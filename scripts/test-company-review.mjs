@@ -10,8 +10,8 @@ import {
 test('review targets stay on the same server and never navigate outside a company player', () => {
   const base = 'http://localhost:8775/docs/verification/company-review.html';
   assert.equal(
-    reviewTarget('../../game/company.html?edition=coupa-all', base),
-    'http://localhost:8775/game/company.html?edition=coupa-all',
+    reviewTarget('../../game/company.html?edition=droneaid-nl-community', base),
+    'http://localhost:8775/game/company.html?edition=droneaid-nl-community',
   );
   assert.equal(
     reviewTarget('/baseline/game/company.html', base),
@@ -131,7 +131,7 @@ function reviewHarness() {
   ])
     ui.set(id, new Element(id));
   ui.get('label').value = 'Frozen baseline';
-  ui.get('target').value = '../../game/company.html?edition=coupa-all';
+  ui.get('target').value = '../../game/company.html?edition=droneaid-nl-community';
   ui.get('width').value = '1280';
   ui.get('height').value = '800';
   ui.get('frames').disabled = ui.get('layout').disabled = true;
@@ -150,7 +150,7 @@ function reviewHarness() {
     },
   });
   const dispose = mountCompanyReview({ document: parent, window });
-  function page(href = 'http://localhost:8775/game/company.html?edition=coupa-all') {
+  function page(href = 'http://localhost:8775/game/company.html?edition=droneaid-nl-community') {
     const solo = new URL(href).pathname.endsWith('/index.html');
     const doc = Object.assign(new Events(), {
       hidden: false,
@@ -356,7 +356,7 @@ test('20-second observations retain the original label and identify animation ca
 
 test('shared Solo redirect observes real boot, pictures, activation and flight state without legacy nodes', () => {
   const h = reviewHarness(),
-    p = h.load(h.page('http://localhost:8775/game/index.html?edition=coupa-all'));
+    p = h.load(h.page('http://localhost:8775/game/index.html?edition=droneaid-nl-community'));
   // The former company entry point redirects here. No old shell may qualify it.
   for (const id of [
     'campaigns',
@@ -406,7 +406,7 @@ test('shared Solo redirect observes real boot, pictures, activation and flight s
 
 test('measurement can be armed while Solo is paused and never starts or resumes the game itself', () => {
   const h = reviewHarness(),
-    p = h.load(h.page('http://localhost:8775/game/index.html?edition=coupa-all'));
+    p = h.load(h.page('http://localhost:8775/game/index.html?edition=droneaid-nl-community'));
   h.ready(p);
   p.doc.body.dataset.flightState = 'paused';
   h.ui.get('frames').onclick();
@@ -442,7 +442,7 @@ test('measurement can be armed while Solo is paused and never starts or resumes 
 
 test('focus interruption discards an active sample even when the game resumes before the next RAF', () => {
   const h = reviewHarness(),
-    p = h.load(h.page('http://localhost:8775/game/index.html?edition=coupa-all'));
+    p = h.load(h.page('http://localhost:8775/game/index.html?edition=droneaid-nl-community'));
   h.ready(p);
   p.play();
   h.ui.get('frames').onclick();
@@ -464,7 +464,7 @@ test('focus interruption discards an active sample even when the game resumes be
 
 test('arming excludes an activation RAF timestamp from before preparation but retains later long frames', () => {
   const h = reviewHarness(),
-    p = h.load(h.page('http://localhost:8775/game/index.html?edition=coupa-all'));
+    p = h.load(h.page('http://localhost:8775/game/index.html?edition=droneaid-nl-community'));
   h.ready(p);
   p.doc.body.dataset.flightState = 'paused';
   h.ui.get('frames').onclick();

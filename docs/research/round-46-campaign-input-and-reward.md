@@ -1,5 +1,7 @@
 # Campaign, input and reward follow-up
 
+> Retained excerpt after an ownership migration. Historical totals and verification statements describe the original scope; this excerpt is not a current release qualification. Original bytes and removed material are preserved separately.
+
 Research checked 2026-09-13. This note informs the next source milestone; it does not change v0.35 or claim that unreleased chapters are installed in the public game.
 
 ## Reference evidence and decisions
@@ -20,7 +22,6 @@ The [Screen Wake Lock API](https://developer.mozilla.org/en-US/docs/Web/API/Scre
 4. **Make objectives and unlocks readable.** Explain the mandatory objective separately from optional clean/speed mastery. Give each role its effect, risk and counterplay in the briefing. Do not require equipment merely because a button exists.
 5. **Complete the quality gates after integration.** Exact-source tests and replay reconstruction establish solvability and consistency. Native browser journeys establish observable behavior. Human challenge, physical touch/controller comfort, animation readability and soundtrack listening remain distinct work.
 
-The spend-management artwork uses fictional procurement, reuse, supply and information motifs informed by [Coupa's business spend management overview](https://www.coupa.com/blog/how-business-spend-management-can-help-accelerate-financial-transformation/) and [community-driven AI discussion](https://www.coupa.com/blog/an-8-trillion-advantage-coupas-community-driven-ai-turns-transactions-into-intelligent-insights/). It does not reproduce a real Coupa interface, mascot or financial outcome. Full image prompts, original bytes and provenance are retained in the three artwork libraries.
 
 ## Integration order
 

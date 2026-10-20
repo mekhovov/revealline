@@ -43,19 +43,6 @@
       "width": 1774,
       "height": 887,
       "runtimeAdopted": false
-    },
-    {
-      "id": "spend-coral-dawn-bakery",
-      "themeId": "coupa",
-      "theme": "Spend Network",
-      "title": "Coral Dawn Bakery",
-      "prompt": "prompts/spend-coral-dawn-bakery.txt",
-      "file": "originals/spend-coral-dawn-bakery.png",
-      "bytes": 2794201,
-      "sha256": "9c62a106d37c55e5b30cc9f4f12e34b1422e6fdc9bef2763e06c581d713861f0",
-      "width": 1774,
-      "height": 887,
-      "runtimeAdopted": false
     }
   ],
   "selectionProvenance": "provenance/originals.json"

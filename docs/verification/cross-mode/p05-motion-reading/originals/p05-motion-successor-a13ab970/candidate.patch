@@ -85,7 +85,7 @@ diff --git a/authoring/motion-lab/README.md b/authoring/motion-lab/README.md
  
  These are fictional cell/second parameters. There are no real payloads, ballistic models, weapon timings, guidance, aerodynamics, operational ranges or named-aircraft performance claims. A heavy body with six rotors is an original concept, not an identified real model. Labels adapt through family vocabulary: business uses Insight scout, Parcel courier, Batch courier, Express courier, Pulse emitter and Workflow filter. The same toy geometry and primitives remain available across all four palettes.
  
-@@ -99,27 +99,27 @@
+@@ -99,25 +99,25 @@
  
  **Equip** saves a cosmetic preference for this exact context, the current theme, or every eligible context. More-specific saved scopes take precedence over broader preferences. When a saved choice is unavailable or locked, resolution uses an eligible authored family starter, then the neutral fallback. No collection ownership or cosmetic equipment changes travel statistics. Ability classes and communication modules are separate controls described above.
  
@@ -94,13 +94,11 @@ diff --git a/authoring/motion-lab/README.md b/authoring/motion-lab/README.md
 -| FPV Front | Daybreak FPV | Skyline FPV; Night signal FPV | Three separate image bodies, each with its own motor rig |
 -| Ukraine Atlas | Atlas bird | Falcon trim | Trim uses the same swallow body with a different wing palette; not a separate falcon illustration |
 -| 1994 Forever | Tape runner | Vector trail | Shared craft body, alternate thruster palette |
--| Navi Network | Spend Sprite | Audit pulse | Shared original helper body; not verified official Coupa Navi art |
 +| Family        | Starter      | Earned cosmetic examples      | Source distinction                                                                                |
 +| ------------- | ------------ | ----------------------------- | ------------------------------------------------------------------------------------------------- |
 +| FPV Front     | Daybreak FPV | Skyline FPV; Night signal FPV | Three separate image bodies, each with its own motor rig                                          |
 +| Ukraine Atlas | Atlas bird   | Falcon trim                   | Trim uses the same swallow body with a different wing palette; not a separate falcon illustration |
 +| 1994 Forever  | Tape runner  | Vector trail                  | Shared craft body, alternate thruster palette                                                     |
-+| Navi Network  | Spend Sprite | Audit pulse                   | Shared original helper body; not verified official Coupa Navi art                                 |
  
  **Apply test reward** inserts the selected authored simulated result. Repeating the same fixture cannot count twice. The six fixtures demonstrate wins, distinct-level star totals, map objectives and clean-run criteria. Ownership persists independently of current context, while availability remains context-specific. **Reset test collection** restores starters. These controls demonstrate collection design, not real wins or a live economy.
  
@@ -116,17 +114,15 @@ diff --git a/authoring/motion-lab/README.md b/authoring/motion-lab/README.md
 -| FPV Front | Concrete / mud / wire |
 -| Ukraine Atlas | Stone / reeds / thorns |
 -| 1994 Forever | Circuit / static / plasma |
--| Navi Network | Archive / queue / alerts |
 +| Family        | Wall / slow / danger material diagrams |
 +| ------------- | -------------------------------------- |
 +| FPV Front     | Concrete / mud / wire                  |
 +| Ukraine Atlas | Stone / reeds / thorns                 |
 +| 1994 Forever  | Circuit / static / plasma              |
-+| Navi Network  | Archive / queue / alerts               |
  
  Microtiles repeat at one-cell pitch; props use larger spaced diagrams; hybrid combines quiet texture and props. Every treatment clips to the same authored rectangles. These are frontend-rendered diagrams, not finished production tiles.
  
-@@ -142,10 +142,10 @@
+@@ -140,10 +140,10 @@
    "sampling": "nearest",
    "animationRecipe": "fpv-tri",
    "rotors": [
@@ -141,7 +137,7 @@ diff --git a/authoring/motion-lab/README.md b/authoring/motion-lab/README.md
    ]
  }
  ```
-@@ -156,13 +156,13 @@
+@@ -154,13 +154,13 @@
  
  Each named `animationRecipes` entry has a `label` and up to eight uniquely identified `components`. The renderer currently supports:
  
@@ -162,7 +158,7 @@ diff --git a/authoring/motion-lab/README.md b/authoring/motion-lab/README.md
  
  The live recipe selector and 2/3/4-blade, shape and radius controls are ephemeral per-character presentation overrides. All other parameters are editable in JSON. A rotor recipe selected on a body without motor anchors is reported as unattached, rather than inventing a rig. Effects are designed visual cues, not photoreal flight/biological/engine simulation.
  
-@@ -187,4 +187,28 @@
+@@ -185,4 +185,28 @@
  node --test authoring/motion-lab/test-motion.mjs authoring/motion-lab/test-grid-motion.mjs authoring/motion-lab/test-animation.mjs authoring/motion-lab/test-collection.mjs authoring/motion-lab/test-ability.mjs
  ```
  

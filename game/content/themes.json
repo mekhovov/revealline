@@ -120,46 +120,6 @@
         "impact": "retro-craft",
         "trapper": "retro-craft"
       }
-    },
-    {
-      "id": "coupa",
-      "name": "Spend Network",
-      "subtitle": "A clearer picture of spend",
-      "family": "navi",
-      "player": "navi-avatar",
-      "enemyShape": "cube",
-      "patrolShape": "spark",
-      "bossShape": "core",
-      "scene": "network",
-      "labels": {
-        "objective": "Opportunity",
-        "supply": "Sync point",
-        "enemy": "Exception",
-        "boss": "Complexity hub",
-        "currency": "Insight",
-        "ability": "AI assist"
-      },
-      "palette": {
-        "ink": "#173747",
-        "paper": "#edf2ed",
-        "muted": "#85a8b6",
-        "accent": "#e2c775",
-        "safe": "#87cbe0",
-        "danger": "#e69477",
-        "field": "#112b3e",
-        "grid": "#1e3d51",
-        "sky": "#bbdadd",
-        "land": "#689bb1"
-      },
-      "classBodies": {
-        "scout": "navi-avatar",
-        "bomber": "navi-avatar",
-        "carrier": "navi-avatar",
-        "interceptor": "navi-avatar",
-        "fiber": "navi-avatar",
-        "impact": "navi-avatar",
-        "trapper": "navi-avatar"
-      }
     }
   ]
 }

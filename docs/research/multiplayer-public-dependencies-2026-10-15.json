@@ -1,1367 +1,1368 @@
 {
-  "format": "revealline-multiplayer-delivery-check.v1",
-  "observedAt": "2026-10-15T04:35:00.111Z",
-  "sourceRevision": "018bd53a09f1366b918f1184605fab215ccab1df",
-  "version": "0.151.1",
-  "manifestSha256": "d3289f7d354babc1ed56d2deb7202f5ebe051d98a8b26a8d9d7eb7adf7075f82",
-  "sourceStable": true,
-  "passed": true,
-  "inventory": [
-    {
-      "routeId": "team-expedition-v1",
-      "mode": "team",
-      "missions": 96,
-      "groups": [
-        "team:team-expedition-aurora-pack",
-        "team:team-expedition-border-pack",
-        "team:team-expedition-crosswind-pack",
-        "team:team-expedition-docks-pack",
-        "team:team-expedition-fracture-pack",
-        "team:team-expedition-gardens-pack",
-        "team:team-expedition-harbors-pack",
-        "team:team-expedition-livewire-pack",
-        "team:team-expedition-phaseworks-pack",
-        "team:team-expedition-relay-pack",
-        "team:team-expedition-sentinel-pack",
-        "team:team-expedition-switchyards-pack"
-      ]
-    },
-    {
-      "routeId": "duel-expedition-v1",
-      "mode": "versus",
-      "missions": 72,
-      "groups": [
-        "versus:versus-expedition-aurora-pack",
-        "versus:versus-expedition-border-pack",
-        "versus:versus-expedition-crosswind-pack",
-        "versus:versus-expedition-docks-pack",
-        "versus:versus-expedition-fracture-pack",
-        "versus:versus-expedition-gardens-pack",
-        "versus:versus-expedition-harbors-pack",
-        "versus:versus-expedition-livewire-pack",
-        "versus:versus-expedition-phaseworks-pack",
-        "versus:versus-expedition-relay-pack",
-        "versus:versus-expedition-sentinel-pack",
-        "versus:versus-expedition-switchyards-pack"
-      ]
-    },
-    {
-      "routeId": "humanoid-hunt-v1",
-      "mode": "team",
-      "missions": 6,
-      "groups": [
-        "team:team-humanoid-hunt-lessons"
-      ]
-    },
-    {
-      "routeId": "humanoid-hunt-v1",
-      "mode": "versus",
-      "missions": 6,
-      "groups": [
-        "versus:journey-humanoid-hunt"
-      ]
-    }
-  ],
-  "files": [
-    {
-      "path": "authoring/library/classic-reveal-artwork/backgrounds/fieldcraft-01.jpg",
-      "bytes": 276824,
-      "sha256": "2b206ab092e51af1b4569c466ec791047aba5cbd605556252d00e6a0e1be3f79",
-      "status": "passed"
-    },
-    {
-      "path": "authoring/library/classic-reveal-artwork/backgrounds/fieldcraft-02.jpg",
-      "bytes": 240180,
-      "sha256": "2958e511adaf042515f6445f40d739cc46797af3a7378b18477bd3d0efac167b",
-      "status": "passed"
-    },
-    {
-      "path": "authoring/library/classic-reveal-artwork/backgrounds/fieldcraft-03.jpg",
-      "bytes": 226890,
-      "sha256": "e0b5c1100d674dc8038efac33b7813921a8181e26619c19a6428e79db6842802",
-      "status": "passed"
-    },
-    {
-      "path": "authoring/library/classic-reveal-artwork/backgrounds/fieldcraft-04.jpg",
-      "bytes": 291750,
-      "sha256": "f7ecf0b53b5cbe1d91aa99a64432d8526953329518922efcd2e46fb38e40fcff",
-      "status": "passed"
-    },
-    {
-      "path": "authoring/library/classic-reveal-artwork/backgrounds/living-threads-01.jpg",
-      "bytes": 318191,
-      "sha256": "560d311bed6011e84cc59050f679177f70c701dca4fff81bdf046e94fcf0f432",
-      "status": "passed"
-    },
-    {
-      "path": "authoring/library/classic-reveal-artwork/backgrounds/living-threads-02.jpg",
-      "bytes": 277898,
-      "sha256": "f156153d7d696819b40252f1f8be2c56cb5732bd0aaee72bdabbeafd77218774",
-      "status": "passed"
-    },
-    {
-      "path": "authoring/library/classic-reveal-artwork/backgrounds/living-threads-03.jpg",
-      "bytes": 299600,
-      "sha256": "0fcefc26e3edca61f3b8b05ca913f60717477bfc83728ea3d23038b770f04bc9",
-      "status": "passed"
-    },
-    {
-      "path": "authoring/library/classic-reveal-artwork/backgrounds/night-shift-01.jpg",
-      "bytes": 251170,
-      "sha256": "a2fa65e9126e1402cf8e3dbd4d798b14f1c940adc4a5f981f0eee6f6d1c0c448",
-      "status": "passed"
-    },
-    {
-      "path": "authoring/library/classic-reveal-artwork/backgrounds/night-shift-02.jpg",
-      "bytes": 284877,
-      "sha256": "cee4164d7fc5ba2acc26f1abf69f06189ece70bed072e74f97b4e70bb82b2de1",
-      "status": "passed"
-    },
-    {
-      "path": "authoring/library/classic-reveal-artwork/backgrounds/night-shift-03.jpg",
-      "bytes": 252851,
-      "sha256": "8ba136b1442f4216af31e2b49c3d1bc019af014f3942fe134b6970e152d761a3",
-      "status": "passed"
-    },
-    {
-      "path": "authoring/library/classic-reveal-artwork/backgrounds/sentinel-relay-01.jpg",
-      "bytes": 261421,
-      "sha256": "af0f43097138386e745e361b3d6d7869740f6e15d99333d3bb2c237f48123418",
-      "status": "passed"
-    },
-    {
-      "path": "authoring/library/classic-reveal-artwork/backgrounds/signal-01.jpg",
-      "bytes": 268343,
-      "sha256": "b1111a42a118f874a0993abec79fe63a6da88f73ae70eaf7739aecc492115fb3",
-      "status": "passed"
-    },
-    {
-      "path": "authoring/library/classic-reveal-artwork/backgrounds/signal-02.jpg",
-      "bytes": 307870,
-      "sha256": "176400881da368a2d827192379617651fb29fd4d44773cbd5a9296e1ee8c0048",
-      "status": "passed"
-    },
-    {
-      "path": "authoring/library/classic-reveal-artwork/backgrounds/signal-03.jpg",
-      "bytes": 264548,
-      "sha256": "a5c0112706c147589d19bbd5ed5bb14f046c2d22e8dc802c0b09a59f4712e1e6",
-      "status": "passed"
-    },
-    {
-      "path": "authoring/library/classic-reveal-artwork/backgrounds/signal-04.jpg",
-      "bytes": 264630,
-      "sha256": "cefa98a6ac605e808fb0e4109405bc08e0f806c1ed3b4a3d22def159d217c5ec",
-      "status": "passed"
-    },
-    {
-      "path": "authoring/library/classic-reveal-artwork/backgrounds/signal-05.jpg",
-      "bytes": 207886,
-      "sha256": "003e6285f7c7ee1ed155d508caa67326ad5fe4d3eeed5edc761f349361aef402",
-      "status": "passed"
-    },
-    {
-      "path": "authoring/library/classic-reveal-artwork/backgrounds/signal-06.jpg",
-      "bytes": 234219,
-      "sha256": "d3719e11d241388f7d798ee0e4ed78387d56932dc461f1202284c34dea1ab12d",
-      "status": "passed"
-    },
-    {
-      "path": "authoring/library/classic-reveal-artwork/backgrounds/signal-07.jpg",
-      "bytes": 264337,
-      "sha256": "47d47c206c066181eb78d22f474891538b7a24801aa6118f8cfd53255cb818da",
-      "status": "passed"
-    },
-    {
-      "path": "authoring/library/classic-reveal-artwork/backgrounds/signal-08.jpg",
-      "bytes": 276549,
-      "sha256": "935c40840c16732082d0a7cd00fa725300a2b8fd44ffd738be2cbecb2db89581",
-      "status": "passed"
-    },
-    {
-      "path": "authoring/library/classic-reveal-artwork/backgrounds/signal-09.jpg",
-      "bytes": 307774,
-      "sha256": "69455e043ab30c3eee430a2a81c8f1c1cd3901203e8b4e5dd38e5377348ebfac",
-      "status": "passed"
-    },
-    {
-      "path": "authoring/library/classic-reveal-artwork/backgrounds/signal-10.jpg",
-      "bytes": 266680,
-      "sha256": "417dc519500675498cf4b5e53f5d35592b0564b68ba970e51d0f950e13ff7e9f",
-      "status": "passed"
-    },
-    {
-      "path": "authoring/library/classic-reveal-artwork/backgrounds/signal-11.jpg",
-      "bytes": 226563,
-      "sha256": "4f56ba1159a737de7580bbe82e4e71e86e2a430f61db35f4d331280fdddb090c",
-      "status": "passed"
-    },
-    {
-      "path": "authoring/library/classic-reveal-artwork/backgrounds/signal-12.jpg",
-      "bytes": 240769,
-      "sha256": "e70a6191b244d2a32cd535b86f469174f3be935a3b95808bd929b59088e8d70b",
-      "status": "passed"
-    },
-    {
-      "path": "authoring/library/classic-reveal-artwork/contact-sheet.jpg",
-      "bytes": 534510,
-      "sha256": "2069a51574d42d18224c88c1299c348bc900048c2cd65761d2fe385de2c68086",
-      "status": "passed"
-    },
-    {
-      "path": "authoring/library/classic-reveal-artwork/index.html",
-      "bytes": 21748,
-      "sha256": "9e8dd73bb00b703f189bf7489fd3bea41072bb849f2e5f8889c714a5e17820c5",
-      "status": "passed"
-    },
-    {
-      "path": "authoring/library/classic-reveal-artwork/manifest.json",
-      "bytes": 12349,
-      "sha256": "847f959335a5897606d3762cc950ec19a5796b2449303c5b416764a2173be93a",
-      "status": "passed"
-    },
-    {
-      "path": "authoring/library/classic-reveal-artwork/prompts.json",
-      "bytes": 36287,
-      "sha256": "b9788abeb0641ddb82d4e0f5342938ac43640092d4375800e064b845a4f2143f",
-      "status": "passed"
-    },
-    {
-      "path": "authoring/library/classic-reveal-artwork/README.md",
-      "bytes": 2371,
-      "sha256": "9f41568f3f0a835b4ccd10e435d850bd113da7476a9c74c83ee13aee8c16604a",
-      "status": "passed"
-    },
-    {
-      "path": "authoring/motion-lab/assets/delta-interceptor.png",
-      "bytes": 468947,
-      "sha256": "00357545f135aa3bc2ed98fa32baf46b3b0a3cd3c596054571746bae153eef9e",
-      "status": "passed"
-    },
-    {
-      "path": "authoring/motion-lab/assets/fixedwing-body.png",
-      "bytes": 373537,
-      "sha256": "bec5073f36946b3060aa42835ed8486e36c1c155e8b57c5c3058fa4630bf1663",
-      "status": "passed"
-    },
-    {
-      "path": "authoring/motion-lab/assets/fpv-body.png",
-      "bytes": 644588,
-      "sha256": "31a742f952415fb9dd2742eb9ba7ef1dc7a5aedca4593d817713c61932fe68c4",
-      "status": "passed"
-    },
-    {
-      "path": "authoring/motion-lab/assets/fpv-night.png",
-      "bytes": 581776,
-      "sha256": "e7df9c8f1ffb7a5ceb883e2130f0f245d208d24aae5d3527f39227ea4c589847",
-      "status": "passed"
-    },
-    {
-      "path": "authoring/motion-lab/assets/fpv-racer.png",
-      "bytes": 879038,
-      "sha256": "bc77fb42b3fd233a3d4391bc23e093d6d93d202d0482934f79091a310f8c01e6",
-      "status": "passed"
-    },
-    {
-      "path": "authoring/motion-lab/assets/heavy-lift.png",
-      "bytes": 795459,
-      "sha256": "2e1b871f2336fe2dc6434ed83afb46572f5afffd17803733914a567d39c517ec",
-      "status": "passed"
-    },
-    {
-      "path": "authoring/motion-lab/assets/navi-avatar.png",
-      "bytes": 384917,
-      "sha256": "3bc265ce6af451a76bc9ab2e9c5c8991c69e43d3d57efbc47c0dea2728e9ff69",
-      "status": "passed"
-    },
-    {
-      "path": "authoring/motion-lab/assets/retro-craft.png",
-      "bytes": 477364,
-      "sha256": "1d0340673c2cf19ab9b88fed271219da5003f82bcd1bd45da4477c774708551b",
-      "status": "passed"
-    },
-    {
-      "path": "authoring/motion-lab/assets/scout-quad.png",
-      "bytes": 641545,
-      "sha256": "14b18895b5b1c457b8db47a5c7a0485b502ad6b8fccb91697ae6b46397e73c99",
-      "status": "passed"
-    },
-    {
-      "path": "authoring/motion-lab/assets/ukrainian-bird.png",
-      "bytes": 290701,
-      "sha256": "fb43fb88833c5a161937097ac74e5588868c82f3b8c896c28139a77c9dffafad",
-      "status": "passed"
-    },
-    {
-      "path": "game/content-design/assets/apex-polar-r1/apex-remix.png",
-      "bytes": 2612919,
-      "sha256": "e85baca009c66e9ee23f57d42bd1d8259af01b8f60a191d159051a083dc488c3",
-      "status": "passed"
-    },
-    {
-      "path": "game/content-design/assets/apex-polar-r1/crossing-complete.png",
-      "bytes": 2404305,
-      "sha256": "62b2848abf7b7a92c3db60dd62c2eab9d86a86a47c4dfad18e19f46421fcc2ad",
-      "status": "passed"
-    },
-    {
-      "path": "game/content-design/assets/apex-polar-r1/final-broadcast.png",
-      "bytes": 2244903,
-      "sha256": "a83d3758eb52d5ce7bb9ed2a9e901ed7688df8c69795c75cda63a74cdd7696b0",
-      "status": "passed"
-    },
-    {
-      "path": "game/content-design/assets/apex-polar-r1/home-signal.png",
-      "bytes": 2427343,
-      "sha256": "2a2fa8d166816a6b826cf766283c6a4e77b4e189e34b9fbaf40cd8e77ccebfef",
-      "status": "passed"
-    },
-    {
-      "path": "game/content-design/assets/apex-polar-r1/returning-light.png",
-      "bytes": 2558586,
-      "sha256": "0003bef93ed01610fdd6fa0cd6b31f6e1cbc290d166780fa9598a21d37a68c3c",
-      "status": "passed"
-    },
-    {
-      "path": "game/content-design/assets/border-r1/behind-the-patrol.png",
-      "bytes": 2740446,
-      "sha256": "89ae10de172c4adcabe99736dee1df00e0a2c2ba029380a330e77dec5953c0ff",
-      "status": "passed"
-    },
-    {
-      "path": "game/content-design/assets/border-r1/border-remix.png",
-      "bytes": 2650660,
-      "sha256": "03486a4c233eb39fc97d21c36f588f34fb4c31d7b3417ea7c78e66b78fa89090",
-      "status": "passed"
-    },
-    {
-      "path": "game/content-design/assets/border-r1/long-rail.png",
-      "bytes": 2818924,
-      "sha256": "b9d561e1e09440977c3afe04e37e898e5fca336f32546e447a7f82a97001d9f4",
-      "status": "passed"
-    },
-    {
-      "path": "game/content-design/assets/border-r1/new-frontier.png",
-      "bytes": 2636818,
-      "sha256": "e3f114f65313811ad004b24a1af0844659a4eba9fd5e180edfefc3c5442d974b",
-      "status": "passed"
-    },
-    {
-      "path": "game/content-design/assets/border-r1/return-pocket.png",
-      "bytes": 2981041,
-      "sha256": "976479d8b41f29b1117f186c210e5d10699f95551b935643f1d798f5c04a0f2f",
-      "status": "passed"
-    },
-    {
-      "path": "game/content-design/assets/border-r1/second-landing.png",
-      "bytes": 2640042,
-      "sha256": "1af17b967da199ae428bc0c726d4e87bf2b0828f43f06bb7300327e36454c7f8",
-      "status": "passed"
-    },
-    {
-      "path": "game/content-design/assets/border-r1/turn-the-corner.png",
-      "bytes": 2952279,
-      "sha256": "53d1f2c5d627961986a12c0cf35787064124b518f4ce713883839743b2aeb1f5",
-      "status": "passed"
-    },
-    {
-      "path": "game/content-design/assets/crosswind-highlands-r1/compass-array.png",
-      "bytes": 2672598,
-      "sha256": "68aec2169fb2cfd4bce6027494fa75de3cd7d79508694c1254dd7ec17be8c818",
-      "status": "passed"
-    },
-    {
-      "path": "game/content-design/assets/crosswind-highlands-r1/crosswind-remix.png",
-      "bytes": 2732689,
-      "sha256": "dc5d33fcdca96f4ae6861f594276ae5bf0208a50faeae2662e4ecbdf0711a69f",
-      "status": "passed"
-    },
-    {
-      "path": "game/content-design/assets/crosswind-highlands-r1/long-wave.png",
-      "bytes": 2612948,
-      "sha256": "8f60752ffeb8bc7f19df30a96f795e3618e858ee3b870983dadb874932bbd4e5",
-      "status": "passed"
-    },
-    {
-      "path": "game/content-design/assets/crosswind-highlands-r1/outer-loop.png",
-      "bytes": 2638067,
-      "sha256": "0d15c80d7752f0cb78158794612fa469e86a5b92bf25874bb9926ad3f6f8484d",
-      "status": "passed"
-    },
-    {
-      "path": "game/content-design/assets/crosswind-highlands-r1/read-the-arrows.png",
-      "bytes": 2628806,
-      "sha256": "87911215f03ee55b81ace5dbafc3cbb30d28e98df7eb42e6f4273c2b41ec00b5",
-      "status": "passed"
-    },
-    {
-      "path": "game/content-design/assets/crosswind-highlands-r1/survey-markers.png",
-      "bytes": 2702883,
-      "sha256": "ad007651f692eecf05e14524eba4833a88a39ed601066e343cd5f711fcfd505c",
-      "status": "passed"
-    },
-    {
-      "path": "game/content-design/assets/crosswind-highlands-r1/windbreak-weave.png",
-      "bytes": 2912970,
-      "sha256": "91bb8ecd0dd0eeaa7eb85272237d63c1ecb95b933400b1746c91de95dbfdd7e1",
-      "status": "passed"
-    },
-    {
-      "path": "game/content-design/assets/fracture-coastal-r1/bank-the-crossing.png",
-      "bytes": 2683665,
-      "sha256": "02ba657404587cd276191e19abf5e2b29c6126dbc709b672d7b541ff9d2ae322",
-      "status": "passed"
-    },
-    {
-      "path": "game/content-design/assets/fracture-coastal-r1/first-fracture.png",
-      "bytes": 2369540,
-      "sha256": "5dbd2da2a014f43842a7e04c4652d158a3a7aa254129bf49ec3991cdca7478e6",
-      "status": "passed"
-    },
-    {
-      "path": "game/content-design/assets/fracture-coastal-r1/five-anchors.png",
-      "bytes": 2721851,
-      "sha256": "c1f2a60d8a27f6fc411601124fe7266293ab595ad2802a70cf5b8a6316d786a3",
-      "status": "passed"
-    },
-    {
-      "path": "game/content-design/assets/fracture-coastal-r1/fracture-remix.png",
-      "bytes": 2404199,
-      "sha256": "1e7942d55e4a9a23dea597ddc134dbb47aa4ddba60a37bd20739633a10e55489",
-      "status": "passed"
-    },
-    {
-      "path": "game/content-design/assets/fracture-coastal-r1/island-reserve.png",
-      "bytes": 2348459,
-      "sha256": "d9b6deb6a14c1d3dd24d9f6c8bed6e9898de898eaf3daf56c15cd88006d4c9bd",
-      "status": "passed"
-    },
-    {
-      "path": "game/content-design/assets/fracture-coastal-r1/staggered-reserve.png",
-      "bytes": 2778442,
-      "sha256": "8def6d22ade8edd4108c70ead9dc93d59e26a0244c5971aa92036be1e563b2a5",
-      "status": "passed"
-    },
-    {
-      "path": "game/content-design/assets/fracture-coastal-r1/two-districts.png",
-      "bytes": 2712909,
-      "sha256": "618a9b7dc9bd94dbbcfa85875e04c6095e715728050778e3069824d360c1e59e",
-      "status": "passed"
-    },
-    {
-      "path": "game/content-design/assets/horizon-r1/choose-your-share.png",
-      "bytes": 2828010,
-      "sha256": "d2d9d57da0c25d1e264387d24d2ecad2e88ad43b77db3934039f1291edd017ae",
-      "status": "passed"
-    },
-    {
-      "path": "game/content-design/assets/horizon-r1/courtyard-return.png",
-      "bytes": 2701528,
-      "sha256": "7c4ed0ae6f76c49b5dbe1361b5ff0b2c17dce08aeb2c0f6aece08890c373123a",
-      "status": "passed"
-    },
-    {
-      "path": "game/content-design/assets/horizon-r1/first-return.png",
-      "bytes": 2366738,
-      "sha256": "3acf496d9a6bc9db2f83ac01d8255223b3913e7ae0a157e48559ac981c80b95d",
-      "status": "passed"
-    },
-    {
-      "path": "game/content-design/assets/horizon-r1/island-outpost.png",
-      "bytes": 2484871,
-      "sha256": "3fb163cde27b9496290a07a106e11737c369dd77b527e5985a1e3c48d9476b46",
-      "status": "passed"
-    },
-    {
-      "path": "game/content-design/assets/horizon-r1/long-way-home.png",
-      "bytes": 2584488,
-      "sha256": "0219e5fbe164647cd1ba0cd2dff019df8d0b9fc334780b06b53693564c1aaadf",
-      "status": "passed"
-    },
-    {
-      "path": "game/content-design/assets/horizon-r1/nearby-shore.png",
-      "bytes": 2618614,
-      "sha256": "f24ba2aac769b952f0ad8de13193627c76e6a39bcd8db9a5ddb3e16ded0f26d5",
-      "status": "passed"
-    },
-    {
-      "path": "game/content-design/assets/horizon-r1/stepping-stones.png",
-      "bytes": 2597944,
-      "sha256": "aa9eadbc166df2bf78030ecec8e24e920d6a254d7e66143f380c1d263005cc36",
-      "status": "passed"
-    },
-    {
-      "path": "game/content-design/assets/horizon-r1/two-bays.png",
-      "bytes": 2669903,
-      "sha256": "589632c9b912ba2b07648c9c0de7c0768e61d5938a1993414d7b36ac650b5118",
-      "status": "passed"
-    },
-    {
-      "path": "game/content-design/assets/horizon-r1/two-keepers.png",
-      "bytes": 2572761,
-      "sha256": "ba9c3c428fbd44e1fd0b7e5ba70bae0abdd11faa65ae219042a7a6d196bce5f6",
-      "status": "passed"
-    },
-    {
-      "path": "game/content-design/assets/livewire-foundry-r1/cooling-loop.png",
-      "bytes": 2621513,
-      "sha256": "8cb6dae5f03e22b522df86d7d7c6ead52c80ba341205a6805887a3e2f51a959b",
-      "status": "passed"
-    },
-    {
-      "path": "game/content-design/assets/livewire-foundry-r1/cross-the-afterglow.png",
-      "bytes": 2279834,
-      "sha256": "814627fbb9efac9b000230d56c109eeac86c5993e81def1fb7a3691586447cbe",
-      "status": "passed"
-    },
-    {
-      "path": "game/content-design/assets/livewire-foundry-r1/crossbar-depot.png",
-      "bytes": 2600502,
-      "sha256": "0598e3c6f97466486442cf02698158a19a29565cfaebcd2affaf9d8be58bef2e",
-      "status": "passed"
-    },
-    {
-      "path": "game/content-design/assets/livewire-foundry-r1/livewire-remix.png",
-      "bytes": 2436701,
-      "sha256": "13b8b69daf7d361678328702a1fc5643bd5663b33d938e9970ffcb64205c499e",
-      "status": "passed"
-    },
-    {
-      "path": "game/content-design/assets/livewire-foundry-r1/read-the-lock.png",
-      "bytes": 2381516,
-      "sha256": "d0f5ed0f7e45bcd16818d54befe2e0fb149097e36958b13c485a8c4abca99ff3",
-      "status": "passed"
-    },
-    {
-      "path": "game/content-design/assets/livewire-foundry-r1/split-junction.png",
-      "bytes": 2460435,
-      "sha256": "8d14f0d044c923c81546f6b1eca217aa1992705665df359dd81d8925183cef5c",
-      "status": "passed"
-    },
-    {
-      "path": "game/content-design/assets/livewire-foundry-r1/switchyard.png",
-      "bytes": 2467333,
-      "sha256": "5bb7761dfe9d7ee763febce40e918839cb6fee64be5f71ad718b652524c287a5",
-      "status": "passed"
-    },
-    {
-      "path": "game/content-design/assets/neon-pixel-r1/dogleg-return.png",
-      "bytes": 2611206,
-      "sha256": "fced7682cd6f55ed13014bc72de429c35a0faa84000b5ba466280ab890ebcb27",
-      "status": "passed"
-    },
-    {
-      "path": "game/content-design/assets/neon-pixel-r1/folded-corner.png",
-      "bytes": 2447483,
-      "sha256": "31653d193a27380e65ff0bff9183f0462ef056b1b418be2568d1f6f9f4af9f13",
-      "status": "passed"
-    },
-    {
-      "path": "game/content-design/assets/neon-pixel-r1/four-quarters.png",
-      "bytes": 2789107,
-      "sha256": "19264377455e6e4989b2e94332b3bef4014bdeb74e038a9ce4c941e8753e468e",
-      "status": "passed"
-    },
-    {
-      "path": "game/content-design/assets/neon-pixel-r1/inside-out.png",
-      "bytes": 2387091,
-      "sha256": "6b23afb2029d683d70d9b445b201008cedee6b49b58ba13170b60e00feb5888a",
-      "status": "passed"
-    },
-    {
-      "path": "game/content-design/assets/neon-pixel-r1/neon-remix.png",
-      "bytes": 2416378,
-      "sha256": "ca5824dd7ec80e0cfe65a22dd061a6112e033ddc1ba89624532cba5c8f06bbfe",
-      "status": "passed"
-    },
-    {
-      "path": "game/content-design/assets/neon-pixel-r1/side-door-bays.png",
-      "bytes": 2337665,
-      "sha256": "896885f80c9f5eb526bfeacbf37c0f608b8668d05ea77be29b01209dd488a52b",
-      "status": "passed"
-    },
-    {
-      "path": "game/content-design/assets/neon-pixel-r1/staggered-circuit.png",
-      "bytes": 2455491,
-      "sha256": "c25b53b961e7b29c16846d552b09e74c3d7cbe3d75681d565c1be6fd290f6f47",
-      "status": "passed"
-    },
-    {
-      "path": "game/content-design/assets/phase-observatory-r1/crossed-bands.png",
-      "bytes": 2204276,
-      "sha256": "e24a33066099cbca5f8e9e150c65edda362c8497c6e7cf1b07a9eb95f5b7a2e1",
-      "status": "passed"
-    },
-    {
-      "path": "game/content-design/assets/phase-observatory-r1/dogleg-transfer.png",
-      "bytes": 2096924,
-      "sha256": "b276f281e1ca76b067b1a52062f1db63970c63cfd07ddd14bd1613f3f6e927e3",
-      "status": "passed"
-    },
-    {
-      "path": "game/content-design/assets/phase-observatory-r1/phase-remix.png",
-      "bytes": 2166862,
-      "sha256": "be1c99899cd5a481e2b5c37e5a17471aad50467eb495e574ee23af3213413739",
-      "status": "passed"
-    },
-    {
-      "path": "game/content-design/assets/phase-observatory-r1/pressure-ladder.png",
-      "bytes": 2017048,
-      "sha256": "37959d5ccee5a352c6c2c18411d0d491b53f50a09bdb6ae33cc6b56becd902b6",
-      "status": "passed"
-    },
-    {
-      "path": "game/content-design/assets/phase-observatory-r1/return-in-reserve.png",
-      "bytes": 2105440,
-      "sha256": "3759447c5d88634d7de4e075183faeb3836f11996adb68997831ad917301692d",
-      "status": "passed"
-    },
-    {
-      "path": "game/content-design/assets/phase-observatory-r1/signal-channels.png",
-      "bytes": 2337875,
-      "sha256": "7b8c153080742e7b3db5aec48e10443a8027d7779d31b106e2e1dd64ab4292c6",
-      "status": "passed"
-    },
-    {
-      "path": "game/content-design/assets/phase-observatory-r1/two-ways-home.png",
-      "bytes": 2240059,
-      "sha256": "e0f862eca2714abb856d7e31f93c0cf7188fe08e47e659ab682de149fc049efb",
-      "status": "passed"
-    },
-    {
-      "path": "game/content-design/assets/relay-archive-r1/first-link.png",
-      "bytes": 2623033,
-      "sha256": "3aca0bdb56bd26881a589407d6bc12645c09ec13d1c65b2ca8c20c7c7a5c0fbf",
-      "status": "passed"
-    },
-    {
-      "path": "game/content-design/assets/relay-archive-r1/nested-relays.png",
-      "bytes": 2320855,
-      "sha256": "a5fb9732b3507a945245a03371940a9983e2ccb5686bb61e1223a74f5dc3101a",
-      "status": "passed"
-    },
-    {
-      "path": "game/content-design/assets/relay-archive-r1/relay-remix.png",
-      "bytes": 2271263,
-      "sha256": "4282132d91861b72f3245bb495909656b048b2e5700951e7d8a375d1eaf1eae7",
-      "status": "passed"
-    },
-    {
-      "path": "game/content-design/assets/relay-archive-r1/second-approach.png",
-      "bytes": 2690752,
-      "sha256": "47b34edd9836d7a36edecddd21e0832f988c81cad6a3e67a9ddff90223ec46ee",
-      "status": "passed"
-    },
-    {
-      "path": "game/content-design/assets/relay-archive-r1/spiral-stores.png",
-      "bytes": 2199237,
-      "sha256": "b0dd11fe2b2a359e4fd4dd77638498e0ef1dde452c3a5d5687b4258bb5c8ab8c",
-      "status": "passed"
-    },
-    {
-      "path": "game/content-design/assets/relay-archive-r1/three-compounds.png",
-      "bytes": 2814902,
-      "sha256": "9c7d6fb16f90221dcfe9c72acb87b7c5d6be32240b5898440d041acbfea4a639",
-      "status": "passed"
-    },
-    {
-      "path": "game/content-design/assets/relay-archive-r1/watchpost-exchange.png",
-      "bytes": 2302982,
-      "sha256": "a5f3fafb62154308d2536ea7ed530e38a8419da2947ca8f642a8ee45d5770669",
-      "status": "passed"
-    },
-    {
-      "path": "game/content-design/assets/rover-pixel-r1/between-the-rows.png",
-      "bytes": 2657991,
-      "sha256": "7cb30010a4f4d335777b631aaaf144f8e5cde6d3b0bc82ece0f1e5b4f7cf10fb",
-      "status": "passed"
-    },
-    {
-      "path": "game/content-design/assets/rover-pixel-r1/broken-yard.png",
-      "bytes": 2346857,
-      "sha256": "07a044d79ace79557bd1a3e4bb8ce8923838fa3024962838efbaaaa62dfb3068",
-      "status": "passed"
-    },
-    {
-      "path": "game/content-design/assets/rover-pixel-r1/rover-remix.png",
-      "bytes": 2389650,
-      "sha256": "0a29d9ede393f8b8123d15f0e30d1c967ab447f0f79857f6aaafc8a8d8989edf",
-      "status": "passed"
-    },
-    {
-      "path": "game/content-design/assets/rover-pixel-r1/sorting-yard.png",
-      "bytes": 2394521,
-      "sha256": "5117cdc157d580330b2a0e85de3c6a3fddfe84bf7dd0e40bbc4a9682044e8140",
-      "status": "passed"
-    },
-    {
-      "path": "game/content-design/assets/rover-pixel-r1/split-berths.png",
-      "bytes": 2184710,
-      "sha256": "99df57db9f52236c9dbbb6dd6952cfc0f733d79e67ec7613711bd94646517f85",
-      "status": "passed"
-    },
-    {
-      "path": "game/content-design/assets/rover-pixel-r1/stepped-return.png",
-      "bytes": 2488082,
-      "sha256": "12d8e0a2ad1614d97420ad32d2681ac43393dc630e25ffc132070dd25db1c089",
-      "status": "passed"
-    },
-    {
-      "path": "game/content-design/assets/rover-pixel-r1/wake-the-yard.png",
-      "bytes": 2298686,
-      "sha256": "15b9bfd4fe820fba336ca6ec56158cab3f37923a59deab32741249426e51be8a",
-      "status": "passed"
-    },
-    {
-      "path": "game/content-design/assets/sentinel-citadel-r1/crown-audience.png",
-      "bytes": 2783220,
-      "sha256": "03d6987c7f9ae8b72ab9ba1e653c4a952377935bd34c24cb6f6fd5d32adaf84c",
-      "status": "passed"
-    },
-    {
-      "path": "game/content-design/assets/sentinel-citadel-r1/first-relay.png",
-      "bytes": 2667878,
-      "sha256": "b352889e425cc909ce2b96f081584cb4fb589085bc2153e3014ef250d84bd1f8",
-      "status": "passed"
-    },
-    {
-      "path": "game/content-design/assets/sentinel-citadel-r1/relay-perimeter.png",
-      "bytes": 2792599,
-      "sha256": "6825c57dc0bec6c080f7862974c73ec706a700b9e2b8ee92261363659134953d",
-      "status": "passed"
-    },
-    {
-      "path": "game/content-design/assets/sentinel-citadel-r1/sentinel-remix.png",
-      "bytes": 2322091,
-      "sha256": "b861e9998ed4edc875e9fc8abd78b4b0e9e1e2efda8799b516120d6dcbacd3e3",
-      "status": "passed"
-    },
-    {
-      "path": "game/content-design/assets/sentinel-citadel-r1/twin-receivers.png",
-      "bytes": 2410060,
-      "sha256": "7576ea8fa432532cf02f4261e4be10bb437e51c34b73d4204ca09f3d910f97f9",
-      "status": "passed"
-    },
-    {
-      "path": "game/content-design/assets/signal-r1/dry-spine.png",
-      "bytes": 2629404,
-      "sha256": "a8e4589c5535754465b2e42994532969d3be514c92ebfefb732c272aceba41f5",
-      "status": "passed"
-    },
-    {
-      "path": "game/content-design/assets/signal-r1/soft-crossing.png",
-      "bytes": 2696257,
-      "sha256": "92054145e6f3406fd866ae60e80ed206032504bed0f2b115ba0f9c508c28b4d7",
-      "status": "passed"
-    },
-    {
-      "path": "game/content-design/assets/signal-r1/wide-approach.png",
-      "bytes": 2888742,
-      "sha256": "a809e80e24296a0f537c3102478dd63161812f12634b500f8d2326f21799a441",
-      "status": "passed"
-    },
-    {
-      "path": "game/content-design/runtime/duel-expedition-v1.json",
-      "bytes": 173007,
-      "sha256": "1a6ee0231ed1a7315cffb7d11cd3c702d952dfd9f750732b059a44f77af14197",
-      "status": "passed"
-    },
-    {
-      "path": "game/content-design/runtime/humanoid-hunt-v1.json",
-      "bytes": 17261,
-      "sha256": "4547578205ad7d5a8453e48de49e210ab40d422b44734f1eb4d6b7ff3e662f58",
-      "status": "passed"
-    },
-    {
-      "path": "game/content-design/runtime/whole-spatial-v10.json",
-      "bytes": 258783,
-      "sha256": "04b2c25e1e6bbbf8890b89a6661ec80fadac53f280ae2ae2caf77fd3de3ed4fc",
-      "status": "passed"
-    },
-    {
-      "path": "game/content-design/runtime/whole-spatial-v11.json",
-      "bytes": 259575,
-      "sha256": "3d7b5b67d5d78a3f25a8108468385f9a6f1b2520fc12b275bcc3bf952ae0d978",
-      "status": "passed"
-    },
-    {
-      "path": "game/content-design/runtime/whole-spatial-v12.json",
-      "bytes": 260606,
-      "sha256": "93ff983369b33f0b0cf005ddd3e3112475c8af6ac5d3d43ef1bdbe49e9df2325",
-      "status": "passed"
-    },
-    {
-      "path": "game/content-design/runtime/whole-spatial-v13.json",
-      "bytes": 261539,
-      "sha256": "dbad0867d7642b78fe46d8eb1b1bf13d367d433248b673b0f00933fdc79491c2",
-      "status": "passed"
-    },
-    {
-      "path": "game/content-design/runtime/whole-spatial-v14.json",
-      "bytes": 262645,
-      "sha256": "a5fa79c0174104525174559a7701c6241c747b2df3d8fc1f99484cfbca8312ef",
-      "status": "passed"
-    },
-    {
-      "path": "game/content-design/runtime/whole-spatial-v15.json",
-      "bytes": 263597,
-      "sha256": "bd832d139178a8e82dbb8eea68aca94ee2e1b395897bcf6818af1cbb7966c6c9",
-      "status": "passed"
-    },
-    {
-      "path": "game/content-design/runtime/whole-spatial-v16.json",
-      "bytes": 264185,
-      "sha256": "cb4761bfb1b528c0264de5b44ab9bb1e05b7d1b9bff752ba50828fbd1b650b8e",
-      "status": "passed"
-    },
-    {
-      "path": "game/content-design/runtime/whole-spatial-v17.json",
-      "bytes": 265782,
-      "sha256": "615510f0643bc972817bdf0d285a00bc6986a3bfb04667754393dc509929b0ea",
-      "status": "passed"
-    },
-    {
-      "path": "game/content-design/runtime/whole-spatial-v18.json",
-      "bytes": 267605,
-      "sha256": "2eef985ba79babbac1a1b761f039dd6678bd447fbd02c18eb28367d20a5fdedb",
-      "status": "passed"
-    },
-    {
-      "path": "game/content-design/runtime/whole-spatial-v19.json",
-      "bytes": 269126,
-      "sha256": "d0e631a5b8551d422ee6b3d5a2476aa25bdf38b824bdd86def06312f0c10658e",
-      "status": "passed"
-    },
-    {
-      "path": "game/content-design/runtime/whole-spatial-v20.json",
-      "bytes": 270352,
-      "sha256": "505b52ec7be45d06c71ccbfdaa6ab23a962dc6777d147c619cd0d0e6b33abe1d",
-      "status": "passed"
-    },
-    {
-      "path": "game/content-design/runtime/whole-spatial-v21.json",
-      "bytes": 271337,
-      "sha256": "45eff01ef344cb77700977c7135a265e9e0c7c2c7ff1e7f3366644c8517473b8",
-      "status": "passed"
-    },
-    {
-      "path": "game/content-design/runtime/whole-spatial-v22.json",
-      "bytes": 273373,
-      "sha256": "4268a186d8565460ee8efc5566f0571d8150ec4d665380fbe329fdbd214b4072",
-      "status": "passed"
-    },
-    {
-      "path": "game/content-design/runtime/whole-spatial-v23.json",
-      "bytes": 275331,
-      "sha256": "3b006b71af58209831aa9973dad88d47405188d0c8f28bad74d0ec03bd52a660",
-      "status": "passed"
-    },
-    {
-      "path": "game/content-design/runtime/whole-spatial-v24.json",
-      "bytes": 276540,
-      "sha256": "54af78a72743cfb23ae5c9d091aec92e9f4a63a588aacd81953949c2ad4d5385",
-      "status": "passed"
-    },
-    {
-      "path": "game/content-design/runtime/whole-spatial-v25.json",
-      "bytes": 277154,
-      "sha256": "26cafd633827012c3c8729329bb2fad0c3feedd2637c2e257bf50d8e123585e7",
-      "status": "passed"
-    },
-    {
-      "path": "game/content-design/runtime/whole-spatial-v9.json",
-      "bytes": 257778,
-      "sha256": "80d2406bece474a0dc169e9d8ea31b473d04d68144e8df6dd4eff41c7850e27a",
-      "status": "passed"
-    },
-    {
-      "path": "game/content-design/team-capture-teaching.mjs",
-      "bytes": 1759,
-      "sha256": "8c150d81c97faca432b870a32798dac01e21c96b1b5197ba7eb90a3753d5615a",
-      "status": "passed"
-    },
-    {
-      "path": "game/content-design/team-entry.mjs",
-      "bytes": 8487,
-      "sha256": "a61d9c9f57df0e99df65867df0f3918ce8ad42faf2a31d9181e1f73a06391903",
-      "status": "passed"
-    },
-    {
-      "path": "game/content-design/team-mission-card.mjs",
-      "bytes": 4139,
-      "sha256": "84163d4197e04c8e20ec51ae5813e343c5f5fd3517e78cc25237b7842acab95b",
-      "status": "passed"
-    },
-    {
-      "path": "game/content-design/team-progress.mjs",
-      "bytes": 9253,
-      "sha256": "466df3c64fe372e09d76159637c93decab26244a58fb34359e6d8edcb02fc205",
-      "status": "passed"
-    },
-    {
-      "path": "game/content-design/team-timed-entry.mjs",
-      "bytes": 2199,
-      "sha256": "74f97d93ca131e4a669ecfe552e49405881687303724e154cc0bd7cb6b9b6d11",
-      "status": "passed"
-    },
-    {
-      "path": "game/coop/attempt-history.mjs",
-      "bytes": 641,
-      "sha256": "108e50d1e474c39b6c7fc0f2935e548b769e03fc27a1495cd22f008d62244196",
-      "status": "passed"
-    },
-    {
-      "path": "game/coop/attempt-identity.mjs",
-      "bytes": 1053,
-      "sha256": "2d86606f8712fe268ed94fabb7c600759eb9af5c6a6aab339d0c2b2297fa593c",
-      "status": "passed"
-    },
-    {
-      "path": "game/coop/enemy-stats-ownership.mjs",
-      "bytes": 1533,
-      "sha256": "672bbb09b94206ff57bbcb93b8e14dd3591b24157114a479bf6a93116cdfdcfc",
-      "status": "passed"
-    },
-    {
-      "path": "game/coop/hunt-attempts.mjs",
-      "bytes": 19444,
-      "sha256": "d3af0dbdf0037f24ad4b9851f19dd8ac027324d70b0481b379af667367b51fe6",
-      "status": "passed"
-    },
-    {
-      "path": "game/coop/input-policy.mjs",
-      "bytes": 1519,
-      "sha256": "89e0a28cf383d79ca3c56a3faf6dc3caf9bf6b5c129764fbcdc03612d6220528",
-      "status": "passed"
-    },
-    {
-      "path": "game/coop/picture-source.mjs",
-      "bytes": 2880,
-      "sha256": "9e029a452492febc6e2b7d2caddb17c6e14b8bdfb07f141d9fdf6df7a89b97b3",
-      "status": "passed"
-    },
-    {
-      "path": "game/coop/presentation-envelope.mjs",
-      "bytes": 11760,
-      "sha256": "a214530dfc2d54682fbd31b9c1f73dd07d508fd5c5b5e2b938c03b3cfd405065",
-      "status": "passed"
-    },
-    {
-      "path": "game/couch/candidate-pictures.mjs",
-      "bytes": 4739,
-      "sha256": "852830714b3b1be251a1d6038761f2c150b2d9e834d6831c524cf6e6603c9c66",
-      "status": "passed"
-    },
-    {
-      "path": "game/couch/candidate-team-pictures.mjs",
-      "bytes": 6605,
-      "sha256": "e020a7c89ca328bea0520089e7c0977ef531041f01b49148884f14308f608cfa",
-      "status": "passed"
-    },
-    {
-      "path": "game/couch/coop-actor-layout.mjs",
-      "bytes": 11782,
-      "sha256": "230bbd56731a9fc9f682c92158acca83b133dfb2a9ec4a2bc0f40bcfc855dd78",
-      "status": "passed"
-    },
-    {
-      "path": "game/couch/coop-actor-presentation.mjs",
-      "bytes": 16422,
-      "sha256": "52bca09367189c20f2c79ffb4e88c809b598b03bc79aa1d150b38bfa974a6884",
-      "status": "passed"
-    },
-    {
-      "path": "game/couch/coop-bonus-view.mjs",
-      "bytes": 11177,
-      "sha256": "016195f594a4a5dfae8b31354ea875a11ae5c894d7339781b9bbf55f2f368308",
-      "status": "passed"
-    },
-    {
-      "path": "game/couch/coop-briefing.mjs",
-      "bytes": 6290,
-      "sha256": "7fd97bb74819a29064a1b8b89969442aa23d6f9d167606d6f6d6f837c714e8bd",
-      "status": "passed"
-    },
-    {
-      "path": "game/couch/coop-cue-overflow.mjs",
-      "bytes": 4194,
-      "sha256": "0acb23d31aafe1ec9c4a2313bb598064be2d0eaf8ec1062b11751b3589440e23",
-      "status": "passed"
-    },
-    {
-      "path": "game/couch/coop-feedback.mjs",
-      "bytes": 5264,
-      "sha256": "b9d3d873de65a372cac00f7e7d5adc6c4b41bbb20de8fb83fa957af1c61f6fee",
-      "status": "passed"
-    },
-    {
-      "path": "game/couch/coop-ground.mjs",
-      "bytes": 672,
-      "sha256": "24278efd114d4c954e3ea41d9d18884c13bb53c3601f9789fbfa7a52ca70f0d1",
-      "status": "passed"
-    },
-    {
-      "path": "game/couch/coop-import-source.mjs",
-      "bytes": 3798,
-      "sha256": "620e3d56cc6fb674d57bbc93ab34132a046a292e88ec7b615976258518a0c80a",
-      "status": "passed"
-    },
-    {
-      "path": "game/couch/coop-outcome-presentation.mjs",
-      "bytes": 4738,
-      "sha256": "36621833ada91639d262913a5957a8404de4817f7ed4b03c2b8dd5e7040c74e4",
-      "status": "passed"
-    },
-    {
-      "path": "game/couch/coop-owned-presentation.mjs",
-      "bytes": 7290,
-      "sha256": "16f7f0f750803bdd4089e3b8df424a1b0e65f7c56d84b3981648a9ffca53609b",
-      "status": "passed"
-    },
-    {
-      "path": "game/couch/coop-picture-bindings.mjs",
-      "bytes": 4089,
-      "sha256": "8d95e8ded7e557b5e19c780d8b63c60d55453808d2574f717434e517c6fb9fb3",
-      "status": "passed"
-    },
-    {
-      "path": "game/couch/coop-picture-image.mjs",
-      "bytes": 1979,
-      "sha256": "18f050b740502abe6ad547ca5cfb3ecd90a75b7e179da65e38921fd057305dbe",
-      "status": "passed"
-    },
-    {
-      "path": "game/couch/coop-pilot-cues.mjs",
-      "bytes": 671,
-      "sha256": "80835d801b96941728f449a84f52c6be36ccf27523bfa9d4437d50a42b26fe9a",
-      "status": "passed"
-    },
-    {
-      "path": "game/couch/coop-presentation.mjs",
-      "bytes": 24050,
-      "sha256": "c5d652e650709a8aa75d985baaa6c1c565e86369dd34674268fe92aec32726d0",
-      "status": "passed"
-    },
-    {
-      "path": "game/couch/coop-rescue-presentation.mjs",
-      "bytes": 2553,
-      "sha256": "f8513ddb03b2479d8f7ee5e115eb53682a5283d42caea9ccfd4279560a7c76e3",
-      "status": "passed"
-    },
-    {
-      "path": "game/couch/coop-retained-presentation.mjs",
-      "bytes": 3584,
-      "sha256": "6914c387d5f39ee6c581b34d3fa7cfb25bdf3d86b77304b30a445be7891a31c5",
-      "status": "passed"
-    },
-    {
-      "path": "game/couch/coop-support-presentation.mjs",
-      "bytes": 4237,
-      "sha256": "fa15bcfc3ad0268815f30c93521af8c165997f94eef271f53ac8555c08004335",
-      "status": "passed"
-    },
-    {
-      "path": "game/couch/coop-terrain-trail.mjs",
-      "bytes": 5713,
-      "sha256": "88f5705ee785b688e1f49ce5147d43c12ac43a31af3b8715ce7da1cd233e2d40",
-      "status": "passed"
-    },
-    {
-      "path": "game/couch/coop-view.mjs",
-      "bytes": 47114,
-      "sha256": "3f25d92f4c7c86859493c041017ca63ac4812d62d1b69d4f98fd3f1f9b5bb837",
-      "status": "passed"
-    },
-    {
-      "path": "game/couch/couch-chapter-install.mjs",
-      "bytes": 25111,
-      "sha256": "4dccb0e41fc2bbdf7f18fee6087c65643a722b53519c3be425711688fd00cc75",
-      "status": "passed"
-    },
-    {
-      "path": "game/couch/couch-chapter.mjs",
-      "bytes": 4283,
-      "sha256": "0e8a3ea7925496aa0b6998a601ca66fffe843d6b37a903815407795f957c502f",
-      "status": "passed"
-    },
-    {
-      "path": "game/couch/couch-input.mjs",
-      "bytes": 20771,
-      "sha256": "116205f58186ae494001021853455290062b7964f4b16143622e463b07d96321",
-      "status": "passed"
-    },
-    {
-      "path": "game/couch/couch-installed-chapters.mjs",
-      "bytes": 26645,
-      "sha256": "0e287f5eb03e7b1f3d021ca77a566a3a1c1183c88b0a3c64605b209b4b3918fd",
-      "status": "passed"
-    },
-    {
-      "path": "game/couch/couch-music-context.mjs",
-      "bytes": 2693,
-      "sha256": "2a05abaa10c7314868807a8df91703b01e6c25524f3cf51aedff391f7b0fd4b6",
-      "status": "passed"
-    },
-    {
-      "path": "game/couch/couch-release-picture.mjs",
-      "bytes": 2824,
-      "sha256": "27e54ffa312e8ed0fdd7d65f47035ca61d7c965cdb172ed7dbf835061f1fe65f",
-      "status": "passed"
-    },
-    {
-      "path": "game/couch/couch-shell.mjs",
-      "bytes": 28662,
-      "sha256": "16757c8a9fbf8b63e67b422c905c27724d2204b67031327be74a97218f79d416",
-      "status": "passed"
-    },
-    {
-      "path": "game/couch/couch-static-pictures.mjs",
-      "bytes": 17515,
-      "sha256": "33eeece8a711088ae326f92ae43484450612f491ebe5b809efdef868ae1c57db",
-      "status": "passed"
-    },
-    {
-      "path": "game/couch/couch.css",
-      "bytes": 17855,
-      "sha256": "bb704c15d641afc2fe0a160eac07de8ccb38996532566f1bc5b27832e9d6f579",
-      "status": "passed"
-    },
-    {
-      "path": "game/couch/couch.mjs",
-      "bytes": 207154,
-      "sha256": "468d4c3e224de29440cfcfec167dd0067530dc44b25f306d4181229130845eb8",
-      "status": "passed"
-    },
-    {
-      "path": "game/couch/creator-team-import.mjs",
-      "bytes": 2806,
-      "sha256": "7024fb6e7060bbdc3f7603e03ef8521535474f3fa6e95f7b7c25afa224665689",
-      "status": "passed"
-    },
-    {
-      "path": "game/couch/index.html",
-      "bytes": 51275,
-      "sha256": "4d177341509896e8592f6e8c1df0579fcddc28b7b087155569a6cc366f990436",
-      "status": "passed"
-    },
-    {
-      "path": "game/couch/mode-entry.js",
-      "bytes": 4912,
-      "sha256": "a725083fb8c03d0aacd9661c41abac1b0cee2137f3f9b6d075251c7afb833556",
-      "status": "passed"
-    },
-    {
-      "path": "game/couch/relay-rescue.css",
-      "bytes": 42306,
-      "sha256": "76fc24281817485f718377e43bedf7c2a4e2a64d9bf080b4ae04e2d022c21bce",
-      "status": "passed"
-    },
-    {
-      "path": "game/couch/relay-rescue.html",
-      "bytes": 61758,
-      "sha256": "3c9b355244d8c9e53f50bc890559ab742ebcb26b343c1ac1400807d509f06a08",
-      "status": "passed"
-    },
-    {
-      "path": "game/couch/relay-rescue.mjs",
-      "bytes": 288150,
-      "sha256": "e0d53946435c8a8cd75145ebefaf62bca667d47b5ccf9f69a89decba05b9ea28",
-      "status": "passed"
-    },
-    {
-      "path": "game/couch/start-cue.mjs",
-      "bytes": 1840,
-      "sha256": "20ce2d79f60de3e4a93acea36a165546495f75baad22a422a65c829e1f860c6c",
-      "status": "passed"
-    },
-    {
-      "path": "game/couch/team-arena-preference.mjs",
-      "bytes": 3358,
-      "sha256": "30fe0e7c62d54e2a1f7a535a126246fcb880a0145970569df0669d2a992d787c",
-      "status": "passed"
-    },
-    {
-      "path": "game/couch/team-contextual-teaching.mjs",
-      "bytes": 5068,
-      "sha256": "fc6e453d5d9531ae61d3f1da10bdf4db31309976813759ab37d1da6018bbdbbe",
-      "status": "passed"
-    },
-    {
-      "path": "game/couch/team-entry.js",
-      "bytes": 2583,
-      "sha256": "b1b0ea4f66d35b0aa876be4c2d5fb8ea5f24ce32813ee4a3972ac1354e107a0e",
-      "status": "passed"
-    },
-    {
-      "path": "game/couch/team-library-preview.mjs",
-      "bytes": 5143,
-      "sha256": "0e745ce11446d6e4576c93873a4ff583dd7c41dd2acf5dcbd32efb825d91b527",
-      "status": "passed"
-    },
-    {
-      "path": "game/couch/versus-package-readiness.mjs",
-      "bytes": 1269,
-      "sha256": "6126d4218ed006162966daafa896ea533a67a9c280053c158eec75eb66fce03b",
-      "status": "passed"
-    },
-    {
-      "path": "game/creator/examples/social-drone-sky-watch.rlpack",
-      "bytes": 2988970,
-      "sha256": "bbbfa9ce8530e17903c10cb044167e298736a372ea2a490a84a6dec4c805dc6b",
-      "status": "passed"
-    },
-    {
-      "path": "game/creator/team-installed.mjs",
-      "bytes": 51053,
-      "sha256": "73f3898dab2889fcd32565e0efc1739f6f8c72b522ab2131041edce6e1499ba7",
-      "status": "passed"
-    },
-    {
-      "path": "game/creator/team-media.mjs",
-      "bytes": 19231,
-      "sha256": "1ec0bc9737a93b340586004f58f434a9626e02626a9bb9495f2c3bfe53b0bdcb",
-      "status": "passed"
-    },
-    {
-      "path": "game/mission-library/installed-inventory.mjs",
-      "bytes": 6565,
-      "sha256": "6df3297f48c1c84f3eac21620a803ccdad4e62660d9a9e146359761a83ef5c07",
-      "status": "passed"
-    },
-    {
-      "path": "game/mission-library/materialize-pack.mjs",
-      "bytes": 1946,
-      "sha256": "4c1275e540f3afbd3b567e8191daf010fb49b4b40efedc55444ecb81efbb753f",
-      "status": "passed"
-    },
-    {
-      "path": "game/mission-library/metadata-custom-source.mjs",
-      "bytes": 5223,
-      "sha256": "575cbdac7747930272b5573f721070ba8562dce9970e14240d7b4e68a7bacdab",
-      "status": "passed"
-    },
-    {
-      "path": "game/mission-library/metadata-installed-library.mjs",
-      "bytes": 7602,
-      "sha256": "a3b41acd1ea04e46b65ccd581764b7bdb65d10069d31d73a00cce74df3443478",
-      "status": "passed"
-    },
-    {
-      "path": "game/mission-library/remote-solo-versus.mjs",
-      "bytes": 17525,
-      "sha256": "ac6e292c568a28fc654fbfcf73207e5502401788249ea79136c5f9e27f47aa7f",
-      "status": "passed"
-    },
-    {
-      "path": "game/mission-library/remote-team.mjs",
-      "bytes": 1945,
-      "sha256": "ae88b45d4dce59f448ebb507d0e064332e0832ea87eb013ae5f684d268820f91",
-      "status": "passed"
-    },
-    {
-      "path": "game/mission-library/spatial-next-editions.mjs",
-      "bytes": 26053,
-      "sha256": "2f8b6fb284a606653cc76dcf763a66383e9edf7a88e7d4ef766ffa18245035b4",
-      "status": "passed"
-    },
-    {
-      "path": "game/multiplayer-recording.mjs",
-      "bytes": 16269,
-      "sha256": "0f5ad0764722ef7b83259e664698d1520b07f83b21ef94ef3968e99780eaa6df",
-      "status": "passed"
-    },
-    {
-      "path": "game/multiplayer-terminal-observation.mjs",
-      "bytes": 10186,
-      "sha256": "963502efdf6312e6f5183998745a1b98ebafa2dfed02d59b89563adf43ce1d0a",
-      "status": "passed"
-    },
-    {
-      "path": "game/ui/continuous-celebration.mjs",
-      "bytes": 1806,
-      "sha256": "fbb629742f863df2aca04db9434acebe8b4eb3c3456fb93b00670434ff5414bb",
-      "status": "passed"
-    },
-    {
-      "path": "game/ui/couch-touch.mjs",
-      "bytes": 3978,
-      "sha256": "891079326fc17b4872108a8d94ac557a62136a5cb0f93a1e529a9331997aeb88",
-      "status": "passed"
-    },
-    {
-      "path": "game/ui/encounter-help.mjs",
-      "bytes": 2993,
-      "sha256": "f1a50d3c688ced53153da1797cd653fb791c0bf2faa016736753d415ff01308f",
-      "status": "passed"
-    },
-    {
-      "path": "game/ui/enemy-stats-events.mjs",
-      "bytes": 1443,
-      "sha256": "d716162cf6176209e455d14a35cc52522741f5bd7efc72d01aad187a9fd79b8a",
-      "status": "passed"
-    },
-    {
-      "path": "game/ui/journey-mode-pictures.mjs",
-      "bytes": 7983,
-      "sha256": "b0102c78bccf4c0cbe945a2d9d20ca1cc2c4d6374f377b41be1c0187e19cb5e7",
-      "status": "passed"
-    },
-    {
-      "path": "game/ui/journey-save-cue.css",
-      "bytes": 1381,
-      "sha256": "494318b44882186fe5fefe4248930285bf61ca32e56bd08db5cda27f143e128f",
-      "status": "passed"
-    },
-    {
-      "path": "game/ui/journey-save-cue.mjs",
-      "bytes": 1381,
-      "sha256": "8281363b0a32dcdff8992422cbe44d263107a58e799f44bae1c82a79466a7ac0",
-      "status": "passed"
-    },
-    {
-      "path": "game/ui/mode-boot.css",
-      "bytes": 1295,
-      "sha256": "4c2f747071af4648b5983db947b92d66dfb4dbe361262f957e2c8fd834ebeaa0",
-      "status": "passed"
-    },
-    {
-      "path": "game/ui/pause-menu.mjs",
-      "bytes": 3619,
-      "sha256": "fa2d081584b3a5ce947a65afe6af2e069901994e284bc6213b92114f171c8bc8",
-      "status": "passed"
-    },
-    {
-      "path": "game/ui/reading-input-prompt.mjs",
-      "bytes": 779,
-      "sha256": "c50c9aeae569e885cd0890b0d045c1d925b78771e4df1322c820f92740774b4a",
-      "status": "passed"
-    },
-    {
-      "path": "game/ui/recording-verification.mjs",
-      "bytes": 974,
-      "sha256": "b85b2c2da6d48e5b6a9b48c0ff368073173782223ed9b66914423fb3cba248bc",
-      "status": "passed"
-    },
-    {
-      "path": "game/ui/team-hunt-save.mjs",
-      "bytes": 16083,
-      "sha256": "b7c8ee3ced7faea43c915e05e571f89e956e76ec209d73be2f1f930461f53eb2",
-      "status": "passed"
-    },
-    {
-      "path": "game/ui/terminal-recording-export.css",
-      "bytes": 991,
-      "sha256": "13b8506a14ce1bbfc5e539e5b6423f7ec3c008686fafb963d2973c7e03745142",
-      "status": "passed"
-    },
-    {
-      "path": "game/ui/terminal-recording-export.mjs",
-      "bytes": 4841,
-      "sha256": "0f52dca53043736e409127eeaba2d066bdf3126c720d8aad212f9229eaf7026b",
-      "status": "passed"
-    }
-  ],
-  "verifiedBytes": 218297917,
-  "failures": [],
-  "scope": "Exact public or packaged bytes and offline dependency ownership. Browser progression, cache upgrades, listening and devices require separate observations.",
-  "target": "https://mekhovov.github.io/revealline/"
+  "format": "revealline-retained-historical-excerpt.v1",
+  "scope": "Retained historical excerpt after an ownership migration. Original bytes are preserved separately. Historical counts, hashes and approvals inside the excerpt describe the original record only; this derived document is not a release qualification, executable restore plan, or complete original inventory.",
+  "originalSHA256": "aa79929614d478278051fbc84e4656a53db5a104fdc55fac885014c2a1237539",
+  "originalGitBlob": "dcb9f42165cecce5e9ce11a9268d8da314109848",
+  "removedRecordsOrFields": 1,
+  "excerpt": {
+    "format": "revealline-multiplayer-delivery-check.v1",
+    "observedAt": "2026-10-15T04:35:00.111Z",
+    "sourceRevision": "018bd53a09f1366b918f1184605fab215ccab1df",
+    "version": "0.151.1",
+    "manifestSha256": "d3289f7d354babc1ed56d2deb7202f5ebe051d98a8b26a8d9d7eb7adf7075f82",
+    "sourceStable": true,
+    "passed": true,
+    "inventory": [
+      {
+        "routeId": "team-expedition-v1",
+        "mode": "team",
+        "missions": 96,
+        "groups": [
+          "team:team-expedition-aurora-pack",
+          "team:team-expedition-border-pack",
+          "team:team-expedition-crosswind-pack",
+          "team:team-expedition-docks-pack",
+          "team:team-expedition-fracture-pack",
+          "team:team-expedition-gardens-pack",
+          "team:team-expedition-harbors-pack",
+          "team:team-expedition-livewire-pack",
+          "team:team-expedition-phaseworks-pack",
+          "team:team-expedition-relay-pack",
+          "team:team-expedition-sentinel-pack",
+          "team:team-expedition-switchyards-pack"
+        ]
+      },
+      {
+        "routeId": "duel-expedition-v1",
+        "mode": "versus",
+        "missions": 72,
+        "groups": [
+          "versus:versus-expedition-aurora-pack",
+          "versus:versus-expedition-border-pack",
+          "versus:versus-expedition-crosswind-pack",
+          "versus:versus-expedition-docks-pack",
+          "versus:versus-expedition-fracture-pack",
+          "versus:versus-expedition-gardens-pack",
+          "versus:versus-expedition-harbors-pack",
+          "versus:versus-expedition-livewire-pack",
+          "versus:versus-expedition-phaseworks-pack",
+          "versus:versus-expedition-relay-pack",
+          "versus:versus-expedition-sentinel-pack",
+          "versus:versus-expedition-switchyards-pack"
+        ]
+      },
+      {
+        "routeId": "humanoid-hunt-v1",
+        "mode": "team",
+        "missions": 6,
+        "groups": [
+          "team:team-humanoid-hunt-lessons"
+        ]
+      },
+      {
+        "routeId": "humanoid-hunt-v1",
+        "mode": "versus",
+        "missions": 6,
+        "groups": [
+          "versus:journey-humanoid-hunt"
+        ]
+      }
+    ],
+    "files": [
+      {
+        "path": "authoring/library/classic-reveal-artwork/backgrounds/fieldcraft-01.jpg",
+        "bytes": 276824,
+        "sha256": "2b206ab092e51af1b4569c466ec791047aba5cbd605556252d00e6a0e1be3f79",
+        "status": "passed"
+      },
+      {
+        "path": "authoring/library/classic-reveal-artwork/backgrounds/fieldcraft-02.jpg",
+        "bytes": 240180,
+        "sha256": "2958e511adaf042515f6445f40d739cc46797af3a7378b18477bd3d0efac167b",
+        "status": "passed"
+      },
+      {
+        "path": "authoring/library/classic-reveal-artwork/backgrounds/fieldcraft-03.jpg",
+        "bytes": 226890,
+        "sha256": "e0b5c1100d674dc8038efac33b7813921a8181e26619c19a6428e79db6842802",
+        "status": "passed"
+      },
+      {
+        "path": "authoring/library/classic-reveal-artwork/backgrounds/fieldcraft-04.jpg",
+        "bytes": 291750,
+        "sha256": "f7ecf0b53b5cbe1d91aa99a64432d8526953329518922efcd2e46fb38e40fcff",
+        "status": "passed"
+      },
+      {
+        "path": "authoring/library/classic-reveal-artwork/backgrounds/living-threads-01.jpg",
+        "bytes": 318191,
+        "sha256": "560d311bed6011e84cc59050f679177f70c701dca4fff81bdf046e94fcf0f432",
+        "status": "passed"
+      },
+      {
+        "path": "authoring/library/classic-reveal-artwork/backgrounds/living-threads-02.jpg",
+        "bytes": 277898,
+        "sha256": "f156153d7d696819b40252f1f8be2c56cb5732bd0aaee72bdabbeafd77218774",
+        "status": "passed"
+      },
+      {
+        "path": "authoring/library/classic-reveal-artwork/backgrounds/living-threads-03.jpg",
+        "bytes": 299600,
+        "sha256": "0fcefc26e3edca61f3b8b05ca913f60717477bfc83728ea3d23038b770f04bc9",
+        "status": "passed"
+      },
+      {
+        "path": "authoring/library/classic-reveal-artwork/backgrounds/night-shift-01.jpg",
+        "bytes": 251170,
+        "sha256": "a2fa65e9126e1402cf8e3dbd4d798b14f1c940adc4a5f981f0eee6f6d1c0c448",
+        "status": "passed"
+      },
+      {
+        "path": "authoring/library/classic-reveal-artwork/backgrounds/night-shift-02.jpg",
+        "bytes": 284877,
+        "sha256": "cee4164d7fc5ba2acc26f1abf69f06189ece70bed072e74f97b4e70bb82b2de1",
+        "status": "passed"
+      },
+      {
+        "path": "authoring/library/classic-reveal-artwork/backgrounds/night-shift-03.jpg",
+        "bytes": 252851,
+        "sha256": "8ba136b1442f4216af31e2b49c3d1bc019af014f3942fe134b6970e152d761a3",
+        "status": "passed"
+      },
+      {
+        "path": "authoring/library/classic-reveal-artwork/backgrounds/sentinel-relay-01.jpg",
+        "bytes": 261421,
+        "sha256": "af0f43097138386e745e361b3d6d7869740f6e15d99333d3bb2c237f48123418",
+        "status": "passed"
+      },
+      {
+        "path": "authoring/library/classic-reveal-artwork/backgrounds/signal-01.jpg",
+        "bytes": 268343,
+        "sha256": "b1111a42a118f874a0993abec79fe63a6da88f73ae70eaf7739aecc492115fb3",
+        "status": "passed"
+      },
+      {
+        "path": "authoring/library/classic-reveal-artwork/backgrounds/signal-02.jpg",
+        "bytes": 307870,
+        "sha256": "176400881da368a2d827192379617651fb29fd4d44773cbd5a9296e1ee8c0048",
+        "status": "passed"
+      },
+      {
+        "path": "authoring/library/classic-reveal-artwork/backgrounds/signal-03.jpg",
+        "bytes": 264548,
+        "sha256": "a5c0112706c147589d19bbd5ed5bb14f046c2d22e8dc802c0b09a59f4712e1e6",
+        "status": "passed"
+      },
+      {
+        "path": "authoring/library/classic-reveal-artwork/backgrounds/signal-04.jpg",
+        "bytes": 264630,
+        "sha256": "cefa98a6ac605e808fb0e4109405bc08e0f806c1ed3b4a3d22def159d217c5ec",
+        "status": "passed"
+      },
+      {
+        "path": "authoring/library/classic-reveal-artwork/backgrounds/signal-05.jpg",
+        "bytes": 207886,
+        "sha256": "003e6285f7c7ee1ed155d508caa67326ad5fe4d3eeed5edc761f349361aef402",
+        "status": "passed"
+      },
+      {
+        "path": "authoring/library/classic-reveal-artwork/backgrounds/signal-06.jpg",
+        "bytes": 234219,
+        "sha256": "d3719e11d241388f7d798ee0e4ed78387d56932dc461f1202284c34dea1ab12d",
+        "status": "passed"
+      },
+      {
+        "path": "authoring/library/classic-reveal-artwork/backgrounds/signal-07.jpg",
+        "bytes": 264337,
+        "sha256": "47d47c206c066181eb78d22f474891538b7a24801aa6118f8cfd53255cb818da",
+        "status": "passed"
+      },
+      {
+        "path": "authoring/library/classic-reveal-artwork/backgrounds/signal-08.jpg",
+        "bytes": 276549,
+        "sha256": "935c40840c16732082d0a7cd00fa725300a2b8fd44ffd738be2cbecb2db89581",
+        "status": "passed"
+      },
+      {
+        "path": "authoring/library/classic-reveal-artwork/backgrounds/signal-09.jpg",
+        "bytes": 307774,
+        "sha256": "69455e043ab30c3eee430a2a81c8f1c1cd3901203e8b4e5dd38e5377348ebfac",
+        "status": "passed"
+      },
+      {
+        "path": "authoring/library/classic-reveal-artwork/backgrounds/signal-10.jpg",
+        "bytes": 266680,
+        "sha256": "417dc519500675498cf4b5e53f5d35592b0564b68ba970e51d0f950e13ff7e9f",
+        "status": "passed"
+      },
+      {
+        "path": "authoring/library/classic-reveal-artwork/backgrounds/signal-11.jpg",
+        "bytes": 226563,
+        "sha256": "4f56ba1159a737de7580bbe82e4e71e86e2a430f61db35f4d331280fdddb090c",
+        "status": "passed"
+      },
+      {
+        "path": "authoring/library/classic-reveal-artwork/backgrounds/signal-12.jpg",
+        "bytes": 240769,
+        "sha256": "e70a6191b244d2a32cd535b86f469174f3be935a3b95808bd929b59088e8d70b",
+        "status": "passed"
+      },
+      {
+        "path": "authoring/library/classic-reveal-artwork/contact-sheet.jpg",
+        "bytes": 534510,
+        "sha256": "2069a51574d42d18224c88c1299c348bc900048c2cd65761d2fe385de2c68086",
+        "status": "passed"
+      },
+      {
+        "path": "authoring/library/classic-reveal-artwork/index.html",
+        "bytes": 21748,
+        "sha256": "9e8dd73bb00b703f189bf7489fd3bea41072bb849f2e5f8889c714a5e17820c5",
+        "status": "passed"
+      },
+      {
+        "path": "authoring/library/classic-reveal-artwork/manifest.json",
+        "bytes": 12349,
+        "sha256": "847f959335a5897606d3762cc950ec19a5796b2449303c5b416764a2173be93a",
+        "status": "passed"
+      },
+      {
+        "path": "authoring/library/classic-reveal-artwork/prompts.json",
+        "bytes": 36287,
+        "sha256": "b9788abeb0641ddb82d4e0f5342938ac43640092d4375800e064b845a4f2143f",
+        "status": "passed"
+      },
+      {
+        "path": "authoring/library/classic-reveal-artwork/README.md",
+        "bytes": 2371,
+        "sha256": "9f41568f3f0a835b4ccd10e435d850bd113da7476a9c74c83ee13aee8c16604a",
+        "status": "passed"
+      },
+      {
+        "path": "authoring/motion-lab/assets/delta-interceptor.png",
+        "bytes": 468947,
+        "sha256": "00357545f135aa3bc2ed98fa32baf46b3b0a3cd3c596054571746bae153eef9e",
+        "status": "passed"
+      },
+      {
+        "path": "authoring/motion-lab/assets/fixedwing-body.png",
+        "bytes": 373537,
+        "sha256": "bec5073f36946b3060aa42835ed8486e36c1c155e8b57c5c3058fa4630bf1663",
+        "status": "passed"
+      },
+      {
+        "path": "authoring/motion-lab/assets/fpv-body.png",
+        "bytes": 644588,
+        "sha256": "31a742f952415fb9dd2742eb9ba7ef1dc7a5aedca4593d817713c61932fe68c4",
+        "status": "passed"
+      },
+      {
+        "path": "authoring/motion-lab/assets/fpv-night.png",
+        "bytes": 581776,
+        "sha256": "e7df9c8f1ffb7a5ceb883e2130f0f245d208d24aae5d3527f39227ea4c589847",
+        "status": "passed"
+      },
+      {
+        "path": "authoring/motion-lab/assets/fpv-racer.png",
+        "bytes": 879038,
+        "sha256": "bc77fb42b3fd233a3d4391bc23e093d6d93d202d0482934f79091a310f8c01e6",
+        "status": "passed"
+      },
+      {
+        "path": "authoring/motion-lab/assets/heavy-lift.png",
+        "bytes": 795459,
+        "sha256": "2e1b871f2336fe2dc6434ed83afb46572f5afffd17803733914a567d39c517ec",
+        "status": "passed"
+      },
+      {
+        "path": "authoring/motion-lab/assets/retro-craft.png",
+        "bytes": 477364,
+        "sha256": "1d0340673c2cf19ab9b88fed271219da5003f82bcd1bd45da4477c774708551b",
+        "status": "passed"
+      },
+      {
+        "path": "authoring/motion-lab/assets/scout-quad.png",
+        "bytes": 641545,
+        "sha256": "14b18895b5b1c457b8db47a5c7a0485b502ad6b8fccb91697ae6b46397e73c99",
+        "status": "passed"
+      },
+      {
+        "path": "authoring/motion-lab/assets/ukrainian-bird.png",
+        "bytes": 290701,
+        "sha256": "fb43fb88833c5a161937097ac74e5588868c82f3b8c896c28139a77c9dffafad",
+        "status": "passed"
+      },
+      {
+        "path": "game/content-design/assets/apex-polar-r1/apex-remix.png",
+        "bytes": 2612919,
+        "sha256": "e85baca009c66e9ee23f57d42bd1d8259af01b8f60a191d159051a083dc488c3",
+        "status": "passed"
+      },
+      {
+        "path": "game/content-design/assets/apex-polar-r1/crossing-complete.png",
+        "bytes": 2404305,
+        "sha256": "62b2848abf7b7a92c3db60dd62c2eab9d86a86a47c4dfad18e19f46421fcc2ad",
+        "status": "passed"
+      },
+      {
+        "path": "game/content-design/assets/apex-polar-r1/final-broadcast.png",
+        "bytes": 2244903,
+        "sha256": "a83d3758eb52d5ce7bb9ed2a9e901ed7688df8c69795c75cda63a74cdd7696b0",
+        "status": "passed"
+      },
+      {
+        "path": "game/content-design/assets/apex-polar-r1/home-signal.png",
+        "bytes": 2427343,
+        "sha256": "2a2fa8d166816a6b826cf766283c6a4e77b4e189e34b9fbaf40cd8e77ccebfef",
+        "status": "passed"
+      },
+      {
+        "path": "game/content-design/assets/apex-polar-r1/returning-light.png",
+        "bytes": 2558586,
+        "sha256": "0003bef93ed01610fdd6fa0cd6b31f6e1cbc290d166780fa9598a21d37a68c3c",
+        "status": "passed"
+      },
+      {
+        "path": "game/content-design/assets/border-r1/behind-the-patrol.png",
+        "bytes": 2740446,
+        "sha256": "89ae10de172c4adcabe99736dee1df00e0a2c2ba029380a330e77dec5953c0ff",
+        "status": "passed"
+      },
+      {
+        "path": "game/content-design/assets/border-r1/border-remix.png",
+        "bytes": 2650660,
+        "sha256": "03486a4c233eb39fc97d21c36f588f34fb4c31d7b3417ea7c78e66b78fa89090",
+        "status": "passed"
+      },
+      {
+        "path": "game/content-design/assets/border-r1/long-rail.png",
+        "bytes": 2818924,
+        "sha256": "b9d561e1e09440977c3afe04e37e898e5fca336f32546e447a7f82a97001d9f4",
+        "status": "passed"
+      },
+      {
+        "path": "game/content-design/assets/border-r1/new-frontier.png",
+        "bytes": 2636818,
+        "sha256": "e3f114f65313811ad004b24a1af0844659a4eba9fd5e180edfefc3c5442d974b",
+        "status": "passed"
+      },
+      {
+        "path": "game/content-design/assets/border-r1/return-pocket.png",
+        "bytes": 2981041,
+        "sha256": "976479d8b41f29b1117f186c210e5d10699f95551b935643f1d798f5c04a0f2f",
+        "status": "passed"
+      },
+      {
+        "path": "game/content-design/assets/border-r1/second-landing.png",
+        "bytes": 2640042,
+        "sha256": "1af17b967da199ae428bc0c726d4e87bf2b0828f43f06bb7300327e36454c7f8",
+        "status": "passed"
+      },
+      {
+        "path": "game/content-design/assets/border-r1/turn-the-corner.png",
+        "bytes": 2952279,
+        "sha256": "53d1f2c5d627961986a12c0cf35787064124b518f4ce713883839743b2aeb1f5",
+        "status": "passed"
+      },
+      {
+        "path": "game/content-design/assets/crosswind-highlands-r1/compass-array.png",
+        "bytes": 2672598,
+        "sha256": "68aec2169fb2cfd4bce6027494fa75de3cd7d79508694c1254dd7ec17be8c818",
+        "status": "passed"
+      },
+      {
+        "path": "game/content-design/assets/crosswind-highlands-r1/crosswind-remix.png",
+        "bytes": 2732689,
+        "sha256": "dc5d33fcdca96f4ae6861f594276ae5bf0208a50faeae2662e4ecbdf0711a69f",
+        "status": "passed"
+      },
+      {
+        "path": "game/content-design/assets/crosswind-highlands-r1/long-wave.png",
+        "bytes": 2612948,
+        "sha256": "8f60752ffeb8bc7f19df30a96f795e3618e858ee3b870983dadb874932bbd4e5",
+        "status": "passed"
+      },
+      {
+        "path": "game/content-design/assets/crosswind-highlands-r1/outer-loop.png",
+        "bytes": 2638067,
+        "sha256": "0d15c80d7752f0cb78158794612fa469e86a5b92bf25874bb9926ad3f6f8484d",
+        "status": "passed"
+      },
+      {
+        "path": "game/content-design/assets/crosswind-highlands-r1/read-the-arrows.png",
+        "bytes": 2628806,
+        "sha256": "87911215f03ee55b81ace5dbafc3cbb30d28e98df7eb42e6f4273c2b41ec00b5",
+        "status": "passed"
+      },
+      {
+        "path": "game/content-design/assets/crosswind-highlands-r1/survey-markers.png",
+        "bytes": 2702883,
+        "sha256": "ad007651f692eecf05e14524eba4833a88a39ed601066e343cd5f711fcfd505c",
+        "status": "passed"
+      },
+      {
+        "path": "game/content-design/assets/crosswind-highlands-r1/windbreak-weave.png",
+        "bytes": 2912970,
+        "sha256": "91bb8ecd0dd0eeaa7eb85272237d63c1ecb95b933400b1746c91de95dbfdd7e1",
+        "status": "passed"
+      },
+      {
+        "path": "game/content-design/assets/fracture-coastal-r1/bank-the-crossing.png",
+        "bytes": 2683665,
+        "sha256": "02ba657404587cd276191e19abf5e2b29c6126dbc709b672d7b541ff9d2ae322",
+        "status": "passed"
+      },
+      {
+        "path": "game/content-design/assets/fracture-coastal-r1/first-fracture.png",
+        "bytes": 2369540,
+        "sha256": "5dbd2da2a014f43842a7e04c4652d158a3a7aa254129bf49ec3991cdca7478e6",
+        "status": "passed"
+      },
+      {
+        "path": "game/content-design/assets/fracture-coastal-r1/five-anchors.png",
+        "bytes": 2721851,
+        "sha256": "c1f2a60d8a27f6fc411601124fe7266293ab595ad2802a70cf5b8a6316d786a3",
+        "status": "passed"
+      },
+      {
+        "path": "game/content-design/assets/fracture-coastal-r1/fracture-remix.png",
+        "bytes": 2404199,
+        "sha256": "1e7942d55e4a9a23dea597ddc134dbb47aa4ddba60a37bd20739633a10e55489",
+        "status": "passed"
+      },
+      {
+        "path": "game/content-design/assets/fracture-coastal-r1/island-reserve.png",
+        "bytes": 2348459,
+        "sha256": "d9b6deb6a14c1d3dd24d9f6c8bed6e9898de898eaf3daf56c15cd88006d4c9bd",
+        "status": "passed"
+      },
+      {
+        "path": "game/content-design/assets/fracture-coastal-r1/staggered-reserve.png",
+        "bytes": 2778442,
+        "sha256": "8def6d22ade8edd4108c70ead9dc93d59e26a0244c5971aa92036be1e563b2a5",
+        "status": "passed"
+      },
+      {
+        "path": "game/content-design/assets/fracture-coastal-r1/two-districts.png",
+        "bytes": 2712909,
+        "sha256": "618a9b7dc9bd94dbbcfa85875e04c6095e715728050778e3069824d360c1e59e",
+        "status": "passed"
+      },
+      {
+        "path": "game/content-design/assets/horizon-r1/choose-your-share.png",
+        "bytes": 2828010,
+        "sha256": "d2d9d57da0c25d1e264387d24d2ecad2e88ad43b77db3934039f1291edd017ae",
+        "status": "passed"
+      },
+      {
+        "path": "game/content-design/assets/horizon-r1/courtyard-return.png",
+        "bytes": 2701528,
+        "sha256": "7c4ed0ae6f76c49b5dbe1361b5ff0b2c17dce08aeb2c0f6aece08890c373123a",
+        "status": "passed"
+      },
+      {
+        "path": "game/content-design/assets/horizon-r1/first-return.png",
+        "bytes": 2366738,
+        "sha256": "3acf496d9a6bc9db2f83ac01d8255223b3913e7ae0a157e48559ac981c80b95d",
+        "status": "passed"
+      },
+      {
+        "path": "game/content-design/assets/horizon-r1/island-outpost.png",
+        "bytes": 2484871,
+        "sha256": "3fb163cde27b9496290a07a106e11737c369dd77b527e5985a1e3c48d9476b46",
+        "status": "passed"
+      },
+      {
+        "path": "game/content-design/assets/horizon-r1/long-way-home.png",
+        "bytes": 2584488,
+        "sha256": "0219e5fbe164647cd1ba0cd2dff019df8d0b9fc334780b06b53693564c1aaadf",
+        "status": "passed"
+      },
+      {
+        "path": "game/content-design/assets/horizon-r1/nearby-shore.png",
+        "bytes": 2618614,
+        "sha256": "f24ba2aac769b952f0ad8de13193627c76e6a39bcd8db9a5ddb3e16ded0f26d5",
+        "status": "passed"
+      },
+      {
+        "path": "game/content-design/assets/horizon-r1/stepping-stones.png",
+        "bytes": 2597944,
+        "sha256": "aa9eadbc166df2bf78030ecec8e24e920d6a254d7e66143f380c1d263005cc36",
+        "status": "passed"
+      },
+      {
+        "path": "game/content-design/assets/horizon-r1/two-bays.png",
+        "bytes": 2669903,
+        "sha256": "589632c9b912ba2b07648c9c0de7c0768e61d5938a1993414d7b36ac650b5118",
+        "status": "passed"
+      },
+      {
+        "path": "game/content-design/assets/horizon-r1/two-keepers.png",
+        "bytes": 2572761,
+        "sha256": "ba9c3c428fbd44e1fd0b7e5ba70bae0abdd11faa65ae219042a7a6d196bce5f6",
+        "status": "passed"
+      },
+      {
+        "path": "game/content-design/assets/livewire-foundry-r1/cooling-loop.png",
+        "bytes": 2621513,
+        "sha256": "8cb6dae5f03e22b522df86d7d7c6ead52c80ba341205a6805887a3e2f51a959b",
+        "status": "passed"
+      },
+      {
+        "path": "game/content-design/assets/livewire-foundry-r1/cross-the-afterglow.png",
+        "bytes": 2279834,
+        "sha256": "814627fbb9efac9b000230d56c109eeac86c5993e81def1fb7a3691586447cbe",
+        "status": "passed"
+      },
+      {
+        "path": "game/content-design/assets/livewire-foundry-r1/crossbar-depot.png",
+        "bytes": 2600502,
+        "sha256": "0598e3c6f97466486442cf02698158a19a29565cfaebcd2affaf9d8be58bef2e",
+        "status": "passed"
+      },
+      {
+        "path": "game/content-design/assets/livewire-foundry-r1/livewire-remix.png",
+        "bytes": 2436701,
+        "sha256": "13b8b69daf7d361678328702a1fc5643bd5663b33d938e9970ffcb64205c499e",
+        "status": "passed"
+      },
+      {
+        "path": "game/content-design/assets/livewire-foundry-r1/read-the-lock.png",
+        "bytes": 2381516,
+        "sha256": "d0f5ed0f7e45bcd16818d54befe2e0fb149097e36958b13c485a8c4abca99ff3",
+        "status": "passed"
+      },
+      {
+        "path": "game/content-design/assets/livewire-foundry-r1/split-junction.png",
+        "bytes": 2460435,
+        "sha256": "8d14f0d044c923c81546f6b1eca217aa1992705665df359dd81d8925183cef5c",
+        "status": "passed"
+      },
+      {
+        "path": "game/content-design/assets/livewire-foundry-r1/switchyard.png",
+        "bytes": 2467333,
+        "sha256": "5bb7761dfe9d7ee763febce40e918839cb6fee64be5f71ad718b652524c287a5",
+        "status": "passed"
+      },
+      {
+        "path": "game/content-design/assets/neon-pixel-r1/dogleg-return.png",
+        "bytes": 2611206,
+        "sha256": "fced7682cd6f55ed13014bc72de429c35a0faa84000b5ba466280ab890ebcb27",
+        "status": "passed"
+      },
+      {
+        "path": "game/content-design/assets/neon-pixel-r1/folded-corner.png",
+        "bytes": 2447483,
+        "sha256": "31653d193a27380e65ff0bff9183f0462ef056b1b418be2568d1f6f9f4af9f13",
+        "status": "passed"
+      },
+      {
+        "path": "game/content-design/assets/neon-pixel-r1/four-quarters.png",
+        "bytes": 2789107,
+        "sha256": "19264377455e6e4989b2e94332b3bef4014bdeb74e038a9ce4c941e8753e468e",
+        "status": "passed"
+      },
+      {
+        "path": "game/content-design/assets/neon-pixel-r1/inside-out.png",
+        "bytes": 2387091,
+        "sha256": "6b23afb2029d683d70d9b445b201008cedee6b49b58ba13170b60e00feb5888a",
+        "status": "passed"
+      },
+      {
+        "path": "game/content-design/assets/neon-pixel-r1/neon-remix.png",
+        "bytes": 2416378,
+        "sha256": "ca5824dd7ec80e0cfe65a22dd061a6112e033ddc1ba89624532cba5c8f06bbfe",
+        "status": "passed"
+      },
+      {
+        "path": "game/content-design/assets/neon-pixel-r1/side-door-bays.png",
+        "bytes": 2337665,
+        "sha256": "896885f80c9f5eb526bfeacbf37c0f608b8668d05ea77be29b01209dd488a52b",
+        "status": "passed"
+      },
+      {
+        "path": "game/content-design/assets/neon-pixel-r1/staggered-circuit.png",
+        "bytes": 2455491,
+        "sha256": "c25b53b961e7b29c16846d552b09e74c3d7cbe3d75681d565c1be6fd290f6f47",
+        "status": "passed"
+      },
+      {
+        "path": "game/content-design/assets/phase-observatory-r1/crossed-bands.png",
+        "bytes": 2204276,
+        "sha256": "e24a33066099cbca5f8e9e150c65edda362c8497c6e7cf1b07a9eb95f5b7a2e1",
+        "status": "passed"
+      },
+      {
+        "path": "game/content-design/assets/phase-observatory-r1/dogleg-transfer.png",
+        "bytes": 2096924,
+        "sha256": "b276f281e1ca76b067b1a52062f1db63970c63cfd07ddd14bd1613f3f6e927e3",
+        "status": "passed"
+      },
+      {
+        "path": "game/content-design/assets/phase-observatory-r1/phase-remix.png",
+        "bytes": 2166862,
+        "sha256": "be1c99899cd5a481e2b5c37e5a17471aad50467eb495e574ee23af3213413739",
+        "status": "passed"
+      },
+      {
+        "path": "game/content-design/assets/phase-observatory-r1/pressure-ladder.png",
+        "bytes": 2017048,
+        "sha256": "37959d5ccee5a352c6c2c18411d0d491b53f50a09bdb6ae33cc6b56becd902b6",
+        "status": "passed"
+      },
+      {
+        "path": "game/content-design/assets/phase-observatory-r1/return-in-reserve.png",
+        "bytes": 2105440,
+        "sha256": "3759447c5d88634d7de4e075183faeb3836f11996adb68997831ad917301692d",
+        "status": "passed"
+      },
+      {
+        "path": "game/content-design/assets/phase-observatory-r1/signal-channels.png",
+        "bytes": 2337875,
+        "sha256": "7b8c153080742e7b3db5aec48e10443a8027d7779d31b106e2e1dd64ab4292c6",
+        "status": "passed"
+      },
+      {
+        "path": "game/content-design/assets/phase-observatory-r1/two-ways-home.png",
+        "bytes": 2240059,
+        "sha256": "e0f862eca2714abb856d7e31f93c0cf7188fe08e47e659ab682de149fc049efb",
+        "status": "passed"
+      },
+      {
+        "path": "game/content-design/assets/relay-archive-r1/first-link.png",
+        "bytes": 2623033,
+        "sha256": "3aca0bdb56bd26881a589407d6bc12645c09ec13d1c65b2ca8c20c7c7a5c0fbf",
+        "status": "passed"
+      },
+      {
+        "path": "game/content-design/assets/relay-archive-r1/nested-relays.png",
+        "bytes": 2320855,
+        "sha256": "a5fb9732b3507a945245a03371940a9983e2ccb5686bb61e1223a74f5dc3101a",
+        "status": "passed"
+      },
+      {
+        "path": "game/content-design/assets/relay-archive-r1/relay-remix.png",
+        "bytes": 2271263,
+        "sha256": "4282132d91861b72f3245bb495909656b048b2e5700951e7d8a375d1eaf1eae7",
+        "status": "passed"
+      },
+      {
+        "path": "game/content-design/assets/relay-archive-r1/second-approach.png",
+        "bytes": 2690752,
+        "sha256": "47b34edd9836d7a36edecddd21e0832f988c81cad6a3e67a9ddff90223ec46ee",
+        "status": "passed"
+      },
+      {
+        "path": "game/content-design/assets/relay-archive-r1/spiral-stores.png",
+        "bytes": 2199237,
+        "sha256": "b0dd11fe2b2a359e4fd4dd77638498e0ef1dde452c3a5d5687b4258bb5c8ab8c",
+        "status": "passed"
+      },
+      {
+        "path": "game/content-design/assets/relay-archive-r1/three-compounds.png",
+        "bytes": 2814902,
+        "sha256": "9c7d6fb16f90221dcfe9c72acb87b7c5d6be32240b5898440d041acbfea4a639",
+        "status": "passed"
+      },
+      {
+        "path": "game/content-design/assets/relay-archive-r1/watchpost-exchange.png",
+        "bytes": 2302982,
+        "sha256": "a5f3fafb62154308d2536ea7ed530e38a8419da2947ca8f642a8ee45d5770669",
+        "status": "passed"
+      },
+      {
+        "path": "game/content-design/assets/rover-pixel-r1/between-the-rows.png",
+        "bytes": 2657991,
+        "sha256": "7cb30010a4f4d335777b631aaaf144f8e5cde6d3b0bc82ece0f1e5b4f7cf10fb",
+        "status": "passed"
+      },
+      {
+        "path": "game/content-design/assets/rover-pixel-r1/broken-yard.png",
+        "bytes": 2346857,
+        "sha256": "07a044d79ace79557bd1a3e4bb8ce8923838fa3024962838efbaaaa62dfb3068",
+        "status": "passed"
+      },
+      {
+        "path": "game/content-design/assets/rover-pixel-r1/rover-remix.png",
+        "bytes": 2389650,
+        "sha256": "0a29d9ede393f8b8123d15f0e30d1c967ab447f0f79857f6aaafc8a8d8989edf",
+        "status": "passed"
+      },
+      {
+        "path": "game/content-design/assets/rover-pixel-r1/sorting-yard.png",
+        "bytes": 2394521,
+        "sha256": "5117cdc157d580330b2a0e85de3c6a3fddfe84bf7dd0e40bbc4a9682044e8140",
+        "status": "passed"
+      },
+      {
+        "path": "game/content-design/assets/rover-pixel-r1/split-berths.png",
+        "bytes": 2184710,
+        "sha256": "99df57db9f52236c9dbbb6dd6952cfc0f733d79e67ec7613711bd94646517f85",
+        "status": "passed"
+      },
+      {
+        "path": "game/content-design/assets/rover-pixel-r1/stepped-return.png",
+        "bytes": 2488082,
+        "sha256": "12d8e0a2ad1614d97420ad32d2681ac43393dc630e25ffc132070dd25db1c089",
+        "status": "passed"
+      },
+      {
+        "path": "game/content-design/assets/rover-pixel-r1/wake-the-yard.png",
+        "bytes": 2298686,
+        "sha256": "15b9bfd4fe820fba336ca6ec56158cab3f37923a59deab32741249426e51be8a",
+        "status": "passed"
+      },
+      {
+        "path": "game/content-design/assets/sentinel-citadel-r1/crown-audience.png",
+        "bytes": 2783220,
+        "sha256": "03d6987c7f9ae8b72ab9ba1e653c4a952377935bd34c24cb6f6fd5d32adaf84c",
+        "status": "passed"
+      },
+      {
+        "path": "game/content-design/assets/sentinel-citadel-r1/first-relay.png",
+        "bytes": 2667878,
+        "sha256": "b352889e425cc909ce2b96f081584cb4fb589085bc2153e3014ef250d84bd1f8",
+        "status": "passed"
+      },
+      {
+        "path": "game/content-design/assets/sentinel-citadel-r1/relay-perimeter.png",
+        "bytes": 2792599,
+        "sha256": "6825c57dc0bec6c080f7862974c73ec706a700b9e2b8ee92261363659134953d",
+        "status": "passed"
+      },
+      {
+        "path": "game/content-design/assets/sentinel-citadel-r1/sentinel-remix.png",
+        "bytes": 2322091,
+        "sha256": "b861e9998ed4edc875e9fc8abd78b4b0e9e1e2efda8799b516120d6dcbacd3e3",
+        "status": "passed"
+      },
+      {
+        "path": "game/content-design/assets/sentinel-citadel-r1/twin-receivers.png",
+        "bytes": 2410060,
+        "sha256": "7576ea8fa432532cf02f4261e4be10bb437e51c34b73d4204ca09f3d910f97f9",
+        "status": "passed"
+      },
+      {
+        "path": "game/content-design/assets/signal-r1/dry-spine.png",
+        "bytes": 2629404,
+        "sha256": "a8e4589c5535754465b2e42994532969d3be514c92ebfefb732c272aceba41f5",
+        "status": "passed"
+      },
+      {
+        "path": "game/content-design/assets/signal-r1/soft-crossing.png",
+        "bytes": 2696257,
+        "sha256": "92054145e6f3406fd866ae60e80ed206032504bed0f2b115ba0f9c508c28b4d7",
+        "status": "passed"
+      },
+      {
+        "path": "game/content-design/assets/signal-r1/wide-approach.png",
+        "bytes": 2888742,
+        "sha256": "a809e80e24296a0f537c3102478dd63161812f12634b500f8d2326f21799a441",
+        "status": "passed"
+      },
+      {
+        "path": "game/content-design/runtime/duel-expedition-v1.json",
+        "bytes": 173007,
+        "sha256": "1a6ee0231ed1a7315cffb7d11cd3c702d952dfd9f750732b059a44f77af14197",
+        "status": "passed"
+      },
+      {
+        "path": "game/content-design/runtime/humanoid-hunt-v1.json",
+        "bytes": 17261,
+        "sha256": "4547578205ad7d5a8453e48de49e210ab40d422b44734f1eb4d6b7ff3e662f58",
+        "status": "passed"
+      },
+      {
+        "path": "game/content-design/runtime/whole-spatial-v10.json",
+        "bytes": 258783,
+        "sha256": "04b2c25e1e6bbbf8890b89a6661ec80fadac53f280ae2ae2caf77fd3de3ed4fc",
+        "status": "passed"
+      },
+      {
+        "path": "game/content-design/runtime/whole-spatial-v11.json",
+        "bytes": 259575,
+        "sha256": "3d7b5b67d5d78a3f25a8108468385f9a6f1b2520fc12b275bcc3bf952ae0d978",
+        "status": "passed"
+      },
+      {
+        "path": "game/content-design/runtime/whole-spatial-v12.json",
+        "bytes": 260606,
+        "sha256": "93ff983369b33f0b0cf005ddd3e3112475c8af6ac5d3d43ef1bdbe49e9df2325",
+        "status": "passed"
+      },
+      {
+        "path": "game/content-design/runtime/whole-spatial-v13.json",
+        "bytes": 261539,
+        "sha256": "dbad0867d7642b78fe46d8eb1b1bf13d367d433248b673b0f00933fdc79491c2",
+        "status": "passed"
+      },
+      {
+        "path": "game/content-design/runtime/whole-spatial-v14.json",
+        "bytes": 262645,
+        "sha256": "a5fa79c0174104525174559a7701c6241c747b2df3d8fc1f99484cfbca8312ef",
+        "status": "passed"
+      },
+      {
+        "path": "game/content-design/runtime/whole-spatial-v15.json",
+        "bytes": 263597,
+        "sha256": "bd832d139178a8e82dbb8eea68aca94ee2e1b395897bcf6818af1cbb7966c6c9",
+        "status": "passed"
+      },
+      {
+        "path": "game/content-design/runtime/whole-spatial-v16.json",
+        "bytes": 264185,
+        "sha256": "cb4761bfb1b528c0264de5b44ab9bb1e05b7d1b9bff752ba50828fbd1b650b8e",
+        "status": "passed"
+      },
+      {
+        "path": "game/content-design/runtime/whole-spatial-v17.json",
+        "bytes": 265782,
+        "sha256": "615510f0643bc972817bdf0d285a00bc6986a3bfb04667754393dc509929b0ea",
+        "status": "passed"
+      },
+      {
+        "path": "game/content-design/runtime/whole-spatial-v18.json",
+        "bytes": 267605,
+        "sha256": "2eef985ba79babbac1a1b761f039dd6678bd447fbd02c18eb28367d20a5fdedb",
+        "status": "passed"
+      },
+      {
+        "path": "game/content-design/runtime/whole-spatial-v19.json",
+        "bytes": 269126,
+        "sha256": "d0e631a5b8551d422ee6b3d5a2476aa25bdf38b824bdd86def06312f0c10658e",
+        "status": "passed"
+      },
+      {
+        "path": "game/content-design/runtime/whole-spatial-v20.json",
+        "bytes": 270352,
+        "sha256": "505b52ec7be45d06c71ccbfdaa6ab23a962dc6777d147c619cd0d0e6b33abe1d",
+        "status": "passed"
+      },
+      {
+        "path": "game/content-design/runtime/whole-spatial-v21.json",
+        "bytes": 271337,
+        "sha256": "45eff01ef344cb77700977c7135a265e9e0c7c2c7ff1e7f3366644c8517473b8",
+        "status": "passed"
+      },
+      {
+        "path": "game/content-design/runtime/whole-spatial-v22.json",
+        "bytes": 273373,
+        "sha256": "4268a186d8565460ee8efc5566f0571d8150ec4d665380fbe329fdbd214b4072",
+        "status": "passed"
+      },
+      {
+        "path": "game/content-design/runtime/whole-spatial-v23.json",
+        "bytes": 275331,
+        "sha256": "3b006b71af58209831aa9973dad88d47405188d0c8f28bad74d0ec03bd52a660",
+        "status": "passed"
+      },
+      {
+        "path": "game/content-design/runtime/whole-spatial-v24.json",
+        "bytes": 276540,
+        "sha256": "54af78a72743cfb23ae5c9d091aec92e9f4a63a588aacd81953949c2ad4d5385",
+        "status": "passed"
+      },
+      {
+        "path": "game/content-design/runtime/whole-spatial-v25.json",
+        "bytes": 277154,
+        "sha256": "26cafd633827012c3c8729329bb2fad0c3feedd2637c2e257bf50d8e123585e7",
+        "status": "passed"
+      },
+      {
+        "path": "game/content-design/runtime/whole-spatial-v9.json",
+        "bytes": 257778,
+        "sha256": "80d2406bece474a0dc169e9d8ea31b473d04d68144e8df6dd4eff41c7850e27a",
+        "status": "passed"
+      },
+      {
+        "path": "game/content-design/team-capture-teaching.mjs",
+        "bytes": 1759,
+        "sha256": "8c150d81c97faca432b870a32798dac01e21c96b1b5197ba7eb90a3753d5615a",
+        "status": "passed"
+      },
+      {
+        "path": "game/content-design/team-entry.mjs",
+        "bytes": 8487,
+        "sha256": "a61d9c9f57df0e99df65867df0f3918ce8ad42faf2a31d9181e1f73a06391903",
+        "status": "passed"
+      },
+      {
+        "path": "game/content-design/team-mission-card.mjs",
+        "bytes": 4139,
+        "sha256": "84163d4197e04c8e20ec51ae5813e343c5f5fd3517e78cc25237b7842acab95b",
+        "status": "passed"
+      },
+      {
+        "path": "game/content-design/team-progress.mjs",
+        "bytes": 9253,
+        "sha256": "466df3c64fe372e09d76159637c93decab26244a58fb34359e6d8edcb02fc205",
+        "status": "passed"
+      },
+      {
+        "path": "game/content-design/team-timed-entry.mjs",
+        "bytes": 2199,
+        "sha256": "74f97d93ca131e4a669ecfe552e49405881687303724e154cc0bd7cb6b9b6d11",
+        "status": "passed"
+      },
+      {
+        "path": "game/coop/attempt-history.mjs",
+        "bytes": 641,
+        "sha256": "108e50d1e474c39b6c7fc0f2935e548b769e03fc27a1495cd22f008d62244196",
+        "status": "passed"
+      },
+      {
+        "path": "game/coop/attempt-identity.mjs",
+        "bytes": 1053,
+        "sha256": "2d86606f8712fe268ed94fabb7c600759eb9af5c6a6aab339d0c2b2297fa593c",
+        "status": "passed"
+      },
+      {
+        "path": "game/coop/enemy-stats-ownership.mjs",
+        "bytes": 1533,
+        "sha256": "672bbb09b94206ff57bbcb93b8e14dd3591b24157114a479bf6a93116cdfdcfc",
+        "status": "passed"
+      },
+      {
+        "path": "game/coop/hunt-attempts.mjs",
+        "bytes": 19444,
+        "sha256": "d3af0dbdf0037f24ad4b9851f19dd8ac027324d70b0481b379af667367b51fe6",
+        "status": "passed"
+      },
+      {
+        "path": "game/coop/input-policy.mjs",
+        "bytes": 1519,
+        "sha256": "89e0a28cf383d79ca3c56a3faf6dc3caf9bf6b5c129764fbcdc03612d6220528",
+        "status": "passed"
+      },
+      {
+        "path": "game/coop/picture-source.mjs",
+        "bytes": 2880,
+        "sha256": "9e029a452492febc6e2b7d2caddb17c6e14b8bdfb07f141d9fdf6df7a89b97b3",
+        "status": "passed"
+      },
+      {
+        "path": "game/coop/presentation-envelope.mjs",
+        "bytes": 11760,
+        "sha256": "a214530dfc2d54682fbd31b9c1f73dd07d508fd5c5b5e2b938c03b3cfd405065",
+        "status": "passed"
+      },
+      {
+        "path": "game/couch/candidate-pictures.mjs",
+        "bytes": 4739,
+        "sha256": "852830714b3b1be251a1d6038761f2c150b2d9e834d6831c524cf6e6603c9c66",
+        "status": "passed"
+      },
+      {
+        "path": "game/couch/candidate-team-pictures.mjs",
+        "bytes": 6605,
+        "sha256": "e020a7c89ca328bea0520089e7c0977ef531041f01b49148884f14308f608cfa",
+        "status": "passed"
+      },
+      {
+        "path": "game/couch/coop-actor-layout.mjs",
+        "bytes": 11782,
+        "sha256": "230bbd56731a9fc9f682c92158acca83b133dfb2a9ec4a2bc0f40bcfc855dd78",
+        "status": "passed"
+      },
+      {
+        "path": "game/couch/coop-actor-presentation.mjs",
+        "bytes": 16422,
+        "sha256": "52bca09367189c20f2c79ffb4e88c809b598b03bc79aa1d150b38bfa974a6884",
+        "status": "passed"
+      },
+      {
+        "path": "game/couch/coop-bonus-view.mjs",
+        "bytes": 11177,
+        "sha256": "016195f594a4a5dfae8b31354ea875a11ae5c894d7339781b9bbf55f2f368308",
+        "status": "passed"
+      },
+      {
+        "path": "game/couch/coop-briefing.mjs",
+        "bytes": 6290,
+        "sha256": "7fd97bb74819a29064a1b8b89969442aa23d6f9d167606d6f6d6f837c714e8bd",
+        "status": "passed"
+      },
+      {
+        "path": "game/couch/coop-cue-overflow.mjs",
+        "bytes": 4194,
+        "sha256": "0acb23d31aafe1ec9c4a2313bb598064be2d0eaf8ec1062b11751b3589440e23",
+        "status": "passed"
+      },
+      {
+        "path": "game/couch/coop-feedback.mjs",
+        "bytes": 5264,
+        "sha256": "b9d3d873de65a372cac00f7e7d5adc6c4b41bbb20de8fb83fa957af1c61f6fee",
+        "status": "passed"
+      },
+      {
+        "path": "game/couch/coop-ground.mjs",
+        "bytes": 672,
+        "sha256": "24278efd114d4c954e3ea41d9d18884c13bb53c3601f9789fbfa7a52ca70f0d1",
+        "status": "passed"
+      },
+      {
+        "path": "game/couch/coop-import-source.mjs",
+        "bytes": 3798,
+        "sha256": "620e3d56cc6fb674d57bbc93ab34132a046a292e88ec7b615976258518a0c80a",
+        "status": "passed"
+      },
+      {
+        "path": "game/couch/coop-outcome-presentation.mjs",
+        "bytes": 4738,
+        "sha256": "36621833ada91639d262913a5957a8404de4817f7ed4b03c2b8dd5e7040c74e4",
+        "status": "passed"
+      },
+      {
+        "path": "game/couch/coop-owned-presentation.mjs",
+        "bytes": 7290,
+        "sha256": "16f7f0f750803bdd4089e3b8df424a1b0e65f7c56d84b3981648a9ffca53609b",
+        "status": "passed"
+      },
+      {
+        "path": "game/couch/coop-picture-bindings.mjs",
+        "bytes": 4089,
+        "sha256": "8d95e8ded7e557b5e19c780d8b63c60d55453808d2574f717434e517c6fb9fb3",
+        "status": "passed"
+      },
+      {
+        "path": "game/couch/coop-picture-image.mjs",
+        "bytes": 1979,
+        "sha256": "18f050b740502abe6ad547ca5cfb3ecd90a75b7e179da65e38921fd057305dbe",
+        "status": "passed"
+      },
+      {
+        "path": "game/couch/coop-pilot-cues.mjs",
+        "bytes": 671,
+        "sha256": "80835d801b96941728f449a84f52c6be36ccf27523bfa9d4437d50a42b26fe9a",
+        "status": "passed"
+      },
+      {
+        "path": "game/couch/coop-presentation.mjs",
+        "bytes": 24050,
+        "sha256": "c5d652e650709a8aa75d985baaa6c1c565e86369dd34674268fe92aec32726d0",
+        "status": "passed"
+      },
+      {
+        "path": "game/couch/coop-rescue-presentation.mjs",
+        "bytes": 2553,
+        "sha256": "f8513ddb03b2479d8f7ee5e115eb53682a5283d42caea9ccfd4279560a7c76e3",
+        "status": "passed"
+      },
+      {
+        "path": "game/couch/coop-retained-presentation.mjs",
+        "bytes": 3584,
+        "sha256": "6914c387d5f39ee6c581b34d3fa7cfb25bdf3d86b77304b30a445be7891a31c5",
+        "status": "passed"
+      },
+      {
+        "path": "game/couch/coop-support-presentation.mjs",
+        "bytes": 4237,
+        "sha256": "fa15bcfc3ad0268815f30c93521af8c165997f94eef271f53ac8555c08004335",
+        "status": "passed"
+      },
+      {
+        "path": "game/couch/coop-terrain-trail.mjs",
+        "bytes": 5713,
+        "sha256": "88f5705ee785b688e1f49ce5147d43c12ac43a31af3b8715ce7da1cd233e2d40",
+        "status": "passed"
+      },
+      {
+        "path": "game/couch/coop-view.mjs",
+        "bytes": 47114,
+        "sha256": "3f25d92f4c7c86859493c041017ca63ac4812d62d1b69d4f98fd3f1f9b5bb837",
+        "status": "passed"
+      },
+      {
+        "path": "game/couch/couch-chapter-install.mjs",
+        "bytes": 25111,
+        "sha256": "4dccb0e41fc2bbdf7f18fee6087c65643a722b53519c3be425711688fd00cc75",
+        "status": "passed"
+      },
+      {
+        "path": "game/couch/couch-chapter.mjs",
+        "bytes": 4283,
+        "sha256": "0e8a3ea7925496aa0b6998a601ca66fffe843d6b37a903815407795f957c502f",
+        "status": "passed"
+      },
+      {
+        "path": "game/couch/couch-input.mjs",
+        "bytes": 20771,
+        "sha256": "116205f58186ae494001021853455290062b7964f4b16143622e463b07d96321",
+        "status": "passed"
+      },
+      {
+        "path": "game/couch/couch-installed-chapters.mjs",
+        "bytes": 26645,
+        "sha256": "0e287f5eb03e7b1f3d021ca77a566a3a1c1183c88b0a3c64605b209b4b3918fd",
+        "status": "passed"
+      },
+      {
+        "path": "game/couch/couch-music-context.mjs",
+        "bytes": 2693,
+        "sha256": "2a05abaa10c7314868807a8df91703b01e6c25524f3cf51aedff391f7b0fd4b6",
+        "status": "passed"
+      },
+      {
+        "path": "game/couch/couch-release-picture.mjs",
+        "bytes": 2824,
+        "sha256": "27e54ffa312e8ed0fdd7d65f47035ca61d7c965cdb172ed7dbf835061f1fe65f",
+        "status": "passed"
+      },
+      {
+        "path": "game/couch/couch-shell.mjs",
+        "bytes": 28662,
+        "sha256": "16757c8a9fbf8b63e67b422c905c27724d2204b67031327be74a97218f79d416",
+        "status": "passed"
+      },
+      {
+        "path": "game/couch/couch-static-pictures.mjs",
+        "bytes": 17515,
+        "sha256": "33eeece8a711088ae326f92ae43484450612f491ebe5b809efdef868ae1c57db",
+        "status": "passed"
+      },
+      {
+        "path": "game/couch/couch.css",
+        "bytes": 17855,
+        "sha256": "bb704c15d641afc2fe0a160eac07de8ccb38996532566f1bc5b27832e9d6f579",
+        "status": "passed"
+      },
+      {
+        "path": "game/couch/couch.mjs",
+        "bytes": 207154,
+        "sha256": "468d4c3e224de29440cfcfec167dd0067530dc44b25f306d4181229130845eb8",
+        "status": "passed"
+      },
+      {
+        "path": "game/couch/creator-team-import.mjs",
+        "bytes": 2806,
+        "sha256": "7024fb6e7060bbdc3f7603e03ef8521535474f3fa6e95f7b7c25afa224665689",
+        "status": "passed"
+      },
+      {
+        "path": "game/couch/index.html",
+        "bytes": 51275,
+        "sha256": "4d177341509896e8592f6e8c1df0579fcddc28b7b087155569a6cc366f990436",
+        "status": "passed"
+      },
+      {
+        "path": "game/couch/mode-entry.js",
+        "bytes": 4912,
+        "sha256": "a725083fb8c03d0aacd9661c41abac1b0cee2137f3f9b6d075251c7afb833556",
+        "status": "passed"
+      },
+      {
+        "path": "game/couch/relay-rescue.css",
+        "bytes": 42306,
+        "sha256": "76fc24281817485f718377e43bedf7c2a4e2a64d9bf080b4ae04e2d022c21bce",
+        "status": "passed"
+      },
+      {
+        "path": "game/couch/relay-rescue.html",
+        "bytes": 61758,
+        "sha256": "3c9b355244d8c9e53f50bc890559ab742ebcb26b343c1ac1400807d509f06a08",
+        "status": "passed"
+      },
+      {
+        "path": "game/couch/relay-rescue.mjs",
+        "bytes": 288150,
+        "sha256": "e0d53946435c8a8cd75145ebefaf62bca667d47b5ccf9f69a89decba05b9ea28",
+        "status": "passed"
+      },
+      {
+        "path": "game/couch/start-cue.mjs",
+        "bytes": 1840,
+        "sha256": "20ce2d79f60de3e4a93acea36a165546495f75baad22a422a65c829e1f860c6c",
+        "status": "passed"
+      },
+      {
+        "path": "game/couch/team-arena-preference.mjs",
+        "bytes": 3358,
+        "sha256": "30fe0e7c62d54e2a1f7a535a126246fcb880a0145970569df0669d2a992d787c",
+        "status": "passed"
+      },
+      {
+        "path": "game/couch/team-contextual-teaching.mjs",
+        "bytes": 5068,
+        "sha256": "fc6e453d5d9531ae61d3f1da10bdf4db31309976813759ab37d1da6018bbdbbe",
+        "status": "passed"
+      },
+      {
+        "path": "game/couch/team-entry.js",
+        "bytes": 2583,
+        "sha256": "b1b0ea4f66d35b0aa876be4c2d5fb8ea5f24ce32813ee4a3972ac1354e107a0e",
+        "status": "passed"
+      },
+      {
+        "path": "game/couch/team-library-preview.mjs",
+        "bytes": 5143,
+        "sha256": "0e745ce11446d6e4576c93873a4ff583dd7c41dd2acf5dcbd32efb825d91b527",
+        "status": "passed"
+      },
+      {
+        "path": "game/couch/versus-package-readiness.mjs",
+        "bytes": 1269,
+        "sha256": "6126d4218ed006162966daafa896ea533a67a9c280053c158eec75eb66fce03b",
+        "status": "passed"
+      },
+      {
+        "path": "game/creator/examples/social-drone-sky-watch.rlpack",
+        "bytes": 2988970,
+        "sha256": "bbbfa9ce8530e17903c10cb044167e298736a372ea2a490a84a6dec4c805dc6b",
+        "status": "passed"
+      },
+      {
+        "path": "game/creator/team-installed.mjs",
+        "bytes": 51053,
+        "sha256": "73f3898dab2889fcd32565e0efc1739f6f8c72b522ab2131041edce6e1499ba7",
+        "status": "passed"
+      },
+      {
+        "path": "game/creator/team-media.mjs",
+        "bytes": 19231,
+        "sha256": "1ec0bc9737a93b340586004f58f434a9626e02626a9bb9495f2c3bfe53b0bdcb",
+        "status": "passed"
+      },
+      {
+        "path": "game/mission-library/installed-inventory.mjs",
+        "bytes": 6565,
+        "sha256": "6df3297f48c1c84f3eac21620a803ccdad4e62660d9a9e146359761a83ef5c07",
+        "status": "passed"
+      },
+      {
+        "path": "game/mission-library/materialize-pack.mjs",
+        "bytes": 1946,
+        "sha256": "4c1275e540f3afbd3b567e8191daf010fb49b4b40efedc55444ecb81efbb753f",
+        "status": "passed"
+      },
+      {
+        "path": "game/mission-library/metadata-custom-source.mjs",
+        "bytes": 5223,
+        "sha256": "575cbdac7747930272b5573f721070ba8562dce9970e14240d7b4e68a7bacdab",
+        "status": "passed"
+      },
+      {
+        "path": "game/mission-library/metadata-installed-library.mjs",
+        "bytes": 7602,
+        "sha256": "a3b41acd1ea04e46b65ccd581764b7bdb65d10069d31d73a00cce74df3443478",
+        "status": "passed"
+      },
+      {
+        "path": "game/mission-library/remote-solo-versus.mjs",
+        "bytes": 17525,
+        "sha256": "ac6e292c568a28fc654fbfcf73207e5502401788249ea79136c5f9e27f47aa7f",
+        "status": "passed"
+      },
+      {
+        "path": "game/mission-library/remote-team.mjs",
+        "bytes": 1945,
+        "sha256": "ae88b45d4dce59f448ebb507d0e064332e0832ea87eb013ae5f684d268820f91",
+        "status": "passed"
+      },
+      {
+        "path": "game/mission-library/spatial-next-editions.mjs",
+        "bytes": 26053,
+        "sha256": "2f8b6fb284a606653cc76dcf763a66383e9edf7a88e7d4ef766ffa18245035b4",
+        "status": "passed"
+      },
+      {
+        "path": "game/multiplayer-recording.mjs",
+        "bytes": 16269,
+        "sha256": "0f5ad0764722ef7b83259e664698d1520b07f83b21ef94ef3968e99780eaa6df",
+        "status": "passed"
+      },
+      {
+        "path": "game/multiplayer-terminal-observation.mjs",
+        "bytes": 10186,
+        "sha256": "963502efdf6312e6f5183998745a1b98ebafa2dfed02d59b89563adf43ce1d0a",
+        "status": "passed"
+      },
+      {
+        "path": "game/ui/continuous-celebration.mjs",
+        "bytes": 1806,
+        "sha256": "fbb629742f863df2aca04db9434acebe8b4eb3c3456fb93b00670434ff5414bb",
+        "status": "passed"
+      },
+      {
+        "path": "game/ui/couch-touch.mjs",
+        "bytes": 3978,
+        "sha256": "891079326fc17b4872108a8d94ac557a62136a5cb0f93a1e529a9331997aeb88",
+        "status": "passed"
+      },
+      {
+        "path": "game/ui/encounter-help.mjs",
+        "bytes": 2993,
+        "sha256": "f1a50d3c688ced53153da1797cd653fb791c0bf2faa016736753d415ff01308f",
+        "status": "passed"
+      },
+      {
+        "path": "game/ui/enemy-stats-events.mjs",
+        "bytes": 1443,
+        "sha256": "d716162cf6176209e455d14a35cc52522741f5bd7efc72d01aad187a9fd79b8a",
+        "status": "passed"
+      },
+      {
+        "path": "game/ui/journey-mode-pictures.mjs",
+        "bytes": 7983,
+        "sha256": "b0102c78bccf4c0cbe945a2d9d20ca1cc2c4d6374f377b41be1c0187e19cb5e7",
+        "status": "passed"
+      },
+      {
+        "path": "game/ui/journey-save-cue.css",
+        "bytes": 1381,
+        "sha256": "494318b44882186fe5fefe4248930285bf61ca32e56bd08db5cda27f143e128f",
+        "status": "passed"
+      },
+      {
+        "path": "game/ui/journey-save-cue.mjs",
+        "bytes": 1381,
+        "sha256": "8281363b0a32dcdff8992422cbe44d263107a58e799f44bae1c82a79466a7ac0",
+        "status": "passed"
+      },
+      {
+        "path": "game/ui/mode-boot.css",
+        "bytes": 1295,
+        "sha256": "4c2f747071af4648b5983db947b92d66dfb4dbe361262f957e2c8fd834ebeaa0",
+        "status": "passed"
+      },
+      {
+        "path": "game/ui/pause-menu.mjs",
+        "bytes": 3619,
+        "sha256": "fa2d081584b3a5ce947a65afe6af2e069901994e284bc6213b92114f171c8bc8",
+        "status": "passed"
+      },
+      {
+        "path": "game/ui/reading-input-prompt.mjs",
+        "bytes": 779,
+        "sha256": "c50c9aeae569e885cd0890b0d045c1d925b78771e4df1322c820f92740774b4a",
+        "status": "passed"
+      },
+      {
+        "path": "game/ui/recording-verification.mjs",
+        "bytes": 974,
+        "sha256": "b85b2c2da6d48e5b6a9b48c0ff368073173782223ed9b66914423fb3cba248bc",
+        "status": "passed"
+      },
+      {
+        "path": "game/ui/team-hunt-save.mjs",
+        "bytes": 16083,
+        "sha256": "b7c8ee3ced7faea43c915e05e571f89e956e76ec209d73be2f1f930461f53eb2",
+        "status": "passed"
+      },
+      {
+        "path": "game/ui/terminal-recording-export.css",
+        "bytes": 991,
+        "sha256": "13b8506a14ce1bbfc5e539e5b6423f7ec3c008686fafb963d2973c7e03745142",
+        "status": "passed"
+      },
+      {
+        "path": "game/ui/terminal-recording-export.mjs",
+        "bytes": 4841,
+        "sha256": "0f52dca53043736e409127eeaba2d066bdf3126c720d8aad212f9229eaf7026b",
+        "status": "passed"
+      }
+    ],
+    "verifiedBytes": 218297917,
+    "failures": [],
+    "scope": "Exact public or packaged bytes and offline dependency ownership. Browser progression, cache upgrades, listening and devices require separate observations.",
+    "target": "https://mekhovov.github.io/revealline/"
+  }
 }

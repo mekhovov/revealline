@@ -1,7 +1,8 @@
 {
   "format": "FieldKitPictureMigration.v1",
-  "id": "production104-retro-pictures-54-v1",
-  "purpose": "Additive candidate slot compatibility only; no artwork approval or publication.",
+  "id": "production104-shared-pictures-57-v2",
+  "purpose": "Explicit shared-content successor; source-only picture slots do not grant artwork approval or publication.",
+  "predecessorContractSHA256": "3aac241e0ebebcd9220c6d3de0d4dcb4bc31c14ea7d5c9196ec549a1284e6fea",
   "baseline": {
     "id": "field-kit",
     "revision": 104,
@@ -16,46 +17,29 @@
         "revision": 104
       }
     },
-    "documentSha256": "43d289be4968f3ec006e5d436834fe26dbbfab963a843c974fb5398401e05843",
+    "documentSha256": "b4271f4c78eb6372b33c8ebc027b9d71d25ae353e56af61cd954b50e9135068f",
     "slots": {
-      "count": 335,
-      "sha256": "f2d853890e884c926450d6cbe7ed2648676e62a079a9e8768fc73a8fc12d1051"
+      "count": 302,
+      "sha256": "93cd0c41cf186805569b72f283fbeb803cf31623b3935cbc3cd0aa494f1fac22"
     },
     "assets": {
-      "count": 2686,
-      "sha256": "0dce0a7e01d70c1abb3c9ec14a2733c6dd4a78d23b6650ca366d9c72db343a01"
+      "count": 2653,
+      "sha256": "033fbc630c64c463102b9fbc8c1b7b0ef38aac8231d4b299546603d780e72c7c"
     },
     "themes": {
       "count": 105,
-      "sha256": "ce902d272d6d742501bce0c9d3b02f70e47ca71382b2af7c100d1a8d87c4e119"
+      "sha256": "3f32da3a5071818a64f4e4adeb99bff4d6a72c649c947ab4446a66969c2a1de2"
     },
     "collections": {
       "count": 1,
-      "sha256": "74daee988fe6fe616d1ecc4a6ffd9f6c9c47b2fc00584259232f8f1477db1b57"
+      "sha256": "84f512c5583368c0d68f138d2d3f7821e0492c0693e931751f8ec3311f6f30cc"
     }
   },
   "additions": {
-    "count": 54,
-    "sha256": "209d585b34e634a7ebf895f1aa91e1003dc310d23bbb1824800572820e851304",
-    "defaultsSha256": "edebcdf4a2725ad05e1f626aec74e2ab0ecc8434955e216fbbffa02a11da6e33",
+    "count": 57,
+    "sha256": "0af04bc51a081e14ad3d0ecf093d0c8bc642289bf6bdc70deb6811c8c44ecc8c",
+    "defaultsSha256": "fd2633566e09e7d20ee533a5af7e2fc08a5214d2b7c6f4405603a71a65f70e3a",
     "slots": [
-      {
-        "id": "picture.retro.01107c041decc30c",
-        "sha256": "63552909684e3c2bd54071b90e9b2e68a9a8d6af9571ec3d5aada924b7601642",
-        "owner": {
-          "baseCampaignKey": "neon-mosaic/2/68f10772f1871b8b",
-          "levelId": "neon-wheat-pack",
-          "levelRevision": "2",
-          "themeId": "retro"
-        },
-        "dimensions": {
-          "width": 1152,
-          "height": 576
-        },
-        "alpha": "opaque",
-        "required": false,
-        "defaultAssetSha256": "429e381ba6aad44f99ec81293ed4fc6ff6a8d49260c45bcede52707c1567eb29"
-      },
       {
         "id": "picture.retro.07e1f236355446f7",
         "sha256": "01a7a0f2d15448347b9215923a49fc038d3acd2ad2ac627ac6b1f5fa47d8df02",
@@ -66,63 +50,97 @@
           "themeId": "retro"
         },
         "dimensions": {
-          "width": 1152,
-          "height": 576
+          "height": 576,
+          "width": 1152
         },
         "alpha": "opaque",
         "required": false,
         "defaultAssetSha256": "5fda43a7569f4fb59928e83144c99092b008d3c00e30c90f8aa2092c61649afb"
       },
       {
-        "id": "picture.retro.0a9a9bb63ff11812",
-        "sha256": "24fe94a69d9dc40a4926a2ad8fc29ce9fdaa9b615ea05a4754fcabe8a095d2bb",
+        "id": "picture.retro.0c9c8c72e343c6a0",
+        "sha256": "ad6d924e99d14d4a45626b8fb1be9a4d25ec3f57368e3aed33ebe1447a4e2461",
         "owner": {
-          "baseCampaignKey": "neon-mosaic/2/68f10772f1871b8b",
-          "levelId": "neon-berehynia-pack",
+          "baseCampaignKey": "neon-mosaic/2/56d7451c6b50ab4b",
+          "levelId": "neon-trembita-pack",
           "levelRevision": "2",
           "themeId": "retro"
         },
         "dimensions": {
-          "width": 1152,
-          "height": 576
+          "height": 576,
+          "width": 1152
         },
         "alpha": "opaque",
         "required": false,
-        "defaultAssetSha256": "5c7a175aba6b77aba759fb59255251fb5726668e095bc167516b87ca1a89e2a0"
+        "defaultAssetSha256": "0177d5f047003c0e19dff2449349eef9039780aa0961b58f49686989055e48c0"
       },
       {
-        "id": "picture.retro.174e86c466ee1732",
-        "sha256": "450411e8485ed6711f6fd5de53a8947dac1003034ffa48c52974442bc6f32530",
+        "id": "picture.retro.0dcd229379bb9916",
+        "sha256": "f34463c43b4a93d12fca038f39eb01c1c5443eb400b73f64e0eaa02477faf8dc",
         "owner": {
-          "baseCampaignKey": "neon-mosaic/2/68f10772f1871b8b",
-          "levelId": "neon-oak-pack",
+          "baseCampaignKey": "neon-mosaic/2/56d7451c6b50ab4b",
+          "levelId": "neon-social-drone-pack",
           "levelRevision": "2",
           "themeId": "retro"
         },
         "dimensions": {
-          "width": 1152,
-          "height": 576
+          "height": 576,
+          "width": 1152
         },
         "alpha": "opaque",
         "required": false,
-        "defaultAssetSha256": "23cf6b109211e280fe8d10f3cc19e05e4cd636112d6b018e98427713468e55f8"
+        "defaultAssetSha256": "cbaae423570945b157061c2cfe89df6860ae9021d8f90a7398b264761d3cbd75"
       },
       {
-        "id": "picture.retro.1a58419fe1a69915",
-        "sha256": "767c342ef279ea6ac3f63166b25475ec8fbef673657480638ebf370dec9a73a9",
+        "id": "picture.retro.0e6db448c107a22d",
+        "sha256": "c0ff6a949bbbbc08f455343240b134368d15cd1a7314299b6e316fcb33f4356b",
         "owner": {
-          "baseCampaignKey": "neon-mosaic/2/68f10772f1871b8b",
-          "levelId": "neon-vyshyvanka-pack",
+          "baseCampaignKey": "neon-mosaic/2/56d7451c6b50ab4b",
+          "levelId": "neon-fpv-line-pack",
           "levelRevision": "2",
           "themeId": "retro"
         },
         "dimensions": {
-          "width": 1152,
-          "height": 576
+          "height": 576,
+          "width": 1152
         },
         "alpha": "opaque",
         "required": false,
-        "defaultAssetSha256": "543407a908a402fbe42da3ee943bb91428ddfd146109ac5bf525084a23a5b99b"
+        "defaultAssetSha256": "1ebf88f27db60b2f31ad58b43c3cc24bd6b095a5b393559482f0ef8d7e8bc449"
+      },
+      {
+        "id": "picture.retro.138611e1c716f21d",
+        "sha256": "524ab7b370fc22e79e59e9e9fe888a40d391021b3bea39fbb8809ff0fe3abdf2",
+        "owner": {
+          "baseCampaignKey": "neon-mosaic/2/56d7451c6b50ab4b",
+          "levelId": "neon-reveal-pack",
+          "levelRevision": "2",
+          "themeId": "retro"
+        },
+        "dimensions": {
+          "height": 576,
+          "width": 1152
+        },
+        "alpha": "opaque",
+        "required": false,
+        "defaultAssetSha256": "874b9e4bae085d0a94c5a2be1f274a8187706422fb2c4e93cc43ab7c7b8b5c2a"
+      },
+      {
+        "id": "picture.retro.1bfc29045b55ce8f",
+        "sha256": "03dc0144dce926ee025a3dee63d4a59795673347f409d9d41b8f76b2a58fe8ad",
+        "owner": {
+          "baseCampaignKey": "neon-mosaic/2/56d7451c6b50ab4b",
+          "levelId": "neon-vinok-pack",
+          "levelRevision": "2",
+          "themeId": "retro"
+        },
+        "dimensions": {
+          "height": 576,
+          "width": 1152
+        },
+        "alpha": "opaque",
+        "required": false,
+        "defaultAssetSha256": "8d7cdcbd5ac807e779397780501706bd96b15204e9e730ebfec95eaec30989c0"
       },
       {
         "id": "picture.retro.1cb1f8acb6834f36",
@@ -134,12 +152,46 @@
           "themeId": "retro"
         },
         "dimensions": {
-          "width": 1152,
-          "height": 576
+          "height": 576,
+          "width": 1152
         },
         "alpha": "opaque",
         "required": false,
         "defaultAssetSha256": "83c3e46aeefb2582ff95cefda2a3f72a4544f121049f312438111746f9da62a2"
+      },
+      {
+        "id": "picture.retro.1dc9ce1961d8149f",
+        "sha256": "4e7f4c99fe73fad3610729ee784d6d79d3e7d1dd08d313127d428b062f2c364a",
+        "owner": {
+          "baseCampaignKey": "neon-mosaic/2/56d7451c6b50ab4b",
+          "levelId": "neon-didukh-pack",
+          "levelRevision": "2",
+          "themeId": "retro"
+        },
+        "dimensions": {
+          "height": 576,
+          "width": 1152
+        },
+        "alpha": "opaque",
+        "required": false,
+        "defaultAssetSha256": "89b1d8f43f121970fa6da36de9b0aa6f549c4de787e52716bda8e0b0079bffbe"
+      },
+      {
+        "id": "picture.retro.1e8ef38a535ca246",
+        "sha256": "631c53e031ba4a956f6c909b61cebbc08149558db5826ec2490dc0ae65997b86",
+        "owner": {
+          "baseCampaignKey": "neon-mosaic/2/56d7451c6b50ab4b",
+          "levelId": "neon-ornek-tulip-pack",
+          "levelRevision": "2",
+          "themeId": "retro"
+        },
+        "dimensions": {
+          "height": 576,
+          "width": 1152
+        },
+        "alpha": "opaque",
+        "required": false,
+        "defaultAssetSha256": "3ce50f5b351538e53d79ed5b9fa6cafb4c715ad1d50111ba17cc6d5925e8c236"
       },
       {
         "id": "picture.retro.26ef1b9a355493e5",
@@ -151,29 +203,46 @@
           "themeId": "retro"
         },
         "dimensions": {
-          "width": 1152,
-          "height": 576
+          "height": 576,
+          "width": 1152
         },
         "alpha": "opaque",
         "required": false,
         "defaultAssetSha256": "ee81629e1e167db975a582bf4a9f5bae19cb9d123271caddf7c37d3c98be17a0"
       },
       {
-        "id": "picture.retro.2ef6e4a5a3a47547",
-        "sha256": "bc75b8e7b26768583d9b066f8d5ec139d4da9fe38e1da3662dae9b5249ede576",
+        "id": "picture.retro.29dad18b7811f67a",
+        "sha256": "2ff706e90116da92ec4a86824e7852b917b2e114e57dd16ab339411a9c4c3dad",
         "owner": {
-          "baseCampaignKey": "neon-mosaic/2/68f10772f1871b8b",
-          "levelId": "neon-ruzha-pack",
+          "baseCampaignKey": "neon-mosaic/2/56d7451c6b50ab4b",
+          "levelId": "neon-kosiv-pitcher-pack",
           "levelRevision": "2",
           "themeId": "retro"
         },
         "dimensions": {
-          "width": 1152,
-          "height": 576
+          "height": 576,
+          "width": 1152
         },
         "alpha": "opaque",
         "required": false,
-        "defaultAssetSha256": "a7894326347fa7b0300e4cdc2e5ed6a7b913bdd7aad9cea98ffdd6b280cb3578"
+        "defaultAssetSha256": "0b81b15f1dd42ab58c9dfbe18238c8cbb854fd99327283c555c7842e222a9e1e"
+      },
+      {
+        "id": "picture.retro.2c8464590ace3452",
+        "sha256": "3eb095f34339a35bae5c2a94a0a7d755c5372e2acad9e90d491000fe68824e52",
+        "owner": {
+          "baseCampaignKey": "neon-mosaic/2/56d7451c6b50ab4b",
+          "levelId": "neon-deer-pack",
+          "levelRevision": "2",
+          "themeId": "retro"
+        },
+        "dimensions": {
+          "height": 576,
+          "width": 1152
+        },
+        "alpha": "opaque",
+        "required": false,
+        "defaultAssetSha256": "e9784468c92017d32dc5367c6530a36ddc0bed6c163d4a20e42be9a5ad979190"
       },
       {
         "id": "picture.retro.3089f3245b4914c6",
@@ -185,8 +254,8 @@
           "themeId": "retro"
         },
         "dimensions": {
-          "width": 1152,
-          "height": 576
+          "height": 576,
+          "width": 1152
         },
         "alpha": "opaque",
         "required": false,
@@ -202,46 +271,63 @@
           "themeId": "retro"
         },
         "dimensions": {
-          "width": 1152,
-          "height": 576
+          "height": 576,
+          "width": 1152
         },
         "alpha": "opaque",
         "required": false,
         "defaultAssetSha256": "195b6ac275589528ee43aa022da6d05f03ded423062f393f7bc13e3a2371cde5"
       },
       {
-        "id": "picture.retro.33b934d436bf245c",
-        "sha256": "80770e1b7f742d843bffac79fb2ae9ea9098a6471de0312320c0400a70aa1b7e",
+        "id": "picture.retro.312afcd26838690f",
+        "sha256": "f8b462fc26f1afa99b25bf3a0642c88c69d587f8cd540ceab514f7253cdf47f7",
         "owner": {
-          "baseCampaignKey": "neon-mosaic/2/68f10772f1871b8b",
-          "levelId": "neon-fpv-drone-pack",
+          "baseCampaignKey": "neon-mosaic/2/56d7451c6b50ab4b",
+          "levelId": "neon-pysanka-pack",
           "levelRevision": "2",
           "themeId": "retro"
         },
         "dimensions": {
-          "width": 1152,
-          "height": 576
+          "height": 576,
+          "width": 1152
         },
         "alpha": "opaque",
         "required": false,
-        "defaultAssetSha256": "a04e13cc0bfd7c995d07d40e041e05d8f1ca1395979c7b27451c786019b6bbfb"
+        "defaultAssetSha256": "5c36c9c26fc105c5b1f36cd5f18b6fd86cc298d3fd2c6df00252b0254cab7301"
       },
       {
-        "id": "picture.retro.3f030c0c0ee5fbba",
-        "sha256": "1099596eb8af782468ad101bcd13859fea87ed36a00ccfaaeebf50a1c901d46a",
+        "id": "picture.retro.34e07bdec7b1f8cb",
+        "sha256": "4d0ee4c55de94fcec04f611929b8032f5ee99c06efe01ece6b369db88af4c9a0",
         "owner": {
-          "baseCampaignKey": "neon-mosaic/2/68f10772f1871b8b",
-          "levelId": "neon-horse-pack",
+          "baseCampaignKey": "neon-mosaic/2/56d7451c6b50ab4b",
+          "levelId": "neon-wheat-pack",
           "levelRevision": "2",
           "themeId": "retro"
         },
         "dimensions": {
-          "width": 1152,
-          "height": 576
+          "height": 576,
+          "width": 1152
         },
         "alpha": "opaque",
         "required": false,
-        "defaultAssetSha256": "1199424aaf8c790ffd992c580f955a5087cdb68c8fc8cb97607bd6d35134767b"
+        "defaultAssetSha256": "2a20d4341f8fdab9ae2dc11ec3b31f217b9ac18dd799682e4ec98a04e8891676"
+      },
+      {
+        "id": "picture.retro.4089f958a4132f41",
+        "sha256": "8cd3d37c5b7cf5710ffa5ff9c56ee5e36248fa6167d88d301388ed4287d36995",
+        "owner": {
+          "baseCampaignKey": "neon-mosaic/2/56d7451c6b50ab4b",
+          "levelId": "neon-drone-aid-pack",
+          "levelRevision": "2",
+          "themeId": "retro"
+        },
+        "dimensions": {
+          "height": 576,
+          "width": 1152
+        },
+        "alpha": "opaque",
+        "required": false,
+        "defaultAssetSha256": "57c7b8ae3a9b9907dce006d2b75d94fd422a00ab88cc3c9f2c83b771de8bec8b"
       },
       {
         "id": "picture.retro.447a8bb3c44affc8",
@@ -253,80 +339,29 @@
           "themeId": "retro"
         },
         "dimensions": {
-          "width": 1152,
-          "height": 576
+          "height": 576,
+          "width": 1152
         },
         "alpha": "opaque",
         "required": false,
         "defaultAssetSha256": "e1b3ee6d7f2790cae07528e7229840f4e321c1817aaeec7d479941bb32aa3d8b"
       },
       {
-        "id": "picture.retro.4698ff67ced93d3f",
-        "sha256": "dff43c218701c8acd2551fb7735fa704c7cb914554ee518b63eb762dde02b867",
+        "id": "picture.retro.45c7f1816a692815",
+        "sha256": "9b9de61344c8f15ac2f51855a467497f80b7cc13e765d0dc058d994b20b4a0a7",
         "owner": {
-          "baseCampaignKey": "neon-mosaic/2/68f10772f1871b8b",
-          "levelId": "neon-barvinok-pack",
+          "baseCampaignKey": "neon-mosaic/2/56d7451c6b50ab4b",
+          "levelId": "neon-berehynia-pack",
           "levelRevision": "2",
           "themeId": "retro"
         },
         "dimensions": {
-          "width": 1152,
-          "height": 576
+          "height": 576,
+          "width": 1152
         },
         "alpha": "opaque",
         "required": false,
-        "defaultAssetSha256": "5b883736f7b85f6fb8131d1055a5be75a8b3fe3852c097468340987f3950afec"
-      },
-      {
-        "id": "picture.retro.488be2dcab4983bd",
-        "sha256": "676eb788cf8b7028885a266482aeba6524825e11fcb1f1ce93a3be33d76114c3",
-        "owner": {
-          "baseCampaignKey": "neon-mosaic/2/68f10772f1871b8b",
-          "levelId": "neon-trembita-pack",
-          "levelRevision": "2",
-          "themeId": "retro"
-        },
-        "dimensions": {
-          "width": 1152,
-          "height": 576
-        },
-        "alpha": "opaque",
-        "required": false,
-        "defaultAssetSha256": "fd3161425321ef7ccc7184cce704a249a285d75cbd0d1dfa94e850096a56f63b"
-      },
-      {
-        "id": "picture.retro.49040d16de3882dc",
-        "sha256": "ab8ee5e6679615683fb1e26249622ccf5404b9cb60188a56004a3392cd900d2a",
-        "owner": {
-          "baseCampaignKey": "neon-mosaic/2/68f10772f1871b8b",
-          "levelId": "neon-pysanka-pack",
-          "levelRevision": "2",
-          "themeId": "retro"
-        },
-        "dimensions": {
-          "width": 1152,
-          "height": 576
-        },
-        "alpha": "opaque",
-        "required": false,
-        "defaultAssetSha256": "6c1ef45913cd8ddc8c01bb79d56f9034d015f67f8f9f03b836a3973b2e41a20e"
-      },
-      {
-        "id": "picture.retro.4a05e2ea99601447",
-        "sha256": "ac977c34ada287d4c088942826d1b2458d96c83c65424469f82d4bdacc434aae",
-        "owner": {
-          "baseCampaignKey": "neon-mosaic/2/68f10772f1871b8b",
-          "levelId": "neon-coupa-pack",
-          "levelRevision": "2",
-          "themeId": "retro"
-        },
-        "dimensions": {
-          "width": 1152,
-          "height": 576
-        },
-        "alpha": "opaque",
-        "required": false,
-        "defaultAssetSha256": "7dc569e09b8cb0db714a7892d9dcaab7fd857fcb35a243d2041ee21437de95e2"
+        "defaultAssetSha256": "c140628cba78d5981eb48af2f609f89b91dd4fe145e1a45978f06cf7847a56eb"
       },
       {
         "id": "picture.retro.4ff13771b76ea7df",
@@ -338,63 +373,114 @@
           "themeId": "retro"
         },
         "dimensions": {
-          "width": 1152,
-          "height": 576
+          "height": 576,
+          "width": 1152
         },
         "alpha": "opaque",
         "required": false,
         "defaultAssetSha256": "d2b52ac07077b3d903595ebb90cfd501addb3d83799bd25ed8bb71e6369e0117"
       },
       {
-        "id": "picture.retro.5126719573617b5c",
-        "sha256": "d3fdc0b3218cf5f102751f79006e14b596b3063bce664766410f4f306f3d883f",
+        "id": "picture.retro.50244a8e45229d6f",
+        "sha256": "e7e15e60c8ea2874d7f39ab5a8952b54af7b7c59e73246d865742c33ddac2cec",
         "owner": {
-          "baseCampaignKey": "neon-mosaic/2/68f10772f1871b8b",
+          "baseCampaignKey": "neon-mosaic/2/56d7451c6b50ab4b",
+          "levelId": "neon-tree-of-life-pack",
+          "levelRevision": "2",
+          "themeId": "retro"
+        },
+        "dimensions": {
+          "height": 576,
+          "width": 1152
+        },
+        "alpha": "opaque",
+        "required": false,
+        "defaultAssetSha256": "da387535ede0336f4aafca4b4a6ab66e5cecf2b188d599c4e679a3454b9ddcd3"
+      },
+      {
+        "id": "picture.retro.528b4148a6d9d70d",
+        "sha256": "a77d0fd082afa301658ebeba6a4e4522e03c38e97168cd2107bae43a19a6728e",
+        "owner": {
+          "baseCampaignKey": "neon-mosaic/2/56d7451c6b50ab4b",
+          "levelId": "neon-horse-pack",
+          "levelRevision": "2",
+          "themeId": "retro"
+        },
+        "dimensions": {
+          "height": 576,
+          "width": 1152
+        },
+        "alpha": "opaque",
+        "required": false,
+        "defaultAssetSha256": "393f8ce5742b7c8b03e50fa68d23265b39e57d708adc9cbad7f499edf8e633a8"
+      },
+      {
+        "id": "picture.retro.5c71b6c3a01529bd",
+        "sha256": "9a538588542c1c833a423c2c60efb74fc49138dbd7b99386e28e0b6c5f8da347",
+        "owner": {
+          "baseCampaignKey": "neon-mosaic/2/56d7451c6b50ab4b",
           "levelId": "neon-sdua-pack",
           "levelRevision": "2",
           "themeId": "retro"
         },
         "dimensions": {
-          "width": 1152,
-          "height": 576
+          "height": 576,
+          "width": 1152
         },
         "alpha": "opaque",
         "required": false,
-        "defaultAssetSha256": "11930225401eaee147fa47c1a55103f6ceece35cab9d8e0f420dfd69cef9866c"
+        "defaultAssetSha256": "7c69e1740dad4b786acda995fc812c2f4a1301520b3e1f474ba42151d04a73de"
       },
       {
-        "id": "picture.retro.639d5586d460236d",
-        "sha256": "57b24a10a232409cf7d2af15047221ef5aaffdd30c6d6fbb6d80ccf7bb240e79",
+        "id": "picture.retro.5ed90a3432285baf",
+        "sha256": "4b09881a27225d993a2c53d4a04793cf9bb0b8a666220cee200c7800c39d28e7",
         "owner": {
-          "baseCampaignKey": "neon-mosaic/2/68f10772f1871b8b",
-          "levelId": "neon-fpv-pack",
+          "baseCampaignKey": "neon-mosaic/2/56d7451c6b50ab4b",
+          "levelId": "neon-swallow-pack",
           "levelRevision": "2",
           "themeId": "retro"
         },
         "dimensions": {
-          "width": 1152,
-          "height": 576
+          "height": 576,
+          "width": 1152
         },
         "alpha": "opaque",
         "required": false,
-        "defaultAssetSha256": "8deed0c8e5575e273ff997540ab070c47ac901a75faae293f7bdd9d79109fbe3"
+        "defaultAssetSha256": "615023699c23654eecfc290c6382c0aa5b59cbe4e45e47ab36f924d98131db52"
       },
       {
-        "id": "picture.retro.6cfa1aa46532a531",
-        "sha256": "6418785d314f02d9835a107d8d4203b7d573a539905d2e0689ef9cff045aa99d",
+        "id": "picture.retro.6056098dc9f595fd",
+        "sha256": "df5a500e920315d3792f47369105ce28f37516ce364a3c5c4703c3a599b090a5",
         "owner": {
-          "baseCampaignKey": "neon-mosaic/2/68f10772f1871b8b",
-          "levelId": "neon-tryzub-pack",
+          "baseCampaignKey": "neon-mosaic/2/56d7451c6b50ab4b",
+          "levelId": "neon-ukraine-pack",
           "levelRevision": "2",
           "themeId": "retro"
         },
         "dimensions": {
-          "width": 1152,
-          "height": 576
+          "height": 576,
+          "width": 1152
         },
         "alpha": "opaque",
         "required": false,
-        "defaultAssetSha256": "857f83e5f079c8a7b7aadffb0ba1ccdff6b7f480fecdc2b27558ae11c34b9d9e"
+        "defaultAssetSha256": "4e177ca072b1e004ff4220c1ce497f67593d250091a692a61a352fba01f9faea"
+      },
+      {
+        "id": "picture.retro.6584229645910c5c",
+        "sha256": "4cf72976a2a56f2f586b4b9c214e2bfa6db70eb15b1c7439ef2c90766be10990",
+        "owner": {
+          "baseCampaignKey": "neon-mosaic/2/56d7451c6b50ab4b",
+          "levelId": "neon-vyshyvanka-pack",
+          "levelRevision": "2",
+          "themeId": "retro"
+        },
+        "dimensions": {
+          "height": 576,
+          "width": 1152
+        },
+        "alpha": "opaque",
+        "required": false,
+        "defaultAssetSha256": "3c5f78ce1ce439e21971324731945268e3289bab6a5a96b6eaa367c14e8b2fc9"
       },
       {
         "id": "picture.retro.70ff6df39d5305de",
@@ -406,46 +492,46 @@
           "themeId": "retro"
         },
         "dimensions": {
-          "width": 1152,
-          "height": 576
+          "height": 576,
+          "width": 1152
         },
         "alpha": "opaque",
         "required": false,
         "defaultAssetSha256": "4788f26b41dc4994c742e00b4af86177f714d2ddd01875b9fe33724095d67930"
       },
       {
-        "id": "picture.retro.71598c612725981c",
-        "sha256": "a3722d61d0eceb187472b3a142adb0fec5e9b7079fb20fefe8dd22eb6c409acd",
+        "id": "picture.retro.715a095dc7f55d71",
+        "sha256": "92927950458456322c76d7b93aaaf82d67e5fd5a64def874586af22b1d1c5369",
         "owner": {
-          "baseCampaignKey": "neon-mosaic/2/68f10772f1871b8b",
-          "levelId": "neon-vinok-pack",
-          "levelRevision": "2",
+          "baseCampaignKey": "equipment-workshop/1/7bbeedba8b221cf4",
+          "levelId": "workshop-02",
+          "levelRevision": "1",
           "themeId": "retro"
         },
         "dimensions": {
-          "width": 1152,
-          "height": 576
+          "height": 576,
+          "width": 768
         },
         "alpha": "opaque",
         "required": false,
-        "defaultAssetSha256": "935629d69945cec60e03befaba71a2b1c618b1f62b1b5577d45c377842b8c28f"
+        "defaultAssetSha256": "4f3d103d666f635991b21d49358d359b574644c9c71897d5175a65ce081d0a4b"
       },
       {
-        "id": "picture.retro.7193ceedab5385fe",
-        "sha256": "e2fda0e7e9fb26669109ddcbbb7d44e4aaeac4f26455d4b7596188fc596049cd",
+        "id": "picture.retro.791fcb87683848d5",
+        "sha256": "a187844f59112c6a62605b3ab357faa9172d2b14a08cc92a043415e0223c2d5b",
         "owner": {
-          "baseCampaignKey": "neon-mosaic/2/68f10772f1871b8b",
-          "levelId": "neon-drone-aid-pack",
+          "baseCampaignKey": "neon-mosaic/2/56d7451c6b50ab4b",
+          "levelId": "neon-oak-pack",
           "levelRevision": "2",
           "themeId": "retro"
         },
         "dimensions": {
-          "width": 1152,
-          "height": 576
+          "height": 576,
+          "width": 1152
         },
         "alpha": "opaque",
         "required": false,
-        "defaultAssetSha256": "e2faefa4908ae769804a71a864ddae94b476de98054d91568895f3029207ad46"
+        "defaultAssetSha256": "4e7281278bfca3f0fd4ead6f32a48ae7f422935ced72c68470cbe78303ad4d67"
       },
       {
         "id": "picture.retro.7971cbca6a4f54e6",
@@ -457,80 +543,97 @@
           "themeId": "retro"
         },
         "dimensions": {
-          "width": 1152,
-          "height": 576
+          "height": 576,
+          "width": 1152
         },
         "alpha": "opaque",
         "required": false,
         "defaultAssetSha256": "7e70a2488d8b3241005ba0b58a0dc251ebd8dc7b8b3e669d8eb5334516ff6dd4"
       },
       {
-        "id": "picture.retro.7ce40a5899662fd1",
-        "sha256": "2d4904900e4d64592d3d4959d8bd86ea7c1d9e3377d584f69bf18e124be9834a",
+        "id": "picture.retro.7c26a81806482e04",
+        "sha256": "e7aee2894536ac1a101389a79e55ddaaf82742cb7ef70de3a1a4d73c9f3402d1",
         "owner": {
-          "baseCampaignKey": "neon-mosaic/2/68f10772f1871b8b",
-          "levelId": "neon-kalyna-pack",
+          "baseCampaignKey": "neon-mosaic/2/56d7451c6b50ab4b",
+          "levelId": "neon-vd-pack",
           "levelRevision": "2",
           "themeId": "retro"
         },
         "dimensions": {
-          "width": 1152,
-          "height": 576
+          "height": 576,
+          "width": 1152
         },
         "alpha": "opaque",
         "required": false,
-        "defaultAssetSha256": "3269302fee85fdb4d826dd8fa8176fbd55af40b236bf7f605fce85e66c6d5315"
+        "defaultAssetSha256": "eda5d64f51033c8b5e1867af5d4695a340c10c7a5849dd69ec4df6566c4c70c2"
       },
       {
-        "id": "picture.retro.801edd73d8845d94",
-        "sha256": "8aa65caeec8bfdadcbd5db1594ddeaee3e1e3d746782205a59d3a976fb746ffe",
+        "id": "picture.retro.7eb7c8f3a28dbcb9",
+        "sha256": "4e8e1093078a3b384869d2c43ea2c07024ff857d5690dcacd1f6d63f230331a4",
         "owner": {
-          "baseCampaignKey": "neon-mosaic/2/68f10772f1871b8b",
+          "baseCampaignKey": "neon-mosaic/2/56d7451c6b50ab4b",
+          "levelId": "neon-bezkonechnyk-pack",
+          "levelRevision": "2",
+          "themeId": "retro"
+        },
+        "dimensions": {
+          "height": 576,
+          "width": 1152
+        },
+        "alpha": "opaque",
+        "required": false,
+        "defaultAssetSha256": "168f70882530e8d2d87eab39e386c5cc04926533ce4361e49667c05424fbc90e"
+      },
+      {
+        "id": "picture.retro.81f16b01666462a3",
+        "sha256": "3b34d04d7ce97f6e9ce80d191fffeb10bde8a2824b4a44810db7024db5b9d032",
+        "owner": {
+          "baseCampaignKey": "neon-mosaic/2/56d7451c6b50ab4b",
+          "levelId": "neon-fpv-drone-pack",
+          "levelRevision": "2",
+          "themeId": "retro"
+        },
+        "dimensions": {
+          "height": 576,
+          "width": 1152
+        },
+        "alpha": "opaque",
+        "required": false,
+        "defaultAssetSha256": "339311c98f9d8e59c5ca6a72f2dd67d5d223bda0776f4dfa9c7e652677a8c6c8"
+      },
+      {
+        "id": "picture.retro.82cc2bf23769a5c0",
+        "sha256": "3d021add1210b7ca0d1662bd69925f38e6aff81d5edebebecef7602724f9a8f0",
+        "owner": {
+          "baseCampaignKey": "neon-mosaic/2/56d7451c6b50ab4b",
+          "levelId": "neon-opishnia-ram-pack",
+          "levelRevision": "2",
+          "themeId": "retro"
+        },
+        "dimensions": {
+          "height": 576,
+          "width": 1152
+        },
+        "alpha": "opaque",
+        "required": false,
+        "defaultAssetSha256": "f5ac6a4eb0daebde5126375c2183493110dc318a3b893fd97ec19200efc07f17"
+      },
+      {
+        "id": "picture.retro.83f2f2589e134ec7",
+        "sha256": "655f096ee50316a2453284d9385da71c9a5e10e3ce422dc490ffec0e7a589b05",
+        "owner": {
+          "baseCampaignKey": "neon-mosaic/2/56d7451c6b50ab4b",
           "levelId": "neon-stork-pack",
           "levelRevision": "2",
           "themeId": "retro"
         },
         "dimensions": {
-          "width": 1152,
-          "height": 576
+          "height": 576,
+          "width": 1152
         },
         "alpha": "opaque",
         "required": false,
-        "defaultAssetSha256": "a03f05c3bf522d496c82386bdf440bc768a29b3563395f1f626acdcb95604e9b"
-      },
-      {
-        "id": "picture.retro.825541ed736f3204",
-        "sha256": "907a37e7233b29a0df63ff4e0b5e7bf3d934d746d55801d306b3884af6c28e94",
-        "owner": {
-          "baseCampaignKey": "neon-mosaic/2/68f10772f1871b8b",
-          "levelId": "neon-reveal-pack",
-          "levelRevision": "2",
-          "themeId": "retro"
-        },
-        "dimensions": {
-          "width": 1152,
-          "height": 576
-        },
-        "alpha": "opaque",
-        "required": false,
-        "defaultAssetSha256": "d2ed5cb0e3bda2ddb320f4ca97ef336ee9424b1e56c86588e653ac4735454781"
-      },
-      {
-        "id": "picture.retro.8458e2485b01ac72",
-        "sha256": "d4143bdfbb029cd4b732efc2ab3665c4cf7db4abbac130f990516b2089329251",
-        "owner": {
-          "baseCampaignKey": "neon-mosaic/2/68f10772f1871b8b",
-          "levelId": "neon-tree-of-life-pack",
-          "levelRevision": "2",
-          "themeId": "retro"
-        },
-        "dimensions": {
-          "width": 1152,
-          "height": 576
-        },
-        "alpha": "opaque",
-        "required": false,
-        "defaultAssetSha256": "1087a0fe3c850fb3167f4457546ce1fef3026a211bd98d26a72a032ed4d7f1d4"
+        "defaultAssetSha256": "a4933203c29227cd248642675e6246a7b894f337dc402479528cb5bed7c3c3a8"
       },
       {
         "id": "picture.retro.88f27efc3207536d",
@@ -542,12 +645,29 @@
           "themeId": "retro"
         },
         "dimensions": {
-          "width": 1152,
-          "height": 576
+          "height": 576,
+          "width": 1152
         },
         "alpha": "opaque",
         "required": false,
         "defaultAssetSha256": "2217f3f5d8caf17cbd0675b87f2ee786844c45bb8869e320e865d144b70c385f"
+      },
+      {
+        "id": "picture.retro.8cd972a95006a24c",
+        "sha256": "24ad3894a112c35902bd8dffcbce67381bf7b3fb420a53084c1449df849f27ef",
+        "owner": {
+          "baseCampaignKey": "neon-mosaic/2/56d7451c6b50ab4b",
+          "levelId": "neon-fish-pack",
+          "levelRevision": "2",
+          "themeId": "retro"
+        },
+        "dimensions": {
+          "height": 576,
+          "width": 1152
+        },
+        "alpha": "opaque",
+        "required": false,
+        "defaultAssetSha256": "f964c22ca321ebaaad8eceecf4e0e983fedea70ae87f511dc5575fd518c6c1ba"
       },
       {
         "id": "picture.retro.928b200d613633e3",
@@ -559,12 +679,29 @@
           "themeId": "retro"
         },
         "dimensions": {
-          "width": 1152,
-          "height": 576
+          "height": 576,
+          "width": 1152
         },
         "alpha": "opaque",
         "required": false,
         "defaultAssetSha256": "ec189d6b6b0280078a00da7f01f3dbec00f26db3e86850e7414d45ea09246782"
+      },
+      {
+        "id": "picture.retro.94463d5cffed00de",
+        "sha256": "0d2a76e1c95977fa21e77be4671ed1afe5f27626aaabd5c91fcc5ede9a65d0c0",
+        "owner": {
+          "baseCampaignKey": "neon-mosaic/2/56d7451c6b50ab4b",
+          "levelId": "neon-rushnyk-pack",
+          "levelRevision": "2",
+          "themeId": "retro"
+        },
+        "dimensions": {
+          "height": 576,
+          "width": 1152
+        },
+        "alpha": "opaque",
+        "required": false,
+        "defaultAssetSha256": "2a2bb4ebc6719614b8a8995c7947bf645dcdfa36b62a0bbb486334ad22a62ec8"
       },
       {
         "id": "picture.retro.95122a9e983a16e2",
@@ -576,46 +713,29 @@
           "themeId": "retro"
         },
         "dimensions": {
-          "width": 1152,
-          "height": 576
+          "height": 576,
+          "width": 1152
         },
         "alpha": "opaque",
         "required": false,
         "defaultAssetSha256": "f76acfb9d3f7b809a4690352dec37fdf643a31de6a5bccd867e0267fdc641137"
       },
       {
-        "id": "picture.retro.95915b7aa62abd3b",
-        "sha256": "c001150c61b55729e92b85561203b72776b2ab8b75f6ffe3cb73e8712570830d",
+        "id": "picture.retro.974e68cb79296168",
+        "sha256": "b25f6f7d8662eb390e618954e6b0181cdac738887e95dfd992f90acd474d6db6",
         "owner": {
-          "baseCampaignKey": "neon-mosaic/2/68f10772f1871b8b",
-          "levelId": "neon-social-drone-pack",
+          "baseCampaignKey": "neon-mosaic/2/56d7451c6b50ab4b",
+          "levelId": "neon-petrykivka-pack",
           "levelRevision": "2",
           "themeId": "retro"
         },
         "dimensions": {
-          "width": 1152,
-          "height": 576
+          "height": 576,
+          "width": 1152
         },
         "alpha": "opaque",
         "required": false,
-        "defaultAssetSha256": "5bdf15dda2bc87e9fef3dc66e3b6543b54f0ce650c44bb127cc0bdf780a764b7"
-      },
-      {
-        "id": "picture.retro.9f9ee7767c5b76f2",
-        "sha256": "6e03af22e0ae3840ebea792d1c42a127e972a29d690708ef276f90d18d9e15c7",
-        "owner": {
-          "baseCampaignKey": "neon-mosaic/2/68f10772f1871b8b",
-          "levelId": "neon-ukraine-pack",
-          "levelRevision": "2",
-          "themeId": "retro"
-        },
-        "dimensions": {
-          "width": 1152,
-          "height": 576
-        },
-        "alpha": "opaque",
-        "required": false,
-        "defaultAssetSha256": "5b5521c5215d26988ffe82dc6aa6cb05985d9dbab3245b36af90abf931c3e799"
+        "defaultAssetSha256": "35380b71995ed72aef4d26b8744041ad8ff50f51510657a78f233680eb6417b9"
       },
       {
         "id": "picture.retro.9ffce44d29eacd48",
@@ -627,80 +747,63 @@
           "themeId": "retro"
         },
         "dimensions": {
-          "width": 1152,
-          "height": 576
+          "height": 576,
+          "width": 1152
         },
         "alpha": "opaque",
         "required": false,
         "defaultAssetSha256": "f033f65dea08de135958c099e9708f7e15c2a5b886c1e3b36906555c8bc92e9f"
       },
       {
-        "id": "picture.retro.a1b9471c4278e505",
-        "sha256": "3f5030ec926b85219754da657fccca40873f636fc52173148c0a301d1646bd6c",
+        "id": "picture.retro.a55025c90d632a14",
+        "sha256": "a6eb04b2c614424906b745084da915a67848649cc5ef2617fa38e2b36edfe2b4",
         "owner": {
-          "baseCampaignKey": "neon-mosaic/2/68f10772f1871b8b",
-          "levelId": "neon-opishnia-ram-pack",
+          "baseCampaignKey": "neon-mosaic/2/56d7451c6b50ab4b",
+          "levelId": "neon-tryzub-pack",
           "levelRevision": "2",
           "themeId": "retro"
         },
         "dimensions": {
-          "width": 1152,
-          "height": 576
+          "height": 576,
+          "width": 1152
         },
         "alpha": "opaque",
         "required": false,
-        "defaultAssetSha256": "56a5f48cd35a2d0d001ea5ff5d8961ab6bcba9221b0235e1a3dde07d147e4cd9"
+        "defaultAssetSha256": "d9dea5e95b7a2390dcd247c7e607601fc6d2a3e06c4f20bdf8af5d91b4733e33"
       },
       {
-        "id": "picture.retro.a383edf4e8208b31",
-        "sha256": "4926da9ed7d357dcbaa5c04c16f6073c57fc29094b009674a319cdccae0e171d",
+        "id": "picture.retro.b02e59c8ee12aa3d",
+        "sha256": "1f4ec834761eb56a3e6051f76169a1b8639404063880994406dcdcb8e4cef5ee",
         "owner": {
-          "baseCampaignKey": "neon-mosaic/2/68f10772f1871b8b",
-          "levelId": "neon-rushnyk-pack",
+          "baseCampaignKey": "neon-mosaic/2/56d7451c6b50ab4b",
+          "levelId": "neon-tsymbaly-pack",
           "levelRevision": "2",
           "themeId": "retro"
         },
         "dimensions": {
-          "width": 1152,
-          "height": 576
+          "height": 576,
+          "width": 1152
         },
         "alpha": "opaque",
         "required": false,
-        "defaultAssetSha256": "621901a6889b29a2484e232d682096a53a5a861ccab2aeff6186ceb2557b09ad"
+        "defaultAssetSha256": "272162c27d872ae3b51cdb69345984a953850472cf86ca55f0d092e4cf088849"
       },
       {
-        "id": "picture.retro.a71d543cce09441d",
-        "sha256": "16e00adec3d822d64e54973df4818e183b67af3ecb1949e8ab890be95772c4d0",
+        "id": "picture.retro.b11f1b4bc7068757",
+        "sha256": "d06eb80ff41addfc92d1c0d0199899c95b3fe5e90d4a1181f8b1540f6fde254d",
         "owner": {
-          "baseCampaignKey": "neon-mosaic/2/68f10772f1871b8b",
-          "levelId": "neon-kosiv-pitcher-pack",
+          "baseCampaignKey": "neon-mosaic/2/56d7451c6b50ab4b",
+          "levelId": "neon-bandura-pack",
           "levelRevision": "2",
           "themeId": "retro"
         },
         "dimensions": {
-          "width": 1152,
-          "height": 576
+          "height": 576,
+          "width": 1152
         },
         "alpha": "opaque",
         "required": false,
-        "defaultAssetSha256": "da2eab968a8d52fbe2b765e6f3fae7a108d34ec6e0674b16ef8cb45454ba8fe7"
-      },
-      {
-        "id": "picture.retro.acd9d9f4676233f5",
-        "sha256": "0abb347921f9d27976da9973ef6ead9023c1033bc056e3a07e1c1993b7c5d57e",
-        "owner": {
-          "baseCampaignKey": "neon-mosaic/2/68f10772f1871b8b",
-          "levelId": "neon-vd-pack",
-          "levelRevision": "2",
-          "themeId": "retro"
-        },
-        "dimensions": {
-          "width": 1152,
-          "height": 576
-        },
-        "alpha": "opaque",
-        "required": false,
-        "defaultAssetSha256": "3b6e3c8701c1ccb3e37c0c0f5de42b2a6862d5e787771dc1d94f86fe15aa312f"
+        "defaultAssetSha256": "c0a2d652d4d20fdd45a82b852f628fbfd01ab210dcb0a24787c110cccb8db719"
       },
       {
         "id": "picture.retro.c1c284feee494d49",
@@ -712,97 +815,80 @@
           "themeId": "retro"
         },
         "dimensions": {
-          "width": 1152,
-          "height": 576
+          "height": 576,
+          "width": 1152
         },
         "alpha": "opaque",
         "required": false,
         "defaultAssetSha256": "fa4c4626c10e19ae26fc40515d1c36ec8c8f96c3f65e8a67148255cf3f346ab9"
       },
       {
-        "id": "picture.retro.caa2e6288933d9e4",
-        "sha256": "62d5453c35bc51fa926bd73064bc23391314549727c59b8cb2ef19ceb33c56a5",
+        "id": "picture.retro.c2237477481c6b0a",
+        "sha256": "8dff379e7f560e9ab7be4475a4f3e3e272327b70f4363c49b91c79a888e622aa",
         "owner": {
-          "baseCampaignKey": "neon-mosaic/2/68f10772f1871b8b",
-          "levelId": "neon-bezkonechnyk-pack",
+          "baseCampaignKey": "neon-mosaic/2/56d7451c6b50ab4b",
+          "levelId": "neon-fpv-pack",
           "levelRevision": "2",
           "themeId": "retro"
         },
         "dimensions": {
-          "width": 1152,
-          "height": 576
+          "height": 576,
+          "width": 1152
         },
         "alpha": "opaque",
         "required": false,
-        "defaultAssetSha256": "cf6625de9bc2859e02f3db98501e435b1c7512743b0a8f90d00444fcc516edda"
+        "defaultAssetSha256": "71c79917cef1a060dd3c9e863ab3f46d750a0d5cbb17df1b67ef3e515ff1aeac"
       },
       {
-        "id": "picture.retro.d0468e29370b9aed",
-        "sha256": "1788d925babf774aa7f00f0e6b42ba5c6fac81275deea98f42b48085f1719cee",
+        "id": "picture.retro.c7e842f8b75dbbf4",
+        "sha256": "ae82649e6322f12876c3f4f3e54c6cf617303ac8aea9393c9d4c52d5b8802e19",
         "owner": {
-          "baseCampaignKey": "neon-mosaic/2/68f10772f1871b8b",
-          "levelId": "neon-fish-pack",
+          "baseCampaignKey": "neon-mosaic/2/56d7451c6b50ab4b",
+          "levelId": "neon-fly-free-pack",
           "levelRevision": "2",
           "themeId": "retro"
         },
         "dimensions": {
-          "width": 1152,
-          "height": 576
+          "height": 576,
+          "width": 1152
         },
         "alpha": "opaque",
         "required": false,
-        "defaultAssetSha256": "ab7cbfb2fbf95d44cc013f2c25d42d101bbf8a1b31945208174cf6ce1f55879f"
+        "defaultAssetSha256": "5b5304d895e258fece7f361f95255976824b4d57ef348b917cf07383f01e5029"
       },
       {
-        "id": "picture.retro.d0d5568e9ba00bd4",
-        "sha256": "3926c3431a8b2079b0dae80ccd839d84b3e5cbbc08126e7b9709d82a90e9e5b1",
+        "id": "picture.retro.cc772910b64b94f0",
+        "sha256": "d752e560636ba90d4dcec4a012ca4532577697e7a3ee159078435a64962364c4",
         "owner": {
-          "baseCampaignKey": "neon-mosaic/2/68f10772f1871b8b",
-          "levelId": "neon-bandura-pack",
-          "levelRevision": "2",
+          "baseCampaignKey": "equipment-workshop/1/7bbeedba8b221cf4",
+          "levelId": "workshop-01",
+          "levelRevision": "1",
           "themeId": "retro"
         },
         "dimensions": {
-          "width": 1152,
-          "height": 576
+          "height": 576,
+          "width": 768
         },
         "alpha": "opaque",
         "required": false,
-        "defaultAssetSha256": "64cd82274046c78a8e35bb594df99346ddf3f567958b808c0d37a8da25d31ff4"
+        "defaultAssetSha256": "a5ed4f007f732f3f6f9ab3e1e731970a53112a97683158088c769b884d5ecc69"
       },
       {
-        "id": "picture.retro.d3223654223fed14",
-        "sha256": "8bee2b5894ddd9436bcc533357a85b9a6e22234b07d41c91b7b667f0572d3561",
+        "id": "picture.retro.cda797a86132fff4",
+        "sha256": "dfedfba5d97304da62bf308acbaaa57e9eaaad08e929e63fc4e8ffa1d5d7af1d",
         "owner": {
-          "baseCampaignKey": "neon-mosaic/2/68f10772f1871b8b",
-          "levelId": "neon-fpv-line-pack",
+          "baseCampaignKey": "neon-mosaic/2/56d7451c6b50ab4b",
+          "levelId": "neon-victory-drones-pack",
           "levelRevision": "2",
           "themeId": "retro"
         },
         "dimensions": {
-          "width": 1152,
-          "height": 576
+          "height": 576,
+          "width": 1152
         },
         "alpha": "opaque",
         "required": false,
-        "defaultAssetSha256": "492dd9c85f2b8110a5c4b2f55bb1e9e5791a6fddfe90b74eaf1c6486312f3cab"
-      },
-      {
-        "id": "picture.retro.d45b321fa8191a25",
-        "sha256": "ddef19d16114092a32321146e8c847d2b32bd7510ffd53ac6c558f5b83067587",
-        "owner": {
-          "baseCampaignKey": "neon-mosaic/2/68f10772f1871b8b",
-          "levelId": "neon-ornek-tulip-pack",
-          "levelRevision": "2",
-          "themeId": "retro"
-        },
-        "dimensions": {
-          "width": 1152,
-          "height": 576
-        },
-        "alpha": "opaque",
-        "required": false,
-        "defaultAssetSha256": "b3bdfec3871d75737fbd2ba31bdd8c606159417b6becb227abc000b522f5f3df"
+        "defaultAssetSha256": "4b998d2a0374c6df98eaf105bdb287ed3ae259812fdb44ead179655a38e23e90"
       },
       {
         "id": "picture.retro.d74d6fdc5d5d3930",
@@ -814,8 +900,8 @@
           "themeId": "retro"
         },
         "dimensions": {
-          "width": 1152,
-          "height": 576
+          "height": 576,
+          "width": 1152
         },
         "alpha": "opaque",
         "required": false,
@@ -831,131 +917,97 @@
           "themeId": "retro"
         },
         "dimensions": {
-          "width": 1152,
-          "height": 576
+          "height": 576,
+          "width": 1152
         },
         "alpha": "opaque",
         "required": false,
         "defaultAssetSha256": "caebb9596c33c491e6c6d5f9a793228977af249d0635628f800775f772c09c30"
       },
       {
-        "id": "picture.retro.e5562fd98729b905",
-        "sha256": "0f0ff2279dda1b15a069582237ae5c8ec91ca8132fa1b954d6c99f68193a4826",
+        "id": "picture.retro.dbe0b00697e28d96",
+        "sha256": "c4c069a82945bfa096886957a3c4499dd283acb0ce2257c4cfe75f81eda785bb",
         "owner": {
-          "baseCampaignKey": "neon-mosaic/2/68f10772f1871b8b",
-          "levelId": "neon-victory-drones-pack",
+          "baseCampaignKey": "neon-mosaic/2/56d7451c6b50ab4b",
+          "levelId": "neon-barvinok-pack",
           "levelRevision": "2",
           "themeId": "retro"
         },
         "dimensions": {
-          "width": 1152,
-          "height": 576
+          "height": 576,
+          "width": 1152
         },
         "alpha": "opaque",
         "required": false,
-        "defaultAssetSha256": "e774a923b8326dd80d63b832f1eead7c15d617252fcc53b307a6ff229f0e2d0d"
+        "defaultAssetSha256": "16560e3e416e3df5eca283bf13189f79c86f8c8665d5c0c254d203a706f1afdf"
       },
       {
-        "id": "picture.retro.e8acb5142f7bfee0",
-        "sha256": "0b15c4dea0bfddc7b7695d247ee426c9abdf4042ed3a8e0456f5c82d3c3495ed",
+        "id": "picture.retro.dd0d6967164bb4a8",
+        "sha256": "8be849200c416de0de2c533c51294215040641510136acf04c758403b38c0da0",
         "owner": {
-          "baseCampaignKey": "neon-mosaic/2/68f10772f1871b8b",
-          "levelId": "neon-swallow-pack",
+          "baseCampaignKey": "neon-mosaic/2/56d7451c6b50ab4b",
+          "levelId": "neon-ruzha-pack",
           "levelRevision": "2",
           "themeId": "retro"
         },
         "dimensions": {
-          "width": 1152,
-          "height": 576
+          "height": 576,
+          "width": 1152
         },
         "alpha": "opaque",
         "required": false,
-        "defaultAssetSha256": "408faf828ad562cc176216d5665d773cfa80541ebdd0abe9fc9f15c6ef8e7331"
+        "defaultAssetSha256": "e2cd42d0268e9d57866b95ad377cd77f09cbd50cfa3fca3e36a1fa86297dcddf"
       },
       {
-        "id": "picture.retro.eb74081e20092228",
-        "sha256": "a2afdc7abbde67131c0aa972c79a6e56f0b311f53c4a536f13a5880bc9e40aec",
+        "id": "picture.retro.f9dbf6651ab32e40",
+        "sha256": "eeac90d4477d319e142934eeb0346d7b69f785cbfaf09ec0462dff08534b916d",
         "owner": {
-          "baseCampaignKey": "neon-mosaic/2/68f10772f1871b8b",
-          "levelId": "neon-tsymbaly-pack",
+          "baseCampaignKey": "neon-mosaic/2/56d7451c6b50ab4b",
+          "levelId": "neon-kalyna-pack",
           "levelRevision": "2",
           "themeId": "retro"
         },
         "dimensions": {
-          "width": 1152,
-          "height": 576
+          "height": 576,
+          "width": 1152
         },
         "alpha": "opaque",
         "required": false,
-        "defaultAssetSha256": "605496ffbb501f5ad6c953cfad30e05ca439aba669993dd59c56331fadf4d219"
+        "defaultAssetSha256": "c0e92c1b1426ad81bfb02160fdf47b2ab1cd8f75079ec8e27f384edd21699598"
       },
       {
-        "id": "picture.retro.f23661fc0d17aa5a",
-        "sha256": "6c19c3914b849dec562627f61531f57f1885f42702185ee96fc2d99bfe31c84c",
+        "id": "picture.ukraine.7bce972e2253bbb8",
+        "sha256": "dce0b36bc8c1a89800396255cfc7dcac10f5177ebb5f32d55036ba4e0a36e05c",
         "owner": {
-          "baseCampaignKey": "neon-mosaic/2/68f10772f1871b8b",
-          "levelId": "neon-didukh-pack",
-          "levelRevision": "2",
-          "themeId": "retro"
+          "baseCampaignKey": "equipment-workshop/1/7bbeedba8b221cf4",
+          "levelId": "workshop-02",
+          "levelRevision": "1",
+          "themeId": "ukraine"
         },
         "dimensions": {
-          "width": 1152,
-          "height": 576
+          "height": 576,
+          "width": 768
         },
         "alpha": "opaque",
         "required": false,
-        "defaultAssetSha256": "9385ea398379cd416417c8807399ca0cc87399ea59e16c1309eed1f3a1822e26"
+        "defaultAssetSha256": "9603c8e9ddf56f0aa8ca273ef65c25a1d2b78890fc456c1cf94765b60a039fdb"
       },
       {
-        "id": "picture.retro.f40a730e0211e4e3",
-        "sha256": "f0e693768c566fab49b13e3887cf39954ffd706ff408e7f245f34f6026f0b561",
+        "id": "picture.ukraine.f12529165334e7a5",
+        "sha256": "93eb89a9d324afb2a0b1b69c8e1ac5a88c7cf42c08c49373ae82d04aafac45fc",
         "owner": {
-          "baseCampaignKey": "neon-mosaic/2/68f10772f1871b8b",
-          "levelId": "neon-deer-pack",
-          "levelRevision": "2",
-          "themeId": "retro"
+          "baseCampaignKey": "equipment-workshop/1/7bbeedba8b221cf4",
+          "levelId": "workshop-01",
+          "levelRevision": "1",
+          "themeId": "ukraine"
         },
         "dimensions": {
-          "width": 1152,
-          "height": 576
+          "height": 576,
+          "width": 768
         },
         "alpha": "opaque",
         "required": false,
-        "defaultAssetSha256": "2a415ad661a4735f0821557756b20e7f0d1e5f7990dc2431b4bed4c6b2380edc"
-      },
-      {
-        "id": "picture.retro.fb31cf5e5c9b0bd9",
-        "sha256": "cf38d44fc12b85365f89cbb06763af0506939b01a383598ceed6f4263eed7131",
-        "owner": {
-          "baseCampaignKey": "neon-mosaic/2/68f10772f1871b8b",
-          "levelId": "neon-fly-free-pack",
-          "levelRevision": "2",
-          "themeId": "retro"
-        },
-        "dimensions": {
-          "width": 1152,
-          "height": 576
-        },
-        "alpha": "opaque",
-        "required": false,
-        "defaultAssetSha256": "67e328e2776e10a80ca3afbe150eb974fdec8a76845f1445457450b53a201a8a"
-      },
-      {
-        "id": "picture.retro.fda42d627f21487d",
-        "sha256": "b48a33c62df0563c67bc2c5c56f9c1b10b32b7bdc1b5e3f4bc7f227053b9c090",
-        "owner": {
-          "baseCampaignKey": "neon-mosaic/2/68f10772f1871b8b",
-          "levelId": "neon-petrykivka-pack",
-          "levelRevision": "2",
-          "themeId": "retro"
-        },
-        "dimensions": {
-          "width": 1152,
-          "height": 576
-        },
-        "alpha": "opaque",
-        "required": false,
-        "defaultAssetSha256": "2b244bba4398b1eea92f004d2ef9bfa1d8859560b5d538a893b7f40bcbcaf35f"
+        "defaultAssetSha256": "f5c3f85aa77db74a39d5dd1fd955b04edfc2f14a179a2057b519b306b14713d8"
       }
     ]
   }

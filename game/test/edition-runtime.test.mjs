@@ -347,7 +347,7 @@ test('actual company host closure retains explicit Demo dependencies and preserv
   assert.ok(catalog.clips.length > 0);
   assert.equal(new Set(recordings).size, recordings.length);
   const required = [
-    ...['fpv', 'ukraine', 'retro', 'coupa'].flatMap((world) =>
+    ...['fpv', 'ukraine', 'retro'].flatMap((world) =>
       ['versus', 'versus-portrait', 'team', 'team-portrait'].map(
         (mode) => `game/ui/art/menu-scenes/${world}-${mode}.webp`,
       ),
@@ -453,21 +453,21 @@ test('standalone menu projection preserves selected profile data and fallback wi
       selected.id === 'fpv',
     );
     assert.ok(!resources.includes('game/ui/art/menu-scenes/retro.webp'));
-    assert.ok(!resources.some((name) => /(?:fpv|ukraine|retro|coupa)-(versus|team)/.test(name)));
+    assert.ok(!resources.some((name) => /(?:fpv|ukraine|retro)-(versus|team)/.test(name)));
     assert.doesNotMatch(
       projectEditionMenuScenes(original, [id]).toString(),
-      /(?:fpv|ukraine|retro|coupa)-(versus|team).*\.webp/,
+      /(?:fpv|ukraine|retro)-(versus|team).*\.webp/,
     );
     if (selected.wordmark) assert.ok(resources.includes(`game/ui/${selected.wordmark.slice(2)}`));
   }
   assert.throws(
-    () => projectEditionMenuScenes(bytes('export const noLookup = {};'), ['coupa-all']),
+    () => projectEditionMenuScenes(bytes('export const noLookup = {};'), ['droneaid']),
     /explicit profile lookup/,
   );
 });
 test('multi-edition menu builds retain their neutral FPV fallback and every selected scene', async () => {
   const original = await fs.readFile(new URL('../ui/menu-scene-catalog.mjs', import.meta.url));
-  const ids = ['coupa-all', 'droneaid-nl-community'];
+  const ids = ['droneaid', 'droneaid-nl-community'];
   const projected = await import(
     `data:text/javascript;base64,${projectEditionMenuScenes(original, ids).toString('base64')}`
   );
@@ -541,7 +541,7 @@ test('shared guide scenario projects selected appearance without changing a mech
       await fs.readFile(new URL('../content/scenarios/line-impact-demo.json', import.meta.url)),
     ),
     original = structuredClone(source),
-    theme = createCompanyTheme('coupa');
+    theme = createCompanyTheme('droneaid');
   const projected = projectEditionGuideScenario(source, {
     theme,
     classes: [

@@ -4,6 +4,7 @@ import { readFile } from 'node:fs/promises';
 import { couchPage } from './helpers/couch-host.mjs';
 import { managedIndexedDB } from './helpers/managed-idb.mjs';
 import { memoryStorage, settle } from './helpers/solo-dom.mjs';
+import { assertDuelLibraryInventory } from './helpers/duel-library-inventory.mjs';
 
 const fetchResponse = async (path) =>
   String(path).includes('/content-design/assets/') ? new Response(await readFile(path)) : undefined;
@@ -26,14 +27,15 @@ const page = (t, search = '', options = {}) =>
   });
 
 async function openMissions(page, activate) {
-  const missions = page.$('race-library-switch'),
-    listeners = missions.listeners.get('click');
-  assert.equal(listeners.size, 1);
-  const [open] = listeners;
+  const missions = page.$('race-chapters'),
+    handler = missions.onclick,
+    href = globalThis.location.href;
+  assert.equal(missions.closest('[hidden],[inert]') === null, true);
+  assert.equal(missions.disabled, false);
+  assert.equal(typeof handler, 'function');
   let opening;
-  // Observe the real shell listener's operation without changing the input
-  // gesture or its focus. Cold catalogue preparation is not a five-second poll.
-  missions.listeners.set('click', new Set([(event) => (opening = open(event))]));
+  // Observe the actual visible action without replacing its gesture/focus owner.
+  missions.onclick = (...args) => (opening = handler.apply(missions, args));
   try {
     activate();
     assert.ok(opening instanceof Promise, 'The public action must own Missions preparation.');
@@ -43,10 +45,12 @@ async function openMissions(page, activate) {
       'Preparing missions… Your current race is kept.',
     );
   } finally {
-    missions.listeners.set('click', listeners);
+    missions.onclick = handler;
   }
   await opening;
   assert.equal(page.$('journey-chooser')?.open, true);
+  assert.equal(globalThis.location.href, href, 'Missions stays in its existing host.');
+  assert.equal(missions.onclick === handler, true, 'The original Missions owner is retained.');
 }
 
 // Actual host, catalogue, profile and authored picture preparation; the finite
@@ -56,20 +60,24 @@ test(
   { timeout: 60000 },
   async (t) => {
     const p = await page(t, '', { nativeKeyboard: true, pads: [pad()] });
+    const libraryLink = p.$('race-library-switch'),
+      listeners = libraryLink.listeners.get('click'),
+      teamLink = p.$('race-coop'),
+      teamListeners = teamLink.listeners.get('click');
+    assert.equal(listeners.size, 1);
     assert.equal(p.doc.body.classList.contains('candidate-journey'), true);
     assert.equal(p.$('race-level').children.length, 91);
     assert.equal(p.$('race-journey-note').textContent, 'New Journey · 91 missions');
     assert.doesNotMatch(p.$('race-journey-note').textContent, /unvalidated|test build/i);
-    assert.equal(p.$('race-summary').textContent, 'One race · First return');
+    assert.equal(p.$('race-summary').textContent, 'Capture · Duel · One race · First return');
     assert.doesNotMatch(p.$('race-summary').textContent, /material review/);
     assert.equal(
       p.$('race-installed-status').textContent,
       'Open All missions for Journey, earlier missions and installed chapters.',
     );
-    assert.equal(
-      p.$('race-coop').querySelector('.game-mode-description').textContent,
-      '12 Team missions',
-    );
+    assert.equal(p.$('race-coop').querySelector('.game-mode-label').textContent, 'Team');
+    assert.equal(p.$('race-coop').dataset.gameMode, 'team');
+    assert.equal(p.$('race-coop').querySelector('.game-mode-badge').textContent, '2P');
     assert.equal(p.$('race-solo-return').getAttribute('href'), '../?journey=whole-spatial-v25');
     assert.equal(
       p.$('race-coop').getAttribute('href'),
@@ -93,22 +101,22 @@ test(
     const checkpoint = p.checkpoint();
     const runs = [...p.renders];
     p.join(0);
-    p.focus('race-library-switch');
+    p.focus('race-chapters');
     await openMissions(p, () => p.pulse(0, 0));
     assert.equal(p.$('race-leave-panel').hidden, true);
     assert.equal(p.$('journey-mode').value, 'versus');
     assert.equal(p.$('journey-collection').value, '');
     assert.equal(p.$('journey-lifecycle').value, 'current');
-    assert.equal(p.$('journey-cards').children.length, 186);
+    assertDuelLibraryInventory(p, { lifecycle: 'current' });
     p.$('journey-lifecycle').value = 'archive';
     p.$('journey-lifecycle').emit('change');
     const archived = [...p.$('journey-cards').children].map((card) => card.dataset.missionId);
-    assert.equal(archived.length, 141);
+    assertDuelLibraryInventory(p, { lifecycle: 'archive' });
     assert.equal(archived.filter((id) => JSON.parse(id)[1] === 'whole-spatial-v10').length, 3);
     assert.equal(archived.filter((id) => JSON.parse(id)[1] === 'whole-spatial-v9').length, 3);
     p.$('journey-lifecycle').value = '';
     p.$('journey-lifecycle').emit('change');
-    assert.equal(p.$('journey-cards').children.length, 327);
+    assertDuelLibraryInventory(p);
     assert.ok(
       archived.every((id) =>
         [...p.$('journey-cards').children].some((card) => card.dataset.missionId === id),
@@ -130,7 +138,16 @@ test(
     p.frame(0); // The newly opened dialog observes neutral before accepting Back.
     p.pulse(0, 1);
     assert.equal(p.$('journey-chooser').open, false);
-    assert.equal(p.doc.activeElement.id, 'race-library-switch');
+    assert.equal(p.doc.activeElement.id, 'race-chapters');
+    assert.equal(p.$('race-library-switch') === libraryLink, true);
+    assert.equal(libraryLink.listeners.get('click') === listeners, true);
+    assert.equal(p.$('race-coop') === teamLink, true);
+    assert.equal(teamLink.listeners.get('click') === teamListeners, true);
+    assert.equal(libraryLink.getAttribute('href'), '?journey=legacy');
+    assert.equal(
+      teamLink.getAttribute('href'),
+      'relay-rescue.html?return=versus&journey-return=whole-spatial-v25',
+    );
     assert.deepEqual(p.checkpoint(), checkpoint);
     assert.equal(
       p.renders.every((run, i) => run === runs[i]),
@@ -163,9 +180,7 @@ test(
     );
     assert.equal(p.$('race-library-switch').textContent, 'All missions');
     assert.equal(p.$('race-library-switch').getAttribute('href'), '?journey=whole-spatial-v25');
-    await openMissions(p, () =>
-      assert.equal(p.$('race-library-switch').emit('click').defaultPrevented, true),
-    );
+    await openMissions(p, () => p.$('race-chapters').click());
     p.$('journey-back').click();
     p.$('race-start').click();
     await settle(() => {
@@ -176,7 +191,7 @@ test(
     p.$('race-pause').click();
     p.frame(0);
     const checkpoint = p.checkpoint();
-    await openMissions(p, () => p.$('race-library-switch').click());
+    await openMissions(p, () => p.$('race-chapters').click());
     p.$('journey-lifecycle').value = 'current';
     p.$('journey-lifecycle').emit('change');
     const target = [...p.$('journey-cards').children].find((card) =>
@@ -191,7 +206,7 @@ test(
     await settle(() => p.$('journey-chooser')?.open);
     assert.equal(p.doc.activeElement, target);
     p.$('journey-back').click();
-    assert.equal(p.doc.activeElement.id, 'race-library-switch');
+    assert.equal(p.doc.activeElement.id, 'race-chapters');
     assert.deepEqual(p.checkpoint(), checkpoint);
     assert.equal(p.state(), 'paused');
   },
@@ -240,10 +255,9 @@ test('an explicit prior Journey remains its exact edition with Legacy access', a
     p.$('race-installed-status').textContent,
     /test route; Legacy chapters stay in the ordinary race/,
   );
-  assert.equal(
-    p.$('race-coop').querySelector('.game-mode-description').textContent,
-    'Separate Team arenas',
-  );
+  assert.equal(p.$('race-coop').querySelector('.game-mode-label').textContent, 'Team');
+  assert.equal(p.$('race-coop').dataset.gameMode, 'team');
+  assert.equal(p.$('race-coop').querySelector('.game-mode-badge').textContent, '2P');
   assert.equal(
     p.$('race-coop').getAttribute('href'),
     'relay-rescue.html?return=versus&journey-return=opening',

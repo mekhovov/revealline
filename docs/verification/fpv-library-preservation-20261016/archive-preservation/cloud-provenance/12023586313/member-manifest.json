@@ -1,0 +1,146 @@
+{
+  "format": "revealline-retained-historical-excerpt.v1",
+  "scope": "Retained historical excerpt after an ownership migration. Original bytes are preserved separately. Historical counts, hashes and approvals inside the excerpt describe the original record only; this derived document is not a release qualification, executable restore plan, or complete original inventory.",
+  "originalSHA256": "478d59574c553956e8c08aeda6bc3fbb81a6682f0b012e0ebac371e16db3978d",
+  "originalGitBlob": "8d86498d5997dac4516c86f91816bd439caa09f4",
+  "removedRecordsOrFields": 6,
+  "excerpt": {
+    "members": [
+      {
+        "path": "candidate-verification.json",
+        "bytes": 13906,
+        "sha256": "2b47697c7539242341043829a23b01f9e72d6547df1db81bb60fab88fd62d0ca",
+        "compressedBytes": 5360,
+        "crc32": "7a0ce0ee",
+        "depth": 0
+      },
+      {
+        "path": "capacity-inventory.json",
+        "bytes": 11159,
+        "sha256": "ec457b6e3a7ee30aa45e2a078ec87bd27317e56f21a171aa3af5764902b949c2",
+        "compressedBytes": 3789,
+        "crc32": "f7ab5b29",
+        "depth": 0
+      },
+      {
+        "path": "checksums.json",
+        "bytes": 10444,
+        "sha256": "b116d8420c0e34313b9e51da6f75c9066bab3695827bbd8f79556afcb727594b",
+        "compressedBytes": 3736,
+        "crc32": "a1259c92",
+        "depth": 0
+      },
+      {
+        "path": "editions.json",
+        "bytes": 18723,
+        "sha256": "1d7a29f509ccee8eeee9cec6ec2bf03b74298fcb6cc9c0747875d98003de82e2",
+        "compressedBytes": 6155,
+        "crc32": "e25fd5c4",
+        "depth": 0
+      },
+      {
+        "path": "manifest-droneaid-community.json",
+        "bytes": 143061,
+        "sha256": "b74c200f57a2467dfc39f0f4e2c318d4d487a81f4bbd9491b5cca68a002f9524",
+        "compressedBytes": 52861,
+        "crc32": "f1a90d07",
+        "depth": 0
+      },
+      {
+        "path": "manifest-droneaid-nl-careful-handoff.json",
+        "bytes": 145137,
+        "sha256": "116e1c0cadeb19c0642e21c34972c7b31a705fbe10340b42875e0967be31418e",
+        "compressedBytes": 53357,
+        "crc32": "9224a9fb",
+        "depth": 0
+      },
+      {
+        "path": "manifest-droneaid-nl-community.json",
+        "bytes": 157458,
+        "sha256": "e08bbcda7a23590900016696ac4fa239cdebacdcb1e5382c22bc20cdd05332de",
+        "compressedBytes": 56785,
+        "crc32": "096a2cc8",
+        "depth": 0
+      },
+      {
+        "path": "manifest-droneaid-nl-makers-together.json",
+        "bytes": 145131,
+        "sha256": "c45bee387955ffc3d4e3503a66dd544e5d128a7fe62bf7e1c3a3ad878e72530d",
+        "compressedBytes": 53368,
+        "crc32": "18a523e5",
+        "depth": 0
+      },
+      {
+        "path": "manifest-droneaid-nl-parts-in-motion.json",
+        "bytes": 145479,
+        "sha256": "c1ded2aee75cfd4bd8fb13fdd9d214d84305182aa0eab77538ed03e42d9b332a",
+        "compressedBytes": 53451,
+        "crc32": "8a684fb3",
+        "depth": 0
+      },
+      {
+        "path": "manifest-droneaid-nl-shared-horizon.json",
+        "bytes": 145114,
+        "sha256": "f52d092616658d791de437c729c9ca47c463a1467dabad2c03151145c6c38165",
+        "compressedBytes": 53334,
+        "crc32": "cb071fa1",
+        "depth": 0
+      },
+      {
+        "path": "manifest-droneaid-nl-signals-of-support.json",
+        "bytes": 145206,
+        "sha256": "8c75101fecccb68fc159b792267729bde551ca6c9c3931089a0418cf78232e2f",
+        "compressedBytes": 53371,
+        "crc32": "4035df2d",
+        "depth": 0
+      },
+      {
+        "path": "manifest-droneaid-nl-workshop-lights.json",
+        "bytes": 145118,
+        "sha256": "50ae94436c7700a4deb9a8c314f055775cf617876bc229ed10dcfaff9401e4af",
+        "compressedBytes": 53326,
+        "crc32": "dbb975fb",
+        "depth": 0
+      },
+      {
+        "path": "manifest-social-drone-ua.json",
+        "bytes": 149361,
+        "sha256": "f99c9882603c488d80b9310b79b6a1be362bfdc5df32e51ccdb721f300c8ac9c",
+        "compressedBytes": 54706,
+        "crc32": "9a575ceb",
+        "depth": 0
+      },
+      {
+        "path": "manifest-fpv-learning.json",
+        "bytes": 158190,
+        "sha256": "b5d447efe392b673660487c6d0739091a49f5a6f9d0c4e81be3fb03094ec7a49",
+        "compressedBytes": 57565,
+        "crc32": "2f4b5507",
+        "depth": 0
+      },
+      {
+        "path": "manifest-ukraine-culture.json",
+        "bytes": 154414,
+        "sha256": "97c254dd37f3e8f993a60bd4737098f472dcade8a37008c6fefbb10dab5b3b82",
+        "compressedBytes": 56273,
+        "crc32": "0206bed9",
+        "depth": 0
+      },
+      {
+        "path": "manifest-victory-drones.json",
+        "bytes": 146178,
+        "sha256": "1730e33c7710155fc9daad4bfeff9eb1a0bd04cf4538dee9adcc6c66a1cf10e0",
+        "compressedBytes": 53646,
+        "crc32": "bea63467",
+        "depth": 0
+      }
+    ],
+    "forbiddenNames": [],
+    "unmatchedSecretPatternMembers": [],
+    "knownVendorWasmPatternOccurrences": [],
+    "nestedArchives": 0,
+    "memberCountIncludingNested": 22,
+    "uncompressedBytesIncludingNested": 2704747,
+    "inspectionPassed": true
+  }
+}

@@ -1,3 +1,5 @@
+> Retained historical excerpt after an ownership migration. Exact original bytes are preserved separately. Original totals and verification statements describe the original scope; this excerpt is not a current qualification or a complete test result.
+
 # Native menu packaging verification — 2026-09-29
 
 These are local working-tree verification artifacts for version **0.142.1**. They are not release-admitted, signed or published builds. Existing retained releases and version numbers were not changed. The final artifacts below supersede earlier packages made during this task.
@@ -29,7 +31,6 @@ Final edition output: `/private/tmp/revealline-menu-editions-complete-20260929-r
 
 All **14 editions passed**. All **549 engine source hashes** still agree with the checkout, and 588 comparisons verify the shared launcher closure in both the stable and versioned directories. The largest offline body is `droneaid-nl-community`: **65,745,219 bytes**, below the unchanged **67,108,864-byte (64 MiB) cap**. Each edition includes only its own home scene plus FPV fallback art; its genuinely selectable gameplay assets remain included.
 
-Scene inventory: 18 profiles, 18 distinct landscape image hashes and 19 delivered WebP files including FPV portrait. Largest active compressed image: **700,570 bytes**, below 2 MiB. The Coupa and Dutch aggregate editions have separate original overview compositions. FPV has a separate portrait original; the other 17 scenes use explicitly authored focal crops, not separate original portrait paintings.
 
 ## Evidence and scope
 

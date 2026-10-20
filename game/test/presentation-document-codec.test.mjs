@@ -211,7 +211,7 @@ test('only exact sorted used string dictionaries and integer indexes are accepte
 });
 
 test('small wire dictionaries cannot bypass expanded bytes, strings, nodes or depth', () => {
-  const amplified = envelope(fixture(1100, 'Є'.repeat(4000)));
+  const amplified = envelope(fixture(Math.ceil(LIMITS.logicalBytes / 8000) + 1, 'Є'.repeat(4000)));
   assert.ok(byteLength(canonicalJSON(amplified)) < LIMITS.encodedBytes);
   assert.throws(() => decodePresentationDocument(amplified), /byte budget/);
   const longString = envelope(fixture(1, 'x'.repeat(8193)));
@@ -225,8 +225,8 @@ test('small wire dictionaries cannot bypass expanded bytes, strings, nodes or de
   assert.throws(() => encodePresentationDocument(deep), /structural budget/);
 });
 
-test('logical8MiB and encoded5MiB ceilings are exact and independent', () => {
-  const document = fixture(1050, 'x'.repeat(7900));
+test('logical12MiB and encoded5MiB ceilings are exact and independent', () => {
+  const document = fixture(Math.floor(LIMITS.logicalBytes / 8192), 'x'.repeat(7900));
   let remaining = LIMITS.logicalBytes - byteLength(canonicalJSON(document));
   assert.ok(remaining > 0);
   for (const asset of document.assets) {

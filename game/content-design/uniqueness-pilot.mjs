@@ -75,31 +75,7 @@ const CLASSIC_BRIEFS = [
     artBrief:
       'A rain-soaked 1994 bicycle courier depot viewed from inside a repair alcove, with a red cargo bicycle, stacked parcels, an illuminated wall clock and reflected amber street lights. Avoid arcade-cabinet or train-platform compositions.',
   },
-  {
-    id: 'shared-branches',
-    name: 'Shared market branches',
-    replaces: 'original-spend-shared-harbor',
-    decision:
-      'Secure one side’s required exchange and expand from that return, or build a central connection first and alternate between both branches.',
-    difference:
-      'Four interrupted shelves create two target branches sharing a middle corridor; either side can be approached first but both must be completed.',
-    walls: [
-      { x: 14, y: 8, w: 18, h: 2 },
-      { x: 40, y: 8, w: 18, h: 2 },
-      { x: 14, y: 26, w: 18, h: 2 },
-      { x: 40, y: 26, w: 18, h: 2 },
-    ],
-    objectives: [
-      { id: 'exchange-west', x: 8.5, y: 18.5, required: true },
-      { id: 'exchange-east', x: 63.5, y: 18.5, required: true },
-    ],
-    terrain: [{ id: 'north-delay', kind: 'slow', x: 30, y: 3, w: 12, h: 3 }],
-    powerups: [{ id: 'central-freeze', kind: 'enemy-freeze', x: 36.5, y: 20.5 }],
-    coverage: 0.7,
-    durationSeconds: [55, 120],
-    artBrief:
-      'A circular community market beneath a timber canopy, seen from the central tea stall, with four distinct radial stalls, baskets and one sunlit fabric awning. No skyline, harbour or warehouse layout from the existing collection.',
-  },
+
 ];
 
 export function createClassicUniquenessPilots() {

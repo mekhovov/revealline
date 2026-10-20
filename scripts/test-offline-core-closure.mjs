@@ -473,7 +473,7 @@ test('public community entries own their shared loader offline without opting in
     'game/boot.mjs': 'import "./app.mjs";',
     'game/app.mjs': 'export const ready = true;',
     'game/communities/index.html':
-      '<link rel="stylesheet" href="directory.css"><a href="coupa/">Coupa</a>',
+      '<link rel="stylesheet" href="directory.css"><a href="sample/">Sample</a>',
     ...Object.fromEntries(
       pages.map((name) => [name, '<script type="module" src="../entry.mjs"></script>']),
     ),

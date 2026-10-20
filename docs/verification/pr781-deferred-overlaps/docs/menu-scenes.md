@@ -1,3 +1,5 @@
+> Retained historical excerpt after an ownership migration. Exact original bytes are preserved separately. Original totals and verification statements describe the original scope; this excerpt is not a current qualification or a complete test result.
+
 # Living menu scenes
 
 The shared landing scene is presentation only. It never selects campaigns, rewrites saves, changes gameplay, plays audio or moves focus. The host imports `attachMenuScene` from `game/ui/menu-scenes.mjs` and loads `game/ui/menu-scenes.css` after its legacy artwork styles.
@@ -14,7 +16,6 @@ The renderer draws at most 30 frames per second while the landing is visible and
 
 This is a lightweight cinemagraph treatment of a flattened image, not a rigged scene or generated video. Regional sampling cannot create missing background pixels or independently rotate an object baked into the image. More substantial object motion needs authored cutouts, repaired backgrounds and animation, or a separately produced seamless video. The [research and implementation boundary](verification/landing-cinemagraph-research-2026-09-29.md) records the primary references, available assets and limitations.
 
-All landing scenes also have a restrained monochrome receiver texture beneath the text-safe overlay. Ordinary profiles use 3% opacity. FPV, Retro, Coupa Developer Integration and every DroneAid profile use 5%; workshop, parts, handoff and horizon DroneAid scenes retain this technical treatment. The texture advances through four frames per second and uses soft-light compositing, so it preserves the underlying artwork's palette. The catalog retains `signalOpacity` and the older `signalPeakOpacity` metadata; the fixed twelve-second CSS opacity pulse has been removed.
 
 `menu-signal-loss.mjs` adds occasional actual image disruption: a first burst after 8–12 visible, active seconds, followed by randomized 18–32 second quiet intervals. Each 550–850 ms burst smoothly rises and fades at up to 40% opacity, with monochrome noise and one to three horizontally displaced bands sampled from the landing artwork. It reuses the gameplay receiver-noise algorithm, never samples text or controls, and remains under the readability shade. The longest processing edge is 256 pixels and drawing is capped at 12 fps during a burst. Idle intervals own one timer and do no drawing. Hidden/covered/disabled states immediately discard a burst; resuming schedules a fresh delay rather than catching up. No audio or flashes are added.
 
@@ -27,13 +28,6 @@ Every layer is aria-hidden, inert, pointer-transparent and unfocusable. Renderin
 | `fpv`                                  | Authored dawn hangar, amber/cyan                    | Clouds, sunbeam, lamp, foliage    |
 | `ukraine`                              | Original generated Ukrainian river valley at dawn   | Clouds, river, sunbeam            |
 | `retro`                                | Original generated 1994 Forever rainy arcade street | Wet pavement, neon lamps          |
-| `coupa`                                | Existing Coupa home illustration                    | Water, sunbeam                    |
-| `coupa-village`                        | Original generated coastal village overview         | Water, clouds                     |
-| `coupa-spend-in-motion-theme`          | Spend-city campaign artwork                         | Water, clouds                     |
-| `coupa-inside-village-theme`           | Inside-village campaign artwork                     | Water, clouds, garden lamp        |
-| `coupa-source-to-pay-theme`            | Source-to-pay campaign artwork                      | Water, clouds                     |
-| `coupa-product-operations-theme`       | Product-operations campaign artwork                 | Work lamps and window light       |
-| `coupa-developer-integration-theme`    | Network-atlas campaign artwork                      | Anchored network-route light      |
 | `droneaid-community`                   | Community-relay campaign artwork                    | Workshop lamps, steam above a cup |
 | `droneaid-nl-community`                | Supplied DroneAid blue/yellow poster with a real drone | One arrival, receiver dropouts    |
 | `droneaid-nl-workshop-lights-theme`    | Workshop-lights campaign artwork                    | Window light and overhead lamp    |
@@ -60,13 +54,6 @@ Only FPV uses a separate portrait original. Every other row uses an explicit foc
 | `fpv`                                  | 68% 50%               | 50% 50%              | Separate portrait original |
 | `ukraine`                              | 68% 50%               | 71% 50%              | Landscape crop             |
 | `retro`                                | 68% 50%               | 68% 50%              | Landscape crop             |
-| `coupa`                                | 62% 50%               | 65% 45%              | Landscape crop             |
-| `coupa-village`                        | 68% 50%               | 71% 50%              | Landscape crop             |
-| `coupa-spend-in-motion-theme`          | 60% 50%               | 64% 50%              | Landscape crop             |
-| `coupa-inside-village-theme`           | 60% 50%               | 55% 50%              | Landscape crop             |
-| `coupa-source-to-pay-theme`            | 60% 50%               | 58% 50%              | Landscape crop             |
-| `coupa-product-operations-theme`       | 60% 50%               | 62% 50%              | Landscape crop             |
-| `coupa-developer-integration-theme`    | 60% 50%               | 57% 50%              | Landscape crop             |
 | `droneaid-community`                   | 64% 50%               | 67% 50%              | Landscape crop             |
 | `droneaid-nl-community`                | 50% 48%               | 90% 50%              | Supplied poster, CSS framing |
 | `droneaid-nl-workshop-lights-theme`    | 62% 50%               | 68% 50%              | Landscape crop             |

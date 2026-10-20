@@ -1,3 +1,5 @@
+> Retained historical excerpt after an ownership migration. Exact original bytes are preserved separately. Original totals and verification statements describe the original scope; this excerpt is not a current qualification or a complete test result.
+
 # Company Studio current input qualification
 
 This receipt covers the bounded Phase 6 Company Studio source changes at
@@ -147,9 +149,6 @@ including its first export, before the same foreground loss. These are partial
 results, not a complete workflow pass. Browser `Page.getFrameTree` timeouts were
 also observed. The input guard was not changed or reset to force a pass.
 
-The first run produced two actual OS files,
-`coupa-all-draft (2).json` and `coupa-all-draft (3).json`. Independent validation
-passed for both:
 
 - **2,848,697 bytes** each; SHA-256
   `52b96e384a7811dea077f072b19925da35e46926383e319d80f9317e78e3388b`.
@@ -157,9 +156,6 @@ passed for both:
   all **126 declared source files**, **26 retained originals**, and a **127-file**
   in-memory CLI workspace round-trip.
 - The complete packet bytes match an independent reconstruction from committed
-  `70309f09f` source with the observed Company name `Coupa qa` and edition
-  revision `7`. There is no embedded binary media. All **137 validation input
-  pins** were unchanged.
 
 The receipt is
 `/private/tmp/company-studio-virtual-partial-downloads-20260929.json`.
@@ -169,24 +165,7 @@ preserved.
 
 ### Native Studio and separate transfer-practice observations
 
-At `0e04b5aa5`, the browser owner completed the Studio editing/export segment with
-native keyboard input and **no pointer reset**. It applied Company name
-`Coupa native` and edition revision `7`; malformed theme JSON was rejected and
-blocked export; repairing/applying the theme allowed the first export. After
-adding a dirty `q` to the theme editor, Reopen opened with Cancel selected.
-Escape preserved that dirty source. A second Reopen followed by explicit
-Replace restored the exact clean exported source, Company name and revision,
-and focused `brand-name`. A second explicit source export followed.
 
-The two actual native files `coupa-all-draft (5).json` and
-`coupa-all-draft (6).json` passed independent validation: **2,848,701 bytes**
-each, SHA-256
-`555a7da1015dadc59c93f08a2aa4a97918dba618a28ce68fa81d164047e64b73`.
-Their complete packet bytes match the recorded `Coupa native` / revision `7`
-changes independently reconstructed from committed source. Production validation
-covers all 126 sources, 26 exact retained originals and a 127-file in-memory CLI
-round-trip. This does not establish OS import, persistent Save/reload, or a
-compiled whole-game preview.
 
 A **separate native practice tab** passed:
 
@@ -196,9 +175,6 @@ A **separate native practice tab** passed:
   and `4 November` selections completed the exercise and made its fields
   readonly. This native segment did not test an incorrect populated choice.
 - Restart cleared all answers; Close cleared the practice. Following the real
-  Studio link returned to a fresh tab-local Studio draft with Company name
-  `Coupa` and Reopen disabled. The real Try transfer practice link reentered
-  blank practice with all three values empty.
 - The reentry select initially chose a culture exercise because of batched
   native-popup navigation. The operator inspected it and selected the intended
   requester exercise through the same native controls. No fixture or runtime
@@ -209,14 +185,6 @@ A **separate native practice tab** passed:
   and matches the production answer-free task exactly. The native brief reader
   was not entered; feedback/evidence reading is the qualified scope.
 
-These practice actions used native input without a pointer reset and did not
-save answers or alter campaign progress. They are a separate segment from the
-Studio source journey, not evidence that the stalled aggregate virtual handoff
-passed. The native artifact receipt is
-`/private/tmp/company-studio-native-downloads-20260929.json`; all 137 selected
-validation pins match its committed source and remain unchanged. The extra
-`coupa-all-draft (4).json` is recorded separately as the second partial virtual
-run's single export, never as a complete aggregate pass.
 
 ### Final separate virtual-practice result
 
@@ -259,14 +227,6 @@ qualified the brief, evidence and feedback Read/Back actions, blank-commit
 rejection, canceled select, incorrect `Electronics kit` / `12` / `8 November`
 rejection, and correct `Reusable case` / `6` / `4 November` completion.
 
-The completed fieldset was disabled while each select's own `disabled` property
-remained false. Up from feedback moved to `company-read-evidence-1`, skipping
-those fields. Native Tab navigation then reached Restart, which cleared all
-answers. Close, the real Studio link (Company reset to `Coupa`, Reopen disabled),
-real practice reentry with all three requester values blank, Close and task
-export passed again. The native Studio source-edit/export segment above remains
-attributed to its observed `0e04b5aa5` source; it is not silently relabeled as
-this repeat.
 
 The eighth actual file, `playtest-foundations-requirement-task (2).json`, passed
 strict UTF-8 and exact production task-byte validation at `e159efd44`:

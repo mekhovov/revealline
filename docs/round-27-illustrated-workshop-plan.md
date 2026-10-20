@@ -1,8 +1,9 @@
 # Round 27 implementation plan: Illustrated Equipment Workshop
 
+> Retained excerpt after an ownership migration. Historical totals and verification statements describe the original scope; this excerpt is not a current release qualification. Original bytes and removed material are preserved separately.
+
 Status: reviewed for implementation, 2026-09-12, after the verified v0.16.0 freeze at source `8fb6b5782a6fee85211b9bbbfb3d13a1d1a60c43`. The proposed working application version is **0.17.0** and the existing Workshop content version becomes **1.1.0**. Neither version is a verified release yet. The review retains the content-only boundary, exact old-pack identity comparisons, separate decoded-image browser evidence, unchanged size budgets, and preserved source art and historical proofs.
 
-Deliver three original collectible pictures for **Garden of Threads**, **Neon Switchboard** and **Clear Ledger**, using the three already playable Workshop maps. This is a player-visible art increment: completing a heritage, 1990s or spend-themed mission reveals a distinct illustrated place, including for players who collected that mission before installing the new edition. Keep 29 campaign maps, six packs, seven classes and all existing rules. Authored reward coverage increases from three Homeward pictures to six total; the other 23 maps remain procedural. First Flight remains separate practice content.
 
 The [candidate](round-27-candidate-backlog.md) records the coverage audit and three complete scene briefs. The separate Ready **Export attempt** usability issue remains outside this implementation.
 
@@ -14,7 +15,6 @@ Use the existing [Equipment Workshop](../game/content/packs/equipment-workshop.j
 | -------------------------------- | ------------------------------------- | --------------------------------------------------------------------------------------------------- | ---------------- |
 | `workshop-01`, Garden of Threads | `ukraine` / heritage; Woven Morning   | Imagined Ukrainian craft courtyard, flowering pear, painted everyday objects and warm morning light | `stitch-bloom`   |
 | `workshop-02`, Neon Switchboard  | `retro` / arcade; After-School Arcade | Original neighborhood computer/arcade room after school in an imagined 1994                         | `neon-fireworks` |
-| `workshop-03`, Clear Ledger      | `coupa` / network; Bright Balance     | Warm miniature exchange city with connected workshops, warehouse and canal                          | `savings-nodes`  |
 
 The three images are static backgrounds. Existing actors, supply pads, objectives, trails and theme finales remain independent overlays. Do not paint active enemies, rewards, controls or misleading cut/hazard symbols into a picture. No image-specific animation schema or collider changes are included.
 
@@ -52,7 +52,6 @@ Generate with the available image-generation tool. Preserve each original PNG ex
 
 Do not crop, resize, quantize, recolor, recompress or otherwise edit imagery using Python, Node, canvas exports or an image CLI. If a generated original exceeds budgets or misses the composition, preserve it under a separate source/attempt path and regenerate, or inspect it and request a separate derivative through the image-editing tool. Link any derivative to its exact parent, preserve both, and embed the selected file's exact bytes. Do not overwrite an accepted original silently. Hash/header/dimension reads and runtime `contain` drawing are validation/presentation, not image editing.
 
-The candidate's reference rationale is retained: Petrykivka-inspired everyday objects and nature are supported by the [UNESCO tradition record](https://ich.unesco.org/en/RL/petrykivka-decorative-painting-as-a-phenomenon-of-the-ukrainian-ornamental-folk-art-00893?lang=en); memorable recognizable locations with their own twist follow [Gary Winnick's development account](https://blog.thimbleweedpark.com/location_location_location.html). Deliberate retro lighting is inspired by [Sabotage's own Sea of Stars description](https://sabotagestudio.com/presskits/sea-of-stars/), without claiming its renderer. The city is a fictional metaphor for coordination and spend visibility informed by [Coupa's platform account](https://www.coupa.com/blog/an-8-trillion-advantage-coupas-community-driven-ai-turns-transactions-into-intelligent-insights/). No reference artwork, branded mascot, screenshot or customer data is copied. These sources inform art direction, not measured enjoyment or historical certification.
 
 ## 3. Reproducible, bounded builder
 
@@ -131,5 +130,3 @@ If gallery replacement or animation review reveals a real runtime defect, report
 5. Freeze and verify v0.17 only after the reviewed source passes the regular complete gates. Record exact original/embedded/generated/archive hashes, dimensions, byte budgets, identities, test totals, browser observations and limitations. Commit source/provenance/tooling, integration/tests and verified release evidence in logical milestones under root coordination.
 
 Suggested parallel ownership: root generates/reviews art and owns browser/version/release work; one agent owns the isolated builder/source recipe/semantic tests; another owns old-to-new identity/transport fixtures and documentation. No one changes core, old proofs, Homeward assets or frozen output for this increment.
-
-Completion means three actually displayed original rewards, preserved gameplay/progress identity, reproducible portable images, observed returning-player collection and all four existing finales. It does not establish human retention, historical authenticity, official Coupa branding, physical-device performance, public hosting, or completion of the user's full long-term asset ambition.

@@ -1,7 +1,5 @@
 # Moving Edges optional chapter sources
 
-This source candidate pairs Terrace Stitch, Survey Wheel and Breakwater Return with twelve original reward stills in four independent owners: `moving-edges-fpv`, `moving-edges-ukraine`, `moving-edges-retro` and `moving-edges-coupa`. The three geometry families remain three maps across all four themes. Runtime catalog admission, production assessment, native play and public delivery are separate work.
-
 [The geometry](../moving-edges/README.md) is retained from commit `1dc861d6bf4cc4d49c5dcc2e419075d9afd7c19e`; [the art](../moving-edges-art/README.md) is retained from `601963d14aca2bec573991d1d2cac2a20c1b4602`. [Editions](editions.json) bind exact source cells, level IDs, themes, original paths/hashes and display text. [The builder](build.mjs) authenticates the source pack, controllers, both original certificates, theme definitions and complete art provenance before preparing any pair. The existing full PNG decoder verifies every original. Thumbnails do not enter the packages.
 
 All twelve PNGs remain byte-exact, totaling 34,526,635 bytes. Ukraine's Survey Wheel original is 1773×887; the other eleven are 1774×887. Exact per-cell dimension admission retains that one-column variation. `contain`/`nearest` posters preserve aspect, and every story is null. The images are fictional scenic rewards; their perspective, paths and warning-like lights are not collision or telegraph geometry. Original prompts and recorded deviations remain authoritative. No new animation, movie or soundtrack is added.
@@ -37,7 +35,5 @@ For an explicit payload export, create the cache parent and choose a new destina
 mkdir -p .cache/moving-edges-pairs
 node authoring/library/moving-edges-chapters/build.mjs ukraine .cache/moving-edges-pairs/ukraine
 ```
-
-The other arguments are `fpv`, `retro` and `coupa`. Export produces `descriptor.json`, `pack.json`, `media.rlmedia` and `inputs.json`. Outputs stay outside tracked source; ordinary-path checks do not claim protection against hostile concurrent filesystem renames.
 
 For a replacement, generate a separately identified original, retain its complete effective prompt and actual dimensions, inspect the full frame and verify the original PNG. Update only the intended edition's exact provenance and image pins, regenerate that successor's paired descriptor and repeat affected owner/saved/earned checks. Never substitute a thumbnail or rewrite an old saved or first-earned identity. Future FPV prompts can include action, damaged hostile equipment or recovery alongside friendly operations; keep scenes original and non-graphic. Preserve failed attempts and state source, native and release qualification separately.

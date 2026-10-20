@@ -14,22 +14,22 @@ import { prepareExternalChapter, externalChapterHash } from '../external-chapter
 const raw = await readFile(path.join(ROOT, PROOF_FILE));
 const proof = JSON.parse(raw);
 
-test('114 exact themed routes preserve physical outcomes, full replays and real serialized v4 saved continuations', async () => {
+test('76 exact retained themed routes preserve physical outcomes, full replays and real serialized v4 saved continuations', async () => {
   const candidate = structuredClone(proof);
   const before = JSON.stringify(candidate);
   const checked = await verifyRouteWorlds({ candidate });
   assert.deepEqual(checked.totals, {
-    contexts: 114,
-    wins: 84,
-    failures: 30,
-    ticks: 91620,
-    savedContinuations: 114,
-    originalPictures: 9,
+    contexts: 76,
+    wins: 56,
+    failures: 20,
+    ticks: 61080,
+    savedContinuations: 76,
+    originalPictures: 6,
   });
   assert.equal(JSON.stringify(candidate), before);
   assert.equal(checked.layoutsReused, 3);
   assert.equal(checked.newlyAuthoredGeometry, 0);
-  assert.equal(new Set(checked.routes.map((r) => r.id)).size, 114);
+  assert.equal(new Set(checked.routes.map((r) => r.id)).size, 76);
   for (const themeId of THEME_IDS) {
     const routes = checked.routes.filter((r) => r.themeId === themeId);
     assert.equal(routes.filter((r) => r.difficulty === 'standard').length, 24);
@@ -106,11 +106,10 @@ test('changed physical outcome and saved-picture evidence are rejected by actual
 
 test('new payloads are exact originals and a foreign paired media file cannot be reassigned by changing its outer hash', async () => {
   const ukraine = await buildRouteWorld('ukraine'),
-    retro = await buildRouteWorld('retro'),
-    coupa = await buildRouteWorld('coupa');
+    retro = await buildRouteWorld('retro');
   assert.notEqual(ukraine.descriptor.campaignKey, retro.descriptor.campaignKey);
   assert.ok(ukraine.payloads.pack.size < 32768 && retro.payloads.pack.size < 32768);
-  for (const world of [ukraine, retro, coupa]) {
+  for (const world of [ukraine, retro]) {
     const pack = world.prepared.pack;
     assert.doesNotMatch(pack.description, /exact paired|separate edition|no new track|story movie/);
     assert.match(pack.metadata.rightsStatus, /Existing theme music; no new track/);

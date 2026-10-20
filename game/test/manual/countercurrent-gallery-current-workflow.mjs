@@ -7,7 +7,7 @@ const assert = (value, message) => {
 };
 const same = (left, right) => JSON.stringify(left) === JSON.stringify(right);
 const root = 'authoring/library/countercurrent-art/';
-const themes = ['fpv', 'ukraine', 'retro', 'coupa'];
+const themes = ['fpv', 'ukraine', 'retro'];
 const slots = ['offset-docks', 'sandbar-braid', 'crossing-watch'];
 const localeKey = 'revealline.locale.v1';
 const snapshot = (storage) =>

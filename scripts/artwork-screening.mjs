@@ -327,8 +327,10 @@ export function thumbnailPNG(image, maximum = 96) {
 export function classifyExactSharing(images) {
   const clusters = new Map();
   for (const image of images) {
-    if (!clusters.has(image.canonicalPixels)) clusters.set(image.canonicalPixels, []);
-    clusters.get(image.canonicalPixels).push(image);
+    // Undecoded formats can prove exact byte reuse, never pixel equivalence.
+    const key = image.canonicalPixels ?? `bytes:${image.id}`;
+    if (!clusters.has(key)) clusters.set(key, []);
+    clusters.get(key).push(image);
   }
   const exactCurrent = [],
     historicalReuse = [];

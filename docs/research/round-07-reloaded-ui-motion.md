@@ -1,5 +1,7 @@
 # Round 07 — Reloaded interface, animation and visual rhythm
 
+> Retained excerpt after an ownership migration. Historical totals and verification statements describe the original scope; this excerpt is not a current release qualification. Original bytes and removed material are preserved separately.
+
 Inspected 12 September 2026. XPOSED RELOADED is the principal interaction reference. This audit examines the parts that make its simple rules feel like a finished arcade game: gallery focus, picture rewards, readable moving cuts, impact effects, quick recovery and sequential results. It extends the [Round 06 mechanics observations](round-06-reloaded-observations.md), with new close samples and one additional gameplay recording. Recommendations below use original theme art and are proposals, not implemented features or measured retention findings.
 
 ## Sources and limits
@@ -34,7 +36,6 @@ During the **0:11** Pack 6 sample, the player's yellow core sits at the leading 
 
 Enemy trails show recent movement direction, while local impact bursts identify collisions and erased territory. This makes a tiny actor legible through motion and contrast. The bright leading point is more useful to steering than a large decorative character alone. The footage does not reveal steering latency, input buffering, analog thresholds or touch fairness.
 
-**Recommendation:** preserve a bright, unambiguous player center, directional motion particles, a distinct unfinished trail and a calmer completed frontier in every theme. Draw critical paths and warning boundaries above detailed props. Separate a character's decorative silhouette, glow and shadow from its gameplay footprint, and make that footprint understandable. A detailed drone or Coupa mascot should retain the same routing clarity as its compact icon version. Avoid covering the head or the next turn with exhaust, confetti, sparks or a prop's roof.
 
 ## The timer is not automatically a failure deadline
 
@@ -94,7 +95,6 @@ Reloaded's compact repeated terrain patterns are particularly good at describing
 | **Detailed props** | Showcase missions, wide boards, strong scene identity | Props sit on legible terrain footprints. Decoration never implies a traversable gap where collision blocks movement, or hides a real gap. |
 | **Hybrid** | Recommended default: compact functional terrain plus selected memorable props | The same route, danger mask and ownership contour remain readable when props are enabled or disabled. Preserve space around the active player and cut. |
 
-For the FPV theme, compact barriers and interference symbols can share gameplay roles with more detailed fortifications, equipment silhouettes and landscape props. Ukrainian cultural packs can pair woven or carved tile motifs with gates, woodland and village details. Retro packs can use bright arcade tiles with cassette-era kiosks or neon machinery. Coupa packs can pair ledger-like cells and risk symbols with original stylized office or platform props. These are fictional visual mappings; they do not add mechanics merely because an object looks functional.
 
 Keep a common hierarchy across all four families: **player and live cut first; imminent hazards and traversable boundaries second; collectible/status cues third; revealed artwork and atmosphere behind them**. Theme changes may alter texture, silhouette, palette and reward pictures, while danger remains identifiable by shape and behavior as well as color. A beautiful revealed background is not a promise of safety: the already verified exposed-ground and contour enemies still matter.
 

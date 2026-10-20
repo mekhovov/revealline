@@ -17,7 +17,7 @@ const baseline = await read('authoring/production/register-fracture-themes.json'
 const candidate = await read('authoring/production/register-countercurrent.json');
 const clone = (value) => JSON.parse(JSON.stringify(value));
 const countercurrentWorks = (value) => value.works.filter((w) => w.adapter === 'countercurrent');
-const themes = ['fpv', 'ukraine', 'retro', 'coupa'];
+const themes = ['fpv', 'ukraine', 'retro'];
 
 // Copy only declared metadata to an isolated source tree, then genuinely re-pin a
 // forged authority. Refusals must concern source relationships, not stale hashes.

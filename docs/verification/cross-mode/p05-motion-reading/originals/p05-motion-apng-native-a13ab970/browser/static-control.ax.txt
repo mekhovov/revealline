@@ -1,3 +1,5 @@
+# Retained historical excerpt after an ownership migration. Exact original bytes are preserved separately. Original totals and verification statements describe the original scope; this excerpt is not a current qualification or a complete test result.
+
 Browser tab: 38, Title: "Motion lab — FPV study", URL: "http://127.0.0.1:60342/authoring/motion-lab/".
 0 AXWebArea Motion lab — FPV study, URL: 127.0.0.1:60342/authoring/motion-lab/
 	1 container
@@ -157,7 +159,6 @@ Browser tab: 38, Title: "Motion lab — FPV study", URL: "http://127.0.0.1:60342
 								271 Ukraine Atlas · heritage study
 								272 1994 Forever · tape arcade
 								273 1994 Forever · neon switchback
-								274 Spend Sprite · fictional spend review
 						93 text Character to inspect
 						94 pop up button (collapsed, settable) Character to inspect, Value: Daybreak FPV · unlocked, ID: character, Secondary Actions: Expand
 							275 menu
@@ -169,8 +170,6 @@ Browser tab: 38, Title: "Motion lab — FPV study", URL: "http://127.0.0.1:60342
 								281 Falcon trim · unavailable
 								282 Tape runner · unavailable
 								283 Vector trail · unavailable
-								284 Spend Sprite · unavailable
-								285 Audit pulse · unavailable
 								286 Scout quad · unlocked
 								287 Heavy lift · unlocked
 								288 Fixed-wing body · unlocked
@@ -199,8 +198,6 @@ Browser tab: 38, Title: "Motion lab — FPV study", URL: "http://127.0.0.1:60342
 								299 Falcon trim / shared bird body
 								300 1994 / coral thruster
 								301 Vector trail / mint thruster
-								302 Spend Sprite / pulse + blink
-								303 Audit trim / gold pulse + blink
 								304 Still body / no attachment
 								305 Scout quad / three blades
 								306 Heavy lift / six rotors
@@ -248,7 +245,6 @@ Browser tab: 38, Title: "Motion lab — FPV study", URL: "http://127.0.0.1:60342
 								326 FPV Front / daybreak
 								327 Ukraine Atlas / indigo linen
 								328 (selected) 1994 Forever / after hours
-								329 Navi Network / blue hours
 						134 button Apply family look, ID: apply-family-look
 						135 text Terrain objects
 						136 pop up button (collapsed, settable) Terrain objects, Value: FPV · concrete / mud / wire, ID: terrain-layer, Secondary Actions: Expand
@@ -256,7 +252,6 @@ Browser tab: 38, Title: "Motion lab — FPV study", URL: "http://127.0.0.1:60342
 								331 (selected) FPV · concrete / mud / wire
 								332 Ukraine · stone / reeds / thorns
 								333 1994 · circuit / static / plasma
-								334 Navi · archive / queue / alerts
 						137 container Terrain treatment
 							138 text Terrain treatment
 							139 container terrain-styles

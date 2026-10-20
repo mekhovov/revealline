@@ -67,7 +67,7 @@ test('eighteen real six-mission curricula preserve shared rules and use 108 dist
   assert.equal(CURRICULUM_MISSIONS.length, 108);
   const geometry = (map) => JSON.stringify([map.walls, map.foundations, map.terrain, map.spawns]);
   const old = new Set(
-    ['coupa', 'droneaid', 'droneaid-nl'].flatMap((brandId) =>
+    ['droneaid', 'droneaid-nl'].flatMap((brandId) =>
       createCompanyProject({ brandId }).maps.map(geometry),
     ),
   );

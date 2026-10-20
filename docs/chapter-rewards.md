@@ -1,5 +1,7 @@
 # Chapter appearances
 
+> Retained excerpt after an ownership migration. Historical totals and verification statements describe the original scope; this excerpt is not a current release qualification. Original bytes and removed material are preserved separately.
+
 The source increment after v0.9.0 makes the existing cosmetic rewards attainable in short campaigns. Progress rules, integration tests and player-interface changes are implemented; this guide makes **no browser-verification claim** for the increment. Frozen v0.9.0 keeps its original behavior. The [accepted plan](round-20-player-polish-plan.md) records the rationale and interface acceptance checks.
 
 ## What a clear earns
@@ -8,12 +10,10 @@ Appearance access belongs to the selected campaign. Count each of its declared m
 
 | Tier | Distinct clears needed | Existing appearances |
 | --- | --- | --- |
-| First clear | 1 | Skyline FPV, Fixed-wing body, Falcon trim, Vector trail, Audit pulse |
 | Chapter explorer | The smaller of 4 and the campaign's map count | Night signal FPV, Delta interceptor |
 
 A one-map campaign reaches both tiers on its first clear; a two-map campaign needs two clears for the final tier; Homeward Skies and Equipment Workshop need three. Campaigns with four or more maps retain the four-clear target. This policy applies to authored packs and generated one-map challenges too. No extra reward currency or repeated-login requirement is involved.
 
-**These are cosmetic appearances.** Choosing one changes the body or its presentation effect, not the gameplay class, ability, ammunition, resistance, speed, collision or score rules. Falcon trim, Vector trail and Audit pulse reuse existing images with different animation effects; their names do not promise separate creature models or official company characters. The same chapter clear can unlock appearances without qualifying for an optional equipment seal.
 
 Pathfinder uses the same final-tier target, with campaign-specific wording. Last light still means every map in that campaign is complete. In a three-map chapter both can become true together. They are derived ordinary-clear achievements, separate from replay-verified mastery records.
 

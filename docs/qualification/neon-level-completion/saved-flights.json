@@ -1,6 +1,6 @@
 {
   "format": "revealline-neon-saved-flight-verification.v1",
-  "cases": 216,
+  "cases": 212,
   "rejectionChecks": 7,
   "scope": "Shipped levels, real core and recorder, exact export/import/replay checkpoints and continued directional input. Original artwork choices use explicit authored-picture fallback pins; decoded image bytes and native storage are qualified separately in the browser.",
   "records": [
@@ -717,7 +717,7 @@
       "continuationPreserved": true,
       "picturesPreserved": true,
       "resumedCheckpointMatches": true,
-      "bytes": 313589
+      "bytes": 309162
     },
     {
       "packId": "neon-mosaic-pack",
@@ -728,7 +728,7 @@
       "continuationPreserved": true,
       "picturesPreserved": true,
       "resumedCheckpointMatches": true,
-      "bytes": 315440
+      "bytes": 311013
     },
     {
       "packId": "neon-mosaic-pack",
@@ -739,18 +739,7 @@
       "continuationPreserved": true,
       "picturesPreserved": true,
       "resumedCheckpointMatches": true,
-      "bytes": 314002
-    },
-    {
-      "packId": "neon-mosaic-pack",
-      "levelId": "neon-coupa-pack",
-      "difficulty": "standard",
-      "turnPolicy": "grid-center",
-      "checkpointPreserved": true,
-      "continuationPreserved": true,
-      "picturesPreserved": true,
-      "resumedCheckpointMatches": true,
-      "bytes": 312027
+      "bytes": 309575
     },
     {
       "packId": "neon-mosaic-pack",
@@ -761,7 +750,7 @@
       "continuationPreserved": true,
       "picturesPreserved": true,
       "resumedCheckpointMatches": true,
-      "bytes": 316010
+      "bytes": 311583
     },
     {
       "packId": "neon-mosaic-pack",
@@ -772,7 +761,7 @@
       "continuationPreserved": true,
       "picturesPreserved": true,
       "resumedCheckpointMatches": true,
-      "bytes": 313859
+      "bytes": 309432
     },
     {
       "packId": "neon-mosaic-pack",
@@ -783,7 +772,7 @@
       "continuationPreserved": true,
       "picturesPreserved": true,
       "resumedCheckpointMatches": true,
-      "bytes": 318206
+      "bytes": 313779
     },
     {
       "packId": "neon-mosaic-pack",
@@ -794,7 +783,7 @@
       "continuationPreserved": true,
       "picturesPreserved": true,
       "resumedCheckpointMatches": true,
-      "bytes": 312052
+      "bytes": 307625
     },
     {
       "packId": "neon-mosaic-pack",
@@ -805,7 +794,7 @@
       "continuationPreserved": true,
       "picturesPreserved": true,
       "resumedCheckpointMatches": true,
-      "bytes": 314484
+      "bytes": 310057
     },
     {
       "packId": "neon-mosaic-pack",
@@ -816,7 +805,7 @@
       "continuationPreserved": true,
       "picturesPreserved": true,
       "resumedCheckpointMatches": true,
-      "bytes": 314330
+      "bytes": 309903
     },
     {
       "packId": "neon-mosaic-pack",
@@ -827,7 +816,7 @@
       "continuationPreserved": true,
       "picturesPreserved": true,
       "resumedCheckpointMatches": true,
-      "bytes": 315120
+      "bytes": 310693
     },
     {
       "packId": "neon-mosaic-pack",
@@ -838,7 +827,7 @@
       "continuationPreserved": true,
       "picturesPreserved": true,
       "resumedCheckpointMatches": true,
-      "bytes": 317017
+      "bytes": 312590
     },
     {
       "packId": "neon-mosaic-pack",
@@ -849,7 +838,7 @@
       "continuationPreserved": true,
       "picturesPreserved": true,
       "resumedCheckpointMatches": true,
-      "bytes": 314055
+      "bytes": 309628
     },
     {
       "packId": "neon-mosaic-pack",
@@ -860,7 +849,7 @@
       "continuationPreserved": true,
       "picturesPreserved": true,
       "resumedCheckpointMatches": true,
-      "bytes": 322008
+      "bytes": 317581
     },
     {
       "packId": "neon-mosaic-pack",
@@ -871,7 +860,7 @@
       "continuationPreserved": true,
       "picturesPreserved": true,
       "resumedCheckpointMatches": true,
-      "bytes": 314498
+      "bytes": 310071
     },
     {
       "packId": "neon-mosaic-pack",
@@ -882,7 +871,7 @@
       "continuationPreserved": true,
       "picturesPreserved": true,
       "resumedCheckpointMatches": true,
-      "bytes": 316032
+      "bytes": 311605
     },
     {
       "packId": "neon-mosaic-pack",
@@ -893,7 +882,7 @@
       "continuationPreserved": true,
       "picturesPreserved": true,
       "resumedCheckpointMatches": true,
-      "bytes": 319166
+      "bytes": 314739
     },
     {
       "packId": "neon-mosaic-pack",
@@ -904,7 +893,7 @@
       "continuationPreserved": true,
       "picturesPreserved": true,
       "resumedCheckpointMatches": true,
-      "bytes": 317929
+      "bytes": 313502
     },
     {
       "packId": "neon-mosaic-pack",
@@ -915,7 +904,7 @@
       "continuationPreserved": true,
       "picturesPreserved": true,
       "resumedCheckpointMatches": true,
-      "bytes": 318064
+      "bytes": 313637
     },
     {
       "packId": "neon-mosaic-pack",
@@ -926,7 +915,7 @@
       "continuationPreserved": true,
       "picturesPreserved": true,
       "resumedCheckpointMatches": true,
-      "bytes": 315406
+      "bytes": 310979
     },
     {
       "packId": "neon-mosaic-pack",
@@ -937,7 +926,7 @@
       "continuationPreserved": true,
       "picturesPreserved": true,
       "resumedCheckpointMatches": true,
-      "bytes": 315561
+      "bytes": 311134
     },
     {
       "packId": "neon-mosaic-pack",
@@ -948,7 +937,7 @@
       "continuationPreserved": true,
       "picturesPreserved": true,
       "resumedCheckpointMatches": true,
-      "bytes": 318292
+      "bytes": 313865
     },
     {
       "packId": "neon-mosaic-pack",
@@ -959,7 +948,7 @@
       "continuationPreserved": true,
       "picturesPreserved": true,
       "resumedCheckpointMatches": true,
-      "bytes": 315099
+      "bytes": 310672
     },
     {
       "packId": "neon-mosaic-pack",
@@ -970,7 +959,7 @@
       "continuationPreserved": true,
       "picturesPreserved": true,
       "resumedCheckpointMatches": true,
-      "bytes": 317472
+      "bytes": 313045
     },
     {
       "packId": "neon-mosaic-pack",
@@ -981,7 +970,7 @@
       "continuationPreserved": true,
       "picturesPreserved": true,
       "resumedCheckpointMatches": true,
-      "bytes": 314562
+      "bytes": 310135
     },
     {
       "packId": "neon-mosaic-pack",
@@ -992,7 +981,7 @@
       "continuationPreserved": true,
       "picturesPreserved": true,
       "resumedCheckpointMatches": true,
-      "bytes": 315801
+      "bytes": 311374
     },
     {
       "packId": "neon-mosaic-pack",
@@ -1003,7 +992,7 @@
       "continuationPreserved": true,
       "picturesPreserved": true,
       "resumedCheckpointMatches": true,
-      "bytes": 315293
+      "bytes": 310866
     },
     {
       "packId": "neon-mosaic-pack",
@@ -1014,7 +1003,7 @@
       "continuationPreserved": true,
       "picturesPreserved": true,
       "resumedCheckpointMatches": true,
-      "bytes": 313660
+      "bytes": 309233
     },
     {
       "packId": "neon-mosaic-pack",
@@ -1025,7 +1014,7 @@
       "continuationPreserved": true,
       "picturesPreserved": true,
       "resumedCheckpointMatches": true,
-      "bytes": 315468
+      "bytes": 311041
     },
     {
       "packId": "neon-mosaic-pack",
@@ -1036,7 +1025,7 @@
       "continuationPreserved": true,
       "picturesPreserved": true,
       "resumedCheckpointMatches": true,
-      "bytes": 317190
+      "bytes": 312763
     },
     {
       "packId": "neon-mosaic-pack",
@@ -1047,7 +1036,7 @@
       "continuationPreserved": true,
       "picturesPreserved": true,
       "resumedCheckpointMatches": true,
-      "bytes": 313911
+      "bytes": 309484
     },
     {
       "packId": "neon-mosaic-pack",
@@ -1058,7 +1047,7 @@
       "continuationPreserved": true,
       "picturesPreserved": true,
       "resumedCheckpointMatches": true,
-      "bytes": 316573
+      "bytes": 312146
     },
     {
       "packId": "neon-mosaic-pack",
@@ -1069,7 +1058,7 @@
       "continuationPreserved": true,
       "picturesPreserved": true,
       "resumedCheckpointMatches": true,
-      "bytes": 315046
+      "bytes": 310619
     },
     {
       "packId": "neon-mosaic-pack",
@@ -1080,7 +1069,7 @@
       "continuationPreserved": true,
       "picturesPreserved": true,
       "resumedCheckpointMatches": true,
-      "bytes": 316820
+      "bytes": 312393
     },
     {
       "packId": "neon-mosaic-pack",
@@ -1091,7 +1080,7 @@
       "continuationPreserved": true,
       "picturesPreserved": true,
       "resumedCheckpointMatches": true,
-      "bytes": 316445
+      "bytes": 312018
     },
     {
       "packId": "neon-mosaic-pack",
@@ -1102,7 +1091,7 @@
       "continuationPreserved": true,
       "picturesPreserved": true,
       "resumedCheckpointMatches": true,
-      "bytes": 312762
+      "bytes": 308335
     },
     {
       "packId": "neon-mosaic-pack",
@@ -1113,7 +1102,7 @@
       "continuationPreserved": true,
       "picturesPreserved": true,
       "resumedCheckpointMatches": true,
-      "bytes": 313634
+      "bytes": 309207
     },
     {
       "packId": "neon-mosaic-pack",
@@ -1124,7 +1113,7 @@
       "continuationPreserved": true,
       "picturesPreserved": true,
       "resumedCheckpointMatches": true,
-      "bytes": 316683
+      "bytes": 312256
     },
     {
       "packId": "neon-mosaic-pack",
@@ -1135,7 +1124,7 @@
       "continuationPreserved": true,
       "picturesPreserved": true,
       "resumedCheckpointMatches": true,
-      "bytes": 313585
+      "bytes": 309158
     },
     {
       "packId": "neon-mosaic-pack",
@@ -1146,7 +1135,7 @@
       "continuationPreserved": true,
       "picturesPreserved": true,
       "resumedCheckpointMatches": true,
-      "bytes": 315436
+      "bytes": 311009
     },
     {
       "packId": "neon-mosaic-pack",
@@ -1157,18 +1146,7 @@
       "continuationPreserved": true,
       "picturesPreserved": true,
       "resumedCheckpointMatches": true,
-      "bytes": 313998
-    },
-    {
-      "packId": "neon-mosaic-pack",
-      "levelId": "neon-coupa-pack",
-      "difficulty": "standard",
-      "turnPolicy": "immediate",
-      "checkpointPreserved": true,
-      "continuationPreserved": true,
-      "picturesPreserved": true,
-      "resumedCheckpointMatches": true,
-      "bytes": 312023
+      "bytes": 309571
     },
     {
       "packId": "neon-mosaic-pack",
@@ -1179,7 +1157,7 @@
       "continuationPreserved": true,
       "picturesPreserved": true,
       "resumedCheckpointMatches": true,
-      "bytes": 316006
+      "bytes": 311579
     },
     {
       "packId": "neon-mosaic-pack",
@@ -1190,7 +1168,7 @@
       "continuationPreserved": true,
       "picturesPreserved": true,
       "resumedCheckpointMatches": true,
-      "bytes": 313855
+      "bytes": 309428
     },
     {
       "packId": "neon-mosaic-pack",
@@ -1201,7 +1179,7 @@
       "continuationPreserved": true,
       "picturesPreserved": true,
       "resumedCheckpointMatches": true,
-      "bytes": 318202
+      "bytes": 313775
     },
     {
       "packId": "neon-mosaic-pack",
@@ -1212,7 +1190,7 @@
       "continuationPreserved": true,
       "picturesPreserved": true,
       "resumedCheckpointMatches": true,
-      "bytes": 312048
+      "bytes": 307621
     },
     {
       "packId": "neon-mosaic-pack",
@@ -1223,7 +1201,7 @@
       "continuationPreserved": true,
       "picturesPreserved": true,
       "resumedCheckpointMatches": true,
-      "bytes": 314480
+      "bytes": 310053
     },
     {
       "packId": "neon-mosaic-pack",
@@ -1234,7 +1212,7 @@
       "continuationPreserved": true,
       "picturesPreserved": true,
       "resumedCheckpointMatches": true,
-      "bytes": 314326
+      "bytes": 309899
     },
     {
       "packId": "neon-mosaic-pack",
@@ -1245,7 +1223,7 @@
       "continuationPreserved": true,
       "picturesPreserved": true,
       "resumedCheckpointMatches": true,
-      "bytes": 315116
+      "bytes": 310689
     },
     {
       "packId": "neon-mosaic-pack",
@@ -1256,7 +1234,7 @@
       "continuationPreserved": true,
       "picturesPreserved": true,
       "resumedCheckpointMatches": true,
-      "bytes": 317013
+      "bytes": 312586
     },
     {
       "packId": "neon-mosaic-pack",
@@ -1267,7 +1245,7 @@
       "continuationPreserved": true,
       "picturesPreserved": true,
       "resumedCheckpointMatches": true,
-      "bytes": 314051
+      "bytes": 309624
     },
     {
       "packId": "neon-mosaic-pack",
@@ -1278,7 +1256,7 @@
       "continuationPreserved": true,
       "picturesPreserved": true,
       "resumedCheckpointMatches": true,
-      "bytes": 322004
+      "bytes": 317577
     },
     {
       "packId": "neon-mosaic-pack",
@@ -1289,7 +1267,7 @@
       "continuationPreserved": true,
       "picturesPreserved": true,
       "resumedCheckpointMatches": true,
-      "bytes": 314494
+      "bytes": 310067
     },
     {
       "packId": "neon-mosaic-pack",
@@ -1300,7 +1278,7 @@
       "continuationPreserved": true,
       "picturesPreserved": true,
       "resumedCheckpointMatches": true,
-      "bytes": 316028
+      "bytes": 311601
     },
     {
       "packId": "neon-mosaic-pack",
@@ -1311,7 +1289,7 @@
       "continuationPreserved": true,
       "picturesPreserved": true,
       "resumedCheckpointMatches": true,
-      "bytes": 319162
+      "bytes": 314735
     },
     {
       "packId": "neon-mosaic-pack",
@@ -1322,233 +1300,13 @@
       "continuationPreserved": true,
       "picturesPreserved": true,
       "resumedCheckpointMatches": true,
-      "bytes": 317925
+      "bytes": 313498
     },
     {
       "packId": "neon-mosaic-pack",
       "levelId": "neon-barvinok-pack",
       "difficulty": "standard",
       "turnPolicy": "immediate",
-      "checkpointPreserved": true,
-      "continuationPreserved": true,
-      "picturesPreserved": true,
-      "resumedCheckpointMatches": true,
-      "bytes": 318060
-    },
-    {
-      "packId": "neon-mosaic-pack",
-      "levelId": "neon-wheat-pack",
-      "difficulty": "standard",
-      "turnPolicy": "immediate",
-      "checkpointPreserved": true,
-      "continuationPreserved": true,
-      "picturesPreserved": true,
-      "resumedCheckpointMatches": true,
-      "bytes": 315402
-    },
-    {
-      "packId": "neon-mosaic-pack",
-      "levelId": "neon-vinok-pack",
-      "difficulty": "standard",
-      "turnPolicy": "immediate",
-      "checkpointPreserved": true,
-      "continuationPreserved": true,
-      "picturesPreserved": true,
-      "resumedCheckpointMatches": true,
-      "bytes": 315557
-    },
-    {
-      "packId": "neon-mosaic-pack",
-      "levelId": "neon-didukh-pack",
-      "difficulty": "standard",
-      "turnPolicy": "immediate",
-      "checkpointPreserved": true,
-      "continuationPreserved": true,
-      "picturesPreserved": true,
-      "resumedCheckpointMatches": true,
-      "bytes": 318288
-    },
-    {
-      "packId": "neon-mosaic-pack",
-      "levelId": "neon-rushnyk-pack",
-      "difficulty": "standard",
-      "turnPolicy": "immediate",
-      "checkpointPreserved": true,
-      "continuationPreserved": true,
-      "picturesPreserved": true,
-      "resumedCheckpointMatches": true,
-      "bytes": 315095
-    },
-    {
-      "packId": "neon-mosaic-pack",
-      "levelId": "neon-bandura-pack",
-      "difficulty": "standard",
-      "turnPolicy": "immediate",
-      "checkpointPreserved": true,
-      "continuationPreserved": true,
-      "picturesPreserved": true,
-      "resumedCheckpointMatches": true,
-      "bytes": 317468
-    },
-    {
-      "packId": "neon-mosaic-pack",
-      "levelId": "neon-trembita-pack",
-      "difficulty": "standard",
-      "turnPolicy": "immediate",
-      "checkpointPreserved": true,
-      "continuationPreserved": true,
-      "picturesPreserved": true,
-      "resumedCheckpointMatches": true,
-      "bytes": 314558
-    },
-    {
-      "packId": "neon-mosaic-pack",
-      "levelId": "neon-tsymbaly-pack",
-      "difficulty": "standard",
-      "turnPolicy": "immediate",
-      "checkpointPreserved": true,
-      "continuationPreserved": true,
-      "picturesPreserved": true,
-      "resumedCheckpointMatches": true,
-      "bytes": 315797
-    },
-    {
-      "packId": "neon-mosaic-pack",
-      "levelId": "neon-kosiv-pitcher-pack",
-      "difficulty": "standard",
-      "turnPolicy": "immediate",
-      "checkpointPreserved": true,
-      "continuationPreserved": true,
-      "picturesPreserved": true,
-      "resumedCheckpointMatches": true,
-      "bytes": 315289
-    },
-    {
-      "packId": "neon-mosaic-pack",
-      "levelId": "neon-opishnia-ram-pack",
-      "difficulty": "standard",
-      "turnPolicy": "immediate",
-      "checkpointPreserved": true,
-      "continuationPreserved": true,
-      "picturesPreserved": true,
-      "resumedCheckpointMatches": true,
-      "bytes": 313656
-    },
-    {
-      "packId": "neon-mosaic-pack",
-      "levelId": "neon-petrykivka-pack",
-      "difficulty": "standard",
-      "turnPolicy": "immediate",
-      "checkpointPreserved": true,
-      "continuationPreserved": true,
-      "picturesPreserved": true,
-      "resumedCheckpointMatches": true,
-      "bytes": 315464
-    },
-    {
-      "packId": "neon-mosaic-pack",
-      "levelId": "neon-oak-pack",
-      "difficulty": "standard",
-      "turnPolicy": "immediate",
-      "checkpointPreserved": true,
-      "continuationPreserved": true,
-      "picturesPreserved": true,
-      "resumedCheckpointMatches": true,
-      "bytes": 317186
-    },
-    {
-      "packId": "neon-mosaic-pack",
-      "levelId": "neon-stork-pack",
-      "difficulty": "standard",
-      "turnPolicy": "immediate",
-      "checkpointPreserved": true,
-      "continuationPreserved": true,
-      "picturesPreserved": true,
-      "resumedCheckpointMatches": true,
-      "bytes": 313907
-    },
-    {
-      "packId": "neon-mosaic-pack",
-      "levelId": "neon-swallow-pack",
-      "difficulty": "standard",
-      "turnPolicy": "immediate",
-      "checkpointPreserved": true,
-      "continuationPreserved": true,
-      "picturesPreserved": true,
-      "resumedCheckpointMatches": true,
-      "bytes": 316569
-    },
-    {
-      "packId": "neon-mosaic-pack",
-      "levelId": "neon-horse-pack",
-      "difficulty": "standard",
-      "turnPolicy": "immediate",
-      "checkpointPreserved": true,
-      "continuationPreserved": true,
-      "picturesPreserved": true,
-      "resumedCheckpointMatches": true,
-      "bytes": 315042
-    },
-    {
-      "packId": "neon-mosaic-pack",
-      "levelId": "neon-deer-pack",
-      "difficulty": "standard",
-      "turnPolicy": "immediate",
-      "checkpointPreserved": true,
-      "continuationPreserved": true,
-      "picturesPreserved": true,
-      "resumedCheckpointMatches": true,
-      "bytes": 316816
-    },
-    {
-      "packId": "neon-mosaic-pack",
-      "levelId": "neon-fish-pack",
-      "difficulty": "standard",
-      "turnPolicy": "immediate",
-      "checkpointPreserved": true,
-      "continuationPreserved": true,
-      "picturesPreserved": true,
-      "resumedCheckpointMatches": true,
-      "bytes": 316441
-    },
-    {
-      "packId": "neon-mosaic-pack",
-      "levelId": "neon-berehynia-pack",
-      "difficulty": "standard",
-      "turnPolicy": "immediate",
-      "checkpointPreserved": true,
-      "continuationPreserved": true,
-      "picturesPreserved": true,
-      "resumedCheckpointMatches": true,
-      "bytes": 312758
-    },
-    {
-      "packId": "neon-mosaic-pack",
-      "levelId": "neon-bezkonechnyk-pack",
-      "difficulty": "standard",
-      "turnPolicy": "immediate",
-      "checkpointPreserved": true,
-      "continuationPreserved": true,
-      "picturesPreserved": true,
-      "resumedCheckpointMatches": true,
-      "bytes": 313630
-    },
-    {
-      "packId": "neon-mosaic-pack",
-      "levelId": "neon-ornek-tulip-pack",
-      "difficulty": "standard",
-      "turnPolicy": "immediate",
-      "checkpointPreserved": true,
-      "continuationPreserved": true,
-      "picturesPreserved": true,
-      "resumedCheckpointMatches": true,
-      "bytes": 316679
-    },
-    {
-      "packId": "neon-mosaic-pack",
-      "levelId": "neon-fpv-pack",
-      "difficulty": "gentle",
-      "turnPolicy": "grid-center",
       "checkpointPreserved": true,
       "continuationPreserved": true,
       "picturesPreserved": true,
@@ -1557,6 +1315,226 @@
     },
     {
       "packId": "neon-mosaic-pack",
+      "levelId": "neon-wheat-pack",
+      "difficulty": "standard",
+      "turnPolicy": "immediate",
+      "checkpointPreserved": true,
+      "continuationPreserved": true,
+      "picturesPreserved": true,
+      "resumedCheckpointMatches": true,
+      "bytes": 310975
+    },
+    {
+      "packId": "neon-mosaic-pack",
+      "levelId": "neon-vinok-pack",
+      "difficulty": "standard",
+      "turnPolicy": "immediate",
+      "checkpointPreserved": true,
+      "continuationPreserved": true,
+      "picturesPreserved": true,
+      "resumedCheckpointMatches": true,
+      "bytes": 311130
+    },
+    {
+      "packId": "neon-mosaic-pack",
+      "levelId": "neon-didukh-pack",
+      "difficulty": "standard",
+      "turnPolicy": "immediate",
+      "checkpointPreserved": true,
+      "continuationPreserved": true,
+      "picturesPreserved": true,
+      "resumedCheckpointMatches": true,
+      "bytes": 313861
+    },
+    {
+      "packId": "neon-mosaic-pack",
+      "levelId": "neon-rushnyk-pack",
+      "difficulty": "standard",
+      "turnPolicy": "immediate",
+      "checkpointPreserved": true,
+      "continuationPreserved": true,
+      "picturesPreserved": true,
+      "resumedCheckpointMatches": true,
+      "bytes": 310668
+    },
+    {
+      "packId": "neon-mosaic-pack",
+      "levelId": "neon-bandura-pack",
+      "difficulty": "standard",
+      "turnPolicy": "immediate",
+      "checkpointPreserved": true,
+      "continuationPreserved": true,
+      "picturesPreserved": true,
+      "resumedCheckpointMatches": true,
+      "bytes": 313041
+    },
+    {
+      "packId": "neon-mosaic-pack",
+      "levelId": "neon-trembita-pack",
+      "difficulty": "standard",
+      "turnPolicy": "immediate",
+      "checkpointPreserved": true,
+      "continuationPreserved": true,
+      "picturesPreserved": true,
+      "resumedCheckpointMatches": true,
+      "bytes": 310131
+    },
+    {
+      "packId": "neon-mosaic-pack",
+      "levelId": "neon-tsymbaly-pack",
+      "difficulty": "standard",
+      "turnPolicy": "immediate",
+      "checkpointPreserved": true,
+      "continuationPreserved": true,
+      "picturesPreserved": true,
+      "resumedCheckpointMatches": true,
+      "bytes": 311370
+    },
+    {
+      "packId": "neon-mosaic-pack",
+      "levelId": "neon-kosiv-pitcher-pack",
+      "difficulty": "standard",
+      "turnPolicy": "immediate",
+      "checkpointPreserved": true,
+      "continuationPreserved": true,
+      "picturesPreserved": true,
+      "resumedCheckpointMatches": true,
+      "bytes": 310862
+    },
+    {
+      "packId": "neon-mosaic-pack",
+      "levelId": "neon-opishnia-ram-pack",
+      "difficulty": "standard",
+      "turnPolicy": "immediate",
+      "checkpointPreserved": true,
+      "continuationPreserved": true,
+      "picturesPreserved": true,
+      "resumedCheckpointMatches": true,
+      "bytes": 309229
+    },
+    {
+      "packId": "neon-mosaic-pack",
+      "levelId": "neon-petrykivka-pack",
+      "difficulty": "standard",
+      "turnPolicy": "immediate",
+      "checkpointPreserved": true,
+      "continuationPreserved": true,
+      "picturesPreserved": true,
+      "resumedCheckpointMatches": true,
+      "bytes": 311037
+    },
+    {
+      "packId": "neon-mosaic-pack",
+      "levelId": "neon-oak-pack",
+      "difficulty": "standard",
+      "turnPolicy": "immediate",
+      "checkpointPreserved": true,
+      "continuationPreserved": true,
+      "picturesPreserved": true,
+      "resumedCheckpointMatches": true,
+      "bytes": 312759
+    },
+    {
+      "packId": "neon-mosaic-pack",
+      "levelId": "neon-stork-pack",
+      "difficulty": "standard",
+      "turnPolicy": "immediate",
+      "checkpointPreserved": true,
+      "continuationPreserved": true,
+      "picturesPreserved": true,
+      "resumedCheckpointMatches": true,
+      "bytes": 309480
+    },
+    {
+      "packId": "neon-mosaic-pack",
+      "levelId": "neon-swallow-pack",
+      "difficulty": "standard",
+      "turnPolicy": "immediate",
+      "checkpointPreserved": true,
+      "continuationPreserved": true,
+      "picturesPreserved": true,
+      "resumedCheckpointMatches": true,
+      "bytes": 312142
+    },
+    {
+      "packId": "neon-mosaic-pack",
+      "levelId": "neon-horse-pack",
+      "difficulty": "standard",
+      "turnPolicy": "immediate",
+      "checkpointPreserved": true,
+      "continuationPreserved": true,
+      "picturesPreserved": true,
+      "resumedCheckpointMatches": true,
+      "bytes": 310615
+    },
+    {
+      "packId": "neon-mosaic-pack",
+      "levelId": "neon-deer-pack",
+      "difficulty": "standard",
+      "turnPolicy": "immediate",
+      "checkpointPreserved": true,
+      "continuationPreserved": true,
+      "picturesPreserved": true,
+      "resumedCheckpointMatches": true,
+      "bytes": 312389
+    },
+    {
+      "packId": "neon-mosaic-pack",
+      "levelId": "neon-fish-pack",
+      "difficulty": "standard",
+      "turnPolicy": "immediate",
+      "checkpointPreserved": true,
+      "continuationPreserved": true,
+      "picturesPreserved": true,
+      "resumedCheckpointMatches": true,
+      "bytes": 312014
+    },
+    {
+      "packId": "neon-mosaic-pack",
+      "levelId": "neon-berehynia-pack",
+      "difficulty": "standard",
+      "turnPolicy": "immediate",
+      "checkpointPreserved": true,
+      "continuationPreserved": true,
+      "picturesPreserved": true,
+      "resumedCheckpointMatches": true,
+      "bytes": 308331
+    },
+    {
+      "packId": "neon-mosaic-pack",
+      "levelId": "neon-bezkonechnyk-pack",
+      "difficulty": "standard",
+      "turnPolicy": "immediate",
+      "checkpointPreserved": true,
+      "continuationPreserved": true,
+      "picturesPreserved": true,
+      "resumedCheckpointMatches": true,
+      "bytes": 309203
+    },
+    {
+      "packId": "neon-mosaic-pack",
+      "levelId": "neon-ornek-tulip-pack",
+      "difficulty": "standard",
+      "turnPolicy": "immediate",
+      "checkpointPreserved": true,
+      "continuationPreserved": true,
+      "picturesPreserved": true,
+      "resumedCheckpointMatches": true,
+      "bytes": 312252
+    },
+    {
+      "packId": "neon-mosaic-pack",
+      "levelId": "neon-fpv-pack",
+      "difficulty": "gentle",
+      "turnPolicy": "grid-center",
+      "checkpointPreserved": true,
+      "continuationPreserved": true,
+      "picturesPreserved": true,
+      "resumedCheckpointMatches": true,
+      "bytes": 309206
+    },
+    {
+      "packId": "neon-mosaic-pack",
       "levelId": "neon-ukraine-pack",
       "difficulty": "gentle",
       "turnPolicy": "grid-center",
@@ -1564,7 +1542,7 @@
       "continuationPreserved": true,
       "picturesPreserved": true,
       "resumedCheckpointMatches": true,
-      "bytes": 315482
+      "bytes": 311055
     },
     {
       "packId": "neon-mosaic-pack",
@@ -1575,18 +1553,7 @@
       "continuationPreserved": true,
       "picturesPreserved": true,
       "resumedCheckpointMatches": true,
-      "bytes": 314045
-    },
-    {
-      "packId": "neon-mosaic-pack",
-      "levelId": "neon-coupa-pack",
-      "difficulty": "gentle",
-      "turnPolicy": "grid-center",
-      "checkpointPreserved": true,
-      "continuationPreserved": true,
-      "picturesPreserved": true,
-      "resumedCheckpointMatches": true,
-      "bytes": 312070
+      "bytes": 309618
     },
     {
       "packId": "neon-mosaic-pack",
@@ -1597,7 +1564,7 @@
       "continuationPreserved": true,
       "picturesPreserved": true,
       "resumedCheckpointMatches": true,
-      "bytes": 316055
+      "bytes": 311628
     },
     {
       "packId": "neon-mosaic-pack",
@@ -1608,7 +1575,7 @@
       "continuationPreserved": true,
       "picturesPreserved": true,
       "resumedCheckpointMatches": true,
-      "bytes": 313903
+      "bytes": 309476
     },
     {
       "packId": "neon-mosaic-pack",
@@ -1619,7 +1586,7 @@
       "continuationPreserved": true,
       "picturesPreserved": true,
       "resumedCheckpointMatches": true,
-      "bytes": 318251
+      "bytes": 313824
     },
     {
       "packId": "neon-mosaic-pack",
@@ -1630,7 +1597,7 @@
       "continuationPreserved": true,
       "picturesPreserved": true,
       "resumedCheckpointMatches": true,
-      "bytes": 312101
+      "bytes": 307674
     },
     {
       "packId": "neon-mosaic-pack",
@@ -1641,7 +1608,7 @@
       "continuationPreserved": true,
       "picturesPreserved": true,
       "resumedCheckpointMatches": true,
-      "bytes": 314531
+      "bytes": 310104
     },
     {
       "packId": "neon-mosaic-pack",
@@ -1652,7 +1619,7 @@
       "continuationPreserved": true,
       "picturesPreserved": true,
       "resumedCheckpointMatches": true,
-      "bytes": 314375
+      "bytes": 309948
     },
     {
       "packId": "neon-mosaic-pack",
@@ -1663,7 +1630,7 @@
       "continuationPreserved": true,
       "picturesPreserved": true,
       "resumedCheckpointMatches": true,
-      "bytes": 315164
+      "bytes": 310737
     },
     {
       "packId": "neon-mosaic-pack",
@@ -1674,7 +1641,7 @@
       "continuationPreserved": true,
       "picturesPreserved": true,
       "resumedCheckpointMatches": true,
-      "bytes": 317063
+      "bytes": 312636
     },
     {
       "packId": "neon-mosaic-pack",
@@ -1685,7 +1652,7 @@
       "continuationPreserved": true,
       "picturesPreserved": true,
       "resumedCheckpointMatches": true,
-      "bytes": 314101
+      "bytes": 309674
     },
     {
       "packId": "neon-mosaic-pack",
@@ -1696,7 +1663,7 @@
       "continuationPreserved": true,
       "picturesPreserved": true,
       "resumedCheckpointMatches": true,
-      "bytes": 322057
+      "bytes": 317630
     },
     {
       "packId": "neon-mosaic-pack",
@@ -1707,7 +1674,7 @@
       "continuationPreserved": true,
       "picturesPreserved": true,
       "resumedCheckpointMatches": true,
-      "bytes": 314542
+      "bytes": 310115
     },
     {
       "packId": "neon-mosaic-pack",
@@ -1718,7 +1685,7 @@
       "continuationPreserved": true,
       "picturesPreserved": true,
       "resumedCheckpointMatches": true,
-      "bytes": 316076
+      "bytes": 311649
     },
     {
       "packId": "neon-mosaic-pack",
@@ -1729,7 +1696,7 @@
       "continuationPreserved": true,
       "picturesPreserved": true,
       "resumedCheckpointMatches": true,
-      "bytes": 319209
+      "bytes": 314782
     },
     {
       "packId": "neon-mosaic-pack",
@@ -1740,7 +1707,7 @@
       "continuationPreserved": true,
       "picturesPreserved": true,
       "resumedCheckpointMatches": true,
-      "bytes": 317973
+      "bytes": 313546
     },
     {
       "packId": "neon-mosaic-pack",
@@ -1751,7 +1718,7 @@
       "continuationPreserved": true,
       "picturesPreserved": true,
       "resumedCheckpointMatches": true,
-      "bytes": 318107
+      "bytes": 313680
     },
     {
       "packId": "neon-mosaic-pack",
@@ -1762,7 +1729,7 @@
       "continuationPreserved": true,
       "picturesPreserved": true,
       "resumedCheckpointMatches": true,
-      "bytes": 315450
+      "bytes": 311023
     },
     {
       "packId": "neon-mosaic-pack",
@@ -1773,7 +1740,7 @@
       "continuationPreserved": true,
       "picturesPreserved": true,
       "resumedCheckpointMatches": true,
-      "bytes": 315610
+      "bytes": 311183
     },
     {
       "packId": "neon-mosaic-pack",
@@ -1784,7 +1751,7 @@
       "continuationPreserved": true,
       "picturesPreserved": true,
       "resumedCheckpointMatches": true,
-      "bytes": 318334
+      "bytes": 313907
     },
     {
       "packId": "neon-mosaic-pack",
@@ -1795,7 +1762,7 @@
       "continuationPreserved": true,
       "picturesPreserved": true,
       "resumedCheckpointMatches": true,
-      "bytes": 315147
+      "bytes": 310720
     },
     {
       "packId": "neon-mosaic-pack",
@@ -1806,7 +1773,7 @@
       "continuationPreserved": true,
       "picturesPreserved": true,
       "resumedCheckpointMatches": true,
-      "bytes": 317518
+      "bytes": 313091
     },
     {
       "packId": "neon-mosaic-pack",
@@ -1817,7 +1784,7 @@
       "continuationPreserved": true,
       "picturesPreserved": true,
       "resumedCheckpointMatches": true,
-      "bytes": 314605
+      "bytes": 310178
     },
     {
       "packId": "neon-mosaic-pack",
@@ -1828,7 +1795,7 @@
       "continuationPreserved": true,
       "picturesPreserved": true,
       "resumedCheckpointMatches": true,
-      "bytes": 315849
+      "bytes": 311422
     },
     {
       "packId": "neon-mosaic-pack",
@@ -1839,7 +1806,7 @@
       "continuationPreserved": true,
       "picturesPreserved": true,
       "resumedCheckpointMatches": true,
-      "bytes": 315337
+      "bytes": 310910
     },
     {
       "packId": "neon-mosaic-pack",
@@ -1850,7 +1817,7 @@
       "continuationPreserved": true,
       "picturesPreserved": true,
       "resumedCheckpointMatches": true,
-      "bytes": 313703
+      "bytes": 309276
     },
     {
       "packId": "neon-mosaic-pack",
@@ -1861,7 +1828,7 @@
       "continuationPreserved": true,
       "picturesPreserved": true,
       "resumedCheckpointMatches": true,
-      "bytes": 315509
+      "bytes": 311082
     },
     {
       "packId": "neon-mosaic-pack",
@@ -1872,7 +1839,7 @@
       "continuationPreserved": true,
       "picturesPreserved": true,
       "resumedCheckpointMatches": true,
-      "bytes": 317235
+      "bytes": 312808
     },
     {
       "packId": "neon-mosaic-pack",
@@ -1883,7 +1850,7 @@
       "continuationPreserved": true,
       "picturesPreserved": true,
       "resumedCheckpointMatches": true,
-      "bytes": 313956
+      "bytes": 309529
     },
     {
       "packId": "neon-mosaic-pack",
@@ -1894,7 +1861,7 @@
       "continuationPreserved": true,
       "picturesPreserved": true,
       "resumedCheckpointMatches": true,
-      "bytes": 316621
+      "bytes": 312194
     },
     {
       "packId": "neon-mosaic-pack",
@@ -1905,7 +1872,7 @@
       "continuationPreserved": true,
       "picturesPreserved": true,
       "resumedCheckpointMatches": true,
-      "bytes": 315091
+      "bytes": 310664
     },
     {
       "packId": "neon-mosaic-pack",
@@ -1916,7 +1883,7 @@
       "continuationPreserved": true,
       "picturesPreserved": true,
       "resumedCheckpointMatches": true,
-      "bytes": 316866
+      "bytes": 312439
     },
     {
       "packId": "neon-mosaic-pack",
@@ -1927,7 +1894,7 @@
       "continuationPreserved": true,
       "picturesPreserved": true,
       "resumedCheckpointMatches": true,
-      "bytes": 316490
+      "bytes": 312063
     },
     {
       "packId": "neon-mosaic-pack",
@@ -1938,7 +1905,7 @@
       "continuationPreserved": true,
       "picturesPreserved": true,
       "resumedCheckpointMatches": true,
-      "bytes": 312810
+      "bytes": 308383
     },
     {
       "packId": "neon-mosaic-pack",
@@ -1949,7 +1916,7 @@
       "continuationPreserved": true,
       "picturesPreserved": true,
       "resumedCheckpointMatches": true,
-      "bytes": 313678
+      "bytes": 309251
     },
     {
       "packId": "neon-mosaic-pack",
@@ -1960,7 +1927,7 @@
       "continuationPreserved": true,
       "picturesPreserved": true,
       "resumedCheckpointMatches": true,
-      "bytes": 316728
+      "bytes": 312301
     },
     {
       "packId": "neon-mosaic-pack",
@@ -1971,7 +1938,7 @@
       "continuationPreserved": true,
       "picturesPreserved": true,
       "resumedCheckpointMatches": true,
-      "bytes": 313629
+      "bytes": 309202
     },
     {
       "packId": "neon-mosaic-pack",
@@ -1982,7 +1949,7 @@
       "continuationPreserved": true,
       "picturesPreserved": true,
       "resumedCheckpointMatches": true,
-      "bytes": 315478
+      "bytes": 311051
     },
     {
       "packId": "neon-mosaic-pack",
@@ -1993,18 +1960,7 @@
       "continuationPreserved": true,
       "picturesPreserved": true,
       "resumedCheckpointMatches": true,
-      "bytes": 314041
-    },
-    {
-      "packId": "neon-mosaic-pack",
-      "levelId": "neon-coupa-pack",
-      "difficulty": "gentle",
-      "turnPolicy": "immediate",
-      "checkpointPreserved": true,
-      "continuationPreserved": true,
-      "picturesPreserved": true,
-      "resumedCheckpointMatches": true,
-      "bytes": 312066
+      "bytes": 309614
     },
     {
       "packId": "neon-mosaic-pack",
@@ -2015,7 +1971,7 @@
       "continuationPreserved": true,
       "picturesPreserved": true,
       "resumedCheckpointMatches": true,
-      "bytes": 316051
+      "bytes": 311624
     },
     {
       "packId": "neon-mosaic-pack",
@@ -2026,7 +1982,7 @@
       "continuationPreserved": true,
       "picturesPreserved": true,
       "resumedCheckpointMatches": true,
-      "bytes": 313899
+      "bytes": 309472
     },
     {
       "packId": "neon-mosaic-pack",
@@ -2037,7 +1993,7 @@
       "continuationPreserved": true,
       "picturesPreserved": true,
       "resumedCheckpointMatches": true,
-      "bytes": 318247
+      "bytes": 313820
     },
     {
       "packId": "neon-mosaic-pack",
@@ -2048,7 +2004,7 @@
       "continuationPreserved": true,
       "picturesPreserved": true,
       "resumedCheckpointMatches": true,
-      "bytes": 312097
+      "bytes": 307670
     },
     {
       "packId": "neon-mosaic-pack",
@@ -2059,7 +2015,7 @@
       "continuationPreserved": true,
       "picturesPreserved": true,
       "resumedCheckpointMatches": true,
-      "bytes": 314527
+      "bytes": 310100
     },
     {
       "packId": "neon-mosaic-pack",
@@ -2070,7 +2026,7 @@
       "continuationPreserved": true,
       "picturesPreserved": true,
       "resumedCheckpointMatches": true,
-      "bytes": 314371
+      "bytes": 309944
     },
     {
       "packId": "neon-mosaic-pack",
@@ -2081,7 +2037,7 @@
       "continuationPreserved": true,
       "picturesPreserved": true,
       "resumedCheckpointMatches": true,
-      "bytes": 315160
+      "bytes": 310733
     },
     {
       "packId": "neon-mosaic-pack",
@@ -2092,7 +2048,7 @@
       "continuationPreserved": true,
       "picturesPreserved": true,
       "resumedCheckpointMatches": true,
-      "bytes": 317059
+      "bytes": 312632
     },
     {
       "packId": "neon-mosaic-pack",
@@ -2103,7 +2059,7 @@
       "continuationPreserved": true,
       "picturesPreserved": true,
       "resumedCheckpointMatches": true,
-      "bytes": 314097
+      "bytes": 309670
     },
     {
       "packId": "neon-mosaic-pack",
@@ -2114,7 +2070,7 @@
       "continuationPreserved": true,
       "picturesPreserved": true,
       "resumedCheckpointMatches": true,
-      "bytes": 322053
+      "bytes": 317626
     },
     {
       "packId": "neon-mosaic-pack",
@@ -2125,7 +2081,7 @@
       "continuationPreserved": true,
       "picturesPreserved": true,
       "resumedCheckpointMatches": true,
-      "bytes": 314538
+      "bytes": 310111
     },
     {
       "packId": "neon-mosaic-pack",
@@ -2136,7 +2092,7 @@
       "continuationPreserved": true,
       "picturesPreserved": true,
       "resumedCheckpointMatches": true,
-      "bytes": 316072
+      "bytes": 311645
     },
     {
       "packId": "neon-mosaic-pack",
@@ -2147,7 +2103,7 @@
       "continuationPreserved": true,
       "picturesPreserved": true,
       "resumedCheckpointMatches": true,
-      "bytes": 319205
+      "bytes": 314778
     },
     {
       "packId": "neon-mosaic-pack",
@@ -2158,7 +2114,7 @@
       "continuationPreserved": true,
       "picturesPreserved": true,
       "resumedCheckpointMatches": true,
-      "bytes": 317969
+      "bytes": 313542
     },
     {
       "packId": "neon-mosaic-pack",
@@ -2169,7 +2125,7 @@
       "continuationPreserved": true,
       "picturesPreserved": true,
       "resumedCheckpointMatches": true,
-      "bytes": 318103
+      "bytes": 313676
     },
     {
       "packId": "neon-mosaic-pack",
@@ -2180,7 +2136,7 @@
       "continuationPreserved": true,
       "picturesPreserved": true,
       "resumedCheckpointMatches": true,
-      "bytes": 315446
+      "bytes": 311019
     },
     {
       "packId": "neon-mosaic-pack",
@@ -2191,7 +2147,7 @@
       "continuationPreserved": true,
       "picturesPreserved": true,
       "resumedCheckpointMatches": true,
-      "bytes": 315606
+      "bytes": 311179
     },
     {
       "packId": "neon-mosaic-pack",
@@ -2202,7 +2158,7 @@
       "continuationPreserved": true,
       "picturesPreserved": true,
       "resumedCheckpointMatches": true,
-      "bytes": 318330
+      "bytes": 313903
     },
     {
       "packId": "neon-mosaic-pack",
@@ -2213,7 +2169,7 @@
       "continuationPreserved": true,
       "picturesPreserved": true,
       "resumedCheckpointMatches": true,
-      "bytes": 315143
+      "bytes": 310716
     },
     {
       "packId": "neon-mosaic-pack",
@@ -2224,7 +2180,7 @@
       "continuationPreserved": true,
       "picturesPreserved": true,
       "resumedCheckpointMatches": true,
-      "bytes": 317514
+      "bytes": 313087
     },
     {
       "packId": "neon-mosaic-pack",
@@ -2235,7 +2191,7 @@
       "continuationPreserved": true,
       "picturesPreserved": true,
       "resumedCheckpointMatches": true,
-      "bytes": 314601
+      "bytes": 310174
     },
     {
       "packId": "neon-mosaic-pack",
@@ -2246,7 +2202,7 @@
       "continuationPreserved": true,
       "picturesPreserved": true,
       "resumedCheckpointMatches": true,
-      "bytes": 315845
+      "bytes": 311418
     },
     {
       "packId": "neon-mosaic-pack",
@@ -2257,7 +2213,7 @@
       "continuationPreserved": true,
       "picturesPreserved": true,
       "resumedCheckpointMatches": true,
-      "bytes": 315333
+      "bytes": 310906
     },
     {
       "packId": "neon-mosaic-pack",
@@ -2268,7 +2224,7 @@
       "continuationPreserved": true,
       "picturesPreserved": true,
       "resumedCheckpointMatches": true,
-      "bytes": 313699
+      "bytes": 309272
     },
     {
       "packId": "neon-mosaic-pack",
@@ -2279,7 +2235,7 @@
       "continuationPreserved": true,
       "picturesPreserved": true,
       "resumedCheckpointMatches": true,
-      "bytes": 315505
+      "bytes": 311078
     },
     {
       "packId": "neon-mosaic-pack",
@@ -2290,7 +2246,7 @@
       "continuationPreserved": true,
       "picturesPreserved": true,
       "resumedCheckpointMatches": true,
-      "bytes": 317231
+      "bytes": 312804
     },
     {
       "packId": "neon-mosaic-pack",
@@ -2301,7 +2257,7 @@
       "continuationPreserved": true,
       "picturesPreserved": true,
       "resumedCheckpointMatches": true,
-      "bytes": 313952
+      "bytes": 309525
     },
     {
       "packId": "neon-mosaic-pack",
@@ -2312,7 +2268,7 @@
       "continuationPreserved": true,
       "picturesPreserved": true,
       "resumedCheckpointMatches": true,
-      "bytes": 316617
+      "bytes": 312190
     },
     {
       "packId": "neon-mosaic-pack",
@@ -2323,7 +2279,7 @@
       "continuationPreserved": true,
       "picturesPreserved": true,
       "resumedCheckpointMatches": true,
-      "bytes": 315087
+      "bytes": 310660
     },
     {
       "packId": "neon-mosaic-pack",
@@ -2334,7 +2290,7 @@
       "continuationPreserved": true,
       "picturesPreserved": true,
       "resumedCheckpointMatches": true,
-      "bytes": 316862
+      "bytes": 312435
     },
     {
       "packId": "neon-mosaic-pack",
@@ -2345,7 +2301,7 @@
       "continuationPreserved": true,
       "picturesPreserved": true,
       "resumedCheckpointMatches": true,
-      "bytes": 316486
+      "bytes": 312059
     },
     {
       "packId": "neon-mosaic-pack",
@@ -2356,7 +2312,7 @@
       "continuationPreserved": true,
       "picturesPreserved": true,
       "resumedCheckpointMatches": true,
-      "bytes": 312806
+      "bytes": 308379
     },
     {
       "packId": "neon-mosaic-pack",
@@ -2367,7 +2323,7 @@
       "continuationPreserved": true,
       "picturesPreserved": true,
       "resumedCheckpointMatches": true,
-      "bytes": 313674
+      "bytes": 309247
     },
     {
       "packId": "neon-mosaic-pack",
@@ -2378,7 +2334,7 @@
       "continuationPreserved": true,
       "picturesPreserved": true,
       "resumedCheckpointMatches": true,
-      "bytes": 316724
+      "bytes": 312297
     }
   ]
 }

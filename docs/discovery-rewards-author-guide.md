@@ -1,5 +1,7 @@
 # Authoring discoveries and campaign finales
 
+> Retained excerpt after an ownership migration. Historical totals and verification statements describe the original scope; this excerpt is not a current release qualification. Original bytes and removed material are preserved separately.
+
 This guide describes the implemented shared reward and authoring capabilities.
 See the [implementation ledger](discovery-rewards-phase-status.md) for completed
 work, validation and remaining phases.
@@ -181,13 +183,11 @@ images and the shared interactive/native media viewers. A printable text preview
 is available in both authoring surfaces. Missing exact assets stay explicitly
 unavailable. It never writes a Journey profile, earned receipt or Collection entry.
 
-Then apply the JSON and export the source draft. From the repository root, a
-Coupa Adventure example is:
 
 ```sh
-node scripts/company-studio.mjs import-draft --file /absolute/path/coupa-adventure-draft.json --workspace .cache/coupa-rewards-source
-node scripts/company-studio.mjs validate --workspace .cache/coupa-rewards-source --edition coupa-adventure
-node scripts/company-studio.mjs preview --workspace .cache/coupa-rewards-source --edition coupa-adventure --out dist/company-previews/coupa-rewards-preview
+node scripts/company-studio.mjs import-draft --file /absolute/path/droneaid-nl-workshop-lights-draft.json --workspace .cache/company-rewards-source
+node scripts/company-studio.mjs validate --workspace .cache/company-rewards-source --edition droneaid-nl-workshop-lights
+node scripts/company-studio.mjs preview --workspace .cache/company-rewards-source --edition droneaid-nl-workshop-lights --out dist/company-previews/company-rewards-preview
 ```
 
 Use a **new workspace and output directory** for each import/build; these commands
@@ -195,16 +195,11 @@ do not overwrite existing outputs. For externally prepared assets, add
 `--media-root /absolute/path/to/media-workspace` to `import-draft`. The draft's
 media is copied only when its bytes match the admitted inventory.
 
-Open **06 / Whole-game preview**, import
-`dist/company-previews/coupa-rewards-preview.report.json`, and use its verified
-preview action while the development server serves the repository. Output under
-`dist/` is visible to the server; hidden `.cache/` output is not a browser preview
-destination. Editing the source invalidates an earlier preview report.
 
 For a standalone compiled directory, use a fresh output name:
 
 ```sh
-node scripts/company-studio.mjs export --workspace .cache/coupa-rewards-source --edition coupa-adventure --out dist/company-exports/coupa-rewards-candidate
+node scripts/company-studio.mjs export --workspace .cache/company-rewards-source --edition droneaid-nl-workshop-lights --out dist/company-exports/company-rewards-candidate
 ```
 
 For a complete authoring check, use a disposable profile and serve that compiled

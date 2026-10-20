@@ -5,6 +5,7 @@ import {
   recordOptionalInstallation,
   removeOptionalInstallation,
   validateOptionalInstallationReference,
+  optionalOfflineFailureMessage,
 } from '../../optional-practice/install-context.mjs';
 import { preparePracticeOffline } from '../../optional-practice/civilian-flight/offline.mjs';
 import { installOptionalLauncher } from '../../optional-practice/launcher-template.mjs';
@@ -26,7 +27,7 @@ function memory() {
 }
 test('optional installations preserve previous versions and isolate stable roots without touching Journey', () => {
   const storage = memory();
-  storage.setItem('journey-coupa', 'untouched');
+  storage.setItem('journey-sample', 'untouched');
   recordOptionalInstallation({ packageId, storage, location: locationFor('v1.2.2') });
   recordOptionalInstallation({ packageId, storage, location: locationFor('v1.2.3') });
   const state = JSON.parse(storage.getItem(optionalInstallationKey(packageId, root)));
@@ -47,7 +48,7 @@ test('optional installations preserve previous versions and isolate stable roots
     JSON.parse(storage.getItem(optionalInstallationKey(packageId, otherRoot))).active.version,
     'v1.3.0',
   );
-  assert.equal(storage.getItem('journey-coupa'), 'untouched');
+  assert.equal(storage.getItem('journey-sample'), 'untouched');
   assert.equal(
     recordOptionalInstallation({
       packageId,
@@ -136,12 +137,15 @@ test('an installation pointer is recorded only after a verified worker activates
   assert.equal(callbacks.size, 0);
 });
 
-function launcher(fetcher, query = '', { storage = memory(), offlineReady = false } = {}) {
+function launcher(
+  fetcher,
+  query = '',
+  { storage = memory(), offlineReady = false, services = {} } = {},
+) {
   const elements = Object.fromEntries(
-    ['locale', 'title', 'check', 'open', 'prepare', 'previous', 'status', 'remove'].map((id) => [
-      id,
-      { hidden: true, textContent: '', disabled: false },
-    ]),
+    ['locale', 'title', 'check', 'open', 'prepare', 'previous', 'status', 'remove', 'download'].map(
+      (id) => [id, { hidden: true, textContent: '', disabled: false }],
+    ),
   );
   const events = new Map(),
     timers = new Map(),
@@ -163,6 +167,7 @@ function launcher(fetcher, query = '', { storage = memory(), offlineReady = fals
     validateOptionalInstallationReference,
     inspectOptionalOffline: async (base) =>
       typeof offlineReady === 'function' ? offlineReady(base) : offlineReady,
+    services,
     setTimeout(callback) {
       timers.set(callback, callback);
       return callback;
@@ -175,11 +180,107 @@ function launcher(fetcher, query = '', { storage = memory(), offlineReady = fals
     },
   };
   const ready = runInNewContext(
-    `(${installOptionalLauncher.toString()})(${JSON.stringify({ packageId, root })}, { optionalInstallationKey, validateOptionalInstallationReference, inspectOptionalOffline })`,
+    `(${installOptionalLauncher.toString()})(${JSON.stringify({ packageId, root })}, { optionalInstallationKey, validateOptionalInstallationReference, inspectOptionalOffline, ...services })`,
     context,
   );
   return { elements, events, timers, locations, ready };
 }
+
+test('launcher failures use localized safe copy, retain usable actions and retranslate without retrying', async () => {
+  const current = {
+    id: packageId,
+    version: 'v1.2.3',
+    scope: '../releases/v1.2.3/site/',
+    entry: 'optional-practice/civilian-flight/index.html',
+  };
+  for (const locale of ['en', 'uk']) {
+    for (const operation of ['prepare', 'remove']) {
+      for (const reason of ['idle-timeout', 'overall-timeout', 'cancelled', 'unknown']) {
+        for (const legacyService of [false, true]) {
+          const error = Object.assign(new Error('SECRET https://private.test/<script>'), {
+            offlineCode: reason,
+          });
+          let calls = 0;
+          const fail = async () => {
+            calls++;
+            throw error;
+          };
+          const storage = memory();
+          recordOptionalInstallation({ packageId, storage, location: locationFor('v1.2.3') });
+          const saved = storage.getItem(optionalInstallationKey(packageId, root));
+          const f = launcher(async () => new Response(JSON.stringify(current)), '?lang=' + locale, {
+            storage,
+            offlineReady: true,
+            services: {
+              prepareOptionalOffline: fail,
+              removeOptionalOffline: fail,
+              ...(!legacyService ? { optionalOfflineFailureMessage } : {}),
+            },
+          });
+          await f.ready;
+          const open = f.elements.open.href;
+          await f.elements[operation === 'prepare' ? 'download' : 'remove'].onclick();
+          for (const language of [locale, locale === 'en' ? 'uk' : 'en']) {
+            f.elements.locale.value = language;
+            f.elements.locale.onchange();
+            const text = f.elements.status.textContent;
+            assert.doesNotMatch(
+              text,
+              /SECRET|private\.test|script|Needs repair|Потрібне відновлення/,
+            );
+            if (!legacyService)
+              assert.equal(text, optionalOfflineFailureMessage(error, language, operation));
+            else
+              assert.match(
+                text,
+                language === 'uk' ? /Не вдалося/ : /not completed|Could not remove/,
+              );
+          }
+          assert.equal(calls, 1, 'Changing language must not repeat the failed operation');
+          assert.equal(f.elements.open.hidden, false);
+          assert.equal(new URL(f.elements.open.href).pathname, new URL(open).pathname);
+          assert.equal(f.elements.remove.hidden, false);
+          assert.equal(storage.getItem(optionalInstallationKey(packageId, root)), saved);
+          assert.equal(f.elements.download.disabled, false);
+          await f.elements.check.onclick();
+          assert.match(f.elements.status.textContent, /Ready offline|Готово офлайн/);
+        }
+      }
+    }
+  }
+});
+
+test('legacy launcher failure never invents an available saved copy', async () => {
+  const current = {
+    id: packageId,
+    version: 'v1.2.3',
+    scope: '../releases/v1.2.3/site/',
+    entry: 'optional-practice/civilian-flight/index.html',
+  };
+  for (const locale of ['en', 'uk']) {
+    for (const readiness of ['no-pointer', false, { status: 'unknown' }]) {
+      const storage = memory();
+      if (readiness !== 'no-pointer')
+        recordOptionalInstallation({ packageId, storage, location: locationFor('v1.2.3') });
+      const f = launcher(async () => new Response(JSON.stringify(current)), '?lang=' + locale, {
+        storage,
+        offlineReady: readiness === 'no-pointer' ? false : readiness,
+        services: {
+          prepareOptionalOffline: async () => {
+            throw new Error('SECRET');
+          },
+        },
+      });
+      await f.ready;
+      await f.elements.download.onclick();
+      assert.equal(f.elements.open.hidden, true);
+      assert.doesNotMatch(
+        f.elements.status.textContent,
+        /SECRET|remain available|залишаються доступними|Ready offline|Готово офлайн/,
+      );
+    }
+  }
+});
 
 test('stable launcher forwards a bounded cosmetic pin without admitting navigation or storage context', async () => {
   const current = {

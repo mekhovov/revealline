@@ -395,23 +395,23 @@ test('retained rollback changes only explicitly selected launcher ownership afte
     };
   const updated = await selectRetainedEditionRelease(
     input,
-    { version: older.release.version, editionIds: ['coupa'] },
+    { version: older.release.version, editionIds: ['sample'] },
     ports,
   );
   assert.deepEqual(input, before);
-  assert.deepEqual(updated.releases[0], { ...before.releases[0], activeEditionIds: ['coupa'] });
+  assert.deepEqual(updated.releases[0], { ...before.releases[0], activeEditionIds: ['sample'] });
   assert.deepEqual(updated.releases[1], { ...before.releases[1], activeEditionIds: [] });
   assert.deepEqual(updated.releases[2], before.releases[2]);
   const oldOutput = await frozenEditionOverlay(input, ports),
     output = await frozenEditionOverlay(updated, ports);
   for (const [name, bytes] of oldOutput)
-    if (!name.startsWith('editions/coupa/app/') && name !== 'editions/index.html')
+    if (!name.startsWith('editions/sample/app/') && name !== 'editions/index.html')
       assert.deepEqual(output.get(name), bytes, `Unchanged frozen or unrelated member: ${name}`);
-  assert.equal(json(output.get('editions/coupa/app/current.json')).version, 'v0.139.0');
+  assert.equal(json(output.get('editions/sample/app/current.json')).version, 'v0.139.0');
   assert.deepEqual(
     await selectRetainedEditionRelease(
       updated,
-      { version: 'v0.139.0', editionIds: ['coupa'] },
+      { version: 'v0.139.0', editionIds: ['sample'] },
       ports,
     ),
     updated,
@@ -424,11 +424,11 @@ test('invalid retained selections and changed review evidence never return a sta
     input = selector(fixture.release),
     before = structuredClone(input);
   for (const request of [
-    { version: 'v99.0.0', editionIds: ['coupa'] },
+    { version: 'v99.0.0', editionIds: ['sample'] },
     { version: fixture.release.version, editionIds: ['droneaid'] },
     { version: fixture.release.version, editionIds: [] },
-    { version: fixture.release.version, editionIds: ['coupa', 'coupa'] },
-    { version: '../escape', editionIds: ['coupa'] },
+    { version: fixture.release.version, editionIds: ['sample', 'sample'] },
+    { version: '../escape', editionIds: ['sample'] },
   ])
     await assert.rejects(
       selectRetainedEditionRelease(input, request, {
@@ -440,7 +440,7 @@ test('invalid retained selections and changed review evidence never return a sta
   await assert.rejects(
     selectRetainedEditionRelease(
       input,
-      { version: fixture.release.version, editionIds: ['coupa'] },
+      { version: fixture.release.version, editionIds: ['sample'] },
       {
         readReleaseAsset: releaseReader(fixture),
         resolveReleaseIdentity: releaseIdentity(fixture),
@@ -517,7 +517,7 @@ process.stdout.write(Buffer.from(data[route], 'base64'));
         '--version',
         'v0.139.0',
         '--editions',
-        'coupa',
+        'sample',
         '--repository',
         'mekhovov/revealline',
         '--base-path',
@@ -539,7 +539,7 @@ process.stdout.write(Buffer.from(data[route], 'base64'));
     selected = JSON.parse(selectedBytes);
   assert.deepEqual(
     selected.releases.map((row) => row.activeEditionIds),
-    [['coupa'], [], ['droneaid']],
+    [['sample'], [], ['droneaid']],
   );
   assert.deepEqual(selected.releases[2], input.releases[2]);
   assert.ok(
@@ -584,7 +584,7 @@ test('sync-selector verifies the complete retained publication before selecting 
   );
   assert.deepEqual(
     selected.releases.map((row) => row.activeEditionIds),
-    [[], ['droneaid'], ['coupa']],
+    [[], ['droneaid'], ['sample']],
   );
   assert.deepEqual(selected.releases[0], { ...f.older.release, activeEditionIds: [] });
   assert.deepEqual(selected.releases[1], f.other.release);
@@ -643,16 +643,16 @@ test('a hosted subset preserves retained paths and unrelated launchers; omitted 
   assert.deepEqual(selected.releases[1].editionIds, ['droneaid']);
   assert.deepEqual(selected.releases[1].activeEditionIds, ['droneaid']);
   const output = await frozenEditionOverlay(selected, ports);
-  assert.equal(json(output.get('editions/coupa/app/current.json')).version, 'v0.139.0');
+  assert.equal(json(output.get('editions/sample/app/current.json')).version, 'v0.139.0');
   assert.equal(json(output.get('editions/droneaid/app/current.json')).version, 'v0.140.0');
-  assert(![...output.keys()].some((name) => name.startsWith('editions/coupa/releases/v0.140.0/')));
+  assert(![...output.keys()].some((name) => name.startsWith('editions/sample/releases/v0.140.0/')));
   for (const [name, source] of runtimeMembers(older))
-    assert.deepEqual(output.get(`editions/coupa/releases/v0.139.0/site/${name}`), source);
+    assert.deepEqual(output.get(`editions/sample/releases/v0.139.0/site/${name}`), source);
   const html = output.get('editions/index.html').toString();
   const distribution = newer.envelope.editions[0].distribution;
   assert.match(
     html,
-    /https:\/\/github.com\/mekhovov\/revealline\/releases\/download\/v0.140.0\/distribution-coupa.zip/,
+    /https:\/\/github.com\/mekhovov\/revealline\/releases\/download\/v0.140.0\/distribution-sample.zip/,
   );
   assert(html.includes(distribution.sha256));
   assert(html.includes(`${distribution.bytes} bytes`));
@@ -671,7 +671,7 @@ test('hosted subset validation is explicit and preserves default all-edition sel
     reviewBytes: fixture.reviewBytes,
     basePath: '/revealline/',
   };
-  for (const editionIds of [[], ['coupa', 'coupa'], ['unknown'], [''], 'coupa'])
+  for (const editionIds of [[], ['sample', 'sample'], ['unknown'], [''], 'sample'])
     await assert.rejects(
       selectPublishedEditionRelease(
         selector(),
@@ -694,7 +694,7 @@ test('hosted subset validation is explicit and preserves default all-edition sel
       .includes('Download editions'),
   );
   await assert.rejects(
-    selectPublishedEditionRelease(selected, { ...request, editionIds: ['coupa'] }, ports),
+    selectPublishedEditionRelease(selected, { ...request, editionIds: ['sample'] }, ports),
     /immutable version is already selected/,
   );
   const reordered = structuredClone(selected);
@@ -703,12 +703,12 @@ test('hosted subset validation is explicit and preserves default all-edition sel
     (await frozenEditionOverlay(reordered, ports)).get('editions/index.html'),
   ).toString();
   assert(
-    reorderedHTML.indexOf('droneaid/app/') < reorderedHTML.indexOf('coupa/app/'),
+    reorderedHTML.indexOf('droneaid/app/') < reorderedHTML.indexOf('sample/app/'),
     'Existing explicit launcher order remains unchanged.',
   );
   const subset = await selectPublishedEditionRelease(
     selector(),
-    { ...request, editionIds: ['coupa'] },
+    { ...request, editionIds: ['sample'] },
     ports,
   );
   const subsetOutput = await frozenEditionOverlay(subset, ports);
@@ -718,11 +718,11 @@ test('hosted subset validation is explicit and preserves default all-edition sel
 
 test('sync-selector explicit hosted subsets still verify download-only original bytes and all review gates', async (t) => {
   const f = await syncSelectorFixture(t, { additionalEditionIds: ['droneaid'] });
-  const args = ['--editions', 'coupa'];
+  const args = ['--editions', 'sample'];
   const result = await f.run(undefined, {}, 'sync-selector', args);
   assert.equal(result.status, 0, result.stderr);
   const selected = json(result.selected);
-  assert.deepEqual(selected.releases[2].editionIds, ['coupa']);
+  assert.deepEqual(selected.releases[2].editionIds, ['sample']);
   assert.deepEqual(selected.releases[1], f.other.release);
   const excluded = f.newer.envelope.editions.find((edition) => edition.id === 'droneaid');
   const route = f.assetRoutes.get(`${f.newer.envelope.version}/${excluded.distribution.path}`);
@@ -746,14 +746,14 @@ test('sync-selector explicit hosted subsets still verify download-only original 
 
 test('sync-selector rejects empty, duplicate and foreign hosted IDs without modifying the selector', async (t) => {
   const f = await syncSelectorFixture(t);
-  for (const ids of [',', 'coupa,coupa', 'unknown']) {
+  for (const ids of [',', 'sample,sample', 'unknown']) {
     const rejected = await f.run(undefined, {}, 'sync-selector', ['--editions', ids]);
     assert.notEqual(rejected.status, 0);
     assert.match(rejected.stderr, /nonempty, unique edition IDs/);
     assert.deepEqual(rejected.selected, rejected.original);
     assert.equal(await fs.readFile(f.callsPath, 'utf8'), '');
   }
-  const wrongCommand = await f.run(undefined, {}, 'verify', ['--editions', 'coupa']);
+  const wrongCommand = await f.run(undefined, {}, 'verify', ['--editions', 'sample']);
   assert.notEqual(wrongCommand.status, 0);
   assert.match(wrongCommand.stderr, /editions belong to sync-selector or select-retained/);
 });

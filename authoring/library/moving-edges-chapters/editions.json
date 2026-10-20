@@ -5,7 +5,7 @@
       "themeId": "fpv",
       "id": "moving-edges-fpv",
       "artRoot": "authoring/library/moving-edges-art",
-      "provenanceSha256": "bdaac5fc8776c83a9e2201f36409b576478b835c708e97e335c8c2d7ee9006e1",
+      "provenanceSha256": "dbc0583efc7fdeeb685858a361734a18973799515023a1b59bc495641d86a6e5",
       "images": [
         {
           "sourceCellId": "moving-edges/terrace-stitch/fpv",
@@ -37,7 +37,7 @@
       "themeId": "ukraine",
       "id": "moving-edges-ukraine",
       "artRoot": "authoring/library/moving-edges-art",
-      "provenanceSha256": "bdaac5fc8776c83a9e2201f36409b576478b835c708e97e335c8c2d7ee9006e1",
+      "provenanceSha256": "dbc0583efc7fdeeb685858a361734a18973799515023a1b59bc495641d86a6e5",
       "images": [
         {
           "sourceCellId": "moving-edges/terrace-stitch/ukraine",
@@ -69,7 +69,7 @@
       "themeId": "retro",
       "id": "moving-edges-retro",
       "artRoot": "authoring/library/moving-edges-art",
-      "provenanceSha256": "bdaac5fc8776c83a9e2201f36409b576478b835c708e97e335c8c2d7ee9006e1",
+      "provenanceSha256": "dbc0583efc7fdeeb685858a361734a18973799515023a1b59bc495641d86a6e5",
       "images": [
         {
           "sourceCellId": "moving-edges/terrace-stitch/retro",
@@ -94,38 +94,6 @@
           "sha256": "1a6cf10c89c674a52093390f798ab981a51023a5af772036ffd88c3ba6b99d96",
           "title": "Summer's Last Lake Ferry",
           "description": "A yellow camera and tape kiosk overlooks offset ferry piers beneath a rose-gold lake sky. Offset piers and broad return water echo the harbor route. This reward scene is not collision geometry."
-        }
-      ]
-    },
-    {
-      "themeId": "coupa",
-      "id": "moving-edges-coupa",
-      "artRoot": "authoring/library/moving-edges-art",
-      "provenanceSha256": "bdaac5fc8776c83a9e2201f36409b576478b835c708e97e335c8c2d7ee9006e1",
-      "images": [
-        {
-          "sourceCellId": "moving-edges/terrace-stitch/coupa",
-          "sourceLevelId": "moving-edges-terrace-stitch",
-          "path": "originals/terrace-stitch-coupa.png",
-          "sha256": "24d887954886059a5eacfe133e94caf59011fdef79cd98324581038c55b1c65f",
-          "title": "The Shared Goods Terraces",
-          "description": "Shared tools, parcels and workshop terraces rise toward a greenhouse above an idyllic coast. Three working levels and connecting paths echo the stepped terraces. This reward scene is not collision geometry."
-        },
-        {
-          "sourceCellId": "moving-edges/survey-wheel/coupa",
-          "sourceLevelId": "moving-edges-survey-wheel",
-          "path": "originals/survey-wheel-coupa.png",
-          "sha256": "d2e32f910fe3831f81be3a5f0a4985ab95f0b13f9f83bae098123dd344f5b753",
-          "title": "The Repair Exchange Rotunda",
-          "description": "A snowy parts-exchange rotunda links warm timber repair workshops at night. A central depot and surrounding workrooms echo the hub and sectors. This reward scene is not collision geometry."
-        },
-        {
-          "sourceCellId": "moving-edges/breakwater-return/coupa",
-          "sourceLevelId": "moving-edges-breakwater-return",
-          "path": "originals/breakwater-return-coupa.png",
-          "sha256": "e2eb3e89295a695f85d27d034457abd398749e7c1dc27ec07a9bdf7ed86cf56f",
-          "title": "The Harbor Maintenance Round",
-          "description": "A harbor maintenance crew shares lit repair workshops and boats beside deep blue night water. Projecting piers and sheltered return water echo the breakwaters. This reward scene is not collision geometry."
         }
       ]
     }

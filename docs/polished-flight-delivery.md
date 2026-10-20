@@ -1,5 +1,7 @@
 # Polished journeys and real-radio flight: delivery ledger
 
+> Retained excerpt after an ownership migration. Historical totals and verification statements describe the original scope; this excerpt is not a current release qualification. Original bytes and removed material are preserved separately.
+
 > **2026-09-30 continuation:** Phases 2–4 and the twelve-drill Phase 6 framework
 > are implemented. The review-controls follow-up fixes focused-control pause,
 > delivers actual 0.5× replay, and binds runtime/retention diagnostics to frozen
@@ -205,15 +207,6 @@ and retained versions. This is one preparation, not a frozen default archive,
 whole-site admission or permission to raise a cap. Sparse inputs and producers were
 restored from their exact committed blobs; historical dirty work was untouched.
 
-The completed `d22621010` candidate CI passes for all eighteen editions and both
-optional packages. The [verified capacity packet](verification/evidence/company-capacity-d22621010.json)
-puts the same-source known lower bound at **924,295,263 bytes** for the default,
-optional packages and four new editions; **1,049,938,753 bytes** with Coupa All and
-DroneAid NL Community added; or **1,375,885,332 bytes** for all eighteen editions.
-The latter two already exceed the unchanged cap. Four editions leave only
-**25,704,737 bytes** before the omitted components. Larger selections require
-separate configured targets or download-only packages; complete hosted admission
-and release selection are still required.
 
 Live-input fault injection reproduced a queued-animation edge case: after a
 300 ms main-thread block, an old rAF timestamp could admit one ordinary simulation
@@ -592,14 +585,6 @@ Both optional packages and their envelopes bring the known lower bound to
 Choosing fewer hosted editions cannot reduce the publisher's full-envelope reads.
 All eighteen must therefore not be offered as one upload batch under current policy.
 
-A compatible proposed first publication contains the four new learning editions,
-`coupa-all` and `droneaid-nl-community`, plus both optional packages. That historical
-source's originals and canonical subset envelopes total **501,633,944 bytes** before
-review/evidence. Hosting is selected independently; all six plus default already
-exceed the hosted cap. The other twelve editions need a later coordinator-owned
-publication batch. Every batch requires its own exact envelope review and complete
-budget check; these historical totals allocate no version and qualify no future
-artifact. The feature changes remain combined in the existing integration PR.
 
 Use the existing `bundle-editions --editions` command for each selected cohort;
 it produces a complete selected envelope and fresh reproducibility receipts.

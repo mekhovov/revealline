@@ -1,5 +1,6 @@
 # Reserve illustrations · wave 9
 
+This is a reduced historical generation record. Retired ownership entries are omitted; original batch totals below remain historical context. The current retained selection is in the reserve illustrations catalog.
 Four new reward illustrations follow [wave 8](../reserve-illustrations-wave-8/README.md). They are source artwork without runtime bindings, new levels, animation, packs or releases.
 
 | Theme | Original | Composition |
@@ -7,7 +8,6 @@ Four new reward illustrations follow [wave 8](../reserve-illustrations-wave-8/RE
 | FPV Front | [Snowglass Rooftop](originals/fpv-snowglass-rooftop.png) | An amber greenhouse and compact scenic drone contrast with a snowy lavender city. |
 | Ukraine Atlas | [Spring Painted Ferry](originals/ukraine-spring-painted-ferry.png) | A turquoise painted ferry and diagonal ramp sit among blossoms and calm blue reflections. |
 | 1994 Forever | [Rainlight Pinball Hall](originals/retro-rainlight-pinball-hall.png) | Three colored cabinets illuminate a rainy midnight interior. |
-| Spend Network | [Sunroof Market House](originals/spend-sunroof-market-house.png) | A yellow produce and parcel hall sits beneath a broad blue solar-panel roof. |
 
 The four original PNGs total **7,893,602 bytes**. All are **1774 × 887, RGB, 8-bit**, exactly **2:1**. The requested 1536 × 768 dimensions and restrained three-shade materials were targets. Stepped contours and broad focal shapes coexist with many colors, detailed reflections and soft light variation; these are not certified limited-palette sprites.
 

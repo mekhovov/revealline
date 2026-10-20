@@ -7,7 +7,6 @@
 291. **FPV**.
 292. **UKRAINE**.
 293. **DRONE AID**.
-294. **COUPA**.
 295. **SOCIAL DRONE**.
 296. **SDUA**.
 297. **VICTORY DRONES**.

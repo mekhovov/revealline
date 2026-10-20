@@ -1,105 +1,108 @@
 {
-  "parent": "7d64e9ba8adbab90f731eb964e1ef138323868b5",
-  "warnings": [
-    {
-      "path": "game/communities/coupa/index.html",
-      "unchangedFromParent": true
-    },
-    {
-      "path": "game/communities/droneaid-community/index.html",
-      "unchangedFromParent": true
-    },
-    {
-      "path": "game/communities/droneaid/index.html",
-      "unchangedFromParent": true
-    },
-    {
-      "path": "game/communities/fpv-learning/index.html",
-      "unchangedFromParent": true
-    },
-    {
-      "path": "game/communities/index.html",
-      "unchangedFromParent": true
-    },
-    {
-      "path": "game/communities/social-drone-ua/index.html",
-      "unchangedFromParent": true
-    },
-    {
-      "path": "game/communities/ukraine-culture/index.html",
-      "unchangedFromParent": true
-    },
-    {
-      "path": "game/communities/victory-drones/index.html",
-      "unchangedFromParent": true
-    },
-    {
-      "path": "game/community/index.html",
-      "unchangedFromParent": true
-    },
-    {
-      "path": "game/community/moderation.html",
-      "unchangedFromParent": true
-    },
-    {
-      "path": "game/community/store.html",
-      "unchangedFromParent": true
-    },
-    {
-      "path": "game/content/mission-library-index.json",
-      "unchangedFromParent": true
-    },
-    {
-      "path": "game/creator/index.html",
-      "unchangedFromParent": true
-    },
-    {
-      "path": "game/creator/player.html",
-      "unchangedFromParent": true
-    },
-    {
-      "path": "game/creator/team.html",
-      "unchangedFromParent": true
-    },
-    {
-      "path": "game/downloads.html",
-      "unchangedFromParent": true
-    },
-    {
-      "path": "game/presentation/combat-review.html",
-      "unchangedFromParent": true
-    },
-    {
-      "path": "game/presentation/journey-actor-review.html",
-      "unchangedFromParent": true
-    },
-    {
-      "path": "game/test/fpv-world-content.test.mjs",
-      "unchangedFromParent": true
-    },
-    {
-      "path": "game/test/workshop-art-integration.test.mjs",
-      "unchangedFromParent": true
-    },
-    {
-      "path": "game/ui/demo-picture.mjs",
-      "unchangedFromParent": true
-    },
-    {
-      "path": "scripts/game-cli.mjs",
-      "unchangedFromParent": true
-    },
-    {
-      "path": "scripts/test-fpv-content.mjs",
-      "unchangedFromParent": true
-    },
-    {
-      "path": "scripts/test-main-pages-profile.mjs",
-      "unchangedFromParent": true
-    },
-    {
-      "path": "site/index.html",
-      "unchangedFromParent": true
-    }
-  ]
+  "format": "revealline-retained-historical-excerpt.v1",
+  "scope": "Retained historical excerpt after an ownership migration. Original bytes are preserved separately. Historical counts, hashes and approvals inside the excerpt describe the original record only; this derived document is not a release qualification, executable restore plan, or complete original inventory.",
+  "originalSHA256": "677ae072b48909e90998778c17205b8db2cdf7fb50f5a5977e404f989c0e4759",
+  "originalGitBlob": "513d1f5af41295c94bb3d1c0f5081a64f7a1cbd7",
+  "removedRecordsOrFields": 1,
+  "excerpt": {
+    "parent": "7d64e9ba8adbab90f731eb964e1ef138323868b5",
+    "warnings": [
+      {
+        "path": "game/communities/droneaid-community/index.html",
+        "unchangedFromParent": true
+      },
+      {
+        "path": "game/communities/droneaid/index.html",
+        "unchangedFromParent": true
+      },
+      {
+        "path": "game/communities/fpv-learning/index.html",
+        "unchangedFromParent": true
+      },
+      {
+        "path": "game/communities/index.html",
+        "unchangedFromParent": true
+      },
+      {
+        "path": "game/communities/social-drone-ua/index.html",
+        "unchangedFromParent": true
+      },
+      {
+        "path": "game/communities/ukraine-culture/index.html",
+        "unchangedFromParent": true
+      },
+      {
+        "path": "game/communities/victory-drones/index.html",
+        "unchangedFromParent": true
+      },
+      {
+        "path": "game/community/index.html",
+        "unchangedFromParent": true
+      },
+      {
+        "path": "game/community/moderation.html",
+        "unchangedFromParent": true
+      },
+      {
+        "path": "game/community/store.html",
+        "unchangedFromParent": true
+      },
+      {
+        "path": "game/content/mission-library-index.json",
+        "unchangedFromParent": true
+      },
+      {
+        "path": "game/creator/index.html",
+        "unchangedFromParent": true
+      },
+      {
+        "path": "game/creator/player.html",
+        "unchangedFromParent": true
+      },
+      {
+        "path": "game/creator/team.html",
+        "unchangedFromParent": true
+      },
+      {
+        "path": "game/downloads.html",
+        "unchangedFromParent": true
+      },
+      {
+        "path": "game/presentation/combat-review.html",
+        "unchangedFromParent": true
+      },
+      {
+        "path": "game/presentation/journey-actor-review.html",
+        "unchangedFromParent": true
+      },
+      {
+        "path": "game/test/fpv-world-content.test.mjs",
+        "unchangedFromParent": true
+      },
+      {
+        "path": "game/test/workshop-art-integration.test.mjs",
+        "unchangedFromParent": true
+      },
+      {
+        "path": "game/ui/demo-picture.mjs",
+        "unchangedFromParent": true
+      },
+      {
+        "path": "scripts/game-cli.mjs",
+        "unchangedFromParent": true
+      },
+      {
+        "path": "scripts/test-fpv-content.mjs",
+        "unchangedFromParent": true
+      },
+      {
+        "path": "scripts/test-main-pages-profile.mjs",
+        "unchangedFromParent": true
+      },
+      {
+        "path": "site/index.html",
+        "unchangedFromParent": true
+      }
+    ]
+  }
 }

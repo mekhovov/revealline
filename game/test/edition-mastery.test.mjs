@@ -19,13 +19,13 @@ import { Document } from './helpers/couch-dom.mjs';
 import { memoryStorage } from './helpers/solo-dom.mjs';
 import { waitFor } from './helpers/wait-for.mjs';
 
-const campaignId = 'coupa-spend-in-motion',
+const campaignId = 'droneaid-nl-workshop-lights',
   missionId = campaignId + '-01';
-const source = createCompanyProject({ brandId: 'coupa', campaignId });
+const source = createCompanyProject({ brandId: 'droneaid-nl', campaignId });
 const bindings = createRewardMissionBindings(source),
   mission = bindings.find((item) => item.missionId === missionId);
 const reward = createStudioReward({
-  campaign: { id: campaignId, brandId: 'coupa' },
+  campaign: { id: campaignId, brandId: 'droneaid-nl' },
   source,
   rule: 'mission-win',
   missionId,
@@ -41,11 +41,11 @@ const reward = createStudioReward({
   },
 });
 const provider = {
-  editionId: 'coupa-adventure',
+  editionId: 'droneaid-nl-workshop-lights',
   route: { source },
   rewards: [reward],
   lessons: [],
-  selection: { brand: { id: 'coupa' }, edition: { campaignIds: [campaignId] } },
+  selection: { brand: { id: 'droneaid-nl' }, edition: { campaignIds: [campaignId] } },
 };
 const row = JSON.parse(
   readFileSync(new URL('fixtures/company-campaign-routes.json', import.meta.url)),

@@ -63,7 +63,7 @@ test('public company directory can display and navigate without a community back
   assert.doesNotMatch(source, /(?:\/v1\/catalog|\/api\/auth|page\.mjs|account\.mjs|client\.mjs)/);
   const links = nodes.filter((node) => node.tagName === 'a').map((node) => attribute(node, 'href'));
   assert.ok(links.includes('../'));
-  for (const slug of ['coupa', 'droneaid', 'droneaid-community'])
+  for (const slug of ['droneaid', 'droneaid-community'])
     assert.ok(links.includes(`./${slug}/`));
 });
 
@@ -117,7 +117,6 @@ test('DroneAid collections share one community card without losing either entry 
   assert.deepEqual(cards.map(heading), [
     'FPV / LINE',
     'DroneAid',
-    'Coupa',
     'Social Drone UA',
     'Victory Drones',
     'Ukraine: Living Culture',
@@ -131,7 +130,6 @@ test('DroneAid collections share one community card without losing either entry 
     './droneaid/',
     './droneaid-community/',
   ]);
-  assert.deepEqual(entries(cards.find((card) => heading(card) === 'Coupa')), ['./coupa/']);
 });
 
 test('old directory bookmarks preserve query and hash while forwarding to the plural path', async () => {

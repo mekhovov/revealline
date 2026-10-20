@@ -1,5 +1,7 @@
 # Reveal Line cross-mode execution register
 
+> Retained excerpt after an ownership migration. Historical totals and verification statements describe the original scope; this excerpt is not a current release qualification. Original bytes and removed material are preserved separately.
+
 > **Current whole-product status:** [completed and remaining delivery](delivery-status.md).
 > Use that dated rollup for current priorities, release status and acceptance limits.
 > The older checkpoints below retain their historical scope.
@@ -30,7 +32,6 @@ from an item's start, not simultaneous commitments or an overall completion date
 | P08-B/P02-B feedback and audio | Partial | Countdown/loss/capture/rescue/results readability, reduced effects, actual soundtrack listening and cross-mode parity. | 1–3 days plus listening/device access |
 | P09 encounter/difficulty benchmark | Partial; pressure and motion increments delivered/in progress | Deterministic optional encounters, readable counterplay, difficulty fairness, historical saves/replays and human playtest findings. | 3–6 days together with P10 |
 | P10 Team encounters | Unfinished qualification | Separate 36-case matrix; Support, rescue, strongholds and two-player readability preserved. | Included in benchmark estimate |
-| P11–P15 themed production | Partial source content; production allocation unresolved | Map accepted missions to FPV, DroneAid, culture/history, Retro and Coupa; complete design cards, branding/art/audio, meaningful variety and independent campaign releases. | 3–7 days for a first finished campaign slice; whole programme not estimable until inventory reconciliation |
 | P16 remaining workflows | Partial | Collection/records/mastery, learning, replay, legacy categories, supporting pages and published help/link closure. | 2–4 days |
 | P17 community creation guide | Unfinished | Independent fresh-workspace creation → install → play → recovery trial; current prompts/templates and release instructions. | 1–2 days |
 | P18 whole-game qualification | Unfinished | Performance, storage/download budgets, accessibility, real devices/controllers, offline/lifecycle and complete public journeys; no unresolved required acceptance. | 3–5 days after blockers close |
@@ -901,7 +902,6 @@ Statuses are `queued`, `implementing`, `reviewing`, `qualifying`, `deployed`, `a
 | P12-D | queued       | DroneAid Return Signal, twelve missions.                                                                                                        | Clearly labelled Combat framing and independent campaign gates.                                                                                                   |
 | P13   | queued       | Living Atlas, twelve culture/history missions.                                                                                                  | Complete edition, cultural/art review, variety, applicable modes and release checks.                                                                              |
 | P14   | queued       | After School Arcade, twelve Retro missions.                                                                                                     | Complete edition, distinct encounters/art/audio, cross-mode and release checks.                                                                                   |
-| P15   | queued       | Spend in Motion, twelve Coupa missions.                                                                                                         | Complete edition, clear noncombat semantics, cross-mode and release checks.                                                                                       |
 | P16   | queued       | Collection, settings/data/recovery, learning, replay, workshops, supporting pages and legacy categories.                                        | Full navigation/state coverage; originals and historical content preserved.                                                                                       |
 | P17   | queued       | Community guide, prompts, templates, compatibility and release workflow.                                                                        | Independent fresh-workspace example created, installed, played and recovered.                                                                                     |
 | P18   | queued       | Full cross-phase/edition/content/accessibility/performance/offline/public regression.                                                           | No unresolved required content, slot or acceptance item.                                                                                                          |

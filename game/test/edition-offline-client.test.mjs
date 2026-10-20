@@ -8,11 +8,11 @@ import {
 import { validateCompanyInstallationReference } from '../edition-context.mjs';
 import { COMPANY_PACKAGE_BUDGET } from '../editions/package-budget.mjs';
 
-const root = 'https://game.test/revealline/editions/coupa-adventure/';
+const root = 'https://game.test/revealline/editions/sample-adventure/';
 const scopeFor = (version = '1.0.0') => `${root}releases/v${version}/site/`;
 const ready = (version = '1.0.0') => ({
   status: 'ready',
-  editionId: 'coupa-adventure',
+  editionId: 'sample-adventure',
   version,
   buildId: 'ab'.repeat(32),
   count: 12,
@@ -59,7 +59,7 @@ function fixture({
     },
     options: {
       scope,
-      editionId: 'coupa-adventure',
+      editionId: 'sample-adventure',
       version,
       serviceWorker: {
         register: async () => registration,
@@ -172,8 +172,8 @@ test('verification interruption, timeout and synchronous post failures settle wi
 
 test('verified update and rollback preserve the previous edition and never touch progress or other audiences', async () => {
   const f = fixture(),
-    key = 'revealline.company-installed.coupa-adventure.v1';
-  f.values.set('journey-coupa-adventure', 'original progress');
+    key = 'revealline.company-installed.sample-adventure.v1';
+  f.values.set('journey-sample-adventure', 'original progress');
   f.values.set('revealline.company-installed.droneaid.v1', 'other edition');
   const v1 = await selectPreparedEdition(f.options);
   const next = fixture({ version: '1.1.0' });
@@ -184,7 +184,7 @@ test('verified update and rollback preserve the previous edition and never touch
   assert.deepEqual(JSON.parse(f.values.get(key)).previous, v1);
   await selectPreparedEdition(f.options);
   assert.deepEqual(JSON.parse(f.values.get(key)), { active: v1, previous: v2 });
-  assert.equal(f.values.get('journey-coupa-adventure'), 'original progress');
+  assert.equal(f.values.get('journey-sample-adventure'), 'original progress');
   assert.equal(f.values.get('revealline.company-installed.droneaid.v1'), 'other edition');
   const before = f.values.get(key);
   await assert.rejects(
@@ -217,7 +217,7 @@ test('verified update and rollback preserve the previous edition and never touch
 test('installation references reject foreign origins, audiences, mutable paths and URL decorations', () => {
   const value = { ...ready(), scope: scopeFor(), entry: 'game/company.html' };
   const options = {
-    editionId: 'coupa-adventure',
+    editionId: 'sample-adventure',
     baseURL: `${root}app/`,
     editionRoot: new URL(root).pathname,
   };
@@ -227,20 +227,20 @@ test('installation references reject foreign origins, audiences, mutable paths a
     scopeFor(),
   );
   for (const scope of [
-    'https://other.test/revealline/editions/coupa-adventure/releases/v1.0.0/site/',
+    'https://other.test/revealline/editions/sample-adventure/releases/v1.0.0/site/',
     scopeFor('2.0.0'),
     `${root}app/`,
     `${scopeFor()}?old=1`,
     `${scopeFor()}#fragment`,
     scopeFor().replace('https://', 'https://name:secret@'),
-    scopeFor().replace('coupa-adventure', 'droneaid'),
+    scopeFor().replace('sample-adventure', 'droneaid'),
   ])
     assert.throws(() => validateCompanyInstallationReference({ ...value, scope }, options));
 });
 
 test('waiting workers and cancelled browser registration never replace an installed selection', async () => {
   const f = fixture(),
-    key = 'revealline.company-installed.coupa-adventure.v1';
+    key = 'revealline.company-installed.sample-adventure.v1';
   await selectPreparedEdition(f.options);
   const original = f.values.get(key);
   f.registration.waiting = f.worker;

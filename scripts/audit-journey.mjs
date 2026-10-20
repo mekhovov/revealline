@@ -78,7 +78,7 @@ export async function auditJourney({ referenceDirectory = null } = {}) {
   }
   for (const source of [
     'authoring/library/fpv-route-choices/packs/fpv-route-choices.json',
-    ...['fpv-pressure', 'ukraine-atlas', 'retro-1994', 'spend-network'].map(
+    ...['fpv-pressure', 'ukraine-atlas', 'retro-1994'].map(
       (id) => `authoring/library/four-worlds-chapters/packs/original-${id}.json`,
     ),
   ]) {

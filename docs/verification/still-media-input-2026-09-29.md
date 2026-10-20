@@ -1,3 +1,5 @@
+> Retained historical excerpt after an ownership migration. Exact original bytes are preserved separately. Original totals and verification statements describe the original scope; this excerpt is not a current qualification or a complete test result.
+
 # Pictures & Stories input qualification
 
 This batch follows the Motion Lab receipt. Shared locale changes are
@@ -115,15 +117,6 @@ remain on origin 8989. Exact new picture ID:
 `still-de54c568-cd9c-437b-8ae7-32f2c96cbd96`, revision 1; story ID:
 `story-b13f23b5-f075-4f3d-ba71-b8af8cddbe53`, revision 1, segment 0–8 seconds.
 
-The first run reached both exports but failed its final whole-owner equality
-assertion. Production deliberately preserves the complete campaign snapshot
-while extending `themeIds` for newly referenced worlds. The fixture now checks
-exact campaign content, the exact permitted owner-key set, all previous themes,
-and only the selected world's permitted addition. Eight bounded safety cases
-confirmed legitimate extensions pass while changed content, lost themes/owners
-or unrelated additions fail. No production guard was weakened and the failed
-run's `signal-12` / `coupa` records were preserved. Only the complete fresh rerun
-is counted as passing.
 
 The two real OS export pairs, filenames suffixed `(3)` and `(4)`, match each other
 and the observed browser blobs:

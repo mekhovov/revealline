@@ -14,7 +14,7 @@ import {
 } from '../ui/menu-scenes.mjs';
 import { Document, Events } from './helpers/couch-dom.mjs';
 
-const modeWorlds = ['fpv', 'ukraine', 'retro', 'coupa'];
+const modeWorlds = ['fpv', 'ukraine', 'retro'];
 const modeProfiles = () =>
   modeWorlds.flatMap((themeId) =>
     ['versus', 'team'].map((mode) => resolveMenuScene({ themeId, mode })),
@@ -182,13 +182,13 @@ function fixture(context = {}, mode = 'solo') {
   };
 }
 
-test('all 18 themes resolve explicitly, company mapping works, unknown IDs safely fall back', () => {
-  assert.equal(Object.keys(MENU_SCENES).length, 18);
+test('all 11 themes resolve explicitly, company mapping works, unknown IDs safely fall back', () => {
+  assert.equal(Object.keys(MENU_SCENES).length, 11);
   for (const id of Object.keys(MENU_SCENES))
-    assert.equal(resolveMenuScene({ themeId: id, editionId: 'coupa-operations' }).id, id);
+    assert.equal(resolveMenuScene({ themeId: id, editionId: 'droneaid-nl-parts-in-motion' }).id, id);
   assert.equal(
-    resolveMenuScene({ editionId: 'coupa-operations' }).id,
-    'coupa-product-operations-theme',
+    resolveMenuScene({ editionId: 'droneaid-nl-parts-in-motion' }).id,
+    'droneaid-nl-parts-in-motion-theme',
   );
   assert.equal(
     resolveMenuScene({ editionId: 'droneaid-nl-shared-horizon' }).id,
@@ -212,7 +212,7 @@ for (const world of modeWorlds)
       assert.notEqual(profile.landscape, MENU_SCENES[world].landscape);
       assert.notEqual(profile.portrait, MENU_SCENES[world].portrait);
       assert.equal(
-        resolveMenuScene({ themeId: world, editionId: 'coupa-all', mode }),
+        resolveMenuScene({ themeId: world, editionId: 'droneaid-nl-community', mode }),
         MENU_SCENES[world],
       );
       for (const themeId of Object.keys(MENU_SCENES).filter((id) => !modeWorlds.includes(id)))
@@ -220,7 +220,7 @@ for (const world of modeWorlds)
     }
     for (const mode of ['solo', '__proto__', 'constructor', '../../private'])
       assert.equal(resolveMenuScene({ themeId: world, mode }), MENU_SCENES[world]);
-    assert.equal(Object.keys(MENU_SCENES).length, 18);
+    assert.equal(Object.keys(MENU_SCENES).length, 11);
   });
 
 for (const world of modeWorlds)
@@ -398,7 +398,6 @@ test('every landing has restrained signal styling, with all drone and technical 
   const technical = new Set([
     'fpv',
     'retro',
-    'coupa-developer-integration-theme',
     'droneaid-community',
     'droneaid-nl-community',
     'droneaid-nl-workshop-lights-theme',
@@ -485,8 +484,8 @@ test('scene files and provenance match checksums and fit 2 MiB including the sha
         (scene) => assets.get(scene.landscape.split('/').at(-1)).sha256,
       ),
     ).size,
-    18,
-    'Each theme, including both aggregate overviews, has its own distinct composition.',
+    Object.keys(MENU_SCENES).length,
+    'Each current theme has its own distinct composition.',
   );
   for (const scene of [...Object.values(MENU_SCENES), ...modeProfiles()]) {
     for (const path of [scene.landscape, scene.portrait]) {
@@ -618,7 +617,7 @@ test('DroneAid photograph keeps a full static source in both orientations and We
 });
 
 test('mode requests on a Solo-only edition preserve focus, the artwork source and a single renderer', () => {
-  const f = fixture({ themeId: 'coupa-village', editionId: 'coupa-all' });
+  const f = fixture({ themeId: 'droneaid-nl-community', editionId: 'droneaid-nl-community' });
   f.menu.focus();
   f.load();
   f.renderer.ready(true);
@@ -1040,7 +1039,7 @@ test('the image/canvas plane stays registered to original artwork through cover 
   f.api.dispose();
 });
 
-test('storage denial retains current-page preference and cross-tab updates are applied', () => {
+test('storage denial retains unsaved menu motion across remote updates until a new explicit save', () => {
   const f = fixture();
   f.win.localStorage = {
     getItem() {
@@ -1053,7 +1052,18 @@ test('storage denial retains current-page preference and cross-tab updates are a
   setMenuAnimation(false, f.win);
   assert.equal(getMenuAnimation(f.win), false);
   assert.equal(f.scene.dataset.motion, 'off');
-  f.win.localStorage = { getItem: () => 'on' };
+  let stored = 'on';
+  f.win.localStorage = {
+    getItem: () => stored,
+    setItem: (_key, value) => {
+      stored = value;
+    },
+  };
+  f.win.emit('storage', { key: MENU_ANIMATION_KEY });
+  assert.equal(f.scene.dataset.motion, 'off');
+  setMenuAnimation(false, f.win);
+  assert.equal(stored, 'off');
+  stored = 'on';
   f.win.emit('storage', { key: MENU_ANIMATION_KEY });
   assert.equal(f.scene.dataset.motion, 'on');
   f.api.dispose();
@@ -1078,11 +1088,11 @@ test('interface backdrops replace only fallback decoration and stop hidden artwo
   assert.equal(f.renderer.runs.at(-1), true);
   assert.equal(image.src, source);
   f.doc.documentElement.dataset.interfaceTheme = 'windows-classic';
-  f.context.editionId = 'coupa-culture';
+  f.context.editionId = 'droneaid-nl-makers-together';
   f.context.themeId = undefined;
   f.api.update();
   assert.equal(f.scene.dataset.backdrop, 'authored');
-  assert.match(image.src, /coupa-inside-village/);
+  assert.match(image.src, /droneaid-nl-makers-together/);
   f.context.editionId = undefined;
   f.context.themeId = 'ukraine';
   f.api.update();

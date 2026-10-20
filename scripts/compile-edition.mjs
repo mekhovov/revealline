@@ -1,3 +1,4 @@
+import { validateEditionContentPackages } from './edition-content-inputs.mjs';
 import { createRewardCosmeticRegistry, resolveRewardCosmetic } from '../game/rewards/cosmetics.mjs';
 import { inspectImageDataUrl } from '../game/content.mjs';
 import { rewardMediaReferences, inspectRewardMediaBytes } from '../game/rewards/media-format.mjs';
@@ -403,6 +404,8 @@ export async function collectEditionEngineFiles({ root, entries = ['game/company
 /** Produce a complete isolated input tree without writing the checkout. The
  * caller supplies a reviewed engine inventory and original bytes; all other
  * paths are derived from the selected catalog's dependency closure. */
+export const EDITION_LOCAL_CONTENT_API_VERSION = 1;
+
 export async function compileEdition({
   catalog: source,
   editionIds,
@@ -411,6 +414,9 @@ export async function compileEdition({
   version = 'DEV',
   sourceRevision = 'development',
   validateCode = true,
+  compactCode = true,
+  contentPackages = [],
+  menuSceneResources = null,
   offline = null,
 } = {}) {
   required(sourceFiles instanceof Map, 'Edition compilation requires original source bytes.');
@@ -484,8 +490,11 @@ export async function compileEdition({
   // An edition home follows edition identity, independent of gameplay theme.
   // Its own scene is also the fallback; unrelated home artwork otherwise
   // consumes several MiB of the deliberately bounded offline package.
-  const menuResources = editionMenuSceneResources(editionIds);
-  enginePaths = projectEditionMenuResourcePaths(enginePaths, editionIds);
+  required(menuSceneResources === null || (Array.isArray(menuSceneResources) &&
+    menuSceneResources.every(editionRelativePath) && new Set(menuSceneResources).size === menuSceneResources.length),
+    'Local menu scenes require unique relative resource paths.');
+  const menuResources = menuSceneResources ?? editionMenuSceneResources(editionIds);
+  if (menuSceneResources === null) enginePaths = projectEditionMenuResourcePaths(enginePaths, editionIds);
   const selectedBrand =
     editionIds.length === 1 &&
     runtimeCatalog.brands.find((brand) => brand.id === runtimeCatalog.editions[0].brandId);
@@ -545,7 +554,8 @@ export async function compileEdition({
     runtimeCatalog,
     new Map([...selectedData].map((name) => [name, sourceFiles.get(name)])),
   );
-  const selectedMedia = new Set(publicationAssets.map((asset) => asset.path));
+  const packagePaths = validateEditionContentPackages(contentPackages, sourceFiles);
+  const selectedMedia = new Set([...publicationAssets.map((asset) => asset.path), ...packagePaths]);
   const excluded = new Set([
     ...catalog.campaigns
       .flatMap((campaign) => [
@@ -586,7 +596,7 @@ export async function compileEdition({
     validateEditionHostRequests(file, bytes);
     files.set(
       file,
-      file === 'game/ui/menu-scene-catalog.mjs'
+      file === 'game/ui/menu-scene-catalog.mjs' && menuSceneResources === null
         ? projectEditionMenuScenes(bytes, editionIds)
         : file === 'game/ui/brand-identity.mjs' && selectedLogo
           ? projectEditionBrandIdentity(bytes, selectedLogo.path)
@@ -615,7 +625,7 @@ export async function compileEdition({
       ),
     );
   }
-  for (const entry of ['game/company.html', 'game/index.html', ...EDITION_RUNTIME_PAGES])
+  for (const entry of new Set(['game/company.html', 'game/index.html', ...EDITION_RUNTIME_PAGES, ...enginePaths.filter((name) => name.endsWith('.html'))]))
     if (files.has(entry)) {
       let html = files.get(entry).toString('utf8');
       required(/<html\b[^>]*>/.test(html), 'Company entry needs an HTML root.');
@@ -755,7 +765,7 @@ html[data-edition-id] .edition-boot-logo{display:inline-block;width:auto;height:
     }
   files = projectEditionLocalization(files);
   for (const file of enginePaths) {
-    if (files.has(file)) files.set(file, projectEditionRuntimeIndentation(file, files.get(file)));
+    if (compactCode && files.has(file)) files.set(file, projectEditionRuntimeIndentation(file, files.get(file)));
   }
   if (files.has('game/index.html')) {
     files.set('game/build-config.json', jsonBytes({ version, entry: 'game/company.html' }));
@@ -893,7 +903,9 @@ html[data-edition-id] .edition-boot-logo{display:inline-block;width:auto;height:
       editionIds,
     }),
   );
-  files = projectEditionCodeIndentation(files);
+  // Downstream distributions may apply reviewed source projections before
+  // their own final closure validation and compaction.
+  if (compactCode) files = projectEditionCodeIndentation(files);
   if (offline !== null) {
     required(
       editionIds.length === 1,
@@ -941,6 +953,7 @@ html[data-edition-id] .edition-boot-logo{display:inline-block;width:auto;height:
     .map(([name, bytes]) => ({ path: name, bytes: bytes.length, sha256: hash(bytes) }))
     .sort((a, b) => (a.path < b.path ? -1 : a.path > b.path ? 1 : 0));
   const manifest = Object.freeze({
+    ...(contentPackages.length ? { contentPackages: structuredClone(contentPackages) } : {}),
     format: 'revealline-edition-build.v1',
     editionIds: [...editionIds],
     version,

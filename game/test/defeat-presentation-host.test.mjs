@@ -119,7 +119,7 @@ function key(page, key, extra = {}) {
   return event;
 }
 
-for (const themeId of ['fpv', 'ukraine', 'retro', 'coupa'])
+for (const themeId of ['fpv', 'ukraine', 'retro'])
   test(`${themeId}: real terminal failure is visible before menu; only wreck age advances`, async (t) => {
     const { page, surface, run, effect } = await setup(t, { themeId }),
       checkpoint = authoritativeCheckpoint(run),
@@ -131,7 +131,7 @@ for (const themeId of ['fpv', 'ukraine', 'retro', 'coupa'])
     assert.equal(page.doc.activeElement.id, 'skip-celebration');
     assert.equal(page.rendered.paused, true);
     assert.equal(page.rendered.defeatEffectsRunning, true);
-    const label = `${themeId === 'fpv' ? 'CRAFT LOST' : themeId === 'coupa' ? 'LINK LOST' : 'LIFE LOST'} · -1 LIFE`;
+    const label = `${themeId === 'fpv' ? 'CRAFT LOST' : 'LIFE LOST'} · -1 LIFE`;
     assert.ok(surface.frame.context.calls.some((c) => c.op === 'fillText' && c.args[0] === label));
     page.frame(100);
     assert.ok(effect().age > firstAge);

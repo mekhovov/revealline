@@ -4,18 +4,12 @@ Date: 12 September 2026. Tested the actual `xonix-theme-designer` and `xonix-lev
 
 ## Inputs and exercised checks
 
-Read both `SKILL.md` files and their brief templates, `authoring/CONTRACT.md`, the primitive catalog, relevant schema definitions, Atlas/Navi example packs and selected catalog prompts. The contract and prompt CLI were initially absent while the kit was being assembled; both subsequently appeared. The contract was read and `python3 authoring/prompt.py list --family cross-family` was executed successfully before finalizing this report. These were assembly timing issues, not remaining skill defects.
-
-Executed `python3 authoring/scripts/validate_pack.py authoring/examples/ukraine-atlas.pack.json authoring/examples/navi-network.pack.json --mode draft --json`. Both passed. Atlas has 11 planned assets and Navi 10. Both reports explicitly warn that runtime primitives are specified, not implemented.
-
 Also invoked the actual validator on temporary **in-memory copies** of those examples, without changing files:
 
 | Probe | Observed result |
 | --- | --- |
 | Atlas art direction changed to watercolor/archive; first reveal uses `style="illustration"`, second `style="photograph"`, both linear sampled | Pass; planned-asset/runtime warnings remain |
 | First reveal uses invented `style="watercolor"` | Reject: style must be one of pixel-art, illustration, photograph, scanned-art |
-| Navi `completion.mode="sequence"` | Reject: mode must be all or any |
-| Navi goal uses invented `goal.ordered-suppliers.v1` | Reject: unknown primitive |
 
 The positive mixed-media probe checks representation, not a completed chapter. It does not certify art, rights, playable media or solvability.
 
@@ -46,12 +40,6 @@ Primary research performed during the exercise: [UNESCO's Kosiv entry](https://i
 
 ## Request 2: ordered supplier reconnection with five levels
 
-**Request:** “Make a Navi Network challenge where the player must reconnect suppliers in a required order, with a five-level progression.”
-
-**Proposed response:** Create the five-level design **Navi Network: Supply Chain**, while explicitly reporting that within-board supplier order is not expressible by the current contract. Its marker goal only counts captured markers; all/any goal composition and linear campaign order do not enforce a temporal supplier sequence. A counted-marker pack must not be presented as fulfilling this request.
-
-**Actions and artifacts:** use the Navi example, `references/level-brief.md`, and an adapted `shared-15-challenge-author` prompt. Proposed outputs are a progression brief and a separate ordered-supplier extension brief under `authoring/drafts/navi-supply-chain/`. A draft of supported background/layout content could accompany those later, but the complete ordered challenge needs the extension. Do not add invented IDs to a pack claiming to pass the existing catalog.
-
 **Five-level proposal — all values are untested design parameters:** use a stable 48×36 board, source player start `(24,0)`, three lives, current player speed and `fill.enemy-seeded.v1`. Marker anchors A `(8,8)`, B `(36,26)`, C `(34,8)`, D `(10,26)` and E `(26,24)` are illustrative, separate from background imagery. Use existing enemy/effect primitives for the supporting challenge.
 
 | Level | Required supplier sequence, pending extension | Learning beat and pressure |
@@ -71,12 +59,5 @@ The extension needs parameter validation for a unique bounded marker sequence, c
 **Blocker:** no sequence goal/failure state exists in the current schema/catalog/runtime. The skills correctly direct this toward an extension brief. Five-level design remains possible now; a complete executable pack matching the requested behavior does not.
 
 ## Skill usability findings
-
-1. **Good constraint handling:** both skills direct the agent to the actual catalog, distinguish specified from implemented behavior, support mixed reveal media, preserve geometry and forbid invented executable primitives. The negative probes confirm the validator reinforces those instructions.
-2. **Prompt adaptation needs explicit priority.** `atlas-02-reveal-art` is hardcoded to Petrykivka and pixel clusters; `shared-04-style-painterly` specifies gouache and requires an existing inspected source. Neither is directly a new Carpathian watercolor prompt. Adapt medium/region or write a derived prompt and record the change; do not follow a mismatched template literally. The parent has been notified and is adding explicit adaptation guidance.
-3. **Level prompt has scope drift.** `shared-15-challenge-author` prescribes six levels, named linked objectives, optional medals and a deterministic seed. This request asks for five levels; linked/ordered goals and automatic medals are not in the current contract, and a seed does not make a hand-authored level procedurally generated. The skill's catalog-first rule should be stated as overriding these prompt defaults.
-4. **Several requested handoff details belong in companion briefs today.** Palette and reveal filtering have fields; source derivatives, atlas pivots, audio stems, detailed typography and reward animations do not all have formal fields. The theme template acknowledges this. Keep those as proposed asset briefs and do not add unknown properties merely to make the deliverable seem complete.
-5. **Preservation needs a concrete review instruction.** The theme skill says keep rules independent and preserve topology/speed/collision, which is correct. A stronger reskin workflow would explicitly compare the source and resulting rulesets/geometry/entity positions so adaptation does not accidentally switch Atlas's largest-region fill to the military/Navi enemy-seeded fill.
-6. **Validation wording is appropriately limited.** Draft success certifies structure and static semantics only. The skills explicitly require separate runtime/playtest checks; the exercise found no instruction implying a schema-valid draft is playable or fun.
 
 **Assessment:** both skills are usable for these requests after the now-resolved assembly gaps. Mixed-media authoring is representable; ordered suppliers is correctly exposed as new capability work. The main improvement is making template adaptation and source-versus-output preservation checks explicit.

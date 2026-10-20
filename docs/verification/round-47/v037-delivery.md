@@ -1,3 +1,5 @@
+> Retained historical excerpt after an ownership migration. Exact original bytes are preserved separately. Original totals and verification statements describe the original scope; this excerpt is not a current qualification or a complete test result.
+
 # v0.37 delivery — complete
 
 Updated 2026-09-14. **Play [v0.37.0](https://mekhovov.github.io/revealline/releases/v0.37.0/site/game/).** [PR #13](https://github.com/mekhovov/revealline/pull/13) merged as `4bb84ee`. Main run [34794013075](https://github.com/mekhovov/revealline/actions/runs/34794013075) and deployment `6428943064` succeeded at 01:45:20 UTC. The complete public-file audit and scoped native play/old-prefix checks are complete. GitHub Release `388082096` was published at **02:17:53 UTC**. Its complete public ZIP matches the frozen artifact; the [final delivery receipt](https://github.com/mekhovov/revealline/releases/download/v0.37.0/v037-delivery-receipt.json) closes this milestone. No new source or full-gate run is implied.
@@ -17,7 +19,6 @@ The frozen candidate adds three Sentinel theme editions: **nine original stills 
 | Local Pages          | 1,679 files / 818,303,462 bytes; 44 editions, three retained 035–037, 41 archived and five hidden files. Independent complete inventory and HTTP `--check` pass.                                                                                                                                                                                                                                         |
 | Public admission     | Main/deployment successful; all **1,679 files / 818,303,462 bytes** match decoded SHA-256, direct HTTP 200 and required MIME. Five hidden files, zero failures/retries/skips. Scoped public native/old-prefix observations pass with limits below. Published release `388082096`, complete public ZIP and final delivery receipt are verified.                                                           |
 
-The earlier numeric development preview separately covers three opening theme wins and settled Collection selection while preserving the paused Spend Network run. It does not establish all nine mission journeys. [Source/native note](v037-source-native.md) and [media-connection correction](media-connection-recovery.md) retain their precise boundaries. Patched long-idle browser recovery, physical devices, sustained performance, full audio/video playback and human challenge remain unqualified.
 
 ## Public native play and deployment
 

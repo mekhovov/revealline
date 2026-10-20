@@ -1,3 +1,5 @@
+# Retained historical excerpt after an ownership migration. Exact original bytes are preserved separately. Original totals and verification statements describe the original scope; this excerpt is not a current qualification or a complete test result.
+
 - heading "Small craft. More character." [level=1, ref=e1]
 - combobox "Text size" [expanded=false, ref=e7]: Standard
   - option "Standard" [selected, ref=e22]
@@ -44,7 +46,6 @@
     - option "Ukraine Atlas · heritage study" [ref=e76]
     - option "1994 Forever · tape arcade" [ref=e77]
     - option "1994 Forever · neon switchback" [ref=e78]
-    - option "Spend Sprite · fictional spend review" [ref=e79]
   - combobox "Character to inspect" [expanded=false, ref=e48]: Daybreak FPV · unlocked
     - option "Neutral marker · unlocked" [ref=e80]
     - option "Daybreak FPV · unlocked" [selected, ref=e81]
@@ -54,8 +55,6 @@
     - option "Falcon trim · unavailable" [ref=e85]
     - option "Tape runner · unavailable" [ref=e86]
     - option "Vector trail · unavailable" [ref=e87]
-    - option "Spend Sprite · unavailable" [ref=e88]
-    - option "Audit pulse · unavailable" [ref=e89]
     - option "Scout quad · unlocked" [ref=e90]
     - option "Heavy lift · unlocked" [ref=e91]
     - option "Fixed-wing body · unlocked" [ref=e92]
@@ -75,8 +74,6 @@
     - option "Falcon trim / shared bird body" [ref=e102]
     - option "1994 / coral thruster" [ref=e103]
     - option "Vector trail / mint thruster" [ref=e104]
-    - option "Spend Sprite / pulse + blink" [ref=e105]
-    - option "Audit trim / gold pulse + blink" [ref=e106]
     - option "Still body / no attachment" [ref=e107]
     - option "Scout quad / three blades" [ref=e108]
     - option "Heavy lift / six rotors" [ref=e109]
@@ -109,13 +106,11 @@
     - option "FPV Front / daybreak" [selected, ref=e126]
     - option "Ukraine Atlas / indigo linen" [ref=e127]
     - option "1994 Forever / after hours" [ref=e128]
-    - option "Navi Network / blue hours" [ref=e129]
   - button "Apply family look" [ref=e30]
   - combobox "Terrain objects" [expanded=false, ref=e53]: FPV · concrete / mud / wire
     - option "FPV · concrete / mud / wire" [selected, ref=e130]
     - option "Ukraine · stone / reeds / thorns" [ref=e131]
     - option "1994 · circuit / static / plasma" [ref=e132]
-    - option "Navi · archive / queue / alerts" [ref=e133]
   - LabelText "Microtile" [ref=e59] clickable [cursor:pointer]
     - radio "Microtile" [checked=false, ref=e134]
   - LabelText "Props" [ref=e60] clickable [cursor:pointer]

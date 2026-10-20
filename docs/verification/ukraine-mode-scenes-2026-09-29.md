@@ -1,3 +1,5 @@
+> Retained historical excerpt after an ownership migration. Exact original bytes are preserved separately. Original totals and verification statements describe the original scope; this excerpt is not a current qualification or a complete test result.
+
 # Ukraine Versus and Team artwork — 29 September 2026
 
 This bounded Phase 5 batch adds two authored mode arrangements to the Ukraine base world, each in landscape and portrait. Solo's approved river-valley image remains unchanged. Versus has blue/gold birds facing one another on separate posts. Team has the pair together on one continuous railing, linked by a woven strand. These are new paintings within the same dawn village, timber lookout and embroidered folk-art identity, not color or camera variants.
@@ -50,5 +52,3 @@ Verified source SHA-256 values:
 - `game/test/manual/portrait-motion-check.mjs`: `26933ea987e0b3000b51fc2be57a88db090cf3ef798392ca0814f1050081bb69`
 
 The parent thread also checked the actual Versus host at `/game/couch/?journey=legacy`, selecting the First Signal tactical map and the Ukraine Atlas world before returning to the landing. At 1280×720, a screenshot showed both opposing birds clearly, with the complete logo, modes, four actions, fullscreen control and footer fitting the viewport. The scene reported `renderer=webgl`, `composition=ukraine-versus`, `loaded=true`, `motion=on` and `running=true`, using the 1536×1024 `ukraine-versus.webp`. Resizing to 390×844 selected the 941×1672 `ukraine-versus-portrait.webp`; all controls and footer still fit without split labels. The foreground birds sit partially behind the quiet action scrim in this narrow composition. No gameplay was started. Team received the production-renderer fixture checks above, not a separate actual-host visual check in this batch.
-
-No phone GPU/memory, physical-controller, long-session comfort or published-release claim is made by this batch. Retro and Coupa Versus/Team are the next separate artwork batches.

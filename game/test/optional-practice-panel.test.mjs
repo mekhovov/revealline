@@ -27,10 +27,10 @@ test('optional navigation resolves source and frozen default/edition hosts witho
   for (const suffix of [
     'game/index.html',
     'releases/v1.2.3/site/game/index.html',
-    'editions/coupa-all/releases/v1.2.3/site/game/company.html',
+    'editions/sample-all/releases/v1.2.3/site/game/company.html',
     'game/snake/',
     'game/snake/play.html',
-    'editions/coupa-all/releases/v1.2.3/site/game/snake/index.html',
+    'editions/sample-all/releases/v1.2.3/site/game/snake/index.html',
     'game/controller-lab/',
     'game/controller-lab/index.html',
     'releases/v1.2.3/site/game/controller-lab/',

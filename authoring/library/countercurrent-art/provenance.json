@@ -10,7 +10,7 @@
   "rawOriginalsPreserved": true,
   "pixelTransformations": [],
   "generation": "Twelve independent text-only generation calls, in four groups of three. No generation retries, image edits, original crop/stretch/resampling/re-encoding. Separate review thumbnails are declared in derivatives.json.",
-  "rightsScope": "Original fictional AI-generated project illustrations. No input reference images, copied game art, named artist imitation or authentic historical/product representation. Ukraine uses broad material/craft cues; Retro equipment and all Coupa-theme commons are invented. No exclusive-rights or human-quality certification.",
+  "rightsScope": "Original fictional AI-generated project illustrations. No input reference images, copied game art, named artist imitation or authentic historical/product representation. Ukraine uses broad material/craft cues; Retro equipment is invented. No exclusive-rights or human-quality certification.",
   "layoutAuthority": {
     "path": "authoring/library/countercurrent/layouts.json",
     "sha256": "daaeb40b6260ada3632d602d42b41788fb0c36de109bcc0a1f648018112f3abc",
@@ -20,13 +20,13 @@
   "contextPins": [
     {
       "path": ".gitattributes",
-      "bytes": 485,
-      "sha256": "367c1353565ebf4b355e01413a282349d799716976daf32147c20d5de858038f"
+      "bytes": 1863,
+      "sha256": "8dd156e88b414536d758e79fafa59029dcd53f69a63e7f2f6cc19c2ebe70aefb"
     },
     {
       "path": ".gitignore",
-      "bytes": 124,
-      "sha256": "38812e650ec5d06647adbf4a940526cb422f1b50ae44a73181ef35860c25b8d2"
+      "bytes": 1300,
+      "sha256": "fbb0c01f5e63841162bc40bdf2077e1e7c5000e579951d55b2691643e5af69c3"
     },
     {
       "path": "authoring/library/four-worlds-chapters/verify-images.mjs",
@@ -35,28 +35,28 @@
     },
     {
       "path": "eslint.config.mjs",
-      "bytes": 1610,
-      "sha256": "418e718b4c0d2eff5092693fddebf57b553bfc45c1b40d9b5bfb144ea9447873"
+      "bytes": 2029,
+      "sha256": "ce9d823ac847931751e88c02ae8528eaebb84b851178361c9eeb1f7b8beb503d"
     },
     {
       "path": "game/campaign-contexts.mjs",
-      "bytes": 4403,
-      "sha256": "3243fc2fc9d0db9fb6cf913609a86105d87bf80270a24fde10ec3b46d5eb92b8"
+      "bytes": 4711,
+      "sha256": "0cfbc653dedff1bb47d6f98b498580e06a66e82325e27973b7d5b88eb707e11a"
     },
     {
       "path": "game/campaign-difficulty.mjs",
-      "bytes": 7336,
-      "sha256": "7890880e30df503b69fef0e44e8d58bfa919243aa535ed33c6a1afaa83367b97"
+      "bytes": 7692,
+      "sha256": "d1e7aa765d4dd63b3c7cbae074b2f33f7bd444229353041d37de35c8ae810aa1"
     },
     {
       "path": "game/content-launch.mjs",
-      "bytes": 9259,
-      "sha256": "cec26626541e3a7bb89ff07d7b787040668ff308c7833fd8e6636098d60c80a2"
+      "bytes": 9534,
+      "sha256": "0ca69612aec298a0d918d4e1d435b0038f44e437912c43920f58dc0953368f2b"
     },
     {
       "path": "game/content.mjs",
-      "bytes": 23214,
-      "sha256": "305dfa4d5fb4c4c27856b59abd0e71779d431f68221ac592989be8f828d75b38"
+      "bytes": 27811,
+      "sha256": "d092bccc466e10d37fa993829ae6037e5c10f8d6a067ef36f20888d7cc197e00"
     },
     {
       "path": "game/core/abilities.mjs",
@@ -70,8 +70,8 @@
     },
     {
       "path": "game/core/capture.mjs",
-      "bytes": 8038,
-      "sha256": "960ebb9ecf19a656fd4fb0877cc5a1d967d1e83617b0262ba62dad4c2189aaef"
+      "bytes": 7865,
+      "sha256": "8847c26ec7459a706261303f185b86c2a4f83691f110bf1809173bc2cc43a6b3"
     },
     {
       "path": "game/core/classic-contour.mjs",
@@ -80,38 +80,38 @@
     },
     {
       "path": "game/core/classic-definition.mjs",
-      "bytes": 7266,
-      "sha256": "fa49c1e2442a393b2be8e3d3b34a0eef188bbe158243f7c13cb824d18d1d3638"
+      "bytes": 11053,
+      "sha256": "a1663a97efb2d04dc2d3e9dc20983740c9be32bc6a84494612b77144892a9270"
     },
     {
       "path": "game/core/classic-motion.mjs",
-      "bytes": 12271,
-      "sha256": "d593680e715467fd4ebfd50bf68bfdd2c3690e79ebbc579a64cdbab093c0a020"
+      "bytes": 12889,
+      "sha256": "23ded4bc7e90cddb838ea08d320b6ac8a6df3755cf12dc362ea10e5d7bcc8c2b"
     },
     {
       "path": "game/core/classic-state.mjs",
-      "bytes": 2306,
-      "sha256": "1964712c73cbb2c793881ccf74a2899ef173eff6cc48251274cb738aa0473377"
+      "bytes": 2896,
+      "sha256": "6b8001326238729541bb9515bfa1f92fdb4d18c961f49e7b2a6c68e41a42726f"
     },
     {
       "path": "game/core/classic-step.mjs",
-      "bytes": 16343,
-      "sha256": "c6078d7ce18dc8d5b4ecf3414bbf943bcb68dd80951d68e2cc7b8f1bf5b29fca"
+      "bytes": 19358,
+      "sha256": "468441bee309496488e34497dcf673382197694610e596a89828bb0575aa61b6"
     },
     {
       "path": "game/core/classic-topology.mjs",
-      "bytes": 6357,
-      "sha256": "aae16753e999d4829dab13503f3ef603e42b73f4b44e782180881160651db3ff"
+      "bytes": 6531,
+      "sha256": "c63830a351caa1c45938382d7793aa7ccbc308fac60b5cd477a14fb1962d5131"
     },
     {
       "path": "game/core/contacts.mjs",
-      "bytes": 5168,
-      "sha256": "aadd6aceee0380ff8e9389f305fe96b6642d553ee255ebfb7bcc1251c2c7c67b"
+      "bytes": 5263,
+      "sha256": "d8c8294bf7141471a125dc325ab1202e2a705ca62ad7632d89129907c8072df4"
     },
     {
       "path": "game/core/encounter.mjs",
-      "bytes": 8716,
-      "sha256": "7b98eb4ec29998ce902a62388b089a0a26b41675199bb9601e4b2a55f0df44ba"
+      "bytes": 10043,
+      "sha256": "5543956a0dc81a613c33e1244a6f02621d1c089ec6cade4e34ff1fcc569d279b"
     },
     {
       "path": "game/core/enemy-pressure.mjs",
@@ -120,28 +120,28 @@
     },
     {
       "path": "game/core/geometry.mjs",
-      "bytes": 3989,
-      "sha256": "8ca7877a89ea203f072fbf3b85f304844f3a3abcf992e8ba1a54f39957e6f331"
+      "bytes": 4290,
+      "sha256": "ad980ff30fef2cb8afd307f2a8dccf0329d1dc996dbd9fa3d13e3d2e9f2ae3d4"
     },
     {
       "path": "game/core/index.mjs",
-      "bytes": 17291,
-      "sha256": "787d7cdc759b04ae2a475e8d5ac49e0618dd26f153336ea71b5920232532e1a2"
+      "bytes": 23285,
+      "sha256": "d5fead46c41a9651da86003f70417a9d2bbd5a61830c007011b205581b2a3330"
     },
     {
       "path": "game/core/level.mjs",
-      "bytes": 14178,
-      "sha256": "0a9fa39cdfa6bb6ed4c9b07a231491529777ab099f2cd6528c54fde84d5e41b8"
+      "bytes": 18861,
+      "sha256": "4d0b9f171ace4d8ff4c35ae7d50b4fccaabee218605e422c098aa23d2c5c5b5c"
     },
     {
       "path": "game/core/line-impact.mjs",
-      "bytes": 9000,
-      "sha256": "cf6e1b509d6789f3bd922f1374ba4ba7a80933bb8a117058dfe579bb95b547e6"
+      "bytes": 9142,
+      "sha256": "e3a11756a9fb7272ad660dbf9a2c175095f89e26f889e3f3edb25865b2b7c5a0"
     },
     {
       "path": "game/core/movement.mjs",
-      "bytes": 10912,
-      "sha256": "3f9ee5115eb94c001fe38595f39763b188ea276114ca21d1bc7a426be6e6922a"
+      "bytes": 11398,
+      "sha256": "216e03da20b388c8278be19a9829a8ef642fea30291125b645c5373e5902c261"
     },
     {
       "path": "game/core/registry.mjs",
@@ -155,18 +155,18 @@
     },
     {
       "path": "game/core/versions.mjs",
-      "bytes": 3074,
-      "sha256": "9bc39659dde70e76c63c9f9bfaa267b3cdfa07966d9096cc079383c71478eec3"
+      "bytes": 8109,
+      "sha256": "715a8990f897e7605e3fe045e5c1a064e163ccbbae7a26ba060214443d1b22f2"
     },
     {
       "path": "game/data-json.mjs",
-      "bytes": 4640,
-      "sha256": "e765ace4b34cc64d8948b73d896e5f8d4666ba5984385f6b2de81c1babefba0c"
+      "bytes": 5594,
+      "sha256": "9ce33d6173f3cba8587ed7a7f1924c66e9d9c86ffa59b37a743764ea0b01f7bd"
     },
     {
       "path": "game/mastery-catalog.mjs",
-      "bytes": 13632,
-      "sha256": "2d7d7679b084ff1dcf6c15579605a00dd71cf611f822b79e198703fc4ac045be"
+      "bytes": 15111,
+      "sha256": "7c49112e908ae97c5cf1cbed83b299f74651b00eb6b1ad3c1594b04a86ce1e1c"
     },
     {
       "path": "game/mastery-equipment.mjs",
@@ -180,28 +180,28 @@
     },
     {
       "path": "game/media-library.mjs",
-      "bytes": 12188,
-      "sha256": "ed1f1abe0b95b9889741ec8929522f0fcaba29a5438b09df18016d3ffffc6eb4"
+      "bytes": 12207,
+      "sha256": "41c65098bae7161466670f4cb138b72f078e638bc8cd28c40652b57dd1836c86"
     },
     {
       "path": "game/platform.mjs",
-      "bytes": 2524,
-      "sha256": "737f4e6dabcc08cd45ad5e5b1fb3b16792881897e89927ce5fe7fc609c0f3260"
+      "bytes": 4198,
+      "sha256": "29682ff18fd1571eeaf5c53a21c1bda5e60f4a93e542bfc718c2ca9bfd6a20ec"
     },
     {
       "path": "game/ui/music.mjs",
-      "bytes": 7050,
-      "sha256": "a1ecafd319417d075ec584d8b2f54008a8b877e49848e364bd91603896c44fda"
+      "bytes": 7205,
+      "sha256": "cb52db174666ea9bc4448a71c56bc53cf593db58183f665705fa4727f93fef50"
     },
     {
       "path": "package.json",
-      "bytes": 1819,
-      "sha256": "fc95490babde1090db3de255b114fd4e4282eae162d77fbb55e5ce3f5a117500"
+      "bytes": 10242,
+      "sha256": "0b7facf42b38bc112a28bb985c207f5d5a6455b3c8c646e1f64d245ff0aba701"
     },
     {
       "path": "scripts/game-cli.mjs",
-      "bytes": 58005,
-      "sha256": "93805cedc9abe70298df782504eacf352c68f258bcfe74157bc58b1736365b2e"
+      "bytes": 94572,
+      "sha256": "889a835029c3de3750ccc7e7b14609f31319e23f1448076ed1f5740573d15c74"
     },
     {
       "path": "scripts/pack-indexes.mjs",
@@ -448,84 +448,10 @@
         "deviations": "The visible upper walkway ends without an obvious connection; it is fictional scenic construction, not a navigable route. Tiny screen marks and the skyline are invented.",
         "style": "Modern generated pixel-art illustration with stepped silhouettes, dark structural masses and luminous practical light; not a certified hand-pixel grid."
       }
-    },
-    {
-      "cellId": "countercurrent/offset-docks/coupa",
-      "themeId": "coupa",
-      "missionSlot": "offset-docks",
-      "sourceLevelId": "countercurrent-offset-docks",
-      "title": "The Shared Receiving Courts",
-      "path": "originals/offset-docks-coupa.png",
-      "originalToolPath": "/Users/oleksandr.mekhovov/.codex/generated_images/01a09357-2b06-77f1-b001-1afd50d8bc73/exec-571e81c9-b9e9-412b-8098-4fcdeca3e1a6.png",
-      "bytes": 2735312,
-      "sha256": "87b28d2fec477a7572f10c83e9ec6e2ed7ef3386818f21d651e1d1897df30997",
-      "width": 1774,
-      "height": 887,
-      "promptSha256": "8fd1c220eb19b48d933dfbeb8e3916cf31f569ec814a9c59ac812b1fbffc8ec4",
-      "requestedDimensions": {
-        "width": 1774,
-        "height": 887
-      },
-      "runtimeBinding": null,
-      "sourceBytesEqual": true,
-      "observations": {
-        "scene": "Two open supply and repair courts face a broad wet delivery lane, with a small cart, crates and bicycle repair.",
-        "topologyEcho": "Opposing workshop ends suggest hooks around open space, rather than a literal overhead map.",
-        "deviations": "Several people are larger than requested. Decorative plant motifs and equipment are fictional; no actual Coupa product, interface or financial claim.",
-        "style": "Modern generated pixel-art illustration with stepped silhouettes, dark structural masses and luminous practical light; not a certified hand-pixel grid."
-      }
-    },
-    {
-      "cellId": "countercurrent/sandbar-braid/coupa",
-      "themeId": "coupa",
-      "missionSlot": "sandbar-braid",
-      "sourceLevelId": "countercurrent-sandbar-braid",
-      "title": "Four Workshops, One Garden",
-      "path": "originals/sandbar-braid-coupa.png",
-      "originalToolPath": "/Users/oleksandr.mekhovov/.codex/generated_images/01a09357-2b06-77f1-b001-1afd50d8bc73/exec-41a76607-5a06-48bb-9cab-4b876fbd9677.png",
-      "bytes": 2884014,
-      "sha256": "ea643aa1735edba5f5ba8c6ca0cb3ee3d671cb37534a06966e505f42d938fe14",
-      "width": 1774,
-      "height": 887,
-      "promptSha256": "94f0d764ee7e10fb16d708d72e2e9b61479f51d1891cecfa3185bf2291ad8b7a",
-      "requestedDimensions": {
-        "width": 1774,
-        "height": 887
-      },
-      "runtimeBinding": null,
-      "sourceBytesEqual": true,
-      "observations": {
-        "scene": "Four staggered greenhouse and workshop bands step across a rain garden at warm dusk.",
-        "topologyEcho": "Four separate roofs create an alternating layered rhythm.",
-        "deviations": "Foreground staff and many workshop props are larger or denser than the prompt. Scenic paths are not authored collision paths; no product or measured sustainability claim.",
-        "style": "Modern generated pixel-art illustration with stepped silhouettes, dark structural masses and luminous practical light; not a certified hand-pixel grid."
-      }
-    },
-    {
-      "cellId": "countercurrent/crossing-watch/coupa",
-      "themeId": "coupa",
-      "missionSlot": "crossing-watch",
-      "sourceLevelId": "countercurrent-crossing-watch",
-      "title": "The Two Caretaker Houses",
-      "path": "originals/crossing-watch-coupa.png",
-      "originalToolPath": "/Users/oleksandr.mekhovov/.codex/generated_images/01a09357-2b06-77f1-b001-1afd50d8bc73/exec-9fb6c495-6fca-448a-889d-e604371a55b9.png",
-      "bytes": 2897299,
-      "sha256": "1615b543d0fd311343d586fb70c877b22f9399c12dae7342101a491f6ae6f5e5",
-      "width": 1774,
-      "height": 887,
-      "promptSha256": "7d3a3410ce67fcd292e82df3fe8530250057fdd071a12c20b93a570ee10e538d",
-      "requestedDimensions": {
-        "width": 1774,
-        "height": 887
-      },
-      "runtimeBinding": null,
-      "sourceBytesEqual": true,
-      "observations": {
-        "scene": "A compact material-library pavilion faces an elongated repair hall across a dark garden at blue hour.",
-        "topologyEcho": "Two unequal lit buildings define a diagonal separation.",
-        "deviations": "Several foreground people, planted paths and a distant city bridge are additions. All architecture and activity are fictional; no brand, financial outcome or fixed warning lanes.",
-        "style": "Modern generated pixel-art illustration with stepped silhouettes, dark structural masses and luminous practical light; not a certified hand-pixel grid."
-      }
     }
-  ]
+  ],
+  "ownershipProjection": {
+    "previousSHA256": "41f8d87480fa488bddcbd29f66b9dd239ece2acbf860c143f6eef82c6fc733e4",
+    "scope": "Retained image provenance with refreshed current source context pins. Original generation metadata and unchanged image identities are preserved; this is a derived record."
+  }
 }

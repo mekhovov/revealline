@@ -19,12 +19,12 @@ import { editionDepartureDestinationAllowed } from '../editions/departure-destin
 async function friendlyProviderFixture(prefix = '/') {
   const fixture = await editionProviderFixture();
   const catalog = structuredClone(fixture.catalog);
-  catalog.brands[0].id = 'coupa';
-  catalog.campaigns[0].brandId = 'coupa';
-  catalog.editions[0].brandId = 'coupa';
-  catalog.editions[0].id = 'coupa-all';
-  catalog.editions.push({ ...catalog.editions[0], id: 'coupa-culture', name: 'Culture' });
-  catalog.defaultEditionId = 'coupa-all';
+  catalog.brands[0].id = 'droneaid-nl';
+  catalog.campaigns[0].brandId = 'droneaid-nl';
+  catalog.editions[0].brandId = 'droneaid-nl';
+  catalog.editions[0].id = 'droneaid-nl-community';
+  catalog.editions.push({ ...catalog.editions[0], id: 'droneaid-nl-workshop-lights', name: 'Culture' });
+  catalog.defaultEditionId = 'droneaid-nl-community';
   for (const path of ['game/editions/catalog.json', 'edition-catalog.json'])
     fixture.files.set(path, catalog);
   const base = `https://example.test${prefix}`;
@@ -32,7 +32,7 @@ async function friendlyProviderFixture(prefix = '/') {
   const load = (suffix, compiled = false) =>
     loadRuntimeContentProvider({
       locationRef: { href: `${base}${suffix}` },
-      documentRef: { documentElement: { dataset: compiled ? { editionId: 'coupa-all' } : {} } },
+      documentRef: { documentElement: { dataset: compiled ? { editionId: 'droneaid-nl-community' } : {} } },
       fetcher(value) {
         const url = new URL(value);
         requests.push(url.href);
@@ -46,46 +46,46 @@ async function friendlyProviderFixture(prefix = '/') {
 test('friendly community host resolves shared files and preserves canonical save and artwork identity', async () => {
   for (const prefix of ['/', '/revealline/', '/revealline/releases/v0.142.3/site/']) {
     const f = await friendlyProviderFixture(prefix);
-    const canonical = await f.load('game/index.html?edition=coupa-all');
+    const canonical = await f.load('game/index.html?edition=droneaid-nl-community');
     for (const suffix of ['', '/', '/index.html']) {
-      const friendly = await f.load(`game/communities/coupa${suffix}?mission=first#details`);
+      const friendly = await f.load(`game/communities/droneaid${suffix}?mission=first#details`);
       assert.equal(friendly.editionId, canonical.editionId);
       assert.deepEqual(friendly.context('0.142.3'), canonical.context('0.142.3'));
       assert.equal(friendly.route.profileKey, canonical.route.profileKey);
       assert.equal(friendly.route.sessionKey, canonical.route.sessionKey);
       assert.equal(friendly.authoredPresentationSha256, canonical.authoredPresentationSha256);
       assert.equal(friendly.rootURL, f.base);
-      assert.equal(friendly.href(), `${f.base}game/communities/coupa/`);
+      assert.equal(friendly.href(), `${f.base}game/communities/droneaid/`);
       assert.equal(
-        friendly.href({ edition: 'coupa-culture', mission: 'first' }),
-        `${f.base}game/communities/coupa/?edition=coupa-culture&mission=first`,
+        friendly.href({ edition: 'droneaid-nl-workshop-lights', mission: 'first' }),
+        `${f.base}game/communities/droneaid/?edition=droneaid-nl-workshop-lights&mission=first`,
       );
-      assert.throws(() => friendly.href({ edition: 'droneaid' }), /another company/);
+      assert.throws(() => friendly.href({ edition: 'droneaid-community' }), /another company/);
     }
     assert.ok(f.requests.every((request) => !request.includes('/communities/')));
-    const narrower = await f.load('game/communities/coupa/?edition=coupa-culture');
-    assert.equal(narrower.editionId, 'coupa-culture');
-    assert.equal(narrower.href({ edition: 'coupa-all' }), `${f.base}game/communities/coupa/`);
-    assert.equal(canonical.href(), `${f.base}game/communities/coupa/`);
+    const narrower = await f.load('game/communities/droneaid/?edition=droneaid-nl-workshop-lights');
+    assert.equal(narrower.editionId, 'droneaid-nl-workshop-lights');
+    assert.equal(narrower.href({ edition: 'droneaid-nl-community' }), `${f.base}game/communities/droneaid/`);
+    assert.equal(canonical.href(), `${f.base}game/communities/droneaid/`);
     const installed = await f.load('game/index.html', true);
-    assert.equal(installed.href(), `${f.base}game/index.html?edition=coupa-all`);
+    assert.equal(installed.href(), `${f.base}game/index.html?edition=droneaid`);
   }
 });
 
 test('friendly path rejects foreign and duplicate selectors before fetching or opening another company', async () => {
   const f = await friendlyProviderFixture();
-  for (const query of ['edition=droneaid', 'edition=coupa-all&edition=coupa-culture'])
-    await assert.rejects(f.load(`game/communities/coupa/?${query}`), /community|selector/);
+  for (const query of ['edition=droneaid-community', 'edition=droneaid-nl-community&edition=droneaid-nl-workshop-lights'])
+    await assert.rejects(f.load(`game/communities/droneaid/?${query}`), /community|selector/);
   assert.equal(f.requests.length, 0);
   f.catalog.brands[0].id = 'another-company';
   f.catalog.campaigns[0].brandId = 'another-company';
   for (const edition of f.catalog.editions) edition.brandId = 'another-company';
-  await assert.rejects(f.load('game/communities/coupa/'), /another company/);
+  await assert.rejects(f.load('game/communities/droneaid/'), /another company/);
 });
 
 test('friendly retained artwork navigation keeps its exact original and departure validation', async () => {
   const f = await friendlyProviderFixture('/revealline/releases/v0.142.3/site/');
-  const original = await f.load('game/index.html?edition=coupa-all');
+  const original = await f.load('game/index.html?edition=droneaid-nl-community');
   const snapshot = await captureEditionPresentation(original.bootstrap);
   const bytes = Buffer.from(JSON.stringify(snapshot));
   const descriptor = {
@@ -97,16 +97,16 @@ test('friendly retained artwork navigation keeps its exact original and departur
   f.files.set(descriptor.path, snapshot);
   f.catalog.editions[0].presentationHistory = [descriptor];
   f.data.themes.themes[0].palette.accent = '#ff00ff';
-  const retained = await f.load(`game/communities/coupa/?presentation=${descriptor.id}`);
+  const retained = await f.load(`game/communities/droneaid/?presentation=${descriptor.id}`);
   assert.equal(retained.authoredPresentationSha256, original.authoredPresentationSha256);
-  assert.equal(retained.href(), `${f.base}game/communities/coupa/?presentation=${descriptor.id}`);
-  assert.equal(retained.href({ presentation: null }), `${f.base}game/communities/coupa/`);
-  const ticket = { kind: 'catalogue', destinationEditionId: 'coupa-culture' };
-  const target = retained.href({ edition: 'coupa-culture', presentation: null });
+  assert.equal(retained.href(), `${f.base}game/communities/droneaid/?presentation=${descriptor.id}`);
+  assert.equal(retained.href({ presentation: null }), `${f.base}game/communities/droneaid/`);
+  const ticket = { kind: 'catalogue', destinationEditionId: 'droneaid-nl-workshop-lights' };
+  const target = retained.href({ edition: 'droneaid-nl-workshop-lights', presentation: null });
   assert.equal(editionDepartureDestinationAllowed(retained, ticket, target, retained.href()), true);
   for (const foreign of [
-    target.replace('/coupa/', '/droneaid/'),
-    target.replace('coupa-culture', 'droneaid-community'),
+    target.replace('/droneaid/', '/droneaid-community/'),
+    target.replace('droneaid-nl-workshop-lights', 'droneaid-community'),
     target.replace('example.test', 'foreign.test'),
   ])
     assert.equal(
@@ -326,7 +326,7 @@ test('presentation receipt is origin-independent and changes with selected palet
   f.data.themes.themes[0].palette.accent = '#ff00ff';
   const changed = await load('http://localhost/game/index.html?edition=sample-public');
   assert.notEqual(changed.authoredPresentationSha256, original.authoredPresentationSha256);
-  f.data.presets.characters[f.data.themes.themes[0].player].bodyMotion.radiansPerSecond = 1.5;
+  f.data.presets.characters[f.data.themes.themes[0].player].bodyMotion = { kind: 'rigid-spin', radiansPerSecond: 1.5, travelGain: 0 };
   const recipe = await load('http://localhost/game/index.html?edition=sample-public');
   assert.notEqual(recipe.authoredPresentationSha256, changed.authoredPresentationSha256);
 });

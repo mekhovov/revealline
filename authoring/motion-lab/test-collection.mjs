@@ -25,7 +25,7 @@ test("authored collection validates against its visual IDs without permitting st
 
 test("each family starts with an eligible default and unknown contexts use neutral", () => {
   const profile = createProfile();
-  for (const [scope, expected] of [[context("fpv-first-flight"), "fpv-body"], [context("atlas-heritage"), "ukrainian-bird"], [context("retro-first"), "retro-craft"], [context("navi-spend-review"), "navi-avatar"]]) {
+  for (const [scope, expected] of [[context("fpv-first-flight"), "fpv-body"], [context("atlas-heritage"), "ukrainian-bird"], [context("retro-first"), "retro-craft"]]) {
     const resolved = resolveCharacter(definitions, profile, scope);
     assert.equal(resolved.characterId, expected); assert.equal(resolved.source, "default");
   }

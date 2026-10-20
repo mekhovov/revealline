@@ -361,7 +361,7 @@ test('terminal events distinguish victory and failure, stop backing music, and s
   await sound.dispose();
 });
 test('picture victory uses soft layered chimes even after the old sample bank has loaded', async () => {
-  for (const family of ['fpv', 'atlas', 'retro', 'navi']) {
+  for (const family of ['fpv', 'atlas', 'retro']) {
     const { sound, context } = await setup();
     sound.themeFamily = family;
     sound.feedbackDirector.buffers.set('win', { duration: 1, legacy: true });

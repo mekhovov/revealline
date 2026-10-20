@@ -1,9 +1,7 @@
+> Retained historical excerpt after an ownership migration. Exact original bytes are preserved separately. Original totals and verification statements describe the original scope; this excerpt is not a current qualification or a complete test result.
+
 # Edition compile follow-up — 29 September 2026
 
-All **14/14** editions pass sequential in-memory compilation after the Enemy
-Workshop and Retro/Coupa changes. Normal source admission, final file/byte caps,
-scene projection and offline-manifest checks remain enabled. No build directory,
-archive, native package or installed-offline run was produced.
 
 The checker captured the working tree from 03:11:26.078Z to 03:11:58.961Z with
 HEAD `c8a8ef459a0ede7cc329eb7bdf5ae1a20abf219e`. All 835 input files and the six

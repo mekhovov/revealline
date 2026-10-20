@@ -1,5 +1,6 @@
 # Reserve illustrations · wave 3
 
+This is a reduced historical generation record. Retired ownership entries are omitted; original batch totals below remain historical context. The current retained selection is in the reserve illustrations catalog.
 Four new, separate reward-scene originals follow [wave 2](../reserve-illustrations-wave-2/README.md) at commit `2bdb1d890202ec74f3b13fab1f7b3c7de286e508`. They bring these three reserve waves to twelve distinct selected works. They add no playable levels, packs, runtime bindings, animation or release.
 
 | Theme         | New illustration                                                 | Composition distinct from wave 2                                                                                                              |
@@ -7,7 +8,6 @@ Four new, separate reward-scene originals follow [wave 2](../reserve-illustratio
 | FPV Front     | [Basalt Beacon](originals/fpv-basalt-beacon.png)                 | A complete four-rotor quadcopter and mountain observatory in warm evening light, replacing the river/deck subject of Reedwater Relay.         |
 | Ukraine Atlas | [Apricot Glasshouse](originals/ukraine-apricot-glasshouse.png)   | A blue jug, three tulips and apricot basket beside a sunlit greenhouse, distinct from Moonlit Loom's interior and night scene.                |
 | 1994 Forever  | [Poolside Mixtape](originals/retro-poolside-mixtape.png)         | Mint/coral roller skates and a purple cassette player beside a bright pool, distinct from Midnight Disk Station's computer and rainy railway. |
-| Spend Network | [Copper Kettle Bazaar](originals/spend-copper-kettle-bazaar.png) | A copper kettle, cobalt mugs and reusable fittings in a terracotta market, distinct from Cloud Cart Exchange's cart/plaza.                    |
 
 The four selected PNGs total **9,359,341 bytes**. Every returned original is **1774 × 887, RGB, 8-bit**, exactly **2:1**. The requested 1792 × 896 size was a target; returned pixels are preserved without cropping, resampling, color conversion or local edits. The [manifest](manifest.json) lists precisely these four works.
 
