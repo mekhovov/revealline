@@ -183,6 +183,139 @@ test('aircraft picker creates an independent editable setup with starter rates a
   assert.equal(f.applied[0].advanced.aircraft.id, 'meteor75-analog-2022');
 });
 
+for (const locale of ['en', 'uk'])
+  test(`library backup restore selects its saved setup and discards removed drafts without changing the active flight (${locale})`, async (t) => {
+    let active = null;
+    const f = fixture(t, { getFlightConfiguration: () => active });
+    const backup = f.store.snapshot();
+    f.edit('Aircraft preset', 'meteor75-analog-2022', { tag: 'select', event: 'change' });
+    await f.click('Use in draft');
+    await f.click('Save for next flight');
+    active = f.store.effective();
+    const activeBefore = structuredClone(active);
+    const callbacks = [f.applied.length, f.tested.length, f.saved.length];
+    const revision = f.store.snapshot().revision;
+    f.edit('Camera tilt (degrees)', 36);
+    const setup = f.find('Drone setup', 'select');
+    const profile = f.find('Rate profile', 'select');
+    const tilt = f.find('Camera tilt (degrees)');
+    f.edit('Paste CLI or a SIM rate profile', JSON.stringify(backup), { tag: 'textarea' });
+    f.setLocale(locale);
+    await f.click(locale === 'en' ? 'Restore library backup' : 'Відновити бібліотеку');
+    const restored = { ...backup, revision: revision + 1 };
+    assert.deepEqual(f.store.snapshot(), restored);
+    assert.deepEqual(JSON.parse(f.storage.getItem(TUNING_LIBRARY_KEY)), restored);
+    assert.equal(setup.value, 'my-drone');
+    assert.equal(profile.value, 'legacy-feel');
+    assert.equal(tilt.value, '10');
+    assert.match(
+      f.ui.root.querySelector('[role="status"]').textContent,
+      locale === 'en'
+        ? /Library restored.*current attempt keeps/
+        : /Бібліотеку відновлено.*Поточна спроба зберігає/,
+    );
+    assert.match(f.ui.root.querySelector('.workbench-summary').textContent, /0 (changes|змін)/);
+    await f.click(locale === 'en' ? 'Undo last edit' : 'Скасувати останню зміну');
+    assert.equal(setup.value, 'my-drone', 'Undo cannot resurrect a removed setup');
+    assert.equal(tilt.value, '10');
+    assert.deepEqual(f.store.snapshot(), restored);
+    assert.deepEqual(active, activeBefore);
+    assert.deepEqual([f.applied.length, f.tested.length, f.saved.length], callbacks);
+  });
+
+test('library backup restore drops an unsaved aircraft and its complete draft baseline', async (t) => {
+  const f = fixture(t);
+  const backup = f.store.snapshot();
+  f.edit('Aircraft preset', 'meteor75-analog-2022', { tag: 'select', event: 'change' });
+  await f.click('Use in draft');
+  f.edit('Camera tilt (degrees)', 36);
+  assert.notEqual(f.find('Drone setup', 'select').value, 'my-drone');
+  f.edit('Paste CLI or a SIM rate profile', JSON.stringify(backup), { tag: 'textarea' });
+  await f.click('Restore library backup');
+  assert.deepEqual(f.store.snapshot(), { ...backup, revision: 1 });
+  assert.equal(f.find('Drone setup', 'select').value, 'my-drone');
+  assert.equal(f.find('Rate algorithm', 'select').value, 'legacy');
+  assert.equal(f.find('Camera tilt (degrees)').value, '10');
+  assert.match(f.ui.root.querySelector('.workbench-summary').textContent, /0 changes/);
+  await f.click('Undo last edit');
+  await f.click('Save for next flight');
+  assert.deepEqual(f.store.snapshot(), { ...backup, revision: 1 });
+  assert.equal(f.applied.length, 0);
+  assert.equal(f.tested.length, 0);
+});
+
+for (const failure of ['quota', 'stale tab'])
+  test(`failed library backup restore retains the complete edited setup (${failure})`, async (t) => {
+    const f = fixture(t);
+    const backup = f.store.export();
+    f.edit('Aircraft preset', 'meteor75-analog-2022', { tag: 'select', event: 'change' });
+    await f.click('Use in draft');
+    await f.click('Save for next flight');
+    f.edit('Camera tilt (degrees)', 36);
+    const setupId = f.find('Drone setup', 'select').value;
+    if (failure === 'quota')
+      f.storage.setItem = () => {
+        throw new Error('Quota exceeded');
+      };
+    else {
+      const other = createTuningLibraryStore({ storage: f.storage });
+      await other.saveProfile('legacy-feel', { name: 'Other tab saved' });
+    }
+    const before = f.store.export();
+    const persisted = f.storage.getItem(TUNING_LIBRARY_KEY);
+    f.edit('Paste CLI or a SIM rate profile', backup, { tag: 'textarea' });
+    await f.click('Restore library backup');
+    assert.equal(f.store.export(), before);
+    assert.equal(f.storage.getItem(TUNING_LIBRARY_KEY), persisted);
+    assert.equal(f.find('Drone setup', 'select').value, setupId);
+    assert.equal(f.find('Camera tilt (degrees)').value, '36');
+    assert.match(
+      f.ui.root.querySelector('[role="status"]').textContent,
+      failure === 'quota' ? /Could not apply:.*Quota/ : /Could not apply:.*Another tab/,
+    );
+    assert.equal(f.applied.length, 0);
+    assert.equal(f.tested.length, 0);
+  });
+
+for (const locale of ['en', 'uk'])
+  test(`committed library backup restore reports a subsequent editor failure separately (${locale})`, async (t) => {
+    const f = fixture(t);
+    const backup = f.store.snapshot();
+    f.edit('Aircraft preset', 'meteor75-analog-2022', { tag: 'select', event: 'change' });
+    await f.click('Use in draft');
+    await f.click('Save for next flight');
+    const revision = f.store.snapshot().revision;
+    f.edit('Paste CLI or a SIM rate profile', JSON.stringify(backup), { tag: 'textarea' });
+    f.setLocale(locale);
+    const setup = f.ui.root
+      .querySelectorAll('select')
+      .find((node) => node.value === f.store.snapshot().selectedSetupId);
+    const replace = setup.replaceChildren.bind(setup);
+    setup.replaceChildren = () => {
+      setup.replaceChildren = replace;
+      throw new Error('Editor repaint interrupted');
+    };
+    await f.click(locale === 'en' ? 'Restore library backup' : 'Відновити бібліотеку');
+    const restored = { ...backup, revision: revision + 1 };
+    assert.deepEqual(f.store.snapshot(), restored);
+    assert.deepEqual(JSON.parse(f.storage.getItem(TUNING_LIBRARY_KEY)), restored);
+    const message = f.ui.root.querySelector('[role="status"]').textContent;
+    assert.match(
+      message,
+      locale === 'en'
+        ? /Library restored.*editor.*Refresh library/
+        : /Бібліотеку відновлено.*редактор.*Оновити бібліотеку/,
+    );
+    assert.doesNotMatch(message, /Could not apply|Не вдалося застосувати/);
+    assert.match(message, /Editor repaint interrupted/);
+    await f.click(locale === 'en' ? 'Refresh library' : 'Оновити бібліотеку');
+    assert.equal(setup.value, 'my-drone');
+    assert.equal(f.ui.root.querySelector('[role="status"]').textContent, '');
+    assert.deepEqual(f.store.snapshot(), restored, 'Refresh never repeats the committed restore');
+    assert.equal(f.applied.length, 0);
+    assert.equal(f.tested.length, 0);
+  });
+
 test('browsing aircraft replaces the preview without saving changes and refreshes its language', (t) => {
   const f = fixture(t),
     before = f.store.snapshot();

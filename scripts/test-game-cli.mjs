@@ -1,4 +1,6 @@
 import test from 'node:test';
+import childProcess from 'node:child_process';
+import { syncBuiltinESMExports } from 'node:module';
 import assert from 'node:assert/strict';
 import * as fs from 'node:fs/promises';
 import path from 'node:path';
@@ -1423,4 +1425,45 @@ test('declaring an optional pack does not relax the 80 MiB core cache budget', a
   await fs.writeFile(path.join(root, 'game/core-payload.bin'), Buffer.alloc(80 * 1024 * 1024));
   await assert.rejects(buildProject({ root, out }), /80 MiB/);
   await assert.rejects(fs.access(out));
+});
+
+test('ordinary test discovery and the Solo library command retain complete isolated native files', async (t) => {
+  const files = [
+    'game/test/mission-library-solo-custom-host.test.mjs',
+    'game/test/mission-library-solo-host.test.mjs',
+    'game/test/mission-library-solo-incoming-host.test.mjs',
+    'game/test/mission-library-solo-handoff-host.test.mjs',
+  ];
+  const invocations = [];
+  const launch = t.mock.method(childProcess, 'spawnSync', (...args) => {
+    invocations.push(args);
+    return { status: 0 };
+  });
+  // The CLI owns a named built-in binding. Synchronize only this test's launch
+  // interception and restore it before examining the actual discovered argv.
+  syncBuiltinESMExports();
+  try {
+    await main(['test']);
+  } finally {
+    launch.mock.restore();
+    syncBuiltinESMExports();
+  }
+  assert.equal(invocations.length, 1);
+  const [command, args] = invocations[0];
+  assert.equal(command, process.execPath);
+  assert.equal(args[0], '--test');
+  assert.match(args[1], /^--test-concurrency=[1-4]$/);
+  const discovered = args.slice(2);
+  for (const file of files) assert.equal(discovered.filter((value) => value === file).length, 1);
+  assert.equal(discovered.includes('game/test/mission-library-solo-fixture.mjs'), false);
+  assert.deepEqual(discovered, [...new Set(discovered)].sort());
+
+  const { scripts } = JSON.parse(
+    await fs.readFile(new URL('../package.json', import.meta.url), 'utf8'),
+  );
+  assert.deepEqual(
+    scripts['test:mission-library-solo'].split(/\s+/),
+    ['node', '--test', '--test-concurrency=1', ...files],
+    'The targeted command uses complete files, one fresh process at a time.',
+  );
 });

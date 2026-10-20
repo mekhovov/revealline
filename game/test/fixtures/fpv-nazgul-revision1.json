@@ -1,0 +1,1003 @@
+{
+  "capturedFrom": "cf13bcad9a59a387be7c31c9af8d30d74e7c1860",
+  "configuration": {
+    "aircraft": {
+      "format": "AdvancedAircraft.v2",
+      "id": "nazgul-eco-xl5-v11",
+      "mass": 0.652,
+      "armLength": 0.1225,
+      "inertia": {
+        "x": 0.002348178,
+        "y": 0.0042071522499999995,
+        "z": 0.002348178
+      },
+      "maxThrust": 10,
+      "radius": 0.21566756826189698,
+      "reactionTorque": 0.0127,
+      "motorTimeConstant": 0.03,
+      "linearDrag": 0.013040000000000001,
+      "quadraticDrag": 0.013040000000000001,
+      "angularDrag": 0.001304,
+      "motorOutputLimit": 1,
+      "sensorNoise": 0,
+      "vibration": 0,
+      "battery": {
+        "nominalVoltage": 22.200000000000003,
+        "fullVoltage": 25.200000000000003,
+        "emptyVoltage": 19.200000000000003,
+        "resistance": 0.045,
+        "fullCurrent": 110,
+        "capacityAh": 1.4,
+        "depletion": false,
+        "chemistry": "LiPo",
+        "currentLimit": 110
+      },
+      "geometry": {
+        "rotors": [
+          {
+            "position": {
+              "x": -0.08662058069535207,
+              "y": 0,
+              "z": -0.08662058069535207
+            },
+            "spin": 1
+          },
+          {
+            "position": {
+              "x": 0.08662058069535207,
+              "y": 0,
+              "z": -0.08662058069535207
+            },
+            "spin": -1
+          },
+          {
+            "position": {
+              "x": 0.08662058069535207,
+              "y": 0,
+              "z": 0.08662058069535207
+            },
+            "spin": 1
+          },
+          {
+            "position": {
+              "x": -0.08662058069535207,
+              "y": 0,
+              "z": 0.08662058069535207
+            },
+            "spin": -1
+          }
+        ],
+        "centerOfMass": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "bodyHalfExtents": {
+          "x": 0.0343,
+          "y": 0.04,
+          "z": 0.05145
+        },
+        "propellerRadius": 0.0635,
+        "ducted": false
+      },
+      "drag": {
+        "linear": {
+          "x": 0.016300000000000002,
+          "y": 0.026080000000000002,
+          "z": 0.016300000000000002
+        },
+        "quadratic": {
+          "x": 0.004782400000000001,
+          "y": 0.015042142500000001,
+          "z": 0.004782400000000001
+        },
+        "angular": {
+          "x": 0.0008218622999999999,
+          "y": 0.0010517880624999999,
+          "z": 0.0008218622999999999
+        }
+      },
+      "propulsion": {
+        "idleSpeed": 0.08,
+        "airmode": true,
+        "table": null
+      }
+    },
+    "controller": {
+      "format": "AdvancedControllerTune.v3",
+      "gains": {
+        "roll": {
+          "p": 0.021133601999999998,
+          "i": 0.009510120899999999,
+          "d": 0.00008218623,
+          "feedforward": 0.00005870445
+        },
+        "pitch": {
+          "p": 0.021133601999999998,
+          "i": 0.009510120899999999,
+          "d": 0.00008218623,
+          "feedforward": 0.00005870445
+        },
+        "yaw": {
+          "p": 0.0208254036375,
+          "i": 0.009371431636875,
+          "d": 0.00014725032875,
+          "feedforward": 0.00010517880624999999
+        }
+      },
+      "integralLimit": 0.30625,
+      "antiWindup": 20,
+      "gyroFilterHz": 100,
+      "dTermFilterHz": 60,
+      "inputSmoothingHz": 0,
+      "feedforwardFilterHz": 30
+    },
+    "response": {
+      "format": "FlightResponseProfile.v2",
+      "rates": {
+        "format": "FpvRateProfile.v1",
+        "algorithm": "actual",
+        "quickRatesRcExpo": false,
+        "axes": {
+          "roll": {
+            "rcRate": 10,
+            "rate": 80,
+            "expo": 25,
+            "limit": 1998
+          },
+          "pitch": {
+            "rcRate": 10,
+            "rate": 80,
+            "expo": 25,
+            "limit": 1998
+          },
+          "yaw": {
+            "rcRate": 10,
+            "rate": 80,
+            "expo": 25,
+            "limit": 1998
+          }
+        },
+        "throttle": {
+          "model": "betaflight-2025.12",
+          "mid": 50,
+          "expo": 0,
+          "hover": 50,
+          "limitType": "off",
+          "limitPercent": 100
+        }
+      },
+      "maxTilt": 30,
+      "responseTicks": 8
+    },
+    "camera": {
+      "tilt": 30,
+      "verticalFov": 82
+    },
+    "preset": {
+      "id": "nazgul-eco-xl5-v11",
+      "revision": 1
+    },
+    "components": {
+      "format": "FpvAircraftComponents.v1",
+      "presetId": "nazgul-eco-xl5-v11",
+      "reference": {
+        "batteryMassGrams": 225,
+        "capacityMah": 1400,
+        "batteryHalfExtents": {
+          "x": 0.020579999999999998,
+          "y": 0.01,
+          "z": 0.036015
+        },
+        "payloadHalfExtents": {
+          "x": 0.010289999999999999,
+          "y": 0.006,
+          "z": 0.015435
+        },
+        "payloadPosition": {
+          "x": 0,
+          "y": 0.026000000000000002,
+          "z": 0
+        },
+        "maxPayloadGrams": 326
+      },
+      "baseline": {
+        "mass": 0.652,
+        "inertia": {
+          "x": 0.002348178,
+          "y": 0.0042071522499999995,
+          "z": 0.002348178
+        },
+        "centerOfMass": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "radius": 0.21566756826189698
+      },
+      "battery": {
+        "massGrams": 225,
+        "capacityMah": 1400
+      },
+      "cameraPayload": {
+        "massGrams": 0
+      }
+    }
+  },
+  "recordings": [
+    {
+      "backend": "civilian-quad-aircraft.v1",
+      "hash": "a7570f6c",
+      "recording": {
+        "format": "AdvancedAircraftRecording.v1",
+        "identity": "e01856d0334a6479",
+        "config": {
+          "backend": "civilian-quad-aircraft.v1",
+          "collision": "rapier3d-compat-0.21.0:02dc6a4e2fffc013bab08fbb44fa68f501d8303615e9afe4c7d89ad4eedda0d0",
+          "frequency": 500,
+          "aircraft": {
+            "format": "AdvancedAircraft.v2",
+            "id": "nazgul-eco-xl5-v11",
+            "mass": 0.652,
+            "armLength": 0.1225,
+            "inertia": {
+              "x": 0.002348178,
+              "y": 0.0042071522499999995,
+              "z": 0.002348178
+            },
+            "maxThrust": 10,
+            "radius": 0.21566756826189698,
+            "reactionTorque": 0.0127,
+            "motorTimeConstant": 0.03,
+            "linearDrag": 0.013040000000000001,
+            "quadraticDrag": 0.013040000000000001,
+            "angularDrag": 0.001304,
+            "motorOutputLimit": 1,
+            "sensorNoise": 0,
+            "vibration": 0,
+            "battery": {
+              "nominalVoltage": 22.200000000000003,
+              "fullVoltage": 25.200000000000003,
+              "emptyVoltage": 19.200000000000003,
+              "resistance": 0.045,
+              "fullCurrent": 110,
+              "capacityAh": 1.4,
+              "depletion": false,
+              "chemistry": "LiPo",
+              "currentLimit": 110
+            },
+            "geometry": {
+              "rotors": [
+                {
+                  "position": {
+                    "x": -0.08662058069535207,
+                    "y": 0,
+                    "z": -0.08662058069535207
+                  },
+                  "spin": 1
+                },
+                {
+                  "position": {
+                    "x": 0.08662058069535207,
+                    "y": 0,
+                    "z": -0.08662058069535207
+                  },
+                  "spin": -1
+                },
+                {
+                  "position": {
+                    "x": 0.08662058069535207,
+                    "y": 0,
+                    "z": 0.08662058069535207
+                  },
+                  "spin": 1
+                },
+                {
+                  "position": {
+                    "x": -0.08662058069535207,
+                    "y": 0,
+                    "z": 0.08662058069535207
+                  },
+                  "spin": -1
+                }
+              ],
+              "centerOfMass": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+              },
+              "bodyHalfExtents": {
+                "x": 0.0343,
+                "y": 0.04,
+                "z": 0.05145
+              },
+              "propellerRadius": 0.0635,
+              "ducted": false
+            },
+            "drag": {
+              "linear": {
+                "x": 0.016300000000000002,
+                "y": 0.026080000000000002,
+                "z": 0.016300000000000002
+              },
+              "quadratic": {
+                "x": 0.004782400000000001,
+                "y": 0.015042142500000001,
+                "z": 0.004782400000000001
+              },
+              "angular": {
+                "x": 0.0008218622999999999,
+                "y": 0.0010517880624999999,
+                "z": 0.0008218622999999999
+              }
+            },
+            "propulsion": {
+              "idleSpeed": 0.08,
+              "airmode": true,
+              "table": null
+            }
+          },
+          "controller": {
+            "format": "AdvancedControllerTune.v3",
+            "gains": {
+              "roll": {
+                "p": 0.021133601999999998,
+                "i": 0.009510120899999999,
+                "d": 0.00008218623,
+                "feedforward": 0.00005870445
+              },
+              "pitch": {
+                "p": 0.021133601999999998,
+                "i": 0.009510120899999999,
+                "d": 0.00008218623,
+                "feedforward": 0.00005870445
+              },
+              "yaw": {
+                "p": 0.0208254036375,
+                "i": 0.009371431636875,
+                "d": 0.00014725032875,
+                "feedforward": 0.00010517880624999999
+              }
+            },
+            "integralLimit": 0.30625,
+            "antiWindup": 20,
+            "gyroFilterHz": 100,
+            "dTermFilterHz": 60,
+            "inputSmoothingHz": 0,
+            "feedforwardFilterHz": 30
+          },
+          "response": {
+            "format": "AircraftResponse.v1",
+            "response": {
+              "format": "FlightResponseProfile.v2",
+              "rates": {
+                "format": "FpvRateProfile.v1",
+                "algorithm": "actual",
+                "quickRatesRcExpo": false,
+                "axes": {
+                  "roll": {
+                    "rcRate": 10,
+                    "rate": 80,
+                    "expo": 25,
+                    "limit": 1998
+                  },
+                  "pitch": {
+                    "rcRate": 10,
+                    "rate": 80,
+                    "expo": 25,
+                    "limit": 1998
+                  },
+                  "yaw": {
+                    "rcRate": 10,
+                    "rate": 80,
+                    "expo": 25,
+                    "limit": 1998
+                  }
+                },
+                "throttle": {
+                  "model": "betaflight-2025.12",
+                  "mid": 50,
+                  "expo": 0,
+                  "hover": 50,
+                  "limitType": "off",
+                  "limitPercent": 100
+                }
+              },
+              "maxTilt": 30,
+              "responseTicks": 8
+            },
+            "mode": "acro",
+            "levelGain": 4
+          },
+          "spawn": {
+            "x": 0,
+            "y": 2,
+            "z": 0
+          },
+          "initialVelocity": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "gravity": {
+            "x": 0,
+            "y": -9.81,
+            "z": 0
+          },
+          "wind": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "floor": true,
+          "obstacles": [],
+          "dynamicColliders": [],
+          "configuration": {}
+        },
+        "scored": false,
+        "origin": "checkpoint",
+        "startMissionTick": 0,
+        "missionTicks": 50,
+        "segments": [
+          {
+            "format": "AdvancedAircraftSegment.v1",
+            "index": 0,
+            "previous": null,
+            "startTick": 0,
+            "endTick": 50,
+            "checkpoint": {
+              "format": "AircraftCheckpoint.v1",
+              "identity": "e01856d0334a6479",
+              "bodyHandle": 0,
+              "world": "AAAAAMP1HMEAAAAAbxIDOz/DLjkAAPBBAAAgQQAAcEIAACBBAACAPwAAgD8BAAEBAQEBAQEAAAAAAAA/AQEBAQAAgD8CAAAAAAAAAAAAAQADAAAA8AAAAArXozwAAEA/BAAAAAAAAAAAAIBArMUnNxQAAAAAAAAAWAIAAAAAAAAXt9E4AABAQArXozwAAMhDDAAAAAAAAAABAAAAAAAAAAEAAAAAAAAABAAAAAAAAAABAc3MTD0AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAABAAAAAAAAAP////////////////////8AAAAAAAAAAAAAAAAAAIA/AAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgD8AAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIA/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD0BDU/AAAAAAAAAAD0BDW/AAEAAAAAAAAAAAAAAAAAAAAAq1HEP1nu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",
+              "state": {
+                "missionTick": 0,
+                "substep": 0,
+                "controls": {
+                  "roll": 0,
+                  "pitch": 0,
+                  "yaw": 0,
+                  "throttle": 0
+                },
+                "target": {
+                  "roll": 0,
+                  "pitch": 0,
+                  "yaw": 0,
+                  "throttle": 0
+                },
+                "sensors": {
+                  "roll": 0,
+                  "pitch": 0,
+                  "yaw": 0
+                },
+                "motorSpeeds": [0, 0, 0, 0],
+                "voltage": 25.200000000000003,
+                "current": 0,
+                "usedAh": 0,
+                "noiseState": 5425713,
+                "consumedSequence": -1,
+                "consumedTimestampUs": 0,
+                "acceptedSequence": -1,
+                "acceptedTimestampUs": 0,
+                "contact": {
+                  "touching": false,
+                  "grounded": false,
+                  "normal": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "impactSpeed": 0,
+                  "contacts": 0,
+                  "ids": [],
+                  "entries": [],
+                  "support": null
+                }
+              },
+              "controller": {
+                "identity": "25d0a9be8c0436e1",
+                "state": {
+                  "format": "AircraftControllerState.v1",
+                  "integral": {
+                    "roll": 0,
+                    "pitch": 0,
+                    "yaw": 0
+                  },
+                  "gyro": {
+                    "roll": 0,
+                    "pitch": 0,
+                    "yaw": 0
+                  },
+                  "derivative": {
+                    "roll": 0,
+                    "pitch": 0,
+                    "yaw": 0
+                  },
+                  "feedforward": {
+                    "roll": 0,
+                    "pitch": 0,
+                    "yaw": 0
+                  },
+                  "target": {
+                    "roll": 0,
+                    "pitch": 0,
+                    "yaw": 0
+                  },
+                  "previousTarget": {
+                    "roll": 0,
+                    "pitch": 0,
+                    "yaw": 0
+                  },
+                  "previousGyro": {
+                    "roll": 0,
+                    "pitch": 0,
+                    "yaw": 0
+                  },
+                  "motors": [0, 0, 0, 0],
+                  "saturated": false,
+                  "requestedTorque": {
+                    "roll": 0,
+                    "pitch": 0,
+                    "yaw": 0
+                  },
+                  "achievedTorque": {
+                    "roll": 0,
+                    "pitch": 0,
+                    "yaw": 0
+                  }
+                }
+              },
+              "pending": [],
+              "terrain": null,
+              "terrainHandles": [],
+              "actors": []
+            },
+            "initialHash": "e41dc126",
+            "events": [
+              ["input", 0, 0, 0, 0.12, 0.07, -0.04, 0.42],
+              ["input", 10, 1, 20000, 0.12, 0.07, -0.04, 0.42],
+              ["input", 20, 2, 40000, 0.12, 0.07, -0.04, 0.42],
+              ["input", 30, 3, 60000, 0.12, 0.07, -0.04, 0.42],
+              ["input", 40, 4, 80000, 0.12, 0.07, -0.04, 0.42],
+              ["input", 50, 5, 100000, 0.12, 0.07, -0.04, 0.42],
+              ["input", 60, 6, 120000, 0.12, 0.07, -0.04, 0.42],
+              ["input", 70, 7, 140000, 0.12, 0.07, -0.04, 0.42],
+              ["input", 80, 8, 160000, 0.12, 0.07, -0.04, 0.42],
+              ["input", 90, 9, 180000, 0.12, 0.07, -0.04, 0.42],
+              ["input", 100, 10, 200000, 0.12, 0.07, -0.04, 0.42],
+              ["input", 110, 11, 220000, 0.12, 0.07, -0.04, 0.42],
+              ["input", 120, 12, 240000, 0.12, 0.07, -0.04, 0.42],
+              ["input", 130, 13, 260000, 0.12, 0.07, -0.04, 0.42],
+              ["input", 140, 14, 280000, 0.12, 0.07, -0.04, 0.42],
+              ["input", 150, 15, 300000, 0.12, 0.07, -0.04, 0.42],
+              ["input", 160, 16, 320000, 0.12, 0.07, -0.04, 0.42],
+              ["input", 170, 17, 340000, 0.12, 0.07, -0.04, 0.42],
+              ["input", 180, 18, 360000, 0.12, 0.07, -0.04, 0.42],
+              ["input", 190, 19, 380000, 0.12, 0.07, -0.04, 0.42],
+              ["input", 200, 20, 400000, 0.12, 0.07, -0.04, 0.42],
+              ["input", 210, 21, 420000, 0.12, 0.07, -0.04, 0.42],
+              ["input", 220, 22, 440000, 0.12, 0.07, -0.04, 0.42],
+              ["input", 230, 23, 460000, 0.12, 0.07, -0.04, 0.42],
+              ["input", 240, 24, 480000, 0.12, 0.07, -0.04, 0.42],
+              ["input", 250, 25, 500000, 0, 0.07, -0.04, 0.42],
+              ["input", 260, 26, 520000, 0, 0.07, -0.04, 0.42],
+              ["input", 270, 27, 540000, 0, 0.07, -0.04, 0.42],
+              ["input", 280, 28, 560000, 0, 0.07, -0.04, 0.42],
+              ["input", 290, 29, 580000, 0, 0.07, -0.04, 0.42],
+              ["input", 300, 30, 600000, 0, 0.07, -0.04, 0.42],
+              ["input", 310, 31, 620000, 0, 0.07, -0.04, 0.42],
+              ["input", 320, 32, 640000, 0, 0.07, -0.04, 0.42],
+              ["input", 330, 33, 660000, 0, 0.07, -0.04, 0.42],
+              ["input", 340, 34, 680000, 0, 0.07, -0.04, 0.42],
+              ["input", 350, 35, 700000, 0, 0.07, -0.04, 0.42],
+              ["input", 360, 36, 720000, 0, 0.07, -0.04, 0.42],
+              ["input", 370, 37, 740000, 0, 0.07, -0.04, 0.42],
+              ["input", 380, 38, 760000, 0, 0.07, -0.04, 0.42],
+              ["input", 390, 39, 780000, 0, 0.07, -0.04, 0.42],
+              ["input", 400, 40, 800000, 0, 0.07, -0.04, 0.42],
+              ["input", 410, 41, 820000, 0, 0.07, -0.04, 0.42],
+              ["input", 420, 42, 840000, 0, 0.07, -0.04, 0.42],
+              ["input", 430, 43, 860000, 0, 0.07, -0.04, 0.42],
+              ["input", 440, 44, 880000, 0, 0.07, -0.04, 0.42],
+              ["input", 450, 45, 900000, 0, 0.07, -0.04, 0.42],
+              ["input", 460, 46, 920000, 0, 0.07, -0.04, 0.42],
+              ["input", 470, 47, 940000, 0, 0.07, -0.04, 0.42],
+              ["input", 480, 48, 960000, 0, 0.07, -0.04, 0.42],
+              ["input", 490, 49, 980000, 0, 0.07, -0.04, 0.42]
+            ],
+            "hashes": [[50, "a7570f6c"]],
+            "finalHash": "a7570f6c"
+          }
+        ],
+        "finalHash": "a7570f6c"
+      }
+    },
+    {
+      "backend": "civilian-quad-aircraft.v2",
+      "hash": "7c975a7c",
+      "recording": {
+        "format": "AdvancedAircraftRecording.v1",
+        "identity": "ae7d28ea832cd0ea",
+        "config": {
+          "backend": "civilian-quad-aircraft.v2",
+          "collision": "rapier3d-compat-0.21.0:02dc6a4e2fffc013bab08fbb44fa68f501d8303615e9afe4c7d89ad4eedda0d0",
+          "frequency": 500,
+          "aircraft": {
+            "format": "AdvancedAircraft.v2",
+            "id": "nazgul-eco-xl5-v11",
+            "mass": 0.652,
+            "armLength": 0.1225,
+            "inertia": {
+              "x": 0.002348178,
+              "y": 0.0042071522499999995,
+              "z": 0.002348178
+            },
+            "maxThrust": 10,
+            "radius": 0.21566756826189698,
+            "reactionTorque": 0.0127,
+            "motorTimeConstant": 0.03,
+            "linearDrag": 0.013040000000000001,
+            "quadraticDrag": 0.013040000000000001,
+            "angularDrag": 0.001304,
+            "motorOutputLimit": 1,
+            "sensorNoise": 0,
+            "vibration": 0,
+            "battery": {
+              "nominalVoltage": 22.200000000000003,
+              "fullVoltage": 25.200000000000003,
+              "emptyVoltage": 19.200000000000003,
+              "resistance": 0.045,
+              "fullCurrent": 110,
+              "capacityAh": 1.4,
+              "depletion": false,
+              "chemistry": "LiPo",
+              "currentLimit": 110
+            },
+            "geometry": {
+              "rotors": [
+                {
+                  "position": {
+                    "x": -0.08662058069535207,
+                    "y": 0,
+                    "z": -0.08662058069535207
+                  },
+                  "spin": 1
+                },
+                {
+                  "position": {
+                    "x": 0.08662058069535207,
+                    "y": 0,
+                    "z": -0.08662058069535207
+                  },
+                  "spin": -1
+                },
+                {
+                  "position": {
+                    "x": 0.08662058069535207,
+                    "y": 0,
+                    "z": 0.08662058069535207
+                  },
+                  "spin": 1
+                },
+                {
+                  "position": {
+                    "x": -0.08662058069535207,
+                    "y": 0,
+                    "z": 0.08662058069535207
+                  },
+                  "spin": -1
+                }
+              ],
+              "centerOfMass": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+              },
+              "bodyHalfExtents": {
+                "x": 0.0343,
+                "y": 0.04,
+                "z": 0.05145
+              },
+              "propellerRadius": 0.0635,
+              "ducted": false
+            },
+            "drag": {
+              "linear": {
+                "x": 0.016300000000000002,
+                "y": 0.026080000000000002,
+                "z": 0.016300000000000002
+              },
+              "quadratic": {
+                "x": 0.004782400000000001,
+                "y": 0.015042142500000001,
+                "z": 0.004782400000000001
+              },
+              "angular": {
+                "x": 0.0008218622999999999,
+                "y": 0.0010517880624999999,
+                "z": 0.0008218622999999999
+              }
+            },
+            "propulsion": {
+              "idleSpeed": 0.08,
+              "airmode": true,
+              "table": null
+            }
+          },
+          "controller": {
+            "format": "AdvancedControllerTune.v3",
+            "gains": {
+              "roll": {
+                "p": 0.021133601999999998,
+                "i": 0.009510120899999999,
+                "d": 0.00008218623,
+                "feedforward": 0.00005870445
+              },
+              "pitch": {
+                "p": 0.021133601999999998,
+                "i": 0.009510120899999999,
+                "d": 0.00008218623,
+                "feedforward": 0.00005870445
+              },
+              "yaw": {
+                "p": 0.0208254036375,
+                "i": 0.009371431636875,
+                "d": 0.00014725032875,
+                "feedforward": 0.00010517880624999999
+              }
+            },
+            "integralLimit": 0.30625,
+            "antiWindup": 20,
+            "gyroFilterHz": 100,
+            "dTermFilterHz": 60,
+            "inputSmoothingHz": 0,
+            "feedforwardFilterHz": 30
+          },
+          "response": {
+            "format": "AircraftResponse.v1",
+            "response": {
+              "format": "FlightResponseProfile.v2",
+              "rates": {
+                "format": "FpvRateProfile.v1",
+                "algorithm": "actual",
+                "quickRatesRcExpo": false,
+                "axes": {
+                  "roll": {
+                    "rcRate": 10,
+                    "rate": 80,
+                    "expo": 25,
+                    "limit": 1998
+                  },
+                  "pitch": {
+                    "rcRate": 10,
+                    "rate": 80,
+                    "expo": 25,
+                    "limit": 1998
+                  },
+                  "yaw": {
+                    "rcRate": 10,
+                    "rate": 80,
+                    "expo": 25,
+                    "limit": 1998
+                  }
+                },
+                "throttle": {
+                  "model": "betaflight-2025.12",
+                  "mid": 50,
+                  "expo": 0,
+                  "hover": 50,
+                  "limitType": "off",
+                  "limitPercent": 100
+                }
+              },
+              "maxTilt": 30,
+              "responseTicks": 8
+            },
+            "mode": "acro",
+            "levelGain": 4
+          },
+          "spawn": {
+            "x": 0,
+            "y": 2,
+            "z": 0
+          },
+          "initialVelocity": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "gravity": {
+            "x": 0,
+            "y": -9.81,
+            "z": 0
+          },
+          "wind": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "floor": true,
+          "obstacles": [],
+          "dynamicColliders": [],
+          "configuration": {}
+        },
+        "scored": false,
+        "origin": "checkpoint",
+        "startMissionTick": 0,
+        "missionTicks": 50,
+        "segments": [
+          {
+            "format": "AdvancedAircraftSegment.v1",
+            "index": 0,
+            "previous": null,
+            "startTick": 0,
+            "endTick": 50,
+            "checkpoint": {
+              "format": "AircraftCheckpoint.v1",
+              "identity": "ae7d28ea832cd0ea",
+              "bodyHandle": 0,
+              "world": "AAAAAMP1HMEAAAAAbxIDOz/DLjkAAPBBAAAgQQAAcEIAACBBAACAPwAAgD8BAAEBAQEBAQEAAAAAAAA/AQEBAQAAgD8CAAAAAAAAAAAAAQADAAAA8AAAAArXozwAAEA/BAAAAAAAAAAAAIBArMUnNxQAAAAAAAAAWAIAAAAAAAAXt9E4AABAQArXozwAAMhDDAAAAAAAAAABAAAAAAAAAAEAAAAAAAAABAAAAAAAAAABAc3MTD0AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAABAAAAAAAAAP////////////////////8AAAAAAAAAAAAAAAAAAIA/AAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgD8AAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIA/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD0BDU/AAAAAAAAAAD0BDW/AAEAAAAAAAAAAAAAAAAAAAAAq1HEP1nu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",
+              "state": {
+                "missionTick": 0,
+                "substep": 0,
+                "controls": {
+                  "roll": 0,
+                  "pitch": 0,
+                  "yaw": 0,
+                  "throttle": 0
+                },
+                "target": {
+                  "roll": 0,
+                  "pitch": 0,
+                  "yaw": 0,
+                  "throttle": 0
+                },
+                "sensors": {
+                  "roll": 0,
+                  "pitch": 0,
+                  "yaw": 0
+                },
+                "motorSpeeds": [0, 0, 0, 0],
+                "voltage": 25.200000000000003,
+                "current": 0,
+                "usedAh": 0,
+                "noiseState": 5425713,
+                "consumedSequence": -1,
+                "consumedTimestampUs": 0,
+                "acceptedSequence": -1,
+                "acceptedTimestampUs": 0,
+                "contact": {
+                  "touching": false,
+                  "grounded": false,
+                  "normal": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                  },
+                  "impactSpeed": 0,
+                  "contacts": 0,
+                  "ids": [],
+                  "entries": [],
+                  "support": null
+                }
+              },
+              "controller": {
+                "identity": "ff37a7a301caa91f",
+                "state": {
+                  "format": "AircraftControllerState.v1",
+                  "integral": {
+                    "roll": 0,
+                    "pitch": 0,
+                    "yaw": 0
+                  },
+                  "gyro": {
+                    "roll": 0,
+                    "pitch": 0,
+                    "yaw": 0
+                  },
+                  "derivative": {
+                    "roll": 0,
+                    "pitch": 0,
+                    "yaw": 0
+                  },
+                  "feedforward": {
+                    "roll": 0,
+                    "pitch": 0,
+                    "yaw": 0
+                  },
+                  "target": {
+                    "roll": 0,
+                    "pitch": 0,
+                    "yaw": 0
+                  },
+                  "previousTarget": {
+                    "roll": 0,
+                    "pitch": 0,
+                    "yaw": 0
+                  },
+                  "previousGyro": {
+                    "roll": 0,
+                    "pitch": 0,
+                    "yaw": 0
+                  },
+                  "motors": [0, 0, 0, 0],
+                  "saturated": false,
+                  "requestedTorque": {
+                    "roll": 0,
+                    "pitch": 0,
+                    "yaw": 0
+                  },
+                  "achievedTorque": {
+                    "roll": 0,
+                    "pitch": 0,
+                    "yaw": 0
+                  }
+                }
+              },
+              "pending": [],
+              "terrain": null,
+              "terrainHandles": [],
+              "actors": []
+            },
+            "initialHash": "eb0bfbbe",
+            "events": [
+              ["input", 0, 0, 0, 0.12, 0.07, -0.04, 0.42],
+              ["input", 10, 1, 20000, 0.12, 0.07, -0.04, 0.42],
+              ["input", 20, 2, 40000, 0.12, 0.07, -0.04, 0.42],
+              ["input", 30, 3, 60000, 0.12, 0.07, -0.04, 0.42],
+              ["input", 40, 4, 80000, 0.12, 0.07, -0.04, 0.42],
+              ["input", 50, 5, 100000, 0.12, 0.07, -0.04, 0.42],
+              ["input", 60, 6, 120000, 0.12, 0.07, -0.04, 0.42],
+              ["input", 70, 7, 140000, 0.12, 0.07, -0.04, 0.42],
+              ["input", 80, 8, 160000, 0.12, 0.07, -0.04, 0.42],
+              ["input", 90, 9, 180000, 0.12, 0.07, -0.04, 0.42],
+              ["input", 100, 10, 200000, 0.12, 0.07, -0.04, 0.42],
+              ["input", 110, 11, 220000, 0.12, 0.07, -0.04, 0.42],
+              ["input", 120, 12, 240000, 0.12, 0.07, -0.04, 0.42],
+              ["input", 130, 13, 260000, 0.12, 0.07, -0.04, 0.42],
+              ["input", 140, 14, 280000, 0.12, 0.07, -0.04, 0.42],
+              ["input", 150, 15, 300000, 0.12, 0.07, -0.04, 0.42],
+              ["input", 160, 16, 320000, 0.12, 0.07, -0.04, 0.42],
+              ["input", 170, 17, 340000, 0.12, 0.07, -0.04, 0.42],
+              ["input", 180, 18, 360000, 0.12, 0.07, -0.04, 0.42],
+              ["input", 190, 19, 380000, 0.12, 0.07, -0.04, 0.42],
+              ["input", 200, 20, 400000, 0.12, 0.07, -0.04, 0.42],
+              ["input", 210, 21, 420000, 0.12, 0.07, -0.04, 0.42],
+              ["input", 220, 22, 440000, 0.12, 0.07, -0.04, 0.42],
+              ["input", 230, 23, 460000, 0.12, 0.07, -0.04, 0.42],
+              ["input", 240, 24, 480000, 0.12, 0.07, -0.04, 0.42],
+              ["input", 250, 25, 500000, 0, 0.07, -0.04, 0.42],
+              ["input", 260, 26, 520000, 0, 0.07, -0.04, 0.42],
+              ["input", 270, 27, 540000, 0, 0.07, -0.04, 0.42],
+              ["input", 280, 28, 560000, 0, 0.07, -0.04, 0.42],
+              ["input", 290, 29, 580000, 0, 0.07, -0.04, 0.42],
+              ["input", 300, 30, 600000, 0, 0.07, -0.04, 0.42],
+              ["input", 310, 31, 620000, 0, 0.07, -0.04, 0.42],
+              ["input", 320, 32, 640000, 0, 0.07, -0.04, 0.42],
+              ["input", 330, 33, 660000, 0, 0.07, -0.04, 0.42],
+              ["input", 340, 34, 680000, 0, 0.07, -0.04, 0.42],
+              ["input", 350, 35, 700000, 0, 0.07, -0.04, 0.42],
+              ["input", 360, 36, 720000, 0, 0.07, -0.04, 0.42],
+              ["input", 370, 37, 740000, 0, 0.07, -0.04, 0.42],
+              ["input", 380, 38, 760000, 0, 0.07, -0.04, 0.42],
+              ["input", 390, 39, 780000, 0, 0.07, -0.04, 0.42],
+              ["input", 400, 40, 800000, 0, 0.07, -0.04, 0.42],
+              ["input", 410, 41, 820000, 0, 0.07, -0.04, 0.42],
+              ["input", 420, 42, 840000, 0, 0.07, -0.04, 0.42],
+              ["input", 430, 43, 860000, 0, 0.07, -0.04, 0.42],
+              ["input", 440, 44, 880000, 0, 0.07, -0.04, 0.42],
+              ["input", 450, 45, 900000, 0, 0.07, -0.04, 0.42],
+              ["input", 460, 46, 920000, 0, 0.07, -0.04, 0.42],
+              ["input", 470, 47, 940000, 0, 0.07, -0.04, 0.42],
+              ["input", 480, 48, 960000, 0, 0.07, -0.04, 0.42],
+              ["input", 490, 49, 980000, 0, 0.07, -0.04, 0.42]
+            ],
+            "hashes": [[50, "7c975a7c"]],
+            "finalHash": "7c975a7c"
+          }
+        ],
+        "finalHash": "7c975a7c"
+      }
+    }
+  ]
+}

@@ -320,6 +320,11 @@
     letter-spacing: 3px;
     font-size: 10px;
   }
+  .home-family-context {
+    margin: 0 0 1rem;
+    line-height: 1.4;
+    overflow-wrap: anywhere;
+  }
   #shell-title {
     margin: 20px 0;
     color: #f0f9ff;

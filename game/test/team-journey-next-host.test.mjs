@@ -470,11 +470,11 @@ for (const interruption of ['focus', 'foreground'])
       f.win.emit('blur');
       f.win.emit('focus');
     }
-    assert.equal(f.$('coop-journey-skip-confirm').textContent, 'Skip mission');
+    assert.equal(f.$('coop-journey-skip-confirm').textContent, 'Skip');
     if (interruption === 'foreground') {
       f.$('coop-journey-skip-confirm').focus();
       f.tap('Enter');
-      assert.equal(f.$('coop-journey-skip-confirm').textContent, 'Skip mission');
+      assert.equal(f.$('coop-journey-skip-confirm').textContent, 'Skip');
       f.tick();
     }
     armSkip(f, 'coop-journey-skip-confirm');

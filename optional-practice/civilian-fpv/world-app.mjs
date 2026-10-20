@@ -85,8 +85,7 @@ import {
   SIM_RADIO_AUDIO_KEY,
   createSimDisplayPreferences,
   attachSimThemeFamilyControls,
-  getSimMenuAnimation,
-  setSimMenuAnimation,
+  simMenuAnimationBinding,
   subscribeSimMenuAnimation,
   simAttachSettingsPanels,
   simSettingsPanelBack,
@@ -127,7 +126,7 @@ import {
   optionalOfflineFailureCode,
   optionalOfflineFailureMessage,
 } from '../install-context.mjs';
-import { mountWorldLibrary, worldImportErrorCopy } from './world-reaction-runtime.mjs';
+import { mountWorldLibrary, worldImportErrorCopy, WORLD_LIBRARY_CATALOGUE } from './world-reaction-runtime.mjs';
 import { mountRegionalLibrary, regionalPresentationOptions } from './regional-library.mjs';
 import { dataIdentity } from '../../game/data-json.mjs';
 import { runtimeActorArtRevision } from '../../game/hunt/preferences.mjs';
@@ -1049,6 +1048,9 @@ export function mountWorldApp({
     missionChooser = null,
     missionLibrary = null,
     missionLaunchGeneration = 0,
+    randomContext = 'flight',
+    randomLevelChoice = 'auto',
+    randomLevelControl = null,
     runtimeOfflineFeedback = null,
     regionalRecoveryControls = null,
     regionalStartControls = null,
@@ -1145,6 +1147,8 @@ export function mountWorldApp({
     flowCelebration = null;
   const learningById = new Map(BEGINNER_LESSONS.map((lesson) => [lesson.id, lesson]));
   const learningEntries = new Map(BEGINNER_CATALOGUE.map((entry) => [entry.id, entry]));
+  const learningMissionKeys = new Set(BEGINNER_CATALOGUE.map(keyOf));
+  const randomLevelsKey = 'revealline.sim.worlds.random-levels.v1';
   const primaryLearning = PRIMARY_LESSON_ORDER.map((id) => learningEntries.get(id));
   const learningSequence = (entry) =>
     learningById.get(entry?.id)?.mode === 'acro' ? PRIMARY_LESSON_ORDER : SELF_LEVEL_LESSON_ORDER;
@@ -1167,6 +1171,11 @@ export function mountWorldApp({
     storage = win.localStorage;
   } catch {
     /* Browser can deny local preference access. */
+  }
+  try {
+    if (storage?.getItem(randomLevelsKey) === 'mixed') randomLevelChoice = 'mixed';
+  } catch {
+    /* Random still follows the current activity without storage. */
   }
   const enemyStatistics = createSimEnemyStatsHost({ gameType: 'worlds', storage });
   void enemyStatistics.stats.read();
@@ -1228,7 +1237,9 @@ export function mountWorldApp({
   ];
   try {
     const saved = JSON.parse(storage?.getItem('revealline.fpv.world-settings.v1') ?? '{}');
-    if (!saved['flight-source'] && win.matchMedia?.('(pointer: coarse)').matches)
+    if (!saved['flight-source'] && profileStore.snapshot().radio?.verified)
+      $('flight-source').value = 'radio';
+    else if (!saved['flight-source'] && win.matchMedia?.('(pointer: coarse)').matches)
       $('flight-source').value = 'touch';
     if (saved['flight-drone-guide'] === 'on') saved['flight-drone-guide'] = 'compact';
     for (const id of preferenceIds)
@@ -1298,6 +1309,7 @@ export function mountWorldApp({
     }
   };
   const txt = (en, uk) => (locale === 'uk' ? uk : en);
+  const navigationContext = () => txt('FPV SIM · Worlds', 'FPV SIM · Світи');
   const localized = (value) =>
     typeof value === 'string' ? value : (value?.[locale] ?? value?.en ?? '');
   // Creator labels may use the current theme name; exact authored/recorded
@@ -2312,6 +2324,11 @@ export function mountWorldApp({
     };
     return txt(...(messages[reason] ?? messages.ready));
   }
+  const radioFlightNotice = el('p', undefined, 'sim-radio-flight-notice');
+  radioFlightNotice.setAttribute('role', 'status');
+  radioFlightNotice.setAttribute('aria-live', 'polite');
+  radioFlightNotice.hidden = true;
+  $('world-viewport').append(radioFlightNotice);
   const stickTraces = ['left', 'right'].map((side) =>
     mountStickTrace($(`world-${side}-stick`), { travel: 180 * 0.34 }),
   );
@@ -2407,7 +2424,7 @@ export function mountWorldApp({
         now: traceTime,
         source,
         reducedMotion,
-        available: !unavailable && !monitor.hidden && state?.status === 'active',
+        available: !unavailable && !monitor.hidden && (state?.status === 'active' || source === 'radio'),
       });
       node.setAttribute(
         'aria-label',
@@ -2419,6 +2436,9 @@ export function mountWorldApp({
       'world-touch-throttle',
       `${Math.round(controls.throttle * 100)}%${touchActive && $('world-left-stick').dataset.touchActive !== 'true' ? ` · ${txt('held', 'утримується')}` : ''}`,
     );
+    radioFlightNotice.hidden = source !== 'radio' || state?.status === 'active' || !sceneReady || beginnerCoach.blocksArm();
+    const radioNotice = radioHelp(radio.status().reason);
+    if (radioFlightNotice.textContent !== radioNotice) radioFlightNotice.textContent = radioNotice;
     const status = $('world-input-status');
     const text =
       source === 'radio'
@@ -2682,11 +2702,33 @@ export function mountWorldApp({
           .includes(search),
     );
   }
+  function includesRandomLevel(isLearning, context = randomContext) {
+    return randomLevelChoice === 'mixed' || isLearning === (context === 'learning');
+  }
+  function paintRandomLevels() {
+    if (!randomLevelControl) return;
+    const { label, select, automatic, mixed } = randomLevelControl;
+    label.textContent = txt('Random levels', 'Випадкові рівні');
+    automatic.textContent =
+      randomContext === 'learning'
+        ? txt('Learning levels only', 'Лише навчальні рівні')
+        : txt('Flight levels only', 'Лише рівні польоту');
+    mixed.textContent = txt('Learning + flight levels', 'Навчання + польоти');
+    select.value = randomLevelChoice;
+  }
   function randomFlightCandidates(worldId) {
-    return filteredCatalogue().filter((entry) => !worldId || entry.world === worldId);
+    return filteredCatalogue().filter(
+      (entry) =>
+        (!worldId || entry.world === worldId) &&
+        includesRandomLevel(Boolean(entry.beginner), current?.beginner ? 'learning' : 'flight'),
+    );
   }
   async function startRandomFlight(worldId) {
     await ready;
+    if (!worldId && missionChooser) {
+      openMissionChooser(current?.beginner ? 'learn' : 'explore');
+      return missionChooser.playRandom();
+    }
     if (disposed) return;
     const candidates = randomFlightCandidates(worldId),
       alternatives = candidates.filter((entry) => keyOf(entry) !== lastCatalogueFlightKey),
@@ -2986,14 +3028,14 @@ export function mountWorldApp({
       const libraryGroups = new Map();
       for (const entry of catalogue.filter(
         (entry) =>
-          !entry.archived && (!courseClassFilter || courseClassFilter.matches(entry.course)),
+          !entry.archived && !downloadedCourseOffered(entry) && (!courseClassFilter || courseClassFilter.matches(entry.course)),
       )) {
         const id = entry.projectId ? `worlds:${entry.packIdentity}` : 'worlds:builtin';
         if (!libraryGroups.has(id)) libraryGroups.set(id, []);
         libraryGroups.get(id).push(entry);
       }
     for (const old of new Set(missionLibrary.missions.map((row) => row.ownerId)))
-      if (!libraryGroups.has(old)) missionLibrary.remove(old);
+      if ((old === 'worlds:builtin' || old.startsWith('worlds:fpv-pack:')) && !libraryGroups.has(old)) missionLibrary.remove(old);
     const complete = completedKeys();
     for (const [id, missions] of libraryGroups) {
       const positions = new Map(),
@@ -3045,6 +3087,7 @@ export function mountWorldApp({
     presentation.refresh();
   }
   function renderCatalogue() {
+    paintRandomLevels();
     renderSchool();
     $('world-grid').replaceChildren();
     $('level-count').textContent = catalogue.filter((entry) => !entry.archived).length;
@@ -3057,14 +3100,14 @@ export function mountWorldApp({
 
     const groups = new Map();
     for (const entry of catalogue.filter(
-      (entry) => !entry.archived && (!courseClassFilter || courseClassFilter.matches(entry.course)),
+      (entry) => !entry.archived && !downloadedCourseOffered(entry) && (!courseClassFilter || courseClassFilter.matches(entry.course)),
     )) {
       const id = entry.projectId ? `worlds:${entry.packIdentity}` : 'worlds:builtin';
       if (!groups.has(id)) groups.set(id, []);
       groups.get(id).push(entry);
     }
     for (const old of new Set(missionLibrary.missions.map((row) => row.ownerId)))
-      if (!groups.has(old)) missionLibrary.remove(old);
+      if ((old === 'worlds:builtin' || old.startsWith('worlds:fpv-pack:')) && !groups.has(old)) missionLibrary.remove(old);
     const complete = completedKeys();
     for (const [id, missions] of groups) {
       const positions = new Map(),
@@ -3116,16 +3159,18 @@ export function mountWorldApp({
   }
   function openMissionChooser(section = 'explore') {
     if (!missionChooser) return;
+    randomContext = section === 'learn' ? 'learning' : 'flight';
+    paintRandomLevels();
     missionLaunchGeneration++;
     pauseFlight();
     missionChooser.open();
     worldLibrary.deactivate();
     regionalLibrary.deactivate();
-    worldCatalogueHost.hidden = section === 'learn';
-    if (section !== 'learn') {
-      worldLibrary.open(worldCatalogueHost);
-      regionalLibrary.open(worldCatalogueHost);
-    }
+    worldCatalogueHost.hidden = true;
+    // One chooser owns selection; download browsers remain in Content & Offline.
+    void regionalLibrary.refreshMissions().catch(() => {});
+    void worldLibrary.refreshMissions().catch(() => {});
+    syncDownloadMissions();
     if (section === 'learn') {
       const complete = completedKeys();
       const next =
@@ -3745,12 +3790,18 @@ export function mountWorldApp({
     el,
     txt,
     parent: $('installed-packs'),
-    begin: () => worldStore.generation(),
+    initialRows: WORLD_LIBRARY_CATALOGUE,
+    onChange: () => syncDownloadMissions(),
+    begin: () => {
+      if (!worldStore) throw new Error(txt('Device storage is unavailable.', 'Сховище пристрою недоступне.'));
+      return worldStore.generation();
+    },
     fly: flyInstalledWorld,
     install: (bytes, row, options) =>
       installExactPack(bytes, `fpv-pack:${row.sha256}`, { ...options, row }),
   });
   const regionalLibrary = mountRegionalLibrary({
+    onChange: () => syncDownloadMissions(),
     el,
     txt,
     parent: $('installed-packs'),
@@ -3766,6 +3817,153 @@ export function mountWorldApp({
       );
     },
   });
+  let downloadMissionSignature = '';
+  const downloadedEntry = ({ row, index, level }) =>
+    catalogue.find(
+      (entry) =>
+        entry.packIdentity === `fpv-pack:${row.sha256}` &&
+        (level
+          ? entry.id === level.id
+          : entry.id ===
+            revisions.find((pack) => pack.sha256 === row.sha256)?.project.courses[index]?.id),
+    );
+  function downloadedCourseOffered(entry) {
+    return (
+      entry.projectId &&
+      worldLibrary
+        .missions()
+        .some(
+          (mission) =>
+            entry.packIdentity === `fpv-pack:${mission.row.sha256}` &&
+            (!mission.level || mission.level.id === entry.id),
+        )
+    );
+  }
+  function syncDownloadMissions() {
+    if (!missionLibrary || disposed) return;
+    const worlds = worldLibrary.missions(),
+      regions = regionalLibrary.missions();
+    const hashOf = (row) => row.saved?.sha256 ?? row.pin.sha256;
+    const signature = JSON.stringify([
+      worlds.map(({ row, index }) => [row.sha256, index]),
+      regions.map((row) => [row.id, hashOf(row)]),
+      locale,
+    ]);
+    // Do not replace an owner while its exact download is being prepared.
+    if (signature === downloadMissionSignature) {
+      missionChooser?.refresh();
+      return;
+    }
+    downloadMissionSignature = signature;
+    const packTitle = (row) => row.title[locale === 'uk' ? 1 : 0];
+    const worldName = (mission) => {
+      const installed = downloadedEntry(mission);
+      return installed
+        ? label(installed)
+        : (mission.level?.title[locale === 'uk' ? 1 : 0] ??
+            `${packTitle(mission.row)} · ${txt('Level', 'Рівень')} ${mission.index + 1}`);
+    };
+    missionLibrary.register({
+      id: 'worlds:downloads',
+      editionId: 'worlds:downloads',
+      edition: 'FPV SIM · Worlds',
+      collection: 'Custom',
+      entries: worlds,
+      describe: (mission) => ({
+        id: `${mission.row.sha256}:${mission.index}`,
+        campaignKey: mission.row.id,
+        campaignTitle: packTitle(mission.row),
+        name: worldName(mission),
+        revision: mission.row.revision,
+        levelIndex: mission.index,
+        campaignLevelCount: mission.row.courses,
+        modes: ['solo'],
+        tags: ['FPV', 'Practice'],
+        hook: txt(
+          'Download once and fly this route. Starts disarmed.',
+          'Завантажте один раз і літайте маршрутом. Старт із вимкненими двигунами.',
+        ),
+      }),
+      presentation: (mission) => ({
+        name: worldName(mission),
+        campaignTitle: packTitle(mission.row),
+      }),
+      availability: (mission) =>
+        downloadedEntry(mission)
+          ? { state: 'ready' }
+          : { state: 'download', bytes: mission.row.bytes },
+      prepare: (mission, options) => worldLibrary.prepareMission(mission.row, options),
+      card: (mission) => downloadedEntry(mission)?.course ?? null,
+      progressState: (mission) => ({
+        state: completedKeys().has(downloadedEntry(mission) && keyOf(downloadedEntry(mission))) ? 'completed' : 'new',
+        bestStars: null,
+      }),
+      launch: (mission, { isCurrent }) => {
+        const entry = downloadedEntry(mission);
+        if (!entry)
+          throw new Error(
+            txt('This route is no longer installed.', 'Цей маршрут більше не встановлено.'),
+          );
+        return startFlight(entry, { isCurrent });
+      },
+    });
+    missionLibrary.register({
+      id: 'worlds:regions',
+      editionId: 'worlds:regions',
+      edition: 'FPV SIM · Maps',
+      collection: 'Custom',
+      entries: regions,
+      describe: (row) => ({
+        id: `${row.id}:${hashOf(row)}`,
+        campaignKey: row.familyKey,
+        campaignTitle: localized(row.familyTitle),
+        name: localized(row.title),
+        revision: hashOf(row),
+        levelIndex: regions.filter((other) => other.familyKey === row.familyKey).indexOf(row),
+        campaignLevelCount: regions.filter((other) => other.familyKey === row.familyKey).length,
+        modes: ['solo'],
+        tags: ['FPV', 'Practice'],
+        hook:
+          localized(row.description) ||
+          txt('Regional free flight · unscored', 'Вільний політ у регіоні · без заліку'),
+      }),
+      presentation: (row) => ({
+        name: localized(row.title),
+        campaignTitle: localized(row.familyTitle),
+        hook: localized(row.description) || txt('Regional free flight · unscored', 'Вільний політ у регіоні · без заліку'),
+      }),
+      availability: (row) =>
+        regionalLibrary.isInstalled(row)
+          ? { state: 'ready' }
+          : row.pin
+            ? { state: 'download', bytes: row.bytes }
+            : {
+                state: 'unavailable',
+                reason: txt(
+                  'Saved scenery could not be verified. Open Content & Offline to manage this version.',
+                  'Не вдалося перевірити збережену місцевість. Відкрийте «Вміст і офлайн» для керування цією версією.',
+                ),
+              },
+      prepare: (row, options) => regionalLibrary.prepareMission(row, options),
+      card: () => null,
+      async launch(row, { isCurrent = () => true }) {
+        const generation = missionLaunchGeneration;
+        const { configuration, record } = await regionalLibrary.loadMission(row);
+        if (disposed || !isCurrent() || generation !== missionLaunchGeneration) return;
+        return startRegionalFlight(
+          regionalLibraryEntry(configuration, {
+            sha256: record.sha256,
+            descriptor: record.descriptor,
+          }),
+          {
+            canAdopt: isCurrent,
+            isCurrent: () => !disposed && !doc.hidden && generation === missionLaunchGeneration,
+          },
+        );
+      },
+    });
+    missionChooser?.refresh();
+  }
   on(restorePackInput, 'change', async (event) => {
     const file = event.target.files[0],
       required = restorePackIdentity;
@@ -4192,6 +4390,7 @@ export function mountWorldApp({
         ),
         muted: !audio.enabled(),
         transitionActive: !['idle', 'cancelled'].includes(continuousPlay.snapshot().phase),
+        navigationContext,
         missionName: titleCourse?.locales?.[locale]?.title ?? '',
         summary: titleCourse?.locales?.[locale]?.brief ?? '',
         phase: 'ready',
@@ -5216,7 +5415,8 @@ export function mountWorldApp({
           : state.status === 'active'
             ? 'playing'
             : state.status,
-      pauseOpensMenu: Boolean(current?.regional),
+      pauseOpensMenu: Boolean(current?.regional && state.status !== 'active' && state.reason !== 'prepared'),
+      navigationContext,
       missionName: $('flight-title').textContent,
       summary: $('flight-menu-brief').textContent,
       canResume: !playbackEnded && ['paused', 'disarmed'].includes(state.status) &&
@@ -8461,13 +8661,12 @@ export function mountWorldApp({
     playShell.open('missions');
   };
   missionLibrary = createSimMissionLibrary();
+  syncDownloadMissions();
+  void regionalLibrary.refreshMissions().catch(() => {});
   const missionTools = el('div', undefined, 'dialog-actions');
   const selectedTools = el('div', undefined, 'dialog-actions');
   const worldCatalogueHost = el('section', undefined, 'world-catalogue-host');
-  const randomMission = button(txt('Random flight', 'Випадковий політ'), async () => {
-    missionChooser.close();
-    await startRandomFlight();
-  });
+  const randomMission = button(txt('Random flight', 'Випадковий політ'), () => missionChooser.playRandom());
   randomMission.dataset.randomFlight = 'catalogue';
   missionTools.append(randomMission);
   for (const [tab, en, uk] of [
@@ -8487,6 +8686,12 @@ export function mountWorldApp({
     document: doc,
     library: missionLibrary,
     supportedModes: ['solo'],
+    randomDownloadable: true,
+    randomFilter: (row) =>
+      includesRandomLevel(
+        row.ownerId === 'worlds:builtin' && learningMissionKeys.has(row.runtimeId),
+      ),
+    browsingContext: ({ label }) => `${navigationContext()} · ${label}`,
     description: () =>
       txt(
         'Every world and school lesson in one list. Choose a route; your flight settings and lesson coach stay with it.',
@@ -8501,8 +8706,23 @@ export function mountWorldApp({
     },
     goalPreferenceOptions: { editionId: 'sim-worlds', getStorage: () => storage },
     onPause: pauseFlight,
-    getCurrentId: () =>
-      current && missionLibrary.missions.find((row) => row.runtimeId === keyOf(current))?.id,
+    getCurrentId: () => {
+      // Leaving a flight clears current; Random still avoids its last catalogue level.
+      const entry = current ?? catalogue.find((row) => keyOf(row) === lastCatalogueFlightKey);
+      return (
+        entry &&
+        missionLibrary.missions.find(
+          (row) =>
+            row.runtimeId === keyOf(entry) ||
+            (entry.regional &&
+              row.ownerId === 'worlds:regions' &&
+              row.runtimeId === `${entry.course.id}:${entry.packIdentity.slice(19)}`) ||
+            (row.ownerId === 'worlds:downloads' &&
+              row.runtimeId ===
+                `${entry.packIdentity.slice(9)}:${revisions.find((pack) => `fpv-pack:${pack.sha256}` === entry.packIdentity)?.project.courses.findIndex((course) => course.id === entry.id)}`),
+        )?.id
+      );
+    },
     readState: () => {
       try {
         return JSON.parse(storage?.getItem('revealline.sim.worlds.mission-browser.v1') ?? 'null');
@@ -8518,6 +8738,7 @@ export function mountWorldApp({
       }
     },
     renderPreview({ container, diagram: course, document }) {
+      if (!course) return;
       const svg = routeThumbnail(document, course, {
         ...appearanceControls.resolve().appearance,
         flightMode: $('flight-mode').value,
@@ -8527,7 +8748,9 @@ export function mountWorldApp({
     },
     onSelection(row) {
       selectedTools.replaceChildren();
-      const entry = catalogue.find((entry) => keyOf(entry) === row?.runtimeId);
+      const downloaded = row?.ownerId === 'worlds:downloads' && worldLibrary.missions().find((mission) =>
+        `${mission.row.sha256}:${mission.index}` === row.runtimeId);
+      const entry = downloaded ? downloadedEntry(downloaded) : catalogue.find((entry) => keyOf(entry) === row?.runtimeId);
       if (!entry) return;
       const tool = (text, action) =>
         button(text, (...args) => {
@@ -8599,6 +8822,34 @@ export function mountWorldApp({
       );
     },
   });
+  const randomLevelsField = el('label', undefined, 'sim-random-levels');
+  const randomLevelsCaption = el('span');
+  const randomLevelsSelect = el('select');
+  randomLevelsSelect.id = 'world-random-levels';
+  const randomAutomatic = el('option'),
+    randomMixed = el('option');
+  randomAutomatic.value = 'auto';
+  randomMixed.value = 'mixed';
+  randomLevelsSelect.append(randomAutomatic, randomMixed);
+  randomLevelsField.append(randomLevelsCaption, randomLevelsSelect);
+  randomLevelControl = {
+    label: randomLevelsCaption,
+    select: randomLevelsSelect,
+    automatic: randomAutomatic,
+    mixed: randomMixed,
+  };
+  paintRandomLevels();
+  missionChooser.elements.footer.querySelector('#journey-random-level').before(randomLevelsField);
+  on(randomLevelsSelect, 'change', () => {
+    randomLevelChoice = randomLevelsSelect.value === 'mixed' ? 'mixed' : 'auto';
+    try {
+      storage?.setItem(randomLevelsKey, randomLevelChoice);
+    } catch {
+      /* Keep this session's choice. */
+    }
+    paintRandomLevels();
+    missionChooser.refresh();
+  });
   // Keep both catalogues inside the chooser's one allocated scrolling row.
   // An unassigned grid child would create an implicit row beneath the action dock.
   courseClassFilter = mountAircraftCourseFilter({
@@ -8644,7 +8895,7 @@ export function mountWorldApp({
     wordmarkURL: shellWordmarkURL,
     // The arcade return can be outside a standalone package's offline scope.
     artworkURL: new URL('../../menu-scenes/fpv.webp', shellWordmarkURL).href,
-    modeName: () => (locale === 'uk' ? 'FPV SIM · Світи' : 'FPV SIM · Worlds'),
+    modeName: navigationContext,
     locale,
     services: {
       settingsPanelBack: simSettingsPanelBack,
@@ -8677,11 +8928,7 @@ export function mountWorldApp({
         const entry = catalogue[(index + 1) % catalogue.length];
         if (entry) void startFlight(entry).catch(reportError);
       },
-      random: () => {
-        const choices = catalogue.filter((entry) => entry !== current);
-        const entry = choices[Math.floor(Math.random() * choices.length)] ?? current;
-        if (entry) void startFlight(entry).catch(reportError);
-      },
+      random: () => void startRandomFlight().catch(reportError),
       fullscreen: () => void immersive.toggle(),
       toggleSound: () => soundButton.click(),
       canResume: () =>
@@ -9083,7 +9330,7 @@ export function mountWorldApp({
       const entry =
         tuningReturnEntry ?? current ?? catalogue.find((item) => !item.beginner && !item.legacy);
       tuningReturnEntry = null;
-      if (entry) void startFlight(entry).catch(reportError);
+      if (entry) void startFlight(entry, { paused: true }).catch(reportError);
     },
     onTest(configuration) {
       if ($('sim-settings').open) closeSettings({ force: true });
@@ -9304,11 +9551,7 @@ export function mountWorldApp({
       textFace: displayBinding('textFace'),
       textSize: displayBinding('textSize'),
       reducedEffects: displayBinding('reducedEffects'),
-      menuAnimation: {
-        get: () => getSimMenuAnimation(win),
-        set: (value) => setSimMenuAnimation(value, win),
-        subscribe: (listener) => subscribeSimMenuAnimation(listener, win),
-      },
+      menuAnimation: simMenuAnimationBinding(win),
       masterMuted: {
         get: () => audio.masterSnapshot().muted,
         set: (value) => audio.setEnabled(!value),
@@ -9339,6 +9582,7 @@ export function mountWorldApp({
   });
 
   const cueSettings = {
+    gameplayOutput: audio.gameplayOutput,
     // This preference is global; the 3D engine has no separate radio bus.
     // The canonical Soundscape consumes the same record in supported modes.
     get radioSettings() {
