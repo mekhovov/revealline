@@ -1,0 +1,141 @@
+candidate	Verify both source release formats and edition admission	2026-10-16T02:41:41.6617517Z ok 49 - the required exact-head source gate remains independent of hosted deployment
+candidate	Verify both source release formats and edition admission	2026-10-16T02:41:41.6618283Z   ---
+candidate	Verify both source release formats and edition admission	2026-10-16T02:41:41.6618699Z   duration_ms: 1.35438
+candidate	Verify both source release formats and edition admission	2026-10-16T02:41:41.6619139Z   ...
+candidate	Verify both source release formats and edition admission	2026-10-16T02:41:41.6619778Z # Subtest: auto-merge wakes from PR validation, never hosted deployment
+candidate	Verify both source release formats and edition admission	2026-10-16T02:41:41.6620656Z ok 50 - auto-merge wakes from PR validation, never hosted deployment
+candidate	Verify both source release formats and edition admission	2026-10-16T02:41:41.6621468Z   ---
+candidate	Verify both source release formats and edition admission	2026-10-16T02:41:41.6621892Z   duration_ms: 0.974608
+candidate	Verify both source release formats and edition admission	2026-10-16T02:41:41.6622345Z   ...
+candidate	Verify both source release formats and edition admission	2026-10-16T02:41:41.6629821Z # Subtest: the package interface exposes no Pages build command
+candidate	Verify both source release formats and edition admission	2026-10-16T02:41:41.6630479Z ok 51 - the package interface exposes no Pages build command
+candidate	Verify both source release formats and edition admission	2026-10-16T02:41:41.6630889Z   ---
+candidate	Verify both source release formats and edition admission	2026-10-16T02:41:41.6631130Z   duration_ms: 1.088369
+candidate	Verify both source release formats and edition admission	2026-10-16T02:41:41.6631531Z   ...
+candidate	Verify both source release formats and edition admission	2026-10-16T02:41:41.6631960Z # Subtest: the retired Pages playbook cannot prescribe a deployment path
+candidate	Verify both source release formats and edition admission	2026-10-16T02:41:41.6632406Z ok 52 - the retired Pages playbook cannot prescribe a deployment path
+candidate	Verify both source release formats and edition admission	2026-10-16T02:41:41.6632696Z   ---
+candidate	Verify both source release formats and edition admission	2026-10-16T02:41:41.6632890Z   duration_ms: 0.769038
+candidate	Verify both source release formats and edition admission	2026-10-16T02:41:41.6633086Z   ...
+candidate	Verify both source release formats and edition admission	2026-10-16T02:41:41.8939360Z # Subtest: opt-in manifest snapshot preserves the legacy distribution and refuses dirty source
+candidate	Verify both source release formats and edition admission	2026-10-16T02:41:41.8940410Z ok 53 - opt-in manifest snapshot preserves the legacy distribution and refuses dirty source
+candidate	Verify both source release formats and edition admission	2026-10-16T02:41:41.8940988Z   ---
+candidate	Verify both source release formats and edition admission	2026-10-16T02:41:41.8941432Z   duration_ms: 185.680838
+candidate	Verify both source release formats and edition admission	2026-10-16T02:41:41.8941726Z   ...
+candidate	Verify both source release formats and edition admission	2026-10-16T02:41:41.9059458Z 1..53
+candidate	Verify both source release formats and edition admission	2026-10-16T02:41:41.9059755Z # tests 71
+candidate	Verify both source release formats and edition admission	2026-10-16T02:41:41.9060005Z # suites 0
+candidate	Verify both source release formats and edition admission	2026-10-16T02:41:41.9060247Z # pass 71
+candidate	Verify both source release formats and edition admission	2026-10-16T02:41:41.9060487Z # fail 0
+candidate	Verify both source release formats and edition admission	2026-10-16T02:41:41.9060726Z # cancelled 0
+candidate	Verify both source release formats and edition admission	2026-10-16T02:41:41.9060979Z # skipped 0
+candidate	Verify both source release formats and edition admission	2026-10-16T02:41:41.9061339Z # todo 0
+candidate	Verify both source release formats and edition admission	2026-10-16T02:41:41.9061610Z # duration_ms 748.962499
+candidate	Verify both source release formats and edition admission	2026-10-16T02:41:42.2154616Z ........../usr/lib/python3.12/zipfile/__init__.py:1620: UserWarning: Duplicate name: 'log.txt'
+candidate	Verify both source release formats and edition admission	2026-10-16T02:41:42.2155176Z   return self._open_to_write(zinfo, force_zip64=force_zip64)
+candidate	Verify both source release formats and edition admission	2026-10-16T02:41:51.7785014Z ......................................................
+candidate	Verify both source release formats and edition admission	2026-10-16T02:41:51.7785940Z ----------------------------------------------------------------------
+candidate	Verify both source release formats and edition admission	2026-10-16T02:41:51.7786355Z Ran 64 tests in 9.707s
+candidate	Verify both source release formats and edition admission	2026-10-16T02:41:51.7786510Z 
+candidate	Verify both source release formats and edition admission	2026-10-16T02:41:51.7786613Z OK
+candidate	Compile twice and inspect original candidate ZIP members	﻿2026-10-16T02:41:51.7987364Z ##[group]Run node scripts/bundle-editions.mjs --editions "$EDITION_IDS" --out .cache/company-candidate --base-path /revealline/
+candidate	Compile twice and inspect original candidate ZIP members	2026-10-16T02:41:51.7988060Z ^[[36;1mnode scripts/bundle-editions.mjs --editions "$EDITION_IDS" --out .cache/company-candidate --base-path /revealline/^[[0m
+candidate	Compile twice and inspect original candidate ZIP members	2026-10-16T02:41:51.8042596Z shell: /usr/bin/bash -e {0}
+candidate	Compile twice and inspect original candidate ZIP members	2026-10-16T02:41:51.8042815Z env:
+candidate	Compile twice and inspect original candidate ZIP members	2026-10-16T02:41:51.8042985Z   EDITION_IDS: fpv-learning
+candidate	Compile twice and inspect original candidate ZIP members	2026-10-16T02:41:51.8043185Z ##[endgroup]
+candidate	Compile twice and inspect original candidate ZIP members	2026-10-16T02:44:44.5321716Z {
+candidate	Compile twice and inspect original candidate ZIP members	2026-10-16T02:44:44.5322323Z   "output": "/home/runner/work/revealline/revealline/.cache/company-candidate",
+candidate	Compile twice and inspect original candidate ZIP members	2026-10-16T02:44:44.5322789Z   "version": "v0.151.1",
+candidate	Compile twice and inspect original candidate ZIP members	2026-10-16T02:44:44.5323607Z   "sourceRevision": "8ab04b8d948203090b9ae32da3b2d4e7c1f16bf3",
+candidate	Compile twice and inspect original candidate ZIP members	2026-10-16T02:44:44.5324147Z   "sourceTree": "dab7b812eb88c9e744f67b0d9d1cca70df492c7c",
+candidate	Compile twice and inspect original candidate ZIP members	2026-10-16T02:44:44.5324548Z   "editionIds": [
+candidate	Compile twice and inspect original candidate ZIP members	2026-10-16T02:44:44.5324811Z     "fpv-learning"
+candidate	Compile twice and inspect original candidate ZIP members	2026-10-16T02:44:44.5325058Z   ],
+candidate	Compile twice and inspect original candidate ZIP members	2026-10-16T02:44:44.5325229Z   "zipMembersVerified": true,
+candidate	Compile twice and inspect original candidate ZIP members	2026-10-16T02:44:44.5325570Z   "reproducibleBuilds": 2,
+candidate	Compile twice and inspect original candidate ZIP members	2026-10-16T02:44:44.5325799Z   "verifiedPresentationReceipts": 1,
+candidate	Compile twice and inspect original candidate ZIP members	2026-10-16T02:44:44.5326036Z   "capacityMetadataFiles": 5,
+candidate	Compile twice and inspect original candidate ZIP members	2026-10-16T02:44:44.5326267Z   "capacityMetadataBytes": 164842,
+candidate	Compile twice and inspect original candidate ZIP members	2026-10-16T02:44:44.5326481Z   "publicEligible": false
+candidate	Compile twice and inspect original candidate ZIP members	2026-10-16T02:44:44.5326669Z }
+candidate	Save small capacity metadata for review	﻿2026-10-16T02:44:44.6118670Z ##[group]Run actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f
+candidate	Save small capacity metadata for review	2026-10-16T02:44:44.6119016Z with:
+candidate	Save small capacity metadata for review	2026-10-16T02:44:44.6119266Z   name: company-capacity-8ab04b8d948203090b9ae32da3b2d4e7c1f16bf3
+candidate	Save small capacity metadata for review	2026-10-16T02:44:44.6120069Z   path: .cache/company-candidate/capacity-inventory.json
+candidate	Save small capacity metadata for review	.cache/company-candidate/editions.json
+candidate	Save small capacity metadata for review	.cache/company-candidate/candidate-verification.json
+candidate	Save small capacity metadata for review	.cache/company-candidate/checksums.json
+candidate	Save small capacity metadata for review	.cache/company-candidate/manifest-*.json
+candidate	Save small capacity metadata for review	
+candidate	Save small capacity metadata for review	2026-10-16T02:44:44.6120805Z   if-no-files-found: error
+candidate	Save small capacity metadata for review	2026-10-16T02:44:44.6120999Z   retention-days: 14
+candidate	Save small capacity metadata for review	2026-10-16T02:44:44.6121430Z   compression-level: 6
+candidate	Save small capacity metadata for review	2026-10-16T02:44:44.6121678Z   overwrite: false
+candidate	Save small capacity metadata for review	2026-10-16T02:44:44.6121861Z   include-hidden-files: false
+candidate	Save small capacity metadata for review	2026-10-16T02:44:44.6122063Z ##[endgroup]
+candidate	Save small capacity metadata for review	2026-10-16T02:44:44.7502620Z With the provided path, there will be 5 files uploaded
+candidate	Save small capacity metadata for review	2026-10-16T02:44:44.7507784Z Artifact name is valid!
+candidate	Save small capacity metadata for review	2026-10-16T02:44:44.7508311Z Root directory input is valid!
+candidate	Save small capacity metadata for review	2026-10-16T02:44:44.9613783Z Beginning upload of artifact content to blob storage
+candidate	Save small capacity metadata for review	2026-10-16T02:44:45.0551592Z Uploaded bytes 61605
+candidate	Save small capacity metadata for review	2026-10-16T02:44:45.0706695Z Finished uploading artifact content to blob storage!
+candidate	Save small capacity metadata for review	2026-10-16T02:44:45.0707680Z SHA256 digest of uploaded artifact zip is a60d7b4c9ad958d55151c99be0560d21293c305c21a38701ebd657f0d82e209e
+candidate	Save small capacity metadata for review	2026-10-16T02:44:45.0708783Z Finalizing artifact upload
+candidate	Save small capacity metadata for review	2026-10-16T02:44:45.3511701Z Artifact company-capacity-8ab04b8d948203090b9ae32da3b2d4e7c1f16bf3.zip successfully finalized. Artifact ID 12021229581
+candidate	Save small capacity metadata for review	2026-10-16T02:44:45.3513199Z Artifact company-capacity-8ab04b8d948203090b9ae32da3b2d4e7c1f16bf3 has been successfully uploaded! Final size is 61605 bytes. Artifact ID is 12021229581
+candidate	Save small capacity metadata for review	2026-10-16T02:44:45.3516216Z Artifact download URL: https://github.com/mekhovov/revealline/actions/runs/38840697239/artifacts/12021229581
+candidate	Save immutable candidates for review	﻿2026-10-16T02:44:45.3647807Z ##[group]Run actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f
+candidate	Save immutable candidates for review	2026-10-16T02:44:45.3648153Z with:
+candidate	Save immutable candidates for review	2026-10-16T02:44:45.3648407Z   name: company-candidate-8ab04b8d948203090b9ae32da3b2d4e7c1f16bf3
+candidate	Save immutable candidates for review	2026-10-16T02:44:45.3648711Z   path: .cache/company-candidate/
+candidate	Save immutable candidates for review	2026-10-16T02:44:45.3648932Z   if-no-files-found: error
+candidate	Save immutable candidates for review	2026-10-16T02:44:45.3649129Z   retention-days: 14
+candidate	Save immutable candidates for review	2026-10-16T02:44:45.3649311Z   compression-level: 6
+candidate	Save immutable candidates for review	2026-10-16T02:44:45.3649497Z   overwrite: false
+candidate	Save immutable candidates for review	2026-10-16T02:44:45.3649691Z   include-hidden-files: false
+candidate	Save immutable candidates for review	2026-10-16T02:44:45.3649892Z ##[endgroup]
+candidate	Save immutable candidates for review	2026-10-16T02:44:45.5049169Z With the provided path, there will be 8 files uploaded
+candidate	Save immutable candidates for review	2026-10-16T02:44:45.5049941Z Artifact name is valid!
+candidate	Save immutable candidates for review	2026-10-16T02:44:45.5050325Z Root directory input is valid!
+candidate	Save immutable candidates for review	2026-10-16T02:44:45.7233646Z Beginning upload of artifact content to blob storage
+candidate	Save immutable candidates for review	2026-10-16T02:44:46.1803768Z Uploaded bytes 8388608
+candidate	Save immutable candidates for review	2026-10-16T02:44:46.3375897Z Uploaded bytes 16777216
+candidate	Save immutable candidates for review	2026-10-16T02:44:46.7228058Z Uploaded bytes 25165824
+candidate	Save immutable candidates for review	2026-10-16T02:44:46.9814911Z Uploaded bytes 33554432
+candidate	Save immutable candidates for review	2026-10-16T02:44:47.2485503Z Uploaded bytes 41943040
+candidate	Save immutable candidates for review	2026-10-16T02:44:47.5268821Z Uploaded bytes 50331648
+candidate	Save immutable candidates for review	2026-10-16T02:44:47.8284757Z Uploaded bytes 58720256
+candidate	Save immutable candidates for review	2026-10-16T02:44:48.0726229Z Uploaded bytes 67108864
+candidate	Save immutable candidates for review	2026-10-16T02:44:48.1883147Z Uploaded bytes 75497472
+candidate	Save immutable candidates for review	2026-10-16T02:44:48.3016814Z Uploaded bytes 78418184
+candidate	Save immutable candidates for review	2026-10-16T02:44:48.3189350Z Finished uploading artifact content to blob storage!
+candidate	Save immutable candidates for review	2026-10-16T02:44:48.3191723Z SHA256 digest of uploaded artifact zip is c12dce2a7f0b333ee101417728baa287b79ad8497f782c3976c9e48cbd0e0df6
+candidate	Save immutable candidates for review	2026-10-16T02:44:48.3193664Z Finalizing artifact upload
+candidate	Save immutable candidates for review	2026-10-16T02:44:48.5773376Z Artifact company-candidate-8ab04b8d948203090b9ae32da3b2d4e7c1f16bf3.zip successfully finalized. Artifact ID 12021498368
+candidate	Save immutable candidates for review	2026-10-16T02:44:48.5775129Z Artifact company-candidate-8ab04b8d948203090b9ae32da3b2d4e7c1f16bf3 has been successfully uploaded! Final size is 78418184 bytes. Artifact ID is 12021498368
+candidate	Save immutable candidates for review	2026-10-16T02:44:48.5777653Z Artifact download URL: https://github.com/mekhovov/revealline/actions/runs/38840697239/artifacts/12021498368
+candidate	Report qualification boundary	﻿2026-10-16T02:44:48.5913983Z ##[group]Run echo 'Company candidate compilation and original member checks passed.' >> "$GITHUB_STEP_SUMMARY"
+candidate	Report qualification boundary	2026-10-16T02:44:48.5914600Z ^[[36;1mecho 'Company candidate compilation and original member checks passed.' >> "$GITHUB_STEP_SUMMARY"^[[0m
+candidate	Report qualification boundary	2026-10-16T02:44:48.5915478Z ^[[36;1mecho 'The small capacity artifact contains exact candidate manifests and launcher component sizes. It excludes future default, retained, hub and optional output; it is not a complete hosted-size or promotion verdict.' >> "$GITHUB_STEP_SUMMARY"^[[0m
+candidate	Report qualification boundary	2026-10-16T02:44:48.5916788Z ^[[36;1mecho 'These artifacts are not promoted or published. Artwork, pacing, installation, offline recovery, accessibility, performance and downloaded-byte receipts remain separate release gates. Existing full-suite policy is unchanged.' >> "$GITHUB_STEP_SUMMARY"^[[0m
+candidate	Report qualification boundary	2026-10-16T02:44:48.5972039Z shell: /usr/bin/bash -e {0}
+candidate	Report qualification boundary	2026-10-16T02:44:48.5972283Z ##[endgroup]
+candidate	Post Run actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444	﻿2026-10-16T02:44:48.6147080Z Post job cleanup.
+candidate	Post Run actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444	2026-10-16T02:44:48.7186927Z (node:8455) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+candidate	Post Run actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444	2026-10-16T02:44:48.7188028Z (Use `node --trace-deprecation ...` to show where the warning was created)
+candidate	Post Run actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444	2026-10-16T02:44:48.7189971Z Cache hit occurred on the primary key node-cache-Linux-x64-npm-c4d90588a7de33efc505559194e3f745660379af2a85dc9bed412adb669838e1, not saving cache.
+candidate	Post Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09	﻿2026-10-16T02:44:48.7298369Z Post job cleanup.
+candidate	Post Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09	2026-10-16T02:44:48.8005793Z [command]/usr/bin/git version
+candidate	Post Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09	2026-10-16T02:44:48.8046555Z git version 2.55.0
+candidate	Post Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09	2026-10-16T02:44:48.8084000Z Temporarily overriding HOME='/home/runner/work/_temp/bf6d5f1b-32a0-4979-8ada-b5ffcfc0689e' before making global git config changes
+candidate	Post Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09	2026-10-16T02:44:48.8101322Z Adding repository directory to the temporary git global config as a safe directory
+candidate	Post Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09	2026-10-16T02:44:48.8102548Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/revealline/revealline
+candidate	Post Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09	2026-10-16T02:44:48.8121867Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+candidate	Post Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09	2026-10-16T02:44:48.8162693Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+candidate	Post Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09	2026-10-16T02:44:48.8450757Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+candidate	Post Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09	2026-10-16T02:44:48.8500757Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+candidate	Post Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09	2026-10-16T02:44:48.8794381Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+candidate	Post Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09	2026-10-16T02:44:48.8843710Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+candidate	Complete job	﻿2026-10-16T02:44:48.9271961Z Cleaning up orphan processes
+

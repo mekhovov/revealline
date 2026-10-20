@@ -67,7 +67,7 @@ async function setup(t, options = {}) {
 function openRetainedSetup(h) {
   // These tests target retained Legacy selector callbacks, not the new public
   // Missions route. Mount their historical parent at the finite DOM boundary;
-  // mission-library-solo-host covers the actual unified navigation and launches.
+  // mission-library-solo-* covers the actual unified navigation and launches.
   h.$('overlay-brief').click();
   h.$('shell-briefing').click();
   h.$('shell-missions').showModal();

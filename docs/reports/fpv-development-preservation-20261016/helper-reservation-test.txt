@@ -1,0 +1,6 @@
+test_exact_clearance_and_active_reservation_do_not_claim_durability (test_preservation.PreservationTests.test_exact_clearance_and_active_reservation_do_not_claim_durability) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 4.719s
+
+OK
