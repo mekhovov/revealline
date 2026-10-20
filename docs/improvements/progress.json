@@ -7,7 +7,7 @@
     "audit": "e2bf4f0e61218c85a1b0bb5779884b622ec03925",
     "implementation": "20555cda6bd44a0736aa829e64c52e455b4e770c",
     "originalWorkspace": "Preserved; no implementation edits.",
-    "latestObservedMain": "311d242b1c6666906a2b5371262a33dcd0c15667"
+    "latestObservedMain": "ab6d32feb740b2313cd305bb56b1db10d8e178ee"
   },
   "featureCount": 83,
   "setup": {
@@ -15,9 +15,9 @@
     "details": "Two managed implementation worktrees plus lightweight sparse checkouts; failed full checkouts self-cleaned after disk exhaustion. No unrelated data removed."
   },
   "nextPriority": [
-    "P1 · Mission browser #1773 / prerequisite #1778: the 11-file evidence repair is published at 428565d after all 17 source stages pass. Hosted fixed-package browser run 39372626146 is in progress; inspect its retained report and after-audits. Three source-mode failures remain separate.",
-    "P1 · Readability #1774: published 2c4d163 preserves current main, all 63 feature/test bodies and five controls. Source checks pass; hosted original 28 whole files plus Overflight host run 39372349639 is in progress. Browser and package acceptance follow.",
-    "P1 · Community readiness #1638: catalog author/check and all source statics pass. Automatic checks omit unchanged store/moderation-client files; resolve complete four-file hosted coverage before final acceptance and reconcile the original PR. Touch localization #1669 and offline/backup #1624/#1627 follow.",
+    "P1 · Mission browser #1773 / trace #1783: new fixed-package run proves English91current+3retained browsing, Back focus and exact briefing, then fails because running is not observed in60s after Start. Keep correct predicate/limits; capture bounded last visible state before choosing a fix. Three source-mode failures remain.",
+    "P1 · Readability #1774: current2c4d run failed.23 complete original files/215 cases and completeOverflight host/31 pass; World115case file runs out of heap, four files not run. Diagnose whole-host retention before repeating unchanged full scope; browser/package follow.",
+    "P1 · Community #1638: e0source75+validation pass; complete four-file qualification needs refreshed draftcoverage #1781 (all21currentcategories retained+Community22nd). Touch #1669 current6dc is publishedDRAFT/source checks pass; explicitshared-touch/native/browser acceptance still open. Offline/backup #1624/#1627 next.",
     "P1 · Compatibility #1668 source merged at the exact qualified revision. Finish current browser/inner-package/offline acceptance; physical checks remain separate.",
     "P1 · Team Home #1747: source merged. All nine admitted files match the independently reviewed local reconciliation. Finish current earned-result/full-host/browser/package acceptance. Full lessons still depend on Learn.",
     "P1 · Shared support #1762: source merged externally at b723. Its eight complete files pass 414 cases; the older preview retains 12 failures. Qualify current-main fixtures and actual Data/modal navigation, exports, package and remaining hosts.",
@@ -31,10 +31,7 @@
     "publishedSource": {
       "revision": "e4400303952d4d6dcfd6416d6d085131ce71466b",
       "observedAt": "2026-10-18T22:43:05Z",
-      "includedMergedSlices": [
-        "F83a",
-        "F81"
-      ],
+      "includedMergedSlices": ["F83a", "F81"],
       "evidence": "No-cache public main-deployment.json, game/build-info.json and game/app.mjs all match e440 deployment inventory; receipt /tmp/revealline-public-e440-identity-evidence.json.",
       "run": "https://github.com/mekhovov/revealline/actions/runs/39166266155",
       "behaviorQualification": "not_run"
@@ -302,7 +299,7 @@
     },
     "currentReadabilityReconciliation": {
       "main": "311d242b1c6666906a2b5371262a33dcd0c15667",
-      "status": "published_current_candidate_hosted_gameplay_in_progress",
+      "status": "published_source_pass_native_failed_world_oom",
       "sourcePaths": 63,
       "changedAfterBodies": 4,
       "unchangedAfterBodies": 59,
@@ -336,8 +333,139 @@
         "force": false,
         "draft": true,
         "hostedRun": "https://github.com/mekhovov/revealline/actions/runs/39372349639",
-        "native": "in_progress_no_pass_claim"
-      }
+        "native": "FAILED_23original215plusmandatoryhost31_WorldOOM4notrun"
+      },
+      "hostedGroup1": {
+        "status": "PASS",
+        "originalWholeFiles": 7,
+        "originalCases": 65,
+        "additionalOverflightHostWholeFiles": 1,
+        "additionalOverflightHostCases": 31,
+        "allZeroSkip": true,
+        "proofSHA256": "b0ac05d95e2ab5fe342a9dd95ea2b2c7d6c91e2d310d1d04a0c4f6b667ff999b",
+        "scope": "Only group1 exact2c4d; complete run now terminal RED."
+      },
+      "currentNativeTerminal": {
+        "status": "FAILED_WHOLE_WORLD_OOM_ORIGINAL28_INCOMPLETE_NO_PROMOTION",
+        "run": 39372349639,
+        "attempt": 1,
+        "head": "2c4d163b8e3338adc32f1047f4de478abda07c1b",
+        "tree": "5ba01250e216f494edfcdd5650d0540d03b64dfe",
+        "completeOriginalWholeFilesPassed": 23,
+        "completeOriginalCasesPassed": 215,
+        "additionalMandatoryWholeHostPassed": true,
+        "additionalMandatoryHostCasesPassed": 31,
+        "completePassedFilesIncludingAdditional": 24,
+        "completePassedCasesIncludingAdditional": 246,
+        "incompleteOriginalWholeFiles": 1,
+        "incompleteWorldEmittedTopLevelOK": 70,
+        "incompleteWorldEmittedNestedOK": 30,
+        "incompleteWorldHasNoTAPFooter": true,
+        "incompleteWorld115Qualified": false,
+        "notRunOriginalWholeFiles": [
+          "game/test/fpv-flight-ui.test.mjs",
+          "game/test/shared-touch-preferences.test.mjs",
+          "game/test/classic-snake-ui.test.mjs",
+          "game/test/localization-couch-host.test.mjs"
+        ],
+        "failureExit": -6,
+        "guard": null,
+        "elapsedSeconds": 68.702136,
+        "peakOwnedRSSBytes": 1899401216,
+        "allFourSemanticSourceAndNodeBinaryDependencyContentSame": true,
+        "perVMMetaEqualityPolicy": "Identity/index/config/dependency metadata compared only within eachVM; semantic content acrossVMs",
+        "allFullNativeAndAuditRawTerminalsVerified": true,
+        "all4CompactArtifactBytes": 210689,
+        "fullFailureJobLogs": {
+          "group4-joblog-capture.json": {
+            "SHA256": "7dbe1eaf705b13931de45607291668beb43926614bd634f912035ba70b82b0b5",
+            "jobID": 118462802505,
+            "label": "group4",
+            "scope": "Complete terminal hosted job log only; not test retry",
+            "ghExitCode": 0,
+            "captureComplete": true,
+            "streams": {
+              "stdout": {
+                "path": "/tmp/revealline-overflight-1774-current2c4d-ci/group4-job118462802505-stdout.log",
+                "bytes": 39201,
+                "SHA256": "cfbf3dbc9468ba1118a74be6e51a7a3d0edd4d972cd85247257bbf3104b4fb84"
+              },
+              "stderr": {
+                "path": "/tmp/revealline-overflight-1774-current2c4d-ci/group4-job118462802505-stderr.log",
+                "bytes": 0,
+                "SHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+              }
+            }
+          },
+          "aggregate-joblog-capture.json": {
+            "SHA256": "a85c495b78f8100acb97c32a5d8f668d13e782b1484e416cc8be64426ba73385",
+            "jobID": 118469289713,
+            "label": "aggregate",
+            "scope": "Complete terminal hosted job log only; not test retry",
+            "ghExitCode": 0,
+            "captureComplete": true,
+            "streams": {
+              "stdout": {
+                "path": "/tmp/revealline-overflight-1774-current2c4d-ci/aggregate-job118469289713-stdout.log",
+                "bytes": 22647,
+                "SHA256": "58304246c23c9f3d2954380e9374b0f10106b13ca8ea32328834b313d57846ea"
+              },
+              "stderr": {
+                "path": "/tmp/revealline-overflight-1774-current2c4d-ci/aggregate-job118469289713-stderr.log",
+                "bytes": 0,
+                "SHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+              }
+            }
+          }
+        },
+        "aggregateConclusion": "FAILED; strictcompletearchiveallowlist rejected G4campaign-failure.json as Unknown or nonregular ZIP member; no complete28receipt produced",
+        "preservedPriorRed": "/tmp/revealline-overflight-1774-ci/first-native28-terminal-summary.json",
+        "newWorldFixtureRetentionHypothesis": "Still not qualified/sufficient: current6c50 entire115 World fixture also OOM. No causal/runtimefix inference.",
+        "reviewerHistory": [
+          "Bounded urllibartifact request redirected401 before body; ghAPI boundedcapture exactdigests succeeded",
+          "G2reviewer sourceauditlabels corrected fromglobal08-14 tolocal01-07; nativeglobalphases stayed08-14; oldreviewer preserved",
+          "G4successmanifest inspection corrected to expectedcampaign-failure.json; actualarchive unchanged",
+          "Firstghfulljoblogcapture rejectedANSI before body output; rawcapture repeated with explicitallow-escape-sequences only; no native/testretry"
+        ],
+        "groupProofs": [
+          {
+            "path": "/tmp/revealline-overflight-1774-current2c4d-ci/group1-independent-readback.json",
+            "SHA256": "b0ac05d95e2ab5fe342a9dd95ea2b2c7d6c91e2d310d1d04a0c4f6b667ff999b"
+          },
+          {
+            "path": "/tmp/revealline-overflight-1774-current2c4d-ci/group2-independent-readback.json",
+            "SHA256": "ddd4b2c0158fdc14c4596e916121b1e1df7e7e5b8a0c499a2ebd15415a205228"
+          },
+          {
+            "path": "/tmp/revealline-overflight-1774-current2c4d-ci/group3-independent-readback.json",
+            "SHA256": "10ca80369ee3858c36312552bc2f6ef411b780481c1a96f992770fe25dec33c1"
+          },
+          {
+            "path": "/tmp/revealline-overflight-1774-current2c4d-ci/group4-failure-independent-readback.json",
+            "SHA256": "e1513084d0a9e765e3b1e5a02ee71b45ab3aae198c44815d3371496889b977c8"
+          }
+        ],
+        "noRerunNoFiltersNoLimitsRaisedNoSourceChange": true,
+        "summarySHA256": "e67f04a332b1d46c5b012bd38a871aaf4cd4fbc4bf638be1a692dce2c2871719",
+        "rootAll4FullRawProofSHA256": "8d53130bba61e93b5a251bbca047ed22a7df69640684623d9fcd74468eb57d5d"
+      },
+      "next": "P1 diagnose retained World host allocations without reducing complete115 scope/limits; original23files215 and additionalhost31 pass, Worldincomplete/fournotrun. Browser/package/player gates remain."
+    },
+    "currentMenuResearch": {
+      "observedDate": "2026-10-20",
+      "decision": "Identify exact failed native phase first; if persistent responsiveness remains, attribute interaction work with a browser performance trace before choosing a renderer/worker/scheduling change. Warnings alone do not establish cause.",
+      "sources": [
+        {
+          "title": "Chrome DevTools performance features reference",
+          "url": "https://developer.chrome.com/docs/devtools/performance/reference",
+          "application": "Interaction/main-thread timeline attribution; CPU throttling does not reproduce actual mobile CPU architecture."
+        },
+        {
+          "title": "MDN WebGL best practices",
+          "url": "https://developer.mozilla.org/en-US/docs/Web/API/WebGL_API/WebGL_best_practices",
+          "application": "Blocking GPU readback is a profiling consideration, not evidence that observed warnings caused this timeout."
+        }
+      ]
     }
   },
   "tasks": [
@@ -533,14 +661,32 @@
       "implementationSlices": [
         {
           "id": "touch-live-locale",
-          "status": "ready_for_checks",
+          "status": "draft_review",
           "pr": "https://github.com/mekhovov/revealline/pull/1669",
-          "commit": "029da03357b63d84ee5b081bb6e420fc297ddcde",
+          "commit": "6dc3147977bf0bac8e0ec549e2ae77bd5f0a427e",
           "evidence": "53 focused and full source gates pass; broader2unchanged failures reproduced on clean base. Independent source and actual Duel menu/paused Team/UK316px review pass; modeled storage, actual controls/gameplay. No physical or listening claim.",
-          "deliveryState": "ready",
+          "deliveryState": "draft",
           "mergeState": "DIRTY",
-          "observedRemoteHead": "029da03357b63d84ee5b081bb6e420fc297ddcde",
-          "lastKnownMergeState": "DIRTY"
+          "observedRemoteHead": "6dc3147977bf0bac8e0ec549e2ae77bd5f0a427e",
+          "lastKnownMergeState": "DIRTY",
+          "next": "Current6dc publishedDRAFT preservinglatestretirement/browserowners. Complete currentselectednative/localization/validate and explicitfivefile shared-touch cohort (separatecoverageprerequisite inpreparation), then EN/UK Duel+Team focus/paused/saveacceptance. Old53 scopedhistorical; physicalnotavailable.",
+          "currentSourcePreparation": {
+            "main": "ab6d32feb740b2313cd305bb56b1db10d8e178ee",
+            "stagedHead": "023562cbab2b55d82347206cd059128a880b2929",
+            "published": true,
+            "catalogStages": 2,
+            "catalogReceiptSHA256": "0ee75391f70fbc1104f76670eca5a19293b12a1def8b783db2965aee7fe51419",
+            "staticStages": 4,
+            "staticReceiptSHA256": "a7486015d199930691528e17632236c56e3dc2c19a93c68b52646e11f2b954df",
+            "rootStaticProofSHA256": "753ba4a17a5830fbcb59e75779073b4300e2918dd7bbb73bbf693dcdb28effa9",
+            "scope": "Authored4formatCHECK/3syntax and registeredcatalogauthor/check only; old53 not inherited, currentnative/browser pending",
+            "head": "6dc3147977bf0bac8e0ec549e2ae77bd5f0a427e",
+            "tree": "f6b50d42256514073158c0cc5d8b7b4ed8dfdc11",
+            "rootProofSHA256": "8b684a928e56b67557e0bf3f098a937b27821e2faa0bf426a2c22ddee479f1ea",
+            "peerProofSHA256": "7c22c6229bbef30970499cbd1e08e5bc005020abb331d79fa53dbc3e4c1417f0",
+            "unownedMerkleEntriesExact": 2598,
+            "normalFastForward": true
+          }
         },
         {
           "id": "about-plain-title",
@@ -760,17 +906,17 @@
       "impact": "H/H",
       "effort": "**3–5d**",
       "featureId": "F12",
-      "status": "ready_for_checks",
+      "status": "draft_review",
       "owner": "integration",
       "qualification": {
-        "automated": "focused_and_source_gates_passed",
+        "automated": "current_catalog_and_statics_pass_complete4cohort_pending",
         "browser": "scoped_modeled_service_passed",
         "physical": "not_tested"
       },
       "blocker": null,
       "pr": "https://github.com/mekhovov/revealline/pull/1638",
-      "commit": "a3b1e33b1766991e4220ffcc54347e335db11c7e",
-      "next": "Reconcile readiness against current main while preserving retired-community cleanup. The narrow locale union adds nine service keys per language. Catalog generation and complete current readiness/client/store/moderation qualification precede updating #1638.",
+      "commit": "e0e919277bb1821527deff78d3643920aa32e9a9",
+      "next": "Admit narrow coverage prerequisite1781 through normal checks, refresh current F12 normally, then collect allfour completegamefiles/configuredchecks and current browser. Prior native/modelled receipts retain their original source.",
       "evidence": [
         "Read-only assessment: Rooms already preflights protocol/catalogue with a bounded timeout and local fallback. Community has /ready but current setup has no equivalent bounded preflight. Readiness must remain distinct from sign-in and publish permissions.",
         "39 distinct focused tests pass; full lint and every repository validation stage pass. Eight full-format findings are byte-unchanged from base461ace; changed formatting passes.",
@@ -779,14 +925,14 @@
         "Merge-based integration a3b preserves b0e and dd337 ancestry. Independent review confirms all 8 source/test blobs identical, all main EN 5912/UK 6022 values retained plus exactly 9 original additions each. Full source gates in progress; local candidate is not yet the published head.",
         "Exact integrated a3b published and ready after 51 focused cases, full lint, changed formatting and uninterrupted full validation. Eight full-format findings are unchanged from main; independent integration review clear."
       ],
-      "deliveryState": "ready",
+      "deliveryState": "draft",
       "mergeState": "DIRTY",
-      "observedRemoteHead": "a3b1e33b1766991e4220ffcc54347e335db11c7e",
+      "observedRemoteHead": "e0e919277bb1821527deff78d3643920aa32e9a9",
       "lastKnownMergeState": "DIRTY",
       "currentReconciliation": {
-        "status": "catalog2_and_statics8_pass_current_publication_preparation",
+        "status": "published_draft_complete4cohort_pending",
         "main": "311d242b1c6666906a2b5371262a33dcd0c15667",
-        "sourceHead": "a3b1e33b1766991e4220ffcc54347e335db11c7e",
+        "sourceHead": "e0e919277bb1821527deff78d3643920aa32e9a9",
         "scope": "Eight oldfeature owner beforeimages match currentmain; preserve reviewedexactruntime/style/HTML/test bodies. Reconcile original9 additions perlocale and regenerate catalogs fromcurrent18namespace closure. No app.mjs feature edit.",
         "qualification": "Two registered catalog source stages PASS, all 18 decoded namespaces and 18 added labels checked; no full CLI/native/player pass. Earlier sparse-absent-document preflight stop preserved.",
         "next": "Freeze actual11 source, qualify formatting/syntax, then complete current readiness/client/store/moderation and configured hosted gates before normal #1638 reconciliation.",
@@ -809,7 +955,33 @@
             "game/test/community-moderation-client.test.mjs"
           ],
           "proofSHA256": "e09e4fb2ba0143b6f0acd69db64505b6d0f783ce235dc75098ddee09353766b1",
-          "scope": "Authored declarations are not executed counts. Existing acceptance workflow covers service transport, not this game cohort; complete feature qualification remains open."
+          "scope": "Authored declarations are not executed counts. Existing acceptance workflow covers service transport, not this game cohort; complete feature qualification remains open.",
+          "prerequisite": "https://github.com/mekhovov/revealline/pull/1781"
+        },
+        "publication": {
+          "head": "e0e919277bb1821527deff78d3643920aa32e9a9",
+          "tree": "2d9f15d4a32d2495f9cf06104a35a5f5e97a979f",
+          "normalFastForward": true,
+          "draft": true,
+          "unownedMerkleEntriesExact": 2272,
+          "rootProofSHA256": "745e2e371ef59da4c3f320ec4448f44075c62989294be6068368c1d0014a64ef",
+          "peerProofSHA256": "7deaaeedb692a0f0b212eb5483106c2ce47bf5185f78ecd575d14ee530a196cb"
+        },
+        "currentSourceWorkflow": {
+          "run": "https://github.com/mekhovov/revealline/actions/runs/39374131797",
+          "metadataConclusion": "success",
+          "completeRawQualification": "five_complete_selected_commands_PASS_75actualTAPcases_not_full4Communitycohort",
+          "proofSHA256": "3b9061383a1202b8e013b9c5dc19a46ac512f6b6d9fd96694cfba952e03e8c87",
+          "node": "v20.19.6",
+          "cases": 75,
+          "wholeReadinessFiles": 2,
+          "allEightSourceAuditsExact": true,
+          "broadTestBuild": "skipped_not_passes"
+        },
+        "serviceWorkflow": {
+          "run": "https://github.com/mekhovov/revealline/actions/runs/39374132797",
+          "metadataConclusion": "success",
+          "scope": "Communityservice transport only, not four gamefiles"
         }
       }
     },
@@ -1230,7 +1402,7 @@
       "blocker": "Capture cold Team-source construction and three picture-setup failures need correction and current complete-cohort qualification. Team Home1747 is source merged; earned-result/full-host/browser/package acceptance remains. Full lessons depend on F25/Learn.",
       "pr": null,
       "commit": null,
-      "next": "P1 · Mission browser #1773 / prerequisite #1778: the 11-file evidence repair is published at 428565d after all 17 source stages pass. Hosted fixed-package browser run 39372626146 is in progress; inspect its retained report and after-audits. Three source-mode failures remain separate.",
+      "next": "P1 · Mission browser #1773 / prerequisite #1778: current hosted browser fails after accepted password and English Home on a 10-second page-state read. All six after-audits pass. Add bounded operation/phase trace to identify the exact preceding action, then resolve the evidenced cause; three source-mode failures remain separate.",
       "evidence": [
         "Read-only current-source assessment finds authoritative journeyDestination progression already exists, but no explained Home recommendation. A real live/saved Resume is different from a navigation cursor; do not suppress both or add another launch/progress owner. Exact current terminal run alone can justify retry wording; the profile does not persist defeat chronology. F25 Learn hub remains planned/D-dependent, so no durable lesson mastery or fictional practice routes are introduced."
       ],
@@ -1508,11 +1680,7 @@
               "failed": 2,
               "total": 22
             },
-            "failedCommands": [
-              "custom1/2",
-              "setup6/7",
-              "coldprobe0/1"
-            ],
+            "failedCommands": ["custom1/2", "setup6/7", "coldprobe0/1"],
             "completeOtherPasses": "incoming6,handoff7,lifecycle8,result1,navigation249,company1368,reader6,distribution2,configuredvalidate",
             "coldTrace": "sourcebound earlynativeconstructioncontinuesbeforeinstalled; processintervalsnotexclusiveCPU/playerlatency; nextcurrent/retainedJourneydisplayboundaryunderread-onlydesign",
             "authoringStatus": "actual37ec10phases33terminals22audits5parityPASS",
@@ -1594,10 +1762,7 @@
         },
         "currentMainUnion": {
           "main": "5f088a41ead6811bfed760cb577bbb170f465002",
-          "paths": [
-            "game/app.mjs",
-            "package.json"
-          ],
+          "paths": ["game/app.mjs", "package.json"],
           "sourceManifestSHA256": "9b19fa8600c385267adb5046b222db3584a07f5518626d87aa4ad120fff752be",
           "rootReadbackSHA256": "6ecd255c85130e9de83658f9c680e114b371208a831a9b71cf910e6775e2a46e",
           "qualified": false
@@ -3662,7 +3827,7 @@
           "commit": "2c4d163b8e3338adc32f1047f4de478abda07c1b",
           "dependency": "Compatibility1668 and complete SingleDrone/Riy typography/layout inventory; follow independent width repair",
           "effort": "Within original6–10d totalF09, not a second full estimate",
-          "next": "P1 · Readability #1774: published 2c4d163 preserves current main, all 63 feature/test bodies and five controls. Source checks pass; hosted original 28 whole files plus Overflight host run 39372349639 is in progress. Browser and package acceptance follow.",
+          "next": "P1 diagnose retained World host allocations without reducing complete115 scope/limits; original23files215 and additionalhost31 pass, Worldincomplete/fournotrun. Browser/package/player gates remain.",
           "evidence": [
             "Read-onlysourceinventory andactualdesktop/320/844CSSbaseline distinguish repeatedcascade/media overrides. All proposed source inputs already local; no build/hydration. Currentfirstpaint/desired/effective text capability needs consistent shared theme-system/host/bootstrap plus optional existing API deltas, not copying oldruntime files. DOM caption alternative must preserve exact now/next facts anddiagramgeometry. Physical/PWA/Deck not inferred.",
             "Read-only full loaded-source inventory381module references/~6.2MB,20stylesheets;161absolute font/lineheight/token declarations recorded before/after with hashes. Dedicated --overflight-text-scale default1 avoidsprimaryscale/doublescaling; em/inherit/unitless remain untouched. Current31fileWIPgrowth47,495bytes incl36,646inventory, no build/log/snapshot growth. No newnative run orbrowserready claim. Proposed fullwidth16:9/liveHUDscroll rejected beforeedit: fails shortviewport andtouchanchoring. Approveddirection keepsremainingviewportFITfield,portraitcriticalHUDrow/landscaperail andexistingtouch overlay samefieldcell; actualENUK320/844 simultaneousvisibility acceptance required. Capacityhold preservespartialWIP; playreferencesplannedmissingstylesheet, generatedbootstrapnotyetrefreshed.",
@@ -3696,28 +3861,107 @@
           "localPrototypeManifest": "f6fac3748aa7a335c0283a1723cdc4d3e0c2afea185748e12ad51dcfe03eb1db",
           "localCandidateCommit": "0d30169a43b7deb8368c1f8a2642d00ea89284c1",
           "currentNativeQualification": {
-            "candidate": "0d30169a43b7deb8368c1f8a2642d00ea89284c1",
-            "cohortFiles": 28,
-            "acceptedCompleteFiles": 2,
-            "acceptedCompleteCases": 28,
-            "acceptedFiles": [
+            "status": "FAILED_WHOLE_WORLD_OOM_ORIGINAL28_INCOMPLETE_NO_PROMOTION",
+            "run": 39372349639,
+            "attempt": 1,
+            "head": "2c4d163b8e3338adc32f1047f4de478abda07c1b",
+            "tree": "5ba01250e216f494edfcdd5650d0540d03b64dfe",
+            "completeOriginalWholeFilesPassed": 23,
+            "completeOriginalCasesPassed": 215,
+            "additionalMandatoryWholeHostPassed": true,
+            "additionalMandatoryHostCasesPassed": 31,
+            "completePassedFilesIncludingAdditional": 24,
+            "completePassedCasesIncludingAdditional": 246,
+            "incompleteOriginalWholeFiles": 1,
+            "incompleteWorldEmittedTopLevelOK": 70,
+            "incompleteWorldEmittedNestedOK": 30,
+            "incompleteWorldHasNoTAPFooter": true,
+            "incompleteWorld115Qualified": false,
+            "notRunOriginalWholeFiles": [
+              "game/test/fpv-flight-ui.test.mjs",
+              "game/test/shared-touch-preferences.test.mjs",
+              "game/test/classic-snake-ui.test.mjs",
+              "game/test/localization-couch-host.test.mjs"
+            ],
+            "failureExit": -6,
+            "guard": null,
+            "elapsedSeconds": 68.702136,
+            "peakOwnedRSSBytes": 1899401216,
+            "allFourSemanticSourceAndNodeBinaryDependencyContentSame": true,
+            "perVMMetaEqualityPolicy": "Identity/index/config/dependency metadata compared only within eachVM; semantic content acrossVMs",
+            "allFullNativeAndAuditRawTerminalsVerified": true,
+            "all4CompactArtifactBytes": 210689,
+            "fullFailureJobLogs": {
+              "group4-joblog-capture.json": {
+                "SHA256": "7dbe1eaf705b13931de45607291668beb43926614bd634f912035ba70b82b0b5",
+                "jobID": 118462802505,
+                "label": "group4",
+                "scope": "Complete terminal hosted job log only; not test retry",
+                "ghExitCode": 0,
+                "captureComplete": true,
+                "streams": {
+                  "stdout": {
+                    "path": "/tmp/revealline-overflight-1774-current2c4d-ci/group4-job118462802505-stdout.log",
+                    "bytes": 39201,
+                    "SHA256": "cfbf3dbc9468ba1118a74be6e51a7a3d0edd4d972cd85247257bbf3104b4fb84"
+                  },
+                  "stderr": {
+                    "path": "/tmp/revealline-overflight-1774-current2c4d-ci/group4-job118462802505-stderr.log",
+                    "bytes": 0,
+                    "SHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+                  }
+                }
+              },
+              "aggregate-joblog-capture.json": {
+                "SHA256": "a85c495b78f8100acb97c32a5d8f668d13e782b1484e416cc8be64426ba73385",
+                "jobID": 118469289713,
+                "label": "aggregate",
+                "scope": "Complete terminal hosted job log only; not test retry",
+                "ghExitCode": 0,
+                "captureComplete": true,
+                "streams": {
+                  "stdout": {
+                    "path": "/tmp/revealline-overflight-1774-current2c4d-ci/aggregate-job118469289713-stdout.log",
+                    "bytes": 22647,
+                    "SHA256": "58304246c23c9f3d2954380e9374b0f10106b13ca8ea32328834b313d57846ea"
+                  },
+                  "stderr": {
+                    "path": "/tmp/revealline-overflight-1774-current2c4d-ci/aggregate-job118469289713-stderr.log",
+                    "bytes": 0,
+                    "SHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+                  }
+                }
+              }
+            },
+            "aggregateConclusion": "FAILED; strictcompletearchiveallowlist rejected G4campaign-failure.json as Unknown or nonregular ZIP member; no complete28receipt produced",
+            "preservedPriorRed": "/tmp/revealline-overflight-1774-ci/first-native28-terminal-summary.json",
+            "newWorldFixtureRetentionHypothesis": "Still not qualified/sufficient: current6c50 entire115 World fixture also OOM. No causal/runtimefix inference.",
+            "reviewerHistory": [
+              "Bounded urllibartifact request redirected401 before body; ghAPI boundedcapture exactdigests succeeded",
+              "G2reviewer sourceauditlabels corrected fromglobal08-14 tolocal01-07; nativeglobalphases stayed08-14; oldreviewer preserved",
+              "G4successmanifest inspection corrected to expectedcampaign-failure.json; actualarchive unchanged",
+              "Firstghfulljoblogcapture rejectedANSI before body output; rawcapture repeated with explicitallow-escape-sequences only; no native/testretry"
+            ],
+            "groupProofs": [
               {
-                "file": "game/test/touch-controls-view.test.mjs",
-                "cases": 3
+                "path": "/tmp/revealline-overflight-1774-current2c4d-ci/group1-independent-readback.json",
+                "SHA256": "b0ac05d95e2ab5fe342a9dd95ea2b2c7d6c91e2d310d1d04a0c4f6b667ff999b"
               },
               {
-                "file": "game/test/overflight-touch.test.mjs",
-                "cases": 25
+                "path": "/tmp/revealline-overflight-1774-current2c4d-ci/group2-independent-readback.json",
+                "SHA256": "ddd4b2c0158fdc14c4596e916121b1e1df7e7e5b8a0c499a2ebd15415a205228"
+              },
+              {
+                "path": "/tmp/revealline-overflight-1774-current2c4d-ci/group3-independent-readback.json",
+                "SHA256": "10ca80369ee3858c36312552bc2f6ef411b780481c1a96f992770fe25dec33c1"
+              },
+              {
+                "path": "/tmp/revealline-overflight-1774-current2c4d-ci/group4-failure-independent-readback.json",
+                "SHA256": "e1513084d0a9e765e3b1e5a02ee71b45ab3aae198c44815d3371496889b977c8"
               }
             ],
-            "incompleteFile": "game/test/overflight-text-scaling-host.test.mjs",
-            "incompleteStatus": "disk_floor_guard_no_terminal_tap_totals",
-            "emittedSuccessesNotCounted": 7,
-            "remainingFilesNotRun": 25,
-            "finalFullSourceContentAudit": "separate_recovery_only_audit_pass_A29246_exact_then_C29267_restored_not_native_qualification",
-            "allCohortFilesPassed": false,
-            "receipt": ".cache/improvements-diagnostics/f09-touch-0d301-qualification/native-reviewed-a12a7935/cohort.json",
-            "recoveryReceiptSHA256": "080ddd0afe3a8bfd727932f19366c61944a13f4c2a38dd0308610133ad7af0d1"
+            "noRerunNoFiltersNoLimitsRaisedNoSourceChange": true,
+            "summarySHA256": "e67f04a332b1d46c5b012bd38a871aaf4cd4fbc4bf638be1a692dce2c2871719"
           },
           "preparationRetry": {
             "status": "stopped_before_any_source_mutation",
@@ -3833,9 +4077,7 @@
             "url": "https://github.com/mekhovov/revealline/pull/1774",
             "head": "2d15ac09834c762a543d5aa3edcb9114f6135b88",
             "tree": "f602d4359e5ed4d45fd6e687bae7a533d8615e71",
-            "parents": [
-              "a7c8be6ff7f4cf2ee0409edbab136e398f21c1c2"
-            ],
+            "parents": ["a7c8be6ff7f4cf2ee0409edbab136e398f21c1c2"],
             "branch": "codex/f09b-overflight-readable-play-oct20",
             "ownedPaths": 63,
             "featurePaths": 58,
@@ -3901,6 +4143,30 @@
               "currentHead": "2d15ac09834c762a543d5aa3edcb9114f6135b88"
             },
             "aggregate": "failedclosed at unknownfailed-groupZIPmember; noaggregatePASS/receipt, allfour source-specific groupartifacts retained"
+          },
+          "historical2d15NativeQualification": {
+            "candidate": "0d30169a43b7deb8368c1f8a2642d00ea89284c1",
+            "cohortFiles": 28,
+            "acceptedCompleteFiles": 2,
+            "acceptedCompleteCases": 28,
+            "acceptedFiles": [
+              {
+                "file": "game/test/touch-controls-view.test.mjs",
+                "cases": 3
+              },
+              {
+                "file": "game/test/overflight-touch.test.mjs",
+                "cases": 25
+              }
+            ],
+            "incompleteFile": "game/test/overflight-text-scaling-host.test.mjs",
+            "incompleteStatus": "disk_floor_guard_no_terminal_tap_totals",
+            "emittedSuccessesNotCounted": 7,
+            "remainingFilesNotRun": 25,
+            "finalFullSourceContentAudit": "separate_recovery_only_audit_pass_A29246_exact_then_C29267_restored_not_native_qualification",
+            "allCohortFilesPassed": false,
+            "receipt": ".cache/improvements-diagnostics/f09-touch-0d301-qualification/native-reviewed-a12a7935/cohort.json",
+            "recoveryReceiptSHA256": "080ddd0afe3a8bfd727932f19366c61944a13f4c2a38dd0308610133ad7af0d1"
           }
         }
       ],
@@ -3964,11 +4230,7 @@
       "nextFamilyPlan": {
         "status": "read_only_inventory_complete_no_implementation_or_native_claim",
         "existingScope": "F09 within original6–10d total allocation",
-        "entryFamily": [
-          "Raid",
-          "Time Attack",
-          "Contract Marathon"
-        ],
+        "entryFamily": ["Raid", "Time Attack", "Contract Marathon"],
         "inventory": "/tmp/revealline-f09-raid-family-readonly-inventory.json",
         "inventorySHA256": "6ebba762584a6ff79fb1627e17bba047199d5a97500a86c3f9158cd5b02778c2",
         "completeDeliverable": "Explicit family capability, scoped typography and current firstpaint/Settings/menu/HUD/earned upgrades/Pause/reading/results; Marathon Bank/Continue and TimeAttack medal/penalty. Preserve existing consequence/reroll facts, Standard/Large, game core, record and input owners.",
@@ -6251,6 +6513,21 @@
       "date": "2026-10-20",
       "item": "DELIVERY",
       "reason": "Published readability2c4d and browser-observability428 via normal fast-forward updates after exact completebody/unownedtree/freshproof checks; both existingPRs remain draft. Hosted native39372349639/browser39372626146 started. Communitycatalog2/statics8 pass, but automatic source selection omits two required wholefiles; coverage remains explicit gate. Counts83/113 unchanged."
+    },
+    {
+      "date": "2026-10-20",
+      "item": "DELIVERY",
+      "reason": "Current2c4d native23original215+mandatoryhost31 pass but completeWorld stillOOM/4notrun/aggregateRED. Current428browser evidence retains10sDOM timeout and all6postaudits; boundedtraceformatter12pass/final15casespending. Communitye0 publishedTODRAFT; separateone-mapprerequisite1781DRAFT published/exactsourceandunownedtreeproofs.1669TODRAFT/current5sourcequalified/staged. Otherchatscontinue,83/113 definitions/priorities/estimates unchanged."
+    },
+    {
+      "date": "2026-10-20",
+      "item": "DELIVERY",
+      "reason": "External1778 merge545 changes11verification paths. Touchpublication safely stopped before ref mutation on freshbase mismatch; old023/proofs preserved. Newtrace12formatter+17source/all15contractcasesPASS, needsNEW4pathPR. Communitye0 exactconfiguredsource75PASS inclreadiness10/readiness-host7+localization58/validate; unchangedstore/moderation remainunselected."
+    },
+    {
+      "date": "2026-10-20",
+      "item": "DELIVERY",
+      "reason": "PublishednormalTouch1669head6dc aftertwofreshnessstops; all5+24owners/2598unownedretained. Coverage1781refreshed167a map22preservesall21currentcategories; read-onlyCHECK/pure18scenariosPASS afterpreservedformatterbookkeepingfailure. Newtrace1783f822 browserterminalRED: EN94Browse/Back/briefingproved, runningnotobserved60s afterfulfilledStart; sixpostauditsPASS/partialtraceoverflowexplicit. No fullplayeracceptance/newfeaturecompletion."
     }
   ],
   "deliveryDependencies": [
@@ -6681,11 +6958,7 @@
         "head": "3939489184c73bdff9c5e4493e3a133e7c5f2f77",
         "run": "https://github.com/mekhovov/revealline/actions/runs/39344948290",
         "result": "success",
-        "scopes": [
-          "publishing538/538",
-          "cheapcontract2/2",
-          "uninterrupted configured validate"
-        ],
+        "scopes": ["publishing538/538", "cheapcontract2/2", "uninterrupted configured validate"],
         "rootFullRawReadbackSHA256": "5d34b906760e011afba9d71502b86c39dacb62b729cebff32097bd4322a05727",
         "rootWholeSourceAuditReadbackSHA256": "69dc1cf4b3453442d277eca8af8cf52c410f4d4ee9d84f958f3788cb5358a19e",
         "broadTestBuild": "policy-skipped, not passes"
@@ -6755,11 +7028,7 @@
         "run": "https://github.com/mekhovov/revealline/actions/runs/39337606463",
         "head": "a39607b7bce39803a22000c88cd417d1e769d5c4",
         "result": "success",
-        "scopes": [
-          "publishing529",
-          "cheapcontract2",
-          "configured validate"
-        ],
+        "scopes": ["publishing529", "cheapcontract2", "configured validate"],
         "dedicatedAuthoring": "tenphases_pass_artifact_rootreview_clear"
       },
       "mergeCommit": "b032b6461437afc4d86ed7a2cb6707f751a67e6b",
@@ -6976,7 +7245,7 @@
       "id": "CI-fixed-compiled-menu-browser-37ec",
       "priority": "P1",
       "pr": "https://github.com/mekhovov/revealline/pull/1778",
-      "status": "draft_source_pass_browser_rerun_in_progress",
+      "status": "source_merged_current_browser_failed_operation_timeout",
       "commit": "428565de342dec02f0c7e694bd212908a00188b2",
       "observedRemoteHead": "428565de342dec02f0c7e694bd212908a00188b2",
       "scope": "Fixed37ec package browser observation through ordinary password form and native EN/UK controls; no source admission policy change. Verification prerequisite, not a new feature.",
@@ -7001,7 +7270,7 @@
         "force": false,
         "draft": true
       },
-      "next": "P1 · Mission browser #1773 / prerequisite #1778: the 11-file evidence repair is published at 428565d after all 17 source stages pass. Hosted fixed-package browser run 39372626146 is in progress; inspect its retained report and after-audits. Three source-mode failures remain separate.",
+      "next": "P1 · Mission browser #1773 / prerequisite #1778: current hosted browser fails after accepted password and English Home on a 10-second page-state read. All six after-audits pass. Add bounded operation/phase trace to identify the exact preceding action, then resolve the evidenced cause; three source-mode failures remain separate.",
       "browserAttempt1": {
         "run": "https://github.com/mekhovov/revealline/actions/runs/39368078857",
         "job": 118449401977,
@@ -7024,7 +7293,7 @@
         "artifactSHA256": "c77a6e34f9e529e5b9c80fa4a36e5ecd934047f6e2a7f3f581a4e9271a01a22e"
       },
       "observabilityRepair": {
-        "status": "published_source_pass_hosted_browser_in_progress",
+        "status": "published_source_pass_hosted_browser_failed_read_public_DOM",
         "sourcePaths": 11,
         "sourceManifestSHA256": "beeb4e42c77f3fb9b293c8ef72674b5a5ed2e427b2c6f725d1127f665a706211",
         "formatterReceiptSHA256": "89b0a3cfbf9b04229a9b2d3047202b290ec2d8ee883d678828b80119a8a1bb77",
@@ -7044,12 +7313,139 @@
         "sourceQualificationReceiptSHA256": "9edb1ac0c7925ef2f89c5918edfecff8775c08f3ada5fa640b03ce4bd7ffd0cd",
         "initialProofSHA256": "a2e5bc40bf67e4b293b6c4b4eb9b6b95d5fa4225cbca29ad9fae076a55aebc6d",
         "freshPrePRProofSHA256": "78f347908d77e54ecace28d50facae687fc8c47365ce5a34a9036c2da7b42cbe"
+      },
+      "browserAttempt2": {
+        "head": "428565de342dec02f0c7e694bd212908a00188b2",
+        "run": "https://github.com/mekhovov/revealline/actions/runs/39372626146",
+        "job": 118463656119,
+        "result": "FAILURE",
+        "completedStages": ["ordinary-password-accepted", "en-home"],
+        "failedOperation": "read public DOM",
+        "operationBudgetMs": 10000,
+        "exactPrecedingBrowseAction": "unknown_pending_bounded_operation_phase_trace",
+        "browserDurationSeconds": 22.782,
+        "allSixFailurePostauditsPassed": true,
+        "sourceBeforeAfterAggregateSHA256": "4521652cefd784d9d5ff8c20d7d1e7961193590e7811e001b2fb0b15d7147697",
+        "allSourceFiles": 37765,
+        "allSourceBytes": 3098734961,
+        "rootProofSHA256": "0c2fe0008e4cbe4be2e9132c66d869e4ec463565e6c52d6ca7424488a0379b4b",
+        "scope": "Exact package/navigation and ordinary access/Home pass; no Missions/UK/Start/Pause/Resume or performance acceptance. GL warnings/aborted fetch are not established cause. No target or timeout change."
+      },
+      "operationTraceSuccessor": {
+        "status": "formatter12_and_source17_complete15_pass_new4pathPR_preparation",
+        "rawManifestSHA256": "7709ca345e70cbafadd2792603b48ed894ebf2847257918218d5c97b25357064",
+        "formattedManifestSHA256": "3c60450b70e203638d4af3b0969a395f6b633bb0a88b1add41bbff85d222ae79",
+        "formatterReceiptSHA256": "0469e26127edd34bef78c4d8ccd08deaeab9e5e88831a64769e60d7ea958ec41",
+        "sourceContractCasesPending": 0,
+        "scope": "bounded128events/32KiB trace; originalpromise/error/timeout/predicates/actions/zero-diagnostics acceptance unchanged; no browser run",
+        "sourceStagesPassed": 17,
+        "sourceContractCasesPassed": 15,
+        "sourceReceiptSHA256": "6901564dc73e1fb0f41dd1097b260e1fa218ea31cfbc054fd220ece621cff55c",
+        "rootProofSHA256": "fd8bc0d4e76b18fee35b21f5fe0378b7a4da5d538e2519866a4089fd981ca858",
+        "rootFormatterProofSHA256": "666f0c2c42e1cea38b83d4564acc9a586b2fdf5f7be0ea9775b9dc1d7ccd67cf",
+        "next": "New narrowlyowned4-path trace PR against545 after1778 externalmerge; no closedbranchupdate. No browser run/pass."
+      },
+      "deliveryState": "merged",
+      "mergeCommit": "545edcad7c6897d7f39ff0e2f5ced8874c9dfe54",
+      "mergedAt": "2026-10-20T05:36:51Z",
+      "externalMergeNote": "External merge of exact428; root did not promote or merge. Browser39372626146 remains failed despite source admission."
+    },
+    {
+      "id": "CI-Community-readiness-complete-cohort",
+      "priority": "P1",
+      "status": "draft_refreshed_current22_source_check_pass_hosted_pending",
+      "deliveryState": "draft",
+      "pr": "https://github.com/mekhovov/revealline/pull/1781",
+      "commit": "167a18accb70d069f64062ee9b37d0c2a4bcb3fa",
+      "scope": "ONE focusedmap category selects allfour completeCommunity readiness/store/moderation files; exactexistingvalidate retained.20oldcategories/order/fallback/limits/workflows unchanged. Not a feature or game-test pass.",
+      "qualification": {
+        "automated": "Formatting/schema and exactfivefunction pure selection:8positive/8unchanged/3invalidrejects PASS. Fouractualgamefiles UNRUN.",
+        "browser": "not_run",
+        "physical": "not_tested"
+      },
+      "sourceReceiptSHA256": "5623271a02ab8b6e8195a4b70ff71c7a8dca5e9cf2b8b788462e2ecd5bf5b2da",
+      "actualMapOID": "319012d882421814569efcc5358f87aa040f87a6",
+      "mapSHA256": "9fddf4a1e0d8a56aeb9009c74a74366dd1dcd7d8c70f5d443f102f8b52664611",
+      "base": "0fe957b33c7daa055b8ba4e248541ccc34902fce",
+      "soleParent": true,
+      "unownedMerkleEntriesExact": 83,
+      "rootRemoteProofSHA256": "96f19f6542eb2426bc8993ce937f9927b493df7265803a6efc8b642fa6f9bfa4",
+      "peerRemoteProofSHA256": "ad918388a53ec150a00af522dc8706aff057c67f528595b094102074c1849176",
+      "next": "Normaltrusted-mapadmission then normalF12refresh/currentcompletefourfile evidence. Current22unionpreservescompiledcontract; no CIpolicy/limit changes.",
+      "observedRemoteHead": "167a18accb70d069f64062ee9b37d0c2a4bcb3fa",
+      "currentPublication": {
+        "main": "ab6d32feb740b2313cd305bb56b1db10d8e178ee",
+        "tree": "179d36b34e22402ae107643f61974fb96e2eb0b4",
+        "parents": [
+          "bc786ea9d09089f44ff1bf79d4d8d69f8198827b",
+          "ab6d32feb740b2313cd305bb56b1db10d8e178ee"
+        ],
+        "mapOID": "241a81dcd15f683c4e00fd2efcdb924f00b962d9",
+        "existingCategoriesPreserved": 21,
+        "categoriesAfter": 22,
+        "normalFF": true,
+        "draft": true,
+        "rootRemoteProofSHA256": "bfe313600d1e98a4bc0d017f3e17672be54fefaa57cdf22258f87b126007b130",
+        "peerRemoteProofSHA256": "dd7f7a19ab323505a508429d9ad9c39eee184de1ed4721d616d70ab5d835fc69",
+        "sourceReceiptSHA256": "8327f43c5b2a78af4ad64a2a85c3b437a28839d812dec3bfe4a51c0f47b876e7",
+        "rootSourceProofSHA256": "d607d773e2ebdf50d781c4748f41334c6ee2c96e829d45d92e7f8d28b4cd096f"
+      },
+      "preservedFormatterFailure": {
+        "receiptSHA256": "93d37b488ce7956f6cf3ed645b02e04d365616967bb078828f6c71d933198841",
+        "status": "FAILED_result_schema_bookkeeping_after_child0_not_retagged",
+        "recoveryProofSHA256": "63f4b0fbd5bc17b90fcfdad3b9af65483459d6b4a6e429aa6bc623b10e51efdf"
+      }
+    },
+    {
+      "status": "draft_source_pass_hosted_failed_running_not_observed",
+      "rawManifestSHA256": "7709ca345e70cbafadd2792603b48ed894ebf2847257918218d5c97b25357064",
+      "formattedManifestSHA256": "3c60450b70e203638d4af3b0969a395f6b633bb0a88b1add41bbff85d222ae79",
+      "formatterReceiptSHA256": "0469e26127edd34bef78c4d8ccd08deaeab9e5e88831a64769e60d7ea958ec41",
+      "sourceContractCasesPending": 0,
+      "scope": "Boundedphase/operation evidence only; no player or performance acceptance",
+      "sourceStagesPassed": 17,
+      "sourceContractCasesPassed": 15,
+      "sourceReceiptSHA256": "6901564dc73e1fb0f41dd1097b260e1fa218ea31cfbc054fd220ece621cff55c",
+      "rootProofSHA256": "fd8bc0d4e76b18fee35b21f5fe0378b7a4da5d538e2519866a4089fd981ca858",
+      "rootFormatterProofSHA256": "666f0c2c42e1cea38b83d4564acc9a586b2fdf5f7be0ea9775b9dc1d7ccd67cf",
+      "next": "Preserve source-correct runningpredicate and unchangedlimits; retain bounded lastpublicDOM observation to distinguish preparation/guard/error/terminal states before choosing runtimefix. Prior428readtimeout andpartial49eventtrace retained.",
+      "id": "CI-menu-browser-operation-trace",
+      "priority": "P1",
+      "deliveryState": "draft",
+      "pr": "https://github.com/mekhovov/revealline/pull/1783",
+      "commit": "f82246c9665f043e3e4f805d012bcab41361634e",
+      "sourcePaths": 4,
+      "sourceScope": "CHECK11/syntax5/whole15 PASS on actual full11 inputs; newPR owns4 differences",
+      "rootRemoteProofSHA256": "cce8b7a218e6aed7f30819cd928dca4bb77a01f3af1087b777fbdb80e54719f5",
+      "peerRemoteProofSHA256": "949ccd3b371eb5cba7c9515e41f10df7f9891d5c5fa3345f9262c29c4d4c03c9",
+      "browserRun": "https://github.com/mekhovov/revealline/actions/runs/39376293817",
+      "currentBrowserTerminal": {
+        "run": 39376293817,
+        "head": "f82246c9665f043e3e4f805d012bcab41361634e",
+        "result": "FAILURE",
+        "proofSHA256": "cd3375c0790d8bff9e01e273c02705094150f9a84cecaabcd0e1fcef9f619c6a",
+        "artifactSHA256": "426ed04624b18e7560897adda9cb64bdd79fa67392468a2b33361b4e959e5473",
+        "artifactBytes": 200389,
+        "englishCurrentMissions": 91,
+        "englishRetainedMissions": 3,
+        "browseBackFocusPassed": true,
+        "exactMissionBriefingPassed": true,
+        "lastFulfilledNativeAction": "#start-button",
+        "runningPredicate": "NOT_OBSERVED_IN_EXISTING_60S_PHASE",
+        "lastFailedOperation": "public observation interval",
+        "operationTraceOverflow": true,
+        "admittedEvents": 49,
+        "droppedEvents": 2369,
+        "allSixPostAuditsPassed": true,
+        "noResourceGuardOrSurvivor": true,
+        "scope": "No acceptedplay/clock/PauseResume/Ukrainian/browserwholeflow pass; clickfulfilment not acceptedrunning; exactcause unresolved",
+        "rootFullRawProofSHA256": "0aec192fbfaaf92bdc7e4b2e2c724bbbd17b6023cb193fb842c0721211751822"
       }
     }
   ],
   "deliverySnapshot": {
-    "featurePRsReady": 9,
-    "featurePRsDraft": 32,
+    "featurePRsReady": 7,
+    "featurePRsDraft": 34,
     "deliverablesMerged": 50,
     "verifiedLive": 0,
     "publishedSourceSlices": 2,
@@ -7058,44 +7454,19 @@
   },
   "admissionReview": {
     "observedDate": "2026-10-20",
-    "scope": "All92 feature candidates;18 separate delivery prerequisites. Original83 feature groups and113 deliverables unchanged.",
+    "scope": "All92 feature candidates;21 separate delivery prerequisites. Original83 feature groups and113 deliverables unchanged.",
     "counts": {
       "merged": 50,
-      "ready": 9,
-      "draft": 32,
+      "ready": 7,
+      "draft": 34,
       "withdrawn": 1
     },
     "conflictedOpenPRs": [
-      1617,
-      1622,
-      1624,
-      1627,
-      1632,
-      1638,
-      1642,
-      1667,
-      1669,
-      1671,
-      1672,
-      1682,
-      1686,
-      1702,
-      1704,
-      1721,
-      1729
+      1617, 1622, 1624, 1627, 1632, 1638, 1642, 1667, 1669, 1671, 1672, 1682, 1686, 1702, 1704,
+      1721, 1729
     ],
-    "conflictedReadyPRs": [
-      1617,
-      1622,
-      1624,
-      1627,
-      1632,
-      1638,
-      1669,
-      1682,
-      1686
-    ],
-    "note": "50 feature source PRs merged,9 open for checks,32 drafts,1 withdrawn;19 prerequisites separate. Compatibility1668 merged externally at tested a7 after2309 source and1908 preview checks. Menu37ec passes16/19 source commands,20/22 ordinary Solo cases; exact preview passes118 complete files/1903 cases and builds. Browser and inner-package acceptance remain. Readability2d15 retains fixture/memory failures; qualified source corrections remain unpublished. Diagnostic1776: prior857 both13/13 pure PASS, native NOT_RUN due JSON tuple/list setup defect; reviewed additive14-case correction passes14 and AST2 locally and read-only format3 passes after a three-quote YAML correction. Exactca197 published normally; controlled comparison39364916396 records BOTH parent and feature OOM under identical limits, no complete115-case pass. Test-only lifecycle proposal under review. No memory cause established. Original83/113 scope unchanged; other chats keep running. Current63+5 readability source controls pass31mock/AST3/format2; native pending. New fixed-package browser prerequisite1778 is published at887829c and its hosted observation is in progress.",
+    "conflictedReadyPRs": [1617, 1622, 1624, 1627, 1632, 1682, 1686],
+    "note": "50 feature source PRs merged,7 open for checks,34 drafts,1 withdrawn;21 separate prerequisites. Community1638 and touch1669 returned to draft while complete current cohort qualification remains open. Readability2c4d whole-host run is RED; browser428 public-DOM read is RED. No new feature completion/public/hardware acceptance.",
     "latestMain": {
       "revision": "ff63cad0ee40a5f5800d61544ed5e21252a1e6d3",
       "tree": "31152737452bc992fc45eb705a28b4e6c6340df2",
@@ -7132,22 +7503,9 @@
       "openNonDraft": 9,
       "conflicting": 9,
       "historicalGreen": 7,
-      "historicalFocusedFailed": [
-        1622,
-        1686
-      ],
+      "historicalFocusedFailed": [1622, 1686],
       "broadTestBuild": "SKIPPED, not pass",
-      "priority": [
-        1638,
-        1669,
-        1624,
-        1627,
-        1632,
-        1617,
-        1622,
-        1686,
-        1682
-      ],
+      "priority": [1638, 1669, 1624, 1627, 1632, 1617, 1622, 1686, 1682],
       "receipt": "/tmp/revealline-c-nine-ready-46ba-metadata/snapshot-receipt.json",
       "receiptSHA256": "efd2bee6b677343f029a86ab4813df38a7271d31259a0fe06c77515a1089bc2a",
       "next": "Reconcile scoped current owners then fresh required source/selected-file/preview checks; no manual admission bypass.",
