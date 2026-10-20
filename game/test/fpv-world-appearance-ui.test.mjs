@@ -229,7 +229,12 @@ function fixture(t, options = {}) {
     rendererFactory: () => renderer,
     ...factories,
   });
-  t.after(() => app.dispose());
+  t.after(async () => {
+    await app.dispose();
+    for (let index = RegionalWorker.instances.length - 1; index >= 0; index -= 1) {
+      if (RegionalWorker.instances[index].terminated) RegionalWorker.instances.splice(index, 1);
+    }
+  });
   return {
     app,
     doc,

@@ -28,10 +28,10 @@ const sourceHashes={
 'optional-practice/civilian-fpv/world-hunt-reactions.mjs':
 '7d890938c2ec3b6d8bd6046db3b436589cf7b356c0e7004ef8814e59713dbbc7',
 'game/ui/contextual-reactions.mjs':
-'fca8aa1df6bcf4fafde73b5658ac5bd81877495084379f5d8100bcaac0aa9736',
+'7da5da76cbda9857c46d86d807d0c05d1075c0cb076f497ced9e2ef84fc23635',
 'game/ui/hunt-feedback-layout.mjs':
 '54f9755b9fb40953d106b3c0d181948b5eb0983f6b360dba1a1435cf69808a53',
-'game/ui/reaction-caption.mjs':'5b7edf3006681a02b40134ff4eee2b1f7da3770eec2b5e9b9ae70c39332a5890',
+'game/ui/reaction-caption.mjs':'4bb936f010f3508167d25f60429c4c1b851d8dee3c92f98028132e5bb8e15842',
 'game/journey/reaction-portraits.mjs':
 '39cbf1428dca4e3d6f71e71fed4b41e280b3c0bc284e3bcacf580fca5552952f',
 'game/ui/art/reactions/guide-idle.svg':
@@ -4562,7 +4562,7 @@ if(node.textContent!==text)node.textContent=text;
 // Result surfaces also have legacy footnote rules; the explicit caption
 // preference takes precedence without exposing a hidden parent surface.
 node.style.display=node.hidden?'none':'block';
-node.style.fontSize=`${options.scale}rem`;
+node.style.fontSize=`calc(${options.scale}rem * var(--overflight-text-scale, 1))`;
 node.style.lineHeight='1.45';
 node.style.color='var(--fk-text, #f1f5fa)';
 node.style.background=options.background?'var(--fk-panel, #172126)':'transparent';
@@ -7956,6 +7956,9 @@ pilot:[
 'Generated voice preview. Missing recordings use captions.',
 'Попередня синтезована озвучка. Відсутні записи замінюються субтитрами.',
 ],
+lastMessage:['Last message','Останнє повідомлення'],
+readMessage:['Read','Читати'],
+pauseToRead:['Pause to read the message.','Призупиніть гру, щоб прочитати повідомлення.'],
 };
 function attachContextualReactions({
 sound,
@@ -7969,6 +7972,7 @@ getReduced=()=>doc?.body?.dataset.effects==='reduced',
 getStorage,
 acquireGain=()=>null,
 voiceLibrary=null,
+captionReader=null,
 }={}){
 if(!sound|| !container|| !doc)
 throw new TypeError('Reaction sound and caption container are required.');
@@ -8001,6 +8005,70 @@ caption.style.cssText=
 'font-family:system-ui,sans-serif;line-height:1.45;overflow-wrap:anywhere;min-width:0;';
 panel.append(portrait,actorPortrait,caption);
 container.append(panel);
+// The optional reader belongs to this accepted-caption owner, not a second
+// history, timer or voice player. Other hosts retain their original path.
+const reader=captionReader?create('section'):null;
+const readerHeading=reader?create('h3'):null;
+const readerText=reader?create('p'):null;
+const readerHint=reader?create('span'):null;
+const readerCue=reader?create('span'):null;
+const pauseButton=captionReader?.pauseButton;
+let lastMessage=null,
+ownSelfLabel=false;
+if(reader){
+const id=`reaction-last-message-${++settingsSequence}`;
+reader.dataset.reactionReader='true';
+reader.hidden=true;
+reader.tabIndex=0;
+reader.setAttribute('role','region');
+readerHeading.id=id;
+reader.setAttribute('aria-labelledby',id);
+readerHint.id=`${id}-hint`;
+readerHint.hidden=true;
+readerCue.id=`${id}-cue`;
+readerCue.hidden=true;
+reader.append(readerHeading,readerText,readerHint,readerCue);
+captionReader.root.append(reader);
+}
+function cue(show){
+if(!pauseButton)return;
+const tokens=(name)=>(pauseButton.getAttribute(name)??'').split(/\s+/u).filter(Boolean);
+const setTokens=(name,values)=>{
+if(tokens(name).join(' ')===values.join(' '))return;
+if(values.length)pauseButton.setAttribute(name,values.join(' '));
+else pauseButton.removeAttribute(name);
+};
+const descriptions=tokens('aria-describedby').filter((id)=>id!==readerHint.id);
+const labels=tokens('aria-labelledby').filter((id)=>id!==readerCue.id);
+if(show){
+pauseButton.dataset.captionReadLabel=tr('readMessage');
+readerHint.textContent=tr('pauseToRead');
+readerCue.textContent=tr('readMessage');
+descriptions.push(readerHint.id);
+if(!labels.length&&pauseButton.id){
+labels.push(pauseButton.id);
+ownSelfLabel=true;
+}
+labels.push(readerCue.id);
+}else{
+delete pauseButton.dataset.captionReadLabel;
+if(ownSelfLabel){
+const index=labels.indexOf(pauseButton.id);
+if(index>=0)labels.splice(index,1);
+ownSelfLabel=false;
+}
+}
+setTokens('aria-describedby',descriptions);
+setTokens('aria-labelledby',labels);
+}
+function clearReader(){
+lastMessage=null;
+if(reader){
+reader.hidden=true;
+readerText.textContent='';
+}
+cue(false);
+}
 const releaseFeedbackLayout=attachHuntFeedbackLayout({container,window:target});
 const preferences=createReactionPreferences({
 window:target,
@@ -8092,6 +8160,7 @@ current=null;
 panel.hidden=true;
 panel.style.display='none';
 caption.textContent='';
+cue(false);
 }
 function cancel(reason){
 stopSpeech();
@@ -8101,14 +8170,15 @@ prepared.clear();
 void cache.cancel();
 }
 if(reason==='danger')return;// Preserve readable text even when its audio is interrupted.
+if(reason!=='suspend')clearReader();
 hidePreview();
 hide();
 }
-function localizedCurrentLine(){
+function localizedCurrentLine(line=current.line){
 return(
-(current.line.resultContext
-?journeyResultReaction(current.line.resultContext,getLocale())
-:reactionLine(current.line.id,getLocale()))??current.line
+(line.resultContext
+?journeyResultReaction(line.resultContext,getLocale())
+:reactionLine(line.id,getLocale()))??line
 );
 }
 function render(){
@@ -8159,9 +8229,34 @@ if(status){
 status.textContent=state.durable?'':tr('unavailable');
 status.hidden=state.durable;
 }
+renderCaption(state,enabled);
+}
+function renderCaption(state,enabled){
+const reading= !!reader&&captionReader.active()===true;
+if(reader){
+if(!reading|| !enabled|| !state.subtitles)clearReader();
+// Returning to the enlarged view may reuse an unexpired accepted line;
+// it cannot revive expired copy, reaccept a reaction or alter its clock.
+else if(!lastMessage&&current&& !current.terminal)
+lastMessage=Object.freeze({...current.line});
+readerHeading.textContent=tr('lastMessage');
+reader.hidden= !lastMessage;
+if(lastMessage){
+readerText.textContent=reactionCaptionText(
+{
+...localizedCurrentLine(lastMessage),
+board:lastMessage.board,
+player:lastMessage.player,
+},
+getLocale(),
+);
+readerText.style.fontSize=`calc(${state.scale}rem * var(--overflight-text-scale, 1))`;
+readerText.style.background=state.background?'var(--panel-bg, #172126)':'transparent';
+}
+}
 panel.style.background=state.background?'var(--panel-bg, #172126)':'transparent';
 panel.style.color='var(--text-color, #fff)';
-caption.style.fontSize=`${state.scale}rem`;
+caption.style.fontSize=`calc(${state.scale}rem * var(--overflight-text-scale, 1))`;
 if(current){
 const localized=localizedCurrentLine();
 caption.textContent=reactionCaptionText(
@@ -8169,8 +8264,23 @@ caption.textContent=reactionCaptionText(
 getLocale(),
 );
 const visible=enabled&&state.subtitles&&(!current.terminal|| !resultContainer);
+// Measuring the same panel is synchronous and never exposes an incomplete
+// live caption to paint or the accessibility tree.
+const measured=visible&&reading&& !current.terminal;
+if(measured){
+panel.style.visibility='hidden';
+panel.setAttribute('aria-hidden','true');
+}
 panel.hidden= !visible;
 panel.style.display=visible?'flex':'none';
+if(measured){
+const fits=captionReader.fits(panel)===true;
+panel.hidden= !fits;
+panel.style.display=fits?'flex':'none';
+panel.style.visibility='';
+panel.removeAttribute('aria-hidden');
+cue(!fits);
+}else cue(false);
 if(current.terminal&&resultContainer&& !journeyOwnsReactionCaption(resultContainer))
 renderResultReactionCaption(resultContainer,localized,state,enabled,getLocale());
 }
@@ -8248,6 +8358,8 @@ motion=null;
 // A setting change applies to the next accepted line, without truncating or
 // replaying the current one. A translated line retains this timing policy.
 current={line,terminal,readingTime:options.snapshot().readingTime};
+if(reader&& !terminal&&captionReader.active()===true&&options.snapshot().subtitles)
+lastMessage=Object.freeze({...line});
 if(!terminal)
 duration=Math.max(duration,captionReadingDuration(line.text,current.readingTime));
 const appearance=REACTION_PORTRAITS[line.speaker]??REACTION_PORTRAITS.guide;
@@ -8455,6 +8567,9 @@ refresh(){
 render();
 prepare();
 },
+refreshCaptionLayout(){
+if(!closed&&reader)renderCaption(options.snapshot(),preferences.snapshot().enabled);
+},
 diagnostics:()=>
 Object.freeze({
 cache:cache.snapshot(),
@@ -8483,6 +8598,7 @@ resume:()=>director.resume(),
 dispose(){
 if(closed)return;
 closed=true;
+clearReader();
 director.suspend();
 clearCaptionTimer();
 hidePreview();
@@ -8503,6 +8619,7 @@ for(const control of controls.values())control.onchange=null;
 settings?.remove();
 actorVoiceControls?.dispose();
 panel.remove();
+reader?.remove();
 releaseFeedbackLayout();
 },
 });

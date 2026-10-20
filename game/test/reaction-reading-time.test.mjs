@@ -49,7 +49,13 @@ function clock(t) {
 }
 function mounted(
   t,
-  { storage = memoryStorage(), document: doc = new Document(), sound, voiceLibrary } = {},
+  {
+    storage = memoryStorage(),
+    document: doc = new Document(),
+    sound,
+    voiceLibrary,
+    captionReader = null,
+  } = {},
 ) {
   const time = clock(t),
     previous = getLocale();
@@ -67,6 +73,7 @@ function mounted(
     settingsContainer: settings,
     getStorage: () => storage,
     getReduced: () => true,
+    captionReader,
     sound: sound ?? {
       configureDialogue() {},
       playDialogue: (...args) => voices.push(args),
@@ -112,6 +119,202 @@ function mounted(
     },
   };
 }
+
+function readerFixture(t) {
+  const doc = new Document(),
+    root = doc.createElement('section'),
+    pause = doc.createElement('button');
+  pause.textContent = 'Pause';
+  pause.id = 'reader-native-pause';
+  pause.setAttribute('aria-describedby', 'original-help');
+  doc.body.append(root, pause);
+  let active = true,
+    fits = false,
+    measurements = 0,
+    configurations = 0;
+  const h = mounted(t, {
+    document: doc,
+    sound: {
+      configureDialogue() {
+        configurations++;
+      },
+    },
+    captionReader: {
+      root,
+      pauseButton: pause,
+      active: () => active,
+      fits: (panel) => {
+        measurements++;
+        assert.equal(panel.getAttribute('aria-hidden'), 'true');
+        assert.equal(panel.style.visibility, 'hidden');
+        return fits;
+      },
+    },
+  });
+  return {
+    ...h,
+    root,
+    pause,
+    reader: root.querySelector('[data-reaction-reader]'),
+    active: (value) => (active = value),
+    fits: (value) => (fits = value),
+    measurements: () => measurements,
+    configurations: () => configurations,
+  };
+}
+
+test('overflow reader retains one exact accepted message through expiry and Pause, without a second clock, voice or write', (t) => {
+  const h = readerFixture(t),
+    line = h.event(),
+    timers = h.callbacks.length;
+  assert.ok(line);
+  assert.equal(h.panel.hidden, true);
+  assert.equal(h.pause.dataset.captionReadLabel, 'Read');
+  assert.match(h.pause.getAttribute('aria-describedby'), /^original-help reaction-last-message-/);
+  const cueLabels = h.pause.getAttribute('aria-labelledby').split(' ');
+  assert.equal(
+    cueLabels[0],
+    h.pause.id,
+    'The current native Pause name stays in the accessible name.',
+  );
+  assert.equal(
+    h.doc.getElementById(cueLabels[1]).textContent,
+    'Read',
+    'The visible label occurs in the accessible name.',
+  );
+  const paragraph = h.reader.querySelector('p'),
+    text = paragraph.textContent;
+  assert.ok(text.includes(line.text));
+  assert.equal(h.reader.querySelector('h3').textContent, 'Last message');
+  assert.equal(h.reader.getAttribute('aria-live'), null);
+  const configurations = h.configurations();
+  h.pause.focus();
+  h.host.refreshCaptionLayout();
+  assert.ok(h.doc.activeElement === h.pause);
+  assert.equal(h.callbacks.length, timers);
+  assert.equal(
+    h.configurations(),
+    configurations,
+    'Layout does not reconfigure audio or prepare voice.',
+  );
+  h.host.suspend();
+  assert.equal(h.pause.dataset.captionReadLabel, undefined);
+  assert.equal(h.reader.hidden, false);
+  assert.ok(h.reader.querySelector('p') === paragraph);
+  assert.equal(paragraph.textContent, text);
+  h.host.resume();
+  h.advance(60000);
+  assert.equal(h.pause.dataset.captionReadLabel, undefined);
+  assert.equal(paragraph.textContent, text);
+  setLocale('uk', { persist: false });
+  assert.equal(h.reader.querySelector('h3').textContent, 'Останнє повідомлення');
+  assert.ok(paragraph.textContent.includes(reactionLine(line.id, 'uk').text));
+  setLocale('en', { persist: false });
+  assert.equal(paragraph.textContent, text);
+  assert.deepEqual(h.storage.writes, []);
+  assert.deepEqual(h.voices, []);
+  h.host.reset('next-run');
+  assert.equal(h.reader.hidden, true);
+  assert.equal(paragraph.textContent, '');
+  assert.equal(h.pause.getAttribute('aria-describedby'), 'original-help');
+});
+
+test('fit changes and returning Extra large reuse only the still-live line without changing its original expiry', (t) => {
+  const h = readerFixture(t),
+    line = h.event(),
+    timers = h.callbacks.length;
+  const duration = Math.max(3000, Math.ceil((line.text.split(/\s+/u).length / 2.5) * 1000));
+  h.fits(true);
+  h.host.refreshCaptionLayout();
+  assert.equal(h.panel.hidden, false);
+  assert.equal(h.pause.dataset.captionReadLabel, undefined);
+  h.active(false);
+  h.host.refreshCaptionLayout();
+  assert.equal(h.reader.hidden, true);
+  assert.equal(h.panel.hidden, false, 'Standard/Large keeps the current original caption.');
+  h.active(true);
+  h.fits(false);
+  h.host.refreshCaptionLayout();
+  assert.equal(h.reader.hidden, false);
+  assert.equal(h.pause.dataset.captionReadLabel, 'Read');
+  assert.equal(h.callbacks.length, timers);
+  h.advance(duration - 1);
+  assert.equal(h.pause.dataset.captionReadLabel, 'Read');
+  h.advance(1);
+  assert.equal(h.pause.dataset.captionReadLabel, undefined);
+  h.active(false);
+  h.host.refreshCaptionLayout();
+  h.active(true);
+  h.host.refreshCaptionLayout();
+  assert.equal(
+    h.reader.hidden,
+    true,
+    'Returning after expiry cannot revive cleared historical copy.',
+  );
+});
+
+test('the reading cue owns only its label/description tokens, preserving later native/foreign owners and locale copy', (t) => {
+  const h = readerFixture(t);
+  assert.ok(h.event());
+  const cue = h.pause.getAttribute('aria-labelledby').split(' ').at(-1),
+    hint = h.pause.getAttribute('aria-describedby').split(' ').at(-1);
+  h.pause.setAttribute('aria-labelledby', `later-native-label ${cue}`);
+  h.pause.setAttribute('aria-describedby', `later-help ${hint}`);
+  setLocale('uk', { persist: false });
+  assert.equal(h.pause.dataset.captionReadLabel, 'Читати');
+  assert.equal(h.doc.getElementById(cue).textContent, 'Читати');
+  assert.equal(h.pause.getAttribute('aria-labelledby'), `later-native-label ${cue}`);
+  assert.equal(h.pause.getAttribute('aria-describedby'), `later-help ${hint}`);
+  h.fits(true);
+  h.host.refreshCaptionLayout();
+  assert.equal(h.pause.getAttribute('aria-labelledby'), 'later-native-label');
+  assert.equal(h.pause.getAttribute('aria-describedby'), 'later-help');
+  h.fits(false);
+  h.host.refreshCaptionLayout();
+  h.host.dispose();
+  assert.equal(h.pause.getAttribute('aria-labelledby'), 'later-native-label');
+  assert.equal(h.pause.getAttribute('aria-describedby'), 'later-help');
+});
+
+test('disabled captions, disabled commentator, result and disposal retire the optional reader and native cue', (t) => {
+  const h = readerFixture(t);
+  assert.ok(h.event());
+  h.host.options.choose({ subtitles: false });
+  assert.equal(h.reader.hidden, true);
+  assert.equal(h.pause.dataset.captionReadLabel, undefined);
+  h.host.options.choose({ subtitles: true });
+  h.host.preferences.choose(false);
+  assert.equal(h.reader.hidden, true);
+  h.host.preferences.choose(true);
+  h.host.reset('reader-result');
+  assert.ok(
+    h.host.events([{ type: 'player.respawned', tick: 1 }], {
+      mode: 'solo',
+      attemptId: 'reader-result',
+    }),
+  );
+  assert.equal(h.host.result({ mode: 'solo', outcome: 'won', attemptId: 'reader-result' }), null);
+  assert.equal(h.reader.hidden, false, 'An unowned result cannot retire the accepted message.');
+  assert.ok(h.host.result({ owned: true, mode: 'solo', missionId: 'one', outcome: 'won' }));
+  assert.equal(h.reader.hidden, true);
+  assert.equal(h.pause.dataset.captionReadLabel, undefined);
+  h.host.dispose();
+  assert.equal(h.root.querySelector('[data-reaction-reader]'), null);
+  assert.equal(h.pause.getAttribute('aria-describedby'), 'original-help');
+});
+
+test('ordinary null-reader hosts do not gain a snapshot, cue, layout work or another timer', (t) => {
+  const h = mounted(t),
+    line = h.event(),
+    timers = h.callbacks.length;
+  assert.ok(line);
+  const text = h.panel.textContent;
+  h.host.refreshCaptionLayout();
+  assert.equal(h.panel.hidden, false);
+  assert.equal(h.panel.textContent, text);
+  assert.equal(h.callbacks.length, timers);
+  assert.equal(h.doc.querySelector('[data-reaction-reader]'), null);
+});
 
 test('legacy reaction choices load without a write and gain Standard timing only on explicit save', () => {
   const raw = JSON.stringify(legacy),
