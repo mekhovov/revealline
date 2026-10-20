@@ -519,6 +519,46 @@
           "args": ["--test", "scripts/test-compiled-menu-browser-consumer.mjs"]
         }
       ]
+    },
+    {
+      "id": "community-readiness-complete-contract",
+      "pathPatterns": ["^game/test/community-readiness(?:-host)?\\.test\\.mjs$"],
+      "commands": [
+        {
+          "id": "community-readiness-unit",
+          "command": "node",
+          "args": ["--test", "--test-concurrency=1", "game/test/community-readiness.test.mjs"],
+          "timeoutMs": 180000
+        },
+        {
+          "id": "community-readiness-host",
+          "command": "node",
+          "args": ["--test", "--test-concurrency=1", "game/test/community-readiness-host.test.mjs"],
+          "timeoutMs": 180000
+        },
+        {
+          "id": "community-readiness-store",
+          "command": "node",
+          "args": ["--test", "--test-concurrency=1", "game/test/community-store.test.mjs"],
+          "timeoutMs": 180000
+        },
+        {
+          "id": "community-readiness-moderation-client",
+          "command": "node",
+          "args": [
+            "--test",
+            "--test-concurrency=1",
+            "game/test/community-moderation-client.test.mjs"
+          ],
+          "timeoutMs": 180000
+        },
+        {
+          "id": "unknown-runtime-validate",
+          "command": "npm",
+          "args": ["run", "validate"],
+          "timeoutMs": 1800000
+        }
+      ]
     }
   ],
   "ignoredPathPatterns": ["^(docs/|.*\\.md$)", "^publishing/pages-controller/(evidence|metadata)/"],
