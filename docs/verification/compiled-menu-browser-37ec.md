@@ -297,3 +297,36 @@ acceptance, performance, or player/device qualification. If entry guards are
 clear, no asynchronous admission cause or production correction is inferred.
 At this authored checkpoint, new formatting/syntax/27-case checks and another
 hosted diagnostic run are unrun and require separate review.
+
+## Scalar first-open observation proposal
+
+The exact b876 hosted source workflow passed the complete 27-case cheap file.
+Its browser observation failed earlier, during visible Missions: the eighth
+read took 10,004.127 ms and the unchanged ten-second read owner expired. Only
+ordinary access and English Home completed. The resume-entry probe was not
+reached and returned no internal guard. All six failure-path postchecks passed.
+
+The existing read collected every mission card and computed each card's public
+visibility even when the caller needed only the chooser's open/visible facts.
+This successor uses a scalar-only profile solely for the visible-Missions wait.
+It leaves the same native click, chooser predicate, ten-second operation cap,
+sixty-second phase window, 570-second flow budget and fatal timeout semantics
+unchanged. It adds no delay, retry, discarded timeout or alternate control.
+
+The current/retained membership, restored-current and exact-selection phases
+still use the original full ordered card scan, visible/enabled facts and
+1,024-card safety cap. No identity, count, locale, focus or launch assertion is
+removed. The self-contained public reader moves to the existing cheap contract
+module so two additive DOM-only controls can prove no card access in the scalar
+profile and complete membership/cap behavior in the default profile; no
+observer, server, application or compiler is imported by those controls.
+
+The same historical package and Chromium binary passed the English browse and
+exact briefing stages in earlier 9ae/9b12/f822 observations. This establishes
+that the early failure is not universal. It does not establish card layout as
+the cause of the b876 timeout: a queued evaluation can also be delayed by the
+renderer. Avoiding unnecessary traversal cannot guarantee renderer progress.
+There is no production fix or browser acceptance claim. The earlier failures
+and all original diagnostic warning criteria remain authoritative. At this
+authored checkpoint, the new source checks, complete 29-case file and any new
+browser observation remain unrun.

@@ -29,6 +29,7 @@ import {
   validateCompiledResumeScript,
   createCompiledResumePauseOwner,
   prepareCompiledResumeEntryProbe,
+  readCompiledMenuPublicState,
 } from './compiled-menu-browser-contract.mjs';
 const owner = () => ({
   status: 'closed',
@@ -1359,5 +1360,116 @@ test('bounded resume protocol timeout and failed cleanup retain only primitive r
       return encodePagesReport(value, secret);
     }),
     encodePagesReport(ordinary, secret),
+  );
+});
+
+function scalarReadFixture({ cards = [], open = true, forbidCardQuery = false } = {}) {
+  let queries = 0;
+  const element = (id, { hidden = false, disabled = false } = {}) => ({
+    id,
+    hidden,
+    disabled,
+    open: id === 'journey-chooser' ? open : false,
+    textContent: id,
+    dataset: {},
+    closest: () => null,
+    getClientRects: () => (hidden ? [] : [{}]),
+  });
+  const controls = new Map();
+  for (const id of [
+    'shell-home',
+    'shell-play',
+    'shell-options',
+    'journey-chooser',
+    'journey-back',
+    'start-button',
+    'pause-button',
+    'shell-menu',
+    'settings-dialog',
+    'mission-replace-dialog',
+    'mode-leave-dialog',
+    'flight-preparation-status',
+    'run-message',
+    'time',
+    'lives',
+    'coverage',
+  ])
+    controls.set(id, element(id));
+  const nodes = cards.map(({ id, hidden = false, disabled = false }) => ({
+    ...element(id, { hidden, disabled }),
+    dataset: { missionId: id },
+  }));
+  const scope = {
+    document: {
+      hidden: false,
+      hasFocus: () => true,
+      activeElement: { id: 'shell-play' },
+      documentElement: { lang: 'en', dataset: { bootState: 'ready', accessState: 'unlocked' } },
+      body: { dataset: { flightState: 'briefing' } },
+      getElementById: (id) => controls.get(id) ?? null,
+      querySelectorAll: (selector) => {
+        assert.equal(selector, '#journey-cards .journey-card');
+        queries += 1;
+        if (forbidCardQuery) throw new Error('Scalar observation must not inspect cards');
+        return nodes;
+      },
+    },
+    location: { href: 'http://127.0.0.1:1234/game/' },
+    getComputedStyle: () => ({ display: 'block', visibility: 'visible' }),
+  };
+  return { scope, queries: () => queries };
+}
+
+test('visible Missions scalar read never accesses cards and preserves every original scalar and chooser fact', () => {
+  const scalar = scalarReadFixture({ forbidCardQuery: true, open: true });
+  const sampled = readCompiledMenuPublicState({ includeCards: false }, scalar.scope);
+  assert.equal(scalar.queries(), 0);
+  assert.deepEqual(sampled.cards, []);
+  assert.equal(sampled.controls['journey-chooser'].open, true);
+  assert.equal(sampled.controls['journey-chooser'].visible, true);
+  assert.equal(sampled.focusedId, 'shell-play');
+  const complete = scalarReadFixture({ cards: [{ id: CURRENT_ID }], open: true });
+  const full = readCompiledMenuPublicState({}, complete.scope);
+  const { cards, ...fullScalars } = full;
+  const { cards: omitted, ...sampledScalars } = sampled;
+  assert.equal(cards.length, 1);
+  assert.deepEqual(omitted, []);
+  assert.deepEqual(sampledScalars, fullScalars);
+  const closed = scalarReadFixture({ forbidCardQuery: true, open: false });
+  const notReady = readCompiledMenuPublicState({ includeCards: false }, closed.scope);
+  assert.equal(notReady.controls['journey-chooser'].open, false);
+  assert.equal(closed.queries(), 0);
+});
+
+test('mandatory membership reads retain full ordered identity visibility enabled facts and the original1024 cap', () => {
+  const ids = [CURRENT_ID, ...RETAINED_IDS];
+  const f = scalarReadFixture({
+    cards: ids.map((id, i) => ({ id, hidden: i === 1, disabled: i === 2 })),
+  });
+  const full = readCompiledMenuPublicState({}, f.scope);
+  assert.deepEqual(
+    full.cards,
+    ids.map((id, i) => ({ id, visible: i !== 1, enabled: i !== 2 })),
+  );
+  assert.equal(f.queries(), 1);
+  // Only the literal false profile omits cards; absent or malformed flags scan fully.
+  assert.deepEqual(
+    readCompiledMenuPublicState({ includeCards: 'false' }, f.scope).cards,
+    full.cards,
+  );
+  const edge = scalarReadFixture({
+    cards: Array.from({ length: 1024 }, (_, i) => ({ id: String(i) })),
+  });
+  assert.equal(readCompiledMenuPublicState({}, edge.scope).cards.length, 1024);
+  const overflow = scalarReadFixture({
+    cards: Array.from({ length: 1025 }, (_, i) => ({ id: String(i) })),
+  });
+  assert.throws(
+    () => readCompiledMenuPublicState({}, overflow.scope),
+    /Public card evidence limit/,
+  );
+  assert.throws(
+    () => readCompiledMenuPublicState({ includeCards: true }, overflow.scope),
+    /Public card evidence limit/,
   );
 });
