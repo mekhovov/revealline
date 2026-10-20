@@ -6,6 +6,7 @@ export const POLICY_FILES = [
   '.github/workflows/deploy-pages.yml',
   'publishing/admission-binding.mjs',
   'publishing/admission-preflight.mjs',
+  'publishing/admission-paths.mjs',
   'publishing/focused-tests.mjs',
   'publishing/focused-shard-plan.mjs',
   'publishing/focused-git-inputs.mjs',

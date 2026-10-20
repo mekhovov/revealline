@@ -8,6 +8,47 @@ import { GLOBAL_SETTINGS } from '../ui/global-settings-view.mjs';
 import { getLocale, setLocale } from '../i18n/index.mjs';
 import { Document, Events } from './helpers/couch-dom.mjs';
 import { activateMissionCard } from './helpers/library-selection.mjs';
+import { waitFor } from './helpers/wait-for.mjs';
+
+for (const locale of ['en', 'uk'])
+  for (const kind of ['overall', 'cancelled', 'unknown'])
+    test(`Gym offline feedback ${locale} ${kind} uses safe localized reasons`, async (t) => {
+      const previous = getLocale();
+      t.after(() => setLocale(previous));
+      const f = await fixture(t, { search: `?lang=${locale}` });
+      const error =
+        kind === 'cancelled'
+          ? new DOMException('secret', 'AbortError')
+          : new Error(
+              kind === 'overall'
+                ? 'Download exceeded five minutes. Retry on a faster connection.'
+                : 'secret backend detail',
+            );
+      f.win.navigator.serviceWorker = {
+        getRegistration: async () => undefined,
+        register: async () => {
+          throw error;
+        },
+      };
+      f.doc.getElementById('offline').click();
+      await waitFor(() => f.doc.getElementById('package-status').textContent.length > 0);
+      const text = f.doc.getElementById('package-status').textContent;
+      assert.doesNotMatch(text, /secret/);
+      assert.match(
+        text,
+        kind === 'overall'
+          ? locale === 'uk'
+            ? /п’ять хвилин/
+            : /five minutes/
+          : kind === 'cancelled'
+            ? locale === 'uk'
+              ? /скасовано/
+              : /cancelled/
+            : locale === 'uk'
+              ? /Не вдалося/
+              : /failed/,
+      );
+    });
 
 async function fixture(t, { storage, search = '', previews = [] } = {}) {
   const doc = new Document(),

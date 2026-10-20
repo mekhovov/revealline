@@ -122,6 +122,7 @@ import {
 import { importEditableZip } from './world-zip.mjs';
 import { openWorldStore } from './world-store.mjs';
 import { mountPracticeOfflineControls } from './offline.mjs';
+import { optionalOfflineFailureCode, optionalOfflineFailureMessage } from '../install-context.mjs';
 import {
   mountWorldLibrary,
   worldImportErrorCopy,
@@ -1845,8 +1846,8 @@ export function mountWorldApp({
       ],
       cancelled: ['Offline download cancelled.', 'Автономне завантаження скасовано.'],
       error: [
-        'Offline preparation failed. Keep this tab open and try again with a packaged simulator.',
-        'Не вдалося підготувати автономний запуск. Залиште цю вкладку відкритою та повторіть спробу в пакунку симулятора.',
+        'Offline preparation failed. Check your connection and browser storage, then retry.',
+        'Не вдалося підготувати офлайн. Перевірте з’єднання та сховище браузера й повторіть спробу.',
       ],
       removeFailed: [
         'Could not remove offline simulator files. Please try again.',
@@ -1859,9 +1860,15 @@ export function mountWorldApp({
     };
     const text = !runtimeOfflineFeedback
       ? ''
-      : messages[runtimeOfflineFeedback.kind]
-        ? txt(...messages[runtimeOfflineFeedback.kind])
-        : txt(...messages.error);
+      : runtimeOfflineFeedback.failureCode
+        ? optionalOfflineFailureMessage(
+            { offlineCode: runtimeOfflineFeedback.failureCode },
+            locale,
+            runtimeOfflineFeedback.operation,
+          )
+        : messages[runtimeOfflineFeedback.kind]
+          ? txt(...messages[runtimeOfflineFeedback.kind])
+          : txt(...messages.error);
     // Both panels report the same completed operation; button presence is not readiness evidence.
     for (const id of ['runtime-offline-status', 'settings-runtime-offline-status']) {
       const node = $(id);
@@ -8103,10 +8110,18 @@ export function mountWorldApp({
     window: win,
     storage,
     packageId: 'fpv-worlds',
-    onStatus(kind) {
+    onStatus(kind, error) {
       if (disposed) return;
       const failure = runtimeOfflineFeedback?.kind === 'removing' ? 'removeFailed' : 'error';
-      runtimeOfflineFeedback = { kind: kind === 'error' ? failure : kind };
+      runtimeOfflineFeedback = {
+        kind: kind === 'error' ? failure : kind,
+        ...(['error', 'cancelled'].includes(kind)
+          ? {
+              failureCode: kind === 'cancelled' ? 'cancelled' : optionalOfflineFailureCode(error),
+              operation: runtimeOfflineFeedback?.kind === 'removing' ? 'remove' : 'prepare',
+            }
+          : {}),
+      };
       paintRuntimeOfflineStatus();
     },
   });

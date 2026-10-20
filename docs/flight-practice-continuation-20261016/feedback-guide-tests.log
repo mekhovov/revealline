@@ -1,0 +1,30 @@
+TAP version 13
+# Subtest: repository and shipped guides name the current rendered radio setup control in both locales
+ok 1 - repository and shipped guides name the current rendered radio setup control in both locales
+  ---
+  duration_ms: 10.325542
+  ...
+# Subtest: repository and shipped guides document the reachable maintained Detailed HUD in both locales
+ok 2 - repository and shipped guides document the reachable maintained Detailed HUD in both locales
+  ---
+  duration_ms: 3.199583
+  ...
+# Subtest: both guide formats distinguish incomplete verification from confirmed repair
+ok 3 - both guide formats distinguish incomplete verification from confirmed repair
+  ---
+  duration_ms: 4.480083
+  ...
+# Subtest: both guide formats explain deadline/cancel recovery without inventing a storage cause
+ok 4 - both guide formats explain deadline/cancel recovery without inventing a storage cause
+  ---
+  duration_ms: 2.965708
+  ...
+1..4
+# tests 4
+# suites 0
+# pass 4
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 69.055208
