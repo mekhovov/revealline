@@ -25,6 +25,7 @@ export function mountRadioGuide({
   loadProfile,
   invalidate,
   autoSaveProfile,
+  previewControl = () => null,
   stopCaptures,
   externalCaptureActive = () => false,
   skipLegacySwitches = () => false,
@@ -164,15 +165,29 @@ export function mountRadioGuide({
   );
   const monitor = el('section', undefined, workspace, 'radio-monitor');
   el('h3', t('Live sticks', 'Стіки наживо'), monitor);
-  el(
+  const monitorCaption = el(
     'p',
     t('These dots should follow your hands.', 'Ці точки мають повторювати рухи ваших рук.'),
     monitor,
     'radio-monitor-caption',
   );
   monitor.append(sticks);
-  const targets = [...sticks.children].map((node) =>
-    el('b', undefined, node, 'radio-stick-target'),
+  const stickGuides = [...sticks.children].map((node) => {
+    const target = el('b', undefined, node, 'radio-stick-target'),
+      ghost = el('em', undefined, node, 'radio-stick-ghost'),
+      trail = el('small', undefined, node, 'radio-stick-trail'),
+      circuit = el('div', undefined, node, 'radio-stick-circuit');
+    for (const item of [target, ghost, trail, circuit]) item.setAttribute('aria-hidden', 'true');
+    return { node, target, ghost, trail, circuit };
+  });
+  const legend = el(
+    'p',
+    t(
+      '● Your stick · ◯ Required position · Moving outline: follow this path',
+      '● Ваш стік · ◯ Потрібне положення · Рухомий контур: повторіть рух',
+    ),
+    monitor,
+    'radio-stick-legend',
   );
   const meters = el('div', undefined, monitor, 'radio-values');
   const values = Object.fromEntries(
@@ -218,13 +233,12 @@ export function mountRadioGuide({
     baseline = null,
     identity = null,
     assignments = [],
-    positive = null,
+    sweep = null,
     prior = null,
     interrupted = false,
     dwell = null,
     lastSample = null,
     confirmationStage = 'rest',
-    returnFor = null,
     automaticAdvance = false;
   function raw() {
     const pad = runtime.raw();
@@ -245,7 +259,7 @@ export function mountRadioGuide({
     return pad;
   }
   function isMapping() {
-    return ['prepare', 'positive', 'return', 'negative', 'centre'].includes(phase);
+    return ['prepare', 'positive', 'sweep', 'centre'].includes(phase);
   }
   function isAction() {
     return phase === 'arm' || phase === 'reset';
@@ -322,7 +336,7 @@ export function mountRadioGuide({
       identity = radioDeviceKey(pad);
       index = 0;
       assignments = [];
-      positive = null;
+      sweep = null;
       interrupted = false;
       clearConfirmation();
       lastSample = null;
@@ -358,15 +372,16 @@ export function mountRadioGuide({
     focusStep();
   }
   function goBack() {
+    if (interrupted || !runtime.raw()) return;
     clearConfirmation();
-    if (phase === 'negative' || (phase === 'return' && returnFor === 'negative')) {
-      phase = 'positive';
-      positive = null;
-    } else {
-      if (!(phase === 'return' && returnFor === 'next')) index = Math.max(0, index - 1);
-      assignments = assignments.slice(0, index);
-      phase = 'prepare';
-    }
+    sweep = null;
+    if (phase === 'centre' || phase === 'sweep') index = Math.min(3, index - 1);
+    else index = Math.max(0, index - 1);
+    assignments = assignments.slice(0, index);
+    for (const key of order.slice(index))
+      for (const field of ['axis', 'min', 'max', 'center']) rows[key][field].value = '';
+    baseline = [...raw().axes];
+    phase = index === 0 ? 'prepare' : 'positive';
     status.textContent = '';
     focusStep();
   }
@@ -420,47 +435,40 @@ export function mountRadioGuide({
               'Рухайте лише виділений стік у вказаному напрямку до краю та утримуйте його.',
             ),
           );
-        positive = { axis: ranges[0].axis, value: pad.axes[ranges[0].axis] };
-        returnFor = 'negative';
-        phase = 'return';
-      } else if (phase === 'return') {
-        if (!atRest(pad))
-          throw new Error(
-            t(
-              'Return the highlighted stick to its starting rest position.',
-              'Поверніть виділений стік у початкове положення спокою.',
-            ),
-          );
-        if (returnFor === 'negative') phase = 'negative';
-        else {
-          index++;
-          positive = null;
-          baseline = [...pad.axes];
-          phase = index === order.length ? 'centre' : 'positive';
+        const axis = ranges[0].axis,
+          row = rows[order[index]];
+        row.axis.value = String(axis);
+        row.invert.checked = pad.axes[axis] < baseline[axis];
+        assignments[index++] = axis;
+        baseline = [...pad.axes];
+        phase = index === order.length ? 'sweep' : 'positive';
+        if (phase === 'sweep') {
+          sweep = {
+            min: [...pad.axes],
+            max: [...pad.axes],
+            started: win.performance.now(),
+            lastEnd: pad.axes.map(() => null),
+            turns: pad.axes.map(() => 0),
+            returnFrom: null,
+          };
+          status.textContent = '';
         }
-      } else if (phase === 'negative') {
-        const end = pad.axes[positive.axis];
-        if (
-          Math.abs(end - positive.value) < minimumSpan ||
-          !otherAxesStill(pad, positive.axis) ||
-          (order[index] !== 'throttle' &&
-            (end - baseline[positive.axis]) * (positive.value - baseline[positive.axis]) >= 0)
-        )
+      } else if (phase === 'sweep') {
+        if (!rangeReady() || !rangeCentred(pad))
           throw new Error(
             t(
-              'Move the same stick all the way to the opposite edge before continuing.',
-              'Перемістіть той самий стік до протилежного краю, перш ніж продовжити.',
+              'Move both sticks around their full outer edge, then put both in the middle.',
+              'Обведіть обома стіками весь зовнішній край, потім поверніть обидва посередині.',
             ),
           );
-        const row = rows[order[index]];
-        row.axis.value = String(positive.axis);
-        row.min.value = String(Math.min(end, positive.value));
-        row.max.value = String(Math.max(end, positive.value));
-        row.center.value = String((end + positive.value) / 2);
-        row.invert.checked = positive.value < end;
-        assignments[index] = positive.axis;
-        returnFor = 'next';
-        phase = 'return';
+        for (const key of order) {
+          const row = rows[key],
+            axis = Number(row.axis.value);
+          row.min.value = String(sweep.min[axis]);
+          row.max.value = String(sweep.max[axis]);
+          row.center.value = String(pad.axes[axis]);
+        }
+        phase = 'centre';
       } else if (phase === 'centre') {
         for (const key of order) {
           const row = rows[key],
@@ -544,16 +552,65 @@ export function mountRadioGuide({
       )
     );
   }
-  function atRest(pad) {
+  function sample(pad) {
+    if (
+      phase !== 'sweep' ||
+      !sweep ||
+      !pad ||
+      interrupted ||
+      doc.hidden ||
+      (doc.hasFocus && !doc.hasFocus()) ||
+      radioDeviceKey(pad) !== identity
+    )
+      return;
+    for (const axis of assignments) {
+      sweep.min[axis] = Math.min(sweep.min[axis], pad.axes[axis]);
+      sweep.max[axis] = Math.max(sweep.max[axis], pad.axes[axis]);
+      const span = sweep.max[axis] - sweep.min[axis];
+      if (span < minimumSpan) continue;
+      const end =
+        pad.axes[axis] <= sweep.min[axis] + span * 0.1
+          ? 'low'
+          : pad.axes[axis] >= sweep.max[axis] - span * 0.1
+            ? 'high'
+            : null;
+      if (end && end !== sweep.lastEnd[axis]) {
+        if (sweep.lastEnd[axis] !== null) sweep.turns[axis]++;
+        sweep.lastEnd[axis] = end;
+      }
+    }
+  }
+  function axisReady(axis) {
+    return sweep && sweep.max[axis] - sweep.min[axis] >= minimumSpan && sweep.turns[axis] >= 3;
+  }
+  function rangeReady() {
     return (
-      baseline &&
-      pad.axes.length === baseline.length &&
-      pad.axes.every(
-        (value, i) =>
-          (assignments.includes(i) && i !== positive?.axis) ||
-          Math.abs(value - baseline[i]) <= 0.12,
-      )
+      sweep &&
+      win.performance.now() - sweep.started >= 2500 &&
+      assignments.length === order.length &&
+      assignments.every(axisReady)
     );
+  }
+  function rangeCentred(pad) {
+    return (
+      rangeReady() &&
+      assignments.every((axis) => {
+        const min = sweep.min[axis],
+          max = sweep.max[axis],
+          span = max - min;
+        return (
+          pad.axes[axis] >= min + Math.max(0.1, span * 0.25) &&
+          pad.axes[axis] <= max - Math.max(0.1, span * 0.25)
+        );
+      })
+    );
+  }
+  function previousInput(pad) {
+    try {
+      return prior?.runtime.verified && prior.form ? normalizeRadioInput(prior.form, pad) : null;
+    } catch {
+      return null;
+    }
   }
   function positiveCandidate(pad) {
     if (!baseline || pad.axes.length !== baseline.length) return null;
@@ -568,6 +625,124 @@ export function mountRadioGuide({
       otherAxesStill(pad, first.axis)
       ? first
       : null;
+  }
+  // Provisional movement is display-only until both endpoints are measured.
+  // It never nominates a channel for calibration, arms or saves a profile.
+  function preview(pad) {
+    if (!isMapping() || !pad || interrupted) return null;
+    const previous = previousInput(pad),
+      measured = Object.fromEntries(order.map((key) => [key, previewControl(key, pad)])),
+      result = Object.fromEntries(
+        order.map((key) => [key, measured[key] ?? previous?.[key] ?? null]),
+      );
+    for (const key of order) {
+      const row = rows[key];
+      if (measured[key] !== null || row.axis.value === '') continue;
+      const axis = Number(row.axis.value),
+        priorChannel = prior?.runtime.verified ? prior.form?.channels[key] : null,
+        span = sweep ? sweep.max[axis] - sweep.min[axis] : 0;
+      if (priorChannel?.axis === axis && priorChannel.invert === row.invert.checked && previous)
+        continue;
+      let value =
+        span >= minimumSpan ? (2 * (pad.axes[axis] - sweep.min[axis])) / span - 1 : pad.axes[axis];
+      value = Math.max(-1, Math.min(1, value)) * (row.invert.checked ? -1 : 1);
+      result[key] = key === 'throttle' ? (value + 1) / 2 : value;
+    }
+    if (phase !== 'positive' || !baseline) return result;
+    const ranked = pad.axes
+      .map((value, axis) => ({ axis, delta: value - baseline[axis] }))
+      .filter(({ axis }) => !assignments.includes(axis))
+      .sort((a, b) => Math.abs(b.delta) - Math.abs(a.delta));
+    const candidate = ranked[0];
+    if (
+      candidate &&
+      Math.abs(candidate.delta) >= 0.04 &&
+      Math.abs(candidate.delta) >= Math.abs(ranked[1]?.delta ?? 0) * 1.8
+    ) {
+      const priorChannel = prior?.runtime.verified ? prior.form?.channels[order[index]] : null;
+      if (
+        previous &&
+        priorChannel?.axis === candidate.axis &&
+        priorChannel.invert === candidate.delta < 0
+      )
+        return result;
+      const value = Math.max(
+        -1,
+        Math.min(1, pad.axes[candidate.axis] * Math.sign(candidate.delta)),
+      );
+      result[order[index]] = order[index] === 'throttle' ? (value + 1) / 2 : value;
+    }
+    return result;
+  }
+  function paintGuides(mapping, pad) {
+    const layout = STICK_LAYOUTS[Number(mode.value)],
+      from = [
+        [0, 0],
+        [0, 0],
+      ],
+      to = [
+        [0, 0],
+        [0, 0],
+      ];
+    let activeSide = null;
+    if (phase === 'sweep' && rangeReady()) {
+      const live = preview(pad);
+      sweep.returnFrom ??= [0, 1].map((side) => {
+        const x = live?.[layout[side * 2]] ?? 0,
+          vertical = layout[side * 2 + 1],
+          value = live?.[vertical] ?? 0;
+        return [x, vertical === 'throttle' ? value * 2 - 1 : value];
+      });
+      from.splice(0, 2, ...sweep.returnFrom);
+    } else if (phase === 'positive') {
+      const position = layout.indexOf(order[index]),
+        side = Math.floor(position / 2),
+        component = position % 2,
+        sign = 1;
+      activeSide = side;
+      to[side][component] = sign;
+    } else if (phase === 'centre' && throttle.value === 'full-travel') {
+      const position = layout.indexOf('throttle');
+      activeSide = Math.floor(position / 2);
+      to[activeSide][position % 2] = -1;
+    }
+    for (const [side, { node, target, ghost, trail, circuit }] of stickGuides.entries()) {
+      const visible = mapping && !interrupted,
+        radius = (node.clientWidth || 112) * 0.34,
+        x0 = from[side][0] * radius,
+        y0 = -from[side][1] * radius,
+        x1 = to[side][0] * radius,
+        y1 = -to[side][1] * radius,
+        distance = Math.hypot(x1 - x0, y1 - y0);
+      const circling = visible && phase === 'sweep' && !rangeReady();
+      node.classList.toggle('is-sweeping', circling);
+      node.style.setProperty('--guide-radius', `${radius}px`);
+      circuit.hidden = !circling;
+      target.hidden = !visible || circling;
+      ghost.hidden = !visible || (!circling && distance === 0);
+      trail.hidden = !visible || distance === 0;
+      node.classList.toggle('is-guided', visible && (activeSide === null || activeSide === side));
+      target.style.left = `${50 + to[side][0] * 34}%`;
+      target.style.top = `${50 - to[side][1] * 34}%`;
+      ghost.style.setProperty('--guide-from-x', `${x0}px`);
+      ghost.style.setProperty('--guide-from-y', `${y0}px`);
+      ghost.style.setProperty('--guide-to-x', `${x1}px`);
+      ghost.style.setProperty('--guide-to-y', `${y1}px`);
+      trail.style.left = `${50 + from[side][0] * 34}%`;
+      trail.style.top = `${50 - from[side][1] * 34}%`;
+      trail.style.width = `${distance}px`;
+      trail.style.transform = `rotate(${Math.atan2(y1 - y0, x1 - x0)}rad)`;
+    }
+    legend.hidden = !mapping;
+    setText(
+      monitorCaption,
+      mapping
+        ? t(
+            'Solid dots are live input. Follow the moving outlines. A new radio uses raw preview until the full-range sweep is complete.',
+            'Суцільні точки — живий ввід. Повторюйте рух контурів. Новий пульт показує необроблений ввід до вимірювання повного діапазону.',
+          )
+        : t('These dots should follow your hands.', 'Ці точки мають повторювати рухи ваших рук.'),
+    );
   }
   function held(pad, key, condition, now, duration = 650, observedAxes = null) {
     if (!condition) {
@@ -678,33 +853,28 @@ export function mountRadioGuide({
         if ((capture?.state ?? capture) === 'done') finishAction();
         else if (confirmationGesture(pad, validProfile(pad), now)) finishAction(true);
       } else if (phase === 'prepare') {
-        if (held(pad, 'prepare', true, now, 850)) advance();
+        // An unknown radio cannot prove its midpoint before measuring travel.
+        // Ready explicitly begins it; a verified profile can prove centre live.
+        const previous = previousInput(pad);
+        if (
+          held(
+            pad,
+            'prepare',
+            !!previous &&
+              Math.abs(previous.throttle - 0.5) < 0.08 &&
+              ['yaw', 'pitch', 'roll'].every((key) => Math.abs(previous[key]) < 0.1),
+            now,
+            850,
+          )
+        )
+          advance();
       } else if (phase === 'positive') {
         const candidate = positiveCandidate(pad);
         if (held(pad, 'positive:' + candidate?.axis, !!candidate, now, 650, [candidate?.axis]))
           advance();
-      } else if (phase === 'return') {
-        const observed = pad.axes
-          .map((_, axis) => axis)
-          .filter((axis) => !assignments.includes(axis) || axis === positive?.axis);
-        if (held(pad, 'return:' + returnFor, atRest(pad), now, 650, observed)) advance();
-      } else if (phase === 'negative') {
-        const end = pad.axes[positive.axis],
-          delta = end - positive.value;
-        const opposite =
-          order[index] === 'throttle' ||
-          (end - baseline[positive.axis]) * (positive.value - baseline[positive.axis]) < 0;
-        if (
-          held(
-            pad,
-            'negative',
-            Math.abs(delta) >= minimumSpan && opposite && otherAxesStill(pad, positive.axis),
-            now,
-            650,
-            [positive.axis],
-          )
-        )
-          advance();
+      } else if (phase === 'sweep') {
+        sample(pad);
+        if (held(pad, 'sweep-centre', rangeCentred(pad), now, 900, assignments)) advance();
       } else if (phase === 'centre') {
         const ready = order.every((key) => {
           const row = rows[key],
@@ -759,28 +929,37 @@ export function mountRadioGuide({
     automaticHint.hidden = holdProgress.hidden;
     setText(
       automaticHint,
-      mapping
+      phase === 'prepare'
         ? t(
-            'Hold each position steadily; the next step starts automatically. Buttons remain available.',
-            'Утримуйте кожне положення: наступний крок почнеться автоматично. Кнопки також доступні.',
+            'Centre both sticks, then choose Ready. A previously calibrated radio can continue automatically.',
+            'Центруйте обидва стіки й натисніть «Готово». Раніше відкалібрований пульт може продовжити автоматично.',
           )
-        : confirmationStage === 'release'
-          ? t(
-              'Now return yaw to centre to confirm.',
-              'Тепер поверніть рискання в центр для підтвердження.',
-            )
-          : actionMapping
+        : phase === 'sweep'
+          ? order
+              .map((key) => `${names[key]} ${axisReady(Number(rows[key].axis.value)) ? '✓' : '…'}`)
+              .join(' · ')
+          : mapping
             ? t(
-                'To keep the current binding instead: rest sticks, hold yaw right for 1 second, then centre.',
-                'Щоб залишити поточне призначення: стіки у спокій, рискання праворуч на 1 секунду, потім у центр.',
+                'Hold the shown direction; the next instruction starts automatically.',
+                'Утримуйте вказаний напрямок: наступна підказка почнеться автоматично.',
               )
-            : t(
-                'Complete assignments save automatically. Close setup whenever you are ready.',
-                'Завершені призначення зберігаються автоматично. Закрийте налаштування, коли будете готові.',
-              ),
+            : confirmationStage === 'release'
+              ? t(
+                  'Now return yaw to centre to confirm.',
+                  'Тепер поверніть рискання в центр для підтвердження.',
+                )
+              : actionMapping
+                ? t(
+                    'To keep the current binding instead: rest sticks, hold yaw right for 1 second, then centre.',
+                    'Щоб залишити поточне призначення: стіки у спокій, рискання праворуч на 1 секунду, потім у центр.',
+                  )
+                : t(
+                    'Complete assignments save automatically. Close setup whenever you are ready.',
+                    'Завершені призначення зберігаються автоматично. Закрийте налаштування, коли будете готові.',
+                  ),
     );
     returnHint.hidden = mapping || actionMapping;
-    back.hidden = !['positive', 'return', 'negative', 'centre'].includes(phase);
+    back.hidden = !['positive', 'sweep', 'centre'].includes(phase);
     cancel.hidden = !mapping && !actionMapping;
     recalibrate.hidden =
       !['check', 'connect', 'manual'].includes(phase) || !pad || (phase === 'connect' && !input);
@@ -789,9 +968,12 @@ export function mountRadioGuide({
     primary.disabled =
       !pad ||
       interrupted ||
+      (phase === 'sweep' && !rangeCentred(pad)) ||
       (phase === 'manual' && (!input || externalCaptureActive())) ||
       (phase === 'check' && (!input || externalCaptureActive()));
-    for (const key of order) setText(values[key], input ? `${Math.round(input[key] * 100)}%` : '—');
+    const displayed = mapping ? preview(pad) : input;
+    for (const key of order)
+      setText(values[key], displayed?.[key] == null ? '—' : `${Math.round(displayed[key] * 100)}%`);
     setText(
       armHint,
       switchRows.arm.button.value === ''
@@ -804,7 +986,6 @@ export function mountRadioGuide({
             'Перемикач призначено. ВИМК → УВІМК для початку або продовження.',
           ),
     );
-    for (const target of targets) target.hidden = true;
     if (phase === 'manual') {
       setText(progress, t('02 / MANUAL SETUP', '02 / РУЧНЕ НАЛАШТУВАННЯ'));
       setText(title, t('Assign your stick channels.', 'Призначте канали стіків.'));
@@ -863,28 +1044,50 @@ export function mountRadioGuide({
         progress,
         `${t('02 / CALIBRATE', '02 / КАЛІБРУВАННЯ')} · ${Math.min(index + 1, 4)} / 4`,
       );
-      if (phase === 'prepare' || phase === 'centre' || phase === 'return') {
-        setText(title, t('Rest your sticks.', 'Поверніть стіки у вихідне положення.'));
+      if (phase === 'sweep') {
+        setText(progress, t('02 / MEASURE FULL TRAVEL', '02 / ВИМІРЯТИ ПОВНИЙ ДІАПАЗОН'));
+        setText(
+          title,
+          rangeReady()
+            ? t('Now centre both sticks.', 'Тепер центруйте обидва стіки.')
+            : t('Circle both sticks around the edge.', 'Обведіть обидва стіки по краю.'),
+        );
         setText(
           instruction,
-          throttle.value === 'full-travel'
+          t(
+            'Make two slow circles around each stick’s outer edge, reaching full up, down, left and right. Then put both sticks in the middle. Each check mark means that channel has enough measured travel.',
+            'Зробіть по два повільних кола вздовж зовнішнього краю кожного стіка: повністю вгору, вниз, ліворуч і праворуч. Потім поверніть обидва посередині. Позначка означає достатній виміряний діапазон каналу.',
+          ),
+        );
+        setText(primary, t('Continue', 'Далі'));
+      } else if (phase === 'prepare' || phase === 'centre') {
+        const finalLow = phase === 'centre' && throttle.value === 'full-travel';
+        setText(
+          title,
+          finalLow
+            ? t('Final check · throttle down.', 'Остання перевірка · газ униз.')
+            : t('Centre both sticks.', 'Центруйте обидва стіки.'),
+        );
+        setText(
+          instruction,
+          finalLow
             ? t(
-                'Lower throttle all the way. Centre the other controls and leave switches OFF.',
-                'Повністю опустіть газ. Центруйте інші осі й залиште перемикачі вимкненими.',
+                'Lower throttle fully to the bottom ring. Keep yaw, pitch and roll centred. This is the final check before returning to flight.',
+                'Повністю опустіть газ до нижнього кільця. Рискання, тангаж і крен тримайте в центрі. Це остання перевірка перед поверненням до польоту.',
               )
             : t(
-                'Release both sticks so they spring to centre. Centred gamepad throttle means 50% power.',
-                'Відпустіть обидва стіки, щоб вони повернулися в центр. Центр газу геймпада означає 50% потужності.',
+                'Put both sticks in the middle and keep switches OFF. Choose Ready to start direction assignment. We will measure the full range with circles afterwards.',
+                'Установіть обидва стіки посередині й вимкніть перемикачі. Натисніть «Готово» для призначення напрямків. Після цього виміряємо повний діапазон коловими рухами.',
               ),
         );
         setText(
           primary,
-          phase === 'centre' ? t('Continue to switches', 'До перемикачів') : t('Ready', 'Готово'),
+          phase === 'centre' ? t('Finish setup', 'Завершити') : t('Ready', 'Готово'),
         );
       } else {
         const key = order[index],
           position = STICK_LAYOUTS[Number(mode.value)].indexOf(key);
-        const positiveDirection = phase === 'positive';
+        const positiveDirection = true;
         const side = position < 2 ? t('left stick', 'лівий стік') : t('right stick', 'правий стік');
         const direction =
           position % 2 === 0
@@ -902,10 +1105,6 @@ export function mountRadioGuide({
             `Перемістіть ${side} до краю ${direction}. Утримуйте до наступної підказки. Інші осі залиште нерухомими.`,
           ),
         );
-        const target = targets[Math.floor(position / 2)],
-          sign = positiveDirection ? 1 : -1;
-        target.hidden = false;
-        target.style.transform = `translate(${position % 2 === 0 ? sign * 40 : 0}px, ${position % 2 === 1 ? -sign * 40 : 0}px)`;
         setText(primary, t('Continue', 'Далі'));
       }
     } else {
@@ -938,6 +1137,7 @@ export function mountRadioGuide({
         phase === 'saved' ? t('Return to flight', 'Повернутися до польоту') : t('Done', 'Готово'),
       );
     }
+    paintGuides(mapping, pad);
     if (interrupted)
       setText(
         status,
@@ -965,6 +1165,8 @@ export function mountRadioGuide({
   update(runtime.raw());
   return {
     update,
+    preview,
+    sample,
     completeSave,
     start,
     cancel: cancelCalibration,

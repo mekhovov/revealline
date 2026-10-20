@@ -1720,6 +1720,7 @@ export function mountRadioSetup({
   function paint(now) {
     if (disposed) return;
     const capturePad = runtime.raw();
+    guide?.sample(capturePad);
     try {
       sampleBootstrap(now);
       sampleLayoutCapture(runtime.raw(), now);
@@ -1741,6 +1742,7 @@ export function mountRadioSetup({
     if (now - lastPaint >= 100) {
       lastPaint = now;
       const pad = runtime.raw();
+      guide?.update(pad);
       if (pad) {
         for (const [action, row] of Object.entries(switchRows)) {
           try {
@@ -1771,7 +1773,9 @@ export function mountRadioSetup({
           const input = Object.fromEntries(
               FLIGHT_CONTROLS.map((control) => [control, previewControl(control, pad)]),
             ),
-            layout = STICK_LAYOUTS[Number(mode.value)];
+            livePreview = guide?.preview(pad);
+          if (livePreview) Object.assign(input, livePreview);
+          const layout = STICK_LAYOUTS[Number(mode.value)];
           for (const control of FLIGHT_CONTROLS) {
             const row = rows[control],
               value = input[control];
@@ -1808,7 +1812,7 @@ export function mountRadioSetup({
                   : input[vertical];
             stickNodes[i].dot.style.transform =
               `translate(${(input[horizontal] ?? 0) * stickNodes[i].node.clientWidth * 0.34}px, ${-y * stickNodes[i].node.clientWidth * 0.34}px)`;
-            stickNodes[i].dot.hidden = false;
+            stickNodes[i].dot.hidden = input[horizontal] === null && input[vertical] === null;
             stickNodes[i].label.textContent = `${copy[horizontal]} / ${copy[vertical]}`;
             stickNodes[i].node.setAttribute(
               'aria-label',
@@ -1822,7 +1826,6 @@ export function mountRadioSetup({
         raw.textContent = runtime.devices().status === 'unavailable' ? copy.unavailable : copy.none;
         clearSticks();
       }
-      guide?.update(pad);
       if (autoSavePending && now >= autoSaveAfter) autoSaveProfile();
       paintSix();
     }
@@ -1853,6 +1856,7 @@ export function mountRadioSetup({
     verifyProfile,
     saveProfile,
     autoSaveProfile,
+    previewControl,
     stopCaptures,
     externalCaptureActive: () =>
       !!(recording || identifying || switchCapture || layoutCapture || practice),
