@@ -15,9 +15,9 @@
     "details": "Two managed implementation worktrees plus lightweight sparse checkouts; failed full checkouts self-cleaned after disk exhaustion. No unrelated data removed."
   },
   "nextPriority": [
-    "P1 · Mission browser #1773 / browser prerequisite #1778: retain the failed-stage report and complete failure-path audits. The 11-file repair passes 12 formatting/equivalence stages; final source qualification stopped before running for missing audit metadata. Correct that setup, qualify and rerun the fixed package. Three source-mode failures remain separate.",
-    "P1 · Readability #1774: all eight retirement-preserving source-generation stages pass; only four of 63 source/test bodies change. Qualify the refreshed controls, publish the complete current-main candidate, then original 28 whole files plus Overflight host and browser/package.",
-    "P1 · Community readiness #1638: both current catalog author/check stages pass with exactly 18 new labels. Qualify the 11-file source and complete readiness/client/store/moderation cohort, then reconcile the original PR; touch localization #1669 and offline/backup #1624/#1627 follow.",
+    "P1 · Mission browser #1773 / prerequisite #1778: the 11-file evidence repair is published at 428565d after all 17 source stages pass. Hosted fixed-package browser run 39372626146 is in progress; inspect its retained report and after-audits. Three source-mode failures remain separate.",
+    "P1 · Readability #1774: published 2c4d163 preserves current main, all 63 feature/test bodies and five controls. Source checks pass; hosted original 28 whole files plus Overflight host run 39372349639 is in progress. Browser and package acceptance follow.",
+    "P1 · Community readiness #1638: catalog author/check and all source statics pass. Automatic checks omit unchanged store/moderation-client files; resolve complete four-file hosted coverage before final acceptance and reconcile the original PR. Touch localization #1669 and offline/backup #1624/#1627 follow.",
     "P1 · Compatibility #1668 source merged at the exact qualified revision. Finish current browser/inner-package/offline acceptance; physical checks remain separate.",
     "P1 · Team Home #1747: source merged. All nine admitted files match the independently reviewed local reconciliation. Finish current earned-result/full-host/browser/package acceptance. Full lessons still depend on Learn.",
     "P1 · Shared support #1762: source merged externally at b723. Its eight complete files pass 414 cases; the older preview retains 12 failures. Qualify current-main fixtures and actual Data/modal navigation, exports, package and remaining hosts.",
@@ -302,7 +302,7 @@
     },
     "currentReadabilityReconciliation": {
       "main": "311d242b1c6666906a2b5371262a33dcd0c15667",
-      "status": "eight_bounded_source_generation_stages_pass_controls_pending",
+      "status": "published_current_candidate_hosted_gameplay_in_progress",
       "sourcePaths": 63,
       "changedAfterBodies": 4,
       "unchangedAfterBodies": 59,
@@ -312,7 +312,32 @@
       "independentReadbackSHA256": "dc9d136d8a06bb21c8d0e79e5f3f2be8dceeb71d71101a1c6424c52216f662ee",
       "referenceSHA256": "c824cf84ab40e23c5084c63b0a38a96aa702ccf6222f7299a177a79df453d754",
       "featureLeafSHA256": "7351b2520ccccc1abb8e375cdbe2fd28cb158940c3d147305a60c37a8f5977bc",
-      "qualification": "Source projection only; no full localization CLI/native/player/package acceptance. Old 58fba stage remains held; #1774 still 2d15. Five diagnostic controls and three roadmap docs on latest main are unowned and preserved."
+      "qualification": "Current source/control checks and complete remote-content preservation verified; native/player/package pending. Old 58fba stage and 2d15 RED remain historical.",
+      "currentControls": {
+        "receiptSHA256": "9984a0e5614247c79638b134b42bbba11d21fbe184273619d3b9a43cfcf0f1dd",
+        "mockCases": 31,
+        "syntaxFiles": 3,
+        "formatFiles": 2,
+        "rootProofSHA256": "cd6dec98199af1de5fd97f0802eced1d536cd35b5a28e8407c931e8f72a399a0",
+        "independentProofSHA256": "08997151ed9ab9c6a10e883e285eb1ddc06939ff91d3cc40d322988b4656281f",
+        "qualification": "Mock and source static only; complete gameplay cohort remains pending."
+      },
+      "published": {
+        "head": "2c4d163b8e3338adc32f1047f4de478abda07c1b",
+        "tree": "5ba01250e216f494edfcdd5650d0540d03b64dfe",
+        "parents": [
+          "2d15ac09834c762a543d5aa3edcb9114f6135b88",
+          "311d242b1c6666906a2b5371262a33dcd0c15667"
+        ],
+        "initialProofSHA256": "f89b3169af2ebad886de8f2f32dedba7c956efeed165559e20c3f3be8b4fbdd2",
+        "freshProofSHA256": "82ff9d660db5cf4d13485e679f7f266e1036fa884de78554f99ffcbc60cbdab3",
+        "peerProofSHA256": "248659978b56e60965146ef1eb2938513e3e6cd7ea6b27c95b9a5017a6c13c27",
+        "unownedMerkleEntriesExact": 5198,
+        "force": false,
+        "draft": true,
+        "hostedRun": "https://github.com/mekhovov/revealline/actions/runs/39372349639",
+        "native": "in_progress_no_pass_claim"
+      }
     }
   },
   "tasks": [
@@ -759,7 +784,7 @@
       "observedRemoteHead": "a3b1e33b1766991e4220ffcc54347e335db11c7e",
       "lastKnownMergeState": "DIRTY",
       "currentReconciliation": {
-        "status": "catalog_source_author_check_pass_static_qualification_next",
+        "status": "catalog2_and_statics8_pass_current_publication_preparation",
         "main": "311d242b1c6666906a2b5371262a33dcd0c15667",
         "sourceHead": "a3b1e33b1766991e4220ffcc54347e335db11c7e",
         "scope": "Eight oldfeature owner beforeimages match currentmain; preserve reviewedexactruntime/style/HTML/test bodies. Reconcile original9 additions perlocale and regenerate catalogs fromcurrent18namespace closure. No app.mjs feature edit.",
@@ -767,7 +792,25 @@
         "next": "Freeze actual11 source, qualify formatting/syntax, then complete current readiness/client/store/moderation and configured hosted gates before normal #1638 reconciliation.",
         "catalogReceiptSHA256": "0509243bd387de1848162040981f43c2fd0f6f50fd86915566613e4c1ac45697",
         "catalogOID": "94b4faaafc9b05ae783e0e0ee88bd3d3d2a7d02a",
-        "rootReadbackSHA256": "01b2fc95f53b6b5d976bb4965a731092e2d7c4ecb064e825c75fddd907490ea5"
+        "rootReadbackSHA256": "01b2fc95f53b6b5d976bb4965a731092e2d7c4ecb064e825c75fddd907490ea5",
+        "statics": {
+          "receiptSHA256": "3373e2907db1f26470ababd881073e0017638f4bf155b71b098ba477c712f8ab",
+          "formatChecks": 10,
+          "syntaxChecks": 7,
+          "rootProofSHA256": "cd61cdceae2063a90199a4e69d8853c8c2f8e6e6ddbfc4aa64654ef419a9e4cd",
+          "independentProofSHA256": "fbe8186d8299b20c12e66eeb93e9331a9d9bb310017d3c6f4649694b9411edcd",
+          "scope": "No candidate runtime imports, native or full localization CLI acceptance."
+        },
+        "hostedCoverageGap": {
+          "requiredWholeFiles": 4,
+          "automaticallySelected": 2,
+          "missing": [
+            "game/test/community-store.test.mjs",
+            "game/test/community-moderation-client.test.mjs"
+          ],
+          "proofSHA256": "e09e4fb2ba0143b6f0acd69db64505b6d0f783ce235dc75098ddee09353766b1",
+          "scope": "Authored declarations are not executed counts. Existing acceptance workflow covers service transport, not this game cohort; complete feature qualification remains open."
+        }
       }
     },
     {
@@ -1187,7 +1230,7 @@
       "blocker": "Capture cold Team-source construction and three picture-setup failures need correction and current complete-cohort qualification. Team Home1747 is source merged; earned-result/full-host/browser/package acceptance remains. Full lessons depend on F25/Learn.",
       "pr": null,
       "commit": null,
-      "next": "P1 · Mission browser #1773 / browser prerequisite #1778: retain the failed-stage report and complete failure-path audits. The 11-file repair passes 12 formatting/equivalence stages; final source qualification stopped before running for missing audit metadata. Correct that setup, qualify and rerun the fixed package. Three source-mode failures remain separate.",
+      "next": "P1 · Mission browser #1773 / prerequisite #1778: the 11-file evidence repair is published at 428565d after all 17 source stages pass. Hosted fixed-package browser run 39372626146 is in progress; inspect its retained report and after-audits. Three source-mode failures remain separate.",
       "evidence": [
         "Read-only current-source assessment finds authoritative journeyDestination progression already exists, but no explained Home recommendation. A real live/saved Resume is different from a navigation cursor; do not suppress both or add another launch/progress owner. Exact current terminal run alone can justify retry wording; the profile does not persist defeat chronology. F25 Learn hub remains planned/D-dependent, so no durable lesson mastery or fictional practice routes are introduced."
       ],
@@ -3616,10 +3659,10 @@
           "status": "draft_review",
           "owner": "lane-a",
           "pr": "https://github.com/mekhovov/revealline/pull/1774",
-          "commit": "2d15ac09834c762a543d5aa3edcb9114f6135b88",
+          "commit": "2c4d163b8e3338adc32f1047f4de478abda07c1b",
           "dependency": "Compatibility1668 and complete SingleDrone/Riy typography/layout inventory; follow independent width repair",
           "effort": "Within original6–10d totalF09, not a second full estimate",
-          "next": "P1 · Readability #1774: stopped stale-main publication before any branch update. Reconcile two locale inputs and regenerate affected derived outputs for ff63 retirement cleanup; qualify new source/control pins, then original28 whole files plus Overflight host and browser/package.",
+          "next": "P1 · Readability #1774: published 2c4d163 preserves current main, all 63 feature/test bodies and five controls. Source checks pass; hosted original 28 whole files plus Overflight host run 39372349639 is in progress. Browser and package acceptance follow.",
           "evidence": [
             "Read-onlysourceinventory andactualdesktop/320/844CSSbaseline distinguish repeatedcascade/media overrides. All proposed source inputs already local; no build/hydration. Currentfirstpaint/desired/effective text capability needs consistent shared theme-system/host/bootstrap plus optional existing API deltas, not copying oldruntime files. DOM caption alternative must preserve exact now/next facts anddiagramgeometry. Physical/PWA/Deck not inferred.",
             "Read-only full loaded-source inventory381module references/~6.2MB,20stylesheets;161absolute font/lineheight/token declarations recorded before/after with hashes. Dedicated --overflight-text-scale default1 avoidsprimaryscale/doublescaling; em/inherit/unitless remain untouched. Current31fileWIPgrowth47,495bytes incl36,646inventory, no build/log/snapshot growth. No newnative run orbrowserready claim. Proposed fullwidth16:9/liveHUDscroll rejected beforeedit: fails shortviewport andtouchanchoring. Approveddirection keepsremainingviewportFITfield,portraitcriticalHUDrow/landscaperail andexistingtouch overlay samefieldcell; actualENUK320/844 simultaneousvisibility acceptance required. Capacityhold preservespartialWIP; playreferencesplannedmissingstylesheet, generatedbootstrapnotyetrefreshed.",
@@ -3640,10 +3683,11 @@
             "Local normal merge0d301/treebe9ca0d159c72d8cd9e7aefaa1eb750d23905549 has parents bebce and783538. Only qualification documentation changes versus bebce; all58 feature blobs equal frozen f6fac374. Root prior compact UK live/earned-upgrade/Pause samples retain their actual prototype scope. Shared scratch remains owned by Capture baseline work before a journaled whole-tree transition. Current28-file test cohort has not run; no old64-case reader receipt retagged. Extra HUD Boost status remains unchanged because it carries distinct Overdrive facts.",
             "Exact0d301 native attempt: touch-controls-view3/3 and overflight-touch25/25 complete PASS, raw lengths/hashes root verified. Third complete file overflight-text-scaling-host stops at disk-floor guard in15.868s, peak307984KiB RSS, minimum2146492416B free and no terminal TAP totals; seven emitted successes are not added to qualified totals. Remaining25files Not run. Child-terminal captured before metadata postflight; originalA58/C9+76/index/refs/dependencies unchanged by recorded stage audit. Final full29246-source content rehash refused belowfloor; separate read-only recovery integrity audit and rename-only restoration pending. No assertion failure inferred, no increased limits/retry/publication; earlier64-case reader and scoped browser evidence retain actual source boundaries.",
             "Separate recovery-only wrapper fa313a loads immutable c7a transition in memory with256MiB emergency reserve solely for integrity/rename restoration; native2GiBreserve/runner/status untouched. Read-only completeA29246manifest f49860fc and all164Cpreimages/owners/deps/native evidence exact. Explicit recovery retains143Acopies by rename and restores164 originalC inodes, removes only owned authoring symlink, full29267restoredsource4ef4ac8f, no postflight errors. Root independently verifies164originalCbytes/OIDs/dev/inode/mtime and143retainedAcopies. Recoveryreceipt080ddd0a, native evidence47c6b3f7/cohortbabb unchanged. Recovery is not test/package qualification; heavy checks remain held belowreserve.",
-            "Draft1774 published at2d15ac0, solefirstparenta7:58 feature paths plus5 validation controls;95 temporary main diff includes32 inherited compatibility-only paths. Complete actual63 source/58 leaf/control readback, then sealed initial and fresh prelaunch receipts, preceded opening the PR and its first actual28-file native workflow. Every unowned parent entry is exact; original work untouched. Source-only28 mocks are not gameplay acceptance."
+            "Draft1774 published at2d15ac0, solefirstparenta7:58 feature paths plus5 validation controls;95 temporary main diff includes32 inherited compatibility-only paths. Complete actual63 source/58 leaf/control readback, then sealed initial and fresh prelaunch receipts, preceded opening the PR and its first actual28-file native workflow. Every unowned parent entry is exact; original work untouched. Source-only28 mocks are not gameplay acceptance.",
+            "Current2c4d normal publication preserves311d main and all5198unowned Merkle entries; all68actual bodies/63leaf independently verified before ref update. Eight source stages and31mock+AST3+format2 pass; hosted gameplay now runs, no native pass transferred from old head."
           ],
           "blocker": "Published2d15 remains unqualified. Staged58fba68-source candidate passed actual readback against46ba, but mainff63 changes4owned beforeowners and12canonical inputs. Promotion stopped; preserve retirement cleanup and requalify current candidate before native/browser/package checks.",
-          "candidateCommit": "2d15ac09834c762a543d5aa3edcb9114f6135b88",
+          "candidateCommit": "2c4d163b8e3338adc32f1047f4de478abda07c1b",
           "qualification": {
             "automated": "actual2d15_source_preview_industrial_native28_gates_FAILED_scopes_retained_source60fixes_prepared",
             "browser": "historical_sampled_RED_findings_current_candidate_not_tested",
@@ -3686,82 +3730,28 @@
             "next": "Review successor task-owned preparation allocation ledger; global2GiBfloor/native limits unchanged."
           },
           "reconciledSourceManifestSHA256": "75c54f6db0d3c40dc5fee920c5264afbeecb4b9e9d7edcceaa9ad0ccbe0f4dd5",
-          "observedRemoteHead": "2d15ac09834c762a543d5aa3edcb9114f6135b88",
+          "observedRemoteHead": "2c4d163b8e3338adc32f1047f4de478abda07c1b",
           "deliveryState": "draft",
           "sourcePublication": {
-            "PR": 1774,
-            "url": "https://github.com/mekhovov/revealline/pull/1774",
-            "head": "2d15ac09834c762a543d5aa3edcb9114f6135b88",
-            "tree": "f602d4359e5ed4d45fd6e687bae7a533d8615e71",
+            "head": "2c4d163b8e3338adc32f1047f4de478abda07c1b",
+            "tree": "5ba01250e216f494edfcdd5650d0540d03b64dfe",
             "parents": [
-              "a7c8be6ff7f4cf2ee0409edbab136e398f21c1c2"
+              "2d15ac09834c762a543d5aa3edcb9114f6135b88",
+              "311d242b1c6666906a2b5371262a33dcd0c15667"
             ],
-            "branch": "codex/f09b-overflight-readable-play-oct20",
-            "ownedPaths": 63,
-            "featurePaths": 58,
-            "validationControls": 5,
-            "temporaryCombinedMainPaths": 95,
-            "inheritedPrerequisiteOnlyPaths": 32,
-            "manifestSHA256": "47b0ac0b5613d9c71d85f135969c9fc25a6ebc8b0cfde7d35d56f854530babdd",
-            "initialPublicationReceiptSHA256": "23f6d4866d858e2cb4feaceb4bf6d9743e80c384b752f5fd21c242d4a74c3441",
-            "immediatePrelaunchReceiptSHA256": "e1df0281d74b5009b9c9995518da70b788e8e68aef6d756381f67a004f4556f2",
-            "proofsSealedBeforePRTriggeredNative": true,
-            "everyUnownedParentAndInheritedOwnerExact": true,
-            "sourceIndexLocalRefsOriginals": "untouched; only new owned remote branch and DRAFT PR",
-            "qualification": "Actual28 complete gameplay files and source/preview/browser/package/device pending; mocks are not gameplay; no promotion/merge",
-            "receiptSHA256": "cadaf5bae4d2eaa0d85c8f305079e9e22cc440d9abb82209b735a0e4cb4b124d"
+            "initialProofSHA256": "f89b3169af2ebad886de8f2f32dedba7c956efeed165559e20c3f3be8b4fbdd2",
+            "freshProofSHA256": "82ff9d660db5cf4d13485e679f7f266e1036fa884de78554f99ffcbc60cbdab3",
+            "peerProofSHA256": "248659978b56e60965146ef1eb2938513e3e6cd7ea6b27c95b9a5017a6c13c27",
+            "unownedMerkleEntriesExact": 5198,
+            "force": false,
+            "draft": true,
+            "hostedRun": "https://github.com/mekhovov/revealline/actions/runs/39372349639",
+            "native": "in_progress_no_pass_claim"
           },
           "independentPublicationReadbackSHA256": "880bc9c17c15e3a8d0243efb74efd63c191a9f22780563c2278c0d63a6abf73a",
           "currentHostedRuns": {
-            "native28": "https://github.com/mekhovov/revealline/actions/runs/39355232920",
-            "source": "https://github.com/mekhovov/revealline/actions/runs/39355232799",
-            "preview": "https://github.com/mekhovov/revealline/actions/runs/39355232996",
-            "status": "actual2d15_all28workflow_TERMINAL_FAILED_two_groups_PASS_two_groups_failed; noaggregatepass",
-            "previewStatus": "terminal_FAILED_generated_SIM_assets_before_build",
-            "previewFailure": {
-              "step": "Verify generated presentation/marking sources",
-              "file": "scripts/refresh-fpv-presentation-assets.mjs:57",
-              "message": "Simulator shared assets differ; run the refresh command.",
-              "Node": "v22.13.1",
-              "completeJobRawSHA256": "80c943d045cca297dec3157b6c540cd0675fc4416e38e48375b485659e276eef",
-              "earlierChecksInStep": "themebootstrap and materialgrain completed; subsequentindustrialmarking not reached",
-              "cause": "Exactsource byte comparison identifies two additional registered derived consumers omitted from earlier four-output closure: sim-presentation.mjs contains prefeatureindustrialCSS and optional-practice/civilian-fpv/style.css contains prefeaturefullscreenCSS. All7fonts/audio payloads and tokens match. Source-only two-output regeneration proposal next.",
-              "sourceDiagnosisSHA256": "298fc04032ce0a655be3363084c40d4c1cd4fdf0d2e32f82acf265cd9ceddab8"
-            },
-            "native28Group1": "complete7files65cases_PASS_artifact_fullraw_independently_verified",
-            "native28Group2": "complete7files37cases_PASS_artifact_fullraw_independently_verified",
-            "nativePartial": {
-              "completePassingWholeFiles": 18,
-              "completePassingCases": 159,
-              "completeFailedFile": {
-                "file": "game/test/text-size-compatibility.test.mjs",
-                "cases": 7,
-                "passed": 6,
-                "failed": 1,
-                "cause": "VM ReferenceError textScalingView undefined; lexical-owner fixture proposal pending"
-              },
-              "incompleteFile": {
-                "file": "game/test/fpv-world-appearance-ui.test.mjs",
-                "result": "V8 heapOOM exit-6 nofullTAPtotals",
-                "heapMiB": 1536,
-                "ownedRSSLimitMiB": 2048,
-                "guard": null,
-                "nativeBaselineComparison": "read-only comparison plan preparing; no baselinecauseclaim/raisedlimits"
-              },
-              "notRunWholeFiles": 8,
-              "full28Passed": false,
-              "initial14FileRootReadbackSHA256": "904dc75e95dde781ac3f5453bddcf7f9f04d0a79bf168e89bee4b2d49a58ea43"
-            },
-            "industrial": {
-              "status": "completed_FAILED_localUX840of841; fivefeaturejobsPASS",
-              "localUXCases": 841,
-              "passed": 840,
-              "failed": 1,
-              "skipped": 0,
-              "cause": "Solecase nativeSettingsinitialization VMtouchVisitSettings ReferenceError; nullbindingproposal groundedactualnonoptinDOM, completefilequalificationpending; no runtimebugclaim",
-              "currentHead": "2d15ac09834c762a543d5aa3edcb9114f6135b88"
-            },
-            "aggregate": "failedclosed at unknownfailed-groupZIPmember; noaggregatePASS/receipt, allfour source-specific groupartifacts retained"
+            "native": "https://github.com/mekhovov/revealline/actions/runs/39372349639",
+            "status": "in_progress"
           },
           "projectionSuccessorPreparation": {
             "status": "two_registered_source_author_check_stages_PASS_NOT_PUBLISHED",
@@ -3837,6 +3827,80 @@
               "native": "NOT_RUN",
               "next": "Narrow currentlocale union and canonical outputs; new source/control freeze and fresh actual publication proof."
             }
+          },
+          "historical2d15SourcePublication": {
+            "PR": 1774,
+            "url": "https://github.com/mekhovov/revealline/pull/1774",
+            "head": "2d15ac09834c762a543d5aa3edcb9114f6135b88",
+            "tree": "f602d4359e5ed4d45fd6e687bae7a533d8615e71",
+            "parents": [
+              "a7c8be6ff7f4cf2ee0409edbab136e398f21c1c2"
+            ],
+            "branch": "codex/f09b-overflight-readable-play-oct20",
+            "ownedPaths": 63,
+            "featurePaths": 58,
+            "validationControls": 5,
+            "temporaryCombinedMainPaths": 95,
+            "inheritedPrerequisiteOnlyPaths": 32,
+            "manifestSHA256": "47b0ac0b5613d9c71d85f135969c9fc25a6ebc8b0cfde7d35d56f854530babdd",
+            "initialPublicationReceiptSHA256": "23f6d4866d858e2cb4feaceb4bf6d9743e80c384b752f5fd21c242d4a74c3441",
+            "immediatePrelaunchReceiptSHA256": "e1df0281d74b5009b9c9995518da70b788e8e68aef6d756381f67a004f4556f2",
+            "proofsSealedBeforePRTriggeredNative": true,
+            "everyUnownedParentAndInheritedOwnerExact": true,
+            "sourceIndexLocalRefsOriginals": "untouched; only new owned remote branch and DRAFT PR",
+            "qualification": "Actual28 complete gameplay files and source/preview/browser/package/device pending; mocks are not gameplay; no promotion/merge",
+            "receiptSHA256": "cadaf5bae4d2eaa0d85c8f305079e9e22cc440d9abb82209b735a0e4cb4b124d"
+          },
+          "historical2d15HostedRuns": {
+            "native28": "https://github.com/mekhovov/revealline/actions/runs/39355232920",
+            "source": "https://github.com/mekhovov/revealline/actions/runs/39355232799",
+            "preview": "https://github.com/mekhovov/revealline/actions/runs/39355232996",
+            "status": "actual2d15_all28workflow_TERMINAL_FAILED_two_groups_PASS_two_groups_failed; noaggregatepass",
+            "previewStatus": "terminal_FAILED_generated_SIM_assets_before_build",
+            "previewFailure": {
+              "step": "Verify generated presentation/marking sources",
+              "file": "scripts/refresh-fpv-presentation-assets.mjs:57",
+              "message": "Simulator shared assets differ; run the refresh command.",
+              "Node": "v22.13.1",
+              "completeJobRawSHA256": "80c943d045cca297dec3157b6c540cd0675fc4416e38e48375b485659e276eef",
+              "earlierChecksInStep": "themebootstrap and materialgrain completed; subsequentindustrialmarking not reached",
+              "cause": "Exactsource byte comparison identifies two additional registered derived consumers omitted from earlier four-output closure: sim-presentation.mjs contains prefeatureindustrialCSS and optional-practice/civilian-fpv/style.css contains prefeaturefullscreenCSS. All7fonts/audio payloads and tokens match. Source-only two-output regeneration proposal next.",
+              "sourceDiagnosisSHA256": "298fc04032ce0a655be3363084c40d4c1cd4fdf0d2e32f82acf265cd9ceddab8"
+            },
+            "native28Group1": "complete7files65cases_PASS_artifact_fullraw_independently_verified",
+            "native28Group2": "complete7files37cases_PASS_artifact_fullraw_independently_verified",
+            "nativePartial": {
+              "completePassingWholeFiles": 18,
+              "completePassingCases": 159,
+              "completeFailedFile": {
+                "file": "game/test/text-size-compatibility.test.mjs",
+                "cases": 7,
+                "passed": 6,
+                "failed": 1,
+                "cause": "VM ReferenceError textScalingView undefined; lexical-owner fixture proposal pending"
+              },
+              "incompleteFile": {
+                "file": "game/test/fpv-world-appearance-ui.test.mjs",
+                "result": "V8 heapOOM exit-6 nofullTAPtotals",
+                "heapMiB": 1536,
+                "ownedRSSLimitMiB": 2048,
+                "guard": null,
+                "nativeBaselineComparison": "read-only comparison plan preparing; no baselinecauseclaim/raisedlimits"
+              },
+              "notRunWholeFiles": 8,
+              "full28Passed": false,
+              "initial14FileRootReadbackSHA256": "904dc75e95dde781ac3f5453bddcf7f9f04d0a79bf168e89bee4b2d49a58ea43"
+            },
+            "industrial": {
+              "status": "completed_FAILED_localUX840of841; fivefeaturejobsPASS",
+              "localUXCases": 841,
+              "passed": 840,
+              "failed": 1,
+              "skipped": 0,
+              "cause": "Solecase nativeSettingsinitialization VMtouchVisitSettings ReferenceError; nullbindingproposal groundedactualnonoptinDOM, completefilequalificationpending; no runtimebugclaim",
+              "currentHead": "2d15ac09834c762a543d5aa3edcb9114f6135b88"
+            },
+            "aggregate": "failedclosed at unknownfailed-groupZIPmember; noaggregatePASS/receipt, allfour source-specific groupartifacts retained"
           }
         }
       ],
@@ -6182,6 +6246,11 @@
       "date": "2026-10-20",
       "item": "DELIVERY",
       "reason": "Eight current readability source stages pass with exact protected inputs and four of63 new after-bodies; browser diagnostic repair passes12 formatting/equivalence stages but fixed17 attempt stops before children on missing preservation metadata. External1776 diagnostic and1779 roadmap merges advance main311d without changing feature counts. Other chats keep running."
+    },
+    {
+      "date": "2026-10-20",
+      "item": "DELIVERY",
+      "reason": "Published readability2c4d and browser-observability428 via normal fast-forward updates after exact completebody/unownedtree/freshproof checks; both existingPRs remain draft. Hosted native39372349639/browser39372626146 started. Communitycatalog2/statics8 pass, but automatic source selection omits two required wholefiles; coverage remains explicit gate. Counts83/113 unchanged."
     }
   ],
   "deliveryDependencies": [
@@ -6907,26 +6976,32 @@
       "id": "CI-fixed-compiled-menu-browser-37ec",
       "priority": "P1",
       "pr": "https://github.com/mekhovov/revealline/pull/1778",
-      "status": "draft_browser_failed_diagnostic_retention_gap",
-      "commit": "887829cf1f5b4e9253dd0cb99386596ded5399ad",
-      "observedRemoteHead": "887829cf1f5b4e9253dd0cb99386596ded5399ad",
+      "status": "draft_source_pass_browser_rerun_in_progress",
+      "commit": "428565de342dec02f0c7e694bd212908a00188b2",
+      "observedRemoteHead": "428565de342dec02f0c7e694bd212908a00188b2",
       "scope": "Fixed37ec package browser observation through ordinary password form and native EN/UK controls; no source admission policy change. Verification prerequisite, not a new feature.",
       "qualification": {
         "automated": "10 formatting checks, four Node22 syntax checks and8/8 contract cases PASS; actual remote10 bodies and all2873 unowned Merkle entries independently verified before PR.",
         "browser": "FAILURE run39368078857: immutable package/hash/navigation checks pass; browser child exits1 after77.36s. Observer raw empty, failed-stage report not retained; no UI flow acceptance or precise cause. Source/deps after-audits absent on this failed path.",
         "physical": "not_tested_hardware_unavailable"
       },
-      "currentRun": "https://github.com/mekhovov/revealline/actions/runs/39368078857",
+      "currentRun": "https://github.com/mekhovov/revealline/actions/runs/39372626146",
       "publication": {
-        "head": "887829cf1f5b4e9253dd0cb99386596ded5399ad",
-        "tree": "ffc6d7d8ffe070fbf55069f1f128503b9e172631",
-        "parent": "afd020483c1174ea11adf78a2b4253809eaf4d86",
-        "ownedPaths": 10,
-        "sourceQualificationReceiptSHA256": "9edb1ac0c7925ef2f89c5918edfecff8775c08f3ada5fa640b03ce4bd7ffd0cd",
-        "initialProofSHA256": "a2e5bc40bf67e4b293b6c4b4eb9b6b95d5fa4225cbca29ad9fae076a55aebc6d",
-        "freshPrePRProofSHA256": "78f347908d77e54ecace28d50facae687fc8c47365ce5a34a9036c2da7b42cbe"
+        "head": "428565de342dec02f0c7e694bd212908a00188b2",
+        "tree": "d6fc6333ca7a0883d93c9d62d045c1066d834aae",
+        "parents": [
+          "887829cf1f5b4e9253dd0cb99386596ded5399ad",
+          "311d242b1c6666906a2b5371262a33dcd0c15667"
+        ],
+        "ownedPaths": 11,
+        "unownedMerkleEntriesExact": 2884,
+        "initialProofSHA256": "3f6dc0845e931401f1c2fc6c1d6f5ca3d465998e452f69e9507e9332d505a052",
+        "freshProofSHA256": "256726fbe9d43a98e7bc181ea09edf94004d90d20cabc1fd93352cbe90941153",
+        "peerProofSHA256": "323b444dbe25eb86c630799a29310c622446d4043d4eebf490b3cca7bee8f10f",
+        "force": false,
+        "draft": true
       },
-      "next": "P1 · Mission browser #1773 / browser prerequisite #1778: retain the failed-stage report and complete failure-path audits. The 11-file repair passes 12 formatting/equivalence stages; final source qualification stopped before running for missing audit metadata. Correct that setup, qualify and rerun the fixed package. Three source-mode failures remain separate.",
+      "next": "P1 · Mission browser #1773 / prerequisite #1778: the 11-file evidence repair is published at 428565d after all 17 source stages pass. Hosted fixed-package browser run 39372626146 is in progress; inspect its retained report and after-audits. Three source-mode failures remain separate.",
       "browserAttempt1": {
         "run": "https://github.com/mekhovov/revealline/actions/runs/39368078857",
         "job": 118449401977,
@@ -6949,13 +7024,26 @@
         "artifactSHA256": "c77a6e34f9e529e5b9c80fa4a36e5ecd934047f6e2a7f3f581a4e9271a01a22e"
       },
       "observabilityRepair": {
-        "status": "source_reviewed_formatter_pass_final_checks_preflight_stopped",
+        "status": "published_source_pass_hosted_browser_in_progress",
         "sourcePaths": 11,
         "sourceManifestSHA256": "beeb4e42c77f3fb9b293c8ef72674b5a5ed2e427b2c6f725d1127f665a706211",
         "formatterReceiptSHA256": "89b0a3cfbf9b04229a9b2d3047202b290ec2d8ee883d678828b80119a8a1bb77",
         "rootFormatterProofSHA256": "fe41d28510aa450552a4c13cfcd2d636c721569185d359f623eb3ab8028d605c",
         "stagesPassed": 12,
-        "scope": "Formatting and AST/JSON/Markdown equivalence only; final fixed17 check/syntax/11contract campaign stopped before any child because priorStoppedReceipt preservation field was missing. No runtime/browser pass."
+        "scope": "Read-only CHECK11, Node syntax5 and complete11 contract cases PASS, zero skips. Original preflight stop and failed browser evidence preserved. No browser acceptance yet.",
+        "sourceQualificationReceiptSHA256": "2f2bb904130f88ae43f76d0dea1b1bcd7dde57fcb2e58d4c5d031354ba01ef47",
+        "rootQualificationProofSHA256": "553bba5abeeb1495dbb46cd3f7d17fcb56621d0366f429fcf90fa7cdaa17a5ae",
+        "sourceStagesPassed": 17,
+        "contractCases": 11
+      },
+      "historical887Publication": {
+        "head": "887829cf1f5b4e9253dd0cb99386596ded5399ad",
+        "tree": "ffc6d7d8ffe070fbf55069f1f128503b9e172631",
+        "parent": "afd020483c1174ea11adf78a2b4253809eaf4d86",
+        "ownedPaths": 10,
+        "sourceQualificationReceiptSHA256": "9edb1ac0c7925ef2f89c5918edfecff8775c08f3ada5fa640b03ce4bd7ffd0cd",
+        "initialProofSHA256": "a2e5bc40bf67e4b293b6c4b4eb9b6b95d5fa4225cbca29ad9fae076a55aebc6d",
+        "freshPrePRProofSHA256": "78f347908d77e54ecace28d50facae687fc8c47365ce5a34a9036c2da7b42cbe"
       }
     }
   ],
