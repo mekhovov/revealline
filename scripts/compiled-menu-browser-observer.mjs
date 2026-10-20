@@ -71,6 +71,8 @@ export function readCompiledMenuPublicState() {
         'settings-dialog',
         'mission-replace-dialog',
         'mode-leave-dialog',
+        'flight-preparation-status',
+        'run-message',
       ].map((id) => [id, control(id)]),
     ),
     cards: nodes.map((x) => ({
@@ -234,6 +236,7 @@ export async function observeCompiledMenu({
     const read = async () => {
       trace.noteRead();
       const s = await step('read public DOM', () => page.evaluate(readCompiledMenuPublicState));
+      trace.recordPublicState(s);
       assert.equal(new URL(s.href).origin, new URL(origin).origin);
       assert.equal(s.hidden, false);
       assert.equal(s.focused, true);

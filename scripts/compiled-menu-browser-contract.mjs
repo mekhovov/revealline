@@ -146,6 +146,11 @@ export function createCompiledOperationTrace(budget, redact) {
   let overflow = false,
     dropped = 0,
     recordingFailures = 0;
+  let latestPublicRead = null,
+    publicReadSequence = 0,
+    publicReadRecordingFailures = 0,
+    publicReadUnavailable = false,
+    publicReadOmittedForReadCap = false;
   const safe = (work) => {
     try {
       return work();
@@ -189,6 +194,11 @@ export function createCompiledOperationTrace(budget, redact) {
     overflow,
     droppedEvents: dropped,
     recordingFailures,
+    publicRead: latestPublicRead,
+    publicReadSequence,
+    publicReadRecordingFailures,
+    publicReadUnavailable,
+    publicReadOmittedForReadCap,
   });
   const compact = (row) =>
     row === null
@@ -213,6 +223,14 @@ export function createCompiledOperationTrace(budget, redact) {
         summaryDetailsOmitted: true,
       };
     }
+    if (Buffer.byteLength(JSON.stringify(value, null, 2)) + 1 > 32768) {
+      value = {
+        ...value,
+        publicRead: null,
+        publicReadOmittedForTraceCap: latestPublicRead !== null,
+        overflow: true,
+      };
+    }
     return JSON.parse(JSON.stringify(value));
   };
   const append = (entry) => {
@@ -228,6 +246,78 @@ export function createCompiledOperationTrace(budget, redact) {
       return;
     }
     events.push(event);
+  };
+  // A passive copy of an already-returned public read; never inspect cards or href.
+  const recordPublicState = (state) => {
+    publicReadSequence += 1;
+    try {
+      const scalarText = (value, cap = 128) =>
+        typeof value === 'string' ? text(value, cap) : null;
+      const scalarBoolean = (value) => (typeof value === 'boolean' ? value : null);
+      const inputControls = state?.controls;
+      const controls = Object.fromEntries(
+        [
+          'shell-home',
+          'shell-play',
+          'shell-options',
+          'journey-chooser',
+          'journey-back',
+          'start-button',
+          'pause-button',
+          'shell-menu',
+          'settings-dialog',
+          'mission-replace-dialog',
+          'mode-leave-dialog',
+          'flight-preparation-status',
+          'run-message',
+        ].map((id) => {
+          const value = inputControls?.[id];
+          return [
+            id,
+            {
+              visible: scalarBoolean(value?.visible),
+              enabled: scalarBoolean(value?.enabled),
+              open: scalarBoolean(value?.open),
+              text: scalarText(value?.text, 256),
+            },
+          ];
+        }),
+      );
+      const candidate = {
+        format: 'CompiledPublicReadV1',
+        readSequence: publicReadSequence,
+        phase,
+        phaseSequence,
+        readIteration,
+        operationId: completed?.id ?? null,
+        elapsedFlowMs: completed?.elapsedFlowMs ?? null,
+        state: {
+          hidden: scalarBoolean(state?.hidden),
+          focused: scalarBoolean(state?.focused),
+          lang: scalarText(state?.lang),
+          focusedId: scalarText(state?.focusedId),
+          boot: scalarText(state?.boot),
+          access: scalarText(state?.access),
+          flight: scalarText(state?.flight),
+          time: scalarText(state?.time, 64),
+          lives: scalarText(state?.lives, 64),
+          coverage: scalarText(state?.coverage, 64),
+          controls,
+        },
+      };
+      if (Buffer.byteLength(JSON.stringify(candidate, null, 2)) + 1 > 8192) {
+        publicReadUnavailable = true;
+        publicReadOmittedForReadCap = true;
+        return;
+      }
+      latestPublicRead = candidate;
+      publicReadUnavailable = false;
+      publicReadOmittedForReadCap = false;
+    } catch {
+      publicReadRecordingFailures += 1;
+      recordingFailures += 1;
+      publicReadUnavailable = true;
+    }
   };
   const start = (args) => {
     const now = time(),
@@ -304,6 +394,7 @@ export function createCompiledOperationTrace(budget, redact) {
   }
   return Object.freeze({
     step,
+    recordPublicState,
     enterPhase: (label) =>
       safe(() => {
         phase = text(label);
@@ -336,6 +427,8 @@ export function createCompiledOperationTrace(budget, redact) {
         omittedForReportCap: true,
         eventSequence,
         operationSequence,
+        publicReadSequence,
+        publicReadOmittedForReportCap: latestPublicRead !== null,
       };
       try {
         return encode({ ...report, operationTrace: omitted });
