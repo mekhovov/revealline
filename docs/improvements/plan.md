@@ -4,7 +4,7 @@
 
 **Latest execution checkpoint:**
 
-**50 source slices merged · 7 open for checks · 34 drafts; 1 withdrawn.** The plan still contains **83 feature groups /113 deliverables**, with **21 separate verification prerequisites**. These PR counts measure source delivery, not completed player acceptance. Priorities and effort estimates are unchanged.
+**50 source slices merged · 7 open for checks · 34 drafts; 1 withdrawn.** The plan still contains **83 feature groups /113 deliverables**, with **21 separate verification prerequisites**. These PR counts measure source delivery, not completed player acceptance. 73 deliverables are still planned. Priorities and effort estimates are unchanged.
 
 | Priority | Deliverable                             | Current evidence                                                                                                                                                                                                                         | Next deliverable                                                                                                                                                                        |
 | -------- | --------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
