@@ -16,7 +16,7 @@
   },
   "nextPriority": [
     "P1 · Mission-menu correction published in draft #1773. Complete its opening/retry/continuation/cold-start tests and source/authoring checks, then browser/package review.",
-    "P1 · Readability #1774: finish controlled memory comparison #1776, qualify prepared fixture/generated-output corrections, then complete native, browser and package acceptance.",
+    "P1 · Readability #1774: controlled comparison #1776 confirms both parent and feature OOM under identical limits. Review the test-only lifecycle correction, qualify prepared fixture/generated-output corrections and complete native/browser/package acceptance.",
     "P1 · Compatibility #1668 source merged at the exact qualified revision. Finish current browser/inner-package/offline acceptance; physical checks remain separate.",
     "P1 · Team Home #1747: source merged. All nine admitted files match the independently reviewed local reconciliation. Finish current earned-result/full-host/browser/package acceptance. Full lessons still depend on Learn.",
     "P1 · Shared support #1762: source merged externally at b723. Its eight complete files pass 414 cases; the older preview retains 12 failures. Qualify current-main fixtures and actual Data/modal navigation, exports, package and remaining hosts.",
@@ -6075,6 +6075,11 @@
       "date": "2026-10-20",
       "item": "DELIVERY",
       "reason": "1776 currentca197 published with complete5body/currentmain proof and normalFF. ExactPython14/AST2 pass; targetedformat3 pass afterYAMLquotesonly. Hostedcontrolledcomparison39364916396 discovered/queued; no nativeoutcome yet. NewroadmapPR1777 keeps83/113definitions and allremainingpriorities."
+    },
+    {
+      "date": "2026-10-20",
+      "item": "DELIVERY",
+      "reason": "Controlledca197 pair terminalverified: botha7 and2d15 V8OOM atsameboundary underunchangedcontrols;14purePASS each; fullraw/10sealedterminals/source/deps/Git/Node proofs exact. Baselinefailure excludesfeature-exclusiveOOM, no retentioncause/115qualification. Test-onlylifecycleproposal nownextP1gate; otherchatsrunning."
     }
   ],
   "deliveryDependencies": [
@@ -6593,16 +6598,16 @@
     {
       "id": "CI-World-appearance-memory-comparison",
       "priority": "P1",
-      "status": "draft_serialization_correction_source_checks_pass_hosted_comparison_queued",
+      "status": "comparison_recorded_both_native_oom_feature_unqualified",
       "deliveryState": "draft",
       "owner": "lane-c",
       "pr": "https://github.com/mekhovov/revealline/pull/1776",
       "commit": "ca19775bf4fec1a4b53f49a2c33c93d2effd6357",
       "observedRemoteHead": "ca19775bf4fec1a4b53f49a2c33c93d2effd6357",
       "scope": "Diagnostic prerequisite only: compare identical whole World appearance test at fixed a7 and 2d15 under unchanged Node22.22.2 / 1536MiB heap / 2048MiB owned RSS / 180s / 2GiB disk floor. No feature acceptance.",
-      "next": "Collect BOTH fixed whole-file hosted observations and complete source/dependency/terminal evidence; retain failure outcomes, then decide whether a fixture-lifecycle correction is supported. No feature pass inferred.",
+      "next": "Review exactc464 test-only worker-registry lifecycle correction, preserve all case/assertion/history semantics, then qualify complete whole file and required native cohort with unchanged budgets. No production memory cause established.",
       "qualification": {
-        "automated": "Exact current Python:14/14 pure PASS and AST2 PASS (065afe). V7 read-only format3/3 PASS (9676ac). Prior failed-format receipt retained. Current hosted native comparison queued; no native observation or cause established.",
+        "automated": "Diagnostic39364916396 terminal:14purePASS on BOTH workers; BOTH whole-file runs V8_OOM, no115case completion. Complete raw/ten sealed terminals/source/deps/Git/Node beforeafter and crossVM semantic dependencies independently verified. Observer COMPARISON_RECORDED is not native/featurePASS.",
         "browser": "not_applicable_diagnostic_only",
         "physical": "not_applicable_diagnostic_only"
       },
@@ -6628,9 +6633,10 @@
         "proofSHA256": "160c4f00f614cecc151b0d02869edef559a3cbd542f84774cfe242a70e41fc9e"
       },
       "conditionalFixtureInvestigation": {
-        "status": "read_only_hypothesis_no_fix_or_cause_claim",
+        "status": "test_only_lifecycle_proposal_under_review_no_native_fix_qualification",
         "finding": "RegionalWorker.instances retains disposed workers and cloned messages. All23 reads use latest worker, none uses previous-test history. Consider clearing registry only after existing awaited app disposal if controlled evidence supports fixture memory work.",
-        "inventorySHA256": "1921e4d5b05249ef02398296aca5f8af63794bf059143a75623476883ef77a71"
+        "inventorySHA256": "1921e4d5b05249ef02398296aca5f8af63794bf059143a75623476883ef77a71",
+        "next": "A prepares a separate exact immutablec464 donor patch; original A WIP stays untouched. Scope and multiple-fixture cleanup ordering reviewed before any application or test."
       },
       "historicalProvenanceSetupFailure": {
         "head": "857d86ca20adf5cdfd833708cbacf93e4fcbe87b",
@@ -6690,6 +6696,107 @@
         "normalForceFalse": true,
         "localFilesIndexRefsWritten": 0,
         "evidenceStorage": "Compact task/tool memory while local evidence writes remain capacity-held; immutable Git objects preserve source for reinspection."
+      },
+      "controlledComparison": {
+        "head": "ca19775bf4fec1a4b53f49a2c33c93d2effd6357",
+        "run": "https://github.com/mekhovov/revealline/actions/runs/39364916396",
+        "status": "COMPARISON_RECORDED",
+        "wholeNativeFileCompleted": false,
+        "featureQualified": false,
+        "observations": [
+          {
+            "label": "baseline",
+            "sourceHead": "a7c8be6ff7f4cf2ee0409edbab136e398f21c1c2",
+            "sourceTree": "bcbea65b4e69718749fa7df0f3320128ce3dccfe",
+            "outcome": "V8_OOM",
+            "nativeQualification": false,
+            "wholeFileCompleted": false,
+            "topLevelOkLines": 70,
+            "indentedOkLines": 30,
+            "lastTopLevelOk": "Regional limit stops retain exports and restart while fatal worker failures remain unavailable",
+            "exitCode": -6,
+            "elapsedSeconds": 83.754234,
+            "peakOwnedRSSBytes": 1882918912,
+            "fullTAPFooter": false,
+            "source": {
+              "aggregateFormat": "UTF-8 path sorted JSONL [path, Git mode, raw content SHA-256]",
+              "aggregateSha256": "683c3d3562fdfcdd4802ec0686408b32f043ac49caae72bd16cb273820609c24",
+              "allTrackedSourceContentsAndModesMatch": true,
+              "bytes": 3709786510,
+              "files": 45658,
+              "format": "revealline-source-identity.v1",
+              "root": "/home/runner/work/revealline/revealline/candidate",
+              "sourceRevision": "a7c8be6ff7f4cf2ee0409edbab136e398f21c1c2",
+              "sourceTree": "bcbea65b4e69718749fa7df0f3320128ce3dccfe"
+            },
+            "sourceAndDependenciesAndGitAndNodeBeforeAfterExact": true,
+            "fiveSealedChildTerminals": true,
+            "controlAndExecutedWorkflowExact": true,
+            "pure14PerVM": "PASS",
+            "nativeStdout": {
+              "bytes": 21597,
+              "SHA256": "8f4f729e11cc710b88eac01b3519a975d8babea130cdd7d8271491fa13227c3b"
+            },
+            "nativeStderr": {
+              "bytes": 1148,
+              "SHA256": "c37f5094d24d7d1ebebca00d4e3b5bed33a84ba0d49811efa5194c9c34134429"
+            },
+            "jobRaw": {
+              "bytes": 38454,
+              "SHA256": "b431c5a7c834a5d29b373495bbeb007c41d93a19b2b155a1a5ef4068098eeef9"
+            },
+            "receiptSHA256": "20778ee6026576f3c8a6281295bcdd78b70e4bac5ff5373e6db14ffd96215262"
+          },
+          {
+            "label": "feature",
+            "sourceHead": "2d15ac09834c762a543d5aa3edcb9114f6135b88",
+            "sourceTree": "f602d4359e5ed4d45fd6e687bae7a533d8615e71",
+            "outcome": "V8_OOM",
+            "nativeQualification": false,
+            "wholeFileCompleted": false,
+            "topLevelOkLines": 70,
+            "indentedOkLines": 30,
+            "lastTopLevelOk": "Regional limit stops retain exports and restart while fatal worker failures remain unavailable",
+            "exitCode": -6,
+            "elapsedSeconds": 65.454477,
+            "peakOwnedRSSBytes": 1972379648,
+            "fullTAPFooter": false,
+            "source": {
+              "aggregateFormat": "UTF-8 path sorted JSONL [path, Git mode, raw content SHA-256]",
+              "aggregateSha256": "c76c1128c06f4496ad44f71ce1f71170a3a02bed0ad2484033db0734b6ec6bfd",
+              "allTrackedSourceContentsAndModesMatch": true,
+              "bytes": 3710117730,
+              "files": 45673,
+              "format": "revealline-source-identity.v1",
+              "root": "/home/runner/work/revealline/revealline/candidate",
+              "sourceRevision": "2d15ac09834c762a543d5aa3edcb9114f6135b88",
+              "sourceTree": "f602d4359e5ed4d45fd6e687bae7a533d8615e71"
+            },
+            "sourceAndDependenciesAndGitAndNodeBeforeAfterExact": true,
+            "fiveSealedChildTerminals": true,
+            "controlAndExecutedWorkflowExact": true,
+            "pure14PerVM": "PASS",
+            "nativeStdout": {
+              "bytes": 21599,
+              "SHA256": "3d6ff37ad6eda0b18a21e5f18742655b976a93cce43195bec2c5725493b8e4ba"
+            },
+            "nativeStderr": {
+              "bytes": 1351,
+              "SHA256": "0a03addfd280a0b128716755fce49a45ed8aee2b44a2644664caba043a032d6d"
+            },
+            "jobRaw": {
+              "bytes": 37934,
+              "SHA256": "dcfebd9ae9f6c615e7f1ace76f1f80b035ba6c17ca42100c567d604e6636f15d"
+            },
+            "receiptSHA256": "e9bd6c2f6abe2dc3be8dfe14381c344f992d374197270e5ae586a676e8b09550"
+          }
+        ],
+        "crossVMSemanticDependenciesAndNodeExact": true,
+        "allRawLinksAndTenSealedTerminalsVerified": true,
+        "independentProofSHA256": "86de4e960a5b7ae4e1d6401fc9ba4afc276197b615bd5d9dff7097891b5d93d9",
+        "rootProofSHA256": "4afea1c17dcf214e5da175f6046fadc632098974d7999538b2643b633b318119",
+        "rootProof": "/tmp/revealline-world-memory-ca197-c-evidence/root-pair-readback.json",
+        "interpretation": "Whole unchanged test OOM reproduced on baseline a7 and feature2d15 under identical controls; excludes a feature-exclusive OOM under these controls, does not identify retention cause or qualify115cases."
       }
     }
   ],
@@ -6741,7 +6848,7 @@
       1682,
       1686
     ],
-    "note": "50 feature source PRs merged,9 open for checks,32 drafts,1 withdrawn;18 prerequisites separate. Compatibility1668 merged externally at tested a7 after2309 source and1908 preview checks. Menu37ec passes16/19 source commands,20/22 ordinary Solo cases; exact preview passes118 complete files/1903 cases and builds. Browser and inner-package acceptance remain. Readability2d15 retains fixture/memory failures; qualified source corrections remain unpublished. Diagnostic1776: prior857 both13/13 pure PASS, native NOT_RUN due JSON tuple/list setup defect; reviewed additive14-case correction passes14 and AST2 locally and read-only format3 passes after a three-quote YAML correction. Exactca197 published normally; hosted comparison39364916396 queued. No memory cause established. Original83/113 scope unchanged; other chats keep running.",
+    "note": "50 feature source PRs merged,9 open for checks,32 drafts,1 withdrawn;18 prerequisites separate. Compatibility1668 merged externally at tested a7 after2309 source and1908 preview checks. Menu37ec passes16/19 source commands,20/22 ordinary Solo cases; exact preview passes118 complete files/1903 cases and builds. Browser and inner-package acceptance remain. Readability2d15 retains fixture/memory failures; qualified source corrections remain unpublished. Diagnostic1776: prior857 both13/13 pure PASS, native NOT_RUN due JSON tuple/list setup defect; reviewed additive14-case correction passes14 and AST2 locally and read-only format3 passes after a three-quote YAML correction. Exactca197 published normally; controlled comparison39364916396 records BOTH parent and feature OOM under identical limits, no complete115-case pass. Test-only lifecycle proposal under review. No memory cause established. Original83/113 scope unchanged; other chats keep running.",
     "latestMain": {
       "revision": "e719544a872bca315cf8173da223d919549f127c",
       "note": "External1775 documentation merge, exact db3 source. Three roadmap files only; no new feature source completion or manual merge by root."
