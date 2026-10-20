@@ -1051,6 +1051,8 @@ export function mountWorldApp({
     missionLibrary = null,
     missionLaunchGeneration = 0,
     runtimeOfflineFeedback = null,
+    storageFeedback = null,
+    storageRequestGeneration = 0,
     regionalRecoveryControls = null,
     regionalStartControls = null,
     regionalAdvancedControls = null,
@@ -1819,6 +1821,29 @@ export function mountWorldApp({
     }
     if (id === 'creator') ensureSpatialEditor();
   }
+  function paintStorageStatus() {
+    if (disposed) return;
+    const messages = {
+      ready: [
+        'Worlds and recordings are saved on this device. Export backups before clearing browser data.',
+        'Світи та записи збережено на цьому пристрої. Експортуйте копії перед очищенням даних браузера.',
+      ],
+      unavailable: [
+        'Durable storage is unavailable. Export your work before leaving.',
+        'Постійне сховище недоступне. Експортуйте роботу перед виходом.',
+      ],
+      granted: [
+        'Persistent storage granted. Keep an exported backup too.',
+        'Постійне сховище надано. Зберігайте також експортовану копію.',
+      ],
+      denied: [
+        'Persistent storage was not granted. Export packs and recordings as backups.',
+        'Постійне сховище не надано. Експортуйте пакунки та записи.',
+      ],
+    };
+    const text = storageFeedback ? txt(...messages[storageFeedback]) : '';
+    if ($('storage-status').textContent !== text) $('storage-status').textContent = text;
+  }
   function paintRuntimeOfflineStatus() {
     const messages = {
       preparing: [
@@ -1861,6 +1886,7 @@ export function mountWorldApp({
   function paintLanguage() {
     courseClassFilter?.refresh();
     paintRuntimeOfflineStatus();
+    paintStorageStatus();
     paintRegionalStarts();
     enemyStatsViews.forEach((view) => view.refresh());
     const toolNames = {
@@ -7680,16 +7706,16 @@ export function mountWorldApp({
     e.target.value = '';
   });
   on($('persistent-storage'), 'click', async () => {
-    const granted = await win.navigator.storage?.persist?.();
-    $('storage-status').textContent = granted
-      ? txt(
-          'Persistent storage granted. Keep an exported backup too.',
-          'Постійне сховище надано. Зберігайте також експортовану копію.',
-        )
-      : txt(
-          'Persistent storage was not granted. Export packs and recordings as backups.',
-          'Постійне сховище не надано. Експортуйте пакунки та записи.',
-        );
+    if (disposed) return;
+    const generation = ++storageRequestGeneration;
+    try {
+      const granted = await win.navigator.storage?.persist?.();
+      if (disposed || generation !== storageRequestGeneration) return;
+      storageFeedback = granted ? 'granted' : 'denied';
+      paintStorageStatus();
+    } catch (error) {
+      if (!disposed && generation === storageRequestGeneration) reportError(error);
+    }
   });
   const settingsRuntimeOfflineStatus = doc.createElement('p');
   settingsRuntimeOfflineStatus.id = 'settings-runtime-offline-status';
@@ -8433,16 +8459,11 @@ export function mountWorldApp({
     appearanceControls.preferences.adoptExisting(
       Boolean(records.length || installed.length || notebook.snapshot().attempts.length),
     );
-    $('storage-status').textContent =
-      worldStore && recordStore
-        ? txt(
-            'Worlds and recordings are saved on this device. Export backups before clearing browser data.',
-            'Світи та записи збережено на цьому пристрої. Експортуйте копії перед очищенням даних браузера.',
-          )
-        : txt(
-            'Durable storage is unavailable. Export your work before leaving.',
-            'Постійне сховище недоступне. Експортуйте роботу перед виходом.',
-          );
+    if (disposed) return;
+    // Initial availability cannot replace a completed explicit permission result.
+    // A pending or rejected request keeps the last completed storage feedback.
+    storageFeedback ??= worldStore && recordStore ? 'ready' : 'unavailable';
+    paintStorageStatus();
   })();
   const shellMissions = el('section', undefined, 'sim-shell-missions');
   const lobbyHeader = doc.querySelector('.studio-header');
