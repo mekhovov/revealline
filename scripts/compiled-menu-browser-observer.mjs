@@ -18,6 +18,7 @@ import {
   RETAINED_IDS,
   STAGES,
   assertLoopback,
+  createCompiledOperationTrace,
 } from './compiled-menu-browser-contract.mjs';
 
 export function readCompiledMenuPublicState() {
@@ -70,6 +71,8 @@ export function readCompiledMenuPublicState() {
         'settings-dialog',
         'mission-replace-dialog',
         'mode-leave-dialog',
+        'flight-preparation-status',
+        'run-message',
       ].map((id) => [id, control(id)]),
     ),
     cards: nodes.map((x) => ({
@@ -115,13 +118,20 @@ export async function observeCompiledMenu({
     cleanup: { context: 'absent', browser: 'absent', server: 'absent' },
   };
   const budget = pagesBudget(570000);
+  const trace = createCompiledOperationTrace(budget, (value, cap) =>
+    redactPagesText(value, password, cap),
+  );
   const step = (...args) => {
     report.activeStep = args[0];
-    return budget.step(...args);
+    return trace.step(...args);
   };
   let server, browser, context, diagnostics;
   const retain = async () =>
-    writeFile(join(output, 'report.json'), encodePagesReport(report, password), { mode: 0o600 });
+    writeFile(
+      join(output, 'report.json'),
+      trace.encodeReport(report, (value) => encodePagesReport(value, password)),
+      { mode: 0o600 },
+    );
   const closeWithin = async (label, work) => {
     let timer;
     try {
@@ -224,7 +234,9 @@ export async function observeCompiledMenu({
     report.stages.push('ordinary-password-accepted');
     await retain();
     const read = async () => {
+      trace.noteRead();
       const s = await step('read public DOM', () => page.evaluate(readCompiledMenuPublicState));
+      trace.recordPublicState(s);
       assert.equal(new URL(s.href).origin, new URL(origin).origin);
       assert.equal(s.hidden, false);
       assert.equal(s.focused, true);
@@ -235,6 +247,7 @@ export async function observeCompiledMenu({
       return s;
     };
     const until = async (label, predicate, cap = 60000) => {
+      trace.enterPhase(label);
       const end = Math.min(budget.deadline, budget.now() + cap);
       for (;;) {
         assert(budget.now() < end, 'Compiled controls deadline: ' + label);
@@ -267,6 +280,7 @@ export async function observeCompiledMenu({
       await step('native filter ' + id, (timeout) => control.selectOption(value, { timeout }));
     };
     const browse = async (locale) => {
+      trace.setLocale(locale);
       await click('#shell-play');
       await until(
         'visible Missions',

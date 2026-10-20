@@ -6155,5 +6155,15 @@
   "textSizeCompatibility.retained": "Дуже великий · тут використовується великий",
   "textSizeCompatibility.fallback": "Дуже великий розмір збережено як бажаний. Цей екран наразі використовує великий розмір. Оберіть стандартний або великий, щоб змінити спільне налаштування.",
   "textSizeCompatibility.readOnlyFallback": "Дуже великий розмір збережено як бажаний. Цей екран наразі використовує великий розмір.",
+  "textSizeCompatibility.extraLarge": "Дуже великий",
+  "community.service.heading": "З’єднання зі спільнотою",
+  "community.service.checking": "Перевіряємо з’єднання зі спільнотою перед налаштуванням…",
+  "community.service.ready": "З’єднання зі спільнотою доступне. Вхід і права на публікацію перевіряються окремо.",
+  "community.service.unavailable": "З’єднання зі спільнотою недоступне. Онлайн-каталог, налаштування облікового запису й публікація призупинені. Локальна гра та створення доступні; встановлений вміст залежить від збережених на пристрої даних.",
+  "community.service.retry": "Перевірити з’єднання знову",
+  "community.service.localPlay": "До локальної гри",
+  "community.service.localCreate": "Створювати локально",
+  "community.service.catalogWaiting": "Каталог відкриється після перевірки з’єднання.",
+  "community.service.accountWaiting": "З’єднання перевіряється перед входом.",
   "playerSteeringArea": "Зона керування гравця {{player}}"
 }

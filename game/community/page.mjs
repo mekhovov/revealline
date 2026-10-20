@@ -1,6 +1,7 @@
 import { createCreatorStore } from '../creator/installed.mjs';
 import { createCommunityAccountClient } from './account.mjs';
 import { createCommunityClient } from './client.mjs';
+import { attachCommunityReadiness, communityRequest, probeCommunityService } from './readiness.mjs';
 import { createCommunityDownloadStore } from './download-store.mjs';
 import { createCommunityLibrary } from './library.mjs';
 import { createCommunityPublisher } from './publisher.mjs';
@@ -49,7 +50,38 @@ let accountSession = injectedAuth ? { user: {}, configured: true } : null;
 const accountParameters = new URL(globalThis.location.href).searchParams;
 const passwordResetToken = accountParameters.get('token');
 const previewURLs = new Set();
-const canPublish = () => Boolean(accountSession && auth?.headers);
+let publishBusy = false;
+let preparingPackage = false;
+let packageSelectionValid = Boolean(publisher.current());
+const canPublish = () =>
+  !publishBusy &&
+  !preparingPackage &&
+  packageSelectionValid &&
+  readiness.available() &&
+  Boolean(accountSession && auth?.headers);
+let catalogRequest = null;
+let catalogGeneration = 0;
+let catalogBusy = false;
+let catalogSelection = null;
+const selectedCatalog = () => ({ query: $('search').value, installed: $('filter').value });
+const sameCatalog = (left, right) =>
+  left?.query === right.query && left?.installed === right.installed;
+const renderPagination = () => {
+  $('more').hidden = !nextCursor;
+  $('more').disabled = catalogBusy || !nextCursor || !readiness.available();
+  $('catalog').setAttribute('aria-busy', String(catalogBusy));
+};
+const cancelCatalog = () => {
+  catalogGeneration += 1;
+  catalogRequest?.abort();
+  catalogRequest = null;
+  catalogBusy = false;
+  catalogSelection = null;
+  nextCursor = null;
+  renderPagination();
+};
+let sessionGeneration = 0;
+let accountMutations = 0;
 const renderAccount = () => {
   $('account-signed-out').hidden = Boolean(accountSession);
   $('account-signed-in').hidden = !accountSession;
@@ -61,6 +93,7 @@ const renderAccount = () => {
             identity: accountSession.user.name || accountSession.user.email,
           }),
     );
+  $('publish-file').disabled = publishBusy || preparingPackage;
   $('publish').disabled = !publisher.current() || !canPublish();
 };
 const setAccountStatus = (message, error = false) => {
@@ -114,15 +147,17 @@ const action = (label, run, className = '') => {
   };
   return button;
 };
-function render() {
-  for (const url of previewURLs) URL.revokeObjectURL(url);
-  previewURLs.clear();
-  $('catalog').replaceChildren();
-  if (!rows.length)
+function render({ append = false, start = 0 } = {}) {
+  if (!append) {
+    for (const url of previewURLs) URL.revokeObjectURL(url);
+    previewURLs.clear();
+    $('catalog').replaceChildren();
+  }
+  if (!rows.length && !catalogBusy && !nextCursor)
     $('catalog').append(
       text('p', localizedMessage('interface:community.noCampaignsMatch'), 'muted'),
     );
-  for (const edition of rows) {
+  for (const edition of rows.slice(start)) {
     const card = document.createElement('article');
     card.className = 'edition';
     card.append(text('h2', edition.title));
@@ -328,49 +363,99 @@ function render() {
   }
 }
 async function refresh({ reset = true } = {}) {
-  try {
-    if (reset) nextCursor = null;
-    const result = await library.catalog({
-      query: $('search').value,
-      installed: $('filter').value,
-      cursor: reset ? null : nextCursor,
-    });
-    rows = reset
-      ? [...result.editions]
-      : [
-          ...rows,
-          ...result.editions.filter(
-            (candidate) => !rows.some((row) => row.editionId === candidate.editionId),
-          ),
-        ];
-    nextCursor = result.nextCursor;
-    $('more').hidden = !nextCursor;
+  if (!readiness.available()) return;
+  const selection = selectedCatalog();
+  // A queued Load more belongs only to the committed result set. It must not
+  // replace a first-page request or consume a cursor from another filter.
+  if (!reset && (catalogBusy || !nextCursor || !sameCatalog(catalogSelection, selection))) return;
+  catalogRequest?.abort();
+  catalogRequest = new AbortController();
+  const current = ++catalogGeneration,
+    cursor = reset ? null : nextCursor,
+    previousCount = reset ? 0 : rows.length,
+    returnFocus = !reset && document.activeElement === $('more');
+  let focusDestination;
+  catalogBusy = true;
+  if (reset) {
+    nextCursor = null;
+    catalogSelection = null;
+    rows = [];
     render();
+  }
+  renderPagination();
+  status(localizedMessage('interface:community.loadingCatalog'));
+  try {
+    const result = await communityRequest(
+      (signal) =>
+        library.catalog({
+          ...selection,
+          cursor,
+          signal,
+        }),
+      { signal: catalogRequest.signal },
+    );
+    if (current !== catalogGeneration || !readiness.available()) return;
+    const seen = new Set(reset ? [] : rows.map((row) => row.editionId));
+    rows = [
+      ...(reset ? [] : rows),
+      ...result.editions.filter((candidate) => {
+        if (seen.has(candidate.editionId)) return false;
+        seen.add(candidate.editionId);
+        return true;
+      }),
+    ];
+    catalogSelection = selection;
+    nextCursor = result.nextCursor;
+    catalogBusy = false;
+    render({ append: !reset && previousCount > 0, start: previousCount });
     status(
       localizedMessage('interface:community.editionsShown', {
         count: rows.length,
       }),
     );
+    focusDestination =
+      $('catalog').querySelectorAll('h2')[previousCount] ?? (nextCursor ? $('more') : $('status'));
   } catch (error) {
+    if (current !== catalogGeneration) return;
+    // A failed query does not invalidate the separate service probe. Keep the
+    // controls available so players can correct the query or retry this page.
     status(
       localizedMessage('interface:community.catalogUnavailable', {
         error: error.message,
       }),
       true,
     );
+    focusDestination = nextCursor ? $('more') : $('service-retry');
+  } finally {
+    if (current === catalogGeneration) {
+      catalogBusy = false;
+      catalogRequest = null;
+      renderPagination();
+      if (returnFocus && [$('more'), document.body, null].includes(document.activeElement)) {
+        if (focusDestination && !['BUTTON', 'INPUT', 'SELECT'].includes(focusDestination.tagName))
+          focusDestination.setAttribute('tabindex', '-1');
+        focusDestination?.focus({ preventScroll: false });
+      }
+    }
   }
 }
-$('refresh').onclick = refresh;
+$('refresh').onclick = () => readiness.check();
 $('more').onclick = () => refresh({ reset: false });
 $('search').oninput = () => refresh({ reset: true });
 $('filter').onchange = () => refresh({ reset: true });
 $('publish-file').onchange = async () => {
+  if (!readiness.available() || publishBusy || preparingPackage) return;
+  preparingPackage = true;
+  renderAccount();
   try {
     const file = $('publish-file').files[0];
     if (!file) return;
+    packageSelectionValid = false;
     const selected = await publisher.select(file);
+    packageSelectionValid = true;
     $('publish-title').value = selected.suggestedTitle;
     $('publish-slug').value = selected.suggestedSlug;
+    preparingPackage = false;
     $('publish').disabled = !canPublish();
     localizedText(
       $('publish-status'),
@@ -383,10 +468,15 @@ $('publish-file').onchange = async () => {
   } catch (error) {
     $('publish').disabled = true;
     localizedText($('publish-status'), error.message);
+  } finally {
+    preparingPackage = false;
+    renderAccount();
   }
 };
 $('publish').onclick = async () => {
-  $('publish').disabled = true;
+  if (!canPublish()) return;
+  publishBusy = true;
+  renderAccount();
   try {
     const result = await publisher.publish({
       title: $('publish-title').value,
@@ -413,7 +503,8 @@ $('publish').onclick = async () => {
   } catch (error) {
     localizedText($('publish-status'), error.message);
   } finally {
-    $('publish').disabled = !publisher.current() || !canPublish();
+    publishBusy = false;
+    renderAccount();
   }
 };
 async function checkSubmission() {
@@ -467,6 +558,8 @@ function scheduleSubmissionCheck() {
 }
 $('account-sign-up').onclick = async () => {
   if (!account) return;
+  sessionGeneration += 1;
+  accountMutations += 1;
   $('account-sign-up').disabled = true;
   try {
     accountSession = await account.signUp({
@@ -480,6 +573,8 @@ $('account-sign-up').onclick = async () => {
   } catch (error) {
     setAccountStatus(error.message, true);
   } finally {
+    accountMutations -= 1;
+    sessionGeneration += 1;
     $('account-sign-up').disabled = false;
   }
 };
@@ -527,6 +622,8 @@ $('account-reset').onclick = async () => {
 };
 $('account-sign-in').onclick = async () => {
   if (!account) return;
+  sessionGeneration += 1;
+  accountMutations += 1;
   $('account-sign-in').disabled = true;
   try {
     accountSession = await account.signIn({
@@ -539,11 +636,15 @@ $('account-sign-in').onclick = async () => {
   } catch (error) {
     setAccountStatus(error.message, true);
   } finally {
+    accountMutations -= 1;
+    sessionGeneration += 1;
     $('account-sign-in').disabled = false;
   }
 };
 $('account-sign-out').onclick = async () => {
   if (!account) return;
+  sessionGeneration += 1;
+  accountMutations += 1;
   $('account-sign-out').disabled = true;
   try {
     await account.signOut();
@@ -555,32 +656,64 @@ $('account-sign-out').onclick = async () => {
   } catch (error) {
     setAccountStatus(error.message, true);
   } finally {
+    accountMutations -= 1;
+    sessionGeneration += 1;
     $('account-sign-out').disabled = false;
   }
 };
-window.addEventListener('pagehide', () => {
+const cancelReadinessWork = () => {
+  readiness.cancel();
+  cancelCatalog();
+  sessionGeneration += 1;
+};
+window.addEventListener('pagehide', (event) => {
+  cancelReadinessWork();
   clearTimeout(submissionTimer);
   for (const url of previewURLs) URL.revokeObjectURL(url);
-  library.close();
-  creatorStore.close();
+  if (!event.persisted) {
+    library.close();
+    creatorStore.close();
+  }
+});
+window.addEventListener('pageshow', (event) => {
+  if (event.persisted) void readiness.check();
+});
+window.addEventListener('offline', () => {
+  cancelReadinessWork();
+  readiness.unavailable();
+});
+window.addEventListener('online', () => void readiness.check());
+async function restoreAccount() {
+  if (!account || accountMutations) return;
+  const current = ++sessionGeneration;
+  try {
+    const session = await communityRequest(() => account.session());
+    if (current !== sessionGeneration || !readiness.available()) return;
+    accountSession = session;
+    if (session) setAccountStatus(localizedMessage('interface:community.sessionRestored'));
+    else if (!renderAccountAction())
+      setAccountStatus(localizedMessage('interface:community.signInOnlyToPublish'));
+    renderAccount();
+  } catch (error) {
+    if (current !== sessionGeneration) return;
+    setAccountStatus(
+      localizedMessage('interface:community.accountServiceUnavailable', { error: error.message }),
+      true,
+    );
+  }
+}
+const readiness = attachCommunityReadiness({
+  document,
+  probe: (signal) => {
+    cancelCatalog();
+    sessionGeneration += 1;
+    return probeCommunityService({ baseURL: apiBase, signal });
+  },
+  onReady: () => {
+    renderAccount();
+    void restoreAccount();
+    return refresh();
+  },
 });
 renderAccount();
-if (account)
-  void account
-    .session()
-    .then((session) => {
-      accountSession = session;
-      if (session) setAccountStatus(localizedMessage('interface:community.sessionRestored'));
-      else if (!renderAccountAction())
-        setAccountStatus(localizedMessage('interface:community.signInOnlyToPublish'));
-      renderAccount();
-    })
-    .catch((error) =>
-      setAccountStatus(
-        localizedMessage('interface:community.accountServiceUnavailable', {
-          error: error.message,
-        }),
-        true,
-      ),
-    );
-void refresh();
+void readiness.check();

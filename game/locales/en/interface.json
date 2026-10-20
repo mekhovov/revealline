@@ -6041,5 +6041,15 @@
   "textSizeCompatibility.retained": "Extra large · using Large here",
   "textSizeCompatibility.fallback": "Extra large is kept as your preferred size. This screen currently uses Large. Choose Standard or Large to change the shared preference.",
   "textSizeCompatibility.readOnlyFallback": "Extra large is kept as your preferred size. This screen currently uses Large.",
+  "textSizeCompatibility.extraLarge": "Extra large",
+  "community.service.heading": "Community connection",
+  "community.service.checking": "Checking the community connection before setup…",
+  "community.service.ready": "Community connection available. Sign-in and publishing permissions are checked separately.",
+  "community.service.unavailable": "Community connection unavailable. Online browsing, account setup and publishing are paused. Local play and creation remain available; already installed content depends on what is kept on this device.",
+  "community.service.retry": "Check connection again",
+  "community.service.localPlay": "Return to local play",
+  "community.service.localCreate": "Create locally",
+  "community.service.catalogWaiting": "The catalog opens after the connection check.",
+  "community.service.accountWaiting": "Connection is checked before sign-in.",
   "playerSteeringArea": "Player {{player}} steering area"
 }

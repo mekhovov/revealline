@@ -1,0 +1,543 @@
+/* Only Single Drone/Riy's native entry opts in. Authored sizes multiply once;
+ * inherited/em text follows its parent. Logical field/camera values do not change. */
+html[data-text-scaling='overflight'][data-theme-text-size='extra-large'] {
+  --overflight-text-scale: 2;
+}
+html[data-text-scaling='overflight'][data-theme-text-size='extra-large']
+  body:not([data-text-size]) {
+  font-size: 32px;
+}
+html[data-text-scaling='overflight'] body[data-text-size] {
+  --overflight-text-scale: 1;
+}
+html[data-text-scaling='overflight'] body[data-text-size='extra-large'] {
+  --overflight-text-scale: 2;
+  font-size: 32px;
+  min-inline-size: 0;
+}
+
+html[data-text-scaling='overflight']
+  body[data-text-size='extra-large']
+  :is(button, summary, .button) {
+  max-inline-size: 100%;
+  min-block-size: 44px;
+  block-size: auto;
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+html[data-text-scaling='overflight']
+  body[data-text-size='extra-large']
+  :is(input, select, textarea, label, p, h1, h2, h3, h4, span, strong, small) {
+  min-inline-size: 0;
+  max-inline-size: 100%;
+  overflow-wrap: anywhere;
+}
+html[data-text-scaling='overflight'] body[data-text-size='extra-large'] dialog {
+  min-inline-size: 0;
+  max-inline-size: calc(100vw - 16px);
+  max-block-size: calc(100dvh - 16px);
+}
+html[data-text-scaling='overflight']
+  body[data-text-size='extra-large']
+  :is(.mode-play-dialog:not(.mode-play-home):not(#overflight-pause-dialog), #upgrade-dialog)[open] {
+  display: block;
+  overflow: auto;
+  scroll-padding-block: 12px;
+}
+html[data-text-scaling='overflight']
+  body[data-text-size='extra-large']
+  .mode-play-dialog:not(#overflight-pause-dialog)
+  .mode-play-content {
+  overflow: visible;
+}
+html[data-text-scaling='overflight']
+  body[data-text-size='extra-large']
+  #overflight-settings-dialog
+  .mode-settings-layout {
+  flex: none;
+  block-size: min(55dvh, 28rem);
+}
+html[data-text-scaling='overflight']
+  body[data-text-size='extra-large']
+  #overflight-settings-dialog
+  .mode-settings-content {
+  overflow: visible;
+}
+html[data-text-scaling='overflight']
+  body[data-text-size='extra-large']
+  :is(.mode-play-actions, .mode-play-bar, .overflight-result-actions) {
+  flex-wrap: wrap;
+}
+html[data-text-scaling='overflight']
+  body[data-text-size='extra-large']
+  :is(.mode-play-utilities, .overflight-operation-grid, .overflight-role-grid) {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 14rem), 1fr));
+}
+html[data-text-scaling='overflight']
+  body[data-text-size='extra-large']
+  :is(.overflight-hangar, .overflight-result-build, #result-stats) {
+  grid-template-columns: minmax(0, 1fr);
+}
+html[data-text-scaling='overflight'] body[data-text-size='extra-large'] .overflight-result-hero {
+  flex-wrap: wrap;
+}
+html[data-text-scaling='overflight'] body[data-text-size='extra-large'] .overflight-upgrade-cards {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 22rem), 1fr));
+  max-block-size: none;
+  overflow: visible;
+}
+html[data-text-scaling='overflight'] body[data-text-size='extra-large'] .upgrade-preview svg text {
+  visibility: hidden;
+}
+html[data-text-scaling='overflight'] body[data-text-size='extra-large'] .upgrade-comparison {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 12px;
+  font-size: 24px;
+  line-height: 1.4;
+}
+html[data-text-scaling='overflight'] body[data-text-size='extra-large'] .upgrade-comparison-state {
+  padding: 8px;
+  border-inline-start: 2px solid currentColor;
+}
+
+/* Remaining viewport height is the field budget; FIT preserves logical geometry.
+ * The touch root shares the exact field grid cell and retains its arena element. */
+html[data-text-scaling='overflight'] body[data-text-size='extra-large'] #overflight-shell {
+  block-size: 100dvh;
+  grid-template-rows: auto minmax(0, 1fr);
+}
+html[data-text-scaling='overflight'] body[data-text-size='extra-large'] .mode-play-stage {
+  overflow: hidden;
+}
+html[data-text-scaling='overflight'] body[data-text-size='extra-large'] #overflight-game {
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: auto minmax(0, 1fr);
+  gap: 4px;
+  min-block-size: 0;
+  overflow: hidden;
+}
+html[data-text-scaling='overflight'] body[data-text-size='extra-large'] #render-host {
+  grid-area: 2 / 1;
+  inline-size: 100%;
+  block-size: 100%;
+  min-block-size: 0;
+}
+html[data-text-scaling='overflight'] body[data-text-size='extra-large'] #overflight-hud {
+  position: relative;
+  inset: auto;
+  grid-area: 1 / 1;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 4px;
+  min-block-size: 0;
+}
+html[data-text-scaling='overflight'] body[data-text-size='extra-large'] #overflight-field-controls {
+  display: contents;
+}
+html[data-text-scaling='overflight'] body[data-text-size='extra-large'] .overflight-topline {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+  padding: 4px 8px;
+}
+
+html[data-text-scaling='overflight']
+  body[data-text-size='extra-large']
+  .overflight-topline
+  :is(span, strong) {
+  overflow-wrap: normal;
+  word-break: normal;
+}
+html[data-text-scaling='overflight'] body[data-text-size='extra-large'] #hud-time {
+  white-space: nowrap;
+}
+html[data-text-scaling='overflight']
+  body[data-text-size='extra-large']
+  :is(.overflight-vitals, .overflight-clock, .overflight-tally) {
+  gap: 2px;
+  max-inline-size: 100%;
+}
+html[data-text-scaling='overflight'] body[data-text-size='extra-large'] .overflight-tally {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 4px 8px;
+}
+html[data-text-scaling='overflight']
+  body[data-text-size='extra-large']
+  :is(#hud-salvage, #hud-final-objective) {
+  max-inline-size: 100%;
+}
+html[data-text-scaling='overflight'] body[data-text-size='extra-large'] .overflight-bottomline {
+  position: static;
+  padding: 4px 8px;
+}
+html[data-text-scaling='overflight'] body[data-text-size='extra-large'] .overflight-riy-controls {
+  max-inline-size: 100%;
+  padding: 4px 8px;
+}
+html[data-text-scaling='overflight'] body[data-text-size='extra-large'] #overflight-flight-details {
+  display: grid;
+  gap: 8px;
+  pointer-events: auto;
+  padding: 4px 8px;
+}
+html[data-text-scaling='overflight']
+  body[data-text-size='extra-large']
+  #overflight-flight-details
+  > * {
+  position: static;
+  inset: auto;
+  transform: none;
+  max-inline-size: 100%;
+  inline-size: auto;
+  margin: 4px 0;
+  white-space: normal;
+  text-overflow: clip;
+  overflow-wrap: anywhere;
+}
+html[data-text-scaling='overflight'] body[data-text-size='extra-large'] #hud-build {
+  flex-wrap: wrap;
+  overflow: visible;
+}
+html[data-text-scaling='overflight'] body[data-text-size='extra-large'] .overflight-riy-copy {
+  font:
+    24px/1.3 system-ui,
+    sans-serif;
+}
+html[data-text-scaling='overflight']
+  body[data-text-size='extra-large']
+  :is(.overflight-result-insignia, .upgrade-celebration) {
+  --overflight-text-scale: 1;
+}
+html[data-text-scaling='overflight'] body[data-text-size='extra-large'] .overflight-touch {
+  position: relative;
+  inset: auto;
+  grid-area: 2 / 1;
+  align-self: end;
+  gap: 8px;
+  margin: 6px;
+}
+html[data-text-scaling='overflight']
+  body[data-text-size='extra-large']
+  .overflight-touch
+  .shared-touch-action {
+  min-inline-size: 0;
+  inline-size: 112px;
+  max-inline-size: calc(100% - var(--touch-size) - 8px);
+  white-space: pre-line;
+}
+/* Direction glyphs retain their pad geometry; their instruction still scales. */
+html[data-text-scaling='overflight']
+  body[data-text-size='extra-large']
+  :is(.shared-touch-pad button, .shared-touch-surface > span:first-child) {
+  --overflight-text-scale: 1;
+}
+
+@media (min-width: 700px) and (max-height: 600px) {
+  html[data-text-scaling='overflight'] body[data-text-size='extra-large'] #overflight-game {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 55%);
+    grid-template-rows: auto minmax(0, 1fr);
+  }
+  html[data-text-scaling='overflight'] body[data-text-size='extra-large'] #render-host,
+  html[data-text-scaling='overflight'] body[data-text-size='extra-large'] .overflight-touch {
+    grid-area: 2 / 1;
+  }
+  html[data-text-scaling='overflight'] body[data-text-size='extra-large'] #overflight-hud {
+    grid-area: 1 / 2 / span 2;
+    align-content: start;
+    grid-auto-rows: auto;
+    gap: 2px;
+  }
+  html[data-text-scaling='overflight'] body[data-text-size='extra-large'] .overflight-riy-controls {
+    grid-template-columns: minmax(0, 1fr);
+    align-items: center;
+    gap: 2px;
+    padding: 2px 8px;
+  }
+  html[data-text-scaling='overflight'] body[data-text-size='extra-large'] .overflight-topline {
+    grid-template-columns: minmax(0, 1fr) 8rem;
+    gap: 4px;
+    padding: 2px 8px;
+  }
+  html[data-text-scaling='overflight'] body[data-text-size='extra-large'] .overflight-bottomline {
+    padding: 2px 8px;
+  }
+}
+
+/* Timed notices and actionable review/squad controls remain live. */
+html[data-text-scaling='overflight']
+  body[data-text-size='extra-large']
+  :is(#hud-cache, #hud-reward, #overflight-commentator, #overflight-review-controls) {
+  position: static;
+  inset: auto;
+  transform: none;
+  max-inline-size: 100%;
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+
+/* Conditional status uses the field column's spare FIT height, not the rail.
+ * The render/touch roots keep their original parent and the same field cell. */
+html[data-text-scaling='overflight'] body[data-text-size='extra-large'] #overflight-field-status {
+  grid-area: 1 / 1;
+  display: grid;
+  gap: 2px;
+  padding: 2px 8px;
+  min-inline-size: 0;
+  color: #f3f0db;
+}
+html[data-text-scaling='overflight']
+  body[data-text-size='extra-large']
+  #overflight-field-status
+  > #hud-boost {
+  font: calc(12px * var(--overflight-text-scale, 1)) / 1.3 var(--fk-font-mono, monospace);
+}
+html[data-text-scaling='overflight']
+  body[data-text-size='extra-large']
+  #overflight-field-status
+  > :not(#hud-boost) {
+  font:
+    calc(12px * var(--overflight-text-scale, 1)) / 1.3 system-ui,
+    sans-serif;
+}
+html[data-text-scaling='overflight']
+  body[data-text-size='extra-large']
+  .overflight-bottomline:empty {
+  display: none;
+}
+/* Deliberate temporary scene overlay: messages cannot grow the instrument row.
+ * A caption that cannot fit uses the existing Pause reader instead. */
+html[data-text-scaling='overflight'] body[data-text-size='extra-large'] #overflight-field-notices {
+  position: absolute;
+  inset: 0;
+  grid-area: 2 / 1 / 3 / 2;
+  min-inline-size: 0;
+  min-block-size: 0;
+  box-sizing: border-box;
+  z-index: 4;
+  display: grid;
+  align-content: start;
+  gap: 4px;
+  padding: 4px;
+  pointer-events: none;
+}
+html[data-text-scaling='overflight']
+  body[data-text-size='extra-large']
+  #overflight-field-notices
+  > * {
+  inline-size: auto;
+  min-inline-size: 0;
+  max-inline-size: 100%;
+  margin: 0;
+}
+html[data-text-scaling='overflight'] body[data-text-size='extra-large'] #hud-reward {
+  grid-template-columns: 28px minmax(0, 1fr);
+  gap: 2px 6px;
+  padding: 4px 8px;
+}
+html[data-text-scaling='overflight'] body[data-text-size='extra-large'] #hud-reward canvas {
+  grid-row: 1;
+}
+html[data-text-scaling='overflight'] body[data-text-size='extra-large'] #hud-reward strong {
+  grid-column: 1 / -1;
+}
+html[data-text-scaling='overflight']
+  body[data-text-size='extra-large']
+  #overflight-results-dialog
+  > .mode-play-actions {
+  flex-direction: column;
+  align-items: stretch;
+}
+html[data-text-scaling='overflight']
+  body[data-text-size='extra-large']
+  #overflight-results-dialog
+  > .mode-play-actions
+  > .button {
+  flex: none;
+  inline-size: 100%;
+}
+html[data-text-scaling='overflight']
+  body[data-text-size='extra-large']
+  #overflight-field-status
+  > * {
+  overflow-wrap: normal;
+  word-break: normal;
+}
+/* Replace only the existing Pause button's painted label while a live message
+ * needs its reader. The button, accessible name, dimensions and handler remain. */
+html[data-text-scaling='overflight']
+  body[data-text-size='extra-large']
+  #overflight-action-pause[data-caption-read-label] {
+  position: relative;
+}
+html[data-text-scaling='overflight']
+  body[data-text-size='extra-large']
+  #overflight-action-pause[data-caption-read-label]::after {
+  content: attr(data-caption-read-label) / '';
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  border-radius: inherit;
+  background: var(--fk-panel, #172126);
+  color: inherit;
+  font: inherit;
+  pointer-events: none;
+}
+html[data-text-scaling='overflight'] body[data-text-size='extra-large'] [data-reaction-reader] p {
+  line-height: 1.45;
+  overflow-wrap: anywhere;
+  white-space: normal;
+}
+
+/* Visible Extra large touch controls own a dock, not an overlay on the field.
+ * The same root, arena, gesture nodes and native action handlers are retained. */
+html[data-text-scaling='overflight']
+  body[data-text-size='extra-large']
+  #overflight-game.has-touch-controls {
+  grid-template-rows: auto minmax(0, 1fr) auto;
+}
+html[data-text-scaling='overflight']
+  body[data-text-size='extra-large']
+  #overflight-game.has-touch-controls
+  .overflight-touch {
+  --overflight-dock-size: min(var(--touch-size), calc((100vw - 24px) / 2));
+  grid-area: 3 / 1;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-self: stretch;
+  align-items: stretch;
+  block-size: var(--overflight-dock-size);
+  min-block-size: 132px;
+  min-inline-size: 0;
+  margin: 4px;
+  gap: 8px;
+}
+html[data-text-scaling='overflight']
+  body[data-text-size='extra-large']
+  #overflight-game.has-touch-controls
+  .overflight-touch[data-touch-side='left']
+  .shared-touch-action {
+  grid-column: 2;
+}
+html[data-text-scaling='overflight']
+  body[data-text-size='extra-large']
+  #overflight-game.has-touch-controls
+  .overflight-touch
+  :is(.shared-touch-surface, .shared-touch-pad, .shared-touch-action) {
+  grid-row: 1;
+  min-inline-size: 0;
+  max-inline-size: 100%;
+  max-block-size: 100%;
+  inline-size: 100%;
+  block-size: 100%;
+  box-sizing: border-box;
+}
+html[data-text-scaling='overflight']
+  body[data-text-size='extra-large']
+  #overflight-game.has-touch-controls
+  .overflight-touch
+  .shared-touch-action {
+  min-block-size: 76px;
+  padding: 4px 6px;
+  white-space: pre-line;
+  overflow-wrap: normal;
+  word-break: normal;
+}
+html[data-text-scaling='overflight']
+  body[data-text-size='extra-large']
+  #overflight-game.has-touch-controls
+  .shared-touch-surface {
+  border-radius: 16px;
+  padding: 4px;
+  text-align: center;
+  overflow-wrap: normal;
+  word-break: normal;
+}
+html[data-text-scaling='overflight']
+  body[data-text-size='extra-large']
+  #overflight-game.has-touch-controls
+  .shared-touch-surface
+  > span:first-child {
+  display: none;
+}
+html[data-text-scaling='overflight']
+  body[data-text-size='extra-large']
+  #overflight-game.has-touch-controls
+  .overflight-vitals {
+  display: contents;
+}
+html[data-text-scaling='overflight']
+  body[data-text-size='extra-large']
+  #overflight-game.has-touch-controls
+  .overflight-topline {
+  grid-template-columns: minmax(0, 1fr) 8rem;
+  gap: 2px 8px;
+}
+html[data-text-scaling='overflight']
+  body[data-text-size='extra-large']
+  #overflight-game.has-touch-controls
+  #hud-hull {
+  grid-area: 1 / 1;
+}
+html[data-text-scaling='overflight']
+  body[data-text-size='extra-large']
+  #overflight-game.has-touch-controls
+  #hud-health {
+  grid-area: 2 / 1;
+}
+html[data-text-scaling='overflight']
+  body[data-text-size='extra-large']
+  #overflight-game.has-touch-controls
+  .overflight-clock {
+  grid-area: 1 / 2 / span 2;
+}
+html[data-text-scaling='overflight']
+  body[data-text-size='extra-large']
+  #overflight-game.has-touch-controls
+  #hud-airframes {
+  grid-area: 3 / 1 / 4 / -1;
+}
+html[data-text-scaling='overflight']
+  body[data-text-size='extra-large']
+  #overflight-game.has-touch-controls
+  #hud-protection {
+  grid-area: 4 / 1 / 5 / -1;
+}
+html[data-text-scaling='overflight']
+  body[data-text-size='extra-large']
+  #overflight-game.has-touch-controls
+  #hud-protection:empty {
+  display: none;
+}
+html[data-text-scaling='overflight']
+  body[data-text-size='extra-large']
+  #overflight-game.has-touch-controls
+  .overflight-tally {
+  grid-area: 5 / 1 / 6 / -1;
+}
+
+@media (min-width: 700px) and (max-height: 600px) {
+  html[data-text-scaling='overflight']
+    body[data-text-size='extra-large']
+    #overflight-game.has-touch-controls {
+    grid-template-rows: auto minmax(140px, 1fr);
+  }
+  html[data-text-scaling='overflight']
+    body[data-text-size='extra-large']
+    #overflight-game.has-touch-controls
+    #overflight-hud {
+    grid-area: 1 / 2;
+  }
+  html[data-text-scaling='overflight']
+    body[data-text-size='extra-large']
+    #overflight-game.has-touch-controls
+    .overflight-touch {
+    grid-area: 2 / 2;
+    block-size: auto;
+  }
+}
