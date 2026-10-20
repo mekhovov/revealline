@@ -6154,5 +6154,6 @@
   "yourUnsavedDraftIsStillHere": "Незбережена чернетка досі тут.",
   "textSizeCompatibility.retained": "Дуже великий · тут використовується великий",
   "textSizeCompatibility.fallback": "Дуже великий розмір збережено як бажаний. Цей екран наразі використовує великий розмір. Оберіть стандартний або великий, щоб змінити спільне налаштування.",
-  "textSizeCompatibility.readOnlyFallback": "Дуже великий розмір збережено як бажаний. Цей екран наразі використовує великий розмір."
+  "textSizeCompatibility.readOnlyFallback": "Дуже великий розмір збережено як бажаний. Цей екран наразі використовує великий розмір.",
+  "textSizeCompatibility.extraLarge": "Дуже великий"
 }
