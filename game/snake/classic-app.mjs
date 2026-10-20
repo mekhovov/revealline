@@ -245,6 +245,7 @@ let playShell = null,
   libraryInfo = null,
   libraryToolsRefresh = null,
   snakeSettingsView = null,
+  snakeSupportSummary = null,
   snakeGlobalSettings = null,
   snakeOfflinePanel = null,
   touchPresentationControls = null,
@@ -2369,6 +2370,7 @@ doc
     }),
   );
 function suspendAudio() {
+  snakeSupportSummary?.invalidate();
   if (disposed || audioInactive) return;
   audioInactive = true;
   pause();
@@ -2696,6 +2698,7 @@ playShell = mountModePlayShell({
   },
   initial: params.has('level') || communityIdentity ? 'play' : 'home',
   onSurfaceChange: (surface) => {
+    snakeSupportSummary?.invalidate();
     if (surface === 'results' && result()) beginResultPlayback();
     if (!['play', 'results'].includes(surface)) {
       transition.cancel(surface);
@@ -2723,6 +2726,7 @@ music = attachCouchMusicHost({
     playShell?.topDialog()?.dataset.modeSurface === 'settings',
   getOwner: () => playShell?.topDialog(),
   onOpen: () => pause({ showMenu: false }),
+  onPresentationChange: () => snakeSupportSummary?.invalidate(),
   onClose: () => refresh(),
 });
 const snakeSettingsSections = [...$('snake-settings').children].filter(
@@ -2735,6 +2739,7 @@ snakeSettingsView = mountModeSettings({
   locale,
   setMenuIcon,
   attachPanels: attachSettingsPanels,
+  onPresentationChange: () => snakeSupportSummary?.invalidate(),
   groups: {
     gameplay: [playShell.elements.buttons.expert, playShell.elements.buttons['home-retry']],
     controls: [$('steering').closest('label')],
@@ -2835,6 +2840,7 @@ const snakeGlobalTools = mountGlobalSettingsTools({
   panels: snakeSettingsView.panels,
   prefix: 'snake-global-tools',
   onOpen: pause,
+  onPresentationChange: () => snakeSupportSummary?.invalidate(),
   offlinePanel: snakeOfflinePanel,
   coreURL: new URL('../', globalThis.location.href),
 });
@@ -2848,11 +2854,28 @@ snakeGlobalSettings.update({
 const snakeSupportRoot = el('section');
 snakeSupportRoot.id = 'support-summary-root';
 snakeSettingsView.panels.data.append(snakeSupportRoot);
-attachLocalSupportSummary({
+snakeSupportSummary = attachLocalSupportSummary({
   document: doc,
   window: globalThis,
   root: snakeSupportRoot,
   settings: playShell.elements.dialogs.settings,
+  getSettingsOpen: () => {
+    const settings = playShell.elements.dialogs.settings,
+      data = snakeSettingsView.panels.data,
+      compact =
+        settings.classList.contains('native-settings') &&
+        (doc.defaultView?.innerWidth ?? doc.documentElement.clientWidth ?? Infinity) <= 700;
+    return (
+      !disposed &&
+      !pageDeparted &&
+      playShell.topDialog() === settings &&
+      settings.open === true &&
+      snakeSettingsView.navigation.panel() === data &&
+      !data.hidden &&
+      !data.inert &&
+      (!compact || settings.getAttribute('data-settings-view') === 'panel')
+    );
+  },
   getHost: () => {
     const offline = offlineAvailability(),
       version = doc.documentElement.dataset.buildVersion,

@@ -45,6 +45,7 @@ jobs:
             .github/workflows/deploy-pages.yml
             publishing/admission-binding.mjs
             publishing/admission-preflight.mjs
+            publishing/admission-paths.mjs
             publishing/focused-test-map.json
             publishing/focused-tests.mjs
             publishing/focused-shard-plan.mjs
@@ -178,6 +179,7 @@ jobs:
             .github/workflows/deploy-pages.yml
             publishing/admission-binding.mjs
             publishing/admission-preflight.mjs
+            publishing/admission-paths.mjs
             publishing/focused-test-map.json
             publishing/focused-tests.mjs
             publishing/focused-shard-plan.mjs
@@ -291,6 +293,7 @@ jobs:
             .github/workflows/deploy-pages.yml
             publishing/admission-binding.mjs
             publishing/admission-preflight.mjs
+            publishing/admission-paths.mjs
             publishing/focused-test-map.json
             publishing/focused-tests.mjs
             publishing/focused-shard-plan.mjs
@@ -319,8 +322,15 @@ jobs:
           name: focused-plan-${{ github.run_id }}-${{ github.run_attempt }}
           path: ${{ runner.temp }}/focused-plan
 
+      - name: Download one focused shard into its exact namespace
+        if: needs.preflight.outputs.focusedShards == '1'
+        uses: actions/download-artifact@37930b1c2abaa49bbe596cd826c3c89aef350131 # v7
+        with:
+          name: focused-shard-${{ github.run_id }}-${{ github.run_attempt }}-1
+          path: ${{ runner.temp }}/focused-shards/focused-shard-${{ github.run_id }}-${{ github.run_attempt }}-1
+
       - name: Download the planned focused shard receipts
-        if: needs.preflight.outputs.focusedShards != '0'
+        if: needs.preflight.outputs.focusedShards != '0' && needs.preflight.outputs.focusedShards != '1'
         uses: actions/download-artifact@37930b1c2abaa49bbe596cd826c3c89aef350131 # v7
         with:
           pattern: focused-shard-${{ github.run_id }}-${{ github.run_attempt }}-*
@@ -509,6 +519,7 @@ jobs:
             .github/workflows/deploy-pages.yml
             publishing/admission-binding.mjs
             publishing/admission-preflight.mjs
+            publishing/admission-paths.mjs
             publishing/focused-test-map.json
             publishing/focused-tests.mjs
             publishing/focused-shard-plan.mjs
