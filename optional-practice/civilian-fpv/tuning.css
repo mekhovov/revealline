@@ -56,6 +56,11 @@
 .fpv-tuning input[type='number'] {
   width: 100%;
 }
+/* Worlds hides legacy file inputs behind its own import buttons. Workbench
+   uploads are native labeled controls; keep their file pickers reachable. */
+.fpv-tuning input[type='file']:not([hidden]) {
+  display: block;
+}
 .fpv-tuning button {
   cursor: pointer;
 }

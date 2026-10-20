@@ -18,7 +18,7 @@ import {
 } from './pack-indexes.mjs';
 import { SOUNDTRACK_BUNDLED_ASSETS } from '../game/content/soundtrack-catalogue.mjs';
 import { generatedBrandIcons } from './brand-icons.mjs';
-import { writeBuildEntry } from './build-entry-writer.mjs';
+import { writeBuildEntries } from './build-entry-writer.mjs';
 import {
   isOptionalSpatialAudioBody,
   isOptionalReactionVoiceBody,
@@ -1062,7 +1062,13 @@ export async function prepareBuildProject({
   version,
   sourceRevision = null,
   publicationProfile = null,
+  onPhase = null,
 } = {}) {
+  if (onPhase !== null && typeof onPhase !== 'function') fail('Invalid build progress callback');
+  const phase = async (name) => {
+    if (onPhase) await onPhase(name);
+  };
+  await phase('inputs');
   root = await fs.realpath(root);
   if (out !== null) out = path.resolve(out);
   const config = await readBuildConfig(root);
@@ -1072,7 +1078,11 @@ export async function prepareBuildProject({
   const files = await collectBuildFiles(root, config);
   // Historical releases and minimal build fixtures predate localization. Current
   // localized distributions must reject missing translations and stale bundles.
-  if (files.includes('game/locales/en/website.json')) await validateLocalization(root);
+  if (files.includes('game/locales/en/website.json')) {
+    await phase('localization');
+    await validateLocalization(root);
+  }
+  await phase('optional-artwork');
   const optionalArtwork =
     config.optionalArtwork === undefined
       ? null
@@ -1080,18 +1090,35 @@ export async function prepareBuildProject({
           await import('./optional-artwork.mjs')
         ).readOptionalArtwork(root, config.optionalArtwork, files);
   if (out !== null) await assertOutput(root, out, config.include);
+  await phase('references');
   await validateBuildReferences(root, files);
   await validatePublishedContentOwnership(root, files);
+  await phase('content-snapshots');
   const { contentSnapshots = [] } = await validateContentSnapshots(root, files);
-  if (files.includes('game/coop/library.mjs')) await validateCoopContent(root);
-  if (files.includes('game/content/campaign.json')) await validateLevels(root);
-  if (files.includes('game/content/themes.json')) await validateThemes(root);
-  if (files.includes('game/content/classes.json')) await validateClasses(root);
+  if (files.includes('game/coop/library.mjs')) {
+    await phase('cooperative-content');
+    await validateCoopContent(root);
+  }
+  if (files.includes('game/content/campaign.json')) {
+    await phase('campaign');
+    await validateLevels(root);
+  }
+  if (files.includes('game/content/themes.json')) {
+    await phase('themes');
+    await validateThemes(root);
+  }
+  if (files.includes('game/content/classes.json')) {
+    await phase('classes');
+    await validateClasses(root);
+  }
   if (
     files.includes('game/content/packs/index.json') ||
     files.includes('game/content/packs/archive-index.json')
-  )
+  ) {
+    await phase('packs');
     await validatePacks(root);
+  }
+  await phase('optional-chapters');
   const optionalEntries =
     config.optionalChapters === undefined
       ? []
@@ -1102,6 +1129,7 @@ export async function prepareBuildProject({
     fail('Optional chapter bodies must remain outside automatic build includes');
   if (config.optionalChapters && !files.includes(config.optionalChapters.catalog))
     fail('Optional chapter catalog must be included in the core build');
+  await phase('external-chapters');
   const externalEntries =
     config.externalChapters === undefined
       ? []
@@ -1112,6 +1140,7 @@ export async function prepareBuildProject({
     fail('External chapter catalog must be included in the core build');
   let missionIndexSnapshot = null;
   if (files.includes('game/content/mission-library-index.json')) {
+    await phase('mission-index');
     const { buildMissionLibraryIndex, assertMissionLibraryIndex, MISSION_LIBRARY_INDEX_PATH } =
       await import('./mission-library-index.mjs');
     const bytes = await fs.readFile(path.join(root, MISSION_LIBRARY_INDEX_PATH));
@@ -1131,6 +1160,7 @@ export async function prepareBuildProject({
       );
     declared.add(entry.name);
   }
+  await phase('soundtracks');
   const soundtrackEntries =
     config.soundtrackAlbums === undefined
       ? []
@@ -1144,6 +1174,7 @@ export async function prepareBuildProject({
       fail('Soundtrack bodies must remain outside automatic includes and other downloads');
     declared.add(entry.name);
   }
+  await phase('source-files');
   const entries = [];
   for (const name of files) entries.push({ name, bytes: await fs.readFile(path.join(root, name)) });
   if (
@@ -1166,6 +1197,7 @@ export async function prepareBuildProject({
     else entries.push({ name, bytes: Buffer.from(bytes) });
   };
   replace('game/build-info.json', json(info));
+  await phase('public-entries');
   addPublicEntries(entries, info);
   if (
     entries
@@ -1173,6 +1205,7 @@ export async function prepareBuildProject({
       ?.bytes.includes('revealline-access-id')
   )
     (await import('./access-pages.mjs')).protectPageEntries(entries);
+  await phase('offline-metadata');
   await addOfflineEntries(
     root,
     entries,
@@ -1184,6 +1217,7 @@ export async function prepareBuildProject({
     publicationProfile,
   );
   entries.sort((a, b) => (a.name < b.name ? -1 : a.name > b.name ? 1 : 0));
+  await phase('manifest');
   const manifest = {
     ...info,
     totalBytes: entries.reduce((n, e) => n + e.bytes.length, 0),
@@ -1236,6 +1270,7 @@ export async function buildProject({
   version,
   sourceRevision = null,
   publicationProfile = null,
+  onPhase = null,
 } = {}) {
   const prepared = await prepareBuildProject({
     root,
@@ -1243,6 +1278,7 @@ export async function buildProject({
     version,
     sourceRevision,
     publicationProfile,
+    onPhase,
   });
   ({ root, out, version, sourceRevision } = prepared);
   const { entries, manifest } = prepared;
@@ -1250,13 +1286,13 @@ export async function buildProject({
   const staging = await fs.mkdtemp(path.join(path.dirname(out), '.xonix-build-'));
   let old;
   try {
+    if (onPhase) await onPhase('zip');
     const zip = createZip(entries);
-    for (const entry of entries) {
-      const target = path.join(staging, entry.name);
-      await fs.mkdir(path.dirname(target), { recursive: true });
-      await writeBuildEntry(path.join(root, entry.name), target, entry.bytes);
-    }
+    if (onPhase) await onPhase('expanded-files');
+    await writeBuildEntries(root, staging, entries);
+    if (onPhase) await onPhase('zip-file');
     await fs.writeFile(path.join(staging, 'distribution.zip'), zip);
+    if (onPhase) await onPhase('replacement-metadata');
     await fs.writeFile(
       path.join(staging, 'distribution.zip.sha256'),
       `${sha256(zip)}  distribution.zip\n`,
@@ -1265,6 +1301,7 @@ export async function buildProject({
       path.join(staging, MARKER),
       json({ tool: 'xonix-game-cli', formatVersion: FORMAT_VERSION }),
     );
+    if (onPhase) await onPhase('replace-output');
     if (await exists(out)) {
       old = `${staging}-previous`;
       await fs.rename(out, old);
@@ -1633,7 +1670,7 @@ export function parseArguments(argv) {
   const allowed = {
     help: [],
     serve: ['root', 'port', 'host'],
-    build: ['out', 'version', 'revision', 'publication-profile'],
+    build: ['out', 'version', 'revision', 'publication-profile', 'progress'],
     validate: [],
     test: [],
     generate: ['seed', 'out'],
@@ -1655,9 +1692,11 @@ export function parseArguments(argv) {
 
 export async function main(argv = process.argv.slice(2)) {
   const { action, options } = parseArguments(argv);
+  if (action === 'build' && options.progress !== undefined && options.progress !== 'stderr')
+    fail('Build progress destination must be stderr.');
   if (action === 'help') {
     process.stdout.write(
-      'Xonix game CLI (Node built-ins)\n  serve [--root DIR] [--host 127.0.0.1] [--port 8768]\n  build [--out dist] [--version LABEL]\n  validate\n  test\n  generate --seed TEXT --out FILE.json\n  inspect-goals --pack FILE.json [--out REPORT.json]\n  release-snapshot --ref REF --version LABEL [--source-format tar|manifest]\n',
+      'Xonix game CLI (Node built-ins)\n  serve [--root DIR] [--host 127.0.0.1] [--port 8768]\n  build [--out dist] [--version LABEL] [--progress stderr]\n  validate\n  test\n  generate --seed TEXT --out FILE.json\n  inspect-goals --pack FILE.json [--out REPORT.json]\n  release-snapshot --ref REF --version LABEL [--source-format tar|manifest]\n',
     );
     return;
   }
@@ -1678,6 +1717,10 @@ export async function main(argv = process.argv.slice(2)) {
           version: options.version,
           sourceRevision: options.revision ?? null,
           publicationProfile: options['publication-profile'] ?? null,
+          onPhase:
+            options.progress === 'stderr'
+              ? (phase) => process.stderr.write(`[build] ${phase}\n`)
+              : null,
         }),
       ),
     );
