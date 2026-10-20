@@ -7,7 +7,7 @@
     "audit": "e2bf4f0e61218c85a1b0bb5779884b622ec03925",
     "implementation": "20555cda6bd44a0736aa829e64c52e455b4e770c",
     "originalWorkspace": "Preserved; no implementation edits.",
-    "latestObservedMain": "06760598a3446f615ef573bb02bde9e75f50e266"
+    "latestObservedMain": "f3da9d32334401af08eb0800e6d1123c1696d401"
   },
   "featureCount": 83,
   "setup": {
@@ -16,8 +16,8 @@
   },
   "nextPriority": [
     "P1 · Mission browser #1773 / diagnostic #1789: all23 diagnostic source cases pass. Trusted Start click reaches the unchanged handler slot with focus, but remains briefing for60s. Read bounded internal entry guards, fix only the evidenced cause, then complete EN/UK play, clock and Pause/Resume. Three feature source-opening checks still fail.",
-    "P1 · Readability #1774:24 complete files/246 cases pass; World115 remains incomplete after heap exhaustion and four files are unrun. Diagnostic #1788 first run stopped in provenance setup before native. Exact API-root correction passes19 mocked controls,AST3 andformat3; publish reviewed refresh and collect unchanged115-case diagnostic.",
-    "P1 · Community readiness #1638: sourcebcce merged externally into main067. All7 selected commands/95 actual cases pass, including all4 complete Community files/37 cases plus58 localization. Current locale formatting/catalog syntax pass. Finish exact-page Retry, local links, EN/UK, retained values/focus; then package/real-service acceptance.",
+    "P1 · Readability #1774:24 complete files/246 cases pass; World115 remains incomplete after heap exhaustion and four files are unrun. Diagnostic #1788 corrected API-root source19/AST3/format3 pass; normal draftfb5a refresh preserves5056 unrelated entries and currentCommunity. Collect hosted full115/scalar outcome, then finish cohort/browser/package.",
+    "P1 · Community readiness #1638: merged sourcebcce passes95 selected cases and current statics. Current exact-page modeled HTTP replay passes Retry, local links, EN/UK, retained draft and keyboard focus. Finish current package/real-service and installed/offline acceptance; no device result inferred.",
     "P1 · Touch language #1669: five-file coverage prerequisite #1787 has merged externally, preserving all23 categories. Refresh the feature with current locale/catalog owners, then run all five complete files and actual Duel/Team language, focus, saved-settings and paused-play checks.",
     "P1 · Offline and backup #1624 / #1627: preserve currentmain067 plusCommunity translations. Offline owner review finds7 immutable source paths and34 additive keys perlanguage. Existing selection already includes both new readiness files; no new map PR. Qualify honest offline readiness, recovery and packaged cold start. Physical iPhone installed-PWA remains Not tested.",
     "P1 · Text preference compatibility #1668: source merged with 2,309 source and 1,908 preview checks passing on its recorded revision. Finish current browser, inner-package and offline acceptance.",
@@ -970,13 +970,13 @@
       "owner": "integration",
       "qualification": {
         "automated": "exact_bcce_normal7commands_95TAP_pass_complete4Community37_plus_localization58_catalog2_statics2_pass",
-        "browser": "historical_modeled_page_only_current_bcce_replay_pending",
+        "browser": "current_bcce_actual_page_modeled_HTTP_scoped_pass_no_real_service_package_player_device",
         "physical": "not_tested"
       },
       "blocker": null,
       "pr": "https://github.com/mekhovov/revealline/pull/1638",
       "commit": "bcce445dc254466c82fa3c2ab1113f3a96f77f0f",
-      "next": "Current exact-page modeled Retry/EN/UK/retained-values/focus acceptance, then package and real-service acceptance. Source merge is complete; player acceptance remains open.",
+      "next": "Qualify current package/real-service behavior and installed/offline acceptance; scoped Retry/local-link/EN/UK/retained-draft/focus page replay now passes.",
       "evidence": [
         "Read-only assessment: Rooms already preflights protocol/catalogue with a bounded timeout and local fallback. Community has /ready but current setup has no equivalent bounded preflight. Readiness must remain distinct from sign-in and publish permissions.",
         "39 distinct focused tests pass; full lint and every repository validation stage pass. Eight full-format findings are byte-unchanged from base461ace; changed formatting passes.",
@@ -1008,7 +1008,7 @@
         "requiredWholeFiles": 4,
         "normalFastForward": true,
         "draft": false,
-        "next": "Current exact-page modeled Retry/EN/UK/retained-values/focus acceptance, then package and real-service acceptance. Source merge is complete; player acceptance remains open.",
+        "next": "Qualify current package/real-service behavior and installed/offline acceptance; scoped Retry/local-link/EN/UK/retained-draft/focus page replay now passes.",
         "staticsReceiptSHA256": "4f0284551eab51a9dc5d2cb95b305ab270594ea177467537d8251336207534ae",
         "hosted": {
           "run": "https://github.com/mekhovov/revealline/actions/runs/39383645504",
@@ -1023,7 +1023,20 @@
           "broadTestBuild": "SKIPPED_NOT_PASS"
         },
         "mergeCommit": "06760598a3446f615ef573bb02bde9e75f50e266",
-        "preservedFailedStaticsReceiptSHA256": "3658973c2b3b24bf1659ab7025689225f536d2c44cae0e4b412aade30d0cc7c7"
+        "preservedFailedStaticsReceiptSHA256": "3658973c2b3b24bf1659ab7025689225f536d2c44cae0e4b412aade30d0cc7c7",
+        "browserReplay": {
+          "status": "PASS_SCOPED_ACTUAL_PAGE_MODELED_HTTP",
+          "proofSHA256": "c588892c6eef56e6e80dbb61499ba056d56918d961886254c0d1fe7e185dd860",
+          "sourceHead": "bcce445dc254466c82fa3c2ab1113f3a96f77f0f",
+          "sourceFilesPrePostExact": 277,
+          "serverRequests": 266,
+          "serverElapsedSeconds": 78.606,
+          "serverPeakRSSBytes": 63078400,
+          "serverCleanlyClosed": true,
+          "eventTrace": "128 retained/138 dropped; path counts and phase changes complete, not a full ordered network trace",
+          "scope": "Actual Retry unavailable/ready/re-loss/recovery; EN/UK; retained harmless search/name/email without submit; Retry focus then Tab to local play. Local links inspected without gameplay. Modeled readiness/signed-out/empty catalog only; model-only favicon204/CSP headers. No real service/account/upload/publish/package/player/hardware claim.",
+          "preservedV1FailureReceiptSHA256": "904b1a5875fa5da0ed77db144936677825a2c418e085612d38b1a15cb1e6ac0d"
+        }
       },
       "previousReconciliation": {
         "status": "published_draft_complete4cohort_pending",
@@ -6673,6 +6686,11 @@
       "date": "2026-10-20",
       "item": "DELIVERY",
       "reason": "Fresh117PR inventory:52/7/32/1 feature sources;25 prerequisites. Communitybcce externalmerge067 after95 selected cases plus localstaticsPASS; currentpage replaypending. Start9ae23PASS and actual trustedhandler slot reached, browserstillRED. World756setupfailed before115; narrowAPIroot correction source19PASS, refreshpending. Offline selection omission corrected:changedfilesautoappended,no mapPR. Otherchatsrunning; recoverabletemporarycleanup only.83/113/73planned unchanged."
+    },
+    {
+      "date": "2026-10-20",
+      "item": "F12/DELIVERY",
+      "reason": "Current exactbcce page replay scopedPASS through CUA:Retry/re-loss/recovery,EN/UK,retaineddraft/focus/local-link keyboard access. Serverclean78.606s/277sourceprepostexact; no realservice/package/player/deviceclaim. V1favicontransportfailurepreserved. World1788 normalfb5adraftrefreshpublished; hosted39389075548pending; APIpostFFlagread recorded separately."
     }
   ],
   "deliveryDependencies": [
@@ -7673,21 +7691,29 @@
     {
       "id": "CI-World-fixture-memory-scalars",
       "priority": "P1",
-      "status": "draft_first_hosted_setup_failed_native_not_run_api_root_correction_source19_pass",
+      "status": "draft_api_root_fix_published_source19_pass_normal_hosted_in_progress",
       "deliveryState": "draft",
       "pr": "https://github.com/mekhovov/revealline/pull/1788",
-      "commit": "756864c85b36ad0482df512d8572d6f9bd11e33f",
+      "commit": "fb5a5b7666b4a2ceb6592268b3da8cf55a86280e",
       "sourcePaths": 7,
       "qualification": {
         "automated": "original18+AST3+format3PASS; API-root corrected successor19+AST3+format3PASS private only",
         "browser": "not_run",
         "physical": "not_tested"
       },
-      "run": "https://github.com/mekhovov/revealline/actions/runs/39386333350",
+      "run": "https://github.com/mekhovov/revealline/actions/runs/39389075548",
       "firstRunOutcome": "Provenance api guard rejected exact own repository root before native; native115 and scalar observation NOT_RUN. No resource-limit relaxation.",
       "correctedSuccessorReceiptSHA256": "daa98ea06c6219aecaac8489e6cc57f714a1948de475f629492a7920c65d1e46",
       "preservedFailedNewTestReceiptSHA256": "274b76df0061b904b384341bc749c78d88b503ccd5759b75f0e6611f107f2d3b",
-      "next": "Publish reviewed normal draft refresh preserving fresh main/unowned leaves, then collect normal full115 diagnostic under original limits."
+      "next": "Collect normal exactfb5a setup/native115/scalar terminal outcome; no local World execution or manual retry.",
+      "base": "f3da9d32334401af08eb0800e6d1123c1696d401",
+      "tree": "e0eec6ca5467777cbc2ffbc305b3c14914dfc300",
+      "parents": [
+        "756864c85b36ad0482df512d8572d6f9bd11e33f",
+        "f3da9d32334401af08eb0800e6d1123c1696d401"
+      ],
+      "allUnownedMerkleEntriesExact": 5056,
+      "peerActualRemoteProofSHA256": "cfc0b72e027d7a09cfb3e047f12d6e6c5a801b5fb649060b8b02d6bd1682cc50"
     },
     {
       "id": "CI-menu-browser-start-event-delivery",
@@ -7736,8 +7762,9 @@
     "conflictedReadyPRs": [1617, 1622, 1624, 1627, 1632, 1682, 1686],
     "note": "52 feature source PRs merged externally,7 open for checks,32 drafts,1 withdrawn;25 separate prerequisites. Community95 actual selected cases pass atbcce; current page replay remains pending. Start23 source cases pass at9ae, trusted click reaches handler but running remains unobserved. World115 native diagnostic has not executed. No new public/hardware/player acceptance.",
     "latestMain": {
-      "revision": "06760598a3446f615ef573bb02bde9e75f50e266",
-      "note": "External merge1638 exactbcce;11 Community leaves. Prior external1786 diagnostic merge b555 retained. Root performed no promotion/merge."
+      "revision": "f3da9d32334401af08eb0800e6d1123c1696d401",
+      "tree": "69cab9ff0d4ce7d07656e5c7ada25a2655da97af",
+      "note": "External1784 merged earlier4066 plan checkpoint only after Community067; source feature counts unchanged. Current6292+successor tracked in draft1790."
     },
     "queryEvidence": "/tmp/revealline-delivery-current-inventory-117.json",
     "inventoryCorrection": "Previously omitted1673 is an existing merged settings follow-up; correcting45→46 is accounting, not new implementation.",
