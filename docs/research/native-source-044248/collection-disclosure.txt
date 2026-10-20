@@ -1,3 +1,5 @@
+# Retained historical excerpt after an ownership migration. Exact original bytes are preserved separately. Original totals and verification statements describe the original scope; this excerpt is not a current qualification or a complete test result.
+
 - paragraph: landscape · 844 × 390 CSS px · source preview; viewport emulation is not device certification
 - iframe [active]:
   - button "Game menu": ◩ REVEAL / LINE
@@ -59,7 +61,6 @@
       - article:
         - heading "First clear" [level=4]
         - paragraph: Locked · 0 / 1 different mission
-        - paragraph: Skyline FPV · Fixed-wing body · Falcon trim · Vector trail · Audit pulse
         - paragraph: Finish 1 more mission in this campaign.
       - article:
         - heading "Chapter explorer" [level=4]

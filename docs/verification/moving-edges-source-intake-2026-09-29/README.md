@@ -1,3 +1,5 @@
+> Retained historical excerpt after an ownership migration. Exact original bytes are preserved separately. Original totals and verification statements describe the original scope; this excerpt is not a current qualification or a complete test result.
+
 # Moving Edges source preservation — 2026-09-29
 
 ## Disposition
@@ -32,10 +34,6 @@ records Git blobs, SHA-256 hashes, lengths and donor identity. The ten inherited
 Countercurrent files are excluded because they already have accepted source.
 No existing file or historical certificate is replaced.
 
-Terrace Stitch, Survey Wheel and Breakwater Return are **three geometry
-families**, not twelve new maps. FPV, Ukraine, Retro and Coupa are four authored
-picture/owner variants. Their twelve original PNGs total 34,526,635 bytes.
-Ukraine Survey Wheel remains 1773 by 887 pixels; the other eleven remain 1774 by 887. No image is resized, regenerated or substituted by its preview.
 
 ## Evidence boundaries
 
@@ -53,9 +51,6 @@ Ukraine Survey Wheel remains 1773 by 887 pixels; the other eleven remain 1774 by
   among these tracked files. The donor worktree is preserved; this intake is not
   a claim to have archived its ignored data.
 - Scenic architecture, paths and warning-like light in the pictures are art,
-  not collision geometry or active warning lanes. Ukrainian-inspired scenes are
-  fictional, not authenticated historical reconstructions. Coupa scenes are not
-  depictions of an official product or promises of financial results.
 - No new rights grant or production-cleared claim is made. Original provenance,
   prompts, generation deviations and attribution language remain intact.
 

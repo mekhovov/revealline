@@ -143,7 +143,7 @@ test('other-envelope originals exceeding the combined budget prevent every optio
   const f = fixture();
   f.releases.get(101).assets.push({
     id: 555,
-    name: 'source-coupa.zip',
+    name: 'source-sample.zip',
     size: 950_000_000,
     state: 'uploaded',
     digest: `sha256:${'a'.repeat(64)}`,
@@ -161,7 +161,7 @@ test('shared evidence already present in an edition counts once and is still dow
   const total = [...f.files.values()].reduce((n, b) => n + b.length, 0);
   f.releases.get(101).assets.push({
     id: 555,
-    name: 'source-coupa.zip',
+    name: 'source-sample.zip',
     size: 950_000_000 - total,
     state: 'uploaded',
     digest: `sha256:${'a'.repeat(64)}`,

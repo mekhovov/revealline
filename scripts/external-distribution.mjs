@@ -40,7 +40,7 @@ async function ordinaryTree(root, relative) {
   }
 }
 const hash = (bytes) => createHash('sha256').update(bytes).digest('hex');
-/** Explicit build only. All producers read the selected source tree; all thirty-two
+/** Explicit build only. All producers read the selected source tree; all selected
  * exact paired bodies join loose/ZIP inventories, never legacy pack metadata. */
 export async function readExternalDistributionEntries(root, option) {
   if (option === undefined) return [];
@@ -61,7 +61,6 @@ export async function readExternalDistributionEntries(root, option) {
     'route-worlds',
     'ukraine-route-art',
     'retro-route-art',
-    'spend-route-art',
     'sentinel-circuit',
     'sentinel-circuit-art',
     'sentinel-circuit-external',
@@ -72,7 +71,6 @@ export async function readExternalDistributionEntries(root, option) {
     'fracture-lines-chapter',
     'fracture-ukraine-art',
     'fracture-retro-art',
-    'fracture-coupa-art',
     'fracture-theme-chapters',
     'countercurrent',
     'countercurrent-art',
@@ -111,19 +109,15 @@ export async function readExternalDistributionEntries(root, option) {
     ['original-fpv-pressure-external', buildExternalPilot],
     ['route-worlds-ukraine', () => buildRouteWorld('ukraine')],
     ['route-worlds-retro', () => buildRouteWorld('retro')],
-    ['route-worlds-coupa', () => buildRouteWorld('coupa')],
     ['sentinel-circuit-fpv', buildExternalSentinel],
     ['sentinel-circuit-ukraine', () => buildSentinelTheme('ukraine')],
     ['sentinel-circuit-retro', () => buildSentinelTheme('retro')],
-    ['sentinel-circuit-coupa', () => buildSentinelTheme('coupa')],
     ['fracture-lines-fpv', buildFractureChapter],
     ['fracture-lines-ukraine', () => buildFractureTheme('ukraine')],
     ['fracture-lines-retro', () => buildFractureTheme('retro')],
-    ['fracture-lines-coupa', () => buildFractureTheme('coupa')],
     ['countercurrent-fpv', () => buildCountercurrentTheme('fpv')],
     ['countercurrent-ukraine', () => buildCountercurrentTheme('ukraine')],
     ['countercurrent-retro', () => buildCountercurrentTheme('retro')],
-    ['countercurrent-coupa', () => buildCountercurrentTheme('coupa')],
   ]);
   required(
     SOURCE_EXTERNAL_CHAPTERS.length === producers.size &&

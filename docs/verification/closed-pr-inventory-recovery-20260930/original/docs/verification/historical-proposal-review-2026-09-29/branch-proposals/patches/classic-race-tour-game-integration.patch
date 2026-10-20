@@ -785,10 +785,10 @@ index 6974a5a57cb6c2d4b22328d9e40da299ffaf88e6..ae45669c95d1549d451f4102bae33036
            </div>
            <button id="race-help-back" type="button">Back</button>
 diff --git a/game/test/couch-installed-chapters.test.mjs b/game/test/couch-installed-chapters.test.mjs
-index 3961cb1d843f213e6ff87fc2277b3a3bf595f8b2..9fa280b36a4f7fcba5b8957434743b47a84b6e22 100644
+index ca54eaa3433fb36b742a95738466c0f570b335f8..8e830be0500cf6c504d767e4a22f659816581eb6 100644
 --- a/game/test/couch-installed-chapters.test.mjs
 +++ b/game/test/couch-installed-chapters.test.mjs
-@@ -90,7 +90,7 @@ function pictures() {
+@@ -90,7 +90,7 @@
    };
    return model;
  }
@@ -797,7 +797,7 @@ index 3961cb1d843f213e6ff87fc2277b3a3bf595f8b2..9fa280b36a4f7fcba5b8957434743b47
    const assets = managedIndexedDB(),
      media = managedIndexedDB(),
      locks = new Locks();
-@@ -120,7 +120,7 @@ async function fixture(t, { embedded = false, chapter = pilot } = {}) {
+@@ -120,7 +120,7 @@
      lockManager: locks,
      writer,
      registeredEntries: [],
@@ -806,7 +806,7 @@ index 3961cb1d843f213e6ff87fc2277b3a3bf595f8b2..9fa280b36a4f7fcba5b8957434743b47
      getManagedStore: () => manager,
      decodeImage,
    });
-@@ -129,7 +129,9 @@ async function fixture(t, { embedded = false, chapter = pilot } = {}) {
+@@ -129,7 +129,9 @@
      await installer.commitMutation(
        await installer.prepareMutation(current, installPack(current.packs, chapter.prior)),
      );
@@ -817,12 +817,14 @@ index 3961cb1d843f213e6ff87fc2277b3a3bf595f8b2..9fa280b36a4f7fcba5b8957434743b47
    installer.close();
    writer.release();
    const model = pictures();
-@@ -407,6 +409,35 @@ test('installed couch reader authenticates the same three originals without acqu
+@@ -405,6 +407,35 @@
+     before,
+     'a different exact channel does not borrow the dev pack or write a profile',
    );
- });
- 
++});
++
 +test('installed campaign grouping preserves each exact owner and authored mission order across refresh', async (t) => {
-+  const other = await buildCountercurrentTheme('coupa');
++  const other = await buildCountercurrentTheme('ukraine');
 +  const f = await fixture(t, { additionalChapters: [other] }),
 +    before = f.writes();
 +  const rows = await f.reader.refresh();
@@ -848,12 +850,10 @@ index 3961cb1d843f213e6ff87fc2277b3a3bf595f8b2..9fa280b36a4f7fcba5b8957434743b47
 +  assert.ok(refreshed.every((row, index) => row.campaign !== rows[index].campaign));
 +  await assert.rejects(f.reader.select(rows[0], { raceId: 1 }), /current installed/);
 +  assert.deepEqual(f.writes(), before);
-+});
-+
+ });
+ 
  test('publication rejects a changed original generation after actual decode and a changed pointer before Start', async (t) => {
-   const f = await fixture(t),
-     rows = await f.reader.refresh();
-@@ -914,7 +945,7 @@ for (const [name, build] of [
+@@ -914,7 +945,7 @@
  // These cases finish the actual installed race through its input and clock.
  // The boundary models delay decoding/lock delivery; they do not edit a run,
  // fabricate a result or certify browser pixels.
@@ -862,7 +862,7 @@ index 3961cb1d843f213e6ff87fc2277b3a3bf595f8b2..9fa280b36a4f7fcba5b8957434743b47
    const f = await fixture(t),
      before = f.writes();
    f.reader.dispose();
-@@ -926,17 +957,22 @@ async function completedInstalledRound(t) {
+@@ -926,17 +957,22 @@
      lockManager: f.locks,
      URLImpl: f.model.URLImpl,
    });
@@ -887,7 +887,7 @@ index 3961cb1d843f213e6ff87fc2277b3a3bf595f8b2..9fa280b36a4f7fcba5b8957434743b47
    page.$('race-setup-back').click();
    await action(page.$('race-start'));
    page.frame(0);
-@@ -958,7 +994,7 @@ async function completedInstalledRound(t) {
+@@ -958,7 +994,7 @@
    assert.equal(sha(completed.picture.image.bytes), completed.picture.pin.sha256);
    assert.equal(completed.picture === page.drawOptions[1].backdrop, true);
    assert.deepEqual(f.writes(), before);
@@ -896,10 +896,11 @@ index 3961cb1d843f213e6ff87fc2277b3a3bf595f8b2..9fa280b36a4f7fcba5b8957434743b47
  }
  function assertCompletedInstalled(page, completed) {
    page.frame(0);
-@@ -982,6 +1018,93 @@ function assertCompletedInstalled(page, completed) {
+@@ -981,6 +1017,93 @@
+   assert.equal(completed.picture.image.released || 0, 0);
    assert.equal(page.$('race-review').hidden, false);
  }
- 
++
 +test('installed tour starts at its authored first mission and advances to the exact second original in Ready', async (t) => {
 +  const { f, page, before, completed, installedChoices } = await completedInstalledRound(t, {
 +    format: 'campaign-tour',
@@ -986,10 +987,9 @@ index 3961cb1d843f213e6ff87fc2277b3a3bf595f8b2..9fa280b36a4f7fcba5b8957434743b47
 +  );
 +  assert.deepEqual(f.writes(), afterExternalRemoval);
 +});
-+
+ 
  test('installed failed Next decode keeps completed Results, wins and the original available to View', async (t) => {
    const diagnostics = [];
-   t.mock.method(console, 'warn', (...args) => diagnostics.push(args));
 diff --git a/game/test/couch-navigation.test.mjs b/game/test/couch-navigation.test.mjs
 index 618f44b698e75126881177725c1cdaa03f2cc6de..a849d3a6c13df146f271166cad363625fb0c0cb3 100644
 --- a/game/test/couch-navigation.test.mjs

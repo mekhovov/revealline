@@ -1,18 +1,34 @@
 {
   "format": "revealline-neon-route-variety-review.v1",
   "scope": "Authored structural variety plus recorded legal-route decisions. No route search, geometry change, human enjoyment or every-seed guarantee.",
-  "levels": 54,
-  "distinctSafeWallStructures": 51,
-  "distinctLowerSafeWallStructures": 51,
+  "levels": 53,
+  "distinctSafeWallStructures": 50,
+  "distinctLowerSafeWallStructures": 50,
   "sharedStructures": [
-    ["neon-spirals-pack", "neon-pinwheels-pack", "neon-wavebands-pack", "neon-prism-pack"]
+    [
+      "neon-spirals-pack",
+      "neon-pinwheels-pack",
+      "neon-wavebands-pack",
+      "neon-prism-pack"
+    ]
   ],
   "sharedLowerStructures": [
-    ["neon-spirals-pack", "neon-pinwheels-pack", "neon-wavebands-pack", "neon-prism-pack"]
+    [
+      "neon-spirals-pack",
+      "neon-pinwheels-pack",
+      "neon-wavebands-pack",
+      "neon-prism-pack"
+    ]
   ],
   "range": {
-    "directionChanges": [7, 348],
-    "routeSeconds": [12.949999999999905, 165.15000000001413]
+    "directionChanges": [
+      7,
+      348
+    ],
+    "routeSeconds": [
+      12.949999999999905,
+      165.15000000001413
+    ]
   },
   "rows": [
     {
@@ -29,7 +45,11 @@
         "slow": 492,
         "lethal": 188
       },
-      "enemyTypes": ["border-patrol", "bouncer", "eroder"],
+      "enemyTypes": [
+        "border-patrol",
+        "bouncer",
+        "eroder"
+      ],
       "directionChanges": 17,
       "firstDirection": "up",
       "routeSeconds": 33.14999999999876,
@@ -49,7 +69,11 @@
         "slow": 0,
         "lethal": 0
       },
-      "enemyTypes": ["border-patrol", "bouncer", "eroder"],
+      "enemyTypes": [
+        "border-patrol",
+        "bouncer",
+        "eroder"
+      ],
       "directionChanges": 52,
       "firstDirection": "right",
       "routeSeconds": 61.64999999999714,
@@ -69,7 +93,10 @@
         "slow": 0,
         "lethal": 274
       },
-      "enemyTypes": ["border-patrol", "bouncer"],
+      "enemyTypes": [
+        "border-patrol",
+        "bouncer"
+      ],
       "directionChanges": 40,
       "firstDirection": "left",
       "routeSeconds": 61.84999999999713,
@@ -89,7 +116,10 @@
         "slow": 0,
         "lethal": 741
       },
-      "enemyTypes": ["border-patrol", "bouncer"],
+      "enemyTypes": [
+        "border-patrol",
+        "bouncer"
+      ],
       "directionChanges": 221,
       "firstDirection": "up",
       "routeSeconds": 107.25000000003142,
@@ -109,7 +139,10 @@
         "slow": 0,
         "lethal": 556
       },
-      "enemyTypes": ["border-patrol", "bouncer"],
+      "enemyTypes": [
+        "border-patrol",
+        "bouncer"
+      ],
       "directionChanges": 194,
       "firstDirection": "left",
       "routeSeconds": 112.7500000000358,
@@ -129,7 +162,10 @@
         "slow": 0,
         "lethal": 0
       },
-      "enemyTypes": ["border-patrol", "bouncer"],
+      "enemyTypes": [
+        "border-patrol",
+        "bouncer"
+      ],
       "directionChanges": 218,
       "firstDirection": "left",
       "routeSeconds": 133.12500000004326,
@@ -149,7 +185,10 @@
         "slow": 0,
         "lethal": 504
       },
-      "enemyTypes": ["border-patrol", "bouncer"],
+      "enemyTypes": [
+        "border-patrol",
+        "bouncer"
+      ],
       "directionChanges": 80,
       "firstDirection": "left",
       "routeSeconds": 49.649999999997824,
@@ -169,7 +208,10 @@
         "slow": 0,
         "lethal": 668
       },
-      "enemyTypes": ["border-patrol", "bouncer"],
+      "enemyTypes": [
+        "border-patrol",
+        "bouncer"
+      ],
       "directionChanges": 89,
       "firstDirection": "left",
       "routeSeconds": 74.85000000000564,
@@ -189,7 +231,10 @@
         "slow": 0,
         "lethal": 1164
       },
-      "enemyTypes": ["border-patrol", "bouncer"],
+      "enemyTypes": [
+        "border-patrol",
+        "bouncer"
+      ],
       "directionChanges": 106,
       "firstDirection": "right",
       "routeSeconds": 117.25000000003938,
@@ -209,7 +254,10 @@
         "slow": 0,
         "lethal": 723
       },
-      "enemyTypes": ["border-patrol", "bouncer"],
+      "enemyTypes": [
+        "border-patrol",
+        "bouncer"
+      ],
       "directionChanges": 227,
       "firstDirection": "right",
       "routeSeconds": 122.75000000004376,
@@ -229,7 +277,10 @@
         "slow": 0,
         "lethal": 720
       },
-      "enemyTypes": ["border-patrol", "bouncer"],
+      "enemyTypes": [
+        "border-patrol",
+        "bouncer"
+      ],
       "directionChanges": 238,
       "firstDirection": "right",
       "routeSeconds": 104.67500000002937,
@@ -249,7 +300,11 @@
         "slow": 484,
         "lethal": 755
       },
-      "enemyTypes": ["border-patrol", "bouncer", "eroder"],
+      "enemyTypes": [
+        "border-patrol",
+        "bouncer",
+        "eroder"
+      ],
       "directionChanges": 92,
       "firstDirection": "right",
       "routeSeconds": 73.45000000000452,
@@ -269,7 +324,10 @@
         "slow": 476,
         "lethal": 432
       },
-      "enemyTypes": ["bouncer", "eroder"],
+      "enemyTypes": [
+        "bouncer",
+        "eroder"
+      ],
       "directionChanges": 32,
       "firstDirection": "right",
       "routeSeconds": 62.54999999999709,
@@ -289,7 +347,10 @@
         "slow": 508,
         "lethal": 392
       },
-      "enemyTypes": ["border-patrol", "bouncer"],
+      "enemyTypes": [
+        "border-patrol",
+        "bouncer"
+      ],
       "directionChanges": 56,
       "firstDirection": "left",
       "routeSeconds": 42.049999999998256,
@@ -309,7 +370,10 @@
         "slow": 692,
         "lethal": 304
       },
-      "enemyTypes": ["border-patrol", "bouncer"],
+      "enemyTypes": [
+        "border-patrol",
+        "bouncer"
+      ],
       "directionChanges": 51,
       "firstDirection": "right",
       "routeSeconds": 62.4499999999971,
@@ -329,7 +393,10 @@
         "slow": 536,
         "lethal": 620
       },
-      "enemyTypes": ["border-patrol", "bouncer"],
+      "enemyTypes": [
+        "border-patrol",
+        "bouncer"
+      ],
       "directionChanges": 348,
       "firstDirection": "right",
       "routeSeconds": 165.15000000001413,
@@ -349,11 +416,15 @@
         "slow": 720,
         "lethal": 171
       },
-      "enemyTypes": ["border-patrol", "bouncer", "contour-patrol"],
+      "enemyTypes": [
+        "border-patrol",
+        "bouncer",
+        "contour-patrol"
+      ],
       "directionChanges": 35,
       "firstDirection": "left",
       "routeSeconds": 58.64999999999731,
-      "routeCheckpoint": "658e3328294ef66c"
+      "routeCheckpoint": "deb6e69aeaeda253"
     },
     {
       "packId": "neon-mosaic-pack",
@@ -369,11 +440,15 @@
         "slow": 649,
         "lethal": 285
       },
-      "enemyTypes": ["border-patrol", "bouncer", "contour-patrol"],
+      "enemyTypes": [
+        "border-patrol",
+        "bouncer",
+        "contour-patrol"
+      ],
       "directionChanges": 13,
       "firstDirection": "right",
       "routeSeconds": 39.449999999998404,
-      "routeCheckpoint": "4ab80f87f95e66de"
+      "routeCheckpoint": "8f9dcdbb8c458db3"
     },
     {
       "packId": "neon-mosaic-pack",
@@ -389,31 +464,15 @@
         "slow": 192,
         "lethal": 282
       },
-      "enemyTypes": ["border-patrol", "bouncer", "contour-patrol"],
+      "enemyTypes": [
+        "border-patrol",
+        "bouncer",
+        "contour-patrol"
+      ],
       "directionChanges": 22,
       "firstDirection": "left",
       "routeSeconds": 39.14999999999842,
-      "routeCheckpoint": "66d8dbc81bf9bccc"
-    },
-    {
-      "packId": "neon-mosaic-pack",
-      "id": "neon-coupa-pack",
-      "name": "Neon COUPA",
-      "description": "",
-      "structureSHA256": "3a2480ab5fd33131becbb39296fc185e6827f5a18898162a114fa9dfd6aaf607",
-      "lowerStructureSHA256": "622e1a51505cd3a2ff59152858ebd9dbbeaa46e96967c69d152908955dbe1348",
-      "geometry": {
-        "safe": 267,
-        "wall": 0,
-        "field": 2325,
-        "slow": 96,
-        "lethal": 310
-      },
-      "enemyTypes": ["border-patrol", "bouncer", "contour-patrol"],
-      "directionChanges": 28,
-      "firstDirection": "left",
-      "routeSeconds": 44.04999999999814,
-      "routeCheckpoint": "2666e5ae4a5a5a6b"
+      "routeCheckpoint": "d7c9bcb1f9f08995"
     },
     {
       "packId": "neon-mosaic-pack",
@@ -429,11 +488,15 @@
         "slow": 359,
         "lethal": 266
       },
-      "enemyTypes": ["border-patrol", "bouncer", "contour-patrol"],
+      "enemyTypes": [
+        "border-patrol",
+        "bouncer",
+        "contour-patrol"
+      ],
       "directionChanges": 13,
       "firstDirection": "left",
       "routeSeconds": 30.14999999999893,
-      "routeCheckpoint": "0c39e2c91e405d79"
+      "routeCheckpoint": "c1ced88a3f94d459"
     },
     {
       "packId": "neon-mosaic-pack",
@@ -449,11 +512,15 @@
         "slow": 688,
         "lethal": 266
       },
-      "enemyTypes": ["border-patrol", "bouncer", "contour-patrol"],
+      "enemyTypes": [
+        "border-patrol",
+        "bouncer",
+        "contour-patrol"
+      ],
       "directionChanges": 27,
       "firstDirection": "right",
       "routeSeconds": 44.14999999999814,
-      "routeCheckpoint": "be7a369cc7e9ed08"
+      "routeCheckpoint": "64d94d02beec74f1"
     },
     {
       "packId": "neon-mosaic-pack",
@@ -469,11 +536,15 @@
         "slow": 376,
         "lethal": 306
       },
-      "enemyTypes": ["border-patrol", "bouncer", "contour-patrol"],
+      "enemyTypes": [
+        "border-patrol",
+        "bouncer",
+        "contour-patrol"
+      ],
       "directionChanges": 16,
       "firstDirection": "right",
       "routeSeconds": 35.64999999999862,
-      "routeCheckpoint": "e461562e46792f01"
+      "routeCheckpoint": "f868f1fee444caab"
     },
     {
       "packId": "neon-mosaic-pack",
@@ -489,11 +560,15 @@
         "slow": 628,
         "lethal": 127
       },
-      "enemyTypes": ["border-patrol", "bouncer", "contour-patrol"],
+      "enemyTypes": [
+        "border-patrol",
+        "bouncer",
+        "contour-patrol"
+      ],
       "directionChanges": 47,
       "firstDirection": "right",
       "routeSeconds": 55.3499999999975,
-      "routeCheckpoint": "c9fad88b2605a22b"
+      "routeCheckpoint": "ea738fb10181df82"
     },
     {
       "packId": "neon-mosaic-pack",
@@ -509,11 +584,15 @@
         "slow": 396,
         "lethal": 213
       },
-      "enemyTypes": ["border-patrol", "bouncer", "contour-patrol"],
+      "enemyTypes": [
+        "border-patrol",
+        "bouncer",
+        "contour-patrol"
+      ],
       "directionChanges": 31,
       "firstDirection": "right",
       "routeSeconds": 58.04999999999735,
-      "routeCheckpoint": "acfcde99c254b4aa"
+      "routeCheckpoint": "af67663829196fd9"
     },
     {
       "packId": "neon-mosaic-pack",
@@ -529,11 +608,15 @@
         "slow": 768,
         "lethal": 236
       },
-      "enemyTypes": ["border-patrol", "bouncer", "contour-patrol"],
+      "enemyTypes": [
+        "border-patrol",
+        "bouncer",
+        "contour-patrol"
+      ],
       "directionChanges": 18,
       "firstDirection": "right",
       "routeSeconds": 46.14999999999802,
-      "routeCheckpoint": "c40e108d19799116"
+      "routeCheckpoint": "89d7f2a72dde024d"
     },
     {
       "packId": "neon-mosaic-pack",
@@ -549,11 +632,15 @@
         "slow": 566,
         "lethal": 209
       },
-      "enemyTypes": ["border-patrol", "bouncer", "contour-patrol"],
+      "enemyTypes": [
+        "border-patrol",
+        "bouncer",
+        "contour-patrol"
+      ],
       "directionChanges": 7,
       "firstDirection": "right",
       "routeSeconds": 29.149999999998986,
-      "routeCheckpoint": "8cb9a5a29feb7e40"
+      "routeCheckpoint": "495d19e6d02a24e5"
     },
     {
       "packId": "neon-mosaic-pack",
@@ -569,11 +656,15 @@
         "slow": 179,
         "lethal": 307
       },
-      "enemyTypes": ["border-patrol", "bouncer", "contour-patrol"],
+      "enemyTypes": [
+        "border-patrol",
+        "bouncer",
+        "contour-patrol"
+      ],
       "directionChanges": 20,
       "firstDirection": "right",
       "routeSeconds": 36.84999999999855,
-      "routeCheckpoint": "daa8b0a0d4878092"
+      "routeCheckpoint": "5449ba7d449f4b0b"
     },
     {
       "packId": "neon-mosaic-pack",
@@ -589,11 +680,15 @@
         "slow": 393,
         "lethal": 112
       },
-      "enemyTypes": ["border-patrol", "bouncer", "contour-patrol"],
+      "enemyTypes": [
+        "border-patrol",
+        "bouncer",
+        "contour-patrol"
+      ],
       "directionChanges": 14,
       "firstDirection": "right",
       "routeSeconds": 40.44999999999835,
-      "routeCheckpoint": "531b3d1069e4e9ed"
+      "routeCheckpoint": "b20d662a640eac86"
     },
     {
       "packId": "neon-mosaic-pack",
@@ -609,11 +704,15 @@
         "slow": 772,
         "lethal": 126
       },
-      "enemyTypes": ["border-patrol", "bouncer", "contour-patrol"],
+      "enemyTypes": [
+        "border-patrol",
+        "bouncer",
+        "contour-patrol"
+      ],
       "directionChanges": 31,
       "firstDirection": "right",
       "routeSeconds": 58.249999999997335,
-      "routeCheckpoint": "d792a3a8ef126296"
+      "routeCheckpoint": "150c7895b745ce81"
     },
     {
       "packId": "neon-mosaic-pack",
@@ -629,11 +728,15 @@
         "slow": 361,
         "lethal": 138
       },
-      "enemyTypes": ["border-patrol", "bouncer", "contour-patrol"],
+      "enemyTypes": [
+        "border-patrol",
+        "bouncer",
+        "contour-patrol"
+      ],
       "directionChanges": 11,
       "firstDirection": "left",
       "routeSeconds": 27.1499999999991,
-      "routeCheckpoint": "a89cc8fffefb45f1"
+      "routeCheckpoint": "c8425794dfba06ed"
     },
     {
       "packId": "neon-mosaic-pack",
@@ -649,11 +752,15 @@
         "slow": 589,
         "lethal": 205
       },
-      "enemyTypes": ["border-patrol", "bouncer", "contour-patrol"],
+      "enemyTypes": [
+        "border-patrol",
+        "bouncer",
+        "contour-patrol"
+      ],
       "directionChanges": 15,
       "firstDirection": "right",
       "routeSeconds": 31.54999999999885,
-      "routeCheckpoint": "6955438a87ff2042"
+      "routeCheckpoint": "5770ce7d38d3a55a"
     },
     {
       "packId": "neon-mosaic-pack",
@@ -669,11 +776,15 @@
         "slow": 448,
         "lethal": 331
       },
-      "enemyTypes": ["border-patrol", "bouncer", "contour-patrol"],
+      "enemyTypes": [
+        "border-patrol",
+        "bouncer",
+        "contour-patrol"
+      ],
       "directionChanges": 42,
       "firstDirection": "left",
       "routeSeconds": 52.94999999999764,
-      "routeCheckpoint": "b1881cf40d54d0fb"
+      "routeCheckpoint": "5d3ac3ad791f8bb0"
     },
     {
       "packId": "neon-mosaic-pack",
@@ -689,11 +800,15 @@
         "slow": 831,
         "lethal": 92
       },
-      "enemyTypes": ["border-patrol", "bouncer", "contour-patrol"],
+      "enemyTypes": [
+        "border-patrol",
+        "bouncer",
+        "contour-patrol"
+      ],
       "directionChanges": 7,
       "firstDirection": "left",
       "routeSeconds": 23.549999999999304,
-      "routeCheckpoint": "f3eefec832a3356a"
+      "routeCheckpoint": "c8f90cc978caf2d8"
     },
     {
       "packId": "neon-mosaic-pack",
@@ -709,11 +824,15 @@
         "slow": 563,
         "lethal": 190
       },
-      "enemyTypes": ["border-patrol", "bouncer", "contour-patrol"],
+      "enemyTypes": [
+        "border-patrol",
+        "bouncer",
+        "contour-patrol"
+      ],
       "directionChanges": 15,
       "firstDirection": "right",
       "routeSeconds": 34.64999999999868,
-      "routeCheckpoint": "3476b942480e1780"
+      "routeCheckpoint": "d678da86a6ba6f9f"
     },
     {
       "packId": "neon-mosaic-pack",
@@ -729,11 +848,15 @@
         "slow": 209,
         "lethal": 107
       },
-      "enemyTypes": ["border-patrol", "bouncer", "contour-patrol"],
+      "enemyTypes": [
+        "border-patrol",
+        "bouncer",
+        "contour-patrol"
+      ],
       "directionChanges": 65,
       "firstDirection": "right",
       "routeSeconds": 80.75000000001033,
-      "routeCheckpoint": "63504fa38e4fcdbc"
+      "routeCheckpoint": "0431213abdb22cbb"
     },
     {
       "packId": "neon-mosaic-pack",
@@ -749,11 +872,15 @@
         "slow": 362,
         "lethal": 234
       },
-      "enemyTypes": ["border-patrol", "bouncer", "contour-patrol"],
+      "enemyTypes": [
+        "border-patrol",
+        "bouncer",
+        "contour-patrol"
+      ],
       "directionChanges": 31,
       "firstDirection": "left",
       "routeSeconds": 52.54999999999766,
-      "routeCheckpoint": "f2d690e4af113d80"
+      "routeCheckpoint": "f686e940a826de5b"
     },
     {
       "packId": "neon-mosaic-pack",
@@ -769,11 +896,15 @@
         "slow": 510,
         "lethal": 179
       },
-      "enemyTypes": ["border-patrol", "bouncer", "contour-patrol"],
+      "enemyTypes": [
+        "border-patrol",
+        "bouncer",
+        "contour-patrol"
+      ],
       "directionChanges": 41,
       "firstDirection": "left",
       "routeSeconds": 65.94999999999855,
-      "routeCheckpoint": "193b3ea5ea27e48f"
+      "routeCheckpoint": "97d8c17077589a75"
     },
     {
       "packId": "neon-mosaic-pack",
@@ -789,11 +920,15 @@
         "slow": 391,
         "lethal": 170
       },
-      "enemyTypes": ["border-patrol", "bouncer", "contour-patrol"],
+      "enemyTypes": [
+        "border-patrol",
+        "bouncer",
+        "contour-patrol"
+      ],
       "directionChanges": 29,
       "firstDirection": "right",
       "routeSeconds": 39.84999999999838,
-      "routeCheckpoint": "c8bae8ac246690cf"
+      "routeCheckpoint": "d770b3204e3b8894"
     },
     {
       "packId": "neon-mosaic-pack",
@@ -809,11 +944,15 @@
         "slow": 962,
         "lethal": 195
       },
-      "enemyTypes": ["border-patrol", "bouncer", "contour-patrol"],
+      "enemyTypes": [
+        "border-patrol",
+        "bouncer",
+        "contour-patrol"
+      ],
       "directionChanges": 20,
       "firstDirection": "left",
       "routeSeconds": 41.44999999999829,
-      "routeCheckpoint": "b15a129b16464bb7"
+      "routeCheckpoint": "3298d75ee17d5701"
     },
     {
       "packId": "neon-mosaic-pack",
@@ -829,11 +968,15 @@
         "slow": 498,
         "lethal": 98
       },
-      "enemyTypes": ["border-patrol", "bouncer", "contour-patrol"],
+      "enemyTypes": [
+        "border-patrol",
+        "bouncer",
+        "contour-patrol"
+      ],
       "directionChanges": 8,
       "firstDirection": "left",
       "routeSeconds": 12.949999999999905,
-      "routeCheckpoint": "766b01adb6b35d6a"
+      "routeCheckpoint": "84ca96fd9087f5a6"
     },
     {
       "packId": "neon-mosaic-pack",
@@ -849,11 +992,15 @@
         "slow": 678,
         "lethal": 278
       },
-      "enemyTypes": ["border-patrol", "bouncer", "contour-patrol"],
+      "enemyTypes": [
+        "border-patrol",
+        "bouncer",
+        "contour-patrol"
+      ],
       "directionChanges": 36,
       "firstDirection": "right",
       "routeSeconds": 54.24999999999756,
-      "routeCheckpoint": "70d3be2d63adcb48"
+      "routeCheckpoint": "46f389046cd5fee3"
     },
     {
       "packId": "neon-mosaic-pack",
@@ -869,11 +1016,15 @@
         "slow": 248,
         "lethal": 142
       },
-      "enemyTypes": ["border-patrol", "bouncer", "contour-patrol"],
+      "enemyTypes": [
+        "border-patrol",
+        "bouncer",
+        "contour-patrol"
+      ],
       "directionChanges": 44,
       "firstDirection": "right",
       "routeSeconds": 61.84999999999713,
-      "routeCheckpoint": "72e802313dbc24a9"
+      "routeCheckpoint": "41880d233520cde3"
     },
     {
       "packId": "neon-mosaic-pack",
@@ -889,11 +1040,15 @@
         "slow": 203,
         "lethal": 181
       },
-      "enemyTypes": ["border-patrol", "bouncer", "contour-patrol"],
+      "enemyTypes": [
+        "border-patrol",
+        "bouncer",
+        "contour-patrol"
+      ],
       "directionChanges": 17,
       "firstDirection": "left",
       "routeSeconds": 28.04999999999905,
-      "routeCheckpoint": "9ed7091dbdab8b34"
+      "routeCheckpoint": "4f5f3274335d2f5d"
     },
     {
       "packId": "neon-mosaic-pack",
@@ -909,11 +1064,15 @@
         "slow": 572,
         "lethal": 182
       },
-      "enemyTypes": ["border-patrol", "bouncer", "contour-patrol"],
+      "enemyTypes": [
+        "border-patrol",
+        "bouncer",
+        "contour-patrol"
+      ],
       "directionChanges": 44,
       "firstDirection": "right",
       "routeSeconds": 57.94999999999735,
-      "routeCheckpoint": "b22a28c72a04e70d"
+      "routeCheckpoint": "a219d4eb61ff4033"
     },
     {
       "packId": "neon-mosaic-pack",
@@ -929,11 +1088,15 @@
         "slow": 611,
         "lethal": 113
       },
-      "enemyTypes": ["border-patrol", "bouncer", "contour-patrol"],
+      "enemyTypes": [
+        "border-patrol",
+        "bouncer",
+        "contour-patrol"
+      ],
       "directionChanges": 29,
       "firstDirection": "left",
       "routeSeconds": 50.849999999997756,
-      "routeCheckpoint": "925cdc4b3f045bdb"
+      "routeCheckpoint": "c8bb046b160e5cf3"
     },
     {
       "packId": "neon-mosaic-pack",
@@ -949,11 +1112,15 @@
         "slow": 359,
         "lethal": 105
       },
-      "enemyTypes": ["border-patrol", "bouncer", "contour-patrol"],
+      "enemyTypes": [
+        "border-patrol",
+        "bouncer",
+        "contour-patrol"
+      ],
       "directionChanges": 19,
       "firstDirection": "right",
       "routeSeconds": 39.449999999998404,
-      "routeCheckpoint": "ae2db4107b17c6cc"
+      "routeCheckpoint": "4853605ffeda610a"
     },
     {
       "packId": "neon-mosaic-pack",
@@ -969,11 +1136,15 @@
         "slow": 925,
         "lethal": 212
       },
-      "enemyTypes": ["border-patrol", "bouncer", "contour-patrol"],
+      "enemyTypes": [
+        "border-patrol",
+        "bouncer",
+        "contour-patrol"
+      ],
       "directionChanges": 22,
       "firstDirection": "left",
       "routeSeconds": 42.74999999999822,
-      "routeCheckpoint": "e0aa71a85192ac4b"
+      "routeCheckpoint": "6913b11062932f12"
     },
     {
       "packId": "neon-mosaic-pack",
@@ -989,11 +1160,15 @@
         "slow": 432,
         "lethal": 206
       },
-      "enemyTypes": ["border-patrol", "bouncer", "contour-patrol"],
+      "enemyTypes": [
+        "border-patrol",
+        "bouncer",
+        "contour-patrol"
+      ],
       "directionChanges": 19,
       "firstDirection": "left",
       "routeSeconds": 37.7499999999985,
-      "routeCheckpoint": "715a04c19ebfdeba"
+      "routeCheckpoint": "12202b79a07f4b17"
     },
     {
       "packId": "neon-mosaic-pack",
@@ -1009,11 +1184,15 @@
         "slow": 988,
         "lethal": 219
       },
-      "enemyTypes": ["border-patrol", "bouncer", "contour-patrol"],
+      "enemyTypes": [
+        "border-patrol",
+        "bouncer",
+        "contour-patrol"
+      ],
       "directionChanges": 53,
       "firstDirection": "right",
       "routeSeconds": 54.84999999999753,
-      "routeCheckpoint": "547c95aa7d2a73fe"
+      "routeCheckpoint": "40a14237fef3f44d"
     },
     {
       "packId": "neon-mosaic-pack",
@@ -1029,11 +1208,15 @@
         "slow": 290,
         "lethal": 218
       },
-      "enemyTypes": ["border-patrol", "bouncer", "contour-patrol"],
+      "enemyTypes": [
+        "border-patrol",
+        "bouncer",
+        "contour-patrol"
+      ],
       "directionChanges": 9,
       "firstDirection": "left",
       "routeSeconds": 21.34999999999943,
-      "routeCheckpoint": "864fdbf214fb5f61"
+      "routeCheckpoint": "9b935d277cf18fff"
     },
     {
       "packId": "neon-mosaic-pack",
@@ -1049,11 +1232,15 @@
         "slow": 106,
         "lethal": 172
       },
-      "enemyTypes": ["border-patrol", "bouncer", "contour-patrol"],
+      "enemyTypes": [
+        "border-patrol",
+        "bouncer",
+        "contour-patrol"
+      ],
       "directionChanges": 62,
       "firstDirection": "left",
       "routeSeconds": 63.64999999999703,
-      "routeCheckpoint": "a1fb99fc2e0455c9"
+      "routeCheckpoint": "ecf3f39cd6a9f1ad"
     },
     {
       "packId": "neon-mosaic-pack",
@@ -1069,11 +1256,15 @@
         "slow": 616,
         "lethal": 279
       },
-      "enemyTypes": ["border-patrol", "bouncer", "contour-patrol"],
+      "enemyTypes": [
+        "border-patrol",
+        "bouncer",
+        "contour-patrol"
+      ],
       "directionChanges": 42,
       "firstDirection": "right",
       "routeSeconds": 48.54999999999789,
-      "routeCheckpoint": "3ba69c720da830d6"
+      "routeCheckpoint": "fee438d5527c5666"
     },
     {
       "packId": "neon-mosaic-pack",
@@ -1089,11 +1280,15 @@
         "slow": 567,
         "lethal": 110
       },
-      "enemyTypes": ["border-patrol", "bouncer", "contour-patrol"],
+      "enemyTypes": [
+        "border-patrol",
+        "bouncer",
+        "contour-patrol"
+      ],
       "directionChanges": 34,
       "firstDirection": "left",
       "routeSeconds": 56.849999999997415,
-      "routeCheckpoint": "8ddb822115097063"
+      "routeCheckpoint": "2d4385238ff17667"
     }
   ]
 }

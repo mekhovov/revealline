@@ -1,5 +1,7 @@
 # Round 20 — attainable chapter rewards
 
+> Retained excerpt after an ownership migration. Historical totals and verification statements describe the original scope; this excerpt is not a current release qualification. Original bytes and removed material are preserved separately.
+
 **Recommendation: make the existing chapter cosmetic milestones attainable, show their exact progress, and acknowledge new appearances beside the completed picture.** This is one bounded player-facing iteration after v0.9. It gives a player a useful reward from completing an existing short chapter, using artwork and progression already present. This plan was accepted after v0.9.0 was frozen. The chapter reward and out-of-order replayability changes are implemented in the v0.10.0 working source; browser and release evidence is recorded separately.
 
 Audit and primary sources accessed **12 September 2026**. The code snapshot includes the pending Equipment Workshop example. [Public release guidance](public-release.md) still identifies its preserved v0.8 evidence separately; pending source content is not evidence of a frozen v0.9 artifact. This pass inspected code and documentation text, with no new video, audio, physical controller or device inspection.
@@ -29,7 +31,6 @@ Use the number of distinct cleared maps in the actual campaign. The first appear
 
 Apply this consistently to authored campaigns and generated one-map challenges. A short campaign therefore gives cosmetic access sooner; that is an explicit policy choice. Cosmetics provide no score, resistance, ammunition or ability advantage. Avoid hidden exemptions for “easy” packs or a new grind counter. If future competitive progression needs different eligibility, that is a separate rules/persistence design.
 
-The current first-tier bodies remain Skyline FPV (`fpv-racer`), Fixed-wing body, Falcon trim, Vector trail and Audit pulse. Final-tier bodies remain Night signal FPV and Delta interceptor. Preserve every starter. Use the actual preset labels and assets; this increment does not invent new bird, business or military models.
 
 Pathfinder's description becomes context-specific: “Complete 3 different missions in this campaign” for Homeward, or four for First Signal/Fieldcraft. Last light remains full-campaign completion. On a three-map chapter both achievements can become true together; this warrants one combined acknowledgement, not two compulsory reward screens. These broad achievements are currently derived from clears, not stored mastery certificates. Do not issue an equipment seal from this change.
 
@@ -41,7 +42,6 @@ In the existing Collection dialog, add two compact reward rows with names, a sta
 CAMPAIGN APPEARANCES · HOMEWARD SKIES
 
 First clear       Available · 1 / 1
-Skyline FPV, Fixed-wing body, Falcon trim, Vector trail, Audit pulse
 
 Chapter explorer  2 / 3 different missions
 Night signal FPV + Delta interceptor

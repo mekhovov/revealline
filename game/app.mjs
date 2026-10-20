@@ -1,5 +1,5 @@
-import { renderTextSizeControl } from './ui/text-size-control.mjs';
 import './i18n/main-entry.mjs';
+import { renderTextSizeControl } from './ui/text-size-control.mjs';
 import { loadBaseArtwork } from './base-artwork.mjs';
 import { continuousPlayPreferences } from './ui/continuous-play.mjs';
 import { nativeArtReviewURL } from './ui/art-review-navigation.mjs';
@@ -1872,7 +1872,9 @@ try {
     const pictureEntry = pictureExecutionForEntry(entry),
       pictureLevel = pictureLevelForRun(nextRun, entry, pictureEntry);
     const guarded = (owner) =>
-      runtimeContent && candidateHost?.owns(entry)
+      // Installed editions own their complete picture closure, including their
+      // practice adapters. They have no main-game download controller.
+      runtimeContent
         ? owner
         : withOfflinePictureGate(owner, async ({ signal }) => {
             if (candidateHost?.owns(entry)) {
@@ -8971,11 +8973,7 @@ try {
       () =>
         `${contentText(theme, 'labels.enemy')} · ${contentText(theme, 'labels.boss')} · ${contentText(theme, 'labels.supply')}`,
     );
-    localizedText($('footer-note'), () =>
-      theme.id === 'coupa'
-        ? t('interface:fictionalSpendManagementThemeOriginalHelperArtwork')
-        : t('interface:originalWorldsMakeEveryLineCount'),
-    );
+    localizedText($('footer-note'), () => t('interface:originalWorldsMakeEveryLineCount'));
     painter.style = scenario?.presentation?.style || library.preferences.style;
     updateBodies();
     painter.setLook(theme, bodyId, painterVisuals());

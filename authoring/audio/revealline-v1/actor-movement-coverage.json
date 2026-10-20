@@ -4,12 +4,10 @@
     "neutral-marker": "motor",
     "ukrainian-bird": "wings",
     "retro-craft": "motor",
-    "navi-avatar": "grain",
     "fpv-racer": "rotor",
     "fpv-night": "rotor",
     "ukrainian-falcon": "wings",
     "retro-vector": "motor",
-    "navi-auditor": "grain",
     "scout-quad": "rotor",
     "heavy-lift": "rotor",
     "fixedwing-body": "motor",
@@ -56,15 +54,6 @@
       "eroder": "ratchet",
       "lane-boss": "motor",
       "relay-sentinel": "motor"
-    },
-    "coupa": {
-      "bouncer": "grain",
-      "border-patrol": "grain",
-      "contour-patrol": "grain",
-      "claimed-rover": "wheels",
-      "eroder": "motor",
-      "lane-boss": "grain",
-      "relay-sentinel": "grain"
     }
   },
   "journey": {

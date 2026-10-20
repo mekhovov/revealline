@@ -1,0 +1,62 @@
+{
+  "format": "revealline-retained-recovery-patches.v1",
+  "scope": "Original recovery bytes are preserved separately. Existing dirty worktrees and pending branch refs are untouched. Derived patches require reapplication and validation against the retained source; omitted generated outputs require regeneration.",
+  "items": [
+    {
+      "path": "recovery/local-worktrees-20261009/team-after-music/working-tree.patch",
+      "previousSHA256": "ada7c89b55af1e6e6f99348cf418e7ebaab9018f00bd3b4d395da5c873aa8ab0",
+      "sha256": "3c0c5c71fa9c498c5f89f9d9c4f6da8f4a9e9e7ca1e4aac75d3c5211e7165869",
+      "bytes": 1231119,
+      "details": {
+        "scope": "All unrelated source diff sections are retained byte-for-byte. Two generated mixed runtime outputs are omitted; regenerate presentation output before using this recovery patch. The full original patch is preserved separately, and existing worktrees are untouched.",
+        "omittedGeneratedDiffs": [
+          {
+            "diffHeader": "diff --git a/game/presentation/compiled/runtime.29298673ed6cc49222b1d52d77efc4f8968abe42a29df5c29b2861bd8f9ce1ed.json b/game/presentation/compiled/runtime.29298673ed6cc49222b1d52d77efc4f8968abe42a29df5c29b2861bd8f9ce1ed.json",
+            "sha256": "f99d69922f219cbfd7dc7e75df55efec4aba40982fc0d03f5da3444086096036"
+          },
+          {
+            "diffHeader": "diff --git a/game/presentation/compiled/runtime.a0ad21cd1412fed07b73dbf0e1ec31ded747a8210a97ccc1efeb1e2c26b24584.json b/game/presentation/compiled/runtime.a0ad21cd1412fed07b73dbf0e1ec31ded747a8210a97ccc1efeb1e2c26b24584.json",
+            "sha256": "03d02207789d038a5629a4513eca66318ab6283c1752336022b11035e97a2932"
+          }
+        ],
+        "retainedSections": 148
+      }
+    },
+    {
+      "path": "recovery/local-worktrees-20261009/ukrainian-ornament-study/local-commits.patch",
+      "previousSHA256": "09f515189edd877fddc4167aa3ba169def220413b85ff5a48151ea3823a5dbf9",
+      "sha256": "281d80f6fceae6b74939a66953b395b6ae6de9690715ca4c88f00d3f0d7c9f92",
+      "bytes": 2427290,
+      "details": {
+        "scope": "Only the retired footer branch was removed from both exact preimage and proposal before rebuilding the affected diff. All unrelated file sections remain byte-for-byte intact. This is a derived recovery patch, not the original commit identity.",
+        "blobProjections": [
+          {
+            "previousBefore": "3b0fee3ed",
+            "previousAfter": "d716cc1ca",
+            "before": "1dae26a8fcd0474c30f917853ac315288f438d87",
+            "after": "4fcf5c4a228c22487a775b2a9d45238c9b7fb2a9"
+          }
+        ]
+      }
+    },
+    {
+      "path": "docs/verification/cross-mode/p05-motion-reading/originals/p05-motion-successor-a13ab970/candidate.patch",
+      "previousSHA256": "dcc5a496b374ac4c0d675cae33e4683aa3ee38b036f3fcf55d606b7395889c79",
+      "sha256": "0bb897d8f7ee41d6b5d553ae380fcca677e99dc192f674b7fe346b287e7c18ee",
+      "bytes": 311483,
+      "details": {
+        "scope": "Retired documentation rows removed from old and new hunk sides; all other patch lines retained. Hunk sizes and offsets are recomputed for the retained document.",
+        "removedLines": 4
+      }
+    },
+    {
+      "path": "docs/verification/closed-pr-inventory-recovery-20260930/original/docs/verification/historical-proposal-review-2026-09-29/branch-proposals/patches/classic-race-tour-game-integration.patch",
+      "previousSHA256": "9725dc506a34d0d2f9db69c8b54e37f1b3611fce03ca0452021e9313b71f526b",
+      "sha256": "c61edf74965f4b84cfb5f749f8010995b2dfa1879532d609fc396912a562bd1a",
+      "bytes": 78166,
+      "details": {
+        "scope": "The additional-chapter ownership test uses the retained Ukraine chapter. Rebuilt from exact preimage/proposal blobs; unrelated proposal edits retained. This derived patch is not a historical test-execution approval."
+      }
+    }
+  ]
+}

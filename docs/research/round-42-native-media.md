@@ -1,5 +1,7 @@
 # Round 42 — Native controls, optional worlds and media continuity
 
+> Retained excerpt after an ownership migration. Historical totals and verification statements describe the original scope; this excerpt is not a current release qualification. Original bytes and removed material are preserved separately.
+
 Updated 2026-09-13. This record separates published results, independently checked bytes, another agent's browser observations, implemented source and remaining integration work. It supports the [production plan](../production-plan.md) and [implementation register](../implementation-roadmap.md).
 
 ## Inspection and verified baseline
@@ -24,7 +26,6 @@ I opened Apple's official WWDC26 transcript/chapter/code page and MDN's storage 
 
 ## Bounded original-worlds milestone
 
-The [chapter compiler and provenance record](../../authoring/library/four-worlds-chapters/README.md) use all **12 byte-identical original PNGs**, with distinct pack/campaign/map identities, as four optional three-map theme variants. They reuse **three R5 geometries/rules and existing music**, not twelve newly designed layouts. The source category `heritage` maps explicitly to registered theme `ukraine`; the other runtime theme IDs are `fpv`, `retro` and `coupa`. Original spend-network imagery is not an official Coupa asset or logo.
 
 The final source batch passed 15 affected tests, including six new cases and all **48 actual legal wins plus saved-prefix continuations** across Standard/Gentle and both turn modes. Every embedded image was compared with its source bytes and fully decoded by the bounded Node PNG scanline checker. This establishes compilation, identity and deterministic solvability, not browser image quality, human enjoyment or new finished tracks.
 

@@ -18,8 +18,6 @@ Run `node authoring/library/sentinel-relay/record-proofs.mjs` from the repositor
 
 Only the source recipe owns the initial coordinates, timings and class roster. Update its content revision when changing simulation data, validate the complete prospective pack and re-record reviewed legal input routes deliberately. Do not update old frozen expectations. The minimum release length also determines the isolation threshold; there is no independent contradictory threshold to tune.
 
-Use `prompts.json` as authoring requests, not runtime input or an executable behavior language. None of its examples was executed to generate new art in this increment. Theme IDs `fpv`, `ukraine`, `retro` and `coupa` select existing presentation families; the final two are original game concepts and do not imply official branding or measured business savings. All themes use map ID `sentinel-relay-01`; changing a theme does not create a separately proven layout.
-
 ## Review before adding artwork
 
 An optional future background should use original 4:3 pixel art with no baked HUD, live trails, objectives or enemies. Keep source bytes and provenance, validate media headers/budgets and fully browser-decode the image before adoption. A prompt alone is not a generated or visually reviewed asset. Preserve a visible gameplay center and draw warnings/cuts above decorative props in compact, prop and hybrid views.

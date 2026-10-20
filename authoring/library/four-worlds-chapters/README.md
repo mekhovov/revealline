@@ -9,9 +9,6 @@ The [source catalog](../four-worlds-source/catalog.json), raw originals, prompts
 | [Illustrated Pressure](packs/original-fpv-pressure.json) | `fpv`            |           10,719,959 |         10,711,106 |
 | [Woven Lines](packs/original-ukraine-atlas.json)         | `ukraine`        |           12,358,446 |         12,349,593 |
 | [After Hours](packs/original-retro-1994.json)            | `retro`          |           10,329,657 |         10,320,804 |
-| [Shared Routes](packs/original-spend-network.json)       | `coupa`          |           11,067,202 |         11,058,349 |
-
-The source catalog calls the Atlas artwork family `heritage`; the registered runtime theme ID is **`ukraine`**. The builder maps these explicitly. `coupa` and its existing body IDs are runtime registry names, not newly produced logos, Navi likenesses, endorsements or actual product functionality. The harbor's invented leaf emblems remain in its unchanged original and in the source observations. Ukrainian settings and motifs are imaginative interpretations rather than authenticated historical reconstructions.
 
 The four-pack portable library totals **44,439,900 bytes**, below the unchanged **48 MiB (50,331,648-byte)** installed-library limit. The largest raw image is 3,286,349 bytes, below 4 MiB. Each pack remains below 24 MiB and the existing per-pack encoded-image/pixel bounds. Adding the image-heavy R5 edition to all four exceeds the installed limit and is refused; an explicit removal can make room. No automatic eviction or capacity increase is introduced. Export the existing pack/library before choosing a removal.
 

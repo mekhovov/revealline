@@ -34,7 +34,7 @@ const derivatives = [];
 for (const [i, row] of manifest.images.entries()) {
   assert.match(
     row.path,
-    /^originals\/(terrace-stitch|survey-wheel|breakwater-return)-(fpv|ukraine|retro|coupa)\.png$/,
+    /^originals\/(terrace-stitch|survey-wheel|breakwater-return)-(fpv|ukraine|retro)\.png$/,
   );
   const source = await readFile(resolve(folder, row.path));
   assert.equal(source.length, row.bytes);

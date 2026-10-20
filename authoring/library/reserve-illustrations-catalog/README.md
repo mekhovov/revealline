@@ -1,6 +1,6 @@
 # Reserve illustration catalog
 
-Open [the authoring gallery](index.html) to choose among the 40 selected originals: ten each for FPV Front, Ukraine Atlas, 1994 Forever and the fictional Spend Network. These are source reserves, not earned pictures, released levels, installed packs or animations. No game or profile state is read or changed.
+Open [the authoring gallery](index.html) to choose among the 30 selected originals: ten each for FPV Front, Ukraine Atlas, and 1994 Forever. These are source reserves, not earned pictures, released levels, installed packs or animations. No game or profile state is read or changed.
 
 Choose a theme, then an illustration, or use Previous / Next. The native select lists and buttons are keyboard focusable. Only the selected original is requested; there are no image thumbnails, image preloads, resized files or copied originals. The image fits the page without cropping. Download original PNG preserves its bytes. The generation prompt, any cleanup prompt, provenance and wave notes are explicit links; the notes preserve requested-versus-observed differences and visual-review limits.
 

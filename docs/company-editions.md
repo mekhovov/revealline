@@ -5,54 +5,36 @@ for the canonical host, selected tool pages and evidence required before qualifi
 
 Company editions reuse Reveal / Line's deterministic simulation, renderer, replay verifier,
 campaign compiler and Journey store. `game/company.html` is the edition entry point; the current
-implementation connects company content to the canonical Solo host. All 14 editions have passed
-shared-host startup and reproducible candidate compilation. Historical default content and the original Portuguese DroneAid pilot
-keep separate content identities.
+implementation connects company content to the canonical Solo host. The current catalog contains 12 editions across six brands. Historical default content and the original Portuguese DroneAid pilot keep separate content identities. A changed catalog requires fresh release qualification; historical results below do not certify the current artifact.
 
 ## Try a draft
 
 Run `node scripts/game-cli.mjs serve --port 8768`, then open
 `http://127.0.0.1:8768/game/company.html`. Choose a company and audience in the selector.
-The generated catalog has 14 editions: six Coupa selections, the preserved three-mission
-Portuguese DroneAid pilot, and seven Netherlands selections (the combined
-`droneaid-nl-community` edition plus six individual chapters). The generator produces 101 JSON files.
+The catalog contains the preserved three-mission Portuguese DroneAid pilot, seven Netherlands selections (the combined `droneaid-nl-community` edition plus six chapters), and Social Drone UA, Victory Drones, Ukraine: Living Culture and FPV Learning. The generator produces their reviewed JSON catalogs and content.
 
-For the next human review, use the [playtest packet](company-editions-playtest.md) and
-[transfer practice page](../authoring/company-studio/playtest.html). The four practice tasks
-change the fictional evidence and expected decisions without saving answers or earning
-campaign progress. The user subsequently reported formative playtesting complete on 26 September 2026; final artwork and physical-device qualification remain separate.
-
-The official Coupa flower spins once every two seconds with its enclosed transparent interior
-filled by a render-time white backing. The Netherlands avatar uses the exact four propeller
+The Netherlands avatar uses the exact four propeller
 paths extracted from the official Dutch logo, spinning twice per second. Original source
-marks remain unchanged; reduced motion stops both rotations. Coupa uses paper tangles, missing-information clouds, stale fragments and backlog knots. DroneAid Netherlands uses six FPV quad families across all seven enemy roles, with four motors, a forward camera and animated propellers. Shared role badges, contact rings, warnings and enemy behaviour stay engine-owned. These are fictional game obstacles, not portrayals of workshop participants or recipients.
+marks remain unchanged; reduced motion stops continuous rotation. DroneAid Netherlands uses six FPV quad families across all seven enemy roles, with four motors, a forward camera and animated propellers. Shared role badges, contact rings, warnings and enemy behaviour stay engine-owned. These are fictional game obstacles, not portrayals of workshop participants or recipients.
 
-Five Coupa campaigns contain 30 distinct maps. Six DroneAid Netherlands campaigns add 36;
-the three historical Portuguese maps remain available separately. All 66 current missions pin
+Six DroneAid Netherlands campaigns contain 36 distinct maps;
+the three historical Portuguese maps remain available separately. The Netherlands missions pin
 `journey-trail-impact-v3`, `journey-actors-v9` and `journey-difficulty-v2`. The host applies its
 normal `gameplay-pressure.v4` attempt recipe once; authoring does not bake it into geometry.
 The historical pilot retains its exact earlier policy and source bytes.
 
 Current content now uses genuine encounter progression, rather than repeating an
-introductory enemy roster in every chapter. Coupa campaign windows are Bands 1–2,
-4–5, 6–7, 8–9 and 11–12; Netherlands windows are 1–2, 3–4, 5–6, 7–8, 9–10 and
+introductory enemy roster in every chapter. Netherlands windows are Bands 1–2, 3–4, 5–6, 7–8, 9–10 and
 11–12. Each chapter introduces its assigned mechanic before combining it later.
 The later chapters use moving frontier patrols, capture-activated roamers,
 territory eroders, finite trail/heading locks, warning lanes, numbered return gates,
 directional fields and shield/core encounters. These are the main Journey's
-registered primitives. The 69 original wall/foundation topologies remain distinct;
+registered primitives. The retained original wall/foundation topologies remain distinct;
 new gates and directional fields are explicit authored geometry, never scenery rules.
-Coupa campaign/pack/edition revisions advance to 4 and Netherlands to 2. Changed
+The Netherlands gameplay successor advanced campaign/pack/edition revisions to 2. Changed
 mission and map revisions also advance; prior frozen releases retain their own pins.
 Later standalone chapters are introductions to advanced mechanics, not novice
 Band-1 courses. Their onboarding and pacing need human testing.
-
-The Solo-first delivery contract offers the 24 fictional Coupa activities as optional bonuses
-**after winning and viewing the revealed picture**. They do not block arcade progression.
-Six are unscored culture reflections; 18 practice tasks use Inspect / Configure / Commit.
-These are illustrative local records, not live Coupa operations. Historical replay/evidence
-validation remains separate from the current bonus flow. Current shared-host tests and bounded
-browser checks are recorded separately from human content and release qualification.
 
 ## Author and compile
 
@@ -73,7 +55,7 @@ Source and observation imports enforce byte limits while reading, before JSON pa
 node scripts/produce-company-content.mjs
 node scripts/produce-company-content.mjs --check
 node scripts/compile-edition.mjs --catalog game/editions/catalog.json \
-  --edition coupa-adventure --out .cache/coupa-candidate \
+  --edition droneaid-community --out .cache/droneaid-candidate \
   --version 0.132.5 --offline-base-path /revealline/
 ```
 
@@ -152,11 +134,9 @@ storage keys must remain scoped explicitly.
 | Phase                   | Implemented                                                                                                    | Remaining acceptance                                                                         |
 | ----------------------- | -------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------- |
 | 1. Foundation           | Registries, player-only catalogues, exclusion reports and fixture editions                                     | Preserve compatibility as new packs enter                                                    |
-| 2. Coupa slice          | Official flower, branded host, First Connection, pinned Continue/Retry and reduced motion                      | Final artifact visual review; formative playtest reported complete                           |
-| 3. Independent editions | 14 editions compiled twice; downloaded artifacts independently checked                                         | Two actual OS-installed PWAs, update/rollback and device storage recovery                    |
+| 3. Independent editions | Per-edition reproducible compilation and downloaded-artifact checks                                         | Two actual OS-installed PWAs, update/rollback and device storage recovery                    |
 | 4. Release admission    | Reproducible archives, whole-source eligibility, original ZIP-member admission and candidate CI                | A new freeze for every changed source revision                                               |
-| 5. Learning/reuse       | 24 Coupa bonus activities, four transfer fixtures, six Netherlands chapters; user reports formative completion | Preserve any supplied observations separately from automated proofs                          |
-| 6. Expansion            | 66 current maps and pictures plus three historical maps/pictures; 414 replay routes                            | Final artifact artwork/content review; preserve individual review records                    |
+| 6. Expansion            | Retained campaign maps, pictures and deterministic route proofs                            | Final artifact artwork/content review; preserve individual review records                    |
 | 7. Promotion            | Evidence-bound delivery/selector tooling and rollback path                                                     | Approved evidence, release allocation, downloaded/deployed-byte verification and publication |
 
 Candidate builds are not qualified releases. Public promotion requires the human and deployed
@@ -173,7 +153,7 @@ inspects ZIP member names, CRCs, lengths and hashes. Outputs are immutable and n
 
 ```sh
 node scripts/bundle-editions.mjs \
-  --editions coupa-all,droneaid-nl-community \
+  --editions droneaid-community,droneaid-nl-community \
   --out .cache/company-candidate --base-path /revealline/
 node scripts/publish-editions.mjs review-template \
   --bundle .cache/company-candidate --review .cache/edition-review.json
@@ -265,7 +245,7 @@ release bytes or changes another edition's launcher. Use the verified local-sele
 
 ```sh
 node scripts/publish-editions.mjs select-retained --version vX.Y.Z \
-  --editions coupa-all --selector publishing/pages-controller/editions.json \
+  --editions droneaid-community --selector publishing/pages-controller/editions.json \
   --repository mekhovov/revealline --base-path /revealline/
 ```
 
@@ -292,7 +272,6 @@ The 11,094-byte `capacity-inventory.json` SHA-256 is
 
 | Edition                   | Immutable site bytes | Active launcher bytes | Combined component bytes |
 | ------------------------- | -------------------: | --------------------: | -----------------------: |
-| `coupa-all`               |           60,368,706 |               237,387 |               60,606,093 |
 | `droneaid-nl-community`   |           64,835,724 |                41,829 |               64,877,553 |
 | `social-drone-ua`         |           25,064,550 |                12,721 |               25,077,271 |
 | `victory-drones`          |           21,341,397 |                12,709 |               21,354,106 |
@@ -414,19 +393,7 @@ hidden campaign data and corrupt dependency hashes. Offline tests simulate faile
 and cache ownership. Report test failures or absent fixtures explicitly, without waiving them
 implicitly.
 
-On 26 September 2026 the user reported human playtesting complete and requested the next
-plan items. The formative gate is complete on that reported basis; no participant counts,
-quotes or measured learning results were supplied or inferred. The recorded design decision
-is to proceed with the current design and three-picture review batches. The first batch added
-Choose Together, Repair the Draft and Scoped Access. The subsequent bulk change completes all
-66 current candidate raster pictures (30 Coupa and 36 Netherlands), with three historical
-Portuguese pictures preserved. All 57 new selections are opaque 2:1 PNG derivatives within
-a 1 MiB per-image production target. Original generated masters remain outside the player
-packet, referenced by exact hashes and portable paths in the generation receipts. This bulk
-change stays in PR #615; it does not reserve a version or enqueue a public release.
-Content accuracy, final asset approval, two real
-installed PWAs, device storage recovery, a published-artifact rollback exercise and a final
-same-device performance comparison remain promotion checks tied to the final artifact.
+Human content review, final asset approval, two real installed PWAs, device storage recovery, a published-artifact rollback exercise and same-device performance comparison remain promotion checks tied to the final artifact. Preserve actual observations separately from automatic test results.
 
 Art-only updates preserve stable mission IDs and gameplay manifests. Before changing art,
 capture the affected edition's exact selected presentation with
@@ -445,7 +412,7 @@ masters outside the public player dependency set, and review each exact derivati
 complete receipts before writing them:
 
 ```sh
-node scripts/import-company-art.mjs game/editions/art-prompts-coupa-bulk-02.json
+node scripts/import-company-art.mjs game/editions/art-prompts-droneaid-workshop-bulk-02.json
 # Add --write only after the complete selected batch is reviewed.
 node scripts/produce-company-content.mjs
 ```
@@ -462,7 +429,6 @@ compiled batch. A source master is not a runtime dependency merely because it is
 provenance receipt.
 
 The completed bulk receipts link exact generated masters and selected files:
-[Coupa](../game/editions/art-prompts-coupa-bulk-02.json),
 [DroneAid workshops](../game/editions/art-prompts-droneaid-workshop-bulk-02.json), and
 [DroneAid community scenes](../game/editions/art-prompts-droneaid-community-bulk-02.json).
 Generation used the built-in image tool; exports preserve opaque RGB pixels with a
@@ -478,8 +444,8 @@ The first workshop picture also supplies the current home hero. The new per-imag
 is 384 KiB, using opaque 2:1 native-resized derivatives; the seven exact pre-FPV presentation
 snapshots preserve the larger original pictures for saved runs. The offline cap remains
 64 MiB. Brand revision 2 and Netherlands edition revision 4 are presentation changes;
-campaign, mission, gameplay and logical progress identities stay unchanged. Coupa and the
-historical Portuguese pilot retain their existing content. Research, composition decisions
+campaign, mission, gameplay and logical progress identities stay unchanged. The
+historical Portuguese pilot retains its existing content. Research, composition decisions
 and source boundaries are in [the FPV art direction](droneaid-fpv-art-direction.md).
 
 The player verifies identity and shared presentation assets at startup. Reveal-only mission
@@ -512,12 +478,6 @@ and bounded scenario coverage. It starts with no passes and never edits the game
 or public selector.
 
 ## Sources and asset boundaries
-
-The official flower comes from the [Coupa brand library](https://drive.google.com/drive/folders/1Bhq6KoBjES--iHt3gWZA2rhjo456Q9j6).
-Current culture content follows [Life at Coupa](https://careers.coupa.com/en/life-at-coupa/):
-Drive Success for #AllofUs, Build Tomorrow Together, Cultivate Belonging and Own our Results.
-API concepts cite [current developer documentation](https://docs.coupa.com/en/developer-documentation/the-coupa-core-api/get-started-with-the-api).
-No live endpoint, tenant policy or credentials are used.
 
 The new `droneaid-nl` brand follows [DroneAid Netherlands](https://drone-aid.nl/nl): violet
 `#4238EB`, yellow `#FFD62C`, light blue `#DCEBFD`, and its original propeller mark. These are

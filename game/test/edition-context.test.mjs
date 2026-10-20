@@ -49,59 +49,59 @@ function harness(editionId) {
 test('default channels retain their exact spellings; same-release company profiles and app IDs differ', () => {
   assert.equal(resolveEditionContext({ version: 'v0.132.1' }).channel, 'release-v0.132.1');
   assert.equal(resolveEditionContext({ version: 'DEV' }).channel, 'dev');
-  const a = resolveEditionContext({ editionId: 'coupa', version }),
+  const a = resolveEditionContext({ editionId: 'sample', version }),
     b = resolveEditionContext({ editionId: 'droneaid-nl-community', version });
   assert.notEqual(a.profileKey, b.profileKey);
   assert.equal(a.writerKey, `${a.profileKey}.writer`);
-  assert.deepEqual(editionAppIdentity({ editionId: 'coupa', basePath }), {
-    id: '/revealline/editions/coupa/',
-    start_url: '/revealline/editions/coupa/app/',
-    scope: '/revealline/editions/coupa/',
+  assert.deepEqual(editionAppIdentity({ editionId: 'sample', basePath }), {
+    id: '/revealline/editions/sample/',
+    start_url: '/revealline/editions/sample/app/',
+    scope: '/revealline/editions/sample/',
   });
   assert.notEqual(
-    officialContentOwner({ editionId: 'coupa', packId: 'shared', revision: '1' }),
+    officialContentOwner({ editionId: 'sample', packId: 'shared', revision: '1' }),
     officialContentOwner({ editionId: 'droneaid-nl-community', packId: 'shared', revision: '1' }),
   );
-  for (const editionId of ['../coupa', 'coupa/other', 'Coupa', '', 'a'.repeat(65)])
+  for (const editionId of ['../sample', 'sample/other', 'Sample', '', 'a'.repeat(65)])
     assert.throws(() => resolveEditionContext({ editionId, version }));
-  assert.throws(() => editionAppIdentity({ editionId: 'coupa', basePath: '//elsewhere/' }));
+  assert.throws(() => editionAppIdentity({ editionId: 'sample', basePath: '//elsewhere/' }));
 });
 
 test('transfer discovers earlier same-edition profiles; read-only recovery protects other editions', () => {
-  const h = harness('coupa');
-  for (const editionId of [undefined, 'coupa', 'droneaid-nl-community']) {
+  const h = harness('sample');
+  for (const editionId of [undefined, 'sample', 'droneaid-nl-community']) {
     const context = resolveEditionContext({ editionId, version: '0.131.0' });
     h.storage.setItem(context.profileKey, '{}');
   }
   const rows = discoverProfileTransfers({
     storage: h.storage,
     currentVersion: version,
-    editionId: 'coupa',
+    editionId: 'sample',
   });
   assert.deepEqual(
     rows.map((row) => row.editionId),
-    ['coupa'],
+    ['sample'],
   );
   assert.equal(discoverProfileTransfers({ storage: h.storage, currentVersion: version }).length, 1);
-  const channel = resolveEditionContext({ editionId: 'coupa', version }).channel;
-  assert.equal(recoveryChannel(channel, version, { editionId: 'coupa' }).support, 'current');
+  const channel = resolveEditionContext({ editionId: 'sample', version }).channel;
+  assert.equal(recoveryChannel(channel, version, { editionId: 'sample' }).support, 'current');
   assert.equal(recoveryChannel(channel, version).support, 'protected-unknown');
 });
 
 test('same-release installed editions have independent state and writer locks', async () => {
-  const h = harness('coupa');
-  await activateInstalledEdition(candidate('coupa'), h);
+  const h = harness('sample');
+  await activateInstalledEdition(candidate('sample'), h);
   const drone = { ...h, locationRef: { href: `${candidate('droneaid-nl-community').scope}game/` } };
   await activateInstalledEdition(candidate('droneaid-nl-community'), drone);
-  assert.equal(readInstalledState(h.storage, { editionId: 'coupa' }).active.editionId, 'coupa');
+  assert.equal(readInstalledState(h.storage, { editionId: 'sample' }).active.editionId, 'sample');
   assert.equal(
     readInstalledState(h.storage, { editionId: 'droneaid-nl-community' }).active.editionId,
     'droneaid-nl-community',
   );
   assert.equal(h.storage.getItem(installedStateKey()), null);
   await assert.rejects(activateInstalledEdition(candidate('droneaid-nl-community'), h), /identity/);
-  h.held.add(resolveEditionContext({ editionId: 'coupa', version }).writerKey);
-  await assert.rejects(activateInstalledEdition(candidate('coupa'), h), /Close the game window/);
+  h.held.add(resolveEditionContext({ editionId: 'sample', version }).writerKey);
+  await assert.rejects(activateInstalledEdition(candidate('sample'), h), /Close the game window/);
   assert.equal(
     (await activateInstalledEdition(candidate('droneaid-nl-community'), drone)).activated,
     true,
@@ -109,9 +109,9 @@ test('same-release installed editions have independent state and writer locks', 
 });
 
 test('branded updates require source review and retain both profiles through rollback', async () => {
-  const h = harness('coupa'),
-    old = candidate('coupa', '0.131.0'),
-    next = candidate('coupa');
+  const h = harness('sample'),
+    old = candidate('sample', '0.131.0'),
+    next = candidate('sample');
   await activateInstalledEdition(old, h);
   const oldKey = resolveEditionContext(old).profileKey,
     nextKey = resolveEditionContext(next).profileKey;

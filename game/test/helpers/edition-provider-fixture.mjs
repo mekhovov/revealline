@@ -2,7 +2,7 @@ import { readFile } from 'node:fs/promises';
 import { createStarterProject } from '../../content-design/starter.mjs';
 import { compileContentProject, resolveMission } from '../../content-design/project.mjs';
 import { createEditionRuntimeCatalog } from '../../editions/model.mjs';
-import { createCompanyTheme, createCompanyPresets } from '../../company-campaigns/brands.mjs';
+import { createCompanyWorkspaceFiles } from '../../../scripts/company-studio.mjs';
 
 export async function editionProviderFixture() {
   const source = createStarterProject('shared-host-fixture');
@@ -22,7 +22,9 @@ export async function editionProviderFixture() {
     heroAssetId: null,
     assetIds: [],
   };
-  const theme = { ...createCompanyTheme('coupa'), id: brand.themeId };
+  const template = createCompanyWorkspaceFiles({ brandId: 'fixture', name: 'Synthetic fixture' });
+  const templateBoot = template.catalog.editions[0].boot;
+  const theme = { ...JSON.parse(template.files.get(templateBoot.themes)).themes[0], id: brand.themeId };
   for (const mission of source.missions) mission.presentation.themeId = theme.id;
   const project = compileContentProject(source);
   const campaign = {
@@ -54,7 +56,7 @@ export async function editionProviderFixture() {
     publication: 'public',
     boot,
   };
-  const presets = createCompanyPresets('coupa');
+  const presets = JSON.parse(template.files.get(templateBoot.presets));
   Object.values(presets.characters).forEach((body) => {
     body.src = null;
   });

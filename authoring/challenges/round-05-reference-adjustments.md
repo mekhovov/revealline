@@ -88,9 +88,7 @@ Provisional pickup tuning for discussion: player boost ×1.3 for 4 seconds, enem
 
 The same geometry and challenge IDs can carry all four families. Neutral semantic roles belong to the simulation; visuals and words are swappable. Distinguish live game actors from figures painted into the reward illustration.
 
-| Neutral role | FPV FRONT — main | UKRAINE ATLAS | 1994 FOREVER | NAVI NETWORK |
 |---|---|---|---|---|
-| Player / trail | Ukrainian FPV drone / luminous signal trace | Firefly, craft shuttle or small bird, chosen per chapter / stitched trace | Microship / phosphor trace | Approved Coupa/Navi token / illuminated flow |
 | Regular field enemy | Fictional invading military patrol drone | Restless storm mote | Neon orb | Duplicate-charge sprite |
 | Contour patrol | Hostile perimeter crawler | Thorn runner | Circuit crawler | Fee ticker following the network edge |
 | Claimed-space enemy | Hostile scout on cleared sectors | Wandering gust on restored ground | Glitch roaming lit pixels | A recurring expense roaming visible operations |
@@ -102,8 +100,6 @@ The same geometry and challenge IDs can carry all four families. Neutral semanti
 | Reward image | Fictional Ukrainian military setting with invading equipment represented clearly | Region- and era-specific art, illustration, photograph or archive | Coherent period scene and hardware culture | Fictional client operations gaining visible savings |
 
 Example chapter titles for the twelve shapes can vary without changing the mechanics: Blue Ford becomes **Signal Crossing / Carpathian Ford / Tape Drag / Approval Queue**; Broken Halo becomes **Danger Ring / Thorn Wreath / Short Circuit / Exception Ring**; Twin Spirals becomes **Relay Labyrinth / Twin Ornaments / Data Maze / Supplier Routes**. Cultural ornaments may inspire the silhouette, but playability decides corridor widths and hazard placement.
-
-Use player, open-field enemy, contour enemy, claimed-space enemy, eroder, slow terrain, lethal terrain, wall and objective as distinct **semantic art roles**. The current schema has only generic field/boundary enemy visual roles, so this expanded role map is another presentation contract extension. Do not turn a Coupa logo or a red embroidered motif into a collision rule implicitly.
 
 ## Acceptance cases for the next implementation
 

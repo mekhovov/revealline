@@ -141,7 +141,7 @@ jobs:
         run: |
           python3 -B - <<'PYCODE'
           import hashlib, pathlib
-          expected = {'scripts/overflight-text-scaling-native-guard.py': '5661376556a4a3b4175f4fb58b3131f9eb3999e30e723f6ddb876464ccdcae37', 'scripts/aggregate-overflight-text-scaling-native.py': '9f5670af4074135e007d43faf7a5ad6c92123ae68c9ee47cd8e8ca6d5dc29c22', 'scripts/test_overflight_text_scaling_native_guard.py': '7ba009712a5ee62bd6678c3ab5ff70126590e4ebc2038053320a1f6992a3baa4'}
+          expected = {'scripts/overflight-text-scaling-native-guard.py': 'a3585ad5906912976dc16be1a91998955e583810913b95749fe51349af6099c0', 'scripts/aggregate-overflight-text-scaling-native.py': 'd81c45b605ec66d0d7d417f79830af8e796612d14e87e8a25f413a062c31cd67', 'scripts/test_overflight_text_scaling_native_guard.py': '91a98d41620e337b05357f463cc39ce2808d93aa2141d216dcca95fe6d8e76bf'}
           for name, digest in expected.items():
               path = pathlib.Path(name)
               assert path.is_file() and not path.is_symlink()
@@ -156,7 +156,7 @@ jobs:
                      shutil.disk_usage(os.environ['RUNNER_TEMP']).free) > 2 * 1024 ** 3
           PYCODE
           python3 -B scripts/test_overflight_text_scaling_native_guard.py
-      - name: Run one fixed complete seven-file group
+      - name: Run fixed seven-file group and mandatory group-one host
         env:
           SOURCE_SHA: ${{ github.event.pull_request.head.sha }}
         shell: bash
@@ -199,7 +199,7 @@ jobs:
         run: |
           python3 -B - <<'PYCODE'
           import hashlib, pathlib
-          expected = {'scripts/overflight-text-scaling-native-guard.py': '5661376556a4a3b4175f4fb58b3131f9eb3999e30e723f6ddb876464ccdcae37', 'scripts/aggregate-overflight-text-scaling-native.py': '9f5670af4074135e007d43faf7a5ad6c92123ae68c9ee47cd8e8ca6d5dc29c22', 'scripts/test_overflight_text_scaling_native_guard.py': '7ba009712a5ee62bd6678c3ab5ff70126590e4ebc2038053320a1f6992a3baa4'}
+          expected = {'scripts/overflight-text-scaling-native-guard.py': 'a3585ad5906912976dc16be1a91998955e583810913b95749fe51349af6099c0', 'scripts/aggregate-overflight-text-scaling-native.py': 'd81c45b605ec66d0d7d417f79830af8e796612d14e87e8a25f413a062c31cd67', 'scripts/test_overflight_text_scaling_native_guard.py': '91a98d41620e337b05357f463cc39ce2808d93aa2141d216dcca95fe6d8e76bf'}
           for name, digest in expected.items():
               path = pathlib.Path(name)
               assert path.is_file() and not path.is_symlink()

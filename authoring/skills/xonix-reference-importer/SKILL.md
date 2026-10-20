@@ -27,8 +27,6 @@ Inspect actual accessible images before describing their silhouette, palette or 
 
 Extract useful general traits: compact silhouette, negative space, broad value groups, outline contrast, directional axis and readability at the intended cell size. A reference-only source can guide a materially original design; do not promise that a tracing or palette swap makes a copy independent or licensed. Use the available image generation tool for new art and any requested raster editing. Preserve originals and generated variants separately with effective prompts and their reference relationships.
 
-Bind a reviewed variant as a cosmetic body or icon through the actual presentation manifest. Keep motor/wing anchors, animation recipe, scale, gameplay center, class ability, equipment, faction/role and level rules independent. A military silhouette does not grant a weapon or identify its operator. A Coupa-inspired helper must remain an original concept unless official brand assets and permission are supplied.
-
 Conclude with actual imported/viewed counts, source/rights statuses, generated outputs, executed validation and unimplemented boundaries. Never call an unknown pack fully imported, an unviewed animation inspected, or a reference-only original production-ready.
 
 ## Deliver the completed feature

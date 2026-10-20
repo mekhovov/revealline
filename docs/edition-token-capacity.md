@@ -1,5 +1,7 @@
 # Lossless edition token-spacing compaction
 
+> Retained excerpt after an ownership migration. Historical totals and verification statements describe the original scope; this excerpt is not a current release qualification. Original bytes and removed material are preserved separately.
+
 At main `8896c4976afec6991c0a34b31ccf28e50dfebf96`, the ordinary
 `droneaid-nl-community` build exceeded the existing 64 MiB limit: 887 files /
 67,324,907 bytes, an overage of 216,043 bytes. Recent shared appearance code
@@ -61,15 +63,7 @@ const catalog = JSON.parse(await fs.readFile('game/editions/catalog.json'));
 const version = 'v' + JSON.parse(await fs.readFile('package.json')).version;
 const sourceRevision = execFileSync('git', ['rev-parse', 'HEAD'], { encoding: 'utf8' }).trim();
 const engine = await collectEditionEngineFiles({ root });
-const ids = [
-  'coupa-all', 'coupa-adventure', 'coupa-culture', 'coupa-foundations',
-  'coupa-operations', 'coupa-developers', 'droneaid-community',
-  'droneaid-nl-community', 'droneaid-nl-workshop-lights',
-  'droneaid-nl-parts-in-motion', 'droneaid-nl-signals-of-support',
-  'droneaid-nl-careful-handoff', 'droneaid-nl-makers-together',
-  'droneaid-nl-shared-horizon', 'social-drone-ua', 'victory-drones',
-  'ukraine-culture', 'fpv-learning',
-];
+const ids = catalog.editions.map(({ id }) => id);
 for (const id of ids.sort()) {
   const selected = await collectEditionSelectedFiles({
     catalog, editionIds: [id], read: (name) => fs.readFile(name),

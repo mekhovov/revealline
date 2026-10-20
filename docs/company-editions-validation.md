@@ -1,5 +1,7 @@
 # Company edition qualification record
 
+> Retained excerpt after an ownership migration. Historical totals and verification statements describe the original scope; this excerpt is not a current release qualification. Original bytes and removed material are preserved separately.
+
 This record distinguishes candidate automation from release qualification. No company
 edition has been promoted or published by this work. Human observations, physical-device
 installation and downloaded/deployed release evidence cannot be inferred from unit tests.
@@ -33,11 +35,6 @@ state, preserves the successful save and offers the existing localized Play guid
 player and session paths retain exact saved MP3 bytes and recover on explicit Play. The private
 intake/panel cohort passes 110 checks and is added to company candidate CI.
 
-The [artwork engineering review](company-artwork-engineering-review.md) records all 66 current
-exports, native-size inspection and 20 static shared-renderer views across 16 missions. The
-older Coupa cover crops retain their main subjects in the inspected views. Parts in Motion 03
-now uses an immutable revision-3 reframe with the complete quad and every propeller tip inside
-the selected 640×320 image. Final human artwork approval is still separate.
 
 The [device qualification matrix](company-editions-device-qualification.md) records the
 80-check post-merge offline/storage/promotion cohort and executable installed-app steps.
@@ -176,15 +173,6 @@ the same tests pass on its runner.
 
 ## Bulk artwork completion in the existing PR
 
-The user requested the remaining work be combined in PR #615 while the release queue is
-occupied. This change completes the 57 remaining current mission illustrations: 22 Coupa
-and 35 Netherlands. All 66 current missions and the three historical Portuguese missions
-have distinct pinned candidate raster pictures. Generation used the built-in image tool,
-reviewed in groups of at most three. Each new selected PNG is an opaque 2:1 derivative
-within the 1 MiB production target. Full-size masters were preserved outside the repository;
-portable original paths, exact hashes, prompts, mechanical export commands and inspection
-notes are recorded in three bulk generation receipts. Candidate status is not final human
-approval of the new art.
 
 Main through `411bb4a7b` was merged into the existing branch, preserving previous frozen
 commit receipts. Conflict resolution retained both main's localized content validation and
@@ -219,24 +207,6 @@ or a command referring to different files cannot create a completed-inspection s
 An initial generation attempt encountered local disk exhaustion; after removing only
 reproducible review-build caches, regeneration and the complete output check passed.
 
-Startup retains the complete selected catalogue and aggregate presentation receipt but
-defers reveal-only image bytes to the existing exact Start/Continue/Replay acquisition path.
-Brand identity, home/hero images, actor bodies, explicit edition roots and shared dependencies
-remain eager. Coupa All checks 7 assets / 861,975 bytes upfront instead of 37 / 42,390,939;
-DroneAid Netherlands checks 5 / 2,980,046 instead of 40 / 33,847,736. These are verified-byte
-reductions, not measured launch-latency or frame-time improvements. The full selected 64 MiB
-budget and publication constraints remain enforced, including deferred images. Missing or
-corrupt historical artwork still fails exact acquisition without substituting current art.
-
-Native in-app browser checks used a separate local origin to preserve the user's existing
-saves. Parts in Motion opened the standard six-mission selector, loaded Six Little Stations,
-accepted movement/pause input and rendered its new image at a 390 × 844 viewport. The board
-occupied 382 CSS pixels and retained 2:1 geometry. Edition switching verified the paused
-DroneAid save before opening Coupa. Room for Everyone then loaded from the standard Missions
-selector at 1280 × 720. Selected composition overlays were inspected with the shared painter;
-these static full-art overlays are diagnostic views, not legal captures or completed runs.
-This is representative engineering review, not comprehensive approval of all 57 new scenes
-or physical-device qualification.
 
 The final integrated local run passed 231 company/runtime/artifact tests and a separate
 111-test actor/replay/persistence/default-offline/review-observer cohort, with no failures
@@ -275,12 +245,6 @@ artifact hashes, 58 downloaded checksums and 14 presentation receipts. Its SHA-2
 Those receipts apply to that exact pre-art commit. New artwork/history/offline changes need
 a new immutable candidate; its exact CI/download receipt is recorded on PR #615.
 
-Mutable first-batch checks compile four affected editions and verify current plus retained
-source/player receipts and original runtime/source ZIP members. The largest offline payload
-is 38,316,536 bytes (Coupa All), within 64 MiB. Generated-worker tests inject CacheStorage
-open/read/write failures: online fallback serves only verified bytes, readiness stays strict,
-and repair preserves old releases and other editions. These are automated observations,
-not physical-device or OS installation results. Public promotion remains pending.
 
 The integrated local cohorts passed 217 company checks, 81 replay/actor/navigation checks,
 and 41 persistence/default-offline checks. All 101 generated outputs verified. Sparse-checkout
@@ -325,28 +289,6 @@ to bytes changed afterward. The combined local cohort passed 208 tests before th
 Studio lifecycle regressions; the final Studio cohort passed 19 and observer cohort 16.
 Changed-file lint and formatting passed.
 
-A bounded live test of the repaired observer recognized the canonical Coupa menu and
-recorded activation into Build Tomorrow at 1280 × 720, DPR 2. Its initial 20-second sample
-contained 2,385 callback intervals, p95 8.9 ms and one 1,484 ms gap. A second sample
-reported a 1,942 ms maximum. A regression then reproduced a measurement-boundary defect:
-the first callback timestamp could precede asset preparation even though the sampling
-clock started afterward. The observer now excludes that activation callback timestamp,
-while preserving genuine later long intervals. Both earlier samples are contaminated
-and are **not gameplay performance evidence**. An additional review found that
-brief iframe focus loss between sampled frames also needs explicit invalidation; the
-observer now discards active samples synchronously on blur. Retain this earlier sample
-as diagnostic data, not as evidence of uninterrupted play or a performance win.
-The review tool observes public DOM and browser metrics, never starts/resumes the game,
-and keeps every exported observation `qualified: false`.
-
-After the boundary fix, a fresh 20-second Build Tomorrow sample at 1280 × 720, DPR 2
-recorded 2,377 intervals, p50 8.3 ms, p95 8.9 ms, maximum 32.9 ms and none over 33 ms.
-This is a bounded observer smoke check, not a baseline comparison or device qualification.
-The browser also confirmed the canonical edition-departure dialog verified the paused
-flight and retained Coupa when Stay was selected. Company Studio imported an actual
-neutral starter draft and v2 compiler report, verified all 466 admitted files, and opened
-the compiled game with its ordinary Start, Missions, Collection and Settings controls.
-The neutral fixture demonstrates data-only authoring; it is not another approved brand.
 
 At this earlier checkpoint human playtesting had not started and 60 current art slots remained.
 The later user-reported formative completion and first artwork batch are recorded above.
@@ -355,22 +297,6 @@ comparison and public promotion remain separate gates.
 
 ## Current Netherlands and canonical Solo expansion — unqualified
 
-The current working source declares **66 current missions** (30 Coupa and 36 DroneAid
-Netherlands), preserves the three historical Portuguese missions, and generates **101 JSON
-files for 14 editions**. All 69 authored maps compile with distinct topology. The 66 current
-missions pin the current Journey gameplay/actor/difficulty catalogs; the historical pilot's
-canonical source is byte-identical to its pre-expansion source.
-
-The advanced encounter successor advances Coupa campaigns/editions to revision 4
-and Netherlands campaigns/editions to revision 2. All current missions compile at
-all three presets, with campaign bands through 12 and real canonical actor,
-relay-gate, directional-field and shield/core data. The independent current route
-suite passes all six checks, replaying **414 winning traces**: 396 current
-mission/difficulty/steering combinations plus 18 historical combinations. It
-verifies required objectives, no life loss, exact discrete outcomes and board
-cells, same-runtime authoritative checkpoints, public replay consistency, actual
-connector/core events, distinct original topologies, shared
-execution catalog compatibility and the unchanged historical source hash.
 
 Candidate run [36242842814](https://github.com/mekhovov/revealline/actions/runs/36242842814)
 exposed an incorrect cross-runtime raw-checkpoint assumption. Its first failure
@@ -458,26 +384,12 @@ controls. These are engineering observations, not human learning or installed-PW
 - An intentionally missing flower asset produced a visible startup failure with Start disabled.
   A healthy tab of the same edition could then obtain the writer lease. A second healthy tab
   showed the session-only warning instead of becoming another writer.
-- Seven consecutive source-hub edition switches covered Coupa, DroneAid and the foundations
   audience. Each reached its matching title and mission count without a stale writer warning.
   Approximate shared heap varied from 35.7 to 91.9 MB in those observations; this is not a
   per-edition allocation measurement or a memory-leak conclusion.
 - The alternate foundations task accepted six reusable cases by 4 November after both records
   were inspected. Reset returned a blank attempt. This checks mechanics, not a participant's understanding.
 
-An exploratory same-device comparison used the retained frozen `0cc709c50` Coupa ZIP and
-an intermediate compiled recovery candidate, both served without HTTP caching at 1280 × 800,
-DPR 2. First Connection ran idle on safe ground for 20 seconds. Both observations contained
-2,400 animation-callback intervals, median 8.3 ms, p95 9.1 ms, maximum 9.4 ms and none over
-33 ms. Menu readiness was 1,360 ms / 1,319 ms; mission preparation was 147 ms / 143 ms.
-This single intermediate comparison does not qualify the final rebased artifact or establish
-a performance improvement. The displayed counts were buffered Resource Timing entries, not
-complete network requests; the tool labels that limitation and never returns qualified=true.
-A subsequent compiled runtime on the rebased main also completed 2,400 intervals in 20 seconds:
-median 8.3 ms, p95 10.0 ms, maximum 10.4 ms, none over 33 ms; menu readiness 1,462 ms and
-mission preparation 142 ms. These are single local samples, not a timing guarantee.
-The observer's load, failure, hidden-page, reload, sample bounds and timing calculations have
-separate deterministic tests. A final artifact/device performance review remains pending.
 
 ## Historical compatibility investigation
 

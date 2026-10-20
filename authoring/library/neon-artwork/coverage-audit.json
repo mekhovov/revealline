@@ -155,14 +155,6 @@
       "geometryGoalReached": true
     },
     {
-      "id": "neon-coupa-pack",
-      "reachableCells": 1907,
-      "bonusCells": 418,
-      "cutsToGoal": 1427,
-      "longestCut": 2,
-      "geometryGoalReached": true
-    },
-    {
       "id": "neon-social-drone-pack",
       "reachableCells": 1978,
       "bonusCells": 346,

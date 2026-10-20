@@ -1,3 +1,5 @@
+# Retained historical excerpt after an ownership migration. Exact original bytes are preserved separately. Original totals and verification statements describe the original scope; this excerpt is not a current qualification or a complete test result.
+
 TAP version 13
 # Subtest: Team pilot 1 paints spinning blades and freezes them when paused, downed or reduced
 ok 1 - Team pilot 1 paints spinning blades and freezes them when paused, downed or reduced
@@ -690,11 +692,6 @@ ok 137 - ukraine: actual observed movement animates microtile bodies; Pause hold
 ok 138 - retro: actual observed movement animates microtile bodies; Pause holds the exact pose
   ---
   duration_ms: 8.6585
-  ...
-# Subtest: coupa: actual observed movement animates microtile bodies; Pause holds the exact pose
-ok 139 - coupa: actual observed movement animates microtile bodies; Pause holds the exact pose
-  ---
-  duration_ms: 1.0735
   ...
 # Subtest: uploaded body remains independent, with light heading/contact cues rather than dark-theme ink inversion
 ok 140 - uploaded body remains independent, with light heading/contact cues rather than dark-theme ink inversion

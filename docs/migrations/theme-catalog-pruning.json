@@ -1,0 +1,455 @@
+{
+  "format": "revealline-theme-catalog-migration.v1",
+  "sourceRevision": "eb39e198d5f230e8e6cbd613952d52cd745fb8ae",
+  "scope": "Derived authoring bundles with retired catalog entries removed. Shared asset records and original payload bytes are unchanged. Prior release or browser qualification does not certify these new bundle bytes.",
+  "items": [
+    {
+      "path": "authoring/industrial-art-review/atlas-sample/industrial-bouncer.rltheme",
+      "previousSHA256": "096254a8876e2152a93d8a2abccebf753ba9387a5016c1ad2d956ec3f6c7bab2",
+      "sha256": "ce2337b9dd72f17cb6feac0f328ec8b7138059fdb1bb257046ff2a7b8494f51f",
+      "previousBytes": 990438,
+      "bytes": 886054,
+      "previousRevision": 2,
+      "revision": 3,
+      "removedSlots": 33,
+      "removedAssets": 33,
+      "preservedPayloads": [
+        {
+          "sha256": "44c148f5a811e2ab908db1f16b986e50382bbea7821a3774fe9dcdca45f49d97",
+          "bytes": 906
+        },
+        {
+          "sha256": "e35ca174c360d5a572c72e6be448666cf3da1438cf0d91f8ea7ff8c221b8eb5e",
+          "bytes": 290
+        }
+      ],
+      "remainingAssetRecordsUnchanged": true
+    },
+    {
+      "path": "authoring/industrial-art-review/environments-v1/approach-windows.rltheme",
+      "previousSHA256": "d9f5533374149877e4e57e76dd56f545705f4ef5227228bf253682e37890362d",
+      "sha256": "5510944e1db18268d162dcc0999aa2ff3f8f4667f76dbebd2a852a52a29fe4df",
+      "previousBytes": 988393,
+      "bytes": 884009,
+      "previousRevision": 2,
+      "revision": 3,
+      "removedSlots": 33,
+      "removedAssets": 33,
+      "preservedPayloads": [
+        {
+          "sha256": "39999ca0d0975c510c920e02d3c769cb884c0e68cc64292f32ec33a796465e49",
+          "bytes": 188
+        },
+        {
+          "sha256": "7b5355c792f4bbf8767c74581be03ce709667b01c8f47e0d78a2851c776d9d15",
+          "bytes": 209
+        },
+        {
+          "sha256": "b4f469204c69d51c32fb18086cd7df823edfbe1ad4c7a7ec49bc0d721759bc6e",
+          "bytes": 193
+        }
+      ],
+      "remainingAssetRecordsUnchanged": true
+    },
+    {
+      "path": "authoring/industrial-art-review/environments-v1/classic-snake-moving-windows.rltheme",
+      "previousSHA256": "15c7b9dfa877efe88aff30ae1aac878a3fcaa93f7be47d32b2ae8f0825021fdd",
+      "sha256": "9458b105257b6fa7f594c8232d95c4618ef8eed63ce68667f0667896eed7c4e8",
+      "previousBytes": 988351,
+      "bytes": 883967,
+      "previousRevision": 2,
+      "revision": 3,
+      "removedSlots": 33,
+      "removedAssets": 33,
+      "preservedPayloads": [
+        {
+          "sha256": "060d24a27ca599259249cf1023b4b395d927d5792742483a636557f077349d9f",
+          "bytes": 194
+        },
+        {
+          "sha256": "63b988bad000d0257ad4948a489dd7d0492a7094f04cae8355cf1390b1ec4b87",
+          "bytes": 181
+        },
+        {
+          "sha256": "b10de418cefecc50066fd80317f157d58fb48050dae78810f29017303266f19e",
+          "bytes": 171
+        }
+      ],
+      "remainingAssetRecordsUnchanged": true
+    },
+    {
+      "path": "authoring/industrial-art-review/environments-v1/classic-snake-twin-intercepts.rltheme",
+      "previousSHA256": "62f1de335abe4e4d1fab5e11c5930c5e271be47bfa1a7a9e0a255ed32a8cfd4b",
+      "sha256": "468bfd659992fd1f8c8406f66b53780d0e587d4b8c0074f81a5db51109fad1e8",
+      "previousBytes": 988334,
+      "bytes": 883950,
+      "previousRevision": 2,
+      "revision": 3,
+      "removedSlots": 33,
+      "removedAssets": 33,
+      "preservedPayloads": [
+        {
+          "sha256": "169b535735b07406329ede24649eaff811ecb6c8fe2414de9c5845f26bddb21b",
+          "bytes": 131
+        },
+        {
+          "sha256": "6c9c4d2fe21839ad2f5f5c27acbe9c4aaee397c7b4c9fa17f9d555004bc21c50",
+          "bytes": 198
+        },
+        {
+          "sha256": "ead2673ebaeb2a1b2396783f2ff59a8b8c0a7787ba2938f73230aa06a4e6786c",
+          "bytes": 207
+        }
+      ],
+      "remainingAssetRecordsUnchanged": true
+    },
+    {
+      "path": "authoring/industrial-art-review/environments-v1/ground-routes.rltheme",
+      "previousSHA256": "23c3d55def77de150551327f3fece40d1154cb15beeb87086a85fb61bc0dffea",
+      "sha256": "7dd7d8d18dee53ced8b147e86a0ca45d4918dfff4dce0e321c84a65499968cc4",
+      "previousBytes": 988432,
+      "bytes": 884048,
+      "previousRevision": 2,
+      "revision": 3,
+      "removedSlots": 33,
+      "removedAssets": 33,
+      "preservedPayloads": [
+        {
+          "sha256": "0a79c783799061b9dd58d63bb833543af9ed17da1074c5b4b16314f51e518e27",
+          "bytes": 203
+        },
+        {
+          "sha256": "0cb8db33029303f8db37675bf277dbc006dcea2ac972170cead54f937822388c",
+          "bytes": 202
+        },
+        {
+          "sha256": "60362738e77f69424cec96a8be2b54b03d119ac06f9b097db456e7764355b50e",
+          "bytes": 227
+        }
+      ],
+      "remainingAssetRecordsUnchanged": true
+    },
+    {
+      "path": "authoring/industrial-art-review/environments-v1/pursuit-escape-lines.rltheme",
+      "previousSHA256": "988950dd70dbdf7f6e9eaaf9547a588e684b4db9aad1cc49a08234478282ab8d",
+      "sha256": "964fa5a13a71a8d568b20301528bf31406d78ae739dd96d3b7be43bd38d20522",
+      "previousBytes": 988336,
+      "bytes": 883952,
+      "previousRevision": 2,
+      "revision": 3,
+      "removedSlots": 33,
+      "removedAssets": 33,
+      "preservedPayloads": [
+        {
+          "sha256": "60362738e77f69424cec96a8be2b54b03d119ac06f9b097db456e7764355b50e",
+          "bytes": 227
+        },
+        {
+          "sha256": "b4f469204c69d51c32fb18086cd7df823edfbe1ad4c7a7ec49bc0d721759bc6e",
+          "bytes": 193
+        },
+        {
+          "sha256": "eec0216c2883cc868e9b805c70ac6997507949cbe40237d4cd8c4d2ae4f3599e",
+          "bytes": 130
+        }
+      ],
+      "remainingAssetRecordsUnchanged": true
+    },
+    {
+      "path": "authoring/industrial-art-review/environments-v1/pursuit-guarded-crossings.rltheme",
+      "previousSHA256": "a8db4031ec7e369972a33019b0a11067c84711e1e0e8e147f5c7dc58108e4f0c",
+      "sha256": "aaed84a7f5c718080f8b1bb86727307ceb5bb79812c02270bdb37b3f5539e94d",
+      "previousBytes": 988382,
+      "bytes": 883998,
+      "previousRevision": 2,
+      "revision": 3,
+      "removedSlots": 33,
+      "removedAssets": 33,
+      "preservedPayloads": [
+        {
+          "sha256": "060d24a27ca599259249cf1023b4b395d927d5792742483a636557f077349d9f",
+          "bytes": 194
+        },
+        {
+          "sha256": "b9402c295ebc1cc92a0eec7036409579a90a741eedbeca36d53adfbc0f7ae6d0",
+          "bytes": 205
+        },
+        {
+          "sha256": "c4a0e570516c0ab1b0833e0ca5310d6a5c32d6ce6c72cb7eb85f183a06266af5",
+          "bytes": 175
+        }
+      ],
+      "remainingAssetRecordsUnchanged": true
+    },
+    {
+      "path": "authoring/industrial-art-review/environments-v1/pursuit-patrol-district.rltheme",
+      "previousSHA256": "6a538eb3cea4ec978fca6ef720cdef4b852016ea6c196f61cec353ca0730aa59",
+      "sha256": "f2693da51385af5d5392009c22a592ec17722e0cee89365c57da2613e8be9165",
+      "previousBytes": 988338,
+      "bytes": 883954,
+      "previousRevision": 2,
+      "revision": 3,
+      "removedSlots": 33,
+      "removedAssets": 33,
+      "preservedPayloads": [
+        {
+          "sha256": "06303de014d81bf18b596d92dac5a82654236dba27b88179c9cbcbbf8e49af03",
+          "bytes": 136
+        },
+        {
+          "sha256": "6c9c4d2fe21839ad2f5f5c27acbe9c4aaee397c7b4c9fa17f9d555004bc21c50",
+          "bytes": 198
+        },
+        {
+          "sha256": "7b5355c792f4bbf8767c74581be03ce709667b01c8f47e0d78a2851c776d9d15",
+          "bytes": 209
+        }
+      ],
+      "remainingAssetRecordsUnchanged": true
+    },
+    {
+      "path": "authoring/industrial-art-review/environments-v1/pursuit-specialist-circuit.rltheme",
+      "previousSHA256": "92e426d99bdb454a7f6d16d5cd1b5a131e2d5063984b9d3653f7aba7d9a0abf4",
+      "sha256": "84ea21b4d8c89b2309725748e65e32318556fc3c5c99e2c889afc8c2f8400028",
+      "previousBytes": 988387,
+      "bytes": 884003,
+      "previousRevision": 2,
+      "revision": 3,
+      "removedSlots": 33,
+      "removedAssets": 33,
+      "preservedPayloads": [
+        {
+          "sha256": "0a79c783799061b9dd58d63bb833543af9ed17da1074c5b4b16314f51e518e27",
+          "bytes": 203
+        },
+        {
+          "sha256": "46dfe1afb911f03e4abc96fc2ab8b1f5ac13369a23069ead6966f0cdf0d8ca2c",
+          "bytes": 174
+        },
+        {
+          "sha256": "d31c4a1386d651c5dffabf7fb7a7a67e62055b0ccd3b7ff669b490c269e124ce",
+          "bytes": 209
+        }
+      ],
+      "remainingAssetRecordsUnchanged": true
+    },
+    {
+      "path": "authoring/industrial-art-review/environments-v1/pursuit-team-material-exchange.rltheme",
+      "previousSHA256": "f9f0f5c383600aa91a2df230c94debded70a0af63732b3a8c43498cb908a050e",
+      "sha256": "efabc8625b4ff7ac3d4a3401ec461e2c7becb9a94e9aa3154ad0522e1c02b283",
+      "previousBytes": 988291,
+      "bytes": 883907,
+      "previousRevision": 2,
+      "revision": 3,
+      "removedSlots": 33,
+      "removedAssets": 33,
+      "preservedPayloads": [
+        {
+          "sha256": "07838930fee015322cbff94a727550a9bf507e2c04f9f91514d37856bfc4dae9",
+          "bytes": 160
+        },
+        {
+          "sha256": "267798728b61d51a087dbc4403959a604b68c30b0f0b1fd6e1940474a9de31aa",
+          "bytes": 126
+        },
+        {
+          "sha256": "6c9c4d2fe21839ad2f5f5c27acbe9c4aaee397c7b4c9fa17f9d555004bc21c50",
+          "bytes": 198
+        }
+      ],
+      "remainingAssetRecordsUnchanged": true
+    },
+    {
+      "path": "authoring/industrial-art-review/environments-v1/pursuit-team-pincer-grounds.rltheme",
+      "previousSHA256": "211cdb781ee40b9ae49b95e475470289e9f4c67ec267d36c47baca64d9c714cd",
+      "sha256": "f7ff9e5d964d40690aa1a2e1502d59472eed06c3deb64c944091895156d89391",
+      "previousBytes": 988331,
+      "bytes": 883947,
+      "previousRevision": 2,
+      "revision": 3,
+      "removedSlots": 33,
+      "removedAssets": 33,
+      "preservedPayloads": [
+        {
+          "sha256": "9dfec1e90a2e8e33ec398fefa94fe453aebd67d2306f91e21a216c48dced10d0",
+          "bytes": 134
+        },
+        {
+          "sha256": "b4f469204c69d51c32fb18086cd7df823edfbe1ad4c7a7ec49bc0d721759bc6e",
+          "bytes": 193
+        },
+        {
+          "sha256": "d31c4a1386d651c5dffabf7fb7a7a67e62055b0ccd3b7ff669b490c269e124ce",
+          "bytes": 209
+        }
+      ],
+      "remainingAssetRecordsUnchanged": true
+    },
+    {
+      "path": "authoring/industrial-art-review/environments-v1/pursuit-team-return-workshop.rltheme",
+      "previousSHA256": "3af85a45db1a3df36721943e4718994e954b7eb5f73aaeb3bebb81d47c081993",
+      "sha256": "8a8f58bd0fb51ebf3ac57caacdfa4fea01ada2793d962fa0344dd531e8c0d6d8",
+      "previousBytes": 988385,
+      "bytes": 884001,
+      "previousRevision": 2,
+      "revision": 3,
+      "removedSlots": 33,
+      "removedAssets": 33,
+      "preservedPayloads": [
+        {
+          "sha256": "060d24a27ca599259249cf1023b4b395d927d5792742483a636557f077349d9f",
+          "bytes": 194
+        },
+        {
+          "sha256": "0a79c783799061b9dd58d63bb833543af9ed17da1074c5b4b16314f51e518e27",
+          "bytes": 203
+        },
+        {
+          "sha256": "39999ca0d0975c510c920e02d3c769cb884c0e68cc64292f32ec33a796465e49",
+          "bytes": 188
+        }
+      ],
+      "remainingAssetRecordsUnchanged": true
+    },
+    {
+      "path": "authoring/industrial-art-review/environments-v1/pursuit-team-shared-bearings.rltheme",
+      "previousSHA256": "056801f01925ab42541c65b0568e900455e836caa3e6cb36aeff81f343de08cd",
+      "sha256": "c6a7811f9c4dbbbb7677666c08088ae1dd0492f80331df4e75bc2122cc3ea7f3",
+      "previousBytes": 988367,
+      "bytes": 883983,
+      "previousRevision": 2,
+      "revision": 3,
+      "removedSlots": 33,
+      "removedAssets": 33,
+      "preservedPayloads": [
+        {
+          "sha256": "6c9c4d2fe21839ad2f5f5c27acbe9c4aaee397c7b4c9fa17f9d555004bc21c50",
+          "bytes": 198
+        },
+        {
+          "sha256": "b3c60b659331692bbe46a3fd12628c47b07a52b55b119bb6bfbef54d155978de",
+          "bytes": 162
+        },
+        {
+          "sha256": "ead2673ebaeb2a1b2396783f2ff59a8b8c0a7787ba2938f73230aa06a4e6786c",
+          "bytes": 207
+        }
+      ],
+      "remainingAssetRecordsUnchanged": true
+    },
+    {
+      "path": "authoring/industrial-art-review/environments-v1/pursuit-team-two-pilot-finale.rltheme",
+      "previousSHA256": "57b90c3c1af027f881badca8028a782a86b013d15071e17f597d000a0b358c5a",
+      "sha256": "02f4ceafb40040dd3686b615c03fc7339616e7b6b0fae6d808c36ee62f087b98",
+      "previousBytes": 988381,
+      "bytes": 883997,
+      "previousRevision": 2,
+      "revision": 3,
+      "removedSlots": 33,
+      "removedAssets": 33,
+      "preservedPayloads": [
+        {
+          "sha256": "060d24a27ca599259249cf1023b4b395d927d5792742483a636557f077349d9f",
+          "bytes": 194
+        },
+        {
+          "sha256": "295c41630adeed5fb08d7771fab59016d4307b06c54779e87f3e3d28811cd434",
+          "bytes": 202
+        },
+        {
+          "sha256": "46dfe1afb911f03e4abc96fc2ab8b1f5ac13369a23069ead6966f0cdf0d8ca2c",
+          "bytes": 174
+        }
+      ],
+      "remainingAssetRecordsUnchanged": true
+    },
+    {
+      "path": "authoring/industrial-art-review/environments-v1/pursuit-team-window-partners.rltheme",
+      "previousSHA256": "cb70bc35af8dcd92230cac814cc55eab897b73087308a1c438a4ad7c58377201",
+      "sha256": "f4c8e158a2c36281ba9bc68925d21bb6001a65cf75fd66678b9b4ca3513f752a",
+      "previousBytes": 988383,
+      "bytes": 883999,
+      "previousRevision": 2,
+      "revision": 3,
+      "removedSlots": 33,
+      "removedAssets": 33,
+      "preservedPayloads": [
+        {
+          "sha256": "63b988bad000d0257ad4948a489dd7d0492a7094f04cae8355cf1390b1ec4b87",
+          "bytes": 181
+        },
+        {
+          "sha256": "7b5355c792f4bbf8767c74581be03ce709667b01c8f47e0d78a2851c776d9d15",
+          "bytes": 209
+        },
+        {
+          "sha256": "b4f469204c69d51c32fb18086cd7df823edfbe1ad4c7a7ec49bc0d721759bc6e",
+          "bytes": 193
+        }
+      ],
+      "remainingAssetRecordsUnchanged": true
+    },
+    {
+      "path": "authoring/industrial-art-review/machinery-v3/industrial-machinery.rltheme",
+      "previousSHA256": "20022646d3929ee8a70e961f9c00684cda0483ffdcec2dd43a299118c7693575",
+      "sha256": "c6617c6a86c4d24e904b81492acf65422d0160ae87cb9ed20daec6b8ff651bbf",
+      "previousBytes": 1034069,
+      "bytes": 929685,
+      "previousRevision": 2,
+      "revision": 3,
+      "removedSlots": 33,
+      "removedAssets": 33,
+      "preservedPayloads": [
+        {
+          "sha256": "08a21fb3ede118b7e602d219acc7190543959911e553fce29a0803847911b66d",
+          "bytes": 936
+        },
+        {
+          "sha256": "10e61096446881e93b140e366f9e6b5af66dbea94181278d360d1fa5789f2734",
+          "bytes": 974
+        },
+        {
+          "sha256": "14aa4345dbca16b00b82f2916d3703100d9ce4a9886eca980f2b0377da809704",
+          "bytes": 386
+        },
+        {
+          "sha256": "2023c589de5f532fc81a730529ebe6e80ec8c9ab2a6019cc059b7a1dbb1ea394",
+          "bytes": 188
+        },
+        {
+          "sha256": "2961feee15006f62381c106f66e6315bbac2996e4677c7d055a1ffcef4d831b0",
+          "bytes": 893
+        },
+        {
+          "sha256": "80049f102a461a7b5a8cda5f8a2736d6ef8fef877d68a1fec21bc740a7cca5a9",
+          "bytes": 858
+        },
+        {
+          "sha256": "9faf453160ce0506bf23df5d10df1ebace980ee9ac67c7d162cedc581b3f4703",
+          "bytes": 372
+        },
+        {
+          "sha256": "a2fd740563d14371ae4a26f11331a72a8e8659b95eca1b30710e5d3034e66581",
+          "bytes": 191
+        },
+        {
+          "sha256": "a846e7fafba85bf38894ee5091dd23b5e68f7be67959b494d5b97d3a78d3bd6d",
+          "bytes": 2177
+        },
+        {
+          "sha256": "eb27092e6560903038a22e0e4653dff638702d868b6d6c2ab5d7184e6cf084a5",
+          "bytes": 1992
+        },
+        {
+          "sha256": "f77a2f99e4d03fdf848a0b109504aad961b908dbd2ea4b109dca2d3202f17b08",
+          "bytes": 1007
+        },
+        {
+          "sha256": "f9d263bd5a5bfafef4382e1e2a66382ede0ac1cb755766f990a6209d30ad4e0f",
+          "bytes": 397
+        }
+      ],
+      "remainingAssetRecordsUnchanged": true
+    }
+  ]
+}

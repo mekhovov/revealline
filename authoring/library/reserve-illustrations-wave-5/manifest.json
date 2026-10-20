@@ -43,19 +43,6 @@
       "width": 1774,
       "height": 887,
       "runtimeAdopted": false
-    },
-    {
-      "id": "spend-raincatcher-rooftops",
-      "file": "originals/spend-raincatcher-rooftops.png",
-      "bytes": 2520491,
-      "sha256": "f94b2fef94700d10a68d770e4b2ea89ec97905e4c992cf26c5901ef983dafaaf",
-      "prompt": "prompts/spend-raincatcher-rooftops.txt",
-      "themeId": "coupa",
-      "theme": "Spend Network",
-      "title": "Raincatcher Rooftops",
-      "width": 1774,
-      "height": 887,
-      "runtimeAdopted": false
     }
   ],
   "selectionProvenance": "provenance/originals.json"

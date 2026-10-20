@@ -1,5 +1,7 @@
 # Reveal Line: completed work and remaining programme
 
+> Retained excerpt after an ownership migration. Historical totals and verification statements describe the original scope; this excerpt is not a current release qualification. Original bytes and removed material are preserved separately.
+
 > **Historical review — 1 October:** use the [plain-language remaining work and priority choices](plan-priorities-2026-10-01.md). It updates merged/public/queued status, explains benefits and deferral costs, and distinguishes the proposed core-game-first refinement from the still-approved A → B → C order. The dated record below is preserved history.
 
 Reviewed 30 September 2026, 18:49 UTC. This is the current explanation and priority
@@ -174,11 +176,6 @@ finished example rather than multiply unreviewed candidates.
 
 ### Required tools first; broader tools and communities later (C6 / remaining C5)
 
-**Work:** carry only necessary validation, recipe-reader, provenance and export
-changes with A/B/C. Extend moving parts/state editing when a real consuming asset
-requires it. Then independently reproduce a fresh-workspace community workflow:
-create → import → install → play → export → recover. Finish specialized creator
-input/recovery routes and subsequent DroneAid, cultural, Retro and Coupa cohorts.
 
 **Benefit:** communities can reproduce the result safely instead of relying on
 hidden local knowledge. **If postponed:** the existing game remains playable, but

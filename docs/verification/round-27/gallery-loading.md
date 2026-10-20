@@ -1,10 +1,11 @@
+> Retained historical excerpt after an ownership migration. Exact original bytes are preserved separately. Original totals and verification statements describe the original scope; this excerpt is not a current qualification or a complete test result.
+
 # Round 27 gallery loading follow-up
 
 Date: 2026-09-12. This is a source fix after the earlier candidate review; previous candidate bytes and reports remain unchanged.
 
 ## Observed mismatch and cause
 
-The parent agent's offline candidate check captured [Copper Orchard with Clear Ledger's city image](../../../.cache/round-27/candidate-browser/offline-homeward.jpg). The screenshot was taken immediately after choosing the next picture. Its Copper Orchard title and Steady Signal metadata belong to the selected record, while the canvas still contains the previously viewed illustration. This image is evidence of the loading defect, not evidence that the Copper Orchard artwork rendered correctly.
 
 Source inspection confirms the boundary: `openPicture()` updated the title and opened the dialog before awaiting `drawPicture()` and the new image's asynchronous decode. The reused canvas remained visible during that interval. Existing generation checks prevented a late older decode from repainting a newer selection, but did not hide pixels already present before the new decode started.
 

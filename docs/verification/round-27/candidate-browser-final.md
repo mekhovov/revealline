@@ -1,3 +1,5 @@
+> Retained historical excerpt after an ownership migration. Exact original bytes are preserved separately. Original totals and verification statements describe the original scope; this excerpt is not a current qualification or a complete test result.
+
 # Round 27 — corrected candidate offline browser check
 
 Date: 2026-09-12. Candidate **0.17.0-gallery-candidate**, build ID `b593b45e9cd6f0f00ea037862d2e010333f82a6d5514836598efa325b85ea306`.
@@ -14,7 +16,6 @@ The browser then navigated the **same page** to the game URL with the server sto
 
 ## Correct selected artwork
 
-The operator repeated Clear Ledger → Copper Orchard. The [first captured Copper Orchard frame](../../../.cache/round-27/gallery-candidate-browser/homeward-first-frame.jpg) already contains the correct orchard/lake painting, rather than the preceding canal city. The later [ready screenshot](../../../.cache/round-27/gallery-candidate-browser/homeward-offline-ready.jpg) and [DOM snapshot](../../../.cache/round-27/gallery-candidate-browser/homeward-offline-ready.txt) confirm that selected picture and its Steady Signal line. The [preceding Ledger capture](../../../.cache/round-27/gallery-candidate-browser/ledger-offline-ready.jpg) preserves the transition's source.
 
 This check addresses the concrete stale-pixels defect observed in the initial candidate. It did not deliberately stall decode or force an image error in the browser; deferred/rejected decode and stale-request behavior are covered by the separate scoped tests. It also does not establish that a loading status must visibly appear on a fast successful decode.
 

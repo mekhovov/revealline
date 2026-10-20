@@ -30,13 +30,16 @@ def artifact_names(source, run):
 
 def expected_files(number):
     phases = guard.fixed_phases("NODE", Path("SOURCE"), number)
+    extra = guard.additional_phases("NODE", Path("SOURCE"), number)
     names = {"node-version", "initial-source", "final-source"}
-    names.update(label for label, _, _ in phases)
+    names.update(label for label, _, _ in phases + extra)
+    if extra:
+        names.update(("additional-host-before-source", "additional-host-after-source"))
     names.update(f"{index:02}-{when}-source" for index in range(1, 8) for when in ("before", "after"))
     files = {"campaign.json", "helper-source.json"}
     for name in names:
         files.update(f"{name}/{file}" for file in ("child-terminal.json", "stdout.log", "stderr.log"))
-    files.update(f"{label}/qualified.json" for label, _, _ in phases)
+    files.update(f"{label}/qualified.json" for label, _, _ in phases + extra)
     return names, files
 
 
@@ -219,12 +222,18 @@ def validate_metadata(groups, source, tree):
     joined, total_raw, common = [], 0, None
     for number, row in enumerate(groups, 1):
         expected = list(guard.WHOLE_FILES[(number - 1) * 7:number * 7])
+        extra = guard.additional_phases("NODE", Path("SOURCE"), number)
         if (row.get("status") != "PASS" or row.get("sourceHead") != source or row.get("sourceTree") != tree or
                 row.get("git", {}).get("head") != source or row.get("git", {}).get("tree") != tree or
                 row.get("wholeFiles") != expected or row.get("all28Inventory") != list(guard.WHOLE_FILES) or
                 len(row.get("phases", [])) != 7 or len(set(row["phases"])) != 7 or
                 row.get("feature", {}).get("initialReferenceManifestSHA256") != guard.FEATURE_MANIFEST_SHA256 or
-                row["feature"].get("featurePaths") != 58 or row["feature"].get("stackAdmitted") is not False):
+                row["feature"].get("featurePaths") != 63 or row["feature"].get("stackAdmitted") is not True or
+                row["feature"].get("dependencyHead") != guard.STACK_HEAD or
+                row["feature"].get("dependencyAdmittedAtMain") != guard.ADMITTED_AT_MAIN or
+                row["feature"].get("additionalCompleteFiles") != 1 or
+                row.get("additionalPhases") != [label for label, _, _ in extra] or
+                row.get("additionalWholeFiles") != [filename for _, _, filename in extra]):
             raise RuntimeError("Group does not bind the complete exact-head selection")
         if (not finite_between(row.get("elapsedSeconds"), 0, 45 * 60) or
                 type(row.get("freeBytes")) is not int or row["freeBytes"] <= 2 * 1024 ** 3):
@@ -236,10 +245,10 @@ def validate_metadata(groups, source, tree):
         feature = row["feature"]
         inventory = feature.get("inventory", [])
         digest = hashlib.sha256(guard.json_bytes(inventory)).hexdigest()
-        if (len(inventory) != 58 or [item.get("path") for item in inventory] != sorted(guard.FEATURE_PATHS) or
+        if (len(inventory) != 63 or [item.get("path") for item in inventory] != sorted(guard.FEATURE_PATHS) or
                 feature.get("inventorySHA256") != digest or
                 feature.get("matchesInitialReference") != (digest == guard.INITIAL_REFERENCE_LEAF_SHA256)):
-            raise RuntimeError("Actual immutable58 feature inventory is incomplete or inconsistent")
+            raise RuntimeError("Actual immutable63 feature inventory is incomplete or inconsistent")
         for item in inventory:
             if (item.get("mode") not in ("100644", "100755") or
                     not re.fullmatch("[a-f0-9]{40}", item.get("OID", "")) or
@@ -264,7 +273,8 @@ def validate_metadata(groups, source, tree):
         joined.extend(row["wholeFiles"])
     if joined != list(guard.WHOLE_FILES) or len(set(joined)) != 28 or total_raw > 32 * MIB:
         raise RuntimeError("Missing/duplicated/reordered whole-file union or raw overflow")
-    return {"wholeFiles": joined, "rawBytes": total_raw, "commonContent": common}
+    return {"wholeFiles": joined, "additionalWholeFiles": list(guard.ADDITIONAL_WHOLE_FILES),
+            "additionalCompleteFiles": 1, "rawBytes": total_raw, "commonContent": common}
 
 
 def read_terminal(directory):
@@ -299,6 +309,7 @@ def read_group(directory, number, source, tree, expected_controls):
         raise RuntimeError("Missing ordinary group artifact directory")
     row = document(directory / "campaign.json")
     phases = guard.fixed_phases("NODE", Path("SOURCE"), number)
+    extra = guard.additional_phases("NODE", Path("SOURCE"), number)
     expected_names, expected_paths = expected_files(number)
     found, raw, total = set(), 0, 0
     for base, dirs, files in os.walk(directory, followlinks=False):
@@ -342,12 +353,17 @@ def read_group(directory, number, source, tree, expected_controls):
             validate_argv(terminals[name][0]["args"], [row["node"]["path"], row["auditorPath"], "--root", row["source"]["root"]])
     if ordinary(directory / "node-version/stdout.log", 64).strip() != b"v22.22.2":
         raise RuntimeError("Exact Node version not demonstrated")
-    for index, (label, _, filename) in enumerate(phases, 1):
+    bindings = [(label, filename, f"{index:02}", row["phases"], index - 1, False)
+                for index, (label, _, filename) in enumerate(phases, 1)]
+    bindings += [(label, filename, "additional-host", row.get("additionalPhases", []), index, True)
+                 for index, (label, _, filename) in enumerate(extra)]
+    for label, filename, audit_prefix, phase_list, phase_index, additional in bindings:
         qualified = document(directory / label / "qualified.json")
         child, terminal_sha = terminals[label]
         if (qualified.get("status") != "PASS" or qualified.get("wholeFile") != filename or
                 qualified.get("phase") != label or qualified.get("child") != {**child, "terminalSHA256": terminal_sha} or
-                row["phases"][index - 1] != label):
+                len(phase_list) <= phase_index or phase_list[phase_index] != label or
+                (additional and qualified.get("kind") != "additional-whole-file")):
             raise RuntimeError("Qualified phase does not bind its sealed native child")
         validate_argv(child["args"], [row["node"]["path"], "--max-old-space-size=1536", "--test",
                       "--test-concurrency=1", "--experimental-test-isolation=none",
@@ -357,7 +373,7 @@ def read_group(directory, number, source, tree, expected_controls):
             raise RuntimeError("Whole-file TAP proof differs")
         for when in ("before", "after"):
             proof = qualified[when]
-            if proof.get("sourceTerminalSHA256") != terminals[f"{index:02}-{when}-source"][1]:
+            if proof.get("sourceTerminalSHA256") != terminals[f"{audit_prefix}-{when}-source"][1]:
                 raise RuntimeError("Source audit terminal differs")
             for key, campaign_key in (("source", "source"), ("git", "git"), ("dependencies", "dependencies"), ("node", "node")):
                 if proof[key] != row[campaign_key]:
@@ -408,13 +424,16 @@ def main():
     for archive, row in zip(archives, groups):
         group = directory / archive["name"]
         phases = []
-        for label in row["phases"]:
+        phase_links = [(label, False) for label in row["phases"]] + [(label, True) for label in row["additionalPhases"]]
+        additional_links = []
+        for label, additional in phase_links:
             data = ordinary(group / label / "qualified.json", 1024 * 1024)
             value = json.loads(data)
-            phases.append({"wholeFile": value["wholeFile"], "qualifiedSHA256": hashlib.sha256(data).hexdigest(),
-                "childTerminalSHA256": value["child"]["terminalSHA256"], "stdoutSHA256": value["child"]["stdoutSHA256"]})
+            link = {"wholeFile": value["wholeFile"], "qualifiedSHA256": hashlib.sha256(data).hexdigest(),
+                "childTerminalSHA256": value["child"]["terminalSHA256"], "stdoutSHA256": value["child"]["stdoutSHA256"]}
+            (additional_links if additional else phases).append(link)
         links.append({**archive, "campaignSHA256": hashlib.sha256(ordinary(group / "campaign.json", 1024 * 1024)).hexdigest(),
-            "helperReceiptSHA256": row["helperProvenance"]["SHA256"], "auditorPath": row["auditorPath"], "phases": phases})
+            "helperReceiptSHA256": row["helperProvenance"]["SHA256"], "auditorPath": row["auditorPath"], "phases": phases, "additionalPhases": additional_links})
     tick(directory)
     result = {"status": "PASS", "sourceHead": args.source_head, "sourceTree": args.source_tree,
               "groups": 4, "completeFiles": 28, "artifactProofs": links, **summary, "browserPackageDeviceQualification": False}

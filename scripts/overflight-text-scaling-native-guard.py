@@ -25,11 +25,13 @@ CAMPAIGN_WALL = 45 * 60
 AUDIT_OID = "56ad477033516d565fbb7f85cea70d0430ceae1c"
 AUDIT_SHA256 = "a6124736ce13aec52fb26d818e6c2aa6ce83965ccaf92b94c783043d1d150fc4"
 STACK_HEAD = "a7c8be6ff7f4cf2ee0409edbab136e398f21c1c2"
-FEATURE_MANIFEST_SHA256 = "3d3c9845d97713034d6a3e66b079716c97edc62c346515a53ac959e10279374a"
+ADMITTED_AT_MAIN = "f4b45a498b5c69bc93e8e74a4cd8a592de77438e"
+ADDITIONAL_WHOLE_FILES = ("game/test/overflight-host.test.mjs",)
+FEATURE_MANIFEST_SHA256 = "c824cf84ab40e23c5084c63b0a38a96aa702ccf6222f7299a177a79df453d754"
 DEPENDENCY_PATHS = ("package.json", "package-lock.json", "authoring/fpv-worlds/package.json", "authoring/fpv-worlds/package-lock.json")
 WHOLE_FILES = ('game/test/touch-controls-view.test.mjs', 'game/test/overflight-touch.test.mjs', 'game/test/overflight-text-scaling-host.test.mjs', 'game/test/overflight-text-scaling-riy-reader-host.test.mjs', 'game/test/overflight-text-scaling-view.test.mjs', 'game/test/reaction-reading-time.test.mjs', 'game/test/overflight-commentator.test.mjs', 'game/test/actor-reaction-director.test.mjs', 'game/test/fpv-hunt-reactions.test.mjs', 'game/test/overflight-text-scaling.test.mjs', 'game/test/overflight-text-scaling-declarations.test.mjs', 'game/test/overflight-upgrade-card.test.mjs', 'game/test/overflight-upgrade-preview.test.mjs', 'game/test/overflight-riy.test.mjs', 'game/test/display-preferences.test.mjs', 'game/test/display-preferences-host.test.mjs', 'game/test/text-size-compatibility.test.mjs', 'game/test/text-size-library.test.mjs', 'game/test/text-size-host.test.mjs', 'game/test/theme-bootstrap.test.mjs', 'game/test/theme-system.test.mjs', 'game/test/theme-family-host.test.mjs', 'game/test/fpv-theme-family-controls.test.mjs', 'game/test/fpv-world-appearance-ui.test.mjs', 'game/test/fpv-flight-ui.test.mjs', 'game/test/shared-touch-preferences.test.mjs', 'game/test/classic-snake-ui.test.mjs', 'game/test/localization-couch-host.test.mjs')
-FEATURE_PATHS = ('docs/accessibility/text-scaling-overflight-inventory.json', 'docs/accessibility/text-scaling-overflight.md', 'game/access-gate.css', 'game/display-preferences.mjs', 'game/i18n/catalogs.mjs', 'game/locales/en/interface.json', 'game/locales/uk/interface.json', 'game/overflight/app.mjs', 'game/overflight/commentator.mjs', 'game/overflight/copy.mjs', 'game/overflight/play.html', 'game/overflight/riy-mode.mjs', 'game/overflight/style.css', 'game/overflight/text-scaling-view.mjs', 'game/overflight/text-scaling.css', 'game/overflight/touch.mjs', 'game/overflight/upgrade-card.mjs', 'game/overflight/upgrade-preview.mjs', 'game/presentation/industrial-workshop.css', 'game/presentation/theme-bootstrap.mjs', 'game/presentation/theme-host.mjs', 'game/presentation/theme-system.mjs', 'game/test/helpers/overflight-native-host.mjs', 'game/test/overflight-commentator.test.mjs', 'game/test/overflight-text-scaling-declarations.test.mjs', 'game/test/overflight-text-scaling-host.test.mjs', 'game/test/overflight-text-scaling-riy-reader-host.test.mjs', 'game/test/overflight-text-scaling-view.test.mjs', 'game/test/overflight-text-scaling.test.mjs', 'game/test/overflight-touch.test.mjs', 'game/test/overflight-upgrade-card.test.mjs', 'game/test/overflight-upgrade-preview.test.mjs', 'game/test/reaction-reading-time.test.mjs', 'game/test/touch-controls-view.test.mjs', 'game/text-size.mjs', 'game/ui/contextual-reactions.mjs', 'game/ui/continuous-play.mjs', 'game/ui/controller-field-editor.css', 'game/ui/global-settings-tools.css', 'game/ui/global-settings-view.css', 'game/ui/install-offline-panel.css', 'game/ui/journey.css', 'game/ui/mode-choice.css', 'game/ui/mode-play-shell.css', 'game/ui/mode-settings-view.css', 'game/ui/optional-practice-panel.css', 'game/ui/pause-menu.css', 'game/ui/profile-recovery-dialog.css', 'game/ui/quick-music-controls.css', 'game/ui/reaction-caption.mjs', 'game/ui/soundtrack-panel.css', 'game/ui/text-size-control.mjs', 'game/ui/touch-controls-view.css', 'game/ui/touch-controls-view.mjs', 'optional-practice/civilian-fpv/flight-fullscreen.css', 'optional-practice/civilian-fpv/flight-fullscreen.mjs', 'optional-practice/civilian-fpv/world-reaction-runtime.mjs', 'scripts/refresh-theme-bootstrap.mjs')
-INITIAL_REFERENCE_LEAF_SHA256 = "684a7fcdcc22ffef90e11e1856f7c27741a0b4dfb104b347932105a3ace9f980"
+FEATURE_PATHS = ('docs/accessibility/text-scaling-overflight-inventory.json', 'docs/accessibility/text-scaling-overflight.md', 'game/access-gate.css', 'game/display-preferences.mjs', 'game/i18n/catalogs.mjs', 'game/locales/en/interface.json', 'game/locales/uk/interface.json', 'game/overflight/app.mjs', 'game/overflight/commentator.mjs', 'game/overflight/copy.mjs', 'game/overflight/play.html', 'game/overflight/riy-mode.mjs', 'game/overflight/style.css', 'game/overflight/text-scaling-view.mjs', 'game/overflight/text-scaling.css', 'game/overflight/touch.mjs', 'game/overflight/upgrade-card.mjs', 'game/overflight/upgrade-preview.mjs', 'game/presentation/industrial-workshop.css', 'game/presentation/theme-bootstrap.mjs', 'game/presentation/theme-host.mjs', 'game/presentation/theme-system.mjs', 'game/test/fpv-world-appearance-ui.test.mjs', 'game/test/helpers/overflight-native-host.mjs', 'game/test/overflight-commentator.test.mjs', 'game/test/overflight-host.test.mjs', 'game/test/overflight-text-scaling-declarations.test.mjs', 'game/test/overflight-text-scaling-host.test.mjs', 'game/test/overflight-text-scaling-riy-reader-host.test.mjs', 'game/test/overflight-text-scaling-view.test.mjs', 'game/test/overflight-text-scaling.test.mjs', 'game/test/overflight-touch.test.mjs', 'game/test/overflight-upgrade-card.test.mjs', 'game/test/overflight-upgrade-preview.test.mjs', 'game/test/reaction-reading-time.test.mjs', 'game/test/text-size-compatibility.test.mjs', 'game/test/touch-controls-view.test.mjs', 'game/text-size.mjs', 'game/ui/contextual-reactions.mjs', 'game/ui/continuous-play.mjs', 'game/ui/controller-field-editor.css', 'game/ui/global-settings-tools.css', 'game/ui/global-settings-view.css', 'game/ui/install-offline-panel.css', 'game/ui/journey.css', 'game/ui/mode-choice.css', 'game/ui/mode-play-shell.css', 'game/ui/mode-settings-view.css', 'game/ui/optional-practice-panel.css', 'game/ui/pause-menu.css', 'game/ui/profile-recovery-dialog.css', 'game/ui/quick-music-controls.css', 'game/ui/reaction-caption.mjs', 'game/ui/soundtrack-panel.css', 'game/ui/text-size-control.mjs', 'game/ui/touch-controls-view.css', 'game/ui/touch-controls-view.mjs', 'optional-practice/civilian-fpv/flight-fullscreen.css', 'optional-practice/civilian-fpv/flight-fullscreen.mjs', 'optional-practice/civilian-fpv/sim-presentation.mjs', 'optional-practice/civilian-fpv/style.css', 'optional-practice/civilian-fpv/world-reaction-runtime.mjs', 'scripts/refresh-theme-bootstrap.mjs')
+INITIAL_REFERENCE_LEAF_SHA256 = "7351b2520ccccc1abb8e375cdbe2fd28cb158940c3d147305a60c37a8f5977bc"
 
 
 def stable_stat(value):
@@ -61,6 +63,17 @@ def fixed_phases(node, root, group):
              [node, "--max-old-space-size=1536", "--test", "--test-concurrency=1",
               "--experimental-test-isolation=none", str(root / filename)], filename)
             for index, filename in enumerate(WHOLE_FILES[start:start + 7], start + 1)]
+
+
+def additional_phases(node, root, group):
+    if group not in (1, 2, 3, 4):
+        raise RuntimeError("Use one of four fixed groups")
+    if group != 1:
+        return []
+    filename, = ADDITIONAL_WHOLE_FILES
+    return [("additional-overflight-host",
+             [node, "--max-old-space-size=1536", "--test", "--test-concurrency=1",
+              "--experimental-test-isolation=none", str(root / filename)], filename)]
 
 
 def require_complete_tap(text):
@@ -142,6 +155,7 @@ class Campaign:
         self.log_lock = threading.Lock()
         self.reserved = {}
         self.results = []
+        self.additional_results = []
         self.capture_threads = []
         self.active_phase = None
         self.baseline_feature = None
@@ -553,22 +567,24 @@ class Campaign:
         return result
 
     def verify_feature(self):
-        if len(WHOLE_FILES) != 28 or len(set(WHOLE_FILES)) != 28 or len(FEATURE_PATHS) != 58 or len(set(FEATURE_PATHS)) != 58:
-            raise RuntimeError("Fixed58 path/28 complete-file inventory changed")
+        if len(WHOLE_FILES) != 28 or len(set(WHOLE_FILES)) != 28 or len(FEATURE_PATHS) != 63 or len(set(FEATURE_PATHS)) != 63:
+            raise RuntimeError("Fixed63 path/28 complete-file inventory changed")
+        if ADDITIONAL_WHOLE_FILES != ('game/test/overflight-host.test.mjs',):
+            raise RuntimeError('The additional complete host file is fixed')
         actual = self.pinned_paths(FEATURE_PATHS)
         if self.baseline_feature is None:
             self.baseline_feature = actual
         elif actual != self.baseline_feature:
             raise RuntimeError("Feature inventory changed within immutable candidate")
-        for filename in WHOLE_FILES:
+        for filename in WHOLE_FILES + ADDITIONAL_WHOLE_FILES:
             if not stat.S_ISREG((self.root / filename).lstat().st_mode):
                 raise RuntimeError("A complete selected test file is absent/nonregular")
         digest = sha256(json_bytes(actual))
         return {"initialReferenceManifestSHA256": FEATURE_MANIFEST_SHA256,
                 "initialReferenceLeafSHA256": INITIAL_REFERENCE_LEAF_SHA256,
                 "matchesInitialReference": digest == INITIAL_REFERENCE_LEAF_SHA256,
-                "explicitDraftStack": STACK_HEAD, "stackAdmitted": False,
-                "featurePaths": 58, "completeFiles": 28, "inventory": actual, "inventorySHA256": digest}
+                "dependencyHead": STACK_HEAD, "dependencyAdmittedAtMain": ADMITTED_AT_MAIN, "stackAdmitted": True,
+                "featurePaths": 63, "completeFiles": 28, "additionalCompleteFiles": 1, "inventory": actual, "inventorySHA256": digest}
 
     def helper_provenance(self):
         path = self.helper.with_name("helper-source.json")
@@ -645,22 +661,31 @@ class Campaign:
         if (self.output / "node-version/stdout.log").read_text().strip() != "v22.22.2":
             raise RuntimeError("Hosted native cohort requires exact Node22.22.2")
         self.source_audit("initial")
-        for index, (label, args, filename) in enumerate(fixed_phases(self.node, self.root, self.group), 1):
+        def qualify_whole_file(label, args, filename, audit_prefix, additional=False):
             self.active_phase = label
-            before = self.source_audit(f"{index:02}-before")
+            before = self.source_audit(f"{audit_prefix}-before")
             child = self.run(label, args)
             counts = require_complete_tap((self.output / label / "stdout.log").read_text())
-            after = self.source_audit(f"{index:02}-after")
+            after = self.source_audit(f"{audit_prefix}-after")
             self.capacity()
             record = {"phase": label, "wholeFile": filename, "child": child, "tap": counts,
                       "before": before, "after": after, "status": "PASS"}
+            if additional:
+                record["kind"] = "additional-whole-file"
             (self.output / label / "qualified.json").write_bytes(json_bytes(record))
-            self.results.append(record)
+            return record
+
+        for index, (label, args, filename) in enumerate(fixed_phases(self.node, self.root, self.group), 1):
+            self.results.append(qualify_whole_file(label, args, filename, f"{index:02}"))
+        for label, args, filename in additional_phases(self.node, self.root, self.group):
+            self.additional_results.append(qualify_whole_file(label, args, filename, "additional-host", additional=True))
         self.source_audit("final")
         self.capacity()
         result = {"status": "PASS", "sourceHead": self.source_sha, "sourceTree": self.source_tree,
                   "phases": [record["phase"] for record in self.results], "wholeFiles": list(WHOLE_FILES[(self.group - 1) * 7:self.group * 7]),
                   "group": self.group, "all28Inventory": list(WHOLE_FILES), "campaignRawBytes": self.log_bytes,
+                  "additionalPhases": [record["phase"] for record in self.additional_results],
+                  "additionalWholeFiles": [record["wholeFile"] for record in self.additional_results],
                   "feature": self.verify_feature(), "controls": self.control_identity(), "helperProvenance": self.helper_provenance(), "auditorPath": str(self.helper), "source": self.baseline_source,
                   "dependencies": self.baseline_dependencies, "git": self.baseline_git, "node": self.baseline_node,
                   "elapsedSeconds": round(time.monotonic() - self.start, 6), "freeBytes": self.capacity()}
@@ -684,6 +709,7 @@ def main():
     except Exception as error:
         failure = {"status": "FAILED_OR_INCOMPLETE", "error": type(error).__name__ + ": " + str(error),
                    "completedQualifiedPhases": [row["phase"] for row in campaign.results],
+                   "completedQualifiedAdditionalPhases": [row["phase"] for row in campaign.additional_results],
                    "sourceHead": args.source_sha, "sourceTree": args.source_tree, "group": args.group,
                    "noPassInferredFromKnownChildExit": True, "sourceAfterFailure": campaign.failure_postflight()}
         if campaign.output.is_dir():

@@ -1,3 +1,5 @@
+> Retained historical excerpt after an ownership migration. Exact original bytes are preserved separately. Original totals and verification statements describe the original scope; this excerpt is not a current qualification or a complete test result.
+
 # Retro Versus and Team artwork — 29 September 2026
 
 This Phase 5 batch adds independently authored landscape and portrait compositions for 1994 Forever's Versus and Team modes. The approved Solo street remains unchanged. Both modes retain its rainy arcade, navy brick, warm cabinets, cyan/magenta light and the original ivory/orange `retro-craft` actor. Versus turns two craft inward on separate cyan/magenta platforms; Team aligns the pair on one shared dock with a connecting blue cable. Neither arrangement is a tint, zoom or floating-symbol substitute.
@@ -15,7 +17,6 @@ All selected originals were generated through the built-in OpenAI `image_gen` to
 
 Pillow 12.1.1/libwebp preserves all dimensions and applies no crop, resize or retouch. Both landscape derivatives passed decoded RGBA equality. The more detailed portraits use the existing quality-94 fallback; their verification establishes decoding, unchanged dimensions, visual quality and exact admitted bytes, not pixel equality. The largest active image plus the 147,343-byte atlas is **2,085,129 bytes**, leaving 12,023 bytes below 2 MiB. Only one orientation is active at a time.
 
-The existing preparation script now reproduces Retro and Coupa mode assets without rewriting other selected scenes. Scene provenance binds runtime/source hashes and encoding methods, and the shared public asset/source ledgers explicitly admit the eight combined additions. Coupa originals and their detailed generation evidence belong to the [parallel Coupa batch](coupa-mode-scenes-2026-09-29.md).
 
 ## Integration and checks
 
@@ -23,7 +24,6 @@ All four base worlds now have nested Versus/Team profiles while the catalog stay
 
 Focused scene/renderer/receiver/edition checks: **69/69 passed**. They include all 18 base profiles and eight authored mode profiles, six-viewport crop geometry for 25 animated profiles (**150 combinations**), original/prompt/reference hashes, both orientations, the image-plus-atlas budget and all 14 Solo-only edition projections. One older test's assumption that Retro modes shared a bitmap was moved to an actual Solo-only edition, retaining its no-reload/focus/renderer assertions. The default dependency closure includes all 16 mode rasters; each company projection excludes them. Source admission verified 187 runtime assets. Scoped ESLint, formatting and whitespace checks passed.
 
-An independent actual in-memory compilation then passed for all 14 editions against the frozen Retro/Coupa source. Its 835 captured inputs remained stable and the 574-file engine set agreed. Every edition excluded multiplayer scene images. The largest final offline core was DroneAid at 66,781,145 bytes, with 327,719 bytes below the 64 MiB cap. This validates compiled dependency closure and byte budgets without materializing large packages; it is not an installed-app or published-release check. The parent thread retains the complete matrix in its packaging evidence.
 
 ## Browser evidence
 

@@ -1,5 +1,7 @@
 # RevealLine production plan
 
+> Retained excerpt after an ownership migration. Historical totals and verification statements describe the original scope; this excerpt is not a current release qualification. Original bytes and removed material are preserved separately.
+
 **Current priorities and delivery status:** [Delivery priorities](delivery-priorities.md) is the single current register. This page is a historical checkpoint record: its status tables, next steps and pending/latest wording apply only to the recorded editions and dates. Preserve their evidence and versioned contracts; do not execute them as today’s release queue.
 
 **Historical checkpoint — v0.40 published and verified.** Its 17 release assets include the [final delivery receipt](https://github.com/mekhovov/revealline/releases/download/v0.40.0/v040-delivery-receipt.json): 3,381 exact-source tests, all 1,526 public files and the full public ZIP pass. Frozen041 source 4d passes 3,404 tests, independent artifacts, packaged native/save/offline checks and local Pages at **1,568 files / 863,835,904 bytes**. Scoped Couch evidence uses Pressure Lines / Orchard Crossing. At 13:56 UTC on 2026-09-14, PR #17 had passed its test step and was building; main/public delivery remains pending. Public picture candidates remain **48 / twelve families**; frozen041 reaches **60 / fifteen**. No new human-quality approval is inferred.
@@ -119,7 +121,6 @@ Use the established playable mechanics and media pipeline to produce a consisten
 | Target                         | Required output                                                                                                             |
 | ------------------------------ | --------------------------------------------------------------------------------------------------------------------------- |
 | 29 wide campaign maps          | Authored progression, explicit mechanics, goals and actual legal wins for every advertised mode                             |
-| 116 map/theme pictures         | One distinct original reward for every map across FPV Front, Ukraine Atlas, 1994 Forever and Coupa                          |
 | 12 victory stories             | Three per theme; inspected animation/video, skippable and replayable from Collection                                        |
 | 40 reserve illustrations       | Additional reviewed content, excluded from automatic runtime downloads                                                      |
 | 56 character presentation sets | Seven roles × four themes × two detail treatments; configurable independent parts and inspected animation                   |

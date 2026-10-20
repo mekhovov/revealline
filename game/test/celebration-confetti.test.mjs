@@ -9,7 +9,7 @@ import {
   CELEBRATION_SECONDS,
 } from '../ui/celebration.mjs';
 
-const families = ['fpv', 'atlas', 'navi', 'retro'];
+const families = ['fpv', 'atlas', 'retro'];
 const at = (state, elapsed) => celebrationFrame({ ...state, elapsed });
 
 function drawingContext() {

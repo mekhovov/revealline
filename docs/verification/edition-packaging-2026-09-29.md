@@ -1,3 +1,5 @@
+> Retained historical excerpt after an ownership migration. Exact original bytes are preserved separately. Original totals and verification statements describe the original scope; this excerpt is not a current qualification or a complete test result.
+
 # Current edition package closure
 
 All **14 editions passed** the final in-memory package check on 2026-09-29. The
@@ -64,12 +66,6 @@ intermediate diagnostic totals.
 
 | Edition                        | Final files | Final bytes |
 | ------------------------------ | ----------: | ----------: |
-| coupa-all                      |         630 |  61,640,562 |
-| coupa-adventure                |         597 |  27,736,366 |
-| coupa-culture                  |         598 |  26,187,008 |
-| coupa-foundations              |         599 |  28,615,153 |
-| coupa-operations               |         599 |  27,760,983 |
-| coupa-developers               |         599 |  29,586,311 |
 | droneaid-community             |         592 |  26,962,513 |
 | droneaid-nl-community          |         668 |  66,775,005 |
 | droneaid-nl-workshop-lights    |         600 |  27,800,951 |

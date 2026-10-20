@@ -38,7 +38,7 @@ const impactDemo = JSON.parse(
 const packs = await expansionSources(),
   sentinel = packs.find((pack) => pack.id === encounterProof.packId),
   legacy = packs.find((pack) => pack.id === proof.routes[0].packId);
-const originalSHA = '22886cf439f716db31333b3b6d9fae0478f8007aff734632badc7c2f38dc53c8';
+const originalSHA = 'b096443b90b36625d9aea1e14dc586ef7b3433b2e0752460fa3c7443bf0a6f40';
 const sha = (value) => createHash('sha256').update(value).digest('hex');
 function fixture() {
   return structuredClone({
@@ -56,19 +56,19 @@ const selected = (value) =>
   );
 const verify = (value) => verifyExpansionProofs(value);
 
-test('bounded aggregate batches preserve 58 previous wins and add twelve pressure Standard wins with thirty separate Gentle outcomes', async () => {
+test('bounded aggregate batches preserve 56 retained wins and add twelve pressure Standard wins with thirty separate Gentle outcomes', async () => {
   assert.equal(sha(bytes), originalSHA);
-  assert.equal(proof.routes.length, 32);
+  assert.equal(proof.routes.length, 30);
   const result = await verifyExpansionRoutes();
-  assert.equal(result.verified, 70);
+  assert.equal(result.verified, 68);
   assert.equal(result.supplementalGentleVerified, 30);
   assert.deepEqual(
-    result.results.slice(0, 32),
+    result.results.slice(0, 30),
     proof.routes.map((route) => route.expected),
   );
   assert.deepEqual(
     result.results
-      .slice(32, 34)
+      .slice(30, 32)
       .map((value) => [value.levelId, value.turnPolicy, value.classId, value.ruleset]),
     [
       ['sentinel-relay-01', 'immediate', 'interceptor', 'xonix-core.v3'],
@@ -76,11 +76,11 @@ test('bounded aggregate batches preserve 58 previous wins and add twelve pressur
     ],
   );
   assert.deepEqual(
-    result.results.slice(34, 40),
+    result.results.slice(32, 38),
     wideProof.routes.map((route) => route.expected),
   );
   assert.deepEqual(
-    result.results.slice(40, 46),
+    result.results.slice(38, 44),
     r2Proof.routes
       .filter((route) => route.difficulty === 'standard')
       .map((route) => route.expected),
@@ -90,7 +90,7 @@ test('bounded aggregate batches preserve 58 previous wins and add twelve pressur
     r2Proof.routes.filter((route) => route.difficulty === 'gentle').map((route) => route.expected),
   );
   assert.deepEqual(
-    result.results.slice(46, 52),
+    result.results.slice(44, 50),
     r3Proof.routes.filter((r) => r.difficulty === 'standard').map((r) => r.expected),
   );
   assert.deepEqual(
@@ -98,7 +98,7 @@ test('bounded aggregate batches preserve 58 previous wins and add twelve pressur
     r3Proof.routes.filter((r) => r.difficulty === 'gentle').map((r) => r.expected),
   );
   assert.deepEqual(
-    result.results.slice(52, 58),
+    result.results.slice(50, 56),
     r4Proof.routes.filter((r) => r.difficulty === 'standard').map((r) => r.expected),
   );
   assert.deepEqual(
@@ -106,7 +106,7 @@ test('bounded aggregate batches preserve 58 previous wins and add twelve pressur
     r4Proof.routes.filter((r) => r.difficulty === 'gentle').map((r) => r.expected),
   );
   assert.deepEqual(
-    result.results.slice(58),
+    result.results.slice(56),
     r5Proof.routes.filter((r) => r.difficulty === 'standard').map((r) => r.expected),
   );
   assert.deepEqual(
@@ -143,10 +143,14 @@ test('bounded aggregate batches preserve 58 previous wins and add twelve pressur
   ]);
   const index = await readPackIndexes(fileURLToPath(new URL('../', import.meta.url)));
   assert.deepEqual(
-    [...new Set([...packs, ...arcade, ...pressure].map((pack) => pack.id))].sort(),
+    [
+      ...new Set(
+        [...packs, ...arcade, ...pressure].map((pack) => pack.id).concat(result.neon.packs),
+      ),
+    ].sort(),
     index.all.map((entry) => entry.id).sort(),
   );
-  assert.equal(index.all.length, 12);
+  assert.equal(index.all.length, 14);
   await assert.rejects(expansionSources({ scope: 'skip-archives' }), /source scope/);
   assert.equal(result.impactDemonstrations.length, 4);
   assert.equal(sha(await readFile(legacyURL)), originalSHA);

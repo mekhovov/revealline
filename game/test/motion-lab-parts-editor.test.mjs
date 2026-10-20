@@ -21,6 +21,35 @@ const presets = freezeMotionPresets(
   ),
 );
 
+// Generic pulse/blink fixture keeps editor bounds covered independently of
+// any optional community's character catalog.
+const signalRecipe = Object.freeze({
+  components: [
+    {
+      id: 'signal-ring',
+      type: 'pulse',
+      anchors: [[0, 0]],
+      radius: 0.2,
+      amplitude: 0.1,
+      frequencyHz: 0.9,
+      opacity: 0.5,
+      color: '#ffffff',
+    },
+    {
+      id: 'signal-lights',
+      type: 'blink',
+      anchors: [
+        [-0.1, 0],
+        [0.1, 0],
+      ],
+      frequencyHz: 1,
+      dutyCycle: 0.5,
+      size: 0.1,
+      color: '#55aaff',
+    },
+  ],
+});
+
 test('all historical attachment fragments round-trip without changing source recipes or rotor components', () => {
   const before = JSON.stringify(presets);
   for (const [id, recipe] of Object.entries(presets.animationRecipes)) {
@@ -35,8 +64,8 @@ test('all historical attachment fragments round-trip without changing source rec
 });
 
 test('attachment edits use historical bounds and preserve wing side and unrelated parts', () => {
-  for (const name of ['swallow-flight', 'retro-thruster', 'helper-guidance']) {
-    const recipe = presets.animationRecipes[name],
+  for (const name of ['swallow-flight', 'retro-thruster', 'signal']) {
+    const recipe = name === 'signal' ? signalRecipe : presets.animationRecipes[name],
       edited = editAttachment(recipe, 0, { anchor: 0, x: -1, y: 1, rate: 0.1 });
     assert.deepEqual(edited[0].anchors[0], [-1, 1, ...recipe.components[0].anchors[0].slice(2)]);
     assert.deepEqual(edited.slice(1), recipe.components.slice(1));
@@ -46,14 +75,11 @@ test('attachment edits use historical bounds and preserve wing side and unrelate
     assert.doesNotThrow(() => editAttachment(recipe, 0, { rate: max }));
     assert.throws(() => editAttachment(recipe, 0, { rate: max + 0.01 }), /invalid/);
   }
-  assert.throws(
-    () => editAttachment(presets.animationRecipes['helper-guidance'], 9, { x: 0 }),
-    /invalid/,
-  );
+  assert.throws(() => editAttachment(signalRecipe, 9, { x: 0 }), /invalid/);
 });
 
 test('unknown fields, invented states and changed component identities reject before acceptance', () => {
-  const recipe = presets.animationRecipes['helper-guidance'],
+  const recipe = signalRecipe,
     parts = attachmentComponents(recipe),
     mutate = (change) => {
       const value = structuredClone(parts);
@@ -92,13 +118,13 @@ test('unknown fields, invented states and changed component identities reject be
     }),
   ])
     assert.throws(() => validateAttachments(value, recipe), /invalid/);
-  const draft = createAttachmentDraft('helper', recipe);
+  const draft = createAttachmentDraft('signal', recipe);
   for (const raw of ['{bad', ' '.repeat(16385), '[{"__proto__":{}}]'])
-    assert.throws(() => readAttachmentDraft(draft, raw, 'helper', recipe), /invalid/);
+    assert.throws(() => readAttachmentDraft(draft, raw, 'signal', recipe), /invalid/);
   assert.throws(() => readAttachmentDraft(draft, '[]', 'other', recipe), /stale/);
   const changed = { ...recipe, components: editAttachment(recipe, 0, { rate: 1.2 }) };
   assert.throws(
-    () => readAttachmentDraft(draft, JSON.stringify(parts), 'helper', changed),
+    () => readAttachmentDraft(draft, JSON.stringify(parts), 'signal', changed),
     /stale/,
   );
 });
@@ -124,7 +150,7 @@ test('mounted attachment controls preserve dirty JSON, reject stale selection an
         doc.createElement(['component', 'anchor'].includes(key) ? 'select' : 'input'),
       ]),
     );
-  let selection = { id: 'helper', recipe: presets.animationRecipes['helper-guidance'] },
+  let selection = { id: 'signal', recipe: signalRecipe },
     accepted = 0;
   const downloads = [],
     listeners = [],
@@ -135,9 +161,7 @@ test('mounted attachment controls preserve dirty JSON, reject stale selection an
         accepted++;
         selection = {
           ...selection,
-          recipe: parts
-            ? { ...selection.recipe, components: parts }
-            : presets.animationRecipes['helper-guidance'],
+          recipe: parts ? { ...selection.recipe, components: parts } : signalRecipe,
         };
       },
       listen(node, type, handler) {
@@ -157,9 +181,9 @@ test('mounted attachment controls preserve dirty JSON, reject stale selection an
   assert.equal(elements.status.textContent, 'invalid');
   assert.equal(accepted, 0);
   elements.export.click();
-  assert.deepEqual(downloads[0], [initial, 'helper.attachments.json']);
+  assert.deepEqual(downloads[0], [initial, 'signal.attachments.json']);
   assert.equal(elements.json.value, '{pending');
-  selection = { id: 'other', recipe: presets.animationRecipes['helper-guidance'] };
+  selection = { id: 'other', recipe: signalRecipe };
   elements.json.value = initial;
   elements.apply.click();
   assert.equal(elements.status.textContent, 'stale');

@@ -21,14 +21,17 @@ from github_dependencies import git_identity, manifest_tree
 
 class PreservationTests(unittest.TestCase):
     def setUp(self):
-        self.root = Path(tempfile.mkdtemp(prefix='preservation-check-'))
+        self.root = Path(tempfile.mkdtemp(prefix='preservation-check-')).resolve()
 
     def test_refuses_traversal_and_private_browser_history(self):
         for path in ['../outside', '/absolute', 'a/../../outside', 'a\\outside']:
             with self.assertRaises(ValueError):
                 safe_relative(path)
         self.assertTrue(privacy_hold('capture/IndexedDB/records'))
-        self.assertTrue(privacy_hold('coupa/private.json'))
+        self.assertTrue(privacy_hold('community/private.json'))
+        self.assertTrue(privacy_hold('game/companies/private.json'))
+        self.assertTrue(privacy_hold('brands/example/public-app.bin'))
+        self.assertTrue(privacy_hold('company-research.json'))
         self.assertTrue(privacy_hold('codex-history.json'))
         self.assertIsNone(privacy_hold('game/live-session.mjs'))
 
@@ -131,7 +134,7 @@ class PreservationTests(unittest.TestCase):
     def test_index_reuses_verified_objects_but_holds_unreviewed_duplicate_content(self):
         sha = hashlib.sha256(b'same bytes').hexdigest()
         rows = [{'kind': 'file', 'path': path, 'bytes': 10, 'sha256': sha, 'mode': 420,
-                 'mtime_ns': 100, 'review': []} for path in ['safe.bin', 'coupa/unreviewed.bin']]
+                 'mtime_ns': 100, 'review': []} for path in ['safe.bin', 'community/unreviewed.bin']]
         inventory, state, catalogue, direct = [self.root / x for x in ['inventory.jsonl', 'state.json', 'catalogue.json', 'library.json']]
         inventory.write_text(''.join(json.dumps(r) + '\n' for r in rows))
         state.write_text(json.dumps({'complete': False}))
@@ -142,7 +145,7 @@ class PreservationTests(unittest.TestCase):
         result = build([inventory], state, [], [direct], catalogue, '/old/root')
         self.assertEqual(len(result['held']), 2)
         self.assertEqual(len(result['files']), 0)
-        approved = [{'path': 'coupa/unreviewed.bin', 'sha256': sha, 'decision': 'allow-app-archive'}]
+        approved = [{'path': 'community/unreviewed.bin', 'sha256': sha, 'decision': 'allow-app-archive'}]
         result = build([inventory], state, [], [direct], catalogue, '/old/root', approved)
         self.assertEqual(len(result['files']), 2)
         self.assertEqual(len(result['directAssets']), 1)
@@ -155,11 +158,11 @@ class PreservationTests(unittest.TestCase):
 
     def test_exact_clearance_and_active_reservation_do_not_claim_durability(self):
         source = self.root / 'source'
-        (source / 'coupa').mkdir(parents=True)
-        original = source / 'coupa/public-app.bin'
+        (source / 'community').mkdir(parents=True)
+        original = source / 'community/public-app.bin'
         original.write_bytes(b'public app')
         sha = hashlib.sha256(b'public app').hexdigest()
-        row = {'kind': 'file', 'path': 'coupa/public-app.bin', 'bytes': 10, 'sha256': sha,
+        row = {'kind': 'file', 'path': 'community/public-app.bin', 'bytes': 10, 'sha256': sha,
                'mtime_ns': original.stat().st_mtime_ns, 'mode': 420, 'review': []}
         inventory = self.root / 'inventory.jsonl'
         inventory.write_text(json.dumps(row) + '\n')

@@ -1,5 +1,7 @@
 # Round 08 — small characters, independent motion, earned appearances
 
+> Retained excerpt after an ownership migration. Historical totals and verification statements describe the original scope; this excerpt is not a current release qualification. Original bytes and removed material are preserved separately.
+
 The [live motion lab](http://127.0.0.1:8767/authoring/motion-lab/) now demonstrates animated propellers, three FPV bodies, characters for all four theme families, explicit inspect/equip controls and a working cosmetic collection evaluator. This remains an isolated design sandbox: movement and presentation work, while territory capture, enemies, lives and actual level wins await the [gameplay implementation plan](round-08-gameplay-plan.md).
 
 ## What to try
@@ -27,9 +29,7 @@ There are **nine themed appearances plus a neutral fallback**: four themed start
 | FPV FRONT | Daybreak FPV | Night signal FPV: clean relay objective, or three distinct FPV clears | Separate open dark frame and its own motor rig |
 | UKRAINE ATLAS | Atlas bird | Falcon trim: heritage fragment objective | Shared bird body; alternate animated wing treatment |
 | 1994 FOREVER | Tape runner | Vector trail: five best-result stars across levels, or three distinct clears | Shared craft body; alternate exhaust treatment |
-| NAVI NETWORK | Spend Sprite | Audit pulse: resolve the fictional spend-case anomaly | Shared original helper body; alternate pulse/highlight treatment |
 
-Spend Sprite is an original business helper concept, **not verified official Coupa Navi artwork**. Falcon trim is a name for a visual treatment, not a newly illustrated falcon species. Skyline and Night names confer no speed or stealth advantage. Current Ukrainian drone bodies use blue/yellow accents and no Z markings.
 
 ## Propellers and other animation
 

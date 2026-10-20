@@ -54,7 +54,10 @@
           "graceSeconds": 0.7,
           "playerRadius": 0.18,
           "pointsPerCell": 10,
-          "timeMedals": [40, 73]
+          "timeMedals": [
+            40,
+            73
+          ]
         }
       },
       {
@@ -108,7 +111,10 @@
           "graceSeconds": 0.7,
           "playerRadius": 0.18,
           "pointsPerCell": 10,
-          "timeMedals": [45, 81]
+          "timeMedals": [
+            45,
+            81
+          ]
         }
       },
       {
@@ -163,7 +169,10 @@
           "graceSeconds": 0.7,
           "playerRadius": 0.18,
           "pointsPerCell": 10,
-          "timeMedals": [50, 89]
+          "timeMedals": [
+            50,
+            89
+          ]
         }
       },
       {
@@ -239,7 +248,10 @@
           "graceSeconds": 0.7,
           "playerRadius": 0.18,
           "pointsPerCell": 10,
-          "timeMedals": [55, 97]
+          "timeMedals": [
+            55,
+            97
+          ]
         }
       },
       {
@@ -293,7 +305,10 @@
           "graceSeconds": 0.7,
           "playerRadius": 0.18,
           "pointsPerCell": 10,
-          "timeMedals": [60, 105]
+          "timeMedals": [
+            60,
+            105
+          ]
         }
       },
       {
@@ -363,7 +378,10 @@
           "graceSeconds": 0.7,
           "playerRadius": 0.18,
           "pointsPerCell": 10,
-          "timeMedals": [65, 113]
+          "timeMedals": [
+            65,
+            113
+          ]
         }
       },
       {
@@ -428,7 +446,10 @@
           "graceSeconds": 0.7,
           "playerRadius": 0.18,
           "pointsPerCell": 10,
-          "timeMedals": [70, 121]
+          "timeMedals": [
+            70,
+            121
+          ]
         }
       },
       {
@@ -509,7 +530,10 @@
           "graceSeconds": 0.7,
           "playerRadius": 0.18,
           "pointsPerCell": 10,
-          "timeMedals": [75, 129]
+          "timeMedals": [
+            75,
+            129
+          ]
         }
       },
       {
@@ -572,7 +596,10 @@
           "graceSeconds": 0.7,
           "playerRadius": 0.18,
           "pointsPerCell": 10,
-          "timeMedals": [50, 89]
+          "timeMedals": [
+            50,
+            89
+          ]
         },
         "signalZones": [
           {
@@ -652,7 +679,10 @@
           "graceSeconds": 0.7,
           "playerRadius": 0.18,
           "pointsPerCell": 10,
-          "timeMedals": [45, 81]
+          "timeMedals": [
+            45,
+            81
+          ]
         },
         "signalZones": [
           {
@@ -732,7 +762,10 @@
           "graceSeconds": 0.7,
           "playerRadius": 0.18,
           "pointsPerCell": 10,
-          "timeMedals": [60, 105],
+          "timeMedals": [
+            60,
+            105
+          ],
           "cutTimeLimitSeconds": 6,
           "timeLimitSeconds": 70,
           "maxTrailCells": 50
@@ -809,7 +842,10 @@
           "graceSeconds": 0.7,
           "playerRadius": 0.18,
           "pointsPerCell": 10,
-          "timeMedals": [70, 121],
+          "timeMedals": [
+            70,
+            121
+          ],
           "timeLimitSeconds": 95,
           "cutTimeLimitSeconds": 8,
           "maxTrailCells": 60
@@ -986,7 +1022,10 @@
             "playerRadius": 0.18,
             "pointsPerCell": 10,
             "objectivePoints": 500,
-            "timeMedals": [40, 73],
+            "timeMedals": [
+              40,
+              73
+            ],
             "switchCooldownSeconds": 2,
             "timeLimitSeconds": 0,
             "cutTimeLimitSeconds": 0,
@@ -1248,7 +1287,10 @@
               "playerRadius": 0.18,
               "pointsPerCell": 10,
               "objectivePoints": 500,
-              "timeMedals": [40, 73],
+              "timeMedals": [
+                40,
+                73
+              ],
               "switchCooldownSeconds": 2,
               "timeLimitSeconds": 0,
               "cutTimeLimitSeconds": 0,
@@ -1485,7 +1527,10 @@
             "playerRadius": 0.18,
             "pointsPerCell": 10,
             "objectivePoints": 500,
-            "timeMedals": [40, 73],
+            "timeMedals": [
+              40,
+              73
+            ],
             "switchCooldownSeconds": 2,
             "timeLimitSeconds": 0,
             "cutTimeLimitSeconds": 0,
@@ -1747,7 +1792,10 @@
               "playerRadius": 0.18,
               "pointsPerCell": 10,
               "objectivePoints": 500,
-              "timeMedals": [40, 73],
+              "timeMedals": [
+                40,
+                73
+              ],
               "switchCooldownSeconds": 2,
               "timeLimitSeconds": 0,
               "cutTimeLimitSeconds": 0,
@@ -1983,7 +2031,10 @@
             }
           }
         },
-        "seen": ["old-win-immediate", "old-win-grid-center"]
+        "seen": [
+          "old-win-immediate",
+          "old-win-grid-center"
+        ]
       }
     },
     "gallery": [
@@ -2020,7 +2071,9 @@
         "completedAt": "2026-09-12T12:00:00.000Z",
         "runId": "old-win-grid-center",
         "switches": 0,
-        "classRoute": ["interceptor"]
+        "classRoute": [
+          "interceptor"
+        ]
       },
       {
         "boardId": "board-v1-f906e5a31749b7da",
@@ -2037,7 +2090,9 @@
         "completedAt": "2026-09-12T12:00:00.000Z",
         "runId": "old-win-immediate",
         "switches": 0,
-        "classRoute": ["interceptor"]
+        "classRoute": [
+          "interceptor"
+        ]
       }
     ],
     "masteries": []
@@ -2064,8 +2119,7 @@
         "fpv-racer",
         "fixedwing-body",
         "ukrainian-falcon",
-        "retro-vector",
-        "navi-auditor"
+        "retro-vector"
       ],
       "count": 1,
       "target": 1,
@@ -2074,7 +2128,10 @@
     {
       "id": "chapter-explorer",
       "name": "Chapter explorer",
-      "bodyIds": ["fpv-night", "delta-interceptor"],
+      "bodyIds": [
+        "fpv-night",
+        "delta-interceptor"
+      ],
       "count": 1,
       "target": 4,
       "earned": false

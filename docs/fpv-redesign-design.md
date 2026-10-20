@@ -1,6 +1,6 @@
 # RevealLine — Pixel FPV Field Kit
 
-Design specification and review atlas for the whole-game redesign. The selected production direction is **Pixel FPV Field Kit**: a complete original FPV presentation, supported by an extensible asset and theme framework. Ukrainian, Retro and Coupa remain future presentation collections; this redesign does not claim their artwork is complete.
+Design specification and review atlas for the whole-game redesign. The selected production direction is **Pixel FPV Field Kit**: a complete original FPV presentation, supported by an extensible asset and theme framework. Ukrainian and Retro remain future presentation collections; this redesign does not claim their artwork is complete.
 
 Open the [interactive design atlas](../authoring/design-atlas/index.html) through the repository’s local server. It provides desktop, tablet and phone layout studies, alternative screen states, English/Ukrainian type specimens, a screen matrix, palette roles and reference comparisons. The studies are HTML/CSS illustrations, not gameplay. Their example scores, maps and objectives do not replace authored mission data.
 

@@ -24,7 +24,7 @@ const envelope = {
   version: 'v0.142.0',
   sourceRevision,
   sourceTree,
-  editions: [{ id: 'coupa-all' }, { id: 'droneaid-nl-community' }],
+  editions: [{ id: 'sample-public' }, { id: 'droneaid-nl-community' }],
 };
 const candidate = {
   envelopeSha256,
@@ -149,7 +149,7 @@ test('complete qualification compiles to the existing hash-bound promotion revie
 });
 
 test('compiled qualification passes the actual immutable edition promotion verifier', async () => {
-  const fixture = editionAdmissionFixture({ version: 'v0.142.0', editionId: 'coupa-all' }),
+  const fixture = editionAdmissionFixture({ version: 'v0.142.0', editionId: 'sample-public' }),
     envelopeBytes = fixture.files.get('editions.json'),
     exactEnvelopeSha256 = createHash('sha256').update(envelopeBytes).digest('hex'),
     exactCandidate = {
@@ -301,7 +301,7 @@ test('device gates reject emulation, normal tabs and one-sided cross-edition cla
       entry.environment.installedApp = false;
     },
     (entry) => {
-      entry.editionIds = ['coupa-all'];
+      entry.editionIds = ['sample-public'];
     },
   ]) {
     const record = createCompanyQualificationRecord(envelope, candidate);

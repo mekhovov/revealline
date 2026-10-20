@@ -1,13 +1,5 @@
 # Route Choices in three worlds
 
-These source-only Tactical editions pair nine original reward pictures with the
-three existing [FPV Route Choices](../fpv-route-choices/README.md) layouts. Ukraine
-Atlas, 1994 Forever and Spend Network each receive a distinct campaign, map and
-poster identity. They reuse the same three geometries; this is **not nine new
-layouts**. They are teaching/challenge candidates with the existing fixed grades,
-not an enjoyment or difficulty certification.
-
-| Layout reused | Tactical choice                                                               | Ukraine Atlas           | 1994 Forever      | Spend Network  |
 | ------------- | ----------------------------------------------------------------------------- | ----------------------- | ----------------- | -------------- |
 | Foundry       | Two exits around a warned interceptor; the direct route is a failure control. | Two Lanes, One Forge    | Midnight Workshop | Value Foundry  |
 | Depot         | Time the carrier field, or take the longer route without equipment.           | Crosswind Market Depot  | Crosswind Courier | Shared Harbor  |
@@ -28,14 +20,6 @@ these newly derived descriptors require a separate coordinated registry refresh.
 
 ## Exact originals and separate payloads
 
-[editions.json](editions.json) pins the full provenance records and ordered
-original assignments from [Ukraine art](../ukraine-route-art/README.md),
-[retro art](../retro-route-art/README.md) and
-[Spend art](../spend-route-art/README.md). Those folders retain the generated PNGs,
-exact prompts and provenance. Small pseudo-letter decorations and the other
-recorded visual qualifications remain as documented there; these are fictional
-scenes, not copied product interfaces or authenticated historical illustrations.
-
 The compiler checks the existing full PNG signature/chunk CRC/decompression/RGB
 decoder, exact original SHA-256, byte size and dimensions. It does not crop,
 resize, recompress or otherwise transform those files. Each presentation uses
@@ -45,26 +29,8 @@ resize, recompress or otherwise transform those files. Each presentation uses
 | ---------------------- | -------------------------------: | ----------------: | -----------------: |
 | `route-worlds-ukraine` |                            8,405 |         8,825,887 |          8,814,876 |
 | `route-worlds-retro`   |                            8,307 |         7,589,633 |          7,578,780 |
-| `route-worlds-coupa`   |                            8,317 |         8,280,993 |          8,270,167 |
-
-The compact pack contains no inline image or dependency. Its exact paired media
-file includes the three originals, presentation assignments and retained owner.
-The existing `revealline-external-chapter.v1` validator checks the complete pair
-before returning a prepared value. Descriptor hashes are in
-[ukraine.json](descriptors/ukraine.json), [retro.json](descriptors/retro.json) and
-[coupa.json](descriptors/coupa.json). Existing embedded readers and the 48 MiB
-pack/index and 256 MiB managed-store caps are unchanged.
 
 Run from the repository root, using new output directories:
-
-```sh
-mkdir -p .cache/route-worlds/outputs
-node authoring/library/route-worlds/build.mjs ukraine .cache/route-worlds/outputs/ukraine
-node authoring/library/route-worlds/build.mjs retro .cache/route-worlds/outputs/retro
-node authoring/library/route-worlds/build.mjs coupa .cache/route-worlds/outputs/coupa
-node authoring/library/route-worlds/verify.mjs
-node --test game/test/route-worlds.test.mjs
-```
 
 Each cache output contains `descriptor.json`, `pack.json`, `media.rlmedia` and
 `inputs.json`. Output must be a new directory beneath this worktree's `.cache`,

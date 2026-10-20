@@ -32,9 +32,9 @@ test('external chapter and backup adapters accept exact matching edition channel
   const indexedDB = { open() {} },
     storage = { getItem: () => null };
   for (const version of ['DEV', '0.132.5']) {
-    const context = resolveEditionContext({ editionId: 'coupa-adventure', version });
+    const context = resolveEditionContext({ editionId: 'sample-adventure', version });
     const pointer = createExternalChapterPointerStore({ ...context, indexedDB });
-    assert.equal(pointer.keys.writerKey, 'revealline.company.coupa-adventure.writer');
+    assert.equal(pointer.keys.writerKey, 'revealline.company.sample-adventure.writer');
     const backup = createExternalBackupAssets({ ...context, indexedDB, storage });
     assert.equal(backup.keys.profileKey, context.profileKey);
     const inventory = createExternalChapterInventoryReader({
@@ -52,12 +52,12 @@ test('external chapter and backup adapters accept exact matching edition channel
         createExternalChapterPointerStore({
           ...context,
           indexedDB,
-          packsKey: context.packsKey.replace('coupa-adventure', 'droneaid-nl-community'),
+          packsKey: context.packsKey.replace('sample-adventure', 'droneaid-nl-community'),
         }),
       /match/,
     );
   }
-  for (const id of ['edition-coupa..dev', 'edition-coupa.release-01.2.3', 'edition-Coupa.dev'])
+  for (const id of ['edition-sample..dev', 'edition-sample.release-01.2.3', 'edition-Sample.dev'])
     assert.throws(
       () =>
         createExternalChapterPointerStore({
@@ -70,7 +70,7 @@ test('external chapter and backup adapters accept exact matching edition channel
 });
 
 test('installation selection respects the stable edition writer across engine releases', async (t) => {
-  const editionId = 'coupa-adventure',
+  const editionId = 'sample-adventure',
     version = '0.132.5';
   const scope = `https://example.test/editions/${editionId}/releases/v${version}/site/`;
   const locks = new Locks(),
@@ -97,12 +97,12 @@ test('installation selection respects the stable edition writer across engine re
 });
 
 test('edition recovery and transfer borrow only their authentic shared writer lease', async (t) => {
-  const editionId = 'coupa-adventure',
+  const editionId = 'sample-adventure',
     currentVersion = '0.132.5';
-  const source = recoveryChannel('edition-coupa-adventure.release-0.132.4', currentVersion, {
+  const source = recoveryChannel('edition-sample-adventure.release-0.132.4', currentVersion, {
     editionId,
   });
-  const next = recoveryChannel('edition-coupa-adventure.release-0.132.5', currentVersion, {
+  const next = recoveryChannel('edition-sample-adventure.release-0.132.5', currentVersion, {
     editionId,
   });
   assert.equal(source.writerKey, next.writerKey);

@@ -463,6 +463,46 @@
           "timeoutMs": 300000
         }
       ]
+    },
+    {
+      "id": "expansion-proof-dispatch",
+      "pathPatterns": [
+        "^scripts/(verify-packs|verify-neon-routes|test-expansion-proof-dispatch|test-neon-proof-dispatch)\\.mjs$",
+        "^game/test/expansion-playthrough\\.test\\.mjs$",
+        "^game/replays/(expansion|sentinel)-routes\\.json$",
+        "^docs/qualification/neon-level-completion/winning-routes\\.json$"
+      ],
+      "commands": [
+        {
+          "id": "expansion-proof-dispatch",
+          "command": "node",
+          "args": [
+            "--test",
+            "game/test/expansion-playthrough.test.mjs",
+            "scripts/test-expansion-proof-dispatch.mjs",
+            "scripts/test-neon-proof-dispatch.mjs"
+          ],
+          "timeoutMs": 1800000
+        }
+      ]
+    },
+    {
+      "id": "remote-team-display-authoring",
+      "pathPatterns": [
+        "^scripts/(?:remote-team-navigation(?:-test-fixture)?|test-remote-team-navigation)\\.mjs$",
+        "^scripts/remote-team-navigation-(?:cultural|expedition|hunt)\\.check\\.mjs$",
+        "^scripts/published-navigation\\.mjs$",
+        "^scripts/(?:remote-team-display-guard|test_remote_team_display_guard)\\.py$",
+        "^\\.github/workflows/remote-team-display-authoring\\.yml$"
+      ],
+      "commands": [
+        {
+          "id": "remote-team-display-contract",
+          "command": "node",
+          "args": ["--test", "--test-concurrency=1", "scripts/test-remote-team-navigation.mjs"],
+          "timeoutMs": 300000
+        }
+      ]
     }
   ],
   "ignoredPathPatterns": ["^(docs/|.*\\.md$)", "^publishing/pages-controller/(evidence|metadata)/"],

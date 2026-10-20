@@ -1,3 +1,5 @@
+> Retained historical excerpt after an ownership migration. Exact original bytes are preserved separately. Original totals and verification statements describe the original scope; this excerpt is not a current qualification or a complete test result.
+
 # Gallery clock: source-browser follow-up
 
 **The observed source celebration checks passed:** all four theme families showed their expected overlays after Play celebration, rapid restarts remained usable, reduced effects showed the clean completed picture, and the final console capture is empty. This is the unfrozen source served on port **8845**, displaying **v0.17.1 / DEV**, with `game/ui/library-panel.mjs` SHA-256 `2bef5afb93d5034b37143286321075cc5a3fa9d7c406c64f5f67c929f74c1eec`. The fix is intended for the later v0.18 integration; it does not alter or certify a repaired frozen v0.17.1.
@@ -14,7 +16,6 @@ Root switched pictures and requested the same delayed capture during each theme'
 | ----------------------------------------------------------------------------------------------- | ------------------------------------------------------ |
 | [Garden of Threads / heritage](../../../.cache/round-28/gallery-clock/browser/garden-700ms.jpg) | Stitch/cross overlay on the original courtyard picture |
 | [Neon Switchboard / 1990s](../../../.cache/round-28/gallery-clock/browser/neon-700ms.jpg)       | Neon particles over the computer-room picture          |
-| [Clear Ledger / spend](../../../.cache/round-28/gallery-clock/browser/ledger-700ms.jpg)         | Connected square/checkmark nodes over the city picture |
 | [Copper Orchard / FPV](../../../.cache/round-28/gallery-clock/browser/homeward-700ms.jpg)       | FPV celebration overlay over the orchard picture       |
 
 The `700ms` filenames describe the requested capture delay, not measured rendering latency or an exact animation-frame count. These captures show effects during the celebrations; they do not record every stage or prove full browser-timeline completion.

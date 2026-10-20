@@ -101,11 +101,8 @@ const head = git('rev-parse', 'HEAD').toString().trim();
 const engine = await collectEditionEngineFiles({ root });
 const catalog = JSON.parse(await read('game/editions/catalog.json'));
 const version = 'v' + JSON.parse(await read('package.json')).version;
-// Same eighteen IDs selected by company-edition-candidate.yml.
-const ids =
-  'coupa-all,coupa-adventure,coupa-culture,coupa-foundations,coupa-operations,coupa-developers,droneaid-community,droneaid-nl-community,droneaid-nl-workshop-lights,droneaid-nl-parts-in-motion,droneaid-nl-signals-of-support,droneaid-nl-careful-handoff,droneaid-nl-makers-together,droneaid-nl-shared-horizon,social-drone-ua,victory-drones,ukraine-culture,fpv-learning'
-    .split(',')
-    .sort();
+// Check every edition admitted by the current local catalog.
+const ids = catalog.editions.map(({ id }) => id).sort();
 const editions = [];
 for (const id of ids) {
   const files = new Map(engine);

@@ -3,12 +3,12 @@
 The static [public directory](../game/communities/index.html) opens the main game
 and all current public community brands without an account or backend request.
 The two DroneAid collections share a directory card, but retain separate edition,
-save and artwork identities. There are 18 public edition selectors across seven
+save and artwork identities. There are 12 public edition selectors across six
 brand records; aggregate selectors do not create additional campaigns.
 
 Friendly URLs under `game/communities/<slug>/` load the one shared Solo document.
 They keep the friendly address visible, rebase resources to `game/index.html`,
-and reject foreign/duplicate edition overrides before loading. Coupa, DroneAid
+and reject foreign/duplicate edition overrides before loading. DroneAid
 Netherlands and Community Relay retain the original #784 routes. Social Drone UA,
 Victory Drones, Ukraine: Living Culture and FPV Learning preserve newer content.
 Installed edition identities, public aliases, retained presentations, Studio

@@ -1,3 +1,4 @@
+import { activateHostAction } from './helpers/host-action.mjs';
 import {
   playCurrentExternalRoute,
   proveHistoricalExternalRoute,
@@ -15,7 +16,7 @@ import { SOURCE_EXTERNAL_CHAPTERS } from '../external-chapter-source.mjs';
 import { authoritativeCheckpoint } from '../replay.mjs';
 import { loadLibrary } from '../library.mjs';
 import { EXTERNAL_CATALOG } from '../external-chapter-catalog.mjs';
-const allEditions = await Promise.all(['ukraine', 'retro', 'coupa'].map(buildSentinelTheme));
+const allEditions = await Promise.all(['ukraine', 'retro'].map(buildSentinelTheme));
 const proof = JSON.parse(
   await readFile(
     new URL('../../authoring/library/sentinel-circuit-external/routes.json', import.meta.url),
@@ -298,13 +299,13 @@ function ticks(p, n) {
   for (let i = 0; i < n; i++) p.frame();
 }
 
-test('three Sentinel Download & play choices preserve an unrelated cut through Stay and retain distinct earned owners through backup/restart', async (t) => {
+test('two Sentinel Download & play choices preserve an unrelated cut through Stay and retain distinct earned owners through backup/restart', async (t) => {
   const f = {};
   let receipts,
     stories,
     setupComplete = false;
   await t.test(
-    'three explicit downloads, independent real wins and exact metadata backup',
+    'two explicit downloads, independent real wins and exact metadata backup',
     async (t) => {
       const p = await page(t, f, true);
       p.$('start-button').click();
@@ -369,8 +370,8 @@ test('three Sentinel Download & play choices preserve an unrelated cut through S
       const library = loadLibrary(f.storage, 'revealline.library.release-0.36.0.v1').library;
       receipts = library.pictureReceipts;
       stories = library.storyReceipts;
-      assert.equal(receipts.length, 3);
-      assert.equal(stories.length, 3);
+      assert.equal(receipts.length, 2);
+      assert.equal(stories.length, 2);
       for (const e of allEditions) {
         const earned = receipts.find(
           (r) => r.presentationPin.identity.baseCampaignKey === e.descriptor.campaignKey,
@@ -378,8 +379,9 @@ test('three Sentinel Download & play choices preserve an unrelated cut through S
         assert.equal(earned.presentationPin.sha256, e.descriptor.originals[0].sha256);
       }
       assert(stories.every((r) => r.storyPin === null));
-      p.$('library-button').click();
-      await p.$('export-backup').onclick();
+      await activateHostAction(p.$('library-button'));
+      p.$('export-backup').click();
+      await settle(() => /Game data prepared/.test(p.$('save-status').textContent));
       assert.match(p.$('save-status').textContent, /Game data prepared/);
       const backup = JSON.parse(p.$('save-json').value);
       assert.equal(backup.format, 'xonix-backup.v2');
@@ -393,7 +395,7 @@ test('three Sentinel Download & play choices preserve an unrelated cut through S
     },
   );
   await t.test(
-    'new app retains exact first-earned still/null-story pins and authenticates all three editions',
+    'new app retains exact first-earned still/null-story pins and authenticates both retained editions',
     {
       skip: setupComplete
         ? false

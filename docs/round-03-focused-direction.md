@@ -1,5 +1,7 @@
 # Round 03 — four theme families, Ukrainian FPV first
 
+> Retained excerpt after an ownership migration. Historical totals and verification statements describe the original scope; this excerpt is not a current release qualification. Original bytes and removed material are preserved separately.
+
 Date: 12 September 2026. Status: visual brainstorming, not an approved implementation specification.
 
 ## Confirmed steering
@@ -9,13 +11,11 @@ The user selected all three motivations: arcade mastery, image discovery and tac
 1. **Ukrainian FPV military game in the Russian–Ukrainian war — MAIN.**
 2. Ukrainian style, ethnicity, history and culture.
 3. 1980s–1990s atmosphere and nostalgia.
-4. Coupa business spend management and AI platform.
 
 The wider space/ocean/fantasy ideas from round 02 remain archived exploration. The earlier suggestion to make tactical play secondary is superseded by the user's interest in all three motivations. Exact modes, difficulty and upgrade systems remain proposals.
 
 ## Current recommendation
 
-One shared territory-reveal game with four complete visual/content families. Develop the main identity around **Daybreak Front**, then use **Night Signal** and **Steel Horizon** as chapter looks or selectable treatments. Keep the drone and enemy-role silhouettes stable across them. A player should still recognize the game when changing from the military family to culture, retro or Coupa.
 
 Three motivations work at different moments: plan a route/module before a board, execute precise cuts during play, and discover artwork or animated details after a capture. The score challenge, collection and temporary build all grow from the same successful action. Do not put upgrade-reading tasks over live danger.
 
@@ -74,20 +74,6 @@ Rewards: complete artwork, small ambient animation, a regional/era stamp, an opt
 
 These are art-direction names, not claims to emulate a particular machine exactly. A fictional cartridge shelf can organize level packs; a cassette deck can organize unlocked music. The avatar can be a tiny toy spacecraft or geometric signal cursor, with pixel glitches and perimeter sparks as threats. [UFO 50](https://50games.fun/) and [Narita Boy](https://www.team17.com/news/narita-boy-out-now-enter-the-digital-kingdom) supply useful precedents for coherent invented nostalgia.
 
-## 4. NAVI NETWORK — Coupa BSM and AI
-
-The main metaphor is a living business network: cuts recover useful connections and fictional savings; suppliers become reachable, matched documents align, workshops open and delivery routes resume. This supports the user's money-saving idea while also representing the broader platform.
-
-- **Savings/Flow City:** animated client districts, mint routes, cobalt buildings and warm windows.
-- **Navi Network:** connected buyers, suppliers, finance and helpful agents, with safe intermission choices inspired by forecasting and scenario exploration.
-- **Value Factory / Paper Circuit:** playful request-to-outcome machinery, origami documents, stamps, matching stations and clear bottleneck puzzles.
-
-Enemy proposals: duplicated records, a boundary-following bottleneck, a stationary exception emitter and a moving disruption cloud. Optional objectives can connect a supplier/request pair or recover order/receipt/invoice landmarks. Customers, suppliers and employees populate the world the player helps.
-
-Module proposals: short enemy-path preview, a recharge for capturing matched tokens, faster movement on a recovered safe route, or better information about the next expedition board. These are authored arcade abilities; they do not require live AI calls to play and do not emulate actual Coupa workflows. In-game money or value points can represent the fictional reward economy.
-
-Official documentation defines [Navi and Agent Studio](https://docs.coupa.com/en/coupa-glossary/overview/c), and Coupa's [Compose announcement](https://www.prnewswire.com/news-releases/coupa-launches-coupa-compose-and-catalyst-to-accelerate-agentic-ai-value-and-delivery-at-inspire-2026-302769893.html) describes agent orchestration across procurement, finance and supply chain. The generated C token is an original placeholder; official game-character artwork and exact brand tokens remain to source.
-
 ## Devices and screen sizes
 
 Recommend one complete provisional 4:3 arena whose game geometry stays unchanged when the window changes. Adapt the HUD, controls and surrounding artwork. If we later want a tall or panoramic arena, give it its own level/challenge identity; different geometry changes route risk and score comparability.
@@ -105,7 +91,6 @@ Recommend one complete provisional 4:3 arena whose game geometry stays unchanged
 
 Fixture sizes are design test cases, not hardware specifications or measurements of the generated images. All three motivations and all supported modes remain available across devices.
 
-Each family changes the shell: field controller, embroidered pocket atlas, cartridge handheld, or Navi operations handset. Framing should be optional and should never consume the space needed for legible play.
 
 Touch recommendation: test a four-way thumb pad outside the board first, then compare relative-swipe steering. D-pad/keyboard cardinal movement is the natural precision baseline. The exact draw/stop/ability model still needs visual explanation and testing. Follow [Apple game-control guidance](https://developer.apple.com/design/human-interface-guidelines/game-controls) for comfortable frequent controls, and [Valve compatibility guidance](https://partner.steamgames.com/doc/steamhardware/compat?l=english) for controller access and readable handheld UI.
 
@@ -118,5 +103,3 @@ All families should support still reveal art, optional ambient layers, collectib
 ## Next discussion and proof
 
 The immediate next design work is a larger main-theme mission storyboard with correctly drawn closure geometry, a measured portrait/landscape layout and a few enemy silhouettes at actual proposed size. Then compare the exact same board under the other three families. A later playable proof should test precise movement, understandable fill rules, fair danger, voluntary replay, real-device frame timing and theme replacement before the full asset set is produced.
-
-Research detail: [four families](research/round-03-four-families.md), [Coupa](research/round-03-coupa.md), [device contract](research/round-03-devices-focused.md), [three motivations](research/round-02-gameplay.md).

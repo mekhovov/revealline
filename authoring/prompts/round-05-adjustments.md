@@ -17,15 +17,12 @@ These references inform proposed design roles. Their existence in an old game do
 | `fpv-04-enemies` | Generic pursuer, perimeter patrol, stationary emitter and sweep sheet. | Four distinct moving domains: field bouncer, changing-contour patrol, revealed-ground crawler and telegraphed territory eroder. Corrects unregistered homing assumptions; preserves fictional invading military identity and distinguishes painted vehicles. Adds separate wall/slow/lethal symbols. |
 | `atlas-04-enemies` | Ink/knot/chip/ribbon roles with generic movement. | Maps ink, thread, dust and unraveling forms to four distinct domains. Keeps cultural subjects separate from hazards and uses material colors without imposing neon. Adds terrain semantics. |
 | `retro-04-enemies` | Generic field/perimeter/emitter/sweep roles. | Uses glitch/spark/disk-error/dropout shapes for the four movement/erosion roles. Explicitly supports muted DOS palettes as well as neon. Adds terrain semantics. |
-| `navi-04-enemies` | Duplicate/bottleneck/emitter/cloud obstacle sheet. | Uses duplicate records, bottlenecks, rework tickets and scope leaks for the four roles. Preserves friendly process-friction imagery; adds no military theme or real business claims. Adds terrain semantics. |
 | `fpv-05-ui` | Field-controller frame and module cards. | Adds a separate teaching-key study for movement domains and three terrain meanings, without crowding the active arena. Claimed ground is not universally safe. |
 | `atlas-05-ui` | Illustrated-atlas collection UI. | Adds the teaching-key study and a proposed full-artwork victory/gallery inset with the actual capture score kept separate. |
 | `retro-05-ui` | Fictional software-shelf collection. | Adds the teaching-key study and the same proposed gallery/score distinction in the existing retro vocabulary. |
-| `navi-05-ui` | Business-friendly game panels and value-points icon. | Adds the teaching-key study and domain distinctions while retaining the restrained business palette and separate real text. |
 | `fpv-06-capture-fx` | Local signal closure and reduced-motion storyboard. | Adds a separate proposed victory/gallery inset. Regular cuts retain their exact fill geometry; full artwork is a reward, not a fictitious 100% capture. Replaces universal-safe boundary wording. |
 | `atlas-06-capture-fx` | Material-specific local closure keyframes. | Adds full-artwork victory guidance while keeping the three traditions and capture geometry distinct. |
 | `retro-06-capture-fx` | Local checker reveal and quiet boundary. | Adds complete-picture reward guidance with the actual percentage retained and ordinary cuts unchanged. |
-| `navi-06-capture-fx` | Local connection reveal and illuminated workshop. | Adds the same gallery/score separation and replaces universal-safe route wording. No business metric is fabricated. |
 | `shared-10-contrast-review` | General player/trail/enemy/objective contrast review. | Tests movement domains, internal contours, erosion warnings, wall/slow/lethal symbols, decorative-object confusion and honest victory percentages. Missing fixtures remain untested. |
 | `shared-14-image-pack` | Twelve planned images with gallery captions and difficulty pairings. | Separates active-play coverage from proposed full-artwork gallery reward; optional mastery no longer needs to withhold the base image. No unsupported pack fields are invented. |
 | `shared-15-challenge-author` | General closure, route, marker and mastery variations. | Prioritizes spatial lessons, domain combinations and explicit fill predictions. Adds distinctions for touch versus enclosure, local terrain, erosion, life-loss progress, delayed trail strikes and gallery reward as supported rules or extension proposals. |
@@ -37,7 +34,6 @@ These references inform proposed design roles. Their existence in an old game do
 - The same fill-blocker symbol applies only to roles selected by the fill policy; movement alone does not imply a blocker.
 - Interior-contour patrol is not silently bound to `enemy.patrol-boundary.v1`.
 - Solid wall, player-only slowing terrain and player-lethal terrain are separate roles; ordinary walls are not damaging.
-- Artwork style and theme stay independent of collision logic. FPV military imagery remains specific to FPV packs; Coupa retains process-friction metaphors.
 - Full artwork on victory is a proposed presentation behavior. Until supported, it belongs in the design brief, not invented schema fields. The actual captured fraction stays unchanged.
 - Image concepts do not prove sprite readiness, movement behavior, input quality, runtime events or device usability.
 

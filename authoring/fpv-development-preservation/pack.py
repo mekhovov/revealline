@@ -30,12 +30,15 @@ def safe_relative(value):
 
 
 def privacy_hold(path):
+    # Ownership holds are generic. Inventory review flags and exact path/hash
+    # clearances remain authoritative for private sources with arbitrary names.
     parts = PurePosixPath(path).parts
-    if any(p.lower() in {'.aws', '.ssh', '.gnupg', '.codex', '.claude', 'coupa',
+    if any(p.lower() in {'.aws', '.ssh', '.gnupg', '.codex', '.claude', 'company', 'companies', 'community', 'communities',
+                          'brand', 'brands', 'private',
                           'indexeddb', 'local storage', 'session storage', 'cookies',
                           'login data', 'history'} for p in parts):
         return 'private-system-or-browser-data-name'
-    if re.search(r'coupa|(?:codex|claude).*history|history.*(?:codex|claude)|browser[-_ ]?profile', path, re.I):
+    if re.search(r'(?:company|communit(?:y|ies)|brand)[-_ /]|(?:codex|claude).*history|history.*(?:codex|claude)|browser[-_ ]?profile', path, re.I):
         return 'private-history-or-profile-name'
     return None
 

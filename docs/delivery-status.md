@@ -1,5 +1,7 @@
 # RevealLine — completed and remaining delivery
 
+> Retained excerpt after an ownership migration. Historical totals and verification statements describe the original scope; this excerpt is not a current release qualification. Original bytes and removed material are preserved separately.
+
 > **3 October implementation update:** [Unified gameplay and industrial art](unified-industrial-plan.md) records the newly approved priorities, bounded budget increases, implemented scope and remaining art/device gates.
 
 > **Historical review — 1 October:** use the [plain-language remaining work and priority choices](plan-priorities-2026-10-01.md). It updates merged/public/queued status, explains benefits and deferral costs, and distinguishes the proposed core-game-first refinement from the still-approved A → B → C order. The dated record below is preserved history.
@@ -124,7 +126,6 @@ Journey P00–P15. Do not close one programme using another programme's numberin
 | P04 creation framework              | Partial                                                        | Real create/edit/preview/export/import/play/recovery with exact original bytes and complete cross-mode previews.                                                        |
 | P06 discovery/install               | Partial                                                        | Compatible content can be found, installed, replaced, removed and recovered within limits without losing the working game or run.                                       |
 | P10 Team encounters                 | Partial                                                        | Full separate Team matrix, complementary routes, Support/rescue, clear two-player state and physical inputs.                                                            |
-| P11–P15 themed production           | Partial; revised allocation                                    | Finished FPV/DroneAid/Ukrainian/Retro/Coupa campaign slices with approved art, sound, design variety, progression and their own release evidence.                       |
 | P16 supporting workflows            | Partial                                                        | Collection, records, saves, replay, learning, legacy content and complete media/history/help recovery.                                                                  |
 | P17 reproducible authoring          | Unfinished acceptance                                          | An independent fresh workspace creates, installs, plays, exports and recovers a pack using maintained guides, skills and CLI.                                           |
 | P18 whole-game qualification        | Unfinished                                                     | Cumulative performance/memory, accessibility, storage/media/offline/lifecycle, public journeys, physical devices and human assessment.                                  |

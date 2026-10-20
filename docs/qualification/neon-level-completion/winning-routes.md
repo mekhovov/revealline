@@ -1,3 +1,5 @@
+> Retained historical excerpt after an ownership migration. Exact original bytes are preserved separately. Original totals and verification statements describe the original scope; this excerpt is not a current qualification or a complete test result.
+
 # Complete moving-enemy wins
 
 All 216 receipts finished with zero lives lost and an unchanged eligible-area denominator. Times below are simulated seconds, not search time or human estimates. Standard/Gentle and both steering modes use Scout and seed 1 under current rules. Each receipt includes the effective level hash and replay checkpoint in [winning-routes.json](winning-routes.json).
@@ -23,7 +25,6 @@ All 216 receipts finished with zero lives lost and an unchanged eligible-area de
 | Neon FPV | 58.65 | 58.64 | 36.55 | 36.55 | 75.3–78.8% |
 | Neon UKRAINE | 39.45 | 39.45 | 51.25 | 51.25 | 82.1–82.5% |
 | Neon DRONE AID | 39.15 | 39.15 | 43.05 | 43.05 | 78.9–79.5% |
-| Neon COUPA | 44.05 | 44.05 | 33.25 | 33.25 | 78.0–80.1% |
 | Neon SOCIAL DRONE | 30.15 | 30.15 | 21.45 | 21.45 | 75.4–81.7% |
 | Neon SDUA | 44.15 | 41.75 | 39.85 | 39.82 | 75.4–83.5% |
 | Neon VICTORY DRONES | 35.65 | 35.63 | 30.35 | 30.35 | 75.3–77.1% |

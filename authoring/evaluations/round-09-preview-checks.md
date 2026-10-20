@@ -33,7 +33,6 @@ Used the in-app browser with the running project server on port 8767. Interactio
 | Immediate strike | Picked up a charge, established rightward travel through the autoplay control, then acted: a ground toy was tagged, one marker updated, the player returned to start and the charge was consumed |
 | Grid strike with fiber | The same flow landed/returned at policy-valid coordinates, cleared the buffer, updated one marker and showed 30.0/36 budget after the six-unit outbound dash |
 | Preferred appearance | Explicitly applied heavy, scout, fixed-wing and delta bodies through the class appearance button; class, link and turn policy remained independently selected |
-| Cross-theme vocabulary | Navi palette/family look showed Insight scout, Parcel/Batch/Express courier, Workflow filter and other business labels; Fiber became Budgeted link. The existing original Spend Sprite body loaded |
 | Final refresh | Updated study scope, cosmetic wording and links to the reference atlas and both preset files loaded without a visible load error |
 
 The complete effect matrix was tested in the pure evaluator; this browser review does **not** claim successful live aiming/capture of every net, projectile, delivery or relay case. Existing physical gamepad, native iPhone input, production save migration and full territory rules were not tested or introduced here. Local background-file handling was unchanged and was not re-exercised through a file chooser in this round.

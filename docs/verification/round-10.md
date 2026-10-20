@@ -1,3 +1,5 @@
+> Retained historical excerpt after an ownership migration. Exact original bytes are preserved separately. Original totals and verification statements describe the original scope; this excerpt is not a current qualification or a complete test result.
+
 # Playable framework verification — 12 September 2026
 
 The deliverable is a playable, configurable browser foundation with local source history and independent release builds. It is ready for human playtesting. Production artwork, physical-device certification and sustained replay appeal are not established by these checks.
@@ -15,7 +17,6 @@ The existing development server runs on port 8767. A fresh `npm run dev` uses 87
 
 [Version index](http://127.0.0.1:8767/releases/) · [Live source game](http://127.0.0.1:8767/game/) · [Live playground](http://127.0.0.1:8767/game/playground/)
 
-[Latest reveal screenshot](round-10/reveal-v0.1.2.png) · [Business-theme screenshot](round-10/spend-network-v0.1.2.png) · [Heritage screenshot](round-10/ukraine-atlas-v0.1.2.png) · [Retro screenshot](round-10/retro-v0.1.2.png)
 
 Each release contains a static site, ZIP, per-file manifest, source archive and release metadata. Existing labels are immutable; later source edits do not rewrite an archived version. Campaign save keys distinguish development/release channel, version, campaign and campaign revision. Separate ports provide stronger origin isolation, including the shared practice handoff key. No remote repository or public deployment was created.
 
@@ -57,7 +58,6 @@ The live browser exercise covered:
 - Seed generation, map/configuration editing, theme/class/steering selection and the shared-engine iframe preview.
 - Completed-picture inspection and return to the same result, with no new completion event or extra award. This is a current-result viewer, not yet a persistent image gallery.
 - Switching all four themes kept the completed run at 52.2% and 8,160 points; business labels changed to Insight, Exception, Complexity hub and Sync point. These are cosmetic/vocabulary changes.
-- A fresh release has no missing-art warning and hides source-only navigation. No official Coupa imagery, third-party game artwork or Telegram emoji original was added to the shipped game.
 
 ### Responsive layout measurements
 

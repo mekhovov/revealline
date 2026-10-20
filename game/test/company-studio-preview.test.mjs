@@ -305,8 +305,12 @@ test('overlong artifact and pending-read abort reject despite nonsettling transp
   }
 });
 
-test('focused Coupa and Netherlands previews accept canonical theme projection but reject selected edits', async () => {
-  for (const editionId of ['coupa-adventure', 'droneaid-nl-workshop-lights', 'coupa-foundations']) {
+test('focused community previews accept canonical theme projection but reject selected edits', async () => {
+  for (const editionId of [
+    'droneaid-nl-parts-in-motion',
+    'droneaid-nl-workshop-lights',
+    'droneaid-nl-makers-together',
+  ]) {
     const { catalog, result } = await compileCompanyWorkspace({ editionId });
     const files = new Map();
     const edition = catalog.editions.find((row) => row.id === editionId);
