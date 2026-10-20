@@ -1,8 +1,10 @@
 # FPV SIM — current delivery plan and status
 
-Reviewed: 20 October 2026, 22:55 CEST Berlin time. Workspace: `go_test_radio_fix`, branch `codex/fpv-flight-widgets-world-picker`.
+Reviewed: 20 October 2026. Workspace: `go_test_radio_fix`, publication branch `codex/fpv-combat-radio-hud-delivery-20261020`.
 
-**Overall: the planned feature mechanisms are implemented locally; release qualification is incomplete.** The local server responds successfully. No release, deployment or new commit was made in this review. This plan consolidates the approved combat overhaul, consistency/presentation plan, six-switch radio work and the latest compact-HUD request. Earlier reports retain their original evidence scope.
+**GitHub publication:** implementation, art and evidence are pushed in draft [PR #1799](https://github.com/mekhovov/revealline/pull/1799) on the approved rewritten history. Original commits are preserved locally. See the [complete related-PR and Releases handoff](fpv-github-merge-handoff-2026-10-20.md). Merge/release qualification is pending. The evidence review below was performed at 22:55 CEST, before the mapped-history transfer; its hash-bound receipts must be refreshed for this candidate.
+
+**Overall: the planned feature mechanisms are implemented locally; release qualification is incomplete.** The local server responds successfully. No release or deployment has been made. The task changes have now been committed and pushed for Releases integration. This plan consolidates the approved combat overhaul, consistency/presentation plan, six-switch radio work and the latest compact-HUD request. Earlier reports retain their original evidence scope.
 
 ## 1. Completed implementation
 
@@ -74,7 +76,7 @@ These are **focused effort estimates**, starting when execution resumes with the
 
 - **Evidence drift:** the latest HUD is newer than the 607-test receipt. Freeze source and refresh reports before calling this release-ready.
 - **Package capacity:** Worlds has no source-file slots left; Academy has roughly 98 KiB of input margin. Reuse/consolidation is required for further growth. Existing byte/file policies remain unchanged.
-- **Local uncommitted work:** substantial changed and untracked task files are present alongside preexisting work. HEAD matches its local remote-tracking reference, but this does not back up working-tree changes or verify the current remote state. No cleanup, staging-all or publication should sweep in unrelated files.
+- **Published integration queue:** all 575 original task files are committed and pushed in #1799. The file audit preserves 572 exactly and three approved history-rewrite edits. Original old-history commits remain on a local preservation branch. Releases owns main; 33 related existing PRs need dependency/conflict/check disposition. Publication does not close qualification gates.
 - **Network/asset scope:** prior Railway checks sometimes used cached pinned bytes because remote downloads stalled. Actual unreliable-network delivery must be checked. The optional r2 pack is adapted existing art, not a fresh photorealistic asset commission.
 - **Radio identity limits:** a receiver exposes its own USB identity, not the bound transmitter/mixer. Ambiguous hardware cannot be safely auto-mapped without a check. Browser/OS dialogs may require a host gesture.
 - **Gameplay coverage:** a reachable initial roster or 128 visible actors does not prove a complete, enjoyable or resource-viable run. Local steering and crowded close pursuit need actual play review.
