@@ -5487,3 +5487,126 @@ test('shared Couch owner and modal facade remain usable while authoring import i
   assert.equal(owner.snapshot().generation, 2);
   assert.equal(owner.readAsset(initial.track.asset.sha256).size, initial.blob.size);
 });
+
+test('soundtrack presentation notifies the committed open once and never rejected or repeated opens', async (t) => {
+  let presentations = 0,
+    reject = true,
+    h;
+  h = await setup(t, {
+    open: false,
+    callbacks: {
+      onOpen: () => {
+        if (reject) throw new Error('Settings owner rejected opening');
+      },
+      onPresentationChange: () => {
+        presentations++;
+        assert.equal(h.panel.isOpen(), true);
+        assert.equal(h.doc.activeElement === h.node('close'), true);
+      },
+    },
+  });
+  await assert.rejects(h.panel.open(), /Settings owner rejected opening/);
+  assert.equal(presentations, 0);
+  assert.equal(h.panel.isOpen(), false);
+  reject = false;
+  await h.panel.open();
+  assert.equal(presentations, 1);
+  await h.panel.open();
+  assert.equal(presentations, 1);
+  h.panel.close();
+  assert.equal(presentations, 1);
+  await h.panel.open();
+  assert.equal(presentations, 2);
+  h.panel.dispose();
+  await h.panel.open();
+  assert.equal(presentations, 2);
+});
+
+test('soundtrack presentation retires a transient successful native open before asynchronous reading', async (t) => {
+  let presentations = 0;
+  const h = await setup(t, {
+    open: false,
+    callbacks: {
+      onPresentationChange: () => presentations++,
+    },
+  });
+  const show = h.panel.element.showModal.bind(h.panel.element);
+  h.panel.element.showModal = () => {
+    show();
+    h.panel.element.close();
+  };
+  await h.panel.open();
+  assert.equal(h.panel.isOpen(), false);
+  assert.equal(presentations, 1);
+});
+
+test('soundtrack committed presentation precedes held authoring and retired visits cannot publish', async (t) => {
+  let release,
+    imports = 0,
+    mounts = 0,
+    presentations = 0;
+  const events = [];
+  const held = new Promise((resolve) => {
+    release = resolve;
+  });
+  t.after(() => release());
+  const app = await setup(t, {
+    open: false,
+    callbacks: {
+      onPresentationChange: () => {
+        presentations++;
+        events.push('presentation');
+      },
+      loadAuthoringView: async () => {
+        imports++;
+        events.push('authoring-load');
+        await held;
+        const module = await import('../ui/soundtrack-authoring-view.mjs');
+        return {
+          ...module,
+          createSoundtrackAuthoringView(...args) {
+            mounts++;
+            return module.createSoundtrackAuthoringView(...args);
+          },
+        };
+      },
+    },
+  });
+  const modal = app.panel.element;
+  const first = app.panel.open();
+  assert.equal(app.panel.isOpen(), true);
+  assert.equal(presentations, 1, 'The committed open notifies synchronously');
+  assert.deepEqual(events, ['presentation']);
+  assert.equal(imports, 0, 'Authoring is demanded after the presentation notification');
+  await settleOnlineCatalogue(
+    () => imports === 1 && !app.node('close').disabled,
+    'the original modal owner can close while authoring is held',
+  );
+  assert.deepEqual(events, ['presentation', 'authoring-load']);
+  await app.panel.open();
+  assert.equal(presentations, 1, 'An already-open request is not another presentation');
+  assert.equal(imports, 1, 'An already-open request does not import again');
+  assert.equal(mounts, 0);
+  assert.equal(app.panel.close(), true);
+  const second = app.panel.open();
+  assert.equal(app.panel.isOpen(), true);
+  assert.equal(presentations, 2, 'A fresh committed visit notifies before the old load settles');
+  assert.equal(imports, 1, 'The new visit joins the existing module load');
+  assert.equal(mounts, 0);
+  assert.equal(app.panel.close(), true);
+  const retiredFocus = app.doc.activeElement;
+  release();
+  await Promise.all([first, second]);
+  assert.equal(app.panel.isOpen(), false);
+  assert.equal(mounts, 0, 'Neither retired visit may publish the resolved authoring view');
+  assert.equal(app.doc.nodes.has('soundtrack-tracks'), false);
+  assert.equal(app.doc.nodes.has('soundtrack-audition'), false);
+  assert.equal(app.doc.activeElement === retiredFocus, true, 'Late import cannot move focus');
+  assert.equal(presentations, 2, 'Late import cannot revive a presentation');
+  await app.panel.open();
+  assert.equal(app.panel.element === modal, true);
+  assert.equal(presentations, 3);
+  assert.equal(imports, 1, 'The next explicit visit reuses the resolved module');
+  assert.equal(mounts, 1, 'Only the current explicit visit may mount authoring');
+  assert.equal(app.doc.nodes.has('soundtrack-tracks'), true);
+});
