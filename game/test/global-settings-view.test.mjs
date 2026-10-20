@@ -184,3 +184,36 @@ test('generated SIM-style control preserves desired extra size across locale ref
   assert.equal(input.querySelector('[data-text-size-retained]'), null);
   settings.destroy();
 });
+
+test('qualified settings retain capability, selected control and focus when lazy providers refresh', () => {
+  const owner = preference('extra-large'),
+    f = fixture();
+  const settings = mountGlobalSettings({
+    ...f,
+    extraLargeText: true,
+    bindings: { textSize: owner },
+  });
+  const input = f.document.getElementById('global-settings-textSize');
+  input.focus();
+  assert.equal(input.querySelector('[data-text-size-retained]').disabled, false);
+  const again = mountGlobalSettings({
+    ...f,
+    locale: 'uk',
+    bindings: { masterVolume: preference(0.5) },
+  });
+  assert.equal(again, settings);
+  assert.equal(f.document.getElementById('global-settings-textSize'), input);
+  assert.equal(input.querySelector('[data-text-size-retained]').disabled, false);
+  assert.equal(input.value, 'extra-large');
+  assert.equal(owner.writes(), 0);
+  assert.equal(f.document.activeElement, input);
+  input.value = 'standard';
+  input.emit('change');
+  assert.equal(owner.get(), 'standard');
+  assert.equal(input.querySelector('[data-text-size-retained]').disabled, false);
+  input.value = 'extra-large';
+  input.emit('change');
+  assert.equal(owner.get(), 'extra-large');
+  assert.equal(owner.writes(), 2);
+  settings.destroy();
+});

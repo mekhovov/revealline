@@ -25,6 +25,7 @@ function seed(
   {
     studio = false,
     primaryTextScaling = false,
+    textScaling,
     coarse = false,
     reduced = false,
     brokenStorage = false,
@@ -41,6 +42,7 @@ function seed(
         }
       : {};
   if (primaryTextScaling) dataset.textScaling = 'solo';
+  if (textScaling) dataset.textScaling = textScaling;
   const document = {
     documentElement: { dataset, style: { setProperty: (key, value) => variables.set(key, value) } },
     currentScript: { dataset: { themeDensity: studio ? 'studio' : 'player' } },
@@ -499,4 +501,22 @@ test('qualified primary extra-large seeds its multiplier before deferred styles 
     presentationThemeVariables(resolved)['--iw-text-size'],
     variables.get('--iw-text-size'),
   );
+});
+
+test('Classic Snake first paint and Standard/Large reset agree while its hub remains unqualified', () => {
+  for (const textSize of ['standard', 'large', 'extra-large']) {
+    const record = {
+      'revealline.display.v1': raw({ textFace: 'pixel', textSize, reducedEffects: false }),
+    };
+    const snake = seed(record, { textScaling: 'snake' });
+    assert.equal(snake.dataset.themeTextSize, textSize);
+    assert.equal(
+      snake.variables.get('--primary-text-scale'),
+      textSize === 'extra-large' ? '2' : '1',
+    );
+    assert.equal(snake.variables.get('--iw-text-size'), textSize === 'large' ? '20px' : '16px');
+    const hub = seed(record);
+    assert.equal(hub.dataset.themeTextSize, textSize === 'extra-large' ? 'large' : textSize);
+    assert.equal(hub.variables.has('--primary-text-scale'), false);
+  }
 });

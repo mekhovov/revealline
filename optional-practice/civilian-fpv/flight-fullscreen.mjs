@@ -8601,6 +8601,7 @@ const globalSettingsOwners=new WeakMap();
 /** Adopt real controls, or render missing fields through injected services.
      * Repeated calls add lazy providers without replacing focused controls.
      * `duplicates` retires aliases by logical setting while retaining their handlers.
+     * `extraLargeText` belongs to the initial host; lazy providers cannot grant or revoke it.
      */
 function mountGlobalSettings({
 document:doc=globalThis.document,
@@ -8611,6 +8612,7 @@ locale='en',
 controls={},
 bindings={},
 duplicates={},
+extraLargeText=false,
 }={}){
 if(!root|| !panels|| !doc)return null;
 bindings={...continuousPlayBindings(),...bindings};
@@ -8652,7 +8654,8 @@ function render(row){
 if(!row.input|| !row.binding)return;
 const value=row.binding.get();
 if(row.spec.type==='checkbox')row.input.checked= !!value;
-else if(row.spec.key==='textSize')renderTextSizeControl(row.input,value,{locale});
+else if(row.spec.key==='textSize')
+renderTextSizeControl(row.input,value,{locale,extraLarge:extraLargeText});
 else row.input.value=String(value);
 if(row.output)row.output.textContent=`${Math.round(Number(value)*100)}%`;
 row.status.textContent=row.binding.warning?.()||'';

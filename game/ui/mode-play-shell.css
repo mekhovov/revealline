@@ -40,7 +40,7 @@
   .mode-play-name {
     flex: 1;
     min-width: 0;
-    font-size: 0.85rem;
+    font-size: calc(0.85rem * var(--primary-text-scale, 1));
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -116,7 +116,7 @@
   }
   .mode-play-dialog h1 {
     font: inherit;
-    font-size: clamp(1.25rem, 3vw, 2rem);
+    font-size: calc(clamp(1.25rem, 3vw, 2rem) * var(--primary-text-scale, 1));
     font-weight: 800;
     margin: 0;
   }
@@ -168,7 +168,7 @@
     padding-top: 0;
   }
   .mode-play-home .mode-play-wordmark {
-    font-size: clamp(2rem, 7vw, 4rem);
+    font-size: calc(clamp(2rem, 7vw, 4rem) * var(--primary-text-scale, 1));
   }
   .mode-play-wordmark img {
     display: block;
@@ -182,7 +182,7 @@
   .mode-play-mission,
   .mode-play-version {
     color: var(--fk-text-muted, var(--muted, #aebdc4));
-    font-size: 0.9rem;
+    font-size: calc(0.9rem * var(--primary-text-scale, 1));
     margin: 8px 0 16px;
   }
   .mode-play-edition {
@@ -275,7 +275,7 @@
   }
   .mode-play-mission {
     margin: 0 0 12px;
-    font-size: 0.8rem;
+    font-size: calc(0.8rem * var(--primary-text-scale, 1));
   }
   .mode-play-utilities {
     display: grid;
@@ -289,7 +289,7 @@
     min-width: 0;
     min-height: 44px;
     padding: 8px;
-    font-size: clamp(12px, 3.3vw, 16px);
+    font-size: calc(clamp(12px, 3.3vw, 16px) * var(--primary-text-scale, 1));
     line-height: 1.2;
   }
   .mode-play-utilities > [hidden] + .button {
@@ -306,7 +306,7 @@
     border: 0;
   }
   .mode-play-dialog[data-mode-surface='pause'] h1 {
-    font-size: 1rem;
+    font-size: calc(1rem * var(--primary-text-scale, 1));
     text-transform: uppercase;
     letter-spacing: 0.08em;
   }
@@ -366,7 +366,7 @@ html body .mode-play-home {
 }
 .mode-play-shell .mode-play-utilities .button {
   padding-inline: 6px;
-  font-size: clamp(12px, 3.3vw, 16px);
+  font-size: calc(clamp(12px, 3.3vw, 16px) * var(--primary-text-scale, 1));
   overflow-wrap: normal;
   word-break: normal;
   --ui-action-fill: var(--iw-button-default-background, var(--fk-panel-raised, #182431));
@@ -406,7 +406,7 @@ html body .mode-play-home {
 }
 
 .mode-play-dialog[data-mode-surface='pause'] h1 {
-  font: 600 18px/1.3 var(--fk-font-ui, sans-serif);
+  font: 600 calc(18px * var(--primary-text-scale, 1)) / 1.3 var(--fk-font-ui, sans-serif);
   text-transform: none;
   letter-spacing: normal;
 }

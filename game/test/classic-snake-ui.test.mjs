@@ -1,4 +1,5 @@
 import { effectiveTextSize } from '../text-size.mjs';
+import { createDisplayPreferences, DISPLAY_PREFERENCES_KEY } from '../display-preferences.mjs';
 import { renderTextSizeControl } from '../ui/text-size-control.mjs';
 import { CLASSIC_SNAKE_CAMPAIGN_REVISION } from '../snake/classic-campaign.mjs';
 const SAVE_KEY = `revealline.classic-snake.round.${CLASSIC_SNAKE_CAMPAIGN_REVISION}`;
@@ -140,6 +141,7 @@ async function harness({
   recordReceipt = { verified: true, saved: true },
   catalogue = CLASSIC_SNAKE_LEVELS,
   initialTextSize = 'standard',
+  realDisplay = false,
 } = {}) {
   const document = new Document();
   let harnessLocale = 'en';
@@ -194,6 +196,24 @@ async function harness({
     effectiveReducedEffects: false,
   };
   const displayListeners = new Set();
+  let displayOwner,
+    displayStorageFails = false;
+  const displayStorage = {
+    getItem: (key) => storage.get(key) ?? null,
+    setItem(key, value) {
+      if (displayStorageFails) throw new Error('Storage unavailable');
+      storage.set(key, value);
+    },
+  };
+  if (realDisplay)
+    storage.set(
+      DISPLAY_PREFERENCES_KEY,
+      JSON.stringify({
+        textFace: 'pixel',
+        textSize: initialTextSize,
+        reducedEffects: false,
+      }),
+    );
   const location = {
     href: `https://example.test/game/snake/play.html?mode=${mode}${directEntry ? `&level=${entry.id}` : ''}&activity=${activity}${artReview ? `&artReview=${encodeURIComponent(artReview)}` : ''}${query}`,
     origin: 'https://example.test',
@@ -434,19 +454,31 @@ async function harness({
         }),
       }),
     createEncounterDisplayPreferences: () => preferences({ showRemains: true }),
-    createDisplayPreferences: () => ({
-      snapshot: () => display,
-      subscribe(listener) {
-        displayListeners.add(listener);
-        listener(display);
-        return () => displayListeners.delete(listener);
-      },
-      set(patch) {
-        Object.assign(display, patch);
-        display.effectiveTextSize = effectiveTextSize(display.textSize);
-        for (const listener of displayListeners) listener(display);
-      },
-    }),
+    createDisplayPreferences: (options) => {
+      if (realDisplay) {
+        displayOwner = createDisplayPreferences({
+          ...options,
+          window,
+          getStorage: () => displayStorage,
+        });
+        displayOwner.subscribe((value) => Object.assign(display, value));
+        return { ...displayOwner, set: (patch) => displayOwner.set({ ...patch }) };
+      }
+      display.effectiveTextSize = effectiveTextSize(display.textSize, options);
+      return {
+        snapshot: () => display,
+        subscribe(listener) {
+          displayListeners.add(listener);
+          listener(display);
+          return () => displayListeners.delete(listener);
+        },
+        set(patch) {
+          Object.assign(display, patch);
+          display.effectiveTextSize = effectiveTextSize(display.textSize, options);
+          for (const listener of displayListeners) listener(display);
+        },
+      };
+    },
     renderTextSizeControl,
     nextInputModality,
     showScreenControls,
@@ -572,6 +604,10 @@ async function harness({
     acceptedAppearances,
     appearanceActions,
     display,
+    displayStorage,
+    setDisplayStorageFails: (value) => {
+      displayStorageFails = value;
+    },
     window,
     storage,
     location,
@@ -581,6 +617,7 @@ async function harness({
     offlinePanel,
     canActivateOffline: () => offlineOptions.canActivate(),
     disposeTools: () => {
+      displayOwner?.dispose();
       tools.dispose();
       offlinePanel.dispose();
     },
@@ -2608,20 +2645,63 @@ test('transient status wrapping never inherits the operation-only rule that hide
 });
 
 for (const mode of ['solo', 'versus', 'team'])
-  test(`${mode}: Snake retains extra-large selected with a Large fallback while the attempt stays paused`, async () => {
-    const h = await harness({ mode, initialTextSize: 'extra-large' });
+  test(`${mode}: qualified Snake text controls preserve paused play across size, storage and locale changes`, async (t) => {
+    const h = await harness({ mode, initialTextSize: 'extra-large', realDisplay: true });
+    t.after(() => h.disposeTools());
     h.shell.open('settings');
     const before = h.created.map((run) => core.exportClassicSnakeReplay(run));
-    const control = h.$('snake-text-size');
+    const beforeStorage = new Map(h.storage);
+    const control = h.$('snake-global-textSize');
     assert.equal(control.value, 'extra-large');
-    assert.equal(control.querySelector('[data-text-size-retained]').disabled, true);
-    assert.equal(h.document.body.dataset.textSize, 'large');
+    assert.equal(control.querySelector('[data-text-size-retained]').disabled, false);
+    assert.equal(h.document.body.dataset.textSize, 'extra-large');
+    assert.equal(h.$('snake-text-size').querySelector('[data-text-size-retained]').disabled, false);
+    h.$('language').value = 'uk';
+    h.$('language').emit('change');
+    assert.equal(control.value, 'extra-large');
+    assert.equal(
+      h.storage.get(DISPLAY_PREFERENCES_KEY),
+      beforeStorage.get(DISPLAY_PREFERENCES_KEY),
+    );
     h.$('snake-text-face').value = 'plain';
     h.$('snake-text-face').emit('change');
-    assert.equal(h.display.textSize, 'extra-large');
+    assert.equal(JSON.parse(h.storage.get(DISPLAY_PREFERENCES_KEY)).textSize, 'extra-large');
+    control.value = 'large';
+    control.emit('change');
+    assert.equal(h.document.body.dataset.textSize, 'large');
+    assert.equal(h.$('snake-text-size').value, 'large');
+    const fromOtherTab = JSON.stringify({
+      textFace: 'plain',
+      textSize: 'standard',
+      reducedEffects: false,
+    });
+    h.storage.set(DISPLAY_PREFERENCES_KEY, fromOtherTab);
+    h.window.emit('storage', {
+      key: DISPLAY_PREFERENCES_KEY,
+      storageArea: h.displayStorage,
+      newValue: fromOtherTab,
+    });
+    assert.equal(control.value, 'standard');
+    assert.equal(h.document.body.dataset.textSize, 'standard');
+    control.focus();
+    h.setDisplayStorageFails(true);
+    control.value = 'extra-large';
+    control.emit('change');
+    assert.equal(h.document.body.dataset.textSize, 'extra-large');
+    assert.equal(h.storage.get(DISPLAY_PREFERENCES_KEY), fromOtherTab);
+    assert.ok(h.$('snake-display-status').textContent);
+    assert.equal(h.document.activeElement, control);
     assert.deepEqual(
       h.created.map((run) => core.exportClassicSnakeReplay(run)),
       before,
     );
     assert.equal(h.shell.blocksPlay(), true);
+    assert.deepEqual(
+      [...h.storage].filter(
+        ([key]) => key !== DISPLAY_PREFERENCES_KEY && key !== 'revealline.locale',
+      ),
+      [...beforeStorage].filter(
+        ([key]) => key !== DISPLAY_PREFERENCES_KEY && key !== 'revealline.locale',
+      ),
+    );
   });
