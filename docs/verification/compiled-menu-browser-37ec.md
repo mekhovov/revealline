@@ -248,3 +248,52 @@ warning criteria remain authoritative. Four additive pure cases exercise event
 ordering, first-click bounds, copied scalar/error isolation, and cleanup. Source
 format/syntax/test and another hosted browser run are pending for this authored
 checkpoint.
+
+## One bounded resume-entry debugger diagnostic
+
+At exact 9ae134bf, the normal source workflow passed all 23 complete cheap cases.
+The compiled-browser run still failed its unchanged running predicate. Its two
+trusted first-click slots reached the same callable handler with focus and no
+default prevention; the latest public state remained briefing and zero clock.
+Those facts establish delivery through the handler slot, not an internal guard
+or accepted play. No production fix is proposed.
+
+This authored successor attaches a scoped Chromium CDP session on the owned context for the
+same existing first Start action. It accepts only the exact loopback app script,
+494,621 bytes with SHA-256
+5eed4aee9b46ce3479ef8abb091170bacd060d9c323597aa78b6adba84a0eacd,
+and an unambiguous breakpoint on the first executable resume statement,
+zero-based line 10689. Wrong source or an unavailable binding retires the probe
+and leaves the normal action and every original assertion/deadline in place.
+
+Only the first matching paused resume frame may be read. The expression contains
+the allowlisted renderer/practice failure, run-presence/status, overview,
+started/paused, picture-resume, running-enemy and course scalar guards. It uses
+returnByValue and throwOnSideEffect, with a 25-ms protocol evaluation timeout;
+a conservative getter refusal is unavailable, never false or an unsafe retry.
+courseBlocked is not called: its boolean/string dependencies are read and its
+plain predicate is derived in Node. No handler, input, game state, storage,
+source patch, scope-chain dump or payload is invoked or changed.
+
+The pause read owner is 100 ms. Each paused protocol/cleanup command is limited
+to 50 ms; unconditional resume, disable and detach follow in finally, for a
+250-ms total diagnostic owner. Any observed excess or uncertain cleanup remains
+explicitly unavailable. Duplicate/unexpected pauses cannot trigger another read.
+Late setup retires its session; callback removal, handle/context cleanup and the
+original process owner remain authoritative. No new native action or higher
+native/flow deadline is introduced.
+
+One primitive record is copied through the existing optional 32-KiB trace and
+262-KiB report/redaction/fallback. Neither script text, CDP IDs, exception detail,
+run payload nor scope objects are retained. A full authoritative original report
+can omit the record and any extra omission marker. Four additive pure mocked
+protocol cases preserve all prior 23 bodies. They exercise source refusal,
+fixed safe evaluation flags, one-pause ownership, deadlines and cleanup; they
+do not validate an actual browser source or execute CDP.
+
+Debugger attachment and pausing alter scheduling and readiness. Any resulting
+flow is an explicitly instrumented causal diagnostic, not ordinary browser
+acceptance, performance, or player/device qualification. If entry guards are
+clear, no asynchronous admission cause or production correction is inferred.
+At this authored checkpoint, new formatting/syntax/27-case checks and another
+hosted diagnostic run are unrun and require separate review.

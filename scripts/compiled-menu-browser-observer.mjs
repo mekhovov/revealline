@@ -20,6 +20,7 @@ import {
   assertLoopback,
   createCompiledOperationTrace,
   installCompiledStartEventProbe,
+  prepareCompiledResumeEntryProbe,
 } from './compiled-menu-browser-contract.mjs';
 
 export function readCompiledMenuPublicState(startProbe = null) {
@@ -133,7 +134,7 @@ export async function observeCompiledMenu({
     report.activeStep = args[0];
     return trace.step(...args);
   };
-  let server, browser, context, diagnostics, startProbe;
+  let server, browser, context, diagnostics, startProbe, resumeEntryProbe;
   const retain = async () =>
     writeFile(
       join(output, 'report.json'),
@@ -247,6 +248,11 @@ export async function observeCompiledMenu({
         page.evaluate(readCompiledMenuPublicState, startProbe ?? null),
       );
       trace.recordPublicState(s);
+      try {
+        trace.recordResumeEntryProbe(resumeEntryProbe?.snapshot());
+      } catch {
+        /* diagnostic only */
+      }
       assert.equal(new URL(s.href).origin, new URL(origin).origin);
       assert.equal(s.hidden, false);
       assert.equal(s.focused, true);
@@ -369,7 +375,43 @@ export async function observeCompiledMenu({
     } catch {
       trace.recordStartProbeLifecycle('setup', 'unavailable');
     }
-    await click('#start-button');
+    let resumeSetupCurrent = true;
+    try {
+      resumeEntryProbe = await step('one resume-entry diagnostic setup', async () => {
+        const session = await context.newCDPSession(page);
+        if (!resumeSetupCurrent) {
+          await prepareCompiledResumeEntryProbe(session, origin, { isCurrent: () => false });
+          return null;
+        }
+        const owner = await prepareCompiledResumeEntryProbe(session, origin, {
+          isCurrent: () => resumeSetupCurrent,
+        });
+        if (!resumeSetupCurrent) {
+          await owner.dispose();
+          return null;
+        }
+        return owner;
+      });
+    } catch {
+      trace.recordResumeEntryProbe({
+        format: 'CompiledResumeEntryProbeV1',
+        sourceVerified: false,
+        status: 'unavailable',
+        reason: 'setup-unavailable',
+        pauses: 0,
+      });
+    } finally {
+      resumeSetupCurrent = false;
+    }
+    try {
+      await click('#start-button');
+    } finally {
+      try {
+        resumeEntryProbe?.stopAfterAction();
+      } catch {
+        /* diagnostic only */
+      }
+    }
     const running = await until('running', (s) => s.flight === 'running');
     await until(
       'real clock advances',
@@ -438,6 +480,18 @@ export async function observeCompiledMenu({
       message: report.failure,
     };
   } finally {
+    if (resumeEntryProbe) {
+      try {
+        await resumeEntryProbe.dispose();
+      } catch {
+        /* existing context/browser cleanup is the final boundary */
+      }
+      try {
+        trace.recordResumeEntryProbe(resumeEntryProbe.snapshot());
+      } catch {
+        /* diagnostic only */
+      }
+    }
     if (startProbe) {
       try {
         await closeWithin('Start observer', async () => {
