@@ -159,7 +159,7 @@ export async function buildThemeBootstrap() {
   let display = null;
   try { if (typeof legacyDisplay === 'string' && legacyDisplay.length <= 2048) display = JSON.parse(legacyDisplay); } catch { /* Ignore damaged local data. */ }
   const studio = doc.currentScript?.dataset.themeDensity === 'studio';
-  const large = display?.textSize === 'large';
+  const large = display?.textSize === 'large' || display?.textSize === 'extra-large';
   const plain = display?.textFace === 'plain';
   let coarse = false, reduced = display?.reducedEffects === true;
   try { coarse = globalThis.matchMedia?.('(pointer: coarse)').matches === true; reduced ||= globalThis.matchMedia?.('(prefers-reduced-motion: reduce)').matches === true; } catch { /* Optional media-query API. */ }

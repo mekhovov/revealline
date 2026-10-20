@@ -7789,7 +7789,7 @@ numeric:themeFonts?.numeric??"'Field Kit Mono', ui-monospace, monospace",
 return{TEXT_FACES,DEFAULT_TEXT_FACE,resolveTextFace,canvasTextFonts};
 })();
 modules['game/text-size.mjs']=(()=>{
-const TEXT_SIZES=Object.freeze(['standard','large']);
+const TEXT_SIZES=Object.freeze(['standard','large','extra-large']);
 const DEFAULT_TEXT_SIZE='standard';
 
 function resolveTextSize(value){
@@ -7797,13 +7797,20 @@ if(!TEXT_SIZES.includes(value))throw new TypeError('Unsupported text size.');
 return value;
 }
 
-return{TEXT_SIZES,DEFAULT_TEXT_SIZE,resolveTextSize};
+/** Preserve desired intent separately. No host is qualified for the additional
+     * size yet; the established Large presentation is the explicit fallback. */
+function effectiveTextSize(value){
+return resolveTextSize(value)==='extra-large'?'large':value;
+}
+
+return{TEXT_SIZES,DEFAULT_TEXT_SIZE,resolveTextSize,effectiveTextSize};
 })();
 modules['game/display-preferences.mjs']=(()=>{
 const DEFAULT_TEXT_FACE=modules['game/text-face.mjs']['DEFAULT_TEXT_FACE'];
 const resolveTextFace=modules['game/text-face.mjs']['resolveTextFace'];
 const DEFAULT_TEXT_SIZE=modules['game/text-size.mjs']['DEFAULT_TEXT_SIZE'];
 const resolveTextSize=modules['game/text-size.mjs']['resolveTextSize'];
+const effectiveTextSize=modules['game/text-size.mjs']['effectiveTextSize'];
 
 const DISPLAY_PREFERENCES_KEY='revealline.display.v1';
 const fields=['textFace','textSize','reducedEffects'];
@@ -7896,6 +7903,7 @@ stored= !!first.value;
 const initial=first.value??legacy(legacyPreferences);
 let state=Object.freeze({
 ...initial,
+effectiveTextSize:effectiveTextSize(initial.textSize),
 effectiveReducedEffects:initial.reducedEffects||systemReduced,
 revision:0,
 });
@@ -7918,6 +7926,7 @@ return state;
 const apply=(values)=>{
 state=Object.freeze({
 ...values,
+effectiveTextSize:effectiveTextSize(values.textSize),
 effectiveReducedEffects:values.reducedEffects||systemReduced,
 revision:state.revision+1,
 });
@@ -8854,8 +8863,87 @@ label.hidden=hidden;
 
 return{attachThemeFamilyControls};
 })();
+modules['game/ui/text-size-control.mjs']=(()=>{
+const resolveTextSize=modules['game/text-size.mjs']['resolveTextSize'];
+const localizedText=simGlobalI18n['localizedText'];
+const t=simGlobalI18n['t'];
+
+const notices=new WeakMap();
+const hostNotices=new WeakMap();
+let nextNotice=0;
+
+/** Read-only hosts acknowledge the fallback without creating another owner. */
+function renderTextSizeFallback(container,desired,{locale}={}){
+resolveTextSize(desired);
+if(!container)return;
+let notice=hostNotices.get(container);
+if(!notice&&desired==='extra-large'){
+notice=container.ownerDocument.createElement('p');
+notice.className='micro-note';
+notice.dataset.textSizeFallback='true';
+container.append(notice);
+hostNotices.set(container,notice);
+}
+if(notice){
+localizedText(notice,()=>
+t('interface:textSizeCompatibility.readOnlyFallback',{lng:locale}),
+);
+notice.hidden=desired!=='extra-large';
+}
+}
+
+/** Render existing desired intent without making an unqualified size selectable.
+     * This view never saves, dispatches change or moves keyboard focus. */
+function renderTextSizeControl(control,desired,{locale}={}){
+resolveTextSize(desired);
+if(!control)return;
+let retained=control.querySelector('[data-text-size-retained]');
+let notice=notices.get(control);
+if(desired==='extra-large'){
+if(!retained){
+retained=control.ownerDocument.createElement('option');
+retained.value='extra-large';
+retained.disabled=true;
+retained.dataset.textSizeRetained='true';
+control.append(retained);
+}
+localizedText(retained,()=>
+t('interface:textSizeCompatibility.retained',{lng:locale}),
+);
+if(!notice){
+notice=control.ownerDocument.createElement('span');
+notice.id=`${control.id||`text-size-${++nextNotice}`}-fallback`;
+notice.className='micro-note';
+notice.dataset.textSizeFallback='true';
+control.after(notice);
+notices.set(control,notice);
+}
+localizedText(notice,()=>t('interface:textSizeCompatibility.fallback',{lng:locale}));
+notice.hidden=false;
+const descriptions=new Set(
+(control.getAttribute('aria-describedby')??'').split(/\s+/).filter(Boolean),
+);
+descriptions.add(notice.id);
+control.setAttribute('aria-describedby',[...descriptions].join(' '));
+}else{
+retained?.remove();
+if(notice){
+notice.hidden=true;
+const descriptions=(control.getAttribute('aria-describedby')??'')
+.split(/\s+/)
+.filter((value)=>value&&value!==notice.id);
+if(descriptions.length)control.setAttribute('aria-describedby',descriptions.join(' '));
+else control.removeAttribute('aria-describedby');
+}
+}
+control.value=desired;
+}
+
+return{renderTextSizeFallback,renderTextSizeControl};
+})();
 modules['game/ui/global-settings-view.mjs']=(()=>{
 const continuousPlayBindings=modules['game/ui/continuous-play.mjs']['continuousPlayBindings'];
+const renderTextSizeControl=modules['game/ui/text-size-control.mjs']['renderTextSizeControl'];
 // One logical settings inventory. Shared flow preferences have one lightweight
 // owner; hosts retain audio, simulation and profile lifecycle ownership.
 const GLOBAL_SETTINGS=Object.freeze(
@@ -9013,6 +9101,7 @@ function render(row){
 if(!row.input|| !row.binding)return;
 const value=row.binding.get();
 if(row.spec.type==='checkbox')row.input.checked= !!value;
+else if(row.spec.key==='textSize')renderTextSizeControl(row.input,value,{locale});
 else row.input.value=String(value);
 if(row.output)row.output.textContent=`${Math.round(Number(value)*100)}%`;
 const feedback=row.binding.feedback?.(locale),
