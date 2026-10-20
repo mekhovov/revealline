@@ -8,7 +8,7 @@ import { prepareScenario } from '../../../game/imports.mjs';
 
 const root = new URL('../../../', import.meta.url);
 export const SOURCE_PINS = Object.freeze({
-  'game/content/themes.json': '93582f7d9ba53753106df7b63928f086820fc0f68357d3c08f26c0b89fb84774',
+  'game/content/themes.json': '77f3e7e8f0951172bd0c11649b0203808b3d1b00ca434c2a576ef631899958b2',
   'game/content/classes.json': '2f776b0dfd099478ffe78465c7b602cd98896206a222a0ed7fd4405a4a643f84',
 });
 export const CHALLENGE_IDS = Object.freeze([

@@ -8,6 +8,47 @@ import { GLOBAL_SETTINGS } from '../ui/global-settings-view.mjs';
 import { getLocale, setLocale } from '../i18n/index.mjs';
 import { Document, Events } from './helpers/couch-dom.mjs';
 import { activateMissionCard } from './helpers/library-selection.mjs';
+import { waitFor } from './helpers/wait-for.mjs';
+
+for (const locale of ['en', 'uk'])
+  for (const kind of ['overall', 'cancelled', 'unknown'])
+    test(`Gym offline feedback ${locale} ${kind} uses safe localized reasons`, async (t) => {
+      const previous = getLocale();
+      t.after(() => setLocale(previous));
+      const f = await fixture(t, { search: `?lang=${locale}` });
+      const error =
+        kind === 'cancelled'
+          ? new DOMException('secret', 'AbortError')
+          : new Error(
+              kind === 'overall'
+                ? 'Download exceeded five minutes. Retry on a faster connection.'
+                : 'secret backend detail',
+            );
+      f.win.navigator.serviceWorker = {
+        getRegistration: async () => undefined,
+        register: async () => {
+          throw error;
+        },
+      };
+      f.doc.getElementById('offline').click();
+      await waitFor(() => f.doc.getElementById('package-status').textContent.length > 0);
+      const text = f.doc.getElementById('package-status').textContent;
+      assert.doesNotMatch(text, /secret/);
+      assert.match(
+        text,
+        kind === 'overall'
+          ? locale === 'uk'
+            ? /п’ять хвилин/
+            : /five minutes/
+          : kind === 'cancelled'
+            ? locale === 'uk'
+              ? /скасовано/
+              : /cancelled/
+            : locale === 'uk'
+              ? /Не вдалося/
+              : /failed/,
+      );
+    });
 
 async function fixture(t, { storage, search = '', previews = [] } = {}) {
   const doc = new Document(),
@@ -697,3 +738,50 @@ for (const clock of ['animation timestamp', 'callback execution']) {
     assert.equal(flow.inert, true, 'Cancelled controls cannot retain input ownership.');
   });
 }
+
+test('gym retains extra-large desired intent while its actual paused model uses the Large interface fallback', async (t) => {
+  const originalLocale = getLocale();
+  t.after(() => setLocale(originalLocale, { persist: false }));
+  const key = 'revealline.display.v1';
+  const records = new Map([
+    [key, JSON.stringify({ textFace: 'plain', textSize: 'extra-large', reducedEffects: false })],
+  ]);
+  const writes = [];
+  const storage = {
+    getItem: (name) => records.get(name) ?? null,
+    setItem(name, value) {
+      records.set(name, value);
+      writes.push(name);
+    },
+  };
+  const f = await fixture(t, { storage }),
+    $ = (id) => f.doc.getElementById(id);
+  const control = $('gym-global-textSize');
+  assert.equal(control.value, 'extra-large');
+  assert.equal(control.querySelector('[data-text-size-retained]').disabled, true);
+  assert.equal(f.doc.body.dataset.textSize, 'large');
+  assert.equal(writes.includes(key), false);
+  $('gym-shell-action-primary').click();
+  f.tick(3);
+  $('gym-shell-action-menu').click();
+  $('gym-shell-action-settings').click();
+  const paused = structuredClone(f.view.snapshot()),
+    trace = structuredClone(f.view.trace());
+  assert.equal(paused.status, 'paused');
+  for (const locale of ['uk', 'en']) {
+    setLocale(locale, { persist: false });
+    assert.equal(control.value, 'extra-large');
+    assert.equal(f.doc.body.dataset.textSize, 'large');
+    assert.equal(writes.includes(key), false);
+    f.tick(3);
+    assert.deepEqual(f.view.snapshot(), paused);
+    assert.deepEqual(f.view.trace(), trace);
+  }
+  $('gym-global-textFace').value = 'pixel';
+  $('gym-global-textFace').emit('change');
+  assert.equal(JSON.parse(records.get(key)).textSize, 'extra-large');
+  assert.equal(f.doc.body.dataset.textSize, 'large');
+  f.tick(3);
+  assert.deepEqual(f.view.snapshot(), paused);
+  assert.deepEqual(f.view.trace(), trace);
+});

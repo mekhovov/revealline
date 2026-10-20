@@ -10,8 +10,8 @@ import {
   COOP_HISTORICAL_IMPORT_PICTURE_POLICIES,
 } from '../couch/coop-picture-bindings.mjs';
 
-const publishedHash = "a78a35c1f86b8192cd10f4582eac7bcbbc3411f6a78b9746cfbfc72da3384dc0",
-  previewHash = "ebeb38f511c01b48daa84eb824e1521b43bddbfb0e16345c952b7b822b19db5b";
+const publishedHash = 'a78a35c1f86b8192cd10f4582eac7bcbbc3411f6a78b9746cfbfc72da3384dc0',
+  previewHash = 'ebeb38f511c01b48daa84eb824e1521b43bddbfb0e16345c952b7b822b19db5b';
 const retained = new Map();
 for (const hash of [publishedHash, previewHash]) {
   const bytes = await readFile(

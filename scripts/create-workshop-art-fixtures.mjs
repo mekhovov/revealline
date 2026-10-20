@@ -38,9 +38,9 @@ const ROOT = fileURLToPath(new URL('../', import.meta.url));
 const FORMAT = 'revealline-workshop-art-fixtures.v1';
 const STAMP = '2026-09-12T16:00:00.000Z';
 export const WORKSHOP_PREVIOUS_SHA256 =
-  '91876d315417252a65a36b1a46f3f3e03737ec26ccc08224f52e9c376f76ea1a';
+  'f6be571a46086ed78ce18178d90326456eb4ebd114baef5e127d7656cee77002';
 export const WORKSHOP_PROOF_SHA256 =
-  '22886cf439f716db31333b3b6d9fae0478f8007aff734632badc7c2f38dc53c8';
+  'b096443b90b36625d9aea1e14dc586ef7b3433b2e0752460fa3c7443bf0a6f40';
 const sha = (bytes) => createHash('sha256').update(bytes).digest('hex');
 const json = (bytes) => JSON.parse(bytes.toString());
 const metadataOnly = (pack) => ({ ...pack, version: '1.0.0', levelVisuals: [] });
@@ -54,7 +54,7 @@ export async function loadWorkshopArtInputs(root = ROOT) {
   assert.equal(
     sha(previousBytes),
     WORKSHOP_PREVIOUS_SHA256,
-    'The retained procedural edition must remain byte-identical.',
+    'The derived retained baseline must match its migration receipt.',
   );
   const currentBytes = await read('game/content/packs/equipment-workshop.json');
   const previousSource = json(previousBytes),
@@ -67,7 +67,7 @@ export async function loadWorkshopArtInputs(root = ROOT) {
   );
   assert.deepEqual(
     currentSource.levelVisuals.map((entry) => entry.levelId),
-    ['workshop-01', 'workshop-02', 'workshop-03'],
+    ['workshop-01', 'workshop-02'],
   );
   const known = new Map(),
     images = [];
@@ -110,8 +110,8 @@ export async function loadWorkshopArtInputs(root = ROOT) {
   }
   assert.equal(
     new Set(images.map((image) => image.sha256)).size,
-    3,
-    'Three distinct source byte streams are required.',
+    2,
+    'Two distinct retained source byte streams are required.',
   );
   const decodeImage = async (dataUrl) => {
     const info = known.get(dataUrl);
@@ -129,9 +129,14 @@ export async function loadWorkshopArtInputs(root = ROOT) {
     WORKSHOP_PROOF_SHA256,
     'Existing proof bytes must not be regenerated for art.',
   );
-  const routes = json(proofBytes).routes.filter((route) => route.packId === current.id);
-  assert.equal(routes.length, 6);
-  assert.equal(new Set(routes.map((r) => `${r.levelId}/${r.turnPolicy}`)).size, 6);
+  const retainedLevels = new Set(
+    current.campaigns.flatMap((campaign) => campaign.levels.map((level) => level.id)),
+  );
+  const routes = json(proofBytes).routes.filter(
+    (route) => route.packId === current.id && retainedLevels.has(route.levelId),
+  );
+  assert.equal(routes.length, 4);
+  assert.equal(new Set(routes.map((r) => `${r.levelId}/${r.turnPolicy}`)).size, 4);
   return {
     previous,
     current,

@@ -1,0 +1,267 @@
+name: Remote Team display authoring
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+    # Conservative module-family coverage includes future relative imports in these owners.
+    # Translation changes run parity but never enter deterministic display provenance.
+    paths:
+      - '.github/workflows/remote-team-display-authoring.yml'
+      - 'scripts/remote-team-navigation*.mjs'
+      - 'scripts/test-remote-team-navigation.mjs'
+      - 'scripts/remote-team-navigation-*.check.mjs'
+      - 'scripts/remote-team-display-guard.py'
+      - 'scripts/test_remote_team_display_guard.py'
+      - 'scripts/published-navigation.mjs'
+      - 'publishing/focused-test-map.json'
+      - 'docs/remote-team-display-authoring.md'
+      - 'game/content-design/**'
+      - 'game/mission-library/**'
+      - 'game/journey/**'
+      - 'game/i18n/**'
+      - 'game/locales/**'
+      - 'native/bridge.mjs'
+      - 'package.json'
+      - 'package-lock.json'
+      - 'game/campaign-contexts.mjs'
+      - 'game/campaign-difficulty.mjs'
+      - 'game/content.mjs'
+      - 'game/controller-bindings.mjs'
+      - 'game/controller-boost.mjs'
+      - 'game/coop/bonus-opportunity.mjs'
+      - 'game/coop/combat-patrols.mjs'
+      - 'game/coop/core.mjs'
+      - 'game/coop/expedition-environment.mjs'
+      - 'game/coop/expedition-version.mjs'
+      - 'game/coop/first-connection.mjs'
+      - 'game/coop/foundations.mjs'
+      - 'game/coop/geometry.mjs'
+      - 'game/coop/library.mjs'
+      - 'game/coop/recipes.mjs'
+      - 'game/coop/relay-yard.mjs'
+      - 'game/coop/roamers.mjs'
+      - 'game/coop/running-enemies.mjs'
+      - 'game/coop/terrain.mjs'
+      - 'game/coop/threats.mjs'
+      - 'game/coop/timed-bonuses.mjs'
+      - 'game/core/abilities.mjs'
+      - 'game/core/arcade-actions.mjs'
+      - 'game/core/bonus-opportunity.mjs'
+      - 'game/core/capture-regions.mjs'
+      - 'game/core/capture.mjs'
+      - 'game/core/classic-contour.mjs'
+      - 'game/core/classic-definition.mjs'
+      - 'game/core/classic-motion.mjs'
+      - 'game/core/classic-state.mjs'
+      - 'game/core/classic-step.mjs'
+      - 'game/core/classic-topology.mjs'
+      - 'game/core/combat-definition.mjs'
+      - 'game/core/combat-motion.mjs'
+      - 'game/core/combat-patrols.mjs'
+      - 'game/core/contacts.mjs'
+      - 'game/core/coverage.mjs'
+      - 'game/core/directional-fields.mjs'
+      - 'game/core/encounter.mjs'
+      - 'game/core/enemy-pressure.mjs'
+      - 'game/core/field-course.mjs'
+      - 'game/core/foundations.mjs'
+      - 'game/core/geometry.mjs'
+      - 'game/core/index.mjs'
+      - 'game/core/level.mjs'
+      - 'game/core/line-impact.mjs'
+      - 'game/core/movement.mjs'
+      - 'game/core/registry.mjs'
+      - 'game/core/relay-gates.mjs'
+      - 'game/core/systems.mjs'
+      - 'game/core/timed-bonuses.mjs'
+      - 'game/core/versions.mjs'
+      - 'game/couch/coop-copy.mjs'
+      - 'game/data-json.mjs'
+      - 'game/flight-media-pins.mjs'
+      - 'game/gameplay-tuning-v1.mjs'
+      - 'game/gameplay-tuning-v2.mjs'
+      - 'game/gameplay-tuning-v3.mjs'
+      - 'game/gameplay-tuning.mjs'
+      - 'game/hunt/actor-facing.mjs'
+      - 'game/hunt/copy.mjs'
+      - 'game/hunt/level.mjs'
+      - 'game/hunt/preferences.mjs'
+      - 'game/hunt/pursuit-goals-v2.mjs'
+      - 'game/hunt/pursuit-goals.mjs'
+      - 'game/hunt/pursuit-specialists.mjs'
+      - 'game/hunt/rules.mjs'
+      - 'game/hunt/running-enemies.mjs'
+      - 'game/hunt/running-enemy-definition.mjs'
+      - 'game/hunt/running-enemy-placement.mjs'
+      - 'game/hunt/team-running-enemies.mjs'
+      - 'game/hunt/variant-guidance.mjs'
+      - 'game/hunt/variants.mjs'
+      - 'game/input-presentation.mjs'
+      - 'game/key-bindings.mjs'
+      - 'game/level-numbering.mjs'
+      - 'game/library.mjs'
+      - 'game/mastery-catalog.mjs'
+      - 'game/mastery-equipment.mjs'
+      - 'game/mastery-records.mjs'
+      - 'game/mastery.mjs'
+      - 'game/media-library.mjs'
+      - 'game/media-presentation.mjs'
+      - 'game/media-still.mjs'
+      - 'game/media-storage-record.mjs'
+      - 'game/mission-brief.mjs'
+      - 'game/official-downloads.mjs'
+      - 'game/picture-receipts.mjs'
+      - 'game/platform.mjs'
+      - 'game/presentation-pins.mjs'
+      - 'game/progress.mjs'
+      - 'game/snake/copy.mjs'
+      - 'game/snake/rules.mjs'
+      - 'game/story-bindings.mjs'
+      - 'game/story-receipts.mjs'
+      - 'game/story-storage-record.mjs'
+      - 'game/text-face.mjs'
+      - 'game/text-size.mjs'
+      - 'game/touch-controls.mjs'
+      - 'game/ui/actor-recipes.mjs'
+      - 'game/ui/art-review-navigation.mjs'
+      - 'game/ui/fpv-body-recipes.mjs'
+      - 'game/ui/music.mjs'
+      - 'game/vendor/i18next-26.4.2.min.js'
+      - 'game/victory-story.mjs'
+      - 'game/video-poster.mjs'
+
+permissions:
+  contents: read
+  actions: read
+
+concurrency:
+  group: remote-team-display-${{ github.event.pull_request.number }}
+  cancel-in-progress: false
+
+jobs:
+  authoring:
+    name: remote-team-display-authoring
+    if: >-
+      github.repository == 'mekhovov/revealline' &&
+      github.event.pull_request.head.repo.full_name == github.repository &&
+      github.event.pull_request.base.ref == 'main'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 55
+    env:
+      PYTHONDONTWRITEBYTECODE: 1
+      GIT_NO_LAZY_FETCH: 1
+      GIT_OPTIONAL_LOCKS: 0
+    steps:
+      - name: Check out the immutable candidate source
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          persist-credentials: false
+          fetch-depth: 1
+      - name: Set up exact authoring Node
+        uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5
+        with:
+          node-version: 22.22.2
+          # No dependency/cache restoration.
+      - name: Require hosted preparation capacity
+        shell: bash
+        run: |
+          python3 -B - <<'PYCODE'
+          import os, shutil
+          assert min(shutil.disk_usage(os.environ['GITHUB_WORKSPACE']).free,
+                     shutil.disk_usage(os.environ['RUNNER_TEMP']).free) > 2 * 1024 ** 3
+          PYCODE
+      - name: Install locked tools without package scripts
+        run: npm ci --ignore-scripts
+      - name: Acquire only the reviewed standalone source auditor
+        env:
+          AUDIT_READ_TOKEN: ${{ github.token }}
+          SOURCE_SHA: ${{ github.event.pull_request.head.sha }}
+        shell: bash
+        run: |
+          python3 -B - <<'PYCODE'
+          import base64, hashlib, json, os, pathlib, re, subprocess, urllib.request
+          expected_oid = '56ad477033516d565fbb7f85cea70d0430ceae1c'
+          expected_sha = 'a6124736ce13aec52fb26d818e6c2aa6ce83965ccaf92b94c783043d1d150fc4'
+          assert os.environ['GITHUB_REPOSITORY'] == 'mekhovov/revealline'
+          source = os.environ['SOURCE_SHA']
+          assert re.fullmatch('[a-f0-9]{40}', source)
+          git_env = {k: v for k, v in os.environ.items() if not k.startswith('GIT_')}
+          git_env.update(GIT_NO_LAZY_FETCH='1', GIT_OPTIONAL_LOCKS='0')
+          def git(*args):
+              return subprocess.check_output(['git', '--no-replace-objects', *args], env=git_env, timeout=15).decode().strip()
+          assert git('rev-parse', '--verify', 'HEAD') == source
+          tree = git('rev-parse', 'HEAD^{tree}')
+          assert re.fullmatch('[a-f0-9]{40}', tree)
+          workflow_commit = os.environ['GITHUB_WORKFLOW_SHA']
+          assert re.fullmatch('[a-f0-9]{40}', workflow_commit)
+          workflow_path = '.github/workflows/remote-team-display-authoring.yml'
+          candidate_workflow = git('rev-parse', 'HEAD:' + workflow_path)
+          workflow_request = urllib.request.Request('https://api.github.com/repos/mekhovov/revealline/contents/' + workflow_path + '?ref=' + workflow_commit,
+              headers={'Authorization': 'Bearer ' + os.environ['AUDIT_READ_TOKEN'], 'Accept': 'application/vnd.github+json',
+                       'X-GitHub-Api-Version': '2022-11-28'})
+          with urllib.request.urlopen(workflow_request, timeout=30) as response:
+              workflow_raw = response.read(32769)
+          assert len(workflow_raw) <= 32768
+          executed_workflow = json.loads(workflow_raw)
+          assert executed_workflow['type'] == 'file' and executed_workflow['sha'] == candidate_workflow
+
+          identity = os.environ['GITHUB_RUN_ID'] + '-' + os.environ['GITHUB_RUN_ATTEMPT']
+          assert re.fullmatch('[0-9]+-[0-9]+', identity)
+          temporary = pathlib.Path(os.environ['RUNNER_TEMP']).resolve(strict=True)
+          trusted = temporary / ('remote-team-display-trusted-' + identity)
+          trusted.mkdir()
+          request = urllib.request.Request('https://api.github.com/repos/mekhovov/revealline/git/blobs/' + expected_oid,
+              headers={'Authorization': 'Bearer ' + os.environ['AUDIT_READ_TOKEN'], 'Accept': 'application/vnd.github+json',
+                       'X-GitHub-Api-Version': '2022-11-28'})
+          with urllib.request.urlopen(request, timeout=30) as response:
+              raw = response.read(32769)
+          assert len(raw) <= 32768
+          result = json.loads(raw)
+          assert result['sha'] == expected_oid and result['encoding'] == 'base64' and result['size'] == 7275
+          data = base64.b64decode(''.join(result['content'].split()), validate=True)
+          assert len(data) == 7275 and hashlib.sha256(data).hexdigest() == expected_sha
+          assert hashlib.sha1(b'blob 7275\0' + data).hexdigest() == expected_oid
+          helper = trusted / 'check-source-identity.mjs'
+          with helper.open('xb') as stream:
+              stream.write(data)
+          helper.chmod(0o444)
+          (trusted / 'helper-source.json').write_text(json.dumps({'oid': expected_oid, 'sha256': expected_sha,
+              'bytes': len(data), 'sourceHead': source, 'sourceTree': tree,
+              'workflowCommit': workflow_commit, 'workflowBlob': candidate_workflow,
+              'workflowDefinitionMatchesCandidate': True}) + '\n')
+          with open(os.environ['GITHUB_ENV'], 'a') as stream:
+              stream.write('REMOTE_TEAM_SOURCE_TREE=' + tree + '\n')
+              stream.write('REMOTE_TEAM_AUDIT_HELPER=' + str(helper) + '\n')
+              stream.write('REMOTE_TEAM_EVIDENCE=' + str(temporary / ('remote-team-display-evidence-' + identity)) + '\n')
+          PYCODE
+      - name: Run toy-only resource guard selftests
+        shell: bash
+        run: |
+          python3 -B - <<'PYCODE'
+          import os, shutil
+          assert min(shutil.disk_usage(os.environ['GITHUB_WORKSPACE']).free,
+                     shutil.disk_usage(os.environ['RUNNER_TEMP']).free) > 2 * 1024 ** 3
+          PYCODE
+          python3 -B scripts/test_remote_team_display_guard.py
+      - name: Run fixed serial produce, check and complete-file phases
+        env:
+          SOURCE_SHA: ${{ github.event.pull_request.head.sha }}
+        shell: bash
+        run: |
+          python3 -B scripts/remote-team-display-guard.py \
+            --root "$GITHUB_WORKSPACE" \
+            --output "$REMOTE_TEAM_EVIDENCE" \
+            --source-sha "$SOURCE_SHA" \
+            --source-tree "$REMOTE_TEAM_SOURCE_TREE" \
+            --audit-helper "$REMOTE_TEAM_AUDIT_HELPER"
+      - name: Preserve bounded authoring outputs and every available receipt
+        if: always()
+        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
+        with:
+          name: remote-team-display-${{ github.run_id }}-${{ github.run_attempt }}
+          path: |
+            ${{ runner.temp }}/remote-team-display-evidence-${{ github.run_id }}-${{ github.run_attempt }}/
+            ${{ runner.temp }}/remote-team-display-trusted-${{ github.run_id }}-${{ github.run_attempt }}/helper-source.json
+          if-no-files-found: warn
+          retention-days: 7

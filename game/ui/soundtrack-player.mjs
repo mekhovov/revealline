@@ -579,18 +579,61 @@ export function createSoundtrackPlayer({
       installDeckURL(deck, track, track.url, { owned: false });
       return true;
     }
-    const original = await preparationQueue.run(
-      'fetch',
-      () =>
-        track.kind === 'published'
-          ? track.readBlob({ signal })
-          : readAsset(track.asset.sha256, {
-              signal,
-              purpose: 'playback',
-              localOnly: localOnly || localPlayback,
-            }),
-      { signal, priority: token === null ? 'demand' : 'required' },
-    );
+    // Share inspection only within this acquisition and only for the exact Blob
+    // validated by our inspector. Local/custom readers that ignore the operation,
+    // or return another Blob, still receive ordinary validation below.
+    const loadGeneration = generation,
+      acquisitionController = new AbortController();
+    let acquisitionOpen = true,
+      inspected = null,
+      downloadInspection = null,
+      original;
+    const checkAcquisition = () => {
+      throwIfSoundtrackAborted(signal);
+      if (!acquisitionOpen || disposed || loadGeneration !== generation)
+        throw new DOMException(t('interface:musicTransitionCancelled'), 'AbortError');
+    };
+    const inspectDownloaded = async (source, { signal: sourceSignal = signal } = {}) => {
+      checkAcquisition();
+      throwIfSoundtrackAborted(sourceSignal);
+      const controller = new AbortController(),
+        cancelInspection = () => controller.abort();
+      signal?.addEventListener('abort', cancelInspection, { once: true });
+      sourceSignal?.addEventListener('abort', cancelInspection, { once: true });
+      acquisitionController.signal.addEventListener('abort', cancelInspection, { once: true });
+      try {
+        const actual = await mp3Inspector.inspect(source, { signal: controller.signal });
+        checkAcquisition();
+        throwIfSoundtrackAborted(sourceSignal);
+        inspected = { source, actual };
+        return actual;
+      } finally {
+        signal?.removeEventListener('abort', cancelInspection);
+        sourceSignal?.removeEventListener('abort', cancelInspection);
+        acquisitionController.signal.removeEventListener('abort', cancelInspection);
+      }
+    };
+    try {
+      original = await preparationQueue.run(
+        'fetch',
+        () =>
+          track.kind === 'published'
+            ? track.readBlob({ signal })
+            : readAsset(track.asset.sha256, {
+                signal,
+                purpose: 'playback',
+                localOnly: localOnly || localPlayback,
+                inspect: inspectDownloaded,
+              }),
+        { signal, priority: token === null ? 'demand' : 'required' },
+      );
+      checkAcquisition();
+      downloadInspection = inspected;
+    } finally {
+      acquisitionOpen = false;
+      acquisitionController.abort();
+      inspected = null;
+    }
     throwIfSoundtrackAborted(signal);
     if (localOnly && original == null) return false;
     const blob = track.kind === 'published' ? original : ownSoundtrackBlob(original);
@@ -611,7 +654,10 @@ export function createSoundtrackPlayer({
         };
         emit();
       }
-      const actual = await mp3Inspector.inspect(blob, { signal });
+      const actual =
+        downloadInspection?.source === original
+          ? downloadInspection.actual
+          : await mp3Inspector.inspect(original, { signal });
       required(
         canonicalJSON(actual) === canonicalJSON(track.asset),
         t('interface:storedAudioBytesDoNotMatchThisTrack'),

@@ -5,6 +5,8 @@ import { deferred, waitFor } from './helpers/coop-presentation-fixture.mjs';
 import { JOURNEY_PREFERENCES_KEY, JOURNEY_PREFERENCES_VERSION } from '../journey/preferences.mjs';
 import { createTeamJourneyCandidates } from '../content-design/team-journey-candidates.mjs';
 import { createTeamTestPack } from '../content-design/team-export.mjs';
+import { ENEMY_STATS_KEY } from '../enemy-stats.mjs';
+import { TEAM_CONTEXTUAL_TEACHING_FORMAT } from '../couch/team-contextual-teaching.mjs';
 
 function memory() {
   const values = new Map(),
@@ -18,6 +20,45 @@ function memory() {
       writes.push([key, value]);
     },
   };
+}
+const writerKey = `${ENEMY_STATS_KEY}:writer`;
+function writerLease(storage) {
+  const writer = storage.values.get(writerKey);
+  assert.match(writer, /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i);
+  assert.deepEqual(storage.writes, [[writerKey, writer]]);
+  assert.equal(storage.values.has(ENEMY_STATS_KEY), false, 'Opening awards no enemy defeats.');
+  return writer;
+}
+function preferenceWrites(storage, writer, difficulty = null, { introducedCut = false } = {}) {
+  const expected = [[writerKey, writer]];
+  if (difficulty !== null)
+    expected.push([
+      JOURNEY_PREFERENCES_KEY,
+      JSON.stringify({ format: JOURNEY_PREFERENCES_VERSION, difficulty }),
+    ]);
+  if (introducedCut)
+    expected.push([
+      TEAM_CONTEXTUAL_TEACHING_FORMAT,
+      JSON.stringify({
+        format: TEAM_CONTEXTUAL_TEACHING_FORMAT,
+        introduced: ['cut'],
+        completed: [],
+      }),
+    ]);
+  assert.deepEqual(
+    storage.writes,
+    expected,
+    'Only the writer lease, owned preference and explicitly introduced teaching may be saved.',
+  );
+  assert.equal(storage.values.has(ENEMY_STATS_KEY), false, 'Setup awards no enemy defeats.');
+}
+function enterVisible(f, id) {
+  const element = f.$(id);
+  assert.ok(element && !element.closest('[hidden],[inert]'), `${id} must be visible.`);
+  assert.ok(element.getClientRects().length, `${id} must have a visible native box.`);
+  element.focus();
+  assert.equal(f.doc.activeElement === element, true, `${id} must own native focus.`);
+  f.tap('Enter');
 }
 async function fixture(t, { preferences = memory(), beforeImport, ...options } = {}) {
   const f = await page(t, {
@@ -53,6 +94,7 @@ for (const [difficulty, reserves] of [
 ])
   test(`owned Team setup selects compiled ${difficulty}, saves shared preference and retains it across Skip`, async (t) => {
     const f = await fixture(t);
+    const writer = writerLease(f.preferences);
     assert.equal(f.$('coop-difficulty').disabled, false);
     await f.choose('coop-difficulty', difficulty);
     await ready(f);
@@ -64,8 +106,9 @@ for (const [difficulty, reserves] of [
     });
     assert.deepEqual(
       f.preferences.writes.map(([key]) => key),
-      [JOURNEY_PREFERENCES_KEY],
+      [writerKey, JOURNEY_PREFERENCES_KEY],
     );
+    preferenceWrites(f.preferences, writer, difficulty);
     f.$('coop-start').click();
     assert.equal(f.$('coop-reserves').textContent, reserves);
     assert.equal(f.$('coop-difficulty').disabled, true);
@@ -79,17 +122,19 @@ for (const [difficulty, reserves] of [
     assert.equal(f.$('coop-level').value, 'stepping-exchange');
     assert.equal(f.$('coop-difficulty').value, difficulty);
     assert.equal(f.$('coop-reserves').textContent, reserves);
+    preferenceWrites(f.preferences, writer, difficulty, { introducedCut: true });
   });
 
 test('an imported Team preset with matching Journey IDs stays immutable and never rewrites shared difficulty', async (t) => {
   const f = await fixture(t);
+  const writer = writerLease(f.preferences);
   await f.selectFile(
     JSON.stringify(createTeamTestPack(createTeamJourneyCandidates(), 'twin-landings', 'expert')),
   );
   assert.equal(f.$('coop-difficulty').disabled, true);
   f.choose('coop-difficulty', 'gentle');
   assert.equal(f.$('coop-difficulty').value, 'expert');
-  assert.deepEqual(f.preferences.writes, []);
+  preferenceWrites(f.preferences, writer);
   f.$('coop-start').click();
   assert.equal(f.$('coop-reserves').textContent, '1 reserve');
   assert.equal(f.$('coop-journey-skip').hidden, true);
@@ -165,24 +210,36 @@ test('denied Team difficulty saving applies the chosen preset locally and Retry 
     setItem: saved.setItem.bind(saved),
   };
   const f = await fixture(t, { preferences });
+  const writer = writerLease(saved);
   assert.equal(f.$('coop-journey-preferences').hidden, false);
   await f.choose('coop-difficulty', 'expert');
   await ready(f);
   assert.match(f.$('coop-journey-preferences-message').textContent, /session-only/);
   assert.equal(f.$('coop-difficulty').value, 'expert');
   allowed = true;
-  f.$('coop-journey-preferences-retry').focus();
-  f.tap('Enter');
+  enterVisible(f, 'coop-settings-open');
+  assert.equal(f.$('coop-options').open, true);
+  enterVisible(f, 'coop-settings-tab-data');
+  assert.equal(f.$('coop-settings-panel-data').hidden, false);
+  enterVisible(f, 'coop-journey-preferences-retry');
   await waitFor(() => f.$('coop-journey-preferences').hidden);
   assert.equal(f.$('coop-menu').hidden, false);
-  assert.equal(f.doc.activeElement.id, 'coop-start');
+  assert.equal(f.doc.activeElement.id, 'coop-settings-tab-data');
+  assert.equal(f.$('coop-options').open, true);
   assert.equal(JSON.parse(saved.getItem(JOURNEY_PREFERENCES_KEY)).difficulty, 'expert');
-  f.$('coop-start').click();
+  preferenceWrites(saved, writer, 'expert');
+  enterVisible(f, 'coop-settings-close');
+  if (f.$('coop-options').open) enterVisible(f, 'coop-settings-close');
+  assert.equal(f.$('coop-options').open, false);
+  assert.equal(f.doc.activeElement.id, 'coop-settings-open');
+  assert.equal(f.$('coop-menu').hidden, false);
+  enterVisible(f, 'coop-start');
   assert.equal(f.$('coop-reserves').textContent, '1 reserve');
 });
 
 test('browser-restored form values and another tab preference cannot replace this visit’s prepared Team edition', async (t) => {
   const f = await fixture(t);
+  const writer = writerLease(f.preferences);
   await f.choose('coop-difficulty', 'expert');
   await ready(f);
   const external = JSON.stringify({ format: JOURNEY_PREFERENCES_VERSION, difficulty: 'gentle' });
@@ -196,9 +253,27 @@ test('browser-restored form values and another tab preference cannot replace thi
   f.win.emit('pageshow', { persisted: true });
   await new Promise((resolve) => setTimeout(resolve, 5));
   assert.equal(f.$('coop-difficulty').value, 'expert');
-  assert.equal(f.preferences.writes.length, 1);
+  preferenceWrites(f.preferences, writer, 'expert');
   f.$('coop-start').click();
+  assert.equal(
+    f.$('coop-menu').hidden,
+    false,
+    'The lifecycle neutral gate consumes the first activation.',
+  );
+  assert.equal(f.$('coop-play').hidden, true);
+  assert.equal(f.$('coop-level').value, 'twin-landings');
+  assert.equal(f.$('coop-difficulty').value, 'expert');
+  preferenceWrites(f.preferences, writer, 'expert');
+  f.tick();
+  assert.equal(f.$('coop-menu').hidden, false, 'A neutral frame does not start the prepared run.');
+  assert.equal(f.$('coop-play').hidden, true);
+  enterVisible(f, 'coop-start');
+  assert.equal(f.$('coop-menu').hidden, true);
+  assert.equal(f.$('coop-play').hidden, false);
+  assert.equal(f.$('coop-level').value, 'twin-landings');
+  assert.equal(f.$('coop-difficulty').value, 'expert');
   assert.equal(f.$('coop-reserves').textContent, '1 reserve');
+  preferenceWrites(f.preferences, writer, 'expert', { introducedCut: true });
 });
 
 test('returning to setup re-enables owned preset selection and retires the old ready lease before new setup callbacks', async (t) => {

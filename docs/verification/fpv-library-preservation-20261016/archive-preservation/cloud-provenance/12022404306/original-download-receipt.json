@@ -1,0 +1,8 @@
+{
+  "capturedAt": "2026-10-16T04:07:28.604048+00:00",
+  "bytes": 61617,
+  "sha256": "5c609f93f64c4aef0875ad40ac62d5c9db9d6932ac70712e4f3ede4efa3637c3",
+  "sourceArtifactID": 12022404306,
+  "memberInspectionPassed": true,
+  "method": "Full authenticated original Actions ZIP downloaded to memory and hashed. No local large copy, extraction or package execution."
+}
