@@ -226,20 +226,24 @@ export function awardCompletion(progress, campaign, result, { runId, practice = 
   next.seen = [...next.seen, runId].slice(-256);
   return next;
 }
-const STARTER_BODIES = Object.freeze(['fpv-body',
-'scout-quad',
-'heavy-lift',
-'ukrainian-bird',
-'retro-craft',
-'neutral-marker']);
+const STARTER_BODIES = Object.freeze([
+  'fpv-body',
+  'scout-quad',
+  'heavy-lift',
+  'ukrainian-bird',
+  'retro-craft',
+  'neutral-marker',
+]);
 const APPEARANCE_TIERS = Object.freeze([
   Object.freeze({
     id: 'first-clear',
     name: 'First clear',
-    bodyIds: Object.freeze(['fpv-racer',
-'fixedwing-body',
-'ukrainian-falcon',
-'retro-vector']),
+    bodyIds: Object.freeze([
+      'fpv-racer',
+      'fixedwing-body',
+      'ukrainian-falcon',
+      'retro-vector',
+    ]),
   }),
   Object.freeze({
     id: 'chapter-explorer',

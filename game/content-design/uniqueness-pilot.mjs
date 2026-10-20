@@ -7,7 +7,8 @@ import { compileContentProject, resolveMission } from './project.mjs';
 export const UNIQUENESS_PILOT_VERSION = 'revealline-uniqueness-pilot.v2';
 // Review-only successors. No current default, progress ID, collection owner,
 // source pack or historical factory is modified by constructing this pilot.
-const CLASSIC_BRIEFS = [{
+const CLASSIC_BRIEFS = [
+  {
     id: 'illustrated-orchard',
     name: 'Orchard return lanes',
     replaces: 'original-fpv-orchard-crossing',
@@ -27,7 +28,7 @@ const CLASSIC_BRIEFS = [{
     artBrief:
       'A high-angle orchard loading yard: three irregular apricot terraces, a small eastern packing shed and a curved irrigation pond, with a low morning sun. No watchtower, courtyard or skyline reused from another mission.',
   },
-{
+  {
     id: 'woven-crossings',
     name: 'Woven crossing bands',
     replaces: 'original-atlas-woven-dawn',
@@ -50,7 +51,7 @@ const CLASSIC_BRIEFS = [{
     artBrief:
       'A river weaving workshop seen from a low upstream bank: a suspended loom, curved willow roots, hanging linen and a distant wooden footbridge. Use a new perspective and silhouette, with researched Ukrainian textile motifs rather than a recoloured orchard.',
   },
-{
+  {
     id: 'arcade-delivery',
     name: 'Last delivery circuit',
     replaces: 'original-retro-midnight-arcade',
@@ -73,7 +74,9 @@ const CLASSIC_BRIEFS = [{
     durationSeconds: [40, 85],
     artBrief:
       'A rain-soaked 1994 bicycle courier depot viewed from inside a repair alcove, with a red cargo bicycle, stacked parcels, an illuminated wall clock and reflected amber street lights. Avoid arcade-cabinet or train-platform compositions.',
-  }];
+  },
+
+];
 
 export function createClassicUniquenessPilots() {
   const original = CURRENT_ART_SOURCES.find(

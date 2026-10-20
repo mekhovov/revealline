@@ -13,7 +13,11 @@ import {
   assertDemoCloseDeclaration,
   readDeclaredDemoCloseTool,
 } from './solo-demo-close-declared-source.mjs';
-const read = (path) => readFile(new URL('../' + path, import.meta.url));
+// Historical declaration assertions use their exact pre-successor inputs.
+import { createDemoGeometryHistoricalReader } from './solo-demo-geometry-historical-source.mjs';
+const read = await createDemoGeometryHistoricalReader((path) =>
+  readFile(new URL('../' + path, import.meta.url)),
+);
 const sha = (bytes) => createHash('sha256').update(bytes).digest('hex');
 const path = 'docs/performance/solo-demo-resources-797e03-activation-boundary-plan.json';
 const oldPath = 'docs/performance/solo-demo-resources-797e03-close-boundary-plan.json';

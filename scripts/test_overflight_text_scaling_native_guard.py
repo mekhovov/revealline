@@ -66,8 +66,12 @@ class GuardTests(unittest.TestCase):
                     "sourceTree": "b" * 40, "allTrackedSourceContentsAndModesMatch": True,
                     "aggregateSha256": "d" * 64, "files": 10, "bytes": 100, "root": f"/different-vm-{number}"},
                 "wholeFiles": selected, "all28Inventory": list(guard.WHOLE_FILES), "phases": [str(i) for i in range(7)],
+                "additionalPhases": ["additional-overflight-host"] if number == 1 else [],
+                "additionalWholeFiles": list(guard.ADDITIONAL_WHOLE_FILES) if number == 1 else [],
                 "feature": {"initialReferenceManifestSHA256": guard.FEATURE_MANIFEST_SHA256,
-                    "featurePaths": 58, "stackAdmitted": False, "inventory": [dict(row) for row in inventory],
+                    "featurePaths": 63, "stackAdmitted": True,
+                    "dependencyHead": guard.STACK_HEAD, "dependencyAdmittedAtMain": guard.ADMITTED_AT_MAIN,
+                    "additionalCompleteFiles": 1, "inventory": [dict(row) for row in inventory],
                     "inventorySHA256": digest, "matchesInitialReference": digest == guard.INITIAL_REFERENCE_LEAF_SHA256},
                 "helperProvenance": {"receipt": {**provenance, "helperPath": f"/vm-{number}/trusted/auditor"},
                     "SHA256": guard.sha256(json.dumps({**provenance, "helperPath": f"/vm-{number}/trusted/auditor"}).encode())},
@@ -91,11 +95,75 @@ class GuardTests(unittest.TestCase):
                        lambda value: value[0].update(campaignRawBytes=8 * guard.MIB + 1),
                        lambda value: value[0]["dependencies"]["root"].update(contentSHA256="different"),
                        lambda value: value[0].update(controls={"workflow": "different"}),
+                       lambda value: value[0]["feature"].update(stackAdmitted=False),
+                       lambda value: value[0]["feature"].update(dependencyHead="0" * 40),
+                       lambda value: value[0]["feature"].update(dependencyAdmittedAtMain="0" * 40),
                        lambda value: value[0]["source"].update(aggregateSha256="e" * 64)):
             rows = self.aggregate_fixture()
             mutate(rows)
             with self.assertRaises(RuntimeError):
                 aggregate.validate_metadata(rows, "a" * 40, "b" * 40)
+
+    def test_additional_host_is_one_complete_file_only_after_original_group_one(self):
+        original = guard.fixed_phases("/node22", Path("/source"), 1)
+        additional = guard.additional_phases("/node22", Path("/source"), 1)
+        self.assertEqual(len(original), 7)
+        self.assertEqual(additional, [("additional-overflight-host", ["/node22", "--max-old-space-size=1536",
+            "--test", "--test-concurrency=1", "--experimental-test-isolation=none",
+            "/source/game/test/overflight-host.test.mjs"], "game/test/overflight-host.test.mjs")])
+        self.assertEqual((original + additional)[7], additional[0])
+        self.assertNotIn(additional[0][2], guard.WHOLE_FILES)
+        for number in (2, 3, 4):
+            self.assertEqual(guard.additional_phases("/node22", Path("/source"), number), [])
+        for number in (0, 5, -1, "1"):
+            with self.assertRaises(RuntimeError):
+                guard.additional_phases("/node22", Path("/source"), number)
+
+    def test_additional_host_metadata_rejects_missing_duplicate_wrong_and_foreign_group(self):
+        rows = self.aggregate_fixture()
+        proof = aggregate.validate_metadata(rows, "a" * 40, "b" * 40)
+        self.assertEqual(proof["wholeFiles"], list(guard.WHOLE_FILES))
+        self.assertEqual(proof["additionalWholeFiles"], ["game/test/overflight-host.test.mjs"])
+        self.assertEqual(proof["additionalCompleteFiles"], 1)
+        for mutate in (lambda value: value[0].update(additionalPhases=[]),
+                       lambda value: value[0].update(additionalWholeFiles=[]),
+                       lambda value: value[0]["additionalPhases"].append("additional-overflight-host"),
+                       lambda value: value[0]["additionalWholeFiles"].append("game/test/overflight-host.test.mjs"),
+                       lambda value: value[0].update(additionalWholeFiles=["game/test/wrong-host.test.mjs"]),
+                       lambda value: value[1].update(additionalPhases=["additional-overflight-host"]),
+                       lambda value: value[1].update(additionalWholeFiles=["game/test/overflight-host.test.mjs"]),
+                       lambda value: value[0]["feature"].update(additionalCompleteFiles=0)):
+            rows = self.aggregate_fixture()
+            mutate(rows)
+            with self.assertRaises(RuntimeError):
+                aggregate.validate_metadata(rows, "a" * 40, "b" * 40)
+
+    def test_additional_host_archive_requires_exact_group_one_namespace(self):
+        def entries(number):
+            _, names = aggregate.expected_files(number)
+            result = [zipfile.ZipInfo(name) for name in sorted(names)]
+            for entry in result:
+                entry.external_attr = (stat.S_IFREG | 0o644) << 16
+                entry.file_size = 65536 if entry.filename.endswith("child-terminal.json") else 0
+            return result
+        first, second = entries(1), entries(2)
+        aggregate.validate_archive(first, 1)
+        aggregate.validate_archive(second, 2)
+        additions = {entry.filename for entry in first if entry.filename.startswith("additional-")}
+        self.assertEqual(len(additions), 10)
+        qualified = "additional-overflight-host/qualified.json"
+        self.assertIn(qualified, additions)
+        with self.assertRaises(RuntimeError):
+            aggregate.validate_archive([entry for entry in first if entry.filename != qualified], 1)
+        duplicated = next(entry for entry in first if entry.filename == qualified)
+        with self.assertRaises(RuntimeError):
+            aggregate.validate_archive(first + [duplicated], 1)
+        with self.assertRaises(RuntimeError):
+            aggregate.validate_archive(second + [duplicated], 2)
+        wrong = zipfile.ZipInfo("additional-wrong-host/qualified.json")
+        wrong.external_attr = (stat.S_IFREG | 0o644) << 16
+        with self.assertRaises(RuntimeError):
+            aggregate.validate_archive([entry for entry in first if entry.filename != qualified] + [wrong], 1)
 
     def test_aggregate_bounded_artifact_reads_reject_oversize_and_symlink(self):
         with tempfile.TemporaryDirectory() as temporary:
@@ -266,24 +334,33 @@ class GuardTests(unittest.TestCase):
         with self.assertRaises(RuntimeError):
             guard.require_complete_tap(text.replace("    ok 1", "    not ok 1"))
 
-    def test_feature_binding_derives_current58_and_rejects_content_or_inventory_drift(self):
+    def test_feature_binding_derives_current63_and_rejects_content_or_inventory_drift(self):
         with tempfile.TemporaryDirectory() as temporary:
             campaign = self.toy(Path(temporary))
             campaign.baseline_feature = None
             entries, names = [], []
-            for index in range(58):
+            for index in range(63):
                 name, content = f"feature-{index}", f"tiny-{index}".encode()
                 names.append(name)
                 (campaign.root / name).write_bytes(content)
                 blob = guard.hashlib.sha1(b"blob " + str(len(content)).encode() + b"\0" + content).hexdigest()
                 entries.append(f"100644 blob {blob}\t{name}\0".encode())
+            required_inventory_indexes = [list(guard.FEATURE_PATHS).index(name) for name in [
+                "optional-practice/civilian-fpv/sim-presentation.mjs",
+                "optional-practice/civilian-fpv/style.css",
+                "game/test/fpv-world-appearance-ui.test.mjs",
+            ]]
             selected = tuple(f"test-{i}.mjs" for i in range(28))
             for name in selected:
                 (campaign.root / name).write_bytes(b"tiny")
+            for filename in guard.ADDITIONAL_WHOLE_FILES:
+                host = campaign.root / filename
+                host.parent.mkdir(parents=True, exist_ok=True)
+                host.write_bytes(b"tiny")
             campaign.git = Mock(return_value=b"".join(entries))
             with patch.object(guard, "FEATURE_PATHS", tuple(names)), patch.object(guard, "WHOLE_FILES", selected):
                 actual = campaign.verify_feature()
-                self.assertEqual(actual["featurePaths"], 58)
+                self.assertEqual(actual["featurePaths"], 63)
                 self.assertFalse(actual["matchesInitialReference"], "Future immutable heads are not blocked by stale initial blobs")
                 (campaign.root / "feature-0").write_bytes(b"drift")
                 with self.assertRaisesRegex(RuntimeError, "content drift"):
@@ -292,6 +369,10 @@ class GuardTests(unittest.TestCase):
                 (campaign.root / selected[-1]).unlink()
                 with self.assertRaises(FileNotFoundError):
                     campaign.verify_feature()
+                for missing in required_inventory_indexes:
+                    campaign.git = Mock(return_value=b"".join(entries[:missing] + entries[missing + 1:]))
+                    with self.assertRaisesRegex(RuntimeError, "required source paths"):
+                        campaign.verify_feature()
                 campaign.git = Mock(return_value=b"".join(entries[:-1]))
                 with self.assertRaisesRegex(RuntimeError, "required source paths"):
                     campaign.verify_feature()
@@ -355,6 +436,7 @@ class GuardTests(unittest.TestCase):
         campaign.env, campaign.known_children = {}, {}
         campaign.log_bytes, campaign.log_lock = 0, threading.Lock()
         campaign.reserved, campaign.results, campaign.capture_threads = {}, [], []
+        campaign.additional_results = []
         campaign.capacity = Mock(return_value=guard.FLOOR + 1)
         campaign.observe, campaign.stop_owned, campaign.reap_adopted = Mock(return_value=[]), Mock(), Mock()
         return campaign
