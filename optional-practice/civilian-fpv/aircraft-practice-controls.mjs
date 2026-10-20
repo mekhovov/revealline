@@ -1,4 +1,4 @@
-import { boundedJSON, exactKeys, required } from '../../game/data-json.mjs';
+import { boundedJSON, dataIdentity, exactKeys, required } from '../../game/data-json.mjs';
 import { exportJSONFile } from '../../game/platform.mjs';
 import { mountAircraftArchiveControls } from './aircraft-archive-controls.mjs';
 
@@ -143,8 +143,29 @@ export function createAircraftRecoveryStore({
       );
       return { missionTick, bytes: new TextEncoder().encode(payload).byteLength };
     },
-    async load({ signal } = {}) {
-      const saved = await transaction('readonly', (store) => store.get(key), signal);
+    async preserveOriginal(source, { signal } = {}) {
+      const data = boundedJSON(source, bounds),
+        missionTick = aircraftRecoveryTick(data),
+        payload = JSON.stringify(data),
+        originalKey = `${key}:original:${dataIdentity(data)}`;
+      await transaction(
+        'readwrite',
+        (store) => {
+          store.put(
+            { format: 'AircraftRecoverySlot.v1', host: key, missionTick, payload },
+            originalKey,
+          );
+          return store.put(originalKey, `${key}:original`);
+        },
+        signal,
+      );
+    },
+    async load({ signal, original = false } = {}) {
+      const selected = original
+        ? await transaction('readonly', (store) => store.get(`${key}:original`), signal)
+        : key;
+      if (!selected) return null;
+      const saved = await transaction('readonly', (store) => store.get(selected), signal);
       if (saved === undefined) return null;
       exactKeys(saved, ['format', 'host', 'missionTick', 'payload'], 'Stored recovery');
       required(
@@ -235,6 +256,10 @@ export function mountAircraftPracticeControls({
     heading.textContent = t('Practice clips & recovery', 'Записи практики й відновлення');
     exportClip.textContent = t('Export recent clip', 'Експортувати останній запис');
     exportRecovery.textContent = t('Export recovery checkpoint', 'Експортувати точку відновлення');
+    exportOriginal.textContent = t(
+      'Export preserved original checkpoint',
+      'Експортувати збережену початкову точку',
+    );
     restore.textContent = t('Restore last saved checkpoint', 'Відновити останню збережену точку');
     fileLabel.firstChild.textContent = t(
       'Import recovery checkpoint',
@@ -337,6 +362,19 @@ export function mountAircraftPracticeControls({
       download(session, signal, () => session.exportRecovery(), 'aircraft-practice-recovery.json'),
     ),
   );
+  const exportOriginal = button(() =>
+    run(async (session, signal) => {
+      const original = await store.load({ signal, original: true });
+      if (!original)
+        throw new Error(
+          t(
+            'No migrated original checkpoint is stored.',
+            'Немає збереженої початкової точки міграції.',
+          ),
+        );
+      await download(session, signal, () => original.data, 'aircraft-original-checkpoint.json');
+    }),
+  );
   async function restoreData(session, data, signal) {
     signal.throwIfAborted();
     if (!same(session)) throw abortError();
@@ -344,6 +382,27 @@ export function mountAircraftPracticeControls({
     signal.throwIfAborted();
     if (!same(session)) throw abortError();
     await session.restoreRecovery(data, { signal });
+    signal.throwIfAborted();
+    if (
+      same(session) &&
+      session.migrateActorRules &&
+      (session.supportsLiveActorRules?.() ?? true)
+    ) {
+      const packet = data?.format === 'AircraftChallengeRecovery.v1' ? data.session : data;
+      if (packet?.identity && !packet.identity.actorRules && packet.mission) {
+        if (!store.preserveOriginal)
+          throw new Error(
+            t(
+              'Original checkpoint storage is unavailable. Recovery remains paused.',
+              'Сховище початкових точок недоступне. Відновлення залишається на паузі.',
+            ),
+          );
+        await store.preserveOriginal(data, { signal });
+      }
+      signal.throwIfAborted();
+      if (!same(session)) throw abortError();
+      await session.migrateActorRules();
+    }
     signal.throwIfAborted();
     if (!same(session)) throw abortError();
     state = session.snapshot();

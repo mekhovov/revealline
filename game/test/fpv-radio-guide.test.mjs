@@ -158,6 +158,26 @@ test('manual Save verified profile also selects the radio in its simulator host'
   assert.equal(f.done(), 1, 'the host must switch input to radio after every explicit save');
 });
 
+test('optional Fire binding saves v4 without changing stick calibration and removal restores the older format', (t) => {
+  const f = fixture(t, { known: true });
+  const fire = f.container.querySelector('[data-radio-switch="fire"]');
+  assert.ok(fire);
+  const channel = fire.querySelector('input');
+  channel.value = '2';
+  channel.emit('change');
+  f.click('I checked the animated sticks and their direction');
+  f.click('Save verified profile');
+  const saved = f.setup.store.snapshot().radio;
+  assert.equal(saved.format, 'RadioProfile.v4');
+  assert.deepEqual(saved.channels, defaultRadioProfile().channels);
+  assert.deepEqual(saved.switches.fire, { button: 2, threshold: 0.5, invert: false });
+  f.click('Remove Fire switch');
+  f.click('I checked the animated sticks and their direction');
+  f.click('Save verified profile');
+  assert.equal(f.setup.store.snapshot().radio.format, 'RadioProfile.v2');
+  assert.equal(Object.hasOwn(f.setup.store.snapshot().radio.switches, 'fire'), false);
+});
+
 test('manual setup is available during calibration and can save without automatic capture', (t) => {
   const f = fixture(t);
   f.click('Set up my sticks');
@@ -262,4 +282,35 @@ test('a known radio cannot arm while its setup dialog owns the controls', (t) =>
   f.runtime.poll();
   assert.equal(f.runtime.status().active, false);
   assert.equal(f.runtime.requestArm(), false);
+});
+
+test('optional Fire conflicts cannot overwrite the verified radio profile or its sticks', (t) => {
+  const f = fixture(t, { known: true });
+  f.click('I checked the animated sticks and their direction');
+  f.click('Save verified profile');
+  const saved = structuredClone(f.setup.store.snapshot().radio);
+  const row = f.container.querySelector('[data-radio-switch="fire"]'),
+    channel = row.querySelector('input'),
+    source = row.querySelector('select');
+  channel.value = '1';
+  channel.emit('change');
+  f.click('I checked the animated sticks and their direction');
+  assert.deepEqual(f.setup.store.snapshot().radio, saved);
+  assert.match(f.container.querySelector('.radio-feedback').textContent, /duplicate switch/);
+  source.value = 'axis';
+  source.emit('change');
+  channel.value = String(saved.channels.yaw.axis);
+  channel.emit('change');
+  f.click('I checked the animated sticks and their direction');
+  assert.deepEqual(f.setup.store.snapshot().radio, saved);
+  assert.match(f.container.querySelector('.radio-feedback').textContent, /overlap/);
+  channel.value = '5';
+  channel.emit('change');
+  f.click('I checked the animated sticks and their direction');
+  f.click('Save verified profile');
+  const updated = f.setup.store.snapshot().radio;
+  assert.deepEqual(updated.channels, saved.channels);
+  assert.deepEqual(updated.switches.arm, saved.switches.arm);
+  assert.deepEqual(updated.switches.reset, saved.switches.reset);
+  assert.deepEqual(updated.switches.fire, { axis: 5, off: -1, on: 1 });
 });

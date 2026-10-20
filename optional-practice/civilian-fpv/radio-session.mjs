@@ -1,15 +1,38 @@
 import { canonicalJSON } from '../../game/data-json.mjs';
-import { defaultRadioProfile, validateRadioProfile } from './radio-profile.mjs';
+import {
+  defaultRadioProfile,
+  loadRadioControlLayout,
+  loadRadioModelSelection,
+  radioDeviceRecommendation,
+  validateRadioProfile,
+} from './radio-profile.mjs';
 
 /** Restore a uniquely identified, already verified mapping without acquiring input.
  * Device slots are not identities. Setup edits and in-flight pickup belong to the
  * runtime; reconnection must preserve both and still require deliberate arming. */
-export function restoreVerifiedRadio(runtime, profileStore) {
-  const result = (status, restored = false) => ({
-    restored,
-    status,
-    reason: runtime.status().reason,
-  });
+export function restoreVerifiedRadio(runtime, profileStore, { storage } = {}) {
+  const result = (status, restored = false) => {
+    const current = runtime.status();
+    if (
+      storage &&
+      ['ready', 'restored'].includes(status) &&
+      current.profile &&
+      !current.active &&
+      !current.controlLayoutLoaded &&
+      !current.controlLayoutDirty &&
+      typeof runtime.setControlLayout === 'function'
+    ) {
+      try {
+        const profile = validateRadioProfile(current.profile);
+        runtime.setControlLayout(loadRadioControlLayout({ storage, device: profile.device }), {
+          restoring: true,
+        });
+      } catch (error) {
+        return { restored, status: 'invalid-layout', reason: error.message };
+      }
+    }
+    return { restored, status, reason: runtime.status().reason };
+  };
   let state = runtime.status();
   if (state.editing || state.profileDirty) return result('editing');
   if (state.active) return result('ready');
@@ -78,7 +101,27 @@ export function restoreVerifiedRadio(runtime, profileStore) {
     if (!matches.has(identity)) matches.set(identity, { profile, hardware });
   }
   if (matches.size > 1) return result('ambiguous');
-  if (!matches.size) return result('missing');
+  if (!matches.size) {
+    // An existing draft belongs to the player. Never replace its calibration
+    // with a model-name proposal, even when another library entry is selected.
+    if (candidates.some((profile) => matchingDevices(profile).length)) return result('unverified');
+    if (devices.devices.length === 1) {
+      const { index, ...device } = devices.devices[0];
+      try {
+        const selection = storage ? loadRadioModelSelection({ storage, device }) : null;
+        const candidate = radioDeviceRecommendation(device, selection ?? {});
+        if (
+          candidate.modelId !== 'other-radio' ||
+          candidate.profile ||
+          candidate.transport === 'receiver'
+        )
+          return { ...result('candidate'), candidate: { ...candidate, index } };
+      } catch (error) {
+        return { ...result('invalid-model'), reason: error.message };
+      }
+    }
+    return result('missing');
+  }
   const match = [...matches.values()][0];
   return restore(match.profile, match.hardware);
 }

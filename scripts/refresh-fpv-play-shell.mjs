@@ -82,6 +82,13 @@ async function projectGlobalServices() {
     ['game/i18n/index.mjs', 'simGlobalI18n'],
     ['game/presentation/theme-system.mjs', 'simGlobalThemes'],
     ['game/hunt/preferences.mjs', 'simGlobalActorPreferences'],
+    // These services already ship in every optional SIM closure. Reuse the
+    // admitted modules instead of embedding another copy in the shared shell.
+    ['game/data-json.mjs', 'simGlobalDataJson'],
+    ['game/hunt/actor-catalog.mjs', 'simGlobalActorCatalog'],
+    ['game/hunt/industrial-soldier-kit.mjs', 'simGlobalSoldierKit'],
+    ['game/ui/art-review-navigation.mjs', 'simGlobalArtNavigation'],
+    ['game/ui/enemy-appearance-controls.mjs', 'simGlobalAppearanceControls'],
   ]);
   const modules = new Map(),
     visiting = new Set();

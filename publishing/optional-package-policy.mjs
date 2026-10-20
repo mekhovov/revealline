@@ -63,7 +63,6 @@ const BASE_OPTIONAL_PACKAGE_POLICIES = Object.freeze({
       'optional-practice/civilian-fpv/radio-profile.mjs',
       'optional-practice/civilian-fpv/flight-response.mjs',
       'optional-practice/civilian-fpv/rates.mjs',
-      'optional-practice/civilian-fpv/world-audio.mjs',
       'optional-practice/civilian-fpv/flight-fullscreen.mjs',
       'optional-practice/civilian-fpv/flight-fullscreen.css',
       'optional-practice/civilian-fpv/sim-presentation.mjs',
@@ -792,9 +791,16 @@ export const OPTIONAL_PACKAGE_POLICIES = Object.freeze(
             'game/ui/enemy-appearance-controls.mjs',
             'game/ui/defeat-sound-controls.mjs',
             'game/ui/destruction-audio.mjs',
-            'game/ui/destruction-level.mjs',
-            'game/ui/human-reaction-policy.mjs',
-            'game/audio/human-reactions/portable.mjs',
+            // Academy's checked shared-audio projection already contains these
+            // exact canonical scopes and hashes; no other Academy module imports
+            // them. Avoid shipping a second unused copy of the recorded bank.
+            ...(id === 'civilian-fpv'
+              ? []
+              : [
+                  'game/ui/destruction-level.mjs',
+                  'game/ui/human-reaction-policy.mjs',
+                  'game/audio/human-reactions/portable.mjs',
+                ]),
           ]),
         ]),
       }),

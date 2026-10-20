@@ -11,6 +11,7 @@ import {
   initAdvancedRuntime,
   replayAdvancedRecording,
   verifyAdvancedRecovery,
+  validateAdvancedPracticeRecovery,
 } from './advanced-simulation.mjs';
 
 /** Serial request processing keeps init, steps and restores in one ownership
@@ -81,6 +82,16 @@ export function createAdvancedWorkerHandler(postMessage) {
             });
             if (simulation !== receivingSimulation || session !== requestSession)
               throw new Error('Advanced recovery was cancelled.');
+            result = receivingSimulation.restore(saved);
+            break;
+          }
+          case 'restore-practice': {
+            const receivingSimulation = simulation;
+            const saved = await validateAdvancedPracticeRecovery(message.snapshot, {
+              expectedIdentity: receivingSimulation.identity,
+            });
+            if (simulation !== receivingSimulation || session !== requestSession)
+              throw new Error('Advanced practice recovery was cancelled.');
             result = receivingSimulation.restore(saved);
             break;
           }

@@ -2,7 +2,7 @@ import * as THREE from './vendor/three.module.js';
 import { resolveIndustrialEnvironment } from '../../game/presentation/industrial-environments.mjs';
 import { canonicalJSON } from '../../game/data-json.mjs';
 import { validateAircraftPhysics } from './aircraft-physics.mjs';
-import { aircraftAppearance } from './aircraft-appearance.mjs';
+import { aircraftAppearance, buildFpvAircraftVisual } from './aircraft-appearance.mjs';
 import { actorVisual } from '../../game/hunt/actor-catalog.mjs';
 import { sharedActorAppearance, runtimeActorArtRevision } from '../../game/hunt/preferences.mjs';
 import {
@@ -44,8 +44,6 @@ import {
   setSurfaceQuality,
   createEnvironmentLight,
   simObjectiveLabelStyle,
-  simObjectiveLabelLayout,
-  createSimGateCueFactory,
 } from './world-visuals.mjs';
 
 // The shared renderer also ships in legacy packages without regional factories.
@@ -61,6 +59,223 @@ export function setRegionalSurfaceQuality(root, quality) {
   });
   for (const material of materials) material.userData.setRegionalSurfaceQuality(tiers[quality]);
   return materials.size;
+}
+
+/** Attach cosmetic contacts to admitted scenery, never to a substitute floor.
+ * Named GLB cells remain stable when the streamed window changes child order. */
+export function createCombatSurfaceAttachments({ roots, originMm }) {
+  let signature = '',
+    objects = new Map(),
+    meshes = [],
+    frame = 0,
+    indexedFrame = -1;
+  const identities = new WeakMap(),
+    ray = new THREE.Raycaster();
+  const normalMatrix = new THREE.Matrix3();
+  const eligible = (object) => {
+    for (let item = object; item; item = item.parent) {
+      if (!item.visible) return false;
+      if (roots().some(([, root]) => root === item)) return true;
+    }
+    return false;
+  };
+  const refresh = () => {
+    if (frame && indexedFrame === frame) return;
+    indexedFrame = frame;
+    const entries = roots();
+    const next = entries
+      .map(
+        ([name, root]) =>
+          `${name}:${root.uuid}:${root.children.map((child) => child.uuid).join(',')}`,
+      )
+      .join('|');
+    if (signature === next) return;
+    signature = next;
+    objects = new Map();
+    meshes = [];
+    for (const [prefix, root] of entries) {
+      const visit = (object, names, tail) => {
+        const named = object.name || object.userData?.collisionId || object.userData?.surfaceId;
+        const path = named ? [...names, encodeURIComponent(String(named))] : names;
+        const indexes = named ? [] : tail;
+        if (object.isMesh) meshes.push(object);
+        if (object.isMesh && !object.isInstancedMesh) {
+          const key = `${prefix}/${path.join('/')}/${indexes.join('.')}`;
+          let hash = 2166136261,
+            second = 5381;
+          for (const char of key) {
+            hash = Math.imul(hash ^ char.charCodeAt(0), 16777619);
+            second = Math.imul(second, 33) ^ char.charCodeAt(0);
+          }
+          // Bound repeated attachment metadata in the full 1,024-body archive.
+          // Duplicate identities are rejected below, including hash collisions.
+          const id = `${prefix}:${(hash >>> 0).toString(16)}:${(second >>> 0).toString(16)}`;
+          identities.set(object, id);
+          objects.set(id, objects.has(id) ? null : object);
+        }
+        object.children.forEach((child, index) => visit(child, path, [...indexes, index]));
+      };
+      root.children.forEach((child, index) => visit(child, [], [index]));
+    }
+  };
+  const read = (hit) => {
+    refresh();
+    const id = identities.get(hit.object);
+    const point = hit.object.worldToLocal(hit.point.clone());
+    return {
+      ...(id && objects.get(id) === hit.object ? { surfaceId: id } : {}),
+      localPosition: { x: point.x, y: point.y, z: point.z },
+    };
+  };
+  return {
+    read,
+    intersections(raycaster) {
+      refresh();
+      // Labels are sprites, not supporting geometry. Recursing through the
+      // complete scene both raycast those overlays and required a camera.
+      return raycaster.intersectObjects(meshes, false).filter((hit) => eligible(hit.object));
+    },
+    beginFrame() {
+      frame++;
+    },
+    invalidate() {
+      signature = '';
+      indexedFrame = -1;
+    },
+    resolve(surface) {
+      if (!surface?.surfaceId || !surface.localPosition) return null;
+      refresh();
+      const object = objects.get(surface.surfaceId);
+      if (!object || !eligible(object)) return null;
+      object.updateWorldMatrix(true, false);
+      const local = surface.localPosition;
+      const point = object.localToWorld(new THREE.Vector3(local.x, local.y, local.z));
+      const normal = new THREE.Vector3(
+        surface.normal.x,
+        surface.normal.y,
+        surface.normal.z,
+      ).normalize();
+      ray.set(point.clone().addScaledVector(normal, 0.05), normal.clone().negate());
+      ray.far = 0.1;
+      const hit = ray
+        .intersectObject(object, false)
+        .find((entry) => entry.face && entry.point.distanceTo(point) < 0.02);
+      if (!hit) return null;
+      normalMatrix.getNormalMatrix(object.matrixWorld);
+      normal.copy(hit.face.normal).applyMatrix3(normalMatrix).normalize();
+      if (normal.dot(ray.ray.direction) > 0) normal.negate();
+      const origin = originMm();
+      return {
+        position: {
+          x: hit.point.x * 1000 + origin.x,
+          y: hit.point.y * 1000 + origin.y,
+          z: hit.point.z * 1000 + origin.z,
+        },
+        normal: { x: normal.x, y: normal.y, z: normal.z },
+        ...read(hit),
+        attached: true,
+      };
+    },
+  };
+}
+
+export function combatWeaponVisualOffset(radiusMm, weapon) {
+  const radius = Math.max(1, radiusMm ?? 220),
+    scale = radius / 220;
+  const barrelEnd = weapon === 'precision' ? 0.3 : 0.26;
+  return {
+    x: 0,
+    y: 0.035,
+    z: -(radius + 40) / 1000 / scale + barrelEnd,
+    flashZ: -barrelEnd - 0.07,
+  };
+}
+
+export function combatMuzzleActive(encounter, weapon) {
+  return (
+    encounter?.status === 'active' &&
+    encounter.events.some(
+      (event) =>
+        event.type === 'fire' &&
+        event.actor === 'player' &&
+        event.weapon === weapon &&
+        encounter.ticks >= event.tick &&
+        encounter.ticks - event.tick < 3,
+    )
+  );
+}
+
+const COMBAT_PROJECTILE_STYLES = {
+  autocannon: { color: 0xffe5ad, scale: [0.035, 0.035, 0.45] },
+  scatter: { color: 0xffd985, scale: [0.05, 0.05, 0.2] },
+  precision: { color: 0xc6efff, scale: [0.025, 0.025, 1.2] },
+  rocket: { color: 0xffa642, scale: [0.09, 0.09, 0.6] },
+  bomb: { color: 0x64734d, scale: [0.16, 0.16, 0.24], emissive: 0 },
+  remote: { color: 0x64734d, scale: [0.16, 0.16, 0.24], emissive: 0 },
+  'enemy-rifle': { color: 0xff9866, scale: [0.035, 0.035, 0.45] },
+  'enemy-energy': { color: 0xf47db4, scale: [0.085, 0.085, 0.25] },
+  'enemy-heavy': { color: 0xff7142, scale: [0.1, 0.1, 0.7] },
+};
+export function combatProjectileStyle(weapon, owner = 'player', palette = {}) {
+  const selected = COMBAT_PROJECTILE_STYLES[weapon];
+  return {
+    color:
+      owner === 'player' ? (palette.playerPulse ?? 0xffe5ad) : (palette.hostilePulse ?? 0xff9866),
+    scale: [0.035, 0.035, 0.45],
+    emissive: 1.4,
+    ...selected,
+    ...(weapon === 'autocannon' && palette.playerPulse !== undefined
+      ? { color: palette.playerPulse }
+      : {}),
+    ...(weapon === 'enemy-rifle' && palette.hostilePulse !== undefined
+      ? { color: palette.hostilePulse }
+      : {}),
+  };
+}
+
+/** Shared native/regional pulse rendering. World facts stay in millimetres;
+ * only instance transforms use the current regional render origin. */
+export function updateFlightProjectileBatches(
+  state,
+  { batches, createBatch, transform = new THREE.Matrix4(), originMm = { x: 0, y: 0, z: 0 } },
+) {
+  for (const batch of batches.values()) batch.count = 0;
+  const rotation = new THREE.Quaternion(),
+    position = new THREE.Vector3(),
+    scale = new THREE.Vector3(),
+    axis = new THREE.Vector3(0, 0, 1),
+    direction = new THREE.Vector3();
+  for (const pulse of [...(state.projectiles ?? []), ...(state.encounter?.ordnance ?? [])]) {
+    if (!pulse.position || pulse.id === undefined) continue;
+    const weapon = pulse.weapon ?? pulse.kind;
+    const batch = createBatch(pulse.owner ?? 'player', weapon);
+    transform.makeTranslation(
+      (pulse.position.x - originMm.x) / 1000,
+      (pulse.position.y - originMm.y) / 1000,
+      (pulse.position.z - originMm.z) / 1000,
+    );
+    if (weapon) {
+      position.set(
+        (pulse.position.x - originMm.x) / 1000,
+        (pulse.position.y - originMm.y) / 1000,
+        (pulse.position.z - originMm.z) / 1000,
+      );
+      direction.set(pulse.velocity?.x ?? 0, pulse.velocity?.y ?? 0, pulse.velocity?.z ?? -1);
+      if (!direction.lengthSq()) direction.set(0, 0, -1);
+      rotation.setFromUnitVectors(axis, direction.normalize());
+      scale.fromArray(
+        (COMBAT_PROJECTILE_STYLES[weapon] ?? COMBAT_PROJECTILE_STYLES.autocannon).scale,
+      );
+      transform.compose(position, rotation, scale);
+    }
+    if (batch.count >= batch.instanceMatrix.count)
+      throw new Error('Projectile presentation capacity exceeded');
+    batch.setMatrixAt(batch.count++, transform);
+  }
+  for (const batch of batches.values()) {
+    batch.visible = batch.count > 0;
+    batch.instanceMatrix.needsUpdate = true;
+  }
 }
 
 const QUALITIES = Object.freeze({
@@ -290,6 +505,391 @@ export function buildPhysicalAircraftVisual({
   return { rotors, tint, physical: true, root: parts };
 }
 
+const GUIDE_ACCENTS = Object.freeze({
+  amber: 0xffd166,
+  white: 0xf5f9ec,
+  cyan: 0x64e4ff,
+  lime: 0xb4ee64,
+  pink: 0xff91ce,
+});
+export function objectiveGuidanceColor(value = 'amber') {
+  return GUIDE_ACCENTS[value] ?? GUIDE_ACCENTS.amber;
+}
+
+function objectiveSemantic(step) {
+  if (['actor-track-v1', 'hunt-contact-v1', 'eliminate'].includes(step.type)) return 'subject';
+  return ['gate', 'hold', 'land'].includes(step.type) ? step.type : 'manoeuvre';
+}
+
+/** Decorative instructions, never collision geometry. All bars bordering a
+ * crossing lie outside its exact aperture; a hold volume is not a racing gate. */
+export function createObjectiveGuideVisual(step, { accent = 'amber', origin = null } = {}) {
+  const root = new THREE.Group(),
+    center = new THREE.Vector3(),
+    size = new THREE.Vector3();
+  const crossing = step.type === 'gate' || step.type === 'crossing-v1';
+  let axis = step.axis,
+    a,
+    b;
+  if (crossing) {
+    [a, b] =
+      step.type === 'gate'
+        ? [axis === 'x' ? 'z' : 'x', 'y']
+        : ['x', 'y', 'z'].filter((k) => k !== axis);
+    const loA = step.type === 'gate' ? step.minSide : step.minA,
+      hiA = step.type === 'gate' ? step.maxSide : step.maxA,
+      loB = step.type === 'gate' ? step.minY : step.minB,
+      hiB = step.type === 'gate' ? step.maxY : step.maxB;
+    center[axis] = step.at / 1000;
+    center[a] = (loA + hiA) / 2000;
+    center[b] = (loB + hiB) / 2000;
+    size[a] = (hiA - loA) / 1000;
+    size[b] = (hiB - loB) / 1000;
+    size[axis] = 0.12;
+  } else if (step.min && step.max) {
+    for (const key of ['x', 'y', 'z']) {
+      center[key] = (step.min[key] + step.max[key]) / 2000;
+      size[key] = (step.max[key] - step.min[key]) / 1000;
+    }
+  } else return null;
+  if (
+    ![...center.toArray(), ...size.toArray()].every(Number.isFinite) ||
+    size.toArray().some((v) => v <= 0)
+  )
+    return null;
+  root.position.copy(center);
+  if (origin) root.position.sub(new THREE.Vector3(...origin));
+  const semantic =
+    step.type === 'gate' ? 'gate' : ['hold', 'land'].includes(step.type) ? step.type : 'manoeuvre';
+  root.name = `objective-${semantic}-guide`;
+  root.userData.guidanceSemantic = semantic;
+  root.userData.criteriaOnly = true;
+  const paints = [0x101820, 0xf5f9ec, objectiveGuidanceColor(accent)].map(
+    (color) =>
+      new THREE.MeshBasicMaterial({
+        color,
+        toneMapped: false,
+        fog: false,
+        transparent: true,
+        opacity: 1,
+        depthTest: true,
+        depthWrite: false,
+      }),
+  );
+  root.userData.ownedMaterials = paints;
+  const entries = paints.map(() => []),
+    shape = new THREE.BoxGeometry(1, 1, 1);
+  const box = (paint, dimensions, position) => {
+    entries[paint].push(
+      new THREE.Matrix4().compose(
+        new THREE.Vector3(...position),
+        new THREE.Quaternion(),
+        new THREE.Vector3(...dimensions),
+      ),
+    );
+  };
+  if (crossing) {
+    const span = size[a],
+      height = size[b],
+      thickness = Math.max(0.055, Math.min(0.22, Math.min(span, height) * 0.055));
+    const rail = (paint, u, v, w, h, depth) => {
+      const p = new THREE.Vector3(),
+        d = new THREE.Vector3();
+      p[a] = u;
+      p[b] = v;
+      d[a] = w;
+      d[b] = h;
+      d[axis] = depth;
+      box(paint, d.toArray(), p.toArray());
+    };
+    for (const sign of [-1, 1]) {
+      rail(0, sign * (span / 2 + thickness / 2), 0, thickness, height + thickness * 2, 0.12);
+      rail(0, 0, sign * (height / 2 + thickness / 2), span, thickness, 0.12);
+      const strip = thickness * 0.42;
+      rail(1, sign * (span / 2 + strip / 2), 0, strip, height, 0.13);
+      rail(1, 0, sign * (height / 2 + strip / 2), span, strip, 0.13);
+      rail(
+        2,
+        sign * (span / 2 + thickness * 0.75),
+        0,
+        thickness * 0.32,
+        Math.min(height * 0.5, 0.9),
+        0.14,
+      );
+    }
+    // Direction arrows sit above the opening at its real altitude.
+    const direction = new THREE.Vector3();
+    direction[axis] = step.direction;
+    const start = new THREE.Vector3();
+    start[b] = height / 2 + thickness + 0.3;
+    start.addScaledVector(direction, -0.45);
+    const arrow = new THREE.ArrowHelper(
+      direction,
+      start,
+      0.9,
+      objectiveGuidanceColor(accent),
+      0.22,
+      0.18,
+    );
+    arrow.name = 'objective-entry-direction';
+    // ArrowHelper uses module-shared geometry; the guide owns cloned resources.
+    arrow.line.geometry = arrow.line.geometry.clone();
+    arrow.cone.geometry = arrow.cone.geometry.clone();
+    arrow.line.material.toneMapped = false;
+    arrow.line.material.fog = false;
+    arrow.line.material.transparent = true;
+    arrow.line.material.depthWrite = false;
+    arrow.cone.material.dispose();
+    arrow.cone.material = paints[2];
+    root.userData.accentMaterials = [paints[2], arrow.line.material];
+    root.add(arrow);
+    root.userData.aperture = { axis, a, b, span, height };
+  } else {
+    const thickness = Math.max(0.04, Math.min(0.12, Math.min(size.x, size.z) * 0.035)),
+      arm = Math.min(1.3, size.x / 4, size.z / 4);
+    for (const x of [-1, 1])
+      for (const y of [-1, 1])
+        for (const z of [-1, 1]) {
+          // Open corners reveal the full region and altitude, including from inside.
+          const p = [(x * size.x) / 2, (y * size.y) / 2, (z * size.z) / 2];
+          box(
+            0,
+            [arm + thickness, thickness * 2, thickness * 2],
+            [p[0] - (x * arm) / 2, p[1], p[2]],
+          );
+          box(1, [arm, thickness, thickness], [p[0] - (x * arm) / 2, p[1], p[2]]);
+          box(
+            0,
+            [thickness * 2, thickness * 2, arm + thickness],
+            [p[0], p[1], p[2] - (z * arm) / 2],
+          );
+          box(1, [thickness, thickness, arm], [p[0], p[1], p[2] - (z * arm) / 2]);
+          box(
+            2,
+            [thickness, Math.min(0.5, size.y / 3), thickness],
+            [p[0], p[1] - (y * Math.min(0.5, size.y / 3)) / 2, p[2]],
+          );
+        }
+    if (step.type === 'land') {
+      const pad = new THREE.Group(),
+        scale = Math.max(0.15, Math.min(0.65, size.x / 5, size.z / 5));
+      pad.name = 'objective-supported-landing-pad';
+      // The runtime resolves the supporting surface. Never invent a floating pad.
+      pad.visible = false;
+      for (const [dimensions, position] of [
+        [
+          [scale * 0.18, 0.012, scale * 1.6],
+          [-scale * 0.5, 0, 0],
+        ],
+        [
+          [scale * 0.18, 0.012, scale * 1.6],
+          [scale * 0.5, 0, 0],
+        ],
+        [
+          [scale, 0.012, scale * 0.18],
+          [0, 0, 0],
+        ],
+      ]) {
+        const item = new THREE.Mesh(shape, paints[2]);
+        item.scale.set(...dimensions);
+        item.position.set(...position);
+        pad.add(item);
+      }
+      root.add(pad);
+    } else if (step.type === 'hold') {
+      // Two separated altitude plates mean stay within this band, not pass through.
+      for (const sign of [-1, 1])
+        box(
+          2,
+          [Math.min(0.65, size.x / 3), thickness, Math.min(0.65, size.z / 3)],
+          [0, (sign * size.y) / 2, 0],
+        );
+    }
+  }
+  for (const [index, matrices] of entries.entries()) {
+    if (!matrices.length) continue;
+    const batch = new THREE.InstancedMesh(shape, paints[index], matrices.length);
+    batch.name = `objective-guide-${['contrast', 'light', 'accent'][index]}`;
+    matrices.forEach((matrix, i) => batch.setMatrixAt(i, matrix));
+    batch.instanceMatrix.needsUpdate = true;
+    root.add(batch);
+  }
+  return root;
+}
+
+/** Explicit actor metadata transfers artwork ownership with its canonical actor.
+ * Names alone are never sufficient, and clearing ownership restores authored visibility. */
+export function applyImportedActorOwnership(root, ownedIds, previous = new Map()) {
+  for (const [object, visible] of previous) object.visible = visible;
+  previous.clear();
+  root.traverse((object) => {
+    const role = object.userData?.rl;
+    if (
+      (role?.kind === 'actor' || role?.type === 'actor') &&
+      typeof role.id === 'string' &&
+      ownedIds.has(role.id)
+    ) {
+      previous.set(object, object.visible);
+      object.visible = false;
+    }
+  });
+  return previous;
+}
+
+/** Only an admitted authored path: never invent a straight line to the objective. */
+export function createRouteGuideVisual(route, accent = 'amber') {
+  const points = route?.waypoints;
+  if (
+    !Array.isArray(points) ||
+    points.length < 2 ||
+    points.length > 256 ||
+    !points.every((point) =>
+      ['x', 'y', 'z'].every((axis) => Number.isFinite(point.position?.[axis])),
+    )
+  )
+    return null;
+  const root = new THREE.Group(),
+    shape = new THREE.CylinderGeometry(1, 1, 1, 5),
+    paints = [0x101820, objectiveGuidanceColor(accent)].map(
+      (color) =>
+        new THREE.MeshBasicMaterial({
+          color,
+          fog: false,
+          toneMapped: false,
+          depthTest: true,
+          depthWrite: false,
+          transparent: true,
+          opacity: 0.85,
+        }),
+    ),
+    matrices = [[], []],
+    up = new THREE.Vector3(0, 1, 0);
+  root.name = 'validated-route-guide';
+  root.userData.routeId = route.id;
+  root.userData.criteriaOnly = true;
+  for (let i = 1; i < points.length; i++) {
+    const from = new THREE.Vector3(
+        ...['x', 'y', 'z'].map((axis) => points[i - 1].position[axis] / 1000),
+      ),
+      to = new THREE.Vector3(...['x', 'y', 'z'].map((axis) => points[i].position[axis] / 1000)),
+      direction = to.clone().sub(from),
+      length = direction.length();
+    if (length < 0.001) continue;
+    const rotation = new THREE.Quaternion().setFromUnitVectors(up, direction.normalize());
+    matrices[0].push(
+      new THREE.Matrix4().compose(
+        from.clone().lerp(to, 0.5),
+        rotation,
+        new THREE.Vector3(0.035, length, 0.035),
+      ),
+    );
+    // Broken accent bands keep the route distinct from a solid obstacle or rail.
+    const bands = Math.min(16, Math.max(1, Math.ceil(length / 1.5)));
+    for (let j = 0; j < bands; j++)
+      matrices[1].push(
+        new THREE.Matrix4().compose(
+          from.clone().lerp(to, (j + 0.3) / bands),
+          rotation,
+          new THREE.Vector3(0.045, (length * 0.45) / bands, 0.045),
+        ),
+      );
+  }
+  for (const [i, transforms] of matrices.entries()) {
+    const batch = new THREE.InstancedMesh(shape, paints[i], transforms.length);
+    transforms.forEach((matrix, index) => batch.setMatrixAt(index, matrix));
+    batch.instanceMatrix.needsUpdate = true;
+    root.add(batch);
+  }
+  return root;
+}
+
+/** A screen-sized badge stays above the aperture; the physical opening never scales. */
+export function objectiveGuideLabelLayout({
+  baseSize = 0.72,
+  viewDepth,
+  projectionY,
+  viewportHeight,
+  preview = false,
+}) {
+  if (![viewDepth, projectionY, viewportHeight].every((v) => Number.isFinite(v) && v > 0))
+    return { size: baseSize, centerY: 0.5 };
+  const pixelsPerMetre = (projectionY * viewportHeight) / (2 * viewDepth);
+  const pixels = Math.max(
+    preview ? 18 : 24,
+    Math.min(preview ? 32 : 42, baseSize * pixelsPerMetre),
+  );
+  const size = pixels / pixelsPerMetre;
+  return { size, centerY: baseSize / (2 * size) };
+}
+
+/** Camera-relative, peripheral presentation. Never move the flight camera or
+ * resize the real aircraft to accommodate a cosmetic propeller preference. */
+export function positionFpvAircraftVisual(
+  visual,
+  camera,
+  {
+    visible = true,
+    phase = 0,
+    throttle = 0,
+    reducedMotion = false,
+    encounter = null,
+    tilt = 0,
+    showKnife = true,
+  } = {},
+) {
+  if (!visual) return;
+  visual.root.visible = visible;
+  if (!visible) return;
+  visual.root.position.copy(camera.position);
+  visual.root.quaternion.copy(camera.quaternion);
+  const depth = 0.7;
+  const halfHeight = Math.tan((camera.fov * Math.PI) / 360) * depth;
+  const halfWidth = halfHeight * camera.aspect;
+  // The complete swept disc stays outside the middle half of the viewport.
+  // Derive clearance from its furthest depth, not a favourable blade angle.
+  const radius = visual.rotors[0]?.userData.radius ?? 0.127;
+  const pitch = 1.25 - Math.max(-20, Math.min(60, tilt)) * 0.002,
+    reach = Math.min(halfWidth * 0.5, halfHeight * 0.85, (depth * 0.65) / Math.cos(pitch)),
+    depthReach = reach * Math.cos(pitch),
+    x = Math.max(halfWidth * 1.12, halfWidth * 0.55 * (1 + depthReach / depth) + reach);
+  for (const [index, side] of visual.sides.entries()) {
+    side.position.set(
+      (index ? 1 : -1) * x,
+      halfHeight * (0.36 - Math.max(-20, Math.min(60, tilt)) * 0.002),
+      -depth,
+    );
+    side.scale.setScalar(reach / radius);
+    side.rotation.x = pitch;
+  }
+  if (visual.nose) {
+    const width = visual.nose.userData.shellWidth ?? 0.17;
+    visual.nose.position.set(0, 0, -depth);
+    visual.nose.scale.set(
+      (halfWidth * 0.24) / width,
+      Math.min(1.5, halfHeight * 1.6),
+      Math.min(1.05, halfHeight * 1.65),
+    );
+    visual.nose.rotation.x = 0.55;
+    const frontDepth = 0.15 * visual.nose.scale.z,
+      topDepth = depth + frontDepth * Math.cos(0.55);
+    visual.nose.position.y = (-0.83 * halfHeight * topDepth) / depth - frontDepth * Math.sin(0.55);
+  }
+  if (visual.knife) visual.knife.visible = showKnife;
+  for (const rotor of visual.rotors) rotor.rotation.y = phase * (rotor.userData.spin ?? 1);
+  const speed = Math.max(0, Math.min(1, throttle / 1000));
+  for (const paint of visual.blurMaterials) paint.opacity = reducedMotion ? 0 : speed * 0.2;
+  if (visual.propPaint) visual.propPaint.opacity = reducedMotion ? 0.7 : 0.7 - speed * 0.38;
+  const equipped = encounter?.weapons ?? [];
+  if (visual.combatCowl) visual.combatCowl.visible = equipped.length > 0;
+  for (const [slot, mounts] of (visual.weaponGroups ?? []).entries())
+    for (const [id, mount] of Object.entries(mounts)) {
+      mount.visible = equipped[slot]?.id === id;
+      const flash = mount.getObjectByName('muzzle-flash');
+      if (flash)
+        flash.visible = slot === encounter?.weaponIndex && combatMuzzleActive(encounter, id);
+    }
+}
+
 /** Shared presentation only. Hosts supply admitted bounds and poses; no physics or ownership. */
 export function createFlightViewFrame({ camera, aircraft }) {
   const framePosition = new THREE.Vector3(),
@@ -302,7 +902,8 @@ export function createFlightViewFrame({ camera, aircraft }) {
     overviewRight = new THREE.Vector3(overviewDirection.z, 0, -overviewDirection.x).normalize(),
     overviewUp = new THREE.Vector3().crossVectors(overviewDirection, overviewRight);
   let rotorTick = null,
-    rotorPhase = 0;
+    rotorPhase = 0,
+    chaseHeading = 0;
   // Mutable configuration is retained by the host: no per-frame option/pose copies.
   const frame = {
     view: 'fpv',
@@ -310,6 +911,11 @@ export function createFlightViewFrame({ camera, aircraft }) {
     regionalFar: camera.far,
     fov: 82,
     tilt: 0,
+    chaseDistance: 1.6,
+    showFpvProps: false,
+    showFpvKnife: true,
+    fpvVisual: null,
+    resolveChase: null,
     radiusMm: 220,
     reducedMotion: false,
     bounds: null,
@@ -390,9 +996,20 @@ export function createFlightViewFrame({ camera, aircraft }) {
           .copy(rotation)
           .multiply(cameraTiltRotation.setFromAxisAngle(cameraTiltAxis, (tilt * Math.PI) / 180));
       } else if (view === 'chase') {
+        cameraOffset.set(0, 0, -1).applyQuaternion(rotation);
+        if (Math.hypot(cameraOffset.x, cameraOffset.z) > 0.05)
+          chaseHeading = Math.atan2(-cameraOffset.x, -cameraOffset.z);
+        const distance = Math.max(0.75, Math.min(6, frame.chaseDistance));
         camera.position
           .copy(position)
-          .add(cameraOffset.set(0, 1.35, 3.2).applyQuaternion(rotation));
+          .add(
+            cameraOffset.set(
+              Math.sin(chaseHeading) * distance,
+              0.6,
+              Math.cos(chaseHeading) * distance,
+            ),
+          );
+        frame.resolveChase?.(position, camera.position);
         camera.up.set(0, 1, 0);
         camera.lookAt(position);
       } else if (frame.regionalOverview && view === 'overview') {
@@ -473,9 +1090,291 @@ export function createFlightViewFrame({ camera, aircraft }) {
         camera.near = near;
         camera.updateProjectionMatrix();
       }
+      positionFpvAircraftVisual(frame.fpvVisual, camera, {
+        visible: view === 'fpv' && frame.showFpvProps,
+        phase: rotorPhase,
+        throttle: frame.throttlePermille ?? state.lastInput?.throttle ?? 0,
+        reducedMotion,
+        encounter: state.encounter,
+        tilt,
+        showKnife: frame.showFpvKnife,
+      });
     },
   };
   return Object.seal(frame);
+}
+
+/** Optional art owns no gameplay data. Consumers release leases before the model
+ * owner; stale loads may dispose their own staging but cannot replace newer art. */
+export function createCombatAppearanceActivation({
+  prepareModels,
+  createActors,
+  createPresentation,
+  makeScene = () => new THREE.Scene(),
+  prepareScene,
+  upload,
+  targets,
+  generation,
+}) {
+  let serial = 0,
+    controller = null,
+    owner = null;
+  let status = { state: 'current', error: null };
+  const clear = () => {
+    const live = targets(false);
+    live.actors?.setAppearanceTemplates?.(null);
+    live.presentation?.setAppearancePartsTemplates?.(null);
+    owner?.dispose();
+    owner = null;
+  };
+  const releaseActors = (items) => {
+    for (const item of items) for (const lease of item.lods) lease.release?.();
+  };
+  const releaseParts = (items) => {
+    for (const lease of items) lease.release?.();
+  };
+  const acquire = (models, indices, unique = false) => {
+    const actors = [],
+      parts = [],
+      roots = new Set(),
+      fragments = new Set();
+    try {
+      for (const index of indices) {
+        const character = models.manifest.characters[index],
+          equipment = (character.equipment ?? []).map((item) => item.root).sort(),
+          lods = [];
+        actors.push({ characterIndex: index, lods });
+        for (const [lod, root] of [character.root, ...character.lods].entries()) {
+          const key = JSON.stringify([character.file, root, equipment]);
+          if (unique && roots.has(key)) continue;
+          roots.add(key);
+          lods.push(models.createActorLease(index, { lod }));
+        }
+        if (!lods.length) actors.pop();
+        const key = JSON.stringify([
+          character.file,
+          character.regionSet ?? null,
+          Object.entries(character.parts ?? {})
+            .sort()
+            .map(([name, part]) => [name, part.mesh, part.cap]),
+          equipment,
+        ]);
+        if (unique && fragments.has(key)) continue;
+        fragments.add(key);
+        parts.push(models.createPartsLease(index));
+      }
+      return { actors, parts };
+    } catch (error) {
+      releaseActors(actors);
+      releaseParts(parts);
+      throw error;
+    }
+  };
+  const install = (leases, actors, presentation) => {
+    let acceptedActor = false,
+      acceptedParts = false;
+    try {
+      acceptedActor = actors.setAppearanceTemplates(leases.actors) === true;
+      if (!acceptedActor) throw new Error('The character models are not supported.');
+      acceptedParts = presentation.setAppearancePartsTemplates(leases.parts) === true;
+      if (!acceptedParts) throw new Error('The character remains are not supported.');
+    } finally {
+      if (!acceptedActor) releaseActors(leases.actors);
+      if (!acceptedParts) releaseParts(leases.parts);
+    }
+  };
+  function reset() {
+    serial++;
+    controller?.abort();
+    controller = null;
+    clear();
+    status = { state: 'current', error: null };
+  }
+  return {
+    reset,
+    status: () => ({ ...status }),
+    async set(pack, { signal, characterIndex } = {}) {
+      reset();
+      if (pack === null) return true;
+      const request = serial,
+        sceneGeneration = generation(),
+        pending = new AbortController();
+      controller = pending;
+      const abort = () => pending.abort();
+      signal?.addEventListener('abort', abort, { once: true });
+      if (signal?.aborted) abort();
+      const current = () => {
+        if (
+          pending.signal.aborted ||
+          request !== serial ||
+          sceneGeneration === null ||
+          generation() !== sceneGeneration
+        )
+          throw new DOMException('Appearance preparation cancelled.', 'AbortError');
+      };
+      let candidate = null;
+      status = { state: 'loading', error: null };
+      try {
+        current();
+        candidate = await prepareModels(pack, { signal: pending.signal });
+        current();
+        const characters = candidate.manifest.characters,
+          indices =
+            characterIndex === undefined ? characters.map((_, index) => index) : [characterIndex];
+        if (
+          !indices.length ||
+          indices.some((index) => !Number.isSafeInteger(index) || !characters[index])
+        )
+          throw new Error('Unknown appearance character.');
+        candidate.prepareTextures(upload);
+        const scene = makeScene();
+        let actors, presentation, restoreActor, restoreParts;
+        try {
+          actors = createActors(scene);
+          presentation = createPresentation(scene);
+          install(acquire(candidate, indices, true), actors, presentation);
+          restoreActor = actors.prepareMaterials?.();
+          restoreParts = presentation.prepareMaterials?.();
+          actors.prepareTextures?.(upload);
+          presentation.prepareTextures?.(upload);
+          await new Promise((resolve, reject) => {
+            const abort = () =>
+              reject(new DOMException('Appearance preparation cancelled.', 'AbortError'));
+            pending.signal.addEventListener('abort', abort, { once: true });
+            Promise.resolve()
+              .then(() => {
+                current();
+                return prepareScene(scene, { signal: pending.signal });
+              })
+              .then(resolve, reject)
+              .finally(() => pending.signal.removeEventListener('abort', abort));
+          });
+          current();
+        } finally {
+          restoreActor?.();
+          restoreParts?.();
+          actors?.dispose();
+          presentation?.dispose();
+        }
+        current();
+        const live = targets(true);
+        install(acquire(candidate, indices), live.actors, live.presentation);
+        owner = candidate;
+        candidate = null;
+        status = {
+          state: 'ready',
+          error: null,
+          sha256: owner.sha256,
+          characterIndex: characterIndex ?? null,
+          characters: indices.length,
+        };
+        return true;
+      } catch (error) {
+        if (request === serial) {
+          clear();
+          status =
+            error?.name === 'AbortError'
+              ? { state: 'current', error: null }
+              : {
+                  state: 'error',
+                  error: String(error?.message ?? 'Appearance could not be prepared.').slice(
+                    0,
+                    240,
+                  ),
+                };
+        }
+        return false;
+      } finally {
+        candidate?.dispose();
+        signal?.removeEventListener('abort', abort);
+        if (controller === pending) controller = null;
+      }
+    },
+  };
+}
+
+/** One optional camera-feed pass. UI stays outside the degraded video layer.
+ * Effects are cosmetic: no simulated radio failures or changes to flight input. */
+function createAnalogVideoPass(renderer) {
+  const target = new THREE.WebGLRenderTarget(1, 1, {
+      type: renderer.extensions.has('EXT_color_buffer_float')
+        ? THREE.HalfFloatType
+        : THREE.UnsignedByteType,
+      depthBuffer: true,
+    }),
+    stage = new THREE.Scene(),
+    camera = new THREE.Camera(),
+    size = new THREE.Vector2(),
+    uniforms = {
+      feed: { value: target.texture },
+      resolution: { value: new THREE.Vector2(1, 1) },
+      clock: { value: 0 },
+      strength: { value: 0 },
+      motion: { value: 1 },
+    },
+    material = new THREE.ShaderMaterial({
+      uniforms,
+      depthTest: false,
+      depthWrite: false,
+      vertexShader: `varying vec2 uvFeed;
+        void main(){uvFeed=uv;gl_Position=vec4(position.xy,0.,1.);}`,
+      fragmentShader: `uniform sampler2D feed;
+        uniform vec2 resolution;
+        uniform float clock,strength,motion;
+        varying vec2 uvFeed;
+        float noise(vec2 p){return fract(sin(dot(p,vec2(127.1,311.7)))*43758.5453);}
+        void main(){
+          float frame=floor(clock*50.);
+          float row=floor(uvFeed.y*min(576.,resolution.y));
+          float band=pow(max(0.,1.-abs(fract(uvFeed.y-clock*.035)-.5)*28.),3.);
+          float jitter=(noise(vec2(row,frame))-.5)*.0012*strength*motion;
+          jitter+=band*.003*strength*motion*sin(clock*1.7);
+          vec2 uv=clamp(uvFeed+vec2(jitter,0.),vec2(.001),vec2(.999));
+          vec2 bleed=vec2((.7+strength*1.8)/resolution.x,0.);
+          vec3 rgb=texture2D(feed,uv).rgb;
+          vec3 smear=vec3(texture2D(feed,clamp(uv-bleed,vec2(.001),vec2(.999))).r,rgb.g,
+            texture2D(feed,clamp(uv+bleed,vec2(.001),vec2(.999))).b);
+          rgb=mix(rgb,smear,strength*.55);
+          rgb=mix(rgb,texture2D(feed,clamp(uv+bleed*4.,vec2(.001),vec2(.999))).rgb,strength*.06);
+          gl_FragColor=vec4(rgb,1.);
+          #include <tonemapping_fragment>
+          #include <colorspace_fragment>
+          float luma=dot(gl_FragColor.rgb,vec3(.299,.587,.114));
+          gl_FragColor.rgb=mix(gl_FragColor.rgb,vec3(luma),strength*.12);
+          float grain=noise(floor(uvFeed*resolution*.7)+vec2(frame,frame*.37))-.5;
+          float line=noise(vec2(row,frame))-.5;
+          float scan=sin(uvFeed.y*min(576.,resolution.y)*6.28318);
+          gl_FragColor.rgb+=strength*(grain*(.12+band*.18)+line*.025-scan*.018);
+          gl_FragColor.rgb*=1.-strength*.035*dot(uvFeed-.5,uvFeed-.5);
+          gl_FragColor.rgb=clamp(gl_FragColor.rgb,0.,1.);
+        }`,
+    }),
+    geometry = new THREE.PlaneGeometry(2, 2);
+  stage.add(new THREE.Mesh(geometry, material));
+  return {
+    begin(amount, seconds, reduced) {
+      renderer.getDrawingBufferSize(size);
+      // Keep camera-feed memory bounded, including high-DPI and 4K displays.
+      const scale = Math.min(1, 1920 / Math.max(size.x, size.y)),
+        width = Math.max(1, Math.round(size.x * scale)),
+        height = Math.max(1, Math.round(size.y * scale));
+      if (target.width !== width || target.height !== height) target.setSize(width, height);
+      uniforms.resolution.value.set(width, height);
+      uniforms.strength.value = amount;
+      uniforms.clock.value = reduced ? 0 : seconds;
+      uniforms.motion.value = reduced ? 0 : 1;
+      renderer.setRenderTarget(target);
+    },
+    finish(destination) {
+      renderer.setRenderTarget(destination);
+      renderer.render(stage, camera);
+    },
+    dispose() {
+      target.dispose();
+      geometry.dispose();
+      material.dispose();
+    },
+  };
 }
 
 /** Presentation only. All world/actor positions are canonical millimetres.
@@ -507,22 +1406,54 @@ export function createFlightRenderer({
   renderer.toneMappingExposure = QUALITIES.balanced.exposure;
   renderer.shadowMap.type = THREE.PCFShadowMap;
   const scene = new THREE.Scene(),
+    fpvScene = new THREE.Scene(),
     camera = new THREE.PerspectiveCamera(82, 1, 0.035, 300);
+  // Count both the world and the small first-person presentation pass.
+  renderer.info.autoReset = false;
   const world = new THREE.Group(),
     goals = new THREE.Group(),
+    routeGuidance = new THREE.Group(),
     aircraft = new THREE.Group(),
+    fpvAircraft = new THREE.Group(),
     ghostAircraft = new THREE.Group(),
     actors = new THREE.Group(),
     projectiles = new THREE.Group(),
+    combatSupplies = new THREE.Group(),
     imported = new THREE.Group(),
     editHandles = new THREE.Group();
   editHandles.visible = false;
-  scene.add(world, goals, aircraft, ghostAircraft, actors, projectiles, imported, editHandles);
+  scene.add(
+    world,
+    goals,
+    routeGuidance,
+    aircraft,
+    ghostAircraft,
+    actors,
+    projectiles,
+    combatSupplies,
+    imported,
+    editHandles,
+  );
   let huntPresentation = createHuntPresentation?.({ THREE, scene }) ?? null;
+  let combatPresentation = null,
+    combatActors = null,
+    combatArchive = null;
+  let combatOptions = {},
+    combatTick = 0,
+    combatOrigin = { x: 0, y: 0, z: 0 },
+    combatFrameAt = null,
+    presentationClock = 0,
+    presentationTick = 0,
+    presentationPaused = false;
   const hemisphere = new THREE.HemisphereLight(0xe5f3ff, 0x3d504a, 2.1);
   const sunlight = new THREE.DirectionalLight(0xffefd8, 3.1);
   const fillLight = new THREE.DirectionalLight(0x9cc7e8, 0.24);
   const rimLight = new THREE.DirectionalLight(0xffbf87, 0);
+  const fpvHemisphere = hemisphere.clone(),
+    fpvSun = sunlight.clone(),
+    fpvFill = fillLight.clone();
+  fpvSun.castShadow = fpvFill.castShadow = false;
+  fpvScene.add(fpvAircraft, fpvHemisphere, fpvSun, fpvSun.target, fpvFill, fpvFill.target);
   sunlight.position.set(-24, 36, 15);
   sunlight.castShadow = true;
   sunlight.shadow.bias = -0.0002;
@@ -568,6 +1499,7 @@ export function createFlightRenderer({
     lastHeight = 0,
     pathLine = null,
     droneVisual = null,
+    fpvVisual = null,
     physicalAircraft = null,
     ghostVisual = null,
     ghostSamples = [],
@@ -592,7 +1524,6 @@ export function createFlightRenderer({
     effectPalette = resolveSimEffects(null),
     goalMaterialKit = null,
     stadiumMaterial = null,
-    gateCueFactory = null,
     pendingPresentation = normalizeSimPresentation(initialPresentation),
     activePresentation = pendingPresentation,
     sceneryFallback = null,
@@ -605,8 +1536,36 @@ export function createFlightRenderer({
   const editRows = [],
     raycaster = new THREE.Raycaster(),
     objectiveRaycaster = new THREE.Raycaster();
-  let objectiveVisibility = null;
-  const objectivePadPoints = new Map();
+  const objectiveVisibility = new Map();
+  let guidanceVisible = true,
+    guidanceAccent = 'amber',
+    guidanceView = null;
+  const objectivePadPoints = new Map(),
+    importedActorVisibility = new Map();
+  let actorSourceIds = new Set(),
+    combatSourceIds = new Set(),
+    routeGuideSource = null,
+    routeGuideAccent = null;
+  function syncImportedActors() {
+    applyImportedActorOwnership(
+      imported,
+      new Set([...actorSourceIds, ...combatSourceIds]),
+      importedActorVisibility,
+    );
+  }
+  function syncRouteGuide(value, visible) {
+    if (routeGuideSource !== value || routeGuideAccent !== guidanceAccent) {
+      releaseGroup(routeGuidance);
+      routeGuideSource = value;
+      routeGuideAccent = guidanceAccent;
+      const guide = createRouteGuideVisual(value, guidanceAccent);
+      if (guide) {
+        register(guide);
+        routeGuidance.add(guide);
+      }
+    }
+    routeGuidance.visible = visible === true;
+  }
   const materials = new Set(),
     geometry = new Set(),
     shadowMaterials = new WeakMap(),
@@ -620,8 +1579,508 @@ export function createFlightRenderer({
     stadiumDetailMaterials = new Map(),
     qualityDetails = [];
   const flightViewFrame = createFlightViewFrame({ camera, aircraft });
+  function syncFpvLighting() {
+    fpvScene.environment = scene.environment;
+    fpvScene.environmentIntensity = scene.environmentIntensity;
+    fpvHemisphere.color.copy(hemisphere.color);
+    fpvHemisphere.groundColor.copy(hemisphere.groundColor);
+    fpvHemisphere.intensity = hemisphere.intensity;
+    for (const [target, source] of [
+      [fpvSun, sunlight],
+      [fpvFill, fillLight],
+    ]) {
+      target.color.copy(source.color);
+      target.intensity = source.intensity;
+      target.position.copy(source.position);
+      target.target.position.copy(source.target.position);
+    }
+  }
+  let analogPass = null,
+    analogAmount = 0,
+    analogClock = 0;
+  function renderFlight() {
+    renderer.info.reset();
+    const destination = renderer.getRenderTarget();
+    const filtered = flightViewFrame.view === 'fpv' && analogAmount > 0;
+    if (!filtered && analogPass) {
+      analogPass.dispose();
+      analogPass = null;
+    }
+    if (filtered) {
+      analogPass ??= createAnalogVideoPass(renderer);
+      analogPass.begin(analogAmount, analogClock, reducedMotion);
+    }
+    try {
+      renderer.render(scene, camera);
+      if (fpvVisual?.root.visible) {
+        syncFpvLighting();
+        // A viewmodel represents hardware below the lens, not objects 0.7m into
+        // the world. Separate depth prevents floors and nearby walls clipping it.
+        const autoClear = renderer.autoClear;
+        renderer.autoClear = false;
+        try {
+          renderer.clearDepth();
+          renderer.render(fpvScene, camera);
+        } finally {
+          renderer.autoClear = autoClear;
+        }
+      }
+      if (filtered) analogPass.finish(destination);
+    } finally {
+      renderer.setRenderTarget(destination);
+    }
+  }
   const pulseTransform = new THREE.Matrix4();
   const labelPosition = new THREE.Vector3();
+  const combatRay = new THREE.Raycaster(),
+    combatRayNormal = new THREE.Vector3(),
+    combatNormalMatrix = new THREE.Matrix3();
+  const combatAttachments = createCombatSurfaceAttachments({
+    roots: () =>
+      regional
+        ? [['region', regional.root]]
+        : [
+            ['world', world],
+            ['imported', imported],
+          ],
+    originMm: () => (regional ? combatOrigin : { x: 0, y: 0, z: 0 }),
+  });
+  function prepareCombatSurfaces() {
+    combatAttachments.beginFrame();
+    for (const root of regional ? [regional.root] : [world, imported]) root.updateMatrixWorld(true);
+  }
+  function combatGround(position, normal = null, sweep = null) {
+    if (sweep?.attachment) return combatAttachments.resolve(sweep.attachment);
+    const origin = regional ? combatOrigin : { x: 0, y: 0, z: 0 };
+    // Actor positions are native foot anchors. Start just above that anchor so
+    // an overhead roof cannot steal a mark intended for the floor below it.
+    const wall = !sweep && normal && Math.abs(normal.y) < 0.25;
+    const start =
+        sweep?.fromMm ??
+        (wall
+          ? {
+              x: position.x + normal.x * 100,
+              y: position.y + normal.y * 100,
+              z: position.z + normal.z * 100,
+            }
+          : { ...position, y: position.y + 100 }),
+      end = sweep?.toMm,
+      direction = end
+        ? new THREE.Vector3(end.x - start.x, end.y - start.y, end.z - start.z)
+        : wall
+          ? new THREE.Vector3(-normal.x, -normal.y, -normal.z)
+          : new THREE.Vector3(0, -1, 0);
+    const length = direction.length();
+    if (length === 0) return sweep ? { clear: true } : null;
+    combatRay.set(
+      new THREE.Vector3(
+        (start.x - origin.x) / 1000,
+        (start.y - origin.y) / 1000,
+        (start.z - origin.z) / 1000,
+      ),
+      direction.normalize(),
+    );
+    combatRay.far = sweep ? length / 1000 + (sweep.radiusMm ?? 0) / 1000 : wall ? 0.2 : 128;
+    const hit = combatAttachments
+      .intersections(combatRay)
+      .find((entry) => entry.face && entry.object.visible);
+    if (!hit) {
+      if (!sweep) return null;
+      // A down probe must find admitted support before a clear sweep is usable.
+      return combatGround(end) ? { clear: true } : null;
+    }
+    combatNormalMatrix.getNormalMatrix(hit.object.matrixWorld);
+    combatRayNormal.copy(hit.face.normal).applyMatrix3(combatNormalMatrix).normalize();
+    if (combatRayNormal.dot(direction) > 0) combatRayNormal.negate();
+    return {
+      position: {
+        x: hit.point.x * 1000 + origin.x,
+        y: hit.point.y * 1000 + origin.y,
+        z: hit.point.z * 1000 + origin.z,
+      },
+      normal: { x: combatRayNormal.x, y: combatRayNormal.y, z: combatRayNormal.z },
+      ...combatAttachments.read(hit),
+    };
+  }
+  flightViewFrame.resolveChase = (from, to) => {
+    const direction = new THREE.Vector3().subVectors(to, from),
+      length = direction.length();
+    if (!length) return;
+    combatRay.set(from, direction.normalize());
+    combatRay.far = length;
+    const hit = combatAttachments
+      .intersections(combatRay)
+      .find((row) => row.face && row.object.visible);
+    if (hit) to.copy(from).addScaledVector(direction, Math.max(0.1, hit.distance - 0.12));
+  };
+  function ensureCombat() {
+    if (
+      typeof combatOptions.createPresentation !== 'function' ||
+      typeof combatOptions.createActors !== 'function'
+    )
+      throw new Error('The combat host must configure its presentation factories before use.');
+    combatActors ??= combatOptions.createActors({ THREE, scene });
+    if (!combatPresentation) {
+      combatPresentation = combatOptions.createPresentation({
+        THREE,
+        scene,
+        groundQuery: combatGround,
+        ...combatOptions,
+      });
+      if (combatArchive) combatPresentation.restore(combatArchive);
+    }
+    return combatPresentation;
+  }
+  function configureCombatPresentation(options = {}) {
+    if (
+      ['createAppearanceModels', 'cloneSkeleton', 'createActors', 'createPresentation'].some(
+        (key) => Object.hasOwn(options, key) && options[key] !== combatOptions[key],
+      )
+    )
+      combatAppearance.reset();
+    combatOptions = { ...combatOptions, ...options };
+    combatPresentation?.configure(options);
+  }
+  const combatAppearance = createCombatAppearanceActivation({
+    generation: () =>
+      disposed || renderer.getContext().isContextLost()
+        ? null
+        : `${sceneGeneration}:${presentationGeneration}:${contextGeneration}`,
+    upload: (texture) => renderer.initTexture(texture),
+    targets(ensure) {
+      if (ensure) ensureCombat();
+      return { actors: combatActors, presentation: combatPresentation };
+    },
+    createActors: (scene) => combatOptions.createActors({ THREE, scene }),
+    createPresentation: (scene) =>
+      combatOptions.createPresentation({ ...combatOptions, THREE, scene }),
+    makeScene() {
+      const stage = new THREE.Scene();
+      stage.environment = scene.environment;
+      stage.fog = scene.fog;
+      stage.environmentIntensity = scene.environmentIntensity;
+      stage.environmentRotation.copy(scene.environmentRotation);
+      for (const light of scene.children.filter((item) => item.isLight)) stage.add(light.clone());
+      return stage;
+    },
+    async prepareModels(pack, { signal }) {
+      const factory = combatOptions.createAppearanceModels,
+        clone = combatOptions.cloneSkeleton;
+      if (!loadGLTF || typeof clone !== 'function' || typeof factory !== 'function')
+        throw new Error('Optional character appearance is unavailable in this simulator.');
+      const { GLTFLoader } = await loadGLTF();
+      signal.throwIfAborted();
+      return factory(pack, {
+        THREE,
+        clone,
+        signal,
+        async loadModel(blob) {
+          signal.throwIfAborted();
+          let imageFailed = false;
+          const manager = new THREE.LoadingManager();
+          manager.setURLModifier((url) => {
+            if (url.startsWith('blob:') || url.startsWith('data:')) return url;
+            throw new Error('Character appearance requested an external resource.');
+          });
+          const result = await configureWorldGLTFLoader(new GLTFLoader(manager), {
+            onImageError: () => {
+              imageFailed = true;
+            },
+          }).parseAsync(await blob.arrayBuffer(), '');
+          if (imageFailed || signal.aborted) {
+            const rejected = new THREE.Group();
+            rejected.add(...(result.scenes ?? [result.scene]));
+            releaseGroup(rejected);
+            signal.throwIfAborted();
+            throw new Error('A character texture could not be decoded.');
+          }
+          return result;
+        },
+      });
+    },
+    async prepareScene(stage, { signal }) {
+      const target = new THREE.WebGLRenderTarget(1, 1),
+        view = camera.clone();
+      view.position.set(0, 1, 4);
+      view.lookAt(0, 1, 0);
+      view.updateMatrixWorld();
+      let previous = null;
+      try {
+        await renderer.compileAsync(stage, view);
+        signal.throwIfAborted();
+        if (disposed || renderer.getContext().isContextLost())
+          throw new DOMException('Graphics context changed.', 'AbortError');
+        const gl = renderer.getContext();
+        if (
+          renderer.info.programs.some(
+            (program) => gl.getProgramParameter(program.program, gl.LINK_STATUS) === false,
+          )
+        )
+          throw new Error('Character shaders could not be compiled.');
+        previous = {
+          target: renderer.getRenderTarget(),
+          face: renderer.getActiveCubeFace(),
+          mip: renderer.getActiveMipmapLevel(),
+          viewport: renderer.getViewport(new THREE.Vector4()),
+          scissor: renderer.getScissor(new THREE.Vector4()),
+          scissorTest: renderer.getScissorTest(),
+          shadows: renderer.shadowMap.autoUpdate,
+          shadowNeeds: renderer.shadowMap.needsUpdate,
+          autoClear: renderer.autoClear,
+        };
+        renderer.setRenderTarget(target);
+        renderer.setViewport(0, 0, 1, 1);
+        renderer.setScissorTest(false);
+        renderer.shadowMap.autoUpdate = false;
+        renderer.shadowMap.needsUpdate = false;
+        renderer.autoClear = true;
+        renderer.render(stage, view);
+      } finally {
+        if (previous) {
+          renderer.setRenderTarget(previous.target, previous.face, previous.mip);
+          renderer.setViewport(previous.viewport);
+          renderer.setScissor(previous.scissor);
+          renderer.setScissorTest(previous.scissorTest);
+          renderer.shadowMap.autoUpdate = previous.shadows;
+          renderer.shadowMap.needsUpdate = previous.shadowNeeds;
+          renderer.autoClear = previous.autoClear;
+        }
+        target.dispose();
+      }
+    },
+  });
+  function setCombatActors(value, options = {}) {
+    if (disposed) return;
+    if (options.originMm) combatOrigin = { ...options.originMm };
+    combatTick = options.tick ?? combatTick;
+    if (value === null && !combatActors) return;
+    ensureCombat();
+    combatActors.setActors(value, options);
+    combatSourceIds = new Set(
+      (value ?? []).flatMap((actor) =>
+        [actor.id, actor.sourceId].filter((id) => typeof id === 'string'),
+      ),
+    );
+    syncImportedActors();
+    if (value !== null && actorRows.size) {
+      releaseGroup(actors);
+      actorRows.clear();
+      lastActorState = null;
+    }
+    actors.visible = value === null;
+  }
+  function observeCombat(facts, options = {}) {
+    if (disposed) return;
+    if (options.originMm) combatOrigin = { ...options.originMm };
+    combatTick = options.tick ?? combatTick;
+    if (facts.length) prepareCombatSurfaces();
+    // Native lessons retain their own accepted actors. Match presentation to
+    // the visible model without writing a cosmetic choice into gameplay facts.
+    const native = !combatActors?.active();
+    const presented = native
+      ? facts.map((fact) => {
+          const appearance = actorRows.get(fact.sourceId ?? fact.actor)?.appearance;
+          return appearance ? { ...fact, appearance: { ...fact.appearance, ...appearance } } : fact;
+        })
+      : facts;
+    ensureCombat().observe(presented, options);
+  }
+  function resetCombatPresentation(runId = '', { preserveAppearance = false } = {}) {
+    if (!preserveAppearance) combatAppearance.reset();
+    combatArchive = null;
+    combatTick = 0;
+    presentationClock = presentationTick = 0;
+    combatFrameAt = null;
+    combatPresentation?.reset(runId);
+    combatActors?.reset();
+    combatSourceIds.clear();
+    syncImportedActors();
+    actors.visible = true;
+    for (const mesh of supplyPools.values()) {
+      mesh.count = 0;
+      mesh.visible = false;
+    }
+  }
+  const supplyPools = new Map(),
+    supplyTransform = new THREE.Object3D();
+  function supplyMesh(key) {
+    if (supplyPools.has(key)) return supplyPools.get(key);
+    const isPad = key === 'pad',
+      isMark = key === 'mark';
+    const geometry = isPad ? new THREE.RingGeometry(1.6, 1.9, 40) : new THREE.BoxGeometry(1, 1, 1);
+    if (isPad) geometry.rotateX(-Math.PI / 2);
+    const material = new THREE.MeshStandardMaterial({
+      color: 0xffffff,
+      roughness: 0.65,
+      metalness: isMark ? 0 : 0.4,
+      emissive: isPad || isMark ? 0x335566 : 0x000000,
+      side: isPad ? THREE.DoubleSide : THREE.FrontSide,
+    });
+    const mesh = new THREE.InstancedMesh(geometry, material, isPad ? 1 : 48);
+    mesh.frustumCulled = false;
+    mesh.count = 0;
+    mesh.name = `combat-supply-${key}`;
+    combatSupplies.add(mesh);
+    supplyPools.set(key, mesh);
+    return mesh;
+  }
+  function drawCombatSupplies(state) {
+    for (const mesh of supplyPools.values()) mesh.count = 0;
+    const c = state.encounter,
+      origin = state.originMm ?? { x: 0, y: 0, z: 0 };
+    const put = (key, p, size, color) => {
+      const mesh = supplyMesh(key);
+      if (mesh.count >= mesh.instanceMatrix.count) return;
+      supplyTransform.position.set(
+        (p.x - origin.x) / 1000,
+        (p.y - origin.y) / 1000,
+        (p.z - origin.z) / 1000,
+      );
+      supplyTransform.rotation.set(0, 0, 0);
+      supplyTransform.scale.set(...size);
+      supplyTransform.updateMatrix();
+      mesh.setMatrixAt(mesh.count, supplyTransform.matrix);
+      mesh.setColorAt(mesh.count++, new THREE.Color(color));
+    };
+    if (c?.servicePad)
+      put(
+        'pad',
+        { ...c.servicePad, y: c.servicePad.y + 18 },
+        [1, 1, 1],
+        c.serviceTicks > 0 ? 0x74efb7 : 0x73d7ef,
+      );
+    for (const item of c?.pickups ?? []) {
+      const health = item.kind === 'health',
+        p = { ...item.position, y: item.position.y + 250 };
+      put('crate', p, [0.55, 0.38, 0.45], health ? 0x163b31 : item.guarded ? 0x7b5422 : 0x334b28);
+      if (health) {
+        put('mark', { ...p, y: p.y + 210 }, [0.3, 0.035, 0.09], 0xd9ffe4);
+        put('mark', { ...p, y: p.y + 212 }, [0.09, 0.035, 0.3], 0xd9ffe4);
+      } else
+        put(
+          'mark',
+          { ...p, y: p.y + 210 },
+          [0.32, 0.035, 0.22],
+          item.guarded ? 0xffb347 : 0xf2e2a8,
+        );
+    }
+    for (const mesh of supplyPools.values()) {
+      mesh.visible = mesh.count > 0;
+      mesh.instanceMatrix.needsUpdate = true;
+      if (mesh.instanceColor) mesh.instanceColor.needsUpdate = true;
+    }
+  }
+  function drawCombatArmament(state) {
+    let group = aircraft.getObjectByName('combat-armament');
+    if (!state.encounter?.weapons) {
+      if (group) group.visible = false;
+      return;
+    }
+    const id = state.encounter.weapons[state.encounter.weaponIndex].id;
+    if (!group) {
+      group = new THREE.Group();
+      group.name = 'combat-armament';
+      aircraft.add(group);
+      for (const weapon of ['autocannon', 'scatter', 'precision', 'rocket']) {
+        const mount = new THREE.Group();
+        mount.name = weapon;
+        group.add(mount);
+        const barrel = new THREE.CylinderGeometry(
+          weapon === 'scatter' ? 0.035 : 0.018,
+          0.025,
+          weapon === 'precision' ? 0.2 : 0.12,
+          weapon === 'scatter' ? 12 : 8,
+        );
+        barrel.rotateX(Math.PI / 2);
+        const body = new THREE.Mesh(
+          barrel,
+          new THREE.MeshStandardMaterial({
+            color: weapon === 'rocket' ? 0x56623c : 0x333d42,
+            metalness: 0.75,
+            roughness: 0.35,
+          }),
+        );
+        body.position.set(0, -0.035, -0.2);
+        mount.add(body);
+        const housing = new THREE.Mesh(
+          new THREE.BoxGeometry(0.09, 0.055, 0.11),
+          new THREE.MeshStandardMaterial({ color: 0x1e292f, metalness: 0.5, roughness: 0.6 }),
+        );
+        housing.position.set(0, -0.035, -0.12);
+        mount.add(housing);
+        const flash = new THREE.Mesh(
+          new THREE.ConeGeometry(weapon === 'scatter' ? 0.09 : 0.045, 0.14, 7),
+          new THREE.MeshBasicMaterial({
+            color: weapon === 'precision' ? 0xb1f9ff : weapon === 'rocket' ? 0xff9442 : 0xffdf86,
+            transparent: true,
+            opacity: 0.8,
+            blending: THREE.AdditiveBlending,
+            depthWrite: false,
+          }),
+        );
+        flash.geometry.rotateX(-Math.PI / 2);
+        flash.position.set(0, -0.035, -0.3);
+        flash.name = 'muzzle-flash';
+        mount.add(flash);
+      }
+    }
+    group.visible = true;
+    for (const mount of group.children) {
+      // The visual barrel ends at the same body-local muzzle used by accepted
+      // projectile simulation, including small physical aircraft presets.
+      const offset = combatWeaponVisualOffset(
+        state.aircraftRadiusMm ?? state.radius ?? flightViewFrame.radiusMm,
+        mount.name,
+      );
+      mount.position.set(offset.x, offset.y, offset.z);
+      mount.getObjectByName('muzzle-flash').position.z = offset.flashZ;
+      mount.visible = mount.name === id;
+      mount.getObjectByName('muzzle-flash').visible = combatMuzzleActive(
+        state.encounter,
+        mount.name,
+      );
+    }
+  }
+  function drawCombat(state) {
+    drawCombatSupplies(state);
+    drawCombatArmament(state);
+    updateFlightProjectileBatches(state, {
+      batches: pulseRows,
+      createBatch: projectileBatch,
+      transform: pulseTransform,
+      originMm: state.originMm ?? { x: 0, y: 0, z: 0 },
+    });
+    if (!combatPresentation && !combatActors) return;
+    combatOrigin = state.originMm ?? { x: 0, y: 0, z: 0 };
+    prepareCombatSurfaces();
+    const now = win.performance?.now?.() ?? globalThis.performance?.now?.();
+    const frameMs =
+      combatFrameAt === null || !Number.isFinite(now) ? null : Math.min(100, now - combatFrameAt);
+    combatFrameAt = now ?? null;
+    if (combatTick < presentationTick) presentationClock = combatTick / 50;
+    else presentationClock += (combatTick - presentationTick) / 50;
+    if (!presentationPaused && state.encounter && state.encounter.status !== 'active')
+      presentationClock += (frameMs ?? 0) / 1000;
+    presentationTick = combatTick;
+    const reduced =
+      reducedMotion ||
+      canvas.ownerDocument?.body?.dataset.effects === 'reduced' ||
+      win.matchMedia?.('(prefers-reduced-motion: reduce)').matches === true;
+    const options = {
+      tick: combatTick,
+      originMm: combatOrigin,
+      cameraPosition: camera.position,
+      graphicsQuality: quality,
+      reducedMotion: reduced,
+      frameMs,
+      presentationClock,
+      enemyHealthDisplay: combatOptions.preferences?.().enemyHealthDisplay ?? 'aimed',
+      aimDirection: camera.getWorldDirection(new THREE.Vector3()),
+    };
+    combatActors?.update(options);
+    combatPresentation?.update(options);
+    actors.visible = !combatActors?.active();
+  }
   const texturesOf = (paint) => Object.values(paint ?? {}).filter((value) => value?.isTexture);
   function ownShadowMaterial(item) {
     if (!item.isMesh || item.customDepthMaterial || Array.isArray(item.material)) return;
@@ -713,6 +2172,7 @@ export function createFlightRenderer({
   function clearImported() {
     if (importedGroundFog) scene.fog = importedGroundFog;
     importedGroundFog = null;
+    importedActorVisibility.clear();
     for (const [object, visible] of representedCollisionMeshes) object.visible = visible;
     representedCollisionMeshes.clear();
     if (sceneryFallback) sceneryFallback.visible = true;
@@ -742,7 +2202,9 @@ export function createFlightRenderer({
     surface.height = 128;
     const context = surface.getContext('2d');
     if (!context) return null;
-    const legibility = objective ? simObjectiveLabelStyle(themeProfile) : null;
+    const legibility = objective
+      ? (simObjectiveLabelStyle(themeProfile) ?? { background: '#101820', foreground: '#f5f9ec' })
+      : null;
     context.fillStyle =
       legibility?.background ??
       (themeProfile ? `#${themeProfile.palette.wall.toString(16).padStart(6, '0')}` : '#132b39');
@@ -767,6 +2229,7 @@ export function createFlightRenderer({
       depthTest: true,
       depthWrite: false,
       toneMapped: false,
+      fog: !objective,
     });
     materials.add(paint);
     const sprite = new THREE.Sprite(paint);
@@ -830,6 +2293,7 @@ export function createFlightRenderer({
     presentationGeneration++;
     droneKind = value;
     releaseGroup(aircraft);
+    releaseGroup(fpvAircraft);
     droneVisual = physicalAircraft
       ? buildPhysicalAircraftVisual({
           configuration: physicalAircraft,
@@ -851,6 +2315,18 @@ export function createFlightRenderer({
           reviewRevision: machineryRevision,
         });
     if (cosmeticColor) droneVisual.tint.color.set(cosmeticColor);
+    fpvVisual = buildFpvAircraftVisual({
+      parent: fpvAircraft,
+      mesh,
+      material,
+      configuration: physicalAircraft,
+      kind: value,
+      quality,
+      color: cosmeticColor,
+    });
+    flightViewFrame.fpvVisual = fpvVisual;
+    fpvAircraft.visible = true;
+    fpvVisual.root.visible = false;
     if (
       !physicalAircraft &&
       (themeProfile?.id ?? activePresentation?.collectionId) === 'military-field'
@@ -917,10 +2393,39 @@ export function createFlightRenderer({
         toneMapped: false,
       });
       materials.add(paint);
-      const marker = new THREE.LineSegments(shape, paint);
+      const marker = new THREE.Group();
+      marker.name = 'objective-subject-brackets';
+      for (const sign of [-1, 1])
+        for (const [dimensions, position] of [
+          [
+            [0.065, 0.4, 0.035],
+            [sign * 0.65, 0.48, 0],
+          ],
+          [
+            [0.4, 0.065, 0.035],
+            [sign * 0.48, 0.65, 0],
+          ],
+        ]) {
+          const backing = mesh(
+            new THREE.BoxGeometry(...dimensions.map((v) => v * 1.45)),
+            material(0x101820, { toneMapped: false, fog: false }),
+            marker,
+          );
+          backing.position.set(...position);
+          const bar = mesh(
+            new THREE.BoxGeometry(...dimensions),
+            new THREE.MeshBasicMaterial({ color: 0xf5f9ec, toneMapped: false, fog: false }),
+            marker,
+          );
+          bar.position.set(position[0], position[1], 0.015);
+          materials.add(bar.material);
+        }
       group.add(marker);
       const light = material(0xffca76, { transparent: true, opacity: 1 });
-      group.userData.ownedMaterials = [light];
+      group.userData.ownedMaterials = [light, paint];
+      // The obsolete line buffer is released now; solid corners stay legible.
+      geometry.delete(shape);
+      shape.dispose();
       const badge = label(String(index + 1).padStart(2, '0'), '#ffca76', group, 0.48, true);
       if (badge) badge.position.y = 0.92;
       group.visible = false;
@@ -959,80 +2464,10 @@ export function createFlightRenderer({
       opacity: 0.4,
       depthWrite: false,
     });
-    let gateCue = null;
-    if (step.type === 'gate') {
-      const gateStyle = themeProfile?.assets?.gate ?? 'builtin:gate';
-      group.userData.themeAsset = gateStyle;
-      // These remain translucent criterion guides; their aperture is unchanged.
-      light.roughness = gateStyle.includes('timber')
-        ? 0.95
-        : gateStyle.includes('utility')
-          ? 0.65
-          : 0.35;
-      light.metalness = gateStyle.includes('utility') ? 0.5 : 0;
-      light.emissiveIntensity = gateStyle.includes('neon')
-        ? 1.5
-        : gateStyle.includes('timber')
-          ? 0.2
-          : 0.65;
-      light.emissive.setHex(
-        gateStyle.includes('timber') ? 0xc8aa72 : (themeProfile?.palette?.accent ?? 0x82e1d5),
-      );
-      const horizontal = step.axis === 'z',
-        span = horizontal ? size[0] : size[2];
-      for (const side of [-1, 1]) {
-        // A short bracket at each outer corner identifies the theme without
-        // filling the gate opening or changing its exact crossing boundary.
-        if (gateStyle.includes('utility') || gateStyle.includes('neon')) {
-          const bracket = mesh(
-            new THREE.BoxGeometry(horizontal ? 0.32 : 0.045, 0.045, horizontal ? 0.045 : 0.32),
-            light,
-            group,
-          );
-          bracket.position.set(
-            horizontal ? side * (span / 2 + 0.14) : 0,
-            size[1] / 2,
-            horizontal ? 0 : side * (span / 2 + 0.14),
-          );
-        }
-        const upright = mesh(new THREE.BoxGeometry(0.045, size[1], 0.045), light, group);
-        upright.position.set(
-          horizontal ? (side * span) / 2 : 0,
-          0,
-          horizontal ? 0 : (side * span) / 2,
-        );
-        const lintel = mesh(
-          new THREE.BoxGeometry(horizontal ? span : 0.045, 0.045, horizontal ? 0.045 : span),
-          light,
-          group,
-        );
-        lintel.position.y = (side * size[1]) / 2;
-      }
-      if (goalMaterialKit) {
-        // Fastener plates occupy the existing 45 mm frame, never its clear opening.
-        const matrices = [];
-        for (const side of [-1, 1])
-          for (const top of [-1, 1])
-            matrices.push(
-              new THREE.Matrix4().makeTranslation(
-                horizontal ? (side * span) / 2 : 0,
-                (top * size[1]) / 2,
-                horizontal ? 0 : (side * span) / 2,
-              ),
-            );
-        instanceSimDetails({
-          shape: new THREE.BoxGeometry(0.034, 0.034, 0.034),
-          paint: goalMaterialKit.paint('steel'),
-          parent: group,
-          matrices,
-          mesh,
-        });
-      }
-      gateCue = gateCueFactory?.({ axis: step.axis, span, height: size[1] }) ?? null;
-      if (gateCue) {
-        register(gateCue);
-        group.add(gateCue);
-      }
+    const gateCue = createObjectiveGuideVisual(step, { accent: guidanceAccent, origin: position });
+    if (gateCue) {
+      register(gateCue);
+      group.add(gateCue);
     }
     const marker = mesh(
       new THREE.TorusGeometry(0.35, 0.045, 6, goalMaterialKit ? 8 : 24),
@@ -1049,7 +2484,7 @@ export function createFlightRenderer({
       true,
     );
     if (badge) badge.position.set(0, size[1] / 2 + 0.5, 0);
-    const row = { group, paint, light, marker, badge, gateCue, index };
+    const row = { group, paint, light, marker, badge, gateCue, index, type: step.type };
     // These are holographic instructions, never collision geometry. Their group
     // shares the criterion's zone centre, so editor translations move all parts.
     const point = (world) =>
@@ -1076,39 +2511,6 @@ export function createFlightRenderer({
       parent.add(arrow);
       register(arrow);
     };
-    if (step.min && step.max && ['hold', 'land'].includes(step.type)) {
-      // Open corner brackets mark both altitude planes, even when the pilot is
-      // inside a wide zone and its centre marker is behind the FPV camera.
-      const corners = [],
-        arm = Math.min(1.4, size[0] / 4, size[2] / 4);
-      for (const x of [-1, 1])
-        for (const z of [-1, 1])
-          for (const y of [-1, 1]) {
-            const v = new THREE.Vector3((x * size[0]) / 2, (y * size[1]) / 2, (z * size[2]) / 2);
-            corners.push(
-              v,
-              v.clone().add(new THREE.Vector3(-x * arm, 0, 0)),
-              v,
-              v.clone().add(new THREE.Vector3(0, 0, -z * arm)),
-              v,
-              v.clone().add(new THREE.Vector3(0, -y * Math.min(0.5, size[1] / 3), 0)),
-            );
-          }
-      const shape = new THREE.BufferGeometry().setFromPoints(corners);
-      geometry.add(shape);
-      const brackets = new THREE.LineSegments(
-        shape,
-        new THREE.LineBasicMaterial({
-          color: effectPalette.goalActive,
-          toneMapped: false,
-          transparent: true,
-          opacity: 0.85,
-        }),
-      );
-      materials.add(brackets.material);
-      group.add(brackets);
-      row.zoneCue = brackets;
-    }
     if (step.type === 'path-v1') {
       const [a, b] = step.plane,
         radius = (step.radiusMin + step.radiusMax) / 2000;
@@ -1187,24 +2589,8 @@ export function createFlightRenderer({
       row.skillShape = 'body-up';
     }
     goalRows.push(row);
-    if (step.type === 'gate') {
-      const direction = new THREE.Vector3(
-        step.axis === 'x' ? step.direction : 0,
-        0,
-        step.axis === 'z' ? step.direction : 0,
-      );
-      const arrow = new THREE.ArrowHelper(
-        direction,
-        new THREE.Vector3(0, -position[1] + 0.1, 0).addScaledVector(direction, -1.1),
-        0.8,
-        effectPalette.directionArrow,
-        0.25,
-        0.18,
-      );
-      group.add(arrow);
-      register(arrow);
-    }
   }
+
   function obstacleSurfaceKind(obstacle) {
     const authored = environmentSurfaceKind?.(obstacle);
     if (authored) return authored;
@@ -1815,10 +3201,16 @@ export function createFlightRenderer({
     setGhost([]);
     editor?.detach();
     course = value;
+    actorSourceIds = new Set([
+      ...(value.actors ?? []).map((actor) => actor.id),
+      ...(options.actorSourceIds ?? []).filter((id) => typeof id === 'string'),
+    ]);
+    combatSourceIds.clear();
     mode = selectedMode;
-    objectiveVisibility = null;
+    objectiveVisibility.clear();
     objectivePadPoints.clear();
     huntPresentation?.reset();
+    resetCombatPresentation();
     huntTargets.clear();
     for (const step of course.steps[mode])
       if (step.type === 'hunt-contact-v1')
@@ -1826,9 +3218,11 @@ export function createFlightRenderer({
     for (const policy of course.pursuit?.actors ?? [])
       if (policy.family === 'courier') huntTargets.set(policy.id, 0);
     currentStep = -1;
+    syncRouteGuide(null, false);
     clearImported();
     scene.environment = null;
-    for (const group of [world, goals, actors, projectiles]) releaseGroup(group);
+    for (const group of [world, goals, actors, projectiles, combatSupplies]) releaseGroup(group);
+    supplyPools.clear();
     garageDetailMaterials.clear();
     stadiumDetailMaterials.clear();
     goalRows.length = 0;
@@ -1860,7 +3254,6 @@ export function createFlightRenderer({
     const theme = surroundings.theme;
     themeProfile = surroundings.profile;
     effectPalette = resolveSimEffects(themeProfile);
-    gateCueFactory = createSimGateCueFactory(themeProfile);
     goalMaterialKit = simCollectionIdForProfile(themeProfile)
       ? createWorkshopMaterials({
           collectionId: simCollectionIdForProfile(themeProfile),
@@ -2641,20 +4034,33 @@ export function createFlightRenderer({
       health: actor.maxHealth ?? actor.health ?? 1,
       cast: preferredCast,
       family: huntFamily,
+      appearance: {
+        family: nativeSoldierFamily ?? huntFamily,
+        cast:
+          huntAppearance?.cast ??
+          (pixel ? 'arcade' : preferredCast === 'authored' ? 'rivals' : preferredCast),
+        type: actor.type,
+        model:
+          group.userData.nativeVehicleModel ?? actorDefinitions.get(actor.id)?.vehicleModel ?? '',
+      },
     };
   }
-  function projectileBatch(owner) {
-    const key = owner === 'player' ? 'player' : 'other';
+  function projectileBatch(owner, weapon = null) {
+    const key = `${owner === 'player' ? 'player' : 'other'}${weapon ? `:${weapon}` : ''}`;
     let batch = pulseRows.get(key);
     if (!batch) {
-      const color = key === 'player' ? effectPalette.playerPulse : effectPalette.hostilePulse;
+      const style = combatProjectileStyle(weapon, owner, effectPalette),
+        color = style.color;
       batch = new THREE.InstancedMesh(
-        new THREE.SphereGeometry(0.055, 6, 4),
-        material(color, { emissive: color, emissiveIntensity: 1.4, roughness: 0.2 }),
-        64,
+        weapon
+          ? new THREE.CapsuleGeometry(0.5, 1, 2, 6).rotateX(Math.PI / 2)
+          : new THREE.SphereGeometry(0.055, 6, 4),
+        material(color, { emissive: color, emissiveIntensity: style.emissive, roughness: 0.2 }),
+        128,
       );
       batch.name = `projectile-pool-${key}`;
       batch.count = 0;
+      batch.visible = false;
       batch.frustumCulled = false;
       batch.instanceMatrix.setUsage(THREE.DynamicDrawUsage);
       projectiles.add(batch);
@@ -2664,6 +4070,7 @@ export function createFlightRenderer({
     return batch;
   }
   function updateActors(state) {
+    if (combatActors?.active()) return;
     lastActorState = state;
     seenActors.clear();
     for (let i = 0; i < Math.min(20, state.actors?.length ?? 0); i++) {
@@ -2685,6 +4092,11 @@ export function createFlightRenderer({
       if (!row) {
         row = createActor(actor);
         actorRows.set(actor.id, row);
+      }
+      if (row.generation !== actor.generation) {
+        row.lastTick = null;
+        row.lastPosition.set(actor.position.x, actor.position.y, actor.position.z);
+        row.generation = actor.generation;
       }
       const p = actor.position,
         definition = actorDefinitions.get(actor.id),
@@ -2802,22 +4214,6 @@ export function createFlightRenderer({
         actors.remove(row.group);
         actorRows.delete(id);
       }
-    for (const batch of pulseRows.values()) batch.count = 0;
-    for (let i = 0; i < Math.min(64, state.projectiles?.length ?? 0); i++) {
-      const pulse = state.projectiles[i];
-      if (!pulse.position || pulse.id === undefined) continue;
-      const batch = projectileBatch(pulse.owner);
-      pulseTransform.makeTranslation(
-        pulse.position.x / 1000,
-        pulse.position.y / 1000,
-        pulse.position.z / 1000,
-      );
-      batch.setMatrixAt(batch.count++, pulseTransform);
-    }
-    for (const batch of pulseRows.values()) {
-      batch.visible = batch.count > 0;
-      batch.instanceMatrix.needsUpdate = true;
-    }
   }
   function machineryPresentationOptions() {
     return {
@@ -2836,7 +4232,41 @@ export function createFlightRenderer({
   function observePresentation(state) {
     if (!disposed && course) huntPresentation?.observe?.(state, machineryPresentationOptions());
   }
-  function draw(state, { cameraMode = view, cameraFov = fov, cameraTilt = tilt } = {}) {
+  function draw(
+    state,
+    {
+      cameraMode = view,
+      cameraFov = fov,
+      cameraTilt = tilt,
+      chaseDistance = 1.6,
+      showFpvProps = false,
+      showFpvKnife = true,
+      guidanceVisible: showGuidance = true,
+      guidanceAccent: accent = 'amber',
+      routeGuide = null,
+      routeGuideVisible = false,
+      analogVideo = false,
+      analogStrength = 35,
+      presentationPaused: paused = false,
+    } = {},
+  ) {
+    if (disposed || renderer.getContext().isContextLost()) return false;
+    analogAmount =
+      analogVideo && Number.isFinite(analogStrength)
+        ? Math.max(0, Math.min(1, analogStrength / 100))
+        : 0;
+    analogClock = Number.isFinite(state.ticks) ? state.ticks / 50 : 0;
+    flightViewFrame.chaseDistance = chaseDistance;
+    flightViewFrame.showFpvProps = showFpvProps;
+    flightViewFrame.showFpvKnife = showFpvKnife;
+    const nextAccent = Object.hasOwn(GUIDE_ACCENTS, accent) ? accent : 'amber';
+    if (guidanceVisible !== showGuidance || guidanceAccent !== nextAccent) currentStep = -2;
+    guidanceVisible = showGuidance !== false;
+    guidanceAccent = nextAccent;
+    syncRouteGuide(routeGuide, routeGuideVisible);
+    const routeOrigin = state.originMm ?? { x: 0, y: 0, z: 0 };
+    routeGuidance.position.set(-routeOrigin.x / 1000, -routeOrigin.y / 1000, -routeOrigin.z / 1000);
+    presentationPaused = paused;
     if (regional) return drawRegional(state, { cameraMode, cameraFov, cameraTilt });
     if (disposed || !course || renderer.getContext().isContextLost()) return false;
     const hunt = course.steps[mode].find((step) => step.type === 'hunt-contact-v1');
@@ -2873,31 +4303,45 @@ export function createFlightRenderer({
     flightViewFrame.reducedMotion = reducedMotion;
     flightViewFrame.rotors = droneVisual.rotors;
     flightViewFrame.draw(state);
-    if (currentStep !== state.step) {
+    drawCombat(state);
+    goals.visible = guidanceVisible || view === 'editor';
+    if (currentStep !== state.step || guidanceView !== view) {
       currentStep = state.step;
+      objectiveVisibility.clear();
+      guidanceView = view;
       for (const row of goalRows) {
         const active = row.index === state.step,
-          complete = row.index < state.step;
-        row.paint.color.setHex(
-          complete
-            ? effectPalette.goalComplete
-            : active
-              ? effectPalette.goalActive
-              : effectPalette.goalInactive,
-        );
-        row.paint.opacity = active ? 1 : 0.18;
-        row.light.color.setHex(active ? effectPalette.goalActive : effectPalette.goalGlowInactive);
-        row.light.opacity = active ? 0.9 : 0.17;
-        row.marker.visible = active;
-        if (row.gateCue) row.gateCue.visible = active;
-        if (row.zoneCue) row.zoneCue.visible = active;
-        if (row.badge) row.badge.material.opacity = active ? 1 : 0.35;
+          preview = row.index === state.step + 1,
+          editing = view === 'editor',
+          visible = editing || active || preview,
+          opacity = editing || active ? 1 : 0.62;
+        row.group.visible = visible;
+        row.group.userData.guidanceState = editing ? 'authoring' : active ? 'current' : 'preview';
+        row.paint.color.setHex(objectiveGuidanceColor(guidanceAccent));
+        row.paint.opacity = opacity * 0.55;
+        row.light.color.setHex(objectiveGuidanceColor(guidanceAccent));
+        row.light.opacity = opacity;
+        row.marker.visible = Boolean(row.actorId && active);
+        if (row.gateCue) {
+          row.gateCue.visible = visible;
+          for (const paint of row.gateCue.userData.ownedMaterials) paint.opacity = opacity;
+          const accentPaints = row.gateCue.userData.accentMaterials ?? [
+            row.gateCue.userData.ownedMaterials[2],
+          ];
+          for (const paint of accentPaints) {
+            paint.color.setHex(objectiveGuidanceColor(guidanceAccent));
+            paint.opacity = opacity;
+          }
+        }
+        if (row.badge) row.badge.material.opacity = opacity;
       }
     }
     // A body-axis rotation cue uses the actual captured entry frame, not an
     // assumed world heading. Before entry it is only a neutral schematic cue.
     for (const row of goalRows)
-      if (row.skillCue) {
+      if (row.group.visible && row.type === 'land')
+        resolveObjectivePad(course.steps[mode][row.index], row.index);
+      else if (row.skillCue) {
         const entry = state.skill?.index === row.index ? state.skill.entry : null;
         if (entry)
           row.skillCue.quaternion.fromArray(entry.map((value) => value / 1000000)).normalize();
@@ -2907,7 +4351,9 @@ export function createFlightRenderer({
     for (const row of goalRows) {
       if (!row.actorId) continue;
       const subject = state.actors?.find((actor) => actor.id === row.actorId);
-      row.group.visible = row.index === state.step && Boolean(subject && subject.health > 0);
+      row.group.visible =
+        (view === 'editor' || row.index === state.step || row.index === state.step + 1) &&
+        Boolean(subject && subject.health > 0);
       if (!row.group.visible) continue;
       const definition = actorDefinitions.get(row.actorId);
       row.group.position.set(
@@ -2918,16 +4364,18 @@ export function createFlightRenderer({
       row.group.quaternion.copy(camera.quaternion);
     }
     // Use the current lens and CSS viewport, independently of graphics pixel ratio.
-    // The authored/legacy path keeps its original texture, size and visibility.
+    // Every collection shares the same readable current/preview screen-size limits.
     camera.updateMatrixWorld();
     for (const row of goalRows) {
-      if (row.badge) row.badge.visible = view === 'editor' || row.index === state.step;
+      if (row.badge)
+        row.badge.visible =
+          view === 'editor' || row.index === state.step || row.index === state.step + 1;
       const baseSize = row.badge?.userData.objectiveLabelBaseSize;
       if (!baseSize) continue;
       row.badge.getWorldPosition(labelPosition).applyMatrix4(camera.matrixWorldInverse);
-      const layout = simObjectiveLabelLayout({
+      const layout = objectiveGuideLabelLayout({
         baseSize,
-        active: row.index === state.step,
+        preview: row.index !== state.step && view !== 'editor',
         viewDepth: -labelPosition.z,
         projectionY: camera.projectionMatrix.elements[5],
         viewportHeight: rect.height,
@@ -2953,7 +4401,7 @@ export function createFlightRenderer({
     world.userData.visuals?.updatePresentation?.(state, { reducedMotion });
     updateGhost(state.ticks);
     if (pathLine) pathLine.visible = view !== 'fpv' && view !== 'editor';
-    renderer.render(scene, camera);
+    renderFlight();
     return !renderer.getContext().isContextLost();
   }
   function setPath(samples) {
@@ -3239,7 +4687,7 @@ export function createFlightRenderer({
           if (sceneryFallback) sceneryFallback.visible = false;
           importedGroundFog = scene.fog;
         }
-        objectiveVisibility = null;
+        objectiveVisibility.clear();
       }
       if (
         json.asset?.extras?.fpvScenery === true &&
@@ -3267,6 +4715,7 @@ export function createFlightRenderer({
             item.visible = false;
         }
       });
+      syncImportedActors();
       const objects = [];
       result.scene.traverse((item) => {
         const id = item.userData?.rl?.id ?? item.userData?.id ?? item.name;
@@ -3495,7 +4944,8 @@ export function createFlightRenderer({
     editor.attach(object);
     return { detach: () => editor?.detach() };
   }
-  function clearSceneResources() {
+  function clearSceneResources({ preserveCombat = false } = {}) {
+    combatAppearance.reset();
     for (const controller of regionalPreparations) controller.abort();
     // The regional session owns verified geometry and its asynchronous disposal.
     // Detach it before disposing renderer-owned aircraft/menu presentation.
@@ -3503,6 +4953,12 @@ export function createFlightRenderer({
     regional = null;
     huntPresentation?.dispose();
     huntPresentation = null;
+    combatArchive = preserveCombat ? (combatPresentation?.export() ?? combatArchive) : null;
+    combatPresentation?.dispose();
+    combatPresentation = null;
+    combatActors?.dispose();
+    combatActors = null;
+    actors.visible = true;
     if (editor) {
       scene.remove(editor.getHelper());
       editor.dispose();
@@ -3510,10 +4966,28 @@ export function createFlightRenderer({
     }
     setPath([]);
     releaseEnvironmentLight();
+    fpvScene.environment = null;
     setGhost([]);
     clearImported();
-    for (const group of [world, goals, aircraft, actors, projectiles, editHandles])
+    supplyPools.clear();
+    routeGuideSource = null;
+    actorSourceIds.clear();
+    combatSourceIds.clear();
+    objectiveVisibility.clear();
+    for (const group of [
+      world,
+      goals,
+      routeGuidance,
+      aircraft,
+      fpvAircraft,
+      actors,
+      projectiles,
+      combatSupplies,
+      editHandles,
+    ])
       releaseGroup(group);
+    fpvVisual = null;
+    flightViewFrame.fpvVisual = null;
     releaseShadow();
     for (const value of materials) {
       for (const texture of texturesOf(value)) texture.dispose();
@@ -3551,7 +5025,7 @@ export function createFlightRenderer({
     contextGeneration++;
     presentationGeneration++;
     importGeneration++;
-    clearSceneResources();
+    clearSceneResources({ preserveCombat: true });
     onContextLost();
   };
   canvas.addEventListener('webglcontextlost', lost);
@@ -3843,15 +5317,312 @@ export function createFlightRenderer({
     flightViewFrame.reducedMotion = reducedMotion;
     flightViewFrame.rotors = droneVisual.rotors;
     flightViewFrame.draw(state);
+    drawCombat(state);
     const p = aircraft.position;
     sunlight.position.set(p.x - 24, p.y + 36, p.z + 15);
     sunlight.target.position.copy(p);
-    renderer.render(scene, camera);
+    renderFlight();
     return !renderer.getContext().isContextLost();
+  }
+  function resolveObjectivePad(step, index) {
+    if (!objectivePadPoints.has(index)) {
+      const pad = new THREE.Vector3(
+          (step.min.x + step.max.x) / 2000,
+          step.max.y / 1000 + 1,
+          (step.min.z + step.max.z) / 2000,
+        ),
+        surfaces = [];
+      world.updateMatrixWorld(true);
+      world.traverse((object) => {
+        if (
+          object.isMesh &&
+          object.userData.collisionId &&
+          (!step.surface || object.userData.collisionId === step.surface)
+        )
+          surfaces.push(object);
+      });
+      objectiveRaycaster.set(pad, new THREE.Vector3(0, -1, 0));
+      objectiveRaycaster.near = 0;
+      objectiveRaycaster.far = (step.max.y - step.min.y) / 1000 + 1.01;
+      const support = objectiveRaycaster.intersectObjects(surfaces, false).find((hit) => {
+        const normal = hit.face?.normal.clone().transformDirection(hit.object.matrixWorld);
+        return (
+          normal?.y >= 0.8660254 &&
+          hit.point.y >= step.min.y / 1000 - 0.01 &&
+          hit.point.y <= step.max.y / 1000 + 0.01
+        );
+      });
+      const floor = (course.bounds?.min.y ?? 0) / 1000;
+      if (support) pad.y = support.point.y;
+      else if (
+        (!step.surface || step.surface === '$floor') &&
+        floor >= step.min.y / 1000 &&
+        floor <= step.max.y / 1000
+      )
+        pad.y = floor;
+      else pad.y = NaN;
+      objectivePadPoints.set(index, pad);
+    }
+    const target = objectivePadPoints.get(index);
+    if (!Number.isFinite(target.y)) return null;
+    const guide = goalRows.find((row) => row.index === index)?.gateCue,
+      pad = guide?.getObjectByName('objective-supported-landing-pad');
+    if (pad) {
+      guide.updateWorldMatrix(true, false);
+      pad.position.copy(guide.worldToLocal(target.clone()));
+      pad.position.y += 0.016;
+      pad.visible = true;
+    }
+
+    return target;
+  }
+  function projectObjective(state, index) {
+    if (
+      disposed ||
+      !course ||
+      !guidanceVisible ||
+      !['fpv', 'chase'].includes(view) ||
+      ['complete', 'failed', 'expired'].includes(state.status)
+    )
+      return null;
+    const step = course.steps[mode]?.[index];
+    if (!step) return null;
+    const p = state.position,
+      target = new THREE.Vector3();
+    let inside = false,
+      heightOnly = false,
+      approach = false,
+      targetId = `objective-${index}`,
+      subject = null,
+      interaction = step.type;
+    if (['actor-track-v1', 'hunt-contact-v1', 'eliminate'].includes(step.type)) {
+      let ids;
+      if (step.type === 'actor-track-v1') {
+        ids = [step.actorId];
+        interaction = step.minTargetTravel > 0 ? 'follow' : 'observe';
+      } else {
+        ids = step.targets;
+        interaction = step.type === 'eliminate' ? 'pulse' : 'touch';
+        if (step.ordered) ids = [ids[index === state.step ? (state.hunt?.caught.length ?? 0) : 0]];
+      }
+      subject = (state.actors ?? [])
+        .filter((actor) => ids.includes(actor.id) && actor.status === 'active')
+        .sort((a, b) => {
+          const distance = (actor) =>
+            ['x', 'y', 'z'].reduce((sum, axis) => sum + (actor.position[axis] - p[axis]) ** 2, 0);
+          return distance(a) - distance(b) || a.id.localeCompare(b.id);
+        })[0];
+      if (!subject) return null;
+      targetId = subject.id;
+      const definition = actorDefinitions.get(subject.id),
+        lift = ['patrol', 'sentry'].includes(subject.type)
+          ? (subject.height ?? definition?.height ?? 1800) / 2
+          : (subject.radius ?? definition?.radius ?? 300);
+      target.set(
+        subject.position.x / 1000,
+        (subject.position.y + lift) / 1000,
+        subject.position.z / 1000,
+      );
+    } else if (step.type === 'gate' || step.type === 'crossing-v1') {
+      interaction = 'cross';
+      if (step.type === 'gate') {
+        target.set(
+          step.axis === 'x' ? step.at / 1000 : (step.minSide + step.maxSide) / 2000,
+          (step.minY + step.maxY) / 2000,
+          step.axis === 'z' ? step.at / 1000 : (step.minSide + step.maxSide) / 2000,
+        );
+      } else {
+        const others = ['x', 'y', 'z'].filter((axis) => axis !== step.axis);
+        target[step.axis] = step.at / 1000;
+        target[others[0]] = (step.minA + step.maxA) / 2000;
+        target[others[1]] = (step.minB + step.maxB) / 2000;
+      }
+      approach = (p[step.axis] - step.at) * step.direction >= 0;
+      if (approach) target[step.axis] -= step.direction * 1.5;
+    } else if (step.min && step.max) {
+      inside = ['x', 'y', 'z'].every(
+        (axis) => p[axis] >= step.min[axis] && p[axis] <= step.max[axis],
+      );
+      if (step.type === 'land') {
+        const pad = resolveObjectivePad(step, index);
+        if (!pad) return null;
+        target.copy(pad);
+      } else {
+        for (const axis of ['x', 'y', 'z'])
+          target[axis] = Math.max(step.min[axis], Math.min(step.max[axis], p[axis])) / 1000;
+        heightOnly =
+          !inside &&
+          ['x', 'z'].every((axis) => p[axis] >= step.min[axis] && p[axis] <= step.max[axis]);
+      }
+      if (['rotation-v1', 'attitude-v1', 'path-v1'].includes(step.type)) interaction = 'manoeuvre';
+    } else return null; // A survival timer has no authored location to reveal.
+    const vertical = target.y - p.y / 1000,
+      distance = target.distanceTo(new THREE.Vector3(p.x / 1000, p.y / 1000, p.z / 1000));
+    const onPad =
+      step.type === 'land' &&
+      (state.grounded ?? p.y === (course.bounds?.min.y ?? 0)) &&
+      (!step.surface || (state.support?.id ?? '$floor') === step.surface);
+    // Once inside a zone there is no meaningful direction to its nearest
+    // point (the drone itself). Keep condition gauges, suppress that marker.
+    if (inside && (step.type !== 'land' || onPad))
+      return {
+        visible: false,
+        type: step.type,
+        index: index,
+        targetId,
+        semantic: objectiveSemantic(step),
+        wrongSide: approach,
+        guidanceAccent,
+        interaction,
+        inside,
+        vertical,
+        distance,
+        offscreen: false,
+        behind: false,
+        occluded: false,
+        directionOnly: false,
+        angle: 0,
+        x: 0.5,
+        y: 0.5,
+      };
+    if (heightOnly)
+      return {
+        visible: true,
+        type: step.type,
+        index: index,
+        targetId,
+        semantic: objectiveSemantic(step),
+        wrongSide: approach,
+        guidanceAccent,
+        interaction,
+        inside,
+        vertical,
+        distance,
+        heightOnly: true,
+        offscreen: true,
+        behind: false,
+        occluded: false,
+        directionOnly: true,
+        angle: vertical > 0 ? -Math.PI / 2 : Math.PI / 2,
+        x: 0.5,
+        y: vertical > 0 ? 0.18 : 0.82,
+        arrow: vertical > 0 ? '↑' : '↓',
+      };
+    camera.updateMatrixWorld();
+    // Visibility is presentation-only. Bound mesh queries to one per five
+    // accepted ticks; paused camera moves still invalidate the cached origin.
+    const previousVisibility = objectiveVisibility.get(index);
+    const visibilityKey = `${sceneGeneration}:${index}:${targetId}:${approach}:${Math.floor(state.ticks / 5)}:${view}`,
+      cameraMoved =
+        previousVisibility &&
+        previousVisibility.tick === state.ticks &&
+        previousVisibility.origin.distanceToSquared(camera.position) > 0.01;
+    if (!previousVisibility || previousVisibility.key !== visibilityKey || cameraMoved) {
+      const direction = target.clone().sub(camera.position),
+        rayLength = direction.length();
+      let occluded = false;
+      if (!inside && rayLength > 0.15) {
+        objectiveRaycaster.set(camera.position, direction.normalize());
+        objectiveRaycaster.camera = camera;
+        objectiveRaycaster.near = 0.035;
+        objectiveRaycaster.far = Math.max(0.035, rayLength - 0.1);
+        // Filter before raycasting: sprite labels require camera-facing
+        // intersection and must never become walls or log during flight.
+        const occluders = [];
+        for (const root of [world, imported, actors])
+          root.traverseVisible((object) => {
+            if (!object.isMesh) return;
+            if (subject) {
+              for (let parent = object; parent; parent = parent.parent)
+                if (parent.name === `actor-${targetId}`) return;
+            }
+            occluders.push(object);
+          });
+        occluded = objectiveRaycaster.intersectObjects(occluders, false).some((hit) => {
+          const paints = Array.isArray(hit.object.material)
+            ? hit.object.material
+            : [hit.object.material];
+          return paints.some((paint) => paint && (!paint.transparent || paint.opacity >= 0.9));
+        });
+      }
+      objectiveVisibility.set(index, {
+        key: visibilityKey,
+        tick: state.ticks,
+        origin: camera.position.clone(),
+        occluded,
+      });
+    }
+    const occluded = objectiveVisibility.get(index).occluded;
+    const local = target.clone().applyMatrix4(camera.matrixWorldInverse);
+    target.project(camera);
+    let x = target.x,
+      y = -target.y;
+    const behind = local.z >= 0;
+    if (behind) {
+      x = -x;
+      y = -y;
+      if (Math.abs(x) < 0.01) x = 1;
+    }
+    if (!Number.isFinite(x) || !Number.isFinite(y)) {
+      x = 0;
+      y = vertical >= 0 ? -1 : 1;
+    }
+    const directionOnly = behind || occluded,
+      offscreen = directionOnly || Math.abs(x) > 0.7 || Math.abs(y) > 0.64;
+    if (directionOnly && Math.abs(x) + Math.abs(y) < 0.001) y = -1;
+    const scale = Math.max(directionOnly ? 0.001 : 1, Math.abs(x) / 0.7, Math.abs(y) / 0.64);
+    return {
+      visible: true,
+      type: step.type,
+      index: index,
+      targetId,
+      semantic: objectiveSemantic(step),
+      wrongSide: approach,
+      guidanceAccent,
+      labelPixels: index === state.step ? 42 : 32,
+      interaction,
+      approach,
+      inside,
+      vertical,
+      distance,
+      offscreen,
+      behind,
+      occluded,
+      directionOnly,
+      angle: Math.atan2(y, x),
+      x: (x / scale + 1) / 2,
+      y: (y / scale + 1) / 2,
+      arrow: Math.abs(x) > Math.abs(y) ? (x > 0 ? '→' : '←') : y > 0 ? '↓' : '↑',
+    };
   }
   return {
     available: true,
     observePresentation,
+    observeCombat,
+    setCombatActors,
+    configureCombatPresentation,
+    setCombatAppearance: (pack, options) => combatAppearance.set(pack, options),
+    setCombatPresentation: configureCombatPresentation,
+    resetCombatPresentation,
+    exportCombatPresentation: () => combatPresentation?.export() ?? combatArchive,
+    projectCombatPoint(position) {
+      const p = new THREE.Vector3(
+        (position.x - combatOrigin.x) / 1000,
+        (position.y - combatOrigin.y) / 1000,
+        (position.z - combatOrigin.z) / 1000,
+      ).project(camera);
+      return p.z < -1 || p.z > 1 ? null : { x: (p.x + 1) / 2, y: (1 - p.y) / 2 };
+    },
+    restoreCombatPresentation(value, options = {}) {
+      combatTick = options.tick ?? value?.tick ?? combatTick;
+      prepareCombatSurfaces();
+      ensureCombat().restore(value, options);
+      presentationClock = Number.isFinite(value?.presentationClock)
+        ? value.presentationClock
+        : combatTick / 50;
+      presentationTick = combatTick;
+      combatFrameAt = null;
+    },
     setCourse,
     setRegional,
     prepareRegionalFrame,
@@ -3874,7 +5645,54 @@ export function createFlightRenderer({
         presentation = presentationGeneration;
       signal?.throwIfAborted();
       if (disposed || (!course && !regional) || renderer.getContext().isContextLost()) return false;
-      await renderer.compileAsync(scene, camera);
+      if (
+        typeof combatOptions.createPresentation === 'function' &&
+        typeof combatOptions.createActors === 'function'
+      )
+        ensureCombat();
+      const pulses = [projectileBatch('player'), projectileBatch('other')];
+      if (combatPresentation) {
+        for (const owner of ['player', 'other'])
+          for (const weapon of ['autocannon', 'scatter', 'precision', 'rocket', 'bomb', 'remote'])
+            pulses.push(projectileBatch(owner, weapon));
+        for (const weapon of ['enemy-rifle', 'enemy-energy', 'enemy-heavy'])
+          pulses.push(projectileBatch('other', weapon));
+        for (const kind of ['pad', 'crate', 'mark']) supplyMesh(kind).visible = true;
+        drawCombatArmament({
+          encounter: { weapons: [{ id: 'autocannon' }], weaponIndex: 0, events: [], ticks: 0 },
+        });
+        for (const mount of aircraft.getObjectByName('combat-armament').children) {
+          mount.visible = true;
+          mount.getObjectByName('muzzle-flash').visible = true;
+        }
+      }
+      for (const batch of pulses) batch.visible = true;
+      const preparedFpv = fpvVisual;
+      const fpvVisibility = [];
+      preparedFpv?.root.traverse((part) => {
+        fpvVisibility.push([part, part.visible]);
+        part.visible = true;
+      });
+      const prepared = [
+        combatPresentation?.prepareMaterials?.(),
+        combatActors?.prepareMaterials?.(),
+        () => {
+          for (const [part, visible] of fpvVisibility) part.visible = visible;
+          for (const batch of pulses) batch.visible = batch.count > 0;
+          for (const mesh of supplyPools.values()) mesh.visible = mesh.count > 0;
+          const armament = aircraft.getObjectByName('combat-armament');
+          if (armament) armament.visible = false;
+        },
+      ];
+      try {
+        // Empty combat pools still expose their complete material palette to the
+        // compiler. Counts remain zero: preparation never invents a hit or actor.
+        await renderer.compileAsync(scene, camera);
+        syncFpvLighting();
+        await renderer.compileAsync(fpvScene, camera);
+      } finally {
+        for (const restore of prepared) restore?.();
+      }
       signal?.throwIfAborted();
       if (
         disposed ||
@@ -3899,244 +5717,10 @@ export function createFlightRenderer({
     createEditor,
     draw,
     objectiveScreen(state) {
-      if (disposed || !course || ['complete', 'failed', 'expired'].includes(state.status))
-        return null;
-      const step = course.steps[mode]?.[state.step];
-      if (!step) return null;
-      const p = state.position,
-        target = new THREE.Vector3();
-      let inside = false,
-        heightOnly = false,
-        approach = false,
-        targetId = `objective-${state.step}`,
-        subject = null,
-        interaction = step.type;
-      if (['actor-track-v1', 'hunt-contact-v1', 'eliminate'].includes(step.type)) {
-        let ids;
-        if (step.type === 'actor-track-v1') {
-          ids = [step.actorId];
-          interaction = step.minTargetTravel > 0 ? 'follow' : 'observe';
-        } else {
-          ids = step.targets;
-          interaction = step.type === 'eliminate' ? 'pulse' : 'touch';
-          if (step.ordered) ids = [ids[state.hunt?.caught.length ?? 0]];
-        }
-        subject = (state.actors ?? [])
-          .filter((actor) => ids.includes(actor.id) && actor.status === 'active')
-          .sort((a, b) => {
-            const distance = (actor) =>
-              ['x', 'y', 'z'].reduce((sum, axis) => sum + (actor.position[axis] - p[axis]) ** 2, 0);
-            return distance(a) - distance(b) || a.id.localeCompare(b.id);
-          })[0];
-        if (!subject) return null;
-        targetId = subject.id;
-        const definition = actorDefinitions.get(subject.id),
-          lift = ['patrol', 'sentry'].includes(subject.type)
-            ? (subject.height ?? definition?.height ?? 1800) / 2
-            : (subject.radius ?? definition?.radius ?? 300);
-        target.set(
-          subject.position.x / 1000,
-          (subject.position.y + lift) / 1000,
-          subject.position.z / 1000,
-        );
-      } else if (step.type === 'gate' || step.type === 'crossing-v1') {
-        interaction = 'cross';
-        if (step.type === 'gate') {
-          target.set(
-            step.axis === 'x' ? step.at / 1000 : (step.minSide + step.maxSide) / 2000,
-            (step.minY + step.maxY) / 2000,
-            step.axis === 'z' ? step.at / 1000 : (step.minSide + step.maxSide) / 2000,
-          );
-        } else {
-          const others = ['x', 'y', 'z'].filter((axis) => axis !== step.axis);
-          target[step.axis] = step.at / 1000;
-          target[others[0]] = (step.minA + step.maxA) / 2000;
-          target[others[1]] = (step.minB + step.maxB) / 2000;
-        }
-        approach = (p[step.axis] - step.at) * step.direction >= 0;
-        if (approach) target[step.axis] -= step.direction * 1.5;
-      } else if (step.min && step.max) {
-        inside = ['x', 'y', 'z'].every(
-          (axis) => p[axis] >= step.min[axis] && p[axis] <= step.max[axis],
-        );
-        if (step.type === 'land') {
-          if (!objectivePadPoints.has(state.step)) {
-            const pad = new THREE.Vector3(
-                (step.min.x + step.max.x) / 2000,
-                step.max.y / 1000 + 1,
-                (step.min.z + step.max.z) / 2000,
-              ),
-              surfaces = [];
-            world.updateMatrixWorld(true);
-            world.traverse((object) => {
-              if (
-                object.isMesh &&
-                object.userData.collisionId &&
-                (!step.surface || object.userData.collisionId === step.surface)
-              )
-                surfaces.push(object);
-            });
-            objectiveRaycaster.set(pad, new THREE.Vector3(0, -1, 0));
-            objectiveRaycaster.near = 0;
-            objectiveRaycaster.far = (step.max.y - step.min.y) / 1000 + 1.01;
-            const support = objectiveRaycaster.intersectObjects(surfaces, false).find((hit) => {
-              const normal = hit.face?.normal.clone().transformDirection(hit.object.matrixWorld);
-              return (
-                normal?.y >= 0.8660254 &&
-                hit.point.y >= step.min.y / 1000 - 0.01 &&
-                hit.point.y <= step.max.y / 1000 + 0.01
-              );
-            });
-            const floor = (course.bounds?.min.y ?? 0) / 1000;
-            if (support) pad.y = support.point.y;
-            else if (
-              (!step.surface || step.surface === '$floor') &&
-              floor >= step.min.y / 1000 &&
-              floor <= step.max.y / 1000
-            )
-              pad.y = floor;
-            else pad.y = NaN;
-            objectivePadPoints.set(state.step, pad);
-          }
-          target.copy(objectivePadPoints.get(state.step));
-          if (!Number.isFinite(target.y)) return null;
-        } else {
-          for (const axis of ['x', 'y', 'z'])
-            target[axis] = Math.max(step.min[axis], Math.min(step.max[axis], p[axis])) / 1000;
-          heightOnly =
-            !inside &&
-            ['x', 'z'].every((axis) => p[axis] >= step.min[axis] && p[axis] <= step.max[axis]);
-        }
-        if (['rotation-v1', 'attitude-v1', 'path-v1'].includes(step.type))
-          interaction = 'manoeuvre';
-      } else return null; // A survival timer has no authored location to reveal.
-      const vertical = target.y - p.y / 1000,
-        distance = target.distanceTo(new THREE.Vector3(p.x / 1000, p.y / 1000, p.z / 1000));
-      const onPad =
-        step.type === 'land' &&
-        (state.grounded ?? p.y === (course.bounds?.min.y ?? 0)) &&
-        (!step.surface || (state.support?.id ?? '$floor') === step.surface);
-      // Once inside a zone there is no meaningful direction to its nearest
-      // point (the drone itself). Keep condition gauges, suppress that marker.
-      if (inside && (step.type !== 'land' || onPad))
-        return {
-          visible: false,
-          type: step.type,
-          index: state.step,
-          targetId,
-          interaction,
-          inside,
-          vertical,
-          distance,
-          offscreen: false,
-          behind: false,
-          occluded: false,
-          directionOnly: false,
-          angle: 0,
-          x: 0.5,
-          y: 0.5,
-        };
-      if (heightOnly)
-        return {
-          visible: true,
-          type: step.type,
-          index: state.step,
-          targetId,
-          interaction,
-          inside,
-          vertical,
-          distance,
-          heightOnly: true,
-          offscreen: true,
-          behind: false,
-          occluded: false,
-          directionOnly: true,
-          angle: vertical > 0 ? -Math.PI / 2 : Math.PI / 2,
-          x: 0.5,
-          y: vertical > 0 ? 0.18 : 0.82,
-          arrow: vertical > 0 ? '↑' : '↓',
-        };
-      camera.updateMatrixWorld();
-      // Visibility is presentation-only. Bound mesh queries to one per five
-      // accepted ticks; paused camera moves still invalidate the cached origin.
-      const visibilityKey = `${sceneGeneration}:${state.step}:${targetId}:${approach}:${Math.floor(state.ticks / 5)}:${view}`,
-        cameraMoved =
-          objectiveVisibility &&
-          objectiveVisibility.tick === state.ticks &&
-          objectiveVisibility.origin.distanceToSquared(camera.position) > 0.01;
-      if (!objectiveVisibility || objectiveVisibility.key !== visibilityKey || cameraMoved) {
-        const direction = target.clone().sub(camera.position),
-          rayLength = direction.length();
-        let occluded = false;
-        if (!inside && rayLength > 0.15) {
-          objectiveRaycaster.set(camera.position, direction.normalize());
-          objectiveRaycaster.camera = camera;
-          objectiveRaycaster.near = 0.035;
-          objectiveRaycaster.far = Math.max(0.035, rayLength - 0.1);
-          // Filter before raycasting: sprite labels require camera-facing
-          // intersection and must never become walls or log during flight.
-          const occluders = [];
-          for (const root of [world, imported, actors])
-            root.traverseVisible((object) => {
-              if (!object.isMesh) return;
-              if (subject) {
-                for (let parent = object; parent; parent = parent.parent)
-                  if (parent.name === `actor-${targetId}`) return;
-              }
-              occluders.push(object);
-            });
-          occluded = objectiveRaycaster.intersectObjects(occluders, false).some((hit) => {
-            const paints = Array.isArray(hit.object.material)
-              ? hit.object.material
-              : [hit.object.material];
-            return paints.some((paint) => paint && (!paint.transparent || paint.opacity >= 0.9));
-          });
-        }
-        objectiveVisibility = {
-          key: visibilityKey,
-          tick: state.ticks,
-          origin: camera.position.clone(),
-          occluded,
-        };
-      }
-      const occluded = objectiveVisibility.occluded;
-      const local = target.clone().applyMatrix4(camera.matrixWorldInverse);
-      target.project(camera);
-      let x = target.x,
-        y = -target.y;
-      const behind = local.z >= 0;
-      if (behind) {
-        x = -x;
-        y = -y;
-        if (Math.abs(x) < 0.01) x = 1;
-      }
-      if (!Number.isFinite(x) || !Number.isFinite(y)) {
-        x = 0;
-        y = vertical >= 0 ? -1 : 1;
-      }
-      const directionOnly = behind || occluded,
-        offscreen = directionOnly || Math.abs(x) > 0.7 || Math.abs(y) > 0.64;
-      if (directionOnly && Math.abs(x) + Math.abs(y) < 0.001) y = -1;
-      const scale = Math.max(directionOnly ? 0.001 : 1, Math.abs(x) / 0.7, Math.abs(y) / 0.64);
-      return {
-        visible: true,
-        type: step.type,
-        index: state.step,
-        targetId,
-        interaction,
-        approach,
-        inside,
-        vertical,
-        distance,
-        offscreen,
-        behind,
-        occluded,
-        directionOnly,
-        angle: Math.atan2(y, x),
-        x: (x / scale + 1) / 2,
-        y: (y / scale + 1) / 2,
-        arrow: Math.abs(x) > Math.abs(y) ? (x > 0 ? '→' : '←') : y > 0 ? '↓' : '↑',
-      };
+      const current = projectObjective(state, state.step);
+      if (!current) return null;
+      const preview = projectObjective(state, state.step + 1);
+      return { ...current, preview: preview ? { ...preview, preview: true } : null };
     },
     aimScreen() {
       if (disposed || !course) return null;
@@ -4158,6 +5742,7 @@ export function createFlightRenderer({
       if (/^#[a-fA-F0-9]{6}$/.test(recipe?.color)) {
         cosmeticColor = recipe.color;
         droneVisual?.tint.color.set(cosmeticColor);
+        fpvVisual?.tint.color.set(cosmeticColor);
       }
     },
     resources() {
@@ -4199,6 +5784,9 @@ export function createFlightRenderer({
         },
         effects: { ...effectPalette },
         hunt: huntPresentation?.resources() ?? null,
+        combat: combatPresentation?.resources() ?? null,
+        combatActors: combatActors?.resources() ?? null,
+        combatAppearance: combatAppearance.status(),
         importedMaterialBindings: structuredClone(importedMaterialBindings),
         registered: {
           geometries: geometry.size + (pathLine ? 1 : 0),
@@ -4212,8 +5800,6 @@ export function createFlightRenderer({
           textures: renderer.info.memory.textures,
           programs: renderer.info.programs?.length ?? 0,
           contextLost: renderer.getContext().isContextLost(),
-          calls: renderer.info.render.calls,
-          triangles: renderer.info.render.triangles,
         },
       };
     },
@@ -4223,6 +5809,8 @@ export function createFlightRenderer({
       sceneGeneration++;
       canvas.removeEventListener('webglcontextlost', lost);
       clearSceneResources();
+      analogPass?.dispose();
+      analogPass = null;
       renderer.dispose();
       renderer.forceContextLoss();
     },

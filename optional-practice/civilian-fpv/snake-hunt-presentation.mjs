@@ -40,6 +40,7 @@ export function mountSnakeHuntPresentationControls({
   const help = document.createElement('p');
   const saving = document.createElement('p');
   const fields = {};
+  const viewListeners = new Set();
   root.append(legend);
   for (const key of ['brutal', 'blood', 'showRemains']) {
     const label = document.createElement('label');
@@ -61,31 +62,46 @@ export function mountSnakeHuntPresentationControls({
   const refresh = () => {
     const uk = locale() === 'uk';
     const state = snapshot();
-    legend.textContent = uk ? 'Вигляд полювання' : 'Hunt presentation';
-    fields.brutal.caption.textContent = uk
-      ? 'Жорстоке знищення гуманоїдів'
-      : 'Brutal humanoid destruction';
-    fields.blood.caption.textContent = uk ? 'Кров і частини тіл' : 'Blood and body parts';
+    legend.textContent = uk ? 'Ефекти знищення' : 'Destruction effects';
+    fields.brutal.caption.textContent = uk ? 'Розчленування' : 'Dismemberment';
+    fields.blood.caption.textContent = uk ? 'Кров' : 'Blood';
     fields.showRemains.caption.textContent = uk
       ? 'Показувати рештки ворогів'
       : 'Show enemy remains';
     for (const [key, { input }] of Object.entries(fields)) input.checked = state[key];
     help.textContent = uk
-      ? 'Спільні налаштування з аркадою. Вимкнене жорстоке знищення дає чисті ефекти. Приховані рештки не прибирають коротких ефектів дотику. Тверді сліди, цілі та фізика не змінюються.'
-      : 'Shared with the arcade. Brutal off uses clean catch effects. Hiding remains keeps brief catch feedback. Solid echo trails, targets and flight physics stay the same.';
+      ? 'Кров керує бризками й відкритими ранами, розчленування — розпадом тіла, рештки — тілами та слідами після удару. Зміни діють одразу. Спільні налаштування з аркадою.'
+      : 'Blood controls splashes and exposed wounds; dismemberment controls body breakup; remains controls settled bodies and marks. Changes apply immediately. Shared with the arcade.';
     saving.textContent = state.durable
       ? ''
       : uk
         ? 'Вибір діє в цьому сеансі; збереження недоступне.'
         : 'Active for this session; saving is unavailable.';
     saving.hidden = state.durable;
+    for (const listener of viewListeners) listener(state);
   };
   const unsubscribe = preferences.subscribe(refresh);
   const unsubscribeDisplay = display.subscribe(refresh);
   return {
-    preferences: Object.freeze({ snapshot }),
+    preferences: Object.freeze({
+      snapshot,
+      set(patch) {
+        const destruction = {};
+        for (const key of ['blood', 'brutal'])
+          if (typeof patch?.[key] === 'boolean') destruction[key] = patch[key];
+        if (Object.keys(destruction).length) preferences.set(destruction);
+        if (typeof patch?.showRemains === 'boolean') display.set(patch.showRemains);
+        return snapshot();
+      },
+      subscribe(listener) {
+        viewListeners.add(listener);
+        listener(snapshot());
+        return () => viewListeners.delete(listener);
+      },
+    }),
     refresh,
     dispose() {
+      viewListeners.clear();
       defeatSounds.dispose();
       unsubscribe();
       unsubscribeDisplay();

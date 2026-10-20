@@ -41,6 +41,62 @@ export const INDUSTRIAL_ENVIRONMENT_DATA_PATH =
 const sha = (bytes) => createHash('sha256').update(bytes).digest('hex');
 const identity = (value) => sha(canonicalJSON(value));
 const ref = ({ id, revision }) => ({ id, revision });
+
+/** Lossless source projection only. The runtime reconstructs the original JSON
+ * before parsing, so source pins, property order and independent objects survive.
+ * The finite dictionary uses only later references and needs no library/file. */
+export function encodeIndustrialEnvironmentModule(data) {
+  const json = JSON.stringify(data),
+    counts = new Map(),
+    dictionary = [],
+    header =
+      '/** Generated immutable admission rows. Retain previous rows; regenerate with scripts/produce-industrial-environments.mjs. */\n// prettier-ignore\n',
+    literal = `export const INDUSTRIAL_ENVIRONMENT_DATA = ${json};\n`;
+  if (/[\ue000-\ue0ff]/u.test(json)) return Buffer.from(header + literal);
+  const add = (value) => {
+    if (value.length >= 8) counts.set(value, (counts.get(value) ?? 0) + 1);
+  };
+  function visit(value) {
+    if (typeof value === 'string') add(JSON.stringify(value));
+    else if (value && typeof value === 'object') {
+      add(JSON.stringify(value));
+      if (Array.isArray(value)) value.forEach(visit);
+      else
+        for (const [key, child] of Object.entries(value)) {
+          add(JSON.stringify(key) + ':');
+          visit(child);
+        }
+    }
+  }
+  visit(data);
+  const candidates = [...counts]
+    .filter(([, count]) => count > 1)
+    .sort(
+      (a, b) =>
+        (b[0].length - 3) * (b[1] - 1) - (a[0].length - 3) * (a[1] - 1) ||
+        (a[0] < b[0] ? -1 : a[0] > b[0] ? 1 : 0),
+    )
+    .slice(0, 512);
+  let text = json;
+  for (const [part] of candidates) {
+    const count =
+      text.split(part).length -
+      1 +
+      dictionary.reduce((sum, row) => sum + row.split(part).length - 1, 0);
+    if ((count - 1) * (Buffer.byteLength(part) - 3) < 64) continue;
+    const marker = String.fromCharCode(0xe000 + dictionary.length);
+    text = text.split(part).join(marker);
+    for (let i = 0; i < dictionary.length; i++)
+      dictionary[i] = dictionary[i].split(part).join(marker);
+    dictionary.push(part);
+    if (dictionary.length === 256) break;
+  }
+  const encoded = `export const INDUSTRIAL_ENVIRONMENT_DATA = (()=>{const [text,rows]=${JSON.stringify([text, dictionary])},pattern=/[\\ue000-\\ue0ff]/g,expand=value=>value.replace(pattern,mark=>rows[mark.charCodeAt(0)-0xe000]);for(let i=rows.length-1;i>=0;i--)rows[i]=expand(rows[i]);return JSON.parse(expand(text));})();\n`;
+  return Buffer.from(
+    header + (Buffer.byteLength(encoded) < Buffer.byteLength(literal) ? encoded : literal),
+  );
+}
+
 const chapterUkrainian = {
   'Patrol District': 'Патрульний район',
   'Escape Lines': 'Шляхи втечі',
@@ -616,9 +672,7 @@ export async function createIndustrialEnvironmentBatch({ previous = null } = {})
         })),
     });
   }
-  const module =
-    Buffer.from(`/** Generated immutable admission rows. Retain previous rows; regenerate with scripts/produce-industrial-environments.mjs. */\n// prettier-ignore
-export const INDUSTRIAL_ENVIRONMENT_DATA = ${JSON.stringify(data)};\n`);
+  const module = encodeIndustrialEnvironmentModule(data);
   files.set(INDUSTRIAL_ENVIRONMENT_DATA_PATH, module);
   const report = {
     format: 'revealline-industrial-environment-inventory.v1',

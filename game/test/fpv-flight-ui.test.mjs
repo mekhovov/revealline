@@ -20,6 +20,7 @@ import {
   radioDeviceIdentity,
 } from '../../optional-practice/civilian-fpv/radio-profile.mjs';
 import { mountFlightNotebook } from '../../optional-practice/civilian-fpv/notebook.mjs';
+import { mountFlightCameraControls } from '../../optional-practice/civilian-fpv/flight-fullscreen.mjs';
 import { Document, Events } from './helpers/couch-dom.mjs';
 import { waitFor } from './helpers/wait-for.mjs';
 
@@ -79,6 +80,7 @@ async function fixture(
     pads = [];
   Object.assign(win, {
     CustomEvent,
+    Event,
     location: new URL(url),
     performance: { now: () => 0 },
     navigator: { getGamepads: () => pads, ...(serviceWorker ? { serviceWorker } : {}) },
@@ -653,6 +655,63 @@ test('radio switch edges while blurred or hidden cannot rearm; return requires a
   assert.deepEqual(f.view.snapshot(), hidden);
 });
 
+test('six switches in Academy open pause, change View, confirm Retry and guard nested resume', async (t) => {
+  const { createRadioControlLayout } = await import(
+    '../../optional-practice/civilian-fpv/radio-profile.mjs'
+  );
+  const f = await fixture(t),
+    pad = {
+      id: 'Six switch radio',
+      index: 0,
+      connected: true,
+      mapping: '',
+      axes: [0, 0, 0, -1],
+      buttons: Array.from({ length: 6 }, () => ({ value: 0 })),
+    };
+  f.setPads([pad]);
+  f.$('input-source').value = 'radio';
+  f.$('input-source').emit('change');
+  await f.view.settled();
+  const profile = radioProfile(pad),
+    layout = createRadioControlLayout(profile);
+  ['arm', 'fire', 'weapon', 'reload', 'payload', 'detonate'].forEach((key, button) => {
+    layout.switches[key] = { button, threshold: 0.5, invert: false };
+  });
+  f.view.radio.select(0);
+  f.view.radio.setProfile(profile);
+  f.view.radio.verify();
+  f.view.radio.setControlLayout(layout);
+  const sample = async (button, value) => {
+    pad.buttons[button].value = value;
+    f.tick(2);
+    await Promise.resolve();
+  };
+  f.tick();
+  await sample(0, 1);
+  f.tick();
+  assert.equal(f.view.snapshot().status, 'active');
+  await sample(0, 0);
+  assert.equal(f.view.snapshot().status, 'paused');
+  assert.equal(f.$('academy-shell-pause-dialog').open, true);
+  const camera = f.$('camera').value;
+  await sample(3, 1);
+  await sample(3, 0);
+  assert.notEqual(f.$('camera').value, camera, 'Reload changes View while paused');
+  await sample(4, 1);
+  await sample(4, 0);
+  const confirmation = f.doc.querySelector('.sim-radio-confirm');
+  assert.equal(confirmation.open, true);
+  await sample(0, 1);
+  assert.equal(f.view.snapshot().status, 'paused', 'Flight ON cannot escape confirmation');
+  confirmation.querySelectorAll('button')[0].click();
+  f.tick();
+  assert.equal(f.view.snapshot().status, 'paused', 'held ON cannot resume after cancellation');
+  await sample(0, 0);
+  await sample(0, 1);
+  f.tick();
+  assert.equal(f.view.snapshot().status, 'active');
+});
+
 test('immediate Retry preserves the completed proof while notebook verification yields', async (t) => {
   let release, book;
   const f = await fixture(t, {
@@ -717,6 +776,236 @@ test('Controls camera chooser and toolbar stay synchronized for the narrow layou
   f.$('camera').value = 'chase';
   f.$('camera').emit('change');
   assert.equal(f.$('camera-help').value, 'chase');
+});
+
+function analogControlsFixture(t, storage, locale = 'en') {
+  const doc = new Document(),
+    win = new Events();
+  Object.assign(win, { Event, localStorage: storage });
+  const pause = doc.createElement('button'),
+    content = doc.createElement('div'),
+    select = doc.createElement('select'),
+    viewport = doc.createElement('div');
+  select.value = 'fpv';
+  doc.body.append(pause, content, select, viewport);
+  const controls = mountFlightCameraControls({
+    document: doc,
+    window: win,
+    select,
+    viewport,
+    locale: () => locale,
+    shell: { elements: { buttons: { pause }, content: { pause: content } }, topDialog: () => null },
+  });
+  t.after(() => controls.dispose());
+  return {
+    doc,
+    controls,
+    analog: doc.querySelector('[data-analog-video]'),
+    strength: doc.querySelector('[data-analog-strength]'),
+  };
+}
+
+test('Analog camera controls default off and preserve older immersion preferences', (t) => {
+  const saved = JSON.stringify({ chaseDistance: 2.5, showFpvProps: true });
+  const h = analogControlsFixture(t, {
+    getItem: () => saved,
+    setItem() {
+      assert.fail('Reading defaults must not rewrite preferences');
+    },
+  });
+  assert.equal(h.analog.checked, false);
+  assert.equal(h.strength.value, '35');
+  assert.equal(h.strength.disabled, true);
+  assert.deepEqual(h.controls.presentationOptions(), {
+    chaseDistance: 2.5,
+    showFpvProps: true,
+    showFpvKnife: true,
+    analogVideo: false,
+    analogStrength: 35,
+    guidanceVisible: true,
+    guidanceAccent: 'amber',
+    routeGuideVisible: false,
+    flightInstruments: true,
+    extraTelemetry: false,
+  });
+});
+
+test('Analog camera toggle and strength persist independently and release their listeners', (t) => {
+  const key = 'revealline.fpv.camera-immersion.v1';
+  const data = new Map([['revealline.flight-profiles.v1', 'untouched-radio-calibration']]);
+  let writes = 0;
+  const storage = {
+    getItem: (name) => data.get(name) ?? null,
+    setItem(name, value) {
+      writes++;
+      data.set(name, value);
+    },
+  };
+  const h = analogControlsFixture(t, storage);
+  h.analog.checked = true;
+  h.analog.emit('change');
+  assert.equal(h.strength.disabled, false);
+  h.strength.value = '70';
+  h.strength.emit('input');
+  assert.equal(h.controls.presentationOptions().analogStrength, 70);
+  assert.deepEqual(JSON.parse(data.get(key)), h.controls.presentationOptions());
+  assert.equal(data.get('revealline.flight-profiles.v1'), 'untouched-radio-calibration');
+  const restored = analogControlsFixture(t, storage, 'uk');
+  assert.equal(restored.analog.checked, true);
+  assert.equal(restored.strength.value, '70');
+  assert.match(restored.analog.parentNode.textContent, /Аналогове відео FPV/);
+  assert.equal(writes, 2, 'Restoring preferences does not write them again');
+  h.controls.dispose();
+  h.analog.checked = false;
+  h.analog.emit('change');
+  h.strength.emit('input');
+  assert.equal(writes, 2);
+});
+
+test('Analog camera preferences clamp stored intensity and remain usable when storage fails', (t) => {
+  for (const [input, expected] of [
+    [500, 100],
+    [-50, 0],
+    ['100', 35],
+  ]) {
+    const h = analogControlsFixture(t, {
+      getItem: () => JSON.stringify({ analogVideo: true, analogStrength: input }),
+    });
+    assert.equal(h.controls.presentationOptions().analogStrength, expected);
+  }
+  const h = analogControlsFixture(t, {
+    getItem() {
+      throw new Error('Storage unavailable');
+    },
+    setItem() {
+      throw new Error('Storage full');
+    },
+  });
+  assert.equal(h.analog.checked, false);
+  h.analog.checked = true;
+  h.analog.emit('change');
+  h.strength.value = '20';
+  h.strength.emit('input');
+  assert.equal(h.controls.presentationOptions().analogVideo, true);
+  assert.equal(h.controls.presentationOptions().analogStrength, 20);
+});
+
+test('Camera knife, guidance, route and instrument preferences persist independently without changing radio calibration', (t) => {
+  const key = 'revealline.fpv.camera-immersion.v1',
+    data = new Map([['revealline.flight-profiles.v1', 'unchanged-calibration']]),
+    writes = [],
+    storage = {
+      getItem: (name) => data.get(name) ?? null,
+      setItem(name, value) {
+        writes.push(name);
+        data.set(name, value);
+      },
+    },
+    h = analogControlsFixture(t, storage),
+    control = (view, name) => view.doc.querySelector(`[data-camera-preference="${name}"]`),
+    change = (name, value) => {
+      const field = control(h, name);
+      if (field.type === 'checkbox') field.checked = value;
+      else field.value = value;
+      field.emit('change');
+    },
+    props = h.doc.querySelector('[data-fpv-props]');
+  assert.equal(control(h, 'showFpvKnife').disabled, true);
+  props.checked = true;
+  props.emit('change');
+  assert.equal(control(h, 'showFpvKnife').disabled, false);
+  for (const [name, value] of Object.entries({
+    showFpvKnife: false,
+    guidanceVisible: false,
+    guidanceAccent: 'white',
+    routeGuideVisible: true,
+    flightInstruments: false,
+    extraTelemetry: true,
+  }))
+    change(name, value);
+  const selected = h.controls.presentationOptions();
+  assert.equal(selected.showFpvProps, true);
+  assert.equal(selected.guidanceVisible, false);
+  assert.equal(
+    selected.routeGuideVisible,
+    true,
+    'route guidance is independent of objective markers',
+  );
+  assert.equal(selected.flightInstruments, false);
+  assert.equal(selected.extraTelemetry, true, 'extra telemetry has its own saved choice');
+  assert.equal(selected.showFpvKnife, false);
+  assert.equal(selected.guidanceAccent, 'white');
+  assert.deepEqual(JSON.parse(data.get(key)), selected);
+  assert.equal(data.get('revealline.flight-profiles.v1'), 'unchanged-calibration');
+  assert.ok(writes.every((name) => name === key));
+  const restored = analogControlsFixture(t, storage, 'uk'),
+    writeCount = writes.length;
+  assert.deepEqual(restored.controls.presentationOptions(), selected);
+  assert.equal(control(restored, 'showFpvKnife').checked, false);
+  assert.equal(control(restored, 'showFpvKnife').disabled, false);
+  assert.equal(control(restored, 'guidanceVisible').checked, false);
+  assert.equal(control(restored, 'routeGuideVisible').checked, true);
+  assert.equal(control(restored, 'flightInstruments').checked, false);
+  assert.equal(control(restored, 'extraTelemetry').checked, true);
+  assert.equal(control(restored, 'guidanceAccent').value, 'white');
+  assert.match(control(restored, 'showFpvKnife').parentNode.textContent, /декоративний/);
+  assert.match(
+    control(restored, 'routeGuideVisible').parentNode.textContent,
+    /Перевірений маршрут/,
+  );
+  restored.doc.querySelector('[data-camera-view="chase"]').click();
+  assert.deepEqual(restored.controls.presentationOptions(), selected);
+  assert.equal(
+    writes.length,
+    writeCount,
+    'restoring and changing view do not rewrite display choices',
+  );
+  const copied = restored.controls.presentationOptions();
+  copied.guidanceVisible = true;
+  assert.equal(restored.controls.presentationOptions().guidanceVisible, false);
+  h.controls.dispose();
+  // Detached controls still exist in caller references; disposal must release
+  // every new preference listener as well as the original analog controls.
+  const detachedFields = h.controls.element.querySelectorAll('[data-camera-preference]');
+  for (const field of detachedFields) {
+    if (field.type === 'checkbox') field.checked = !field.checked;
+    else field.value = 'lime';
+    field.emit('change');
+  }
+  assert.equal(writes.length, writeCount);
+});
+
+test('Camera presentation preferences reject malformed saved choices and accept every supported accent', (t) => {
+  const saved = {
+    showFpvKnife: 'false',
+    guidanceVisible: 0,
+    routeGuideVisible: 'true',
+    flightInstruments: null,
+    extraTelemetry: 1,
+    guidanceAccent: 'pink',
+  };
+  const h = analogControlsFixture(t, {
+    getItem: () => JSON.stringify(saved),
+    setItem() {
+      assert.fail('Reading malformed choices must not overwrite saved data');
+    },
+  });
+  assert.equal(h.controls.presentationOptions().showFpvKnife, true);
+  assert.equal(h.controls.presentationOptions().guidanceVisible, true);
+  assert.equal(h.controls.presentationOptions().routeGuideVisible, false);
+  assert.equal(h.controls.presentationOptions().flightInstruments, true);
+  assert.equal(h.controls.presentationOptions().extraTelemetry, false);
+  assert.equal(h.controls.presentationOptions().guidanceAccent, 'amber');
+  for (const accent of ['amber', 'cyan', 'white', 'lime']) {
+    const restored = analogControlsFixture(t, {
+      getItem: () => JSON.stringify({ guidanceAccent: accent }),
+    });
+    assert.equal(restored.controls.presentationOptions().guidanceAccent, accent);
+    assert.equal(
+      restored.doc.querySelector('[data-camera-preference="guidanceAccent"]').value,
+      accent,
+    );
+  }
 });
 
 test('Studio preview runs the actual course as authoring and never reaches the notebook earning callback', async (t) => {
@@ -3042,4 +3331,49 @@ test('Academy ordinary verified success retains current course copy and one admi
     );
   assert.equal(h.deliveries.length, 1);
   await academyTerminalResetLanguage(h, FLIGHT_COURSES[0]);
+});
+
+test('optional combat D-pad commands require release and retain controller flight ownership', () => {
+  const doc = new Document(),
+    win = new Events();
+  const pad = {
+    id: 'combat-pad',
+    index: 0,
+    connected: true,
+    mapping: 'standard',
+    axes: [0, 0, 0, 0],
+    buttons: Array.from({ length: 16 }, () => ({ value: 0 })),
+  };
+  let enabled = true,
+    now = 0;
+  const gamepad = createFlightGamepad({ document: doc, window: win, combatLayout: () => enabled });
+  const poll = (scope = 'flight') => gamepad.poll({ gamepads: [pad], scope, now: (now += 20) });
+  poll();
+  poll();
+  for (const [index, action] of [
+    [12, 'reload'],
+    [13, 'payload'],
+    [14, 'weaponA'],
+    [15, 'weaponB'],
+    [10, 'detonate'],
+  ]) {
+    pad.buttons[index].value = 1;
+    assert.deepEqual(poll().actions, []);
+    assert.equal(gamepad.sample(0.02).roll, 0);
+    assert.equal(gamepad.sample(0.02).pitch, 0);
+    pad.buttons[index].value = 0;
+    assert.deepEqual(poll().actions, [action]);
+    assert.equal(gamepad.status().active, true);
+  }
+  pad.buttons[13].value = 1;
+  poll('blocked');
+  poll();
+  pad.buttons[13].value = 0;
+  assert.deepEqual(poll().actions, [], 'held command cannot leak across menu boundary');
+  enabled = false;
+  poll();
+  pad.buttons[15].value = 1;
+  poll();
+  assert.equal(gamepad.sample(0.02).roll, 0.5, 'ordinary D-pad flight mapping is retained');
+  gamepad.dispose();
 });
