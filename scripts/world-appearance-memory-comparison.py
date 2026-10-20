@@ -98,7 +98,7 @@ def controls(root):
         p = Path(git(root, "rev-parse", "--git-path", name).decode().strip())
         p = p if p.is_absolute() else root / p
         data, identity = ordinary(p, 16 * MIB)
-        metadata[name] = {"SHA256": digest(data), "identity": identity}
+        metadata[name] = {"SHA256": digest(data), "identity": list(identity)}
     return {"head": git(root, "rev-parse", "HEAD").decode().strip(),
             "tree": git(root, "rev-parse", "HEAD^{tree}").decode().strip(),
             "inventory": rows, "metadata": metadata}
