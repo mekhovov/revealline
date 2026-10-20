@@ -338,6 +338,7 @@ async function modeledRequest() {
     nodeVersion: fixture.nodeVersion,
     nodeSourceRevision: fixture.nodeSourceRevision,
     nodeModules: fixture.nodeModules,
+    nodeSourceProjection: fixture.nodeSourceProjection,
     nodeCheckpoint: row.nodeObservation.actual.checkpoint,
     trace: columns,
     traceSHA256: sha(JSON.stringify(columns)),
@@ -370,6 +371,9 @@ test('opt-in admission binds fixed recording/source/browser/Node/checkpoint and 
     },
     (value) => {
       value.nodeVersion = 'v22.22.2';
+    },
+    (value) => {
+      delete value.nodeSourceProjection;
     },
     (value) => {
       value.nodeSourceRevision = '0'.repeat(40);
@@ -462,7 +466,7 @@ test('native source readback and original strict checkpoint are mandatory, not d
   }
 });
 
-test('historical Node mirror executes its checked modules and removes all owned files', async () => {
+test('derived Node mirror executes its checked modules and removes all owned files', async () => {
   const { fixture } = await loadReplayPortabilityCase(ids[0]);
   let root;
   await withReplayPortabilityNodeSource(fixture, async (rootURL) => {
@@ -470,8 +474,8 @@ test('historical Node mirror executes its checked modules and removes all owned 
     assert(root.href.startsWith('file:'));
     assert.notEqual(root.href, new URL('../', import.meta.url).href);
     const catalog = await readFile(new URL('game/i18n/catalogs.mjs', root));
-    assert.equal(catalog.length, 1264959);
-    assert.equal(sha(catalog), 'ba333d67a719078e6fca92094bee9d60e7fdcfd2ed197adadefed115766e9224');
+    assert.equal(catalog.length, 1261767);
+    assert.equal(sha(catalog), '0b8a2d882650815ef03b020c8e5f58a0ff9ee1f6c0f65d5ac1c2b54d9b28266a');
     const core = await import(new URL('game/core/index.mjs', root));
     const replay = await import(new URL('game/replay.mjs', root));
     assert.equal(typeof core.createRun, 'function');
@@ -745,4 +749,26 @@ test('cleanup failure or whole-envelope overflow cannot become a completed diagn
   assert.equal(overflow.report.strictIdentity.status, 'pass');
   assert.equal(overflow.report.comparison, undefined);
   assert(Buffer.byteLength(JSON.stringify(overflow.report)) <= 512 * 1024);
+});
+
+test('presentation projection preserves every original native module pin', async () => {
+  for (const id of ids) {
+    const { fixture, row } = await loadReplayPortabilityCase(id);
+    assert.equal(fixture.nodeSourceProjection.format, 'PresentationCatalogProjectionV1');
+    assert.notEqual(
+      fixture.nodeSourceProjection.original.sha256,
+      fixture.nodeSourceProjection.derived.sha256,
+    );
+    assert.deepEqual(
+      fixture.nodeModules.find((item) => item.path === 'game/i18n/catalogs.mjs'),
+      fixture.nodeSourceProjection.derived,
+    );
+    const native = row.nativeModules.find((item) => item.path === 'game/i18n/catalogs.mjs');
+    assert.equal(
+      native.sha256,
+      id.startsWith('baseline-')
+        ? 'a7a25ae3d7ffbb1a4940c5a20c84891f09b40f9d4454b77bebb9a0dd37045816'
+        : fixture.nodeSourceProjection.original.sha256,
+    );
+  }
 });
