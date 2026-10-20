@@ -103,8 +103,62 @@ const html = parse(
   await readFile(new URL('../../optional-practice/fpv-worlds/index.html', import.meta.url), 'utf8'),
 );
 
+// Scalar-only diagnostic proposal; no fixture or payload history is retained.
+let fixtureMemoryCreated = 0;
+let fixtureMemoryDisposeStarted = 0;
+let fixtureMemoryDisposeCompleted = 0;
+let fixtureMemoryRows = 0;
+let fixtureMemoryOmitted = 0;
+function recordFixtureMemory(phase, fixtureId, inspectWorkers = false) {
+  if (fixtureMemoryRows >= 512) {
+    fixtureMemoryOmitted += 1;
+    return;
+  }
+  const memory = process.memoryUsage();
+  let liveWorkers = null;
+  let terminatedWorkers = null;
+  let retainedMessages = null;
+  if (inspectWorkers) {
+    liveWorkers = 0;
+    terminatedWorkers = 0;
+    retainedMessages = 0;
+    for (const worker of RegionalWorker.instances) {
+      if (worker.terminated) terminatedWorkers += 1;
+      else liveWorkers += 1;
+      retainedMessages += worker.messages.length;
+    }
+  }
+  const line =
+    '# world-fixture-memory ' +
+    JSON.stringify({
+      sequence: fixtureMemoryRows + 1,
+      phase,
+      fixtureId,
+      created: fixtureMemoryCreated,
+      disposeStarted: fixtureMemoryDisposeStarted,
+      disposeCompleted: fixtureMemoryDisposeCompleted,
+      omitted: fixtureMemoryOmitted,
+      heapUsed: memory.heapUsed,
+      heapTotal: memory.heapTotal,
+      external: memory.external,
+      arrayBuffers: memory.arrayBuffers,
+      rss: memory.rss,
+      liveWorkers,
+      terminatedWorkers,
+      retainedMessages,
+    }) +
+    '\n';
+  if (Buffer.byteLength(line, 'utf8') > 1024) {
+    fixtureMemoryOmitted += 1;
+    return;
+  }
+  fixtureMemoryRows += 1;
+  process.stdout.write(line);
+}
+
 registerOfflineFeedbackTests();
 function fixture(t, options = {}) {
+  const fixtureMemoryId = ++fixtureMemoryCreated;
   const {
     storage = new Map(),
     serviceWorker,
@@ -229,11 +283,17 @@ function fixture(t, options = {}) {
     rendererFactory: () => renderer,
     ...factories,
   });
+  recordFixtureMemory('constructed', fixtureMemoryId);
   t.after(async () => {
+    fixtureMemoryDisposeStarted += 1;
+    recordFixtureMemory('before-dispose', fixtureMemoryId, true);
     await app.dispose();
+    fixtureMemoryDisposeCompleted += 1;
+    recordFixtureMemory('after-dispose', fixtureMemoryId, true);
     for (let index = RegionalWorker.instances.length - 1; index >= 0; index -= 1) {
       if (RegionalWorker.instances[index].terminated) RegionalWorker.instances.splice(index, 1);
     }
+    recordFixtureMemory('after-worker-prune', fixtureMemoryId, true);
   });
   return {
     app,
