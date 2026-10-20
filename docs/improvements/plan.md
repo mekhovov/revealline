@@ -4,7 +4,7 @@
 
 **Latest execution checkpoint:**
 
-**50 source slices merged · 9 open for checks · 32 drafts; 1 withdrawn.** All **83 feature groups /113 deliverables** remain tracked, with 17 prerequisites separate. PR inventory is not plan completion.
+**50 source slices merged · 9 open for checks · 32 drafts; 1 withdrawn.** All **83 feature groups /113 deliverables** remain tracked, with 18 prerequisites separate. PR inventory is not plan completion.
 
 | Priority | Deliverable | Current progress | Next gate |
 | --- | --- | --- | --- |
@@ -18,13 +18,15 @@
 
 **Completed source phase:** compatibility #1668 merged externally at exact a7. All 43 tested files and every unrelated prior-main entry are verified. Its source and development-preview results do not establish live, browser or physical-device acceptance.
 
-**Readability repair:** the two omitted generated outputs now pass registered author/check stages. Two precise test-fixture corrections pass formatting/syntax checks; their complete native files still need qualification. The current 2d15 run is terminal: 18 complete passing files/159 cases, one complete file 6/7, one heap-aborted file without totals, and 8 files not reached. A controlled parent/current memory comparison is being prepared under the same limits. The corrections remain unpublished.
+**Readability repair:** the two omitted generated outputs now pass registered author/check stages. Two precise test-fixture corrections pass formatting/syntax checks; their complete native files still need qualification. The current 2d15 run is terminal: 18 complete passing files/159 cases, one complete file 6/7, one heap-aborted file without totals, and 8 files not reached. The [controlled comparison #1776](https://github.com/mekhovov/revealline/pull/1776) is now verified: both the parent and feature version run out of memory at the same test boundary under identical limits. Both workers pass all 14 evidence checks; neither completes the 115-case file. Full logs and source/dependency checks are verified. The next P1 step is a narrowly reviewed test-fixture lifecycle correction, followed by the same complete-file check. The retained references are a hypothesis until that check passes. The corrected control suite also passes all 31 mocked cases, three syntax checks and two formatting checks. The corrections remain unpublished.
 
 **Menu repair:** the missing file-stream fixture is corrected. Handoff 7/7, incoming 6/6, lifecycle 8/8, navigation 249 and other complete checks pass; custom/setup cold openings and the explicit cold probe still fail. The observed cost is in the uncompiled source route; the built game already has independently admitted navigation. The current preview passes 118 complete files / 1,903 cases and both builds; complete logs and compact package identity are verified. Built-player evidence comes before adding another production artifact or claiming a player speed improvement.
 
-**Capacity and preservation:** other chats keep running. Only proven temporary duplicates or old unused remote-image HTTP cache entries were cleaned. Recent 16-entry cleanup preserves every original byte in verified restore backups. Source, unfinished work, commits, saves, offline storage and dependencies remain intact. Local heavy runs retain their 2.55 GB launch /2 GiB continuous reserve; bounded source checks retain 256/128 MiB.
+**Capacity and preservation:** other chats keep running. Only proven temporary duplicates or old unused remote-image HTTP cache entries were cleaned. Recent HTTP-cache cleanup and archiving of 13 closed diagnostic logs preserve every original byte in verified restore backups; the current open log is excluded. Source, unfinished work, commits, saves, offline storage and dependencies remain intact. Local heavy runs retain their 2.55 GB launch /2 GiB continuous reserve; bounded source checks retain 256/128 MiB.
 
-**Current source:** main f4b45a498b5c69bc93e8e74a4cd8a592de77438e. Physical iPhone installed-PWA offline cold launch, Steam Deck, listening/assistive technology and suspend/resume remain **Not tested** without hardware. Estimates remain the original developer-day ranges; review, CI and hardware waiting are separate.
+**Current source:** main e719544a872bca315cf8173da223d919549f127c. Physical iPhone installed-PWA offline cold launch, Steam Deck, listening/assistive technology and suspend/resume remain **Not tested** without hardware. Estimates remain the original developer-day ranges; review, CI and hardware waiting are separate.
+
+**Controlled memory comparison:** [Draft #1776](https://github.com/mekhovov/revealline/pull/1776) compares the unchanged complete World test on its parent and feature revisions. The first attempt stopped during checkout, before tests; a narrow setup correction is published. Each hosted runner must pass all 13 evidence regressions before its memory observation. Both runners passed 13 evidence checks, then stopped on receipt normalization before the native file. A focused correction adds a 14th regression and is being qualified. No memory observation, cause or fix is claimed.
 
 ## 1. Summary, priorities and current evidence
 
