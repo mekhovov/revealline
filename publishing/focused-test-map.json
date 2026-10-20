@@ -503,6 +503,22 @@
           "timeoutMs": 300000
         }
       ]
+    },
+    {
+      "id": "compiled-menu-browser-contract",
+      "pathPatterns": [
+        "^scripts/(compiled-menu-browser[^/]*|run-compiled-menu-browser|test-compiled-menu-browser-consumer)\\.mjs$",
+        "^scripts/compiled-menu-browser-tools/(package|package-lock)\\.json$",
+        "^docs/verification/compiled-menu-browser-37ec(?:-plan\\.json|\\.md)$",
+        "^\\.github/workflows/compiled-menu-browser-37ec\\.yml$"
+      ],
+      "commands": [
+        {
+          "id": "compiled-menu-browser-contract",
+          "command": "node",
+          "args": ["--test", "scripts/test-compiled-menu-browser-consumer.mjs"]
+        }
+      ]
     }
   ],
   "ignoredPathPatterns": ["^(docs/|.*\\.md$)", "^publishing/pages-controller/(evidence|metadata)/"],
