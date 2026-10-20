@@ -56,7 +56,7 @@ jobs:
         run: |
           python3 -B - <<'PY'
           import hashlib, pathlib
-          expected = {"scripts/world-fixture-memory-scalars.py":"c5a21b544ec32b2064fe63985a8adc347ad8e3e58e828e2a091c973755c48458","scripts/world-fixture-memory-scalars-pins.json":"af72badb069e97dac169070dcceae9171d63aa770764fb35aaf828ff168b7730","scripts/test_world_fixture_memory_scalars.py":"c87af3a844485682b006d7ee226225c74c7a59ecf1215ca1396da39e51fae366","scripts/parse-scalar-observations.py":"f308d6e86496c8af0d34298dce77309d4142ec43db7d26e09499d02e54a22f57","docs/verification/world-fixture-memory-scalars.md":"815b9ee0139200465adb8ecf2686d4020a816e369bf42456d0e192171946ee86"}
+          expected = {"scripts/world-fixture-memory-scalars.py":"193daa2dc9f6c4e3c9b5953527679344cb8835ef2ebb58028602bd33de4babdf","scripts/world-fixture-memory-scalars-pins.json":"af72badb069e97dac169070dcceae9171d63aa770764fb35aaf828ff168b7730","scripts/test_world_fixture_memory_scalars.py":"f23f518b3d936b15c5882029e1954a2d1bb529e00e15f5b585f091e23ab456cc","scripts/parse-scalar-observations.py":"f308d6e86496c8af0d34298dce77309d4142ec43db7d26e09499d02e54a22f57","docs/verification/world-fixture-memory-scalars.md":"bb93c0529843d765fbe8ae221fd09647cc8357a416cc0c53d63ff469440d4634"}
           for name, digest in expected.items():
               p = pathlib.Path(name)
               assert p.is_file() and not p.is_symlink()

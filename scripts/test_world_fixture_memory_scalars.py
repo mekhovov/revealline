@@ -250,6 +250,30 @@ class Observer(unittest.TestCase):
                 else:
                     with self.assertRaises(RuntimeError): cm.candidate_context('/candidate')
 
+    def test_api_accepts_exact_repository_and_descendants_without_widening_owner(self):
+        allowed = ('repos/mekhovov/revealline',
+                   'repos/mekhovov/revealline/actions/runs/123')
+        rejected = ('repos/mekhovov/revealline-other',
+                    'repos/mekhovov/revealline-other/actions/runs/123',
+                    'repos/other/revealline',
+                    'https://api.github.com/repos/mekhovov/revealline')
+        with patch.dict(cm.os.environ, {'DIAGNOSTIC_READ_TOKEN': 'mock-only-token'}), patch.object(
+                cm.urllib.request, 'build_opener') as transport:
+            transport.return_value.open.side_effect = lambda request, timeout: cm.io.BytesIO(b'{"ok":true}')
+            for path in allowed:
+                self.assertEqual(cm.api(path), {'ok': True})
+                self.assertIs(transport.call_args.args[0], cm.NoRedirect)
+                args, kwargs = transport.return_value.open.call_args
+                self.assertEqual(args[0].full_url, 'https://api.github.com/' + path)
+                self.assertEqual(args[0].get_header('Authorization'), 'Bearer mock-only-token')
+                self.assertEqual(kwargs, {'timeout': 30})
+            self.assertEqual(transport.return_value.open.call_count, len(allowed))
+            transport.reset_mock()
+            for path in rejected:
+                with self.assertRaisesRegex(RuntimeError, 'Unexpected API owner'):
+                    cm.api(path)
+            transport.assert_not_called()
+
     def test_overflow_summary_retains_native_outcome_and_fails_diagnostic(self):
         row = {'format': 'world-scalar-diagnostic.v1', 'outcome': 'WHOLE_FILE_SUCCESS',
                'nativeOutcome': 'V8_OOM', 'scalarStatus': 'scalar-observations-partial',
