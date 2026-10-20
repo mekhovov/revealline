@@ -605,6 +605,146 @@
           "timeoutMs": 1800000
         }
       ]
+    },
+    {
+      "id": "community-removal-complete-contract",
+      "pathPatterns": ["^game/test/community-removal-review\\.test\\.mjs$"],
+      "commands": [
+        {
+          "id": "community-removal-complete-classic-community-package",
+          "command": "node",
+          "args": [
+            "--test",
+            "--test-concurrency=1",
+            "game/test/classic-community-package.test.mjs"
+          ],
+          "timeoutMs": 180000
+        },
+        {
+          "id": "community-removal-complete-community-account-upload",
+          "command": "node",
+          "args": ["--test", "--test-concurrency=1", "game/test/community-account-upload.test.mjs"],
+          "timeoutMs": 180000
+        },
+        {
+          "id": "community-removal-complete-community-appearance",
+          "command": "node",
+          "args": ["--test", "--test-concurrency=1", "game/test/community-appearance.test.mjs"],
+          "timeoutMs": 180000
+        },
+        {
+          "id": "community-removal-complete-community-art-cohort",
+          "command": "node",
+          "args": ["--test", "--test-concurrency=1", "game/test/community-art-cohort.test.mjs"],
+          "timeoutMs": 180000
+        },
+        {
+          "id": "community-removal-complete-community-creator-guide",
+          "command": "node",
+          "args": ["--test", "--test-concurrency=1", "game/test/community-creator-guide.test.mjs"],
+          "timeoutMs": 180000
+        },
+        {
+          "id": "community-removal-complete-community-directory",
+          "command": "node",
+          "args": ["--test", "--test-concurrency=1", "game/test/community-directory.test.mjs"],
+          "timeoutMs": 180000
+        },
+        {
+          "id": "community-removal-complete-community-entry",
+          "command": "node",
+          "args": ["--test", "--test-concurrency=1", "game/test/community-entry.test.mjs"],
+          "timeoutMs": 180000
+        },
+        {
+          "id": "community-removal-complete-community-friendly-host",
+          "command": "node",
+          "args": ["--test", "--test-concurrency=1", "game/test/community-friendly-host.test.mjs"],
+          "timeoutMs": 180000
+        },
+        {
+          "id": "community-removal-complete-community-moderator",
+          "command": "node",
+          "args": ["--test", "--test-concurrency=1", "game/test/community-moderator.test.mjs"],
+          "timeoutMs": 180000
+        },
+        {
+          "id": "community-removal-complete-community-native-families",
+          "command": "node",
+          "args": [
+            "--test",
+            "--test-concurrency=1",
+            "game/test/community-native-families.test.mjs"
+          ],
+          "timeoutMs": 180000
+        },
+        {
+          "id": "community-removal-complete-community-ownership-concurrency",
+          "command": "node",
+          "args": [
+            "--test",
+            "--test-concurrency=1",
+            "game/test/community-ownership-concurrency.test.mjs"
+          ],
+          "timeoutMs": 180000
+        },
+        {
+          "id": "community-removal-complete-community-removal-review",
+          "command": "node",
+          "args": ["--test", "--test-concurrency=1", "game/test/community-removal-review.test.mjs"],
+          "timeoutMs": 180000
+        },
+        {
+          "id": "community-removal-complete-community-routes",
+          "command": "node",
+          "args": ["--test", "--test-concurrency=1", "game/test/community-routes.test.mjs"],
+          "timeoutMs": 180000
+        },
+        {
+          "id": "community-removal-complete-community-soundtrack-styles",
+          "command": "node",
+          "args": [
+            "--test",
+            "--test-concurrency=1",
+            "game/test/community-soundtrack-styles.test.mjs"
+          ],
+          "timeoutMs": 180000
+        },
+        {
+          "id": "community-removal-complete-curated-community-theme-host",
+          "command": "node",
+          "args": [
+            "--test",
+            "--test-concurrency=1",
+            "game/test/curated-community-theme-host.test.mjs"
+          ],
+          "timeoutMs": 180000
+        },
+        {
+          "id": "community-removal-complete-curated-community-theme",
+          "command": "node",
+          "args": ["--test", "--test-concurrency=1", "game/test/curated-community-theme.test.mjs"],
+          "timeoutMs": 180000
+        },
+        {
+          "id": "community-removal-complete-overflight-community",
+          "command": "node",
+          "args": ["--test", "--test-concurrency=1", "game/test/overflight-community.test.mjs"],
+          "timeoutMs": 180000
+        },
+        {
+          "id": "community-removal-complete-overflight-riy-community",
+          "command": "node",
+          "args": ["--test", "--test-concurrency=1", "game/test/overflight-riy-community.test.mjs"],
+          "timeoutMs": 180000
+        },
+        {
+          "id": "community-removal-complete-raid-community",
+          "command": "node",
+          "args": ["--test", "--test-concurrency=1", "game/test/raid-community.test.mjs"],
+          "timeoutMs": 180000
+        }
+      ]
     }
   ],
   "ignoredPathPatterns": ["^(docs/|.*\\.md$)", "^publishing/pages-controller/(evidence|metadata)/"],

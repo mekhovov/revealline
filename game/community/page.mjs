@@ -2,6 +2,7 @@ import { createCreatorStore } from '../creator/installed.mjs';
 import { createCommunityAccountClient } from './account.mjs';
 import { createCommunityClient } from './client.mjs';
 import { attachCommunityReadiness, communityRequest, probeCommunityService } from './readiness.mjs';
+import { confirmCommunityRemoval } from './removal-review.mjs';
 import { createCommunityDownloadStore } from './download-store.mjs';
 import { createCommunityLibrary } from './library.mjs';
 import { createCommunityPublisher } from './publisher.mjs';
@@ -141,17 +142,52 @@ const action = (label, run, className = '') => {
   const button = text('button', label, className);
   button.type = 'button';
   button.onclick = async () => {
+    let restoreFocus;
     button.disabled = true;
     try {
-      await run();
+      await run({
+        button,
+        returnFocus: (restore) => {
+          restoreFocus = restore;
+        },
+      });
     } catch (error) {
       status(error.message, true);
     } finally {
       button.disabled = false;
+      restoreFocus?.();
     }
   };
   return button;
 };
+async function confirmRemoval(kind, edition, review, action, generation) {
+  const current = () => action.button.isConnected && generation === catalogGeneration;
+  const decision = await confirmCommunityRemoval({
+    document,
+    window,
+    kind,
+    edition,
+    review,
+    opener: action.button,
+    fallback: () => $('filter'),
+    isCurrent: current,
+  });
+  action.returnFocus(decision.restoreFocus);
+  if (!decision.confirmed || !current()) {
+    if (current()) status(localizedMessage('interface:community.removal.cancelled'));
+    return false;
+  }
+  return true;
+}
+async function prepareRemoval(read, action, generation) {
+  status(localizedMessage('interface:community.removal.checking'));
+  try {
+    return await read();
+  } catch (error) {
+    if (generation === catalogGeneration && action.button.isConnected) status(error.message, true);
+    return null;
+  }
+}
 function render({ append = false, start = 0 } = {}) {
   if (!append) {
     for (const url of previewURLs) URL.revokeObjectURL(url);
@@ -298,10 +334,35 @@ function render({ append = false, start = 0 } = {}) {
         actions.append(
           action(
             localizedMessage('interface:community.offloadInstalledMedia'),
-            async () => {
-              const review = await library.reviewInstalledOffload(edition);
-              await library.offloadInstalled(edition, review);
+            async (action) => {
+              const generation = catalogGeneration;
+              const review = await prepareRemoval(
+                () => library.reviewInstalledOffload(edition),
+                action,
+                generation,
+              );
+              if (!review) return;
+              if (!(await confirmRemoval('offload', edition, review, action, generation))) return;
+              let result;
+              try {
+                result = await library.offloadInstalled(edition, review);
+              } catch (error) {
+                if (generation !== catalogGeneration || !action.button.isConnected) return;
+                status(
+                  localizedMessage('interface:community.removal.unconfirmed', {
+                    error: error.message,
+                  }),
+                  true,
+                );
+                return;
+              }
+              if (generation !== catalogGeneration || !action.button.isConnected) return;
               await refresh({ reset: true });
+              if (generation + 1 !== catalogGeneration) return;
+              if (result?.journalComplete === false) {
+                status(localizedMessage('interface:community.removal.journalIncomplete'), true);
+                return;
+              }
               status(
                 review.localCopyRetained &&
                   ['overflight', 'overflight-hunt', 'overflight-riy'].includes(edition.family)
@@ -320,11 +381,31 @@ function render({ append = false, start = 0 } = {}) {
           ),
           action(
             localizedMessage('interface:community.removeRecoveryDownload'),
-            async () => {
-              const review = await library.reviewDownloadRemoval(edition);
-              await library.removeDownload(edition, review);
-              status(localizedMessage('interface:community.recoveryDownloadRemoved'));
+            async (action) => {
+              const generation = catalogGeneration;
+              const review = await prepareRemoval(
+                () => library.reviewDownloadRemoval(edition),
+                action,
+                generation,
+              );
+              if (!review) return;
+              if (!(await confirmRemoval('download', edition, review, action, generation))) return;
+              try {
+                await library.removeDownload(edition, review);
+              } catch (error) {
+                if (generation !== catalogGeneration || !action.button.isConnected) return;
+                status(
+                  localizedMessage('interface:community.removal.unconfirmed', {
+                    error: error.message,
+                  }),
+                  true,
+                );
+                return;
+              }
+              if (generation !== catalogGeneration || !action.button.isConnected) return;
               await refresh({ reset: true });
+              if (generation + 1 !== catalogGeneration) return;
+              status(localizedMessage('interface:community.recoveryDownloadRemoved'));
             },
             'secondary',
           ),
