@@ -27,7 +27,7 @@ process birth ownership, Linux subreaper, cleanup, source, Git, Node, root and
 authoring dependency audits are reused. Both locked installs disable scripts.
 Prepared controls retain JSON-list metadata identities.
 
-All eleven already-qualified parser cases remain intact; seven new pure observer
+All eleven already-qualified parser cases remain intact; eight new pure observer
 cases cover actual parser status independence, full footer/failed/partial outcomes,
 exact Node/root/argv, raw/terminal/resource binding, real controls JSON roundtrip
 and metadata drift, immutable event routing and bounded summary fallback. They run

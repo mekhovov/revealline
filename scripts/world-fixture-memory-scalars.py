@@ -131,7 +131,7 @@ def bounded(response, maximum):
 
 
 def api(path):
-    if not path.startswith("repos/mekhovov/revealline/"):
+    if path != "repos/mekhovov/revealline" and not path.startswith("repos/mekhovov/revealline/"):
         raise RuntimeError("Unexpected API owner")
     request = urllib.request.Request("https://api.github.com/" + path,
         headers={"Authorization": "Bearer " + os.environ["DIAGNOSTIC_READ_TOKEN"],
@@ -280,7 +280,7 @@ signal.alarm(45)
 values=runpy.run_path(sys.argv[1],run_name='diagnostic_source_controls')
 module=types.SimpleNamespace(**values)
 suite=unittest.defaultTestLoader.loadTestsFromModule(module)
-if suite.countTestCases()!=18: raise SystemExit('Expected complete18 pure controls')
+if suite.countTestCases()!=19: raise SystemExit('Expected complete19 pure controls')
 result=unittest.TextTestRunner(stream=sys.stdout,verbosity=1).run(suite)
 raise SystemExit(0 if result.wasSuccessful() else 1)
 """
@@ -396,9 +396,9 @@ def run(args):
         record["python"] = {"path": python, "SHA256": campaign.hash_regular(Path(python))}
         campaign.run("pure-controls", pure_args(python, campaign.root))
         pure_stdout = (campaign.output / "pure-controls/stdout.log").read_text()
-        if not re.search(r"^Ran 18 tests in [0-9.]+s\s*$", pure_stdout, re.M) or not pure_stdout.rstrip().endswith("OK"):
-            raise RuntimeError("Complete18 pure controls did not report success")
-        record["pureControlCases"] = 18
+        if not re.search(r"^Ran 19 tests in [0-9.]+s\s*$", pure_stdout, re.M) or not pure_stdout.rstrip().endswith("OK"):
+            raise RuntimeError("Complete19 pure controls did not report success")
+        record["pureControlCases"] = 19
         record["before"] = campaign.source_audit("before")
         campaign.active_phase = "world-file"
         try:
