@@ -213,3 +213,205 @@ test('boost streaks reflect offensive width only while striking and preserve bod
   assert.equal(run.player.radius, 9);
   assert.ok(wider.every((cue) => cue.frame === 'bar'));
 });
+
+import { legalOverflightHuntRefits } from '../overflight/raid-upgrades.mjs';
+import { overflightHuntText } from '../overflight/raid-copy.mjs';
+
+function raidXLRecorder() {
+  const calls = [],
+    context = new Proxy(
+      {},
+      {
+        get(target, key) {
+          return key in target ? target[key] : (...args) => calls.push([key, ...args]);
+        },
+        set(target, key, value) {
+          calls.push(['set', key, value]);
+          target[key] = value;
+          return true;
+        },
+      },
+    );
+  return { context, calls };
+}
+function raidXLDocument() {
+  const document = new Document(),
+    create = document.createElement.bind(document);
+  document.createElement = (tag) => {
+    const element = create(tag);
+    if (tag === 'canvas') element.getContext = () => raidXLRecorder().context;
+    return element;
+  };
+  return document;
+}
+function raidXLCases() {
+  const cases = examples().map(({ offer }) => ({ offer }));
+  for (const [hull, rerolls] of [
+    [87.5, 0],
+    [100, 0],
+    [100, 2],
+  ]) {
+    const run = {
+      build: createOverflightHuntBuild(),
+      player: { hull, maxHull: 100 },
+      progression: { rerolls },
+      compiled: { upgrades: { modules: HUNT_UPGRADE_IDS } },
+    };
+    const offer = draftOverflightHuntRefits(run, () => 0.5).find((item) => item.kind === 'field');
+    assert.ok(offer);
+    cases.push({ offer, rerolls });
+  }
+  for (const [from, fromRank, to, toRank, shield] of [
+    ['plating', 2, 'recovery-shield', 0, 0],
+    ['boost-duration', 1, 'recovery-shield', 1, 1],
+    ['recovery-shield', 2, 'boost-duration', 0, 2],
+  ]) {
+    const run = {
+      build: createOverflightHuntBuild(),
+      player: { shield },
+      compiled: { upgrades: { modules: HUNT_UPGRADE_IDS } },
+    };
+    Object.assign(run.build.hunt, { [from]: fromRank, [to]: toRank });
+    const offer = legalOverflightHuntRefits(run).find(
+      (item) => item.fromSystem === from && item.system === to,
+    );
+    assert.ok(offer);
+    cases.push({ offer, player: run.player, rulesVersion: 3 });
+  }
+  return cases;
+}
+
+test('Raid XL removes only canvas text, preserving the complete default commands and sprites', () => {
+  for (const options of raidXLCases())
+    for (const locale of ['en', 'uk'])
+      for (const time of [0, 1.8])
+        for (const reducedEffects of [false, true]) {
+          const before = structuredClone(options),
+            model = overflightHuntPreviewModel(options.offer, options),
+            streams = [];
+          for (const expandedComparison of [undefined, false, true]) {
+            const recorder = raidXLRecorder(),
+              flags = {
+                time,
+                locale,
+                reducedEffects,
+                paintSprite: (_context, ...args) => recorder.calls.push(['sprite', ...args]),
+              };
+            if (expandedComparison !== undefined) flags.expandedComparison = expandedComparison;
+            paintOverflightHuntPreview(recorder.context, model, flags);
+            streams.push(recorder.calls);
+          }
+          assert.deepEqual(streams[0], streams[1]);
+          assert.ok(streams[0].some(([name]) => name === 'fillText'));
+          assert.deepEqual(
+            streams[2],
+            streams[0].filter(([name]) => name !== 'fillText'),
+            options.offer.id,
+          );
+          assert.ok(streams[2].some(([name]) => name === 'sprite'));
+          assert.deepEqual(options, before);
+        }
+});
+
+test('Raid XL actual cards retain comparisons, shield consequences and exact legal choices in EN/UK', () => {
+  for (const options of raidXLCases())
+    for (const locale of ['en', 'uk']) {
+      const before = structuredClone(options),
+        chosen = [],
+        common = { ...options, locale, document: raidXLDocument() };
+      const standard = createOverflightHuntUpgradeCard(common);
+      const explicit = createOverflightHuntUpgradeCard({ ...common, expandedComparison: false });
+      assert.equal(explicit.getAttribute('aria-label'), standard.getAttribute('aria-label'));
+      assert.equal(standard.querySelector('.raid-upgrade-comparison'), null);
+      const card = createOverflightHuntUpgradeCard({
+        ...common,
+        expandedComparison: true,
+        onChoose: (id) => chosen.push(id),
+      });
+      const rows = card.querySelectorAll('.upgrade-comparison-state');
+      assert.equal(rows.length, 2);
+      assert.equal(rows[0].children[0].textContent, overflightHuntText(locale, 'current'));
+      assert.equal(rows[1].children[0].textContent, overflightHuntText(locale, 'next'));
+      assert.ok(rows.every((row) => row.children[1].textContent.length > 0));
+      assert.ok(card.getAttribute('aria-label').startsWith(standard.getAttribute('aria-label')));
+      assert.equal(card.querySelector('canvas').getAttribute('aria-hidden'), 'true');
+      assert.equal(card.tagName, 'BUTTON');
+      assert.equal(card.dataset.upgradeId, options.offer.id);
+      const consequence = standard.querySelector('.upgrade-consequence');
+      if (consequence) {
+        assert.equal(
+          card.querySelector('.upgrade-consequence').textContent,
+          consequence.textContent,
+        );
+        assert.ok(card.getAttribute('aria-label').includes(consequence.textContent));
+      }
+      card.click();
+      card.disabled = true;
+      card.click();
+      assert.deepEqual(chosen, [options.offer.id]);
+      assert.deepEqual(options, before);
+    }
+});
+
+test('Raid XL field facts expose exact localized amounts visibly and in ARIA without repeating next prose', () => {
+  const fields = raidXLCases().filter(({ offer }) => offer.kind === 'field');
+  assert.deepEqual(
+    fields.map(({ offer }) => offer.system),
+    ['field-repair', 'field-reroll', 'field-score'],
+  );
+  for (const options of fields)
+    for (const locale of ['en', 'uk']) {
+      const card = createOverflightHuntUpgradeCard({
+        ...options,
+        document: raidXLDocument(),
+        locale,
+        expandedComparison: true,
+      });
+      const amount = card.querySelector('.raid-upgrade-preview-amount').textContent;
+      assert.ok(amount.startsWith('+' + options.offer.amount.toLocaleString(locale) + ' '));
+      assert.ok(card.getAttribute('aria-label').includes(amount));
+      assert.equal(card.querySelectorAll('.raid-upgrade-preview-amount').length, 1);
+      assert.equal(card.querySelector('.upgrade-description'), null);
+      const rows = card.querySelectorAll('.upgrade-comparison-state');
+      assert.equal(rows[1].children[1].textContent, options.offer.next[locale]);
+      const original = createOverflightHuntUpgradeCard({
+        ...options,
+        document: raidXLDocument(),
+        locale,
+      });
+      assert.ok(original.getAttribute('aria-label').includes(rows[0].children[1].textContent));
+      assert.doesNotMatch(amount, /undefined|NaN|Infinity/);
+    }
+});
+
+test('Raid XL plating uses the real localized hull-loss owner and localized numbers for both ranks', () => {
+  for (const { offer } of examples().filter(({ offer }) => offer.system === 'plating'))
+    for (const locale of ['en', 'uk']) {
+      assert.equal(
+        overflightHuntText(locale, 'damageTaken'),
+        OVERFLIGHT_HUNT_COPY[locale].damageTaken,
+      );
+      assert.equal(typeof OVERFLIGHT_HUNT_COPY[locale].damageTaken, 'string');
+      const model = overflightHuntPreviewModel(offer);
+      const card = createOverflightHuntUpgradeCard({
+        document: raidXLDocument(),
+        offer,
+        locale,
+        expandedComparison: true,
+      });
+      const rows = card.querySelectorAll('.upgrade-comparison-state');
+      for (const [index, parameters] of [model.before, model.after].entries()) {
+        const fact =
+          OVERFLIGHT_HUNT_COPY[locale].damageTaken +
+          ': −' +
+          (20 * (1 - parameters.armorReduction)).toLocaleString(locale);
+        assert.equal(rows[index].children[2].textContent, fact);
+        assert.ok(card.getAttribute('aria-label').includes(fact));
+        assert.equal(
+          rows[index].children[1].textContent,
+          overflightHuntPreviewCaption('plating', parameters, locale),
+        );
+        assert.doesNotMatch(fact, /undefined|NaN|Infinity|000000000/);
+      }
+    }
+});

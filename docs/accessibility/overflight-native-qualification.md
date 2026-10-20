@@ -1,3 +1,134 @@
+# Raid, Time Attack and Contract Marathon complete44-file qualification proposal
+
+Status: SOURCE QUALIFIED; COMPLETE44 NATIVE AND BROWSER GATES PENDING. This
+same-feature successor extends the existing Overflight native gate. It creates
+no separate generic prerequisite feature or PR.
+The eight actual formatted production/test after-images now come from the
+successful eight-stage source-only run in private attempt4, referenced by
+`formatted-raid8-source-reference.json` (82cde0f61860d23ecfdf29bdb3879be211b3fba999409aff8aa156f5eac770f6).
+The sealed formatter manifest is3eeeccde; its initially pending label is
+contextualized by the later successful CHECK8 and syntax6 terminal receipt.
+The actual66 source reference is now bound to manifest `74ee09f420fb779b88040763c3a40b96d97af68908833714c5c8b767c7c57936`
+and leaf `9a49fefca0800efd001a8fabb151bc42446a4c52067c95aa39471a58470a0b0d`, using all current
+source bodies and the actual root attempt4 formatted8 outputs. Raw V5 recipes are
+not substituted for formatted evidence. Both native entrypoints reject missing or
+malformed reference pins before creating output or downloading artifacts. This packet
+authorizes no application, native test, browser, install, build or publication.
+
+## Current history and unchanged source ownership
+
+The source qualification baseline is main
+`fcb0227a846dae06ae8226acdaf1c90b17b4f5d5`, tree
+`d46afbe5b9ed481f788f201a515f3a070e6fd33a`, descended from migrated c97.
+Publication planning now uses current main
+`70650655ce432f0c5089d96c2239a23e6e23865e`, tree
+`ad73475ab58e9a3cd534c7d66a6eddb25027bb43`. All71 named before-owners remain
+exact there; its four admitted Missions paths are unowned and must be preserved.
+The source receipts retain their original baseline and are not retagged. Earlier
+commits remain evidence/artifact references and are not merged into the new graph.
+
+All eight Raid before-images still match. Of63 named source/browser owners from
+the earlier5cb inventory,62 match; only the World test changed to the admitted
+`43afec5314e67653492c37165f171c59761ecb21` fixture. Its external cleanup
+factories, nullable owners, worker pruning/scalars and complete115 cases must stay.
+Current Touch/F12/ExtraLarge labels, retirements, F79 and settings/focus owners stay.
+No locale key or generated output is changed by the eight-file Raid source delta.
+
+The complete28+mandatory-host619-case result and separate115-case World result
+belong to historical `6c26ceeba877a7b08ac9f6d7c01b466df4e245ec` only.
+Neither is qualification of c97 or this new Raid candidate.
+
+## Fixed four groups, eleven complete files each
+
+The original four contiguous seven-file blocks remain byte-for-byte ordered.
+Group1 still runs the complete Overflight host immediately after its original
+seven. The fifteen additional family files are appended in these fixed slices:
+
+- Group1: original seven, Overflight host, Raid core, Raid balance, Raid HUD.
+- Group2: original seven, Raid presentation, records, refit shield, review pilot.
+- Group3: original seven, Raid variants, Time Attack medal goal, Raid Community,
+  Raid project.
+- Group4: original seven, Raid Studio preview, reroll disclosure, upgrade
+  consequences, attack readability.
+
+Every command retains exact Node22.22.2,1536MiB old-space, `--test`,
+`--test-concurrency=1`, `--experimental-test-isolation=none` and one
+complete immutable-root filename. There are no name filters, skipped-case
+acceptance, retries or remainder selection. Each new file has its own before/after
+full source/dependency/Git/Node audits and sealed child/raw/qualified proof.
+Additional audit prefixes are unique; the original host namespace is retained.
+The aggregator requires the original ordered28 plus exact host+family15 union44,
+including full44 inventory fields and exact per-group additions.
+
+The fixed feature inventory is the original63 paths plus Raid HTML, Raid upgrade
+card and Raid presentation test:66 paths. Candidate content is dynamically bound
+to immutable HEAD modes/OIDs/SHA/bytes, not old whole-module copies. The actual formatted8 manifest and66-leaf
+proof are now sealed after source qualification. Their exact remote candidate
+bodies and all unowned current-main entries still require independent initial
+publication and immediate prelaunch readback before any workflow launch.
+
+## Resource, archive and lifecycle boundary
+
+The native launch reserve is2.55GB on the actual source/output filesystems after
+preparation. Continuous and postflight reserve remains2GiB. Per child stays180s,
+1536MiB heap and2048MiB owned RSS. Four groups retain45min campaigns,55min workflow
+jobs and `max-parallel:1`. Raw stays4MiB per stream,8MiB per group and32MiB total;
+uncompressed group artifacts stay12MiB and compressed downloads13MiB. Terminal
+reserves remain64KiB. Exhaustion is failure/incomplete, never truncated success.
+
+Each eleven-file group has36 child-stage directories: node version, initial/final
+source audits,22 per-file source audits and11 native children. Its exact namespace
+contains121 files; up to36 declared stage directories plus optional `tmp/` gives
+158 ZIP entries. The old128-entry ceiling fits only the earlier smaller selection.
+The successor ceiling158 is derived from this exact namespace. Exact filenames,
+directory allowlist, duplicate/traversal/symlink/encryption rejection, CRC/digest and
+all byte/raw/download caps remain unchanged. Unknown or159th entries fail.
+
+The process lifecycle here is explicitly the existing isolated **Linux hosted**
+subreaper and birth-identity implementation; it is preserved, not a new Mac
+process controller. No Mac native invocation is proposed by this source packet.
+Any later local recovery-drive execution needs a separately reviewed precise
+birth-safe outer controller. No frozen control authorizes execution by itself.
+
+## Complete source, tooling and proof
+
+The independently pinned source auditor
+`56ad477033516d565fbb7f85cea70d0430ceae1c` /
+`a6124736ce13aec52fb26d818e6c2aa6ce83965ccaf92b94c783043d1d150fc4`
+hashes every tracked raw blob/mode against the exact candidate tree. Root and
+authoring installed dependencies, package/lock identities, Node binary, workflow
+definition and helper provenance remain before/after invariants. The current
+authoring lock resolves fake-indexeddb6.2.5; installed version must equal the
+then-immutable lock rather than a permanent hardcoded initial version.
+
+A complete run produces44 native,96 source-audit and4 Node-version children:
+144 sealed terminals with complete streams, exact144 proof links and complete
+positive zero-skip/cancel/todo TAP. Source/Node/dependency content must match across
+fresh VMs; device/inode/mtime identities remain per-job invariants. The aggregator
+never executes downloaded artifacts or imports a game.
+
+All31 prior toy method registrations are retained. Four new mocked cases cover
+exact44 order/argv, missing/duplicate/transplanted family metadata, full158-entry
+namespace and unchanged byte caps, plus explicitly patched missing/invalid-reference refusal. Their source
+passed all35 mocked cases, Python AST3 and read-only Markdown/YAML formatting2
+in the separate APFS source-only campaign, receipt
+`41d013874a619b166cedf28ec6181c272a50030c11f52443f9b90bd4df0a8344`.
+The earlier SMB attempt failed its45-second child wall guard and remains failed.
+The eight production/test files separately passed the eight-stage source run,
+receipt `d72f9e0262ffff75d78e45d586b0d5c0027b0f6bbe1c55320749d1c788833a34`.
+These passes execute no game or native case. This later documentation-only
+update requires its own read-only format check. Browser EN/UK/fonts/scales,
+Standard/Large parity, XL layout/ARIA, Time Attack medals, Marathon authority,
+packages and devices remain separate acceptance.
+
+---
+
+## Historical63-path proposal and evidence (preserved verbatim below)
+
+The following original text records its earlier source/evidence state. It does
+not override this successor's actual formatted8 reference, fixed44 selection or
+current-history boundary.
+
 # Single Drone and Riy complete native qualification proposal
 
 Status: source-only63-path successor, not family acceptance. The exact2d15 original28-file campaign is terminal RED:18 complete passing files with159 tests; one complete failed file with7 tests (6 passed,1 failed); one heap-OOM incomplete file;8 files not run. No complete28 pass or aggregate pass exists. The source-only60-path controls previously passed28 mocked regressions, Python AST3 and formatting2. The62-path successor passed31 mocked cases, Python AST3 and formatting2 under receipt `2fb56bc42e3b63135712b7cf29abcd400b4e961aa4d88e60396feb7f8d06cea1`. The prior63-path reference passed the same31 cases and static checks under receipt `54167aa923f119f634525dad8e36dac1b870ec6390d2aa71d7344c9f14d5665b`. This retirement-preserving63-path reference retains all31 cases and requires fresh mock/static qualification before publication. This does not mark F09 complete.

@@ -1,4 +1,4 @@
-"""Fixed Linux hosted Overflight28 complete-file campaign. No command or limit overrides."""
+"""Fixed Linux hosted Raid-family44 complete-file campaign. No command or limit overrides."""
 import argparse
 import ctypes
 import hashlib
@@ -16,6 +16,7 @@ import time
 
 MIB = 1024 * 1024
 FLOOR = 2048 * MIB
+LAUNCH_FLOOR = 2550000000
 RSS_LIMIT = 2048 * MIB
 WALL_LIMIT = 180
 STREAM_LIMIT = 4 * MIB
@@ -24,14 +25,30 @@ TERMINAL_RESERVE = 65536
 CAMPAIGN_WALL = 45 * 60
 AUDIT_OID = "56ad477033516d565fbb7f85cea70d0430ceae1c"
 AUDIT_SHA256 = "a6124736ce13aec52fb26d818e6c2aa6ce83965ccaf92b94c783043d1d150fc4"
-STACK_HEAD = "a7c8be6ff7f4cf2ee0409edbab136e398f21c1c2"
-ADMITTED_AT_MAIN = "f4b45a498b5c69bc93e8e74a4cd8a592de77438e"
+STACK_HEAD = "fcb0227a846dae06ae8226acdaf1c90b17b4f5d5"
+ADMITTED_AT_MAIN = "fcb0227a846dae06ae8226acdaf1c90b17b4f5d5"
 ADDITIONAL_WHOLE_FILES = ("game/test/overflight-host.test.mjs",)
-FEATURE_MANIFEST_SHA256 = "c824cf84ab40e23c5084c63b0a38a96aa702ccf6222f7299a177a79df453d754"
+FAMILY_FILES = ("game/test/overflight-raid-core.test.mjs", "game/test/overflight-raid-balance.test.mjs", "game/test/overflight-raid-hud.test.mjs", "game/test/overflight-raid-presentation.test.mjs", "game/test/overflight-raid-records.test.mjs", "game/test/overflight-raid-refit-shield.test.mjs", "game/test/overflight-raid-review-pilot.test.mjs", "game/test/overflight-raid-variants.test.mjs", "game/test/overflight-time-attack-medal-goal.test.mjs", "game/test/raid-community.test.mjs", "game/test/raid-project.test.mjs", "game/test/raid-studio-preview.test.mjs", "game/test/overflight-reroll-disclosure.test.mjs", "game/test/overflight-upgrade-consequences.test.mjs", "game/test/overflight-attack-readability.test.mjs")
+FAMILY_GROUP_SLICES = ((0, 3), (3, 7), (7, 11), (11, 15))
+FEATURE_MANIFEST_SHA256 = "74ee09f420fb779b88040763c3a40b96d97af68908833714c5c8b767c7c57936"  # Actual current66 inventory and formatted Raid8 reference
 DEPENDENCY_PATHS = ("package.json", "package-lock.json", "authoring/fpv-worlds/package.json", "authoring/fpv-worlds/package-lock.json")
 WHOLE_FILES = ('game/test/touch-controls-view.test.mjs', 'game/test/overflight-touch.test.mjs', 'game/test/overflight-text-scaling-host.test.mjs', 'game/test/overflight-text-scaling-riy-reader-host.test.mjs', 'game/test/overflight-text-scaling-view.test.mjs', 'game/test/reaction-reading-time.test.mjs', 'game/test/overflight-commentator.test.mjs', 'game/test/actor-reaction-director.test.mjs', 'game/test/fpv-hunt-reactions.test.mjs', 'game/test/overflight-text-scaling.test.mjs', 'game/test/overflight-text-scaling-declarations.test.mjs', 'game/test/overflight-upgrade-card.test.mjs', 'game/test/overflight-upgrade-preview.test.mjs', 'game/test/overflight-riy.test.mjs', 'game/test/display-preferences.test.mjs', 'game/test/display-preferences-host.test.mjs', 'game/test/text-size-compatibility.test.mjs', 'game/test/text-size-library.test.mjs', 'game/test/text-size-host.test.mjs', 'game/test/theme-bootstrap.test.mjs', 'game/test/theme-system.test.mjs', 'game/test/theme-family-host.test.mjs', 'game/test/fpv-theme-family-controls.test.mjs', 'game/test/fpv-world-appearance-ui.test.mjs', 'game/test/fpv-flight-ui.test.mjs', 'game/test/shared-touch-preferences.test.mjs', 'game/test/classic-snake-ui.test.mjs', 'game/test/localization-couch-host.test.mjs')
-FEATURE_PATHS = ('docs/accessibility/text-scaling-overflight-inventory.json', 'docs/accessibility/text-scaling-overflight.md', 'game/access-gate.css', 'game/display-preferences.mjs', 'game/i18n/catalogs.mjs', 'game/locales/en/interface.json', 'game/locales/uk/interface.json', 'game/overflight/app.mjs', 'game/overflight/commentator.mjs', 'game/overflight/copy.mjs', 'game/overflight/play.html', 'game/overflight/riy-mode.mjs', 'game/overflight/style.css', 'game/overflight/text-scaling-view.mjs', 'game/overflight/text-scaling.css', 'game/overflight/touch.mjs', 'game/overflight/upgrade-card.mjs', 'game/overflight/upgrade-preview.mjs', 'game/presentation/industrial-workshop.css', 'game/presentation/theme-bootstrap.mjs', 'game/presentation/theme-host.mjs', 'game/presentation/theme-system.mjs', 'game/test/fpv-world-appearance-ui.test.mjs', 'game/test/helpers/overflight-native-host.mjs', 'game/test/overflight-commentator.test.mjs', 'game/test/overflight-host.test.mjs', 'game/test/overflight-text-scaling-declarations.test.mjs', 'game/test/overflight-text-scaling-host.test.mjs', 'game/test/overflight-text-scaling-riy-reader-host.test.mjs', 'game/test/overflight-text-scaling-view.test.mjs', 'game/test/overflight-text-scaling.test.mjs', 'game/test/overflight-touch.test.mjs', 'game/test/overflight-upgrade-card.test.mjs', 'game/test/overflight-upgrade-preview.test.mjs', 'game/test/reaction-reading-time.test.mjs', 'game/test/text-size-compatibility.test.mjs', 'game/test/touch-controls-view.test.mjs', 'game/text-size.mjs', 'game/ui/contextual-reactions.mjs', 'game/ui/continuous-play.mjs', 'game/ui/controller-field-editor.css', 'game/ui/global-settings-tools.css', 'game/ui/global-settings-view.css', 'game/ui/install-offline-panel.css', 'game/ui/journey.css', 'game/ui/mode-choice.css', 'game/ui/mode-play-shell.css', 'game/ui/mode-settings-view.css', 'game/ui/optional-practice-panel.css', 'game/ui/pause-menu.css', 'game/ui/profile-recovery-dialog.css', 'game/ui/quick-music-controls.css', 'game/ui/reaction-caption.mjs', 'game/ui/soundtrack-panel.css', 'game/ui/text-size-control.mjs', 'game/ui/touch-controls-view.css', 'game/ui/touch-controls-view.mjs', 'optional-practice/civilian-fpv/flight-fullscreen.css', 'optional-practice/civilian-fpv/flight-fullscreen.mjs', 'optional-practice/civilian-fpv/sim-presentation.mjs', 'optional-practice/civilian-fpv/style.css', 'optional-practice/civilian-fpv/world-reaction-runtime.mjs', 'scripts/refresh-theme-bootstrap.mjs')
-INITIAL_REFERENCE_LEAF_SHA256 = "7351b2520ccccc1abb8e375cdbe2fd28cb158940c3d147305a60c37a8f5977bc"
+FEATURE_PATHS = ('docs/accessibility/text-scaling-overflight-inventory.json', 'docs/accessibility/text-scaling-overflight.md', 'game/access-gate.css', 'game/display-preferences.mjs', 'game/i18n/catalogs.mjs', 'game/locales/en/interface.json', 'game/locales/uk/interface.json', 'game/overflight/app.mjs', 'game/overflight/commentator.mjs', 'game/overflight/copy.mjs', 'game/overflight/play.html', 'game/overflight/riy-mode.mjs', 'game/overflight/style.css', 'game/overflight/text-scaling-view.mjs', 'game/overflight/text-scaling.css', 'game/overflight/touch.mjs', 'game/overflight/upgrade-card.mjs', 'game/overflight/upgrade-preview.mjs', 'game/presentation/industrial-workshop.css', 'game/presentation/theme-bootstrap.mjs', 'game/presentation/theme-host.mjs', 'game/presentation/theme-system.mjs', 'game/test/fpv-world-appearance-ui.test.mjs', 'game/test/helpers/overflight-native-host.mjs', 'game/test/overflight-commentator.test.mjs', 'game/test/overflight-host.test.mjs', 'game/test/overflight-text-scaling-declarations.test.mjs', 'game/test/overflight-text-scaling-host.test.mjs', 'game/test/overflight-text-scaling-riy-reader-host.test.mjs', 'game/test/overflight-text-scaling-view.test.mjs', 'game/test/overflight-text-scaling.test.mjs', 'game/test/overflight-touch.test.mjs', 'game/test/overflight-upgrade-card.test.mjs', 'game/test/overflight-upgrade-preview.test.mjs', 'game/test/reaction-reading-time.test.mjs', 'game/test/text-size-compatibility.test.mjs', 'game/test/touch-controls-view.test.mjs', 'game/text-size.mjs', 'game/ui/contextual-reactions.mjs', 'game/ui/continuous-play.mjs', 'game/ui/controller-field-editor.css', 'game/ui/global-settings-tools.css', 'game/ui/global-settings-view.css', 'game/ui/install-offline-panel.css', 'game/ui/journey.css', 'game/ui/mode-choice.css', 'game/ui/mode-play-shell.css', 'game/ui/mode-settings-view.css', 'game/ui/optional-practice-panel.css', 'game/ui/pause-menu.css', 'game/ui/profile-recovery-dialog.css', 'game/ui/quick-music-controls.css', 'game/ui/reaction-caption.mjs', 'game/ui/soundtrack-panel.css', 'game/ui/text-size-control.mjs', 'game/ui/touch-controls-view.css', 'game/ui/touch-controls-view.mjs', 'optional-practice/civilian-fpv/flight-fullscreen.css', 'optional-practice/civilian-fpv/flight-fullscreen.mjs', 'optional-practice/civilian-fpv/sim-presentation.mjs', 'optional-practice/civilian-fpv/style.css', 'optional-practice/civilian-fpv/world-reaction-runtime.mjs', 'scripts/refresh-theme-bootstrap.mjs', 'game/overflight/raid.html', 'game/overflight/raid-upgrade-card.mjs', 'game/test/overflight-raid-presentation.test.mjs')
+INITIAL_REFERENCE_LEAF_SHA256 = "9a49fefca0800efd001a8fabb151bc42446a4c52067c95aa39471a58470a0b0d"  # Actual candidate66 after root source8 PASS
+
+
+def require_formatted_raid_reference():
+    for value in (FEATURE_MANIFEST_SHA256, INITIAL_REFERENCE_LEAF_SHA256):
+        if not isinstance(value, str) or not re.fullmatch("[a-f0-9]{64}", value):
+            raise RuntimeError("Formatted Raid8 source qualification/reference is still pending")
+
+
+def complete_inventory():
+    return WHOLE_FILES + ADDITIONAL_WHOLE_FILES + FAMILY_FILES
+
+
+def additional_audit_prefix(label):
+    return "additional-host" if label == "additional-overflight-host" else label
 
 
 def stable_stat(value):
@@ -68,12 +85,18 @@ def fixed_phases(node, root, group):
 def additional_phases(node, root, group):
     if group not in (1, 2, 3, 4):
         raise RuntimeError("Use one of four fixed groups")
-    if group != 1:
-        return []
-    filename, = ADDITIONAL_WHOLE_FILES
-    return [("additional-overflight-host",
-             [node, "--max-old-space-size=1536", "--test", "--test-concurrency=1",
-              "--experimental-test-isolation=none", str(root / filename)], filename)]
+    rows = []
+    if group == 1:
+        filename, = ADDITIONAL_WHOLE_FILES
+        rows.append(("additional-overflight-host",
+                     [node, "--max-old-space-size=1536", "--test", "--test-concurrency=1",
+                      "--experimental-test-isolation=none", str(root / filename)], filename))
+    start, end = FAMILY_GROUP_SLICES[group - 1]
+    rows.extend((f"raid-family-{index:02}-{Path(filename).stem}",
+                 [node, "--max-old-space-size=1536", "--test", "--test-concurrency=1",
+                  "--experimental-test-isolation=none", str(root / filename)], filename)
+                for index, filename in enumerate(FAMILY_FILES[start:end], start + 1))
+    return rows
 
 
 def require_complete_tap(text):
@@ -567,8 +590,10 @@ class Campaign:
         return result
 
     def verify_feature(self):
-        if len(WHOLE_FILES) != 28 or len(set(WHOLE_FILES)) != 28 or len(FEATURE_PATHS) != 63 or len(set(FEATURE_PATHS)) != 63:
-            raise RuntimeError("Fixed63 path/28 complete-file inventory changed")
+        if (len(WHOLE_FILES) != 28 or len(set(WHOLE_FILES)) != 28 or
+                len(FEATURE_PATHS) != 66 or len(set(FEATURE_PATHS)) != 66 or
+                len(FAMILY_FILES) != 15 or len(complete_inventory()) != 44 or len(set(complete_inventory())) != 44):
+            raise RuntimeError("Fixed66 paths/original28 plus16 complete-file inventory changed")
         if ADDITIONAL_WHOLE_FILES != ('game/test/overflight-host.test.mjs',):
             raise RuntimeError('The additional complete host file is fixed')
         actual = self.pinned_paths(FEATURE_PATHS)
@@ -576,7 +601,7 @@ class Campaign:
             self.baseline_feature = actual
         elif actual != self.baseline_feature:
             raise RuntimeError("Feature inventory changed within immutable candidate")
-        for filename in WHOLE_FILES + ADDITIONAL_WHOLE_FILES:
+        for filename in complete_inventory():
             if not stat.S_ISREG((self.root / filename).lstat().st_mode):
                 raise RuntimeError("A complete selected test file is absent/nonregular")
         digest = sha256(json_bytes(actual))
@@ -584,7 +609,9 @@ class Campaign:
                 "initialReferenceLeafSHA256": INITIAL_REFERENCE_LEAF_SHA256,
                 "matchesInitialReference": digest == INITIAL_REFERENCE_LEAF_SHA256,
                 "dependencyHead": STACK_HEAD, "dependencyAdmittedAtMain": ADMITTED_AT_MAIN, "stackAdmitted": True,
-                "featurePaths": 63, "completeFiles": 28, "additionalCompleteFiles": 1, "inventory": actual, "inventorySHA256": digest}
+                "featurePaths": 66, "completeFiles": 28, "additionalCompleteFiles": 16,
+                "raidFamilyCompleteFiles": 15, "totalCompleteFiles": 44,
+                "inventory": actual, "inventorySHA256": digest}
 
     def helper_provenance(self):
         path = self.helper.with_name("helper-source.json")
@@ -635,12 +662,15 @@ class Campaign:
                     "nativeQualification": False}
 
     def execute(self):
+        require_formatted_raid_reference()
         if not re.fullmatch(r"[a-f0-9]{40}", self.source_sha) or not re.fullmatch(r"[a-f0-9]{40}", self.source_tree):
             raise RuntimeError("Use complete immutable source identities")
         temporary = Path(os.environ.get("RUNNER_TEMP", "")).resolve(strict=True)
         if (not os.environ.get("RUNNER_TEMP") or self.output.parent.resolve(strict=True) != temporary or
                 self.output.exists() or self.output.is_symlink() or self.output.resolve().is_relative_to(self.root)):
             raise RuntimeError("Use a fresh direct child of runner temporary storage outside source")
+        if min(shutil.disk_usage(self.root).free, shutil.disk_usage(temporary).free) < LAUNCH_FLOOR:
+            raise RuntimeError("Native launch requires 2.55GB on actual source/output filesystems")
         self.output.mkdir()
         (self.output / "tmp").mkdir()
         self.env = controlled_environment(os.environ, self.output / "tmp")
@@ -678,12 +708,13 @@ class Campaign:
         for index, (label, args, filename) in enumerate(fixed_phases(self.node, self.root, self.group), 1):
             self.results.append(qualify_whole_file(label, args, filename, f"{index:02}"))
         for label, args, filename in additional_phases(self.node, self.root, self.group):
-            self.additional_results.append(qualify_whole_file(label, args, filename, "additional-host", additional=True))
+            self.additional_results.append(qualify_whole_file(label, args, filename, additional_audit_prefix(label), additional=True))
         self.source_audit("final")
         self.capacity()
         result = {"status": "PASS", "sourceHead": self.source_sha, "sourceTree": self.source_tree,
                   "phases": [record["phase"] for record in self.results], "wholeFiles": list(WHOLE_FILES[(self.group - 1) * 7:self.group * 7]),
-                  "group": self.group, "all28Inventory": list(WHOLE_FILES), "campaignRawBytes": self.log_bytes,
+                  "group": self.group, "all28Inventory": list(WHOLE_FILES),
+                  "all44Inventory": list(complete_inventory()), "campaignRawBytes": self.log_bytes,
                   "additionalPhases": [record["phase"] for record in self.additional_results],
                   "additionalWholeFiles": [record["wholeFile"] for record in self.additional_results],
                   "feature": self.verify_feature(), "controls": self.control_identity(), "helperProvenance": self.helper_provenance(), "auditorPath": str(self.helper), "source": self.baseline_source,
