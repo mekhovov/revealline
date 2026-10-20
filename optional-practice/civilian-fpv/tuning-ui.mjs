@@ -280,6 +280,8 @@ export function mountFlightTuning({
   );
   rateChoice.value = 'defaults';
   const aircraftSummary = el('p', undefined, aircraftPanel);
+  const aircraftNotice = el('p', undefined, aircraftPanel);
+  aircraftNotice.dataset.aircraftNotice = 'true';
   const aircraftPreview = el('div', undefined, aircraftPanel);
   const aircraftEvidence = el('details', undefined, aircraftPanel);
   el(
@@ -292,6 +294,8 @@ export function mountFlightTuning({
     const preset = getAircraftPreset(aircraftSelect.value);
     const configuration = createPresetConfiguration(preset.id);
     aircraftSummary.textContent = `${preset.flyingMassGrams} ${t('g flying weight', 'г польотної маси')} · ${preset.propellerDiameterMm} ${t('mm propellers', 'мм пропелери')} · ${preset.wheelbaseMm} ${t('mm wheelbase', 'мм база')} · ${preset.battery.name}`;
+    aircraftNotice.textContent = preset.notice ? t(preset.notice.en, preset.notice.uk) : '';
+    aircraftNotice.hidden = !preset.notice;
     aircraftPreview.replaceChildren(
       createAircraftPreview({
         document: doc,
@@ -353,26 +357,42 @@ export function mountFlightTuning({
     );
     const kinds = {
       manufacturer: t('Manufacturer specification', 'Характеристика виробника'),
+      'reviewer-reported': t(
+        'Published reviewer measurement',
+        'Вимірювання з опублікованого огляду',
+      ),
+      inferred: t('Inferred from sources', 'Припущення за джерелами'),
       calculated: t('Calculated', 'Розраховано'),
       estimated: t('Estimated', 'Оцінка'),
     };
     const fields = {
       assembledMass: t('Assembled mass', 'Маса зібраного дрона'),
       batteryMass: t('Battery mass', 'Маса батареї'),
+      flyingMass: t('Flying mass', 'Польотна маса'),
+      batteryCapacity: t('Battery capacity', 'Ємність батареї'),
+      nominalVoltage: t('Nominal battery voltage', 'Номінальна напруга батареї'),
+      fullVoltage: t('Fully charged battery voltage', 'Напруга повністю зарядженої батареї'),
       propeller: t('Propeller dimensions', 'Розміри пропелера'),
       inertia: t('Inertia', 'Інерція'),
       propulsion: t('Propulsion', 'Тяга й двигуни'),
       drag: t('Aerodynamic drag', 'Аеродинамічний опір'),
+      batteryElectrical: t('Electrical response', 'Електрична характеристика'),
+      controller: t('Controller behavior', 'Поведінка контролера'),
     };
-    for (const [field, label] of Object.entries(fields))
-      el('p', `${label}: ${kinds[preset.evidence[field].kind]}`, aircraftDetails, false);
-    if (preset.evidence.propeller.note)
-      el(
-        'p',
-        `${t('Source note (original language)', 'Примітка джерела (мовою оригіналу)')}: ${preset.evidence.propeller.note}`,
-        aircraftDetails,
-        false,
-      );
+    for (const [field, label] of Object.entries(fields)) {
+      const evidence = preset.evidence[field];
+      if (!evidence) continue;
+      el('p', `${label}: ${kinds[evidence.kind]}`, aircraftDetails, false);
+      // Important source limitations stay inert original-language text, beside
+      // the specific evidence label rather than implying all values are measured.
+      if (evidence.note && (preset.notice || field === 'propeller'))
+        el(
+          'p',
+          `${t('Source note (original language)', 'Примітка джерела (мовою оригіналу)')}: ${evidence.note}`,
+          aircraftDetails,
+          false,
+        );
+    }
     if (preset.evidence.batteryMass.kind === 'estimated')
       el(
         'p',
@@ -1654,9 +1674,28 @@ export function mountFlightTuning({
     t('Restore library backup', 'Відновити бібліотеку'),
     async () => {
       await mutate(() => store.restore(text.value, library.revision));
-      drafts.clear();
-      setupDrafts.clear();
-      load();
+      if (disposed) return;
+      // A replacement library may remove the setup being edited. Reset the
+      // complete editor baseline only after persistence has succeeded.
+      try {
+        drafts.clear();
+        setupDrafts.clear();
+        editedSetup = null;
+        editedSetupId = library.selectedSetupId;
+        completeDraft = null;
+        responseBench?.invalidate();
+        load();
+        status.textContent = t(
+          'Library restored. The current attempt keeps its original configuration.',
+          'Бібліотеку відновлено. Поточна спроба зберігає початкові налаштування.',
+        );
+      } catch (failure) {
+        // Rendering cannot undo the committed restore or report it as failed.
+        status.textContent = `${t(
+          'Library restored, but the editor could not refresh. Choose Refresh library to reload the saved settings.',
+          'Бібліотеку відновлено, але редактор не вдалося оновити. Виберіть «Оновити бібліотеку», щоб завантажити збережені налаштування.',
+        )} ${failure.message}`;
+      }
     },
     transfer,
   );
@@ -1827,6 +1866,7 @@ export function mountFlightTuning({
       editedSetupId = store.snapshot().selectedSetupId;
       completeDraft = null;
       load();
+      if (!store.status().error) status.textContent = '';
     },
     actions,
   );
@@ -3028,8 +3068,12 @@ export function mountFlightTuning({
     } catch {
       /* Incomplete text stays editable. Save validates the complete setup. */
     }
-    for (const { exact, slider } of cameraSliders)
-      if (exact.value.trim() && Number.isFinite(Number(exact.value))) slider.value = exact.value;
+    for (const { exact, slider } of cameraSliders) {
+      const value = cameraValue(exact, false);
+      // Native ranges clamp out-of-bounds assignments. Keep the last valid
+      // slider/preview while the exact field retains unfinished numeric text.
+      if (value !== null) slider.value = String(value);
+    }
     const changes = completeDraft?.changes() ?? [];
     const invalid = [...root.querySelectorAll('[aria-invalid="true"]')].length;
     const flightConfiguration = getFlightConfiguration();

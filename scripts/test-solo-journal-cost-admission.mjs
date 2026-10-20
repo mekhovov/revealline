@@ -316,6 +316,10 @@ async function retainedCohort(t, prospective = false) {
     analysis = JSON.parse(await readFile(join(dir, 'analysis.json')));
   assert.equal(calls.length, 21);
   assert.equal(analysis.observations.length, 20);
+  assert.equal(analysis.status, 'unresolved');
+  assert.equal(analysis.conditionalStatus, 'unresolved');
+  assert.equal(analysis.qualificationAssessment.eligible, false);
+  assert.equal(analysis.qualificationAssessment.clockEvidence, 'empirical-minimum-step-only');
   assert.equal(row.status, 'failed');
   assert.equal(row.synchronousJournalHookOverhead, 'unresolved');
   assert.equal(row.appDiagnosticsOverhead, 'not-measured');

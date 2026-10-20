@@ -1,0 +1,36 @@
+{
+  "format": "IndependentPublicSourceTreeJournalPublicationReview.v1",
+  "createdUTC": "2026-10-16T08:38:06.397446+00:00",
+  "repository": "mekhovov/revealline",
+  "head": "e016e7317637e75ebe853ec4bbce4bc9b586ee09",
+  "singleNormalParent": "ae0377a7a020c5bcdc71ac772d1c150cb0cbc501",
+  "branchContainsExactHead": true,
+  "files": [
+    {
+      "path": "docs/preservation/fpv-source-audit-20261016/main-public-source-metadata-proof/GitHub-13537-public-tree-object-readback-v2.json",
+      "gitBlobSHA1": "e6fe92ae8d471b5aa410debaca1d0628244a38e0",
+      "bytes": 8219435,
+      "SHA256": "97ba37cb20db07e999bec9b80ccd1a1f5a1338fdb8b2e1fafea16f1e3432ec84",
+      "fullGitHubReadback": "PASSED"
+    },
+    {
+      "path": "docs/preservation/fpv-source-audit-20261016/main-public-source-metadata-proof/main-source-LFS-all-version-alias-supplement.json",
+      "gitBlobSHA1": "e2196e04c5adcf83f11c197264b4c13318c8f372",
+      "bytes": 779,
+      "SHA256": "dab197de20630f820fcfbd969b603cb871871e222bf92a2c95665c0addef71df",
+      "fullGitHubReadback": "PASSED"
+    },
+    {
+      "path": "docs/preservation/fpv-source-audit-20261016/main-public-source-metadata-proof/LFS_ALIAS_SUPPLEMENT.md",
+      "gitBlobSHA1": "46602e8e8ebc699f840bc2dab48ccd8f764c476e",
+      "bytes": 1670,
+      "SHA256": "399a00ab85d548e743970196355bffefd0969c0b330df4a7c6aad21e1e0ab5f5",
+      "fullGitHubReadback": "PASSED"
+    }
+  ],
+  "ordered55647TreeJournalExactSourceProjectionInputSHA256Verified": true,
+  "mainSourceOnlyNoPrivateFamilyMetadata": true,
+  "sourceBodiesReadOrCopied": 0,
+  "sourceMutation": false,
+  "allVolumeComplete": false
+}

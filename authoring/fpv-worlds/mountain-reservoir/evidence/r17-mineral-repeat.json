@@ -1,0 +1,32 @@
+{
+  "format": "FPVReservoirMineralFinishRepeat.v1",
+  "passed": true,
+  "rows": [
+    {
+      "path": "mountain-reservoir-source.glb",
+      "bytes": 1217048,
+      "sha256": "02e09aaf6dceacf4628f5ad918c7a964c9bc9b0b089fb0fc8455312bde38a758"
+    },
+    {
+      "path": "prepared/models/mountain-reservoir.glb",
+      "bytes": 1215540,
+      "sha256": "845db7a0d0d92b3be0ff7a180af947d6827eea94616970f569aece7ef32f51de"
+    },
+    {
+      "path": "prepared/mountain-reservoir.r17.rlpack",
+      "bytes": 1362392,
+      "sha256": "52b5dcbc2be428bc5f7daabb280a03771c526696fb92fe80bbad82265cd4630a"
+    },
+    {
+      "path": "prepared/mountain-reservoir.r17.zip",
+      "bytes": 1362453,
+      "sha256": "5d8626a13d9d37afbbe0e15e6a67c5febd737b1d0ac5b5249d4f55fc6f8a2920"
+    },
+    {
+      "path": "prepared/project.json",
+      "bytes": 370174,
+      "sha256": "741378d217f81e416ff8279bb6f302dac82d4ae4cd1d9672b707e8c65d8c0587"
+    }
+  ],
+  "scope": "Independent complete source/prepared/pack/ZIP generation twice; same bytes. No visual/player/offline claim."
+}

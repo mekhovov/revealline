@@ -1,5 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import { readFile } from 'node:fs/promises';
 import { Document, Events } from './helpers/couch-dom.mjs';
 import { mountFlightTuning } from '../../optional-practice/civilian-fpv/tuning-ui.mjs';
 import {
@@ -15,6 +16,19 @@ import {
 } from '../../optional-practice/civilian-fpv/aircraft-presets.mjs';
 
 const settle = () => new Promise((resolve) => setImmediate(resolve));
+
+test('shared tuning file pickers opt out of Worlds legacy file-input hiding without exposing explicitly hidden controls', async () => {
+  const css = await readFile(
+    new URL('../../optional-practice/civilian-fpv/tuning.css', import.meta.url),
+    'utf8',
+  );
+  // The native two-app backup round trip covers the full cascade. This source
+  // guard retains the narrow ownership boundary instead of unhiding all inputs.
+  assert.match(
+    css,
+    /\.fpv-tuning input\[type=['"]file['"]\]:not\(\[hidden\]\)\s*\{\s*display:\s*block;/,
+  );
+});
 function fixture(
   t,
   {
@@ -169,6 +183,139 @@ test('aircraft picker creates an independent editable setup with starter rates a
   assert.equal(f.applied[0].advanced.aircraft.id, 'meteor75-analog-2022');
 });
 
+for (const locale of ['en', 'uk'])
+  test(`library backup restore selects its saved setup and discards removed drafts without changing the active flight (${locale})`, async (t) => {
+    let active = null;
+    const f = fixture(t, { getFlightConfiguration: () => active });
+    const backup = f.store.snapshot();
+    f.edit('Aircraft preset', 'meteor75-analog-2022', { tag: 'select', event: 'change' });
+    await f.click('Use in draft');
+    await f.click('Save for next flight');
+    active = f.store.effective();
+    const activeBefore = structuredClone(active);
+    const callbacks = [f.applied.length, f.tested.length, f.saved.length];
+    const revision = f.store.snapshot().revision;
+    f.edit('Camera tilt (degrees)', 36);
+    const setup = f.find('Drone setup', 'select');
+    const profile = f.find('Rate profile', 'select');
+    const tilt = f.find('Camera tilt (degrees)');
+    f.edit('Paste CLI or a SIM rate profile', JSON.stringify(backup), { tag: 'textarea' });
+    f.setLocale(locale);
+    await f.click(locale === 'en' ? 'Restore library backup' : 'Відновити бібліотеку');
+    const restored = { ...backup, revision: revision + 1 };
+    assert.deepEqual(f.store.snapshot(), restored);
+    assert.deepEqual(JSON.parse(f.storage.getItem(TUNING_LIBRARY_KEY)), restored);
+    assert.equal(setup.value, 'my-drone');
+    assert.equal(profile.value, 'legacy-feel');
+    assert.equal(tilt.value, '10');
+    assert.match(
+      f.ui.root.querySelector('[role="status"]').textContent,
+      locale === 'en'
+        ? /Library restored.*current attempt keeps/
+        : /Бібліотеку відновлено.*Поточна спроба зберігає/,
+    );
+    assert.match(f.ui.root.querySelector('.workbench-summary').textContent, /0 (changes|змін)/);
+    await f.click(locale === 'en' ? 'Undo last edit' : 'Скасувати останню зміну');
+    assert.equal(setup.value, 'my-drone', 'Undo cannot resurrect a removed setup');
+    assert.equal(tilt.value, '10');
+    assert.deepEqual(f.store.snapshot(), restored);
+    assert.deepEqual(active, activeBefore);
+    assert.deepEqual([f.applied.length, f.tested.length, f.saved.length], callbacks);
+  });
+
+test('library backup restore drops an unsaved aircraft and its complete draft baseline', async (t) => {
+  const f = fixture(t);
+  const backup = f.store.snapshot();
+  f.edit('Aircraft preset', 'meteor75-analog-2022', { tag: 'select', event: 'change' });
+  await f.click('Use in draft');
+  f.edit('Camera tilt (degrees)', 36);
+  assert.notEqual(f.find('Drone setup', 'select').value, 'my-drone');
+  f.edit('Paste CLI or a SIM rate profile', JSON.stringify(backup), { tag: 'textarea' });
+  await f.click('Restore library backup');
+  assert.deepEqual(f.store.snapshot(), { ...backup, revision: 1 });
+  assert.equal(f.find('Drone setup', 'select').value, 'my-drone');
+  assert.equal(f.find('Rate algorithm', 'select').value, 'legacy');
+  assert.equal(f.find('Camera tilt (degrees)').value, '10');
+  assert.match(f.ui.root.querySelector('.workbench-summary').textContent, /0 changes/);
+  await f.click('Undo last edit');
+  await f.click('Save for next flight');
+  assert.deepEqual(f.store.snapshot(), { ...backup, revision: 1 });
+  assert.equal(f.applied.length, 0);
+  assert.equal(f.tested.length, 0);
+});
+
+for (const failure of ['quota', 'stale tab'])
+  test(`failed library backup restore retains the complete edited setup (${failure})`, async (t) => {
+    const f = fixture(t);
+    const backup = f.store.export();
+    f.edit('Aircraft preset', 'meteor75-analog-2022', { tag: 'select', event: 'change' });
+    await f.click('Use in draft');
+    await f.click('Save for next flight');
+    f.edit('Camera tilt (degrees)', 36);
+    const setupId = f.find('Drone setup', 'select').value;
+    if (failure === 'quota')
+      f.storage.setItem = () => {
+        throw new Error('Quota exceeded');
+      };
+    else {
+      const other = createTuningLibraryStore({ storage: f.storage });
+      await other.saveProfile('legacy-feel', { name: 'Other tab saved' });
+    }
+    const before = f.store.export();
+    const persisted = f.storage.getItem(TUNING_LIBRARY_KEY);
+    f.edit('Paste CLI or a SIM rate profile', backup, { tag: 'textarea' });
+    await f.click('Restore library backup');
+    assert.equal(f.store.export(), before);
+    assert.equal(f.storage.getItem(TUNING_LIBRARY_KEY), persisted);
+    assert.equal(f.find('Drone setup', 'select').value, setupId);
+    assert.equal(f.find('Camera tilt (degrees)').value, '36');
+    assert.match(
+      f.ui.root.querySelector('[role="status"]').textContent,
+      failure === 'quota' ? /Could not apply:.*Quota/ : /Could not apply:.*Another tab/,
+    );
+    assert.equal(f.applied.length, 0);
+    assert.equal(f.tested.length, 0);
+  });
+
+for (const locale of ['en', 'uk'])
+  test(`committed library backup restore reports a subsequent editor failure separately (${locale})`, async (t) => {
+    const f = fixture(t);
+    const backup = f.store.snapshot();
+    f.edit('Aircraft preset', 'meteor75-analog-2022', { tag: 'select', event: 'change' });
+    await f.click('Use in draft');
+    await f.click('Save for next flight');
+    const revision = f.store.snapshot().revision;
+    f.edit('Paste CLI or a SIM rate profile', JSON.stringify(backup), { tag: 'textarea' });
+    f.setLocale(locale);
+    const setup = f.ui.root
+      .querySelectorAll('select')
+      .find((node) => node.value === f.store.snapshot().selectedSetupId);
+    const replace = setup.replaceChildren.bind(setup);
+    setup.replaceChildren = () => {
+      setup.replaceChildren = replace;
+      throw new Error('Editor repaint interrupted');
+    };
+    await f.click(locale === 'en' ? 'Restore library backup' : 'Відновити бібліотеку');
+    const restored = { ...backup, revision: revision + 1 };
+    assert.deepEqual(f.store.snapshot(), restored);
+    assert.deepEqual(JSON.parse(f.storage.getItem(TUNING_LIBRARY_KEY)), restored);
+    const message = f.ui.root.querySelector('[role="status"]').textContent;
+    assert.match(
+      message,
+      locale === 'en'
+        ? /Library restored.*editor.*Refresh library/
+        : /Бібліотеку відновлено.*редактор.*Оновити бібліотеку/,
+    );
+    assert.doesNotMatch(message, /Could not apply|Не вдалося застосувати/);
+    assert.match(message, /Editor repaint interrupted/);
+    await f.click(locale === 'en' ? 'Refresh library' : 'Оновити бібліотеку');
+    assert.equal(setup.value, 'my-drone');
+    assert.equal(f.ui.root.querySelector('[role="status"]').textContent, '');
+    assert.deepEqual(f.store.snapshot(), restored, 'Refresh never repeats the committed restore');
+    assert.equal(f.applied.length, 0);
+    assert.equal(f.tested.length, 0);
+  });
+
 test('browsing aircraft replaces the preview without saving changes and refreshes its language', (t) => {
   const f = fixture(t),
     before = f.store.snapshot();
@@ -204,6 +351,39 @@ test('Mobula8 shows its installed components as text with Ukrainian field labels
   assert.match(f.ui.root.textContent, /Польотний контролер: X12 ELRS V2.1/);
   assert.match(f.ui.root.textContent, /Установлена FPV-камера: Caddx ANT/);
   assert.match(f.ui.root.textContent, /Примітка джерела \(мовою оригіналу\).*conflicting 51 mm/);
+});
+
+test('civilian candidate provenance and unsupported stock modes remain visible in EN and UK', (t) => {
+  const f = fixture(t),
+    before = f.store.snapshot();
+  f.edit('Aircraft preset', 'cetus-x-betaflight-2022', { tag: 'select', event: 'change' });
+  const notice = f.ui.root.querySelector('[data-aircraft-notice="true"]');
+  assert.equal(notice.hidden, false);
+  assert.match(notice.textContent, /Historical 2022.*reviewer dry weight/);
+  assert.equal(
+    notice.closest('details'),
+    null,
+    'material limitations must be visible before opening evidence',
+  );
+  assert.match(f.ui.root.textContent, /Assembled mass: Published reviewer measurement/);
+  assert.match(f.ui.root.textContent, /Flying mass: Calculated/);
+  assert.match(f.ui.root.textContent, /Series connection doubles voltage, not amp-hour capacity/);
+  f.edit('Aircraft preset', 'protos-16-aio-1-0', { tag: 'select', event: 'change' });
+  assert.match(notice.textContent, /104.4 g battery-inclusive mass is inferred/);
+  assert.match(notice.textContent, /Stock Protos position\/height hold.*not reproduced/);
+  assert.match(f.ui.root.textContent, /Flying mass: Inferred from sources/);
+  assert.match(f.ui.root.textContent, /Battery mass: Manufacturer specification/);
+  assert.match(f.ui.root.textContent, /8.70 V upper operating limit/);
+  assert.match(f.ui.root.textContent, /factory curves, latency and PID behavior are unsupported/);
+  f.setLocale('uk');
+  assert.match(notice.textContent, /Маса 104,4 г із батареєю є припущенням/);
+  assert.match(f.ui.root.textContent, /Польотна маса: Припущення за джерелами/);
+  assert.match(f.ui.root.textContent, /Маса батареї: Характеристика виробника/);
+  assert.deepEqual(
+    f.store.snapshot(),
+    before,
+    'browsing evidence cannot change saved configuration',
+  );
 });
 
 test('aircraft picker keeps complete current Legacy rates and restores saved custom aircraft after navigation', async (t) => {
@@ -2211,6 +2391,44 @@ test('direct PID editing enters the tested draft with exact units and invalid te
     'controller',
   );
 });
+
+for (const locale of ['en', 'uk'])
+  test(`camera numeric, slider and framing stay synchronized without clamping invalid text (${locale})`, async (t) => {
+    const f = fixture(t, { locale }),
+      before = f.store.export();
+    const camera = locale === 'uk' ? 'Камера' : 'Camera';
+    const label = locale === 'uk' ? 'Вертикальне поле зору (градуси)' : 'Vertical FOV (degrees)';
+    const framing =
+      locale === 'uk' ? 'Попередній перегляд камери 16:9' : 'Camera framing preview at 16:9';
+    await f.click(camera);
+    const exact = f.find(label, 'input', f.ui.root, 'number');
+    const slider = f.find(label, 'input', f.ui.root, 'range');
+    const preview = f.ui.root.querySelector(`[aria-label="${framing}"]`);
+    exact.focus();
+    f.edit(label, '86', { type: 'number' });
+    assert.equal(slider.value, '86');
+    assert.match(preview.textContent, /86°/);
+    assert.equal(f.document.activeElement, exact);
+    const validFrame = preview.textContent;
+    for (const invalid of ['4', '', '150']) {
+      f.edit(label, invalid, { type: 'number' });
+      assert.equal(exact.value, invalid, 'retain the unfinished numeric text');
+      assert.equal(exact.getAttribute('aria-invalid'), 'true');
+      assert.equal(slider.value, '86', 'invalid text must not clamp or move the valid slider');
+      assert.equal(preview.textContent, validFrame);
+      assert.equal(f.document.activeElement, exact);
+    }
+    f.edit(label, '103', { type: 'number', event: 'change' });
+    assert.equal(slider.value, '103', 'committed numeric changes also synchronize');
+    assert.match(preview.textContent, /103°/);
+    assert.equal(exact.getAttribute('aria-invalid'), null);
+    slider.focus();
+    f.edit(label, '92.5', { type: 'range' });
+    assert.equal(exact.value, '92.5');
+    assert.match(preview.textContent, /92.5°/);
+    assert.equal(f.document.activeElement, slider);
+    assert.equal(f.store.export(), before, 'preview changes remain an unsaved draft');
+  });
 
 test('draft camera framing updates precisely and invalid text retains the last valid preview', async (t) => {
   const f = fixture(t),
