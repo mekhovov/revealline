@@ -5056,42 +5056,7 @@
         "commit": "ac6837d28317f42ffc832516d1ab1a9a6cd5754c",
         "patchId": "8a6419a37b96e44b74c4bd0dbd44dad8a205147f",
         "equivalentMainCommits": [],
-        "files": [
-          "A\tauthoring/library/spend-role-presentations/README.md",
-          "A\tauthoring/library/spend-role-presentations/inspection/east-pixelated.jpg",
-          "A\tauthoring/library/spend-role-presentations/inspection/game-scale-receipt.json",
-          "A\tauthoring/library/spend-role-presentations/inspection/index.html",
-          "A\tauthoring/library/spend-role-presentations/inspection/inspect-alpha.py",
-          "A\tauthoring/library/spend-role-presentations/inspection/north-auto.jpg",
-          "A\tauthoring/library/spend-role-presentations/originals/bomber.png",
-          "A\tauthoring/library/spend-role-presentations/originals/carrier.png",
-          "A\tauthoring/library/spend-role-presentations/originals/fiber.png",
-          "A\tauthoring/library/spend-role-presentations/originals/impact.png",
-          "A\tauthoring/library/spend-role-presentations/originals/interceptor.png",
-          "A\tauthoring/library/spend-role-presentations/originals/scout.png",
-          "A\tauthoring/library/spend-role-presentations/originals/trapper.png",
-          "A\tauthoring/library/spend-role-presentations/prompts/bomber.txt",
-          "A\tauthoring/library/spend-role-presentations/prompts/carrier.txt",
-          "A\tauthoring/library/spend-role-presentations/prompts/fiber.txt",
-          "A\tauthoring/library/spend-role-presentations/prompts/impact.txt",
-          "A\tauthoring/library/spend-role-presentations/prompts/interceptor.txt",
-          "A\tauthoring/library/spend-role-presentations/prompts/scout.txt",
-          "A\tauthoring/library/spend-role-presentations/prompts/trapper.txt",
-          "A\tauthoring/library/spend-role-presentations/provenance/alpha-inspection.json",
-          "A\tauthoring/library/spend-role-presentations/provenance/bomber.json",
-          "A\tauthoring/library/spend-role-presentations/provenance/carrier.json",
-          "A\tauthoring/library/spend-role-presentations/provenance/fiber.json",
-          "A\tauthoring/library/spend-role-presentations/provenance/full-image-inspection.json",
-          "A\tauthoring/library/spend-role-presentations/provenance/impact.json",
-          "A\tauthoring/library/spend-role-presentations/provenance/interceptor.json",
-          "A\tauthoring/library/spend-role-presentations/provenance/official-reference.json",
-          "A\tauthoring/library/spend-role-presentations/provenance/preparation.json",
-          "A\tauthoring/library/spend-role-presentations/provenance/reference-theme.json",
-          "A\tauthoring/library/spend-role-presentations/provenance/role-briefs.json",
-          "A\tauthoring/library/spend-role-presentations/provenance/scout.json",
-          "A\tauthoring/library/spend-role-presentations/provenance/tool-responses.json",
-          "A\tauthoring/library/spend-role-presentations/provenance/trapper.json"
-        ]
+        "files": []
       },
       {
         "commit": "53d553485b8d7dc0f912959892947819a19d9803",
@@ -12903,18 +12868,6 @@
         "allNonMergePatchesMatchMain": false,
         "unmatched": [
           "fbd314d7190c81e2ff67981e9006c49993d35d43"
-        ]
-      },
-      {
-        "location": "local",
-        "name": "art/spend-role-presentations",
-        "tip": "ac6837d28317f42ffc832516d1ab1a9a6cd5754c",
-        "patches": [
-          "ac6837d28317f42ffc832516d1ab1a9a6cd5754c"
-        ],
-        "allNonMergePatchesMatchMain": false,
-        "unmatched": [
-          "ac6837d28317f42ffc832516d1ab1a9a6cd5754c"
         ]
       },
       {

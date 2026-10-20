@@ -6140,66 +6140,6 @@
         "sha256": "5b2190174f93a1dc50c782add3c0ecc10fa4a43d1eb6ccd0a22927790a682bf9"
       },
       {
-        "path": "authoring/library/spend-role-presentations/inspection/east-pixelated.jpg",
-        "bytes": 88305,
-        "sha256": "42847003fa5c4def715169fdce730554e90e47c71d01d1ae0bf35729864b4547"
-      },
-      {
-        "path": "authoring/library/spend-role-presentations/inspection/north-auto.jpg",
-        "bytes": 87538,
-        "sha256": "29eb99044437fbc2fab649ff1e3c15f9556a7e6165cf6d93d7e72718d5c55955"
-      },
-      {
-        "path": "authoring/library/spend-role-presentations/originals/bomber.png",
-        "bytes": 751704,
-        "sha256": "9657e96d874439abee5e25edc74addfbc09251b29d94e4181cff519234cb06d1"
-      },
-      {
-        "path": "authoring/library/spend-role-presentations/originals/carrier.png",
-        "bytes": 557242,
-        "sha256": "319ca85aafe43a1e6d321c792386bd8d8773e5ab929eb0a2be8495b6a8d4cabc"
-      },
-      {
-        "path": "authoring/library/spend-role-presentations/originals/fiber.png",
-        "bytes": 607264,
-        "sha256": "16dabc04250ffb1630c28bbc2c41372b837102445d27c9ce4a6f3bef3608d854"
-      },
-      {
-        "path": "authoring/library/spend-role-presentations/originals/impact.png",
-        "bytes": 467205,
-        "sha256": "2d90408c213125725c49ab837cccc56d2fe53c873f0e895dd0f5bb6f6df82233"
-      },
-      {
-        "path": "authoring/library/spend-role-presentations/originals/interceptor.png",
-        "bytes": 313087,
-        "sha256": "340674c4dfb4ae6a9b501bb1849d47edb7ca81af96f888fcf26a228f7eb7e9c0"
-      },
-      {
-        "path": "authoring/library/spend-role-presentations/originals/scout.png",
-        "bytes": 390919,
-        "sha256": "fedd015335b836535d3078d4f819576344fa74a1c82e172d9b61047b68edf566"
-      },
-      {
-        "path": "authoring/library/spend-role-presentations/originals/trapper.png",
-        "bytes": 672321,
-        "sha256": "5fe7ef3796e27ab33d6e5ad7c1a748bee66e23fa28fa18293953fd7e72591015"
-      },
-      {
-        "path": "authoring/library/spend-role-presentations/provenance/alpha-inspection.json",
-        "bytes": 29365,
-        "sha256": "7fa98777c6f9743f54648a7dbc20b777099c5d6b5d1d90b6402fb3920f846594"
-      },
-      {
-        "path": "authoring/library/spend-role-presentations/provenance/role-briefs.json",
-        "bytes": 21941,
-        "sha256": "c3c05c279c27f90ba9dbc615ab9c2adf41e9dae5ee9b320ac3fa48442c53f410"
-      },
-      {
-        "path": "authoring/library/spend-role-presentations/provenance/tool-responses.json",
-        "bytes": 20512,
-        "sha256": "26983cfa80ba23a04cbfabadc5941390fd470f69099bb3b0a406aed438a787ff"
-      },
-      {
         "path": "authoring/library/tactical-challenges/README.md",
         "bytes": 9060,
         "sha256": "b89e0d289836ea954e34b1f2eae8438850dcb3525b46a54ad0849684019f778d"
