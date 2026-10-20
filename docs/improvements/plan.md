@@ -67,6 +67,8 @@ This plan replaces the earlier roadmap, retains **F01–F81**, and incorporates 
 
 **Replay and Studio fixture prerequisite:** [draft #1769](https://github.com/mekhovov/revealline/pull/1769), exact5698039, passes both changed complete files **83/83**, additional navigation249 and the configured source workflow. The broader preview passes **118 complete files /1,886 cases**, zero failures/skips/cancellations. Full game3583-file and separate Worlds builds/uploads succeed. Root independently verifies full test output and compact package records tied to this source and uploaded artifact. The1.095GB archive was not downloaded; independent inner-package contents, browser/device and current-main integration remain unqualified. Earlierd408 failure is retained; original test deadlines and assertions remain.
 
+**Current prerequisite refreshes:** producer #1771 is now3939489 and fixture #1769 is now02051b5, both normal successors preserving entire mainb723 and their reviewed source. Fresh checks are running. All ten-phase/a396 and source83/preview1886/build569 results above remain historical and do not qualify these new revisions. Compatibility source unions and the primary Solo adapter continue privately; no manual promotion, merge or check bypass.
+
 ### Changes from the previous plan
 
 | Change                                                              | Reason                                                                                                                                                                                                    |

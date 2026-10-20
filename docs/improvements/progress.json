@@ -15,9 +15,9 @@
     "details": "Two managed implementation worktrees plus lightweight sparse checkouts; failed full checkouts self-cleaned after disk exhaustion. No unrelated data removed."
   },
   "nextPriority": [
-    "P1 · Menu loading: producer #1771 passes all ten authoring phases and selected source checks. The primary Solo adapter is drafted and under source review. Next: source checks, full cold-opening and native cohorts, browser and package qualification. Other browsing hosts follow separately.",
+    "P1 · Menu loading: producer passed ten authoring phases; its refreshed candidate now runs fresh checks. The primary Solo adapter is source-reviewed and receiving formatting/syntax qualification. Complete native/cold-opening, browser/package and later browsing hosts remain.",
     "P1 · Single Drone/Riy readability: the earlier 58-file reconciliation passes formatting, syntax and four canonical outputs. All 28 mocked guard checks pass. Reconcile newly merged support changes, then publish the reviewed candidate and run all 28 complete gameplay files, fonts, languages, controls and player/package checks.",
-    "P1 · Text compatibility #1668: its old candidate retains ten fixture failures. Shared fixture #1769 now passes 83 changed-file cases, all 1,886 broader preview cases and both remote builds; compact package records verified. Prepare the current-main source union and rerun before browser/package acceptance.",
+    "P1 · Text compatibility #1668: preserve the prior ten fixture failures. Shared fixture passed 83 changed-file cases, 1,886 preview cases and remote builds; its current-main refresh is running fresh checks. Prepare the source union and canonical output, then stack and rerun before browser/package acceptance.",
     "P1 · Team Home #1747: source merged. All nine admitted files match the independently reviewed local reconciliation. Finish current earned-result/full-host/browser/package acceptance. Full lessons still depend on Learn.",
     "P1 · Shared support #1762: source merged externally at b723. Its eight complete files pass 414 cases; the older preview retains 12 failures. Qualify current-main fixtures and actual Data/modal navigation, exports, package and remaining hosts.",
     "P2 · Room invitations #1744: source merged; 108 scoped checks, tracked-module lint and delayed QR focus review pass. Full source, Ukrainian host, manual fallback, package, sharing, scanning and device checks remain.",
@@ -1121,7 +1121,7 @@
       "blocker": "Capture cold Team-source construction and three picture-setup failures need correction and current complete-cohort qualification. Team Home1747 is source merged; earned-result/full-host/browser/package acceptance remains. Full lessons depend on F25/Learn.",
       "pr": null,
       "commit": null,
-      "next": "P1 · Menu loading: producer #1771 passes all ten authoring phases and selected source checks. The primary Solo adapter is drafted and under source review. Next: source checks, full cold-opening and native cohorts, browser and package qualification. Other browsing hosts follow separately.",
+      "next": "P1 · Menu loading: producer passed ten authoring phases; its refreshed candidate now runs fresh checks. The primary Solo adapter is source-reviewed and receiving formatting/syntax qualification. Complete native/cold-opening, browser/package and later browsing hosts remain.",
       "evidence": [
         "Read-only current-source assessment finds authoritative journeyDestination progression already exists, but no explained Home recommendation. A real live/saved Resume is different from a navigation cursor; do not suppress both or add another launch/progress owner. Exact current terminal run alone can justify retry wording; the profile does not persist defeat chronology. F25 Learn hub remains planned/D-dependent, so no durable lesson mastery or fictional practice routes are introduced."
       ],
@@ -1299,7 +1299,18 @@
         "status": "source_review_clear_static_native_and_package_UNRUN",
         "authoringPrerequisite": "https://github.com/mekhovov/revealline/pull/1771",
         "currentMainOwnerReview": "b723 refresh pending; runtime sender remains unpublished",
-        "limits": "No player-performance, network-abort-on-retirement, installed readiness or device claim."
+        "limits": "No player-performance, network-abort-on-retirement, installed readiness or device claim.",
+        "staticAttempt1": {
+          "receiptSHA256": "f8a060e9a49dc03c649e5f447d57fd8cbbc4afd10b78ea9ce434978836667aa0",
+          "commandsPlanned": 16,
+          "commandsTerminal": 3,
+          "passed": 2,
+          "failed": "registry format difference",
+          "notRun": 13,
+          "syntaxExecuted": 0,
+          "sourcesOriginalsDependenciesExact": true
+        },
+        "formatSuccessor": "Nine formatter outputs produced privately; strict AST comparison rejects quoted property-key syntax. Bounded registry-only equivalence review pending, no current static/native pass."
       }
     },
     {
@@ -2583,17 +2594,17 @@
         }
       ],
       "studioFixturePrerequisite": {
-        "status": "exact569_source83_preview1886_remote_builds_pass_current_main_integration_pending",
+        "status": "current02051_refresh_checks_pending_prior56983_preview1886_pass",
         "source": "public opener completion within original wait deadline; all existing assertions/controller flow retained",
         "manifestSHA256": "65233b91a96b1aeb383ed901aa78a9cced12f9f386387c662824ed4976d9ca0f",
         "formatReceiptSHA256": "e8995d4df3f412531445bd783ee186996f0e42abab4a7e38e35f0f79b81e29f3",
         "productionChanges": 0,
         "nativeExecuted": true,
-        "delivery": "Current569 changed files83/83, navigation249 and configured source workflow PASS; broader preview118 whole files1886/1886 and both remote builds/uploads PASS. Root verifies compact metadata/source/package links. Full inner archive/browser/device acceptance and current-main integration remain separate.",
+        "delivery": "Exactfixture4 leaves retained in current-main refresh02051; fresh checks pending. Prior569 source/preview/build results stay exact569.",
         "staticReceiptSHA256": "0140dba7d6f94c23b8b1f6a676bf5118aa913030726dc2b0139ac772526617ad",
         "heldFourPathManifestSHA256": "db0e34ab6fc7d2c2cdcb2ebd0b615bd9e12dbe133aa26fd33a01696459da931b",
         "deliveryPrerequisite": "https://github.com/mekhovov/revealline/pull/1769",
-        "publishedHead": "56980397d30971c6722cc4493686e552c6d4231d",
+        "publishedHead": "02051b50bc2924876cbd3d7aa97a9fbecddfb8cb",
         "nativeProofSHA256": "097276810ca5dd3f8dfbbb75ec4e794e9e9eb5b51d06c20a48e5629534b137e9",
         "previewProofSHA256": "cf6a296bf7c07d1d53570589fa4d2d5e81db39a2a42a64bad63c3968685f0561"
       }
@@ -2896,7 +2907,7 @@
       "blocker": null,
       "pr": "https://github.com/mekhovov/revealline/pull/1668",
       "commit": "55901aeb76886fc7ee3e6dd7bc252ca6cae89fbe",
-      "next": "P1 · Text compatibility #1668: its old candidate retains ten fixture failures. Shared fixture #1769 now passes 83 changed-file cases, all 1,886 broader preview cases and both remote builds; compact package records verified. Prepare the current-main source union and rerun before browser/package acceptance.",
+      "next": "P1 · Text compatibility #1668: preserve the prior ten fixture failures. Shared fixture passed 83 changed-file cases, 1,886 preview cases and remote builds; its current-main refresh is running fresh checks. Prepare the source union and canonical output, then stack and rerun before browser/package acceptance.",
       "evidence": [
         "Source inventory confirms existing two-value shared preference, cross-tab/media lifecycle ownership and host-specific CSS. Existing Large is not a uniform200% scale. Root measurement branch codex/f09a-readable-scaling begins on cb8; no product changes or pass claimed.",
         "Actual1280x720 baseline Home and Settings16→20px, pausedHUD26→30px; existing Large is not200%. Measurement JSON and compatibility design prepared on root branch; no product change or compliance claim.",
@@ -5831,16 +5842,16 @@
     {
       "id": "CI-Replay-gameplay-audio-read-fixture",
       "priority": "P1",
-      "status": "draft_exact569_source_and_preview_success_compact_package_records_verified",
+      "status": "draft_current_main_refresh_checks_pending_prior_exact_head_results_retained",
       "deliveryState": "draft",
       "owner": "lane-c",
       "pr": "https://github.com/mekhovov/revealline/pull/1769",
-      "commit": "56980397d30971c6722cc4493686e552c6d4231d",
-      "observedRemoteHead": "56980397d30971c6722cc4493686e552c6d4231d",
+      "commit": "02051b50bc2924876cbd3d7aa97a9fbecddfb8cb",
+      "observedRemoteHead": "02051b50bc2924876cbd3d7aa97a9fbecddfb8cb",
       "scope": "Nativepreviewfixture ownership: Replaylegitimategameplay-audio read/no-writes plusStudiopublicopen completion within ORIGINALreadinessdeadline, unchangedcontroller/editor/focus/assertions. Test+doconly4paths; no production/helper/timeout changes.",
-      "next": "Current569 changed files83/83, navigation249 and configured source workflow PASS; broader preview118 whole files1886/1886 and both remote builds/uploads PASS. Root verifies compact metadata/source/package links. Full inner archive/browser/device acceptance and current-main integration remain separate.",
+      "next": "Current02051 normal refresh includes entireb723 main and exact4 accepted fixture leaves. Fresh source/preview/admission checks running; prior569 source83, preview1886 and remote builds stay historical. Compatibility can explicitly stack on this branch after source/canonical qualification.",
       "qualification": {
-        "automated": "exact569_source83_and_preview1886_and_remote_builds_pass",
+        "automated": "current02051_checks_pending_prior569_source83_preview1886_remote_builds_pass",
         "browser": "not_required_fixture_only",
         "physical": "not_required_fixture_only"
       },
@@ -5850,7 +5861,7 @@
         "Publishedd408/tree332d8419 soleparent8dc exact2sourceblobs/everyunownedmainentry preserved; localoriginalsource/index/refs untouched. Manifest33e0d79b30a29a23dc7a074196d0ab21df363b18a12bc4e47458102ca11f4333; separatePR1769 draftnativepending."
       ],
       "mergeState": "UNSTABLE",
-      "previousQualifiedHead": "d408beddda1d04b742aac4e99cb116998961b1d6",
+      "previousQualifiedHead": "56980397d30971c6722cc4493686e552c6d4231d",
       "previousPreviewResults": {
         "head": "d408beddda1d04b742aac4e99cb116998961b1d6",
         "cases": 1886,
@@ -5907,19 +5918,33 @@
         "largeArchiveDownloaded": false,
         "independentInnerPackageAcceptance": false,
         "browserPhysicalOffline": "not tested"
+      },
+      "currentMainRefresh": {
+        "head": "02051b50bc2924876cbd3d7aa97a9fbecddfb8cb",
+        "tree": "7a68b7afd8934c0ea8a2be53d2ab33fdff4d7af0",
+        "main": "b723fdc91ac8f9feabc40091f042882acd0d88ab",
+        "parents": [
+          "56980397d30971c6722cc4493686e552c6d4231d",
+          "b723fdc91ac8f9feabc40091f042882acd0d88ab"
+        ],
+        "publicationReceipt": "/tmp/revealline-fixture1769-b723-refresh-publication/publication.json",
+        "publicationSHA256": "ad6d11056030c1ff64672f870c986f6fc0e3d9f6bc58f2a8d08480902393596c",
+        "allOwnedAndUnownedMainVerified": true,
+        "qualification": "newhead native/source/preview or dedicatedauthoring pending; no previous-head result inheritance",
+        "draft": true
       }
     },
     {
       "id": "CI-Team-display-authoring",
-      "status": "draft_ten_authoring_phases_and_source_CI_pass_artifact_review_clear",
+      "status": "draft_current_main_refresh_checks_pending_prior_exact_head_results_retained",
       "priority": "P1",
       "pr": "https://github.com/mekhovov/revealline/pull/1771",
-      "commit": "a39607b7bce39803a22000c88cd417d1e769d5c4",
-      "observedRemoteHead": "a39607b7bce39803a22000c88cd417d1e769d5c4",
+      "commit": "3939489184c73bdff9c5e4493e3a133e7c5f2f77",
+      "observedRemoteHead": "3939489184c73bdff9c5e4493e3a133e7c5f2f77",
       "deliveryState": "draft",
       "scope": "Stage1 registered Team display producer/checker for CulturalV2/Expeditions/Hunt; deterministic metadata with exactreceiving/allpreset/locale/diagram parity. No sender/gameplay activation. ExistingF10scope; producer/adapter/fullqualification remain separate.",
       "evidence": "Current 19 mocked guard tests, 18 source checks and final documentation check pass. Exact-head selected source workflow succeeds (publishing529, cheap contract2, configured validation). Dedicated run39337606560 passes all ten produce/check/parity phases; root verifies all33 terminal receipts, complete raw hashes, source/dependencies/Git/Node and executed workflow binding. No gameplay/sender activation or player-performance claim.",
-      "next": "Stage1 authoring is qualified at a396 with root and two independent artifact reviews clear. Source admission remains separate. Stage2 sender adapter source design is in progress; preserve receiver validation and complete current cold/player/package checks.",
+      "next": "Current3939489 normal refresh includes entireb723 main,11 exacta396 owners and only2 current publishing test registrations inmap. Fresh ten-phase/source/workflow checks running; a396 accepted artifact remains historical. Runtime sender source and static qualification continue separately.",
       "sourceManifestSHA256": "9b16aa1f8736c60de868b65c9d604e1c04037030415b6aa4b908e275079491d4",
       "nativeHostedAuthoring": "ten_complete_authoring_phases_pass_exact_a396_no_sender_activation",
       "readiness": "Existingobservedcheckblockers+draftgate preserved; absentnewjobisnotautomaticrequiredcheck; explicitreviewcondition/no waiver",
@@ -5954,6 +5979,21 @@
         "independentBProofSHA256": "242af5c3d7e1ac364e49d3c495452336f9f9412454483f3ec15a7895382fc3ba",
         "independentBFinalProofSHA256": "7eed307537dd77cc475dea2e8b9014468ad232d242fa5a60a18b8b28c30316ed",
         "executedWorkflowBindingProofSHA256": "cb6c6c4361183cc7fb4404267a69b4143f0ae9a404f35e2b65e256ee9f04e477"
+      },
+      "previousQualifiedHead": "a39607b7bce39803a22000c88cd417d1e769d5c4",
+      "currentMainRefresh": {
+        "head": "3939489184c73bdff9c5e4493e3a133e7c5f2f77",
+        "tree": "f5acdd0c5a50f9767e21e019af27f9ef57e95e9f",
+        "main": "b723fdc91ac8f9feabc40091f042882acd0d88ab",
+        "parents": [
+          "a39607b7bce39803a22000c88cd417d1e769d5c4",
+          "b723fdc91ac8f9feabc40091f042882acd0d88ab"
+        ],
+        "publicationReceipt": "/tmp/revealline-team-authoring-b723-refresh-publication/publication.json",
+        "publicationSHA256": "5570fceba0082df7f2cbccf4e444bae3a5e0c28fa6dd273724d296c0007be64a",
+        "allOwnedAndUnownedMainVerified": true,
+        "qualification": "newhead native/source/preview or dedicatedauthoring pending; no previous-head result inheritance",
+        "draft": true
       }
     }
   ],
@@ -5980,7 +6020,7 @@
       1721, 1729
     ],
     "conflictedReadyPRs": [1617, 1622, 1624, 1627, 1632, 1638, 1669, 1682, 1686],
-    "note": "49 feature source PRs merged,9 open for checks,31 drafts,1 withdrawn;17 prerequisites separate. External1762 merge atb723 preserves its414-case source and older12-failure preview scopes. Fixture569 now source+preview1886+remote builds success; full inner archive acceptance separate. Readability28 mocked guard/static checks pass, native28 pending current-main union. Sender primarySolo12-path source draft reviewed; static/native/package unrun. No manual merge/promotion/check bypass.",
+    "note": "49 feature source PRs merged,9 open for checks,31 drafts,1 withdrawn;17 prerequisites separate. External1762 merge atb723 preserves its414-case source and older12-failure preview scopes. Fixture569 now source+preview1886+remote builds success; full inner archive acceptance separate. Readability28 mocked guard/static checks pass, native28 pending current-main union. Sender primarySolo12-path source draft reviewed; static/native/package unrun. No manual merge/promotion/check bypass. Current prerequisite refreshes:1771/3939489 and1769/02051 preserve entireb723 and reviewed source; fresh current-head qualification pending.",
     "latestMain": {
       "revision": "b723fdc91ac8f9feabc40091f042882acd0d88ab",
       "note": "98ef external admission workflow/policy8 paths preserved, followed by external1762 exact8e support18-path merge. Fresh compatibility/readability source unions required; no old source qualification inherited."
