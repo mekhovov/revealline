@@ -6040,5 +6040,6 @@
   "textSizeCompatibility.retained": "Extra large · using Large here",
   "textSizeCompatibility.fallback": "Extra large is kept as your preferred size. This screen currently uses Large. Choose Standard or Large to change the shared preference.",
   "textSizeCompatibility.readOnlyFallback": "Extra large is kept as your preferred size. This screen currently uses Large.",
+  "textSizeCompatibility.extraLarge": "Extra large",
   "worldIdsCommaSeparated": "Worlds (comma separated: retro, fpv, ukraine)"
 }
