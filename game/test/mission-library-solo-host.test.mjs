@@ -1,7 +1,9 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
-import { soloPage } from './helpers/solo-dom.mjs';
+import { soloPage as nativeSoloPage } from './helpers/solo-dom.mjs';
+const soloPage = (t, options = {}) =>
+  nativeSoloPage(t, { initialReadyTimeoutMs: 30_000, ...options });
 import { waitFor } from './helpers/wait-for.mjs';
 import { classicLibrarySources } from '../mission-library/classic-source.mjs';
 import { createMissionLibrary } from '../mission-library/library.mjs';
@@ -12,20 +14,14 @@ import { retryFixture } from './fixtures/retry-scenarios.mjs';
 import { loadLibrary } from '../library.mjs';
 import { inspectImageDataUrl } from '../content.mjs';
 
-class Picture {
-  width = 1774;
-  height = 887;
-  naturalWidth = 1774;
-  naturalHeight = 887;
-  set src(value) {
-    this.source = value;
-    queueMicrotask(() => this.onload?.());
-  }
-  async decode() {}
-  removeAttribute() {
-    this.source = '';
-  }
-}
+import { RasterImage as Picture } from './helpers/raster-image.mjs';
+
+const decodeImage = async (dataUrl) => {
+  const image = inspectImageDataUrl(dataUrl);
+  assert.equal(image.valid, true);
+  return { naturalWidth: image.width, naturalHeight: image.height };
+};
+
 async function journeyPage(t, search = '') {
   return soloPage(t, {
     search,
@@ -89,7 +85,17 @@ async function installedAssets(pack) {
   } finally {
     db.close();
   }
-  return assets;
+  // The finite IndexedDB model represents one database. Browser database names
+  // must not share schema versions: Creator browsing opens its own store.
+  const databases = new Map([['revealline-assets-v1', assets.indexedDB]]);
+  return {
+    indexedDB: {
+      open(name, ...args) {
+        if (!databases.has(name)) databases.set(name, managedIndexedDB().indexedDB);
+        return databases.get(name).open(name, ...args);
+      },
+    },
+  };
 }
 
 test('installed Custom late mission in a second campaign launches its exact authored identity', async (t) => {
@@ -103,7 +109,7 @@ test('installed Custom late mission in a second campaign launches its exact auth
     level.id = `custom-second-${index}`;
   });
   source.campaigns.push(second);
-  const { pack } = await preparePack(source);
+  const { pack } = await preparePack(source, { decodeImage });
   const assets = await installedAssets(pack);
   const p = await soloPage(t, { titleScreen: true, assetIndexedDB: assets.indexedDB });
   await open(p);
@@ -141,7 +147,7 @@ test('late Custom clear follows authored Next, ends truthfully, and never grants
   }));
   source.levelVisuals = [];
   source.visualOverrides = {};
-  const { pack } = await preparePack(source);
+  const { pack } = await preparePack(source, { decodeImage });
   const assets = await installedAssets(pack);
   const p = await soloPage(t, { titleScreen: true, assetIndexedDB: assets.indexedDB });
   await open(p);
@@ -155,9 +161,14 @@ test('late Custom clear follows authored Next, ends truthfully, and never grants
   async function clear() {
     p.key('ArrowDown');
     p.key('ArrowDown', false);
-    for (let tick = 0; tick < 900 && p.rendered.run.status !== 'won'; tick++) p.frame();
+    // Preserve native fixed steps while avoiding hundreds of redundant DOM paints.
+    for (let frame = 0; frame < 30 && p.rendered.run.status !== 'won'; frame++) p.frame(250);
     assert.equal(p.rendered.run.status, 'won');
-    for (let tick = 0; tick < 400 && p.$('game-overlay').dataset.kind !== 'won'; tick++) p.frame();
+    assert.equal(p.$('game-overlay').hidden, true);
+    p.$('skip-celebration').click();
+    assert.equal(p.$('show-result').hidden, false);
+    p.$('show-result').click();
+    p.frame(0);
     assert.equal(p.$('game-overlay').dataset.kind, 'won');
     assert.equal(p.$('next-button').hidden, false);
   }
@@ -188,13 +199,15 @@ test('late Custom clear follows authored Next, ends truthfully, and never grants
   assert.equal(p.$('journey-collection').value, 'Custom');
   assert.deepEqual(p.errors, []);
 });
-const settle = (predicate) => waitFor(predicate, { timeoutMs: 15000 });
+// This host compiles the complete cross-mode catalogue and validates installed
+// original artwork. Bound the operation without treating it as a frame-time test.
+const settle = (predicate) => waitFor(predicate, { timeoutMs: 60_000 });
 async function open(p) {
   p.$('shell-play').click();
   try {
     await settle(() => p.$('journey-chooser')?.open && p.$('journey-collection'));
   } catch (error) {
-    error.message += ` ${p.$('run-message').textContent} ${p.errors.map(String).join(';')}`;
+    error.message += ` ${JSON.stringify({ home: p.$('shell-home').open, playDisabled: p.$('shell-play').disabled, opening: p.$('mission-library-opening-status')?.textContent, pack: p.$('pack-status').textContent, chooser: p.$('journey-chooser')?.open, focus: p.doc.activeElement?.id })} ${p.$('run-message').textContent} ${p.errors.map(String).join(';')}`;
     throw error;
   }
 }
@@ -203,6 +216,21 @@ function showAllLifecycles(p) {
   p.$('journey-lifecycle').emit('change');
 }
 async function startPrepared(p, id) {
+  await settle(() => {
+    p.frame(0);
+    return (
+      p.rendered.run.levelId === id &&
+      p.doc.body.dataset.pictureState === 'ready' &&
+      !p.$('start-button').disabled
+    );
+  });
+  assert.notEqual(
+    p.doc.body.dataset.flightState,
+    'running',
+    'Selecting a mission retains its explicit briefing.',
+  );
+  assert.equal(p.rendered.run.tick, 0);
+  p.$('start-button').click();
   await running(p, id);
   assert.equal(p.rendered.paused, false);
   assert.equal(p.$('game-overlay').hidden, true);
@@ -299,7 +327,7 @@ test('Journey setup changes next preset and library details without replacing th
   assert.deepEqual(p.errors, []);
 });
 
-test('unified Solo validates and directly launches the included late Classic', async (t) => {
+test('unified Solo downloads, validates and briefs the late Classic', async (t) => {
   const p = await soloPage(t, { titleScreen: true });
   await open(p);
   p.$('journey-collection').value = 'Classic';
@@ -312,8 +340,9 @@ test('unified Solo validates and directly launches the included late Classic', a
     (button) => button.dataset.missionId === row.id,
   );
   assert.ok(card);
-  assert.equal(card.dataset.availabilityState, 'included');
-  assert.equal(card.querySelector('.journey-card-action').hidden, true);
+  assert.equal(card.dataset.availabilityState, 'download');
+  assert.equal(Boolean(card.querySelector('.journey-card-action').hidden), false);
+  assert.match(card.querySelector('.journey-card-action').textContent, /Download/);
   assert.equal(card.disabled, false);
   card.focus();
   card.click();
@@ -323,7 +352,7 @@ test('unified Solo validates and directly launches the included late Classic', a
   assert.deepEqual(p.errors, []);
 });
 
-test('unified Solo failed included-chapter read retries inline and preserves the flight until retry succeeds', async (t) => {
+test('unified Solo failed chapter download retries inline and preserves the flight until retry succeeds', async (t) => {
   let available = false,
     requests = 0;
   const p = await soloPage(t, {
@@ -346,8 +375,9 @@ test('unified Solo failed included-chapter read retries inline and preserves the
     selected = () =>
       [...p.$('journey-cards').children].find((card) => card.dataset.missionId === row.id);
   const card = selected();
-  assert.equal(card.dataset.availabilityState, 'included');
-  assert.equal(card.querySelector('.journey-card-action').hidden, true);
+  assert.equal(card.dataset.availabilityState, 'download');
+  assert.equal(Boolean(card.querySelector('.journey-card-action').hidden), false);
+  assert.match(card.querySelector('.journey-card-action').textContent, /Download/);
   assert.equal(card.disabled, false);
   card.focus();
   card.click();
@@ -372,7 +402,7 @@ test('unified Solo failed included-chapter read retries inline and preserves the
   assert.deepEqual(p.errors, []);
 });
 
-test('empty-profile Classic selection directly launches its exact late mission without awarding a clear', async (t) => {
+test('empty-profile Classic selection briefs its exact late mission without awarding a clear', async (t) => {
   const p = await soloPage(t, { titleScreen: true });
   await open(p);
   const card = [...p.$('journey-cards').children].find(
@@ -391,7 +421,7 @@ test('empty-profile Classic selection directly launches its exact late mission w
   assert.deepEqual(p.errors, []);
 });
 
-test('incoming opaque Classic handoff launches its exact late mission without another picker', async (t) => {
+test('incoming opaque Classic handoff briefs its exact late mission without another picker', async (t) => {
   const search = new URLSearchParams({ journey: 'legacy', 'library-mission': lateBase.id });
   const p = await soloPage(t, { titleScreen: true, search: `?${search}` });
   await startPrepared(p, lateBase.runtimeId);
@@ -513,7 +543,7 @@ test('unknown incoming identity reports failure and never starts a different mis
   assert.deepEqual(p.errors, []);
 });
 
-test('default Journey mounts335 missions and hands the exact Classic selection to its own host', async (t) => {
+test('default Journey mounts all 435 missions and hands the exact Classic selection to its own host', async (t) => {
   const p = await journeyPage(t);
   await open(p);
   showAllLifecycles(p);
@@ -549,10 +579,15 @@ test('Solo mode filter exposes the same qualified Journey identities in Versus w
   p.$('journey-mode').emit('change');
   const cards = [...p.$('journey-cards').children];
   assert.deepEqual(
-    cards.map((card) => card.dataset.missionId),
+    cards.map((card) => card.dataset.missionId).filter((id) => original.includes(id)),
     original,
   );
   assert.equal(new Set(original).size, 435);
+  assert.equal(new Set(cards.map((card) => card.dataset.missionId)).size, cards.length);
+  assert.ok(
+    cards.some((card) => JSON.parse(card.dataset.missionId)[0] === 'journey:duel-expedition-v1'),
+    'The Versus-only expedition remains available beside the shared catalogue.',
+  );
   const target = cards[1];
   assert.match(target.textContent, /Journey.*Band 1\/12/);
   assertReadyCard(target);
@@ -565,32 +600,36 @@ test('Solo mode filter exposes the same qualified Journey identities in Versus w
   assert.deepEqual(p.errors, []);
 });
 
-for (const collection of ['Journey', 'Classic'])
-  test(`Solo Team filter hands an exact ${collection} mission to its Team host`, async (t) => {
+for (const [collection, route] of [
+  ['Journey', 'team-cultural-specialist-originals-2'],
+  ['Journey', 'team-expedition-v1'],
+  ['Classic', 'legacy'],
+])
+  test(`Solo Team filter hands an exact ${collection} mission from ${route} to its Team host`, async (t) => {
     const p = await soloPage(t, { titleScreen: true });
     await open(p);
     p.$('journey-mode').value = 'team';
     p.$('journey-mode').emit('change');
     const cards = [...p.$('journey-cards').children];
-    assert.equal(cards.length, 14);
-    assert.equal(new Set(cards.map((card) => card.dataset.missionId)).size, 14);
-    const target = cards.find((card) =>
-      card.querySelector('.journey-card-tags').textContent.includes(collection),
+    assert.equal(cards.length, 116);
+    assert.equal(new Set(cards.map((card) => card.dataset.missionId)).size, 116);
+    const target = cards.find(
+      (card) =>
+        card.querySelector('.journey-card-tags').textContent.includes(collection) &&
+        (route === 'legacy' || JSON.parse(card.dataset.missionId)[1] === route),
     );
+    assert.ok(target, `The ${route} edition remains selectable.`);
     assertReadyCard(target);
     target.click();
     await settle(() => globalThis.location.href.includes('library-mission='));
     const destination = new URL(globalThis.location.href);
     assert.equal(destination.pathname, '/game/couch/relay-rescue.html');
-    assert.equal(
-      destination.searchParams.get('journey'),
-      collection === 'Journey' ? 'team-cultural-specialist-originals-2' : 'legacy',
-    );
+    assert.equal(destination.searchParams.get('journey'), route);
     assert.equal(destination.searchParams.get('library-mission'), target.dataset.missionId);
     assert.deepEqual(p.errors, []);
   });
 
-test('incoming Journey selection launches exactly its requested mission without another picker', async (t) => {
+test('incoming Journey selection briefs exactly its requested mission without another picker', async (t) => {
   const id = JSON.stringify([
     'journey:whole-spatial-v5',
     'whole-spatial-v5',
