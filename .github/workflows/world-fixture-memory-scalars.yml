@@ -1,0 +1,101 @@
+name: World complete-file scalar memory diagnostic
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+    branches: [main]
+    paths:
+      - 'game/test/fpv-world-appearance-ui.test.mjs'
+      - '.github/workflows/world-fixture-memory-scalars.yml'
+      - 'scripts/world-fixture-memory-scalars.py'
+      - 'scripts/world-fixture-memory-scalars-pins.json'
+      - 'scripts/parse-scalar-observations.py'
+      - 'scripts/test_world_fixture_memory_scalars.py'
+      - 'docs/verification/world-fixture-memory-scalars.md'
+
+permissions:
+  contents: read
+  actions: read
+
+concurrency:
+  group: world-scalars-${{ github.event.pull_request.number }}
+  cancel-in-progress: false
+
+jobs:
+  observe:
+    name: Complete115 scalar observation
+    if: >-
+      github.repository == 'mekhovov/revealline' &&
+      github.repository_id == '1367404328' &&
+      github.event.pull_request.head.repo.full_name == github.repository &&
+      github.event.pull_request.head.ref == 'codex/world-fixture-memory-scalars' &&
+      github.event.pull_request.draft == true
+    runs-on: ubuntu-24.04
+    timeout-minutes: 55
+    env:
+      PYTHONDONTWRITEBYTECODE: 1
+      GIT_NO_LAZY_FETCH: 1
+      GIT_OPTIONAL_LOCKS: 0
+    steps:
+      - name: Check out the immutable reviewed candidate
+        env:
+          GIT_NO_LAZY_FETCH: '0'
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          path: candidate
+          persist-credentials: false
+          fetch-depth: 1
+      - name: Set up the identical native Node
+        uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444
+        with:
+          node-version: 22.22.2
+      - name: Verify reviewed observer control bodies
+        working-directory: candidate
+        shell: bash
+        run: |
+          python3 -B - <<'PY'
+          import hashlib, pathlib
+          expected = {"scripts/world-fixture-memory-scalars.py":"193daa2dc9f6c4e3c9b5953527679344cb8835ef2ebb58028602bd33de4babdf","scripts/world-fixture-memory-scalars-pins.json":"af72badb069e97dac169070dcceae9171d63aa770764fb35aaf828ff168b7730","scripts/test_world_fixture_memory_scalars.py":"f23f518b3d936b15c5882029e1954a2d1bb529e00e15f5b585f091e23ab456cc","scripts/parse-scalar-observations.py":"f308d6e86496c8af0d34298dce77309d4142ec43db7d26e09499d02e54a22f57","docs/verification/world-fixture-memory-scalars.md":"bb93c0529843d765fbe8ae221fd09647cc8357a416cc0c53d63ff469440d4634"}
+          for name, digest in expected.items():
+              p = pathlib.Path(name)
+              assert p.is_file() and not p.is_symlink()
+              assert hashlib.sha256(p.read_bytes()).hexdigest() == digest
+          PY
+      - name: Retain the original preparation floor
+        shell: bash
+        run: |
+          python3 -B - <<'PY'
+          import os, shutil
+          assert min(shutil.disk_usage('candidate').free,
+                     shutil.disk_usage(os.environ['RUNNER_TEMP']).free) > 2 * 1024**3
+          PY
+      - name: Install locked target dependencies without scripts
+        working-directory: candidate
+        timeout-minutes: 5
+        run: npm ci --ignore-scripts
+      - name: Install locked World fixture dependencies without scripts
+        working-directory: candidate
+        timeout-minutes: 5
+        run: npm ci --prefix authoring/fpv-worlds --ignore-scripts
+      - name: Bind immutable source guard auditor and executed workflow
+        env:
+          DIAGNOSTIC_READ_TOKEN: ${{ github.token }}
+        run: >-
+          python3 -B candidate/scripts/world-fixture-memory-scalars.py prepare
+          --root "$GITHUB_WORKSPACE/candidate"
+          --trusted "$RUNNER_TEMP/world-scalar-trusted"
+      - name: Observe the complete file with unchanged native limits
+        run: >-
+          python3 -B candidate/scripts/world-fixture-memory-scalars.py run
+          --root "$GITHUB_WORKSPACE/candidate"
+          --trusted "$RUNNER_TEMP/world-scalar-trusted"
+          --output "$RUNNER_TEMP/world-scalar-observation"
+      - name: Retain actual failed or successful evidence
+        if: always()
+        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f
+        with:
+          name: world-scalars-${{ github.event.pull_request.head.sha }}-${{ github.run_id }}-${{ github.run_attempt }}
+          path: ${{ runner.temp }}/world-scalar-observation/
+          if-no-files-found: error
+          retention-days: 14

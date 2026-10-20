@@ -1,8 +1,0 @@
-{
-  "at": "2026-09-19T08:34:58.659068+00:00",
-  "status": "PASS_FINAL_ARCHIVE_AUTHORITIES_UNCHANGED",
-  "archiveCommit": "950e30e6c891345ac5b68e2e796b54c0e64828f5",
-  "deployment": 6538726400,
-  "successStatus": 18557058965,
-  "scope": "Final actual authority readback after completeHTTPaudit and scopednativeplay; retainactualfiles"
-}

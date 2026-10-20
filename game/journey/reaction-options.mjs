@@ -9,24 +9,36 @@ export const DEFAULT_REACTION_OPTIONS = Object.freeze({
   volume: DEFAULT_DIALOGUE_VOLUME,
   scale: 1,
   background: true,
+  readingTime: 1,
 });
-const format = 'ReactionPresentationV1';
+const format = 'ReactionPresentationV2';
 const pageObservers = new WeakMap();
 export function validateReactionOptions(input) {
   const value = boundedJSON(input, { maxBytes: 1024, maxNodes: 12, maxDepth: 1 });
-  exactKeys(value, ['format', ...Object.keys(DEFAULT_REACTION_OPTIONS)], 'Reaction presentation');
+  const legacy = value.format === 'ReactionPresentationV1';
+  exactKeys(
+    value,
+    [
+      'format',
+      ...Object.keys(DEFAULT_REACTION_OPTIONS).filter((key) => !legacy || key !== 'readingTime'),
+    ],
+    'Reaction presentation',
+  );
   if (
-    value.format !== format ||
+    (!legacy && value.format !== format) ||
     ['sounds', 'speech', 'subtitles', 'background'].some(
       (key) => typeof value[key] !== 'boolean',
     ) ||
     !Number.isFinite(value.volume) ||
     value.volume < 0 ||
     value.volume > 1 ||
-    ![1, 1.5, 2].includes(value.scale)
+    ![1, 1.5, 2].includes(value.scale) ||
+    (!legacy && ![1, 2].includes(value.readingTime))
   )
     throw new TypeError('Invalid reaction presentation options.');
-  return Object.freeze(value);
+  // Read the earlier record without rewriting it. Only an explicit choice or
+  // Retry writes the current format to the same preference owner.
+  return Object.freeze({ ...value, format, readingTime: legacy ? 1 : value.readingTime });
 }
 
 /** Invalid/future bytes are retained; an unavailable store never disables play. */

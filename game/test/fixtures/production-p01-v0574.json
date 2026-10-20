@@ -5,9 +5,9 @@
     "tree": "4cd7f24680af174ea35773d28e07e54e5f39e01f",
     "tag": "v0.57.4",
     "path": "authoring/library/fpv-field-kit/production.rltheme",
-    "bytes": 6808841,
-    "sha256": "f0e8f98c63b6871a6c3ab60eaef7d265912e370db3522b336cc60a408ac92b4a",
-    "scope": "Immutable published source oracle; public P01 acceptance is separate."
+    "bytes": 6698245,
+    "sha256": "28d44490fe5c7e104219d467d678f1a55a74007487d8be83e1dd1663d49e0428",
+    "scope": "Derived retained-content oracle after an ownership migration. Source commit and tag identify the original artifact; these new bytes are not that release or its historical qualification."
   },
   "metadata": {
     "format": "revealline-theme-bundle.v1",
@@ -27,24 +27,35 @@
   },
   "groups": {
     "slots": {
-      "count": 293,
-      "sha256": "75ceaae41400f20fced4bfb885d2c9175082eb4f5cbdcea30175191b56d93c68"
+      "count": 260,
+      "sha256": "ee6aeaa4307f1f964981b8614c2d650fa019180f94d6df76005d474be18e0566"
     },
     "assets": {
-      "count": 1074,
-      "sha256": "d62ae456761eabff26ad9429c06385cfe77dabc72d7d8f4de2d8bc1f17cf55b7"
+      "count": 1041,
+      "sha256": "5decaf509f1c0b45ecc38f09c7cdf79c1710bdd745cfb4fd2cd33cc066950056"
     },
     "themes": {
       "count": 24,
-      "sha256": "b1324cd1c4ab133a503b0575f6d0a21822e4047afc1c6d10e575197cedb0502c"
+      "sha256": "532a11798deeb008a4d9f4c9469bc172bff0ceb3bbbd65cf362aee811a888050"
     },
     "collections": {
       "count": 1,
-      "sha256": "74daee988fe6fe616d1ecc4a6ffd9f6c9c47b2fc00584259232f8f1477db1b57"
+      "sha256": "84f512c5583368c0d68f138d2d3f7821e0492c0693e931751f8ec3311f6f30cc"
     }
   },
   "payloads": {
     "count": 127,
     "sha256": "8117060274f4e7525d8bc71d172ae915671e8aea610640b28084a14f59523bef"
+  },
+  "migration": {
+    "format": "revealline-retained-production-oracle.v1",
+    "originalBundleSHA256": "f0e8f98c63b6871a6c3ab60eaef7d265912e370db3522b336cc60a408ac92b4a",
+    "originalFixtureSHA256": "99adb3dc9f9566b2381d940dd045b928cd7573e8586e1b6afe188aaf6dec3e45",
+    "removedSlots": 33,
+    "removedAssets": 33,
+    "preservedPayloads": {
+      "count": 127,
+      "sha256": "8117060274f4e7525d8bc71d172ae915671e8aea610640b28084a14f59523bef"
+    }
   }
 }

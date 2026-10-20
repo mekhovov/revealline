@@ -1,13 +1,17 @@
 import { t } from '../i18n/index.mjs';
 import { required } from '../data-json.mjs';
 
-export const WORLD_THEMES = Object.freeze([['fpv', 'FPV Front'],
-['ukraine', 'Ukraine Atlas'],
-['retro', '1994 Forever']]);
-const legacyModes = new Map([['original-fpv-pressure', 'Arcade'],
-['original-ukraine-atlas', 'Arcade'],
-['original-retro-1994', 'Arcade'],
-['fpv-route-choices', 'Tactical']]);
+export const WORLD_THEMES = Object.freeze([
+  ['fpv', 'FPV Front'],
+  ['ukraine', 'Ukraine Atlas'],
+  ['retro', '1994 Forever'],
+]);
+const legacyModes = new Map([
+  ['original-fpv-pressure', 'Arcade'],
+  ['original-ukraine-atlas', 'Arcade'],
+  ['original-retro-1994', 'Arcade'],
+  ['fpv-route-choices', 'Tactical'],
+]);
 export const legacyWorldMode = (id) => legacyModes.get(id) ?? 'Other';
 export function installedWorldMode(pack) {
   const levels = pack.campaigns?.flatMap((campaign) => campaign.levels) ?? [];

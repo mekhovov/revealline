@@ -1,9 +1,13 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { mkdtemp, rm, writeFile } from 'node:fs/promises';
+import { mkdtemp, readFile, rm, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { createHash } from 'node:crypto';
+import { execFile } from 'node:child_process';
+import { promisify } from 'node:util';
+import { fileURLToPath } from 'node:url';
+import { assessEmpiricalClockOverhead } from './solo-overhead-acceptance.mjs';
 import {
   analyzeDiagnostics,
   diagnosticsSchedule,
@@ -552,3 +556,68 @@ test('analysis preserves missing/invalid files and detects changed raw report by
   assert.equal(result.observations[2].status, 'report-hash-mismatch');
   assert.equal(result.observations.length, 6);
 });
+
+for (const method of [undefined, PROSPECTIVE_OVERHEAD_METHOD]) {
+  const label = method ?? 'historical-default';
+  test(label + ': apparently passing empirical app interval is conditional only', () => {
+    const f = evidence();
+    if (method) f.manifest.analysisMethod = method;
+    const arithmetic = analyzeDiagnostics(f.manifest, f.reports);
+    const original = JSON.stringify(arithmetic);
+    assert.equal(arithmetic.status, 'pass');
+    assert(arithmetic.adjustedInterval.upper95 < 0.05);
+    const assessed = assessEmpiricalClockOverhead(arithmetic);
+    assert.equal(assessed.status, 'unresolved');
+    assert.equal(assessed.conditionalStatus, 'pass');
+    assert.equal(assessed.qualificationAssessment.eligible, false);
+    assert.deepEqual(assessed.adjustedInterval, arithmetic.adjustedInterval);
+    assert.deepEqual(assessed.pairs, arithmetic.pairs);
+    assert.equal(JSON.stringify(arithmetic), original);
+  });
+
+  test(
+    label + ': actual analyze CLI refuses an empirical-only pass without changing evidence',
+    async (t) => {
+      const directory = await mkdtemp(join(tmpdir(), 'solo-overhead-acceptance-'));
+      t.after(() => rm(directory, { recursive: true, force: true }));
+      const f = evidence();
+      if (method) f.manifest.analysisMethod = method;
+      for (let i = 0; i < f.reports.length; i++) {
+        const bytes = JSON.stringify(f.reports[i]);
+        f.manifest.executions[i].reportSha256 = createHash('sha256').update(bytes).digest('hex');
+        await writeFile(join(directory, f.manifest.executions[i].report), bytes);
+      }
+      const manifestBytes = JSON.stringify(f.manifest);
+      await writeFile(join(directory, 'manifest.json'), manifestBytes);
+      const arithmetic = await analyzeDirectory(directory);
+      assert.equal(arithmetic.status, 'pass');
+      assert(arithmetic.adjustedInterval.upper95 < 0.05);
+      let rejection;
+      try {
+        await promisify(execFile)(
+          process.execPath,
+          [
+            fileURLToPath(new URL('./qualify-solo-diagnostics.mjs', import.meta.url)),
+            'analyze',
+            directory,
+          ],
+          { timeout: 10000, maxBuffer: 1024 ** 2 },
+        );
+      } catch (error) {
+        rejection = error;
+      }
+      assert(rejection, 'Current CLI must not exit successfully on an empirical-only interval.');
+      assert.equal(rejection.code, 1);
+      const summary = JSON.parse(rejection.stdout);
+      assert.equal(summary.status, 'unresolved');
+      assert.equal(summary.conditionalStatus, 'pass');
+      assert.equal(summary.qualificationAssessment.eligible, false);
+      const assessed = JSON.parse(await readFile(summary.output, 'utf8'));
+      assert.equal(assessed.status, 'unresolved');
+      assert.equal(assessed.conditionalStatus, 'pass');
+      assert.equal(assessed.completePairs, 10);
+      assert.deepEqual(assessed.adjustedInterval, arithmetic.adjustedInterval);
+      assert.equal(await readFile(join(directory, 'manifest.json'), 'utf8'), manifestBytes);
+    },
+  );
+}

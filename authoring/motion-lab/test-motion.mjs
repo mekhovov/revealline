@@ -114,8 +114,8 @@ test("true stalls cap catch-up, and board limits remain fixed", () => {
   assert.equal(edge.x, 47.2);
 });
 
-test("four palettes and three terrain treatments share the same footprint data", () => {
-  assert.equal(Object.keys(presets.themes).length, 4);
+test("three palettes and three terrain treatments share the same footprint data", () => {
+  assert.equal(Object.keys(presets.themes).length, 3);
   assert.deepEqual(Object.keys(presets.terrainStyles).sort(), ["hybrid", "microtile", "props"]);
   const footprints = JSON.stringify(presets.terrain);
   for (const theme of Object.keys(presets.themes)) for (const terrainStyle of Object.keys(presets.terrainStyles)) {
