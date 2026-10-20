@@ -21,6 +21,10 @@ export function attachBackupArchiveApply({ document: doc, root, execute, current
     node('p', 'help', () => copy('help')),
     summary,
   );
+  // Kept components remain available for deliberate re-review. Automatic
+  // continuation belongs to unfinished work, never an earlier kept component.
+  const nextReview = () =>
+    steps.find((step) => !complete(step) && !step.review.disabled)?.review ?? summary;
   function update() {
     const done = steps.filter((step) => step.state === 'saved').length,
       skipped = steps.filter((step) => step.state === 'skipped').length;
@@ -77,10 +81,7 @@ export function attachBackupArchiveApply({ document: doc, root, execute, current
           if (current()) {
             const ownedFocus = doc.activeElement === step.review;
             update();
-            if (ownedFocus && step.state === 'saved')
-              (steps.find((item) => !item.review.disabled)?.review ?? summary).focus({
-                preventScroll: true,
-              });
+            if (ownedFocus && step.state === 'saved') nextReview().focus({ preventScroll: true });
           }
         }
       };
@@ -90,10 +91,7 @@ export function attachBackupArchiveApply({ document: doc, root, execute, current
         step.error = step.notice = '';
         const ownedFocus = doc.activeElement === step.keep;
         update();
-        if (ownedFocus)
-          (steps.find((item) => item !== step && !item.review.disabled)?.review ?? summary).focus({
-            preventScroll: true,
-          });
+        if (ownedFocus) nextReview().focus({ preventScroll: true });
         return true;
       };
       update();
