@@ -1,4 +1,6 @@
 // These are public-UI adapters, not simulator training or completion hooks.
+import { validateFlightResponse } from '../optional-practice/civilian-fpv/radio-profile.mjs';
+
 export const OBSERVED_PACKAGES = Object.freeze({
   'civilian-flight': Object.freeze({
     settingsPrefix: 'gym',
@@ -162,11 +164,40 @@ export async function revealFPVProfiles(page, openSetup) {
     .waitFor({ state: 'visible' });
 }
 
-export function expectedImportedProfileExport(format, fixture) {
-  if (format === 'FlightProfiles.v1') return fixture;
+export function expectedImportedProfileExport(format, fixture, options = {}) {
+  if (!['FlightProfiles.v1', 'FlightProfiles.v2'].includes(format))
+    throw new Error(`Unsupported observed profile export format: ${format}`);
+  if (
+    !options ||
+    typeof options !== 'object' ||
+    Array.isArray(options) ||
+    Object.keys(options).some((key) => !['ratesOwner', 'priorExport', 'importNotice'].includes(key))
+  )
+    throw new Error('Invalid observed profile import policy.');
+  const { ratesOwner = false, priorExport = null, importNotice = '' } = options;
+  if (typeof ratesOwner !== 'boolean') throw new Error('Rates ownership must be explicit.');
+  const expected = structuredClone(fixture);
+  if (ratesOwner) {
+    if (
+      priorExport?.format !== format ||
+      priorExport.radio !== null ||
+      (format === 'FlightProfiles.v2' &&
+        (!Array.isArray(priorExport.radios) || priorExport.radios.length !== 0)) ||
+      typeof importNotice !== 'string' ||
+      importNotice.length > 4096 ||
+      !importNotice.includes(
+        'Included flight response settings were not applied. Rates & throttle profiles remain unchanged.',
+      )
+    )
+      throw new Error(
+        'Require the fresh public export and explicit calibration-only import notice.',
+      );
+    expected.response = validateFlightResponse(priorExport.response);
+  } else if (priorExport !== null || importNotice !== '')
+    throw new Error('Legacy profile import cannot silently opt into response preservation.');
+  if (format === 'FlightProfiles.v1') return expected;
   if (format === 'FlightProfiles.v2')
-    return { ...fixture, format, radios: fixture.radio ? [fixture.radio] : [] };
-  throw new Error(`Unsupported observed profile export format: ${format}`);
+    return { ...expected, format, radios: expected.radio ? [expected.radio] : [] };
 }
 
 export function matchesLaunchedAppURL(actual, expectedEntry, locale = 'en') {

@@ -1,3 +1,4 @@
+import './i18n/main-entry.mjs';
 import { loadBaseArtwork } from './base-artwork.mjs';
 import { continuousPlayPreferences } from './ui/continuous-play.mjs';
 import { nativeArtReviewURL } from './ui/art-review-navigation.mjs';
@@ -14221,15 +14222,16 @@ try {
           });
           trace?.mark('missions-versus-source-end');
           trace?.mark('missions-remote-team-import-begin');
-          const { createRemoteTeamLibrarySources } = await import(
-            './mission-library/remote-team.mjs'
+          const { loadRemoteTeamLibrarySources } = await import(
+            './mission-library/remote-team-display.mjs'
           );
           trace?.mark('missions-remote-team-import-end');
           assertCurrent();
           trace?.mark('missions-remote-team-sources-begin');
-          const teamSources = createRemoteTeamLibrarySources({
+          const teamSources = await loadRemoteTeamLibrarySources({
             launch: departLibraryMission,
             difficulty: () => browsingJourneyPreferences.snapshot().difficulty,
+            assertCurrent,
           });
           trace?.mark('missions-remote-team-sources-end');
           trace?.mark('missions-prior-import-begin');
