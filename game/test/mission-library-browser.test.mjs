@@ -126,3 +126,99 @@ test('search and Back never launch a game and a stale card cannot launch after c
   assert.equal(launches, 0);
   chooser.destroy();
 });
+
+for (const randomDownloadable of [false, true]) {
+  test(`Random selection ${randomDownloadable ? 'prepares downloadable SIM maps' : 'keeps other hosts limited to ready missions'}`, async () => {
+    const doc = new Document();
+    let installed = false,
+      downloads = 0,
+      launches = 0;
+    const entry = {
+      id: 'download-map',
+      name: 'Railway Valley',
+      campaignKey: 'maps',
+      campaignTitle: 'World maps',
+      levelIndex: 0,
+      modes: ['solo'],
+    };
+    const library = createMissionLibrary([
+      {
+        id: 'maps',
+        editionId: 'maps',
+        edition: 'SIM',
+        collection: 'Custom',
+        entries: [entry],
+        describe: (value) => value,
+        availability: () => (installed ? { state: 'ready' } : { state: 'download', bytes: 1024 }),
+        async prepare(value, { signal }) {
+          assert.equal(value, entry);
+          signal.throwIfAborted();
+          downloads++;
+          installed = true;
+        },
+        launch(value) {
+          assert.equal(value, entry);
+          launches++;
+        },
+      },
+    ]);
+    const chooser = attachMissionLibraryBrowser({ document: doc, library, randomDownloadable });
+    chooser.open();
+    assert.equal(
+      doc.getElementById('journey-random-level').disabled,
+      !randomDownloadable,
+      'Download-only results must enable the SIM Random button',
+    );
+    assert.equal(chooser.playRandom(), randomDownloadable);
+    for (let i = 0; i < 8; i++) await new Promise((resolve) => setImmediate(resolve));
+    assert.equal(downloads, Number(randomDownloadable));
+    assert.equal(launches, Number(randomDownloadable));
+    chooser.destroy();
+    library.dispose();
+  });
+}
+
+test('Host Random filter scopes candidates without removing manually selectable levels', async () => {
+  const doc = new Document();
+  const entries = ['flight', 'learning'].map((id, levelIndex) => ({
+    id,
+    levelIndex,
+    name: id,
+    campaignKey: 'sim',
+    campaignTitle: 'SIM',
+    modes: ['solo'],
+  }));
+  const launches = [];
+  const library = createMissionLibrary([
+    {
+      id: 'sim',
+      editionId: 'sim',
+      edition: 'SIM',
+      collection: 'Classic',
+      entries,
+      describe: (entry) => entry,
+      availability: () => ({ state: 'ready' }),
+      launch: (entry) => launches.push(entry.id),
+    },
+  ]);
+  let selectedType = 'learning';
+  const chooser = attachMissionLibraryBrowser({
+    document: doc,
+    library,
+    random: () => 0,
+    randomFilter: (row) => row.runtimeId === selectedType,
+  });
+  chooser.open();
+  assert.equal(chooser.elements.list.children.length, 2);
+  chooser.playRandom();
+  await new Promise((resolve) => setImmediate(resolve));
+  assert.deepEqual(launches, ['learning']);
+  chooser.open();
+  selectedType = 'flight';
+  chooser.refresh();
+  chooser.playRandom();
+  await new Promise((resolve) => setImmediate(resolve));
+  assert.deepEqual(launches, ['learning', 'flight']);
+  chooser.destroy();
+  library.dispose();
+});

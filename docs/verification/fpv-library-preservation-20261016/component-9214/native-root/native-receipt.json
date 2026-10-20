@@ -1,0 +1,147 @@
+{
+  "recordedAt": "2026-10-16T03:07:42.891207+00:00",
+  "head": "8ab04b8d948203090b9ae32da3b2d4e7c1f16bf3",
+  "result": "ACCEPTED: bounded native synthetic component only",
+  "scope": "No database, scenery, WebGL, actual flight, physical input, default/player storage, full-player themes, persistence, public launch or performance qualification.",
+  "passes": [
+    "390x844 guarded reopen retains exact6ecbFly while newprimaryfed1 is displayed; prior exactVersion is revealed in Versions",
+    "Native Return on restored focus requests exact6ecbFly, not the changed primary",
+    "844x390 actual Refresh callback preserves the same exact oldFly",
+    "1280x800 UK missing priorFly focuses Versions; nativeReturn opens disclosure without newFly or Download",
+    "Deliberate navigation to LunarVersions during pending refresh remains on Lunar/open; Desertclosed at resolution, observed in tool DOM result",
+    "24offers/10families remain in empty/all synthetic scenarios; sampled viewport widths390/844/1280 match documentwidth; inspected productioncontrols min44px",
+    "UK ArrowDown on AlpineVersions reaches exactR6Fly"
+  ],
+  "observationNote": "The navigation-away-specific-target supplemental object in native-observations.json was captured after selecting empty fixture and is not used as corroboration. The preceding explicit-navigation-away report and separate root tool DOM observation provide the actual navigation result. Raw original observations remain preserved.",
+  "verifiedFrozenFiles": [
+    {
+      "path": "index.html",
+      "httpStatus": 200,
+      "bytes": 2820,
+      "sha256": "dc7d7363309cfc57703425b10c4a7fd1ac322ba85550d98edd8164d3d5edfd18"
+    },
+    {
+      "path": "preview.mjs",
+      "httpStatus": 200,
+      "bytes": 7745,
+      "sha256": "e52bd89c984436412b8c56f410242e65d971cd981be6c329e9b8d0d32cbc755a"
+    },
+    {
+      "path": "preview.css",
+      "httpStatus": 200,
+      "bytes": 708,
+      "sha256": "bb92f1390f6e082789e19c8fa5c9d8c66cc39888bcebe47ba83cb92fc731c49d"
+    },
+    {
+      "path": "runtime/optional-practice/civilian-fpv/regional-library.mjs",
+      "httpStatus": 200,
+      "bytes": 74392,
+      "sha256": "4e414ab01cd63b8feaaeda1f141a76a7cd85d738084a92b25e1ea4f8eb0f918e"
+    },
+    {
+      "path": "runtime/optional-practice/civilian-fpv/input.mjs",
+      "httpStatus": 200,
+      "bytes": 38417,
+      "sha256": "fa05c07d694b96042ad4285294b1b676c60ef85b5122175a0d7b0b0268a1e8d6"
+    },
+    {
+      "path": "runtime/optional-practice/civilian-fpv/world-style.css",
+      "httpStatus": 200,
+      "bytes": 119168,
+      "sha256": "e75fe38f7a339e844376c9ca2eb35ef6d7f84202b395e0c8d2c491ba915e1529"
+    },
+    {
+      "path": "runtime/optional-practice/civilian-fpv/style.css",
+      "httpStatus": 200,
+      "bytes": 175643,
+      "sha256": "caf333f5853e0805126789f96e5013878461f725cd8354c9239be84e5aab81ce"
+    },
+    {
+      "path": "runtime/game/vendor/i18next-26.4.2.min.js",
+      "httpStatus": 200,
+      "bytes": 43702,
+      "sha256": "eb0dd6d72e8f756b90faf864853af2a17870fe97b54473b7c34494870c65901c"
+    }
+  ],
+  "files": [
+    {
+      "path": "console.json",
+      "bytes": 2,
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    {
+      "path": "explicit-navigation-away.json",
+      "bytes": 1327,
+      "sha256": "59e4c0b54d45f4ff2a7de92438bac395ae8d7019172624b256bcab3c90c00bac"
+    },
+    {
+      "path": "explicit-navigation-away.png",
+      "bytes": 138254,
+      "sha256": "ea3042f90ac1553d9b8afaa5caf57721054fe6bd2c5ed6382f9459ff0799eb12"
+    },
+    {
+      "path": "handheld-missing-confirm-safe.json",
+      "bytes": 1144,
+      "sha256": "9af66756d6bcd56390325e3685cf8627ec2d2f49c345a66fa1d5af5ba72dd849"
+    },
+    {
+      "path": "handheld-missing-fly-uk.json",
+      "bytes": 1145,
+      "sha256": "43c4138c0db575e63326a07e4e2b6d1ade0c9635b8d38390cec0c10a8d7755f4"
+    },
+    {
+      "path": "handheld-missing-fly-uk.png",
+      "bytes": 109803,
+      "sha256": "5a54027a53cc3d01779fa7ce8a460b068ac5cb2428032fb1c3e9759052b0682c"
+    },
+    {
+      "path": "landscape-direct-refresh.json",
+      "bytes": 1178,
+      "sha256": "d0255752ea943a67335fa3b1b0d5576ce0680d14a26b5c3d35a04e20ac7cf2d9"
+    },
+    {
+      "path": "landscape-direct-refresh.png",
+      "bytes": 24149,
+      "sha256": "f6b3531572f6c2b7dcda209b2d8aa0171123905b2143880bb9fedd01cf785314"
+    },
+    {
+      "path": "native-observations.json",
+      "bytes": 8156,
+      "sha256": "d81c13d2a4817936df36abb7dda5b39a91c13084d8ad9ca44ad4fa53de827a40"
+    },
+    {
+      "path": "portrait-all-uk.png",
+      "bytes": 62673,
+      "sha256": "96b917751836894ffdb12ce60ce6c77c0d46b45bcb0fd6d27698509872db0329"
+    },
+    {
+      "path": "portrait-exact-enter.json",
+      "bytes": 1011,
+      "sha256": "bd4cd3b0e4905036b7b4f7c8e5cc476b84656d2076201534830b7fb387c49e2c"
+    },
+    {
+      "path": "portrait-guarded-reopen.json",
+      "bytes": 737,
+      "sha256": "0fe1d8690013fb2faacc0950a43ff847600a61df1e3a5f7210717835032c5a20"
+    },
+    {
+      "path": "portrait-guarded-reopen.png",
+      "bytes": 58926,
+      "sha256": "50b183aac24449769f5525312593d47c8d766499f33874c876eb953cca7218e7"
+    }
+  ],
+  "consoleWarningErrors": [],
+  "preservedNegative": {
+    "head": "81c0d6587cdb582835a64e3d69c4c130460fb11a",
+    "receiptSHA256": "e86aa7c0f7b5a15db65d3bc3cc88ab8f78014647d858a51fb08575eb7dd8b5e4",
+    "unchanged": true
+  },
+  "cleanup": "Root tab1 closed normally; viewport reset; no renderer or elapsed run active.",
+  "remaining": [
+    "Combined latest-main exact package/source gates",
+    "Normal-player Library/theme/input/storage integration",
+    "Actual public rollout and launches",
+    "Original public saved-map/closingDB diagnosis",
+    "All24retention, physicaldevices, offline/restart/eviction and endurance"
+  ]
+}

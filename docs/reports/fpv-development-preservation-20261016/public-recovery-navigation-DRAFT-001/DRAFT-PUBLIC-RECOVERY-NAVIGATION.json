@@ -1,0 +1,289 @@
+{
+  "format": "DRAFT_INCOMPLETE_PublicRecoveryNavigation.v1",
+  "status": "DRAFT INCOMPLETE — finite already-public scope, root review required",
+  "repository": "mekhovov/revealline",
+  "createdUTC": "2026-10-16T15:28:26.904036+00:00",
+  "publishedByThisTask": false,
+  "preservationPRNavigation": [
+    {
+      "number": 1547,
+      "url": "https://github.com/mekhovov/revealline/pull/1547",
+      "role": "Captured primary source and working snapshots",
+      "currentReadyMergedOrHeadStatusQueried": false
+    },
+    {
+      "number": 1550,
+      "url": "https://github.com/mekhovov/revealline/pull/1550",
+      "role": "Independent evidence and original verification archives",
+      "currentReadyMergedOrHeadStatusQueried": false
+    },
+    {
+      "number": 1551,
+      "url": "https://github.com/mekhovov/revealline/pull/1551",
+      "role": "Source-history and archival anchor audit",
+      "currentReadyMergedOrHeadStatusQueried": false
+    },
+    {
+      "number": 1552,
+      "url": "https://github.com/mekhovov/revealline/pull/1552",
+      "role": "CAS backup, index and portable recovery tooling",
+      "currentReadyMergedOrHeadStatusQueried": false
+    },
+    {
+      "number": 1556,
+      "url": "https://github.com/mekhovov/revealline/pull/1556",
+      "role": "Later captured primary source snapshot",
+      "currentReadyMergedOrHeadStatusQueried": false
+    }
+  ],
+  "immutablePublicReferences": {
+    "tool-guide": {
+      "repository": "mekhovov/revealline",
+      "path": "authoring/fpv-development-preservation/README.md",
+      "publishedHead": "66f2a6e2d4924dc43d255967914b081b3f9c582d",
+      "bytes": 13682,
+      "sha256": "cb8dfa9577e9ce478a478734c7552b8aef25eaa23a4206620c594ebf41571842",
+      "GitBlobSHA1": "81bffab706bdfe2e22ed377306a380e600ea402c",
+      "url": "https://github.com/mekhovov/revealline/blob/66f2a6e2d4924dc43d255967914b081b3f9c582d/authoring/fpv-development-preservation/README.md",
+      "acceptedPublicationInput": "accepted-public-publication-017",
+      "verificationMeaning": "Previously accepted publication/body identity; no fresh recheck by this draft"
+    },
+    "original-stage-index": {
+      "repository": "mekhovov/revealline",
+      "path": "docs/reports/fpv-development-preservation-20261016/final-index/preservation-index.json",
+      "publishedHead": "0942916a74c5ed6821e31b7d4ee34a66e97b9456",
+      "bytes": 41343790,
+      "sha256": "630438ac879a40577638e5b21706fea93b637b8a34dbc70ad3266248b2d9509e",
+      "GitBlobSHA1": "ba3776568571f971f32553cf7486f09019c5ac40",
+      "url": "https://github.com/mekhovov/revealline/blob/0942916a74c5ed6821e31b7d4ee34a66e97b9456/docs/reports/fpv-development-preservation-20261016/final-index/preservation-index.json",
+      "acceptedPublicationInput": "accepted-public-publication-018",
+      "verificationMeaning": "Previously accepted publication/body identity; no fresh recheck by this draft"
+    },
+    "original-stage-actual": {
+      "repository": "mekhovov/revealline",
+      "path": "docs/reports/fpv-development-preservation-20261016/cloud-portable-restore-38861525073/full-portable-restore.json",
+      "publishedHead": "f3e846a92ef2605fa29210cdfd685e02d99bb481",
+      "bytes": 1406,
+      "sha256": "14ad3bcdf1252a60ecfae9426227251d8863e35e46e4f3705a051940aa8d26f7",
+      "GitBlobSHA1": "5286c589ded00c723c038b0e42a09dec862a0c55",
+      "url": "https://github.com/mekhovov/revealline/blob/f3e846a92ef2605fa29210cdfd685e02d99bb481/docs/reports/fpv-development-preservation-20261016/cloud-portable-restore-38861525073/full-portable-restore.json",
+      "acceptedPublicationInput": "accepted-public-publication-019",
+      "verificationMeaning": "Previously accepted publication/body identity; no fresh recheck by this draft"
+    },
+    "extra-object-coverage": {
+      "repository": "mekhovov/revealline",
+      "path": "docs/reports/fpv-development-preservation-20261016/four-reviewed-public-positive-cohorts-object-coverage-003.json",
+      "publishedHead": "4c3727ef3dc36719c511cccc4fe9785a7fd7f47b",
+      "bytes": 14153,
+      "sha256": "4968a47b87e51a724008b70fc417f63e2bbac2b3c7e6ebcc576f691dfb4c2d88",
+      "GitBlobSHA1": "0f9adca67754434c375193d1d4973f7fbb5a7259",
+      "url": "https://github.com/mekhovov/revealline/blob/4c3727ef3dc36719c511cccc4fe9785a7fd7f47b/docs/reports/fpv-development-preservation-20261016/four-reviewed-public-positive-cohorts-object-coverage-003.json",
+      "acceptedPublicationInput": "accepted-public-publication-021",
+      "verificationMeaning": "Previously accepted publication/body identity; no fresh recheck by this draft"
+    },
+    "extra003-root-acceptance": {
+      "repository": "mekhovov/revealline",
+      "path": "docs/reports/fpv-development-preservation-20261016/cloud-incremental-readback-38875736494/root-independent-review/root-acceptance.json",
+      "publishedHead": "4c3727ef3dc36719c511cccc4fe9785a7fd7f47b",
+      "bytes": 1174,
+      "sha256": "1d524fce6d6bd8a0b4198ad38b0a7a61d2eede31276f0878921d933b6913c797",
+      "GitBlobSHA1": "af3883dbc134f8ab3cbf415e348e2dea42e4b5a8",
+      "url": "https://github.com/mekhovov/revealline/blob/4c3727ef3dc36719c511cccc4fe9785a7fd7f47b/docs/reports/fpv-development-preservation-20261016/cloud-incremental-readback-38875736494/root-independent-review/root-acceptance.json",
+      "acceptedPublicationInput": "accepted-public-publication-021",
+      "verificationMeaning": "Previously accepted publication/body identity; no fresh recheck by this draft"
+    },
+    "explicit13-receipt": {
+      "repository": "mekhovov/revealline",
+      "path": "docs/reports/fpv-development-preservation-20261016/explicit-public-checkpoint-v2-receipt.json",
+      "publishedHead": "377db4be1c493ed0e731dda4bf47d7af70b08814",
+      "bytes": 4394,
+      "sha256": "def8e762f75f8d9263e085a82435f5d49c9183ab48bb324029b47897da9bdcda",
+      "GitBlobSHA1": "09dafd7f98b05918f7a6aa2864b8ce4ef9015264",
+      "url": "https://github.com/mekhovov/revealline/blob/377db4be1c493ed0e731dda4bf47d7af70b08814/docs/reports/fpv-development-preservation-20261016/explicit-public-checkpoint-v2-receipt.json",
+      "acceptedPublicationInput": "accepted-public-publication-022",
+      "verificationMeaning": "Previously accepted publication/body identity; no fresh recheck by this draft"
+    },
+    "original21-manifest": {
+      "repository": "mekhovov/revealline",
+      "path": "docs/verification/fpv-library-preservation-20261016/archive-preservation/release-assets-manifest-21.json",
+      "publishedHead": "0959055975afe3a929c8f2c8602a6ab77488277c",
+      "bytes": 57917,
+      "sha256": "9cdb91833ff75877e145a83e12a31d29e8ed6d293adef98333d1c412f2e95cae",
+      "GitBlobSHA1": "0e42ab8f2a5b5e22f583d0735d4b7b75f09d5df6",
+      "url": "https://github.com/mekhovov/revealline/blob/0959055975afe3a929c8f2c8602a6ab77488277c/docs/verification/fpv-library-preservation-20261016/archive-preservation/release-assets-manifest-21.json",
+      "acceptedPublicationInput": "accepted-public-original21-publication",
+      "verificationMeaning": "Already accepted immutable public publication and original-scope receipt; no new body GET"
+    },
+    "source-cold-acceptance": {
+      "repository": "mekhovov/revealline",
+      "path": "docs/verification/fpv-library-preservation-20261016/source-closure-independent-review/github-hosted-original-source-cold-independent-acceptance.json",
+      "publishedHead": "9ea22e3dc5ab93e6c140a96e392bc503336d062a",
+      "bytes": 4361,
+      "sha256": "b4eaf35c23147ec4fc87eee8f8a5f05e09dee39929914358137b6156591b07e2",
+      "GitBlobSHA1": "f2a7a7953348f1effbc012e2b0f02444e3c2adcd",
+      "url": "https://github.com/mekhovov/revealline/blob/9ea22e3dc5ab93e6c140a96e392bc503336d062a/docs/verification/fpv-library-preservation-20261016/source-closure-independent-review/github-hosted-original-source-cold-independent-acceptance.json",
+      "acceptedPublicationInput": "accepted-public-source-cold-proof-publication",
+      "verificationMeaning": "Already accepted immutable public publication and original-scope receipt; no new body GET"
+    }
+  },
+  "acceptedToolGuideDirectory": {
+    "repository": "mekhovov/revealline",
+    "commit": "66f2a6e2d4924dc43d255967914b081b3f9c582d",
+    "path": "authoring/fpv-development-preservation",
+    "url": "https://github.com/mekhovov/revealline/tree/66f2a6e2d4924dc43d255967914b081b3f9c582d/authoring/fpv-development-preservation",
+    "retrieveCompatiblePinnedToolsetTogether": true
+  },
+  "relatedPublicHelperPublicationReferences": [
+    {
+      "repository": "mekhovov/revealline",
+      "path": "authoring/fpv-development-preservation/restore.py",
+      "publishedHead": "66f2a6e2d4924dc43d255967914b081b3f9c582d",
+      "bytes": 13519,
+      "sha256": "7aa2f86692ab4d5fd3117d594e5a46ab7c033567788ba6cd242007ff804d0374",
+      "GitBlobSHA1": "5545f5ee0eb23388b6af0be1615c8e767abd1ab0",
+      "url": "https://github.com/mekhovov/revealline/blob/66f2a6e2d4924dc43d255967914b081b3f9c582d/authoring/fpv-development-preservation/restore.py",
+      "acceptedPublicationInput": "accepted-public-publication-017",
+      "verificationMeaning": "Previously accepted publication/body identity; no fresh recheck by this draft"
+    },
+    {
+      "repository": "mekhovov/revealline",
+      "path": "authoring/fpv-development-preservation/portable_restore_check.py",
+      "publishedHead": "66f2a6e2d4924dc43d255967914b081b3f9c582d",
+      "bytes": 4033,
+      "sha256": "37c9c75c2d8448674c9e8b9f8f0ed7d39487fda34d92e47162ddda58618222fc",
+      "GitBlobSHA1": "187b41a96417f619a6a36d438852a4e506522596",
+      "url": "https://github.com/mekhovov/revealline/blob/66f2a6e2d4924dc43d255967914b081b3f9c582d/authoring/fpv-development-preservation/portable_restore_check.py",
+      "acceptedPublicationInput": "accepted-public-publication-017",
+      "verificationMeaning": "Previously accepted publication/body identity; no fresh recheck by this draft"
+    }
+  ],
+  "backupRelease": {
+    "repository": "mekhovov/revealline",
+    "id": 414505790,
+    "tag": "fpv-development-preservation-20261016",
+    "developmentBackupNotPlayerRelease": true,
+    "authenticatedRetrievalRequired": true
+  },
+  "originalStageActualScope": {
+    "files": 122706,
+    "logicalBytes": 20682624334,
+    "portableLinks": 282,
+    "GitDependencyFiles": 39,
+    "acceptedRun": 38861525073,
+    "runHead": "0942916a74c5ed6821e31b7d4ee34a66e97b9456",
+    "indexSHA256": "630438ac879a40577638e5b21706fea93b637b8a34dbc70ad3266248b2d9509e",
+    "originalScopeOnly": true
+  },
+  "extraPublicObjectCoverage": {
+    "positiveLogicalPaths": 40505,
+    "logicalBytes": 5142009238,
+    "CASPartsWithActualObjectReadbackAndMemberChecks": 19,
+    "directIdentitiesReusedFromOriginalStageActualRestore": 10,
+    "fullExpandedLogicalPathModeTimeLinkRestoreClaimed": false,
+    "focusedPartActualRun": 38875736494,
+    "focusedPartRunHead": "bc8afad425e6ae138278d6a0371a7bbbb0518571",
+    "focusedPartObjects": 14504,
+    "focusedPartRawBytes": 889683927,
+    "focusedPartCompressedBytes": 614442443,
+    "focusedPartSHA256": "b536ee45f56151c013bf773070a32479ad8db9b6dcdef99b5c0df107033cb842"
+  },
+  "original21VerificationArchives": {
+    "count": 21,
+    "bytes": 436184309,
+    "manifestReference": "original21-manifest",
+    "scope": "Exact original archive integrity, not package/native/public/physical/performance qualification"
+  },
+  "explicit13FileCheckpoint": {
+    "assetId": 646797088,
+    "bytes": 119025,
+    "sha256": "53c7db37eb7b04b9b3e87cfc6526cbe6804d3e1c2c6c428e12cf6419fcf1875a",
+    "acceptedServerFullAuthenticatedReadbackAndAll13MemberChecks": true,
+    "receiptReference": "explicit13-receipt",
+    "existingExactPublicMemberWhitelist": [
+      {
+        "path": "PUBLIC-RECOVERY-ENTRY.md",
+        "bytes": 3102,
+        "sha256": "e072427ce3b45d7accd6a1bc6f7bccd83e35fda3242a270634ee38b3277cdf61"
+      },
+      {
+        "path": "independent-original-stage-full-restore-review/github-full-portable-restore.json",
+        "bytes": 1406,
+        "sha256": "14ad3bcdf1252a60ecfae9426227251d8863e35e46e4f3705a051940aa8d26f7"
+      },
+      {
+        "path": "independent-original-stage-full-restore-review/root-independent-acceptance.json",
+        "bytes": 727,
+        "sha256": "849359ad75e6002a20497320fe6433f6a29c0c9ea17a7a1ce768ff72f94dfb65"
+      },
+      {
+        "path": "bulk-pack-lane/independent-incremental-003-root/root-acceptance.json",
+        "bytes": 1174,
+        "sha256": "1d524fce6d6bd8a0b4198ad38b0a7a61d2eede31276f0878921d933b6913c797"
+      },
+      {
+        "path": "saved-dependencies/gltf-validator-2.0.0-dev.3.10/ISSUES.md",
+        "bytes": 17519,
+        "sha256": "72981a105335964111253e7e5db4e956b8ab3a17fd74c2d02180bffc7f533c20"
+      },
+      {
+        "path": "saved-dependencies/gltf-validator-2.0.0-dev.3.10/LICENSE",
+        "bytes": 11560,
+        "sha256": "3ddf9be5c28fe27dad143a5dc76eea25222ad1dd68934a047064e56ed2fa40c5"
+      },
+      {
+        "path": "saved-dependencies/gltf-validator-2.0.0-dev.3.10/NOTICES",
+        "bytes": 22286,
+        "sha256": "933f161ca1e7b3ead5a6cf93ebb3bf6cb67f0e79b38e08d2046f8cdc41cb78a3"
+      },
+      {
+        "path": "saved-dependencies/gltf-validator-2.0.0-dev.3.10/README.md",
+        "bytes": 6814,
+        "sha256": "f5f26dc624a62817b356cec631b33af7358d046a4b2c0499a5f55189d986afa5"
+      },
+      {
+        "path": "saved-dependencies/gltf-validator-2.0.0-dev.3.10/gltf_validator.dart.js",
+        "bytes": 307792,
+        "sha256": "b73a7b2d455ac217567725138b46d826a13d7d1bb0c88c15f7c571bfb349298c"
+      },
+      {
+        "path": "saved-dependencies/gltf-validator-2.0.0-dev.3.10/index.js",
+        "bytes": 2829,
+        "sha256": "78deff9ea85743e86461c2d14fae76e7fc3ca0432e652f62948066b55fa16f0d"
+      },
+      {
+        "path": "saved-dependencies/gltf-validator-2.0.0-dev.3.10/module.mjs",
+        "bytes": 2822,
+        "sha256": "d2a88775a8b22f61be8e00644760f0f04b615fad0fc5175fefd40e0da4df2c8f"
+      },
+      {
+        "path": "saved-dependencies/gltf-validator-2.0.0-dev.3.10/package.json",
+        "bytes": 618,
+        "sha256": "3578d16153fa237c72784588da2e8fcccc9cd3c1c58ef34c7912f0732d2f5fa6"
+      },
+      {
+        "path": "saved-dependencies/gltf-validator-2.0.0-dev.3.10/validation.schema.json",
+        "bytes": 11107,
+        "sha256": "e33db4da1e907481a5fc056d2daab40be1a603620d8f4a1c81919120f3340365"
+      }
+    ],
+    "validatorFiles": 9,
+    "validatorLicenseAndNoticesIncluded": true,
+    "notNewlyAssembledByThisTask": true
+  },
+  "originalPublicSourceColdProof": {
+    "reference": "source-cold-acceptance",
+    "acceptedRun": 38860055058,
+    "capturedScopeOnly": true,
+    "finalCurrentSourceCutoffClaimed": false
+  },
+  "latestPublicReceiptHeadUsed": "377db4be1c493ed0e731dda4bf47d7af70b08814",
+  "latestPublicReceiptHeadNotClaimedToBeCurrentOrMerged": true,
+  "finalFull198InventoryComplete": false,
+  "finalPublicInputSetConfirmed": false,
+  "finalPublicCutoffReference": null,
+  "safeToDisconnect": false,
+  "preservationComplete": false,
+  "playerReadinessOrStorageRuntimePerformanceAcceptanceClaimed": false,
+  "repositoryProtectionsOrRequiredApplicationCIChanged": false,
+  "noOriginalSourceBodyDirectoryTargetWalkAssetGETCanonicalAPICheckAppExecutionRestoreJobOrGitWrite": true
+}

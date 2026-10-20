@@ -1,0 +1,20 @@
+test_exact_clearance_and_active_reservation_do_not_claim_durability (test_preservation.PreservationTests.test_exact_clearance_and_active_reservation_do_not_claim_durability) ... ok
+test_index_reuses_verified_objects_but_holds_unreviewed_duplicate_content (test_preservation.PreservationTests.test_index_reuses_verified_objects_but_holds_unreviewed_duplicate_content) ... ok
+test_partial_inventory_never_claims_complete_restore (test_preservation.PreservationTests.test_partial_inventory_never_claims_complete_restore) ... {"format": "FPVPortableRestoreReceipt.v1", "files": 0, "logicalBytes": 0, "allFileHashesMatch": true, "unresolvedInternalLinks": [], "complete": false, "scope": "inventoried non-Git payload; Git checkout recovery is a separate receipt", "overallDisconnectSafetyClaimed": false, "inventoryCoverageComplete": false, "deferredExternalDependenciesExplicitlyAccepted": false, "createdAtUnix": 1792124082.341266}
+ok
+test_real_part_roundtrip_and_tampered_header_refusal (test_preservation.PreservationTests.test_real_part_roundtrip_and_tampered_header_refusal) ... {"event": "packed", "part": 1, "objects": 1, "rawObjectBytes": 29000, "compressedBytes": 266, "sha256": "1b5b75f18dc29b4a99ab3f7fbf22cdba1f2a69554aa09e634245b272560e6cf3"}
+ok
+test_refuses_malicious_part_header_and_cache_symlink_parent (test_preservation.PreservationTests.test_refuses_malicious_part_header_and_cache_symlink_parent) ... ok
+test_refuses_source_changed_since_inventory (test_preservation.PreservationTests.test_refuses_source_changed_since_inventory) ... ok
+test_refuses_traversal_and_private_browser_history (test_preservation.PreservationTests.test_refuses_traversal_and_private_browser_history) ... ok
+test_rejects_nonzero_payload_after_tar_terminator (test_preservation.PreservationTests.test_rejects_nonzero_payload_after_tar_terminator) ... ok
+test_restores_relative_files_and_refuses_existing_output (test_preservation.PreservationTests.test_restores_relative_files_and_refuses_existing_output) ... {"format": "FPVPortableRestoreReceipt.v1", "files": 1, "logicalBytes": 14, "allFileHashesMatch": true, "unresolvedInternalLinks": [], "complete": true, "scope": "inventoried non-Git payload; Git checkout recovery is a separate receipt", "overallDisconnectSafetyClaimed": false, "inventoryCoverageComplete": true, "deferredExternalDependenciesExplicitlyAccepted": false, "createdAtUnix": 1792124094.949857}
+ok
+test_rewrites_internal_links_and_reports_external_or_traversing_links (test_preservation.PreservationTests.test_rewrites_internal_links_and_reports_external_or_traversing_links) ... ok
+test_unresolved_internal_link_keeps_restore_incomplete (test_preservation.PreservationTests.test_unresolved_internal_link_keeps_restore_incomplete) ... {"format": "FPVPortableRestoreReceipt.v1", "files": 0, "logicalBytes": 0, "allFileHashesMatch": true, "unresolvedInternalLinks": [{"path": "missing-dependency", "rewrittenRelativeTarget": "not-in-backup"}], "complete": false, "scope": "inventoried non-Git payload; Git checkout recovery is a separate receipt", "overallDisconnectSafetyClaimed": false, "inventoryCoverageComplete": true, "deferredExternalDependenciesExplicitlyAccepted": false, "createdAtUnix": 1792124096.3141189}
+ok
+
+----------------------------------------------------------------------
+Ran 11 tests in 22.481s
+
+OK

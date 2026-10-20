@@ -667,6 +667,10 @@ for (const turnPolicy of ['immediate', 'grid-center']) {
     f.key('KeyW', false);
     f.key('ArrowUp', false);
     f.$('race-start').click();
+    // Accepted Resume establishes its clock before a later callback spends play time.
+    f.frame(100);
+    assert.equal(f.state(), 'running');
+    assert.deepEqual(f.checkpoint(), before, 'The first Resume callback must not spend menu time.');
     f.frame(100);
     for (let tick = 0; tick < 12; tick++) {
       stepRun(expected[0], { direction: 'down' }, FIXED_DT);
