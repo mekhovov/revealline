@@ -660,10 +660,10 @@ export function mountRadioSetup({
       ),
     ],
     fire: [
-      t('Fire', 'Вогонь'),
+      t('Fire gun', 'Вогонь зі зброї'),
       t(
-        'Flying: Fire · Paused: Select on release',
-        'У польоті: вогонь · На паузі: вибір після відпускання',
+        'Flying: shoot the active gun · Paused: Select on release',
+        'У польоті: стріляти з активної зброї · На паузі: вибір після відпускання',
       ),
     ],
     weapon: [
@@ -680,7 +680,7 @@ export function mountRadioSetup({
     payload: [
       t('Deploy / arm', 'Скинути / підготувати'),
       t(
-        'Flying: payload · Paused: Retry with confirmation',
+        'Flying: drop bomb / deploy payload · Paused: Retry with confirmation',
         'У польоті: заряд · На паузі: повтор із підтвердженням',
       ),
     ],
@@ -741,6 +741,7 @@ export function mountRadioSetup({
     const draft = ensureLayout(),
       profile = layoutProfile();
     paintModel();
+    const pad = runtime.raw();
     for (const [action, row] of Object.entries(sixRows)) {
       const binding = draft?.switches[action];
       row.binding.textContent = binding
@@ -750,6 +751,21 @@ export function mountRadioSetup({
         : ['arm', 'fire'].includes(action)
           ? t('Not assigned · required', 'Не призначено · обов’язково')
           : t('Available through the menu', 'Доступно через меню');
+      let active = null;
+      try {
+        if (binding && pad) active = radioSwitch(draft, pad, action, row.active ?? false);
+      } catch {
+        /* A missing live sample does not change saved assignments. */
+      }
+      row.active = active;
+      row.live.textContent =
+        active === null
+          ? t('No live input', 'Немає живого сигналу')
+          : active
+            ? t('ON', 'УВІМК.')
+            : t('OFF', 'ВИМК.');
+      row.live.setAttribute('aria-label', `${sixNames[action][0]}: ${row.live.textContent}`);
+      row.node.dataset.switchActive = active === true ? 'true' : 'false';
       row.capture.disabled = !draft || Boolean(layoutCapture) || practice;
       row.node.dataset.captureState =
         layoutCapture?.action === action ? 'listening' : binding ? 'assigned' : 'empty';
@@ -758,6 +774,12 @@ export function mountRadioSetup({
     sixPanel.querySelector('[data-six-practice]').disabled = !ready || Boolean(layoutCapture);
     sixPanel.querySelector('[data-six-capture-all]').disabled =
       !draft || Boolean(layoutCapture) || practice;
+    sixPanel.querySelector('[data-six-swap-fire-payload]').disabled =
+      !draft?.switches.fire ||
+      !draft?.switches.payload ||
+      Boolean(layoutCapture) ||
+      practice ||
+      Boolean(guide?.captureActive());
   }
   function modelNotice(candidate) {
     const messages = {
@@ -1930,12 +1952,13 @@ export function mountRadioSetup({
     el('legend', `${index + 1} · ${sixNames[action][0]}`, node);
     el('p', sixNames[action][1], node);
     const binding = el('output', '', node);
+    const live = el('output', '', node, 'radio-switch-live');
     const capture = button(
       t('Assign this switch', 'Призначити перемикач'),
       () => startLayoutCapture(action),
       node,
     );
-    sixRows[action] = { node, binding, capture };
+    sixRows[action] = { node, binding, live, capture, active: null };
   }
   const modelPanel = el('details', undefined, sixPanel);
   modelPanel.dataset.radioModelPanel = '';
@@ -2045,6 +2068,31 @@ export function mountRadioSetup({
     sixPanel,
   );
   captureAll.dataset.sixCaptureAll = '';
+  const swapFirePayload = button(
+    t('Swap Fire gun ↔ Deploy payload', 'Поміняти Вогонь ↔ Застосування заряду'),
+    () => {
+      const draft = ensureLayout();
+      if (
+        !draft?.switches.fire ||
+        !draft?.switches.payload ||
+        layoutCapture ||
+        practice ||
+        guide?.captureActive()
+      )
+        return;
+      const before = structuredClone(draft.switches);
+      [draft.switches.fire, draft.switches.payload] = [draft.switches.payload, draft.switches.fire];
+      if (!persistSixLayout()) draft.switches = before;
+      paintSix();
+    },
+    sixPanel,
+  );
+  swapFirePayload.dataset.sixSwapFirePayload = '';
+  swapFirePayload.title = t(
+    'Use when your Fire switch drops the payload. Exchanges these two assignments only; keeps stick calibration and every other switch.',
+    'Якщо перемикач вогню скидає заряд. Міняє лише ці дві дії; зберігає калібрування стіків та інші перемикачі.',
+  );
+
   const undo = button(
     t('Restore previous controls', 'Повернути попереднє керування'),
     () => {
