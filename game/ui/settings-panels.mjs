@@ -15,6 +15,20 @@ export function settingsPanelBack(root) {
     return false;
   return panelOwners.get(settings)?.back() === true;
 }
+
+/** A nested tool may close after its Settings parent changed responsive layout. */
+export function restoreSettingsPanelFocus(root, opener) {
+  const settings = root?.classList?.contains('native-settings')
+    ? root
+    : root?.querySelector?.('.native-settings');
+  if (
+    !settings ||
+    settings.closest('[hidden],[inert],[aria-hidden="true"]') ||
+    !settings.getClientRects().length
+  )
+    return false;
+  return panelOwners.get(settings)?.restoreFocus(opener) === true;
+}
 const owns = (root, doc, list, { tab, panel }) =>
   root?.ownerDocument === doc &&
   doc?.contains(root) &&
@@ -69,6 +83,7 @@ export function attachSettingsPanels({
   root,
   document: doc = globalThis.document,
   beforeSelect = () => false,
+  onPresentationChange = () => {},
 } = {}) {
   const list = root?.querySelector?.('.field-kit-settings-tabs'),
     records = [...(list?.querySelectorAll('[role="tab"]') ?? [])].map((tab) => ({
@@ -82,8 +97,15 @@ export function attachSettingsPanels({
   const compact = () =>
     root?.classList?.contains('native-settings') &&
     (doc.defaultView?.innerWidth ?? doc.documentElement?.clientWidth ?? Infinity) <= 700;
+  let previousCompact = compact();
   function view(name) {
-    if (root?.classList?.contains('native-settings')) root.setAttribute('data-settings-view', name);
+    if (
+      !root?.classList?.contains('native-settings') ||
+      root.getAttribute('data-settings-view') === name
+    )
+      return false;
+    root.setAttribute('data-settings-view', name);
+    return true;
   }
   const owned = (record) => !destroyed && owns(root, doc, list, record);
   const available = () => records.filter((record) => owned(record) && enabled(record));
@@ -104,12 +126,17 @@ export function attachSettingsPanels({
       returnFocus = beforeSelect(next.tab) === true;
     // A host hook may retire this surface, disable the target or start a newer selection.
     if (ticket !== generation || !owned(next) || !enabled(next)) return false;
+    const selectionChanged = current !== next;
     paint(next);
     if (drill && compact()) {
-      view('panel');
+      const viewChanged = view('panel');
+      if (selectionChanged || viewChanged) onPresentationChange();
+      if (ticket !== generation || !owned(next) || !enabled(next) || current !== next) return false;
       if (!focusPanel()) next.panel.focus?.();
       return true;
     }
+    if (selectionChanged) onPresentationChange();
+    if (ticket !== generation || !owned(next) || !enabled(next) || current !== next) return false;
     if (focus || returnFocus) next.tab.focus();
     return true;
   }
@@ -119,13 +146,50 @@ export function attachSettingsPanels({
   view('categories');
   const back = () => {
     if (!destroyed && compact() && root.getAttribute('data-settings-view') === 'panel') {
+      const ticket = ++generation;
       view('categories');
-      current?.tab.focus();
+      onPresentationChange();
+      if (ticket === generation && !destroyed) current?.tab.focus();
       return true;
     }
     return false;
   };
-  if (root) panelOwners.set(root, { back });
+  const focusable = (element) =>
+    element?.isConnected &&
+    !element.disabled &&
+    element.getAttribute('aria-disabled') !== 'true' &&
+    element.tabIndex >= 0 &&
+    !element.closest('[hidden],[inert],[aria-hidden="true"]') &&
+    element.getClientRects().length &&
+    doc.defaultView?.getComputedStyle(element)?.visibility !== 'hidden';
+  const restoreFocus = (opener) => {
+    if (!current || !owned(current) || !enabled(current)) return false;
+    const ticket = ++generation;
+    // Reveal only the still-selected category. A retired/hidden control must
+    // not change categories or be made available by closing a child tool.
+    if (
+      current.panel.contains(opener) &&
+      !opener.disabled &&
+      !opener.closest('[hidden],[inert],[aria-hidden="true"]')
+    ) {
+      if (compact() && view('panel')) onPresentationChange();
+      if (ticket !== generation || destroyed || !current || !owned(current) || !enabled(current))
+        return false;
+      if (focusable(opener)) {
+        opener.focus({ preventScroll: true });
+        if (compact()) opener.scrollIntoView?.({ block: 'nearest', inline: 'nearest' });
+        return true;
+      }
+    }
+    if (view('categories')) onPresentationChange();
+    if (ticket !== generation || destroyed || !current || !owned(current) || !enabled(current))
+      return false;
+    if (!focusable(current.tab)) return false;
+    current.tab.focus({ preventScroll: true });
+    if (compact()) current.tab.scrollIntoView?.({ block: 'nearest', inline: 'nearest' });
+    return true;
+  };
+  if (root) panelOwners.set(root, { back, restoreFocus });
   const cancel = (event) => {
     if (back()) {
       event.preventDefault();
@@ -148,13 +212,27 @@ export function attachSettingsPanels({
   };
   root?.addEventListener('click', backClick, true);
   const resize = () => {
-    if (destroyed || !root?.contains(doc.activeElement)) return;
-    if (current?.panel.contains(doc.activeElement)) view('panel');
-    else if (list?.contains(doc.activeElement)) view('categories');
+    if (destroyed) return;
+    // CSS can hide Data at the breakpoint without changing the selected panel
+    // or view attribute. That owner change does not depend on current focus.
+    const nextCompact = compact(),
+      breakpointChanged = nextCompact !== previousCompact;
+    previousCompact = nextCompact;
+    const viewChanged = !root?.contains(doc.activeElement)
+      ? false
+      : current?.panel.contains(doc.activeElement)
+        ? view('panel')
+        : list?.contains(doc.activeElement)
+          ? view('categories')
+          : false;
+    if (breakpointChanged || (nextCompact && viewChanged)) {
+      generation++;
+      onPresentationChange();
+    }
   };
   doc.defaultView?.addEventListener?.('resize', resize);
   function focusPanel() {
-    if (!current || !owned(current)) return false;
+    if (!current || !owned(current) || !enabled(current)) return false;
     const target = [
       ...current.panel.querySelectorAll(
         'button,a[href],select,input:not([type="hidden"]),textarea,summary,[tabindex]',
@@ -210,13 +288,17 @@ export function attachSettingsPanels({
     panel: () => (current && owned(current) ? current.panel : null),
     focusCategories() {
       if (!current || !owned(current) || !enabled(current)) return false;
-      view('categories');
+      const ticket = ++generation;
+      if (view('categories')) onPresentationChange();
+      if (ticket !== generation || destroyed || !current || !owned(current) || !enabled(current))
+        return false;
       current.tab.focus();
       return true;
     },
     focusPanel() {
-      view('panel');
-      return focusPanel();
+      const ticket = ++generation;
+      if (view('panel')) onPresentationChange();
+      return ticket === generation && !destroyed && focusPanel();
     },
     back,
     destroy() {
@@ -228,6 +310,7 @@ export function attachSettingsPanels({
       root?.removeEventListener('click', backClick, true);
       doc.defaultView?.removeEventListener?.('resize', resize);
       removers.forEach((remove) => remove());
+      onPresentationChange();
     },
   });
 }

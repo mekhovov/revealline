@@ -6,11 +6,19 @@ on:
     paths:
       - '.github/workflows/published-pages-smoke.yml'
       - 'scripts/solo-pages-smoke*'
+      - 'scripts/solo-pages-backup*'
       - 'scripts/run-solo-pages-smoke.mjs'
       - 'scripts/run-solo-remote-correctness.mjs'
       - 'scripts/solo-qualification-shared-mode.mjs'
       - 'docs/performance/solo-published-pages-smoke-plan.json'
   workflow_dispatch:
+    inputs:
+      diagnostic:
+        description: Fixed optional diagnostic scope
+        type: choice
+        required: true
+        default: none
+        options: [none, missions, backup]
 
 permissions:
   contents: read
@@ -175,6 +183,8 @@ jobs:
             /scripts/serve-production-preview.mjs
             /scripts/solo-pages-smoke.mjs
             /scripts/solo-pages-smoke.test.mjs
+            /scripts/solo-pages-backup.mjs
+            /scripts/solo-pages-backup.test.mjs
             /scripts/solo-qualification-shared-mode.mjs
       - uses: actions/setup-node@v4
         with:
@@ -211,8 +221,8 @@ jobs:
             | tee "$RUNNER_TEMP/pages-source-evidence/controls.tap"
       - name: Check only the new source and declaration style
         run: |
-          timeout --signal=TERM --kill-after=15s 1m npx --no-install eslint scripts/solo-pages-smoke.mjs scripts/run-solo-pages-smoke.mjs scripts/solo-pages-smoke.test.mjs --max-warnings 0
-          timeout --signal=TERM --kill-after=15s 1m npx --no-install prettier --check scripts/solo-pages-smoke.mjs scripts/run-solo-pages-smoke.mjs scripts/solo-pages-smoke.test.mjs docs/performance/solo-published-pages-smoke-plan.json .github/workflows/published-pages-smoke.yml
+          timeout --signal=TERM --kill-after=15s 1m npx --no-install eslint scripts/solo-pages-smoke.mjs scripts/run-solo-pages-smoke.mjs scripts/solo-pages-smoke.test.mjs scripts/solo-pages-backup.mjs scripts/solo-pages-backup.test.mjs --max-warnings 0
+          timeout --signal=TERM --kill-after=15s 1m npx --no-install prettier --check scripts/solo-pages-smoke.mjs scripts/run-solo-pages-smoke.mjs scripts/solo-pages-smoke.test.mjs scripts/solo-pages-backup.mjs scripts/solo-pages-backup.test.mjs docs/performance/solo-published-pages-smoke-plan.json .github/workflows/published-pages-smoke.yml
       - name: Bound source evidence
         id: source_evidence
         if: always()
@@ -254,6 +264,7 @@ jobs:
         engine: [chromium, webkit]
     env:
       PAGES_SMOKE_ENGINE: ${{ matrix.engine }}
+      PAGES_SMOKE_DIAGNOSTIC: ${{ inputs.diagnostic || 'none' }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -402,6 +413,8 @@ jobs:
             /scripts/serve-production-preview.mjs
             /scripts/solo-pages-smoke.mjs
             /scripts/solo-pages-smoke.test.mjs
+            /scripts/solo-pages-backup.mjs
+            /scripts/solo-pages-backup.test.mjs
             /scripts/solo-qualification-shared-mode.mjs
       - uses: actions/setup-node@v4
         with:
@@ -443,7 +456,7 @@ jobs:
       - uses: actions/upload-artifact@v4
         if: always() && steps.browser_evidence.outcome == 'success'
         with:
-          name: published-pages-controls-${{ matrix.engine }}-${{ github.run_id }}-${{ github.run_attempt }}
+          name: published-pages-controls-${{ matrix.engine }}-${{ inputs.diagnostic || 'none' }}-${{ github.run_id }}-${{ github.run_attempt }}
           path: |
             ${{ runner.temp }}/pages-smoke-evidence/summary.json
             ${{ runner.temp }}/pages-smoke-evidence/report.json
