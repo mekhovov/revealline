@@ -9,6 +9,7 @@ on:
       - 'scripts/solo-replay-portability-diagnostic.test.mjs'
       - 'docs/performance/fixtures/solo-replay-portability/first-eight-39109911286.json'
       - 'docs/performance/fixtures/solo-replay-portability/node-1255-catalogs.fixture'
+      - 'docs/performance/fixtures/solo-replay-portability/node-1255-modules.json.gz'
       - 'scripts/run-solo-replay-portability.mjs'
       - 'scripts/test-solo-replay-portability-hook.mjs'
       - 'docs/performance/solo-replay-portability-797-plan.json'
@@ -7452,6 +7453,7 @@ jobs:
             /scripts/solo-replay-portability-diagnostic.test.mjs
             /docs/performance/fixtures/solo-replay-portability/first-eight-39109911286.json
             /docs/performance/fixtures/solo-replay-portability/node-1255-catalogs.fixture
+            /docs/performance/fixtures/solo-replay-portability/node-1255-modules.json.gz
             /scripts/run-solo-replay-portability.mjs
             /scripts/test-solo-replay-portability-hook.mjs
             /docs/performance/solo-replay-portability-797-plan.json
@@ -7809,6 +7811,7 @@ jobs:
             /scripts/solo-replay-portability-diagnostic.test.mjs
             /docs/performance/fixtures/solo-replay-portability/first-eight-39109911286.json
             /docs/performance/fixtures/solo-replay-portability/node-1255-catalogs.fixture
+            /docs/performance/fixtures/solo-replay-portability/node-1255-modules.json.gz
             /scripts/run-solo-replay-portability.mjs
             /scripts/test-solo-replay-portability-hook.mjs
             /docs/performance/solo-replay-portability-797-plan.json

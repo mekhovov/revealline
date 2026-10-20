@@ -21,7 +21,8 @@ const expected = new Map([
   ],
   [
     'game/ui/actor-presentation.mjs',
-    { bytes: 23588, sha256: "6b4e4c20da271cd105deee017883558ea715eab6d9e034b66053f4da2f17af00" },
+    // Exact projected source identity, recorded in retained-authoring-history.json.
+    { bytes: 23588, sha256: '6b4e4c20da271cd105deee017883558ea715eab6d9e034b66053f4da2f17af00' },
   ],
 ]);
 const hash = (bytes) => createHash('sha256').update(bytes).digest('hex');

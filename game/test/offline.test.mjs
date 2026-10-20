@@ -1529,12 +1529,12 @@ test('valid empty 200, 204 and 205 bodies retain status and an accurate zero len
   }
 });
 
-test('actual illustrated Workshop bytes survive both install and missing-file repair', async () => {
+test('retained illustrated Workshop bytes survive both install and missing-file repair', async () => {
   const bytes = await fs.readFile(
     new URL('../content/packs/equipment-workshop.json', import.meta.url),
   );
-  assert.equal(bytes.byteLength, 11127024);
-  assert.equal(digest(bytes), 'a015f79c47d8bac6cd09ba04e50c0c98d759e523eea7d225edbe62a8a5254054');
+  assert.equal(bytes.byteLength, 7189735);
+  assert.equal(digest(bytes), 'bf487870e21443f7246c28a74945583f412f13dd32c1cd09b17fdd0df62bbbd5');
   let responses = 0;
   const h = host({}, new Map(), {
     entries: [['game/content/packs/equipment-workshop.json', bytes]],
