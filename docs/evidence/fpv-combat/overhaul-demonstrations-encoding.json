@@ -1,0 +1,11 @@
+{
+  "format": "FpvTeachingExampleEncodingEvidenceV1",
+  "measuredAt": "2026-10-20T01:17:00.422Z",
+  "records": 24,
+  "frames": 14847,
+  "sourceBytes": 221646,
+  "encodedBytes": 89916,
+  "savingBytes": 131730,
+  "exactDecodedEquality": true,
+  "decodedSha256": "e85bdeed3f0cbf0c4febdd0274e6788c783844f5934b9dd0315ebaa3e51672de"
+}

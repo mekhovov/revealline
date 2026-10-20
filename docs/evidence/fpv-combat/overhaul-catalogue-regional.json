@@ -1,0 +1,2181 @@
+{
+  "format": "FPVCombatCatalogueMatrix.v2",
+  "createdAt": "2026-10-20T02:44:35.503Z",
+  "node": "v20.19.5",
+  "scope": "regional",
+  "filter": null,
+  "ticksPerCase": 3,
+  "methodology": "Each exact edition/start × activity/population × Standard/Advanced: production geometry admission, definition round-trip, real aircraft adapter, accepted simulation intervals and paired recovery. Advanced uses the production simulation through an in-process worker client.",
+  "replayRequested": true,
+  "limitations": [
+    "These short starts are admission/regression checks, not full activity victories or global navigation proofs.",
+    "No renderer, audio, browser GPU, physical radio, human enjoyment, sustained frame-rate or memory qualification is claimed.",
+    "Survival admits the requested capacity but its initial live formation follows the 40% schedule.",
+    "Only the bundled and pinned downloadable editions enumerated by these source catalogues are included."
+  ],
+  "sources": {
+    "scripts/qualify-fpv-combat-catalogue.mjs": "afd0984f6c752aeb0af56e75ed42f438d4d7b00978ab80a1212af061e2838c16",
+    "optional-practice/civilian-fpv/encounter-runtime.mjs": "6032329b81ba388553c73eb4cce0aea88f535793dc861c7a2dfb7131b0f7da85",
+    "optional-practice/civilian-fpv/encounter-session.mjs": "dec30f6136161c7892f3e383ca2d53804fd8a69cd9fae9186fc48c3b0cd6301c",
+    "optional-practice/civilian-fpv/encounter-geometry.mjs": "9d1254b8f7db0b2dc6499f0dbef59568674a56f5cc014ed982fc9eb1f0d09fde",
+    "optional-practice/civilian-fpv/world-catalogue.mjs": "54cbcaea1085548862dfbf3a64a99bac4f27dd8c7529786da3320b2e0248e611",
+    "optional-practice/civilian-fpv/world-library.mjs": "223f5888aa5717761540600b3d50afe9fda4541a0ef7a7a75a33eb5e5c85edb7",
+    "optional-practice/civilian-fpv/regional-library.mjs": "54625dc989fb8b73775dcfc3d43743389f3bb19df0970edc9a523421a2909316",
+    "optional-practice/civilian-fpv/world-model.mjs": "3fb846d3d5e6930801e57fa01b70bfc70db1c0b26392340d842f5859cca926c8",
+    "optional-practice/civilian-fpv/aircraft-course-session.mjs": "a176279ec7d6610229b1e60cfe488cad9aab8c8151b811fcf7018f95e54be114",
+    "optional-practice/civilian-fpv/regional-session.mjs": "d18e9072db4d405e407c366b6b2ba76260b0a4d16c6886050799c9e7ee0771ae",
+    "optional-practice/civilian-fpv/advanced-regional.mjs": "b8ed104a14c72c323b216ded750c4685945467a5b61a6c4c3f5c83af6691caf3"
+  },
+  "editions": [
+    {
+      "id": "alpine-highlands-study",
+      "course": "alpine-highlands-study",
+      "kind": "regional",
+      "start": "glacial-valley",
+      "sha256": "92b7ed6acb426a04b007006a72536b8178bd0ad59bba7182637e25fd0d4cf804",
+      "commit": "ca76af991b127f6ed81434162832a79518add9a8",
+      "baseIdentity": "1f4786a4a049cde7",
+      "courseIdentity": "1e1adcd73d2243e5",
+      "cases": [
+        {
+          "activity": "continuous",
+          "population": 12,
+          "backend": "standard",
+          "status": "passed",
+          "definitionIdentity": "5f127ce89aad6d8e",
+          "baseIdentity": "1f4786a4a049cde7",
+          "admitted": 12,
+          "required": 10,
+          "initialActive": 12,
+          "acceptedTicks": 3,
+          "sessionIdentity": {
+            "format": "FPVEncounterSession.v2",
+            "base": {
+              "format": "FPVRegionalEncounterBase.v1",
+              "environment": {
+                "format": "RegionalEncounterEnvironment.v1",
+                "configuration": "bc8dfebb8770f5e7"
+              },
+              "terrain": "f0d045487e322f39",
+              "scenery": "797fca0c42151edb",
+              "mode": "acro",
+              "response": "4b9042ea35b7f12d"
+            },
+            "encounter": "5f127ce89aad6d8e"
+          },
+          "recoveryRestored": true,
+          "replayVerified": true
+        },
+        {
+          "activity": "continuous",
+          "population": 12,
+          "backend": "advanced",
+          "status": "passed",
+          "definitionIdentity": "c3569c850d58ce1a",
+          "baseIdentity": "1f4786a4a049cde7",
+          "admitted": 12,
+          "required": 10,
+          "initialActive": 12,
+          "acceptedTicks": 3,
+          "sessionIdentity": {
+            "format": "FPVEncounterSession.v2",
+            "base": {
+              "model": "regional-aircraft-contact.v1",
+              "configuration": "51b276cfd797fee4"
+            },
+            "encounter": "c3569c850d58ce1a"
+          },
+          "recoveryRestored": true,
+          "replayVerified": true
+        },
+        {
+          "activity": "hunting",
+          "population": 12,
+          "backend": "standard",
+          "status": "passed",
+          "definitionIdentity": "f6a4d45e8dbc3dc4",
+          "baseIdentity": "1f4786a4a049cde7",
+          "admitted": 12,
+          "required": 10,
+          "initialActive": 12,
+          "acceptedTicks": 3,
+          "sessionIdentity": {
+            "format": "FPVEncounterSession.v2",
+            "base": {
+              "format": "FPVRegionalEncounterBase.v1",
+              "environment": {
+                "format": "RegionalEncounterEnvironment.v1",
+                "configuration": "bc8dfebb8770f5e7"
+              },
+              "terrain": "f0d045487e322f39",
+              "scenery": "797fca0c42151edb",
+              "mode": "acro",
+              "response": "4b9042ea35b7f12d"
+            },
+            "encounter": "f6a4d45e8dbc3dc4"
+          },
+          "recoveryRestored": true,
+          "replayVerified": true
+        },
+        {
+          "activity": "hunting",
+          "population": 12,
+          "backend": "advanced",
+          "status": "passed",
+          "definitionIdentity": "62133cc77dfd2fd4",
+          "baseIdentity": "1f4786a4a049cde7",
+          "admitted": 12,
+          "required": 10,
+          "initialActive": 12,
+          "acceptedTicks": 3,
+          "sessionIdentity": {
+            "format": "FPVEncounterSession.v2",
+            "base": {
+              "model": "regional-aircraft-contact.v1",
+              "configuration": "51b276cfd797fee4"
+            },
+            "encounter": "62133cc77dfd2fd4"
+          },
+          "recoveryRestored": true,
+          "replayVerified": true
+        },
+        {
+          "activity": "elimination",
+          "population": 12,
+          "backend": "standard",
+          "status": "passed",
+          "definitionIdentity": "0dba44462f9cc776",
+          "baseIdentity": "1f4786a4a049cde7",
+          "admitted": 12,
+          "required": 10,
+          "initialActive": 12,
+          "acceptedTicks": 3,
+          "sessionIdentity": {
+            "format": "FPVEncounterSession.v2",
+            "base": {
+              "format": "FPVRegionalEncounterBase.v1",
+              "environment": {
+                "format": "RegionalEncounterEnvironment.v1",
+                "configuration": "bc8dfebb8770f5e7"
+              },
+              "terrain": "f0d045487e322f39",
+              "scenery": "797fca0c42151edb",
+              "mode": "acro",
+              "response": "4b9042ea35b7f12d"
+            },
+            "encounter": "0dba44462f9cc776"
+          },
+          "recoveryRestored": true,
+          "replayVerified": true
+        },
+        {
+          "activity": "elimination",
+          "population": 12,
+          "backend": "advanced",
+          "status": "passed",
+          "definitionIdentity": "d4ab464bc70d0ae2",
+          "baseIdentity": "1f4786a4a049cde7",
+          "admitted": 12,
+          "required": 10,
+          "initialActive": 12,
+          "acceptedTicks": 3,
+          "sessionIdentity": {
+            "format": "FPVEncounterSession.v2",
+            "base": {
+              "model": "regional-aircraft-contact.v1",
+              "configuration": "51b276cfd797fee4"
+            },
+            "encounter": "d4ab464bc70d0ae2"
+          },
+          "recoveryRestored": true,
+          "replayVerified": true
+        },
+        {
+          "activity": "strike",
+          "population": 12,
+          "backend": "standard",
+          "status": "passed",
+          "definitionIdentity": "4037744e65ed51e3",
+          "baseIdentity": "1f4786a4a049cde7",
+          "admitted": 12,
+          "required": 10,
+          "initialActive": 12,
+          "acceptedTicks": 3,
+          "sessionIdentity": {
+            "format": "FPVEncounterSession.v2",
+            "base": {
+              "format": "FPVRegionalEncounterBase.v1",
+              "environment": {
+                "format": "RegionalEncounterEnvironment.v1",
+                "configuration": "bc8dfebb8770f5e7"
+              },
+              "terrain": "f0d045487e322f39",
+              "scenery": "797fca0c42151edb",
+              "mode": "acro",
+              "response": "4b9042ea35b7f12d"
+            },
+            "encounter": "4037744e65ed51e3"
+          },
+          "recoveryRestored": true,
+          "replayVerified": true
+        },
+        {
+          "activity": "strike",
+          "population": 12,
+          "backend": "advanced",
+          "status": "passed",
+          "definitionIdentity": "147872b08647b61b",
+          "baseIdentity": "1f4786a4a049cde7",
+          "admitted": 12,
+          "required": 10,
+          "initialActive": 12,
+          "acceptedTicks": 3,
+          "sessionIdentity": {
+            "format": "FPVEncounterSession.v2",
+            "base": {
+              "model": "regional-aircraft-contact.v1",
+              "configuration": "51b276cfd797fee4"
+            },
+            "encounter": "147872b08647b61b"
+          },
+          "recoveryRestored": true,
+          "replayVerified": true
+        },
+        {
+          "activity": "survival",
+          "survivalMode": "timed",
+          "population": 64,
+          "backend": "standard",
+          "status": "passed",
+          "definitionIdentity": "581096551cef3141",
+          "baseIdentity": "1f4786a4a049cde7",
+          "admitted": 64,
+          "required": 56,
+          "initialActive": 25,
+          "acceptedTicks": 3,
+          "sessionIdentity": {
+            "format": "FPVEncounterSession.v2",
+            "base": {
+              "format": "FPVRegionalEncounterBase.v1",
+              "environment": {
+                "format": "RegionalEncounterEnvironment.v1",
+                "configuration": "6a8661c4c2245342"
+              },
+              "terrain": "f0d045487e322f39",
+              "scenery": "797fca0c42151edb",
+              "mode": "acro",
+              "response": "4b9042ea35b7f12d"
+            },
+            "encounter": "581096551cef3141"
+          },
+          "recoveryRestored": true,
+          "replayVerified": true
+        },
+        {
+          "activity": "survival",
+          "survivalMode": "timed",
+          "population": 64,
+          "backend": "advanced",
+          "status": "passed",
+          "definitionIdentity": "9d473efdfa2cf2c5",
+          "baseIdentity": "1f4786a4a049cde7",
+          "admitted": 64,
+          "required": 56,
+          "initialActive": 25,
+          "acceptedTicks": 3,
+          "sessionIdentity": {
+            "format": "FPVEncounterSession.v2",
+            "base": {
+              "model": "regional-aircraft-contact.v1",
+              "configuration": "33a30384a080f711"
+            },
+            "encounter": "9d473efdfa2cf2c5"
+          },
+          "recoveryRestored": true,
+          "replayVerified": true
+        },
+        {
+          "activity": "survival",
+          "survivalMode": "timed",
+          "population": 96,
+          "backend": "standard",
+          "status": "passed",
+          "definitionIdentity": "c5b142a3876fa570",
+          "baseIdentity": "1f4786a4a049cde7",
+          "admitted": 96,
+          "required": 83,
+          "initialActive": 38,
+          "acceptedTicks": 3,
+          "sessionIdentity": {
+            "format": "FPVEncounterSession.v2",
+            "base": {
+              "format": "FPVRegionalEncounterBase.v1",
+              "environment": {
+                "format": "RegionalEncounterEnvironment.v1",
+                "configuration": "8affd797ee27c524"
+              },
+              "terrain": "f0d045487e322f39",
+              "scenery": "797fca0c42151edb",
+              "mode": "acro",
+              "response": "4b9042ea35b7f12d"
+            },
+            "encounter": "c5b142a3876fa570"
+          },
+          "recoveryRestored": true,
+          "replayVerified": true
+        },
+        {
+          "activity": "survival",
+          "survivalMode": "timed",
+          "population": 96,
+          "backend": "advanced",
+          "status": "passed",
+          "definitionIdentity": "7555ad1c3d49e5f4",
+          "baseIdentity": "1f4786a4a049cde7",
+          "admitted": 96,
+          "required": 83,
+          "initialActive": 38,
+          "acceptedTicks": 3,
+          "sessionIdentity": {
+            "format": "FPVEncounterSession.v2",
+            "base": {
+              "model": "regional-aircraft-contact.v1",
+              "configuration": "97f119f4781540ea"
+            },
+            "encounter": "7555ad1c3d49e5f4"
+          },
+          "recoveryRestored": true,
+          "replayVerified": true
+        },
+        {
+          "activity": "survival",
+          "survivalMode": "timed",
+          "population": 128,
+          "backend": "standard",
+          "status": "passed",
+          "definitionIdentity": "c61287f985f5ee75",
+          "baseIdentity": "1f4786a4a049cde7",
+          "admitted": 128,
+          "required": 110,
+          "initialActive": 50,
+          "acceptedTicks": 3,
+          "sessionIdentity": {
+            "format": "FPVEncounterSession.v2",
+            "base": {
+              "format": "FPVRegionalEncounterBase.v1",
+              "environment": {
+                "format": "RegionalEncounterEnvironment.v1",
+                "configuration": "b9b2bc6526d4eb32"
+              },
+              "terrain": "f0d045487e322f39",
+              "scenery": "797fca0c42151edb",
+              "mode": "acro",
+              "response": "4b9042ea35b7f12d"
+            },
+            "encounter": "c61287f985f5ee75"
+          },
+          "recoveryRestored": true,
+          "replayVerified": true
+        },
+        {
+          "activity": "survival",
+          "survivalMode": "timed",
+          "population": 128,
+          "backend": "advanced",
+          "status": "passed",
+          "definitionIdentity": "1bf2925f751c986a",
+          "baseIdentity": "1f4786a4a049cde7",
+          "admitted": 128,
+          "required": 110,
+          "initialActive": 50,
+          "acceptedTicks": 3,
+          "sessionIdentity": {
+            "format": "FPVEncounterSession.v2",
+            "base": {
+              "model": "regional-aircraft-contact.v1",
+              "configuration": "32cb4154eaa7eccc"
+            },
+            "encounter": "1bf2925f751c986a"
+          },
+          "recoveryRestored": true,
+          "replayVerified": true
+        },
+        {
+          "activity": "survival",
+          "survivalMode": "endless",
+          "population": 64,
+          "backend": "standard",
+          "status": "passed",
+          "definitionIdentity": "ed17ffbf9c1eda1a",
+          "baseIdentity": "1f4786a4a049cde7",
+          "admitted": 64,
+          "required": 56,
+          "initialActive": 25,
+          "acceptedTicks": 3,
+          "sessionIdentity": {
+            "format": "FPVEncounterSession.v2",
+            "base": {
+              "format": "FPVRegionalEncounterBase.v1",
+              "environment": {
+                "format": "RegionalEncounterEnvironment.v1",
+                "configuration": "6a8661c4c2245342"
+              },
+              "terrain": "f0d045487e322f39",
+              "scenery": "797fca0c42151edb",
+              "mode": "acro",
+              "response": "4b9042ea35b7f12d"
+            },
+            "encounter": "ed17ffbf9c1eda1a"
+          },
+          "recoveryRestored": true,
+          "replayVerified": true
+        },
+        {
+          "activity": "survival",
+          "survivalMode": "endless",
+          "population": 64,
+          "backend": "advanced",
+          "status": "passed",
+          "definitionIdentity": "df1c93a6a89d0746",
+          "baseIdentity": "1f4786a4a049cde7",
+          "admitted": 64,
+          "required": 56,
+          "initialActive": 25,
+          "acceptedTicks": 3,
+          "sessionIdentity": {
+            "format": "FPVEncounterSession.v2",
+            "base": {
+              "model": "regional-aircraft-contact.v1",
+              "configuration": "33a30384a080f711"
+            },
+            "encounter": "df1c93a6a89d0746"
+          },
+          "recoveryRestored": true,
+          "replayVerified": true
+        },
+        {
+          "activity": "survival",
+          "survivalMode": "endless",
+          "population": 96,
+          "backend": "standard",
+          "status": "passed",
+          "definitionIdentity": "44dba236c77ea88f",
+          "baseIdentity": "1f4786a4a049cde7",
+          "admitted": 96,
+          "required": 83,
+          "initialActive": 38,
+          "acceptedTicks": 3,
+          "sessionIdentity": {
+            "format": "FPVEncounterSession.v2",
+            "base": {
+              "format": "FPVRegionalEncounterBase.v1",
+              "environment": {
+                "format": "RegionalEncounterEnvironment.v1",
+                "configuration": "8affd797ee27c524"
+              },
+              "terrain": "f0d045487e322f39",
+              "scenery": "797fca0c42151edb",
+              "mode": "acro",
+              "response": "4b9042ea35b7f12d"
+            },
+            "encounter": "44dba236c77ea88f"
+          },
+          "recoveryRestored": true,
+          "replayVerified": true
+        },
+        {
+          "activity": "survival",
+          "survivalMode": "endless",
+          "population": 96,
+          "backend": "advanced",
+          "status": "passed",
+          "definitionIdentity": "bf9cac8e1ee9391b",
+          "baseIdentity": "1f4786a4a049cde7",
+          "admitted": 96,
+          "required": 83,
+          "initialActive": 38,
+          "acceptedTicks": 3,
+          "sessionIdentity": {
+            "format": "FPVEncounterSession.v2",
+            "base": {
+              "model": "regional-aircraft-contact.v1",
+              "configuration": "97f119f4781540ea"
+            },
+            "encounter": "bf9cac8e1ee9391b"
+          },
+          "recoveryRestored": true,
+          "replayVerified": true
+        },
+        {
+          "activity": "survival",
+          "survivalMode": "endless",
+          "population": 128,
+          "backend": "standard",
+          "status": "passed",
+          "definitionIdentity": "107054f89ae3a316",
+          "baseIdentity": "1f4786a4a049cde7",
+          "admitted": 128,
+          "required": 110,
+          "initialActive": 50,
+          "acceptedTicks": 3,
+          "sessionIdentity": {
+            "format": "FPVEncounterSession.v2",
+            "base": {
+              "format": "FPVRegionalEncounterBase.v1",
+              "environment": {
+                "format": "RegionalEncounterEnvironment.v1",
+                "configuration": "b9b2bc6526d4eb32"
+              },
+              "terrain": "f0d045487e322f39",
+              "scenery": "797fca0c42151edb",
+              "mode": "acro",
+              "response": "4b9042ea35b7f12d"
+            },
+            "encounter": "107054f89ae3a316"
+          },
+          "recoveryRestored": true,
+          "replayVerified": true
+        },
+        {
+          "activity": "survival",
+          "survivalMode": "endless",
+          "population": 128,
+          "backend": "advanced",
+          "status": "passed",
+          "definitionIdentity": "383c57171d194c05",
+          "baseIdentity": "1f4786a4a049cde7",
+          "admitted": 128,
+          "required": 110,
+          "initialActive": 50,
+          "acceptedTicks": 3,
+          "sessionIdentity": {
+            "format": "FPVEncounterSession.v2",
+            "base": {
+              "model": "regional-aircraft-contact.v1",
+              "configuration": "32cb4154eaa7eccc"
+            },
+            "encounter": "383c57171d194c05"
+          },
+          "recoveryRestored": true,
+          "replayVerified": true
+        }
+      ]
+    },
+    {
+      "id": "alpine-highlands-study",
+      "course": "alpine-highlands-study",
+      "kind": "regional",
+      "start": "switchback-pass",
+      "sha256": "92b7ed6acb426a04b007006a72536b8178bd0ad59bba7182637e25fd0d4cf804",
+      "commit": "ca76af991b127f6ed81434162832a79518add9a8",
+      "baseIdentity": "1f4786a4a049cde7",
+      "courseIdentity": "1e1adcd73d2243e5",
+      "cases": [
+        {
+          "activity": "continuous",
+          "population": 12,
+          "backend": "standard",
+          "status": "passed",
+          "definitionIdentity": "27903e35ddf05ca2",
+          "baseIdentity": "1f4786a4a049cde7",
+          "admitted": 12,
+          "required": 10,
+          "initialActive": 12,
+          "acceptedTicks": 3,
+          "sessionIdentity": {
+            "format": "FPVEncounterSession.v2",
+            "base": {
+              "format": "FPVRegionalEncounterBase.v1",
+              "environment": {
+                "format": "RegionalEncounterEnvironment.v1",
+                "configuration": "e613ebf1abafeb65"
+              },
+              "terrain": "f0d045487e322f39",
+              "scenery": "797fca0c42151edb",
+              "mode": "acro",
+              "response": "4b9042ea35b7f12d"
+            },
+            "encounter": "27903e35ddf05ca2"
+          },
+          "recoveryRestored": true,
+          "replayVerified": true
+        },
+        {
+          "activity": "continuous",
+          "population": 12,
+          "backend": "advanced",
+          "status": "passed",
+          "definitionIdentity": "2c03b48c33182f02",
+          "baseIdentity": "1f4786a4a049cde7",
+          "admitted": 12,
+          "required": 10,
+          "initialActive": 12,
+          "acceptedTicks": 3,
+          "sessionIdentity": {
+            "format": "FPVEncounterSession.v2",
+            "base": {
+              "model": "regional-aircraft-contact.v1",
+              "configuration": "faad647ef3a2ce6d"
+            },
+            "encounter": "2c03b48c33182f02"
+          },
+          "recoveryRestored": true,
+          "replayVerified": true
+        },
+        {
+          "activity": "hunting",
+          "population": 12,
+          "backend": "standard",
+          "status": "passed",
+          "definitionIdentity": "e2129d461f054ec8",
+          "baseIdentity": "1f4786a4a049cde7",
+          "admitted": 12,
+          "required": 10,
+          "initialActive": 12,
+          "acceptedTicks": 3,
+          "sessionIdentity": {
+            "format": "FPVEncounterSession.v2",
+            "base": {
+              "format": "FPVRegionalEncounterBase.v1",
+              "environment": {
+                "format": "RegionalEncounterEnvironment.v1",
+                "configuration": "e613ebf1abafeb65"
+              },
+              "terrain": "f0d045487e322f39",
+              "scenery": "797fca0c42151edb",
+              "mode": "acro",
+              "response": "4b9042ea35b7f12d"
+            },
+            "encounter": "e2129d461f054ec8"
+          },
+          "recoveryRestored": true,
+          "replayVerified": true
+        },
+        {
+          "activity": "hunting",
+          "population": 12,
+          "backend": "advanced",
+          "status": "passed",
+          "definitionIdentity": "45cd4f314aacffec",
+          "baseIdentity": "1f4786a4a049cde7",
+          "admitted": 12,
+          "required": 10,
+          "initialActive": 12,
+          "acceptedTicks": 3,
+          "sessionIdentity": {
+            "format": "FPVEncounterSession.v2",
+            "base": {
+              "model": "regional-aircraft-contact.v1",
+              "configuration": "faad647ef3a2ce6d"
+            },
+            "encounter": "45cd4f314aacffec"
+          },
+          "recoveryRestored": true,
+          "replayVerified": true
+        },
+        {
+          "activity": "elimination",
+          "population": 12,
+          "backend": "standard",
+          "status": "passed",
+          "definitionIdentity": "225851ea712ad5fa",
+          "baseIdentity": "1f4786a4a049cde7",
+          "admitted": 12,
+          "required": 10,
+          "initialActive": 12,
+          "acceptedTicks": 3,
+          "sessionIdentity": {
+            "format": "FPVEncounterSession.v2",
+            "base": {
+              "format": "FPVRegionalEncounterBase.v1",
+              "environment": {
+                "format": "RegionalEncounterEnvironment.v1",
+                "configuration": "e613ebf1abafeb65"
+              },
+              "terrain": "f0d045487e322f39",
+              "scenery": "797fca0c42151edb",
+              "mode": "acro",
+              "response": "4b9042ea35b7f12d"
+            },
+            "encounter": "225851ea712ad5fa"
+          },
+          "recoveryRestored": true,
+          "replayVerified": true
+        },
+        {
+          "activity": "elimination",
+          "population": 12,
+          "backend": "advanced",
+          "status": "passed",
+          "definitionIdentity": "188ae319d0422f5a",
+          "baseIdentity": "1f4786a4a049cde7",
+          "admitted": 12,
+          "required": 10,
+          "initialActive": 12,
+          "acceptedTicks": 3,
+          "sessionIdentity": {
+            "format": "FPVEncounterSession.v2",
+            "base": {
+              "model": "regional-aircraft-contact.v1",
+              "configuration": "faad647ef3a2ce6d"
+            },
+            "encounter": "188ae319d0422f5a"
+          },
+          "recoveryRestored": true,
+          "replayVerified": true
+        },
+        {
+          "activity": "strike",
+          "population": 12,
+          "backend": "standard",
+          "status": "passed",
+          "definitionIdentity": "3c2a7270c86955c3",
+          "baseIdentity": "1f4786a4a049cde7",
+          "admitted": 12,
+          "required": 10,
+          "initialActive": 12,
+          "acceptedTicks": 3,
+          "sessionIdentity": {
+            "format": "FPVEncounterSession.v2",
+            "base": {
+              "format": "FPVRegionalEncounterBase.v1",
+              "environment": {
+                "format": "RegionalEncounterEnvironment.v1",
+                "configuration": "e613ebf1abafeb65"
+              },
+              "terrain": "f0d045487e322f39",
+              "scenery": "797fca0c42151edb",
+              "mode": "acro",
+              "response": "4b9042ea35b7f12d"
+            },
+            "encounter": "3c2a7270c86955c3"
+          },
+          "recoveryRestored": true,
+          "replayVerified": true
+        },
+        {
+          "activity": "strike",
+          "population": 12,
+          "backend": "advanced",
+          "status": "passed",
+          "definitionIdentity": "8d42c7f2683711c3",
+          "baseIdentity": "1f4786a4a049cde7",
+          "admitted": 12,
+          "required": 10,
+          "initialActive": 12,
+          "acceptedTicks": 3,
+          "sessionIdentity": {
+            "format": "FPVEncounterSession.v2",
+            "base": {
+              "model": "regional-aircraft-contact.v1",
+              "configuration": "faad647ef3a2ce6d"
+            },
+            "encounter": "8d42c7f2683711c3"
+          },
+          "recoveryRestored": true,
+          "replayVerified": true
+        },
+        {
+          "activity": "survival",
+          "survivalMode": "timed",
+          "population": 64,
+          "backend": "standard",
+          "status": "passed",
+          "definitionIdentity": "96528fdd07903aba",
+          "baseIdentity": "1f4786a4a049cde7",
+          "admitted": 64,
+          "required": 56,
+          "initialActive": 25,
+          "acceptedTicks": 3,
+          "sessionIdentity": {
+            "format": "FPVEncounterSession.v2",
+            "base": {
+              "format": "FPVRegionalEncounterBase.v1",
+              "environment": {
+                "format": "RegionalEncounterEnvironment.v1",
+                "configuration": "2dbb86d25eeeaed9"
+              },
+              "terrain": "f0d045487e322f39",
+              "scenery": "797fca0c42151edb",
+              "mode": "acro",
+              "response": "4b9042ea35b7f12d"
+            },
+            "encounter": "96528fdd07903aba"
+          },
+          "recoveryRestored": true,
+          "replayVerified": true
+        },
+        {
+          "activity": "survival",
+          "survivalMode": "timed",
+          "population": 64,
+          "backend": "advanced",
+          "status": "passed",
+          "definitionIdentity": "b0afd03e67f90326",
+          "baseIdentity": "1f4786a4a049cde7",
+          "admitted": 64,
+          "required": 56,
+          "initialActive": 25,
+          "acceptedTicks": 3,
+          "sessionIdentity": {
+            "format": "FPVEncounterSession.v2",
+            "base": {
+              "model": "regional-aircraft-contact.v1",
+              "configuration": "469dc2d40272224c"
+            },
+            "encounter": "b0afd03e67f90326"
+          },
+          "recoveryRestored": true,
+          "replayVerified": true
+        },
+        {
+          "activity": "survival",
+          "survivalMode": "timed",
+          "population": 96,
+          "backend": "standard",
+          "status": "passed",
+          "definitionIdentity": "05a5797a18fa4de7",
+          "baseIdentity": "1f4786a4a049cde7",
+          "admitted": 96,
+          "required": 83,
+          "initialActive": 38,
+          "acceptedTicks": 3,
+          "sessionIdentity": {
+            "format": "FPVEncounterSession.v2",
+            "base": {
+              "format": "FPVRegionalEncounterBase.v1",
+              "environment": {
+                "format": "RegionalEncounterEnvironment.v1",
+                "configuration": "f2afd35518c12918"
+              },
+              "terrain": "f0d045487e322f39",
+              "scenery": "797fca0c42151edb",
+              "mode": "acro",
+              "response": "4b9042ea35b7f12d"
+            },
+            "encounter": "05a5797a18fa4de7"
+          },
+          "recoveryRestored": true,
+          "replayVerified": true
+        },
+        {
+          "activity": "survival",
+          "survivalMode": "timed",
+          "population": 96,
+          "backend": "advanced",
+          "status": "passed",
+          "definitionIdentity": "84736a241482e7dd",
+          "baseIdentity": "1f4786a4a049cde7",
+          "admitted": 96,
+          "required": 83,
+          "initialActive": 38,
+          "acceptedTicks": 3,
+          "sessionIdentity": {
+            "format": "FPVEncounterSession.v2",
+            "base": {
+              "model": "regional-aircraft-contact.v1",
+              "configuration": "fa134863fa0fffb1"
+            },
+            "encounter": "84736a241482e7dd"
+          },
+          "recoveryRestored": true,
+          "replayVerified": true
+        },
+        {
+          "activity": "survival",
+          "survivalMode": "timed",
+          "population": 128,
+          "backend": "standard",
+          "status": "passed",
+          "definitionIdentity": "c38f0fae13e3b653",
+          "baseIdentity": "1f4786a4a049cde7",
+          "admitted": 128,
+          "required": 110,
+          "initialActive": 50,
+          "acceptedTicks": 3,
+          "sessionIdentity": {
+            "format": "FPVEncounterSession.v2",
+            "base": {
+              "format": "FPVRegionalEncounterBase.v1",
+              "environment": {
+                "format": "RegionalEncounterEnvironment.v1",
+                "configuration": "6abe371845900e0d"
+              },
+              "terrain": "f0d045487e322f39",
+              "scenery": "797fca0c42151edb",
+              "mode": "acro",
+              "response": "4b9042ea35b7f12d"
+            },
+            "encounter": "c38f0fae13e3b653"
+          },
+          "recoveryRestored": true,
+          "replayVerified": true
+        },
+        {
+          "activity": "survival",
+          "survivalMode": "timed",
+          "population": 128,
+          "backend": "advanced",
+          "status": "passed",
+          "definitionIdentity": "d4bc13a680e28f68",
+          "baseIdentity": "1f4786a4a049cde7",
+          "admitted": 128,
+          "required": 110,
+          "initialActive": 50,
+          "acceptedTicks": 3,
+          "sessionIdentity": {
+            "format": "FPVEncounterSession.v2",
+            "base": {
+              "model": "regional-aircraft-contact.v1",
+              "configuration": "4c81e3777198e0f3"
+            },
+            "encounter": "d4bc13a680e28f68"
+          },
+          "recoveryRestored": true,
+          "replayVerified": true
+        },
+        {
+          "activity": "survival",
+          "survivalMode": "endless",
+          "population": 64,
+          "backend": "standard",
+          "status": "passed",
+          "definitionIdentity": "3d896221e723fc35",
+          "baseIdentity": "1f4786a4a049cde7",
+          "admitted": 64,
+          "required": 56,
+          "initialActive": 25,
+          "acceptedTicks": 3,
+          "sessionIdentity": {
+            "format": "FPVEncounterSession.v2",
+            "base": {
+              "format": "FPVRegionalEncounterBase.v1",
+              "environment": {
+                "format": "RegionalEncounterEnvironment.v1",
+                "configuration": "2dbb86d25eeeaed9"
+              },
+              "terrain": "f0d045487e322f39",
+              "scenery": "797fca0c42151edb",
+              "mode": "acro",
+              "response": "4b9042ea35b7f12d"
+            },
+            "encounter": "3d896221e723fc35"
+          },
+          "recoveryRestored": true,
+          "replayVerified": true
+        },
+        {
+          "activity": "survival",
+          "survivalMode": "endless",
+          "population": 64,
+          "backend": "advanced",
+          "status": "passed",
+          "definitionIdentity": "4490c8e6b9192269",
+          "baseIdentity": "1f4786a4a049cde7",
+          "admitted": 64,
+          "required": 56,
+          "initialActive": 25,
+          "acceptedTicks": 3,
+          "sessionIdentity": {
+            "format": "FPVEncounterSession.v2",
+            "base": {
+              "model": "regional-aircraft-contact.v1",
+              "configuration": "469dc2d40272224c"
+            },
+            "encounter": "4490c8e6b9192269"
+          },
+          "recoveryRestored": true,
+          "replayVerified": true
+        },
+        {
+          "activity": "survival",
+          "survivalMode": "endless",
+          "population": 96,
+          "backend": "standard",
+          "status": "passed",
+          "definitionIdentity": "eaf0a5d977ecffac",
+          "baseIdentity": "1f4786a4a049cde7",
+          "admitted": 96,
+          "required": 83,
+          "initialActive": 38,
+          "acceptedTicks": 3,
+          "sessionIdentity": {
+            "format": "FPVEncounterSession.v2",
+            "base": {
+              "format": "FPVRegionalEncounterBase.v1",
+              "environment": {
+                "format": "RegionalEncounterEnvironment.v1",
+                "configuration": "f2afd35518c12918"
+              },
+              "terrain": "f0d045487e322f39",
+              "scenery": "797fca0c42151edb",
+              "mode": "acro",
+              "response": "4b9042ea35b7f12d"
+            },
+            "encounter": "eaf0a5d977ecffac"
+          },
+          "recoveryRestored": true,
+          "replayVerified": true
+        },
+        {
+          "activity": "survival",
+          "survivalMode": "endless",
+          "population": 96,
+          "backend": "advanced",
+          "status": "passed",
+          "definitionIdentity": "57a8c0ea33f4865e",
+          "baseIdentity": "1f4786a4a049cde7",
+          "admitted": 96,
+          "required": 83,
+          "initialActive": 38,
+          "acceptedTicks": 3,
+          "sessionIdentity": {
+            "format": "FPVEncounterSession.v2",
+            "base": {
+              "model": "regional-aircraft-contact.v1",
+              "configuration": "fa134863fa0fffb1"
+            },
+            "encounter": "57a8c0ea33f4865e"
+          },
+          "recoveryRestored": true,
+          "replayVerified": true
+        },
+        {
+          "activity": "survival",
+          "survivalMode": "endless",
+          "population": 128,
+          "backend": "standard",
+          "status": "passed",
+          "definitionIdentity": "2c9844b5a8957120",
+          "baseIdentity": "1f4786a4a049cde7",
+          "admitted": 128,
+          "required": 110,
+          "initialActive": 50,
+          "acceptedTicks": 3,
+          "sessionIdentity": {
+            "format": "FPVEncounterSession.v2",
+            "base": {
+              "format": "FPVRegionalEncounterBase.v1",
+              "environment": {
+                "format": "RegionalEncounterEnvironment.v1",
+                "configuration": "6abe371845900e0d"
+              },
+              "terrain": "f0d045487e322f39",
+              "scenery": "797fca0c42151edb",
+              "mode": "acro",
+              "response": "4b9042ea35b7f12d"
+            },
+            "encounter": "2c9844b5a8957120"
+          },
+          "recoveryRestored": true,
+          "replayVerified": true
+        },
+        {
+          "activity": "survival",
+          "survivalMode": "endless",
+          "population": 128,
+          "backend": "advanced",
+          "status": "passed",
+          "definitionIdentity": "54d2cb6994b25767",
+          "baseIdentity": "1f4786a4a049cde7",
+          "admitted": 128,
+          "required": 110,
+          "initialActive": 50,
+          "acceptedTicks": 3,
+          "sessionIdentity": {
+            "format": "FPVEncounterSession.v2",
+            "base": {
+              "model": "regional-aircraft-contact.v1",
+              "configuration": "4c81e3777198e0f3"
+            },
+            "encounter": "54d2cb6994b25767"
+          },
+          "recoveryRestored": true,
+          "replayVerified": true
+        }
+      ]
+    },
+    {
+      "id": "alpine-highlands-study",
+      "course": "alpine-highlands-study",
+      "kind": "regional",
+      "start": "snow-saddle",
+      "sha256": "92b7ed6acb426a04b007006a72536b8178bd0ad59bba7182637e25fd0d4cf804",
+      "commit": "ca76af991b127f6ed81434162832a79518add9a8",
+      "baseIdentity": "1f4786a4a049cde7",
+      "courseIdentity": "1e1adcd73d2243e5",
+      "cases": [
+        {
+          "activity": "continuous",
+          "population": 12,
+          "backend": "standard",
+          "status": "passed",
+          "definitionIdentity": "d05107d95fe7edac",
+          "baseIdentity": "1f4786a4a049cde7",
+          "admitted": 12,
+          "required": 10,
+          "initialActive": 12,
+          "acceptedTicks": 3,
+          "sessionIdentity": {
+            "format": "FPVEncounterSession.v2",
+            "base": {
+              "format": "FPVRegionalEncounterBase.v1",
+              "environment": {
+                "format": "RegionalEncounterEnvironment.v1",
+                "configuration": "add9689cf63fa776"
+              },
+              "terrain": "f0d045487e322f39",
+              "scenery": "797fca0c42151edb",
+              "mode": "acro",
+              "response": "4b9042ea35b7f12d"
+            },
+            "encounter": "d05107d95fe7edac"
+          },
+          "recoveryRestored": true,
+          "replayVerified": true
+        },
+        {
+          "activity": "continuous",
+          "population": 12,
+          "backend": "advanced",
+          "status": "passed",
+          "definitionIdentity": "c958fb92d072244c",
+          "baseIdentity": "1f4786a4a049cde7",
+          "admitted": 12,
+          "required": 10,
+          "initialActive": 12,
+          "acceptedTicks": 3,
+          "sessionIdentity": {
+            "format": "FPVEncounterSession.v2",
+            "base": {
+              "model": "regional-aircraft-contact.v1",
+              "configuration": "93b29726b0c97364"
+            },
+            "encounter": "c958fb92d072244c"
+          },
+          "recoveryRestored": true,
+          "replayVerified": true
+        },
+        {
+          "activity": "hunting",
+          "population": 12,
+          "backend": "standard",
+          "status": "passed",
+          "definitionIdentity": "66b54b757e91de52",
+          "baseIdentity": "1f4786a4a049cde7",
+          "admitted": 12,
+          "required": 10,
+          "initialActive": 12,
+          "acceptedTicks": 3,
+          "sessionIdentity": {
+            "format": "FPVEncounterSession.v2",
+            "base": {
+              "format": "FPVRegionalEncounterBase.v1",
+              "environment": {
+                "format": "RegionalEncounterEnvironment.v1",
+                "configuration": "add9689cf63fa776"
+              },
+              "terrain": "f0d045487e322f39",
+              "scenery": "797fca0c42151edb",
+              "mode": "acro",
+              "response": "4b9042ea35b7f12d"
+            },
+            "encounter": "66b54b757e91de52"
+          },
+          "recoveryRestored": true,
+          "replayVerified": true
+        },
+        {
+          "activity": "hunting",
+          "population": 12,
+          "backend": "advanced",
+          "status": "passed",
+          "definitionIdentity": "5e6fd9aeac5d2506",
+          "baseIdentity": "1f4786a4a049cde7",
+          "admitted": 12,
+          "required": 10,
+          "initialActive": 12,
+          "acceptedTicks": 3,
+          "sessionIdentity": {
+            "format": "FPVEncounterSession.v2",
+            "base": {
+              "model": "regional-aircraft-contact.v1",
+              "configuration": "93b29726b0c97364"
+            },
+            "encounter": "5e6fd9aeac5d2506"
+          },
+          "recoveryRestored": true,
+          "replayVerified": true
+        },
+        {
+          "activity": "elimination",
+          "population": 12,
+          "backend": "standard",
+          "status": "passed",
+          "definitionIdentity": "c9d0a5abff05dd84",
+          "baseIdentity": "1f4786a4a049cde7",
+          "admitted": 12,
+          "required": 10,
+          "initialActive": 12,
+          "acceptedTicks": 3,
+          "sessionIdentity": {
+            "format": "FPVEncounterSession.v2",
+            "base": {
+              "format": "FPVRegionalEncounterBase.v1",
+              "environment": {
+                "format": "RegionalEncounterEnvironment.v1",
+                "configuration": "add9689cf63fa776"
+              },
+              "terrain": "f0d045487e322f39",
+              "scenery": "797fca0c42151edb",
+              "mode": "acro",
+              "response": "4b9042ea35b7f12d"
+            },
+            "encounter": "c9d0a5abff05dd84"
+          },
+          "recoveryRestored": true,
+          "replayVerified": true
+        },
+        {
+          "activity": "elimination",
+          "population": 12,
+          "backend": "advanced",
+          "status": "passed",
+          "definitionIdentity": "e366950f58525b44",
+          "baseIdentity": "1f4786a4a049cde7",
+          "admitted": 12,
+          "required": 10,
+          "initialActive": 12,
+          "acceptedTicks": 3,
+          "sessionIdentity": {
+            "format": "FPVEncounterSession.v2",
+            "base": {
+              "model": "regional-aircraft-contact.v1",
+              "configuration": "93b29726b0c97364"
+            },
+            "encounter": "e366950f58525b44"
+          },
+          "recoveryRestored": true,
+          "replayVerified": true
+        },
+        {
+          "activity": "strike",
+          "population": 12,
+          "backend": "standard",
+          "status": "passed",
+          "definitionIdentity": "bdf35df7d51fef41",
+          "baseIdentity": "1f4786a4a049cde7",
+          "admitted": 12,
+          "required": 10,
+          "initialActive": 12,
+          "acceptedTicks": 3,
+          "sessionIdentity": {
+            "format": "FPVEncounterSession.v2",
+            "base": {
+              "format": "FPVRegionalEncounterBase.v1",
+              "environment": {
+                "format": "RegionalEncounterEnvironment.v1",
+                "configuration": "add9689cf63fa776"
+              },
+              "terrain": "f0d045487e322f39",
+              "scenery": "797fca0c42151edb",
+              "mode": "acro",
+              "response": "4b9042ea35b7f12d"
+            },
+            "encounter": "bdf35df7d51fef41"
+          },
+          "recoveryRestored": true,
+          "replayVerified": true
+        },
+        {
+          "activity": "strike",
+          "population": 12,
+          "backend": "advanced",
+          "status": "passed",
+          "definitionIdentity": "3500ad35cf2e44c1",
+          "baseIdentity": "1f4786a4a049cde7",
+          "admitted": 12,
+          "required": 10,
+          "initialActive": 12,
+          "acceptedTicks": 3,
+          "sessionIdentity": {
+            "format": "FPVEncounterSession.v2",
+            "base": {
+              "model": "regional-aircraft-contact.v1",
+              "configuration": "93b29726b0c97364"
+            },
+            "encounter": "3500ad35cf2e44c1"
+          },
+          "recoveryRestored": true,
+          "replayVerified": true
+        },
+        {
+          "activity": "survival",
+          "survivalMode": "timed",
+          "population": 64,
+          "backend": "standard",
+          "status": "passed",
+          "definitionIdentity": "5360b65d487c2123",
+          "baseIdentity": "1f4786a4a049cde7",
+          "admitted": 64,
+          "required": 56,
+          "initialActive": 25,
+          "acceptedTicks": 3,
+          "sessionIdentity": {
+            "format": "FPVEncounterSession.v2",
+            "base": {
+              "format": "FPVRegionalEncounterBase.v1",
+              "environment": {
+                "format": "RegionalEncounterEnvironment.v1",
+                "configuration": "d4098e65803a4e37"
+              },
+              "terrain": "f0d045487e322f39",
+              "scenery": "797fca0c42151edb",
+              "mode": "acro",
+              "response": "4b9042ea35b7f12d"
+            },
+            "encounter": "5360b65d487c2123"
+          },
+          "recoveryRestored": true,
+          "replayVerified": true
+        },
+        {
+          "activity": "survival",
+          "survivalMode": "timed",
+          "population": 64,
+          "backend": "advanced",
+          "status": "passed",
+          "definitionIdentity": "367e788be90ceedf",
+          "baseIdentity": "1f4786a4a049cde7",
+          "admitted": 64,
+          "required": 56,
+          "initialActive": 25,
+          "acceptedTicks": 3,
+          "sessionIdentity": {
+            "format": "FPVEncounterSession.v2",
+            "base": {
+              "model": "regional-aircraft-contact.v1",
+              "configuration": "009fcc0218e095c7"
+            },
+            "encounter": "367e788be90ceedf"
+          },
+          "recoveryRestored": true,
+          "replayVerified": true
+        },
+        {
+          "activity": "survival",
+          "survivalMode": "timed",
+          "population": 96,
+          "backend": "standard",
+          "status": "passed",
+          "definitionIdentity": "7ec251304ab288d6",
+          "baseIdentity": "1f4786a4a049cde7",
+          "admitted": 96,
+          "required": 83,
+          "initialActive": 38,
+          "acceptedTicks": 3,
+          "sessionIdentity": {
+            "format": "FPVEncounterSession.v2",
+            "base": {
+              "format": "FPVRegionalEncounterBase.v1",
+              "environment": {
+                "format": "RegionalEncounterEnvironment.v1",
+                "configuration": "03dc5b5ec404145d"
+              },
+              "terrain": "f0d045487e322f39",
+              "scenery": "797fca0c42151edb",
+              "mode": "acro",
+              "response": "4b9042ea35b7f12d"
+            },
+            "encounter": "7ec251304ab288d6"
+          },
+          "recoveryRestored": true,
+          "replayVerified": true
+        },
+        {
+          "activity": "survival",
+          "survivalMode": "timed",
+          "population": 96,
+          "backend": "advanced",
+          "status": "passed",
+          "definitionIdentity": "d11a432923031cd4",
+          "baseIdentity": "1f4786a4a049cde7",
+          "admitted": 96,
+          "required": 83,
+          "initialActive": 38,
+          "acceptedTicks": 3,
+          "sessionIdentity": {
+            "format": "FPVEncounterSession.v2",
+            "base": {
+              "model": "regional-aircraft-contact.v1",
+              "configuration": "6d44140397946eea"
+            },
+            "encounter": "d11a432923031cd4"
+          },
+          "recoveryRestored": true,
+          "replayVerified": true
+        },
+        {
+          "activity": "survival",
+          "survivalMode": "timed",
+          "population": 128,
+          "backend": "standard",
+          "status": "passed",
+          "definitionIdentity": "ff2e160ef80475eb",
+          "baseIdentity": "1f4786a4a049cde7",
+          "admitted": 128,
+          "required": 110,
+          "initialActive": 50,
+          "acceptedTicks": 3,
+          "sessionIdentity": {
+            "format": "FPVEncounterSession.v2",
+            "base": {
+              "format": "FPVRegionalEncounterBase.v1",
+              "environment": {
+                "format": "RegionalEncounterEnvironment.v1",
+                "configuration": "77d80a94c882f407"
+              },
+              "terrain": "f0d045487e322f39",
+              "scenery": "797fca0c42151edb",
+              "mode": "acro",
+              "response": "4b9042ea35b7f12d"
+            },
+            "encounter": "ff2e160ef80475eb"
+          },
+          "recoveryRestored": true,
+          "replayVerified": true
+        },
+        {
+          "activity": "survival",
+          "survivalMode": "timed",
+          "population": 128,
+          "backend": "advanced",
+          "status": "passed",
+          "definitionIdentity": "f8cca91a07a9ece8",
+          "baseIdentity": "1f4786a4a049cde7",
+          "admitted": 128,
+          "required": 110,
+          "initialActive": 50,
+          "acceptedTicks": 3,
+          "sessionIdentity": {
+            "format": "FPVEncounterSession.v2",
+            "base": {
+              "model": "regional-aircraft-contact.v1",
+              "configuration": "27f5badced34f21a"
+            },
+            "encounter": "f8cca91a07a9ece8"
+          },
+          "recoveryRestored": true,
+          "replayVerified": true
+        },
+        {
+          "activity": "survival",
+          "survivalMode": "endless",
+          "population": 64,
+          "backend": "standard",
+          "status": "passed",
+          "definitionIdentity": "1547e6f6861ff010",
+          "baseIdentity": "1f4786a4a049cde7",
+          "admitted": 64,
+          "required": 56,
+          "initialActive": 25,
+          "acceptedTicks": 3,
+          "sessionIdentity": {
+            "format": "FPVEncounterSession.v2",
+            "base": {
+              "format": "FPVRegionalEncounterBase.v1",
+              "environment": {
+                "format": "RegionalEncounterEnvironment.v1",
+                "configuration": "d4098e65803a4e37"
+              },
+              "terrain": "f0d045487e322f39",
+              "scenery": "797fca0c42151edb",
+              "mode": "acro",
+              "response": "4b9042ea35b7f12d"
+            },
+            "encounter": "1547e6f6861ff010"
+          },
+          "recoveryRestored": true,
+          "replayVerified": true
+        },
+        {
+          "activity": "survival",
+          "survivalMode": "endless",
+          "population": 64,
+          "backend": "advanced",
+          "status": "passed",
+          "definitionIdentity": "1638dcb727e80224",
+          "baseIdentity": "1f4786a4a049cde7",
+          "admitted": 64,
+          "required": 56,
+          "initialActive": 25,
+          "acceptedTicks": 3,
+          "sessionIdentity": {
+            "format": "FPVEncounterSession.v2",
+            "base": {
+              "model": "regional-aircraft-contact.v1",
+              "configuration": "009fcc0218e095c7"
+            },
+            "encounter": "1638dcb727e80224"
+          },
+          "recoveryRestored": true,
+          "replayVerified": true
+        },
+        {
+          "activity": "survival",
+          "survivalMode": "endless",
+          "population": 96,
+          "backend": "standard",
+          "status": "passed",
+          "definitionIdentity": "eb4433eab46f9c79",
+          "baseIdentity": "1f4786a4a049cde7",
+          "admitted": 96,
+          "required": 83,
+          "initialActive": 38,
+          "acceptedTicks": 3,
+          "sessionIdentity": {
+            "format": "FPVEncounterSession.v2",
+            "base": {
+              "format": "FPVRegionalEncounterBase.v1",
+              "environment": {
+                "format": "RegionalEncounterEnvironment.v1",
+                "configuration": "03dc5b5ec404145d"
+              },
+              "terrain": "f0d045487e322f39",
+              "scenery": "797fca0c42151edb",
+              "mode": "acro",
+              "response": "4b9042ea35b7f12d"
+            },
+            "encounter": "eb4433eab46f9c79"
+          },
+          "recoveryRestored": true,
+          "replayVerified": true
+        },
+        {
+          "activity": "survival",
+          "survivalMode": "endless",
+          "population": 96,
+          "backend": "advanced",
+          "status": "passed",
+          "definitionIdentity": "03dac96d75b6ccfb",
+          "baseIdentity": "1f4786a4a049cde7",
+          "admitted": 96,
+          "required": 83,
+          "initialActive": 38,
+          "acceptedTicks": 3,
+          "sessionIdentity": {
+            "format": "FPVEncounterSession.v2",
+            "base": {
+              "model": "regional-aircraft-contact.v1",
+              "configuration": "6d44140397946eea"
+            },
+            "encounter": "03dac96d75b6ccfb"
+          },
+          "recoveryRestored": true,
+          "replayVerified": true
+        },
+        {
+          "activity": "survival",
+          "survivalMode": "endless",
+          "population": 128,
+          "backend": "standard",
+          "status": "passed",
+          "definitionIdentity": "4bbe76dd1836dfd8",
+          "baseIdentity": "1f4786a4a049cde7",
+          "admitted": 128,
+          "required": 110,
+          "initialActive": 50,
+          "acceptedTicks": 3,
+          "sessionIdentity": {
+            "format": "FPVEncounterSession.v2",
+            "base": {
+              "format": "FPVRegionalEncounterBase.v1",
+              "environment": {
+                "format": "RegionalEncounterEnvironment.v1",
+                "configuration": "77d80a94c882f407"
+              },
+              "terrain": "f0d045487e322f39",
+              "scenery": "797fca0c42151edb",
+              "mode": "acro",
+              "response": "4b9042ea35b7f12d"
+            },
+            "encounter": "4bbe76dd1836dfd8"
+          },
+          "recoveryRestored": true,
+          "replayVerified": true
+        },
+        {
+          "activity": "survival",
+          "survivalMode": "endless",
+          "population": 128,
+          "backend": "advanced",
+          "status": "passed",
+          "definitionIdentity": "82a838fbad88d0e7",
+          "baseIdentity": "1f4786a4a049cde7",
+          "admitted": 128,
+          "required": 110,
+          "initialActive": 50,
+          "acceptedTicks": 3,
+          "sessionIdentity": {
+            "format": "FPVEncounterSession.v2",
+            "base": {
+              "model": "regional-aircraft-contact.v1",
+              "configuration": "27f5badced34f21a"
+            },
+            "encounter": "82a838fbad88d0e7"
+          },
+          "recoveryRestored": true,
+          "replayVerified": true
+        }
+      ]
+    },
+    {
+      "id": "alpine-highlands-study",
+      "course": "alpine-highlands-study",
+      "kind": "regional",
+      "start": "summit-station",
+      "sha256": "92b7ed6acb426a04b007006a72536b8178bd0ad59bba7182637e25fd0d4cf804",
+      "commit": "ca76af991b127f6ed81434162832a79518add9a8",
+      "baseIdentity": "1f4786a4a049cde7",
+      "courseIdentity": "1e1adcd73d2243e5",
+      "cases": [
+        {
+          "activity": "continuous",
+          "population": 12,
+          "backend": "standard",
+          "status": "passed",
+          "definitionIdentity": "8de094df2d51c3fa",
+          "baseIdentity": "1f4786a4a049cde7",
+          "admitted": 12,
+          "required": 11,
+          "initialActive": 12,
+          "acceptedTicks": 3,
+          "sessionIdentity": {
+            "format": "FPVEncounterSession.v2",
+            "base": {
+              "format": "FPVRegionalEncounterBase.v1",
+              "environment": {
+                "format": "RegionalEncounterEnvironment.v1",
+                "configuration": "3fc006479bf69934"
+              },
+              "terrain": "f0d045487e322f39",
+              "scenery": "797fca0c42151edb",
+              "mode": "acro",
+              "response": "4b9042ea35b7f12d"
+            },
+            "encounter": "8de094df2d51c3fa"
+          },
+          "recoveryRestored": true,
+          "replayVerified": true
+        },
+        {
+          "activity": "continuous",
+          "population": 12,
+          "backend": "advanced",
+          "status": "passed",
+          "definitionIdentity": "04de2604cb7b6be7",
+          "baseIdentity": "1f4786a4a049cde7",
+          "admitted": 12,
+          "required": 11,
+          "initialActive": 12,
+          "acceptedTicks": 3,
+          "sessionIdentity": {
+            "format": "FPVEncounterSession.v2",
+            "base": {
+              "model": "regional-aircraft-contact.v1",
+              "configuration": "1e9aecead960e3f4"
+            },
+            "encounter": "04de2604cb7b6be7"
+          },
+          "recoveryRestored": true,
+          "replayVerified": true
+        },
+        {
+          "activity": "hunting",
+          "population": 12,
+          "backend": "standard",
+          "status": "passed",
+          "definitionIdentity": "89ae174fb355a6ec",
+          "baseIdentity": "1f4786a4a049cde7",
+          "admitted": 12,
+          "required": 11,
+          "initialActive": 12,
+          "acceptedTicks": 3,
+          "sessionIdentity": {
+            "format": "FPVEncounterSession.v2",
+            "base": {
+              "format": "FPVRegionalEncounterBase.v1",
+              "environment": {
+                "format": "RegionalEncounterEnvironment.v1",
+                "configuration": "3fc006479bf69934"
+              },
+              "terrain": "f0d045487e322f39",
+              "scenery": "797fca0c42151edb",
+              "mode": "acro",
+              "response": "4b9042ea35b7f12d"
+            },
+            "encounter": "89ae174fb355a6ec"
+          },
+          "recoveryRestored": true,
+          "replayVerified": true
+        },
+        {
+          "activity": "hunting",
+          "population": 12,
+          "backend": "advanced",
+          "status": "passed",
+          "definitionIdentity": "2197aa96ee3b63e5",
+          "baseIdentity": "1f4786a4a049cde7",
+          "admitted": 12,
+          "required": 11,
+          "initialActive": 12,
+          "acceptedTicks": 3,
+          "sessionIdentity": {
+            "format": "FPVEncounterSession.v2",
+            "base": {
+              "model": "regional-aircraft-contact.v1",
+              "configuration": "1e9aecead960e3f4"
+            },
+            "encounter": "2197aa96ee3b63e5"
+          },
+          "recoveryRestored": true,
+          "replayVerified": true
+        },
+        {
+          "activity": "elimination",
+          "population": 12,
+          "backend": "standard",
+          "status": "passed",
+          "definitionIdentity": "392bb0d70c1c2022",
+          "baseIdentity": "1f4786a4a049cde7",
+          "admitted": 12,
+          "required": 11,
+          "initialActive": 12,
+          "acceptedTicks": 3,
+          "sessionIdentity": {
+            "format": "FPVEncounterSession.v2",
+            "base": {
+              "format": "FPVRegionalEncounterBase.v1",
+              "environment": {
+                "format": "RegionalEncounterEnvironment.v1",
+                "configuration": "3fc006479bf69934"
+              },
+              "terrain": "f0d045487e322f39",
+              "scenery": "797fca0c42151edb",
+              "mode": "acro",
+              "response": "4b9042ea35b7f12d"
+            },
+            "encounter": "392bb0d70c1c2022"
+          },
+          "recoveryRestored": true,
+          "replayVerified": true
+        },
+        {
+          "activity": "elimination",
+          "population": 12,
+          "backend": "advanced",
+          "status": "passed",
+          "definitionIdentity": "48312664be13354f",
+          "baseIdentity": "1f4786a4a049cde7",
+          "admitted": 12,
+          "required": 11,
+          "initialActive": 12,
+          "acceptedTicks": 3,
+          "sessionIdentity": {
+            "format": "FPVEncounterSession.v2",
+            "base": {
+              "model": "regional-aircraft-contact.v1",
+              "configuration": "1e9aecead960e3f4"
+            },
+            "encounter": "48312664be13354f"
+          },
+          "recoveryRestored": true,
+          "replayVerified": true
+        },
+        {
+          "activity": "strike",
+          "population": 12,
+          "backend": "standard",
+          "status": "passed",
+          "definitionIdentity": "d0e2549ca97ece99",
+          "baseIdentity": "1f4786a4a049cde7",
+          "admitted": 12,
+          "required": 11,
+          "initialActive": 12,
+          "acceptedTicks": 3,
+          "sessionIdentity": {
+            "format": "FPVEncounterSession.v2",
+            "base": {
+              "format": "FPVRegionalEncounterBase.v1",
+              "environment": {
+                "format": "RegionalEncounterEnvironment.v1",
+                "configuration": "3fc006479bf69934"
+              },
+              "terrain": "f0d045487e322f39",
+              "scenery": "797fca0c42151edb",
+              "mode": "acro",
+              "response": "4b9042ea35b7f12d"
+            },
+            "encounter": "d0e2549ca97ece99"
+          },
+          "recoveryRestored": true,
+          "replayVerified": true
+        },
+        {
+          "activity": "strike",
+          "population": 12,
+          "backend": "advanced",
+          "status": "passed",
+          "definitionIdentity": "7ea1c91f5d6e14f4",
+          "baseIdentity": "1f4786a4a049cde7",
+          "admitted": 12,
+          "required": 11,
+          "initialActive": 12,
+          "acceptedTicks": 3,
+          "sessionIdentity": {
+            "format": "FPVEncounterSession.v2",
+            "base": {
+              "model": "regional-aircraft-contact.v1",
+              "configuration": "1e9aecead960e3f4"
+            },
+            "encounter": "7ea1c91f5d6e14f4"
+          },
+          "recoveryRestored": true,
+          "replayVerified": true
+        },
+        {
+          "activity": "survival",
+          "survivalMode": "timed",
+          "population": 64,
+          "backend": "standard",
+          "status": "passed",
+          "definitionIdentity": "1e4b598a939e7f9e",
+          "baseIdentity": "1f4786a4a049cde7",
+          "admitted": 64,
+          "required": 56,
+          "initialActive": 25,
+          "acceptedTicks": 3,
+          "sessionIdentity": {
+            "format": "FPVEncounterSession.v2",
+            "base": {
+              "format": "FPVRegionalEncounterBase.v1",
+              "environment": {
+                "format": "RegionalEncounterEnvironment.v1",
+                "configuration": "cad72c2770bf2e62"
+              },
+              "terrain": "f0d045487e322f39",
+              "scenery": "797fca0c42151edb",
+              "mode": "acro",
+              "response": "4b9042ea35b7f12d"
+            },
+            "encounter": "1e4b598a939e7f9e"
+          },
+          "recoveryRestored": true,
+          "replayVerified": true
+        },
+        {
+          "activity": "survival",
+          "survivalMode": "timed",
+          "population": 64,
+          "backend": "advanced",
+          "status": "passed",
+          "definitionIdentity": "d36e16ea2664e7ac",
+          "baseIdentity": "1f4786a4a049cde7",
+          "admitted": 64,
+          "required": 56,
+          "initialActive": 25,
+          "acceptedTicks": 3,
+          "sessionIdentity": {
+            "format": "FPVEncounterSession.v2",
+            "base": {
+              "model": "regional-aircraft-contact.v1",
+              "configuration": "621202adcede8f86"
+            },
+            "encounter": "d36e16ea2664e7ac"
+          },
+          "recoveryRestored": true,
+          "replayVerified": true
+        },
+        {
+          "activity": "survival",
+          "survivalMode": "timed",
+          "population": 96,
+          "backend": "standard",
+          "status": "passed",
+          "definitionIdentity": "6a1d23bbcda54447",
+          "baseIdentity": "1f4786a4a049cde7",
+          "admitted": 96,
+          "required": 82,
+          "initialActive": 38,
+          "acceptedTicks": 3,
+          "sessionIdentity": {
+            "format": "FPVEncounterSession.v2",
+            "base": {
+              "format": "FPVRegionalEncounterBase.v1",
+              "environment": {
+                "format": "RegionalEncounterEnvironment.v1",
+                "configuration": "076f18b7534f5925"
+              },
+              "terrain": "f0d045487e322f39",
+              "scenery": "797fca0c42151edb",
+              "mode": "acro",
+              "response": "4b9042ea35b7f12d"
+            },
+            "encounter": "6a1d23bbcda54447"
+          },
+          "recoveryRestored": true,
+          "replayVerified": true
+        },
+        {
+          "activity": "survival",
+          "survivalMode": "timed",
+          "population": 96,
+          "backend": "advanced",
+          "status": "passed",
+          "definitionIdentity": "8db1be232735d5b5",
+          "baseIdentity": "1f4786a4a049cde7",
+          "admitted": 96,
+          "required": 82,
+          "initialActive": 38,
+          "acceptedTicks": 3,
+          "sessionIdentity": {
+            "format": "FPVEncounterSession.v2",
+            "base": {
+              "model": "regional-aircraft-contact.v1",
+              "configuration": "e55f632f0476bf87"
+            },
+            "encounter": "8db1be232735d5b5"
+          },
+          "recoveryRestored": true,
+          "replayVerified": true
+        },
+        {
+          "activity": "survival",
+          "survivalMode": "timed",
+          "population": 128,
+          "backend": "standard",
+          "status": "passed",
+          "definitionIdentity": "cbbfc5ccecaf3a29",
+          "baseIdentity": "1f4786a4a049cde7",
+          "admitted": 128,
+          "required": 108,
+          "initialActive": 50,
+          "acceptedTicks": 3,
+          "sessionIdentity": {
+            "format": "FPVEncounterSession.v2",
+            "base": {
+              "format": "FPVRegionalEncounterBase.v1",
+              "environment": {
+                "format": "RegionalEncounterEnvironment.v1",
+                "configuration": "800d3b6757fcf6e5"
+              },
+              "terrain": "f0d045487e322f39",
+              "scenery": "797fca0c42151edb",
+              "mode": "acro",
+              "response": "4b9042ea35b7f12d"
+            },
+            "encounter": "cbbfc5ccecaf3a29"
+          },
+          "recoveryRestored": true,
+          "replayVerified": true
+        },
+        {
+          "activity": "survival",
+          "survivalMode": "timed",
+          "population": 128,
+          "backend": "advanced",
+          "status": "passed",
+          "definitionIdentity": "edb30c26a21ec988",
+          "baseIdentity": "1f4786a4a049cde7",
+          "admitted": 128,
+          "required": 108,
+          "initialActive": 50,
+          "acceptedTicks": 3,
+          "sessionIdentity": {
+            "format": "FPVEncounterSession.v2",
+            "base": {
+              "model": "regional-aircraft-contact.v1",
+              "configuration": "0e2db91b4e5a41de"
+            },
+            "encounter": "edb30c26a21ec988"
+          },
+          "recoveryRestored": true,
+          "replayVerified": true
+        },
+        {
+          "activity": "survival",
+          "survivalMode": "endless",
+          "population": 64,
+          "backend": "standard",
+          "status": "passed",
+          "definitionIdentity": "bd1040fd9f502d61",
+          "baseIdentity": "1f4786a4a049cde7",
+          "admitted": 64,
+          "required": 56,
+          "initialActive": 25,
+          "acceptedTicks": 3,
+          "sessionIdentity": {
+            "format": "FPVEncounterSession.v2",
+            "base": {
+              "format": "FPVRegionalEncounterBase.v1",
+              "environment": {
+                "format": "RegionalEncounterEnvironment.v1",
+                "configuration": "cad72c2770bf2e62"
+              },
+              "terrain": "f0d045487e322f39",
+              "scenery": "797fca0c42151edb",
+              "mode": "acro",
+              "response": "4b9042ea35b7f12d"
+            },
+            "encounter": "bd1040fd9f502d61"
+          },
+          "recoveryRestored": true,
+          "replayVerified": true
+        },
+        {
+          "activity": "survival",
+          "survivalMode": "endless",
+          "population": 64,
+          "backend": "advanced",
+          "status": "passed",
+          "definitionIdentity": "b91c81933e5a6833",
+          "baseIdentity": "1f4786a4a049cde7",
+          "admitted": 64,
+          "required": 56,
+          "initialActive": 25,
+          "acceptedTicks": 3,
+          "sessionIdentity": {
+            "format": "FPVEncounterSession.v2",
+            "base": {
+              "model": "regional-aircraft-contact.v1",
+              "configuration": "621202adcede8f86"
+            },
+            "encounter": "b91c81933e5a6833"
+          },
+          "recoveryRestored": true,
+          "replayVerified": true
+        },
+        {
+          "activity": "survival",
+          "survivalMode": "endless",
+          "population": 96,
+          "backend": "standard",
+          "status": "passed",
+          "definitionIdentity": "23898e979f80e60c",
+          "baseIdentity": "1f4786a4a049cde7",
+          "admitted": 96,
+          "required": 82,
+          "initialActive": 38,
+          "acceptedTicks": 3,
+          "sessionIdentity": {
+            "format": "FPVEncounterSession.v2",
+            "base": {
+              "format": "FPVRegionalEncounterBase.v1",
+              "environment": {
+                "format": "RegionalEncounterEnvironment.v1",
+                "configuration": "076f18b7534f5925"
+              },
+              "terrain": "f0d045487e322f39",
+              "scenery": "797fca0c42151edb",
+              "mode": "acro",
+              "response": "4b9042ea35b7f12d"
+            },
+            "encounter": "23898e979f80e60c"
+          },
+          "recoveryRestored": true,
+          "replayVerified": true
+        },
+        {
+          "activity": "survival",
+          "survivalMode": "endless",
+          "population": 96,
+          "backend": "advanced",
+          "status": "passed",
+          "definitionIdentity": "6f1c921e85f50656",
+          "baseIdentity": "1f4786a4a049cde7",
+          "admitted": 96,
+          "required": 82,
+          "initialActive": 38,
+          "acceptedTicks": 3,
+          "sessionIdentity": {
+            "format": "FPVEncounterSession.v2",
+            "base": {
+              "model": "regional-aircraft-contact.v1",
+              "configuration": "e55f632f0476bf87"
+            },
+            "encounter": "6f1c921e85f50656"
+          },
+          "recoveryRestored": true,
+          "replayVerified": true
+        },
+        {
+          "activity": "survival",
+          "survivalMode": "endless",
+          "population": 128,
+          "backend": "standard",
+          "status": "passed",
+          "definitionIdentity": "907f611142fc2142",
+          "baseIdentity": "1f4786a4a049cde7",
+          "admitted": 128,
+          "required": 108,
+          "initialActive": 50,
+          "acceptedTicks": 3,
+          "sessionIdentity": {
+            "format": "FPVEncounterSession.v2",
+            "base": {
+              "format": "FPVRegionalEncounterBase.v1",
+              "environment": {
+                "format": "RegionalEncounterEnvironment.v1",
+                "configuration": "800d3b6757fcf6e5"
+              },
+              "terrain": "f0d045487e322f39",
+              "scenery": "797fca0c42151edb",
+              "mode": "acro",
+              "response": "4b9042ea35b7f12d"
+            },
+            "encounter": "907f611142fc2142"
+          },
+          "recoveryRestored": true,
+          "replayVerified": true
+        },
+        {
+          "activity": "survival",
+          "survivalMode": "endless",
+          "population": 128,
+          "backend": "advanced",
+          "status": "passed",
+          "definitionIdentity": "8880aacdb5a09d07",
+          "baseIdentity": "1f4786a4a049cde7",
+          "admitted": 128,
+          "required": 108,
+          "initialActive": 50,
+          "acceptedTicks": 3,
+          "sessionIdentity": {
+            "format": "FPVEncounterSession.v2",
+            "base": {
+              "model": "regional-aircraft-contact.v1",
+              "configuration": "0e2db91b4e5a41de"
+            },
+            "encounter": "8880aacdb5a09d07"
+          },
+          "recoveryRestored": true,
+          "replayVerified": true
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "summary": {
+    "editions": 4,
+    "cases": 80,
+    "passed": 80,
+    "failed": 0,
+    "inventoryErrors": 0,
+    "bundledCourses": 0,
+    "downloadedCourses": 0,
+    "regionalStarts": 4,
+    "minAdmitted": 12,
+    "minRequired": 10,
+    "replayed": 80
+  }
+}
