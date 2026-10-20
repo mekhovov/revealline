@@ -19,9 +19,10 @@ import {
   STAGES,
   assertLoopback,
   createCompiledOperationTrace,
+  installCompiledStartEventProbe,
 } from './compiled-menu-browser-contract.mjs';
 
-export function readCompiledMenuPublicState() {
+export function readCompiledMenuPublicState(startProbe = null) {
   const visible = (x) =>
     Boolean(
       x &&
@@ -75,6 +76,13 @@ export function readCompiledMenuPublicState() {
         'run-message',
       ].map((id) => [id, control(id)]),
     ),
+    startActivation: (() => {
+      try {
+        return startProbe?.snapshot() ?? null;
+      } catch {
+        return null;
+      }
+    })(),
     cards: nodes.map((x) => ({
       id: x.dataset.missionId,
       visible: visible(x),
@@ -125,7 +133,7 @@ export async function observeCompiledMenu({
     report.activeStep = args[0];
     return trace.step(...args);
   };
-  let server, browser, context, diagnostics;
+  let server, browser, context, diagnostics, startProbe;
   const retain = async () =>
     writeFile(
       join(output, 'report.json'),
@@ -235,7 +243,9 @@ export async function observeCompiledMenu({
     await retain();
     const read = async () => {
       trace.noteRead();
-      const s = await step('read public DOM', () => page.evaluate(readCompiledMenuPublicState));
+      const s = await step('read public DOM', () =>
+        page.evaluate(readCompiledMenuPublicState, startProbe ?? null),
+      );
       trace.recordPublicState(s);
       assert.equal(new URL(s.href).origin, new URL(origin).origin);
       assert.equal(s.hidden, false);
@@ -351,6 +361,14 @@ export async function observeCompiledMenu({
     assert.equal(new URL(s.href).searchParams.get('library-mission'), CURRENT_ID);
     assert.equal(new URL(s.href).searchParams.get('journey'), 'whole-spatial-v25');
     report.stages.push('exact-current-briefing');
+    try {
+      startProbe = await step('passive Start probe setup', () =>
+        page.evaluateHandle(installCompiledStartEventProbe),
+      );
+      trace.recordStartProbeLifecycle('setup', 'installed-or-unavailable');
+    } catch {
+      trace.recordStartProbeLifecycle('setup', 'unavailable');
+    }
     await click('#start-button');
     const running = await until('running', (s) => s.flight === 'running');
     await until(
@@ -420,6 +438,21 @@ export async function observeCompiledMenu({
       message: report.failure,
     };
   } finally {
+    if (startProbe) {
+      try {
+        await closeWithin('Start observer', async () => {
+          try {
+            const cleanup = await startProbe.evaluate((probe) => probe.dispose());
+            trace.recordStartProbeLifecycle('cleanup', cleanup.teardown);
+          } finally {
+            await startProbe.dispose();
+          }
+        });
+      } catch {
+        trace.recordStartProbeLifecycle('cleanup', 'unconfirmed');
+      }
+    }
+    // Closing the ephemeral context also removes listeners if setup response failed.
     diagnostics?.detach();
     try {
       if (context) {

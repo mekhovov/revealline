@@ -211,3 +211,40 @@ syntax-checked, executed or hosted. Prior source qualification belongs to the
 published predecessor; the actual browser result remains failed and unresolved.
 The fourteen current diagnostics remain unfiltered, and the existing zero-event
 success criterion is unchanged. No device or player-latency claim is made.
+
+## Passive first-Start delivery observation
+
+This successor adds diagnostic observation only. The historical 9b12 browser run
+still failed its unchanged 60-second running predicate after the real Start click
+fulfilled; its latest public state remained briefing with a zero clock. That does
+not establish whether the click reached the native handler or which internal
+admission condition prevented play. No production correction is claimed.
+
+Immediately before the existing first Start action, the observer installs two
+passive click listeners: window capture and a target listener registered after
+the current onclick slot. The fixed two-slot record retains only that first
+matching click, its trust/default-prevented facts, handler function/type and
+identity match, and bounded public flight/focus/visibility facts. Repeated clicks
+cannot overwrite these activation facts. A target record supports an
+after-existing-handler-slot inference only when its function identity still
+matches the callable handler present during installation; it records neither the
+handler's return value nor successful launch. Capture without the target record
+narrows event delivery, but does not by itself name a particular blocker.
+
+The callback never wraps, calls, awaits, or replaces onclick, prevents defaults,
+stops propagation, dispatches input, changes game state, or starts a timer.
+Diagnostic setup/teardown evaluations and callbacks add work and can affect
+scheduling; this is not an ordinary-path latency measurement. Listener removal is
+attempted in finally, including partially failed registration. If a setup RPC
+fails before returning its handle, closing the ephemeral browser context remains
+the cleanup boundary. Unconfirmed removal is recorded rather than called clean.
+
+The record travels through the already-existing public read and optional bounded
+trace: the eight-KiB read, 32-KiB trace, 262-KiB combined report, redaction, and
+authoritative original-report fallback remain unchanged. A full original report
+can leave no space for additional observation or an omission marker. All existing
+native actions, assertions, source/package identity, deadlines, and diagnostic
+warning criteria remain authoritative. Four additive pure cases exercise event
+ordering, first-click bounds, copied scalar/error isolation, and cleanup. Source
+format/syntax/test and another hosted browser run are pending for this authored
+checkpoint.
