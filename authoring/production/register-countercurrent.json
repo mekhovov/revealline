@@ -4883,8 +4883,8 @@
       "skinId": "bouncer.fpv.v1",
       "source": {
         "path": "game/enemy-catalog.mjs",
-        "bytes": 5957,
-        "sha256": "afc72e8da334aa2244c0123778baf9194c1c15ca1cea32b9b39b7d1569287c63"
+        "bytes": 5837,
+        "sha256": "95d6f3c7ff15f32892d1ef826238a7a7de2992c70c4c26b97cc29fb909efcd3a"
       }
     },
     {
@@ -4893,8 +4893,8 @@
       "skinId": "bouncer.ukraine.v1",
       "source": {
         "path": "game/enemy-catalog.mjs",
-        "bytes": 5957,
-        "sha256": "afc72e8da334aa2244c0123778baf9194c1c15ca1cea32b9b39b7d1569287c63"
+        "bytes": 5837,
+        "sha256": "95d6f3c7ff15f32892d1ef826238a7a7de2992c70c4c26b97cc29fb909efcd3a"
       }
     },
     {
@@ -4903,8 +4903,8 @@
       "skinId": "bouncer.retro.v1",
       "source": {
         "path": "game/enemy-catalog.mjs",
-        "bytes": 5957,
-        "sha256": "afc72e8da334aa2244c0123778baf9194c1c15ca1cea32b9b39b7d1569287c63"
+        "bytes": 5837,
+        "sha256": "95d6f3c7ff15f32892d1ef826238a7a7de2992c70c4c26b97cc29fb909efcd3a"
       }
     },
     {
@@ -4913,8 +4913,8 @@
       "skinId": "border-patrol.fpv.v1",
       "source": {
         "path": "game/enemy-catalog.mjs",
-        "bytes": 5957,
-        "sha256": "afc72e8da334aa2244c0123778baf9194c1c15ca1cea32b9b39b7d1569287c63"
+        "bytes": 5837,
+        "sha256": "95d6f3c7ff15f32892d1ef826238a7a7de2992c70c4c26b97cc29fb909efcd3a"
       }
     },
     {
@@ -4923,8 +4923,8 @@
       "skinId": "border-patrol.ukraine.v1",
       "source": {
         "path": "game/enemy-catalog.mjs",
-        "bytes": 5957,
-        "sha256": "afc72e8da334aa2244c0123778baf9194c1c15ca1cea32b9b39b7d1569287c63"
+        "bytes": 5837,
+        "sha256": "95d6f3c7ff15f32892d1ef826238a7a7de2992c70c4c26b97cc29fb909efcd3a"
       }
     },
     {
@@ -4933,8 +4933,8 @@
       "skinId": "border-patrol.retro.v1",
       "source": {
         "path": "game/enemy-catalog.mjs",
-        "bytes": 5957,
-        "sha256": "afc72e8da334aa2244c0123778baf9194c1c15ca1cea32b9b39b7d1569287c63"
+        "bytes": 5837,
+        "sha256": "95d6f3c7ff15f32892d1ef826238a7a7de2992c70c4c26b97cc29fb909efcd3a"
       }
     },
     {
@@ -4943,8 +4943,8 @@
       "skinId": "contour-patrol.fpv.v1",
       "source": {
         "path": "game/enemy-catalog.mjs",
-        "bytes": 5957,
-        "sha256": "afc72e8da334aa2244c0123778baf9194c1c15ca1cea32b9b39b7d1569287c63"
+        "bytes": 5837,
+        "sha256": "95d6f3c7ff15f32892d1ef826238a7a7de2992c70c4c26b97cc29fb909efcd3a"
       }
     },
     {
@@ -4953,8 +4953,8 @@
       "skinId": "contour-patrol.ukraine.v1",
       "source": {
         "path": "game/enemy-catalog.mjs",
-        "bytes": 5957,
-        "sha256": "afc72e8da334aa2244c0123778baf9194c1c15ca1cea32b9b39b7d1569287c63"
+        "bytes": 5837,
+        "sha256": "95d6f3c7ff15f32892d1ef826238a7a7de2992c70c4c26b97cc29fb909efcd3a"
       }
     },
     {
@@ -4963,8 +4963,8 @@
       "skinId": "contour-patrol.retro.v1",
       "source": {
         "path": "game/enemy-catalog.mjs",
-        "bytes": 5957,
-        "sha256": "afc72e8da334aa2244c0123778baf9194c1c15ca1cea32b9b39b7d1569287c63"
+        "bytes": 5837,
+        "sha256": "95d6f3c7ff15f32892d1ef826238a7a7de2992c70c4c26b97cc29fb909efcd3a"
       }
     },
     {
@@ -4973,8 +4973,8 @@
       "skinId": "claimed-rover.fpv.v1",
       "source": {
         "path": "game/enemy-catalog.mjs",
-        "bytes": 5957,
-        "sha256": "afc72e8da334aa2244c0123778baf9194c1c15ca1cea32b9b39b7d1569287c63"
+        "bytes": 5837,
+        "sha256": "95d6f3c7ff15f32892d1ef826238a7a7de2992c70c4c26b97cc29fb909efcd3a"
       }
     },
     {
@@ -4983,8 +4983,8 @@
       "skinId": "claimed-rover.ukraine.v1",
       "source": {
         "path": "game/enemy-catalog.mjs",
-        "bytes": 5957,
-        "sha256": "afc72e8da334aa2244c0123778baf9194c1c15ca1cea32b9b39b7d1569287c63"
+        "bytes": 5837,
+        "sha256": "95d6f3c7ff15f32892d1ef826238a7a7de2992c70c4c26b97cc29fb909efcd3a"
       }
     },
     {
@@ -4993,8 +4993,8 @@
       "skinId": "claimed-rover.retro.v1",
       "source": {
         "path": "game/enemy-catalog.mjs",
-        "bytes": 5957,
-        "sha256": "afc72e8da334aa2244c0123778baf9194c1c15ca1cea32b9b39b7d1569287c63"
+        "bytes": 5837,
+        "sha256": "95d6f3c7ff15f32892d1ef826238a7a7de2992c70c4c26b97cc29fb909efcd3a"
       }
     },
     {
@@ -5003,8 +5003,8 @@
       "skinId": "eroder.fpv.v1",
       "source": {
         "path": "game/enemy-catalog.mjs",
-        "bytes": 5957,
-        "sha256": "afc72e8da334aa2244c0123778baf9194c1c15ca1cea32b9b39b7d1569287c63"
+        "bytes": 5837,
+        "sha256": "95d6f3c7ff15f32892d1ef826238a7a7de2992c70c4c26b97cc29fb909efcd3a"
       }
     },
     {
@@ -5013,8 +5013,8 @@
       "skinId": "eroder.ukraine.v1",
       "source": {
         "path": "game/enemy-catalog.mjs",
-        "bytes": 5957,
-        "sha256": "afc72e8da334aa2244c0123778baf9194c1c15ca1cea32b9b39b7d1569287c63"
+        "bytes": 5837,
+        "sha256": "95d6f3c7ff15f32892d1ef826238a7a7de2992c70c4c26b97cc29fb909efcd3a"
       }
     },
     {
@@ -5023,8 +5023,8 @@
       "skinId": "eroder.retro.v1",
       "source": {
         "path": "game/enemy-catalog.mjs",
-        "bytes": 5957,
-        "sha256": "afc72e8da334aa2244c0123778baf9194c1c15ca1cea32b9b39b7d1569287c63"
+        "bytes": 5837,
+        "sha256": "95d6f3c7ff15f32892d1ef826238a7a7de2992c70c4c26b97cc29fb909efcd3a"
       }
     },
     {
@@ -5033,8 +5033,8 @@
       "skinId": "lane-boss.fpv.v1",
       "source": {
         "path": "game/enemy-catalog.mjs",
-        "bytes": 5957,
-        "sha256": "afc72e8da334aa2244c0123778baf9194c1c15ca1cea32b9b39b7d1569287c63"
+        "bytes": 5837,
+        "sha256": "95d6f3c7ff15f32892d1ef826238a7a7de2992c70c4c26b97cc29fb909efcd3a"
       }
     },
     {
@@ -5043,8 +5043,8 @@
       "skinId": "lane-boss.ukraine.v1",
       "source": {
         "path": "game/enemy-catalog.mjs",
-        "bytes": 5957,
-        "sha256": "afc72e8da334aa2244c0123778baf9194c1c15ca1cea32b9b39b7d1569287c63"
+        "bytes": 5837,
+        "sha256": "95d6f3c7ff15f32892d1ef826238a7a7de2992c70c4c26b97cc29fb909efcd3a"
       }
     },
     {
@@ -5053,8 +5053,8 @@
       "skinId": "lane-boss.retro.v1",
       "source": {
         "path": "game/enemy-catalog.mjs",
-        "bytes": 5957,
-        "sha256": "afc72e8da334aa2244c0123778baf9194c1c15ca1cea32b9b39b7d1569287c63"
+        "bytes": 5837,
+        "sha256": "95d6f3c7ff15f32892d1ef826238a7a7de2992c70c4c26b97cc29fb909efcd3a"
       }
     },
     {
@@ -5063,8 +5063,8 @@
       "skinId": "relay-sentinel.fpv.v1",
       "source": {
         "path": "game/enemy-catalog.mjs",
-        "bytes": 5957,
-        "sha256": "afc72e8da334aa2244c0123778baf9194c1c15ca1cea32b9b39b7d1569287c63"
+        "bytes": 5837,
+        "sha256": "95d6f3c7ff15f32892d1ef826238a7a7de2992c70c4c26b97cc29fb909efcd3a"
       }
     },
     {
@@ -5073,8 +5073,8 @@
       "skinId": "relay-sentinel.ukraine.v1",
       "source": {
         "path": "game/enemy-catalog.mjs",
-        "bytes": 5957,
-        "sha256": "afc72e8da334aa2244c0123778baf9194c1c15ca1cea32b9b39b7d1569287c63"
+        "bytes": 5837,
+        "sha256": "95d6f3c7ff15f32892d1ef826238a7a7de2992c70c4c26b97cc29fb909efcd3a"
       }
     },
     {
@@ -5083,8 +5083,8 @@
       "skinId": "relay-sentinel.retro.v1",
       "source": {
         "path": "game/enemy-catalog.mjs",
-        "bytes": 5957,
-        "sha256": "afc72e8da334aa2244c0123778baf9194c1c15ca1cea32b9b39b7d1569287c63"
+        "bytes": 5837,
+        "sha256": "95d6f3c7ff15f32892d1ef826238a7a7de2992c70c4c26b97cc29fb909efcd3a"
       }
     }
   ],

@@ -42,8 +42,8 @@
     {
       "sourcePath": "game/enemy-catalog.mjs",
       "cachePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/ukraine-enemy-presentations/.cache/source-authority/game/enemy-catalog.mjs",
-      "bytes": 5957,
-      "sha256": "afc72e8da334aa2244c0123778baf9194c1c15ca1cea32b9b39b7d1569287c63",
+      "bytes": 5837,
+      "sha256": "95d6f3c7ff15f32892d1ef826238a7a7de2992c70c4c26b97cc29fb909efcd3a",
       "gitBlob": "ad9eb4659a16249934b6eefb8582f7b813b0c5b5"
     },
     {
