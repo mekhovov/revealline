@@ -24,6 +24,7 @@ export function attachBackupSetPanel({
   refresh,
   presentFeedback = () => {},
   URLImpl = URL,
+  restore,
 }) {
   const node = (tag, id, text) => {
     const element = document.createElement(tag);
@@ -39,7 +40,9 @@ export function attachBackupSetPanel({
     archiveHelp = node(
       'p',
       'backup-archive-help',
-      localizedMessage('interface:backupArchive.help'),
+      localizedMessage(
+        restore ? 'interface:backupApply.archiveHelp' : 'interface:backupArchive.help',
+      ),
     ),
     prepare = node(
       'button',
@@ -215,7 +218,14 @@ export function attachBackupSetPanel({
           );
           showStatus(
             archive
-              ? () => t('interface:backupArchive.requested') + ' ' + archiveScope(result)
+              ? () =>
+                  t(
+                    restore
+                      ? 'interface:backupApply.archiveRequested'
+                      : 'interface:backupArchive.requested',
+                  ) +
+                  ' ' +
+                  archiveScope(result)
               : 'Download requested. Check your browser destination; this does not confirm a disk write. Keep this five-file set in a separate folder with the shown filenames. Prepared files remain available to retry.' +
                   (result.coverage.musicRecoveryNotice
                     ? ` ${result.coverage.musicRecoveryNotice}`
@@ -283,6 +293,7 @@ export function attachBackupSetPanel({
     presentFeedback,
     onStart: release,
     URLImpl,
+    restore,
   });
   cancelButton.onclick = () => archiveReview.cancelPending() || cancel();
   dialog.addEventListener('close', () => {
