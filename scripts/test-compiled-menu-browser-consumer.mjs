@@ -24,6 +24,11 @@ import {
   assertLoopback,
   createCompiledOperationTrace,
   installCompiledStartEventProbe,
+  COMPILED_RESUME_ENTRY,
+  COMPILED_RESUME_GUARDS,
+  validateCompiledResumeScript,
+  createCompiledResumePauseOwner,
+  prepareCompiledResumeEntryProbe,
 } from './compiled-menu-browser-contract.mjs';
 const owner = () => ({
   status: 'closed',
@@ -1033,4 +1038,326 @@ test('passive Start probe removes partial registrations and retains unconfirmed 
   });
   assert.equal(absent.snapshot().installed, false);
   assert.equal(absent.dispose().teardown, 'removed');
+});
+
+function resumeProtocolFixture({
+  values,
+  exception = false,
+  badSource = false,
+  ambiguous = false,
+  hangRead = false,
+  failDisable = false,
+  reenterResume = false,
+} = {}) {
+  const listeners = new Map(),
+    calls = [],
+    pending = new Map();
+  let timerId = 0,
+    clock = 0,
+    detachedResolve,
+    evaluationResolve;
+  const detached = new Promise((resolve) => {
+    detachedResolve = resolve;
+  });
+  const evaluationStarted = new Promise((resolve) => {
+    evaluationResolve = resolve;
+  });
+  const binding = { scriptId: 'compiled-script', breakpointId: 'only-entry', columnNumber: 3 };
+  const frame = () => {
+    const item = {
+      functionName: 'resume',
+      callFrameId: 'private-frame',
+      location: {
+        scriptId: binding.scriptId,
+        lineNumber: COMPILED_RESUME_ENTRY.lineNumber,
+        columnNumber: 3,
+      },
+    };
+    Object.defineProperty(item, 'scopeChain', {
+      get() {
+        throw new Error('Never inspect scopes');
+      },
+    });
+    return item;
+  };
+  const paused = () => ({ hitBreakpoints: [binding.breakpointId], callFrames: [frame()] });
+  const emit = (name, value) => {
+    for (const callback of [...(listeners.get(name) ?? [])]) callback(value);
+  };
+  const timers = {
+    setTimeout(callback, milliseconds) {
+      const id = ++timerId;
+      pending.set(id, { callback, milliseconds });
+      return id;
+    },
+    clearTimeout(id) {
+      pending.delete(id);
+    },
+    fire(milliseconds) {
+      const entry = [...pending].find(([, value]) => value.milliseconds === milliseconds);
+      assert(entry, 'Expected pending diagnostic timer');
+      clock += milliseconds;
+      pending.delete(entry[0]);
+      entry[1].callback();
+    },
+  };
+  const normal = {
+    practiceRenderFailed: false,
+    rendererLostCount: 0,
+    runPresent: true,
+    campaignOverview: false,
+    practice: false,
+    runStatus: 'playing',
+    started: false,
+    paused: true,
+    pictureResumeActive: false,
+    runningEnemyNeedsPreparation: false,
+    courseEntryActive: false,
+    courseSession: false,
+    coursePhase: 'idle',
+  };
+  const session = {
+    on(name, callback) {
+      if (!listeners.has(name)) listeners.set(name, new Set());
+      listeners.get(name).add(callback);
+    },
+    off(name, callback) {
+      listeners.get(name)?.delete(callback);
+    },
+    async send(method, params) {
+      calls.push({ method, params });
+      if (method === 'Debugger.enable') {
+        emit('Debugger.scriptParsed', {
+          scriptId: binding.scriptId,
+          url: 'http://127.0.0.1:1234/game/app.mjs',
+        });
+        if (ambiguous)
+          emit('Debugger.scriptParsed', {
+            scriptId: 'duplicate',
+            url: 'http://127.0.0.1:1234/game/app.mjs',
+          });
+        return {};
+      }
+      if (method === 'Debugger.getScriptSource') {
+        assert(badSource);
+        return { scriptSource: 'untrusted tiny source' };
+      }
+      if (method === 'Debugger.removeBreakpoint') return {};
+      if (method === 'Debugger.evaluateOnCallFrame') {
+        evaluationResolve();
+        if (hangRead) return new Promise(() => {});
+        return exception
+          ? { exceptionDetails: { text: 'PRIVATE EXCEPTION' } }
+          : { result: { value: values ?? normal } };
+      }
+      if (method === 'Debugger.resume') {
+        if (reenterResume) emit('Debugger.paused', paused());
+        return {};
+      }
+      if (method === 'Debugger.disable') {
+        if (failDisable) throw new Error('private transport detail');
+        return {};
+      }
+      throw new Error('Unexpected protocol command: ' + method);
+    },
+    async detach() {
+      calls.push({ method: 'detach' });
+      detachedResolve();
+    },
+  };
+  return {
+    session,
+    binding,
+    timers,
+    calls,
+    paused,
+    emit,
+    detached,
+    evaluationStarted,
+    normal,
+    now: () => clock,
+    pending: () => pending.size,
+    listeners: () => [...listeners.values()].reduce((n, set) => n + set.size, 0),
+  };
+}
+
+test('compiled resume diagnostic refuses mismatched or ambiguous source before any breakpoint or guard evaluation', async () => {
+  assert.throws(() => validateCompiledResumeScript('not the compiled source'));
+  for (const options of [{ badSource: true }, { ambiguous: true }]) {
+    const f = resumeProtocolFixture(options);
+    const probe = await prepareCompiledResumeEntryProbe(f.session, 'http://127.0.0.1:1234/', {
+      timers: f.timers,
+      now: f.now,
+    });
+    assert.equal(probe.snapshot().status, 'unavailable');
+    assert.equal(probe.snapshot().sourceVerified, false);
+    assert.equal(probe.snapshot().guards, null);
+    assert(
+      !f.calls.some((x) =>
+        ['Debugger.setBreakpoint', 'Debugger.evaluateOnCallFrame'].includes(x.method),
+      ),
+    );
+    assert(f.calls.some((x) => x.method === 'Debugger.disable'));
+    assert.equal(f.calls.at(-1).method, 'detach');
+    assert.equal(f.listeners(), 0);
+    assert.equal(f.pending(), 0);
+  }
+  const stale = resumeProtocolFixture();
+  const retired = await prepareCompiledResumeEntryProbe(stale.session, 'http://127.0.0.1:1234/', {
+    timers: stale.timers,
+    now: stale.now,
+    isCurrent: () => false,
+  });
+  assert.equal(retired.snapshot().status, 'unavailable');
+  assert(!stale.calls.some((x) => x.method === 'Debugger.enable'));
+  assert.equal(stale.listeners(), 0);
+});
+
+test('one matching resume pause uses the fixed side-effect-safe scalar expression and always resumes disables and detaches', async () => {
+  const f = resumeProtocolFixture();
+  const probe = createCompiledResumePauseOwner(f.session, f.binding, {
+    timers: f.timers,
+    now: f.now,
+  });
+  f.emit('Debugger.paused', f.paused());
+  await f.detached;
+  await probe.dispose();
+  const row = probe.snapshot();
+  assert.equal(row.status, 'captured');
+  // This is a protocol mock, not successful validation of the real compiled source.
+  assert.equal(row.sourceVerified, false);
+  assert.deepEqual(Object.keys(row.guards), [...COMPILED_RESUME_GUARDS, 'courseWouldBlock']);
+  assert.equal(row.guards.courseWouldBlock, false);
+  assert.equal(row.guards.started, false);
+  assert.deepEqual(row.cleanup, {
+    resume: 'acknowledged',
+    disable: 'acknowledged',
+    detach: 'acknowledged',
+  });
+  assert.equal(row.pauseOwnerExceeded, false);
+  const reads = f.calls.filter((x) => x.method === 'Debugger.evaluateOnCallFrame');
+  assert.equal(reads.length, 1);
+  assert.equal(reads[0].params.throwOnSideEffect, true);
+  assert.equal(reads[0].params.returnByValue, true);
+  assert.equal(reads[0].params.silent, true);
+  assert.equal(reads[0].params.includeCommandLineAPI, false);
+  assert.equal(reads[0].params.generatePreview, false);
+  assert.equal(reads[0].params.timeout, 25);
+  assert(!reads[0].params.expression.includes('courseBlocked('));
+  assert(!reads[0].params.expression.includes('hasFocus('));
+  assert(!reads[0].params.expression.includes('localStorage'));
+  assert.deepEqual(
+    f.calls.map((x) => x.method),
+    [
+      'Debugger.removeBreakpoint',
+      'Debugger.evaluateOnCallFrame',
+      'Debugger.resume',
+      'Debugger.disable',
+      'detach',
+    ],
+  );
+  assert.equal(f.pending(), 0);
+  assert.equal(f.listeners(), 0);
+  row.guards.started = true;
+  assert.equal(probe.snapshot().guards.started, false);
+  assert(!JSON.stringify(probe.snapshot()).includes('private-frame'));
+  probe.stopAfterAction();
+  await probe.dispose();
+  assert.equal(f.calls.filter((x) => x.method === 'Debugger.resume').length, 1);
+});
+
+test('resume read refusal unexpected frames and reentrant cleanup never evaluate unsafely or inspect another scope', async () => {
+  const refused = resumeProtocolFixture({ exception: true });
+  const p = createCompiledResumePauseOwner(refused.session, refused.binding, {
+    timers: refused.timers,
+    now: refused.now,
+  });
+  refused.emit('Debugger.paused', refused.paused());
+  await refused.detached;
+  await p.dispose();
+  assert.equal(p.snapshot().reason, 'side-effect-or-read-refused');
+  assert.equal(p.snapshot().guards, null);
+  assert(!JSON.stringify(p.snapshot()).includes('PRIVATE'));
+  assert.equal(refused.calls.filter((x) => x.method === 'Debugger.evaluateOnCallFrame').length, 1);
+  const other = resumeProtocolFixture();
+  const q = createCompiledResumePauseOwner(other.session, other.binding, {
+    timers: other.timers,
+    now: other.now,
+  });
+  const event = other.paused();
+  event.callFrames[0].functionName = 'different';
+  other.emit('Debugger.paused', event);
+  await other.detached;
+  await q.dispose();
+  assert.equal(q.snapshot().reason, 'unexpected-paused-frame');
+  assert(!other.calls.some((x) => x.method === 'Debugger.evaluateOnCallFrame'));
+  const reentrant = resumeProtocolFixture({ reenterResume: true });
+  const r = createCompiledResumePauseOwner(reentrant.session, reentrant.binding, {
+    timers: reentrant.timers,
+    now: reentrant.now,
+  });
+  reentrant.emit('Debugger.paused', reentrant.paused());
+  await reentrant.detached;
+  await r.dispose();
+  assert.equal(r.snapshot().status, 'unavailable');
+  assert.equal(r.snapshot().pauses, 2);
+  assert.equal(
+    reentrant.calls.filter((x) => x.method === 'Debugger.evaluateOnCallFrame').length,
+    1,
+  );
+  assert.equal(reentrant.calls.filter((x) => x.method === 'Debugger.resume').length, 1);
+  assert.equal(reentrant.calls.filter((x) => x.method === 'detach').length, 1);
+});
+
+test('bounded resume protocol timeout and failed cleanup retain only primitive redacted evidence and original report authority', async () => {
+  const f = resumeProtocolFixture({ hangRead: true });
+  const probe = createCompiledResumePauseOwner(f.session, f.binding, {
+    timers: f.timers,
+    now: f.now,
+  });
+  f.emit('Debugger.paused', f.paused());
+  await f.evaluationStarted;
+  f.timers.fire(50);
+  await f.detached;
+  await probe.dispose();
+  assert.equal(probe.snapshot().status, 'unavailable');
+  assert.equal(probe.snapshot().guards, null);
+  assert.equal(probe.snapshot().pauseElapsedMs, 50);
+  assert.equal(f.pending(), 0);
+  const failed = resumeProtocolFixture({ failDisable: true });
+  const q = createCompiledResumePauseOwner(failed.session, failed.binding, {
+    timers: failed.timers,
+    now: failed.now,
+  });
+  failed.emit('Debugger.paused', failed.paused());
+  await failed.detached;
+  await q.dispose();
+  assert.equal(q.snapshot().cleanup.resume, 'acknowledged');
+  assert.equal(q.snapshot().cleanup.disable, 'unconfirmed');
+  assert.equal(q.snapshot().cleanup.detach, 'acknowledged');
+  assert.equal(q.snapshot().status, 'unavailable');
+  const secret = 'secret-passphrase';
+  const trace = createCompiledOperationTrace(
+    { deadline: 570000, now: () => 0, step: () => Promise.resolve() },
+    (value, cap) => redactPagesText(value, secret, cap),
+  );
+  trace.recordResumeEntryProbe({
+    ...q.snapshot(),
+    reason: secret,
+    guards: { ...failed.normal, runStatus: secret, courseWouldBlock: false },
+  });
+  assert(!JSON.stringify(trace.snapshot()).includes(secret));
+  assert(Buffer.byteLength(JSON.stringify(trace.snapshot().resumeEntryProbe)) < 4096);
+  const ordinary = {
+    diagnostics: { total: 1, overflow: false, events: [{ message: 'x'.repeat(261000) }] },
+  };
+  const encoded = trace.encodeReport(ordinary, (value) => encodePagesReport(value, secret));
+  assert.deepEqual(JSON.parse(encoded).diagnostics, ordinary.diagnostics);
+  assert.equal(
+    trace.encodeReport(ordinary, (value) => {
+      if (value.operationTrace) throw new Error('no room for diagnostics');
+      return encodePagesReport(value, secret);
+    }),
+    encodePagesReport(ordinary, secret),
+  );
 });
