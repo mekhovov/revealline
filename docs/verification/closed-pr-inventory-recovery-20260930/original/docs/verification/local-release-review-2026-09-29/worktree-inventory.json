@@ -24723,38 +24723,6 @@
         "conflictPaths": []
       },
       {
-        "path": "<projects>/go_test/.cache/worktrees/spend-role-presentations",
-        "head": "ac6837d28317f42ffc832516d1ab1a9a6cd5754c",
-        "branch": "art/spend-role-presentations",
-        "detached": false,
-        "prunable": null,
-        "locked": null,
-        "exists": true,
-        "branchRef": {
-          "head": "ac6837d28317f42ffc832516d1ab1a9a6cd5754c",
-          "upstream": null,
-          "tracking": ""
-        },
-        "openPRs": [],
-        "closedPRs": [],
-        "handledBySteamDeckTask": false,
-        "changes": [],
-        "trackedCount": 0,
-        "untrackedCount": 0,
-        "dirtyCount": 0,
-        "conflictCount": 0,
-        "stagedCount": 0,
-        "commitDate": "2026-09-14T20:19:02+02:00",
-        "author": "Oleksandr Mekhovov",
-        "behindCachedMain": 2956,
-        "aheadCachedMain": 1,
-        "headInCachedMain": false,
-        "overlapWithPrimaryDirty": [],
-        "classification": "clean-unpublished-or-historical-branch-review",
-        "dependencyOnly": false,
-        "conflictPaths": []
-      },
-      {
         "path": "<projects>/go_test/.cache/worktrees/sprite-derivative-tool",
         "head": "b8774ec65d3dcc36a600b865eeb8b6c89ca97367",
         "branch": "feat/sprite-derivative-tool",

@@ -242,31 +242,6 @@
       },
       {
         "location": "local",
-        "name": "art/spend-role-presentations",
-        "tip": "ac6837d28317f42ffc832516d1ab1a9a6cd5754c",
-        "relationship": {
-          "ahead": 1,
-          "behind": 1179,
-          "mergeBase": "e9928cdaad2f55d912aadd2ef25f635fb99e938c",
-          "uniqueCommits": [
-            {
-              "sha": "ac6837d28317f42ffc832516d1ab1a9a6cd5754c"
-            }
-          ]
-        },
-        "pullRequests": [],
-        "worktrees": [
-          "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/spend-role-presentations"
-        ],
-        "ownerTask": null,
-        "stablePatchGroup": null,
-        "successor": null,
-        "releaseEvidence": [],
-        "classification": "unclassified",
-        "requiredAction": "Inspect unique changes, patch equivalence, successor and owner intent; names alone are not evidence."
-      },
-      {
-        "location": "local",
         "name": "art/ukraine-enemy-presentations",
         "tip": "53d553485b8d7dc0f912959892947819a19d9803",
         "relationship": {
@@ -32944,13 +32919,6 @@
         "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/source-identity-checker-362e5bf",
         "head": "3d2e75bb3621aacfbd9b7a931cd1f8ff917a7ba6",
         "branch": "refs/heads/codex/source-identity-checker-362e5bf",
-        "dirty": false,
-        "statusEntries": []
-      },
-      {
-        "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/spend-role-presentations",
-        "head": "ac6837d28317f42ffc832516d1ab1a9a6cd5754c",
-        "branch": "refs/heads/art/spend-role-presentations",
         "dirty": false,
         "statusEntries": []
       },

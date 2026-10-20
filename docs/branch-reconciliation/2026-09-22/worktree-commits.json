@@ -2098,13 +2098,7 @@
     {
       "tip": "ac6837d28317f42ffc832516d1ab1a9a6cd5754c",
       "kind": "recorded-branch-tip",
-      "refs": [
-        {
-          "location": "local",
-          "name": "art/spend-role-presentations",
-          "classification": "unique-changes-require-intake"
-        }
-      ]
+      "refs": []
     },
     {
       "tip": "b8774ec65d3dcc36a600b865eeb8b6c89ca97367",

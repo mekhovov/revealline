@@ -73342,13 +73342,6 @@
         "mtimeNs": 1790626923289754700
       },
       {
-        "path": "work/my_projects/go_test/authoring/library/spend-role-presentations/inspection/index.html",
-        "sha256": "02282f05a47d6f97ef890c403889b2c74fa3a2bbcbae78cff3b5263a67d94105",
-        "bytes": 3931,
-        "sourceBeforeAndAfterSHA256Match": true,
-        "mtimeNs": 1790861173813491200
-      },
-      {
         "path": "work/my_projects/go_test/docs/verification/public-v0691/profile-ownership-followup-success.json",
         "sha256": "022af10f8e620a32c0d7ddc53ae9d31e728430eca8b519d90cb9e92d7ae38173",
         "bytes": 530,
@@ -74903,13 +74896,6 @@
         "mtimeNs": 1790861173118599700
       },
       {
-        "path": "work/my_projects/go_test/authoring/library/spend-role-presentations/provenance/full-image-inspection.json",
-        "sha256": "05e714dd973b5579bd44852bb7b706337946ab251be849d4fdd006dee66c79c7",
-        "bytes": 6161,
-        "sourceBeforeAndAfterSHA256Match": true,
-        "mtimeNs": 1790861173834898900
-      },
-      {
         "path": "work/my_projects/go_test/authoring/library/neon-channels/scenario.json",
         "sha256": "05e90c59f77a5d152598920170d5541984b50a9cb799248cd6fad97b327355ec",
         "bytes": 374064,
@@ -75678,13 +75664,6 @@
         "bytes": 6234,
         "sourceBeforeAndAfterSHA256Match": true,
         "mtimeNs": 1790626923333918700
-      },
-      {
-        "path": "work/my_projects/go_test/authoring/library/spend-role-presentations/provenance/reference-theme.json",
-        "sha256": "07b0a59034ed14d5c3f9ecef17ff162624d205673ddaa5167541ac6c61a668bd",
-        "bytes": 1191,
-        "sourceBeforeAndAfterSHA256Match": true,
-        "mtimeNs": 1790861173835469300
       },
       {
         "path": "work/my_projects/go_test/docs/verification/hosted-soundtracks-2026-09-21/selection-cache/manual-metadata.json",
@@ -78214,13 +78193,6 @@
         "mtimeNs": 1790626924776000300
       },
       {
-        "path": "work/my_projects/go_test/authoring/library/spend-role-presentations/provenance/official-reference.json",
-        "sha256": "0df3bea6492851e8eddfa18cc570e4d373cb5e286d2350d9199bd1cc52aadbde",
-        "bytes": 2130,
-        "sourceBeforeAndAfterSHA256Match": true,
-        "mtimeNs": 1790861173835285900
-      },
-      {
         "path": "work/my_projects/go_test/docs/verification/cross-mode/p01/offline-visibility/local-browser/verify-network-after.json",
         "sha256": "0dfa33e18e3f8c0b80805d6ac04f5f692099f2d8760b78816135c5d05065665a",
         "bytes": 72,
@@ -78786,13 +78758,6 @@
         "bytes": 218,
         "sourceBeforeAndAfterSHA256Match": true,
         "mtimeNs": 1790432972201466800
-      },
-      {
-        "path": "work/my_projects/go_test/authoring/library/spend-role-presentations/provenance/trapper.json",
-        "sha256": "0f3b41ab645b6457900d02379fa9cb55535e45e86714de085a58084edd85dee8",
-        "bytes": 1685,
-        "sourceBeforeAndAfterSHA256Match": true,
-        "mtimeNs": 1790861173836423600
       },
       {
         "path": "work/my_projects/go_test_company_campaigns/game/editions/retained-presentation.mjs",
@@ -80608,13 +80573,6 @@
         "mtimeNs": 1790626923790872100
       },
       {
-        "path": "work/my_projects/go_test/authoring/library/spend-role-presentations/provenance/carrier.json",
-        "sha256": "14ad7d974be7f6707813ff4a4d6e3ae1d6a121c6066aea7c22c4ac5818cff912",
-        "bytes": 1676,
-        "sourceBeforeAndAfterSHA256Match": true,
-        "mtimeNs": 1790861173834534200
-      },
-      {
         "path": "work/my_projects/go_test/docs/evidence/fpv-railworks-admitted-player.png",
         "sha256": "14afa38edb07b86fb639aa4a751139f79f6004171b3e1406890d540aaa09f16f",
         "bytes": 54730,
@@ -81553,13 +81511,6 @@
         "mtimeNs": 1790626933448875000
       },
       {
-        "path": "work/my_projects/go_test/authoring/library/spend-role-presentations/originals/fiber.png",
-        "sha256": "16dabc04250ffb1630c28bbc2c41372b837102445d27c9ce4a6f3bef3608d854",
-        "bytes": 607264,
-        "sourceBeforeAndAfterSHA256Match": true,
-        "mtimeNs": 1790861173824016900
-      },
-      {
         "path": "work/my_projects/go_test/docs/verification/classic-snake/pursuit-v2/classic-pursuit-last-offer.json",
         "sha256": "16dc4604a6c8a5a892cf63a61fc1cdb0c516a24c58cb8717811a009fa2846a0c",
         "bytes": 6417,
@@ -81894,13 +81845,6 @@
         "bytes": 1515,
         "sourceBeforeAndAfterSHA256Match": true,
         "mtimeNs": 1790626932563447700
-      },
-      {
-        "path": "work/my_projects/go_test/authoring/library/spend-role-presentations/prompts/trapper.txt",
-        "sha256": "17c1fd7e483a17ef2361f04591f461d4217bd0ae951f885be3c142a947374179",
-        "bytes": 2325,
-        "sourceBeforeAndAfterSHA256Match": true,
-        "mtimeNs": 1790861173834152600
       },
       {
         "path": "work/my_projects/go_test/publishing/pages-controller/delivery/evidence/cross-mode-p03/public-v06124/public-byte-report.json",
@@ -88210,13 +88154,6 @@
         "mtimeNs": 1791564571791010500
       },
       {
-        "path": "work/my_projects/go_test/authoring/library/spend-role-presentations/provenance/tool-responses.json",
-        "sha256": "26983cfa80ba23a04cbfabadc5941390fd470f69099bb3b0a406aed438a787ff",
-        "bytes": 20512,
-        "sourceBeforeAndAfterSHA256Match": true,
-        "mtimeNs": 1790861173836344500
-      },
-      {
         "path": "work/my_projects/go_test/docs/verification/cross-mode/enemy-workshop-return-v0613/originals/p03-enemy-workshop-return-r2-ccd04f9c/qualified-node22.json",
         "sha256": "269940df21265ac9d756d2c1771c50be84799f068eb9eef9f3cf6ddacf1c843c",
         "bytes": 18529,
@@ -88726,13 +88663,6 @@
         "bytes": 33119,
         "sourceBeforeAndAfterSHA256Match": true,
         "mtimeNs": 1790861174223561800
-      },
-      {
-        "path": "work/my_projects/go_test/authoring/library/spend-role-presentations/provenance/scout.json",
-        "sha256": "27d5c54fe92173f12ea069dc46b1766e89ced84996bb52a1d44c5da0e333ffd8",
-        "bytes": 1626,
-        "sourceBeforeAndAfterSHA256Match": true,
-        "mtimeNs": 1790861173835840500
       },
       {
         "path": "work/my_projects/go_test/docs/verification/cross-mode/p05b-p08-integration/delayed-native/08-both-seats-live.png",
@@ -89645,13 +89575,6 @@
         "mtimeNs": 1790626932994988500
       },
       {
-        "path": "work/my_projects/go_test/authoring/library/spend-role-presentations/inspection/north-auto.jpg",
-        "sha256": "29eb99044437fbc2fab649ff1e3c15f9556a7e6165cf6d93d7e72718d5c55955",
-        "bytes": 87538,
-        "sourceBeforeAndAfterSHA256Match": true,
-        "mtimeNs": 1790861173814243000
-      },
-      {
         "path": "work/my_projects/go_test/docs/verification/cross-mode/picker-clearance-v0618/originals/focused-node20.19.5.json",
         "sha256": "29edafb244badc8b9fa38e864d174a047d3c61ea5fc878a8dc68f89d750eedf0",
         "bytes": 501,
@@ -89958,13 +89881,6 @@
         "bytes": 1301,
         "sourceBeforeAndAfterSHA256Match": true,
         "mtimeNs": 1790626923552598500
-      },
-      {
-        "path": "work/my_projects/go_test/authoring/library/spend-role-presentations/README.md",
-        "sha256": "2abbd725ccb89764549f85a13ef5cddccaa7b00e76dca4c28d0964da5d1e7693",
-        "bytes": 6155,
-        "sourceBeforeAndAfterSHA256Match": true,
-        "mtimeNs": 1790861173812771400
       },
       {
         "path": "work/my_projects/go_test/authoring/library/countercurrent-art/originals/crossing-watch-ukraine.png",
@@ -91260,13 +91176,6 @@
         "bytes": 1115932,
         "sourceBeforeAndAfterSHA256Match": true,
         "mtimeNs": 1790626921942162700
-      },
-      {
-        "path": "work/my_projects/go_test/authoring/library/spend-role-presentations/originals/impact.png",
-        "sha256": "2d90408c213125725c49ab837cccc56d2fe53c873f0e895dd0f5bb6f6df82233",
-        "bytes": 467205,
-        "sourceBeforeAndAfterSHA256Match": true,
-        "mtimeNs": 1790861173826195600
       },
       {
         "path": "work/my_projects/go_test/publishing/pages-controller/delivery/evidence/cross-mode-p01/public-v0571/http/publication-hosted/production/receipt-reception.json",
@@ -92816,13 +92725,6 @@
         "mtimeNs": 1790626923433272800
       },
       {
-        "path": "work/my_projects/go_test/authoring/library/spend-role-presentations/originals/carrier.png",
-        "sha256": "319ca85aafe43a1e6d321c792386bd8d8773e5ab929eb0a2be8495b6a8d4cabc",
-        "bytes": 557242,
-        "sourceBeforeAndAfterSHA256Match": true,
-        "mtimeNs": 1790861173820635000
-      },
-      {
         "path": "work/my_projects/go_test/authoring/library/countercurrent-art/generation-results.json",
         "sha256": "31a1785c53536964a548b483b48f0250041d0d42090b520d1f5ecef44ee2e8fc",
         "bytes": 16317,
@@ -93544,13 +93446,6 @@
         "mtimeNs": 1790861173120393800
       },
       {
-        "path": "work/my_projects/go_test/authoring/library/spend-role-presentations/provenance/preparation.json",
-        "sha256": "33b32c28b6a950052e105a1619a4a895eb815de52c3676897949f2b2cca2cb42",
-        "bytes": 3641,
-        "sourceBeforeAndAfterSHA256Match": true,
-        "mtimeNs": 1790861173835387900
-      },
-      {
         "path": "work/my_projects/go_test/authoring/audio/revealline-v1/originals/impact/impactMetal_light_000.ogg",
         "sha256": "33b5e6e37c6e9d54e07bf5a89b12c76e879f40c1ea83cdd82714df1d6f9fec6d",
         "bytes": 7651,
@@ -93675,13 +93570,6 @@
         "bytes": 1257,
         "sourceBeforeAndAfterSHA256Match": true,
         "mtimeNs": 1790626932574668800
-      },
-      {
-        "path": "work/my_projects/go_test/authoring/library/spend-role-presentations/originals/interceptor.png",
-        "sha256": "340674c4dfb4ae6a9b501bb1849d47edb7ca81af96f888fcf26a228f7eb7e9c0",
-        "bytes": 313087,
-        "sourceBeforeAndAfterSHA256Match": true,
-        "mtimeNs": 1790861173827787000
       },
       {
         "path": "work/my_projects/go_test/docs/verification/cross-mode/enemy-workshop-return-v0613/originals/p03-enemy-workshop-return-628e95da/preimages/authoring/enemy-catalog/index.html",
@@ -94816,13 +94704,6 @@
         "bytes": 2306,
         "sourceBeforeAndAfterSHA256Match": true,
         "mtimeNs": 1790626924226062000
-      },
-      {
-        "path": "work/my_projects/go_test/authoring/library/spend-role-presentations/inspection/game-scale-receipt.json",
-        "sha256": "3696c92ead5bffe140b9bb4e09163bab48a059df0aa546ccd06e31eb05dd6df5",
-        "bytes": 3399,
-        "sourceBeforeAndAfterSHA256Match": true,
-        "mtimeNs": 1790861173813416300
       },
       {
         "path": "work/my_projects/go_test/docs/verification/fpv-redesign/phase7/native-zoom-200-large-display.png",
@@ -97898,13 +97779,6 @@
         "mtimeNs": 1790626932916750200
       },
       {
-        "path": "work/my_projects/go_test/authoring/library/spend-role-presentations/prompts/fiber.txt",
-        "sha256": "3eba2134b6feefaad704f74946fbe1b3de51565890f6150d07d6769277195bde",
-        "bytes": 2309,
-        "sourceBeforeAndAfterSHA256Match": true,
-        "mtimeNs": 1790861173833374500
-      },
-      {
         "path": "work/my_projects/go_test/publishing/pages-controller/delivery/evidence/cross-mode-p08/public-v0616/native/11-wide-standard-1280x720-clip.jpg",
         "sha256": "3ebc8ba4cb206370ba5a539876c4eb6d4f2fd6824f3a881bc11a9fc2567b92af",
         "bytes": 26532,
@@ -99275,13 +99149,6 @@
         "bytes": 16972,
         "sourceBeforeAndAfterSHA256Match": true,
         "mtimeNs": 1790626929948409600
-      },
-      {
-        "path": "work/my_projects/go_test/authoring/library/spend-role-presentations/inspection/east-pixelated.jpg",
-        "sha256": "42847003fa5c4def715169fdce730554e90e47c71d01d1ae0bf35729864b4547",
-        "bytes": 88305,
-        "sourceBeforeAndAfterSHA256Match": true,
-        "mtimeNs": 1790861173813226700
       },
       {
         "path": "work/my_projects/go_test/docs/verification/xposed-journey-p04.md",
@@ -111072,13 +110939,6 @@
         "mtimeNs": 1790626922592693100
       },
       {
-        "path": "work/my_projects/go_test/authoring/library/spend-role-presentations/originals/trapper.png",
-        "sha256": "5fe7ef3796e27ab33d6e5ad7c1a748bee66e23fa28fa18293953fd7e72591015",
-        "bytes": 672321,
-        "sourceBeforeAndAfterSHA256Match": true,
-        "mtimeNs": 1790861173832985500
-      },
-      {
         "path": "work/my_projects/go_test/publishing/pages-controller/delivery/evidence/cross-mode-p03/studio-v0615-publication/preparation/originals-index.json",
         "sha256": "5fece571387c16eae33c5f34c41b307521367ccb089f15bc1a9921ee448ae8d0",
         "bytes": 6223,
@@ -111882,13 +111742,6 @@
         "bytes": 86521,
         "sourceBeforeAndAfterSHA256Match": true,
         "mtimeNs": 1791564572567329200
-      },
-      {
-        "path": "work/my_projects/go_test/authoring/library/spend-role-presentations/provenance/fiber.json",
-        "sha256": "61f31db9c4e7be86e36eb0c9decf32efecf465f48c7bc1c523345d00307898ee",
-        "bytes": 1674,
-        "sourceBeforeAndAfterSHA256Match": true,
-        "mtimeNs": 1790861173834605200
       },
       {
         "path": "work/my_projects/go_test/docs/verification/fpv-redesign/phase6-integration/README.md",
@@ -114759,13 +114612,6 @@
         "bytes": 130239,
         "sourceBeforeAndAfterSHA256Match": true,
         "mtimeNs": 1790626923150576600
-      },
-      {
-        "path": "work/my_projects/go_test/authoring/library/spend-role-presentations/provenance/interceptor.json",
-        "sha256": "695aa68689066193901ba09012f67796aaeeb1416110c5e9a8fe4f03ea98d961",
-        "bytes": 1632,
-        "sourceBeforeAndAfterSHA256Match": true,
-        "mtimeNs": 1790861173835061000
       },
       {
         "path": "work/my_projects/go_test_company_campaigns/game/i18n/catalogs.mjs",
@@ -123371,13 +123217,6 @@
         "mtimeNs": 1790626923576894000
       },
       {
-        "path": "work/my_projects/go_test/authoring/library/spend-role-presentations/provenance/alpha-inspection.json",
-        "sha256": "7fa98777c6f9743f54648a7dbc20b777099c5d6b5d1d90b6402fb3920f846594",
-        "bytes": 29365,
-        "sourceBeforeAndAfterSHA256Match": true,
-        "mtimeNs": 1790861173834379200
-      },
-      {
         "path": "work/my_projects/go_test/publishing/pages-controller/delivery/evidence/cross-mode-p01/public-v057/browser/public-offline-run/online-targets-attempt-2.json",
         "sha256": "7faf2a04af6a085b207382d3151d14ea1d5d0950e88a7f181dabddad0eaf62c6",
         "bytes": 3019,
@@ -131869,13 +131708,6 @@
         "mtimeNs": 1791564571983076800
       },
       {
-        "path": "work/my_projects/go_test/authoring/library/spend-role-presentations/originals/bomber.png",
-        "sha256": "9657e96d874439abee5e25edc74addfbc09251b29d94e4181cff519234cb06d1",
-        "bytes": 751704,
-        "sourceBeforeAndAfterSHA256Match": true,
-        "mtimeNs": 1790861173817993600
-      },
-      {
         "path": "work/my_projects/go_test/game/test/classic-snake-library.test.mjs",
         "sha256": "965efb327fdda7d9c9ed799f9ea57ee97aa7d6de4bdd2e8a2c307e7849f73123",
         "bytes": 4606,
@@ -136503,13 +136335,6 @@
         "mtimeNs": 1790626924767158600
       },
       {
-        "path": "work/my_projects/go_test/authoring/library/spend-role-presentations/prompts/bomber.txt",
-        "sha256": "a234da543ec92ebd02f64eab3c1ec3fcd3c206447b7df0f428876b5f9162d92d",
-        "bytes": 2280,
-        "sourceBeforeAndAfterSHA256Match": true,
-        "mtimeNs": 1790861173833218100
-      },
-      {
         "path": "work/my_projects/go_test/publishing/pages-controller/delivery/evidence/cross-mode-p03/v0630-public/root-acceptance.json",
         "sha256": "a23de4763b393adad7cc22a983fe4d26d8cdb96a50571867defbbdaa0d518d9a",
         "bytes": 2212,
@@ -136718,13 +136543,6 @@
         "bytes": 979,
         "sourceBeforeAndAfterSHA256Match": true,
         "mtimeNs": 1790626923044754000
-      },
-      {
-        "path": "work/my_projects/go_test/authoring/library/spend-role-presentations/prompts/scout.txt",
-        "sha256": "a2d50c71013d4fefc70818fa5578b32ca2889c8f4bdfe3dd37dc10d5e48f46c1",
-        "bytes": 2230,
-        "sourceBeforeAndAfterSHA256Match": true,
-        "mtimeNs": 1790861173834071300
       },
       {
         "path": "work/my_projects/go_test/publishing/pages-controller/delivery/evidence/cross-mode-p03/public-v0591/tools/inputs/5419c020b79b9712f5986699c76f2df9d0f981d0/catalog.json",
@@ -149943,13 +149761,6 @@
         "mtimeNs": 1790626930452462800
       },
       {
-        "path": "work/my_projects/go_test/authoring/library/spend-role-presentations/provenance/role-briefs.json",
-        "sha256": "c3c05c279c27f90ba9dbc615ab9c2adf41e9dae5ee9b320ac3fa48442c53f410",
-        "bytes": 21941,
-        "sourceBeforeAndAfterSHA256Match": true,
-        "mtimeNs": 1790861173835755600
-      },
-      {
         "path": "work/my_projects/go_test/docs/verification/appearance-quality-2026-10-02/localization/checks.json",
         "sha256": "c3c47bc3b3c0a9debce9ef5c9c679bf8482e95bc83ce2c9c1924bcb58c172a59",
         "bytes": 2685,
@@ -154647,13 +154458,6 @@
         "mtimeNs": 1790861173959424400
       },
       {
-        "path": "work/my_projects/go_test/authoring/library/spend-role-presentations/prompts/carrier.txt",
-        "sha256": "cf43d21843e4d474fff09f96a556205a85ab6567ea27c92fae6dc35fc4719406",
-        "bytes": 2274,
-        "sourceBeforeAndAfterSHA256Match": true,
-        "mtimeNs": 1790861173833296800
-      },
-      {
         "path": "work/my_projects/go_test/authoring/library/fpv-enemy-presentations/originals/contour-patrol.png",
         "sha256": "cf46a28c2573c9e486a17bb558dec51bb4e0882493360cf6a84bc3c452b404b8",
         "bytes": 769992,
@@ -154757,13 +154561,6 @@
         "bytes": 2551,
         "sourceBeforeAndAfterSHA256Match": true,
         "mtimeNs": 1790626921878847200
-      },
-      {
-        "path": "work/my_projects/go_test/authoring/library/spend-role-presentations/provenance/impact.json",
-        "sha256": "cf9e51cfd6c244a3aa59dfe2669e4741398b5d6aafbf1e687bdd07cc3d7e3ff6",
-        "bytes": 1645,
-        "sourceBeforeAndAfterSHA256Match": true,
-        "mtimeNs": 1790861173834984700
       },
       {
         "path": "work/my_projects/go_test/publishing/pages-controller/evidence/archive-10/combined-051/staged.json",
@@ -157599,13 +157396,6 @@
         "bytes": 946,
         "sourceBeforeAndAfterSHA256Match": true,
         "mtimeNs": 1790626931944424400
-      },
-      {
-        "path": "work/my_projects/go_test/authoring/library/spend-role-presentations/prompts/interceptor.txt",
-        "sha256": "d708ec5141cdab95924b2f795788815cb9ed12d1909bfac9d7bafb6226392d17",
-        "bytes": 2225,
-        "sourceBeforeAndAfterSHA256Match": true,
-        "mtimeNs": 1790861173833835500
       },
       {
         "path": "work/my_projects/go_test/docs/verification/cross-mode/p05-a/confirmations/preparation.json",
@@ -170922,13 +170712,6 @@
         "mtimeNs": 1790626933755992900
       },
       {
-        "path": "work/my_projects/go_test/authoring/library/spend-role-presentations/prompts/impact.txt",
-        "sha256": "f9977f68a4175017233f77eddb5e44d8b112b2ffa11fd4feebb3ed6c36949af1",
-        "bytes": 2261,
-        "sourceBeforeAndAfterSHA256Match": true,
-        "mtimeNs": 1790861173833609500
-      },
-      {
         "path": "work/my_projects/go_test/docs/verification/public-v0693/observer/catalog-cohorts.mjs",
         "sha256": "f9982cb6c453f2a916ef0f177357312bfe27adb9ecf9a07ce81772f370abec39",
         "bytes": 1183,
@@ -171893,13 +171676,6 @@
         "bytes": 7901,
         "sourceBeforeAndAfterSHA256Match": true,
         "mtimeNs": 1790397597000000000
-      },
-      {
-        "path": "work/my_projects/go_test/authoring/library/spend-role-presentations/provenance/bomber.json",
-        "sha256": "fc099ad967e381d17a859d237cfd727f76e16e0d054f0e373c83181f9efc3cca",
-        "bytes": 1717,
-        "sourceBeforeAndAfterSHA256Match": true,
-        "mtimeNs": 1790861173834457500
       },
       {
         "path": "work/my_projects/go_test/docs/verification/workshop-boot-correction-v070/packet/fixture-fs.mjs.txt",
@@ -173055,13 +172831,6 @@
         "bytes": 1327,
         "sourceBeforeAndAfterSHA256Match": true,
         "mtimeNs": 1790626922478878400
-      },
-      {
-        "path": "work/my_projects/go_test/authoring/library/spend-role-presentations/originals/scout.png",
-        "sha256": "fedd015335b836535d3078d4f819576344fa74a1c82e172d9b61047b68edf566",
-        "bytes": 390919,
-        "sourceBeforeAndAfterSHA256Match": true,
-        "mtimeNs": 1790861173829503800
       },
       {
         "path": "work/my_projects/go_test/publishing/pages-controller/delivery/evidence/discovery-v0680/prepublication/full-admission-check.json",
