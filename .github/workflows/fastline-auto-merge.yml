@@ -68,6 +68,7 @@ jobs:
             .github/workflows/deploy-pages.yml
             publishing/fastline-merge-controller.mjs
             publishing/admission-binding.mjs
+            publishing/admission-paths.mjs
             publishing/admission-preflight.mjs
             publishing/focused-tests.mjs
             publishing/focused-shard-plan.mjs

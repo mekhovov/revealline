@@ -184,3 +184,29 @@ test('release-ready fails closed on unverified zero work, malformed plans and wo
   for (const invalid of ['', '00', '01', '5', '-1', '1.0'])
     assert.equal(accepts({ FOCUSED_SHARDS: invalid, FOCUSED_RESULT: 'success' }), false, invalid);
 });
+
+test('one downloaded worker keeps the same artifact namespace as multiple workers', async () => {
+  const single = workflow.slice(
+    workflow.indexOf('      - name: Download one focused shard'),
+    workflow.indexOf('      - name: Download the planned focused shard receipts'),
+  );
+  assert.ok(single.includes("if: needs.preflight.outputs.focusedShards == '1'"));
+  assert.ok(
+    single.includes('name: focused-shard-${{ github.run_id }}-${{ github.run_attempt }}-1'),
+  );
+  assert.ok(
+    single.includes(
+      'path: ${{ runner.temp }}/focused-shards/focused-shard-${{ github.run_id }}-${{ github.run_attempt }}-1',
+    ),
+  );
+  const multiple = workflow.slice(
+    workflow.indexOf('      - name: Download the planned focused shard receipts'),
+    workflow.indexOf('      - name: Require exact complete command coverage'),
+  );
+  assert.ok(
+    multiple.includes(
+      "if: needs.preflight.outputs.focusedShards != '0' && needs.preflight.outputs.focusedShards != '1'",
+    ),
+  );
+  assert.ok(multiple.includes('merge-multiple: false'));
+});
