@@ -1,4 +1,8 @@
 import assert from 'node:assert/strict';
+import {
+  captureBeforeValidation,
+  settlePostflightChecks,
+} from './compiled-menu-browser-finalization.mjs';
 import { createHash } from 'node:crypto';
 import { execFileSync } from 'node:child_process';
 import { createReadStream } from 'node:fs';
@@ -255,7 +259,12 @@ async function run() {
     performanceExcluded: true,
     commands: [],
   };
-  let complete = false;
+  let complete = false,
+    postflightAttempted = false;
+  const tools = join(root, 'tools/node_modules'),
+    browsers = join(root, 'browsers'),
+    game = join(root, 'generated'),
+    browserOutput = join(privateEvidence, 'browser');
   const childEnv = {
     ...cleanEnv(),
     CI: 'true',
@@ -281,7 +290,11 @@ async function run() {
       inspected = Date.now();
     }
   };
-  const command = async (name, argv, { browser = false, timeoutMs = 180000 } = {}) => {
+  const command = async (
+    name,
+    argv,
+    { browser = false, timeoutMs = 180000, beforeValidate = null } = {},
+  ) => {
     await inspect(); // Fresh post-audit prelaunch reserve.
     const raw = join(privateEvidence, name + '.log'),
       ownerPath = join(privateEvidence, name + '-owner.json');
@@ -298,7 +311,17 @@ async function run() {
     // Child-terminal facts survive any later full audit or capacity failure.
     await save(join(output, name + '-terminal.json'), { name, owner, raw: await digest(raw) });
     report.commands.push({ name, owner, raw: await digest(raw) });
-    assertOwner(owner);
+    if (beforeValidate) {
+      const outcome = await captureBeforeValidation(beforeValidate, () => assertOwner(owner));
+      if (outcome.captureFailed)
+        report.observerReportRetentionFailure = redactPagesText(
+          outcome.captureError?.message ?? outcome.captureError,
+          password,
+        );
+      // The original ownership/exit failure always remains authoritative.
+      if (outcome.validationFailed) throw outcome.validationError;
+      if (outcome.captureFailed) throw outcome.captureError;
+    } else assertOwner(owner);
     await inspect();
     return raw;
   };
@@ -320,6 +343,91 @@ async function run() {
     assert.equal(result.sourceTree, tree);
     assert.equal(result.allTrackedSourceContentsAndModesMatch, true);
     return result;
+  };
+  const runPostflight = async () => {
+    assert.equal(postflightAttempted, false, 'Postflight is attempted only once');
+    postflightAttempted = true;
+    const results = await settlePostflightChecks(
+      [
+        {
+          label: 'package',
+          check: async () => {
+            assert(report.packageBefore, 'Package before-image was not admitted');
+            report.packageAfter = await inventory(game);
+            assert.deepEqual(report.packageAfter, report.packageBefore);
+          },
+        },
+        {
+          label: 'dependencies',
+          check: async () => {
+            assert(report.dependenciesBefore, 'Dependency before-image was not admitted');
+            report.dependenciesAfter = {
+              repository: await inventory(join(repository, 'node_modules'), true),
+              tools: await inventory(tools, true),
+              browsers: await inventory(browsers, true),
+            };
+            assert.deepEqual(report.dependenciesAfter, report.dependenciesBefore);
+          },
+        },
+        {
+          label: 'node',
+          check: async () => {
+            assert(report.node, 'Node before-image was not admitted');
+            assert.deepEqual(await digest(process.execPath), {
+              bytes: report.node.bytes,
+              sha256: report.node.sha256,
+            });
+          },
+        },
+        {
+          label: 'source',
+          check: async () => {
+            report.sourceAfter = await audit('source-after');
+            assert(report.sourceBefore, 'Source before-image was not admitted');
+            assert.deepEqual(report.sourceAfter, report.sourceBefore);
+          },
+        },
+        {
+          label: 'git',
+          check: async () => {
+            assert.equal(git('rev-parse', 'HEAD'), source);
+            assert.equal(git('rev-parse', 'HEAD^{tree}'), tree);
+          },
+        },
+        {
+          label: 'reserve',
+          check: async () => {
+            await floor(root);
+            await liveBytes(root);
+          },
+        },
+      ],
+      async () => {
+        // Do not launch another audit after an ownership/resource guard or past
+        // the existing campaign deadline/floor. Record unavailable, never pass.
+        assert(
+          report.commands.every(
+            ({ owner }) =>
+              owner.status === 'closed' &&
+              owner.violation === null &&
+              owner.signal === null &&
+              !owner.forcedCleanup &&
+              owner.survivors.length === 0 &&
+              owner.ambiguous.length === 0,
+          ),
+          'Prior command ownership/resource guard prevents postcheck',
+        );
+        await inspect();
+      },
+    );
+    report.postflight = results.map(({ label, status, error }) => ({
+      label,
+      status,
+      ...(status !== 'passed'
+        ? { failure: redactPagesText(error?.message ?? error, password) }
+        : {}),
+    }));
+    return results;
   };
   try {
     await floor(root);
@@ -361,8 +469,6 @@ async function run() {
     );
     report.executedWorkflowOID = workflow.sha;
     report.sourceBefore = await audit('source-before');
-    const tools = join(root, 'tools/node_modules'),
-      browsers = join(root, 'browsers');
     for (const name of ['package.json', 'package-lock.json']) {
       assert.deepEqual(
         await digest(join(root, 'tools', name)),
@@ -395,8 +501,7 @@ async function run() {
     };
     const outer = join(root, 'artifact.zip');
     report.download = await download(outer, root);
-    const outerDir = join(root, 'outer'),
-      game = join(root, 'generated');
+    const outerDir = join(root, 'outer');
     await command('archive-outer', [
       '/usr/bin/python3',
       '-B',
@@ -470,7 +575,6 @@ async function run() {
         'Exact hash-verified existing generated loader and navigation; no runtime admission or regeneration.',
     };
     report.packageBefore = await inventory(game);
-    const browserOutput = join(privateEvidence, 'browser');
     await mkdir(browserOutput, { mode: 0o700 });
     await command(
       'browser',
@@ -483,30 +587,27 @@ async function run() {
         browserOutput,
         source,
       ],
-      { browser: true, timeoutMs: 600000 },
+      {
+        browser: true,
+        timeoutMs: 600000,
+        beforeValidate: async () => {
+          const observed = await readSmall(join(browserOutput, 'report.json'), 262144);
+          assert.equal(observed.format, 'RevealLineCompiledMenuBrowserReportV1');
+          assert.equal(observed.toolingRevision, source);
+          assert.deepEqual(observed.target, TARGET);
+          report.browser = observed;
+          // save() uses the existing complete-report sanitizer and bound.
+          await save(join(output, 'browser-report.json'), observed);
+          return observed;
+        },
+      },
     );
-    const browserReport = await readSmall(join(browserOutput, 'report.json'), 262144);
+    const browserReport = report.browser;
     assertBrowserReport(browserReport, report.commands.at(-1).owner, source);
     report.browser = browserReport;
-    report.packageAfter = await inventory(game);
-    assert.deepEqual(report.packageAfter, report.packageBefore);
-    report.dependenciesAfter = {
-      repository: await inventory(join(repository, 'node_modules'), true),
-      tools: await inventory(tools, true),
-      browsers: await inventory(browsers, true),
-    };
-    assert.deepEqual(report.dependenciesAfter, report.dependenciesBefore);
-    assert.deepEqual(await digest(process.execPath), {
-      bytes: report.node.bytes,
-      sha256: report.node.sha256,
-    });
-    report.sourceAfter = await audit('source-after');
-    assert.deepEqual(report.sourceAfter, report.sourceBefore);
-    assert.equal(git('rev-parse', 'HEAD'), source);
-    assert.equal(git('rev-parse', 'HEAD^{tree}'), tree);
-    await floor(root);
-    await liveBytes(root);
-    await save(join(output, 'browser-report.json'), browserReport);
+    const postflight = await runPostflight();
+    const failedPostflight = postflight.find((x) => x.status !== 'passed');
+    if (failedPostflight) throw failedPostflight.error;
     for (const name of ['en-home', 'en-missions', 'uk-home', 'uk-missions']) {
       const data = await readFile(join(browserOutput, name + '.jpg'));
       assert(data.length <= 512 * 1024);
@@ -517,6 +618,13 @@ async function run() {
     report.failure = redactPagesText(error?.message ?? error, password);
     process.exitCode = 1;
   } finally {
+    if (!postflightAttempted) {
+      const postflight = await runPostflight();
+      if (postflight.some((x) => x.status !== 'passed')) {
+        complete = false;
+        process.exitCode = 1;
+      }
+    }
     // Keep full byte inventories privately; the small published receipt binds
     // them by digest instead of uploading multi-megabyte environment listings.
     for (const field of [

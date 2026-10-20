@@ -62,13 +62,15 @@ test('every first-party level has one permanent unique number', () => {
     ),
   }));
   const rows = [...journeyRows, ...teamArenaRows, ...classicRows, ...companyRows];
+  const frozen = JSON.parse(readFileSync(new URL('./fixtures/retained-level-numbers.json', import.meta.url), 'utf8'));
+  assert.deepEqual([...rows].sort((a,b) => a.number-b.number), frozen.entries);
   assert.equal(rows.length, OFFICIAL_LEVEL_COUNT);
   assert(rows.every(({ key, number }) => key && Number.isSafeInteger(number) && number > 0));
   assert.equal(new Set(rows.map(({ key }) => key)).size, rows.length);
   assert.equal(new Set(rows.map(({ number }) => number)).size, rows.length);
   assert.deepEqual(
     rows.map(({ number }) => number).sort((a, b) => a - b),
-    Array.from({ length: OFFICIAL_LEVEL_COUNT }, (_, index) => index + 1),
+    JSON.parse(readFileSync(new URL('./fixtures/retained-level-numbers.json', import.meta.url), 'utf8')).entries.map(({ number }) => number),
   );
 });
 

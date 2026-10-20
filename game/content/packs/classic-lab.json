@@ -154,9 +154,7 @@
       "title": "Classic Lab · practice demonstrations",
       "themeId": "fpv",
       "musicId": "first-light-orchard-window",
-      "classIds": [
-        "scout"
-      ],
+      "classIds": ["scout"],
       "levels": [
         {
           "version": "xonix-level.v4",

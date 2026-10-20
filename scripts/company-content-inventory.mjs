@@ -12,6 +12,7 @@ import { campaignKey } from '../game/library.mjs';
 import { sceneDescriptor } from '../game/ui/scene-art.mjs';
 import { applyGameplayTuning, resolveGameplayTuning } from '../game/gameplay-tuning.mjs';
 import { decodeOriginalPNG } from '../authoring/library/four-worlds-chapters/verify-images.mjs';
+import { inspectImageDataUrl } from '../game/content.mjs';
 import {
   boardSVG,
   duplicateGroups,
@@ -88,7 +89,28 @@ export async function buildCompanyInventory({ root = ROOT, readFile = fs.readFil
     await pin(sourcePath, asset);
     if (!originalByHash.has(asset.sha256)) {
       const bytes = await read(sourcePath);
-      const decoded = decodeOriginalPNG(`data:image/png;base64,${bytes.toString('base64')}`);
+      const mime = bytes.subarray(0, 8).equals(Buffer.from([137, 80, 78, 71, 13, 10, 26, 10]))
+        ? 'image/png'
+        : bytes[0] === 255 && bytes[1] === 216 && bytes[2] === 255
+          ? 'image/jpeg'
+          : bytes.toString('ascii', 0, 4) === 'RIFF' && bytes.toString('ascii', 8, 12) === 'WEBP'
+            ? 'image/webp'
+            : null;
+      required(mime, `Unsupported original raster format: ${sourcePath}`);
+      const dataURL = `data:${mime};base64,${bytes.toString('base64')}`;
+      const header = inspectImageDataUrl(dataURL);
+      required(header.valid, `Original image header differs: ${sourcePath}`);
+      // The repository's portable decoder covers RGB8 PNG. Other accepted
+      // formats retain exact byte/header proofs without inventing pixel hashes.
+      const portableRGB =
+        mime === 'image/png' && bytes.subarray(24, 29).equals(Buffer.from([8, 2, 0, 0, 0]));
+      const decoded = portableRGB
+        ? decodeOriginalPNG(dataURL)
+        : {
+            naturalWidth: header.width,
+            naturalHeight: header.height,
+            pixelsSha256: null,
+          };
       required(
         decoded.naturalWidth === asset.width && decoded.naturalHeight === asset.height,
         `Original dimensions differ: ${sourcePath}`,
@@ -100,6 +122,8 @@ export async function buildCompanyInventory({ root = ROOT, readFile = fs.readFil
         width: decoded.naturalWidth,
         height: decoded.naturalHeight,
         pixelsSha256: decoded.pixelsSha256,
+        mime,
+        pixelVerification: decoded.pixelsSha256 ? 'full-rgb8-png' : 'not-decoded',
         description: asset.alt,
       });
     }
@@ -283,7 +307,7 @@ export async function buildCompanyInventory({ root = ROOT, readFile = fs.readFil
         .filter(
           (other) =>
             other.kind === 'original' &&
-            (other.id === art.id || other.pixelsSha256 === art.pixelsSha256),
+            (other.id === art.id || (art.pixelsSha256 && other.pixelsSha256 === art.pixelsSha256)),
         )
         .map((other) => ({
           companyArtwork: art.id,
@@ -309,6 +333,7 @@ export async function buildCompanyInventory({ root = ROOT, readFile = fs.readFil
         sha256: hash(baseBytes),
       },
       decoder: await pin('authoring/library/four-worlds-chapters/verify-images.mjs'),
+      imageHeaders: await pin('game/content.mjs'),
       proceduralRenderer: await pin('game/ui/scene-art.mjs'),
     },
     summary: {
@@ -319,6 +344,8 @@ export async function buildCompanyInventory({ root = ROOT, readFile = fs.readFil
       retainedPresentations: contexts.filter((row) => row.classification !== 'current').length,
       historicalInstances: instances.length - current.length,
       originalPictures: originalByHash.size,
+      pixelDecodedPictures: [...originalByHash.values()].filter((row) => row.pixelsSha256).length,
+      headerOnlyPictures: [...originalByHash.values()].filter((row) => !row.pixelsSha256).length,
       currentSharedOriginalGroups: comparisons.currentSharedOriginals.length,
       currentSharedPixelGroups: comparisons.currentSharedPixels.length,
       inconsistentCurrentOwners: comparisons.currentOwnerVariants.length,
@@ -327,7 +354,7 @@ export async function buildCompanyInventory({ root = ROOT, readFile = fs.readFil
     },
     limitations: [
       'Canonical owner IDs deduplicate bundle views for review only. Exact edition profile, campaign, simulation and presentation identities are preserved separately; this report never migrates or aliases progress.',
-      'Current manifest artwork and retained original revisions are decoded with the pinned RGB8 decoder. Decorative logos/body assets are byte-verified dependencies, not mission-picture ownership or pixel-screening candidates.',
+      'Non-interlaced RGB8 PNG mission originals are fully decoded with the pinned decoder. Other PNG variants and JPEG/WebP originals have exact byte and header verification only; their pixels are not compared and they cannot establish visual uniqueness. Decorative logos/body assets are byte-verified dependencies, not mission-picture ownership or pixel-screening candidates.',
       'Gameplay matches are structural review findings, not completed playtests. Similarity transforms/perceptual review and human composition approval remain pending for company originals.',
       'Null-background instances identify procedural themes, not a visual uniqueness claim. Seed-distribution review remains separate.',
       'Dependency lists preserve selected original data; they exclude shared engine/readers and are not complete save/replay recovery proof or full offline package sizes.',

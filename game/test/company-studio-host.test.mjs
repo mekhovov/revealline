@@ -20,9 +20,9 @@ import { createDefaultThemeBundle } from '../presentation/catalog.mjs';
 import { reviseStudioTheme } from '../presentation/studio-session.mjs';
 import { createThemeCandidate, saveThemePreview } from '../presentation/theme-preview.mjs';
 import {
-  COMPANY_PLAYTEST_FIXTURES,
-  companyPlaytestTask,
-} from '../company-campaigns/playtest-fixtures.mjs';
+  PRACTICE_FIXTURES,
+  practiceTask,
+} from '../../authoring/company-studio/practice-fixtures.mjs';
 
 const html = await readFile(
   new URL('../../authoring/company-studio/index.html', import.meta.url),
@@ -846,11 +846,11 @@ test('leaving an active Company reading region does not steal newer focus', asyn
   assert.equal(h.doc.activeElement.id, 'export-draft-bottom');
 });
 
-async function openPractice(h, id = 'playtest-foundations-requirement') {
+async function openPractice(h, id = 'practice-open-bridge') {
   h.$('practice-select').value = id;
   h.$('practice-select').emit('change');
   await h.click('open-practice');
-  return COMPANY_PLAYTEST_FIXTURES.find((row) => row.id === id);
+  return PRACTICE_FIXTURES.find((row) => row.id === id);
 }
 async function activatePractice(h, control) {
   const node = h.$('practice-workbench').querySelector(`[data-control="${control}"]`);
@@ -909,7 +909,7 @@ test('completed transfer practice remains readable, exports task cards only and 
   assert.equal(h.downloads[0].name, `${task.id}-task.json`);
   assert.deepEqual(
     JSON.parse(await h.blobs.get(h.downloads[0].href).text()),
-    companyPlaytestTask(task.id),
+    practiceTask(task.id),
   );
   await h.click('restart-practice');
   assert.equal(h.doc.activeElement.id, 'company-read-practice');
