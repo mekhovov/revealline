@@ -1,0 +1,95 @@
+# Actual couch Duel enlarged text
+
+This dependent slice extends the existing Extra large choice to the actual couch
+Duel host (`game/couch/index.html`), independently of Classic Snake's Versus
+variant. It builds on reviewed Classic Snake head
+`94d73cd63d81afbf25c978a6c54df99bd5654ff2`. The actual Team host
+`game/couch/relay-rescue.html`, Snake hub and other unqualified families retain
+Large fallback and the shared desired preference.
+
+## Declaration and capability boundary
+
+The recorded pre-edit entry walk follows the direct launcher's `data-module`,
+static imports, literal deferred imports and literal stylesheet references:
+639 modules, 35 stylesheets and 439 absolute font/line-height declarations.
+The native bridge and generic direct launcher remain recorded dynamic boundaries.
+This inventory is source closure, not executed navigation or all-theme coverage.
+
+The entry, first-paint bootstrap, live theme host, actual display preference owner
+and native adopted Text size control explicitly agree on the Versus capability.
+Twenty-six remaining readable absolute sizes in `couch.css` multiply their
+Standard declaration by two. Existing shared declarations already use the same
+default-one multiplier, including controller setup, reading, deferred settings,
+recovery, chooser and caption tools. Six runtime status/statistics declarations
+receive family-scoped overrides at the original breakpoints. Inherited `em`
+text follows its parent; Extra large uses Standard theme tokens, avoiding a second
+Large-token multiplier. The password gate remains a separate pre-unlock surface.
+
+Direction arrows, the aria-hidden touch seat ordinal and the fixed unsaved `!`
+badge are artwork exceptions. Caption preferences are still independent and
+receive the established multiplier once. Both existing BoardPainters receive a
+text-only factor for readable event/recovery feedback. Logical cell labels,
+actors, world geometry, input, simulation and save owners are unchanged.
+
+## Actual layout owners
+
+Duel uses native hidden sections rather than Snake modal dialogs. Enlarged
+landing/footer, settings, help reading, chooser and result layouts retain their
+native hidden/paused/finished owners. Compact utilities place by row; the Pause
+selector outranks the existing shared ID branch. Result transition actions flow
+with the outer screen. The help reader retains its keyboard owner and gets a
+practical multiline viewport, not a normative minimum-size claim.
+
+The live HUD reserves its actual height instead of the handheld 44px row. Both
+boards share the remaining bounded viewport, using the existing footprint owner
+to fit their complete bitmaps; an added minimum arena height must not force a
+live board below the viewport. Compact play keeps the primary Pause/Results
+label while full song details remain available through the existing Pause/audio
+controls and accessible description. Readable counters keep their enlarged font
+sizes. Responsive seat order, touch-input ownership and logical geometry stay
+intact. Actual browser review must verify both complete boards within the
+viewport at 320/390px and 844×390 landscape, alongside menu focus and scrolling.
+
+The first actual 320px Ukrainian review found that the compact song caption's
+unbroken intrinsic width expanded the app's implicit grid column and both seats.
+The correction explicitly constrains that column and its HUD/readout children,
+wraps seat statistics and gives compact Pause/Results its own row on narrow
+screens. A second actual check found that growing the app and a fixed arena
+minimum still pushed live boards below the viewport; the bounded grid and compact
+song-details policy above address that separate vertical failure. It applies to live play and the existing earned-board review;
+the normal and Large layouts, font sizes, hidden owners and logical bitmaps stay
+unchanged. Source checks bind these real owners; visual qualification belongs to
+the corrected snapshot, not the earlier overflowing candidate.
+
+The next actual check enabled Direction pad, Large controls and Always for both
+seats at Ukrainian 320px. The inherited tall-phone layout reserved a 192px
+three-row pad below each board and collapsed both board slots. Enlarged compact
+Duel now lays out the same four native direction buttons in one row below each
+board. Regular targets remain 52px; Large targets remain 64px square, with 4px
+gaps. DOM order, keyboard handlers, translated accessible names, text sizes and
+the ordinary Standard/Large cross are unchanged. Equipment retains its existing
+wrapping row and visibility owner.
+
+A row cannot use the old square pad's center-based compass. The couch input owner
+therefore resolves captured points against the actual four button rectangles
+only when the pad is wider than twice its height. The shared gesture owner keeps
+its existing per-finger capture, outside release and cancellation behavior;
+square D-pads, stick and swipe retain their existing direction resolver. Focused
+tests cover every row target, slides, gutters, both seats and stale/failing
+capture. Browser review must still measure both boards, each 64px target and
+usable steering at 320px portrait and 844×390 landscape before qualification.
+
+## Qualification
+
+Actual-host checks use both real simulations and the real preference owner.
+They verify initial/explicit sizes, first paint, live locale changes, cross-tab
+adoption and failed persistence without changing paused checkpoints, logical
+board dimensions or unrelated stored data. Source regressions bind actual
+native states and runtime stylesheet owners; they do not model browser layout.
+
+The new F08 keyboard rows are in separate reviewed branches. Their behavior must
+be preserved during reconciliation and their actual enlarged layout measured
+then; this baseline does not qualify rows that are absent from its ancestry.
+Keep this PR a dependent draft until predecessor admission and bounded actual
+browser review. No numeric 200% label, all-theme, physical-device, PWA, acoustic,
+assistive-technology or general accessibility-conformance claim is added.

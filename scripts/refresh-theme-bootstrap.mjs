@@ -159,7 +159,7 @@ export async function buildThemeBootstrap() {
   let display = null;
   try { if (typeof legacyDisplay === 'string' && legacyDisplay.length <= 2048) display = JSON.parse(legacyDisplay); } catch { /* Ignore damaged local data. */ }
   const studio = doc.currentScript?.dataset.themeDensity === 'studio';
-  const qualifiedText = ['solo', 'snake'].includes(root.dataset.textScaling);
+  const qualifiedText = ['solo', 'snake', 'versus'].includes(root.dataset.textScaling);
   const extraLarge = display?.textSize === 'extra-large' && qualifiedText;
   const large = display?.textSize === 'large' || (display?.textSize === 'extra-large' && !extraLarge);
   const plain = display?.textFace === 'plain';

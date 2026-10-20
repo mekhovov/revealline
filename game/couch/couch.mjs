@@ -236,6 +236,7 @@ $('race-quick-sound').onclick = () => audioPreferences.setMuted(!audioMaster.sna
 $('race-master-volume').onchange = () =>
   audioPreferences.setVolume(Number($('race-master-volume').value));
 const displayPreferences = createDisplayPreferences({
+  extraLarge: true,
   window,
   matchMedia,
   getStorage: () => localStorage,
@@ -248,7 +249,7 @@ const renderDisplayPreferences = (state) => {
   document.body.dataset.textSize = state.effectiveTextSize ?? state.textSize;
   document.body.dataset.effects = state.effectiveReducedEffects ? 'reduced' : 'full';
   $('race-text-face').value = state.textFace;
-  renderTextSizeControl($('race-text-size'), state.textSize);
+  renderTextSizeControl($('race-text-size'), state.textSize, { extraLarge: true });
   $('race-reduced').checked = state.reducedEffects;
   localizedText($('race-system-reduction'), () =>
     state.effectiveReducedEffects && !state.reducedEffects
@@ -5139,6 +5140,7 @@ try {
         brutal: encounterDisplay.snapshot().brutal,
         blood: encounterDisplay.snapshot().blood,
         textFace: displayPreferences.snapshot().textFace,
+        textScale: displayPreferences.snapshot().effectiveTextSize === 'extra-large' ? 2 : 1,
         paused: match.status !== 'running',
         reduced: displayPreferences.snapshot().effectiveReducedEffects,
         fullReveal: run.status === 'won',
