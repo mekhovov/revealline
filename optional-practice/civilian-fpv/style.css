@@ -7721,3 +7721,101 @@ html body #viewport[data-hud-density='compact'] #touch-controls > div > span {
   }
 }
 /* END SHARED SIM FULLSCREEN */
+
+/* Radio setup: manual mapping and its live monitor share the same workspace. */
+@layer legacy {
+  .radio-setup .radio-channels fieldset { display: grid; grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center; gap: 8px; padding: 12px; }
+  .radio-setup .radio-channels fieldset > :is(p, output, details, .radio-channel-meter) { grid-column: 1 / -1; }
+  .radio-setup .radio-channels fieldset > label { grid-column: 2; grid-row: 5; display: flex; align-items: center; gap: 8px; margin: 0; padding: 4px; }
+  .radio-setup .radio-channels fieldset > button { grid-column: 1; grid-row: 5; justify-self: start; margin: 0; }
+  .radio-setup .radio-channels fieldset > details { grid-row: 6; margin: 0; }
+  .radio-setup .radio-channels fieldset > details > label { margin: 0; }
+  .radio-setup .radio-channel-hint,
+  .radio-setup .radio-channel-reading {
+    flex-basis: 100%;
+    margin: 0;
+  }
+  .radio-setup .radio-channel-hint {
+    font-size: 13px;
+  }
+  .radio-setup .radio-channel-reading {
+    font-size: 12px;
+    font-variant-numeric: tabular-nums;
+  }
+  .radio-setup .radio-channel-meter {
+    position: relative;
+    flex: 1 0 100%;
+    height: 12px;
+    margin: 4px 0 10px;
+    border: 1px solid currentColor;
+    border-radius: 8px;
+  }
+  .radio-channel-meter::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 0;
+    height: 100%;
+    border-left: 1px solid currentColor;
+    opacity: 0.4;
+  }
+  .radio-channel-meter i {
+    position: absolute;
+    top: 50%;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--fk-amber, #edbd61);
+    transform: translate(-50%, -50%);
+  }
+  .radio-setup .radio-channels fieldset > details {
+    flex-basis: 100%;
+  }
+  .radio-setup .radio-channels fieldset > details[open] {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .radio-setup .radio-channels fieldset > details > summary {
+    flex-basis: 100%;
+    padding: 8px 0;
+  }
+  .radio-setup .radio-channels fieldset.is-listening {
+    border-width: 2px;
+    border-color: var(--fk-amber, #edbd61);
+  }
+  .radio-guide[data-radio-guide-phase='manual'] .radio-monitor {
+    align-self: start;
+    position: sticky;
+    top: 8px;
+  }
+  .radio-guide[data-radio-guide-phase='manual'] .radio-extra-manual > summary {
+    display: none;
+  }
+  .radio-guide[data-radio-guide-phase='manual'] .radio-task .radio-extra-manual {
+    border: 0;
+  }
+  @media (max-width: 620px) {
+    .radio-guide[data-radio-guide-phase='manual'] .radio-task {
+      display: block;
+      grid-row: 2;
+    }
+    .radio-guide[data-radio-guide-phase='manual'] .radio-monitor {
+      grid-row: 1;
+      z-index: 2;
+      top: 0;
+      padding: 10px;
+      background: var(--fk-panel, #101923);
+    }
+    .radio-guide[data-radio-guide-phase='manual'] .radio-monitor h3 {
+      margin: 0;
+      font-size: 15px;
+    }
+    .radio-guide[data-radio-guide-phase='manual'] .radio-monitor .radio-monitor-caption,
+    .radio-guide[data-radio-guide-phase='manual'] .radio-values,
+    .radio-guide[data-radio-guide-phase='manual'] .radio-arm-hint {
+      display: none;
+    }
+  }
+}
