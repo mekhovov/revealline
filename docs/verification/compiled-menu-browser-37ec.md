@@ -152,3 +152,32 @@ checks and complete cheap contract tests were pending. See delivery progress and
 the PR for current execution status. Actual hosted download, binary
 provisioning, archive verification, browser controls, source/dependency restoration
 proof, required-check discovery and bounded evidence review are all UNRUN here.
+
+### Bounded operation attribution proposal
+
+The actual 428565de hosted observation accepted the ordinary access form and
+reached English Home, then failed with Pages operation expired: read public DOM.
+All six failure-path postchecks passed. The generic read label does not identify
+which predicate in the first English browse flow was waiting. The whole browser
+process lasted 22.782 seconds; the inherited per-operation read cap is ten
+seconds, distinct from the unchanged 570-second flow budget.
+
+This source successor adds only diagnostic operation events, named phase/read
+iteration and the last fulfilled native action. It preserves each original
+Promise, callback, selector, assertion and deadline. It admits at most 128
+append-only events and 32 KiB of trace, reserving half for summary fields. Existing
+password redaction also scrubs trace labels/errors. The unchanged 256 KiB total
+report cap remains authoritative: if combined evidence does not fit, an explicit
+omitted-trace marker is attempted; if even that cannot fit, the original report
+is retained without a trace. Missing trace is unknown evidence, never a completed
+operation.
+
+The process-wide monotonic observations add Promise reactions and scheduling
+overhead. They do not measure exclusive browser work or player latency, and their
+rejection observer affects Promise bookkeeping. No browser rerun or passing
+flow is claimed by this authored proposal.
+
+The existing zero-diagnostic success criterion remains unchanged. The failed
+report also contains four WebGL warnings and an aborted presentation fetch; these
+would independently fail that criterion if the full flow finished. They are
+preserved and are not established causes of the read timeout.

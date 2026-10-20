@@ -4,7 +4,7 @@ import { mkdtemp, writeFile, rm } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { randomUUID } from 'node:crypto';
-import { encodePagesReport } from './solo-pages-smoke.mjs';
+import { encodePagesReport, redactPagesText } from './solo-pages-smoke.mjs';
 import {
   captureBeforeValidation,
   settlePostflightChecks,
@@ -22,6 +22,7 @@ import {
   assertBrowserReport,
   assertSignedArtifactURL,
   assertLoopback,
+  createCompiledOperationTrace,
 } from './compiled-menu-browser-contract.mjs';
 const owner = () => ({
   status: 'closed',
@@ -403,4 +404,172 @@ test('unavailable postflight admission never launches checks or erases original 
   );
   assert(results.every((x) => x.error === guard));
   assert.equal(outcome.validationError, originalFailure);
+});
+
+test('operation trace preserves exact promise, arguments, phase reads and fulfilled native action', async () => {
+  let now = 1000,
+    resolve;
+  const pending = new Promise((done) => {
+    resolve = done;
+  });
+  const argsSeen = [],
+    work = () => 'original callback';
+  const budget = {
+    deadline: 571000,
+    now: () => now,
+    step(...args) {
+      assert.equal(this, budget);
+      argsSeen.push(args);
+      return pending;
+    },
+  };
+  const trace = createCompiledOperationTrace(budget, (value) => value);
+  trace.setLocale('en');
+  trace.enterPhase('visible Missions');
+  trace.noteRead();
+  assert.equal(trace.step('native click #shell-play', work, 4500), pending);
+  assert.deepEqual(argsSeen, [['native click #shell-play', work, 4500]]);
+  assert.equal(argsSeen[0][1], work);
+  assert.equal(trace.snapshot().events[0].event, 'started');
+  now = 1250;
+  resolve('unchanged value');
+  assert.equal(await pending, 'unchanged value');
+  const value = trace.snapshot();
+  assert.equal(value.events.length, 2);
+  assert.equal(value.lastCompletedNativeAction.label, 'native click #shell-play');
+  assert.equal(value.lastCompletedNativeAction.phase, 'visible Missions');
+  assert.equal(value.lastCompletedNativeAction.readIteration, 1);
+  assert.equal(value.lastCompletedNativeAction.requestedCapMs, 4500);
+  assert.equal(value.lastCompletedNativeAction.elapsedOperationMs, 250);
+  assert.equal(value.currentOperation, null);
+  trace.enterPhase('current source');
+  assert.equal(trace.snapshot().phaseReadIteration, 0);
+  assert.equal(trace.snapshot().phaseSequence, 2);
+  for (const label of [
+    'ordinary password entry',
+    'ordinary password submission',
+    'real exact mission card',
+    'native Ukrainian language',
+  ]) {
+    assert.equal(trace.step(label, work), pending);
+    await pending;
+    assert.equal(trace.snapshot().lastCompletedNativeAction.label, label);
+  }
+});
+
+test('operation trace preserves rejection, synchronous throw and nonassimilated thenables', async () => {
+  const original = new Error('original rejection'),
+    rejected = Promise.reject(original);
+  const trace = createCompiledOperationTrace(
+    { deadline: 1000, now: () => 10, step: () => rejected },
+    (value) => value,
+  );
+  const same = trace.step('read public DOM', () => {});
+  assert.equal(same, rejected);
+  await assert.rejects(same, (error) => error === original);
+  assert.equal(trace.snapshot().lastCompletedOperation.errorMessage, original.message);
+  assert.equal(trace.snapshot().lastCompletedNativeAction, null);
+  const sync = new Error('original synchronous throw');
+  const hostile = createCompiledOperationTrace(
+    {
+      get deadline() {
+        throw new Error('diagnostic getter');
+      },
+      now() {
+        throw new Error('diagnostic clock');
+      },
+      step() {
+        throw sync;
+      },
+    },
+    () => {
+      throw new Error('diagnostic redactor');
+    },
+  );
+  assert.throws(
+    () => hostile.step('native click #shell-play'),
+    (error) => error === sync,
+  );
+  let readThen = 0;
+  const thenable = {
+    get then() {
+      readThen += 1;
+      throw new Error('must not read');
+    },
+  };
+  const foreign = createCompiledOperationTrace(
+    { deadline: 100, now: () => 0, step: () => thenable },
+    (value) => value,
+  );
+  assert.equal(foreign.step('untouched caller-owned result'), thenable);
+  assert.equal(readThen, 0);
+  const encodeError = new Error('original report encoding');
+  assert.throws(
+    () =>
+      trace.encodeReport({}, () => {
+        throw encodeError;
+      }),
+    (error) => error === encodeError,
+  );
+});
+
+test('operation trace is append-only, bounded and redacted while retaining last native action', async () => {
+  const secret = randomUUID();
+  const trace = createCompiledOperationTrace(
+    { deadline: 570000, now: () => 0, step: () => Promise.resolve('original') },
+    (value, cap) => redactPagesText(value, secret, cap),
+  );
+  trace.enterPhase('visible Missions ' + secret);
+  trace.setLocale('uk');
+  await trace.step('native filter journey-mode ' + secret);
+  const first = trace.snapshot().events;
+  for (let i = 0; i < 180; i += 1) {
+    trace.noteRead();
+    await trace.step('read public DOM ' + secret + ' ' + i);
+  }
+  await trace.step('native click #journey-back ' + secret);
+  const value = trace.snapshot();
+  assert(value.events.length <= 128);
+  assert(Buffer.byteLength(JSON.stringify(value, null, 2)) + 1 <= 32768);
+  assert.equal(value.overflow, true);
+  assert(value.droppedEvents > 0);
+  assert.deepEqual(value.events.slice(0, first.length), first);
+  assert(value.lastCompletedNativeAction.label.startsWith('native click #journey-back'));
+  assert(!JSON.stringify(value).includes(secret));
+  assert.equal(value.locale, 'uk');
+  assert.equal(value.phaseReadIteration, 180);
+});
+
+test('operation trace fits the unchanged combined report cap without hiding original diagnostics', async () => {
+  const secret = randomUUID();
+  const trace = createCompiledOperationTrace(
+    {
+      deadline: 570000,
+      now: () => 0,
+      step: () => Promise.reject(new Error(secret + ' x'.repeat(300))),
+    },
+    (value, cap) => redactPagesText(value, secret, cap),
+  );
+  for (let i = 0; i < 40; i += 1) {
+    await assert.rejects(trace.step('read public DOM ' + secret + ' ' + 'x'.repeat(90)));
+  }
+  const ordinary = {
+    diagnostics: { total: 1, overflow: false, events: [{ message: 'x'.repeat(250000) }] },
+  };
+  const encoded = trace.encodeReport(ordinary, (value) => encodePagesReport(value, secret));
+  assert(Buffer.byteLength(encoded) <= 262144);
+  const decoded = JSON.parse(encoded);
+  assert.deepEqual(decoded.diagnostics, ordinary.diagnostics);
+  assert.equal(decoded.operationTrace.omittedForReportCap, true);
+  assert.equal(decoded.operationTrace.overflow, true);
+  assert.deepEqual(decoded.operationTrace.events, []);
+  assert(!encoded.includes(secret));
+  const original = encodePagesReport(ordinary, secret);
+  assert.equal(
+    trace.encodeReport(ordinary, (value) => {
+      if (value.operationTrace) throw new Error('diagnostic encoding unavailable');
+      return encodePagesReport(value, secret);
+    }),
+    original,
+  );
 });
