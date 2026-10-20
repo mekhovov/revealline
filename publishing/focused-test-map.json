@@ -559,6 +559,52 @@
           "timeoutMs": 1800000
         }
       ]
+    },
+    {
+      "id": "couch-touch-localization-complete-contract",
+      "pathPatterns": ["^game/test/couch-touch-localization-host\\.test\\.mjs$"],
+      "commands": [
+        {
+          "id": "couch-touch-live-locale",
+          "command": "node",
+          "args": [
+            "--test",
+            "--test-concurrency=1",
+            "game/test/couch-touch-localization-host.test.mjs"
+          ],
+          "timeoutMs": 180000
+        },
+        {
+          "id": "couch-touch-shared-gestures",
+          "command": "node",
+          "args": ["--test", "--test-concurrency=1", "game/test/couch-shared-touch.test.mjs"],
+          "timeoutMs": 180000
+        },
+        {
+          "id": "couch-touch-steering",
+          "command": "node",
+          "args": ["--test", "--test-concurrency=1", "game/test/touch-steering.test.mjs"],
+          "timeoutMs": 180000
+        },
+        {
+          "id": "couch-touch-preferences",
+          "command": "node",
+          "args": ["--test", "--test-concurrency=1", "game/test/shared-touch-preferences.test.mjs"],
+          "timeoutMs": 180000
+        },
+        {
+          "id": "couch-touch-coop-input-policy",
+          "command": "node",
+          "args": ["--test", "--test-concurrency=1", "game/test/coop-input-policy.test.mjs"],
+          "timeoutMs": 180000
+        },
+        {
+          "id": "unknown-runtime-validate",
+          "command": "npm",
+          "args": ["run", "validate"],
+          "timeoutMs": 1800000
+        }
+      ]
     }
   ],
   "ignoredPathPatterns": ["^(docs/|.*\\.md$)", "^publishing/pages-controller/(evidence|metadata)/"],
