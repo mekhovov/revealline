@@ -1,0 +1,267 @@
+{
+  "format": "revealline-retained-historical-excerpt.v1",
+  "scope": "Retained historical excerpt after an ownership migration. Original bytes are preserved separately. Historical counts, hashes and approvals inside the excerpt describe the original record only; this derived document is not a release qualification, executable restore plan, or complete original inventory.",
+  "originalSHA256": "b116d8420c0e34313b9e51da6f75c9066bab3695827bbd8f79556afcb727594b",
+  "originalGitBlob": "fad2f34507c838bca896b936721a4adce2139f75",
+  "removedRecordsOrFields": 24,
+  "excerpt": {
+    "files": [
+      {
+        "bytes": 13906,
+        "path": "candidate-verification.json",
+        "sha256": "2b47697c7539242341043829a23b01f9e72d6547df1db81bb60fab88fd62d0ca"
+      },
+      {
+        "bytes": 11159,
+        "path": "capacity-inventory.json",
+        "sha256": "ec457b6e3a7ee30aa45e2a078ec87bd27317e56f21a171aa3af5764902b949c2"
+      },
+      {
+        "bytes": 32663343,
+        "path": "distribution-droneaid-community.zip",
+        "sha256": "a2f03ab47a51c4de7a88efd507fdf67feb6534fdda099cfa4d7a6647e39d6b6c"
+      },
+      {
+        "bytes": 34891572,
+        "path": "distribution-droneaid-nl-careful-handoff.zip",
+        "sha256": "ba6c5375fb2bc0f035f1efcb63a00bb71592a81751ce667446d7cef3878d4eb1"
+      },
+      {
+        "bytes": 72305826,
+        "path": "distribution-droneaid-nl-community.zip",
+        "sha256": "4d4819c470a51db8e722646aea8dc4a48c3f8ebbc26407086a6bb82a8a933144"
+      },
+      {
+        "bytes": 34766978,
+        "path": "distribution-droneaid-nl-makers-together.zip",
+        "sha256": "218a30f2a0fdce391c8163c823edeb63af9c9a8fc37c9ffaecf88b4ce572632a"
+      },
+      {
+        "bytes": 35285926,
+        "path": "distribution-droneaid-nl-parts-in-motion.zip",
+        "sha256": "5414c5f623a8ac2e8e7ef5ba5b8ec52d28a0a06399b9e98c870537985e9cadbe"
+      },
+      {
+        "bytes": 35077911,
+        "path": "distribution-droneaid-nl-shared-horizon.zip",
+        "sha256": "a35f9d4d0a91929106f5e21886e8754126528642cb5b8d04e132fc501fe32771"
+      },
+      {
+        "bytes": 34878590,
+        "path": "distribution-droneaid-nl-signals-of-support.zip",
+        "sha256": "48270cc3d4b6b464163a2bcd20841397b959a7518d50828a6094420fefc16bfc"
+      },
+      {
+        "bytes": 33576409,
+        "path": "distribution-droneaid-nl-workshop-lights.zip",
+        "sha256": "acdfe5e7183d3d287befa91b7af46e6e4b795e03619e68562d34a3e440016a25"
+      },
+      {
+        "bytes": 41419969,
+        "path": "distribution-fpv-learning.zip",
+        "sha256": "142c051714df1b380f15569a395c6fdee71a4aae46eadd1fe526a81b9f8f2b3c"
+      },
+      {
+        "bytes": 40198185,
+        "path": "distribution-social-drone-ua.zip",
+        "sha256": "81745a3881bd6eee050f4ebedf1687fde9cef5505c07a4cd35204a7d6c85e98a"
+      },
+      {
+        "bytes": 50299155,
+        "path": "distribution-ukraine-culture.zip",
+        "sha256": "ebf420a88420c06f8894386bc4fc2fbf65a63cec229932e90b8b47924ddf36cd"
+      },
+      {
+        "bytes": 29874148,
+        "path": "distribution-victory-drones.zip",
+        "sha256": "102d5c520ec805ae228b20c73c51e13f223c4f420c1bfb30ef54f5b7f8d64a06"
+      },
+      {
+        "bytes": 18723,
+        "path": "editions.json",
+        "sha256": "1d7a29f509ccee8eeee9cec6ec2bf03b74298fcb6cc9c0747875d98003de82e2"
+      },
+      {
+        "bytes": 143061,
+        "path": "manifest-droneaid-community.json",
+        "sha256": "b74c200f57a2467dfc39f0f4e2c318d4d487a81f4bbd9491b5cca68a002f9524"
+      },
+      {
+        "bytes": 145137,
+        "path": "manifest-droneaid-nl-careful-handoff.json",
+        "sha256": "116e1c0cadeb19c0642e21c34972c7b31a705fbe10340b42875e0967be31418e"
+      },
+      {
+        "bytes": 157458,
+        "path": "manifest-droneaid-nl-community.json",
+        "sha256": "e08bbcda7a23590900016696ac4fa239cdebacdcb1e5382c22bc20cdd05332de"
+      },
+      {
+        "bytes": 145131,
+        "path": "manifest-droneaid-nl-makers-together.json",
+        "sha256": "c45bee387955ffc3d4e3503a66dd544e5d128a7fe62bf7e1c3a3ad878e72530d"
+      },
+      {
+        "bytes": 145479,
+        "path": "manifest-droneaid-nl-parts-in-motion.json",
+        "sha256": "c1ded2aee75cfd4bd8fb13fdd9d214d84305182aa0eab77538ed03e42d9b332a"
+      },
+      {
+        "bytes": 145114,
+        "path": "manifest-droneaid-nl-shared-horizon.json",
+        "sha256": "f52d092616658d791de437c729c9ca47c463a1467dabad2c03151145c6c38165"
+      },
+      {
+        "bytes": 145206,
+        "path": "manifest-droneaid-nl-signals-of-support.json",
+        "sha256": "8c75101fecccb68fc159b792267729bde551ca6c9c3931089a0418cf78232e2f"
+      },
+      {
+        "bytes": 145118,
+        "path": "manifest-droneaid-nl-workshop-lights.json",
+        "sha256": "50ae94436c7700a4deb9a8c314f055775cf617876bc229ed10dcfaff9401e4af"
+      },
+      {
+        "bytes": 158190,
+        "path": "manifest-fpv-learning.json",
+        "sha256": "b5d447efe392b673660487c6d0739091a49f5a6f9d0c4e81be3fb03094ec7a49"
+      },
+      {
+        "bytes": 149361,
+        "path": "manifest-social-drone-ua.json",
+        "sha256": "f99c9882603c488d80b9310b79b6a1be362bfdc5df32e51ccdb721f300c8ac9c"
+      },
+      {
+        "bytes": 154414,
+        "path": "manifest-ukraine-culture.json",
+        "sha256": "97c254dd37f3e8f993a60bd4737098f472dcade8a37008c6fefbb10dab5b3b82"
+      },
+      {
+        "bytes": 146178,
+        "path": "manifest-victory-drones.json",
+        "sha256": "1730e33c7710155fc9daad4bfeff9eb1a0bd04cf4538dee9adcc6c66a1cf10e0"
+      },
+      {
+        "bytes": 57806757,
+        "path": "source-droneaid-community.zip",
+        "sha256": "fc2c989f2740ceaaf97c5b4af52d1afb97cf9a9bd3ed0b24d651bb6b6ee457e5"
+      },
+      {
+        "bytes": 60235145,
+        "path": "source-droneaid-nl-careful-handoff.zip",
+        "sha256": "ffd218654595ae0c063eabe21418a259e61e5e828f46a48d7a1e60f6c89dfac1"
+      },
+      {
+        "bytes": 97258810,
+        "path": "source-droneaid-nl-community.zip",
+        "sha256": "77a3a9ff55d5bf76de22e23acd48de0489e470797ccf63cd0757504de148715f"
+      },
+      {
+        "bytes": 60102941,
+        "path": "source-droneaid-nl-makers-together.zip",
+        "sha256": "7561a86c094385917a0932e874db6e22639a5a8a22278886585985e3a665ff61"
+      },
+      {
+        "bytes": 60614271,
+        "path": "source-droneaid-nl-parts-in-motion.zip",
+        "sha256": "ad3fe015ff5a33308fad084ee876452ee5cc4692085e7658de695a3847bad5d6"
+      },
+      {
+        "bytes": 60437511,
+        "path": "source-droneaid-nl-shared-horizon.zip",
+        "sha256": "76921b4722936b1509b61711393b1e525fcd81967db8fc4fcc08b032e1247231"
+      },
+      {
+        "bytes": 60250962,
+        "path": "source-droneaid-nl-signals-of-support.zip",
+        "sha256": "8bf948368e6defb450e3dda8ecb84d2f0e11e37057381d732318b6c2c7acdc8a"
+      },
+      {
+        "bytes": 58920515,
+        "path": "source-droneaid-nl-workshop-lights.zip",
+        "sha256": "41b733ab24ec58cd82cf2eafcae7f0bfa1481f602f2efcc546c8bc212d9bf76b"
+      },
+      {
+        "bytes": 65516902,
+        "path": "source-fpv-learning.zip",
+        "sha256": "9dd95fb91e067e6ba2c1d4ff70db135b53bdc334a4e497a802dfc87f93354728"
+      },
+      {
+        "bytes": 431164,
+        "path": "source-inventory-droneaid-community.json",
+        "sha256": "b44a05adc8d8866ecb78a056dc104488e1480e4ee1a0a133b142d6361def14f1"
+      },
+      {
+        "bytes": 436585,
+        "path": "source-inventory-droneaid-nl-careful-handoff.json",
+        "sha256": "fbae3efb9cd86407b62788cded51045d7c0ecdc5f9f04b9b3c582cd33e0e712d"
+      },
+      {
+        "bytes": 466129,
+        "path": "source-inventory-droneaid-nl-community.json",
+        "sha256": "f51637cc889d50cbefd94279ec87eb54a0bb7c4a263fcc077aa6eafa0a209d85"
+      },
+      {
+        "bytes": 436573,
+        "path": "source-inventory-droneaid-nl-makers-together.json",
+        "sha256": "0f97a94a9d236b4bd29ea4aee180c722d0e068e7ba0265f26e7d1f362887641a"
+      },
+      {
+        "bytes": 437207,
+        "path": "source-inventory-droneaid-nl-parts-in-motion.json",
+        "sha256": "7843ec5531d7d1c8ddfb6edb4a2b63096b1900080f4fa37ad21092393a3e5069"
+      },
+      {
+        "bytes": 436535,
+        "path": "source-inventory-droneaid-nl-shared-horizon.json",
+        "sha256": "788c4fa95507901af849b376c60b7b043f35f41f1edfeb4d9340db62b4298639"
+      },
+      {
+        "bytes": 436735,
+        "path": "source-inventory-droneaid-nl-signals-of-support.json",
+        "sha256": "03b553d1d411d2f22b9d834a6ff70639456dba44e433e5fdca394d9cfa8169b2"
+      },
+      {
+        "bytes": 435982,
+        "path": "source-inventory-droneaid-nl-workshop-lights.json",
+        "sha256": "d51e8b5c9f261315cef7aa76c71965d5f16bf952bda4c9c3d45bbbebcbd1a1a5"
+      },
+      {
+        "bytes": 462386,
+        "path": "source-inventory-fpv-learning.json",
+        "sha256": "056ecc008eba5cb2e87192c461333b27fd57436bf3a03b48ffa666f25ff520a8"
+      },
+      {
+        "bytes": 443171,
+        "path": "source-inventory-social-drone-ua.json",
+        "sha256": "ce457036042378b9563ff220c334e905f0eb045c5e92b02c4e4ec4d1233b63b8"
+      },
+      {
+        "bytes": 454374,
+        "path": "source-inventory-ukraine-culture.json",
+        "sha256": "2354507cfd3fbd757a00fb8f3aa9e3b81e51d2812bb1893d90bc89ac2141228f"
+      },
+      {
+        "bytes": 436693,
+        "path": "source-inventory-victory-drones.json",
+        "sha256": "6ce1ae4b0ae9b076d6e2591f1b816130fb7783845b0bb92808c1e59ec4720f8a"
+      },
+      {
+        "bytes": 64328490,
+        "path": "source-social-drone-ua.zip",
+        "sha256": "e635abcd0cd2593f6af8c27b671a40f08d034539daada6c88f3d4b939fd323f0"
+      },
+      {
+        "bytes": 74410054,
+        "path": "source-ukraine-culture.zip",
+        "sha256": "45ce5f6aa63282880eddcf87520adf3d052cb9e44c3a90b376c5c9e4aa3962b9"
+      },
+      {
+        "bytes": 54016868,
+        "path": "source-victory-drones.zip",
+        "sha256": "2930254cf822e8de9e7e84e12682486e266219d2297128e93e390ff502b2eda5"
+      }
+    ],
+    "format": "revealline-edition-checksums.v1"
+  }
+}

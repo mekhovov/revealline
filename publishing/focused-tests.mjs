@@ -5,6 +5,7 @@ import { spawn, spawnSync } from 'node:child_process';
 import { createHash } from 'node:crypto';
 import { fileURLToPath } from 'node:url';
 import { parseTestPolicy, readTestPolicy } from './test-policy.mjs';
+import { compactFocusedPlan } from './focused-shard-plan.mjs';
 
 const here = path.dirname(fileURLToPath(import.meta.url));
 
@@ -72,9 +73,24 @@ export function validateFocusedTestMap(manifest) {
   };
 }
 
-export function focusedTestPlan(paths, manifest, { fallbackHandled = false } = {}) {
+export function focusedTestPlan(
+  paths,
+  manifest,
+  { fallbackHandled = false, deletedTests = [] } = {},
+) {
   if (!Array.isArray(paths) || !paths.length || paths.some((item) => !safeChangedPath(item)))
     throw new Error('Focused-test selection requires bounded repository-relative paths.');
+  if (
+    !Array.isArray(deletedTests) ||
+    deletedTests.some(
+      (item) =>
+        !paths.includes(item) ||
+        !item.endsWith('.test.mjs') ||
+        !/^(game\/test|publishing(?:\/pages-controller)?|scripts)\//u.test(item),
+    )
+  )
+    throw new Error('Deleted focused tests must be admitted changed test paths.');
+  const deleted = new Set(deletedTests);
   const map = validateFocusedTestMap(manifest);
   const categories = map.categories.filter((category) =>
     paths.some((changed) => category.patterns.some((pattern) => pattern.test(changed))),
@@ -95,6 +111,9 @@ export function focusedTestPlan(paths, manifest, { fallbackHandled = false } = {
 
   const deferredTests = [];
   for (const changed of paths) {
+    // Only trusted source-tree acquisition may supply these omissions. Category
+    // commands and unknown-runtime validation still cover the removed feature.
+    if (deleted.has(changed)) continue;
     if (!changed.endsWith('.test.mjs')) continue;
     if (!/^(game\/test|publishing(?:\/pages-controller)?|scripts)\//u.test(changed)) continue;
     if (
@@ -126,6 +145,7 @@ export function focusedTestPlan(paths, manifest, { fallbackHandled = false } = {
     categories: categories.map((category) => category.id),
     unknownRuntime,
     deferredTests,
+    ...(deleted.size ? { deletedTests: [...deleted].sort() } : {}),
     commands: uniqueCommands,
   };
 }
@@ -313,6 +333,83 @@ export function focusedCommandExecutionPlan(
     deduplicated,
     diagnostics,
   };
+}
+
+// Unwired v2 preparation seam. Selection, explicit waivers and package-test
+// coverage use the existing functions unchanged. The trusted acquisition layer
+// must supply source-bound inputs; no candidate planner or command is executed.
+export function prepareCompactFocusedExecution({
+  paths,
+  deletedTests = [],
+  manifestBytes,
+  testPolicyBytes,
+  inputs,
+  identity,
+}) {
+  if (
+    !(typeof manifestBytes === 'string' || Buffer.isBuffer(manifestBytes)) ||
+    !(typeof testPolicyBytes === 'string' || Buffer.isBuffer(testPolicyBytes)) ||
+    Buffer.byteLength(manifestBytes) > SHARD_RECEIPT_LIMIT ||
+    Buffer.byteLength(testPolicyBytes) > SHARD_RECEIPT_LIMIT ||
+    !Array.isArray(paths) ||
+    !paths.length ||
+    paths.some((p) => !safeChangedPath(p)) ||
+    identity?.manifestSha256 !== sha256(manifestBytes) ||
+    identity?.testPolicySha256 !== sha256(testPolicyBytes) ||
+    identity?.changedPathsSha256 !== sha256(JSON.stringify(paths)) ||
+    Object.hasOwn(identity, 'selectionSha256')
+  )
+    throw new Error('Focused preparation source identity/digest mismatch.');
+  if (
+    !inputs ||
+    typeof inputs !== 'object' ||
+    Object.keys(inputs).sort().join(',') !== 'packageScripts,repositoryFiles,shellSemantics' ||
+    !inputs.packageScripts ||
+    typeof inputs.packageScripts !== 'object' ||
+    Array.isArray(inputs.packageScripts) ||
+    !Array.isArray(inputs.repositoryFiles) ||
+    inputs.repositoryFiles.some((p) => !safeChangedPath(p)) ||
+    ![null, 'posix'].includes(inputs.shellSemantics)
+  )
+    throw new Error('Invalid focused preparation inputs.');
+  const normalizedInputs = {
+    packageScripts: inputs.packageScripts,
+    repositoryFiles: [...inputs.repositoryFiles].sort(),
+    shellSemantics: inputs.shellSemantics,
+  };
+  const inputBytes = JSON.stringify(normalizedInputs);
+  if (Buffer.byteLength(inputBytes) > SHARD_RECEIPT_LIMIT)
+    throw new Error('Focused preparation inputs exceed their bound.');
+  const manifest = JSON.parse(manifestBytes.toString());
+  const testPolicy = parseTestPolicy(testPolicyBytes.toString());
+  const selected = focusedTestPlan(paths, manifest, {
+    fallbackHandled: identity.fallbackHandled,
+    deletedTests,
+  });
+  const policy = applyFocusedTestPolicy(selected.commands, testPolicy, normalizedInputs);
+  const execution = focusedCommandExecutionPlan(policy.commands, normalizedInputs);
+  const selection = {
+    selected,
+    waivedTests: policy.waivedTests,
+    execution,
+    inputsSha256: sha256(inputBytes),
+  };
+  let noWorkReason = null;
+  if (!execution.commands.length) {
+    if (!selected.commands.length) noWorkReason = 'no-selected-commands';
+    else if (policy.waivedTests.length === selected.commands.length)
+      noWorkReason = 'explicit-policy-waiver';
+    else throw new Error('Unexplained empty focused execution plan.');
+  }
+  const plan = compactFocusedPlan(
+    execution.commands,
+    {
+      ...identity,
+      selectionSha256: sha256(JSON.stringify(selection)),
+    },
+    { noWorkReason },
+  );
+  return { plan, selection };
 }
 
 export function packageScriptShellSemantics(

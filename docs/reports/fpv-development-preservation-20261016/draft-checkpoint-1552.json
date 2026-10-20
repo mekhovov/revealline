@@ -1,0 +1,10 @@
+{
+  "format": "FPVBackupPRDraftCheckpoint.v1",
+  "pr": 1552,
+  "head": "39856085fd13c77ce70bb076fe09e5a6d744143e",
+  "isDraft": true,
+  "state": "OPEN",
+  "autoMergeRequest": null,
+  "noMergeRequestedByLane": true,
+  "capturedAtUnix": 1792127795.9541838
+}

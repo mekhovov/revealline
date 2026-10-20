@@ -10,7 +10,11 @@ export function installDemoRecoveryProbe(env = globalThis) {
     nextId = 1,
     resourceContract = null,
     closeCapture = null,
-    closeCaptureCount = 0;
+    closeCaptureCount = 0,
+    pausedGeometryPolicy = null,
+    pendingGeometry = false,
+    geometryFailure = null,
+    lastGeometryPaint = null;
   const ids = new WeakMap(),
     namespaces = new WeakSet(),
     surfaces = new Map();
@@ -46,6 +50,61 @@ export function installDemoRecoveryProbe(env = globalThis) {
       };
     },
   });
+
+  // Enabled only by the separately declared paused-geometry observer. One
+  // boundary call observes native frame opportunities; it never polls by RPC.
+  const geometryState = (nativeCallback = null) => {
+    const canvas = env.document.getElementById('demo-canvas');
+    const rect = canvas.getBoundingClientRect();
+    const geometry = {
+      clientWidth: canvas.clientWidth,
+      clientHeight: canvas.clientHeight,
+      intrinsicWidth: canvas.width,
+      intrinsicHeight: canvas.height,
+      bounds: { x: rect.x, y: rect.y, width: rect.width, height: rect.height },
+    };
+    return {
+      format: 'DemoPausedGeometrySampleV1',
+      nativeCallback,
+      atMs: env.performance.now(),
+      runId: identity(run),
+      painterId: identity(painter),
+      tick: run?.tick,
+      drawCount,
+      paused: last?.paused,
+      open: Boolean(env.document.getElementById('demo-dialog')?.open),
+      practice:
+        env.document.getElementById('demo-dialog')?.classList.contains('is-practice') ?? false,
+      visible: !env.document.hidden,
+      focused: env.document.hasFocus(),
+      geometry,
+      fittedWidth: Math.min(
+        geometry.clientWidth,
+        (geometry.clientHeight * geometry.intrinsicWidth) / geometry.intrinsicHeight,
+      ),
+      paint: lastGeometryPaint,
+      generation: painter?.preparationGeneration ?? null,
+      paintRevision: painter?.paintRevision ?? null,
+    };
+  };
+  const geometryKey = (value) =>
+    JSON.stringify({
+      runId: value.runId,
+      painterId: value.painterId,
+      tick: value.tick,
+      geometry: value.geometry,
+      fittedWidth: value.fittedWidth,
+      generation: value.generation,
+      paintRevision: value.paintRevision,
+    });
+  const geometryMatchesPaint = (s) =>
+    s.paint?.drawCount === s.drawCount &&
+    s.paint.width === s.fittedWidth &&
+    s.paint.intrinsicWidth === s.geometry.intrinsicWidth &&
+    s.paint.intrinsicHeight === s.geometry.intrinsicHeight &&
+    s.paint.generation === s.generation &&
+    s.paint.paintRevision === s.paintRevision;
+
   const snapshot = (label, diagnostics = null) => {
     const doc = env.document,
       parent = game?.scene?.scenes?.find((s) => s.lastPaint?.run);
@@ -67,6 +126,7 @@ export function installDemoRecoveryProbe(env = globalThis) {
       painterId: identity(painter),
       drawCount,
       lastDraw: last,
+      ...(pausedGeometryPolicy ? { geometry: geometryState() } : {}),
       diagnosticsSource: diagnostics ? 'public-paused-export' : 'not-requested',
       quality: diagnostics?.quality ?? null,
       calibration: diagnostics?.cadenceCalibration ?? null,
@@ -94,6 +154,136 @@ export function installDemoRecoveryProbe(env = globalThis) {
     return { canvas: selected[1].canvas, name: String(selected[0]) };
   }
   env.demoRecoveryProbe = {
+    configurePausedGeometry(policy) {
+      if (pausedGeometryPolicy || policy !== 'paint-matches-stable-geometry-v1')
+        throw Error('Exact one-time paused geometry policy required');
+      pausedGeometryPolicy = policy;
+    },
+    pausedGeometryState() {
+      if (!pausedGeometryPolicy) throw Error('Paused geometry observer not configured');
+      return geometryState();
+    },
+    pausedGeometryFailure() {
+      return geometryFailure ? structuredClone(geometryFailure) : null;
+    },
+    settlePausedGeometry(owner) {
+      if (
+        !pausedGeometryPolicy ||
+        pendingGeometry ||
+        !owner ||
+        Object.keys(owner).sort().join(',') !== 'afterDraw,painterId,practice,runId' ||
+        !Number.isSafeInteger(owner.runId) ||
+        !Number.isSafeInteger(owner.painterId) ||
+        !Number.isSafeInteger(owner.afterDraw) ||
+        owner.afterDraw < 0 ||
+        typeof owner.practice !== 'boolean'
+      )
+        throw Error('Bounded paused geometry owner required');
+      pendingGeometry = true;
+      geometryFailure = null;
+      return new Promise((resolve, reject) => {
+        let handle,
+          timer,
+          settled = false,
+          ordinal = 0,
+          previous = null;
+        let lastTimestamp = -Infinity,
+          staleGeometryFrames = 0;
+        const startedAtMs = env.performance.now();
+        let first = null,
+          latest = null;
+        const finish = (error, value) => {
+          if (settled) return;
+          settled = true;
+          pendingGeometry = false;
+          if (handle !== undefined) env.cancelAnimationFrame(handle);
+          if (timer !== undefined) env.clearTimeout(timer);
+          if (error) {
+            geometryFailure = {
+              format: 'DemoPausedGeometryFailureV1',
+              policy: pausedGeometryPolicy,
+              owner: { ...owner },
+              failure: String(error?.message ?? error).slice(0, 512),
+              first,
+              latest,
+              previous,
+              framesObserved: ordinal,
+              staleGeometryFrames,
+            };
+            reject(error);
+          } else resolve(value);
+        };
+        const check = (s) => {
+          if (
+            !s.open ||
+            !s.visible ||
+            !s.focused ||
+            !s.paused ||
+            s.runId !== owner.runId ||
+            s.painterId !== owner.painterId ||
+            s.practice !== owner.practice ||
+            s.tick !== first.tick ||
+            s.drawCount <= owner.afterDraw ||
+            s.drawCount < first.drawCount
+          )
+            throw Error('Paused geometry owner changed');
+          const g = s.geometry;
+          if (
+            ![
+              g.clientWidth,
+              g.clientHeight,
+              g.intrinsicWidth,
+              g.intrinsicHeight,
+              g.bounds.width,
+              g.bounds.height,
+              s.fittedWidth,
+            ].every((n) => Number.isFinite(n) && n > 0) ||
+            ![g.bounds.x, g.bounds.y].every(Number.isFinite)
+          )
+            throw Error('Actual paused canvas geometry required');
+        };
+        const frame = (timestamp) => {
+          try {
+            if (!Number.isFinite(timestamp) || timestamp <= lastTimestamp)
+              throw Error('Distinct native frame timestamps required');
+            lastTimestamp = timestamp;
+            if (++ordinal > 2048 || env.performance.now() - startedAtMs >= 10000)
+              throw Error('Paused geometry readiness bound');
+            const sample = geometryState({ ordinal, timestamp });
+            latest = sample;
+            check(sample);
+            if (!geometryMatchesPaint(sample)) {
+              staleGeometryFrames++;
+              previous = null;
+            } else if (previous && geometryKey(previous) === geometryKey(sample)) {
+              finish(null, {
+                format: 'DemoPausedGeometryReadinessV1',
+                policy: pausedGeometryPolicy,
+                owner: { ...owner },
+                first,
+                framesObserved: ordinal,
+                staleGeometryFrames,
+                accepted: [previous, sample],
+              });
+              return;
+            } else previous = sample;
+            if (ordinal >= 2048) throw Error('Paused geometry readiness bound');
+            handle = env.requestAnimationFrame(frame);
+          } catch (error) {
+            finish(error);
+          }
+        };
+        try {
+          first = geometryState();
+          check(first);
+          timer = env.setTimeout(() => finish(Error('Paused geometry readiness deadline')), 10000);
+          handle = env.requestAnimationFrame(frame);
+        } catch (error) {
+          finish(error);
+        }
+      });
+    },
+
     configureResources(contract) {
       if (
         resourceContract ||
@@ -192,6 +382,15 @@ export function installDemoRecoveryProbe(env = globalThis) {
           run = state;
           painter = this;
           drawCount++;
+          if (pausedGeometryPolicy)
+            lastGeometryPaint = {
+              drawCount,
+              width: options.displayCSSWidth,
+              intrinsicWidth: context.canvas.width,
+              intrinsicHeight: context.canvas.height,
+              generation: this.preparationGeneration ?? null,
+              paintRevision: this.paintRevision ?? null,
+            };
           last = {
             quality: options.quality ?? 'full',
             reduced: options.reduced,

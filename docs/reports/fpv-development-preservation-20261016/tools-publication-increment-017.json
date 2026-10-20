@@ -1,0 +1,62 @@
+{
+  "previousHead": "6723330a0c109ff428f811fba0404d47665f3a6d",
+  "head": "66f2a6e2d4924dc43d255967914b081b3f9c582d",
+  "authenticatedChangedBlobReadbackMatches": true,
+  "capacityFixAgainst": "6723330a0c109ff428f811fba0404d47665f3a6d",
+  "files": [
+    {
+      "path": "docs/reports/fpv-development-preservation-20261016/shared-cache-capacity-review-receipt.json",
+      "gitBlobSHA1": "d843b79dd09983883cf19ed0d96b0d2e33f969ee",
+      "sha256": "e72153fc720ac8850b6ab4487c7b9b64e7335cc0d0a06a681777c7e2ea1201e7",
+      "bytes": 2010
+    },
+    {
+      "path": "docs/reports/fpv-development-preservation-20261016/tools-publication-increment-016.json",
+      "gitBlobSHA1": "30c0551b90325691419af69eade7cd573b006fb9",
+      "sha256": "fdae6b840753c33701459c8d71999d9cd9d1e912d96af29ae76eb458cf3ec4fe",
+      "bytes": 2373
+    },
+    {
+      "path": "docs/reports/fpv-development-preservation-20261016/helper-tests-shared-cache-five.txt",
+      "gitBlobSHA1": "9b7a813cee9bd0352dddbaed1be3727c6fe15e26",
+      "sha256": "5c7c995859fa8885eeb1abde10bc513b49cda16cdf272fc27014d2e869707a63",
+      "bytes": 5662
+    },
+    {
+      "path": "docs/reports/fpv-development-preservation-20261016/helper-tests-shared-cas.txt",
+      "gitBlobSHA1": "3af3152c323998d63321dbad5892d28809120586",
+      "sha256": "c8edb9e4b76ed4517cdf4a78992dde6d37b1e8f8102375b174060888c0737bae",
+      "bytes": 2324
+    },
+    {
+      "path": "docs/reports/fpv-development-preservation-20261016/helper-tests-capacity-legacy.txt",
+      "gitBlobSHA1": "1826c47ffebf21092f9d8aebf5e5732e4494ae2a",
+      "sha256": "034a8d4b9715f0fa72cd40de99edd7a78982e1b5c5eb45153ba94a3f7576ea31",
+      "bytes": 1602
+    },
+    {
+      "path": "authoring/fpv-development-preservation/restore.py",
+      "gitBlobSHA1": "5545f5ee0eb23388b6af0be1615c8e767abd1ab0",
+      "sha256": "7aa2f86692ab4d5fd3117d594e5a46ab7c033567788ba6cd242007ff804d0374",
+      "bytes": 13519
+    },
+    {
+      "path": "authoring/fpv-development-preservation/portable_restore_check.py",
+      "gitBlobSHA1": "187b41a96417f619a6a36d438852a4e506522596",
+      "sha256": "37c9c75c2d8448674c9e8b9f8f0ed7d39487fda34d92e47162ddda58618222fc",
+      "bytes": 4033
+    },
+    {
+      "path": "authoring/fpv-development-preservation/test_multi_restore.py",
+      "gitBlobSHA1": "c60e9a8e967d90b97dc5564aa9ac43ff8ae186de",
+      "sha256": "e74df26a0bf0f49c3725e3009d600e87088c1a5adf70be0f6bca1d726d175bc7",
+      "bytes": 10385
+    },
+    {
+      "path": "authoring/fpv-development-preservation/README.md",
+      "gitBlobSHA1": "81bffab706bdfe2e22ed377306a380e600ea402c",
+      "sha256": "cb8dfa9577e9ce478a478734c7552b8aef25eaa23a4206620c594ebf41571842",
+      "bytes": 13682
+    }
+  ]
+}
