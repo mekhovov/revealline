@@ -7,7 +7,7 @@
     "audit": "e2bf4f0e61218c85a1b0bb5779884b622ec03925",
     "implementation": "20555cda6bd44a0736aa829e64c52e455b4e770c",
     "originalWorkspace": "Preserved; no implementation edits.",
-    "latestObservedMain": "43deae2ce89d0b3b58964b7c97960b26667db26a"
+    "latestObservedMain": "15e58e77ae45e4fb9ef9e939734a5e9273f3b1cf"
   },
   "featureCount": 83,
   "setup": {
@@ -15,11 +15,11 @@
     "details": "Two managed implementation worktrees plus lightweight sparse checkouts; failed full checkouts self-cleaned after disk exhaustion. No unrelated data removed."
   },
   "nextPriority": [
-    "P1 · Mission browser #1773 / diagnostic #1789: normal current29 source cases pass. Browser reaches current/retained Missions, Back focus, exact briefing and Start; one source-bound pause has unavailable guard values. Review and qualify active-pause ownership correction with complete old-owner31 expected29pass/2fail then corrected31pass. Diagnose cause before production fix; preserve original deadlines.",
-    "P1 · Readability #1774 / test-fixture prerequisite #1791: unchanged complete115 World cases now pass under original limits at6c26. Finish all28 original whole files plus mandatory Overflight host on this revision, then EN/UK/fonts/scales/browser/package acceptance. Historical24 files/246 cases remain bound to2c4d; four previously unrun files still require current proof.",
-    "P1 · Community readiness #1638 and query ownership #1644: source merged; current e758 modeled-page Retry/EN/UK/retained-values/focus replay passes. Installed-library #1651 refreshed to e4cc and all4 whole Community files/52 cases plus validation pass. Next actual current Installed/outage/removal/recovery browser integration, then real service/package/installed-offline acceptance.",
-    "P1 · Touch language #1669: current2d0b passes all9 selected commands/374 cases, including all5 whole Touch files/67 cases. Prepare one isolated current Team menu review; exact assets and explicit1024-request envelope reviewed before launch. Actual Duel/Team EN/UK, focus, paused play and retained saves remain open; packages/devices separate.",
-    "P1 · Offline and backup #1624 / #1627: current43de refresh published4df; canonical18-namespace catalog2 and six static stages pass. Normal planner explicitly selects all6 Offline files, localization and validation. Complete terminal evidence and final configured validation, then recovery and packaged cold launch; physical iPhone installed-PWA remains Not tested.",
+    "P1 · Mission browser #1773 / diagnostic #1789: current 31 source cases pass. The latest browser run stops earlier while reading Missions; the Start probe is not reached. Preserve the older Start observation and failures, establish reliable browser responsiveness, then verify the actual cause, accepted play and Pause/Resume without extending deadlines.",
+    "P1 · Readability #1774 / prerequisite #1791: all 28 original whole files plus the required host pass, 619 cases on the exact draft. Complete EN/UK, fonts, scales and viewport browser acceptance, then packages. Prepare the next complete Raid/Time Attack/Marathon layout slice; its execution is still pending.",
+    "P1 · Community #1638 / #1644 / #1651: all three source slices are merged externally. Installed-library source passes all four whole Community files, 52 cases and configured validation. Verify the current Installed/outage browser flow, then deliver removal review and retained recovery as separate PRs; real service and installed/offline packages remain open.",
+    "P1 · Touch language #1669: nine selected commands pass, 374 cases. Native Team settings EN→UK→EN preserve a changed Swipe preference with one write. The isolated server fails on a missing stylesheet, so the full browser flow remains unqualified. Finish the complete resource closure, then Team/Duel focus, paused play and retained-save acceptance.",
+    "P1 · Offline and backup #1624 / #1627: all six required Offline files pass, 94 cases, plus 58 localization cases, full localization and configured validation. Eight source audits and complete terminal evidence verify the exact draft. Next recovery and packaged cold launch; physical iPhone installed-PWA remains Not tested.",
     "P1 · Text preference compatibility #1668: source merged with 2,309 source and 1,908 preview checks passing on its recorded revision. Finish current browser, inner-package and offline acceptance.",
     "P1 · Team Home #1747: source merged and nine reviewed files match the admitted source. Finish earned-result, complete-host, browser and package acceptance. Full lesson recommendations still depend on Learn.",
     "P1 · Shared support #1762: eight complete files pass 414 cases; the older preview retains 12 failures. Check current Data/modal navigation, exports, package and remaining hosts.",
@@ -107,7 +107,7 @@
           ".cache/improvements-evidence/2026-10-19/minimal-retention-generated-duplicate-release.json"
         ]
       },
-      "latestFreePointBytes": 209412096,
+      "latestFreePointBytes": 236552192,
       "latestCompaction": {
         "sourcePackBytes": 1478004933,
         "minimalReplacementBytes": 545060240,
@@ -274,24 +274,38 @@
       },
       "latestTemporaryBackupOffload": {
         "status": "PASS_BACKUP_ONLY",
-        "bytesFullyPreserved": 129764920,
-        "files": 672,
+        "bytesFullyPreserved": 164436235,
+        "files": 1218,
         "externalRoot": "/Volumes/alex/CodexMigrationStaging",
         "receipts": [
           "/Volumes/alex/CodexMigrationStaging/revealline-temporary-backups-20261020-0845/receipt-one-completed.json",
           "/Volumes/alex/CodexMigrationStaging/revealline-temporary-backups-20261020-0910-index/receipt.json",
-          "/Volumes/alex/CodexMigrationStaging/revealline-temporary-backups-20261020-0920-closed/receipt-three-completed.json"
+          "/Volumes/alex/CodexMigrationStaging/revealline-temporary-backups-20261020-0920-closed/receipt-five-completed-corrected.json"
         ],
         "manifestSHA256": [
           "90be6515ac3ea8011272be0cdc9c2d27d352450d326a310a1e30ad32f4c404b2",
           "0cc89f3cf71663e1f9c53b3da0b839ca731f1265426b3d533e9147da6938badd",
-          "97054f894cc684025b594e799babd1a22a496e80964ef913e1b1785ea9dcc098"
+          "52b22b7428b074e4a49f35feb9b3049901d4309f9360b56ff98496a7a2a8ec7a"
         ],
         "originalBackupPathsAccessibleViaVerifiedSymlinks": true,
         "originalBytesAndMetadataLosslesslyPreserved": true,
         "sourceGitWipSavesOfflineDependenciesUntouched": true,
         "otherChatsKeepRunning": true,
-        "qualification": "Closed recovery backups only; external share must remain mounted for historical recovery. One interrupted index handoff and closed-copy wall stop are retained; final original-path hashes verify all completed moves. Remaining three reviewed backup directories untouched."
+        "qualification": "Only closed historical recovery backups: five completed directories plus index/SDK backups, complete byte/metadata retention and verified original-path symlinks. External share must remain mounted for historical recovery; last reviewed bytecode backup untouched."
+      },
+      "failedReadOnlyFetchIncident": {
+        "status": "STOPPED_IDENTIFIED_TEMPORARY_FILE_RECOVERABLY_OFFLOADED",
+        "cause": "A source search omitted the no-lazy-fetch environment and initiated promisor hydration; it failed from disk exhaustion. Whole object-store unchanged is not claimed.",
+        "session": 87499,
+        "sourceIndexRefsWipSavesNotRemoved": true,
+        "agentFrozen": true,
+        "temporaryFile": "tmp_pack_v4HpNb",
+        "bytesFullyPreserved": 72613888,
+        "SHA256": "401b5a65b868a01878f282ab3b19036fcb69550d86f5732beb1f08b4c1f93de6",
+        "receipt": "/Volumes/alex/CodexMigrationStaging/revealline-failed-readonly-fetch-20261020-0935/receipt.json",
+        "manifestSHA256": "fe7eaffd373de8a1231db166da08b09f9380aa0156ca1720a9508ca58b7a74d4",
+        "cleanup": "Only the identified closed failed partial pack was copied, fsynced and fully hashed; original pathname is a verified symlink. Existing valid packs and unproven old fragments untouched.",
+        "prevention": "Every local Git read requires GIT_NO_LAZY_FETCH=1 and GIT_OPTIONAL_LOCKS=0; bounded explicit API reads replace repository searches. Other chats keep running."
       }
     },
     "pendingTestPrerequisite": {
@@ -381,7 +395,7 @@
     },
     "currentReadabilityReconciliation": {
       "main": "311d242b1c6666906a2b5371262a33dcd0c15667",
-      "status": "unchanged_world115_pass_at6c26_broader_cohort_and_player_acceptance_pending",
+      "status": "complete_current_619_native_PASS_browser_packages_pending",
       "sourcePaths": 63,
       "changedAfterBodies": 4,
       "unchangedAfterBodies": 59,
@@ -391,7 +405,7 @@
       "independentReadbackSHA256": "dc9d136d8a06bb21c8d0e79e5f3f2be8dceeb71d71101a1c6424c52216f662ee",
       "referenceSHA256": "c824cf84ab40e23c5084c63b0a38a96aa702ccf6222f7299a177a79df453d754",
       "featureLeafSHA256": "7351b2520ccccc1abb8e375cdbe2fd28cb158940c3d147305a60c37a8f5977bc",
-      "qualification": "Source-merged readability retains its scoped source evidence. Separate draft1791 now passes complete115 native World test under unchanged limits. Complete current cohort, browser and packages remain pending.",
+      "qualification": "All28 original wholefiles plus mandatory host pass619 on exact6c26 draft, with99 sealed terminals and66 fullsource audits independently verified. Actual browser and package acceptance remain pending.",
       "currentControls": {
         "receiptSHA256": "9984a0e5614247c79638b134b42bbba11d21fbe184273619d3b9a43cfcf0f1dd",
         "mockCases": 31,
@@ -428,34 +442,30 @@
         "scope": "Only group1 exact2c4d; complete run now terminal RED."
       },
       "currentNativeTerminal": {
-        "status": "COMPLETE_WHOLE_WORLD115_PASS_BROADER_COHORT_PENDING",
+        "status": "PASS_COMPLETE_28_ORIGINAL_FILES_PLUS_REQUIRED_HOST",
         "head": "6c26ceeba877a7b08ac9f6d7c01b466df4e245ec",
         "tree": "aab3e3d0fcfdac14f791b0ae2037cbb9866b8e46",
-        "run": 39396405266,
-        "job": 118540122232,
-        "tests": 115,
-        "topLevel": 85,
-        "nested": 30,
-        "pass": 115,
+        "run": 39396405321,
+        "originalWholeFiles": 28,
+        "originalCases": 588,
+        "additionalMandatoryHostFiles": 1,
+        "additionalMandatoryHostCases": 31,
+        "totalWholeFiles": 29,
+        "cases": 619,
+        "pass": 619,
         "fail": 0,
         "skipped": 0,
         "cancelled": 0,
-        "todo": 0,
-        "seconds": 65.2092,
-        "peakRSSBytes": 1422635008,
-        "Node": "22.22.2",
-        "heapMiB": 1536,
-        "RSSMiB": 2048,
-        "wallSeconds": 180,
-        "wholeFileUnfiltered": true,
-        "allThreeFullSourceAuditsExact": true,
-        "scalarRows": 444,
-        "observedFixtures": 111,
-        "allPruneWorkersAndMessages": 0,
-        "rootFull21ProofSHA256": "42dd0f25d9e9bd466ce5c9a522c02210c0ce49aa2c871604635fc774847bd4d8",
-        "remaining": "Current original28 files plus mandatory host complete terminal collection; actual browser/fonts/languages/scales/packages. Do not add old246 cases to current115."
+        "sealedTerminals": 99,
+        "fullSourceAudits": 66,
+        "completeGroupRawBytes": 320297,
+        "wholeFilesUnfiltered": true,
+        "limitsUnchanged": true,
+        "rootReadbackSHA256": "38d87bba45032bf16707b29857979d3e7ca22d3168387ca494cb4f1ba6db2d13",
+        "peerReadbackSHA256": "f2da523f4e6750a371eb2fb9c911373f6cd439538a7727da8c2cdf9e443c713e",
+        "remaining": "Exact browser/fonts/languages/scales/viewports, source admission and packages. Standalone115 and historical246 are not added to619."
       },
-      "next": "P1 · Readability #1774 / test-fixture prerequisite #1791: unchanged complete115 World cases now pass under original limits at6c26. Finish all28 original whole files plus mandatory Overflight host on this revision, then EN/UK/fonts/scales/browser/package acceptance. Historical24 files/246 cases remain bound to2c4d; four previously unrun files still require current proof.",
+      "next": "P1 · Readability #1774 / prerequisite #1791: all 28 original whole files plus the required host pass, 619 cases on the exact draft. Complete EN/UK, fonts, scales and viewport browser acceptance, then packages. Prepare the next complete Raid/Time Attack/Marathon layout slice; its execution is still pending.",
       "historical2c4dNativeTerminal": {
         "status": "FAILED_WHOLE_WORLD_OOM_ORIGINAL28_INCOMPLETE_NO_PROMOTION",
         "run": 39372349639,
@@ -559,6 +569,34 @@
         "noRerunNoFiltersNoLimitsRaisedNoSourceChange": true,
         "summarySHA256": "e67f04a332b1d46c5b012bd38a871aaf4cd4fbc4bf638be1a692dce2c2871719",
         "rootAll4FullRawProofSHA256": "8d53130bba61e93b5a251bbca047ed22a7df69640684623d9fcd74468eb57d5d"
+      },
+      "world115NativeTerminal": {
+        "status": "COMPLETE_WHOLE_WORLD115_PASS_BROADER_COHORT_PENDING",
+        "head": "6c26ceeba877a7b08ac9f6d7c01b466df4e245ec",
+        "tree": "aab3e3d0fcfdac14f791b0ae2037cbb9866b8e46",
+        "run": 39396405266,
+        "job": 118540122232,
+        "tests": 115,
+        "topLevel": 85,
+        "nested": 30,
+        "pass": 115,
+        "fail": 0,
+        "skipped": 0,
+        "cancelled": 0,
+        "todo": 0,
+        "seconds": 65.2092,
+        "peakRSSBytes": 1422635008,
+        "Node": "22.22.2",
+        "heapMiB": 1536,
+        "RSSMiB": 2048,
+        "wallSeconds": 180,
+        "wholeFileUnfiltered": true,
+        "allThreeFullSourceAuditsExact": true,
+        "scalarRows": 444,
+        "observedFixtures": 111,
+        "allPruneWorkersAndMessages": 0,
+        "rootFull21ProofSHA256": "42dd0f25d9e9bd466ce5c9a522c02210c0ce49aa2c871604635fc774847bd4d8",
+        "remaining": "Current original28 files plus mandatory host complete terminal collection; actual browser/fonts/languages/scales/packages. Do not add old246 cases to current115."
       }
     },
     "currentMenuResearch": {
@@ -577,17 +615,17 @@
         }
       ],
       "latestEntryDiagnostic": {
-        "commit": "7db95989f5b895ff1d8c96d229b397c275ff0547",
-        "status": "draft_current29_source_PASS_browser_guard_values_unavailable",
-        "sourceRun": "https://github.com/mekhovov/revealline/actions/runs/39395985782",
-        "browserRun": "https://github.com/mekhovov/revealline/actions/runs/39395985869",
+        "commit": "3c1d3119387e47636794095e9926365ed7b81459",
+        "status": "draft_current31_source_PASS_browser_earlier_Missions_DOM_failure_probe_NOT_REACHED",
+        "sourceRun": "https://github.com/mekhovov/revealline/actions/runs/39400710939",
+        "browserRun": "https://github.com/mekhovov/revealline/actions/runs/39400710863",
         "qualification": {
-          "automated": "Private13 stages and normal whole29 PASS",
-          "browser": "Current/retained Missions, Back focus, briefing and native Start reached; one pause, guard read unavailable, running fails original60s; all6 after-audits pass",
+          "automated": "Private14 stages PASS: complete oldowner31 yields29pass/2newfail; corrected complete31PASS. Normal exact3c1d complete31PASS.",
+          "browser": "FAILED earlier at visible Missions public DOM read9999.953ms; source-bound probe NOT_REACHED/null; six after-audits PASS",
           "physical": "not_tested"
         },
-        "rootProofSHA256": "d8b292af967dd9ebeadfeb92331487183319fcc7934acc7f15636231f91fb358",
-        "next": "P1 · Mission browser #1773 / diagnostic #1789: normal current29 source cases pass. Browser reaches current/retained Missions, Back focus, exact briefing and Start; one source-bound pause has unavailable guard values. Review and qualify active-pause ownership correction with complete old-owner31 expected29pass/2fail then corrected31pass. Diagnose cause before production fix; preserve original deadlines."
+        "next": "P1 · Mission browser #1773 / diagnostic #1789: current 31 source cases pass. The latest browser run stops earlier while reading Missions; the Start probe is not reached. Preserve the older Start observation and failures, establish reliable browser responsiveness, then verify the actual cause, accepted play and Pause/Resume without extending deadlines.",
+        "terminalPeerProofSHA256": "2c327fd2d9d97efda1d655869417998d46aa85036c7cc0f17caaef6b0b73ee18"
       }
     }
   },
@@ -792,7 +830,7 @@
           "mergeState": "UNSTABLE",
           "observedRemoteHead": "2d0b02b2260e6c0033e2755cf39d04f07d7f01fc",
           "lastKnownMergeState": "DIRTY",
-          "next": "Actual current Duel/Team EN/UK language, focus, paused-play and save acceptance; all5 whole Touch files/67cases and full9commands/374cases now pass on exact2d0b. Remains draft; package/device acceptance separate.",
+          "next": "P1 · Touch language #1669: nine selected commands pass, 374 cases. Native Team settings EN→UK→EN preserve a changed Swipe preference with one write. The isolated server fails on a missing stylesheet, so the full browser flow remains unqualified. Finish the complete resource closure, then Team/Duel focus, paused play and retained-save acceptance.",
           "currentSourcePreparation": {
             "main": "ab6d32feb740b2313cd305bb56b1db10d8e178ee",
             "stagedHead": "023562cbab2b55d82347206cd059128a880b2929",
@@ -856,6 +894,23 @@
               "overall": "SUCCESS",
               "broadTestBuild": "SKIPPED_NOT_PASS"
             }
+          },
+          "currentBrowserObservation": {
+            "head": "2d0b02b2260e6c0033e2755cf39d04f07d7f01fc",
+            "status": "PARTIAL_NATIVE_SETTINGS_ONLY_FULL_REFERENCE_RUN_FAILED",
+            "viewport": "390x760 CSS fixture, not iPhone hardware",
+            "actualActions": "Native Settings: select Swipe once, English→Ukrainian→English; reopen Controls and observe focus/labels/options/both-seat accessibility labels",
+            "observed": "Swipe, regular size and0.55 opacity preserved; exactly one touch preference write across language roundtrip",
+            "sourcePrePostVerified": true,
+            "postGitObjectReread": false,
+            "serverAttempt3": "/tmp/revealline-touch2d0b-team-page-review-attempt3/receipt.json",
+            "failure": "Strict reference server stopped on missing /game/ui/profile-recovery-dialog.css after527requests; no whole-browser pass. Previous missing global-settings-tools.css retained.",
+            "evidence": [
+              ".cache/improvements-evidence/2026-10-20/team2d0b-v4-partial-uk-controls-ax.txt",
+              ".cache/improvements-evidence/2026-10-20/team2d0b-v4-partial-en-roundtrip-controls-ax.txt",
+              ".cache/improvements-evidence/2026-10-20/team2d0b-v4-partial-en-roundtrip-controls.png"
+            ],
+            "unqualified": "Play unavailable in this reference session; paused play, retained real saves, Duel, packages and devices remain open."
           }
         },
         {
@@ -2472,15 +2527,15 @@
       "implementationSlices": [
         {
           "id": "local-installed",
-          "status": "reviewed_stack",
+          "status": "merged",
           "pr": "https://github.com/mekhovov/revealline/pull/1651",
           "commit": "e4cc86af458863e787e2061a97526aae61286f86",
           "evidence": [
             "Source review,47 focused tests/source gates and actual catalog-outage browser passed.",
             "Integrated on query53d: six original feature blobs and +528/−35 delta identical.54/54 focused cases, full lint, uninterrupted full validation and changed format/diff pass. Eight full-format parent-baseline files unchanged. Independent integration review clear; published dependent draft. Actual catalog-outage browser receipt remains attributed to00d predecessor; no full PWA/device claim."
           ],
-          "deliveryState": "draft",
-          "mergeState": "UNSTABLE",
+          "deliveryState": "merged",
+          "mergeState": "MERGED",
           "observedRemoteHead": "e4cc86af458863e787e2061a97526aae61286f86",
           "currentQualification": {
             "head": "e4cc86af458863e787e2061a97526aae61286f86",
@@ -2496,8 +2551,12 @@
             "overall": "SUCCESS",
             "rootFullSourceProofSHA256": "ee5df85050802721a9d47bd7022b5257a77655f5089035f856d2e336e24854f0",
             "broadTestBuild": "SKIPPED_NOT_PASS",
-            "currentBrowserPackagePhysical": "PENDING"
-          }
+            "currentBrowserPackagePhysical": "PENDING",
+            "sourceMerge": "External exacte4cc admitted; actual current browser/package/physical pending"
+          },
+          "mergeCommit": "5cb1e76a8087aa04a2492f790b5e0c0c08469e40",
+          "mergedAt": "2026-10-20T09:17:11Z",
+          "next": "P1 · Community #1638 / #1644 / #1651: all three source slices are merged externally. Installed-library source passes all four whole Community files, 52 cases and configured validation. Verify the current Installed/outage browser flow, then deliver removal review and retained recovery as separate PRs; real service and installed/offline packages remain open."
         },
         {
           "id": "retained-recovery-entry",
@@ -2739,14 +2798,14 @@
       "status": "draft_review",
       "owner": "lane-b",
       "qualification": {
-        "automated": "current43de_source10_catalog2_and_statics6_pass_normal_six_file_terminal_collection_and_validation_pending",
+        "automated": "PASS exact4df all6 Offline wholefiles94 + localization58 =152; full localization and configured validation; 8 fullsource audits",
         "browser": "component_fixture_passed",
         "physical": "not_tested"
       },
       "blocker": null,
       "pr": "https://github.com/mekhovov/revealline/pull/1624",
       "commit": "4dfad38a23d367a0ecc80b849ce8a97888e40099",
-      "next": "P1 · Offline and backup #1624 / #1627: current43de refresh published4df; canonical18-namespace catalog2 and six static stages pass. Normal planner explicitly selects all6 Offline files, localization and validation. Complete terminal evidence and final configured validation, then recovery and packaged cold launch; physical iPhone installed-PWA remains Not tested.",
+      "next": "P1 · Offline and backup #1624 / #1627: all six required Offline files pass, 94 cases, plus 58 localization cases, full localization and configured validation. Eight source audits and complete terminal evidence verify the exact draft. Next recovery and packaged cold launch; physical iPhone installed-PWA remains Not tested.",
       "evidence": [
         "51 focused readiness/state/host tests pass; verified health calls use verify=true. Generations discard stale/cross-tab results.",
         "Lint, full content validation and changed-file formatting pass. Full format has eight unchanged baseline failures.",
@@ -2759,7 +2818,7 @@
       "observedRemoteHead": "4dfad38a23d367a0ecc80b849ce8a97888e40099",
       "lastKnownMergeState": "UNSTABLE",
       "currentReconciliation": {
-        "status": "published_current10_source_catalog2_statics6_pass_normal_cohort_pending",
+        "status": "exact4df_normal_six_commands_source_PASS_browser_recovery_packages_pending",
         "reviewedMain": "41f148583c21e6d46ef637729a3aed3b6488737d",
         "requiredFreshMain": "43deae2ce89d0b3b58964b7c97960b26667db26a",
         "immutableSourcePaths": 7,
@@ -2801,7 +2860,25 @@
           "waived": false,
           "manualMapChange": false,
           "proofSHA256": "c89a1ccb03d9d6466b93af12df1797823e4b8c9d78e70a8ba85c00d4cc0aab06",
-          "terminal": "Collection in progress; final validation not yet qualified"
+          "terminal": "PASS: six commands executed successfully, all required whole files, full localization and configured validation; broad test/build skipped, not passed"
+        },
+        "hostedTerminal": {
+          "run": 39397451863,
+          "head": "4dfad38a23d367a0ecc80b849ce8a97888e40099",
+          "commands": 6,
+          "OfflineWholeFiles": 6,
+          "OfflineCases": 94,
+          "localizationCases": 58,
+          "totalCases": 152,
+          "fullSourceAudits": 8,
+          "fullRawJobBytes": 284049,
+          "overall": "SUCCESS",
+          "configuredValidation": "PASS",
+          "fullLocalization": "PASS",
+          "rootArtifactsReadbackSHA256": "97ed46df1ca509711894dddbe96dda7a47218cf524b6a278d4c0a185bbf18f06",
+          "rootSixJobsReadbackSHA256": "62ab3f84f980b8952988934d811fe0ee8a0addd1ee3b9c352e5a622d80aca3a3",
+          "broadTestBuild": "SKIPPED_NOT_PASS",
+          "qualificationBoundary": "Draft based on43de; no inherited unmerged1791 World pass; browser/recovery/package/device acceptance remain pending."
         }
       },
       "deviceResearchChecklist": [
@@ -4027,7 +4104,7 @@
       "blocker": null,
       "pr": null,
       "commit": "94d73cd63d81afbf25c978a6c54df99bd5654ff2",
-      "next": "P1 · Readability #1774 / test-fixture prerequisite #1791: unchanged complete115 World cases now pass under original limits at6c26. Finish all28 original whole files plus mandatory Overflight host on this revision, then EN/UK/fonts/scales/browser/package acceptance. Historical24 files/246 cases remain bound to2c4d; four previously unrun files still require current proof.",
+      "next": "P1 · Readability #1774 / prerequisite #1791: all 28 original whole files plus the required host pass, 619 cases on the exact draft. Complete EN/UK, fonts, scales and viewport browser acceptance, then packages. Prepare the next complete Raid/Time Attack/Marathon layout slice; its execution is still pending.",
       "evidence": [
         "Read-only inventory identifies one classic-app/play.html owner for Solo/Versus/Team; separate Snake hub is excluded from the first candidate. Acceptance covers first-paint/runtime/preference/caption consistency, complete deferred styles, actual EN/UK portrait/landscape menus/readers/results/HUD and retained pause/focus/save ownership. No product change or200% family qualification claimed yet. /tmp/revealline-f09b-snake-inventory-preliminary.json.",
         "Frozen627 on e40: complete play-family preference/first-paint/settings integration,377-module/21-sheet inventory,41 readable absolute declarations scaled once and2 arrow-art exclusions.138 host/bootstrap/global plus120 shared regressions and3 closure/runtime-theme tests pass; full lint pass, full validation/source/browser review pending. Thin source fixture8810, no automatic progress injection. No200% or device acceptance claimed.",
@@ -4150,7 +4227,7 @@
           "commit": "2c4d163b8e3338adc32f1047f4de478abda07c1b",
           "dependency": "Compatibility1668 and complete SingleDrone/Riy typography/layout inventory; follow independent width repair",
           "effort": "Within original6–10d totalF09, not a second full estimate",
-          "next": "Complete current28 original whole files plus mandatory Overflight host after #1791 unchanged115 PASS, then complete language/font/text-size/viewport and package acceptance; next Raid/Time Attack/Marathon family remains planned.",
+          "next": "P1 · Readability #1774 / prerequisite #1791: all 28 original whole files plus the required host pass, 619 cases on the exact draft. Complete EN/UK, fonts, scales and viewport browser acceptance, then packages. Prepare the next complete Raid/Time Attack/Marathon layout slice; its execution is still pending.",
           "evidence": [
             "Read-onlysourceinventory andactualdesktop/320/844CSSbaseline distinguish repeatedcascade/media overrides. All proposed source inputs already local; no build/hydration. Currentfirstpaint/desired/effective text capability needs consistent shared theme-system/host/bootstrap plus optional existing API deltas, not copying oldruntime files. DOM caption alternative must preserve exact now/next facts anddiagramgeometry. Physical/PWA/Deck not inferred.",
             "Read-only full loaded-source inventory381module references/~6.2MB,20stylesheets;161absolute font/lineheight/token declarations recorded before/after with hashes. Dedicated --overflight-text-scale default1 avoidsprimaryscale/doublescaling; em/inherit/unitless remain untouched. Current31fileWIPgrowth47,495bytes incl36,646inventory, no build/log/snapshot growth. No newnative run orbrowserready claim. Proposed fullwidth16:9/liveHUDscroll rejected beforeedit: fails shortviewport andtouchanchoring. Approveddirection keepsremainingviewportFITfield,portraitcriticalHUDrow/landscaperail andexistingtouch overlay samefieldcell; actualENUK320/844 simultaneousvisibility acceptance required. Capacityhold preservespartialWIP; playreferencesplannedmissingstylesheet, generatedbootstrapnotyetrefreshed.",
@@ -4507,7 +4584,31 @@
             "tinyCorrectedReceiptSHA256": "c6f2e967c138d9d6a8e3bd04df57114913e32763fe9db55bad9dc7463684b720",
             "scope": "11 pure parser cases plus actual tiny Node emitter and parser; no World execution or memory-cause conclusion. Prior unsupported-option failure preserved."
           },
-          "mergeState": "UNKNOWN"
+          "mergeState": "UNKNOWN",
+          "currentNativeTerminal": {
+            "status": "PASS_COMPLETE_28_ORIGINAL_FILES_PLUS_REQUIRED_HOST",
+            "head": "6c26ceeba877a7b08ac9f6d7c01b466df4e245ec",
+            "tree": "aab3e3d0fcfdac14f791b0ae2037cbb9866b8e46",
+            "run": 39396405321,
+            "originalWholeFiles": 28,
+            "originalCases": 588,
+            "additionalMandatoryHostFiles": 1,
+            "additionalMandatoryHostCases": 31,
+            "totalWholeFiles": 29,
+            "cases": 619,
+            "pass": 619,
+            "fail": 0,
+            "skipped": 0,
+            "cancelled": 0,
+            "sealedTerminals": 99,
+            "fullSourceAudits": 66,
+            "completeGroupRawBytes": 320297,
+            "wholeFilesUnfiltered": true,
+            "limitsUnchanged": true,
+            "rootReadbackSHA256": "38d87bba45032bf16707b29857979d3e7ca22d3168387ca494cb4f1ba6db2d13",
+            "peerReadbackSHA256": "f2da523f4e6750a371eb2fb9c911373f6cd439538a7727da8c2cdf9e443c713e",
+            "remaining": "Exact browser/fonts/languages/scales/viewports, source admission and packages. Standalone115 and historical246 are not added to619."
+          }
         }
       ],
       "sourceReconciliation": {
@@ -4574,7 +4675,18 @@
         "inventory": "/tmp/revealline-f09-raid-family-readonly-inventory.json",
         "inventorySHA256": "6ebba762584a6ff79fb1627e17bba047199d5a97500a86c3f9158cd5b02778c2",
         "completeDeliverable": "Explicit family capability, scoped typography and current firstpaint/Settings/menu/HUD/earned upgrades/Pause/reading/results; Marathon Bank/Continue and TimeAttack medal/penalty. Preserve existing consequence/reroll facts, Standard/Large, game core, record and input owners.",
-        "next": "Observe allthree current native/browser baselines and freeze source pins before implementation; current1774 complete28 gates remain first."
+        "next": "Observe allthree current native/browser baselines and freeze source pins before implementation; current1774 complete28 gates remain first.",
+        "currentRaidFamily": {
+          "status": "SOURCE_ONLY_NEXT_COMPLETE_FAMILY_PROPOSAL_IN_DEVELOPMENT",
+          "main": "15e58e77ae45e4fb9ef9e939734a5e9273f3b1cf",
+          "packet": "/tmp/revealline-f09-raid-family-current5cb-readonly-inventory-v1",
+          "sealSHA256": "be13f8e2c916b3892e0c972dfb61da3dc002077e5c78763c79fbbc810fb29709",
+          "freshMainContextProofSHA256": "c5b3794c1c8c61dce7d50dd5ef2403b46f6959fa59790c0b43626b35c19c230a",
+          "finding": "Raid, Time Attack and Marathon lack explicit Extra large capability/CSS; fixed10px canvas labels need a complete layout correction, not an opt-in toggle. Preserve live facts, medals, bank/continue/refit/resource/record authority.",
+          "proposedWholeFileUnion": 44,
+          "nativeBrowser": "NOT_RUN; complete closure and explicit1791 test stack or admission required",
+          "originalFeaturePriorityEffortUnchanged": true
+        }
       }
     },
     {
@@ -7978,23 +8090,23 @@
     {
       "id": "CI-menu-browser-start-event-delivery",
       "priority": "P1",
-      "status": "draft_current29_source_PASS_browser_guard_values_unavailable",
+      "status": "draft_current31_source_PASS_browser_earlier_Missions_DOM_failure_probe_NOT_REACHED",
       "deliveryState": "draft",
       "pr": "https://github.com/mekhovov/revealline/pull/1789",
-      "commit": "7db95989f5b895ff1d8c96d229b397c275ff0547",
+      "commit": "3c1d3119387e47636794095e9926365ed7b81459",
       "sourcePaths": 4,
       "qualification": {
-        "automated": "Private13 stages and normal whole29 PASS",
-        "browser": "Current/retained Missions, Back focus, briefing and native Start reached; one pause, guard read unavailable, running fails original60s; all6 after-audits pass",
+        "automated": "Private14 stages PASS: complete oldowner31 yields29pass/2newfail; corrected complete31PASS. Normal exact3c1d complete31PASS.",
+        "browser": "FAILED earlier at visible Missions public DOM read9999.953ms; source-bound probe NOT_REACHED/null; six after-audits PASS",
         "physical": "not_tested"
       },
-      "sourceRun": "https://github.com/mekhovov/revealline/actions/runs/39395985782",
-      "browserRun": "https://github.com/mekhovov/revealline/actions/runs/39395985869",
-      "sourceProofSHA256": "562ac858e2645644fe33e0f1d061e211c602b44242bb9884e10b756ed278fed7",
-      "browserProofSHA256": "c13ea2fafcc666c5c40d2611a627887fbe7aa0a0cb6358c120a5afe8f982d0bc",
-      "scope": "Source-bound diagnostic only; actual guards=null, no production cause or accepted play inferred. Source-bound pause88.298ms, resume/disable/detach acknowledged; original10s/60s/570s flow limits unchanged.",
-      "next": "P1 · Mission browser #1773 / diagnostic #1789: normal current29 source cases pass. Browser reaches current/retained Missions, Back focus, exact briefing and Start; one source-bound pause has unavailable guard values. Review and qualify active-pause ownership correction with complete old-owner31 expected29pass/2fail then corrected31pass. Diagnose cause before production fix; preserve original deadlines.",
-      "observedRemoteHead": "7db95989f5b895ff1d8c96d229b397c275ff0547",
+      "sourceRun": "https://github.com/mekhovov/revealline/actions/runs/39400710939",
+      "browserRun": "https://github.com/mekhovov/revealline/actions/runs/39400710863",
+      "sourceProofSHA256": "32badf53faf8100ba0b378bf3c7d182b44b619ee51562942a93a36f315062c5b",
+      "browserProofSHA256": "2c327fd2d9d97efda1d655869417998d46aa85036c7cc0f17caaef6b0b73ee18",
+      "scope": "Bounded diagnostic-owner correction only. No actual guard values, race, production cause or accepted play inferred from latest run; deadlines unchanged.",
+      "next": "P1 · Mission browser #1773 / diagnostic #1789: current 31 source cases pass. The latest browser run stops earlier while reading Missions; the Start probe is not reached. Preserve the older Start observation and failures, establish reliable browser responsiveness, then verify the actual cause, accepted play and Pause/Resume without extending deadlines.",
+      "observedRemoteHead": "3c1d3119387e47636794095e9926365ed7b81459",
       "mergeState": "UNSTABLE",
       "historical9ae": {
         "commit": "9ae134bf8af765194809ba278cd2b920e48dea45",
@@ -8009,11 +8121,10 @@
         "browserProofSHA256": "d1088f859bb37c731838decdd8c2a587997c1100e58bfb0ef57b5b35efce7c83",
         "scope": "Rules out pre-target capture suppression for this click; no internal guard, async cause or accepted play proven. Six post-audits exact, observer cleanup removed."
       },
-      "base": "43deae2ce89d0b3b58964b7c97960b26667db26a",
-      "tree": "4061829b6df70f5c30a4576faf8565981884a105",
+      "base": "5cb1e76a8087aa04a2492f790b5e0c0c08469e40",
+      "tree": "a81f2837dc5388cdd1fcffcfdce3dde3e799e640",
       "sourceReceiptSHA256": "04a6464b29ad464d64d697ffd09038db6e3361321e2f4fe40da54d7f7bd5007f",
       "peerProofSHA256": "949fcd0464a9e477869e8bbcc6e786ef1ebc20884b2802860e01c89de5fbe1cf",
-      "rootTerminalReadbackSHA256": "d8b292af967dd9ebeadfeb92331487183319fcc7934acc7f15636231f91fb358",
       "historicalB876": {
         "commit": "b876bc32efd6843c7e28c4c476739d345c0ebd38",
         "qualification": {
@@ -8028,19 +8139,34 @@
         "rootTerminalReadbackSHA256": "9985374cdd83bf82a416f55877b4e13e0de3d1d39eae2907e513caf1bc7f271a"
       },
       "nextSourceProposal": {
-        "status": "SOURCE_REVIEW_ONLY_NOT_EXECUTED",
+        "status": "QUALIFIED_14_STAGES_AND_PUBLISHED_3C1D_NORMAL31_PASS_BROWSER_EARLY_FAILURE",
         "manifestSHA256": "996336911028fd349bf255c9e4f890f0cffc38d1aadd11cfb7c48e30790fbb3c",
         "envelopeSHA256": "972fdce2b596ffeb06a87ce204154b4f5c48f64645b60cfd55d6714b63068bc1",
         "plannedStages": 14,
         "completeBaseline": "Old owner31 cases: expected29pass/2fail, actual failed child retained",
         "completeCorrected": "31 pass required",
         "hypothesis": "Separate native click completion can retire active diagnostic read; source ownership flaw reviewed, actual7db race not proved"
-      }
+      },
+      "historical7db": {
+        "commit": "7db95989f5b895ff1d8c96d229b397c275ff0547",
+        "qualification": {
+          "automated": "Private13 stages and normal whole29 PASS",
+          "browser": "Current/retained Missions, Back focus, briefing and native Start reached; one pause, guard read unavailable, running fails original60s; all6 after-audits pass",
+          "physical": "not_tested"
+        },
+        "sourceRun": "https://github.com/mekhovov/revealline/actions/runs/39395985782",
+        "browserRun": "https://github.com/mekhovov/revealline/actions/runs/39395985869",
+        "sourceProofSHA256": "562ac858e2645644fe33e0f1d061e211c602b44242bb9884e10b756ed278fed7",
+        "browserProofSHA256": "c13ea2fafcc666c5c40d2611a627887fbe7aa0a0cb6358c120a5afe8f982d0bc",
+        "rootTerminalReadbackSHA256": "d8b292af967dd9ebeadfeb92331487183319fcc7934acc7f15636231f91fb358",
+        "scope": "Source-bound diagnostic only; actual guards=null, no production cause or accepted play inferred. Source-bound pause88.298ms, resume/disable/detach acknowledged; original10s/60s/570s flow limits unchanged."
+      },
+      "private14RootReadbackSHA256": "33a3f773a5fceabe32d1b33c90184ee149c820cb579e91674155934757b600ce"
     },
     {
       "id": "CI-World-fixture-hook-owner-release",
       "priority": "P1",
-      "status": "draft_complete115_native_PASS_broader_cohort_pending",
+      "status": "draft_complete_original28_plus_host619_PASS_browser_packages_pending",
       "deliveryState": "draft",
       "pr": "https://github.com/mekhovov/revealline/pull/1791",
       "commit": "6c26ceeba877a7b08ac9f6d7c01b466df4e245ec",
@@ -8051,11 +8177,36 @@
       "closureSourcePaths": 7,
       "scope": "Test-only two module-level cleanup factories clear small holder references in finally. Every original assertion/test/order/await and native limits preserved. Not a production leak or dominant-cause claim.",
       "qualification": {
-        "automated": "Tiny6 controls PASS, including19 existing mocks+8 extracted-declaration cases; actual unchanged whole115 native PASS",
+        "automated": "Tiny6 and standalone115PASS; full28original wholefiles588 plus requiredhost31 =619PASS; 99terminals/66sourceaudits verified",
         "browser": "pending",
         "physical": "not_tested"
       },
       "nativeTerminal": {
+        "status": "PASS_COMPLETE_28_ORIGINAL_FILES_PLUS_REQUIRED_HOST",
+        "head": "6c26ceeba877a7b08ac9f6d7c01b466df4e245ec",
+        "tree": "aab3e3d0fcfdac14f791b0ae2037cbb9866b8e46",
+        "run": 39396405321,
+        "originalWholeFiles": 28,
+        "originalCases": 588,
+        "additionalMandatoryHostFiles": 1,
+        "additionalMandatoryHostCases": 31,
+        "totalWholeFiles": 29,
+        "cases": 619,
+        "pass": 619,
+        "fail": 0,
+        "skipped": 0,
+        "cancelled": 0,
+        "sealedTerminals": 99,
+        "fullSourceAudits": 66,
+        "completeGroupRawBytes": 320297,
+        "wholeFilesUnfiltered": true,
+        "limitsUnchanged": true,
+        "rootReadbackSHA256": "38d87bba45032bf16707b29857979d3e7ca22d3168387ca494cb4f1ba6db2d13",
+        "peerReadbackSHA256": "f2da523f4e6750a371eb2fb9c911373f6cd439538a7727da8c2cdf9e443c713e",
+        "remaining": "Exact browser/fonts/languages/scales/viewports, source admission and packages. Standalone115 and historical246 are not added to619."
+      },
+      "next": "P1 · Readability #1774 / prerequisite #1791: all 28 original whole files plus the required host pass, 619 cases on the exact draft. Complete EN/UK, fonts, scales and viewport browser acceptance, then packages. Prepare the next complete Raid/Time Attack/Marathon layout slice; its execution is still pending.",
+      "world115NativeTerminal": {
         "status": "COMPLETE_WHOLE_WORLD115_PASS_BROADER_COHORT_PENDING",
         "head": "6c26ceeba877a7b08ac9f6d7c01b466df4e245ec",
         "tree": "aab3e3d0fcfdac14f791b0ae2037cbb9866b8e46",
@@ -8082,14 +8233,13 @@
         "allPruneWorkersAndMessages": 0,
         "rootFull21ProofSHA256": "42dd0f25d9e9bd466ce5c9a522c02210c0ce49aa2c871604635fc774847bd4d8",
         "remaining": "Current original28 files plus mandatory host complete terminal collection; actual browser/fonts/languages/scales/packages. Do not add old246 cases to current115."
-      },
-      "next": "P1 · Readability #1774 / test-fixture prerequisite #1791: unchanged complete115 World cases now pass under original limits at6c26. Finish all28 original whole files plus mandatory Overflight host on this revision, then EN/UK/fonts/scales/browser/package acceptance. Historical24 files/246 cases remain bound to2c4d; four previously unrun files still require current proof."
+      }
     }
   ],
   "deliverySnapshot": {
     "featurePRsReady": 6,
-    "featurePRsDraft": 32,
-    "deliverablesMerged": 53,
+    "featurePRsDraft": 31,
+    "deliverablesMerged": 54,
     "verifiedLive": 0,
     "publishedSourceSlices": 2,
     "hardware": "unavailable",
@@ -8100,24 +8250,25 @@
     "observedDate": "2026-10-20",
     "scope": "All 92 feature candidates and 26 separate verification prerequisites: 118 explicitly queried PRs. Original 83 feature groups and 113 deliverables unchanged.",
     "counts": {
-      "merged": 53,
+      "merged": 54,
       "ready": 6,
-      "draft": 32,
+      "draft": 31,
       "withdrawn": 1
     },
     "conflictedOpenPRs": [
       1617, 1622, 1627, 1632, 1642, 1667, 1671, 1672, 1682, 1686, 1702, 1704, 1721, 1729, 1773
     ],
     "conflictedReadyPRs": [1617, 1622, 1627, 1632, 1682, 1686],
-    "note": "53 source slices merged, 6 open for checks, 32 drafts and 1 withdrawn; 26 separate prerequisites. New draft1791 passes unchanged complete115 World test. Touch2d0b passes374 selected cases. Installed-library e4cc passes all4 required Community files/52 cases and configured source gates. Offline4df current catalog2/statics6 pass; normal six-file cohort and final validation tracked separately. Start7db normal29 pass; browser reaches Start but guard values unavailable, running still fails. No whole-feature/player/package/device completion.",
+    "note": "54 source slices merged, 6 open for checks, 31 drafts and 1 withdrawn; 26 separate verification prerequisites. Exact draft1791 complete28 plus mandatory host passes619. Offline4df passes152 plus full localization/validation. Start3c1d passes31 source cases; latest browser fails earlier at Missions with probe NOT_REACHED. Touch374 source pass and partial native language/preference observations; no whole player/package/device completion.",
     "latestMain": {
-      "revision": "43deae2ce89d0b3b58964b7c97960b26667db26a",
-      "tree": "9f400c1b58df33766b150e64623b4b8895827cb4",
-      "note": "Observed external1788 exactfb5a merged into43de; seven scalar/test-control paths only. Current drafted successors do not inherit source admission or device acceptance."
+      "revision": "15e58e77ae45e4fb9ef9e939734a5e9273f3b1cf",
+      "tree": "9f2499301b2a58bd7d029de3cb52fe011562ee52",
+      "note": "External F79 merge1651 exacte4cc→5cb, followed by external roadmap1790 mergea56→15e. Latest advance changes only three roadmap documents; all63 inventoried source/asset owners remain exact. Source admission and player acceptance are separate.",
+      "sourceContextProofSHA256": "c5b3794c1c8c61dce7d50dd5ef2403b46f6959fa59790c0b43626b35c19c230a"
     },
-    "queryEvidence": "/tmp/revealline-delivery-inventory-118-current43de.json",
+    "queryEvidence": "/tmp/revealline-delivery-inventory-118-current5cb.json",
     "inventoryCorrection": "Previously omitted1673 is an existing merged settings follow-up; correcting45→46 is accounting, not new implementation.",
-    "queryEvidenceSHA256": "cfa0f1eee6ffdbc66e2176ae946238492f73a67e17be8d4362b37bdcda26bef1",
+    "queryEvidenceSHA256": "d10a40ee1314deca7823b8152e34ac10fd9c9df3ff822cd3e8f07bac22074524",
     "additionalInventoryVerification": {
       "trackedPRs": 110,
       "featureCandidates": 92,
@@ -8169,10 +8320,15 @@
     },
     "latestDraftHeads": {
       "1624": "4dfad38a23d367a0ecc80b849ce8a97888e40099",
-      "1651": "e4cc86af458863e787e2061a97526aae61286f86",
       "1669": "2d0b02b2260e6c0033e2755cf39d04f07d7f01fc",
-      "1789": "7db95989f5b895ff1d8c96d229b397c275ff0547",
+      "1789": "3c1d3119387e47636794095e9926365ed7b81459",
       "1791": "6c26ceeba877a7b08ac9f6d7c01b466df4e245ec"
+    },
+    "externalInstalledSourceMerge": {
+      "PR": 1651,
+      "head": "e4cc86af458863e787e2061a97526aae61286f86",
+      "mergeCommit": "5cb1e76a8087aa04a2492f790b5e0c0c08469e40",
+      "mergedAt": "2026-10-20T09:17:11Z"
     }
   }
 }
