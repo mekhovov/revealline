@@ -42,6 +42,8 @@ jobs:
       GIT_OPTIONAL_LOCKS: 0
     steps:
       - name: Check out only reviewed diagnostic controls
+        env:
+          GIT_NO_LAZY_FETCH: "0"
         uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
         with:
           ref: ${{ github.event.pull_request.head.sha }}
@@ -56,6 +58,8 @@ jobs:
             /scripts/test_world_appearance_memory_comparison.py
             /docs/verification/world-appearance-memory-comparison.md
       - name: Check out the fixed immutable target
+        env:
+          GIT_NO_LAZY_FETCH: "0"
         uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
         with:
           ref: ${{ matrix.source }}
@@ -135,6 +139,8 @@ jobs:
       GIT_OPTIONAL_LOCKS: 0
     steps:
       - name: Check out only reviewed diagnostic controls
+        env:
+          GIT_NO_LAZY_FETCH: "0"
         uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
         with:
           ref: ${{ github.event.pull_request.head.sha }}
