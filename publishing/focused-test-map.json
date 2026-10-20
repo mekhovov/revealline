@@ -505,6 +505,22 @@
       ]
     },
     {
+      "id": "compiled-menu-browser-contract",
+      "pathPatterns": [
+        "^scripts/(compiled-menu-browser[^/]*|run-compiled-menu-browser|test-compiled-menu-browser-consumer)\\.mjs$",
+        "^scripts/compiled-menu-browser-tools/(package|package-lock)\\.json$",
+        "^docs/verification/compiled-menu-browser-37ec(?:-plan\\.json|\\.md)$",
+        "^\\.github/workflows/compiled-menu-browser-37ec\\.yml$"
+      ],
+      "commands": [
+        {
+          "id": "compiled-menu-browser-contract",
+          "command": "node",
+          "args": ["--test", "scripts/test-compiled-menu-browser-consumer.mjs"]
+        }
+      ]
+    },
+    {
       "id": "community-readiness-complete-contract",
       "pathPatterns": ["^game/test/community-readiness(?:-host)?\\.test\\.mjs$"],
       "commands": [
