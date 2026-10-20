@@ -137,7 +137,7 @@ test('current main Journey host adds every installed Journey level without prete
 
 test('actual public company editions expose only their own isolated installed levels', async () => {
   const root = new URL('../../', import.meta.url);
-  for (const editionId of ['coupa-all', 'droneaid-nl-community', 'droneaid-community']) {
+  for (const editionId of ['droneaid-nl-community', 'droneaid-community']) {
     const bootstrap = await loadEditionBootstrap({
       catalogURL: new URL('game/editions/catalog.json', root).href,
       contentBaseURL: root.href,

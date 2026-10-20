@@ -51,6 +51,6 @@ test('generic, custom and other-brand theme labels retain their authored values'
     editionThemeLabel(workshop, 'A label without a brand separator', provider),
     'A label without a brand separator',
   );
-  const [coupa] = createCompanyThemes('coupa');
-  assert.equal(editionThemeLabel(coupa, coupa.name, provider), coupa.name);
+  const [other] = createCompanyThemes('droneaid');
+  assert.equal(editionThemeLabel(other, other.name, provider), other.name);
 });

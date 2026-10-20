@@ -21,13 +21,6 @@ SOURCES = {
     'fpv-portrait': 'game/ui/art/field-kit/prepared/title-hangar-portrait-v1.png',
     'ukraine': 'authoring/library/menu-scenes/ukraine-dawn-v1.png',
     'retro': 'authoring/library/menu-scenes/retro-rainy-arcade-v1.png',
-    'coupa': 'game/editions/assets/coupa/home.png',
-    'coupa-village': 'authoring/library/menu-scenes/coupa-overview-v1.png',
-    'coupa-spend-in-motion-theme': 'game/editions/assets/coupa/spend-city-v2.png',
-    'coupa-inside-village-theme': 'game/editions/assets/coupa/coupa-inside-village-key.png',
-    'coupa-source-to-pay-theme': 'game/editions/assets/coupa/coupa-source-to-pay-key.png',
-    'coupa-product-operations-theme': 'game/editions/assets/coupa/coupa-product-operations-key.png',
-    'coupa-developer-integration-theme': 'game/editions/assets/coupa/network-atlas-v2.png',
     'droneaid-community': 'game/editions/assets/droneaid/droneaid-community-relay-01.png',
     'droneaid-nl-community': 'authoring/library/droneaid-brand-kit-2026-09-29/background-original.png',
 }

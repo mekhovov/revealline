@@ -63,7 +63,7 @@ test('optional practice archives are reproducible, admitted completely and absen
   assert.match(entries.get('game/i18n/catalogs.mjs').toString(), /dataJson/);
   assert.doesNotMatch(
     entries.get('game/i18n/catalogs.mjs').toString(),
-    /coupa|droneaid|completionRewards/i,
+    /company-campaigns|droneaid|completionRewards/i,
   );
   const identity = JSON.parse(entries.get(`${OPTIONAL_PRACTICE_ROOT}app.webmanifest`));
   assert.equal(identity.id, './civilian-flight-practice');
@@ -88,8 +88,8 @@ test('release-qualified practice retains the full shared menu stylesheet closure
     engineTree: 'b'.repeat(40),
     basePath: '/revealline/',
   });
-  assert.equal(built.entries.length, 96);
-  assert.equal(OPTIONAL_PRACTICE_LIMITS.files, 98);
+  assert.equal(built.entries.length, 98);
+  assert.equal(OPTIONAL_PRACTICE_LIMITS.files, 100);
   for (const stylesheet of [
     'mode-play-shell.css',
     'mode-choice.css',

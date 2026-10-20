@@ -109,10 +109,10 @@ for (const themeId of ENEMY_THEMES)
 test('selected procedural skins alter body family, while a custom role image and collision radius remain independent', () => {
   const f = createActorPresentation()
     .sample([{ id: 'a', type: 'contour-patrol', x: 4, y: 4, radius: 0.2 }], {
-      actorSkins: { 'contour-patrol': enemySkinId('contour-patrol', 'coupa') },
+      actorSkins: { 'contour-patrol': enemySkinId('contour-patrol', 'retro') },
     })
     .get('a');
-  assert.equal(f.themeId, 'coupa');
+  assert.equal(f.themeId, 'retro');
   const { ctx, calls } = canvas(),
     image = { id: 'owned-contour' };
   drawPresentedActor(ctx, f, themes[0].palette, image);
@@ -199,11 +199,11 @@ test('failure feedback stays at the failed tick, never later respawn; reduced ef
         (c) =>
           c.op === 'fillText' &&
           c.args[0] ===
-            `${themeId === 'fpv' ? 'CRAFT LOST' : themeId === 'coupa' ? 'LINK LOST' : 'LIFE LOST'} · -1 LIFE`,
+            `${themeId === 'fpv' ? 'CRAFT LOST' : 'LIFE LOST'} · -1 LIFE`,
       ),
     );
   }
-  assert.equal(new Set(shapes).size, 4);
+  assert.equal(new Set(shapes).size, ENEMY_THEMES.length);
   const { ctx, calls } = canvas();
   drawRecoveryCue(ctx, { status: 'respawning', respawnAt: 3, time: 2.6 }, themes[0].palette);
   assert.ok(calls.some((c) => c.op === 'fillText' && c.args[0] === 'RECOVERY 0.4s'));

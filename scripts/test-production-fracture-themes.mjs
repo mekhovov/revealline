@@ -17,7 +17,7 @@ const baseline = await read('authoring/production/register-sentinel-themes.json'
 const candidate = await read('authoring/production/register-fracture-themes.json');
 const clone = (value) => JSON.parse(JSON.stringify(value));
 const fractureWorks = (value) => value.works.filter((w) => w.adapter.startsWith('fracture'));
-const themes = ['fpv', 'ukraine', 'retro', 'coupa'];
+const themes = ['fpv', 'ukraine', 'retro'];
 
 // Copy only declared metadata to an isolated source tree, then genuinely re-pin a
 // forged authority. Refusals must concern source relationships, not stale hashes.

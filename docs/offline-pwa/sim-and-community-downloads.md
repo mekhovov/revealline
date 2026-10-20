@@ -1,5 +1,7 @@
 # SIM and community downloads
 
+> Retained excerpt after an ownership migration. Historical totals and verification statements describe the original scope; this excerpt is not a current release qualification. Original bytes and removed material are preserved separately.
+
 Implementation slice: 2026-10-02, `codex/sim-community-offline-20261002`.
 Started from main `7ba34e68a`, then rebased onto `0ca7cd3d1` after the Pages
 capacity correction merged. The original checkout and other agents' branches
@@ -83,10 +85,6 @@ Browser evidence used the actual generated worker and official content store:
   console errors. An unvisited Open meadow free flight also rendered at
   390 × 844, armed with Touch selected, and advanced before being paused.
 - The community directory opened offline with all seven Play/download routes.
-  Coupa's First Connection mission started, responded to input and ran before
-  pausing, without a preparation prompt or console error. Settings opened the
-  community chooser; switching to DroneAid started Open the Doors offline, which
-  ran for 48 seconds without console errors before being paused.
 
 These browser observations used build
 `59a00ad014543d2776422ec2cf6f5d8a3b652cd765e7ae81d56e50ea999eaa9f`.
@@ -95,12 +93,6 @@ expose preparation from community Settings. Final production-profile build
 qualification is recorded below; the earlier screenshots are not evidence of
 those subsequent edits or a deployed release.
 
-Retained [browser build and request log](evidence/sim-community-20261002/browser-build-and-requests.txt),
-[verified download state](evidence/sim-community-20261002/downloads-ready.jpg),
-[SIM desktop](evidence/sim-community-20261002/sim-offline.jpg),
-[SIM phone viewport](evidence/sim-community-20261002/sim-phone-offline.jpg),
-[Coupa mission](evidence/sim-community-20261002/coupa-offline.jpg) and
-[DroneAid mission](evidence/sim-community-20261002/droneaid-offline.jpg).
 
 The final `main-pages` production-profile build passed on the rebased source:
 build ID `dc7d5ce1c459541438502969ef5d334efa0d9e3b00ce68f32b0779297ea011a5`,

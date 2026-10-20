@@ -112,7 +112,7 @@ test('optional candidate is byte-reproducible and inventories only its selected 
   );
   assert.doesNotMatch(
     source.get('game/i18n/catalogs.mjs').toString(),
-    /coupa|droneaid|completionRewards/i,
+    /company-campaigns|completionRewards/i,
   );
   assert.equal(inventory.licenses[0].license, 'MIT');
   assert.equal(inventory.licenses[0].version, '26.4.2');
@@ -226,6 +226,33 @@ test('pinned generated launcher code still must match its committed template and
       zip: createEditionZip(runtime),
     });
     await assert.rejects(validateOptionalPackageAdmission(f.envelope, f), message);
+  }
+});
+
+test('new launcher cannot omit its failure-copy import or service even with updated member pins', async () => {
+  for (const target of [" } from './context.mjs'", ', mountPracticeNavigation });']) {
+    const manifest = structuredClone(built.manifest);
+    const runtime = new Map(built.entries.map((entry) => [entry.name, entry.bytes]));
+    const original = runtime.get('launcher/app.mjs').toString();
+    const changed = original.replace(', optionalOfflineFailureMessage' + target, target);
+    assert.notEqual(changed, original);
+    const bytes = Buffer.from(changed);
+    runtime.set('launcher/app.mjs', bytes);
+    Object.assign(
+      manifest.files.find((row) => row.path === 'launcher/app.mjs'),
+      editionDescriptor('launcher/app.mjs', bytes),
+    );
+    runtime.set('optional-package.json', editionJSON(manifest));
+    const f = fixture({
+      ...built,
+      manifest,
+      entries: [...runtime].map(([name, bytes]) => ({ name, bytes })),
+      zip: createEditionZip(runtime),
+    });
+    await assert.rejects(
+      validateOptionalPackageAdmission(f.envelope, f),
+      /launcher differs from its committed template/,
+    );
   }
 });
 

@@ -1,3 +1,5 @@
+> Retained historical excerpt after an ownership migration. Exact original bytes are preserved separately. Original totals and verification statements describe the original scope; this excerpt is not a current qualification or a complete test result.
+
 # Original actor source preservation — 2026-09-29
 
 ## Disposition
@@ -60,9 +62,6 @@ does not qualify these bodies for runtime use.
 - Historical provenance includes the developer's absolute local paths, image
   identifiers, filesystem inodes and localhost references. These are retained
   source provenance, not portable runtime addresses.
-- Spend's public Coupa documentation informed vocabulary only. Preserve the
-  explicit disclaimer that these are not official Coupa/Navi mascot designs or
-  copied product interfaces.
 - Ukrainian ornament is an original, Ukrainian-inspired art direction, not a
   claim that the invented motifs are authenticated historical patterns.
 - Source README references to old bases, workspaces and release holds are dated

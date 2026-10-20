@@ -1,3 +1,5 @@
+# Retained historical excerpt after an ownership migration. Exact original bytes are preserved separately. Original totals and verification statements describe the original scope; this excerpt is not a current qualification or a complete test result.
+
 TAP version 13
 # Subtest: all 18 themes resolve explicitly, company mapping works, unknown IDs safely fall back
 ok 1 - all 18 themes resolve explicitly, company mapping works, unknown IDs safely fall back
@@ -19,11 +21,6 @@ ok 4 - retro mode compositions keep the theme identity, safe mode fallback and S
   ---
   duration_ms: 0.056708
   ...
-# Subtest: coupa mode compositions keep the theme identity, safe mode fallback and Solo-only edition boundary
-ok 5 - coupa mode compositions keep the theme identity, safe mode fallback and Solo-only edition boundary
-  ---
-  duration_ms: 0.054375
-  ...
 # Subtest: fpv mode and orientation choose one authored bitmap, reset reception and preserve focus and renderer
 ok 6 - fpv mode and orientation choose one authored bitmap, reset reception and preserve focus and renderer
   ---
@@ -38,11 +35,6 @@ ok 7 - ukraine mode and orientation choose one authored bitmap, reset reception 
 ok 8 - retro mode and orientation choose one authored bitmap, reset reception and preserve focus and renderer
   ---
   duration_ms: 0.352
-  ...
-# Subtest: coupa mode and orientation choose one authored bitmap, reset reception and preserve focus and renderer
-ok 9 - coupa mode and orientation choose one authored bitmap, reset reception and preserve focus and renderer
-  ---
-  duration_ms: 0.422917
   ...
 # Subtest: every scene retains bounded artwork anchors and one shared image/canvas plane without moving stickers
 ok 10 - every scene retains bounded artwork anchors and one shared image/canvas plane without moving stickers
@@ -83,11 +75,6 @@ ok 16 - ukraine mode originals, style references and prompts are bound to their 
 ok 17 - retro mode originals, style references and prompts are bound to their delivered derivatives
   ---
   duration_ms: 28.119416
-  ...
-# Subtest: coupa mode originals, style references and prompts are bound to their delivered derivatives
-ok 18 - coupa mode originals, style references and prompts are bound to their delivered derivatives
-  ---
-  duration_ms: 29.48025
   ...
 # Subtest: DroneAid lossless runtime derivative retains the exact supplied original and pixel provenance
 ok 19 - DroneAid lossless runtime derivative retains the exact supplied original and pixel provenance

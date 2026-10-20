@@ -1,3 +1,5 @@
+# Retained historical excerpt after an ownership migration. Exact original bytes are preserved separately. Original totals and verification statements describe the original scope; this excerpt is not a current qualification or a complete test result.
+
 TAP version 13
 # Subtest: whole-game preview verifies the report, every artifact byte and exact selected draft
 ok 1 - whole-game preview verifies the report, every artifact byte and exact selected draft
@@ -23,11 +25,6 @@ ok 4 - preview verification stops before activation on cancellation and oversize
 ok 5 - overlong artifact and pending-read abort reject despite nonsettling transport cancellation
   ---
   duration_ms: 108.274
-  ...
-# Subtest: focused Coupa and Netherlands previews accept canonical theme projection but reject selected edits
-ok 6 - focused Coupa and Netherlands previews accept canonical theme projection but reject selected edits
-  ---
-  duration_ms: 53253.791833
   ...
 # Subtest: new-company starter loads the current Solo host and First Flight with complete neutral classes
 ok 7 - new-company starter loads the current Solo host and First Flight with complete neutral classes

@@ -104,7 +104,7 @@ test('the company host keeps multiple read-only wins in exported progress withou
   const disk = managedIndexedDB(),
     backend = createJourneyBackend({
       ...disk,
-      profileKey: 'journey-coupa-adventure',
+      profileKey: 'journey-sample-adventure',
       canWrite: () => false,
     });
   const profile = createJourneyProfileStore({ backend, canWrite: () => false });

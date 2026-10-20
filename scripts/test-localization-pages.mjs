@@ -202,9 +202,9 @@ test('maintained sprite review pages localize static and generated presentation 
   assert.match(generated, /onLocaleChange\(update\)/);
   assert.match(generated, /localizedAttribute\(node,\s*['"]alt['"]/);
   assert.doesNotMatch(generated, /textContent\s*=\s*['"](?:Prompt copied|Text selected)/);
-  const inlineScripts = [...generated.matchAll(/<script>([\s\S]*?)<\/script>/g)];
+  const inlineScripts = descendants(parse(generated)).filter(node => node.tagName === 'script' && !attribute(node, 'src') && (!attribute(node, 'type') || attribute(node, 'type') === 'application/x-revealline-locked' && attribute(node, 'data-access-type') === '')).map(node => node.childNodes.map(child => child.value ?? '').join(''));
   assert.ok(inlineScripts.length);
-  assert.doesNotThrow(() => new Function(inlineScripts.at(-1)[1]));
+  assert.doesNotThrow(() => new Function(inlineScripts.at(-1)));
 });
 
 test('offline download and launcher routes provide live language controls and bilingual fallbacks', async () => {
@@ -220,7 +220,7 @@ test('offline download and launcher routes provide live language controls and bi
     );
     assert.ok(source.includes('"' + prefix + 'i18n/style.css"'), file + ': stylesheet');
     const moduleName = file.endsWith('app.html') ? 'app.mjs' : 'downloads.mjs';
-    assert.ok(source.includes('type="module" src="' + moduleName + '"'), file + ': module entry');
+    assert.ok(nodes.some(node => node.tagName === 'script' && attribute(node, 'src') === moduleName && (attribute(node, 'type') === 'module' || attribute(node, 'type') === 'application/x-revealline-locked' && attribute(node, 'data-access-type') === 'module')), file + ': module entry');
     const moduleSource = await fs.readFile(
       new URL(file.replace(/html$/, 'mjs'), import.meta.url),
       'utf8',
@@ -292,7 +292,7 @@ test('company entry and public directory localize independently of the main game
   );
   assert.ok(companySource.includes('"i18n/style.css"'), 'game/company.html: language styles');
   assert.ok(
-    companySource.includes('type="module" src="company-entry.mjs"'),
+    companyNodes.some(node => node.tagName === 'script' && attribute(node, 'src') === 'company-entry.mjs' && (attribute(node, 'type') === 'module' || attribute(node, 'type') === 'application/x-revealline-locked' && attribute(node, 'data-access-type') === 'module')),
     'game/company.html: localized module entry',
   );
   const companyKeys = companyNodes.map((node) => attribute(node, 'data-i18n')).filter(Boolean);
@@ -341,7 +341,7 @@ test('company entry and public directory localize independently of the main game
   );
   const directoryNodes = descendants(parse(directorySource));
   assert.ok(directoryNodes.some((node) => attribute(node, 'data-language-control') !== undefined));
-  for (const edition of ['droneaid', 'coupa', 'droneaid-community']) {
+  for (const edition of ['droneaid', 'droneaid-community']) {
     const link = directoryNodes.find((node) => attribute(node, 'href') === `./${edition}/`);
     assert.ok(link, `company directory: ${edition} launch link`);
     assert.ok(

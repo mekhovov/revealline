@@ -6,7 +6,7 @@
   "contexts": [
     {
       "id": "fpv-first-flight",
-      "label": "FPV Front \u00b7 first flight",
+      "label": "FPV Front · first flight",
       "scope": {
         "gameId": "reveal-lab",
         "themeId": "fpv-front",
@@ -18,7 +18,7 @@
     },
     {
       "id": "fpv-precision",
-      "label": "FPV Front \u00b7 relay islands",
+      "label": "FPV Front · relay islands",
       "scope": {
         "gameId": "reveal-lab",
         "themeId": "fpv-front",
@@ -30,7 +30,7 @@
     },
     {
       "id": "atlas-heritage",
-      "label": "Ukraine Atlas \u00b7 heritage study",
+      "label": "Ukraine Atlas · heritage study",
       "scope": {
         "gameId": "reveal-lab",
         "themeId": "ukraine-atlas",
@@ -42,7 +42,7 @@
     },
     {
       "id": "retro-first",
-      "label": "1994 Forever \u00b7 tape arcade",
+      "label": "1994 Forever · tape arcade",
       "scope": {
         "gameId": "reveal-lab",
         "themeId": "retro-1994",
@@ -54,7 +54,7 @@
     },
     {
       "id": "retro-second",
-      "label": "1994 Forever \u00b7 neon switchback",
+      "label": "1994 Forever · neon switchback",
       "scope": {
         "gameId": "reveal-lab",
         "themeId": "retro-1994",
@@ -62,18 +62,6 @@
         "challengeId": "neon-run",
         "levelId": "retro-l02",
         "mapId": "neon-switchback"
-      }
-    },
-    {
-      "id": "navi-spend-review",
-      "label": "Spend Sprite \u00b7 fictional spend review",
-      "scope": {
-        "gameId": "reveal-lab",
-        "themeId": "navi-network",
-        "caseId": "spend-review",
-        "challengeId": "clean-ledger",
-        "levelId": "navi-l01",
-        "mapId": "supplier-routes"
       }
     }
   ],
@@ -95,12 +83,6 @@
         "themeId": "retro-1994"
       },
       "characterId": "retro-craft"
-    },
-    {
-      "scope": {
-        "themeId": "navi-network"
-      },
-      "characterId": "navi-avatar"
     }
   ],
   "characters": [
@@ -313,54 +295,6 @@
       }
     },
     {
-      "id": "navi-avatar",
-      "label": "Spend Sprite",
-      "family": "navi-network",
-      "description": "Starter original business helper concept. This is not an official Coupa or Navi character.",
-      "availableIn": [
-        {
-          "themeId": "navi-network"
-        }
-      ],
-      "unlock": {
-        "starter": true
-      }
-    },
-    {
-      "id": "navi-auditor",
-      "label": "Audit pulse",
-      "family": "navi-network",
-      "description": "Earned shared-helper-body cosmetic with alternate attachments/effects. Fictional spend outcomes only.",
-      "availableIn": [
-        {
-          "themeId": "navi-network"
-        }
-      ],
-      "unlock": {
-        "anyOf": [
-          {
-            "allOf": [
-              {
-                "id": "clean-case",
-                "label": "Complete the spend-review case and resolve its anomaly",
-                "type": "completed-levels",
-                "scope": {
-                  "gameId": "reveal-lab",
-                  "themeId": "navi-network",
-                  "caseId": "spend-review",
-                  "challengeId": "clean-ledger"
-                },
-                "target": 1,
-                "objectivesAll": [
-                  "anomaly-resolved"
-                ]
-              }
-            ]
-          }
-        ]
-      }
-    },
-    {
       "id": "scout-quad",
       "label": "Scout quad",
       "family": "fpv-front",
@@ -424,7 +358,7 @@
   "fixtures": [
     {
       "id": "fpv-first-clear",
-      "label": "Simulate \u00b7 first FPV clear",
+      "label": "Simulate · first FPV clear",
       "description": "Explicit test result for the isolated lab profile. No playable level has been completed and no real reward or business outcome is claimed.",
       "event": {
         "version": "1.0.0",
@@ -452,7 +386,7 @@
     },
     {
       "id": "fpv-clean-map",
-      "label": "Simulate \u00b7 clean relay map",
+      "label": "Simulate · clean relay map",
       "description": "Explicit test result for the isolated lab profile. No playable level has been completed and no real reward or business outcome is claimed.",
       "event": {
         "version": "1.0.0",
@@ -482,7 +416,7 @@
     },
     {
       "id": "atlas-heritage",
-      "label": "Simulate \u00b7 heritage fragment",
+      "label": "Simulate · heritage fragment",
       "description": "Explicit test result for the isolated lab profile. No playable level has been completed and no real reward or business outcome is claimed.",
       "event": {
         "version": "1.0.0",
@@ -512,7 +446,7 @@
     },
     {
       "id": "retro-first-clear",
-      "label": "Simulate \u00b7 first retro clear \u00b7 2 stars",
+      "label": "Simulate · first retro clear · 2 stars",
       "description": "Explicit test result for the isolated lab profile. No playable level has been completed and no real reward or business outcome is claimed.",
       "event": {
         "version": "1.0.0",
@@ -540,7 +474,7 @@
     },
     {
       "id": "retro-second-clear",
-      "label": "Simulate \u00b7 second retro clear \u00b7 3 stars",
+      "label": "Simulate · second retro clear · 3 stars",
       "description": "Explicit test result for the isolated lab profile. No playable level has been completed and no real reward or business outcome is claimed.",
       "event": {
         "version": "1.0.0",
@@ -564,36 +498,6 @@
           "durationMs": 85000,
           "objectives": [
             "disk-found"
-          ]
-        }
-      }
-    },
-    {
-      "id": "navi-clean-case",
-      "label": "Simulate \u00b7 fictional clean spend case",
-      "description": "Explicit test result for the isolated lab profile. No playable level has been completed and no real reward or business outcome is claimed.",
-      "event": {
-        "version": "1.0.0",
-        "id": "fixture-navi-clean-case.v1",
-        "runId": "preview-navi-clean-case.v1",
-        "type": "run.completed.v1",
-        "simulated": true,
-        "context": {
-          "gameId": "reveal-lab",
-          "themeId": "navi-network",
-          "caseId": "spend-review",
-          "challengeId": "clean-ledger",
-          "levelId": "navi-l01",
-          "mapId": "supplier-routes"
-        },
-        "result": {
-          "outcome": "won",
-          "stars": 2,
-          "coverage": 0.75,
-          "livesLost": 1,
-          "durationMs": 87000,
-          "objectives": [
-            "anomaly-resolved"
           ]
         }
       }

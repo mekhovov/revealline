@@ -95,7 +95,7 @@ for (const edition of catalog.editions) {
     ];
     for (const name of required) assert.ok(compiled.files.has(name), `Missing ${name}`);
     const modeArt = [...compiled.files.keys()].filter((name) =>
-      /menu-scenes\/(fpv|ukraine|retro|coupa)-(versus|team)(-portrait)?\.webp$/.test(name),
+      /menu-scenes\/(fpv|ukraine|retro)-(versus|team)(-portrait)?\.webp$/.test(name),
     );
     assert.deepEqual(modeArt, [], 'Solo editions must exclude multiplayer scenery');
     const manualFixtures = [...compiled.files.keys()].filter((name) =>

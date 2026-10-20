@@ -1,3 +1,5 @@
+# Retained historical excerpt after an ownership migration. Exact original bytes are preserved separately. Original totals and verification statements describe the original scope; this excerpt is not a current qualification or a complete test result.
+
 - heading "Settings" [level=1, ref=e1]
 - searchbox "Search settings" [ref=e2]
 - menuitem "You and Google" [ref=e4]
@@ -28,7 +30,6 @@
 - button "Show home button" [disabled, ref=e29]
 - radio "New Tab page" [checked=false, ref=e71]
 - radio [checked=true, ref=e72]
-- textbox "Enter custom web address" [disabled, ref=e73]: https://thesource.coupa.com/
 - button "Show bookmarks bar" [ref=e30]
 - combobox "Tab position" [expanded=false, ref=e23]: Horizontal
   - option " Vertical " [ref=e42]

@@ -1,3 +1,5 @@
+> Retained historical excerpt after an ownership migration. Exact original bytes are preserved separately. Original totals and verification statements describe the original scope; this excerpt is not a current qualification or a complete test result.
+
 # Round 27 — initial candidate offline browser check
 
 Date: 2026-09-12. Candidate **0.17.0-format-candidate**, build ID `589100977e9f3e2b155e366e13b954db0c37804f163a1c1d6121b0af2b430c8e`.
@@ -14,9 +16,7 @@ The initial fresh tab displayed the existing another-tab/session-only warning wh
 
 ## Four collection pictures and the decode defect
 
-The candidate profile showed four collected pictures. All four were opened through collection controls. Retained captures include [Garden](../../../.cache/round-27/candidate-browser/offline-garden.jpg), [Neon](../../../.cache/round-27/candidate-browser/offline-neon.jpg), [Clear Ledger](../../../.cache/round-27/candidate-browser/offline-ledger.jpg), and the [initial Copper Orchard view](../../../.cache/round-27/candidate-browser/offline-homeward.jpg). The [import snapshot](../../../.cache/round-27/candidate-browser/collection-import.txt) records four pictures and one equipment seal. The existing Garden celebration was also exercised; its [captured frame](../../../.cache/round-27/candidate-browser/offline-garden-celebration.jpg) does not by itself establish the complete animation duration.
 
-The initial `offline-homeward.jpg` visibly pairs the **Copper Orchard** title and Steady Signal metadata with the **previous Clear Ledger canal-city image**. It must not be presented as a correct Homeward picture or complete four-picture visual pass. The observed transition exposes a stale-image presentation problem while the newly selected image decodes asynchronously.
 
 After decode, the [later Copper Orchard screenshot](../../../.cache/round-27/candidate-browser/offline-homeward-after-decode.jpg) shows the correct orchard/lake landscape under that title, and the [later DOM snapshot](../../../.cache/round-27/candidate-browser/offline-homeward-after-decode.txt) records the completed-picture image and collection actions. The operator inspected this later image. Thus the Homeward bytes remained accessible offline, but the early display was misleading. These two captures concern different points in the journey; the later capture was taken after the Neon completion below and is not an immediate-before/after timing measurement. The gallery loading presentation is being corrected separately before the next candidate.
 

@@ -1,12 +1,14 @@
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
-import { readFile } from 'node:fs/promises';
+import { readFile, rm, stat, symlink, writeFile } from 'node:fs/promises';
+import { fileURLToPath } from 'node:url';
 import vm from 'node:vm';
 import test from 'node:test';
 import {
   traceReplayPortability,
   loadReplayPortabilityCase,
   createReplayPortabilityReference,
+  withReplayPortabilityNodeSource,
   prepareReplayPortabilityRequest,
   assertReplayPortabilityNativeModules,
 } from './solo-replay-portability-diagnostic.mjs';
@@ -336,6 +338,7 @@ async function modeledRequest() {
     nodeVersion: fixture.nodeVersion,
     nodeSourceRevision: fixture.nodeSourceRevision,
     nodeModules: fixture.nodeModules,
+    nodeSourceProjection: fixture.nodeSourceProjection,
     nodeCheckpoint: row.nodeObservation.actual.checkpoint,
     trace: columns,
     traceSHA256: sha(JSON.stringify(columns)),
@@ -368,6 +371,9 @@ test('opt-in admission binds fixed recording/source/browser/Node/checkpoint and 
     },
     (value) => {
       value.nodeVersion = 'v22.22.2';
+    },
+    (value) => {
+      delete value.nodeSourceProjection;
     },
     (value) => {
       value.nodeSourceRevision = '0'.repeat(40);
@@ -457,6 +463,101 @@ test('native source readback and original strict checkpoint are mandatory, not d
     const bad = structuredClone(report);
     change(bad);
     assert.throws(() => assertReplayPortabilityNativeModules(row, bad));
+  }
+});
+
+test('derived Node mirror executes its checked modules and removes all owned files', async () => {
+  const { fixture } = await loadReplayPortabilityCase(ids[0]);
+  let root;
+  await withReplayPortabilityNodeSource(fixture, async (rootURL) => {
+    root = new URL(rootURL);
+    assert(root.href.startsWith('file:'));
+    assert.notEqual(root.href, new URL('../', import.meta.url).href);
+    const catalog = await readFile(new URL('game/i18n/catalogs.mjs', root));
+    assert.equal(catalog.length, 1261607);
+    assert.equal(sha(catalog), '0f4661c71926c1f79ad159ef7d8e15d03e72d4f34a8de2e8b194eae915f0cd71');
+    const core = await import(new URL('game/core/index.mjs', root));
+    const replay = await import(new URL('game/replay.mjs', root));
+    assert.equal(typeof core.createRun, 'function');
+    assert.equal(typeof replay.verifyReplay, 'function');
+  });
+  await assert.rejects(stat(root), { code: 'ENOENT' });
+});
+
+test('changed owned Node bytes are refused after execution and still removed', async () => {
+  const { fixture } = await loadReplayPortabilityCase(ids[0]);
+  let root;
+  await assert.rejects(
+    withReplayPortabilityNodeSource(fixture, async (rootURL) => {
+      root = new URL(rootURL);
+      const target = new URL('game/core/index.mjs', root);
+      const bytes = await readFile(target);
+      bytes[0] ^= 1;
+      await writeFile(target, bytes);
+    }),
+    /Node source differs/,
+  );
+  await assert.rejects(stat(root), { code: 'ENOENT' });
+});
+
+test('owned Node source cannot borrow a symlink to the tooling checkout', async () => {
+  const { fixture } = await loadReplayPortabilityCase(ids[0]);
+  let root;
+  await assert.rejects(
+    withReplayPortabilityNodeSource(fixture, async (rootURL) => {
+      root = new URL(rootURL);
+      const target = new URL('game/core/index.mjs', root);
+      await rm(target);
+      await symlink(fileURLToPath(new URL('../game/core/index.mjs', import.meta.url)), target);
+    }),
+    /Node source must be a regular file/,
+  );
+  await assert.rejects(stat(root), { code: 'ENOENT' });
+});
+
+test('Node reference failure removes the owned mirror without importing a fallback', async () => {
+  const { fixture } = await loadReplayPortabilityCase(ids[0]);
+  let root;
+  await assert.rejects(
+    withReplayPortabilityNodeSource(fixture, async (rootURL) => {
+      root = new URL(rootURL);
+      throw new Error('modeled reference failure');
+    }),
+    /modeled reference failure/,
+  );
+  await assert.rejects(stat(root), { code: 'ENOENT' });
+});
+
+test('historical Node catalog, borrowed modules, closure and source identity cannot be repinned', async () => {
+  const { fixture } = await loadReplayPortabilityCase(ids[0]);
+  for (const change of [
+    (value) => {
+      value.nodeSourceRevision = '0'.repeat(40);
+    },
+    (value) => {
+      value.nodeModules.find((item) => item.path === 'game/i18n/catalogs.mjs').sha256 = '0'.repeat(
+        64,
+      );
+    },
+    (value) => {
+      value.nodeModules.find((item) => item.path === 'game/core/index.mjs').sha256 = '0'.repeat(64);
+    },
+    (value) => {
+      value.nodeModules.pop();
+    },
+    (value) => {
+      value.nodeModules[0].path = 'game/../outside.mjs';
+    },
+  ]) {
+    const invalid = structuredClone(fixture);
+    change(invalid);
+    let called = false;
+    await assert.rejects(
+      withReplayPortabilityNodeSource(invalid, async () => {
+        called = true;
+      }),
+    );
+    assert.equal(called, false, 'Changed source must be refused before execution');
   }
 });
 
@@ -648,4 +749,26 @@ test('cleanup failure or whole-envelope overflow cannot become a completed diagn
   assert.equal(overflow.report.strictIdentity.status, 'pass');
   assert.equal(overflow.report.comparison, undefined);
   assert(Buffer.byteLength(JSON.stringify(overflow.report)) <= 512 * 1024);
+});
+
+test('presentation projection preserves every original native module pin', async () => {
+  for (const id of ids) {
+    const { fixture, row } = await loadReplayPortabilityCase(id);
+    assert.equal(fixture.nodeSourceProjection.format, 'PresentationCatalogProjectionV1');
+    assert.notEqual(
+      fixture.nodeSourceProjection.original.sha256,
+      fixture.nodeSourceProjection.derived.sha256,
+    );
+    assert.deepEqual(
+      fixture.nodeModules.find((item) => item.path === 'game/i18n/catalogs.mjs'),
+      fixture.nodeSourceProjection.derived,
+    );
+    const native = row.nativeModules.find((item) => item.path === 'game/i18n/catalogs.mjs');
+    assert.equal(
+      native.sha256,
+      id.startsWith('baseline-')
+        ? 'a7a25ae3d7ffbb1a4940c5a20c84891f09b40f9d4454b77bebb9a0dd37045816'
+        : fixture.nodeSourceProjection.original.sha256,
+    );
+  }
 });

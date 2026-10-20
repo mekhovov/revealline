@@ -1,0 +1,9 @@
+{
+  "format": "revealline-historical-fixture-projection.v1",
+  "path": "game/test/fixtures/compatibility-v0100.json",
+  "previousCanonicalSHA256": "d1e58e7c23006d761a6dfc503e4476f079285e773fda20ef8b3ac24b2940151b",
+  "canonicalSHA256": "ac779b280e0c14270f0aa48abb503c7d233bacd66ba9edb6a6cea0df94c80e8f",
+  "unchangedReplayCasesSHA256": "bbb5103f4edc314932ed71ef391b58cc977a690bc52c01c7d354cae8b8b60844",
+  "unchangedProfileSHA256": "2aa0f794781f332755df7370b7f7cf1d0a35eccb3047723f051c27dde4d4d931",
+  "scope": "One retired cosmetic unlock was removed from the expected milestone list. Frozen replay cases, profile, campaign, continuation and original source provenance are unchanged. This is a derived fixture, not the original complete oracle."
+}

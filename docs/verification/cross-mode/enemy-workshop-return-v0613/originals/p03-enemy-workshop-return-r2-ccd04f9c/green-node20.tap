@@ -1,3 +1,5 @@
+# Retained historical excerpt after an ownership migration. Exact original bytes are preserved separately. Original totals and verification statements describe the original scope; this excerpt is not a current qualification or a complete test result.
+
 TAP version 13
 # (node:14287) ExperimentalWarning: vm.USE_MAIN_CONTEXT_DEFAULT_LOADER is an experimental feature and might change at any time
 # (Use `node --trace-warnings ...` to show where the warning was created)
@@ -76,11 +78,6 @@ ok 15 - retro: seven role body geometries differ before badges, with the same co
   ---
   duration_ms: 0.134542
   ...
-# Subtest: coupa: seven role body geometries differ before badges, with the same colors
-ok 16 - coupa: seven role body geometries differ before badges, with the same colors
-  ---
-  duration_ms: 0.120208
-  ...
 # Subtest: fpv: all seven catalog practice routes validate and execute ordinary inputs
 ok 17 - fpv: all seven catalog practice routes validate and execute ordinary inputs
   ---
@@ -95,11 +92,6 @@ ok 18 - ukraine: all seven catalog practice routes validate and execute ordinary
 ok 19 - retro: all seven catalog practice routes validate and execute ordinary inputs
   ---
   duration_ms: 9.687417
-  ...
-# Subtest: coupa: all seven catalog practice routes validate and execute ordinary inputs
-ok 20 - coupa: all seven catalog practice routes validate and execute ordinary inputs
-  ---
-  duration_ms: 9.889959
   ...
 # Subtest: selected procedural skins alter body family, while a custom role image and collision radius remain independent
 ok 21 - selected procedural skins alter body family, while a custom role image and collision radius remain independent

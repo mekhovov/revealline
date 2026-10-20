@@ -10,49 +10,6 @@ import { CURRICULUM_CAMPAIGNS } from './curriculum.mjs';
 export const COMPANY_BRANDS = Object.freeze([
   {
     format: 'revealline-brand-pack.v1',
-    id: 'coupa',
-    revision: 2,
-    name: 'Coupa',
-    description: 'Make room for tomorrow. An illustrated world of connected work.',
-    publication: 'public',
-    themeId: 'coupa-village',
-    themeIds: [
-      'coupa-village',
-      ...COMPANY_CAMPAIGNS.filter((c) => c.brandId === 'coupa').map((c) => `${c.id}-theme`),
-    ],
-    actorSetId: 'coupa-flower',
-    logoAssetId: 'coupa-flower',
-    heroAssetId: 'coupa-wallpaper-network-2024',
-    iconAssetId: 'coupa-icon-512',
-    fontAssetId: 'poppins-regular',
-    assetIds: [
-      'coupa-flower',
-      'coupa-wallpaper-network-2024',
-      'coupa-wallpaper-center-2024',
-      'poppins-regular',
-      'poppins-license',
-      'coupa-icon-512',
-    ],
-    sources: [
-      {
-        title: 'Coupa brand library — official flower identity',
-        url: 'https://drive.google.com/drive/folders/1Bhq6KoBjES--iHt3gWZA2rhjo456Q9j6',
-        kind: 'official',
-      },
-      {
-        title: 'Life at Coupa — current company values',
-        url: 'https://careers.coupa.com/en/life-at-coupa/',
-        kind: 'official',
-      },
-      {
-        title: 'Poppins — SIL Open Font License',
-        url: 'https://github.com/google/fonts/tree/main/ofl/poppins',
-        kind: 'license',
-      },
-    ],
-  },
-  {
-    format: 'revealline-brand-pack.v1',
     id: 'droneaid',
     revision: 1,
     name: 'DroneAid',
@@ -140,24 +97,6 @@ const choices = [
       ...(item.id === 'social-drone-ua' ? ['social-drone-sky-watch'] : []),
     ],
   ]),
-  [
-    'coupa-all',
-    'coupa',
-    'Coupa Village',
-    'everyone',
-    COMPANY_CAMPAIGNS.filter((c) => c.brandId === 'coupa').map((c) => c.id),
-  ],
-  ['coupa-adventure', 'coupa', 'Spend in Motion', 'public', ['coupa-spend-in-motion']],
-  ['coupa-culture', 'coupa', 'Inside the Village', 'culture', ['coupa-inside-village']],
-  ['coupa-foundations', 'coupa', 'From Need to Value', 'learners', ['coupa-source-to-pay']],
-  ['coupa-operations', 'coupa', 'A Day in Coupa', 'operators', ['coupa-product-operations']],
-  [
-    'coupa-developers',
-    'coupa',
-    'Connect the Network',
-    'developers',
-    ['coupa-developer-integration'],
-  ],
   ['droneaid-community', 'droneaid', 'Community Relay', 'public', ['droneaid-community-relay']],
   [
     'droneaid-nl-community',
@@ -358,102 +297,6 @@ const retainedPresentations = Object.freeze({
       bytes: 59411,
     },
   ],
-  'coupa-all': [
-    {
-      id: '13e5c4ff2313ebd3714e6d6461e2468857be6e4997fede8da24542880951df13',
-      path: 'game/editions/retained/coupa-all-before-learning-bonus.json',
-      sha256: 'de8370665d5c99e953326e1861f0817afb3dfc511f0629cdec6f50c6d4b5c709',
-      bytes: 191970,
-    },
-    {
-      id: 'ecb87b6208f6f55322188ab34d8d9aa63b94064dd346f400bbe2bbbcc9d7870b',
-      path: 'game/editions/retained/coupa-all.json',
-      sha256: 'a48dc47e3e788046de0094c7d34bd74eda0c8776f271131254e26f5ec12e5706',
-      bytes: 146284,
-    },
-    {
-      id: 'd9deabcadfd9bdc7622da65ebbcc91bdd752db02234009edc3fe09f85812f842',
-      path: 'game/editions/retained/coupa-all-fb207466c.json',
-      sha256: '680c7f4fdb23619aed0627ea47444c7040a7f208104e4c2abc1a3d486adbe636',
-      bytes: 148510,
-    },
-    {
-      id: 'c55614c27b1c70e0ac9d0701d3defbfbb03262ecfe3e8458d436958bdaf96561',
-      path: 'game/editions/retained/coupa-all-before-discovery-rewards.json',
-      sha256: '4d79d4b009d3496712fe6919bb02730dc6fbe4c3d7191908bf75db75a989865b',
-      bytes: 165206,
-    },
-  ],
-  'coupa-adventure': [
-    {
-      id: '82527f475e9cb0ddbc6bf9701e495e49e08dd635a0e89578c107268373426a05',
-      path: 'game/editions/retained/coupa-adventure-fb207466c.json',
-      sha256: 'ef9a0bf6562fa74ab643d9b214bf1deb1338a1694337cdd822d9cb3cd3c26937',
-      bytes: 29600,
-    },
-    {
-      id: '77db1de24b49c04417f38b32002177590c92b353c17e5e9f580f44207e5fccf1',
-      path: 'game/editions/retained/coupa-adventure-before-discovery-rewards.json',
-      sha256: 'e251352b441ac1352802030be0bd6e9e2aed6a48e38dff8eee572c1d26221902',
-      bytes: 33391,
-    },
-  ],
-  'coupa-culture': [
-    {
-      id: 'ed8d7747ad136a06243a2cf8c90dacdc5cf42dc71f5c6448174bde48ea241ae8',
-      path: 'game/editions/retained/coupa-culture-fb207466c.json',
-      sha256: '12dbf430730aff337133b19e1140efc2c107cc18351b07048eef59c19593bcba',
-      bytes: 44733,
-    },
-  ],
-  'coupa-foundations': [
-    {
-      id: 'bb5393ff4a73f30346496334ac6004d84766dfbd958dbdfb62d2b3554e20d429',
-      path: 'game/editions/retained/coupa-foundations-before-learning-bonus.json',
-      sha256: '0ee0079828321ec31cfc6f0683f76ec5a8e90d7065008626793e33195f6a1187',
-      bytes: 50235,
-    },
-    {
-      id: '57dd4d5b7e0f8c27662349a8af870862657d700682ac758ad51721a61fdd59aa',
-      path: 'game/editions/retained/coupa-foundations.json',
-      sha256: '98d2a026fc89b48cbd76c2d2c2d74d491f666583ae819324f855ebd7f309dd90',
-      bytes: 46542,
-    },
-    {
-      id: '176ab6d261ed0e4366b570dd14df270d6b27a761404baf17921dc1f974898bd6',
-      path: 'game/editions/retained/coupa-foundations-fb207466c.json',
-      sha256: 'e6694057707e69a8a134836d91bc1879f3555b39f6fc58622a15073454bf7432',
-      bytes: 47276,
-    },
-  ],
-  'coupa-operations': [
-    {
-      id: '99254aaf116f5b68881ef51f36c7b5b9ebfbcf6cce371de90c8234c07862a43d',
-      path: 'game/editions/retained/coupa-operations.json',
-      sha256: '716bcbd296e6053ca6628b8b55dada9c0489a8893c1044cbc24854899caf6e20',
-      bytes: 47693,
-    },
-    {
-      id: '681f63d8afef4e5a89e3d62ac1a2ddaa775cf6d03ad2c3897c64bc2dfb84b922',
-      path: 'game/editions/retained/coupa-operations-fb207466c.json',
-      sha256: 'b00276030dd4642756c75e15120f2d415e07e85dc90b0eacf99cf0ee71574c3d',
-      bytes: 48443,
-    },
-  ],
-  'coupa-developers': [
-    {
-      id: '72ede618c25678c324d39389b9789130c66bb05f461e900d367e9c3f2a878224',
-      path: 'game/editions/retained/coupa-developers.json',
-      sha256: 'ee4d10212133066658ae5543883a5e1def3602a5bc840874223b90bdccac9c06',
-      bytes: 50046,
-    },
-    {
-      id: 'ab769c5bd0c8e9cfeb09c20c9363a6012d482b911aec1577c6665d264490127a',
-      path: 'game/editions/retained/coupa-developers-fb207466c.json',
-      sha256: 'd4bc46ff2c873a07325b9efec577e1df854b85479f3ba10a89ceb2a0db019d9a',
-      bytes: 50786,
-    },
-  ],
   'droneaid-nl-community': [
     {
       id: '13bf4f80b1b055d9fb5abdc137dfc93b94fe4ba55072104e697fb29615374679',
@@ -582,40 +425,28 @@ export const COMPANY_EDITIONS = Object.freeze(
   choices.map(([id, brandId, name, audience, campaignIds]) => ({
     format: 'revealline-edition.v1',
     id,
-    revision:
-      id === 'coupa-all'
-        ? 8
-        : id === 'coupa-foundations'
-          ? 7
-          : [
-                'coupa-adventure',
-                'droneaid-nl-community',
-                'coupa-operations',
-                'coupa-developers',
-              ].includes(id)
-            ? 6
-            : brandId === 'coupa'
-              ? 5
-              : ['droneaid-nl-workshop-lights', 'droneaid-nl-parts-in-motion'].includes(id)
-                ? 5
-                : brandId === 'droneaid-nl'
-                  ? 4
-                  : id === 'fpv-learning'
-                    ? 9
-                    : id === 'social-drone-ua'
-                      ? 10
-                      : id === 'ukraine-culture'
-                        ? 8
-                        : id === 'victory-drones'
-                          ? 6
-                          : [
-                                'social-drone-ua',
-                                'victory-drones',
-                                'ukraine-culture',
-                                'fpv-learning',
-                              ].includes(id)
-                            ? 5
-                            : 1,
+    revision: ['droneaid-nl-community'].includes(id)
+      ? 6
+      : ['droneaid-nl-workshop-lights', 'droneaid-nl-parts-in-motion'].includes(id)
+        ? 5
+        : brandId === 'droneaid-nl'
+          ? 4
+          : id === 'fpv-learning'
+            ? 9
+            : id === 'social-drone-ua'
+              ? 10
+              : id === 'ukraine-culture'
+                ? 8
+                : id === 'victory-drones'
+                  ? 6
+                  : [
+                        'social-drone-ua',
+                        'victory-drones',
+                        'ukraine-culture',
+                        'fpv-learning',
+                      ].includes(id)
+                    ? 5
+                    : 1,
     name: `${name} / LINE`,
     brandId,
     audience,
@@ -635,18 +466,6 @@ export const COMPANY_EDITIONS = Object.freeze(
 
 const palettes = {
   ...Object.fromEntries(CURRICULUM_IDENTITIES.map((item) => [item.id, item.palette])),
-  coupa: {
-    ink: '#081D4D',
-    paper: '#FFFFFF',
-    muted: '#B8CAE5',
-    accent: '#5FD6FF',
-    safe: '#96EAAA',
-    danger: '#FF9A88',
-    field: '#081D4D',
-    grid: '#193866',
-    sky: '#D8F0FF',
-    land: '#1565C0',
-  },
   'droneaid-nl': {
     ink: '#0D0B2E',
     paper: '#FFFFFF',
@@ -683,9 +502,7 @@ export function createCompanyTheme(brandId) {
     name: brand.id === 'droneaid-nl' ? 'DroneAid Netherlands' : brand.name,
     subtitle: curriculum
       ? 'Explore, connect and discover something worth keeping.'
-      : brandId === 'coupa'
-        ? 'Connected work. Shared possibilities.'
-        : 'Build together. Connect the community.',
+      : 'Build together. Connect the community.',
     family: 'company',
     player,
     scene: 'network',
@@ -734,23 +551,14 @@ export function createCompanyTheme(brandId) {
           root: curriculum.root,
           scale: curriculum.genre === 'ambient' ? 'dorian' : 'major',
         }
-      : brandId === 'coupa'
-        ? {
-            id: 'village-connections',
-            name: 'Village Connections',
-            genre: 'chiptune',
-            tempo: 108,
-            root: 60,
-            scale: 'major',
-          }
-        : {
-            id: brandId === 'droneaid-nl' ? 'workshop-first-light' : 'workshop-after-rain',
-            name: brandId === 'droneaid-nl' ? 'Workshop First Light' : 'Workshop After Rain',
-            genre: 'ambient',
-            tempo: 72,
-            root: 57,
-            scale: 'dorian',
-          },
+      : {
+          id: brandId === 'droneaid-nl' ? 'workshop-first-light' : 'workshop-after-rain',
+          name: brandId === 'droneaid-nl' ? 'Workshop First Light' : 'Workshop After Rain',
+          genre: 'ambient',
+          tempo: 72,
+          root: 57,
+          scale: 'dorian',
+        },
     classBodies: Object.fromEntries(
       ['scout', 'bomber', 'carrier', 'interceptor', 'fiber', 'impact', 'trapper'].map((id) => [
         id,
@@ -792,25 +600,18 @@ export function createCompanyPresets(brandId) {
       'neutral-marker': { ...neutral },
       [theme.player]: {
         ...neutral,
-        label: brandId === 'coupa' ? 'Coupa flower' : 'Community courier',
-        ...(brandId === 'coupa'
+        label: 'Community courier',
+        ...(brandId === 'droneaid-nl'
           ? {
-              src: '../../game/editions/assets/coupa/flower-blue.png',
-              sourceStatus: 'Official Coupa flower; gameplay rotation chosen for this game',
-              bodyMotion: { kind: 'rigid-spin', radiansPerSecond: Math.PI, travelGain: 0 },
-              bodyBacking: { kind: 'opaque-interior', color: '#FFFFFF' },
+              label: 'DroneAid Netherlands propeller',
+              src: '../../game/editions/assets/droneaid-nl/propeller.png',
+              sourceStatus:
+                'Exact four propeller paths from the official Netherlands logo; gameplay rotation user-selected',
+              widthCells: 2.3,
+              heightCells: 2.3,
+              bodyMotion: { kind: 'rigid-spin', radiansPerSecond: 4 * Math.PI, travelGain: 0 },
             }
-          : brandId === 'droneaid-nl'
-            ? {
-                label: 'DroneAid Netherlands propeller',
-                src: '../../game/editions/assets/droneaid-nl/propeller.png',
-                sourceStatus:
-                  'Exact four propeller paths from the official Netherlands logo; gameplay rotation user-selected',
-                widthCells: 2.3,
-                heightCells: 2.3,
-                bodyMotion: { kind: 'rigid-spin', radiansPerSecond: 4 * Math.PI, travelGain: 0 },
-              }
-            : {}),
+          : {}),
       },
     },
     animationRecipes: { still: { label: 'Rigid body', components: [] } },
@@ -820,61 +621,6 @@ export function createCompanyPresets(brandId) {
 // Campaign palettes, material metaphors and sound are presentation only. All
 // physical actor cues and deterministic movement remain owned by the engine.
 const campaignLooks = {
-  'coupa-spend-in-motion': [
-    'Connected City',
-    '#081D4D',
-    '#1565C0',
-    '#5FD6FF',
-    'paper-tangle',
-    'Paper tangle',
-    'chiptune',
-    108,
-    60,
-  ],
-  'coupa-inside-village': [
-    'Community Mosaic',
-    '#112A55',
-    '#276EC8',
-    '#EEC874',
-    'missing-cloud',
-    'Missed connection',
-    'ambient',
-    84,
-    62,
-  ],
-  'coupa-source-to-pay': [
-    'Supply District',
-    '#102A50',
-    '#2469B5',
-    '#8CDFE8',
-    'stale-fragments',
-    'Loose fragments',
-    'chiptune',
-    102,
-    60,
-  ],
-  'coupa-product-operations': [
-    'Operations Studio',
-    '#102446',
-    '#2864A3',
-    '#E8C378',
-    'paper-tangle',
-    'Paper tangle',
-    'chiptune',
-    96,
-    65,
-  ],
-  'coupa-developer-integration': [
-    'Resource Atlas',
-    '#08182F',
-    '#214A97',
-    '#5FD6FF',
-    'backlog-knot',
-    'Unresolved knot',
-    'ambient',
-    90,
-    57,
-  ],
   'droneaid-nl-workshop-lights': [
     'FPV Workshop',
     '#0D0B2E',

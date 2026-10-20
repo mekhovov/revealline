@@ -111,7 +111,6 @@ test('public community routes and shared loader retain exact native inventory ow
   const f = await fixture(t);
   const names = [
     'game/communities/index.html',
-    'game/communities/coupa/index.html',
     'game/communities/droneaid/index.html',
     'game/communities/droneaid-community/index.html',
     'game/communities/social-drone-ua/index.html',

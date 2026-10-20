@@ -19,7 +19,7 @@ import {
 } from '../game/company-campaigns/brands.mjs';
 import { COMPANY_CAMPAIGNS } from '../game/company-campaigns/catalog.mjs';
 import { CURRICULUM_LESSONS } from '../game/company-campaigns/curriculum-lessons.mjs';
-import { COMPANY_LESSONS } from '../game/company-campaigns/lessons.mjs';
+
 import { createCompanyProject } from '../game/company-campaigns/content.mjs';
 import { selectCurrentCompanyArtwork } from '../game/company-campaigns/artwork.mjs';
 import { CURRICULUM_CAMPAIGNS } from '../game/company-campaigns/curriculum.mjs';
@@ -32,10 +32,7 @@ import {
   createCompanyRewards,
 } from '../game/company-campaigns/rewards.mjs';
 import { createRewardMissionBindings } from '../game/rewards/bindings.mjs';
-import {
-  COMPANY_LEARNING_REWARD_CAMPAIGN_IDS,
-  createCompanyLearningRewards,
-} from '../game/company-campaigns/learning-rewards.mjs';
+
 import {
   completionRewardAssetReferences,
   validateCompletionRewards,
@@ -67,11 +64,7 @@ export async function produceCompanyContent({
       entry.id,
       {
         project: createCompanyProject,
-        rewards: COMPANY_REWARD_CAMPAIGN_IDS.includes(entry.id)
-          ? createCompanyRewards
-          : COMPANY_LEARNING_REWARD_CAMPAIGN_IDS.includes(entry.id)
-            ? createCompanyLearningRewards
-            : null,
+        rewards: COMPANY_REWARD_CAMPAIGN_IDS.includes(entry.id) ? createCompanyRewards : null,
       },
     ]),
     ...CURRICULUM_CAMPAIGNS.map((entry) => [
@@ -95,7 +88,7 @@ export async function produceCompanyContent({
       const project = compileContentProject(source);
       projects.set(definition.id, project);
       files.set(definition.sourcePath, bytes(source));
-      const selectedLessons = [...COMPANY_LESSONS, ...CURRICULUM_LESSONS].filter((lesson) =>
+      const selectedLessons = CURRICULUM_LESSONS.filter((lesson) =>
         definition.missionIds.includes(lesson.missionId),
       );
       const lessonPath = selectedLessons.length
@@ -211,7 +204,7 @@ export async function produceCompanyContent({
     editions: COMPANY_EDITIONS,
     campaigns,
     assets,
-    defaultEditionId: 'coupa-all',
+    defaultEditionId: COMPANY_EDITIONS[0].id,
   });
   files.set('game/editions/catalog.json', bytes(catalog));
   const formatting = await resolveConfig(fileURLToPath(import.meta.url));

@@ -38,7 +38,6 @@ const themes = {
   fpv: 'FPV Front',
   ukraine: 'Ukraine Atlas',
   retro: '1994 Forever',
-  coupa: 'Spend Network',
 };
 const label = (s) => s.replaceAll('-', ' ');
 

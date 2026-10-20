@@ -1,3 +1,5 @@
+> Retained historical excerpt after an ownership migration. Exact original bytes are preserved separately. Original totals and verification statements describe the original scope; this excerpt is not a current qualification or a complete test result.
+
 # Round 19 source browser checks
 
 Observed 12 September 2026 using the Codex in-app browser at the owned source origin `http://127.0.0.1:8811`. Work progressed to source version 0.9.0 during this pass; the final workshop preview displayed `v0.9.0 / DEV`. The user's port 8767 and preserved releases were kept separate. Final static/source checks have their own [input inventory](source-inputs.json).
@@ -26,7 +28,6 @@ After reload, the exported profile contained **one picture, one score and two se
 
 ## Workshop and layout
 
-The indexed Equipment Workshop loaded through the same authoring control. Its three selectable maps showed Ukraine Atlas, 1994 Forever and Spend Network themes. Clear Ledger with Impact craft opened through the actual Open full preview link in a separate practice tab, with the Safe Reconcile checklist and ordinary opportunity objective.
 
 [Measured CSS viewports](authoring-viewports.json) were **320×640**, **844×390** and **1440×900**. Document width matched each viewport. The visible Start action measured approximately 44, 44 and 44.65 CSS pixels high. The browser had DPR 1.2, so capability dimensions were scaled to obtain the recorded CSS sizes; an initial 266×533 diagnostic is retained honestly. [The phone screenshot](screenshots/workshop-phone.jpg) records the actual view. Its reading region scrolls; the still does not claim to display every checklist row simultaneously.
 

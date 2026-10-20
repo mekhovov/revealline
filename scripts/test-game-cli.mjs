@@ -1,4 +1,6 @@
 import test from 'node:test';
+import childProcess from 'node:child_process';
+import { syncBuiltinESMExports } from 'node:module';
 import assert from 'node:assert/strict';
 import * as fs from 'node:fs/promises';
 import path from 'node:path';
@@ -18,6 +20,7 @@ import {
   createZip,
   generateLevel,
   inspectBuildProject,
+  main,
   parseArguments,
   PUBLIC_SECURITY_HEADERS,
   readBuildConfig,
@@ -230,6 +233,10 @@ test('real Git snapshot runs an older frozen entry through an aliased temp root 
     'scripts/pack-indexes.mjs',
     'scripts/brand-icons.mjs',
     'scripts/build-entry-writer.mjs',
+    'scripts/published-content-ownership.mjs',
+    'game/editions/model.mjs',
+    'game/edition-context.mjs',
+    'game/presentation/theme-system.mjs',
     'publishing/vendor/acorn-8.18.0.mjs',
     'publishing/vendor/acorn-LICENSE.txt',
     'game/data-json.mjs',
@@ -424,6 +431,67 @@ test('build is byte-reproducible and each manifest checksum covers exact output 
     await fs.readFile(path.join(root, 'game/core.mjs'), 'utf8'),
     'export const value = 3;\n',
   );
+});
+
+test('optional build progress preserves exact output bytes and reports preparation and replacement', async (t) => {
+  const { root, out, directory } = await fixture(t);
+  const original = await buildProject({ root, out });
+  const phases = [];
+  const observed = await buildProject({
+    root,
+    out: path.join(directory, 'observed'),
+    onPhase: (phase) => phases.push(phase),
+  });
+  assert.equal(observed.sha256, original.sha256);
+  assert.deepEqual(
+    await fs.readFile(path.join(observed.out, 'distribution.zip')),
+    await fs.readFile(path.join(out, 'distribution.zip')),
+  );
+  for (const phase of [
+    'inputs',
+    'references',
+    'content-snapshots',
+    'source-files',
+    'offline-metadata',
+    'manifest',
+    'zip',
+    'expanded-files',
+    'zip-file',
+    'replace-output',
+  ])
+    assert(phases.includes(phase), `Missing phase: ${phase}`);
+  assert.equal(phases[0], 'inputs');
+  assert.equal(phases.at(-1), 'replace-output');
+  assert.equal(new Set(phases).size, phases.length);
+});
+
+test('progress errors remain visible and cannot replace a working output', async (t) => {
+  const { root, out, directory } = await fixture(t);
+  await buildProject({ root, out });
+  const original = await fs.readFile(path.join(out, 'distribution.zip'));
+  await fs.writeFile(path.join(root, 'game/core.mjs'), 'export const value = 99;\n');
+  const failure = new Error('Progress destination unavailable');
+  await assert.rejects(
+    buildProject({
+      root,
+      out,
+      onPhase: async (phase) => {
+        if (phase === 'replace-output') throw failure;
+      },
+    }),
+    (error) => error === failure,
+  );
+  assert.deepEqual(await fs.readFile(path.join(out, 'distribution.zip')), original);
+  assert(!(await fs.readdir(directory)).some((name) => name.startsWith('.xonix-build-')));
+  await assert.rejects(buildProject({ root, out, onPhase: 'stderr' }), /progress callback/i);
+});
+
+test('CLI progress accepts only the explicit stderr destination', async () => {
+  assert.deepEqual(parseArguments(['build', '--progress', 'stderr']), {
+    action: 'build',
+    options: { progress: 'stderr' },
+  });
+  await assert.rejects(main(['build', '--progress', 'other']), /progress.*stderr/i);
 });
 
 test('manifest-only inspection shares exact build preparation without site or ZIP writes', async (t) => {
@@ -920,9 +988,9 @@ test('packaged offline builds generate scoped metadata, generated brand icons, c
     path.join(root, 'game/ui/install-entry.mjs'),
     'export const installOwner = true;',
   );
-  await fs.mkdir(path.join(root, 'game/communities/coupa'), { recursive: true });
+  await fs.mkdir(path.join(root, 'game/communities/sample'), { recursive: true });
   await fs.writeFile(
-    path.join(root, 'game/communities/coupa/index.html'),
+    path.join(root, 'game/communities/sample/index.html'),
     '<!doctype html><html data-community-entry="loading"><head><script type="module" src="../entry.mjs"></script></head><body>Opening community</body></html>',
   );
   await fs.writeFile(
@@ -991,7 +1059,7 @@ test('packaged offline builds generate scoped metadata, generated brand icons, c
       [...page.matchAll(/<script\b[^>]*src="[^"]*\/ui\/install-entry\.mjs"/g)].length,
       1,
     );
-  const community = await fs.readFile(path.join(out, 'game/communities/coupa/index.html'), 'utf8');
+  const community = await fs.readFile(path.join(out, 'game/communities/sample/index.html'), 'utf8');
   assert.doesNotMatch(community, /install-entry\.mjs/);
   assert.deepEqual(
     [...community.matchAll(/<script\b[^>]*src="([^"]+)"/g)].map((match) => match[1]),
@@ -1000,7 +1068,7 @@ test('packaged offline builds generate scoped metadata, generated brand icons, c
   );
   assert.match(community, /\.\.\/\.\.\/\.\.\/manifest.webmanifest/);
   assert.match(community, /\.\.\/\.\.\/\.\.\/service-worker.js/);
-  assert.ok(cache.files.some((file) => file.path === 'game/communities/coupa/index.html'));
+  assert.ok(cache.files.some((file) => file.path === 'game/communities/sample/index.html'));
   assert.ok(cache.files.some((file) => file.path === 'game/communities/entry.mjs'));
   // Both missing metadata and an already prepared page produce one declaration.
   for (const page of [entry, nested]) {
@@ -1253,9 +1321,9 @@ async function optionalPackFixture(t) {
 }
 test('optional indexed pack keeps exact shipped and ZIP bytes while core cache excludes only the declared source', async (t) => {
   const { root, out, directory } = await optionalPackFixture(t);
-  await fs.mkdir(path.join(root, 'game/communities/coupa'), { recursive: true });
+  await fs.mkdir(path.join(root, 'game/communities/sample'), { recursive: true });
   await fs.writeFile(
-    path.join(root, 'game/communities/coupa/index.html'),
+    path.join(root, 'game/communities/sample/index.html'),
     '<!doctype html><html data-community-entry="loading"><head></head><body>Opening community</body></html>',
   );
   const result = await buildProject({ root, out });
@@ -1277,11 +1345,11 @@ test('optional indexed pack keeps exact shipped and ZIP bytes while core cache e
   ]);
   const page = await fs.readFile(path.join(out, 'game/index.html'), 'utf8');
   assert.match(page, /optionalPacks/);
-  const shell = await fs.readFile(path.join(out, 'game/communities/coupa/index.html'), 'utf8');
+  const shell = await fs.readFile(path.join(out, 'game/communities/sample/index.html'), 'utf8');
   assert.doesNotMatch(shell, /optionalPacks|optionalArtwork/);
   assert.match(shell, /revealline-offline/);
   assert.match(shell, new RegExp(cache.buildId));
-  assert.ok(cache.files.some((file) => file.path === 'game/communities/coupa/index.html'));
+  assert.ok(cache.files.some((file) => file.path === 'game/communities/sample/index.html'));
   const zip = await fs.readFile(path.join(out, 'distribution.zip'));
   assert.ok(zip.includes(original), 'Stored ZIP entry retains exact optional pack payload.');
   const omitted = manifest.files
@@ -1361,4 +1429,45 @@ test('declaring an optional pack does not relax the 80 MiB core cache budget', a
   await fs.writeFile(path.join(root, 'game/core-payload.bin'), Buffer.alloc(80 * 1024 * 1024));
   await assert.rejects(buildProject({ root, out }), /80 MiB/);
   await assert.rejects(fs.access(out));
+});
+
+test('ordinary test discovery and the Solo library command retain complete isolated native files', async (t) => {
+  const files = [
+    'game/test/mission-library-solo-custom-host.test.mjs',
+    'game/test/mission-library-solo-host.test.mjs',
+    'game/test/mission-library-solo-incoming-host.test.mjs',
+    'game/test/mission-library-solo-handoff-host.test.mjs',
+  ];
+  const invocations = [];
+  const launch = t.mock.method(childProcess, 'spawnSync', (...args) => {
+    invocations.push(args);
+    return { status: 0 };
+  });
+  // The CLI owns a named built-in binding. Synchronize only this test's launch
+  // interception and restore it before examining the actual discovered argv.
+  syncBuiltinESMExports();
+  try {
+    await main(['test']);
+  } finally {
+    launch.mock.restore();
+    syncBuiltinESMExports();
+  }
+  assert.equal(invocations.length, 1);
+  const [command, args] = invocations[0];
+  assert.equal(command, process.execPath);
+  assert.equal(args[0], '--test');
+  assert.match(args[1], /^--test-concurrency=[1-4]$/);
+  const discovered = args.slice(2);
+  for (const file of files) assert.equal(discovered.filter((value) => value === file).length, 1);
+  assert.equal(discovered.includes('game/test/mission-library-solo-fixture.mjs'), false);
+  assert.deepEqual(discovered, [...new Set(discovered)].sort());
+
+  const { scripts } = JSON.parse(
+    await fs.readFile(new URL('../package.json', import.meta.url), 'utf8'),
+  );
+  assert.deepEqual(
+    scripts['test:mission-library-solo'].split(/\s+/),
+    ['node', '--test', '--test-concurrency=1', ...files],
+    'The targeted command uses complete files, one fresh process at a time.',
+  );
 });

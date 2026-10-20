@@ -34,8 +34,8 @@ const finales = {
 };
 const editionIds = new Set([
   '',
-  'coupa-all',
   'droneaid-nl-community',
+  'droneaid-pt-community',
   'social-drone-ua',
   'victory-drones',
   'ukraine-culture',

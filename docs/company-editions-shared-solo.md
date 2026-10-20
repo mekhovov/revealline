@@ -20,9 +20,7 @@ opened by the canonical host.
 
 Brand packs supply palette, typography, official identity artwork, home composition,
 character recipes and campaign-specific enemy appearances. Cosmetic body rotation does not
-change collision geometry. The Coupa flower rotates at half a revolution per second; its
-original exterior transparency is retained while enclosed interior holes receive an opaque
-white backing at render time. The Dutch propeller rotates twice per second. Reduced effects
+change collision geometry. The Dutch propeller rotates twice per second. Reduced effects
 stops continuous rotation. Menu marks stay upright.
 
 The arena fits the largest rectangle of the map's existing aspect ratio into the available
@@ -30,8 +28,7 @@ viewport, reserving measured room for HUD, notices, safe areas and visible touch
 Portrait phones use the full available width. Short landscape screens put touch steering
 beside the board. The layout never stretches the world or changes input coordinates.
 
-Official 2024 Coupa wallpapers furnish the home menu. All 66 current missions have distinct
-pinned generated pictures. The Netherlands revision-2 set now depicts recognizable FPV
+All 36 Netherlands missions have distinct pinned generated pictures. The Netherlands revision-2 set now depicts recognizable FPV
 quads, goggles, practical drone-building benches and donation cases, using the official
 violet/yellow palette and Ukraine-support details. Its first workshop picture also supplies
 the home hero. The six campaign enemy families are generic Canvas recipes: ducted, open-X,
@@ -99,28 +96,16 @@ still be rejected by the shared engine's strict checkpoint check. A portable-mat
 would need a separate gameplay revision with retained readers; company editions neither
 round that authority nor introduce their own physics to conceal the limitation.
 
-The 2026-09-26 local browser review exercised Coupa and Dutch home menus, mission selection,
-the Band 12 Run Ledger encounter, settings and Controller Practice in both source and
-compiled editions. At 1280×720 the arena measured 1243×621; at 390×844 it measured 382×191
-with controls below; at 844×390 it measured 652×326 with controls beside it. HUD and touch
-controls did not overlap the board in those views. These are bounded viewport observations,
-not a claim that every physical device was tested. Automated startup, Missions and first
-launch passed for all 14 editions; the shared save/backup compatibility cohort passed 63
-checks. After rebasing onto main `a8881ac17`, the company cohort passed 172 checks and the
-shared-contract/upstream-presentation cohort passed 230. The final control relocation has
-its own actual-host regression. Full release qualification remains separate from these
-focused checks.
+On 19 October 2026, the source-cleanup candidate passed browser checks for all six retained community routes. Each loaded its own mission, advanced the gameplay clock, and supported pause/resume without missing artwork or script errors. The public directory retained all six community destinations and the main-game link. These are desktop source-preview checks, not physical-device or published-release qualification.
 
 A keyboard follow-up reproduced a missed-release edge case when an embedded view becomes
 hidden without a window blur. The shared Solo input adapter now clears its physical key
 ledger on either departure event, retaining the normal explicit-resume and held-repeat
 guards. Three actual-focus host regressions cover launch, Settings return, letter-key
 fallback, blur and visibility-only recovery. Together with the continuous input, UI input
-and controller boost recovery suites, all 138 checks pass. Browser checks also confirmed
-arrow and WASD steering and Escape pause/resume in Coupa; the user confirmed keyboard
-controls were working before this additional lifecycle fix.
+and controller boost recovery suites, all 138 checks pass.
 
 The delivery sequence remains: shared-host candidate → advanced encounter proofs →
-14-edition reproducible freeze → human review of the representative artwork and gameplay →
+retained-edition reproducible freeze → human review of the representative artwork and gameplay →
 final art in small batches → installation/performance/rollback qualification → exact-byte
 release promotion. Public promotion remains closed until the recorded gates pass.

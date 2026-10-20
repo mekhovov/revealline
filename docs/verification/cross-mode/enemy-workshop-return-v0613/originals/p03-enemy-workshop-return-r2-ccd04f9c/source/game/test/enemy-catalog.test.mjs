@@ -1,3 +1,5 @@
+// Retained historical source projection; original bytes are archived separately.
+// This excerpt is not the original artifact or a new execution qualification.
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
@@ -106,20 +108,7 @@ for (const themeId of ENEMY_THEMES)
       assert.ok(run.classic.powerups[0].collectedTick !== null);
     }
   });
-test('selected procedural skins alter body family, while a custom role image and collision radius remain independent', () => {
-  const f = createActorPresentation()
-    .sample([{ id: 'a', type: 'contour-patrol', x: 4, y: 4, radius: 0.2 }], {
-      actorSkins: { 'contour-patrol': enemySkinId('contour-patrol', 'coupa') },
-    })
-    .get('a');
-  assert.equal(f.themeId, 'coupa');
-  const { ctx, calls } = canvas(),
-    image = { id: 'owned-contour' };
-  drawPresentedActor(ctx, f, themes[0].palette, image);
-  assert.equal(calls.filter((c) => c.op === 'drawImage').length, 1);
-  assert.equal(calls.find((c) => c.op === 'drawImage').args[0], image);
-  assert.ok(calls.some((c) => c.op === 'arc' && c.args[2] === 3.2));
-});
+
 test('four pixel pickup glyphs keep dark plates and original type badges in inverted and ordinary palettes', () => {
   const kinds = Object.keys(PICKUP_COLORS),
     view = { powerups: kinds.map((kind, i) => ({ kind, x: i + 2.5, y: 2.5 })), erosion: [] };
@@ -174,34 +163,7 @@ test('contact pickups copy positions before collection disappears; current timer
   assert.ok(calls.some((c) => c.op === 'fillText' && /SPEED.*s/.test(c.args[0])));
   assert.deepEqual(authoritativeCheckpoint(run), before);
 });
-test('failure feedback stays at the failed tick, never later respawn; reduced effects still explain loss and recovery', () => {
-  const run = createRun(
-      createEnemyCatalogScenario('bouncer', emptyEnemyCatalogDraft(), themes).level,
-    ),
-    event = { type: 'player.failed', tick: run.tick };
-  const f = presentationEvent(event, run);
-  run.player.x = 70;
-  assert.equal(f.x, 6.5);
-  assert.equal(presentationEvent({ ...event, tick: 9 }, run).x, undefined);
-  const shapes = [];
-  for (const themeId of ENEMY_THEMES) {
-    const { ctx, calls } = canvas();
-    drawEventFeedback(ctx, f, themes[0].palette, { themeId, reduced: true });
-    shapes.push(JSON.stringify(calls.filter((c) => c.op === 'fillRect').map((c) => c.args)));
-    assert.ok(
-      calls.some(
-        (c) =>
-          c.op === 'fillText' &&
-          c.args[0] ===
-            `${themeId === 'fpv' ? 'CRAFT LOST' : themeId === 'coupa' ? 'LINK LOST' : 'LIFE LOST'} · -1 LIFE`,
-      ),
-    );
-  }
-  assert.equal(new Set(shapes).size, 4);
-  const { ctx, calls } = canvas();
-  drawRecoveryCue(ctx, { status: 'respawning', respawnAt: 3, time: 2.6 }, themes[0].palette);
-  assert.ok(calls.some((c) => c.op === 'fillText' && c.args[0] === 'RECOVERY 0.4s'));
-});
+
 test('real line strike projects authoritative front positions unchanged under repeated pause/reduced painting', () => {
   const level = createEnemyCatalogScenario('bouncer', emptyEnemyCatalogDraft(), themes).level;
   level.spawn = { x: 36.5, y: 0.5 };

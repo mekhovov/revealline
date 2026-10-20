@@ -1,10 +1,11 @@
 # Round 04 — reusable art direction, asset production and prompt workflows
 
+> Retained excerpt after an ownership migration. Historical totals and verification statements describe the original scope; this excerpt is not a current release qualification. Original bytes and removed material are preserved separately.
+
 Researched 12 September 2026. This is an authoring-system recommendation and a working prompt library, not evidence that a game, sprite set or audio pack has been built.
 
 ## Recommendation
 
-Treat each theme as a complete art direction and content package, with **separate gameplay, artwork, UI and audio contracts**. The first theme stays Ukrainian FPV military: its reveal pictures contain fictional invading Russian military forces. Culture/history, 1980s–1990s nostalgia and Coupa BSM/AI are peer families. New reveal-image styles can be added inside any family without changing the simulation.
 
 The important distinction is between the **pixel-art game language** and the **reveal-art medium**. Crisp player silhouettes, distinct enemy roles, an unmistakable active path and a readable boundary can remain stable above pixel illustration, flat graphic art, painting or photographic imagery. Style diversity is a strength when those active layers remain distinguishable. This is a design recommendation to prove with composites and playtests, not a measured result.
 
@@ -25,7 +26,6 @@ The [56-prompt catalog](../../authoring/prompts/catalog.json) and [selection gui
 | UNESCO describes Petrykivka through fantastic flowers and other natural elements rooted in local observation. [Petrykivka](https://ich.unesco.org/en/RL/petrykivka-decorative-painting-as-a-phenomenon-of-the-ukrainian-ornamental-folk-art-00893?lang=en) | Make an original contemporary botanical adaptation with references; avoid treating every floral pattern as interchangeable Ukrainian folk art. |
 | UNESCO describes Kosiv ceramics' contour drawing, green/yellow coloring and figurative scenes tied to Hutsul life. [Kosiv ceramics](https://ich.unesco.org/en/RL/tradition-of-kosiv-painted-ceramics-01456?RL=01456) | A Kosiv pack should have its own cream ground, contour/material language and scenes, with a separate source trail. |
 | UNESCO and the Crimean Tatar organization ALEM describe Örnek as a meaningful symbol system transmitted by practitioners. [UNESCO](https://ich.unesco.org/en/RL/ornek-a-crimean-tatar-ornament-and-knowledge-about-it-01601?RL=01601), [ALEM](https://www.ornek-crimea.com/about-ornek-en) | Give Örnek its own chapter and reference notes. Do not randomly combine symbols and then claim a documented meaning. |
-| Official Coupa documentation distinguishes Navi conversational assistance and Navi Agent Studio's environment for specialized business-process agents. [Coupa glossary](https://docs.coupa.com/en/coupa-glossary/overview/c) | Let the business theme include planning, connections and helpful agents. Describe arcade effects as metaphors, keep the C-token placeholder explicit and use supplied official art when selected. |
 
 The recommendations above are project-specific inferences from these primary sources. They are not claims that the cited tools or artists endorse the game.
 
@@ -100,7 +100,6 @@ This round can validate the library and authoring contracts. Runtime performance
 
 1. A fixed main-theme board over the same military illustration in pixel art, clean graphic illustration, gouache and cinematic miniature styling. Change only presentation and evaluate the cost of keeping active information readable.
 2. One accepted FPV drone reconstructed as a small real sprite with a short rotor loop, all cardinal directions and explicit pivot. This exposes the gap between concept quality and real game size early.
-3. The identical mask and enemy fixture in the four approved families, including the hardest bright artwork cases: snow, ceramic cream, CRT glow and ivory Coupa panels.
 4. A tiny three-image chapter with one easy, one medium and one optional-objective board to test whether image discovery and tactical choice reinforce precise cutting.
 
 These are recommended design proofs before scaling to hundreds of backgrounds and a complete production asset set. They preserve the user's accepted breadth while giving the team concrete evidence about its consistency.

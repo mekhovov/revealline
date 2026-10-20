@@ -13,9 +13,8 @@ The inspected Reloaded reference frames show bright compact bodies, short motion
 | FPV Front     | Tracked vehicles, quad rotors, radar arrays and a toothed eroder |
 | Ukraine Atlas | Thorn beetles, patterned winged spirits and floral guardians     |
 | 1994 Forever  | Arcade robots, compact comets and glitch machinery               |
-| Spend Network | Walking invoices, parcels and linked accounting machinery        |
 
-`microtile` reduces fine details but keeps tread/leg movement; `hybrid` and `props` retain highlights and larger body treatments. New themes with the existing `fpv`, `atlas`, `retro` or `navi` family inherit the matching presentation. The existing eight artwork slots and additional classic `contour`, `rover`, `eroder` slots remain independent replacements. Imported bodies face upward at zero rotation; the renderer rotates them with observed travel. Existing player body/propeller rigs are retained.
+`microtile` reduces fine details but keeps tread/leg movement; `hybrid` and `props` retain highlights and larger body treatments. New themes with the existing `fpv`, `atlas` or `retro` family inherit the matching presentation. The existing eight artwork slots and additional classic `contour`, `rover`, `eroder` slots remain independent replacements. Imported bodies face upward at zero rotation; the renderer rotates them with observed travel. Existing player body/propeller rigs are retained.
 
 The normal body box targets 24–32 CSS pixels on canvases at least 480 CSS pixels wide, and at least 16 on ordinary phone-sized canvases (bosses may reach 40 CSS pixels). Logical caps of 64 pixels (80 for bosses) prevent unlimited enlargement on very small embedded canvases. At smaller sizes the cap can take precedence over the desired minimum. `BoardPainter.draw(..., {actorScale})` accepts a bounded cosmetic multiplier; it is not a physics setting or a new persisted player preference.
 

@@ -2981,564 +2981,6 @@
         "recipe": null,
         "revision": 2
       },
-      "picture.coupa.0481ceb3eba28ea9": {
-        "description": "First Signal · Stone Lanes · Spend Network: registered baseline component; no new raster or audio production is claimed.",
-        "file": null,
-        "format": "revealline-asset-revision.v1",
-        "geometry": null,
-        "id": "picture.coupa.0481ceb3eba28ea9.default",
-        "kind": "recipe",
-        "provenance": {
-          "creator": "Reveal Line",
-          "license": "Project-authored component; bundled font licenses remain separate",
-          "parent": null,
-          "prompt": "Create one original FPV Field Kit first signal · stone lanes · spend network for slot picture.coupa.0481ceb3eba28ea9. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 768 by 576 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
-          "source": "Existing runtime presentation and Field Kit specification"
-        },
-        "quality": { "evidence": [], "stage": "source" },
-        "recipe": { "id": "scene.reveal.v1" },
-        "revision": 1
-      },
-      "picture.coupa.05d993f4148d93fc": {
-        "description": "Spend Network · Shared Routes · City of Small Wins · Spend Network: registered baseline component; no new raster or audio production is claimed.",
-        "file": null,
-        "format": "revealline-asset-revision.v1",
-        "geometry": null,
-        "id": "picture.coupa.05d993f4148d93fc.default",
-        "kind": "recipe",
-        "provenance": {
-          "creator": "Reveal Line",
-          "license": "Project-authored component; bundled font licenses remain separate",
-          "parent": null,
-          "prompt": "Create one original FPV Field Kit spend network · shared routes · city of small wins · spend network for slot picture.coupa.05d993f4148d93fc. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 1152 by 576 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
-          "source": "Existing runtime presentation and Field Kit specification"
-        },
-        "quality": { "evidence": [], "stage": "source" },
-        "recipe": { "id": "scene.reveal.v1" },
-        "revision": 1
-      },
-      "picture.coupa.090b4ca5dc7ea7fa": {
-        "description": "First Signal · Night Patrol · Spend Network: registered baseline component; no new raster or audio production is claimed.",
-        "file": null,
-        "format": "revealline-asset-revision.v1",
-        "geometry": null,
-        "id": "picture.coupa.090b4ca5dc7ea7fa.default",
-        "kind": "recipe",
-        "provenance": {
-          "creator": "Reveal Line",
-          "license": "Project-authored component; bundled font licenses remain separate",
-          "parent": null,
-          "prompt": "Create one original FPV Field Kit first signal · night patrol · spend network for slot picture.coupa.090b4ca5dc7ea7fa. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 768 by 576 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
-          "source": "Existing runtime presentation and Field Kit specification"
-        },
-        "quality": { "evidence": [], "stage": "source" },
-        "recipe": { "id": "scene.reveal.v1" },
-        "revision": 1
-      },
-      "picture.coupa.0ff486f1577a5fc7": {
-        "description": "Spend Network · Shared Routes · Shared Value Harbor · Spend Network: registered baseline component; no new raster or audio production is claimed.",
-        "file": null,
-        "format": "revealline-asset-revision.v1",
-        "geometry": null,
-        "id": "picture.coupa.0ff486f1577a5fc7.default",
-        "kind": "recipe",
-        "provenance": {
-          "creator": "Reveal Line",
-          "license": "Project-authored component; bundled font licenses remain separate",
-          "parent": null,
-          "prompt": "Create one original FPV Field Kit spend network · shared routes · shared value harbor · spend network for slot picture.coupa.0ff486f1577a5fc7. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 1152 by 576 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
-          "source": "Existing runtime presentation and Field Kit specification"
-        },
-        "quality": { "evidence": [], "stage": "source" },
-        "recipe": { "id": "scene.reveal.v1" },
-        "revision": 1
-      },
-      "picture.coupa.1b09bd3b6f1608be": {
-        "description": "Spend Network · Sentinel Circuit · sentinel-circuit-coupa-listening-court: registered baseline component; no new raster or audio production is claimed.",
-        "file": null,
-        "format": "revealline-asset-revision.v1",
-        "geometry": null,
-        "id": "picture.coupa.1b09bd3b6f1608be.default",
-        "kind": "recipe",
-        "provenance": {
-          "creator": "Reveal Line",
-          "license": "Project-authored component; bundled font licenses remain separate",
-          "parent": null,
-          "prompt": "Create one original FPV Field Kit spend network · sentinel circuit · sentinel-circuit-coupa-listening-court for slot picture.coupa.1b09bd3b6f1608be. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 1774 by 887 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
-          "source": "Existing runtime presentation and Field Kit specification"
-        },
-        "quality": { "evidence": [], "stage": "source" },
-        "recipe": { "id": "scene.reveal.v1" },
-        "revision": 1
-      },
-      "picture.coupa.1f4ed16be3f1c6cc": {
-        "description": "Spend Network · Fracture Lines · fracture-lines-frayed-causeway: registered baseline component; no new raster or audio production is claimed.",
-        "file": null,
-        "format": "revealline-asset-revision.v1",
-        "geometry": null,
-        "id": "picture.coupa.1f4ed16be3f1c6cc.default",
-        "kind": "recipe",
-        "provenance": {
-          "creator": "Reveal Line",
-          "license": "Project-authored component; bundled font licenses remain separate",
-          "parent": null,
-          "prompt": "Create one original FPV Field Kit spend network · fracture lines · fracture-lines-frayed-causeway for slot picture.coupa.1f4ed16be3f1c6cc. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 1774 by 887 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
-          "source": "Existing runtime presentation and Field Kit specification"
-        },
-        "quality": { "evidence": [], "stage": "source" },
-        "recipe": { "id": "scene.reveal.v1" },
-        "revision": 1
-      },
-      "picture.coupa.280ea068e8a16fac": {
-        "description": "Spend Network · Sentinel Circuit · sentinel-circuit-coupa-switchyard-gates: registered baseline component; no new raster or audio production is claimed.",
-        "file": null,
-        "format": "revealline-asset-revision.v1",
-        "geometry": null,
-        "id": "picture.coupa.280ea068e8a16fac.default",
-        "kind": "recipe",
-        "provenance": {
-          "creator": "Reveal Line",
-          "license": "Project-authored component; bundled font licenses remain separate",
-          "parent": null,
-          "prompt": "Create one original FPV Field Kit spend network · sentinel circuit · sentinel-circuit-coupa-switchyard-gates for slot picture.coupa.280ea068e8a16fac. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 1774 by 887 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
-          "source": "Existing runtime presentation and Field Kit specification"
-        },
-        "quality": { "evidence": [], "stage": "source" },
-        "recipe": { "id": "scene.reveal.v1" },
-        "revision": 1
-      },
-      "picture.coupa.2a75ce6ea2ef63e0": {
-        "description": "Spend Network · Route Choices · route-worlds-coupa-switchback: registered baseline component; no new raster or audio production is claimed.",
-        "file": null,
-        "format": "revealline-asset-revision.v1",
-        "geometry": null,
-        "id": "picture.coupa.2a75ce6ea2ef63e0.default",
-        "kind": "recipe",
-        "provenance": {
-          "creator": "Reveal Line",
-          "license": "Project-authored component; bundled font licenses remain separate",
-          "parent": null,
-          "prompt": "Create one original FPV Field Kit spend network · route choices · route-worlds-coupa-switchback for slot picture.coupa.2a75ce6ea2ef63e0. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 1672 by 941 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
-          "source": "Existing runtime presentation and Field Kit specification"
-        },
-        "quality": { "evidence": [], "stage": "source" },
-        "recipe": { "id": "scene.reveal.v1" },
-        "revision": 1
-      },
-      "picture.coupa.3d671e7498b870e7": {
-        "description": "First Signal · Hidden Frequency · Spend Network: registered baseline component; no new raster or audio production is claimed.",
-        "file": null,
-        "format": "revealline-asset-revision.v1",
-        "geometry": null,
-        "id": "picture.coupa.3d671e7498b870e7.default",
-        "kind": "recipe",
-        "provenance": {
-          "creator": "Reveal Line",
-          "license": "Project-authored component; bundled font licenses remain separate",
-          "parent": null,
-          "prompt": "Create one original FPV Field Kit first signal · hidden frequency · spend network for slot picture.coupa.3d671e7498b870e7. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 768 by 576 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
-          "source": "Existing runtime presentation and Field Kit specification"
-        },
-        "quality": { "evidence": [], "stage": "source" },
-        "recipe": { "id": "scene.reveal.v1" },
-        "revision": 1
-      },
-      "picture.coupa.3f2efe130aa97273": {
-        "description": "Spend Network · Shared Routes · The Thoughtful Market · Spend Network: registered baseline component; no new raster or audio production is claimed.",
-        "file": null,
-        "format": "revealline-asset-revision.v1",
-        "geometry": null,
-        "id": "picture.coupa.3f2efe130aa97273.default",
-        "kind": "recipe",
-        "provenance": {
-          "creator": "Reveal Line",
-          "license": "Project-authored component; bundled font licenses remain separate",
-          "parent": null,
-          "prompt": "Create one original FPV Field Kit spend network · shared routes · the thoughtful market · spend network for slot picture.coupa.3f2efe130aa97273. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 1152 by 576 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
-          "source": "Existing runtime presentation and Field Kit specification"
-        },
-        "quality": { "evidence": [], "stage": "source" },
-        "recipe": { "id": "scene.reveal.v1" },
-        "revision": 1
-      },
-      "picture.coupa.40f512bb0fb9c2b3": {
-        "description": "Spend Network · Sentinel Circuit · sentinel-circuit-coupa-open-circuit: registered baseline component; no new raster or audio production is claimed.",
-        "file": null,
-        "format": "revealline-asset-revision.v1",
-        "geometry": null,
-        "id": "picture.coupa.40f512bb0fb9c2b3.default",
-        "kind": "recipe",
-        "provenance": {
-          "creator": "Reveal Line",
-          "license": "Project-authored component; bundled font licenses remain separate",
-          "parent": null,
-          "prompt": "Create one original FPV Field Kit spend network · sentinel circuit · sentinel-circuit-coupa-open-circuit for slot picture.coupa.40f512bb0fb9c2b3. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 1774 by 887 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
-          "source": "Existing runtime presentation and Field Kit specification"
-        },
-        "quality": { "evidence": [], "stage": "source" },
-        "recipe": { "id": "scene.reveal.v1" },
-        "revision": 1
-      },
-      "picture.coupa.47c1d9559d9f2246": {
-        "description": "First Signal · First Signal · Spend Network: registered baseline component; no new raster or audio production is claimed.",
-        "file": null,
-        "format": "revealline-asset-revision.v1",
-        "geometry": null,
-        "id": "picture.coupa.47c1d9559d9f2246.default",
-        "kind": "recipe",
-        "provenance": {
-          "creator": "Reveal Line",
-          "license": "Project-authored component; bundled font licenses remain separate",
-          "parent": null,
-          "prompt": "Create one original FPV Field Kit first signal · first signal · spend network for slot picture.coupa.47c1d9559d9f2246. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 768 by 576 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
-          "source": "Existing runtime presentation and Field Kit specification"
-        },
-        "quality": { "evidence": [], "stage": "source" },
-        "recipe": { "id": "scene.reveal.v1" },
-        "revision": 1
-      },
-      "picture.coupa.5686cf79f5ffe46d": {
-        "description": "Equipment Workshop · Garden of Threads · Spend Network: registered baseline component; no new raster or audio production is claimed.",
-        "file": null,
-        "format": "revealline-asset-revision.v1",
-        "geometry": null,
-        "id": "picture.coupa.5686cf79f5ffe46d.default",
-        "kind": "recipe",
-        "provenance": {
-          "creator": "Reveal Line",
-          "license": "Project-authored component; bundled font licenses remain separate",
-          "parent": null,
-          "prompt": "Create one original FPV Field Kit equipment workshop · garden of threads · spend network for slot picture.coupa.5686cf79f5ffe46d. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 768 by 576 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
-          "source": "Existing runtime presentation and Field Kit specification"
-        },
-        "quality": { "evidence": [], "stage": "source" },
-        "recipe": { "id": "scene.reveal.v1" },
-        "revision": 1
-      },
-      "picture.coupa.5865540015dd327e": {
-        "description": "First Signal · Signal Garden · Spend Network: registered baseline component; no new raster or audio production is claimed.",
-        "file": null,
-        "format": "revealline-asset-revision.v1",
-        "geometry": null,
-        "id": "picture.coupa.5865540015dd327e.default",
-        "kind": "recipe",
-        "provenance": {
-          "creator": "Reveal Line",
-          "license": "Project-authored component; bundled font licenses remain separate",
-          "parent": null,
-          "prompt": "Create one original FPV Field Kit first signal · signal garden · spend network for slot picture.coupa.5865540015dd327e. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 768 by 576 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
-          "source": "Existing runtime presentation and Field Kit specification"
-        },
-        "quality": { "evidence": [], "stage": "source" },
-        "recipe": { "id": "scene.reveal.v1" },
-        "revision": 1
-      },
-      "picture.coupa.691155cfa40084bf": {
-        "description": "Spend Network · Fracture Lines · fracture-lines-split-ring: registered baseline component; no new raster or audio production is claimed.",
-        "file": null,
-        "format": "revealline-asset-revision.v1",
-        "geometry": null,
-        "id": "picture.coupa.691155cfa40084bf.default",
-        "kind": "recipe",
-        "provenance": {
-          "creator": "Reveal Line",
-          "license": "Project-authored component; bundled font licenses remain separate",
-          "parent": null,
-          "prompt": "Create one original FPV Field Kit spend network · fracture lines · fracture-lines-split-ring for slot picture.coupa.691155cfa40084bf. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 1774 by 887 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
-          "source": "Existing runtime presentation and Field Kit specification"
-        },
-        "quality": { "evidence": [], "stage": "source" },
-        "recipe": { "id": "scene.reveal.v1" },
-        "revision": 1
-      },
-      "picture.coupa.73d147ccabfbd137": {
-        "description": "First Signal · Short Fuse · Spend Network: registered baseline component; no new raster or audio production is claimed.",
-        "file": null,
-        "format": "revealline-asset-revision.v1",
-        "geometry": null,
-        "id": "picture.coupa.73d147ccabfbd137.default",
-        "kind": "recipe",
-        "provenance": {
-          "creator": "Reveal Line",
-          "license": "Project-authored component; bundled font licenses remain separate",
-          "parent": null,
-          "prompt": "Create one original FPV Field Kit first signal · short fuse · spend network for slot picture.coupa.73d147ccabfbd137. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 768 by 576 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
-          "source": "Existing runtime presentation and Field Kit specification"
-        },
-        "quality": { "evidence": [], "stage": "source" },
-        "recipe": { "id": "scene.reveal.v1" },
-        "revision": 1
-      },
-      "picture.coupa.7b47f9c3630246d4": {
-        "description": "Spend Network · Countercurrent · countercurrent-offset-docks: registered baseline component; no new raster or audio production is claimed.",
-        "file": null,
-        "format": "revealline-asset-revision.v1",
-        "geometry": null,
-        "id": "picture.coupa.7b47f9c3630246d4.default",
-        "kind": "recipe",
-        "provenance": {
-          "creator": "Reveal Line",
-          "license": "Project-authored component; bundled font licenses remain separate",
-          "parent": null,
-          "prompt": "Create one original FPV Field Kit spend network · countercurrent · countercurrent-offset-docks for slot picture.coupa.7b47f9c3630246d4. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 1774 by 887 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
-          "source": "Existing runtime presentation and Field Kit specification"
-        },
-        "quality": { "evidence": [], "stage": "source" },
-        "recipe": { "id": "scene.reveal.v1" },
-        "revision": 1
-      },
-      "picture.coupa.918ad57613204cd4": {
-        "description": "Sentinel Relay · Sentinel Relay · Spend Network: registered baseline component; no new raster or audio production is claimed.",
-        "file": null,
-        "format": "revealline-asset-revision.v1",
-        "geometry": null,
-        "id": "picture.coupa.918ad57613204cd4.default",
-        "kind": "recipe",
-        "provenance": {
-          "creator": "Reveal Line",
-          "license": "Project-authored component; bundled font licenses remain separate",
-          "parent": null,
-          "prompt": "Create one original FPV Field Kit sentinel relay · sentinel relay · spend network for slot picture.coupa.918ad57613204cd4. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 768 by 576 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
-          "source": "Existing runtime presentation and Field Kit specification"
-        },
-        "quality": { "evidence": [], "stage": "source" },
-        "recipe": { "id": "scene.reveal.v1" },
-        "revision": 1
-      },
-      "picture.coupa.92819c6b51cb991c": {
-        "description": "Equipment Workshop · Neon Switchboard · Spend Network: registered baseline component; no new raster or audio production is claimed.",
-        "file": null,
-        "format": "revealline-asset-revision.v1",
-        "geometry": null,
-        "id": "picture.coupa.92819c6b51cb991c.default",
-        "kind": "recipe",
-        "provenance": {
-          "creator": "Reveal Line",
-          "license": "Project-authored component; bundled font licenses remain separate",
-          "parent": null,
-          "prompt": "Create one original FPV Field Kit equipment workshop · neon switchboard · spend network for slot picture.coupa.92819c6b51cb991c. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 768 by 576 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
-          "source": "Existing runtime presentation and Field Kit specification"
-        },
-        "quality": { "evidence": [], "stage": "source" },
-        "recipe": { "id": "scene.reveal.v1" },
-        "revision": 1
-      },
-      "picture.coupa.9b4302b0e015b34a": {
-        "description": "First Signal · Relay Storm · Spend Network: registered baseline component; no new raster or audio production is claimed.",
-        "file": null,
-        "format": "revealline-asset-revision.v1",
-        "geometry": null,
-        "id": "picture.coupa.9b4302b0e015b34a.default",
-        "kind": "recipe",
-        "provenance": {
-          "creator": "Reveal Line",
-          "license": "Project-authored component; bundled font licenses remain separate",
-          "parent": null,
-          "prompt": "Create one original FPV Field Kit first signal · relay storm · spend network for slot picture.coupa.9b4302b0e015b34a. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 768 by 576 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
-          "source": "Existing runtime presentation and Field Kit specification"
-        },
-        "quality": { "evidence": [], "stage": "source" },
-        "recipe": { "id": "scene.reveal.v1" },
-        "revision": 1
-      },
-      "picture.coupa.9c36bbfb2cf2e14d": {
-        "description": "First Signal · Last Light · Spend Network: registered baseline component; no new raster or audio production is claimed.",
-        "file": null,
-        "format": "revealline-asset-revision.v1",
-        "geometry": null,
-        "id": "picture.coupa.9c36bbfb2cf2e14d.default",
-        "kind": "recipe",
-        "provenance": {
-          "creator": "Reveal Line",
-          "license": "Project-authored component; bundled font licenses remain separate",
-          "parent": null,
-          "prompt": "Create one original FPV Field Kit first signal · last light · spend network for slot picture.coupa.9c36bbfb2cf2e14d. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 768 by 576 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
-          "source": "Existing runtime presentation and Field Kit specification"
-        },
-        "quality": { "evidence": [], "stage": "source" },
-        "recipe": { "id": "scene.reveal.v1" },
-        "revision": 1
-      },
-      "picture.coupa.a47222e499efa5eb": {
-        "description": "Equipment Workshop · Clear Ledger · Spend Network: registered baseline component; no new raster or audio production is claimed.",
-        "file": null,
-        "format": "revealline-asset-revision.v1",
-        "geometry": null,
-        "id": "picture.coupa.a47222e499efa5eb.default",
-        "kind": "recipe",
-        "provenance": {
-          "creator": "Reveal Line",
-          "license": "Project-authored component; bundled font licenses remain separate",
-          "parent": null,
-          "prompt": "Create one original FPV Field Kit equipment workshop · clear ledger · spend network for slot picture.coupa.a47222e499efa5eb. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 768 by 576 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
-          "source": "Existing runtime presentation and Field Kit specification"
-        },
-        "quality": { "evidence": [], "stage": "source" },
-        "recipe": { "id": "scene.reveal.v1" },
-        "revision": 1
-      },
-      "picture.coupa.aa5451d69dc5c353": {
-        "description": "First Signal · Relay Orchard · Spend Network: registered baseline component; no new raster or audio production is claimed.",
-        "file": null,
-        "format": "revealline-asset-revision.v1",
-        "geometry": null,
-        "id": "picture.coupa.aa5451d69dc5c353.default",
-        "kind": "recipe",
-        "provenance": {
-          "creator": "Reveal Line",
-          "license": "Project-authored component; bundled font licenses remain separate",
-          "parent": null,
-          "prompt": "Create one original FPV Field Kit first signal · relay orchard · spend network for slot picture.coupa.aa5451d69dc5c353. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 768 by 576 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
-          "source": "Existing runtime presentation and Field Kit specification"
-        },
-        "quality": { "evidence": [], "stage": "source" },
-        "recipe": { "id": "scene.reveal.v1" },
-        "revision": 1
-      },
-      "picture.coupa.b2c793a221d65a11": {
-        "description": "Spend Network · Route Choices · route-worlds-coupa-depot: registered baseline component; no new raster or audio production is claimed.",
-        "file": null,
-        "format": "revealline-asset-revision.v1",
-        "geometry": null,
-        "id": "picture.coupa.b2c793a221d65a11.default",
-        "kind": "recipe",
-        "provenance": {
-          "creator": "Reveal Line",
-          "license": "Project-authored component; bundled font licenses remain separate",
-          "parent": null,
-          "prompt": "Create one original FPV Field Kit spend network · route choices · route-worlds-coupa-depot for slot picture.coupa.b2c793a221d65a11. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 1672 by 941 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
-          "source": "Existing runtime presentation and Field Kit specification"
-        },
-        "quality": { "evidence": [], "stage": "source" },
-        "recipe": { "id": "scene.reveal.v1" },
-        "revision": 1
-      },
-      "picture.coupa.b80cf770ce6cb4a4": {
-        "description": "First Signal · Crosswind · Spend Network: registered baseline component; no new raster or audio production is claimed.",
-        "file": null,
-        "format": "revealline-asset-revision.v1",
-        "geometry": null,
-        "id": "picture.coupa.b80cf770ce6cb4a4.default",
-        "kind": "recipe",
-        "provenance": {
-          "creator": "Reveal Line",
-          "license": "Project-authored component; bundled font licenses remain separate",
-          "parent": null,
-          "prompt": "Create one original FPV Field Kit first signal · crosswind · spend network for slot picture.coupa.b80cf770ce6cb4a4. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 768 by 576 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
-          "source": "Existing runtime presentation and Field Kit specification"
-        },
-        "quality": { "evidence": [], "stage": "source" },
-        "recipe": { "id": "scene.reveal.v1" },
-        "revision": 1
-      },
-      "picture.coupa.c09c95e761808a54": {
-        "description": "Spend Network · Fracture Lines · fracture-lines-fault-fan: registered baseline component; no new raster or audio production is claimed.",
-        "file": null,
-        "format": "revealline-asset-revision.v1",
-        "geometry": null,
-        "id": "picture.coupa.c09c95e761808a54.default",
-        "kind": "recipe",
-        "provenance": {
-          "creator": "Reveal Line",
-          "license": "Project-authored component; bundled font licenses remain separate",
-          "parent": null,
-          "prompt": "Create one original FPV Field Kit spend network · fracture lines · fracture-lines-fault-fan for slot picture.coupa.c09c95e761808a54. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 1774 by 887 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
-          "source": "Existing runtime presentation and Field Kit specification"
-        },
-        "quality": { "evidence": [], "stage": "source" },
-        "recipe": { "id": "scene.reveal.v1" },
-        "revision": 1
-      },
-      "picture.coupa.c6000faa77b7d10e": {
-        "description": "Spend Network · Route Choices · route-worlds-coupa-foundry: registered baseline component; no new raster or audio production is claimed.",
-        "file": null,
-        "format": "revealline-asset-revision.v1",
-        "geometry": null,
-        "id": "picture.coupa.c6000faa77b7d10e.default",
-        "kind": "recipe",
-        "provenance": {
-          "creator": "Reveal Line",
-          "license": "Project-authored component; bundled font licenses remain separate",
-          "parent": null,
-          "prompt": "Create one original FPV Field Kit spend network · route choices · route-worlds-coupa-foundry for slot picture.coupa.c6000faa77b7d10e. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 1672 by 941 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
-          "source": "Existing runtime presentation and Field Kit specification"
-        },
-        "quality": { "evidence": [], "stage": "source" },
-        "recipe": { "id": "scene.reveal.v1" },
-        "revision": 1
-      },
-      "picture.coupa.cb4a704dd3086148": {
-        "description": "First Signal · The Crossing · Spend Network: registered baseline component; no new raster or audio production is claimed.",
-        "file": null,
-        "format": "revealline-asset-revision.v1",
-        "geometry": null,
-        "id": "picture.coupa.cb4a704dd3086148.default",
-        "kind": "recipe",
-        "provenance": {
-          "creator": "Reveal Line",
-          "license": "Project-authored component; bundled font licenses remain separate",
-          "parent": null,
-          "prompt": "Create one original FPV Field Kit first signal · the crossing · spend network for slot picture.coupa.cb4a704dd3086148. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 768 by 576 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
-          "source": "Existing runtime presentation and Field Kit specification"
-        },
-        "quality": { "evidence": [], "stage": "source" },
-        "recipe": { "id": "scene.reveal.v1" },
-        "revision": 1
-      },
-      "picture.coupa.d89ff114a5355b44": {
-        "description": "Spend Network · Countercurrent · countercurrent-crossing-watch: registered baseline component; no new raster or audio production is claimed.",
-        "file": null,
-        "format": "revealline-asset-revision.v1",
-        "geometry": null,
-        "id": "picture.coupa.d89ff114a5355b44.default",
-        "kind": "recipe",
-        "provenance": {
-          "creator": "Reveal Line",
-          "license": "Project-authored component; bundled font licenses remain separate",
-          "parent": null,
-          "prompt": "Create one original FPV Field Kit spend network · countercurrent · countercurrent-crossing-watch for slot picture.coupa.d89ff114a5355b44. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 1774 by 887 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
-          "source": "Existing runtime presentation and Field Kit specification"
-        },
-        "quality": { "evidence": [], "stage": "source" },
-        "recipe": { "id": "scene.reveal.v1" },
-        "revision": 1
-      },
-      "picture.coupa.d9bbb55300b07784": {
-        "description": "Spend Network · Countercurrent · countercurrent-sandbar-braid: registered baseline component; no new raster or audio production is claimed.",
-        "file": null,
-        "format": "revealline-asset-revision.v1",
-        "geometry": null,
-        "id": "picture.coupa.d9bbb55300b07784.default",
-        "kind": "recipe",
-        "provenance": {
-          "creator": "Reveal Line",
-          "license": "Project-authored component; bundled font licenses remain separate",
-          "parent": null,
-          "prompt": "Create one original FPV Field Kit spend network · countercurrent · countercurrent-sandbar-braid for slot picture.coupa.d9bbb55300b07784. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 1774 by 887 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
-          "source": "Existing runtime presentation and Field Kit specification"
-        },
-        "quality": { "evidence": [], "stage": "source" },
-        "recipe": { "id": "scene.reveal.v1" },
-        "revision": 1
-      },
-      "picture.coupa.e9fe90c13e941598": {
-        "description": "First Signal · Supply Circuit · Spend Network: registered baseline component; no new raster or audio production is claimed.",
-        "file": null,
-        "format": "revealline-asset-revision.v1",
-        "geometry": null,
-        "id": "picture.coupa.e9fe90c13e941598.default",
-        "kind": "recipe",
-        "provenance": {
-          "creator": "Reveal Line",
-          "license": "Project-authored component; bundled font licenses remain separate",
-          "parent": null,
-          "prompt": "Create one original FPV Field Kit first signal · supply circuit · spend network for slot picture.coupa.e9fe90c13e941598. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 768 by 576 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
-          "source": "Existing runtime presentation and Field Kit specification"
-        },
-        "quality": { "evidence": [], "stage": "source" },
-        "recipe": { "id": "scene.reveal.v1" },
-        "revision": 1
-      },
       "picture.fpv.0e2d32dab758d51f": {
         "description": "scene-orchard-window",
         "file": {
@@ -5852,6 +5294,24 @@
         "recipe": { "id": "scene.reveal.v1" },
         "revision": 1
       },
+      "picture.retro.07e1f236355446f7": {
+        "description": "Neon Reference Pack · Neon Spirals · 1994 Forever: registered baseline component; no new raster or audio production is claimed.",
+        "file": null,
+        "format": "revealline-asset-revision.v1",
+        "geometry": null,
+        "id": "picture.retro.07e1f236355446f7.default",
+        "kind": "recipe",
+        "provenance": {
+          "creator": "Reveal Line",
+          "license": "Project-authored component; bundled font licenses remain separate",
+          "parent": null,
+          "prompt": "Create one original FPV Field Kit neon reference pack · neon spirals · 1994 forever for slot picture.retro.07e1f236355446f7. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 1152 by 576 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
+          "source": "Existing runtime presentation and Field Kit specification"
+        },
+        "quality": { "evidence": [], "stage": "source" },
+        "recipe": { "id": "scene.reveal.v1" },
+        "revision": 1
+      },
       "picture.retro.09c25cd49f784db8": {
         "description": "First Signal · Night Patrol · 1994 Forever: registered baseline component; no new raster or audio production is claimed.",
         "file": null,
@@ -5870,6 +5330,78 @@
         "recipe": { "id": "scene.reveal.v1" },
         "revision": 1
       },
+      "picture.retro.0c9c8c72e343c6a0": {
+        "description": "Neon Words & Symbols · Neon Trembita · 1994 Forever: registered baseline component; no new raster or audio production is claimed.",
+        "file": null,
+        "format": "revealline-asset-revision.v1",
+        "geometry": null,
+        "id": "picture.retro.0c9c8c72e343c6a0.default",
+        "kind": "recipe",
+        "provenance": {
+          "creator": "Reveal Line",
+          "license": "Project-authored component; bundled font licenses remain separate",
+          "parent": null,
+          "prompt": "Create one original FPV Field Kit neon words & symbols · neon trembita · 1994 forever for slot picture.retro.0c9c8c72e343c6a0. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 1152 by 576 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
+          "source": "Existing runtime presentation and Field Kit specification"
+        },
+        "quality": { "evidence": [], "stage": "source" },
+        "recipe": { "id": "scene.reveal.v1" },
+        "revision": 1
+      },
+      "picture.retro.0dcd229379bb9916": {
+        "description": "Neon Words & Symbols · Neon SOCIAL DRONE · 1994 Forever: registered baseline component; no new raster or audio production is claimed.",
+        "file": null,
+        "format": "revealline-asset-revision.v1",
+        "geometry": null,
+        "id": "picture.retro.0dcd229379bb9916.default",
+        "kind": "recipe",
+        "provenance": {
+          "creator": "Reveal Line",
+          "license": "Project-authored component; bundled font licenses remain separate",
+          "parent": null,
+          "prompt": "Create one original FPV Field Kit neon words & symbols · neon social drone · 1994 forever for slot picture.retro.0dcd229379bb9916. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 1152 by 576 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
+          "source": "Existing runtime presentation and Field Kit specification"
+        },
+        "quality": { "evidence": [], "stage": "source" },
+        "recipe": { "id": "scene.reveal.v1" },
+        "revision": 1
+      },
+      "picture.retro.0e6db448c107a22d": {
+        "description": "Neon Words & Symbols · Neon FPV LINE · 1994 Forever: registered baseline component; no new raster or audio production is claimed.",
+        "file": null,
+        "format": "revealline-asset-revision.v1",
+        "geometry": null,
+        "id": "picture.retro.0e6db448c107a22d.default",
+        "kind": "recipe",
+        "provenance": {
+          "creator": "Reveal Line",
+          "license": "Project-authored component; bundled font licenses remain separate",
+          "parent": null,
+          "prompt": "Create one original FPV Field Kit neon words & symbols · neon fpv line · 1994 forever for slot picture.retro.0e6db448c107a22d. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 1152 by 576 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
+          "source": "Existing runtime presentation and Field Kit specification"
+        },
+        "quality": { "evidence": [], "stage": "source" },
+        "recipe": { "id": "scene.reveal.v1" },
+        "revision": 1
+      },
+      "picture.retro.138611e1c716f21d": {
+        "description": "Neon Words & Symbols · Neon REVEAL · 1994 Forever: registered baseline component; no new raster or audio production is claimed.",
+        "file": null,
+        "format": "revealline-asset-revision.v1",
+        "geometry": null,
+        "id": "picture.retro.138611e1c716f21d.default",
+        "kind": "recipe",
+        "provenance": {
+          "creator": "Reveal Line",
+          "license": "Project-authored component; bundled font licenses remain separate",
+          "parent": null,
+          "prompt": "Create one original FPV Field Kit neon words & symbols · neon reveal · 1994 forever for slot picture.retro.138611e1c716f21d. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 1152 by 576 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
+          "source": "Existing runtime presentation and Field Kit specification"
+        },
+        "quality": { "evidence": [], "stage": "source" },
+        "recipe": { "id": "scene.reveal.v1" },
+        "revision": 1
+      },
       "picture.retro.1afdd5025f933caa": {
         "description": "1994 Forever · Sentinel Circuit · sentinel-circuit-retro-open-circuit: registered baseline component; no new raster or audio production is claimed.",
         "file": null,
@@ -5882,6 +5414,78 @@
           "license": "Project-authored component; bundled font licenses remain separate",
           "parent": null,
           "prompt": "Create one original FPV Field Kit 1994 forever · sentinel circuit · sentinel-circuit-retro-open-circuit for slot picture.retro.1afdd5025f933caa. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 1774 by 887 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
+          "source": "Existing runtime presentation and Field Kit specification"
+        },
+        "quality": { "evidence": [], "stage": "source" },
+        "recipe": { "id": "scene.reveal.v1" },
+        "revision": 1
+      },
+      "picture.retro.1bfc29045b55ce8f": {
+        "description": "Neon Words & Symbols · Neon Vinok · 1994 Forever: registered baseline component; no new raster or audio production is claimed.",
+        "file": null,
+        "format": "revealline-asset-revision.v1",
+        "geometry": null,
+        "id": "picture.retro.1bfc29045b55ce8f.default",
+        "kind": "recipe",
+        "provenance": {
+          "creator": "Reveal Line",
+          "license": "Project-authored component; bundled font licenses remain separate",
+          "parent": null,
+          "prompt": "Create one original FPV Field Kit neon words & symbols · neon vinok · 1994 forever for slot picture.retro.1bfc29045b55ce8f. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 1152 by 576 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
+          "source": "Existing runtime presentation and Field Kit specification"
+        },
+        "quality": { "evidence": [], "stage": "source" },
+        "recipe": { "id": "scene.reveal.v1" },
+        "revision": 1
+      },
+      "picture.retro.1cb1f8acb6834f36": {
+        "description": "Neon Reference Pack · Neon Crossroads · 1994 Forever: registered baseline component; no new raster or audio production is claimed.",
+        "file": null,
+        "format": "revealline-asset-revision.v1",
+        "geometry": null,
+        "id": "picture.retro.1cb1f8acb6834f36.default",
+        "kind": "recipe",
+        "provenance": {
+          "creator": "Reveal Line",
+          "license": "Project-authored component; bundled font licenses remain separate",
+          "parent": null,
+          "prompt": "Create one original FPV Field Kit neon reference pack · neon crossroads · 1994 forever for slot picture.retro.1cb1f8acb6834f36. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 1152 by 576 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
+          "source": "Existing runtime presentation and Field Kit specification"
+        },
+        "quality": { "evidence": [], "stage": "source" },
+        "recipe": { "id": "scene.reveal.v1" },
+        "revision": 1
+      },
+      "picture.retro.1dc9ce1961d8149f": {
+        "description": "Neon Words & Symbols · Neon Didukh · 1994 Forever: registered baseline component; no new raster or audio production is claimed.",
+        "file": null,
+        "format": "revealline-asset-revision.v1",
+        "geometry": null,
+        "id": "picture.retro.1dc9ce1961d8149f.default",
+        "kind": "recipe",
+        "provenance": {
+          "creator": "Reveal Line",
+          "license": "Project-authored component; bundled font licenses remain separate",
+          "parent": null,
+          "prompt": "Create one original FPV Field Kit neon words & symbols · neon didukh · 1994 forever for slot picture.retro.1dc9ce1961d8149f. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 1152 by 576 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
+          "source": "Existing runtime presentation and Field Kit specification"
+        },
+        "quality": { "evidence": [], "stage": "source" },
+        "recipe": { "id": "scene.reveal.v1" },
+        "revision": 1
+      },
+      "picture.retro.1e8ef38a535ca246": {
+        "description": "Neon Words & Symbols · Neon Crimean Tatar Ornek Tulip · 1994 Forever: registered baseline component; no new raster or audio production is claimed.",
+        "file": null,
+        "format": "revealline-asset-revision.v1",
+        "geometry": null,
+        "id": "picture.retro.1e8ef38a535ca246.default",
+        "kind": "recipe",
+        "provenance": {
+          "creator": "Reveal Line",
+          "license": "Project-authored component; bundled font licenses remain separate",
+          "parent": null,
+          "prompt": "Create one original FPV Field Kit neon words & symbols · neon crimean tatar ornek tulip · 1994 forever for slot picture.retro.1e8ef38a535ca246. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 1152 by 576 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
           "source": "Existing runtime presentation and Field Kit specification"
         },
         "quality": { "evidence": [], "stage": "source" },
@@ -5924,6 +5528,60 @@
         "recipe": { "id": "scene.reveal.v1" },
         "revision": 1
       },
+      "picture.retro.26ef1b9a355493e5": {
+        "description": "Neon Reference Pack · Neon Crossgrid · 1994 Forever: registered baseline component; no new raster or audio production is claimed.",
+        "file": null,
+        "format": "revealline-asset-revision.v1",
+        "geometry": null,
+        "id": "picture.retro.26ef1b9a355493e5.default",
+        "kind": "recipe",
+        "provenance": {
+          "creator": "Reveal Line",
+          "license": "Project-authored component; bundled font licenses remain separate",
+          "parent": null,
+          "prompt": "Create one original FPV Field Kit neon reference pack · neon crossgrid · 1994 forever for slot picture.retro.26ef1b9a355493e5. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 1152 by 576 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
+          "source": "Existing runtime presentation and Field Kit specification"
+        },
+        "quality": { "evidence": [], "stage": "source" },
+        "recipe": { "id": "scene.reveal.v1" },
+        "revision": 1
+      },
+      "picture.retro.29dad18b7811f67a": {
+        "description": "Neon Words & Symbols · Neon Kosiv Pitcher · 1994 Forever: registered baseline component; no new raster or audio production is claimed.",
+        "file": null,
+        "format": "revealline-asset-revision.v1",
+        "geometry": null,
+        "id": "picture.retro.29dad18b7811f67a.default",
+        "kind": "recipe",
+        "provenance": {
+          "creator": "Reveal Line",
+          "license": "Project-authored component; bundled font licenses remain separate",
+          "parent": null,
+          "prompt": "Create one original FPV Field Kit neon words & symbols · neon kosiv pitcher · 1994 forever for slot picture.retro.29dad18b7811f67a. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 1152 by 576 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
+          "source": "Existing runtime presentation and Field Kit specification"
+        },
+        "quality": { "evidence": [], "stage": "source" },
+        "recipe": { "id": "scene.reveal.v1" },
+        "revision": 1
+      },
+      "picture.retro.2c8464590ace3452": {
+        "description": "Neon Words & Symbols · Neon Pysanka Deer · 1994 Forever: registered baseline component; no new raster or audio production is claimed.",
+        "file": null,
+        "format": "revealline-asset-revision.v1",
+        "geometry": null,
+        "id": "picture.retro.2c8464590ace3452.default",
+        "kind": "recipe",
+        "provenance": {
+          "creator": "Reveal Line",
+          "license": "Project-authored component; bundled font licenses remain separate",
+          "parent": null,
+          "prompt": "Create one original FPV Field Kit neon words & symbols · neon pysanka deer · 1994 forever for slot picture.retro.2c8464590ace3452. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 1152 by 576 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
+          "source": "Existing runtime presentation and Field Kit specification"
+        },
+        "quality": { "evidence": [], "stage": "source" },
+        "recipe": { "id": "scene.reveal.v1" },
+        "revision": 1
+      },
       "picture.retro.2cec45ca18fee23e": {
         "description": "First Signal · Crosswind · 1994 Forever: registered baseline component; no new raster or audio production is claimed.",
         "file": null,
@@ -5960,6 +5618,60 @@
         "recipe": { "id": "scene.reveal.v1" },
         "revision": 1
       },
+      "picture.retro.3089f3245b4914c6": {
+        "description": "Neon Reference Pack · Neon Chambers · 1994 Forever: registered baseline component; no new raster or audio production is claimed.",
+        "file": null,
+        "format": "revealline-asset-revision.v1",
+        "geometry": null,
+        "id": "picture.retro.3089f3245b4914c6.default",
+        "kind": "recipe",
+        "provenance": {
+          "creator": "Reveal Line",
+          "license": "Project-authored component; bundled font licenses remain separate",
+          "parent": null,
+          "prompt": "Create one original FPV Field Kit neon reference pack · neon chambers · 1994 forever for slot picture.retro.3089f3245b4914c6. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 1152 by 576 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
+          "source": "Existing runtime presentation and Field Kit specification"
+        },
+        "quality": { "evidence": [], "stage": "source" },
+        "recipe": { "id": "scene.reveal.v1" },
+        "revision": 1
+      },
+      "picture.retro.30a898d4401f9533": {
+        "description": "Neon Reference Pack · Neon Channels · 1994 Forever: registered baseline component; no new raster or audio production is claimed.",
+        "file": null,
+        "format": "revealline-asset-revision.v1",
+        "geometry": null,
+        "id": "picture.retro.30a898d4401f9533.default",
+        "kind": "recipe",
+        "provenance": {
+          "creator": "Reveal Line",
+          "license": "Project-authored component; bundled font licenses remain separate",
+          "parent": null,
+          "prompt": "Create one original FPV Field Kit neon reference pack · neon channels · 1994 forever for slot picture.retro.30a898d4401f9533. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 1152 by 576 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
+          "source": "Existing runtime presentation and Field Kit specification"
+        },
+        "quality": { "evidence": [], "stage": "source" },
+        "recipe": { "id": "scene.reveal.v1" },
+        "revision": 1
+      },
+      "picture.retro.312afcd26838690f": {
+        "description": "Neon Words & Symbols · Neon Pysanka · 1994 Forever: registered baseline component; no new raster or audio production is claimed.",
+        "file": null,
+        "format": "revealline-asset-revision.v1",
+        "geometry": null,
+        "id": "picture.retro.312afcd26838690f.default",
+        "kind": "recipe",
+        "provenance": {
+          "creator": "Reveal Line",
+          "license": "Project-authored component; bundled font licenses remain separate",
+          "parent": null,
+          "prompt": "Create one original FPV Field Kit neon words & symbols · neon pysanka · 1994 forever for slot picture.retro.312afcd26838690f. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 1152 by 576 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
+          "source": "Existing runtime presentation and Field Kit specification"
+        },
+        "quality": { "evidence": [], "stage": "source" },
+        "recipe": { "id": "scene.reveal.v1" },
+        "revision": 1
+      },
       "picture.retro.3256a277f274465d": {
         "description": "1994 Forever · Sentinel Circuit · sentinel-circuit-retro-listening-court: registered baseline component; no new raster or audio production is claimed.",
         "file": null,
@@ -5978,6 +5690,78 @@
         "recipe": { "id": "scene.reveal.v1" },
         "revision": 1
       },
+      "picture.retro.34e07bdec7b1f8cb": {
+        "description": "Neon Words & Symbols · Neon Wheat Sheaf · 1994 Forever: registered baseline component; no new raster or audio production is claimed.",
+        "file": null,
+        "format": "revealline-asset-revision.v1",
+        "geometry": null,
+        "id": "picture.retro.34e07bdec7b1f8cb.default",
+        "kind": "recipe",
+        "provenance": {
+          "creator": "Reveal Line",
+          "license": "Project-authored component; bundled font licenses remain separate",
+          "parent": null,
+          "prompt": "Create one original FPV Field Kit neon words & symbols · neon wheat sheaf · 1994 forever for slot picture.retro.34e07bdec7b1f8cb. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 1152 by 576 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
+          "source": "Existing runtime presentation and Field Kit specification"
+        },
+        "quality": { "evidence": [], "stage": "source" },
+        "recipe": { "id": "scene.reveal.v1" },
+        "revision": 1
+      },
+      "picture.retro.4089f958a4132f41": {
+        "description": "Neon Words & Symbols · Neon DRONE AID · 1994 Forever: registered baseline component; no new raster or audio production is claimed.",
+        "file": null,
+        "format": "revealline-asset-revision.v1",
+        "geometry": null,
+        "id": "picture.retro.4089f958a4132f41.default",
+        "kind": "recipe",
+        "provenance": {
+          "creator": "Reveal Line",
+          "license": "Project-authored component; bundled font licenses remain separate",
+          "parent": null,
+          "prompt": "Create one original FPV Field Kit neon words & symbols · neon drone aid · 1994 forever for slot picture.retro.4089f958a4132f41. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 1152 by 576 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
+          "source": "Existing runtime presentation and Field Kit specification"
+        },
+        "quality": { "evidence": [], "stage": "source" },
+        "recipe": { "id": "scene.reveal.v1" },
+        "revision": 1
+      },
+      "picture.retro.447a8bb3c44affc8": {
+        "description": "Neon Reference Pack · Neon Pinwheels · 1994 Forever: registered baseline component; no new raster or audio production is claimed.",
+        "file": null,
+        "format": "revealline-asset-revision.v1",
+        "geometry": null,
+        "id": "picture.retro.447a8bb3c44affc8.default",
+        "kind": "recipe",
+        "provenance": {
+          "creator": "Reveal Line",
+          "license": "Project-authored component; bundled font licenses remain separate",
+          "parent": null,
+          "prompt": "Create one original FPV Field Kit neon reference pack · neon pinwheels · 1994 forever for slot picture.retro.447a8bb3c44affc8. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 1152 by 576 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
+          "source": "Existing runtime presentation and Field Kit specification"
+        },
+        "quality": { "evidence": [], "stage": "source" },
+        "recipe": { "id": "scene.reveal.v1" },
+        "revision": 1
+      },
+      "picture.retro.45c7f1816a692815": {
+        "description": "Neon Words & Symbols · Neon Berehynia Motif · 1994 Forever: registered baseline component; no new raster or audio production is claimed.",
+        "file": null,
+        "format": "revealline-asset-revision.v1",
+        "geometry": null,
+        "id": "picture.retro.45c7f1816a692815.default",
+        "kind": "recipe",
+        "provenance": {
+          "creator": "Reveal Line",
+          "license": "Project-authored component; bundled font licenses remain separate",
+          "parent": null,
+          "prompt": "Create one original FPV Field Kit neon words & symbols · neon berehynia motif · 1994 forever for slot picture.retro.45c7f1816a692815. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 1152 by 576 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
+          "source": "Existing runtime presentation and Field Kit specification"
+        },
+        "quality": { "evidence": [], "stage": "source" },
+        "recipe": { "id": "scene.reveal.v1" },
+        "revision": 1
+      },
       "picture.retro.4d8b59426e203af3": {
         "description": "1994 Forever · Route Choices · route-worlds-retro-depot: registered baseline component; no new raster or audio production is claimed.",
         "file": null,
@@ -5990,6 +5774,60 @@
           "license": "Project-authored component; bundled font licenses remain separate",
           "parent": null,
           "prompt": "Create one original FPV Field Kit 1994 forever · route choices · route-worlds-retro-depot for slot picture.retro.4d8b59426e203af3. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 1672 by 941 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
+          "source": "Existing runtime presentation and Field Kit specification"
+        },
+        "quality": { "evidence": [], "stage": "source" },
+        "recipe": { "id": "scene.reveal.v1" },
+        "revision": 1
+      },
+      "picture.retro.4ff13771b76ea7df": {
+        "description": "Neon Reference Pack · Neon Spines · 1994 Forever: registered baseline component; no new raster or audio production is claimed.",
+        "file": null,
+        "format": "revealline-asset-revision.v1",
+        "geometry": null,
+        "id": "picture.retro.4ff13771b76ea7df.default",
+        "kind": "recipe",
+        "provenance": {
+          "creator": "Reveal Line",
+          "license": "Project-authored component; bundled font licenses remain separate",
+          "parent": null,
+          "prompt": "Create one original FPV Field Kit neon reference pack · neon spines · 1994 forever for slot picture.retro.4ff13771b76ea7df. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 1152 by 576 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
+          "source": "Existing runtime presentation and Field Kit specification"
+        },
+        "quality": { "evidence": [], "stage": "source" },
+        "recipe": { "id": "scene.reveal.v1" },
+        "revision": 1
+      },
+      "picture.retro.50244a8e45229d6f": {
+        "description": "Neon Words & Symbols · Neon Tree of Life · 1994 Forever: registered baseline component; no new raster or audio production is claimed.",
+        "file": null,
+        "format": "revealline-asset-revision.v1",
+        "geometry": null,
+        "id": "picture.retro.50244a8e45229d6f.default",
+        "kind": "recipe",
+        "provenance": {
+          "creator": "Reveal Line",
+          "license": "Project-authored component; bundled font licenses remain separate",
+          "parent": null,
+          "prompt": "Create one original FPV Field Kit neon words & symbols · neon tree of life · 1994 forever for slot picture.retro.50244a8e45229d6f. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 1152 by 576 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
+          "source": "Existing runtime presentation and Field Kit specification"
+        },
+        "quality": { "evidence": [], "stage": "source" },
+        "recipe": { "id": "scene.reveal.v1" },
+        "revision": 1
+      },
+      "picture.retro.528b4148a6d9d70d": {
+        "description": "Neon Words & Symbols · Neon Pysanka Horse · 1994 Forever: registered baseline component; no new raster or audio production is claimed.",
+        "file": null,
+        "format": "revealline-asset-revision.v1",
+        "geometry": null,
+        "id": "picture.retro.528b4148a6d9d70d.default",
+        "kind": "recipe",
+        "provenance": {
+          "creator": "Reveal Line",
+          "license": "Project-authored component; bundled font licenses remain separate",
+          "parent": null,
+          "prompt": "Create one original FPV Field Kit neon words & symbols · neon pysanka horse · 1994 forever for slot picture.retro.528b4148a6d9d70d. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 1152 by 576 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
           "source": "Existing runtime presentation and Field Kit specification"
         },
         "quality": { "evidence": [], "stage": "source" },
@@ -6032,6 +5870,114 @@
         "recipe": { "id": "scene.reveal.v1" },
         "revision": 1
       },
+      "picture.retro.5c71b6c3a01529bd": {
+        "description": "Neon Words & Symbols · Neon SDUA · 1994 Forever: registered baseline component; no new raster or audio production is claimed.",
+        "file": null,
+        "format": "revealline-asset-revision.v1",
+        "geometry": null,
+        "id": "picture.retro.5c71b6c3a01529bd.default",
+        "kind": "recipe",
+        "provenance": {
+          "creator": "Reveal Line",
+          "license": "Project-authored component; bundled font licenses remain separate",
+          "parent": null,
+          "prompt": "Create one original FPV Field Kit neon words & symbols · neon sdua · 1994 forever for slot picture.retro.5c71b6c3a01529bd. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 1152 by 576 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
+          "source": "Existing runtime presentation and Field Kit specification"
+        },
+        "quality": { "evidence": [], "stage": "source" },
+        "recipe": { "id": "scene.reveal.v1" },
+        "revision": 1
+      },
+      "picture.retro.5ed90a3432285baf": {
+        "description": "Neon Words & Symbols · Neon Swallow · 1994 Forever: registered baseline component; no new raster or audio production is claimed.",
+        "file": null,
+        "format": "revealline-asset-revision.v1",
+        "geometry": null,
+        "id": "picture.retro.5ed90a3432285baf.default",
+        "kind": "recipe",
+        "provenance": {
+          "creator": "Reveal Line",
+          "license": "Project-authored component; bundled font licenses remain separate",
+          "parent": null,
+          "prompt": "Create one original FPV Field Kit neon words & symbols · neon swallow · 1994 forever for slot picture.retro.5ed90a3432285baf. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 1152 by 576 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
+          "source": "Existing runtime presentation and Field Kit specification"
+        },
+        "quality": { "evidence": [], "stage": "source" },
+        "recipe": { "id": "scene.reveal.v1" },
+        "revision": 1
+      },
+      "picture.retro.6056098dc9f595fd": {
+        "description": "Neon Words & Symbols · Neon UKRAINE · 1994 Forever: registered baseline component; no new raster or audio production is claimed.",
+        "file": null,
+        "format": "revealline-asset-revision.v1",
+        "geometry": null,
+        "id": "picture.retro.6056098dc9f595fd.default",
+        "kind": "recipe",
+        "provenance": {
+          "creator": "Reveal Line",
+          "license": "Project-authored component; bundled font licenses remain separate",
+          "parent": null,
+          "prompt": "Create one original FPV Field Kit neon words & symbols · neon ukraine · 1994 forever for slot picture.retro.6056098dc9f595fd. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 1152 by 576 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
+          "source": "Existing runtime presentation and Field Kit specification"
+        },
+        "quality": { "evidence": [], "stage": "source" },
+        "recipe": { "id": "scene.reveal.v1" },
+        "revision": 1
+      },
+      "picture.retro.6584229645910c5c": {
+        "description": "Neon Words & Symbols · Neon Vyshyvanka Diamonds · 1994 Forever: registered baseline component; no new raster or audio production is claimed.",
+        "file": null,
+        "format": "revealline-asset-revision.v1",
+        "geometry": null,
+        "id": "picture.retro.6584229645910c5c.default",
+        "kind": "recipe",
+        "provenance": {
+          "creator": "Reveal Line",
+          "license": "Project-authored component; bundled font licenses remain separate",
+          "parent": null,
+          "prompt": "Create one original FPV Field Kit neon words & symbols · neon vyshyvanka diamonds · 1994 forever for slot picture.retro.6584229645910c5c. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 1152 by 576 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
+          "source": "Existing runtime presentation and Field Kit specification"
+        },
+        "quality": { "evidence": [], "stage": "source" },
+        "recipe": { "id": "scene.reveal.v1" },
+        "revision": 1
+      },
+      "picture.retro.70ff6df39d5305de": {
+        "description": "Neon Reference Pack · Neon Prism · 1994 Forever: registered baseline component; no new raster or audio production is claimed.",
+        "file": null,
+        "format": "revealline-asset-revision.v1",
+        "geometry": null,
+        "id": "picture.retro.70ff6df39d5305de.default",
+        "kind": "recipe",
+        "provenance": {
+          "creator": "Reveal Line",
+          "license": "Project-authored component; bundled font licenses remain separate",
+          "parent": null,
+          "prompt": "Create one original FPV Field Kit neon reference pack · neon prism · 1994 forever for slot picture.retro.70ff6df39d5305de. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 1152 by 576 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
+          "source": "Existing runtime presentation and Field Kit specification"
+        },
+        "quality": { "evidence": [], "stage": "source" },
+        "recipe": { "id": "scene.reveal.v1" },
+        "revision": 1
+      },
+      "picture.retro.715a095dc7f55d71": {
+        "description": "Equipment Workshop · Neon Switchboard · 1994 Forever: registered baseline component; no new raster or audio production is claimed.",
+        "file": null,
+        "format": "revealline-asset-revision.v1",
+        "geometry": null,
+        "id": "picture.retro.715a095dc7f55d71.default",
+        "kind": "recipe",
+        "provenance": {
+          "creator": "Reveal Line",
+          "license": "Project-authored component; bundled font licenses remain separate",
+          "parent": null,
+          "prompt": "Create one original FPV Field Kit equipment workshop · neon switchboard · 1994 forever for slot picture.retro.715a095dc7f55d71. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 768 by 576 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
+          "source": "Existing runtime presentation and Field Kit specification"
+        },
+        "quality": { "evidence": [], "stage": "source" },
+        "recipe": { "id": "scene.reveal.v1" },
+        "revision": 1
+      },
       "picture.retro.75cd7ebf9b541f4f": {
         "description": "1994 Forever · Countercurrent · countercurrent-offset-docks: registered baseline component; no new raster or audio production is claimed.",
         "file": null,
@@ -6068,6 +6014,24 @@
         "recipe": { "id": "scene.reveal.v1" },
         "revision": 1
       },
+      "picture.retro.791fcb87683848d5": {
+        "description": "Neon Words & Symbols · Neon Oak and Acorns · 1994 Forever: registered baseline component; no new raster or audio production is claimed.",
+        "file": null,
+        "format": "revealline-asset-revision.v1",
+        "geometry": null,
+        "id": "picture.retro.791fcb87683848d5.default",
+        "kind": "recipe",
+        "provenance": {
+          "creator": "Reveal Line",
+          "license": "Project-authored component; bundled font licenses remain separate",
+          "parent": null,
+          "prompt": "Create one original FPV Field Kit neon words & symbols · neon oak and acorns · 1994 forever for slot picture.retro.791fcb87683848d5. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 1152 by 576 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
+          "source": "Existing runtime presentation and Field Kit specification"
+        },
+        "quality": { "evidence": [], "stage": "source" },
+        "recipe": { "id": "scene.reveal.v1" },
+        "revision": 1
+      },
       "picture.retro.7957561fc5d0fd35": {
         "description": "1994 Forever · After Hours · Midnight Arcade · 1994 Forever: registered baseline component; no new raster or audio production is claimed.",
         "file": null,
@@ -6080,6 +6044,114 @@
           "license": "Project-authored component; bundled font licenses remain separate",
           "parent": null,
           "prompt": "Create one original FPV Field Kit 1994 forever · after hours · midnight arcade · 1994 forever for slot picture.retro.7957561fc5d0fd35. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 1152 by 576 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
+          "source": "Existing runtime presentation and Field Kit specification"
+        },
+        "quality": { "evidence": [], "stage": "source" },
+        "recipe": { "id": "scene.reveal.v1" },
+        "revision": 1
+      },
+      "picture.retro.7971cbca6a4f54e6": {
+        "description": "Neon Reference Pack · Neon Switchback · 1994 Forever: registered baseline component; no new raster or audio production is claimed.",
+        "file": null,
+        "format": "revealline-asset-revision.v1",
+        "geometry": null,
+        "id": "picture.retro.7971cbca6a4f54e6.default",
+        "kind": "recipe",
+        "provenance": {
+          "creator": "Reveal Line",
+          "license": "Project-authored component; bundled font licenses remain separate",
+          "parent": null,
+          "prompt": "Create one original FPV Field Kit neon reference pack · neon switchback · 1994 forever for slot picture.retro.7971cbca6a4f54e6. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 1152 by 576 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
+          "source": "Existing runtime presentation and Field Kit specification"
+        },
+        "quality": { "evidence": [], "stage": "source" },
+        "recipe": { "id": "scene.reveal.v1" },
+        "revision": 1
+      },
+      "picture.retro.7c26a81806482e04": {
+        "description": "Neon Words & Symbols · Neon VD · 1994 Forever: registered baseline component; no new raster or audio production is claimed.",
+        "file": null,
+        "format": "revealline-asset-revision.v1",
+        "geometry": null,
+        "id": "picture.retro.7c26a81806482e04.default",
+        "kind": "recipe",
+        "provenance": {
+          "creator": "Reveal Line",
+          "license": "Project-authored component; bundled font licenses remain separate",
+          "parent": null,
+          "prompt": "Create one original FPV Field Kit neon words & symbols · neon vd · 1994 forever for slot picture.retro.7c26a81806482e04. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 1152 by 576 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
+          "source": "Existing runtime presentation and Field Kit specification"
+        },
+        "quality": { "evidence": [], "stage": "source" },
+        "recipe": { "id": "scene.reveal.v1" },
+        "revision": 1
+      },
+      "picture.retro.7eb7c8f3a28dbcb9": {
+        "description": "Neon Words & Symbols · Neon Bezkonechnyk · 1994 Forever: registered baseline component; no new raster or audio production is claimed.",
+        "file": null,
+        "format": "revealline-asset-revision.v1",
+        "geometry": null,
+        "id": "picture.retro.7eb7c8f3a28dbcb9.default",
+        "kind": "recipe",
+        "provenance": {
+          "creator": "Reveal Line",
+          "license": "Project-authored component; bundled font licenses remain separate",
+          "parent": null,
+          "prompt": "Create one original FPV Field Kit neon words & symbols · neon bezkonechnyk · 1994 forever for slot picture.retro.7eb7c8f3a28dbcb9. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 1152 by 576 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
+          "source": "Existing runtime presentation and Field Kit specification"
+        },
+        "quality": { "evidence": [], "stage": "source" },
+        "recipe": { "id": "scene.reveal.v1" },
+        "revision": 1
+      },
+      "picture.retro.81f16b01666462a3": {
+        "description": "Neon Words & Symbols · Neon FPV Drone · 1994 Forever: registered baseline component; no new raster or audio production is claimed.",
+        "file": null,
+        "format": "revealline-asset-revision.v1",
+        "geometry": null,
+        "id": "picture.retro.81f16b01666462a3.default",
+        "kind": "recipe",
+        "provenance": {
+          "creator": "Reveal Line",
+          "license": "Project-authored component; bundled font licenses remain separate",
+          "parent": null,
+          "prompt": "Create one original FPV Field Kit neon words & symbols · neon fpv drone · 1994 forever for slot picture.retro.81f16b01666462a3. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 1152 by 576 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
+          "source": "Existing runtime presentation and Field Kit specification"
+        },
+        "quality": { "evidence": [], "stage": "source" },
+        "recipe": { "id": "scene.reveal.v1" },
+        "revision": 1
+      },
+      "picture.retro.82cc2bf23769a5c0": {
+        "description": "Neon Words & Symbols · Neon Opishnia Ram · 1994 Forever: registered baseline component; no new raster or audio production is claimed.",
+        "file": null,
+        "format": "revealline-asset-revision.v1",
+        "geometry": null,
+        "id": "picture.retro.82cc2bf23769a5c0.default",
+        "kind": "recipe",
+        "provenance": {
+          "creator": "Reveal Line",
+          "license": "Project-authored component; bundled font licenses remain separate",
+          "parent": null,
+          "prompt": "Create one original FPV Field Kit neon words & symbols · neon opishnia ram · 1994 forever for slot picture.retro.82cc2bf23769a5c0. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 1152 by 576 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
+          "source": "Existing runtime presentation and Field Kit specification"
+        },
+        "quality": { "evidence": [], "stage": "source" },
+        "recipe": { "id": "scene.reveal.v1" },
+        "revision": 1
+      },
+      "picture.retro.83f2f2589e134ec7": {
+        "description": "Neon Words & Symbols · Neon Stork · 1994 Forever: registered baseline component; no new raster or audio production is claimed.",
+        "file": null,
+        "format": "revealline-asset-revision.v1",
+        "geometry": null,
+        "id": "picture.retro.83f2f2589e134ec7.default",
+        "kind": "recipe",
+        "provenance": {
+          "creator": "Reveal Line",
+          "license": "Project-authored component; bundled font licenses remain separate",
+          "parent": null,
+          "prompt": "Create one original FPV Field Kit neon words & symbols · neon stork · 1994 forever for slot picture.retro.83f2f2589e134ec7. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 1152 by 576 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
           "source": "Existing runtime presentation and Field Kit specification"
         },
         "quality": { "evidence": [], "stage": "source" },
@@ -6104,6 +6176,42 @@
         "recipe": { "id": "scene.reveal.v1" },
         "revision": 1
       },
+      "picture.retro.88f27efc3207536d": {
+        "description": "Neon Reference Pack · Neon Crossfire · 1994 Forever: registered baseline component; no new raster or audio production is claimed.",
+        "file": null,
+        "format": "revealline-asset-revision.v1",
+        "geometry": null,
+        "id": "picture.retro.88f27efc3207536d.default",
+        "kind": "recipe",
+        "provenance": {
+          "creator": "Reveal Line",
+          "license": "Project-authored component; bundled font licenses remain separate",
+          "parent": null,
+          "prompt": "Create one original FPV Field Kit neon reference pack · neon crossfire · 1994 forever for slot picture.retro.88f27efc3207536d. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 1152 by 576 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
+          "source": "Existing runtime presentation and Field Kit specification"
+        },
+        "quality": { "evidence": [], "stage": "source" },
+        "recipe": { "id": "scene.reveal.v1" },
+        "revision": 1
+      },
+      "picture.retro.8cd972a95006a24c": {
+        "description": "Neon Words & Symbols · Neon Pysanka Fish · 1994 Forever: registered baseline component; no new raster or audio production is claimed.",
+        "file": null,
+        "format": "revealline-asset-revision.v1",
+        "geometry": null,
+        "id": "picture.retro.8cd972a95006a24c.default",
+        "kind": "recipe",
+        "provenance": {
+          "creator": "Reveal Line",
+          "license": "Project-authored component; bundled font licenses remain separate",
+          "parent": null,
+          "prompt": "Create one original FPV Field Kit neon words & symbols · neon pysanka fish · 1994 forever for slot picture.retro.8cd972a95006a24c. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 1152 by 576 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
+          "source": "Existing runtime presentation and Field Kit specification"
+        },
+        "quality": { "evidence": [], "stage": "source" },
+        "recipe": { "id": "scene.reveal.v1" },
+        "revision": 1
+      },
       "picture.retro.8f27ced22ffeccda": {
         "description": "First Signal · Supply Circuit · 1994 Forever: registered baseline component; no new raster or audio production is claimed.",
         "file": null,
@@ -6116,6 +6224,60 @@
           "license": "Project-authored component; bundled font licenses remain separate",
           "parent": null,
           "prompt": "Create one original FPV Field Kit first signal · supply circuit · 1994 forever for slot picture.retro.8f27ced22ffeccda. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 768 by 576 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
+          "source": "Existing runtime presentation and Field Kit specification"
+        },
+        "quality": { "evidence": [], "stage": "source" },
+        "recipe": { "id": "scene.reveal.v1" },
+        "revision": 1
+      },
+      "picture.retro.928b200d613633e3": {
+        "description": "Neon Reference Pack · Neon Conduit · 1994 Forever: registered baseline component; no new raster or audio production is claimed.",
+        "file": null,
+        "format": "revealline-asset-revision.v1",
+        "geometry": null,
+        "id": "picture.retro.928b200d613633e3.default",
+        "kind": "recipe",
+        "provenance": {
+          "creator": "Reveal Line",
+          "license": "Project-authored component; bundled font licenses remain separate",
+          "parent": null,
+          "prompt": "Create one original FPV Field Kit neon reference pack · neon conduit · 1994 forever for slot picture.retro.928b200d613633e3. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 1152 by 576 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
+          "source": "Existing runtime presentation and Field Kit specification"
+        },
+        "quality": { "evidence": [], "stage": "source" },
+        "recipe": { "id": "scene.reveal.v1" },
+        "revision": 1
+      },
+      "picture.retro.94463d5cffed00de": {
+        "description": "Neon Words & Symbols · Neon Rushnyk · 1994 Forever: registered baseline component; no new raster or audio production is claimed.",
+        "file": null,
+        "format": "revealline-asset-revision.v1",
+        "geometry": null,
+        "id": "picture.retro.94463d5cffed00de.default",
+        "kind": "recipe",
+        "provenance": {
+          "creator": "Reveal Line",
+          "license": "Project-authored component; bundled font licenses remain separate",
+          "parent": null,
+          "prompt": "Create one original FPV Field Kit neon words & symbols · neon rushnyk · 1994 forever for slot picture.retro.94463d5cffed00de. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 1152 by 576 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
+          "source": "Existing runtime presentation and Field Kit specification"
+        },
+        "quality": { "evidence": [], "stage": "source" },
+        "recipe": { "id": "scene.reveal.v1" },
+        "revision": 1
+      },
+      "picture.retro.95122a9e983a16e2": {
+        "description": "Neon Reference Pack · Neon Switchyards · 1994 Forever: registered baseline component; no new raster or audio production is claimed.",
+        "file": null,
+        "format": "revealline-asset-revision.v1",
+        "geometry": null,
+        "id": "picture.retro.95122a9e983a16e2.default",
+        "kind": "recipe",
+        "provenance": {
+          "creator": "Reveal Line",
+          "license": "Project-authored component; bundled font licenses remain separate",
+          "parent": null,
+          "prompt": "Create one original FPV Field Kit neon reference pack · neon switchyards · 1994 forever for slot picture.retro.95122a9e983a16e2. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 1152 by 576 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
           "source": "Existing runtime presentation and Field Kit specification"
         },
         "quality": { "evidence": [], "stage": "source" },
@@ -6158,6 +6320,24 @@
         "recipe": { "id": "scene.reveal.v1" },
         "revision": 1
       },
+      "picture.retro.974e68cb79296168": {
+        "description": "Neon Words & Symbols · Neon Petrykivka Flower · 1994 Forever: registered baseline component; no new raster or audio production is claimed.",
+        "file": null,
+        "format": "revealline-asset-revision.v1",
+        "geometry": null,
+        "id": "picture.retro.974e68cb79296168.default",
+        "kind": "recipe",
+        "provenance": {
+          "creator": "Reveal Line",
+          "license": "Project-authored component; bundled font licenses remain separate",
+          "parent": null,
+          "prompt": "Create one original FPV Field Kit neon words & symbols · neon petrykivka flower · 1994 forever for slot picture.retro.974e68cb79296168. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 1152 by 576 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
+          "source": "Existing runtime presentation and Field Kit specification"
+        },
+        "quality": { "evidence": [], "stage": "source" },
+        "recipe": { "id": "scene.reveal.v1" },
+        "revision": 1
+      },
       "picture.retro.99fcd5c9685d28fe": {
         "description": "1994 Forever · Route Choices · route-worlds-retro-switchback: registered baseline component; no new raster or audio production is claimed.",
         "file": null,
@@ -6170,6 +6350,24 @@
           "license": "Project-authored component; bundled font licenses remain separate",
           "parent": null,
           "prompt": "Create one original FPV Field Kit 1994 forever · route choices · route-worlds-retro-switchback for slot picture.retro.99fcd5c9685d28fe. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 1672 by 941 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
+          "source": "Existing runtime presentation and Field Kit specification"
+        },
+        "quality": { "evidence": [], "stage": "source" },
+        "recipe": { "id": "scene.reveal.v1" },
+        "revision": 1
+      },
+      "picture.retro.9ffce44d29eacd48": {
+        "description": "Neon Reference Pack · Neon Hearts · 1994 Forever: registered baseline component; no new raster or audio production is claimed.",
+        "file": null,
+        "format": "revealline-asset-revision.v1",
+        "geometry": null,
+        "id": "picture.retro.9ffce44d29eacd48.default",
+        "kind": "recipe",
+        "provenance": {
+          "creator": "Reveal Line",
+          "license": "Project-authored component; bundled font licenses remain separate",
+          "parent": null,
+          "prompt": "Create one original FPV Field Kit neon reference pack · neon hearts · 1994 forever for slot picture.retro.9ffce44d29eacd48. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 1152 by 576 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
           "source": "Existing runtime presentation and Field Kit specification"
         },
         "quality": { "evidence": [], "stage": "source" },
@@ -6194,6 +6392,24 @@
         "recipe": { "id": "scene.reveal.v1" },
         "revision": 1
       },
+      "picture.retro.a55025c90d632a14": {
+        "description": "Neon Words & Symbols · Neon Ukrainian Trident · 1994 Forever: registered baseline component; no new raster or audio production is claimed.",
+        "file": null,
+        "format": "revealline-asset-revision.v1",
+        "geometry": null,
+        "id": "picture.retro.a55025c90d632a14.default",
+        "kind": "recipe",
+        "provenance": {
+          "creator": "Reveal Line",
+          "license": "Project-authored component; bundled font licenses remain separate",
+          "parent": null,
+          "prompt": "Create one original FPV Field Kit neon words & symbols · neon ukrainian trident · 1994 forever for slot picture.retro.a55025c90d632a14. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 1152 by 576 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
+          "source": "Existing runtime presentation and Field Kit specification"
+        },
+        "quality": { "evidence": [], "stage": "source" },
+        "recipe": { "id": "scene.reveal.v1" },
+        "revision": 1
+      },
       "picture.retro.af956efd80dd3b8b": {
         "description": "Night Shift · Afterglow Sentinel · 1994 Forever: registered baseline component; no new raster or audio production is claimed.",
         "file": null,
@@ -6206,6 +6422,24 @@
           "license": "Project-authored component; bundled font licenses remain separate",
           "parent": null,
           "prompt": "Create one original FPV Field Kit night shift · afterglow sentinel · 1994 forever for slot picture.retro.af956efd80dd3b8b. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 768 by 576 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
+          "source": "Existing runtime presentation and Field Kit specification"
+        },
+        "quality": { "evidence": [], "stage": "source" },
+        "recipe": { "id": "scene.reveal.v1" },
+        "revision": 1
+      },
+      "picture.retro.b02e59c8ee12aa3d": {
+        "description": "Neon Words & Symbols · Neon Tsymbaly · 1994 Forever: registered baseline component; no new raster or audio production is claimed.",
+        "file": null,
+        "format": "revealline-asset-revision.v1",
+        "geometry": null,
+        "id": "picture.retro.b02e59c8ee12aa3d.default",
+        "kind": "recipe",
+        "provenance": {
+          "creator": "Reveal Line",
+          "license": "Project-authored component; bundled font licenses remain separate",
+          "parent": null,
+          "prompt": "Create one original FPV Field Kit neon words & symbols · neon tsymbaly · 1994 forever for slot picture.retro.b02e59c8ee12aa3d. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 1152 by 576 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
           "source": "Existing runtime presentation and Field Kit specification"
         },
         "quality": { "evidence": [], "stage": "source" },
@@ -6266,6 +6500,24 @@
         "recipe": { "id": "scene.reveal.v1" },
         "revision": 1
       },
+      "picture.retro.b11f1b4bc7068757": {
+        "description": "Neon Words & Symbols · Neon Bandura · 1994 Forever: registered baseline component; no new raster or audio production is claimed.",
+        "file": null,
+        "format": "revealline-asset-revision.v1",
+        "geometry": null,
+        "id": "picture.retro.b11f1b4bc7068757.default",
+        "kind": "recipe",
+        "provenance": {
+          "creator": "Reveal Line",
+          "license": "Project-authored component; bundled font licenses remain separate",
+          "parent": null,
+          "prompt": "Create one original FPV Field Kit neon words & symbols · neon bandura · 1994 forever for slot picture.retro.b11f1b4bc7068757. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 1152 by 576 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
+          "source": "Existing runtime presentation and Field Kit specification"
+        },
+        "quality": { "evidence": [], "stage": "source" },
+        "recipe": { "id": "scene.reveal.v1" },
+        "revision": 1
+      },
       "picture.retro.b62ce8f2e71e0e13": {
         "description": "First Signal · Last Light · 1994 Forever: registered baseline component; no new raster or audio production is claimed.",
         "file": null,
@@ -6278,6 +6530,42 @@
           "license": "Project-authored component; bundled font licenses remain separate",
           "parent": null,
           "prompt": "Create one original FPV Field Kit first signal · last light · 1994 forever for slot picture.retro.b62ce8f2e71e0e13. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 768 by 576 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
+          "source": "Existing runtime presentation and Field Kit specification"
+        },
+        "quality": { "evidence": [], "stage": "source" },
+        "recipe": { "id": "scene.reveal.v1" },
+        "revision": 1
+      },
+      "picture.retro.c1c284feee494d49": {
+        "description": "Neon Reference Pack · Neon Arrows · 1994 Forever: registered baseline component; no new raster or audio production is claimed.",
+        "file": null,
+        "format": "revealline-asset-revision.v1",
+        "geometry": null,
+        "id": "picture.retro.c1c284feee494d49.default",
+        "kind": "recipe",
+        "provenance": {
+          "creator": "Reveal Line",
+          "license": "Project-authored component; bundled font licenses remain separate",
+          "parent": null,
+          "prompt": "Create one original FPV Field Kit neon reference pack · neon arrows · 1994 forever for slot picture.retro.c1c284feee494d49. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 1152 by 576 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
+          "source": "Existing runtime presentation and Field Kit specification"
+        },
+        "quality": { "evidence": [], "stage": "source" },
+        "recipe": { "id": "scene.reveal.v1" },
+        "revision": 1
+      },
+      "picture.retro.c2237477481c6b0a": {
+        "description": "Neon Words & Symbols · Neon FPV · 1994 Forever: registered baseline component; no new raster or audio production is claimed.",
+        "file": null,
+        "format": "revealline-asset-revision.v1",
+        "geometry": null,
+        "id": "picture.retro.c2237477481c6b0a.default",
+        "kind": "recipe",
+        "provenance": {
+          "creator": "Reveal Line",
+          "license": "Project-authored component; bundled font licenses remain separate",
+          "parent": null,
+          "prompt": "Create one original FPV Field Kit neon words & symbols · neon fpv · 1994 forever for slot picture.retro.c2237477481c6b0a. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 1152 by 576 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
           "source": "Existing runtime presentation and Field Kit specification"
         },
         "quality": { "evidence": [], "stage": "source" },
@@ -6302,6 +6590,60 @@
         "recipe": { "id": "scene.reveal.v1" },
         "revision": 1
       },
+      "picture.retro.c7e842f8b75dbbf4": {
+        "description": "Neon Words & Symbols · Neon FLY FREE · 1994 Forever: registered baseline component; no new raster or audio production is claimed.",
+        "file": null,
+        "format": "revealline-asset-revision.v1",
+        "geometry": null,
+        "id": "picture.retro.c7e842f8b75dbbf4.default",
+        "kind": "recipe",
+        "provenance": {
+          "creator": "Reveal Line",
+          "license": "Project-authored component; bundled font licenses remain separate",
+          "parent": null,
+          "prompt": "Create one original FPV Field Kit neon words & symbols · neon fly free · 1994 forever for slot picture.retro.c7e842f8b75dbbf4. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 1152 by 576 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
+          "source": "Existing runtime presentation and Field Kit specification"
+        },
+        "quality": { "evidence": [], "stage": "source" },
+        "recipe": { "id": "scene.reveal.v1" },
+        "revision": 1
+      },
+      "picture.retro.cc772910b64b94f0": {
+        "description": "Equipment Workshop · Garden of Threads · 1994 Forever: registered baseline component; no new raster or audio production is claimed.",
+        "file": null,
+        "format": "revealline-asset-revision.v1",
+        "geometry": null,
+        "id": "picture.retro.cc772910b64b94f0.default",
+        "kind": "recipe",
+        "provenance": {
+          "creator": "Reveal Line",
+          "license": "Project-authored component; bundled font licenses remain separate",
+          "parent": null,
+          "prompt": "Create one original FPV Field Kit equipment workshop · garden of threads · 1994 forever for slot picture.retro.cc772910b64b94f0. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 768 by 576 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
+          "source": "Existing runtime presentation and Field Kit specification"
+        },
+        "quality": { "evidence": [], "stage": "source" },
+        "recipe": { "id": "scene.reveal.v1" },
+        "revision": 1
+      },
+      "picture.retro.cda797a86132fff4": {
+        "description": "Neon Words & Symbols · Neon VICTORY DRONES · 1994 Forever: registered baseline component; no new raster or audio production is claimed.",
+        "file": null,
+        "format": "revealline-asset-revision.v1",
+        "geometry": null,
+        "id": "picture.retro.cda797a86132fff4.default",
+        "kind": "recipe",
+        "provenance": {
+          "creator": "Reveal Line",
+          "license": "Project-authored component; bundled font licenses remain separate",
+          "parent": null,
+          "prompt": "Create one original FPV Field Kit neon words & symbols · neon victory drones · 1994 forever for slot picture.retro.cda797a86132fff4. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 1152 by 576 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
+          "source": "Existing runtime presentation and Field Kit specification"
+        },
+        "quality": { "evidence": [], "stage": "source" },
+        "recipe": { "id": "scene.reveal.v1" },
+        "revision": 1
+      },
       "picture.retro.d5dffc3bfb59d2bd": {
         "description": "First Signal · Relay Orchard · 1994 Forever: registered baseline component; no new raster or audio production is claimed.",
         "file": null,
@@ -6314,6 +6656,24 @@
           "license": "Project-authored component; bundled font licenses remain separate",
           "parent": null,
           "prompt": "Create one original FPV Field Kit first signal · relay orchard · 1994 forever for slot picture.retro.d5dffc3bfb59d2bd. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 768 by 576 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
+          "source": "Existing runtime presentation and Field Kit specification"
+        },
+        "quality": { "evidence": [], "stage": "source" },
+        "recipe": { "id": "scene.reveal.v1" },
+        "revision": 1
+      },
+      "picture.retro.d74d6fdc5d5d3930": {
+        "description": "Neon Reference Pack · Neon Wavebands · 1994 Forever: registered baseline component; no new raster or audio production is claimed.",
+        "file": null,
+        "format": "revealline-asset-revision.v1",
+        "geometry": null,
+        "id": "picture.retro.d74d6fdc5d5d3930.default",
+        "kind": "recipe",
+        "provenance": {
+          "creator": "Reveal Line",
+          "license": "Project-authored component; bundled font licenses remain separate",
+          "parent": null,
+          "prompt": "Create one original FPV Field Kit neon reference pack · neon wavebands · 1994 forever for slot picture.retro.d74d6fdc5d5d3930. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 1152 by 576 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
           "source": "Existing runtime presentation and Field Kit specification"
         },
         "quality": { "evidence": [], "stage": "source" },
@@ -6338,18 +6698,54 @@
         "recipe": { "id": "scene.reveal.v1" },
         "revision": 1
       },
-      "picture.retro.e81b10a354214f55": {
-        "description": "Equipment Workshop · Clear Ledger · 1994 Forever: registered baseline component; no new raster or audio production is claimed.",
+      "picture.retro.dae9aab7d66d04b8": {
+        "description": "Neon Reference Pack · Neon Labyrinth · 1994 Forever: registered baseline component; no new raster or audio production is claimed.",
         "file": null,
         "format": "revealline-asset-revision.v1",
         "geometry": null,
-        "id": "picture.retro.e81b10a354214f55.default",
+        "id": "picture.retro.dae9aab7d66d04b8.default",
         "kind": "recipe",
         "provenance": {
           "creator": "Reveal Line",
           "license": "Project-authored component; bundled font licenses remain separate",
           "parent": null,
-          "prompt": "Create one original FPV Field Kit equipment workshop · clear ledger · 1994 forever for slot picture.retro.e81b10a354214f55. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 768 by 576 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
+          "prompt": "Create one original FPV Field Kit neon reference pack · neon labyrinth · 1994 forever for slot picture.retro.dae9aab7d66d04b8. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 1152 by 576 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
+          "source": "Existing runtime presentation and Field Kit specification"
+        },
+        "quality": { "evidence": [], "stage": "source" },
+        "recipe": { "id": "scene.reveal.v1" },
+        "revision": 1
+      },
+      "picture.retro.dbe0b00697e28d96": {
+        "description": "Neon Words & Symbols · Neon Barvinok · 1994 Forever: registered baseline component; no new raster or audio production is claimed.",
+        "file": null,
+        "format": "revealline-asset-revision.v1",
+        "geometry": null,
+        "id": "picture.retro.dbe0b00697e28d96.default",
+        "kind": "recipe",
+        "provenance": {
+          "creator": "Reveal Line",
+          "license": "Project-authored component; bundled font licenses remain separate",
+          "parent": null,
+          "prompt": "Create one original FPV Field Kit neon words & symbols · neon barvinok · 1994 forever for slot picture.retro.dbe0b00697e28d96. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 1152 by 576 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
+          "source": "Existing runtime presentation and Field Kit specification"
+        },
+        "quality": { "evidence": [], "stage": "source" },
+        "recipe": { "id": "scene.reveal.v1" },
+        "revision": 1
+      },
+      "picture.retro.dd0d6967164bb4a8": {
+        "description": "Neon Words & Symbols · Neon Eight-Point Ruzha · 1994 Forever: registered baseline component; no new raster or audio production is claimed.",
+        "file": null,
+        "format": "revealline-asset-revision.v1",
+        "geometry": null,
+        "id": "picture.retro.dd0d6967164bb4a8.default",
+        "kind": "recipe",
+        "provenance": {
+          "creator": "Reveal Line",
+          "license": "Project-authored component; bundled font licenses remain separate",
+          "parent": null,
+          "prompt": "Create one original FPV Field Kit neon words & symbols · neon eight-point ruzha · 1994 forever for slot picture.retro.dd0d6967164bb4a8. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 1152 by 576 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
           "source": "Existing runtime presentation and Field Kit specification"
         },
         "quality": { "evidence": [], "stage": "source" },
@@ -6386,6 +6782,24 @@
           "license": "Project-authored component; bundled font licenses remain separate",
           "parent": null,
           "prompt": "Create one original FPV Field Kit 1994 forever · route choices · route-worlds-retro-foundry for slot picture.retro.f5875974ea1c7ec0. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 1672 by 940 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
+          "source": "Existing runtime presentation and Field Kit specification"
+        },
+        "quality": { "evidence": [], "stage": "source" },
+        "recipe": { "id": "scene.reveal.v1" },
+        "revision": 1
+      },
+      "picture.retro.f9dbf6651ab32e40": {
+        "description": "Neon Words & Symbols · Neon Kalyna · 1994 Forever: registered baseline component; no new raster or audio production is claimed.",
+        "file": null,
+        "format": "revealline-asset-revision.v1",
+        "geometry": null,
+        "id": "picture.retro.f9dbf6651ab32e40.default",
+        "kind": "recipe",
+        "provenance": {
+          "creator": "Reveal Line",
+          "license": "Project-authored component; bundled font licenses remain separate",
+          "parent": null,
+          "prompt": "Create one original FPV Field Kit neon words & symbols · neon kalyna · 1994 forever for slot picture.retro.f9dbf6651ab32e40. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 1152 by 576 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
           "source": "Existing runtime presentation and Field Kit specification"
         },
         "quality": { "evidence": [], "stage": "source" },
@@ -6662,24 +7076,6 @@
         "recipe": { "id": "scene.reveal.v1" },
         "revision": 1
       },
-      "picture.ukraine.579543192e929e8c": {
-        "description": "Equipment Workshop · Clear Ledger · Ukraine Atlas: registered baseline component; no new raster or audio production is claimed.",
-        "file": null,
-        "format": "revealline-asset-revision.v1",
-        "geometry": null,
-        "id": "picture.ukraine.579543192e929e8c.default",
-        "kind": "recipe",
-        "provenance": {
-          "creator": "Reveal Line",
-          "license": "Project-authored component; bundled font licenses remain separate",
-          "parent": null,
-          "prompt": "Create one original FPV Field Kit equipment workshop · clear ledger · ukraine atlas for slot picture.ukraine.579543192e929e8c. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 768 by 576 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
-          "source": "Existing runtime presentation and Field Kit specification"
-        },
-        "quality": { "evidence": [], "stage": "source" },
-        "recipe": { "id": "scene.reveal.v1" },
-        "revision": 1
-      },
       "picture.ukraine.59755656a503791a": {
         "description": "Ukraine Atlas · Sentinel Circuit · sentinel-circuit-ukraine-open-circuit: registered baseline component; no new raster or audio production is claimed.",
         "file": null,
@@ -6800,6 +7196,24 @@
           "license": "Project-authored component; bundled font licenses remain separate",
           "parent": null,
           "prompt": "Create one original FPV Field Kit first signal · last light · ukraine atlas for slot picture.ukraine.76a8045adbf8f262. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 768 by 576 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
+          "source": "Existing runtime presentation and Field Kit specification"
+        },
+        "quality": { "evidence": [], "stage": "source" },
+        "recipe": { "id": "scene.reveal.v1" },
+        "revision": 1
+      },
+      "picture.ukraine.7bce972e2253bbb8": {
+        "description": "Equipment Workshop · Neon Switchboard · Ukraine Atlas: registered baseline component; no new raster or audio production is claimed.",
+        "file": null,
+        "format": "revealline-asset-revision.v1",
+        "geometry": null,
+        "id": "picture.ukraine.7bce972e2253bbb8.default",
+        "kind": "recipe",
+        "provenance": {
+          "creator": "Reveal Line",
+          "license": "Project-authored component; bundled font licenses remain separate",
+          "parent": null,
+          "prompt": "Create one original FPV Field Kit equipment workshop · neon switchboard · ukraine atlas for slot picture.ukraine.7bce972e2253bbb8. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 768 by 576 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
           "source": "Existing runtime presentation and Field Kit specification"
         },
         "quality": { "evidence": [], "stage": "source" },
@@ -7034,6 +7448,24 @@
           "license": "Project-authored component; bundled font licenses remain separate",
           "parent": null,
           "prompt": "Create one original FPV Field Kit first signal · crosswind · ukraine atlas for slot picture.ukraine.e719cd444c87f153. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 768 by 576 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
+          "source": "Existing runtime presentation and Field Kit specification"
+        },
+        "quality": { "evidence": [], "stage": "source" },
+        "recipe": { "id": "scene.reveal.v1" },
+        "revision": 1
+      },
+      "picture.ukraine.f12529165334e7a5": {
+        "description": "Equipment Workshop · Garden of Threads · Ukraine Atlas: registered baseline component; no new raster or audio production is claimed.",
+        "file": null,
+        "format": "revealline-asset-revision.v1",
+        "geometry": null,
+        "id": "picture.ukraine.f12529165334e7a5.default",
+        "kind": "recipe",
+        "provenance": {
+          "creator": "Reveal Line",
+          "license": "Project-authored component; bundled font licenses remain separate",
+          "parent": null,
+          "prompt": "Create one original FPV Field Kit equipment workshop · garden of threads · ukraine atlas for slot picture.ukraine.f12529165334e7a5. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 768 by 576 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
           "source": "Existing runtime presentation and Field Kit specification"
         },
         "quality": { "evidence": [], "stage": "source" },
@@ -10505,130 +10937,6 @@
       "pickup.slow": { "id": "pickup.slow.field-kit", "revision": 2 },
       "pickup.speed": { "id": "pickup.speed.field-kit", "revision": 2 },
       "pickup.supply": { "id": "pickup.supply.field-kit", "revision": 2 },
-      "picture.coupa.0481ceb3eba28ea9": {
-        "id": "picture.coupa.0481ceb3eba28ea9.default",
-        "revision": 1
-      },
-      "picture.coupa.05d993f4148d93fc": {
-        "id": "picture.coupa.05d993f4148d93fc.default",
-        "revision": 1
-      },
-      "picture.coupa.090b4ca5dc7ea7fa": {
-        "id": "picture.coupa.090b4ca5dc7ea7fa.default",
-        "revision": 1
-      },
-      "picture.coupa.0ff486f1577a5fc7": {
-        "id": "picture.coupa.0ff486f1577a5fc7.default",
-        "revision": 1
-      },
-      "picture.coupa.1b09bd3b6f1608be": {
-        "id": "picture.coupa.1b09bd3b6f1608be.default",
-        "revision": 1
-      },
-      "picture.coupa.1f4ed16be3f1c6cc": {
-        "id": "picture.coupa.1f4ed16be3f1c6cc.default",
-        "revision": 1
-      },
-      "picture.coupa.280ea068e8a16fac": {
-        "id": "picture.coupa.280ea068e8a16fac.default",
-        "revision": 1
-      },
-      "picture.coupa.2a75ce6ea2ef63e0": {
-        "id": "picture.coupa.2a75ce6ea2ef63e0.default",
-        "revision": 1
-      },
-      "picture.coupa.3d671e7498b870e7": {
-        "id": "picture.coupa.3d671e7498b870e7.default",
-        "revision": 1
-      },
-      "picture.coupa.3f2efe130aa97273": {
-        "id": "picture.coupa.3f2efe130aa97273.default",
-        "revision": 1
-      },
-      "picture.coupa.40f512bb0fb9c2b3": {
-        "id": "picture.coupa.40f512bb0fb9c2b3.default",
-        "revision": 1
-      },
-      "picture.coupa.47c1d9559d9f2246": {
-        "id": "picture.coupa.47c1d9559d9f2246.default",
-        "revision": 1
-      },
-      "picture.coupa.5686cf79f5ffe46d": {
-        "id": "picture.coupa.5686cf79f5ffe46d.default",
-        "revision": 1
-      },
-      "picture.coupa.5865540015dd327e": {
-        "id": "picture.coupa.5865540015dd327e.default",
-        "revision": 1
-      },
-      "picture.coupa.691155cfa40084bf": {
-        "id": "picture.coupa.691155cfa40084bf.default",
-        "revision": 1
-      },
-      "picture.coupa.73d147ccabfbd137": {
-        "id": "picture.coupa.73d147ccabfbd137.default",
-        "revision": 1
-      },
-      "picture.coupa.7b47f9c3630246d4": {
-        "id": "picture.coupa.7b47f9c3630246d4.default",
-        "revision": 1
-      },
-      "picture.coupa.918ad57613204cd4": {
-        "id": "picture.coupa.918ad57613204cd4.default",
-        "revision": 1
-      },
-      "picture.coupa.92819c6b51cb991c": {
-        "id": "picture.coupa.92819c6b51cb991c.default",
-        "revision": 1
-      },
-      "picture.coupa.9b4302b0e015b34a": {
-        "id": "picture.coupa.9b4302b0e015b34a.default",
-        "revision": 1
-      },
-      "picture.coupa.9c36bbfb2cf2e14d": {
-        "id": "picture.coupa.9c36bbfb2cf2e14d.default",
-        "revision": 1
-      },
-      "picture.coupa.a47222e499efa5eb": {
-        "id": "picture.coupa.a47222e499efa5eb.default",
-        "revision": 1
-      },
-      "picture.coupa.aa5451d69dc5c353": {
-        "id": "picture.coupa.aa5451d69dc5c353.default",
-        "revision": 1
-      },
-      "picture.coupa.b2c793a221d65a11": {
-        "id": "picture.coupa.b2c793a221d65a11.default",
-        "revision": 1
-      },
-      "picture.coupa.b80cf770ce6cb4a4": {
-        "id": "picture.coupa.b80cf770ce6cb4a4.default",
-        "revision": 1
-      },
-      "picture.coupa.c09c95e761808a54": {
-        "id": "picture.coupa.c09c95e761808a54.default",
-        "revision": 1
-      },
-      "picture.coupa.c6000faa77b7d10e": {
-        "id": "picture.coupa.c6000faa77b7d10e.default",
-        "revision": 1
-      },
-      "picture.coupa.cb4a704dd3086148": {
-        "id": "picture.coupa.cb4a704dd3086148.default",
-        "revision": 1
-      },
-      "picture.coupa.d89ff114a5355b44": {
-        "id": "picture.coupa.d89ff114a5355b44.default",
-        "revision": 1
-      },
-      "picture.coupa.d9bbb55300b07784": {
-        "id": "picture.coupa.d9bbb55300b07784.default",
-        "revision": 1
-      },
-      "picture.coupa.e9fe90c13e941598": {
-        "id": "picture.coupa.e9fe90c13e941598.default",
-        "revision": 1
-      },
       "picture.fpv.0e2d32dab758d51f": {
         "id": "picture.fpv.0e2d32dab758d51f.field-kit",
         "revision": 2
@@ -10857,12 +11165,48 @@
         "id": "picture.retro.05b3a5728d91fd13.default",
         "revision": 1
       },
+      "picture.retro.07e1f236355446f7": {
+        "id": "picture.retro.07e1f236355446f7.default",
+        "revision": 1
+      },
       "picture.retro.09c25cd49f784db8": {
         "id": "picture.retro.09c25cd49f784db8.default",
         "revision": 1
       },
+      "picture.retro.0c9c8c72e343c6a0": {
+        "id": "picture.retro.0c9c8c72e343c6a0.default",
+        "revision": 1
+      },
+      "picture.retro.0dcd229379bb9916": {
+        "id": "picture.retro.0dcd229379bb9916.default",
+        "revision": 1
+      },
+      "picture.retro.0e6db448c107a22d": {
+        "id": "picture.retro.0e6db448c107a22d.default",
+        "revision": 1
+      },
+      "picture.retro.138611e1c716f21d": {
+        "id": "picture.retro.138611e1c716f21d.default",
+        "revision": 1
+      },
       "picture.retro.1afdd5025f933caa": {
         "id": "picture.retro.1afdd5025f933caa.default",
+        "revision": 1
+      },
+      "picture.retro.1bfc29045b55ce8f": {
+        "id": "picture.retro.1bfc29045b55ce8f.default",
+        "revision": 1
+      },
+      "picture.retro.1cb1f8acb6834f36": {
+        "id": "picture.retro.1cb1f8acb6834f36.default",
+        "revision": 1
+      },
+      "picture.retro.1dc9ce1961d8149f": {
+        "id": "picture.retro.1dc9ce1961d8149f.default",
+        "revision": 1
+      },
+      "picture.retro.1e8ef38a535ca246": {
+        "id": "picture.retro.1e8ef38a535ca246.default",
         "revision": 1
       },
       "picture.retro.1fe699b92f4baa39": {
@@ -10873,6 +11217,18 @@
         "id": "picture.retro.24fb94bb1748abf1.default",
         "revision": 1
       },
+      "picture.retro.26ef1b9a355493e5": {
+        "id": "picture.retro.26ef1b9a355493e5.default",
+        "revision": 1
+      },
+      "picture.retro.29dad18b7811f67a": {
+        "id": "picture.retro.29dad18b7811f67a.default",
+        "revision": 1
+      },
+      "picture.retro.2c8464590ace3452": {
+        "id": "picture.retro.2c8464590ace3452.default",
+        "revision": 1
+      },
       "picture.retro.2cec45ca18fee23e": {
         "id": "picture.retro.2cec45ca18fee23e.default",
         "revision": 1
@@ -10881,12 +11237,52 @@
         "id": "picture.retro.2e64114a83b2c60b.default",
         "revision": 1
       },
+      "picture.retro.3089f3245b4914c6": {
+        "id": "picture.retro.3089f3245b4914c6.default",
+        "revision": 1
+      },
+      "picture.retro.30a898d4401f9533": {
+        "id": "picture.retro.30a898d4401f9533.default",
+        "revision": 1
+      },
+      "picture.retro.312afcd26838690f": {
+        "id": "picture.retro.312afcd26838690f.default",
+        "revision": 1
+      },
       "picture.retro.3256a277f274465d": {
         "id": "picture.retro.3256a277f274465d.default",
         "revision": 1
       },
+      "picture.retro.34e07bdec7b1f8cb": {
+        "id": "picture.retro.34e07bdec7b1f8cb.default",
+        "revision": 1
+      },
+      "picture.retro.4089f958a4132f41": {
+        "id": "picture.retro.4089f958a4132f41.default",
+        "revision": 1
+      },
+      "picture.retro.447a8bb3c44affc8": {
+        "id": "picture.retro.447a8bb3c44affc8.default",
+        "revision": 1
+      },
+      "picture.retro.45c7f1816a692815": {
+        "id": "picture.retro.45c7f1816a692815.default",
+        "revision": 1
+      },
       "picture.retro.4d8b59426e203af3": {
         "id": "picture.retro.4d8b59426e203af3.default",
+        "revision": 1
+      },
+      "picture.retro.4ff13771b76ea7df": {
+        "id": "picture.retro.4ff13771b76ea7df.default",
+        "revision": 1
+      },
+      "picture.retro.50244a8e45229d6f": {
+        "id": "picture.retro.50244a8e45229d6f.default",
+        "revision": 1
+      },
+      "picture.retro.528b4148a6d9d70d": {
+        "id": "picture.retro.528b4148a6d9d70d.default",
         "revision": 1
       },
       "picture.retro.555f716d5503cbdc": {
@@ -10897,6 +11293,30 @@
         "id": "picture.retro.5bad347d8755fe8c.default",
         "revision": 1
       },
+      "picture.retro.5c71b6c3a01529bd": {
+        "id": "picture.retro.5c71b6c3a01529bd.default",
+        "revision": 1
+      },
+      "picture.retro.5ed90a3432285baf": {
+        "id": "picture.retro.5ed90a3432285baf.default",
+        "revision": 1
+      },
+      "picture.retro.6056098dc9f595fd": {
+        "id": "picture.retro.6056098dc9f595fd.default",
+        "revision": 1
+      },
+      "picture.retro.6584229645910c5c": {
+        "id": "picture.retro.6584229645910c5c.default",
+        "revision": 1
+      },
+      "picture.retro.70ff6df39d5305de": {
+        "id": "picture.retro.70ff6df39d5305de.default",
+        "revision": 1
+      },
+      "picture.retro.715a095dc7f55d71": {
+        "id": "picture.retro.715a095dc7f55d71.default",
+        "revision": 1
+      },
       "picture.retro.75cd7ebf9b541f4f": {
         "id": "picture.retro.75cd7ebf9b541f4f.default",
         "revision": 1
@@ -10905,16 +11325,64 @@
         "id": "picture.retro.77498c017c8a2b0e.default",
         "revision": 1
       },
+      "picture.retro.791fcb87683848d5": {
+        "id": "picture.retro.791fcb87683848d5.default",
+        "revision": 1
+      },
       "picture.retro.7957561fc5d0fd35": {
         "id": "picture.retro.7957561fc5d0fd35.default",
+        "revision": 1
+      },
+      "picture.retro.7971cbca6a4f54e6": {
+        "id": "picture.retro.7971cbca6a4f54e6.default",
+        "revision": 1
+      },
+      "picture.retro.7c26a81806482e04": {
+        "id": "picture.retro.7c26a81806482e04.default",
+        "revision": 1
+      },
+      "picture.retro.7eb7c8f3a28dbcb9": {
+        "id": "picture.retro.7eb7c8f3a28dbcb9.default",
+        "revision": 1
+      },
+      "picture.retro.81f16b01666462a3": {
+        "id": "picture.retro.81f16b01666462a3.default",
+        "revision": 1
+      },
+      "picture.retro.82cc2bf23769a5c0": {
+        "id": "picture.retro.82cc2bf23769a5c0.default",
+        "revision": 1
+      },
+      "picture.retro.83f2f2589e134ec7": {
+        "id": "picture.retro.83f2f2589e134ec7.default",
         "revision": 1
       },
       "picture.retro.875cccfdfc8a0387": {
         "id": "picture.retro.875cccfdfc8a0387.default",
         "revision": 1
       },
+      "picture.retro.88f27efc3207536d": {
+        "id": "picture.retro.88f27efc3207536d.default",
+        "revision": 1
+      },
+      "picture.retro.8cd972a95006a24c": {
+        "id": "picture.retro.8cd972a95006a24c.default",
+        "revision": 1
+      },
       "picture.retro.8f27ced22ffeccda": {
         "id": "picture.retro.8f27ced22ffeccda.default",
+        "revision": 1
+      },
+      "picture.retro.928b200d613633e3": {
+        "id": "picture.retro.928b200d613633e3.default",
+        "revision": 1
+      },
+      "picture.retro.94463d5cffed00de": {
+        "id": "picture.retro.94463d5cffed00de.default",
+        "revision": 1
+      },
+      "picture.retro.95122a9e983a16e2": {
+        "id": "picture.retro.95122a9e983a16e2.default",
         "revision": 1
       },
       "picture.retro.971f9d9a3bfd5d28": {
@@ -10925,16 +11393,32 @@
         "id": "picture.retro.971fdba734ea63b3.default",
         "revision": 1
       },
+      "picture.retro.974e68cb79296168": {
+        "id": "picture.retro.974e68cb79296168.default",
+        "revision": 1
+      },
       "picture.retro.99fcd5c9685d28fe": {
         "id": "picture.retro.99fcd5c9685d28fe.default",
+        "revision": 1
+      },
+      "picture.retro.9ffce44d29eacd48": {
+        "id": "picture.retro.9ffce44d29eacd48.default",
         "revision": 1
       },
       "picture.retro.a1f7c170c23ef12a": {
         "id": "picture.retro.a1f7c170c23ef12a.default",
         "revision": 1
       },
+      "picture.retro.a55025c90d632a14": {
+        "id": "picture.retro.a55025c90d632a14.default",
+        "revision": 1
+      },
       "picture.retro.af956efd80dd3b8b": {
         "id": "picture.retro.af956efd80dd3b8b.default",
+        "revision": 1
+      },
+      "picture.retro.b02e59c8ee12aa3d": {
+        "id": "picture.retro.b02e59c8ee12aa3d.default",
         "revision": 1
       },
       "picture.retro.b03760ef0f3f5816": {
@@ -10949,24 +11433,60 @@
         "id": "picture.retro.b0adb2f7bec09e04.default",
         "revision": 1
       },
+      "picture.retro.b11f1b4bc7068757": {
+        "id": "picture.retro.b11f1b4bc7068757.default",
+        "revision": 1
+      },
       "picture.retro.b62ce8f2e71e0e13": {
         "id": "picture.retro.b62ce8f2e71e0e13.default",
+        "revision": 1
+      },
+      "picture.retro.c1c284feee494d49": {
+        "id": "picture.retro.c1c284feee494d49.default",
+        "revision": 1
+      },
+      "picture.retro.c2237477481c6b0a": {
+        "id": "picture.retro.c2237477481c6b0a.default",
         "revision": 1
       },
       "picture.retro.c3872f4a1d50b033": {
         "id": "picture.retro.c3872f4a1d50b033.default",
         "revision": 1
       },
+      "picture.retro.c7e842f8b75dbbf4": {
+        "id": "picture.retro.c7e842f8b75dbbf4.default",
+        "revision": 1
+      },
+      "picture.retro.cc772910b64b94f0": {
+        "id": "picture.retro.cc772910b64b94f0.default",
+        "revision": 1
+      },
+      "picture.retro.cda797a86132fff4": {
+        "id": "picture.retro.cda797a86132fff4.default",
+        "revision": 1
+      },
       "picture.retro.d5dffc3bfb59d2bd": {
         "id": "picture.retro.d5dffc3bfb59d2bd.default",
+        "revision": 1
+      },
+      "picture.retro.d74d6fdc5d5d3930": {
+        "id": "picture.retro.d74d6fdc5d5d3930.default",
         "revision": 1
       },
       "picture.retro.da7d60e2f7c56546": {
         "id": "picture.retro.da7d60e2f7c56546.default",
         "revision": 1
       },
-      "picture.retro.e81b10a354214f55": {
-        "id": "picture.retro.e81b10a354214f55.default",
+      "picture.retro.dae9aab7d66d04b8": {
+        "id": "picture.retro.dae9aab7d66d04b8.default",
+        "revision": 1
+      },
+      "picture.retro.dbe0b00697e28d96": {
+        "id": "picture.retro.dbe0b00697e28d96.default",
+        "revision": 1
+      },
+      "picture.retro.dd0d6967164bb4a8": {
+        "id": "picture.retro.dd0d6967164bb4a8.default",
         "revision": 1
       },
       "picture.retro.f51ec5e1cad0f62d": {
@@ -10975,6 +11495,10 @@
       },
       "picture.retro.f5875974ea1c7ec0": {
         "id": "picture.retro.f5875974ea1c7ec0.default",
+        "revision": 1
+      },
+      "picture.retro.f9dbf6651ab32e40": {
+        "id": "picture.retro.f9dbf6651ab32e40.default",
         "revision": 1
       },
       "picture.retro.fa96a6d358624a69": {
@@ -11037,10 +11561,6 @@
         "id": "picture.ukraine.5741090bebe0c878.default",
         "revision": 1
       },
-      "picture.ukraine.579543192e929e8c": {
-        "id": "picture.ukraine.579543192e929e8c.default",
-        "revision": 1
-      },
       "picture.ukraine.59755656a503791a": {
         "id": "picture.ukraine.59755656a503791a.default",
         "revision": 1
@@ -11067,6 +11587,10 @@
       },
       "picture.ukraine.76a8045adbf8f262": {
         "id": "picture.ukraine.76a8045adbf8f262.default",
+        "revision": 1
+      },
+      "picture.ukraine.7bce972e2253bbb8": {
+        "id": "picture.ukraine.7bce972e2253bbb8.default",
         "revision": 1
       },
       "picture.ukraine.8238e243c4898e68": {
@@ -11119,6 +11643,10 @@
       },
       "picture.ukraine.e719cd444c87f153": {
         "id": "picture.ukraine.e719cd444c87f153.default",
+        "revision": 1
+      },
+      "picture.ukraine.f12529165334e7a5": {
+        "id": "picture.ukraine.f12529165334e7a5.default",
         "revision": 1
       },
       "picture.ukraine.f397638fc836b8f4": {
@@ -11323,7 +11851,7 @@
       "ui.tooltip": { "id": "ui.tooltip.field-kit", "revision": 24 }
     },
     "collection": null,
-    "theme": { "id": "fpv", "name": "FPV Field Kit", "revision": 104 },
+    "theme": { "id": "fpv", "name": "FPV Field Kit", "revision": 105 },
     "tokens": {
       "amber": "#f4bf62",
       "borderWidth": 2,
@@ -11351,7 +11879,7 @@
       "textSize": 18
     }
   },
-  "source": { "id": "field-kit", "revision": 104 },
+  "source": { "id": "field-kit", "revision": 105 },
   "urls": {
     "009d14748f943002091255caebd32e4df1c886569575f512ab0d55d7a3ff637a": "./assets/009d14748f943002091255caebd32e4df1c886569575f512ab0d55d7a3ff637a.png",
     "00b0f847cd1f80495615e3ada13899df67c6df05bf1f6d846ffc46cb3cc3fc5f": "./assets/00b0f847cd1f80495615e3ada13899df67c6df05bf1f6d846ffc46cb3cc3fc5f.png",

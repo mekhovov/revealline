@@ -55,7 +55,7 @@ test('all four worlds cover every enemy role and explicit skins override world d
     }
   assert.equal(recordedMovement('', { family: 'fpv' }, 'bouncer'), 'wheels');
   assert.equal(recordedMovement('', { family: 'atlas' }, 'contour-patrol'), 'grain');
-  assert.equal(recordedMovement('', { family: 'navi' }, 'claimed-rover'), 'wheels');
+  assert.equal(recordedMovement('', { family: 'custom' }, 'claimed-rover'), 'wheels');
 });
 test('all Journey palettes, Team threats, combat patrols and unknown appearances retain recorded fallbacks', () => {
   for (const material of JOURNEY_ACTOR_MATERIALS)
@@ -82,7 +82,7 @@ test('company recipes follow their visible rotor or paper bodies even on ground 
   for (const recipe of Object.keys(FPV_BODY_RECIPES))
     for (const { type } of ENEMY_CATALOG)
       assert.equal(
-        recordedMovement('', { family: 'navi', actorRecipes: { [type]: recipe } }, type),
+        recordedMovement('', { family: 'custom', actorRecipes: { [type]: recipe } }, type),
         'rotor',
       );
   for (const recipe of ['paper-tangle', 'missing-cloud', 'stale-fragments', 'backlog-knot'])
@@ -95,12 +95,12 @@ test('company recipes follow their visible rotor or paper bodies even on ground 
 test('player body selection follows equipped class, per-player body and appearance override', () => {
   const theme = {
     player: 'neutral-marker',
-    classBodies: { carrier: 'heavy-lift', scout: 'navi-avatar' },
+    classBodies: { carrier: 'heavy-lift', scout: 'retro-craft' },
   };
   assert.equal(playerMovementBody({}, { activeClassId: 'carrier' }, theme), 'heavy-lift');
   assert.equal(
     playerMovementBody({ classId: 'scout' }, { activeClassId: 'carrier' }, theme),
-    'navi-avatar',
+    'retro-craft',
   );
   assert.equal(playerMovementBody({ bodyId: 'ukrainian-bird' }, {}, theme), 'ukrainian-bird');
   assert.equal(

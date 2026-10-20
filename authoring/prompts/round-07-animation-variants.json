@@ -91,7 +91,7 @@
         "ROLE_DOMAIN_MAP",
         "FAMILY_STYLE"
       ],
-      "prompt": "Inspect {{ENEMY_REFERENCES}} and {{ROLE_DOMAIN_MAP}} before creating a separate {{FAMILY_STYLE}} keyframe study. Distinguish an open-field mover, a patrol on changing interior capture contours, an enemy crossing revealed ground and a territory eroder. Give each a stable silhouette and restrained motion signature rather than identical glowing balls. Keep the fill-blocker mark attached only to roles the selected policy designates. Motion diagrams illustrate the declared domain; they do not implement homing, erosion, internal-contour traversal or new behavior. Preserve anchors, collider references and role identity across frames. Current FPV examples use explicit Ukrainian/hostile-military/neutral identity and no Z markings anywhere; Coupa uses process-friction objects rather than military motifs. Use the built-in image editor for the requested derivative and preserve all references. Record generated keyframes as concepts; timing, loop seams, interruption and actual-size readability require subsequent assembled playback.",
+      "prompt": "Inspect {{ENEMY_REFERENCES}} and {{ROLE_DOMAIN_MAP}} before creating a separate {{FAMILY_STYLE}} keyframe study. Distinguish an open-field mover, a patrol on changing interior capture contours, an enemy crossing revealed ground and a territory eroder. Give each a stable silhouette and restrained motion signature rather than identical glowing balls. Keep the fill-blocker mark attached only to roles the selected policy designates. Motion diagrams illustrate the declared domain; they do not implement homing, erosion, internal-contour traversal or new behavior. Preserve anchors, collider references and role identity across frames. Current FPV examples use explicit Ukrainian/hostile-military/neutral identity and no Z markings anywhere. Use the built-in image editor for the requested derivative and preserve all references. Record generated keyframes as concepts; timing, loop seams, interruption and actual-size readability require subsequent assembled playback.",
       "example_request": "Make the four enemy roles recognizable by silhouette and motion in every theme."
     },
     {
@@ -129,24 +129,6 @@
       ],
       "prompt": "Direct 1994 FOREVER animation from {{ERA_DIRECTION}}, {{ASSET_SET}} and {{STATE_TRACE}}. Choose a coherent period vocabulary such as limited-color DOS, console pixel clusters or a warm home-computer room; do not impose neon, CRT wobble or heavy bloom on every scene. Separate craft body, propeller/thruster visual parts, trail, local capture effects, terrain and UI. Preserve the same collider geometry and recorded movement across microtile, detailed-object and hybrid skins, retaining all three as available presentation choices. Specify idle/move/turn, supported slow/boost and hit/respawn responses, capture and victory as component-level states with loops, cancellation and clocks. Use economical keyframe changes and optional cosmetic accents while keeping a bright readable player/trail hierarchy. Reduced motion should replace busy effects with steady meaningful symbols. Sound cues can evoke a period instrument palette, but actual audio must be produced and listened to separately. Report unsupported preview features and do not call a storyboard working animation.",
       "example_request": "Compare a DOS-like motion style and a richer 16-bit style on the same level."
-    },
-    {
-      "id": "animation-08-navi-motion",
-      "family": "navi-network",
-      "asset_type": "family_animation_plan",
-      "mode": "text_generate",
-      "intent": "Create clear business-world motion with modular brand art.",
-      "status": "template_not_executed",
-      "reference_requirements": [
-        "Approved character/brand reference or explicit placeholder status, assets and fixed state trace."
-      ],
-      "variables": [
-        "APPROVED_IDENTITY_REFERENCE",
-        "ASSET_SET",
-        "STATE_TRACE"
-      ],
-      "prompt": "Direct NAVI NETWORK motion from {{APPROVED_IDENTITY_REFERENCE}}, {{ASSET_SET}} and {{STATE_TRACE}}. If the identity reference is only a C-token placeholder, retain that status rather than claiming an exact official Navi mascot. Separate hero body/accent parts, connection trail, local savings-token effects, terrain/process materials, UI and sound cues. Use friendly restrained material motion and the approved palette; introduce no military imagery or nationality-coded enemies. Obstacles represent process friction, not customers or employees. Plan state-driven idle/move/turn, supported slow/boost, hit/respawn, capture and victory with clear priorities, cancellation, looping and reduced-motion fallbacks. Keep fictional game points separate from real customer claims. Provide microtile, detailed-object and hybrid variants using the same board geometry and trace. Cosmetic replacement never alters network objectives or collider data. Deliver a component/state plan and actual playback acceptance scenarios; no storyboard or generated clip proves a game runtime implements them.",
-      "example_request": "Animate Navi’s connections and process obstacles without making it look like a military reskin."
     },
     {
       "id": "animation-09-terrain-appearance",

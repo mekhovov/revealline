@@ -91,7 +91,7 @@ document.getElementById('measure').onclick = async (event) => {
   try {
     for (const [profile, reduced] of [
       ['fpv', false],
-      ['coupa-spend-in-motion-theme', false],
+      ['retro', false],
       ['fpv', true],
     ]) {
       status.textContent = `${profile}: ${reduced ? 'reduced motion' : 'animated'}`;

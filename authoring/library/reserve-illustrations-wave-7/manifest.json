@@ -43,19 +43,6 @@
       "width": 1774,
       "height": 887,
       "runtimeAdopted": false
-    },
-    {
-      "id": "spend-citrus-parcel-hub",
-      "themeId": "coupa",
-      "theme": "Spend Network",
-      "title": "Citrus Parcel Hub",
-      "prompt": "prompts/spend-citrus-parcel-hub.txt",
-      "file": "originals/spend-citrus-parcel-hub.png",
-      "bytes": 1916377,
-      "sha256": "a02df60240645d8a010619ae24e994646f71601cfb754db78d15a875bf301c52",
-      "width": 1774,
-      "height": 887,
-      "runtimeAdopted": false
     }
   ],
   "selectionProvenance": "provenance/originals.json"

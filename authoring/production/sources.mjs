@@ -548,7 +548,7 @@ export async function verifyProductionSources(input, { root, files = false } = {
         cohort.artRoot !== 'authoring/library/sentinel-theme-art' ||
         cohort.provenanceSha256 !==
           declared.get('authoring/library/sentinel-theme-art/provenance.json')?.sha256 ||
-        !['ukraine', 'retro', 'coupa'].includes(w.themeId)
+        !['ukraine', 'retro'].includes(w.themeId)
       )
         throw new Error(t('errors:productionSources.unknownSentinelThemeCohort'));
       const edition = cohort.editions.find((e) => e.themeId === w.themeId);

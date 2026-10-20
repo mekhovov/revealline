@@ -111,7 +111,7 @@ test('an admitted edition launches its current pressure lesson and the actual ch
       assert.equal(url.searchParams.get('guide-seed'), String(run.seed));
       assert.equal(url.searchParams.get('class'), run.classId);
       assert.equal(
-        preview.writes.length,
+        preview.writes.filter(([key]) => key === handoffKey).length,
         0,
         'Edition reconstruction never overwrites the Playground.',
       );
@@ -140,6 +140,7 @@ test('an admitted edition launches its current pressure lesson and the actual ch
       assert.deepEqual(page.rendered.run.classRecipes, options.classRecipes);
       assert.equal(page.$('enemy-workshop-return').textContent, 'Return to field guide');
       page.$('start-button').click();
+      await page.waitUntilRunning('edition guide child');
       page.key('ArrowRight');
       for (let i = 0; i < 30; i++) {
         page.frame();
@@ -363,6 +364,9 @@ async function liveCut(page) {
 function openGuide(page) {
   page.$('overlay-menu').click();
   assert.equal(page.$('shell-home').open, true);
+  page.$('shell-options').click();
+  assert.equal(page.$('settings-dialog').open, true);
+  page.$('settings-tab-extras').click();
   page.$('shell-workshop').focus();
   nativeKey(page, 'Enter');
   assert.equal(page.$('shell-workshop-dialog').open, true);
@@ -395,13 +399,18 @@ function readinessClock(t) {
   let now = Date.now(),
     sequence = 0;
   const callbacks = new Map();
+  const setInterval = globalThis.setInterval,
+    clearInterval = globalThis.clearInterval;
   t.mock.method(Date, 'now', () => now);
   t.mock.method(globalThis, 'setInterval', (callback, delay) => {
+    if (delay !== 250) return setInterval(callback, delay);
     const id = ++sequence;
     callbacks.set(id, { callback, delay });
     return id;
   });
-  t.mock.method(globalThis, 'clearInterval', (id) => callbacks.delete(id));
+  t.mock.method(globalThis, 'clearInterval', (id) => {
+    if (!callbacks.delete(id)) clearInterval(id);
+  });
   return {
     callbacks,
     tick(ms = 250) {
@@ -445,7 +454,15 @@ function bootChild(frame) {
   });
   new Script(readFileSync(new URL('../boot.mjs', import.meta.url), 'utf8')).runInContext(context);
   frame.contentDocument = document;
-  return { document, fail: () => document.emit('DOMContentLoaded') };
+  return {
+    document,
+    fail: async () => {
+      document.emit('DOMContentLoaded');
+      // The access gate resolves before the real boot script mounts.
+      await Promise.resolve();
+      await Promise.resolve();
+    },
+  };
 }
 
 test('confirmed pre-ready practice failure returns controller focus without consuming a held Confirm or changing the exact setup', async (t) => {
@@ -477,10 +494,10 @@ test('confirmed pre-ready practice failure returns controller focus without cons
   ticks(page, 12);
   page.$('pause-button').click();
   page.frame(0);
-  const checkpoint = authoritativeCheckpoint(page.rendered.run),
-    saved = [...page.storage.map],
-    writes = page.storage.writes.length;
+  const checkpoint = authoritativeCheckpoint(page.rendered.run);
   openGuide(page);
+  const saved = [...page.storage.map],
+    writes = page.storage.writes.length;
   page.change('enemy-guide-topic', 'optional-sentry');
   const controls = padBoundary(page, t),
     lesson = await launch(page),
@@ -496,7 +513,7 @@ test('confirmed pre-ready practice failure returns controller focus without cons
   clock.tick(21000);
   assert.equal(page.doc.activeElement, lesson.frame, 'slow loading retains child input ownership');
   assert.equal(page.padReads, reads, 'the parent does not sample a loading child controller');
-  child.fail();
+  await child.fail();
   const detail = child.document.getElementById('boot-detail').textContent;
   assert.match(detail, /renderer is unavailable/);
   assert.equal(child.document.documentElement.dataset.bootState, 'failed');
@@ -554,7 +571,7 @@ test('visible-window blur defers confirmed practice failure focus until a fresh 
   page.doc.focused = false;
   page.win.emit('blur');
   assert.equal(page.doc.hidden, false, 'a visible window can be inactive');
-  child.fail();
+  await child.fail();
   clock.tick();
   assert.match(page.$('enemy-guide-status').textContent, /Practice could not start/);
   assert.equal(
@@ -592,7 +609,7 @@ for (const event of ['pageshow', 'visibilitychange'])
     const lesson = await launch(page),
       child = bootChild(lesson.frame);
     page.doc.focused = false;
-    child.fail();
+    await child.fail();
     clock.tick();
     assert.equal(page.doc.activeElement.id, lesson.frame.id);
     if (event === 'pageshow') page.win.emit('pagehide', { persisted: true });
@@ -628,7 +645,7 @@ for (const changed of [
     const lesson = await launch(page),
       child = bootChild(lesson.frame);
     page.doc.focused = false;
-    child.fail();
+    await child.fail();
     clock.tick();
     assert.equal(page.doc.activeElement.id, lesson.frame.id);
     if (changed === 'newer-focus') {
@@ -676,7 +693,7 @@ test('practice readiness resumes after cached departure and never transfers focu
   assert.equal(queued.length, 1);
   page.win.emit('pagehide', { persisted: true });
   assert.equal(clock.callbacks.size, 0, 'departure retires the timer');
-  child.fail();
+  await child.fail();
   for (const callback of queued) callback();
   assert.equal(page.doc.activeElement, lesson.frame);
   page.doc.hidden = true;
@@ -709,7 +726,7 @@ test('practice readiness preserves user focus and settles at ready without obser
   other.textContent = 'Independent parent control';
   page.$('enemy-guide-practice').append(other);
   other.focus();
-  child.fail();
+  await child.fail();
   clock.tick();
   assert.equal(page.doc.activeElement, other, 'failure does not steal a newer focus choice');
   for (const language of ['uk', 'en']) {
@@ -768,7 +785,7 @@ for (const retired of [
     if (retired === 'disposed') page.win.emit('pagehide', { persisted: false });
     const focus = page.doc.activeElement,
       status = page.$('enemy-guide-status')?.textContent;
-    child.fail();
+    await child.fail();
     for (const callback of queued) callback();
     clock.tick();
     assert.equal(page.doc.activeElement, focus);
@@ -904,14 +921,14 @@ for (const turnPolicy of ['immediate', 'grid-center']) {
     const snapshot = [...storage.map],
       writeCount = storage.writes.length;
     page.change('enemy-guide-topic', 'line-impact');
-    page.change('enemy-guide-theme', 'coupa');
+    page.change('enemy-guide-theme', 'retro');
     assert.match(page.$('enemy-guide-risk').textContent, /costs a life/);
     const controls = padBoundary(page, t);
     const lesson = await launch(page);
     const recipe = JSON.parse(preview.getItem(handoffKey));
     assert.equal(recipe.level.id, 'line-impact-demo');
     assert.equal(recipe.settings.turnPolicy, turnPolicy);
-    assert.equal(recipe.theme.id, 'coupa');
+    assert.equal(recipe.theme.id, 'retro');
     assert.equal(recipe.masteryDefinition, null);
     const reads = page.padReads;
     controls.set(13, true);
@@ -947,6 +964,10 @@ for (const turnPolicy of ['immediate', 'grid-center']) {
     assert.equal(page.$('shell-workshop-dialog').open, false, 'a separate Back leaves Workshop');
     assert.equal(page.$('shell-home').open, true);
     assert.equal(page.doc.activeElement.id, 'shell-workshop');
+    controls.pulse(1);
+    await Promise.resolve();
+    assert.equal(page.$('settings-dialog').open, false, 'a separate Back leaves Settings');
+    assert.equal(page.$('shell-home').open, true);
     controls.pulse(1);
     await Promise.resolve();
     assert.equal(page.$('shell-home').open, false, 'a separate Back leaves Main menu');

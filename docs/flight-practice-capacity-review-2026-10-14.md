@@ -1,5 +1,7 @@
 # Flight practice: retained-version capacity review
 
+> Retained excerpt after an ownership migration. Historical totals and verification statements describe the original scope; this excerpt is not a current release qualification. Original bytes and removed material are preserved separately.
+
 ## Latest deployed-baseline update
 
 The successful main deployment at `1a2e87d50` supplies a complete **920,119,188-byte**
@@ -166,7 +168,6 @@ headers. Source files were not changed and no new image files were written.
 | ---------------------------------------------------------------------------- | -------------: | ---------------------: | --------------: |
 | `game/content-design/assets/team-partners-r1/split-orchards.png`             |      3,110,865 |              3,173,657 |   62,792 larger |
 | `game/editions/assets/discovery/textile-light-diffuse-v1.png`                |      3,333,938 |              2,933,262 | 400,676 smaller |
-| `game/editions/assets/coupa/choose-together-v1.png`                          |      3,209,122 |              3,253,019 |   43,897 larger |
 | `game/ui/art/field-kit/prepared/title-hangar-v1.png`                         |        866,080 |                650,244 | 215,836 smaller |
 | `authoring/library/ukraine-atlas-art/originals/petrykivka-sun-courtyard.png` |      3,286,349 |              3,363,328 |   76,979 larger |
 

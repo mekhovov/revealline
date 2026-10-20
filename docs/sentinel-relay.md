@@ -1,5 +1,7 @@
 # Sentinel Relay
 
+> Retained excerpt after an ownership migration. Historical totals and verification statements describe the original scope; this excerpt is not a current release qualification. Original bytes and removed material are preserved separately.
+
 Sentinel Relay is a one-map, two-stage picture-reveal encounter. Its fictional signal machine changes from horizontal stripes to vertical stripes after you capture its shield relay. The final opening can release the whole remaining picture. It uses the same movement and equipment as other missions.
 
 The [portable pack](../game/content/packs/sentinel-relay.json) includes four existing original procedural themes and seven classes, with no downloaded image or audio files. Its source and ten reusable authoring prompts live in [the authoring folder](../authoring/library/sentinel-relay/README.md). This guide describes the implemented source recipe; browser presentation, native behavior and physical-device evidence belong to the associated release verification, not the route tests below.
@@ -51,7 +53,6 @@ The source's 30/60-second medal thresholds give room beyond the ordinary recorde
 
 ## Reuse or tune the encounter
 
-The source file [`proposedpack-source.json`](../authoring/library/sentinel-relay/proposedpack-source.json) owns the runtime recipe. The name identifies the editable source; the document is a real pack-v3 candidate, not another import format. It includes `fpv`, `ukraine`, `retro` and `coupa` themes without duplicating the map. Change the selected presentation to reuse Ukrainian dawn, heritage ornament, neon arcade or the original business network scene. Existing theme effects are separate from phase state; a theme's labels must not imply different rules or official branding.
 
 Use the ten [finite prompt recipes](../authoring/library/sentinel-relay/prompts.json) for four reskins, a future background proposal, ordinary proofs, missed windows, isolation, save/reskin verification and bounded pacing revision. These are authoring examples, not commands the runtime executes and not new CLI catalog IDs. The background prompt has not been executed; it is not a generated or reviewed asset.
 

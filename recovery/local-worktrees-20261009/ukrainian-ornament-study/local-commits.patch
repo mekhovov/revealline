@@ -21298,7 +21298,7 @@ Restore configured Prettier settings after the disk-exhaustion Git Data API uplo
  30 files changed, 5465 insertions(+), 8810 deletions(-)
 
 diff --git a/game/app.mjs b/game/app.mjs
-index 3b0fee3ed..d716cc1ca 100644
+index 1dae26a8fcd0474c30f917853ac315288f438d87..4fcf5c4a228c22487a775b2a9d45238c9b7fb2a9 100644
 --- a/game/app.mjs
 +++ b/game/app.mjs
 @@ -1,122 +1,94 @@
@@ -21479,7 +21479,7 @@ index 3b0fee3ed..d716cc1ca 100644
  import {
    FIRST_FLIGHT_LESSONS,
    getFirstFlightLesson,
-@@ -124,103 +96,82 @@ import {
+@@ -124,103 +96,82 @@
    createLessonScenario,
    captureLessonFacts,
    createLessonObserver,
@@ -21646,7 +21646,7 @@ index 3b0fee3ed..d716cc1ca 100644
  import {
    emptyLibrary,
    loadLibrary,
-@@ -232,7 +183,7 @@ import {
+@@ -232,7 +183,7 @@
    withMasteryRecords,
    withCinematicVolume,
    DEFAULT_CINEMATIC_VOLUME,
@@ -21655,7 +21655,7 @@ index 3b0fee3ed..d716cc1ca 100644
  import {
    emptyPackLibrary,
    importPackLibrary,
-@@ -240,7 +191,7 @@ import {
+@@ -240,7 +191,7 @@
    preparePack,
    installPack,
    resolvePackCampaign,
@@ -21664,7 +21664,7 @@ index 3b0fee3ed..d716cc1ca 100644
  import {
    canAutoStartPackLaunch,
    canReconcilePackCommit,
-@@ -248,63 +199,45 @@ import {
+@@ -248,63 +199,45 @@
    createPackLaunchGuard,
    preparePackCatalog,
    resolvePackLaunch,
@@ -21752,7 +21752,7 @@ index 3b0fee3ed..d716cc1ca 100644
  
  const $ = (id) => document.getElementById(id),
    show = (id, on) => ($(id).hidden = !on);
-@@ -315,45 +248,33 @@ const getJSON = async (path) => {
+@@ -315,45 +248,33 @@
  };
  const clamp = (n, a, b) => Math.min(b, Math.max(a, n));
  const timeLabel = (time) =>
@@ -21812,7 +21812,7 @@ index 3b0fee3ed..d716cc1ca 100644
    // Guide lessons keep the canonical catalog when a selected pack narrows flight themes.
    const guideThemes = themesFile.themes;
    const characterPresentations = createCharacterPresentations(presets);
-@@ -381,9 +302,7 @@ try {
+@@ -381,9 +302,7 @@
    let chapterSnapshot = null;
    let installedEntries = [baseEntry],
      executionCatalog = createExecutionCatalog(installedEntries),
@@ -21823,7 +21823,7 @@ index 3b0fee3ed..d716cc1ca 100644
    function prepareContentCatalog(nextPacks) {
      const entries = [
        baseEntry,
-@@ -396,10 +315,7 @@ try {
+@@ -396,10 +315,7 @@
          campaign: entry.campaign,
          sourcePackId: entry.sourcePackId,
          ...(entry.sourcePackFormat
@@ -21835,7 +21835,7 @@ index 3b0fee3ed..d716cc1ca 100644
            : {}),
        })),
      );
-@@ -420,87 +336,67 @@ try {
+@@ -420,87 +336,67 @@
    }
    let buildVersion = document.documentElement.dataset.buildVersion;
    let buildSourceRevision = null;
@@ -21945,7 +21945,7 @@ index 3b0fee3ed..d716cc1ca 100644
    let gameplayTuningPanel = null;
    const nextGameplayTuning = (entry = activeEntry) =>
      gameplayTuning.snapshot(
-@@ -513,16 +409,13 @@ try {
+@@ -513,16 +409,13 @@
        ? entry.difficulty[0].toUpperCase() + entry.difficulty.slice(1)
        : legacyDifficultyLabel(entry);
    }
@@ -21965,7 +21965,7 @@ index 3b0fee3ed..d716cc1ca 100644
          })
        : null;
    const journeyCatalog =
-@@ -550,42 +443,37 @@ try {
+@@ -550,42 +443,37 @@
      unifiedDisposed = false,
      journeySkipArmed = null,
      journeyLaunch = null;
@@ -22018,7 +22018,7 @@ index 3b0fee3ed..d716cc1ca 100644
    const libraryKey = `revealline.library.${channel}.v1`;
    const packsKey = `revealline.packs.${channel}.v1`;
    // Candidate saves are revision-pinned and independent of Legacy/release slots.
-@@ -603,41 +491,33 @@ try {
+@@ -603,41 +491,33 @@
          sessionBusy,
          backupBusy,
          persistenceReady,
@@ -22066,7 +22066,7 @@ index 3b0fee3ed..d716cc1ca 100644
    const externalChapters = navigator.locks?.request
      ? createExternalChapterHost({
          profileKey: libraryKey,
-@@ -668,65 +548,52 @@ try {
+@@ -668,65 +548,52 @@
        readAssetStore(`${libraryKey}.backup-journal`),
      ]);
      if (values.some((value) => value !== null))
@@ -22143,7 +22143,7 @@ index 3b0fee3ed..d716cc1ca 100644
        );
      return writeAssetStore(packsKey, value);
    }
-@@ -740,16 +607,12 @@ try {
+@@ -740,16 +607,12 @@
          : writeAssetStore(key, value),
      profileKey: libraryKey,
      packsKey,
@@ -22162,7 +22162,7 @@ index 3b0fee3ed..d716cc1ca 100644
        return saveLibrary(localStorage, libraryKey, next, current.recovery, {
          ...options,
          baseline: libraryBaseline,
-@@ -757,14 +620,11 @@ try {
+@@ -757,14 +620,11 @@
        });
      },
    });
@@ -22179,7 +22179,7 @@ index 3b0fee3ed..d716cc1ca 100644
          throw new Error(
            `Pending ${chapters.reason}; use the exact pilot recovery files. Ambiguous journals were left untouched.`,
          );
-@@ -777,12 +637,7 @@ try {
+@@ -777,12 +637,7 @@
      }
    }
  
@@ -22193,7 +22193,7 @@ index 3b0fee3ed..d716cc1ca 100644
    let storedStateAdopted = false;
    async function readSavedState() {
      const chapters = await checkedChapters();
-@@ -793,9 +648,7 @@ try {
+@@ -793,9 +648,7 @@
        });
        return { content, profile };
      };
@@ -22204,7 +22204,7 @@ index 3b0fee3ed..d716cc1ca 100644
    }
    try {
      const snapshot = await readSavedState();
-@@ -807,7 +660,7 @@ try {
+@@ -807,7 +660,7 @@
      loaded.warning = `Stored collection was not adopted: ${error.message} This session starts with base content; your stored bytes remain untouched.`;
    }
    let libraryBaseline = loaded.library,
@@ -22213,7 +22213,7 @@ index 3b0fee3ed..d716cc1ca 100644
    let library = loaded.library,
      progress = progressFor(library, campaign),
      recovery = loaded.recovery;
-@@ -836,20 +689,12 @@ try {
+@@ -836,20 +689,12 @@
    const modeReturn = createModeReturn({
      storage: returnStorage,
      baseURL: location.href,
@@ -22236,7 +22236,7 @@ index 3b0fee3ed..d716cc1ca 100644
    });
    const returnContext =
      !practiceSession &&
-@@ -857,23 +702,19 @@ try {
+@@ -857,23 +702,19 @@
      !packLaunchRequest &&
      !libraryHandoff &&
      storedStateAdopted
@@ -22264,7 +22264,7 @@ index 3b0fee3ed..d716cc1ca 100644
            // A consumed, source-qualified return restores an exact selectable
            // mission in the unified library. Earned unlocks are not required and
            // no clear is invented; ordinary bookmark/Continue gates stay below.
-@@ -893,11 +734,7 @@ try {
+@@ -893,11 +734,7 @@
          !packLaunchError &&
          storedStateAdopted
        ? resolveSelectionBookmark(selectionBookmark.read().selection, {
@@ -22277,7 +22277,7 @@ index 3b0fee3ed..d716cc1ca 100644
            playable: (entry, index) =>
              difficultyNavigation.playable(
                entry,
-@@ -925,10 +762,8 @@ try {
+@@ -925,10 +762,8 @@
      progress = progressFor(library, campaign);
    }
    if (loaded.warning || packWarning) {
@@ -22290,7 +22290,7 @@ index 3b0fee3ed..d716cc1ca 100644
    }
    const initialSelection = candidateHost
      ? { levelIndex: 0, overview: false }
-@@ -938,8 +773,8 @@ try {
+@@ -938,8 +773,8 @@
    let levelIndex = initialSelection.levelIndex,
      campaignOverview = !scenario && initialSelection.overview,
      theme = themesFile.themes[0],
@@ -22301,7 +22301,7 @@ index 3b0fee3ed..d716cc1ca 100644
      seed = 1,
      bodyId = theme.player,
      run,
-@@ -958,13 +793,13 @@ try {
+@@ -958,13 +793,13 @@
      recordingStopped = false,
      captionUntil = 0,
      runMessageCue = null,
@@ -22317,7 +22317,7 @@ index 3b0fee3ed..d716cc1ca 100644
      appearanceRewardIds = [],
      celebrationActive = false,
      defeatActive = false,
-@@ -980,9 +815,9 @@ try {
+@@ -980,9 +815,9 @@
      courseObserver = null,
      courseUnavailable = null,
      courseView = null,
@@ -22329,7 +22329,7 @@ index 3b0fee3ed..d716cc1ca 100644
      courseEntryHold = false,
      modeDeparture = null,
      missionReplacement = null,
-@@ -1000,12 +835,12 @@ try {
+@@ -1000,12 +835,12 @@
    const worldPlayIntents = new WeakMap();
    const journeyReactions = attachJourneyReactions();
    const flightInformation = attachFlightInformation({
@@ -22345,7 +22345,7 @@ index 3b0fee3ed..d716cc1ca 100644
        captionUntil = (run?.time || 0) + 5;
        return { fullText: message, cue, expiresAt: captionUntil };
      },
-@@ -1019,19 +854,17 @@ try {
+@@ -1019,19 +854,17 @@
        return persistProfile().ok;
      },
      onStatus: (status) => {
@@ -22369,7 +22369,7 @@ index 3b0fee3ed..d716cc1ca 100644
      ) || theme;
    classId = classRegistry.some((c) => c.id === library.preferences.classId)
      ? library.preferences.classId
-@@ -1039,7 +872,7 @@ try {
+@@ -1039,7 +872,7 @@
    turnPolicy = library.preferences.turnPolicy;
    bodyId = library.preferences.bodyId;
    if (candidateHost) {
@@ -22378,7 +22378,7 @@ index 3b0fee3ed..d716cc1ca 100644
      bodyId = theme.player;
    }
    if (courseRequest && !courseRequest.turnPolicy)
-@@ -1064,11 +897,7 @@ try {
+@@ -1064,11 +897,7 @@
        volume: library.preferences.masterVolume,
      },
      writable: () =>
@@ -22391,7 +22391,7 @@ index 3b0fee3ed..d716cc1ca 100644
      onWarning: (message) => {
        if (message) warning(message);
      },
-@@ -1079,13 +908,9 @@ try {
+@@ -1079,13 +908,9 @@
      getStorage: () => localStorage,
      legacyPreferences: library.preferences,
      writable: () =>
@@ -22407,7 +22407,7 @@ index 3b0fee3ed..d716cc1ca 100644
      },
    });
    const stopDisplayView = displayPreferences.subscribe(applyDisplayPreferences);
-@@ -1099,20 +924,16 @@ try {
+@@ -1099,20 +924,16 @@
      window,
      getStorage: () => localStorage,
      writable: () =>
@@ -22432,7 +22432,7 @@ index 3b0fee3ed..d716cc1ca 100644
    });
    let musicPreviewState = null,
      musicPreviewRequest = 0;
-@@ -1129,43 +950,36 @@ try {
+@@ -1129,43 +950,36 @@
      try {
        source = new URL(track?.websites?.[0]?.url ?? track?.rights?.source);
      } catch {}
@@ -22457,12 +22457,13 @@ index 3b0fee3ed..d716cc1ca 100644
          !!source.password;
        if (!website.hidden) website.href = source.href;
 -      else website.removeAttribute("href");
-+      else website.removeAttribute('href');
-     }
+-    }
 -    $("music-preview").textContent = ["blocked", "error"].includes(
 -      musicPreviewState.status,
 -    )
 -      ? "Audio is unavailable"
++      else website.removeAttribute('href');
++    }
 +    $('music-preview').textContent = ['blocked', 'error'].includes(musicPreviewState.status)
 +      ? 'Audio is unavailable'
        : musicPreviewState.playing
@@ -22493,7 +22494,7 @@ index 3b0fee3ed..d716cc1ca 100644
      renderMusicPreview();
    };
    const stopMasterView = audioMaster.subscribe(renderMasterPreferences);
-@@ -1188,7 +1002,7 @@ try {
+@@ -1188,7 +1002,7 @@
      soundtrackLibrary = null,
      soundtrackMenuGesture = false,
      soundtrackLastScene = null,
@@ -22502,7 +22503,7 @@ index 3b0fee3ed..d716cc1ca 100644
    let authoredMusic = null,
      soundtrackGeneration = -1,
      soundtrackDisposed = false;
-@@ -1196,19 +1010,15 @@ try {
+@@ -1196,19 +1010,15 @@
    // This edition explicitly adopts v4. All media adapters share its single ledger;
    // training keeps its existing legacy presentation and never creates picture pins.
    getPictureManager();
@@ -22526,7 +22527,7 @@ index 3b0fee3ed..d716cc1ca 100644
    let flightVisualLease = null,
      freshVisualAttempt = false,
      pictureVisualController = null;
-@@ -1218,66 +1028,53 @@ try {
+@@ -1218,66 +1028,53 @@
      pictureThemePending = null,
      pictureGeneration = 0;
    const picturePreparingMessage =
@@ -22546,8 +22547,7 @@ index 3b0fee3ed..d716cc1ca 100644
      preparationOperation = null;
      preparationFeedback.clear();
 -    $("flight-preparation-cancel").hidden = true;
-+    $('flight-preparation-cancel').hidden = true;
-   }
+-  }
 -  function beginPreparation(
 -    message,
 -    cancel,
@@ -22559,6 +22559,8 @@ index 3b0fee3ed..d716cc1ca 100644
 -      cancel,
 -      result,
 -    };
++    $('flight-preparation-cancel').hidden = true;
++  }
 +  function beginPreparation(message, cancel, stage = 'preparing', result = false) {
 +    const operation = { status: preparationFeedback.begin({ message, stage }), cancel, result };
      preparationOperation = operation;
@@ -22610,7 +22612,7 @@ index 3b0fee3ed..d716cc1ca 100644
    };
    const storyDialog = createStoryDialog({
      audioMaster,
-@@ -1290,7 +1087,7 @@ try {
+@@ -1290,7 +1087,7 @@
      }),
      saveVolume(volume) {
        if (practice || courseEntry)
@@ -22619,7 +22621,7 @@ index 3b0fee3ed..d716cc1ca 100644
        library = withCinematicVolume(library, volume);
        const saved = persistProfile();
        if (!saved.ok) throw new Error(saved.warning);
-@@ -1302,17 +1099,15 @@ try {
+@@ -1302,17 +1099,15 @@
      },
      neutralize: () => clearInput(),
    });
@@ -22643,7 +22645,7 @@ index 3b0fee3ed..d716cc1ca 100644
      try {
        const pins = validateFlightPresentationPinsForRun(flightPictures.pins(), {
          identityCatalog: flightPictures.identityCatalog,
-@@ -1322,21 +1117,10 @@ try {
+@@ -1322,21 +1117,10 @@
        });
        const pin = storyPinForTheme(pins, theme.id),
          backdrop = flightPictures.current();
@@ -22668,7 +22670,7 @@ index 3b0fee3ed..d716cc1ca 100644
        void storyDialog
          .open({
            pin,
-@@ -1344,10 +1128,7 @@ try {
+@@ -1344,10 +1128,7 @@
            drawPoster(canvas) {
              canvas.width = size.width;
              canvas.height = size.height;
@@ -22680,7 +22682,7 @@ index 3b0fee3ed..d716cc1ca 100644
            },
          })
          .catch((error) => notify(error.message));
-@@ -1355,28 +1136,24 @@ try {
+@@ -1355,28 +1136,24 @@
        notify(error.message);
      }
    };
@@ -22719,7 +22721,7 @@ index 3b0fee3ed..d716cc1ca 100644
      return button;
    });
    function clearPictureRecovery() {
-@@ -1384,7 +1161,7 @@ try {
+@@ -1384,7 +1161,7 @@
      for (const button of pictureRecoveryButtons) button.hidden = true;
    }
    async function pictureMedia({ signal } = {}) {
@@ -22728,7 +22730,7 @@ index 3b0fee3ed..d716cc1ca 100644
      return {
        store: pictureStore,
        storyStore,
-@@ -1392,10 +1169,7 @@ try {
+@@ -1392,10 +1169,7 @@
      };
    }
    function pictureIdentity(metadata) {
@@ -22740,7 +22742,7 @@ index 3b0fee3ed..d716cc1ca 100644
    }
    function newFlightPictures({
      nextRun = run,
-@@ -1403,7 +1177,7 @@ try {
+@@ -1403,7 +1177,7 @@
      entry = activeEntry,
      nextThemeId = theme.id,
      pins,
@@ -22749,7 +22751,7 @@ index 3b0fee3ed..d716cc1ca 100644
      explicitLegacy = false,
      candidatePicture = null,
    } = {}) {
-@@ -1412,9 +1186,7 @@ try {
+@@ -1412,9 +1186,7 @@
        ? entry.campaign.levels.find((level) => level.id === nextRun.levelId)
        : nextRun.level;
      if (candidateHost?.owns(entry)) {
@@ -22760,7 +22762,7 @@ index 3b0fee3ed..d716cc1ca 100644
        return createCandidateFlightPictures({
          context: {
            runId: nextRunId,
-@@ -1428,8 +1200,8 @@ try {
+@@ -1428,8 +1200,8 @@
        });
      }
      const authoredBackground =
@@ -22771,7 +22773,7 @@ index 3b0fee3ed..d716cc1ca 100644
        entry.visualOverrides?.background ??
        null;
      return createFlightPictures({
-@@ -1462,18 +1234,14 @@ try {
+@@ -1462,18 +1234,14 @@
              releasePictures.prepareSelection({
                ...options,
                authoredBackground:
@@ -22793,7 +22795,7 @@ index 3b0fee3ed..d716cc1ca 100644
            ? async ({ media, selection, explicitLegacy, signal }) => {
                const checked = await checkedChapters({ signal });
                const original = await externalChapters.authoredPicture(
-@@ -1488,12 +1256,11 @@ try {
+@@ -1488,12 +1256,11 @@
                );
                if (original.metadata.generation !== media.metadata.generation)
                  throw new Error(
@@ -22808,7 +22810,7 @@ index 3b0fee3ed..d716cc1ca 100644
                const library = fallback
                  ? validateMediaLibrary(
                      {
-@@ -1557,7 +1324,7 @@ try {
+@@ -1557,7 +1324,7 @@
        clearPictureRecovery();
        themeFeedback.clear();
      }
@@ -22817,7 +22819,7 @@ index 3b0fee3ed..d716cc1ca 100644
      pictureGeneration++;
      if (pictureResume !== null || retirePrewarm) {
        flightPictures?.cancel();
-@@ -1570,11 +1337,9 @@ try {
+@@ -1570,11 +1337,9 @@
      pictureThemePending = null;
    }
    function pictureFailure(error, notify) {
@@ -22831,7 +22833,7 @@ index 3b0fee3ed..d716cc1ca 100644
      const message = needsWriter
        ? error.message
        : `Picture unavailable: ${error.message} Your flight remains paused. Retry after restoring its original media.`;
-@@ -1582,28 +1347,17 @@ try {
+@@ -1582,28 +1347,17 @@
      // An unjoined prewarm has no launch lease to publish its terminal feedback.
      // Keep other preparation owners in charge of their existing presenter.
      if (pictureResume === null && !preparationOperation && !pictureThemePending)
@@ -22865,7 +22867,7 @@ index 3b0fee3ed..d716cc1ca 100644
      picturePrewarm = prewarm;
      prewarm.promise = owner.ensure(theme.id, {
        onStatus(status) {
-@@ -1614,8 +1368,7 @@ try {
+@@ -1614,8 +1368,7 @@
      });
      void prewarm.promise
        .then(() => {
@@ -22875,7 +22877,7 @@ index 3b0fee3ed..d716cc1ca 100644
        })
        .catch((error) => {
          if (picturePrewarm !== prewarm || owner !== flightPictures) return;
-@@ -1633,15 +1386,13 @@ try {
+@@ -1633,15 +1386,13 @@
    };
    function soundtrackContext() {
      const edition = activeEntry.baseCampaignKey || campaignKey(campaign);
@@ -22896,7 +22898,7 @@ index 3b0fee3ed..d716cc1ca 100644
      return {
        scene: soundtrackScene,
        themeId: theme.id,
-@@ -1671,8 +1422,7 @@ try {
+@@ -1671,8 +1422,7 @@
        const resumed = soundtrackPlayer.resume();
        if (wasListening) return resumed;
      }
@@ -22906,7 +22908,7 @@ index 3b0fee3ed..d716cc1ca 100644
      // Ordinary Resume enables effects but keeps an intentional music-only Pause.
      return sound.enable();
    }
-@@ -1680,13 +1430,13 @@ try {
+@@ -1680,13 +1430,13 @@
      audioPreferences.setMuted(muted);
      // Only explicit player actions mirror the legacy preference. Playback promises never do.
      const saved = preferences({ musicEnabled: !audioMaster.snapshot().muted });
@@ -22922,7 +22924,7 @@ index 3b0fee3ed..d716cc1ca 100644
      return { ok: !warning, warning };
    }
    function suspendAudio() {
-@@ -1694,21 +1444,18 @@ try {
+@@ -1694,21 +1444,18 @@
      if (soundtrackPlayer) soundtrackPlayer.suspend();
      else sound.suspend();
    }
@@ -22949,7 +22951,7 @@ index 3b0fee3ed..d716cc1ca 100644
        soundtrackOperation = null;
      }
    }
-@@ -1720,13 +1467,12 @@ try {
+@@ -1720,13 +1467,12 @@
          catalogue,
          archives: SOUNDTRACK_ARCHIVES,
          readLocal: (hash) => soundtrackAssets.get(hash),
@@ -22967,7 +22969,7 @@ index 3b0fee3ed..d716cc1ca 100644
          );
        soundtrackStore = createSoundtrackStore({ managedStore: pictureManager });
        soundtrackPlayer = createSoundtrackPlayer({
-@@ -1746,7 +1492,7 @@ try {
+@@ -1746,7 +1492,7 @@
                state.preparation?.message ||
                (state.track
                  ? `${state.track.title} · ${state.status}`
@@ -22976,7 +22978,7 @@ index 3b0fee3ed..d716cc1ca 100644
              state.preparation,
            );
          },
-@@ -1766,28 +1512,25 @@ try {
+@@ -1766,28 +1512,25 @@
          readAsset: source.readAsset,
          getContext: soundtrackContext,
          onLibrary: (_library, snapshot) => {
@@ -23011,7 +23013,7 @@ index 3b0fee3ed..d716cc1ca 100644
            preferences({ musicVolume: value });
          },
          onPlayback: () => {
-@@ -1802,23 +1545,16 @@ try {
+@@ -1802,23 +1545,16 @@
        });
        // The studio owns persisted playlist selection. Keep the legacy genre selector
        // only for browsers that cannot attach the file-audio transport.
@@ -23042,7 +23044,7 @@ index 3b0fee3ed..d716cc1ca 100644
            soundtrackLibrary = setCatalogueTracks(
              upgradeSoundtrackLibrary(snapshot.library),
              catalogue.tracks,
-@@ -1830,7 +1566,7 @@ try {
+@@ -1830,7 +1566,7 @@
          } else if (!soundtrackDisposed) {
            const state = soundtrackPlayer.snapshot();
            soundtrackStatus(
@@ -23051,7 +23053,7 @@ index 3b0fee3ed..d716cc1ca 100644
              state.preparation,
            );
          }
-@@ -1850,8 +1586,8 @@ try {
+@@ -1850,8 +1586,8 @@
        publishedAudio.setPlayer(null);
        soundtrackPanel = null;
        sound.resumeMusic();
@@ -23062,7 +23064,7 @@ index 3b0fee3ed..d716cc1ca 100644
        if (!soundtrackDisposed) soundtrackStatus(error.message || String(error));
      }
    }
-@@ -1861,24 +1597,22 @@ try {
+@@ -1861,24 +1597,22 @@
      return {
        dispose: () => presenter.dispose(),
        update(status) {
@@ -23093,7 +23095,7 @@ index 3b0fee3ed..d716cc1ca 100644
    function startRememberedMenuMusic(event) {
      if (
        !event.isTrusted ||
-@@ -1887,25 +1621,18 @@ try {
+@@ -1887,25 +1621,18 @@
        document.hidden ||
        audioMaster.snapshot().muted ||
        guideMusicWasPlaying ||
@@ -23123,7 +23125,7 @@ index 3b0fee3ed..d716cc1ca 100644
      )
        return;
      soundtrackMenuGesture = true;
-@@ -1918,19 +1645,19 @@ try {
+@@ -1918,19 +1645,19 @@
        },
      );
    }
@@ -23150,7 +23152,7 @@ index 3b0fee3ed..d716cc1ca 100644
      },
    });
    // Published presentation is a separate cosmetic release. Loading it never
-@@ -1941,7 +1668,7 @@ try {
+@@ -1941,7 +1668,7 @@
      presentationReady = Promise.resolve(null);
    try {
      presentationHost = createPresentationHost({
@@ -23159,7 +23161,7 @@ index 3b0fee3ed..d716cc1ca 100644
      });
      presentationReady = presentationHost
        .load({ onStatus: presentationFeedback.update })
-@@ -1951,62 +1678,46 @@ try {
+@@ -1951,62 +1678,46 @@
          return snapshot;
        })
        .catch((error) => {
@@ -23233,7 +23235,7 @@ index 3b0fee3ed..d716cc1ca 100644
      );
    }
    function adoptFlightVisualLease(next) {
-@@ -2049,9 +1760,7 @@ try {
+@@ -2049,9 +1760,7 @@
          return store.commit(prepared, options);
        };
        return externalChapters
@@ -23244,7 +23246,7 @@ index 3b0fee3ed..d716cc1ca 100644
          : write();
      },
    });
-@@ -2063,11 +1772,11 @@ try {
+@@ -2063,11 +1772,11 @@
          return picture.visualOverrides.background.dataUrl;
        const original = boardPaintSizeForLevel(picture.level),
          scale = Math.min(320 / original.width, 180 / original.height),
@@ -23258,7 +23260,7 @@ index 3b0fee3ed..d716cc1ca 100644
            theme: picture.theme,
            level: picture.level,
            seed: picture.item.seed ?? 1,
-@@ -2075,21 +1784,21 @@ try {
+@@ -2075,21 +1784,21 @@
            height: canvas.height,
            ...(backdrop ? { image: backdrop.image, fit: backdrop.fit } : {}),
          });
@@ -23284,7 +23286,7 @@ index 3b0fee3ed..d716cc1ca 100644
    const touchPreferences = createTouchPreferences({
      legacy: library.preferences.touchControls,
      onChange: () => {
-@@ -2099,14 +1808,13 @@ try {
+@@ -2099,14 +1808,13 @@
    });
    syncAssistControls();
    refreshTextSize();
@@ -23306,7 +23308,7 @@ index 3b0fee3ed..d716cc1ca 100644
    configureAudio({
      style: library.preferences.musicGenre,
      master: library.preferences.masterVolume,
-@@ -2114,11 +1822,11 @@ try {
+@@ -2114,11 +1822,11 @@
      sfx: library.preferences.sfxVolume,
    });
    if (scenario?.music) assignMusic(scenario.music);
@@ -23320,7 +23322,7 @@ index 3b0fee3ed..d716cc1ca 100644
    }
    const controller = createControllerRouter({
      autoJoin: true,
-@@ -2127,31 +1835,28 @@ try {
+@@ -2127,31 +1835,28 @@
      boostMode: library.preferences.controllerBoostMode,
      ...(controllerPreview ? { readPads: controllerPreview.readPads } : {}),
    });
@@ -23362,7 +23364,7 @@ index 3b0fee3ed..d716cc1ca 100644
    }
    function manualSupplyAvailable() {
      return (
-@@ -2166,7 +1871,7 @@ try {
+@@ -2166,7 +1871,7 @@
        !courseEntry &&
        !campaignOverview &&
        !!run &&
@@ -23371,7 +23373,7 @@ index 3b0fee3ed..d716cc1ca 100644
        run.classRecipes.length > 1 &&
        run.hangars.length > 0
      );
-@@ -2174,7 +1879,7 @@ try {
+@@ -2174,7 +1879,7 @@
    function controllerFlightHint() {
      const b = controllerLabels.flight;
      const actions = arcadeActionCapabilities(run?.level);
@@ -23380,7 +23382,7 @@ index 3b0fee3ed..d716cc1ca 100644
    }
    function refreshControllerPrompts() {
      controllerDeviceId = controllerFrame?.assigned?.id ?? controllerDeviceId;
-@@ -2183,33 +1888,28 @@ try {
+@@ -2183,33 +1888,28 @@
        controllerDeviceId,
      );
      const b = controllerLabels.flight;
@@ -23422,7 +23424,7 @@ index 3b0fee3ed..d716cc1ca 100644
        controller.setBoostMode(library.preferences.controllerBoostMode);
        clearInput();
      }
-@@ -2220,105 +1920,89 @@ try {
+@@ -2220,105 +1920,89 @@
      const dialog = controllerDialog();
      if (dialog) return `modal:${dialog.id}`;
      if (courseBlocked()) return `course:${coursePhase}`;
@@ -23562,7 +23564,7 @@ index 3b0fee3ed..d716cc1ca 100644
          transferCancel &&
          !transferCancel.hidden &&
          !transferCancel.disabled
-@@ -2326,17 +2010,16 @@ try {
+@@ -2326,17 +2010,16 @@
          transferCancel.click();
          return;
        }
@@ -23585,7 +23587,7 @@ index 3b0fee3ed..d716cc1ca 100644
        return;
      }
      const scope = controllerScope();
-@@ -2350,40 +2033,37 @@ try {
+@@ -2350,40 +2033,37 @@
        return;
      }
      if (journeyLaunch && preparationOperation?.result) {
@@ -23639,7 +23641,7 @@ index 3b0fee3ed..d716cc1ca 100644
      getBindings: () => library.preferences.keyboardBindings,
      readControllerCommand: () => controllerFrame?.flight,
      onClear: () => {
-@@ -2394,50 +2074,48 @@ try {
+@@ -2394,50 +2074,48 @@
    function readingPrompt({ scrollable }) {
      const mode = document.body.dataset.inputMode;
      const scroll = !scrollable
@@ -23707,7 +23709,7 @@ index 3b0fee3ed..d716cc1ca 100644
        return (
          controllerDialog() === dialog &&
          (settingsTabOwnsKey(event, dialog) ||
-@@ -2445,16 +2123,13 @@ try {
+@@ -2445,16 +2123,13 @@
        );
      },
      onTabBoundary: ({ backward }) => {
@@ -23726,7 +23728,7 @@ index 3b0fee3ed..d716cc1ca 100644
          backward,
          beforeExit: suspendInteraction,
        });
-@@ -2465,16 +2140,14 @@ try {
+@@ -2465,16 +2140,14 @@
      getDefaultFocus: controllerFocus,
      getReadingPrompt: readingPrompt,
      getControlLabels: () => ({
@@ -23746,7 +23748,7 @@ index 3b0fee3ed..d716cc1ca 100644
      },
      onBack: controllerBack,
      onMenu: () => {
-@@ -2483,12 +2156,12 @@ try {
+@@ -2483,12 +2156,12 @@
          !dialogOpen() &&
          started &&
          paused &&
@@ -23761,20 +23763,20 @@ index 3b0fee3ed..d716cc1ca 100644
        controllerReading?.hint(message);
      },
      onReadingChange: (state) => controllerReading?.changed(state),
-@@ -2496,18 +2169,13 @@ try {
+@@ -2496,18 +2169,13 @@
    controllerReading = attachControllerReading({
      compactOverlay: !courseSession,
      additionalSurfaces: [
 -      ["help-reading", "help-read", "How to play", "help-reading-unit"],
--      [
++      ['help-reading', 'help-read', 'How to play', 'help-reading-unit'],
++      ['flight-details-reading', 'flight-details-read', 'Field details', 'flight-details-unit'],
+       [
 -        "flight-details-reading",
 -        "flight-details-read",
 -        "Field details",
 -        "flight-details-unit",
 -      ],
-+      ['help-reading', 'help-read', 'How to play', 'help-reading-unit'],
-+      ['flight-details-reading', 'flight-details-read', 'Field details', 'flight-details-unit'],
-       [
+-      [
 -        "collection-reading",
 -        "collection-read",
 -        "Achievements and appearances",
@@ -23786,7 +23788,7 @@ index 3b0fee3ed..d716cc1ca 100644
        ],
      ],
      getNavigation: () => controllerNavigation,
-@@ -2527,42 +2195,39 @@ try {
+@@ -2527,42 +2195,39 @@
        paused &&
        !courseBlocked() &&
        !campaignOverview &&
@@ -23837,7 +23839,7 @@ index 3b0fee3ed..d716cc1ca 100644
          objectiveLabel: theme.labels.objective,
          actorRoles: [...roles].map(([type, count]) => ({ type, count })),
          actions,
-@@ -2578,33 +2243,25 @@ try {
+@@ -2578,33 +2243,25 @@
      getPresentation: () => presentationSnapshot,
      getThemeId: () => theme.id,
      getTurnPolicy: () => turnPolicy,
@@ -23876,7 +23878,7 @@ index 3b0fee3ed..d716cc1ca 100644
      pause(true);
      enemyGuide.open();
    };
-@@ -2617,7 +2274,7 @@ try {
+@@ -2617,7 +2274,7 @@
      if (courseEntry) cancelCourseEntry();
      cancelModeDeparture({ close: true });
      cancelMissionReplacement();
@@ -23885,7 +23887,7 @@ index 3b0fee3ed..d716cc1ca 100644
      optionalWorlds?.close(false);
      invalidateContentSwitch();
      pause(true);
-@@ -2638,8 +2295,8 @@ try {
+@@ -2638,8 +2295,8 @@
        touchPreferences.destroy();
        flightDetails.dispose();
        flightInformation.dispose();
@@ -23896,7 +23898,7 @@ index 3b0fee3ed..d716cc1ca 100644
        journeyReactions.dispose();
        soundtrackDisposed = true;
        soundtrackLoad.abort();
-@@ -2669,11 +2326,10 @@ try {
+@@ -2669,11 +2326,10 @@
        journeyPreferences?.dispose();
        gameplayTuningPanel?.dispose();
        gameplayTuning.dispose();
@@ -23910,7 +23912,7 @@ index 3b0fee3ed..d716cc1ca 100644
        sessionPictures.dispose();
        pictureStore?.close();
        storyStore?.close();
-@@ -2702,48 +2358,43 @@ try {
+@@ -2702,48 +2358,43 @@
        missionReplacementFocusClearance?.destroy();
      }
    };
@@ -23980,7 +23982,7 @@ index 3b0fee3ed..d716cc1ca 100644
    }
    const keySettings = attachKeySettings({
      continuousSteering: true,
-@@ -2755,7 +2406,7 @@ try {
+@@ -2755,7 +2406,7 @@
          : {
              ok: false,
              warning:
@@ -23989,7 +23991,7 @@ index 3b0fee3ed..d716cc1ca 100644
            };
      },
      onChanged: () => {
-@@ -2765,7 +2416,7 @@ try {
+@@ -2765,7 +2416,7 @@
    });
    const controllerSettings = attachControllerSettings({
      continuousSteering: true,
@@ -23998,7 +24000,7 @@ index 3b0fee3ed..d716cc1ca 100644
      getBindings: () => library.preferences.controllerBindings,
      onBeforeEdit: () => keySettings.refresh(),
      onApply: (value) => {
-@@ -2778,16 +2429,16 @@ try {
+@@ -2778,16 +2429,16 @@
          : {
              ok: false,
              warning:
@@ -24020,7 +24022,7 @@ index 3b0fee3ed..d716cc1ca 100644
      storageRetention.close();
      if (!event.persisted) {
        storageRetention.destroy();
-@@ -2797,8 +2448,8 @@ try {
+@@ -2797,8 +2448,8 @@
      }
    });
    controllerBoostSettings = attachControllerBoostSettings({
@@ -24031,7 +24033,7 @@ index 3b0fee3ed..d716cc1ca 100644
      getMode: () => library.preferences.controllerBoostMode,
      applyMode: (mode) => {
        pause(true);
-@@ -2807,10 +2458,7 @@ try {
+@@ -2807,10 +2458,7 @@
        return saved;
      },
    });
@@ -24043,7 +24045,7 @@ index 3b0fee3ed..d716cc1ca 100644
      pendingAction = false;
      pendingPickup = false;
      pendingSwitch = null;
-@@ -2823,32 +2471,28 @@ try {
+@@ -2823,32 +2471,28 @@
    }
    function courseBlocked() {
      return (
@@ -24086,7 +24088,7 @@ index 3b0fee3ed..d716cc1ca 100644
        embedded: courseEmbedded,
        entry: {
          available: !practice && !courseSession && !started && !courseEntry,
-@@ -2860,42 +2504,36 @@ try {
+@@ -2860,42 +2504,36 @@
      if (!courseSession) return;
      // Ended/transitioning embedded courses retain only their terminal reader.
      if (controllerShellBar) controllerShellBar.hidden = courseBlocked();
@@ -24148,7 +24150,7 @@ index 3b0fee3ed..d716cc1ca 100644
      };
    }
    function stopCourseGuidance() {
-@@ -2905,14 +2543,11 @@ try {
+@@ -2905,14 +2543,11 @@
          steps: [],
        }),
        available: false,
@@ -24165,7 +24167,7 @@ index 3b0fee3ed..d716cc1ca 100644
      if (!courseEntry) return;
      courseEntry.controller.abort();
      courseEntry = null;
-@@ -2945,11 +2580,10 @@ try {
+@@ -2945,11 +2580,10 @@
      clearInput();
      paused = true;
      sound.pause();
@@ -24180,7 +24182,7 @@ index 3b0fee3ed..d716cc1ca 100644
      const assertCurrent = () => {
        if (
          courseEntry !== ticket ||
-@@ -2960,13 +2594,10 @@ try {
+@@ -2960,13 +2594,10 @@
          campaign !== ticket.campaign ||
          libraryGeneration !== ticket.generation
        )
@@ -24196,7 +24198,7 @@ index 3b0fee3ed..d716cc1ca 100644
          await retainFlightForFirstFlight({
            run,
            recorder,
-@@ -2977,12 +2608,8 @@ try {
+@@ -2977,12 +2608,8 @@
            runId,
            continuation: { direction: input.snapshotDirection() },
            presentationPins: flightPictures?.pins(),
@@ -24211,7 +24213,7 @@ index 3b0fee3ed..d716cc1ca 100644
            mediaIdentityCatalog: flightPictures?.identityCatalog,
            storage: localStorage,
            sessionKey,
-@@ -2994,15 +2621,11 @@ try {
+@@ -2994,15 +2621,11 @@
                recovery !== null ||
                (await readAssetStore(journalKey)) !== null
              )
@@ -24229,7 +24231,7 @@ index 3b0fee3ed..d716cc1ca 100644
              return navigator.locks.request(
                `${libraryKey}.backup-lock`,
                { signal: ticket.controller.signal },
-@@ -3018,10 +2641,10 @@ try {
+@@ -3018,10 +2641,10 @@
          });
        }
        assertCurrent();
@@ -24244,19 +24246,21 @@ index 3b0fee3ed..d716cc1ca 100644
        // Navigation lifecycle callbacks must not autosave again after the checked
        // handoff. Only an explicit resume/new attempt releases this save hold.
        location.assign(target.href);
-@@ -3032,45 +2655,41 @@ try {
+@@ -3032,45 +2655,41 @@
        courseEntryMessage = `${error.message} Your flight remains paused here. You can return to it or use its export controls.`;
        clearInput();
        refreshCourse();
 -      $("first-flight-help-enter").focus({ preventScroll: true });
-+      $('first-flight-help-enter').focus({ preventScroll: true });
-     }
-   }
+-    }
+-  }
 -  const catalogueHref = authoredRoute ? "./?journey=legacy" : "./";
 -  const catalogueLabel = authoredRoute ? "Legacy missions" : "New Journey";
 -  const librarySourceReturn = readMissionLibraryReturn(params, {
 -    mode: "solo",
 -  });
++      $('first-flight-help-enter').focus({ preventScroll: true });
++    }
++  }
 +  const catalogueHref = authoredRoute ? './?journey=legacy' : './';
 +  const catalogueLabel = authoredRoute ? 'Legacy missions' : 'New Journey';
 +  const librarySourceReturn = readMissionLibraryReturn(params, { mode: 'solo' });
@@ -24311,7 +24315,7 @@ index 3b0fee3ed..d716cc1ca 100644
    const currentAuthoredModeRoute = () =>
      candidateHost?.owns(activeEntry) ? authoredRoute.id : null;
    const modeDestination = (ticket) =>
-@@ -3080,21 +2699,20 @@ try {
+@@ -3080,21 +2699,20 @@
      modeDestinations[ticket.kind];
    function syncAuthoredModeLinks() {
      const href =
@@ -24341,7 +24345,7 @@ index 3b0fee3ed..d716cc1ca 100644
                selection: ticket.selection,
              })
            : modeReturn.prepare(ticket.selection);
-@@ -3102,62 +2720,51 @@ try {
+@@ -3102,62 +2720,51 @@
          token: prepared.token,
          href: missionLibraryHref({
            baseURL: location.href,
@@ -24418,7 +24422,7 @@ index 3b0fee3ed..d716cc1ca 100644
        !document.hidden &&
        document.hasFocus?.() !== false
      ) {
-@@ -3166,7 +2773,7 @@ try {
+@@ -3166,7 +2773,7 @@
      }
      if (
        restore &&
@@ -24427,7 +24431,7 @@ index 3b0fee3ed..d716cc1ca 100644
        !document.hidden &&
        document.hasFocus?.() !== false &&
        availableFocusTarget(ticket.opener)
-@@ -3187,10 +2794,9 @@ try {
+@@ -3187,10 +2794,9 @@
        document.hasFocus?.() === false ||
        modeDeparture !== ticket ||
        ticket.controller.signal.aborted ||
@@ -24440,7 +24444,7 @@ index 3b0fee3ed..d716cc1ca 100644
        run !== ticket.run ||
        recorder !== ticket.recorder ||
        runId !== ticket.runId ||
-@@ -3205,18 +2811,18 @@ try {
+@@ -3205,18 +2811,18 @@
    }
    function modeDepartureMessage(ticket) {
      const flight = !ticket.unfinished
@@ -24468,7 +24472,7 @@ index 3b0fee3ed..d716cc1ca 100644
                ? `Back from ${modeLabel(ticket.kind)} opens Solo’s title; it does not resume a flight.`
                : ticket.fallback
                  ? `Return context is unavailable. Back from ${modeLabel(ticket.kind)} will open Solo’s title.`
-@@ -3224,7 +2830,7 @@ try {
+@@ -3224,7 +2830,7 @@
      }`;
    }
    function unfinishedFlight() {
@@ -24477,7 +24481,7 @@ index 3b0fee3ed..d716cc1ca 100644
    }
    async function retainNavigationFlight(ticket, assertCurrent, onProgress) {
      const retained = await retainFlightForFirstFlight({
-@@ -3237,9 +2843,7 @@ try {
+@@ -3237,9 +2843,7 @@
        runId,
        continuation: { direction: input.snapshotDirection() },
        presentationPins: flightPictures?.pins(),
@@ -24488,12 +24492,13 @@ index 3b0fee3ed..d716cc1ca 100644
        ...(flightVisualLease ? { visualThemePin: flightVisualLease.pin() } : {}),
        mediaIdentityCatalog: flightPictures?.identityCatalog,
        storage: localStorage,
-@@ -3251,20 +2855,14 @@ try {
+@@ -3251,20 +2855,14 @@
          const currentSaved = localStorage.getItem(sessionKey);
          if (currentSaved !== null && currentSaved !== lastOwnedAttempt)
            throw new Error(
 -            "The saved flight is not this tab’s last verified save. Its bytes were kept.",
--          );
++            'The saved flight is not this tab’s last verified save. Its bytes were kept.',
+           );
 -        if (
 -          !storedStateAdopted ||
 -          recovery !== null ||
@@ -24501,8 +24506,7 @@ index 3b0fee3ed..d716cc1ca 100644
 -        )
 -          throw new Error(
 -            "Stored data needs recovery before this flight can be retained.",
-+            'The saved flight is not this tab’s last verified save. Its bytes were kept.',
-           );
+-          );
 +        if (!storedStateAdopted || recovery !== null || (await readAssetStore(journalKey)) !== null)
 +          throw new Error('Stored data needs recovery before this flight can be retained.');
        },
@@ -24513,7 +24517,7 @@ index 3b0fee3ed..d716cc1ca 100644
          return navigator.locks.request(
            `${libraryKey}.backup-lock`,
            { signal: ticket.controller.signal },
-@@ -3276,9 +2874,7 @@ try {
+@@ -3276,9 +2874,7 @@
      assertCurrent();
      const raw = localStorage.getItem(sessionKey);
      if (!attemptReadbackMatches(raw, retained.session))
@@ -24524,7 +24528,7 @@ index 3b0fee3ed..d716cc1ca 100644
      ticket.savedRaw = raw;
      lastOwnedAttempt = raw;
    }
-@@ -3286,12 +2882,7 @@ try {
+@@ -3286,12 +2882,7 @@
      kind,
      event,
      opener,
@@ -24538,7 +24542,7 @@ index 3b0fee3ed..d716cc1ca 100644
    ) {
      if (
        event.defaultPrevented ||
-@@ -3305,15 +2896,14 @@ try {
+@@ -3305,15 +2896,14 @@
      event.preventDefault();
      if (!Object.hasOwn(modeDestinations, kind)) return;
      if (
@@ -24558,7 +24562,7 @@ index 3b0fee3ed..d716cc1ca 100644
      )
        return;
      if (
-@@ -3330,9 +2920,7 @@ try {
+@@ -3330,9 +2920,7 @@
        pictureThemePending ||
        backupBusy
      ) {
@@ -24569,7 +24573,7 @@ index 3b0fee3ed..d716cc1ca 100644
        return false;
      }
      const ticket = {
-@@ -3352,17 +2940,14 @@ try {
+@@ -3352,17 +2940,14 @@
        libraryTarget,
        libraryMode,
        libraryHref:
@@ -24591,7 +24595,7 @@ index 3b0fee3ed..d716cc1ca 100644
              })
            : null,
        unfinished: unfinishedFlight(),
-@@ -3371,15 +2956,13 @@ try {
+@@ -3371,15 +2956,13 @@
        pending: true,
      };
      modeDeparture = ticket;
@@ -24609,7 +24613,7 @@ index 3b0fee3ed..d716cc1ca 100644
        }
        return;
      }
-@@ -3393,29 +2976,26 @@ try {
+@@ -3393,29 +2976,26 @@
          return;
        } catch {
          if (prepared) clearModeHint(ticket);
@@ -24649,7 +24653,7 @@ index 3b0fee3ed..d716cc1ca 100644
        return;
      }
      try {
-@@ -3425,7 +3005,7 @@ try {
+@@ -3425,7 +3005,7 @@
            () => modeDepartureCurrent(ticket),
            ({ ticks, total }) => {
              if (modeDeparture === ticket)
@@ -24658,7 +24662,7 @@ index 3b0fee3ed..d716cc1ca 100644
                  `Verifying your saved flight: ${ticks} / ${total} ticks. Stay cancels waiting.`;
            },
          );
-@@ -3438,21 +3018,18 @@ try {
+@@ -3438,21 +3018,18 @@
      }
      if (modeDeparture !== ticket) return;
      ticket.pending = false;
@@ -24688,7 +24692,7 @@ index 3b0fee3ed..d716cc1ca 100644
      const ticket = modeDeparture;
      if (!ticket || ticket.pending) return;
      if (document.hidden || document.hasFocus?.() === false) {
-@@ -3465,17 +3042,17 @@ try {
+@@ -3465,17 +3042,17 @@
          try {
            assertWriter();
            if (localStorage.getItem(sessionKey) !== ticket.savedRaw)
@@ -24710,7 +24714,7 @@ index 3b0fee3ed..d716cc1ca 100644
          try {
            const prepared = prepareModeHint(ticket);
            ticket.token = prepared.token;
-@@ -3490,8 +3067,7 @@ try {
+@@ -3490,8 +3067,7 @@
        location.href = destination;
      } catch (error) {
        clearModeHint(ticket);
@@ -24720,20 +24724,21 @@ index 3b0fee3ed..d716cc1ca 100644
      }
    };
    function cancelMissionReplacement() {
-@@ -3525,60 +3101,40 @@ try {
+@@ -3525,60 +3101,40 @@
              ticket.targetIdentity)) ||
        canonicalJSON(modeSelection()) !== canonicalJSON(ticket.selection)
      )
 -      throw new Error(
 -        "The flight or available missions changed. Stay here and choose again.",
 -      );
-+      throw new Error('The flight or available missions changed. Stay here and choose again.');
-   }
+-  }
 -  const libraryLaunchKinds = new Set([
 -    "library-installed",
 -    "library-challenge",
 -    "library-picture",
 -  ]);
++      throw new Error('The flight or available missions changed. Stay here and choose again.');
++  }
 +  const libraryLaunchKinds = new Set(['library-installed', 'library-challenge', 'library-picture']);
    const isLibraryRequest = (request) => libraryLaunchKinds.has(request.kind);
    function requestLibraryLaunch(descriptor, launch) {
@@ -24795,7 +24800,7 @@ index 3b0fee3ed..d716cc1ca 100644
      const intent = {
        epoch: ++worldPlayEpoch,
        launch,
-@@ -3650,8 +3206,8 @@ try {
+@@ -3650,8 +3206,8 @@
        pictureThemePending
      )
        throw new DOMException(
@@ -24806,7 +24811,7 @@ index 3b0fee3ed..d716cc1ca 100644
        );
      return intent;
    }
-@@ -3661,13 +3217,11 @@ try {
+@@ -3661,13 +3217,11 @@
    ) {
      assertWorldPlay(launch);
      if (signal?.aborted || (pack !== null && !packs.packs.includes(pack)))
@@ -24823,7 +24828,7 @@ index 3b0fee3ed..d716cc1ca 100644
        id: campaignKey(entry.campaign),
        sourcePackId: pack?.id ?? null,
        pack,
-@@ -3678,24 +3232,20 @@ try {
+@@ -3678,24 +3232,20 @@
        ...(levelId !== undefined ? { levelId } : {}),
        ...(levelRevision !== undefined ? { levelRevision } : {}),
      };
@@ -24853,7 +24858,7 @@ index 3b0fee3ed..d716cc1ca 100644
            launch.isCurrent,
          );
      }
-@@ -3714,11 +3264,9 @@ try {
+@@ -3714,11 +3264,9 @@
      pictures?.dispose();
    }
    function worldAttemptCurrent(ticket) {
@@ -24867,7 +24872,7 @@ index 3b0fee3ed..d716cc1ca 100644
        if (ticket.replacement) missionReplacementCurrent(ticket.replacement);
        else if (missionReplacement) return false;
        const backupLock = localStorage.getItem(`${libraryKey}.backup-lock`);
-@@ -3745,21 +3293,17 @@ try {
+@@ -3745,21 +3293,17 @@
        backgrounds: candidate.campaign.levels.map((level) => ({
          id: level.id,
          background:
@@ -24894,7 +24899,7 @@ index 3b0fee3ed..d716cc1ca 100644
          continue;
        for (const theme of entry.themes) {
          if (!other.themes.some((item) => item.id === theme.id)) continue;
-@@ -3768,7 +3312,7 @@ try {
+@@ -3768,7 +3312,7 @@
            canonicalJSON(presentation(other, theme.id))
          )
            throw new Error(
@@ -24903,7 +24908,7 @@ index 3b0fee3ed..d716cc1ca 100644
            );
        }
      }
-@@ -3778,36 +3322,22 @@ try {
+@@ -3778,36 +3322,22 @@
      if (worldAttempt) return false;
      const target = resolveMissionRequest(request);
      assertWorldArtworkOwner(target.entry);
@@ -24946,7 +24951,7 @@ index 3b0fee3ed..d716cc1ca 100644
      const ticket = {
        request,
        intent,
-@@ -3822,16 +3352,13 @@ try {
+@@ -3822,16 +3352,13 @@
      const cancel = () => {
        if (worldAttempt === ticket) cancelWorldAttempt();
      };
@@ -24967,7 +24972,7 @@ index 3b0fee3ed..d716cc1ca 100644
          );
      };
      try {
-@@ -3841,7 +3368,7 @@ try {
+@@ -3841,7 +3368,7 @@
            ticket.controller.signal.aborted ||
            assertWorldPlay(request.launch) !== intent
          )
@@ -24976,7 +24981,7 @@ index 3b0fee3ed..d716cc1ca 100644
        };
        assertOwner();
        ticket.backupLock = localStorage.getItem(`${libraryKey}.backup-lock`);
-@@ -3849,19 +3376,12 @@ try {
+@@ -3849,19 +3376,12 @@
        ticket.savedRaw = localStorage.getItem(sessionKey);
        assertOwner();
        assertCurrent();
@@ -25000,7 +25005,7 @@ index 3b0fee3ed..d716cc1ca 100644
        const nextRecorder = createRecorder(nextRun.level, options, buildVersion);
        ticket.pictures = newFlightPictures({
          nextRun,
-@@ -3881,18 +3401,13 @@ try {
+@@ -3881,18 +3401,13 @@
            ),
        });
        assertCurrent();
@@ -25024,7 +25029,7 @@ index 3b0fee3ed..d716cc1ca 100644
          ticket,
          entry,
          levelIndex: destinationIndex,
-@@ -3906,14 +3421,14 @@ try {
+@@ -3906,14 +3421,14 @@
        const adopted = prepare({ preparedAttempt });
        if (!adopted)
          throw new DOMException(
@@ -25042,7 +25047,7 @@ index 3b0fee3ed..d716cc1ca 100644
            true,
          );
          throw new Error(
-@@ -3922,7 +3437,7 @@ try {
+@@ -3922,7 +3437,7 @@
        }
        throw error;
      } finally {
@@ -25051,7 +25056,7 @@ index 3b0fee3ed..d716cc1ca 100644
        if (worldAttempt === ticket) worldAttempt = null;
        ticket.visuals?.release();
        ticket.visuals = null;
-@@ -3957,7 +3472,7 @@ try {
+@@ -3957,7 +3472,7 @@
        storedStateAdopted === intent.storedStateAdopted &&
        !started &&
        paused &&
@@ -25060,7 +25065,7 @@ index 3b0fee3ed..d716cc1ca 100644
        !practice &&
        !scenario &&
        !courseBlocked() &&
-@@ -3982,54 +3497,47 @@ try {
+@@ -3982,54 +3497,47 @@
      if (
        !entry ||
        !launch ||
@@ -25128,7 +25133,7 @@ index 3b0fee3ed..d716cc1ca 100644
        const selection = {
          packs,
          pack: request.pack,
-@@ -4039,7 +3547,7 @@ try {
+@@ -4039,7 +3547,7 @@
          levelRevision: request.levelRevision,
        };
        if (request.pack === null && request.baseEntry !== baseEntry)
@@ -25137,7 +25142,7 @@ index 3b0fee3ed..d716cc1ca 100644
        const target =
          request.pack === null
            ? resolveCampaignMissionTarget({ ...selection, entry: baseEntry })
-@@ -4053,19 +3561,14 @@ try {
+@@ -4053,19 +3561,14 @@
            (target.levelIndex === null || levelIndex === target.levelIndex),
        };
      }
@@ -25161,7 +25166,7 @@ index 3b0fee3ed..d716cc1ca 100644
          title: entry.campaign.title || entry.campaign.name || entry.campaign.id,
          entry,
          identity: {
-@@ -4075,35 +3578,23 @@ try {
+@@ -4075,35 +3578,23 @@
          },
        };
      }
@@ -25206,7 +25211,7 @@ index 3b0fee3ed..d716cc1ca 100644
        const options = {
          levelId: item.levelId,
          themeId: item.themeId,
-@@ -4123,63 +3614,51 @@ try {
+@@ -4123,63 +3614,51 @@
          },
        };
      }
@@ -25219,9 +25224,10 @@ index 3b0fee3ed..d716cc1ca 100644
 -        same: courseRequest.lessonId === lesson.id,
 -        title: lesson.title,
 -      };
-+      return { same: courseRequest.lessonId === lesson.id, title: lesson.title };
-     }
+-    }
 -    if (request.kind === "class") {
++      return { same: courseRequest.lessonId === lesson.id, title: lesson.title };
++    }
 +    if (request.kind === 'class') {
        const recipe = (scenario?.classRecipes || classRegistry).find(
          (item) => item.id === request.id,
@@ -25232,12 +25238,13 @@ index 3b0fee3ed..d716cc1ca 100644
 -        same: classId === request.id,
 -        title: `Starting class: ${recipe.label}`,
 -      };
-+      if (courseSession || !recipe) throw new Error('That starting class is unavailable.');
-+      return { same: classId === request.id, title: `Starting class: ${recipe.label}` };
-     }
+-    }
 -    if (request.kind === "steering") {
 -      if (!["immediate", "grid-center"].includes(request.id))
 -        throw new Error("That steering policy is unavailable.");
++      if (courseSession || !recipe) throw new Error('That starting class is unavailable.');
++      return { same: classId === request.id, title: `Starting class: ${recipe.label}` };
++    }
 +    if (request.kind === 'steering') {
 +      if (!['immediate', 'grid-center'].includes(request.id))
 +        throw new Error('That steering policy is unavailable.');
@@ -25289,7 +25296,7 @@ index 3b0fee3ed..d716cc1ca 100644
        return {
          same: request.id
            ? activeEntry.sourcePackId === request.id
-@@ -4191,37 +3670,34 @@ try {
+@@ -4191,37 +3670,34 @@
            baseEntry.campaign.id,
        };
      }
@@ -25334,7 +25341,7 @@ index 3b0fee3ed..d716cc1ca 100644
        if (ticket) ticket.installing = true;
        return activatePack(request.id, {
          preserveCurrentRun: !!ticket,
-@@ -4230,45 +3706,40 @@ try {
+@@ -4230,45 +3706,40 @@
            : undefined,
        });
      }
@@ -25395,7 +25402,7 @@ index 3b0fee3ed..d716cc1ca 100644
          true,
        );
        refreshContentSelectors();
-@@ -4308,7 +3779,7 @@ try {
+@@ -4308,7 +3779,7 @@
      if (!unfinishedFlight()) {
        if (launch && target.same) return false;
        const selected = await applyMissionRequest(request);
@@ -25404,7 +25411,7 @@ index 3b0fee3ed..d716cc1ca 100644
        else if (selected && launch?.isCurrent()) launch.onSelected();
        return selected;
      }
-@@ -4318,12 +3789,12 @@ try {
+@@ -4318,12 +3789,12 @@
      if (practice && !setup && !launch) return applyMissionRequest(request);
      const ticket = {
        request:
@@ -25419,7 +25426,7 @@ index 3b0fee3ed..d716cc1ca 100644
                  ? { recordIdentity: request.recordIdentity }
                  : {}),
              },
-@@ -4352,27 +3823,27 @@ try {
+@@ -4352,27 +3823,27 @@
      };
      missionReplacement = ticket;
      modeDepartureHold = true;
@@ -25464,7 +25471,7 @@ index 3b0fee3ed..d716cc1ca 100644
      try {
        if (!ticket.sessionOnly)
          await retainNavigationFlight(
-@@ -4380,42 +3851,34 @@ try {
+@@ -4380,42 +3851,34 @@
            () => missionReplacementCurrent(ticket),
            ({ ticks, total }) => {
              if (missionReplacement === ticket)
@@ -25516,7 +25523,7 @@ index 3b0fee3ed..d716cc1ca 100644
      const ticket = missionReplacement;
      if (!ticket || ticket.pending) return;
      try {
-@@ -4425,10 +3888,10 @@ try {
+@@ -4425,10 +3888,10 @@
          try {
            assertWriter();
            if (localStorage.getItem(sessionKey) !== ticket.savedRaw)
@@ -25529,7 +25536,7 @@ index 3b0fee3ed..d716cc1ca 100644
            missionReplacementMessage(ticket);
            return;
          }
-@@ -4439,86 +3902,72 @@ try {
+@@ -4439,86 +3902,72 @@
        if (
          !document.hidden &&
          document.hasFocus() &&
@@ -25643,7 +25650,7 @@ index 3b0fee3ed..d716cc1ca 100644
      if (index + 1 < FIRST_FLIGHT_LESSONS.length)
        selectCourseLesson(FIRST_FLIGHT_LESSONS[index + 1].id);
      else leaveCourse();
-@@ -4533,48 +3982,48 @@ try {
+@@ -4533,48 +3982,48 @@
      defeatPaused = false;
      defeatRemaining = 0;
      painter.skipCelebration?.();
@@ -25717,7 +25724,7 @@ index 3b0fee3ed..d716cc1ca 100644
          } catch {}
        }
      }
-@@ -4582,17 +4031,11 @@ try {
+@@ -4582,17 +4031,11 @@
        ...activeEntry,
        campaign: activeEntry.baseCampaign || activeEntry.campaign,
      };
@@ -25737,7 +25744,7 @@ index 3b0fee3ed..d716cc1ca 100644
      );
    }
    function executionEntries() {
-@@ -4614,9 +4057,7 @@ try {
+@@ -4614,9 +4057,7 @@
        const completed = campaign.levels.filter(
          (_, index) => clears[journeyMission(activeEntry, index)?.id],
        ).length;
@@ -25748,7 +25755,7 @@ index 3b0fee3ed..d716cc1ca 100644
        return {
          levelIndex: index < 0 ? 0 : index,
          overview: false,
-@@ -4625,12 +4066,7 @@ try {
+@@ -4625,12 +4066,7 @@
          total: campaign.levels.length,
        };
      }
@@ -25762,7 +25769,7 @@ index 3b0fee3ed..d716cc1ca 100644
    }
    function missionAvailable(index, entry = activeEntry) {
      if (journeyEnabled && journeyMission(entry, index)) return true;
-@@ -4656,11 +4092,7 @@ try {
+@@ -4656,11 +4092,7 @@
      );
    }
    function currentAppearanceMilestones() {
@@ -25775,7 +25782,7 @@ index 3b0fee3ed..d716cc1ca 100644
    }
    function executionForEntry(entry, mode) {
      // Candidate editions are owned by their shared compiler, not the installed
-@@ -4668,17 +4100,14 @@ try {
+@@ -4668,17 +4100,14 @@
      if (candidateHost?.owns(entry))
        return candidateHost.select(candidateHost.mission(entry, 0), mode);
      const baseKey = entry.baseCampaignKey || campaignKey(entry.campaign);
@@ -25795,7 +25802,7 @@ index 3b0fee3ed..d716cc1ca 100644
      // Equal simulation identities may belong to different packs with distinct
      // presentation metadata. A difficulty projection must retain this owner.
      const shared = executionCatalog.select(baseKey, mode);
-@@ -4694,7 +4123,7 @@ try {
+@@ -4694,7 +4123,7 @@
        );
        campaign = activeEntry.campaign;
        classRegistry = activeEntry.classRecipes;
@@ -25804,7 +25811,7 @@ index 3b0fee3ed..d716cc1ca 100644
        progress = progressFor(library, campaign);
        return;
      }
-@@ -4706,56 +4135,48 @@ try {
+@@ -4706,56 +4135,48 @@
      progress = progressFor(library, campaign);
    }
    function refreshDifficulty() {
@@ -25884,7 +25891,7 @@ index 3b0fee3ed..d716cc1ca 100644
        return;
      }
      const cue = difficultyCue({
-@@ -4765,21 +4186,14 @@ try {
+@@ -4765,21 +4186,14 @@
        recovering: sessionBusy,
        practice,
      });
@@ -25913,7 +25920,7 @@ index 3b0fee3ed..d716cc1ca 100644
      if (
        cue.available &&
        standard &&
-@@ -4787,52 +4201,42 @@ try {
+@@ -4787,52 +4201,42 @@
        (difficultyDetailsFor?.campaign !== standard.campaign ||
          difficultyDetailsFor?.levelIndex !== levelIndex)
      ) {
@@ -25978,7 +25985,7 @@ index 3b0fee3ed..d716cc1ca 100644
      }
    }
    function invalidateContentSwitch({ announce = false } = {}) {
-@@ -4840,89 +4244,70 @@ try {
+@@ -4840,89 +4244,70 @@
      const interrupted = contentSwitchBusy;
      packLaunchGuard.invalidate();
      contentSwitchBusy = false;
@@ -26089,7 +26096,7 @@ index 3b0fee3ed..d716cc1ca 100644
      let saved;
      try {
        saved =
-@@ -4936,13 +4321,10 @@ try {
+@@ -4936,13 +4321,10 @@
                ok: false,
                warning:
                  writer.reason ||
@@ -26105,7 +26112,7 @@ index 3b0fee3ed..d716cc1ca 100644
      }
      saveSucceeded = saved.ok;
      if (saved.ok) {
-@@ -4953,8 +4335,8 @@ try {
+@@ -4953,8 +4335,8 @@
        progress = progressFor(library, campaign);
        adoptControllerBoostMode();
      } else {
@@ -26116,7 +26123,7 @@ index 3b0fee3ed..d716cc1ca 100644
      }
      refreshDifficulty();
      refreshTextSize();
-@@ -4965,8 +4347,7 @@ try {
+@@ -4965,8 +4347,7 @@
      if (courseEntry)
        return {
          ok: false,
@@ -26126,7 +26133,7 @@ index 3b0fee3ed..d716cc1ca 100644
        };
      library = updatePreferences(library, { ...library.preferences, ...patch });
      if (!practice) return persistProfile();
-@@ -4975,7 +4356,7 @@ try {
+@@ -4975,7 +4356,7 @@
      return {
        ok: false,
        warning:
@@ -26135,7 +26142,7 @@ index 3b0fee3ed..d716cc1ca 100644
      };
    }
    function cancelRestore() {
-@@ -4987,11 +4368,7 @@ try {
+@@ -4987,11 +4368,7 @@
    function rememberSelection() {
      const mission = journeyEnabled && journeyMission();
      if (mission && !practice && !scenario)
@@ -26148,7 +26155,7 @@ index 3b0fee3ed..d716cc1ca 100644
      if (candidateHost?.owns(activeEntry)) return;
      return selectionBookmark.remember({
        campaignKey: activeEntry.baseCampaignKey || campaignKey(campaign),
-@@ -5021,31 +4398,22 @@ try {
+@@ -5021,31 +4398,22 @@
        : current || (candidateHost ? journeyCatalog.missions[0] : null);
    }
    function journeySkipMission() {
@@ -26185,7 +26192,7 @@ index 3b0fee3ed..d716cc1ca 100644
      if (
        !journeyEnabled ||
        !mission ||
-@@ -5058,22 +4426,11 @@ try {
+@@ -5058,22 +4426,11 @@
      pause(true);
      clearInput();
      if (candidateHost) {
@@ -26211,7 +26218,7 @@ index 3b0fee3ed..d716cc1ca 100644
        return adopted;
      }
      const owner = { run, runId, mission, feedback: null, cancel: null };
-@@ -5087,22 +4444,17 @@ try {
+@@ -5087,22 +4444,17 @@
          if (journeyLaunch !== owner) return;
          journeyLaunch = null;
          invalidateContentSwitch();
@@ -26237,7 +26244,7 @@ index 3b0fee3ed..d716cc1ca 100644
        packLaunchGuard.assert(operation, packs);
        if (
          journeyLaunch !== owner ||
-@@ -5114,24 +4466,16 @@ try {
+@@ -5114,24 +4466,16 @@
          return false;
        const authored = installedEntries.find(
          (entry) =>
@@ -26268,7 +26275,7 @@ index 3b0fee3ed..d716cc1ca 100644
        contentSwitchBusy = false;
        refreshContentSelectors();
        owner.feedback.finish();
-@@ -5141,11 +4485,7 @@ try {
+@@ -5141,11 +4485,7 @@
        if (journeyLaunch === owner) journeyLaunch = null;
        const adopted = await prepareResultAttempt(kind, index, entry);
        if (adopted && skipped)
@@ -26281,21 +26288,21 @@ index 3b0fee3ed..d716cc1ca 100644
        return adopted;
      } catch (error) {
        if (
-@@ -5156,11 +4496,9 @@ try {
+@@ -5156,11 +4496,9 @@
        ) {
          owner.feedback?.finish(
            `Could not prepare ${mission.name}. Try again; your current flight is kept.`,
 -          "error",
--        );
--        warning(
--          `Could not open the next mission. Your current flight is kept. ${error.message}`,
 +          'error',
          );
+-        warning(
+-          `Could not open the next mission. Your current flight is kept. ${error.message}`,
+-        );
 +        warning(`Could not open the next mission. Your current flight is kept. ${error.message}`);
        }
        return false;
      } finally {
-@@ -5185,20 +4523,16 @@ try {
+@@ -5185,20 +4523,16 @@
      } = {},
    ) {
      if (courseSession || courseEntry)
@@ -26320,7 +26327,7 @@ index 3b0fee3ed..d716cc1ca 100644
        seed = selectedSeed;
      }
      if (contentSwitchTicket) packLaunchGuard.assert(contentSwitchTicket, packs);
-@@ -5211,8 +4545,7 @@ try {
+@@ -5211,8 +4545,7 @@
      demo = false;
      entry = executionForEntry(
        entry,
@@ -26330,7 +26337,7 @@ index 3b0fee3ed..d716cc1ca 100644
      );
      activeEntry = entry;
      campaign = entry.campaign;
-@@ -5222,28 +4555,17 @@ try {
+@@ -5222,28 +4555,17 @@
      const selection = currentSelection({ levelId });
      levelIndex = selection.levelIndex;
      campaignOverview = !practice && selection.overview;
@@ -26367,7 +26374,7 @@ index 3b0fee3ed..d716cc1ca 100644
      refreshCampaigns();
      prepare({ restoreAdoption, contentSwitchTicket, difficulty });
      if (!restoreAdoption) rememberSelection();
-@@ -5252,8 +4574,7 @@ try {
+@@ -5252,8 +4574,7 @@
      next,
      { contentSwitchTicket = null, preserveCurrentRun = false } = {},
    ) {
@@ -26377,7 +26384,7 @@ index 3b0fee3ed..d716cc1ca 100644
      attemptFiles?.invalidate();
      const ownsOperation = !contentSwitchTicket;
      const operation = contentSwitchTicket || packLaunchGuard.begin(packs);
-@@ -5268,13 +4589,10 @@ try {
+@@ -5268,13 +4589,10 @@
          preserveCurrentRun &&
          before.packs.some(
            (old) =>
@@ -26393,7 +26400,7 @@ index 3b0fee3ed..d716cc1ca 100644
        packLaunchGuard.assert(operation, before);
        assertWriter();
        let content = prepareContentCatalog(next);
-@@ -5287,9 +4605,7 @@ try {
+@@ -5287,9 +4605,7 @@
          });
        } catch (error) {
          if (!packLaunchGuard.current(operation, packs)) throw error;
@@ -26404,7 +26411,7 @@ index 3b0fee3ed..d716cc1ca 100644
        }
        if (!packLaunchGuard.current(operation, before)) {
          await packCommits.noteStaleCommit();
-@@ -5307,9 +4623,7 @@ try {
+@@ -5307,9 +4623,7 @@
        )
          selectEntry(baseEntry, { contentSwitchTicket: operation });
        else if (!preserveCurrentRun && activeEntry.sourcePackId) {
@@ -26415,7 +26422,7 @@ index 3b0fee3ed..d716cc1ca 100644
          const authoredId = activeEntry.baseCampaign?.id || campaign.id;
          selectEntry(
            resolvePackCampaign(
-@@ -5330,22 +4644,17 @@ try {
+@@ -5330,22 +4644,17 @@
        }
      }
    }
@@ -26441,7 +26448,7 @@ index 3b0fee3ed..d716cc1ca 100644
      });
      const source = await packLaunchGuard.run(
        operation,
-@@ -5359,29 +4668,22 @@ try {
+@@ -5359,29 +4668,22 @@
        () => packs,
        async () => {
          try {
@@ -26478,7 +26485,7 @@ index 3b0fee3ed..d716cc1ca 100644
      await replacePackLibrary(installPack(before, prepared.pack), {
        contentSwitchTicket: operation,
        preserveCurrentRun,
-@@ -5393,12 +4695,10 @@ try {
+@@ -5393,12 +4695,10 @@
      files,
      { signal, download = false, onStatus, pictureReview } = {},
    ) {
@@ -26493,7 +26500,7 @@ index 3b0fee3ed..d716cc1ca 100644
      const operation = packLaunchGuard.begin(packs),
        before = packs;
      packCommits.markIntent();
-@@ -5407,7 +4707,7 @@ try {
+@@ -5407,7 +4707,7 @@
      const cancel = () => {
        if (packLaunchGuard.current(operation, packs)) invalidateContentSwitch();
      };
@@ -26502,7 +26509,7 @@ index 3b0fee3ed..d716cc1ca 100644
      const report = (message, stage) =>
        preparationStatus(
          onStatus,
-@@ -5419,42 +4719,36 @@ try {
+@@ -5419,42 +4719,36 @@
      try {
        report(
          download
@@ -26557,7 +26564,7 @@ index 3b0fee3ed..d716cc1ca 100644
          try {
            await releasePictures.assignFreshChapter({
              descriptor: installed.descriptor,
-@@ -5464,7 +4758,7 @@ try {
+@@ -5464,7 +4758,7 @@
              onStatus: (status) => report(status.message, status.stage),
            });
          } catch (error) {
@@ -26566,7 +26573,7 @@ index 3b0fee3ed..d716cc1ca 100644
              notify(
                `Chapter installed with its source originals. Field Kit defaults could not be saved: ${error.message}`,
              );
-@@ -5482,7 +4776,7 @@ try {
+@@ -5482,7 +4776,7 @@
        }
        throw error;
      } finally {
@@ -26575,7 +26582,7 @@ index 3b0fee3ed..d716cc1ca 100644
        if (packLaunchGuard.current(operation, packs)) {
          contentSwitchBusy = false;
          refreshContentSelectors();
-@@ -5492,11 +4786,10 @@ try {
+@@ -5492,11 +4786,10 @@
    }
    async function installOptionalChapter(summary, { signal, onStatus } = {}) {
      if (courseEntry || courseSession || practice)
@@ -26589,7 +26596,7 @@ index 3b0fee3ed..d716cc1ca 100644
      cancelRestore();
      const operation = packLaunchGuard.begin(packs),
        before = packs;
-@@ -5506,12 +4799,12 @@ try {
+@@ -5506,12 +4799,12 @@
      const cancelled = () => {
        if (packLaunchGuard.current(operation, packs)) invalidateContentSwitch();
      };
@@ -26604,7 +26611,7 @@ index 3b0fee3ed..d716cc1ca 100644
          () => !signal?.aborted && packLaunchGuard.current(operation, packs),
        );
        const pack = await packLaunchGuard.run(
-@@ -5522,14 +4815,14 @@ try {
+@@ -5522,14 +4815,14 @@
            prepareOptionalDownload(summary, {
              library: before,
              signal,
@@ -26621,7 +26628,7 @@ index 3b0fee3ed..d716cc1ca 100644
          () => !signal?.aborted && packLaunchGuard.current(operation, packs),
        );
        await replacePackLibrary(installPack(before, pack), {
-@@ -5538,7 +4831,7 @@ try {
+@@ -5538,7 +4831,7 @@
        });
        return pack;
      } finally {
@@ -26630,7 +26637,7 @@ index 3b0fee3ed..d716cc1ca 100644
        if (packLaunchGuard.current(operation, packs)) {
          contentSwitchBusy = false;
          refreshContentSelectors();
-@@ -5548,64 +4841,45 @@ try {
+@@ -5548,64 +4841,45 @@
    }
    async function activatePack(
      packId,
@@ -26707,7 +26714,7 @@ index 3b0fee3ed..d716cc1ca 100644
            }
            throw new Error(
              `${entry.campaign.levels[targetIndex].name} is still locked. The next available level is selected.`,
-@@ -5615,9 +4889,9 @@ try {
+@@ -5615,9 +4889,9 @@
        selectEntry(entry, { levelId, contentSwitchTicket: operation });
        if (announce)
          contentStatus(
@@ -26719,7 +26726,7 @@ index 3b0fee3ed..d716cc1ca 100644
        return operation;
      } catch (error) {
        if (!packLaunchGuard.current(operation, packs)) return false;
-@@ -5636,10 +4910,7 @@ try {
+@@ -5636,10 +4910,7 @@
      const index = campaign.levels.findIndex((level) => level.id === levelId);
      if (index < 0 || !missionAvailable(index)) {
        refreshContentSelectors();
@@ -26731,7 +26738,7 @@ index 3b0fee3ed..d716cc1ca 100644
        return false;
      }
      invalidateContentSwitch();
-@@ -5662,9 +4933,7 @@ try {
+@@ -5662,9 +4933,7 @@
    function refreshSavedFlight() {
      const saved = savedAttempt();
      const savedMode = difficultyLabel(
@@ -26742,7 +26749,7 @@ index 3b0fee3ed..d716cc1ca 100644
      );
      const preview = practice
        ? null
-@@ -5676,43 +4945,31 @@ try {
+@@ -5676,43 +4945,31 @@
            })),
          );
      const atReady = !started && !practice;
@@ -26802,7 +26809,7 @@ index 3b0fee3ed..d716cc1ca 100644
        campaignKey: campaignKey(campaign),
        themeId: theme.id,
        bodyId,
-@@ -5726,23 +4983,18 @@ try {
+@@ -5726,23 +4983,18 @@
    function currentBackupSession(savedAt) {
      if (candidateHost)
        throw new Error(
@@ -26831,7 +26838,7 @@ index 3b0fee3ed..d716cc1ca 100644
        // Capture time belongs to this export, while all actual host contents are
        // read again after waits so resumed/replaced state cannot pass as unchanged.
        return { library, packs, session: currentBackupSession(savedAt) };
-@@ -5750,7 +5002,7 @@ try {
+@@ -5750,7 +5002,7 @@
    }
    function attemptReadbackMatches(raw, session) {
      return (
@@ -26840,7 +26847,7 @@ index 3b0fee3ed..d716cc1ca 100644
        raw.length <= SESSION_STORAGE_BYTES &&
        new TextEncoder().encode(raw).length <= SESSION_STORAGE_BYTES &&
        canonicalJSON(JSON.parse(raw)) === canonicalJSON(session)
-@@ -5758,16 +5010,12 @@ try {
+@@ -5758,16 +5010,12 @@
    }
    function persistAttempt(notify = true) {
      if (titleFlightHold)
@@ -26860,7 +26867,7 @@ index 3b0fee3ed..d716cc1ca 100644
        );
      assertWriter();
      const session = snapshotAttempt();
-@@ -5775,10 +5023,7 @@ try {
+@@ -5775,10 +5023,7 @@
      try {
        saved = saveSession(localStorage, sessionKey, session);
      } catch {
@@ -26872,7 +26879,7 @@ index 3b0fee3ed..d716cc1ca 100644
      }
      if (saved.ok) {
        try {
-@@ -5791,7 +5036,7 @@ try {
+@@ -5791,7 +5036,7 @@
      if (notify)
        warning(
          saved.ok
@@ -26881,7 +26888,7 @@ index 3b0fee3ed..d716cc1ca 100644
            : saved.warning,
        );
      return session;
-@@ -5799,36 +5044,30 @@ try {
+@@ -5799,36 +5044,30 @@
    function findCampaignEntry(key) {
      let entry = executionEntries().find((e) => campaignKey(e.campaign) === key);
      if (!entry) {
@@ -26927,7 +26934,7 @@ index 3b0fee3ed..d716cc1ca 100644
        );
      invalidateContentSwitch();
      sessionBusy = true;
-@@ -5845,41 +5084,29 @@ try {
+@@ -5845,41 +5084,29 @@
        controller.abort();
        // Title cancellation owns this field status too. Settle it immediately;
        // a pending decoder may finish later, after another action owns the UI.
@@ -26980,7 +26987,7 @@ index 3b0fee3ed..d716cc1ca 100644
          );
        if (restored.session.visualThemePin) {
          stagedVisuals = await prepareSavedVisualTheme(
-@@ -5889,7 +5116,7 @@ try {
+@@ -5889,7 +5116,7 @@
              currentManifestSha256: pagePresentationSnapshot?.manifestSha256,
            },
            {
@@ -26989,7 +26996,7 @@ index 3b0fee3ed..d716cc1ca 100644
              signal: controller.signal,
              onStatus(status) {
                feedback.update(status);
-@@ -5914,7 +5141,7 @@ try {
+@@ -5914,7 +5141,7 @@
          },
        });
        if (controller.signal.aborted)
@@ -26998,7 +27005,7 @@ index 3b0fee3ed..d716cc1ca 100644
        beforeAdopt?.();
        feedback.finish(savedFlightRestoredMessage);
        selectEntry(entry, {
-@@ -5938,12 +5165,10 @@ try {
+@@ -5938,12 +5165,10 @@
        classId = run.classId;
        turnPolicy = run.turnPolicy;
        seed = run.seed;
@@ -27013,7 +27020,7 @@ index 3b0fee3ed..d716cc1ca 100644
        handled = false;
        recordingStopped = false;
        clearInput();
-@@ -5953,13 +5178,13 @@ try {
+@@ -5953,13 +5178,13 @@
        setTheme();
        painter.setLevel?.(run.level, { seed });
        updateLoadout();
@@ -27030,7 +27037,7 @@ index 3b0fee3ed..d716cc1ca 100644
        );
        const adopted = {
          run,
-@@ -5975,13 +5200,13 @@ try {
+@@ -5975,13 +5200,13 @@
      } catch (error) {
        if (controller.signal.aborted)
          throw new DOMException(
@@ -27048,7 +27055,7 @@ index 3b0fee3ed..d716cc1ca 100644
        sessionBusy = false;
        stagedPictures?.dispose();
        stagedVisuals?.release();
-@@ -5991,7 +5216,7 @@ try {
+@@ -5991,7 +5216,7 @@
      }
    }
    let titleFlight = null;
@@ -27057,7 +27064,7 @@ index 3b0fee3ed..d716cc1ca 100644
    function cancelTitleFlight() {
      const ticket = titleFlight;
      if (!ticket) return;
-@@ -5999,13 +5224,12 @@ try {
+@@ -5999,13 +5224,12 @@
      ticket.controller.abort();
      ticket.visuals?.release();
      ticket.visuals = null;
@@ -27075,7 +27082,7 @@ index 3b0fee3ed..d716cc1ca 100644
    }
    function titleFlightCurrent(ticket, expected = ticket) {
      return (
-@@ -6053,10 +5277,7 @@ try {
+@@ -6053,10 +5277,7 @@
        !run
      )
        return;
@@ -27087,7 +27094,7 @@ index 3b0fee3ed..d716cc1ca 100644
      const ticket = {
        controller: new AbortController(),
        feedback,
-@@ -6072,7 +5293,7 @@ try {
+@@ -6072,7 +5293,7 @@
        savedRaw: null,
      };
      titleFlight = ticket;
@@ -27096,7 +27103,7 @@ index 3b0fee3ed..d716cc1ca 100644
      // The original activation unlocks audio; the persisted master gate is unchanged.
      void activateAudio().catch(() => {});
      try {
-@@ -6081,32 +5302,26 @@ try {
+@@ -6081,32 +5302,26 @@
        ticket.persistenceReady = persistenceReady;
        ticket.backupLock = localStorage.getItem(`${libraryKey}.backup-lock`);
        if (ticket.backupLock !== null)
@@ -27136,7 +27143,7 @@ index 3b0fee3ed..d716cc1ca 100644
            );
          }
          expected = await restoreAttempt(candidate, {
-@@ -6120,9 +5335,9 @@ try {
+@@ -6120,9 +5335,9 @@
        } else {
          if (!continuing && ticket.savedRaw !== null)
            throw new Error(
@@ -27148,7 +27155,7 @@ index 3b0fee3ed..d716cc1ca 100644
            // The named Start is an explicit fresh attempt after a completed result.
            campaignOverview = false;
            prepare();
-@@ -6138,9 +5353,7 @@ try {
+@@ -6138,9 +5353,7 @@
          }
          const owner = flightPictures;
          if (!owner)
@@ -27159,7 +27166,7 @@ index 3b0fee3ed..d716cc1ca 100644
          ticket.prewarm =
            picturePrewarm?.owner === owner && picturePrewarm.themeId === theme.id
              ? picturePrewarm
-@@ -6161,19 +5374,16 @@ try {
+@@ -6161,19 +5374,16 @@
            await Promise.race([
              pending,
              new Promise((resolve, reject) => {
@@ -27183,7 +27190,7 @@ index 3b0fee3ed..d716cc1ca 100644
          assertCurrent();
          if (freshVisualAttempt && !flightVisualLease) {
            ticket.visuals = await prepareFreshAttemptVisuals(
-@@ -6187,45 +5397,35 @@ try {
+@@ -6187,45 +5397,35 @@
            );
          }
        }
@@ -27239,7 +27246,7 @@ index 3b0fee3ed..d716cc1ca 100644
        }
      }
    }
-@@ -6233,22 +5433,19 @@ try {
+@@ -6233,22 +5433,19 @@
      const p = library.preferences;
      refreshTextSize();
      turnPolicy = p.turnPolicy;
@@ -27272,7 +27279,7 @@ index 3b0fee3ed..d716cc1ca 100644
      syncAssistControls();
      keySettings.refresh();
      controller.setBindings(p.controllerBindings);
-@@ -6316,35 +5513,23 @@ try {
+@@ -6316,35 +5513,23 @@
      backupSet: practice
        ? null
        : {
@@ -27299,12 +27306,12 @@ index 3b0fee3ed..d716cc1ca 100644
              if (!storedStateAdopted || !persistenceReady || !writer.writable)
                throw new Error(
 -                "Resolve storage recovery before preparing all inventories. Individual game-data export remains available.",
--              );
++                'Resolve storage recovery before preparing all inventories. Individual game-data export remains available.',
+               );
 -            if (started && !paused && !["won", "lost"].includes(run.status))
 -              throw new Error(
 -                "Pause the flight before preparing a backup set.",
-+                'Resolve storage recovery before preparing all inventories. Individual game-data export remains available.',
-               );
+-              );
 +            if (started && !paused && !['won', 'lost'].includes(run.status))
 +              throw new Error('Pause the flight before preparing a backup set.');
              return JSON.stringify({
@@ -27315,7 +27322,7 @@ index 3b0fee3ed..d716cc1ca 100644
                runId,
                backupMarker: localStorage.getItem(`${libraryKey}.backup-lock`),
              });
-@@ -6353,8 +5538,7 @@ try {
+@@ -6353,8 +5538,7 @@
              externalBackup
                ? snapshotCurrentBackup(savedAt)
                : { library, packs, session: currentBackupSession(savedAt) },
@@ -27325,7 +27332,7 @@ index 3b0fee3ed..d716cc1ca 100644
            readStill: (options) => pictureStore.read(options),
            readStory: (options) => storyStore.exportInventory(options),
            // Byte recovery is available even when the audio player cannot initialize.
-@@ -6363,8 +5547,8 @@ try {
+@@ -6363,8 +5547,8 @@
              createSoundtrackSource({
                catalogue: SOUNDTRACK_CATALOGUE,
                archives: SOUNDTRACK_ARCHIVES,
@@ -27336,7 +27343,7 @@ index 3b0fee3ed..d716cc1ca 100644
          },
      openStory: (request) => storyDialog.open(request),
      resolveMediaIdentityCatalog: (metadata) =>
-@@ -6372,17 +5556,14 @@ try {
+@@ -6372,17 +5556,14 @@
          baseEntries: [baseEntry],
          metadata,
        }),
@@ -27356,7 +27363,7 @@ index 3b0fee3ed..d716cc1ca 100644
          }
        : null,
      get: () => ({
-@@ -6410,9 +5591,7 @@ try {
+@@ -6410,9 +5591,7 @@
        // Do not clear an actual pending pack/restore/backup operation to make an
        // export eligible. An otherwise idle queued autoplay loses its ticket.
        if (contentSwitchBusy || sessionBusy || backupBusy)
@@ -27367,7 +27374,7 @@ index 3b0fee3ed..d716cc1ca 100644
        invalidateContentSwitch();
        return attemptFiles.prepare(options);
      },
-@@ -6426,7 +5605,7 @@ try {
+@@ -6426,7 +5605,7 @@
          runId,
          storedStateAdopted,
          persistenceReady,
@@ -27376,7 +27383,7 @@ index 3b0fee3ed..d716cc1ca 100644
          profile: localStorage.getItem(libraryKey),
          saved: localStorage.getItem(sessionKey),
          backupMarker: localStorage.getItem(`${libraryKey}.backup-lock`),
-@@ -6434,37 +5613,37 @@ try {
+@@ -6434,37 +5613,37 @@
      sessionNote: () =>
        [
          sessionPictures.status().originals
@@ -27425,7 +27432,7 @@ index 3b0fee3ed..d716cc1ca 100644
        const selection = currentSelection();
        levelIndex = selection.levelIndex;
        campaignOverview = !practice && selection.overview;
-@@ -6473,12 +5652,12 @@ try {
+@@ -6473,12 +5652,12 @@
      },
      applyBackup: async (prepared) => {
        if (courseSession || courseEntry)
@@ -27440,7 +27447,7 @@ index 3b0fee3ed..d716cc1ca 100644
          backupBusy = true;
          invalidateContentSwitch();
          packCommits.markIntent();
-@@ -6508,9 +5687,9 @@ try {
+@@ -6508,9 +5687,9 @@
            storedStateAdopted = true;
            saveSucceeded = true;
            if (result.warning) {
@@ -27453,7 +27460,7 @@ index 3b0fee3ed..d716cc1ca 100644
            library = result.profile.library;
            libraryBaseline = library;
            libraryGeneration = result.profile.generation;
-@@ -6540,12 +5719,9 @@ try {
+@@ -6540,12 +5719,9 @@
        } finally {
          // An uncertain rollback or failed adoption cannot authorize old-profile
          // writes. A verified unchanged failure resumes the same verifier jobs.
@@ -27468,7 +27475,7 @@ index 3b0fee3ed..d716cc1ca 100644
          } catch {
            safeOriginal = false;
          }
-@@ -6560,86 +5736,77 @@ try {
+@@ -6560,86 +5736,77 @@
      onCancelEnter: () => cancelCourseEntry(),
      onNext: () => nextCourseLesson(),
      onSkip: () => nextCourseLesson(true),
@@ -27557,20 +27564,20 @@ index 3b0fee3ed..d716cc1ca 100644
 +    return requestMissionReplacement({ kind: 'pack', id: packId }, opener);
    };
 -  $("level-select").onchange = () =>
--    requestMissionReplacement(
--      { kind: "level", id: $("level-select").value },
--      $("level-select"),
--    );
--  $("campaign-select").onchange = () =>
 +  $('level-select').onchange = () =>
 +    requestMissionReplacement({ kind: 'level', id: $('level-select').value }, $('level-select'));
 +  $('campaign-select').onchange = () =>
      requestMissionReplacement(
--      { kind: "campaign", id: $("campaign-select").value },
--      $("campaign-select"),
+-      { kind: "level", id: $("level-select").value },
+-      $("level-select"),
 +      { kind: 'campaign', id: $('campaign-select').value },
 +      $('campaign-select'),
      );
+-  $("campaign-select").onchange = () =>
+-    requestMissionReplacement(
+-      { kind: "campaign", id: $("campaign-select").value },
+-      $("campaign-select"),
+-    );
 -  $("difficulty-select").onchange = () => {
 -    if ($("difficulty-select").disabled) return;
 +  $('difficulty-select').onchange = () => {
@@ -27589,7 +27596,7 @@ index 3b0fee3ed..d716cc1ca 100644
      browsingJourneyPreferences.choose(mode);
      clearInput();
      preferences({ campaignDifficulty: mode });
-@@ -6648,24 +5815,21 @@ try {
+@@ -6648,24 +5815,21 @@
      if (!started && !sessionBusy) prepare();
      else refreshDifficulty();
    };
@@ -27620,7 +27627,7 @@ index 3b0fee3ed..d716cc1ca 100644
      controller: gameplayTuning,
      getDifficulty: () => browsingJourneyPreferences.snapshot().difficulty,
    });
-@@ -6674,11 +5838,10 @@ try {
+@@ -6674,11 +5838,10 @@
      cancelWorldAttempt();
      cancelTitleFlight();
      clearInput();
@@ -27634,7 +27641,7 @@ index 3b0fee3ed..d716cc1ca 100644
      pause(true);
      try {
        persistAttempt();
-@@ -6686,35 +5849,31 @@ try {
+@@ -6686,35 +5849,31 @@
        warning(e.message);
      }
    };
@@ -27684,7 +27691,7 @@ index 3b0fee3ed..d716cc1ca 100644
        craftSwitchAvailable() &&
        !e.repeat &&
        !e.ctrlKey &&
-@@ -6726,93 +5885,81 @@ try {
+@@ -6726,93 +5885,81 @@
        !dialogOpen()
      ) {
        e.preventDefault();
@@ -27809,7 +27816,7 @@ index 3b0fee3ed..d716cc1ca 100644
      const player = soundtrackPlayer,
        request = ++musicPreviewRequest;
      try {
-@@ -6822,35 +5969,35 @@ try {
+@@ -6822,35 +5969,35 @@
        // The current player's notifications own its label, including cancellation
        // or a newer Pause/Play. A late gesture result must not overwrite them.
        if (player || soundtrackPlayer || request !== musicPreviewRequest) return;
@@ -27856,7 +27863,7 @@ index 3b0fee3ed..d716cc1ca 100644
        saved = preferences({
          screenSteeringHand: requested,
          touchControls: {
-@@ -6863,13 +6010,12 @@ try {
+@@ -6863,13 +6010,12 @@
        { persist: !practice && !courseEntry },
      );
      syncAssistControls();
@@ -27873,7 +27880,7 @@ index 3b0fee3ed..d716cc1ca 100644
            ? `Steering hand selected for this session. ${saved.warning}`
            : `Steering hand unchanged. ${saved.warning}`);
      status.hidden = false;
-@@ -6877,64 +6023,55 @@ try {
+@@ -6877,64 +6023,55 @@
    function refreshScreenSteeringHand() {
      touchPreferences.adoptLegacy(library.preferences.touchControls);
      const hand = touchPreferences.snapshot().side;
@@ -27900,16 +27907,18 @@ index 3b0fee3ed..d716cc1ca 100644
        strip.append(...ordered);
 -      if (ordered.some((group) => group.contains(focused)))
 -        focused.focus({ preventScroll: true });
-+      if (ordered.some((group) => group.contains(focused))) focused.focus({ preventScroll: true });
-     }
+-    }
 -    $("screen-steering-status").textContent = "";
 -    $("screen-steering-status").hidden = true;
-+    $('screen-steering-status').textContent = '';
-+    $('screen-steering-status').hidden = true;
-   }
+-  }
 -  $("text-size").onchange = () =>
 -    changeDisplay({ textSize: $("text-size").value });
 -  for (const key of ["mode", "size", "opacity"]) {
++      if (ordered.some((group) => group.contains(focused))) focused.focus({ preventScroll: true });
++    }
++    $('screen-steering-status').textContent = '';
++    $('screen-steering-status').hidden = true;
++  }
 +  $('text-size').onchange = () => changeDisplay({ textSize: $('text-size').value });
 +  for (const key of ['mode', 'size', 'opacity']) {
      $(`touch-${key}`).onchange = () => {
@@ -27961,17 +27970,18 @@ index 3b0fee3ed..d716cc1ca 100644
    }
    function refreshTextSize() {
      // Current validated profile is a fallback only; shared/explicit intent wins.
-@@ -6951,27 +6088,24 @@ try {
+@@ -6951,27 +6088,24 @@
        textSize: state.textSize,
        reducedEffects: state.reducedEffects,
      });
 -    $("display-preferences-status").textContent =
 -      displayPreferences.getWarning() || saved.warning || "";
-+    $('display-preferences-status').textContent =
-+      displayPreferences.getWarning() || saved.warning || '';
-   }
+-  }
 -  $("settings-grid").onchange = () =>
 -    preferences({ showGrid: $("settings-grid").checked });
++    $('display-preferences-status').textContent =
++      displayPreferences.getWarning() || saved.warning || '';
++  }
 +  $('settings-grid').onchange = () => preferences({ showGrid: $('settings-grid').checked });
    function syncAssistControls() {
      refreshScreenSteeringHand();
@@ -27991,15 +28001,16 @@ index 3b0fee3ed..d716cc1ca 100644
 -    document.body.style.setProperty("--touch-opacity", touch.opacity);
 -    $("touch-instruction").textContent =
 -      touch.mode === "swipe" ? "Swipe to turn" : "Drag to steer";
+-  }
+-  for (const id of ["reduced-effects", "settings-reduced-effects"]) {
 +    document.body.style.setProperty('--touch-opacity', touch.opacity);
 +    $('touch-instruction').textContent = touch.mode === 'swipe' ? 'Swipe to turn' : 'Drag to steer';
-   }
--  for (const id of ["reduced-effects", "settings-reduced-effects"]) {
++  }
 +  for (const id of ['reduced-effects', 'settings-reduced-effects']) {
      $(id).onchange = () => {
        changeDisplay({ reducedEffects: $(id).checked });
        syncAssistControls();
-@@ -6981,9 +6115,8 @@ try {
+@@ -6981,9 +6115,8 @@
      return (
        scenario?.visualOverrides || {
          ...activeEntry.visualOverrides,
@@ -28011,14 +28022,15 @@ index 3b0fee3ed..d716cc1ca 100644
        }
      );
    }
-@@ -7006,12 +6139,12 @@ try {
+@@ -7006,12 +6139,12 @@
          Object.hasOwn(presets.characters, candidate) &&
          (practice || availableBodies().has(candidate))
            ? candidate
 -          : "neutral-marker";
-+          : 'neutral-marker';
-     }
+-    }
 -    bodyWarning = "";
++          : 'neutral-marker';
++    }
 +    bodyWarning = '';
      if (!Object.hasOwn(presets.characters, bodyId)) {
        bodyWarning = `Body ${bodyId} is not registered. Using the neutral rig; choose a registered appearance to change its animation.`;
@@ -28027,7 +28039,7 @@ index 3b0fee3ed..d716cc1ca 100644
      }
      for (const [name, value] of Object.entries({
        paper: theme.palette.paper,
-@@ -7021,17 +6154,17 @@ try {
+@@ -7021,15 +6154,15 @@
        danger: theme.palette.danger,
      }))
        document.documentElement.style.setProperty(`--${name}`, value);
@@ -28044,17 +28056,13 @@ index 3b0fee3ed..d716cc1ca 100644
 +    $('world-legend').textContent =
        `${theme.labels.enemy} · ${theme.labels.boss} · ${theme.labels.supply}`;
 -    $("footer-note").textContent =
--      theme.id === "coupa"
--        ? "Fictional spend-management theme · original helper artwork"
--        : "Original worlds · make every line count";
+-      "Original worlds · make every line count";
 +    $('footer-note').textContent =
-+      theme.id === 'coupa'
-+        ? 'Fictional spend-management theme · original helper artwork'
-+        : 'Original worlds · make every line count';
++      'Original worlds · make every line count';
      painter.style = scenario?.presentation?.style || library.preferences.style;
      updateBodies();
      painter.setLook(theme, bodyId, painterVisuals());
-@@ -7039,86 +6172,79 @@ try {
+@@ -7037,86 +6170,79 @@
    }
    function updateBodies() {
      const allowed = availableBodies();
@@ -28088,10 +28096,11 @@ index 3b0fee3ed..d716cc1ca 100644
        : next
          ? `${next.name}: ${next.count} / ${next.target} different missions in this campaign. See Collection for the appearances.`
 -        : "All chapter appearances are available in this campaign. Cosmetics do not change abilities.";
-+        : 'All chapter appearances are available in this campaign. Cosmetics do not change abilities.';
-   }
+-  }
 -  const bodyLabels = (ids) =>
 -    ids.map((id) => presets.characters[id]?.label || id);
++        : 'All chapter appearances are available in this campaign. Cosmetics do not change abilities.';
++  }
 +  const bodyLabels = (ids) => ids.map((id) => presets.characters[id]?.label || id);
    function paintAppearanceRewards(entry) {
      const selected = entry.campaign;
@@ -28149,11 +28158,12 @@ index 3b0fee3ed..d716cc1ca 100644
        copy.append(title, state, names, detail);
        row.append(thumbnail, copy);
 -      $("appearance-rewards").append(row);
-+      $('appearance-rewards').append(row);
-     }
+-    }
 -    $("collection-note").textContent = practice
 -      ? "Practice previews every appearance without earning rewards. These rows show existing campaign progress. Cosmetics do not change abilities."
 -      : `Appearances belong to this campaign.${difficultyLabel(entry) ? " Standard and Gentle share mission and appearance unlocks." : ""} Cosmetics do not change abilities.`;
++      $('appearance-rewards').append(row);
++    }
 +    $('collection-note').textContent = practice
 +      ? 'Practice previews every appearance without earning rewards. These rows show existing campaign progress. Cosmetics do not change abilities.'
 +      : `Appearances belong to this campaign.${difficultyLabel(entry) ? ' Standard and Gentle share mission and appearance unlocks.' : ''} Cosmetics do not change abilities.`;
@@ -28177,7 +28187,7 @@ index 3b0fee3ed..d716cc1ca 100644
    }
    function leavePractice() {
      if (courseSession || courseEntry) return;
-@@ -7126,81 +6252,63 @@ try {
+@@ -7124,81 +6250,63 @@
      practice = practiceSession;
      demo = false;
      campaignOverview = false;
@@ -28288,7 +28298,7 @@ index 3b0fee3ed..d716cc1ca 100644
      });
      void missionThumbnails
        .refresh({
-@@ -7213,49 +6321,41 @@ try {
+@@ -7211,49 +6319,41 @@
        .catch(() => {
          /* Preserve honest unavailable thumbnails. */
        });
@@ -28363,7 +28373,7 @@ index 3b0fee3ed..d716cc1ca 100644
    }
    function currentBriefing() {
      if (courseSession) {
-@@ -7268,9 +6368,9 @@ try {
+@@ -7266,9 +6366,9 @@
            lesson.summary,
            ...lesson.instructions,
            ...lesson.steps.map((step) => `${step.label}: ${step.instruction}`),
@@ -28375,7 +28385,7 @@ index 3b0fee3ed..d716cc1ca 100644
          status: lesson.instructions[0],
        };
      }
-@@ -7287,29 +6387,29 @@ try {
+@@ -7285,29 +6385,29 @@
    }
    function refreshMissionBrief() {
      const brief = currentBriefing();
@@ -28415,7 +28425,7 @@ index 3b0fee3ed..d716cc1ca 100644
        `Optional seal · ${masteryDefinition.name}. ${masteryDefinition.description} Your picture and next mission never depend on this goal.`;
    }
    function overlay(kind, { preserveFocus = false } = {}) {
-@@ -7317,159 +6417,136 @@ try {
+@@ -7315,159 +6415,136 @@
      // choice. An inactive child must not pull focus back from its parent.
      const preservePauseFocus =
        preserveFocus ||
@@ -28671,7 +28681,7 @@ index 3b0fee3ed..d716cc1ca 100644
        }
      }
      refreshSavedFlight();
-@@ -7477,17 +6554,11 @@ try {
+@@ -7475,17 +6552,11 @@
      refreshCourse();
      refreshDifficulty();
      controllerReading?.refresh();
@@ -28691,7 +28701,7 @@ index 3b0fee3ed..d716cc1ca 100644
      // Storage adapters can reenter the host. Inspect ownership after those reads.
      const backupLock = localStorage.getItem(`${libraryKey}.backup-lock`),
        savedRaw = localStorage.getItem(sessionKey);
-@@ -7523,7 +6594,7 @@ try {
+@@ -7521,7 +6592,7 @@
        themeOverride === ticket.themeOverride &&
        library.preferences.campaignDifficulty === ticket.difficulty &&
        journeyPreferences?.snapshot().revision === ticket.journeyRevision &&
@@ -28700,7 +28710,7 @@ index 3b0fee3ed..d716cc1ca 100644
        libraryGeneration === ticket.libraryGeneration &&
        packs === ticket.packs &&
        writer.writable === ticket.writable &&
-@@ -7559,15 +6630,15 @@ try {
+@@ -7557,15 +6628,15 @@
      if (resultAttempt)
        finishResultAttempt(
          resultAttempt,
@@ -28719,7 +28729,7 @@ index 3b0fee3ed..d716cc1ca 100644
        practice ||
        scenario ||
        courseSession ||
-@@ -7580,8 +6651,8 @@ try {
+@@ -7578,8 +6649,8 @@
        index = levelIndex,
        epoch = resultAttemptEpoch,
        controller = new AbortController(),
@@ -28730,7 +28740,7 @@ index 3b0fee3ed..d716cc1ca 100644
      const operation = { cancel: null };
      libraryNextOperation = operation;
      let feedback;
-@@ -7596,9 +6667,9 @@ try {
+@@ -7594,9 +6665,9 @@
        document.hasFocus?.() !== false &&
        !dialogOpen();
      const detach = () => {
@@ -28743,7 +28753,7 @@ index 3b0fee3ed..d716cc1ca 100644
      };
      operation.cancel = ({ restoreFocus = false } = {}) => {
        if (libraryNextOperation !== operation) return;
-@@ -7607,8 +6678,8 @@ try {
+@@ -7605,8 +6676,8 @@
        controller.abort();
        button.disabled = false;
        feedback?.finish(
@@ -28754,7 +28764,7 @@ index 3b0fee3ed..d716cc1ca 100644
        );
        if (
          restoreFocus &&
-@@ -7620,31 +6691,24 @@ try {
+@@ -7618,31 +6689,24 @@
          button.focus({ preventScroll: true });
      };
      function changedFocus(event) {
@@ -28793,7 +28803,7 @@ index 3b0fee3ed..d716cc1ca 100644
        const host = await getUnifiedMissionLibrary();
        if (!current()) return;
        await host.refreshInstalled();
-@@ -7652,42 +6716,37 @@ try {
+@@ -7650,42 +6714,37 @@
        const mission = journeyEnabled ? journeyMission() : null;
        const row = mission
          ? host.library
@@ -28848,7 +28858,7 @@ index 3b0fee3ed..d716cc1ca 100644
        }
        if (!current()) return;
        // Keep admission cancellable while adapters verify installed originals.
-@@ -7711,18 +6770,15 @@ try {
+@@ -7709,18 +6768,15 @@
            return activation.isCurrent();
          },
        };
@@ -28870,7 +28880,7 @@ index 3b0fee3ed..d716cc1ca 100644
          );
        }
      } finally {
-@@ -7748,11 +6804,7 @@ try {
+@@ -7746,11 +6802,7 @@
        previous = resultAttempt;
      cancelResultAttempt();
      // Abort/disposal callbacks can start or retire a newer deliberate operation.
@@ -28883,7 +28893,7 @@ index 3b0fee3ed..d716cc1ca 100644
      if (
        practice ||
        scenario ||
-@@ -7761,15 +6813,15 @@ try {
+@@ -7759,15 +6811,15 @@
        dialogOpen() ||
        document.hidden ||
        !document.hasFocus() ||
@@ -28903,7 +28913,7 @@ index 3b0fee3ed..d716cc1ca 100644
        run,
        recorder,
        runId,
-@@ -7797,11 +6849,9 @@ try {
+@@ -7795,11 +6847,9 @@
      const epoch = ++resultAttemptEpoch;
      try {
        ticket.feedback = beginPreparation(
@@ -28917,7 +28927,7 @@ index 3b0fee3ed..d716cc1ca 100644
          true,
        );
        ticket.backupLock = localStorage.getItem(`${libraryKey}.backup-lock`);
-@@ -7809,48 +6859,35 @@ try {
+@@ -7807,48 +6857,35 @@
        ticket.savedRaw = localStorage.getItem(sessionKey);
        if (resultAttempt !== ticket || resultAttemptEpoch !== epoch) return;
        if (!resultAttemptCurrent(ticket))
@@ -28977,7 +28987,7 @@ index 3b0fee3ed..d716cc1ca 100644
        let candidateAttempt = null;
        if (candidateHost?.owns(entry)) {
          candidateAttempt = await candidateHost.preparer.prepare(
-@@ -7867,25 +6904,20 @@ try {
+@@ -7865,25 +6902,20 @@
            },
          );
          if (!resultAttemptCurrent(ticket)) {
@@ -29008,7 +29018,7 @@ index 3b0fee3ed..d716cc1ca 100644
            ? retryFlightPresentationPins(ticket.owner.pins(), {
                identityCatalog: pictureIdentity(),
                campaignKey: campaignKey(entry.campaign),
-@@ -7900,7 +6932,7 @@ try {
+@@ -7898,7 +6930,7 @@
          nextThemeId: nextTheme.id,
          candidatePicture: candidateAttempt?.picture ?? null,
          ...(pins ? { pins } : {}),
@@ -29017,7 +29027,7 @@ index 3b0fee3ed..d716cc1ca 100644
        });
        // Audio permission belongs to this explicit action, before storage or decoding.
        activateAudio().catch(() => {});
-@@ -7908,26 +6940,18 @@ try {
+@@ -7906,26 +6938,18 @@
          signal: ticket.controller.signal,
          onStatus(status) {
            if (resultAttemptCurrent(ticket))
@@ -29052,7 +29062,7 @@ index 3b0fee3ed..d716cc1ca 100644
        }
        const preparedPictures = ticket.pictures;
        const adopted = prepare({
-@@ -7983,25 +7007,24 @@ try {
+@@ -7981,25 +7005,24 @@
        }
      } catch (error) {
        if (resultAttempt === ticket) {
@@ -29084,7 +29094,7 @@ index 3b0fee3ed..d716cc1ca 100644
            ownedFocus,
          );
        }
-@@ -8020,14 +7043,10 @@ try {
+@@ -8018,14 +7041,10 @@
      preparedAttempt = null,
      retainAttemptAppearance = false,
    } = {}) {
@@ -29101,7 +29111,7 @@ index 3b0fee3ed..d716cc1ca 100644
            ? worldAttemptCurrent(preparedAttempt.ticket)
            : resultAttemptCurrent(preparedAttempt.ticket);
        if (!current()) return false;
-@@ -8042,18 +7061,17 @@ try {
+@@ -8040,18 +7059,17 @@
        courseEntryHold = false;
        modeDepartureHold = false;
        titleFlightHold = false;
@@ -29125,7 +29135,7 @@ index 3b0fee3ed..d716cc1ca 100644
        if (!restoreAdoption) {
          cancelRestore();
          applyNextDifficulty(difficulty);
-@@ -8066,15 +7084,13 @@ try {
+@@ -8064,15 +7082,13 @@
          ? { pins: flightPictures.pins(), legacy: flightPictures.legacy }
          : null;
      const keepVisuals =
@@ -29143,7 +29153,7 @@ index 3b0fee3ed..d716cc1ca 100644
          worldAttempt = null;
          ticket.intent.consumed = true;
          ticket.adoptionEpoch = ++worldPlayEpoch;
-@@ -8102,34 +7118,26 @@ try {
+@@ -8100,34 +7116,26 @@
        classRegistry = activeEntry.classRecipes;
        classId = preparedAttempt.classId;
        themesFile.themes = activeEntry.themes;
@@ -29187,7 +29197,7 @@ index 3b0fee3ed..d716cc1ca 100644
          refreshCampaigns();
        }
      } else if (!restoreAdoption) {
-@@ -8137,28 +7145,25 @@ try {
+@@ -8135,28 +7143,25 @@
        flightPictures = null;
      }
      legacyPictureButton.hidden = true;
@@ -29221,7 +29231,7 @@ index 3b0fee3ed..d716cc1ca 100644
          {
            seed,
            turnPolicy,
-@@ -8166,10 +7171,7 @@ try {
+@@ -8164,10 +7169,7 @@
            classRecipes: scenario?.classRecipes || classRegistry,
          },
        );
@@ -29233,7 +29243,7 @@ index 3b0fee3ed..d716cc1ca 100644
      const informationOwner = flightInformation.adopt(run, runId);
      courseObserver = null;
      courseUnavailable = null;
-@@ -8183,10 +7185,9 @@ try {
+@@ -8181,10 +7183,9 @@
        } catch {
          stopCourseGuidance();
        }
@@ -29247,7 +29257,7 @@ index 3b0fee3ed..d716cc1ca 100644
      const observedCampaign = explicitPractice
        ? scenario.masteryDefinition
          ? scenarioMasteryCampaign(scenario, run.classRecipes)
-@@ -8195,17 +7196,12 @@ try {
+@@ -8193,17 +7194,12 @@
          ? catalog()
              .map((entry) => entry.campaign)
              .find((entry) => {
@@ -29269,7 +29279,7 @@ index 3b0fee3ed..d716cc1ca 100644
                );
              })
          : campaign;
-@@ -8215,15 +7211,11 @@ try {
+@@ -8213,15 +7209,11 @@
          : explicitPractice
            ? scenario.masteryDefinition
            : observedCampaign
@@ -29287,7 +29297,7 @@ index 3b0fee3ed..d716cc1ca 100644
      if (masteryDefinition)
        try {
          masteryObserver = createMasteryObserver({
-@@ -8234,31 +7226,27 @@ try {
+@@ -8232,31 +7224,27 @@
              runId,
              definition: masteryDefinition,
            }),
@@ -29325,7 +29335,7 @@ index 3b0fee3ed..d716cc1ca 100644
      }
      if (!scenario && !musicOverride) {
        const track = activeEntry.music?.find(
-@@ -8266,7 +7254,7 @@ try {
+@@ -8264,7 +7252,7 @@
        );
        if (track) {
          assignMusic(track);
@@ -29334,7 +29344,7 @@ index 3b0fee3ed..d716cc1ca 100644
        }
      }
      if (scenario?.music) assignMusic(scenario.music);
-@@ -8280,30 +7268,25 @@ try {
+@@ -8278,30 +7266,25 @@
        preparedAttempt?.recorder ||
        createRecorder(
          run.level,
@@ -29375,7 +29385,7 @@ index 3b0fee3ed..d716cc1ca 100644
        preserveFocus: !!preparedAttempt,
      });
      flightInformation.commitWarning(
-@@ -8311,12 +7294,12 @@ try {
+@@ -8309,12 +7292,12 @@
        courseSession
          ? getFirstFlightLesson(courseRequest.lessonId).instructions[0]
          : practice
@@ -29391,7 +29401,7 @@ index 3b0fee3ed..d716cc1ca 100644
      );
      if (!restoreAdoption && !preparedAttempt) {
        flightPictures = newFlightPictures(retainedPictures ?? {});
-@@ -8325,7 +7308,7 @@ try {
+@@ -8323,7 +7306,7 @@
      previousPictures?.dispose();
      const preparedOwnershipCurrent = () =>
        !preparedAttempt ||
@@ -29400,7 +29410,7 @@ index 3b0fee3ed..d716cc1ca 100644
          ? worldPlayEpoch === preparedAttempt.ticket.adoptionEpoch
          : resultAttemptEpoch === preparedAttempt.ticket.adoptionEpoch) &&
          run === preparedAttempt.run &&
-@@ -8351,24 +7334,16 @@ try {
+@@ -8349,24 +7332,16 @@
      refreshHUD();
      return true;
    }
@@ -29429,7 +29439,7 @@ index 3b0fee3ed..d716cc1ca 100644
      }
      attemptFiles?.invalidate();
      if (contentSwitchTicket) packLaunchGuard.assert(contentSwitchTicket, packs);
-@@ -8398,15 +7373,11 @@ try {
+@@ -8396,15 +7371,11 @@
        pictureResume = ticket;
        paused = true;
        clearInput();
@@ -29449,7 +29459,7 @@ index 3b0fee3ed..d716cc1ca 100644
            ? picturePrewarm
            : null;
        if (prewarm) {
-@@ -8415,10 +7386,7 @@ try {
+@@ -8413,10 +7384,7 @@
        }
        const prepared =
          prewarm?.promise ??
@@ -29461,7 +29471,7 @@ index 3b0fee3ed..d716cc1ca 100644
        void prepared
          .then(async () => {
            if (needsFreshVisuals)
-@@ -8440,7 +7408,7 @@ try {
+@@ -8438,7 +7406,7 @@
              run === selectedRun &&
              theme.id === selectedTheme
            )
@@ -29470,7 +29480,7 @@ index 3b0fee3ed..d716cc1ca 100644
            if (
              pictureResume !== ticket ||
              pictureGeneration !== ticket ||
-@@ -8474,15 +7442,14 @@ try {
+@@ -8472,15 +7440,14 @@
                error instanceof ReleasePictureWriteRequiredError
                  ? error.message
                  : `Picture unavailable: ${error.message}`,
@@ -29488,7 +29498,7 @@ index 3b0fee3ed..d716cc1ca 100644
            if (pictureResume === ticket) pictureResume = null;
          });
        return;
-@@ -8498,29 +7465,27 @@ try {
+@@ -8496,29 +7463,27 @@
      courseEntryHold = false;
      modeDepartureHold = false;
      titleFlightHold = false;
@@ -29530,7 +29540,7 @@ index 3b0fee3ed..d716cc1ca 100644
    }
    function finishDefeatPresentation() {
      if (!defeatActive) return;
-@@ -8528,27 +7493,20 @@ try {
+@@ -8526,27 +7491,20 @@
      defeatPaused = false;
      defeatRemaining = 0;
      clearInput();
@@ -29564,7 +29574,7 @@ index 3b0fee3ed..d716cc1ca 100644
      if (defeatRemaining <= 1e-9) finishDefeatPresentation();
    }
    function pause(force, { preserveWorld = false } = {}) {
-@@ -8562,16 +7520,14 @@ try {
+@@ -8560,16 +7518,14 @@
      if (defeatActive) {
        defeatPaused = true;
        clearInput();
@@ -29583,7 +29593,7 @@ index 3b0fee3ed..d716cc1ca 100644
      if (force !== true && paused) {
        resume();
        return;
-@@ -8579,13 +7535,13 @@ try {
+@@ -8577,13 +7533,13 @@
      clearInput();
      paused = true;
      sound.pause?.();
@@ -29602,7 +29612,7 @@ index 3b0fee3ed..d716cc1ca 100644
        );
      if (
        !practice &&
-@@ -8599,8 +7555,8 @@ try {
+@@ -8597,8 +7553,8 @@
          persistAttempt(false);
        } catch {}
      }
@@ -29613,7 +29623,7 @@ index 3b0fee3ed..d716cc1ca 100644
      refreshHUD();
    }
    function refreshHUD() {
-@@ -8609,150 +7565,130 @@ try {
+@@ -8607,150 +7563,130 @@
      const reactionMission = journeySkipMission();
      journeyReactions.present({
        owned: !!reactionMission,
@@ -29847,7 +29857,7 @@ index 3b0fee3ed..d716cc1ca 100644
      refreshMastery();
      refreshCourse();
      flightDetails?.reconcile();
-@@ -8764,176 +7700,146 @@ try {
+@@ -8762,176 +7698,146 @@
      const teachingCapture =
        journeyEnabled &&
        !practice &&
@@ -30043,14 +30053,6 @@ index 3b0fee3ed..d716cc1ca 100644
 -                "enemy-freeze":
 -                  "Freeze pickup: enemies are held for three seconds. Terrain and the mission clock stay active.",
 -              }[event.kind] || "Powerup collected.",
--            );
--          if (event.type === "rover.warning")
--            warning(
--              "Claimed-ground rover waking in one second. Watch the marked actor.",
--            );
--          if (event.type === "rover.activated")
--            warning(
--              "Claimed-ground rover active. Your secured ground still has a moving threat.",
 +                'extra-life': event.gain
 +                  ? 'Extra life collected.'
 +                  : 'Life pickup collected. Already at the nine-life limit.',
@@ -30060,6 +30062,14 @@ index 3b0fee3ed..d716cc1ca 100644
 +                  'Freeze pickup: enemies are held for three seconds. Terrain and the mission clock stay active.',
 +              }[event.kind] || 'Powerup collected.',
              );
+-          if (event.type === "rover.warning")
+-            warning(
+-              "Claimed-ground rover waking in one second. Watch the marked actor.",
+-            );
+-          if (event.type === "rover.activated")
+-            warning(
+-              "Claimed-ground rover active. Your secured ground still has a moving threat.",
+-            );
 -          if (event.type === "erosion.warning")
 -            warning(
 -              "The marked captured cell is about to reopen. Watch the edge timer.",
@@ -30099,7 +30109,7 @@ index 3b0fee3ed..d716cc1ca 100644
              warning(laneWarningCaption(run, event, theme.labels.boss));
          });
        }
-@@ -8960,89 +7866,76 @@ try {
+@@ -8958,89 +7864,76 @@
        clearInput();
        return;
      }
@@ -30168,12 +30178,13 @@ index 3b0fee3ed..d716cc1ca 100644
 -      $("controller-ui-hint").textContent =
 -        scope === "flight" ? controllerFlightHint() : controllerMenuHint();
 -      if (assigned && scope !== "flight") controllerNavigation.engage();
+-    }
+-    if (status.code === "joined" && scope !== "flight")
+-      controllerNavigation.engage();
 +      $('controller-ui-hint').textContent =
 +        scope === 'flight' ? controllerFlightHint() : controllerMenuHint();
 +      if (assigned && scope !== 'flight') controllerNavigation.engage();
-     }
--    if (status.code === "joined" && scope !== "flight")
--      controllerNavigation.engage();
++    }
 +    if (status.code === 'joined' && scope !== 'flight') controllerNavigation.engage();
      if (disconnected) {
        clearInput();
@@ -30213,7 +30224,7 @@ index 3b0fee3ed..d716cc1ca 100644
          }
          clearInput();
        }
-@@ -9053,11 +7946,11 @@ try {
+@@ -9051,11 +7944,11 @@
      const focus = document.activeElement;
      controllerPreview?.report({
        scope: controllerScope().slice(0, 160),
@@ -30229,7 +30240,7 @@ index 3b0fee3ed..d716cc1ca 100644
        )
          .trim()
          .slice(0, 160),
-@@ -9070,22 +7963,17 @@ try {
+@@ -9068,22 +7961,17 @@
        started &&
        flightPictures?.ready(theme.id) &&
        !dialogOpen() &&
@@ -30256,7 +30267,7 @@ index 3b0fee3ed..d716cc1ca 100644
            : {
                direction: controls.direction,
                boost: controls.boost,
-@@ -9104,13 +7992,13 @@ try {
+@@ -9102,13 +7990,13 @@
          if (!recordingStopped && recorder.ticks >= MAX_REPLAY_TICKS) {
            recordingStopped = true;
            recorder = null;
@@ -30273,7 +30284,7 @@ index 3b0fee3ed..d716cc1ca 100644
            command.direction = null;
            command.boost = false;
            command.action = false;
-@@ -9126,12 +8014,12 @@ try {
+@@ -9124,12 +8012,12 @@
            }
          stepRun(run, command, FIXED_DT);
          if (
@@ -30289,7 +30300,7 @@ index 3b0fee3ed..d716cc1ca 100644
          controls = controllerBoostAfterRecovery({
            beforeStatus,
            run,
-@@ -9140,44 +8028,30 @@ try {
+@@ -9138,44 +8026,30 @@
            frame: controllerFrame,
            controls,
          });
@@ -30341,7 +30352,7 @@ index 3b0fee3ed..d716cc1ca 100644
              };
            }
          pendingAction = false;
-@@ -9190,37 +8064,30 @@ try {
+@@ -9188,37 +8062,30 @@
            } catch {
              recordingStopped = true;
              recorder = null;
@@ -30386,7 +30397,7 @@ index 3b0fee3ed..d716cc1ca 100644
                missionId: mission.id,
                runId,
                gameplayId: dataIdentity({
-@@ -9228,7 +8095,7 @@ try {
+@@ -9226,7 +8093,7 @@
                  level: run.level,
                  classes: run.classRecipes,
                }),
@@ -30395,7 +30406,7 @@ index 3b0fee3ed..d716cc1ca 100644
              });
            if (!candidateHost?.owns(activeEntry)) {
              const previousBodies = availableBodies();
-@@ -9236,16 +8103,13 @@ try {
+@@ -9234,16 +8101,13 @@
                const result = getSummary(run);
                const tuning = recoverGameplayTuning(run.level);
                if (tuning) {
@@ -30415,7 +30426,7 @@ index 3b0fee3ed..d716cc1ca 100644
                    );
                  // Normal pressure clears retain the original picture/collection owner.
                  // Exact reconstruction above admits only this versioned adapter;
-@@ -9263,15 +8127,12 @@ try {
+@@ -9261,15 +8125,12 @@
                  mediaIdentityCatalog: flightPictures?.identityCatalog,
                });
              } catch (error) {
@@ -30435,7 +30446,7 @@ index 3b0fee3ed..d716cc1ca 100644
              persistProfile();
              updateBodies();
              paintMissions();
-@@ -9289,7 +8150,7 @@ try {
+@@ -9287,7 +8148,7 @@
                  );
                } catch (error) {
                  masteryAward = {
@@ -30444,7 +30455,7 @@ index 3b0fee3ed..d716cc1ca 100644
                    message: `Your picture is collected; the seal could not be checked. ${error.message}`,
                  };
                }
-@@ -9311,7 +8172,7 @@ try {
+@@ -9309,7 +8170,7 @@
              } catch {}
            }
          }
@@ -30453,7 +30464,7 @@ index 3b0fee3ed..d716cc1ca 100644
            if (recoverGameplayTuning(run.level)?.adminOverride)
              try {
                const old = JSON.parse(localStorage.getItem(sessionKey));
-@@ -9321,7 +8182,7 @@ try {
+@@ -9319,7 +8180,7 @@
                }
              } catch {
                warning(
@@ -30462,7 +30473,7 @@ index 3b0fee3ed..d716cc1ca 100644
                );
              }
            painter.startCelebration?.({
-@@ -9330,32 +8191,28 @@ try {
+@@ -9328,32 +8189,28 @@
              reduced: displayPreferences.snapshot().effectiveReducedEffects,
            });
            celebrationActive = true;
@@ -30508,7 +30519,7 @@ index 3b0fee3ed..d716cc1ca 100644
            );
          }
        }
-@@ -9365,8 +8222,8 @@ try {
+@@ -9363,8 +8220,8 @@
      }
      if (celebrationActive && !painter.celebrationStatus?.active) {
        celebrationActive = false;
@@ -30519,7 +30530,7 @@ index 3b0fee3ed..d716cc1ca 100644
      }
      storyDialog.syncSettings();
      if (soundtrackPlayer) {
-@@ -9377,53 +8234,44 @@ try {
+@@ -9375,53 +8232,44 @@
        }
        soundtrackPlayer.update(!paused && started, theme, run);
      } else sound.update(!paused && started, theme, run);
@@ -30595,7 +30606,7 @@ index 3b0fee3ed..d716cc1ca 100644
      const owner = flightPictures,
        controller = new AbortController(),
        ticket = ++pictureGeneration;
-@@ -9435,23 +8283,17 @@ try {
+@@ -9433,23 +8281,17 @@
      pictureThemePending = { ticket, controller };
      const feedback = themeFeedback.begin({
        message: `Preparing ${next.name || next.id} artwork…`,
@@ -30623,7 +30634,7 @@ index 3b0fee3ed..d716cc1ca 100644
        flightPictures = candidate;
        candidate = null;
        owner.dispose();
-@@ -9461,22 +8303,18 @@ try {
+@@ -9459,22 +8301,18 @@
        setTheme();
        paintMissions();
        refreshMissionBrief();
@@ -30649,7 +30660,7 @@ index 3b0fee3ed..d716cc1ca 100644
          });
          pictureFailure(error, notify);
        }
-@@ -9484,64 +8322,53 @@ try {
+@@ -9482,64 +8320,53 @@
        candidate?.dispose();
        if (pictureThemePending?.ticket === ticket) {
          pictureThemePending = null;
@@ -30738,7 +30749,7 @@ index 3b0fee3ed..d716cc1ca 100644
    function restartAvailable() {
      return (
        unfinishedFlight() &&
-@@ -9562,8 +8389,8 @@ try {
+@@ -9560,8 +8387,8 @@
    function invalidateRestart(message) {
      if (!restartRequest) return;
      restartRequest.cancelled = true;
@@ -30749,7 +30760,7 @@ index 3b0fee3ed..d716cc1ca 100644
        `${message} Keep this attempt, then choose Restart again when ready.`;
    }
    function requestRestart(opener) {
-@@ -9594,35 +8421,30 @@ try {
+@@ -9592,35 +8419,30 @@
        cancelled: false,
      };
      restartRequest = ticket;
@@ -30794,7 +30805,7 @@ index 3b0fee3ed..d716cc1ca 100644
      const ticket = restartRequest;
      if (!ticket || !restartDialog.open || ticket.cancelled) return;
      if (
-@@ -9638,66 +8460,55 @@ try {
+@@ -9636,66 +8458,55 @@
        levelIndex !== ticket.levelIndex ||
        libraryGeneration !== ticket.generation
      ) {
@@ -30880,7 +30891,7 @@ index 3b0fee3ed..d716cc1ca 100644
        return;
      }
      if (practice) {
-@@ -9706,10 +8517,10 @@ try {
+@@ -9704,10 +8515,10 @@
          levelIndex = 0;
        }
      } else {
@@ -30894,7 +30905,7 @@ index 3b0fee3ed..d716cc1ca 100644
          return;
        }
        if (selection.atEnd && !scenario) {
-@@ -9722,9 +8533,9 @@ try {
+@@ -9720,9 +8531,9 @@
          clearInput();
          sound.pause();
          paintMissions();
@@ -30906,7 +30917,7 @@ index 3b0fee3ed..d716cc1ca 100644
          return;
        }
        levelIndex = selection.levelIndex;
-@@ -9732,7 +8543,7 @@ try {
+@@ -9730,7 +8541,7 @@
      prepare();
      rememberSelection();
    };
@@ -30915,7 +30926,7 @@ index 3b0fee3ed..d716cc1ca 100644
      if (courseSession || courseEntry) return;
      leavePractice();
      levelIndex = 0;
-@@ -9740,51 +8551,45 @@ try {
+@@ -9738,51 +8549,45 @@
      demo = true;
      prepare();
      resume();
@@ -30986,15 +30997,16 @@ index 3b0fee3ed..d716cc1ca 100644
      }
      paintAppearanceRewards(entry);
    }
-@@ -9806,38 +8611,37 @@ try {
+@@ -9804,38 +8609,37 @@
        collectionContextKey =
          [...library.gallery]
            .sort((a, b) => b.completedAt.localeCompare(a.completedAt))
 -          .find((item) => collectionContexts.has(item.campaignKey))
 -          ?.campaignKey ?? currentKey;
-+          .find((item) => collectionContexts.has(item.campaignKey))?.campaignKey ?? currentKey;
-     }
+-    }
 -    $("collection-context").replaceChildren(
++          .find((item) => collectionContexts.has(item.campaignKey))?.campaignKey ?? currentKey;
++    }
 +    $('collection-context').replaceChildren(
        ...[...collectionContexts].map(
          ([key, entry]) => new Option(collectionContextLabel(entry), key),
@@ -31039,7 +31051,7 @@ index 3b0fee3ed..d716cc1ca 100644
      // Pausing may focus Resume; native return belongs to this entry control.
      if (
        opener?.isConnected &&
-@@ -9845,45 +8649,42 @@ try {
+@@ -9843,45 +8647,42 @@
        !opener.closest('[hidden],[inert],[aria-hidden="true"]')
      )
        opener.focus({ preventScroll: true });
@@ -31098,7 +31110,7 @@ index 3b0fee3ed..d716cc1ca 100644
          operation.status.finish({ message: exported.message });
          if (operation.run === run)
            notify(
-@@ -9891,45 +8692,39 @@ try {
+@@ -9889,45 +8690,39 @@
            );
        }
      } catch (error) {
@@ -31156,7 +31168,7 @@ index 3b0fee3ed..d716cc1ca 100644
    function suspendInteraction() {
      cancelUnifiedOpening?.();
      // Returning to focus must not revive a picker or launch requested before
-@@ -9941,33 +8736,25 @@ try {
+@@ -9939,33 +8734,25 @@
      controllerInactive = true;
      cancelModeDeparture({ close: true });
      cancelTitleFlight();
@@ -31196,7 +31208,7 @@ index 3b0fee3ed..d716cc1ca 100644
        return;
      }
      if (!soundtrackSuspended) return;
-@@ -9984,27 +8771,17 @@ try {
+@@ -9982,27 +8769,17 @@
        return;
      const listening = soundtrackPlayer?.snapshot();
      const blockedListening =
@@ -31231,7 +31243,7 @@ index 3b0fee3ed..d716cc1ca 100644
      if (document.hidden) {
        optionalWorlds?.close(false);
        suspendInteraction();
-@@ -10040,7 +8817,7 @@ try {
+@@ -10038,7 +8815,7 @@
            levelId: campaign.levels[levelIndex].id,
          };
        contentStatus(
@@ -31240,7 +31252,7 @@ index 3b0fee3ed..d716cc1ca 100644
        );
      }
    }
-@@ -10050,23 +8827,14 @@ try {
+@@ -10048,23 +8825,14 @@
      create() {
        this.boardSize = boardPaintSizeForRun(run);
        const { width, height } = this.boardSize;
@@ -31270,7 +31282,7 @@ index 3b0fee3ed..d716cc1ca 100644
          return;
        const dt = clamp(delta / 1000, 0, 1);
        update(dt);
-@@ -10077,14 +8845,8 @@ try {
+@@ -10075,14 +8843,8 @@
          this.scale.resize(width, height);
          this.cameras.main.setSize(width, height);
          this.boardSize = { width, height };
@@ -31287,7 +31299,7 @@ index 3b0fee3ed..d716cc1ca 100644
        }
        painter.draw(this.boardTexture.context, run, Math.min(dt, 0.1), {
          textFace: displayPreferences.snapshot().textFace,
-@@ -10092,9 +8854,8 @@ try {
+@@ -10090,9 +8852,8 @@
          displayCSSWidth: this.game.canvas.clientWidth,
          paused,
          reduced: displayPreferences.snapshot().effectiveReducedEffects,
@@ -31299,7 +31311,7 @@ index 3b0fee3ed..d716cc1ca 100644
          backdrop: flightPictures?.current(),
          celebrationPaused: document.hidden || dialogOpen(),
          defeatEffectsRunning: defeatEffectsRunning(),
-@@ -10104,7 +8865,7 @@ try {
+@@ -10102,7 +8863,7 @@
    }
    new Phaser.Game({
      type: Phaser.CANVAS,
@@ -31308,7 +31320,7 @@ index 3b0fee3ed..d716cc1ca 100644
      width: boardPaintSizeForRun(run).width,
      height: boardPaintSizeForRun(run).height,
      backgroundColor: theme.palette.field,
-@@ -10118,45 +8879,32 @@ try {
+@@ -10116,45 +8877,32 @@
      banner: false,
    });
    missionPicker = attachMissionPicker({
@@ -31365,7 +31377,7 @@ index 3b0fee3ed..d716cc1ca 100644
        if (packLaunchGuard.current(operation, packs)) {
          contentSwitchBusy = false;
          refreshContentSelectors();
-@@ -10166,40 +8914,25 @@ try {
+@@ -10164,40 +8912,25 @@
    }
    function departLibraryMission(context) {
      if (context.isCurrent?.() === false) return false;
@@ -31418,7 +31430,7 @@ index 3b0fee3ed..d716cc1ca 100644
        const options = {
          seed,
          turnPolicy,
-@@ -10207,44 +8940,27 @@ try {
+@@ -10205,44 +8938,27 @@
          classRecipes: entry.classRecipes,
        };
        const pictures = newFlightPictures({
@@ -31473,7 +31485,7 @@ index 3b0fee3ed..d716cc1ca 100644
        if (selected) {
          const row = unifiedLibrary.library.find(context.libraryMissionId);
          retainedLibraryOwner = {
-@@ -10255,10 +8971,10 @@ try {
+@@ -10253,10 +8969,10 @@
        }
        return selected;
      }
@@ -31486,7 +31498,7 @@ index 3b0fee3ed..d716cc1ca 100644
        isCurrent: () => revision === unifiedLaunchRevision && !document.hidden,
        onStarted: () => {
          const row = unifiedLibrary?.library.find(context.libraryMissionId);
-@@ -10272,8 +8988,7 @@ try {
+@@ -10270,8 +8986,7 @@
        },
        onSelected: () => {},
        onCancelled: () => {
@@ -31496,7 +31508,7 @@ index 3b0fee3ed..d716cc1ca 100644
          unifiedChooser?.restore();
          unifiedChooser?.reveal(context.libraryMissionId);
          return true;
-@@ -10285,9 +9000,7 @@ try {
+@@ -10283,9 +8998,7 @@
        ...selection,
        onStatus: (status) => {
          if (launch.isCurrent())
@@ -31507,7 +31519,7 @@ index 3b0fee3ed..d716cc1ca 100644
        },
      });
      // An unfinished-flight replacement owns the pending action. Do not reopen
-@@ -10298,12 +9011,9 @@ try {
+@@ -10296,12 +9009,9 @@
      if (unifiedLibrary) return unifiedLibrary;
      if (unifiedLibraryLoading) return unifiedLibraryLoading;
      unifiedLibraryLoading = (async () => {
@@ -31523,7 +31535,7 @@ index 3b0fee3ed..d716cc1ca 100644
        const libraryThemes = authoredJourneyUsesActorMaterials(route.id)
          ? journeyActorThemeCandidates(originalThemes, {
              includeOriginals: route.preserveOriginalThemes === true,
-@@ -10319,9 +9029,7 @@ try {
+@@ -10317,9 +9027,7 @@
          });
        // Compile the other mode through its own validated runtime adapter. The
        // combined browsing identity never grants this Solo host Versus ownership.
@@ -31534,7 +31546,7 @@ index 3b0fee3ed..d716cc1ca 100644
        const versusPreview = createCandidateVersusHost(route.source, {
          themes: libraryThemes,
          corePackIds: route.corePackIds,
-@@ -10337,67 +9045,44 @@ try {
+@@ -10335,67 +9043,44 @@
        ) =>
          host
            .select(mission, difficulty)
@@ -31616,7 +31628,7 @@ index 3b0fee3ed..d716cc1ca 100644
        );
        spatialEditionPreview?.dispose();
        spatialEditionPreview = await createSpatialEditionSources({
-@@ -10410,8 +9095,8 @@ try {
+@@ -10408,8 +9093,8 @@
          index,
          journeySources: [
            combineJourneyLibrarySources([
@@ -31627,7 +31639,7 @@ index 3b0fee3ed..d716cc1ca 100644
            ]),
            ...teamSources,
            ...spatialEditionPreview.sources,
-@@ -10425,14 +9110,14 @@ try {
+@@ -10423,14 +9108,14 @@
                classRecipes: entry.classRecipes,
                classId: entry.classRecipes[0].id,
              });
@@ -31644,7 +31656,7 @@ index 3b0fee3ed..d716cc1ca 100644
            } catch {}
            return supported;
          },
-@@ -10446,84 +9131,65 @@ try {
+@@ -10444,84 +9129,65 @@
          availabilityExternal: (row, pack) => {
            if (!pack)
              return isRelease
@@ -31749,7 +31761,7 @@ index 3b0fee3ed..d716cc1ca 100644
              );
            })
          : null;
-@@ -10536,10 +9202,10 @@ try {
+@@ -10534,10 +9200,10 @@
            state.read() ??
            (returnedRow
              ? {
@@ -31764,7 +31776,7 @@ index 3b0fee3ed..d716cc1ca 100644
                  selectedId: returnedRow.id,
                  scroll: 0,
                }
-@@ -10550,7 +9216,7 @@ try {
+@@ -10548,7 +9214,7 @@
            pause(true);
            clearInput();
            journeySkipArmed = null;
@@ -31773,7 +31785,7 @@ index 3b0fee3ed..d716cc1ca 100644
          },
          onReturn: (opener) => {
            clearInput();
-@@ -10564,18 +9230,15 @@ try {
+@@ -10562,18 +9228,15 @@
        // Keep the native settings and their guarded handlers, but not the old
        // pack/level/campaign browser. Settings describe the current Solo host,
        // independently of the library's cross-mode browsing filter.
@@ -31799,7 +31811,7 @@ index 3b0fee3ed..d716cc1ca 100644
        }
        unifiedLibrary = result;
        return result;
-@@ -10636,18 +9299,18 @@ try {
+@@ -10634,18 +9297,18 @@
      // intent immediately; a not-yet-mounted dialog cannot block its resume.
      ++resultAttemptEpoch;
      const parent = controllerDialog();
@@ -31825,7 +31837,7 @@ index 3b0fee3ed..d716cc1ca 100644
      let failed = false;
      const cancel = () => {
        if (revision === unifiedOpenRevision) ++unifiedOpenRevision;
-@@ -10670,7 +9333,7 @@ try {
+@@ -10668,7 +9331,7 @@
          document.hidden ||
          document.hasFocus?.() === false ||
          controllerDialog() !== parent ||
@@ -31834,7 +31846,7 @@ index 3b0fee3ed..d716cc1ca 100644
          run !== oldRun ||
          started !== wasStarted ||
          !paused
-@@ -10678,19 +9341,18 @@ try {
+@@ -10676,19 +9339,18 @@
          return;
        unifiedChooser.open(opener, options);
        if (options?.focusSetup) {
@@ -31857,7 +31869,7 @@ index 3b0fee3ed..d716cc1ca 100644
          warning(`Mission library could not open: ${error.message}`);
        }
      } finally {
-@@ -10702,85 +9364,74 @@ try {
+@@ -10700,85 +9362,74 @@
      }
    }
    if (journeyEnabled) {
@@ -31964,7 +31976,7 @@ index 3b0fee3ed..d716cc1ca 100644
    }
    if (journeyPreferences) {
      let preferenceRevision = journeyPreferences.snapshot().revision,
-@@ -10793,41 +9444,30 @@ try {
+@@ -10791,41 +9442,30 @@
          cancelResultAttempt();
        }
        exportSequence++;
@@ -32018,7 +32030,7 @@ index 3b0fee3ed..d716cc1ca 100644
              `Export failed: ${error.message}. Your session difficulty choice is still here.`;
        }
      };
-@@ -10837,162 +9477,112 @@ try {
+@@ -10835,162 +9475,112 @@
      getLibrary: () => packs,
      getUsage: () => chapterSnapshot?.usage,
      sourceChapters: !practiceSession
@@ -32050,7 +32062,44 @@ index 3b0fee3ed..d716cc1ca 100644
 -                return { status: snapshot.reason };
 -              const installed = snapshot.index.chapters.some(
 -                (d) => d.id === descriptor.id,
--              );
++      ? SOURCE_EXTERNAL_EDITIONS.map(({ descriptor, name, description, mode, levels }) => ({
++          id: descriptor.id,
++          controlId:
++            descriptor.id === SOURCE_EXTERNAL_CHAPTER.id ? 'source' : `source-${descriptor.id}`,
++          name,
++          description,
++          mode,
++          themeId: descriptor.themeId,
++          levels,
++          sourceOnly: !isRelease,
++          bytes: descriptor.pack.bytes + descriptor.media.bytes,
++          download: isRelease
++            ? (options) => installSourceChapter(descriptor.id, null, { ...options, download: true })
++            : null,
++          backupSupported: !!externalBackup,
++          async inspect({ signal }) {
++            const snapshot = await inspectChapters({ signal });
++            if (snapshot.status !== 'checked') return { status: snapshot.reason };
++            const installed = snapshot.index.chapters.some((d) => d.id === descriptor.id);
++            if (installed) await externalChapters.readiness(snapshot, descriptor.id, { signal });
++            return { status: installed ? 'installed' : 'absent' };
++          },
++          install: (files, options) => installSourceChapter(descriptor.id, files, options),
++          async play({ signal, onStatus, launch }) {
++            if (!storedStateAdopted || !persistenceReady)
++              throw new Error('Reload after recovery before playing this chapter.');
++            const snapshot = await checkedChapters({ signal });
++            await externalChapters.readiness(snapshot, descriptor.id, { signal });
++            assertWorldPlay(launch);
++            adoptContentCatalog(contentFromChapters(snapshot));
++            const pack = packs.packs.find((item) => item.id === descriptor.id);
++            return requestWorldPlay(pack, { signal, launch, onStatus });
++          },
++          async choose({ signal, onStatus, launch }) {
++            if (!storedStateAdopted || !persistenceReady)
++              throw new Error(
++                'Reload after recovery to adopt the preserved profile before choosing this chapter.',
+               );
 -              if (installed)
 -                await externalChapters.readiness(snapshot, descriptor.id, {
 -                  signal,
@@ -32103,44 +32152,7 @@ index 3b0fee3ed..d716cc1ca 100644
 -                resolvePackCampaign(pack, pack.campaigns[0].id),
 -                launch,
 -                onStatus,
-+      ? SOURCE_EXTERNAL_EDITIONS.map(({ descriptor, name, description, mode, levels }) => ({
-+          id: descriptor.id,
-+          controlId:
-+            descriptor.id === SOURCE_EXTERNAL_CHAPTER.id ? 'source' : `source-${descriptor.id}`,
-+          name,
-+          description,
-+          mode,
-+          themeId: descriptor.themeId,
-+          levels,
-+          sourceOnly: !isRelease,
-+          bytes: descriptor.pack.bytes + descriptor.media.bytes,
-+          download: isRelease
-+            ? (options) => installSourceChapter(descriptor.id, null, { ...options, download: true })
-+            : null,
-+          backupSupported: !!externalBackup,
-+          async inspect({ signal }) {
-+            const snapshot = await inspectChapters({ signal });
-+            if (snapshot.status !== 'checked') return { status: snapshot.reason };
-+            const installed = snapshot.index.chapters.some((d) => d.id === descriptor.id);
-+            if (installed) await externalChapters.readiness(snapshot, descriptor.id, { signal });
-+            return { status: installed ? 'installed' : 'absent' };
-+          },
-+          install: (files, options) => installSourceChapter(descriptor.id, files, options),
-+          async play({ signal, onStatus, launch }) {
-+            if (!storedStateAdopted || !persistenceReady)
-+              throw new Error('Reload after recovery before playing this chapter.');
-+            const snapshot = await checkedChapters({ signal });
-+            await externalChapters.readiness(snapshot, descriptor.id, { signal });
-+            assertWorldPlay(launch);
-+            adoptContentCatalog(contentFromChapters(snapshot));
-+            const pack = packs.packs.find((item) => item.id === descriptor.id);
-+            return requestWorldPlay(pack, { signal, launch, onStatus });
-+          },
-+          async choose({ signal, onStatus, launch }) {
-+            if (!storedStateAdopted || !persistenceReady)
-+              throw new Error(
-+                'Reload after recovery to adopt the preserved profile before choosing this chapter.',
-               );
+-              );
 -            },
 -          }),
 -        )
@@ -32256,7 +32268,7 @@ index 3b0fee3ed..d716cc1ca 100644
      },
      onOpen: () => {
        pause(true);
-@@ -11010,7 +9600,7 @@ try {
+@@ -11008,7 +9598,7 @@
      onRead: (request) => controllerNavigation.beginReading(request),
      onManage: () => {
        clearInput();
@@ -32265,7 +32277,7 @@ index 3b0fee3ed..d716cc1ca 100644
      },
    });
    if (!practiceSession) {
-@@ -11023,11 +9613,11 @@ try {
+@@ -11021,11 +9611,11 @@
    }
    gameShell = attachGameShell({
      training: courseSession,
@@ -32279,7 +32291,7 @@ index 3b0fee3ed..d716cc1ca 100644
        return true;
      },
      focusMissions: () => missionPicker?.focusSelectedChapter(),
-@@ -11035,39 +9625,36 @@ try {
+@@ -11033,39 +9623,36 @@
      pause,
      getTopDialog: controllerDialog,
      canContinue: () =>
@@ -32328,7 +32340,7 @@ index 3b0fee3ed..d716cc1ca 100644
      },
      onTitleCancel: cancelTitleFlight,
      onModeDeparture: requestModeDeparture,
-@@ -11076,18 +9663,17 @@ try {
+@@ -11074,18 +9661,17 @@
      onMissions: !practiceSession
        ? (opener) =>
            journeyChooser.open(opener, {
@@ -32352,7 +32364,7 @@ index 3b0fee3ed..d716cc1ca 100644
      link.onclick = (event) => {
        if (
          !practiceSession &&
-@@ -11098,24 +9684,24 @@ try {
+@@ -11096,24 +9682,24 @@
        ) {
          event.preventDefault();
          void openUnifiedMissions(link, {
@@ -32384,7 +32396,7 @@ index 3b0fee3ed..d716cc1ca 100644
    void initializeSoundtrack();
    if (autoplayPackLaunch)
      requestAnimationFrame(() => {
-@@ -11123,11 +9709,10 @@ try {
+@@ -11121,11 +9707,10 @@
        if (
          canAutoStartPackLaunch({
            current: packLaunchGuard.current(autoplayPackLaunch.ticket, packs),
@@ -32398,7 +32410,7 @@ index 3b0fee3ed..d716cc1ca 100644
            run,
            expectedRun: autoplayPackLaunch.run,
            entry: activeEntry,
-@@ -11142,11 +9727,11 @@ try {
+@@ -11140,11 +9725,11 @@
      });
    if (globalThis.RevealLineBoot) globalThis.RevealLineBoot.ready();
    else {
@@ -32413,7 +32425,7 @@ index 3b0fee3ed..d716cc1ca 100644
    }
    if (libraryHandoff && !practiceSession) {
      const revision = ++unifiedOpenRevision;
-@@ -11174,30 +9759,26 @@ try {
+@@ -11172,30 +9757,26 @@
          )
            return;
          const row = host.library.find(libraryHandoff);
@@ -32453,7 +32465,7 @@ index 3b0fee3ed..d716cc1ca 100644
            unifiedChooser.reveal(row.id);
          }
        } catch (error) {
-@@ -11212,12 +9793,11 @@ try {
+@@ -11210,12 +9791,11 @@
      exactReturn &&
      !document.hidden &&
      document.hasFocus?.() !== false &&
@@ -32468,7 +32480,7 @@ index 3b0fee3ed..d716cc1ca 100644
    }
    const workshopReturn = readWorkshopReturn(location.search);
    if (
-@@ -11229,8 +9809,7 @@ try {
+@@ -11227,8 +9807,7 @@
      workshopReturn &&
      !document.hidden &&
      document.hasFocus?.() !== false &&
@@ -32478,7 +32490,7 @@ index 3b0fee3ed..d716cc1ca 100644
      gameShell?.openWorkshop({ tool: workshopReturn.id })
    )
      clearWorkshopReturn(window);
-@@ -11240,23 +9819,20 @@ try {
+@@ -11238,23 +9817,20 @@
    if (
      !document.hidden &&
      document.hasFocus?.() !== false &&

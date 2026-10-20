@@ -1,3 +1,5 @@
+> Retained historical excerpt after an ownership migration. Exact original bytes are preserved separately. Original totals and verification statements describe the original scope; this excerpt is not a current qualification or a complete test result.
+
 # Demo variety, audio and privacy follow-up — 30 September 2026
 
 ## Scope
@@ -10,7 +12,6 @@ The implementation now:
 - shows the exact verified earned original in demo, completion and takeover practice, while the opt-in privacy setting conceals every demo/practice picture without changing Collection or ordinary play;
 - supplies sixteen authored recordings across all twelve base maps, including six readable mistake scenes and two complete losses;
 - gives every other compatible installed Standard level a lazy, seeded improvised source recorded and strictly replay-verified through the ordinary core;
-- retains exact installed campaign, mission, class roster, theme and picture ownership, including isolated Coupa and DroneAid editions;
 - changes the performance seed on each improvised preparation so a repeated level does not replay one fixed route.
 
 ## Authored mistake pacing
@@ -32,7 +33,6 @@ All sixteen authored recordings reproduce their complete authoritative checkpoin
 
 The focused runtime cohort passes **47 tests** across audio feedback, earned-picture host behavior, settings, practice/captions, improvised playback, authored recordings, source isolation and theme selection. On the rebased integration source, the final recording/source/improv subset passes **27/27** and the mounted Confirm/Back, experience and host cohort passes **35/35**. `node scripts/build-demo-recordings.mjs` verifies **16 authored recordings across 12 unchanged campaign levels**.
 
-The source cohort exercises the real current Journey composition and all public `coupa-all`, `droneaid-nl-community` and `droneaid-community` edition bootstraps. Every installed Standard level receives exactly its own compatible source; public editions expose only improvised sources owned by that edition. Gentle entries do not duplicate scenes. Same map IDs in distinct installed owners remain distinct campaign and level keys.
 
 Scoped ESLint, Prettier, localization and whitespace checks pass. The ordinary build-inventory assertion confirms every dynamic demo asset and Worker module is collected. After the latest-main rebase and Settings integration fix, the production build passes with 2,661 files and manifest SHA-256 `992a80f5673d6bf77dd81e251de1881cd20f0accfff3a4f03aebe388cc35cef6`; [the retained output](build.txt) records its version and path. An earlier attempt exhausted local disk while writing; removing only that task-owned ignored `dist` output and repeating the unchanged build succeeded. These tests use modeled DOM/input and local assets; they do not substitute for Safari/iPhone hardware, physical controllers/touch, actual speakers, battery/thermal measurements or unfamiliar viewers.
 

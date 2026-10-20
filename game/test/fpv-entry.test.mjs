@@ -32,7 +32,7 @@ test('bundled FPV launches and returns to the exact game entry across source, ho
     'http://127.0.0.1:8777/game/?journey=legacy',
     'https://example.test/project/game/index.html?journey=legacy',
     'https://example.test/project/releases/v1.2.3/site/game/index.html',
-    'https://example.test/project/editions/coupa/releases/v1.2.3/site/game/company.html',
+    'https://example.test/project/editions/sample/releases/v1.2.3/site/game/company.html',
     'capacitor://localhost/game/index.html',
     'file:///app/site/game/index.html',
   ]) {
@@ -87,7 +87,7 @@ test('World SIM returns to the actual arcade mode, query and community without b
   for (const root of [
     'https://example.test/project/',
     'https://example.test/project/releases/v1.2.3/site/',
-    'https://example.test/project/editions/coupa/releases/v1.2.3/site/',
+    'https://example.test/project/editions/sample/releases/v1.2.3/site/',
     'capacitor://localhost/',
   ]) {
     for (const entry of [
@@ -121,7 +121,7 @@ test('World SIM returns to the actual arcade mode, query and community without b
 test('Snake launch keeps the selected seats and bounded cosmetics within the current build', () => {
   for (const root of [
     'https://example.test/project/',
-    'https://example.test/project/editions/coupa/releases/v1.2.3/site/',
+    'https://example.test/project/editions/sample/releases/v1.2.3/site/',
     'capacitor://localhost/',
     'file:///app/site/',
   ]) {

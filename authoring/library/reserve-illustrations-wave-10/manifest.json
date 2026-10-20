@@ -43,19 +43,6 @@
       "width": 1774,
       "height": 887,
       "runtimeAdopted": false
-    },
-    {
-      "id": "spend-storybook-rail-depot",
-      "themeId": "coupa",
-      "theme": "Spend Network",
-      "title": "Storybook Rail Depot",
-      "prompt": "prompts/spend-storybook-rail-depot.txt",
-      "file": "originals/spend-storybook-rail-depot.png",
-      "bytes": 1803179,
-      "sha256": "f0dd68a9228b140047ca071e9526679cfeea3b29a921b7f0434120f3186e1ba0",
-      "width": 1774,
-      "height": 887,
-      "runtimeAdopted": false
     }
   ],
   "selectionProvenance": "provenance/originals.json"

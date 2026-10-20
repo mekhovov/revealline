@@ -1,3 +1,5 @@
+> Retained historical excerpt after an ownership migration. Exact original bytes are preserved separately. Original totals and verification statements describe the original scope; this excerpt is not a current qualification or a complete test result.
+
 # Wave10 reserve illustrations at 320px
 
 Root completed and displayed the native browser review on 2026-09-15 using `http://127.0.0.1:58212/`. All four originals decoded at 1774×887 pixels; each image's DOM display measured exactly 320×160 CSS pixels with its original aspect ratio and standard browser resampling. The wrapper loaded the unchanged images from the existing catalog at port 55334, without new copies or image derivatives.
@@ -9,7 +11,6 @@ The selected originals are pinned to source `091936e27c3b9f1c061081ca93827014a92
 | FPV Front     | Sunflower Workbench      | `fpv-sunflower-workbench.png`          | `5b5997e3f867fa6e8522a437f7917346566ad6e53e794fe2809108206e407ba2` |
 | Ukraine Atlas | Tidal Mosaic Observatory | `ukraine-tidal-mosaic-observatory.png` | `63005624f666329d77b2fee035f9163e846df64ab44b4b6002ea59e0d52ed7cc` |
 | 1994 Forever  | Neon Skate Arcade        | `retro-neon-skate-arcade.png`          | `6fcd9f1c294ab1b4215998e74b842380748aa9816ede9d18eecd487b649fd691` |
-| Spend Network | Storybook Rail Depot     | `spend-storybook-rail-depot.png`       | `f0dd68a9228b140047ca071e9526679cfeea3b29a921b7f0434120f3186e1ba0` |
 
 Root judged the four compositions distinct and readable at this display size: the FPV workbench and sunflower depth; the observatory and coastal steps; the skate/rink and arcade; and the train, parcels and depot. This closes the Wave10 small-display **source-art** review gate only.
 

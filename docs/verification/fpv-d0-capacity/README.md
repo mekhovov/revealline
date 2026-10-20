@@ -1,3 +1,5 @@
+> Retained historical excerpt after an ownership migration. Exact original bytes are preserved separately. Original totals and verification statements describe the original scope; this excerpt is not a current qualification or a complete test result.
+
 # Approved offline capacity increment — 3 October 2026
 
 The owner explicitly approved a 72 MiB shared-core budget after reviewing
@@ -25,7 +27,6 @@ raised.
 - All 18 editions compile with normal guards; unchanged working-tree source
   capture. Largest: droneaid-nl-community, 67,464,716 bytes / 924 files.
   See `editions.json`. These are in-memory compilations, not published archives.
-- Coupa-all compiled twice with identical outputs.
 - Actual Codex in-app browser and production worker installed exactly 75,497,472
   bytes, then staged a second verified version while preserving the active first
   version. A corrupt third version was rejected; the original still verified

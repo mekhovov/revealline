@@ -1,19 +1,14 @@
 # Reserve illustrations · wave 1
 
-Four source illustrations for a future picture library: one each for FPV Front, Ukraine Atlas, 1994 Forever and the fictional Spend Network. This contributes four reserve works toward the planned forty. It does not add maps, register a pack, change runtime assets, or complete an animation milestone.
-
 | Theme | Original | Composition |
 | --- | --- | --- |
 | FPV Front | [Sunflower Signal](originals/fpv-sunflower-signal.png) | A foreground FPV camera and four motor hubs, blue/yellow battery straps, sunflowers, a fictional grain terminal and distant equipment. |
 | Ukraine Atlas | [Potter’s Light](originals/ukraine-potters-light.png) | Cream ceramics, invented bird/floral decoration, a blue courtyard gate, mountain village and warm kiln. |
 | 1994 Forever | [Rooftop Radio](originals/retro-rooftop-radio.png) | A cassette boombox and headphones on a rooftop table, sunset skyline and glowing greenhouse. |
-| Spend Network | [Circular Workshop](originals/spend-circular-workshop.png) | An original friendly robot sorting reusable materials, a brass balance and a bright cooperative workshop. |
 
 All four are untouched 1774 × 887, 8-bit RGB PNGs with an exact 2:1 aspect ratio. Together they contain **11,283,511 bytes**. The built-in image generator produced each image in a separate text-only call. No source image was passed to those calls. Exact prompts, tool output paths, file hashes, PNG chunk checks and clone provenance are retained in [provenance/originals.json](provenance/originals.json) and [provenance/tool-responses.json](provenance/tool-responses.json). The requested 1792 × 896 dimensions were a target; the actual returned dimensions are preserved without resampling.
 
 The visual brief uses broad foreground shapes, stepped edges, luminous light and richer reward detail. These are pixel-art-inspired illustrations, without a claimed fixed palette or a measured pixel grid. Each composition offers a primary foreground subject, a middle-distance discovery and a quieter distant region for progressive reveal. That is a composition review, not evidence from a playable reveal route. Any future map must still test its own capture masks, crop behavior and reward timing.
-
-The Ukrainian pottery palette was informed by UNESCO’s [description of the tradition of Kosiv painted ceramics](https://ich.unesco.org/en/RL/tradition-of-kosiv-painted-ceramics-01456). The ornaments, architecture and scene are invented; they do not reproduce a named specimen or certify historical accuracy. The FPV scene is fictional equipment imagery without a real operation or current location. The Spend scene depicts a fictional reuse/procurement world, not actual Coupa product features.
 
 Known limits remain visible in the originals. The FPV image crops part of the far-left propeller at the frame edge; it is a wide illustration, not a complete body sprite. The Spend image contains a generic recycling symbol and leaf mark despite the no-emblems prompt preference; no company identity is asserted. Fine ceramic ornament, hardware markings and skyline details naturally lose definition at small display sizes. No complete rotor rig, physical-device readability, gameplay, animation or release adoption is claimed.
 

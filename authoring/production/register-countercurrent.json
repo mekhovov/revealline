@@ -1,11 +1,26 @@
 {
   "format": "revealline-production-register.v1",
-  "revision": 4,
+  "revision": 5,
   "basis": {
     "maps": 29,
-    "themes": ["fpv", "ukraine", "retro", "coupa"],
-    "classes": ["scout", "bomber", "carrier", "interceptor", "fiber", "impact", "trapper"],
-    "treatments": ["compact", "detailed"],
+    "themes": [
+      "fpv",
+      "ukraine",
+      "retro"
+    ],
+    "classes": [
+      "scout",
+      "bomber",
+      "carrier",
+      "interceptor",
+      "fiber",
+      "impact",
+      "trapper"
+    ],
+    "treatments": [
+      "compact",
+      "detailed"
+    ],
     "presentationBasis": "player-class",
     "storiesPerTheme": 3,
     "reserves": 40,
@@ -14,17 +29,19 @@
   "context": {
     "sourceCommit": "62a92651b1dc51fc74ca25a545dd9bde35c2574c",
     "limitations": [
+      "Selected ownership scope from the prior register. Retained evidence is historical context; this selection does not award new approvals.",
       "Nine proposed geometry families are not an approved final 29-map campaign. Theme editions reuse those families.",
       "Historical delivery is recorded separately from unfilled final production quality assessments; no visual, human balance or listening approval is fabricated.",
       "The twelve Route Worlds/Sentinel originals are source integrated at 0106; release 036 was not accepted when this register was authored.",
       "The five external entries carry fifteen originals, including three reused FPV Pressure originals. They do not add fifteen new pictures.",
       "Dawn is one silent eight-second story. Native export-to-disk and full backup qualification retain the stated delivery limits.",
-      "Seven player classes times four themes times two treatments defines 56 slots. Enemies are supporting handles, not a second completed set.",
+      "Seven player classes times three themes times two treatments defines 42 slots. Enemies are supporting handles, not a second completed set.",
       "Thirteen licensed candidate songs remain separate unregistered intake context. Five synth recipes are not five finished, listened recordings.",
       "Files and source references do not perform inspection or permit changing saved, earned or released ownership.",
       "Revision2 adds nine independently generated Sentinel theme stills and exact proposed owners; it adds no layout families or production assessments. The baseline source commit remains context, and new immutable source metadata is pinned per work.",
       "Revision3 appends twelve Fracture originals and three proposed geometry families in the existing unassigned-10, unassigned-11 and unassigned-12 planning slots. Four themes share each family. Earlier context is historical; exact source metadata is pinned per work. This adds no quality assessments, delivery approvals or story works.",
-      "Revision4 appends twelve Countercurrent originals and three proposed geometry families in the existing unassigned-13, unassigned-14 and unassigned-15 planning slots. Four themes share each physical family. Earlier source and delivery context remains historical; exact immutable metadata is pinned per work. This adds no quality assessments, delivery approvals or story works."
+      "Revision4 appends twelve Countercurrent originals and three proposed geometry families in the existing unassigned-13, unassigned-14 and unassigned-15 planning slots. Four themes share each physical family. Earlier source and delivery context remains historical; exact immutable metadata is pinned per work. This adds no quality assessments, delivery approvals or story works.",
+      "Projected metadata identities follow the retained content inputs. This rebinding does not approve artwork, sound, balance, or a release."
     ]
   },
   "layouts": [
@@ -33,8 +50,8 @@
       "title": "Orchard Crossing",
       "source": {
         "path": "authoring/library/four-worlds-chapters/chapters.json",
-        "bytes": 5847,
-        "sha256": "8fd00b9607aa8b4dba2bd8151d560938ef705f061ce6d4068b2ce028d7c42920"
+        "bytes": 4407,
+        "sha256": "9fa0e9f97d8837387f0f9e0ae138b00976bedd28de6823268af11e8bdd064079"
       },
       "variantOf": null,
       "owners": [
@@ -61,12 +78,6 @@
           "levelId": "original-retro-midnight-arcade",
           "levelRevision": "1",
           "themeId": "retro"
-        },
-        {
-          "baseCampaignKey": "original-spend-shared-routes/1/7a36efe129711f19",
-          "levelId": "original-spend-shared-harbor",
-          "levelRevision": "1",
-          "themeId": "coupa"
         }
       ]
     },
@@ -75,8 +86,8 @@
       "title": "Courtyard Exits",
       "source": {
         "path": "authoring/library/four-worlds-chapters/chapters.json",
-        "bytes": 5847,
-        "sha256": "8fd00b9607aa8b4dba2bd8151d560938ef705f061ce6d4068b2ce028d7c42920"
+        "bytes": 4407,
+        "sha256": "9fa0e9f97d8837387f0f9e0ae138b00976bedd28de6823268af11e8bdd064079"
       },
       "variantOf": null,
       "owners": [
@@ -103,12 +114,6 @@
           "levelId": "original-retro-video-rental",
           "levelRevision": "1",
           "themeId": "retro"
-        },
-        {
-          "baseCampaignKey": "original-spend-shared-routes/1/7a36efe129711f19",
-          "levelId": "original-spend-city-wins",
-          "levelRevision": "1",
-          "themeId": "coupa"
         }
       ]
     },
@@ -117,8 +122,8 @@
       "title": "Night Crossfire",
       "source": {
         "path": "authoring/library/four-worlds-chapters/chapters.json",
-        "bytes": 5847,
-        "sha256": "8fd00b9607aa8b4dba2bd8151d560938ef705f061ce6d4068b2ce028d7c42920"
+        "bytes": 4407,
+        "sha256": "9fa0e9f97d8837387f0f9e0ae138b00976bedd28de6823268af11e8bdd064079"
       },
       "variantOf": null,
       "owners": [
@@ -145,12 +150,6 @@
           "levelId": "original-retro-last-train",
           "levelRevision": "1",
           "themeId": "retro"
-        },
-        {
-          "baseCampaignKey": "original-spend-shared-routes/1/7a36efe129711f19",
-          "levelId": "original-spend-market-workshop",
-          "levelRevision": "1",
-          "themeId": "coupa"
         }
       ]
     },
@@ -160,7 +159,7 @@
       "source": {
         "path": "authoring/library/fpv-route-choices/distribution.json",
         "bytes": 3446,
-        "sha256": "c85097a58e9c84037083907484cbac739592ccbebb5156ac6f27afab76fc1dab"
+        "sha256": "ad12de5c544adf02a653e3e0ba12ca6a76c1429bcc27dbe9a6683d9202cafd09"
       },
       "variantOf": null,
       "owners": [
@@ -181,12 +180,6 @@
           "levelId": "route-worlds-retro-foundry",
           "levelRevision": "1",
           "themeId": "retro"
-        },
-        {
-          "baseCampaignKey": "route-worlds-coupa/1/708c553521008c7d",
-          "levelId": "route-worlds-coupa-foundry",
-          "levelRevision": "1",
-          "themeId": "coupa"
         }
       ]
     },
@@ -196,7 +189,7 @@
       "source": {
         "path": "authoring/library/fpv-route-choices/distribution.json",
         "bytes": 3446,
-        "sha256": "c85097a58e9c84037083907484cbac739592ccbebb5156ac6f27afab76fc1dab"
+        "sha256": "ad12de5c544adf02a653e3e0ba12ca6a76c1429bcc27dbe9a6683d9202cafd09"
       },
       "variantOf": null,
       "owners": [
@@ -217,12 +210,6 @@
           "levelId": "route-worlds-retro-depot",
           "levelRevision": "1",
           "themeId": "retro"
-        },
-        {
-          "baseCampaignKey": "route-worlds-coupa/1/708c553521008c7d",
-          "levelId": "route-worlds-coupa-depot",
-          "levelRevision": "1",
-          "themeId": "coupa"
         }
       ]
     },
@@ -232,7 +219,7 @@
       "source": {
         "path": "authoring/library/fpv-route-choices/distribution.json",
         "bytes": 3446,
-        "sha256": "c85097a58e9c84037083907484cbac739592ccbebb5156ac6f27afab76fc1dab"
+        "sha256": "ad12de5c544adf02a653e3e0ba12ca6a76c1429bcc27dbe9a6683d9202cafd09"
       },
       "variantOf": null,
       "owners": [
@@ -253,12 +240,6 @@
           "levelId": "route-worlds-retro-switchback",
           "levelRevision": "1",
           "themeId": "retro"
-        },
-        {
-          "baseCampaignKey": "route-worlds-coupa/1/708c553521008c7d",
-          "levelId": "route-worlds-coupa-switchback",
-          "levelRevision": "1",
-          "themeId": "coupa"
         }
       ]
     },
@@ -321,8 +302,8 @@
       "title": "Listening Court",
       "source": {
         "path": "authoring/library/sentinel-theme-chapters/editions.json",
-        "bytes": 8414,
-        "sha256": "1e14923784d75f59f2537cf9a14fa2c127b92ad77b3feaebfb80658e88136b88"
+        "bytes": 5679,
+        "sha256": "bfac4c017bd955f0185e8eabe45470be3e5044e0fef7fde6c294c8f1b5fa5a7f"
       },
       "variantOf": "sentinel-listening",
       "owners": [
@@ -343,12 +324,6 @@
           "levelId": "sentinel-circuit-retro-listening-court",
           "levelRevision": "1",
           "themeId": "retro"
-        },
-        {
-          "baseCampaignKey": "sentinel-circuit-coupa/1/8459eb3ba67608e6",
-          "levelId": "sentinel-circuit-coupa-listening-court",
-          "levelRevision": "1",
-          "themeId": "coupa"
         }
       ]
     },
@@ -357,8 +332,8 @@
       "title": "Switchyard Gates",
       "source": {
         "path": "authoring/library/sentinel-theme-chapters/editions.json",
-        "bytes": 8414,
-        "sha256": "1e14923784d75f59f2537cf9a14fa2c127b92ad77b3feaebfb80658e88136b88"
+        "bytes": 5679,
+        "sha256": "bfac4c017bd955f0185e8eabe45470be3e5044e0fef7fde6c294c8f1b5fa5a7f"
       },
       "variantOf": "sentinel-switchyard",
       "owners": [
@@ -379,12 +354,6 @@
           "levelId": "sentinel-circuit-retro-switchyard-gates",
           "levelRevision": "1",
           "themeId": "retro"
-        },
-        {
-          "baseCampaignKey": "sentinel-circuit-coupa/1/8459eb3ba67608e6",
-          "levelId": "sentinel-circuit-coupa-switchyard-gates",
-          "levelRevision": "1",
-          "themeId": "coupa"
         }
       ]
     },
@@ -393,8 +362,8 @@
       "title": "Open the Circuit",
       "source": {
         "path": "authoring/library/sentinel-theme-chapters/editions.json",
-        "bytes": 8414,
-        "sha256": "1e14923784d75f59f2537cf9a14fa2c127b92ad77b3feaebfb80658e88136b88"
+        "bytes": 5679,
+        "sha256": "bfac4c017bd955f0185e8eabe45470be3e5044e0fef7fde6c294c8f1b5fa5a7f"
       },
       "variantOf": "sentinel-circuit",
       "owners": [
@@ -415,12 +384,6 @@
           "levelId": "sentinel-circuit-retro-open-circuit",
           "levelRevision": "1",
           "themeId": "retro"
-        },
-        {
-          "baseCampaignKey": "sentinel-circuit-coupa/1/8459eb3ba67608e6",
-          "levelId": "sentinel-circuit-coupa-open-circuit",
-          "levelRevision": "1",
-          "themeId": "coupa"
         }
       ]
     },
@@ -451,12 +414,6 @@
           "levelId": "fracture-lines-split-ring",
           "levelRevision": "1",
           "themeId": "retro"
-        },
-        {
-          "baseCampaignKey": "fracture-lines-coupa/1/7366cdb1e5e3ed7e",
-          "levelId": "fracture-lines-split-ring",
-          "levelRevision": "1",
-          "themeId": "coupa"
         }
       ]
     },
@@ -487,12 +444,6 @@
           "levelId": "fracture-lines-fault-fan",
           "levelRevision": "1",
           "themeId": "retro"
-        },
-        {
-          "baseCampaignKey": "fracture-lines-coupa/1/7366cdb1e5e3ed7e",
-          "levelId": "fracture-lines-fault-fan",
-          "levelRevision": "1",
-          "themeId": "coupa"
         }
       ]
     },
@@ -523,12 +474,6 @@
           "levelId": "fracture-lines-frayed-causeway",
           "levelRevision": "1",
           "themeId": "retro"
-        },
-        {
-          "baseCampaignKey": "fracture-lines-coupa/1/7366cdb1e5e3ed7e",
-          "levelId": "fracture-lines-frayed-causeway",
-          "levelRevision": "1",
-          "themeId": "coupa"
         }
       ]
     },
@@ -559,12 +504,6 @@
           "levelId": "countercurrent-offset-docks",
           "levelRevision": "1",
           "themeId": "retro"
-        },
-        {
-          "baseCampaignKey": "countercurrent-coupa/1/5f8155b60753cb07",
-          "levelId": "countercurrent-offset-docks",
-          "levelRevision": "1",
-          "themeId": "coupa"
         }
       ]
     },
@@ -595,12 +534,6 @@
           "levelId": "countercurrent-sandbar-braid",
           "levelRevision": "1",
           "themeId": "retro"
-        },
-        {
-          "baseCampaignKey": "countercurrent-coupa/1/5f8155b60753cb07",
-          "levelId": "countercurrent-sandbar-braid",
-          "levelRevision": "1",
-          "themeId": "coupa"
         }
       ]
     },
@@ -631,12 +564,6 @@
           "levelId": "countercurrent-crossing-watch",
           "levelRevision": "1",
           "themeId": "retro"
-        },
-        {
-          "baseCampaignKey": "countercurrent-coupa/1/5f8155b60753cb07",
-          "levelId": "countercurrent-crossing-watch",
-          "levelRevision": "1",
-          "themeId": "coupa"
         }
       ]
     }
@@ -797,8 +724,8 @@
       "themeId": "fpv",
       "source": {
         "path": "authoring/library/four-worlds-source/catalog.json",
-        "bytes": 12360,
-        "sha256": "dcc82dfcf403ad86e83e1d985e8c9ecd530fbfad1c7bf9d556eaff9ba0530d29"
+        "bytes": 9287,
+        "sha256": "ecbeb480cdf7b42da4b945fef50c54ee5bfd29c84d46219d928b66b4d0bd922d"
       },
       "sourceId": "orchard-crossing",
       "adapter": "pressure",
@@ -833,8 +760,8 @@
       "dependencies": [
         {
           "path": "authoring/library/four-worlds-chapters/distribution.json",
-          "bytes": 4255,
-          "sha256": "11ad3664a02f7efdef01b601adadf62b4b275f7db6d03c37ae8d9e78f9e9bcb6"
+          "bytes": 3280,
+          "sha256": "84621ad3d577c2e0f7522dfde0d76b5d7fad02a500cabb4071e1fb1443690ac4"
         },
         {
           "path": "authoring/library/fpv-pressure-art/provenance.json",
@@ -856,8 +783,8 @@
       "themeId": "fpv",
       "source": {
         "path": "authoring/library/four-worlds-source/catalog.json",
-        "bytes": 12360,
-        "sha256": "dcc82dfcf403ad86e83e1d985e8c9ecd530fbfad1c7bf9d556eaff9ba0530d29"
+        "bytes": 9287,
+        "sha256": "ecbeb480cdf7b42da4b945fef50c54ee5bfd29c84d46219d928b66b4d0bd922d"
       },
       "sourceId": "courtyard-exits",
       "adapter": "pressure",
@@ -892,8 +819,8 @@
       "dependencies": [
         {
           "path": "authoring/library/four-worlds-chapters/distribution.json",
-          "bytes": 4255,
-          "sha256": "11ad3664a02f7efdef01b601adadf62b4b275f7db6d03c37ae8d9e78f9e9bcb6"
+          "bytes": 3280,
+          "sha256": "84621ad3d577c2e0f7522dfde0d76b5d7fad02a500cabb4071e1fb1443690ac4"
         },
         {
           "path": "authoring/library/fpv-pressure-art/provenance.json",
@@ -915,8 +842,8 @@
       "themeId": "fpv",
       "source": {
         "path": "authoring/library/four-worlds-source/catalog.json",
-        "bytes": 12360,
-        "sha256": "dcc82dfcf403ad86e83e1d985e8c9ecd530fbfad1c7bf9d556eaff9ba0530d29"
+        "bytes": 9287,
+        "sha256": "ecbeb480cdf7b42da4b945fef50c54ee5bfd29c84d46219d928b66b4d0bd922d"
       },
       "sourceId": "night-crossfire",
       "adapter": "pressure",
@@ -951,8 +878,8 @@
       "dependencies": [
         {
           "path": "authoring/library/four-worlds-chapters/distribution.json",
-          "bytes": 4255,
-          "sha256": "11ad3664a02f7efdef01b601adadf62b4b275f7db6d03c37ae8d9e78f9e9bcb6"
+          "bytes": 3280,
+          "sha256": "84621ad3d577c2e0f7522dfde0d76b5d7fad02a500cabb4071e1fb1443690ac4"
         },
         {
           "path": "authoring/library/fpv-pressure-art/provenance.json",
@@ -974,8 +901,8 @@
       "themeId": "ukraine",
       "source": {
         "path": "authoring/library/four-worlds-source/catalog.json",
-        "bytes": 12360,
-        "sha256": "dcc82dfcf403ad86e83e1d985e8c9ecd530fbfad1c7bf9d556eaff9ba0530d29"
+        "bytes": 9287,
+        "sha256": "ecbeb480cdf7b42da4b945fef50c54ee5bfd29c84d46219d928b66b4d0bd922d"
       },
       "sourceId": "carpathian-woven-dawn",
       "adapter": "pressure",
@@ -1004,8 +931,8 @@
       "dependencies": [
         {
           "path": "authoring/library/four-worlds-chapters/distribution.json",
-          "bytes": 4255,
-          "sha256": "11ad3664a02f7efdef01b601adadf62b4b275f7db6d03c37ae8d9e78f9e9bcb6"
+          "bytes": 3280,
+          "sha256": "84621ad3d577c2e0f7522dfde0d76b5d7fad02a500cabb4071e1fb1443690ac4"
         },
         {
           "path": "authoring/library/ukraine-atlas-art/provenance.json",
@@ -1022,8 +949,8 @@
       "themeId": "ukraine",
       "source": {
         "path": "authoring/library/four-worlds-source/catalog.json",
-        "bytes": 12360,
-        "sha256": "dcc82dfcf403ad86e83e1d985e8c9ecd530fbfad1c7bf9d556eaff9ba0530d29"
+        "bytes": 9287,
+        "sha256": "ecbeb480cdf7b42da4b945fef50c54ee5bfd29c84d46219d928b66b4d0bd922d"
       },
       "sourceId": "petrykivka-sun-courtyard",
       "adapter": "pressure",
@@ -1052,8 +979,8 @@
       "dependencies": [
         {
           "path": "authoring/library/four-worlds-chapters/distribution.json",
-          "bytes": 4255,
-          "sha256": "11ad3664a02f7efdef01b601adadf62b4b275f7db6d03c37ae8d9e78f9e9bcb6"
+          "bytes": 3280,
+          "sha256": "84621ad3d577c2e0f7522dfde0d76b5d7fad02a500cabb4071e1fb1443690ac4"
         },
         {
           "path": "authoring/library/ukraine-atlas-art/provenance.json",
@@ -1070,8 +997,8 @@
       "themeId": "ukraine",
       "source": {
         "path": "authoring/library/four-worlds-source/catalog.json",
-        "bytes": 12360,
-        "sha256": "dcc82dfcf403ad86e83e1d985e8c9ecd530fbfad1c7bf9d556eaff9ba0530d29"
+        "bytes": 9287,
+        "sha256": "ecbeb480cdf7b42da4b945fef50c54ee5bfd29c84d46219d928b66b4d0bd922d"
       },
       "sourceId": "dnipro-autumn-watch",
       "adapter": "pressure",
@@ -1100,8 +1027,8 @@
       "dependencies": [
         {
           "path": "authoring/library/four-worlds-chapters/distribution.json",
-          "bytes": 4255,
-          "sha256": "11ad3664a02f7efdef01b601adadf62b4b275f7db6d03c37ae8d9e78f9e9bcb6"
+          "bytes": 3280,
+          "sha256": "84621ad3d577c2e0f7522dfde0d76b5d7fad02a500cabb4071e1fb1443690ac4"
         },
         {
           "path": "authoring/library/ukraine-atlas-art/provenance.json",
@@ -1118,8 +1045,8 @@
       "themeId": "retro",
       "source": {
         "path": "authoring/library/four-worlds-source/catalog.json",
-        "bytes": 12360,
-        "sha256": "dcc82dfcf403ad86e83e1d985e8c9ecd530fbfad1c7bf9d556eaff9ba0530d29"
+        "bytes": 9287,
+        "sha256": "ecbeb480cdf7b42da4b945fef50c54ee5bfd29c84d46219d928b66b4d0bd922d"
       },
       "sourceId": "midnight-arcade",
       "adapter": "pressure",
@@ -1148,8 +1075,8 @@
       "dependencies": [
         {
           "path": "authoring/library/four-worlds-chapters/distribution.json",
-          "bytes": 4255,
-          "sha256": "11ad3664a02f7efdef01b601adadf62b4b275f7db6d03c37ae8d9e78f9e9bcb6"
+          "bytes": 3280,
+          "sha256": "84621ad3d577c2e0f7522dfde0d76b5d7fad02a500cabb4071e1fb1443690ac4"
         },
         {
           "path": "authoring/library/1994-forever-art/provenance.json",
@@ -1166,8 +1093,8 @@
       "themeId": "retro",
       "source": {
         "path": "authoring/library/four-worlds-source/catalog.json",
-        "bytes": 12360,
-        "sha256": "dcc82dfcf403ad86e83e1d985e8c9ecd530fbfad1c7bf9d556eaff9ba0530d29"
+        "bytes": 9287,
+        "sha256": "ecbeb480cdf7b42da4b945fef50c54ee5bfd29c84d46219d928b66b4d0bd922d"
       },
       "sourceId": "rainy-video-rental",
       "adapter": "pressure",
@@ -1196,8 +1123,8 @@
       "dependencies": [
         {
           "path": "authoring/library/four-worlds-chapters/distribution.json",
-          "bytes": 4255,
-          "sha256": "11ad3664a02f7efdef01b601adadf62b4b275f7db6d03c37ae8d9e78f9e9bcb6"
+          "bytes": 3280,
+          "sha256": "84621ad3d577c2e0f7522dfde0d76b5d7fad02a500cabb4071e1fb1443690ac4"
         },
         {
           "path": "authoring/library/1994-forever-art/provenance.json",
@@ -1214,8 +1141,8 @@
       "themeId": "retro",
       "source": {
         "path": "authoring/library/four-worlds-source/catalog.json",
-        "bytes": 12360,
-        "sha256": "dcc82dfcf403ad86e83e1d985e8c9ecd530fbfad1c7bf9d556eaff9ba0530d29"
+        "bytes": 9287,
+        "sha256": "ecbeb480cdf7b42da4b945fef50c54ee5bfd29c84d46219d928b66b4d0bd922d"
       },
       "sourceId": "last-train-cassette",
       "adapter": "pressure",
@@ -1244,157 +1171,13 @@
       "dependencies": [
         {
           "path": "authoring/library/four-worlds-chapters/distribution.json",
-          "bytes": 4255,
-          "sha256": "11ad3664a02f7efdef01b601adadf62b4b275f7db6d03c37ae8d9e78f9e9bcb6"
+          "bytes": 3280,
+          "sha256": "84621ad3d577c2e0f7522dfde0d76b5d7fad02a500cabb4071e1fb1443690ac4"
         },
         {
           "path": "authoring/library/1994-forever-art/provenance.json",
           "bytes": 6650,
           "sha256": "337a8f5ab80e7f843e41d99fb13d64d9486632c5ab87f34f3a15c3050c2cfd5c"
-        }
-      ]
-    },
-    {
-      "id": "picture-shared-value-harbor",
-      "revision": 1,
-      "kind": "picture",
-      "title": "Shared Value Harbor",
-      "themeId": "coupa",
-      "source": {
-        "path": "authoring/library/four-worlds-source/catalog.json",
-        "bytes": 12360,
-        "sha256": "dcc82dfcf403ad86e83e1d985e8c9ecd530fbfad1c7bf9d556eaff9ba0530d29"
-      },
-      "sourceId": "shared-value-harbor",
-      "adapter": "pressure",
-      "files": [
-        {
-          "role": "original",
-          "file": {
-            "path": "authoring/library/spend-network-art/originals/shared-value-harbor.png",
-            "bytes": 2577915,
-            "sha256": "d80e371a2bc008ce1b893268725add92a5b9a18bc8589e7b5145cbb4a75b46fa"
-          },
-          "width": 1774,
-          "height": 887,
-          "durationSeconds": null
-        }
-      ],
-      "owners": [
-        {
-          "baseCampaignKey": "original-spend-shared-routes/1/7a36efe129711f19",
-          "levelId": "original-spend-shared-harbor",
-          "levelRevision": "1",
-          "themeId": "coupa"
-        }
-      ],
-      "derivedFrom": null,
-      "dependencies": [
-        {
-          "path": "authoring/library/four-worlds-chapters/distribution.json",
-          "bytes": 4255,
-          "sha256": "11ad3664a02f7efdef01b601adadf62b4b275f7db6d03c37ae8d9e78f9e9bcb6"
-        },
-        {
-          "path": "authoring/library/spend-network-art/provenance.json",
-          "bytes": 8373,
-          "sha256": "e9210678ac08512c8962a15b11f01bd98ea3a626379c246d442e35d2cc8d3cf6"
-        }
-      ]
-    },
-    {
-      "id": "picture-city-savings-observatory",
-      "revision": 1,
-      "kind": "picture",
-      "title": "City Savings Observatory",
-      "themeId": "coupa",
-      "source": {
-        "path": "authoring/library/four-worlds-source/catalog.json",
-        "bytes": 12360,
-        "sha256": "dcc82dfcf403ad86e83e1d985e8c9ecd530fbfad1c7bf9d556eaff9ba0530d29"
-      },
-      "sourceId": "city-savings-observatory",
-      "adapter": "pressure",
-      "files": [
-        {
-          "role": "original",
-          "file": {
-            "path": "authoring/library/spend-network-art/originals/city-savings-observatory.png",
-            "bytes": 2702090,
-            "sha256": "71e39606ce0283c0bb6fe120f22e2429415aba1d9dac0d412f629b686ba82175"
-          },
-          "width": 1774,
-          "height": 887,
-          "durationSeconds": null
-        }
-      ],
-      "owners": [
-        {
-          "baseCampaignKey": "original-spend-shared-routes/1/7a36efe129711f19",
-          "levelId": "original-spend-city-wins",
-          "levelRevision": "1",
-          "themeId": "coupa"
-        }
-      ],
-      "derivedFrom": null,
-      "dependencies": [
-        {
-          "path": "authoring/library/four-worlds-chapters/distribution.json",
-          "bytes": 4255,
-          "sha256": "11ad3664a02f7efdef01b601adadf62b4b275f7db6d03c37ae8d9e78f9e9bcb6"
-        },
-        {
-          "path": "authoring/library/spend-network-art/provenance.json",
-          "bytes": 8373,
-          "sha256": "e9210678ac08512c8962a15b11f01bd98ea3a626379c246d442e35d2cc8d3cf6"
-        }
-      ]
-    },
-    {
-      "id": "picture-thoughtful-market-workshop",
-      "revision": 1,
-      "kind": "picture",
-      "title": "Thoughtful Market Workshop",
-      "themeId": "coupa",
-      "source": {
-        "path": "authoring/library/four-worlds-source/catalog.json",
-        "bytes": 12360,
-        "sha256": "dcc82dfcf403ad86e83e1d985e8c9ecd530fbfad1c7bf9d556eaff9ba0530d29"
-      },
-      "sourceId": "thoughtful-market-workshop",
-      "adapter": "pressure",
-      "files": [
-        {
-          "role": "original",
-          "file": {
-            "path": "authoring/library/spend-network-art/originals/thoughtful-market-workshop.png",
-            "bytes": 3005071,
-            "sha256": "4f64115023245871c5ae126ddc8f711e9b0b48d130316045a1ba3baf08934fa0"
-          },
-          "width": 1774,
-          "height": 887,
-          "durationSeconds": null
-        }
-      ],
-      "owners": [
-        {
-          "baseCampaignKey": "original-spend-shared-routes/1/7a36efe129711f19",
-          "levelId": "original-spend-market-workshop",
-          "levelRevision": "1",
-          "themeId": "coupa"
-        }
-      ],
-      "derivedFrom": null,
-      "dependencies": [
-        {
-          "path": "authoring/library/four-worlds-chapters/distribution.json",
-          "bytes": 4255,
-          "sha256": "11ad3664a02f7efdef01b601adadf62b4b275f7db6d03c37ae8d9e78f9e9bcb6"
-        },
-        {
-          "path": "authoring/library/spend-network-art/provenance.json",
-          "bytes": 8373,
-          "sha256": "e9210678ac08512c8962a15b11f01bd98ea3a626379c246d442e35d2cc8d3cf6"
         }
       ]
     },
@@ -1407,7 +1190,7 @@
       "source": {
         "path": "authoring/library/fpv-route-choices/distribution.json",
         "bytes": 3446,
-        "sha256": "c85097a58e9c84037083907484cbac739592ccbebb5156ac6f27afab76fc1dab"
+        "sha256": "ad12de5c544adf02a653e3e0ba12ca6a76c1429bcc27dbe9a6683d9202cafd09"
       },
       "sourceId": "split-signal-foundry",
       "adapter": "route",
@@ -1450,7 +1233,7 @@
       "source": {
         "path": "authoring/library/fpv-route-choices/distribution.json",
         "bytes": 3446,
-        "sha256": "c85097a58e9c84037083907484cbac739592ccbebb5156ac6f27afab76fc1dab"
+        "sha256": "ad12de5c544adf02a653e3e0ba12ca6a76c1429bcc27dbe9a6683d9202cafd09"
       },
       "sourceId": "crosswind-depot",
       "adapter": "route",
@@ -1493,7 +1276,7 @@
       "source": {
         "path": "authoring/library/fpv-route-choices/distribution.json",
         "bytes": 3446,
-        "sha256": "c85097a58e9c84037083907484cbac739592ccbebb5156ac6f27afab76fc1dab"
+        "sha256": "ad12de5c544adf02a653e3e0ba12ca6a76c1429bcc27dbe9a6683d9202cafd09"
       },
       "sourceId": "signal-switchback",
       "adapter": "route",
@@ -1535,8 +1318,8 @@
       "themeId": "ukraine",
       "source": {
         "path": "authoring/library/route-worlds/editions.json",
-        "bytes": 2049,
-        "sha256": "f1cf474b1f02b48bcbafb60fbab080416afc9c2c135c68a2def2ae90865300fc"
+        "bytes": 1411,
+        "sha256": "db598fb6ecc35cd5667d307d2b15451eb5a41bf0089f443a254e927afe34d435"
       },
       "sourceId": "two-lanes-forge",
       "adapter": "world",
@@ -1575,8 +1358,8 @@
         },
         {
           "path": "authoring/library/route-worlds/build.mjs",
-          "bytes": 13370,
-          "sha256": "8cb7ec2e3bf6cf334517ad056568110af4f7bc70a0143ad37bc33b10ff733d43"
+          "bytes": 13335,
+          "sha256": "4c58707b50a13b4b9a6086065d027143d106b234ff066ff5f98fcc4872e61664"
         }
       ]
     },
@@ -1588,8 +1371,8 @@
       "themeId": "ukraine",
       "source": {
         "path": "authoring/library/route-worlds/editions.json",
-        "bytes": 2049,
-        "sha256": "f1cf474b1f02b48bcbafb60fbab080416afc9c2c135c68a2def2ae90865300fc"
+        "bytes": 1411,
+        "sha256": "db598fb6ecc35cd5667d307d2b15451eb5a41bf0089f443a254e927afe34d435"
       },
       "sourceId": "crosswind-market-depot",
       "adapter": "world",
@@ -1628,8 +1411,8 @@
         },
         {
           "path": "authoring/library/route-worlds/build.mjs",
-          "bytes": 13370,
-          "sha256": "8cb7ec2e3bf6cf334517ad056568110af4f7bc70a0143ad37bc33b10ff733d43"
+          "bytes": 13335,
+          "sha256": "4c58707b50a13b4b9a6086065d027143d106b234ff066ff5f98fcc4872e61664"
         }
       ]
     },
@@ -1641,8 +1424,8 @@
       "themeId": "ukraine",
       "source": {
         "path": "authoring/library/route-worlds/editions.json",
-        "bytes": 2049,
-        "sha256": "f1cf474b1f02b48bcbafb60fbab080416afc9c2c135c68a2def2ae90865300fc"
+        "bytes": 1411,
+        "sha256": "db598fb6ecc35cd5667d307d2b15451eb5a41bf0089f443a254e927afe34d435"
       },
       "sourceId": "carpathian-thread-relay",
       "adapter": "world",
@@ -1681,8 +1464,8 @@
         },
         {
           "path": "authoring/library/route-worlds/build.mjs",
-          "bytes": 13370,
-          "sha256": "8cb7ec2e3bf6cf334517ad056568110af4f7bc70a0143ad37bc33b10ff733d43"
+          "bytes": 13335,
+          "sha256": "4c58707b50a13b4b9a6086065d027143d106b234ff066ff5f98fcc4872e61664"
         }
       ]
     },
@@ -1694,8 +1477,8 @@
       "themeId": "retro",
       "source": {
         "path": "authoring/library/route-worlds/editions.json",
-        "bytes": 2049,
-        "sha256": "f1cf474b1f02b48bcbafb60fbab080416afc9c2c135c68a2def2ae90865300fc"
+        "bytes": 1411,
+        "sha256": "db598fb6ecc35cd5667d307d2b15451eb5a41bf0089f443a254e927afe34d435"
       },
       "sourceId": "midnight-workshop",
       "adapter": "world",
@@ -1734,8 +1517,8 @@
         },
         {
           "path": "authoring/library/route-worlds/build.mjs",
-          "bytes": 13370,
-          "sha256": "8cb7ec2e3bf6cf334517ad056568110af4f7bc70a0143ad37bc33b10ff733d43"
+          "bytes": 13335,
+          "sha256": "4c58707b50a13b4b9a6086065d027143d106b234ff066ff5f98fcc4872e61664"
         }
       ]
     },
@@ -1747,8 +1530,8 @@
       "themeId": "retro",
       "source": {
         "path": "authoring/library/route-worlds/editions.json",
-        "bytes": 2049,
-        "sha256": "f1cf474b1f02b48bcbafb60fbab080416afc9c2c135c68a2def2ae90865300fc"
+        "bytes": 1411,
+        "sha256": "db598fb6ecc35cd5667d307d2b15451eb5a41bf0089f443a254e927afe34d435"
       },
       "sourceId": "crosswind-courier",
       "adapter": "world",
@@ -1787,8 +1570,8 @@
         },
         {
           "path": "authoring/library/route-worlds/build.mjs",
-          "bytes": 13370,
-          "sha256": "8cb7ec2e3bf6cf334517ad056568110af4f7bc70a0143ad37bc33b10ff733d43"
+          "bytes": 13335,
+          "sha256": "4c58707b50a13b4b9a6086065d027143d106b234ff066ff5f98fcc4872e61664"
         }
       ]
     },
@@ -1800,8 +1583,8 @@
       "themeId": "retro",
       "source": {
         "path": "authoring/library/route-worlds/editions.json",
-        "bytes": 2049,
-        "sha256": "f1cf474b1f02b48bcbafb60fbab080416afc9c2c135c68a2def2ae90865300fc"
+        "bytes": 1411,
+        "sha256": "db598fb6ecc35cd5667d307d2b15451eb5a41bf0089f443a254e927afe34d435"
       },
       "sourceId": "signal-thread",
       "adapter": "world",
@@ -1840,167 +1623,8 @@
         },
         {
           "path": "authoring/library/route-worlds/build.mjs",
-          "bytes": 13370,
-          "sha256": "8cb7ec2e3bf6cf334517ad056568110af4f7bc70a0143ad37bc33b10ff733d43"
-        }
-      ]
-    },
-    {
-      "id": "picture-coupa-value-foundry",
-      "revision": 1,
-      "kind": "picture",
-      "title": "Value Foundry",
-      "themeId": "coupa",
-      "source": {
-        "path": "authoring/library/route-worlds/editions.json",
-        "bytes": 2049,
-        "sha256": "f1cf474b1f02b48bcbafb60fbab080416afc9c2c135c68a2def2ae90865300fc"
-      },
-      "sourceId": "value-foundry",
-      "adapter": "world",
-      "files": [
-        {
-          "role": "original",
-          "file": {
-            "path": "authoring/library/spend-route-art/originals/value-foundry.png",
-            "bytes": 2725160,
-            "sha256": "0f0c8022f3b80732c24131324ce3ecf404219f5de6546ead11ff825e3dbed518"
-          },
-          "width": 1672,
-          "height": 941,
-          "durationSeconds": null
-        }
-      ],
-      "owners": [
-        {
-          "baseCampaignKey": "route-worlds-coupa/1/708c553521008c7d",
-          "levelId": "route-worlds-coupa-foundry",
-          "levelRevision": "1",
-          "themeId": "coupa"
-        }
-      ],
-      "derivedFrom": null,
-      "dependencies": [
-        {
-          "path": "authoring/library/route-worlds/descriptors/coupa.json",
-          "bytes": 1730,
-          "sha256": "38849fc20068802638304d14b2df6fbcefdca1a6f76fdeb6a2520464b5612503"
-        },
-        {
-          "path": "authoring/library/spend-route-art/provenance.json",
-          "bytes": 5024,
-          "sha256": "273a5ef4dfbb51e9f4da2fabdf7aeb7f6d788cf1470a7fb8efaa4c62d482e4bc"
-        },
-        {
-          "path": "authoring/library/route-worlds/build.mjs",
-          "bytes": 13370,
-          "sha256": "8cb7ec2e3bf6cf334517ad056568110af4f7bc70a0143ad37bc33b10ff733d43"
-        }
-      ]
-    },
-    {
-      "id": "picture-coupa-shared-harbor",
-      "revision": 1,
-      "kind": "picture",
-      "title": "Shared Harbor",
-      "themeId": "coupa",
-      "source": {
-        "path": "authoring/library/route-worlds/editions.json",
-        "bytes": 2049,
-        "sha256": "f1cf474b1f02b48bcbafb60fbab080416afc9c2c135c68a2def2ae90865300fc"
-      },
-      "sourceId": "shared-harbor",
-      "adapter": "world",
-      "files": [
-        {
-          "role": "original",
-          "file": {
-            "path": "authoring/library/spend-route-art/originals/shared-harbor.png",
-            "bytes": 2686912,
-            "sha256": "8abf21258aef8cee936909fe7d2d8c4eb86a9eb8aff61c6fae6e6f918f5a8e3d"
-          },
-          "width": 1672,
-          "height": 941,
-          "durationSeconds": null
-        }
-      ],
-      "owners": [
-        {
-          "baseCampaignKey": "route-worlds-coupa/1/708c553521008c7d",
-          "levelId": "route-worlds-coupa-depot",
-          "levelRevision": "1",
-          "themeId": "coupa"
-        }
-      ],
-      "derivedFrom": null,
-      "dependencies": [
-        {
-          "path": "authoring/library/route-worlds/descriptors/coupa.json",
-          "bytes": 1730,
-          "sha256": "38849fc20068802638304d14b2df6fbcefdca1a6f76fdeb6a2520464b5612503"
-        },
-        {
-          "path": "authoring/library/spend-route-art/provenance.json",
-          "bytes": 5024,
-          "sha256": "273a5ef4dfbb51e9f4da2fabdf7aeb7f6d788cf1470a7fb8efaa4c62d482e4bc"
-        },
-        {
-          "path": "authoring/library/route-worlds/build.mjs",
-          "bytes": 13370,
-          "sha256": "8cb7ec2e3bf6cf334517ad056568110af4f7bc70a0143ad37bc33b10ff733d43"
-        }
-      ]
-    },
-    {
-      "id": "picture-coupa-network-garden",
-      "revision": 1,
-      "kind": "picture",
-      "title": "Network Garden",
-      "themeId": "coupa",
-      "source": {
-        "path": "authoring/library/route-worlds/editions.json",
-        "bytes": 2049,
-        "sha256": "f1cf474b1f02b48bcbafb60fbab080416afc9c2c135c68a2def2ae90865300fc"
-      },
-      "sourceId": "network-garden",
-      "adapter": "world",
-      "files": [
-        {
-          "role": "original",
-          "file": {
-            "path": "authoring/library/spend-route-art/originals/network-garden.png",
-            "bytes": 2858095,
-            "sha256": "65d18bb0e98d901b9ba4820e62724dfbe32da6cd31c5580fe03096eedbfd39f0"
-          },
-          "width": 1672,
-          "height": 941,
-          "durationSeconds": null
-        }
-      ],
-      "owners": [
-        {
-          "baseCampaignKey": "route-worlds-coupa/1/708c553521008c7d",
-          "levelId": "route-worlds-coupa-switchback",
-          "levelRevision": "1",
-          "themeId": "coupa"
-        }
-      ],
-      "derivedFrom": null,
-      "dependencies": [
-        {
-          "path": "authoring/library/route-worlds/descriptors/coupa.json",
-          "bytes": 1730,
-          "sha256": "38849fc20068802638304d14b2df6fbcefdca1a6f76fdeb6a2520464b5612503"
-        },
-        {
-          "path": "authoring/library/spend-route-art/provenance.json",
-          "bytes": 5024,
-          "sha256": "273a5ef4dfbb51e9f4da2fabdf7aeb7f6d788cf1470a7fb8efaa4c62d482e4bc"
-        },
-        {
-          "path": "authoring/library/route-worlds/build.mjs",
-          "bytes": 13370,
-          "sha256": "8cb7ec2e3bf6cf334517ad056568110af4f7bc70a0143ad37bc33b10ff733d43"
+          "bytes": 13335,
+          "sha256": "4c58707b50a13b4b9a6086065d027143d106b234ff066ff5f98fcc4872e61664"
         }
       ]
     },
@@ -2048,7 +1672,7 @@
         {
           "path": "authoring/library/sentinel-circuit-external/build.mjs",
           "bytes": 10172,
-          "sha256": "ee481bcaef80d86778fdda295f8660d0bfa2d6e0950bd24fddc59e051d463e88"
+          "sha256": "06bca8ebd9572d52671a336c02db986f5a50dae266ad5b5bff4097ca5f319cfb"
         }
       ]
     },
@@ -2096,7 +1720,7 @@
         {
           "path": "authoring/library/sentinel-circuit-external/build.mjs",
           "bytes": 10172,
-          "sha256": "ee481bcaef80d86778fdda295f8660d0bfa2d6e0950bd24fddc59e051d463e88"
+          "sha256": "06bca8ebd9572d52671a336c02db986f5a50dae266ad5b5bff4097ca5f319cfb"
         }
       ]
     },
@@ -2144,7 +1768,7 @@
         {
           "path": "authoring/library/sentinel-circuit-external/build.mjs",
           "bytes": 10172,
-          "sha256": "ee481bcaef80d86778fdda295f8660d0bfa2d6e0950bd24fddc59e051d463e88"
+          "sha256": "06bca8ebd9572d52671a336c02db986f5a50dae266ad5b5bff4097ca5f319cfb"
         }
       ]
     },
@@ -2156,8 +1780,8 @@
       "themeId": null,
       "source": {
         "path": "game/content/themes.json",
-        "bytes": 4266,
-        "sha256": "93582f7d9ba53753106df7b63928f086820fc0f68357d3c08f26c0b89fb84774"
+        "bytes": 3198,
+        "sha256": "77f3e7e8f0951172bd0c11649b0203808b3d1b00ca434c2a576ef631899958b2"
       },
       "sourceId": "fpv-body",
       "adapter": "body",
@@ -2179,8 +1803,8 @@
       "dependencies": [
         {
           "path": "authoring/motion-lab/presets.json",
-          "bytes": 23077,
-          "sha256": "edbb5c4e73e03b7e516825575bf2fed6d234745cecc514241667097a3d3f8eca"
+          "bytes": 19910,
+          "sha256": "ea9cf4d7fce6b4b9afdbcd709819d0f5d7b35ed117a47868fea69209b037d912"
         },
         {
           "path": "authoring/motion-lab/animation.mjs",
@@ -2194,8 +1818,8 @@
         },
         {
           "path": "game/ui/actor-presentation.mjs",
-          "bytes": 25033,
-          "sha256": "4676dbca131440742815a3ed7a5e1e2ec89c121f813e5d8c0ff45f01360dde4a"
+          "bytes": 23588,
+          "sha256": "6b4e4c20da271cd105deee017883558ea715eab6d9e034b66053f4da2f17af00"
         }
       ]
     },
@@ -2207,8 +1831,8 @@
       "themeId": null,
       "source": {
         "path": "game/content/themes.json",
-        "bytes": 4266,
-        "sha256": "93582f7d9ba53753106df7b63928f086820fc0f68357d3c08f26c0b89fb84774"
+        "bytes": 3198,
+        "sha256": "77f3e7e8f0951172bd0c11649b0203808b3d1b00ca434c2a576ef631899958b2"
       },
       "sourceId": "heavy-lift",
       "adapter": "body",
@@ -2230,8 +1854,8 @@
       "dependencies": [
         {
           "path": "authoring/motion-lab/presets.json",
-          "bytes": 23077,
-          "sha256": "edbb5c4e73e03b7e516825575bf2fed6d234745cecc514241667097a3d3f8eca"
+          "bytes": 19910,
+          "sha256": "ea9cf4d7fce6b4b9afdbcd709819d0f5d7b35ed117a47868fea69209b037d912"
         },
         {
           "path": "authoring/motion-lab/animation.mjs",
@@ -2245,59 +1869,8 @@
         },
         {
           "path": "game/ui/actor-presentation.mjs",
-          "bytes": 25033,
-          "sha256": "4676dbca131440742815a3ed7a5e1e2ec89c121f813e5d8c0ff45f01360dde4a"
-        }
-      ]
-    },
-    {
-      "id": "rig-navi-avatar",
-      "revision": 1,
-      "kind": "presentation",
-      "title": "Navi Avatar",
-      "themeId": null,
-      "source": {
-        "path": "game/content/themes.json",
-        "bytes": 4266,
-        "sha256": "93582f7d9ba53753106df7b63928f086820fc0f68357d3c08f26c0b89fb84774"
-      },
-      "sourceId": "navi-avatar",
-      "adapter": "body",
-      "files": [
-        {
-          "role": "concept",
-          "file": {
-            "path": "authoring/motion-lab/assets/navi-avatar.png",
-            "bytes": 384917,
-            "sha256": "3bc265ce6af451a76bc9ab2e9c5c8991c69e43d3d57efbc47c0dea2728e9ff69"
-          },
-          "width": 1254,
-          "height": 1254,
-          "durationSeconds": null
-        }
-      ],
-      "owners": [],
-      "derivedFrom": null,
-      "dependencies": [
-        {
-          "path": "authoring/motion-lab/presets.json",
-          "bytes": 23077,
-          "sha256": "edbb5c4e73e03b7e516825575bf2fed6d234745cecc514241667097a3d3f8eca"
-        },
-        {
-          "path": "authoring/motion-lab/animation.mjs",
-          "bytes": 8068,
-          "sha256": "e739040d96daea57fd782f13991d96241e11022803038af8d4d184be15981c40"
-        },
-        {
-          "path": "authoring/motion-lab/render-character.mjs",
-          "bytes": 6489,
-          "sha256": "1ae56eb2b059b910cb3f1960eca0c4786f828d669b6f6c7615b5527850030e9a"
-        },
-        {
-          "path": "game/ui/actor-presentation.mjs",
-          "bytes": 25033,
-          "sha256": "4676dbca131440742815a3ed7a5e1e2ec89c121f813e5d8c0ff45f01360dde4a"
+          "bytes": 23588,
+          "sha256": "6b4e4c20da271cd105deee017883558ea715eab6d9e034b66053f4da2f17af00"
         }
       ]
     },
@@ -2309,8 +1882,8 @@
       "themeId": null,
       "source": {
         "path": "game/content/themes.json",
-        "bytes": 4266,
-        "sha256": "93582f7d9ba53753106df7b63928f086820fc0f68357d3c08f26c0b89fb84774"
+        "bytes": 3198,
+        "sha256": "77f3e7e8f0951172bd0c11649b0203808b3d1b00ca434c2a576ef631899958b2"
       },
       "sourceId": "retro-craft",
       "adapter": "body",
@@ -2332,8 +1905,8 @@
       "dependencies": [
         {
           "path": "authoring/motion-lab/presets.json",
-          "bytes": 23077,
-          "sha256": "edbb5c4e73e03b7e516825575bf2fed6d234745cecc514241667097a3d3f8eca"
+          "bytes": 19910,
+          "sha256": "ea9cf4d7fce6b4b9afdbcd709819d0f5d7b35ed117a47868fea69209b037d912"
         },
         {
           "path": "authoring/motion-lab/animation.mjs",
@@ -2347,8 +1920,8 @@
         },
         {
           "path": "game/ui/actor-presentation.mjs",
-          "bytes": 25033,
-          "sha256": "4676dbca131440742815a3ed7a5e1e2ec89c121f813e5d8c0ff45f01360dde4a"
+          "bytes": 23588,
+          "sha256": "6b4e4c20da271cd105deee017883558ea715eab6d9e034b66053f4da2f17af00"
         }
       ]
     },
@@ -2360,8 +1933,8 @@
       "themeId": null,
       "source": {
         "path": "game/content/themes.json",
-        "bytes": 4266,
-        "sha256": "93582f7d9ba53753106df7b63928f086820fc0f68357d3c08f26c0b89fb84774"
+        "bytes": 3198,
+        "sha256": "77f3e7e8f0951172bd0c11649b0203808b3d1b00ca434c2a576ef631899958b2"
       },
       "sourceId": "scout-quad",
       "adapter": "body",
@@ -2383,8 +1956,8 @@
       "dependencies": [
         {
           "path": "authoring/motion-lab/presets.json",
-          "bytes": 23077,
-          "sha256": "edbb5c4e73e03b7e516825575bf2fed6d234745cecc514241667097a3d3f8eca"
+          "bytes": 19910,
+          "sha256": "ea9cf4d7fce6b4b9afdbcd709819d0f5d7b35ed117a47868fea69209b037d912"
         },
         {
           "path": "authoring/motion-lab/animation.mjs",
@@ -2398,8 +1971,8 @@
         },
         {
           "path": "game/ui/actor-presentation.mjs",
-          "bytes": 25033,
-          "sha256": "4676dbca131440742815a3ed7a5e1e2ec89c121f813e5d8c0ff45f01360dde4a"
+          "bytes": 23588,
+          "sha256": "6b4e4c20da271cd105deee017883558ea715eab6d9e034b66053f4da2f17af00"
         }
       ]
     },
@@ -2411,8 +1984,8 @@
       "themeId": null,
       "source": {
         "path": "game/content/themes.json",
-        "bytes": 4266,
-        "sha256": "93582f7d9ba53753106df7b63928f086820fc0f68357d3c08f26c0b89fb84774"
+        "bytes": 3198,
+        "sha256": "77f3e7e8f0951172bd0c11649b0203808b3d1b00ca434c2a576ef631899958b2"
       },
       "sourceId": "ukrainian-bird",
       "adapter": "body",
@@ -2434,8 +2007,8 @@
       "dependencies": [
         {
           "path": "authoring/motion-lab/presets.json",
-          "bytes": 23077,
-          "sha256": "edbb5c4e73e03b7e516825575bf2fed6d234745cecc514241667097a3d3f8eca"
+          "bytes": 19910,
+          "sha256": "ea9cf4d7fce6b4b9afdbcd709819d0f5d7b35ed117a47868fea69209b037d912"
         },
         {
           "path": "authoring/motion-lab/animation.mjs",
@@ -2449,8 +2022,8 @@
         },
         {
           "path": "game/ui/actor-presentation.mjs",
-          "bytes": 25033,
-          "sha256": "4676dbca131440742815a3ed7a5e1e2ec89c121f813e5d8c0ff45f01360dde4a"
+          "bytes": 23588,
+          "sha256": "6b4e4c20da271cd105deee017883558ea715eab6d9e034b66053f4da2f17af00"
         }
       ]
     },
@@ -2611,8 +2184,8 @@
       "themeId": "ukraine",
       "source": {
         "path": "authoring/library/sentinel-theme-chapters/editions.json",
-        "bytes": 8414,
-        "sha256": "1e14923784d75f59f2537cf9a14fa2c127b92ad77b3feaebfb80658e88136b88"
+        "bytes": 5679,
+        "sha256": "bfac4c017bd955f0185e8eabe45470be3e5044e0fef7fde6c294c8f1b5fa5a7f"
       },
       "sourceId": "sentinel-circuit-ukraine-poster-1",
       "adapter": "sentinel-world",
@@ -2646,8 +2219,8 @@
         },
         {
           "path": "authoring/library/sentinel-theme-art/provenance.json",
-          "bytes": 16174,
-          "sha256": "48cfad28a7454317d4f16dbdbd0c593ee6ad0bf5aa2a94152a7f27be9ef5e948"
+          "bytes": 12200,
+          "sha256": "608a9041891ec2cf0eda3c3c285ac9c550490148e19fc0a6077f5289534fe9eb"
         }
       ]
     },
@@ -2659,8 +2232,8 @@
       "themeId": "ukraine",
       "source": {
         "path": "authoring/library/sentinel-theme-chapters/editions.json",
-        "bytes": 8414,
-        "sha256": "1e14923784d75f59f2537cf9a14fa2c127b92ad77b3feaebfb80658e88136b88"
+        "bytes": 5679,
+        "sha256": "bfac4c017bd955f0185e8eabe45470be3e5044e0fef7fde6c294c8f1b5fa5a7f"
       },
       "sourceId": "sentinel-circuit-ukraine-poster-2",
       "adapter": "sentinel-world",
@@ -2694,8 +2267,8 @@
         },
         {
           "path": "authoring/library/sentinel-theme-art/provenance.json",
-          "bytes": 16174,
-          "sha256": "48cfad28a7454317d4f16dbdbd0c593ee6ad0bf5aa2a94152a7f27be9ef5e948"
+          "bytes": 12200,
+          "sha256": "608a9041891ec2cf0eda3c3c285ac9c550490148e19fc0a6077f5289534fe9eb"
         }
       ]
     },
@@ -2707,8 +2280,8 @@
       "themeId": "ukraine",
       "source": {
         "path": "authoring/library/sentinel-theme-chapters/editions.json",
-        "bytes": 8414,
-        "sha256": "1e14923784d75f59f2537cf9a14fa2c127b92ad77b3feaebfb80658e88136b88"
+        "bytes": 5679,
+        "sha256": "bfac4c017bd955f0185e8eabe45470be3e5044e0fef7fde6c294c8f1b5fa5a7f"
       },
       "sourceId": "sentinel-circuit-ukraine-poster-3",
       "adapter": "sentinel-world",
@@ -2742,8 +2315,8 @@
         },
         {
           "path": "authoring/library/sentinel-theme-art/provenance.json",
-          "bytes": 16174,
-          "sha256": "48cfad28a7454317d4f16dbdbd0c593ee6ad0bf5aa2a94152a7f27be9ef5e948"
+          "bytes": 12200,
+          "sha256": "608a9041891ec2cf0eda3c3c285ac9c550490148e19fc0a6077f5289534fe9eb"
         }
       ]
     },
@@ -2755,8 +2328,8 @@
       "themeId": "retro",
       "source": {
         "path": "authoring/library/sentinel-theme-chapters/editions.json",
-        "bytes": 8414,
-        "sha256": "1e14923784d75f59f2537cf9a14fa2c127b92ad77b3feaebfb80658e88136b88"
+        "bytes": 5679,
+        "sha256": "bfac4c017bd955f0185e8eabe45470be3e5044e0fef7fde6c294c8f1b5fa5a7f"
       },
       "sourceId": "sentinel-circuit-retro-poster-1",
       "adapter": "sentinel-world",
@@ -2790,8 +2363,8 @@
         },
         {
           "path": "authoring/library/sentinel-theme-art/provenance.json",
-          "bytes": 16174,
-          "sha256": "48cfad28a7454317d4f16dbdbd0c593ee6ad0bf5aa2a94152a7f27be9ef5e948"
+          "bytes": 12200,
+          "sha256": "608a9041891ec2cf0eda3c3c285ac9c550490148e19fc0a6077f5289534fe9eb"
         }
       ]
     },
@@ -2803,8 +2376,8 @@
       "themeId": "retro",
       "source": {
         "path": "authoring/library/sentinel-theme-chapters/editions.json",
-        "bytes": 8414,
-        "sha256": "1e14923784d75f59f2537cf9a14fa2c127b92ad77b3feaebfb80658e88136b88"
+        "bytes": 5679,
+        "sha256": "bfac4c017bd955f0185e8eabe45470be3e5044e0fef7fde6c294c8f1b5fa5a7f"
       },
       "sourceId": "sentinel-circuit-retro-poster-2",
       "adapter": "sentinel-world",
@@ -2838,8 +2411,8 @@
         },
         {
           "path": "authoring/library/sentinel-theme-art/provenance.json",
-          "bytes": 16174,
-          "sha256": "48cfad28a7454317d4f16dbdbd0c593ee6ad0bf5aa2a94152a7f27be9ef5e948"
+          "bytes": 12200,
+          "sha256": "608a9041891ec2cf0eda3c3c285ac9c550490148e19fc0a6077f5289534fe9eb"
         }
       ]
     },
@@ -2851,8 +2424,8 @@
       "themeId": "retro",
       "source": {
         "path": "authoring/library/sentinel-theme-chapters/editions.json",
-        "bytes": 8414,
-        "sha256": "1e14923784d75f59f2537cf9a14fa2c127b92ad77b3feaebfb80658e88136b88"
+        "bytes": 5679,
+        "sha256": "bfac4c017bd955f0185e8eabe45470be3e5044e0fef7fde6c294c8f1b5fa5a7f"
       },
       "sourceId": "sentinel-circuit-retro-poster-3",
       "adapter": "sentinel-world",
@@ -2886,152 +2459,8 @@
         },
         {
           "path": "authoring/library/sentinel-theme-art/provenance.json",
-          "bytes": 16174,
-          "sha256": "48cfad28a7454317d4f16dbdbd0c593ee6ad0bf5aa2a94152a7f27be9ef5e948"
-        }
-      ]
-    },
-    {
-      "id": "picture-sentinel-circuit-coupa-poster-1",
-      "revision": 1,
-      "kind": "picture",
-      "title": "The shared inventory court",
-      "themeId": "coupa",
-      "source": {
-        "path": "authoring/library/sentinel-theme-chapters/editions.json",
-        "bytes": 8414,
-        "sha256": "1e14923784d75f59f2537cf9a14fa2c127b92ad77b3feaebfb80658e88136b88"
-      },
-      "sourceId": "sentinel-circuit-coupa-poster-1",
-      "adapter": "sentinel-world",
-      "files": [
-        {
-          "role": "original",
-          "file": {
-            "path": "authoring/library/sentinel-theme-art/coupa/originals/listening-court.png",
-            "bytes": 2767187,
-            "sha256": "8aab2381420f0b127eb98b402de8c7b2af2fc24d471a61ce6180b0f17910959d"
-          },
-          "width": 1774,
-          "height": 887,
-          "durationSeconds": null
-        }
-      ],
-      "owners": [
-        {
-          "baseCampaignKey": "sentinel-circuit-coupa/1/8459eb3ba67608e6",
-          "levelId": "sentinel-circuit-coupa-listening-court",
-          "levelRevision": "1",
-          "themeId": "coupa"
-        }
-      ],
-      "derivedFrom": null,
-      "dependencies": [
-        {
-          "path": "authoring/library/sentinel-theme-chapters/descriptors/coupa.json",
-          "bytes": 1790,
-          "sha256": "7642e1a75ed6a1956a280c37a4602ab5d9a3f88c566f9a4740d2313514dd7c37"
-        },
-        {
-          "path": "authoring/library/sentinel-theme-art/provenance.json",
-          "bytes": 16174,
-          "sha256": "48cfad28a7454317d4f16dbdbd0c593ee6ad0bf5aa2a94152a7f27be9ef5e948"
-        }
-      ]
-    },
-    {
-      "id": "picture-sentinel-circuit-coupa-poster-2",
-      "revision": 1,
-      "kind": "picture",
-      "title": "The inland exchange yard",
-      "themeId": "coupa",
-      "source": {
-        "path": "authoring/library/sentinel-theme-chapters/editions.json",
-        "bytes": 8414,
-        "sha256": "1e14923784d75f59f2537cf9a14fa2c127b92ad77b3feaebfb80658e88136b88"
-      },
-      "sourceId": "sentinel-circuit-coupa-poster-2",
-      "adapter": "sentinel-world",
-      "files": [
-        {
-          "role": "original",
-          "file": {
-            "path": "authoring/library/sentinel-theme-art/coupa/originals/switchyard-gates.png",
-            "bytes": 2187660,
-            "sha256": "1395c68c2742d979eeb811be85dbf1352dfb78f114c1352112fac9937ec5e96a"
-          },
-          "width": 1774,
-          "height": 887,
-          "durationSeconds": null
-        }
-      ],
-      "owners": [
-        {
-          "baseCampaignKey": "sentinel-circuit-coupa/1/8459eb3ba67608e6",
-          "levelId": "sentinel-circuit-coupa-switchyard-gates",
-          "levelRevision": "1",
-          "themeId": "coupa"
-        }
-      ],
-      "derivedFrom": null,
-      "dependencies": [
-        {
-          "path": "authoring/library/sentinel-theme-chapters/descriptors/coupa.json",
-          "bytes": 1790,
-          "sha256": "7642e1a75ed6a1956a280c37a4602ab5d9a3f88c566f9a4740d2313514dd7c37"
-        },
-        {
-          "path": "authoring/library/sentinel-theme-art/provenance.json",
-          "bytes": 16174,
-          "sha256": "48cfad28a7454317d4f16dbdbd0c593ee6ad0bf5aa2a94152a7f27be9ef5e948"
-        }
-      ]
-    },
-    {
-      "id": "picture-sentinel-circuit-coupa-poster-3",
-      "revision": 1,
-      "kind": "picture",
-      "title": "The illuminated exchange hall",
-      "themeId": "coupa",
-      "source": {
-        "path": "authoring/library/sentinel-theme-chapters/editions.json",
-        "bytes": 8414,
-        "sha256": "1e14923784d75f59f2537cf9a14fa2c127b92ad77b3feaebfb80658e88136b88"
-      },
-      "sourceId": "sentinel-circuit-coupa-poster-3",
-      "adapter": "sentinel-world",
-      "files": [
-        {
-          "role": "original",
-          "file": {
-            "path": "authoring/library/sentinel-theme-art/coupa/originals/open-the-circuit.png",
-            "bytes": 2449288,
-            "sha256": "c3251eca67f94f7e27c75e0c4ac8d1ade6a81b009ee3c154ec276578eb2a8793"
-          },
-          "width": 1774,
-          "height": 887,
-          "durationSeconds": null
-        }
-      ],
-      "owners": [
-        {
-          "baseCampaignKey": "sentinel-circuit-coupa/1/8459eb3ba67608e6",
-          "levelId": "sentinel-circuit-coupa-open-circuit",
-          "levelRevision": "1",
-          "themeId": "coupa"
-        }
-      ],
-      "derivedFrom": null,
-      "dependencies": [
-        {
-          "path": "authoring/library/sentinel-theme-chapters/descriptors/coupa.json",
-          "bytes": 1790,
-          "sha256": "7642e1a75ed6a1956a280c37a4602ab5d9a3f88c566f9a4740d2313514dd7c37"
-        },
-        {
-          "path": "authoring/library/sentinel-theme-art/provenance.json",
-          "bytes": 16174,
-          "sha256": "48cfad28a7454317d4f16dbdbd0c593ee6ad0bf5aa2a94152a7f27be9ef5e948"
+          "bytes": 12200,
+          "sha256": "608a9041891ec2cf0eda3c3c285ac9c550490148e19fc0a6077f5289534fe9eb"
         }
       ]
     },
@@ -3187,8 +2616,8 @@
       "themeId": "ukraine",
       "source": {
         "path": "authoring/library/fracture-theme-chapters/editions.json",
-        "bytes": 5806,
-        "sha256": "15375a267c864634722f505b8f4f6897df4e8710714fd343fde51c55df229db7"
+        "bytes": 3892,
+        "sha256": "2438411e9a59f5c99d2cae8355f367b374d1a78c68a1782b4f0c2255a22f05ad"
       },
       "sourceId": "fracture-lines-ukraine-poster-1",
       "adapter": "fracture-world",
@@ -3235,8 +2664,8 @@
       "themeId": "ukraine",
       "source": {
         "path": "authoring/library/fracture-theme-chapters/editions.json",
-        "bytes": 5806,
-        "sha256": "15375a267c864634722f505b8f4f6897df4e8710714fd343fde51c55df229db7"
+        "bytes": 3892,
+        "sha256": "2438411e9a59f5c99d2cae8355f367b374d1a78c68a1782b4f0c2255a22f05ad"
       },
       "sourceId": "fracture-lines-ukraine-poster-2",
       "adapter": "fracture-world",
@@ -3283,8 +2712,8 @@
       "themeId": "ukraine",
       "source": {
         "path": "authoring/library/fracture-theme-chapters/editions.json",
-        "bytes": 5806,
-        "sha256": "15375a267c864634722f505b8f4f6897df4e8710714fd343fde51c55df229db7"
+        "bytes": 3892,
+        "sha256": "2438411e9a59f5c99d2cae8355f367b374d1a78c68a1782b4f0c2255a22f05ad"
       },
       "sourceId": "fracture-lines-ukraine-poster-3",
       "adapter": "fracture-world",
@@ -3331,8 +2760,8 @@
       "themeId": "retro",
       "source": {
         "path": "authoring/library/fracture-theme-chapters/editions.json",
-        "bytes": 5806,
-        "sha256": "15375a267c864634722f505b8f4f6897df4e8710714fd343fde51c55df229db7"
+        "bytes": 3892,
+        "sha256": "2438411e9a59f5c99d2cae8355f367b374d1a78c68a1782b4f0c2255a22f05ad"
       },
       "sourceId": "fracture-lines-retro-poster-1",
       "adapter": "fracture-world",
@@ -3379,8 +2808,8 @@
       "themeId": "retro",
       "source": {
         "path": "authoring/library/fracture-theme-chapters/editions.json",
-        "bytes": 5806,
-        "sha256": "15375a267c864634722f505b8f4f6897df4e8710714fd343fde51c55df229db7"
+        "bytes": 3892,
+        "sha256": "2438411e9a59f5c99d2cae8355f367b374d1a78c68a1782b4f0c2255a22f05ad"
       },
       "sourceId": "fracture-lines-retro-poster-2",
       "adapter": "fracture-world",
@@ -3427,8 +2856,8 @@
       "themeId": "retro",
       "source": {
         "path": "authoring/library/fracture-theme-chapters/editions.json",
-        "bytes": 5806,
-        "sha256": "15375a267c864634722f505b8f4f6897df4e8710714fd343fde51c55df229db7"
+        "bytes": 3892,
+        "sha256": "2438411e9a59f5c99d2cae8355f367b374d1a78c68a1782b4f0c2255a22f05ad"
       },
       "sourceId": "fracture-lines-retro-poster-3",
       "adapter": "fracture-world",
@@ -3468,150 +2897,6 @@
       ]
     },
     {
-      "id": "picture-fracture-lines-coupa-poster-1",
-      "revision": 1,
-      "kind": "picture",
-      "title": "The Shared Repair Court",
-      "themeId": "coupa",
-      "source": {
-        "path": "authoring/library/fracture-theme-chapters/editions.json",
-        "bytes": 5806,
-        "sha256": "15375a267c864634722f505b8f4f6897df4e8710714fd343fde51c55df229db7"
-      },
-      "sourceId": "fracture-lines-coupa-poster-1",
-      "adapter": "fracture-world",
-      "files": [
-        {
-          "role": "original",
-          "file": {
-            "path": "authoring/library/fracture-coupa-art/originals/split-ring-coupa.png",
-            "bytes": 3057159,
-            "sha256": "d914da1caf4b59d1892603154514fc865db460595ce8929d43841f1fd94d4362"
-          },
-          "width": 1774,
-          "height": 887,
-          "durationSeconds": null
-        }
-      ],
-      "owners": [
-        {
-          "baseCampaignKey": "fracture-lines-coupa/1/7366cdb1e5e3ed7e",
-          "levelId": "fracture-lines-split-ring",
-          "levelRevision": "1",
-          "themeId": "coupa"
-        }
-      ],
-      "derivedFrom": null,
-      "dependencies": [
-        {
-          "path": "authoring/library/fracture-theme-chapters/descriptors/coupa.json",
-          "bytes": 1739,
-          "sha256": "44f8208565215c4494916107494f55bd9f16b7e1c3adff9a764381597dc0ee1e"
-        },
-        {
-          "path": "authoring/library/fracture-coupa-art/provenance.json",
-          "bytes": 9538,
-          "sha256": "3709b1a56f5e88f2335c8fcd50b82c3f7efa4de8f89585db6b6af3325c7898d8"
-        }
-      ]
-    },
-    {
-      "id": "picture-fracture-lines-coupa-poster-2",
-      "revision": 1,
-      "kind": "picture",
-      "title": "Where Three Deliveries Meet",
-      "themeId": "coupa",
-      "source": {
-        "path": "authoring/library/fracture-theme-chapters/editions.json",
-        "bytes": 5806,
-        "sha256": "15375a267c864634722f505b8f4f6897df4e8710714fd343fde51c55df229db7"
-      },
-      "sourceId": "fracture-lines-coupa-poster-2",
-      "adapter": "fracture-world",
-      "files": [
-        {
-          "role": "original",
-          "file": {
-            "path": "authoring/library/fracture-coupa-art/originals/fault-fan-coupa.png",
-            "bytes": 2950816,
-            "sha256": "e857e9fe8f6876c1bdf628e39606dde1b9c6efa987d913cec2064b86bc530d70"
-          },
-          "width": 1774,
-          "height": 887,
-          "durationSeconds": null
-        }
-      ],
-      "owners": [
-        {
-          "baseCampaignKey": "fracture-lines-coupa/1/7366cdb1e5e3ed7e",
-          "levelId": "fracture-lines-fault-fan",
-          "levelRevision": "1",
-          "themeId": "coupa"
-        }
-      ],
-      "derivedFrom": null,
-      "dependencies": [
-        {
-          "path": "authoring/library/fracture-theme-chapters/descriptors/coupa.json",
-          "bytes": 1739,
-          "sha256": "44f8208565215c4494916107494f55bd9f16b7e1c3adff9a764381597dc0ee1e"
-        },
-        {
-          "path": "authoring/library/fracture-coupa-art/provenance.json",
-          "bytes": 9538,
-          "sha256": "3709b1a56f5e88f2335c8fcd50b82c3f7efa4de8f89585db6b6af3325c7898d8"
-        }
-      ]
-    },
-    {
-      "id": "picture-fracture-lines-coupa-poster-3",
-      "revision": 1,
-      "kind": "picture",
-      "title": "The Bridges We Rebuilt",
-      "themeId": "coupa",
-      "source": {
-        "path": "authoring/library/fracture-theme-chapters/editions.json",
-        "bytes": 5806,
-        "sha256": "15375a267c864634722f505b8f4f6897df4e8710714fd343fde51c55df229db7"
-      },
-      "sourceId": "fracture-lines-coupa-poster-3",
-      "adapter": "fracture-world",
-      "files": [
-        {
-          "role": "original",
-          "file": {
-            "path": "authoring/library/fracture-coupa-art/originals/frayed-causeway-coupa.png",
-            "bytes": 2698848,
-            "sha256": "b4b5d78c29a5bfa1345297baf28d8851fb81a51acbc86bd1926e428e4b9d23cb"
-          },
-          "width": 1774,
-          "height": 887,
-          "durationSeconds": null
-        }
-      ],
-      "owners": [
-        {
-          "baseCampaignKey": "fracture-lines-coupa/1/7366cdb1e5e3ed7e",
-          "levelId": "fracture-lines-frayed-causeway",
-          "levelRevision": "1",
-          "themeId": "coupa"
-        }
-      ],
-      "derivedFrom": null,
-      "dependencies": [
-        {
-          "path": "authoring/library/fracture-theme-chapters/descriptors/coupa.json",
-          "bytes": 1739,
-          "sha256": "44f8208565215c4494916107494f55bd9f16b7e1c3adff9a764381597dc0ee1e"
-        },
-        {
-          "path": "authoring/library/fracture-coupa-art/provenance.json",
-          "bytes": 9538,
-          "sha256": "3709b1a56f5e88f2335c8fcd50b82c3f7efa4de8f89585db6b6af3325c7898d8"
-        }
-      ]
-    },
-    {
       "id": "picture-countercurrent-offset-docks-fpv",
       "revision": 1,
       "kind": "picture",
@@ -3619,8 +2904,8 @@
       "themeId": "fpv",
       "source": {
         "path": "authoring/library/countercurrent-chapters/editions.json",
-        "bytes": 6719,
-        "sha256": "242ed154276212f8928e81d0b3e4619bc3b5a6dd1d769573f58c63d984e992c6"
+        "bytes": 5078,
+        "sha256": "d40a8b79a9923b07aec66a893098fa173b6c2282f7c67f1589c5e7e4d1458598"
       },
       "sourceId": "countercurrent-fpv-poster-1",
       "adapter": "countercurrent",
@@ -3654,13 +2939,13 @@
         },
         {
           "path": "authoring/library/countercurrent-art/provenance.json",
-          "bytes": 25236,
-          "sha256": "72137c0459d22aa1adc5acc53cb3ac95ca526d26fc53e76deca53552f107c435"
+          "bytes": 21198,
+          "sha256": "9aef6fc68783f8fa46f65916ccee492c255cef03bff1c3d3df636cc1522a9f98"
         },
         {
           "path": "authoring/library/countercurrent-art/manifest.json",
-          "bytes": 9279,
-          "sha256": "27f31bdaa91db438066107e221ed77f16ad5325873b1512566edb7881475e6b1"
+          "bytes": 6976,
+          "sha256": "c563bcdbcd0503081f24aa451437540b67ceabd545b4edb05b3256d0ccd75543"
         }
       ]
     },
@@ -3672,8 +2957,8 @@
       "themeId": "fpv",
       "source": {
         "path": "authoring/library/countercurrent-chapters/editions.json",
-        "bytes": 6719,
-        "sha256": "242ed154276212f8928e81d0b3e4619bc3b5a6dd1d769573f58c63d984e992c6"
+        "bytes": 5078,
+        "sha256": "d40a8b79a9923b07aec66a893098fa173b6c2282f7c67f1589c5e7e4d1458598"
       },
       "sourceId": "countercurrent-fpv-poster-2",
       "adapter": "countercurrent",
@@ -3707,13 +2992,13 @@
         },
         {
           "path": "authoring/library/countercurrent-art/provenance.json",
-          "bytes": 25236,
-          "sha256": "72137c0459d22aa1adc5acc53cb3ac95ca526d26fc53e76deca53552f107c435"
+          "bytes": 21198,
+          "sha256": "9aef6fc68783f8fa46f65916ccee492c255cef03bff1c3d3df636cc1522a9f98"
         },
         {
           "path": "authoring/library/countercurrent-art/manifest.json",
-          "bytes": 9279,
-          "sha256": "27f31bdaa91db438066107e221ed77f16ad5325873b1512566edb7881475e6b1"
+          "bytes": 6976,
+          "sha256": "c563bcdbcd0503081f24aa451437540b67ceabd545b4edb05b3256d0ccd75543"
         }
       ]
     },
@@ -3725,8 +3010,8 @@
       "themeId": "fpv",
       "source": {
         "path": "authoring/library/countercurrent-chapters/editions.json",
-        "bytes": 6719,
-        "sha256": "242ed154276212f8928e81d0b3e4619bc3b5a6dd1d769573f58c63d984e992c6"
+        "bytes": 5078,
+        "sha256": "d40a8b79a9923b07aec66a893098fa173b6c2282f7c67f1589c5e7e4d1458598"
       },
       "sourceId": "countercurrent-fpv-poster-3",
       "adapter": "countercurrent",
@@ -3760,13 +3045,13 @@
         },
         {
           "path": "authoring/library/countercurrent-art/provenance.json",
-          "bytes": 25236,
-          "sha256": "72137c0459d22aa1adc5acc53cb3ac95ca526d26fc53e76deca53552f107c435"
+          "bytes": 21198,
+          "sha256": "9aef6fc68783f8fa46f65916ccee492c255cef03bff1c3d3df636cc1522a9f98"
         },
         {
           "path": "authoring/library/countercurrent-art/manifest.json",
-          "bytes": 9279,
-          "sha256": "27f31bdaa91db438066107e221ed77f16ad5325873b1512566edb7881475e6b1"
+          "bytes": 6976,
+          "sha256": "c563bcdbcd0503081f24aa451437540b67ceabd545b4edb05b3256d0ccd75543"
         }
       ]
     },
@@ -3778,8 +3063,8 @@
       "themeId": "ukraine",
       "source": {
         "path": "authoring/library/countercurrent-chapters/editions.json",
-        "bytes": 6719,
-        "sha256": "242ed154276212f8928e81d0b3e4619bc3b5a6dd1d769573f58c63d984e992c6"
+        "bytes": 5078,
+        "sha256": "d40a8b79a9923b07aec66a893098fa173b6c2282f7c67f1589c5e7e4d1458598"
       },
       "sourceId": "countercurrent-ukraine-poster-1",
       "adapter": "countercurrent",
@@ -3813,13 +3098,13 @@
         },
         {
           "path": "authoring/library/countercurrent-art/provenance.json",
-          "bytes": 25236,
-          "sha256": "72137c0459d22aa1adc5acc53cb3ac95ca526d26fc53e76deca53552f107c435"
+          "bytes": 21198,
+          "sha256": "9aef6fc68783f8fa46f65916ccee492c255cef03bff1c3d3df636cc1522a9f98"
         },
         {
           "path": "authoring/library/countercurrent-art/manifest.json",
-          "bytes": 9279,
-          "sha256": "27f31bdaa91db438066107e221ed77f16ad5325873b1512566edb7881475e6b1"
+          "bytes": 6976,
+          "sha256": "c563bcdbcd0503081f24aa451437540b67ceabd545b4edb05b3256d0ccd75543"
         }
       ]
     },
@@ -3831,8 +3116,8 @@
       "themeId": "ukraine",
       "source": {
         "path": "authoring/library/countercurrent-chapters/editions.json",
-        "bytes": 6719,
-        "sha256": "242ed154276212f8928e81d0b3e4619bc3b5a6dd1d769573f58c63d984e992c6"
+        "bytes": 5078,
+        "sha256": "d40a8b79a9923b07aec66a893098fa173b6c2282f7c67f1589c5e7e4d1458598"
       },
       "sourceId": "countercurrent-ukraine-poster-2",
       "adapter": "countercurrent",
@@ -3866,13 +3151,13 @@
         },
         {
           "path": "authoring/library/countercurrent-art/provenance.json",
-          "bytes": 25236,
-          "sha256": "72137c0459d22aa1adc5acc53cb3ac95ca526d26fc53e76deca53552f107c435"
+          "bytes": 21198,
+          "sha256": "9aef6fc68783f8fa46f65916ccee492c255cef03bff1c3d3df636cc1522a9f98"
         },
         {
           "path": "authoring/library/countercurrent-art/manifest.json",
-          "bytes": 9279,
-          "sha256": "27f31bdaa91db438066107e221ed77f16ad5325873b1512566edb7881475e6b1"
+          "bytes": 6976,
+          "sha256": "c563bcdbcd0503081f24aa451437540b67ceabd545b4edb05b3256d0ccd75543"
         }
       ]
     },
@@ -3884,8 +3169,8 @@
       "themeId": "ukraine",
       "source": {
         "path": "authoring/library/countercurrent-chapters/editions.json",
-        "bytes": 6719,
-        "sha256": "242ed154276212f8928e81d0b3e4619bc3b5a6dd1d769573f58c63d984e992c6"
+        "bytes": 5078,
+        "sha256": "d40a8b79a9923b07aec66a893098fa173b6c2282f7c67f1589c5e7e4d1458598"
       },
       "sourceId": "countercurrent-ukraine-poster-3",
       "adapter": "countercurrent",
@@ -3919,13 +3204,13 @@
         },
         {
           "path": "authoring/library/countercurrent-art/provenance.json",
-          "bytes": 25236,
-          "sha256": "72137c0459d22aa1adc5acc53cb3ac95ca526d26fc53e76deca53552f107c435"
+          "bytes": 21198,
+          "sha256": "9aef6fc68783f8fa46f65916ccee492c255cef03bff1c3d3df636cc1522a9f98"
         },
         {
           "path": "authoring/library/countercurrent-art/manifest.json",
-          "bytes": 9279,
-          "sha256": "27f31bdaa91db438066107e221ed77f16ad5325873b1512566edb7881475e6b1"
+          "bytes": 6976,
+          "sha256": "c563bcdbcd0503081f24aa451437540b67ceabd545b4edb05b3256d0ccd75543"
         }
       ]
     },
@@ -3937,8 +3222,8 @@
       "themeId": "retro",
       "source": {
         "path": "authoring/library/countercurrent-chapters/editions.json",
-        "bytes": 6719,
-        "sha256": "242ed154276212f8928e81d0b3e4619bc3b5a6dd1d769573f58c63d984e992c6"
+        "bytes": 5078,
+        "sha256": "d40a8b79a9923b07aec66a893098fa173b6c2282f7c67f1589c5e7e4d1458598"
       },
       "sourceId": "countercurrent-retro-poster-1",
       "adapter": "countercurrent",
@@ -3972,13 +3257,13 @@
         },
         {
           "path": "authoring/library/countercurrent-art/provenance.json",
-          "bytes": 25236,
-          "sha256": "72137c0459d22aa1adc5acc53cb3ac95ca526d26fc53e76deca53552f107c435"
+          "bytes": 21198,
+          "sha256": "9aef6fc68783f8fa46f65916ccee492c255cef03bff1c3d3df636cc1522a9f98"
         },
         {
           "path": "authoring/library/countercurrent-art/manifest.json",
-          "bytes": 9279,
-          "sha256": "27f31bdaa91db438066107e221ed77f16ad5325873b1512566edb7881475e6b1"
+          "bytes": 6976,
+          "sha256": "c563bcdbcd0503081f24aa451437540b67ceabd545b4edb05b3256d0ccd75543"
         }
       ]
     },
@@ -3990,8 +3275,8 @@
       "themeId": "retro",
       "source": {
         "path": "authoring/library/countercurrent-chapters/editions.json",
-        "bytes": 6719,
-        "sha256": "242ed154276212f8928e81d0b3e4619bc3b5a6dd1d769573f58c63d984e992c6"
+        "bytes": 5078,
+        "sha256": "d40a8b79a9923b07aec66a893098fa173b6c2282f7c67f1589c5e7e4d1458598"
       },
       "sourceId": "countercurrent-retro-poster-2",
       "adapter": "countercurrent",
@@ -4025,13 +3310,13 @@
         },
         {
           "path": "authoring/library/countercurrent-art/provenance.json",
-          "bytes": 25236,
-          "sha256": "72137c0459d22aa1adc5acc53cb3ac95ca526d26fc53e76deca53552f107c435"
+          "bytes": 21198,
+          "sha256": "9aef6fc68783f8fa46f65916ccee492c255cef03bff1c3d3df636cc1522a9f98"
         },
         {
           "path": "authoring/library/countercurrent-art/manifest.json",
-          "bytes": 9279,
-          "sha256": "27f31bdaa91db438066107e221ed77f16ad5325873b1512566edb7881475e6b1"
+          "bytes": 6976,
+          "sha256": "c563bcdbcd0503081f24aa451437540b67ceabd545b4edb05b3256d0ccd75543"
         }
       ]
     },
@@ -4043,8 +3328,8 @@
       "themeId": "retro",
       "source": {
         "path": "authoring/library/countercurrent-chapters/editions.json",
-        "bytes": 6719,
-        "sha256": "242ed154276212f8928e81d0b3e4619bc3b5a6dd1d769573f58c63d984e992c6"
+        "bytes": 5078,
+        "sha256": "d40a8b79a9923b07aec66a893098fa173b6c2282f7c67f1589c5e7e4d1458598"
       },
       "sourceId": "countercurrent-retro-poster-3",
       "adapter": "countercurrent",
@@ -4078,172 +3363,13 @@
         },
         {
           "path": "authoring/library/countercurrent-art/provenance.json",
-          "bytes": 25236,
-          "sha256": "72137c0459d22aa1adc5acc53cb3ac95ca526d26fc53e76deca53552f107c435"
+          "bytes": 21198,
+          "sha256": "9aef6fc68783f8fa46f65916ccee492c255cef03bff1c3d3df636cc1522a9f98"
         },
         {
           "path": "authoring/library/countercurrent-art/manifest.json",
-          "bytes": 9279,
-          "sha256": "27f31bdaa91db438066107e221ed77f16ad5325873b1512566edb7881475e6b1"
-        }
-      ]
-    },
-    {
-      "id": "picture-countercurrent-offset-docks-coupa",
-      "revision": 1,
-      "kind": "picture",
-      "title": "The Shared Receiving Courts",
-      "themeId": "coupa",
-      "source": {
-        "path": "authoring/library/countercurrent-chapters/editions.json",
-        "bytes": 6719,
-        "sha256": "242ed154276212f8928e81d0b3e4619bc3b5a6dd1d769573f58c63d984e992c6"
-      },
-      "sourceId": "countercurrent-coupa-poster-1",
-      "adapter": "countercurrent",
-      "files": [
-        {
-          "role": "original",
-          "file": {
-            "path": "authoring/library/countercurrent-art/originals/offset-docks-coupa.png",
-            "bytes": 2735312,
-            "sha256": "87b28d2fec477a7572f10c83e9ec6e2ed7ef3386818f21d651e1d1897df30997"
-          },
-          "width": 1774,
-          "height": 887,
-          "durationSeconds": null
-        }
-      ],
-      "owners": [
-        {
-          "baseCampaignKey": "countercurrent-coupa/1/5f8155b60753cb07",
-          "levelId": "countercurrent-offset-docks",
-          "levelRevision": "1",
-          "themeId": "coupa"
-        }
-      ],
-      "derivedFrom": null,
-      "dependencies": [
-        {
-          "path": "authoring/library/countercurrent-chapters/descriptors/coupa.json",
-          "bytes": 1744,
-          "sha256": "82210b6f6f025fb97d7cd5c66516b3cea2b5c2668d3ba522fe64fbdf00b6dba1"
-        },
-        {
-          "path": "authoring/library/countercurrent-art/provenance.json",
-          "bytes": 25236,
-          "sha256": "72137c0459d22aa1adc5acc53cb3ac95ca526d26fc53e76deca53552f107c435"
-        },
-        {
-          "path": "authoring/library/countercurrent-art/manifest.json",
-          "bytes": 9279,
-          "sha256": "27f31bdaa91db438066107e221ed77f16ad5325873b1512566edb7881475e6b1"
-        }
-      ]
-    },
-    {
-      "id": "picture-countercurrent-sandbar-braid-coupa",
-      "revision": 1,
-      "kind": "picture",
-      "title": "Four Workshops, One Garden",
-      "themeId": "coupa",
-      "source": {
-        "path": "authoring/library/countercurrent-chapters/editions.json",
-        "bytes": 6719,
-        "sha256": "242ed154276212f8928e81d0b3e4619bc3b5a6dd1d769573f58c63d984e992c6"
-      },
-      "sourceId": "countercurrent-coupa-poster-2",
-      "adapter": "countercurrent",
-      "files": [
-        {
-          "role": "original",
-          "file": {
-            "path": "authoring/library/countercurrent-art/originals/sandbar-braid-coupa.png",
-            "bytes": 2884014,
-            "sha256": "ea643aa1735edba5f5ba8c6ca0cb3ee3d671cb37534a06966e505f42d938fe14"
-          },
-          "width": 1774,
-          "height": 887,
-          "durationSeconds": null
-        }
-      ],
-      "owners": [
-        {
-          "baseCampaignKey": "countercurrent-coupa/1/5f8155b60753cb07",
-          "levelId": "countercurrent-sandbar-braid",
-          "levelRevision": "1",
-          "themeId": "coupa"
-        }
-      ],
-      "derivedFrom": null,
-      "dependencies": [
-        {
-          "path": "authoring/library/countercurrent-chapters/descriptors/coupa.json",
-          "bytes": 1744,
-          "sha256": "82210b6f6f025fb97d7cd5c66516b3cea2b5c2668d3ba522fe64fbdf00b6dba1"
-        },
-        {
-          "path": "authoring/library/countercurrent-art/provenance.json",
-          "bytes": 25236,
-          "sha256": "72137c0459d22aa1adc5acc53cb3ac95ca526d26fc53e76deca53552f107c435"
-        },
-        {
-          "path": "authoring/library/countercurrent-art/manifest.json",
-          "bytes": 9279,
-          "sha256": "27f31bdaa91db438066107e221ed77f16ad5325873b1512566edb7881475e6b1"
-        }
-      ]
-    },
-    {
-      "id": "picture-countercurrent-crossing-watch-coupa",
-      "revision": 1,
-      "kind": "picture",
-      "title": "The Two Caretaker Houses",
-      "themeId": "coupa",
-      "source": {
-        "path": "authoring/library/countercurrent-chapters/editions.json",
-        "bytes": 6719,
-        "sha256": "242ed154276212f8928e81d0b3e4619bc3b5a6dd1d769573f58c63d984e992c6"
-      },
-      "sourceId": "countercurrent-coupa-poster-3",
-      "adapter": "countercurrent",
-      "files": [
-        {
-          "role": "original",
-          "file": {
-            "path": "authoring/library/countercurrent-art/originals/crossing-watch-coupa.png",
-            "bytes": 2897299,
-            "sha256": "1615b543d0fd311343d586fb70c877b22f9399c12dae7342101a491f6ae6f5e5"
-          },
-          "width": 1774,
-          "height": 887,
-          "durationSeconds": null
-        }
-      ],
-      "owners": [
-        {
-          "baseCampaignKey": "countercurrent-coupa/1/5f8155b60753cb07",
-          "levelId": "countercurrent-crossing-watch",
-          "levelRevision": "1",
-          "themeId": "coupa"
-        }
-      ],
-      "derivedFrom": null,
-      "dependencies": [
-        {
-          "path": "authoring/library/countercurrent-chapters/descriptors/coupa.json",
-          "bytes": 1744,
-          "sha256": "82210b6f6f025fb97d7cd5c66516b3cea2b5c2668d3ba522fe64fbdf00b6dba1"
-        },
-        {
-          "path": "authoring/library/countercurrent-art/provenance.json",
-          "bytes": 25236,
-          "sha256": "72137c0459d22aa1adc5acc53cb3ac95ca526d26fc53e76deca53552f107c435"
-        },
-        {
-          "path": "authoring/library/countercurrent-art/manifest.json",
-          "bytes": 9279,
-          "sha256": "27f31bdaa91db438066107e221ed77f16ad5325873b1512566edb7881475e6b1"
+          "bytes": 6976,
+          "sha256": "c563bcdbcd0503081f24aa451437540b67ceabd545b4edb05b3256d0ccd75543"
         }
       ]
     }
@@ -4394,54 +3520,6 @@
       }
     },
     {
-      "slotId": "picture.pressure-orchard.coupa",
-      "revision": 1,
-      "workId": "picture-shared-value-harbor",
-      "workRevision": 1,
-      "previous": null,
-      "handle": {
-        "kind": "picture",
-        "owner": {
-          "baseCampaignKey": "original-spend-shared-routes/1/7a36efe129711f19",
-          "levelId": "original-spend-shared-harbor",
-          "levelRevision": "1",
-          "themeId": "coupa"
-        }
-      }
-    },
-    {
-      "slotId": "picture.pressure-courtyard.coupa",
-      "revision": 1,
-      "workId": "picture-city-savings-observatory",
-      "workRevision": 1,
-      "previous": null,
-      "handle": {
-        "kind": "picture",
-        "owner": {
-          "baseCampaignKey": "original-spend-shared-routes/1/7a36efe129711f19",
-          "levelId": "original-spend-city-wins",
-          "levelRevision": "1",
-          "themeId": "coupa"
-        }
-      }
-    },
-    {
-      "slotId": "picture.pressure-crossfire.coupa",
-      "revision": 1,
-      "workId": "picture-thoughtful-market-workshop",
-      "workRevision": 1,
-      "previous": null,
-      "handle": {
-        "kind": "picture",
-        "owner": {
-          "baseCampaignKey": "original-spend-shared-routes/1/7a36efe129711f19",
-          "levelId": "original-spend-market-workshop",
-          "levelRevision": "1",
-          "themeId": "coupa"
-        }
-      }
-    },
-    {
       "slotId": "picture.route-foundry.fpv",
       "revision": 1,
       "workId": "picture-split-signal-foundry",
@@ -4582,54 +3660,6 @@
           "levelId": "route-worlds-retro-switchback",
           "levelRevision": "1",
           "themeId": "retro"
-        }
-      }
-    },
-    {
-      "slotId": "picture.route-foundry.coupa",
-      "revision": 1,
-      "workId": "picture-coupa-value-foundry",
-      "workRevision": 1,
-      "previous": null,
-      "handle": {
-        "kind": "picture",
-        "owner": {
-          "baseCampaignKey": "route-worlds-coupa/1/708c553521008c7d",
-          "levelId": "route-worlds-coupa-foundry",
-          "levelRevision": "1",
-          "themeId": "coupa"
-        }
-      }
-    },
-    {
-      "slotId": "picture.route-depot.coupa",
-      "revision": 1,
-      "workId": "picture-coupa-shared-harbor",
-      "workRevision": 1,
-      "previous": null,
-      "handle": {
-        "kind": "picture",
-        "owner": {
-          "baseCampaignKey": "route-worlds-coupa/1/708c553521008c7d",
-          "levelId": "route-worlds-coupa-depot",
-          "levelRevision": "1",
-          "themeId": "coupa"
-        }
-      }
-    },
-    {
-      "slotId": "picture.route-switchback.coupa",
-      "revision": 1,
-      "workId": "picture-coupa-network-garden",
-      "workRevision": 1,
-      "previous": null,
-      "handle": {
-        "kind": "picture",
-        "owner": {
-          "baseCampaignKey": "route-worlds-coupa/1/708c553521008c7d",
-          "levelId": "route-worlds-coupa-switchback",
-          "levelRevision": "1",
-          "themeId": "coupa"
         }
       }
     },
@@ -5312,216 +4342,6 @@
       }
     },
     {
-      "slotId": "presentation.scout.coupa.compact",
-      "revision": 1,
-      "workId": "rig-navi-avatar",
-      "workRevision": 1,
-      "previous": null,
-      "handle": {
-        "kind": "presentation",
-        "classId": "scout",
-        "themeId": "coupa",
-        "treatmentId": "compact",
-        "bodyId": "navi-avatar",
-        "style": "microtile"
-      }
-    },
-    {
-      "slotId": "presentation.scout.coupa.detailed",
-      "revision": 1,
-      "workId": "rig-navi-avatar",
-      "workRevision": 1,
-      "previous": null,
-      "handle": {
-        "kind": "presentation",
-        "classId": "scout",
-        "themeId": "coupa",
-        "treatmentId": "detailed",
-        "bodyId": "navi-avatar",
-        "style": "hybrid"
-      }
-    },
-    {
-      "slotId": "presentation.bomber.coupa.compact",
-      "revision": 1,
-      "workId": "rig-navi-avatar",
-      "workRevision": 1,
-      "previous": null,
-      "handle": {
-        "kind": "presentation",
-        "classId": "bomber",
-        "themeId": "coupa",
-        "treatmentId": "compact",
-        "bodyId": "navi-avatar",
-        "style": "microtile"
-      }
-    },
-    {
-      "slotId": "presentation.bomber.coupa.detailed",
-      "revision": 1,
-      "workId": "rig-navi-avatar",
-      "workRevision": 1,
-      "previous": null,
-      "handle": {
-        "kind": "presentation",
-        "classId": "bomber",
-        "themeId": "coupa",
-        "treatmentId": "detailed",
-        "bodyId": "navi-avatar",
-        "style": "hybrid"
-      }
-    },
-    {
-      "slotId": "presentation.carrier.coupa.compact",
-      "revision": 1,
-      "workId": "rig-navi-avatar",
-      "workRevision": 1,
-      "previous": null,
-      "handle": {
-        "kind": "presentation",
-        "classId": "carrier",
-        "themeId": "coupa",
-        "treatmentId": "compact",
-        "bodyId": "navi-avatar",
-        "style": "microtile"
-      }
-    },
-    {
-      "slotId": "presentation.carrier.coupa.detailed",
-      "revision": 1,
-      "workId": "rig-navi-avatar",
-      "workRevision": 1,
-      "previous": null,
-      "handle": {
-        "kind": "presentation",
-        "classId": "carrier",
-        "themeId": "coupa",
-        "treatmentId": "detailed",
-        "bodyId": "navi-avatar",
-        "style": "hybrid"
-      }
-    },
-    {
-      "slotId": "presentation.interceptor.coupa.compact",
-      "revision": 1,
-      "workId": "rig-navi-avatar",
-      "workRevision": 1,
-      "previous": null,
-      "handle": {
-        "kind": "presentation",
-        "classId": "interceptor",
-        "themeId": "coupa",
-        "treatmentId": "compact",
-        "bodyId": "navi-avatar",
-        "style": "microtile"
-      }
-    },
-    {
-      "slotId": "presentation.interceptor.coupa.detailed",
-      "revision": 1,
-      "workId": "rig-navi-avatar",
-      "workRevision": 1,
-      "previous": null,
-      "handle": {
-        "kind": "presentation",
-        "classId": "interceptor",
-        "themeId": "coupa",
-        "treatmentId": "detailed",
-        "bodyId": "navi-avatar",
-        "style": "hybrid"
-      }
-    },
-    {
-      "slotId": "presentation.fiber.coupa.compact",
-      "revision": 1,
-      "workId": "rig-navi-avatar",
-      "workRevision": 1,
-      "previous": null,
-      "handle": {
-        "kind": "presentation",
-        "classId": "fiber",
-        "themeId": "coupa",
-        "treatmentId": "compact",
-        "bodyId": "navi-avatar",
-        "style": "microtile"
-      }
-    },
-    {
-      "slotId": "presentation.fiber.coupa.detailed",
-      "revision": 1,
-      "workId": "rig-navi-avatar",
-      "workRevision": 1,
-      "previous": null,
-      "handle": {
-        "kind": "presentation",
-        "classId": "fiber",
-        "themeId": "coupa",
-        "treatmentId": "detailed",
-        "bodyId": "navi-avatar",
-        "style": "hybrid"
-      }
-    },
-    {
-      "slotId": "presentation.impact.coupa.compact",
-      "revision": 1,
-      "workId": "rig-navi-avatar",
-      "workRevision": 1,
-      "previous": null,
-      "handle": {
-        "kind": "presentation",
-        "classId": "impact",
-        "themeId": "coupa",
-        "treatmentId": "compact",
-        "bodyId": "navi-avatar",
-        "style": "microtile"
-      }
-    },
-    {
-      "slotId": "presentation.impact.coupa.detailed",
-      "revision": 1,
-      "workId": "rig-navi-avatar",
-      "workRevision": 1,
-      "previous": null,
-      "handle": {
-        "kind": "presentation",
-        "classId": "impact",
-        "themeId": "coupa",
-        "treatmentId": "detailed",
-        "bodyId": "navi-avatar",
-        "style": "hybrid"
-      }
-    },
-    {
-      "slotId": "presentation.trapper.coupa.compact",
-      "revision": 1,
-      "workId": "rig-navi-avatar",
-      "workRevision": 1,
-      "previous": null,
-      "handle": {
-        "kind": "presentation",
-        "classId": "trapper",
-        "themeId": "coupa",
-        "treatmentId": "compact",
-        "bodyId": "navi-avatar",
-        "style": "microtile"
-      }
-    },
-    {
-      "slotId": "presentation.trapper.coupa.detailed",
-      "revision": 1,
-      "workId": "rig-navi-avatar",
-      "workRevision": 1,
-      "previous": null,
-      "handle": {
-        "kind": "presentation",
-        "classId": "trapper",
-        "themeId": "coupa",
-        "treatmentId": "detailed",
-        "bodyId": "navi-avatar",
-        "style": "hybrid"
-      }
-    },
-    {
       "slotId": "story.fpv.1",
       "revision": 1,
       "workId": "story-dawn-signal",
@@ -5691,54 +4511,6 @@
       }
     },
     {
-      "slotId": "picture.sentinel-listening.coupa",
-      "revision": 1,
-      "workId": "picture-sentinel-circuit-coupa-poster-1",
-      "workRevision": 1,
-      "previous": null,
-      "handle": {
-        "kind": "picture",
-        "owner": {
-          "baseCampaignKey": "sentinel-circuit-coupa/1/8459eb3ba67608e6",
-          "levelId": "sentinel-circuit-coupa-listening-court",
-          "levelRevision": "1",
-          "themeId": "coupa"
-        }
-      }
-    },
-    {
-      "slotId": "picture.sentinel-switchyard.coupa",
-      "revision": 1,
-      "workId": "picture-sentinel-circuit-coupa-poster-2",
-      "workRevision": 1,
-      "previous": null,
-      "handle": {
-        "kind": "picture",
-        "owner": {
-          "baseCampaignKey": "sentinel-circuit-coupa/1/8459eb3ba67608e6",
-          "levelId": "sentinel-circuit-coupa-switchyard-gates",
-          "levelRevision": "1",
-          "themeId": "coupa"
-        }
-      }
-    },
-    {
-      "slotId": "picture.sentinel-circuit.coupa",
-      "revision": 1,
-      "workId": "picture-sentinel-circuit-coupa-poster-3",
-      "workRevision": 1,
-      "previous": null,
-      "handle": {
-        "kind": "picture",
-        "owner": {
-          "baseCampaignKey": "sentinel-circuit-coupa/1/8459eb3ba67608e6",
-          "levelId": "sentinel-circuit-coupa-open-circuit",
-          "levelRevision": "1",
-          "themeId": "coupa"
-        }
-      }
-    },
-    {
       "slotId": "picture.unassigned-10.fpv",
       "revision": 1,
       "workId": "picture-fracture-lines-split-ring-fpv",
@@ -5879,54 +4651,6 @@
           "levelId": "fracture-lines-frayed-causeway",
           "levelRevision": "1",
           "themeId": "retro"
-        }
-      }
-    },
-    {
-      "slotId": "picture.unassigned-10.coupa",
-      "revision": 1,
-      "workId": "picture-fracture-lines-coupa-poster-1",
-      "workRevision": 1,
-      "previous": null,
-      "handle": {
-        "kind": "picture",
-        "owner": {
-          "baseCampaignKey": "fracture-lines-coupa/1/7366cdb1e5e3ed7e",
-          "levelId": "fracture-lines-split-ring",
-          "levelRevision": "1",
-          "themeId": "coupa"
-        }
-      }
-    },
-    {
-      "slotId": "picture.unassigned-11.coupa",
-      "revision": 1,
-      "workId": "picture-fracture-lines-coupa-poster-2",
-      "workRevision": 1,
-      "previous": null,
-      "handle": {
-        "kind": "picture",
-        "owner": {
-          "baseCampaignKey": "fracture-lines-coupa/1/7366cdb1e5e3ed7e",
-          "levelId": "fracture-lines-fault-fan",
-          "levelRevision": "1",
-          "themeId": "coupa"
-        }
-      }
-    },
-    {
-      "slotId": "picture.unassigned-12.coupa",
-      "revision": 1,
-      "workId": "picture-fracture-lines-coupa-poster-3",
-      "workRevision": 1,
-      "previous": null,
-      "handle": {
-        "kind": "picture",
-        "owner": {
-          "baseCampaignKey": "fracture-lines-coupa/1/7366cdb1e5e3ed7e",
-          "levelId": "fracture-lines-frayed-causeway",
-          "levelRevision": "1",
-          "themeId": "coupa"
         }
       }
     },
@@ -6073,61 +4797,13 @@
           "themeId": "retro"
         }
       }
-    },
-    {
-      "slotId": "picture.unassigned-13.coupa",
-      "revision": 1,
-      "workId": "picture-countercurrent-offset-docks-coupa",
-      "workRevision": 1,
-      "previous": null,
-      "handle": {
-        "kind": "picture",
-        "owner": {
-          "baseCampaignKey": "countercurrent-coupa/1/5f8155b60753cb07",
-          "levelId": "countercurrent-offset-docks",
-          "levelRevision": "1",
-          "themeId": "coupa"
-        }
-      }
-    },
-    {
-      "slotId": "picture.unassigned-14.coupa",
-      "revision": 1,
-      "workId": "picture-countercurrent-sandbar-braid-coupa",
-      "workRevision": 1,
-      "previous": null,
-      "handle": {
-        "kind": "picture",
-        "owner": {
-          "baseCampaignKey": "countercurrent-coupa/1/5f8155b60753cb07",
-          "levelId": "countercurrent-sandbar-braid",
-          "levelRevision": "1",
-          "themeId": "coupa"
-        }
-      }
-    },
-    {
-      "slotId": "picture.unassigned-15.coupa",
-      "revision": 1,
-      "workId": "picture-countercurrent-crossing-watch-coupa",
-      "workRevision": 1,
-      "previous": null,
-      "handle": {
-        "kind": "picture",
-        "owner": {
-          "baseCampaignKey": "countercurrent-coupa/1/5f8155b60753cb07",
-          "levelId": "countercurrent-crossing-watch",
-          "levelRevision": "1",
-          "themeId": "coupa"
-        }
-      }
     }
   ],
   "assessments": [],
   "deliveries": [
     {
       "id": "prior035-pictures",
-      "title": "Fifteen optional originals delivered before v036; historical milestone only",
+      "title": "12 retained works from prior035-pictures; selected historical references only",
       "works": [
         {
           "workId": "picture-orchard-crossing",
@@ -6163,18 +4839,6 @@
         },
         {
           "workId": "picture-last-train-cassette",
-          "workRevision": 1
-        },
-        {
-          "workId": "picture-shared-value-harbor",
-          "workRevision": 1
-        },
-        {
-          "workId": "picture-city-savings-observatory",
-          "workRevision": 1
-        },
-        {
-          "workId": "picture-thoughtful-market-workshop",
           "workRevision": 1
         },
         {
@@ -6219,8 +4883,8 @@
       "skinId": "bouncer.fpv.v1",
       "source": {
         "path": "game/enemy-catalog.mjs",
-        "bytes": 5966,
-        "sha256": "46ce076af222227c5895bec7c8516f4e6e8098cfc81a9432d9fb0d6546e6c447"
+        "bytes": 5837,
+        "sha256": "95d6f3c7ff15f32892d1ef826238a7a7de2992c70c4c26b97cc29fb909efcd3a"
       }
     },
     {
@@ -6229,8 +4893,8 @@
       "skinId": "bouncer.ukraine.v1",
       "source": {
         "path": "game/enemy-catalog.mjs",
-        "bytes": 5966,
-        "sha256": "46ce076af222227c5895bec7c8516f4e6e8098cfc81a9432d9fb0d6546e6c447"
+        "bytes": 5837,
+        "sha256": "95d6f3c7ff15f32892d1ef826238a7a7de2992c70c4c26b97cc29fb909efcd3a"
       }
     },
     {
@@ -6239,18 +4903,8 @@
       "skinId": "bouncer.retro.v1",
       "source": {
         "path": "game/enemy-catalog.mjs",
-        "bytes": 5966,
-        "sha256": "46ce076af222227c5895bec7c8516f4e6e8098cfc81a9432d9fb0d6546e6c447"
-      }
-    },
-    {
-      "typeId": "bouncer",
-      "themeId": "coupa",
-      "skinId": "bouncer.coupa.v1",
-      "source": {
-        "path": "game/enemy-catalog.mjs",
-        "bytes": 5966,
-        "sha256": "46ce076af222227c5895bec7c8516f4e6e8098cfc81a9432d9fb0d6546e6c447"
+        "bytes": 5837,
+        "sha256": "95d6f3c7ff15f32892d1ef826238a7a7de2992c70c4c26b97cc29fb909efcd3a"
       }
     },
     {
@@ -6259,8 +4913,8 @@
       "skinId": "border-patrol.fpv.v1",
       "source": {
         "path": "game/enemy-catalog.mjs",
-        "bytes": 5966,
-        "sha256": "46ce076af222227c5895bec7c8516f4e6e8098cfc81a9432d9fb0d6546e6c447"
+        "bytes": 5837,
+        "sha256": "95d6f3c7ff15f32892d1ef826238a7a7de2992c70c4c26b97cc29fb909efcd3a"
       }
     },
     {
@@ -6269,8 +4923,8 @@
       "skinId": "border-patrol.ukraine.v1",
       "source": {
         "path": "game/enemy-catalog.mjs",
-        "bytes": 5966,
-        "sha256": "46ce076af222227c5895bec7c8516f4e6e8098cfc81a9432d9fb0d6546e6c447"
+        "bytes": 5837,
+        "sha256": "95d6f3c7ff15f32892d1ef826238a7a7de2992c70c4c26b97cc29fb909efcd3a"
       }
     },
     {
@@ -6279,18 +4933,8 @@
       "skinId": "border-patrol.retro.v1",
       "source": {
         "path": "game/enemy-catalog.mjs",
-        "bytes": 5966,
-        "sha256": "46ce076af222227c5895bec7c8516f4e6e8098cfc81a9432d9fb0d6546e6c447"
-      }
-    },
-    {
-      "typeId": "border-patrol",
-      "themeId": "coupa",
-      "skinId": "border-patrol.coupa.v1",
-      "source": {
-        "path": "game/enemy-catalog.mjs",
-        "bytes": 5966,
-        "sha256": "46ce076af222227c5895bec7c8516f4e6e8098cfc81a9432d9fb0d6546e6c447"
+        "bytes": 5837,
+        "sha256": "95d6f3c7ff15f32892d1ef826238a7a7de2992c70c4c26b97cc29fb909efcd3a"
       }
     },
     {
@@ -6299,8 +4943,8 @@
       "skinId": "contour-patrol.fpv.v1",
       "source": {
         "path": "game/enemy-catalog.mjs",
-        "bytes": 5966,
-        "sha256": "46ce076af222227c5895bec7c8516f4e6e8098cfc81a9432d9fb0d6546e6c447"
+        "bytes": 5837,
+        "sha256": "95d6f3c7ff15f32892d1ef826238a7a7de2992c70c4c26b97cc29fb909efcd3a"
       }
     },
     {
@@ -6309,8 +4953,8 @@
       "skinId": "contour-patrol.ukraine.v1",
       "source": {
         "path": "game/enemy-catalog.mjs",
-        "bytes": 5966,
-        "sha256": "46ce076af222227c5895bec7c8516f4e6e8098cfc81a9432d9fb0d6546e6c447"
+        "bytes": 5837,
+        "sha256": "95d6f3c7ff15f32892d1ef826238a7a7de2992c70c4c26b97cc29fb909efcd3a"
       }
     },
     {
@@ -6319,18 +4963,8 @@
       "skinId": "contour-patrol.retro.v1",
       "source": {
         "path": "game/enemy-catalog.mjs",
-        "bytes": 5966,
-        "sha256": "46ce076af222227c5895bec7c8516f4e6e8098cfc81a9432d9fb0d6546e6c447"
-      }
-    },
-    {
-      "typeId": "contour-patrol",
-      "themeId": "coupa",
-      "skinId": "contour-patrol.coupa.v1",
-      "source": {
-        "path": "game/enemy-catalog.mjs",
-        "bytes": 5966,
-        "sha256": "46ce076af222227c5895bec7c8516f4e6e8098cfc81a9432d9fb0d6546e6c447"
+        "bytes": 5837,
+        "sha256": "95d6f3c7ff15f32892d1ef826238a7a7de2992c70c4c26b97cc29fb909efcd3a"
       }
     },
     {
@@ -6339,8 +4973,8 @@
       "skinId": "claimed-rover.fpv.v1",
       "source": {
         "path": "game/enemy-catalog.mjs",
-        "bytes": 5966,
-        "sha256": "46ce076af222227c5895bec7c8516f4e6e8098cfc81a9432d9fb0d6546e6c447"
+        "bytes": 5837,
+        "sha256": "95d6f3c7ff15f32892d1ef826238a7a7de2992c70c4c26b97cc29fb909efcd3a"
       }
     },
     {
@@ -6349,8 +4983,8 @@
       "skinId": "claimed-rover.ukraine.v1",
       "source": {
         "path": "game/enemy-catalog.mjs",
-        "bytes": 5966,
-        "sha256": "46ce076af222227c5895bec7c8516f4e6e8098cfc81a9432d9fb0d6546e6c447"
+        "bytes": 5837,
+        "sha256": "95d6f3c7ff15f32892d1ef826238a7a7de2992c70c4c26b97cc29fb909efcd3a"
       }
     },
     {
@@ -6359,18 +4993,8 @@
       "skinId": "claimed-rover.retro.v1",
       "source": {
         "path": "game/enemy-catalog.mjs",
-        "bytes": 5966,
-        "sha256": "46ce076af222227c5895bec7c8516f4e6e8098cfc81a9432d9fb0d6546e6c447"
-      }
-    },
-    {
-      "typeId": "claimed-rover",
-      "themeId": "coupa",
-      "skinId": "claimed-rover.coupa.v1",
-      "source": {
-        "path": "game/enemy-catalog.mjs",
-        "bytes": 5966,
-        "sha256": "46ce076af222227c5895bec7c8516f4e6e8098cfc81a9432d9fb0d6546e6c447"
+        "bytes": 5837,
+        "sha256": "95d6f3c7ff15f32892d1ef826238a7a7de2992c70c4c26b97cc29fb909efcd3a"
       }
     },
     {
@@ -6379,8 +5003,8 @@
       "skinId": "eroder.fpv.v1",
       "source": {
         "path": "game/enemy-catalog.mjs",
-        "bytes": 5966,
-        "sha256": "46ce076af222227c5895bec7c8516f4e6e8098cfc81a9432d9fb0d6546e6c447"
+        "bytes": 5837,
+        "sha256": "95d6f3c7ff15f32892d1ef826238a7a7de2992c70c4c26b97cc29fb909efcd3a"
       }
     },
     {
@@ -6389,8 +5013,8 @@
       "skinId": "eroder.ukraine.v1",
       "source": {
         "path": "game/enemy-catalog.mjs",
-        "bytes": 5966,
-        "sha256": "46ce076af222227c5895bec7c8516f4e6e8098cfc81a9432d9fb0d6546e6c447"
+        "bytes": 5837,
+        "sha256": "95d6f3c7ff15f32892d1ef826238a7a7de2992c70c4c26b97cc29fb909efcd3a"
       }
     },
     {
@@ -6399,18 +5023,8 @@
       "skinId": "eroder.retro.v1",
       "source": {
         "path": "game/enemy-catalog.mjs",
-        "bytes": 5966,
-        "sha256": "46ce076af222227c5895bec7c8516f4e6e8098cfc81a9432d9fb0d6546e6c447"
-      }
-    },
-    {
-      "typeId": "eroder",
-      "themeId": "coupa",
-      "skinId": "eroder.coupa.v1",
-      "source": {
-        "path": "game/enemy-catalog.mjs",
-        "bytes": 5966,
-        "sha256": "46ce076af222227c5895bec7c8516f4e6e8098cfc81a9432d9fb0d6546e6c447"
+        "bytes": 5837,
+        "sha256": "95d6f3c7ff15f32892d1ef826238a7a7de2992c70c4c26b97cc29fb909efcd3a"
       }
     },
     {
@@ -6419,8 +5033,8 @@
       "skinId": "lane-boss.fpv.v1",
       "source": {
         "path": "game/enemy-catalog.mjs",
-        "bytes": 5966,
-        "sha256": "46ce076af222227c5895bec7c8516f4e6e8098cfc81a9432d9fb0d6546e6c447"
+        "bytes": 5837,
+        "sha256": "95d6f3c7ff15f32892d1ef826238a7a7de2992c70c4c26b97cc29fb909efcd3a"
       }
     },
     {
@@ -6429,8 +5043,8 @@
       "skinId": "lane-boss.ukraine.v1",
       "source": {
         "path": "game/enemy-catalog.mjs",
-        "bytes": 5966,
-        "sha256": "46ce076af222227c5895bec7c8516f4e6e8098cfc81a9432d9fb0d6546e6c447"
+        "bytes": 5837,
+        "sha256": "95d6f3c7ff15f32892d1ef826238a7a7de2992c70c4c26b97cc29fb909efcd3a"
       }
     },
     {
@@ -6439,18 +5053,8 @@
       "skinId": "lane-boss.retro.v1",
       "source": {
         "path": "game/enemy-catalog.mjs",
-        "bytes": 5966,
-        "sha256": "46ce076af222227c5895bec7c8516f4e6e8098cfc81a9432d9fb0d6546e6c447"
-      }
-    },
-    {
-      "typeId": "lane-boss",
-      "themeId": "coupa",
-      "skinId": "lane-boss.coupa.v1",
-      "source": {
-        "path": "game/enemy-catalog.mjs",
-        "bytes": 5966,
-        "sha256": "46ce076af222227c5895bec7c8516f4e6e8098cfc81a9432d9fb0d6546e6c447"
+        "bytes": 5837,
+        "sha256": "95d6f3c7ff15f32892d1ef826238a7a7de2992c70c4c26b97cc29fb909efcd3a"
       }
     },
     {
@@ -6459,8 +5063,8 @@
       "skinId": "relay-sentinel.fpv.v1",
       "source": {
         "path": "game/enemy-catalog.mjs",
-        "bytes": 5966,
-        "sha256": "46ce076af222227c5895bec7c8516f4e6e8098cfc81a9432d9fb0d6546e6c447"
+        "bytes": 5837,
+        "sha256": "95d6f3c7ff15f32892d1ef826238a7a7de2992c70c4c26b97cc29fb909efcd3a"
       }
     },
     {
@@ -6469,8 +5073,8 @@
       "skinId": "relay-sentinel.ukraine.v1",
       "source": {
         "path": "game/enemy-catalog.mjs",
-        "bytes": 5966,
-        "sha256": "46ce076af222227c5895bec7c8516f4e6e8098cfc81a9432d9fb0d6546e6c447"
+        "bytes": 5837,
+        "sha256": "95d6f3c7ff15f32892d1ef826238a7a7de2992c70c4c26b97cc29fb909efcd3a"
       }
     },
     {
@@ -6479,18 +5083,8 @@
       "skinId": "relay-sentinel.retro.v1",
       "source": {
         "path": "game/enemy-catalog.mjs",
-        "bytes": 5966,
-        "sha256": "46ce076af222227c5895bec7c8516f4e6e8098cfc81a9432d9fb0d6546e6c447"
-      }
-    },
-    {
-      "typeId": "relay-sentinel",
-      "themeId": "coupa",
-      "skinId": "relay-sentinel.coupa.v1",
-      "source": {
-        "path": "game/enemy-catalog.mjs",
-        "bytes": 5966,
-        "sha256": "46ce076af222227c5895bec7c8516f4e6e8098cfc81a9432d9fb0d6546e6c447"
+        "bytes": 5837,
+        "sha256": "95d6f3c7ff15f32892d1ef826238a7a7de2992c70c4c26b97cc29fb909efcd3a"
       }
     }
   ],
@@ -6502,23 +5096,18 @@
     },
     {
       "path": "authoring/library/four-worlds-chapters/distribution.json",
-      "bytes": 4255,
-      "sha256": "11ad3664a02f7efdef01b601adadf62b4b275f7db6d03c37ae8d9e78f9e9bcb6"
+      "bytes": 3280,
+      "sha256": "84621ad3d577c2e0f7522dfde0d76b5d7fad02a500cabb4071e1fb1443690ac4"
     },
     {
       "path": "authoring/library/four-worlds-source/catalog.json",
-      "bytes": 12360,
-      "sha256": "dcc82dfcf403ad86e83e1d985e8c9ecd530fbfad1c7bf9d556eaff9ba0530d29"
+      "bytes": 9287,
+      "sha256": "ecbeb480cdf7b42da4b945fef50c54ee5bfd29c84d46219d928b66b4d0bd922d"
     },
     {
       "path": "authoring/library/fpv-route-choices/distribution.json",
       "bytes": 3446,
-      "sha256": "c85097a58e9c84037083907484cbac739592ccbebb5156ac6f27afab76fc1dab"
-    },
-    {
-      "path": "authoring/library/route-worlds/descriptors/coupa.json",
-      "bytes": 1730,
-      "sha256": "38849fc20068802638304d14b2df6fbcefdca1a6f76fdeb6a2520464b5612503"
+      "sha256": "ad12de5c544adf02a653e3e0ba12ca6a76c1429bcc27dbe9a6683d9202cafd09"
     },
     {
       "path": "authoring/library/route-worlds/descriptors/retro.json",
@@ -6532,8 +5121,8 @@
     },
     {
       "path": "authoring/library/route-worlds/editions.json",
-      "bytes": 2049,
-      "sha256": "f1cf474b1f02b48bcbafb60fbab080416afc9c2c135c68a2def2ae90865300fc"
+      "bytes": 1411,
+      "sha256": "db598fb6ecc35cd5667d307d2b15451eb5a41bf0089f443a254e927afe34d435"
     },
     {
       "path": "authoring/library/sentinel-circuit-external/descriptor.json",
@@ -6552,8 +5141,8 @@
     },
     {
       "path": "game/content/themes.json",
-      "bytes": 4266,
-      "sha256": "93582f7d9ba53753106df7b63928f086820fc0f68357d3c08f26c0b89fb84774"
+      "bytes": 3198,
+      "sha256": "77f3e7e8f0951172bd0c11649b0203808b3d1b00ca434c2a576ef631899958b2"
     },
     {
       "path": "game/ui/music.mjs",
@@ -6562,13 +5151,13 @@
     },
     {
       "path": "authoring/library/sentinel-theme-chapters/editions.json",
-      "bytes": 8414,
-      "sha256": "1e14923784d75f59f2537cf9a14fa2c127b92ad77b3feaebfb80658e88136b88"
+      "bytes": 5679,
+      "sha256": "bfac4c017bd955f0185e8eabe45470be3e5044e0fef7fde6c294c8f1b5fa5a7f"
     },
     {
       "path": "authoring/library/sentinel-theme-art/provenance.json",
-      "bytes": 16174,
-      "sha256": "48cfad28a7454317d4f16dbdbd0c593ee6ad0bf5aa2a94152a7f27be9ef5e948"
+      "bytes": 12200,
+      "sha256": "608a9041891ec2cf0eda3c3c285ac9c550490148e19fc0a6077f5289534fe9eb"
     },
     {
       "path": "authoring/library/sentinel-theme-chapters/descriptors/ukraine.json",
@@ -6579,11 +5168,6 @@
       "path": "authoring/library/sentinel-theme-chapters/descriptors/retro.json",
       "bytes": 1790,
       "sha256": "071967ad32c7904d07c61e24e8467aa88ddf30c6302a4978646a771c9878cd22"
-    },
-    {
-      "path": "authoring/library/sentinel-theme-chapters/descriptors/coupa.json",
-      "bytes": 1790,
-      "sha256": "7642e1a75ed6a1956a280c37a4602ab5d9a3f88c566f9a4740d2313514dd7c37"
     },
     {
       "path": "authoring/library/fracture-lines-chapter/edition.json",
@@ -6612,8 +5196,8 @@
     },
     {
       "path": "authoring/library/fracture-theme-chapters/editions.json",
-      "bytes": 5806,
-      "sha256": "15375a267c864634722f505b8f4f6897df4e8710714fd343fde51c55df229db7"
+      "bytes": 3892,
+      "sha256": "2438411e9a59f5c99d2cae8355f367b374d1a78c68a1782b4f0c2255a22f05ad"
     },
     {
       "path": "authoring/library/fracture-theme-chapters/descriptors/ukraine.json",
@@ -6636,34 +5220,24 @@
       "sha256": "0838b853611aa53f97336e8971b9ec429ec48c13b0b91c91df3a212d7cff2197"
     },
     {
-      "path": "authoring/library/fracture-theme-chapters/descriptors/coupa.json",
-      "bytes": 1739,
-      "sha256": "44f8208565215c4494916107494f55bd9f16b7e1c3adff9a764381597dc0ee1e"
-    },
-    {
-      "path": "authoring/library/fracture-coupa-art/provenance.json",
-      "bytes": 9538,
-      "sha256": "3709b1a56f5e88f2335c8fcd50b82c3f7efa4de8f89585db6b6af3325c7898d8"
-    },
-    {
       "path": "authoring/library/fracture-lines/layouts.json",
       "bytes": 7669,
       "sha256": "af15577704ce673100f7c6d89ae92baffa25c5ebfdae2459ea4c720a9d7ab179"
     },
     {
       "path": "authoring/library/countercurrent-chapters/editions.json",
-      "bytes": 6719,
-      "sha256": "242ed154276212f8928e81d0b3e4619bc3b5a6dd1d769573f58c63d984e992c6"
+      "bytes": 5078,
+      "sha256": "d40a8b79a9923b07aec66a893098fa173b6c2282f7c67f1589c5e7e4d1458598"
     },
     {
       "path": "authoring/library/countercurrent-art/provenance.json",
-      "bytes": 25236,
-      "sha256": "72137c0459d22aa1adc5acc53cb3ac95ca526d26fc53e76deca53552f107c435"
+      "bytes": 21198,
+      "sha256": "9aef6fc68783f8fa46f65916ccee492c255cef03bff1c3d3df636cc1522a9f98"
     },
     {
       "path": "authoring/library/countercurrent-art/manifest.json",
-      "bytes": 9279,
-      "sha256": "27f31bdaa91db438066107e221ed77f16ad5325873b1512566edb7881475e6b1"
+      "bytes": 6976,
+      "sha256": "c563bcdbcd0503081f24aa451437540b67ceabd545b4edb05b3256d0ccd75543"
     },
     {
       "path": "authoring/library/countercurrent/layouts.json",
@@ -6684,11 +5258,6 @@
       "path": "authoring/library/countercurrent-chapters/descriptors/retro.json",
       "bytes": 1744,
       "sha256": "003a87e724987186862e18254e6806cdc4e3d7956730cfed9225a3069d715f46"
-    },
-    {
-      "path": "authoring/library/countercurrent-chapters/descriptors/coupa.json",
-      "bytes": 1744,
-      "sha256": "82210b6f6f025fb97d7cd5c66516b3cea2b5c2668d3ba522fe64fbdf00b6dba1"
     }
   ]
 }

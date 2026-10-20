@@ -33,7 +33,6 @@ Useful prompts to adapt:
 
 > Author a 1990s synth-arcade chapter with three distinct collectible scenes: an illuminated computer room, a rainy neon station and a dawn rooftop. Use the existing territory-capture rules and registered music descriptors. Produce one map-specific picture per level, retain sources and inspect the full reveal; do not imply the prompt created a new mechanic or licensed recording.
 
-> Adapt the same chapter to an original Coupa-inspired Spend Network world: legible savings routes, warm celebratory light and a reusable avatar. Treat scores as fictional game points. Preserve capture geometry and independent actor roles, and avoid claiming official Coupa product behavior or actual customer savings.
 
 ## Maintain a reproducible illustrated chapter
 

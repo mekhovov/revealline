@@ -1,5 +1,7 @@
 # Round 05 — XPOSED source inventory and edition cross-check
 
+> Retained excerpt after an ownership migration. Historical totals and verification statements describe the original scope; this excerpt is not a current release qualification. Original bytes and removed material are preserved separately.
+
 Research date: 12 September 2026. This inventory supplements [the first research pass](xonix-and-xposed.md). It identifies accessible media and checks textual evidence. Video URLs and duration metadata are **not** evidence that the footage has been watched; direct viewing findings belong in the companion visual audit. Search coverage is broad, not a claim to have located every upload on the internet.
 
 **Direct-video update later in this same round:** the Reloaded tutorial was subsequently inspected in XR-V3 at 00:45–00:55. It directly names four powerups and three special field roles, and explains four enemy roles. This supersedes the earlier source-search uncertainties recorded below. See the [postscript](#direct-video-postscript) and [contract/challenge adjustments](../../authoring/challenges/round-05-reference-adjustments.md).
@@ -104,7 +106,6 @@ These are design judgments, not measured retention findings:
 4. Preserve the two threat domains—open field and safe-boundary traffic—if observed. They create distinct decisions without requiring excessive enemy counts.
 5. Give each hazard one readable spatial or timing purpose. Separate lethal terrain, slow terrain, live bullets, open-region anchor enemies and decorative background objects in art and in data.
 6. Treat a delayed trail-strike pulse as an explicit candidate mechanic. If adopted, expose its speed/delay and escape condition in the rules contract; do not quietly turn all trail contact into immediate death.
-7. Keep the clean neon gameplay layer while replacing unrelated background collections with intentional chapters for FPV FRONT, UKRAINE ATLAS, 1994 FOREVER and NAVI NETWORK.
 
 No standalone manual, complete named enemy compendium or publisher capture-algorithm specification was located by the source search. The directly viewed in-game tutorial subsequently resolved several of these gaps as recorded below; the exact fill algorithm remains open.
 

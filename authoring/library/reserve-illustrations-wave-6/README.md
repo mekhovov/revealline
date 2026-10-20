@@ -1,5 +1,6 @@
 # Reserve illustrations · wave 6
 
+This is a reduced historical generation record. Retired ownership entries are omitted; original batch totals below remain historical context. The current retained selection is in the reserve illustrations catalog.
 Four original reward-scene illustrations follow [wave 5](../reserve-illustrations-wave-5/README.md). They remain source illustrations: no runtime binding, playable level, animation, pack or release is added.
 
 | Theme | Original | Composition |
@@ -7,7 +8,6 @@ Four original reward-scene illustrations follow [wave 5](../reserve-illustration
 | FPV Front | [Saffron Balloon Meadow](originals/fpv-saffron-balloon-meadow.png) | A prominent four-rotor quad over a golden meadow, with three dawn balloons and a distant lake, distinct from the preceding copper canyon. |
 | Ukraine Atlas | [Bluebell Watermill](originals/ukraine-bluebell-watermill.png) | A large timber wheel and curved blue stream among spring flowers, distinct from the preceding snowy sled courtyard. |
 | 1994 Forever | [Sunset Bumper Pavilion](originals/retro-sunset-bumper-pavilion.png) | A plum-and-turquoise car and sunset reflections beneath an open fairground canopy, distinct from the preceding indoor bowling lanes. |
-| Spend Network | [Coral Dawn Bakery](originals/spend-coral-dawn-bakery.png) | A bread cart between a glowing oven and an open coastal doorway, distinct from the preceding rooftop raincatcher. |
 
 The four original PNGs total **11,104,428 bytes**. Each returned image is **1774 × 887, RGB, 8-bit**, exactly **2:1**. The requested 1536 × 768 dimensions were a target; every returned original is retained unchanged, without resizing, cropping or color conversion.
 

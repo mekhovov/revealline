@@ -11,166 +11,9 @@
   "worlds": [
     "fpv",
     "ukraine",
-    "retro",
-    "coupa"
+    "retro"
   ],
   "editions": [
-    {
-      "id": "coupa-all",
-      "title": "Coupa Village / LINE",
-      "brand": "coupa",
-      "modes": [
-        "solo"
-      ],
-      "scene": "coupa-village",
-      "routes": [
-        "/game/?edition=coupa-all",
-        "/editions/coupa-all/app/"
-      ],
-      "menus": "shared-native",
-      "verification": {
-        "automated": "catalogue, supported modes, scene and two launch routes checked",
-        "physicalController": "not tested",
-        "publishedBuild": "not tested",
-        "browser": "Current c0a875750 source: EN/UK, both palettes, 390×844 and 844×390 rendered landing checks passed (8 per edition); exact branding/scene, Solo capability, four actions, fullscreen, registered icons, 44px control heights, decoded artwork and essential bounds fit without horizontal overflow. See docs/verification/edition-menu-matrix-2026-09-29.md. Input-only, installed-offline and published-build acceptance remain separate.",
-        "standalonePackage": "2026-09-29 frozen follow-up inputs: normal-admission in-memory compile and final offline manifest passed for all 14 editions; no multiplayer scene or manual fixture included. See edition-packaging-followup receipt. Installed-offline/native/published acceptance remains pending.",
-        "historical": {
-          "browser": "default-package EN and Ukrainian 390×844: branding, Solo-only capabilities, four actions, scene decode and overflow passed; local versioned standalone launcher → player handoff passed",
-          "standalonePackage": "final local compilation passed; complete dependency/font/icon/scene/offline inventory and version binding passed; source-hash agreement passed"
-        }
-      },
-      "publicSlug": "coupa-all"
-    },
-    {
-      "id": "coupa-adventure",
-      "title": "Spend in Motion / LINE",
-      "brand": "coupa",
-      "modes": [
-        "solo"
-      ],
-      "scene": "coupa-spend-in-motion-theme",
-      "routes": [
-        "/game/?edition=coupa-adventure",
-        "/editions/coupa-adventure/app/"
-      ],
-      "menus": "shared-native",
-      "verification": {
-        "automated": "catalogue, supported modes, scene and two launch routes checked",
-        "physicalController": "not tested",
-        "publishedBuild": "not tested",
-        "browser": "Current c0a875750 source: EN/UK, both palettes, 390×844 and 844×390 rendered landing checks passed (8 per edition); exact branding/scene, Solo capability, four actions, fullscreen, registered icons, 44px control heights, decoded artwork and essential bounds fit without horizontal overflow. See docs/verification/edition-menu-matrix-2026-09-29.md. Input-only, installed-offline and published-build acceptance remain separate.",
-        "standalonePackage": "2026-09-29 frozen follow-up inputs: normal-admission in-memory compile and final offline manifest passed for all 14 editions; no multiplayer scene or manual fixture included. See edition-packaging-followup receipt. Installed-offline/native/published acceptance remains pending.",
-        "historical": {
-          "browser": "default-package EN and Ukrainian 390×844: branding, Solo-only capabilities, four actions, scene decode and overflow passed; local versioned standalone launcher → player handoff passed",
-          "standalonePackage": "final local compilation passed; complete dependency/font/icon/scene/offline inventory and version binding passed; source-hash agreement passed"
-        }
-      },
-      "publicSlug": "coupa-adventure"
-    },
-    {
-      "id": "coupa-culture",
-      "title": "Inside the Village / LINE",
-      "brand": "coupa",
-      "modes": [
-        "solo"
-      ],
-      "scene": "coupa-inside-village-theme",
-      "routes": [
-        "/game/?edition=coupa-culture",
-        "/editions/coupa-culture/app/"
-      ],
-      "menus": "shared-native",
-      "verification": {
-        "automated": "catalogue, supported modes, scene and two launch routes checked",
-        "physicalController": "not tested",
-        "publishedBuild": "not tested",
-        "browser": "Current c0a875750 source: EN/UK, both palettes, 390×844 and 844×390 rendered landing checks passed (8 per edition); exact branding/scene, Solo capability, four actions, fullscreen, registered icons, 44px control heights, decoded artwork and essential bounds fit without horizontal overflow. See docs/verification/edition-menu-matrix-2026-09-29.md. Input-only, installed-offline and published-build acceptance remain separate.",
-        "standalonePackage": "2026-09-29 frozen follow-up inputs: normal-admission in-memory compile and final offline manifest passed for all 14 editions; no multiplayer scene or manual fixture included. See edition-packaging-followup receipt. Installed-offline/native/published acceptance remains pending.",
-        "historical": {
-          "browser": "default-package EN and Ukrainian 390×844: branding, Solo-only capabilities, four actions, scene decode and overflow passed; local versioned standalone launcher → player handoff passed",
-          "standalonePackage": "final local compilation passed; complete dependency/font/icon/scene/offline inventory and version binding passed; source-hash agreement passed"
-        }
-      },
-      "publicSlug": "coupa-culture"
-    },
-    {
-      "id": "coupa-foundations",
-      "title": "From Need to Value / LINE",
-      "brand": "coupa",
-      "modes": [
-        "solo"
-      ],
-      "scene": "coupa-source-to-pay-theme",
-      "routes": [
-        "/game/?edition=coupa-foundations",
-        "/editions/coupa-foundations/app/"
-      ],
-      "menus": "shared-native",
-      "verification": {
-        "automated": "catalogue, supported modes, scene and two launch routes checked",
-        "physicalController": "not tested",
-        "publishedBuild": "not tested",
-        "browser": "Current c0a875750 source: EN/UK, both palettes, 390×844 and 844×390 rendered landing checks passed (8 per edition); exact branding/scene, Solo capability, four actions, fullscreen, registered icons, 44px control heights, decoded artwork and essential bounds fit without horizontal overflow. See docs/verification/edition-menu-matrix-2026-09-29.md. Input-only, installed-offline and published-build acceptance remain separate.",
-        "standalonePackage": "2026-09-29 frozen follow-up inputs: normal-admission in-memory compile and final offline manifest passed for all 14 editions; no multiplayer scene or manual fixture included. See edition-packaging-followup receipt. Installed-offline/native/published acceptance remains pending.",
-        "historical": {
-          "browser": "default-package EN and Ukrainian 390×844: branding, Solo-only capabilities, four actions, scene decode and overflow passed; local versioned standalone launcher → player handoff passed",
-          "standalonePackage": "final local compilation passed; complete dependency/font/icon/scene/offline inventory and version binding passed; source-hash agreement passed"
-        }
-      },
-      "publicSlug": "coupa-foundations"
-    },
-    {
-      "id": "coupa-operations",
-      "title": "A Day in Coupa / LINE",
-      "brand": "coupa",
-      "modes": [
-        "solo"
-      ],
-      "scene": "coupa-product-operations-theme",
-      "routes": [
-        "/game/?edition=coupa-operations",
-        "/editions/coupa-operations/app/"
-      ],
-      "menus": "shared-native",
-      "verification": {
-        "automated": "catalogue, supported modes, scene and two launch routes checked",
-        "physicalController": "not tested",
-        "publishedBuild": "not tested",
-        "browser": "Current c0a875750 source: EN/UK, both palettes, 390×844 and 844×390 rendered landing checks passed (8 per edition); exact branding/scene, Solo capability, four actions, fullscreen, registered icons, 44px control heights, decoded artwork and essential bounds fit without horizontal overflow. See docs/verification/edition-menu-matrix-2026-09-29.md. Input-only, installed-offline and published-build acceptance remain separate.",
-        "standalonePackage": "2026-09-29 frozen follow-up inputs: normal-admission in-memory compile and final offline manifest passed for all 14 editions; no multiplayer scene or manual fixture included. See edition-packaging-followup receipt. Installed-offline/native/published acceptance remains pending.",
-        "historical": {
-          "browser": "default-package EN and Ukrainian 390×844: branding, Solo-only capabilities, four actions, scene decode and overflow passed; local versioned standalone launcher → player handoff passed",
-          "standalonePackage": "final local compilation passed; complete dependency/font/icon/scene/offline inventory and version binding passed; source-hash agreement passed"
-        }
-      },
-      "publicSlug": "coupa-operations"
-    },
-    {
-      "id": "coupa-developers",
-      "title": "Connect the Network / LINE",
-      "brand": "coupa",
-      "modes": [
-        "solo"
-      ],
-      "scene": "coupa-developer-integration-theme",
-      "routes": [
-        "/game/?edition=coupa-developers",
-        "/editions/coupa-developers/app/"
-      ],
-      "menus": "shared-native",
-      "verification": {
-        "automated": "catalogue, supported modes, scene and two launch routes checked",
-        "physicalController": "not tested",
-        "publishedBuild": "not tested",
-        "browser": "Current c0a875750 source: EN/UK, both palettes, 390×844 and 844×390 rendered landing checks passed (8 per edition); exact branding/scene, Solo capability, four actions, fullscreen, registered icons, 44px control heights, decoded artwork and essential bounds fit without horizontal overflow. See docs/verification/edition-menu-matrix-2026-09-29.md. Input-only, installed-offline and published-build acceptance remain separate.",
-        "standalonePackage": "2026-09-29 frozen follow-up inputs: normal-admission in-memory compile and final offline manifest passed for all 14 editions; no multiplayer scene or manual fixture included. See edition-packaging-followup receipt. Installed-offline/native/published acceptance remains pending.",
-        "historical": {
-          "browser": "default-package EN and Ukrainian 390×844: branding, Solo-only capabilities, four actions, scene decode and overflow passed; local versioned standalone launcher → player handoff passed",
-          "standalonePackage": "final local compilation passed; complete dependency/font/icon/scene/offline inventory and version binding passed; source-hash agreement passed"
-        }
-      },
-      "publicSlug": "coupa-developers"
-    },
     {
       "id": "droneaid-community",
       "title": "Community Relay / LINE",
@@ -531,7 +374,6 @@
     "/app/",
     "/game/communities/",
     "/game/community/store.html",
-    "/game/communities/coupa/",
     "/game/communities/droneaid/",
     "/game/communities/droneaid-community/",
     "/game/communities/fpv-learning/",
@@ -786,7 +628,7 @@
     }
   ],
   "brandingRevision": "2026-09-29-fpv-line",
-  "verificationNote": "Evidence entries retain their individual revisions and dates. Early observations predate FPV / LINE; later branding, workflow and package receipts have separate cutoffs. See docs/native-menu-roadmap.md for current priorities, not blanket acceptance of current main.",
+  "verificationNote": "Evidence entries retain their individual revisions and dates. Early observations predate FPV / LINE; later branding, workflow and package receipts have separate cutoffs. See docs/native-menu-roadmap.md for current priorities, not blanket acceptance of current main. Ownership projection: removed retired editions and their launch routes; earlier evidence is historical and does not qualify this projection.",
   "evidenceScope": {
     "historical": "Browser and standalone-package observations below belong to the shared development snapshots recorded on 2026-09-28 and 2026-09-29, before main reconciliation. They do not qualify the current candidate.",
     "currentCandidate": "Reviewed against main 09a43d833 on 2026-09-30. Dated receipts cover all four base-world mode compositions, original-14 browser layouts and meaningful creator workflows. All 18 editions compiled in memory at fa31dcc6996f5383989017f98f7ea51739924a06 (docs/verification/reserve-catalog-input-2026-09-30.md); later donor compiles retain separate attribution. These are not current aggregate, installed-offline, physical/native or published acceptance. See docs/native-menu-roadmap.md."
@@ -797,30 +639,6 @@
       "route": "/app/",
       "source": "game/offline/app.html",
       "generator": "scripts/offline-launcher.mjs"
-    },
-    {
-      "route": "/editions/coupa-all/app/",
-      "generator": "scripts/compile-edition.mjs"
-    },
-    {
-      "route": "/editions/coupa-adventure/app/",
-      "generator": "scripts/compile-edition.mjs"
-    },
-    {
-      "route": "/editions/coupa-culture/app/",
-      "generator": "scripts/compile-edition.mjs"
-    },
-    {
-      "route": "/editions/coupa-foundations/app/",
-      "generator": "scripts/compile-edition.mjs"
-    },
-    {
-      "route": "/editions/coupa-operations/app/",
-      "generator": "scripts/compile-edition.mjs"
-    },
-    {
-      "route": "/editions/coupa-developers/app/",
-      "generator": "scripts/compile-edition.mjs"
     },
     {
       "route": "/editions/droneaid-community/app/",

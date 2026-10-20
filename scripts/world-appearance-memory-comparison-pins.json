@@ -1,0 +1,65 @@
+{
+  "format": "world-memory-fixed-diagnostic-pins.v1",
+  "targets": {
+    "baseline": {
+      "head": "a7c8be6ff7f4cf2ee0409edbab136e398f21c1c2",
+      "tree": "bcbea65b4e69718749fa7df0f3320128ce3dccfe"
+    },
+    "feature": {
+      "head": "2d15ac09834c762a543d5aa3edcb9114f6135b88",
+      "tree": "f602d4359e5ed4d45fd6e687bae7a533d8615e71"
+    }
+  },
+  "owners": {
+    "game/test/fpv-world-appearance-ui.test.mjs": {
+      "OID": "c46411cfe70fad0a9a1e364645ef896dc5da74d4",
+      "bytes": 161945
+    },
+    "optional-practice/civilian-fpv/world-app.mjs": {
+      "OID": "9d32074e5862ef080af13a4901a288802f3f565e",
+      "bytes": 431653
+    },
+    "optional-practice/civilian-fpv/advanced-worker.mjs": {
+      "OID": "4f5279cab2f1684393494b6fa34998ff593b1bd7",
+      "bytes": 8669
+    },
+    "game/test/helpers/global-tools-fixture.mjs": {
+      "OID": "8ae1a34d6c06e108e16a8667e991c267d2020dbf",
+      "bytes": 862
+    },
+    "game/test/helpers/couch-dom.mjs": {
+      "OID": "28282ff7b4f1c58958159f29a55594cd7f0999cb",
+      "bytes": 20764
+    },
+    "package.json": {
+      "OID": "f94337351898beb64a2b56e8f396029682967ff1",
+      "bytes": 11087
+    },
+    "package-lock.json": {
+      "OID": "acda9271c2aa2f98d6d80efee8c3a8aca2c192e8",
+      "bytes": 40069
+    },
+    "authoring/fpv-worlds/package.json": {
+      "OID": "32801b5afc57ab17d8d63396acf5d34eca42bcc8",
+      "bytes": 469
+    },
+    "authoring/fpv-worlds/package-lock.json": {
+      "OID": "5c928d790d8ddc46255a87d7a3d7676ccb91d21e",
+      "bytes": 26330
+    }
+  },
+  "guard": {
+    "OID": "7efd0a70a86c95c369b0185daa103d306da9a706",
+    "SHA256": "5661376556a4a3b4175f4fb58b3131f9eb3999e30e723f6ddb876464ccdcae37",
+    "bytes": 40284,
+    "filename": "native-guard.py"
+  },
+  "auditor": {
+    "OID": "56ad477033516d565fbb7f85cea70d0430ceae1c",
+    "SHA256": "a6124736ce13aec52fb26d818e6c2aa6ce83965ccaf92b94c783043d1d150fc4",
+    "bytes": 7275,
+    "filename": "source-auditor.mjs"
+  },
+  "nodeSHA256": "81925c0995b5c1427b5d538e6a90ca2fdc4daffb786b09af749beaf7369d4e90",
+  "localExecution": "NOT_RUN; source-only diagnostic proposal"
+}

@@ -46,20 +46,6 @@
       "prompt": "prompts/retro-midnight-disk-station.txt",
       "cleanupPrompt": "prompts/retro-midnight-disk-station-cleanup.txt",
       "runtimeAdopted": false
-    },
-    {
-      "id": "spend-cloud-cart-exchange",
-      "themeId": "coupa",
-      "theme": "Spend Network",
-      "title": "Cloud Cart Exchange",
-      "file": "originals/spend-cloud-cart-exchange-clean.png",
-      "bytes": 2549711,
-      "sha256": "560949cad2ee1031dd5f5edd9c5115db576db5d8133ae3712faa11243cee0971",
-      "width": 1774,
-      "height": 887,
-      "prompt": "prompts/spend-cloud-cart-exchange.txt",
-      "cleanupPrompt": "prompts/spend-cloud-cart-exchange-cleanup.txt",
-      "runtimeAdopted": false
     }
   ],
   "selectionProvenance": "provenance/selected-originals.json"

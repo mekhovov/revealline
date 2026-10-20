@@ -1,6 +1,6 @@
 ---
 name: xonix-audio-director
-description: 'Design audio direction, music prompts, adaptive stems, event sound effects, menus, and audio asset plans for Xonix theme packs. Use for Ukrainian instrumentation, 1980s–1990s chip and synth moods, FPV arcade feedback, Coupa business themes, or audio variation and production review.'
+description: "Design themed game content using the current generic authoring contracts and supplied references."
 ---
 
 # Xonix Audio Director

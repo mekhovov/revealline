@@ -120,15 +120,7 @@ function flow(map, id, direction, preferred) {
 
 export function companyChallengeStage(brandId, campaignIndex) {
   if (brandId === 'droneaid') return { stage: 0, band: 1 };
-  return brandId === 'coupa'
-    ? [
-        { stage: 1, band: 1 },
-        { stage: 2, band: 4 },
-        { stage: 3, band: 6 },
-        { stage: 4, band: 8 },
-        { stage: 6, band: 11 },
-      ][campaignIndex]
-    : { stage: campaignIndex + 1, band: [1, 3, 5, 7, 9, 11][campaignIndex] };
+  return { stage: campaignIndex + 1, band: [1, 3, 5, 7, 9, 11][campaignIndex] };
 }
 
 /** Mutates only a fresh factory-owned mission/map pair before compilation. */

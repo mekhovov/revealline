@@ -1,0 +1,129 @@
+{
+  "sourceRevision": "8ab04b8d948203090b9ae32da3b2d4e7c1f16bf3",
+  "scope": "Frozen synthetic callback-only component; no database, WebGL, player storage, scenery, flight, physical input or full-player host.",
+  "observations": [
+    {
+      "name": "portrait-guarded-reopen",
+      "actions": "Fixture metadata changed only · desert-expedition-study · fed1f7d18bfe3163cbb52b8b7ecd174a777b89a45ac962c181bd8ca11b727ea7",
+      "focusAction": "fly",
+      "focusReport": "Actual DOM focus: · fly · desert-expedition-study · 6ecb919762a9d3fac6519ca80600489cab0cb6b3cb3e0804d01d5f7e8791029d · connected · enabled",
+      "focusTag": "BUTTON",
+      "focusVersion": "6ecb919762a9d3fac6519ca80600489cab0cb6b3cb3e0804d01d5f7e8791029d",
+      "phase": "Metadata resolved: another saved edition is now active; exact prior Fly must remain intended unless you moved focus.",
+      "primary": "fed1f7d18bfe3163cbb52b8b7ecd174a777b89a45ac962c181bd8ca11b727ea7",
+      "scrollWidth": 390,
+      "versionsOpen": true,
+      "viewport": [
+        390,
+        844
+      ]
+    },
+    {
+      "name": "portrait-exact-enter",
+      "actions": "Fixture metadata changed only · desert-expedition-study · fed1f7d18bfe3163cbb52b8b7ecd174a777b89a45ac962c181bd8ca11b727ea7\nFixture load request (no asset bytes) · desert-expedition-study · 6ecb919762a9d3fac6519ca80600489cab0cb6b3cb3e0804d01d5f7e8791029d\nFixture Fly requested — NO FLIGHT STARTED · desert-expedition-study · 6ecb919762a9d3fac6519ca80600489cab0cb6b3cb3e0804d01d5f7e8791029d",
+      "focusAction": "fly",
+      "focusReport": "Actual DOM focus: · fly · desert-expedition-study · 6ecb919762a9d3fac6519ca80600489cab0cb6b3cb3e0804d01d5f7e8791029d · connected · enabled",
+      "focusTag": "BUTTON",
+      "focusVersion": "6ecb919762a9d3fac6519ca80600489cab0cb6b3cb3e0804d01d5f7e8791029d",
+      "phase": "Metadata resolved: another saved edition is now active; exact prior Fly must remain intended unless you moved focus.",
+      "primary": "fed1f7d18bfe3163cbb52b8b7ecd174a777b89a45ac962c181bd8ca11b727ea7",
+      "scrollWidth": 390,
+      "versionsOpen": true,
+      "viewport": [
+        390,
+        844
+      ]
+    },
+    {
+      "name": "landscape-direct-refresh",
+      "actions": "Fixture metadata changed only · desert-expedition-study · fed1f7d18bfe3163cbb52b8b7ecd174a777b89a45ac962c181bd8ca11b727ea7\nFixture load request (no asset bytes) · desert-expedition-study · 6ecb919762a9d3fac6519ca80600489cab0cb6b3cb3e0804d01d5f7e8791029d\nFixture Fly requested — NO FLIGHT STARTED · desert-expedition-study · 6ecb919762a9d3fac6519ca80600489cab0cb6b3cb3e0804d01d5f7e8791029d\nFixture closed (no database connection)\nFixture metadata changed only · desert-expedition-study · fed1f7d18bfe3163cbb52b8b7ecd174a777b89a45ac962c181bd8ca11b727ea7",
+      "focusAction": "fly",
+      "focusReport": "Actual DOM focus: · fly · desert-expedition-study · 6ecb919762a9d3fac6519ca80600489cab0cb6b3cb3e0804d01d5f7e8791029d · connected · enabled",
+      "focusTag": "BUTTON",
+      "focusVersion": "6ecb919762a9d3fac6519ca80600489cab0cb6b3cb3e0804d01d5f7e8791029d",
+      "phase": "Metadata resolved: another saved edition is now active; exact prior Fly must remain intended unless you moved focus.",
+      "primary": "fed1f7d18bfe3163cbb52b8b7ecd174a777b89a45ac962c181bd8ca11b727ea7",
+      "scrollWidth": 844,
+      "versionsOpen": true,
+      "viewport": [
+        844,
+        390
+      ]
+    },
+    {
+      "name": "handheld-missing-fly-uk",
+      "actions": "Fixture metadata changed only · desert-expedition-study · fed1f7d18bfe3163cbb52b8b7ecd174a777b89a45ac962c181bd8ca11b727ea7\nFixture load request (no asset bytes) · desert-expedition-study · 6ecb919762a9d3fac6519ca80600489cab0cb6b3cb3e0804d01d5f7e8791029d\nFixture Fly requested — NO FLIGHT STARTED · desert-expedition-study · 6ecb919762a9d3fac6519ca80600489cab0cb6b3cb3e0804d01d5f7e8791029d\nFixture closed (no database connection)\nFixture metadata changed only · desert-expedition-study · fed1f7d18bfe3163cbb52b8b7ecd174a777b89a45ac962c181bd8ca11b727ea7\nFixture closed (no database connection)\nFixture metadata changed only · desert-expedition-study · fed1f7d18bfe3163cbb52b8b7ecd174a777b89a45ac962c181bd8ca11b727ea7",
+      "focusReport": "Actual DOM focus: · Versions disclosure · connected · enabled",
+      "focusTag": "SUMMARY",
+      "phase": "Metadata resolved: old Fly not listed; confirmation must go to Versions safely. No removal performed.",
+      "primary": "fed1f7d18bfe3163cbb52b8b7ecd174a777b89a45ac962c181bd8ca11b727ea7",
+      "scrollWidth": 1280,
+      "versionsOpen": false,
+      "viewport": [
+        1280,
+        800
+      ]
+    },
+    {
+      "name": "handheld-missing-confirm-safe",
+      "actions": "Fixture metadata changed only · desert-expedition-study · fed1f7d18bfe3163cbb52b8b7ecd174a777b89a45ac962c181bd8ca11b727ea7\nFixture load request (no asset bytes) · desert-expedition-study · 6ecb919762a9d3fac6519ca80600489cab0cb6b3cb3e0804d01d5f7e8791029d\nFixture Fly requested — NO FLIGHT STARTED · desert-expedition-study · 6ecb919762a9d3fac6519ca80600489cab0cb6b3cb3e0804d01d5f7e8791029d\nFixture closed (no database connection)\nFixture metadata changed only · desert-expedition-study · fed1f7d18bfe3163cbb52b8b7ecd174a777b89a45ac962c181bd8ca11b727ea7\nFixture closed (no database connection)\nFixture metadata changed only · desert-expedition-study · fed1f7d18bfe3163cbb52b8b7ecd174a777b89a45ac962c181bd8ca11b727ea7",
+      "focusReport": "Actual DOM focus: · Versions disclosure · connected · enabled",
+      "focusTag": "SUMMARY",
+      "phase": "Metadata resolved: old Fly not listed; confirmation must go to Versions safely. No removal performed.",
+      "primary": "fed1f7d18bfe3163cbb52b8b7ecd174a777b89a45ac962c181bd8ca11b727ea7",
+      "scrollWidth": 1280,
+      "versionsOpen": true,
+      "viewport": [
+        1280,
+        800
+      ]
+    },
+    {
+      "name": "explicit-navigation-away",
+      "actions": "Fixture metadata changed only · desert-expedition-study · fed1f7d18bfe3163cbb52b8b7ecd174a777b89a45ac962c181bd8ca11b727ea7\nFixture load request (no asset bytes) · desert-expedition-study · 6ecb919762a9d3fac6519ca80600489cab0cb6b3cb3e0804d01d5f7e8791029d\nFixture Fly requested — NO FLIGHT STARTED · desert-expedition-study · 6ecb919762a9d3fac6519ca80600489cab0cb6b3cb3e0804d01d5f7e8791029d\nFixture closed (no database connection)\nFixture metadata changed only · desert-expedition-study · fed1f7d18bfe3163cbb52b8b7ecd174a777b89a45ac962c181bd8ca11b727ea7\nFixture closed (no database connection)\nFixture metadata changed only · desert-expedition-study · fed1f7d18bfe3163cbb52b8b7ecd174a777b89a45ac962c181bd8ca11b727ea7\nFixture closed (no database connection)\nFixture metadata changed only · desert-expedition-study · fed1f7d18bfe3163cbb52b8b7ecd174a777b89a45ac962c181bd8ca11b727ea7",
+      "focusReport": "Actual DOM focus: · Versions disclosure · connected · enabled",
+      "focusTag": "SUMMARY",
+      "phase": "Metadata resolved: another saved edition is now active; exact prior Fly must remain intended unless you moved focus.",
+      "primary": "fed1f7d18bfe3163cbb52b8b7ecd174a777b89a45ac962c181bd8ca11b727ea7",
+      "scrollWidth": 1280,
+      "versionsOpen": false,
+      "viewport": [
+        1280,
+        800
+      ]
+    },
+    {
+      "name": "handheld-empty-uk-layout",
+      "editions": 24,
+      "families": 10,
+      "language": "uk",
+      "minHeight": 44,
+      "scrollWidth": 1280,
+      "viewport": [
+        1280,
+        800
+      ]
+    },
+    {
+      "name": "navigation-away-specific-target",
+      "desertOpen": false,
+      "lunarOpen": false
+    },
+    {
+      "name": "portrait-all-uk-layout",
+      "editions": 24,
+      "families": 10,
+      "language": "uk",
+      "minHeight": 44,
+      "scrollWidth": 390,
+      "viewport": [
+        390,
+        844
+      ]
+    },
+    {
+      "name": "uk-directional-navigation",
+      "focus": "Actual DOM focus: · fly · alpine-highlands-study · 92b7ed6acb426a04b007006a72536b8178bd0ad59bba7182637e25fd0d4cf804 · connected · enabled"
+    }
+  ]
+}

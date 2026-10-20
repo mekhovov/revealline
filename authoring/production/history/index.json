@@ -3,23 +3,28 @@
   "entries": [
     {
       "path": "authoring/motion-lab/presets.json",
-      "bytes": 23077,
-      "sha256": "edbb5c4e73e03b7e516825575bf2fed6d234745cecc514241667097a3d3f8eca"
+      "bytes": 19910,
+      "sha256": "ea9cf4d7fce6b4b9afdbcd709819d0f5d7b35ed117a47868fea69209b037d912"
     },
     {
       "path": "authoring/motion-lab/presets.json",
-      "bytes": 36911,
-      "sha256": "e857a548bccaa9649d86ccb6443fbf9fd37f8ff4de8e3f6a7a7da900b92ed8cb"
+      "bytes": 34518,
+      "sha256": "e16731f4065e5d1e76b84abc985874187c5133cf55776ea352a4479bded5cdb0"
     },
     {
       "path": "game/ui/actor-presentation.mjs",
-      "bytes": 25033,
-      "sha256": "4676dbca131440742815a3ed7a5e1e2ec89c121f813e5d8c0ff45f01360dde4a"
+      "bytes": 23588,
+      "sha256": "6b4e4c20da271cd105deee017883558ea715eab6d9e034b66053f4da2f17af00"
     },
     {
       "path": "game/enemy-catalog.mjs",
-      "bytes": 5966,
-      "sha256": "46ce076af222227c5895bec7c8516f4e6e8098cfc81a9432d9fb0d6546e6c447"
+      "bytes": 5837,
+      "sha256": "95d6f3c7ff15f32892d1ef826238a7a7de2992c70c4c26b97cc29fb909efcd3a"
+    },
+    {
+      "path": "game/ui/music.mjs",
+      "bytes": 7050,
+      "sha256": "a1ecafd319417d075ec584d8b2f54008a8b877e49848e364bd91603896c44fda"
     }
   ]
 }

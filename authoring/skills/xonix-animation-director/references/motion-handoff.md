@@ -48,8 +48,6 @@ The board still paints 16 logical pixels per cell: legacy 48×36 uses 768×576, 
 
 The current FPV image margins make the visible player roughly 18/12 pixels at its desktop/phone minima. Measure replacement-art alpha bounds; a nominal box is not proof of occupied pixels. The neutral marker is scaled by its visible triangle extent. Logical caps take precedence on unusually tiny embedded canvases. `BoardPainter.draw(...,{actorScale,playerScale})` exposes separate bounded cosmetic adjustments; neither changes the collider nor becomes a persisted preference automatically. Maintain player `rules.playerRadius` and enemy radius markers outside the cosmetic body transform. Keep shield and queued-turn cues clear of the enlarged player.
 
-`presentation.style` values remain `microtile`, `hybrid` and `props`. Preserve distinct four-theme shapes, not only palettes: FPV vehicles/rotors/radar, Ukrainian patterned creatures/botanical forms, retro robots/comets/glitches, and business invoices/parcels/linked blocks. The renderer maps theme families `fpv`, `atlas`, `retro`, `navi` to these existing treatments. Keep source crop, center and rotor anchors locked when making a cosmetic trim; an intentional crop requires a new measured anchor record.
-
 ### Motion and cut invariants
 
 - Enemies retain a bounded previous-position cache (64 actors). Facing is measured on new simulation ticks; initial velocity is a fallback. Never write a cosmetic heading, speed or tail into a simulation entity. Stationary treads/walking stay still; rotors/radar may idle. Microtile simplification keeps locomotion rather than turning it off. Optional pressure AIM/CHASE/REST cues read owned core targets and actor-clock deadlines; this is an original extension, not reference-game AI evidence.

@@ -16,7 +16,6 @@ Date: 2026-09-12. Root used the connected in-app browser against the actual loca
 | Blade settings | Two/four/three-blade selections and paddle/swept shape changes updated the inspection label and painted rig |
 | Ukrainian family | Apply family look selected stone/reeds/thorns and the loaded bird body; heritage fixture unlocked Falcon trim |
 | Retro reward stages | Two stars on the first level left Vector trail locked at 2/5; three stars on a second level unlocked it at five best-result stars |
-| Business family | Apply family look loaded the original helper with pulse/blink; fictional anomaly fixture unlocked Audit pulse |
 | Art switching | All four families loaded actual body images, while terrain remained independently replaceable diagrams |
 
 Five earned cosmetics were unlocked through the six authored simulated fixtures. These were UI fixture tests, not real game wins. Three body families have shared-body earned treatments; they were not counted as additional unique illustrations.

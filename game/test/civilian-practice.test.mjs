@@ -215,7 +215,7 @@ test('optional removal unregisters only exact app scope and deletes only its own
   let unregisters = 0;
   const deleted = [];
   const cache = {
-    keys: async () => [own, foreign, 'revealline-core:v1', 'edition-coupa:v1'],
+    keys: async () => [own, foreign, 'revealline-core:v1', 'edition-sample:v1'],
     delete: async (name) => {
       deleted.push(name);
     },

@@ -1,0 +1,72 @@
+{
+  "format": "world-scalar-diagnostic-pins.v1",
+  "reviewedBase": {
+    "oid": "69608e1a2970873c33a260c3437357f4b5d563ab",
+    "tree": {
+      "oid": "fb5bce9d7634401227112aa974963de3bc71266c"
+    },
+    "parents": {
+      "nodes": [
+        {
+          "oid": "4f39f2d41b098d42acd82559d8c71360cf902a47"
+        },
+        {
+          "oid": "167a18accb70d069f64062ee9b37d0c2a4bcb3fa"
+        }
+      ]
+    }
+  },
+  "owners": {
+    "game/test/fpv-world-appearance-ui.test.mjs": {
+      "OID": "03b3342c0af2c361b7c56dae14a4a12792254eab",
+      "bytes": 164080
+    },
+    "optional-practice/civilian-fpv/world-app.mjs": {
+      "OID": "9d32074e5862ef080af13a4901a288802f3f565e",
+      "bytes": 431653
+    },
+    "optional-practice/civilian-fpv/advanced-worker.mjs": {
+      "OID": "4f5279cab2f1684393494b6fa34998ff593b1bd7",
+      "bytes": 8669
+    },
+    "game/test/helpers/global-tools-fixture.mjs": {
+      "OID": "8ae1a34d6c06e108e16a8667e991c267d2020dbf",
+      "bytes": 862
+    },
+    "game/test/helpers/couch-dom.mjs": {
+      "OID": "28282ff7b4f1c58958159f29a55594cd7f0999cb",
+      "bytes": 20764
+    },
+    "package.json": {
+      "OID": "bf2d7e5d8f6509b36d6ba5791011d5da04820cfe",
+      "bytes": 11511
+    },
+    "package-lock.json": {
+      "OID": "acda9271c2aa2f98d6d80efee8c3a8aca2c192e8",
+      "bytes": 40069
+    },
+    "authoring/fpv-worlds/package.json": {
+      "OID": "32801b5afc57ab17d8d63396acf5d34eca42bcc8",
+      "bytes": 469
+    },
+    "authoring/fpv-worlds/package-lock.json": {
+      "OID": "5c928d790d8ddc46255a87d7a3d7676ccb91d21e",
+      "bytes": 26330
+    }
+  },
+  "guard": {
+    "OID": "7bec188c1b5116b34b3c374ca754eaa144b9849f",
+    "SHA256": "a3585ad5906912976dc16be1a91998955e583810913b95749fe51349af6099c0",
+    "bytes": 42131,
+    "filename": "native-guard.py"
+  },
+  "auditor": {
+    "OID": "56ad477033516d565fbb7f85cea70d0430ceae1c",
+    "SHA256": "a6124736ce13aec52fb26d818e6c2aa6ce83965ccaf92b94c783043d1d150fc4",
+    "bytes": 7275,
+    "filename": "source-auditor.mjs"
+  },
+  "nodeSHA256": "81925c0995b5c1427b5d538e6a90ca2fdc4daffb786b09af749beaf7369d4e90",
+  "repositoryID": 1367404328,
+  "headRef": "codex/world-fixture-memory-scalars"
+}

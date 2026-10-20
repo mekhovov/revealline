@@ -1,3 +1,5 @@
+# Retained historical excerpt after an ownership migration. Exact original bytes are preserved separately. Original totals and verification statements describe the original scope; this excerpt is not a current qualification or a complete test result.
+
 TAP version 13
 # Subtest: actual Studio handlers show startup/read/encode stages, cancel a late upload, and save exact source bytes in Studio storage only
     # Subtest: actual rotor controls preserve inherited motion while editing one existing hub
@@ -94,11 +96,6 @@ ok 13 - preview verification stops before activation on cancellation and oversiz
 ok 14 - overlong artifact and pending-read abort reject despite nonsettling transport cancellation
   ---
   duration_ms: 57.47825
-  ...
-# Subtest: focused Coupa and Netherlands previews accept canonical theme projection but reject selected edits
-ok 15 - focused Coupa and Netherlands previews accept canonical theme projection but reject selected edits
-  ---
-  duration_ms: 34342.7965
   ...
 # Subtest: new-company starter loads the current Solo host and First Flight with complete neutral classes
 ok 16 - new-company starter loads the current Solo host and First Flight with complete neutral classes

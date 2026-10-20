@@ -34,11 +34,11 @@ test('startup metadata cannot select another origin or community or an invalid b
 
 test('community startup uses its immutable edition pointer even without a build hash', () => {
   const page = new URL(
-    'https://example.test/revealline/editions/coupa/releases/v1.0.0/site/game/company.html',
+    'https://example.test/revealline/editions/sample/releases/v1.0.0/site/game/company.html',
   );
-  const metadata = new URL('https://example.test/revealline/editions/coupa/app/current.json');
+  const metadata = new URL('https://example.test/revealline/editions/sample/app/current.json');
   const current = { version: '1.0.0', scope: '../', buildId: 'a'.repeat(64) };
-  const pointer = { editionId: 'coupa', version: 'v1.0.0', scope: '../releases/v1.0.0/site/' };
+  const pointer = { editionId: 'sample', version: 'v1.0.0', scope: '../releases/v1.0.0/site/' };
   assert.equal(startupUpdateCandidate(pointer, current, page, metadata, true).available, false);
   assert.equal(
     startupUpdateCandidate(

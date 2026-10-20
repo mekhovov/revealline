@@ -1,16 +1,9 @@
 # Sentinel Circuit theme chapter candidates
 
-This compiler pairs the nine [Sentinel theme originals](../sentinel-theme-art/README.md)
-with the three existing [Sentinel missions](../sentinel-circuit/README.md), creating
-independent Ukraine Atlas, 1994 Forever and Spend Network Tactical editions.
-There are **three reused layouts and zero new geometries**. The older FPV edition,
-all original images and its saved/earned owners remain unchanged.
-
 | Theme         | New chapter ID             | Authored campaign key                         |
 | ------------- | -------------------------- | --------------------------------------------- |
 | Ukraine Atlas | `sentinel-circuit-ukraine` | `sentinel-circuit-ukraine/1/2c5a77757c64c4d1` |
 | 1994 Forever  | `sentinel-circuit-retro`   | `sentinel-circuit-retro/1/e8edd91a796a9b65`   |
-| Spend Network | `sentinel-circuit-coupa`   | `sentinel-circuit-coupa/1/8459eb3ba67608e6`   |
 
 [editions.json](editions.json) explicitly maps every theme and mission role to
 one full art cell ID, source level ID, original path/hash, scenic title and
@@ -57,7 +50,6 @@ authority is granted by an unverified JSON shape.
 | ----------------------------------- | ---------------------: | ---------------: |
 | [Ukraine](descriptors/ukraine.json) |                  9,440 |        8,175,624 |
 | [Retro](descriptors/retro.json)     |                  9,404 |        7,553,086 |
-| [Spend](descriptors/coupa.json)     |                  9,427 |        7,416,321 |
 
 Each descriptor pins both bodies by exact bytes and SHA-256, the authored
 campaign key and all three original poster records. The nine original PNGs total
