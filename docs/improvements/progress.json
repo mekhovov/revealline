@@ -15,10 +15,10 @@
     "details": "Two managed implementation worktrees plus lightweight sparse checkouts; failed full checkouts self-cleaned after disk exhaustion. No unrelated data removed."
   },
   "nextPriority": [
-    "P1 · Missions entry (F10): draft #1798 adds passive click and preparation-status observations. All 13 source stages and 37 contract cases pass; current CI and browser diagnostics are pending. Establish the actual cause, then verify English/Ukrainian play and Pause/Resume.",
-    "P1 · Raid, Time Attack and Marathon readability (F09): draft #1797 contains the complete 13-file feature. Eight source stages, 35 regression-control cases and documentation checks pass. Run all 44 complete gameplay files, then verify menus, HUD, upgrades and results across languages, fonts, sizes and orientations.",
-    "P1 · Offline readiness (F14): draft #1624 at 5f9 passes 152/152 cases, full localization and configured validation. Catalog generation and all six static stages pass. Next: actual browser/service-worker behavior, recovery and inner-package/offline acceptance. Physical iPhone PWA and Steam Deck remain Not tested.",
-    "P1 · Community removal review (F80): catalog author/check and all six static stages pass for eight sources. Existing normal/industrial selection covers only 8 of 23 required files. Qualify the ninth-file map proposal for all 23 Community files, then verify Keep/removal/recovery, browser and packages.",
+    "P1 · Missions entry (F10): draft #1798 passes the hosted 37-case contract suite. Its historical compiled-package browser review opens Missions and the exact briefing but fails to enter play after Start. Guard diagnostics are unavailable; investigate the finite protocol error before any game fix. Current EN/UK play and Pause/Resume remain open.",
+    "P1 · Raid, Time Attack and Marathon readability (F09): draft #1797 contains the complete 13-file feature. Source checks and all 35 regression-control cases pass. The first two gameplay groups pass 22 complete files /209 cases; two groups remain. Then verify menus, HUD, upgrades and results across languages, fonts, sizes and orientations.",
+    "P1 · Offline readiness (F14): draft #1624 at 5f9 passes 152/152 cases, full localization and configured validation. Existing Company builds retained no usable dashboard package. Qualify the existing preview workflow trigger in the same feature, then test actual service-worker behavior, recovery and packaged offline use in an isolated profile. Physical iPhone PWA and Steam Deck remain Not tested.",
+    "P1 · Community removal review (F80): draft #1653 is refreshed at febb475 with nine qualified sources. Catalog generation, six static stages and the three-stage coverage update pass. The normal workflow must execute all 27 commands, including all 23 Community files once; Keep/removal/recovery, browser and package acceptance follow.",
     "P1 · Touch language #1669: source merged externally; nine selected commands pass 374 cases. Native Team starts and pauses; EN→UK→EN retains changed Swipe, one write and paused facts, then resumes. The strict reference session fails on a delayed soundtrack request. Complete audio/resource session qualification, Duel, real-save and package acceptance; devices remain separate.",
     "P1 · Text preference compatibility #1668: source merged with 2,309 source and 1,908 preview checks passing on its recorded revision. Finish current browser, inner-package and offline acceptance.",
     "P1 · Team Home #1747: source merged and nine reviewed files match the admitted source. Finish earned-result, complete-host, browser and package acceptance. Full lesson recommendations still depend on Learn.",
@@ -1837,9 +1837,10 @@
       "blocker": "Capture cold Team-source construction and three picture-setup failures need correction and current complete-cohort qualification. Team Home1747 is source merged; earned-result/full-host/browser/package acceptance remains. Full lessons depend on F25/Learn.",
       "pr": null,
       "commit": null,
-      "next": "P1 · Missions entry (F10): draft #1798 adds passive click and preparation-status observations. All 13 source stages and 37 contract cases pass; current CI and browser diagnostics are pending. Establish the actual cause, then verify English/Ukrainian play and Pause/Resume.",
+      "next": "P1 · Missions entry (F10): draft #1798 passes the hosted 37-case contract suite. Its historical compiled-package browser review opens Missions and the exact briefing but fails to enter play after Start. Guard diagnostics are unavailable; investigate the finite protocol error before any game fix. Current EN/UK play and Pause/Resume remain open.",
       "evidence": [
-        "Read-only current-source assessment finds authoritative journeyDestination progression already exists, but no explained Home recommendation. A real live/saved Resume is different from a navigation cursor; do not suppress both or add another launch/progress owner. Exact current terminal run alone can justify retry wording; the profile does not persist defeat chronology. F25 Learn hub remains planned/D-dependent, so no durable lesson mastery or fictional practice routes are introduced."
+        "Read-only current-source assessment finds authoritative journeyDestination progression already exists, but no explained Home recommendation. A real live/saved Resume is different from a navigation cursor; do not suppress both or add another launch/progress owner. Exact current terminal run alone can justify retry wording; the profile does not persist defeat chronology. F25 Learn hub remains planned/D-dependent, so no durable lesson mastery or fictional practice routes are introduced.",
+        "Exact71fd973 normal contract suite passes all37. Historical compiled37ec browser opens Missions, observes Preparing missions and exact-current briefing, then remains briefing/0:00 after trusted Start. Resume probe reached, guard read unavailable command-error, no product cause inferred. All5terminals/raw906bytes/ZIPCRC/job logs/source/dependency/package and6postaudits independently verified; original failure preserved."
       ],
       "implementationSlices": [
         {
@@ -2218,7 +2219,7 @@
         }
       },
       "currentMissionsEntryDiagnostic": {
-        "status": "DRAFT1798_SOURCE13_37_PASS_NORMAL_CI_BROWSER_PENDING",
+        "status": "DRAFT1798_HOSTED37_PASS_HISTORICAL_BROWSER_START_FAILURE_CAUSE_UNKNOWN",
         "pr": "https://github.com/mekhovov/revealline/pull/1798",
         "mappedHead": "43d296867028c2cc4ff1d07d6f0476217e1c2569",
         "casesRequired": 37,
@@ -2237,10 +2238,25 @@
         "final4ManifestSHA256": "75f43ec9105e794aee1a1501f5bd4c2bbe72e324787065edf4e37ffa5d1101b3",
         "preparedHead": "71fd9736fc38bd77de479229ac9d5f6f89ddde96",
         "publishedBranch": "codex/missions-passive-entry-observation",
-        "browser": "NOT_RUN_CURRENT_HEAD_CAUSE_UNESTABLISHED",
+        "browser": "Historical compiled37ec accepted Missions/briefing but running was not observed after Start within60s; source71fd973 observer. Guard probe reached one matching pause, then evaluate-guards command-error; cleanup acknowledged. No production cause inferred.",
         "currentHead": "71fd9736fc38bd77de479229ac9d5f6f89ddde96",
         "remotePeerProofSHA256": "16ce1fa0c89205f4734687c77179641c0e17453316172055e2c0d968fdabaa9a",
-        "allFourRemoteBodiesAndUnownedTreesExact": true
+        "allFourRemoteBodiesAndUnownedTreesExact": true,
+        "hostedSource37Run": 39431929694,
+        "hostedBrowserRun": 39431929574,
+        "hostedSource37Cases": 37,
+        "hostedBrowserPeerProofSHA256": "1f85d97f6266e84fc0d849fa2b4ec4999cceda13c0c1a8ea5275f34dc61faedd",
+        "hostedBrowserRootProofSHA256": "f9a9fbd83f84d6fa40d6597f6fc853ef5b0a0b97d165d29fbf0422ea9fca7c24",
+        "compiledTarget": "37ec4fc6af9ee62747339459d28decc2a5283501",
+        "currentGameAcceptance": "NOT_TESTED_BY_HISTORICAL_PACKAGE_REVIEW",
+        "currentGuardOwnerComparison": {
+          "currentMain": "70650655ce432f0c5089d96c2239a23e6e23865e",
+          "appOID": "f0aed71f80cf8125545b3ea9ab99bb943f1cf927",
+          "resumeFunctionBytes": 13389,
+          "resumeAndCourseBlockedAndStartBindingExactHistorical37ec": true,
+          "proofSHA256": "36d681dac06c85aa7a764efb6b287efe7f3af0a6a268793fe2f86c83b0b67696",
+          "scope": "Authored named owner code equality only; current compiled runtime state and cause remain unknown. Protocol-prefix proposal frozen, not implemented or run."
+        }
       }
     },
     {
@@ -2790,28 +2806,30 @@
       },
       "blocker": "Explicit F79 integration dependency.",
       "pr": "https://github.com/mekhovov/revealline/pull/1653",
-      "commit": "a4cf2afb23cd55bb1df26f8fbc1d76e713c03dd9",
-      "next": "P1 · Community removal review (F80): catalog author/check and all six static stages pass for eight sources. Existing normal/industrial selection covers only 8 of 23 required files. Qualify the ninth-file map proposal for all 23 Community files, then verify Keep/removal/recovery, browser and packages.",
+      "commit": "febb475e6cc51f0171b4d229f4be0b624a5dd93c",
+      "next": "P1 · Community removal review (F80): draft #1653 is refreshed at febb475 with nine qualified sources. Catalog generation, six static stages and the three-stage coverage update pass. The normal workflow must execute all 27 commands, including all 23 Community files once; Keep/removal/recovery, browser and package acceptance follow.",
       "evidence": [
         "Draft implementation uses existing review capabilities; no new deletion primitive. Media/progress/recovery/local-copy consequences distinguished.",
         "Offloaded edition disappears from current Installed filter; review must not promise offline reinstallation access before F79 recovery entry is delivered.",
         "69 focused checks, full lint/validate, changed format/diff passed. Independent source review passed. Browser and built/hardware checks pending.",
         "Exact dfe browser: UK/EN review defaults Keep; Keep preserves content and returns focus. Confirmed offload removes Play while retaining recovery; reinstall restores Play. Recovery-download review inspected and cancelled. No actual recovery-copy deletion or earned-progress equality claimed.",
-        "IntegratedF80a4cf onInstalled6c340: five standalone feature blobs unchanged; locale union retains21 original additions and intentional offloaded-copy correction. Same8-file +653/−14 feature delta.76/76 focused/full lint/uninterrupted validation/changed format/diff pass; eight unchanged formatting-baseline files retained. Root independent review clear; published dependent draft, original actual Keep/offload/recovery-cancel scope retained."
+        "IntegratedF80a4cf onInstalled6c340: five standalone feature blobs unchanged; locale union retains21 original additions and intentional offloaded-copy correction. Same8-file +653/−14 feature delta.76/76 focused/full lint/uninterrupted validation/changed format/diff pass; eight unchanged formatting-baseline files retained. Root independent review clear; published dependent draft, original actual Keep/offload/recovery-cancel scope retained.",
+        "Actual map3 author/CHECK/pure required-policy projection passes; ordered old23 categories/outside fields preserved, all121 protected references/source8 exact, raw1526stdout/0stderr complete and zero signals/unknown cleanup. Only new private map authored; all23 game tests still require native execution at published source9.",
+        "Existing draft1653 normally fast-forwarded1deb→febb475, parents[1deb,706], exact actualsource9 over currentmain. All2,751,031 remote source bytes and nine tree objects independently verified;2,343 unowned Merkle boundaries and37,784 local recursive unowned leaves exact. Native27-command/all23 Community execution is pending; no browser/recovery/package/device acceptance inferred."
       ],
       "deliveryState": "draft",
       "mergeState": "DIRTY",
-      "observedRemoteHead": "1deb7db02fd9f54123e57f3a0465058354a14517",
+      "observedRemoteHead": "febb475e6cc51f0171b4d229f4be0b624a5dd93c",
       "currentSourceProposal": {
-        "status": "SOURCE8_CANONICAL2_STATIC6_PASS_NINTH_FILE_COVERAGE_PROPOSAL_PENDING",
+        "status": "SOURCE9_PUBLISHED_FEBB_CANONICAL2_STATIC6_MAP3_PASS_NATIVE23_PENDING",
         "supplement": "/tmp/revealline-community-f80-currente370-source-supplement-v1/supplement.json",
         "supplementSHA256": "809979bcad91ed7c7dbc84661f6e77633565fe5ba0c6a005560401e429488e03",
         "source5UnchangedOriginalFeatureAfter": true,
         "localeChangesEach": "21 additions and one intentional offloaded-copy replacement; all admitted Touch/F12/XL/retirement values preserved",
         "catalogBeforeOID": "cfe7c4df44bfb4e168aeee0289cd26fcc59c1579",
         "catalogAfter": "927c427bbd48b34f27ffd7cb38815a6c2e1c5e4b",
-        "next": "P1 · Community removal review (F80): catalog author/check and all six static stages pass for eight exact sources. Existing normal/industrial selection reaches only8 of23 required Community files. Qualify the ninth-file map proposal so the same feature PR executes all23 once, then actual removal/Keep/recovery/browser/package acceptance.",
-        "currentMain": "fcb0227a846dae06ae8226acdaf1c90b17b4f5d5",
+        "next": "P1 · Community removal review (F80): draft #1653 is refreshed at febb475 with nine qualified sources. Catalog generation, six static stages and the three-stage coverage update pass. The normal workflow must execute all 27 commands, including all 23 Community files once; Keep/removal/recovery, browser and package acceptance follow.",
+        "currentMain": "70650655ce432f0c5089d96c2239a23e6e23865e",
         "packet": "/Volumes/alex/CodexMigrationStaging/revealline-community-f80-currentfcb-canonical-proposal-v2",
         "runnerSHA256": "47f00b25b85f0b4aceb5db5c2cb8479c642ec5149a2d888b7180c6595accd833",
         "rootSourceReviewSHA256": "7f976bd1f410d1a19a98843dcdab55f9e9d79c48b1afd45ae231fafed10f5990",
@@ -2831,9 +2849,35 @@
           "remaining": 15,
           "reviewProofSHA256": "56af458feb63d8f7cc61a6a1403a42122e30b55ba93cc8f0607faa474048a8a3",
           "sameFeatureNinthFile": "publishing/focused-test-map.json",
-          "proposal": "Preserve existing4 Community commands and validation; add one exact-new-test category selecting remaining19 wholefiles separately. Prospective fullnine selection27 commands includesall23once; actual registered pure planner/check pending."
+          "proposal": "Actual registered required-policy projection passes all23 old-category parity and positive/negative cases; samefeature ninth-file selects27 uniquecommands includingall23Communityonce. Actual complete23-file execution remains pending publication."
         },
-        "staticPeerProofSHA256": "07ccc3d42e9437cc2ff9575747fabaf9b4dcefcdc4cff23e106fbcd40b05196f"
+        "staticPeerProofSHA256": "07ccc3d42e9437cc2ff9575747fabaf9b4dcefcdc4cff23e106fbcd40b05196f",
+        "final9Manifest": "/Volumes/alex/CodexMigrationStaging/revealline-f80-root-map3-invocation-v1/final-current9-source-manifest.json",
+        "final9ManifestSHA256": "a535f51e7e358b91939855f3bcb03e291719199b390b399e40ba9a68b85f1de0",
+        "mapRootProofSHA256": "8a79a5574c3f9abe0e96e7474ffa2ff15fad99b4e4326af46ae22b02f89facf7",
+        "mapPeerProofSHA256": "153baecf35a8fae4f022eac50fb9b80a96081f338f9dbf7eedebeddef9b7409c",
+        "formattedMapOID": "55215ade9cecc37c4e88b895ee6476270a5ffedf",
+        "currentHead": "febb475e6cc51f0171b4d229f4be0b624a5dd93c",
+        "remoteSource9ProofSHA256": "02498079af16a99d5e725ca2d1cdac1dd18de7f06686094f9950ae607a1c5080",
+        "allNineRemoteBodiesExact": true,
+        "normalNonForceExistingDraftRefresh": true,
+        "unownedRecursiveLeavesPreserved": 37784,
+        "normalCurrentRun": {
+          "run": 39436001835,
+          "head": "febb475e6cc51f0171b4d229f4be0b624a5dd93c",
+          "status": "ATTEMPT1_INFRA_UPLOAD404_BEFORE_GAME_TESTS_BOUNDED_RETRY_AUTHORIZED",
+          "step": "Preserve the exact focused plan",
+          "all27Executed": false,
+          "broadAndFocusedJobs": "SKIPPED_NOT_PASS",
+          "cause": "Artifact upload finalization returned404 after ZIP upload; no failing planner assertion or gameplay test is shown. Same-source failed-job retry authorized once after retaining all attempt1 evidence.",
+          "compactPrepare": {
+            "status": "SUCCESS",
+            "commands": 27,
+            "shards": 4,
+            "planSHA256": "8eb610e7786a65a966e9c6aff37b7ce736161f476a0fa238f57834885d6037f5"
+          },
+          "noMapOrProductChangeForInfrastructureFailure": true
+        }
       },
       "historyMigration": {
         "observedAt": "2026-10-20T11:50:08Z",
@@ -3069,7 +3113,7 @@
       "blocker": null,
       "pr": "https://github.com/mekhovov/revealline/pull/1624",
       "commit": "5f9b1efb5ccd1d9d70f134abc77c2aff77c9480a",
-      "next": "P1 · Offline readiness (F14): draft #1624 at 5f9 passes 152/152 cases, full localization and configured validation. Catalog generation and all six static stages pass. Next: actual browser/service-worker behavior, recovery and inner-package/offline acceptance. Physical iPhone PWA and Steam Deck remain Not tested.",
+      "next": "P1 · Offline readiness (F14): draft #1624 at 5f9 passes 152/152 cases, full localization and configured validation. Existing Company builds retained no usable dashboard package. Qualify the existing preview workflow trigger in the same feature, then test actual service-worker behavior, recovery and packaged offline use in an isolated profile. Physical iPhone PWA and Steam Deck remain Not tested.",
       "evidence": [
         "51 focused readiness/state/host tests pass; verified health calls use verify=true. Generations discard stale/cross-tab results.",
         "Lint, full content validation and changed-file formatting pass. Full format has eight unchanged baseline failures.",
@@ -3229,7 +3273,14 @@
           "releaseReady": "SUCCESS"
         },
         "currentHostedRootProofSHA256": "92ce968f026bfe0e101029e0d46b23d9645f03fe0d1a54537b6b7e3b6719ff84",
-        "currentHostedPeerProofSHA256": "e12caa95627c2de25ed77fa4a44924bec30737adc0030903291853315a23d43c"
+        "currentHostedPeerProofSHA256": "e12caa95627c2de25ed77fa4a44924bec30737adc0030903291853315a23d43c",
+        "packageRoute": {
+          "status": "SOURCE_ONLY_EXISTING_APPEARANCE_TRIGGER_PROPOSAL_QUALIFICATION_PENDING",
+          "sameFeatureEleventhPath": ".github/workflows/appearance-preview.yml",
+          "proposalSHA256": "397b498debdacdda3daedf94cf4a738a13eab65eef6c1299dbd1971bbde5c225",
+          "existingCompanyResult": "Exact5f9 Company/Industrial successful but no usable default dashboard package retained; Company archive-save step skipped on PR. No package acceptance inferred.",
+          "browserIsolation": "Owned external profile or isolated hosted browser only; preserve normal browser/PWA/save data and actual2.55GB/2GiB gates. Hardware unavailable."
+        }
       },
       "historyMigration": {
         "observedAt": "2026-10-20T11:50:08Z",
@@ -5072,15 +5123,36 @@
             "/Volumes/alex/CodexMigrationStaging/revealline-f09-v5-root-source-invocation-v1/root-full-eight-source-stages-readback.json"
           ],
           "nativeWholeFilesRequired": 44,
-          "nativeStatus": "not_run",
+          "nativeStatus": "PARTIAL_TWO_OF_FOUR_GROUPS_PASS_22_OF_44_FILES_209_CASES",
           "browserStatus": "not_run",
           "physicalStatus": "not_tested",
-          "next": "P1 · Raid, Time Attack and Marathon readability (F09): draft #1797 contains the complete 13-file feature. Eight source stages, 35 regression-control cases and documentation checks pass. Run all 44 complete gameplay files, then verify menus, HUD, upgrades and results across languages, fonts, sizes and orientations.",
+          "next": "P1 · Raid, Time Attack and Marathon readability (F09): draft #1797 contains the complete 13-file feature. Source checks and all 35 regression-control cases pass. The first two gameplay groups pass 22 complete files /209 cases; two groups remain. Then verify menus, HUD, upgrades and results across languages, fonts, sizes and orientations.",
           "scope": "Source milestone within original F09b definition and estimate; not a new deliverable or completion.",
           "commit": "62c64e42510bbd626d1b314dc91a90e795150d32",
           "observedRemoteHead": "62c64e42510bbd626d1b314dc91a90e795150d32",
           "deliveryState": "draft",
-          "mergeState": "CLEAN"
+          "mergeState": "CLEAN",
+          "normalSourceCI": "Six commands at exact62c64e4 pass568 complete TAP cases plus configured validation; this is separate from dedicated44.",
+          "nativeGroupsVerified": [
+            {
+              "group": 1,
+              "wholeFiles": 11,
+              "cases": 141,
+              "sealedTerminals": 36,
+              "sourceAudits": 24,
+              "proofSHA256": "a9ec5bb82085889aa5601ea323750cd203034f4c78e77c8df452977946bd4cbb"
+            },
+            {
+              "group": 2,
+              "wholeFiles": 11,
+              "cases": 68,
+              "sealedTerminals": 36,
+              "sourceAudits": 24,
+              "proofSHA256": "0f83c336d994a9bde2b2fc07a106e2763d21a3032b5582223f69e279e44369d3"
+            }
+          ],
+          "nativeRemainingWholeFiles": 22,
+          "normalSourceProofSHA256": "78e8ef9b6df464573b0347242494a1fce697c7412867698eb27bc02939301c53"
         }
       ],
       "sourceReconciliation": {
@@ -7603,6 +7675,16 @@
       "date": "2026-10-20",
       "item": "F09b / F10",
       "reason": "Published draft1797 complete13-file Raid family and draft1798 passive Missions follow-up, all17 actual remote bodies/unowned trees independently verified against706. Source checks pass; actual44 gameplay/browser gates pending. Feature PR inventory93 plus28 prerequisites;83 groups/113 definitions and73 planned unchanged."
+    },
+    {
+      "date": "2026-10-20",
+      "item": "F10 / F14 / F80",
+      "reason": "Actual Missions hosted37 passes; historical compiled-browser proceeds to exactbriefing then Start running predicate fails with guard read unavailable. No product cause guessed. Community map3 passes and selects all23 once; samefeature publication/native gate next. Offline existing workflow route proposed because exactCompany artifacts retained no dashboard package. Definitions/priorities/effort and source-merge versus acceptance distinction preserved."
+    },
+    {
+      "date": "2026-10-20",
+      "item": "F80 / F09b",
+      "reason": "Normal non-force existing1653 update to currentmain feature9 febb475; independent full remote bodies/tree proof exact. Dedicated Raid groups1/2 pass22 of44 wholefiles/209 cases; two groups remain. Normal source568 plus validate is separately recorded. No feature completion or hardware pass inferred."
     }
   ],
   "deliveryDependencies": [
@@ -8891,14 +8973,17 @@
     {
       "id": "CI-Missions-passive-entry-observation",
       "priority": "P1",
-      "status": "draft_source13_37_PASS_normal_CI_browser_pending",
+      "status": "draft_hosted_source37_PASS_historical_browser_START_FAILED_cause_unknown",
       "pr": "https://github.com/mekhovov/revealline/pull/1798",
       "commit": "71fd9736fc38bd77de479229ac9d5f6f89ddde96",
       "scope": "Four bounded passive diagnostic files only. F10 browser entry/play remains unqualified; this is a verification prerequisite, not another player feature.",
-      "next": "Read actual normal source37/browser terminal evidence, diagnose native click/preparation, then implement the evidenced game fix.",
+      "next": "Resolve unavailable guard protocol classification without changing native operations; then diagnose actual Start and qualify current packaged EN/UK play/Pause/Resume.",
       "sourceRootProofSHA256": "2c2ec905cac42b020934a4aedf0b738317603e10727affd36ca79ce49c4e2166",
       "sourcePeerProofSHA256": "b7001fd6b9b4b0d6df6297ae63d330095357b6d3b750d131f857bdd80084ab04",
-      "remoteProofSHA256": "16ce1fa0c89205f4734687c77179641c0e17453316172055e2c0d968fdabaa9a"
+      "remoteProofSHA256": "16ce1fa0c89205f4734687c77179641c0e17453316172055e2c0d968fdabaa9a",
+      "hostedSourceRun": 39431929694,
+      "hostedBrowserRun": 39431929574,
+      "rootHostedReadbackSHA256": "f9a9fbd83f84d6fa40d6597f6fc853ef5b0a0b97d165d29fbf0422ea9fca7c24"
     }
   ],
   "deliverySnapshot": {
