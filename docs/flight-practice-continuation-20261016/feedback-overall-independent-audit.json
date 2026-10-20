@@ -1,0 +1,222 @@
+{
+  "format": "IndependentPracticeOverallTimeoutAudit.v1",
+  "passed": true,
+  "sourceRevision": "b8aec0821087354ac8a6765a5b95c68d24dd9137",
+  "sourceTree": "3bafa19b36118173b1b19a9039d9572b09692f7b",
+  "envelopeSha256": "c271bc6c248844f756ba4c1a191e6008593d48c4d03b9e4d34836d6a174c73a6",
+  "authorityArchive": {
+    "path": "/tmp/practice-native-ddac-authority-20261016.tgz",
+    "sha256": "842df6677dd6c62a61a426ffe978c2a6d3b04807a267e7ee9af3e564f7c1fbba"
+  },
+  "results": [
+    {
+      "id": "civilian-flight",
+      "receipt": {
+        "path": "/tmp/practice-feedback-overall-gym-20261016-run1.json",
+        "sha256": "cb76fe102d882ee6bbb2fbf829dbcd022f21d090375b8035d38bdcdea39f51a6"
+      },
+      "heldMs": 299810.944792,
+      "status": "Download exceeded five minutes. Retry on a faster connection.",
+      "checkpointCount": 13,
+      "worldRecordCounts": [
+        {
+          "name": "assets",
+          "count": 0
+        },
+        {
+          "name": "meta",
+          "count": 1
+        },
+        {
+          "name": "projects",
+          "count": 1
+        },
+        {
+          "name": "revisions",
+          "count": 1
+        }
+      ],
+      "baselineCachedFiles": [
+        {
+          "name": "revealline.optional.civilian-flight.v1:/revealline/practice/civilian-flight/app/:d784e191fd4b66ca658d2fa1ee7ee7060962817e0379d36a2e4ea4d6f8eba211",
+          "files": 9
+        },
+        {
+          "name": "revealline.optional.civilian-flight.v1:/revealline/practice/civilian-flight/releases/v0.151.1/site/optional-practice/civilian-flight/:7525ba59f03019010aecede5d01f7ab5d8392fffdea32dfe42f6a20c651575fb",
+          "files": 92
+        },
+        {
+          "name": "revealline.optional.package.v1:/revealline/practice/civilian-fpv/app/:5b3884b6df69ee10429cddc6be66488a30bcb49f2e48f296328bdb6494ade956",
+          "files": 9
+        },
+        {
+          "name": "revealline.optional.package.v1:/revealline/practice/civilian-fpv/releases/v0.0.0/site/optional-practice/civilian-fpv/:b0edd5ec4a11c18168a9540992cae721dd6f3e347db3b19bccdcef85aba8e8c6",
+          "files": 99
+        },
+        {
+          "name": "revealline.optional.package.v1:/revealline/practice/fpv-worlds/app/:ad388fda35f406927debc777439bcc78040f610fae8978acdf9757ceef159faa",
+          "files": 9
+        },
+        {
+          "name": "revealline.optional.package.v1:/revealline/practice/fpv-worlds/releases/v0.151.1/site/optional-practice/fpv-worlds/:d96f3c4bc7ba342a2261dcd12f3f7be9157efb25a57fc5345a2cf65eaa59b96a",
+          "files": 160
+        }
+      ],
+      "proof": {
+        "input": "first frozen demonstration frames under an explicit synthetic practice session",
+        "sha256": "5c7fe2b10e9d9dc7d2a95efa42ded4abacfc383619e5ff51deb0973870e374a6",
+        "attempts": 1
+      },
+      "profiles": {
+        "input": "synthetic unverified radio mapping and independent simulator response imported through Setup",
+        "sha256": "5ea6a02ba3a3aecd84779cdc30bdced5f0a15a00dafae19ce745f17cd0473a0d",
+        "radioVerified": false
+      },
+      "preservedPointersCachesWorkers": true,
+      "retryRemovedToExactBaseline": true,
+      "sourceAuthorityVerified": true
+    },
+    {
+      "id": "civilian-fpv",
+      "receipt": {
+        "path": "/tmp/practice-feedback-overall-academy-20261016-run1.json",
+        "sha256": "7791e5fdc358912d3fa9959d7e57d021c3d3cc0308ee332b60e5a60ee594597a"
+      },
+      "heldMs": 299809.874958,
+      "status": "Download exceeded five minutes. Retry on a faster connection.",
+      "checkpointCount": 13,
+      "worldRecordCounts": [
+        {
+          "name": "assets",
+          "count": 0
+        },
+        {
+          "name": "meta",
+          "count": 1
+        },
+        {
+          "name": "projects",
+          "count": 1
+        },
+        {
+          "name": "revisions",
+          "count": 1
+        }
+      ],
+      "baselineCachedFiles": [
+        {
+          "name": "revealline.optional.civilian-flight.v1:/revealline/practice/civilian-flight/app/:d784e191fd4b66ca658d2fa1ee7ee7060962817e0379d36a2e4ea4d6f8eba211",
+          "files": 9
+        },
+        {
+          "name": "revealline.optional.civilian-flight.v1:/revealline/practice/civilian-flight/releases/v0.151.1/site/optional-practice/civilian-flight/:7525ba59f03019010aecede5d01f7ab5d8392fffdea32dfe42f6a20c651575fb",
+          "files": 92
+        },
+        {
+          "name": "revealline.optional.package.v1:/revealline/practice/civilian-fpv/app/:5b3884b6df69ee10429cddc6be66488a30bcb49f2e48f296328bdb6494ade956",
+          "files": 9
+        },
+        {
+          "name": "revealline.optional.package.v1:/revealline/practice/civilian-fpv/releases/v0.0.0/site/optional-practice/civilian-fpv/:b0edd5ec4a11c18168a9540992cae721dd6f3e347db3b19bccdcef85aba8e8c6",
+          "files": 99
+        },
+        {
+          "name": "revealline.optional.package.v1:/revealline/practice/fpv-worlds/app/:ad388fda35f406927debc777439bcc78040f610fae8978acdf9757ceef159faa",
+          "files": 9
+        },
+        {
+          "name": "revealline.optional.package.v1:/revealline/practice/fpv-worlds/releases/v0.151.1/site/optional-practice/fpv-worlds/:d96f3c4bc7ba342a2261dcd12f3f7be9157efb25a57fc5345a2cf65eaa59b96a",
+          "files": 160
+        }
+      ],
+      "proof": {
+        "input": "first frozen demonstration frames under an explicit synthetic practice session",
+        "sha256": "5c7fe2b10e9d9dc7d2a95efa42ded4abacfc383619e5ff51deb0973870e374a6",
+        "attempts": 1
+      },
+      "profiles": {
+        "input": "synthetic unverified radio mapping and independent simulator response imported through Setup",
+        "sha256": "5ea6a02ba3a3aecd84779cdc30bdced5f0a15a00dafae19ce745f17cd0473a0d",
+        "radioVerified": false
+      },
+      "preservedPointersCachesWorkers": true,
+      "retryRemovedToExactBaseline": true,
+      "sourceAuthorityVerified": true
+    },
+    {
+      "id": "fpv-worlds",
+      "receipt": {
+        "path": "/tmp/practice-feedback-overall-worlds-20261016-run1.json",
+        "sha256": "8920df3cf333cfe2a2af08f724c794368933cc263ca0efe959a648334b7a0705"
+      },
+      "heldMs": 299602.93225000007,
+      "status": "Download exceeded five minutes. Retry on a faster connection.",
+      "checkpointCount": 13,
+      "worldRecordCounts": [
+        {
+          "name": "assets",
+          "count": 0
+        },
+        {
+          "name": "meta",
+          "count": 1
+        },
+        {
+          "name": "projects",
+          "count": 1
+        },
+        {
+          "name": "revisions",
+          "count": 1
+        }
+      ],
+      "baselineCachedFiles": [
+        {
+          "name": "revealline.optional.civilian-flight.v1:/revealline/practice/civilian-flight/app/:d784e191fd4b66ca658d2fa1ee7ee7060962817e0379d36a2e4ea4d6f8eba211",
+          "files": 9
+        },
+        {
+          "name": "revealline.optional.civilian-flight.v1:/revealline/practice/civilian-flight/releases/v0.151.1/site/optional-practice/civilian-flight/:7525ba59f03019010aecede5d01f7ab5d8392fffdea32dfe42f6a20c651575fb",
+          "files": 92
+        },
+        {
+          "name": "revealline.optional.package.v1:/revealline/practice/civilian-fpv/app/:5b3884b6df69ee10429cddc6be66488a30bcb49f2e48f296328bdb6494ade956",
+          "files": 9
+        },
+        {
+          "name": "revealline.optional.package.v1:/revealline/practice/civilian-fpv/releases/v0.0.0/site/optional-practice/civilian-fpv/:b0edd5ec4a11c18168a9540992cae721dd6f3e347db3b19bccdcef85aba8e8c6",
+          "files": 99
+        },
+        {
+          "name": "revealline.optional.package.v1:/revealline/practice/fpv-worlds/app/:ad388fda35f406927debc777439bcc78040f610fae8978acdf9757ceef159faa",
+          "files": 9
+        },
+        {
+          "name": "revealline.optional.package.v1:/revealline/practice/fpv-worlds/releases/v0.151.1/site/optional-practice/fpv-worlds/:d96f3c4bc7ba342a2261dcd12f3f7be9157efb25a57fc5345a2cf65eaa59b96a",
+          "files": 160
+        }
+      ],
+      "proof": {
+        "input": "first frozen demonstration frames under an explicit synthetic practice session",
+        "sha256": "5c7fe2b10e9d9dc7d2a95efa42ded4abacfc383619e5ff51deb0973870e374a6",
+        "attempts": 1
+      },
+      "profiles": {
+        "input": "synthetic unverified radio mapping and independent simulator response imported through Setup",
+        "sha256": "5ea6a02ba3a3aecd84779cdc30bdced5f0a15a00dafae19ce745f17cd0473a0d",
+        "radioVerified": false
+      },
+      "preservedPointersCachesWorkers": true,
+      "retryRemovedToExactBaseline": true,
+      "sourceAuthorityVerified": true
+    }
+  ],
+  "limits": [
+    "Three English real-time five-minute fault cases on exact b8 candidate, not broader connection/device/browser qualification.",
+    "Original-byte trickle uses owned server and same-payload alternate paths; not historical binary migration.",
+    "All six baseline cache inventories independently match original workers; post-timeout/retry/removal receipts contain exact cache names/workers/pointers, not fresh content hashes for every retained cache.",
+    "Nonempty UI-created World project/revision preserved; assets empty and Gym persistent flight records not populated.",
+    "Academy synthetic proof/profile preservation relies on source-bound observer assertions; raw round-trip export content is not retained in these receipts.",
+    "Browser-context offline/process restart is not machine-wide offline, OS reboot, physical radio, human review or public hosting qualification."
+  ]
+}
