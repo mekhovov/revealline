@@ -294,3 +294,97 @@ test('destroy and absent supporting-page roots leave no active listeners or focu
     empty.destroy();
   }
 });
+
+test('presentation notifications observe committed category, compact Back and resize owners; rejected selection publishes nothing', () => {
+  const f = fixture();
+  f.root.classList.add('native-settings');
+  f.document.defaultView.innerWidth = 390;
+  const events = [];
+  let reject = false;
+  const panels = attachSettingsPanels({
+    ...f,
+    beforeSelect(tab) {
+      if (reject) tab.disabled = true;
+    },
+    onPresentationChange() {
+      events.push({ panel: visiblePanels(f), view: f.root.getAttribute('data-settings-view') });
+    },
+  });
+  assert.deepEqual(events, []);
+  panels.select(f.tabs.data.id, { drill: true });
+  assert.deepEqual(events.at(-1), { panel: ['data'], view: 'panel' });
+  const unchanged = events.length;
+  panels.select(f.tabs.data.id, { drill: true });
+  assert.equal(
+    events.length,
+    unchanged,
+    'Selecting the same committed panel does not retire its report.',
+  );
+  panels.back();
+  assert.deepEqual(events.at(-1), { panel: ['data'], view: 'categories' });
+  f.tabs.data.emit('keydown', { key: 'ArrowLeft' });
+  assert.deepEqual(events.at(-1), { panel: ['display'], view: 'categories' });
+  const count = events.length;
+  reject = true;
+  assert.equal(panels.select(f.tabs.controls.id), false);
+  assert.equal(events.length, count);
+  reject = false;
+  panels.focusPanel();
+  f.tabs.display.focus();
+  f.document.defaultView.emit('resize');
+  assert.equal(events.at(-1).view, 'categories');
+  panels.destroy();
+  assert.equal(events.length, count + 3);
+});
+
+test('a presentation notification that retires settings cannot restore the old panel focus', () => {
+  const f = fixture();
+  let panels,
+    retire = false;
+  panels = attachSettingsPanels({
+    ...f,
+    onPresentationChange() {
+      if (retire) {
+        retire = false;
+        panels.destroy();
+        f.document.body.focus();
+      }
+    },
+  });
+  retire = true;
+  assert.equal(panels.select(f.tabs.data.id, { focus: true }), false);
+  assert.equal(f.document.activeElement, f.document.body);
+});
+
+test('compact CSS breakpoint changes notify with unchanged categories and outside focus; same-side resizes do not', () => {
+  const f = fixture();
+  f.root.classList.add('native-settings');
+  f.document.defaultView.innerWidth = 1000;
+  const notifications = [];
+  const panels = attachSettingsPanels({
+    ...f,
+    onPresentationChange() {
+      notifications.push({
+        width: f.document.defaultView.innerWidth,
+        view: f.root.getAttribute('data-settings-view'),
+        active: f.document.activeElement,
+      });
+    },
+  });
+  panels.select(f.tabs.data.id);
+  notifications.length = 0;
+  f.document.body.focus();
+  for (const width of [1000, 701, 700, 699, 320, 1000]) {
+    f.document.defaultView.innerWidth = width;
+    f.document.defaultView.emit('resize');
+  }
+  assert.deepEqual(
+    notifications.map(({ width, view }) => ({ width, view })),
+    [
+      { width: 700, view: 'categories' },
+      { width: 1000, view: 'categories' },
+    ],
+  );
+  assert.ok(notifications.every(({ active }) => active === f.document.body));
+  panels.destroy();
+});
