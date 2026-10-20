@@ -1,5 +1,7 @@
 # Enemy workshop and encounter feedback
 
+> Retained excerpt after an ownership migration. Historical totals and verification statements describe the original scope; this excerpt is not a current release qualification. Original bytes and removed material are preserved separately.
+
 Open `/authoring/enemy-catalog/` on the local development server, or the same route under an immutable release’s site. The current build configuration includes this authoring route. Source presence and an allowlist entry do not replace verification in the exact published artifact.
 
 The workshop previews seven registered behavior roles, four original presentation families and three detail treatments. Choose a role, select its skin, enable/disable it for future generators, and Apply to save the catalog locally. Reload restores the last successfully saved choices. Export/import transfers a bounded 64 KiB JSON choice document; it does not pretend to contain custom image bytes or installed packs. Storage failure leaves the last saved choice set intact and reports the error.
@@ -63,7 +65,6 @@ The exact choice document is:
 }
 ```
 
-The example abbreviates the list: validation requires all seven roles exactly once. Each skin is `<registered type>.<fpv|ukraine|retro|coupa>.v1`; arbitrary skin names, executable fields, getters and duplicate roles are rejected. Inputs are copied and the validated result is deeply frozen.
 
 `enemyCatalogSelection(draft)` returns `{allowedTypes, actorSkins, style}`. Future map generators consume `allowedTypes` when creating a **new authored edition**, then run ordinary geometry/content validation. An empty allowed set is valid as a catalog preference, but does not waive the level validator's requirements. This helper never filters an existing level or mutates a live run. Existing score/save/pack identity remains unchanged.
 

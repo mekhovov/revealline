@@ -13,7 +13,6 @@ Choose a template and copy it into a library directory before editing:
 - [FPV FRONT](examples/fpv-front.media.json): realistic FPV avatar with an optional pixel derivative, fictional invading infantry/equipment variants, concrete/mud/wire terrain objects, and uploaded scene originals.
 - [UKRAINE ATLAS](examples/ukraine-atlas.media.json): bird/charm avatar, researched cultural materials, folkloric threats, landscape/artwork/photo originals.
 - [1994 FOREVER](examples/retro-1994.media.json): original arcade craft, robots, cassette/circuit/CRT objects, retro scenes.
-- [NAVI NETWORK](examples/navi-network.media.json): planned approved Navi/brand artwork, fictional spend-leak agents, paperwork/archive objects, business-city images.
 
 Each template has **27 planned assets and 31 bindings**. No file paths, hashes, produced images, rights approvals or visual reviews are invented. Planned derivatives name their planned source; import that source before registering an actual derivative. The templates cover player variants, enemy characters/equipment, all three terrain materials, reveal layers, active trail, contour, pickups, UI, capture-effect sources and separate marketing art.
 

@@ -1,14 +1,14 @@
 # Round 02 — Fifteen worlds for the same territory game
 
+> Retained excerpt after an ownership migration. Historical totals and verification statements describe the original scope; this excerpt is not a current release qualification. Original bytes and removed material are preserved separately.
+
 Research date: 12 September 2026. This is a design exploration, not an implementation specification. The first twelve names match the original concept boards for this round. Names, sound directions, mechanics, and reward ideas below are proposals. Reference games are a curated set of useful precedents, not a ranking of all popular pixel-art games.
 
 ## Recommended direction
 
-Keep all three initial families: Ukrainian FPV action, Ukrainian living folk art, and a Coupa savings adventure. Develop an additional playful retro anthology around them. The strongest common identity is **a beautiful world gradually brought to life by the lines you draw**. This ties precision, danger, curiosity, and collection together without making every theme another recolored military board.
 
 Treat each world as a small album: a distinct avatar, line material, capture animation, enemy vocabulary, musical arrangement, scene collection, and one optional rule twist. Every world can support classic rules. Its optional twist should be explicitly selected and separately scored, so a player can enjoy any artwork without relearning the game.
 
-The next visual comparison should prioritize 02 KYIV AFTER HOURS, 05 PETRYKIVKA BLOOM, 08 MIDNIGHT CIRCUIT, and 12 COUPA CITY. Together they test dark city atmosphere, decorative illustration, crisp arcade abstraction, and approachable corporate character art. 06 PYSANKA COSMOS offers the most distinctive long-term signature: drawing a safe boundary is conceptually close to wax-resist image revelation.
 
 ## Ukrainian worlds
 
@@ -123,16 +123,6 @@ The next visual comparison should prioritize 02 KYIV AFTER HOURS, 05 PETRYKIVKA 
 - **Best showcase:** phone portrait and tablet; good candidate for a calm, untimed mode alongside normal arcade difficulty.
 - **Reference:** [Owlboy](https://www.owlboygame.com/) shows that a flying avatar, expressive companions, and detailed pixel scenery can share a coherent world. Use that characterful craft; create our own creatures.
 
-### 12 — COUPA CITY
-
-- **Look:** approachable blue-and-white city, warm shop interiors, clear gold value markers, friendly people, and an optimistic miniature skyline. Avoid turning the playfield into a dense corporate dashboard.
-- **Player / threats:** a Coupa-inspired mascot, an approved Navi asset, or a clearly provisional custom savings drone; invoice gremlins, duplication sprites, subscription leaks, and runaway cost bubbles.
-- **Reveal / reward:** each enclosed opportunity funds a visible improvement: a client cafe reopens, a factory adds cleaner equipment, a clinic gets a bright new room. Fictional amounts express game score, not claims about customer savings.
-- **Sound:** playful jazz-funk synthesis, marimba-like phrases, cash-register percussion used sparingly, and a growing town theme.
-- **Distinctive rule:** optional contracts reward enclosing matching opportunities, while risk pockets tempt the player into a larger cut. Client stories make saving value meaningful beyond an increasing number.
-- **Best showcase:** browser on an office laptop; phone for a short three-board challenge; TV for an event tournament.
-- **Reference:** [Eastward](https://eastwardgame.com/) is useful for lively urban vignettes and warm characters. The corporate rules, mascot interpretation, and client scenes here are original proposals.
-
 ## Three additional directions to visualize next
 
 ### 13 — ÖRNEK GARDENS
@@ -187,4 +177,3 @@ These are design recommendations for the next visual tests, not measured device-
 - Choose whether the default reward is a finished illustration, an animated living scene, or a small collectible object; the recommendation is an animated scene plus a compact collectible card.
 - Choose the strongest emotional range: hopeful restoration, pure arcade exhilaration, cozy discovery, or a selectable mixture. Each can sit above the same capture rules.
 - Compare the same exact board state in the selected styles. Keep player position, trail, enemies, percentage revealed, and UI content fixed so the comparison tests art rather than unrelated layouts.
-

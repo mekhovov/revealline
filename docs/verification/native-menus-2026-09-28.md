@@ -1,3 +1,5 @@
+> Retained historical excerpt after an ownership migration. Exact original bytes are preserved separately. Original totals and verification statements describe the original scope; this excerpt is not a current qualification or a complete test result.
+
 # Native menus — implementation evidence, 28–29 September 2026
 
 This is local source and candidate-package evidence. Historical releases were not edited. Physical controllers, Steam Deck hardware, native iOS and the public website are separate acceptance surfaces and are not certified by this report. Existing demo work and concurrent mission-library work were preserved.
@@ -18,11 +20,9 @@ Source URL: `http://127.0.0.1:8768/`, Codex in-app Chromium browser.
 | Accessibility                          | Plain font, Large text and disabled animation were changed through Settings. Large mode controls stack vertically and footer joins document flow; no horizontal overflow at 390px. Scene reports `motion=off`. Preferences restored after testing. |
 | Palette/language                       | Neon Arcade and FPV Field Kit observed; English and Ukrainian changed through the same shared controls. Palette does not change world artwork.                                                                                                     |
 
-The first Large-text check caught mode-label overlap and footer clipping; the corrected layout was reloaded and measured. The Audio check caught duplicate quick transport under the complete couch transport; the refreshed final screen contains one transport. Focus padding was increased to keep category outlines inside the scroll area. At 390px, the final Ukrainian Settings title ends at x=305 and the 44px Back action begins at x=321. The relocated fullscreen action now has a visible pixel icon and 22px English/Ukrainian label. These first checks used responsive desktop-browser viewports, not physical phone/handheld tests. A separate true browser-zoom check on the final compiled Coupa edition is recorded below.
 
 Screenshots: [desktop landing](native-menu-2026-09-29/solo-desktop.png), [Ukrainian portrait](native-menu-2026-09-29/solo-portrait-uk.png), [Ukrainian short landscape](native-menu-2026-09-29/solo-landscape-uk.png), [desktop Settings](native-menu-2026-09-29/settings-desktop.png), [Ukrainian Settings](native-menu-2026-09-29/settings-portrait-uk.png).
 
-True **200% native Chrome zoom** passed on final compiled Coupa Village in English and Ukrainian. Chrome’s accessibility state reported 200%; device-pixel ratio changed from 2 to 4 and the CSS viewport from 1593×1123 to 796×561, with no CSS scale or viewport override. Document width remained 796px, every essential control fit, and keyboard Settings → Back restored `#shell-options` focus. Zoom was restored to 100% and verified. This is one shared-menu edition at browser zoom, not an all-route zoom matrix.
 
 Final rebuilt default package (`http://127.0.0.1:8976/game/`) also passed a 1280×800 browser check: exactly seven visible mode/action controls, 54px mode targets and 56px action rows, document width 1280px, loaded menu fonts, FPV scene and `Version v0.142.1`. Arrow navigation opened Settings; Escape restored the Settings trigger, and two Up inputs returned to Start. Temporary viewport overrides were reset. Final screenshots: [packaged landing](native-menu-2026-09-29/solo-packaged.png) and [packaged Settings](native-menu-2026-09-29/settings-packaged.png).
 
@@ -67,7 +67,6 @@ Final local web, all 14 standalone editions, desktop stage, iOS static stage, ve
 
 Scene timing and memory measurements are in [the local performance report](menu-scenes/performance.md): six visible desktop-browser samples, zero long tasks, reduced motion with zero active scene animations. The portrait FPV sample retains one 42.4ms interval. These are scene-only measurements, not physical-mobile or whole-game performance certification.
 
-Actual offline browser acceptance passed for the prepared English Coupa edition: Chrome DevTools explicitly used Offline, a reload reached the landing with its new 1536×1024 scene and loaded pixel font, and Network showed service-worker responses including the packaged font. No throttling was restored and DevTools closed. This was one edition on the preceding candidate with identical landing JavaScript/artwork/font, not all editions or native cold launches; see [exact browser evidence](company-menu-source-2026-09-29.md). Forced delayed-font failure remains unverified in a real browser.
 
 The pinned iOS dependencies and official bridge are installed/built locally, and all 16 iOS Node tests and 17 native CLI tests pass. The iOS doctor confirms configuration; this machine still lacks full Xcode and a simulator. Physical controller mapping/reconnection, native webview behavior, real-device frame-time/memory, and final published-byte/player acceptance remain separate checks. Do not turn these missing observations into passing claims.
 

@@ -1,5 +1,7 @@
 # Optional original worlds
 
+> Retained excerpt after an ownership migration. Historical totals and verification statements describe the original scope; this excerpt is not a current release qualification. Original bytes and removed material are preserved separately.
+
 **Missions → More chapters** opens the optional picture chapter browser from the sticky Missions heading, beside Back. The selected chapter retains focus, and Game mode can stay collapsed. The source includes **FPV Front · Route Choices — Tactical** alongside the four original Arcade picture collections; each release records its own frozen and public qualification without changing the default Pressure Lines chapter or existing profiles.
 
 | Chapter                              | Maps and pictures                                                     | Authored action policy                                                            |
@@ -7,7 +9,6 @@
 | FPV Front · Illustrated Pressure     | Three original pictures over the reviewed Pressure Lines layouts      | Direction-only Arcade                                                             |
 | Ukraine Atlas · Woven Lines          | Three original pictures over the same Pressure Lines layouts          | Direction-only Arcade                                                             |
 | 1994 Forever · After Hours           | Three original pictures over the same Pressure Lines layouts          | Direction-only Arcade                                                             |
-| Spend Network · Shared Routes        | Three original pictures over the same Pressure Lines layouts          | Direction-only Arcade                                                             |
 | FPV Front · Route Choices — Tactical | Three distinct route-choice layouts and three exact original pictures | Manual equipment; Scout, Light carrier and Fiber recommendations in Mission brief |
 
 The four original collections have separate campaign progress and reuse music, enemies and rules. Their twelve pictures are not twelve distinct geometries or newly recorded soundtracks. Route Choices adds three layouts, not another reskin of those Pressure Lines maps; its art remains separate from live collision objects. Existing music is reused throughout.

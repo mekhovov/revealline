@@ -1,5 +1,7 @@
 # Round 02 — arcade skill, picture discovery, and tactical expeditions
 
+> Retained excerpt after an ownership migration. Historical totals and verification statements describe the original scope; this excerpt is not a current release qualification. Original bytes and removed material are preserved separately.
+
 Research date: 12 September 2026. Status: design proposals for discussion, not an implementation specification. The user selected **all three motivations** from round 01 and requested more device, screen-size, aesthetic, and theme exploration. This note develops the gameplay side; no code or production assets have been created for it.
 
 ## Recommendation
@@ -50,7 +52,6 @@ Choose a location or themed collection; restore a few meaningful landmarks acros
 - Collection progress persists. Failed attempts need not remove art already earned on earlier boards.
 - Avoid requiring players to comb every last 1% of a board to enjoy its complete artwork. The last fragments may hold optional medals, not the only satisfying ending.
 
-**Visual:** an illustrated atlas, cassette shelf, stamp album, embroidered travel book, or Coupa city map can replace the generic level grid. Each theme supplies its own album metaphor while using the same collection structure.
 
 **Best fit:** tablet, laptop, family/shared-screen play, and slower phone sessions. This is the best place for Ukrainian places, regional motifs, cultural notes, and animated scenery.
 
@@ -78,9 +79,7 @@ Everything in this table is an original proposal. Numeric strengths and duration
 
 | # | Idea | What changes in the player's decision | Readable tradeoff or constraint | Possible theme treatments |
 | --- | --- | --- | --- | --- |
-| 1 | **Boundary glide — passive module** | Move faster on already safe territory, making another departure point more attractive. | No speed increase while drawing; it does not make a dangerous cut automatically safe. | Drone transit boost; folk-art bird following a stitch; Coupa express route. |
 | 2 | **Long-cut capacitor — passive module** | Closing a sufficiently long unbroken cut restores some active-ability charge. | Benefit arrives only on successful closure; failure gives no refund. Use distance rather than arbitrary button activity. | Signal battery; singing-thread spool; savings momentum. |
-| 3 | **Echo preview — active module** | Briefly show a short prediction of deterministic enemy movement before committing. | One limited charge and a clearly labeled short horizon; unpredictable enemies must not show a false certain future. | Recon echo; firefly glimmers; Navi forecast. |
 | 4 | **Boundary decoy — active module** | Place one temporary lure on an existing safe edge to redirect a compatible boundary follower. | Only that enemy role responds; the lure cannot redraw geometry or secretly attract every threat. | Signal beacon; folk charm; fictional duplicate-alert lure. |
 | 5 | **Insulated spool — passive module** | Survive one eligible collision with a live trail, allowing a bold cut once. | A large visible shield indicator disappears; eligibility and outcome must be clear. Avoid combining many invisible protections. | Shielded signal; protective thread; contingency reserve. |
 | 6 | **Closure pulse — passive module** | Capturing a sufficiently large new area briefly slows nearby compatible roaming threats. | The pulse happens after the region is validly captured; it cannot change which region fills. | Signal wave; expanding floral ring; efficiency wave. |
@@ -113,7 +112,6 @@ Use a small number of synchronized stems that tell the player what changed. Thes
 | Landmark restored | Add a local sound and one musical voice. | Windmill turns, birds appear, window lights switch on, or a customer-city district wakes. |
 | Board complete | Brief original melodic cadence; optional full arrangement in the gallery. | Finished artwork holds long enough to enjoy, with a prompt to continue and the option to stay. |
 
-For KALYNA, explore tracker drums, FM bass, original bandura-like plucks and sopilka-like melody. For VYRIY, try softer percussion, plucked strings and airy call-and-response. For COUPA QUEST, try a polished electronic groove whose separate parts join as waste is removed. These are new soundtrack briefs, not instructions to copy recordings.
 
 Layered reveal rewards can include a complete postcard, animated gallery version, unlocked soundtrack stem, pixel vignette, theme border, and a collectible patch. A pack should decide which rewards exist. A short optional gallery note can identify the artist or cultural reference. Avoid turning every small cut into a pop-up reward.
 
@@ -137,7 +135,6 @@ Input candidates to compare in a later playable proof: a fixed four-way touch pa
 
 ## Next visual iteration to request
 
-1. The same dramatic closure in three identities: KALYNA, VYRIY, and COUPA QUEST. Show safe territory, live trail, a marked blocker, and a capturable relay as distinct roles.
 2. One scene before capture, during the cut, immediately after closure, and in the completed animated-gallery concept.
 3. The same board on a small portrait phone, landscape handheld, tablet, desktop, and distant TV view. Preserve gameplay geometry and demonstrate different framing.
 4. An Expedition choice screen with only three modules, each a short sentence and one clear icon.

@@ -94,8 +94,8 @@ function storeFixture(f, { values = new Map(), storage, acceptClear } = {}) {
 }
 
 test('current tuned Solo gameplay verifies through its exact selected binding without changing replay bytes', async () => {
-  const source = createCompanyProject({ brandId: 'coupa', campaignId: 'coupa-source-to-pay' });
-  const missionId = 'coupa-source-to-pay-01';
+  const source = createCompanyProject({ brandId: 'droneaid-nl', campaignId: 'droneaid-nl-workshop-lights' });
+  const missionId = 'droneaid-nl-workshop-lights-01';
   const route = JSON.parse(
     readFileSync(new URL('fixtures/company-campaign-routes.json', import.meta.url)),
   ).rows.find(

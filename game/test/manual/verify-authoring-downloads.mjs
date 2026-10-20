@@ -16,7 +16,7 @@ import { importMediaBundle } from '../../media-bundle.mjs';
 import { validateEnemyCatalogDraft } from '../../enemy-catalog.mjs';
 import { compileContentProject } from '../../content-design/project.mjs';
 import { validateScenario } from '../../content.mjs';
-import { companyPlaytestTask } from '../../company-campaigns/playtest-fixtures.mjs';
+import { practiceTask } from '../../../authoring/company-studio/practice-fixtures.mjs';
 import { verifyReplayAsync } from '../../replay.mjs';
 import {
   validateStudioDraft,
@@ -72,11 +72,11 @@ const groups = [
     ['my-journey-backup.json', 'my-journey-backup (1).json', 'my-journey-backup (2).json'],
   ],
   ['Playground', 'scenario', ['signal-01.xonix (2).json', 'signal-01.xonix (3).json']],
-  ['Company Studio', 'company', ['coupa-all-draft.json', 'coupa-all-draft (1).json']],
+  ['Company Studio', 'company', ['droneaid-nl-community-draft.json', 'droneaid-nl-community-draft (1).json']],
   [
     'Company transfer practice',
     'task',
-    ['playtest-culture-connection-task.json', 'playtest-culture-connection-task (1).json'],
+    ['practice-open-bridge-task.json', 'practice-open-bridge-task (1).json'],
   ],
   [
     'Enemy Workshop',
@@ -168,7 +168,7 @@ try {
           };
         } else if (kind === 'task') {
           const result = parsed();
-          assert.deepEqual(result, companyPlaytestTask(result.id));
+          assert.deepEqual(result, practiceTask(result.id));
           record.validation = { exactTaskFixture: result.id, exportedResponses: false };
         } else if (kind === 'enemy') {
           const result = validateEnemyCatalogDraft(parsed());

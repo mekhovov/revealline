@@ -43,19 +43,6 @@
       "height": 887,
       "prompt": "prompts/retro-poolside-mixtape.txt",
       "runtimeAdopted": false
-    },
-    {
-      "id": "spend-copper-kettle-bazaar",
-      "themeId": "coupa",
-      "theme": "Spend Network",
-      "title": "Copper Kettle Bazaar",
-      "file": "originals/spend-copper-kettle-bazaar.png",
-      "bytes": 2175587,
-      "sha256": "6114aefe292f9c5410ad27cfd4c959fb0054a0374cfb8794eb6144a6ba6f9edb",
-      "width": 1774,
-      "height": 887,
-      "prompt": "prompts/spend-copper-kettle-bazaar.txt",
-      "runtimeAdopted": false
     }
   ],
   "selectionProvenance": "provenance/originals.json"

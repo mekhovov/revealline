@@ -1,5 +1,6 @@
 # Reserve illustrations · wave 10
 
+This is a reduced historical generation record. Retired ownership entries are omitted; original batch totals below remain historical context. The current retained selection is in the reserve illustrations catalog.
 The final four reserve illustrations follow [wave 9](../reserve-illustrations-wave-9/README.md). They complete **40 selected source works**, ten per theme, without runtime bindings, new levels, animation, packs or releases.
 
 | Theme | Original | Composition |
@@ -7,7 +8,6 @@ The final four reserve illustrations follow [wave 9](../reserve-illustrations-wa
 | FPV Front | [Sunflower Workbench](originals/fpv-sunflower-workbench.png) | A compact quad with four distinct rotor rings rests on a blue table before a golden sunrise field. |
 | Ukraine Atlas | [Tidal Mosaic Observatory](originals/ukraine-tidal-mosaic-observatory.png) | An indigo dome and broad folk-inspired mosaic bands overlook a turquoise rocky coast. |
 | 1994 Forever | [Neon Skate Arcade](originals/retro-neon-skate-arcade.png) | Yellow skates and a cyan rink lead toward blank arcade cabinets in a purple sunset interior. |
-| Spend Network | [Storybook Rail Depot](originals/spend-storybook-rail-depot.png) | A coral train carries colored books toward matching indoor sorting bays. |
 
 The four PNGs total **8,253,032 bytes**. All are **1774 × 887, RGB, 8-bit**, exactly **2:1**. Requested 1536 × 768 dimensions and few-shade materials were targets. Visible clusters and stepped outlines retain richer shading and more colors than a strict limited palette. These are wide reward illustrations, not production sprites.
 

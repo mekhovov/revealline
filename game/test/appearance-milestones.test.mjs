@@ -19,10 +19,9 @@ const STARTERS = [
   'heavy-lift',
   'ukrainian-bird',
   'retro-craft',
-  'navi-avatar',
   'neutral-marker',
 ];
-const FIRST = ['fpv-racer', 'fixedwing-body', 'ukrainian-falcon', 'retro-vector', 'navi-auditor'];
+const FIRST = ['fpv-racer', 'fixedwing-body', 'ukrainian-falcon', 'retro-vector'];
 const FINAL = ['fpv-night', 'delta-interceptor'];
 const ALL = [...STARTERS, ...FIRST, ...FINAL];
 function chapter(length) {

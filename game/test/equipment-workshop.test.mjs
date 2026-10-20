@@ -49,7 +49,7 @@ function recording(level, options, segments) {
   return exportReplay(recorder, run);
 }
 
-test('workshop retains proven geometry and equipment with three independent themes and original illustrated rewards', () => {
+test('workshop retains proven geometry and equipment with two retained independent themes and original illustrated rewards', () => {
   assert.equal(
     createHash('sha256').update(proofBytes).digest('hex'),
     '63a77908b1ce98b480f9fd0431894e4f1d58ad56e4266ae0860206de564d8c1a',
@@ -60,12 +60,12 @@ test('workshop retains proven geometry and equipment with three independent them
   assert.deepEqual(pack.visualOverrides, {});
   assert.deepEqual(
     pack.levelVisuals.map((entry) => entry.levelId),
-    ['workshop-01', 'workshop-02', 'workshop-03'],
+    ['workshop-01', 'workshop-02'],
   );
   assert.deepEqual(pack.classRecipes, homeward.classRecipes);
   assert.deepEqual(
     campaign.levels.map((level) => level.themeId),
-    ['ukraine', 'retro', 'coupa'],
+    ['ukraine', 'retro'],
   );
   for (let i = 0; i < campaign.levels.length; i++) {
     const current = normalizedLevel(campaign.levels[i]);
@@ -99,7 +99,8 @@ test('prepared practice scenarios select the actual per-map theme, music and aut
 });
 
 for (const route of proof.routes.filter(
-  (value) => value.variant === 'specialty' || value.classId === 'interceptor',
+  (value) =>
+    levelFor(value.levelId) && (value.variant === 'specialty' || value.classId === 'interceptor'),
 ))
   test(`${levelFor(route.levelId).id}/${route.turnPolicy}/${route.classId}: legal ${route.variant} route`, async () => {
     const level = levelFor(route.levelId),
@@ -151,7 +152,7 @@ for (const route of proof.routes.filter(
     }
   });
 
-for (const comparison of proof.comparisons)
+for (const comparison of proof.comparisons.filter((row) => levelFor(row.levelId)))
   test(`${levelFor(comparison.levelId).id}/${comparison.turnPolicy}: omitted equipment stays unqualified`, async () => {
     const level = levelFor(comparison.levelId),
       definition = goalFor(comparison.levelId);

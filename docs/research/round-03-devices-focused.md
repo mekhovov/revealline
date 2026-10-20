@@ -1,6 +1,7 @@
 # Round 03 — one device contract, four visual families
 
-Status: focused design proposal; no game, controls, accessibility measurements or hardware benchmarks have been implemented. Builds on [round-02 device research](round-02-devices.md). The four families are now the main Ukrainian FPV war theme, Ukrainian culture/history, 1980s/1990s nostalgia, and Coupa BSM + AI.
+> Retained excerpt after an ownership migration. Historical totals and verification statements describe the original scope; this excerpt is not a current release qualification. Original bytes and removed material are preserved separately.
+
 
 ## Recommended responsive contract
 
@@ -46,9 +47,7 @@ Apple recommends 44×44 pt for frequent game touch controls, safe placement and 
 | **Main: Ukrainian FPV war** | Fictional field controller: matte graphite/navy, wheat-yellow status accents, restrained blue identification, small woven pull-tab | A compact field handset. Large simple drone/hostile silhouettes; calm controls; no realistic military telemetry clutter. | A signal-station frame with enough quiet space for the board. Mission planning happens between boards. |
 | **Ukrainian culture/history** | Embroidered pocket atlas: warm paper, indigo or plum, culturally specific ornament in the frame | An atlas page inside a pocket console; tactile-looking corner stitching, clean inner board edge | A collector's atlas/light table; completed scenes have room for provenance, place, era and discovery captions. Keep regional motifs distinct. |
 | **1980s/1990s nostalgia** | Handheld cartridge: aged ivory, charcoal plastic, colored buttons, optional translucent casing | A satisfying pocket game with cartridge-shaped pack covers and remembered hardware proportions | A restrained CRT/Amiga-style cabinet, cartridge shelf, or after-school desktop. Scanlines and curvature are independently optional. |
-| **Coupa BSM + AI** | Navi console: clean cloud-blue interface, mint/cyan confirmation, calm invoice/map cards | A friendly operations handset. A short savings objective replaces military language; the main character uses verified supplied Navi/brand assets when available. | A clear operations console and client-world gallery; tactical choices become readable opportunity cards. Avoid imitating a dense business dashboard during live play. |
 
-The Coupa console must remain a game. Small approvals tables, financial KPI tiles and chat panels would make the first screen harder to read without improving the core cut-and-reveal action. A generated Navi-like symbol is a placeholder until official source assets are verified.
 
 ## Main FPV readability critique
 

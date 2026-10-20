@@ -81,7 +81,7 @@ test('Versus defaults to one exact FPV actor snapshot for both Journey boards wi
   assert.equal(appearance.snapshot.resolved.theme.id, 'fpv');
   assert.equal(
     appearance.snapshot.manifestSha256,
-    'b4a7285520550e4cd04c7b9e80b4c6468c0a914faac77c05fa7f86a72c8a3c8f',
+    'af2d1d398ca56ec365899940d27f790c2b406d385461e89a1dc8fcbbcede6972',
   );
   assert.equal(appearance.snapshot.canvas, undefined);
   assert.equal(p.drawOptions[0].backdrop, p.drawOptions[1].backdrop);

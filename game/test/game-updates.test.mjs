@@ -165,8 +165,8 @@ test('successful updates remap the verified previous game route while Back keeps
   const active = { version: '2.0.0', scope: current };
   for (const route of [
     'game/couch/relay-rescue.html?campaign=first#menu',
-    'game/index.html?edition=coupa-culture&presentation=earned',
-    'game/communities/coupa/?edition=coupa-culture',
+    'game/index.html?edition=droneaid-nl-workshop-lights&presentation=earned',
+    'game/communities/droneaid/?edition=droneaid-nl-workshop-lights',
   ]) {
     const update = gameUpdatesURL(new URL(old + route));
     assert.equal(updateReturnURL(update, current, sourceActive).href, old + route);
@@ -179,7 +179,7 @@ test('successful updates remap the verified previous game route while Back keeps
     'https://outside.example/game/',
     root + 'releases/v9.0.0/site/game/',
     old + 'game/playground/',
-    old + 'game/communities/coupa/?edition=droneaid-community',
+    old + 'game/communities/droneaid/?edition=droneaid-community',
   ]) {
     const update = gameUpdatesURL(new URL(address));
     update.href = page.href;

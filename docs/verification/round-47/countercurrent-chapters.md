@@ -1,6 +1,7 @@
+> Retained historical excerpt after an ownership migration. Exact original bytes are preserved separately. Original totals and verification statements describe the original scope; this excerpt is not a current qualification or a complete test result.
+
 # Countercurrent optional chapters
 
-Countercurrent adds three authored wide missions in each of four original-picture editions: FPV Front, Ukraine Atlas, 1994 Forever and Spend Network. The chapter browser offers sixteen exact external choices, using the existing theme/mode filters and small pages. Installation remains explicit, with room for at most twelve installed packs; adding choices never evicts another chapter or replaces a saved flight.
 
 The shared mission order is Offset Docks, Sandbar Braid and Crossing Watch. Offset Docks asks the player to choose a return around opposing hooks, Sandbar Braid combines staggered bars with a head-intercept threat, and Crossing Watch adds two watched lanes. These are Arcade missions with ordinary steering, contact pickups and stopping after each completed capture. Standard and Gentle difficulties and Immediate and Grid turns retain the accepted authored recipes.
 

@@ -24,7 +24,7 @@ not estimate the original pre-company game's performance or the effect of earlie
   normal `/revealline/` offline configuration. Verify each baseline archive descriptor against
   its independent freeze report. Match the candidate descriptors to its final freeze before
   accepting the comparison binding. Serve the original compiled files without player edits.
-- Use `coupa-all` and `droneaid-nl-community`. Serve both samples through one disposable
+- Use `droneaid-community` and `droneaid-nl-community`. Serve both samples through one disposable
   loopback review origin under separate comparison prefixes, with the same response headers.
   Prefixes are a browser-comparison convenience, not a claim about installation scopes.
 - Use the same browser, viewport, input and sound/motion settings. Record the order and
@@ -53,8 +53,8 @@ Do not replace a missing device result with responsive viewport emulation or an 
 route proof. The installed-app and update/recovery matrix is in
 [device qualification](company-editions-device-qualification.md).
 
-Use separate 20-second records for at least one late Coupa encounter, one late Netherlands
-encounter and one actual picture reveal. Then alternate the exact Coupa and Netherlands targets
+Use separate 20-second records for at least one late Community Relay encounter, one late Netherlands
+encounter and one actual picture reveal. Then alternate the exact Community Relay and Netherlands targets
 at least twice and export the session summary. Preserve every valid slow sample. These desktop
 records can close the previously ambiguous scene-labeling gap, while the same scenarios on target
 physical devices remain a separate gate.

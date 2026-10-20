@@ -29,7 +29,7 @@ const expected = RELEASE_ASSET_NAMES.map((name, index) => ({
 
 test('additive metadata budget accepts the exact cap and rejects one more byte', () => {
   const asset = {
-    name: 'distribution-coupa.zip',
+    name: 'distribution-sample.zip',
     size: ADDITIVE_RELEASE_ASSET_BYTE_LIMIT,
     digest: `sha256:${'a'.repeat(64)}`,
   };
@@ -74,7 +74,7 @@ test('additive budget counts the other envelope and unknown extras, excluding on
     const existing = releaseAssetNames(format).map((name) => pin(name, 900_000_000));
     existing.push(
       pin('editions.json', 10),
-      pin('source-coupa.zip', 800_000_000),
+      pin('source-sample.zip', 800_000_000),
       pin('unrecognized-extra.bin', 20),
     );
     assert.equal(

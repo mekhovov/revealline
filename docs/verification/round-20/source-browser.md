@@ -1,3 +1,5 @@
+> Retained historical excerpt after an ownership migration. Exact original bytes are preserved separately. Original totals and verification statements describe the original scope; this excerpt is not a current qualification or a complete test result.
+
 # Chapter reward source browser checks
 
 Observed 12 September 2026 in the Codex in-app browser at the owned source origin `http://127.0.0.1:8814/game/`, displaying v0.10.0 / DEV. The [gate inventory](source-inputs.json) records the final tested source; all 266 inputs also matched after the candidate build.
@@ -12,8 +14,6 @@ Each live attempt imported an unchanged Round 19 legal suspended fixture through
 
 1. **Neon Switchboard / Immediate:** Resume then Up finished at 71.1%, three lives, 11,910 points and gold. Its first new clear named the five first-tier appearances. Despite Garden of Threads still being uncleared, the earned Neon Switchboard mission button was enabled. Choose appearance focused `body-select` while retaining the won state. Selecting Skyline FPV kept 11,910 points and the active Heavy carrier ability, and disabled automatic appearance matching.
 2. **Garden of Threads / Grid + buffer:** Resume then Right finished at 74.1%, three lives, 12,590 points and gold. No new tier message appeared. The flight deck and Collection showed **Chapter explorer: 2 / 3**; its row named Night signal FPV and Delta interceptor and said to finish one more mission. [The default-size screenshot](screenshots/chapter-progress.jpg) records this actual presentation.
-3. **Clear Ledger / Grid + buffer:** Reduced effects was enabled before resuming. Right completed at 73.1%, three lives, 11,740 points and gold. The result named exactly Night signal FPV and Delta interceptor; both options became enabled. Keyboard Enter on Choose appearance focused the selector. Explicitly choosing each final body retained the won state, 11,740 points and Impact craft ability. The later [result screenshot](screenshots/final-appearance-reward.jpg) records the same reward after the placement correction below.
-4. **Clear Ledger / Immediate repeat:** A different recorded attempt and steering policy completed the same mission. Its new ordinary score and equipment record were saved, but the distinct map count remained three. The reward text was empty and its Choose appearance action hidden; no duplicate tier was announced.
 
 The three-clear profile exported **three pictures, three scores and three seals**, 5,840 bytes, SHA-256 `0a3ebc3dc4948b9a208b2460fac9659798d89cdc7f42089128dd404825f3f10b`. The repeat profile held **three pictures, four scores and four seals**, 7,065 bytes, SHA-256 `e7c5b758cb66604ccc468dfb59171c25b00cde4ff1a703bdd8d614e225b66416`. Both retain three distinct Workshop clears. [Profile checks](profile-checks.json) preserve paths, counts and digests. Source warning/error samples were empty.
 

@@ -1,5 +1,7 @@
 # Round 08 — character progression and propeller presentation
 
+> Retained excerpt after an ownership migration. Historical totals and verification statements describe the original scope; this excerpt is not a current release qualification. Original bytes and removed material are preserved separately.
+
 Research and implementation review: 12 September 2026. This is a targeted source update and a collection-design brief. It does not add territory simulation, prove retention, audition audio or benchmark an engine. The [gameplay plan](../round-08-gameplay-plan.md) separates the working collection preview from the next proposed playable slice.
 
 ## What the reference actually supports
@@ -35,10 +37,8 @@ The new [collection definition](../../authoring/motion-lab/collection-presets.js
 | FPV Front | Same starter | Night signal FPV (`fpv-night`) | Clean Relay Islands completion with its relay objective **or** three different FPV level clears. |
 | Ukraine Atlas | Atlas bird (`ukrainian-bird`) | Falcon trim (`ukrainian-falcon`) | Complete a heritage level and its fragment objective. This is a trim on the shared bird body. |
 | 1994 Forever | Tape runner (`retro-craft`) | Vector trail (`retro-vector`) | Five best-result stars across distinct retro levels **or** three different retro level clears. Shared craft body, alternate visual treatment. |
-| Business | Spend Sprite (`navi-avatar`) | Audit pulse (`navi-auditor`) | Complete the fictional spend-review case and resolve its anomaly. Shared helper body, alternate visual treatment. |
 | Any context | Neutral marker (`neutral-marker`) | — | Always available as a diagnostic fallback. |
 
-Spend Sprite is an original business helper, **not an official Coupa or Navi character**. The retained `navi-*` IDs are technical vocabulary from earlier drafts. No real client data, savings result or brand endorsement is implied.
 
 The six supplied buttons are deliberately named **Simulate**. They submit complete, fixed test results for first FPV clear, clean relay map, heritage fragment, two retro clears and a fictional clean spend case. Applying all six unlocks all five earned cosmetics for review. Clicking one repeatedly does not manufacture progress. Unlocking never changes the equipped character automatically.
 

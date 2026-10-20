@@ -1,6 +1,6 @@
 ---
 name: xonix-theme-designer
-description: 'Design or revise Xonix game themes and content packs, including Ukrainian FPV Front, Ukrainian culture and history, 1980s–1990s nostalgia, Coupa Navi Network, and new visual families. Use for theme bibles, palettes, image collections, character roles, progression concepts, or a reskin that preserves game rules.'
+description: "Design themed game content using the current generic authoring contracts and supplied references."
 ---
 
 # Xonix Theme Designer
@@ -10,8 +10,6 @@ Read [Delivery priorities](../../../docs/delivery-priorities.md) first for the c
 For the current FPV Field Kit implementation, use [the production/adoption contract](../../../docs/field-kit-production.md). The compiler's runtime snapshot and editable studio document share hash-addressed bytes; loading a release collection appends local history. Preserve actual selected geometry and the effective production brief in variation requests. Generated originals, explicitly prepared derivatives and reviewed assets are different evidence stages. Never certify the complete FPV theme while its 38-composition/44-frame manifest reports missing entries or its required slots remain unreviewed.
 
 Turn a theme request into a concrete art direction and draft content pack. Work within the user's approved scope; do not request approval again for routine authoring changes.
-
-The active Reveal Line presentation direction is the approved [FPV Field Kit redesign](../../../docs/fpv-redesign-design.md), with [phase status](../../../docs/fpv-redesign-execution.md) and [interactive atlas](../../design-atlas/index.html). Use its ink/cyan/amber palette, readable Exo 2 interface, large Handjet accents and Plex telemetry. Future Ukrainian/Retro/Coupa collections remain separate from the first complete FPV delivery. The atlas is a review artifact; confirm which compiler/studio/runtime phase actually shipped before prescribing its interface. Existing campaign and saved-art ownership contracts remain authoritative.
 
 For a theme applied to the playable `game/`, use [Runtime Maintainer](../xonix-runtime-maintainer/SKILL.md) and the [runtime configuration guide](../../../docs/assets-and-configuration.md). Edit the actual theme record from `game/content/themes.json` or an exported `xonix-playground.v1` scenario; legacy family names and draft-pack fields are not runtime imports. The draft workflow below still applies when a draft pack is the requested deliverable.
 
@@ -44,7 +42,6 @@ Read the contract, `schema/primitive-catalog.json`, and the closest example pack
 - `fpv-front`: Main direction is Ukrainian FPV-drone arcade action in the Russian–Ukrainian war. Preserve the requested reveal of fictional invading Russian military presence. Painted vehicles are illustration; live enemy sprites carry collision and readable cues. W1 Daybreak Front is the current recommended style; W2 Night Signal and W3 Steel Horizon are chapter alternatives.
 - `ukraine-atlas`: Use identifiable places, periods, and traditions. Distinguish Petrykivka painting, embroidery, Kosiv ceramics, and Crimean Tatar Örnek. Avoid treating all regional motifs as interchangeable. Include contemporary Ukraine as well as heritage.
 - `retro-1994`: Broaden nostalgia beyond neon: warm computer rooms, DOS and demoscene colors, arcade cabinets, cassette artwork, space operas, and summer after-school scenes. Use original artwork and sound compositions.
-- `navi-network`: Convey spend visibility, savings, suppliers, and AI assistance as playable discoveries. Use verified Coupa/Navi references when supplied or found; otherwise label a temporary C-token as a placeholder. In-game savings and currency may be fictional; avoid presenting them as real customer results.
 
 ## Adapt templates to the request
 

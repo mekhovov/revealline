@@ -1,5 +1,7 @@
 # Reveal Line delivery status — 26 September 2026
 
+> Retained excerpt after an ownership migration. Historical totals and verification statements describe the original scope; this excerpt is not a current release qualification. Original bytes and removed material are preserved separately.
+
 > **Historical register.** Current status as of 26 September 2026: stable
 > [v0.141.2](https://github.com/mekhovov/revealline/releases/tag/v0.141.2) is selected on Pages from
 > exact source `12978e5fd3fe0ce70bbee96aa543f569f64622d4`. Selector PR #677 merged as
@@ -114,7 +116,6 @@ can extend them. Hardware-dependent acceptance is called out separately.
 |    11 | **P02/P05 audio and themes**           | One audio authority, complete theme compatibility/restoration, transfer/offline behavior and actual listening review                                                  |                                             **2–4 days** |
 |    12 | **P04/P17 Studio/community authoring** | Cross-mode previews, upload/edit/history/bundle round trips and an independent create/install/play/recover trial                                                      |                                             **4–7 days** |
 |    13 | **P09/P10 encounters and difficulty**  | Gentle/Standard/Hard, deterministic optional encounters, readable counterplay and 36-case Team matrix                                                                 |               **3–6 days**, plus human balance playtests |
-|    14 | **P11–P15 campaign production**        | FPV, DroneAid, Living Atlas, Retro and Coupa slices with design cards, reviewed art and independent releases                                                          |                          **3–7 days per accepted slice** |
 
 The ETA is not a promise that all work can proceed concurrently. Feature preparation may run in
 isolated branches, but tags, frozen assets, archive admission and Pages deployment must remain

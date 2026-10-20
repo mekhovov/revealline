@@ -1,3 +1,5 @@
+// Retained historical source projection; original bytes are archived separately.
+// This excerpt is not the original artifact or a new execution qualification.
 import {
   freshSoloVisualSelection,
   prepareFreshSoloVisualTheme,
@@ -6160,9 +6162,7 @@ try {
     $('world-legend').textContent =
       `${theme.labels.enemy} · ${theme.labels.boss} · ${theme.labels.supply}`;
     $('footer-note').textContent =
-      theme.id === 'coupa'
-        ? 'Fictional spend-management theme · original helper artwork'
-        : 'Original worlds · make every line count';
+      'Original worlds · make every line count';
     painter.style = scenario?.presentation?.style || library.preferences.style;
     updateBodies();
     painter.setLook(theme, bodyId, painterVisuals());

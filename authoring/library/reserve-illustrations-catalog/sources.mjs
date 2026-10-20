@@ -50,7 +50,7 @@ export function validateReserveManifest(value) {
       entry.sourceOnly !== true ||
       typeof entry.id !== 'string' ||
       typeof entry.title !== 'string' ||
-      !['fpv', 'ukraine', 'retro', 'coupa'].includes(entry.themeId) ||
+      !['fpv', 'ukraine', 'retro'].includes(entry.themeId) ||
       !value.themes?.[entry.themeId] ||
       !Number.isInteger(entry.wave) ||
       entry.wave < 1 ||

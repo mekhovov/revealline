@@ -5,7 +5,7 @@
       "themeId": "fpv",
       "id": "countercurrent-fpv",
       "artRoot": "authoring/library/countercurrent-art",
-      "provenanceSha256": "72137c0459d22aa1adc5acc53cb3ac95ca526d26fc53e76deca53552f107c435",
+      "provenanceSha256": "9aef6fc68783f8fa46f65916ccee492c255cef03bff1c3d3df636cc1522a9f98",
       "images": [
         {
           "sourceCellId": "countercurrent/offset-docks/fpv",
@@ -37,14 +37,14 @@
       "themeId": "ukraine",
       "id": "countercurrent-ukraine",
       "artRoot": "authoring/library/countercurrent-art",
-      "provenanceSha256": "72137c0459d22aa1adc5acc53cb3ac95ca526d26fc53e76deca53552f107c435",
+      "provenanceSha256": "9aef6fc68783f8fa46f65916ccee492c255cef03bff1c3d3df636cc1522a9f98",
       "images": [
         {
           "sourceCellId": "countercurrent/offset-docks/ukraine",
           "sourceLevelId": "countercurrent-offset-docks",
           "path": "originals/offset-docks-ukraine.png",
           "sha256": "697a6980465d20d93c6b5e51a38eb05855910d019b6d4a1ab8ce88081b5ba195",
-          "title": "The Boatbuilders\u2019 Morning",
+          "title": "The Boatbuilders’ Morning",
           "description": "A sheltered wooden boat, whitewashed workshop and two opposing landing yards frame a misty river at dawn."
         },
         {
@@ -69,7 +69,7 @@
       "themeId": "retro",
       "id": "countercurrent-retro",
       "artRoot": "authoring/library/countercurrent-art",
-      "provenanceSha256": "72137c0459d22aa1adc5acc53cb3ac95ca526d26fc53e76deca53552f107c435",
+      "provenanceSha256": "9aef6fc68783f8fa46f65916ccee492c255cef03bff1c3d3df636cc1522a9f98",
       "images": [
         {
           "sourceCellId": "countercurrent/offset-docks/retro",
@@ -94,38 +94,6 @@
           "sha256": "498dca62d17a4e59c486bbea7a023b9e8aa11cf69cba169092a4671d0fde8e99",
           "title": "After-Hours Rooftop Exchange",
           "description": "A square upper-left creative club and a long lower-right repair studio overlook roof gardens and a coral city sunset."
-        }
-      ]
-    },
-    {
-      "themeId": "coupa",
-      "id": "countercurrent-coupa",
-      "artRoot": "authoring/library/countercurrent-art",
-      "provenanceSha256": "72137c0459d22aa1adc5acc53cb3ac95ca526d26fc53e76deca53552f107c435",
-      "images": [
-        {
-          "sourceCellId": "countercurrent/offset-docks/coupa",
-          "sourceLevelId": "countercurrent-offset-docks",
-          "path": "originals/offset-docks-coupa.png",
-          "sha256": "87b28d2fec477a7572f10c83e9ec6e2ed7ef3386818f21d651e1d1897df30997",
-          "title": "The Shared Receiving Courts",
-          "description": "Two open supply and repair courts face a broad wet delivery lane, with a small cart, crates and bicycle repair."
-        },
-        {
-          "sourceCellId": "countercurrent/sandbar-braid/coupa",
-          "sourceLevelId": "countercurrent-sandbar-braid",
-          "path": "originals/sandbar-braid-coupa.png",
-          "sha256": "ea643aa1735edba5f5ba8c6ca0cb3ee3d671cb37534a06966e505f42d938fe14",
-          "title": "Four Workshops, One Garden",
-          "description": "Four staggered greenhouse and workshop bands step across a rain garden at warm dusk."
-        },
-        {
-          "sourceCellId": "countercurrent/crossing-watch/coupa",
-          "sourceLevelId": "countercurrent-crossing-watch",
-          "path": "originals/crossing-watch-coupa.png",
-          "sha256": "1615b543d0fd311343d586fb70c877b22f9399c12dae7342101a491f6ae6f5e5",
-          "title": "The Two Caretaker Houses",
-          "description": "A compact material-library pavilion faces an elongated repair hall across a dark garden at blue hour."
         }
       ]
     }

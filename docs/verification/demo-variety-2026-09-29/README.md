@@ -1,3 +1,5 @@
+> Retained historical excerpt after an ownership migration. Exact original bytes are preserved separately. Original totals and verification statements describe the original scope; this excerpt is not a current qualification or a complete test result.
+
 # Demo viewing variety — 29 September 2026
 
 This optional expansion follows baseline `78831c543c530c9209d808998f995c897642d059` on held draft PR #781. It adds four authored recordings to the existing six, giving **ten scenes across eight unchanged base-campaign maps**, with **398.300 seconds** of recorded gameplay. The two existing live-bot maps remain separately qualified; no bot scope, physics, progression, picture-access policy or replay tolerance changed.
@@ -28,7 +30,6 @@ Pointer activation in this browser review did not reliably activate the requeste
 
 ## Scope and remaining limits
 
-The ordinary main game includes these base/Legacy owners in its installed execution catalogue. These recordings are not retagged as the current Journey missions, and are not admitted to DroneAid or Coupa editions. Exact campaign, level revision, map and equipment fingerprints remain mandatory. Broader Journey, tactical-equipment and company-specific scenes need their own freshly authored compatible traces. Historical R5 Night Crossfire proof inputs lose a life under current Standard tuning and were rejected rather than shipped; the live bot remains limited to Orchard Crossing and Courtyard Exits.
 
 Edition build resources now derive their bounded local replay paths from the validated catalogue instead of a hardcoded list. This keeps future additions present in offline/native source inventories. Packaging still includes the existing generic catalogue as shared runtime data; this change adds no private company content.
 

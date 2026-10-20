@@ -27,7 +27,7 @@ function memory() {
 }
 test('optional installations preserve previous versions and isolate stable roots without touching Journey', () => {
   const storage = memory();
-  storage.setItem('journey-coupa', 'untouched');
+  storage.setItem('journey-sample', 'untouched');
   recordOptionalInstallation({ packageId, storage, location: locationFor('v1.2.2') });
   recordOptionalInstallation({ packageId, storage, location: locationFor('v1.2.3') });
   const state = JSON.parse(storage.getItem(optionalInstallationKey(packageId, root)));
@@ -48,7 +48,7 @@ test('optional installations preserve previous versions and isolate stable roots
     JSON.parse(storage.getItem(optionalInstallationKey(packageId, otherRoot))).active.version,
     'v1.3.0',
   );
-  assert.equal(storage.getItem('journey-coupa'), 'untouched');
+  assert.equal(storage.getItem('journey-sample'), 'untouched');
   assert.equal(
     recordOptionalInstallation({
       packageId,

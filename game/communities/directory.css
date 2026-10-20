@@ -86,9 +86,6 @@
     --accent: #ffdb63;
     grid-column: 1 / -1;
   }
-  .community-card--coupa {
-    --accent: #79cfff;
-  }
   .card-identity {
     display: flex;
     align-items: center;

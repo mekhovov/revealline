@@ -1,5 +1,7 @@
 # Round 07 — compact scale, layered motion and three terrain treatments
 
+> Retained excerpt after an ownership migration. Historical totals and verification statements describe the original scope; this excerpt is not a current release qualification. Original bytes and removed material are preserved separately.
+
 12 September 2026. Keep both approved visual approaches and make **hybrid the default**: compact repeated pixels communicate routes and danger; a smaller number of detailed objects supplies identity. XPOSED RELOADED remains the principal interaction reference. This round adds an isolated [motion lab](../authoring/motion-lab/README.md), a new FPV body concept, a terrain comparison, animation authoring guidance and further direct video evidence. It does not implement the territory game or finish every theme's production animation.
 
 ## One board, three appearances
@@ -28,9 +30,7 @@ Movement should respond immediately to directional input. The body can turn or b
 
 Use the same presentation interface across themes, with different component recipes. Separately replace body, moving attachments, shadow, wake, active cut, frontier, capture effect, damage/respawn effect, terrain material, UI transition and sound cue. Some components are images or frame sequences; others are small parameterized drawing/effect recipes. They need stable roles, anchors, draw order and explicit state dependencies.
 
-| Component | FPV FRONT | UKRAINE ATLAS | 1994 FOREVER | NAVI NETWORK |
 |---|---|---|---|---|
-| Player identity | Compact quadcopter | Swallow, embroidered shuttle or another chosen cultural character | Small arcade craft or cursor-like ship | Approved Navi character or Coupa mark |
 | Motion response | Motor spin, restrained banking, short dust or signal wake | Wing cycle or shuttle tilt, thread or petal wake | Thruster flicker, directional pose, pixel exhaust | Directional pose, restrained expression and data ribbon |
 | Moving threats | Unmarked fictional invading military actors with distinct movement silhouettes | Storm, thorn or folklore roles appropriate to the chapter | Sparks, sentries and circuit creatures | Fictional cost leaks, duplicate invoices and risk actors |
 | Terrain life | Small warning lights, interference rhythm, restrained environmental movement | Reeds, woven highlights, water or wind | Machinery lights, plasma cycle, static | Queue indicators, ledger pulses, alert signs |

@@ -34,24 +34,24 @@ const decodeImage = async (url) => decodeOriginalPNG(url);
 for (const pack of source.packs)
   preparedPacks.push((await preparePack(pack, { decodeImage })).pack);
 
-test('four optional theme chapters compile all twelve exact originals with distinct contexts and unchanged gameplay', async () => {
+test('three retained theme chapters compile all nine exact originals with distinct contexts and unchanged gameplay', async () => {
   await buildOriginalChapters();
   const distribution = JSON.parse(
     await readFile(path.join(ROOT, CHAPTER_ROOT, 'distribution.json'), 'utf8'),
   );
   assert.deepEqual(distribution, distributionFor(source));
-  assert.equal(distribution.combinedLibraryBytes, 44439900);
-  assert.equal(distribution.distinctImages, 12);
+  assert.equal(distribution.combinedLibraryBytes, 33381550);
+  assert.equal(distribution.distinctImages, 9);
   assert.equal(distribution.distinctReusedGeometries, 3);
   assert.equal(
     new Set(
       source.packs.map((p) => campaignKey({ ...p.campaigns[0], classRecipes: p.classRecipes })),
     ).size,
-    4,
+    3,
   );
   assert.deepEqual(
     source.packs.map((p) => p.themes[0].id),
-    ['fpv', 'ukraine', 'retro', 'coupa'],
+    ['fpv', 'ukraine', 'retro'],
   );
   assert.equal(source.recipe.chapters[1].sourceTheme, 'heritage');
   const used = new Set();
@@ -94,10 +94,10 @@ test('four optional theme chapters compile all twelve exact originals with disti
       assert.equal(id, original.levelVisuals[i].levelId);
     }
   }
-  assert.equal(used.size, 12);
+  assert.equal(used.size, 9);
 });
 
-test('all four original packs fit the existing installed limit; an extra illustrated edition refuses without eviction', async () => {
+test('retained packs and one extra edition fit; over-budget imports refuse before decoding', async () => {
   const bytes = JSON.stringify({ format: 'xonix-pack-library.v1', packs: preparedPacks });
   assert.equal(PACK_LIMITS.maxBytes, 24 * 1024 * 1024);
   assert.equal(PACK_LIMITS.libraryBytes, 48 * 1024 * 1024);
@@ -113,14 +113,17 @@ test('all four original packs fit the existing installed limit; an extra illustr
       decodeImage: async () => ({ naturalWidth: 1774, naturalHeight: 887 }),
     })
   ).pack;
-  assert.throws(() => installPack(installed, old), /byte budget/);
+  assert.equal(installPack(installed, old).packs.length, 4);
   assert.equal(exportPackLibrary(installed), bytes);
   const explicitRemoval = removePack(installed, 'original-ukraine-atlas');
   const added = installPack(explicitRemoval, old);
-  assert.equal(added.packs.length, 4);
+  assert.equal(added.packs.length, 3);
   assert.ok(added.packs.some((p) => p.id === old.id));
   let decoded = 0;
-  const over = JSON.stringify({ format: 'xonix-pack-library.v1', packs: [...preparedPacks, old] });
+  const over = JSON.stringify({
+    format: 'xonix-pack-library.v1',
+    packs: [...preparedPacks, old, { ...source.packs[0], id: 'capacity-overflow' }],
+  });
   await assert.rejects(
     importPackLibrary(over, {
       decodeImage: async () => {
@@ -134,7 +137,7 @@ test('all four original packs fit the existing installed limit; an extra illustr
   assert.equal(exportPackLibrary(installed), bytes);
 });
 
-test('optional pack files and raw originals stay outside every default build and index', async () => {
+test('optional packs stay outside default indexes while explicit shared scenery metadata is published', async () => {
   const config = await readBuildConfig(ROOT),
     files = await collectBuildFiles(ROOT, config);
   const indexes = await Promise.all(
@@ -149,29 +152,29 @@ test('optional pack files and raw originals stay outside every default build and
       false,
     );
   }
-  assert.equal(
-    files.some((file) => file.startsWith(`${CHAPTER_ROOT}/`)),
-    false,
+  assert.deepEqual(
+    files.filter((file) => file.startsWith(`${CHAPTER_ROOT}/`)),
+    [`${CHAPTER_ROOT}/distribution.json`],
   );
   for (const image of source.images.values())
-    assert.equal(files.includes(image.record.source), false);
+    assert.equal(files.includes(image.record.source), true);
   assert.equal(
     config.optionalOffline.length,
-    6,
-    'Arcade R5 joins the existing optional editions within the unchanged offline budget.',
+    9,
+    'All retained optional editions remain explicitly declared within the offline budget.',
   );
 });
 
-test('48 fresh wins resolve actual compiled art and verify pressure-phase save/restore in both difficulties and steering policies', async () => {
+test('36 fresh wins resolve actual compiled art and verify pressure-phase save/restore in both difficulties and steering policies', async () => {
   const result = await verifyFourWorlds();
-  assert.equal(result.routes.length, 48);
-  assert.equal(result.imageFacts.length, 12);
+  assert.equal(result.routes.length, 36);
+  assert.equal(result.imageFacts.length, 9);
   assert.equal(
     new Set(result.routes.map((r) => `${r.packId}/${r.difficulty}/${r.levelId}/${r.turnPolicy}`))
       .size,
-    48,
+    36,
   );
-  assert.equal(new Set(result.imageFacts.map((r) => r.sha256)).size, 12);
+  assert.equal(new Set(result.imageFacts.map((r) => r.sha256)).size, 9);
   for (const route of result.routes) {
     assert.equal(route.status, 'won');
     assert.equal(route.livesLost, 0);

@@ -1,5 +1,7 @@
 # Round 21 — Sentinel Relay, a playable two-stage reveal encounter
 
+> Retained excerpt after an ownership migration. Historical totals and verification statements describe the original scope; this excerpt is not a current release qualification. Original bytes and removed material are preserved separately.
+
 Prepared 12 September 2026 against the source following the Round 20 chapter-reward work. **Accepted implementation plan.** The new versioned core, pack, portable consumers and editor are implemented in the working source; browser and release checks remain in progress. The preserved v0.10.0 release passed 1,128 source tests. New verification is recorded separately and does not overwrite its evidence.
 
 This increment adds one independently selectable **Sentinel Relay** encounter. Capture a shield relay, then finish a sufficiently long cut during a repeating core opening. That successful cut releases the last field seed and reveals the remaining picture. If earlier captures leave too little field for that route, isolating the core provides an explicit alternate finish. Keep seven classes, both steering policies and the existing movement controls. The encounter is fictional equipment; Ukrainian FPV is its first presentation, with identical mechanics available to the other themes.
@@ -102,7 +104,6 @@ Reuse procedural theme primitives and existing licensed/original backgrounds for
 | Ukrainian FPV             | Fictional signal sentinel; closed shield segments become an open beacon ring. Ukrainian palette/ornament remains decoration. | Equipment powers down with sparse sparks/smoke; the homeward scene becomes clear. No depiction of harm to people. |
 | Ukrainian heritage        | Knotted rosette opens into a geometric flower.                                                                               | Existing stitch-bloom finale reveals the artwork.                                                                 |
 | 1980s–1990s arcade        | Closed neon brackets open into a central diamond.                                                                            | Existing neon finale and original arcade music cadence.                                                           |
-| Business / Coupa-inspired | A fictional blocked network node opens its connections.                                                                      | Existing savings-node finale; no claim of real measured savings or official product identity.                     |
 
 Warning uses outlined/hatch-marked boundaries; active uses a solid bounded stripe; open uses separated core segments and a stable `Core open` label. Color reinforces these differences. A shrinking opening meter is supplemental, with remaining time rounded for display only. Change announcements occur once per phase, not every animation frame; keep full instructions reviewable when paused.
 

@@ -1,3 +1,5 @@
+# Retained historical excerpt after an ownership migration. Exact original bytes are preserved separately. Original totals and verification statements describe the original scope; this excerpt is not a current qualification or a complete test result.
+
 TAP version 13
 # Subtest: artwork update offers explicit exact-snapshot recovery and Continue retains the original save
     # Subtest: save the earlier presentation
@@ -136,82 +138,6 @@ ok 16 - edition controller practice reconstructs only its selected mission witho
 ok 17 - official DroneAid wordmark belongs only to the aggregate landing and keeps a text fallback
   ---
   duration_ms: 8505.026417
-  ...
-# Subtest: every declared edition boots and starts through the canonical Solo host
-    # Subtest: coupa-all
-    ok 1 - coupa-all
-      ---
-      duration_ms: 2989.286
-      ...
-    # Subtest: coupa-adventure
-    ok 2 - coupa-adventure
-      ---
-      duration_ms: 1671.617708
-      ...
-    # Subtest: coupa-culture
-    ok 3 - coupa-culture
-      ---
-      duration_ms: 1835.080791
-      ...
-    # Subtest: coupa-foundations
-    ok 4 - coupa-foundations
-      ---
-      duration_ms: 1751.152625
-      ...
-    # Subtest: coupa-operations
-    ok 5 - coupa-operations
-      ---
-      duration_ms: 1978.602333
-      ...
-    # Subtest: coupa-developers
-    ok 6 - coupa-developers
-      ---
-      duration_ms: 2218.239958
-      ...
-    # Subtest: droneaid-community
-    ok 7 - droneaid-community
-      ---
-      duration_ms: 1238.611125
-      ...
-    # Subtest: droneaid-nl-community
-    ok 8 - droneaid-nl-community
-      ---
-      duration_ms: 2904.593792
-      ...
-    # Subtest: droneaid-nl-workshop-lights
-    ok 9 - droneaid-nl-workshop-lights
-      ---
-      duration_ms: 1400.51125
-      ...
-    # Subtest: droneaid-nl-parts-in-motion
-    ok 10 - droneaid-nl-parts-in-motion
-      ---
-      duration_ms: 1394.863084
-      ...
-    # Subtest: droneaid-nl-makers-together
-    ok 11 - droneaid-nl-makers-together
-      ---
-      duration_ms: 1478.130375
-      ...
-    # Subtest: droneaid-nl-careful-handoff
-    ok 12 - droneaid-nl-careful-handoff
-      ---
-      duration_ms: 2027.14375
-      ...
-    # Subtest: droneaid-nl-signals-of-support
-    ok 13 - droneaid-nl-signals-of-support
-      ---
-      duration_ms: 1549.035542
-      ...
-    # Subtest: droneaid-nl-shared-horizon
-    ok 14 - droneaid-nl-shared-horizon
-      ---
-      duration_ms: 1665.846625
-      ...
-    1..14
-ok 18 - every declared edition boots and starts through the canonical Solo host
-  ---
-  duration_ms: 26105.104916
   ...
 # Subtest: same-origin installed creator campaign cannot inject missions into a selected edition
 ok 19 - same-origin installed creator campaign cannot inject missions into a selected edition

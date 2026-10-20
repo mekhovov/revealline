@@ -1,5 +1,7 @@
 # Round 09 — Ukrainian and Russian drone references for an original arcade game
 
+> Retained excerpt after an ownership migration. Historical totals and verification statements describe the original scope; this excerpt is not a current release qualification. Original bytes and removed material are preserved separately.
+
 Research accessed **12 September 2026**. This is a curated inventory of **33 records: 32 named platform/model references and one linked modification**, not an exhaustive inventory or a claim to have inspected every photograph or video. The [machine-readable catalog](../../authoring/catalogs/round-09-drone-references.json) supplies a source claim, evidence category, access date, operator qualification and caveat for every record. All records are `reference-only`; none registers a gameplay class.
 
 The useful design result is a **composable fleet**, rather than one aircraft per mechanic: an airframe silhouette, a role module, a communication presentation, a fictional ruleset and a theme can vary independently. Public equipment names identify research references; production game art and behavior remain original. No real operational performance is used to tune the game.
@@ -75,9 +77,7 @@ The right column is **fictional arcade design**, not a description of real weapo
 | Communication presentation | Ordinary indicator, filament indicator, fictional relay badge | Fiber belongs here; do not label an aircraft immune to game hazards because of a real link claim. |
 | Arcade action | Preview art, carry/drop, pulse, temporarily pause one hazard, checkpoint dash | Define effects in tiles/ticks and version the ruleset independently. |
 | Movement policy | Immediate turn or grid-center buffered turn | Existing selected policy remains authoritative; body art must not add steering lag. |
-| Theme | Ukrainian defense, Ukrainian cultural atlas, retro cabinet, Spend Sprite business | The same action can use an original drone, bird, spacecraft or helper. |
 
-For example, **carry/drop** can move an aid capsule in the defense theme, a museum fragment in the Ukrainian atlas, a glowing cartridge in the retro theme and a savings token in the business theme. **Scan** can preview a route, illuminate embroidery, reveal an arcade bonus or identify a fictional spend anomaly. **Net** can become a woven lattice, pixel cage or workflow hold. These are original game metaphors; this research creates no claims about Coupa product functionality.
 
 A compact tile mode needs a readable center, four or six clear anchor dots and one role symbol. A detailed prop mode may add body supports, cameras and attachments. A hybrid mode should preserve the compact center and action cue while drawing larger art above it. Cargo, rotors, wings and trails must never silently move or resize the logical collision footprint. For large screens, the inspection view can explain the full original body; for small screens, action readability takes priority over resemblance. These are recommendations for review, not newly implemented rendering guarantees.
 

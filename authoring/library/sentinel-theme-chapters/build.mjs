@@ -26,20 +26,20 @@ import {
   boundedFile,
 } from '../sentinel-circuit-external/build.mjs';
 export { ROOT, SOURCE_LEVEL_IDS, SOURCE_PACK_SHA, SOURCE_PROOF, SOURCE_PROOF_SHA, boundedFile };
-export const THEME_IDS = Object.freeze(['ukraine', 'retro', 'coupa']);
+export const THEME_IDS = Object.freeze(['ukraine', 'retro']);
 export const EDITIONS_FILE = 'authoring/library/sentinel-theme-chapters/editions.json';
 const ART = 'authoring/library/sentinel-theme-art';
 const IMAGES = ['listening-court', 'switchyard-gates', 'open-the-circuit'];
 const INPUTS = Object.freeze({
   'authoring/library/sentinel-circuit/build.mjs':
-    'e76f204cbe240bdedac79f2d92c85ab767846be32cfae50cd76ef983340c4d41',
+    '8d5a8751cc814a4eafef80fdc6cdcefc7770aa69f23ab7cc48121d7ff66fa485',
   'authoring/library/sentinel-circuit-external/build.mjs':
-    'ee481bcaef80d86778fdda295f8660d0bfa2d6e0950bd24fddc59e051d463e88',
+    '06bca8ebd9572d52671a336c02db986f5a50dae266ad5b5bff4097ca5f319cfb',
   'authoring/library/sentinel-circuit/routes.json':
     'eb235f9bc26ea3670137f3f7d7ac86ac5e8c4b56b98502b8ef61f0ad98d95e70',
-  'game/content/themes.json': '93582f7d9ba53753106df7b63928f086820fc0f68357d3c08f26c0b89fb84774',
+  'game/content/themes.json': '77f3e7e8f0951172bd0c11649b0203808b3d1b00ca434c2a576ef631899958b2',
   'authoring/library/sentinel-theme-art/provenance.json':
-    '48cfad28a7454317d4f16dbdbd0c593ee6ad0bf5aa2a94152a7f27be9ef5e948',
+    '608a9041891ec2cf0eda3c3c285ac9c550490148e19fc0a6077f5289534fe9eb',
 });
 export const physicalLevel = (level) => {
   const copy = structuredClone(level);
@@ -61,7 +61,7 @@ export function validateSentinelThemeEditions(value, provenance) {
   assert.equal(doc.artRoot, ART);
   assert.equal(doc.provenanceSha256, INPUTS[`${ART}/provenance.json`]);
   assert.equal(provenance.format, 'revealline-source-art-provenance.v1');
-  assert.equal(provenance.images.length, 9);
+  assert.equal(provenance.images.length, THEME_IDS.length * 3);
   assert.deepEqual(
     doc.editions.map((e) => e.themeId),
     THEME_IDS,
@@ -100,7 +100,7 @@ export function validateSentinelThemeEditions(value, provenance) {
   return doc;
 }
 export async function buildSentinelTheme(themeId) {
-  assert.ok(THEME_IDS.includes(themeId), 'Choose ukraine, retro or coupa.');
+  assert.ok(THEME_IDS.includes(themeId), 'Choose ukraine or retro.');
 
   const inputPins = [];
   for (const [file, hash] of Object.entries(INPUTS)) {

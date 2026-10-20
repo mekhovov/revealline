@@ -131,46 +131,6 @@
         "impact": "retro-craft",
         "trapper": "retro-craft"
       }
-    },
-    {
-      "id": "coupa",
-      "name": "Spend Network",
-      "subtitle": "A clearer picture of spend",
-      "family": "navi",
-      "player": "navi-avatar",
-      "enemyShape": "cube",
-      "patrolShape": "spark",
-      "bossShape": "core",
-      "scene": "network",
-      "labels": {
-        "objective": "Opportunity",
-        "supply": "Sync point",
-        "enemy": "Exception",
-        "boss": "Complexity hub",
-        "currency": "Insight",
-        "ability": "AI assist"
-      },
-      "palette": {
-        "ink": "#173747",
-        "paper": "#edf2ed",
-        "muted": "#85a8b6",
-        "accent": "#e2c775",
-        "safe": "#87cbe0",
-        "danger": "#e69477",
-        "field": "#112b3e",
-        "grid": "#1e3d51",
-        "sky": "#bbdadd",
-        "land": "#689bb1"
-      },
-      "classBodies": {
-        "scout": "navi-avatar",
-        "bomber": "navi-avatar",
-        "carrier": "navi-avatar",
-        "interceptor": "navi-avatar",
-        "fiber": "navi-avatar",
-        "impact": "navi-avatar",
-        "trapper": "navi-avatar"
-      }
     }
   ],
   "classRecipes": [
@@ -271,19 +231,56 @@
           "name": "Sentinel Relay",
           "width": 48,
           "height": 36,
-          "spawn": { "x": 0.5, "y": 18.5 },
-          "goal": { "coverage": 0.75 },
+          "spawn": {
+            "x": 0.5,
+            "y": 18.5
+          },
+          "goal": {
+            "coverage": 0.75
+          },
           "walls": [],
           "enemies": [
-            { "id": "sentinel", "type": "relay-sentinel", "x": 34.5, "y": 18.5, "radius": 0.25 }
+            {
+              "id": "sentinel",
+              "type": "relay-sentinel",
+              "x": 34.5,
+              "y": 18.5,
+              "radius": 0.25
+            }
           ],
           "objectives": [
-            { "id": "shield-relay", "x": 8.5, "y": 8.5, "required": true, "hidden": false },
-            { "id": "sentinel-core", "x": 34.5, "y": 18.5, "required": true, "hidden": false }
+            {
+              "id": "shield-relay",
+              "x": 8.5,
+              "y": 8.5,
+              "required": true,
+              "hidden": false
+            },
+            {
+              "id": "sentinel-core",
+              "x": 34.5,
+              "y": 18.5,
+              "required": true,
+              "hidden": false
+            }
           ],
-          "supplies": [{ "id": "home-supply", "x": 0.5, "y": 18.5, "radius": 2 }],
+          "supplies": [
+            {
+              "id": "home-supply",
+              "x": 0.5,
+              "y": 18.5,
+              "radius": 2
+            }
+          ],
           "signalZones": [],
-          "hangars": [{ "id": "home-hangar", "x": 0.5, "y": 18.5, "radius": 2 }],
+          "hangars": [
+            {
+              "id": "home-hangar",
+              "x": 0.5,
+              "y": 18.5,
+              "radius": 2
+            }
+          ],
           "rules": {
             "lives": 3,
             "moveSpeed": 8,
@@ -307,8 +304,16 @@
             "minReleaseCutCells": 8,
             "initialDelayTicks": 240,
             "transitionTicks": 180,
-            "shielded": { "warningTicks": 240, "activeTicks": 84, "restTicks": 396 },
-            "exposed": { "warningTicks": 240, "activeTicks": 84, "openTicks": 480 },
+            "shielded": {
+              "warningTicks": 240,
+              "activeTicks": 84,
+              "restTicks": 396
+            },
+            "exposed": {
+              "warningTicks": 240,
+              "activeTicks": 84,
+              "openTicks": 480
+            },
             "laneWidth": 1.2
           },
           "metadata": {

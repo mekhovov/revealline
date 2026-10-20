@@ -88,7 +88,7 @@ See [GitHub's hosting definition](https://docs.github.com/en/pages/getting-start
 | Actual browser journey   | Password access is resolved. Paired intake, video-only poster capture, ordinary Solo completion, Replay/Skip, earned-poster reload and actual pack transfer/unfinished recovery passed in the built-in browser. Physical audio and a clean physical profile remain unverified.                                                    |
 
 The focused video/intake/access-entry cohort passed **44/44**. The broad run exposed obsolete
-fixture assumptions, a missing authoring dependency and changed document hashes. Two Coupa
+fixture assumptions, a missing authoring dependency and changed document hashes. Two community
 picture-preparation cases also failed during that run, then passed without increased timeouts.
 After the repairs, all eight affected files passed together: **138/138** at concurrency two.
 The final guide-integrity rerun passed **31/31** after the documentation update. Full

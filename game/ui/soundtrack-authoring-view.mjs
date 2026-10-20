@@ -111,11 +111,9 @@ export function createSoundtrackAuthoringView({
     min: '1',
     max: '5',
   });
-  const trackThemes = input(
-    'track-themes',
-    localizedMessage('interface:worldsCommaSeparatedRetroFpvUkraineCoupa'),
-    { maxlength: '160' },
-  );
+  const trackThemes = input('track-themes', localizedMessage('interface:worldIdsCommaSeparated'), {
+    maxlength: '160',
+  });
   const tagFields = section(
     t('interface:musicalCharacter'),
     trackGenre.field,

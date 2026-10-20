@@ -2,7 +2,8 @@
   "catalogueAuthority": {
     "path": "offline-content.json",
     "bytes": 6188682,
-    "sha256": "b0a1f1c2df1b3f372090aa108f6c4caad5f5301fc024a0ae53a6e15ceb68e321"
+    "sha256": "b0a1f1c2df1b3f372090aa108f6c4caad5f5301fc024a0ae53a6e15ceb68e321",
+    "scope": "Historical source of this bounded test fixture. Retired catalogue members are omitted; this fixture is not the complete original catalogue and does not reproduce its transport hash."
   },
   "core": {
     "files": [
@@ -85,7 +86,6 @@
           "authoring/library/neon-artwork/backgrounds/chambers.jpg",
           "authoring/library/neon-artwork/backgrounds/channels.jpg",
           "authoring/library/neon-artwork/backgrounds/conduit.jpg",
-          "authoring/library/neon-artwork/backgrounds/coupa.jpg",
           "authoring/library/neon-artwork/backgrounds/crossfire.jpg",
           "authoring/library/neon-artwork/backgrounds/crossgrid.jpg",
           "authoring/library/neon-artwork/backgrounds/crossroads.jpg",
@@ -143,8 +143,6 @@
           "authoring/library/neon-mosaic/berehynia/scenario.json",
           "authoring/library/neon-mosaic/bezkonechnyk/preview.svg",
           "authoring/library/neon-mosaic/bezkonechnyk/scenario.json",
-          "authoring/library/neon-mosaic/coupa/preview.svg",
-          "authoring/library/neon-mosaic/coupa/scenario.json",
           "authoring/library/neon-mosaic/deer/preview.svg",
           "authoring/library/neon-mosaic/deer/scenario.json",
           "authoring/library/neon-mosaic/designs.json",
@@ -223,7 +221,6 @@
           "authoring/motion-lab/assets/fpv-night.png",
           "authoring/motion-lab/assets/fpv-racer.png",
           "authoring/motion-lab/assets/heavy-lift.png",
-          "authoring/motion-lab/assets/navi-avatar.png",
           "authoring/motion-lab/assets/retro-craft.png",
           "authoring/motion-lab/assets/scout-quad.png",
           "authoring/motion-lab/assets/ukrainian-bird.png",
@@ -621,12 +618,6 @@
         "kind": "gameplay"
       },
       {
-        "path": "authoring/library/neon-artwork/backgrounds/coupa.jpg",
-        "bytes": 315948,
-        "sha256": "e1d6aea7e2c9d2ffeb1f48e79ab82a901a981963851ed6ae381757d3fd7bf98d",
-        "kind": "gameplay"
-      },
-      {
         "path": "authoring/library/neon-artwork/backgrounds/crossfire.jpg",
         "bytes": 321291,
         "sha256": "ddc978126e0df0dd503f90fea0dc2e157ef17ee183cc0a0931956e6536fd789d",
@@ -966,18 +957,6 @@
         "path": "authoring/library/neon-mosaic/bezkonechnyk/scenario.json",
         "bytes": 366239,
         "sha256": "074d1cd0d76399454f3005c70440360ed3154c9d213062204010de5a749ae1b5",
-        "kind": "gameplay"
-      },
-      {
-        "path": "authoring/library/neon-mosaic/coupa/preview.svg",
-        "bytes": 5038,
-        "sha256": "6a0228ff94bd2e6c9d898faeec6c27d272bc82b99dc4e9a8fa4b52fd7b7c7b8b",
-        "kind": "gameplay"
-      },
-      {
-        "path": "authoring/library/neon-mosaic/coupa/scenario.json",
-        "bytes": 435057,
-        "sha256": "e182d14f626e4a27466595e78d868e31fa9acd471b0de7113e674baecf8e50f4",
         "kind": "gameplay"
       },
       {
@@ -1446,12 +1425,6 @@
         "path": "authoring/motion-lab/assets/heavy-lift.png",
         "bytes": 795459,
         "sha256": "2e1b871f2336fe2dc6434ed83afb46572f5afffd17803733914a567d39c517ec",
-        "kind": "gameplay"
-      },
-      {
-        "path": "authoring/motion-lab/assets/navi-avatar.png",
-        "bytes": 384917,
-        "sha256": "3bc265ce6af451a76bc9ab2e9c5c8991c69e43d3d57efbc47c0dea2728e9ff69",
         "kind": "gameplay"
       },
       {

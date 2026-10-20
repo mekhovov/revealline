@@ -113,7 +113,7 @@
       "path": "game/ui/event-feedback.mjs",
       "priorSHA256": "549eed24bb124214635514c96df9365147e129f2a36ae62ee730ecd954260e01",
       "currentSHA256": "e4d87d5b087b6b56351e583c1569f829363b162a0041d5fef5319870c83842bc",
-      "assessment": "Resolves the cosmetic feedback family from an explicit semantic family before consulting the unique theme ID. FPV-family editions reuse the existing FPV failure branch and label; Ukrainian/Atlas and Coupa/Navi mappings preserve their existing branches. Event lifetime, position, age, reduced-effects bounds and state inputs are unchanged."
+      "assessment": "Resolves the cosmetic feedback family from an explicit semantic family before consulting the unique theme ID. FPV-family editions reuse the existing FPV failure branch and label; Ukrainian/Atlas mappings preserve their existing branch. Event lifetime, position, age, reduced-effects bounds and state inputs are unchanged."
     },
     {
       "path": "game/ui/render.mjs",

@@ -1,20 +1,15 @@
 # Company edition phase status — 28 September 2026
 
-This record separates shipped source, candidate evidence and public company-edition promotion.
-The default Reveal Line v0.141.7 release is public. Its main source contains the Coupa and
-DroneAid framework and campaigns, but `publishing/pages-controller/editions.json` still has an
-empty release list. No standalone company edition is therefore claimed as publicly selected.
+> Retained excerpt after an ownership migration. Historical totals and verification statements describe the original scope; this excerpt is not a current release qualification. Original bytes and removed material are preserved separately.
+
 
 ## Completed phases
 
 | Phase                   | Result                                                                                                                                                                                                                      |
 | ----------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | 1. Framework foundation | Brand/edition registries, player projections, runtime catalogues, exclusion reports and fixture editions are on main.                                                                                                       |
-| 2. Coupa vertical slice | The official flower presentation, whole-game Coupa UX, reduced motion and the first complete mission are on main.                                                                                                           |
 | 3. Independent editions | Fourteen independently scoped PWA candidates compile reproducibly with stable identities, scoped workers and edition-aware persistence. Automated coexistence, interruption and rollback models pass.                       |
 | 4. Release admission    | Additive edition envelopes, source eligibility, original ZIP-member validation and immutable candidate CI are on main.                                                                                                      |
-| 5. Learning and reuse   | Twenty-four optional Coupa activities and the DroneAid Netherlands proof campaigns use shared engine mechanics and data-driven presentation. The user reported formative playtesting complete.                              |
-| 6. Content expansion    | Thirty Coupa and thirty-six current DroneAid Netherlands missions have distinct maps and raster pictures; three Portuguese historical missions remain separate. All 414 route fixtures retain legal deterministic outcomes. |
 
 PR #615 was merged through cumulative integration commit `b0d0a819c1` and is an ancestor of
 main. Main `6fe52474b5b395a5c416bd388555d488db33f287`, tree
@@ -53,7 +48,6 @@ This evidence establishes candidate integrity. The candidate remains `publicElig
    make desktop observations identify opening play, advanced encounters, picture reveals and
    edition-switch sequences. This changes review tooling and documentation only, so it does not
    allocate a product version or enter the serialized freeze lane.
-2. **Human and device evidence — explicitly deferred.** Record final Coupa/DroneAid asset and
    content approval, actual assistive-technology/input results, and two OS-installed PWAs
    exercising offline launch, update, rollback, storage failure and backup transfer when this work
    resumes. Evidence must name the exact artifact. The bounded qualification recorder binds every
@@ -61,9 +55,6 @@ This evidence establishes candidate integrity. The candidate remains `publicElig
    environment and required scenarios; missing or failed observations remain non-promotable.
    Meanwhile, the review compiler can be completed and tested without creating a passing review.
 3. **Primary company promotion.** After every required gate passes, allocate one release root and
-   freeze the exact source once. Upload all qualified edition archives, but initially select only
-   `coupa-all` and `droneaid-nl-community` for Pages. Measure the complete hosted output against
-   the 950,000,000-byte operational cap before changing the selector.
 4. **Audience rollout.** Add the twelve campaign-specific editions through bounded selector-only
    maintenance batches, reusing the same immutable release assets. Admit each batch only when the
    assembled Pages total remains within the cap. A selector batch does not rebuild gameplay.

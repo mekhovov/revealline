@@ -43,19 +43,6 @@
       "width": 1774,
       "height": 887,
       "runtimeAdopted": false
-    },
-    {
-      "id": "spend-sunroof-market-house",
-      "themeId": "coupa",
-      "theme": "Spend Network",
-      "title": "Sunroof Market House",
-      "prompt": "prompts/spend-sunroof-market-house.txt",
-      "file": "originals/spend-sunroof-market-house.png",
-      "bytes": 2006763,
-      "sha256": "d0328adc0ce24e22afbcaf67e09d93c0eb03e7a805d30890532284ecc0a1f24c",
-      "width": 1774,
-      "height": 887,
-      "runtimeAdopted": false
     }
   ],
   "selectionProvenance": "provenance/originals.json"

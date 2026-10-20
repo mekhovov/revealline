@@ -4,12 +4,12 @@
     {
       "id": "fpv-arcade-r5",
       "path": "fpv-arcade-r5.json",
-      "name": "FPV Front \u00b7 Pressure Lines",
+      "name": "FPV Front · Pressure Lines",
       "campaigns": [
         {
           "id": "fpv-pressure-lines",
           "revision": "1",
-          "title": "FPV Front \u00b7 Pressure Lines",
+          "title": "FPV Front · Pressure Lines",
           "levels": [
             {
               "id": "orchard-crossing",
@@ -30,12 +30,12 @@
     {
       "id": "fpv-pressure-frontier",
       "path": "fpv-pressure-frontier.json",
-      "name": "FPV Front \u00b7 Frontier Lines",
+      "name": "FPV Front · Frontier Lines",
       "campaigns": [
         {
           "id": "fpv-pressure-frontier",
           "revision": "1",
-          "title": "FPV Front \u00b7 Frontier Lines",
+          "title": "FPV Front · Frontier Lines",
           "levels": [
             {
               "id": "copper-switchyard",
@@ -178,10 +178,6 @@
             {
               "id": "workshop-02",
               "name": "Neon Switchboard"
-            },
-            {
-              "id": "workshop-03",
-              "name": "Clear Ledger"
             }
           ]
         }
@@ -304,10 +300,6 @@
             {
               "id": "neon-drone-aid-pack",
               "name": "Neon DRONE AID"
-            },
-            {
-              "id": "neon-coupa-pack",
-              "name": "Neon COUPA"
             },
             {
               "id": "neon-social-drone-pack",

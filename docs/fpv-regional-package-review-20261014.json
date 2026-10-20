@@ -1,216 +1,217 @@
 {
-  "sourceRevision": "d1a472796d2eed4a195c7e008bee2afcb72caf8c",
-  "sourceTree": "28f1598da9a6cd5f4cd87a8068c8102920eac886",
-  "version": "v0.151.1",
-  "publicEligible": false,
-  "reproducibleBuilds": 2,
-  "committedInputsVerified": true,
-  "revision": "6c419db6e8daef9ea22e16fe9277bccd96a0ea42cb2dd6c3af30377ce40aafb1",
-  "cloudRun": 38638456956,
-  "githubArtifactId": 11929647396,
-  "topLevelChecksumsVerified": 15,
-  "worldsMembersVerified": 153,
-  "worldsBytes": 17275820,
-  "browserOfflineVerified": false,
-  "files": {
-    "github-artifact.zip": {
-      "bytes": 22990829,
-      "sha256": "6e30886e35b8ea43e9a779252d2e150396e31d6974e6d35c93dabd0dd9a27df7"
-    },
-    "distribution-optional-fpv-worlds.zip": {
-      "bytes": 17328878,
-      "sha256": "5058393acc3ddfde3a4a43a065e7e72faa27a8dfe782d2253465d9d324e84412"
-    },
-    "manifest-optional-fpv-worlds.json": {
-      "bytes": 28192,
-      "sha256": "a4672aa7db45e8f193dfa49088f14a50b91a065c405662de9ed3b2988bcb567b"
-    }
-  },
-  "allArchives": [
-    {
-      "id": "civilian-flight",
-      "kind": "distribution",
-      "verifiedMembers": 94,
-      "uncompressedBytes": 3738628,
-      "limits": {
-        "files": 96,
-        "bytes": 8388608
-      },
-      "archiveBytes": 3752312,
-      "archiveSHA256": "92ef6f83984ad873be687eba5c96a71b286643e62f8d6c6c7901631bdf78ac55"
-    },
-    {
-      "id": "civilian-flight",
-      "kind": "source",
-      "verifiedMembers": 96,
-      "uncompressedBytes": 3772182,
-      "limits": {
-        "files": 96,
-        "bytes": 8388608
-      },
-      "archiveBytes": 3786202,
-      "archiveSHA256": "bdb9d2b5519e47cad4365b478e10252c80ad3a29587a591b9d423fe8985ff5c8"
-    },
-    {
-      "id": "civilian-fpv",
-      "kind": "distribution",
-      "verifiedMembers": 101,
-      "uncompressedBytes": 6742838,
-      "limits": {
-        "files": 104,
-        "bytes": 8388608
-      },
-      "archiveBytes": 6757856,
-      "archiveSHA256": "6d6ff068320474f6c6ffb719d3c0a79d3fff04fa4114745feef5e05cc3a67183"
-    },
-    {
-      "id": "civilian-fpv",
-      "kind": "source",
-      "verifiedMembers": 103,
-      "uncompressedBytes": 6777902,
-      "limits": {
-        "files": 104,
-        "bytes": 8388608
-      },
-      "archiveBytes": 6793224,
-      "archiveSHA256": "7bbffc5cebf3716fe577b6367329cb93416191972fa11149e11b932b578b2281"
-    },
-    {
-      "id": "fpv-worlds",
-      "kind": "distribution",
-      "verifiedMembers": 154,
-      "uncompressedBytes": 17304012,
-      "limits": {
-        "files": 156,
-        "bytes": 20971520
-      },
-      "archiveBytes": 17328878,
-      "archiveSHA256": "5058393acc3ddfde3a4a43a065e7e72faa27a8dfe782d2253465d9d324e84412"
-    },
-    {
-      "id": "fpv-worlds",
-      "kind": "source",
-      "verifiedMembers": 156,
-      "uncompressedBytes": 17346603,
-      "limits": {
-        "files": 156,
-        "bytes": 20971520
-      },
-      "archiveBytes": 17371773,
-      "archiveSHA256": "1a8b7ee89b3fa48bfec77624d155c91e73cbc84c3f14e08deb9f0a8d593ca539"
-    }
-  ],
-  "stage": {
-    "sourceRevision": "d1a472796d2eed4a195c7e008bee2afcb72caf8c",
-    "revision": "6c419db6e8daef9ea22e16fe9277bccd96a0ea42cb2dd6c3af30377ce40aafb1",
-    "origin": "http://127.0.0.1:9031",
-    "launcherURL": "http://127.0.0.1:9031/revealline/practice/fpv-worlds/app/?lang=en",
-    "entryURL": "http://127.0.0.1:9031/revealline/practice/fpv-worlds/releases/v0.151.1/site/optional-practice/fpv-worlds/index.html",
-    "regionalURL": "http://127.0.0.1:9031/revealline/practice/fpv-worlds/releases/v0.151.1/site/optional-practice/fpv-worlds/index.html?lang=en&regionalReview=/region/terrain/region.json&regionalScenery=/region/scenery/region.json",
-    "regionalSourceRoot": "/Volumes/alex/CodexMigrationStaging/fpv-large-worlds-20261014/urban-mixed-r2",
-    "boundary": "Frozen package bytes unchanged. Same-origin external regional review fixture is not packaged or installed. No normal catalogue admission claimed.",
-    "stageStatus": "native-review-completed-server-preserved",
-    "regionalManifestPins": {
-      "terrain": {
-        "bytes": 5814,
-        "sha256": "d0ec271c419a4b2032e359e5e8106e8089a10f26dd5e0251536629e3fa35f25f"
-      },
-      "scenery": {
-        "bytes": 5824,
-        "sha256": "d0794c442362dcf95885ef7db417e8d3480db179a2dce2d0f026b65cf075de17"
-      }
-    },
-    "serverPID": 43126
-  },
-  "artifactURL": "https://github.com/mekhovov/revealline/actions/runs/38638456956/artifacts/11929647396",
-  "nativeJourney": {
-    "status": "passed-bounded-native-packaged-regional-session",
-    "runtimeOfflinePreparation": true,
-    "externalRegionalOfflineVerified": false,
-    "observations": [
-      "Canonical Download for offline use completed on the first attempt and reported Ready offline.",
-      "Actual Open prepared practice link opened the unchanged packaged home successfully.",
-      "Explicit regionalReview URL opened the unchanged packaged host with separately served same-origin terrain/scenery. Initial state:3m,0speed,0throttle,paused.",
-      "Deliberate Arm and W input raised throttle to42% then62%; actual climb rendered.",
-      "V switched FPV to Chase and P opened the shared pause menu.",
-      "Changing Self-level to Acro reset to3m,0speed,0throttle,paused; Chase camera remained selected.",
-      "Retry again returned the session ready and disarmed. No error logs were observed."
-    ],
-    "runtimeOriginUnavailableReloadVerified": false,
-    "browserRestartVerified": false,
-    "screenshots": [
-      {
-        "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/regional-exact-package-ready.png",
-        "bytes": 50614,
-        "sha256": "065fe8006c86b71def3fe32a98d5438d520802d5b49d3bfeff288498d0eb21bd"
-      }
-    ],
-    "browserMethod": "Native Codex in-app browser UI and rendered scene inspected by parent agent. No hidden state browser inspection or non-CUA automation."
-  },
-  "cloudStatus": {
-    "optionalPractice": "success",
-    "companyCandidate": "success",
-    "observedAt": "2026-10-14"
-  },
-  "correctedFailures": [
-    "The preceding host source passed native source checks but its main distribution omitted18explicit regional dependencies. PR1269 adds them to the explicit build closure.",
-    "Five Academy package test counts still represented the99runtime/101source closure before two shared contact/support helpers. PR1269 binds the correct101runtime/103source counts and asserts both helpers.",
-    "Worlds final source envelope includes143runtime paths,10launcher paths,2worker templates and1source inventory:156files. The runtime archive contains154files, including its package manifest. The20MiB byte ceiling is unchanged."
-  ],
-  "limitations": [
-    "The unchanged cloud package is frozen at d1a472796d2eed4a195c7e008bee2afcb72caf8c, not an assertion about later main.",
-    "The regional review route uses separately pinned same-origin external terrain/scenery delivery; it is not a normal Library catalogue entry or installed regional content.",
-    "No saved player data, caches or prior verification origins are removed.",
-    "Cloud builds and archive verification do not establish native browser offline success, device FPS, regional source offline delivery or public eligibility."
-  ],
-  "limits": {
-    "fullCompanyEditionQualification": "cloud-compilation-and-member-admission-passed; external-release-gates-remain",
-    "regionalContentOffline": "not-installed-or-claimed",
-    "regionalNormalCatalogueEntry": "not-yet-admitted",
-    "currentSourceVersusFrozenPackage": "only exact d1a472796d2eed4a195c7e008bee2afcb72caf8c verified"
-  },
-  "companyCapacityReceipt": {
+  "format": "revealline-retained-historical-excerpt.v1",
+  "scope": "Retained historical excerpt after an ownership migration. Original bytes are preserved separately. Historical counts, hashes and approvals inside the excerpt describe the original record only; this derived document is not a release qualification, executable restore plan, or complete original inventory.",
+  "originalSHA256": "77afb133031c7c02a65865ccf2e1db920e234ffb9f73b71db737bb92925806f3",
+  "originalGitBlob": "cafe631e9e142f7934b600a007bc5f820fcd5e7d",
+  "removedRecordsOrFields": 6,
+  "excerpt": {
     "sourceRevision": "d1a472796d2eed4a195c7e008bee2afcb72caf8c",
     "sourceTree": "28f1598da9a6cd5f4cd87a8068c8102920eac886",
-    "cloudRun": 38638456956,
-    "cloudConclusion": "success",
-    "artifactId": 11931371956,
-    "artifactSHA256": "ccc9ad720d0fd7dc7b3f40f9aa162332e5e72bee843172728e725f98fa0fdb5e",
-    "independentlyVerifiedMetadataPaths": [
-      "candidate-verification.json",
-      "capacity-inventory.json",
-      "editions.json",
-      "manifest-coupa-adventure.json",
-      "manifest-coupa-all.json",
-      "manifest-coupa-culture.json",
-      "manifest-coupa-developers.json",
-      "manifest-coupa-foundations.json",
-      "manifest-coupa-operations.json",
-      "manifest-droneaid-community.json",
-      "manifest-droneaid-nl-careful-handoff.json",
-      "manifest-droneaid-nl-community.json",
-      "manifest-droneaid-nl-makers-together.json",
-      "manifest-droneaid-nl-parts-in-motion.json",
-      "manifest-droneaid-nl-shared-horizon.json",
-      "manifest-droneaid-nl-signals-of-support.json",
-      "manifest-droneaid-nl-workshop-lights.json",
-      "manifest-fpv-learning.json",
-      "manifest-social-drone-ua.json",
-      "manifest-ukraine-culture.json",
-      "manifest-victory-drones.json"
-    ],
-    "cloudEditionCount": 18,
-    "reproducibleBuilds": 2,
-    "cloudOriginalZipMembersVerified": true,
+    "version": "v0.151.1",
     "publicEligible": false,
-    "fullCompanyArchiveLocallyRetrieved": false,
-    "boundary": "PR workflow retains compact metadata only; whole-company archive admission evidence is from successful cloud job, not independent downloaded full archive verification.",
-    "requiredExternalQualification": [
-      "human-artwork-and-brand-review",
-      "human-learning-and-pacing-review",
-      "install-offline-upgrade-rollback-matrix",
-      "performance-and-accessibility-review",
-      "downloaded-release-byte-verification"
-    ]
+    "reproducibleBuilds": 2,
+    "committedInputsVerified": true,
+    "revision": "6c419db6e8daef9ea22e16fe9277bccd96a0ea42cb2dd6c3af30377ce40aafb1",
+    "cloudRun": 38638456956,
+    "githubArtifactId": 11929647396,
+    "topLevelChecksumsVerified": 15,
+    "worldsMembersVerified": 153,
+    "worldsBytes": 17275820,
+    "browserOfflineVerified": false,
+    "files": {
+      "github-artifact.zip": {
+        "bytes": 22990829,
+        "sha256": "6e30886e35b8ea43e9a779252d2e150396e31d6974e6d35c93dabd0dd9a27df7"
+      },
+      "distribution-optional-fpv-worlds.zip": {
+        "bytes": 17328878,
+        "sha256": "5058393acc3ddfde3a4a43a065e7e72faa27a8dfe782d2253465d9d324e84412"
+      },
+      "manifest-optional-fpv-worlds.json": {
+        "bytes": 28192,
+        "sha256": "a4672aa7db45e8f193dfa49088f14a50b91a065c405662de9ed3b2988bcb567b"
+      }
+    },
+    "allArchives": [
+      {
+        "id": "civilian-flight",
+        "kind": "distribution",
+        "verifiedMembers": 94,
+        "uncompressedBytes": 3738628,
+        "limits": {
+          "files": 96,
+          "bytes": 8388608
+        },
+        "archiveBytes": 3752312,
+        "archiveSHA256": "92ef6f83984ad873be687eba5c96a71b286643e62f8d6c6c7901631bdf78ac55"
+      },
+      {
+        "id": "civilian-flight",
+        "kind": "source",
+        "verifiedMembers": 96,
+        "uncompressedBytes": 3772182,
+        "limits": {
+          "files": 96,
+          "bytes": 8388608
+        },
+        "archiveBytes": 3786202,
+        "archiveSHA256": "bdb9d2b5519e47cad4365b478e10252c80ad3a29587a591b9d423fe8985ff5c8"
+      },
+      {
+        "id": "civilian-fpv",
+        "kind": "distribution",
+        "verifiedMembers": 101,
+        "uncompressedBytes": 6742838,
+        "limits": {
+          "files": 104,
+          "bytes": 8388608
+        },
+        "archiveBytes": 6757856,
+        "archiveSHA256": "6d6ff068320474f6c6ffb719d3c0a79d3fff04fa4114745feef5e05cc3a67183"
+      },
+      {
+        "id": "civilian-fpv",
+        "kind": "source",
+        "verifiedMembers": 103,
+        "uncompressedBytes": 6777902,
+        "limits": {
+          "files": 104,
+          "bytes": 8388608
+        },
+        "archiveBytes": 6793224,
+        "archiveSHA256": "7bbffc5cebf3716fe577b6367329cb93416191972fa11149e11b932b578b2281"
+      },
+      {
+        "id": "fpv-worlds",
+        "kind": "distribution",
+        "verifiedMembers": 154,
+        "uncompressedBytes": 17304012,
+        "limits": {
+          "files": 156,
+          "bytes": 20971520
+        },
+        "archiveBytes": 17328878,
+        "archiveSHA256": "5058393acc3ddfde3a4a43a065e7e72faa27a8dfe782d2253465d9d324e84412"
+      },
+      {
+        "id": "fpv-worlds",
+        "kind": "source",
+        "verifiedMembers": 156,
+        "uncompressedBytes": 17346603,
+        "limits": {
+          "files": 156,
+          "bytes": 20971520
+        },
+        "archiveBytes": 17371773,
+        "archiveSHA256": "1a8b7ee89b3fa48bfec77624d155c91e73cbc84c3f14e08deb9f0a8d593ca539"
+      }
+    ],
+    "stage": {
+      "sourceRevision": "d1a472796d2eed4a195c7e008bee2afcb72caf8c",
+      "revision": "6c419db6e8daef9ea22e16fe9277bccd96a0ea42cb2dd6c3af30377ce40aafb1",
+      "origin": "http://127.0.0.1:9031",
+      "launcherURL": "http://127.0.0.1:9031/revealline/practice/fpv-worlds/app/?lang=en",
+      "entryURL": "http://127.0.0.1:9031/revealline/practice/fpv-worlds/releases/v0.151.1/site/optional-practice/fpv-worlds/index.html",
+      "regionalURL": "http://127.0.0.1:9031/revealline/practice/fpv-worlds/releases/v0.151.1/site/optional-practice/fpv-worlds/index.html?lang=en&regionalReview=/region/terrain/region.json&regionalScenery=/region/scenery/region.json",
+      "regionalSourceRoot": "/Volumes/alex/CodexMigrationStaging/fpv-large-worlds-20261014/urban-mixed-r2",
+      "boundary": "Frozen package bytes unchanged. Same-origin external regional review fixture is not packaged or installed. No normal catalogue admission claimed.",
+      "stageStatus": "native-review-completed-server-preserved",
+      "regionalManifestPins": {
+        "terrain": {
+          "bytes": 5814,
+          "sha256": "d0ec271c419a4b2032e359e5e8106e8089a10f26dd5e0251536629e3fa35f25f"
+        },
+        "scenery": {
+          "bytes": 5824,
+          "sha256": "d0794c442362dcf95885ef7db417e8d3480db179a2dce2d0f026b65cf075de17"
+        }
+      },
+      "serverPID": 43126
+    },
+    "artifactURL": "https://github.com/mekhovov/revealline/actions/runs/38638456956/artifacts/11929647396",
+    "nativeJourney": {
+      "status": "passed-bounded-native-packaged-regional-session",
+      "runtimeOfflinePreparation": true,
+      "externalRegionalOfflineVerified": false,
+      "observations": [
+        "Canonical Download for offline use completed on the first attempt and reported Ready offline.",
+        "Actual Open prepared practice link opened the unchanged packaged home successfully.",
+        "Explicit regionalReview URL opened the unchanged packaged host with separately served same-origin terrain/scenery. Initial state:3m,0speed,0throttle,paused.",
+        "Deliberate Arm and W input raised throttle to42% then62%; actual climb rendered.",
+        "V switched FPV to Chase and P opened the shared pause menu.",
+        "Changing Self-level to Acro reset to3m,0speed,0throttle,paused; Chase camera remained selected.",
+        "Retry again returned the session ready and disarmed. No error logs were observed."
+      ],
+      "runtimeOriginUnavailableReloadVerified": false,
+      "browserRestartVerified": false,
+      "screenshots": [
+        {
+          "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/regional-exact-package-ready.png",
+          "bytes": 50614,
+          "sha256": "065fe8006c86b71def3fe32a98d5438d520802d5b49d3bfeff288498d0eb21bd"
+        }
+      ],
+      "browserMethod": "Native Codex in-app browser UI and rendered scene inspected by parent agent. No hidden state browser inspection or non-CUA automation."
+    },
+    "cloudStatus": {
+      "optionalPractice": "success",
+      "companyCandidate": "success",
+      "observedAt": "2026-10-14"
+    },
+    "correctedFailures": [
+      "The preceding host source passed native source checks but its main distribution omitted18explicit regional dependencies. PR1269 adds them to the explicit build closure.",
+      "Five Academy package test counts still represented the99runtime/101source closure before two shared contact/support helpers. PR1269 binds the correct101runtime/103source counts and asserts both helpers.",
+      "Worlds final source envelope includes143runtime paths,10launcher paths,2worker templates and1source inventory:156files. The runtime archive contains154files, including its package manifest. The20MiB byte ceiling is unchanged."
+    ],
+    "limitations": [
+      "The unchanged cloud package is frozen at d1a472796d2eed4a195c7e008bee2afcb72caf8c, not an assertion about later main.",
+      "The regional review route uses separately pinned same-origin external terrain/scenery delivery; it is not a normal Library catalogue entry or installed regional content.",
+      "No saved player data, caches or prior verification origins are removed.",
+      "Cloud builds and archive verification do not establish native browser offline success, device FPS, regional source offline delivery or public eligibility."
+    ],
+    "limits": {
+      "fullCompanyEditionQualification": "cloud-compilation-and-member-admission-passed; external-release-gates-remain",
+      "regionalContentOffline": "not-installed-or-claimed",
+      "regionalNormalCatalogueEntry": "not-yet-admitted",
+      "currentSourceVersusFrozenPackage": "only exact d1a472796d2eed4a195c7e008bee2afcb72caf8c verified"
+    },
+    "companyCapacityReceipt": {
+      "sourceRevision": "d1a472796d2eed4a195c7e008bee2afcb72caf8c",
+      "sourceTree": "28f1598da9a6cd5f4cd87a8068c8102920eac886",
+      "cloudRun": 38638456956,
+      "cloudConclusion": "success",
+      "artifactId": 11931371956,
+      "artifactSHA256": "ccc9ad720d0fd7dc7b3f40f9aa162332e5e72bee843172728e725f98fa0fdb5e",
+      "independentlyVerifiedMetadataPaths": [
+        "candidate-verification.json",
+        "capacity-inventory.json",
+        "editions.json",
+        "manifest-droneaid-community.json",
+        "manifest-droneaid-nl-careful-handoff.json",
+        "manifest-droneaid-nl-community.json",
+        "manifest-droneaid-nl-makers-together.json",
+        "manifest-droneaid-nl-parts-in-motion.json",
+        "manifest-droneaid-nl-shared-horizon.json",
+        "manifest-droneaid-nl-signals-of-support.json",
+        "manifest-droneaid-nl-workshop-lights.json",
+        "manifest-fpv-learning.json",
+        "manifest-social-drone-ua.json",
+        "manifest-ukraine-culture.json",
+        "manifest-victory-drones.json"
+      ],
+      "cloudEditionCount": 18,
+      "reproducibleBuilds": 2,
+      "cloudOriginalZipMembersVerified": true,
+      "publicEligible": false,
+      "fullCompanyArchiveLocallyRetrieved": false,
+      "boundary": "PR workflow retains compact metadata only; whole-company archive admission evidence is from successful cloud job, not independent downloaded full archive verification.",
+      "requiredExternalQualification": [
+        "human-artwork-and-brand-review",
+        "human-learning-and-pacing-review",
+        "install-offline-upgrade-rollback-matrix",
+        "performance-and-accessibility-review",
+        "downloaded-release-byte-verification"
+      ]
+    }
   }
 }

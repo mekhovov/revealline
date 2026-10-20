@@ -1,3 +1,5 @@
+> Retained historical excerpt after an ownership migration. Exact original bytes are preserved separately. Original totals and verification statements describe the original scope; this excerpt is not a current qualification or a complete test result.
+
 # FPV Versus and Team artwork — 29 September 2026
 
 This bounded Phase 5 batch adds actual mode compositions for the FPV base world. Solo's approved landscape/portrait files remain unchanged. Versus has opposing amber/cyan drones on separate launch stands; Team has matching, aligned drones connected to one preparation dock. Each has a separately composed portrait original. These arrangements are part of the painting, not tint/zoom changes or generic floating overlays.
@@ -57,5 +59,3 @@ Verified source SHA-256 values:
 - `game/ui/menu-scene-catalog.mjs`: `7bedf849365bd1fc211d3bd0f7de71eaf779278974faa2a0b459d087e769c639`
 - `game/ui/menu-scenes.mjs`: `d288b3b0450848f89ce482cc7d94dbfc68038c7116d9e182d61184c9175956c1`
 - `game/test/manual/portrait-motion-check.mjs`: `80f435ca2efadfbd59020eab91f8749da3c9b461874e9b9b3e3b546db5b3c35d`
-
-These source checks do not constitute physical-controller, phone GPU/memory, long-session animation comfort or published-release acceptance. Ukraine, Retro and Coupa mode compositions remain explicitly outside this batch.

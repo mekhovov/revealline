@@ -43,19 +43,6 @@
       "width": 1774,
       "height": 887,
       "runtimeAdopted": false
-    },
-    {
-      "id": "spend-canal-parcel-crane",
-      "file": "originals/spend-canal-parcel-crane.png",
-      "bytes": 2670342,
-      "sha256": "407561c2a427e24175431c19d970f9581f9a6bab7d1adbcdbd69c87bb0e62f2b",
-      "prompt": "prompts/spend-canal-parcel-crane.txt",
-      "themeId": "coupa",
-      "theme": "Spend Network",
-      "title": "Canal Parcel Crane",
-      "width": 1774,
-      "height": 887,
-      "runtimeAdopted": false
     }
   ],
   "selectionProvenance": "provenance/originals.json"

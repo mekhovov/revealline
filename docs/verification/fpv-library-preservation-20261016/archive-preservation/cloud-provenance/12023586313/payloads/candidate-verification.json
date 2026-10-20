@@ -1,1 +1,337 @@
-{"admission":{"editions":[{"distributionSha256":"b2665e2c0868e8e8f722ffac71ec23aef28ccdf5e04f7a5146564990d158e8fc","files":1054,"id":"coupa-adventure","sourceArchiveSha256":"c74ce73776b2446fff1024cc203e754085d81002e4caed7755e085caf65a33fa","totalBytes":33210741},{"distributionSha256":"b28d78bf949faae9dfa9f26c62222edeeb5fdeca089c941b61d75a6a883bf372","files":1089,"id":"coupa-all","sourceArchiveSha256":"0127417de914fc85fe8a10c639f9e8e38b23cd450e62aad77a99a09e0806cccd","totalBytes":67445023},{"distributionSha256":"5d6e2b6d7bf90719178435d00fa3b3f6f3e6bdd955a05f779cfae7faa6265673","files":1053,"id":"coupa-culture","sourceArchiveSha256":"27bfb3451c7c0970bd07191eb6269cfcead35812a0f5b8034ec8205d4738343a","totalBytes":31591617},{"distributionSha256":"7b4ea243b3460d5b34ad00df507493fe04efbf65ff1dd5862662ea69ee24f89f","files":1054,"id":"coupa-developers","sourceArchiveSha256":"3967ba58cc4384c42320b5cb47927bd84041b88ee39e1c6bcb2b6a2e33f14da3","totalBytes":34990935},{"distributionSha256":"23d6e8e2a6510286d1efddcddf0daba2fa47d95a4cd6da579ff94414a9db38b8","files":1056,"id":"coupa-foundations","sourceArchiveSha256":"dd06e35a32105392c12d5a22f766d8ff976c7e4abb79a2cd7befc2d5e4495fa2","totalBytes":34076397},{"distributionSha256":"f6c1abbd86b35d17ba7a86c494f85afdd5865c7034b0b58199a4126e69dd04a2","files":1054,"id":"coupa-operations","sourceArchiveSha256":"b7001e168076c10e86cf0e50cdcb44d5388f97caf0d3df36478817aa786ad2c2","totalBytes":33165594},{"distributionSha256":"a2f03ab47a51c4de7a88efd507fdf67feb6534fdda099cfa4d7a6647e39d6b6c","files":1047,"id":"droneaid-community","sourceArchiveSha256":"fc2c989f2740ceaaf97c5b4af52d1afb97cf9a9bd3ed0b24d651bb6b6ee457e5","totalBytes":32367130},{"distributionSha256":"ba6c5375fb2bc0f035f1efcb63a00bb71592a81751ce667446d7cef3878d4eb1","files":1057,"id":"droneaid-nl-careful-handoff","sourceArchiveSha256":"ffd218654595ae0c063eabe21418a259e61e5e828f46a48d7a1e60f6c89dfac1","totalBytes":34590447},{"distributionSha256":"4d4819c470a51db8e722646aea8dc4a48c3f8ebbc26407086a6bb82a8a933144","files":1125,"id":"droneaid-nl-community","sourceArchiveSha256":"77a3a9ff55d5bf76de22e23acd48de0489e470797ccf63cd0757504de148715f","totalBytes":71976558},{"distributionSha256":"218a30f2a0fdce391c8163c823edeb63af9c9a8fc37c9ffaecf88b4ce572632a","files":1057,"id":"droneaid-nl-makers-together","sourceArchiveSha256":"7561a86c094385917a0932e874db6e22639a5a8a22278886585985e3a665ff61","totalBytes":34465871},{"distributionSha256":"5414c5f623a8ac2e8e7ef5ba5b8ec52d28a0a06399b9e98c870537985e9cadbe","files":1059,"id":"droneaid-nl-parts-in-motion","sourceArchiveSha256":"ad3fe015ff5a33308fad084ee876452ee5cc4692085e7658de695a3847bad5d6","totalBytes":34984033},{"distributionSha256":"a35f9d4d0a91929106f5e21886e8754126528642cb5b8d04e132fc501fe32771","files":1057,"id":"droneaid-nl-shared-horizon","sourceArchiveSha256":"76921b4722936b1509b61711393b1e525fcd81967db8fc4fcc08b032e1247231","totalBytes":34776853},{"distributionSha256":"48270cc3d4b6b464163a2bcd20841397b959a7518d50828a6094420fefc16bfc","files":1057,"id":"droneaid-nl-signals-of-support","sourceArchiveSha256":"8bf948368e6defb450e3dda8ecb84d2f0e11e37057381d732318b6c2c7acdc8a","totalBytes":34577264},{"distributionSha256":"acdfe5e7183d3d287befa91b7af46e6e4b795e03619e68562d34a3e440016a25","files":1057,"id":"droneaid-nl-workshop-lights","sourceArchiveSha256":"41b733ab24ec58cd82cf2eafcae7f0bfa1481f602f2efcc546c8bc212d9bf76b","totalBytes":33275337},{"distributionSha256":"142c051714df1b380f15569a395c6fdee71a4aae46eadd1fe526a81b9f8f2b3c","files":1139,"id":"fpv-learning","sourceArchiveSha256":"9dd95fb91e067e6ba2c1d4ff70db135b53bdc334a4e497a802dfc87f93354728","totalBytes":41090253},{"distributionSha256":"81745a3881bd6eee050f4ebedf1687fde9cef5505c07a4cd35204a7d6c85e98a","files":1083,"id":"social-drone-ua","sourceArchiveSha256":"e635abcd0cd2593f6af8c27b671a40f08d034539daada6c88f3d4b939fd323f0","totalBytes":39887700},{"distributionSha256":"ebf420a88420c06f8894386bc4fc2fbf65a63cec229932e90b8b47924ddf36cd","files":1114,"id":"ukraine-culture","sourceArchiveSha256":"45ce5f6aa63282880eddcf87520adf3d052cb9e44c3a90b376c5c9e4aa3962b9","totalBytes":49977565},{"distributionSha256":"102d5c520ec805ae228b20c73c51e13f223c4f420c1bfb30ef54f5b7f8d64a06","files":1063,"id":"victory-drones","sourceArchiveSha256":"2930254cf822e8de9e7e84e12682486e266219d2297128e93e390ff502b2eda5","totalBytes":29570658}],"format":"revealline-editions-admission.v1","publicEligible":false,"sourceRevision":"b65d80f716b8db646bfdf5f714892f1c0f6409b0","sourceTree":"98a19c4b9465279e910f7fd5c7b37d10b2c9d566","status":"verified-candidate-members","version":"v0.151.1","zipMembersVerified":true},"envelopeSha256":"1d7a29f509ccee8eeee9cec6ec2bf03b74298fcb6cc9c0747875d98003de82e2","format":"revealline-edition-candidate-verification.v1","presentationReceipts":[{"authoredPresentationSha256":"a8140db62289e35afe5dabc077efdfff0552c1dd663ad691dd4aeb77f6c794c3","editionId":"coupa-adventure","retained":[{"authoredPresentationSha256":"82527f475e9cb0ddbc6bf9701e495e49e08dd635a0e89578c107268373426a05"},{"authoredPresentationSha256":"77db1de24b49c04417f38b32002177590c92b353c17e5e9f580f44207e5fccf1"}]},{"authoredPresentationSha256":"dda2222a30f2ae83f0ae0ce98f3913d99814caf16a5712e42cdd407057f84e75","editionId":"coupa-all","retained":[{"authoredPresentationSha256":"13e5c4ff2313ebd3714e6d6461e2468857be6e4997fede8da24542880951df13"},{"authoredPresentationSha256":"ecb87b6208f6f55322188ab34d8d9aa63b94064dd346f400bbe2bbbcc9d7870b"},{"authoredPresentationSha256":"d9deabcadfd9bdc7622da65ebbcc91bdd752db02234009edc3fe09f85812f842"},{"authoredPresentationSha256":"c55614c27b1c70e0ac9d0701d3defbfbb03262ecfe3e8458d436958bdaf96561"}]},{"authoredPresentationSha256":"3251b9fa97467f42c88707b824ee68f6c281d2019c2d0f255942f7e815e5f685","editionId":"coupa-culture","retained":[{"authoredPresentationSha256":"ed8d7747ad136a06243a2cf8c90dacdc5cf42dc71f5c6448174bde48ea241ae8"}]},{"authoredPresentationSha256":"ad90829fbb5030caf1a75e735a9b2f87671c735209bac4446306441748dd72ca","editionId":"coupa-developers","retained":[{"authoredPresentationSha256":"72ede618c25678c324d39389b9789130c66bb05f461e900d367e9c3f2a878224"},{"authoredPresentationSha256":"ab769c5bd0c8e9cfeb09c20c9363a6012d482b911aec1577c6665d264490127a"}]},{"authoredPresentationSha256":"a00d1c7aa2b8e8ed174b7b87570eca99210b82f3cc380e8ed76a75222da14b2c","editionId":"coupa-foundations","retained":[{"authoredPresentationSha256":"bb5393ff4a73f30346496334ac6004d84766dfbd958dbdfb62d2b3554e20d429"},{"authoredPresentationSha256":"57dd4d5b7e0f8c27662349a8af870862657d700682ac758ad51721a61fdd59aa"},{"authoredPresentationSha256":"176ab6d261ed0e4366b570dd14df270d6b27a761404baf17921dc1f974898bd6"}]},{"authoredPresentationSha256":"eb4eb9543b305aae96ded37e32211f7b7fc71f7c62b741923e4780da841de317","editionId":"coupa-operations","retained":[{"authoredPresentationSha256":"99254aaf116f5b68881ef51f36c7b5b9ebfbcf6cce371de90c8234c07862a43d"},{"authoredPresentationSha256":"681f63d8afef4e5a89e3d62ac1a2ddaa775cf6d03ad2c3897c64bc2dfb84b922"}]},{"authoredPresentationSha256":"37badc3a8660b647430f7611aa215cbb5789b05cbeaf2ca46ef0f283e59e3df4","editionId":"droneaid-community"},{"authoredPresentationSha256":"eb0891a6a26235ede2a5fa078cfa619f6f41d97064e04a13d8630c19cc9a4226","editionId":"droneaid-nl-careful-handoff","retained":[{"authoredPresentationSha256":"fb9dafae437c37905dcdd07cec0f67b53ead801a8894c2bf2070309dfd16a913"},{"authoredPresentationSha256":"2cb54a68ee115af048b210d130af7418d44307adbeb69ab54dbc4fc0418cacd7"}]},{"authoredPresentationSha256":"d141c4a6b967be2089c08efb94c01e4560b51224a64d4ff076c039e2b8621a22","editionId":"droneaid-nl-community","retained":[{"authoredPresentationSha256":"13bf4f80b1b055d9fb5abdc137dfc93b94fe4ba55072104e697fb29615374679"},{"authoredPresentationSha256":"3445135910a80ceb5b5fdb862c431ead7db00a09631ede2ec28426119d907f67"},{"authoredPresentationSha256":"389459b2b3b2a5b330a053b9eaf11918878a8f19688e035cd19b641744f98c85"},{"authoredPresentationSha256":"8b53a415ac9b76ebd25aca2ac7b67464f026e43e39185970c59501e6f918e3cb"}]},{"authoredPresentationSha256":"4bd4f5e45704594aba28f8e2f10d95189d5deb3d93b3f7e2cfa64c38e73ba384","editionId":"droneaid-nl-makers-together","retained":[{"authoredPresentationSha256":"609db6d6c7ea54120531b53b2b5c54b26d1484306195a426c39bd40d5236b478"},{"authoredPresentationSha256":"8c7d12be0f28ca874e88bbb453ab06fc947245681e8a4fc851b0c70a88314488"}]},{"authoredPresentationSha256":"c90ee45a84f94ff7bff7ceeda4876ffda8a4eb286f86f26dda04adb81241d58f","editionId":"droneaid-nl-parts-in-motion","retained":[{"authoredPresentationSha256":"0b402f348a0d84f534c5db803d731394f7120160d7fd9c538887a4361a20ae40"},{"authoredPresentationSha256":"e8c32e78d0ef5bf6f09a08cbe2ccaf244ec4917c877bce69c2fdf9cb3f38673b"},{"authoredPresentationSha256":"375300b9464b5a567c7cc8888e9a46f6f3e00cb01de0a25bf5cf2eff3c3b5f01"}]},{"authoredPresentationSha256":"5862e6c5d31ddfba52ea647b5ed75a162ae37b0b768159e70ae201bcdb93c193","editionId":"droneaid-nl-shared-horizon","retained":[{"authoredPresentationSha256":"1c5fc1701fb224c9a548d1540b19e2f8c893b43c6bc81d2b91a0bb65d3bcf0a6"},{"authoredPresentationSha256":"fb225362d153cdd9af4d0421e7e7905521bb0d926cab7557985d40982924e429"}]},{"authoredPresentationSha256":"9f83cc366d579118503b20bf2ebc7ce9267e6b7533b6293ab44866584b6d9090","editionId":"droneaid-nl-signals-of-support","retained":[{"authoredPresentationSha256":"013849c9507447451ca1f9a58d845da2d44436dbf776b231162ab8715cc61863"},{"authoredPresentationSha256":"048f59ae3ab8452c1e2f387a15dc10baad8d88c921663e2c576e7ad2fffa2b44"}]},{"authoredPresentationSha256":"8793606f36cf35c064304b63362d018b79b8d99a482361e6b6be2f70195a45dc","editionId":"droneaid-nl-workshop-lights","retained":[{"authoredPresentationSha256":"4e9e2e8ebc38f4bf6ae0b5a06144c103947cb90704b6646800bec534bcbf5c14"},{"authoredPresentationSha256":"115d034320ff3efb161abd00b5886485bd92c7a161d405e5f8cb384263480b70"},{"authoredPresentationSha256":"f4882beacf8fc6bb07aaee36b818541df42b08c0e64ffcc461a2744f6503d302"}]},{"authoredPresentationSha256":"5fe07f863586800fcd47eadcc815871dc200939ec6d4f7a5f915108749a569f2","editionId":"fpv-learning","retained":[{"authoredPresentationSha256":"2b0c8781faf178c7e7952018a07ad290af67cf32217eedcbeeacf9a42c732ace"},{"authoredPresentationSha256":"a34183de94677f3e2d20a88062a3643778723a34b53a57c606eb667740e9d70c"},{"authoredPresentationSha256":"2ccf3e4f9b9066359219e3fdcd2dad32366f9ea3e2cf12d1b16c0de09d36c604"},{"authoredPresentationSha256":"089b0801b048970f1920e76b03ceda92f389e256c5e38e45c5e25abeebe04f0d"},{"authoredPresentationSha256":"5c23ab5e0b883f17e9de0df3a5b8b41010a86da1c495969c6e0efcc96658bdea"},{"authoredPresentationSha256":"108c4348f0a40c6e6b48387a9fa81d95161f006f842d1239e3048986c29696b2"},{"authoredPresentationSha256":"ace3662d4631d798e58b5eeea22d4f0d2c3fc8bf538f6a7a47bcb54ae6938fd0"},{"authoredPresentationSha256":"d5188109991148940036debb16fabe91d600104b3e82d4670efa5aed5dabfa16"}]},{"authoredPresentationSha256":"798e5b719f2361bb967232b2425573e9ad74df48188e30835d45afc6ffc1b763","editionId":"social-drone-ua","retained":[{"authoredPresentationSha256":"ef26881b40bfc01a8ac1ef4ce5d746d11b253a64d2c44316dde458659f541195"},{"authoredPresentationSha256":"7a5367fe55d1b22621662ac29d4c1224a1635fa0b40d0a8cb6e24d620b19a826"},{"authoredPresentationSha256":"3a82bd8aa3306adf9f02be6f56945985b7e54e1606fc3156a2271ba19bbd16a6"},{"authoredPresentationSha256":"985d7722d69526a98abc1d7026c2279ace2a64443362dcc861aab6cd92fb608b"},{"authoredPresentationSha256":"b082d3766168bd305e235adad284813b2a8578de5de009f8ca985aaf1a2e5bd6"},{"authoredPresentationSha256":"9ae68b77e05e8b2a0dc934510e080af89ee5223a3304a0197c3b53a2e61af1b0"},{"authoredPresentationSha256":"943441d44205dfced2e89cf47738d2fd6cc22e886cbd0fbea5bb24d77177e0de"},{"authoredPresentationSha256":"776e569d90c869e8cdf96beb046d21d9f5439fde57c9fbe991119e4029e0dcd6"},{"authoredPresentationSha256":"95c2f3c78f07732c3d804e042b5c5a1bb56d9c38f79330b1d09135f46affecd5"}]},{"authoredPresentationSha256":"2dd69ecc1f96478c028aa621629aa6555c1175d540783b05a38320ed86074f29","editionId":"ukraine-culture","retained":[{"authoredPresentationSha256":"3e868c83c369a31d78e3a551e8b83b6179bba80543dca9df19cbb73566deb295"},{"authoredPresentationSha256":"430cb1cb0c5231f9c42dc9fd9d2b0e55b35a49c676e09c0df8effa17f9a396b2"},{"authoredPresentationSha256":"95915f9348a50bb93f6c5d234624f85fc1a758f59d1db2bb4f804876257a3c25"},{"authoredPresentationSha256":"004d6874394bf5d37967eb841fa0004c4980d40169f7154b425ab3fcdea83e58"},{"authoredPresentationSha256":"b056de12bcb25f16bc3ed5324b5a0e1a7e30f2614a37eb244675ef02a8c2a805"},{"authoredPresentationSha256":"976af38b7451ae581864ff9baef4975cab0c3feb385fa73ea8d3680e43ed5742"},{"authoredPresentationSha256":"c92804d620efc050f08aacc1428bf20a5517d5f89488daf07abc67c336815e7f"}]},{"authoredPresentationSha256":"a26b277283688b02459ae3af631b313d0983abebcffba1d5681f4b74a1b3781f","editionId":"victory-drones","retained":[{"authoredPresentationSha256":"9685f48ccc6c053c69aebb695a1f31e66e54a839806e8956d816258cc07906d8"},{"authoredPresentationSha256":"abcba1ea9574640497faf043f8caf26a039f1355d34df68f3e2f8546690439b4"},{"authoredPresentationSha256":"afeb4333ec165a3ecbaa01bce74822744e2f56238f7608701284bcbd436638b3"},{"authoredPresentationSha256":"6de52c0aa1ae09a7f9699adb5d73f69c779a5220e003434cb6dfe5c6333bff9f"},{"authoredPresentationSha256":"36e42f75903c47abf1c23da0f22f46b74498284cdf84abd0b5f36b10d5838037"}]}],"publicEligible":false,"reproducibleBuilds":2,"requiredExternalQualification":["human-artwork-and-brand-review","human-learning-and-pacing-review","install-offline-upgrade-rollback-matrix","performance-and-accessibility-review","downloaded-release-byte-verification"],"sourceEligibility":{"assets":458,"files":42935,"format":"revealline-public-source-eligibility.v1","status":"verified"},"sourceRevision":"b65d80f716b8db646bfdf5f714892f1c0f6409b0","sourceTree":"98a19c4b9465279e910f7fd5c7b37d10b2c9d566","version":"v0.151.1"}
+{
+  "format": "revealline-retained-historical-excerpt.v1",
+  "scope": "Retained historical excerpt after an ownership migration. Original bytes are preserved separately. Historical counts, hashes and approvals inside the excerpt describe the original record only; this derived document is not a release qualification, executable restore plan, or complete original inventory.",
+  "originalSHA256": "2b47697c7539242341043829a23b01f9e72d6547df1db81bb60fab88fd62d0ca",
+  "originalGitBlob": "64f05e1d654cfdf901001150a9b79405d1165565",
+  "removedRecordsOrFields": 12,
+  "excerpt": {
+    "admission": {
+      "editions": [
+        {
+          "distributionSha256": "a2f03ab47a51c4de7a88efd507fdf67feb6534fdda099cfa4d7a6647e39d6b6c",
+          "files": 1047,
+          "id": "droneaid-community",
+          "sourceArchiveSha256": "fc2c989f2740ceaaf97c5b4af52d1afb97cf9a9bd3ed0b24d651bb6b6ee457e5",
+          "totalBytes": 32367130
+        },
+        {
+          "distributionSha256": "ba6c5375fb2bc0f035f1efcb63a00bb71592a81751ce667446d7cef3878d4eb1",
+          "files": 1057,
+          "id": "droneaid-nl-careful-handoff",
+          "sourceArchiveSha256": "ffd218654595ae0c063eabe21418a259e61e5e828f46a48d7a1e60f6c89dfac1",
+          "totalBytes": 34590447
+        },
+        {
+          "distributionSha256": "4d4819c470a51db8e722646aea8dc4a48c3f8ebbc26407086a6bb82a8a933144",
+          "files": 1125,
+          "id": "droneaid-nl-community",
+          "sourceArchiveSha256": "77a3a9ff55d5bf76de22e23acd48de0489e470797ccf63cd0757504de148715f",
+          "totalBytes": 71976558
+        },
+        {
+          "distributionSha256": "218a30f2a0fdce391c8163c823edeb63af9c9a8fc37c9ffaecf88b4ce572632a",
+          "files": 1057,
+          "id": "droneaid-nl-makers-together",
+          "sourceArchiveSha256": "7561a86c094385917a0932e874db6e22639a5a8a22278886585985e3a665ff61",
+          "totalBytes": 34465871
+        },
+        {
+          "distributionSha256": "5414c5f623a8ac2e8e7ef5ba5b8ec52d28a0a06399b9e98c870537985e9cadbe",
+          "files": 1059,
+          "id": "droneaid-nl-parts-in-motion",
+          "sourceArchiveSha256": "ad3fe015ff5a33308fad084ee876452ee5cc4692085e7658de695a3847bad5d6",
+          "totalBytes": 34984033
+        },
+        {
+          "distributionSha256": "a35f9d4d0a91929106f5e21886e8754126528642cb5b8d04e132fc501fe32771",
+          "files": 1057,
+          "id": "droneaid-nl-shared-horizon",
+          "sourceArchiveSha256": "76921b4722936b1509b61711393b1e525fcd81967db8fc4fcc08b032e1247231",
+          "totalBytes": 34776853
+        },
+        {
+          "distributionSha256": "48270cc3d4b6b464163a2bcd20841397b959a7518d50828a6094420fefc16bfc",
+          "files": 1057,
+          "id": "droneaid-nl-signals-of-support",
+          "sourceArchiveSha256": "8bf948368e6defb450e3dda8ecb84d2f0e11e37057381d732318b6c2c7acdc8a",
+          "totalBytes": 34577264
+        },
+        {
+          "distributionSha256": "acdfe5e7183d3d287befa91b7af46e6e4b795e03619e68562d34a3e440016a25",
+          "files": 1057,
+          "id": "droneaid-nl-workshop-lights",
+          "sourceArchiveSha256": "41b733ab24ec58cd82cf2eafcae7f0bfa1481f602f2efcc546c8bc212d9bf76b",
+          "totalBytes": 33275337
+        },
+        {
+          "distributionSha256": "142c051714df1b380f15569a395c6fdee71a4aae46eadd1fe526a81b9f8f2b3c",
+          "files": 1139,
+          "id": "fpv-learning",
+          "sourceArchiveSha256": "9dd95fb91e067e6ba2c1d4ff70db135b53bdc334a4e497a802dfc87f93354728",
+          "totalBytes": 41090253
+        },
+        {
+          "distributionSha256": "81745a3881bd6eee050f4ebedf1687fde9cef5505c07a4cd35204a7d6c85e98a",
+          "files": 1083,
+          "id": "social-drone-ua",
+          "sourceArchiveSha256": "e635abcd0cd2593f6af8c27b671a40f08d034539daada6c88f3d4b939fd323f0",
+          "totalBytes": 39887700
+        },
+        {
+          "distributionSha256": "ebf420a88420c06f8894386bc4fc2fbf65a63cec229932e90b8b47924ddf36cd",
+          "files": 1114,
+          "id": "ukraine-culture",
+          "sourceArchiveSha256": "45ce5f6aa63282880eddcf87520adf3d052cb9e44c3a90b376c5c9e4aa3962b9",
+          "totalBytes": 49977565
+        },
+        {
+          "distributionSha256": "102d5c520ec805ae228b20c73c51e13f223c4f420c1bfb30ef54f5b7f8d64a06",
+          "files": 1063,
+          "id": "victory-drones",
+          "sourceArchiveSha256": "2930254cf822e8de9e7e84e12682486e266219d2297128e93e390ff502b2eda5",
+          "totalBytes": 29570658
+        }
+      ],
+      "format": "revealline-editions-admission.v1",
+      "publicEligible": false,
+      "sourceRevision": "b65d80f716b8db646bfdf5f714892f1c0f6409b0",
+      "sourceTree": "98a19c4b9465279e910f7fd5c7b37d10b2c9d566",
+      "status": "verified-candidate-members",
+      "version": "v0.151.1",
+      "zipMembersVerified": true
+    },
+    "envelopeSha256": "1d7a29f509ccee8eeee9cec6ec2bf03b74298fcb6cc9c0747875d98003de82e2",
+    "format": "revealline-edition-candidate-verification.v1",
+    "presentationReceipts": [
+      {
+        "authoredPresentationSha256": "37badc3a8660b647430f7611aa215cbb5789b05cbeaf2ca46ef0f283e59e3df4",
+        "editionId": "droneaid-community"
+      },
+      {
+        "authoredPresentationSha256": "eb0891a6a26235ede2a5fa078cfa619f6f41d97064e04a13d8630c19cc9a4226",
+        "editionId": "droneaid-nl-careful-handoff",
+        "retained": [
+          {
+            "authoredPresentationSha256": "fb9dafae437c37905dcdd07cec0f67b53ead801a8894c2bf2070309dfd16a913"
+          },
+          {
+            "authoredPresentationSha256": "2cb54a68ee115af048b210d130af7418d44307adbeb69ab54dbc4fc0418cacd7"
+          }
+        ]
+      },
+      {
+        "authoredPresentationSha256": "d141c4a6b967be2089c08efb94c01e4560b51224a64d4ff076c039e2b8621a22",
+        "editionId": "droneaid-nl-community",
+        "retained": [
+          {
+            "authoredPresentationSha256": "13bf4f80b1b055d9fb5abdc137dfc93b94fe4ba55072104e697fb29615374679"
+          },
+          {
+            "authoredPresentationSha256": "3445135910a80ceb5b5fdb862c431ead7db00a09631ede2ec28426119d907f67"
+          },
+          {
+            "authoredPresentationSha256": "389459b2b3b2a5b330a053b9eaf11918878a8f19688e035cd19b641744f98c85"
+          },
+          {
+            "authoredPresentationSha256": "8b53a415ac9b76ebd25aca2ac7b67464f026e43e39185970c59501e6f918e3cb"
+          }
+        ]
+      },
+      {
+        "authoredPresentationSha256": "4bd4f5e45704594aba28f8e2f10d95189d5deb3d93b3f7e2cfa64c38e73ba384",
+        "editionId": "droneaid-nl-makers-together",
+        "retained": [
+          {
+            "authoredPresentationSha256": "609db6d6c7ea54120531b53b2b5c54b26d1484306195a426c39bd40d5236b478"
+          },
+          {
+            "authoredPresentationSha256": "8c7d12be0f28ca874e88bbb453ab06fc947245681e8a4fc851b0c70a88314488"
+          }
+        ]
+      },
+      {
+        "authoredPresentationSha256": "c90ee45a84f94ff7bff7ceeda4876ffda8a4eb286f86f26dda04adb81241d58f",
+        "editionId": "droneaid-nl-parts-in-motion",
+        "retained": [
+          {
+            "authoredPresentationSha256": "0b402f348a0d84f534c5db803d731394f7120160d7fd9c538887a4361a20ae40"
+          },
+          {
+            "authoredPresentationSha256": "e8c32e78d0ef5bf6f09a08cbe2ccaf244ec4917c877bce69c2fdf9cb3f38673b"
+          },
+          {
+            "authoredPresentationSha256": "375300b9464b5a567c7cc8888e9a46f6f3e00cb01de0a25bf5cf2eff3c3b5f01"
+          }
+        ]
+      },
+      {
+        "authoredPresentationSha256": "5862e6c5d31ddfba52ea647b5ed75a162ae37b0b768159e70ae201bcdb93c193",
+        "editionId": "droneaid-nl-shared-horizon",
+        "retained": [
+          {
+            "authoredPresentationSha256": "1c5fc1701fb224c9a548d1540b19e2f8c893b43c6bc81d2b91a0bb65d3bcf0a6"
+          },
+          {
+            "authoredPresentationSha256": "fb225362d153cdd9af4d0421e7e7905521bb0d926cab7557985d40982924e429"
+          }
+        ]
+      },
+      {
+        "authoredPresentationSha256": "9f83cc366d579118503b20bf2ebc7ce9267e6b7533b6293ab44866584b6d9090",
+        "editionId": "droneaid-nl-signals-of-support",
+        "retained": [
+          {
+            "authoredPresentationSha256": "013849c9507447451ca1f9a58d845da2d44436dbf776b231162ab8715cc61863"
+          },
+          {
+            "authoredPresentationSha256": "048f59ae3ab8452c1e2f387a15dc10baad8d88c921663e2c576e7ad2fffa2b44"
+          }
+        ]
+      },
+      {
+        "authoredPresentationSha256": "8793606f36cf35c064304b63362d018b79b8d99a482361e6b6be2f70195a45dc",
+        "editionId": "droneaid-nl-workshop-lights",
+        "retained": [
+          {
+            "authoredPresentationSha256": "4e9e2e8ebc38f4bf6ae0b5a06144c103947cb90704b6646800bec534bcbf5c14"
+          },
+          {
+            "authoredPresentationSha256": "115d034320ff3efb161abd00b5886485bd92c7a161d405e5f8cb384263480b70"
+          },
+          {
+            "authoredPresentationSha256": "f4882beacf8fc6bb07aaee36b818541df42b08c0e64ffcc461a2744f6503d302"
+          }
+        ]
+      },
+      {
+        "authoredPresentationSha256": "5fe07f863586800fcd47eadcc815871dc200939ec6d4f7a5f915108749a569f2",
+        "editionId": "fpv-learning",
+        "retained": [
+          {
+            "authoredPresentationSha256": "2b0c8781faf178c7e7952018a07ad290af67cf32217eedcbeeacf9a42c732ace"
+          },
+          {
+            "authoredPresentationSha256": "a34183de94677f3e2d20a88062a3643778723a34b53a57c606eb667740e9d70c"
+          },
+          {
+            "authoredPresentationSha256": "2ccf3e4f9b9066359219e3fdcd2dad32366f9ea3e2cf12d1b16c0de09d36c604"
+          },
+          {
+            "authoredPresentationSha256": "089b0801b048970f1920e76b03ceda92f389e256c5e38e45c5e25abeebe04f0d"
+          },
+          {
+            "authoredPresentationSha256": "5c23ab5e0b883f17e9de0df3a5b8b41010a86da1c495969c6e0efcc96658bdea"
+          },
+          {
+            "authoredPresentationSha256": "108c4348f0a40c6e6b48387a9fa81d95161f006f842d1239e3048986c29696b2"
+          },
+          {
+            "authoredPresentationSha256": "ace3662d4631d798e58b5eeea22d4f0d2c3fc8bf538f6a7a47bcb54ae6938fd0"
+          },
+          {
+            "authoredPresentationSha256": "d5188109991148940036debb16fabe91d600104b3e82d4670efa5aed5dabfa16"
+          }
+        ]
+      },
+      {
+        "authoredPresentationSha256": "798e5b719f2361bb967232b2425573e9ad74df48188e30835d45afc6ffc1b763",
+        "editionId": "social-drone-ua",
+        "retained": [
+          {
+            "authoredPresentationSha256": "ef26881b40bfc01a8ac1ef4ce5d746d11b253a64d2c44316dde458659f541195"
+          },
+          {
+            "authoredPresentationSha256": "7a5367fe55d1b22621662ac29d4c1224a1635fa0b40d0a8cb6e24d620b19a826"
+          },
+          {
+            "authoredPresentationSha256": "3a82bd8aa3306adf9f02be6f56945985b7e54e1606fc3156a2271ba19bbd16a6"
+          },
+          {
+            "authoredPresentationSha256": "985d7722d69526a98abc1d7026c2279ace2a64443362dcc861aab6cd92fb608b"
+          },
+          {
+            "authoredPresentationSha256": "b082d3766168bd305e235adad284813b2a8578de5de009f8ca985aaf1a2e5bd6"
+          },
+          {
+            "authoredPresentationSha256": "9ae68b77e05e8b2a0dc934510e080af89ee5223a3304a0197c3b53a2e61af1b0"
+          },
+          {
+            "authoredPresentationSha256": "943441d44205dfced2e89cf47738d2fd6cc22e886cbd0fbea5bb24d77177e0de"
+          },
+          {
+            "authoredPresentationSha256": "776e569d90c869e8cdf96beb046d21d9f5439fde57c9fbe991119e4029e0dcd6"
+          },
+          {
+            "authoredPresentationSha256": "95c2f3c78f07732c3d804e042b5c5a1bb56d9c38f79330b1d09135f46affecd5"
+          }
+        ]
+      },
+      {
+        "authoredPresentationSha256": "2dd69ecc1f96478c028aa621629aa6555c1175d540783b05a38320ed86074f29",
+        "editionId": "ukraine-culture",
+        "retained": [
+          {
+            "authoredPresentationSha256": "3e868c83c369a31d78e3a551e8b83b6179bba80543dca9df19cbb73566deb295"
+          },
+          {
+            "authoredPresentationSha256": "430cb1cb0c5231f9c42dc9fd9d2b0e55b35a49c676e09c0df8effa17f9a396b2"
+          },
+          {
+            "authoredPresentationSha256": "95915f9348a50bb93f6c5d234624f85fc1a758f59d1db2bb4f804876257a3c25"
+          },
+          {
+            "authoredPresentationSha256": "004d6874394bf5d37967eb841fa0004c4980d40169f7154b425ab3fcdea83e58"
+          },
+          {
+            "authoredPresentationSha256": "b056de12bcb25f16bc3ed5324b5a0e1a7e30f2614a37eb244675ef02a8c2a805"
+          },
+          {
+            "authoredPresentationSha256": "976af38b7451ae581864ff9baef4975cab0c3feb385fa73ea8d3680e43ed5742"
+          },
+          {
+            "authoredPresentationSha256": "c92804d620efc050f08aacc1428bf20a5517d5f89488daf07abc67c336815e7f"
+          }
+        ]
+      },
+      {
+        "authoredPresentationSha256": "a26b277283688b02459ae3af631b313d0983abebcffba1d5681f4b74a1b3781f",
+        "editionId": "victory-drones",
+        "retained": [
+          {
+            "authoredPresentationSha256": "9685f48ccc6c053c69aebb695a1f31e66e54a839806e8956d816258cc07906d8"
+          },
+          {
+            "authoredPresentationSha256": "abcba1ea9574640497faf043f8caf26a039f1355d34df68f3e2f8546690439b4"
+          },
+          {
+            "authoredPresentationSha256": "afeb4333ec165a3ecbaa01bce74822744e2f56238f7608701284bcbd436638b3"
+          },
+          {
+            "authoredPresentationSha256": "6de52c0aa1ae09a7f9699adb5d73f69c779a5220e003434cb6dfe5c6333bff9f"
+          },
+          {
+            "authoredPresentationSha256": "36e42f75903c47abf1c23da0f22f46b74498284cdf84abd0b5f36b10d5838037"
+          }
+        ]
+      }
+    ],
+    "publicEligible": false,
+    "reproducibleBuilds": 2,
+    "requiredExternalQualification": [
+      "human-artwork-and-brand-review",
+      "human-learning-and-pacing-review",
+      "install-offline-upgrade-rollback-matrix",
+      "performance-and-accessibility-review",
+      "downloaded-release-byte-verification"
+    ],
+    "sourceEligibility": {
+      "assets": 458,
+      "files": 42935,
+      "format": "revealline-public-source-eligibility.v1",
+      "status": "verified"
+    },
+    "sourceRevision": "b65d80f716b8db646bfdf5f714892f1c0f6409b0",
+    "sourceTree": "98a19c4b9465279e910f7fd5c7b37d10b2c9d566",
+    "version": "v0.151.1"
+  }
+}

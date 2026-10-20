@@ -6,8 +6,6 @@ For applied changes to the playable `game/`, pair these briefs with [Runtime Mai
 
 Updated 13 September 2026 · 148 reusable CLI examples across nine catalogs: 56 base, 16 source/asset, 16 animation, 16 character collection, 20 ability/world, 9 native-edition/audio, 6 classic, 3 presentation and 6 enemy workflows. Templates are not executed runs; prose requests are counted separately.
 
-The catalog supports four themed families (its NAVI NETWORK draft direction maps to the playable Spend Network world): **FPV FRONT** (main Ukrainian military theme), **UKRAINE ATLAS**, **1994 FOREVER**, and **NAVI NETWORK**. The same gameplay overlay can sit above pixel-art, flat illustration, painterly or photographic reveal images. Background art never defines collision geometry or actual enemy positions.
-
 Open [catalog.json](catalog.json), the [asset-variation supplement](round-06-asset-variations.md), the [animation supplement](round-07-animation-variants.md), the [character-collection supplement](round-08-character-collections.md), and the [ability/world supplement](round-09-abilities-and-world.md) for the exact prompt text, required references, variables, intended output and variations. The prompts are deliberately specific enough to start useful work; choose one and replace its variables rather than pasting the entire library into an agent.
 
 The shared CLI loads all nine catalogs, including `asset-variant-*`, `animation-*`, `collection-*` and `ability-*` IDs. Use `python3 authoring/prompt.py show ability-03-bomber-pickup-drop` or `list` to browse the complete collection. Local rendering substitutes prompt text; it does not call a model or produce media.
@@ -101,10 +99,6 @@ Choose one accepted military reveal picture and inspect it. Run `shared-02-style
 
 Use `shared-13-historical-chapter` with a named region and narrow era. Research first; let museum evidence determine object and architectural details. Generate the image-pack briefs from those notes and use `atlas-02-reveal-art` only after replacing the Petrykivka-specific subject if it is a historical scene. A contemporary Petrykivka adaptation, a Kosiv ceramics chapter and a historical reconstruction are different art briefs.
 
-### Extend the Coupa theme
-
-Use `navi-01-theme-bible` with current official Coupa reference notes, then `shared-17-module-cards` with the actual supported effect catalog. Create a Paper Circuit image pack with `shared-14-image-pack`. The original C-token remains replaceable placeholder art; use `shared-01-reference-lock` when real selected Navi artwork is available. Keep inferred gameplay metaphors distinct from Coupa's documented product behavior.
-
 ## Catalog index
 
 Each family has eight examples: theme bible, reveal art, player, enemy family, menu/UI, capture FX, soundtrack brief and promotional art. Shared prompts add production, review, editing, cultural research, challenge authoring and style expansion.
@@ -147,19 +141,6 @@ Each family has eight examples: theme bible, reveal art, player, enemy family, m
 | `retro-06-capture-fx`  | `image_generate` | Make a nostalgic but clean score-feedback sequence.             |
 | `retro-07-soundtrack`  | `text_generate`  | Specify original tracker nostalgia with adaptive layers.        |
 | `retro-08-promo`       | `image_generate` | Create collectible imaginary box art.                           |
-
-### navi-network
-
-| ID                    | Mode             | Purpose                                                          |
-| --------------------- | ---------------- | ---------------------------------------------------------------- |
-| `navi-01-theme-bible` | `text_generate`  | Make Coupa-inspired value recovery playful and broad.            |
-| `navi-02-reveal-art`  | `image_generate` | Reveal a living business network instead of a spreadsheet.       |
-| `navi-03-player`      | `image_generate` | Explore a replaceable placeholder with human-friendly character. |
-| `navi-04-enemies`     | `image_generate` | Turn spend friction into distinct abstract obstacles.            |
-| `navi-05-ui`          | `image_generate` | Create a game interface that feels clear and business-friendly.  |
-| `navi-06-capture-fx`  | `image_generate` | Show a connection becoming useful when a region closes.          |
-| `navi-07-soundtrack`  | `text_generate`  | Give Coupa-inspired play a warm, confident sound.                |
-| `navi-08-promo`       | `image_generate` | Explain value recovery through an inviting illustrated city.     |
 
 ### cross-family
 

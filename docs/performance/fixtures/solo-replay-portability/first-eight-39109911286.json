@@ -208,8 +208,8 @@
     },
     {
       "path": "game/i18n/catalogs.mjs",
-      "bytes": 1264959,
-      "sha256": "ba333d67a719078e6fca92094bee9d60e7fdcfd2ed197adadefed115766e9224"
+      "bytes": 1261607,
+      "sha256": "0f4661c71926c1f79ad159ef7d8e15d03e72d4f34a8de2e8b194eae915f0cd71"
     },
     {
       "path": "game/i18n/index.mjs",
@@ -703,7 +703,13 @@
         "checks": [],
         "scope": "Strict artifact verifier rejected the unchanged recording. Mechanics are unobserved."
       },
-      "nativeModuleOverrides": []
+      "nativeModuleOverrides": [
+        {
+          "path": "game/i18n/catalogs.mjs",
+          "bytes": 1264959,
+          "sha256": "ba333d67a719078e6fca92094bee9d60e7fdcfd2ed197adadefed115766e9224"
+        }
+      ]
     },
     {
       "id": "candidate-first30-webkit",
@@ -844,7 +850,13 @@
         "checks": [],
         "scope": "Strict artifact verifier rejected the unchanged recording. Mechanics are unobserved."
       },
-      "nativeModuleOverrides": []
+      "nativeModuleOverrides": [
+        {
+          "path": "game/i18n/catalogs.mjs",
+          "bytes": 1264959,
+          "sha256": "ba333d67a719078e6fca92094bee9d60e7fdcfd2ed197adadefed115766e9224"
+        }
+      ]
     }
   ],
   "columns": [
@@ -886,5 +898,20 @@
     "gitBlob": "3a73ab1789500e68492ac4bf7572ef84d7bf0ab3",
     "bytes": 9513,
     "sha256": "7e5e0337294144449b66519d945e927a0f0e8c586963df9b83e5a4a2aa246d7c"
+  },
+  "nodeSourceProjection": {
+    "format": "PresentationCatalogProjectionV1",
+    "scope": "Retired presentation messages removed; original gameplay modules and checkpoints unchanged. This is a derived source closure, not the original historical catalog.",
+    "original": {
+      "path": "game/i18n/catalogs.mjs",
+      "bytes": 1264959,
+      "sha256": "ba333d67a719078e6fca92094bee9d60e7fdcfd2ed197adadefed115766e9224"
+    },
+    "derived": {
+      "path": "game/i18n/catalogs.mjs",
+      "bytes": 1261607,
+      "sha256": "0f4661c71926c1f79ad159ef7d8e15d03e72d4f34a8de2e8b194eae915f0cd71"
+    },
+    "receipt": "docs/migrations/retained-packed-catalogs.json"
   }
 }

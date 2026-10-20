@@ -16,7 +16,7 @@ test('edition display names gain one shared suffix without changing stable ident
     'DroneAid / LINE',
   );
   assert.equal(editionDisplayName('DroneAid / LINE', 'droneaid'), 'DroneAid / LINE');
-  assert.equal(editionDisplayName('Coupa Village / LINE', 'coupa-all'), 'Coupa Village / LINE');
+  assert.equal(editionDisplayName('Sample Village / LINE', 'sample-all'), 'Sample Village / LINE');
   assert.equal(
     editionDisplayName('Workshop Lights', 'droneaid-nl-workshop-lights'),
     'Workshop Lights / LINE',

@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { createMediaPreparation } from '../ui/media-preparation.mjs';
 import { mountEditionLessons } from '../ui/edition-lessons.mjs';
-import { COMPANY_LESSONS } from '../company-campaigns/lessons.mjs';
+import { learningFixture, scoredLearningFixture } from './helpers/learning-fixture.mjs';
 import { createCompanyProject } from '../company-campaigns/content.mjs';
 import { compileContentProject, resolveMission } from '../content-design/project.mjs';
 import { applyGameplayTuning, resolveGameplayTuning } from '../gameplay-tuning.mjs';
@@ -66,7 +66,7 @@ async function learningDialogFixture(
   picture.id = 'view-picture';
   doc.body.append(picture, settings);
   const lesson = {
-    ...structuredClone(COMPANY_LESSONS[0]),
+    ...learningFixture(),
     missionId: f.source.missions[0].id,
     campaignId: f.source.campaigns[0].id,
   };
@@ -326,8 +326,8 @@ test('superseded and disposed learning imports cannot announce or adopt a late f
 });
 
 test('verified bonus save failures stay in the owning modal or named host recovery without changing the won run', async (t) => {
-  const lesson = COMPANY_LESSONS.find((entry) => entry.campaignId === 'coupa-source-to-pay'),
-    source = createCompanyProject({ brandId: 'coupa', campaignId: lesson.campaignId }),
+  const source = createCompanyProject({ brandId: 'droneaid-nl', campaignId: 'droneaid-nl-workshop-lights' }),
+    lesson = scoredLearningFixture({ missionId: source.missions[0].id, campaignId: source.campaigns[0].id }),
     compiled = compileContentProject(source),
     row = JSON.parse(
       readFileSync(new URL('fixtures/company-campaign-routes.json', import.meta.url)),
@@ -431,7 +431,7 @@ test('optional bonus waits for won picture, cannot change progression, and reope
     doc.body.append(node);
   }
   const lesson = {
-    ...structuredClone(COMPANY_LESSONS[0]),
+    ...learningFixture(),
     missionId: f.source.missions[0].id,
     campaignId: f.source.campaigns[0].id,
   };
@@ -504,10 +504,10 @@ test('optional bonus waits for won picture, cannot change progression, and reope
 });
 
 test('independent completed bonuses defer verification during play and persist out of order on Pause', async (t) => {
-  const lessons = COMPANY_LESSONS.filter(
-      (entry) => entry.campaignId === 'coupa-source-to-pay',
-    ).slice(0, 2),
-    source = createCompanyProject({ brandId: 'coupa', campaignId: lessons[0].campaignId }),
+  const source = createCompanyProject({ brandId: 'droneaid-nl', campaignId: 'droneaid-nl-workshop-lights' }),
+    lessons = source.missions.slice(0, 2).map(mission => scoredLearningFixture({
+      id: `sample-${mission.id}`, missionId: mission.id, campaignId: source.campaigns[0].id,
+    })),
     compiled = compileContentProject(source),
     rows = JSON.parse(
       readFileSync(new URL('fixtures/company-campaign-routes.json', import.meta.url)),
@@ -569,7 +569,7 @@ test('independent completed bonuses defer verification during play and persist o
         },
         { signal },
       ),
-    provider: { editionId: 'coupa-foundations', route: { source }, lessons },
+    provider: { editionId: 'sample-public', route: { source }, lessons },
     document: doc,
     window: { localStorage: storage, setTimeout },
     writer: { writable: true },
@@ -608,7 +608,7 @@ test('independent completed bonuses defer verification during play and persist o
   }
   const saved = () =>
     JSON.parse(
-      storage.getItem('revealline.company-learning-proofs.coupa-foundations.v1') || '{"proofs":[]}',
+      storage.getItem('revealline.company-learning-proofs.sample-public.v1') || '{"proofs":[]}',
     ).proofs;
   async function waitFor(count) {
     for (let tries = 0; tries < 1000 && saved().length !== count; tries++)
@@ -631,7 +631,7 @@ test('independent completed bonuses defer verification during play and persist o
   await waitFor(1);
   assert.equal(saved()[0].attempt.missionId, lessons[1].missionId);
   const revisit = view.pictureReady(
-    earnedPictureReference(source, lessons[1], 'coupa-foundations'),
+    earnedPictureReference(source, lessons[1], 'sample-public'),
   );
   doc.body.append(revisit);
   revisit.click();
@@ -653,8 +653,8 @@ test('independent completed bonuses defer verification during play and persist o
 });
 
 test('a wrong optional choice survives reload as practice; only a fresh actual won-run attempt earns proof', async (t) => {
-  const lesson = COMPANY_LESSONS.find((entry) => entry.campaignId === 'coupa-source-to-pay'),
-    source = createCompanyProject({ brandId: 'coupa', campaignId: lesson.campaignId }),
+  const source = createCompanyProject({ brandId: 'droneaid-nl', campaignId: 'droneaid-nl-workshop-lights' }),
+    lesson = scoredLearningFixture({ missionId: source.missions[0].id, campaignId: source.campaigns[0].id }),
     compiled = compileContentProject(source),
     row = JSON.parse(
       readFileSync(new URL('fixtures/company-campaign-routes.json', import.meta.url)),

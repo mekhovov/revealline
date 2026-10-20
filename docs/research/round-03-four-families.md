@@ -1,5 +1,7 @@
 # Round 03 — Four focused families, twelve visual treatments
 
+> Retained excerpt after an ownership migration. Historical totals and verification statements describe the original scope; this excerpt is not a current release qualification. Original bytes and removed material are preserved separately.
+
 Updated 12 September 2026. This supersedes the broad theme recommendation in round 02. The earlier ocean, fantasy, and space concepts remain archived exploration; the active scope is the four families the user listed. These are proposed treatments for one shared Xonix-style game, not twelve separate products or a commitment to implement twelve modes.
 
 ## Priority and common identity
@@ -10,7 +12,6 @@ The core action is always recognizable: leave a safe edge, draw a vulnerable lin
 
 A useful main-theme reveal sequence is **hidden image → exposed invading military scene → completed collectible scene**. A separate optional before/after reward may show recovery following mission completion, but the player should genuinely discover the military scene during play. Any units drawn into the background must be visually distinct from bright, animated hazards that can actually hit the player or trail.
 
-Recommended next close-ups: **W1 Daybreak Front as the main direction; W2 Night Signal as a lighting comparison; C1 Living Ornament, R2 Amiga Summer, and B2 Navi Network as proof that the common visual system supports the other families.**
 
 ## Family 1 — Ukrainian FPV / Russian–Ukrainian war — MAIN
 
@@ -70,18 +71,6 @@ Authenticity is part of the creative direction:
 | **R3 — NEON 1994** | CRT darks, chrome, deep purple, cyan reflections, stylized city nights; signal-bike-like cursor | Reveal music-video-like city scenes, cassette covers, and club posters; digital sentries and bright circuits. Original synthwave/breakbeat tracks | Chain enclosed nodes for a score multiplier; unlock visualizers and soundtrack arrangements |
 
 These dates are creative labels, not hardware emulation claims. [UFO 50](https://50games.fun/) explicitly combines an imagined 1980s game library with modern design and a shared palette. [Narita Boy](https://www.team17.com/games/narita-boy) demonstrates a coherent 80s digital fantasy and synth identity. [Cyber Shadow](https://www.yachtclubgames.com/games/cyber-shadow/) is useful for a tighter action silhouette vocabulary. Borrow design principles while drawing original scenes and characters.
-
-## Family 4 — Coupa BSM + AI
-
-| ID / treatment | Look and avatar | Reveal, enemies, and sound | Optional rule / reason to return |
-| --- | --- | --- | --- |
-| **B1 — SAVINGS CITY** | Friendly blue/white city with gold value accents; a small Coupa-themed helper | Reveal a client business improving as opportunities are captured; duplicate invoices, runaway subscriptions, and expense gremlins. Playful synth-funk | Enclose matching opportunities to finish a client contract; collect lively client districts |
-| **B2 — NAVI NETWORK** | Deep blue, clear white, electric cyan, restrained gold; an original placeholder avatar pending verified official Navi artwork | Reveal a lively network connecting buyers, suppliers, finance, and useful AI assistants; disconnected links, duplicated records, and delay loops. Bright electronic arpeggios | Capture complementary nodes to create a visible workflow; unlock helpful agent characters and short challenges |
-| **B3 — VALUE FACTORY** | Warm illustrated workshop mixed with Coupa blues; a compact helper robot carrying a checkmark/light | Reveal a miniature business process becoming productive; paper piles, bottlenecks, and waste bubbles. Tactile percussion and cheerful bass | Enclose a complete request-to-outcome group; earn an animated process postcard and increasingly interesting layouts |
-
-Coupa's documentation defines [Navi and Navi Agent Studio](https://docs.coupa.com/en/coupa-glossary/overview/c); its [supplier-assistance documentation](https://docs.coupa.com/en/supplier-documentation/coupa-for-suppliers/the-coupa-supplier-portal-or-csp/answer-csp-related-questions-with-csp-supplier-assistance-agent) supplies a current official visual reference for Navi. Its own [May 2026 Compose announcement](https://www.prnewswire.com/news-releases/coupa-launches-coupa-compose-and-catalyst-to-accelerate-agentic-ai-value-and-delivery-at-inspire-2026-302769893.html) describes building, managing, and orchestrating AI agents across procurement, finance, and supply chain.
-
-The proposed game interprets those ideas through symbols and playful activity. A made-up robot is a concept mascot until matched to supplied brand assets. Game scores and pretend customer amounts are fictional. Keep BSM and AI understandable through actions and outcomes, rather than showing a dense enterprise dashboard or requiring technical vocabulary.
 
 ## One coherent pixel standard
 

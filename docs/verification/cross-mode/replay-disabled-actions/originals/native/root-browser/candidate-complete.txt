@@ -1,3 +1,5 @@
+# Retained historical excerpt after an ownership migration. Exact original bytes are preserved separately. Original totals and verification statements describe the original scope; this excerpt is not a current qualification or a complete test result.
+
 - banner:
   - link "← Back to the game":
     - /url: ../
@@ -57,7 +59,6 @@
         - option "FPV Front" [selected]
         - option "Ukraine Atlas"
         - option "1994 Forever"
-        - option "Spend Network"
       - checkbox "Show grid"
       - text: Show grid
       - paragraph: Themes change the art. The imported route, class abilities and result stay exactly as recorded. This theater is silent.

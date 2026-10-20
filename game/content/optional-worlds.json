@@ -44,20 +44,6 @@
       "normalizedSha256": "cb340176ef35be42995ada894eae34e0ba001a14ddac63ace4719e1babfa80e1"
     },
     {
-      "id": "original-spend-network",
-      "version": "1.0.0",
-      "name": "Spend Network · Shared Routes",
-      "description": "Three original reward pictures over the proven Pressure Lines layouts. Separate progress; existing music. Direction-only Arcade, contact pickups and warned hunters.",
-      "themeId": "coupa",
-      "levels": 3,
-      "path": "authoring/library/four-worlds-chapters/packs/original-spend-network.json",
-      "bytes": 11067202,
-      "normalizedBytes": 11058349,
-      "sha256": "5ab9a0c7362ca8e05819ff3d68c0a7246ab5057b4d796a063d3d69af115504ac",
-      "campaignKey": "original-spend-shared-routes/1/7a36efe129711f19",
-      "normalizedSha256": "86088205a8335a6689370d9edcaa5759a217b6e0c469435f119add348d6aa610"
-    },
-    {
       "id": "fpv-route-choices",
       "version": "1.0.0",
       "name": "FPV Front · Route Choices — Tactical",
