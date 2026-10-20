@@ -697,3 +697,106 @@ for (const clock of ['animation timestamp', 'callback execution']) {
     assert.equal(flow.inert, true, 'Cancelled controls cannot retain input ownership.');
   });
 }
+
+for (const locale of ['en', 'uk'])
+  test(`assisted gym ${locale} presets preserve a paused practice transcript through partial save, Retry and Undo`, async (t) => {
+    const priorLocale = getLocale();
+    setLocale(locale, { persist: false });
+    t.after(() => setLocale(priorLocale, { persist: false }));
+    const displayKey = 'revealline.display.v1',
+      menuKey = 'revealline.menu-animation.v1',
+      originalDisplay = { textFace: 'pixel', textSize: 'standard', reducedEffects: false },
+      values = new Map([
+        [displayKey, JSON.stringify(originalDisplay)],
+        [menuKey, 'on'],
+      ]),
+      writes = [];
+    let menuWorking = true;
+    const f = await fixture(t, {
+        search: `?lang=${locale}`,
+        storage: {
+          getItem: (key) => values.get(key) ?? null,
+          setItem(key, value) {
+            if ([displayKey, menuKey].includes(key)) {
+              writes.push([key, value]);
+              if (key === menuKey && !menuWorking)
+                throw new DOMException('Modeled full storage', 'QuotaExceededError');
+            }
+            values.set(key, value);
+          },
+        },
+      }),
+      $ = (id) => f.doc.getElementById(id),
+      preset = (suffix) => $(`gym-settings-panel-accessibility-comfort-${suffix}`);
+    $('gym-shell-action-primary').click();
+    f.key('KeyW');
+    f.tick(4);
+    f.key('KeyW', 'keyup');
+    $('gym-shell-action-pause').click();
+    $('gym-shell-action-pause-settings').click();
+    $('gym-settings-tab-accessibility').click();
+    const paused = f.view.snapshot(),
+      before = f.view.trace(),
+      replayed = replayPractice(f.view.catalogue(), before),
+      drillId = $('drill').value;
+    assert.equal(paused.status, 'paused');
+    assert.ok(paused.ticks > 0, 'The test retains a started practice attempt.');
+    assert.equal(preset('apply').closest('[hidden],[inert]'), null);
+    preset('choice').value = 'clear';
+    preset('choice').emit('change');
+    preset('choice').value = 'comfort';
+    preset('choice').emit('change');
+    assert.equal(writes.length, 0, 'Opening and previewing never writes preferences.');
+    assert.deepEqual(JSON.parse(values.get(displayKey)), originalDisplay);
+    assert.equal(values.get(menuKey), 'on');
+    menuWorking = false;
+    preset('apply').focus();
+    preset('apply').click();
+    assert.equal(writes.length, 2);
+    assert.equal(f.doc.activeElement, preset('apply'));
+    assert.equal($('gym-global-textSize').value, 'large');
+    assert.equal($('gym-global-menuAnimation').checked, false);
+    assert.deepEqual(JSON.parse(values.get(displayKey)), {
+      textFace: 'plain',
+      textSize: 'large',
+      reducedEffects: true,
+    });
+    assert.equal(values.get(menuKey), 'on');
+    assert.match(
+      preset('status').textContent,
+      locale === 'en' ? /Session only/ : /Лише в цьому сеансі/,
+    );
+    menuWorking = true;
+    preset('apply').click();
+    assert.equal(writes.length, 3, 'Retry saves only the owner that remained unsaved.');
+    assert.equal(writes[2][0], menuKey);
+    assert.equal(values.get(menuKey), 'off');
+    assert.doesNotMatch(preset('status').textContent, /Session only|Лише в цьому сеансі/);
+    f.tick(4);
+    assert.deepEqual(f.view.snapshot(), paused);
+    assert.deepEqual(f.view.trace(), before);
+    assert.deepEqual(replayPractice(f.view.catalogue(), f.view.trace()), replayed);
+    preset('undo').focus();
+    preset('undo').click();
+    assert.equal(writes.length, 5);
+    assert.deepEqual(JSON.parse(values.get(displayKey)), originalDisplay);
+    assert.equal(values.get(menuKey), 'on');
+    assert.equal(f.doc.activeElement, preset('apply'));
+    assert.equal($('drill').value, drillId);
+    assert.deepEqual(f.view.snapshot(), paused);
+    assert.deepEqual(f.view.trace(), before);
+    assert.deepEqual(replayPractice(f.view.catalogue(), f.view.trace()), replayed);
+    $('gym-shell-action-settings-back').click();
+    f.tick(4);
+    assert.equal($('gym-shell-pause-dialog').open, true);
+    assert.equal(f.doc.activeElement, $('gym-shell-action-pause-resume'));
+    assert.deepEqual(f.view.snapshot(), paused, 'Leaving Settings never resumes the drill.');
+    assert.deepEqual(f.view.trace(), before);
+    const retainedApply = preset('apply');
+    f.view.dispose();
+    const finalWrites = writes.length;
+    retainedApply.click();
+    f.win.emit('pageshow', { persisted: true });
+    assert.equal(writes.length, finalWrites);
+    assert.equal(f.doc.querySelector('.comfort-presets'), null);
+  });
