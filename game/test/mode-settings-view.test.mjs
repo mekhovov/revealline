@@ -168,3 +168,27 @@ test('nested settings selects can shrink beneath their longest native option', a
     'A moved Snake disclosure must not retain the intrinsic width of its localized cast option.',
   );
 });
+
+test('mode settings forward the existing presentation owner without replacing host controls', () => {
+  const f = fixture();
+  const events = [];
+  const settings = mountModeSettings({
+    ...f,
+    groups: { gameplay: [f.gameplay], display: [f.language] },
+    attachPanels: attachSettingsPanels,
+    onPresentationChange: () =>
+      events.push({
+        selected: f.root.querySelector('[aria-selected="true"]').id,
+        view: f.root.dataset.settingsView,
+      }),
+  });
+  assert.deepEqual(events, []);
+  settings.tabs.display.click();
+  assert.equal(events.length, 1);
+  assert.equal(events[0].selected, settings.tabs.display.id);
+  assert.equal(events[0].view, 'panel');
+  assert.equal(f.document.getElementById('existing-language') === f.language, true);
+  settings.tabs.display.click();
+  assert.equal(events.length, 1);
+  settings.destroy();
+});
