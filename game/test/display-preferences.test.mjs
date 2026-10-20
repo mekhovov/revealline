@@ -128,6 +128,7 @@ test('shared display record overrides legacy synchronously and startup never wri
   assert.deepEqual(f.preferences.snapshot(), {
     textFace: 'plain',
     textSize: 'standard',
+    effectiveTextSize: 'standard',
     reducedEffects: true,
     effectiveReducedEffects: true,
     revision: 0,
@@ -462,6 +463,7 @@ test('persisted return reads current shared state and cap without resaving or du
   assert.deepEqual(f.preferences.snapshot(), {
     textFace: 'plain',
     textSize: 'large',
+    effectiveTextSize: 'large',
     reducedEffects: false,
     effectiveReducedEffects: true,
     revision: 1,

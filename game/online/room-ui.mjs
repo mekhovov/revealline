@@ -123,9 +123,10 @@ export function mountRoomUI({
         option.textContent = names[i];
       });
     const textSize = doc.querySelector('[data-tool-text-size]');
-    [...textSize.options].forEach((option, i) => {
-      option.textContent = ['Звичайний', 'Великий'][i];
-    });
+    for (const option of textSize.options) {
+      const label = { standard: 'Звичайний', large: 'Великий' }[option.value];
+      if (label) option.textContent = label;
+    }
     const textFace = doc.querySelector('[data-tool-text-face]');
     [...textFace.options].forEach((option, i) => {
       option.textContent = [t('interface:themeFont'), t('common:text.plain')][i];

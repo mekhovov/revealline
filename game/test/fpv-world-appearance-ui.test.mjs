@@ -33,7 +33,11 @@ import { createAdvancedWorkerHandler } from '../../optional-practice/civilian-fp
 
 import { WORLD_LIBRARY_CATALOGUE } from '../../optional-practice/civilian-fpv/world-library.mjs';
 import { REGIONAL_LIBRARY_PINS } from '../../optional-practice/civilian-fpv/regional-library.mjs';
-const unifiedMissionCount = WORLD_CATALOGUE.length + BEGINNER_CATALOGUE.length + WORLD_LIBRARY_CATALOGUE.reduce((total, row) => total + row.courses, 0) + REGIONAL_LIBRARY_PINS.length;
+const unifiedMissionCount =
+  WORLD_CATALOGUE.length +
+  BEGINNER_CATALOGUE.length +
+  WORLD_LIBRARY_CATALOGUE.reduce((total, row) => total + row.courses, 0) +
+  REGIONAL_LIBRARY_PINS.length;
 
 function registerOfflineFeedbackTests() {
   for (const locale of ['en', 'uk'])
@@ -373,7 +377,9 @@ test('World random flight from the shared chooser follows displayed filters, pre
   const originals = structuredClone(WORLD_CATALOGUE),
     choose = () => h.doc.querySelector('[data-random-flight="catalogue"]');
   t.after(() => setLocale(priorLocale, { persist: false }));
-  const expected = new Set(WORLD_CATALOGUE.filter((entry) => entry.world === 'stadium').map((entry) => entry.id));
+  const expected = new Set(
+    WORLD_CATALOGUE.filter((entry) => entry.world === 'stadium').map((entry) => entry.id),
+  );
   h.$('worlds-shell-action-missions').click();
   assert.equal(choose().type, 'button');
   h.$('journey-search').value = 'Circuit stadium';
@@ -2029,10 +2035,7 @@ test('World shared chooser remains usable when native scene loading fails', asyn
       h.$('journey-chooser').open &&
       h.$('journey-chooser').textContent.includes('Scene fixture unavailable'),
   );
-  assert.equal(
-    h.doc.querySelectorAll('.journey-card').length,
-    unifiedMissionCount,
-  );
+  assert.equal(h.doc.querySelectorAll('.journey-card').length, unifiedMissionCount);
   assert.ok(h.doc.querySelectorAll('.journey-card').every((item) => !item.disabled));
   assert.notEqual(h.app.snapshot().state.status, 'active');
 });
@@ -3912,7 +3915,10 @@ test('Unified map cards and search follow the current language without changing 
   h.$('journey-search').value = 'Залізнична долина';
   h.$('journey-search').emit('input');
   const cards = h.doc.querySelectorAll('.journey-card');
-  assert.deepEqual(cards.map((card) => card.dataset.missionId), ids);
+  assert.deepEqual(
+    cards.map((card) => card.dataset.missionId),
+    ids,
+  );
   assert.ok(cards.every((card) => card.textContent.includes('Залізнична долина')));
 });
 
@@ -4000,4 +4006,22 @@ test('Random from a paused lesson keeps the learning context and can exclude all
   h.$('world-random-levels').value = 'mixed';
   h.$('world-random-levels').emit('change');
   assert.equal(h.$('journey-random-level').disabled, false);
+});
+
+test('World preserves incoming extra-large through generated controls and an unrelated display change', async (t) => {
+  const storage = new Map([
+    [
+      'revealline.display.v1',
+      JSON.stringify({ textFace: 'plain', textSize: 'extra-large', reducedEffects: false }),
+    ],
+  ]);
+  const h = fixture(t, { storage });
+  await h.app.ready;
+  const control = h.$('worlds-global-textSize');
+  assert.equal(control.value, 'extra-large');
+  assert.equal(control.querySelector('[data-text-size-retained]').disabled, true);
+  assert.equal(h.doc.body.dataset.textSize, 'large');
+  h.$('worlds-global-reducedEffects').checked = true;
+  h.$('worlds-global-reducedEffects').emit('change');
+  assert.equal(JSON.parse(storage.get('revealline.display.v1')).textSize, 'extra-large');
 });

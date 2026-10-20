@@ -1,3 +1,4 @@
+import { renderTextSizeControl } from '../ui/text-size-control.mjs';
 import { classicOperationStatus } from './classic-operation-status.mjs';
 import { CLASSIC_SNAKE_CAMPAIGN_REVISION } from './classic-campaign.mjs';
 import { classicBoardPreferences, isClassicWorldStyle } from './classic-worlds.mjs';
@@ -2063,7 +2064,8 @@ remains.subscribe(primeEffects);
 display.subscribe(primeEffects);
 display.subscribe((choice) => {
   doc.body.dataset.textFace = $('snake-text-face').value = choice.textFace;
-  doc.body.dataset.textSize = $('snake-text-size').value = choice.textSize;
+  doc.body.dataset.textSize = choice.effectiveTextSize ?? choice.textSize;
+  renderTextSizeControl($('snake-text-size'), choice.textSize);
   footprint?.refresh();
 });
 $('snake-text-face').addEventListener('change', () =>
