@@ -392,6 +392,38 @@ test('Academy terminal playback remains distinct from live flight completion and
   }
 });
 
+test('Worlds preserves its actual flight and playback states while every existing host scope remains intact', () => {
+  for (const state of [
+    'idle',
+    'running',
+    'paused',
+    'disarmed',
+    'complete',
+    'expired',
+    'failed',
+    'playback-ended',
+  ]) {
+    const value = supportSnapshot({ kind: 'fpv-worlds', state }, environment(), clock);
+    assert.equal(value.scope, 'worlds-game-shell');
+    assert.equal(value.game.host, 'fpv-worlds');
+    assert.equal(value.game.state, state);
+    assert.equal(value.game.saving.writable, null);
+    assert.equal(value.controller.assigned, null);
+    assert.equal(value.controller.neutral, null);
+    assert.equal(value.controller.confirmBlocked, null);
+  }
+  for (const [kind, scope] of [
+    ['solo', 'primary-game-shell'],
+    ['capture-team', 'team-game-shell'],
+    ['capture-versus', 'versus-game-shell'],
+    ['fpv-academy', 'academy-game-shell'],
+  ]) {
+    const value = supportSnapshot({ kind, state: 'paused' }, environment(), clock);
+    assert.equal(value.game.host, kind);
+    assert.equal(value.scope, scope);
+  }
+});
+
 const observationCopy = {
   en: {
     presence:

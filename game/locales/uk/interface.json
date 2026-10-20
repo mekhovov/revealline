@@ -6097,5 +6097,6 @@
   "supportSummary.game.playback-ended": "Перегляд завершено",
   "supportSummary.presence.connected": "Виявлено під’єднаний контролер. Це спостереження не підтверджує його призначення чи готовність до керування меню.",
   "supportSummary.presence.disconnected": "Під’єднаного контролера не виявлено.",
+  "supportSummary.game.failed": "Політ завершився невдачею",
   "worldIdsCommaSeparated": "Світи (через кому: retro, fpv, ukraine)"
 }
