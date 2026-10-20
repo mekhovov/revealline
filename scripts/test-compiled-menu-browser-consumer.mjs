@@ -1614,3 +1614,109 @@ test('resume read failure retains only finite stage and kind without raw protoco
     assert(!JSON.stringify(p.snapshot()).includes(secret));
   }
 });
+
+test('first Missions visibility profile omits only three unused container texts and preserves every other public fact', () => {
+  const omitted = ['shell-home', 'journey-chooser', 'settings-dialog'];
+  const scalar = scalarReadFixture({ forbidCardQuery: true, open: true });
+  const getterReads = new Map(omitted.map((id) => [id, 0]));
+  for (const id of omitted) {
+    Object.defineProperty(scalar.scope.document.getElementById(id), 'textContent', {
+      configurable: true,
+      get() {
+        getterReads.set(id, getterReads.get(id) + 1);
+        throw new Error('Unused container text must stay unobserved: ' + id);
+      },
+    });
+  }
+  const sampled = readCompiledMenuPublicState(
+    { includeCards: false, omitUnusedContainerText: true },
+    scalar.scope,
+  );
+  const baseline = scalarReadFixture({ forbidCardQuery: true, open: true });
+  const expected = readCompiledMenuPublicState({ includeCards: false }, baseline.scope);
+  for (const id of omitted) expected.controls[id].text = null;
+  assert.deepEqual(sampled, expected);
+  assert.equal(Object.keys(sampled.controls).length, 13);
+  assert.deepEqual([...getterReads.values()], [0, 0, 0]);
+  assert.equal(scalar.queries(), 0);
+  assert.deepEqual(sampled.cards, []);
+  assert.equal(sampled.controls['journey-chooser'].visible, true);
+  assert.equal(sampled.controls['journey-chooser'].open, true);
+  assert.equal(sampled.controls['shell-play'].text, 'shell-play');
+  assert.equal(sampled.controls['shell-options'].text, 'shell-options');
+  const trace = createCompiledOperationTrace(
+    { deadline: 570000, now: () => 0, step: () => Promise.resolve() },
+    (value) => value,
+  );
+  trace.recordPublicState(sampled);
+  for (const id of omitted) assert.equal(trace.snapshot().publicRead.state.controls[id].text, null);
+  for (const id of omitted) {
+    for (const options of [
+      {},
+      { includeCards: false },
+      { includeCards: false, omitUnusedContainerText: false },
+      { includeCards: false, omitUnusedContainerText: 'true' },
+      { includeCards: true, omitUnusedContainerText: true },
+      { includeCards: 'false', omitUnusedContainerText: true },
+    ]) {
+      const f = scalarReadFixture({ open: true });
+      let reads = 0;
+      Object.defineProperty(f.scope.document.getElementById(id), 'textContent', {
+        get() {
+          reads += 1;
+          throw new Error('Expected default text read: ' + id);
+        },
+      });
+      assert.throws(
+        () => readCompiledMenuPublicState(options, f.scope),
+        new RegExp('Expected default text read: ' + id),
+      );
+      assert.equal(reads, 1);
+    }
+  }
+});
+
+test('first Missions text omission preserves default normalized text whitespace and the exact512 boundary', () => {
+  const omitted = ['shell-home', 'journey-chooser', 'settings-dialog'];
+  const cases = [
+    ['', ''],
+    [' \t\n\u00a0\ufeff ', ''],
+    [' \talpha\n ', 'alpha'],
+    ['x'.repeat(512), 'x'.repeat(512)],
+    ['x'.repeat(513), '[public text over limit]'],
+    ['\u00a0' + 'x'.repeat(512) + '\ufeff', 'x'.repeat(512)],
+    ['\u00a0' + 'x'.repeat(513) + '\ufeff', '[public text over limit]'],
+    [' '.repeat(20000) + 'a' + ' '.repeat(20000), 'a'],
+  ];
+  for (const [value, expectedText] of cases) {
+    const f = scalarReadFixture({ cards: [{ id: CURRENT_ID }], open: true });
+    for (const id of [...omitted, 'shell-play', 'shell-options', 'time', 'lives', 'coverage'])
+      f.scope.document.getElementById(id).textContent = value;
+    for (const options of [
+      {},
+      { includeCards: false },
+      { includeCards: false, omitUnusedContainerText: false },
+      { includeCards: false, omitUnusedContainerText: 'true' },
+      { includeCards: true, omitUnusedContainerText: true },
+      { includeCards: 'false', omitUnusedContainerText: true },
+    ]) {
+      const full = readCompiledMenuPublicState(options, f.scope);
+      for (const id of [...omitted, 'shell-play', 'shell-options'])
+        assert.equal(full.controls[id].text, expectedText);
+      assert.equal(full.time, expectedText);
+      assert.equal(full.lives, expectedText);
+      assert.equal(full.coverage, expectedText);
+    }
+    const sampled = readCompiledMenuPublicState(
+      { includeCards: false, omitUnusedContainerText: true },
+      f.scope,
+    );
+    for (const id of omitted) assert.equal(sampled.controls[id].text, null);
+    for (const id of ['shell-play', 'shell-options'])
+      assert.equal(sampled.controls[id].text, expectedText);
+    assert.equal(sampled.time, expectedText);
+    assert.equal(sampled.lives, expectedText);
+    assert.equal(sampled.coverage, expectedText);
+    assert.deepEqual(sampled.cards, []);
+  }
+});

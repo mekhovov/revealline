@@ -1173,7 +1173,7 @@ export async function prepareCompiledResumeEntryProbe(session, origin, options =
 }
 
 export function readCompiledMenuPublicState(
-  { startProbe = null, includeCards = true } = {},
+  { startProbe = null, includeCards = true, omitUnusedContainerText = false } = {},
   scope = globalThis,
 ) {
   const { document, location } = scope;
@@ -1197,7 +1197,13 @@ export function readCompiledMenuPublicState(
       visible: visible(x),
       enabled: Boolean(x && !x.disabled),
       open: Boolean(x?.open),
-      text: text(x),
+      // Only the first visibility wait opts out of these unused subtree strings.
+      text:
+        includeCards === false &&
+        omitUnusedContainerText === true &&
+        ['shell-home', 'journey-chooser', 'settings-dialog'].includes(id)
+          ? null
+          : text(x),
     };
   };
   // The first-open wait checks only chooser controls, not mission membership.
