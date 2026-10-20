@@ -5985,5 +5985,7 @@
   "supportSummary.game.complete": "Flight complete",
   "supportSummary.game.expired": "Flight time expired",
   "supportSummary.game.playback-ended": "Playback ended",
+  "supportSummary.presence.connected": "Connected controller observed. Assignment and menu readiness are not confirmed by this observation.",
+  "supportSummary.presence.disconnected": "No connected controller was observed.",
   "worldIdsCommaSeparated": "Worlds (comma separated: retro, fpv, ukraine)"
 }
