@@ -1,0 +1,150 @@
+name: Fixed compiled menu browser 37ec
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+    paths:
+      - '.github/workflows/compiled-menu-browser-37ec.yml'
+      - 'scripts/compiled-menu-browser*.mjs'
+      - 'scripts/run-compiled-menu-browser.mjs'
+      - 'scripts/test-compiled-menu-browser-consumer.mjs'
+      - 'scripts/compiled-menu-browser-tools/**'
+      - 'scripts/solo-remote-archive.py'
+      - 'scripts/serve-production-preview.mjs'
+      - 'scripts/run-solo-remote-correctness.mjs'
+      - 'scripts/solo-pages-*.mjs'
+      - 'scripts/solo-qualification-shared-mode.mjs'
+      - 'scripts/game-cli.mjs'
+      - 'scripts/check-source-identity.mjs'
+      - 'docs/verification/compiled-menu-browser-37ec*'
+      - 'package.json'
+      - 'package-lock.json'
+
+permissions:
+  contents: read
+  actions: read
+
+concurrency:
+  group: compiled-menu-browser-37ec-${{ github.event.pull_request.number }}
+  cancel-in-progress: false
+
+jobs:
+  compiled_menu_browser:
+    name: compiled-menu-browser-37ec
+    if: >-
+      github.repository == 'mekhovov/revealline' &&
+      github.event.pull_request.head.repo.full_name == github.repository &&
+      github.event.pull_request.base.ref == 'main'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 50
+    env:
+      PYTHONDONTWRITEBYTECODE: 1
+      GIT_NO_LAZY_FETCH: 1
+      GIT_OPTIONAL_LOCKS: 0
+      SOURCE_SHA: ${{ github.event.pull_request.head.sha }}
+    steps:
+      - name: Exact consumer controls, not target runtime source
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          fetch-depth: 1
+          persist-credentials: false
+      - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5
+        with:
+          node-version: 22.22.2
+          package-manager-cache: false
+      - name: Bind source and fresh owned workspace
+        shell: bash
+        run: |
+          set -euo pipefail
+          unset GIT_INDEX_FILE GIT_COMMON_DIR GIT_DIR GIT_WORK_TREE NODE_OPTIONS NODE_COMPILE_CACHE
+          test "$(git rev-parse HEAD)" = "$SOURCE_SHA"
+          python3 -B - <<'PYCODE'
+          import os, pathlib, re, shutil
+          assert shutil.disk_usage(os.environ['RUNNER_TEMP']).free > 10 * 1024**3
+          identity = os.environ['GITHUB_RUN_ID'] + '-' + os.environ['GITHUB_RUN_ATTEMPT']
+          assert re.fullmatch('[0-9]+-[0-9]+', identity)
+          root = pathlib.Path(os.environ['RUNNER_TEMP']).resolve() / ('cmb-' + identity)
+          root.mkdir(mode=0o700)
+          (root / 'tools').mkdir(mode=0o700)
+          PYCODE
+      - name: Acquire immutable standalone source auditor only
+        env:
+          READ_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          python3 -B - <<'PYCODE'
+          import base64, hashlib, json, os, pathlib, re, urllib.request
+          oid = '56ad477033516d565fbb7f85cea70d0430ceae1c'
+          request = urllib.request.Request('https://api.github.com/repos/mekhovov/revealline/git/blobs/' + oid,
+            headers={'Authorization': 'Bearer ' + os.environ['READ_TOKEN'], 'Accept': 'application/vnd.github+json'})
+          with urllib.request.urlopen(request, timeout=30) as response:
+            raw = response.read(32769)
+          assert len(raw) <= 32768
+          row = json.loads(raw)
+          assert row['sha'] == oid and row['size'] == 7275 and row['encoding'] == 'base64'
+          data = base64.b64decode(''.join(row['content'].split()), validate=True)
+          assert len(data) == 7275
+          assert hashlib.sha256(data).hexdigest() == 'a6124736ce13aec52fb26d818e6c2aa6ce83965ccaf92b94c783043d1d150fc4'
+          identity = os.environ['GITHUB_RUN_ID'] + '-' + os.environ['GITHUB_RUN_ATTEMPT']
+          assert re.fullmatch('[0-9]+-[0-9]+', identity)
+          root = pathlib.Path(os.environ['RUNNER_TEMP']).resolve() / ('cmb-trusted-' + identity)
+          root.mkdir(mode=0o700)
+          with (root / 'source-audit.mjs').open('xb') as target: target.write(data)
+          PYCODE
+      - name: Install locked consumer and browser dependencies without package scripts
+        timeout-minutes: 15
+        shell: bash
+        run: |
+          set -euo pipefail
+          unset NODE_OPTIONS NODE_COMPILE_CACHE GIT_INDEX_FILE GIT_COMMON_DIR GIT_DIR GIT_WORK_TREE
+          root="$RUNNER_TEMP/cmb-$GITHUB_RUN_ID-$GITHUB_RUN_ATTEMPT"
+          cp scripts/compiled-menu-browser-tools/package.json scripts/compiled-menu-browser-tools/package-lock.json "$root/tools/"
+          timeout --signal=TERM --kill-after=15s 4m npm ci --ignore-scripts --no-audit --no-fund
+          timeout --signal=TERM --kill-after=15s 4m npm ci --prefix "$root/tools" --ignore-scripts --no-audit --no-fund
+          PLAYWRIGHT_BROWSERS_PATH="$root/browsers" timeout --signal=TERM --kill-after=30s 6m \
+            node "$root/tools/node_modules/playwright/cli.js" install --with-deps chromium
+      - name: Observe fixed historical compiled package through its ordinary form
+        timeout-minutes: 31
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REVEALLINE_PAGES_TEST_PASSWORD: ${{ secrets.REVEALLINE_PAGES_TEST_PASSWORD }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          unset NODE_OPTIONS NODE_COMPILE_CACHE GIT_INDEX_FILE GIT_COMMON_DIR GIT_DIR GIT_WORK_TREE
+          timeout --signal=TERM --kill-after=30s 30m \
+            node --max-old-space-size=1536 scripts/run-compiled-menu-browser.mjs
+      - name: Verify closed bounded sanitized evidence before upload
+        id: evidence
+        if: always()
+        shell: bash
+        run: |
+          python3 -B - <<'PYCODE'
+          import os, pathlib, re, stat
+          identity = os.environ['GITHUB_RUN_ID'] + '-' + os.environ['GITHUB_RUN_ATTEMPT']
+          assert re.fullmatch('[0-9]+-[0-9]+', identity)
+          root = pathlib.Path(os.environ['RUNNER_TEMP']).resolve() / ('cmb-evidence-' + identity)
+          assert root.is_dir() and not root.is_symlink()
+          total = 0
+          names = list(root.iterdir())
+          assert len(names) <= 32
+          allowed = {'summary.json', 'summary-provisional.json', 'cleanup.json', 'browser-report.json', 'en-home.jpg', 'en-missions.jpg', 'uk-home.jpg', 'uk-missions.jpg'}
+          for phase in ['source-before', 'archive-outer', 'archive-inner', 'browser', 'source-after']:
+            allowed.update({phase + '-terminal.json', phase + '-log.json'})
+          for file in names:
+            info = file.lstat()
+            assert file.name in allowed and stat.S_ISREG(info.st_mode) and not file.is_symlink()
+            total += info.st_size
+          assert total <= 4 * 1024**2
+          with open(os.environ['GITHUB_OUTPUT'], 'a') as output: output.write('bounded=true\n')
+          PYCODE
+      - name: Retain only sanitized bounded consumer evidence
+        if: ${{ !cancelled() && steps.evidence.outputs.bounded == 'true' }}
+        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
+        with:
+          name: compiled-menu-browser-37ec-${{ github.event.pull_request.head.sha }}
+          path: ${{ runner.temp }}/cmb-evidence-${{ github.run_id }}-${{ github.run_attempt }}/
+          if-no-files-found: error
+          retention-days: 7
+          compression-level: 0
