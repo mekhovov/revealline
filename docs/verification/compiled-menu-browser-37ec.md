@@ -330,3 +330,39 @@ There is no production fix or browser acceptance claim. The earlier failures
 and all original diagnostic warning criteria remain authoritative. At this
 authored checkpoint, the new source checks, complete 29-case file and any new
 browser observation remain unrun.
+
+## Active resume-pause ownership correction proposal
+
+The exact7db normal source workflow passed the complete29-case file. Its browser
+observation reached English current/retained Missions, Back focus, exact briefing
+and the native Start handler. The debugger verified the exact compiled source
+and paused once at resume entry, then retained guard-read-unavailable with no
+scalar values. Its pause lasted88.298ms and resume/disable/detach were all
+acknowledged. The unchanged running window expired; all six postchecks passed.
+This is not an internal guard result or a production-cause finding.
+
+The observer uses a separate CDP session from the native click promise. Source
+review found that completion of that promise unconditionally closed the probe
+even if its independently bounded pause read was still active. This correction
+lets an already-active pause keep its existing100ms read owner and finally
+cleanup. A no-hit or already-retiring owner follows the original disarm path.
+The25ms side-effect-safe evaluation,50ms command/cleanup limits and250ms observed
+pause owner remain unchanged. No new timer, retry, permissive evaluation,
+getter/function fallback, native action or ordinary-flow deadline is added.
+
+Two finite fields identify the last read stage and a conservative failure kind:
+command deadline, unavailable frame/session, generic protocol error or a
+whitelisted JavaScript exception class. No raw message, stack, exception text,
+description, scope object, script or user payload is retained. Classification
+does not convert unavailable values into successful guard reads or identify
+the production cause. The existing trace/report bounds and original evidence
+authority remain unchanged.
+
+All original29 test bodies remain exact. One appended held-evaluation mock
+requires that native-action completion cannot resume/detach the active read;
+a second covers finite classification and rejected raw-data propagation. The
+proposed complete baseline against the original7db owner plus the new controls
+must record the old29 passing and both new cases failing. The corrected complete
+31-case file must then pass under the same tool-only guard. Those source red/
+green results and any new hosted diagnostic remain unrun at this authored
+checkpoint. The source review alone does not prove this race occurred in7db.

@@ -1473,3 +1473,144 @@ test('mandatory membership reads retain full ordered identity visibility enabled
     /Public card evidence limit/,
   );
 });
+
+test('native action completion cannot prematurely retire a matching bounded active resume read', async () => {
+  const f = resumeProtocolFixture();
+  const originalSend = f.session.send;
+  let enterRead, releaseRead;
+  const entered = new Promise((resolve) => {
+    enterRead = resolve;
+  });
+  const held = new Promise((resolve) => {
+    releaseRead = resolve;
+  });
+  f.session.send = async function (method, ...args) {
+    if (method === 'Debugger.evaluateOnCallFrame') {
+      enterRead();
+      await held;
+    }
+    return originalSend.call(this, method, ...args);
+  };
+  const probe = createCompiledResumePauseOwner(f.session, f.binding, {
+    timers: f.timers,
+    now: f.now,
+  });
+  f.emit('Debugger.paused', f.paused());
+  await entered;
+  try {
+    probe.stopAfterAction();
+    assert.equal(
+      f.calls.some((x) => x.method === 'Debugger.resume'),
+      false,
+      'The active read, not completion of the separate native click, owns resume',
+    );
+    assert.equal(probe.isClosed(), false);
+    releaseRead();
+    await f.detached;
+    await probe.dispose();
+    const row = probe.snapshot();
+    assert.equal(row.status, 'captured');
+    assert.equal(row.readStage, 'complete');
+    assert.equal(row.readFailureKind, null);
+    assert.deepEqual(row.guards, { ...f.normal, courseWouldBlock: false });
+    assert.deepEqual(row.cleanup, {
+      resume: 'acknowledged',
+      disable: 'acknowledged',
+      detach: 'acknowledged',
+    });
+    assert.equal(f.calls.filter((x) => x.method === 'Debugger.evaluateOnCallFrame').length, 1);
+    assert.equal(f.pending(), 0);
+  } finally {
+    releaseRead();
+    await probe.dispose();
+  }
+});
+
+test('resume read failure retains only finite stage and kind without raw protocol or exception data', async () => {
+  const secret = 'PRIVATE_PROTOCOL_PAYLOAD';
+  const cases = [
+    [
+      'Debugger.removeBreakpoint',
+      'Diagnostic command deadline',
+      'remove-entry-breakpoint',
+      'command-deadline',
+    ],
+    [
+      'Debugger.evaluateOnCallFrame',
+      'Protocol error: Can only perform operation while paused ' + secret,
+      'evaluate-guards',
+      'frame-unavailable',
+    ],
+    [
+      'Debugger.evaluateOnCallFrame',
+      'Protocol error: Session closed ' + secret,
+      'evaluate-guards',
+      'session-retired',
+    ],
+    [
+      'Debugger.evaluateOnCallFrame',
+      'Protocol error: unexpected ' + secret,
+      'evaluate-guards',
+      'protocol-error',
+    ],
+  ];
+  for (const [method, message, stage, kind] of cases) {
+    const f = resumeProtocolFixture();
+    const originalSend = f.session.send;
+    f.session.send = async function (name, ...args) {
+      if (name === method) throw new Error(message);
+      return originalSend.call(this, name, ...args);
+    };
+    const probe = createCompiledResumePauseOwner(f.session, f.binding, {
+      timers: f.timers,
+      now: f.now,
+    });
+    f.emit('Debugger.paused', f.paused());
+    await f.detached;
+    await probe.dispose();
+    const row = probe.snapshot();
+    assert.equal(row.readStage, stage);
+    assert.equal(row.readFailureKind, kind);
+    assert.equal(row.guards, null);
+    assert(!JSON.stringify(row).includes(secret));
+    assert.deepEqual(row.cleanup, {
+      resume: 'acknowledged',
+      disable: 'acknowledged',
+      detach: 'acknowledged',
+    });
+    const trace = createCompiledOperationTrace(
+      { deadline: 570000, now: () => 0, step: () => Promise.resolve() },
+      (value) => value,
+    );
+    trace.recordResumeEntryProbe(row);
+    assert.equal(trace.snapshot().resumeEntryProbe.readFailureKind, kind);
+    trace.recordResumeEntryProbe({ ...row, readStage: secret, readFailureKind: secret });
+    assert.equal(trace.snapshot().resumeEntryProbe.readStage, null);
+    assert.equal(trace.snapshot().resumeEntryProbe.readFailureKind, null);
+    assert(!JSON.stringify(trace.snapshot()).includes(secret));
+  }
+  for (const [className, expected] of [
+    ['ReferenceError', 'javascript-reference-error'],
+    ['EvalError', 'javascript-eval-error'],
+    ['Error', 'javascript-exception'],
+  ]) {
+    const f = resumeProtocolFixture();
+    const originalSend = f.session.send;
+    f.session.send = async function (method, ...args) {
+      if (method === 'Debugger.evaluateOnCallFrame')
+        return {
+          exceptionDetails: { exception: { className, description: secret }, text: secret },
+        };
+      return originalSend.call(this, method, ...args);
+    };
+    const p = createCompiledResumePauseOwner(f.session, f.binding, {
+      timers: f.timers,
+      now: f.now,
+    });
+    f.emit('Debugger.paused', f.paused());
+    await f.detached;
+    await p.dispose();
+    assert.equal(p.snapshot().readFailureKind, expected);
+    assert(!JSON.stringify(p.snapshot()).includes(secret));
+  }
+});

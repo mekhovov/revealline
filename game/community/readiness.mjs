@@ -84,7 +84,12 @@ export async function probeCommunityService({
 
 /** Only gates service-dependent setup. Authentication and per-action busy
  * states remain owned by their existing account/publisher handlers. */
-export function attachCommunityReadiness({ document, probe, onReady = () => {} }) {
+export function attachCommunityReadiness({
+  document,
+  probe,
+  onReady = () => {},
+  localCatalogAvailable = () => false,
+}) {
   const $ = (id) => document.getElementById(id);
   let generation = 0;
   let controller = null;
@@ -97,7 +102,8 @@ export function attachCommunityReadiness({ document, probe, onReady = () => {} }
   };
   const render = () => {
     for (const id of ['service-catalog-fields', 'service-account-fields', 'service-publish-fields'])
-      $(id).disabled = state !== 'ready';
+      $(id).disabled =
+        state !== 'ready' && !(id === 'service-catalog-fields' && localCatalogAvailable());
     $('service-retry').disabled = state === 'checking';
     $('service-status').dataset.state = state;
     localizedText($('service-status'), localizedMessage(messages[state]));
@@ -140,5 +146,5 @@ export function attachCommunityReadiness({ document, probe, onReady = () => {} }
   };
   $('service-retry').onclick = check;
   render();
-  return Object.freeze({ check, cancel, unavailable, available: () => state === 'ready' });
+  return Object.freeze({ check, cancel, unavailable, render, available: () => state === 'ready' });
 }
