@@ -211,3 +211,158 @@ syntax-checked, executed or hosted. Prior source qualification belongs to the
 published predecessor; the actual browser result remains failed and unresolved.
 The fourteen current diagnostics remain unfiltered, and the existing zero-event
 success criterion is unchanged. No device or player-latency claim is made.
+
+## Passive first-Start delivery observation
+
+This successor adds diagnostic observation only. The historical 9b12 browser run
+still failed its unchanged 60-second running predicate after the real Start click
+fulfilled; its latest public state remained briefing with a zero clock. That does
+not establish whether the click reached the native handler or which internal
+admission condition prevented play. No production correction is claimed.
+
+Immediately before the existing first Start action, the observer installs two
+passive click listeners: window capture and a target listener registered after
+the current onclick slot. The fixed two-slot record retains only that first
+matching click, its trust/default-prevented facts, handler function/type and
+identity match, and bounded public flight/focus/visibility facts. Repeated clicks
+cannot overwrite these activation facts. A target record supports an
+after-existing-handler-slot inference only when its function identity still
+matches the callable handler present during installation; it records neither the
+handler's return value nor successful launch. Capture without the target record
+narrows event delivery, but does not by itself name a particular blocker.
+
+The callback never wraps, calls, awaits, or replaces onclick, prevents defaults,
+stops propagation, dispatches input, changes game state, or starts a timer.
+Diagnostic setup/teardown evaluations and callbacks add work and can affect
+scheduling; this is not an ordinary-path latency measurement. Listener removal is
+attempted in finally, including partially failed registration. If a setup RPC
+fails before returning its handle, closing the ephemeral browser context remains
+the cleanup boundary. Unconfirmed removal is recorded rather than called clean.
+
+The record travels through the already-existing public read and optional bounded
+trace: the eight-KiB read, 32-KiB trace, 262-KiB combined report, redaction, and
+authoritative original-report fallback remain unchanged. A full original report
+can leave no space for additional observation or an omission marker. All existing
+native actions, assertions, source/package identity, deadlines, and diagnostic
+warning criteria remain authoritative. Four additive pure cases exercise event
+ordering, first-click bounds, copied scalar/error isolation, and cleanup. Source
+format/syntax/test and another hosted browser run are pending for this authored
+checkpoint.
+
+## One bounded resume-entry debugger diagnostic
+
+At exact 9ae134bf, the normal source workflow passed all 23 complete cheap cases.
+The compiled-browser run still failed its unchanged running predicate. Its two
+trusted first-click slots reached the same callable handler with focus and no
+default prevention; the latest public state remained briefing and zero clock.
+Those facts establish delivery through the handler slot, not an internal guard
+or accepted play. No production fix is proposed.
+
+This authored successor attaches a scoped Chromium CDP session on the owned context for the
+same existing first Start action. It accepts only the exact loopback app script,
+494,621 bytes with SHA-256
+5eed4aee9b46ce3479ef8abb091170bacd060d9c323597aa78b6adba84a0eacd,
+and an unambiguous breakpoint on the first executable resume statement,
+zero-based line 10689. Wrong source or an unavailable binding retires the probe
+and leaves the normal action and every original assertion/deadline in place.
+
+Only the first matching paused resume frame may be read. The expression contains
+the allowlisted renderer/practice failure, run-presence/status, overview,
+started/paused, picture-resume, running-enemy and course scalar guards. It uses
+returnByValue and throwOnSideEffect, with a 25-ms protocol evaluation timeout;
+a conservative getter refusal is unavailable, never false or an unsafe retry.
+courseBlocked is not called: its boolean/string dependencies are read and its
+plain predicate is derived in Node. No handler, input, game state, storage,
+source patch, scope-chain dump or payload is invoked or changed.
+
+The pause read owner is 100 ms. Each paused protocol/cleanup command is limited
+to 50 ms; unconditional resume, disable and detach follow in finally, for a
+250-ms total diagnostic owner. Any observed excess or uncertain cleanup remains
+explicitly unavailable. Duplicate/unexpected pauses cannot trigger another read.
+Late setup retires its session; callback removal, handle/context cleanup and the
+original process owner remain authoritative. No new native action or higher
+native/flow deadline is introduced.
+
+One primitive record is copied through the existing optional 32-KiB trace and
+262-KiB report/redaction/fallback. Neither script text, CDP IDs, exception detail,
+run payload nor scope objects are retained. A full authoritative original report
+can omit the record and any extra omission marker. Four additive pure mocked
+protocol cases preserve all prior 23 bodies. They exercise source refusal,
+fixed safe evaluation flags, one-pause ownership, deadlines and cleanup; they
+do not validate an actual browser source or execute CDP.
+
+Debugger attachment and pausing alter scheduling and readiness. Any resulting
+flow is an explicitly instrumented causal diagnostic, not ordinary browser
+acceptance, performance, or player/device qualification. If entry guards are
+clear, no asynchronous admission cause or production correction is inferred.
+At this authored checkpoint, new formatting/syntax/27-case checks and another
+hosted diagnostic run are unrun and require separate review.
+
+## Scalar first-open observation proposal
+
+The exact b876 hosted source workflow passed the complete 27-case cheap file.
+Its browser observation failed earlier, during visible Missions: the eighth
+read took 10,004.127 ms and the unchanged ten-second read owner expired. Only
+ordinary access and English Home completed. The resume-entry probe was not
+reached and returned no internal guard. All six failure-path postchecks passed.
+
+The existing read collected every mission card and computed each card's public
+visibility even when the caller needed only the chooser's open/visible facts.
+This successor uses a scalar-only profile solely for the visible-Missions wait.
+It leaves the same native click, chooser predicate, ten-second operation cap,
+sixty-second phase window, 570-second flow budget and fatal timeout semantics
+unchanged. It adds no delay, retry, discarded timeout or alternate control.
+
+The current/retained membership, restored-current and exact-selection phases
+still use the original full ordered card scan, visible/enabled facts and
+1,024-card safety cap. No identity, count, locale, focus or launch assertion is
+removed. The self-contained public reader moves to the existing cheap contract
+module so two additive DOM-only controls can prove no card access in the scalar
+profile and complete membership/cap behavior in the default profile; no
+observer, server, application or compiler is imported by those controls.
+
+The same historical package and Chromium binary passed the English browse and
+exact briefing stages in earlier 9ae/9b12/f822 observations. This establishes
+that the early failure is not universal. It does not establish card layout as
+the cause of the b876 timeout: a queued evaluation can also be delayed by the
+renderer. Avoiding unnecessary traversal cannot guarantee renderer progress.
+There is no production fix or browser acceptance claim. The earlier failures
+and all original diagnostic warning criteria remain authoritative. At this
+authored checkpoint, the new source checks, complete 29-case file and any new
+browser observation remain unrun.
+
+## Active resume-pause ownership correction proposal
+
+The exact7db normal source workflow passed the complete29-case file. Its browser
+observation reached English current/retained Missions, Back focus, exact briefing
+and the native Start handler. The debugger verified the exact compiled source
+and paused once at resume entry, then retained guard-read-unavailable with no
+scalar values. Its pause lasted88.298ms and resume/disable/detach were all
+acknowledged. The unchanged running window expired; all six postchecks passed.
+This is not an internal guard result or a production-cause finding.
+
+The observer uses a separate CDP session from the native click promise. Source
+review found that completion of that promise unconditionally closed the probe
+even if its independently bounded pause read was still active. This correction
+lets an already-active pause keep its existing100ms read owner and finally
+cleanup. A no-hit or already-retiring owner follows the original disarm path.
+The25ms side-effect-safe evaluation,50ms command/cleanup limits and250ms observed
+pause owner remain unchanged. No new timer, retry, permissive evaluation,
+getter/function fallback, native action or ordinary-flow deadline is added.
+
+Two finite fields identify the last read stage and a conservative failure kind:
+command deadline, unavailable frame/session, generic protocol error or a
+whitelisted JavaScript exception class. No raw message, stack, exception text,
+description, scope object, script or user payload is retained. Classification
+does not convert unavailable values into successful guard reads or identify
+the production cause. The existing trace/report bounds and original evidence
+authority remain unchanged.
+
+All original29 test bodies remain exact. One appended held-evaluation mock
+requires that native-action completion cannot resume/detach the active read;
+a second covers finite classification and rejected raw-data propagation. The
+proposed complete baseline against the original7db owner plus the new controls
+must record the old29 passing and both new cases failing. The corrected complete
+31-case file must then pass under the same tool-only guard. Those source red/
+green results and any new hosted diagnostic remain unrun at this authored
+checkpoint. The source review alone does not prove this race occurred in7db.
