@@ -7,7 +7,7 @@
     "audit": "e2bf4f0e61218c85a1b0bb5779884b622ec03925",
     "implementation": "20555cda6bd44a0736aa829e64c52e455b4e770c",
     "originalWorkspace": "Preserved; no implementation edits.",
-    "latestObservedMain": "f4b45a498b5c69bc93e8e74a4cd8a592de77438e"
+    "latestObservedMain": "e719544a872bca315cf8173da223d919549f127c"
   },
   "featureCount": 83,
   "setup": {
@@ -15,9 +15,9 @@
     "details": "Two managed implementation worktrees plus lightweight sparse checkouts; failed full checkouts self-cleaned after disk exhaustion. No unrelated data removed."
   },
   "nextPriority": [
-    "P1 · Mission-menu correction published in draft1773. Complete its opening/retry/continuation/cold-start tests and source/authoring checks, then browser/package review.",
-    "P1 · Readability1774: finish the two fixture corrections and memory-failure diagnosis; publish the complete generated-output/source correction, then rerun meaningful current gates and browser/package acceptance.",
-    "P1 · Compatibility1668 source merged at the exact qualified revision. Finish current browser/inner-package/offline acceptance; physical checks remain separate.",
+    "P1 · Mission-menu correction published in draft #1773. Complete its opening/retry/continuation/cold-start tests and source/authoring checks, then browser/package review.",
+    "P1 · Readability #1774: finish controlled memory comparison #1776, qualify prepared fixture/generated-output corrections, then complete native, browser and package acceptance.",
+    "P1 · Compatibility #1668 source merged at the exact qualified revision. Finish current browser/inner-package/offline acceptance; physical checks remain separate.",
     "P1 · Team Home #1747: source merged. All nine admitted files match the independently reviewed local reconciliation. Finish current earned-result/full-host/browser/package acceptance. Full lessons still depend on Learn.",
     "P1 · Shared support #1762: source merged externally at b723. Its eight complete files pass 414 cases; the older preview retains 12 failures. Qualify current-main fixtures and actual Data/modal navigation, exports, package and remaining hosts.",
     "P2 · Room invitations #1744: source merged; 108 scoped checks, tracked-module lint and delayed QR focus review pass. Full source, Ukrainian host, manual fallback, package, sharing, scanning and device checks remain.",
@@ -184,7 +184,25 @@
         "manifestSHA256": "c0e287d92cae34b8c7ff2a7d3140beaf28f864b7704ad01e9b4c91a03ea96ae3",
         "receipt": ".cache/improvements-evidence/2026-10-20/reversible-browser-cache-dedupe-phase7/result.json",
         "scope": "Old unused remote-image HTTP cache only. Source, WIP, Git, saves, offline storage and dependencies untouched; other chats keep running. Source and native limits unchanged."
-      }
+      },
+      "closedDiagnosticLogArchive": {
+        "archivedClosedLogs": 13,
+        "originalBytes": 71956901,
+        "backupBytes": 3668380,
+        "allOriginalBytesRecoverable": true,
+        "currentOpenLogExcluded": true,
+        "manifestSHA256": "180f047122091d7fd812b80a66355859b3c222a4477b6bb3fa0588395664582a",
+        "receipt": ".cache/improvements-evidence/2026-10-20/reversible-closed-diagnostic-log-archive/result.json"
+      },
+      "additionalRecoverableHTTPPhase8": {
+        "releasedEntries": 11,
+        "originalBytes": 16193223,
+        "newBackupBytes": 1251015,
+        "allOriginalBytesRecoverable": true,
+        "manifestSHA256": "f099089d2840083f8413f4de65f10b7eed480ba2a9301d424415629a08b8b50d",
+        "receipt": ".cache/improvements-evidence/2026-10-20/reversible-browser-cache-dedupe-phase8/result.json"
+      },
+      "currentWorkMode": "Other chats keep running. External capacity recovery permits bounded source checks and small evidence/progress writes again; heavy local builds retain2.55GB/2GiB floors."
     },
     "pendingTestPrerequisite": {
       "status": "source_merged_ci_failures_unresolved",
@@ -3588,7 +3606,7 @@
             "Separate recovery-only wrapper fa313a loads immutable c7a transition in memory with256MiB emergency reserve solely for integrity/rename restoration; native2GiBreserve/runner/status untouched. Read-only completeA29246manifest f49860fc and all164Cpreimages/owners/deps/native evidence exact. Explicit recovery retains143Acopies by rename and restores164 originalC inodes, removes only owned authoring symlink, full29267restoredsource4ef4ac8f, no postflight errors. Root independently verifies164originalCbytes/OIDs/dev/inode/mtime and143retainedAcopies. Recoveryreceipt080ddd0a, native evidence47c6b3f7/cohortbabb unchanged. Recovery is not test/package qualification; heavy checks remain held belowreserve.",
             "Draft1774 published at2d15ac0, solefirstparenta7:58 feature paths plus5 validation controls;95 temporary main diff includes32 inherited compatibility-only paths. Complete actual63 source/58 leaf/control readback, then sealed initial and fresh prelaunch receipts, preceded opening the PR and its first actual28-file native workflow. Every unowned parent entry is exact; original work untouched. Source-only28 mocks are not gameplay acceptance."
           ],
-          "blocker": "Two precise VMfixture gaps plus one nativewholefile memory failure require review; stagedtwo-derived-output correction and60source+5controls checks pass but unpublished. Allnewhead/native/browser/package gates remain.",
+          "blocker": "Current2d15 failed complete-file/fixture/memory gates remain. Generated outputs, two fixtures and62-control mocks/statics prepared; staged67-path feature successor awaits controlled memory evidence and native/browser/package qualification.",
           "candidateCommit": "2d15ac09834c762a543d5aa3edcb9114f6135b88",
           "qualification": {
             "automated": "actual2d15_source_preview_industrial_native28_gates_FAILED_scopes_retained_source60fixes_prepared",
@@ -3739,11 +3757,15 @@
               "controls62SourceReview": {
                 "root": "de8e8b624eda9e1143dc05776f4142f084391fc58437378362600adbd6e020ef",
                 "independent": "B complete review clear",
-                "mocksAndStatics": "HELD below fresh 256 MiB prelaunch floor; not executed",
-                "publication": "not_authorized_before_memory_comparison_decision"
+                "mocksAndStatics": "PASS: complete 31 mocked cases, Python AST3 and read-only formatting2",
+                "publication": "not_authorized_before_memory_comparison_decision",
+                "receiptSHA256": "2fb56bc42e3b63135712b7cf29abcd400b4e961aa4d88e60396feb7f8d06cea1",
+                "rootFullRawReadbackSHA256": "c51fe426ea64235ee8179bfaf2f552ac7dac42e8601915c582c0273a6d056918",
+                "native": "NOT_RUN; controlled comparison1776 current857 pending after historical65ae checkout-only failure"
               }
             }
-          }
+          },
+          "deliveryPrerequisite": "https://github.com/mekhovov/revealline/pull/1776"
         }
       ],
       "sourceReconciliation": {
@@ -6043,6 +6065,11 @@
       "date": "2026-10-20",
       "item": "DELIVERY",
       "reason": "External1668mergeverified43exactsourceblobs/unownedmain; sourceinventory50merged9open32draft1withdrawn. CurrentF10coldsourceandF09bVM/memoryfailures recorded withprecisescopes, sourcecorrections preparedwithoutguardrelaxation. Another16oldunusedHTTPcacheentriespreservedrecoverablybeforecleanup; source/WIP/commits/saves/offline retained andotherchatsrunning."
+    },
+    {
+      "date": "2026-10-20",
+      "item": "DELIVERY",
+      "reason": "Current62 source controls pass31 mocked cases,AST3/format2. Diagnostic1776 prior65ae checkout and857 JSON-identity setup failures preserved; neither ran native. V6 identity serialization correction passes14 pure cases/AST2; workflow-only formatting difference remains. Main e719 includes external1775 docs merge only. Compiled menu browser source independently reviewed; actual browser and hardware acceptance pending. Other chats keep running."
     }
   ],
   "deliveryDependencies": [
@@ -6557,6 +6584,85 @@
       "mergeCommit": "b032b6461437afc4d86ed7a2cb6707f751a67e6b",
       "mergedAt": "2026-10-20T01:47:09Z",
       "externalMergeNote": "Externally merged atb032 on newhead3e6 after incorporatingf001. Earlier393 passing evidence stays scoped393; root did not merge or promote."
+    },
+    {
+      "id": "CI-World-appearance-memory-comparison",
+      "priority": "P1",
+      "status": "draft_provenance_correction_pure14_pass_workflow_format_pending_native_not_run",
+      "deliveryState": "draft",
+      "owner": "lane-c",
+      "pr": "https://github.com/mekhovov/revealline/pull/1776",
+      "commit": "857d86ca20adf5cdfd833708cbacf93e4fcbe87b",
+      "observedRemoteHead": "857d86ca20adf5cdfd833708cbacf93e4fcbe87b",
+      "scope": "Diagnostic prerequisite only: compare identical whole World appearance test at fixed a7 and 2d15 under unchanged Node22.22.2 / 1536MiB heap / 2048MiB owned RSS / 180s / 2GiB disk floor. No feature acceptance.",
+      "next": "Qualify the14-case serialization correction and source statics, publish the staged successor, then verify BOTH controlled whole-file observations. No memory cause is established.",
+      "qualification": {
+        "automated": "V6 exact Python source passes all14 complete pure cases and AST2. Read-only formatting: MD/pinsJSON pass, workflow differs; overall source campaign FAILED_FORMAT_ONLY. No native file executed.",
+        "browser": "not_applicable_diagnostic_only",
+        "physical": "not_applicable_diagnostic_only"
+      },
+      "publication": {
+        "head": "857d86ca20adf5cdfd833708cbacf93e4fcbe87b",
+        "tree": "b058478bc299fd8df708f2cfe392a00d75e7f2cf",
+        "parent": "65ae97c94e57c178e21214f19a314cb87c824307",
+        "sourcePaths": 5,
+        "successorAgainstParent": "Only workflow checkout-step hydration setting; all other source and audit/resource restrictions exact.",
+        "initialProofSHA256": "5c1fc664a270a7c33123a01e85ac695099e4b9c8e233defd2b9a3435b6e0c59c",
+        "freshPrelaunchProofSHA256": "24763604aa9b1b260c6335d1b5d6ae9f09e5ba068451687c1a7afcdcd562ec99",
+        "independentReadbackSHA256": "b88d20d0ce81b7237ebb090b76418d12a09be8bade9ac9f0899efe640aa33c1c",
+        "normalForceFalse": true,
+        "localFilesIndexRefsWritten": 0,
+        "evidenceStorage": "Compact task/tool memory while local evidence writes remain capacity-held; immutable Git objects preserve source for reinspection."
+      },
+      "currentRun": "https://github.com/mekhovov/revealline/actions/runs/39362932129",
+      "historicalSetupFailure": {
+        "head": "65ae97c94e57c178e21214f19a314cb87c824307",
+        "run": "https://github.com/mekhovov/revealline/actions/runs/39362430200",
+        "result": "Both VM jobs and observer failed initial sparse checkout; pure13 and native file NOT RUN.",
+        "proofSHA256": "160c4f00f614cecc151b0d02869edef559a3cbd542f84774cfe242a70e41fc9e"
+      },
+      "conditionalFixtureInvestigation": {
+        "status": "read_only_hypothesis_no_fix_or_cause_claim",
+        "finding": "RegionalWorker.instances retains disposed workers and cloned messages. All23 reads use latest worker, none uses previous-test history. Consider clearing registry only after existing awaited app disposal if controlled evidence supports fixture memory work.",
+        "inventorySHA256": "1921e4d5b05249ef02398296aca5f8af63794bf059143a75623476883ef77a71"
+      },
+      "historicalProvenanceSetupFailure": {
+        "head": "857d86ca20adf5cdfd833708cbacf93e4fcbe87b",
+        "run": "https://github.com/mekhovov/revealline/actions/runs/39362932129",
+        "pureRegressionsPerVM": {
+          "baseline": 13,
+          "feature": 13,
+          "allPassed": true
+        },
+        "native": "NOT_RUN on both VMs: JSON receipt converted control identity tuples to lists before exact comparison.",
+        "observer": "COMPARISON_INCOMPLETE, zero outcomes, exit1",
+        "proofSHA256": "6a3c52d9574d2eb0a632030a1ec959f2b820465e2acf892ef55c0508ecbd97d0"
+      },
+      "stagedSuccessor": {
+        "head": "e8665995d0f04cff45d791d2bd3c58a80210ac02",
+        "tree": "5ca544f0236b38b1ddb59383e8444d21e75a5678",
+        "parents": [
+          "803d43952dc2b2d5877c97016e0a8cf3607a827a",
+          "e719544a872bca315cf8173da223d919549f127c"
+        ],
+        "sourceDelta": "Serialize the same complete control identity as a list; one additive regression invokes actual controls() and verifies JSON roundtrip and metadata-change rejection; original13 retained.",
+        "authoredPureRegressions": 14,
+        "currentLocalQualification": "14/14 pure PASS and AST2 PASS; formatCHECK3 exit1 only YAML formatting. Exact failed receipt retained; format-only successor under review.",
+        "PRBranchUpdated": false,
+        "rootRemoteProofSHA256": "c9c3065fd252e29643953feb56774f0e499a8cc505294a43dbfe882db7b3d639"
+      },
+      "localSourceQualification": {
+        "freezeSHA256": "e646484494b5ec0e6e5ae08f7a45d517129c1edf1b03c2215336a1ebdd2db135",
+        "receipt": "/tmp/revealline-world-appearance-memory-diagnostic-source-v6-private/receipt.json",
+        "receiptSHA256": "065afe2d79b0451ae82370fb69a39503cfbd630a2309786e2fcd1b27d5924444",
+        "pureCases": 14,
+        "pureAllPassed": true,
+        "syntaxFiles": 2,
+        "syntaxPassed": true,
+        "format": "FAILED: workflowYAML differs; MD and pinsJSON pass",
+        "native": "NOT_RUN",
+        "preservation": "Full used raw verified, no children or guard violation; all originals/artifacts/dependencies/index/owned refs exact"
+      }
     }
   ],
   "deliverySnapshot": {
@@ -6570,7 +6676,7 @@
   },
   "admissionReview": {
     "observedDate": "2026-10-20",
-    "scope": "All92 feature candidates from task/slice/follow-up PR fields;17 delivery prerequisites and documentation excluded",
+    "scope": "All92 feature candidates;18 separate delivery prerequisites. Original83 feature groups and113 deliverables unchanged.",
     "counts": {
       "merged": 50,
       "ready": 9,
@@ -6607,13 +6713,28 @@
       1682,
       1686
     ],
-    "note": "50 feature source PRs merged, 9 open for checks, 32 drafts, 1 withdrawn; 17 prerequisites separate. Compatibility 1668 merged externally at tested a7 after 2,309 source and 1,908 preview checks. Menu 37ec passes 16 of 19 source commands and 20 of 22 ordinary Solo cases; exact preview passes 118 complete files / 1,903 cases and builds with compact package identity verified; browser and inner-package acceptance remain. Readability 2d15 retains failed complete-file, fixture and memory gates; source corrections remain unpublished. Original 83 groups and 113 deliverables unchanged. Other chats keep running.",
+    "note": "50 feature source PRs merged,9 open for checks,32 drafts,1 withdrawn;18 prerequisites separate. Compatibility1668 merged externally at tested a7 after2309 source and1908 preview checks. Menu37ec passes16/19 source commands,20/22 ordinary Solo cases; exact preview passes118 complete files/1903 cases and builds. Browser and inner-package acceptance remain. Readability2d15 retains fixture/memory failures; qualified source corrections remain unpublished. Diagnostic1776: prior857 both13/13 pure PASS, native NOT_RUN due JSON tuple/list setup defect; reviewed additive14-case correction passes14 and AST2 locally but workflow formatCHECK needs correction. No memory cause established. Original83/113 scope unchanged; other chats keep running.",
     "latestMain": {
-      "revision": "f4b45a498b5c69bc93e8e74a4cd8a592de77438e",
-      "note": "External1668 exacta7 source merge afterb032; root independentlyverifiedall43testedOIDs/modes/sizes andeveryunownedb032treeentry. No manualmerge/promotion ornewlive/devicequalification."
+      "revision": "e719544a872bca315cf8173da223d919549f127c",
+      "note": "External1775 documentation merge, exact db3 source. Three roadmap files only; no new feature source completion or manual merge by root."
     },
     "queryEvidence": "/tmp/revealline-complete-inventory-109-result.json",
     "inventoryCorrection": "Previously omitted1673 is an existing merged settings follow-up; correcting45→46 is accounting, not new implementation.",
-    "queryEvidenceSHA256": "94bfa88d8a62e577911341fc563d7d6c7eaa48af5a6e54013b11670f38c3dc6d"
+    "queryEvidenceSHA256": "94bfa88d8a62e577911341fc563d7d6c7eaa48af5a6e54013b11670f38c3dc6d",
+    "additionalInventoryVerification": {
+      "trackedPRs": 110,
+      "featureCandidates": 92,
+      "deliveryPrerequisites": 18,
+      "counts": {
+        "merged": 50,
+        "withdrawn": 1,
+        "ready": 9,
+        "draft": 32
+      },
+      "source": "GitHub GraphQL; compact results retained in task memory, local writes capacity-held",
+      "rawSHA256": "7ea4d914c11630ce2bb9d6930c0e993163d3c788e638c82400ac00fe6f818137",
+      "main": "f4b45a498b5c69bc93e8e74a4cd8a592de77438e",
+      "note": "Inventory collected before1776 workflow successor; current857 normalFF independently verified separately. PR states and feature counts unchanged."
+    }
   }
 }
