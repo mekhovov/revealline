@@ -181,3 +181,33 @@ The existing zero-diagnostic success criterion remains unchanged. The failed
 report also contains four WebGL warnings and an aborted presentation fetch; these
 would independently fail that criterion if the full flow finished. They are
 preserved and are not established causes of the read timeout.
+
+## Proposed latest public-read evidence
+
+This source successor retains only the latest bounded public scalar/control read
+within the existing32KiB operation trace. It excludes cards, URLs, payloads and
+read history. The thirteen control IDs include the existing eleven plus public
+flight preparation status and run-message feedback in the same evaluation. These
+fields do not change any running predicate, assertion, native action or deadline.
+
+The actual f822 run reached exact-current briefing but did not observe running
+within the existing60s phase window after a fulfilled Start click. That click
+does not prove accepted play. The next observation copies public state before
+the unchanged visibility/focus/discard assertions; it adds no browser read,
+clock, frame, timer, storage access or launch bypass. Missing fields and failed
+bookkeeping remain unavailable, never successful admission.
+
+Latest read text is password-redacted and bounded; an8KiB sample limit and the
+existing32KiB trace/report262KiB limits remain. No intermediate flight history
+is inferred. Original diagnostics and original report-encoding errors retain
+authority. Omission is explicit when a marker fits; if a full original report
+leaves no room even for that marker, the original unchanged report wins and the
+additional diagnostic is unavailable. No sidecar or runner expansion is added.
+
+All fifteen existing cheap cases remain; four additive pure cases cover
+allowlisted copying, bounded latest-only retention, redaction/failure isolation
+and report-cap authority. This authored successor has not been formatted,
+syntax-checked, executed or hosted. Prior source qualification belongs to the
+published predecessor; the actual browser result remains failed and unresolved.
+The fourteen current diagnostics remain unfiltered, and the existing zero-event
+success criterion is unchanged. No device or player-latency claim is made.
