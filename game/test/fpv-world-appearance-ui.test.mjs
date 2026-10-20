@@ -156,6 +156,35 @@ function recordFixtureMemory(phase, fixtureId, inspectWorkers = false) {
   process.stdout.write(line);
 }
 
+function createOptionRestoreHook(optionOwner) {
+  return () => {
+    try {
+      if (optionOwner.value) globalThis.Option = optionOwner.value;
+      else delete globalThis.Option;
+    } finally {
+      optionOwner.value = null;
+    }
+  };
+}
+
+function createFixtureDisposeHook(appOwner, fixtureMemoryId) {
+  return async () => {
+    try {
+      fixtureMemoryDisposeStarted += 1;
+      recordFixtureMemory('before-dispose', fixtureMemoryId, true);
+      await appOwner.app.dispose();
+      fixtureMemoryDisposeCompleted += 1;
+      recordFixtureMemory('after-dispose', fixtureMemoryId, true);
+      for (let index = RegionalWorker.instances.length - 1; index >= 0; index -= 1) {
+        if (RegionalWorker.instances[index].terminated) RegionalWorker.instances.splice(index, 1);
+      }
+      recordFixtureMemory('after-worker-prune', fixtureMemoryId, true);
+    } finally {
+      appOwner.app = null;
+    }
+  };
+}
+
 registerOfflineFeedbackTests();
 function fixture(t, options = {}) {
   const fixtureMemoryId = ++fixtureMemoryCreated;
@@ -192,10 +221,7 @@ function fixture(t, options = {}) {
     option.value = value;
     return option;
   };
-  t.after(() => {
-    if (priorOption) globalThis.Option = priorOption;
-    else delete globalThis.Option;
-  });
+  t.after(createOptionRestoreHook({ value: priorOption }));
   doc.createElementNS = (_namespace, name) => doc.createElement(name);
   function copy(source, parent) {
     if (!source.tagName) return;
@@ -284,17 +310,7 @@ function fixture(t, options = {}) {
     ...factories,
   });
   recordFixtureMemory('constructed', fixtureMemoryId);
-  t.after(async () => {
-    fixtureMemoryDisposeStarted += 1;
-    recordFixtureMemory('before-dispose', fixtureMemoryId, true);
-    await app.dispose();
-    fixtureMemoryDisposeCompleted += 1;
-    recordFixtureMemory('after-dispose', fixtureMemoryId, true);
-    for (let index = RegionalWorker.instances.length - 1; index >= 0; index -= 1) {
-      if (RegionalWorker.instances[index].terminated) RegionalWorker.instances.splice(index, 1);
-    }
-    recordFixtureMemory('after-worker-prune', fixtureMemoryId, true);
-  });
+  t.after(createFixtureDisposeHook({ app }, fixtureMemoryId));
   return {
     app,
     doc,
