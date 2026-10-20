@@ -6164,5 +6164,6 @@
   "community.service.localPlay": "До локальної гри",
   "community.service.localCreate": "Створювати локально",
   "community.service.catalogWaiting": "Каталог відкриється після перевірки з’єднання.",
-  "community.service.accountWaiting": "З’єднання перевіряється перед входом."
+  "community.service.accountWaiting": "З’єднання перевіряється перед входом.",
+  "playerSteeringArea": "Зона керування гравця {{player}}"
 }

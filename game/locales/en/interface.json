@@ -6050,5 +6050,6 @@
   "community.service.localPlay": "Return to local play",
   "community.service.localCreate": "Create locally",
   "community.service.catalogWaiting": "The catalog opens after the connection check.",
-  "community.service.accountWaiting": "Connection is checked before sign-in."
+  "community.service.accountWaiting": "Connection is checked before sign-in.",
+  "playerSteeringArea": "Player {{player}} steering area"
 }
