@@ -4,6 +4,7 @@ import { lstat, mkdir, mkdtemp, readFile, realpath, rm, stat, writeFile } from '
 import { tmpdir } from 'node:os';
 import { dirname, join } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
+import { gunzipSync } from 'node:zlib';
 
 const fixtureURL = new URL(
   '../docs/performance/fixtures/solo-replay-portability/first-eight-39109911286.json',
@@ -17,6 +18,7 @@ export async function loadReplayPortabilityCase(id) {
   assert(bytes.length <= 131072, 'Fixed replay identities exceed bound');
   const fixture = JSON.parse(bytes);
   assert.equal(fixture.format, 'SoloReplayPortabilityFixedCasesV1');
+  validateNodeSourceClosure(fixture);
   const row = fixture.cases.find((entry) => entry.id === id);
   assert(row, 'Undeclared portability recording');
   row.nativeModules = fixture.nodeModules.map(
@@ -322,12 +324,33 @@ const historicalCatalogURL = new URL(
 );
 const historicalCatalog = Object.freeze({
   path: 'game/i18n/catalogs.mjs',
-  bytes: 1264959,
-  sha256: 'ba333d67a719078e6fca92094bee9d60e7fdcfd2ed197adadefed115766e9224',
+  bytes: 1261767,
+  sha256: '0b8a2d882650815ef03b020c8e5f58a0ff9ee1f6c0f65d5ac1c2b54d9b28266a',
+});
+const catalogProjection = Object.freeze({
+  format: 'PresentationCatalogProjectionV1',
+  scope:
+    'Retired presentation messages removed; original gameplay modules and checkpoints unchanged. This is a derived source closure, not the original historical catalog.',
+  original: {
+    path: 'game/i18n/catalogs.mjs',
+    bytes: 1264959,
+    sha256: 'ba333d67a719078e6fca92094bee9d60e7fdcfd2ed197adadefed115766e9224',
+  },
+  derived: {
+    path: 'game/i18n/catalogs.mjs',
+    bytes: 1261767,
+    sha256: '0b8a2d882650815ef03b020c8e5f58a0ff9ee1f6c0f65d5ac1c2b54d9b28266a',
+  },
+  receipt: 'docs/migrations/retained-packed-catalogs.json',
 });
 function validateNodeSourceClosure(fixture) {
+  assert.deepEqual(
+    fixture.nodeSourceProjection,
+    catalogProjection,
+    'Reviewed presentation projection required',
+  );
   assert.equal(fixture.nodeSourceRevision, '1255a79a90268316f8ea768d3e0c56610b26df52');
-  assert.equal(fixture.nodeModules.length, 47, 'Exact historical Node closure required');
+  assert.equal(fixture.nodeModules.length, 47, 'Reviewed Node closure required');
   assert.equal(new Set(fixture.nodeModules.map((item) => item.path)).size, 47);
   assert.deepEqual(
     fixture.nodeModules.find((item) => item.path === historicalCatalog.path),
@@ -342,7 +365,40 @@ function validateNodeSourceClosure(fixture) {
     assert(total <= 16 * 1024 * 1024, 'Node source byte bound');
   }
 }
+const pinnedModulesURL = new URL(
+  '../docs/performance/fixtures/solo-replay-portability/node-1255-modules.json.gz',
+  import.meta.url,
+);
+async function readPinnedNodeModule(item) {
+  const info = await lstat(pinnedModulesURL);
+  assert(info.isFile() && !info.isSymbolicLink(), 'Pinned Node archive must be a regular file');
+  assert.equal(
+    await realpath(pinnedModulesURL),
+    fileURLToPath(pinnedModulesURL),
+    'Pinned Node archive alias refused',
+  );
+  assert.equal(info.size, 187989);
+  const bytes = await readFile(pinnedModulesURL);
+  assert.equal(
+    sha256(bytes),
+    '138a5ef95c6fcaf657f03a677d51247e2a585b02d35d74f70772c4acdf279753',
+    'Pinned Node archive differs',
+  );
+  const archive = JSON.parse(gunzipSync(bytes, { maxOutputLength: 2 * 1024 * 1024 }));
+  assert.equal(archive.format, 'ReplayPortabilityPinnedNodeModulesV1');
+  assert.equal(archive.sourceRevision, '1255a79a90268316f8ea768d3e0c56610b26df52');
+  assert.equal(archive.modules.length, 46);
+  const source = archive.modules.find((entry) => entry.path === item.path);
+  assert(source, 'Undeclared pinned Node module');
+  assert.equal(source.bytes, item.bytes);
+  assert.equal(source.sha256, item.sha256, 'Node source differs: ' + item.path);
+  const content = Buffer.from(source.data, 'base64');
+  assert.equal(content.length, item.bytes);
+  assert.equal(sha256(content), item.sha256, 'Node source differs: ' + item.path);
+  return content;
+}
 async function readNodeModule(item, rootURL = null) {
+  if (!rootURL && item.path !== historicalCatalog.path) return readPinnedNodeModule(item);
   const url = rootURL
     ? new URL(item.path, rootURL)
     : item.path === historicalCatalog.path
@@ -360,8 +416,9 @@ async function readNodeModule(item, rootURL = null) {
 async function verifyNodeModules(fixture, rootURL = null) {
   for (const item of fixture.nodeModules) await readNodeModule(item, rootURL);
 }
-// This owned mirror executes the exact retained Node closure. The single frozen
-// catalog is data from 1255; the other 46 must still match their original hashes.
+// This mirror executes the explicitly derived closure. Its catalog has a reviewed
+// presentation-only projection; the other 46 modules retain their original hashes.
+// Original modules are read from the checked archive, never the changing current source.
 // No external source/reference path or current-source fallback is accepted.
 export async function withReplayPortabilityNodeSource(fixture, use) {
   validateNodeSourceClosure(fixture);
@@ -426,6 +483,7 @@ export async function createReplayPortabilityReference(recordId, recordingText) 
       nodeVersion: process.version,
       nodeSourceRevision: fixture.nodeSourceRevision,
       nodeModules: fixture.nodeModules,
+      nodeSourceProjection: fixture.nodeSourceProjection,
       nodeCheckpoint: verified.actual.checkpoint,
       trace,
       traceSHA256: sha256(JSON.stringify(trace)),
@@ -458,6 +516,7 @@ export async function prepareReplayPortabilityRequest(request, context) {
   assert.equal(reference.nodeVersion, fixture.nodeVersion);
   assert.equal(reference.nodeSourceRevision, fixture.nodeSourceRevision);
   assert.deepEqual(reference.nodeModules, fixture.nodeModules);
+  assert.deepEqual(reference.nodeSourceProjection, fixture.nodeSourceProjection);
   assert.deepEqual(reference.nodeCheckpoint, row.nodeObservation.actual.checkpoint);
   assert.deepEqual(reference.trace.finalCheckpoint, reference.nodeCheckpoint);
   assert.equal(sha256(JSON.stringify(reference.trace)), reference.traceSHA256);
