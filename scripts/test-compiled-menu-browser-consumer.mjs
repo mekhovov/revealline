@@ -573,3 +573,243 @@ test('operation trace fits the unchanged combined report cap without hiding orig
     original,
   );
 });
+
+test('latest public read copies only allowed scalars and controls without reading cards', async () => {
+  let now = 50;
+  const state = {
+    hidden: false,
+    focused: true,
+    lang: 'en',
+    focusedId: 'start-button',
+    boot: 'ready',
+    access: 'accepted',
+    flight: 'briefing',
+    time: '0:00',
+    lives: '3',
+    coverage: '0%',
+    controls: { 'start-button': { visible: true, enabled: true, open: false, text: 'Start' } },
+    payloadHistory: { mustNotRetain: true },
+    get cards() {
+      throw new Error('cards must never be inspected');
+    },
+    get href() {
+      throw new Error('href must never be inspected');
+    },
+  };
+  const pending = Promise.resolve(state);
+  const budget = { deadline: 570050, now: () => now, step: () => pending };
+  const trace = createCompiledOperationTrace(budget, (value) => value);
+  trace.enterPhase('accepted briefing');
+  trace.noteRead();
+  assert.equal(
+    trace.step('read public DOM', () => state),
+    pending,
+  );
+  assert.equal(await pending, state);
+  trace.recordPublicState(state);
+  const copied = trace.snapshot().publicRead;
+  assert.equal(copied.phase, 'accepted briefing');
+  assert.equal(copied.readIteration, 1);
+  assert.equal(copied.operationId, trace.snapshot().lastCompletedOperation.id);
+  assert.equal(copied.elapsedFlowMs, trace.snapshot().lastCompletedOperation.elapsedFlowMs);
+  assert.equal(copied.state.flight, 'briefing');
+  assert.equal(copied.state.focusedId, 'start-button');
+  assert.deepEqual(copied.state.controls['start-button'], {
+    visible: true,
+    enabled: true,
+    open: false,
+    text: 'Start',
+  });
+  assert.equal(Object.hasOwn(copied.state, 'cards'), false);
+  assert.equal(Object.hasOwn(copied.state, 'href'), false);
+  assert.equal(Object.hasOwn(copied.state, 'payloadHistory'), false);
+  assert.equal(Object.keys(copied.state.controls).length, 13);
+  assert.equal(state.controls['start-button'].text, 'Start');
+  state.controls['start-button'].text = 'changed input';
+  copied.state.controls['start-button'].text = 'changed returned snapshot';
+  assert.equal(trace.snapshot().publicRead.state.controls['start-button'].text, 'Start');
+});
+
+test('latest public read stays bounded and replaces prior reads without history or extra operations', () => {
+  const trace = createCompiledOperationTrace(
+    { deadline: 570000, now: () => 0, step: () => Promise.resolve() },
+    (value) => value,
+  );
+  const ids = [
+    'shell-home',
+    'shell-play',
+    'shell-options',
+    'journey-chooser',
+    'journey-back',
+    'start-button',
+    'pause-button',
+    'shell-menu',
+    'settings-dialog',
+    'mission-replace-dialog',
+    'mode-leave-dialog',
+    'flight-preparation-status',
+    'run-message',
+  ];
+  const controls = Object.fromEntries(
+    ids.map((id) => [
+      id,
+      {
+        visible: true,
+        enabled: true,
+        open: false,
+        text: 'x'.repeat(5000),
+      },
+    ]),
+  );
+  for (let i = 0; i < 200; i += 1) {
+    trace.noteRead();
+    trace.recordPublicState({ flight: i === 199 ? 'unknown-public-state' : 'briefing', controls });
+  }
+  const value = trace.snapshot();
+  assert.equal(value.publicReadSequence, 200);
+  assert.equal(value.publicRead.readSequence, 200);
+  assert.equal(value.publicRead.readIteration, 200);
+  assert.equal(value.publicRead.state.flight, 'unknown-public-state');
+  assert.equal(value.publicRead.state.controls['run-message'].text.length, 256);
+  assert.equal(value.publicRead.state.controls['run-message'].visible, true);
+  assert.equal(value.publicReadUnavailable, false);
+  assert.equal(value.publicReadRecordingFailures, 0);
+  assert.equal(value.operationSequence, 0);
+  assert.deepEqual(value.events, []);
+  assert.equal(Object.hasOwn(value, 'publicReadHistory'), false);
+  assert(Buffer.byteLength(JSON.stringify(value.publicRead, null, 2)) + 1 <= 8192);
+  assert(Buffer.byteLength(JSON.stringify(value, null, 2)) + 1 <= 32768);
+  const nonAsciiControls = Object.fromEntries(
+    ids.map((id) => [
+      id,
+      {
+        visible: true,
+        enabled: true,
+        open: false,
+        text: '界'.repeat(5000),
+      },
+    ]),
+  );
+  trace.recordPublicState({ flight: 'paused', controls: nonAsciiControls });
+  const omitted = trace.snapshot();
+  assert.deepEqual(omitted.publicRead, value.publicRead);
+  assert.equal(omitted.publicReadSequence, 201);
+  assert.equal(omitted.publicReadUnavailable, true);
+  assert.equal(omitted.publicReadOmittedForReadCap, true);
+  assert(Buffer.byteLength(JSON.stringify(omitted, null, 2)) + 1 <= 32768);
+  trace.recordPublicState({
+    flight: 'running',
+    controls: {
+      'start-button': { visible: false, enabled: true, open: false, text: 'Resume' },
+    },
+  });
+  const recovered = trace.snapshot();
+  assert.equal(recovered.publicRead.readSequence, 202);
+  assert.equal(recovered.publicRead.state.flight, 'running');
+  assert.equal(recovered.publicReadUnavailable, false);
+  assert.equal(recovered.publicReadOmittedForReadCap, false);
+});
+
+test('public read redaction and unavailable fields cannot replace prior complete evidence or caller failures', () => {
+  const secret = randomUUID();
+  const trace = createCompiledOperationTrace(
+    { deadline: 570000, now: () => 0, step: () => Promise.resolve() },
+    (value, cap) => redactPagesText(value, secret, cap),
+  );
+  trace.recordPublicState({
+    flight: secret,
+    hidden: 'not a boolean',
+    focused: false,
+    controls: {
+      'flight-preparation-status': {
+        visible: true,
+        enabled: false,
+        open: false,
+        text: 'Preparing ' + secret,
+      },
+    },
+  });
+  const first = trace.snapshot().publicRead;
+  assert(!JSON.stringify(first).includes(secret));
+  assert.equal(first.state.hidden, null);
+  assert.equal(first.state.focused, false);
+  assert.equal(first.state.time, null);
+  assert.deepEqual(first.state.controls['start-button'], {
+    visible: null,
+    enabled: null,
+    open: null,
+    text: null,
+  });
+  assert.equal(first.state.controls['flight-preparation-status'].visible, true);
+  const original = new Error('original public getter');
+  assert.doesNotThrow(() =>
+    trace.recordPublicState({
+      get flight() {
+        throw original;
+      },
+    }),
+  );
+  const failed = trace.snapshot();
+  assert.deepEqual(failed.publicRead, first);
+  assert.equal(failed.publicReadSequence, 2);
+  assert.equal(failed.publicReadUnavailable, true);
+  assert.equal(failed.publicReadRecordingFailures, 1);
+  assert.equal(failed.recordingFailures, 1);
+  trace.recordPublicState({ flight: 'paused', hidden: false, focused: true });
+  const recovered = trace.snapshot();
+  assert.equal(recovered.publicRead.readSequence, 3);
+  assert.equal(recovered.publicRead.state.flight, 'paused');
+  assert.equal(recovered.publicReadUnavailable, false);
+  assert.equal(recovered.publicReadRecordingFailures, 1);
+  assert.equal(recovered.recordingFailures, 1);
+  const hostile = createCompiledOperationTrace(
+    { deadline: 570000, now: () => 0, step: () => Promise.resolve() },
+    () => {
+      throw new Error('diagnostic redaction');
+    },
+  );
+  assert.doesNotThrow(() => hostile.recordPublicState({ flight: 'briefing' }));
+  assert(hostile.snapshot().recordingFailures > 0);
+  assert.equal(hostile.snapshot().publicRead.state.flight, '[trace text unavailable]');
+});
+
+test('public read report-cap omission keeps every original diagnostic and exact-cap fallback authoritative', () => {
+  const secret = randomUUID();
+  const trace = createCompiledOperationTrace(
+    { deadline: 570000, now: () => 0, step: () => Promise.resolve() },
+    (value, cap) => redactPagesText(value, secret, cap),
+  );
+  trace.recordPublicState({
+    flight: 'briefing',
+    controls: {
+      'run-message': { visible: true, enabled: true, open: false, text: secret },
+    },
+  });
+  const ordinary = {
+    diagnostics: { total: 1, overflow: false, events: [{ message: 'x'.repeat(261000) }] },
+  };
+  const encoded = trace.encodeReport(ordinary, (value) => encodePagesReport(value, secret));
+  assert(Buffer.byteLength(encoded) <= 262144);
+  const decoded = JSON.parse(encoded);
+  assert.deepEqual(decoded.diagnostics, ordinary.diagnostics);
+  assert.equal(decoded.operationTrace.omittedForReportCap, true);
+  assert.equal(decoded.operationTrace.publicReadOmittedForReportCap, true);
+  assert.equal(decoded.operationTrace.publicReadSequence, 1);
+  assert(!encoded.includes(secret));
+  const original = encodePagesReport(ordinary, secret);
+  assert.equal(
+    trace.encodeReport(ordinary, (value) => {
+      if (value.operationTrace) throw new Error('no room even for omission marker');
+      return encodePagesReport(value, secret);
+    }),
+    original,
+  );
+  const failure = new Error('original report encoding failure');
+  assert.throws(
+    () =>
+      trace.encodeReport({}, () => {
+        throw failure;
+      }),
+    (error) => error === failure,
+  );
+});
