@@ -324,8 +324,8 @@ const historicalCatalogURL = new URL(
 );
 const historicalCatalog = Object.freeze({
   path: 'game/i18n/catalogs.mjs',
-  bytes: 1261767,
-  sha256: '0b8a2d882650815ef03b020c8e5f58a0ff9ee1f6c0f65d5ac1c2b54d9b28266a',
+  bytes: 1261607,
+  sha256: '0f4661c71926c1f79ad159ef7d8e15d03e72d4f34a8de2e8b194eae915f0cd71',
 });
 const catalogProjection = Object.freeze({
   format: 'PresentationCatalogProjectionV1',
@@ -338,8 +338,8 @@ const catalogProjection = Object.freeze({
   },
   derived: {
     path: 'game/i18n/catalogs.mjs',
-    bytes: 1261767,
-    sha256: '0b8a2d882650815ef03b020c8e5f58a0ff9ee1f6c0f65d5ac1c2b54d9b28266a',
+    bytes: 1261607,
+    sha256: '0f4661c71926c1f79ad159ef7d8e15d03e72d4f34a8de2e8b194eae915f0cd71',
   },
   receipt: 'docs/migrations/retained-packed-catalogs.json',
 });

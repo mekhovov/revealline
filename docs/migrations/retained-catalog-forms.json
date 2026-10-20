@@ -63,14 +63,14 @@
     {
       "path": "game/locales/en/content.json",
       "previousSHA256": "b5d47109e6dc996c87a37785960fee2e9904b5ba7e15ec899ba7170927282af1",
-      "sha256": "5dbe8a0e963b4c9019cd9191bc36bd1acf0f8f7dd57a19431b1dc93cc7bde638",
-      "retiredEntries": 2
+      "sha256": "4123075116771b80ab4abc1e99a44b774d6186693c8b326550e3fe1c401e860f",
+      "retiredEntries": 8
     },
     {
       "path": "game/locales/uk/content.json",
       "previousSHA256": "1ccf0cc346436ba50e56e7288eef112f7261d5f853c9a0ee33eff43d2c0c622d",
-      "sha256": "a578c0ada012a72ccee100f17eed6824e23d6e2b6c09ff0ef9fb97951bd9b234",
-      "retiredEntries": 2
+      "sha256": "5e99ebba145477dfc7c97cd2b05023895c473dea651c4d106c4b259fd2c919a5",
+      "retiredEntries": 8
     }
   ]
 }

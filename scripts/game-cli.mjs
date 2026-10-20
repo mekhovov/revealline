@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 import { validateLocalization } from './localization.mjs';
-import { validatePublishedContentOwnership } from './published-content-ownership.mjs';
+const validatePublishedContentOwnership = async (...args) =>
+  (await import('./published-content-ownership.mjs')).validatePublishedContentOwnership(...args);
 /** Local browser-game tooling, including catalog validation for localized builds. */
 import { createHash } from 'node:crypto';
 import { createServer } from 'node:http';
