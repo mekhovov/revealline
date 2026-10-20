@@ -17,6 +17,14 @@ const previous = JSON.parse(
 const historyRoot = 'authoring/production/history';
 const index = JSON.parse(await readFile(path.join(root, historyRoot, 'index.json')));
 const sourceIndex = JSON.parse(await readFile(path.join(root, historyRoot, 'source-index.json')));
+test('retained enemy snapshots carry exactly their declared theme forms', async () => {
+  const entry = index.entries.find((row) => row.path === 'game/enemy-catalog.mjs');
+  assert.ok(entry, 'The historical enemy source remains indexed.');
+  const snapshot = await import(new URL(`../${historyRoot}/${entry.sha256}.mjs`, import.meta.url));
+  for (const enemy of snapshot.ENEMY_CATALOG)
+    assert.equal(enemy.forms.length, snapshot.ENEMY_THEMES.length, enemy.type);
+});
+
 const old = index.entries[0];
 const snapshot = `${historyRoot}/${old.sha256}.json`;
 const current = await readFile(path.join(root, old.path));
@@ -233,7 +241,7 @@ test('the projected enemy catalogue remains pinned while the Journey catalogue e
   assert.deepEqual(retained, {
     path: 'game/enemy-catalog.mjs',
     bytes: 5837,
-    sha256: "95d6f3c7ff15f32892d1ef826238a7a7de2992c70c4c26b97cc29fb909efcd3a",
+    sha256: '95d6f3c7ff15f32892d1ef826238a7a7de2992c70c4c26b97cc29fb909efcd3a',
   });
   assert(pins(register).some((pin) => JSON.stringify(pin) === JSON.stringify(retained)));
   const name = `${historyRoot}/${retained.sha256}.mjs`;
