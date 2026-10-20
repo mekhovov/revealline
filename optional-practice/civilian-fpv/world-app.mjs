@@ -1089,6 +1089,7 @@ export function mountWorldApp({
     flightToken = 0,
     finished = false,
     resultMedalGoal = null,
+    resultCopy = null,
     sceneReady = false,
     scenePreparationGeneration = 0,
     qualityPreparing = false,
@@ -1862,6 +1863,10 @@ export function mountWorldApp({
     enemyStatsViews.forEach((view) => view.refresh());
     if (resultMedalGoal?.node.isConnected)
       resultMedalGoal.node.textContent = worldMedalGoalText(resultMedalGoal.goal, locale);
+    if (resultCopy?.token === flightToken) {
+      for (const { node, refresh } of resultCopy.bindings) if (node.isConnected) refresh();
+      flowControls?.setLocale(locale);
+    }
     const toolNames = {
       learn: txt('Flight School', 'Льотна школа'),
       playlists: txt('Playlists', 'Добірки'),
@@ -2695,10 +2700,10 @@ export function mountWorldApp({
     // Selection never supplies a simulation seed or bypasses scene preparation/arming.
     return startFlight(entry, { mode: $('flight-mode').value });
   }
-  function randomFlightControl(worldId, next = false) {
+  function randomFlightControl(worldId, next = false, bindCopy = (node) => node) {
     const candidates = randomFlightCandidates(worldId),
       entry = candidates[0] ?? catalogue.find((item) => !item.archived && item.world === worldId),
-      title =
+      title = () =>
         localized(FLIGHT_WORLDS.find((world) => world.id === worldId)?.title) ||
         installed.find((pack) => pack.id === entry?.projectId)?.project.title ||
         worldId,
@@ -2711,34 +2716,43 @@ export function mountWorldApp({
         () => startRandomFlight(worldId),
         'primary',
       );
+    bindCopy(action, () =>
+      next
+        ? txt('Random next flight', 'Випадковий наступний політ')
+        : txt('Random flight', 'Випадковий політ'),
+    );
     action.dataset.randomFlight = next ? 'next' : 'catalogue';
     action.disabled = candidates.length === 0;
-    if (title) action.setAttribute('aria-label', `${action.textContent}: ${title}`);
-    info.append(
-      el(
-        'strong',
-        title
-          ? `${txt('This world', 'Цей світ')}: ${title}`
-          : txt('No matching world', 'Немає відповідного світу'),
-      ),
-      el(
-        'small',
-        candidates.length === 0
+    if (title()) {
+      action.setAttribute('aria-label', `${action.textContent}: ${title()}`);
+      bindCopy(action, () => `${action.textContent}: ${title()}`, 'aria-label');
+    }
+    const heading = el('strong'),
+      description = el('small');
+    const readHeading = () =>
+      title()
+        ? `${txt('This world', 'Цей світ')}: ${title()}`
+        : txt('No matching world', 'Немає відповідного світу');
+    const readDescription = () =>
+      candidates.length === 0
+        ? txt(
+            'No matching flights. Change your filters.',
+            'Немає відповідних польотів. Змініть фільтри.',
+          )
+        : candidates.length === 1
           ? txt(
-              'No matching flights. Change your filters.',
-              'Немає відповідних польотів. Змініть фільтри.',
+              'Only one flight matches your filters.',
+              'Лише один політ відповідає вашим фільтрам.',
             )
-          : candidates.length === 1
-            ? txt(
-                'Only one flight matches your filters.',
-                'Лише один політ відповідає вашим фільтрам.',
-              )
-            : txt(
-                `${candidates.length} filtered flights. No immediate repeats.`,
-                `Польотів за фільтрами: ${candidates.length}. Без повторення поспіль.`,
-              ),
-      ),
-    );
+          : txt(
+              `${candidates.length} filtered flights. No immediate repeats.`,
+              `Польотів за фільтрами: ${candidates.length}. Без повторення поспіль.`,
+            );
+    heading.textContent = readHeading();
+    description.textContent = readDescription();
+    bindCopy(heading, readHeading);
+    bindCopy(description, readDescription);
+    info.append(heading, description);
     row.append(info, action);
     return row;
   }
@@ -4775,18 +4789,19 @@ export function mountWorldApp({
       }
     }
   }
-  function splitSummary(rows, reference) {
+  function splitSummary(rows, reference, bindCopy = (node) => node) {
+    const text = (tag, read) => bindCopy(el(tag, read()), read);
     const details = el('details', undefined, 'sector-summary');
-    details.append(el('summary', txt('Completed sector times', 'Час пройдених ділянок')));
+    details.append(text('summary', () => txt('Completed sector times', 'Час пройдених ділянок')));
     const table = el('table'),
       heading = el('tr');
     for (const title of [
-      txt('Sector', 'Ділянка'),
-      txt('Time', 'Час'),
-      txt('Split Δ', 'Δ ділянки'),
-      txt('Total Δ', 'Δ разом'),
+      ['Sector', 'Ділянка'],
+      ['Time', 'Час'],
+      ['Split Δ', 'Δ ділянки'],
+      ['Total Δ', 'Δ разом'],
     ]) {
-      const th = el('th', title);
+      const th = text('th', () => txt(...title));
       th.scope = 'col';
       heading.append(th);
     }
@@ -4796,13 +4811,17 @@ export function mountWorldApp({
     for (const sector of rows) {
       const row = el('tr'),
         baseline = reference?.sectors[sector.index];
-      row.append(el('td', String(sector.index + 1)), el('td', seconds(sector.ticks)));
+      row.append(
+        el('td', String(sector.index + 1)),
+        text('td', () => seconds(sector.ticks)),
+      );
       for (const value of [
         baseline ? sector.ticks - baseline.ticks : null,
         baseline ? sector.endTick - baseline.endTick : null,
       ]) {
         const cell = el('td');
         paintDelta(cell, '', value);
+        bindCopy(cell, () => ` ${deltaSeconds(value)}`);
         row.append(cell);
       }
       body.append(row);
@@ -5392,6 +5411,7 @@ export function mountWorldApp({
     }
     finished = true;
     resultMedalGoal = null;
+    resultCopy = null;
     enemyStatistics.finish();
     input.enable(false);
     fire = false;
@@ -5473,6 +5493,23 @@ export function mountWorldApp({
         sectors: sectors.snapshot(),
       });
     $('result-panel').hidden = false;
+    // Locale refresh only paints accepted facts into the existing result nodes.
+    // Verification and navigation keep their own lifecycle and event handlers.
+    const copy = { token, bindings: [] };
+    resultCopy = copy;
+    const bindCopy = (node, read, attribute = null) => {
+      const refresh = () => {
+        const text = read();
+        if (attribute) {
+          if (node.getAttribute(attribute) !== text) node.setAttribute(attribute, text);
+        } else if (node.textContent !== text) node.textContent = text;
+      };
+      copy.bindings.push({ node, refresh });
+      refresh();
+      return node;
+    };
+    const resultEl = (tag, read, className) => bindCopy(el(tag, undefined, className), read);
+    const resultButton = (read, action, className) => bindCopy(button('', action, className), read);
     const resultDetails = el('div');
     // One host-owned view keeps live totals and the optional family breakdown
     // inside the result card without replacing or expanding its primary actions.
@@ -5480,41 +5517,45 @@ export function mountWorldApp({
     resultEnemyStatsView.refresh();
     $('result-panel').replaceChildren(resultDetails, resultEnemyStatsView.root);
     resultDetails.replaceChildren(
-      el(
-        'h2',
+      resultEl('h2', () =>
         state.status === 'complete'
           ? entry.beginner
             ? txt('Lesson complete', 'Урок виконано')
             : txt('Challenge complete', 'Завдання виконано')
           : txt('Flight ended', 'Політ завершено'),
       ),
-      el('p', txt('Checking recording…', 'Перевірка запису…')),
+      resultEl('p', () => txt('Checking recording…', 'Перевірка запису…')),
     );
     const resultActions = el('div', undefined, 'button-row continuous-result-actions');
-    const retryAction = button(
-      txt('Fly again', 'Летіти ще раз'),
+    const retryAction = resultButton(
+      () => txt('Fly again', 'Летіти ще раз'),
       () => $('world-retry').click(),
       'primary',
     );
     resultActions.append(retryAction);
     if (!$('world-next').disabled)
       resultActions.append(
-        button(txt('Next flight', 'Наступний політ'), () => $('world-next').click(), 'primary'),
+        resultButton(
+          () => txt('Next flight', 'Наступний політ'),
+          () => $('world-next').click(),
+          'primary',
+        ),
       );
     if (entry.beginner && state.status === 'complete' && !isPreview)
       resultActions.append(
-        button(
-          !nextLearningEntry(entry)
-            ? txt('Return to your course', 'Повернутися до курсу')
-            : txt('Next lesson', 'Наступний урок'),
+        resultButton(
+          () =>
+            !nextLearningEntry(entry)
+              ? txt('Return to your course', 'Повернутися до курсу')
+              : txt('Next lesson', 'Наступний урок'),
           () => nextLearningFlight(),
           'primary',
         ),
       );
     if (entry.beginner && state.status === 'complete' && !nextLearningEntry(entry))
       resultActions.append(
-        button(
-          txt('Explore more worlds', 'Досліджувати інші світи'),
+        resultButton(
+          () => txt('Explore more worlds', 'Досліджувати інші світи'),
           async () => {
             await closeFlight();
             showTab('explore');
@@ -5523,10 +5564,11 @@ export function mountWorldApp({
         ),
       );
     resultActions.append(
-      button(
-        entry.beginner
-          ? txt('Back to Flight School', 'До льотної школи')
-          : txt('Back to lobby', 'До меню'),
+      resultButton(
+        () =>
+          entry.beginner
+            ? txt('Back to Flight School', 'До льотної школи')
+            : txt('Back to lobby', 'До меню'),
         async () => {
           await closeFlight();
           if (entry.beginner) showTab('learn');
@@ -5534,16 +5576,25 @@ export function mountWorldApp({
       ),
     );
     resultActions.append(
-      button(txt('Random level', 'Випадковий рівень'), () => playShell.activate('random')),
-      button(txt('Choose mission', 'Вибрати місію'), () => {
-        continuousPlay.cancel('mission-choice');
-        openCatalogueTab('explore');
-      }),
-      button(txt('Home', 'Додому'), async () => {
-        continuousPlay.cancel('home');
-        await closeFlight();
-        playShell.openHome();
-      }),
+      resultButton(
+        () => txt('Random level', 'Випадковий рівень'),
+        () => playShell.activate('random'),
+      ),
+      resultButton(
+        () => txt('Choose mission', 'Вибрати місію'),
+        () => {
+          continuousPlay.cancel('mission-choice');
+          openCatalogueTab('explore');
+        },
+      ),
+      resultButton(
+        () => txt('Home', 'Додому'),
+        async () => {
+          continuousPlay.cancel('home');
+          await closeFlight();
+          playShell.openHome();
+        },
+      ),
     );
     $('result-panel').append(resultActions);
     flowControls?.dispose();
@@ -5635,16 +5686,14 @@ export function mountWorldApp({
       // Keep the action row connected while asynchronous verification updates
       // only its sibling details; keyboard/controller focus must stay usable.
       resultDetails.replaceChildren(
-        el(
-          'h2',
+        resultEl('h2', () =>
           state.status === 'complete'
             ? entry.beginner
               ? txt('Lesson complete', 'Урок виконано')
               : txt('Challenge complete', 'Завдання виконано')
             : txt('Flight ended', 'Політ завершено'),
         ),
-        el(
-          'p',
+        resultEl('p', () =>
           isPreview
             ? txt(
                 'Authoring preview · no rewards or completion earned.',
@@ -5652,9 +5701,9 @@ export function mountWorldApp({
               )
             : txt('Recording verified.', 'Запис перевірено.'),
         ),
-        el(
+        resultEl(
           'small',
-          `${(state.ticks / 50).toFixed(2)} s · ${state.contacts ?? 0} ${txt('contacts', 'контактів')}`,
+          () => `${seconds(state.ticks)} · ${state.contacts ?? 0} ${txt('contacts', 'контактів')}`,
         ),
       );
       if (
@@ -5664,7 +5713,7 @@ export function mountWorldApp({
       ) {
         const stars = { gold: 3, silver: 2, bronze: 1 }[resultSummary.medal];
         const rating = el('p', '★'.repeat(stars), 'result-stars');
-        rating.setAttribute('aria-label', txt(`${stars} of 3 stars`, `${stars} з 3 зірок`));
+        bindCopy(rating, () => txt(`${stars} of 3 stars`, `${stars} з 3 зірок`), 'aria-label');
         resultDetails.append(rating);
       }
       const medalGoal = !isPreview && worldMedalGoal(resultSummary, state.ticks);
@@ -5676,13 +5725,14 @@ export function mountWorldApp({
       }
       if (!entry.beginner)
         resultDetails.append(
-          el(
+          resultEl(
             'p',
-            `${resultSummary.medal ? `${txt('Medal', 'Медаль')}: ${resultSummary.medal} · ` : ''}${txt('Score', 'Бали')}: ${resultSummary.score}${resultSummary.accuracy === null ? '' : ` · ${Math.round(resultSummary.accuracy * 100)}%`}`,
+            () =>
+              `${resultSummary.medal ? `${txt('Medal', 'Медаль')}: ${locale === 'uk' ? { gold: 'золото', silver: 'срібло', bronze: 'бронза' }[resultSummary.medal] : resultSummary.medal} · ` : ''}${txt('Score', 'Бали')}: ${resultSummary.score}${resultSummary.accuracy === null ? '' : ` · ${Math.round(resultSummary.accuracy * 100)}%`}`,
           ),
         );
       if (resultSummary.sectors.length)
-        resultDetails.append(splitSummary(resultSummary.sectors, completedReference));
+        resultDetails.append(splitSummary(resultSummary.sectors, completedReference, bindCopy));
       const lostSector = completedReference
         ? resultSummary.sectors
             .map((sector) => ({
@@ -5707,19 +5757,21 @@ export function mountWorldApp({
           suggestion = el('div');
         suggestion.dataset.coachLesson = lesson.id;
         suggestion.append(
-          el(
+          resultEl(
             'p',
-            `${txt('Section', 'Ділянка')} ${measured.index + 1}: ${seconds(measured.ticks)}. ${
-              lostSector
-                ? txt(
-                    `${seconds(lostSector.loss)} longer than the same section in your best flight with these settings.`,
-                    `На ${seconds(lostSector.loss)} довше за ту саму ділянку у вашому найкращому польоті з цими налаштуваннями.`,
-                  )
-                : txt('Your longest completed section.', 'Ваша найдовша пройдена ділянка.')
-            }`,
+            () =>
+              `${txt('Section', 'Ділянка')} ${measured.index + 1}: ${seconds(measured.ticks)}. ${
+                lostSector
+                  ? txt(
+                      `${seconds(lostSector.loss)} longer than the same section in your best flight with these settings.`,
+                      `На ${seconds(lostSector.loss)} довше за ту саму ділянку у вашому найкращому польоті з цими налаштуваннями.`,
+                    )
+                  : txt('Your longest completed section.', 'Ваша найдовша пройдена ділянка.')
+              }`,
           ),
-          button(
-            `${txt('Optional gate-sequence lesson', 'Необов’язковий урок проходження воріт')}: ${label(lesson)}`,
+          resultButton(
+            () =>
+              `${txt('Optional gate-sequence lesson', 'Необов’язковий урок проходження воріт')}: ${label(lesson)}`,
             () => {
               if (disposed || token !== flightToken || current !== entry) return;
               const original = demonstrationEntry(entry),
@@ -5751,24 +5803,27 @@ export function mountWorldApp({
       }
       const practiceActions = el('section', undefined, 'sim-flight-practice');
       practiceActions.append(
-        el('h3', txt('Watch → Try → Repeat', 'Дивіться → спробуйте → повторіть')),
+        resultEl('h3', () => txt('Watch → Try → Repeat', 'Дивіться → спробуйте → повторіть')),
       );
       if (!entry.legacy)
         practiceActions.append(
-          button(txt('Watch this section', 'Переглянути цю ділянку'), () =>
-            startFlight(entry, {
-              checkpoint: {
-                mode: proof.mode,
-                index: lostSector?.index ?? resultSummary.weakest,
-                proof,
-                watch: true,
-              },
-            }),
+          resultButton(
+            () => txt('Watch this section', 'Переглянути цю ділянку'),
+            () =>
+              startFlight(entry, {
+                checkpoint: {
+                  mode: proof.mode,
+                  index: lostSector?.index ?? resultSummary.weakest,
+                  proof,
+                  watch: true,
+                },
+              }),
           ),
-          button(
-            lostSector
-              ? txt('Practise biggest time loss', 'Тренувати ділянку з найбільшою втратою часу')
-              : txt('Practise longest section', 'Тренувати найдовшу ділянку'),
+          resultButton(
+            () =>
+              lostSector
+                ? txt('Practise biggest time loss', 'Тренувати ділянку з найбільшою втратою часу')
+                : txt('Practise longest section', 'Тренувати найдовшу ділянку'),
             () =>
               startFlight(entry, {
                 checkpoint: {
@@ -5781,33 +5836,43 @@ export function mountWorldApp({
         );
       if (demonstrationFor(entry, proof.mode))
         practiceActions.append(
-          button(txt('Watch example', 'Переглянути приклад'), () =>
-            watchDemonstration(entry, proof.mode),
+          resultButton(
+            () => txt('Watch example', 'Переглянути приклад'),
+            () => watchDemonstration(entry, proof.mode),
           ),
         );
       $('result-panel').append(practiceActions);
       const resultActions = el('div', undefined, 'button-row');
       resultActions.append(
-        button(txt('Fly again', 'Летіти ще раз'), () => $('world-retry').click(), 'primary'),
+        resultButton(
+          () => txt('Fly again', 'Летіти ще раз'),
+          () => $('world-retry').click(),
+          'primary',
+        ),
       );
       if (!$('world-next').disabled)
         resultActions.append(
-          button(txt('Next flight', 'Наступний політ'), () => $('world-next').click(), 'primary'),
+          resultButton(
+            () => txt('Next flight', 'Наступний політ'),
+            () => $('world-next').click(),
+            'primary',
+          ),
         );
       if (entry.beginner && state.status === 'complete' && !isPreview)
         resultActions.append(
-          button(
-            !nextLearningEntry(entry)
-              ? txt('Return to your course', 'Повернутися до курсу')
-              : txt('Next lesson', 'Наступний урок'),
+          resultButton(
+            () =>
+              !nextLearningEntry(entry)
+                ? txt('Return to your course', 'Повернутися до курсу')
+                : txt('Next lesson', 'Наступний урок'),
             () => nextLearningFlight(),
             'primary',
           ),
         );
       if (entry.beginner && state.status === 'complete' && !nextLearningEntry(entry))
         resultActions.append(
-          button(
-            txt('Explore more worlds', 'Досліджувати інші світи'),
+          resultButton(
+            () => txt('Explore more worlds', 'Досліджувати інші світи'),
             async () => {
               await closeFlight();
               showTab('explore');
@@ -5816,10 +5881,11 @@ export function mountWorldApp({
           ),
         );
       resultActions.append(
-        button(
-          entry.beginner
-            ? txt('Back to Flight School', 'До льотної школи')
-            : txt('Back to lobby', 'До меню'),
+        resultButton(
+          () =>
+            entry.beginner
+              ? txt('Back to Flight School', 'До льотної школи')
+              : txt('Back to lobby', 'До меню'),
           async () => {
             await closeFlight();
             if (entry.beginner) showTab('learn');
@@ -5828,11 +5894,12 @@ export function mountWorldApp({
       );
       $('result-panel').append(resultActions);
       if (!isPreview && !entry.beginner && !completedPlaylist)
-        $('result-panel').append(randomFlightControl(entry.world, true));
+        $('result-panel').append(randomFlightControl(entry.world, true, bindCopy));
       presentation.resume();
       practiceActions.append(
-        button(txt('Watch your flight', 'Переглянути свій політ'), () =>
-          startFlight(entry, { preview: true, replayProof: proof }),
+        resultButton(
+          () => txt('Watch your flight', 'Переглянути свій політ'),
+          () => startFlight(entry, { preview: true, replayProof: proof }),
         ),
       );
     } catch (error) {
@@ -6457,6 +6524,7 @@ export function mountWorldApp({
     $('world-replay-controls').hidden = true;
     $('result-panel').hidden = true;
     resultMedalGoal = null;
+    resultCopy = null;
     $('flight-mode').disabled =
       $('flight-source').disabled =
       $('radio-setup-button').disabled =
@@ -6782,6 +6850,7 @@ export function mountWorldApp({
     accumulator = 0;
     $('result-panel').hidden = true;
     resultMedalGoal = null;
+    resultCopy = null;
     $('flight-title').textContent = label(entry);
     $('flight-collection').textContent = replayProof
       ? $('world-replay-label').textContent
@@ -7175,6 +7244,7 @@ export function mountWorldApp({
     if (token !== flightToken || disposed) return;
     flight = null;
     resultMedalGoal = null;
+    resultCopy = null;
     if (activeTuningDraft) {
       tuningStore.refresh();
       const camera = tuningStore.effective().camera;
@@ -9518,6 +9588,7 @@ export function mountWorldApp({
       if (closing) return closing;
       disposed = true;
       resultMedalGoal = null;
+      resultCopy = null;
       regionalManifestRequest?.abort();
       closing = Promise.resolve().then(async () => {
         courseClassFilter?.dispose();
