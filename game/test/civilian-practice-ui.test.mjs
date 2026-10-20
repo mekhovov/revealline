@@ -738,3 +738,50 @@ for (const clock of ['animation timestamp', 'callback execution']) {
     assert.equal(flow.inert, true, 'Cancelled controls cannot retain input ownership.');
   });
 }
+
+test('gym retains extra-large desired intent while its actual paused model uses the Large interface fallback', async (t) => {
+  const originalLocale = getLocale();
+  t.after(() => setLocale(originalLocale, { persist: false }));
+  const key = 'revealline.display.v1';
+  const records = new Map([
+    [key, JSON.stringify({ textFace: 'plain', textSize: 'extra-large', reducedEffects: false })],
+  ]);
+  const writes = [];
+  const storage = {
+    getItem: (name) => records.get(name) ?? null,
+    setItem(name, value) {
+      records.set(name, value);
+      writes.push(name);
+    },
+  };
+  const f = await fixture(t, { storage }),
+    $ = (id) => f.doc.getElementById(id);
+  const control = $('gym-global-textSize');
+  assert.equal(control.value, 'extra-large');
+  assert.equal(control.querySelector('[data-text-size-retained]').disabled, true);
+  assert.equal(f.doc.body.dataset.textSize, 'large');
+  assert.equal(writes.includes(key), false);
+  $('gym-shell-action-primary').click();
+  f.tick(3);
+  $('gym-shell-action-menu').click();
+  $('gym-shell-action-settings').click();
+  const paused = structuredClone(f.view.snapshot()),
+    trace = structuredClone(f.view.trace());
+  assert.equal(paused.status, 'paused');
+  for (const locale of ['uk', 'en']) {
+    setLocale(locale, { persist: false });
+    assert.equal(control.value, 'extra-large');
+    assert.equal(f.doc.body.dataset.textSize, 'large');
+    assert.equal(writes.includes(key), false);
+    f.tick(3);
+    assert.deepEqual(f.view.snapshot(), paused);
+    assert.deepEqual(f.view.trace(), trace);
+  }
+  $('gym-global-textFace').value = 'pixel';
+  $('gym-global-textFace').emit('change');
+  assert.equal(JSON.parse(records.get(key)).textSize, 'extra-large');
+  assert.equal(f.doc.body.dataset.textSize, 'large');
+  f.tick(3);
+  assert.deepEqual(f.view.snapshot(), paused);
+  assert.deepEqual(f.view.trace(), trace);
+});

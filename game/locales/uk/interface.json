@@ -6151,5 +6151,8 @@
   "yourUnfinishedLineCrossedItself": "Незавершена лінія перетнула себе.",
   "yourUnfinishedLineRemainsExposed": "Ваша незавершена лінія залишається вразливою.",
   "yourUnfinishedLineWasCancelledEarlierSecuredTerritoryIsKept": "Незавершену лінію скасовано; раніше захоплена територія збережена.",
-  "yourUnsavedDraftIsStillHere": "Незбережена чернетка досі тут."
+  "yourUnsavedDraftIsStillHere": "Незбережена чернетка досі тут.",
+  "textSizeCompatibility.retained": "Дуже великий · тут використовується великий",
+  "textSizeCompatibility.fallback": "Дуже великий розмір збережено як бажаний. Цей екран наразі використовує великий розмір. Оберіть стандартний або великий, щоб змінити спільне налаштування.",
+  "textSizeCompatibility.readOnlyFallback": "Дуже великий розмір збережено як бажаний. Цей екран наразі використовує великий розмір."
 }

@@ -1,3 +1,4 @@
+import { renderTextSizeControl } from '../ui/text-size-control.mjs';
 import { localizedText, t } from '../i18n/index.mjs';
 import { attachFullscreen } from '../ui/fullscreen.mjs';
 import { setMenuIcon } from '../ui/native-menu-icons.mjs';
@@ -97,10 +98,10 @@ export function attachCreatorPlayerMenu({
   });
   const stopDisplay = display.subscribe((state) => {
     doc.body.dataset.textFace = state.textFace;
-    doc.body.dataset.textSize = state.textSize;
+    doc.body.dataset.textSize = state.effectiveTextSize ?? state.textSize;
     doc.body.dataset.effects = state.effectiveReducedEffects ? 'reduced' : 'full';
     $('creator-text-face').value = state.textFace;
-    $('creator-text-size').value = state.textSize;
+    renderTextSizeControl($('creator-text-size'), state.textSize);
     $('creator-reduced-effects').checked = state.reducedEffects;
     scene.update();
   });

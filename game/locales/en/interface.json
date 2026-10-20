@@ -6037,5 +6037,8 @@
   "yourUnfinishedLineCrossedItself": "Your unfinished line crossed itself.",
   "yourUnfinishedLineRemainsExposed": "Your unfinished line remains exposed.",
   "yourUnfinishedLineWasCancelledEarlierSecuredTerritoryIsKept": "Your unfinished line was cancelled; earlier secured territory is kept.",
-  "yourUnsavedDraftIsStillHere": "Your unsaved draft is still here."
+  "yourUnsavedDraftIsStillHere": "Your unsaved draft is still here.",
+  "textSizeCompatibility.retained": "Extra large · using Large here",
+  "textSizeCompatibility.fallback": "Extra large is kept as your preferred size. This screen currently uses Large. Choose Standard or Large to change the shared preference.",
+  "textSizeCompatibility.readOnlyFallback": "Extra large is kept as your preferred size. This screen currently uses Large."
 }

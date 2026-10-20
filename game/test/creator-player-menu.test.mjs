@@ -432,3 +432,17 @@ test('winning presentation keeps the original board in place until Continue rele
   menu.refresh();
   assert.equal($('creator-home').hidden, false);
 });
+
+test('Creator keeps extra-large intent visible and changing another preference never resets it', (t) => {
+  const stored = { textFace: 'plain', textSize: 'extra-large', reducedEffects: false };
+  const h = fixture(t, { stored });
+  const state = structuredClone(h.state);
+  assert.equal(h.doc.body.dataset.textSize, 'large');
+  assert.equal(h.$('creator-text-size').value, 'extra-large');
+  assert.equal(h.$('creator-text-size').querySelector('[data-text-size-retained]').disabled, true);
+  assert.equal(h.writes.length, 0);
+  h.$('creator-text-face').value = 'pixel';
+  h.$('creator-text-face').emit('change');
+  assert.equal(JSON.parse(h.writes.at(-1)[1]).textSize, 'extra-large');
+  assert.deepEqual(h.state, state);
+});
