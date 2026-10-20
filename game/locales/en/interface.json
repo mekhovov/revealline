@@ -5981,5 +5981,9 @@
   "supportSummary.game.unavailable": "Unavailable",
   "supportSummary.preparedWaiting": "Summary prepared below. An earlier export is still waiting for its destination; another export will be available when it settles.",
   "supportSummary.game.finished": "Round finished",
+  "supportSummary.game.disarmed": "Disarmed",
+  "supportSummary.game.complete": "Flight complete",
+  "supportSummary.game.expired": "Flight time expired",
+  "supportSummary.game.playback-ended": "Playback ended",
   "worldIdsCommaSeparated": "Worlds (comma separated: retro, fpv, ukraine)"
 }

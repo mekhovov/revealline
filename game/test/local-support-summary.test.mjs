@@ -378,3 +378,16 @@ test('Versus finished is an observed round state and preserves primary and Team 
   );
   assert.equal(supportSnapshot({ kind: 'solo' }, environment(), clock).scope, 'primary-game-shell');
 });
+
+test('Academy terminal playback remains distinct from live flight completion and expiry', () => {
+  for (const state of ['disarmed', 'complete', 'expired', 'playback-ended']) {
+    const value = supportSnapshot({ kind: 'fpv-academy', state }, environment(), clock);
+    assert.equal(value.scope, 'academy-game-shell');
+    assert.equal(value.game.host, 'fpv-academy');
+    assert.equal(value.game.state, state);
+    assert.equal(value.game.saving.writable, null);
+    assert.equal(value.controller.assigned, null);
+    assert.equal(value.controller.neutral, null);
+    assert.equal(value.controller.confirmBlocked, null);
+  }
+});
