@@ -457,3 +457,129 @@ test('empty filtered pages retain pagination without stale or duplicated empty m
   assert.deepEqual(shownTitles(h), ['Edition match']);
   assert.equal(h.$('catalog').children.length, 1, 'only the matching card is shown');
 });
+
+test('Installed remains reachable during an outage without unlocking accounts or publishing', async (t) => {
+  const requests = [];
+  const h = host(t, {
+    probe: async () => {
+      throw new Error('offline');
+    },
+    catalog: async (args) => {
+      requests.push(args);
+      return {
+        editions: [
+          {
+            ...catalogEdition('local'),
+            installed: true,
+            local: true,
+            managementAvailable: false,
+            publishedAt: undefined,
+            playHref: '../creator/player.html?edition=local',
+          },
+        ],
+        nextCursor: null,
+      };
+    },
+  });
+  await settle();
+  assert.equal(h.calls.catalog, 0);
+  await h.$('open-installed').onclick();
+  assert.equal(requests[0].installed, 'installed');
+  assert.equal(h.$('service-catalog-fields').disabled, false);
+  assert.equal(h.$('service-account-fields').disabled, true);
+  assert.equal(h.$('service-publish-fields').disabled, true);
+  assert.deepEqual(shownTitles(h), ['Edition local']);
+  assert.equal(h.$('catalog').querySelector('a').href, '../creator/player.html?edition=local');
+  assert.equal(
+    h.$('catalog').querySelectorAll('button').length,
+    0,
+    'missing metadata cannot unlock destructive or online actions',
+  );
+  assert.doesNotMatch(h.$('catalog').textContent, /NaN|Invalid Date/u);
+  assert.equal(h.$('filter').ownerDocument.activeElement, h.$('filter'));
+  h.$('search').value = 'local';
+  await h.$('search').oninput();
+  assert.equal(requests.at(-1).query, 'local');
+  await h.$('refresh').onclick();
+  assert.equal(h.calls.session, 0);
+  h.$('filter').value = 'all';
+  await h.$('filter').onchange();
+  assert.equal(h.$('service-catalog-fields').disabled, true);
+  assert.deepEqual(shownTitles(h), [], 'local rows cannot masquerade as remote results');
+  await h.$('open-installed').onclick();
+  assert.deepEqual(shownTitles(h), ['Edition local']);
+});
+
+test('a pending service probe never blocks or cancels local Installed results', async (t) => {
+  const probe = deferred();
+  const local = deferred();
+  const h = host(t, { probe: () => probe.promise, catalog: () => local.promise });
+  await settle();
+  const browsing = h.$('open-installed').onclick();
+  await settle();
+  assert.equal(h.calls.catalog, 1);
+  probe.resolve();
+  await settle();
+  assert.equal(h.calls.catalog, 1, 'readiness success does not restart local browsing');
+  local.resolve({ editions: [catalogEdition('local')], nextCursor: null });
+  await browsing;
+  assert.deepEqual(shownTitles(h), ['Edition local']);
+});
+
+test('switching to Installed cancels a remote request and rejects its late result', async (t) => {
+  const remote = deferred();
+  let remoteSignal;
+  const h = host(t, {
+    catalog: (args) => {
+      if (args.installed === 'installed')
+        return { editions: [catalogEdition('local')], nextCursor: null };
+      remoteSignal = args.signal;
+      return remote.promise;
+    },
+  });
+  await settle();
+  await h.$('open-installed').onclick();
+  assert.equal(remoteSignal.aborted, true);
+  remote.resolve({ editions: [catalogEdition('remote')], nextCursor: 'remote-next' });
+  await settle();
+  assert.deepEqual(shownTitles(h), ['Edition local']);
+  assert.equal(h.$('more').hidden, true);
+  h.window.dispatchEvent(new Event('offline'));
+  await settle();
+  assert.equal(h.$('service-catalog-fields').disabled, false);
+  assert.deepEqual(shownTitles(h), ['Edition local']);
+});
+
+test('an unavailable local edition has no Play or install action and leaves healthy games usable', async (t) => {
+  const h = host(t, {
+    probe: async () => {
+      throw new Error('offline');
+    },
+    catalog: async () => ({
+      editions: [
+        {
+          ...catalogEdition('unavailable'),
+          local: true,
+          localUnavailable: true,
+          installed: false,
+          publishedAt: undefined,
+        },
+        {
+          ...catalogEdition('healthy'),
+          local: true,
+          installed: true,
+          managementAvailable: false,
+          playHref: '../creator/player.html?edition=healthy',
+        },
+      ],
+      nextCursor: null,
+    }),
+  });
+  await settle();
+  await h.$('open-installed').onclick();
+  const cards = h.$('catalog').querySelectorAll('article');
+  assert.equal(cards[0].querySelectorAll('button').length, 0);
+  assert.equal(cards[0].querySelectorAll('a').length, 0);
+  assert.match(cards[0].textContent, /could not be checked/u);
+  assert.equal(cards[1].querySelector('a').href, '../creator/player.html?edition=healthy');
+});
