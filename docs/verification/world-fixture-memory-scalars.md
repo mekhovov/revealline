@@ -1,13 +1,22 @@
 # World fixture scalar memory diagnostic
 
 This new draft observes the complete 115-case World appearance file on one immutable
-current-main-derived candidate. It is evidence collection, not a memory repair or
-qualification of the Overflight family.
+current-main-derived candidate. This successor tests a fixture-only hook ownership
+hypothesis; it does not qualify the Overflight family.
 
-The fixture is exactly the separately reviewed 03b3342 scalar-only successor of
-current 6c50c3e. It records bounded numbers at construction and the existing cleanup
-boundaries. It adds no references, object history, GC, timers, filtering, assertion
-changes, extra cleanup or production behavior.
+The fixture builds on the separately reviewed 03b3342 scalar successor of
+6c50c3e. Its two fixture after-hooks now come from module-level factories. Explicit
+small owners release their Option or app reference in finally after restoration
+or disposal. Existing test bodies, assertions, callback registration order,
+disposal, worker pruning and scalar boundaries stay intact. No GC, timer, filter,
+native limit or production behavior changes.
+
+The prior fb5a diagnostic exhausted the heap after 70 top-level and 30 nested OK
+lines without a full footer. Its 380 scalar rows cover 95 observed fixture
+lifecycles, with zero worker and message counts at every recorded prune. That
+evidence identifies no dominant cause. Node retains registered hook functions, so
+isolating these two hook owners is a controlled fixture hypothesis to test with
+the same complete 115-case command.
 
 The earlier controlled a7 and 2d15 files both exhausted the unchanged heap. The
 current 2c4d campaign completed 23 original files/215 cases plus the mandatory
