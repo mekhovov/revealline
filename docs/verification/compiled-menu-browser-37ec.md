@@ -366,3 +366,11 @@ must record the old29 passing and both new cases failing. The corrected complete
 31-case file must then pass under the same tool-only guard. Those source red/
 green results and any new hosted diagnostic remain unrun at this authored
 checkpoint. The source review alone does not prove this race occurred in7db.
+
+## First Missions visibility read: explicit unused text omission
+
+The proposed consumer correction opts in to skipping only the unused `shell-home`, `journey-chooser`, and `settings-dialog` subtree text reads while waiting for the first visible Missions chooser. It records their text as explicit `null`; no text value is inferred. All thirteen controls retain their visibility, enabled, and open facts. Locale, focus, origin, discard checks, HUD values, asserted captions, the single native click, and every existing deadline remain unchanged. Default reads, the original card-free scalar mode without this new opt-in, and all membership/activation reads retain their full text contract.
+
+This source proposal preserves the entire original 31-case file and appends two contract cases. The additions require the three throwing text getters to remain unobserved only in the explicit first-visibility profile, preserve all other public facts and the existing trace's null representation, and retain exact trim/512-boundary/whitespace semantics for default and malformed-option reads. The proposed complete cohort is 33 cheap contract cases. Formatting, syntax, RED/GREEN controls, and browser execution for this proposal are NOT RUN.
+
+The exact `3c1d3119387e47636794095e9926365ed7b81459` source run passed all 31 existing cases. Its actual compiled-target browser run failed during the tenth public-DOM read in the first visible-Missions phase, before Start/CDP. The last completed read had the chooser closed and the page in briefing at 0:00. This proposal removes independently identified unnecessary observer work; it does not attribute or claim to fix that timeout, renderer work, or production behavior. The prior failure, original deadlines, and acceptance requirements remain authoritative.

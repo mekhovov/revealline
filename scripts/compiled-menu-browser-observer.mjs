@@ -181,6 +181,7 @@ export async function observeCompiledMenu({
         page.evaluate(readCompiledMenuPublicState, {
           startProbe: startProbe ?? null,
           includeCards: readOptions?.includeCards !== false,
+          omitUnusedContainerText: readOptions?.omitUnusedContainerText === true,
         }),
       );
       trace.recordPublicState(s);
@@ -238,7 +239,7 @@ export async function observeCompiledMenu({
         'visible Missions',
         (s) => s.controls['journey-chooser'].open && s.controls['journey-chooser'].visible,
         60000,
-        { includeCards: false },
+        { includeCards: false, omitUnusedContainerText: true },
       );
       await filter('journey-mode', 'solo');
       await filter('journey-collection', 'Journey');
