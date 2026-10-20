@@ -13,6 +13,8 @@ import {
 import { diagnosticsArguments, observerArguments } from './qualify-solo-diagnostics.mjs';
 import { PROSPECTIVE_OVERHEAD_METHOD } from './solo-overhead-interval.mjs';
 
+import { assessEmpiricalClockOverhead } from './solo-overhead-acceptance.mjs';
+
 const MiB = 1024 ** 2;
 const sha = (bytes) => createHash('sha256').update(bytes).digest('hex');
 export const DIAGNOSTICS_SOURCE = 'cce49c81d82b79aefc24898f32eeebc609e569fb';
@@ -704,7 +706,7 @@ export async function runDiagnosticsCohort(ctx, row, dir, tmp, url, now = () => 
       ? (await import('./solo-journal-cost-analysis.mjs')).analyzeJournalCost(manifest, reports)
       : analyzeDiagnostics(manifest, reports);
     const analysis = {
-      ...measured,
+      ...assessEmpiricalClockOverhead(measured),
       provenance: {
         sourceRevision: diagnosticsSource(ctx.plan).revision,
         artifactAdmission: row.artifactAdmission,

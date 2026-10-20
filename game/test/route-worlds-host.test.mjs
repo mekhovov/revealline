@@ -1,3 +1,4 @@
+import { activateHostAction } from './helpers/host-action.mjs';
 import {
   playCurrentExternalRoute,
   proveHistoricalExternalRoute,
@@ -18,7 +19,7 @@ import { SOURCE_EXTERNAL_CHAPTERS } from '../external-chapter-source.mjs';
 import { authoritativeCheckpoint } from '../replay.mjs';
 import { loadLibrary } from '../library.mjs';
 import { EXTERNAL_CATALOG } from '../external-chapter-catalog.mjs';
-const editions = await Promise.all(['ukraine', 'retro', 'coupa'].map(buildRouteWorld));
+const editions = await Promise.all(['ukraine', 'retro'].map(buildRouteWorld));
 const [pilot, sentinel] = await Promise.all([buildExternalPilot(), buildExternalSentinel()]);
 const allEditions = [pilot, ...editions, sentinel];
 const sentinelProof = JSON.parse(
@@ -322,11 +323,11 @@ function ticks(p, n) {
   for (let i = 0; i < n; i++) p.frame();
 }
 
-test('five exact registered editions install together within unchanged budgets, preserve a paused cut, and Play/earn Route Choices and Sentinel originals', async (t) => {
+test('four exact registered editions install together within unchanged budgets, preserve a paused cut, and Play/earn Route Choices and Sentinel originals', async (t) => {
   const f = {};
   let receipts,
     setupComplete = false;
-  await t.test('five native pairs, three Route Choices wins and one Sentinel win', async (t) => {
+  await t.test('four native pairs, two Route Choices wins and one Sentinel win', async (t) => {
     const p = await page(t, f);
     p.$('start-button').click();
     await settle(() => p.doc.body.dataset.flightState === 'running');
@@ -381,7 +382,7 @@ test('five exact registered editions install together within unchanged budgets, 
     playCurrentExternalRoute(p, sentinel);
     const library = loadLibrary(f.storage, 'revealline.library.dev.v1').library;
     receipts = library.pictureReceipts;
-    assert.equal(receipts.length, 4);
+    assert.equal(receipts.length, 3);
     for (const e of [...editions, sentinel])
       assert(
         receipts.some(
@@ -389,8 +390,9 @@ test('five exact registered editions install together within unchanged budgets, 
         ),
       );
     assert(library.storyReceipts.every((r) => r.storyPin === null));
-    p.$('library-button').click();
-    await p.$('export-backup').onclick();
+    await activateHostAction(p.$('library-button'));
+    p.$('export-backup').click();
+    await settle(() => /Game data prepared/.test(p.$('save-status').textContent));
     assert.match(p.$('save-status').textContent, /Game data prepared/);
     const backup = JSON.parse(p.$('save-json').value);
     assert.equal(backup.format, 'xonix-backup.v2');
@@ -403,7 +405,7 @@ test('five exact registered editions install together within unchanged budgets, 
     setupComplete = true;
   });
   await t.test(
-    'restart authenticates all five indexed editions and retains exact first-earned pictures',
+    'restart authenticates all four indexed editions and retains exact first-earned pictures',
     {
       skip: setupComplete
         ? false
@@ -483,9 +485,11 @@ test('released host reads the exact small catalog then explicitly downloads only
     const p = await page(t, f, true);
     await open(p);
     assert.equal(playControl(p, editions[0]).disabled, false);
-    const requests = p.requests.length;
+    const pairRequests = () =>
+      p.requests.filter((r) => r.url.includes('/optional/external-chapters/')).map((r) => r.url);
+    const requests = pairRequests();
     await play(p, editions[0], { sameCampaign: true });
-    assert.equal(p.requests.length, requests, 'Installed Play does not download the pair again.');
+    assert.deepEqual(pairRequests(), requests, 'Installed Play does not download the pair again.');
     assert.equal(p.rendered.backdrop.pin.sha256, editions[0].descriptor.originals[0].sha256);
   });
 });

@@ -1,5 +1,7 @@
 # Collection, presentation and production follow-up
 
+> Retained excerpt after an ownership migration. Historical totals and verification statements describe the original scope; this excerpt is not a current release qualification. Original bytes and removed material are preserved separately.
+
 Reviewed 2026-09-13 during v0.36 qualification. The frozen release and PR #12 are separate from this next source work. This note adds concrete follow-ups to the active production plan; it does not declare the complete game finished.
 
 ## Reference and platform checks
@@ -14,7 +16,6 @@ I reopened two existing local reference images: [Pack 1 at 4:33](evidence/round-
 
 1. **Collection context.** The frozen browser showed `Standard · Standard` on a single-difficulty picture card. After reopening, a Sentinel picture appeared beside First Signal achievements. Give earned results one clear difficulty label and provide an explicit chapter-progress view. Looking at another chapter must not select it for the current flight, resume play or change saved/earned ownership.
 2. **Production visibility.** The new source-only register exposes the incomplete matrix and missing checks. Actual keyboard filtering, an unbound slot, exact-original preview, Clear, Back and reload were exercised. Preview must remain a read-only inspection; neither a decoded PNG nor a generated file qualifies a finished map, story, character set or soundtrack.
-3. **Next nine pictures.** Nine new Sentinel theme candidates were visually inspected and preserved unchanged. Ukrainian craft, retro repair/rail scenes and fictional spend-network settings extend the three existing Sentinel compositions. Bind them through exact new chapter/theme owners and validate partial reveal, full reward, Collection and recovery before advertising them as playable. They add no new routing geometry.
 4. **Compact flight presentation.** A repeated game title in the flight header adds little information. In a later focused presentation pass, show useful chapter/mode context or remove the duplicate, and compare HUD/arena space against the reference. Preserve readable text, visible objectives, keyboard focus, touch safe areas and the complete arena; do not remove a warning merely to gain screen space.
 
 ## Qualification order

@@ -12,6 +12,7 @@ import {
 } from '../replay.mjs';
 import { preparePack, resolvePackCampaign } from '../packs.mjs';
 import { campaignKey } from '../library.mjs';
+import { inspectImageDataUrl } from '../content.mjs';
 import { suspendSession, restoreSession } from '../sessions.mjs';
 
 const readJSON = async (path) => JSON.parse(await readFile(new URL(path, import.meta.url), 'utf8'));
@@ -19,10 +20,13 @@ const digest = (value) => createHash('sha256').update(JSON.stringify(value)).dig
 const source = await readJSON('../../authoring/library/sentinel-relay/proposedpack-source.json');
 const inputPack = await readJSON('../content/packs/sentinel-relay.json');
 const proof = await readJSON('../replays/sentinel-routes.json');
-const noImage = async () => {
-  throw new Error('This pack has no imported images.');
+// Exact source headers bound the Node replay fixture; browser decoding is tested separately.
+const decodeImage = async (dataURL) => {
+  const header = inspectImageDataUrl(dataURL);
+  assert.equal(header.valid, true, header.errors.join('; '));
+  return { naturalWidth: header.width, naturalHeight: header.height };
 };
-const { pack } = await preparePack(inputPack, { decodeImage: noImage });
+const { pack } = await preparePack(inputPack, { decodeImage });
 const { campaign } = resolvePackCampaign(pack, 'sentinel-relay');
 const level = campaign.levels[0];
 const optionsFor = (route) => ({
@@ -112,17 +116,32 @@ function replayRoute(route) {
 }
 
 test('Sentinel source, runtime and exact proof identity agree without generated expectations', () => {
-  assert.deepEqual(inputPack, source);
+  const {
+    levelVisuals: publishedVisuals,
+    version: publishedVersion,
+    ...publishedGameplay
+  } = inputPack;
+  const { levelVisuals: sourceVisuals, version: sourceVersion, ...sourceGameplay } = source;
+  assert.deepEqual(publishedGameplay, sourceGameplay);
+  assert.deepEqual(sourceVisuals, []);
+  assert.equal(sourceVersion, '1.0.0');
+  assert.equal(publishedVersion, '1.1.0');
+  assert.equal(
+    publishedVisuals.length,
+    1,
+    'The published recipe adds its admitted original artwork.',
+  );
   assert.equal(pack.format, 'xonix-pack.v3');
   assert.equal(pack.engine, 'xonix-core.v3');
   assert.deepEqual(pack.masteries, []);
   assert.deepEqual(pack.visualOverrides, {});
-  assert.deepEqual(pack.levelVisuals, []);
+  assert.equal(pack.levelVisuals.length, 1);
+  assert.equal(pack.levelVisuals[0].levelId, level.id);
   assert.equal(campaign.levels.length, 1);
   assert.equal(level.version, 'xonix-level.v2');
   assert.deepEqual(
     pack.themes.map((theme) => theme.id),
-    ['fpv', 'ukraine', 'retro', 'coupa'],
+    ['fpv', 'ukraine', 'retro'],
   );
   assert.equal(proof.format, 'xonix-sentinel-proof.v1');
   assert.equal(proof.packSha256, digest(pack));

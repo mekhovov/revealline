@@ -1,3 +1,5 @@
+// Retained historical source projection; original bytes are archived separately.
+// This excerpt is not the original artifact or a new execution qualification.
 import { PICKUP_COLORS, drawPickupIcon } from './classic-view.mjs';
 
 const finitePoint = (value) => Number.isFinite(value?.x) && Number.isFinite(value?.y);
@@ -108,10 +110,6 @@ export function drawEventFeedback(
         ctx.fillRect(-2, -offset - 3, 4, 5);
         ctx.restore();
       }
-    } else if (themeId === 'coupa') {
-      ctx.fillRect(-offset - 3, -6, 5, 12);
-      ctx.fillRect(offset - 2, -4, 5, 10);
-      ctx.fillRect(-2, -1, 3, 3);
     } else {
       for (const [x, y] of [
         [-1, 0],
@@ -133,7 +131,7 @@ export function drawEventFeedback(
         'enemy-freeze': 'ENEMIES FROZEN',
       }[event.kind]
     : failed
-      ? `${themeId === 'fpv' ? 'CRAFT LOST' : themeId === 'coupa' ? 'LINK LOST' : 'LIFE LOST'} · -1 LIFE`
+      ? `${themeId === 'fpv' ? 'CRAFT LOST' : 'LIFE LOST'} · -1 LIFE`
       : event.type === 'shield.absorbed'
         ? 'SHIELD USED'
         : 'READY';

@@ -75,16 +75,16 @@ test('quota failures remain visible without erasing existing storage or blocking
 test('hub and frozen views share an edition writer lease; other audiences and exported session progress remain independent', async () => {
   const locks = lockManager(),
     disk = managedIndexedDB();
-  const key = 'revealline.company.coupa-adventure.writer';
+  const key = 'revealline.company.sample-adventure.writer';
   const hub = await claimProfileWriter(locks, key),
     standalone = await claimProfileWriter(locks, key);
-  const other = await claimProfileWriter(locks, 'revealline.company.coupa-culture.writer');
+  const other = await claimProfileWriter(locks, 'revealline.company.sample-culture.writer');
   assert.equal(hub.writable, true);
   assert.equal(standalone.writable, false);
   assert.equal(other.writable, true);
   const backend = createJourneyBackend({
     ...disk,
-    profileKey: 'journey-coupa-adventure',
+    profileKey: 'journey-sample-adventure',
     canWrite: () => standalone.writable,
   });
   const reader = createJourneyProfileStore({ backend, canWrite: () => standalone.writable });
@@ -119,7 +119,7 @@ test('lease loss during asynchronous database open or transaction reads aborts w
     let writable = true;
     const backend = createJourneyBackend({
       ...disk,
-      profileKey: 'journey-coupa-adventure',
+      profileKey: 'journey-sample-adventure',
       canWrite: () => writable,
     });
     if (opened) await backend.read();
@@ -136,9 +136,9 @@ test('lease loss during asynchronous database open or transaction reads aborts w
 test('explicit same-edition backup crosses isolated origin stores while another audience rejects it unchanged', async () => {
   const make = (profileKey, disk = managedIndexedDB()) =>
     createJourneyProfileStore({ backend: createJourneyBackend({ ...disk, profileKey }) });
-  const source = make('journey-coupa-adventure'),
-    destination = make('journey-coupa-adventure');
-  const other = make('journey-coupa-culture');
+  const source = make('journey-sample-adventure'),
+    destination = make('journey-sample-adventure');
+  const other = make('journey-sample-culture');
   await Promise.all([source.load(), destination.load(), other.load()]);
   source.record({
     type: 'complete',

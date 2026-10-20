@@ -1,0 +1,1709 @@
+{
+  "capturedAt": "2026-10-16T04:41:58.424168+00:00",
+  "method": "Read-only exact blob lookup in canonical Git object store with GIT_NO_LAZY_FETCH=1 and Git hash verification. No original mutation, lazy fetch, runtime.env, private config, browser or player data read. No literal values/context emitted.",
+  "blobsReviewed": 7,
+  "clearedExactTemplateBlobs": 7,
+  "heldExactTemplateBlobs": 0,
+  "allHistoricalTemplateVersionsClearedClaimed": false,
+  "rows": [
+    {
+      "gitBlobSHA1": "2a0032724d98ef1e12ea758d190334985924bb29",
+      "bytes": 1449,
+      "sha256": "d293a778d3aed34b4b7b76be2b48a24257945bbcfe7fb944d56efe56298a68c5",
+      "GitObjectIdentityVerified": true,
+      "path": "services/community/.env.example",
+      "runtimeEnvOrPlayerDataRead": false,
+      "fields": [
+        {
+          "line": 1,
+          "key": "COMMUNITY_HOST",
+          "valueClass": "nonsecret-local-setting",
+          "valueBytes": 7,
+          "sensitiveName": false,
+          "valueSHA256": "19e36255972107d42b8cecb77ef5622e842e8a50778a6ed8dd1ce94732daca9e",
+          "literalValuePublished": false
+        },
+        {
+          "line": 2,
+          "key": "COMMUNITY_PORT",
+          "valueClass": "numeric-setting",
+          "valueBytes": 4,
+          "sensitiveName": false,
+          "valueSHA256": "fd4d18552b5be40e9d2dd7615973c8ffe9aac393666efab859748c268ed5e49d",
+          "literalValuePublished": false
+        },
+        {
+          "line": 3,
+          "key": "COMMUNITY_DATABASE_URL",
+          "valueClass": "local-development-service-url-with-placeholder-credentials",
+          "valueBytes": 57,
+          "sensitiveName": true,
+          "valueSHA256": "34e0fa6b8b788ba59c48f33887173689dc84cc427cdf9578eb3c125667a6e699",
+          "literalValuePublished": false
+        },
+        {
+          "line": 4,
+          "key": "COMMUNITY_BLOB_ROOT",
+          "valueClass": "documented-nonsecret-local-setting",
+          "valueBytes": 11,
+          "sensitiveName": false,
+          "valueSHA256": "b9177c02e9160dfecbd84463596d11d4dab1f565f95ea7a51edc0e5a3893f459",
+          "literalValuePublished": false
+        },
+        {
+          "line": 5,
+          "key": "COMMUNITY_TUS_ROOT",
+          "valueClass": "documented-nonsecret-local-setting",
+          "valueBytes": 9,
+          "sensitiveName": false,
+          "valueSHA256": "8ec8b27cf9ad6c2926579f033c3266f0f21d8b10d3eac858038014b0ecf42ed3",
+          "literalValuePublished": false
+        },
+        {
+          "line": 6,
+          "key": "COMMUNITY_TUS_EXPIRATION_SECONDS",
+          "valueClass": "numeric-setting",
+          "valueBytes": 5,
+          "sensitiveName": false,
+          "valueSHA256": "b045dd9c18caa8be1e17a4b902152cc1fd292b242b7b9dd74ba8c40896239424",
+          "literalValuePublished": false
+        },
+        {
+          "line": 7,
+          "key": "COMMUNITY_TUS_CLEANUP_INTERVAL_SECONDS",
+          "valueClass": "numeric-setting",
+          "valueBytes": 3,
+          "sensitiveName": false,
+          "valueSHA256": "983bd614bb5afece5ab3b6023f71147cd7b6bc2314f9d27af7422541c6558389",
+          "literalValuePublished": false
+        },
+        {
+          "line": 8,
+          "key": "COMMUNITY_TUS_CLEANUP_BATCH_SIZE",
+          "valueClass": "numeric-setting",
+          "valueBytes": 2,
+          "sensitiveName": false,
+          "valueSHA256": "e29c9c180c6279b0b02abd6a1801c7c04082cf486ec027aa13515e4f3884bb6b",
+          "literalValuePublished": false
+        },
+        {
+          "line": 9,
+          "key": "COMMUNITY_TUS_CLEANUP_LEASE_SECONDS",
+          "valueClass": "numeric-setting",
+          "valueBytes": 3,
+          "sensitiveName": false,
+          "valueSHA256": "2abaca4911e68fa9bfbf3482ee797fd5b9045b841fdff7253557c5fe15de6477",
+          "literalValuePublished": false
+        },
+        {
+          "line": 10,
+          "key": "COMMUNITY_TUS_LOCK_TIMEOUT_SECONDS",
+          "valueClass": "numeric-setting",
+          "valueBytes": 2,
+          "sensitiveName": false,
+          "valueSHA256": "624b60c58c9d8bfb6ff1886c2fd605d2adeb6ea4da576068201b6c6958ce93f4",
+          "literalValuePublished": false
+        },
+        {
+          "line": 11,
+          "key": "COMMUNITY_TUS_LOCK_POOL_SIZE",
+          "valueClass": "numeric-setting",
+          "valueBytes": 2,
+          "sensitiveName": false,
+          "valueSHA256": "f5ca38f748a1d6eaf726b8a42fb575c3c71f1864a8143301782de13da2d9202b",
+          "literalValuePublished": false
+        },
+        {
+          "line": 12,
+          "key": "COMMUNITY_MAX_PACKAGE_BYTES",
+          "valueClass": "numeric-setting",
+          "valueBytes": 9,
+          "sensitiveName": false,
+          "valueSHA256": "510f683005588fb4d96169c03bd2d1c120fcd0ae13e24d2dd8040600f25b8dff",
+          "literalValuePublished": false
+        },
+        {
+          "line": 13,
+          "key": "COMMUNITY_VALIDATOR_VERSION",
+          "valueClass": "documented-nonsecret-local-setting",
+          "valueBytes": 17,
+          "sensitiveName": false,
+          "valueSHA256": "a3b4893cdafc4abcc9d54c91148cd25b40a8f394197d5c2c8bbbe119e7465f40",
+          "literalValuePublished": false
+        },
+        {
+          "line": 14,
+          "key": "COMMUNITY_WORKER_POLL_MS",
+          "valueClass": "numeric-setting",
+          "valueBytes": 4,
+          "sensitiveName": false,
+          "valueSHA256": "40510175845988f13f6162ed8526f0b09f73384467fa855e1e79b44a56562a58",
+          "literalValuePublished": false
+        },
+        {
+          "line": 16,
+          "key": "COMMUNITY_AUTH_ATTEMPTS_PER_WINDOW",
+          "valueClass": "numeric-setting",
+          "valueBytes": 2,
+          "sensitiveName": false,
+          "valueSHA256": "624b60c58c9d8bfb6ff1886c2fd605d2adeb6ea4da576068201b6c6958ce93f4",
+          "literalValuePublished": false
+        },
+        {
+          "line": 17,
+          "key": "COMMUNITY_AUTH_WINDOW_SECONDS",
+          "valueClass": "numeric-setting",
+          "valueBytes": 3,
+          "sensitiveName": false,
+          "valueSHA256": "983bd614bb5afece5ab3b6023f71147cd7b6bc2314f9d27af7422541c6558389",
+          "literalValuePublished": false
+        },
+        {
+          "line": 18,
+          "key": "COMMUNITY_REPORTS_PER_WINDOW",
+          "valueClass": "numeric-setting",
+          "valueBytes": 1,
+          "sensitiveName": false,
+          "valueSHA256": "e7f6c011776e8db7cd330b54174fd76f7d0216b612387a5ffcfb81e6f0919683",
+          "literalValuePublished": false
+        },
+        {
+          "line": 19,
+          "key": "COMMUNITY_REPORT_WINDOW_SECONDS",
+          "valueClass": "numeric-setting",
+          "valueBytes": 4,
+          "sensitiveName": false,
+          "valueSHA256": "8b34042b7a96b3ba94b27ad723ca8f57787eefbab2083b3098173c444aefbfdf",
+          "literalValuePublished": false
+        },
+        {
+          "line": 20,
+          "key": "COMMUNITY_SUBMISSIONS_PER_WINDOW",
+          "valueClass": "numeric-setting",
+          "valueBytes": 2,
+          "sensitiveName": false,
+          "valueSHA256": "6b51d431df5d7f141cbececcf79edf3dd861c3b4069f0b11661a3eefacbba918",
+          "literalValuePublished": false
+        },
+        {
+          "line": 21,
+          "key": "COMMUNITY_SUBMISSION_WINDOW_SECONDS",
+          "valueClass": "numeric-setting",
+          "valueBytes": 4,
+          "sensitiveName": false,
+          "valueSHA256": "8b34042b7a96b3ba94b27ad723ca8f57787eefbab2083b3098173c444aefbfdf",
+          "literalValuePublished": false
+        },
+        {
+          "line": 22,
+          "key": "COMMUNITY_UPLOAD_BYTES_PER_WINDOW",
+          "valueClass": "numeric-setting",
+          "valueBytes": 10,
+          "sensitiveName": false,
+          "valueSHA256": "39f8d58187887b481fe709f7b323f2b876d9f522e9f7afef815c2089084a36d7",
+          "literalValuePublished": false
+        },
+        {
+          "line": 23,
+          "key": "COMMUNITY_UPLOAD_WINDOW_SECONDS",
+          "valueClass": "numeric-setting",
+          "valueBytes": 5,
+          "sensitiveName": false,
+          "valueSHA256": "b045dd9c18caa8be1e17a4b902152cc1fd292b242b7b9dd74ba8c40896239424",
+          "literalValuePublished": false
+        },
+        {
+          "line": 27,
+          "key": "COMMUNITY_ALLOW_DEV_AUTH",
+          "valueClass": "nonsecret-local-setting",
+          "valueBytes": 4,
+          "sensitiveName": false,
+          "valueSHA256": "b5bea41b6c623f7c09f1bf24dcae58ebab3c0cdd90ad966bc43a45b44867e12b",
+          "literalValuePublished": false
+        },
+        {
+          "line": 28,
+          "key": "COMMUNITY_DEV_TOKENS",
+          "valueClass": "explicit-local-development-token-map",
+          "valueBytes": 39,
+          "sensitiveName": true,
+          "valueSHA256": "5ac8aacfacf3b2c94732f664e88543aaa506a0f046b41d9d489dc58d9b88584d",
+          "literalValuePublished": false
+        }
+      ],
+      "unclassifiedFields": [],
+      "disposition": "clear-exact-template-blob",
+      "scope": "Specific complete blob version only. Empty/replacement placeholders and local development examples are not blanket exemptions for .env.example or later versions.",
+      "localDevelopmentTokenMapReview": {
+        "JSONMappingEntries": 1,
+        "allTokenAndIdentityNamesExplicitLocalSampleShape": true,
+        "templateCommentExplicitlyDevelopmentOnly": true,
+        "explicitDevAuthFlagPresent": true,
+        "codeReadsDevMapOnlyWhenExplicitFlagTrue": true,
+        "literalValuesPublished": false
+      },
+      "localDockerCredentialReview": [
+        {
+          "key": "COMMUNITY_DATABASE_URL",
+          "localDevelopmentHost": true,
+          "usernameMatchesVersionedDockerDefault": true,
+          "passwordMatchesVersionedDockerDefault": true
+        }
+      ],
+      "reviewDoesNotClearOtherTemplateVersions": true
+    },
+    {
+      "gitBlobSHA1": "42ef9193fdd1b59c90e6d7463a6ccd15b7a78854",
+      "bytes": 2695,
+      "sha256": "bdcef8048d2277f820c84302346929076abddb0c1f7fbcab98c6aa2955679774",
+      "GitObjectIdentityVerified": true,
+      "path": "services/community/.env.example",
+      "runtimeEnvOrPlayerDataRead": false,
+      "fields": [
+        {
+          "line": 1,
+          "key": "COMMUNITY_HOST",
+          "valueClass": "nonsecret-local-setting",
+          "valueBytes": 7,
+          "sensitiveName": false,
+          "valueSHA256": "19e36255972107d42b8cecb77ef5622e842e8a50778a6ed8dd1ce94732daca9e",
+          "literalValuePublished": false
+        },
+        {
+          "line": 2,
+          "key": "COMMUNITY_PORT",
+          "valueClass": "numeric-setting",
+          "valueBytes": 4,
+          "sensitiveName": false,
+          "valueSHA256": "fd4d18552b5be40e9d2dd7615973c8ffe9aac393666efab859748c268ed5e49d",
+          "literalValuePublished": false
+        },
+        {
+          "line": 3,
+          "key": "COMMUNITY_DATABASE_URL",
+          "valueClass": "local-development-service-url-with-placeholder-credentials",
+          "valueBytes": 57,
+          "sensitiveName": true,
+          "valueSHA256": "34e0fa6b8b788ba59c48f33887173689dc84cc427cdf9578eb3c125667a6e699",
+          "literalValuePublished": false
+        },
+        {
+          "line": 5,
+          "key": "COMMUNITY_BLOB_STORAGE",
+          "valueClass": "documented-nonsecret-local-setting",
+          "valueBytes": 4,
+          "sensitiveName": false,
+          "valueSHA256": "1044dec7206e8d7c9fbb4ae8f766668406d2567fc7fc1a160a9d4700fcf8f8e9",
+          "literalValuePublished": false
+        },
+        {
+          "line": 6,
+          "key": "COMMUNITY_BLOB_ROOT",
+          "valueClass": "documented-nonsecret-local-setting",
+          "valueBytes": 11,
+          "sensitiveName": false,
+          "valueSHA256": "b9177c02e9160dfecbd84463596d11d4dab1f565f95ea7a51edc0e5a3893f459",
+          "literalValuePublished": false
+        },
+        {
+          "line": 17,
+          "key": "COMMUNITY_TUS_ROOT",
+          "valueClass": "documented-nonsecret-local-setting",
+          "valueBytes": 9,
+          "sensitiveName": false,
+          "valueSHA256": "8ec8b27cf9ad6c2926579f033c3266f0f21d8b10d3eac858038014b0ecf42ed3",
+          "literalValuePublished": false
+        },
+        {
+          "line": 18,
+          "key": "COMMUNITY_TUS_EXPIRATION_SECONDS",
+          "valueClass": "numeric-setting",
+          "valueBytes": 5,
+          "sensitiveName": false,
+          "valueSHA256": "b045dd9c18caa8be1e17a4b902152cc1fd292b242b7b9dd74ba8c40896239424",
+          "literalValuePublished": false
+        },
+        {
+          "line": 19,
+          "key": "COMMUNITY_TUS_CLEANUP_INTERVAL_SECONDS",
+          "valueClass": "numeric-setting",
+          "valueBytes": 3,
+          "sensitiveName": false,
+          "valueSHA256": "983bd614bb5afece5ab3b6023f71147cd7b6bc2314f9d27af7422541c6558389",
+          "literalValuePublished": false
+        },
+        {
+          "line": 20,
+          "key": "COMMUNITY_TUS_CLEANUP_BATCH_SIZE",
+          "valueClass": "numeric-setting",
+          "valueBytes": 2,
+          "sensitiveName": false,
+          "valueSHA256": "e29c9c180c6279b0b02abd6a1801c7c04082cf486ec027aa13515e4f3884bb6b",
+          "literalValuePublished": false
+        },
+        {
+          "line": 21,
+          "key": "COMMUNITY_TUS_CLEANUP_LEASE_SECONDS",
+          "valueClass": "numeric-setting",
+          "valueBytes": 3,
+          "sensitiveName": false,
+          "valueSHA256": "2abaca4911e68fa9bfbf3482ee797fd5b9045b841fdff7253557c5fe15de6477",
+          "literalValuePublished": false
+        },
+        {
+          "line": 22,
+          "key": "COMMUNITY_TUS_LOCK_TIMEOUT_SECONDS",
+          "valueClass": "numeric-setting",
+          "valueBytes": 2,
+          "sensitiveName": false,
+          "valueSHA256": "624b60c58c9d8bfb6ff1886c2fd605d2adeb6ea4da576068201b6c6958ce93f4",
+          "literalValuePublished": false
+        },
+        {
+          "line": 23,
+          "key": "COMMUNITY_TUS_LOCK_POOL_SIZE",
+          "valueClass": "numeric-setting",
+          "valueBytes": 2,
+          "sensitiveName": false,
+          "valueSHA256": "f5ca38f748a1d6eaf726b8a42fb575c3c71f1864a8143301782de13da2d9202b",
+          "literalValuePublished": false
+        },
+        {
+          "line": 24,
+          "key": "COMMUNITY_MAX_PACKAGE_BYTES",
+          "valueClass": "numeric-setting",
+          "valueBytes": 9,
+          "sensitiveName": false,
+          "valueSHA256": "510f683005588fb4d96169c03bd2d1c120fcd0ae13e24d2dd8040600f25b8dff",
+          "literalValuePublished": false
+        },
+        {
+          "line": 25,
+          "key": "COMMUNITY_VALIDATOR_VERSION",
+          "valueClass": "documented-nonsecret-local-setting",
+          "valueBytes": 17,
+          "sensitiveName": false,
+          "valueSHA256": "a3b4893cdafc4abcc9d54c91148cd25b40a8f394197d5c2c8bbbe119e7465f40",
+          "literalValuePublished": false
+        },
+        {
+          "line": 29,
+          "key": "COMMUNITY_WORKER_POLL_MS",
+          "valueClass": "numeric-setting",
+          "valueBytes": 4,
+          "sensitiveName": false,
+          "valueSHA256": "40510175845988f13f6162ed8526f0b09f73384467fa855e1e79b44a56562a58",
+          "literalValuePublished": false
+        },
+        {
+          "line": 31,
+          "key": "COMMUNITY_AUTH_ATTEMPTS_PER_WINDOW",
+          "valueClass": "numeric-setting",
+          "valueBytes": 2,
+          "sensitiveName": false,
+          "valueSHA256": "624b60c58c9d8bfb6ff1886c2fd605d2adeb6ea4da576068201b6c6958ce93f4",
+          "literalValuePublished": false
+        },
+        {
+          "line": 32,
+          "key": "COMMUNITY_AUTH_WINDOW_SECONDS",
+          "valueClass": "numeric-setting",
+          "valueBytes": 3,
+          "sensitiveName": false,
+          "valueSHA256": "983bd614bb5afece5ab3b6023f71147cd7b6bc2314f9d27af7422541c6558389",
+          "literalValuePublished": false
+        },
+        {
+          "line": 33,
+          "key": "COMMUNITY_REPORTS_PER_WINDOW",
+          "valueClass": "numeric-setting",
+          "valueBytes": 1,
+          "sensitiveName": false,
+          "valueSHA256": "e7f6c011776e8db7cd330b54174fd76f7d0216b612387a5ffcfb81e6f0919683",
+          "literalValuePublished": false
+        },
+        {
+          "line": 34,
+          "key": "COMMUNITY_REPORT_WINDOW_SECONDS",
+          "valueClass": "numeric-setting",
+          "valueBytes": 4,
+          "sensitiveName": false,
+          "valueSHA256": "8b34042b7a96b3ba94b27ad723ca8f57787eefbab2083b3098173c444aefbfdf",
+          "literalValuePublished": false
+        },
+        {
+          "line": 35,
+          "key": "COMMUNITY_SUBMISSIONS_PER_WINDOW",
+          "valueClass": "numeric-setting",
+          "valueBytes": 2,
+          "sensitiveName": false,
+          "valueSHA256": "6b51d431df5d7f141cbececcf79edf3dd861c3b4069f0b11661a3eefacbba918",
+          "literalValuePublished": false
+        },
+        {
+          "line": 36,
+          "key": "COMMUNITY_SUBMISSION_WINDOW_SECONDS",
+          "valueClass": "numeric-setting",
+          "valueBytes": 4,
+          "sensitiveName": false,
+          "valueSHA256": "8b34042b7a96b3ba94b27ad723ca8f57787eefbab2083b3098173c444aefbfdf",
+          "literalValuePublished": false
+        },
+        {
+          "line": 37,
+          "key": "COMMUNITY_UPLOAD_BYTES_PER_WINDOW",
+          "valueClass": "numeric-setting",
+          "valueBytes": 10,
+          "sensitiveName": false,
+          "valueSHA256": "39f8d58187887b481fe709f7b323f2b876d9f522e9f7afef815c2089084a36d7",
+          "literalValuePublished": false
+        },
+        {
+          "line": 38,
+          "key": "COMMUNITY_UPLOAD_WINDOW_SECONDS",
+          "valueClass": "numeric-setting",
+          "valueBytes": 5,
+          "sensitiveName": false,
+          "valueSHA256": "b045dd9c18caa8be1e17a4b902152cc1fd292b242b7b9dd74ba8c40896239424",
+          "literalValuePublished": false
+        },
+        {
+          "line": 42,
+          "key": "COMMUNITY_ALLOW_DEV_AUTH",
+          "valueClass": "nonsecret-local-setting",
+          "valueBytes": 4,
+          "sensitiveName": false,
+          "valueSHA256": "b5bea41b6c623f7c09f1bf24dcae58ebab3c0cdd90ad966bc43a45b44867e12b",
+          "literalValuePublished": false
+        },
+        {
+          "line": 43,
+          "key": "COMMUNITY_DEV_TOKENS",
+          "valueClass": "explicit-local-development-token-map",
+          "valueBytes": 39,
+          "sensitiveName": true,
+          "valueSHA256": "5ac8aacfacf3b2c94732f664e88543aaa506a0f046b41d9d489dc58d9b88584d",
+          "literalValuePublished": false
+        }
+      ],
+      "unclassifiedFields": [],
+      "disposition": "clear-exact-template-blob",
+      "scope": "Specific complete blob version only. Empty/replacement placeholders and local development examples are not blanket exemptions for .env.example or later versions.",
+      "localDevelopmentTokenMapReview": {
+        "JSONMappingEntries": 1,
+        "allTokenAndIdentityNamesExplicitLocalSampleShape": true,
+        "templateCommentExplicitlyDevelopmentOnly": true,
+        "explicitDevAuthFlagPresent": true,
+        "codeReadsDevMapOnlyWhenExplicitFlagTrue": true,
+        "literalValuesPublished": false
+      },
+      "localDockerCredentialReview": [
+        {
+          "key": "COMMUNITY_DATABASE_URL",
+          "localDevelopmentHost": true,
+          "usernameMatchesVersionedDockerDefault": true,
+          "passwordMatchesVersionedDockerDefault": true
+        }
+      ],
+      "reviewDoesNotClearOtherTemplateVersions": true
+    },
+    {
+      "gitBlobSHA1": "53f6988974464ea05dc5170931a880afc03fc8ba",
+      "bytes": 3335,
+      "sha256": "2329fad72abbadedf99b67bd5a47cbf4dd1dc8d87cf865fa7c3353ca89bac9be",
+      "GitObjectIdentityVerified": true,
+      "path": "services/community/.env.example",
+      "runtimeEnvOrPlayerDataRead": false,
+      "fields": [
+        {
+          "line": 1,
+          "key": "COMMUNITY_HOST",
+          "valueClass": "nonsecret-local-setting",
+          "valueBytes": 7,
+          "sensitiveName": false,
+          "valueSHA256": "19e36255972107d42b8cecb77ef5622e842e8a50778a6ed8dd1ce94732daca9e",
+          "literalValuePublished": false
+        },
+        {
+          "line": 2,
+          "key": "COMMUNITY_PORT",
+          "valueClass": "numeric-setting",
+          "valueBytes": 4,
+          "sensitiveName": false,
+          "valueSHA256": "fd4d18552b5be40e9d2dd7615973c8ffe9aac393666efab859748c268ed5e49d",
+          "literalValuePublished": false
+        },
+        {
+          "line": 3,
+          "key": "COMMUNITY_DATABASE_URL",
+          "valueClass": "local-development-service-url-with-placeholder-credentials",
+          "valueBytes": 57,
+          "sensitiveName": true,
+          "valueSHA256": "34e0fa6b8b788ba59c48f33887173689dc84cc427cdf9578eb3c125667a6e699",
+          "literalValuePublished": false
+        },
+        {
+          "line": 5,
+          "key": "COMMUNITY_BLOB_STORAGE",
+          "valueClass": "documented-nonsecret-local-setting",
+          "valueBytes": 4,
+          "sensitiveName": false,
+          "valueSHA256": "1044dec7206e8d7c9fbb4ae8f766668406d2567fc7fc1a160a9d4700fcf8f8e9",
+          "literalValuePublished": false
+        },
+        {
+          "line": 6,
+          "key": "COMMUNITY_BLOB_ROOT",
+          "valueClass": "documented-nonsecret-local-setting",
+          "valueBytes": 11,
+          "sensitiveName": false,
+          "valueSHA256": "b9177c02e9160dfecbd84463596d11d4dab1f565f95ea7a51edc0e5a3893f459",
+          "literalValuePublished": false
+        },
+        {
+          "line": 26,
+          "key": "COMMUNITY_TUS_ROOT",
+          "valueClass": "documented-nonsecret-local-setting",
+          "valueBytes": 9,
+          "sensitiveName": false,
+          "valueSHA256": "8ec8b27cf9ad6c2926579f033c3266f0f21d8b10d3eac858038014b0ecf42ed3",
+          "literalValuePublished": false
+        },
+        {
+          "line": 27,
+          "key": "COMMUNITY_TUS_EXPIRATION_SECONDS",
+          "valueClass": "numeric-setting",
+          "valueBytes": 5,
+          "sensitiveName": false,
+          "valueSHA256": "b045dd9c18caa8be1e17a4b902152cc1fd292b242b7b9dd74ba8c40896239424",
+          "literalValuePublished": false
+        },
+        {
+          "line": 28,
+          "key": "COMMUNITY_TUS_CLEANUP_INTERVAL_SECONDS",
+          "valueClass": "numeric-setting",
+          "valueBytes": 3,
+          "sensitiveName": false,
+          "valueSHA256": "983bd614bb5afece5ab3b6023f71147cd7b6bc2314f9d27af7422541c6558389",
+          "literalValuePublished": false
+        },
+        {
+          "line": 29,
+          "key": "COMMUNITY_TUS_CLEANUP_BATCH_SIZE",
+          "valueClass": "numeric-setting",
+          "valueBytes": 2,
+          "sensitiveName": false,
+          "valueSHA256": "e29c9c180c6279b0b02abd6a1801c7c04082cf486ec027aa13515e4f3884bb6b",
+          "literalValuePublished": false
+        },
+        {
+          "line": 30,
+          "key": "COMMUNITY_TUS_CLEANUP_LEASE_SECONDS",
+          "valueClass": "numeric-setting",
+          "valueBytes": 3,
+          "sensitiveName": false,
+          "valueSHA256": "2abaca4911e68fa9bfbf3482ee797fd5b9045b841fdff7253557c5fe15de6477",
+          "literalValuePublished": false
+        },
+        {
+          "line": 31,
+          "key": "COMMUNITY_TUS_LOCK_TIMEOUT_SECONDS",
+          "valueClass": "numeric-setting",
+          "valueBytes": 2,
+          "sensitiveName": false,
+          "valueSHA256": "624b60c58c9d8bfb6ff1886c2fd605d2adeb6ea4da576068201b6c6958ce93f4",
+          "literalValuePublished": false
+        },
+        {
+          "line": 32,
+          "key": "COMMUNITY_TUS_LOCK_POOL_SIZE",
+          "valueClass": "numeric-setting",
+          "valueBytes": 2,
+          "sensitiveName": false,
+          "valueSHA256": "f5ca38f748a1d6eaf726b8a42fb575c3c71f1864a8143301782de13da2d9202b",
+          "literalValuePublished": false
+        },
+        {
+          "line": 33,
+          "key": "COMMUNITY_MAX_PACKAGE_BYTES",
+          "valueClass": "numeric-setting",
+          "valueBytes": 9,
+          "sensitiveName": false,
+          "valueSHA256": "510f683005588fb4d96169c03bd2d1c120fcd0ae13e24d2dd8040600f25b8dff",
+          "literalValuePublished": false
+        },
+        {
+          "line": 34,
+          "key": "COMMUNITY_VALIDATOR_VERSION",
+          "valueClass": "documented-nonsecret-local-setting",
+          "valueBytes": 17,
+          "sensitiveName": false,
+          "valueSHA256": "a3b4893cdafc4abcc9d54c91148cd25b40a8f394197d5c2c8bbbe119e7465f40",
+          "literalValuePublished": false
+        },
+        {
+          "line": 38,
+          "key": "COMMUNITY_WORKER_POLL_MS",
+          "valueClass": "numeric-setting",
+          "valueBytes": 4,
+          "sensitiveName": false,
+          "valueSHA256": "40510175845988f13f6162ed8526f0b09f73384467fa855e1e79b44a56562a58",
+          "literalValuePublished": false
+        },
+        {
+          "line": 40,
+          "key": "COMMUNITY_AUTH_ATTEMPTS_PER_WINDOW",
+          "valueClass": "numeric-setting",
+          "valueBytes": 2,
+          "sensitiveName": false,
+          "valueSHA256": "624b60c58c9d8bfb6ff1886c2fd605d2adeb6ea4da576068201b6c6958ce93f4",
+          "literalValuePublished": false
+        },
+        {
+          "line": 41,
+          "key": "COMMUNITY_AUTH_WINDOW_SECONDS",
+          "valueClass": "numeric-setting",
+          "valueBytes": 3,
+          "sensitiveName": false,
+          "valueSHA256": "983bd614bb5afece5ab3b6023f71147cd7b6bc2314f9d27af7422541c6558389",
+          "literalValuePublished": false
+        },
+        {
+          "line": 42,
+          "key": "COMMUNITY_REPORTS_PER_WINDOW",
+          "valueClass": "numeric-setting",
+          "valueBytes": 1,
+          "sensitiveName": false,
+          "valueSHA256": "e7f6c011776e8db7cd330b54174fd76f7d0216b612387a5ffcfb81e6f0919683",
+          "literalValuePublished": false
+        },
+        {
+          "line": 43,
+          "key": "COMMUNITY_REPORT_WINDOW_SECONDS",
+          "valueClass": "numeric-setting",
+          "valueBytes": 4,
+          "sensitiveName": false,
+          "valueSHA256": "8b34042b7a96b3ba94b27ad723ca8f57787eefbab2083b3098173c444aefbfdf",
+          "literalValuePublished": false
+        },
+        {
+          "line": 44,
+          "key": "COMMUNITY_SUBMISSIONS_PER_WINDOW",
+          "valueClass": "numeric-setting",
+          "valueBytes": 2,
+          "sensitiveName": false,
+          "valueSHA256": "6b51d431df5d7f141cbececcf79edf3dd861c3b4069f0b11661a3eefacbba918",
+          "literalValuePublished": false
+        },
+        {
+          "line": 45,
+          "key": "COMMUNITY_SUBMISSION_WINDOW_SECONDS",
+          "valueClass": "numeric-setting",
+          "valueBytes": 4,
+          "sensitiveName": false,
+          "valueSHA256": "8b34042b7a96b3ba94b27ad723ca8f57787eefbab2083b3098173c444aefbfdf",
+          "literalValuePublished": false
+        },
+        {
+          "line": 46,
+          "key": "COMMUNITY_UPLOAD_BYTES_PER_WINDOW",
+          "valueClass": "numeric-setting",
+          "valueBytes": 10,
+          "sensitiveName": false,
+          "valueSHA256": "39f8d58187887b481fe709f7b323f2b876d9f522e9f7afef815c2089084a36d7",
+          "literalValuePublished": false
+        },
+        {
+          "line": 47,
+          "key": "COMMUNITY_UPLOAD_WINDOW_SECONDS",
+          "valueClass": "numeric-setting",
+          "valueBytes": 5,
+          "sensitiveName": false,
+          "valueSHA256": "b045dd9c18caa8be1e17a4b902152cc1fd292b242b7b9dd74ba8c40896239424",
+          "literalValuePublished": false
+        },
+        {
+          "line": 51,
+          "key": "COMMUNITY_ALLOW_DEV_AUTH",
+          "valueClass": "nonsecret-local-setting",
+          "valueBytes": 4,
+          "sensitiveName": false,
+          "valueSHA256": "b5bea41b6c623f7c09f1bf24dcae58ebab3c0cdd90ad966bc43a45b44867e12b",
+          "literalValuePublished": false
+        },
+        {
+          "line": 52,
+          "key": "COMMUNITY_DEV_TOKENS",
+          "valueClass": "explicit-local-development-token-map",
+          "valueBytes": 39,
+          "sensitiveName": true,
+          "valueSHA256": "5ac8aacfacf3b2c94732f664e88543aaa506a0f046b41d9d489dc58d9b88584d",
+          "literalValuePublished": false
+        }
+      ],
+      "unclassifiedFields": [],
+      "disposition": "clear-exact-template-blob",
+      "scope": "Specific complete blob version only. Empty/replacement placeholders and local development examples are not blanket exemptions for .env.example or later versions.",
+      "localDevelopmentTokenMapReview": {
+        "JSONMappingEntries": 1,
+        "allTokenAndIdentityNamesExplicitLocalSampleShape": true,
+        "templateCommentExplicitlyDevelopmentOnly": true,
+        "explicitDevAuthFlagPresent": true,
+        "codeReadsDevMapOnlyWhenExplicitFlagTrue": true,
+        "literalValuesPublished": false
+      },
+      "localDockerCredentialReview": [
+        {
+          "key": "COMMUNITY_DATABASE_URL",
+          "localDevelopmentHost": true,
+          "usernameMatchesVersionedDockerDefault": true,
+          "passwordMatchesVersionedDockerDefault": true
+        }
+      ],
+      "reviewDoesNotClearOtherTemplateVersions": true
+    },
+    {
+      "gitBlobSHA1": "757d362afca581d4ec2f13c08d4cd40180ab2fe8",
+      "bytes": 3210,
+      "sha256": "d273b319bbe86f5e350beb3d5999096bac8f75dd15f2c9d9f44ba7eed33716b2",
+      "GitObjectIdentityVerified": true,
+      "path": "services/community/.env.example",
+      "runtimeEnvOrPlayerDataRead": false,
+      "fields": [
+        {
+          "line": 1,
+          "key": "COMMUNITY_HOST",
+          "valueClass": "nonsecret-local-setting",
+          "valueBytes": 7,
+          "sensitiveName": false,
+          "valueSHA256": "19e36255972107d42b8cecb77ef5622e842e8a50778a6ed8dd1ce94732daca9e",
+          "literalValuePublished": false
+        },
+        {
+          "line": 2,
+          "key": "COMMUNITY_PORT",
+          "valueClass": "numeric-setting",
+          "valueBytes": 4,
+          "sensitiveName": false,
+          "valueSHA256": "fd4d18552b5be40e9d2dd7615973c8ffe9aac393666efab859748c268ed5e49d",
+          "literalValuePublished": false
+        },
+        {
+          "line": 3,
+          "key": "COMMUNITY_DATABASE_URL",
+          "valueClass": "local-development-service-url-with-placeholder-credentials",
+          "valueBytes": 57,
+          "sensitiveName": true,
+          "valueSHA256": "34e0fa6b8b788ba59c48f33887173689dc84cc427cdf9578eb3c125667a6e699",
+          "literalValuePublished": false
+        },
+        {
+          "line": 5,
+          "key": "COMMUNITY_BLOB_STORAGE",
+          "valueClass": "documented-nonsecret-local-setting",
+          "valueBytes": 4,
+          "sensitiveName": false,
+          "valueSHA256": "1044dec7206e8d7c9fbb4ae8f766668406d2567fc7fc1a160a9d4700fcf8f8e9",
+          "literalValuePublished": false
+        },
+        {
+          "line": 6,
+          "key": "COMMUNITY_BLOB_ROOT",
+          "valueClass": "documented-nonsecret-local-setting",
+          "valueBytes": 11,
+          "sensitiveName": false,
+          "valueSHA256": "b9177c02e9160dfecbd84463596d11d4dab1f565f95ea7a51edc0e5a3893f459",
+          "literalValuePublished": false
+        },
+        {
+          "line": 24,
+          "key": "COMMUNITY_TUS_ROOT",
+          "valueClass": "documented-nonsecret-local-setting",
+          "valueBytes": 9,
+          "sensitiveName": false,
+          "valueSHA256": "8ec8b27cf9ad6c2926579f033c3266f0f21d8b10d3eac858038014b0ecf42ed3",
+          "literalValuePublished": false
+        },
+        {
+          "line": 25,
+          "key": "COMMUNITY_TUS_EXPIRATION_SECONDS",
+          "valueClass": "numeric-setting",
+          "valueBytes": 5,
+          "sensitiveName": false,
+          "valueSHA256": "b045dd9c18caa8be1e17a4b902152cc1fd292b242b7b9dd74ba8c40896239424",
+          "literalValuePublished": false
+        },
+        {
+          "line": 26,
+          "key": "COMMUNITY_TUS_CLEANUP_INTERVAL_SECONDS",
+          "valueClass": "numeric-setting",
+          "valueBytes": 3,
+          "sensitiveName": false,
+          "valueSHA256": "983bd614bb5afece5ab3b6023f71147cd7b6bc2314f9d27af7422541c6558389",
+          "literalValuePublished": false
+        },
+        {
+          "line": 27,
+          "key": "COMMUNITY_TUS_CLEANUP_BATCH_SIZE",
+          "valueClass": "numeric-setting",
+          "valueBytes": 2,
+          "sensitiveName": false,
+          "valueSHA256": "e29c9c180c6279b0b02abd6a1801c7c04082cf486ec027aa13515e4f3884bb6b",
+          "literalValuePublished": false
+        },
+        {
+          "line": 28,
+          "key": "COMMUNITY_TUS_CLEANUP_LEASE_SECONDS",
+          "valueClass": "numeric-setting",
+          "valueBytes": 3,
+          "sensitiveName": false,
+          "valueSHA256": "2abaca4911e68fa9bfbf3482ee797fd5b9045b841fdff7253557c5fe15de6477",
+          "literalValuePublished": false
+        },
+        {
+          "line": 29,
+          "key": "COMMUNITY_TUS_LOCK_TIMEOUT_SECONDS",
+          "valueClass": "numeric-setting",
+          "valueBytes": 2,
+          "sensitiveName": false,
+          "valueSHA256": "624b60c58c9d8bfb6ff1886c2fd605d2adeb6ea4da576068201b6c6958ce93f4",
+          "literalValuePublished": false
+        },
+        {
+          "line": 30,
+          "key": "COMMUNITY_TUS_LOCK_POOL_SIZE",
+          "valueClass": "numeric-setting",
+          "valueBytes": 2,
+          "sensitiveName": false,
+          "valueSHA256": "f5ca38f748a1d6eaf726b8a42fb575c3c71f1864a8143301782de13da2d9202b",
+          "literalValuePublished": false
+        },
+        {
+          "line": 31,
+          "key": "COMMUNITY_MAX_PACKAGE_BYTES",
+          "valueClass": "numeric-setting",
+          "valueBytes": 9,
+          "sensitiveName": false,
+          "valueSHA256": "510f683005588fb4d96169c03bd2d1c120fcd0ae13e24d2dd8040600f25b8dff",
+          "literalValuePublished": false
+        },
+        {
+          "line": 32,
+          "key": "COMMUNITY_VALIDATOR_VERSION",
+          "valueClass": "documented-nonsecret-local-setting",
+          "valueBytes": 17,
+          "sensitiveName": false,
+          "valueSHA256": "a3b4893cdafc4abcc9d54c91148cd25b40a8f394197d5c2c8bbbe119e7465f40",
+          "literalValuePublished": false
+        },
+        {
+          "line": 36,
+          "key": "COMMUNITY_WORKER_POLL_MS",
+          "valueClass": "numeric-setting",
+          "valueBytes": 4,
+          "sensitiveName": false,
+          "valueSHA256": "40510175845988f13f6162ed8526f0b09f73384467fa855e1e79b44a56562a58",
+          "literalValuePublished": false
+        },
+        {
+          "line": 38,
+          "key": "COMMUNITY_AUTH_ATTEMPTS_PER_WINDOW",
+          "valueClass": "numeric-setting",
+          "valueBytes": 2,
+          "sensitiveName": false,
+          "valueSHA256": "624b60c58c9d8bfb6ff1886c2fd605d2adeb6ea4da576068201b6c6958ce93f4",
+          "literalValuePublished": false
+        },
+        {
+          "line": 39,
+          "key": "COMMUNITY_AUTH_WINDOW_SECONDS",
+          "valueClass": "numeric-setting",
+          "valueBytes": 3,
+          "sensitiveName": false,
+          "valueSHA256": "983bd614bb5afece5ab3b6023f71147cd7b6bc2314f9d27af7422541c6558389",
+          "literalValuePublished": false
+        },
+        {
+          "line": 40,
+          "key": "COMMUNITY_REPORTS_PER_WINDOW",
+          "valueClass": "numeric-setting",
+          "valueBytes": 1,
+          "sensitiveName": false,
+          "valueSHA256": "e7f6c011776e8db7cd330b54174fd76f7d0216b612387a5ffcfb81e6f0919683",
+          "literalValuePublished": false
+        },
+        {
+          "line": 41,
+          "key": "COMMUNITY_REPORT_WINDOW_SECONDS",
+          "valueClass": "numeric-setting",
+          "valueBytes": 4,
+          "sensitiveName": false,
+          "valueSHA256": "8b34042b7a96b3ba94b27ad723ca8f57787eefbab2083b3098173c444aefbfdf",
+          "literalValuePublished": false
+        },
+        {
+          "line": 42,
+          "key": "COMMUNITY_SUBMISSIONS_PER_WINDOW",
+          "valueClass": "numeric-setting",
+          "valueBytes": 2,
+          "sensitiveName": false,
+          "valueSHA256": "6b51d431df5d7f141cbececcf79edf3dd861c3b4069f0b11661a3eefacbba918",
+          "literalValuePublished": false
+        },
+        {
+          "line": 43,
+          "key": "COMMUNITY_SUBMISSION_WINDOW_SECONDS",
+          "valueClass": "numeric-setting",
+          "valueBytes": 4,
+          "sensitiveName": false,
+          "valueSHA256": "8b34042b7a96b3ba94b27ad723ca8f57787eefbab2083b3098173c444aefbfdf",
+          "literalValuePublished": false
+        },
+        {
+          "line": 44,
+          "key": "COMMUNITY_UPLOAD_BYTES_PER_WINDOW",
+          "valueClass": "numeric-setting",
+          "valueBytes": 10,
+          "sensitiveName": false,
+          "valueSHA256": "39f8d58187887b481fe709f7b323f2b876d9f522e9f7afef815c2089084a36d7",
+          "literalValuePublished": false
+        },
+        {
+          "line": 45,
+          "key": "COMMUNITY_UPLOAD_WINDOW_SECONDS",
+          "valueClass": "numeric-setting",
+          "valueBytes": 5,
+          "sensitiveName": false,
+          "valueSHA256": "b045dd9c18caa8be1e17a4b902152cc1fd292b242b7b9dd74ba8c40896239424",
+          "literalValuePublished": false
+        },
+        {
+          "line": 49,
+          "key": "COMMUNITY_ALLOW_DEV_AUTH",
+          "valueClass": "nonsecret-local-setting",
+          "valueBytes": 4,
+          "sensitiveName": false,
+          "valueSHA256": "b5bea41b6c623f7c09f1bf24dcae58ebab3c0cdd90ad966bc43a45b44867e12b",
+          "literalValuePublished": false
+        },
+        {
+          "line": 50,
+          "key": "COMMUNITY_DEV_TOKENS",
+          "valueClass": "explicit-local-development-token-map",
+          "valueBytes": 39,
+          "sensitiveName": true,
+          "valueSHA256": "5ac8aacfacf3b2c94732f664e88543aaa506a0f046b41d9d489dc58d9b88584d",
+          "literalValuePublished": false
+        }
+      ],
+      "unclassifiedFields": [],
+      "disposition": "clear-exact-template-blob",
+      "scope": "Specific complete blob version only. Empty/replacement placeholders and local development examples are not blanket exemptions for .env.example or later versions.",
+      "localDevelopmentTokenMapReview": {
+        "JSONMappingEntries": 1,
+        "allTokenAndIdentityNamesExplicitLocalSampleShape": true,
+        "templateCommentExplicitlyDevelopmentOnly": true,
+        "explicitDevAuthFlagPresent": true,
+        "codeReadsDevMapOnlyWhenExplicitFlagTrue": true,
+        "literalValuesPublished": false
+      },
+      "localDockerCredentialReview": [
+        {
+          "key": "COMMUNITY_DATABASE_URL",
+          "localDevelopmentHost": true,
+          "usernameMatchesVersionedDockerDefault": true,
+          "passwordMatchesVersionedDockerDefault": true
+        }
+      ],
+      "reviewDoesNotClearOtherTemplateVersions": true
+    },
+    {
+      "gitBlobSHA1": "782f897d2e310d976b19a457872cabeb4e410601",
+      "bytes": 2001,
+      "sha256": "3d1e59723f010ecc862a580ca20f48276f82e51e62e6fceef7b37cb4c19cd032",
+      "GitObjectIdentityVerified": true,
+      "path": "services/community/.env.example",
+      "runtimeEnvOrPlayerDataRead": false,
+      "fields": [
+        {
+          "line": 1,
+          "key": "COMMUNITY_HOST",
+          "valueClass": "nonsecret-local-setting",
+          "valueBytes": 7,
+          "sensitiveName": false,
+          "valueSHA256": "19e36255972107d42b8cecb77ef5622e842e8a50778a6ed8dd1ce94732daca9e",
+          "literalValuePublished": false
+        },
+        {
+          "line": 2,
+          "key": "COMMUNITY_PORT",
+          "valueClass": "numeric-setting",
+          "valueBytes": 4,
+          "sensitiveName": false,
+          "valueSHA256": "fd4d18552b5be40e9d2dd7615973c8ffe9aac393666efab859748c268ed5e49d",
+          "literalValuePublished": false
+        },
+        {
+          "line": 3,
+          "key": "COMMUNITY_DATABASE_URL",
+          "valueClass": "local-development-service-url-with-placeholder-credentials",
+          "valueBytes": 57,
+          "sensitiveName": true,
+          "valueSHA256": "34e0fa6b8b788ba59c48f33887173689dc84cc427cdf9578eb3c125667a6e699",
+          "literalValuePublished": false
+        },
+        {
+          "line": 4,
+          "key": "COMMUNITY_BLOB_ROOT",
+          "valueClass": "documented-nonsecret-local-setting",
+          "valueBytes": 11,
+          "sensitiveName": false,
+          "valueSHA256": "b9177c02e9160dfecbd84463596d11d4dab1f565f95ea7a51edc0e5a3893f459",
+          "literalValuePublished": false
+        },
+        {
+          "line": 5,
+          "key": "COMMUNITY_TUS_ROOT",
+          "valueClass": "documented-nonsecret-local-setting",
+          "valueBytes": 9,
+          "sensitiveName": false,
+          "valueSHA256": "8ec8b27cf9ad6c2926579f033c3266f0f21d8b10d3eac858038014b0ecf42ed3",
+          "literalValuePublished": false
+        },
+        {
+          "line": 6,
+          "key": "COMMUNITY_TUS_EXPIRATION_SECONDS",
+          "valueClass": "numeric-setting",
+          "valueBytes": 5,
+          "sensitiveName": false,
+          "valueSHA256": "b045dd9c18caa8be1e17a4b902152cc1fd292b242b7b9dd74ba8c40896239424",
+          "literalValuePublished": false
+        },
+        {
+          "line": 7,
+          "key": "COMMUNITY_TUS_CLEANUP_INTERVAL_SECONDS",
+          "valueClass": "numeric-setting",
+          "valueBytes": 3,
+          "sensitiveName": false,
+          "valueSHA256": "983bd614bb5afece5ab3b6023f71147cd7b6bc2314f9d27af7422541c6558389",
+          "literalValuePublished": false
+        },
+        {
+          "line": 8,
+          "key": "COMMUNITY_TUS_CLEANUP_BATCH_SIZE",
+          "valueClass": "numeric-setting",
+          "valueBytes": 2,
+          "sensitiveName": false,
+          "valueSHA256": "e29c9c180c6279b0b02abd6a1801c7c04082cf486ec027aa13515e4f3884bb6b",
+          "literalValuePublished": false
+        },
+        {
+          "line": 9,
+          "key": "COMMUNITY_TUS_CLEANUP_LEASE_SECONDS",
+          "valueClass": "numeric-setting",
+          "valueBytes": 3,
+          "sensitiveName": false,
+          "valueSHA256": "2abaca4911e68fa9bfbf3482ee797fd5b9045b841fdff7253557c5fe15de6477",
+          "literalValuePublished": false
+        },
+        {
+          "line": 10,
+          "key": "COMMUNITY_TUS_LOCK_TIMEOUT_SECONDS",
+          "valueClass": "numeric-setting",
+          "valueBytes": 2,
+          "sensitiveName": false,
+          "valueSHA256": "624b60c58c9d8bfb6ff1886c2fd605d2adeb6ea4da576068201b6c6958ce93f4",
+          "literalValuePublished": false
+        },
+        {
+          "line": 11,
+          "key": "COMMUNITY_TUS_LOCK_POOL_SIZE",
+          "valueClass": "numeric-setting",
+          "valueBytes": 2,
+          "sensitiveName": false,
+          "valueSHA256": "f5ca38f748a1d6eaf726b8a42fb575c3c71f1864a8143301782de13da2d9202b",
+          "literalValuePublished": false
+        },
+        {
+          "line": 12,
+          "key": "COMMUNITY_MAX_PACKAGE_BYTES",
+          "valueClass": "numeric-setting",
+          "valueBytes": 9,
+          "sensitiveName": false,
+          "valueSHA256": "510f683005588fb4d96169c03bd2d1c120fcd0ae13e24d2dd8040600f25b8dff",
+          "literalValuePublished": false
+        },
+        {
+          "line": 13,
+          "key": "COMMUNITY_VALIDATOR_VERSION",
+          "valueClass": "documented-nonsecret-local-setting",
+          "valueBytes": 17,
+          "sensitiveName": false,
+          "valueSHA256": "a3b4893cdafc4abcc9d54c91148cd25b40a8f394197d5c2c8bbbe119e7465f40",
+          "literalValuePublished": false
+        },
+        {
+          "line": 17,
+          "key": "COMMUNITY_WORKER_POLL_MS",
+          "valueClass": "numeric-setting",
+          "valueBytes": 4,
+          "sensitiveName": false,
+          "valueSHA256": "40510175845988f13f6162ed8526f0b09f73384467fa855e1e79b44a56562a58",
+          "literalValuePublished": false
+        },
+        {
+          "line": 19,
+          "key": "COMMUNITY_AUTH_ATTEMPTS_PER_WINDOW",
+          "valueClass": "numeric-setting",
+          "valueBytes": 2,
+          "sensitiveName": false,
+          "valueSHA256": "624b60c58c9d8bfb6ff1886c2fd605d2adeb6ea4da576068201b6c6958ce93f4",
+          "literalValuePublished": false
+        },
+        {
+          "line": 20,
+          "key": "COMMUNITY_AUTH_WINDOW_SECONDS",
+          "valueClass": "numeric-setting",
+          "valueBytes": 3,
+          "sensitiveName": false,
+          "valueSHA256": "983bd614bb5afece5ab3b6023f71147cd7b6bc2314f9d27af7422541c6558389",
+          "literalValuePublished": false
+        },
+        {
+          "line": 21,
+          "key": "COMMUNITY_REPORTS_PER_WINDOW",
+          "valueClass": "numeric-setting",
+          "valueBytes": 1,
+          "sensitiveName": false,
+          "valueSHA256": "e7f6c011776e8db7cd330b54174fd76f7d0216b612387a5ffcfb81e6f0919683",
+          "literalValuePublished": false
+        },
+        {
+          "line": 22,
+          "key": "COMMUNITY_REPORT_WINDOW_SECONDS",
+          "valueClass": "numeric-setting",
+          "valueBytes": 4,
+          "sensitiveName": false,
+          "valueSHA256": "8b34042b7a96b3ba94b27ad723ca8f57787eefbab2083b3098173c444aefbfdf",
+          "literalValuePublished": false
+        },
+        {
+          "line": 23,
+          "key": "COMMUNITY_SUBMISSIONS_PER_WINDOW",
+          "valueClass": "numeric-setting",
+          "valueBytes": 2,
+          "sensitiveName": false,
+          "valueSHA256": "6b51d431df5d7f141cbececcf79edf3dd861c3b4069f0b11661a3eefacbba918",
+          "literalValuePublished": false
+        },
+        {
+          "line": 24,
+          "key": "COMMUNITY_SUBMISSION_WINDOW_SECONDS",
+          "valueClass": "numeric-setting",
+          "valueBytes": 4,
+          "sensitiveName": false,
+          "valueSHA256": "8b34042b7a96b3ba94b27ad723ca8f57787eefbab2083b3098173c444aefbfdf",
+          "literalValuePublished": false
+        },
+        {
+          "line": 25,
+          "key": "COMMUNITY_UPLOAD_BYTES_PER_WINDOW",
+          "valueClass": "numeric-setting",
+          "valueBytes": 10,
+          "sensitiveName": false,
+          "valueSHA256": "39f8d58187887b481fe709f7b323f2b876d9f522e9f7afef815c2089084a36d7",
+          "literalValuePublished": false
+        },
+        {
+          "line": 26,
+          "key": "COMMUNITY_UPLOAD_WINDOW_SECONDS",
+          "valueClass": "numeric-setting",
+          "valueBytes": 5,
+          "sensitiveName": false,
+          "valueSHA256": "b045dd9c18caa8be1e17a4b902152cc1fd292b242b7b9dd74ba8c40896239424",
+          "literalValuePublished": false
+        },
+        {
+          "line": 30,
+          "key": "COMMUNITY_ALLOW_DEV_AUTH",
+          "valueClass": "nonsecret-local-setting",
+          "valueBytes": 4,
+          "sensitiveName": false,
+          "valueSHA256": "b5bea41b6c623f7c09f1bf24dcae58ebab3c0cdd90ad966bc43a45b44867e12b",
+          "literalValuePublished": false
+        },
+        {
+          "line": 31,
+          "key": "COMMUNITY_DEV_TOKENS",
+          "valueClass": "explicit-local-development-token-map",
+          "valueBytes": 39,
+          "sensitiveName": true,
+          "valueSHA256": "5ac8aacfacf3b2c94732f664e88543aaa506a0f046b41d9d489dc58d9b88584d",
+          "literalValuePublished": false
+        }
+      ],
+      "unclassifiedFields": [],
+      "disposition": "clear-exact-template-blob",
+      "scope": "Specific complete blob version only. Empty/replacement placeholders and local development examples are not blanket exemptions for .env.example or later versions.",
+      "localDevelopmentTokenMapReview": {
+        "JSONMappingEntries": 1,
+        "allTokenAndIdentityNamesExplicitLocalSampleShape": true,
+        "templateCommentExplicitlyDevelopmentOnly": true,
+        "explicitDevAuthFlagPresent": true,
+        "codeReadsDevMapOnlyWhenExplicitFlagTrue": true,
+        "literalValuesPublished": false
+      },
+      "localDockerCredentialReview": [
+        {
+          "key": "COMMUNITY_DATABASE_URL",
+          "localDevelopmentHost": true,
+          "usernameMatchesVersionedDockerDefault": true,
+          "passwordMatchesVersionedDockerDefault": true
+        }
+      ],
+      "reviewDoesNotClearOtherTemplateVersions": true
+    },
+    {
+      "gitBlobSHA1": "c6d46b494c2c349c54087882a0622c21bda525d5",
+      "bytes": 1221,
+      "sha256": "f0a1bf0db9905c51c8eaa4054a8a98bc91ea648ceb6cf45ebebeb46eed3ba42f",
+      "GitObjectIdentityVerified": true,
+      "path": "services/community/.env.example",
+      "runtimeEnvOrPlayerDataRead": false,
+      "fields": [
+        {
+          "line": 1,
+          "key": "COMMUNITY_HOST",
+          "valueClass": "nonsecret-local-setting",
+          "valueBytes": 7,
+          "sensitiveName": false,
+          "valueSHA256": "19e36255972107d42b8cecb77ef5622e842e8a50778a6ed8dd1ce94732daca9e",
+          "literalValuePublished": false
+        },
+        {
+          "line": 2,
+          "key": "COMMUNITY_PORT",
+          "valueClass": "numeric-setting",
+          "valueBytes": 4,
+          "sensitiveName": false,
+          "valueSHA256": "fd4d18552b5be40e9d2dd7615973c8ffe9aac393666efab859748c268ed5e49d",
+          "literalValuePublished": false
+        },
+        {
+          "line": 3,
+          "key": "COMMUNITY_DATABASE_URL",
+          "valueClass": "local-development-service-url-with-placeholder-credentials",
+          "valueBytes": 57,
+          "sensitiveName": true,
+          "valueSHA256": "34e0fa6b8b788ba59c48f33887173689dc84cc427cdf9578eb3c125667a6e699",
+          "literalValuePublished": false
+        },
+        {
+          "line": 4,
+          "key": "COMMUNITY_BLOB_ROOT",
+          "valueClass": "documented-nonsecret-local-setting",
+          "valueBytes": 11,
+          "sensitiveName": false,
+          "valueSHA256": "b9177c02e9160dfecbd84463596d11d4dab1f565f95ea7a51edc0e5a3893f459",
+          "literalValuePublished": false
+        },
+        {
+          "line": 5,
+          "key": "COMMUNITY_TUS_ROOT",
+          "valueClass": "documented-nonsecret-local-setting",
+          "valueBytes": 9,
+          "sensitiveName": false,
+          "valueSHA256": "8ec8b27cf9ad6c2926579f033c3266f0f21d8b10d3eac858038014b0ecf42ed3",
+          "literalValuePublished": false
+        },
+        {
+          "line": 6,
+          "key": "COMMUNITY_MAX_PACKAGE_BYTES",
+          "valueClass": "numeric-setting",
+          "valueBytes": 9,
+          "sensitiveName": false,
+          "valueSHA256": "510f683005588fb4d96169c03bd2d1c120fcd0ae13e24d2dd8040600f25b8dff",
+          "literalValuePublished": false
+        },
+        {
+          "line": 7,
+          "key": "COMMUNITY_VALIDATOR_VERSION",
+          "valueClass": "documented-nonsecret-local-setting",
+          "valueBytes": 17,
+          "sensitiveName": false,
+          "valueSHA256": "a3b4893cdafc4abcc9d54c91148cd25b40a8f394197d5c2c8bbbe119e7465f40",
+          "literalValuePublished": false
+        },
+        {
+          "line": 8,
+          "key": "COMMUNITY_WORKER_POLL_MS",
+          "valueClass": "numeric-setting",
+          "valueBytes": 4,
+          "sensitiveName": false,
+          "valueSHA256": "40510175845988f13f6162ed8526f0b09f73384467fa855e1e79b44a56562a58",
+          "literalValuePublished": false
+        },
+        {
+          "line": 10,
+          "key": "COMMUNITY_AUTH_ATTEMPTS_PER_WINDOW",
+          "valueClass": "numeric-setting",
+          "valueBytes": 2,
+          "sensitiveName": false,
+          "valueSHA256": "624b60c58c9d8bfb6ff1886c2fd605d2adeb6ea4da576068201b6c6958ce93f4",
+          "literalValuePublished": false
+        },
+        {
+          "line": 11,
+          "key": "COMMUNITY_AUTH_WINDOW_SECONDS",
+          "valueClass": "numeric-setting",
+          "valueBytes": 3,
+          "sensitiveName": false,
+          "valueSHA256": "983bd614bb5afece5ab3b6023f71147cd7b6bc2314f9d27af7422541c6558389",
+          "literalValuePublished": false
+        },
+        {
+          "line": 12,
+          "key": "COMMUNITY_REPORTS_PER_WINDOW",
+          "valueClass": "numeric-setting",
+          "valueBytes": 1,
+          "sensitiveName": false,
+          "valueSHA256": "e7f6c011776e8db7cd330b54174fd76f7d0216b612387a5ffcfb81e6f0919683",
+          "literalValuePublished": false
+        },
+        {
+          "line": 13,
+          "key": "COMMUNITY_REPORT_WINDOW_SECONDS",
+          "valueClass": "numeric-setting",
+          "valueBytes": 4,
+          "sensitiveName": false,
+          "valueSHA256": "8b34042b7a96b3ba94b27ad723ca8f57787eefbab2083b3098173c444aefbfdf",
+          "literalValuePublished": false
+        },
+        {
+          "line": 14,
+          "key": "COMMUNITY_SUBMISSIONS_PER_WINDOW",
+          "valueClass": "numeric-setting",
+          "valueBytes": 2,
+          "sensitiveName": false,
+          "valueSHA256": "6b51d431df5d7f141cbececcf79edf3dd861c3b4069f0b11661a3eefacbba918",
+          "literalValuePublished": false
+        },
+        {
+          "line": 15,
+          "key": "COMMUNITY_SUBMISSION_WINDOW_SECONDS",
+          "valueClass": "numeric-setting",
+          "valueBytes": 4,
+          "sensitiveName": false,
+          "valueSHA256": "8b34042b7a96b3ba94b27ad723ca8f57787eefbab2083b3098173c444aefbfdf",
+          "literalValuePublished": false
+        },
+        {
+          "line": 16,
+          "key": "COMMUNITY_UPLOAD_BYTES_PER_WINDOW",
+          "valueClass": "numeric-setting",
+          "valueBytes": 10,
+          "sensitiveName": false,
+          "valueSHA256": "39f8d58187887b481fe709f7b323f2b876d9f522e9f7afef815c2089084a36d7",
+          "literalValuePublished": false
+        },
+        {
+          "line": 17,
+          "key": "COMMUNITY_UPLOAD_WINDOW_SECONDS",
+          "valueClass": "numeric-setting",
+          "valueBytes": 5,
+          "sensitiveName": false,
+          "valueSHA256": "b045dd9c18caa8be1e17a4b902152cc1fd292b242b7b9dd74ba8c40896239424",
+          "literalValuePublished": false
+        },
+        {
+          "line": 21,
+          "key": "COMMUNITY_ALLOW_DEV_AUTH",
+          "valueClass": "nonsecret-local-setting",
+          "valueBytes": 4,
+          "sensitiveName": false,
+          "valueSHA256": "b5bea41b6c623f7c09f1bf24dcae58ebab3c0cdd90ad966bc43a45b44867e12b",
+          "literalValuePublished": false
+        },
+        {
+          "line": 22,
+          "key": "COMMUNITY_DEV_TOKENS",
+          "valueClass": "explicit-local-development-token-map",
+          "valueBytes": 39,
+          "sensitiveName": true,
+          "valueSHA256": "5ac8aacfacf3b2c94732f664e88543aaa506a0f046b41d9d489dc58d9b88584d",
+          "literalValuePublished": false
+        }
+      ],
+      "unclassifiedFields": [],
+      "disposition": "clear-exact-template-blob",
+      "scope": "Specific complete blob version only. Empty/replacement placeholders and local development examples are not blanket exemptions for .env.example or later versions.",
+      "localDevelopmentTokenMapReview": {
+        "JSONMappingEntries": 1,
+        "allTokenAndIdentityNamesExplicitLocalSampleShape": true,
+        "templateCommentExplicitlyDevelopmentOnly": true,
+        "explicitDevAuthFlagPresent": true,
+        "codeReadsDevMapOnlyWhenExplicitFlagTrue": true,
+        "literalValuesPublished": false
+      },
+      "localDockerCredentialReview": [
+        {
+          "key": "COMMUNITY_DATABASE_URL",
+          "localDevelopmentHost": true,
+          "usernameMatchesVersionedDockerDefault": true,
+          "passwordMatchesVersionedDockerDefault": true
+        }
+      ],
+      "reviewDoesNotClearOtherTemplateVersions": true
+    },
+    {
+      "gitBlobSHA1": "dfb86a292aa85d92160749b48f1913c6ef281f32",
+      "bytes": 1762,
+      "sha256": "572add7bcd04ed18329009eec48102453c42852b2b83d0a332a366b23bc841c4",
+      "GitObjectIdentityVerified": true,
+      "path": "services/community/.env.example",
+      "runtimeEnvOrPlayerDataRead": false,
+      "fields": [
+        {
+          "line": 1,
+          "key": "COMMUNITY_HOST",
+          "valueClass": "nonsecret-local-setting",
+          "valueBytes": 7,
+          "sensitiveName": false,
+          "valueSHA256": "19e36255972107d42b8cecb77ef5622e842e8a50778a6ed8dd1ce94732daca9e",
+          "literalValuePublished": false
+        },
+        {
+          "line": 2,
+          "key": "COMMUNITY_PORT",
+          "valueClass": "numeric-setting",
+          "valueBytes": 4,
+          "sensitiveName": false,
+          "valueSHA256": "fd4d18552b5be40e9d2dd7615973c8ffe9aac393666efab859748c268ed5e49d",
+          "literalValuePublished": false
+        },
+        {
+          "line": 3,
+          "key": "COMMUNITY_DATABASE_URL",
+          "valueClass": "local-development-service-url-with-placeholder-credentials",
+          "valueBytes": 57,
+          "sensitiveName": true,
+          "valueSHA256": "34e0fa6b8b788ba59c48f33887173689dc84cc427cdf9578eb3c125667a6e699",
+          "literalValuePublished": false
+        },
+        {
+          "line": 4,
+          "key": "COMMUNITY_BLOB_ROOT",
+          "valueClass": "documented-nonsecret-local-setting",
+          "valueBytes": 11,
+          "sensitiveName": false,
+          "valueSHA256": "b9177c02e9160dfecbd84463596d11d4dab1f565f95ea7a51edc0e5a3893f459",
+          "literalValuePublished": false
+        },
+        {
+          "line": 5,
+          "key": "COMMUNITY_TUS_ROOT",
+          "valueClass": "documented-nonsecret-local-setting",
+          "valueBytes": 9,
+          "sensitiveName": false,
+          "valueSHA256": "8ec8b27cf9ad6c2926579f033c3266f0f21d8b10d3eac858038014b0ecf42ed3",
+          "literalValuePublished": false
+        },
+        {
+          "line": 6,
+          "key": "COMMUNITY_TUS_EXPIRATION_SECONDS",
+          "valueClass": "numeric-setting",
+          "valueBytes": 5,
+          "sensitiveName": false,
+          "valueSHA256": "b045dd9c18caa8be1e17a4b902152cc1fd292b242b7b9dd74ba8c40896239424",
+          "literalValuePublished": false
+        },
+        {
+          "line": 7,
+          "key": "COMMUNITY_TUS_CLEANUP_INTERVAL_SECONDS",
+          "valueClass": "numeric-setting",
+          "valueBytes": 3,
+          "sensitiveName": false,
+          "valueSHA256": "983bd614bb5afece5ab3b6023f71147cd7b6bc2314f9d27af7422541c6558389",
+          "literalValuePublished": false
+        },
+        {
+          "line": 8,
+          "key": "COMMUNITY_TUS_CLEANUP_BATCH_SIZE",
+          "valueClass": "numeric-setting",
+          "valueBytes": 2,
+          "sensitiveName": false,
+          "valueSHA256": "e29c9c180c6279b0b02abd6a1801c7c04082cf486ec027aa13515e4f3884bb6b",
+          "literalValuePublished": false
+        },
+        {
+          "line": 9,
+          "key": "COMMUNITY_TUS_CLEANUP_LEASE_SECONDS",
+          "valueClass": "numeric-setting",
+          "valueBytes": 3,
+          "sensitiveName": false,
+          "valueSHA256": "2abaca4911e68fa9bfbf3482ee797fd5b9045b841fdff7253557c5fe15de6477",
+          "literalValuePublished": false
+        },
+        {
+          "line": 10,
+          "key": "COMMUNITY_TUS_LOCK_TIMEOUT_SECONDS",
+          "valueClass": "numeric-setting",
+          "valueBytes": 2,
+          "sensitiveName": false,
+          "valueSHA256": "624b60c58c9d8bfb6ff1886c2fd605d2adeb6ea4da576068201b6c6958ce93f4",
+          "literalValuePublished": false
+        },
+        {
+          "line": 11,
+          "key": "COMMUNITY_TUS_LOCK_POOL_SIZE",
+          "valueClass": "numeric-setting",
+          "valueBytes": 2,
+          "sensitiveName": false,
+          "valueSHA256": "f5ca38f748a1d6eaf726b8a42fb575c3c71f1864a8143301782de13da2d9202b",
+          "literalValuePublished": false
+        },
+        {
+          "line": 12,
+          "key": "COMMUNITY_MAX_PACKAGE_BYTES",
+          "valueClass": "numeric-setting",
+          "valueBytes": 9,
+          "sensitiveName": false,
+          "valueSHA256": "510f683005588fb4d96169c03bd2d1c120fcd0ae13e24d2dd8040600f25b8dff",
+          "literalValuePublished": false
+        },
+        {
+          "line": 13,
+          "key": "COMMUNITY_VALIDATOR_VERSION",
+          "valueClass": "documented-nonsecret-local-setting",
+          "valueBytes": 17,
+          "sensitiveName": false,
+          "valueSHA256": "a3b4893cdafc4abcc9d54c91148cd25b40a8f394197d5c2c8bbbe119e7465f40",
+          "literalValuePublished": false
+        },
+        {
+          "line": 14,
+          "key": "COMMUNITY_WORKER_POLL_MS",
+          "valueClass": "numeric-setting",
+          "valueBytes": 4,
+          "sensitiveName": false,
+          "valueSHA256": "40510175845988f13f6162ed8526f0b09f73384467fa855e1e79b44a56562a58",
+          "literalValuePublished": false
+        },
+        {
+          "line": 16,
+          "key": "COMMUNITY_AUTH_ATTEMPTS_PER_WINDOW",
+          "valueClass": "numeric-setting",
+          "valueBytes": 2,
+          "sensitiveName": false,
+          "valueSHA256": "624b60c58c9d8bfb6ff1886c2fd605d2adeb6ea4da576068201b6c6958ce93f4",
+          "literalValuePublished": false
+        },
+        {
+          "line": 17,
+          "key": "COMMUNITY_AUTH_WINDOW_SECONDS",
+          "valueClass": "numeric-setting",
+          "valueBytes": 3,
+          "sensitiveName": false,
+          "valueSHA256": "983bd614bb5afece5ab3b6023f71147cd7b6bc2314f9d27af7422541c6558389",
+          "literalValuePublished": false
+        },
+        {
+          "line": 18,
+          "key": "COMMUNITY_REPORTS_PER_WINDOW",
+          "valueClass": "numeric-setting",
+          "valueBytes": 1,
+          "sensitiveName": false,
+          "valueSHA256": "e7f6c011776e8db7cd330b54174fd76f7d0216b612387a5ffcfb81e6f0919683",
+          "literalValuePublished": false
+        },
+        {
+          "line": 19,
+          "key": "COMMUNITY_REPORT_WINDOW_SECONDS",
+          "valueClass": "numeric-setting",
+          "valueBytes": 4,
+          "sensitiveName": false,
+          "valueSHA256": "8b34042b7a96b3ba94b27ad723ca8f57787eefbab2083b3098173c444aefbfdf",
+          "literalValuePublished": false
+        },
+        {
+          "line": 20,
+          "key": "COMMUNITY_SUBMISSIONS_PER_WINDOW",
+          "valueClass": "numeric-setting",
+          "valueBytes": 2,
+          "sensitiveName": false,
+          "valueSHA256": "6b51d431df5d7f141cbececcf79edf3dd861c3b4069f0b11661a3eefacbba918",
+          "literalValuePublished": false
+        },
+        {
+          "line": 21,
+          "key": "COMMUNITY_SUBMISSION_WINDOW_SECONDS",
+          "valueClass": "numeric-setting",
+          "valueBytes": 4,
+          "sensitiveName": false,
+          "valueSHA256": "8b34042b7a96b3ba94b27ad723ca8f57787eefbab2083b3098173c444aefbfdf",
+          "literalValuePublished": false
+        },
+        {
+          "line": 22,
+          "key": "COMMUNITY_UPLOAD_BYTES_PER_WINDOW",
+          "valueClass": "numeric-setting",
+          "valueBytes": 10,
+          "sensitiveName": false,
+          "valueSHA256": "39f8d58187887b481fe709f7b323f2b876d9f522e9f7afef815c2089084a36d7",
+          "literalValuePublished": false
+        },
+        {
+          "line": 23,
+          "key": "COMMUNITY_UPLOAD_WINDOW_SECONDS",
+          "valueClass": "numeric-setting",
+          "valueBytes": 5,
+          "sensitiveName": false,
+          "valueSHA256": "b045dd9c18caa8be1e17a4b902152cc1fd292b242b7b9dd74ba8c40896239424",
+          "literalValuePublished": false
+        },
+        {
+          "line": 27,
+          "key": "COMMUNITY_ALLOW_DEV_AUTH",
+          "valueClass": "nonsecret-local-setting",
+          "valueBytes": 4,
+          "sensitiveName": false,
+          "valueSHA256": "b5bea41b6c623f7c09f1bf24dcae58ebab3c0cdd90ad966bc43a45b44867e12b",
+          "literalValuePublished": false
+        },
+        {
+          "line": 28,
+          "key": "COMMUNITY_DEV_TOKENS",
+          "valueClass": "explicit-local-development-token-map",
+          "valueBytes": 39,
+          "sensitiveName": true,
+          "valueSHA256": "5ac8aacfacf3b2c94732f664e88543aaa506a0f046b41d9d489dc58d9b88584d",
+          "literalValuePublished": false
+        }
+      ],
+      "unclassifiedFields": [],
+      "disposition": "clear-exact-template-blob",
+      "scope": "Specific complete blob version only. Empty/replacement placeholders and local development examples are not blanket exemptions for .env.example or later versions.",
+      "localDevelopmentTokenMapReview": {
+        "JSONMappingEntries": 1,
+        "allTokenAndIdentityNamesExplicitLocalSampleShape": true,
+        "templateCommentExplicitlyDevelopmentOnly": true,
+        "explicitDevAuthFlagPresent": true,
+        "codeReadsDevMapOnlyWhenExplicitFlagTrue": true,
+        "literalValuesPublished": false
+      },
+      "localDockerCredentialReview": [
+        {
+          "key": "COMMUNITY_DATABASE_URL",
+          "localDevelopmentHost": true,
+          "usernameMatchesVersionedDockerDefault": true,
+          "passwordMatchesVersionedDockerDefault": true
+        }
+      ],
+      "reviewDoesNotClearOtherTemplateVersions": true
+    }
+  ],
+  "reviewFinalizedAt": "2026-10-16T04:45:14.493327+00:00",
+  "initialStructuredMapHoldResolvedBy": "Exact per-blob JSON map/local sample shape review; all seven comments identify development-only adapter with explicit flag. Database credentials match the versioned local development Docker defaults. No runtime.env read or blanket template exemption.",
+  "developmentComposeSHA256": "ae1c4af084aba5aad7169398a96b18e2003663e81c8c89e5fccf4557ecc82360",
+  "explicitDevAuthConfigSHA256": "ed53e57cf2ca779f50aaa4fa71a241b2ed20a2ae613edb13dd0a2b8e6fc0cb8c"
+}

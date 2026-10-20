@@ -34,7 +34,6 @@ async function providerFor(editionId) {
 
 test('controller choices contain all and only admitted company missions, with campaign cosmetics', async () => {
   for (const [editionId, count, prefix] of [
-    ['coupa-all', 30, 'coupa-'],
     ['droneaid-nl-community', 36, 'droneaid-nl-'],
   ]) {
     const { provider, requests } = await providerFor(editionId);
@@ -55,7 +54,7 @@ test('controller choices contain all and only admitted company missions, with ca
 });
 
 test('company practice reconstructs the canonical difficulty once and honors class and steering', async () => {
-  const { provider } = await providerFor('coupa-adventure');
+  const { provider } = await providerFor('droneaid-nl-workshop-lights');
   const project = compileContentProject(provider.route.source);
   const missionId = project.missions[0].id;
   for (const difficulty of ['gentle', 'standard', 'expert']) {
@@ -101,7 +100,7 @@ test('practice links preserve the friendly installed audience and reject foreign
   assert.equal(url.searchParams.get('controller-session'), session);
   assert.equal(url.searchParams.get('practice'), '1');
   for (const change of [
-    { missionId: 'coupa-spend-in-motion-01' },
+    { missionId: 'foreign-mission-01' },
     { missionId: 'droneaid-nl-shared-horizon-01' },
     { classId: '__proto__' },
     { turnPolicy: 'script' },
@@ -113,7 +112,7 @@ test('practice links preserve the friendly installed audience and reject foreign
 });
 
 test('advanced relay, flow and sentinel missions pass the real Controller Practice import boundary', async () => {
-  for (const editionId of ['coupa-all', 'droneaid-nl-community']) {
+  for (const editionId of ['droneaid-nl-community']) {
     const { provider } = await providerFor(editionId);
     const project = compileContentProject(provider.route.source);
     const byVersion = new Map();

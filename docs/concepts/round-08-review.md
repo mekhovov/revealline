@@ -1,5 +1,7 @@
 # Round 08 — applied body assets and provenance
 
+> Retained excerpt after an ownership migration. Historical totals and verification statements describe the original scope; this excerpt is not a current release qualification. Original bytes and removed material are preserved separately.
+
 Five new transparent body images are bound to the motion lab. The existing Daybreak body remains unchanged. The renderer adds separately configurable blades, wings, thrusters or helper effects; those moving components are not baked into these body files.
 
 | Bound original | Dimensions | Fully transparent pixels | Applied role |
@@ -8,7 +10,6 @@ Five new transparent body images are bound to the motion lab. The existing Daybr
 | [Night signal FPV](../../authoring/motion-lab/assets/fpv-night.png) | 1254 × 1254 RGBA | 1,256,921 | Open dark frame; separate motor positions and night recipe |
 | [Atlas bird](../../authoring/motion-lab/assets/ukrainian-bird.png) | 1145 × 1374 RGBA | 1,383,501 | Original folk-inspired swallow body; moving wings supplied separately |
 | [Tape runner](../../authoring/motion-lab/assets/retro-craft.png) | 1223 × 1286 RGBA | 1,213,516 | Original retro craft; separate twin exhaust effects |
-| [Spend Sprite](../../authoring/motion-lab/assets/navi-avatar.png) | 1254 × 1254 RGBA | 1,148,113 | Original business helper; separate pulse/highlight animation |
 
 The alpha channel and dimensions were inspected read-only with Pillow. Each accepted image was visually inspected before binding. Originals were copied byte-for-byte into the asset directory; no programmatic image cleanup, recoloring or transparency extraction was applied. Six body files support nine themed appearances through shared-body treatments; neither a new palette nor a recipe is counted as a new body illustration.
 
@@ -24,7 +25,6 @@ Generated-image native paths in those JSON records identify the source files; th
 
 The FPV concepts have readable four-arm silhouettes, compact central batteries/camera cues and blue/yellow Ukrainian accents. Skyline's circular guards are static structural body art; each guard receives its own animated blade overlay. Night has a wider open motor layout, so it uses different anchors and radius. There are no Z markings on these current bodies.
 
-The Atlas bird uses original decorative motifs rather than claiming an exact historical regional artifact. Falcon trim currently changes the wing treatment of the same body. The retro craft is an original arcade-inspired silhouette; Vector trail changes exhaust. Spend Sprite and Audit pulse are original helper treatments, not verified Coupa/Navi character assets.
 
 The live inset shows the small body enlarged independently of the arena. At the default 1.25-cell slot, the body is only about 8–18 CSS pixels in the checked layouts; transparent padding and non-square source fitting reduce occupied pixels further. Large-source detail cannot be assumed to survive that reduction. Production still needs intentional low-resolution exports, pixel-grid cleanup, blade/hub contrast review, exact attachment alignment and physical-phone playtests.
 

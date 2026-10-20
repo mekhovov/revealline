@@ -61,13 +61,6 @@
         "runtime-menu-scene-fpv-portrait",
         "runtime-menu-scene-ukraine",
         "runtime-menu-scene-retro",
-        "runtime-menu-scene-coupa",
-        "runtime-menu-scene-coupa-village",
-        "runtime-menu-scene-coupa-spend-in-motion-theme",
-        "runtime-menu-scene-coupa-inside-village-theme",
-        "runtime-menu-scene-coupa-source-to-pay-theme",
-        "runtime-menu-scene-coupa-product-operations-theme",
-        "runtime-menu-scene-coupa-developer-integration-theme",
         "runtime-menu-scene-droneaid-community",
         "runtime-menu-scene-droneaid-nl-community",
         "runtime-menu-scene-droneaid-nl-workshop-lights-theme",
@@ -149,18 +142,6 @@
       "source": "game/ui/art/menu-scenes/provenance.json",
       "promptSource": "authoring/library/menu-scenes/retro-mode-prompts.json",
       "description": "Four original built-in image_gen retro Versus/Team compositions, separately authored for landscape and portrait. Complete prompts and source/reference hashes retained; unchanged dimensions and exact encoding recipes recorded in provenance. Default-game mode artwork is excluded from every Solo-only company edition package."
-    },
-    {
-      "assetIds": [
-        "runtime-menu-scene-coupa-versus",
-        "runtime-menu-scene-coupa-versus-portrait",
-        "runtime-menu-scene-coupa-team",
-        "runtime-menu-scene-coupa-team-portrait"
-      ],
-      "kind": "generated-project-artwork-and-encoding-derivatives",
-      "source": "game/ui/art/menu-scenes/provenance.json",
-      "promptSource": "authoring/library/menu-scenes/coupa-mode-scenes-2026-09-29/prompts.json",
-      "description": "Four original built-in image_gen coupa Versus/Team compositions, separately authored for landscape and portrait. Complete prompts and source/reference hashes retained; unchanged dimensions and exact encoding recipes recorded in provenance. Default-game mode artwork is excluded from every Solo-only company edition package."
     }
   ]
 }

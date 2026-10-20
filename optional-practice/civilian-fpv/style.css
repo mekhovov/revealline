@@ -4274,6 +4274,11 @@ body .mode-settings-view[open] [data-settings-back][data-menu-icon]::before {
 .global-settings-option [hidden] {
   display: none !important;
 }
+.global-settings-save-retry {
+  min-height: 44px;
+  max-width: 100%;
+  white-space: normal;
+}
 
 /* Legacy layout and paint share one cascade layer. Theme recipes own opt-in appearance. */
 @layer legacy {
@@ -6245,7 +6250,7 @@ html
     :is([data-sim-hud-active='true'], [data-sim-flight-compact='true'])
   )
   > .mode-play-bar
-  > :not([data-mode-action='pause']):not([data-mode-action='camera']) {
+  > :not([data-mode-action='menu']):not([data-mode-action='pause']):not([data-mode-action='camera']) {
   display: none !important;
 }
 html
@@ -6254,7 +6259,7 @@ html
     :is([data-sim-hud-active='true'], [data-sim-flight-compact='true'])
   )
   > .mode-play-bar
-  :is([data-mode-action='pause'], [data-mode-action='camera']) {
+  :is([data-mode-action='menu'], [data-mode-action='pause'], [data-mode-action='camera']) {
   min-height: 44px !important;
   min-width: 44px !important;
   margin: 0 !important;
@@ -6446,11 +6451,11 @@ html body .sim-flight-comfort :is(small, p) {
   overflow-wrap: anywhere;
 }
 html body :is(#viewport, #world-viewport)[data-stick-size='compact'] {
-  --sim-monitor-stick-size: 64px;
+  --sim-monitor-stick-size: 80px;
   --sim-touch-stick-size: 104px;
 }
 html body :is(#viewport, #world-viewport)[data-stick-size='large'] {
-  --sim-monitor-stick-size: 112px;
+  --sim-monitor-stick-size: 144px;
   --sim-touch-stick-size: 144px;
 }
 html body :is(#viewport, #world-viewport)[data-stick-opacity='quiet'] {
@@ -6581,5 +6586,65 @@ html body.sim-worlds #flight-dialog[data-sim-flight-compact='true'] > header:not
     top: auto;
     bottom: var(--flight-safe-bottom);
   }
+}
+
+/* Flight overlay controls stay compact across all material themes. */
+html body.field-kit .sim-drone-response .sim-response-close {
+  flex: 0 0 44px !important;
+  width: 44px !important;
+  height: 44px !important;
+  min-width: 44px !important;
+  min-height: 44px !important;
+  max-width: 44px !important;
+  padding: 0 !important;
+  border: 0 !important;
+  border-image: none !important;
+  border-radius: 6px !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  font: 24px/1 system-ui, sans-serif !important;
+  opacity: 0.9;
+  transform: none !important;
+}
+html body.field-kit .sim-drone-response .sim-response-close::before,
+html body.field-kit .sim-drone-response .sim-response-close::after {
+  content: none !important;
+}
+html body.field-kit .sim-drone-response .sim-response-close:focus-visible {
+  outline: 2px solid var(--fk-amber);
+  outline-offset: -4px;
+}
+html body.field-kit .sim-drone-response[data-display='compact'] .sim-response-close {
+  top: 0;
+  right: 0;
+}
+
+html body.field-kit .sim-radio-flight-notice:not([hidden]) {
+  position: absolute;
+  left: 50%;
+  bottom: max(24px, env(safe-area-inset-bottom));
+  transform: translateX(-50%);
+  z-index: 20;
+  width: max-content;
+  max-width: min(420px, calc(100% - 32px));
+  margin: 0;
+  padding: 8px 12px;
+  border-radius: 6px;
+  background: #0d1822e8;
+  color: #f4f7fb;
+  font: 600 14px/1.4 var(--fk-font-ui, sans-serif);
+  text-align: center;
+  pointer-events: none;
+}
+@media (max-width: 1100px) {
+  html body.field-kit .sim-radio-flight-notice:not([hidden]) { bottom: max(152px, env(safe-area-inset-bottom)); }
+}
+html body.field-kit .sim-stick-trace-path { stroke-opacity: .65; stroke-width: 1.75; }
+html body.field-kit .sim-stick-trace-arrow { stroke-opacity: .9; stroke-width: 1.75; }
+
+html body.field-kit #world-viewport > .sim-drone-response {
+  left: max(12px, env(safe-area-inset-left));
+  bottom: max(12px, env(safe-area-inset-bottom));
+  transform: none;
 }
 /* END SHARED SIM FULLSCREEN */

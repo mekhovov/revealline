@@ -1,3 +1,5 @@
+> Retained historical excerpt after an ownership migration. Exact original bytes are preserved separately. Original totals and verification statements describe the original scope; this excerpt is not a current qualification or a complete test result.
+
 # Native menu follow-up: input safety, states and portraits
 
 Base: `10f9bf21e`, the scoped #782 input reconciled with accepted main `b5ab06e1`. Checks below ran against the working source corrections committed with this report. Older mixed-snapshot evidence remains separately attributed.
@@ -53,7 +55,6 @@ Verification of the frozen correction:
 
 - 27/27 focused authoring-input, support-input and edition-runtime tests; 2/2 sparse catalogue Python tests. Scoped lint, formatting and diff checks passed.
 - The Controller Practice dependency closure includes input navigation and field-editor CSS, with no authoring samples or manual test fixtures; projected imports have no missing targets.
-- `compileEdition` for Coupa Village succeeded in memory: 558 engine inputs, 599 output files, 61,475,615 bytes (under the 64 MiB limit). Inputs were the exact `88ce620f4` package plus this bounded runtime correction; the concurrent custom-menu locale build was replaced with its `88ce620f4` bytes for this verification only. This did not write a package or establish acceptance of every edition.
 - On the default landing, trusted keyboard Enter entered fullscreen, Escape exited it, and focus remained on the fullscreen action. This verifies the IAB keyboard path, not browser activation from a physical controller.
 
 This report is local candidate evidence. Physical controllers, Steam Deck/native webviews, mobile frame-time/memory, forced-colors browser rendering, every final edition package and the published build remain separate gates. #782 is a draft aggregate input assigned to v0.150.0; no version or public deployment is created by these commits.

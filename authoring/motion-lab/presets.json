@@ -238,17 +238,6 @@
       "rotors": [],
       "animationRecipe": "retro-thruster"
     },
-    "navi-avatar": {
-      "label": "Spend Sprite",
-      "src": "assets/navi-avatar.png",
-      "sourceStatus": "original image-generated helper; not verified official Coupa Navi artwork",
-      "widthCells": 1.25,
-      "heightCells": 1.25,
-      "headingOffsetDegrees": 0,
-      "sampling": "nearest",
-      "rotors": [],
-      "animationRecipe": "helper-guidance"
-    },
     "fpv-racer": {
       "label": "Skyline FPV",
       "src": "assets/fpv-racer.png",
@@ -350,17 +339,6 @@
       "sampling": "nearest",
       "rotors": [],
       "animationRecipe": "vector-thruster"
-    },
-    "navi-auditor": {
-      "label": "Audit pulse",
-      "src": "assets/navi-avatar.png",
-      "sourceStatus": "shared original helper image; cosmetic pulse variant, not official Navi",
-      "widthCells": 1.25,
-      "heightCells": 1.25,
-      "headingOffsetDegrees": 0,
-      "sampling": "nearest",
-      "rotors": [],
-      "animationRecipe": "audit-guidance"
     },
     "scout-quad": {
       "label": "Scout quad",
@@ -1086,26 +1064,6 @@
           "propSrc": null
         }
       }
-    },
-    "navi-materials": {
-      "label": "Navi · archive / queue / alerts",
-      "roles": {
-        "wall": {
-          "kind": "archive",
-          "microSrc": null,
-          "propSrc": null
-        },
-        "slow": {
-          "kind": "queue",
-          "microSrc": null,
-          "propSrc": null
-        },
-        "danger": {
-          "kind": "alert",
-          "microSrc": null,
-          "propSrc": null
-        }
-      }
     }
   },
   "themes": {
@@ -1146,19 +1104,6 @@
         "slow": "#9691c6",
         "danger": "#d97591",
         "dim": "#646a8d"
-      }
-    },
-    "navi-network": {
-      "label": "Navi Network / blue hours",
-      "colors": {
-        "arena": "#0d2535",
-        "grid": "#234253",
-        "accent": "#86daf2",
-        "body": "#eef9fb",
-        "wall": "#74b7cf",
-        "slow": "#a6b89d",
-        "danger": "#e4a065",
-        "dim": "#5d8598"
       }
     }
   },
@@ -1258,8 +1203,16 @@
           "id": "wings",
           "type": "wings",
           "anchors": [
-            [-0.13, -0.08, -1],
-            [0.13, -0.08, 1]
+            [
+              -0.13,
+              -0.08,
+              -1
+            ],
+            [
+              0.13,
+              -0.08,
+              1
+            ]
           ],
           "span": 0.43,
           "chord": 0.2,
@@ -1279,8 +1232,16 @@
           "id": "wings",
           "type": "wings",
           "anchors": [
-            [-0.13, -0.08, -1],
-            [0.13, -0.08, 1]
+            [
+              -0.13,
+              -0.08,
+              -1
+            ],
+            [
+              0.13,
+              -0.08,
+              1
+            ]
           ],
           "span": 0.43,
           "chord": 0.2,
@@ -1300,8 +1261,14 @@
           "id": "exhaust",
           "type": "thruster",
           "anchors": [
-            [-0.08, 0.355],
-            [0.08, 0.355]
+            [
+              -0.08,
+              0.355
+            ],
+            [
+              0.08,
+              0.355
+            ]
           ],
           "length": 0.23,
           "width": 0.08,
@@ -1319,8 +1286,14 @@
           "id": "exhaust",
           "type": "thruster",
           "anchors": [
-            [-0.08, 0.355],
-            [0.08, 0.355]
+            [
+              -0.08,
+              0.355
+            ],
+            [
+              0.08,
+              0.355
+            ]
           ],
           "length": 0.23,
           "width": 0.08,
@@ -1328,60 +1301,6 @@
           "flickerHz": 7,
           "color": "#75dec8",
           "innerColor": "#e3f8ce"
-        }
-      ]
-    },
-    "helper-guidance": {
-      "label": "Spend Sprite / pulse + blink",
-      "components": [
-        {
-          "id": "guidance",
-          "type": "pulse",
-          "anchors": [[0, 0.14]],
-          "radius": 0.38,
-          "amplitude": 0.05,
-          "frequencyHz": 0.8,
-          "opacity": 0.2,
-          "color": "#8bd4e4"
-        },
-        {
-          "id": "eyes",
-          "type": "blink",
-          "anchors": [
-            [-0.085, -0.005],
-            [0.085, -0.005]
-          ],
-          "frequencyHz": 0.8,
-          "dutyCycle": 0.18,
-          "size": 0.035,
-          "color": "#f0d66a"
-        }
-      ]
-    },
-    "audit-guidance": {
-      "label": "Audit trim / gold pulse + blink",
-      "components": [
-        {
-          "id": "guidance",
-          "type": "pulse",
-          "anchors": [[0, 0.14]],
-          "radius": 0.38,
-          "amplitude": 0.05,
-          "frequencyHz": 0.8,
-          "opacity": 0.2,
-          "color": "#dfc56c"
-        },
-        {
-          "id": "eyes",
-          "type": "blink",
-          "anchors": [
-            [-0.085, -0.005],
-            [0.085, -0.005]
-          ],
-          "frequencyHz": 0.8,
-          "dutyCycle": 0.18,
-          "size": 0.035,
-          "color": "#a8e8ee"
         }
       ]
     },
@@ -1461,7 +1380,12 @@
         {
           "id": "exhaust",
           "type": "thruster",
-          "anchors": [[-0.01, 0.34]],
+          "anchors": [
+            [
+              -0.01,
+              0.34
+            ]
+          ],
           "length": 0.18,
           "width": 0.1,
           "speedGain": 0.8,
@@ -1624,8 +1548,16 @@
           "id": "wings",
           "type": "wings",
           "anchors": [
-            [-0.3, -0.1, -1],
-            [0.3, -0.1, 1]
+            [
+              -0.3,
+              -0.1,
+              -1
+            ],
+            [
+              0.3,
+              -0.1,
+              1
+            ]
           ],
           "span": 0.185,
           "chord": 0.14,
@@ -1644,8 +1576,16 @@
           "id": "wings",
           "type": "wings",
           "anchors": [
-            [-0.23, -0.13, -1],
-            [0.23, -0.13, 1]
+            [
+              -0.23,
+              -0.13,
+              -1
+            ],
+            [
+              0.23,
+              -0.13,
+              1
+            ]
           ],
           "span": 0.22,
           "chord": 0.18,
@@ -1664,8 +1604,16 @@
           "id": "wings",
           "type": "wings",
           "anchors": [
-            [-0.22, -0.22, -1],
-            [0.22, -0.22, 1]
+            [
+              -0.22,
+              -0.22,
+              -1
+            ],
+            [
+              0.22,
+              -0.22,
+              1
+            ]
           ],
           "span": 0.23,
           "chord": 0.22,
@@ -1684,8 +1632,16 @@
           "id": "wings",
           "type": "wings",
           "anchors": [
-            [-0.285, -0.08, -1],
-            [0.285, -0.08, 1]
+            [
+              -0.285,
+              -0.08,
+              -1
+            ],
+            [
+              0.285,
+              -0.08,
+              1
+            ]
           ],
           "span": 0.195,
           "chord": 0.14,
@@ -1704,8 +1660,16 @@
           "id": "wings",
           "type": "wings",
           "anchors": [
-            [-0.235, -0.17, -1],
-            [0.235, -0.17, 1]
+            [
+              -0.235,
+              -0.17,
+              -1
+            ],
+            [
+              0.235,
+              -0.17,
+              1
+            ]
           ],
           "span": 0.22,
           "chord": 0.16,
@@ -1724,8 +1688,16 @@
           "id": "wings",
           "type": "wings",
           "anchors": [
-            [-0.162, -0.196, -1],
-            [0.162, -0.196, 1]
+            [
+              -0.162,
+              -0.196,
+              -1
+            ],
+            [
+              0.162,
+              -0.196,
+              1
+            ]
           ],
           "span": 0.28,
           "chord": 0.2,
@@ -1744,8 +1716,16 @@
           "id": "wings",
           "type": "wings",
           "anchors": [
-            [-0.335, -0.105, -1],
-            [0.335, -0.105, 1]
+            [
+              -0.335,
+              -0.105,
+              -1
+            ],
+            [
+              0.335,
+              -0.105,
+              1
+            ]
           ],
           "span": 0.12,
           "chord": 0.16,
@@ -1768,9 +1748,6 @@
     },
     "retro-1994": {
       "terrainLayer": "retro-materials"
-    },
-    "navi-network": {
-      "terrainLayer": "navi-materials"
     }
   },
   "characterPresentations": {

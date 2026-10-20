@@ -57,17 +57,23 @@ function samePoint(a, b) {
   return Math.abs(a.x - b.x) < EPS && Math.abs(a.y - b.y) < EPS;
 }
 export function selfContact(state, trace, horizon) {
-  const previous = state.trailSegments.map((s) => ({ ...s }));
   let best = null;
-  const visited = new Set(state.trail.map((c) => c.index));
-  let last = state.trail.at(-1)?.index;
-  for (const cell of trace.cells) {
-    if (cell.time > horizon + EPS) break;
-    if (visited.has(cell.index) && cell.index !== last)
-      best = Math.min(best ?? Infinity, cell.time);
-    visited.add(cell.index);
-    last = cell.index;
+  if (trace.cells.length) {
+    const visited = new Set();
+    for (const cell of state.trail) visited.add(cell.index);
+    let last = state.trail.at(-1)?.index;
+    for (const cell of trace.cells) {
+      if (cell.time > horizon + EPS) break;
+      if (visited.has(cell.index) && cell.index !== last)
+        best = Math.min(best ?? Infinity, cell.time);
+      visited.add(cell.index);
+      last = cell.index;
+    }
   }
+  if (!trace.additions.length) return best;
+  // Existing segments are read-only until appendTrail runs after contact selection.
+  // Own the array because each new trace segment joins subsequent contact checks.
+  const previous = state.trailSegments.slice();
   for (const s of trace.additions) {
     if (s.t0 > horizon + EPS) break;
     const fraction = s.t1 > s.t0 ? Math.min(1, (horizon - s.t0) / (s.t1 - s.t0)) : 1;
@@ -103,16 +109,19 @@ export function appendTrail(state, trace, time) {
     state.cutStartedAt = state.time + trace.started;
     state.events.push({ type: 'cut.started', tick: state.tick, time: state.time + trace.started });
   }
-  const have = new Set(state.trail.map((c) => c.index));
-  for (const c of trace.cells)
-    if (c.time < time + EPS && !have.has(c.index)) {
-      have.add(c.index);
-      state.trail.push({
-        x: c.index % state.width,
-        y: Math.floor(c.index / state.width),
-        index: c.index,
-      });
-    }
+  if (trace.cells.length) {
+    const have = new Set();
+    for (const cell of state.trail) have.add(cell.index);
+    for (const c of trace.cells)
+      if (c.time < time + EPS && !have.has(c.index)) {
+        have.add(c.index);
+        state.trail.push({
+          x: c.index % state.width,
+          y: Math.floor(c.index / state.width),
+          index: c.index,
+        });
+      }
+  }
   for (const s of trace.additions) {
     if (s.t0 >= time - EPS) continue;
     const end = pointAt(

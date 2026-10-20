@@ -25,10 +25,10 @@ test('installed game menus reach communities and return to the same mode or comp
     for (const entry of [
       'game/',
       'game/index.html?journey=legacy',
-      'game/index.html?edition=coupa-culture&presentation=retained',
+      'game/index.html?edition=droneaid-nl-workshop-lights&presentation=retained',
       'game/couch/index.html?mode=versus',
       'game/couch/relay-rescue.html?campaign=first',
-      'game/communities/coupa/?edition=coupa-culture',
+      'game/communities/droneaid/?edition=droneaid-nl-workshop-lights',
       'game/communities/droneaid/',
     ]) {
       const source = `${root}${entry}`;
@@ -51,7 +51,7 @@ test('community Back rejects foreign origins, releases, tools and invalid compan
     'https://name:secret@example.test/revealline/releases/v0.142.3/site/game/',
     '/revealline/game/',
     '/revealline/releases/v0.142.3/site/game/playground/',
-    './coupa/?edition=droneaid-community',
+    './droneaid/?edition=droneaid-community',
     './unknown/',
     'javascript:alert(1)',
   ])
@@ -112,19 +112,19 @@ test('friendly entry preserves own campaign, controls and fragment but refuses f
       assert.equal(entry.searchParams.get('steering'), 'smooth');
       assert.equal(entry.hash, '#details');
     }
-  const coupa = 'https://example.test/game/communities/coupa/';
+  const community = 'https://example.test/game/communities/droneaid/';
   for (const query of [
-    'edition=droneaid',
+    'edition=victory-drones',
     'edition=droneaid-community',
-    'edition=coupa-forged',
+    'edition=droneaid-nl-forged',
     'edition=',
-    'edition=coupa-all&edition=coupa-culture',
+    'edition=droneaid-nl-community&edition=droneaid-nl-workshop-lights',
   ])
-    assert.throws(() => communityEntryURL(`${coupa}?${query}`));
+    assert.throws(() => communityEntryURL(`${community}?${query}`));
   assert.throws(() => communityRouteFromURL('https://example.test/game/communities/unknown/'));
   assert.equal(communityRouteFromURL('https://example.test/game/communities/'), null);
   assert.equal(
-    communityRouteFromURL('https://example.test/game/index.html?edition=coupa-all'),
+    communityRouteFromURL('https://example.test/game/index.html?edition=droneaid-nl-community'),
     null,
   );
 });
@@ -148,7 +148,7 @@ test('share URLs omit aggregate query, retain narrower edition identity and neve
   );
   assert.throws(() =>
     communityHref('https://example.test/game/', {
-      brandId: 'coupa',
+      brandId: 'droneaid-nl',
       editionId: 'droneaid-community',
     }),
   );
@@ -156,7 +156,7 @@ test('share URLs omit aggregate query, retain narrower edition identity and neve
 
 test('friendly company navigation keeps owned links and tool parameters in the shared release root', () => {
   const root = 'https://example.test/revealline/releases/v0.142.3/site/';
-  const address = `${root}game/communities/coupa/`;
+  const address = `${root}game/communities/droneaid/`;
   for (const absolute of [false, true]) {
     const paths = [
       './?edition=droneaid&presentation=foreign&mission=first#details',
@@ -171,10 +171,10 @@ test('friendly company navigation keeps owned links and tool parameters in the s
       return { href, textContent: 'Tool', getAttribute: (name) => (name === 'href' ? href : null) };
     });
     const provider = {
-      editionId: 'coupa-all',
+      editionId: 'droneaid-nl-community',
       rootURL: root,
       retainedPresentationId: 'retained',
-      selection: { brand: { name: 'Coupa' } },
+      selection: { brand: { name: 'DroneAid' } },
       href: () => `${address}?presentation=retained`,
     };
     const doc = { querySelectorAll: (selector) => (selector === 'a[href]' ? links : []) };
@@ -182,11 +182,11 @@ test('friendly company navigation keeps owned links and tool parameters in the s
     assert.equal(links[0].href, `${address}?presentation=retained&mission=first#details`);
     assert.equal(
       links[1].href,
-      `${root}game/controller-lab/?edition=coupa-all&presentation=retained`,
+      `${root}game/controller-lab/?edition=droneaid&presentation=retained`,
     );
     assert.equal(
       links[2].href,
-      `${root}game/replay-theater/?edition=coupa-all&presentation=retained`,
+      `${root}game/replay-theater/?edition=droneaid&presentation=retained`,
     );
     assert.equal(links[3].href, `${address}?presentation=retained#settings-data`);
     assert.equal(links[4].hidden, true);

@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { createCompanyLearningProofStore } from '../company-campaigns/learning-proofs.mjs';
 import { createLearningAttempt, reduceLearningAttempt } from '../company-campaigns/learning.mjs';
-import { COMPANY_LESSONS } from '../company-campaigns/lessons.mjs';
+import { scoredLearningFixture } from './helpers/learning-fixture.mjs';
 import { createCompanyProject } from '../company-campaigns/content.mjs';
 import { compileContentProject, resolveMission } from '../content-design/project.mjs';
 import { applyGameplayTuning } from '../gameplay-tuning.mjs';
@@ -12,7 +12,7 @@ import { createRecorder, recordInput, exportReplay } from '../replay.mjs';
 import { companySimulationIdentity } from '../company-session.mjs';
 import { canonicalJSON } from '../data-json.mjs';
 
-const lesson = COMPANY_LESSONS.find((entry) => entry.missionId === 'coupa-source-to-pay-01');
+const lesson = scoredLearningFixture({ missionId: 'droneaid-nl-workshop-lights-01', campaignId: 'droneaid-nl-workshop-lights' });
 const row = JSON.parse(
   readFileSync(new URL('fixtures/company-campaign-routes.json', import.meta.url)),
 ).rows.find(
@@ -23,7 +23,7 @@ const row = JSON.parse(
 );
 function fixture() {
   const project = compileContentProject(
-    createCompanyProject({ brandId: 'coupa', campaignId: lesson.campaignId }),
+    createCompanyProject({ brandId: 'droneaid-nl', campaignId: lesson.campaignId }),
   );
   const manifest = resolveMission(project, lesson.missionId, { difficulty: row.difficulty });
   const level = applyGameplayTuning(manifest.level, row.gameplayTuning);
@@ -62,7 +62,7 @@ function fixture() {
       setItem: (key, value) => data.set(key, value),
     };
   const config = {
-    editionId: 'coupa-foundations',
+    editionId: 'sample-public',
     storage,
     lessons: [lesson],
     acceptSimulation: (missionId, identity) =>

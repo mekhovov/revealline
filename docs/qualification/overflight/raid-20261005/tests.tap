@@ -1,3 +1,5 @@
+# Retained historical excerpt after an ownership migration. Exact original bytes are preserved separately. Original totals and verification statements describe the original scope; this excerpt is not a current qualification or a complete test result.
+
 TAP version 13
 # Subtest: same-origin account client sends bounded JSON with cookie credentials and restores session
 ok 1 - same-origin account client sends bounded JSON with cookie credentials and restores session
@@ -129,11 +131,6 @@ ok 26 - fpv-learning loads the one shared document without changing its visible 
   ---
   duration_ms: 1.671209
   ...
-# Subtest: coupa loads the one shared document without changing its visible URL
-ok 27 - coupa loads the one shared document without changing its visible URL
-  ---
-  duration_ms: 4.205
-  ...
 # Subtest: droneaid loads the one shared document without changing its visible URL
 ok 28 - droneaid loads the one shared document without changing its visible URL
   ---
@@ -189,53 +186,6 @@ ok 38 - a stalled fetch expires into the same readable recovery page without doc
   ---
   duration_ms: 2.688584
   ...
-# Subtest: actual friendly More and Workshop links compose at the canonical game root
-    # Subtest: coupa
-    ok 1 - coupa
-      ---
-      duration_ms: 8896.499167
-      ...
-    # Subtest: droneaid
-    ok 2 - droneaid
-      ---
-      duration_ms: 4257.611084
-      ...
-    # Subtest: coupa?edition=coupa-culture&journey=legacy\#details
-    ok 3 - coupa?edition=coupa-culture&journey=legacy\#details
-      ---
-      duration_ms: 1667.035875
-      ...
-    1..3
-ok 39 - actual friendly More and Workshop links compose at the canonical game root
-  ---
-  duration_ms: 14822.212333
-  ...
-# Subtest: real friendly communities run in the common host with their own artwork, saves and controls
-    # Subtest: coupa
-    ok 1 - coupa
-      ---
-      duration_ms: 5299.133583
-      ...
-    # Subtest: droneaid
-    ok 2 - droneaid
-      ---
-      duration_ms: 5049.832375
-      ...
-    # Subtest: droneaid-community
-    ok 3 - droneaid-community
-      ---
-      duration_ms: 2156.398916
-      ...
-    # Subtest: coupa?edition=coupa-culture
-    ok 4 - coupa?edition=coupa-culture
-      ---
-      duration_ms: 2465.655416
-      ...
-    1..4
-ok 40 - real friendly communities run in the common host with their own artwork, saves and controls
-  ---
-  duration_ms: 14971.87425
-  ...
 # Subtest: four newly added public communities preserve their current gameplay and save ownership at friendly routes
     # Subtest: social-drone-ua
     ok 1 - social-drone-ua
@@ -271,47 +221,6 @@ ok 42 - the actual friendly host rejects a cross-company selector before content
 ok 43 - the actual friendly field guide opens and closes without changing company progress
   ---
   duration_ms: 1853.904375
-  ...
-# Subtest: friendly guide panel practice uses the shared release game root and restores its temporary handoff
-    # Subtest: social-drone-ua
-    ok 1 - social-drone-ua
-      ---
-      duration_ms: 5.423416
-      ...
-    # Subtest: victory-drones
-    ok 2 - victory-drones
-      ---
-      duration_ms: 5.586458
-      ...
-    # Subtest: ukraine-culture
-    ok 3 - ukraine-culture
-      ---
-      duration_ms: 3.9385
-      ...
-    # Subtest: fpv-learning
-    ok 4 - fpv-learning
-      ---
-      duration_ms: 5.234209
-      ...
-    # Subtest: coupa
-    ok 5 - coupa
-      ---
-      duration_ms: 4.204583
-      ...
-    # Subtest: droneaid
-    ok 6 - droneaid
-      ---
-      duration_ms: 3.949667
-      ...
-    # Subtest: droneaid-community
-    ok 7 - droneaid-community
-      ---
-      duration_ms: 5.279
-      ...
-    1..7
-ok 44 - friendly guide panel practice uses the shared release game root and restores its temporary handoff
-  ---
-  duration_ms: 34.634958
   ...
 # Subtest: moderation report validation returns a bounded immutable public shape
 ok 45 - moderation report validation returns a bounded immutable public shape

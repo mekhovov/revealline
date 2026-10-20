@@ -1,5 +1,6 @@
 # Reserve illustrations · wave 8
 
+This is a reduced historical generation record. Retired ownership entries are omitted; original batch totals below remain historical context. The current retained selection is in the reserve illustrations catalog.
 Four new source reward scenes follow [wave 7](../reserve-illustrations-wave-7/README.md), exploring larger pixel clusters and simpler focal shapes. They add no runtime binding, playable level, animation, pack or release.
 
 | Theme | Original | Composition |
@@ -7,7 +8,6 @@ Four new source reward scenes follow [wave 7](../reserve-illustrations-wave-7/RE
 | FPV Front | [Peach Rooftop Dawn](originals/fpv-peach-rooftop-dawn.png) | A clearly separated four-motor quad on a broad teal parapet against a peach city sunrise. |
 | Ukraine Atlas | [Amber Orchard Gate](originals/ukraine-amber-orchard-gate.png) | An open turquoise gate, large apples and golden canopies frame a winding orchard path. |
 | 1994 Forever | [Violet Video Nook](originals/retro-violet-video-nook.png) | Blank colored cases, a purple shelf, cyan CRT and checkerboard floor make a compact interior. |
-| Spend Network | [Mint Canal Tram](originals/spend-mint-canal-tram.png) | A mint freight vehicle and parcel wagon stand beside a coral depot and an arched canal bridge. |
 
 The four selected PNGs total **5,928,803 bytes**. Each returned original is **1774 × 887, RGB, 8-bit**, exactly **2:1**. Requested 1536 × 768 dimensions and about twenty colors were targets. The images have visible stepped contours and broad clusters, but retain soft light variation and many more colors; this is neither an exact low-resolution grid nor a certified limited-palette asset.
 

@@ -10,7 +10,7 @@ const assert = (value, message) => {
 };
 const same = (left, right) => JSON.stringify(left) === JSON.stringify(right);
 const localeKey = 'revealline.locale.v1';
-const themes = ['fpv', 'ukraine', 'retro', 'coupa'];
+const themes = ['fpv', 'ukraine', 'retro'];
 const snapshot = (storage) =>
   Array.from({ length: storage.length }, (_, index) => storage.key(index))
     .sort()

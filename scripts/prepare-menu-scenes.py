@@ -32,17 +32,6 @@ SOURCES = {
     'retro-versus-portrait': 'authoring/library/menu-scenes/retro-versus-portrait-v1.png',
     'retro-team': 'authoring/library/menu-scenes/retro-team-v1.png',
     'retro-team-portrait': 'authoring/library/menu-scenes/retro-team-portrait-v1.png',
-    'coupa': 'game/editions/assets/coupa/home.png',
-    'coupa-versus': 'authoring/library/menu-scenes/coupa-mode-scenes-2026-09-29/coupa-versus-v1.png',
-    'coupa-versus-portrait': 'authoring/library/menu-scenes/coupa-mode-scenes-2026-09-29/coupa-versus-portrait-v1.png',
-    'coupa-team': 'authoring/library/menu-scenes/coupa-mode-scenes-2026-09-29/coupa-team-v1.png',
-    'coupa-team-portrait': 'authoring/library/menu-scenes/coupa-mode-scenes-2026-09-29/coupa-team-portrait-v1.png',
-    'coupa-village': 'authoring/library/menu-scenes/coupa-overview-v1.png',
-    'coupa-spend-in-motion-theme': 'game/editions/assets/coupa/spend-city-v2.png',
-    'coupa-inside-village-theme': 'game/editions/assets/coupa/coupa-inside-village-key.png',
-    'coupa-source-to-pay-theme': 'game/editions/assets/coupa/coupa-source-to-pay-key.png',
-    'coupa-product-operations-theme': 'game/editions/assets/coupa/coupa-product-operations-key.png',
-    'coupa-developer-integration-theme': 'game/editions/assets/coupa/network-atlas-v2.png',
     'droneaid-community': 'game/editions/assets/droneaid/droneaid-community-relay-01.png',
     'droneaid-nl-community': 'authoring/library/droneaid-brand-kit-2026-09-29/background-original.png',
 }
@@ -59,7 +48,7 @@ for name, source in SOURCES.items():
     if selected and name not in selected:
         continue
     preserve_original = name == 'droneaid-nl-community'
-    mode_world = next((world for world in ['fpv', 'ukraine', 'retro', 'coupa']
+    mode_world = next((world for world in ['fpv', 'ukraine', 'retro']
                        if name.startswith((world + '-versus', world + '-team'))), None)
     output = OUT / ('droneaid-main-background.png' if preserve_original else name + '.webp')
     with Image.open(ROOT / source) as original:
@@ -94,9 +83,7 @@ for name, source in SOURCES.items():
         'sourceSha256': hashlib.sha256((ROOT / source).read_bytes()).hexdigest(),
         'width': size[0], 'height': size[1],
         'process': process,
-        **({'promptSource': ('authoring/library/menu-scenes/coupa-mode-scenes-2026-09-29/prompts.json'
-                            if mode_world == 'coupa' else
-                            f'authoring/library/menu-scenes/{mode_world}-mode-prompts.json'),
+        **({'promptSource': f'authoring/library/menu-scenes/{mode_world}-mode-prompts.json',
             'generator': 'OpenAI built-in image_gen',
             'rights': f'Original generated project artwork; existing {mode_world.upper()} project art used as reference'}
            if mode_world else {}),

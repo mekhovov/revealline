@@ -1,3 +1,5 @@
+# Retained historical excerpt after an ownership migration. Exact original bytes are preserved separately. Original totals and verification statements describe the original scope; this excerpt is not a current qualification or a complete test result.
+
 - main:
   - button "Menu"
   - generic: Riy · escorts
@@ -537,11 +539,7 @@
         - paragraph: 86.7 MiB including shared dependencies · Not fully prepared offline
         - link "Play FPV Learning / LINE":
           - /url: http://127.0.0.1:8900/game/communities/fpv-learning/
-        - checkbox "Coupa Village / LINE"
-        - text: Coupa Village / LINE
         - paragraph: 116.7 MiB including shared dependencies · Not fully prepared offline
-        - link "Play Coupa Village / LINE":
-          - /url: http://127.0.0.1:8900/game/communities/coupa/
         - checkbox "DroneAid / LINE"
         - text: DroneAid / LINE
         - paragraph: 88.7 MiB including shared dependencies · Not fully prepared offline

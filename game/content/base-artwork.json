@@ -131,46 +131,6 @@
         "impact": "retro-craft",
         "trapper": "retro-craft"
       }
-    },
-    {
-      "id": "coupa",
-      "name": "Spend Network",
-      "subtitle": "A clearer picture of spend",
-      "family": "navi",
-      "player": "navi-avatar",
-      "enemyShape": "cube",
-      "patrolShape": "spark",
-      "bossShape": "core",
-      "scene": "network",
-      "labels": {
-        "objective": "Opportunity",
-        "supply": "Sync point",
-        "enemy": "Exception",
-        "boss": "Complexity hub",
-        "currency": "Insight",
-        "ability": "AI assist"
-      },
-      "palette": {
-        "ink": "#173747",
-        "paper": "#edf2ed",
-        "muted": "#85a8b6",
-        "accent": "#e2c775",
-        "safe": "#87cbe0",
-        "danger": "#e69477",
-        "field": "#112b3e",
-        "grid": "#1e3d51",
-        "sky": "#bbdadd",
-        "land": "#689bb1"
-      },
-      "classBodies": {
-        "scout": "navi-avatar",
-        "bomber": "navi-avatar",
-        "carrier": "navi-avatar",
-        "interceptor": "navi-avatar",
-        "fiber": "navi-avatar",
-        "impact": "navi-avatar",
-        "trapper": "navi-avatar"
-      }
     }
   ],
   "classRecipes": [
@@ -269,7 +229,10 @@
           "name": "First Signal",
           "width": 48,
           "height": 36,
-          "spawn": { "x": 24.5, "y": 0.5 },
+          "spawn": {
+            "x": 24.5,
+            "y": 0.5
+          },
           "walls": [],
           "enemies": [
             {
@@ -283,8 +246,17 @@
             }
           ],
           "objectives": [],
-          "supplies": [{ "id": "home", "x": 24.5, "y": 0.5, "radius": 2 }],
-          "goal": { "coverage": 0.45 },
+          "supplies": [
+            {
+              "id": "home",
+              "x": 24.5,
+              "y": 0.5,
+              "radius": 2
+            }
+          ],
+          "goal": {
+            "coverage": 0.45
+          },
           "rules": {
             "lives": 3,
             "moveSpeed": 10,
@@ -303,7 +275,10 @@
           "name": "Relay Orchard",
           "width": 48,
           "height": 36,
-          "spawn": { "x": 24.5, "y": 0.5 },
+          "spawn": {
+            "x": 24.5,
+            "y": 0.5
+          },
           "walls": [],
           "enemies": [
             {
@@ -316,9 +291,26 @@
               "radius": 0.3
             }
           ],
-          "objectives": [{ "id": "relay", "x": 8.5, "y": 14.5, "required": true, "hidden": false }],
-          "supplies": [{ "id": "home", "x": 24.5, "y": 0.5, "radius": 2 }],
-          "goal": { "coverage": 0.58 },
+          "objectives": [
+            {
+              "id": "relay",
+              "x": 8.5,
+              "y": 14.5,
+              "required": true,
+              "hidden": false
+            }
+          ],
+          "supplies": [
+            {
+              "id": "home",
+              "x": 24.5,
+              "y": 0.5,
+              "radius": 2
+            }
+          ],
+          "goal": {
+            "coverage": 0.58
+          },
           "rules": {
             "lives": 3,
             "moveSpeed": 10,
@@ -337,7 +329,10 @@
           "name": "Crosswind",
           "width": 48,
           "height": 36,
-          "spawn": { "x": 24.5, "y": 0.5 },
+          "spawn": {
+            "x": 24.5,
+            "y": 0.5
+          },
           "walls": [],
           "enemies": [
             {
@@ -360,8 +355,17 @@
             }
           ],
           "objectives": [],
-          "supplies": [{ "id": "home", "x": 24.5, "y": 0.5, "radius": 2 }],
-          "goal": { "coverage": 0.62 },
+          "supplies": [
+            {
+              "id": "home",
+              "x": 24.5,
+              "y": 0.5,
+              "radius": 2
+            }
+          ],
+          "goal": {
+            "coverage": 0.62
+          },
           "rules": {
             "lives": 3,
             "moveSpeed": 10,
@@ -380,10 +384,23 @@
           "name": "Stone Lanes",
           "width": 48,
           "height": 36,
-          "spawn": { "x": 24.5, "y": 0.5 },
+          "spawn": {
+            "x": 24.5,
+            "y": 0.5
+          },
           "walls": [
-            { "x": 10, "y": 10, "w": 8, "h": 2 },
-            { "x": 29, "y": 21, "w": 8, "h": 2 }
+            {
+              "x": 10,
+              "y": 10,
+              "w": 8,
+              "h": 2
+            },
+            {
+              "x": 29,
+              "y": 21,
+              "w": 8,
+              "h": 2
+            }
           ],
           "enemies": [
             {
@@ -406,10 +423,25 @@
             }
           ],
           "objectives": [
-            { "id": "relay", "x": 11.5, "y": 29.5, "required": true, "hidden": false }
+            {
+              "id": "relay",
+              "x": 11.5,
+              "y": 29.5,
+              "required": true,
+              "hidden": false
+            }
           ],
-          "supplies": [{ "id": "home", "x": 24.5, "y": 0.5, "radius": 2 }],
-          "goal": { "coverage": 0.65 },
+          "supplies": [
+            {
+              "id": "home",
+              "x": 24.5,
+              "y": 0.5,
+              "radius": 2
+            }
+          ],
+          "goal": {
+            "coverage": 0.65
+          },
           "rules": {
             "lives": 3,
             "moveSpeed": 10,
@@ -428,7 +460,10 @@
           "name": "Night Patrol",
           "width": 48,
           "height": 36,
-          "spawn": { "x": 24.5, "y": 0.5 },
+          "spawn": {
+            "x": 24.5,
+            "y": 0.5
+          },
           "walls": [],
           "enemies": [
             {
@@ -450,8 +485,17 @@
             }
           ],
           "objectives": [],
-          "supplies": [{ "id": "home", "x": 24.5, "y": 0.5, "radius": 2 }],
-          "goal": { "coverage": 0.65 },
+          "supplies": [
+            {
+              "id": "home",
+              "x": 24.5,
+              "y": 0.5,
+              "radius": 2
+            }
+          ],
+          "goal": {
+            "coverage": 0.65
+          },
           "rules": {
             "lives": 3,
             "moveSpeed": 10,
@@ -470,7 +514,10 @@
           "name": "Hidden Frequency",
           "width": 48,
           "height": 36,
-          "spawn": { "x": 24.5, "y": 0.5 },
+          "spawn": {
+            "x": 24.5,
+            "y": 0.5
+          },
           "walls": [],
           "enemies": [
             {
@@ -493,11 +540,32 @@
             }
           ],
           "objectives": [
-            { "id": "hidden-relay", "x": 8.5, "y": 10.5, "required": true, "hidden": true },
-            { "id": "bonus", "x": 37.5, "y": 30.5, "required": false, "hidden": false }
+            {
+              "id": "hidden-relay",
+              "x": 8.5,
+              "y": 10.5,
+              "required": true,
+              "hidden": true
+            },
+            {
+              "id": "bonus",
+              "x": 37.5,
+              "y": 30.5,
+              "required": false,
+              "hidden": false
+            }
           ],
-          "supplies": [{ "id": "home", "x": 24.5, "y": 0.5, "radius": 2 }],
-          "goal": { "coverage": 0.68 },
+          "supplies": [
+            {
+              "id": "home",
+              "x": 24.5,
+              "y": 0.5,
+              "radius": 2
+            }
+          ],
+          "goal": {
+            "coverage": 0.68
+          },
           "rules": {
             "lives": 3,
             "moveSpeed": 10,
@@ -516,7 +584,10 @@
           "name": "The Crossing",
           "width": 48,
           "height": 36,
-          "spawn": { "x": 24.5, "y": 0.5 },
+          "spawn": {
+            "x": 24.5,
+            "y": 0.5
+          },
           "walls": [],
           "enemies": [
             {
@@ -540,9 +611,26 @@
               "laneWidth": 1.2
             }
           ],
-          "objectives": [{ "id": "relay", "x": 8.5, "y": 27.5, "required": true, "hidden": false }],
-          "supplies": [{ "id": "home", "x": 24.5, "y": 0.5, "radius": 2 }],
-          "goal": { "coverage": 0.7 },
+          "objectives": [
+            {
+              "id": "relay",
+              "x": 8.5,
+              "y": 27.5,
+              "required": true,
+              "hidden": false
+            }
+          ],
+          "supplies": [
+            {
+              "id": "home",
+              "x": 24.5,
+              "y": 0.5,
+              "radius": 2
+            }
+          ],
+          "goal": {
+            "coverage": 0.7
+          },
           "rules": {
             "lives": 3,
             "moveSpeed": 10,
@@ -561,8 +649,18 @@
           "name": "Last Light",
           "width": 48,
           "height": 36,
-          "spawn": { "x": 24.5, "y": 0.5 },
-          "walls": [{ "x": 9, "y": 11, "w": 7, "h": 2 }],
+          "spawn": {
+            "x": 24.5,
+            "y": 0.5
+          },
+          "walls": [
+            {
+              "x": 9,
+              "y": 11,
+              "w": 7,
+              "h": 2
+            }
+          ],
           "enemies": [
             {
               "id": "west",
@@ -594,9 +692,26 @@
               "laneWidth": 1.2
             }
           ],
-          "objectives": [{ "id": "relay", "x": 8.5, "y": 29.5, "required": true, "hidden": false }],
-          "supplies": [{ "id": "home", "x": 24.5, "y": 0.5, "radius": 2 }],
-          "goal": { "coverage": 0.72 },
+          "objectives": [
+            {
+              "id": "relay",
+              "x": 8.5,
+              "y": 29.5,
+              "required": true,
+              "hidden": false
+            }
+          ],
+          "supplies": [
+            {
+              "id": "home",
+              "x": 24.5,
+              "y": 0.5,
+              "radius": 2
+            }
+          ],
+          "goal": {
+            "coverage": 0.72
+          },
           "rules": {
             "lives": 3,
             "moveSpeed": 10,
@@ -615,7 +730,10 @@
           "name": "Signal Garden",
           "width": 48,
           "height": 36,
-          "spawn": { "x": 24.5, "y": 0.5 },
+          "spawn": {
+            "x": 24.5,
+            "y": 0.5
+          },
           "walls": [],
           "enemies": [
             {
@@ -638,10 +756,25 @@
             }
           ],
           "objectives": [
-            { "id": "archive", "x": 8.5, "y": 28.5, "required": true, "hidden": true }
+            {
+              "id": "archive",
+              "x": 8.5,
+              "y": 28.5,
+              "required": true,
+              "hidden": true
+            }
           ],
-          "supplies": [{ "id": "home", "x": 24.5, "y": 0.5, "radius": 2 }],
-          "goal": { "coverage": 0.63 },
+          "supplies": [
+            {
+              "id": "home",
+              "x": 24.5,
+              "y": 0.5,
+              "radius": 2
+            }
+          ],
+          "goal": {
+            "coverage": 0.63
+          },
           "rules": {
             "lives": 3,
             "moveSpeed": 10,
@@ -672,7 +805,10 @@
           "name": "Supply Circuit",
           "width": 48,
           "height": 36,
-          "spawn": { "x": 24.5, "y": 0.5 },
+          "spawn": {
+            "x": 24.5,
+            "y": 0.5
+          },
           "walls": [],
           "enemies": [
             {
@@ -693,12 +829,32 @@
               "clockwise": false
             }
           ],
-          "objectives": [{ "id": "relay", "x": 8.5, "y": 14.5, "required": true, "hidden": false }],
-          "supplies": [
-            { "id": "home", "x": 24.5, "y": 0.5, "radius": 2 },
-            { "id": "west-pad", "x": 0.5, "y": 18.5, "radius": 2 }
+          "objectives": [
+            {
+              "id": "relay",
+              "x": 8.5,
+              "y": 14.5,
+              "required": true,
+              "hidden": false
+            }
           ],
-          "goal": { "coverage": 0.67 },
+          "supplies": [
+            {
+              "id": "home",
+              "x": 24.5,
+              "y": 0.5,
+              "radius": 2
+            },
+            {
+              "id": "west-pad",
+              "x": 0.5,
+              "y": 18.5,
+              "radius": 2
+            }
+          ],
+          "goal": {
+            "coverage": 0.67
+          },
           "rules": {
             "lives": 3,
             "moveSpeed": 10,
@@ -722,8 +878,18 @@
             }
           ],
           "hangars": [
-            { "id": "home-hangar", "x": 24.5, "y": 0.5, "radius": 2 },
-            { "id": "west-hangar", "x": 0.5, "y": 18.5, "radius": 2 }
+            {
+              "id": "home-hangar",
+              "x": 24.5,
+              "y": 0.5,
+              "radius": 2
+            },
+            {
+              "id": "west-hangar",
+              "x": 0.5,
+              "y": 18.5,
+              "radius": 2
+            }
           ]
         },
         {
@@ -733,7 +899,10 @@
           "name": "Short Fuse",
           "width": 48,
           "height": 36,
-          "spawn": { "x": 24.5, "y": 0.5 },
+          "spawn": {
+            "x": 24.5,
+            "y": 0.5
+          },
           "walls": [],
           "enemies": [
             {
@@ -755,8 +924,17 @@
             }
           ],
           "objectives": [],
-          "supplies": [{ "id": "home", "x": 24.5, "y": 0.5, "radius": 2 }],
-          "goal": { "coverage": 0.7 },
+          "supplies": [
+            {
+              "id": "home",
+              "x": 24.5,
+              "y": 0.5,
+              "radius": 2
+            }
+          ],
+          "goal": {
+            "coverage": 0.7
+          },
           "rules": {
             "lives": 3,
             "moveSpeed": 10,
@@ -778,7 +956,10 @@
           "name": "Relay Storm",
           "width": 48,
           "height": 36,
-          "spawn": { "x": 24.5, "y": 0.5 },
+          "spawn": {
+            "x": 24.5,
+            "y": 0.5
+          },
           "walls": [],
           "enemies": [
             {
@@ -811,9 +992,26 @@
               "radius": 0.3
             }
           ],
-          "objectives": [{ "id": "relay", "x": 8.5, "y": 27.5, "required": true, "hidden": false }],
-          "supplies": [{ "id": "home", "x": 24.5, "y": 0.5, "radius": 2 }],
-          "goal": { "coverage": 0.74 },
+          "objectives": [
+            {
+              "id": "relay",
+              "x": 8.5,
+              "y": 27.5,
+              "required": true,
+              "hidden": false
+            }
+          ],
+          "supplies": [
+            {
+              "id": "home",
+              "x": 24.5,
+              "y": 0.5,
+              "radius": 2
+            }
+          ],
+          "goal": {
+            "coverage": 0.74
+          },
           "rules": {
             "lives": 3,
             "moveSpeed": 10,

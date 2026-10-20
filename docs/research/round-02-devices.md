@@ -1,5 +1,7 @@
 # Round 02 — screens, controls and device identities
 
+> Retained excerpt after an ownership migration. Historical totals and verification statements describe the original scope; this excerpt is not a current release qualification. Original bytes and removed material are preserved separately.
+
 Research date: 12 September 2026. These are design proposals for discussion, not implemented or measured behavior. User steering: support all three motivations — arcade mastery, artwork discovery and tactical runs — while exploring more aesthetics and device sizes.
 
 ## Recommended direction
@@ -18,7 +20,6 @@ The sizes below are representative viewport test fixtures, not a list of current
 | --- | --- | --- |
 | Small portrait phone: 320×568 and 375×667 CSS-pixel fixtures | A compact status row, complete 4:3 board, one-line objective, then a generous control deck; pause above the board; no upgrade cards during live play | **Pocket arcade:** a virtual handheld with a patterned case. One board is a satisfying short session; tactical choices become a full-screen intermission. Controls never cover the live trail. |
 | Larger portrait phone: 390×844 and 430×932 fixtures | Same hierarchy with more breathing room; larger controls and optional subtitle space; extra height can hold the current expedition module, without shrinking the board | **Collectible cartridge:** mission ends with a postcard sliding into an album. An optional one-handed control profile moves the thumb pad toward either hand. |
-| Phone landscape: 667×375 and 844×390 fixtures | Complete board centered between two control rails; concise HUD above; left rail for four-way movement, right for draw/ability as selected by the final rules | **Signal handset:** vivid central screen, restrained blue/gold casing or Coupa calculator casing. Broad thumbs stay outside the arena. On the smallest landscape viewport, show fewer HUD details rather than tiny text. |
 | Tablet: 768×1024, 1024×768 and resized-window fixtures | Large board; controls in lower corners; between boards, a side panel or two-page spread contains upgrades, discoveries and route context | **Collector's light table:** art feels worth keeping. Show the finished picture at a useful size, inspect original details, compare restored layers. Pencil can later help the editor; gameplay never requires it. |
 | Laptop/browser: 1280×720 and 1440×900 fixtures | Board plus narrow mission rail; visible keyboard hints on demand; pause/settings navigable with keys; expanded album/editor when outside a mission | **1990s signal station:** tasteful pixel monitor frame and cartridge shelves. Space around the board provides optional narrative, not essential threat indicators hidden from smaller screens. |
 | Desktop/wide: 1920×1080 and 2560×1440 fixtures | Enlarge the board to a comfortable size; align score and route information in the margins; avoid filling every gap with decoration | **Arcade cabinet:** strong typography, rich reveal art and restrained frame lighting. Optional art-first framing can replace the fictional cabinet. |
@@ -33,7 +34,6 @@ The sizes below are representative viewport test fixtures, not a list of current
 - Tablet/desktop: board → adjacent context panel; context collapses to intermission screens on phones.
 - TV/Deck: board → minimal status → input prompts. Choose UI sizes for physical viewing distance, not resolution alone.
 
-All themes should have their own shell treatment: embroidered handheld, carved folk-art frame, black-and-cyan signal station, calculator-like Coupa case, transparent-plastic Y2K handheld, or nautical chart folio. The game should still look good in a frame-free accessibility mode.
 
 ## Touch controls: compare two real candidates
 
@@ -89,7 +89,6 @@ These are proposed benchmark gates and research questions. No implementation or 
 ## Recommended visuals for this round
 
 1. The same Ukrainian scene in portrait phone, landscape phone, Steam Deck and laptop layouts, so adaptation is visible rather than claimed.
-2. Portrait pocket-console shells in embroidered Ukrainian, transparent-plastic synthwave and Coupa calculator treatments.
 3. Tablet collector album and TV gallery reward showing the finished art cleanly.
 4. A separate exploratory tall-board concept marked **alternate challenge geometry**, to compare its stronger portrait image composition without implying score equivalence.
 

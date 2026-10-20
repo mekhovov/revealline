@@ -1,5 +1,7 @@
 # Engine and configurable game framework research
 
+> Retained excerpt after an ownership migration. Historical totals and verification statements describe the original scope; this excerpt is not a current release qualification. Original bytes and removed material are preserved separately.
+
 Research date: 12 September 2026. This is a design proposal, not an implementation or a benchmark. Official documentation and project-maintainer sources were consulted. Recommendations and architecture below are our engineering judgments, distinguished from verified platform facts.
 
 ## Recommendation to discuss
@@ -49,7 +51,6 @@ Publishing a web game on Steam with Electron is a demonstrated path documented b
 
 Godot's browser export requires WebAssembly and WebGL 2 using its Compatibility renderer. Single-threaded export is the default and improves macOS/iOS compatibility; native mobile exports perform better. Its web audio sample mode has effect limitations. Godot iOS export requires macOS and Xcode too. An engine does not eliminate Apple's toolchain. [Godot web export](https://docs.godotengine.org/en/stable/tutorials/export/exporting_for_web.html), [Godot iOS export](https://docs.godotengine.org/en/stable/tutorials/export/exporting_for_ios.html).
 
-For budgeting, Apple lists its standard Developer Program at USD 99 per membership year (or local currency), and Valve lists a USD 100 Steam Direct fee per app, recoupable after USD 1,000 adjusted gross revenue. These are publishing costs, separate from engine licenses, hardware and development. Recheck at release. [Apple membership](https://developer.apple.com/programs/whats-included/), [Steam Direct fee](https://partner.steamgames.com/doc/gettingstarted/appfee).
 
 ## The flexible framework: the practical promise
 
@@ -77,7 +78,6 @@ This architecture is a proposal, not a built-in Phaser feature. Phaser does prov
 | Behavior recipe | Supported movement/attack primitives combined with bounded conditions, durations, targets and parameters |
 | Package manifest | Stable ID, version, schema version, compatible runtime version, dependencies, content hashes, locales and asset budgets |
 
-The Ukrainian FPV theme and the Coupa/Navi theme should be two configurations of these roles. A jammer can map to a budget-draining anomaly; a restored image can map to a revealed savings opportunity. If the Coupa version needs fundamentally different money-economy logic, give it a different ruleset rather than disguising extra mechanics as art.
 
 Keep content packs as data and media, not arbitrary downloaded JavaScript. Require declared behavior IDs and schema validation; preserve last-known-good versions. This supports understandable editing, stable saves, compatible updates and predictable review of changes.
 
@@ -98,7 +98,6 @@ Acceptance targets to agree with the user (proposals, not measured results):
 - Clear board and readable controls on phone; keyboard and controller navigation across all menus.
 - A modest initial download, with image/music packs loaded on demand; explicit texture-memory limits.
 - Same recorded seed/input sequence produces the same capture results; save/reload and suspend/resume preserve valid state.
-- Hot-swapping the Ukrainian and Coupa theme changes all intended art/audio/UI without editing the simulation.
 - Editor-generated packs run in the shipped runtime, and corrupt/incompatible packs fail with actionable errors.
 
 Meaningful simulation tests should cover connected-region capture around multiple enemies, self-intersecting trails, simultaneous collisions/capture, corner contacts, unfillable islands, initial safe cells, pause/resume, and generated-map reachability. Include real-device visual/input/audio checks; compile success alone is insufficient.

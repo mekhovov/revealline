@@ -1,5 +1,7 @@
 # Round 03 visual prompts and review
 
+> Retained excerpt after an ownership migration. Historical totals and verification statements describe the original scope; this excerpt is not a current release qualification. Original bytes and removed material are preserved separately.
+
 Date: 2026-09-12. Built-in image generation was used. These are concept illustrations, not production assets or tested gameplay screenshots.
 
 ## Outputs
@@ -10,7 +12,6 @@ Date: 2026-09-12. Built-in image generation was used. These are concept illustra
 
 ## Review
 
-The military board restores the user's intended focus on invading military presence in revealed pictures and makes live hazards brighter than illustrated background vehicles. The family board distinguishes military, cultural, nostalgic and Coupa identities. The device board communicates control placement and six contexts. Exact 4:3 board proportions were not consistently produced by the image generator; arena proportions, geometry, active trails, HUD counts and button labels are illustrative. The definitive layout must preserve a chosen simulation geometry. These images do not validate controls, hitboxes, performance, historical details, regional motifs or brand accuracy. The Coupa C token is an original placeholder. Generated history/cultural scenes are imagined; future historical packs need a named era and references. Some generated background details and lettering require revision. Keep these files as reference art, not a ready-to-slice atlas.
 
 ## Military prompt
 
@@ -29,19 +30,6 @@ One small board footer 'MAIN GAME / VISUAL STUDY'. Original art only. Clear geom
 
 ## Four-family prompt
 
-Use case: stylized-concept.
-Asset type: one high-quality 2x2 art-direction board for FOUR theme families of a modern pixel-art Xonix game, landscape approximately 3:2. Four equally sized large gameplay screens with a concise heading, minimal HUD and tiny palette swatches. Consistent basic screen organization but distinct art language, avatar, hazards, reveal imagery and UI materials. Rich sophisticated crisp pixel art with intentional clusters and restrained light, no painting or 3D render, no stock mobile-game UI.
-All four must clearly show actual territory-capture gameplay: full rectangular board, roughly half revealed into gorgeous artwork through orthogonal connected regions, rest dark quiet fog, a small themed player tracing a bright L-shaped vulnerable path from safe ground into fog, two distinct moving threats plus a stationary capturable object. Main game camera flat, grid-aligned; underlying pictures can have illustrated depth. No diagonal paths.
-Exact titles:
-'1 / FPV FRONT'
-'2 / UKRAINE ATLAS'
-'3 / 1994 FOREVER'
-'4 / NAVI NETWORK'
-1 FPV FRONT: MAIN theme, Ukrainian FPV drone military arcade in the Russian-Ukrainian war. Readable blue-and-yellow compact quadcopter, dark graphite/olive field-controller frame with tiny flag detail, warm white trail. Revealed artwork a fictional elevated Ukrainian battlefield, golden fields/green tree lines/country road, invading dark armored vehicles visibly depicted. Red-edged live hostile drone/armored patrol/fictional emitter icons in fog, distinguishable from background art. Serious stylish 16-bit action tone, not gore or caricatures. No real military map details.
-2 UKRAINE ATLAS: Ukrainian cultural/ethnic/historical collection family. Player a tiny golden stylized swallow whose route becomes a stitched line. Revealed original artwork combines a warm Ukrainian village vignette, a beautifully composed Petrykivka-inspired decorative bird and botanical details in a clear art-book composition. Parchment cream, deep plum, red, ochre and green. Border a very thin geometric embroidery design; keep botanical painting and geometric stitch distinct. Enemies animated ink blots and thorn sprites. Warm handcrafted collectible atlas feeling; no generic Russian domes/costumes. Stylish modern pixel-art interpretation, not historical reconstruction.
-3 1994 FOREVER: intimate nostalgic Amiga/DOS/16-bit computer game aesthetic. Reveal a sunlit 1990s bedroom with CRT monitor, cassette player, floppy disks, homemade space-game poster, and a shelf of colorful unbranded game boxes. Tiny white toy spaceship cursor hero, glitch invaders, luminous cyan orthogonal route. Cream computer bezel, teal, muted purple, amber, raspberry palette. Tasteful pixel bevel buttons, rich point-and-click-adventure background. No real copyrighted game posters. Focus nostalgic atmosphere, not all magenta synthwave.
-4 NAVI NETWORK: Coupa business spend management and AI platform as a playful city-network game. Proposed blue circular C token hero; do not claim to reproduce an official Navi mascot. Revealed image an imaginative clean pixel city of connected suppliers, a sourcing market, warehouse, invoice matching station, finance/payment hub and a luminous friendly AI network node with radiating abstract connection lines. Rich navy/cobalt/cyan/mint/white palette, elegant minimal high-contrast interface. Threats red duplicate-document bug, amber cost-leak siphon and tangled supply-route knot. Captured mint links light up operational districts. Make the game feel like recovering business value and orchestrating helpful AI agents, not generic coin collecting or a spreadsheet. Optional tiny label 'VALUE RESTORED'. No fake product screenshots.
-No more than requested title/HUD words. No paragraphs, no watermarks, no device mockups. Make every family original, visually memorable, connected by clear Xonix geometry.
 
 ## Device prompt
 
@@ -56,4 +44,3 @@ Bottom row left panel, title 'TABLET': tablet landscape; large 4:3 board at left
 Bottom row middle panel, title 'LAPTOP / BROWSER': open laptop straight-on; 16:10 display showing complete board and a quiet slim mission rail; no virtual touch controls; bottom hint 'WASD' and a space-key symbol, subtle browser chrome, game is main content.
 Bottom row right panel, title 'TV / CONTROLLER': large thin TV front-on with gamepad symbol beneath; complete 4:3 arena centered inside 16:9 screen; large simple lives/area/score HUD designed to read from a couch; quiet dark margins and no tiny upgrade text.
 One shared narrow footer text exactly 'ONE ARENA / SIX LAYOUTS'. Each panel title large and easy to read. Avoid other paragraphs, device specs, garbled text or heavy decorative frames. This image must clearly communicate responsive composition, accessible control space and real differences between portrait touch and controller play.
-

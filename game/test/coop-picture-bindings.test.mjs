@@ -13,7 +13,7 @@ import {
 } from '../couch/coop-picture-bindings.mjs';
 import { createCoopPresentation } from '../couch/coop-presentation.mjs';
 
-const publishedManifest = '7e8db95cec2eaab6b031e12bb44e036173611539393d44bbdfc50ff784d098b8';
+const publishedManifest = 'a78a35c1f86b8192cd10f4582eac7bcbbc3411f6a78b9746cfbfc72da3384dc0';
 const sha = (bytes) => createHash('sha256').update(bytes).digest('hex');
 const compiled = validateCompiledPresentation(
   JSON.parse(await readFile(new URL('../presentation/compiled/runtime.json', import.meta.url))),
@@ -84,7 +84,7 @@ test('the closed two-row authority is immutable and matches the complete authore
   assert.equal(COOP_PICTURE_BINDINGS.length, 2);
   assert.equal(
     compiled.resolved.theme.revision,
-    104,
+    105,
     'Exact reviewed production metadata, never an unqualified latest alias',
   );
   assert.deepEqual(
@@ -146,19 +146,19 @@ test('the closed two-row authority is immutable and matches the complete authore
   assert.throws(() => COOP_PICTURE_BINDINGS.push(COOP_PICTURE_BINDINGS[0]), TypeError);
 });
 
-test('current104 picture association preserves the exact58–97,99–103 closed bindings and policies', () => {
+test('current105 picture association preserves the exact58–97,99–104 closed bindings and policies', () => {
   const retained = [
     58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81,
-    82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 99, 100, 101, 102, 103,
+    82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 99, 100, 101, 102, 103, 104,
   ];
   assert.deepEqual(
     [...new Set(COOP_SUPPORTED_PICTURE_BINDINGS.map((row) => row.themeRevision))].sort(
       (a, b) => a - b,
     ),
-    [...retained, 104].sort((a, b) => a - b),
+    [...retained, 105].sort((a, b) => a - b),
   );
-  assert.equal(COOP_SUPPORTED_PICTURE_BINDINGS.length, 92);
-  for (const revision of [98, 105])
+  assert.equal(COOP_SUPPORTED_PICTURE_BINDINGS.length, 94);
+  for (const revision of [98, 106])
     assert.equal(
       COOP_SUPPORTED_PICTURE_BINDINGS.some((row) => row.themeRevision === revision),
       false,
@@ -180,15 +180,15 @@ test('current104 picture association preserves the exact58–97,99–103 closed 
   }
   assert.deepEqual(
     COOP_HISTORICAL_IMPORT_PICTURE_POLICIES.map((row) => row.themeRevision).sort((a, b) => a - b),
-    [...retained, 104].sort((a, b) => a - b),
+    [...retained, 105].sort((a, b) => a - b),
   );
-  assert.equal(COOP_HISTORICAL_IMPORT_PICTURE_POLICIES.length, 46);
-  for (const revision of [98, 105])
+  assert.equal(COOP_HISTORICAL_IMPORT_PICTURE_POLICIES.length, 47);
+  for (const revision of [98, 106])
     assert.equal(
       COOP_HISTORICAL_IMPORT_PICTURE_POLICIES.some((row) => row.themeRevision === revision),
       false,
     );
-  const current = COOP_HISTORICAL_IMPORT_PICTURE_POLICIES.find((row) => row.themeRevision === 104);
+  const current = COOP_HISTORICAL_IMPORT_PICTURE_POLICIES.find((row) => row.themeRevision === 105);
   for (const previous of COOP_HISTORICAL_IMPORT_PICTURE_POLICIES)
     assert.deepEqual(previous, {
       ...current,
@@ -202,7 +202,7 @@ test('the original retained62 manifest still selects and verifies both unchanged
     JSON.parse(
       await readFile(
         new URL(
-          '../presentation/compiled/runtime.b4a7285520550e4cd04c7b9e80b4c6468c0a914faac77c05fa7f86a72c8a3c8f.json',
+          '../presentation/compiled/runtime.af2d1d398ca56ec365899940d27f790c2b406d385461e89a1dc8fcbbcede6972.json',
           import.meta.url,
         ),
       ),
@@ -235,7 +235,7 @@ test('the bounded actual-current-runtime host prepares both starter pictures', a
     );
     t.after(() => f.presentation.dispose());
     const binding = await f.presentation.select(f.request);
-    assert.equal(binding.choice.themeRevision, 104);
+    assert.equal(binding.choice.themeRevision, 105);
     assert.equal(binding.choice.picture.sha256, COOP_PICTURE_BINDINGS[index].picture.sha256);
     assert.equal(f.presentation.confirm(f.request), binding);
     assert.deepEqual(f.calls, { reads: 1, decodes: 1, releases: 0 });
@@ -243,7 +243,7 @@ test('the bounded actual-current-runtime host prepares both starter pictures', a
 });
 
 test('the complete finite policy rejects unreviewed or source-stage themes before reading pictures', async (t) => {
-  for (const revision of [98, 105]) {
+  for (const revision of [98, 106]) {
     const f = fixture(
       0,
       compiled,

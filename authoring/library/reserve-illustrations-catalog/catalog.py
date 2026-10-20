@@ -13,7 +13,7 @@ ROOT = HERE.parents[2]
 SOURCE = '091936e27c3b9f1c061081ca93827014a927d963'
 PREFIX = 'authoring/library/reserve-illustrations-catalog/'
 INVENTORY = 'authoring/library/reserve-illustrations-wave-10/provenance/selected-inventory-40.json'
-THEMES = {'fpv': 'FPV Front', 'ukraine': 'Ukraine Atlas', 'retro': '1994 Forever', 'coupa': 'Spend Network'}
+THEMES = {'fpv': 'FPV Front', 'ukraine': 'Ukraine Atlas', 'retro': '1994 Forever'}
 LOCAL = {'index.html': 'text/html', 'catalog.css': 'text/css', 'catalog.mjs': 'text/javascript', 'presentation.mjs': 'text/javascript', 'sources.mjs': 'text/javascript', 'manifest.json': 'application/json', 'README.md': 'text/plain'}
 # Reviewed runtime closure for this catalog's launcher and controller reader.
 # These are application code/fonts and one compact identity icon: original art comes exclusively

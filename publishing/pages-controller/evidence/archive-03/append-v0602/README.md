@@ -1,9 +1,0 @@
-# Archive03 v0.60.2 retention — scoped admission
-
-Root reviewed the actual authority originals, both complete audits, all315 original evidence members and the actual native defect/correction journeys. Corrected archive commit1eff31098cc79cf923f4429fe6dd8d97f520972a (treea574fdae893f46de18c9108a55c8be220eb5dc19) deployed through run35222747833, deployment6502924637/status18474456961. Hosted original extraction and the complete public audit verify1,490 files /783,087,639 bytes with zero failed attempts, retries or skipped files. The row review independently checks every path, exact URL, status, MIME, byte count and hash plus unchanged before/after authorities.
-
-The sole changed public route is the shared release explorer, now the exact accepted accessible redirect/fallback to the main catalog. All1,489 other first-deployment rows remain exact, including798 historical canonical rows, both legacy JSON routes, root and `.nojekyll`. The former historical list is preserved under legacy in the archive source. No frozen game is rebuilt or retagged.
-
-The first deployment's successful byte audit, two transport retries, obsolete Current v0.35.0 navigation defect and actual Solo/Team observations are preserved byte for byte in originals.zip. Corrected native evidence proves keyboard explorer→main live catalog→Back to retained title/Continue. Earlier play observations describe unchanged canonical bodies at their actual earlier deployment, not a fresh corrected-deployment playthrough. Original v0.33–v0.35 scoped references remain in the six prior admission pins.
-
-This is historical online retention, not fresh offline, physical-device/controller/touch, new win, full responsive or P03/P05 acceptance. This scoped admission is ready for the next publisher selector update. Public game release and full P03/P05 acceptance remain separate.

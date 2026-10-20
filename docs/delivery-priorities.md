@@ -1,5 +1,7 @@
 # RevealLine delivery plan
 
+> Retained excerpt after an ownership migration. Historical totals and verification statements describe the original scope; this excerpt is not a current release qualification. Original bytes and removed material are preserved separately.
+
 > **Current whole-product status:** [completed and remaining delivery](delivery-status.md).
 > Use that dated rollup for current priorities, release status and acceptance limits.
 > The older checkpoints below retain their historical scope.
@@ -186,7 +188,6 @@ The following inventory is the retained v0.41/v0.42 content cohort plus separate
 | 56 complete player sets              | FPV and Ukraine body cohorts are delivered; Retro and Spend body cohorts are separately committed. | Full state/rotor animation and both detail treatments remain to be completed. Body counts are not complete-set counts.                                                                                         |
 | 24 finished tracks                   | 24-track source album candidate.                                                                   | Full listening, in-game mix, native transfer and storage qualification.                                                                                                                                        |
 
-The four themes remain FPV Front, Ukraine Atlas, 1994 Forever and the fictional spend-management/Coupa-inspired theme. Each theme needs the same readable mechanical roles, even when its characters, objects and goals differ. Combat interactions are game abstractions, with non-graphic victory presentation.
 
 ## Framework and storage constraints
 

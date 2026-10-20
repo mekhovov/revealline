@@ -1,7 +1,8 @@
 {
   "baselineCommit": "dcdad7f7b8c05c20e192564a981c8f9448460653",
   "baselineIdentities": 164,
-  "currentIdentities": 164,
+  "retiredIdentities": 17,
+  "currentIdentities": 147,
   "missingIdentities": [],
   "scope": "Official Classic mission catalog identities; does not inspect private browser imports or saved runs."
 }

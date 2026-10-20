@@ -39,6 +39,7 @@ async function projectGlobalServices() {
       getMenuAnimation: 'getSimMenuAnimation',
       setMenuAnimation: 'setSimMenuAnimation',
       subscribeMenuAnimation: 'subscribeSimMenuAnimation',
+      menuAnimationBinding: 'simMenuAnimationBinding',
     },
     'game/ui/theme-family-controls.mjs': {
       attachThemeFamilyControls: 'attachSimThemeFamilyControls',
@@ -57,8 +58,10 @@ async function projectGlobalServices() {
     ...Object.keys(entries),
     'game/text-face.mjs',
     'game/text-size.mjs',
+    'game/ui/text-size-control.mjs',
     'game/ui/theme-material-preview.mjs',
     'game/ui/movement-audio.mjs',
+    'game/ui/gameplay-audio-controls.mjs',
     'game/ui/radio-audio.mjs',
     'game/ui/celebration.mjs',
     'game/data-json.mjs',

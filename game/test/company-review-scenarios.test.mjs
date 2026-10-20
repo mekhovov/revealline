@@ -24,7 +24,7 @@ test('company review summaries count only ready target transitions and completed
       {
         action: 'Load to company menu',
         ms: 100,
-        target: 'http://localhost/game/index.html?edition=coupa-all',
+        target: 'http://localhost/game/index.html?edition=droneaid-community',
       },
       {
         action: 'Frame intervals',

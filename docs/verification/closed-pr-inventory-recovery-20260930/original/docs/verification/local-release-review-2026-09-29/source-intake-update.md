@@ -1,3 +1,5 @@
+> Retained historical excerpt after an ownership migration. Exact original bytes are preserved separately. Original totals and verification statements describe the original scope; this excerpt is not a current qualification or a complete test result.
+
 # Local source intake and release queue — 2026-09-29 follow-up
 
 This supplements the [remaining-branch ledger](remaining-branches.md) and its
@@ -45,9 +47,6 @@ visual acceptance was performed by this source-intake lane.
 ### Owner-reported checks, not rerun here
 
 - #784's owner reports 105 passing focused contract/host/packaging checks,
-  scoped lint/format/localization checks, and a browser check of the isolated
-  Coupa friendly address and its own campaign navigation. Main `b5ab06e` is an
-  ancestor; all fifteen #785 provenance files retain exact main bytes.
 - #787's owner reports 27 focused tests passing on each of Node 20 and Node 22,
   scoped checks and independent source review. Profiling and actual workflow
   activation remain separate. No speedup is claimed by preserving the tools.

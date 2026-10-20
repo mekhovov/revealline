@@ -8,14 +8,14 @@ import {
 import { validateStudioData } from '../../authoring/company-studio/model.mjs';
 import { validateEditionRuntimeCatalog } from '../editions/model.mjs';
 import { createCompanyWorkspaceFiles } from '../../scripts/company-studio.mjs';
-import { COMPANY_LESSONS } from '../company-campaigns/lessons.mjs';
+import { learningFixture } from './helpers/learning-fixture.mjs';
 import { completionLearningReference } from '../rewards/learning.mjs';
 
 const json = async (file) => JSON.parse(await readFile(new URL(file, import.meta.url), 'utf8'));
 const catalog = await json('../editions/catalog.json');
-const campaign = catalog.campaigns.find((item) => item.id === 'coupa-spend-in-motion');
+const campaign = catalog.campaigns.find((item) => item.id === 'droneaid-nl-workshop-lights');
 const source = await json(`../../${campaign.sourcePath}`);
-const edition = catalog.editions.find((item) => item.id === 'coupa-adventure');
+const edition = catalog.editions.find((item) => item.id === 'droneaid-nl-workshop-lights');
 const locales = {
   en: {
     title: 'Our connected village',
@@ -33,7 +33,7 @@ const create = (extra = {}) =>
 
 test('authors explicitly select exact learning requirements without silently adding a mission or granting preview progress', () => {
   const lesson = {
-    ...structuredClone(COMPANY_LESSONS[0]),
+    ...structuredClone(learningFixture()),
     campaignId: campaign.id,
     missionId: source.missions[1].id,
   };

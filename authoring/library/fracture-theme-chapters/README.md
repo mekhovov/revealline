@@ -10,7 +10,6 @@ separate campaign owners; they add no geometry family or difficulty mode.
 | ------------- | ------------------------ | ------------------------------------------------ |
 | Ukraine Atlas | `fracture-lines-ukraine` | [Ukraine art](../fracture-ukraine-art/README.md) |
 | 1994 Forever  | `fracture-lines-retro`   | [Retro art](../fracture-retro-art/README.md)     |
-| Spend Network | `fracture-lines-coupa`   | [Spend art](../fracture-coupa-art/README.md)     |
 
 [editions.json](editions.json) maps each complete art cell, source level ID and
 exact original path/hash to its scenic title and description. The three art
@@ -56,18 +55,10 @@ node authoring/library/fracture-theme-chapters/build.mjs ukraine .cache/ukraine-
 node authoring/library/fracture-theme-chapters/verify.mjs
 ```
 
-The [Ukraine](descriptors/ukraine.json), [Retro](descriptors/retro.json) and
-[Spend](descriptors/coupa.json) descriptors pin both body sizes and SHA-256 hashes,
-the campaign key and all three exact poster records. Large paired bodies stay
-in the cache; only these small descriptors and [routes.json](routes.json) are
-source artifacts. The six pair bodies total 25,448,150 bytes; this describes
-payload size, not available installation space.
-
 | Owner                    | Compact gameplay bytes | `.rlmedia` bytes |
 | ------------------------ | ---------------------: | ---------------: |
 | `fracture-lines-ukraine` |                  9,311 |        8,734,108 |
 | `fracture-lines-retro`   |                  9,393 |        7,967,075 |
-| `fracture-lines-coupa`   |                  9,345 |        8,718,918 |
 
 `verify.mjs --record` exclusively creates the initial three
 descriptors and proof, refusing existing outputs or an explicit candidate.

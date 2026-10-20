@@ -1,3 +1,4 @@
+import { renderTextSizeFallback } from './ui/text-size-control.mjs';
 import {
   resolveEditionAppearanceDefault,
   resolveEditionAppearanceThemes,
@@ -252,10 +253,11 @@ async function main() {
   });
   await themeHost.ready;
   displayPreferences.subscribe((value) => {
+    renderTextSizeFallback($('settings-dialog'), value.textSize);
     preferences.reduced = value.effectiveReducedEffects;
     $('reduced-motion').checked = value.effectiveReducedEffects;
     document.documentElement.dataset.reducedMotion = String(value.effectiveReducedEffects);
-    document.documentElement.dataset.textSize = value.textSize;
+    document.documentElement.dataset.textSize = value.effectiveTextSize ?? value.textSize;
     document.body.dataset.textFace = value.textFace;
   });
   $('show-grid').checked = preferences.grid;

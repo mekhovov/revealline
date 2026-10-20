@@ -244,16 +244,19 @@ test('observer integrates seed before prepare and retains independent offline/re
     new URL('./observe-optional-installation.mjs', import.meta.url),
     'utf8',
   );
-  assert(
-    source.indexOf("verifyWorldSeed(page, 'before-installation')") <
-      source.indexOf('await prepare(worlds)'),
+  const start = source.indexOf(
+    '// Default journey: prepare current siblings, then qualify restart.',
   );
+  assert(start >= 0, 'Keep the default restart protocol separate from historical migration.');
+  const defaultJourney = source.slice(start);
+  const seeded = defaultJourney.indexOf("verifyWorldSeed(page, 'before-installation')");
+  assert(seeded >= 0 && seeded < defaultJourney.indexOf('await prepare(worlds)'));
   for (const label of [
     'offline-standalone-window',
     'browser-process-restart-launcher',
     'browser-process-restart-standalone',
   ])
-    assert(source.includes(`'${label}'`));
+    assert(defaultJourney.includes(`'${label}'`));
   assert.match(source, /closed-window-round-\$\{round\}/);
   assert.match(source, /report\.passed &&= worldSeed\.passed/);
   assert.match(source, /worldSeedSourceSha256 === sha\(await readFile\(worldSeedURL\)\)/);

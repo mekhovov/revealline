@@ -1,5 +1,7 @@
 # Round 14 — returning players, picture rewards and safe continuity
 
+> Retained excerpt after an ownership migration. Historical totals and verification statements describe the original scope; this excerpt is not a current release qualification. Original bytes and removed material are preserved separately.
+
 Research checked **12 September 2026**. This is a bounded recommendation pass, not an engagement study or an implementation report. Eight primary sources were checked. Historical patch notes describe particular changes; their current availability does not make those changes newly released. No new gameplay footage was watched or audio auditioned this round, and no artwork was copied.
 
 The strongest immediate improvement is a reliable answer to **“What was I doing, and what can I play next?”** Pair it with a visible picture collection and explicit transfer from an earlier release. More currencies or longer reward sequences would not solve the present continuity gaps.
@@ -59,7 +61,6 @@ The gallery should show campaign/set completion, earned pictures and an explicit
 
 On a new terminal completion, compare before/after achievement state and show only newly earned items, with their conditions. On imported old progress, list ownership without pretending the player just earned it in the current run. A modest milestone indicator such as **3 / 4 different missions** is more actionable than an unexplained locked icon.
 
-After the final mission, offer an optional campaign overview: completed set, outstanding mastery targets, picture viewing and another world. Retain existing finale timing; the improvement is a clear finished state. Proposed original themes are a restored Ukrainian night skyline, an assembled heritage embroidery, a retro cabinet attract screen, and a Spend Network scene with illuminated savings nodes. These are presentation ideas, not historical claims or newly supplied assets.
 
 **Acceptance:** final completion awards once; replay does not relock anything; Back returns to a usable collection screen; one deliberate input skips the presentation without also starting a new run. Every essential reward statement remains visible without audio.
 

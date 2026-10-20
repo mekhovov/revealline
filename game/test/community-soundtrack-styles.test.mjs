@@ -14,7 +14,7 @@ test('main game and community brands expose only their admitted special song sty
     ...DEFAULT_PUBLIC_SOUNDTRACK_STYLE_IDS,
     'ukrainian',
   ]);
-  for (const brandId of ['coupa', 'droneaid', 'droneaid-nl', 'unknown-community'])
+  for (const brandId of ['droneaid', 'droneaid-nl', 'unknown-community'])
     assert.deepEqual(
       availableCommunitySoundtrackStyles(brandId),
       DEFAULT_PUBLIC_SOUNDTRACK_STYLE_IDS,

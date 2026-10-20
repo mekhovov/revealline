@@ -18,7 +18,6 @@ const [assets, artwork, sources, catalog, ...receipts] = await Promise.all(
     'game/editions/artwork.json',
     'game/editions/asset-sources.json',
     'game/editions/catalog.json',
-    'game/editions/art-prompts-coupa-bulk-02.json',
     'game/editions/art-prompts-droneaid-workshop-bulk-02.json',
     'game/editions/art-prompts-droneaid-community-bulk-02.json',
     'game/editions/art-prompts-droneaid-fpv-workshop-v2.json',
@@ -29,7 +28,7 @@ const [assets, artwork, sources, catalog, ...receipts] = await Promise.all(
 );
 
 test('every current and historical mission has a distinct pinned picture with complete bulk provenance', async () => {
-  assert.equal(COMPANY_MISSIONS.length, 69);
+  assert.equal(COMPANY_MISSIONS.length, 39);
   const homeIds = [
     ...new Set(CURRICULUM_CAMPAIGNS.map((campaign) => `${campaign.brandId}-home-picture`)),
   ];
@@ -51,10 +50,10 @@ test('every current and historical mission has a distinct pinned picture with co
       !distinctDiscoveryPictures.includes(asset.id) &&
       !campaignKeyIds.includes(asset.id),
   );
-  assert.equal(legacyArtwork.length, 106);
-  assert.equal(new Set(legacyArtwork.map((asset) => asset.sha256)).size, 106);
+  assert.equal(legacyArtwork.length, 76);
+  assert.equal(new Set(legacyArtwork.map((asset) => asset.sha256)).size, 76);
   const totalPictures =
-    106 + homeIds.length + campaignKeyIds.length + distinctDiscoveryPictures.length;
+    76 + homeIds.length + campaignKeyIds.length + distinctDiscoveryPictures.length;
   assert.equal(artwork.length, totalPictures);
   assert.equal(new Set(artwork.map((asset) => asset.sha256)).size, totalPictures);
   assert.deepEqual(
@@ -71,7 +70,7 @@ test('every current and historical mission has a distinct pinned picture with co
       .sort(),
     distinctDiscoveryPictures.sort(),
   );
-  assert.equal(selectCurrentCompanyArtwork(legacyArtwork).length, 69);
+  assert.equal(selectCurrentCompanyArtwork(legacyArtwork).length, 39);
   assert.deepEqual(
     artwork
       .filter((asset) => homeIds.includes(asset.id))
@@ -100,7 +99,7 @@ test('every current and historical mission has a distinct pinned picture with co
     assert.deepEqual(imported.artwork, artwork);
     assert.deepEqual(imported.sources, sources);
   }
-  assert.equal(count, 94);
+  assert.equal(count, 72);
   for (const receipt of receipts)
     for (const record of receipt.assets) {
       assert.equal(record.review.status, 'candidate');
@@ -114,7 +113,7 @@ test('bulk artwork preserves all pre-batch gameplay manifests and exact recovera
   const selected = catalog.editions.filter(
     (edition) => legacyBrands.has(edition.brandId) && edition.id !== 'droneaid-community',
   );
-  assert.equal(selected.length, 13);
+  assert.equal(selected.length, 7);
   const originals = new Map();
   for (const edition of selected) {
     const descriptor = edition.presentationHistory.find((item) =>
@@ -131,7 +130,7 @@ test('bulk artwork preserves all pre-batch gameplay manifests and exact recovera
         snapshot.files.find((file) => file.path === campaign.sourcePath).data,
       );
   }
-  assert.equal(originals.size, 11);
+  assert.equal(originals.size, 6);
   for (const definition of COMPANY_CAMPAIGNS.filter((campaign) => originals.has(campaign.id))) {
     const previousSource = originals.get(definition.id),
       currentSource = createCompanyProject({

@@ -1,3 +1,5 @@
+# Retained historical excerpt after an ownership migration. Exact original bytes are preserved separately. Original totals and verification statements describe the original scope; this excerpt is not a current qualification or a complete test result.
+
 TAP version 13
 # Subtest: BoardPainter keeps separate default boss bodies beneath the shared explicit boss upload
 ok 1 - BoardPainter keeps separate default boss bodies beneath the shared explicit boss upload
@@ -550,16 +552,6 @@ ok 110 - legacy retro cover: a decoded backdrop preserves opaque concealment, cu
   ---
   duration_ms: 11.841791
   ...
-# Subtest: legacy coupa contain: a decoded backdrop preserves opaque concealment, cues, separate actor art and authority
-ok 111 - legacy coupa contain: a decoded backdrop preserves opaque concealment, cues, separate actor art and authority
-  ---
-  duration_ms: 5.370583
-  ...
-# Subtest: legacy coupa cover: a decoded backdrop preserves opaque concealment, cues, separate actor art and authority
-ok 112 - legacy coupa cover: a decoded backdrop preserves opaque concealment, cues, separate actor art and authority
-  ---
-  duration_ms: 3.356917
-  ...
 # Subtest: Classic wide fpv contain: a decoded backdrop preserves opaque concealment, cues, separate actor art and authority
 ok 113 - Classic wide fpv contain: a decoded backdrop preserves opaque concealment, cues, separate actor art and authority
   ---
@@ -589,16 +581,6 @@ ok 117 - Classic wide retro contain: a decoded backdrop preserves opaque conceal
 ok 118 - Classic wide retro cover: a decoded backdrop preserves opaque concealment, cues, separate actor art and authority
   ---
   duration_ms: 46.692375
-  ...
-# Subtest: Classic wide coupa contain: a decoded backdrop preserves opaque concealment, cues, separate actor art and authority
-ok 119 - Classic wide coupa contain: a decoded backdrop preserves opaque concealment, cues, separate actor art and authority
-  ---
-  duration_ms: 10.002167
-  ...
-# Subtest: Classic wide coupa cover: a decoded backdrop preserves opaque concealment, cues, separate actor art and authority
-ok 120 - Classic wide coupa cover: a decoded backdrop preserves opaque concealment, cues, separate actor art and authority
-  ---
-  duration_ms: 10.209875
   ...
 # Subtest: absent/null bindings exactly retain old drawing; clearing a temporary binding restores the same authored image and fit
 ok 121 - absent/null bindings exactly retain old drawing; clearing a temporary binding restores the same authored image and fit
@@ -804,11 +786,6 @@ ok 160 - ukraine: actual observed movement animates microtile bodies; Pause hold
 ok 161 - retro: actual observed movement animates microtile bodies; Pause holds the exact pose
   ---
   duration_ms: 0.792917
-  ...
-# Subtest: coupa: actual observed movement animates microtile bodies; Pause holds the exact pose
-ok 162 - coupa: actual observed movement animates microtile bodies; Pause holds the exact pose
-  ---
-  duration_ms: 2.14475
   ...
 # Subtest: uploaded body remains independent, with light heading/contact cues rather than dark-theme ink inversion
 ok 163 - uploaded body remains independent, with light heading/contact cues rather than dark-theme ink inversion

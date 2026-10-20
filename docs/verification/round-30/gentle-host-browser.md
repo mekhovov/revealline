@@ -1,3 +1,5 @@
+> Retained historical excerpt after an ownership migration. Exact original bytes are preserved separately. Original totals and verification statements describe the original scope; this excerpt is not a current qualification or a complete test result.
+
 # Gentle solo host and source browser verification
 
 This note closes the scoped source observations at `1be170c86832abadab9b532bceacff3338d83d82` on 12 September 2026. The browser displayed **v0.20.0 / DEV** in the isolated Gentle worktree. This was not a v0.21 candidate, offline check or public deployment. Root performed the browser actions; this report's author read the retained exports, DOM captures and logs, inspected the final compact/landscape/desktop screenshots, and independently restored the two saved sessions. No browser run or test-suite rerun was performed to write this note.
@@ -27,7 +29,6 @@ Root exercised normal and Reduced effects presentations for all four worlds. The
 | FPV Front     | [Capture](../../../.cache/gentle-browser/fpv-celebration.jpg)     | [Capture](../../../.cache/gentle-browser/fpv-reduced-celebration.jpg)     |
 | Ukraine Atlas | [Capture](../../../.cache/gentle-browser/ukraine-celebration.jpg) | [Capture](../../../.cache/gentle-browser/ukraine-reduced-celebration.jpg) |
 | 1994 Forever  | [Capture](../../../.cache/gentle-browser/retro-celebration.jpg)   | [Capture](../../../.cache/gentle-browser/retro-reduced-celebration.jpg)   |
-| Spend Network | [Capture](../../../.cache/gentle-browser/coupa-celebration.jpg)   | [Capture](../../../.cache/gentle-browser/coupa-reduced-celebration.jpg)   |
 
 The parent harness sized an ordinary real-game iframe through its visible CSS viewport select. These are CSS dimensions, not physical devices; the outer screenshot files are 1,365 × 1,122 pixels. Scrolling was allowed. No universal no-scroll, target-size or whole-page visibility result is inferred from a screenshot crop.
 

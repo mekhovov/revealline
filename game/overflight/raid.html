@@ -299,7 +299,13 @@
       </header>
       <div id="upgrade-cards" class="overflight-upgrade-cards"></div>
       <footer class="mode-play-actions">
-        <button id="reroll-upgrades" type="button"></button><span id="rerolls-left"></span>
+        <button
+          id="reroll-upgrades"
+          type="button"
+          aria-describedby="reroll-hint rerolls-left"
+        ></button>
+        <span id="rerolls-left"></span>
+        <p id="reroll-hint" class="overflight-reroll-hint"></p>
       </footer>
     </dialog>
   </body>

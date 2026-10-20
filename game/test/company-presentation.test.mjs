@@ -15,7 +15,7 @@ import { createCompanyProject } from '../company-campaigns/content.mjs';
 import { compileContentProject, resolveMission } from '../content-design/project.mjs';
 
 test('company presentation is data-only and rejects unknown recipes or invalid sound', () => {
-  for (const id of ['coupa', 'droneaid', 'droneaid-nl']) {
+  for (const id of ['droneaid', 'droneaid-nl']) {
     const theme = createCompanyTheme(id);
     assert.equal(validateTheme(theme).valid, true);
     assert.equal(validateTheme({ ...theme, actorRecipes: { bouncer: 'script:run' } }).valid, false);
@@ -28,7 +28,7 @@ test('company presentation is data-only and rejects unknown recipes or invalid s
 });
 
 test('every advanced company actor keeps a registered company body and the canonical core role', () => {
-  for (const brandId of ['coupa', 'droneaid-nl']) {
+  for (const brandId of ['droneaid-nl']) {
     const project = compileContentProject(createCompanyProject({ brandId }));
     const themes = createCompanyThemes(brandId);
     const seen = new Set();
@@ -58,7 +58,7 @@ test('every advanced company actor keeps a registered company body and the canon
 });
 
 test('rigid logo motion stops with reduced motion and never changes collision records', () => {
-  const body = createCompanyPresets('coupa').characters['coupa-flower'];
+  const body = createCompanyPresets('droneaid-nl').characters['droneaid-nl-propeller'];
   const before = structuredClone(body);
   assert.notEqual(
     bodyMotionPose(body, { seconds: 1 }).heading,
@@ -77,7 +77,7 @@ test('fictional enemy silhouettes preserve physical contact and supported moveme
   const before = structuredClone(enemies);
   const sample = (options) => createActorPresentation().sample(enemies, options).get('paper');
   const original = sample({}),
-    themed = sample({ bodyRecipes: createCompanyTheme('coupa').actorRecipes });
+    themed = sample({ bodyRecipes: createCompanyTheme('droneaid').actorRecipes });
   assert.equal(themed.bodyRecipe, 'paper-tangle');
   for (const property of ['type', 'x', 'y', 'radius', 'diameter'])
     assert.equal(themed[property], original[property]);
@@ -110,12 +110,9 @@ test('campaign-specific cosmetics stay within the selected brand and valid recip
 });
 
 test('official gameplay symbols spin at fixed chosen rates without travel-dependent speed', () => {
-  const flower = createCompanyPresets('coupa').characters['coupa-flower'];
   const propeller = createCompanyPresets('droneaid-nl').characters['droneaid-nl-propeller'];
-  assert.equal(flower.bodyMotion.radiansPerSecond, Math.PI);
   assert.equal(propeller.bodyMotion.radiansPerSecond, 4 * Math.PI);
-  assert.deepEqual(flower.bodyBacking, { kind: 'opaque-interior', color: '#FFFFFF' });
-  for (const body of [flower, propeller]) {
+  for (const body of [propeller]) {
     assert.equal(body.bodyMotion.travelGain, 0);
     assert.deepEqual(
       bodyMotionPose(body, { seconds: 0.2, speedRatio: 0 }),
@@ -141,7 +138,7 @@ test('each Dutch campaign dresses every supported enemy role in its own FPV fami
     assert.equal(validateTheme(theme).valid, true);
   }
   assert.equal(families.size, 6);
-  for (const brandId of ['coupa', 'droneaid'])
+  for (const brandId of ['droneaid'])
     for (const theme of createCompanyThemes(brandId))
       assert.ok(Object.values(theme.actorRecipes).every((recipe) => !recipe.startsWith('fpv-')));
 });

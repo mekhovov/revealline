@@ -1,3 +1,5 @@
+> Retained historical excerpt after an ownership migration. Exact original bytes are preserved separately. Original totals and verification statements describe the original scope; this excerpt is not a current qualification or a complete test result.
+
 # Spatial sound implementation record
 
 > Historical completion and remaining priorities as reviewed 1 October 2026: [audio plan snapshot](../../spatial-audio-plan.md). The entries below are chronological evidence; older blockers and packaging policies may be superseded.
@@ -32,7 +34,6 @@
 | Menus | Keyboard navigation, confirm/back; independent persisted enable + 35% default volume |
 | Replay/practice | Existing controlled subject; replay pause/restart/inactive cleanup; historical events never replay after decoding |
 
-All twelve Journey material entries select a material profile from their registered source theme, with legacy FPV/Atlas/Retro/Spend Network and custom-family fallback. Source assets are shared to keep memory bounded. This is not a claim of individually recorded vocalizations for every skin.
 
 ## Verification evidence
 

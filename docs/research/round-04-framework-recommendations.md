@@ -1,5 +1,7 @@
 # Round 04 — a framework that can carry every approved theme
 
+> Retained excerpt after an ownership migration. Historical totals and verification statements describe the original scope; this excerpt is not a current release qualification. Original bytes and removed material are preserved separately.
+
 Research checked: 12 September 2026. This document proposes architecture and validation work; it does not claim that a game runtime, content editor, platform build or performance proof exists. It extends [the engine comparison](engine-and-framework.md) and [the four-family direction](../round-03-focused-direction.md).
 
 **Recommendation: retain Phaser 4 + TypeScript provisionally, with a small territory-capture simulation and a content compiler that separates appearance from rules.** The key is to make the editable product a collection of game-specific content packs, not an unrestricted second game engine. Every approved visual family can use pixel characters over pixel, painted, photographic, ceramic, paper, vector-derived or layered reveal art. Goals and supported behavior combinations remain separately editable.
@@ -20,7 +22,6 @@ The official release page confirms Phaser **4.2.1**, dated 9 July 2026. Pin a te
 
 An invading vehicle painted into a background is scenery. A hostile moving vehicle is an entity with a behavior ID, footprint and visible role marker. A collectible painted motif becomes a gameplay objective only when the author places an explicit landmark in board coordinates. Never derive collision, capture quota or objective position from image colors at runtime.
 
-This lets the same layout reveal a military panorama, a Petrykivka illustration, a cassette-room painting or a Coupa city without changing territory logic. It also avoids using visual GPU readback to determine gameplay. Phaser documents masks as rendering components, with no effect on physics/input. [Versioned mask component API](https://docs.phaser.io/api-documentation/4.0.0/namespace/gameobjects-components-mask).
 
 ### 2. Design the reveal around Phaser 4 filters; old BitmapMask advice is obsolete
 
@@ -54,9 +55,7 @@ Treat a future panoramic or tall arena as a different level identity, not a resi
 
 **Proposal:** behavior code speaks in stable roles such as player, roaming threat, perimeter threat, emitter, capturable landmark, safe boundary and open trail. Packs bind them to characters, animation tags, sounds, names, iconography and presentation recipes.
 
-| Role | FPV main family | Ukraine Atlas | 80s–90s | Coupa/Navi |
 | --- | --- | --- | --- | --- |
-| Player | Ukrainian FPV quadcopter | Golden bird / stylus | Signal cursor / toy spacecraft | Approved Navi art or placeholder token |
 | Roaming threat | Hostile military drone | Ink blot / thorn | Glitch sprite | Disruption cloud |
 | Perimeter threat | Patrol marker | Cracking edge | Electric spark | Bottleneck token |
 | Capturable emitter | Interference station | Ink source | Corrupt sector | Exception station |
@@ -72,7 +71,6 @@ Animation roles need an authored fallback: for example, a static idle frame when
 
 **Proposal:** start with a small registry: capture percentage, capture marked areas, collect a count of tagged landmarks, survive a duration, finish before a timer, preserve lives and connect a supported pair/group of captured landmarks. Combine them with explicit all/any/sequence logic and bounded parameters. Preview the resulting objective as plain language.
 
-Examples: FPV “capture enough territory and contain two interference stations”; Ukraine Atlas “reveal three marked details”; retro “finish within the timer with one large-cut medal”; Coupa “recover the three document landmarks and reconnect a supplier route.” Thresholds are content, while each evaluator is tested code.
 
 Keep required win conditions, optional medals, expedition choices and unlock conditions separate. Separate “blocks region filling” from “triggers an effect when captured”; an emitter can be capturable without being an enemy that prevents capture. The editor should flag impossible combinations such as a required landmark permanently excluded from the board.
 
@@ -148,7 +146,6 @@ Valve requires readable Deck UI and recommends adjustable text/contrast; its pub
 | Change requested | Intended workflow | Extension needed? |
 | --- | --- | --- |
 | Add 100 images in mixed styles | Import, derive thumbnails/board crops, add captions/unlocks, preview readability | No, if supported media formats/layer types |
-| Replace FPV drone with bird or Navi character | Bind role art, pivots/animation tags, sound/UI tokens; preview hitbox | No |
 | Add night, embroidered, ceramic or CRT treatment | Add a theme recipe using supported materials and effects | No |
 | Change quota, enemy speed, lives or timers | Ruleset parameters and level overrides | No |
 | Combine capture and landmark objectives | Select registered evaluators and composition | No |

@@ -1,3 +1,5 @@
+# Retained historical excerpt after an ownership migration. Exact original bytes are preserved separately. Original totals and verification statements describe the original scope; this excerpt is not a current qualification or a complete test result.
+
 TAP version 13
 # Subtest: actual Studio handlers show startup/read/encode stages, cancel a late upload, and save exact source bytes in Studio storage only
     # Subtest: actual rotor controls preserve inherited motion while editing one existing hub
@@ -94,11 +96,6 @@ ok 13 - preview verification stops before activation on cancellation and oversiz
 ok 14 - overlong artifact and pending-read abort reject despite nonsettling transport cancellation
   ---
   duration_ms: 25.497125
-  ...
-# Subtest: focused Coupa and Netherlands previews accept canonical theme projection but reject selected edits
-ok 15 - focused Coupa and Netherlands previews accept canonical theme projection but reject selected edits
-  ---
-  duration_ms: 20314.202459
   ...
 # Subtest: new-company starter loads the current Solo host and First Flight with complete neutral classes
 ok 16 - new-company starter loads the current Solo host and First Flight with complete neutral classes
@@ -334,7 +331,7 @@ not ok 61 - a controller selects Team Settings and paused quick sound without re
   error: |-
     Expected values to be strictly deep-equal:
     + actual - expected ... Lines skipped
-    
+
       {
         hud: [
     ...
@@ -2408,9 +2405,9 @@ not ok 463 - original candidate envelopes retain their r1 interface after the bu
   failureType: 'testCodeFailure'
   error: |-
     Expected values to be strictly equal:
-    
+
     'r3' !== 'r2'
-    
+
   code: 'ERR_ASSERTION'
   name: 'AssertionError'
   expected: 'r2'

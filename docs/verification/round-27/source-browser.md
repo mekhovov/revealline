@@ -1,3 +1,5 @@
+> Retained historical excerpt after an ownership migration. Exact original bytes are preserved separately. Original totals and verification statements describe the original scope; this excerpt is not a current qualification or a complete test result.
+
 # Round 27 — illustrated Workshop source browser checks
 
 Date: 2026-09-12. These observations concern the working **v0.17.0 / DEV** browser source, before its release archive. They establish the recorded local browser journeys and rendered results, not public hosting, physical device behavior or human enjoyment/retention.
@@ -36,8 +38,6 @@ All six suspended attempts were resumed and finished through game controls with 
 | Garden of Threads / Ukraine Atlas | Grid-center |    74.1% | 12,590 | [Snapshot](../../../.cache/round-27/browser/observed/workshop-01-grid-center-finish.txt) |
 | Neon Switchboard / 1994 Forever   | Immediate   |    71.1% | 11,910 | [Snapshot](../../../.cache/round-27/browser/observed/workshop-02-immediate-finish.txt)   |
 | Neon Switchboard / 1994 Forever   | Grid-center |    72.2% | 12,080 | [Snapshot](../../../.cache/round-27/browser/observed/workshop-02-grid-center-finish.txt) |
-| Clear Ledger / Spend Network      | Immediate   |    73.1% | 11,740 | [Snapshot](../../../.cache/round-27/browser/observed/workshop-03-immediate-finish.txt)   |
-| Clear Ledger / Spend Network      | Grid-center |    73.1% | 11,740 | [Snapshot](../../../.cache/round-27/browser/observed/workshop-03-grid-center-finish.txt) |
 
 The HUD values around 0:58, 0:51 and 0:27 are **remaining mission time**, not elapsed completion time. These ordinary Interceptor routes earned normal picture completion while their optional equipment seals correctly remained unearned. The [Garden finale](screenshots/garden-live-finale.jpg), [Neon finale](screenshots/neon-live-finale.jpg) and [Ledger finale](screenshots/ledger-live-grid-center-finale.jpg) show the new art through the actual result presentation. Keep picture and the collection viewer were exercised, including [Garden](../../../.cache/round-27/browser/observed/workshop-01-grid-center-keep-picture.txt), [Neon](../../../.cache/round-27/browser/observed/neon-keep-picture.txt) and [Ledger](../../../.cache/round-27/browser/observed/workshop-03-grid-center-keep-picture.txt).
 

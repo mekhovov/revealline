@@ -62,13 +62,13 @@ function friendlyPage(t, href, options = {}) {
 
 test('actual friendly More and Workshop links compose at the canonical game root', async (t) => {
   for (const [slug, query, base, editionId] of [
-    ['coupa', '', 'http://localhost/', 'coupa-all'],
+    ['droneaid', '', 'http://localhost/', 'droneaid-nl-community'],
     ['droneaid', '', 'http://localhost/revealline/', 'droneaid-nl-community'],
     [
-      'coupa',
-      '?edition=coupa-culture&journey=legacy#details',
+      'droneaid',
+      '?edition=droneaid-nl-workshop-lights&journey=legacy#details',
       'http://localhost/revealline/releases/v0.142.3/site/',
-      'coupa-culture',
+      'droneaid-nl-workshop-lights',
     ],
   ])
     await t.test(`${slug}${query}`, async (t) => {
@@ -156,7 +156,7 @@ async function verifyFriendlyGameplay(t, slug, query, base) {
   page.frame(0);
   const before = authoritativeCheckpoint(page.rendered.run);
   const picker = page.$('edition-select');
-  picker.value = route.brandId === 'coupa' ? 'droneaid-nl-community' : 'coupa-all';
+  picker.value = route.brandId === 'droneaid-nl' ? 'droneaid-community' : 'droneaid-nl-community';
   assert.equal(await picker.onchange(), false);
   assert.equal(picker.value, editionId);
   for (let i = 0; i < 3; i++) page.frame();
@@ -176,10 +176,10 @@ async function verifyFriendlyGameplay(t, slug, query, base) {
 
 test('real friendly communities run in the common host with their own artwork, saves and controls', async (t) => {
   const cases = [
-    ['coupa', '', 'http://localhost/'],
+    ['droneaid', '', 'http://localhost/'],
     ['droneaid', '', 'http://localhost/revealline/'],
     ['droneaid-community', '', 'http://localhost/revealline/releases/v0.142.3/site/'],
-    ['coupa', '?edition=coupa-culture', 'http://localhost/revealline/releases/v0.142.3/site/'],
+    ['droneaid', '?edition=droneaid-nl-workshop-lights', 'http://localhost/revealline/releases/v0.142.3/site/'],
   ];
   for (const [slug, query, base] of cases)
     await t.test(`${slug}${query}`, (t) => verifyFriendlyGameplay(t, slug, query, base));
@@ -193,7 +193,7 @@ test('four newly added public communities preserve their current gameplay and sa
 test('the actual friendly host rejects a cross-company selector before content reads or flight setup', async (t) => {
   const requests = [];
   await assert.rejects(
-    friendlyPage(t, 'http://localhost/game/communities/coupa/?edition=droneaid', {
+    friendlyPage(t, 'http://localhost/game/communities/droneaid/?edition=droneaid-community', {
       fetchResponse(value) {
         requests.push(String(value));
         throw new Error('Unexpected content read');
@@ -210,7 +210,7 @@ test('the actual friendly field guide opens and closes without changing company 
     return this.id === 'enemy-guide-preview' ? null : getContext.apply(this, args);
   });
   const base = 'http://localhost/revealline/releases/v0.142.3/site/';
-  const href = `${base}game/communities/coupa/?edition=coupa-culture#details`;
+  const href = `${base}game/communities/droneaid/?edition=droneaid-nl-workshop-lights#details`;
   const { page } = await friendlyPage(t, href);
   page.$('shell-featured').click();
   await settle(() => page.doc.body.dataset.flightState === 'running');
@@ -238,7 +238,7 @@ test('the actual friendly field guide opens and closes without changing company 
   assert.equal(page.rendered.backdrop, picture);
   assert.deepEqual([...page.storage.map], saved);
   assert.equal(page.win.location.href, href);
-  assert.equal(page.doc.body.dataset.editionId, 'coupa-culture');
+  assert.equal(page.doc.body.dataset.editionId, 'droneaid-nl-workshop-lights');
   assert.deepEqual(page.errors, []);
 });
 

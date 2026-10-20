@@ -1,3 +1,5 @@
+> Retained historical excerpt after an ownership migration. Exact original bytes are preserved separately. Original totals and verification statements describe the original scope; this excerpt is not a current qualification or a complete test result.
+
 # Round 27 gallery landscape follow-up
 
 Date: 2026-09-12. This is a narrow presentation amendment to the illustrated Workshop iteration.
@@ -22,7 +24,6 @@ The parent agent reloaded the real page and checked the updated 844 × 390 previ
 
 - [Garden of Threads](screenshots/garden-landscape-gallery-fixed.jpg).
 - [Neon Switchboard](screenshots/neon-landscape-gallery-fixed.jpg).
-- [Clear Ledger](screenshots/ledger-landscape-gallery-fixed.jpg).
 - [Copper Orchard](screenshots/homeward-landscape-gallery-fixed.jpg), including its existing Steady Signal seal text.
 
 The pictures remain visibly complete and proportionate; the heading and actions do not overlap them. This resolves the observed landscape stacking issue for these four scenes. The earlier screenshots remain the pre-change evidence.

@@ -1,3 +1,5 @@
+> Retained historical excerpt after an ownership migration. Exact original bytes are preserved separately. Original totals and verification statements describe the original scope; this excerpt is not a current qualification or a complete test result.
+
 # v0.17.1 candidate browser verification
 
 **PASS for the observed candidate offline journey.** The normal production worker prepared successfully on the first attempt, then served the game, collected pictures, a resumed legal flight, and a first Playground visit after its server stopped. This report covers `0.17.1-candidate`; it does not certify the later frozen release or every browser/device.
@@ -14,7 +16,6 @@ Root installed Equipment Workshop and Homeward Skies, then imported the existing
 
 ## Pictures, resumed flight, and retained records
 
-All four pictures were opened and visually inspected after server shutdown. The screenshots show the correct art under each title: [Garden of Threads](../../../.cache/round-27-1/candidate-browser/garden-celebration-offline.jpg), [Neon Switchboard](../../../.cache/round-27-1/candidate-browser/neon-offline.jpg), [Clear Ledger](../../../.cache/round-27-1/candidate-browser/ledger-offline.jpg), and [Copper Orchard](../../../.cache/round-27-1/candidate-browser/homeward-offline.jpg). Root pressed Garden's Play celebration button before its later screenshot; that static image does not independently establish the animation timeline. At 1280 × 720, Copper Orchard's complete picture and seal are visible, but the bottom action row is partly clipped before native scrolling. This is not an all-actions-visible claim.
 
 The existing legal `workshop-02-grid-center.session.json` prefix was imported through Save JSON. The [restored snapshot](../../../.cache/round-27-1/candidate-browser/grid-loaded-offline.txt) shows a paused flight with **33.2%**, **5,600 points**, three lives, and **0:52 remaining**. Explicit Resume followed by the actual Move up control finished the mission: [result text](../../../.cache/round-27-1/candidate-browser/grid-win-offline.txt), [result screenshot](../../../.cache/round-27-1/candidate-browser/grid-win-offline.jpg). The result is **72.2%**, **12,080 points**, three lives, and **0:13 elapsed**; the HUD's **0:51** is the remaining mission limit. Power Circuit remains unearned. No simulation state was injected for this finish.
 

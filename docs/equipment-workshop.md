@@ -1,5 +1,7 @@
 # Equipment Workshop
 
+> Retained excerpt after an ownership migration. Historical totals and verification statements describe the original scope; this excerpt is not a current release qualification. Original bytes and removed material are preserved separately.
+
 This compact expansion demonstrates authored optional equipment goals across three visual themes. [equipment-workshop.json](../game/content/packs/equipment-workshop.json) is an explicit `xonix-pack.v2` document, 18,389 bytes after formatting. It contains three maps, seven unchanged equipment recipes, three procedural themes, three synthesized music tracks and three finite goal definitions. It embeds no images, copies none of the Homeward picture payloads, and needs no additional runtime dependency.
 
 This is working source after frozen v0.8.0. A release label, browser playtest, or native-device certification is separate evidence.
@@ -8,9 +10,7 @@ This is working source after frozen v0.8.0. A release label, browser playtest, o
 | --- | --- | --- | --- |
 | `workshop-01` — Garden of Threads | Ukraine Atlas, heritage scene, bird character; ambient/Dorian “Woven Morning” | Both memory markers and 72% coverage | **Steady Thread**: with a signal-resistant class, close one cut containing at least eight distinct endpoint cells in active `broad-band` interference, then win without losing a life. Recommended: Fiber relay. |
 | `workshop-02` — Neon Switchboard | 1994 Forever, arcade scene, retro craft; chiptune/minor “After-School Arcade” | Both cartridge markers and 68% coverage | **Power Circuit**: actually refill at `west-supply` and `south-supply`; close a cut through at least two suppressed cells in each emitter region; switch to Heavy carrier at `south-hangar`; win. Recommended: Light carrier, then Heavy carrier. |
-| `workshop-03` — Clear Ledger | Spend Network, network scene, abstract Navi avatar; synthwave/major “Bright Balance” | Opportunity marker and 70% coverage within 35 seconds | **Safe Reconcile**: pulse from a live cut of at least three cells, actually stun `cable-cutter` with that pulse, return home, then win without losing a life. Recommended: Impact craft. |
 
-The spend presentation is an original abstract project theme, not an official Coupa product or endorsement. Equipment remains fictional arcade behavior. A different body never changes a recipe's capability. All seven classes remain selectable; the seals are optional and do not block ordinary clears or picture rewards. The current procedural scenes are reusable theme artwork, not three new full-image reward paintings.
 
 ## Play and adapt
 
