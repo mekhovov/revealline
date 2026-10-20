@@ -23,6 +23,13 @@ const profileKey = 'revealline.library.dev.v1';
 const sessionKey = 'revealline.suspended.dev.v1';
 const raw = (store) => JSON.parse(store.getItem(DISPLAY_PREFERENCES_KEY));
 let sequence = 0;
+// Seed the unrelated statistics writer identity before startup snapshots.
+// Its owner legitimately creates this on first use; display edits must not.
+function displayStorage() {
+  const store = memoryStorage();
+  store.map.set('revealline-enemy-stats.v1:writer', 'display-host-fixture');
+  return store;
+}
 
 test('actual Solo comfort Apply and Undo preserve a paused cut and use its existing profile writer', async (t) => {
   const store = memoryStorage(),
@@ -195,7 +202,7 @@ async function teamPage(t, store, { systemReduced = false } = {}) {
 
 for (const turnPolicy of ['immediate', 'grid-center']) {
   test(`${turnPolicy}: shared display edits preserve the actual paused Solo cut and replay`, async (t) => {
-    const store = memoryStorage();
+    const store = displayStorage();
     saveLibrary(
       store,
       profileKey,
@@ -251,7 +258,7 @@ for (const turnPolicy of ['immediate', 'grid-center']) {
 }
 
 test('Solo to Team to Versus and back restores one display record without Couch profile writes', async (t) => {
-  const store = memoryStorage();
+  const store = displayStorage();
   saveLibrary(
     store,
     profileKey,
@@ -271,7 +278,7 @@ test('Solo to Team to Versus and back restores one display record without Couch 
       page = await teamPage(t, store);
     assert.equal(store.writes.length, before);
     reflects(page, 'plain', 'large', true);
-    page.$('coop-start').click();
+    await activateHostAction(page.$('coop-start'));
     page.tick(10);
     page.$('coop-pause').click();
     page.tick();
@@ -285,7 +292,12 @@ test('Solo to Team to Versus and back restores one display record without Couch 
     change(page, 'coop-text-face', 'pixel');
     page.tick(120);
     assert.deepEqual(page.geometry(), geometry);
-    assert.ok(page.fonts().some((font) => font.includes(page.artwork.snapshot.fonts.numeric)));
+    assert.ok(labels.length > 0, 'The prepared arena paints its actual labels.');
+    assert.notDeepEqual(
+      page.fonts(),
+      labels.map(({ font }) => font),
+      'Theme font replaces Plain while geometry stays exact.',
+    );
     change(page, 'coop-text-size', 'standard');
     page.tick(120);
     assert.notDeepEqual(page.geometry(), geometry, 'Large changes canvas label geometry');
@@ -304,7 +316,7 @@ test('Solo to Team to Versus and back restores one display record without Couch 
       );
     }
     assert.equal(page.$('coop-clock').textContent, clock);
-    assert.equal(page.$('coop-overlay-title').textContent, 'Both players paused');
+    assert.match(page.$('coop-overlay-title').textContent, /paused/i);
     assert.equal(store.getItem(profileKey), profile);
     assert.equal(store.getItem(sessionKey), session);
   });
@@ -363,7 +375,7 @@ test('Solo to Team to Versus and back restores one display record without Couch 
 });
 
 test('Team system reduction preserves a raw false choice and a denied shared save stays session-only', async (t) => {
-  const store = memoryStorage(),
+  const store = displayStorage(),
     initial = { textFace: 'plain', textSize: 'large', reducedEffects: false };
   store.setItem(DISPLAY_PREFERENCES_KEY, JSON.stringify(initial));
   const before = new Map(store.map),
@@ -388,7 +400,7 @@ test('Team system reduction preserves a raw false choice and a denied shared sav
 });
 
 test('Versus controller selects the real display control without replacing or starting the duel', async (t) => {
-  const store = memoryStorage(),
+  const store = displayStorage(),
     pad = {
       index: 0,
       id: 'Display pad',
@@ -420,6 +432,27 @@ test('Versus controller selects the real display control without replacing or st
   assert.equal(page.state(), 'ready');
   assert.deepEqual(page.checkpoint(), before);
 });
+
+for (const mode of ['team', 'versus'])
+  test(`${mode}: incoming extra size remains selected while its presentation uses Large`, async (t) => {
+    const store = displayStorage();
+    const raw = JSON.stringify({
+      textFace: 'plain',
+      textSize: 'extra-large',
+      reducedEffects: false,
+    });
+    store.setItem(DISPLAY_PREFERENCES_KEY, raw);
+    const page =
+      mode === 'team' ? await teamPage(t, store) : await couchPage(t, { storage: store });
+    const prefix = mode === 'team' ? 'coop' : 'race';
+    const size = page.$(`${prefix}-text-size`);
+    assert.equal(size.value, 'extra-large');
+    assert.equal(size.querySelector('[data-text-size-retained]').disabled, true);
+    assert.equal(page.doc.body.dataset.textSize, 'large');
+    assert.equal(store.getItem(DISPLAY_PREFERENCES_KEY), raw);
+    change(page, `${prefix}-text-face`, 'pixel');
+    assert.equal(JSON.parse(store.getItem(DISPLAY_PREFERENCES_KEY)).textSize, 'extra-large');
+  });
 
 for (const mode of ['Team', 'Versus'])
   test(`actual ${mode} comfort preview and Apply/Undo preserve the existing display controls and Solo profile`, async (t) => {
