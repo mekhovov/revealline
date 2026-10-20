@@ -76,7 +76,7 @@ jobs:
         run: |
           python3 -B - <<'PY'
           import hashlib, pathlib
-          expected = {"scripts/world-appearance-memory-comparison.py":"a2afbbf8f12a745caf4f8f748c80558e58ee54bae13ae8bdb5ac4a732e43c6d9","scripts/world-appearance-memory-comparison-pins.json":"679106613c26d3c5d50512e20de207c5b452aaad1cca639ff9c9d8f60ca65091","scripts/test_world_appearance_memory_comparison.py":"18d5df2a5750ef4bcd7d8db04616ae48c423210d760f4e46af11467f58ea43fe","docs/verification/world-appearance-memory-comparison.md":"3bc5d7ea99120c4034d78b6b05d1bff2dd635a8ef98392c4428c1b3f85c616e4"}
+          expected = {"scripts/world-appearance-memory-comparison.py":"c8e0cc312dd1a904c6d17016cfa9514b0d096a1eb306182e7db01af4d9b87f35","scripts/world-appearance-memory-comparison-pins.json":"679106613c26d3c5d50512e20de207c5b452aaad1cca639ff9c9d8f60ca65091","scripts/test_world_appearance_memory_comparison.py":"e81fc2d0643d39258da07d550294d573cc3c01f809e6bfb244a1dd4f0cac6573","docs/verification/world-appearance-memory-comparison.md":"3bc5d7ea99120c4034d78b6b05d1bff2dd635a8ef98392c4428c1b3f85c616e4"}
           for name, digest in expected.items():
               p = pathlib.Path(name)
               assert p.is_file() and not p.is_symlink()
@@ -160,7 +160,7 @@ jobs:
         run: |
           python3 -B - <<'PY'
           import hashlib, pathlib
-          expected = {"scripts/world-appearance-memory-comparison.py":"a2afbbf8f12a745caf4f8f748c80558e58ee54bae13ae8bdb5ac4a732e43c6d9","scripts/world-appearance-memory-comparison-pins.json":"679106613c26d3c5d50512e20de207c5b452aaad1cca639ff9c9d8f60ca65091","scripts/test_world_appearance_memory_comparison.py":"18d5df2a5750ef4bcd7d8db04616ae48c423210d760f4e46af11467f58ea43fe","docs/verification/world-appearance-memory-comparison.md":"3bc5d7ea99120c4034d78b6b05d1bff2dd635a8ef98392c4428c1b3f85c616e4"}
+          expected = {"scripts/world-appearance-memory-comparison.py":"c8e0cc312dd1a904c6d17016cfa9514b0d096a1eb306182e7db01af4d9b87f35","scripts/world-appearance-memory-comparison-pins.json":"679106613c26d3c5d50512e20de207c5b452aaad1cca639ff9c9d8f60ca65091","scripts/test_world_appearance_memory_comparison.py":"e81fc2d0643d39258da07d550294d573cc3c01f809e6bfb244a1dd4f0cac6573","docs/verification/world-appearance-memory-comparison.md":"3bc5d7ea99120c4034d78b6b05d1bff2dd635a8ef98392c4428c1b3f85c616e4"}
           for name, digest in expected.items():
               p = pathlib.Path(name)
               assert p.is_file() and not p.is_symlink()

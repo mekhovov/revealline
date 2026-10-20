@@ -182,6 +182,31 @@ class Evidence(unittest.TestCase):
         self.assertEqual(len(PINS["owners"]), 9)
         self.assertEqual(set(PINS["targets"]), {"baseline", "feature"})
 
+    def test_actual_controls_shape_survives_receipt_json_and_rejects_metadata_change(self):
+        data = b"fixed control and metadata"
+        identity = (7, 11, stat.S_IFREG | 0o644, 1, len(data), 123456, 789012)
+
+        def external_git(root, *args):
+            if args[:4] == ("ls-tree", "-z", "HEAD", "--"):
+                return ("100644 blob " + m.blob(data) + "\t" + args[4] + "\0").encode()
+            if args[:2] == ("rev-parse", "--git-path"):
+                return ("metadata/" + args[2] + "\n").encode()
+            if args == ("rev-parse", "HEAD"):
+                return ("a" * 40 + "\n").encode()
+            if args == ("rev-parse", "HEAD^{tree}"):
+                return ("b" * 40 + "\n").encode()
+            raise AssertionError("Unexpected external Git call")
+
+        with patch.object(m, "git", side_effect=external_git), patch.object(
+                m, "ordinary", return_value=(data, identity)):
+            actual = m.controls(Path(__file__).parent)
+        receipt_control = json.loads(m.encode(actual))
+        self.assertEqual(actual, receipt_control)
+        for name in ("HEAD", "index", "config"):
+            self.assertEqual(actual["metadata"][name]["identity"], list(identity))
+        receipt_control["metadata"]["index"]["identity"][1] += 1
+        self.assertNotEqual(actual, receipt_control)
+
     def test_partial_archive_member_set_is_allowed_only_as_evidence(self):
         m.validate_zip([entry("comparison.json")])
 
