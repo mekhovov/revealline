@@ -1,5 +1,6 @@
 # Reserve illustrations · wave 7
 
+This is a reduced historical generation record. Retired ownership entries are omitted; original batch totals below remain historical context. The current retained selection is in the reserve illustrations catalog.
 Four original reward scenes follow [wave 6](../reserve-illustrations-wave-6/README.md). They are source illustrations, adding no runtime binding, playable level, animation, pack or release.
 
 | Theme | Original | Composition |
@@ -7,7 +8,6 @@ Four original reward scenes follow [wave 6](../reserve-illustrations-wave-6/READ
 | FPV Front | [Bluehour Coastal Relay](originals/fpv-bluehour-coastal-relay.png) | A compact four-arm quad against a cobalt cove and a lamplit headland, contrasting with the preceding golden balloon meadow. |
 | Ukraine Atlas | [Highland Embroidered Fair](originals/ukraine-highland-embroidered-fair.png) | Three large patterned textiles between timber stalls and open mountain ridges, contrasting with the preceding waterwheel and stream. |
 | 1994 Forever | [Apricot Tape Workshop](originals/retro-apricot-cassette-repair.png) | Foreground cassettes and an opened teal tape machine in a sunlit workshop, contrasting with the preceding outdoor bumper pavilion. |
-| Spend Network | [Citrus Parcel Hub](originals/spend-citrus-parcel-hub.png) | A parcel cart and three broad colored paths leading to matching cubbies, contrasting with the preceding warm bakery. |
 
 The four selected PNGs total **9,112,745 bytes**. Each returned original is **1774 × 887, RGB, 8-bit**, exactly **2:1**. Requested 1536 × 768 dimensions were a target; pixels are retained without resizing, cropping, recoloring or other local edits.
 

@@ -1,50 +1,42 @@
 {
-  "errors": [],
-  "companyInitial": "Review Vyshyvanka and apply it to the intended community or campaign draft. No default has changed yet.",
-  "formats": {
-    "catalog": "revealline-edition-catalog.v2",
-    "brand": "revealline-brand-pack.v2"
-  },
-  "community": {
-    "id": "coupa",
-    "appearanceDefault": {
-      "familyId": "vyshyvanka",
-      "revision": "r1"
-    }
-  },
-  "campaign": {
-    "id": "coupa-spend-in-motion",
-    "appearanceDefault": {
-      "familyId": "dnipro-porcelain",
-      "revision": "r1"
-    }
-  },
-  "export": {
-    "format": "revealline-company-source-draft.v1",
-    "filename": "coupa-all-draft.json",
-    "files": 244
-  },
-  "families": [
-    "Existing appearance",
-    "Industrial Workshop",
-    "Vyshyvanka",
-    "Dnipro Porcelain",
-    "Tryzub",
-    "Desktop 98",
-    "DOS Navigator",
-    "Orchard Workshop",
-    "Neon Ruins"
-  ],
-  "specimen": {
-    "theme": "dnipro-porcelain",
-    "text": "rgb(18, 32, 64)",
-    "primary": [
-      {
-        "background": "rgb(0, 87, 183)",
-        "foreground": "rgb(255, 255, 255)"
-      }
-    ]
-  },
-  "studioStatus": "Loading and verifying the current release collection…",
-  "preferenceKeys": []
+  "format": "revealline-retained-historical-excerpt.v1",
+  "scope": "Retained historical excerpt after an ownership migration. Original bytes are preserved separately. Historical counts, hashes and approvals inside the excerpt describe the original record only; this derived document is not a release qualification, executable restore plan, or complete original inventory.",
+  "originalSHA256": "8482185189fcb56bc6735b3d34d635202f9a6db0069d9e03680509e102c84eb4",
+  "originalGitBlob": "b08a04d0da64d1f6a3570359fb7003eb3ea8f35b",
+  "removedRecordsOrFields": 3,
+  "excerpt": {
+    "errors": [],
+    "companyInitial": "Review Vyshyvanka and apply it to the intended community or campaign draft. No default has changed yet.",
+    "formats": {
+      "catalog": "revealline-edition-catalog.v2",
+      "brand": "revealline-brand-pack.v2"
+    },
+    "export": {
+      "format": "revealline-company-source-draft.v1",
+      "files": 244
+    },
+    "families": [
+      "Existing appearance",
+      "Industrial Workshop",
+      "Vyshyvanka",
+      "Dnipro Porcelain",
+      "Tryzub",
+      "Desktop 98",
+      "DOS Navigator",
+      "Orchard Workshop",
+      "Neon Ruins"
+    ],
+    "specimen": {
+      "theme": "dnipro-porcelain",
+      "text": "rgb(18, 32, 64)",
+      "primary": [
+        {
+          "background": "rgb(0, 87, 183)",
+          "foreground": "rgb(255, 255, 255)"
+        }
+      ]
+    },
+    "studioStatus": "Loading and verifying the current release collection…",
+    "preferenceKeys": []
+  }
 }

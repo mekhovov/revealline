@@ -2,8 +2,6 @@
 
 > Historical authoring checkpoint: the source-only scope below describes the original chapter production. Runtime integration now exists in the v0.41 candidate with sixteen advertised external owners and the unchanged twelve installed-pack limit. Follow the [current delivery plan](../../../docs/current-delivery-plan.md) for exact source gates, archive prerequisites and pending frozen/native/public qualification.
 
-This source-only candidate packages the three accepted Countercurrent layouts with twelve original reward illustrations in four independent owners: `countercurrent-fpv`, `countercurrent-ukraine`, `countercurrent-retro`, and `countercurrent-coupa`. It does not add a runtime catalog entry, production-register binding, release version, or quality approval. The current twelve-entry catalog ceiling remains a separate capability decision.
-
 The geometry comes from [Countercurrent](../countercurrent/README.md), and every original PNG comes unchanged from the separately accepted [art batch](../countercurrent-art/README.md). [Editions](editions.json) map each source cell to its exact level ID, original path/hash and display text. [The builder](build.mjs) pins the geometry source, retained proof, themes, manifest and full provenance before preparing the four pack/media pairs. It decodes full PNG CRCs and pixels through the existing decoder; the review JPEGs never enter these packages.
 
 Each owner retains all three level IDs, Standard revisions, seven class recipes, seeds, geometry, actors, warning timing, bonuses and capture rules. Only the campaign owner and approved name/theme/display metadata change. Gentle execution revisions are derived normally from the new authored campaign key. These three maps remain three geometry families across all four themes, not twelve new maps. Artwork is scenery, not collision or warning-lane geometry; all recorded visual deviations remain in the art provenance. The FPV stills depict fictional harbor service and observation scenes; future FPV artwork can broaden the military context.
@@ -37,8 +35,6 @@ For an explicit payload export, create the parent cache directory, then use a ne
 mkdir -p .cache/countercurrent-pairs
 node authoring/library/countercurrent-chapters/build.mjs ukraine .cache/countercurrent-pairs/ukraine
 ```
-
-The other accepted theme arguments are `fpv`, `retro` and `coupa`. The writer refuses existing outputs, paths outside this worktree's cache, and symlink parents. It produces `descriptor.json`, `pack.json`, `media.rlmedia` and `inputs.json`; this ordinary-file contract does not claim protection against a hostile concurrent filesystem rename.
 
 ## Replacing a reward later
 

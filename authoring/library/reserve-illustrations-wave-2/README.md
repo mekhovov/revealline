@@ -10,7 +10,6 @@ They add no maps, runtime assets, rewards, packs, animation rigs or release.
 | FPV Front     | [Reedwater Relay](originals/fpv-reedwater-relay.png)                     | A complete friendly FPV quadcopter, lantern and wet landing deck beside a quiet river pumping house at blue hour.      |
 | Ukraine Atlas | [Moonlit Loom](originals/ukraine-moonlit-loom.png)                       | A timber loom and cream/red/indigo cloth, yarn basket and invented string instrument, overlooking a moonlit valley.    |
 | 1994 Forever  | [Midnight Disk Station](originals/retro-midnight-disk-station-clean.png) | A cream CRT computer, starfield, floppy disks and unbranded gamepad; a rainy elevated railway and sleeping cat beyond. |
-| Spend Network | [Cloud Cart Exchange](originals/spend-cloud-cart-exchange-clean.png)     | An original friendly logistics cart carrying useful materials through a bright cooperative market plaza.               |
 
 The four selected files total **9,832,692 bytes**. Each is an unchanged
 **1774 × 887, 8-bit RGB PNG**, exactly 2:1. The requested 1792 × 896 size was a
@@ -39,18 +38,6 @@ Run the finite comparison server with `python3 provenance/serve.py` from this
 cohort directory when wave 1 is checked out beside it. For separate sparse
 worktrees, pass `--previous /absolute/path/to/reserve-illustrations-wave-1`. It
 serves only the comparison HTML and eight images on a new loopback port.
-
-The broad objects and warm/cool light provide connected foreground, middle and
-distant discoveries. Fine reeds, woven threads, fittings and background windows
-compress at small sizes. The style is pixel-art-inspired with stepped clusters,
-not a measured fixed palette or uniform pixel grid. The loom and string
-instrument are invented cultural imagery, without historical or construction
-accuracy claims. FPV equipment and locations are fictional and non-graphic.
-Spend's background figures are small fictional silhouettes, not identifiable
-people; the cart is not an official Coupa/Navi mascot or a product feature claim.
-The retro hardware evokes a general period rather than certifying a particular
-machine or controller design. No legible text or branding is intended in the
-selected files; initial cleanup targets remain visible only in retained variants.
 
 Prompt examples: “one unmistakable foreground hero object readable at 320 by
 160,” “a broad traditional wooden handloom with an unfinished cream textile,”

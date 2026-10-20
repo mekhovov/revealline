@@ -13,7 +13,6 @@ const DEVICE_GATES = new Set([
   'storage-and-backup-recovery',
   'same-device-performance',
 ]);
-const PRIMARY_EDITIONS = new Set(['coupa-all', 'droneaid-nl-community']);
 let envelope = null;
 let envelopeSha256 = '';
 let record = null;
@@ -243,8 +242,9 @@ $('clear').addEventListener('click', () => {
   renderCoverage();
 });
 $('primary').addEventListener('click', () => {
+  const firstPair = new Set((envelope?.editions ?? []).slice(0, 2).map(({ id }) => id));
   for (const input of $('editions').querySelectorAll('input'))
-    input.checked = PRIMARY_EDITIONS.has(input.value);
+    input.checked = firstPair.has(input.value);
 });
 $('all').addEventListener('click', () => {
   for (const input of $('editions').querySelectorAll('input')) input.checked = true;

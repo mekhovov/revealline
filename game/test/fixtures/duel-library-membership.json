@@ -123,7 +123,11 @@
     {
       "packId": "journey-opening",
       "campaignId": "prologue",
-      "missionIds": ["first-return", "choose-your-share", "two-keepers"]
+      "missionIds": [
+        "first-return",
+        "choose-your-share",
+        "two-keepers"
+      ]
     },
     {
       "packId": "journey-opening",
@@ -248,72 +252,106 @@
     {
       "packId": "journey-sentinel",
       "campaignId": "sentinel-crown",
-      "missionIds": ["first-relay", "twin-receivers", "relay-perimeter", "crown-audience"]
+      "missionIds": [
+        "first-relay",
+        "twin-receivers",
+        "relay-perimeter",
+        "crown-audience"
+      ]
     },
     {
       "packId": "journey-apex",
       "campaignId": "apex-aurora",
-      "missionIds": ["crossing-complete", "final-broadcast", "returning-light", "home-signal"]
+      "missionIds": [
+        "crossing-complete",
+        "final-broadcast",
+        "returning-light",
+        "home-signal"
+      ]
     },
     {
       "packId": "opening-remixes",
       "campaignId": "horizon-remixes",
-      "missionIds": ["horizon-remix"]
+      "missionIds": [
+        "horizon-remix"
+      ]
     },
     {
       "packId": "border-remixes",
       "campaignId": "border-remixes",
-      "missionIds": ["border-remix"]
+      "missionIds": [
+        "border-remix"
+      ]
     },
     {
       "packId": "signal-remixes",
       "campaignId": "signal-remixes",
-      "missionIds": ["signal-remix"]
+      "missionIds": [
+        "signal-remix"
+      ]
     },
     {
       "packId": "neon-remixes",
       "campaignId": "neon-remixes",
-      "missionIds": ["neon-remix"]
+      "missionIds": [
+        "neon-remix"
+      ]
     },
     {
       "packId": "rover-remixes",
       "campaignId": "rover-remixes",
-      "missionIds": ["rover-remix"]
+      "missionIds": [
+        "rover-remix"
+      ]
     },
     {
       "packId": "fracture-remixes",
       "campaignId": "fracture-remixes",
-      "missionIds": ["fracture-remix"]
+      "missionIds": [
+        "fracture-remix"
+      ]
     },
     {
       "packId": "phase-remixes",
       "campaignId": "phase-remixes",
-      "missionIds": ["phase-remix"]
+      "missionIds": [
+        "phase-remix"
+      ]
     },
     {
       "packId": "livewire-remixes",
       "campaignId": "livewire-remixes",
-      "missionIds": ["livewire-remix"]
+      "missionIds": [
+        "livewire-remix"
+      ]
     },
     {
       "packId": "relay-remixes",
       "campaignId": "relay-remixes",
-      "missionIds": ["relay-remix"]
+      "missionIds": [
+        "relay-remix"
+      ]
     },
     {
       "packId": "crosswind-remixes",
       "campaignId": "crosswind-remixes",
-      "missionIds": ["crosswind-remix"]
+      "missionIds": [
+        "crosswind-remix"
+      ]
     },
     {
       "packId": "sentinel-remixes",
       "campaignId": "sentinel-remixes",
-      "missionIds": ["sentinel-remix"]
+      "missionIds": [
+        "sentinel-remix"
+      ]
     },
     {
       "packId": "apex-remixes",
       "campaignId": "apex-remixes",
-      "missionIds": ["apex-remix"]
+      "missionIds": [
+        "apex-remix"
+      ]
     },
     {
       "packId": "ornament-crossings-study",
@@ -340,47 +378,68 @@
     {
       "packId": "journey-team-opening",
       "campaignId": "horizon-partners",
-      "missionIds": ["twin-landings"]
+      "missionIds": [
+        "twin-landings"
+      ]
     },
     {
       "packId": "journey-team-foundation-practice",
       "campaignId": "stepping-partner-specialists",
-      "missionIds": ["stepping-exchange"]
+      "missionIds": [
+        "stepping-exchange"
+      ]
     },
     {
       "packId": "journey-team-foundation-practice",
       "campaignId": "shared-returns",
-      "missionIds": ["divided-workshop"]
+      "missionIds": [
+        "divided-workshop"
+      ]
     },
     {
       "packId": "journey-team-foundation-practice",
       "campaignId": "switchback-partner-specialists",
-      "missionIds": ["switchback-partners"]
+      "missionIds": [
+        "switchback-partners"
+      ]
     },
     {
       "packId": "journey-team-signal",
       "campaignId": "signal-partners",
-      "missionIds": ["shared-detour"]
+      "missionIds": [
+        "shared-detour"
+      ]
     },
     {
       "packId": "journey-team-material-practice",
       "campaignId": "material-partner-specialists",
-      "missionIds": ["crossed-gardens"]
+      "missionIds": [
+        "crossed-gardens"
+      ]
     },
     {
       "packId": "journey-team-material-practice",
       "campaignId": "shared-material-routes",
-      "missionIds": ["split-orchards", "weaver-crossing"]
+      "missionIds": [
+        "split-orchards",
+        "weaver-crossing"
+      ]
     },
     {
       "packId": "journey-team-changing-ground",
       "campaignId": "changing-common-ground",
-      "missionIds": ["shared-lookout"]
+      "missionIds": [
+        "shared-lookout"
+      ]
     },
     {
       "packId": "journey-team-changing-ground",
       "campaignId": "complementary-specialists",
-      "missionIds": ["twin-depots", "changing-courtyard", "last-rendezvous"]
+      "missionIds": [
+        "twin-depots",
+        "changing-courtyard",
+        "last-rendezvous"
+      ]
     }
   ],
   "expedition": {
@@ -496,17 +555,26 @@
       {
         "packId": "versus-expedition-fracture-pack",
         "campaignId": "versus-expedition-fracture-part-1",
-        "missionIds": ["versus-stone-margin", "versus-faultline-bid"]
+        "missionIds": [
+          "versus-stone-margin",
+          "versus-faultline-bid"
+        ]
       },
       {
         "packId": "versus-expedition-fracture-pack",
         "campaignId": "versus-expedition-fracture-part-2",
-        "missionIds": ["versus-lasting-shortcut"]
+        "missionIds": [
+          "versus-lasting-shortcut"
+        ]
       },
       {
         "packId": "versus-expedition-fracture-pack",
         "campaignId": "versus-expedition-fracture-part-3",
-        "missionIds": ["versus-coastal-hedge", "versus-repair-dividend", "versus-unbroken-finish"]
+        "missionIds": [
+          "versus-coastal-hedge",
+          "versus-repair-dividend",
+          "versus-unbroken-finish"
+        ]
       },
       {
         "packId": "versus-expedition-sentinel-pack",
@@ -523,27 +591,38 @@
       {
         "packId": "versus-expedition-aurora-pack",
         "campaignId": "versus-expedition-aurora-part-1",
-        "missionIds": ["versus-polar-dividend"]
+        "missionIds": [
+          "versus-polar-dividend"
+        ]
       },
       {
         "packId": "versus-expedition-aurora-pack",
         "campaignId": "versus-expedition-aurora-part-2",
-        "missionIds": ["versus-warning-on-the-shore"]
+        "missionIds": [
+          "versus-warning-on-the-shore"
+        ]
       },
       {
         "packId": "versus-expedition-aurora-pack",
         "campaignId": "versus-expedition-aurora-part-3",
-        "missionIds": ["versus-permanent-aurora"]
+        "missionIds": [
+          "versus-permanent-aurora"
+        ]
       },
       {
         "packId": "versus-expedition-aurora-pack",
         "campaignId": "versus-expedition-aurora-part-4",
-        "missionIds": ["versus-highland-lock-race"]
+        "missionIds": [
+          "versus-highland-lock-race"
+        ]
       },
       {
         "packId": "versus-expedition-aurora-pack",
         "campaignId": "versus-expedition-aurora-part-5",
-        "missionIds": ["versus-polar-crown-route", "versus-expedition-decider"]
+        "missionIds": [
+          "versus-polar-crown-route",
+          "versus-expedition-decider"
+        ]
       }
     ],
     "team": [
@@ -728,7 +807,10 @@
       "xonix-core.v10",
       "xonix-core.v12"
     ],
-    "archivedSources": ["archived", "archive"],
+    "archivedSources": [
+      "archived",
+      "archive"
+    ],
     "archivedPackIds": [
       "fpv-arcade",
       "fpv-arcade-r2",
@@ -742,870 +824,1704 @@
       "owner": "[\"classic\",\"base\",null]",
       "edition": "fd46e787fec3568b8215497a7004b759d45965123ab2e33cd2d654a41aee1718",
       "campaign": "first-signal/2/88639f3aab7b6cc1",
-      "modes": ["solo", "versus"],
+      "modes": [
+        "solo",
+        "versus"
+      ],
       "lifecycle": "current",
       "missions": [
-        ["signal-01", "1"],
-        ["signal-02", "1"],
-        ["signal-03", "1"],
-        ["signal-04", "1"],
-        ["signal-05", "1"],
-        ["signal-06", "1"],
-        ["signal-07", "1"],
-        ["signal-08", "1"],
-        ["signal-09", "1"],
-        ["signal-10", "1"],
-        ["signal-11", "1"],
-        ["signal-12", "1"]
+        [
+          "signal-01",
+          "1"
+        ],
+        [
+          "signal-02",
+          "1"
+        ],
+        [
+          "signal-03",
+          "1"
+        ],
+        [
+          "signal-04",
+          "1"
+        ],
+        [
+          "signal-05",
+          "1"
+        ],
+        [
+          "signal-06",
+          "1"
+        ],
+        [
+          "signal-07",
+          "1"
+        ],
+        [
+          "signal-08",
+          "1"
+        ],
+        [
+          "signal-09",
+          "1"
+        ],
+        [
+          "signal-10",
+          "1"
+        ],
+        [
+          "signal-11",
+          "1"
+        ],
+        [
+          "signal-12",
+          "1"
+        ]
       ]
     },
     {
       "owner": "[\"classic\",\"bundled\",\"fpv-arcade-r5\",\"current-line-impact.v1\"]",
       "edition": "350d89cf41767668b3734b474e5dd3d1d301bb0b5612e5082c5d233a1a081a74:current-line-impact.v1",
       "campaign": "fpv-pressure-lines/1/ebb56ffdd9baa8e8::current-line-impact.v1",
-      "modes": ["solo", "versus"],
+      "modes": [
+        "solo",
+        "versus"
+      ],
       "lifecycle": "current",
       "missions": [
-        ["orchard-crossing", "1"],
-        ["courtyard-exits", "1"],
-        ["night-crossfire", "1"]
+        [
+          "orchard-crossing",
+          "1"
+        ],
+        [
+          "courtyard-exits",
+          "1"
+        ],
+        [
+          "night-crossfire",
+          "1"
+        ]
       ]
     },
     {
       "owner": "[\"classic\",\"bundled\",\"fpv-arcade-r5\"]",
       "edition": "350d89cf41767668b3734b474e5dd3d1d301bb0b5612e5082c5d233a1a081a74",
       "campaign": "fpv-pressure-lines/1/ebb56ffdd9baa8e8",
-      "modes": ["solo", "versus"],
+      "modes": [
+        "solo",
+        "versus"
+      ],
       "lifecycle": "archive",
       "missions": [
-        ["orchard-crossing", "1"],
-        ["courtyard-exits", "1"],
-        ["night-crossfire", "1"]
+        [
+          "orchard-crossing",
+          "1"
+        ],
+        [
+          "courtyard-exits",
+          "1"
+        ],
+        [
+          "night-crossfire",
+          "1"
+        ]
       ]
     },
     {
       "owner": "[\"classic\",\"bundled\",\"fpv-pressure-frontier\",\"current-line-impact.v1\"]",
       "edition": "2ceba2a83670216da9443602f16ac30f4ed734ffba969c622dd1bff8153780c9:current-line-impact.v1",
       "campaign": "fpv-pressure-frontier/1/b9387b2be34f51ff::current-line-impact.v1",
-      "modes": ["solo", "versus"],
+      "modes": [
+        "solo",
+        "versus"
+      ],
       "lifecycle": "current",
       "missions": [
-        ["copper-switchyard", "1"],
-        ["river-frontiers", "1"],
-        ["last-beacon", "1"]
+        [
+          "copper-switchyard",
+          "1"
+        ],
+        [
+          "river-frontiers",
+          "1"
+        ],
+        [
+          "last-beacon",
+          "1"
+        ]
       ]
     },
     {
       "owner": "[\"classic\",\"bundled\",\"fpv-pressure-frontier\"]",
       "edition": "2ceba2a83670216da9443602f16ac30f4ed734ffba969c622dd1bff8153780c9",
       "campaign": "fpv-pressure-frontier/1/b9387b2be34f51ff",
-      "modes": ["solo", "versus"],
+      "modes": [
+        "solo",
+        "versus"
+      ],
       "lifecycle": "archive",
       "missions": [
-        ["copper-switchyard", "1"],
-        ["river-frontiers", "1"],
-        ["last-beacon", "1"]
+        [
+          "copper-switchyard",
+          "1"
+        ],
+        [
+          "river-frontiers",
+          "1"
+        ],
+        [
+          "last-beacon",
+          "1"
+        ]
       ]
     },
     {
       "owner": "[\"classic\",\"bundled\",\"night-shift\"]",
       "edition": "0b5c7297bd5b63b306a3b9e24963883b3d685575500247d8adb2b9e52ba9d2b9",
       "campaign": "night-shift/1/7b8ffcade23e3175",
-      "modes": ["solo", "versus"],
+      "modes": [
+        "solo",
+        "versus"
+      ],
       "lifecycle": "current",
       "missions": [
-        ["night-shift-01", "1"],
-        ["night-shift-02", "1"],
-        ["night-shift-03", "1"]
+        [
+          "night-shift-01",
+          "1"
+        ],
+        [
+          "night-shift-02",
+          "1"
+        ],
+        [
+          "night-shift-03",
+          "1"
+        ]
       ]
     },
     {
       "owner": "[\"classic\",\"bundled\",\"living-threads\"]",
       "edition": "970bd335a0e9ba9a9870ebb086123386274b1cd9985788e4035e923573679ce7",
       "campaign": "living-threads/1/e3287c370bec5e41",
-      "modes": ["solo", "versus"],
+      "modes": [
+        "solo",
+        "versus"
+      ],
       "lifecycle": "current",
       "missions": [
-        ["living-threads-01", "1"],
-        ["living-threads-02", "1"],
-        ["living-threads-03", "1"]
+        [
+          "living-threads-01",
+          "1"
+        ],
+        [
+          "living-threads-02",
+          "1"
+        ],
+        [
+          "living-threads-03",
+          "1"
+        ]
       ]
     },
     {
       "owner": "[\"classic\",\"bundled\",\"fieldcraft\"]",
       "edition": "c2e914d8326415398a84a2c8ad1f5c605d1e2af325b106783bb81af044e3a7a5",
       "campaign": "fieldcraft/1/96ae746769a8b440",
-      "modes": ["solo", "versus"],
+      "modes": [
+        "solo",
+        "versus"
+      ],
       "lifecycle": "current",
       "missions": [
-        ["fieldcraft-01", "1"],
-        ["fieldcraft-02", "1"],
-        ["fieldcraft-03", "1"],
-        ["fieldcraft-04", "1"]
+        [
+          "fieldcraft-01",
+          "1"
+        ],
+        [
+          "fieldcraft-02",
+          "1"
+        ],
+        [
+          "fieldcraft-03",
+          "1"
+        ],
+        [
+          "fieldcraft-04",
+          "1"
+        ]
       ]
     },
     {
       "owner": "[\"classic\",\"bundled\",\"homeward-skies\"]",
       "edition": "4793e07a45484238bae483e2a2e9354c6d29e0ad2ba2d8d708169bd9e0250b8b",
       "campaign": "homeward-skies/1/0d01f5687b3c38ff",
-      "modes": ["solo", "versus"],
+      "modes": [
+        "solo",
+        "versus"
+      ],
       "lifecycle": "current",
       "missions": [
-        ["homeward-01", "1"],
-        ["homeward-02", "1"],
-        ["homeward-03", "1"]
+        [
+          "homeward-01",
+          "1"
+        ],
+        [
+          "homeward-02",
+          "1"
+        ],
+        [
+          "homeward-03",
+          "1"
+        ]
       ]
     },
     {
       "owner": "[\"classic\",\"bundled\",\"equipment-workshop\"]",
       "edition": "a015f79c47d8bac6cd09ba04e50c0c98d759e523eea7d225edbe62a8a5254054",
       "campaign": "equipment-workshop/1/3fc2cf073da368b4",
-      "modes": ["solo", "versus"],
+      "modes": [
+        "solo",
+        "versus"
+      ],
       "lifecycle": "current",
       "missions": [
-        ["workshop-01", "1"],
-        ["workshop-02", "1"],
-        ["workshop-03", "1"]
+        [
+          "workshop-01",
+          "1"
+        ],
+        [
+          "workshop-02",
+          "1"
+        ],
+        [
+          "workshop-03",
+          "1"
+        ]
       ]
     },
     {
       "owner": "[\"classic\",\"bundled\",\"sentinel-relay\"]",
       "edition": "d4a07c6221cf7e9fef622f972e779d1c791e5fadd4d212ac0d8c1ca1dfd5f27c",
       "campaign": "sentinel-relay/1/838c4e06647f7fd0",
-      "modes": ["solo", "versus"],
+      "modes": [
+        "solo",
+        "versus"
+      ],
       "lifecycle": "current",
-      "missions": [["sentinel-relay-01", "1"]]
+      "missions": [
+        [
+          "sentinel-relay-01",
+          "1"
+        ]
+      ]
     },
     {
       "owner": "[\"classic\",\"bundled\",\"neon-reference-pack\",\"current-line-impact.v1\"]",
       "edition": "afe0315a9b96d0fb8edc55f063e3a5441626e4f86168e1272bfe1380a4125b10:current-line-impact.v1",
       "campaign": "neon-reference/2/608cd0b9fd6ede21::current-line-impact.v1",
-      "modes": ["solo", "versus"],
+      "modes": [
+        "solo",
+        "versus"
+      ],
       "lifecycle": "current",
       "missions": [
-        ["neon-channels-pack", "2"],
-        ["neon-crossroads-pack", "2"],
-        ["neon-hearts-pack", "2"],
-        ["neon-labyrinth-pack", "2"],
-        ["neon-arrows-pack", "2"],
-        ["neon-chambers-pack", "2"],
-        ["neon-crossgrid-pack", "2"],
-        ["neon-switchback-pack", "2"],
-        ["neon-spirals-pack", "2"],
-        ["neon-crossfire-pack", "2"],
-        ["neon-pinwheels-pack", "2"],
-        ["neon-wavebands-pack", "2"],
-        ["neon-conduit-pack", "2"],
-        ["neon-switchyards-pack", "2"],
-        ["neon-spines-pack", "2"],
-        ["neon-prism-pack", "2"]
+        [
+          "neon-channels-pack",
+          "2"
+        ],
+        [
+          "neon-crossroads-pack",
+          "2"
+        ],
+        [
+          "neon-hearts-pack",
+          "2"
+        ],
+        [
+          "neon-labyrinth-pack",
+          "2"
+        ],
+        [
+          "neon-arrows-pack",
+          "2"
+        ],
+        [
+          "neon-chambers-pack",
+          "2"
+        ],
+        [
+          "neon-crossgrid-pack",
+          "2"
+        ],
+        [
+          "neon-switchback-pack",
+          "2"
+        ],
+        [
+          "neon-spirals-pack",
+          "2"
+        ],
+        [
+          "neon-crossfire-pack",
+          "2"
+        ],
+        [
+          "neon-pinwheels-pack",
+          "2"
+        ],
+        [
+          "neon-wavebands-pack",
+          "2"
+        ],
+        [
+          "neon-conduit-pack",
+          "2"
+        ],
+        [
+          "neon-switchyards-pack",
+          "2"
+        ],
+        [
+          "neon-spines-pack",
+          "2"
+        ],
+        [
+          "neon-prism-pack",
+          "2"
+        ]
       ]
     },
     {
       "owner": "[\"classic\",\"bundled\",\"neon-reference-pack\"]",
       "edition": "afe0315a9b96d0fb8edc55f063e3a5441626e4f86168e1272bfe1380a4125b10",
       "campaign": "neon-reference/2/608cd0b9fd6ede21",
-      "modes": ["solo", "versus"],
+      "modes": [
+        "solo",
+        "versus"
+      ],
       "lifecycle": "archive",
       "missions": [
-        ["neon-channels-pack", "2"],
-        ["neon-crossroads-pack", "2"],
-        ["neon-hearts-pack", "2"],
-        ["neon-labyrinth-pack", "2"],
-        ["neon-arrows-pack", "2"],
-        ["neon-chambers-pack", "2"],
-        ["neon-crossgrid-pack", "2"],
-        ["neon-switchback-pack", "2"],
-        ["neon-spirals-pack", "2"],
-        ["neon-crossfire-pack", "2"],
-        ["neon-pinwheels-pack", "2"],
-        ["neon-wavebands-pack", "2"],
-        ["neon-conduit-pack", "2"],
-        ["neon-switchyards-pack", "2"],
-        ["neon-spines-pack", "2"],
-        ["neon-prism-pack", "2"]
+        [
+          "neon-channels-pack",
+          "2"
+        ],
+        [
+          "neon-crossroads-pack",
+          "2"
+        ],
+        [
+          "neon-hearts-pack",
+          "2"
+        ],
+        [
+          "neon-labyrinth-pack",
+          "2"
+        ],
+        [
+          "neon-arrows-pack",
+          "2"
+        ],
+        [
+          "neon-chambers-pack",
+          "2"
+        ],
+        [
+          "neon-crossgrid-pack",
+          "2"
+        ],
+        [
+          "neon-switchback-pack",
+          "2"
+        ],
+        [
+          "neon-spirals-pack",
+          "2"
+        ],
+        [
+          "neon-crossfire-pack",
+          "2"
+        ],
+        [
+          "neon-pinwheels-pack",
+          "2"
+        ],
+        [
+          "neon-wavebands-pack",
+          "2"
+        ],
+        [
+          "neon-conduit-pack",
+          "2"
+        ],
+        [
+          "neon-switchyards-pack",
+          "2"
+        ],
+        [
+          "neon-spines-pack",
+          "2"
+        ],
+        [
+          "neon-prism-pack",
+          "2"
+        ]
       ]
     },
     {
       "owner": "[\"classic\",\"bundled\",\"neon-mosaic-pack\",\"current-line-impact.v1\"]",
       "edition": "b7835f71ad45e7a8fcaae4b81f30fe91cf7c3e7e0e215a8a675f521b8f438ef6:current-line-impact.v1",
       "campaign": "neon-mosaic/2/68f10772f1871b8b::current-line-impact.v1",
-      "modes": ["solo", "versus"],
+      "modes": [
+        "solo",
+        "versus"
+      ],
       "lifecycle": "current",
       "missions": [
-        ["neon-fpv-pack", "2"],
-        ["neon-ukraine-pack", "2"],
-        ["neon-drone-aid-pack", "2"],
-        ["neon-coupa-pack", "2"],
-        ["neon-social-drone-pack", "2"],
-        ["neon-sdua-pack", "2"],
-        ["neon-victory-drones-pack", "2"],
-        ["neon-vd-pack", "2"],
-        ["neon-fpv-line-pack", "2"],
-        ["neon-reveal-pack", "2"],
-        ["neon-fly-free-pack", "2"],
-        ["neon-fpv-drone-pack", "2"],
-        ["neon-tryzub-pack", "2"],
-        ["neon-vyshyvanka-pack", "2"],
-        ["neon-ruzha-pack", "2"],
-        ["neon-kalyna-pack", "2"],
-        ["neon-tree-of-life-pack", "2"],
-        ["neon-pysanka-pack", "2"],
-        ["neon-barvinok-pack", "2"],
-        ["neon-wheat-pack", "2"],
-        ["neon-vinok-pack", "2"],
-        ["neon-didukh-pack", "2"],
-        ["neon-rushnyk-pack", "2"],
-        ["neon-bandura-pack", "2"],
-        ["neon-trembita-pack", "2"],
-        ["neon-tsymbaly-pack", "2"],
-        ["neon-kosiv-pitcher-pack", "2"],
-        ["neon-opishnia-ram-pack", "2"],
-        ["neon-petrykivka-pack", "2"],
-        ["neon-oak-pack", "2"],
-        ["neon-stork-pack", "2"],
-        ["neon-swallow-pack", "2"],
-        ["neon-horse-pack", "2"],
-        ["neon-deer-pack", "2"],
-        ["neon-fish-pack", "2"],
-        ["neon-berehynia-pack", "2"],
-        ["neon-bezkonechnyk-pack", "2"],
-        ["neon-ornek-tulip-pack", "2"]
+        [
+          "neon-fpv-pack",
+          "2"
+        ],
+        [
+          "neon-ukraine-pack",
+          "2"
+        ],
+        [
+          "neon-drone-aid-pack",
+          "2"
+        ],
+        [
+          "neon-social-drone-pack",
+          "2"
+        ],
+        [
+          "neon-sdua-pack",
+          "2"
+        ],
+        [
+          "neon-victory-drones-pack",
+          "2"
+        ],
+        [
+          "neon-vd-pack",
+          "2"
+        ],
+        [
+          "neon-fpv-line-pack",
+          "2"
+        ],
+        [
+          "neon-reveal-pack",
+          "2"
+        ],
+        [
+          "neon-fly-free-pack",
+          "2"
+        ],
+        [
+          "neon-fpv-drone-pack",
+          "2"
+        ],
+        [
+          "neon-tryzub-pack",
+          "2"
+        ],
+        [
+          "neon-vyshyvanka-pack",
+          "2"
+        ],
+        [
+          "neon-ruzha-pack",
+          "2"
+        ],
+        [
+          "neon-kalyna-pack",
+          "2"
+        ],
+        [
+          "neon-tree-of-life-pack",
+          "2"
+        ],
+        [
+          "neon-pysanka-pack",
+          "2"
+        ],
+        [
+          "neon-barvinok-pack",
+          "2"
+        ],
+        [
+          "neon-wheat-pack",
+          "2"
+        ],
+        [
+          "neon-vinok-pack",
+          "2"
+        ],
+        [
+          "neon-didukh-pack",
+          "2"
+        ],
+        [
+          "neon-rushnyk-pack",
+          "2"
+        ],
+        [
+          "neon-bandura-pack",
+          "2"
+        ],
+        [
+          "neon-trembita-pack",
+          "2"
+        ],
+        [
+          "neon-tsymbaly-pack",
+          "2"
+        ],
+        [
+          "neon-kosiv-pitcher-pack",
+          "2"
+        ],
+        [
+          "neon-opishnia-ram-pack",
+          "2"
+        ],
+        [
+          "neon-petrykivka-pack",
+          "2"
+        ],
+        [
+          "neon-oak-pack",
+          "2"
+        ],
+        [
+          "neon-stork-pack",
+          "2"
+        ],
+        [
+          "neon-swallow-pack",
+          "2"
+        ],
+        [
+          "neon-horse-pack",
+          "2"
+        ],
+        [
+          "neon-deer-pack",
+          "2"
+        ],
+        [
+          "neon-fish-pack",
+          "2"
+        ],
+        [
+          "neon-berehynia-pack",
+          "2"
+        ],
+        [
+          "neon-bezkonechnyk-pack",
+          "2"
+        ],
+        [
+          "neon-ornek-tulip-pack",
+          "2"
+        ]
       ]
     },
     {
       "owner": "[\"classic\",\"bundled\",\"neon-mosaic-pack\"]",
       "edition": "b7835f71ad45e7a8fcaae4b81f30fe91cf7c3e7e0e215a8a675f521b8f438ef6",
       "campaign": "neon-mosaic/2/68f10772f1871b8b",
-      "modes": ["solo", "versus"],
+      "modes": [
+        "solo",
+        "versus"
+      ],
       "lifecycle": "archive",
       "missions": [
-        ["neon-fpv-pack", "2"],
-        ["neon-ukraine-pack", "2"],
-        ["neon-drone-aid-pack", "2"],
-        ["neon-coupa-pack", "2"],
-        ["neon-social-drone-pack", "2"],
-        ["neon-sdua-pack", "2"],
-        ["neon-victory-drones-pack", "2"],
-        ["neon-vd-pack", "2"],
-        ["neon-fpv-line-pack", "2"],
-        ["neon-reveal-pack", "2"],
-        ["neon-fly-free-pack", "2"],
-        ["neon-fpv-drone-pack", "2"],
-        ["neon-tryzub-pack", "2"],
-        ["neon-vyshyvanka-pack", "2"],
-        ["neon-ruzha-pack", "2"],
-        ["neon-kalyna-pack", "2"],
-        ["neon-tree-of-life-pack", "2"],
-        ["neon-pysanka-pack", "2"],
-        ["neon-barvinok-pack", "2"],
-        ["neon-wheat-pack", "2"],
-        ["neon-vinok-pack", "2"],
-        ["neon-didukh-pack", "2"],
-        ["neon-rushnyk-pack", "2"],
-        ["neon-bandura-pack", "2"],
-        ["neon-trembita-pack", "2"],
-        ["neon-tsymbaly-pack", "2"],
-        ["neon-kosiv-pitcher-pack", "2"],
-        ["neon-opishnia-ram-pack", "2"],
-        ["neon-petrykivka-pack", "2"],
-        ["neon-oak-pack", "2"],
-        ["neon-stork-pack", "2"],
-        ["neon-swallow-pack", "2"],
-        ["neon-horse-pack", "2"],
-        ["neon-deer-pack", "2"],
-        ["neon-fish-pack", "2"],
-        ["neon-berehynia-pack", "2"],
-        ["neon-bezkonechnyk-pack", "2"],
-        ["neon-ornek-tulip-pack", "2"]
+        [
+          "neon-fpv-pack",
+          "2"
+        ],
+        [
+          "neon-ukraine-pack",
+          "2"
+        ],
+        [
+          "neon-drone-aid-pack",
+          "2"
+        ],
+        [
+          "neon-social-drone-pack",
+          "2"
+        ],
+        [
+          "neon-sdua-pack",
+          "2"
+        ],
+        [
+          "neon-victory-drones-pack",
+          "2"
+        ],
+        [
+          "neon-vd-pack",
+          "2"
+        ],
+        [
+          "neon-fpv-line-pack",
+          "2"
+        ],
+        [
+          "neon-reveal-pack",
+          "2"
+        ],
+        [
+          "neon-fly-free-pack",
+          "2"
+        ],
+        [
+          "neon-fpv-drone-pack",
+          "2"
+        ],
+        [
+          "neon-tryzub-pack",
+          "2"
+        ],
+        [
+          "neon-vyshyvanka-pack",
+          "2"
+        ],
+        [
+          "neon-ruzha-pack",
+          "2"
+        ],
+        [
+          "neon-kalyna-pack",
+          "2"
+        ],
+        [
+          "neon-tree-of-life-pack",
+          "2"
+        ],
+        [
+          "neon-pysanka-pack",
+          "2"
+        ],
+        [
+          "neon-barvinok-pack",
+          "2"
+        ],
+        [
+          "neon-wheat-pack",
+          "2"
+        ],
+        [
+          "neon-vinok-pack",
+          "2"
+        ],
+        [
+          "neon-didukh-pack",
+          "2"
+        ],
+        [
+          "neon-rushnyk-pack",
+          "2"
+        ],
+        [
+          "neon-bandura-pack",
+          "2"
+        ],
+        [
+          "neon-trembita-pack",
+          "2"
+        ],
+        [
+          "neon-tsymbaly-pack",
+          "2"
+        ],
+        [
+          "neon-kosiv-pitcher-pack",
+          "2"
+        ],
+        [
+          "neon-opishnia-ram-pack",
+          "2"
+        ],
+        [
+          "neon-petrykivka-pack",
+          "2"
+        ],
+        [
+          "neon-oak-pack",
+          "2"
+        ],
+        [
+          "neon-stork-pack",
+          "2"
+        ],
+        [
+          "neon-swallow-pack",
+          "2"
+        ],
+        [
+          "neon-horse-pack",
+          "2"
+        ],
+        [
+          "neon-deer-pack",
+          "2"
+        ],
+        [
+          "neon-fish-pack",
+          "2"
+        ],
+        [
+          "neon-berehynia-pack",
+          "2"
+        ],
+        [
+          "neon-bezkonechnyk-pack",
+          "2"
+        ],
+        [
+          "neon-ornek-tulip-pack",
+          "2"
+        ]
       ]
     },
     {
       "owner": "[\"classic\",\"archived\",\"fpv-arcade-r4\",\"current-line-impact.v1\"]",
       "edition": "a7ab557d69f2bdd5473ee85d62ee0e7a03e6e75f01e79cc0dc7654b1c5ae6703:current-line-impact.v1",
       "campaign": "fpv-first-light-r4/4/0295a1eae3e180ec::current-line-impact.v1",
-      "modes": ["solo", "versus"],
+      "modes": [
+        "solo",
+        "versus"
+      ],
       "lifecycle": "archive",
       "missions": [
-        ["orchard-window", "4"],
-        ["split-courtyard", "4"],
-        ["night-signal", "4"]
+        [
+          "orchard-window",
+          "4"
+        ],
+        [
+          "split-courtyard",
+          "4"
+        ],
+        [
+          "night-signal",
+          "4"
+        ]
       ]
     },
     {
       "owner": "[\"classic\",\"archived\",\"fpv-arcade-r4\"]",
       "edition": "a7ab557d69f2bdd5473ee85d62ee0e7a03e6e75f01e79cc0dc7654b1c5ae6703",
       "campaign": "fpv-first-light-r4/4/0295a1eae3e180ec",
-      "modes": ["solo", "versus"],
+      "modes": [
+        "solo",
+        "versus"
+      ],
       "lifecycle": "archive",
       "missions": [
-        ["orchard-window", "4"],
-        ["split-courtyard", "4"],
-        ["night-signal", "4"]
+        [
+          "orchard-window",
+          "4"
+        ],
+        [
+          "split-courtyard",
+          "4"
+        ],
+        [
+          "night-signal",
+          "4"
+        ]
       ]
     },
     {
       "owner": "[\"classic\",\"archived\",\"fpv-arcade-r3\",\"current-line-impact.v1\"]",
       "edition": "af6387ab382e4f614832b1b96abaddbd23c8330a44cc96f64e50271cfe081848:current-line-impact.v1",
       "campaign": "fpv-first-light-r3/3/73b6b5aed8595174::current-line-impact.v1",
-      "modes": ["solo", "versus"],
+      "modes": [
+        "solo",
+        "versus"
+      ],
       "lifecycle": "archive",
       "missions": [
-        ["orchard-window", "3"],
-        ["split-courtyard", "3"],
-        ["night-signal", "3"]
+        [
+          "orchard-window",
+          "3"
+        ],
+        [
+          "split-courtyard",
+          "3"
+        ],
+        [
+          "night-signal",
+          "3"
+        ]
       ]
     },
     {
       "owner": "[\"classic\",\"archived\",\"fpv-arcade-r3\"]",
       "edition": "af6387ab382e4f614832b1b96abaddbd23c8330a44cc96f64e50271cfe081848",
       "campaign": "fpv-first-light-r3/3/73b6b5aed8595174",
-      "modes": ["solo", "versus"],
+      "modes": [
+        "solo",
+        "versus"
+      ],
       "lifecycle": "archive",
       "missions": [
-        ["orchard-window", "3"],
-        ["split-courtyard", "3"],
-        ["night-signal", "3"]
+        [
+          "orchard-window",
+          "3"
+        ],
+        [
+          "split-courtyard",
+          "3"
+        ],
+        [
+          "night-signal",
+          "3"
+        ]
       ]
     },
     {
       "owner": "[\"classic\",\"archived\",\"fpv-arcade-r2\",\"current-line-impact.v1\"]",
       "edition": "3235a0ae1f9f0ae9952f5d98d2001ec5022ab47fc459c3fb0093f48de620377f:current-line-impact.v1",
       "campaign": "fpv-first-light-r2/2/33e59e00d45542d4::current-line-impact.v1",
-      "modes": ["solo", "versus"],
+      "modes": [
+        "solo",
+        "versus"
+      ],
       "lifecycle": "archive",
       "missions": [
-        ["orchard-window", "2"],
-        ["split-courtyard", "2"],
-        ["night-signal", "2"]
+        [
+          "orchard-window",
+          "2"
+        ],
+        [
+          "split-courtyard",
+          "2"
+        ],
+        [
+          "night-signal",
+          "2"
+        ]
       ]
     },
     {
       "owner": "[\"classic\",\"archived\",\"fpv-arcade-r2\"]",
       "edition": "3235a0ae1f9f0ae9952f5d98d2001ec5022ab47fc459c3fb0093f48de620377f",
       "campaign": "fpv-first-light-r2/2/33e59e00d45542d4",
-      "modes": ["solo", "versus"],
+      "modes": [
+        "solo",
+        "versus"
+      ],
       "lifecycle": "archive",
       "missions": [
-        ["orchard-window", "2"],
-        ["split-courtyard", "2"],
-        ["night-signal", "2"]
+        [
+          "orchard-window",
+          "2"
+        ],
+        [
+          "split-courtyard",
+          "2"
+        ],
+        [
+          "night-signal",
+          "2"
+        ]
       ]
     },
     {
       "owner": "[\"classic\",\"archived\",\"fpv-arcade\"]",
       "edition": "7b8413aa8dc5cc99f6413f0d2b2bf8dd7b9ba5613c6fa02550a3dbd12a7b9904",
       "campaign": "fpv-first-light/1/7109e646c73e09be",
-      "modes": ["solo", "versus"],
+      "modes": [
+        "solo",
+        "versus"
+      ],
       "lifecycle": "archive",
       "missions": [
-        ["orchard-window", "1"],
-        ["split-courtyard", "1"],
-        ["night-signal", "1"]
+        [
+          "orchard-window",
+          "1"
+        ],
+        [
+          "split-courtyard",
+          "1"
+        ],
+        [
+          "night-signal",
+          "1"
+        ]
       ]
     },
     {
       "owner": "[\"classic\",\"optional\",\"original-fpv-pressure\",\"current-line-impact.v1\"]",
       "edition": "dc7b29694ec409c629e4006f11b96a2834937bf0f846e9dd9f29c5981aa5daa9:current-line-impact.v1",
       "campaign": "original-fpv-pressure-lines/1/b86804fb3ab94151::current-line-impact.v1",
-      "modes": ["solo", "versus"],
+      "modes": [
+        "solo",
+        "versus"
+      ],
       "lifecycle": "current",
       "missions": [
-        ["original-fpv-orchard-crossing", "1"],
-        ["original-fpv-courtyard-exits", "1"],
-        ["original-fpv-night-crossfire", "1"]
+        [
+          "original-fpv-orchard-crossing",
+          "1"
+        ],
+        [
+          "original-fpv-courtyard-exits",
+          "1"
+        ],
+        [
+          "original-fpv-night-crossfire",
+          "1"
+        ]
       ]
     },
     {
       "owner": "[\"classic\",\"optional\",\"original-fpv-pressure\"]",
       "edition": "dc7b29694ec409c629e4006f11b96a2834937bf0f846e9dd9f29c5981aa5daa9",
       "campaign": "original-fpv-pressure-lines/1/b86804fb3ab94151",
-      "modes": ["solo", "versus"],
+      "modes": [
+        "solo",
+        "versus"
+      ],
       "lifecycle": "archive",
       "missions": [
-        ["original-fpv-orchard-crossing", "1"],
-        ["original-fpv-courtyard-exits", "1"],
-        ["original-fpv-night-crossfire", "1"]
+        [
+          "original-fpv-orchard-crossing",
+          "1"
+        ],
+        [
+          "original-fpv-courtyard-exits",
+          "1"
+        ],
+        [
+          "original-fpv-night-crossfire",
+          "1"
+        ]
       ]
     },
     {
       "owner": "[\"classic\",\"optional\",\"original-ukraine-atlas\",\"current-line-impact.v1\"]",
       "edition": "690c56f06c85fddf01bab9b997022ed3c5ed9b8872b79b4124cd263607a3d91b:current-line-impact.v1",
       "campaign": "original-ukraine-woven-lines/1/f9ac733132be4765::current-line-impact.v1",
-      "modes": ["solo", "versus"],
+      "modes": [
+        "solo",
+        "versus"
+      ],
       "lifecycle": "current",
       "missions": [
-        ["original-atlas-woven-dawn", "1"],
-        ["original-atlas-sun-courtyard", "1"],
-        ["original-atlas-autumn-watch", "1"]
+        [
+          "original-atlas-woven-dawn",
+          "1"
+        ],
+        [
+          "original-atlas-sun-courtyard",
+          "1"
+        ],
+        [
+          "original-atlas-autumn-watch",
+          "1"
+        ]
       ]
     },
     {
       "owner": "[\"classic\",\"optional\",\"original-ukraine-atlas\"]",
       "edition": "690c56f06c85fddf01bab9b997022ed3c5ed9b8872b79b4124cd263607a3d91b",
       "campaign": "original-ukraine-woven-lines/1/f9ac733132be4765",
-      "modes": ["solo", "versus"],
+      "modes": [
+        "solo",
+        "versus"
+      ],
       "lifecycle": "archive",
       "missions": [
-        ["original-atlas-woven-dawn", "1"],
-        ["original-atlas-sun-courtyard", "1"],
-        ["original-atlas-autumn-watch", "1"]
+        [
+          "original-atlas-woven-dawn",
+          "1"
+        ],
+        [
+          "original-atlas-sun-courtyard",
+          "1"
+        ],
+        [
+          "original-atlas-autumn-watch",
+          "1"
+        ]
       ]
     },
     {
       "owner": "[\"classic\",\"optional\",\"original-retro-1994\",\"current-line-impact.v1\"]",
       "edition": "33e772d12a0ae98373e4240257b0f9726f00ad28095cb0ae06d6d1fc79964714:current-line-impact.v1",
       "campaign": "original-retro-after-hours/1/ccd70c475a070df5::current-line-impact.v1",
-      "modes": ["solo", "versus"],
+      "modes": [
+        "solo",
+        "versus"
+      ],
       "lifecycle": "current",
       "missions": [
-        ["original-retro-midnight-arcade", "1"],
-        ["original-retro-video-rental", "1"],
-        ["original-retro-last-train", "1"]
+        [
+          "original-retro-midnight-arcade",
+          "1"
+        ],
+        [
+          "original-retro-video-rental",
+          "1"
+        ],
+        [
+          "original-retro-last-train",
+          "1"
+        ]
       ]
     },
     {
       "owner": "[\"classic\",\"optional\",\"original-retro-1994\"]",
       "edition": "33e772d12a0ae98373e4240257b0f9726f00ad28095cb0ae06d6d1fc79964714",
       "campaign": "original-retro-after-hours/1/ccd70c475a070df5",
-      "modes": ["solo", "versus"],
+      "modes": [
+        "solo",
+        "versus"
+      ],
       "lifecycle": "archive",
       "missions": [
-        ["original-retro-midnight-arcade", "1"],
-        ["original-retro-video-rental", "1"],
-        ["original-retro-last-train", "1"]
-      ]
-    },
-    {
-      "owner": "[\"classic\",\"optional\",\"original-spend-network\",\"current-line-impact.v1\"]",
-      "edition": "5ab9a0c7362ca8e05819ff3d68c0a7246ab5057b4d796a063d3d69af115504ac:current-line-impact.v1",
-      "campaign": "original-spend-shared-routes/1/7a36efe129711f19::current-line-impact.v1",
-      "modes": ["solo", "versus"],
-      "lifecycle": "current",
-      "missions": [
-        ["original-spend-shared-harbor", "1"],
-        ["original-spend-city-wins", "1"],
-        ["original-spend-market-workshop", "1"]
-      ]
-    },
-    {
-      "owner": "[\"classic\",\"optional\",\"original-spend-network\"]",
-      "edition": "5ab9a0c7362ca8e05819ff3d68c0a7246ab5057b4d796a063d3d69af115504ac",
-      "campaign": "original-spend-shared-routes/1/7a36efe129711f19",
-      "modes": ["solo", "versus"],
-      "lifecycle": "archive",
-      "missions": [
-        ["original-spend-shared-harbor", "1"],
-        ["original-spend-city-wins", "1"],
-        ["original-spend-market-workshop", "1"]
+        [
+          "original-retro-midnight-arcade",
+          "1"
+        ],
+        [
+          "original-retro-video-rental",
+          "1"
+        ],
+        [
+          "original-retro-last-train",
+          "1"
+        ]
       ]
     },
     {
       "owner": "[\"classic\",\"optional\",\"fpv-route-choices\",\"current-line-impact.v1\"]",
       "edition": "589543f693e650355216aa702844a7726b7cd6e318900b8583702fd0650ae989:current-line-impact.v1",
       "campaign": "fpv-route-choices/1/4a7f15a0b07d557d::current-line-impact.v1",
-      "modes": ["solo", "versus"],
+      "modes": [
+        "solo",
+        "versus"
+      ],
       "lifecycle": "current",
       "missions": [
-        ["route-choices-foundry", "1"],
-        ["route-choices-depot", "1"],
-        ["route-choices-switchback", "1"]
+        [
+          "route-choices-foundry",
+          "1"
+        ],
+        [
+          "route-choices-depot",
+          "1"
+        ],
+        [
+          "route-choices-switchback",
+          "1"
+        ]
       ]
     },
     {
       "owner": "[\"classic\",\"optional\",\"fpv-route-choices\"]",
       "edition": "589543f693e650355216aa702844a7726b7cd6e318900b8583702fd0650ae989",
       "campaign": "fpv-route-choices/1/4a7f15a0b07d557d",
-      "modes": ["solo", "versus"],
+      "modes": [
+        "solo",
+        "versus"
+      ],
       "lifecycle": "archive",
       "missions": [
-        ["route-choices-foundry", "1"],
-        ["route-choices-depot", "1"],
-        ["route-choices-switchback", "1"]
+        [
+          "route-choices-foundry",
+          "1"
+        ],
+        [
+          "route-choices-depot",
+          "1"
+        ],
+        [
+          "route-choices-switchback",
+          "1"
+        ]
       ]
     },
     {
       "owner": "[\"classic\",\"external\",\"original-fpv-pressure-external\",\"current-line-impact.v1\"]",
       "edition": "09fabce4207875dc73eefe49aaea8bc4aed491855e756b9dfda39cd4c35abe2c:current-line-impact.v1",
       "campaign": "original-fpv-pressure-lines-external/1/60d1f9c4f1304d7d::current-line-impact.v1",
-      "modes": ["solo", "versus"],
+      "modes": [
+        "solo",
+        "versus"
+      ],
       "lifecycle": "archive",
       "missions": [
-        ["original-fpv-orchard-crossing-external", "1"],
-        ["original-fpv-courtyard-exits-external", "1"],
-        ["original-fpv-night-crossfire-external", "1"]
+        [
+          "original-fpv-orchard-crossing-external",
+          "1"
+        ],
+        [
+          "original-fpv-courtyard-exits-external",
+          "1"
+        ],
+        [
+          "original-fpv-night-crossfire-external",
+          "1"
+        ]
       ]
     },
     {
       "owner": "[\"classic\",\"external\",\"original-fpv-pressure-external\"]",
       "edition": "09fabce4207875dc73eefe49aaea8bc4aed491855e756b9dfda39cd4c35abe2c",
       "campaign": "original-fpv-pressure-lines-external/1/60d1f9c4f1304d7d",
-      "modes": ["solo", "versus"],
+      "modes": [
+        "solo",
+        "versus"
+      ],
       "lifecycle": "archive",
       "missions": [
-        ["original-fpv-orchard-crossing-external", "1"],
-        ["original-fpv-courtyard-exits-external", "1"],
-        ["original-fpv-night-crossfire-external", "1"]
+        [
+          "original-fpv-orchard-crossing-external",
+          "1"
+        ],
+        [
+          "original-fpv-courtyard-exits-external",
+          "1"
+        ],
+        [
+          "original-fpv-night-crossfire-external",
+          "1"
+        ]
       ]
     },
     {
       "owner": "[\"classic\",\"external\",\"route-worlds-ukraine\",\"current-line-impact.v1\"]",
       "edition": "911ac4781505be1b405c33994a749990aa175a457ae020cbe0d1bcadda87abc0:current-line-impact.v1",
       "campaign": "route-worlds-ukraine/1/6fc246baf830fe27::current-line-impact.v1",
-      "modes": ["solo", "versus"],
+      "modes": [
+        "solo",
+        "versus"
+      ],
       "lifecycle": "current",
       "missions": [
-        ["route-worlds-ukraine-foundry", "1"],
-        ["route-worlds-ukraine-depot", "1"],
-        ["route-worlds-ukraine-switchback", "1"]
+        [
+          "route-worlds-ukraine-foundry",
+          "1"
+        ],
+        [
+          "route-worlds-ukraine-depot",
+          "1"
+        ],
+        [
+          "route-worlds-ukraine-switchback",
+          "1"
+        ]
       ]
     },
     {
       "owner": "[\"classic\",\"external\",\"route-worlds-ukraine\"]",
       "edition": "911ac4781505be1b405c33994a749990aa175a457ae020cbe0d1bcadda87abc0",
       "campaign": "route-worlds-ukraine/1/6fc246baf830fe27",
-      "modes": ["solo", "versus"],
+      "modes": [
+        "solo",
+        "versus"
+      ],
       "lifecycle": "archive",
       "missions": [
-        ["route-worlds-ukraine-foundry", "1"],
-        ["route-worlds-ukraine-depot", "1"],
-        ["route-worlds-ukraine-switchback", "1"]
+        [
+          "route-worlds-ukraine-foundry",
+          "1"
+        ],
+        [
+          "route-worlds-ukraine-depot",
+          "1"
+        ],
+        [
+          "route-worlds-ukraine-switchback",
+          "1"
+        ]
       ]
     },
     {
       "owner": "[\"classic\",\"external\",\"route-worlds-retro\",\"current-line-impact.v1\"]",
       "edition": "ef63420ef94edeecf56cd13f1a77c75afef9a5be6ec4c0d5d5814d002f7962b4:current-line-impact.v1",
       "campaign": "route-worlds-retro/1/31673372d46ee993::current-line-impact.v1",
-      "modes": ["solo", "versus"],
+      "modes": [
+        "solo",
+        "versus"
+      ],
       "lifecycle": "current",
       "missions": [
-        ["route-worlds-retro-foundry", "1"],
-        ["route-worlds-retro-depot", "1"],
-        ["route-worlds-retro-switchback", "1"]
+        [
+          "route-worlds-retro-foundry",
+          "1"
+        ],
+        [
+          "route-worlds-retro-depot",
+          "1"
+        ],
+        [
+          "route-worlds-retro-switchback",
+          "1"
+        ]
       ]
     },
     {
       "owner": "[\"classic\",\"external\",\"route-worlds-retro\"]",
       "edition": "ef63420ef94edeecf56cd13f1a77c75afef9a5be6ec4c0d5d5814d002f7962b4",
       "campaign": "route-worlds-retro/1/31673372d46ee993",
-      "modes": ["solo", "versus"],
+      "modes": [
+        "solo",
+        "versus"
+      ],
       "lifecycle": "archive",
       "missions": [
-        ["route-worlds-retro-foundry", "1"],
-        ["route-worlds-retro-depot", "1"],
-        ["route-worlds-retro-switchback", "1"]
-      ]
-    },
-    {
-      "owner": "[\"classic\",\"external\",\"route-worlds-coupa\",\"current-line-impact.v1\"]",
-      "edition": "96d6c0e6612197a542ec28d31132a20e0e945c1e12407109ddedad04ac0b0813:current-line-impact.v1",
-      "campaign": "route-worlds-coupa/1/708c553521008c7d::current-line-impact.v1",
-      "modes": ["solo", "versus"],
-      "lifecycle": "current",
-      "missions": [
-        ["route-worlds-coupa-foundry", "1"],
-        ["route-worlds-coupa-depot", "1"],
-        ["route-worlds-coupa-switchback", "1"]
-      ]
-    },
-    {
-      "owner": "[\"classic\",\"external\",\"route-worlds-coupa\"]",
-      "edition": "96d6c0e6612197a542ec28d31132a20e0e945c1e12407109ddedad04ac0b0813",
-      "campaign": "route-worlds-coupa/1/708c553521008c7d",
-      "modes": ["solo", "versus"],
-      "lifecycle": "archive",
-      "missions": [
-        ["route-worlds-coupa-foundry", "1"],
-        ["route-worlds-coupa-depot", "1"],
-        ["route-worlds-coupa-switchback", "1"]
+        [
+          "route-worlds-retro-foundry",
+          "1"
+        ],
+        [
+          "route-worlds-retro-depot",
+          "1"
+        ],
+        [
+          "route-worlds-retro-switchback",
+          "1"
+        ]
       ]
     },
     {
       "owner": "[\"classic\",\"external\",\"sentinel-circuit-fpv\",\"current-line-impact.v1\"]",
       "edition": "ae2c1489c27afd2f492472d00605a57a65fd1d2c154e63b1b2c17b48bca323cb:current-line-impact.v1",
       "campaign": "sentinel-circuit-fpv/1/398c82081d2d49df::current-line-impact.v1",
-      "modes": ["solo", "versus"],
+      "modes": [
+        "solo",
+        "versus"
+      ],
       "lifecycle": "current",
       "missions": [
-        ["sentinel-circuit-fpv-listening-court", "1"],
-        ["sentinel-circuit-fpv-switchyard-gates", "1"],
-        ["sentinel-circuit-fpv-open-circuit", "1"]
+        [
+          "sentinel-circuit-fpv-listening-court",
+          "1"
+        ],
+        [
+          "sentinel-circuit-fpv-switchyard-gates",
+          "1"
+        ],
+        [
+          "sentinel-circuit-fpv-open-circuit",
+          "1"
+        ]
       ]
     },
     {
       "owner": "[\"classic\",\"external\",\"sentinel-circuit-fpv\"]",
       "edition": "ae2c1489c27afd2f492472d00605a57a65fd1d2c154e63b1b2c17b48bca323cb",
       "campaign": "sentinel-circuit-fpv/1/398c82081d2d49df",
-      "modes": ["solo", "versus"],
+      "modes": [
+        "solo",
+        "versus"
+      ],
       "lifecycle": "archive",
       "missions": [
-        ["sentinel-circuit-fpv-listening-court", "1"],
-        ["sentinel-circuit-fpv-switchyard-gates", "1"],
-        ["sentinel-circuit-fpv-open-circuit", "1"]
+        [
+          "sentinel-circuit-fpv-listening-court",
+          "1"
+        ],
+        [
+          "sentinel-circuit-fpv-switchyard-gates",
+          "1"
+        ],
+        [
+          "sentinel-circuit-fpv-open-circuit",
+          "1"
+        ]
       ]
     },
     {
       "owner": "[\"classic\",\"external\",\"sentinel-circuit-ukraine\",\"current-line-impact.v1\"]",
       "edition": "b567d8901dcec9b4964ce5ada8f64276f7754f8dc537c9002703d746fcbcdd85:current-line-impact.v1",
       "campaign": "sentinel-circuit-ukraine/1/2c5a77757c64c4d1::current-line-impact.v1",
-      "modes": ["solo", "versus"],
+      "modes": [
+        "solo",
+        "versus"
+      ],
       "lifecycle": "current",
       "missions": [
-        ["sentinel-circuit-ukraine-listening-court", "1"],
-        ["sentinel-circuit-ukraine-switchyard-gates", "1"],
-        ["sentinel-circuit-ukraine-open-circuit", "1"]
+        [
+          "sentinel-circuit-ukraine-listening-court",
+          "1"
+        ],
+        [
+          "sentinel-circuit-ukraine-switchyard-gates",
+          "1"
+        ],
+        [
+          "sentinel-circuit-ukraine-open-circuit",
+          "1"
+        ]
       ]
     },
     {
       "owner": "[\"classic\",\"external\",\"sentinel-circuit-ukraine\"]",
       "edition": "b567d8901dcec9b4964ce5ada8f64276f7754f8dc537c9002703d746fcbcdd85",
       "campaign": "sentinel-circuit-ukraine/1/2c5a77757c64c4d1",
-      "modes": ["solo", "versus"],
+      "modes": [
+        "solo",
+        "versus"
+      ],
       "lifecycle": "archive",
       "missions": [
-        ["sentinel-circuit-ukraine-listening-court", "1"],
-        ["sentinel-circuit-ukraine-switchyard-gates", "1"],
-        ["sentinel-circuit-ukraine-open-circuit", "1"]
+        [
+          "sentinel-circuit-ukraine-listening-court",
+          "1"
+        ],
+        [
+          "sentinel-circuit-ukraine-switchyard-gates",
+          "1"
+        ],
+        [
+          "sentinel-circuit-ukraine-open-circuit",
+          "1"
+        ]
       ]
     },
     {
       "owner": "[\"classic\",\"external\",\"sentinel-circuit-retro\",\"current-line-impact.v1\"]",
       "edition": "eab41d563f717170dc0c0077aa18b1656d2845e102b76e719a9daca6e5886545:current-line-impact.v1",
       "campaign": "sentinel-circuit-retro/1/e8edd91a796a9b65::current-line-impact.v1",
-      "modes": ["solo", "versus"],
+      "modes": [
+        "solo",
+        "versus"
+      ],
       "lifecycle": "current",
       "missions": [
-        ["sentinel-circuit-retro-listening-court", "1"],
-        ["sentinel-circuit-retro-switchyard-gates", "1"],
-        ["sentinel-circuit-retro-open-circuit", "1"]
+        [
+          "sentinel-circuit-retro-listening-court",
+          "1"
+        ],
+        [
+          "sentinel-circuit-retro-switchyard-gates",
+          "1"
+        ],
+        [
+          "sentinel-circuit-retro-open-circuit",
+          "1"
+        ]
       ]
     },
     {
       "owner": "[\"classic\",\"external\",\"sentinel-circuit-retro\"]",
       "edition": "eab41d563f717170dc0c0077aa18b1656d2845e102b76e719a9daca6e5886545",
       "campaign": "sentinel-circuit-retro/1/e8edd91a796a9b65",
-      "modes": ["solo", "versus"],
+      "modes": [
+        "solo",
+        "versus"
+      ],
       "lifecycle": "archive",
       "missions": [
-        ["sentinel-circuit-retro-listening-court", "1"],
-        ["sentinel-circuit-retro-switchyard-gates", "1"],
-        ["sentinel-circuit-retro-open-circuit", "1"]
-      ]
-    },
-    {
-      "owner": "[\"classic\",\"external\",\"sentinel-circuit-coupa\",\"current-line-impact.v1\"]",
-      "edition": "0fc200adfd509d7a993f24c73432195e314b4450b2ef45fd601b523f62464c6c:current-line-impact.v1",
-      "campaign": "sentinel-circuit-coupa/1/8459eb3ba67608e6::current-line-impact.v1",
-      "modes": ["solo", "versus"],
-      "lifecycle": "current",
-      "missions": [
-        ["sentinel-circuit-coupa-listening-court", "1"],
-        ["sentinel-circuit-coupa-switchyard-gates", "1"],
-        ["sentinel-circuit-coupa-open-circuit", "1"]
-      ]
-    },
-    {
-      "owner": "[\"classic\",\"external\",\"sentinel-circuit-coupa\"]",
-      "edition": "0fc200adfd509d7a993f24c73432195e314b4450b2ef45fd601b523f62464c6c",
-      "campaign": "sentinel-circuit-coupa/1/8459eb3ba67608e6",
-      "modes": ["solo", "versus"],
-      "lifecycle": "archive",
-      "missions": [
-        ["sentinel-circuit-coupa-listening-court", "1"],
-        ["sentinel-circuit-coupa-switchyard-gates", "1"],
-        ["sentinel-circuit-coupa-open-circuit", "1"]
+        [
+          "sentinel-circuit-retro-listening-court",
+          "1"
+        ],
+        [
+          "sentinel-circuit-retro-switchyard-gates",
+          "1"
+        ],
+        [
+          "sentinel-circuit-retro-open-circuit",
+          "1"
+        ]
       ]
     },
     {
       "owner": "[\"classic\",\"external\",\"fracture-lines-fpv\",\"current-line-impact.v1\"]",
       "edition": "7ccdba1465b1f5e2f2df25cdb574a8d93eb53974b14adf3599bb6f1bf23f5a8b:current-line-impact.v1",
       "campaign": "fracture-lines-fpv/1/8f79476cc9cf6221::current-line-impact.v1",
-      "modes": ["solo", "versus"],
+      "modes": [
+        "solo",
+        "versus"
+      ],
       "lifecycle": "current",
       "missions": [
-        ["fracture-lines-split-ring", "1"],
-        ["fracture-lines-fault-fan", "1"],
-        ["fracture-lines-frayed-causeway", "1"]
+        [
+          "fracture-lines-split-ring",
+          "1"
+        ],
+        [
+          "fracture-lines-fault-fan",
+          "1"
+        ],
+        [
+          "fracture-lines-frayed-causeway",
+          "1"
+        ]
       ]
     },
     {
       "owner": "[\"classic\",\"external\",\"fracture-lines-fpv\"]",
       "edition": "7ccdba1465b1f5e2f2df25cdb574a8d93eb53974b14adf3599bb6f1bf23f5a8b",
       "campaign": "fracture-lines-fpv/1/8f79476cc9cf6221",
-      "modes": ["solo", "versus"],
+      "modes": [
+        "solo",
+        "versus"
+      ],
       "lifecycle": "archive",
       "missions": [
-        ["fracture-lines-split-ring", "1"],
-        ["fracture-lines-fault-fan", "1"],
-        ["fracture-lines-frayed-causeway", "1"]
+        [
+          "fracture-lines-split-ring",
+          "1"
+        ],
+        [
+          "fracture-lines-fault-fan",
+          "1"
+        ],
+        [
+          "fracture-lines-frayed-causeway",
+          "1"
+        ]
       ]
     },
     {
       "owner": "[\"classic\",\"external\",\"fracture-lines-ukraine\",\"current-line-impact.v1\"]",
       "edition": "41603c33807ef931552d1993f0dc6254055abae392c7b2fd61ccfe5618344505:current-line-impact.v1",
       "campaign": "fracture-lines-ukraine/1/8b020a538ec5549f::current-line-impact.v1",
-      "modes": ["solo", "versus"],
+      "modes": [
+        "solo",
+        "versus"
+      ],
       "lifecycle": "current",
       "missions": [
-        ["fracture-lines-split-ring", "1"],
-        ["fracture-lines-fault-fan", "1"],
-        ["fracture-lines-frayed-causeway", "1"]
+        [
+          "fracture-lines-split-ring",
+          "1"
+        ],
+        [
+          "fracture-lines-fault-fan",
+          "1"
+        ],
+        [
+          "fracture-lines-frayed-causeway",
+          "1"
+        ]
       ]
     },
     {
       "owner": "[\"classic\",\"external\",\"fracture-lines-ukraine\"]",
       "edition": "41603c33807ef931552d1993f0dc6254055abae392c7b2fd61ccfe5618344505",
       "campaign": "fracture-lines-ukraine/1/8b020a538ec5549f",
-      "modes": ["solo", "versus"],
+      "modes": [
+        "solo",
+        "versus"
+      ],
       "lifecycle": "archive",
       "missions": [
-        ["fracture-lines-split-ring", "1"],
-        ["fracture-lines-fault-fan", "1"],
-        ["fracture-lines-frayed-causeway", "1"]
+        [
+          "fracture-lines-split-ring",
+          "1"
+        ],
+        [
+          "fracture-lines-fault-fan",
+          "1"
+        ],
+        [
+          "fracture-lines-frayed-causeway",
+          "1"
+        ]
       ]
     },
     {
       "owner": "[\"classic\",\"external\",\"fracture-lines-retro\",\"current-line-impact.v1\"]",
       "edition": "61a6f6714d531466c34ca0f69004f5a3b1819caa046ad62eade1938ec0eb77b0:current-line-impact.v1",
       "campaign": "fracture-lines-retro/1/c03c1bf508a14755::current-line-impact.v1",
-      "modes": ["solo", "versus"],
+      "modes": [
+        "solo",
+        "versus"
+      ],
       "lifecycle": "current",
       "missions": [
-        ["fracture-lines-split-ring", "1"],
-        ["fracture-lines-fault-fan", "1"],
-        ["fracture-lines-frayed-causeway", "1"]
+        [
+          "fracture-lines-split-ring",
+          "1"
+        ],
+        [
+          "fracture-lines-fault-fan",
+          "1"
+        ],
+        [
+          "fracture-lines-frayed-causeway",
+          "1"
+        ]
       ]
     },
     {
       "owner": "[\"classic\",\"external\",\"fracture-lines-retro\"]",
       "edition": "61a6f6714d531466c34ca0f69004f5a3b1819caa046ad62eade1938ec0eb77b0",
       "campaign": "fracture-lines-retro/1/c03c1bf508a14755",
-      "modes": ["solo", "versus"],
+      "modes": [
+        "solo",
+        "versus"
+      ],
       "lifecycle": "archive",
       "missions": [
-        ["fracture-lines-split-ring", "1"],
-        ["fracture-lines-fault-fan", "1"],
-        ["fracture-lines-frayed-causeway", "1"]
-      ]
-    },
-    {
-      "owner": "[\"classic\",\"external\",\"fracture-lines-coupa\",\"current-line-impact.v1\"]",
-      "edition": "d9e4ba55eddc55c15e690b590d7c7dbb34934227faa7fcff471fc82929c8dcd9:current-line-impact.v1",
-      "campaign": "fracture-lines-coupa/1/7366cdb1e5e3ed7e::current-line-impact.v1",
-      "modes": ["solo", "versus"],
-      "lifecycle": "current",
-      "missions": [
-        ["fracture-lines-split-ring", "1"],
-        ["fracture-lines-fault-fan", "1"],
-        ["fracture-lines-frayed-causeway", "1"]
-      ]
-    },
-    {
-      "owner": "[\"classic\",\"external\",\"fracture-lines-coupa\"]",
-      "edition": "d9e4ba55eddc55c15e690b590d7c7dbb34934227faa7fcff471fc82929c8dcd9",
-      "campaign": "fracture-lines-coupa/1/7366cdb1e5e3ed7e",
-      "modes": ["solo", "versus"],
-      "lifecycle": "archive",
-      "missions": [
-        ["fracture-lines-split-ring", "1"],
-        ["fracture-lines-fault-fan", "1"],
-        ["fracture-lines-frayed-causeway", "1"]
+        [
+          "fracture-lines-split-ring",
+          "1"
+        ],
+        [
+          "fracture-lines-fault-fan",
+          "1"
+        ],
+        [
+          "fracture-lines-frayed-causeway",
+          "1"
+        ]
       ]
     },
     {
       "owner": "[\"classic\",\"external\",\"countercurrent-fpv\",\"current-line-impact.v1\"]",
       "edition": "9756b1e4afa71e11d231b4a07a88c0fd53de4e63c862f7c7191b260f12c36b38:current-line-impact.v1",
       "campaign": "countercurrent-fpv/1/7359effa888ca945::current-line-impact.v1",
-      "modes": ["solo", "versus"],
+      "modes": [
+        "solo",
+        "versus"
+      ],
       "lifecycle": "current",
       "missions": [
-        ["countercurrent-offset-docks", "1"],
-        ["countercurrent-sandbar-braid", "1"],
-        ["countercurrent-crossing-watch", "1"]
+        [
+          "countercurrent-offset-docks",
+          "1"
+        ],
+        [
+          "countercurrent-sandbar-braid",
+          "1"
+        ],
+        [
+          "countercurrent-crossing-watch",
+          "1"
+        ]
       ]
     },
     {
       "owner": "[\"classic\",\"external\",\"countercurrent-fpv\"]",
       "edition": "9756b1e4afa71e11d231b4a07a88c0fd53de4e63c862f7c7191b260f12c36b38",
       "campaign": "countercurrent-fpv/1/7359effa888ca945",
-      "modes": ["solo", "versus"],
+      "modes": [
+        "solo",
+        "versus"
+      ],
       "lifecycle": "archive",
       "missions": [
-        ["countercurrent-offset-docks", "1"],
-        ["countercurrent-sandbar-braid", "1"],
-        ["countercurrent-crossing-watch", "1"]
+        [
+          "countercurrent-offset-docks",
+          "1"
+        ],
+        [
+          "countercurrent-sandbar-braid",
+          "1"
+        ],
+        [
+          "countercurrent-crossing-watch",
+          "1"
+        ]
       ]
     },
     {
       "owner": "[\"classic\",\"external\",\"countercurrent-ukraine\",\"current-line-impact.v1\"]",
       "edition": "7a369c639fbfa5a414cfa377e37990d0e8cf8dff226830b00be697cc3b85f13d:current-line-impact.v1",
       "campaign": "countercurrent-ukraine/1/7f014de96585a18e::current-line-impact.v1",
-      "modes": ["solo", "versus"],
+      "modes": [
+        "solo",
+        "versus"
+      ],
       "lifecycle": "current",
       "missions": [
-        ["countercurrent-offset-docks", "1"],
-        ["countercurrent-sandbar-braid", "1"],
-        ["countercurrent-crossing-watch", "1"]
+        [
+          "countercurrent-offset-docks",
+          "1"
+        ],
+        [
+          "countercurrent-sandbar-braid",
+          "1"
+        ],
+        [
+          "countercurrent-crossing-watch",
+          "1"
+        ]
       ]
     },
     {
       "owner": "[\"classic\",\"external\",\"countercurrent-ukraine\"]",
       "edition": "7a369c639fbfa5a414cfa377e37990d0e8cf8dff226830b00be697cc3b85f13d",
       "campaign": "countercurrent-ukraine/1/7f014de96585a18e",
-      "modes": ["solo", "versus"],
+      "modes": [
+        "solo",
+        "versus"
+      ],
       "lifecycle": "archive",
       "missions": [
-        ["countercurrent-offset-docks", "1"],
-        ["countercurrent-sandbar-braid", "1"],
-        ["countercurrent-crossing-watch", "1"]
+        [
+          "countercurrent-offset-docks",
+          "1"
+        ],
+        [
+          "countercurrent-sandbar-braid",
+          "1"
+        ],
+        [
+          "countercurrent-crossing-watch",
+          "1"
+        ]
       ]
     },
     {
       "owner": "[\"classic\",\"external\",\"countercurrent-retro\",\"current-line-impact.v1\"]",
       "edition": "1c782ed22679e1c3a0822bc7d31849a44c2e07efdd3bb85006be9682d51fcfbe:current-line-impact.v1",
       "campaign": "countercurrent-retro/1/84d11a16c0585605::current-line-impact.v1",
-      "modes": ["solo", "versus"],
+      "modes": [
+        "solo",
+        "versus"
+      ],
       "lifecycle": "current",
       "missions": [
-        ["countercurrent-offset-docks", "1"],
-        ["countercurrent-sandbar-braid", "1"],
-        ["countercurrent-crossing-watch", "1"]
+        [
+          "countercurrent-offset-docks",
+          "1"
+        ],
+        [
+          "countercurrent-sandbar-braid",
+          "1"
+        ],
+        [
+          "countercurrent-crossing-watch",
+          "1"
+        ]
       ]
     },
     {
       "owner": "[\"classic\",\"external\",\"countercurrent-retro\"]",
       "edition": "1c782ed22679e1c3a0822bc7d31849a44c2e07efdd3bb85006be9682d51fcfbe",
       "campaign": "countercurrent-retro/1/84d11a16c0585605",
-      "modes": ["solo", "versus"],
+      "modes": [
+        "solo",
+        "versus"
+      ],
       "lifecycle": "archive",
       "missions": [
-        ["countercurrent-offset-docks", "1"],
-        ["countercurrent-sandbar-braid", "1"],
-        ["countercurrent-crossing-watch", "1"]
-      ]
-    },
-    {
-      "owner": "[\"classic\",\"external\",\"countercurrent-coupa\",\"current-line-impact.v1\"]",
-      "edition": "625879853cfd4e7b26deb252ba0505565efda8fe27891e68c167893149310ff5:current-line-impact.v1",
-      "campaign": "countercurrent-coupa/1/5f8155b60753cb07::current-line-impact.v1",
-      "modes": ["solo", "versus"],
-      "lifecycle": "current",
-      "missions": [
-        ["countercurrent-offset-docks", "1"],
-        ["countercurrent-sandbar-braid", "1"],
-        ["countercurrent-crossing-watch", "1"]
-      ]
-    },
-    {
-      "owner": "[\"classic\",\"external\",\"countercurrent-coupa\"]",
-      "edition": "625879853cfd4e7b26deb252ba0505565efda8fe27891e68c167893149310ff5",
-      "campaign": "countercurrent-coupa/1/5f8155b60753cb07",
-      "modes": ["solo", "versus"],
-      "lifecycle": "archive",
-      "missions": [
-        ["countercurrent-offset-docks", "1"],
-        ["countercurrent-sandbar-braid", "1"],
-        ["countercurrent-crossing-watch", "1"]
+        [
+          "countercurrent-offset-docks",
+          "1"
+        ],
+        [
+          "countercurrent-sandbar-braid",
+          "1"
+        ],
+        [
+          "countercurrent-crossing-watch",
+          "1"
+        ]
       ]
     }
   ],
@@ -1613,67 +2529,131 @@
     "whole-spatial-v25": [
       {
         "routeId": "whole-spatial-v24",
-        "missionIds": ["crossing-complete", "returning-light", "home-signal"]
+        "missionIds": [
+          "crossing-complete",
+          "returning-light",
+          "home-signal"
+        ]
       },
       {
         "routeId": "whole-spatial-v23",
-        "missionIds": ["first-relay", "relay-perimeter", "crown-audience"]
+        "missionIds": [
+          "first-relay",
+          "relay-perimeter",
+          "crown-audience"
+        ]
       },
       {
         "routeId": "whole-spatial-v22",
-        "missionIds": ["read-the-arrows", "windbreak-weave", "long-wave"]
+        "missionIds": [
+          "read-the-arrows",
+          "windbreak-weave",
+          "long-wave"
+        ]
       },
       {
         "routeId": "whole-spatial-v21",
-        "missionIds": ["first-link", "second-approach", "three-compounds"]
+        "missionIds": [
+          "first-link",
+          "second-approach",
+          "three-compounds"
+        ]
       },
       {
         "routeId": "whole-spatial-v20",
-        "missionIds": ["read-the-lock", "switchyard", "split-junction"]
+        "missionIds": [
+          "read-the-lock",
+          "switchyard",
+          "split-junction"
+        ]
       },
       {
         "routeId": "whole-spatial-v19",
-        "missionIds": ["return-in-reserve", "two-ways-home", "dogleg-transfer"]
+        "missionIds": [
+          "return-in-reserve",
+          "two-ways-home",
+          "dogleg-transfer"
+        ]
       },
       {
         "routeId": "whole-spatial-v18",
-        "missionIds": ["first-fracture", "two-districts", "fracture-remix"]
+        "missionIds": [
+          "first-fracture",
+          "two-districts",
+          "fracture-remix"
+        ]
       },
       {
         "routeId": "whole-spatial-v17",
-        "missionIds": ["wake-the-yard", "between-the-rows", "rover-remix"]
+        "missionIds": [
+          "wake-the-yard",
+          "between-the-rows",
+          "rover-remix"
+        ]
       },
       {
         "routeId": "whole-spatial-v16",
-        "missionIds": ["dogleg-return", "staggered-circuit", "neon-remix"]
+        "missionIds": [
+          "dogleg-return",
+          "staggered-circuit",
+          "neon-remix"
+        ]
       },
       {
         "routeId": "whole-spatial-v15",
-        "missionIds": ["folded-corner", "inside-out", "side-door-bays"]
+        "missionIds": [
+          "folded-corner",
+          "inside-out",
+          "side-door-bays"
+        ]
       },
       {
         "routeId": "whole-spatial-v14",
-        "missionIds": ["soft-crossing", "cool-the-crossing", "signal-remix"]
+        "missionIds": [
+          "soft-crossing",
+          "cool-the-crossing",
+          "signal-remix"
+        ]
       },
       {
         "routeId": "whole-spatial-v13",
-        "missionIds": ["nearby-shore", "two-bays", "behind-the-patrol"]
+        "missionIds": [
+          "nearby-shore",
+          "two-bays",
+          "behind-the-patrol"
+        ]
       },
       {
         "routeId": "whole-spatial-v12",
-        "missionIds": ["border-remix", "dry-spine", "wide-approach"]
+        "missionIds": [
+          "border-remix",
+          "dry-spine",
+          "wide-approach"
+        ]
       },
       {
         "routeId": "whole-spatial-v11",
-        "missionIds": ["second-landing", "long-rail", "new-frontier"]
+        "missionIds": [
+          "second-landing",
+          "long-rail",
+          "new-frontier"
+        ]
       },
       {
         "routeId": "whole-spatial-v10",
-        "missionIds": ["island-outpost", "long-way-home", "horizon-remix"]
+        "missionIds": [
+          "island-outpost",
+          "long-way-home",
+          "horizon-remix"
+        ]
       },
       {
         "routeId": "whole-spatial-v9",
-        "missionIds": ["stepping-stones", "return-pocket", "neutral-ground"]
+        "missionIds": [
+          "stepping-stones",
+          "return-pocket",
+          "neutral-ground"
+        ]
       }
     ],
     "opening": []
@@ -1713,11 +2693,19 @@
       "owner": "team-classic:relay-rescue-starter",
       "edition": "relay-rescue-starter@2",
       "campaign": "relay-rescue-starter",
-      "modes": ["team"],
+      "modes": [
+        "team"
+      ],
       "lifecycle": "current",
       "missions": [
-        ["first-connection", "2"],
-        ["relay-yard", "2"]
+        [
+          "first-connection",
+          "2"
+        ],
+        [
+          "relay-yard",
+          "2"
+        ]
       ]
     }
   ]

@@ -912,8 +912,8 @@ test('Motion attachment drafts are per character and live edits keep the existin
   assert.deepEqual(freezeView(h), before);
   assert.equal(h.$('play-pause').textContent, 'Pause');
   h.$('parts-editor-json').value = '{unapplied';
-  h.change('character', 'navi-avatar');
-  assert.equal(JSON.parse(h.$('parts-editor-json').value)[0].type, 'pulse');
+  h.change('character', 'retro-craft');
+  assert.equal(JSON.parse(h.$('parts-editor-json').value)[0].type, 'thruster');
   h.change('parts-editor-rate', '1.25');
   h.change('character', 'ukrainian-bird');
   assert.equal(
@@ -921,8 +921,8 @@ test('Motion attachment drafts are per character and live edits keep the existin
     accepted,
     'Pending text cannot overwrite another character',
   );
-  h.change('character', 'navi-avatar');
-  assert.equal(JSON.parse(h.$('parts-editor-json').value)[0].frequencyHz, 1.25);
+  h.change('character', 'retro-craft');
+  assert.equal(JSON.parse(h.$('parts-editor-json').value)[0].flickerHz, 1.25);
   h.change('animation-recipe', 'swallow-flight');
   assert.equal(
     JSON.parse(h.$('parts-editor-json').value)[0].frequencyHz,

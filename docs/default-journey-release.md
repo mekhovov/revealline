@@ -1,5 +1,7 @@
 # Default Journey release — six-hour delivery
 
+> Retained excerpt after an ownership migration. Historical totals and verification statements describe the original scope; this excerpt is not a current release qualification. Original bytes and removed material are preserved separately.
+
 > **Current status:** use the
 > [completed and remaining delivery plan](plan-status-2026-09-23.md) for released
 > features, active promotion, prioritized remaining work and evidence limits.
@@ -115,7 +117,6 @@ additive commitments or guarantees.
 | Then | P04/P05 complete Studio/themes/exact restoration | 2–5 days |
 | Then | P08-B/P02-B animation/audio qualification and listening | 1–3 days plus device/listening availability |
 | Then | P09/P10 encounter/difficulty and Team qualification | 3–6 days |
-| Deferred production | P11–P15 FPV, DroneAid, Atlas, Retro, Coupa | 3–7 days per first finished campaign slice; refine full scope first |
 | Then | P16 Collection/learning/replay/legacy/supporting workflows | 2–4 days |
 | Then | P17 independently reproduced community guide | 1–2 days |
 | Final | P18 performance/accessibility/offline/physical-device qualification | 3–5 days after blockers close |

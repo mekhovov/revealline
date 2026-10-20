@@ -101,6 +101,29 @@ post-unlock screenshots are eligible for upload, total at most 4 MiB. Private
 raw browser output, credentials, signed URLs and package payloads are not uploaded.
 No deployed site or retained local user data is touched.
 
+## Failure evidence and current-source reconciliation
+
+The first exact 887829 consumer run verified the historical archive and existing
+compiled navigation, then its browser child exited 1. The uploaded evidence did
+not retain the observer report, so its failing native UI stage remains unknown.
+This diagnostic successor retains the bounded, source-bound observer report
+through the existing complete-report sanitizer before validating the child exit.
+The original exit/ownership failure stays authoritative; no raw private browser
+output or credentials are added to public evidence.
+
+The same package, dependency, Node, tracked-source, Git and resource postchecks
+are attempted once on both paths. Fresh campaign, disk/allocation and prior-child
+ownership guards admit each postcheck. An unavailable check is recorded as
+unavailable and cannot qualify source equivalence or success. Secondary postcheck
+errors do not replace the original observer failure. Normal native actions,
+predicates, deadlines, credentials and historical target remain unchanged.
+
+The proposal preserves current main's ownership-retirement changes and every
+current focused-map category, adding only the consumer category. The small new
+finalization module is covered by the existing workflow trigger/control checkout
+and focused consumer pattern; ordinary CLI discovery still adds only the cheap
+contract file. This is an unexecuted diagnostic successor, not browser acceptance.
+
 ## Discovery, acceptance and remaining gates
 
 The unchanged default CLI discovers only the new cheap contract

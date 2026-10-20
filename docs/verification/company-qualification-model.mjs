@@ -32,8 +32,8 @@ export const COMPANY_GATE_SCENARIOS = Object.freeze({
     'screen-reader',
   ]),
   'installed-pwa-isolation': Object.freeze([
-    'coupa-os-launch',
-    'droneaid-os-launch',
+    'first-app-os-launch',
+    'second-app-os-launch',
     'concurrent-isolation',
   ]),
   'update-and-rollback': Object.freeze([
@@ -78,7 +78,6 @@ const CROSS_EDITION_GATES = new Set([
   'storage-and-backup-recovery',
   'same-device-performance',
 ]);
-const PRIMARY_EDITIONS = Object.freeze(['coupa-all', 'droneaid-nl-community']);
 const REVIEW_STATUSES = new Set(['pending', 'passed', 'failed', 'unavailable']);
 const OUTCOMES = new Set(['passed', 'failed', 'unavailable']);
 const DEVICE_ENVIRONMENT_FIELDS = Object.freeze([
@@ -236,9 +235,8 @@ function validateReview(review, editionIds, envelope) {
   )
     fail('One review entry cannot count the same scenario more than once.');
   if (CROSS_EDITION_GATES.has(review.gate) && review.status === 'passed') {
-    for (const id of PRIMARY_EDITIONS)
-      if (editionIds.includes(id) && !review.editionIds.includes(id))
-        fail('Cross-edition device evidence must observe both primary company editions together.');
+    if (review.editionIds.length < Math.min(2, editionIds.length))
+      fail('Cross-edition device evidence must observe two included editions together.');
   }
   if (review.gate === 'automated-validation') {
     if (review.environment !== null) fail('Automated validation cannot claim a physical device.');

@@ -1,3 +1,5 @@
+> Retained historical excerpt after an ownership migration. Exact original bytes are preserved separately. Original totals and verification statements describe the original scope; this excerpt is not a current qualification or a complete test result.
+
 # Round 27.1 — frozen v0.17.1 offline browser journey
 
 **Offline preparation, offline content installation, flight continuation and profile retention passed in the recorded journey. Gallery celebration acceptance remains incomplete:** the main-game console captured a celebration timing exception. The screenshots show the correct artwork, but this is not a clean-console or complete-animation pass.
@@ -14,7 +16,6 @@ The original player library was then imported through the public Save JSON flow:
 
 ## Artwork and legal flight continuation
 
-Root opened all four pictures; the report author also inspected their saved screenshots. Each title has its expected original artwork: [Garden of Threads](../../../.cache/round-27-1/frozen-browser/garden-celebration-offline.jpg), [Neon Switchboard](../../../.cache/round-27-1/frozen-browser/neon-offline.jpg), [Clear Ledger](../../../.cache/round-27-1/frozen-browser/ledger-offline.jpg), and [Copper Orchard](../../../.cache/round-27-1/frozen-browser/homeward-offline.jpg). Garden's Play celebration control was pressed before its static capture; that image does not establish an animation timeline, and the exception below prevents calling celebration successful. At **1280 × 720**, Copper Orchard's picture, title and seal are visible, but its bottom action row is partly clipped before native scrolling. This is not an all-actions-visible claim.
 
 The existing legal [workshop-01-immediate.session.json](../../../.cache/round-27/browser/workshop-art-20260912154036973/workshop-01-immediate.session.json) prefix was imported through Save JSON while offline. The [restored state](../../../.cache/round-27-1/frozen-browser/immediate-loaded-offline.txt) is paused at **38.9%**, **6,590 points**, **three lives**, one of two memories and **0:58 remaining**. Root explicitly chose Resume and used the normal Move right control.
 

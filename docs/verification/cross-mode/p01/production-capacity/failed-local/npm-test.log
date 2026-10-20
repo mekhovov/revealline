@@ -1,3 +1,5 @@
+# Retained historical excerpt after an ownership migration. Exact original bytes are preserved separately. Original totals and verification statements describe the original scope; this excerpt is not a current qualification or a complete test result.
+
 
 > revealline@0.57.2 test
 > node scripts/game-cli.mjs test
@@ -6346,11 +6348,6 @@ ok 1242 - exact retro pair remains within its edition prefix and authenticates i
   ---
   duration_ms: 1025.493208
   ...
-# Subtest: exact coupa pair remains within its edition prefix and authenticates its three originals
-ok 1243 - exact coupa pair remains within its edition prefix and authenticates its three originals
-  ---
-  duration_ms: 1166.643875
-  ...
 # Subtest: a Countercurrent owner cannot accept a sibling pair or a cancelled originals response
 ok 1244 - a Countercurrent owner cannot accept a sibling pair or a cancelled originals response
   ---
@@ -6486,11 +6483,6 @@ ok 1266 - ukraine: real terminal failure is visible before menu; only wreck age 
 ok 1267 - retro: real terminal failure is visible before menu; only wreck age advances
   ---
   duration_ms: 971.854959
-  ...
-# Subtest: coupa: real terminal failure is visible before menu; only wreck age advances
-ok 1268 - coupa: real terminal failure is visible before menu; only wreck age advances
-  ---
-  duration_ms: 973.418125
   ...
 # Subtest: Classic traveling-front defeat, reduced effects, focus loss and explicit skip preserve the terminal run
 ok 1269 - Classic traveling-front defeat, reduced effects, focus loss and explicit skip preserve the terminal run
@@ -7279,11 +7271,6 @@ ok 1425 - retro: seven role body geometries differ before badges, with the same 
   ---
   duration_ms: 0.141125
   ...
-# Subtest: coupa: seven role body geometries differ before badges, with the same colors
-ok 1426 - coupa: seven role body geometries differ before badges, with the same colors
-  ---
-  duration_ms: 0.198292
-  ...
 # Subtest: fpv: all seven catalog practice routes validate and execute ordinary inputs
 ok 1427 - fpv: all seven catalog practice routes validate and execute ordinary inputs
   ---
@@ -7298,11 +7285,6 @@ ok 1428 - ukraine: all seven catalog practice routes validate and execute ordina
 ok 1429 - retro: all seven catalog practice routes validate and execute ordinary inputs
   ---
   duration_ms: 9.560958
-  ...
-# Subtest: coupa: all seven catalog practice routes validate and execute ordinary inputs
-ok 1430 - coupa: all seven catalog practice routes validate and execute ordinary inputs
-  ---
-  duration_ms: 10.203083
   ...
 # Subtest: selected procedural skins alter body family, while a custom role image and collision radius remain independent
 ok 1431 - selected procedural skins alter body family, while a custom role image and collision radius remain independent
@@ -9469,15 +9451,6 @@ ok 1839 - queued layout cannot alter a outside owner's scroll or focus
   ---
   duration_ms: 0.113667
   ...
-# Subtest: queued layout cannot alter a disposed owner's scroll or focus
-ok 1840 - queued layout cannot alter a disposed owner's scroll or focus
-  ---
-  duration_ms: 0.203917
-  ...
-# original-fpv-pressure: 10719959 formatted bytes; 10711106 normalized JSON bytes; dc7b29694ec409c629e4006f11b96a2834937bf0f846e9dd9f29c5981aa5daa9
-# original-ukraine-atlas: 12358446 formatted bytes; 12349593 normalized JSON bytes; 690c56f06c85fddf01bab9b997022ed3c5ed9b8872b79b4124cd263607a3d91b
-# original-retro-1994: 10329657 formatted bytes; 10320804 normalized JSON bytes; 33e772d12a0ae98373e4240257b0f9726f00ad28095cb0ae06d6d1fc79964714
-# original-spend-network: 11067202 formatted bytes; 11058349 normalized JSON bytes; 5ab9a0c7362ca8e05819ff3d68c0a7246ab5057b4d796a063d3d69af115504ac
 # Subtest: four optional theme chapters compile all twelve exact originals with distinct contexts and unchanged gameplay
 ok 1841 - four optional theme chapters compile all twelve exact originals with distinct contexts and unchanged gameplay
   ---
@@ -9825,11 +9798,6 @@ ok 1879 - exact ukraine pair remains within its edition prefix and authenticates
 ok 1880 - exact retro pair remains within its edition prefix and authenticates its three originals
   ---
   duration_ms: 1089.128959
-  ...
-# Subtest: exact coupa pair remains within its edition prefix and authenticates its three originals
-ok 1881 - exact coupa pair remains within its edition prefix and authenticates its three originals
-  ---
-  duration_ms: 1195.880041
   ...
 # Subtest: a Fracture owner cannot accept a sibling pair or a cancelled originals response
 ok 1882 - a Fracture owner cannot accept a sibling pair or a cancelled originals response
@@ -14151,16 +14119,6 @@ ok 2737 - legacy retro cover: a decoded backdrop preserves opaque concealment, c
   ---
   duration_ms: 4.132291
   ...
-# Subtest: legacy coupa contain: a decoded backdrop preserves opaque concealment, cues, separate actor art and authority
-ok 2738 - legacy coupa contain: a decoded backdrop preserves opaque concealment, cues, separate actor art and authority
-  ---
-  duration_ms: 4.737166
-  ...
-# Subtest: legacy coupa cover: a decoded backdrop preserves opaque concealment, cues, separate actor art and authority
-ok 2739 - legacy coupa cover: a decoded backdrop preserves opaque concealment, cues, separate actor art and authority
-  ---
-  duration_ms: 3.976042
-  ...
 # Subtest: Classic wide fpv contain: a decoded backdrop preserves opaque concealment, cues, separate actor art and authority
 ok 2740 - Classic wide fpv contain: a decoded backdrop preserves opaque concealment, cues, separate actor art and authority
   ---
@@ -14190,16 +14148,6 @@ ok 2744 - Classic wide retro contain: a decoded backdrop preserves opaque concea
 ok 2745 - Classic wide retro cover: a decoded backdrop preserves opaque concealment, cues, separate actor art and authority
   ---
   duration_ms: 8.190791
-  ...
-# Subtest: Classic wide coupa contain: a decoded backdrop preserves opaque concealment, cues, separate actor art and authority
-ok 2746 - Classic wide coupa contain: a decoded backdrop preserves opaque concealment, cues, separate actor art and authority
-  ---
-  duration_ms: 8.222833
-  ...
-# Subtest: Classic wide coupa cover: a decoded backdrop preserves opaque concealment, cues, separate actor art and authority
-ok 2747 - Classic wide coupa cover: a decoded backdrop preserves opaque concealment, cues, separate actor art and authority
-  ---
-  duration_ms: 7.320584
   ...
 # Subtest: absent/null bindings exactly retain old drawing; clearing a temporary binding restores the same authored image and fit
 ok 2748 - absent/null bindings exactly retain old drawing; clearing a temporary binding restores the same authored image and fit
@@ -15738,11 +15686,6 @@ ok 3051 - retro: actual observed movement animates microtile bodies; Pause holds
   ---
   duration_ms: 0.3195
   ...
-# Subtest: coupa: actual observed movement animates microtile bodies; Pause holds the exact pose
-ok 3052 - coupa: actual observed movement animates microtile bodies; Pause holds the exact pose
-  ---
-  duration_ms: 0.395625
-  ...
 # Subtest: uploaded body remains independent, with light heading/contact cues rather than dark-theme ink inversion
 ok 3053 - uploaded body remains independent, with light heading/contact cues rather than dark-theme ink inversion
   ---
@@ -16705,11 +16648,6 @@ ok 3237 - explicit ukraine transport resolves only that exact owner and all thre
 ok 3238 - explicit retro transport resolves only that exact owner and all three null-story originals
   ---
   duration_ms: 1133.560709
-  ...
-# Subtest: explicit coupa transport resolves only that exact owner and all three null-story originals
-ok 3239 - explicit coupa transport resolves only that exact owner and all three null-story originals
-  ---
-  duration_ms: 1375.883625
   ...
 # Subtest: cross-theme originals and interrupted second body cannot become an install capability
 ok 3240 - cross-theme originals and interrupted second body cannot become an install capability

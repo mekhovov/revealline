@@ -9,7 +9,7 @@ import { MEDIA_LIMITS } from '../../../game/media-library.mjs';
 
 const folder = fileURLToPath(new URL('./', import.meta.url));
 const root = resolve(folder, '../../..');
-const themes = ['ukraine', 'retro', 'coupa'];
+const themes = ['ukraine', 'retro'];
 const names = ['listening-court', 'switchyard-gates', 'open-the-circuit'];
 const cells = themes.flatMap((theme) =>
   names.map((name) => ({

@@ -1,5 +1,7 @@
 # Pixel art, cultural direction, and replay references
 
+> Retained excerpt after an ownership migration. Historical totals and verification statements describe the original scope; this excerpt is not a current release qualification. Original bytes and removed material are preserved separately.
+
 Research pass: 12 September 2026. This is a curated set of influential modern pixel-art references, not a claim to cover every popular title or a popularity ranking. Factual observations are linked to developers, publishers, artist accounts, or cultural institutions. Recommendations and palette values are our design proposals. Reference screenshots and music are research references, not licensed production assets.
 
 ## Recommended synthesis
@@ -71,19 +73,9 @@ All names, colors, and mechanics below are proposals.
 | --- | --- | --- | --- |
 | **Signal over the Steppe** | Midnight navy `#101C35`, blue `#3987D8`, warm wheat `#EDC85B`, ivory `#F3E7CD`, vermilion warning `#E75A48`; top-down drone above a dark field; reveal dusk landscapes and occupied military positions in stylized form; slim stitched frame. | Focused, brave, tense, hopeful. Strongest match to the requested FPV theme. | Landscape detail can obscure threats unless the active layer is deliberately separated. |
 | **Petrykivka Afterlight** | Deep plum `#271B32`, parchment `#F4E6CA`, leaf green `#477D50`, berry `#BD3443`, gold `#E6B859`; drone with a small luminous bird motif; completed territories bloom into folk-art landscapes. | Magical, warm, distinctly Ukrainian; a wider emotional range than military hardware alone. | Requires excellent restraint so flourishes do not become busy decoration. |
-| **Navi: Savings Circuit** | Proposed dark blue `#102C4D`, clear blue `#278CDD`, pale sky `#CFEFFC`, white `#F8FBFF`, savings accent `#68D8B1`; crisp data-city board and illuminated value routes. Exact brand tokens remain to verify. | Clever, upbeat, satisfying; rescues lost value and restores client projects. | A corporate theme needs a playful visual metaphor and readable objectives to feel like a game rather than a dashboard. |
 
 For the Ukraine game, depict hostile military machinery and invader units as the challenges. Enemy roles should be recognizable gameplay archetypes: perimeter crawler, roaming interceptor, static jammer, telegraphed scanner. Pixel shape and animation communicate role; narrative identities can change with the theme pack. The positive reveal reward could show liberated scenery, hidden invader positions, cultural artwork, or a sequence that changes from occupation to recovery. This is a key choice for the user to make next.
 
-For the Coupa theme, propose maverick-spend leaks, duplicate-invoice glitches, delayed approvals, and waste clouds as enemies; securing an area restores budget or savings. This is fictional game shorthand, not a claim about the behavior of Coupa products or customers.
-
-## Coupa / Navi reference status
-
-Official Coupa documentation confirms a Navi icon and chat interface. It provides a concrete UI reference but does not establish a complete animated game character sheet. [Official Navi documentation](https://docs.coupa.com/en/supplier-documentation/coupa-for-suppliers/the-coupa-supplier-portal-or-csp/answer-csp-related-questions-with-csp-supplier-assistance-agent). The indexed article was readable during research, but a direct browser open redirected to a browser-upgrade page.
-
-Coupa's partner marketing playbook directs readers to `brand.coupa.com` for logos and usage. [Official playbook](https://get.coupa.com/rs/950-OLU-185/images/CoupaLink%20Partner%20Marketing%20Playbook.pdf). The brand portal could not be fetched in this research session, so exact current brand colors and rules are unverified. Brand agency Bluetext documents its work on Coupa's dominant blue and X-Factor motif. [Agency's first-person case study](https://bluetext.com/work/coupa/)
-
-Next concepts may use a clearly labeled proposed Navi adaptation; final sprite sheets should be based on approved source artwork available to the user.
 
 ## Music direction
 

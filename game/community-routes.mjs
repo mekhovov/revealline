@@ -10,19 +10,6 @@ export const COMMUNITY_ROUTES = Object.freeze(
       editionIds: [id],
     })),
     {
-      slug: 'coupa',
-      brandId: 'coupa',
-      editionId: 'coupa-all',
-      editionIds: [
-        'coupa-all',
-        'coupa-adventure',
-        'coupa-culture',
-        'coupa-foundations',
-        'coupa-operations',
-        'coupa-developers',
-      ],
-    },
-    {
       slug: 'droneaid',
       brandId: 'droneaid-nl',
       editionId: 'droneaid-nl-community',

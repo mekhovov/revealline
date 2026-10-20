@@ -1,3 +1,14 @@
+import { execFile } from 'node:child_process';
+import { promisify } from 'node:util';
+import { mkdtemp, writeFile, rm } from 'node:fs/promises';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
+import { randomUUID } from 'node:crypto';
+import { encodePagesReport } from './solo-pages-smoke.mjs';
+import {
+  captureBeforeValidation,
+  settlePostflightChecks,
+} from './compiled-menu-browser-finalization.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
@@ -209,4 +220,187 @@ test('new fixed workflow never replaces protected Pages/main or ordinary source 
     /REVEALLINE_PAGES_TEST_PASSWORD: \$\{\{ secrets\.REVEALLINE_PAGES_TEST_PASSWORD \}\}/,
   );
   assert.match(source, /scripts\/run-compiled-menu-browser\.mjs/);
+});
+
+test('failed observer report is sanitized before exit validation and all postchecks still run', async () => {
+  const directory = await mkdtemp(join(tmpdir(), 'cmb-finalization-'));
+  const secret = randomUUID();
+  const privateReport = join(directory, 'private-report.json');
+  const publicReport = join(directory, 'public-report.json');
+  const order = [];
+  try {
+    const payload = {
+      format: 'RevealLineCompiledMenuBrowserReportV1',
+      toolingRevision: 'a'.repeat(40),
+      target: TARGET,
+      status: 'failed',
+      failure: 'fixture visible Missions failure ' + secret,
+      failureDetails: {
+        step: 'fixture native Missions click',
+        message: 'fixture failure ' + secret,
+      },
+    };
+    let childFailure;
+    try {
+      await promisify(execFile)(
+        process.execPath,
+        [
+          '--max-old-space-size=128',
+          '--input-type=module',
+          '--eval',
+          'import { writeFileSync } from "node:fs"; writeFileSync(process.env.CMB_TEST_REPORT, process.env.CMB_TEST_PAYLOAD); process.stdout.write("DO_NOT_UPLOAD_" + process.env.CMB_TEST_SECRET); process.exitCode = 1;',
+        ],
+        {
+          timeout: 10000,
+          maxBuffer: 65536,
+          env: {
+            ...process.env,
+            CMB_TEST_REPORT: privateReport,
+            CMB_TEST_PAYLOAD: JSON.stringify(payload),
+            CMB_TEST_SECRET: secret,
+          },
+        },
+      );
+    } catch (error) {
+      childFailure = error;
+    }
+    assert.equal(childFailure?.code, 1);
+    assert.equal(childFailure.signal, null);
+    assert.equal(childFailure.stdout, 'DO_NOT_UPLOAD_' + secret);
+    const terminal = { ...owner(), exitCode: childFailure.code };
+    const originalFailure = new Error('original observer exit validation');
+    const outcome = await captureBeforeValidation(
+      async () => {
+        order.push('capture');
+        const report = JSON.parse(await readFile(privateReport, 'utf8'));
+        assert.equal(report.failureDetails.step, 'fixture native Missions click');
+        await writeFile(publicReport, encodePagesReport(report, secret));
+        return report;
+      },
+      () => {
+        order.push('validate');
+        assert.throws(() => assertOwner(terminal));
+        throw originalFailure;
+      },
+    );
+    assert.equal(outcome.validationFailed, true);
+    assert.equal(outcome.validationError, originalFailure);
+    assert.equal(outcome.captureFailed, false);
+    assert.equal(outcome.value.failure, payload.failure);
+    const publicBytes = await readFile(publicReport, 'utf8');
+    assert(!publicBytes.includes(secret));
+    assert(!publicBytes.includes('DO_NOT_UPLOAD_'));
+    assert.equal(JSON.parse(publicBytes).failureDetails.step, 'fixture native Missions click');
+    const checks = [];
+    for (const label of ['source', 'dependencies', 'node']) {
+      const file = join(directory, label + '.txt');
+      await writeFile(file, 'unchanged-' + label);
+      checks.push({
+        label,
+        check: async () => {
+          order.push(label);
+          assert.equal(await readFile(file, 'utf8'), 'unchanged-' + label);
+        },
+      });
+    }
+    const postflight = await settlePostflightChecks(checks);
+    assert.deepEqual(order, ['capture', 'validate', 'source', 'dependencies', 'node']);
+    assert.deepEqual(
+      postflight.map(({ label, status }) => ({ label, status })),
+      ['source', 'dependencies', 'node'].map((label) => ({ label, status: 'passed' })),
+    );
+    assert.equal(outcome.validationError, originalFailure);
+  } finally {
+    await rm(directory, { recursive: true, force: true });
+  }
+});
+
+test('report capture and postcheck failures never suppress original validation or later checks', async () => {
+  const captureError = new Error('missing observer report');
+  const originalFailure = new Error('original exit validation');
+  const outcome = await captureBeforeValidation(
+    async () => {
+      throw captureError;
+    },
+    () => {
+      throw originalFailure;
+    },
+  );
+  assert.equal(outcome.captureFailed, true);
+  assert.equal(outcome.captureError, captureError);
+  assert.equal(outcome.validationFailed, true);
+  assert.equal(outcome.validationError, originalFailure);
+  const seen = [];
+  const postflightError = new Error('source mismatch');
+  const results = await settlePostflightChecks([
+    {
+      label: 'source',
+      check: async () => {
+        seen.push('source');
+        throw postflightError;
+      },
+    },
+    {
+      label: 'dependencies',
+      check: async () => {
+        seen.push('dependencies');
+      },
+    },
+    {
+      label: 'node',
+      check: async () => {
+        seen.push('node');
+      },
+    },
+  ]);
+  assert.deepEqual(seen, ['source', 'dependencies', 'node']);
+  assert.equal(results[0].status, 'failed');
+  assert.equal(results[0].error, postflightError);
+  assert.equal(results[1].status, 'passed');
+  assert.equal(results[2].status, 'passed');
+  assert.equal(outcome.validationError, originalFailure);
+  let validations = 0;
+  const accepted = await captureBeforeValidation(
+    async () => 'retained',
+    () => {
+      validations += 1;
+    },
+  );
+  assert.equal(accepted.value, 'retained');
+  assert.equal(accepted.captureFailed, false);
+  assert.equal(accepted.validationFailed, false);
+  assert.equal(validations, 1);
+});
+
+test('unavailable postflight admission never launches checks or erases original failure', async () => {
+  const originalFailure = new Error('original observer failure');
+  const outcome = await captureBeforeValidation(
+    async () => ({ status: 'failed' }),
+    () => {
+      throw originalFailure;
+    },
+  );
+  const guard = new Error('existing campaign deadline or disk/ownership guard');
+  const attempted = [];
+  let admitted = 0;
+  const results = await settlePostflightChecks(
+    ['source', 'dependencies', 'node'].map((label) => ({
+      label,
+      check: async () => {
+        attempted.push(label);
+      },
+    })),
+    async () => {
+      admitted += 1;
+      throw guard;
+    },
+  );
+  assert.equal(admitted, 3);
+  assert.deepEqual(attempted, []);
+  assert.deepEqual(
+    results.map((x) => x.status),
+    ['unavailable', 'unavailable', 'unavailable'],
+  );
+  assert(results.every((x) => x.error === guard));
+  assert.equal(outcome.validationError, originalFailure);
 });

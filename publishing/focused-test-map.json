@@ -465,6 +465,28 @@
       ]
     },
     {
+      "id": "expansion-proof-dispatch",
+      "pathPatterns": [
+        "^scripts/(verify-packs|verify-neon-routes|test-expansion-proof-dispatch|test-neon-proof-dispatch)\\.mjs$",
+        "^game/test/expansion-playthrough\\.test\\.mjs$",
+        "^game/replays/(expansion|sentinel)-routes\\.json$",
+        "^docs/qualification/neon-level-completion/winning-routes\\.json$"
+      ],
+      "commands": [
+        {
+          "id": "expansion-proof-dispatch",
+          "command": "node",
+          "args": [
+            "--test",
+            "game/test/expansion-playthrough.test.mjs",
+            "scripts/test-expansion-proof-dispatch.mjs",
+            "scripts/test-neon-proof-dispatch.mjs"
+          ],
+          "timeoutMs": 1800000
+        }
+      ]
+    },
+    {
       "id": "remote-team-display-authoring",
       "pathPatterns": [
         "^scripts/(?:remote-team-navigation(?:-test-fixture)?|test-remote-team-navigation)\\.mjs$",

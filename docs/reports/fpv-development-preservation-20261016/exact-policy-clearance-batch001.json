@@ -1,55 +1,26 @@
 {
-  "format": "fpv-preservation-exact-policy-clearance.v1",
-  "reviewedAt": "2026-10-16T03:58:37.205698+00:00",
-  "mainTree": "2169552a0571b9d62bce116054f1e21aabd10fa1",
-  "rows": [
-    {
-      "path": "flight-practice-publication.sMOWmR/.xonix-build-rNivMM/authoring/production/history/source-index.json",
-      "sha256": "56b95644566df142375ff4153d3634a8393aa1583a3198d7e720b457031f237a",
-      "decision": "allow-app-archive",
-      "reason": "Exact Git blob matches publicly tracked main2169552a at corresponding application path. Game art/chapter descriptor or production build source-history metadata, not private company/browser history."
-    },
-    {
-      "path": "flight-practice-publication.sMOWmR/.xonix-build-rNivMM/authoring/production/history/index.json",
-      "sha256": "97489553e0c6c6a383b00a8d2885266f3a5d7f38b455e61db7d972dc3b49ee1f",
-      "decision": "allow-app-archive",
-      "reason": "Exact Git blob matches publicly tracked main2169552a at corresponding application path. Game art/chapter descriptor or production build source-history metadata, not private company/browser history."
-    },
-    {
-      "path": "flight-practice-publication.sMOWmR/.xonix-build-rNivMM/authoring/library/sentinel-theme-art/coupa/originals/switchyard-gates.png",
-      "sha256": "1395c68c2742d979eeb811be85dbf1352dfb78f114c1352112fac9937ec5e96a",
-      "decision": "allow-app-archive",
-      "reason": "Exact Git blob matches publicly tracked main2169552a at corresponding application path. Game art/chapter descriptor or production build source-history metadata, not private company/browser history."
-    },
-    {
-      "path": "flight-practice-publication.sMOWmR/.xonix-build-rNivMM/authoring/library/route-worlds/descriptors/coupa.json",
-      "sha256": "38849fc20068802638304d14b2df6fbcefdca1a6f76fdeb6a2520464b5612503",
-      "decision": "allow-app-archive",
-      "reason": "Exact Git blob matches publicly tracked main2169552a at corresponding application path. Game art/chapter descriptor or production build source-history metadata, not private company/browser history."
-    },
-    {
-      "path": "flight-practice-publication.sMOWmR/.xonix-build-rNivMM/authoring/library/sentinel-theme-art/coupa/originals/listening-court.png",
-      "sha256": "8aab2381420f0b127eb98b402de8c7b2af2fc24d471a61ce6180b0f17910959d",
-      "decision": "allow-app-archive",
-      "reason": "Exact Git blob matches publicly tracked main2169552a at corresponding application path. Game art/chapter descriptor or production build source-history metadata, not private company/browser history."
-    },
-    {
-      "path": "flight-practice-publication.sMOWmR/.xonix-build-rNivMM/authoring/library/sentinel-theme-art/coupa/originals/open-the-circuit.png",
-      "sha256": "c3251eca67f94f7e27c75e0c4ac8d1ade6a81b009ee3c154ec276578eb2a8793",
-      "decision": "allow-app-archive",
-      "reason": "Exact Git blob matches publicly tracked main2169552a at corresponding application path. Game art/chapter descriptor or production build source-history metadata, not private company/browser history."
-    },
-    {
-      "path": "flight-practice-publication.sMOWmR/.xonix-build-rNivMM/authoring/library/sentinel-theme-chapters/descriptors/coupa.json",
-      "sha256": "7642e1a75ed6a1956a280c37a4602ab5d9a3f88c566f9a4740d2313514dd7c37",
-      "decision": "allow-app-archive",
-      "reason": "Exact Git blob matches publicly tracked main2169552a at corresponding application path. Game art/chapter descriptor or production build source-history metadata, not private company/browser history."
-    },
-    {
-      "path": "flight-practice-publication.sMOWmR/.xonix-build-rNivMM/game/communities/coupa/index.html",
-      "sha256": "2dea1f079f7f81bce604d73c7ae086dd9e77e62469ee2ed4c2d3ad41aac82429",
-      "decision": "allow-app-archive",
-      "reason": "Generated FPV / LINE public Coupa community entry. Entire HTML read; includes only application access-gate verifier, scripts, styles, manifest/offline metadata and community links; no private company content or user data."
-    }
-  ]
+  "format": "revealline-retained-historical-excerpt.v1",
+  "scope": "Retained historical excerpt after an ownership migration. Original bytes are preserved separately. Historical counts, hashes and approvals inside the excerpt describe the original record only; this derived document is not a release qualification, executable restore plan, or complete original inventory.",
+  "originalSHA256": "ef9a7e6d4b93b0d5208b9b58f8595c9303a279f6240dfa10c969e7a9ce3588c7",
+  "originalGitBlob": "db802db5a60e1a92ea3d89542ae6e22f75c17fa3",
+  "removedRecordsOrFields": 6,
+  "excerpt": {
+    "format": "fpv-preservation-exact-policy-clearance.v1",
+    "reviewedAt": "2026-10-16T03:58:37.205698+00:00",
+    "mainTree": "2169552a0571b9d62bce116054f1e21aabd10fa1",
+    "rows": [
+      {
+        "path": "flight-practice-publication.sMOWmR/.xonix-build-rNivMM/authoring/production/history/source-index.json",
+        "sha256": "56b95644566df142375ff4153d3634a8393aa1583a3198d7e720b457031f237a",
+        "decision": "allow-app-archive",
+        "reason": "Exact Git blob matches publicly tracked main2169552a at corresponding application path. Game art/chapter descriptor or production build source-history metadata, not private company/browser history."
+      },
+      {
+        "path": "flight-practice-publication.sMOWmR/.xonix-build-rNivMM/authoring/production/history/index.json",
+        "sha256": "97489553e0c6c6a383b00a8d2885266f3a5d7f38b455e61db7d972dc3b49ee1f",
+        "decision": "allow-app-archive",
+        "reason": "Exact Git blob matches publicly tracked main2169552a at corresponding application path. Game art/chapter descriptor or production build source-history metadata, not private company/browser history."
+      }
+    ]
+  }
 }

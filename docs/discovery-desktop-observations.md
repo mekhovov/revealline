@@ -1,5 +1,7 @@
 # Discovery desktop observations
 
+> Retained excerpt after an ownership migration. Historical totals and verification statements describe the original scope; this excerpt is not a current release qualification. Original bytes and removed material are preserved separately.
+
 The discovery observer extends the existing company review surface/interval helpers. It is a
 passive measurement tool, not a release gate, gameplay driver or progress fixture. Every report
 remains `qualified: false`. Mocked DOM tests verify its logic only; they are never device evidence.
@@ -102,9 +104,6 @@ records are not eligible for a baseline regression comparison or frozen-artifact
 | FPV Learning, The Frame, standard/immediate/scout, stationary opening with enemies active | 1,200 frame intervals over 20 seconds; p95 16.80 ms; maximum 16.80 ms                | Does not characterize movement or advanced encounters              |
 | Same mission after a normal keyboard win, settled result                                  | 1,200 intervals over 20 seconds; p95 16.70 ms; maximum 16.80 ms                      | Armed after the win; does not measure the initial reveal animation |
 | Long tasks during those two samples                                                       | No observed page-wide long tasks                                                     | No isolated reward-rendering attribution                           |
-| 20 FPV Learning/Coupa All URL transitions                                                 | 21 ready documents; exactly one reward dialog, shelf and result per document         | Navigation destroys the previous document                          |
-| Connected DOM across those navigations                                                    | FPV: 2,723–2,726 nodes; Coupa: 2,725–2,728                                           | Connected nodes only, not detached retained owners                 |
-| Connected media across those navigations                                                  | FPV: one image; Coupa: three images; each one audio, no video, no connected blob URL | Does not count decoder allocations or unreferenced object URLs     |
 
 The result was earned through normal arrow-key controls, with 85.1% captured, 19,940 points and
 three lives remaining. No completion fixture was imported. The UI reported tab-only discovery

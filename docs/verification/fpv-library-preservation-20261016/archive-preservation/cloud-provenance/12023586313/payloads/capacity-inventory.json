@@ -1,1 +1,317 @@
-{"aggregateAssumption":"Every envelope edition hosted with an active launcher at this single candidate revision; this is not a deployment selection.","allEditionComponentsBytes":715081640,"basis":"Exact manifest lengths after candidate admission; archive bodies are not included or reverified by this metadata packet.","completeHostedOutput":false,"editions":[{"contentSha256":"ac04c0e60f0edee7a968335b04bc11fc1fbdb544e34a3eef2dc53e88698374bb","id":"coupa-adventure","immutable":{"bytes":33354907,"files":1055},"immutableAndActiveLauncherBytes":33837706,"manifest":{"bytes":144166,"path":"manifest-coupa-adventure.json","sha256":"e96fe17f5ab559b5aecb243c0fb08724b307dd962092ac17d0fa38e2a8aa4ca2"},"stableLauncher":{"bytes":482799,"currentPointer":{"bytes":118,"path":"editions/coupa-adventure/app/current.json","sha256":"94ad883d3e3092f6a3f39fd8e3285882a6fd8fc68582fd2773e4f925b08dbfc0"},"files":31}},{"contentSha256":"f3cb502c1dab96e945e44c807ec5649b464a9cfc385986f435dd1e0d7cc5650a","id":"coupa-all","immutable":{"bytes":67594724,"files":1090},"immutableAndActiveLauncherBytes":68077471,"manifest":{"bytes":149701,"path":"manifest-coupa-all.json","sha256":"52c6d102c95be5672f48025d89914b27ec68fec77c4b1e15cc419078bb0bc479"},"stableLauncher":{"bytes":482747,"currentPointer":{"bytes":112,"path":"editions/coupa-all/app/current.json","sha256":"2ef27f9ea147a6f8ddc482577966b824fd6f65d8794e6aa1b4de91df7b927583"},"files":31}},{"contentSha256":"3f2f4e5460a01141c3a285a7809d64fc3f4de1227e84a862ac94799aaf74acfa","id":"coupa-culture","immutable":{"bytes":31735597,"files":1054},"immutableAndActiveLauncherBytes":32218397,"manifest":{"bytes":143980,"path":"manifest-coupa-culture.json","sha256":"0cb50019f804d0194bd3676fff31ceedd2e1532d28dff46279ac1ecb06372599"},"stableLauncher":{"bytes":482800,"currentPointer":{"bytes":116,"path":"editions/coupa-culture/app/current.json","sha256":"da5cccb9d9404c79b5a83c855744ee504b806a3741865a33587311988d5cd791"},"files":31}},{"contentSha256":"13eac78d78d8ae0b63be73e13e9d08e7d4045b413717cc6534f486651d78b1c7","id":"coupa-developers","immutable":{"bytes":35135096,"files":1055},"immutableAndActiveLauncherBytes":35617922,"manifest":{"bytes":144161,"path":"manifest-coupa-developers.json","sha256":"0f4ad267de7dba8a5d7b2efb854ee52bd9ada938170e76cd28823e45dd91a6ed"},"stableLauncher":{"bytes":482826,"currentPointer":{"bytes":119,"path":"editions/coupa-developers/app/current.json","sha256":"287b1bc5c15a3b387d06763c98f6caf51bdd86c43e27971ad96245ac6798eb39"},"files":31}},{"contentSha256":"abf5ef4765c4a086f9524a316534f744b5d0afa6aa26bcef63d4469571748fbf","id":"coupa-foundations","immutable":{"bytes":34220880,"files":1057},"immutableAndActiveLauncherBytes":34703708,"manifest":{"bytes":144483,"path":"manifest-coupa-foundations.json","sha256":"1c5bb3bfc2730b4d7283fe53a2fed26ed86e2bd4b57883300b01e5e11b712b5b"},"stableLauncher":{"bytes":482828,"currentPointer":{"bytes":120,"path":"editions/coupa-foundations/app/current.json","sha256":"64eee476248dee44140dc34790b6a3f0e47ed97bf37d0030e92996bd39f8fc98"},"files":31}},{"contentSha256":"33ffe9bc276c262146433dfddcd526a67d5d9cc4acaa8639b9ba21c0d93e7f2e","id":"coupa-operations","immutable":{"bytes":33309771,"files":1055},"immutableAndActiveLauncherBytes":33792572,"manifest":{"bytes":144177,"path":"manifest-coupa-operations.json","sha256":"5252593b7e191fb6cae438a7682af4e8a5dce1eb040ae38d8108b7715b211663"},"stableLauncher":{"bytes":482801,"currentPointer":{"bytes":119,"path":"editions/coupa-operations/app/current.json","sha256":"06bc62804fc0e8a321f5c6469fa5a16db7c15d9789dc798cec92bc6cd5b629a7"},"files":31}},{"contentSha256":"89757fb620868c48f9ffe8c63aef2d50c007468f1cae3309219cf74b5181dd4c","id":"droneaid-community","immutable":{"bytes":32510191,"files":1048},"immutableAndActiveLauncherBytes":32981838,"manifest":{"bytes":143061,"path":"manifest-droneaid-community.json","sha256":"b74c200f57a2467dfc39f0f4e2c318d4d487a81f4bbd9491b5cca68a002f9524"},"stableLauncher":{"bytes":471647,"currentPointer":{"bytes":121,"path":"editions/droneaid-community/app/current.json","sha256":"2326c068bc8b724486eb6434d9bca53aaa991c47ed522b4a5f83bc529a1a6d2a"},"files":31}},{"contentSha256":"b64dbdba58274adacc96252a0afa065d8f2f30cb20ad0a559393fea7d599afc6","id":"droneaid-nl-careful-handoff","immutable":{"bytes":34735584,"files":1058},"immutableAndActiveLauncherBytes":35022811,"manifest":{"bytes":145137,"path":"manifest-droneaid-nl-careful-handoff.json","sha256":"116e1c0cadeb19c0642e21c34972c7b31a705fbe10340b42875e0967be31418e"},"stableLauncher":{"bytes":287227,"currentPointer":{"bytes":130,"path":"editions/droneaid-nl-careful-handoff/app/current.json","sha256":"cb2b43c5d4874e474ef0ff79b7a075a6ea7ec1dfffc46557bc7185a195c037af"},"files":30}},{"contentSha256":"a2aeddb8386d64c2e849e0fb89a1c71378e2c52f952aaf6ff574b720cba54aab","id":"droneaid-nl-community","immutable":{"bytes":72134016,"files":1126},"immutableAndActiveLauncherBytes":72421107,"manifest":{"bytes":157458,"path":"manifest-droneaid-nl-community.json","sha256":"e08bbcda7a23590900016696ac4fa239cdebacdcb1e5382c22bc20cdd05332de"},"stableLauncher":{"bytes":287091,"currentPointer":{"bytes":124,"path":"editions/droneaid-nl-community/app/current.json","sha256":"ced50e32f35d63defac683607d19e15881c1d724289b1da6e7030964b830004d"},"files":30}},{"contentSha256":"5d24d898189595632ac70f11caed10bde9683624288a241b748dbc3def66dadd","id":"droneaid-nl-makers-together","immutable":{"bytes":34611002,"files":1058},"immutableAndActiveLauncherBytes":34898209,"manifest":{"bytes":145131,"path":"manifest-droneaid-nl-makers-together.json","sha256":"c45bee387955ffc3d4e3503a66dd544e5d128a7fe62bf7e1c3a3ad878e72530d"},"stableLauncher":{"bytes":287207,"currentPointer":{"bytes":130,"path":"editions/droneaid-nl-makers-together/app/current.json","sha256":"715c5a812dd8da87bafdf6d344c6cc3b960e10c96fcf9be98672ff1406824cd8"},"files":30}},{"contentSha256":"009b18814b90113121337dd5fe639c4c24b47d5aeac7000b8bcd5ba95a2d25c1","id":"droneaid-nl-parts-in-motion","immutable":{"bytes":35129512,"files":1060},"immutableAndActiveLauncherBytes":35416719,"manifest":{"bytes":145479,"path":"manifest-droneaid-nl-parts-in-motion.json","sha256":"c1ded2aee75cfd4bd8fb13fdd9d214d84305182aa0eab77538ed03e42d9b332a"},"stableLauncher":{"bytes":287207,"currentPointer":{"bytes":130,"path":"editions/droneaid-nl-parts-in-motion/app/current.json","sha256":"d7f8673a673ccc966a520651a11e79047aa33a1173701766275ee9bf9d682263"},"files":30}},{"contentSha256":"68df87cf21ac0ef22a30a2ecb04aca8139367e863ad86a6cedbeb130a6f3bbd1","id":"droneaid-nl-shared-horizon","immutable":{"bytes":34921967,"files":1058},"immutableAndActiveLauncherBytes":35209162,"manifest":{"bytes":145114,"path":"manifest-droneaid-nl-shared-horizon.json","sha256":"f52d092616658d791de437c729c9ca47c463a1467dabad2c03151145c6c38165"},"stableLauncher":{"bytes":287195,"currentPointer":{"bytes":129,"path":"editions/droneaid-nl-shared-horizon/app/current.json","sha256":"655b585fa557332c8e001cebb2ad48c0c0498b8fceae2229d2d9b841703ffdcf"},"files":30}},{"contentSha256":"88b91dddef312a20d881256b4242c6e575cee2ead8077aed7d75b34362ec9e80","id":"droneaid-nl-signals-of-support","immutable":{"bytes":34722470,"files":1058},"immutableAndActiveLauncherBytes":35009713,"manifest":{"bytes":145206,"path":"manifest-droneaid-nl-signals-of-support.json","sha256":"8c75101fecccb68fc159b792267729bde551ca6c9c3931089a0418cf78232e2f"},"stableLauncher":{"bytes":287243,"currentPointer":{"bytes":133,"path":"editions/droneaid-nl-signals-of-support/app/current.json","sha256":"fe99243f7f9e08ff783c91128591683c22a68dfe053f4574e6ff45cb545071d0"},"files":30}},{"contentSha256":"5c9569c7f98215f29b77c9f83dbcd9942ddbce4c347c5b74ff2a2fa8efda046f","id":"droneaid-nl-workshop-lights","immutable":{"bytes":33420455,"files":1058},"immutableAndActiveLauncherBytes":33707662,"manifest":{"bytes":145118,"path":"manifest-droneaid-nl-workshop-lights.json","sha256":"50ae94436c7700a4deb9a8c314f055775cf617876bc229ed10dcfaff9401e4af"},"stableLauncher":{"bytes":287207,"currentPointer":{"bytes":130,"path":"editions/droneaid-nl-workshop-lights/app/current.json","sha256":"1ab54c420c717e2421eef58aec189799787e92b855a60c3204a7f2059efcf725"},"files":30}},{"contentSha256":"349b785029d939765454e7306c07fd78a2a38d31cc356f312507689f5c788405","id":"fpv-learning","immutable":{"bytes":41248443,"files":1140},"immutableAndActiveLauncherBytes":41506490,"manifest":{"bytes":158190,"path":"manifest-fpv-learning.json","sha256":"b5d447efe392b673660487c6d0739091a49f5a6f9d0c4e81be3fb03094ec7a49"},"stableLauncher":{"bytes":258047,"currentPointer":{"bytes":115,"path":"editions/fpv-learning/app/current.json","sha256":"3d1b47eb4a3ce234dc8978587420da4c826a5276c88d8a916f2650ba32fe85af"},"files":28}},{"contentSha256":"c811f1f430ba99d7d9a6a24974508550840a69ada912eccd8c0cba536c5f0407","id":"social-drone-ua","immutable":{"bytes":40037061,"files":1084},"immutableAndActiveLauncherBytes":40295144,"manifest":{"bytes":149361,"path":"manifest-social-drone-ua.json","sha256":"f99c9882603c488d80b9310b79b6a1be362bfdc5df32e51ccdb721f300c8ac9c"},"stableLauncher":{"bytes":258083,"currentPointer":{"bytes":118,"path":"editions/social-drone-ua/app/current.json","sha256":"d64c7bfc37f1d5ad85464ce942f16d684900846177af13c859d348dcbe4652bd"},"files":28}},{"contentSha256":"e6fb80f70f89c24a846b29b51147ff990746b8a3b35b909583e73ece32672883","id":"ukraine-culture","immutable":{"bytes":50131979,"files":1115},"immutableAndActiveLauncherBytes":50390102,"manifest":{"bytes":154414,"path":"manifest-ukraine-culture.json","sha256":"97c254dd37f3e8f993a60bd4737098f472dcade8a37008c6fefbb10dab5b3b82"},"stableLauncher":{"bytes":258123,"currentPointer":{"bytes":118,"path":"editions/ukraine-culture/app/current.json","sha256":"67ef4a16cae53307d385138896b75d7b074662a377166cff31b070bfae477452"},"files":28}},{"contentSha256":"28b44051334a17bcaa69805b1cbd71ab1321a9c969c25a888445eef04f5fd831","id":"victory-drones","immutable":{"bytes":29716836,"files":1064},"immutableAndActiveLauncherBytes":29974907,"manifest":{"bytes":146178,"path":"manifest-victory-drones.json","sha256":"1730e33c7710155fc9daad4bfeff9eb1a0bd04cf4538dee9adcc6c66a1cf10e0"},"stableLauncher":{"bytes":258071,"currentPointer":{"bytes":117,"path":"editions/victory-drones/app/current.json","sha256":"73652320d743ad0239e3d75e092fe01d5b78a888a1e71d8106f577d9216983ae"},"files":28}}],"format":"revealline-edition-capacity.v1","hostedBudgetBytes":950000000,"inputs":{"candidateVerification":{"bytes":13906,"path":"candidate-verification.json","sha256":"2b47697c7539242341043829a23b01f9e72d6547df1db81bb60fab88fd62d0ca"},"envelope":{"bytes":18723,"path":"editions.json","sha256":"1d7a29f509ccee8eeee9cec6ec2bf03b74298fcb6cc9c0747875d98003de82e2"}},"missingComponents":["Exact future default artifact and generated root routes","Previously retained edition versions and launcher ownership","Selected-edition hub including download-only links","Optional packages, launchers and any other hosted files"],"promotable":false,"publicEligible":false,"publicationAssessment":"not-performed","sourceRevision":"b65d80f716b8db646bfdf5f714892f1c0f6409b0","sourceTree":"98a19c4b9465279e910f7fd5c7b37d10b2c9d566","version":"v0.151.1"}
+{
+  "format": "revealline-retained-historical-excerpt.v1",
+  "scope": "Retained historical excerpt after an ownership migration. Original bytes are preserved separately. Historical counts, hashes and approvals inside the excerpt describe the original record only; this derived document is not a release qualification, executable restore plan, or complete original inventory.",
+  "originalSHA256": "ec457b6e3a7ee30aa45e2a078ec87bd27317e56f21a171aa3af5764902b949c2",
+  "originalGitBlob": "6c530f86a0f91cac5745bc430696cae3dcb16522",
+  "removedRecordsOrFields": 6,
+  "excerpt": {
+    "aggregateAssumption": "Every envelope edition hosted with an active launcher at this single candidate revision; this is not a deployment selection.",
+    "allEditionComponentsBytes": 715081640,
+    "basis": "Exact manifest lengths after candidate admission; archive bodies are not included or reverified by this metadata packet.",
+    "completeHostedOutput": false,
+    "editions": [
+      {
+        "contentSha256": "89757fb620868c48f9ffe8c63aef2d50c007468f1cae3309219cf74b5181dd4c",
+        "id": "droneaid-community",
+        "immutable": {
+          "bytes": 32510191,
+          "files": 1048
+        },
+        "immutableAndActiveLauncherBytes": 32981838,
+        "manifest": {
+          "bytes": 143061,
+          "path": "manifest-droneaid-community.json",
+          "sha256": "b74c200f57a2467dfc39f0f4e2c318d4d487a81f4bbd9491b5cca68a002f9524"
+        },
+        "stableLauncher": {
+          "bytes": 471647,
+          "currentPointer": {
+            "bytes": 121,
+            "path": "editions/droneaid-community/app/current.json",
+            "sha256": "2326c068bc8b724486eb6434d9bca53aaa991c47ed522b4a5f83bc529a1a6d2a"
+          },
+          "files": 31
+        }
+      },
+      {
+        "contentSha256": "b64dbdba58274adacc96252a0afa065d8f2f30cb20ad0a559393fea7d599afc6",
+        "id": "droneaid-nl-careful-handoff",
+        "immutable": {
+          "bytes": 34735584,
+          "files": 1058
+        },
+        "immutableAndActiveLauncherBytes": 35022811,
+        "manifest": {
+          "bytes": 145137,
+          "path": "manifest-droneaid-nl-careful-handoff.json",
+          "sha256": "116e1c0cadeb19c0642e21c34972c7b31a705fbe10340b42875e0967be31418e"
+        },
+        "stableLauncher": {
+          "bytes": 287227,
+          "currentPointer": {
+            "bytes": 130,
+            "path": "editions/droneaid-nl-careful-handoff/app/current.json",
+            "sha256": "cb2b43c5d4874e474ef0ff79b7a075a6ea7ec1dfffc46557bc7185a195c037af"
+          },
+          "files": 30
+        }
+      },
+      {
+        "contentSha256": "a2aeddb8386d64c2e849e0fb89a1c71378e2c52f952aaf6ff574b720cba54aab",
+        "id": "droneaid-nl-community",
+        "immutable": {
+          "bytes": 72134016,
+          "files": 1126
+        },
+        "immutableAndActiveLauncherBytes": 72421107,
+        "manifest": {
+          "bytes": 157458,
+          "path": "manifest-droneaid-nl-community.json",
+          "sha256": "e08bbcda7a23590900016696ac4fa239cdebacdcb1e5382c22bc20cdd05332de"
+        },
+        "stableLauncher": {
+          "bytes": 287091,
+          "currentPointer": {
+            "bytes": 124,
+            "path": "editions/droneaid-nl-community/app/current.json",
+            "sha256": "ced50e32f35d63defac683607d19e15881c1d724289b1da6e7030964b830004d"
+          },
+          "files": 30
+        }
+      },
+      {
+        "contentSha256": "5d24d898189595632ac70f11caed10bde9683624288a241b748dbc3def66dadd",
+        "id": "droneaid-nl-makers-together",
+        "immutable": {
+          "bytes": 34611002,
+          "files": 1058
+        },
+        "immutableAndActiveLauncherBytes": 34898209,
+        "manifest": {
+          "bytes": 145131,
+          "path": "manifest-droneaid-nl-makers-together.json",
+          "sha256": "c45bee387955ffc3d4e3503a66dd544e5d128a7fe62bf7e1c3a3ad878e72530d"
+        },
+        "stableLauncher": {
+          "bytes": 287207,
+          "currentPointer": {
+            "bytes": 130,
+            "path": "editions/droneaid-nl-makers-together/app/current.json",
+            "sha256": "715c5a812dd8da87bafdf6d344c6cc3b960e10c96fcf9be98672ff1406824cd8"
+          },
+          "files": 30
+        }
+      },
+      {
+        "contentSha256": "009b18814b90113121337dd5fe639c4c24b47d5aeac7000b8bcd5ba95a2d25c1",
+        "id": "droneaid-nl-parts-in-motion",
+        "immutable": {
+          "bytes": 35129512,
+          "files": 1060
+        },
+        "immutableAndActiveLauncherBytes": 35416719,
+        "manifest": {
+          "bytes": 145479,
+          "path": "manifest-droneaid-nl-parts-in-motion.json",
+          "sha256": "c1ded2aee75cfd4bd8fb13fdd9d214d84305182aa0eab77538ed03e42d9b332a"
+        },
+        "stableLauncher": {
+          "bytes": 287207,
+          "currentPointer": {
+            "bytes": 130,
+            "path": "editions/droneaid-nl-parts-in-motion/app/current.json",
+            "sha256": "d7f8673a673ccc966a520651a11e79047aa33a1173701766275ee9bf9d682263"
+          },
+          "files": 30
+        }
+      },
+      {
+        "contentSha256": "68df87cf21ac0ef22a30a2ecb04aca8139367e863ad86a6cedbeb130a6f3bbd1",
+        "id": "droneaid-nl-shared-horizon",
+        "immutable": {
+          "bytes": 34921967,
+          "files": 1058
+        },
+        "immutableAndActiveLauncherBytes": 35209162,
+        "manifest": {
+          "bytes": 145114,
+          "path": "manifest-droneaid-nl-shared-horizon.json",
+          "sha256": "f52d092616658d791de437c729c9ca47c463a1467dabad2c03151145c6c38165"
+        },
+        "stableLauncher": {
+          "bytes": 287195,
+          "currentPointer": {
+            "bytes": 129,
+            "path": "editions/droneaid-nl-shared-horizon/app/current.json",
+            "sha256": "655b585fa557332c8e001cebb2ad48c0c0498b8fceae2229d2d9b841703ffdcf"
+          },
+          "files": 30
+        }
+      },
+      {
+        "contentSha256": "88b91dddef312a20d881256b4242c6e575cee2ead8077aed7d75b34362ec9e80",
+        "id": "droneaid-nl-signals-of-support",
+        "immutable": {
+          "bytes": 34722470,
+          "files": 1058
+        },
+        "immutableAndActiveLauncherBytes": 35009713,
+        "manifest": {
+          "bytes": 145206,
+          "path": "manifest-droneaid-nl-signals-of-support.json",
+          "sha256": "8c75101fecccb68fc159b792267729bde551ca6c9c3931089a0418cf78232e2f"
+        },
+        "stableLauncher": {
+          "bytes": 287243,
+          "currentPointer": {
+            "bytes": 133,
+            "path": "editions/droneaid-nl-signals-of-support/app/current.json",
+            "sha256": "fe99243f7f9e08ff783c91128591683c22a68dfe053f4574e6ff45cb545071d0"
+          },
+          "files": 30
+        }
+      },
+      {
+        "contentSha256": "5c9569c7f98215f29b77c9f83dbcd9942ddbce4c347c5b74ff2a2fa8efda046f",
+        "id": "droneaid-nl-workshop-lights",
+        "immutable": {
+          "bytes": 33420455,
+          "files": 1058
+        },
+        "immutableAndActiveLauncherBytes": 33707662,
+        "manifest": {
+          "bytes": 145118,
+          "path": "manifest-droneaid-nl-workshop-lights.json",
+          "sha256": "50ae94436c7700a4deb9a8c314f055775cf617876bc229ed10dcfaff9401e4af"
+        },
+        "stableLauncher": {
+          "bytes": 287207,
+          "currentPointer": {
+            "bytes": 130,
+            "path": "editions/droneaid-nl-workshop-lights/app/current.json",
+            "sha256": "1ab54c420c717e2421eef58aec189799787e92b855a60c3204a7f2059efcf725"
+          },
+          "files": 30
+        }
+      },
+      {
+        "contentSha256": "349b785029d939765454e7306c07fd78a2a38d31cc356f312507689f5c788405",
+        "id": "fpv-learning",
+        "immutable": {
+          "bytes": 41248443,
+          "files": 1140
+        },
+        "immutableAndActiveLauncherBytes": 41506490,
+        "manifest": {
+          "bytes": 158190,
+          "path": "manifest-fpv-learning.json",
+          "sha256": "b5d447efe392b673660487c6d0739091a49f5a6f9d0c4e81be3fb03094ec7a49"
+        },
+        "stableLauncher": {
+          "bytes": 258047,
+          "currentPointer": {
+            "bytes": 115,
+            "path": "editions/fpv-learning/app/current.json",
+            "sha256": "3d1b47eb4a3ce234dc8978587420da4c826a5276c88d8a916f2650ba32fe85af"
+          },
+          "files": 28
+        }
+      },
+      {
+        "contentSha256": "c811f1f430ba99d7d9a6a24974508550840a69ada912eccd8c0cba536c5f0407",
+        "id": "social-drone-ua",
+        "immutable": {
+          "bytes": 40037061,
+          "files": 1084
+        },
+        "immutableAndActiveLauncherBytes": 40295144,
+        "manifest": {
+          "bytes": 149361,
+          "path": "manifest-social-drone-ua.json",
+          "sha256": "f99c9882603c488d80b9310b79b6a1be362bfdc5df32e51ccdb721f300c8ac9c"
+        },
+        "stableLauncher": {
+          "bytes": 258083,
+          "currentPointer": {
+            "bytes": 118,
+            "path": "editions/social-drone-ua/app/current.json",
+            "sha256": "d64c7bfc37f1d5ad85464ce942f16d684900846177af13c859d348dcbe4652bd"
+          },
+          "files": 28
+        }
+      },
+      {
+        "contentSha256": "e6fb80f70f89c24a846b29b51147ff990746b8a3b35b909583e73ece32672883",
+        "id": "ukraine-culture",
+        "immutable": {
+          "bytes": 50131979,
+          "files": 1115
+        },
+        "immutableAndActiveLauncherBytes": 50390102,
+        "manifest": {
+          "bytes": 154414,
+          "path": "manifest-ukraine-culture.json",
+          "sha256": "97c254dd37f3e8f993a60bd4737098f472dcade8a37008c6fefbb10dab5b3b82"
+        },
+        "stableLauncher": {
+          "bytes": 258123,
+          "currentPointer": {
+            "bytes": 118,
+            "path": "editions/ukraine-culture/app/current.json",
+            "sha256": "67ef4a16cae53307d385138896b75d7b074662a377166cff31b070bfae477452"
+          },
+          "files": 28
+        }
+      },
+      {
+        "contentSha256": "28b44051334a17bcaa69805b1cbd71ab1321a9c969c25a888445eef04f5fd831",
+        "id": "victory-drones",
+        "immutable": {
+          "bytes": 29716836,
+          "files": 1064
+        },
+        "immutableAndActiveLauncherBytes": 29974907,
+        "manifest": {
+          "bytes": 146178,
+          "path": "manifest-victory-drones.json",
+          "sha256": "1730e33c7710155fc9daad4bfeff9eb1a0bd04cf4538dee9adcc6c66a1cf10e0"
+        },
+        "stableLauncher": {
+          "bytes": 258071,
+          "currentPointer": {
+            "bytes": 117,
+            "path": "editions/victory-drones/app/current.json",
+            "sha256": "73652320d743ad0239e3d75e092fe01d5b78a888a1e71d8106f577d9216983ae"
+          },
+          "files": 28
+        }
+      }
+    ],
+    "format": "revealline-edition-capacity.v1",
+    "hostedBudgetBytes": 950000000,
+    "inputs": {
+      "candidateVerification": {
+        "bytes": 13906,
+        "path": "candidate-verification.json",
+        "sha256": "2b47697c7539242341043829a23b01f9e72d6547df1db81bb60fab88fd62d0ca"
+      },
+      "envelope": {
+        "bytes": 18723,
+        "path": "editions.json",
+        "sha256": "1d7a29f509ccee8eeee9cec6ec2bf03b74298fcb6cc9c0747875d98003de82e2"
+      }
+    },
+    "missingComponents": [
+      "Exact future default artifact and generated root routes",
+      "Previously retained edition versions and launcher ownership",
+      "Selected-edition hub including download-only links",
+      "Optional packages, launchers and any other hosted files"
+    ],
+    "promotable": false,
+    "publicEligible": false,
+    "publicationAssessment": "not-performed",
+    "sourceRevision": "b65d80f716b8db646bfdf5f714892f1c0f6409b0",
+    "sourceTree": "98a19c4b9465279e910f7fd5c7b37d10b2c9d566",
+    "version": "v0.151.1"
+  }
+}

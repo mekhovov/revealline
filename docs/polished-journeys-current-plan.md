@@ -1,5 +1,7 @@
 # Learning journeys and FPV: review and priority choices
 
+> Retained excerpt after an ownership migration. Historical totals and verification statements describe the original scope; this excerpt is not a current release qualification. Original bytes and removed material are preserved separately.
+
 > **Historical snapshot:** this document records the 1 October 2026 planning review. Queue, deployment, pull-request status, release, capacity and recommendation statements below are dated evidence, not current instructions or current repository status.
 
 Reviewed **1 October 2026 (Europe/Berlin)** against main
@@ -48,7 +50,6 @@ the publication process. These statuses must not be used interchangeably.
 
 | Family                       | Campaigns | Arcade missions |
 | ---------------------------- | --------: | --------------: |
-| Coupa                        |         5 |              30 |
 | DroneAid Netherlands         |         6 |              36 |
 | Historical DroneAid Portugal |         1 |               3 |
 | Social Drone UA              |         2 |              12 |
@@ -69,9 +70,6 @@ workbenches cover workshop handoffs, fair comparisons, museum object labels and
 aircraft component relationships. Most other discoveries are pictures and concise
 explanations, not full interactive lessons. EN/UK content and reading profiles exist.
 
-Coupa has 24 lesson definitions across its learning campaigns. Explicit discovery
-reward sidecars for older company campaigns have pilot coverage, including Spend
-in Motion and Workshop Lights; universal coverage is not claimed.
 
 Shared rules, responsive play, expedition map/list, immediate Next/Retry, brief
 reduced-motion-aware reveals, Collection, exact earned reward revisions and the
@@ -273,9 +271,6 @@ saves matter as much as the editor controls.
 
 ### R6 — Deepen selected arcade learning and company rewards
 
-**Recommended P3 until the player loop is settled; Phases 4/5.** Add meaningful
-activities and later application to selected existing missions; extend older
-Coupa/DroneAid reward pilots where useful. No new 108-mission quota is required.
 
 **What the player gains:** a reveal can become something to inspect, compare or
 apply, rather than only a picture with text. Older company campaigns gain more

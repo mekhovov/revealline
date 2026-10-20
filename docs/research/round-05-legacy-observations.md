@@ -1,5 +1,7 @@
 # Round 05 — direct inspection of legacy territory games
 
+> Retained excerpt after an ownership migration. Historical totals and verification statements describe the original scope; this excerpt is not a current release qualification. Original bytes and removed material are preserved separately.
+
 Research date: 12 September 2026. Scope: Xonix DOS, SeXoniX DOS, and Super Qix. This audit supplements [the earlier lineage report](xonix-and-xposed.md). It is design research, not a claim that every screenshot, release, or internet video has been inspected.
 
 ## Method and coverage
@@ -50,14 +52,12 @@ The separate 1996 ZX Spectrum title **Sex Xonix** and a similarly named JVL touc
 4. **Preserve gained territory on a life loss in the default arcade mode.** Reset only the unfinished trail, clearly identify the collision, briefly protect respawn, and keep the next attempt immediate. Campaign and challenge variants may use stricter failure rules if visibly declared.
 5. **Use optional collection to redirect movement.** A collectible beyond a tempting route can create an interesting detour. Historical letters suggest regional symbols, unit patches, cassette labels, or fictional savings tokens. Avoid a required collectible that can become unreachable after capture.
 6. **Separate image content from active objects.** Photographed vehicles, painted aircraft, illustrated flowers, and decorative logos never acquire collision automatically. Real enemies need an outline or marker consistently distinct from those background objects.
-7. **Allow different cover palettes per chapter, with the same hierarchy.** A cobalt DOS field, charcoal signal interference, cream paper veil, or dark Coupa circuit mesh can all work. Artwork and cultural ornament should recede while the player draws; briefly intensify the artwork on a capture event.
 8. **Do not copy legacy ambiguity.** Show the capture policy before the challenge and highlight what blocks a fill. The exact DOS/SeXoniX policies remain open questions. A recommended first prototype is the explicitly explainable empty-region policy from the X11 manual, compared with another policy in a controlled test, rather than falsely calling either an exact Reloaded clone.
 
 ### Concrete challenge sequence to discuss
 
 | Proposed challenge | Decision it teaches | Family adaptation |
 |---|---|---|
-| First Signal | Complete one short cut, then a larger L route | Drone clears interference; Atlas uncovers a motif; retro boots a scene; Navi reveals a savings opportunity |
 | Two Domains | Watch both interior motion and a border patrol | Open-field interceptor plus route crawler, with visible domain labels during teaching |
 | Empty Pocket | Predict which partition satisfies the chosen fill policy | A single marked anchor threat makes the explanation concrete |
 | The Detour | Trade safe percentage for an optional collectible | Patch, regional stamp, cassette token, or fictional savings badge |

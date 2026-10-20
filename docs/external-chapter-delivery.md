@@ -1,6 +1,7 @@
 # Exact external chapter delivery
 
-This successor source adds Fracture Lines in FPV Front, Ukraine Atlas, 1994 Forever and Spend Network to the eight existing external editions. Its four Arcade editions share three authored Fracture layouts and keep twelve distinct original reward pictures, separate progress, existing theme music and null stories. They preserve the exact level IDs, rules, seeds and class recipes; the theme copies add no geometry families. The preceding eight descriptors, sixteen paired bodies and five embedded optional entries remain exact. This is source adoption, not a new frozen or public release; published v0.36.0 and v0.37.0 remain separate delivery evidence.
+> Retained excerpt after an ownership migration. Historical totals and verification statements describe the original scope; this excerpt is not a current release qualification. Original bytes and removed material are preserved separately.
+
 
 [The registry](../game/external-chapter-source.mjs) owns all twelve full immutable descriptors. [The separate catalog](../game/content/external-worlds.json) uses `revealline-external-chapters.v1` and must equal that registry's exact titles, descriptions, identities and pair hashes. Catalogs, file names and installed names never introduce a trusted descriptor. Main game, backup recovery and same-channel Picture Workshop all use the same registry, including release channels. Existing saved and first-earned picture/story pins are resolved unchanged; a new edition never substitutes for an old receipt.
 
@@ -25,15 +26,12 @@ Only an explicit build emits these twenty-four bodies, once each in loose files,
 | `original-fpv-pressure-external` |       9,398 B |             8,037,391 B |
 | `route-worlds-ukraine`           |       8,405 B |             8,825,887 B |
 | `route-worlds-retro`             |       8,307 B |             7,589,633 B |
-| `route-worlds-coupa`             |       8,317 B |             8,280,993 B |
 | `sentinel-circuit-fpv`           |       9,238 B |             8,596,058 B |
 | `sentinel-circuit-ukraine`       |       9,440 B |             8,175,624 B |
 | `sentinel-circuit-retro`         |       9,404 B |             7,553,086 B |
-| `sentinel-circuit-coupa`         |       9,427 B |             7,416,321 B |
 | `fracture-lines-fpv`             |       9,708 B |             8,669,310 B |
 | `fracture-lines-ukraine`         |       9,311 B |             8,734,108 B |
 | `fracture-lines-retro`           |       9,393 B |             7,967,075 B |
-| `fracture-lines-coupa`           |       9,345 B |             8,718,918 B |
 
 The twenty-four paired bodies total 98,674,097 bytes: the existing sixteen remain 64,546,929 bytes and the new eight add 34,127,168 bytes. The thirty-six original PNGs total 98,421,735 bytes, including twelve Fracture originals totaling 34,040,565 bytes. These are source payload totals, not a measured site/ZIP size or available installed space.
 

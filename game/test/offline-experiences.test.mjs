@@ -42,7 +42,7 @@ test('every public community owns complete mode dependencies with shared hash re
     ).length,
     3,
   );
-  assert.throws(() => addOfflineExperiences([group('company:coupa-all')], []), /Incomplete/);
+  assert.throws(() => addOfflineExperiences([group(`company:${COMMUNITY_ROUTES.find(route => route.editionIds.length > 1).editionIds[0]}`)], []), /Incomplete/);
 });
 test('SIM follows admitted dependencies outside its directory and fails for a missing dependency', () => {
   const files = [
@@ -76,15 +76,15 @@ test('all gameplay preserves explicit SIM and community choices through an updat
       group('base'),
       group('shared'),
       group('extras:sim-fpv', [], { current: false }),
-      group('community:coupa', [], { current: false }),
+      group('community:sample', [], { current: false }),
       { id: 'music:one', kind: 'soundtrack' },
     ],
   };
   const ids = gameplaySelection(catalogue, {
     all: true,
-    selected: ['extras:sim-fpv', 'community:coupa', 'music:one'],
+    selected: ['extras:sim-fpv', 'community:sample', 'music:one'],
   });
-  assert.deepEqual(ids, ['base', 'shared', 'extras:sim-fpv', 'community:coupa']);
+  assert.deepEqual(ids, ['base', 'shared', 'extras:sim-fpv', 'community:sample']);
   const retained = restoredGameplaySelection(catalogue, {
     edition: 'https://example.test/',
     updating: true,

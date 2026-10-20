@@ -1,12 +1,13 @@
 # Territory-reveal game — research and concept round 01
 
+> Retained excerpt after an ownership migration. Historical totals and verification statements describe the original scope; this excerpt is not a current release qualification. Original bytes and removed material are preserved separately.
+
 Date: 12 September 2026. Status: **brainstorming; proposed choices, not an approved design**. The user explicitly requested research and visual iteration before implementation. The workspace started empty. No game, editor, dependency setup or platform package has been built.
 
 Later steering: the user selected all three motivations and narrowed the themes to four families, with Ukrainian FPV military as the main game. See [the current round 03 direction](round-03-focused-direction.md); the decisions below are retained as round 01 history.
 
 ## First recommendation
 
-Build toward a beautiful Ukrainian FPV territory-capture arcade game: clear Xonix movement, daring cuts, satisfying reveals, optional mastery challenges, and rich original Ukrainian art and music. Use this as the first expression of a themeable game family. A Coupa savings adventure should demonstrate that the framework can change its identity through content and supported rulesets.
 
 The first bet is **classic arcade mastery as the foundation, discovery and reclamation as the identity**. Short expeditions with upgrade choices are a possible later mode. This is a recommendation awaiting the user's response, not a settled decision.
 
@@ -32,7 +33,6 @@ The related Switch game's reviews identify control precision and unexplained fil
 | Approach | The player comes back for | Advantages | Main cost |
 | --- | --- | --- | --- |
 | Classic arcade mastery — recommended foundation | A better cut, cleaner survival, faster clear and higher score | Closest to Xonix/Reloaded; low input complexity; easy to understand | Once art is familiar, authored hazards and skill goals must sustain replay |
-| Living-picture reclamation — recommended identity | Restoring places, discovering scenic details, completing a collection | Distinctive emotional payoff; Ukrainian and Coupa themes both fit | More authored artwork and clear rules for interactive landmarks |
 | Short tactical expeditions — possible later mode | Choosing modules, discovering combinations and beating a shared seed | High variation from reusable content | Balance work and added complexity can obscure the core arcade game |
 
 Proposed first-play sequence: enter a safe perimeter, see one enemy's movement, make a small guided cut, close it and expose a striking detail, then choose a larger risk. A second board introduces a boundary threat; a third introduces a terrain obstacle. Exact timings, life counts and quotas remain tunable design decisions.
@@ -51,9 +51,7 @@ Names below are working labels; no name-availability research has been performed
 | --- | --- | --- |
 | A — KALYNA | Ukrainian FPV arcade | Navy, blue, wheat gold, ivory and warning red; readable quadcopter; stylized Russian invading military machines; Ukrainian landscape reveals; restrained embroidered safe borders |
 | B — VYRIY | Ukrainian folk-art interpretation | Plum, parchment, berry red, green and gold; Petrykivka-inspired flora and birds; warm reveal celebrations; the same readable drone and danger roles |
-| C — COUPA QUEST | Savings adventure | Ink blue, cyan and mint; a proposed C token; invoice glitches, cost leaks and duplicate-document enemies; a client city that becomes lively as value is recovered |
 
-Recommended synthesis: A's clear field and drone identity, with B's rich cultural image collections. C is a proposed reskin demonstration, not an approved Coupa/Navi brand treatment. Its C token is a placeholder; the official Navi source character sheet and brand tokens remain to verify.
 
 The concept board shows colors, composition and silhouettes. It is not a real game screenshot, sprite atlas, final regional motif library or proof of capture geometry. The generated incidental signage and decorative density need refinement. Production art should have consistent pixels, transparent layers, animation and small-screen review.
 
@@ -65,7 +63,6 @@ Petrykivka flora/birds, regional embroidery, pysanka and Crimean Tatar Örnek sh
 
 ### What the pictures reveal is still open
 
-Three viable treatments are reconnaissance-style imagery with stylized invading units, beautiful Ukrainian scenery/culture, or a before/after pair that changes from interference/occupation to recovery. Round 01 visualizes scenery and cultural art as an assumption. The user's answer may shift both artwork and mechanics. Military threats in the Ukrainian theme represent invading forces, while the Coupa theme uses fictional waste and operational obstacles.
 
 ### Nostalgia and music
 
@@ -122,7 +119,6 @@ After choosing an art direction, specify a manifest for every visual/audio role,
 | Release material | Key art, app icons, Steam/storefront images, screenshots, trailer shots and promotional/ad compositions |
 | Editable sources | Layered art, palettes, sprite timing, audio stems, localization, license/provenance records and versioned manifests |
 
-The asset contract should permit an entire game identity to be changed by choosing packs. Confirm it with at least the Ukrainian and Coupa examples before expanding the library. A folder of generated images is insufficient without roles, sizes, states and runtime validation.
 
 ## Flexible work sequence
 
@@ -131,7 +127,6 @@ The asset contract should permit an entire game identity to be changed by choosi
 | 1. Research and concept iteration — current | Source notes, visual options, replay priorities, open decisions | User chooses the desired experience and art direction |
 | 2. Visual/gameplay specification | Desktop/phone screens, capture storyboard, enemy roles, rules, sound brief and initial asset manifest | User reviews a concrete coherent design |
 | 3. Small playable/device proof | One polished board, a few enemy roles, one capture sequence and all three input methods | Fair readable play on agreed phone/laptop targets; no asset-scale expansion yet |
-| 4. Theme and pack contract | Ukrainian and Coupa configurations sharing the same simulation | Full art/audio/UI swap without theme-specific core changes |
 | 5. Authoring tools | Import, edit, preview, validate, generate and version content | A person can create and revise a level without editing source code |
 | 6. Production packs | Complete approved assets, campaign, challenges, original music and promotional material | Art consistency, useful progression and voluntary replay in playtests |
 | 7. Platform releases | Browser, iOS and desktop/Steam builds as prioritized | Device, save/resume, input, packaging and release checks pass |
@@ -150,9 +145,7 @@ Each stage should be split into small reviewable pieces with its own done criter
 
 ## Decision log
 
-- Confirmed by user: Xonix/Reloaded core; modern nostalgic pixel art; Ukrainian FPV first theme; easy theme/rule/content changes; Coupa variation; browser/iPhone/desktop/Steam aspirations; keyboard, touch and joystick support; research and visual iteration before building.
 - Proposed: classic mastery plus living-picture identity; A/B art synthesis; Phaser/TypeScript; optional expeditions later.
 - First question already asked: prioritize tense arcade mastery, beautiful discovery, or tactical upgrade runs. Awaiting response.
-- Later decisions, to address one at a time: what the reveal pictures show; preferred nostalgia era; game tone; capture rules; session length; phone orientation and first launch platform; art scope; monetization and commercial scope; target devices; official Coupa source art.
 
 For every future design round: revisit relevant web evidence, show an updated visual, recommend an option with tradeoffs, and record accepted changes. Research should narrow as decisions become concrete rather than repeating this broad survey.

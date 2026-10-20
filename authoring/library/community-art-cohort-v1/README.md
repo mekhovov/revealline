@@ -58,14 +58,3 @@ logos or text pixels were used. The scene is fictional and does not represent an
 exact community premises or endorsement.
 
 ## Remaining C5 work
-
-Board preparation and native packet round trips are recorded in the linked
-revision 5 and revision 7 evidence. Full/partial reveal readability and production
-review remain open; adopt through versioned presentation bindings only after
-those checks. Complete community actor/state/branding cohorts, regionally coherent cultural scenes, Retro and Coupa treatments. The
-Poltava courtyard and Synevyr-inspired source scenes are now included; their
-cultural/readability review and adoption remain open. The original Poltava image
-here remains unchanged; later architecture corrections belong to its separately
-identified revision 6 source and revision 7 derivative. The separate optional
-CC0 photograph is preserved in `../real-world-references/`.
-No C5 cohort is declared production-complete by this first source image.

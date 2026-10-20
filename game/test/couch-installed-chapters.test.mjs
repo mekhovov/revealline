@@ -1140,7 +1140,7 @@ test('main-lobby Back cancels an explicitly pending Retry and never enables Star
 
 for (const [name, build] of [
   ['Fracture', () => buildFractureTheme('ukraine')],
-  ['Countercurrent', () => buildCountercurrentTheme('coupa')],
+  ['Countercurrent', () => buildCountercurrentTheme('retro')],
 ])
   test(`new ${name} owner keeps exact installed originals through the reader and shared Couch boards without solo writes`, async (t) => {
     const chapter = await build();

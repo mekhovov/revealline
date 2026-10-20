@@ -1,3 +1,5 @@
+# Retained historical excerpt after an ownership migration. Exact original bytes are preserved separately. Original totals and verification statements describe the original scope; this excerpt is not a current qualification or a complete test result.
+
 TAP version 13
 # Subtest: the actual game has a static dark guard before resources and a single caught module entry
 ok 1 - the actual game has a static dark guard before resources and a single caught module entry
@@ -165,11 +167,6 @@ ok 32 - ukraine-culture loads the one shared document without changing its visib
 ok 33 - fpv-learning loads the one shared document without changing its visible URL
   ---
   duration_ms: 0.988792
-  ...
-# Subtest: coupa loads the one shared document without changing its visible URL
-ok 34 - coupa loads the one shared document without changing its visible URL
-  ---
-  duration_ms: 1.108834
   ...
 # Subtest: droneaid loads the one shared document without changing its visible URL
 ok 35 - droneaid loads the one shared document without changing its visible URL

@@ -1,3 +1,5 @@
+> Retained historical excerpt after an ownership migration. Exact original bytes are preserved separately. Original totals and verification statements describe the original scope; this excerpt is not a current qualification or a complete test result.
+
 # v0.37 source and native preview evidence
 
 Recorded 2026-09-14 before v0.37 exact-source gates. The numeric `0.37.0`
@@ -25,20 +27,8 @@ completed with capture stops, full reward views and distinct Collection ownershi
 | ------------- | -------------------------- | -------: | -----: | ----: | ------: | ----- |
 | Ukraine Atlas | Courtyard of quiet craft   |    62.9% | 14,900 |     3 |  9.86 s | Gold  |
 | 1994 Forever  | The radio-repair courtyard |    45.2% | 10,850 |     3 | 23.34 s | Gold  |
-| Spend Network | The shared inventory court |    62.9% | 14,900 |     3 |  9.88 s | Gold  |
 
-Collection retained all three rewards with one difficulty label each. Separate
-settled native reads establish Retro then Ukraine chapter-progress selection while
-the Spend Network flight stayed paused at 24.9% / 6,200 / three lives / 2:54,
-opportunity 1. Viewing another chapter did not switch or resume the flight.
 
-The Spend Network replay was explicitly paused with a visible unfinished horizontal
-cut at 0% / 0 / three lives / 2:59. Navigating to `about:blank`, reopening the game
-and choosing Continue restored the same visible line while paused. Explicit Resume
-continued its saved rightward movement; a later Up command and Pause yielded
-24.9% / 6,200 / three lives / 2:54, opportunity 1. Collection still contained all
-three rewards after reopening. The input chronology is root-observed, not an
-independently captured raw input-event stream.
 
 ## Receipt corrections and limits
 

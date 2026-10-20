@@ -1,3 +1,5 @@
+> Retained historical excerpt after an ownership migration. Exact original bytes are preserved separately. Original totals and verification statements describe the original scope; this excerpt is not a current qualification or a complete test result.
+
 # Round 27 gallery loading: source-browser acceptance
 
 Date: 2026-09-12. This addendum covers the reloaded working source after the [gallery loading fix](gallery-loading.md). It leaves earlier candidate artifacts and reports intact. The final rebuilt candidate is still pending; these observations are not frozen-release acceptance.
@@ -8,7 +10,6 @@ The parent agent reloaded the source page and used the actual collection and gal
 
 1. Opened Garden of Threads and played its celebration, then waited approximately 650 ms. [The captured frame](../../../.cache/round-27/gallery-loading-browser/solo-garden-celebration-final.jpg) shows the correct garden illustration with stitch effects, its title and gallery actions.
 2. Opened Neon Switchboard and waited approximately 450 ms. [The ready view](../../../.cache/round-27/gallery-loading-browser/solo-neon-ready-final.jpg) shows the matching nighttime room illustration.
-3. Opened Clear Ledger and then Copper Orchard without an intervening wait, followed by approximately 450 ms for the final view. [Copper Orchard now shows its orchard artwork](../../../.cache/round-27/gallery-loading-browser/solo-homeward-ready-final.jpg), with the matching title and Steady Signal seal. The [DOM capture](../../../.cache/round-27/gallery-loading-browser/solo-homeward-ready-final.txt) also records enabled gallery actions and focus on Close. The previous candidate's title/image mismatch is preserved as defect evidence in the linked loading-fix report.
 4. Activated Replay mission. The [resulting mission view](../../../.cache/round-27/gallery-loading-browser/solo-gallery-replay-ready.txt) is Copper Orchard at Ready: 0.0% revealed, three lives and score 00000. Start mission has focus; playback did not automatically start a flight.
 
 The [ready-state inspection](../../../.cache/round-27/gallery-loading-browser/source-first-inspection.json) records Copper Orchard, restored `FPV Front / GOLD` metadata, a visible canvas, `aria-busy="false"` and both actions enabled. The [captured source console](../../../.cache/round-27/gallery-loading-browser/source-console.json) is empty.

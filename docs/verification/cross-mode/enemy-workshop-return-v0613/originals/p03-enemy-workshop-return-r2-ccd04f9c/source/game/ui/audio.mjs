@@ -1,3 +1,5 @@
+// Retained historical source projection; original bytes are archived separately.
+// This excerpt is not the original artifact or a new execution qualification.
 import { createPublishedCues } from './published-audio.mjs';
 import {
   MUSIC_STYLES,
@@ -612,9 +614,7 @@ export class Soundscape {
         const phrase =
           this.themeFamily === 'atlas'
             ? [0, 5, 7, 12, 14, 12]
-            : this.themeFamily === 'navi'
-              ? [0, 4, 9, 7, 12, 16]
-              : [0, 4, 7, 12, 7, 12];
+            : [0, 4, 7, 12, 7, 12];
         cue(phrase, this.themeFamily === 'retro' ? 'chip' : 'bell', 0.13, 0.4);
         for (const n of [0, 4, 7])
           this.play(

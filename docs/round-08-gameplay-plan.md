@@ -1,5 +1,7 @@
 # Round 08 — from the motion lab to a playable territory game
 
+> Retained excerpt after an ownership migration. Historical totals and verification statements describe the original scope; this excerpt is not a current release qualification. Original bytes and removed material are preserved separately.
+
 This plan is for review before starting the real game. Round 08 adds character selection, cosmetic-unlock evaluation, presentation studies and both configurable steering modes to the lab. **Territory capture, enemies, lives, actual medals and playable level completion remain unimplemented.** A simulated reward button is a test fixture, not a completed mission.
 
 The next useful build is a small, polished Xonix slice: a bright, precise player opens a trail, reconnects to safe ground, exposes a satisfying region of an original picture, survives readable danger and chooses another image. Start with the Ukrainian FPV theme, then run the identical levels with Ukrainian cultural, retro and business presentation. Richer enemy roles and content tools follow once that loop is understandable and enjoyable.
@@ -8,7 +10,6 @@ The next useful build is a small, polished Xonix slice: a bright, precise player
 
 The [current pack contract](../authoring/CONTRACT.md) is a validated design format. The [media authoring tools](../authoring/media/README.md) preserve originals and derivatives. The motion lab is a presentation sandbox. The new [collection evaluator](../authoring/motion-lab/collection.mjs) is a working, pure preview module. None is already the missing game runtime, and they should not be joined by undocumented assumptions.
 
-The game kernel will own positions, live trails, ownership, contacts, timers, goals and results. Presentation will own bodies, propellers, palettes, microtiles, detailed props, reveal pictures, particles, audio and menu animation. A character named Skyline FPV or Audit pulse will have the same movement and collision footprint as the starter. Different stats would require a separately selected, versioned ruleset, a visible description and separate challenge comparisons.
 
 Authors can change existing rule parameters and art bindings without changing kernel code. A new fill algorithm, enemy behavior, timed effect or unlock primitive still requires a registered implementation, schema and meaningful tests. “Data-driven” does not mean arbitrary new behavior can emerge from an image or prompt.
 

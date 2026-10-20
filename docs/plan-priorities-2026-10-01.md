@@ -1,5 +1,7 @@
 # Reveal Line: remaining work explained for reprioritization
 
+> Retained excerpt after an ownership migration. Historical totals and verification statements describe the original scope; this excerpt is not a current release qualification. Original bytes and removed material are preserved separately.
+
 > **Historical snapshot:** this document records the 1 October review against its pinned main revision. Its queue, deployment, PR-status and recommendation statements are preserved as dated evidence, not current instructions.
 
 Reviewed **1 October 2026, 22:30 CEST (Europe/Berlin)** against main
@@ -231,12 +233,6 @@ panels merely because artwork review is deferred.
 
 **Recommended priority: later expansion, not a missing-engine emergency.**
 
-Finish distinct campaign progression, optional mastery definitions and broader
-DroneAid/cultural/Retro/Coupa content where the accepted inventory requires it.
-New packs (#883), Random play (#898), noise-free picture preview (#908) and wider
-reward/learning enrichment are discrete features, not proof core completion is
-blocked. Already-prepared independent work can still be admitted safely; this
-recommendation concerns new effort, not discarding finished contributions.
 
 **What players gain:** more replay goals and community-specific experiences.
 **Without expansion:** there is less breadth, but improving current missions can

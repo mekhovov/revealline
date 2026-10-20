@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Regenerate the v0.1 schema, primitive catalog and four authoring examples.
+"""Regenerate the v0.1 schema, primitive catalog and three authoring examples.
 
 Maintainer utility: it overwrites generated files. Author new packs separately.
 """
@@ -54,7 +54,7 @@ definitions = {
                            "promptRef": string(), "reviewNotes": string()}, ["method", "creator"])
     }, ["id", "kind", "status", "brief", "provenance"]),
     "theme": obj({
-        "id": ID, "family": enum("fpv-front", "ukraine-atlas", "retro-1994", "navi-network", "custom"),
+        "id": ID, "family": enum("fpv-front", "ukraine-atlas", "retro-1994", "custom"),
         "title": string(), "artDirection": string(),
         "cultureNotes": string(), "referenceUrls": arr(string(), 0, 30),
         "palette": obj({key: COLOR for key in ["field", "safe", "trail", "player", "enemy", "objective", "text", "panel"]}),
@@ -190,13 +190,7 @@ families = [
      ["Arcade cursor", "Glitch sprite", "Restore pixels", "High score", "Lost disk"],
      ["pixel-art", "illustration", "photograph"], "pixel-art", "dither", "fill.keep-largest.v1", "Summer Disk", "Original pixel-art computer room at golden hour, imaginary disk cases and cozy summer details.",
      ["https://50games.fun/"], "disk"),
-    ("navi-network", "Navi Network: Savings City", "Restore a fictional business network through territory capture, document connections and visible city improvements.",
-     "Clean blue/white pixel city, warm workshop lights, expressive assistant silhouette. Use a provisional C character until official brand/Navi assets are supplied.",
-     "Currency and AI behavior are fictional arcade metaphors, not product performance or savings claims. Replace placeholder marks using authorized brand assets.",
-     ["#11293F", "#70C5EB", "#F3C75B", "#CDEEFF", "#EF8890", "#7ADDAB", "#F7FBFF", "#1E3C57"],
-     ["Navi placeholder", "Cost leak", "Reconnect", "Fictional savings", "Matched invoice"],
-     ["pixel-art", "illustration", "photograph"], "illustration", "blueprint", "fill.enemy-seeded.v1", "Connected Workshop", "Original inviting business city with suppliers and workshops; no text or numeric savings claims baked into the image.",
-     ["https://docs.coupa.com/en/coupa-glossary/overview/c"], "invoice")
+
 ]
 
 packs = []
@@ -216,8 +210,6 @@ for family, title, summary, direction, culture, colors, words, styles, style, co
     effects = [invoke("effect.grant-score.v1", points=150)]
     if family == "fpv-front":
         effects += [invoke("effect.clear-modifier.v1", modifierId="interference")]
-    if family == "navi-network":
-        effects += [invoke("effect.disable-enemy-tag.v1", enemyTag="leak")]
     if family == "retro-1994":
         effects += [invoke("effect.add-time.v1", seconds=10)]
     pack = {
@@ -252,14 +244,14 @@ for family, title, summary, direction, culture, colors, words, styles, style, co
                     "playerStart": {"x": 24, "y": 0},
                     "enemies": [
                         {"id": "roamer", "visualRole": "fieldEnemy", "behavior": invoke("enemy.bounce-field.v1", cellsPerSecond=3),
-                         "start": {"x": 12, "y": 10}, "tags": ["leak" if family == "navi-network" else "patrol"]},
+                         "start": {"x": 12, "y": 10}, "tags": ["patrol"]},
                         {"id": "edge", "visualRole": "boundaryEnemy", "behavior": invoke("enemy.patrol-boundary.v1", cellsPerSecond=2, clockwise=True),
                          "start": {"x": 0, "y": 24}, "tags": ["boundary"]}],
                     "markers": [{"id": "marker-a", "at": {"x": 8, "y": 8}, "tag": marker_tag, "visualRole": "objective", "onCapture": effects},
                                 {"id": "marker-b", "at": {"x": 36, "y": 26}, "tag": marker_tag, "visualRole": "objective", "onCapture": [invoke("effect.grant-score.v1", points=150)]}],
                     "modifiers": [{"id": "interference", "rule": invoke("modifier.cut-timeout.v1", seconds=8)}] if family == "fpv-front" else [],
                     "difficulty": "intro"}],
-        "campaigns": [{"id": "chapter-one", "title": title, "levelIds": ["first-light"], "progression": "linear", "rewardMode": "gallery", "fictionalEconomy": family == "navi-network"}]
+        "campaigns": [{"id": "chapter-one", "title": title, "levelIds": ["first-light"], "progression": "linear", "rewardMode": "gallery", "fictionalEconomy": False}]
     }
     # Every declared capability is a contract ID, never a claim that the runtime exists.
     primitives = set()

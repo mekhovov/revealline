@@ -112,7 +112,7 @@ test('optional candidate is byte-reproducible and inventories only its selected 
   );
   assert.doesNotMatch(
     source.get('game/i18n/catalogs.mjs').toString(),
-    /coupa|droneaid|completionRewards/i,
+    /company-campaigns|completionRewards/i,
   );
   assert.equal(inventory.licenses[0].license, 'MIT');
   assert.equal(inventory.licenses[0].version, '26.4.2');

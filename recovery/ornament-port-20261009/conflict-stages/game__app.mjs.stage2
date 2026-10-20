@@ -1,3 +1,5 @@
+// Retained historical source projection; original bytes are archived separately.
+// This excerpt is not the original artifact or a new execution qualification.
 import { loadBaseArtwork } from './base-artwork.mjs';
 import { nativeArtReviewURL } from './ui/art-review-navigation.mjs';
 import { specialistFailureCopy } from './hunt/actor-catalog.mjs';
@@ -8272,9 +8274,7 @@ try {
         `${contentText(theme, 'labels.enemy')} · ${contentText(theme, 'labels.boss')} · ${contentText(theme, 'labels.supply')}`,
     );
     localizedText($('footer-note'), () =>
-      theme.id === 'coupa'
-        ? t('interface:fictionalSpendManagementThemeOriginalHelperArtwork')
-        : t('interface:originalWorldsMakeEveryLineCount'),
+      t('interface:originalWorldsMakeEveryLineCount'),
     );
     painter.style = scenario?.presentation?.style || library.preferences.style;
     updateBodies();

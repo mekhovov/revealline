@@ -1,5 +1,7 @@
 # Delivery audit and Flight Details language correction — 28 September 2026
 
+> Retained excerpt after an ownership migration. Historical totals and verification statements describe the original scope; this excerpt is not a current release qualification. Original bytes and removed material are preserved separately.
+
 ## Published and completed
 
 The verified public baseline remains [v0.141.7](https://mekhovov.github.io/revealline/releases/v0.141.7/site/game/), frozen source `efbb3882b4edd447c8e9f60ed60c536a956d78f3`. Its retained deployment audit covers 2,223 files / 757,762,788 bytes with zero final failures. This entry did not rerun that inventory or certify physical devices.
@@ -43,7 +45,6 @@ This correction belongs to the **following compatible batch**, not a silent expa
 | P18 — browser qualification | Incomplete | Cumulative regression, performance, accessibility, media/offline recovery, real devices and human playtests |
 | Native stores / online multiplayer | Deferred | Separate platform/signing/hardware and authoritative session/reconnect gates |
 
-Do not reuse historical 15/29 picture families, 60/116 pictures or “0/4 campaigns” as current counts. The [company source record](company-editions-phase-status-2026-09-28.md) records 30 Coupa and 36 current DroneAid missions, but that does not imply standalone public selection, physical-device acceptance or closure of original P11–P15. Candidate counts and ownership records are not public mission counts.
 
 ## Next batches and release concerns
 

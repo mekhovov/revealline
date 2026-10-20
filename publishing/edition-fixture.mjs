@@ -4,7 +4,7 @@ import { editionAppIdentity } from '../game/edition-context.mjs';
 /** Tiny complete candidate shared by admission and promotion failure tests. */
 export function editionAdmissionFixture({
   version = 'v0.140.0',
-  editionId = 'coupa',
+  editionId = 'sample',
   basePath = '/revealline/',
   legacyPublicAddress = false,
 } = {}) {

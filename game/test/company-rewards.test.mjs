@@ -5,7 +5,6 @@ import { createHash } from 'node:crypto';
 import { COMPANY_CAMPAIGNS } from '../company-campaigns/catalog.mjs';
 import { CURRICULUM_CAMPAIGNS } from '../company-campaigns/curriculum.mjs';
 import { SKY_WATCH_CAMPAIGN } from '../company-campaigns/sky-watch.mjs';
-import { COMPANY_LEARNING_REWARD_CAMPAIGN_IDS } from '../company-campaigns/learning-rewards.mjs';
 import {
   COMPANY_REWARD_CAMPAIGN_IDS,
   createCompanyRewards,
@@ -51,7 +50,6 @@ test('reward pilots are complete bilingual discoveries with exact existing campa
       .sort(),
     [
       ...COMPANY_REWARD_CAMPAIGN_IDS,
-      ...COMPANY_LEARNING_REWARD_CAMPAIGN_IDS,
       ...CURRICULUM_CAMPAIGNS.map((entry) => entry.id),
       SKY_WATCH_CAMPAIGN.id,
     ].sort(),
@@ -187,10 +185,8 @@ test('generated reward sidecars and catalog are deterministic and checked in', a
   );
 });
 
-test('all four updated editions retain their exact pre-reward presentation without changing gameplay source', async () => {
+test('both updated editions retain their exact pre-reward presentation without changing gameplay source', async () => {
   for (const id of [
-    'coupa-all',
-    'coupa-adventure',
     'droneaid-nl-community',
     'droneaid-nl-workshop-lights',
   ]) {

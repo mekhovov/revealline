@@ -238,7 +238,7 @@ test('240px larger actor body leaves real contact and active-cut world coordinat
   );
 });
 
-for (const themeId of ['fpv', 'ukraine', 'retro', 'coupa'])
+for (const themeId of ['fpv', 'ukraine', 'retro'])
   test(`${themeId}: actual observed movement animates microtile bodies; Pause holds the exact pose`, () => {
     const poses = createActorPresentation(),
       options = { themeId, style: 'microtile', dt: 0.1 };

@@ -54,7 +54,7 @@ test('ordinary catalogue guidance translates Sentinel counterplay and every prac
 test('twelve concise topics distinguish registered roles, optional encounters and line impacts', () => {
   assert.equal(ENEMY_GUIDE_TOPICS.length, 12);
   for (const { id } of ENEMY_GUIDE_TOPICS)
-    for (const theme of ['fpv', 'ukraine', 'retro', 'coupa']) {
+    for (const theme of ['fpv', 'ukraine', 'retro']) {
       const entry = enemyGuideEntry(id, theme);
       for (const part of ['spot', 'risk', 'try', 'note'])
         assert.ok(entry[part].length > 20 && entry[part].length < 200);
@@ -70,7 +70,7 @@ test('twelve concise topics distinguish registered roles, optional encounters an
 test('all four-theme/two-policy lesson variants validate without changing original content', () => {
   const before = structuredClone({ themes, impactScenario });
   for (const { id } of ENEMY_GUIDE_TOPICS.filter(({ id }) => !isEncounterGuideTopic(id)))
-    for (const themeId of ['fpv', 'ukraine', 'retro', 'coupa'])
+    for (const themeId of ['fpv', 'ukraine', 'retro'])
       for (const turnPolicy of ['immediate', 'grid-center']) {
         const scenario = lesson(id, themeId, turnPolicy);
         assert.equal(validateScenario(scenario).valid, true);

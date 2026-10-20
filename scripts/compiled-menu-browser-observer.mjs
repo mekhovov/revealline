@@ -115,6 +115,10 @@ export async function observeCompiledMenu({
     cleanup: { context: 'absent', browser: 'absent', server: 'absent' },
   };
   const budget = pagesBudget(570000);
+  const step = (...args) => {
+    report.activeStep = args[0];
+    return budget.step(...args);
+  };
   let server, browser, context, diagnostics;
   const retain = async () =>
     writeFile(join(output, 'report.json'), encodePagesReport(report, password), { mode: 0o600 });
@@ -157,18 +161,18 @@ export async function observeCompiledMenu({
     assert.equal(preview.headers, 'generated _headers (verified)');
     const origin = assertLoopback(preview.url).href;
     report.preview = { mode: preview.mode, headers: preview.headers, fixtureAccess: false, origin };
-    browser = await budget.step('launch', () =>
+    browser = await step('launch', () =>
       chromium.launch({ headless: true, executablePath: report.binaryBefore.path, timeout: 30000 }),
     );
     report.cleanup.browser = 'pending';
     report.browserVersion = browser.version();
     assert.equal(report.browserVersion, '151.0.7922.34');
-    context = await budget.step('fresh context', () =>
+    context = await step('fresh context', () =>
       browser.newContext({ viewport: { width: 1440, height: 900 }, locale: 'en-US' }),
     );
     report.cleanup.context = 'pending';
     assert.equal(context.pages().length, 0);
-    const page = await budget.step('new page', () => context.newPage());
+    const page = await step('new page', () => context.newPage());
     await page.bringToFront();
     diagnostics = createPagesDiagnostics(page, password, 128);
     report.diagnostics = diagnostics.result;
@@ -188,24 +192,24 @@ export async function observeCompiledMenu({
       }
     });
     const url = origin + 'game/?journey=whole-spatial-v25';
-    await budget.step(
+    await step(
       'game document',
       (timeout) => page.goto(url, { waitUntil: 'domcontentloaded', timeout }),
       60000,
     );
     const field = page.locator('#access-gate input[type="password"]');
-    await budget.step(
+    await step(
       'ordinary access form',
       (timeout) => field.waitFor({ state: 'visible', timeout }),
       60000,
     );
     assert.equal(page.url(), url);
-    await budget.step('ordinary password entry', (timeout) => field.fill(password, { timeout }));
+    await step('ordinary password entry', (timeout) => field.fill(password, { timeout }));
     assert.equal(page.url(), url);
-    await budget.step('ordinary password submission', (timeout) =>
+    await step('ordinary password submission', (timeout) =>
       page.locator('#access-gate button[type="submit"]').click({ timeout }),
     );
-    await budget.step(
+    await step(
       'ordinary password accepted',
       (timeout) =>
         page.waitForFunction(
@@ -220,9 +224,7 @@ export async function observeCompiledMenu({
     report.stages.push('ordinary-password-accepted');
     await retain();
     const read = async () => {
-      const s = await budget.step('read public DOM', () =>
-        page.evaluate(readCompiledMenuPublicState),
-      );
+      const s = await step('read public DOM', () => page.evaluate(readCompiledMenuPublicState));
       assert.equal(new URL(s.href).origin, new URL(origin).origin);
       assert.equal(s.hidden, false);
       assert.equal(s.focused, true);
@@ -238,7 +240,7 @@ export async function observeCompiledMenu({
         assert(budget.now() < end, 'Compiled controls deadline: ' + label);
         const s = await read();
         if (predicate(s)) return s;
-        await budget.step(
+        await step(
           'public observation interval',
           () => page.waitForTimeout(100),
           Math.min(1000, end - budget.now()),
@@ -246,12 +248,10 @@ export async function observeCompiledMenu({
       }
     };
     const click = async (selector) =>
-      budget.step('native click ' + selector, (timeout) =>
-        page.locator(selector).click({ timeout }),
-      );
+      step('native click ' + selector, (timeout) => page.locator(selector).click({ timeout }));
     const screenshot = async (name) => {
       assert.equal(await page.locator('#access-gate').count(), 0);
-      const bytes = await budget.step('bounded screenshot', () =>
+      const bytes = await step('bounded screenshot', () =>
         page.screenshot({ type: 'jpeg', quality: 45, fullPage: false, timeout: 10000 }),
       );
       assert(bytes.length <= 512 * 1024, 'Screenshot cap');
@@ -264,9 +264,7 @@ export async function observeCompiledMenu({
     const filter = async (id, value) => {
       const control = page.locator('#' + id);
       if (!(await control.isVisible())) await click('#journey-filter-summary');
-      await budget.step('native filter ' + id, (timeout) =>
-        control.selectOption(value, { timeout }),
-      );
+      await step('native filter ' + id, (timeout) => control.selectOption(value, { timeout }));
     };
     const browse = async (locale) => {
       await click('#shell-play');
@@ -326,7 +324,7 @@ export async function observeCompiledMenu({
     const index = s.cards.findIndex((x) => x.id === CURRENT_ID);
     const card = page.locator('#journey-cards .journey-card').nth(index);
     assert.equal(await card.getAttribute('data-mission-id'), CURRENT_ID);
-    await budget.step('real exact mission card', (timeout) => card.click({ timeout }));
+    await step('real exact mission card', (timeout) => card.click({ timeout }));
     s = await until(
       'accepted briefing',
       (s) =>
@@ -350,7 +348,7 @@ export async function observeCompiledMenu({
       'paused',
       (s) => s.flight === 'paused' && s.controls['start-button'].visible,
     );
-    await budget.step('paused observation', () => page.waitForTimeout(500), 1500);
+    await step('paused observation', () => page.waitForTimeout(500), 1500);
     s = await read();
     assert.equal(s.time, paused.time);
     assert.equal(s.lives, paused.lives);
@@ -370,9 +368,7 @@ export async function observeCompiledMenu({
     await click('#settings-tab-display');
     const languages = page.locator('#settings-dialog [data-language-select]:visible');
     assert.equal(await languages.count(), 1);
-    await budget.step('native Ukrainian language', (timeout) =>
-      languages.selectOption('uk', { timeout }),
-    );
+    await step('native Ukrainian language', (timeout) => languages.selectOption('uk', { timeout }));
     await until('Ukrainian locale', (s) => s.lang === 'uk');
     assert.equal(
       (await page.locator('#settings-tab-display').textContent()).trim(),
@@ -403,6 +399,12 @@ export async function observeCompiledMenu({
     report.status = 'passed-controls';
   } catch (error) {
     report.failure = redactPagesText(error?.message ?? error, password);
+    report.failureDetails = {
+      name: typeof error?.name === 'string' ? error.name : 'Error',
+      step: report.activeStep ?? null,
+      completedStages: [...report.stages],
+      message: report.failure,
+    };
   } finally {
     diagnostics?.detach();
     try {

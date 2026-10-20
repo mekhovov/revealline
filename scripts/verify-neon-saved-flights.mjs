@@ -21,11 +21,13 @@ import {
 // state, storage, awards or artwork bytes are created by this verifier.
 const records = [];
 let rejectionChecks = 0;
+let expectedRecords = 0;
 for (const packId of ['neon-reference-pack', 'neon-mosaic-pack']) {
   const pack = JSON.parse(
     await readFile(new URL(`../game/content/packs/${packId}.json`, import.meta.url)),
   );
   for (const authored of pack.campaigns) {
+    expectedRecords += authored.levels.length * 4;
     const original = {
       ...authored,
       classRecipes: pack.classRecipes.filter((recipe) => authored.classIds.includes(recipe.id)),
@@ -145,7 +147,7 @@ for (const packId of ['neon-reference-pack', 'neon-mosaic-pack']) {
     }
   }
 }
-assert.equal(records.length, 216);
+assert.equal(records.length, expectedRecords);
 const report = {
   format: 'revealline-neon-saved-flight-verification.v1',
   cases: records.length,

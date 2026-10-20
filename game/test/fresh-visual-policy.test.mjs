@@ -32,7 +32,7 @@ test('fresh policy declares exact full original coverage for both accepted diffi
       assert.equal(match.kind, 'compatible');
       assert.equal(match.content.owner.baseCampaignKey, FRESH_SOLO_VISUAL_RELEASE.campaignKey);
     }
-    assert.equal(freshSoloVisualSelection(entry, 'coupa'), null);
+    assert.equal(freshSoloVisualSelection(entry, 'sample'), null);
     assert.equal(freshSoloVisualSelection({ ...entry, activity: 'challenge' }, 'fpv'), null);
     assert.equal(
       freshSoloVisualSelection(

@@ -1,311 +1,276 @@
 {
-  "format": "FPVEarlyVerifiedParts.v1",
-  "parts": [
-    {
-      "format": "FPVCASPartVerified.v1",
-      "repo": "mekhovov/revealline",
-      "releaseId": 414505790,
-      "tag": "fpv-development-preservation-20261016",
-      "assetId": 646078378,
-      "assetName": "fpv-cas-f966df1dc59abd44344edaff5b55d52fd5e0719183533aa84ad53ab64a123063.tar.zst",
-      "assetURL": "https://github.com/mekhovov/revealline/releases/download/untagged-9a5982b8261a24c31535/fpv-cas-f966df1dc59abd44344edaff5b55d52fd5e0719183533aa84ad53ab64a123063.tar.zst",
-      "bytes": 7372794,
-      "sha256": "f966df1dc59abd44344edaff5b55d52fd5e0719183533aa84ad53ab64a123063",
-      "serverDigestMatch": true,
-      "authenticatedFullReadbackSHA256Match": true,
-      "restoredMembers": {
-        "members": 8,
-        "bytes": 7412239,
-        "allRestoredMemberSHA256Match": true,
-        "destination": "verify-policy-001/restored"
-      },
-      "partManifest": {
-        "format": "FPVCASPart.v1",
-        "number": 1,
-        "objects": [
+  "format": "revealline-retained-historical-excerpt.v1",
+  "scope": "Retained historical excerpt after an ownership migration. Original bytes are preserved separately. Historical counts, hashes and approvals inside the excerpt describe the original record only; this derived document is not a release qualification, executable restore plan, or complete original inventory.",
+  "originalSHA256": "db3ec4d7fd81d437142d1cd58a175a74f9df7995ee6970111f44fd0c84a3c07d",
+  "originalGitBlob": "d501c06a8161cb0899bb4f089d2a5c7b5e4856da",
+  "removedRecordsOrFields": 6,
+  "excerpt": {
+    "format": "FPVEarlyVerifiedParts.v1",
+    "parts": [
+      {
+        "format": "FPVCASPartVerified.v1",
+        "repo": "mekhovov/revealline",
+        "releaseId": 414505790,
+        "tag": "fpv-development-preservation-20261016",
+        "assetId": 646078378,
+        "assetName": "fpv-cas-f966df1dc59abd44344edaff5b55d52fd5e0719183533aa84ad53ab64a123063.tar.zst",
+        "assetURL": "https://github.com/mekhovov/revealline/releases/download/untagged-9a5982b8261a24c31535/fpv-cas-f966df1dc59abd44344edaff5b55d52fd5e0719183533aa84ad53ab64a123063.tar.zst",
+        "bytes": 7372794,
+        "sha256": "f966df1dc59abd44344edaff5b55d52fd5e0719183533aa84ad53ab64a123063",
+        "serverDigestMatch": true,
+        "authenticatedFullReadbackSHA256Match": true,
+        "restoredMembers": {
+          "members": 8,
+          "bytes": 7412239,
+          "allRestoredMemberSHA256Match": true,
+          "destination": "verify-policy-001/restored"
+        },
+        "partManifest": {
+          "format": "FPVCASPart.v1",
+          "number": 1,
+          "objects": [
+            {
+              "sha256": "1395c68c2742d979eeb811be85dbf1352dfb78f114c1352112fac9937ec5e96a",
+              "bytes": 2187660,
+              "member": "objects/1395c68c2742d979eeb811be85dbf1352dfb78f114c1352112fac9937ec5e96a"
+            },
+            {
+              "sha256": "2dea1f079f7f81bce604d73c7ae086dd9e77e62469ee2ed4c2d3ad41aac82429",
+              "bytes": 3425,
+              "member": "objects/2dea1f079f7f81bce604d73c7ae086dd9e77e62469ee2ed4c2d3ad41aac82429"
+            },
+            {
+              "sha256": "38849fc20068802638304d14b2df6fbcefdca1a6f76fdeb6a2520464b5612503",
+              "bytes": 1730,
+              "member": "objects/38849fc20068802638304d14b2df6fbcefdca1a6f76fdeb6a2520464b5612503"
+            },
+            {
+              "sha256": "56b95644566df142375ff4153d3634a8393aa1583a3198d7e720b457031f237a",
+              "bytes": 419,
+              "member": "objects/56b95644566df142375ff4153d3634a8393aa1583a3198d7e720b457031f237a"
+            },
+            {
+              "sha256": "7642e1a75ed6a1956a280c37a4602ab5d9a3f88c566f9a4740d2313514dd7c37",
+              "bytes": 1790,
+              "member": "objects/7642e1a75ed6a1956a280c37a4602ab5d9a3f88c566f9a4740d2313514dd7c37"
+            },
+            {
+              "sha256": "8aab2381420f0b127eb98b402de8c7b2af2fc24d471a61ce6180b0f17910959d",
+              "bytes": 2767187,
+              "member": "objects/8aab2381420f0b127eb98b402de8c7b2af2fc24d471a61ce6180b0f17910959d"
+            },
+            {
+              "sha256": "97489553e0c6c6a383b00a8d2885266f3a5d7f38b455e61db7d972dc3b49ee1f",
+              "bytes": 740,
+              "member": "objects/97489553e0c6c6a383b00a8d2885266f3a5d7f38b455e61db7d972dc3b49ee1f"
+            },
+            {
+              "sha256": "c3251eca67f94f7e27c75e0c4ac8d1ade6a81b009ee3c154ec276578eb2a8793",
+              "bytes": 2449288,
+              "member": "objects/c3251eca67f94f7e27c75e0c4ac8d1ade6a81b009ee3c154ec276578eb2a8793"
+            }
+          ]
+        },
+        "sourceBeforeAfterChecks": 8,
+        "localSourceReceipt": "batch-policy-001/part-0001-local.json",
+        "verifiedAtUnix": 1792123457.8976371,
+        "sourceChecks": [
           {
-            "sha256": "1395c68c2742d979eeb811be85dbf1352dfb78f114c1352112fac9937ec5e96a",
-            "bytes": 2187660,
-            "member": "objects/1395c68c2742d979eeb811be85dbf1352dfb78f114c1352112fac9937ec5e96a"
-          },
-          {
-            "sha256": "2dea1f079f7f81bce604d73c7ae086dd9e77e62469ee2ed4c2d3ad41aac82429",
-            "bytes": 3425,
-            "member": "objects/2dea1f079f7f81bce604d73c7ae086dd9e77e62469ee2ed4c2d3ad41aac82429"
-          },
-          {
-            "sha256": "38849fc20068802638304d14b2df6fbcefdca1a6f76fdeb6a2520464b5612503",
-            "bytes": 1730,
-            "member": "objects/38849fc20068802638304d14b2df6fbcefdca1a6f76fdeb6a2520464b5612503"
-          },
-          {
+            "path": "flight-practice-publication.sMOWmR/.xonix-build-rNivMM/authoring/production/history/source-index.json",
             "sha256": "56b95644566df142375ff4153d3634a8393aa1583a3198d7e720b457031f237a",
             "bytes": 419,
-            "member": "objects/56b95644566df142375ff4153d3634a8393aa1583a3198d7e720b457031f237a"
+            "sourceBeforeAndAfterSHA256Match": true,
+            "mtimeNs": 1791951779251207900
           },
           {
-            "sha256": "7642e1a75ed6a1956a280c37a4602ab5d9a3f88c566f9a4740d2313514dd7c37",
-            "bytes": 1790,
-            "member": "objects/7642e1a75ed6a1956a280c37a4602ab5d9a3f88c566f9a4740d2313514dd7c37"
-          },
-          {
-            "sha256": "8aab2381420f0b127eb98b402de8c7b2af2fc24d471a61ce6180b0f17910959d",
-            "bytes": 2767187,
-            "member": "objects/8aab2381420f0b127eb98b402de8c7b2af2fc24d471a61ce6180b0f17910959d"
-          },
-          {
+            "path": "flight-practice-publication.sMOWmR/.xonix-build-rNivMM/authoring/production/history/index.json",
             "sha256": "97489553e0c6c6a383b00a8d2885266f3a5d7f38b455e61db7d972dc3b49ee1f",
             "bytes": 740,
-            "member": "objects/97489553e0c6c6a383b00a8d2885266f3a5d7f38b455e61db7d972dc3b49ee1f"
-          },
-          {
-            "sha256": "c3251eca67f94f7e27c75e0c4ac8d1ade6a81b009ee3c154ec276578eb2a8793",
-            "bytes": 2449288,
-            "member": "objects/c3251eca67f94f7e27c75e0c4ac8d1ade6a81b009ee3c154ec276578eb2a8793"
+            "sourceBeforeAndAfterSHA256Match": true,
+            "mtimeNs": 1791951778721486300
           }
-        ]
+        ],
+        "localSourceReceiptSHA256": "a91029e54d30ccdb9816ded718aa33f13a2dccdc4e5f1cb34937eff515c91d35"
       },
-      "sourceBeforeAfterChecks": 8,
-      "localSourceReceipt": "batch-policy-001/part-0001-local.json",
-      "verifiedAtUnix": 1792123457.8976371,
-      "sourceChecks": [
-        {
-          "path": "flight-practice-publication.sMOWmR/.xonix-build-rNivMM/authoring/library/sentinel-theme-art/coupa/originals/switchyard-gates.png",
-          "sha256": "1395c68c2742d979eeb811be85dbf1352dfb78f114c1352112fac9937ec5e96a",
-          "bytes": 2187660,
-          "sourceBeforeAndAfterSHA256Match": true,
-          "mtimeNs": 1791951708975102300
+      {
+        "format": "FPVCASPartVerified.v1",
+        "repo": "mekhovov/revealline",
+        "releaseId": 414505790,
+        "tag": "fpv-development-preservation-20261016",
+        "assetId": 646081888,
+        "assetName": "fpv-cas-fa059aac33fe88f19f92886d2f5a42b66aa9de05e57db735460a0743c54d44b0.tar.zst",
+        "assetURL": "https://github.com/mekhovov/revealline/releases/download/untagged-9a5982b8261a24c31535/fpv-cas-fa059aac33fe88f19f92886d2f5a42b66aa9de05e57db735460a0743c54d44b0.tar.zst",
+        "bytes": 10005,
+        "sha256": "fa059aac33fe88f19f92886d2f5a42b66aa9de05e57db735460a0743c54d44b0",
+        "serverDigestMatch": true,
+        "authenticatedFullReadbackSHA256Match": true,
+        "restoredMembers": {
+          "members": 11,
+          "bytes": 23796,
+          "allRestoredMemberSHA256Match": true,
+          "destination": "verify-flat-001/restored"
         },
-        {
-          "path": "flight-practice-publication.sMOWmR/.xonix-build-rNivMM/game/communities/coupa/index.html",
-          "sha256": "2dea1f079f7f81bce604d73c7ae086dd9e77e62469ee2ed4c2d3ad41aac82429",
-          "bytes": 3425,
-          "sourceBeforeAndAfterSHA256Match": true,
-          "mtimeNs": 1791951972540725000
+        "partManifest": {
+          "format": "FPVCASPart.v1",
+          "number": 1,
+          "objects": [
+            {
+              "sha256": "1de5c24b9c0574ecf59b764d55cf450566df8d8455318ee8ab50c79c0f19a397",
+              "bytes": 2281,
+              "member": "objects/1de5c24b9c0574ecf59b764d55cf450566df8d8455318ee8ab50c79c0f19a397"
+            },
+            {
+              "sha256": "210a15a9d977d34fd9e2afedfda5845a95fdaaa818edd356dbd6bf10449e5f29",
+              "bytes": 3113,
+              "member": "objects/210a15a9d977d34fd9e2afedfda5845a95fdaaa818edd356dbd6bf10449e5f29"
+            },
+            {
+              "sha256": "33721132e0ed8a89a7d65d4edf09d1a43dc959cb1ebef2ef41dc97f3a8ed99de",
+              "bytes": 2449,
+              "member": "objects/33721132e0ed8a89a7d65d4edf09d1a43dc959cb1ebef2ef41dc97f3a8ed99de"
+            },
+            {
+              "sha256": "356a7994d95257e4a6596b7639321406e2b64d2d632c91041c0aad7093b5e821",
+              "bytes": 1952,
+              "member": "objects/356a7994d95257e4a6596b7639321406e2b64d2d632c91041c0aad7093b5e821"
+            },
+            {
+              "sha256": "9ad5f567203da0a040b60209d35a4b6af30d3cd7bd4dad5e1fa7e0e9ce4a60e9",
+              "bytes": 1882,
+              "member": "objects/9ad5f567203da0a040b60209d35a4b6af30d3cd7bd4dad5e1fa7e0e9ce4a60e9"
+            },
+            {
+              "sha256": "a0b2af40787819101eb9b17e6e709d4ddba14b2ce0af321179537b575b1e1c86",
+              "bytes": 1944,
+              "member": "objects/a0b2af40787819101eb9b17e6e709d4ddba14b2ce0af321179537b575b1e1c86"
+            },
+            {
+              "sha256": "a887ff1afbc8f9e92d3b00f0adb6f46bc42bb4d63794a57f528c6aa5a68a4526",
+              "bytes": 2235,
+              "member": "objects/a887ff1afbc8f9e92d3b00f0adb6f46bc42bb4d63794a57f528c6aa5a68a4526"
+            },
+            {
+              "sha256": "b1c2771d572ac793aac3288a2661a3d8e74a6f5ffd6412d122151b241d98a061",
+              "bytes": 2329,
+              "member": "objects/b1c2771d572ac793aac3288a2661a3d8e74a6f5ffd6412d122151b241d98a061"
+            },
+            {
+              "sha256": "b2783550e7ebcc6f863650071cf9d24dd843cdc612b949265e2795b0661af7cb",
+              "bytes": 1523,
+              "member": "objects/b2783550e7ebcc6f863650071cf9d24dd843cdc612b949265e2795b0661af7cb"
+            },
+            {
+              "sha256": "bf550bc9c8c5a858f66d017399968915622b5d8bbfbb335b316ee59e480097c9",
+              "bytes": 2289,
+              "member": "objects/bf550bc9c8c5a858f66d017399968915622b5d8bbfbb335b316ee59e480097c9"
+            },
+            {
+              "sha256": "f951de704c4b965c30c497e10fa420d24fa07c23ce535c0f48b399bf37f4db18",
+              "bytes": 1799,
+              "member": "objects/f951de704c4b965c30c497e10fa420d24fa07c23ce535c0f48b399bf37f4db18"
+            }
+          ]
         },
-        {
-          "path": "flight-practice-publication.sMOWmR/.xonix-build-rNivMM/authoring/library/route-worlds/descriptors/coupa.json",
-          "sha256": "38849fc20068802638304d14b2df6fbcefdca1a6f76fdeb6a2520464b5612503",
-          "bytes": 1730,
-          "sourceBeforeAndAfterSHA256Match": true,
-          "mtimeNs": 1791951688204813900
-        },
-        {
-          "path": "flight-practice-publication.sMOWmR/.xonix-build-rNivMM/authoring/production/history/source-index.json",
-          "sha256": "56b95644566df142375ff4153d3634a8393aa1583a3198d7e720b457031f237a",
-          "bytes": 419,
-          "sourceBeforeAndAfterSHA256Match": true,
-          "mtimeNs": 1791951779251207900
-        },
-        {
-          "path": "flight-practice-publication.sMOWmR/.xonix-build-rNivMM/authoring/library/sentinel-theme-chapters/descriptors/coupa.json",
-          "sha256": "7642e1a75ed6a1956a280c37a4602ab5d9a3f88c566f9a4740d2313514dd7c37",
-          "bytes": 1790,
-          "sourceBeforeAndAfterSHA256Match": true,
-          "mtimeNs": 1791951717082441500
-        },
-        {
-          "path": "flight-practice-publication.sMOWmR/.xonix-build-rNivMM/authoring/library/sentinel-theme-art/coupa/originals/listening-court.png",
-          "sha256": "8aab2381420f0b127eb98b402de8c7b2af2fc24d471a61ce6180b0f17910959d",
-          "bytes": 2767187,
-          "sourceBeforeAndAfterSHA256Match": true,
-          "mtimeNs": 1791951707094499900
-        },
-        {
-          "path": "flight-practice-publication.sMOWmR/.xonix-build-rNivMM/authoring/production/history/index.json",
-          "sha256": "97489553e0c6c6a383b00a8d2885266f3a5d7f38b455e61db7d972dc3b49ee1f",
-          "bytes": 740,
-          "sourceBeforeAndAfterSHA256Match": true,
-          "mtimeNs": 1791951778721486300
-        },
-        {
-          "path": "flight-practice-publication.sMOWmR/.xonix-build-rNivMM/authoring/library/sentinel-theme-art/coupa/originals/open-the-circuit.png",
-          "sha256": "c3251eca67f94f7e27c75e0c4ac8d1ade6a81b009ee3c154ec276578eb2a8793",
-          "bytes": 2449288,
-          "sourceBeforeAndAfterSHA256Match": true,
-          "mtimeNs": 1791951708004380300
-        }
-      ],
-      "localSourceReceiptSHA256": "a91029e54d30ccdb9816ded718aa33f13a2dccdc4e5f1cb34937eff515c91d35"
-    },
-    {
-      "format": "FPVCASPartVerified.v1",
-      "repo": "mekhovov/revealline",
-      "releaseId": 414505790,
-      "tag": "fpv-development-preservation-20261016",
-      "assetId": 646081888,
-      "assetName": "fpv-cas-fa059aac33fe88f19f92886d2f5a42b66aa9de05e57db735460a0743c54d44b0.tar.zst",
-      "assetURL": "https://github.com/mekhovov/revealline/releases/download/untagged-9a5982b8261a24c31535/fpv-cas-fa059aac33fe88f19f92886d2f5a42b66aa9de05e57db735460a0743c54d44b0.tar.zst",
-      "bytes": 10005,
-      "sha256": "fa059aac33fe88f19f92886d2f5a42b66aa9de05e57db735460a0743c54d44b0",
-      "serverDigestMatch": true,
-      "authenticatedFullReadbackSHA256Match": true,
-      "restoredMembers": {
-        "members": 11,
-        "bytes": 23796,
-        "allRestoredMemberSHA256Match": true,
-        "destination": "verify-flat-001/restored"
-      },
-      "partManifest": {
-        "format": "FPVCASPart.v1",
-        "number": 1,
-        "objects": [
+        "sourceBeforeAfterChecks": 11,
+        "localSourceReceipt": "batch-flat-001/part-0001-local.json",
+        "verifiedAtUnix": 1792123511.748364,
+        "sourceChecks": [
           {
+            "path": "urban-hall-pr-body.md",
             "sha256": "1de5c24b9c0574ecf59b764d55cf450566df8d8455318ee8ab50c79c0f19a397",
             "bytes": 2281,
-            "member": "objects/1de5c24b9c0574ecf59b764d55cf450566df8d8455318ee8ab50c79c0f19a397"
+            "sourceBeforeAndAfterSHA256Match": true,
+            "mtimeNs": 1792007122155249400
           },
           {
+            "path": "regional-scenery-pr-body.md",
             "sha256": "210a15a9d977d34fd9e2afedfda5845a95fdaaa818edd356dbd6bf10449e5f29",
             "bytes": 3113,
-            "member": "objects/210a15a9d977d34fd9e2afedfda5845a95fdaaa818edd356dbd6bf10449e5f29"
+            "sourceBeforeAndAfterSHA256Match": true,
+            "mtimeNs": 1791994617152835700
           },
           {
+            "path": "urban-bando-pr-body.md",
             "sha256": "33721132e0ed8a89a7d65d4edf09d1a43dc959cb1ebef2ef41dc97f3a8ed99de",
             "bytes": 2449,
-            "member": "objects/33721132e0ed8a89a7d65d4edf09d1a43dc959cb1ebef2ef41dc97f3a8ed99de"
+            "sourceBeforeAndAfterSHA256Match": true,
+            "mtimeNs": 1791989273624915600
           },
           {
+            "path": "urban-ground-pr-body.md",
             "sha256": "356a7994d95257e4a6596b7639321406e2b64d2d632c91041c0aad7093b5e821",
             "bytes": 1952,
-            "member": "objects/356a7994d95257e4a6596b7639321406e2b64d2d632c91041c0aad7093b5e821"
+            "sourceBeforeAndAfterSHA256Match": true,
+            "mtimeNs": 1792005221641816000
           },
           {
+            "path": "canyon-landmarks-pr-body.md",
             "sha256": "9ad5f567203da0a040b60209d35a4b6af30d3cd7bd4dad5e1fa7e0e9ce4a60e9",
             "bytes": 1882,
-            "member": "objects/9ad5f567203da0a040b60209d35a4b6af30d3cd7bd4dad5e1fa7e0e9ce4a60e9"
+            "sourceBeforeAndAfterSHA256Match": true,
+            "mtimeNs": 1792010156574717100
           },
           {
+            "path": "urban-mixed-pr-body.md",
             "sha256": "a0b2af40787819101eb9b17e6e709d4ddba14b2ce0af321179537b575b1e1c86",
             "bytes": 1944,
-            "member": "objects/a0b2af40787819101eb9b17e6e709d4ddba14b2ce0af321179537b575b1e1c86"
+            "sourceBeforeAndAfterSHA256Match": true,
+            "mtimeNs": 1791999745063322300
           },
           {
+            "path": "regional-start-pr-body.md",
             "sha256": "a887ff1afbc8f9e92d3b00f0adb6f46bc42bb4d63794a57f528c6aa5a68a4526",
             "bytes": 2235,
-            "member": "objects/a887ff1afbc8f9e92d3b00f0adb6f46bc42bb4d63794a57f528c6aa5a68a4526"
+            "sourceBeforeAndAfterSHA256Match": true,
+            "mtimeNs": 1791999070260562800
           },
           {
+            "path": "urban-loading-pr-body.md",
             "sha256": "b1c2771d572ac793aac3288a2661a3d8e74a6f5ffd6412d122151b241d98a061",
             "bytes": 2329,
-            "member": "objects/b1c2771d572ac793aac3288a2661a3d8e74a6f5ffd6412d122151b241d98a061"
+            "sourceBeforeAndAfterSHA256Match": true,
+            "mtimeNs": 1792004290992868100
           },
           {
+            "path": "urban-lighting-pr-body.md",
             "sha256": "b2783550e7ebcc6f863650071cf9d24dd843cdc612b949265e2795b0661af7cb",
             "bytes": 1523,
-            "member": "objects/b2783550e7ebcc6f863650071cf9d24dd843cdc612b949265e2795b0661af7cb"
+            "sourceBeforeAndAfterSHA256Match": true,
+            "mtimeNs": 1792002473602514100
           },
           {
+            "path": "regional-scenery-flight-pr-body.md",
             "sha256": "bf550bc9c8c5a858f66d017399968915622b5d8bbfbb335b316ee59e480097c9",
             "bytes": 2289,
-            "member": "objects/bf550bc9c8c5a858f66d017399968915622b5d8bbfbb335b316ee59e480097c9"
+            "sourceBeforeAndAfterSHA256Match": true,
+            "mtimeNs": 1791997378860328400
           },
           {
+            "path": "urban-surface-pr-body.md",
             "sha256": "f951de704c4b965c30c497e10fa420d24fa07c23ce535c0f48b399bf37f4db18",
             "bytes": 1799,
-            "member": "objects/f951de704c4b965c30c497e10fa420d24fa07c23ce535c0f48b399bf37f4db18"
+            "sourceBeforeAndAfterSHA256Match": true,
+            "mtimeNs": 1792000999793854100
           }
-        ]
+        ],
+        "localSourceReceiptSHA256": "f622ecae3120efafe217e6f978c32ccb0b289ba39cfb359561a2564a73eb5f1b"
+      }
+    ],
+    "totalObjects": 19,
+    "rawBytes": 7436035,
+    "compressedBytes": 7382799,
+    "inventoryStateAtReceipt": {
+      "counts": {
+        "file": 85733,
+        "excluded": 33,
+        "symlink": 262,
+        "git-checkout": 31
       },
-      "sourceBeforeAfterChecks": 11,
-      "localSourceReceipt": "batch-flat-001/part-0001-local.json",
-      "verifiedAtUnix": 1792123511.748364,
-      "sourceChecks": [
-        {
-          "path": "urban-hall-pr-body.md",
-          "sha256": "1de5c24b9c0574ecf59b764d55cf450566df8d8455318ee8ab50c79c0f19a397",
-          "bytes": 2281,
-          "sourceBeforeAndAfterSHA256Match": true,
-          "mtimeNs": 1792007122155249400
-        },
-        {
-          "path": "regional-scenery-pr-body.md",
-          "sha256": "210a15a9d977d34fd9e2afedfda5845a95fdaaa818edd356dbd6bf10449e5f29",
-          "bytes": 3113,
-          "sourceBeforeAndAfterSHA256Match": true,
-          "mtimeNs": 1791994617152835700
-        },
-        {
-          "path": "urban-bando-pr-body.md",
-          "sha256": "33721132e0ed8a89a7d65d4edf09d1a43dc959cb1ebef2ef41dc97f3a8ed99de",
-          "bytes": 2449,
-          "sourceBeforeAndAfterSHA256Match": true,
-          "mtimeNs": 1791989273624915600
-        },
-        {
-          "path": "urban-ground-pr-body.md",
-          "sha256": "356a7994d95257e4a6596b7639321406e2b64d2d632c91041c0aad7093b5e821",
-          "bytes": 1952,
-          "sourceBeforeAndAfterSHA256Match": true,
-          "mtimeNs": 1792005221641816000
-        },
-        {
-          "path": "canyon-landmarks-pr-body.md",
-          "sha256": "9ad5f567203da0a040b60209d35a4b6af30d3cd7bd4dad5e1fa7e0e9ce4a60e9",
-          "bytes": 1882,
-          "sourceBeforeAndAfterSHA256Match": true,
-          "mtimeNs": 1792010156574717100
-        },
-        {
-          "path": "urban-mixed-pr-body.md",
-          "sha256": "a0b2af40787819101eb9b17e6e709d4ddba14b2ce0af321179537b575b1e1c86",
-          "bytes": 1944,
-          "sourceBeforeAndAfterSHA256Match": true,
-          "mtimeNs": 1791999745063322300
-        },
-        {
-          "path": "regional-start-pr-body.md",
-          "sha256": "a887ff1afbc8f9e92d3b00f0adb6f46bc42bb4d63794a57f528c6aa5a68a4526",
-          "bytes": 2235,
-          "sourceBeforeAndAfterSHA256Match": true,
-          "mtimeNs": 1791999070260562800
-        },
-        {
-          "path": "urban-loading-pr-body.md",
-          "sha256": "b1c2771d572ac793aac3288a2661a3d8e74a6f5ffd6412d122151b241d98a061",
-          "bytes": 2329,
-          "sourceBeforeAndAfterSHA256Match": true,
-          "mtimeNs": 1792004290992868100
-        },
-        {
-          "path": "urban-lighting-pr-body.md",
-          "sha256": "b2783550e7ebcc6f863650071cf9d24dd843cdc612b949265e2795b0661af7cb",
-          "bytes": 1523,
-          "sourceBeforeAndAfterSHA256Match": true,
-          "mtimeNs": 1792002473602514100
-        },
-        {
-          "path": "regional-scenery-flight-pr-body.md",
-          "sha256": "bf550bc9c8c5a858f66d017399968915622b5d8bbfbb335b316ee59e480097c9",
-          "bytes": 2289,
-          "sourceBeforeAndAfterSHA256Match": true,
-          "mtimeNs": 1791997378860328400
-        },
-        {
-          "path": "urban-surface-pr-body.md",
-          "sha256": "f951de704c4b965c30c497e10fa420d24fa07c23ce535c0f48b399bf37f4db18",
-          "bytes": 1799,
-          "sourceBeforeAndAfterSHA256Match": true,
-          "mtimeNs": 1792000999793854100
-        }
-      ],
-      "localSourceReceiptSHA256": "f622ecae3120efafe217e6f978c32ccb0b289ba39cfb359561a2564a73eb5f1b"
-    }
-  ],
-  "totalObjects": 19,
-  "rawBytes": 7436035,
-  "compressedBytes": 7382799,
-  "inventoryStateAtReceipt": {
-    "counts": {
-      "file": 85733,
-      "excluded": 33,
-      "symlink": 262,
-      "git-checkout": 31
+      "bytes": 19029042409,
+      "elapsedSeconds": 1721.0792841911316,
+      "complete": true
     },
-    "bytes": 19029042409,
-    "elapsedSeconds": 1721.0792841911316,
-    "complete": true
-  },
-  "overallCoverageClaimed": false,
-  "overallDisconnectSafetyClaimed": false
+    "overallCoverageClaimed": false,
+    "overallDisconnectSafetyClaimed": false
+  }
 }

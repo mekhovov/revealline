@@ -1,5 +1,7 @@
 # Round 05 — authored arcade boards with collectible artwork
 
+> Retained excerpt after an ownership migration. Historical totals and verification statements describe the original scope; this excerpt is not a current release qualification. Original bytes and removed material are preserved separately.
+
 12 September 2026. Recommendation: keep FPV FRONT as the leading identity and build its design around short, authored territory puzzles. Classic arcade mastery, image discovery and tactical objectives remain the three motivations. This round revises design, prompts and authoring guidance; it does not start runtime implementation.
 
 ## What the inspection covered
@@ -28,7 +30,6 @@ This is a substantial selected audit, not every screenshot or video on the inter
 
 **Make substantial captures feel substantial.** Lightfish's inspected 28–29-second sequence closes a cut, reveals 43% and raises its multiplier from 1 to 6.5. Its tutorial ties large captures to possible powerups. Borrow the clear causal payoff: closure, reveal, affected objects, concise score explanation. Our bonus formula, cap and pickup schedule remain design choices. With erosion enabled, area scoring should count first-time captured cells so reopening/reclaiming cannot farm unlimited points.
 
-**Give objectives a visible purpose.** Fortix provides the strongest reference for capturing something that changes the next decision. A relay can disable one linked threat, an Atlas landmark restore a route, a retro switch affect a circuit, and a Navi opportunity remove a fictional cost leak. Begin with capture markers and existing declared effects. Opening actual gates or changing terrain needs an extension. Contact pickups remain a different acquisition model; renaming a capture marker cannot implement them.
 
 **Reward completion, then invite mastery.** On victory, stop threats and reveal the complete illustration while retaining the actual achieved percentage in the result. Both Reloaded's opening sequence and Super Qix's 83% celebration support this separation. Unlock the next ordinary stage through completion; use survival, speed and exceptional captures as optional replay medals. Reference speed thresholds vary by level, so our medal deadlines must be authored independently of any hard failure timer.
 
@@ -42,7 +43,6 @@ Keep the player brightest, the active route unmistakable, threats recognizable b
 
 The military vehicles painted into the FPV picture are part of the fictional reveal scene. Live hostile sprites must have their own consistent outline, movement and hit cue. A vehicle in a photograph does not become an enemy because its pixels resemble one.
 
-| Shared role | FPV FRONT | UKRAINE ATLAS | 1994 FOREVER | NAVI NETWORK |
 |---|---|---|---|---|
 | Emotional promise | Reclaim signal and expose invading military presence | Discover places, traditions and stories | Recover a vividly remembered era | Reveal fictional savings and better operations |
 | Wall / slow / danger | Barrier / interference / marked danger | Stone / marsh or dense thread / thorn patch | Circuit block / tape drag / short circuit | Closed block / approval backlog / exception zone |
@@ -50,7 +50,6 @@ The military vehicles painted into the FPV picture are part of the fictional rev
 | Erosion | Hostile interference | Unraveling shadow | Corrupted pixels | Reopening cost leak |
 | Collection | Mission artwork and patches | Regional atlas and objects | Cartridge shelf and scenes | Customer network and discoveries |
 
-These are alternative presentations of declared mechanics. Preserve regional specificity for Ukrainian cultural art and use a verified Coupa/Navi reference when selecting the final branded avatar. The current C-token remains a concept placeholder. Pixel, illustrated, photographic and scanned-art backgrounds stay independently replaceable.
 
 ## Devices and controls
 

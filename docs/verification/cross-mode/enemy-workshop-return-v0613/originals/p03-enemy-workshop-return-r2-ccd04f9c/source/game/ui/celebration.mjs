@@ -1,3 +1,5 @@
+// Retained historical source projection; original bytes are archived separately.
+// This excerpt is not the original artifact or a new execution qualification.
 import { hashText } from './music.mjs';
 const clamp = (v, a, b) => Math.min(b, Math.max(a, v)),
   TAU = Math.PI * 2;
@@ -8,9 +10,7 @@ export function finaleKind(theme = {}) {
     ? 'signal-clear'
     : theme.family === 'atlas' || theme.scene === 'heritage'
       ? 'stitch-bloom'
-      : theme.family === 'navi' || theme.scene === 'network'
-        ? 'savings-nodes'
-        : 'neon-fireworks';
+      : 'neon-fireworks';
 }
 export function createCelebration({ theme = {}, levelId = '', seed = 0, reduced = false } = {}) {
   return {
@@ -110,33 +110,6 @@ export function celebrationFrame(state) {
           tone: 'safe',
         });
       }
-    } else if (state.kind === 'savings-nodes') {
-      for (let j = 0; j < 12; j++) {
-        const a = (j * TAU) / 12,
-          age = time - (j % 4) * 0.1;
-        if (age < 0) continue;
-        particles.push({
-          shape: 'node',
-          x: 0.5 + Math.cos(a) * 0.3,
-          y: 0.48 + Math.sin(a) * 0.3,
-          size: 6 + ease(age / 0.45) * 3,
-          alpha: fade * 0.8,
-          tone: j % 2 ? 'accent' : 'safe',
-        });
-      }
-      for (let j = 0; j < 32; j++) {
-        const age = time - (j % 8) * 0.05;
-        if (age < 0) continue;
-        const angle = j * 2.399 + (state.seed % 13);
-        particles.push({
-          shape: 'spark',
-          x: 0.5 + Math.cos(angle) * Math.max(0, 0.28 - age * 0.11),
-          y: 0.48 + Math.sin(angle) * Math.max(0, 0.28 - age * 0.11),
-          size: 2,
-          alpha: fade * 0.6,
-          tone: 'accent',
-        });
-      }
     } else {
       for (let burst = 0; burst < 4; burst++) {
         const age = time - 0.15 - burst * 0.24;
@@ -185,17 +158,7 @@ export function drawCelebration(ctx, frame, palette, width = 768, height = 576) 
     ctx.fillStyle = palette.muted;
     ctx.fillRect(x - 17, y + 3, 34, 4);
   }
-  if (frame.kind === 'savings-nodes') {
-    ctx.strokeStyle = palette.safe;
-    ctx.lineWidth = 1;
-    ctx.globalAlpha = (1 - frame.progress) * 0.3;
-    for (const p of frame.particles.filter((p) => p.shape === 'node')) {
-      ctx.beginPath();
-      ctx.moveTo(width * 0.5, height * 0.48);
-      ctx.lineTo(p.x * width, p.y * height);
-      ctx.stroke();
-    }
-  }
+
   for (const p of frame.particles) {
     if (p.alpha <= 0) continue;
     const x = Math.round(p.x * width),

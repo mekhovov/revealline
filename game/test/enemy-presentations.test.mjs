@@ -51,7 +51,7 @@ test('uploads retain precedence, resolved skins scope defaults and unknown types
   const model = createEnemyPresentations(source);
   for (const row of model.entries) {
     assert.equal(model.forFrame({ type: row.type, themeId: 'fpv' }), row);
-    for (const themeId of ['ukraine', 'retro', 'coupa', 'unknown'])
+    for (const themeId of ['ukraine', 'retro', 'unknown'])
       assert.equal(model.forFrame({ type: row.type, themeId }), null);
   }
   for (const type of ['lane-boss', 'relay-sentinel'])

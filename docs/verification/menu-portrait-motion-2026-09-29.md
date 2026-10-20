@@ -1,3 +1,5 @@
+> Retained historical excerpt after an ownership migration. Exact original bytes are preserved separately. Original totals and verification statements describe the original scope; this excerpt is not a current qualification or a complete test result.
+
 # Dutch campaign portrait motion — 29 September 2026
 
 This follow-up is based on merged `10f9bf21e` plus the portrait profile changes in this batch. It covers a concrete crop bug, not qualification of every remaining Phase 5 requirement.
@@ -37,6 +39,5 @@ This subagent's computer-use context exposed neither an in-app browser nor a usa
 
 ## Remaining Phase 5 work
 
-Mode-specific authored composition remains a separate asset batch for the **four base worlds × three supported modes** (FPV, Ukraine, Retro and Coupa; Solo, Versus and Team). Current mode IDs do not independently arrange the subjects baked into flattened images. Separate object motion needs measured cutouts and repaired backgrounds or new authored compositions; arbitrary zoom, tint changes and unrelated particle overlays would not fulfill that request. The fourteen company editions remain Solo-only.
 
 This batch adds no physical-phone performance, GPU-memory, long-session comfort or final-package claim. The broader exact-revision browser/package and physical-device acceptance matrix remains a Phase 7 gate.

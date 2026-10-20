@@ -1,5 +1,7 @@
 # Living menu scenes
 
+> Retained excerpt after an ownership migration. Historical totals and verification statements describe the original scope; this excerpt is not a current release qualification. Original bytes and removed material are preserved separately.
+
 The shared landing scene is presentation only. It never selects campaigns, rewrites saves, changes gameplay, plays audio or moves focus. The host imports `attachMenuScene` from `game/ui/menu-scenes.mjs` and loads `game/ui/menu-scenes.css` after its legacy artwork styles.
 
 Edition landing hosts pass their edition identity without an explicit gameplay theme override, so each edition always displays its assigned home scene. Standalone compilation retains the selected edition profile and the FPV fallback, including both FPV orientations. It projects the profile lookup and offline dependency inventory together, and removes all four base-world Versus/Team composition maps from Solo-only editions, avoiding unrelated scene payloads within the existing 64 MiB offline limit. The main game retains all 18 profiles.
@@ -10,13 +12,11 @@ One active image is selected, including on orientation changes. FPV Solo and all
 
 Five Dutch campaign portraits have separately measured animation regions because their narrow central crops exclude the landscape windows and edge lamps. Workshop Lights uses its small rear pendant and sunlit bench; Parts in Motion is reframed toward its bench lamp, window light and assembled drone; Makers Together uses the trailing plant and lit floor; Signals of Support and Shared Horizon use visible wall light. These portrait regions reuse the original pixels. Lighting changes brightness without deforming the depicted drones or tools; only the plant region receives bounded foliage movement. The supplied aggregate DroneAid poster retains its deliberate still treatment.
 
-`game/ui/menu-scene-motion.mjs` renders the complete artwork through one WebGL texture with a fixed `1.025` crop and zero pan when the profile has supported motion regions. Clouds use a single displaced source sample with slow, nonsynchronized drift; steam uses rising two-phase flow; softly bounded source-coordinate regions provide small water movement, lighting changes and foliage sway. The camera does not repeatedly zoom or move. FPV foliage uses the landscape rectangle `61,35,28,20` and portrait rectangle `79,58,12,10`, expressed as source-image percentages. The scene DOM contains the image/canvas artwork plane, a normally hidden receiver canvas, and the subtle analog texture. Menus, their text-safe shading and their controls remain stationary. FPV Versus selects two opposing drones on separate stands; FPV Team selects a coordinated pair connected to one service dock. These are separately authored complete paintings, including portrait compositions, not overlays or tint/zoom variants. Their drone silhouettes are static; the measured sky, lamp, foliage and illumination regions move through the same renderer. Ukraine Versus and Team also use distinct bird arrangements, with separate landscape/portrait images and measured cloud, lamp, water and leaf regions. Retro uses opposing craft on separate launch platforms or linked craft on a shared dock; Coupa uses opposing Navi pods on separate pedestals or a pair connected to one beacon on a shared dock. Both worlds also have independent portrait compositions. No flying actor or particle overlay is added.
 
 The renderer draws at most 30 frames per second while the landing is visible and active. It uses the already-loaded image as its sole texture, inline shader programs and a source-ratio canvas capped at 1,600 pixels on its longest edge and 1.44 million pixels in area. The uploaded texture obeys the same limits. It does not advance gameplay, run hidden simulation or fetch a second moving-image asset. Every loaded still gets one six-second CSS arrival from scale `1` to `1.035`, then holds. That shared parent transform applies to both the original image and WebGL output, so successful WebGL no longer bypasses the entrance. The GPU has no animated camera. Without supported regions it draws once at source scale and requests no further frames; if WebGL is unavailable, the original image still receives the same CSS arrival. The fallback never alternates or loops, and renderer readiness never restarts the entrance. Animation off and reduced effects show the original static image.
 
 This is a lightweight cinemagraph treatment of a flattened image, not a rigged scene or generated video. Regional sampling cannot create missing background pixels or independently rotate an object baked into the image. More substantial object motion needs authored cutouts, repaired backgrounds and animation, or a separately produced seamless video. The [research and implementation boundary](verification/landing-cinemagraph-research-2026-09-29.md) records the primary references, available assets and limitations.
 
-All landing scenes also have a restrained monochrome receiver texture beneath the text-safe overlay. Ordinary profiles use 3% opacity. FPV, Retro, Coupa Developer Integration and every DroneAid profile use 5%; workshop, parts, handoff and horizon DroneAid scenes retain this technical treatment. The texture advances through four frames per second and uses soft-light compositing, so it preserves the underlying artwork's palette. The catalog retains `signalOpacity` and the older `signalPeakOpacity` metadata; the fixed twelve-second CSS opacity pulse has been removed.
 
 `menu-signal-loss.mjs` adds occasional actual image disruption: a first burst after 8–12 visible, active seconds, followed by randomized 18–32 second quiet intervals. Each 550–850 ms burst smoothly rises and fades at up to 40% opacity, with monochrome noise and one to three horizontally displaced bands sampled from the landing artwork. It reuses the gameplay receiver-noise algorithm, never samples text or controls, and remains under the readability shade. The longest processing edge is 256 pixels and drawing is capped at 12 fps during a burst. Idle intervals own one timer and do no drawing. Hidden/covered/disabled states immediately discard a burst; resuming schedules a fresh delay rather than catching up. No audio or flashes are added.
 
@@ -29,13 +29,6 @@ Every layer is aria-hidden, inert, pointer-transparent and unfocusable. Renderin
 | `fpv`                                  | Authored dawn hangar, amber/cyan                       | Clouds, sunbeam, lamp, foliage    |
 | `ukraine`                              | Original generated Ukrainian river valley at dawn      | Clouds, river, sunbeam            |
 | `retro`                                | Original generated 1994 Forever rainy arcade street    | Wet pavement, neon lamps          |
-| `coupa`                                | Existing Coupa home illustration                       | Water, sunbeam                    |
-| `coupa-village`                        | Original generated coastal village overview            | Water, clouds                     |
-| `coupa-spend-in-motion-theme`          | Spend-city campaign artwork                            | Water, clouds                     |
-| `coupa-inside-village-theme`           | Inside-village campaign artwork                        | Water, clouds, garden lamp        |
-| `coupa-source-to-pay-theme`            | Source-to-pay campaign artwork                         | Water, clouds                     |
-| `coupa-product-operations-theme`       | Product-operations campaign artwork                    | Work lamps and window light       |
-| `coupa-developer-integration-theme`    | Network-atlas campaign artwork                         | Anchored network-route light      |
 | `droneaid-community`                   | Community-relay campaign artwork                       | Workshop lamps, steam above a cup |
 | `droneaid-nl-community`                | Supplied DroneAid blue/yellow poster with a real drone | One arrival, receiver dropouts    |
 | `droneaid-nl-workshop-lights-theme`    | Workshop-lights campaign artwork                       | Window light and overhead lamp    |
@@ -64,13 +57,6 @@ This table describes the 18 base Solo profiles. FPV has a separate portrait orig
 | `fpv`                                  | 68% 50%               | 50% 50%              | Separate portrait original   |
 | `ukraine`                              | 68% 50%               | 71% 50%              | Landscape crop               |
 | `retro`                                | 68% 50%               | 68% 50%              | Landscape crop               |
-| `coupa`                                | 62% 50%               | 65% 45%              | Landscape crop               |
-| `coupa-village`                        | 68% 50%               | 71% 50%              | Landscape crop               |
-| `coupa-spend-in-motion-theme`          | 60% 50%               | 64% 50%              | Landscape crop               |
-| `coupa-inside-village-theme`           | 60% 50%               | 55% 50%              | Landscape crop               |
-| `coupa-source-to-pay-theme`            | 60% 50%               | 58% 50%              | Landscape crop               |
-| `coupa-product-operations-theme`       | 60% 50%               | 62% 50%              | Landscape crop               |
-| `coupa-developer-integration-theme`    | 60% 50%               | 57% 50%              | Landscape crop               |
 | `droneaid-community`                   | 64% 50%               | 67% 50%              | Landscape crop               |
 | `droneaid-nl-community`                | 50% 48%               | 90% 50%              | Supplied poster, CSS framing |
 | `droneaid-nl-workshop-lights-theme`    | 62% 50%               | 68% 50%              | Landscape crop               |
@@ -109,14 +95,6 @@ Measured motion regions differ by orientation and avoid the birds, strand and ra
 `MENU_SCENE_COMPOSITIONS.retro` preserves 1994 Forever's rainy arcade street, cyan/magenta neon, warm cabinet interior and ivory/orange `retro-craft` actor. Versus turns two craft inward on separate cyan/magenta launch platforms. Team aligns them on one dock with a shared blue connection. Each tall image is separately composed so both actors fit a phone crop. Solo remains unchanged.
 
 The craft are static painted actors; existing pavement reflections, storefront lamps/neon and plant leaves receive localized motion. Portrait regions are separately measured and avoid the wings, platforms and cable. Landscapes use verified lossless WebP at effort 100/method 6; portraits use the established quality 94/method 6 fallback. All four retain original dimensions and stay below 2 MiB including the shared atlas. Complete prompts, the one Versus orientation-correction step and hashes are in `authoring/library/menu-scenes/retro-mode-prompts.json`; selected original PNGs are stored beside it. The discarded draft is identified by hash rather than shipped as a source dependency. The [Retro mode evidence](verification/retro-mode-scenes-2026-09-29.md) distinguishes rendered verification from physical-device acceptance.
-
-## Coupa mode compositions
-
-`MENU_SCENE_COMPOSITIONS.coupa` preserves Spend Network's white-stone coastal village, blue roofs, turquoise water and friendly white/navy/cyan Navi pod. Versus uses two separate inward-facing docking pedestals with cyan/amber trim. Team shares one service dock and a cyan beacon connected to both pods. Both have separate portrait originals with dark upper stone arches for the menu. This applies to the default Coupa world; all 14 company editions continue to use their own Solo profiles.
-
-Cloud, lamp, sea and foliage regions are measured separately for each orientation. Portrait foliage is assigned to the visible lower-right planters, instead of left-edge ivy that the final phone cover crop excludes. Robot faces, cables and dock geometry remain static. The four WebPs are lossless, decoded RGBA matches the sources, and the largest image plus atlas is 1,892,231 bytes. Selected sources, the retained Team portrait refinement input, complete prompts and reference hashes are under `authoring/library/menu-scenes/coupa-mode-scenes-2026-09-29/`. The [Coupa evidence](verification/coupa-mode-scenes-2026-09-29.md) records that generation and its exact encoding.
-
-The four nested world maps leave the theme catalog at 18 identities. Their eight Versus/Team profiles bring the crop regression to 25 animated profiles across six viewports (150 combinations). The default runtime retains all 16 mode rasters, while every Solo-only edition's catalog and dependency projection omit them. Only the selected orientation decodes; repeated updates preserve the same owner and focus. Reduced motion retains the correct mode still, and hidden/gameplay/dialog lifecycle behavior is shared with Solo.
 
 ## Earlier motion evidence — 29 September 2026
 

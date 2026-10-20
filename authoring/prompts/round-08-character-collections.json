@@ -19,7 +19,7 @@
         "FAMILY_BRIEFS",
         "TARGET_CONTEXTS"
       ],
-      "prompt": "Author a character collection from {{CURRENT_COLLECTION}}, {{FAMILY_BRIEFS}} and {{TARGET_CONTEXTS}}. Separate stable character identity, cosmetic variant, source/derivative artwork, replaceable component recipe, context eligibility, acquisition rule and current selection. Preserve existing IDs when replacing an image or propeller treatment. Give each character a coherent reason to exist beyond a palette swap, while keeping movement, collider, capture, damage and scoring unchanged unless the user explicitly requests a separately reviewed rules change. Retain the four independent families: Ukrainian FPV equipment, specific Ukrainian cultural characters, wider 80s–90s nostalgia and Coupa-inspired business characters. Record body, portrait, rotor/wing/thruster/pulse and trail references only where useful and supported. Inspect the actual preview format before writing records; the collection is not automatically a content-pack or media-schema extension. Deliver a concise roster and recipe mapping with starter/earned intent, fallback choices and readiness evidence. Mark new images, unsupported selectors and unimplemented progression as planned rather than inventing working outputs.",
+      "prompt": "Author a character collection from {{CURRENT_COLLECTION}}, {{FAMILY_BRIEFS}} and {{TARGET_CONTEXTS}}. Separate stable character identity, cosmetic variant, source/derivative artwork, replaceable component recipe, context eligibility, acquisition rule and current selection. Preserve existing IDs when replacing an image or propeller treatment. Give each character a coherent reason to exist beyond a palette swap, while keeping movement, collider, capture, damage and scoring unchanged unless the user explicitly requests a separately reviewed rules change. Retain the three independent families: Ukrainian FPV equipment, specific Ukrainian cultural characters, wider 80s–90s nostalgia. Record body, portrait, rotor/wing/thruster/pulse and trail references only where useful and supported. Inspect the actual preview format before writing records; the collection is not automatically a content-pack or media-schema extension. Deliver a concise roster and recipe mapping with starter/earned intent, fallback choices and readiness evidence. Mark new images, unsupported selectors and unimplemented progression as planned rather than inventing working outputs.",
       "example_request": "Create a roster with starter and earned characters across all four themes, preserving the existing character IDs."
     },
     {
@@ -93,24 +93,6 @@
       ],
       "prompt": "Create an original 1994 FOREVER character from {{ERA_DIRECTION}}, {{CHARACTER_BRIEF}} and {{DISPLAY_TARGET}}. Choose a clear nostalgic vocabulary such as a home-computer cursor craft, toy-like space skimmer or restrained vector-era ship; do not mix all decades into generic neon. Give the character a readable tiny silhouette, an unambiguous forward direction and a bright functional center that can lead the live cut. Keep body and intended thruster/accent boundaries suitable for later independent replacement; no exhaust or glow should cover the next turn. Design the selectable or earned variant as a cosmetic identity, preserving the baseline collider, movement and capture rules. Use original forms rather than tracing recognizable commercial game sprites. Keep functional labels outside generated art. Record the effective prompt, selected references and measured output dimensions, and inspect the resulting image at its intended scale. A beautiful keyframe is a concept until alpha, sampling, attachments and actual applied motion have been checked in the available preview.",
       "example_request": "Create a warm home-computer starter craft and an earned vector-style cosmetic with the same movement rules."
-    },
-    {
-      "id": "collection-06-navi-character",
-      "family": "navi-network",
-      "asset_type": "character_variant_concept",
-      "mode": "image_edit",
-      "intent": "Adapt approved business character identity into a selectable cosmetic variant.",
-      "status": "template_not_executed",
-      "reference_requirements": [
-        "Actual inspected approved identity or explicitly labeled original placeholder, character variation brief and display target."
-      ],
-      "variables": [
-        "IDENTITY_REFERENCE",
-        "CHARACTER_BRIEF",
-        "DISPLAY_TARGET"
-      ],
-      "prompt": "Inspect {{IDENTITY_REFERENCE}} and create the requested NAVI NETWORK variation described by {{CHARACTER_BRIEF}} for {{DISPLAY_TARGET}}. Preserve the supplied identity accurately; if it is an original C-token or unverified mascot concept, retain that label and do not claim an exact official Coupa Navi reproduction. Keep the character friendly, compact and readable, with an independently replaceable pulse/accent or connection cue where supported. A starter guide and an earned auditor-themed cosmetic can differ in silhouette detail or material without implying real customer savings, changed speed or new AI capability. Keep process-friction obstacles abstract and introduce no military imagery or nationality-coded enemies. Preserve the original source, save a derived copy and record the complete prompt and parent asset. Generated labels should not replace actual localized UI. Inspect real output dimensions, alpha and small-size clarity, then apply the asset through the existing preview only when that step is requested and available. Report concept, applied visual and inspected motion readiness separately.",
-      "example_request": "Adapt the supplied Navi placeholder into an earned auditor look, retaining honest brand status and business imagery."
     },
     {
       "id": "collection-07-exchange-asset",
@@ -272,7 +254,7 @@
         "STATE_INTERFACE"
       ],
       "prompt": "Design {{COMPONENT_TYPES}} for {{CHARACTER_REFERENCES}} using {{STATE_INTERFACE}}. Treat a cultural bird wing, retro thruster and business-character pulse as different motion systems, not rotor animations with renamed labels. Define inspected local hinges/nozzles/centers, transform ownership, bounds, draw order, idle/move responses and reduced-motion steady views. A wing can use bounded angular motion, a thruster can change length or opacity, and a pulse can vary a restrained accent only where the actual renderer supports those fields. All response reads declared state and velocity without altering authoritative movement or collider geometry. Specify loop/timebase, pause/resume behavior, priority and cancellation on supported hit/respawn/victory or character exchange. If the avatar art already contains wings or exhaust, explain how overlays avoid duplicated anatomy and clipping. Keep original media and stable character/component IDs. Deliver the recipe and an actual playback checklist; unsupported controls and unplayed motion remain explicitly proposed, and no sound exists merely because a cue is described. Preserve the configured immediate or grid-center buffered movement policy. Derive response from documented actual travel/state signals, which may differ from a requested buffered direction; compare each cosmetic recipe within both supported mode baselines without changing turn logic.",
-      "example_request": "Give the Ukrainian bird wings, retro craft a thruster and Navi a quiet pulse, with independent recipes and clean character switching."
+      "example_request": "Give the Ukrainian bird wings, retro craft a thruster, with independent recipes and clean character switching."
     },
     {
       "id": "collection-16-source-faithful-style",
@@ -289,7 +271,7 @@
         "STYLE_VARIATION",
         "COMPONENT_LOCKS"
       ],
-      "prompt": "Inspect {{SOURCE_ART}} and create only the requested {{STYLE_VARIATION}} while respecting {{COMPONENT_LOCKS}}. Preserve the original file, stable collection identity, subject, heading, center and accepted attachment relationships unless the user explicitly requested a change. Keep-source with a separate overlay remains valid; do not automatically pixelate a painting or photographic source. For a requested derived style, save a separate asset with its parent, effective prompt and actual dimensions. Keep skin detail independent from gameplay speed, collider, capture and earned state. Respect the active family: no Z markings on current FPV variants, specific Ukrainian cultural references, coherent 80s–90s vocabulary and correctly labeled Coupa/Navi identity without military imports. Use the built-in image-edit route with inspected references. Compare the result under an unchanged live-trail fixture and at the intended occupied-pixel scale. Report fidelity differences and inspect alpha/anchors before application; a completed style edit does not by itself prove a working animated or production-ready character.",
+      "prompt": "Inspect {{SOURCE_ART}} and create only the requested {{STYLE_VARIATION}} while respecting {{COMPONENT_LOCKS}}. Preserve the original file, stable collection identity, subject, heading, center and accepted attachment relationships unless the user explicitly requested a change. Keep-source with a separate overlay remains valid; do not automatically pixelate a painting or photographic source. For a requested derived style, save a separate asset with its parent, effective prompt and actual dimensions. Keep skin detail independent from gameplay speed, collider, capture and earned state. Respect the active family: no Z markings on current FPV variants, specific Ukrainian cultural references, coherent 80s–90s vocabulary. Use the built-in image-edit route with inspected references. Compare the result under an unchanged live-trail fixture and at the intended occupied-pixel scale. Report fidelity differences and inspect alpha/anchors before application; a completed style edit does not by itself prove a working animated or production-ready character.",
       "example_request": "Create pixel, painterly or clean illustrated looks for the same accepted character while preserving its collection ID and anchors."
     }
   ]

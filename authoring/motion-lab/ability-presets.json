@@ -47,8 +47,7 @@
       "preferredBodies": {
         "fpv-front": "scout-quad",
         "ukraine-atlas": "ukrainian-bird",
-        "retro-1994": "retro-craft",
-        "navi-network": "navi-avatar"
+        "retro-1994": "retro-craft"
       }
     },
     {
@@ -73,8 +72,7 @@
       "preferredBodies": {
         "fpv-front": "fpv-body",
         "ukraine-atlas": "ukrainian-bird",
-        "retro-1994": "retro-craft",
-        "navi-network": "navi-avatar"
+        "retro-1994": "retro-craft"
       }
     },
     {
@@ -99,8 +97,7 @@
       "preferredBodies": {
         "fpv-front": "heavy-lift",
         "ukraine-atlas": "ukrainian-bird",
-        "retro-1994": "retro-craft",
-        "navi-network": "navi-avatar"
+        "retro-1994": "retro-craft"
       }
     },
     {
@@ -125,8 +122,7 @@
       "preferredBodies": {
         "fpv-front": "fpv-racer",
         "ukraine-atlas": "ukrainian-bird",
-        "retro-1994": "retro-craft",
-        "navi-network": "navi-avatar"
+        "retro-1994": "retro-craft"
       }
     },
     {
@@ -151,8 +147,7 @@
       "preferredBodies": {
         "fpv-front": "fixedwing-body",
         "ukraine-atlas": "ukrainian-bird",
-        "retro-1994": "retro-craft",
-        "navi-network": "navi-avatar"
+        "retro-1994": "retro-craft"
       },
       "visualWake": {
         "spacing": 0.2,
@@ -183,8 +178,7 @@
       "preferredBodies": {
         "fpv-front": "fpv-body",
         "ukraine-atlas": "ukrainian-bird",
-        "retro-1994": "retro-craft",
-        "navi-network": "navi-avatar"
+        "retro-1994": "retro-craft"
       }
     },
     {
@@ -211,8 +205,7 @@
       "preferredBodies": {
         "fpv-front": "delta-interceptor",
         "ukraine-atlas": "ukrainian-bird",
-        "retro-1994": "retro-craft",
-        "navi-network": "navi-avatar"
+        "retro-1994": "retro-craft"
       }
     },
     {
@@ -239,8 +232,7 @@
       "preferredBodies": {
         "fpv-front": "scout-quad",
         "ukraine-atlas": "ukrainian-bird",
-        "retro-1994": "retro-craft",
-        "navi-network": "navi-avatar"
+        "retro-1994": "retro-craft"
       }
     },
     {
@@ -268,8 +260,7 @@
       "preferredBodies": {
         "fpv-front": "delta-interceptor",
         "ukraine-atlas": "ukrainian-bird",
-        "retro-1994": "retro-craft",
-        "navi-network": "navi-avatar"
+        "retro-1994": "retro-craft"
       }
     },
     {
@@ -294,8 +285,7 @@
       "preferredBodies": {
         "fpv-front": "scout-quad",
         "ukraine-atlas": "ukrainian-bird",
-        "retro-1994": "retro-craft",
-        "navi-network": "navi-avatar"
+        "retro-1994": "retro-craft"
       }
     }
   ],
@@ -451,27 +441,6 @@
       "supplyLabel": "Supply pad",
       "hazeLabel": "Synthetic signal haze",
       "budgetLabel": "Spool budget"
-    },
-    "navi-network": {
-      "classLabels": {
-        "scout": "Insight scout",
-        "light-bomber": "Parcel courier",
-        "heavy-carrier": "Batch courier",
-        "fiber-courier": "Connected courier",
-        "fixedwing-courier": "Express courier",
-        "strike": "Reset sprint",
-        "interceptor": "Exception catcher",
-        "repeater": "Pulse emitter",
-        "net-catcher": "Workflow filter",
-        "relay": "Signal helper"
-      },
-      "equipmentLabels": {
-        "radio": "Wireless link",
-        "fiber": "Budgeted link"
-      },
-      "supplyLabel": "Supply pad",
-      "hazeLabel": "Synthetic signal haze",
-      "budgetLabel": "Link budget"
     }
   }
 }

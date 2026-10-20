@@ -1,15 +1,24 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
-import { readFile } from 'node:fs/promises';
 import { deflateSync } from 'node:zlib';
 import { importCompanyArt } from '../../scripts/import-company-art.mjs';
 import { crc32 } from '../../scripts/game-cli.mjs';
 import { selectCurrentCompanyArtwork } from '../company-campaigns/artwork.mjs';
 
-const bytes = await readFile(
-  new URL('../editions/assets/coupa/bulk-02/listen-then-link-v1.png', import.meta.url),
-);
+// Opaque synthetic RGB fixture: importer validation must not require community artwork.
+const chunk = (type, data) => {
+  const out = Buffer.alloc(12 + data.length);
+  out.writeUInt32BE(data.length); out.write(type, 4); out.set(data, 8);
+  out.writeUInt32BE(crc32(out.subarray(4, 8 + data.length)), 8 + data.length);
+  return out;
+};
+const header = Buffer.alloc(13);
+header.writeUInt32BE(960); header.writeUInt32BE(480, 4); header[8] = 8; header[9] = 2;
+const bytes = Buffer.concat([
+  Buffer.from('89504e470d0a1a0a', 'hex'), chunk('IHDR', header),
+  chunk('IDAT', deflateSync(Buffer.alloc((960 * 3 + 1) * 480))), chunk('IEND', Buffer.alloc(0)),
+]);
 const sha256 = createHash('sha256').update(bytes).digest('hex');
 const source = () => ({
   tool: 'image_gen.imagegen',

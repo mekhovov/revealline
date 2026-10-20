@@ -20,7 +20,7 @@ const descriptor = (path, value) => ({
 });
 const picture = bytes('<svg xmlns="http://www.w3.org/2000/svg"/>');
 const asset = {
-  ...descriptor('game/editions/assets/coupa.svg', picture),
+  ...descriptor('game/editions/assets/sample.svg', picture),
   approved: true,
   publication: 'public',
 };
@@ -100,7 +100,7 @@ test('edition envelope binds exact source and original descriptors without chang
   assert.equal(result.zipMembersVerified, true);
   assert.equal(result.publicEligible, false);
   assert.equal(result.status, 'verified-candidate-members');
-  f.files.set('distribution-coupa.zip', bytes('replaced'));
+  f.files.set('distribution-sample.zip', bytes('replaced'));
   await assert.rejects(validateEditionAdmission(f.envelope, f), /bytes differ/);
 });
 

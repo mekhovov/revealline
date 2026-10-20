@@ -1,3 +1,5 @@
+> Retained historical excerpt after an ownership migration. Exact original bytes are preserved separately. Original totals and verification statements describe the original scope; this excerpt is not a current qualification or a complete test result.
+
 # Primary checkout release inventory review
 
 Read-only review on 2026-09-29. Repository: `<shared-checkout>`. Observed branch `codex/mission-selector-level-cards`, HEAD `9e0bf4f69081a38f23514e006239891cd3c62942`. No repository edit, test, snapshot commit, PR mutation, build, or release action was performed by this review.
@@ -311,8 +313,6 @@ Complete 526-file observation at 2026-09-29T00:42:03.626599+00:00. These groups 
 - `??` `docs/verification/fpv-line-brand-2026-09-29/about-en.jpg`
 - `??` `docs/verification/fpv-line-brand-2026-09-29/about-uk.jpg`
 - `??` `docs/verification/fpv-line-brand-2026-09-29/company-studio.jpg`
-- `??` `docs/verification/fpv-line-brand-2026-09-29/coupa-developers-390-corrected.jpg`
-- `??` `docs/verification/fpv-line-brand-2026-09-29/coupa-developers-390.jpg`
 - `??` `docs/verification/fpv-line-brand-2026-09-29/creator.jpg`
 - `??` `docs/verification/fpv-line-brand-2026-09-29/design-atlas.jpg`
 - `??` `docs/verification/fpv-line-brand-2026-09-29/droneaid-390-corrected.jpg`
@@ -418,7 +418,6 @@ Complete 526-file observation at 2026-09-29T00:42:03.626599+00:00. These groups 
 ### C2. Living landing scenes, receiver/retune and font assets (92 files)
 
 - `??` `authoring/library/menu-scenes/aggregate-prompts.json`
-- `??` `authoring/library/menu-scenes/coupa-overview-v1.png`
 - `??` `authoring/library/menu-scenes/droneaid-nl-overview-v1.png`
 - `??` `authoring/library/menu-scenes/prompts.json`
 - `??` `authoring/library/menu-scenes/retro-rainy-arcade-v1.png`
@@ -475,13 +474,6 @@ Complete 526-file observation at 2026-09-29T00:42:03.626599+00:00. These groups 
 - `??` `game/test/menu-scenes.test.mjs`
 - `??` `game/test/menu-signal-loss.test.mjs`
 - `??` `game/ui/art/menu-scenes/analog-noise-atlas.png`
-- `??` `game/ui/art/menu-scenes/coupa-developer-integration-theme.webp`
-- `??` `game/ui/art/menu-scenes/coupa-inside-village-theme.webp`
-- `??` `game/ui/art/menu-scenes/coupa-product-operations-theme.webp`
-- `??` `game/ui/art/menu-scenes/coupa-source-to-pay-theme.webp`
-- `??` `game/ui/art/menu-scenes/coupa-spend-in-motion-theme.webp`
-- `??` `game/ui/art/menu-scenes/coupa-village.webp`
-- `??` `game/ui/art/menu-scenes/coupa.webp`
 - `??` `game/ui/art/menu-scenes/droneaid-community.webp`
 - `??` `game/ui/art/menu-scenes/droneaid-main-background.png`
 - `??` `game/ui/art/menu-scenes/droneaid-nl-careful-handoff-theme.webp`
