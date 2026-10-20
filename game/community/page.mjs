@@ -3,6 +3,7 @@ import { createCommunityAccountClient } from './account.mjs';
 import { createCommunityClient } from './client.mjs';
 import { attachCommunityReadiness, communityRequest, probeCommunityService } from './readiness.mjs';
 import { confirmCommunityRemoval } from './removal-review.mjs';
+import { captureCommunityActionFocus } from './action-focus.mjs';
 import { createCommunityDownloadStore } from './download-store.mjs';
 import { createCommunityLibrary } from './library.mjs';
 import { createCommunityPublisher } from './publisher.mjs';
@@ -70,7 +71,8 @@ localizedText($('open-installed'), () =>
 const selectedCatalog = () => ({ query: $('search').value, installed: $('filter').value });
 const sameCatalog = (left, right) =>
   left?.query === right.query && left?.installed === right.installed;
-const localCatalogSelected = () => $('filter').value === 'installed';
+localizedText($('open-recovery'), localizedMessage('interface:community.recovery.copies'));
+const localCatalogSelected = () => ['installed', 'recovery'].includes($('filter').value);
 const canBrowseCatalog = () => localCatalogSelected() || readiness.available();
 const renderPagination = () => {
   $('more').hidden = !nextCursor;
@@ -143,10 +145,12 @@ const action = (label, run, className = '') => {
   button.type = 'button';
   button.onclick = async () => {
     let restoreFocus;
+    const startedWithFocus = document.activeElement === button;
     button.disabled = true;
     try {
       await run({
         button,
+        startedWithFocus,
         returnFocus: (restore) => {
           restoreFocus = restore;
         },
@@ -201,12 +205,13 @@ function render({ append = false, start = 0 } = {}) {
   for (const edition of rows.slice(start)) {
     const card = document.createElement('article');
     card.className = 'edition';
+    card.dataset.editionId = edition.editionId;
     card.append(text('h2', edition.title));
     card.append(
       text(
         'p',
         edition.description ||
-          (edition.localUnavailable
+          (edition.localUnavailable || edition.recoveryCopy
             ? () =>
                 getLocale() === 'uk'
                   ? 'На цьому пристрої є запис цього видання.'
@@ -304,7 +309,78 @@ function render({ append = false, start = 0 } = {}) {
     );
     const actions = document.createElement('div');
     actions.className = 'actions';
-    if (edition.localUnavailable) {
+    if (edition.recoveryCopy) {
+      if (edition.localUnavailable) {
+        actions.append(
+          text('p', localizedMessage('interface:community.recovery.unavailable'), 'meta'),
+        );
+      } else {
+        actions.append(
+          text('p', localizedMessage('interface:community.recovery.presence'), 'meta'),
+        );
+        actions.append(
+          text(
+            'p',
+            localizedMessage('interface:community.recovery.bytes', {
+              bytes: formatNumber(edition.retainedBytes),
+            }),
+            'meta',
+          ),
+        );
+        if (edition.installed && edition.playHref) {
+          const play = text('a', localizedMessage('interface:community.playOffline'));
+          play.href = edition.playHref;
+          actions.append(play);
+        }
+        actions.append(
+          action(localizedMessage('interface:community.reinstallExactEdition'), async (action) => {
+            const generation = catalogGeneration;
+            let focusGeneration = generation;
+            const focus = captureCommunityActionFocus({
+              document,
+              window,
+              opener: action.button,
+              startedWithFocus: action.startedWithFocus,
+              isCurrent: () => focusGeneration === catalogGeneration,
+            });
+            action.returnFocus(() => {
+              const replacement = [...$('catalog').querySelectorAll('article')].find(
+                (candidate) => candidate.dataset.editionId === edition.editionId,
+              );
+              focus.restore(
+                replacement?.querySelector('a') ??
+                  replacement?.querySelector('button') ??
+                  $('refresh'),
+              );
+            });
+            status(localizedMessage('interface:community.recovery.checking'));
+            let result;
+            try {
+              result = await library.restoreRetained(edition.editionId);
+            } catch (error) {
+              if (generation !== catalogGeneration || !action.button.isConnected) return;
+              status(
+                localizedMessage('interface:community.recovery.failed', { error: error.message }),
+                true,
+              );
+              return;
+            }
+            if (generation !== catalogGeneration || !action.button.isConnected) return;
+            await refresh({ reset: true });
+            if (generation + 1 !== catalogGeneration) return;
+            focusGeneration = catalogGeneration;
+            status(
+              localizedMessage(
+                result.journalComplete === false
+                  ? 'interface:community.recovery.journalIncomplete'
+                  : 'interface:community.recovery.restored',
+              ),
+              result.journalComplete === false,
+            );
+          }),
+        );
+      }
+    } else if (edition.localUnavailable) {
       actions.append(
         text(
           'p',
@@ -578,6 +654,12 @@ async function refresh({ reset = true } = {}) {
 $('refresh').onclick = () => (localCatalogSelected() ? refresh() : readiness.check());
 $('open-installed').onclick = () => {
   $('filter').value = 'installed';
+  readiness.render();
+  $('filter').focus();
+  return refresh();
+};
+$('open-recovery').onclick = () => {
+  $('filter').value = 'recovery';
   readiness.render();
   $('filter').focus();
   return refresh();

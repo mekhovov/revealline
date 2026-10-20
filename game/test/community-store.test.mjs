@@ -864,3 +864,284 @@ test('one unavailable local runtime remains visible without hiding healthy insta
   assert.equal(result.editions[1].installed, true);
   assert.match(result.editions[1].playHref, /relay-rescue/u);
 });
+
+const offlineClient = {
+  catalog() {
+    throw new Error('Recovery must not contact the catalog');
+  },
+  download() {
+    throw new Error('Recovery must not download');
+  },
+};
+const reopenLocalLibrary = (h, overrides = {}) =>
+  createCommunityLibrary({
+    client: offlineClient,
+    creatorStore: h.creatorStore,
+    stateStore: h.stateStore,
+    downloadStore: h.downloadStore,
+    decodeImage,
+    ...overrides,
+  });
+
+test('fresh offline recovery restores an offloaded Creator edition and its exact progress owner', async (t) => {
+  const { createJourneyBackend } = await import('../journey/profile.mjs');
+  const { managedIndexedDB } = await import('./helpers/managed-idb.mjs');
+  const { loadInstalledCreatorBundle } = await import('../creator/installed.mjs');
+  const content = await packageFixture(),
+    published = await edition(content.blob);
+  const h = await fixture({
+    editions: [published],
+    downloads: new Map([[published.editionId, content.blob]]),
+  });
+  t.after(() => h.creatorStore.close());
+  await h.library.install(published, { offline: false });
+  const original = await h.library.status(published.editionId);
+  const progressDisk = managedIndexedDB();
+  const progress = createJourneyBackend({ ...progressDisk, profileKey: original.profileKey });
+  await progress.commit([
+    {
+      type: 'complete',
+      mode: 'solo',
+      missionId: 'picture-1',
+      runId: 'retained-run',
+      gameplayId: 'exact-gameplay',
+      difficulty: 'standard',
+      stars: 2,
+    },
+  ]);
+  const originalProgress = await progress.read();
+  await h.library.offloadInstalled(published, await h.library.reviewInstalledOffload(published));
+  const locks = [];
+  let writes = 0;
+  const fresh = reopenLocalLibrary(h, {
+    lockManager: {
+      request(name, work) {
+        locks.push(name);
+        return work();
+      },
+    },
+    downloadStore: {
+      ...h.downloadStore,
+      put() {
+        writes++;
+        throw new Error('Do not replace the recovery copy');
+      },
+    },
+  });
+  assert.deepEqual((await fresh.catalog({ installed: 'installed' })).editions, []);
+  const row = (await fresh.catalog({ installed: 'recovery' })).editions[0];
+  assert.equal(row.recoveryCopy, true);
+  assert.equal(row.retainedBytes, content.blob.size);
+  assert.equal(row.title, published.slug);
+  assert.equal(row.publishedAt, undefined);
+  assert.equal(row.packageSize, undefined);
+  assert.equal(row.installed, false);
+  assert.equal(row.playHref, null);
+  const restored = await fresh.restoreRetained(row.editionId);
+  assert.equal(restored.journalComplete, true);
+  const after = await fresh.status(row.editionId);
+  assert.equal(after.installed, true);
+  assert.equal(after.playHref, original.playHref);
+  assert.equal(after.profileKey, original.profileKey);
+  assert.equal(after.attemptKey, original.attemptKey);
+  assert.deepEqual(await progress.read(), originalProgress);
+  const playable = await loadInstalledCreatorBundle(h.creatorStore, after.creatorEditionId, {
+    decodeImage,
+  });
+  assert.equal(playable.editionId, content.prepared.editionId);
+  assert.deepEqual(
+    await (await h.downloadStore.get(row.editionId)).arrayBuffer(),
+    await content.blob.arrayBuffer(),
+  );
+  assert.equal(writes, 0);
+  assert.deepEqual(locks, [`revealline-community-edition-${published.editionId}`]);
+});
+
+test('recovery rejects missing, altered, malformed or mismatched exact bytes before any owner write', async (t) => {
+  const content = await packageFixture(),
+    published = await edition(content.blob);
+  const h = await fixture({
+    editions: [published],
+    downloads: new Map([[published.editionId, content.blob]]),
+  });
+  t.after(() => h.creatorStore.close());
+  await h.library.install(published, { offline: false });
+  await h.library.offloadInstalled(published, await h.library.reviewInstalledOffload(published));
+  const original = await h.stateStore.read();
+  for (const kind of ['missing', 'altered', 'malformed', 'identity', 'family', 'runtime']) {
+    await h.stateStore.write(original);
+    await h.downloadStore.put(published.editionId, content.blob);
+    if (kind === 'missing') await h.downloadStore.remove(published.editionId);
+    if (kind === 'altered') await h.downloadStore.put(published.editionId, new Blob(['tampered']));
+    if (kind === 'malformed') {
+      const malformed = new Blob(['{}']);
+      await h.downloadStore.put(published.editionId, malformed);
+    }
+    if (kind === 'malformed')
+      await h.stateStore.update((state) => ({
+        ...state,
+        editions: [
+          {
+            ...state.editions[0],
+            packageSha256: '44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a',
+          },
+        ],
+      }));
+    if (kind === 'identity')
+      await h.stateStore.update((state) => {
+        state.editions[0].creatorEditionId = 'f'.repeat(64);
+        return state;
+      });
+    if (kind === 'family')
+      await h.stateStore.update((state) => {
+        Object.assign(state.editions[0], { family: 'team', runtimeIdentity: 'f'.repeat(64) });
+        return state;
+      });
+    if (kind === 'runtime')
+      await h.stateStore.update((state) => {
+        state.editions[0].runtimeIdentity = 'unexpected';
+        return state;
+      });
+    const before = await h.stateStore.read(),
+      retained = await h.downloadStore.get(published.editionId),
+      media = await h.creatorStore.readDomain('media');
+    let writes = 0;
+    const fresh = reopenLocalLibrary(h, {
+      stateStore: {
+        read: () => h.stateStore.read(),
+        update() {
+          writes++;
+          throw new Error('Unexpected journal write');
+        },
+      },
+    });
+    await assert.rejects(fresh.restoreRetained(published.editionId), undefined, kind);
+    assert.equal(writes, 0, kind);
+    assert.deepEqual(await h.stateStore.read(), before, kind);
+    assert.deepEqual(await h.creatorStore.readDomain('media'), media, kind);
+    assert.deepEqual(
+      await (await h.downloadStore.get(published.editionId))?.arrayBuffer(),
+      await retained?.arrayBuffer(),
+      kind,
+    );
+  }
+});
+
+test('recovery listing isolates unreadable copies, includes staged entries and owns its search/cursor', async (t) => {
+  const content = await packageFixture(),
+    published = await edition(content.blob);
+  const h = await fixture({
+    editions: [published],
+    downloads: new Map([[published.editionId, content.blob]]),
+  });
+  t.after(() => h.creatorStore.close());
+  await h.library.install(published, { offline: false });
+  const original = (await h.stateStore.read()).editions[0];
+  const rows = ['1', '2', '3', '4'].map((n) => ({
+    ...original,
+    editionId: `ed_${n.repeat(64)}`,
+    slug: `copy-${n}`,
+    installation: 'staged',
+  }));
+  await h.stateStore.write({ format: 'revealline-community-library.v1', editions: rows });
+  for (const row of rows.slice(1)) await h.downloadStore.put(row.editionId, content.blob);
+  const fresh = reopenLocalLibrary(h, {
+    downloadStore: {
+      ...h.downloadStore,
+      get(id) {
+        if (id === rows[0].editionId) throw new Error('Unreadable cache entry');
+        return h.downloadStore.get(id);
+      },
+    },
+  });
+  await h.downloadStore.remove(rows[3].editionId);
+  const first = await fresh.catalog({ installed: 'recovery', limit: 2 });
+  assert.equal(first.editions.length, 2);
+  assert.equal(first.editions[0].localUnavailable, true);
+  assert.equal(first.editions[0].recoveryAvailable, false);
+  assert.equal(first.editions[0].retainedBytes, undefined);
+  assert.equal(first.editions[1].recoveryAvailable, true);
+  assert.equal(first.nextCursor, `recovery:${rows[1].editionId}`);
+  const next = await fresh.catalog({ installed: 'recovery', limit: 2, cursor: first.nextCursor });
+  assert.deepEqual(
+    next.editions.map((row) => row.editionId),
+    [rows[2].editionId],
+  );
+  assert.equal(next.nextCursor, null);
+  assert.deepEqual(
+    (await fresh.catalog({ installed: 'recovery', query: 'COPY-2' })).editions.map(
+      (row) => row.editionId,
+    ),
+    [rows[1].editionId],
+  );
+  await assert.rejects(
+    fresh.catalog({ installed: 'installed', cursor: first.nextCursor }),
+    /cursor/,
+  );
+  await assert.rejects(
+    fresh.catalog({ installed: 'recovery', cursor: `local:${rows[0].editionId}` }),
+    /cursor/,
+  );
+  await fresh.restoreRetained(rows[1].editionId);
+  assert.equal((await fresh.status(rows[1].editionId)).installed, true);
+});
+
+test('local reinstall rechecks the retained copy and association after admission review', async (t) => {
+  const content = await packageFixture(),
+    published = await edition(content.blob);
+  const h = await fixture({
+    editions: [published],
+    downloads: new Map([[published.editionId, content.blob]]),
+  });
+  t.after(() => h.creatorStore.close());
+  await h.library.install(published, { offline: false });
+  await h.library.offloadInstalled(published, await h.library.reviewInstalledOffload(published));
+  const original = await h.stateStore.read();
+  for (const kind of ['copy', 'association']) {
+    await h.stateStore.write(original);
+    await h.downloadStore.put(published.editionId, content.blob);
+    const creatorStore = {
+      ...h.creatorStore,
+      async readDomain(...args) {
+        const result = await h.creatorStore.readDomain(...args);
+        if (kind === 'copy') await h.downloadStore.put(published.editionId, new Blob(['changed']));
+        else
+          await h.stateStore.update((state) => {
+            state.editions[0].version = 'new-local-choice';
+            return state;
+          });
+        return result;
+      },
+    };
+    const fresh = reopenLocalLibrary(h, { creatorStore });
+    await assert.rejects(fresh.restoreRetained(published.editionId), /changed/);
+    assert.deepEqual(await installedCreatorManifests(h.creatorStore), []);
+    assert.equal((await h.stateStore.read()).editions[0].installation, 'offloaded');
+  }
+});
+
+test('local reinstall reports incomplete final journal separately from a committed runtime', async (t) => {
+  const content = await packageFixture(),
+    published = await edition(content.blob);
+  const h = await fixture({
+    editions: [published],
+    downloads: new Map([[published.editionId, content.blob]]),
+  });
+  t.after(() => h.creatorStore.close());
+  await h.library.install(published, { offline: false });
+  await h.library.offloadInstalled(published, await h.library.reviewInstalledOffload(published));
+  let writes = 0;
+  const fresh = reopenLocalLibrary(h, {
+    stateStore: {
+      read: () => h.stateStore.read(),
+      update(mutate) {
+        if (++writes === 2) throw new Error('Final write unavailable');
+        return h.stateStore.update(mutate);
+      },
+    },
+  });
+  assert.equal((await fresh.restoreRetained(published.editionId)).journalComplete, false);
+  assert.equal((await fresh.status(published.editionId)).installed, true);
+  assert.equal((await h.stateStore.read()).editions[0].installation, 'staged');
+  assert.ok(await h.downloadStore.get(published.editionId));
+});

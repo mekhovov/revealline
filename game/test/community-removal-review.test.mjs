@@ -52,7 +52,7 @@ test('removal review defaults to Keep and distinguishes content, progress, recov
       assert.match(h.$('local-copy').textContent, /Creator/);
       assert.match(
         h.$('recovery').textContent,
-        locale === 'en' ? /Reconnect to the catalog/ : /Підключіться до каталогу/,
+        locale === 'en' ? /Open Recovery copies/ : /Копії для відновлення/,
       );
       assert.doesNotMatch(h.$('dialog').textContent, /interface:|community.removal\.|\{\{/);
       h.$('keep').click();
