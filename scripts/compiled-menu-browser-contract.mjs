@@ -146,6 +146,7 @@ export function createCompiledOperationTrace(budget, redact) {
   let overflow = false,
     dropped = 0,
     recordingFailures = 0;
+  const startProbeLifecycle = { setup: null, cleanup: null };
   let latestPublicRead = null,
     publicReadSequence = 0,
     publicReadRecordingFailures = 0,
@@ -199,6 +200,7 @@ export function createCompiledOperationTrace(budget, redact) {
     publicReadRecordingFailures,
     publicReadUnavailable,
     publicReadOmittedForReadCap,
+    startProbeLifecycle,
   });
   const compact = (row) =>
     row === null
@@ -292,6 +294,48 @@ export function createCompiledOperationTrace(budget, redact) {
         operationId: completed?.id ?? null,
         elapsedFlowMs: completed?.elapsedFlowMs ?? null,
         state: {
+          startActivation: (() => {
+            const input = state?.startActivation;
+            if (!input || input.format !== 'CompiledStartEventProbeV1') return null;
+            const fact = (row, expectedPhase) => {
+              if (!row || row.phase !== expectedPhase) return null;
+              return Object.fromEntries([
+                ['phase', expectedPhase],
+                ['eventType', row.eventType === 'click' ? 'click' : null],
+                ...[
+                  'trusted',
+                  'defaultPrevented',
+                  'isPrimary',
+                  'handlerFunctionPresent',
+                  'sameInstalledHandler',
+                  'installedHandlerFunction',
+                  'hidden',
+                  'focused',
+                  'startEnabled',
+                ].map((key) => [key, scalarBoolean(row[key])]),
+                ...['eventPhase', 'button', 'detail'].map((key) => [
+                  key,
+                  Number.isInteger(row[key]) && row[key] >= -1 && row[key] <= 10 ? row[key] : null,
+                ]),
+                ...['handlerType', 'flight', 'focusedId'].map((key) => [
+                  key,
+                  scalarText(row[key], 64),
+                ]),
+              ]);
+            };
+            return {
+              format: 'CompiledStartEventProbeV1',
+              installed: scalarBoolean(input.installed),
+              disposed: scalarBoolean(input.disposed),
+              teardown: scalarText(input.teardown, 32),
+              failures:
+                Number.isSafeInteger(input.failures) && input.failures >= 0
+                  ? Math.min(input.failures, 1000000)
+                  : null,
+              capture: fact(input.capture, 'window-capture'),
+              afterHandlerSlot: fact(input.afterHandlerSlot, 'target-after-handler-slot'),
+            };
+          })(),
           hidden: scalarBoolean(state?.hidden),
           focused: scalarBoolean(state?.focused),
           lang: scalarText(state?.lang),
@@ -395,6 +439,18 @@ export function createCompiledOperationTrace(budget, redact) {
   return Object.freeze({
     step,
     recordPublicState,
+    recordStartProbeLifecycle: (kind, outcome) =>
+      safe(() => {
+        if (!['setup', 'cleanup'].includes(kind) || startProbeLifecycle[kind] !== null) return;
+        startProbeLifecycle[kind] = [
+          'installed-or-unavailable',
+          'unavailable',
+          'removed',
+          'unconfirmed',
+        ].includes(outcome)
+          ? outcome
+          : 'unconfirmed';
+      }),
     enterPhase: (label) =>
       safe(() => {
         phase = text(label);
@@ -435,6 +491,117 @@ export function createCompiledOperationTrace(budget, redact) {
       } catch {
         return original;
       }
+    },
+  });
+}
+
+// Passive, fixed-slot observation of one real Start click; never invoke its handler.
+export function installCompiledStartEventProbe({
+  window: win = globalThis.window,
+  document: doc = globalThis.document,
+} = {}) {
+  let button = null,
+    installedHandler = null,
+    capturedEvent = null;
+  let capture = null,
+    afterHandlerSlot = null,
+    failures = 0;
+  let installed = false,
+    disposed = false,
+    teardown = 'not-requested',
+    cleanupUnconfirmed = false;
+  const removers = [];
+  const safe = (work) => {
+    try {
+      return work();
+    } catch {
+      failures += 1;
+      return undefined;
+    }
+  };
+  const clean = () => {
+    let removed = true;
+    for (const remove of removers.splice(0)) {
+      try {
+        remove();
+      } catch {
+        failures += 1;
+        removed = false;
+      }
+    }
+    installed = false;
+    if (!removed) cleanupUnconfirmed = true;
+    return removed;
+  };
+  const facts = (event, phase) => {
+    const handler = button.onclick;
+    const number = (value, minimum, maximum) =>
+      Number.isInteger(value) && value >= minimum && value <= maximum ? value : null;
+    return Object.freeze({
+      phase,
+      eventType: event.type === 'click' ? 'click' : null,
+      trusted: event.isTrusted === true,
+      defaultPrevented: event.defaultPrevented === true,
+      eventPhase: number(event.eventPhase, 0, 3),
+      button: number(event.button, -1, 4),
+      detail: number(event.detail, 0, 10),
+      isPrimary: typeof event.isPrimary === 'boolean' ? event.isPrimary : null,
+      handlerType: typeof handler,
+      handlerFunctionPresent: typeof handler === 'function',
+      sameInstalledHandler: handler === installedHandler,
+      installedHandlerFunction: typeof installedHandler === 'function',
+      hidden: doc.hidden === true,
+      focused: doc.hasFocus() === true,
+      flight:
+        typeof doc.body?.dataset?.flightState === 'string'
+          ? doc.body.dataset.flightState.slice(0, 64)
+          : null,
+      focusedId:
+        typeof doc.activeElement?.id === 'string' ? doc.activeElement.id.slice(0, 64) : null,
+      startEnabled: button.disabled === false,
+    });
+  };
+  const atCapture = (event) =>
+    safe(() => {
+      if (disposed || capturedEvent || event.type !== 'click') return;
+      if (event.target !== button && !button.contains(event.target)) return;
+      capturedEvent = event;
+      capture = facts(event, 'window-capture');
+    });
+  const atTarget = (event) =>
+    safe(() => {
+      if (disposed || afterHandlerSlot || event !== capturedEvent || event.type !== 'click') return;
+      afterHandlerSlot = facts(event, 'target-after-handler-slot');
+    });
+  safe(() => {
+    button = doc.getElementById('start-button');
+    if (!button || !win?.addEventListener || !button.addEventListener) return;
+    installedHandler = button.onclick;
+    // Register cleanup before registration, including a partially-throwing host.
+    removers.push(() => win.removeEventListener('click', atCapture, true));
+    win.addEventListener('click', atCapture, { capture: true, passive: true });
+    removers.push(() => button.removeEventListener('click', atTarget, false));
+    button.addEventListener('click', atTarget, { capture: false, passive: true });
+    installed = true;
+  });
+  if (!installed) clean();
+  return Object.freeze({
+    snapshot: () => ({
+      format: 'CompiledStartEventProbeV1',
+      installed,
+      disposed,
+      teardown,
+      failures,
+      capture: capture ? { ...capture } : null,
+      afterHandlerSlot: afterHandlerSlot ? { ...afterHandlerSlot } : null,
+    }),
+    dispose: () => {
+      if (!disposed) {
+        disposed = true;
+        teardown = clean() && !cleanupUnconfirmed ? 'removed' : 'unconfirmed';
+        capturedEvent = null;
+      }
+      return { disposed, teardown, failures };
     },
   });
 }

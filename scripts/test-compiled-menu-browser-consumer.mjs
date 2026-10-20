@@ -23,6 +23,7 @@ import {
   assertSignedArtifactURL,
   assertLoopback,
   createCompiledOperationTrace,
+  installCompiledStartEventProbe,
 } from './compiled-menu-browser-contract.mjs';
 const owner = () => ({
   status: 'closed',
@@ -812,4 +813,224 @@ test('public read report-cap omission keeps every original diagnostic and exact-
       }),
     (error) => error === failure,
   );
+});
+
+function startEventFixture({ failTargetAdd = false, failWindowRemove = false } = {}) {
+  const order = [],
+    windowListeners = new Set(),
+    targetListeners = new Set(),
+    options = [];
+  let calls = 0,
+    forbidden = 0;
+  const button = {
+    disabled: false,
+    onclick() {
+      calls += 1;
+      order.push('original-handler');
+    },
+    contains: (target) => target?.inside === true,
+    addEventListener(type, callback, opts) {
+      assert.equal(type, 'click');
+      options.push(opts);
+      targetListeners.add(callback);
+      if (failTargetAdd) throw new Error('target registration failed');
+    },
+    removeEventListener(type, callback, capture) {
+      assert.equal(type, 'click');
+      assert.equal(capture, false);
+      targetListeners.delete(callback);
+    },
+  };
+  const win = {
+    addEventListener(type, callback, opts) {
+      assert.equal(type, 'click');
+      options.push(opts);
+      windowListeners.add(callback);
+    },
+    removeEventListener(type, callback, capture) {
+      assert.equal(type, 'click');
+      assert.equal(capture, true);
+      if (failWindowRemove) throw new Error('window removal unconfirmed');
+      windowListeners.delete(callback);
+    },
+  };
+  const doc = {
+    body: { dataset: { flightState: 'briefing' } },
+    hidden: false,
+    hasFocus: () => true,
+    activeElement: { id: 'start-button' },
+    getElementById(id) {
+      assert.equal(id, 'start-button');
+      return button;
+    },
+  };
+  const event = (target = button) => ({
+    type: 'click',
+    target,
+    isTrusted: true,
+    defaultPrevented: false,
+    eventPhase: 1,
+    button: 0,
+    detail: 1,
+    isPrimary: false,
+    preventDefault() {
+      forbidden += 1;
+    },
+    stopPropagation() {
+      forbidden += 1;
+    },
+    stopImmediatePropagation() {
+      forbidden += 1;
+    },
+  });
+  const capture = (value) => {
+    order.push('window-capture');
+    for (const callback of windowListeners) callback(value);
+  };
+  const target = (value) => {
+    value.eventPhase = 2;
+    button.onclick.call(button, value);
+    order.push('target-observer');
+    for (const callback of targetListeners) callback(value);
+  };
+  return {
+    win,
+    doc,
+    button,
+    order,
+    options,
+    event,
+    capture,
+    target,
+    calls: () => calls,
+    forbidden: () => forbidden,
+    listeners: () => [windowListeners.size, targetListeners.size],
+  };
+}
+
+test('passive Start probe records capture then the existing handler slot without invoking or altering native activation', () => {
+  const f = startEventFixture(),
+    original = f.button.onclick;
+  const probe = installCompiledStartEventProbe({ window: f.win, document: f.doc });
+  assert.equal(f.calls(), 0);
+  assert.deepEqual(f.options, [
+    { capture: true, passive: true },
+    { capture: false, passive: true },
+  ]);
+  assert.equal(f.button.onclick, original);
+  const event = f.event();
+  f.capture(event);
+  assert.equal(probe.snapshot().capture.eventPhase, 1);
+  assert.equal(probe.snapshot().afterHandlerSlot, null);
+  f.target(event);
+  assert.equal(f.calls(), 1);
+  assert.equal(f.button.onclick, original);
+  assert.deepEqual(f.order, ['window-capture', 'original-handler', 'target-observer']);
+  const result = probe.snapshot();
+  assert.equal(result.capture.trusted, true);
+  assert.equal(result.capture.defaultPrevented, false);
+  assert.equal(result.capture.handlerType, 'function');
+  assert.equal(result.capture.handlerFunctionPresent, true);
+  assert.equal(result.capture.sameInstalledHandler, true);
+  assert.equal(result.afterHandlerSlot.phase, 'target-after-handler-slot');
+  assert.equal(result.afterHandlerSlot.eventPhase, 2);
+  assert.equal(result.afterHandlerSlot.flight, 'briefing');
+  assert.equal(result.afterHandlerSlot.focused, true);
+  assert.equal(f.forbidden(), 0);
+  assert.deepEqual(probe.dispose(), { disposed: true, teardown: 'removed', failures: 0 });
+  assert.deepEqual(f.listeners(), [0, 0]);
+  assert.deepEqual(probe.dispose(), { disposed: true, teardown: 'removed', failures: 0 });
+});
+
+test('passive Start probe keeps only the first matching click and distinguishes capture-only delivery', () => {
+  const f = startEventFixture(),
+    probe = installCompiledStartEventProbe({ window: f.win, document: f.doc });
+  f.capture(f.event({ inside: false }));
+  assert.equal(probe.snapshot().capture, null);
+  const first = f.event();
+  f.capture(first);
+  const captured = probe.snapshot().capture;
+  f.doc.body.dataset.flightState = 'running';
+  for (let i = 0; i < 256; i += 1) {
+    const later = f.event();
+    f.capture(later);
+    f.target(later);
+  }
+  assert.deepEqual(probe.snapshot().capture, captured);
+  assert.equal(probe.snapshot().afterHandlerSlot, null);
+  f.button.onclick = () => {};
+  f.target(first);
+  assert.equal(probe.snapshot().afterHandlerSlot.sameInstalledHandler, false);
+  const fixed = probe.snapshot();
+  f.doc.body.dataset.flightState = 'paused';
+  f.target(first);
+  assert.deepEqual(probe.snapshot(), fixed);
+  assert.equal(f.forbidden(), 0);
+  probe.dispose();
+});
+
+test('passive Start probe bounds scalar copies and isolates failed getters without substituting another activation', () => {
+  const f = startEventFixture(),
+    probe = installCompiledStartEventProbe({ window: f.win, document: f.doc });
+  f.doc.body.dataset.flightState = '界'.repeat(10000);
+  f.doc.activeElement.id = '界'.repeat(10000);
+  const first = f.event();
+  f.capture(first);
+  f.target(first);
+  const copied = probe.snapshot();
+  assert.equal(copied.capture.flight.length, 64);
+  assert.equal(copied.capture.focusedId.length, 64);
+  assert(Buffer.byteLength(JSON.stringify(copied)) < 4096);
+  copied.capture.flight = 'changed';
+  assert.notEqual(probe.snapshot().capture.flight, 'changed');
+  probe.dispose();
+  const broken = startEventFixture(),
+    failed = installCompiledStartEventProbe({ window: broken.win, document: broken.doc });
+  Object.defineProperty(broken.button, 'onclick', {
+    configurable: true,
+    get() {
+      throw new Error('private detail');
+    },
+  });
+  const blocked = broken.event();
+  assert.doesNotThrow(() => broken.capture(blocked));
+  assert.equal(failed.snapshot().failures, 1);
+  Object.defineProperty(broken.button, 'onclick', { value: () => {}, writable: true });
+  broken.capture(broken.event());
+  assert.equal(failed.snapshot().capture, null);
+  assert.equal(failed.snapshot().failures, 1);
+  assert(!JSON.stringify(failed.snapshot()).includes('private detail'));
+  failed.dispose();
+  const trace = createCompiledOperationTrace(
+    { deadline: 100, now: () => 0, step: () => Promise.resolve() },
+    (s, cap) => String(s).slice(0, cap),
+  );
+  trace.recordPublicState({ startActivation: probe.snapshot() });
+  assert.equal(trace.snapshot().publicRead.state.startActivation.disposed, true);
+  trace.recordStartProbeLifecycle('setup', 'unavailable');
+  trace.recordStartProbeLifecycle('setup', 'removed');
+  assert.equal(trace.snapshot().startProbeLifecycle.setup, 'unavailable');
+});
+
+test('passive Start probe removes partial registrations and retains unconfirmed cleanup honestly', () => {
+  const partial = startEventFixture({ failTargetAdd: true });
+  const probe = installCompiledStartEventProbe({ window: partial.win, document: partial.doc });
+  assert.equal(probe.snapshot().installed, false);
+  assert.equal(probe.snapshot().failures, 1);
+  assert.deepEqual(partial.listeners(), [0, 0]);
+  assert.equal(probe.dispose().teardown, 'removed');
+  const unknown = startEventFixture({ failTargetAdd: true, failWindowRemove: true });
+  const unavailable = installCompiledStartEventProbe({
+    window: unknown.win,
+    document: unknown.doc,
+  });
+  assert.equal(unavailable.snapshot().installed, false);
+  assert.equal(unavailable.dispose().teardown, 'unconfirmed');
+  assert.equal(unavailable.dispose().teardown, 'unconfirmed');
+  const absent = installCompiledStartEventProbe({
+    window: {},
+    document: { getElementById: () => null },
+  });
+  assert.equal(absent.snapshot().installed, false);
+  assert.equal(absent.dispose().teardown, 'removed');
 });
