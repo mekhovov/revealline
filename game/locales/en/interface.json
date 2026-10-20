@@ -6041,6 +6041,7 @@
   "textSizeCompatibility.retained": "Extra large · using Large here",
   "textSizeCompatibility.fallback": "Extra large is kept as your preferred size. This screen currently uses Large. Choose Standard or Large to change the shared preference.",
   "textSizeCompatibility.readOnlyFallback": "Extra large is kept as your preferred size. This screen currently uses Large.",
+  "textSizeCompatibility.extraLarge": "Extra large",
   "community.service.heading": "Community connection",
   "community.service.checking": "Checking the community connection before setup…",
   "community.service.ready": "Community connection available. Sign-in and publishing permissions are checked separately.",

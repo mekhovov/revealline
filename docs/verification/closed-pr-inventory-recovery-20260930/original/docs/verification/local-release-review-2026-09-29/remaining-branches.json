@@ -48,22 +48,12 @@
         ]
       },
       {
-        "branch": "art/spend-role-presentations",
         "head": "ac6837d28317f42ffc832516d1ab1a9a6cd5754c",
         "unknown": 34,
         "product": 33,
         "known": 0,
         "deletions": 0,
-        "productPaths": [
-          "authoring/library/spend-role-presentations/inspection/east-pixelated.jpg",
-          "authoring/library/spend-role-presentations/inspection/game-scale-receipt.json",
-          "authoring/library/spend-role-presentations/inspection/index.html",
-          "authoring/library/spend-role-presentations/inspection/inspect-alpha.py",
-          "authoring/library/spend-role-presentations/inspection/north-auto.jpg",
-          "authoring/library/spend-role-presentations/originals/bomber.png",
-          "authoring/library/spend-role-presentations/originals/carrier.png",
-          "authoring/library/spend-role-presentations/originals/fiber.png"
-        ]
+        "productPaths": []
       },
       {
         "branch": "art/ukraine-enemy-presentations",

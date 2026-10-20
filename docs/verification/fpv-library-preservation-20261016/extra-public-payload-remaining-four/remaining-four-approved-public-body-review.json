@@ -15233,17 +15233,6 @@
         "publicationCleared": true
       },
       {
-        "path": "work/my_projects/go_test_company_campaigns/authoring/library/spend-role-presentations/provenance/full-image-inspection.json",
-        "rootAlias": "work/my_projects/go_test_company_campaigns",
-        "bytes": 6161,
-        "sha256": "05e714dd973b5579bd44852bb7b706337946ab251be849d4fdd006dee66c79c7",
-        "gitBlob": "ac6b880e4ee1d1433f4c7d06f2f43bf476042e18",
-        "stableSourceIdentity": true,
-        "exactDeclaredPublicGitLeaf": true,
-        "finitePatternFindings": [],
-        "publicationCleared": true
-      },
-      {
         "path": "work/my_projects/go_test_company_campaigns/authoring/library/tactical-teaching/scenarios/tactical-borrowed-seconds.json",
         "rootAlias": "work/my_projects/go_test_company_campaigns",
         "bytes": 5188,
@@ -15255,44 +15244,11 @@
         "publicationCleared": true
       },
       {
-        "path": "work/my_projects/go_test_company_campaigns/authoring/library/spend-role-presentations/provenance/reference-theme.json",
-        "rootAlias": "work/my_projects/go_test_company_campaigns",
-        "bytes": 1191,
-        "sha256": "07b0a59034ed14d5c3f9ecef17ff162624d205673ddaa5167541ac6c61a668bd",
-        "gitBlob": "ca08583fc4eb0335afdec5631707e2d44b833c77",
-        "stableSourceIdentity": true,
-        "exactDeclaredPublicGitLeaf": true,
-        "finitePatternFindings": [],
-        "publicationCleared": true
-      },
-      {
         "path": "work/my_projects/go_test_company_campaigns/authoring/library/revealline-original-soundtrack/local-production/sketches/direction-b-tracker-breaks/receipt.json",
         "rootAlias": "work/my_projects/go_test_company_campaigns",
         "bytes": 2382,
         "sha256": "5e3f8534dcde14f079f960f0aecdada9f58eca5c3b9c82d76350fd3d15988071",
         "gitBlob": "2e77c4b1bbe31f22eaa4ce7933405d5d3a2ee627",
-        "stableSourceIdentity": true,
-        "exactDeclaredPublicGitLeaf": true,
-        "finitePatternFindings": [],
-        "publicationCleared": true
-      },
-      {
-        "path": "work/my_projects/go_test_company_campaigns/authoring/library/spend-role-presentations/provenance/fiber.json",
-        "rootAlias": "work/my_projects/go_test_company_campaigns",
-        "bytes": 1674,
-        "sha256": "61f31db9c4e7be86e36eb0c9decf32efecf465f48c7bc1c523345d00307898ee",
-        "gitBlob": "7babfe9a343ecb894cb59fe5403455245ca62334",
-        "stableSourceIdentity": true,
-        "exactDeclaredPublicGitLeaf": true,
-        "finitePatternFindings": [],
-        "publicationCleared": true
-      },
-      {
-        "path": "work/my_projects/go_test_company_campaigns/authoring/library/spend-role-presentations/provenance/bomber.json",
-        "rootAlias": "work/my_projects/go_test_company_campaigns",
-        "bytes": 1717,
-        "sha256": "fc099ad967e381d17a859d237cfd727f76e16e0d054f0e373c83181f9efc3cca",
-        "gitBlob": "ad436cf23a4e1b68ea37f0057a44c06335b36e09",
         "stableSourceIdentity": true,
         "exactDeclaredPublicGitLeaf": true,
         "finitePatternFindings": [],
@@ -15326,17 +15282,6 @@
         "bytes": 91,
         "sha256": "02dc75a26a67bf62615533b0962040ea26d7daaaa668937e10d42dab7a03563a",
         "gitBlob": "ea36ed2823ffb42e806ef99b6f0c0d2671eb5d14",
-        "stableSourceIdentity": true,
-        "exactDeclaredPublicGitLeaf": true,
-        "finitePatternFindings": [],
-        "publicationCleared": true
-      },
-      {
-        "path": "work/my_projects/go_test_company_campaigns/authoring/library/spend-role-presentations/provenance/interceptor.json",
-        "rootAlias": "work/my_projects/go_test_company_campaigns",
-        "bytes": 1632,
-        "sha256": "695aa68689066193901ba09012f67796aaeeb1416110c5e9a8fe4f03ea98d961",
-        "gitBlob": "ceb891a07e25b94726ec4fc8310c59ebe8401545",
         "stableSourceIdentity": true,
         "exactDeclaredPublicGitLeaf": true,
         "finitePatternFindings": [],
@@ -15486,17 +15431,6 @@
         "publicationCleared": true
       },
       {
-        "path": "work/my_projects/go_test_company_campaigns/authoring/library/spend-role-presentations/provenance/alpha-inspection.json",
-        "rootAlias": "work/my_projects/go_test_company_campaigns",
-        "bytes": 29365,
-        "sha256": "7fa98777c6f9743f54648a7dbc20b777099c5d6b5d1d90b6402fb3920f846594",
-        "gitBlob": "e3b7d9f53d3d1980dec51931a7637d7d51ba57c8",
-        "stableSourceIdentity": true,
-        "exactDeclaredPublicGitLeaf": true,
-        "finitePatternFindings": [],
-        "publicationCleared": true
-      },
-      {
         "path": "work/my_projects/go_test_company_campaigns/authoring/library/revealline-original-soundtrack/local-production/candidates/furnace-heart/receipt.json",
         "rootAlias": "work/my_projects/go_test_company_campaigns",
         "bytes": 2153,
@@ -15535,17 +15469,6 @@
         "bytes": 1094096,
         "sha256": "b4a7285520550e4cd04c7b9e80b4c6468c0a914faac77c05fa7f86a72c8a3c8f",
         "gitBlob": "2af55cc8ef356c68e8f785a2a52ffe4cef5145ca",
-        "stableSourceIdentity": true,
-        "exactDeclaredPublicGitLeaf": true,
-        "finitePatternFindings": [],
-        "publicationCleared": true
-      },
-      {
-        "path": "work/my_projects/go_test_company_campaigns/authoring/library/spend-role-presentations/provenance/role-briefs.json",
-        "rootAlias": "work/my_projects/go_test_company_campaigns",
-        "bytes": 21941,
-        "sha256": "c3c05c279c27f90ba9dbc615ab9c2adf41e9dae5ee9b320ac3fa48442c53f410",
-        "gitBlob": "8e6b589e33f27c8c4f76b99ae80aaface5bfda5e",
         "stableSourceIdentity": true,
         "exactDeclaredPublicGitLeaf": true,
         "finitePatternFindings": [],
@@ -15728,33 +15651,11 @@
         "publicationCleared": true
       },
       {
-        "path": "work/my_projects/go_test_company_campaigns/authoring/library/spend-role-presentations/provenance/scout.json",
-        "rootAlias": "work/my_projects/go_test_company_campaigns",
-        "bytes": 1626,
-        "sha256": "27d5c54fe92173f12ea069dc46b1766e89ced84996bb52a1d44c5da0e333ffd8",
-        "gitBlob": "7d620f7e984462bcb909c0cd5e6f8f64f10f1405",
-        "stableSourceIdentity": true,
-        "exactDeclaredPublicGitLeaf": true,
-        "finitePatternFindings": [],
-        "publicationCleared": true
-      },
-      {
         "path": "work/my_projects/go_test_company_campaigns/authoring/library/revealline-original-soundtrack/local-production/scores/embers-at-rest.json",
         "rootAlias": "work/my_projects/go_test_company_campaigns",
         "bytes": 103736,
         "sha256": "17be0aab3742cb80bd5b5c93bc998083ae7231bb8bf10fa36421cc7908d02f2b",
         "gitBlob": "2bd147a8c18358c23d19d8e683a49186101d72d3",
-        "stableSourceIdentity": true,
-        "exactDeclaredPublicGitLeaf": true,
-        "finitePatternFindings": [],
-        "publicationCleared": true
-      },
-      {
-        "path": "work/my_projects/go_test_company_campaigns/authoring/library/spend-role-presentations/inspection/game-scale-receipt.json",
-        "rootAlias": "work/my_projects/go_test_company_campaigns",
-        "bytes": 3399,
-        "sha256": "3696c92ead5bffe140b9bb4e09163bab48a059df0aa546ccd06e31eb05dd6df5",
-        "gitBlob": "c66dad4e2c3faab8741dbf101e0dc592789ce1ef",
         "stableSourceIdentity": true,
         "exactDeclaredPublicGitLeaf": true,
         "finitePatternFindings": [],
@@ -15772,33 +15673,11 @@
         "publicationCleared": true
       },
       {
-        "path": "work/my_projects/go_test_company_campaigns/authoring/library/spend-role-presentations/provenance/carrier.json",
-        "rootAlias": "work/my_projects/go_test_company_campaigns",
-        "bytes": 1676,
-        "sha256": "14ad7d974be7f6707813ff4a4d6e3ae1d6a121c6066aea7c22c4ac5818cff912",
-        "gitBlob": "5721fb44d9c2adf3d0026aacbd6bfeef359fe92e",
-        "stableSourceIdentity": true,
-        "exactDeclaredPublicGitLeaf": true,
-        "finitePatternFindings": [],
-        "publicationCleared": true
-      },
-      {
         "path": "work/my_projects/go_test_company_campaigns/authoring/library/retro-role-presentations/provenance/tool-responses.json",
         "rootAlias": "work/my_projects/go_test_company_campaigns",
         "bytes": 23550,
         "sha256": "ee73fbf9336c52076b78c3fe558e2f6787d9d5ec8c983dc755a3ba167d2aac29",
         "gitBlob": "d66a148c3d87e47f82ae26322bac6a0f9f9ad862",
-        "stableSourceIdentity": true,
-        "exactDeclaredPublicGitLeaf": true,
-        "finitePatternFindings": [],
-        "publicationCleared": true
-      },
-      {
-        "path": "work/my_projects/go_test_company_campaigns/authoring/library/spend-role-presentations/provenance/official-reference.json",
-        "rootAlias": "work/my_projects/go_test_company_campaigns",
-        "bytes": 2130,
-        "sha256": "0df3bea6492851e8eddfa18cc570e4d373cb5e286d2350d9199bd1cc52aadbde",
-        "gitBlob": "1955ff997db13c475bc73d1c406e870cf80c51fa",
         "stableSourceIdentity": true,
         "exactDeclaredPublicGitLeaf": true,
         "finitePatternFindings": [],
@@ -15926,28 +15805,6 @@
         "publicationCleared": true
       },
       {
-        "path": "work/my_projects/go_test_company_campaigns/authoring/library/spend-role-presentations/provenance/preparation.json",
-        "rootAlias": "work/my_projects/go_test_company_campaigns",
-        "bytes": 3641,
-        "sha256": "33b32c28b6a950052e105a1619a4a895eb815de52c3676897949f2b2cca2cb42",
-        "gitBlob": "192130326fae651e90e8ed2b7257cc3e043988d1",
-        "stableSourceIdentity": true,
-        "exactDeclaredPublicGitLeaf": true,
-        "finitePatternFindings": [],
-        "publicationCleared": true
-      },
-      {
-        "path": "work/my_projects/go_test_company_campaigns/authoring/library/spend-role-presentations/provenance/impact.json",
-        "rootAlias": "work/my_projects/go_test_company_campaigns",
-        "bytes": 1645,
-        "sha256": "cf9e51cfd6c244a3aa59dfe2669e4741398b5d6aafbf1e687bdd07cc3d7e3ff6",
-        "gitBlob": "e2b44ae5aa74a4656522eb20e25b0f15d0948c20",
-        "stableSourceIdentity": true,
-        "exactDeclaredPublicGitLeaf": true,
-        "finitePatternFindings": [],
-        "publicationCleared": true
-      },
-      {
         "path": "work/my_projects/go_test_company_campaigns/authoring/library/tactical-teaching/scenarios/tactical-quiet-crossing.json",
         "rootAlias": "work/my_projects/go_test_company_campaigns",
         "bytes": 5285,
@@ -16019,28 +15876,6 @@
         "bytes": 1002027,
         "sha256": "fe6c9849db9040c42be1f32ea9f67d93c7280f1148c866339310d76bda22263c",
         "gitBlob": "d10c15d8a9616fbd5598a22200e791bf5d2b0e88",
-        "stableSourceIdentity": true,
-        "exactDeclaredPublicGitLeaf": true,
-        "finitePatternFindings": [],
-        "publicationCleared": true
-      },
-      {
-        "path": "work/my_projects/go_test_company_campaigns/authoring/library/spend-role-presentations/provenance/trapper.json",
-        "rootAlias": "work/my_projects/go_test_company_campaigns",
-        "bytes": 1685,
-        "sha256": "0f3b41ab645b6457900d02379fa9cb55535e45e86714de085a58084edd85dee8",
-        "gitBlob": "d3573ab945a0142e16410f67e752cdaf0bdbf0eb",
-        "stableSourceIdentity": true,
-        "exactDeclaredPublicGitLeaf": true,
-        "finitePatternFindings": [],
-        "publicationCleared": true
-      },
-      {
-        "path": "work/my_projects/go_test_company_campaigns/authoring/library/spend-role-presentations/provenance/tool-responses.json",
-        "rootAlias": "work/my_projects/go_test_company_campaigns",
-        "bytes": 20512,
-        "sha256": "26983cfa80ba23a04cbfabadc5941390fd470f69099bb3b0a406aed438a787ff",
-        "gitBlob": "cdce56f915100e17e573606cfc7018560b20e412",
         "stableSourceIdentity": true,
         "exactDeclaredPublicGitLeaf": true,
         "finitePatternFindings": [],
@@ -91936,33 +91771,11 @@
         "publicationCleared": true
       },
       {
-        "path": "work/my_projects/go_test/authoring/library/spend-role-presentations/originals/bomber.png",
-        "rootAlias": "work/my_projects/go_test",
-        "bytes": 751704,
-        "sha256": "9657e96d874439abee5e25edc74addfbc09251b29d94e4181cff519234cb06d1",
-        "gitBlob": "520004eb6bd8f5b33ab5d64b76be6fa5f3351c92",
-        "stableSourceIdentity": true,
-        "exactDeclaredPublicGitLeaf": true,
-        "finitePatternFindings": [],
-        "publicationCleared": true
-      },
-      {
         "path": "work/my_projects/go_test/authoring/library/retro-role-presentations/originals/scout.png",
         "rootAlias": "work/my_projects/go_test",
         "bytes": 861737,
         "sha256": "0a5ac02d8653bcc67c07c03691ff7ce40b476860b15a02b1dedd93eda7370607",
         "gitBlob": "2304d6ba4f703e2e5d8f3871f8ab6b2e10c67cb5",
-        "stableSourceIdentity": true,
-        "exactDeclaredPublicGitLeaf": true,
-        "finitePatternFindings": [],
-        "publicationCleared": true
-      },
-      {
-        "path": "work/my_projects/go_test/authoring/library/spend-role-presentations/inspection/north-auto.jpg",
-        "rootAlias": "work/my_projects/go_test",
-        "bytes": 87538,
-        "sha256": "29eb99044437fbc2fab649ff1e3c15f9556a7e6165cf6d93d7e72718d5c55955",
-        "gitBlob": "ebba6f901f1545376f10a81bcb09931cb6a18f6e",
         "stableSourceIdentity": true,
         "exactDeclaredPublicGitLeaf": true,
         "finitePatternFindings": [],
@@ -92002,28 +91815,6 @@
         "publicationCleared": true
       },
       {
-        "path": "work/my_projects/go_test/authoring/library/spend-role-presentations/inspection/index.html",
-        "rootAlias": "work/my_projects/go_test",
-        "bytes": 3931,
-        "sha256": "02282f05a47d6f97ef890c403889b2c74fa3a2bbcbae78cff3b5263a67d94105",
-        "gitBlob": "e47a31986fe475728fd411342e34d7533bb632d2",
-        "stableSourceIdentity": true,
-        "exactDeclaredPublicGitLeaf": true,
-        "finitePatternFindings": [],
-        "publicationCleared": true
-      },
-      {
-        "path": "work/my_projects/go_test/authoring/library/spend-role-presentations/originals/trapper.png",
-        "rootAlias": "work/my_projects/go_test",
-        "bytes": 672321,
-        "sha256": "5fe7ef3796e27ab33d6e5ad7c1a748bee66e23fa28fa18293953fd7e72591015",
-        "gitBlob": "72f180d1fd1be519b0f4bff8651708e7df629b5d",
-        "stableSourceIdentity": true,
-        "exactDeclaredPublicGitLeaf": true,
-        "finitePatternFindings": [],
-        "publicationCleared": true
-      },
-      {
         "path": "work/my_projects/go_test/authoring/library/neon-conduit/preview.svg",
         "rootAlias": "work/my_projects/go_test",
         "bytes": 3949,
@@ -92040,17 +91831,6 @@
         "bytes": 7629,
         "sha256": "545629fb0269bfe63f4895db9b5e5e537c704f24d2795e4d4e78e62ea6344de2",
         "gitBlob": "dfde7e33a136abbf9cab25ca80feaa47dfca4271",
-        "stableSourceIdentity": true,
-        "exactDeclaredPublicGitLeaf": true,
-        "finitePatternFindings": [],
-        "publicationCleared": true
-      },
-      {
-        "path": "work/my_projects/go_test/authoring/library/spend-role-presentations/prompts/carrier.txt",
-        "rootAlias": "work/my_projects/go_test",
-        "bytes": 2274,
-        "sha256": "cf43d21843e4d474fff09f96a556205a85ab6567ea27c92fae6dc35fc4719406",
-        "gitBlob": "6fbe54ab2da7a9bb909457120ded2c97781211cb",
         "stableSourceIdentity": true,
         "exactDeclaredPublicGitLeaf": true,
         "finitePatternFindings": [],
@@ -92090,33 +91870,11 @@
         "publicationCleared": true
       },
       {
-        "path": "work/my_projects/go_test/authoring/library/spend-role-presentations/provenance/official-reference.json",
-        "rootAlias": "work/my_projects/go_test",
-        "bytes": 2130,
-        "sha256": "0df3bea6492851e8eddfa18cc570e4d373cb5e286d2350d9199bd1cc52aadbde",
-        "gitBlob": "1955ff997db13c475bc73d1c406e870cf80c51fa",
-        "stableSourceIdentity": true,
-        "exactDeclaredPublicGitLeaf": true,
-        "finitePatternFindings": [],
-        "publicationCleared": true
-      },
-      {
         "path": "work/my_projects/go_test/authoring/library/neon-switchyards/pack.json",
         "rootAlias": "work/my_projects/go_test",
         "bytes": 475263,
         "sha256": "01b71a16b8ec00177643ec2f5fac4f049724e031c53804f17930e8d1b8fd7fa8",
         "gitBlob": "551c259485d97cd44954654c56e9960377c682b7",
-        "stableSourceIdentity": true,
-        "exactDeclaredPublicGitLeaf": true,
-        "finitePatternFindings": [],
-        "publicationCleared": true
-      },
-      {
-        "path": "work/my_projects/go_test/authoring/library/spend-role-presentations/originals/scout.png",
-        "rootAlias": "work/my_projects/go_test",
-        "bytes": 390919,
-        "sha256": "fedd015335b836535d3078d4f819576344fa74a1c82e172d9b61047b68edf566",
-        "gitBlob": "30df68edcd28cf3cafbcd267c10d495a0b808d15",
         "stableSourceIdentity": true,
         "exactDeclaredPublicGitLeaf": true,
         "finitePatternFindings": [],
@@ -92145,44 +91903,11 @@
         "publicationCleared": true
       },
       {
-        "path": "work/my_projects/go_test/authoring/library/spend-role-presentations/prompts/scout.txt",
-        "rootAlias": "work/my_projects/go_test",
-        "bytes": 2230,
-        "sha256": "a2d50c71013d4fefc70818fa5578b32ca2889c8f4bdfe3dd37dc10d5e48f46c1",
-        "gitBlob": "b6bdb976727a867f43117c7d5add3e841292df35",
-        "stableSourceIdentity": true,
-        "exactDeclaredPublicGitLeaf": true,
-        "finitePatternFindings": [],
-        "publicationCleared": true
-      },
-      {
-        "path": "work/my_projects/go_test/authoring/library/spend-role-presentations/prompts/fiber.txt",
-        "rootAlias": "work/my_projects/go_test",
-        "bytes": 2309,
-        "sha256": "3eba2134b6feefaad704f74946fbe1b3de51565890f6150d07d6769277195bde",
-        "gitBlob": "cb95f67a6aab0ebb8a26a4a0f24631833036cb30",
-        "stableSourceIdentity": true,
-        "exactDeclaredPublicGitLeaf": true,
-        "finitePatternFindings": [],
-        "publicationCleared": true
-      },
-      {
         "path": "work/my_projects/go_test/authoring/library/neon-conduit/README.md",
         "rootAlias": "work/my_projects/go_test",
         "bytes": 1967,
         "sha256": "294b46f44df9901722f12c45aa372b1f99dcd34701e613339420eff0010b32c4",
         "gitBlob": "0703865f3448b853cb2c81df66e20347182d384b",
-        "stableSourceIdentity": true,
-        "exactDeclaredPublicGitLeaf": true,
-        "finitePatternFindings": [],
-        "publicationCleared": true
-      },
-      {
-        "path": "work/my_projects/go_test/authoring/library/spend-role-presentations/originals/interceptor.png",
-        "rootAlias": "work/my_projects/go_test",
-        "bytes": 313087,
-        "sha256": "340674c4dfb4ae6a9b501bb1849d47edb7ca81af96f888fcf26a228f7eb7e9c0",
-        "gitBlob": "05f6cc0ee24bd26a9de3f54ced680f7a60e23f9f",
         "stableSourceIdentity": true,
         "exactDeclaredPublicGitLeaf": true,
         "finitePatternFindings": [],
@@ -92222,77 +91947,11 @@
         "publicationCleared": true
       },
       {
-        "path": "work/my_projects/go_test/authoring/library/spend-role-presentations/inspection/east-pixelated.jpg",
-        "rootAlias": "work/my_projects/go_test",
-        "bytes": 88305,
-        "sha256": "42847003fa5c4def715169fdce730554e90e47c71d01d1ae0bf35729864b4547",
-        "gitBlob": "a0d9d8adfa790fea33537f6c54bea3dfb27a86b9",
-        "stableSourceIdentity": true,
-        "exactDeclaredPublicGitLeaf": true,
-        "finitePatternFindings": [],
-        "publicationCleared": true
-      },
-      {
-        "path": "work/my_projects/go_test/authoring/library/spend-role-presentations/README.md",
-        "rootAlias": "work/my_projects/go_test",
-        "bytes": 6155,
-        "sha256": "2abbd725ccb89764549f85a13ef5cddccaa7b00e76dca4c28d0964da5d1e7693",
-        "gitBlob": "b1f3f8ceace67910a0e8d1c00cb052891bc629d6",
-        "stableSourceIdentity": true,
-        "exactDeclaredPublicGitLeaf": true,
-        "finitePatternFindings": [],
-        "publicationCleared": true
-      },
-      {
-        "path": "work/my_projects/go_test/authoring/library/spend-role-presentations/inspection/game-scale-receipt.json",
-        "rootAlias": "work/my_projects/go_test",
-        "bytes": 3399,
-        "sha256": "3696c92ead5bffe140b9bb4e09163bab48a059df0aa546ccd06e31eb05dd6df5",
-        "gitBlob": "c66dad4e2c3faab8741dbf101e0dc592789ce1ef",
-        "stableSourceIdentity": true,
-        "exactDeclaredPublicGitLeaf": true,
-        "finitePatternFindings": [],
-        "publicationCleared": true
-      },
-      {
-        "path": "work/my_projects/go_test/authoring/library/spend-role-presentations/provenance/preparation.json",
-        "rootAlias": "work/my_projects/go_test",
-        "bytes": 3641,
-        "sha256": "33b32c28b6a950052e105a1619a4a895eb815de52c3676897949f2b2cca2cb42",
-        "gitBlob": "192130326fae651e90e8ed2b7257cc3e043988d1",
-        "stableSourceIdentity": true,
-        "exactDeclaredPublicGitLeaf": true,
-        "finitePatternFindings": [],
-        "publicationCleared": true
-      },
-      {
-        "path": "work/my_projects/go_test/authoring/library/spend-role-presentations/prompts/bomber.txt",
-        "rootAlias": "work/my_projects/go_test",
-        "bytes": 2280,
-        "sha256": "a234da543ec92ebd02f64eab3c1ec3fcd3c206447b7df0f428876b5f9162d92d",
-        "gitBlob": "efc068eebb86884e6f9bdb174f53c57cba355c51",
-        "stableSourceIdentity": true,
-        "exactDeclaredPublicGitLeaf": true,
-        "finitePatternFindings": [],
-        "publicationCleared": true
-      },
-      {
         "path": "work/my_projects/go_test/authoring/library/countercurrent/mechanics.json",
         "rootAlias": "work/my_projects/go_test",
         "bytes": 185258,
         "sha256": "a754ca2c5e033400378b17bc244cc8617a34da244542df724c359c50b07345f8",
         "gitBlob": "8b0441aa2a3277c6a6a605261fad4755784906a0",
-        "stableSourceIdentity": true,
-        "exactDeclaredPublicGitLeaf": true,
-        "finitePatternFindings": [],
-        "publicationCleared": true
-      },
-      {
-        "path": "work/my_projects/go_test/authoring/library/spend-role-presentations/provenance/interceptor.json",
-        "rootAlias": "work/my_projects/go_test",
-        "bytes": 1632,
-        "sha256": "695aa68689066193901ba09012f67796aaeeb1416110c5e9a8fe4f03ea98d961",
-        "gitBlob": "ceb891a07e25b94726ec4fc8310c59ebe8401545",
         "stableSourceIdentity": true,
         "exactDeclaredPublicGitLeaf": true,
         "finitePatternFindings": [],
@@ -92332,17 +91991,6 @@
         "publicationCleared": true
       },
       {
-        "path": "work/my_projects/go_test/authoring/library/spend-role-presentations/prompts/trapper.txt",
-        "rootAlias": "work/my_projects/go_test",
-        "bytes": 2325,
-        "sha256": "17c1fd7e483a17ef2361f04591f461d4217bd0ae951f885be3c142a947374179",
-        "gitBlob": "f7b38f5efdb7e4f7dd2fd3141a7e34ac1432df52",
-        "stableSourceIdentity": true,
-        "exactDeclaredPublicGitLeaf": true,
-        "finitePatternFindings": [],
-        "publicationCleared": true
-      },
-      {
         "path": "work/my_projects/go_test/authoring/library/equipment-workshop/pack-source.json",
         "rootAlias": "work/my_projects/go_test",
         "bytes": 18389,
@@ -92354,110 +92002,11 @@
         "publicationCleared": true
       },
       {
-        "path": "work/my_projects/go_test/authoring/library/spend-role-presentations/provenance/fiber.json",
-        "rootAlias": "work/my_projects/go_test",
-        "bytes": 1674,
-        "sha256": "61f31db9c4e7be86e36eb0c9decf32efecf465f48c7bc1c523345d00307898ee",
-        "gitBlob": "7babfe9a343ecb894cb59fe5403455245ca62334",
-        "stableSourceIdentity": true,
-        "exactDeclaredPublicGitLeaf": true,
-        "finitePatternFindings": [],
-        "publicationCleared": true
-      },
-      {
-        "path": "work/my_projects/go_test/authoring/library/spend-role-presentations/provenance/impact.json",
-        "rootAlias": "work/my_projects/go_test",
-        "bytes": 1645,
-        "sha256": "cf9e51cfd6c244a3aa59dfe2669e4741398b5d6aafbf1e687bdd07cc3d7e3ff6",
-        "gitBlob": "e2b44ae5aa74a4656522eb20e25b0f15d0948c20",
-        "stableSourceIdentity": true,
-        "exactDeclaredPublicGitLeaf": true,
-        "finitePatternFindings": [],
-        "publicationCleared": true
-      },
-      {
-        "path": "work/my_projects/go_test/authoring/library/spend-role-presentations/provenance/tool-responses.json",
-        "rootAlias": "work/my_projects/go_test",
-        "bytes": 20512,
-        "sha256": "26983cfa80ba23a04cbfabadc5941390fd470f69099bb3b0a406aed438a787ff",
-        "gitBlob": "cdce56f915100e17e573606cfc7018560b20e412",
-        "stableSourceIdentity": true,
-        "exactDeclaredPublicGitLeaf": true,
-        "finitePatternFindings": [],
-        "publicationCleared": true
-      },
-      {
-        "path": "work/my_projects/go_test/authoring/library/spend-role-presentations/provenance/role-briefs.json",
-        "rootAlias": "work/my_projects/go_test",
-        "bytes": 21941,
-        "sha256": "c3c05c279c27f90ba9dbc615ab9c2adf41e9dae5ee9b320ac3fa48442c53f410",
-        "gitBlob": "8e6b589e33f27c8c4f76b99ae80aaface5bfda5e",
-        "stableSourceIdentity": true,
-        "exactDeclaredPublicGitLeaf": true,
-        "finitePatternFindings": [],
-        "publicationCleared": true
-      },
-      {
-        "path": "work/my_projects/go_test/authoring/library/spend-role-presentations/provenance/bomber.json",
-        "rootAlias": "work/my_projects/go_test",
-        "bytes": 1717,
-        "sha256": "fc099ad967e381d17a859d237cfd727f76e16e0d054f0e373c83181f9efc3cca",
-        "gitBlob": "ad436cf23a4e1b68ea37f0057a44c06335b36e09",
-        "stableSourceIdentity": true,
-        "exactDeclaredPublicGitLeaf": true,
-        "finitePatternFindings": [],
-        "publicationCleared": true
-      },
-      {
-        "path": "work/my_projects/go_test/authoring/library/spend-role-presentations/prompts/impact.txt",
-        "rootAlias": "work/my_projects/go_test",
-        "bytes": 2261,
-        "sha256": "f9977f68a4175017233f77eddb5e44d8b112b2ffa11fd4feebb3ed6c36949af1",
-        "gitBlob": "e87f5b487ecb5e4f00bec29918f42b8e62ab1296",
-        "stableSourceIdentity": true,
-        "exactDeclaredPublicGitLeaf": true,
-        "finitePatternFindings": [],
-        "publicationCleared": true
-      },
-      {
-        "path": "work/my_projects/go_test/authoring/library/spend-role-presentations/prompts/interceptor.txt",
-        "rootAlias": "work/my_projects/go_test",
-        "bytes": 2225,
-        "sha256": "d708ec5141cdab95924b2f795788815cb9ed12d1909bfac9d7bafb6226392d17",
-        "gitBlob": "928f95f483c1f46031d1aeb5edc3536464c82b2e",
-        "stableSourceIdentity": true,
-        "exactDeclaredPublicGitLeaf": true,
-        "finitePatternFindings": [],
-        "publicationCleared": true
-      },
-      {
         "path": "work/my_projects/go_test/authoring/library/countercurrent/test-source.mjs",
         "rootAlias": "work/my_projects/go_test",
         "bytes": 5628,
         "sha256": "f2fbd7dabdaf33aee33d8035000b6fc8b4c9eb1fd987ef59cc22d5952982c6fb",
         "gitBlob": "ef2cde68c89e7377c3b686540f443aff6cd6f572",
-        "stableSourceIdentity": true,
-        "exactDeclaredPublicGitLeaf": true,
-        "finitePatternFindings": [],
-        "publicationCleared": true
-      },
-      {
-        "path": "work/my_projects/go_test/authoring/library/spend-role-presentations/originals/fiber.png",
-        "rootAlias": "work/my_projects/go_test",
-        "bytes": 607264,
-        "sha256": "16dabc04250ffb1630c28bbc2c41372b837102445d27c9ce4a6f3bef3608d854",
-        "gitBlob": "9ef911a49ce6598fa19969e787ec9a5f307da372",
-        "stableSourceIdentity": true,
-        "exactDeclaredPublicGitLeaf": true,
-        "finitePatternFindings": [],
-        "publicationCleared": true
-      },
-      {
-        "path": "work/my_projects/go_test/authoring/library/spend-role-presentations/provenance/alpha-inspection.json",
-        "rootAlias": "work/my_projects/go_test",
-        "bytes": 29365,
-        "sha256": "7fa98777c6f9743f54648a7dbc20b777099c5d6b5d1d90b6402fb3920f846594",
-        "gitBlob": "e3b7d9f53d3d1980dec51931a7637d7d51ba57c8",
         "stableSourceIdentity": true,
         "exactDeclaredPublicGitLeaf": true,
         "finitePatternFindings": [],
@@ -92519,17 +92068,6 @@
         "publicationCleared": true
       },
       {
-        "path": "work/my_projects/go_test/authoring/library/spend-role-presentations/provenance/trapper.json",
-        "rootAlias": "work/my_projects/go_test",
-        "bytes": 1685,
-        "sha256": "0f3b41ab645b6457900d02379fa9cb55535e45e86714de085a58084edd85dee8",
-        "gitBlob": "d3573ab945a0142e16410f67e752cdaf0bdbf0eb",
-        "stableSourceIdentity": true,
-        "exactDeclaredPublicGitLeaf": true,
-        "finitePatternFindings": [],
-        "publicationCleared": true
-      },
-      {
         "path": "work/my_projects/go_test/authoring/library/countercurrent/test-proof.mjs",
         "rootAlias": "work/my_projects/go_test",
         "bytes": 5213,
@@ -92541,66 +92079,11 @@
         "publicationCleared": true
       },
       {
-        "path": "work/my_projects/go_test/authoring/library/spend-role-presentations/provenance/reference-theme.json",
-        "rootAlias": "work/my_projects/go_test",
-        "bytes": 1191,
-        "sha256": "07b0a59034ed14d5c3f9ecef17ff162624d205673ddaa5167541ac6c61a668bd",
-        "gitBlob": "ca08583fc4eb0335afdec5631707e2d44b833c77",
-        "stableSourceIdentity": true,
-        "exactDeclaredPublicGitLeaf": true,
-        "finitePatternFindings": [],
-        "publicationCleared": true
-      },
-      {
-        "path": "work/my_projects/go_test/authoring/library/spend-role-presentations/provenance/scout.json",
-        "rootAlias": "work/my_projects/go_test",
-        "bytes": 1626,
-        "sha256": "27d5c54fe92173f12ea069dc46b1766e89ced84996bb52a1d44c5da0e333ffd8",
-        "gitBlob": "7d620f7e984462bcb909c0cd5e6f8f64f10f1405",
-        "stableSourceIdentity": true,
-        "exactDeclaredPublicGitLeaf": true,
-        "finitePatternFindings": [],
-        "publicationCleared": true
-      },
-      {
-        "path": "work/my_projects/go_test/authoring/library/spend-role-presentations/provenance/carrier.json",
-        "rootAlias": "work/my_projects/go_test",
-        "bytes": 1676,
-        "sha256": "14ad7d974be7f6707813ff4a4d6e3ae1d6a121c6066aea7c22c4ac5818cff912",
-        "gitBlob": "5721fb44d9c2adf3d0026aacbd6bfeef359fe92e",
-        "stableSourceIdentity": true,
-        "exactDeclaredPublicGitLeaf": true,
-        "finitePatternFindings": [],
-        "publicationCleared": true
-      },
-      {
-        "path": "work/my_projects/go_test/authoring/library/spend-role-presentations/provenance/full-image-inspection.json",
-        "rootAlias": "work/my_projects/go_test",
-        "bytes": 6161,
-        "sha256": "05e714dd973b5579bd44852bb7b706337946ab251be849d4fdd006dee66c79c7",
-        "gitBlob": "ac6b880e4ee1d1433f4c7d06f2f43bf476042e18",
-        "stableSourceIdentity": true,
-        "exactDeclaredPublicGitLeaf": true,
-        "finitePatternFindings": [],
-        "publicationCleared": true
-      },
-      {
         "path": "work/my_projects/go_test/authoring/library/neon-conduit/scenario.json",
         "rootAlias": "work/my_projects/go_test",
         "bytes": 424754,
         "sha256": "efcf7d2b1fea8897306864c4baaa91996b141f9b9e3728adb40268af2ac63325",
         "gitBlob": "6332b08fad0bb204aee1d9495687fe823a993112",
-        "stableSourceIdentity": true,
-        "exactDeclaredPublicGitLeaf": true,
-        "finitePatternFindings": [],
-        "publicationCleared": true
-      },
-      {
-        "path": "work/my_projects/go_test/authoring/library/spend-role-presentations/originals/carrier.png",
-        "rootAlias": "work/my_projects/go_test",
-        "bytes": 557242,
-        "sha256": "319ca85aafe43a1e6d321c792386bd8d8773e5ab929eb0a2be8495b6a8d4cabc",
-        "gitBlob": "1d17be7cd74f93649da56f44bbee96ba521a0a03",
         "stableSourceIdentity": true,
         "exactDeclaredPublicGitLeaf": true,
         "finitePatternFindings": [],
@@ -92634,17 +92117,6 @@
         "bytes": 7698,
         "sha256": "e698b8cba39b1c26792fdce3e70c48345b89acd2c98f2e3d0e23baeaa4fb04ff",
         "gitBlob": "a36e36e9c16e8b5b51ca754a49938bedba09ed24",
-        "stableSourceIdentity": true,
-        "exactDeclaredPublicGitLeaf": true,
-        "finitePatternFindings": [],
-        "publicationCleared": true
-      },
-      {
-        "path": "work/my_projects/go_test/authoring/library/spend-role-presentations/originals/impact.png",
-        "rootAlias": "work/my_projects/go_test",
-        "bytes": 467205,
-        "sha256": "2d90408c213125725c49ab837cccc56d2fe53c873f0e895dd0f5bb6f6df82233",
-        "gitBlob": "e6c6594112e901abb91554effc08788b4636fbec",
         "stableSourceIdentity": true,
         "exactDeclaredPublicGitLeaf": true,
         "finitePatternFindings": [],

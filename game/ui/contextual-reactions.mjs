@@ -254,6 +254,9 @@ const labels = {
     'Generated voice preview. Missing recordings use captions.',
     'Попередня синтезована озвучка. Відсутні записи замінюються субтитрами.',
   ],
+  lastMessage: ['Last message', 'Останнє повідомлення'],
+  readMessage: ['Read', 'Читати'],
+  pauseToRead: ['Pause to read the message.', 'Призупиніть гру, щоб прочитати повідомлення.'],
 };
 export function attachContextualReactions({
   sound,
@@ -267,6 +270,7 @@ export function attachContextualReactions({
   getStorage,
   acquireGain = () => null,
   voiceLibrary = null,
+  captionReader = null,
 } = {}) {
   if (!sound || !container || !doc)
     throw new TypeError('Reaction sound and caption container are required.');
@@ -299,6 +303,70 @@ export function attachContextualReactions({
     'font-family:system-ui,sans-serif;line-height:1.45;overflow-wrap:anywhere;min-width:0;';
   panel.append(portrait, actorPortrait, caption);
   container.append(panel);
+  // The optional reader belongs to this accepted-caption owner, not a second
+  // history, timer or voice player. Other hosts retain their original path.
+  const reader = captionReader ? create('section') : null;
+  const readerHeading = reader ? create('h3') : null;
+  const readerText = reader ? create('p') : null;
+  const readerHint = reader ? create('span') : null;
+  const readerCue = reader ? create('span') : null;
+  const pauseButton = captionReader?.pauseButton;
+  let lastMessage = null,
+    ownSelfLabel = false;
+  if (reader) {
+    const id = `reaction-last-message-${++settingsSequence}`;
+    reader.dataset.reactionReader = 'true';
+    reader.hidden = true;
+    reader.tabIndex = 0;
+    reader.setAttribute('role', 'region');
+    readerHeading.id = id;
+    reader.setAttribute('aria-labelledby', id);
+    readerHint.id = `${id}-hint`;
+    readerHint.hidden = true;
+    readerCue.id = `${id}-cue`;
+    readerCue.hidden = true;
+    reader.append(readerHeading, readerText, readerHint, readerCue);
+    captionReader.root.append(reader);
+  }
+  function cue(show) {
+    if (!pauseButton) return;
+    const tokens = (name) => (pauseButton.getAttribute(name) ?? '').split(/\s+/u).filter(Boolean);
+    const setTokens = (name, values) => {
+      if (tokens(name).join(' ') === values.join(' ')) return;
+      if (values.length) pauseButton.setAttribute(name, values.join(' '));
+      else pauseButton.removeAttribute(name);
+    };
+    const descriptions = tokens('aria-describedby').filter((id) => id !== readerHint.id);
+    const labels = tokens('aria-labelledby').filter((id) => id !== readerCue.id);
+    if (show) {
+      pauseButton.dataset.captionReadLabel = tr('readMessage');
+      readerHint.textContent = tr('pauseToRead');
+      readerCue.textContent = tr('readMessage');
+      descriptions.push(readerHint.id);
+      if (!labels.length && pauseButton.id) {
+        labels.push(pauseButton.id);
+        ownSelfLabel = true;
+      }
+      labels.push(readerCue.id);
+    } else {
+      delete pauseButton.dataset.captionReadLabel;
+      if (ownSelfLabel) {
+        const index = labels.indexOf(pauseButton.id);
+        if (index >= 0) labels.splice(index, 1);
+        ownSelfLabel = false;
+      }
+    }
+    setTokens('aria-describedby', descriptions);
+    setTokens('aria-labelledby', labels);
+  }
+  function clearReader() {
+    lastMessage = null;
+    if (reader) {
+      reader.hidden = true;
+      readerText.textContent = '';
+    }
+    cue(false);
+  }
   const releaseFeedbackLayout = attachHuntFeedbackLayout({ container, window: target });
   const preferences = createReactionPreferences({
     window: target,
@@ -390,6 +458,7 @@ export function attachContextualReactions({
     panel.hidden = true;
     panel.style.display = 'none';
     caption.textContent = '';
+    cue(false);
   }
   function cancel(reason) {
     stopSpeech();
@@ -399,14 +468,15 @@ export function attachContextualReactions({
       void cache.cancel();
     }
     if (reason === 'danger') return; // Preserve readable text even when its audio is interrupted.
+    if (reason !== 'suspend') clearReader();
     hidePreview();
     hide();
   }
-  function localizedCurrentLine() {
+  function localizedCurrentLine(line = current.line) {
     return (
-      (current.line.resultContext
-        ? journeyResultReaction(current.line.resultContext, getLocale())
-        : reactionLine(current.line.id, getLocale())) ?? current.line
+      (line.resultContext
+        ? journeyResultReaction(line.resultContext, getLocale())
+        : reactionLine(line.id, getLocale())) ?? line
     );
   }
   function render() {
@@ -457,9 +527,34 @@ export function attachContextualReactions({
       status.textContent = state.durable ? '' : tr('unavailable');
       status.hidden = state.durable;
     }
+    renderCaption(state, enabled);
+  }
+  function renderCaption(state, enabled) {
+    const reading = !!reader && captionReader.active() === true;
+    if (reader) {
+      if (!reading || !enabled || !state.subtitles) clearReader();
+      // Returning to the enlarged view may reuse an unexpired accepted line;
+      // it cannot revive expired copy, reaccept a reaction or alter its clock.
+      else if (!lastMessage && current && !current.terminal)
+        lastMessage = Object.freeze({ ...current.line });
+      readerHeading.textContent = tr('lastMessage');
+      reader.hidden = !lastMessage;
+      if (lastMessage) {
+        readerText.textContent = reactionCaptionText(
+          {
+            ...localizedCurrentLine(lastMessage),
+            board: lastMessage.board,
+            player: lastMessage.player,
+          },
+          getLocale(),
+        );
+        readerText.style.fontSize = `calc(${state.scale}rem * var(--overflight-text-scale, 1))`;
+        readerText.style.background = state.background ? 'var(--panel-bg, #172126)' : 'transparent';
+      }
+    }
     panel.style.background = state.background ? 'var(--panel-bg, #172126)' : 'transparent';
     panel.style.color = 'var(--text-color, #fff)';
-    caption.style.fontSize = `${state.scale}rem`;
+    caption.style.fontSize = `calc(${state.scale}rem * var(--overflight-text-scale, 1))`;
     if (current) {
       const localized = localizedCurrentLine();
       caption.textContent = reactionCaptionText(
@@ -467,8 +562,23 @@ export function attachContextualReactions({
         getLocale(),
       );
       const visible = enabled && state.subtitles && (!current.terminal || !resultContainer);
+      // Measuring the same panel is synchronous and never exposes an incomplete
+      // live caption to paint or the accessibility tree.
+      const measured = visible && reading && !current.terminal;
+      if (measured) {
+        panel.style.visibility = 'hidden';
+        panel.setAttribute('aria-hidden', 'true');
+      }
       panel.hidden = !visible;
       panel.style.display = visible ? 'flex' : 'none';
+      if (measured) {
+        const fits = captionReader.fits(panel) === true;
+        panel.hidden = !fits;
+        panel.style.display = fits ? 'flex' : 'none';
+        panel.style.visibility = '';
+        panel.removeAttribute('aria-hidden');
+        cue(!fits);
+      } else cue(false);
       if (current.terminal && resultContainer && !journeyOwnsReactionCaption(resultContainer))
         renderResultReactionCaption(resultContainer, localized, state, enabled, getLocale());
     }
@@ -546,6 +656,8 @@ export function attachContextualReactions({
     // A setting change applies to the next accepted line, without truncating or
     // replaying the current one. A translated line retains this timing policy.
     current = { line, terminal, readingTime: options.snapshot().readingTime };
+    if (reader && !terminal && captionReader.active() === true && options.snapshot().subtitles)
+      lastMessage = Object.freeze({ ...line });
     if (!terminal)
       duration = Math.max(duration, captionReadingDuration(line.text, current.readingTime));
     const appearance = REACTION_PORTRAITS[line.speaker] ?? REACTION_PORTRAITS.guide;
@@ -758,6 +870,9 @@ export function attachContextualReactions({
       render();
       prepare();
     },
+    refreshCaptionLayout() {
+      if (!closed && reader) renderCaption(options.snapshot(), preferences.snapshot().enabled);
+    },
     diagnostics: () =>
       Object.freeze({
         cache: cache.snapshot(),
@@ -790,6 +905,7 @@ export function attachContextualReactions({
     dispose() {
       if (closed) return;
       closed = true;
+      clearReader();
       director.suspend();
       clearCaptionTimer();
       hidePreview();
@@ -810,6 +926,7 @@ export function attachContextualReactions({
       settings?.remove();
       actorVoiceControls?.dispose();
       panel.remove();
+      reader?.remove();
       releaseFeedbackLayout();
     },
   });

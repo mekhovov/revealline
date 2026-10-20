@@ -1,5 +1,9 @@
 import { createTouchPreferences } from '../touch-preferences.mjs';
-import { nextInputModality, showScreenControls } from '../input-presentation.mjs';
+import {
+  nextInputModality,
+  showScreenControls,
+  resolveScreenControls,
+} from '../input-presentation.mjs';
 import { attachTouchSteering } from '../ui/touch-steering.mjs';
 import {
   mountTouchControlsView,
@@ -16,7 +20,10 @@ export function createOverflightTouch({
   settingsMount,
   active,
   actionLabel,
+  actionName = null,
   onInterrupt = () => {},
+  onLayoutChange = () => {},
+  visibilitySettings = null,
 }) {
   const listeners = [];
   const listen = (target, type, fn, options) => {
@@ -35,7 +42,8 @@ export function createOverflightTouch({
     controlKey = null,
     suppressAssistiveClick = false,
     assistiveClickTimer = null,
-    modality = win.matchMedia?.('(any-pointer: coarse)').matches ? 'touch' : 'keyboard';
+    modality = win.matchMedia?.('(any-pointer: coarse)').matches ? 'touch' : 'keyboard',
+    screenControls = 'auto';
   const pointers = new Set();
   const actionPointers = new Set();
   const keys = new Set();
@@ -47,7 +55,7 @@ export function createOverflightTouch({
   });
   view.root.classList.add('overflight-touch');
   view.setVisible(false);
-  const enabled = () => !disposed && active();
+  const enabled = () => !disposed && active() && screenControls !== 'off';
   const preferences = createTouchPreferences({
     storage,
     eventTarget: win,
@@ -55,6 +63,7 @@ export function createOverflightTouch({
       clear();
       view.apply(settings);
       settingsView.refresh();
+      onLayoutChange();
     },
   });
   const settingsView = mountTouchPresentationSettings({
@@ -62,9 +71,33 @@ export function createOverflightTouch({
     mount: settingsMount,
     preferences,
     idPrefix: 'overflight',
+    visibility: visibilitySettings
+      ? {
+          get: () => screenControls,
+          set: (value) => {
+            const next = resolveScreenControls(value);
+            if (next === screenControls) return;
+            screenControls = next;
+            clear();
+            refresh();
+          },
+          help: visibilitySettings.help,
+          mount: visibilitySettings.mount,
+          title: visibilitySettings.title,
+        }
+      : null,
   });
   view.apply(preferences.snapshot());
 
+  function refreshAction(readiness = '') {
+    const visible = actionLabel();
+    const full = actionName?.() ?? visible;
+    const suffix = readiness ? ` · ${readiness}` : '';
+    view.actionButton.textContent = `${visible}${readiness ? `\n${readiness}` : ''}`;
+    if (full !== visible)
+      view.actionButton.setAttribute('aria-label', `${visible} · ${full}${suffix}`);
+    else view.actionButton.removeAttribute('aria-label');
+  }
   function releaseBoost() {
     const id = boostPointer;
     boostPointer = null;
@@ -94,9 +127,26 @@ export function createOverflightTouch({
   function refresh() {
     if (disposed) return;
     if (!enabled()) clear();
-    const visible = showScreenControls({ modality, scope: 'flight', running: enabled() });
+    const visible = showScreenControls({
+      preference: screenControls,
+      modality,
+      scope: 'flight',
+      running: enabled(),
+    });
+    const layout =
+      !!visibilitySettings &&
+      showScreenControls({
+        preference: screenControls,
+        modality,
+        scope: 'flight',
+        running: true,
+      });
+    const changed =
+      view.root.hidden === visible || mount.classList.contains('has-touch-layout') !== layout;
     view.setVisible(visible);
     mount.classList.toggle('has-touch-controls', visible);
+    mount.classList.toggle('has-touch-layout', layout);
+    if (changed) onLayoutChange();
   }
 
   const steering = attachTouchSteering({
@@ -250,11 +300,12 @@ export function createOverflightTouch({
       clear();
       view.apply(preferences.snapshot());
       settingsView.refresh();
-      view.actionButton.textContent = actionLabel();
+      refreshAction();
+      onLayoutChange();
     },
     updateBoost({ cooldown = 0, readyLabel }) {
       const value = Math.ceil(Math.max(0, cooldown) * 10) / 10;
-      view.actionButton.textContent = `${actionLabel()}\n${value > 0 ? `${value.toFixed(1)}s` : readyLabel}`;
+      refreshAction(value > 0 ? `${value.toFixed(1)}s` : readyLabel);
       view.actionButton.dataset.ready = String(value === 0);
     },
     dispose() {
@@ -266,7 +317,7 @@ export function createOverflightTouch({
       settingsView.dispose();
       listeners.forEach((remove) => remove());
       view.dispose();
-      mount.classList.remove('has-touch-controls');
+      mount.classList.remove('has-touch-controls', 'has-touch-layout');
     },
   };
 }
