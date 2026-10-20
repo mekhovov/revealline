@@ -1,6 +1,7 @@
 import { createCreatorStore } from '../creator/installed.mjs';
 import { createCommunityAccountClient } from './account.mjs';
 import { createCommunityClient } from './client.mjs';
+import { attachCommunityReadiness, communityRequest, probeCommunityService } from './readiness.mjs';
 import { createCommunityDownloadStore } from './download-store.mjs';
 import { createCommunityLibrary } from './library.mjs';
 import { createCommunityPublisher } from './publisher.mjs';
@@ -49,7 +50,19 @@ let accountSession = injectedAuth ? { user: {}, configured: true } : null;
 const accountParameters = new URL(globalThis.location.href).searchParams;
 const passwordResetToken = accountParameters.get('token');
 const previewURLs = new Set();
-const canPublish = () => Boolean(accountSession && auth?.headers);
+let publishBusy = false;
+let preparingPackage = false;
+let packageSelectionValid = Boolean(publisher.current());
+const canPublish = () =>
+  !publishBusy &&
+  !preparingPackage &&
+  packageSelectionValid &&
+  readiness.available() &&
+  Boolean(accountSession && auth?.headers);
+let catalogRequest = null;
+let catalogGeneration = 0;
+let sessionGeneration = 0;
+let accountMutations = 0;
 const renderAccount = () => {
   $('account-signed-out').hidden = Boolean(accountSession);
   $('account-signed-in').hidden = !accountSession;
@@ -61,6 +74,7 @@ const renderAccount = () => {
             identity: accountSession.user.name || accountSession.user.email,
           }),
     );
+  $('publish-file').disabled = publishBusy || preparingPackage;
   $('publish').disabled = !publisher.current() || !canPublish();
 };
 const setAccountStatus = (message, error = false) => {
@@ -328,13 +342,23 @@ function render() {
   }
 }
 async function refresh({ reset = true } = {}) {
+  if (!readiness.available()) return;
+  catalogRequest?.abort();
+  catalogRequest = new AbortController();
+  const current = ++catalogGeneration;
   try {
     if (reset) nextCursor = null;
-    const result = await library.catalog({
-      query: $('search').value,
-      installed: $('filter').value,
-      cursor: reset ? null : nextCursor,
-    });
+    const result = await communityRequest(
+      (signal) =>
+        library.catalog({
+          query: $('search').value,
+          installed: $('filter').value,
+          cursor: reset ? null : nextCursor,
+          signal,
+        }),
+      { signal: catalogRequest.signal },
+    );
+    if (current !== catalogGeneration || !readiness.available()) return;
     rows = reset
       ? [...result.editions]
       : [
@@ -352,6 +376,8 @@ async function refresh({ reset = true } = {}) {
       }),
     );
   } catch (error) {
+    if (current !== catalogGeneration) return;
+    readiness.unavailable();
     status(
       localizedMessage('interface:community.catalogUnavailable', {
         error: error.message,
@@ -360,17 +386,23 @@ async function refresh({ reset = true } = {}) {
     );
   }
 }
-$('refresh').onclick = refresh;
+$('refresh').onclick = () => readiness.check();
 $('more').onclick = () => refresh({ reset: false });
 $('search').oninput = () => refresh({ reset: true });
 $('filter').onchange = () => refresh({ reset: true });
 $('publish-file').onchange = async () => {
+  if (!readiness.available() || publishBusy || preparingPackage) return;
+  preparingPackage = true;
+  renderAccount();
   try {
     const file = $('publish-file').files[0];
     if (!file) return;
+    packageSelectionValid = false;
     const selected = await publisher.select(file);
+    packageSelectionValid = true;
     $('publish-title').value = selected.suggestedTitle;
     $('publish-slug').value = selected.suggestedSlug;
+    preparingPackage = false;
     $('publish').disabled = !canPublish();
     localizedText(
       $('publish-status'),
@@ -383,10 +415,15 @@ $('publish-file').onchange = async () => {
   } catch (error) {
     $('publish').disabled = true;
     localizedText($('publish-status'), error.message);
+  } finally {
+    preparingPackage = false;
+    renderAccount();
   }
 };
 $('publish').onclick = async () => {
-  $('publish').disabled = true;
+  if (!canPublish()) return;
+  publishBusy = true;
+  renderAccount();
   try {
     const result = await publisher.publish({
       title: $('publish-title').value,
@@ -413,7 +450,8 @@ $('publish').onclick = async () => {
   } catch (error) {
     localizedText($('publish-status'), error.message);
   } finally {
-    $('publish').disabled = !publisher.current() || !canPublish();
+    publishBusy = false;
+    renderAccount();
   }
 };
 async function checkSubmission() {
@@ -467,6 +505,8 @@ function scheduleSubmissionCheck() {
 }
 $('account-sign-up').onclick = async () => {
   if (!account) return;
+  sessionGeneration += 1;
+  accountMutations += 1;
   $('account-sign-up').disabled = true;
   try {
     accountSession = await account.signUp({
@@ -480,6 +520,8 @@ $('account-sign-up').onclick = async () => {
   } catch (error) {
     setAccountStatus(error.message, true);
   } finally {
+    accountMutations -= 1;
+    sessionGeneration += 1;
     $('account-sign-up').disabled = false;
   }
 };
@@ -527,6 +569,8 @@ $('account-reset').onclick = async () => {
 };
 $('account-sign-in').onclick = async () => {
   if (!account) return;
+  sessionGeneration += 1;
+  accountMutations += 1;
   $('account-sign-in').disabled = true;
   try {
     accountSession = await account.signIn({
@@ -539,11 +583,15 @@ $('account-sign-in').onclick = async () => {
   } catch (error) {
     setAccountStatus(error.message, true);
   } finally {
+    accountMutations -= 1;
+    sessionGeneration += 1;
     $('account-sign-in').disabled = false;
   }
 };
 $('account-sign-out').onclick = async () => {
   if (!account) return;
+  sessionGeneration += 1;
+  accountMutations += 1;
   $('account-sign-out').disabled = true;
   try {
     await account.signOut();
@@ -555,32 +603,66 @@ $('account-sign-out').onclick = async () => {
   } catch (error) {
     setAccountStatus(error.message, true);
   } finally {
+    accountMutations -= 1;
+    sessionGeneration += 1;
     $('account-sign-out').disabled = false;
   }
 };
-window.addEventListener('pagehide', () => {
+const cancelReadinessWork = () => {
+  readiness.cancel();
+  catalogGeneration += 1;
+  sessionGeneration += 1;
+  catalogRequest?.abort();
+};
+window.addEventListener('pagehide', (event) => {
+  cancelReadinessWork();
   clearTimeout(submissionTimer);
   for (const url of previewURLs) URL.revokeObjectURL(url);
-  library.close();
-  creatorStore.close();
+  if (!event.persisted) {
+    library.close();
+    creatorStore.close();
+  }
+});
+window.addEventListener('pageshow', (event) => {
+  if (event.persisted) void readiness.check();
+});
+window.addEventListener('offline', () => {
+  cancelReadinessWork();
+  readiness.unavailable();
+});
+window.addEventListener('online', () => void readiness.check());
+async function restoreAccount() {
+  if (!account || accountMutations) return;
+  const current = ++sessionGeneration;
+  try {
+    const session = await communityRequest(() => account.session());
+    if (current !== sessionGeneration || !readiness.available()) return;
+    accountSession = session;
+    if (session) setAccountStatus(localizedMessage('interface:community.sessionRestored'));
+    else if (!renderAccountAction())
+      setAccountStatus(localizedMessage('interface:community.signInOnlyToPublish'));
+    renderAccount();
+  } catch (error) {
+    if (current !== sessionGeneration) return;
+    setAccountStatus(
+      localizedMessage('interface:community.accountServiceUnavailable', { error: error.message }),
+      true,
+    );
+  }
+}
+const readiness = attachCommunityReadiness({
+  document,
+  probe: (signal) => {
+    catalogGeneration += 1;
+    sessionGeneration += 1;
+    catalogRequest?.abort();
+    return probeCommunityService({ baseURL: apiBase, signal });
+  },
+  onReady: () => {
+    renderAccount();
+    void restoreAccount();
+    return refresh();
+  },
 });
 renderAccount();
-if (account)
-  void account
-    .session()
-    .then((session) => {
-      accountSession = session;
-      if (session) setAccountStatus(localizedMessage('interface:community.sessionRestored'));
-      else if (!renderAccountAction())
-        setAccountStatus(localizedMessage('interface:community.signInOnlyToPublish'));
-      renderAccount();
-    })
-    .catch((error) =>
-      setAccountStatus(
-        localizedMessage('interface:community.accountServiceUnavailable', {
-          error: error.message,
-        }),
-        true,
-      ),
-    );
-void refresh();
+void readiness.check();
