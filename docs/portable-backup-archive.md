@@ -46,9 +46,18 @@ the entire game is covered. A Journey export conflict, cancellation or changed
 owner prevents publication; only the existing Journey exporter can return its
 explicitly marked available-evidence recovery result.
 
-The game does not directly import the ZIP in this slice. Extract it using the
-device's archive tool, read the manifest and coverage report, then use the
-existing reviews for pictures, stories, music and game-data JSON. For included
+In **Saves & loads → Inspect an archive and extract files**, choose a portable
+ZIP and explicitly inspect it. The read-only inspector checks its bounded ZIP
+structure, safe filenames, CRC32 checksums and each component's recorded SHA-256.
+It lists actual exclusions and offers native downloads of the original files in
+restore order. A different version/profile channel receives an advisory; that
+advisory cannot establish component compatibility or identify a trusted source.
+Download the needed files before closing the screen. Each download is a request,
+not proof of a saved file. Nothing is imported or restored by inspection.
+
+You can also extract it using the device's archive tool. Read the manifest and
+coverage report, then use the existing reviews for pictures, stories, music and
+compatible Legacy game-data JSON. For included
 Journey JSON, use **Keep your Journey → Inspect Journey backup** in the same
 edition. Each restore is separate; there is no new atomic transaction or hidden
 replacement of current progress. Keep a backup of the destination before restoring.
@@ -67,6 +76,23 @@ of 16 flat filenames before reading any body. CRC calculation reads at most
 second whole-archive byte array. These are safety ceilings, not recommended
 backup sizes for low-memory phones.
 
+The inspector accepts this game's flat, uncompressed v1 ZIP profile, including
+early v1 game archives without the later explicit `gameData` field. It rejects
+compression, encryption, ZIP64/extensions, symlink attributes, unsafe or duplicate
+names (including case collisions), inconsistent records, unlisted files,
+oversized metadata and checksum/hash mismatches before exposing any downloads.
+It reads headers and CRC chunks with bounded slices and never allocates a second
+whole ZIP buffer. WebCrypto SHA-256 reads one component at a time; its largest
+allocation remains bounded by the archive's existing overall limit. Physical
+low-memory-device qualification is still required. Recompressed ZIPs can be
+extracted with the device's archive tool and reviewed through the component owners.
+
+Inspection borrows the Library's operation slot, cancellation and feedback.
+Closing the view, changing the chosen file or backgrounding a pending inspection
+prevents late results and retains the busy slot until the current read settles.
+Completed read-only downloads survive a Files-app round trip and are released on
+close/unload or a new preparation. The original file and game stores are untouched.
+
 Focused tests cover unchanged component hashes, explicit exclusions, borrowed
 Journey async export, partial evidence, cancellation and ownership fencing,
 bounded ZIP reads, CRC32, and native-link lifecycle. The system `unzip` reader
@@ -76,6 +102,13 @@ preparing an archive does not change saved game data or resume play. The authore
 case preserves the existing Legacy export rejection and checks actual archive
 members and exclusions. Those are source/fixture results, not physical-device
 qualification.
+
+Additional tests cover malicious ZIP structure, checksum and manifest mismatch,
+exact extracted bytes, early-v1 compatibility, authored/partial Journey scope,
+native download retry, English/Ukrainian changes, cancellation, stale reads and
+the actual ordinary Home export → inspect → download flow. Inspection does not
+prove that a component's separate restore will succeed; those existing reviewers
+still validate their own format, owner, originals, generations and replacement policy.
 
 Pending device checks: build an exact committed revision; save an archive from
 Safari and a Home Screen installation; find and extract it in Files; compare its
