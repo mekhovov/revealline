@@ -1,0 +1,228 @@
+name: Overflight text scaling complete native cohort
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+    # Conservative module-family coverage includes future relative imports in these owners.
+    # Both translations and generated runtime owners affect this fixed family cohort.
+    paths:
+      - '.github/workflows/overflight-text-scaling-native.yml'
+      - 'scripts/**'
+      - 'game/**'
+      - 'optional-practice/**'
+      - 'authoring/fpv-worlds/**'
+      - 'native/**'
+      - 'publishing/**'
+      - 'assets/**'
+      - 'package.json'
+      - 'package-lock.json'
+      - '.prettier*'
+      - 'docs/accessibility/**'
+
+permissions:
+  contents: read
+  actions: read
+
+concurrency:
+  group: overflight28-${{ github.event.pull_request.number }}
+  cancel-in-progress: false
+
+jobs:
+  native:
+    name: overflight28-group-${{ matrix.group }}
+    strategy:
+      fail-fast: false
+      max-parallel: 1
+      matrix:
+        group: [1, 2, 3, 4]
+    if: >-
+      github.repository == 'mekhovov/revealline' &&
+      github.event.pull_request.head.repo.full_name == github.repository &&
+      (github.event.pull_request.base.ref == 'main' ||
+       github.event.pull_request.base.ref == 'codex/f09a-text-size-compatibility')
+    runs-on: ubuntu-24.04
+    timeout-minutes: 55
+    env:
+      PYTHONDONTWRITEBYTECODE: 1
+      OVERFLIGHT_GROUP: ${{ matrix.group }}
+      GIT_NO_LAZY_FETCH: 1
+      GIT_OPTIONAL_LOCKS: 0
+    steps:
+      - name: Check out the immutable candidate source
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          persist-credentials: false
+          fetch-depth: 1
+      - name: Set up exact native test Node
+        uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5
+        with:
+          node-version: 22.22.2
+          # No dependency/cache restoration.
+      - name: Require hosted preparation capacity
+        shell: bash
+        run: |
+          python3 -B - <<'PYCODE'
+          import os, shutil
+          assert min(shutil.disk_usage(os.environ['GITHUB_WORKSPACE']).free,
+                     shutil.disk_usage(os.environ['RUNNER_TEMP']).free) > 2 * 1024 ** 3
+          PYCODE
+      - name: Install locked tools without package scripts
+        run: npm ci --ignore-scripts
+      - name: Install required locked World fixture dependency without scripts
+        run: npm ci --prefix authoring/fpv-worlds --ignore-scripts
+      - name: Acquire only the reviewed standalone source auditor
+        env:
+          AUDIT_READ_TOKEN: ${{ github.token }}
+          SOURCE_SHA: ${{ github.event.pull_request.head.sha }}
+        shell: bash
+        run: |
+          python3 -B - <<'PYCODE'
+          import base64, hashlib, json, os, pathlib, re, subprocess, urllib.request
+          expected_oid = '56ad477033516d565fbb7f85cea70d0430ceae1c'
+          expected_sha = 'a6124736ce13aec52fb26d818e6c2aa6ce83965ccaf92b94c783043d1d150fc4'
+          assert os.environ['GITHUB_REPOSITORY'] == 'mekhovov/revealline'
+          source = os.environ['SOURCE_SHA']
+          assert re.fullmatch('[a-f0-9]{40}', source)
+          git_env = {k: v for k, v in os.environ.items() if not k.startswith('GIT_')}
+          git_env.update(GIT_NO_LAZY_FETCH='1', GIT_OPTIONAL_LOCKS='0')
+          def git(*args):
+              return subprocess.check_output(['git', '--no-replace-objects', *args], env=git_env, timeout=15).decode().strip()
+          assert git('rev-parse', '--verify', 'HEAD') == source
+          tree = git('rev-parse', 'HEAD^{tree}')
+          assert re.fullmatch('[a-f0-9]{40}', tree)
+          workflow_commit = os.environ['GITHUB_WORKFLOW_SHA']
+          assert re.fullmatch('[a-f0-9]{40}', workflow_commit)
+          workflow_path = '.github/workflows/overflight-text-scaling-native.yml'
+          candidate_workflow = git('rev-parse', 'HEAD:' + workflow_path)
+          workflow_request = urllib.request.Request('https://api.github.com/repos/mekhovov/revealline/contents/' + workflow_path + '?ref=' + workflow_commit,
+              headers={'Authorization': 'Bearer ' + os.environ['AUDIT_READ_TOKEN'], 'Accept': 'application/vnd.github+json',
+                       'X-GitHub-Api-Version': '2022-11-28'})
+          with urllib.request.urlopen(workflow_request, timeout=30) as response:
+              workflow_raw = response.read(32769)
+          assert len(workflow_raw) <= 32768
+          executed_workflow = json.loads(workflow_raw)
+          assert executed_workflow['type'] == 'file' and executed_workflow['sha'] == candidate_workflow
+
+          identity = os.environ['GITHUB_RUN_ID'] + '-' + os.environ['GITHUB_RUN_ATTEMPT']
+          group = os.environ['OVERFLIGHT_GROUP']
+          assert group in ('1', '2', '3', '4')
+          identity += '-g' + group
+          assert re.fullmatch('[0-9]+-[0-9]+-g[1-4]', identity)
+          temporary = pathlib.Path(os.environ['RUNNER_TEMP']).resolve(strict=True)
+          trusted = temporary / ('overflight28-trusted-' + identity)
+          trusted.mkdir()
+          request = urllib.request.Request('https://api.github.com/repos/mekhovov/revealline/git/blobs/' + expected_oid,
+              headers={'Authorization': 'Bearer ' + os.environ['AUDIT_READ_TOKEN'], 'Accept': 'application/vnd.github+json',
+                       'X-GitHub-Api-Version': '2022-11-28'})
+          with urllib.request.urlopen(request, timeout=30) as response:
+              raw = response.read(32769)
+          assert len(raw) <= 32768
+          result = json.loads(raw)
+          assert result['sha'] == expected_oid and result['encoding'] == 'base64' and result['size'] == 7275
+          data = base64.b64decode(''.join(result['content'].split()), validate=True)
+          assert len(data) == 7275 and hashlib.sha256(data).hexdigest() == expected_sha
+          assert hashlib.sha1(b'blob 7275\0' + data).hexdigest() == expected_oid
+          helper = trusted / 'check-source-identity.mjs'
+          with helper.open('xb') as stream:
+              stream.write(data)
+          helper.chmod(0o444)
+          (trusted / 'helper-source.json').write_text(json.dumps({'oid': expected_oid, 'sha256': expected_sha,
+              'bytes': len(data), 'sourceHead': source, 'sourceTree': tree,
+              'workflowCommit': workflow_commit, 'workflowBlob': candidate_workflow,
+              'workflowDefinitionMatchesCandidate': True}) + '\n')
+          with open(os.environ['GITHUB_ENV'], 'a') as stream:
+              stream.write('OVERFLIGHT_SOURCE_TREE=' + tree + '\n')
+              stream.write('OVERFLIGHT_AUDIT_HELPER=' + str(helper) + '\n')
+              stream.write('OVERFLIGHT_EVIDENCE=' + str(temporary / ('overflight28-evidence-' + identity)) + '\n')
+          PYCODE
+      - name: Verify reviewed guard, aggregator and toy source bytes
+        shell: bash
+        run: |
+          python3 -B - <<'PYCODE'
+          import hashlib, pathlib
+          expected = {'scripts/overflight-text-scaling-native-guard.py': '5661376556a4a3b4175f4fb58b3131f9eb3999e30e723f6ddb876464ccdcae37', 'scripts/aggregate-overflight-text-scaling-native.py': '9f5670af4074135e007d43faf7a5ad6c92123ae68c9ee47cd8e8ca6d5dc29c22', 'scripts/test_overflight_text_scaling_native_guard.py': '7ba009712a5ee62bd6678c3ab5ff70126590e4ebc2038053320a1f6992a3baa4'}
+          for name, digest in expected.items():
+              path = pathlib.Path(name)
+              assert path.is_file() and not path.is_symlink()
+              assert hashlib.sha256(path.read_bytes()).hexdigest() == digest
+          PYCODE
+      - name: Run toy-only resource guard selftests
+        shell: bash
+        run: |
+          python3 -B - <<'PYCODE'
+          import os, shutil
+          assert min(shutil.disk_usage(os.environ['GITHUB_WORKSPACE']).free,
+                     shutil.disk_usage(os.environ['RUNNER_TEMP']).free) > 2 * 1024 ** 3
+          PYCODE
+          python3 -B scripts/test_overflight_text_scaling_native_guard.py
+      - name: Run one fixed complete seven-file group
+        env:
+          SOURCE_SHA: ${{ github.event.pull_request.head.sha }}
+        shell: bash
+        run: |
+          python3 -B scripts/overflight-text-scaling-native-guard.py \
+            --root "$GITHUB_WORKSPACE" \
+            --output "$OVERFLIGHT_EVIDENCE" \
+            --source-sha "$SOURCE_SHA" \
+            --source-tree "$OVERFLIGHT_SOURCE_TREE" \
+            --audit-helper "$OVERFLIGHT_AUDIT_HELPER" \
+            --group "$OVERFLIGHT_GROUP"
+      - name: Preserve bounded native outputs and every available receipt
+        if: always()
+        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
+        with:
+          name: overflight28-${{ github.event.pull_request.head.sha }}-${{ github.run_id }}-${{ github.run_attempt }}-g${{ matrix.group }}
+          path: ${{ runner.temp }}/overflight28-evidence-${{ github.run_id }}-${{ github.run_attempt }}-g${{ matrix.group }}/
+          if-no-files-found: warn
+          retention-days: 7
+
+  aggregate:
+    name: overflight28-complete-exact-head
+    needs: native
+    if: always() && needs.native.result != 'skipped'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    env:
+      PYTHONDONTWRITEBYTECODE: 1
+      GIT_NO_LAZY_FETCH: 1
+      GIT_OPTIONAL_LOCKS: 0
+    steps:
+      - name: Check out the same immutable candidate
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          persist-credentials: false
+          fetch-depth: 1
+      - name: Verify reviewed guard, aggregator and toy source bytes
+        shell: bash
+        run: |
+          python3 -B - <<'PYCODE'
+          import hashlib, pathlib
+          expected = {'scripts/overflight-text-scaling-native-guard.py': '5661376556a4a3b4175f4fb58b3131f9eb3999e30e723f6ddb876464ccdcae37', 'scripts/aggregate-overflight-text-scaling-native.py': '9f5670af4074135e007d43faf7a5ad6c92123ae68c9ee47cd8e8ca6d5dc29c22', 'scripts/test_overflight_text_scaling_native_guard.py': '7ba009712a5ee62bd6678c3ab5ff70126590e4ebc2038053320a1f6992a3baa4'}
+          for name, digest in expected.items():
+              path = pathlib.Path(name)
+              assert path.is_file() and not path.is_symlink()
+              assert hashlib.sha256(path.read_bytes()).hexdigest() == digest
+          PYCODE
+      - name: Require the complete exact-head union of all28 whole files
+        env:
+          SOURCE_HEAD: ${{ github.event.pull_request.head.sha }}
+          ARTIFACT_READ_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          test "$(git --no-replace-objects rev-parse HEAD)" = "$SOURCE_HEAD"
+          SOURCE_TREE="$(git --no-replace-objects rev-parse 'HEAD^{tree}')"
+          python3 -B scripts/aggregate-overflight-text-scaling-native.py \
+            --artifacts "$RUNNER_TEMP/overflight28-aggregate-$GITHUB_RUN_ID-$GITHUB_RUN_ATTEMPT" \
+            --source-head "$SOURCE_HEAD" --source-tree "$SOURCE_TREE" \
+            --run "$GITHUB_RUN_ID-$GITHUB_RUN_ATTEMPT" --root "$GITHUB_WORKSPACE" \
+            --download --receipt "$RUNNER_TEMP/overflight28-complete-$GITHUB_RUN_ID-$GITHUB_RUN_ATTEMPT.json"
+      - name: Preserve the bounded aggregate receipt
+        if: always()
+        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
+        with:
+          name: overflight28-complete-${{ github.event.pull_request.head.sha }}-${{ github.run_id }}-${{ github.run_attempt }}
+          path: ${{ runner.temp }}/overflight28-complete-${{ github.run_id }}-${{ github.run_attempt }}.json
+          if-no-files-found: warn
+          retention-days: 7
