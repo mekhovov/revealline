@@ -4221,23 +4221,6 @@
         "path": "$WORKSPACE/.cache/worktrees/source-identity-checker-362e5bf"
       },
       {
-        "branch": "art/spend-role-presentations",
-        "head": "ac6837d28317f42ffc832516d1ab1a9a6cd5754c",
-        "exists": true,
-        "previousHead": "ac6837d28317f42ffc832516d1ab1a9a6cd5754c",
-        "newWorktree": false,
-        "headChanged": false,
-        "dirtyCount": 0,
-        "sourceDirtyCount": 0,
-        "dependencyOnly": false,
-        "previousClassification": "clean-unpublished-or-historical-branch-review",
-        "newDirtyPaths": [],
-        "statusChangedPaths": [],
-        "clearedDirtyPaths": [],
-        "openPRs": [],
-        "path": "$WORKSPACE/.cache/worktrees/spend-role-presentations"
-      },
-      {
         "branch": "feat/sprite-derivative-tool",
         "head": "b8774ec65d3dcc36a600b865eeb8b6c89ca97367",
         "exists": true,

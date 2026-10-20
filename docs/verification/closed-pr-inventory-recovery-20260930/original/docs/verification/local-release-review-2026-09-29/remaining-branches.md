@@ -47,7 +47,6 @@ history. The existing 2026-09-22 art-ref proof already identifies their scope.
 - `art/retro-role-presentations`:
   `fbd314d7190c81e2ff67981e9006c49993d35d43`.
   Seven static body originals, prompts and provenance; no runtime adoption.
-- `art/spend-role-presentations`:
   `ac6837d28317f42ffc832516d1ab1a9a6cd5754c`.
   Seven static body candidates; no animation or collision qualification.
 - `art/ukraine-enemy-presentations`:

@@ -1,0 +1,118 @@
+{
+  "format": "retained-reference-cleanup.v1",
+  "scope": "Mixed historical records retain unrelated values. Original records are preserved separately; previous counts and verification claims describe the original evidence. No runtime content changed.",
+  "items": [
+    {
+      "path": "docs/branch-reconciliation/2026-09-22/art-ref-proof.json",
+      "originalSHA256": "0d0e859d7be17407693be92042b5a9c49634ad1e76397aaa4ad56a38ce5883ae",
+      "originalBytes": 96094,
+      "sha256": "1c9194325e457907fc7a7c06be47b5009bbf91866e7780d0407a3fd557e8b994",
+      "bytes": 82543
+    },
+    {
+      "path": "docs/branch-reconciliation/2026-09-22/coverage.json",
+      "originalSHA256": "6ce06dd8f0b0c78602dfe419f83350c68ec88e25259b4687cec7ac53b1c6125b",
+      "originalBytes": 3735868,
+      "sha256": "62000f2a61006116950fe4bb2b8e606cabfd14f09e880f7cc2aedbfa438d1ebc",
+      "bytes": 3722482
+    },
+    {
+      "path": "docs/branch-reconciliation/2026-09-22/inventory.json",
+      "originalSHA256": "20a6f814aecc755a4e3164a9c0382d3efded9bede9f033a41f262d62970aa002",
+      "originalBytes": 1309650,
+      "sha256": "0bfde321db37980f36c9447ee0a06b410e110fc20f2ee3e6eff26565013f8cf3",
+      "bytes": 1308453
+    },
+    {
+      "path": "docs/branch-reconciliation/2026-09-22/patch-index.json",
+      "originalSHA256": "3528a59ad18bc57eead1e32c35076cc5217ee69f048dddc226b27141c0a0876c",
+      "originalBytes": 787507,
+      "sha256": "437a3e54a0eab9763c3efdf4125ef66a1c8bd70000661429878fecb8a69bfb26",
+      "bytes": 784291
+    },
+    {
+      "path": "docs/branch-reconciliation/2026-09-22/reconciled.json",
+      "originalSHA256": "a799f4b1feb0241cf431152769698ee4a7f5a7b1c9701d5f8edc5485fdc7c203",
+      "originalBytes": 1582431,
+      "sha256": "029430bb6276fa405fb7bd4ef5521f861aa9ae2aa15a65d96f14d89f794868d5",
+      "bytes": 1580333
+    },
+    {
+      "path": "docs/branch-reconciliation/2026-09-22/worktree-commits.json",
+      "originalSHA256": "e894eef38aed1b62e39d593202fe37e84ae374009c173473b38e7080105e397a",
+      "originalBytes": 79762,
+      "sha256": "921da45d53f9ddefef5900be98a5bc9f2ec9107507bb63e4aa5937644c110c7f",
+      "bytes": 79594
+    },
+    {
+      "path": "docs/qualification/overflight/rebalance-20261014/space-recovery-small.json",
+      "originalSHA256": "1303a492463e96213911008285797ddc1d0a632f6cd13162c45f512ab7e9777e",
+      "originalBytes": 1286514,
+      "sha256": "ba0d060873117168bad659b1b781195f4327ca38b7a6409daaabd29263091d1a",
+      "bytes": 1283951
+    },
+    {
+      "path": "docs/reports/fpv-development-preservation-20261016/cloud-incremental-readback-38875736494/extra-public-003-verified.json",
+      "originalSHA256": "6d2511e65a234eadd1884e8f6c583e9256b5e9683f15089ca5944c6977baec2e",
+      "originalBytes": 8188793,
+      "sha256": "23817a5ae5f7d32932b44f3f846ba1f10af9cd5be10d85fb7cddc5fea395fc7d",
+      "bytes": 8178037
+    },
+    {
+      "path": "docs/reports/fpv-development-preservation-20261016/incremental-readback-plans/extra-public-003.json",
+      "originalSHA256": "a9958e3d8586445fe16d4c3876aabc21b717c900ef6fcbf03508faa8c84adb32",
+      "originalBytes": 8188154,
+      "sha256": "f3b14cbcb54a2306681bd47347985d325a4b82cc988adf79440d528d063845a0",
+      "bytes": 8177398
+    },
+    {
+      "path": "docs/verification/closed-pr-inventory-recovery-20260930/original/docs/verification/local-release-review-2026-09-29/refresh.json",
+      "originalSHA256": "eff4181c16ac58915f4caa5878b0cdcff99796fe43c4b5c02251221a315b1ace",
+      "originalBytes": 212248,
+      "sha256": "90b1f32986a81de5b0e11e0eca1c75e402b375cd7adb95dbd5ab17ee4a212cd2",
+      "bytes": 211607
+    },
+    {
+      "path": "docs/verification/closed-pr-inventory-recovery-20260930/original/docs/verification/local-release-review-2026-09-29/remaining-branches.json",
+      "originalSHA256": "950f4ce3c356aef2b6d5615b1269f24d74a6b1078151265092e6458f49b72915",
+      "originalBytes": 120726,
+      "sha256": "ab403afa36b09283c20b17b0f2dbdda9b092ef622f2cd873e14d5e6c53de4ef1",
+      "bytes": 120016
+    },
+    {
+      "path": "docs/verification/closed-pr-inventory-recovery-20260930/original/docs/verification/local-release-review-2026-09-29/remaining-branches.md",
+      "originalSHA256": "ce9eb1e33f52038da511b92752a4002e18d3988959fbf41c8a2fbd84f52f4f3a",
+      "originalBytes": 10059,
+      "sha256": "da093181e6b8b981c311a3e0cbcb5bc343b85d8a8a61d3843af3a787f9742d73",
+      "bytes": 10025
+    },
+    {
+      "path": "docs/verification/closed-pr-inventory-recovery-20260930/original/docs/verification/local-release-review-2026-09-29/worktree-inventory.json",
+      "originalSHA256": "fa000de4b248a23253e53525544f6f085536d3c3fbb5c6dd04d61363bf082520",
+      "originalBytes": 956096,
+      "sha256": "32c4fa3c8ce6a28d24f6985f259c967f8577a3e73faafb6d07fbd2176c4c5eba",
+      "bytes": 955027
+    },
+    {
+      "path": "docs/verification/fpv-library-preservation-20261016/extra-public-payload-remaining-four/remaining-four-approved-public-body-review.json",
+      "originalSHA256": "6d4a404e2e1d51c0de885e2f86047989da289cf5f3faa50b92c5f0feb260a793",
+      "originalBytes": 15013608,
+      "sha256": "fc4a4398998040b9d08097bef51565a9f6642173f868d49ac823ea32c4085a83",
+      "bytes": 14988824
+    },
+    {
+      "path": "docs/verification/fpv-library-preservation-20261016/extra-public-payload-remaining-four/remaining-four-approved-public-files-final.jsonl",
+      "originalSHA256": "f9e615b7458181005a4f69f256682fa3b7ea7265612acfa90af80b3a63e88fe2",
+      "originalBytes": 11195048,
+      "sha256": "ac0b49d876c4dd96c1d117fde1f33a891302abc3ef666f0f04fcaaf2b62d39a5",
+      "bytes": 11176504
+    },
+    {
+      "path": "docs/verification/original-actor-source-intake-2026-09-29/manifest.json",
+      "originalSHA256": "b032dab5acb07a0d7b9f2196a1103ec22d1e18af83e472f250540b6f732b2a35",
+      "originalBytes": 36145,
+      "sha256": "7fad30516efe7ea5f24f3e59f745cce6f6995206e82950a29ea9cb5c77a9629c",
+      "bytes": 24081
+    }
+  ]
+}

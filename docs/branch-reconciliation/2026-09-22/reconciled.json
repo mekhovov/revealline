@@ -256,38 +256,6 @@
       },
       {
         "location": "local",
-        "name": "art/spend-role-presentations",
-        "tip": "ac6837d28317f42ffc832516d1ab1a9a6cd5754c",
-        "relationship": {
-          "ahead": 1,
-          "behind": 1179,
-          "mergeBase": "e9928cdaad2f55d912aadd2ef25f635fb99e938c",
-          "uniqueCommits": [
-            {
-              "sha": "ac6837d28317f42ffc832516d1ab1a9a6cd5754c"
-            }
-          ]
-        },
-        "pullRequests": [],
-        "worktrees": [
-          "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/spend-role-presentations"
-        ],
-        "ownerTask": null,
-        "stablePatchGroup": null,
-        "successor": null,
-        "releaseEvidence": [],
-        "classification": "unique-changes-require-intake",
-        "requiredAction": "Coordinate owner and retain as source-only draft intake; do not ship or claim animation acceptance.",
-        "proof": {
-          "kind": "unique-source-candidates-not-in-main",
-          "file": "art-ref-proof.json",
-          "tip": "ac6837d28317f42ffc832516d1ab1a9a6cd5754c",
-          "main": "1b16a858fdd4ab303629277b3cd1138fa2475f04"
-        },
-        "dirtyChangesCovered": false
-      },
-      {
-        "location": "local",
         "name": "art/ukraine-enemy-presentations",
         "tip": "53d553485b8d7dc0f912959892947819a19d9803",
         "relationship": {
@@ -33647,13 +33615,6 @@
         "statusEntries": []
       },
       {
-        "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/spend-role-presentations",
-        "head": "ac6837d28317f42ffc832516d1ab1a9a6cd5754c",
-        "branch": "refs/heads/art/spend-role-presentations",
-        "dirty": false,
-        "statusEntries": []
-      },
-      {
         "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/sprite-derivative-tool",
         "head": "b8774ec65d3dcc36a600b865eeb8b6c89ca97367",
         "branch": "refs/heads/feat/sprite-derivative-tool",
@@ -39280,23 +39241,6 @@
               "location": "local",
               "name": "codex/source-identity-checker-362e5bf",
               "classification": "patch-equivalent-to-main"
-            }
-          ]
-        },
-        "dirtyChangesCovered": false
-      },
-      {
-        "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/spend-role-presentations",
-        "tip": "ac6837d28317f42ffc832516d1ab1a9a6cd5754c",
-        "detached": false,
-        "proof": {
-          "tip": "ac6837d28317f42ffc832516d1ab1a9a6cd5754c",
-          "kind": "recorded-branch-tip",
-          "refs": [
-            {
-              "location": "local",
-              "name": "art/spend-role-presentations",
-              "classification": "unique-changes-require-intake"
             }
           ]
         },
