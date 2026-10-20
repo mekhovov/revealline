@@ -13,7 +13,7 @@
       "purpose": "Practice routes, racing and precision; create and share content.",
       "inputs": "Keyboard, touch or calibrated controller",
       "requirements": "WebGL graphics required; richer scenes use more resources",
-      "firstFlight": "Open Explore and choose a challenge. Use Watch first flight or Try first flight, then follow the app’s coaching. Import .rlpack content through World packs."
+      "firstFlight": "On Home, choose “Learn to fly” for beginner lessons or “Explore worlds” to choose a challenge. Follow the in-app briefing and start explicitly. .rlpack files add World Studio content, not apps to the Flight practice directory."
     },
     "uk": {
       "name": "Студія FPV-світів",
@@ -21,7 +21,7 @@
       "purpose": "Тренуйте маршрути, перегони й точність; створюйте вміст і діліться ним.",
       "inputs": "Клавіатура, дотик або відкалібрований контролер",
       "requirements": "Потрібна графіка WebGL; складніші сцени потребують більше ресурсів",
-      "firstFlight": "Відкрийте «Огляд» і оберіть завдання. Скористайтеся переглядом або спробою першого польоту та підказками застосунку. Вміст .rlpack імпортується через «Пакети світів»."
+      "firstFlight": "На головному екрані оберіть «Навчитися літати» для початкових уроків або «Дослідити світи», щоб обрати завдання. Прочитайте інструктаж у застосунку та запустіть політ самостійно. Файли .rlpack додають вміст World Studio, а не застосунки до каталогу льотної практики."
     }
   }
 }

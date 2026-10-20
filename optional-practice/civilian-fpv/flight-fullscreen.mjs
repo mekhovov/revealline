@@ -9691,7 +9691,7 @@ export const readSimRadioAudio=sharedGlobalSettings.readSimRadioAudio;
 export const SIM_RADIO_AUDIO_KEY=sharedGlobalSettings.SIM_RADIO_AUDIO_KEY;
 export const attachSimMenuAudioSettings=sharedGlobalSettings.attachSimMenuAudioSettings;
 export const readSimMenuAudio=sharedGlobalSettings.readSimMenuAudio;
-// Canonical source sha256: e35af79d78f4fea9f291249c562c676cbb2e1d7cca927290fd7bfe3e6925a432
+// Canonical source sha256: a878605004fbfd49d3809deb02e4081e808243f1a2a43d5499a981ff0e335055
 const sharedModeShell=(()=>{
 // Dependency-free presentation shared with bundled simulator builds.
 const GAME_MODE_ORDER=Object.freeze([
@@ -9967,6 +9967,7 @@ function attachSettingsPanels({
 root,
 document:doc=globalThis.document,
 beforeSelect=()=>false,
+onPresentationChange=()=>{},
 }={}){
 const list=root?.querySelector?.('.field-kit-settings-tabs'),
 records=[...(list?.querySelectorAll('[role="tab"]')??[])].map((tab)=>({
@@ -9980,9 +9981,15 @@ generation=0;
 const compact=()=>
 root?.classList?.contains('native-settings')&&
 (doc.defaultView?.innerWidth??doc.documentElement?.clientWidth??Infinity)<=700;
+let previousCompact=compact();
 function view(name){
-if(root?.classList?.contains('native-settings'))
+if(
+!root?.classList?.contains('native-settings')||
+root.getAttribute('data-settings-view')===name
+)
+return false;
 root.setAttribute('data-settings-view',name);
+return true;
 }
 const owned=(record)=> !destroyed&&owns(root,doc,list,record);
 const available=()=>records.filter((record)=>owned(record)&&enabled(record));
@@ -10003,12 +10010,18 @@ const ticket= ++generation,
 returnFocus=beforeSelect(next.tab)===true;
 // A host hook may retire this surface, disable the target or start a newer selection.
 if(ticket!==generation|| !owned(next)|| !enabled(next))return false;
+const selectionChanged=current!==next;
 paint(next);
 if(drill&&compact()){
-view('panel');
+const viewChanged=view('panel');
+if(selectionChanged||viewChanged)onPresentationChange();
+if(ticket!==generation|| !owned(next)|| !enabled(next)||current!==next)
+return false;
 if(!focusPanel())next.panel.focus?.();
 return true;
 }
+if(selectionChanged)onPresentationChange();
+if(ticket!==generation|| !owned(next)|| !enabled(next)||current!==next)return false;
 if(focus||returnFocus)next.tab.focus();
 return true;
 }
@@ -10018,8 +10031,10 @@ paint(initial.find(({tab})=>tab.getAttribute('aria-selected')==='true')||initial
 view('categories');
 const back=()=>{
 if(!destroyed&&compact()&&root.getAttribute('data-settings-view')==='panel'){
+const ticket= ++generation;
 view('categories');
-current?.tab.focus();
+onPresentationChange();
+if(ticket===generation&& !destroyed)current?.tab.focus();
 return true;
 }
 return false;
@@ -10034,6 +10049,7 @@ element.getClientRects().length&&
 doc.defaultView?.getComputedStyle(element)?.visibility!=='hidden';
 const restoreFocus=(opener)=>{
 if(!current|| !owned(current)|| !enabled(current))return false;
+const ticket= ++generation;
 // Reveal only the still-selected category. A retired/hidden control must
 // not change categories or be made available by closing a child tool.
 if(
@@ -10041,14 +10057,18 @@ current.panel.contains(opener)&&
 !opener.disabled&&
 !opener.closest('[hidden],[inert],[aria-hidden="true"]')
 ){
-if(compact())view('panel');
+if(compact()&&view('panel'))onPresentationChange();
+if(ticket!==generation||destroyed|| !current|| !owned(current)|| !enabled(current))
+return false;
 if(focusable(opener)){
 opener.focus({preventScroll:true});
 if(compact())opener.scrollIntoView?.({block:'nearest',inline:'nearest'});
 return true;
 }
 }
-view('categories');
+if(view('categories'))onPresentationChange();
+if(ticket!==generation||destroyed|| !current|| !owned(current)|| !enabled(current))
+return false;
 if(!focusable(current.tab))return false;
 current.tab.focus({preventScroll:true});
 if(compact())current.tab.scrollIntoView?.({block:'nearest',inline:'nearest'});
@@ -10077,13 +10097,27 @@ event.stopImmediatePropagation?.();
 };
 root?.addEventListener('click',backClick,true);
 const resize=()=>{
-if(destroyed|| !root?.contains(doc.activeElement))return;
-if(current?.panel.contains(doc.activeElement))view('panel');
-else if(list?.contains(doc.activeElement))view('categories');
+if(destroyed)return;
+// CSS can hide Data at the breakpoint without changing the selected panel
+// or view attribute. That owner change does not depend on current focus.
+const nextCompact=compact(),
+breakpointChanged=nextCompact!==previousCompact;
+previousCompact=nextCompact;
+const viewChanged= !root?.contains(doc.activeElement)
+?false
+:current?.panel.contains(doc.activeElement)
+?view('panel')
+:list?.contains(doc.activeElement)
+?view('categories')
+:false;
+if(breakpointChanged||(nextCompact&&viewChanged)){
+generation++;
+onPresentationChange();
+}
 };
 doc.defaultView?.addEventListener?.('resize',resize);
 function focusPanel(){
-if(!current|| !owned(current))return false;
+if(!current|| !owned(current)|| !enabled(current))return false;
 const target=[
 ...current.panel.querySelectorAll(
 'button,a[href],select,input:not([type="hidden"]),textarea,summary,[tabindex]',
@@ -10139,13 +10173,17 @@ primary:()=>(current&&owned(current)?current.tab:null),
 panel:()=>(current&&owned(current)?current.panel:null),
 focusCategories(){
 if(!current|| !owned(current)|| !enabled(current))return false;
-view('categories');
+const ticket= ++generation;
+if(view('categories'))onPresentationChange();
+if(ticket!==generation||destroyed|| !current|| !owned(current)|| !enabled(current))
+return false;
 current.tab.focus();
 return true;
 },
 focusPanel(){
-view('panel');
-return focusPanel();
+const ticket= ++generation;
+if(view('panel'))onPresentationChange();
+return ticket===generation&& !destroyed&&focusPanel();
 },
 back,
 destroy(){
@@ -10157,6 +10195,7 @@ root?.removeEventListener('cancel',cancel);
 root?.removeEventListener('click',backClick,true);
 doc.defaultView?.removeEventListener?.('resize',resize);
 removers.forEach((remove)=>remove());
+onPresentationChange();
 },
 });
 }
@@ -10209,6 +10248,7 @@ locale='en',
 setMenuIcon=()=>{},
 attachPanels,
 beforeSelect,
+onPresentationChange,
 }={}){
 const doc=root?.ownerDocument;
 if(!doc|| !content|| !root.contains(content)||typeof attachPanels!=='function')
@@ -10270,7 +10310,7 @@ layout.append(panel);
 rootClasses.forEach((name)=>root.classList.add(name));
 if(contentClass)content.classList.add('mode-settings-content');
 content.append(layout);
-const navigation=attachPanels({root,document:doc,beforeSelect});
+const navigation=attachPanels({root,document:doc,beforeSelect,onPresentationChange});
 let destroyed=false;
 const api=Object.freeze({
 navigation,
