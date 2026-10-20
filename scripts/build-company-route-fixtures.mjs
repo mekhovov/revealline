@@ -27,8 +27,7 @@ const execute = promisify(execFile);
 const path = 'game/test/fixtures/company-campaign-routes.json';
 const previous = JSON.parse(readFileSync(path, 'utf8')).rows;
 const projects = new Map(
-  ['droneaid-nl',
-'droneaid'].map((brandId) => {
+  ['droneaid-nl', 'droneaid'].map((brandId) => {
     const source = createCompanyProject({ brandId });
     createContentExecutionCatalog(source);
     return [brandId, compileContentProject(source)];

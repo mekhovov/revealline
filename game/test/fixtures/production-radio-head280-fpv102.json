@@ -4,8 +4,9 @@
   "provenance": {
     "path": "authoring/library/fpv-field-kit/production.rltheme",
     "gitBlob": "ee60d86a7061f9b29b41a28f135d3dd529dab729",
-    "bytes": 8472841,
-    "sha256": "a6343c77e63b3ff2ad1d401f8193795f484d5eb046797049452191051051d14b"
+    "bytes": 8363961,
+    "sha256": "7dc5ab1ac30adfac6eacc2a99e78dcdcd08ed5d2ccc3bd20bcd212ae864d7dd4",
+    "scope": "Derived retained-content oracle after an ownership migration. Source commit and tag identify the original artifact; these new bytes are not that release or its historical qualification."
   },
   "metadata": {
     "format": "revealline-theme-bundle.v1",
@@ -25,26 +26,36 @@
   },
   "groups": {
     "slots": {
-      "count": 335,
-      "sha256": "f2d853890e884c926450d6cbe7ed2648676e62a079a9e8768fc73a8fc12d1051"
+      "count": 302,
+      "sha256": "93cd0c41cf186805569b72f283fbeb803cf31623b3935cbc3cd0aa494f1fac22"
     },
     "assets": {
-      "count": 2646,
-      "sha256": "c66871ed92ee90f75979fd67274517939161623c31911c55b5b72614c13d3700"
+      "count": 2613,
+      "sha256": "08f00ee62d0ceb40b9d2ab041b37b4e3d8fd4d655a7a0280e9afdc45dc402f19"
     },
     "themes": {
       "count": 103,
-      "sha256": "67f57b021a66042299fecf1d573c011e448a6cbb53b895f87c9f231eb145e5a1"
+      "sha256": "5e3d25ab18a80120a07d94f008ae28b51bf71e1731b564fb0b886be4e90ae722"
     },
     "collections": {
       "count": 1,
-      "sha256": "74daee988fe6fe616d1ecc4a6ffd9f6c9c47b2fc00584259232f8f1477db1b57"
+      "sha256": "84f512c5583368c0d68f138d2d3f7821e0492c0693e931751f8ec3311f6f30cc"
     }
   },
   "payloads": {
     "count": 132,
-    "bytes": 4009342,
     "sha256": "4932cc57542adc364f44cb548011a7ca26afa7e0cb1eb00e00647fe5c381738c"
   },
-  "scope": "Exact pre-radio-continuation canonical production102. Original binary imported, all original payloads validated and exported byte-identically. The separate divergent discovery103 archive stays immutable; numeric revisions are not interchangeable."
+  "scope": "Exact pre-radio-continuation canonical production102. Original binary imported, all original payloads validated and exported byte-identically. The separate divergent discovery103 archive stays immutable; numeric revisions are not interchangeable.",
+  "migration": {
+    "format": "revealline-retained-production-oracle.v1",
+    "originalBundleSHA256": "a6343c77e63b3ff2ad1d401f8193795f484d5eb046797049452191051051d14b",
+    "originalFixtureSHA256": "83c4153ec97c693526b6d00baf722b4494a107cd48f03a991f7e2de64b7de3d2",
+    "removedSlots": 33,
+    "removedAssets": 33,
+    "preservedPayloads": {
+      "count": 132,
+      "sha256": "4932cc57542adc364f44cb548011a7ca26afa7e0cb1eb00e00647fe5c381738c"
+    }
+  }
 }

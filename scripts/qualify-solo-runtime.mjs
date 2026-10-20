@@ -1180,6 +1180,7 @@ ${hitchStore ? hitchModule.hitchJournalInitScript({ costProbe: cost }) : ''}
   };
   if (frameTraceOptions) {
     frameRecorder = createQualificationFrameTrace(cdp, {
+      protocol: frameTraceOptions.protocol,
       file: resolve(output) + '.frame-trace.json',
       remainingMs: () => deadline - Date.now(),
       onLimit: async () => {

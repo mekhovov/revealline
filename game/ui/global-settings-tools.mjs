@@ -1,8 +1,9 @@
-import { localizedText, t } from '../i18n/index.mjs';
+import { localizedAttribute, localizedText, t } from '../i18n/index.mjs';
 import { attachProfileRecoveryDialog } from './profile-recovery-dialog.mjs';
 import { attachStorageRetention } from './storage-retention.mjs';
 import { attachInstallOfflinePanel } from './install-offline-panel.mjs';
 import { setMenuIcon } from './native-menu-icons.mjs';
+import { restoreSettingsPanelFocus } from './settings-panels.mjs';
 
 const owners = new WeakMap();
 export const globalSettingsToolsRoot = (doc = globalThis.document) =>
@@ -89,6 +90,7 @@ export function mountGlobalSettingsTools({
   getOwner = () => null,
   isOwnerCurrent = () => true,
   onOpen = () => {},
+  onPresentationChange = () => {},
   currentVersion = doc.documentElement.dataset.buildVersion,
   resolveSourceVersion,
   packaged = !!currentVersion && !currentVersion.includes('__'),
@@ -176,6 +178,7 @@ export function mountGlobalSettingsTools({
       getOwner,
       isOwnerCurrent,
       onOpen,
+      onPresentationChange,
       ...(loadRecovery ? { load: loadRecovery } : {}),
     });
   }
@@ -290,22 +293,26 @@ export function mountGlobalSettingsTools({
         releaseToolKeyboard();
         releaseToolKeyboard = () => {};
         toolFrame.removeAttribute('src');
-        if (
-          valid(toolOwner) &&
-          !doc.hidden &&
-          doc.hasFocus?.() !== false &&
-          toolOpener?.isConnected &&
-          !toolOpener.closest('[hidden],[inert],[aria-hidden="true"]')
-        )
-          toolOpener.focus({ preventScroll: true });
+        if (valid(toolOwner) && !doc.hidden && doc.hasFocus?.() !== false) {
+          if (restoreSettingsPanelFocus(settingsRoot, toolOpener)) return;
+          if (
+            toolOpener?.isConnected &&
+            !toolOpener.disabled &&
+            !toolOpener.closest('[hidden],[inert],[aria-hidden="true"]') &&
+            toolOpener.getClientRects().length
+          )
+            toolOpener.focus({ preventScroll: true });
+        }
       });
     }
     localizedText(doc.getElementById(`${prefix}-tool-title`), () => t(title));
-    toolFrame.title = t(title);
+    localizedAttribute(toolFrame, 'title', () => t(title));
     toolFrame.src = url.href;
     doc.getElementById(`${prefix}-tool-open-page`).href = url.href;
+    const opening = !toolDialog.open;
     toolDialog.showModal();
     doc.getElementById(`${prefix}-tool-back`).focus({ preventScroll: true });
+    if (opening) onPresentationChange();
   };
   if (coreURL)
     for (const [key, category, title, route, icon] of [
@@ -317,7 +324,7 @@ export function mountGlobalSettingsTools({
         'controls',
       ],
       ['creatorTools', 'extras', 'interface:nativeMenu.creatorTools', 'creator/', 'content'],
-      ['about', 'extras', 'interface:about', '../site/about.html#versions', 'info'],
+      ['about', 'extras', 'common:navigation.aboutCredits', '../site/about.html#versions', 'info'],
     ]) {
       if (controls[key] || !panels[category]) continue;
       const { button } = row(key, category, title, icon);

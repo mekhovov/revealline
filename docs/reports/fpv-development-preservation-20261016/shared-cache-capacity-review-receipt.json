@@ -1,0 +1,48 @@
+{
+  "format": "FPVSharedCacheCapacityReviewReceipt.v1",
+  "scope": "Optional shared-cache capacity accounting only; standalone estimate and original content-integrity checks retained",
+  "why": "A per-index gate previously reserved already present exclusive shared cache bytes again, which could refuse a combined restore that fits.",
+  "change": "Credit only exact-size existing regular cache files for future capacity allocation. No cached content is trusted by this accounting; original full asset/member/Git-blob hashes still run before reuse.",
+  "additionalPayloadRereadsForCapacity": false,
+  "checks": [
+    "actual two-namespace direct-asset restore passes constrained remaining capacity",
+    "actual TAR/Zstandard part and extracted member reuse pass constrained remaining capacity",
+    "same-size corrupt cached asset still refuses by original digest check without overwrite or global receipt",
+    "no download or work creation with insufficient combined space",
+    "wrong approved input/hash/namespace/final status and contradictory asset identity refuse",
+    "legacy standalone capacity refusal, full relative-path restore and unsafe cache/header refusal pass"
+  ],
+  "regressions": {
+    "multiFive": {
+      "passed": 5,
+      "seconds": 44.236
+    },
+    "actualSharedCAS": {
+      "passed": 1,
+      "seconds": 10.033
+    },
+    "legacy": {
+      "passed": 3,
+      "seconds": 11.68
+    }
+  },
+  "logs": [
+    {
+      "name": "tool-tests-multi-002.log",
+      "sha256": "5c7c995859fa8885eeb1abde10bc513b49cda16cdf272fc27014d2e869707a63",
+      "bytes": 5662
+    },
+    {
+      "name": "tool-tests-multi-cas-001.log",
+      "sha256": "c8edb9e4b76ed4517cdf4a78992dde6d37b1e8f8102375b174060888c0737bae",
+      "bytes": 2324
+    },
+    {
+      "name": "tool-tests-capacity-legacy-001.log",
+      "sha256": "034a8d4b9715f0fa72cd40de99edd7a78982e1b5c5eb45153ba94a3f7576ea31",
+      "bytes": 1602
+    }
+  ],
+  "fullAppPayloadRestorePerformed": false,
+  "overallDisconnectSafetyClaimed": false
+}

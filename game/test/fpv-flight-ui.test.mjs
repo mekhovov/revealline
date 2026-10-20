@@ -13,7 +13,7 @@ import {
 import { createFlightRenderer } from '../../optional-practice/civilian-fpv/renderer.mjs';
 import { FLIGHT_COURSES } from '../../optional-practice/civilian-fpv/catalogue.mjs';
 import { FLIGHT_DEMONSTRATIONS } from '../../optional-practice/civilian-fpv/demonstrations.mjs';
-import { replayFlight } from '../../optional-practice/civilian-fpv/model.mjs';
+import { MAX_FLIGHT_TICKS, replayFlight } from '../../optional-practice/civilian-fpv/model.mjs';
 import {
   createFlightProfileStore,
   defaultRadioProfile,
@@ -23,12 +23,59 @@ import { mountFlightNotebook } from '../../optional-practice/civilian-fpv/notebo
 import { Document, Events } from './helpers/couch-dom.mjs';
 import { waitFor } from './helpers/wait-for.mjs';
 
+function registerOfflineFeedbackTests() {
+  for (const locale of ['en', 'uk'])
+    for (const kind of ['overall', 'cancelled', 'unknown'])
+      test(`Academy offline feedback ${locale} ${kind} uses safe localized reasons`, async (t) => {
+        const previous = getLocale();
+        t.after(() => setLocale(previous));
+        const error =
+          kind === 'cancelled'
+            ? new DOMException('secret', 'AbortError')
+            : new Error(
+                kind === 'overall'
+                  ? 'Download exceeded five minutes. Retry on a faster connection.'
+                  : 'secret backend detail',
+              );
+        const f = await fixture(t, {
+          notebookFactory: null,
+          studioFactory: null,
+          url: `https://example.test/optional-practice/civilian-fpv/?lang=${locale}`,
+          serviceWorker: {
+            getRegistration: async () => undefined,
+            register: async () => {
+              throw error;
+            },
+          },
+        });
+        f.$('install-offline').click();
+        await waitFor(() => !f.$('install-offline').disabled);
+        const text = f.$('transfer-status').textContent;
+        assert.doesNotMatch(text, /secret/);
+        assert.match(
+          text,
+          kind === 'overall'
+            ? locale === 'uk'
+              ? /п’ять хвилин/
+              : /five minutes/
+            : kind === 'cancelled'
+              ? locale === 'uk'
+                ? /скасовано/
+                : /cancelled/
+              : locale === 'uk'
+                ? /Не вдалося/
+                : /failed/,
+        );
+      });
+}
+
 const html = parse(
   await readFile(
     new URL('../../optional-practice/civilian-fpv/index.html', import.meta.url),
     'utf8',
   ),
 );
+registerOfflineFeedbackTests();
 async function fixture(
   t,
   {
@@ -78,6 +125,7 @@ async function fixture(
     disposed = false,
     pads = [];
   Object.assign(win, {
+    CustomEvent,
     location: new URL(url),
     performance: { now: () => 0 },
     navigator: { getGamepads: () => pads, ...(serviceWorker ? { serviceWorker } : {}) },
@@ -340,6 +388,12 @@ test('Academy prepares a saved aircraft and waits for a pending flight step befo
     assert.equal(settings.open, false, `${action} must leave Settings before flight`);
     assert.equal(h.view.snapshot().reason, 'prepared', action);
     assert.equal(h.view.snapshot().ticks, 0, action);
+    for (let tick = 0; tick < 12; tick++) {
+      h.tick();
+      await new Promise((resolve) => setImmediate(resolve));
+    }
+    assert.notEqual(h.view.snapshot().status, 'active', `${action} must wait for explicit Arm`);
+    assert.equal(h.view.snapshot().ticks, 0, `${action} must not advance while ready`);
     h.$('arm').click();
     for (let tick = 0; tick < 8; tick++) {
       h.tick();
@@ -1439,7 +1493,8 @@ test('unavailable offline capability stays explanatory and a failed prepare neve
   });
   f.$('install-offline').click();
   await new Promise((resolve) => setImmediate(resolve));
-  assert.equal(f.$('transfer-status').textContent, 'Offline package unavailable');
+  assert.match(f.$('transfer-status').textContent, /Offline preparation failed/);
+  assert.doesNotMatch(f.$('transfer-status').textContent, /Offline package unavailable/);
   assert.equal(f.$('install-offline').disabled, false);
   assert.equal(f.$('remove-offline').disabled, false);
 });
@@ -1540,6 +1595,78 @@ test('TX15 default does not match an unrelated joystick', async (t) => {
   assert.equal(f.view.radio.status().profile, null);
   assert.equal(f.view.snapshot().status, 'disarmed');
 });
+
+for (const save of ['guided', 'manual']) {
+  test(`Academy radio setup saves through ${save} controls and activates radio flight`, async (t) => {
+    const data = new Map();
+    const f = await fixture(t, {
+      storage: {
+        getItem: (key) => data.get(key) ?? null,
+        setItem: (key, value) => data.set(key, value),
+      },
+    });
+    const profile = defaultRadioProfile();
+    const pad = {
+      id: profile.device.id,
+      index: 0,
+      connected: true,
+      mapping: '',
+      axes: [0.004, 0.004, -1, 0.004, -1, 0, 0, 0],
+      buttons: Array.from({ length: 24 }, () => ({ value: 0 })),
+    };
+    f.setPads([pad]);
+    f.win.Event = Event;
+    const create = f.doc.createElement.bind(f.doc);
+    f.doc.createElement = (...args) => {
+      const node = create(...args);
+      Object.defineProperty(node, 'firstChild', {
+        get: () =>
+          node._text
+            ? {
+                get textContent() {
+                  return node._text;
+                },
+                set textContent(value) {
+                  node._text = value;
+                },
+              }
+            : (node.children[0] ?? null),
+      });
+      return node;
+    };
+    f.$('setup').click();
+    const container = f.$('radio-setup');
+    const click = (text) =>
+      container
+        .querySelectorAll('button')
+        .find((node) => node.textContent === text)
+        .click();
+    if (save === 'manual') {
+      click('I checked the animated sticks and their direction');
+      click('Save verified profile');
+    } else {
+      const checked = container.querySelector('.radio-confirm input');
+      checked.checked = true;
+      checked.emit('change');
+      click('Save & return');
+    }
+    await f.view.settled();
+    assert.equal(f.$('setup-dialog').open, false);
+    assert.equal(f.$('input-source').value, 'radio');
+    assert.equal(f.view.radio.status().verified, true);
+    assert.equal(f.view.radio.status().editing, false);
+    assert.notEqual(f.view.snapshot().status, 'active');
+    f.tick(2);
+    pad.axes[4] = 1;
+    f.tick(2);
+    assert.equal(f.view.snapshot().status, 'active');
+    pad.axes[2] = -0.5;
+    pad.axes[3] = 0.5;
+    f.tick(3);
+    assert.ok(f.view.snapshot().lastInput.throttle > 0);
+    assert.ok(f.view.snapshot().lastInput.yaw > 0);
+  });
+}
 
 test('camera focus preserves global pause for keyboard, touch and radio owners without resuming held input', async (t) => {
   for (const owner of ['keyboard', 'touch', 'radio']) {
@@ -1642,6 +1769,55 @@ test('Academy title focus loss before flight initialization keeps the menu usabl
   f.$('academy-shell-action-primary').click();
   f.$('academy-shell-action-start').click();
   assert.equal(f.view.snapshot().status, 'active');
+});
+
+test('Academy Home context stays localized with its current flight while browsing and returning', async (t) => {
+  const h = await fixture(t, { home: true });
+  const context = h.$('academy-shell-navigation-context');
+  const home = h.$('academy-shell-home-dialog');
+  assert.equal(context.textContent, 'FPV SIM · Academy');
+  assert.equal(context.hidden, false);
+  assert.ok(home.querySelector('nav').getAttribute('aria-describedby').includes(context.id));
+  const prepared = h.view.snapshot();
+  const mission = home.querySelector('.mode-play-mission').textContent;
+  const browse = () => {
+    h.$('academy-shell-action-missions').focus();
+    h.$('academy-shell-action-missions').click();
+    assert.equal(h.$('journey-chooser').open, true);
+    assert.ok(
+      h.$('journey-chooser-status').textContent.includes(`${context.textContent} · `),
+      'The chooser keeps the exact localized host context while browsing.',
+    );
+    h.doc.querySelectorAll('.journey-card')[1].focus();
+    h.tick(2);
+    h.$('journey-back').click();
+    assert.equal(home.open, true);
+    assert.ok(
+      h.doc.activeElement === h.$('academy-shell-action-missions'),
+      `Back must return focus to the mission opener, received ${h.doc.activeElement?.id}`,
+    );
+  };
+  browse();
+  assert.deepEqual(
+    h.view.snapshot(),
+    prepared,
+    'focus-only browsing cannot start or replace a flight',
+  );
+  assert.equal(home.querySelector('.mode-play-mission').textContent, mission);
+  h.$('academy-shell-action-primary').click();
+  h.tick(3);
+  h.$('academy-shell-action-menu').click();
+  const paused = h.view.snapshot();
+  assert.equal(paused.status, 'paused');
+  assert.ok(paused.ticks > 0);
+  h.$('language').value = 'uk';
+  h.$('language').emit('change');
+  assert.equal(context.textContent, 'FPV SIM · Академія');
+  const translatedMission = home.querySelector('.mode-play-mission').textContent;
+  browse();
+  assert.deepEqual(h.view.snapshot(), paused);
+  assert.equal(home.querySelector('.mode-play-mission').textContent, translatedMission);
+  assert.equal(context.textContent, 'FPV SIM · Академія');
 });
 
 test('Academy shell keeps menu input out of native flight and requires explicit Start', async (t) => {
@@ -2051,6 +2227,74 @@ async function openAcademyTuning(h) {
   await new Promise((resolve) => setImmediate(resolve));
   assert.equal(h.doc.querySelector('.fpv-tuning').open, true);
 }
+
+for (const configuration of ['Legacy', 'Actual'])
+  test(`Academy Apply & restart retains ${configuration} settings and waits for explicit Arm`, async (t) => {
+    const data = new Map();
+    let holdPreparation = false,
+      releasePreparation;
+    const h = await fixture(t, {
+      storage: {
+        getItem: (key) => data.get(key) ?? null,
+        setItem: (key, value) => data.set(key, value),
+      },
+      rendererFactory: () => ({
+        available: true,
+        setCourse() {},
+        setPath() {},
+        draw() {},
+        dispose() {},
+        async prepare() {
+          if (holdPreparation)
+            await new Promise((resolve) => {
+              releasePreparation = resolve;
+            });
+          return true;
+        },
+      }),
+    });
+    h.$('arm').click();
+    h.tick(6);
+    assert.ok(h.view.snapshot().ticks > 0);
+    h.view.pause();
+    await openAcademyTuning(h);
+    if (configuration === 'Actual') {
+      const algorithm = academyTuningControl(h, 'Rate algorithm', 'select');
+      algorithm.value = 'actual';
+      algorithm.emit('change');
+    }
+    const camera = academyTuningControl(h, 'Vertical FOV (degrees)');
+    camera.value = '103';
+    camera.emit('input');
+    holdPreparation = true;
+    await academyTuningClick(h, 'Apply & restart');
+    await waitFor(() => Boolean(releasePreparation), {
+      message: 'Academy replacement preparation',
+    });
+    assert.equal(h.$('arm').disabled, true);
+    assert.notEqual(h.view.snapshot().status, 'active');
+    holdPreparation = false;
+    releasePreparation();
+    await h.view.settled();
+    h.tick(12);
+    assert.notEqual(h.view.snapshot().status, 'active');
+    assert.equal(h.view.snapshot().ticks, 0);
+    assert.equal(h.$('camera-fov').value, '103');
+    const saved = JSON.parse(data.get('revealline.fpv.tuning.v1'));
+    const setup = saved.setups.find((item) => item.id === saved.selectedSetupId);
+    const profile = saved.profiles.find(
+      (item) => item.id === (setup.profileId ?? saved.defaultProfileId),
+    );
+    assert.deepEqual(h.view.exportAttempt().response, profile.response);
+    assert.equal(
+      profile.response.format,
+      configuration === 'Legacy' ? 'FlightResponseProfile.v1' : 'FlightResponseProfile.v2',
+    );
+    h.$('arm').click();
+    h.tick(8);
+    assert.equal(h.view.snapshot().status, 'active');
+    assert.ok(h.view.snapshot().ticks > 0);
+  });
 
 test('Academy mode, reset and input changes preserve the tested draft until a normal course launch', async (t) => {
   const [tuning, workers] = await Promise.all([
@@ -2564,4 +2808,307 @@ test('keyboard resume never grants another input owner throttle or changes check
       input.dispose();
     }
   }
+});
+
+test('actual Academy settings keep an unsaved menu animation choice and Retry the same checkbox', async (t) => {
+  const priorLocale = getLocale();
+  setLocale('en', { persist: false });
+  t.after(() => setLocale(priorLocale, { persist: false }));
+  const key = 'revealline.menu-animation.v1',
+    data = new Map([[key, 'on']]);
+  let working = false;
+  const storage = {
+    getItem: (key) => data.get(key) ?? null,
+    setItem(key, value) {
+      if (key === 'revealline.menu-animation.v1' && !working)
+        throw new DOMException('Modeled blocked storage', 'SecurityError');
+      data.set(key, value);
+    },
+  };
+  const h = await fixture(t, { storage }),
+    input = h.doc.getElementById('academy-global-menuAnimation');
+  input.checked = false;
+  input.emit('change');
+  const status = h.doc.getElementById(`${input.id}-status`),
+    retry = status.parentNode.querySelector('.global-settings-save-retry');
+  assert.equal(input.checked, false);
+  assert.match(status.textContent, /Session only.*blocked/);
+  assert.equal(h.doc.documentElement.dataset.menuAnimation, 'off');
+  working = true;
+  retry.click();
+  assert.equal(data.get(key), 'off');
+  assert.equal(status.textContent, 'Saved');
+  assert.equal(retry.hidden, true);
+});
+
+async function academyTerminalLanguageFixture(t, options = {}) {
+  const previous = getLocale();
+  setLocale('en', { persist: false });
+  t.after(() => setLocale(previous, { persist: false }));
+  const records = new Map(),
+    writes = [];
+  let lastDraw = null;
+  const h = await fixture(t, {
+    storage: {
+      getItem: (key) => records.get(key) ?? null,
+      setItem(key, value) {
+        writes.push([key, value]);
+        records.set(key, value);
+      },
+    },
+    // Keep the real scheduler/model. This long expiry fixture does not retain
+    // every renderer draw in the ordinary fixture's diagnostic array.
+    rendererFactory: () => ({
+      available: true,
+      setCourse() {},
+      setPath() {},
+      draw(state) {
+        lastDraw = state;
+      },
+      dispose() {},
+    }),
+    ...options,
+  });
+  let downloads = 0;
+  h.win.URL.createObjectURL = () => {
+    downloads++;
+    return 'blob:unexpected-terminal-recording';
+  };
+  return { ...h, records, writes, downloads: () => downloads, lastDraw: () => lastDraw };
+}
+
+function academyTerminalLanguage(h, locale, expected, proof) {
+  const outcome = h.$('complete'),
+    title = h.$('complete-title'),
+    lesson = h.$('lesson'),
+    state = h.view.snapshot(),
+    records = [...h.records],
+    writes = h.writes.length,
+    deliveries = h.deliveries.length;
+  const opener = h.$('academy-shell-action-settings');
+  h.$('academy-shell-action-menu').click();
+  assert.equal(h.$('academy-shell-home-dialog').open, true);
+  assert.equal(opener.getClientRects().length > 0, true, 'Use the visible Home Settings opener.');
+  opener.focus();
+  opener.click();
+  assert.equal(h.$('academy-shell-settings-dialog').open, true);
+  h.$('academy-settings-tab-display').click();
+  const field = h.$('language');
+  assert.equal(field.tagName, 'SELECT');
+  assert.equal(h.$('academy-shell-settings-dialog').contains(field), true);
+  field.focus();
+  field.value = locale;
+  field.emit('change');
+  assert.equal(getLocale(), locale);
+  assert.equal(h.$('complete-title').textContent, expected.title);
+  assert.equal(h.$('lesson').textContent, expected.lesson);
+  assert.equal(h.$('complete') === outcome, true, 'Keep the exact native result region.');
+  assert.equal(h.$('complete-title') === title, true, 'Keep the exact result heading.');
+  assert.equal(h.$('lesson') === lesson, true, 'Keep the exact result advice node.');
+  assert.equal(h.doc.activeElement === field, true, 'Language refresh must retain field focus.');
+  assert.equal(outcome.hidden, expected.outcomeHidden ?? false);
+  assert.equal(h.$('next').hidden, expected.nextHidden ?? true);
+  assert.equal(h.$('review').hidden, expected.reviewHidden ?? true);
+  assert.deepEqual(
+    h.view.snapshot(),
+    state,
+    'The existing language pause cannot restart a terminal flight.',
+  );
+  if (proof !== null) assert.equal(JSON.stringify(h.view.exportAttempt()), proof);
+  assert.deepEqual([...h.records], records);
+  assert.equal(
+    h.writes.length,
+    writes,
+    'Repainting terminal copy must not write records or preferences.',
+  );
+  assert.equal(h.deliveries.length, deliveries, 'Language must not readmit a result.');
+  assert.equal(h.downloads(), 0);
+  h.$('academy-shell-action-settings-back').click();
+  assert.equal(h.$('academy-shell-settings-dialog').open, false);
+  assert.equal(
+    h.doc.activeElement === opener,
+    true,
+    `Back restores #${opener.id}; received #${h.doc.activeElement?.id ?? 'none'}.`,
+  );
+  assert.deepEqual(h.view.snapshot(), state);
+}
+
+async function academyTerminalResetLanguage(h, course) {
+  h.view.reset();
+  await h.view.settled();
+  assert.equal(h.view.snapshot().status, 'disarmed');
+  assert.equal(h.view.snapshot().ticks, 0);
+  assert.equal(h.$('complete').hidden, true);
+  academyTerminalLanguage(
+    h,
+    'uk',
+    {
+      ...course.locales.uk,
+      outcomeHidden: true,
+      nextHidden: h.$('next').hidden,
+      reviewHidden: h.$('review').hidden,
+    },
+    JSON.stringify(h.view.exportAttempt()),
+  );
+  assert.equal(h.$('complete').hidden, true, 'Translation cannot revive the previous result.');
+}
+
+test('Academy expired result retains terminal meaning through native language changes after all 36000 model ticks', async (t) => {
+  const h = await academyTerminalLanguageFixture(t);
+  assert.equal(h.view.arm(), true);
+  for (
+    let frame = 0;
+    frame < MAX_FLIGHT_TICKS + 4 && h.view.snapshot().status !== 'expired';
+    frame++
+  )
+    h.tick();
+  assert.equal(h.view.snapshot().status, 'expired');
+  assert.equal(h.view.snapshot().ticks, MAX_FLIGHT_TICKS);
+  assert.equal(
+    h.renders.length,
+    0,
+    'The renderer option avoids retaining the full timed-out flight.',
+  );
+  assert.equal(h.$('complete-title').textContent, 'Flight ended');
+  assert.equal(h.$('lesson').textContent, 'Your next route starts with another try.');
+  assert.equal(h.deliveries.length, 0);
+  const proof = JSON.stringify(h.view.exportAttempt());
+  for (const [locale, title, lesson] of [
+    ['uk', 'Політ завершено', 'Новий маршрут починається з наступної спроби.'],
+    ['en', 'Flight ended', 'Your next route starts with another try.'],
+  ])
+    academyTerminalLanguage(h, locale, { title, lesson }, proof);
+  // The live owner remains expired while an unfinished recording owns the
+  // presentation. Its EOF must not borrow the live flight's terminal meaning.
+  const demonstration = FLIGHT_DEMONSTRATIONS.find(
+    (item) => item.course === 'flight-01' && item.mode === 'self-level',
+  );
+  await h.view.review({ ...demonstration, frames: demonstration.frames.slice(0, 4) });
+  h.tick(6);
+  assert.equal(h.doc.querySelector('[data-mode-play-shell]').dataset.phase, 'results');
+  assert.equal(h.lastDraw().status, 'active');
+  assert.equal(h.lastDraw().ticks, 4);
+  assert.equal(h.$('complete').hidden, true);
+  const playback = h.lastDraw();
+  for (const locale of ['uk', 'en']) {
+    academyTerminalLanguage(
+      h,
+      locale,
+      {
+        ...FLIGHT_COURSES[0].locales[locale],
+        outcomeHidden: true,
+      },
+      proof,
+    );
+    assert.deepEqual(
+      h.lastDraw(),
+      playback,
+      'Locale cannot complete or advance the four-frame recording.',
+    );
+    assert.equal(h.view.snapshot().status, 'expired', 'The actual live owner is still distinct.');
+  }
+  await academyTerminalResetLanguage(h, FLIGHT_COURSES[0]);
+});
+
+test('Academy unscored terminal retains draft-test meaning through native language changes after a real public-course objective', async (t) => {
+  const course = structuredClone(FLIGHT_COURSES[0]),
+    landing = { ...course.steps['self-level'].at(-1), ticks: 1 };
+  course.steps = { 'self-level': [landing], acro: [landing] };
+  const h = await academyTerminalLanguageFixture(t, { courses: [course], demonstrations: [] });
+  await openAcademyTuning(h);
+  await academyTuningClick(h, 'Test draft · unscored');
+  await h.view.settled();
+  assert.equal(h.doc.querySelector('.fpv-tuning').open, false);
+  assert.equal(h.doc.querySelector('.tuning-return').hidden, false);
+  assert.equal(h.view.arm(), true);
+  h.tick(3);
+  assert.equal(h.view.snapshot().status, 'complete');
+  assert.equal(h.view.snapshot().step, 1);
+  assert.equal(h.$('complete-title').textContent, 'Draft test finished');
+  assert.equal(
+    h.$('lesson').textContent,
+    'Unscored, without a recording. Return to tuning to compare.',
+  );
+  assert.equal(h.deliveries.length, 0);
+  h.$('export-attempt').click();
+  assert.equal(h.downloads(), 0, 'An unscored draft cannot export proof.');
+  for (const [locale, title, lesson] of [
+    [
+      'uk',
+      'Перевірку чернетки завершено',
+      'Без заліку й запису. Поверніться до рейтів для порівняння.',
+    ],
+    ['en', 'Draft test finished', 'Unscored, without a recording. Return to tuning to compare.'],
+  ])
+    academyTerminalLanguage(h, locale, { title, lesson }, null);
+  assert.equal(h.records.has('revealline.fpv.tuning.v1'), false);
+  await academyTerminalResetLanguage(h, course);
+});
+
+test('Academy ordinary verified success retains current course copy and one admission across native language changes', async (t) => {
+  const h = await academyTerminalLanguageFixture(t),
+    pad = {
+      id: 'Fixture USB',
+      index: 0,
+      connected: true,
+      mapping: '',
+      axes: [0, 0, 0, -1],
+      buttons: [],
+    };
+  h.setPads([pad]);
+  h.$('input-source').value = 'radio';
+  h.$('input-source').emit('change');
+  await h.view.settled();
+  h.view.radio.select(0);
+  h.view.radio.setProfile(radioProfile(pad));
+  h.view.radio.verify();
+  assert.equal(h.view.arm(), true);
+  h.tick();
+  const example = FLIGHT_DEMONSTRATIONS.find(
+    (item) => item.course === 'flight-01' && item.mode === 'self-level',
+  );
+  for (const values of example.frames) {
+    pad.axes = [values[0] / 1000, values[1] / 1000, values[2] / 1000, values[3] / 500 - 1];
+    h.tick();
+  }
+  await h.view.settled();
+  assert.equal(h.view.snapshot().status, 'complete');
+  assert.equal(h.deliveries.length, 1);
+  assert.equal(h.$('next').hidden, false);
+  assert.equal(h.$('review').hidden, false);
+  const proof = JSON.stringify(h.view.exportAttempt());
+  for (const locale of ['uk', 'en'])
+    academyTerminalLanguage(
+      h,
+      locale,
+      {
+        ...FLIGHT_COURSES[0].locales[locale],
+        nextHidden: false,
+        reviewHidden: false,
+      },
+      proof,
+    );
+  assert.equal(h.deliveries.length, 1);
+  await academyTerminalResetLanguage(h, FLIGHT_COURSES[0]);
+});
+
+test('Academy retains extra-large desired size without exposing an unqualified selectable setting', async (t) => {
+  let raw = JSON.stringify({ textFace: 'plain', textSize: 'extra-large', reducedEffects: false });
+  const writes = [];
+  const storage = {
+    getItem: (key) => (key === 'revealline.display.v1' ? raw : null),
+    setItem(key, value) {
+      writes.push(key);
+      if (key === 'revealline.display.v1') raw = value;
+    },
+  };
+  const f = await fixture(t, { home: true, storage });
+  const control = f.$('academy-global-textSize');
+  assert.equal(control.value, 'extra-large');
+  assert.equal(control.querySelector('[data-text-size-retained]').disabled, true);
+  assert.equal(f.doc.body.dataset.textSize, 'large');
+  assert.equal(writes.includes('revealline.display.v1'), false);
+  f.$('academy-global-reducedEffects').checked = true;
+  f.$('academy-global-reducedEffects').emit('change');
+  assert.equal(JSON.parse(raw).textSize, 'extra-large');
 });

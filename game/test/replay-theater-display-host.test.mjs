@@ -1,3 +1,4 @@
+import { GAMEPLAY_AUDIO_KEY } from '../gameplay-audio-preferences.mjs';
 import { MOVEMENT_AUDIO_KEY } from '../ui/movement-audio.mjs';
 import { RADIO_AUDIO_KEY } from '../ui/radio-audio.mjs';
 import { AUDIO_PREFERENCES_KEY } from '../audio-preferences.mjs';
@@ -109,7 +110,8 @@ function fixture(
   let sequence = 0,
     failWrites = false,
     releaseBoot,
-    markBootStarted;
+    markBootStarted,
+    gameplayAudioConstructionReads = null;
   const bootStarted = new Promise((resolve) => {
     markBootStarted = resolve;
   });
@@ -153,6 +155,14 @@ function fixture(
     cancelAnimationFrame: (id) => frames.delete(id),
     fetch: async (path) => {
       requests.push(String(path));
+      if (gameplayAudioConstructionReads === null) {
+        gameplayAudioConstructionReads = reads.filter((key) => key === GAMEPLAY_AUDIO_KEY).length;
+        assert.equal(
+          gameplayAudioConstructionReads,
+          1,
+          'Theater constructs one shared gameplay-audio preference owner before runtime reads.',
+        );
+      }
       if (edition) return failEdition ? new Response('', { status: 503 }) : edition.fetcher(path);
       if (String(path).includes('content/themes') || String(path).includes('motion-lab/presets')) {
         markBootStarted();
@@ -224,6 +234,9 @@ function fixture(
     storage,
     writes,
     reads,
+    get gameplayAudioConstructionReads() {
+      return gameplayAudioConstructionReads;
+    },
     requests,
     paints,
     frames,
@@ -343,6 +356,16 @@ function raw(page) {
   return JSON.parse(page.data.get(DISPLAY_PREFERENCES_KEY));
 }
 function noPlayerAccess(page) {
+  assert.equal(
+    page.gameplayAudioConstructionReads,
+    1,
+    'The gameplay-audio read belongs to the native presentation construction boundary.',
+  );
+  assert.equal(
+    page.writes.some(({ key }) => key === GAMEPLAY_AUDIO_KEY),
+    false,
+    'Loading presentation preferences cannot write the gameplay-audio setting.',
+  );
   assert.ok(
     page.reads.every((key) =>
       [
@@ -350,6 +373,7 @@ function noPlayerAccess(page) {
         ENCOUNTER_DISPLAY_PREFERENCES_KEY,
         ENEMY_ARTWORK_PREFERENCES_KEY,
         AUDIO_PREFERENCES_KEY,
+        GAMEPLAY_AUDIO_KEY,
         MENU_AUDIO_KEY,
         RADIO_AUDIO_KEY,
         MOVEMENT_AUDIO_KEY,
@@ -681,4 +705,16 @@ test('Theater adopts global remains without rewriting recordings or advancing a 
   assert.equal(JSON.stringify(p.original), original);
   assert.deepEqual(p.writes, []);
   noPlayerAccess(p);
+});
+
+test('Theater preserves desired extra-large while keeping recorded bytes and playback unchanged', async (t) => {
+  const p = fixture(t, { stored: encode({ textSize: 'extra-large' }) });
+  await p.loading;
+  const before = JSON.stringify(p.original);
+  assert.equal(p.$('replay-text-size').value, 'extra-large');
+  assert.equal(p.$('replay-text-size').querySelector('[data-text-size-retained]').disabled, true);
+  assert.equal(p.doc.body.dataset.textSize, 'large');
+  p.change('replay-text-face', 'plain');
+  assert.equal(JSON.parse(p.data.get(DISPLAY_PREFERENCES_KEY)).textSize, 'extra-large');
+  assert.equal(JSON.stringify(p.original), before);
 });

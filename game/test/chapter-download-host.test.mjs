@@ -2,6 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { authoritativeCheckpoint } from '../replay.mjs';
+import { nativeCaptureSession } from '../capture-presentation-session.mjs';
 import { normalizedLevel } from '../core/level.mjs';
 import { applyGameplayTuning, resolveGameplayTuning } from '../gameplay-tuning.mjs';
 import { soloPage, settle } from './helpers/solo-dom.mjs';
@@ -30,7 +31,7 @@ function chapterFetch(t, intercept) {
 }
 
 // These are retained chapter-selector host/service tests. The current player
-// catalogue is covered by mission-library-solo-host/controller-host tests.
+// catalogue is covered by mission-library-solo-*/controller-host tests.
 // Mount only the native Legacy dialog boundary; keep the real shell pause/Home,
 // selector callbacks, download, replacement, artwork and storage authorities.
 const chapterParents = new WeakMap();
@@ -154,12 +155,16 @@ test('retained chapter selector: download failure preserves the real cut; retry 
     // Checked replacement may refresh only savedAt. The subsequent download
     // must preserve its exact verified bytes and every other storage entry.
     const slot = 'revealline.suspended.dev.v1',
-      beforeSave = JSON.parse(pausedStorage.get(slot)),
+      beforeEnvelope = JSON.parse(pausedStorage.get(slot)),
+      beforeSave = nativeCaptureSession(beforeEnvelope),
       checkedRaw = page.storage.getItem(slot),
-      checkedSave = JSON.parse(checkedRaw);
+      checkedEnvelope = JSON.parse(checkedRaw),
+      checkedSave = nativeCaptureSession(checkedEnvelope);
     assert.equal(typeof checkedSave.savedAt, 'string');
     assert.ok(Date.parse(checkedSave.savedAt) >= Date.parse(beforeSave.savedAt));
-    assert.deepEqual({ ...checkedSave, savedAt: beforeSave.savedAt }, beforeSave);
+    const timestampNormalized = structuredClone(checkedEnvelope);
+    nativeCaptureSession(timestampNormalized).savedAt = beforeSave.savedAt;
+    assert.deepEqual(timestampNormalized, beforeEnvelope);
     requestStored = new Map(pausedStorage).set(slot, checkedRaw);
     assert.deepEqual(page.storage.map, requestStored);
     requestWrites = page.storage.writes.length;

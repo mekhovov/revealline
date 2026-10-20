@@ -3,10 +3,10 @@
   "sources": {
     "game/content/packs/fpv-arcade-r5.json": "350d89cf41767668b3734b474e5dd3d1d301bb0b5612e5082c5d233a1a081a74",
     "game/replays/fpv-arcade-r5-routes.json": "0fff81cd1db68106695b3fb92ddbba04025c379597e6d4fa6dc5a8bd0b7825de",
-    "game/content/themes.json": "93582f7d9ba53753106df7b63928f086820fc0f68357d3c08f26c0b89fb84774",
-    "authoring/library/four-worlds-source/catalog.json": "dcc82dfcf403ad86e83e1d985e8c9ecd530fbfad1c7bf9d556eaff9ba0530d29"
+    "game/content/themes.json": "77f3e7e8f0951172bd0c11649b0203808b3d1b00ca434c2a576ef631899958b2",
+    "authoring/library/four-worlds-source/catalog.json": "ecbeb480cdf7b42da4b945fef50c54ee5bfd29c84d46219d928b66b4d0bd922d"
   },
-  "recipeSha256": "8fd00b9607aa8b4dba2bd8151d560938ef705f061ce6d4068b2ce028d7c42920",
+  "recipeSha256": "9fa0e9f97d8837387f0f9e0ae138b00976bedd28de6823268af11e8bdd064079",
   "packs": [
     {
       "id": "original-fpv-pressure",

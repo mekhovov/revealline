@@ -1,0 +1,76 @@
+{
+  "format": "revealline-retained-catalog-forms-migration.v1",
+  "sourceRevision": "bd95b9a05298f11ffea48be86d9fab2af561e7e2",
+  "scope": "Derived historical catalog retains only forms for its declared themes. Original source is preserved by the prior ownership receipt; exact source pins and byte counts are renewed. Original historical approvals apply only to original bytes. Unused retired locale entries are preserved separately.",
+  "originalSHA256": "46ce076af222227c5895bec7c8516f4e6e8098cfc81a9432d9fb0d6546e6c447",
+  "previousPath": "authoring/production/history/afc72e8da334aa2244c0123778baf9194c1c15ca1cea32b9b39b7d1569287c63.mjs",
+  "path": "authoring/production/history/95d6f3c7ff15f32892d1ef826238a7a7de2992c70c4c26b97cc29fb909efcd3a.mjs",
+  "previousSHA256": "afc72e8da334aa2244c0123778baf9194c1c15ca1cea32b9b39b7d1569287c63",
+  "sha256": "95d6f3c7ff15f32892d1ef826238a7a7de2992c70c4c26b97cc29fb909efcd3a",
+  "previousBytes": 5957,
+  "bytes": 5837,
+  "retiredForms": 7,
+  "updatedReferences": [
+    {
+      "path": "authoring/library/ukraine-enemy-presentations/provenance/preparation.json",
+      "previousSHA256": "72db45e34330e23ecddffeb8166d99abc845da231f3ffc128434fd60dc817812",
+      "sha256": "3707e9caa6fcbe1543dda0ca8833e82a471b99f7a6006df086f69963d492f11d",
+      "pins": 1
+    },
+    {
+      "path": "authoring/production/history/index.json",
+      "previousSHA256": "f0826602345978df115db9ae433350474f540df02c392506f026a3b20c483589",
+      "sha256": "42a03f979fe5702895060b699481dacf80e9ec4878fd50144b8a1bc5e37dbfe4",
+      "pins": 1
+    },
+    {
+      "path": "authoring/production/register-countercurrent.json",
+      "previousSHA256": "0613e5ff26224ff81954634746c46b4a12de7ee0947a623aebeb1c2cd8146829",
+      "sha256": "0adbcae84693ec5eb9198fa82b11bccbcfb1283093ec1e562715d769b85bbb3d",
+      "pins": 21
+    },
+    {
+      "path": "authoring/production/register-fracture-themes.json",
+      "previousSHA256": "15e6992c8434c117a5d34f23bc3b721dfe6e379dcaca9c55cb8c75a534fa8633",
+      "sha256": "f9b87967fa1aea8926f1edfbf877260c2918ac5f722d697a93d16a5b2ef32848",
+      "pins": 21
+    },
+    {
+      "path": "authoring/production/register-sentinel-themes.json",
+      "previousSHA256": "d23b70d38db0914949dcce8d1c2b3d6494e0ec68da0ad2e69141534473b07381",
+      "sha256": "7c62bb456649a6ecd27287ad945ea78ef719dd134f269460ffa824c79857ce61",
+      "pins": 21
+    },
+    {
+      "path": "authoring/production/register.json",
+      "previousSHA256": "094131d7632015bde65cab1841e6194d5a1c1f310484cbb19b04db39ebe528e4",
+      "sha256": "79587678a7cef2c8c358669aa27b8e2fb54f8b5ab81bbd3dde9125d9b87bc6d6",
+      "pins": 21
+    },
+    {
+      "path": "docs/migrations/retained-authoring-history.json",
+      "previousSHA256": "764dbe48c239a06bd96b91cf21d6c78088bc664be53d9cf3995f8c8e68cd907b",
+      "sha256": "38e2d91047fd6e0530ce5fb9de4bf87e9522b22fdf60071fa95ba46174a73cdb",
+      "pins": 1
+    },
+    {
+      "path": "scripts/test-production-metadata-history.mjs",
+      "previousSHA256": "321ad4bd49f6909fe733a1add41cf8f8d19fe018a11002cb21a78e343591634e",
+      "sha256": "a0d67c65d60ef3bea22f3aaeb656a57854315b9a669e67c9785f528ee4a9c18f"
+    }
+  ],
+  "locales": [
+    {
+      "path": "game/locales/en/content.json",
+      "previousSHA256": "b5d47109e6dc996c87a37785960fee2e9904b5ba7e15ec899ba7170927282af1",
+      "sha256": "4123075116771b80ab4abc1e99a44b774d6186693c8b326550e3fe1c401e860f",
+      "retiredEntries": 8
+    },
+    {
+      "path": "game/locales/uk/content.json",
+      "previousSHA256": "1ccf0cc346436ba50e56e7288eef112f7261d5f853c9a0ee33eff43d2c0c622d",
+      "sha256": "5e99ebba145477dfc7c97cd2b05023895c473dea651c4d106c4b259fd2c919a5",
+      "retiredEntries": 8
+    }
+  ]
+}
