@@ -241,3 +241,219 @@ test('Retry during sign-out cannot restore a stale signed-in session', async (t)
   assert.equal(h.$('account-signed-out').hidden, false);
   assert.equal(h.$('publish').disabled, true);
 });
+
+const catalogEdition = (id) => ({
+  editionId: id,
+  title: `Edition ${id}`,
+  description: 'Query ownership fixture',
+  version: 1,
+  packageSize: 1024,
+  publishedAt: '2026-10-18T12:00:00Z',
+});
+const shownTitles = (h) =>
+  h
+    .$('catalog')
+    .querySelectorAll('h2')
+    .map((node) => node.textContent);
+
+test('new search owns rows and cursor; old Load more cannot replace the pending first page', async (t) => {
+  const requests = [];
+  const h = host(t, {
+    catalog: (args) => {
+      const pending = deferred();
+      requests.push({ ...pending, args });
+      return pending.promise;
+    },
+  });
+  await settle();
+  requests[0].resolve({ editions: [catalogEdition('old')], nextCursor: 'old-next' });
+  await settle();
+  assert.deepEqual(shownTitles(h), ['Edition old']);
+  h.$('search').value = 'new';
+  h.$('search').focus();
+  const searching = h.$('search').oninput();
+  await settle();
+  assert.equal(h.$('more').hidden, true);
+  assert.equal(h.$('more').disabled, true);
+  assert.equal(h.$('catalog').getAttribute('aria-busy'), 'true');
+  assert.deepEqual(shownTitles(h), []);
+  await h.$('more').onclick();
+  assert.equal(requests.length, 2, 'even a queued activation cannot supersede the new first page');
+  requests[1].resolve({ editions: [catalogEdition('new')], nextCursor: 'new-next' });
+  await searching;
+  assert.deepEqual(shownTitles(h), ['Edition new']);
+  assert.equal(h.$('catalog').getAttribute('aria-busy'), 'false');
+  h.$('more').focus();
+  const more = h.$('more').onclick();
+  await settle();
+  assert.equal(requests[2].args.query, 'new');
+  assert.equal(requests[2].args.cursor, 'new-next');
+  await h.$('more').onclick();
+  assert.equal(requests.length, 3, 'pagination is not duplicated while pending');
+  requests[2].resolve({
+    editions: [catalogEdition('new'), catalogEdition('next')],
+    nextCursor: null,
+  });
+  await more;
+  assert.deepEqual(shownTitles(h), ['Edition new', 'Edition next']);
+  assert.equal(h.$('catalog').ownerDocument.activeElement.textContent, 'Edition next');
+  assert.equal(h.$('more').hidden, true);
+});
+
+test('a filter change cancels old pagination and owns later errors and the next cursor', async (t) => {
+  const requests = [];
+  const h = host(t, {
+    catalog: (args) => {
+      const pending = deferred();
+      requests.push({ ...pending, args });
+      return pending.promise;
+    },
+  });
+  await settle();
+  requests[0].resolve({ editions: [catalogEdition('all')], nextCursor: 'all-next' });
+  await settle();
+  const more = h.$('more').onclick();
+  await settle();
+  h.$('filter').value = 'installed';
+  const filtered = h.$('filter').onchange();
+  await settle();
+  assert.equal(requests[1].args.signal.aborted, true);
+  assert.equal(requests[2].args.installed, 'installed');
+  assert.equal(requests[2].args.cursor, null);
+  requests[2].resolve({ editions: [catalogEdition('installed')], nextCursor: 'installed-next' });
+  await filtered;
+  requests[1].reject(new Error('obsolete pagination failure'));
+  await more;
+  assert.equal(h.$('service-status').dataset.state, 'ready');
+  assert.deepEqual(shownTitles(h), ['Edition installed']);
+  const next = h.$('more').onclick();
+  await settle();
+  assert.equal(requests[3].args.cursor, 'installed-next');
+  requests[3].resolve({ editions: [], nextCursor: null });
+  await next;
+  assert.deepEqual(shownTitles(h), ['Edition installed']);
+});
+
+test('a failed replacement query cannot present prior rows as its results, and Retry uses the current query', async (t) => {
+  let fail = false;
+  const args = [];
+  const h = host(t, {
+    catalog: async (request) => {
+      args.push(request);
+      if (fail) throw new Error('current query unavailable');
+      return { editions: [catalogEdition(request.query || 'first')], nextCursor: 'next' };
+    },
+  });
+  await settle();
+  fail = true;
+  h.$('search').value = 'replacement';
+  h.$('search').focus();
+  await h.$('search').oninput();
+  assert.deepEqual(shownTitles(h), []);
+  assert.equal(h.$('more').hidden, true);
+  assert.equal(h.$('more').disabled, true);
+  assert.equal(h.$('catalog').getAttribute('aria-busy'), 'false');
+  assert.equal(h.$('service-status').dataset.state, 'ready');
+  assert.equal(h.$('service-catalog-fields').disabled, false, 'a failed query remains editable');
+  assert.equal(h.$('search').ownerDocument.activeElement, h.$('search'));
+  fail = false;
+  await h.$('service-retry').onclick();
+  await settle();
+  assert.equal(args.at(-1).query, 'replacement');
+  assert.equal(args.at(-1).cursor, null);
+  assert.deepEqual(shownTitles(h), ['Edition replacement']);
+});
+
+test('out-of-order successes and an offline interruption cannot replace the latest results or restore its pager', async (t) => {
+  const requests = [];
+  const h = host(t, {
+    catalog: (args) => {
+      const pending = deferred();
+      requests.push({ ...pending, args });
+      return pending.promise;
+    },
+  });
+  await settle();
+  h.$('search').value = 'second';
+  const second = h.$('search').oninput();
+  await settle();
+  h.$('search').value = 'latest';
+  const latest = h.$('search').oninput();
+  await settle();
+  requests[2].resolve({
+    editions: [catalogEdition('latest'), catalogEdition('latest')],
+    nextCursor: 'latest-next',
+  });
+  await latest;
+  requests[1].resolve({ editions: [catalogEdition('obsolete')], nextCursor: 'obsolete-next' });
+  requests[0].resolve({ editions: [catalogEdition('oldest')], nextCursor: 'oldest-next' });
+  await second;
+  await settle();
+  assert.deepEqual(shownTitles(h), ['Edition latest']);
+  const more = h.$('more').onclick();
+  await settle();
+  assert.equal(requests[3].args.cursor, 'latest-next');
+  h.window.dispatchEvent(new Event('offline'));
+  assert.equal(requests[3].args.signal.aborted, true);
+  requests[3].resolve({ editions: [catalogEdition('late-page')], nextCursor: 'late-next' });
+  await more;
+  assert.deepEqual(shownTitles(h), ['Edition latest']);
+  assert.equal(h.$('more').hidden, true);
+  assert.equal(h.$('more').disabled, true);
+  assert.equal(h.$('catalog').getAttribute('aria-busy'), 'false');
+  assert.equal(h.$('service-status').dataset.state, 'unavailable');
+});
+
+test('pagination preserves existing cards and a newer keyboard focus choice', async (t) => {
+  const pending = deferred();
+  const h = host(t, {
+    catalog: async ({ cursor }) =>
+      cursor
+        ? pending.promise
+        : {
+            editions: [catalogEdition('first')],
+            nextCursor: 'second-page',
+          },
+  });
+  await settle();
+  const existingAction = h.$('catalog').querySelector('button');
+  h.$('more').focus();
+  const more = h.$('more').onclick();
+  await settle();
+  existingAction.focus();
+  pending.resolve({ editions: [catalogEdition('second')], nextCursor: null });
+  await more;
+  assert.equal(
+    h.$('catalog').querySelector('button'),
+    existingAction,
+    'existing cards and loaded previews are retained',
+  );
+  assert.equal(
+    existingAction.ownerDocument.activeElement,
+    existingAction,
+    'newer focus is never reassigned to the new heading',
+  );
+  assert.deepEqual(shownTitles(h), ['Edition first', 'Edition second']);
+});
+
+test('empty filtered pages retain pagination without stale or duplicated empty messages', async (t) => {
+  let page = 0;
+  const h = host(t, {
+    catalog: async () => {
+      page++;
+      return {
+        editions: page < 3 ? [] : [catalogEdition('match')],
+        nextCursor: page < 3 ? `cursor-${page}` : null,
+      };
+    },
+  });
+  await settle();
+  assert.deepEqual(shownTitles(h), []);
+  assert.equal(h.$('catalog').children.length, 0, 'more pages may still contain matches');
+  assert.equal(h.$('more').hidden, false);
+  await h.$('more').onclick();
+  assert.equal(h.$('catalog').children.length, 0);
+  await h.$('more').onclick();
+  assert.deepEqual(shownTitles(h), ['Edition match']);
+  assert.equal(h.$('catalog').children.length, 1, 'only the matching card is shown');
+});

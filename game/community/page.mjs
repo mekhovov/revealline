@@ -61,6 +61,25 @@ const canPublish = () =>
   Boolean(accountSession && auth?.headers);
 let catalogRequest = null;
 let catalogGeneration = 0;
+let catalogBusy = false;
+let catalogSelection = null;
+const selectedCatalog = () => ({ query: $('search').value, installed: $('filter').value });
+const sameCatalog = (left, right) =>
+  left?.query === right.query && left?.installed === right.installed;
+const renderPagination = () => {
+  $('more').hidden = !nextCursor;
+  $('more').disabled = catalogBusy || !nextCursor || !readiness.available();
+  $('catalog').setAttribute('aria-busy', String(catalogBusy));
+};
+const cancelCatalog = () => {
+  catalogGeneration += 1;
+  catalogRequest?.abort();
+  catalogRequest = null;
+  catalogBusy = false;
+  catalogSelection = null;
+  nextCursor = null;
+  renderPagination();
+};
 let sessionGeneration = 0;
 let accountMutations = 0;
 const renderAccount = () => {
@@ -128,15 +147,17 @@ const action = (label, run, className = '') => {
   };
   return button;
 };
-function render() {
-  for (const url of previewURLs) URL.revokeObjectURL(url);
-  previewURLs.clear();
-  $('catalog').replaceChildren();
-  if (!rows.length)
+function render({ append = false, start = 0 } = {}) {
+  if (!append) {
+    for (const url of previewURLs) URL.revokeObjectURL(url);
+    previewURLs.clear();
+    $('catalog').replaceChildren();
+  }
+  if (!rows.length && !catalogBusy && !nextCursor)
     $('catalog').append(
       text('p', localizedMessage('interface:community.noCampaignsMatch'), 'muted'),
     );
-  for (const edition of rows) {
+  for (const edition of rows.slice(start)) {
     const card = document.createElement('article');
     card.className = 'edition';
     card.append(text('h2', edition.title));
@@ -343,47 +364,79 @@ function render() {
 }
 async function refresh({ reset = true } = {}) {
   if (!readiness.available()) return;
+  const selection = selectedCatalog();
+  // A queued Load more belongs only to the committed result set. It must not
+  // replace a first-page request or consume a cursor from another filter.
+  if (!reset && (catalogBusy || !nextCursor || !sameCatalog(catalogSelection, selection))) return;
   catalogRequest?.abort();
   catalogRequest = new AbortController();
-  const current = ++catalogGeneration;
+  const current = ++catalogGeneration,
+    cursor = reset ? null : nextCursor,
+    previousCount = reset ? 0 : rows.length,
+    returnFocus = !reset && document.activeElement === $('more');
+  let focusDestination;
+  catalogBusy = true;
+  if (reset) {
+    nextCursor = null;
+    catalogSelection = null;
+    rows = [];
+    render();
+  }
+  renderPagination();
+  status(localizedMessage('interface:community.loadingCatalog'));
   try {
-    if (reset) nextCursor = null;
     const result = await communityRequest(
       (signal) =>
         library.catalog({
-          query: $('search').value,
-          installed: $('filter').value,
-          cursor: reset ? null : nextCursor,
+          ...selection,
+          cursor,
           signal,
         }),
       { signal: catalogRequest.signal },
     );
     if (current !== catalogGeneration || !readiness.available()) return;
-    rows = reset
-      ? [...result.editions]
-      : [
-          ...rows,
-          ...result.editions.filter(
-            (candidate) => !rows.some((row) => row.editionId === candidate.editionId),
-          ),
-        ];
+    const seen = new Set(reset ? [] : rows.map((row) => row.editionId));
+    rows = [
+      ...(reset ? [] : rows),
+      ...result.editions.filter((candidate) => {
+        if (seen.has(candidate.editionId)) return false;
+        seen.add(candidate.editionId);
+        return true;
+      }),
+    ];
+    catalogSelection = selection;
     nextCursor = result.nextCursor;
-    $('more').hidden = !nextCursor;
-    render();
+    catalogBusy = false;
+    render({ append: !reset && previousCount > 0, start: previousCount });
     status(
       localizedMessage('interface:community.editionsShown', {
         count: rows.length,
       }),
     );
+    focusDestination =
+      $('catalog').querySelectorAll('h2')[previousCount] ?? (nextCursor ? $('more') : $('status'));
   } catch (error) {
     if (current !== catalogGeneration) return;
-    readiness.unavailable();
+    // A failed query does not invalidate the separate service probe. Keep the
+    // controls available so players can correct the query or retry this page.
     status(
       localizedMessage('interface:community.catalogUnavailable', {
         error: error.message,
       }),
       true,
     );
+    focusDestination = nextCursor ? $('more') : $('service-retry');
+  } finally {
+    if (current === catalogGeneration) {
+      catalogBusy = false;
+      catalogRequest = null;
+      renderPagination();
+      if (returnFocus && [$('more'), document.body, null].includes(document.activeElement)) {
+        if (focusDestination && !['BUTTON', 'INPUT', 'SELECT'].includes(focusDestination.tagName))
+          focusDestination.setAttribute('tabindex', '-1');
+        focusDestination?.focus({ preventScroll: false });
+      }
+    }
   }
 }
 $('refresh').onclick = () => readiness.check();
@@ -610,9 +663,8 @@ $('account-sign-out').onclick = async () => {
 };
 const cancelReadinessWork = () => {
   readiness.cancel();
-  catalogGeneration += 1;
+  cancelCatalog();
   sessionGeneration += 1;
-  catalogRequest?.abort();
 };
 window.addEventListener('pagehide', (event) => {
   cancelReadinessWork();
@@ -653,9 +705,8 @@ async function restoreAccount() {
 const readiness = attachCommunityReadiness({
   document,
   probe: (signal) => {
-    catalogGeneration += 1;
+    cancelCatalog();
     sessionGeneration += 1;
-    catalogRequest?.abort();
     return probeCommunityService({ baseURL: apiBase, signal });
   },
   onReady: () => {
