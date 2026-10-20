@@ -295,24 +295,44 @@ export function buildFpvAircraftVisual({
   knife.name = 'fpv-nose-knife';
   knife.userData.cosmeticOnly = true;
   knife.visible = false;
-  knife.position.set(shellWidth * 0.74, 0.014, -0.065);
-  knife.rotation.y = -0.12;
+  // A substantial forward blade on the centreline, clamped to the canopy.
+  // Presentation only: its tip stays in the lower foreground crop.
+  knife.position.set(0, 0.022, 0.025);
   nose.add(knife);
-  knifeParts.add(box(0.014, 0.01, 0.042), carbon, [0, 0, 0.012]);
-  knifeParts.add(box(0.028, 0.006, 0.008), edge, [0, 0, -0.012]);
+  // Two mounting saddles, a dark grip and a broad guard connect it visibly
+  // to the nose instead of leaving a miniature blade beside the equipment.
+  for (const z of [0.022, 0.075]) knifeParts.add(box(0.057, 0.013, 0.016), edge, [0, -0.014, z]);
+  knifeParts.add(box(0.026, 0.018, 0.078), carbon, [0, 0, 0.048]);
+  knifeParts.add(box(0.069, 0.012, 0.016), edge, [0, 0, 0]);
   knifeParts.add(
     plate(
       [
-        [-0.009, -0.016],
-        [0.009, -0.016],
-        [0.007, -0.068],
-        [0, -0.095],
-        [-0.006, -0.06],
+        [-0.022, -0.008],
+        [0.022, -0.008],
+        [0.019, -0.15],
+        [0, -0.235],
+        [-0.019, -0.15],
       ],
-      0.002,
+      0.004,
     ),
     alloy,
   );
+  // Raised central facets catch light along the blade's spine at FPV angles.
+  const bladeRidge = shape(new THREE.BufferGeometry());
+  bladeRidge.setAttribute(
+    'position',
+    new THREE.Float32BufferAttribute(
+      [
+        -0.022, 0.002, -0.008, 0, 0.009, -0.008, -0.019, 0.002, -0.15, -0.019, 0.002, -0.15, 0,
+        0.009, -0.008, 0, 0.006, -0.15, -0.019, 0.002, -0.15, 0, 0.006, -0.15, 0, 0.002, -0.235,
+        0.022, 0.002, -0.008, 0.019, 0.002, -0.15, 0, 0.009, -0.008, 0.019, 0.002, -0.15, 0, 0.006,
+        -0.15, 0, 0.009, -0.008, 0.019, 0.002, -0.15, 0, 0.002, -0.235, 0, 0.006, -0.15,
+      ],
+      3,
+    ),
+  );
+  bladeRidge.computeVertexNormals();
+  knifeParts.add(bladeRidge, alloy);
   knifeParts.finish();
   const combatCowl = new THREE.Group(),
     plating = batch(combatCowl, 'fpv-equipment-cowl');

@@ -255,6 +255,7 @@ export function validateEncounterDefinition(source) {
             'enemyDamage',
             'servicePad',
             'crowdModel',
+            'contactModel',
           ]
         : []),
       'format',
@@ -291,6 +292,10 @@ export function validateEncounterDefinition(source) {
     required(
       v.crowdModel === undefined || v.crowdModel === 'squad-lanes-v1',
       'Unsupported crowd model',
+    );
+    required(
+      v.contactModel === undefined || v.contactModel === 'arcade-ram-v1',
+      'Unsupported encounter contact model',
     );
     const config = normalizeEncounterConfig(v);
     for (const key of Object.keys(config))
@@ -795,6 +800,7 @@ export function createEncounterDefinition({
         ? {
             ...config,
             crowdModel: 'squad-lanes-v1',
+            contactModel: 'arcade-ram-v1',
             servicePad: (admitServicePad ?? owned?.admitServicePad)?.(course.spawn) ?? null,
           }
         : {}),
@@ -2184,6 +2190,7 @@ export function prepareEncounterDefinition({
                   format: ENCOUNTER_FORMAT_V2,
                   revision: 'r2',
                   crowdModel: 'squad-lanes-v1',
+                  contactModel: 'arcade-ram-v1',
                   servicePad: retained.servicePad ?? admitServicePad?.(course.spawn) ?? null,
                   actors: retained.actors.map(resolveMilitaryEncounterActor),
                 }
@@ -2284,6 +2291,7 @@ function createEncounterRuntimeV2(source, { geometry, runId = null } = {}) {
   );
   const isSurvival = definition.activity === 'survival',
     squadLanes = definition.crowdModel === 'squad-lanes-v1',
+    arcadeRam = definition.contactModel === 'arcade-ram-v1' && definition.ammoPreset === 'arcade',
     bossIndex = prototypes.length - 1;
   const payloadCapacity =
     definition.ammoPreset === 'tactical' ? 1 : { bomb: 3, remote: 2, drone: 1 }[definition.payload];
@@ -2931,6 +2939,10 @@ function createEncounterRuntimeV2(source, { geometry, runId = null } = {}) {
     draft.newImpacts.push(event);
   }
   function playerDamage(draft, amount, detail = {}) {
+    // Arcade treats the aircraft as a ram weapon. Preserve incoming fire and
+    // deliberate payload detonation; only enemy collision damage is exempt.
+    // Definitions without this policy retain their recorded contact rules.
+    if (arcadeRam && ['impact', 'contact'].includes(detail.cause)) return;
     if (
       definition.playerDamage === 'invulnerable' ||
       draft.phase === 'aftermath' ||

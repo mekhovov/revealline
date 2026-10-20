@@ -25,9 +25,9 @@ const sourceHashes={
 'optional-practice/civilian-fpv/world-enemy-guide.mjs':
 '6320d09d4488e8c2b51a3f4ab7324d1e40d620d8917dbd59fa6f5969d7765bf7',
 'optional-practice/civilian-fpv/world-encounter-editor.mjs':
-'e09bbd370f1c321b8aa0fd2240c7cc252f2542004375fb305f59f6306b482d88',
+'6dc1d351d46b9dc5f1b84890fe92ee6f5cc04a846bb39950417890490f115eb7',
 'optional-practice/civilian-fpv/encounter-runtime.mjs':
-'f00cc97b2117b9dd0453b78b903baac7a883006126e25e79324d72ac0378cc80',
+'16ea9a79127bf0274219cb0d24da4fdd19ceb533040a7f55bcb2302e3e80ba8b',
 'optional-practice/civilian-fpv/encounter-geometry.mjs':
 '9d1254b8f7db0b2dc6499f0dbef59568674a56f5cc014ed982fc9eb1f0d09fde',
 'optional-practice/civilian-fpv/world-progress.mjs':
@@ -86,7 +86,7 @@ const sourceHashes={
 'optional-practice/civilian-fpv/encounter-session.mjs':
 '81405ee2439c0359b32b1df1dd4409bd469dae7b8731bb45ab888f606de25600',
 'optional-practice/civilian-fpv/encounter-controls.mjs':
-'9abac43ca3f476638e4d9ab4e63ddb55ac218e4680e687f4d2411cd628f4fab9',
+'4590c51253dc9b869a0769d04cffad9ba5367ac2182d2c3a3eed6b16d964a7c0',
 'optional-practice/civilian-fpv/combat-presentation.mjs':
 '44abdb7ed340d7d058c23711cca9a27d1916039c5b5f4182768c78e35ac567ea',
 'optional-practice/civilian-fpv/combat-actors.mjs':
@@ -3551,6 +3551,7 @@ v,
 'enemyDamage',
 'servicePad',
 'crowdModel',
+'contactModel',
 ]
 :[]),
 'format',
@@ -3589,6 +3590,10 @@ if(v2){
 required(
 v.crowdModel===undefined||v.crowdModel==='squad-lanes-v1',
 'Unsupported crowd model',
+);
+required(
+v.contactModel===undefined||v.contactModel==='arcade-ram-v1',
+'Unsupported encounter contact model',
 );
 const config=normalizeEncounterConfig(v);
 for(const key of Object.keys(config))
@@ -4100,6 +4105,7 @@ return validateEncounterDefinition({
 ?{
 ...config,
 crowdModel:'squad-lanes-v1',
+contactModel:'arcade-ram-v1',
 servicePad:(admitServicePad??owned?.admitServicePad)?.(course.spawn)??null,
 }
 :{}),
@@ -5511,6 +5517,7 @@ recovery
 format:ENCOUNTER_FORMAT_V2,
 revision:'r2',
 crowdModel:'squad-lanes-v1',
+contactModel:'arcade-ram-v1',
 servicePad:retained.servicePad??admitServicePad?.(course.spawn)??null,
 actors:retained.actors.map(resolveMilitaryEncounterActor),
 }
@@ -5611,6 +5618,7 @@ typeof runId==='string'&&runId.length>0&&runId.length<=256,
 );
 const isSurvival=definition.activity==='survival',
 squadLanes=definition.crowdModel==='squad-lanes-v1',
+arcadeRam=definition.contactModel==='arcade-ram-v1'&&definition.ammoPreset==='arcade',
 bossIndex=prototypes.length-1;
 const payloadCapacity=
 definition.ammoPreset==='tactical'
@@ -6265,6 +6273,10 @@ normal,
 draft.newImpacts.push(event);
 }
 function playerDamage(draft,amount,detail={}){
+// Arcade treats the aircraft as a ram weapon. Preserve incoming fire and
+// deliberate payload detonation; only enemy collision damage is exempt.
+// Definitions without this policy retain their recorded contact rules.
+if(arcadeRam&&['impact','contact'].includes(detail.cause))return;
 if(
 definition.playerDamage==='invulnerable'||
 draft.phase==='aftermath'||
@@ -8043,6 +8055,7 @@ for(const field of[
 'seed',
 'survivalMode',
 'crowdModel',
+'contactModel',
 'loadout',
 'payload',
 'ammoPreset',
@@ -8061,6 +8074,7 @@ Object.assign(definition,normalizeEncounterConfig(definition),{
 format:ENCOUNTER_FORMAT_V2,
 revision:'r2',
 crowdModel:'squad-lanes-v1',
+contactModel:'arcade-ram-v1',
 });
 definition.actors=definition.actors.map(resolveMilitaryEncounterActor);
 }
@@ -8501,6 +8515,7 @@ servicePad,
 format:ENCOUNTER_FORMAT_V2,
 revision:'r2',
 crowdModel:'squad-lanes-v1',
+contactModel:'arcade-ram-v1',
 ...normalizeEncounterConfig({
 activity:activity.value,
 difficulty:difficulty.value,
@@ -17905,6 +17920,11 @@ selection.activity==='original'
 :txt(
 'Two weapons and one payload. C: switch · L: reload · G: deploy · H: detonate. Changing these choices restarts the attempt.',
 'Дві зброї та один заряд. C: змінити · L: перезарядити · G: застосувати · H: підірвати. Зміна параметрів починає нову спробу.',
+);
+if(selection.activity!=='original'&&selection.ammoPreset==='arcade')
+help.textContent+=txt(
+' Arcade: ramming enemies does not damage your hull. Enemy fire still does.',
+' Аркада: зіткнення з ворогами не пошкоджують ваш корпус. Ворожий вогонь залишається небезпечним.',
 );
 status.textContent=
 unavailable||

@@ -275,6 +275,11 @@ export function mountEncounterControls({
             'Two weapons and one payload. C: switch · L: reload · G: deploy · H: detonate. Changing these choices restarts the attempt.',
             'Дві зброї та один заряд. C: змінити · L: перезарядити · G: застосувати · H: підірвати. Зміна параметрів починає нову спробу.',
           );
+    if (selection.activity !== 'original' && selection.ammoPreset === 'arcade')
+      help.textContent += txt(
+        ' Arcade: ramming enemies does not damage your hull. Enemy fire still does.',
+        ' Аркада: зіткнення з ворогами не пошкоджують ваш корпус. Ворожий вогонь залишається небезпечним.',
+      );
     status.textContent =
       unavailable ||
       (encounter
