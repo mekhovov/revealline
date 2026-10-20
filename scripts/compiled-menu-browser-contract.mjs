@@ -1101,3 +1101,80 @@ export async function prepareCompiledResumeEntryProbe(session, origin, options =
     return owner;
   }
 }
+
+export function readCompiledMenuPublicState(
+  { startProbe = null, includeCards = true } = {},
+  scope = globalThis,
+) {
+  const { document, location } = scope;
+  const getComputedStyle = (element) => scope.getComputedStyle(element);
+  const visible = (x) =>
+    Boolean(
+      x &&
+        !x.hidden &&
+        !x.closest('[hidden]') &&
+        x.getClientRects().length &&
+        getComputedStyle(x).display !== 'none' &&
+        getComputedStyle(x).visibility !== 'hidden',
+    );
+  const text = (x) => {
+    const s = (x?.textContent ?? '').trim();
+    return s.length <= 512 ? s : '[public text over limit]';
+  };
+  const control = (id) => {
+    const x = document.getElementById(id);
+    return {
+      visible: visible(x),
+      enabled: Boolean(x && !x.disabled),
+      open: Boolean(x?.open),
+      text: text(x),
+    };
+  };
+  // The first-open wait checks only chooser controls, not mission membership.
+  // All identity/count/activation phases retain the original complete scan.
+  const nodes =
+    includeCards === false ? [] : [...document.querySelectorAll('#journey-cards .journey-card')];
+  if (nodes.length > 1024) throw new Error('Public card evidence limit');
+  return {
+    href: location.href,
+    hidden: document.hidden,
+    focused: document.hasFocus(),
+    lang: document.documentElement.lang,
+    focusedId: document.activeElement?.id ?? '',
+    boot: document.documentElement.dataset.bootState,
+    access: document.documentElement.dataset.accessState,
+    flight: document.body.dataset.flightState,
+    time: text(document.getElementById('time')),
+    lives: text(document.getElementById('lives')),
+    coverage: text(document.getElementById('coverage')),
+    controls: Object.fromEntries(
+      [
+        'shell-home',
+        'shell-play',
+        'shell-options',
+        'journey-chooser',
+        'journey-back',
+        'start-button',
+        'pause-button',
+        'shell-menu',
+        'settings-dialog',
+        'mission-replace-dialog',
+        'mode-leave-dialog',
+        'flight-preparation-status',
+        'run-message',
+      ].map((id) => [id, control(id)]),
+    ),
+    startActivation: (() => {
+      try {
+        return startProbe?.snapshot() ?? null;
+      } catch {
+        return null;
+      }
+    })(),
+    cards: nodes.map((x) => ({
+      id: x.dataset.missionId,
+      visible: visible(x),
+      enabled: !x.disabled,
+    })),
+  };
+}
