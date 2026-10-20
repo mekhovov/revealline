@@ -27,7 +27,7 @@ CONTROLS = (WORKFLOW, "scripts/world-fixture-memory-scalars.py",
             "scripts/world-fixture-memory-scalars-pins.json",
             "scripts/test_world_fixture_memory_scalars.py",
             "docs/verification/world-fixture-memory-scalars.md", "scripts/parse-scalar-observations.py")
-PINS_SHA = "af72badb069e97dac169070dcceae9171d63aa770764fb35aaf828ff168b7730"
+PINS_SHA = "e9ad7ff031b16fce16ef878cb9ecf39908b1350627a19f2aab80417ebd684aa6"
 DEADLINE = None
 PHASES = ("node-version", "initial-source", "pure-controls", "before-source", "world-file", "after-source")
 MEMBERS = {"observation.json", "helper-source.json", "scalar-observations.json"}
