@@ -16,9 +16,9 @@
   },
   "nextPriority": [
     "P1 · Mission browser #1773 / diagnostic #1789: all23 diagnostic source cases pass. Trusted Start click reaches the unchanged handler slot with focus, but remains briefing for60s. Read bounded internal entry guards, fix only the evidenced cause, then complete EN/UK play, clock and Pause/Resume. Three feature source-opening checks still fail.",
-    "P1 · Readability #1774:24 complete files/246 cases pass; World115 remains incomplete after heap exhaustion and four files are unrun. Diagnostic #1788 corrected API-root source19/AST3/format3 pass; normal draftfb5a refresh preserves5056 unrelated entries and currentCommunity. Collect hosted full115/scalar outcome, then finish cohort/browser/package.",
+    "P1 · Readability #1774 / World #1788:24 complete files/246 cases retain passes; original4 files remain unrun. Correctedfb5a setup/source19 passes, but World115 stillV8OOM. All380 scalar rows cover95 completed fixtures with0 recorded workers/messages at prune whileheap grows147.9MB→1.598GB. Review test cleanup ownership and prove repair through unchangedfull115; no productioncause established.",
     "P1 · Community readiness #1638: merged sourcebcce passes95 selected cases and current statics. Current exact-page modeled HTTP replay passes Retry, local links, EN/UK, retained draft and keyboard focus. Finish current package/real-service and installed/offline acceptance; no device result inferred.",
-    "P1 · Touch language #1669: five-file coverage prerequisite #1787 has merged externally, preserving all23 categories. Refresh the feature with current locale/catalog owners, then run all five complete files and actual Duel/Team language, focus, saved-settings and paused-play checks.",
+    "P1 · Touch language #1669: current18-namespace catalog generation/check passes with only2 steering labels, preserving Community/ExtraLarge/current removals. Finish locale-format/catalog-syntax, publish normal5source refresh, then all5 wholefiles and actual Duel/Team language/focus/paused-play acceptance.",
     "P1 · Offline and backup #1624 / #1627: preserve currentmain067 plusCommunity translations. Offline owner review finds7 immutable source paths and34 additive keys perlanguage. Existing selection already includes both new readiness files; no new map PR. Qualify honest offline readiness, recovery and packaged cold start. Physical iPhone installed-PWA remains Not tested.",
     "P1 · Text preference compatibility #1668: source merged with 2,309 source and 1,908 preview checks passing on its recorded revision. Finish current browser, inner-package and offline acceptance.",
     "P1 · Team Home #1747: source merged and nine reviewed files match the admitted source. Finish earned-result, complete-host, browser and package acceptance. Full lesson recommendations still depend on Learn.",
@@ -746,6 +746,23 @@
             "existingCategoriesPreserved": 22,
             "categoriesAfter": 23,
             "scope": "Formatting and selection checks only; eight positive, twelve unchanged and three invalid-schema scenarios pass. Five complete game files unrun. Stacked publication packet in preparation."
+          },
+          "qualification": {
+            "automated": "current_catalog_author_check2_pass_local_statics_and_normal5wholefile_cohort_pending"
+          },
+          "currentReconciliation": {
+            "status": "private_current5_catalog2_pass_statics_publication_pending",
+            "main": "f3da9d32334401af08eb0800e6d1123c1696d401",
+            "sourcePaths": 5,
+            "localeAdditions": 2,
+            "catalogBeforeOID": "31338a9cb46632c620c9638fc9725478dfde0f10",
+            "catalogAfterOID": "cfe7c4df44bfb4e168aeee0289cd26fcc59c1579",
+            "catalogReceiptSHA256": "05ec9526613a1f9f5eba5e8956ad23ce3e0ede0794ad95aea81b48a9b33f4907",
+            "full18NamespaceDecodeEqual": true,
+            "CommunityNineKeysAndExtraLargePreserved": true,
+            "requiredWholeFiles": 5,
+            "admittedMapOID": "55fb03f2db4e7bad1a83efc8fa45bf2249cffcd4",
+            "nativeBrowser": "NOT_RUN"
           }
         },
         {
@@ -2586,10 +2603,10 @@
       "impact": "H/H",
       "effort": "**4–6d**",
       "featureId": "F14",
-      "status": "ready_for_checks",
+      "status": "draft_review",
       "owner": "lane-b",
       "qualification": {
-        "automated": "focused_passed",
+        "automated": "historical_scoped_pass_preserved_current_source_refresh_pending",
         "browser": "component_fixture_passed",
         "physical": "not_tested"
       },
@@ -2604,7 +2621,7 @@
         "Actual component with modeled states: EN/UK verified core, different selected edition, missing-files repair, waiting update and unavailable storage inspected. Rebase preserves component/CSS; exact industrial assets hydrated for validation.",
         "Integrated on dd337 with original b7 ancestor preserved. Independent review confirms all 7 feature blobs unchanged, all main locale values retained plus 34 original keys per locale. 44 focused checks, full lint and uninterrupted full validation pass; 8 unchanged main formatting findings disclosed. Earlier modeled readiness browser scope retained."
       ],
-      "deliveryState": "ready",
+      "deliveryState": "draft",
       "mergeState": "DIRTY",
       "observedRemoteHead": "146c36e8f890aab0204941f73812b4e79df4b2dd",
       "lastKnownMergeState": "DIRTY",
@@ -2617,7 +2634,8 @@
         "localeConflicts": 0,
         "existingCurrentImportsCompatible": true,
         "coverageCorrection": "Existing focusedTestPlan automatically adds both changed offline readiness test files; no coverage-map prerequisite is needed. Earlier command-list-only omission claim withdrawn.",
-        "proofSHA256": "24ba4e433c0ed3b5e501b8ec7b4cb0e8a2d0588ff9cb1346e241920602f7a8de"
+        "proofSHA256": "24ba4e433c0ed3b5e501b8ec7b4cb0e8a2d0588ff9cb1346e241920602f7a8de",
+        "PRState": "OPEN_DRAFT_OLD146C_UNCHANGED"
       }
     },
     {
@@ -6691,6 +6709,11 @@
       "date": "2026-10-20",
       "item": "F12/DELIVERY",
       "reason": "Current exactbcce page replay scopedPASS through CUA:Retry/re-loss/recovery,EN/UK,retaineddraft/focus/local-link keyboard access. Serverclean78.606s/277sourceprepostexact; no realservice/package/player/deviceclaim. V1favicontransportfailurepreserved. World1788 normalfb5adraftrefreshpublished; hosted39389075548pending; APIpostFFlagread recorded separately."
+    },
+    {
+      "date": "2026-10-20",
+      "item": "DELIVERY",
+      "reason": "Worldfb5a actualnativeV8OOM84.062s;380scalarrows95fixtures complete but115notqualified;3sourceaudits/Node/deps exact. Reviewcleanupownershipnext,no productioncauseclaim. Touch currentcatalog2PASS preserve18namespaces+only2labels. Offline1624 demoted to draft beforecurrentrefresh;146cunchanged =>52/6/33/1.73plannedunchanged."
     }
   ],
   "deliveryDependencies": [
@@ -7691,13 +7714,13 @@
     {
       "id": "CI-World-fixture-memory-scalars",
       "priority": "P1",
-      "status": "draft_api_root_fix_published_source19_pass_normal_hosted_in_progress",
+      "status": "draft_source19_pass_native_V8OOM_complete_observed95fixture_scalars_not115pass",
       "deliveryState": "draft",
       "pr": "https://github.com/mekhovov/revealline/pull/1788",
       "commit": "fb5a5b7666b4a2ceb6592268b3da8cf55a86280e",
       "sourcePaths": 7,
       "qualification": {
-        "automated": "original18+AST3+format3PASS; API-root corrected successor19+AST3+format3PASS private only",
+        "automated": "source19/AST3/format3PASS; actualnormalfb5anative115V8OOM; observed95fixture380scalarrows complete",
         "browser": "not_run",
         "physical": "not_tested"
       },
@@ -7705,7 +7728,7 @@
       "firstRunOutcome": "Provenance api guard rejected exact own repository root before native; native115 and scalar observation NOT_RUN. No resource-limit relaxation.",
       "correctedSuccessorReceiptSHA256": "daa98ea06c6219aecaac8489e6cc57f714a1948de475f629492a7920c65d1e46",
       "preservedFailedNewTestReceiptSHA256": "274b76df0061b904b384341bc749c78d88b503ccd5759b75f0e6611f107f2d3b",
-      "next": "Collect normal exactfb5a setup/native115/scalar terminal outcome; no local World execution or manual retry.",
+      "next": "Review isolated test cleanup ownership against Node22 retained-hook source, then normal unchangedfull115 diagnostic to prove/disprove; no production memory attribution or limit relaxation.",
       "base": "f3da9d32334401af08eb0800e6d1123c1696d401",
       "tree": "e0eec6ca5467777cbc2ffbc305b3c14914dfc300",
       "parents": [
@@ -7713,7 +7736,25 @@
         "f3da9d32334401af08eb0800e6d1123c1696d401"
       ],
       "allUnownedMerkleEntriesExact": 5056,
-      "peerActualRemoteProofSHA256": "cfc0b72e027d7a09cfb3e047f12d6e6c5a801b5fb649060b8b02d6bd1682cc50"
+      "peerActualRemoteProofSHA256": "cfc0b72e027d7a09cfb3e047f12d6e6c5a801b5fb649060b8b02d6bd1682cc50",
+      "terminal": {
+        "run": "https://github.com/mekhovov/revealline/actions/runs/39389075548",
+        "nativeOutcome": "V8_OOM",
+        "exitCode": -6,
+        "seconds": 84.062327,
+        "peakRSSBytes": 1988120576,
+        "TAP": "70 top-level+30 nested; no115footer, NOT_QUALIFIED",
+        "scalarStatus": "complete_for95_observed_fixtures_only",
+        "scalarRows": 380,
+        "omitted": 0,
+        "all95PruneWorkersAndMessages": 0,
+        "heapUsedFirstPrune": 147909456,
+        "heapUsedLastPrune": 1597932992,
+        "sourceAuditsExact": 3,
+        "NodeAndDependenciesExact": true,
+        "full21ReadbackSHA256": "42e79d389c2bc30d88a5656080e2005b6f9d4ec2e24cb86500c18b0486731989",
+        "cause": "UNPROVEN"
+      }
     },
     {
       "id": "CI-menu-browser-start-event-delivery",
@@ -7737,8 +7778,8 @@
     }
   ],
   "deliverySnapshot": {
-    "featurePRsReady": 7,
-    "featurePRsDraft": 32,
+    "featurePRsReady": 6,
+    "featurePRsDraft": 33,
     "deliverablesMerged": 52,
     "verifiedLive": 0,
     "publishedSourceSlices": 2,
@@ -7751,8 +7792,8 @@
     "scope": "All92 feature candidates;25 separate verification prerequisites. Original83 feature groups and113 deliverables unchanged.",
     "counts": {
       "merged": 52,
-      "ready": 7,
-      "draft": 32,
+      "ready": 6,
+      "draft": 33,
       "withdrawn": 1
     },
     "conflictedOpenPRs": [
@@ -7760,7 +7801,7 @@
       1729, 1773
     ],
     "conflictedReadyPRs": [1617, 1622, 1624, 1627, 1632, 1682, 1686],
-    "note": "52 feature source PRs merged externally,7 open for checks,32 drafts,1 withdrawn;25 separate prerequisites. Community95 actual selected cases pass atbcce; current page replay remains pending. Start23 source cases pass at9ae, trusted click reaches handler but running remains unobserved. World115 native diagnostic has not executed. No new public/hardware/player acceptance.",
+    "note": "52 merged feature sources,6 open for checks,33 drafts,1 withdrawn;25 prerequisites. Offline1624 demoted to draft for current reconciliation, old146c unchanged. Community current modeled page replay passes; Start remainsblocked. Worldfb5a stillV8OOM; observed95-fixture scalars are complete,115file is notqualified. No productioncause/player/package/device completion.",
     "latestMain": {
       "revision": "f3da9d32334401af08eb0800e6d1123c1696d401",
       "tree": "69cab9ff0d4ce7d07656e5c7ada25a2655da97af",
