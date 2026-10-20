@@ -255,3 +255,20 @@ test('terminal disposal cancels deferred repair and stale callbacks cannot rewri
   assert.equal(f.writes.length, 0);
   f.assertChildUnchanged();
 });
+
+test('tool history return keeps extra-large selected and preserves hosted frame plus shared bytes', (t) => {
+  const f = fixture(t);
+  const value = { textFace: 'plain', textSize: 'extra-large', reducedEffects: true };
+  f.external(value);
+  f.host.emit('pageshow', { persisted: true });
+  f.flush();
+  assert.equal(f.control.value, 'extra-large');
+  assert.equal(f.control.querySelector('[data-text-size-retained]').disabled, true);
+  assert.equal(f.doc.body.dataset.textSize, 'large');
+  assert.equal(f.writes.length, 0);
+  f.assertChildUnchanged();
+  f.face.value = 'pixel';
+  f.face.emit('change', { currentTarget: f.face });
+  assert.equal(JSON.parse(f.writes.at(-1)).textSize, 'extra-large');
+  f.assertChildUnchanged();
+});

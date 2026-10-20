@@ -210,3 +210,37 @@ test('storage warnings and rejected changes stay visible without falsely applyin
   assert.equal(status.textContent, 'Unavailable');
   settings.destroy();
 });
+
+test('generated SIM-style control preserves desired extra size across locale refresh and explicit Large selection', () => {
+  const owner = preference('extra-large'),
+    f = fixture();
+  const settings = mountGlobalSettings({ ...f, bindings: { textSize: owner } });
+  const input = f.document.getElementById('global-settings-textSize');
+  input.focus();
+  assert.equal(input.value, 'extra-large');
+  assert.equal(input.querySelector('[data-text-size-retained]').disabled, true);
+  const status = input.closest('[data-global-setting]').querySelector('[role="status"]'),
+    fallback = input.parentElement.querySelector('[data-text-size-fallback]');
+  assert.deepEqual(
+    input.getAttribute('aria-describedby').split(/\s+/),
+    [status.id, fallback.id],
+    'the retained-size notice supplements the shared persistence status',
+  );
+  settings.refresh('uk');
+  assert.equal(input.value, 'extra-large');
+  assert.match(input.querySelector('[data-text-size-retained]').textContent, /Дуже великий/);
+  assert.match(
+    input.parentElement.querySelector('[data-text-size-fallback]').textContent,
+    /збережено/,
+  );
+  assert.equal(f.document.activeElement, input);
+  assert.equal(owner.writes(), 0);
+  input.value = 'large';
+  input.emit('change');
+  assert.equal(owner.get(), 'large');
+  assert.equal(owner.writes(), 1);
+  assert.equal(input.querySelector('[data-text-size-retained]'), null);
+  assert.equal(input.getAttribute('aria-describedby'), status.id);
+  assert.equal(fallback.hidden, true);
+  settings.destroy();
+});

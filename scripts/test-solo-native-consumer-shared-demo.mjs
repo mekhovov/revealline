@@ -24,13 +24,13 @@ const lanes = {
     seconds: 3720,
   },
   'demo-recovery': {
-    plan: 'solo-demo-recovery-797e03-current-tooling-plan.json',
+    plan: 'solo-demo-recovery-797e03-geometry-tooling-plan.json',
     job: 125,
     step: 79,
     seconds: 4620,
   },
   'demo-resources': {
-    plan: 'solo-demo-resources-797e03-activation-boundary-plan.json',
+    plan: 'solo-demo-resources-797e03-paused-geometry-plan.json',
     job: 125,
     step: 79,
     seconds: 4620,

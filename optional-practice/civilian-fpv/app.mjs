@@ -547,7 +547,7 @@ export function mountFlightApp({
   listeners.push(
     displayPreferences.subscribe((state) => {
       doc.body.dataset.textFace = state.textFace;
-      doc.body.dataset.textSize = state.textSize;
+      doc.body.dataset.textSize = state.effectiveTextSize ?? state.textSize;
       doc.body.dataset.effects = state.effectiveReducedEffects ? 'reduced' : 'full';
     }),
   );
@@ -716,7 +716,8 @@ export function mountFlightApp({
     if (!tuningDraft) tuning?.endDraftTest();
     if (!tuningDraft) tuningStore.refresh();
     const baselineConfiguration = tuningDraft ?? tuningStore.effective();
-    const physicalAircraft = baselineConfiguration.advanced?.aircraft?.format === 'AdvancedAircraft.v2';
+    const physicalAircraft =
+      baselineConfiguration.advanced?.aircraft?.format === 'AdvancedAircraft.v2';
     const configuration = physicalAircraft
       ? prepareAircraftChallenge(baselineConfiguration, challenge)
       : baselineConfiguration;
@@ -896,7 +897,12 @@ export function mountFlightApp({
     if (id === 'setup-dialog') {
       setup?.dispose();
       setup = null;
-      if (tuningCalibrationReturn) { const done=tuningCalibrationReturn; tuningCalibrationReturn=null; done(); return; }
+      if (tuningCalibrationReturn) {
+        const done = tuningCalibrationReturn;
+        tuningCalibrationReturn = null;
+        done();
+        return;
+      }
     }
     const opener = dialogOpeners.get(id);
     (opener?.isConnected && !opener.closest('[hidden],[inert]')
@@ -1795,7 +1801,15 @@ export function mountFlightApp({
   const menuContext = () => {
     // The reference arena owns its flight keys and raw controller preview.
     if (advancedPractice) return null;
-    if (tuning?.root.open) return { root: tuning.root, key: 'fpv-tuning', blockRadio: tuning.captureActive(), blockDevices: tuning.captureActive(), captureControllerIndex: gamepad.status().index, onCaptureBack: () => tuning.releaseCapture() };
+    if (tuning?.root.open)
+      return {
+        root: tuning.root,
+        key: 'fpv-tuning',
+        blockRadio: tuning.captureActive(),
+        blockDevices: tuning.captureActive(),
+        captureControllerIndex: gamepad.status().index,
+        onCaptureBack: () => tuning.releaseCapture(),
+      };
     const globalToolRoot = globalTools?.root();
     if (globalToolRoot)
       return {
@@ -2349,12 +2363,24 @@ export function mountFlightApp({
     onOpen: () => pause(),
     getFlightConfiguration: () => workbenchAttemptConfiguration,
     getPracticeConditions: () => ({
-      host: 'Academy', courseId: authoringCourse?.id ?? courses[selected]?.id ?? null, mode,
+      host: 'Academy',
+      courseId: authoringCourse?.id ?? courses[selected]?.id ?? null,
+      mode,
       courseIdentity: dataIdentity(authoringCourse ?? courses[selected]),
       label: `Academy · ${authoringCourse?.id ?? courses[selected]?.id ?? ''} · ${mode}`,
-      input: { source: input.owner(), keyboard: $('keyboard-preset').value, touch: $('touch-response').value, radio: radio.status().profile, radioDevice: radio.status().selected?.key ?? null, controller: { id: gamepad.status().id, index: gamepad.status().index } },
+      input: {
+        source: input.owner(),
+        keyboard: $('keyboard-preset').value,
+        touch: $('touch-response').value,
+        radio: radio.status().profile,
+        radioDevice: radio.status().selected?.key ?? null,
+        controller: { id: gamepad.status().id, index: gamepad.status().index },
+      },
     }),
-    onCalibration(done) { tuningCalibrationReturn = done; openDialog('setup-dialog'); },
+    onCalibration(done) {
+      tuningCalibrationReturn = done;
+      openDialog('setup-dialog');
+    },
     onApply() {
       playShell?.enterPlay();
       reset();
@@ -2367,7 +2393,11 @@ export function mountFlightApp({
       inputDiagnostics.read(
         flight,
         replay ? 'recording' : input.owner(),
-        !replay && input.owner() === 'radio' ? radio.diagnostics() : !replay && input.owner() === 'controller' ? gamepad.previewDiagnostics() : null,
+        !replay && input.owner() === 'radio'
+          ? radio.diagnostics()
+          : !replay && input.owner() === 'controller'
+            ? gamepad.previewDiagnostics()
+            : null,
       ),
     onAdvanced(configuration) {
       pause();

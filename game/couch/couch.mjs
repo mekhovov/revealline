@@ -1,3 +1,4 @@
+import { renderTextSizeControl } from '../ui/text-size-control.mjs';
 import { acceptAttemptAppearance } from '../presentation/attempt-appearance.mjs';
 import { prepareIndustrialEnvironmentSource } from '../presentation/industrial-environments.mjs';
 import { runtimeActorArtRevision } from '../hunt/preferences.mjs';
@@ -249,10 +250,10 @@ const displayPreferences = createDisplayPreferences({
 });
 const renderDisplayPreferences = (state) => {
   document.body.dataset.textFace = state.textFace;
-  document.body.dataset.textSize = state.textSize;
+  document.body.dataset.textSize = state.effectiveTextSize ?? state.textSize;
   document.body.dataset.effects = state.effectiveReducedEffects ? 'reduced' : 'full';
   $('race-text-face').value = state.textFace;
-  $('race-text-size').value = state.textSize;
+  renderTextSizeControl($('race-text-size'), state.textSize);
   $('race-reduced').checked = state.reducedEffects;
   localizedText($('race-system-reduction'), () =>
     state.effectiveReducedEffects && !state.reducedEffects

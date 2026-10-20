@@ -230,7 +230,7 @@ export function mountCivilianPractice({ document: doc, window: win }) {
   const display = createSimDisplayPreferences({ window: win, getStorage: () => win.localStorage });
   const stopDisplay = display.subscribe((state) => {
     doc.body.dataset.textFace = state.textFace;
-    doc.body.dataset.textSize = state.textSize;
+    doc.body.dataset.textSize = state.effectiveTextSize ?? state.textSize;
     doc.body.dataset.effects = state.effectiveReducedEffects ? 'reduced' : 'full';
   });
   const themeHost = installSimThemeHost({
