@@ -2597,3 +2597,94 @@ test('actual Academy settings keep an unsaved menu animation choice and Retry th
   assert.equal(status.textContent, 'Saved');
   assert.equal(retry.hidden, true);
 });
+
+for (const locale of ['en', 'uk'])
+  test(`Academy ${locale} comfort presets preserve the paused attempt through preview, Retry and Undo`, async (t) => {
+    const priorLocale = getLocale();
+    setLocale(locale, { persist: false });
+    t.after(() => setLocale(priorLocale, { persist: false }));
+    const displayKey = 'revealline.display.v1',
+      menuKey = 'revealline.menu-animation.v1',
+      data = new Map(),
+      writes = [];
+    let working = true;
+    const h = await fixture(t, {
+      url: `https://example.test/optional-practice/civilian-fpv/?lang=${locale}`,
+      storage: {
+        getItem: (key) => data.get(key) ?? null,
+        setItem(key, value) {
+          if ([displayKey, menuKey].includes(key)) {
+            writes.push([key, value]);
+            if (!working) throw new DOMException('Modeled full storage', 'QuotaExceededError');
+          }
+          data.set(key, value);
+        },
+      },
+    });
+    assert.equal(h.view.arm(), true);
+    h.tick(4);
+    h.$('academy-flight-menu').click();
+    h.$('academy-shell-action-pause-settings').click();
+    h.$('academy-settings-tab-accessibility').click();
+    const prefix = 'academy-settings-panel-accessibility-comfort-',
+      preset = (suffix) => h.$(`${prefix}${suffix}`),
+      before = h.view.exportAttempt(),
+      paused = h.view.snapshot(),
+      controls = ['mode', 'input-source', 'camera', 'camera-fov', 'camera-tilt'],
+      configuration = controls.map((id) => h.$(id).value);
+    assert.equal(paused.status, 'paused');
+    assert.equal(preset('apply').closest('[hidden],[inert]'), null);
+    preset('choice').value = 'clear';
+    preset('choice').emit('change');
+    preset('choice').value = 'comfort';
+    preset('choice').emit('change');
+    assert.equal(
+      writes.length,
+      0,
+      'Opening and changing the preview must not persist preferences.',
+    );
+    working = false;
+    preset('apply').focus();
+    preset('apply').click();
+    assert.equal(h.$('academy-global-textSize').value, 'large');
+    assert.equal(h.$('academy-global-menuAnimation').checked, false);
+    assert.match(
+      preset('status').textContent,
+      locale === 'en' ? /Session only/ : /Лише в цьому сеансі/,
+    );
+    assert.equal(h.doc.activeElement, preset('apply'));
+    working = true;
+    preset('apply').click();
+    assert.deepEqual(JSON.parse(data.get(displayKey)), {
+      textFace: 'plain',
+      textSize: 'large',
+      reducedEffects: true,
+    });
+    assert.equal(data.get(menuKey), 'off');
+    assert.doesNotMatch(preset('status').textContent, /Session only|Лише в цьому сеансі/);
+    h.tick(4);
+    assert.deepEqual(h.view.exportAttempt(), before);
+    assert.deepEqual(h.view.snapshot(), paused);
+    preset('undo').focus();
+    preset('undo').click();
+    assert.deepEqual(JSON.parse(data.get(displayKey)), {
+      textFace: 'pixel',
+      textSize: 'standard',
+      reducedEffects: false,
+    });
+    assert.equal(data.get(menuKey), 'on');
+    assert.equal(h.doc.activeElement, preset('apply'));
+    assert.deepEqual(
+      controls.map((id) => h.$(id).value),
+      configuration,
+    );
+    assert.deepEqual(h.view.exportAttempt(), before);
+    assert.equal(h.$('academy-shell-settings-dialog').open, true);
+    const retainedApply = preset('apply');
+    h.view.dispose();
+    const finalWrites = writes.length;
+    retainedApply.click();
+    h.win.emit('pageshow', { persisted: true });
+    assert.equal(writes.length, finalWrites);
+    assert.equal(h.doc.querySelector('.comfort-presets'), null);
+  });

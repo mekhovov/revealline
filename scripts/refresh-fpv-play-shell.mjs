@@ -45,6 +45,7 @@ async function projectGlobalServices() {
       attachThemeFamilyControls: 'attachSimThemeFamilyControls',
     },
     'game/ui/global-settings-view.mjs': { mountGlobalSettings: 'mountSimGlobalSettings' },
+    'game/ui/comfort-presets.mjs': { mountComfortPresets: 'mountSimComfortPresets' },
     'game/ui/radio-audio.mjs': {
       readRadioAudio: 'readSimRadioAudio',
       RADIO_AUDIO_KEY: 'SIM_RADIO_AUDIO_KEY',
@@ -220,6 +221,7 @@ const css = [
   await read('game/ui/pause-menu.css'),
   await read('game/ui/mode-settings-view.css'),
   await read('game/ui/global-settings-view.css'),
+  await read('game/ui/comfort-presets.css'),
   await read('game/ui/journey.css'),
   (await read('game/ui/mode-choice.css')).replace(/^@import[^;]+;\s*/, ''),
 ].join('\n');
