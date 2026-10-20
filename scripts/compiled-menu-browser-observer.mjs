@@ -19,6 +19,7 @@ import {
   STAGES,
   assertLoopback,
   createCompiledOperationTrace,
+  installCompiledMissionsEventProbe,
   installCompiledStartEventProbe,
   prepareCompiledResumeEntryProbe,
   readCompiledMenuPublicState,
@@ -67,7 +68,7 @@ export async function observeCompiledMenu({
     report.activeStep = args[0];
     return trace.step(...args);
   };
-  let server, browser, context, diagnostics, startProbe, resumeEntryProbe;
+  let server, browser, context, diagnostics, startProbe, resumeEntryProbe, missionsProbe;
   const retain = async () =>
     writeFile(
       join(output, 'report.json'),
@@ -180,6 +181,7 @@ export async function observeCompiledMenu({
       const s = await step('read public DOM', () =>
         page.evaluate(readCompiledMenuPublicState, {
           startProbe: startProbe ?? null,
+          missionsProbe: readOptions?.observeMissions === true ? (missionsProbe ?? null) : null,
           includeCards: readOptions?.includeCards !== false,
           omitUnusedContainerText: readOptions?.omitUnusedContainerText === true,
         }),
@@ -239,7 +241,7 @@ export async function observeCompiledMenu({
         'visible Missions',
         (s) => s.controls['journey-chooser'].open && s.controls['journey-chooser'].visible,
         60000,
-        { includeCards: false, omitUnusedContainerText: true },
+        { includeCards: false, omitUnusedContainerText: true, observeMissions: locale === 'en' },
       );
       await filter('journey-mode', 'solo');
       await filter('journey-collection', 'Journey');
@@ -285,6 +287,14 @@ export async function observeCompiledMenu({
       report.stages.push(locale + '-current-and-retained', locale + '-browse-back-focus');
       await retain();
     };
+    try {
+      missionsProbe = await step('passive Missions probe setup', () =>
+        page.evaluateHandle(installCompiledMissionsEventProbe),
+      );
+      trace.recordMissionsProbeLifecycle('setup', 'installed-or-unavailable');
+    } catch {
+      trace.recordMissionsProbeLifecycle('setup', 'unavailable');
+    }
     await browse('en');
     await click('#shell-play');
     let s = await until('exact current visible', (s) =>
@@ -429,6 +439,20 @@ export async function observeCompiledMenu({
         trace.recordResumeEntryProbe(resumeEntryProbe.snapshot());
       } catch {
         /* diagnostic only */
+      }
+    }
+    if (missionsProbe) {
+      try {
+        await closeWithin('Missions observer', async () => {
+          try {
+            const cleanup = await missionsProbe.evaluate((probe) => probe.dispose());
+            trace.recordMissionsProbeLifecycle('cleanup', cleanup.teardown);
+          } finally {
+            await missionsProbe.dispose();
+          }
+        });
+      } catch {
+        trace.recordMissionsProbeLifecycle('cleanup', 'unconfirmed');
       }
     }
     if (startProbe) {
