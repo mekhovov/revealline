@@ -15,15 +15,17 @@
     "details": "Two managed implementation worktrees plus lightweight sparse checkouts; failed full checkouts self-cleaned after disk exhaustion. No unrelated data removed."
   },
   "nextPriority": [
-    "P1 · Mission browser #1773 / trace #1783: new fixed-package run proves English91current+3retained browsing, Back focus and exact briefing, then fails because running is not observed in60s after Start. Keep correct predicate/limits; capture bounded last visible state before choosing a fix. Three source-mode failures remain.",
-    "P1 · Readability #1774: current2c4d run failed.23 complete original files/215 cases and completeOverflight host/31 pass; World115case file runs out of heap, four files not run. Diagnose whole-host retention before repeating unchanged full scope; browser/package follow.",
-    "P1 · Community #1638: e0source75+validation pass; complete four-file qualification needs refreshed draftcoverage #1781 (all21currentcategories retained+Community22nd). Touch #1669 current6dc is publishedDRAFT/source checks pass; explicitshared-touch/native/browser acceptance still open. Offline/backup #1624/#1627 next.",
-    "P1 · Compatibility #1668 source merged at the exact qualified revision. Finish current browser/inner-package/offline acceptance; physical checks remain separate.",
-    "P1 · Team Home #1747: source merged. All nine admitted files match the independently reviewed local reconciliation. Finish current earned-result/full-host/browser/package acceptance. Full lessons still depend on Learn.",
-    "P1 · Shared support #1762: source merged externally at b723. Its eight complete files pass 414 cases; the older preview retains 12 failures. Qualify current-main fixtures and actual Data/modal navigation, exports, package and remaining hosts.",
-    "P2 · Room invitations #1744: source merged; 108 scoped checks, tracked-module lint and delayed QR focus review pass. Full source, Ukrainian host, manual fallback, package, sharing, scanning and device checks remain.",
-    "P2 · Audio and terminology: preserve merged changes; finish remaining host copy, listening and player acceptance.",
-    "Continue phases 0–8 with all 83 feature groups and 113 deliverables in their original priority order and estimates. Source merge is not full feature completion. Protect 2 GiB; physical iPhone offline startup, Steam Deck and suspend/resume remain Not tested."
+    "P1 · Mission browser #1773 / trace #1783: English mission browsing, Back focus and the briefing pass. Start still does not enter observed play within 60 seconds. Capture the last visible state, identify the cause and finish English/Ukrainian play. Three source-opening checks still fail.",
+    "P1 · Readability #1774: 23 original complete files pass 215 cases, and the full Overflight host passes 31. The World file still runs out of memory; four files were not run. Diagnose retention, then complete the unchanged test scope and browser/package checks.",
+    "P1 · Community readiness #1638: 75 selected tests and validation pass. Store and moderation files remain outside that selection. Coverage PR #1781 preserves all current categories; normal admission must precede the complete four-file run and Retry/local-play acceptance.",
+    "P1 · Touch language #1669: the reconciled five-file fix is published in draft and source checks pass. Finish explicit shared-touch coverage and current Duel/Team language switching, focus, saved settings and paused-play checks.",
+    "P1 · Offline and backup #1624 / #1627: reconcile against current main, verify honest offline readiness and retained progress, then qualify packaged startup and recovery. Physical iPhone installed-PWA checks remain unavailable.",
+    "P1 · Text preference compatibility #1668: source merged with 2,309 source and 1,908 preview checks passing on its recorded revision. Finish current browser, inner-package and offline acceptance.",
+    "P1 · Team Home #1747: source merged and nine reviewed files match the admitted source. Finish earned-result, complete-host, browser and package acceptance. Full lesson recommendations still depend on Learn.",
+    "P1 · Shared support #1762: eight complete files pass 414 cases; the older preview retains 12 failures. Check current Data/modal navigation, exports, package and remaining hosts.",
+    "P2 · Room invitations #1744: source merged with 108 scoped checks and delayed QR focus review passing. Complete Ukrainian/manual fallback, broader hosts, package, sharing, scanning and device checks.",
+    "P2 · Audio and terminology: preserve merged changes; finish remaining host wording, actual listening and player acceptance.",
+    "Continue phases 0–8 with all 83 feature groups /113 deliverables and their original effort estimates. Source merge is not full feature completion. Keep physical iPhone, Steam Deck and suspend/resume checks marked Not tested until hardware is available."
   ],
   "release": {
     "status": "source_delivery_in_progress",
@@ -7450,7 +7452,8 @@
     "verifiedLive": 0,
     "publishedSourceSlices": 2,
     "hardware": "unavailable",
-    "featurePRsClosed": 1
+    "featurePRsClosed": 1,
+    "plannedDeliverables": 73
   },
   "admissionReview": {
     "observedDate": "2026-10-20",
