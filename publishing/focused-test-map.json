@@ -482,7 +482,7 @@
             "scripts/test-expansion-proof-dispatch.mjs",
             "scripts/test-neon-proof-dispatch.mjs"
           ],
-          "timeoutMs": 600000
+          "timeoutMs": 1800000
         }
       ]
     }

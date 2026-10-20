@@ -4,8 +4,9 @@
   "provenance": {
     "path": "authoring/library/fpv-field-kit/production.rltheme",
     "gitBlob": "b169ce37169c01c42d817376babf06d97a93b36f",
-    "bytes": 8557998,
-    "sha256": "9d1670f2cb9330afef70bd82e34b03d2d8e639196dbee20573c68b65c6d6b3e1"
+    "bytes": 8449118,
+    "sha256": "5a2a648914272328dc5cb9b952426b2bd64a9a171dc2ff1ff115b4cd87f7f674",
+    "scope": "Derived retained-content oracle after an ownership migration. Source commit and tag identify the original artifact; these new bytes are not that release or its historical qualification."
   },
   "metadata": {
     "format": "revealline-theme-bundle.v1",
@@ -25,26 +26,36 @@
   },
   "groups": {
     "slots": {
-      "count": 335,
-      "sha256": "f2d853890e884c926450d6cbe7ed2648676e62a079a9e8768fc73a8fc12d1051"
+      "count": 302,
+      "sha256": "93cd0c41cf186805569b72f283fbeb803cf31623b3935cbc3cd0aa494f1fac22"
     },
     "assets": {
-      "count": 2654,
-      "sha256": "4fcbed951b4a34ed3327e52375bb7b5b45e9b691d2623a08312b12710baac8a9"
+      "count": 2621,
+      "sha256": "617ba97fa0ee6d3289fd6c537c840e8727514c78ed44cf5a620dc047cae84371"
     },
     "themes": {
       "count": 104,
-      "sha256": "ed29383b3e3916878df71bf0701f1da075bf0df8b9fc8aadfd8cd1610175f35d"
+      "sha256": "4c9600fc104ee0c72fb323debbc0f66b435868cca5e7a49bcce8bdcc1fe603c9"
     },
     "collections": {
       "count": 1,
-      "sha256": "74daee988fe6fe616d1ecc4a6ffd9f6c9c47b2fc00584259232f8f1477db1b57"
+      "sha256": "84f512c5583368c0d68f138d2d3f7821e0492c0693e931751f8ec3311f6f30cc"
     }
   },
   "payloads": {
     "count": 132,
-    "bytes": 4009342,
     "sha256": "4932cc57542adc364f44cb548011a7ca26afa7e0cb1eb00e00647fe5c381738c"
   },
-  "scope": "Exact accepted main canonical production103. Independently parsed as RLTHM3 bounded data; canonical encoded metadata and every original raw payload hash/length match, with no trailing bytes. No product module, producer, compiler, test, image decoder or audio audition executed. Separate divergent103 history is not this predecessor."
+  "scope": "Exact accepted main canonical production103. Independently parsed as RLTHM3 bounded data; canonical encoded metadata and every original raw payload hash/length match, with no trailing bytes. No product module, producer, compiler, test, image decoder or audio audition executed. Separate divergent103 history is not this predecessor.",
+  "migration": {
+    "format": "revealline-retained-production-oracle.v1",
+    "originalBundleSHA256": "9d1670f2cb9330afef70bd82e34b03d2d8e639196dbee20573c68b65c6d6b3e1",
+    "originalFixtureSHA256": "21e92eaf18e5ed619c91d47c734ef1602aa8dac5ae859d7c1837d71b0b161257",
+    "removedSlots": 33,
+    "removedAssets": 33,
+    "preservedPayloads": {
+      "count": 132,
+      "sha256": "4932cc57542adc364f44cb548011a7ca26afa7e0cb1eb00e00647fe5c381738c"
+    }
+  }
 }
