@@ -469,6 +469,10 @@ export function createCompiledOperationTrace(budget, redact) {
           sourceBytes: COMPILED_RESUME_ENTRY.bytes,
           lineNumber: COMPILED_RESUME_ENTRY.lineNumber,
           sourceVerified: value.sourceVerified === true,
+          readStage: COMPILED_RESUME_READ_STAGES.includes(value.readStage) ? value.readStage : null,
+          readFailureKind: COMPILED_RESUME_FAILURE_KINDS.includes(value.readFailureKind)
+            ? value.readFailureKind
+            : null,
           status: text(value.status, 32),
           reason: value.reason === null ? null : text(value.reason, 64),
           pauses:
@@ -682,6 +686,48 @@ export const COMPILED_RESUME_GUARDS = Object.freeze([
   'courseSession',
   'coursePhase',
 ]);
+const COMPILED_RESUME_READ_STAGES = Object.freeze([
+  'not-started',
+  'frame-match',
+  'remove-entry-breakpoint',
+  'evaluate-guards',
+  'complete',
+]);
+const COMPILED_RESUME_FAILURE_KINDS = Object.freeze([
+  'command-deadline',
+  'frame-unavailable',
+  'session-retired',
+  'protocol-error',
+  'command-error',
+  'error-unavailable',
+  'javascript-reference-error',
+  'javascript-eval-error',
+  'javascript-exception',
+  'invalid-values',
+  'frame-mismatch',
+  'read-owner-deadline',
+  'inspection-unavailable',
+]);
+function compiledResumeReadErrorKind(error) {
+  try {
+    const value = error?.message;
+    if (typeof value !== 'string') return 'error-unavailable';
+    const message = value.slice(0, 4096);
+    if (message === 'Diagnostic command deadline') return 'command-deadline';
+    if (
+      /Can only perform operation while paused|not paused|Cannot find.*(?:call frame|context)|Could not find.*call frame/i.test(
+        message,
+      )
+    )
+      return 'frame-unavailable';
+    if (/Target.*closed|Session.*closed|session.*detached|No session with given id/i.test(message))
+      return 'session-retired';
+    if (/^Protocol error\b/.test(message)) return 'protocol-error';
+    return 'command-error';
+  } catch {
+    return 'error-unavailable';
+  }
+}
 const RESUME_GUARD_EXPRESSION =
   '({' +
   'practiceRenderFailed:practiceRenderFailure.failed,' +
@@ -789,6 +835,8 @@ export function createCompiledResumePauseOwner(
     pauseElapsedMs = null,
     watchdog = null;
   let sourceVerified = false;
+  let readStage = 'not-started',
+    readFailureKind = null;
   let closing = null,
     closed = false,
     pauseOwnerExceeded = false;
@@ -880,14 +928,17 @@ export function createCompiledResumePauseOwner(
         void close();
         return;
       }
+      readStage = 'frame-match';
       pauseAt = now();
       watchdog = timers.setTimeout(() => {
+        readFailureKind ??= 'read-owner-deadline';
         unavailable('pause-read-deadline');
         void close();
       }, 100);
       void (async () => {
         try {
           if (!binding) {
+            readFailureKind ??= 'frame-mismatch';
             unavailable('unexpected-paused-frame');
             return;
           }
@@ -900,11 +951,14 @@ export function createCompiledResumePauseOwner(
             frame.location.lineNumber !== COMPILED_RESUME_ENTRY.lineNumber ||
             frame.location.columnNumber !== binding.columnNumber
           ) {
+            readFailureKind ??= 'frame-mismatch';
             unavailable('unexpected-paused-frame');
             return;
           }
+          readStage = 'remove-entry-breakpoint';
           await send('Debugger.removeBreakpoint', { breakpointId: binding.breakpointId });
           if (closed) return;
+          readStage = 'evaluate-guards';
           const result = await send('Debugger.evaluateOnCallFrame', {
             callFrameId: frame.callFrameId,
             expression: RESUME_GUARD_EXPRESSION,
@@ -917,18 +971,28 @@ export function createCompiledResumePauseOwner(
           });
           if (closed) return;
           if (result.exceptionDetails) {
+            const kind = result.exceptionDetails.exception?.className;
+            readFailureKind ??=
+              kind === 'ReferenceError'
+                ? 'javascript-reference-error'
+                : kind === 'EvalError'
+                  ? 'javascript-eval-error'
+                  : 'javascript-exception';
             unavailable('side-effect-or-read-refused');
             return;
           }
           const copied = copyCompiledResumeGuards(result.result?.value);
           if (!copied) {
+            readFailureKind ??= 'invalid-values';
             unavailable('guard-values-unavailable');
             return;
           }
           guards = copied;
+          readStage = 'complete';
           status = 'captured';
           reason = null;
-        } catch {
+        } catch (error) {
+          readFailureKind ??= compiledResumeReadErrorKind(error);
           unavailable('guard-read-unavailable');
         } finally {
           await close();
@@ -938,6 +1002,7 @@ export function createCompiledResumePauseOwner(
         void close();
       });
     } catch {
+      readFailureKind ??= 'inspection-unavailable';
       unavailable('pause-inspection-unavailable');
       void close();
     }
@@ -956,6 +1021,8 @@ export function createCompiledResumePauseOwner(
       sourceBytes: COMPILED_RESUME_ENTRY.bytes,
       lineNumber: COMPILED_RESUME_ENTRY.lineNumber,
       sourceVerified,
+      readStage,
+      readFailureKind,
       status,
       reason,
       pauses,
@@ -998,6 +1065,9 @@ export function createCompiledResumePauseOwner(
           : 'binding-unavailable',
       ),
     stopAfterAction: () => {
+      // A matching active pause already owns its fixed read/watchdog/finally cleanup.
+      // Native input completion must not race that independent bounded owner.
+      if (pauses > 0 && !closed) return;
       if (pauses === 0 && status === 'armed') unavailable('entry-breakpoint-not-hit');
       void close();
     },
