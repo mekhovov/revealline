@@ -6151,5 +6151,8 @@
   "teamHomeRecommendation.recordedNext": "Пропонована командна місія: {{mission}}. Вона йде після місії «{{previous}}», завершення якої записано у вашому прогресі командної подорожі.",
   "supportSummary.controller.observed": "Змійка виявила контролер. Ця гра не повідомляє про нейтральне положення та готовність підтвердження.",
   "supportSummary.game.finished": "Раунд завершено",
+  "textSizeCompatibility.retained": "Дуже великий · тут використовується великий",
+  "textSizeCompatibility.fallback": "Дуже великий розмір збережено як бажаний. Цей екран наразі використовує великий розмір. Оберіть стандартний або великий, щоб змінити спільне налаштування.",
+  "textSizeCompatibility.readOnlyFallback": "Дуже великий розмір збережено як бажаний. Цей екран наразі використовує великий розмір.",
   "worldIdsCommaSeparated": "Світи (через кому: retro, fpv, ukraine)"
 }

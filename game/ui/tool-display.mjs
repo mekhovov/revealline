@@ -1,3 +1,4 @@
+import { renderTextSizeControl, renderTextSizeFallback } from './text-size-control.mjs';
 import { t, localizedText, getLocale } from '../i18n/index.mjs';
 import { createDisplayPreferences } from '../display-preferences.mjs';
 import { applyFieldKitCopy, fieldKitCopy } from './field-kit-copy.mjs';
@@ -36,9 +37,10 @@ export function mountToolDisplay({
   const render = (state) => {
     if (disposed) return;
     doc.body.dataset.textFace = state.textFace;
-    doc.body.dataset.textSize = state.textSize;
+    doc.body.dataset.textSize = state.effectiveTextSize ?? state.textSize;
     doc.body.dataset.effects = state.effectiveReducedEffects ? 'reduced' : 'full';
-    for (const control of controls) control.value = state.textSize;
+    for (const control of controls) renderTextSizeControl(control, state.textSize);
+    if (!controls.length) renderTextSizeFallback(notice?.parentElement ?? doc.body, state.textSize);
     for (const control of faces) control.value = state.textFace;
   };
   const stopView = preferences.subscribe(render);
@@ -59,7 +61,7 @@ export function mountToolDisplay({
   };
   const changed = (event) => {
     if (disposed) return;
-    preferences.set({ textSize: event.currentTarget.value === 'large' ? 'large' : 'standard' });
+    preferences.set({ textSize: event.currentTarget.value });
   };
   const faceChanged = (event) => {
     if (disposed) return;
