@@ -6165,6 +6165,7 @@
   "community.service.localCreate": "Створювати локально",
   "community.service.catalogWaiting": "Каталог відкриється після перевірки з’єднання.",
   "community.service.accountWaiting": "З’єднання перевіряється перед входом.",
+  "playerSteeringArea": "Зона керування гравця {{player}}",
   "readiness.title": "Готовність до гри без інтернету",
   "readiness.context": "Завантаження збережені в",
   "readiness.runtime": "Основні файли гри",

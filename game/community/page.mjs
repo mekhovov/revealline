@@ -63,12 +63,17 @@ let catalogRequest = null;
 let catalogGeneration = 0;
 let catalogBusy = false;
 let catalogSelection = null;
+localizedText($('open-installed'), () =>
+  getLocale() === 'uk' ? 'Встановлені кампанії' : 'Installed campaigns',
+);
 const selectedCatalog = () => ({ query: $('search').value, installed: $('filter').value });
 const sameCatalog = (left, right) =>
   left?.query === right.query && left?.installed === right.installed;
+const localCatalogSelected = () => $('filter').value === 'installed';
+const canBrowseCatalog = () => localCatalogSelected() || readiness.available();
 const renderPagination = () => {
   $('more').hidden = !nextCursor;
-  $('more').disabled = catalogBusy || !nextCursor || !readiness.available();
+  $('more').disabled = catalogBusy || !nextCursor || !canBrowseCatalog();
   $('catalog').setAttribute('aria-busy', String(catalogBusy));
 };
 const cancelCatalog = () => {
@@ -164,7 +169,18 @@ function render({ append = false, start = 0 } = {}) {
     card.append(
       text(
         'p',
-        edition.description || localizedMessage('interface:community.noCreatorDescription'),
+        edition.description ||
+          (edition.localUnavailable
+            ? () =>
+                getLocale() === 'uk'
+                  ? 'На цьому пристрої є запис цього видання.'
+                  : 'This device has a record of this edition.'
+            : edition.local
+              ? () =>
+                  getLocale() === 'uk'
+                    ? 'Збережено на цьому пристрої. Для гри підключення до каталогу не потрібне.'
+                    : 'Stored on this device. Playing does not require the online catalog.'
+              : localizedMessage('interface:community.noCreatorDescription')),
       ),
     );
     const flags = document.createElement('p');
@@ -235,24 +251,50 @@ function render({ append = false, start = 0 } = {}) {
       text(
         'p',
         () =>
-          t('interface:community.editionMetadata', {
-            version: edition.version,
-            size: formatNumber(edition.packageSize / 1024 / 1024, {
-              minimumFractionDigits: 1,
-              maximumFractionDigits: 1,
-            }),
-            date: formatDate(new Date(edition.publishedAt)),
-          }),
+          !edition.publishedAt
+            ? getLocale() === 'uk'
+              ? `Версія ${edition.version} · локальне видання`
+              : `Version ${edition.version} · local edition`
+            : t('interface:community.editionMetadata', {
+                version: edition.version,
+                size: formatNumber(edition.packageSize / 1024 / 1024, {
+                  minimumFractionDigits: 1,
+                  maximumFractionDigits: 1,
+                }),
+                date: formatDate(new Date(edition.publishedAt)),
+              }),
         'meta',
       ),
     );
     const actions = document.createElement('div');
     actions.className = 'actions';
-    if (edition.installed) {
+    if (edition.localUnavailable) {
+      actions.append(
+        text(
+          'p',
+          () =>
+            getLocale() === 'uk'
+              ? 'Не вдалося перевірити локальні файли цього видання. Спробуйте оновити список. Інші встановлені ігри залишаються доступними.'
+              : 'This edition’s local files could not be checked. Try Refresh. Other installed games remain available.',
+          'meta',
+        ),
+      );
+    } else if (edition.installed) {
       const play = text('a', localizedMessage('interface:community.playOffline'));
       play.href = edition.playHref;
       actions.append(play);
-      if (edition.packageRetained)
+      if (edition.local && !edition.managementAvailable) {
+        actions.append(
+          text(
+            'p',
+            () =>
+              getLocale() === 'uk'
+                ? 'Гра доступна. Для керування пакетами відкрийте це видання в онлайн-каталозі.'
+                : 'Ready to play. Open this edition in the online catalog to manage its packages.',
+            'meta',
+          ),
+        );
+      } else if (edition.packageRetained)
         actions.append(
           action(
             localizedMessage('interface:community.offloadInstalledMedia'),
@@ -345,25 +387,34 @@ function render({ append = false, start = 0 } = {}) {
       localizedText(option, localizedMessage(`interface:community.${key}`));
       reportReason.append(option);
     }
-    actions.append(
-      reportReason,
-      action(
-        localizedMessage('interface:community.report'),
-        async () => {
-          await library.report(edition.editionId, {
-            reason: reportReason.value,
-          });
-          status(localizedMessage('interface:community.reportReceived'));
-        },
-        'secondary',
-      ),
-    );
+    if (!edition.local)
+      actions.append(
+        reportReason,
+        action(
+          localizedMessage('interface:community.report'),
+          async () => {
+            await library.report(edition.editionId, {
+              reason: reportReason.value,
+            });
+            status(localizedMessage('interface:community.reportReceived'));
+          },
+          'secondary',
+        ),
+      );
     card.append(actions);
     $('catalog').append(card);
   }
 }
 async function refresh({ reset = true } = {}) {
-  if (!readiness.available()) return;
+  if (!canBrowseCatalog()) {
+    cancelCatalog();
+    rows = [];
+    render();
+    readiness.render();
+    status(localizedMessage('interface:community.service.catalogWaiting'));
+    return;
+  }
+  readiness.render();
   const selection = selectedCatalog();
   // A queued Load more belongs only to the committed result set. It must not
   // replace a first-page request or consume a cursor from another filter.
@@ -394,7 +445,7 @@ async function refresh({ reset = true } = {}) {
         }),
       { signal: catalogRequest.signal },
     );
-    if (current !== catalogGeneration || !readiness.available()) return;
+    if (current !== catalogGeneration || !canBrowseCatalog()) return;
     const seen = new Set(reset ? [] : rows.map((row) => row.editionId));
     rows = [
       ...(reset ? [] : rows),
@@ -425,7 +476,11 @@ async function refresh({ reset = true } = {}) {
       }),
       true,
     );
-    focusDestination = nextCursor ? $('more') : $('service-retry');
+    focusDestination = nextCursor
+      ? $('more')
+      : localCatalogSelected()
+        ? $('refresh')
+        : $('service-retry');
   } finally {
     if (current === catalogGeneration) {
       catalogBusy = false;
@@ -439,7 +494,13 @@ async function refresh({ reset = true } = {}) {
     }
   }
 }
-$('refresh').onclick = () => readiness.check();
+$('refresh').onclick = () => (localCatalogSelected() ? refresh() : readiness.check());
+$('open-installed').onclick = () => {
+  $('filter').value = 'installed';
+  readiness.render();
+  $('filter').focus();
+  return refresh();
+};
 $('more').onclick = () => refresh({ reset: false });
 $('search').oninput = () => refresh({ reset: true });
 $('filter').onchange = () => refresh({ reset: true });
@@ -676,11 +737,15 @@ window.addEventListener('pagehide', (event) => {
   }
 });
 window.addEventListener('pageshow', (event) => {
-  if (event.persisted) void readiness.check();
+  if (event.persisted) {
+    void readiness.check();
+    if (localCatalogSelected()) void refresh();
+  }
 });
 window.addEventListener('offline', () => {
   cancelReadinessWork();
   readiness.unavailable();
+  if (localCatalogSelected()) void refresh();
 });
 window.addEventListener('online', () => void readiness.check());
 async function restoreAccount() {
@@ -704,15 +769,16 @@ async function restoreAccount() {
 }
 const readiness = attachCommunityReadiness({
   document,
+  localCatalogAvailable: localCatalogSelected,
   probe: (signal) => {
-    cancelCatalog();
+    if (!localCatalogSelected()) cancelCatalog();
     sessionGeneration += 1;
     return probeCommunityService({ baseURL: apiBase, signal });
   },
   onReady: () => {
     renderAccount();
     void restoreAccount();
-    return refresh();
+    if (!localCatalogSelected()) return refresh();
   },
 });
 renderAccount();

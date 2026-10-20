@@ -19,69 +19,11 @@ import {
   STAGES,
   assertLoopback,
   createCompiledOperationTrace,
+  installCompiledStartEventProbe,
+  prepareCompiledResumeEntryProbe,
+  readCompiledMenuPublicState,
 } from './compiled-menu-browser-contract.mjs';
 
-export function readCompiledMenuPublicState() {
-  const visible = (x) =>
-    Boolean(
-      x &&
-        !x.hidden &&
-        !x.closest('[hidden]') &&
-        x.getClientRects().length &&
-        getComputedStyle(x).display !== 'none' &&
-        getComputedStyle(x).visibility !== 'hidden',
-    );
-  const text = (x) => {
-    const s = (x?.textContent ?? '').trim();
-    return s.length <= 512 ? s : '[public text over limit]';
-  };
-  const control = (id) => {
-    const x = document.getElementById(id);
-    return {
-      visible: visible(x),
-      enabled: Boolean(x && !x.disabled),
-      open: Boolean(x?.open),
-      text: text(x),
-    };
-  };
-  const nodes = [...document.querySelectorAll('#journey-cards .journey-card')];
-  if (nodes.length > 1024) throw new Error('Public card evidence limit');
-  return {
-    href: location.href,
-    hidden: document.hidden,
-    focused: document.hasFocus(),
-    lang: document.documentElement.lang,
-    focusedId: document.activeElement?.id ?? '',
-    boot: document.documentElement.dataset.bootState,
-    access: document.documentElement.dataset.accessState,
-    flight: document.body.dataset.flightState,
-    time: text(document.getElementById('time')),
-    lives: text(document.getElementById('lives')),
-    coverage: text(document.getElementById('coverage')),
-    controls: Object.fromEntries(
-      [
-        'shell-home',
-        'shell-play',
-        'shell-options',
-        'journey-chooser',
-        'journey-back',
-        'start-button',
-        'pause-button',
-        'shell-menu',
-        'settings-dialog',
-        'mission-replace-dialog',
-        'mode-leave-dialog',
-        'flight-preparation-status',
-        'run-message',
-      ].map((id) => [id, control(id)]),
-    ),
-    cards: nodes.map((x) => ({
-      id: x.dataset.missionId,
-      visible: visible(x),
-      enabled: !x.disabled,
-    })),
-  };
-}
 async function fingerprint(file) {
   const p = await realpath(file),
     info = await lstat(p);
@@ -125,7 +67,7 @@ export async function observeCompiledMenu({
     report.activeStep = args[0];
     return trace.step(...args);
   };
-  let server, browser, context, diagnostics;
+  let server, browser, context, diagnostics, startProbe, resumeEntryProbe;
   const retain = async () =>
     writeFile(
       join(output, 'report.json'),
@@ -233,10 +175,20 @@ export async function observeCompiledMenu({
     );
     report.stages.push('ordinary-password-accepted');
     await retain();
-    const read = async () => {
+    const read = async (readOptions = undefined) => {
       trace.noteRead();
-      const s = await step('read public DOM', () => page.evaluate(readCompiledMenuPublicState));
+      const s = await step('read public DOM', () =>
+        page.evaluate(readCompiledMenuPublicState, {
+          startProbe: startProbe ?? null,
+          includeCards: readOptions?.includeCards !== false,
+        }),
+      );
       trace.recordPublicState(s);
+      try {
+        trace.recordResumeEntryProbe(resumeEntryProbe?.snapshot());
+      } catch {
+        /* diagnostic only */
+      }
       assert.equal(new URL(s.href).origin, new URL(origin).origin);
       assert.equal(s.hidden, false);
       assert.equal(s.focused, true);
@@ -246,12 +198,12 @@ export async function observeCompiledMenu({
       );
       return s;
     };
-    const until = async (label, predicate, cap = 60000) => {
+    const until = async (label, predicate, cap = 60000, readOptions = undefined) => {
       trace.enterPhase(label);
       const end = Math.min(budget.deadline, budget.now() + cap);
       for (;;) {
         assert(budget.now() < end, 'Compiled controls deadline: ' + label);
-        const s = await read();
+        const s = await read(readOptions);
         if (predicate(s)) return s;
         await step(
           'public observation interval',
@@ -285,6 +237,8 @@ export async function observeCompiledMenu({
       await until(
         'visible Missions',
         (s) => s.controls['journey-chooser'].open && s.controls['journey-chooser'].visible,
+        60000,
+        { includeCards: false },
       );
       await filter('journey-mode', 'solo');
       await filter('journey-collection', 'Journey');
@@ -351,7 +305,51 @@ export async function observeCompiledMenu({
     assert.equal(new URL(s.href).searchParams.get('library-mission'), CURRENT_ID);
     assert.equal(new URL(s.href).searchParams.get('journey'), 'whole-spatial-v25');
     report.stages.push('exact-current-briefing');
-    await click('#start-button');
+    try {
+      startProbe = await step('passive Start probe setup', () =>
+        page.evaluateHandle(installCompiledStartEventProbe),
+      );
+      trace.recordStartProbeLifecycle('setup', 'installed-or-unavailable');
+    } catch {
+      trace.recordStartProbeLifecycle('setup', 'unavailable');
+    }
+    let resumeSetupCurrent = true;
+    try {
+      resumeEntryProbe = await step('one resume-entry diagnostic setup', async () => {
+        const session = await context.newCDPSession(page);
+        if (!resumeSetupCurrent) {
+          await prepareCompiledResumeEntryProbe(session, origin, { isCurrent: () => false });
+          return null;
+        }
+        const owner = await prepareCompiledResumeEntryProbe(session, origin, {
+          isCurrent: () => resumeSetupCurrent,
+        });
+        if (!resumeSetupCurrent) {
+          await owner.dispose();
+          return null;
+        }
+        return owner;
+      });
+    } catch {
+      trace.recordResumeEntryProbe({
+        format: 'CompiledResumeEntryProbeV1',
+        sourceVerified: false,
+        status: 'unavailable',
+        reason: 'setup-unavailable',
+        pauses: 0,
+      });
+    } finally {
+      resumeSetupCurrent = false;
+    }
+    try {
+      await click('#start-button');
+    } finally {
+      try {
+        resumeEntryProbe?.stopAfterAction();
+      } catch {
+        /* diagnostic only */
+      }
+    }
     const running = await until('running', (s) => s.flight === 'running');
     await until(
       'real clock advances',
@@ -420,6 +418,33 @@ export async function observeCompiledMenu({
       message: report.failure,
     };
   } finally {
+    if (resumeEntryProbe) {
+      try {
+        await resumeEntryProbe.dispose();
+      } catch {
+        /* existing context/browser cleanup is the final boundary */
+      }
+      try {
+        trace.recordResumeEntryProbe(resumeEntryProbe.snapshot());
+      } catch {
+        /* diagnostic only */
+      }
+    }
+    if (startProbe) {
+      try {
+        await closeWithin('Start observer', async () => {
+          try {
+            const cleanup = await startProbe.evaluate((probe) => probe.dispose());
+            trace.recordStartProbeLifecycle('cleanup', cleanup.teardown);
+          } finally {
+            await startProbe.dispose();
+          }
+        });
+      } catch {
+        trace.recordStartProbeLifecycle('cleanup', 'unconfirmed');
+      }
+    }
+    // Closing the ephemeral context also removes listeners if setup response failed.
     diagnostics?.detach();
     try {
       if (context) {
