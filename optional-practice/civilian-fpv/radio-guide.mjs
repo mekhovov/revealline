@@ -99,7 +99,7 @@ export function mountRadioGuide({
   const stepNodes = [
     t('Connect', 'Під’єднайте'),
     t('Calibrate', 'Відкалібруйте'),
-    t('Ready', 'Готово'),
+    t('Sticks ready', 'Стіки готові'),
   ].map((name, i) => {
     const node = el('li', undefined, steps);
     el('span', String(i + 1).padStart(2, '0'), node);
@@ -1108,19 +1108,19 @@ export function mountRadioGuide({
         setText(primary, t('Continue', 'Далі'));
       }
     } else {
-      setText(progress, t('03 / READY · AUTO-SAVE', '03 / ГОТОВО · АВТОЗБЕРЕЖЕННЯ'));
+      setText(progress, t('03 / STICKS READY · AUTO-SAVE', '03 / СТІКИ ГОТОВІ · АВТОЗБЕРЕЖЕННЯ'));
       setText(
         title,
         phase === 'saved'
-          ? t('Ready for this session.', 'Готово для цього сеансу.')
+          ? t('Sticks ready for this session.', 'Стіки готові для цього сеансу.')
           : t('Do the dots follow your hands?', 'Точки повторюють рухи ваших рук?'),
       );
       setText(
         instruction,
         phase === 'saved'
           ? t(
-              'Your radio works, but the browser could not save the profile. You can return now or export a backup below.',
-              'Пульт працює, але браузер не зміг зберегти профіль. Можна повернутися або експортувати копію нижче.',
+              'Stick calibration works for this session, but could not be saved. Check switch actions below; export a backup to keep this calibration.',
+              'Калібрування стіків діє в цьому сеансі, але не збережене. Перевірте дії перемикачів нижче; експортуйте резервну копію калібрування.',
             )
           : !input
             ? t(
@@ -1128,13 +1128,15 @@ export function mountRadioGuide({
                 'Це призначення потребує калібрування. Виберіть «Калібрувати стіки» або «Налаштувати стіки вручну».',
               )
             : t(
-                'Move both sticks left/right and up/down. Check that the dots follow in the same direction.',
-                'Рухайте обидва стіки ліворуч/праворуч і вгору/вниз. Точки мають повторювати напрямок руху.',
+                'Move both sticks and check that the dots follow your hands. Then check the switch actions below. Stick calibration does not identify your intended Fire or Deploy switch.',
+                'Рухайте обидва стіки: точки мають повторювати рухи рук. Потім перевірте дії перемикачів нижче. Калібрування стіків не визначає, які перемикачі ви обрали для вогню чи заряду.',
               ),
       );
       setText(
         primary,
-        phase === 'saved' ? t('Return to flight', 'Повернутися до польоту') : t('Done', 'Готово'),
+        phase === 'saved'
+          ? t('Return to flight', 'Повернутися до польоту')
+          : t('Close setup', 'Закрити налаштування'),
       );
     }
     paintGuides(mapping, pad);

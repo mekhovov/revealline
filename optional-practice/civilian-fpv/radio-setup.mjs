@@ -64,7 +64,7 @@ const COPY = {
     travel: 'Record full travel',
     stop: 'Finish travel',
     centre: 'Measure centre',
-    verified: 'Stick channels are ready. Changes save automatically.',
+    verified: 'Stick settings ready. Check physical directions and switch actions below.',
     saved: 'Saved automatically on this device.',
     session: 'Session only — profile could not be saved.',
     response: 'Flight response — separate from calibration',
@@ -156,7 +156,7 @@ const COPY = {
     travel: 'Записати повний хід',
     stop: 'Завершити запис',
     centre: 'Виміряти центр',
-    verified: 'Стіки готові. Зміни зберігаються автоматично.',
+    verified: 'Налаштування стіків готові. Перевірте фізичні напрямки й дії перемикачів нижче.',
     saved: 'Автоматично збережено на пристрої.',
     session: 'Лише цей сеанс — профіль не вдалося зберегти.',
     response: 'Реакція польоту — окремо від калібрування',
@@ -284,6 +284,7 @@ export function mountRadioSetup({
     practiceSeen = new Set(),
     sixPanel = null,
     sixStatus = null,
+    sixLive = null,
     sixRows = {},
     modelControls = null,
     modelDeviceKey = null,
@@ -653,7 +654,7 @@ export function mountRadioSetup({
   }
   const sixNames = {
     arm: [
-      t('Flight', 'Політ'),
+      t('Arm / Pause', 'Увімкнення / Пауза'),
       t(
         'ON: Arm / resume · OFF: pause and menu',
         'УВІМК.: запуск / продовження · ВИМК.: пауза й меню',
@@ -667,25 +668,25 @@ export function mountRadioSetup({
       ),
     ],
     weapon: [
-      t('Weapon', 'Зброя'),
+      t('Switch gun', 'Змінити зброю'),
       t(
         'Flying: next weapon · Paused: Back on release',
         'У польоті: наступна зброя · На паузі: назад після відпускання',
       ),
     ],
     reload: [
-      t('Reload', 'Перезарядити'),
+      t('Reload gun', 'Перезарядити зброю'),
       t('Flying: reload · Paused: View', 'У польоті: перезарядження · На паузі: камера'),
     ],
     payload: [
-      t('Deploy / arm', 'Скинути / підготувати'),
+      t('Deploy payload', 'Застосувати заряд'),
       t(
         'Flying: drop bomb / deploy payload · Paused: Retry with confirmation',
-        'У польоті: заряд · На паузі: повтор із підтвердженням',
+        'У польоті: скинути бомбу / застосувати заряд · На паузі: повтор із підтвердженням',
       ),
     ],
     detonate: [
-      t('Detonate', 'Підірвати'),
+      t('Detonate charge', 'Підірвати заряд'),
       t(
         'Flying: separate detonation · Paused: Settings',
         'У польоті: окремий підрив · На паузі: налаштування',
@@ -744,10 +745,13 @@ export function mountRadioSetup({
     const pad = runtime.raw();
     for (const [action, row] of Object.entries(sixRows)) {
       const binding = draft?.switches[action];
+      const bindingKey = binding ? canonicalJSON(binding) : '';
+      if (row.bindingKey !== bindingKey) row.active = false;
+      row.bindingKey = bindingKey;
       row.binding.textContent = binding
         ? Object.hasOwn(binding, 'axis')
-          ? `${t('Channel', 'Канал')} ${binding.axis} · ${t('OFF', 'ВИМК')} ${binding.off.toFixed(2)} → ${t('ON', 'УВІМК')} ${binding.on.toFixed(2)}`
-          : `${t('Button', 'Кнопка')} ${binding.button}${binding.invert ? ` · ${t('reversed', 'зворотна')}` : ''}`
+          ? `USB ${t('axis', 'вісь')} ${binding.axis} · ${t('OFF', 'ВИМК')} ${binding.off.toFixed(2)} → ${t('ON', 'УВІМК')} ${binding.on.toFixed(2)}`
+          : `USB ${t('button', 'кнопка')} ${binding.button}${binding.invert ? ` · ${t('reversed', 'зворотна')}` : ''}`
         : ['arm', 'fire'].includes(action)
           ? t('Not assigned · required', 'Не призначено · обов’язково')
           : t('Available through the menu', 'Доступно через меню');
@@ -758,9 +762,10 @@ export function mountRadioSetup({
         /* A missing live sample does not change saved assignments. */
       }
       row.active = active;
-      row.live.textContent =
-        active === null
-          ? t('No live input', 'Немає живого сигналу')
+      row.live.textContent = !binding
+        ? t('Not assigned', 'Не призначено')
+        : active === null
+          ? t('No live sample', 'Немає живого сигналу')
           : active
             ? t('ON', 'УВІМК.')
             : t('OFF', 'ВИМК.');
@@ -770,6 +775,26 @@ export function mountRadioSetup({
       row.node.dataset.captureState =
         layoutCapture?.action === action ? 'listening' : binding ? 'assigned' : 'empty';
     }
+    const activeActions = Object.entries(sixRows)
+      .filter(([, row]) => row.active === true)
+      .map(([action]) => sixNames[action][0]);
+    const liveText = !pad
+      ? t(
+          'Connect your radio to preview switch actions.',
+          'Під’єднайте пульт для перевірки дій перемикачів.',
+        )
+      : activeActions.length
+        ? `${t('ON now', 'Зараз увімкнено')}: ${activeActions.join(' · ')}`
+        : !Object.values(draft?.switches ?? {}).some(Boolean)
+          ? t(
+              'No switch actions assigned yet. Choose a switch below.',
+              'Дії перемикачів ще не призначені. Виберіть перемикач нижче.',
+            )
+          : t(
+              'All assigned actions OFF. Move one switch to see its action.',
+              'Усі призначені дії вимкнено. Рухніть один перемикач, щоб побачити його дію.',
+            );
+    if (sixLive && sixLive.textContent !== liveText) sixLive.textContent = liveText;
     const ready = Boolean(draft?.switches.arm && draft?.switches.fire);
     sixPanel.querySelector('[data-six-practice]').disabled = !ready || Boolean(layoutCapture);
     sixPanel.querySelector('[data-six-capture-all]').disabled =
@@ -804,8 +829,8 @@ export function mountRadioSetup({
         'Pocket має п’ять перемикачів і ручку. Використайте ручку для ще однієї дії або вибирайте її в меню паузи. Перевірте все керування перед збереженням.',
       ),
       'check-candidate': t(
-        'These are suggested channels, not checked settings. Your radio may use different channels. Use the live preview and optional switch Practice.',
-        'Це запропоновані канали, а не перевірені налаштування. Ваш пульт може використовувати інші канали. Перевірте кожен стік і перемикач перед збереженням.',
+        'Applying a suggestion saves its assignments automatically. It cannot identify your intended physical switches. Move your Fire control: only Fire gun should light. If another action lights, assign that control below.',
+        'Запропоновані призначення зберігаються автоматично, але не перевірені з фізичними перемикачами. Рухніть ваш перемикач вогню: має засвітитися лише «Вогонь зі зброї». Якщо інша дія — призначте цей перемикач нижче.',
       ),
     };
     return messages[candidate.noticeCode] ?? candidate.notice;
@@ -903,7 +928,7 @@ export function mountRadioSetup({
     if (result.state === 'return')
       sixStatus.textContent = `${sixNames[capture.action][0]}: ${copy.switchReturn}`;
     if (result.state !== 'done') return;
-    const conflict = RADIO_CONTROL_SWITCHES.some(
+    const conflict = RADIO_CONTROL_SWITCHES.find(
       (action) =>
         action !== capture.action &&
         layoutDraft.switches[action] &&
@@ -912,7 +937,15 @@ export function mountRadioSetup({
     );
     if (conflict) {
       layoutCapture = layoutSequence = null;
-      sixStatus.textContent = copy.switchConflict;
+      const firePayload = [capture.action, conflict].sort().join('/') === 'fire/payload';
+      sixStatus.textContent = `${sixNames[capture.action][0]}: ${t('not changed', 'не змінено')}. ${t('That control currently activates', 'Цей перемикач зараз активує')} ${sixNames[conflict][0]}. ${
+        firePayload
+          ? t(
+              'Use “Swap Fire gun ↔ Deploy payload” below to exchange them without changing your sticks.',
+              'Використайте «Поміняти Вогонь ↔ Застосування заряду» нижче, щоб обміняти дії без зміни стіків.',
+            )
+          : copy.switchConflict
+      }`;
       paintSix();
       return;
     }
@@ -1013,7 +1046,7 @@ export function mountRadioSetup({
     store.radios().forEach(({ key, profile }, index) => {
       const option = el(
         'option',
-        `${index + 1}. ${profile.name} · ${profile.verified ? (locale === 'uk' ? 'перевірено' : 'verified') : locale === 'uk' ? 'чернетка' : 'draft'}`,
+        `${index + 1}. ${profile.name} · ${profile.verified ? (locale === 'uk' ? 'стіки налаштовано' : 'sticks configured') : locale === 'uk' ? 'чернетка' : 'draft'}`,
         librarySelect,
       );
       option.value = key;
@@ -1270,6 +1303,22 @@ export function mountRadioSetup({
       guide?.captureActive()
     )
       return null;
+    // An untouched new controller has empty fields, not a corrupt JSON profile.
+    // Explain the next action instead of leaking validation internals into setup.
+    const incomplete = Object.entries(rows).some(([control, row]) =>
+      [
+        'axis',
+        'min',
+        'max',
+        'deadZone',
+        ...(control === 'throttle' && throttle.value === 'full-travel' ? [] : ['center']),
+      ].some((key) => row[key].value.trim() === '' || !Number.isFinite(Number(row[key].value))),
+    );
+    if (incomplete) {
+      autoSavePending = false;
+      status.textContent = copy.incomplete;
+      return null;
+    }
     try {
       const candidate = readProfile(true);
       normalizeRadioInput(candidate, runtime.raw());
@@ -1319,15 +1368,21 @@ export function mountRadioSetup({
         runtime.setProvisionalMenu?.(null);
         bootstrapEnabled = false;
       }
-      if (signature === savedLayoutSignature) return true;
+      const announceSaved = () => {
+        if (announce && sixStatus)
+          sixStatus.textContent = t(
+            'Assignments saved automatically. Check physical switch choices with the live preview.',
+            'Призначення збережено автоматично. Перевірте вибір фізичних перемикачів у живому перегляді.',
+          );
+      };
+      if (signature === savedLayoutSignature) {
+        announceSaved();
+        return true;
+      }
       try {
         saveRadioControlLayout({ storage, layout });
         savedLayoutSignature = signature;
-        if (announce && sixStatus)
-          sixStatus.textContent = t(
-            'Switches saved automatically. Practice is optional; close setup when ready.',
-            'Перемикачі збережено автоматично. Тренування необов’язкове; закрийте налаштування, коли будете готові.',
-          );
+        announceSaved();
       } catch {
         if (sixStatus)
           sixStatus.textContent = t(
@@ -1938,11 +1993,18 @@ export function mountRadioSetup({
   el(
     'p',
     t(
-      'Assign Flight and Fire first. Add other switches if you want; those actions are also available from the pause menu. Flight OFF opens the menu. Return to its main screen before switching Flight ON to resume.',
-      'Спочатку призначте Політ і Вогонь. Інші перемикачі — за бажанням: ці дії доступні й у меню паузи. Політ ВИМК. відкриває меню. Щоб продовжити, поверніться на його головний екран і перемкніть Політ в УВІМК.',
+      'Move your intended Fire switch: “Fire gun” should light. If “Deploy payload” lights, use Swap below. Assign each action to your chosen control. Changes save automatically; weapons stay inactive here.',
+      'Рухніть ваш перемикач вогню: має засвітитися «Вогонь зі зброї». Якщо світиться «Застосувати заряд», поміняйте дії кнопкою нижче. Призначте кожній дії обраний перемикач. Зміни зберігаються автоматично; зброя тут не діє.',
     ),
     sixPanel,
   );
+  sixLive = el('p', '', sixPanel);
+  sixLive.className = 'radio-action-preview';
+  sixLive.dataset.radioActionPreview = '';
+  sixLive.tabIndex = -1;
+  sixLive.setAttribute('role', 'status');
+  sixLive.setAttribute('aria-live', 'polite');
+  sixLive.setAttribute('aria-atomic', 'true');
   sixStatus = el('p', '', sixPanel);
   sixStatus.setAttribute('role', 'status');
   sixStatus.dataset.sixStatus = '';
@@ -1951,10 +2013,13 @@ export function mountRadioSetup({
     node.dataset.sixRole = action;
     el('legend', `${index + 1} · ${sixNames[action][0]}`, node);
     el('p', sixNames[action][1], node);
-    const binding = el('output', '', node);
-    const live = el('output', '', node, 'radio-switch-live');
+    const inputDetails = el('details', undefined, node);
+    el('summary', t('Radio input details', 'Деталі сигналу пульта'), inputDetails);
+    const binding = el('output', '', inputDetails);
+    const live = el('output', '', node);
+    live.className = 'radio-switch-live';
     const capture = button(
-      t('Assign this switch', 'Призначити перемикач'),
+      `${t('Assign', 'Призначити')} ${sixNames[action][0]}`,
       () => startLayoutCapture(action),
       node,
     );
@@ -1990,7 +2055,7 @@ export function mountRadioSetup({
   modelMessage.dataset.radioModelStatus = '';
   modelMessage.setAttribute('role', 'status');
   const candidateButton = button(
-    t('Try suggested channels', 'Спробувати запропоновані канали'),
+    t('Apply suggested switch assignments', 'Застосувати запропоновані перемикачі'),
     () => {
       try {
         const device = radioDeviceIdentity(runtime.raw()),
@@ -2022,6 +2087,8 @@ export function mountRadioSetup({
           /* Suggestion remains usable for this session. */
         }
         persistSixLayout();
+        modelPanel.open = false;
+        sixLive.focus();
       } catch (error) {
         modelMessage.textContent = error.message;
       }
