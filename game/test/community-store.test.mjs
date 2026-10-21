@@ -102,6 +102,7 @@ const fixture = async ({
     creatorStore,
     downloadStore,
     stateStore,
+    client,
     library: createCommunityLibrary({
       client,
       creatorStore,
@@ -649,4 +650,217 @@ test('publisher retries the same immutable submission after an interrupted resum
   assert.equal((await publisher.publish(input)).status, 'queued');
   assert.equal(creates, 1);
   assert.equal(uploads, 2);
+});
+
+test('Installed enumerates verified local editions across an outage and a fresh library instance', async () => {
+  const content = await packageFixture();
+  const published = await edition(content.blob);
+  const h = await fixture({
+    editions: [published],
+    downloads: new Map([[published.editionId, content.blob]]),
+  });
+  await h.library.install(published, { offline: false });
+  let networkCalls = 0;
+  h.client.catalog = async () => {
+    networkCalls++;
+    throw new Error('catalog offline');
+  };
+  const cached = await h.library.catalog({ installed: 'installed' });
+  assert.equal(cached.editions[0].title, published.title);
+  assert.equal(cached.editions[0].managementAvailable, true);
+  const reopened = createCommunityLibrary({ ...h, decodeImage });
+  const local = await reopened.catalog({ installed: 'installed' });
+  assert.equal(networkCalls, 0);
+  assert.equal(local.editions.length, 1);
+  assert.equal(
+    local.editions[0].title,
+    published.slug,
+    'historical journal provides a truthful stable name',
+  );
+  assert.equal(local.editions[0].managementAvailable, false);
+  assert.equal(
+    local.editions[0].publishedAt,
+    undefined,
+    'local inventory does not invent remote publication metadata',
+  );
+  assert.equal(local.editions[0].packageSize, undefined);
+  assert.equal(local.editions[0].installed, true);
+  assert.equal(
+    local.editions[0].playHref,
+    `../creator/player.html?edition=${content.prepared.editionId}`,
+  );
+  assert.equal(local.editions[0].previewAvailable, false);
+  assert.equal(
+    (await reopened.catalog({ installed: 'installed', query: 'AURORA' })).editions.length,
+    1,
+  );
+  assert.equal(
+    (await reopened.catalog({ installed: 'installed', query: 'absent' })).editions.length,
+    0,
+  );
+  h.creatorStore.close();
+});
+
+test('local Installed excludes offloaded and staged-only content and paginates exact editions', async () => {
+  const content = await packageFixture();
+  const h = await fixture({ editions: [], downloads: new Map() });
+  const published = await edition(content.blob);
+  const ids = ['a', 'b', 'c'].map((letter) => `ed_${letter.repeat(64)}`);
+  for (const editionId of ids) {
+    const item = { ...published, editionId };
+    await h.downloadStore.put(editionId, content.blob);
+    await h.library.install(item);
+  }
+  const first = await h.library.catalog({ installed: 'installed', limit: 1 });
+  assert.deepEqual(
+    first.editions.map((item) => item.editionId),
+    [ids[0]],
+  );
+  const second = await h.library.catalog({
+    installed: 'installed',
+    limit: 1,
+    cursor: first.nextCursor,
+  });
+  assert.deepEqual(
+    second.editions.map((item) => item.editionId),
+    [ids[1]],
+  );
+  const third = await h.library.catalog({
+    installed: 'installed',
+    limit: 1,
+    cursor: second.nextCursor,
+  });
+  assert.deepEqual(
+    third.editions.map((item) => item.editionId),
+    [ids[2]],
+  );
+  assert.equal(third.nextCursor, null);
+  await assert.rejects(
+    h.library.catalog({ installed: 'installed', cursor: 'remote-cursor' }),
+    /cursor/u,
+  );
+  await assert.rejects(h.library.catalog({ installed: 'installed', limit: 0 }), /limit/u);
+  const review = await h.library.reviewInstalledOffload(published);
+  await h.library.offloadInstalled(published, review);
+  assert.equal(
+    (await h.library.catalog({ installed: 'installed' })).editions.length,
+    0,
+    'shared exact runtime is actually offloaded, regardless of other journal entries',
+  );
+  await h.stateStore.update((state) => {
+    state.editions[0].installation = 'staged';
+    return state;
+  });
+  assert.equal((await h.library.catalog({ installed: 'installed' })).editions.length, 0);
+  h.creatorStore.close();
+});
+
+test('Installed refuses unrelated cached metadata and honors cancellation before local reads', async () => {
+  const content = await packageFixture();
+  const published = await edition(content.blob);
+  const h = await fixture({
+    editions: [published],
+    downloads: new Map([[published.editionId, content.blob]]),
+  });
+  await h.library.install(published, { offline: false });
+  await h.stateStore.update((state) => {
+    state.editions[0].version = 'historical-version';
+    return state;
+  });
+  const result = await h.library.catalog({ installed: 'installed' });
+  assert.equal(result.editions[0].managementAvailable, false);
+  assert.equal(result.editions[0].title, published.slug);
+  const controller = new AbortController();
+  controller.abort();
+  await assert.rejects(
+    h.library.catalog({ installed: 'installed', signal: controller.signal }),
+    /abort/iu,
+  );
+  h.creatorStore.close();
+});
+
+test('local Installed uses each native runtime owner and never upgrades retained packages to Play', async () => {
+  const stateStore = createMemoryCommunityStateStore();
+  const families = ['classic', 'team', 'fpv', 'overflight', 'overflight-hunt', 'overflight-riy'];
+  const linked = families.map((family, index) => ({
+    editionId: `ed_${String(index + 1).repeat(64)}`,
+    collectionId: null,
+    creatorEditionId: String(index + 1).repeat(64),
+    slug: family,
+    version: '1',
+    packageSha256: 'f'.repeat(64),
+    family,
+    runtimeIdentity:
+      family === 'team' ? 'a'.repeat(64) : family === 'fpv' ? 'local-world' : 'b'.repeat(16),
+    installation: 'installed',
+    installedAt: null,
+  }));
+  await stateStore.update((state) => ({ ...state, editions: linked }));
+  const installed = new Set(linked.map((item) => item.creatorEditionId));
+  const library = createCommunityLibrary({
+    client: {
+      catalog() {
+        throw new Error('Local inventory must not contact the service');
+      },
+    },
+    creatorStore: {},
+    stateStore,
+    downloadStore: createMemoryCommunityDownloadStore(),
+    classicInstalled: { storage: async (id) => ({ installed: installed.has(id) }) },
+    nativeInstalled: {
+      storage: async (item) => ({ installed: installed.has(item.creatorEditionId) }),
+    },
+  });
+  const result = await library.catalog({ installed: 'installed' });
+  assert.equal(result.editions.length, families.length);
+  const destinations = [
+    '/snake/play.html?',
+    '/couch/relay-rescue.html?',
+    '/civilian-fpv/index.html?',
+    '/overflight/play.html?community=',
+    '/overflight/raid.html?',
+    '/overflight/play.html?operation=riy',
+  ];
+  for (let index = 0; index < families.length; index++) {
+    assert.equal(result.editions[index].family, families[index]);
+    assert.ok(result.editions[index].playHref.includes(destinations[index]));
+  }
+  installed.delete(linked[1].creatorEditionId);
+  assert.equal((await library.catalog({ installed: 'installed' })).editions.length, 5);
+});
+
+test('one unavailable local runtime remains visible without hiding healthy installed games', async () => {
+  const stateStore = createMemoryCommunityStateStore();
+  const editions = ['fpv', 'team'].map((family, index) => ({
+    editionId: `ed_${String(index + 1).repeat(64)}`,
+    collectionId: null,
+    creatorEditionId: String(index + 1).repeat(64),
+    slug: family,
+    version: '1',
+    packageSha256: 'a'.repeat(64),
+    family,
+    runtimeIdentity: family === 'fpv' ? 'local-world' : 'b'.repeat(64),
+    installation: 'installed',
+    installedAt: null,
+  }));
+  await stateStore.update((state) => ({ ...state, editions }));
+  const library = createCommunityLibrary({
+    client: {},
+    creatorStore: {},
+    stateStore,
+    downloadStore: createMemoryCommunityDownloadStore(),
+    nativeInstalled: {
+      storage: async (item) => {
+        if (item.family === 'fpv') throw new Error('optional store unavailable');
+        return { installed: true };
+      },
+    },
+  });
+  const result = await library.catalog({ installed: 'installed' });
+  assert.equal(result.editions.length, 2);
+  assert.equal(result.editions[0].localUnavailable, true);
+  assert.equal(result.editions[0].installed, false);
+  assert.equal(result.editions[0].playHref, undefined);
+  assert.equal(result.editions[1].installed, true);
+  assert.match(result.editions[1].playHref, /relay-rescue/u);
 });

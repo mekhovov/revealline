@@ -11,6 +11,7 @@ import { mountModeGuides } from './mode-choice.mjs';
 import { MODE_SETTINGS_CATEGORIES as NATIVE_MENU_CATEGORIES } from './mode-settings-view.mjs';
 import { mountGlobalSettings } from './global-settings-view.mjs';
 import { wireLandingMenuNavigation } from './mode-play-shell.mjs';
+import { mountComfortPresets } from './comfort-presets.mjs';
 
 export { NATIVE_MENU_CATEGORIES };
 const owners = new WeakMap();
@@ -520,9 +521,10 @@ export function prepareNativeMenus({
   });
   let globalSettings = null;
   const extraGlobalControls = {};
+  let comfortPresets;
   // Providers mount at different points in the host lifecycle. Adopt their real
   // rows after they are ready; subsequent calls register late tools in place.
-  const refreshGlobalSettings = ({ controls = {} } = {}) => {
+  const refreshGlobalSettings = ({ controls = {}, comfort } = {}) => {
     Object.assign(extraGlobalControls, controls);
     const row = (id) => {
       const node = $(id);
@@ -557,7 +559,7 @@ export function prepareNativeMenus({
       masterVolume: row(`${fieldPrefix}master-volume`),
       audioCues: [
         ...settings.querySelectorAll(
-          '[data-menu-audio], [data-radio-audio], [data-movement-audio]',
+          '[data-menu-audio], [data-radio-audio], [data-movement-audio], [data-gameplay-audio]',
         ),
       ],
       touchPresentation: touchRows,
@@ -604,6 +606,13 @@ export function prepareNativeMenus({
         offlineTools: [mode === 'team' ? node('coop-offline') : node('settings-offline')],
       },
     });
+    if (comfort && !comfortPresets)
+      comfortPresets = mountComfortPresets({
+        document: doc,
+        window: doc.defaultView,
+        root: panels.accessibility,
+        ...comfort,
+      });
     return globalSettings;
   };
   listeners.push(onLocaleChange(() => globalSettings?.refresh(getLocale())));
@@ -637,6 +646,7 @@ export function prepareNativeMenus({
     showBrandTitle,
     hideBrandTitle,
     destroy() {
+      comfortPresets?.destroy();
       globalSettings?.destroy();
       retune.dispose();
       scene.dispose();

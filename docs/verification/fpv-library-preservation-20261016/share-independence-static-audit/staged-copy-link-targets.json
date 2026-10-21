@@ -1,0 +1,2331 @@
+{
+  "capturedAt": "2026-10-16T04:17:56.137051+00:00",
+  "sourceRoot": "/Volumes/alex/CodexMigrationStaging",
+  "snapshots": [
+    {
+      "name": "app-files.jsonl",
+      "snapshotSHA256": "63bd5a897e7c874b814102543d1d44ace2ad5bdf8e7f567c35593c5601202642",
+      "bytesRead": 22903283,
+      "sizeBefore": 22903283,
+      "sizeAfter": 22903283,
+      "mtimeBeforeNs": 1792123421827329297,
+      "mtimeAfterNs": 1792123421827329297,
+      "stableDuringRead": true,
+      "rowsByKind": {
+        "file": 85733,
+        "excluded": 33,
+        "symlink": 262,
+        "git-checkout": 31
+      },
+      "symlinkRows": 262,
+      "trailingPartialRow": false,
+      "scope": "Completed primary inventory snapshot."
+    },
+    {
+      "name": "app-supplement-workingtrees.jsonl",
+      "snapshotSHA256": "a8931a78a6b0c83ca7657d4e4addda87b867586028cf082ab5245d8e2c1e4e8e",
+      "bytesRead": 6713412,
+      "sizeBefore": 6713412,
+      "sizeAfter": 6713412,
+      "mtimeBeforeNs": 1792124080339193982,
+      "mtimeAfterNs": 1792124080339193982,
+      "stableDuringRead": true,
+      "rowsByKind": {
+        "excluded": 47,
+        "file": 24358,
+        "symlink": 20
+      },
+      "symlinkRows": 20,
+      "trailingPartialRow": false,
+      "scope": "Current readable prefix snapshot; supplement inventories may continue growing."
+    },
+    {
+      "name": "app-supplement-workingtrees-delta.jsonl",
+      "snapshotSHA256": "6caced4cf06bd0d73d24d3204138a40ab7a39137687de2b04dcad6b2b3e0cb4d",
+      "bytesRead": 3145205,
+      "sizeBefore": 3145205,
+      "sizeAfter": 3145205,
+      "mtimeBeforeNs": 1792124211906211975,
+      "mtimeAfterNs": 1792124211906211975,
+      "stableDuringRead": true,
+      "rowsByKind": {
+        "excluded": 18,
+        "file": 13156
+      },
+      "symlinkRows": 0,
+      "trailingPartialRow": false,
+      "scope": "Current readable prefix snapshot; supplement inventories may continue growing."
+    }
+  ],
+  "uniqueSymlinkRows": 282,
+  "alexAbsoluteTargets": 281,
+  "outsideCapturedRootTargets": [
+    {
+      "kind": "symlink",
+      "path": "fpv-package-qualification-20261014/batched-storage-103be7a7/independent-storage-checks/authoring/fpv-worlds/regions/urban-bando/delivery-review-r1",
+      "target": "<internal-app-worktrees>/fpv-rgba-isolated-20261015/authoring/fpv-worlds/regions/urban-bando/delivery-review-r1",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    }
+  ],
+  "links": [
+    {
+      "kind": "symlink",
+      "path": "fpv-canal-city-authoring-20261015/optional-practice",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-package-qualification-20261014/desert-start-headings-e006821b/functional-check/runtime/optional-practice",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-canal-city-authoring-20261015/game",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-package-qualification-20261014/desert-start-headings-e006821b/functional-check/runtime/game",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-canal-city-authoring-20261015/authoring/fpv-worlds/regions/hillside-town",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-canyon-expanse-source-20261015/authoring/fpv-worlds/regions/hillside-town",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-canal-city-refinement-20261015/optional-practice",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-package-qualification-20261014/desert-start-headings-e006821b/functional-check/runtime/optional-practice",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-canal-city-refinement-20261015/game",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-package-qualification-20261014/desert-start-headings-e006821b/functional-check/runtime/game",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-canal-city-refinement-20261015/authoring/fpv-worlds/regions/hillside-town",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-canyon-expanse-source-20261015/authoring/fpv-worlds/regions/hillside-town",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-canal-library-integrated-20261015/optional-practice/civilian-fpv/regional-delivery.mjs",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-package-qualification-20261014/desert-start-headings-e006821b/functional-check/runtime/optional-practice/civilian-fpv/regional-delivery.mjs",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-canal-library-integrated-20261015/optional-practice/civilian-fpv/regional",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-package-qualification-20261014/desert-start-headings-e006821b/functional-check/runtime/optional-practice/civilian-fpv/regional",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-canal-library-source-20261015/optional-practice/civilian-fpv/regional-delivery.mjs",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-package-qualification-20261014/desert-start-headings-e006821b/functional-check/runtime/optional-practice/civilian-fpv/regional-delivery.mjs",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-canal-library-source-20261015/optional-practice/civilian-fpv/regional",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-package-qualification-20261014/desert-start-headings-e006821b/functional-check/runtime/optional-practice/civilian-fpv/regional",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-coastal-harbour-native-20261015/connected",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-tropical-harbour-r3b-20261015",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-coastal-harbour-native-20261015/original",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-tropical-settlement-r2c-20261015",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-coastal-harbour-native-20261015/runtime",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-coastal-water-native-20261015/runtime",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-coastal-water-native-20261015/region",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-tropical-ground-native-20261015/region",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-hillside-contact-native-20261015/web/region-r3",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-hillside-courtyard-r3b-20261015",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-hillside-contact-native-20261015/web/region-r4",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-hillside-courtyard-r4b-20261015",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-hillside-courtyard-native-r3-20261015/web/region-r2",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-hillside-town-r2-20261015",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-hillside-courtyard-native-r3-20261015/web/region-r3",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-hillside-courtyard-r3b-20261015",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-hillside-courtyard-native-r4-20261015/web/region-r3",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-hillside-courtyard-r3b-20261015",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-hillside-courtyard-native-r4-20261015/web/region-r4",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-hillside-courtyard-r4b-20261015",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-hillside-ground-native-20261015/web/region",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-hillside-town-r2-20261015",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-hillside-material-native-r5-20261015/web/region-r5",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-hillside-courtyard-r5b-20261015",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-hillside-material-native-r5-20261015/web/region-r4",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-hillside-courtyard-r4b-20261015",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-hillside-town-native-r1-20261015/region",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-hillside-town-r1g-20261015",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-hillside-town-native-r2-20261015/region",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-hillside-town-r2-20261015",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-lunar-basin-authoring-20261015/optional-practice",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-canal-city-refinement-20261015/optional-practice",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-lunar-basin-authoring-20261015/game",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-canal-city-refinement-20261015/game",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-lunar-basin-authoring-20261015/authoring/fpv-worlds/regions/scenery-cell.mjs",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-canal-city-refinement-20261015/optional-practice/civilian-fpv/regional/scenery-cell.mjs",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-lunar-basin-authoring-20261015/authoring/fpv-worlds/regions/hillside-town",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-canal-city-refinement-20261015/authoring/fpv-worlds/regions/hillside-town",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-lunar-basin-authoring-20261015/authoring/fpv-worlds/regions/rgba-scenery-cell.mjs",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-canal-city-refinement-20261015/authoring/fpv-worlds/regions/rgba-scenery-cell.mjs",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-lunar-basin-authoring-20261015/authoring/fpv-worlds/regions/desert-expedition",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-canal-city-refinement-20261015/authoring/fpv-worlds/regions/desert-expedition",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-lunar-basin-authoring-20261015/authoring/fpv-worlds/regions/region-manifest.mjs",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-canal-city-refinement-20261015/authoring/fpv-worlds/regions/region-manifest.mjs",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-lunar-basin-authoring-20261015/authoring/fpv-worlds/regions/canal-city",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-canal-city-refinement-20261015/authoring/fpv-worlds/regions/canal-city",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-lunar-basin-authoring-20261015/authoring/fpv-worlds/regions/prepare-delivery.mjs",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-canal-city-refinement-20261015/authoring/fpv-worlds/regions/prepare-delivery.mjs",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-lunar-basin-authoring-20261015/authoring/fpv-worlds/regions/indexed-scenery-cell.mjs",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-canal-city-refinement-20261015/authoring/fpv-worlds/regions/indexed-scenery-cell.mjs",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-lunar-basin-authoring-20261015/authoring/fpv-worlds/regions/scenery-preview.mjs.baseline",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-canal-city-refinement-20261015/authoring/fpv-worlds/regions/scenery-preview.mjs.baseline",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-lunar-basin-authoring-20261015/authoring/fpv-worlds/regions/terrain-cell.mjs",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-canal-city-refinement-20261015/authoring/fpv-worlds/regions/terrain-cell.mjs",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-lunar-basin-authoring-20261015/authoring/fpv-worlds/regions/scenery-lighting.mjs",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-canal-city-refinement-20261015/authoring/fpv-worlds/regions/scenery-lighting.mjs",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-lunar-basin-authoring-20261015/authoring/fpv-worlds/regions/verified-mixed-window.mjs",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-canal-city-refinement-20261015/authoring/fpv-worlds/regions/verified-mixed-window.mjs",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-lunar-basin-authoring-20261015/authoring/fpv-worlds/regions/scenery-preview.html",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-canal-city-refinement-20261015/authoring/fpv-worlds/regions/scenery-preview.html",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-lunar-basin-authoring-20261015/authoring/fpv-worlds/regions/verified-scenery-window.mjs",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-canal-city-refinement-20261015/authoring/fpv-worlds/regions/verified-scenery-window.mjs",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-lunar-connections-20261015/optional-practice",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-canal-city-refinement-20261015/optional-practice",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-lunar-connections-20261015/game",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-canal-city-refinement-20261015/game",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-lunar-connections-20261015/authoring/fpv-worlds/regions/scenery-cell.mjs",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-canal-city-refinement-20261015/optional-practice/civilian-fpv/regional/scenery-cell.mjs",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-lunar-connections-20261015/authoring/fpv-worlds/regions/hillside-town",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-canal-city-refinement-20261015/authoring/fpv-worlds/regions/hillside-town",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-lunar-connections-20261015/authoring/fpv-worlds/regions/rgba-scenery-cell.mjs",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-canal-city-refinement-20261015/authoring/fpv-worlds/regions/rgba-scenery-cell.mjs",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-lunar-connections-20261015/authoring/fpv-worlds/regions/desert-expedition",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-canal-city-refinement-20261015/authoring/fpv-worlds/regions/desert-expedition",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-lunar-connections-20261015/authoring/fpv-worlds/regions/region-manifest.mjs",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-canal-city-refinement-20261015/authoring/fpv-worlds/regions/region-manifest.mjs",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-lunar-connections-20261015/authoring/fpv-worlds/regions/canal-city",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-canal-city-refinement-20261015/authoring/fpv-worlds/regions/canal-city",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-lunar-connections-20261015/authoring/fpv-worlds/regions/prepare-delivery.mjs",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-canal-city-refinement-20261015/authoring/fpv-worlds/regions/prepare-delivery.mjs",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-lunar-connections-20261015/authoring/fpv-worlds/regions/indexed-scenery-cell.mjs",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-canal-city-refinement-20261015/authoring/fpv-worlds/regions/indexed-scenery-cell.mjs",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-lunar-connections-20261015/authoring/fpv-worlds/regions/scenery-preview.mjs.baseline",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-canal-city-refinement-20261015/authoring/fpv-worlds/regions/scenery-preview.mjs.baseline",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-lunar-connections-20261015/authoring/fpv-worlds/regions/terrain-cell.mjs",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-canal-city-refinement-20261015/authoring/fpv-worlds/regions/terrain-cell.mjs",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-lunar-connections-20261015/authoring/fpv-worlds/regions/scenery-lighting.mjs",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-canal-city-refinement-20261015/authoring/fpv-worlds/regions/scenery-lighting.mjs",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-lunar-connections-20261015/authoring/fpv-worlds/regions/verified-mixed-window.mjs",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-canal-city-refinement-20261015/authoring/fpv-worlds/regions/verified-mixed-window.mjs",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-lunar-connections-20261015/authoring/fpv-worlds/regions/scenery-preview.html",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-canal-city-refinement-20261015/authoring/fpv-worlds/regions/scenery-preview.html",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-lunar-connections-20261015/authoring/fpv-worlds/regions/verified-scenery-window.mjs",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-canal-city-refinement-20261015/authoring/fpv-worlds/regions/verified-scenery-window.mjs",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-lunar-regolith-20261015/game",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-lunar-basin-authoring-20261015/game",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-lunar-regolith-20261015/authoring/fpv-worlds/regions/scenery-cell.mjs",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-canal-city-refinement-20261015/optional-practice/civilian-fpv/regional/scenery-cell.mjs",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-lunar-regolith-20261015/authoring/fpv-worlds/regions/hillside-town",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-canal-city-refinement-20261015/authoring/fpv-worlds/regions/hillside-town",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-lunar-regolith-20261015/authoring/fpv-worlds/regions/rgba-scenery-cell.mjs",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-canal-city-refinement-20261015/authoring/fpv-worlds/regions/rgba-scenery-cell.mjs",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-lunar-regolith-20261015/authoring/fpv-worlds/regions/desert-expedition",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-canal-city-refinement-20261015/authoring/fpv-worlds/regions/desert-expedition",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-lunar-regolith-20261015/authoring/fpv-worlds/regions/region-manifest.mjs",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-canal-city-refinement-20261015/authoring/fpv-worlds/regions/region-manifest.mjs",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-lunar-regolith-20261015/authoring/fpv-worlds/regions/canal-city",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-canal-city-refinement-20261015/authoring/fpv-worlds/regions/canal-city",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-lunar-regolith-20261015/authoring/fpv-worlds/regions/prepare-delivery.mjs",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-canal-city-refinement-20261015/authoring/fpv-worlds/regions/prepare-delivery.mjs",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-lunar-regolith-20261015/authoring/fpv-worlds/regions/indexed-scenery-cell.mjs",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-canal-city-refinement-20261015/authoring/fpv-worlds/regions/indexed-scenery-cell.mjs",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-lunar-regolith-20261015/authoring/fpv-worlds/regions/scenery-preview.mjs.baseline",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-canal-city-refinement-20261015/authoring/fpv-worlds/regions/scenery-preview.mjs.baseline",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-lunar-regolith-20261015/authoring/fpv-worlds/regions/terrain-cell.mjs",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-canal-city-refinement-20261015/authoring/fpv-worlds/regions/terrain-cell.mjs",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-lunar-regolith-20261015/authoring/fpv-worlds/regions/scenery-lighting.mjs",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-canal-city-refinement-20261015/authoring/fpv-worlds/regions/scenery-lighting.mjs",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-lunar-regolith-20261015/authoring/fpv-worlds/regions/verified-mixed-window.mjs",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-canal-city-refinement-20261015/authoring/fpv-worlds/regions/verified-mixed-window.mjs",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-lunar-regolith-20261015/authoring/fpv-worlds/regions/scenery-preview.html",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-canal-city-refinement-20261015/authoring/fpv-worlds/regions/scenery-preview.html",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-lunar-regolith-20261015/authoring/fpv-worlds/regions/verified-scenery-window.mjs",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-canal-city-refinement-20261015/authoring/fpv-worlds/regions/verified-scenery-window.mjs",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-lunar-regolith-20261015/optional-practice/navigation.mjs",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-lunar-basin-authoring-20261015/optional-practice/navigation.mjs",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-lunar-regolith-20261015/optional-practice/fpv-worlds",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-lunar-basin-authoring-20261015/optional-practice/fpv-worlds",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-lunar-regolith-20261015/optional-practice/install-context.mjs",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-lunar-basin-authoring-20261015/optional-practice/install-context.mjs",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-lunar-regolith-20261015/optional-practice/guide.mjs",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-lunar-basin-authoring-20261015/optional-practice/guide.mjs",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-lunar-regolith-20261015/optional-practice/civilian-fpv/world-catalogue.mjs",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-lunar-basin-authoring-20261015/optional-practice/civilian-fpv/world-catalogue.mjs",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-lunar-regolith-20261015/optional-practice/civilian-fpv/math.mjs",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-lunar-basin-authoring-20261015/optional-practice/civilian-fpv/math.mjs",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-lunar-regolith-20261015/optional-practice/civilian-fpv/flight-fullscreen.mjs",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-lunar-basin-authoring-20261015/optional-practice/civilian-fpv/flight-fullscreen.mjs",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-lunar-regolith-20261015/optional-practice/civilian-fpv/sim-presentation.mjs",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-lunar-basin-authoring-20261015/optional-practice/civilian-fpv/sim-presentation.mjs",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-lunar-regolith-20261015/optional-practice/civilian-fpv/radio-controls.mjs",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-lunar-basin-authoring-20261015/optional-practice/civilian-fpv/radio-controls.mjs",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-lunar-regolith-20261015/optional-practice/civilian-fpv/notebook.mjs",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-lunar-basin-authoring-20261015/optional-practice/civilian-fpv/notebook.mjs",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-lunar-regolith-20261015/optional-practice/civilian-fpv/flight-contact.mjs",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-lunar-basin-authoring-20261015/optional-practice/civilian-fpv/flight-contact.mjs",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-lunar-regolith-20261015/optional-practice/civilian-fpv/world-model.mjs",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-lunar-basin-authoring-20261015/optional-practice/civilian-fpv/world-model.mjs",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-lunar-regolith-20261015/optional-practice/civilian-fpv/attempts.mjs",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-lunar-basin-authoring-20261015/optional-practice/civilian-fpv/attempts.mjs",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-lunar-regolith-20261015/optional-practice/civilian-fpv/industrial-soldiers.mjs",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-lunar-basin-authoring-20261015/optional-practice/civilian-fpv/industrial-soldiers.mjs",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-lunar-regolith-20261015/optional-practice/civilian-fpv/world-editor.mjs",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-lunar-basin-authoring-20261015/optional-practice/civilian-fpv/world-editor.mjs",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-lunar-regolith-20261015/optional-practice/civilian-fpv/radio-runtime.mjs",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-lunar-basin-authoring-20261015/optional-practice/civilian-fpv/radio-runtime.mjs",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-lunar-regolith-20261015/optional-practice/civilian-fpv/regional-locations.mjs",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-lunar-basin-authoring-20261015/optional-practice/civilian-fpv/regional-locations.mjs",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-lunar-regolith-20261015/optional-practice/civilian-fpv/radio-guide.mjs",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-lunar-basin-authoring-20261015/optional-practice/civilian-fpv/radio-guide.mjs",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-lunar-regolith-20261015/optional-practice/civilian-fpv/demonstrations.mjs",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-lunar-basin-authoring-20261015/optional-practice/civilian-fpv/demonstrations.mjs",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-lunar-regolith-20261015/optional-practice/civilian-fpv/input.mjs",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-lunar-basin-authoring-20261015/optional-practice/civilian-fpv/input.mjs",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-lunar-regolith-20261015/optional-practice/civilian-fpv/snake-hunt-catalogue.mjs",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-lunar-basin-authoring-20261015/optional-practice/civilian-fpv/snake-hunt-catalogue.mjs",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-lunar-regolith-20261015/optional-practice/civilian-fpv/world-pursuit.mjs",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-lunar-basin-authoring-20261015/optional-practice/civilian-fpv/world-pursuit.mjs",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-lunar-regolith-20261015/optional-practice/civilian-fpv/flight-sectors.mjs",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-lunar-basin-authoring-20261015/optional-practice/civilian-fpv/flight-sectors.mjs",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-lunar-regolith-20261015/optional-practice/civilian-fpv/snake-hunt-presentation.mjs",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-lunar-basin-authoring-20261015/optional-practice/civilian-fpv/snake-hunt-presentation.mjs",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-lunar-regolith-20261015/optional-practice/civilian-fpv/flight-support.mjs",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-lunar-basin-authoring-20261015/optional-practice/civilian-fpv/flight-support.mjs",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-lunar-regolith-20261015/optional-practice/civilian-fpv/industrial-vehicles.mjs",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-lunar-basin-authoring-20261015/optional-practice/civilian-fpv/industrial-vehicles.mjs",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-lunar-regolith-20261015/optional-practice/civilian-fpv/regional-delivery.mjs",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-lunar-basin-authoring-20261015/optional-practice/civilian-fpv/regional-delivery.mjs",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-lunar-regolith-20261015/optional-practice/civilian-fpv/radio-session.mjs",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-lunar-basin-authoring-20261015/optional-practice/civilian-fpv/radio-session.mjs",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-lunar-regolith-20261015/optional-practice/civilian-fpv/catalogue.mjs",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-lunar-basin-authoring-20261015/optional-practice/civilian-fpv/catalogue.mjs",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-lunar-regolith-20261015/optional-practice/civilian-fpv/battlefield-ground.mjs",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-lunar-basin-authoring-20261015/optional-practice/civilian-fpv/battlefield-ground.mjs",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-lunar-regolith-20261015/optional-practice/civilian-fpv/world-style.css",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-lunar-basin-authoring-20261015/optional-practice/civilian-fpv/world-style.css",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-lunar-regolith-20261015/optional-practice/civilian-fpv/world-themes.mjs",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-lunar-basin-authoring-20261015/optional-practice/civilian-fpv/world-themes.mjs",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-lunar-regolith-20261015/optional-practice/civilian-fpv/expressive-hunt-courses.mjs",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-lunar-basin-authoring-20261015/optional-practice/civilian-fpv/expressive-hunt-courses.mjs",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-lunar-regolith-20261015/optional-practice/civilian-fpv/world-store.mjs",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-lunar-basin-authoring-20261015/optional-practice/civilian-fpv/world-store.mjs",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-lunar-regolith-20261015/optional-practice/civilian-fpv/world-demonstrations.mjs",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-lunar-basin-authoring-20261015/optional-practice/civilian-fpv/world-demonstrations.mjs",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-lunar-regolith-20261015/optional-practice/civilian-fpv/README.md",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-lunar-basin-authoring-20261015/optional-practice/civilian-fpv/README.md",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-lunar-regolith-20261015/optional-practice/civilian-fpv/radio-profile.mjs",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-lunar-basin-authoring-20261015/optional-practice/civilian-fpv/radio-profile.mjs",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-lunar-regolith-20261015/optional-practice/civilian-fpv/world-visuals.mjs",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-lunar-basin-authoring-20261015/optional-practice/civilian-fpv/world-visuals.mjs",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-lunar-regolith-20261015/optional-practice/civilian-fpv/beginner-coach.mjs",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-lunar-basin-authoring-20261015/optional-practice/civilian-fpv/beginner-coach.mjs",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-lunar-regolith-20261015/optional-practice/civilian-fpv/world-reaction-runtime.mjs",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-lunar-basin-authoring-20261015/optional-practice/civilian-fpv/world-reaction-runtime.mjs",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-lunar-regolith-20261015/optional-practice/civilian-fpv/world-content.mjs",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-lunar-basin-authoring-20261015/optional-practice/civilian-fpv/world-content.mjs",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-lunar-regolith-20261015/optional-practice/civilian-fpv/content-definitions.mjs",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-lunar-basin-authoring-20261015/optional-practice/civilian-fpv/content-definitions.mjs",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-lunar-regolith-20261015/optional-practice/civilian-fpv/regional-session.mjs",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-lunar-basin-authoring-20261015/optional-practice/civilian-fpv/regional-session.mjs",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-lunar-regolith-20261015/optional-practice/civilian-fpv/style.css",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-lunar-basin-authoring-20261015/optional-practice/civilian-fpv/style.css",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-lunar-regolith-20261015/optional-practice/civilian-fpv/world-assets.mjs",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-lunar-basin-authoring-20261015/optional-practice/civilian-fpv/world-assets.mjs",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-lunar-regolith-20261015/optional-practice/civilian-fpv/renderer.mjs",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-lunar-basin-authoring-20261015/optional-practice/civilian-fpv/renderer.mjs",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-lunar-regolith-20261015/optional-practice/civilian-fpv/industrial-environment.mjs",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-lunar-basin-authoring-20261015/optional-practice/civilian-fpv/industrial-environment.mjs",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-lunar-regolith-20261015/optional-practice/civilian-fpv/radio-setup.mjs",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-lunar-basin-authoring-20261015/optional-practice/civilian-fpv/radio-setup.mjs",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-lunar-regolith-20261015/optional-practice/civilian-fpv/snake-hunt.mjs",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-lunar-basin-authoring-20261015/optional-practice/civilian-fpv/snake-hunt.mjs",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-lunar-regolith-20261015/optional-practice/civilian-fpv/regional-library.mjs",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-lunar-basin-authoring-20261015/optional-practice/civilian-fpv/regional-library.mjs",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-lunar-regolith-20261015/optional-practice/civilian-fpv/playlists.mjs",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-lunar-basin-authoring-20261015/optional-practice/civilian-fpv/playlists.mjs",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-lunar-regolith-20261015/optional-practice/civilian-fpv/world-records.mjs",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-lunar-basin-authoring-20261015/optional-practice/civilian-fpv/world-records.mjs",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-lunar-regolith-20261015/optional-practice/civilian-fpv/world-app.mjs",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-lunar-basin-authoring-20261015/optional-practice/civilian-fpv/world-app.mjs",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-lunar-regolith-20261015/optional-practice/civilian-fpv/world-zip.mjs",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-lunar-basin-authoring-20261015/optional-practice/civilian-fpv/world-zip.mjs",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-lunar-regolith-20261015/optional-practice/civilian-fpv/rotation-table.mjs",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-lunar-basin-authoring-20261015/optional-practice/civilian-fpv/rotation-table.mjs",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-lunar-regolith-20261015/optional-practice/civilian-fpv/world-collision.mjs",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-lunar-basin-authoring-20261015/optional-practice/civilian-fpv/world-collision.mjs",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-lunar-regolith-20261015/optional-practice/civilian-fpv/native-pursuit-courses.mjs",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-lunar-basin-authoring-20261015/optional-practice/civilian-fpv/native-pursuit-courses.mjs",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-lunar-regolith-20261015/optional-practice/civilian-fpv/model.mjs",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-lunar-basin-authoring-20261015/optional-practice/civilian-fpv/model.mjs",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-lunar-regolith-20261015/optional-practice/civilian-fpv/offline.mjs",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-lunar-basin-authoring-20261015/optional-practice/civilian-fpv/offline.mjs",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-lunar-regolith-20261015/optional-practice/civilian-fpv/vendor",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-lunar-basin-authoring-20261015/optional-practice/civilian-fpv/vendor",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-lunar-shelter-delivery-r3-20261015/optional-practice",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-package-qualification-20261014/lunar-library-title-65e92d12/functional-check/runtime/optional-practice",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-lunar-shelter-detail-20261015/optional-practice",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-package-qualification-20261014/lunar-library-66b318e7/functional-check/runtime/optional-practice",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-lunar-shelter-library-r3-20261015/optional-practice/navigation.mjs",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-package-qualification-20261014/lunar-library-title-65e92d12/functional-check/runtime/optional-practice/navigation.mjs",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-lunar-shelter-library-r3-20261015/optional-practice/fpv-worlds",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-package-qualification-20261014/lunar-library-title-65e92d12/functional-check/runtime/optional-practice/fpv-worlds",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-lunar-shelter-library-r3-20261015/optional-practice/install-context.mjs",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-package-qualification-20261014/lunar-library-title-65e92d12/functional-check/runtime/optional-practice/install-context.mjs",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-lunar-shelter-library-r3-20261015/optional-practice/guide.mjs",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-package-qualification-20261014/lunar-library-title-65e92d12/functional-check/runtime/optional-practice/guide.mjs",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-lunar-shelter-library-r3-20261015/optional-practice/civilian-fpv/world-catalogue.mjs",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-package-qualification-20261014/lunar-library-title-65e92d12/functional-check/runtime/optional-practice/civilian-fpv/world-catalogue.mjs",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-lunar-shelter-library-r3-20261015/optional-practice/civilian-fpv/math.mjs",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-package-qualification-20261014/lunar-library-title-65e92d12/functional-check/runtime/optional-practice/civilian-fpv/math.mjs",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-lunar-shelter-library-r3-20261015/optional-practice/civilian-fpv/flight-fullscreen.mjs",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-package-qualification-20261014/lunar-library-title-65e92d12/functional-check/runtime/optional-practice/civilian-fpv/flight-fullscreen.mjs",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-lunar-shelter-library-r3-20261015/optional-practice/civilian-fpv/sim-presentation.mjs",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-package-qualification-20261014/lunar-library-title-65e92d12/functional-check/runtime/optional-practice/civilian-fpv/sim-presentation.mjs",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-lunar-shelter-library-r3-20261015/optional-practice/civilian-fpv/radio-controls.mjs",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-package-qualification-20261014/lunar-library-title-65e92d12/functional-check/runtime/optional-practice/civilian-fpv/radio-controls.mjs",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-lunar-shelter-library-r3-20261015/optional-practice/civilian-fpv/notebook.mjs",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-package-qualification-20261014/lunar-library-title-65e92d12/functional-check/runtime/optional-practice/civilian-fpv/notebook.mjs",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-lunar-shelter-library-r3-20261015/optional-practice/civilian-fpv/flight-contact.mjs",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-package-qualification-20261014/lunar-library-title-65e92d12/functional-check/runtime/optional-practice/civilian-fpv/flight-contact.mjs",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-lunar-shelter-library-r3-20261015/optional-practice/civilian-fpv/world-model.mjs",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-package-qualification-20261014/lunar-library-title-65e92d12/functional-check/runtime/optional-practice/civilian-fpv/world-model.mjs",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-lunar-shelter-library-r3-20261015/optional-practice/civilian-fpv/attempts.mjs",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-package-qualification-20261014/lunar-library-title-65e92d12/functional-check/runtime/optional-practice/civilian-fpv/attempts.mjs",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-lunar-shelter-library-r3-20261015/optional-practice/civilian-fpv/industrial-soldiers.mjs",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-package-qualification-20261014/lunar-library-title-65e92d12/functional-check/runtime/optional-practice/civilian-fpv/industrial-soldiers.mjs",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-lunar-shelter-library-r3-20261015/optional-practice/civilian-fpv/world-editor.mjs",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-package-qualification-20261014/lunar-library-title-65e92d12/functional-check/runtime/optional-practice/civilian-fpv/world-editor.mjs",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-lunar-shelter-library-r3-20261015/optional-practice/civilian-fpv/radio-runtime.mjs",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-package-qualification-20261014/lunar-library-title-65e92d12/functional-check/runtime/optional-practice/civilian-fpv/radio-runtime.mjs",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-lunar-shelter-library-r3-20261015/optional-practice/civilian-fpv/regional-locations.mjs",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-package-qualification-20261014/lunar-library-title-65e92d12/functional-check/runtime/optional-practice/civilian-fpv/regional-locations.mjs",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-lunar-shelter-library-r3-20261015/optional-practice/civilian-fpv/radio-guide.mjs",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-package-qualification-20261014/lunar-library-title-65e92d12/functional-check/runtime/optional-practice/civilian-fpv/radio-guide.mjs",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-lunar-shelter-library-r3-20261015/optional-practice/civilian-fpv/demonstrations.mjs",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-package-qualification-20261014/lunar-library-title-65e92d12/functional-check/runtime/optional-practice/civilian-fpv/demonstrations.mjs",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-lunar-shelter-library-r3-20261015/optional-practice/civilian-fpv/input.mjs",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-package-qualification-20261014/lunar-library-title-65e92d12/functional-check/runtime/optional-practice/civilian-fpv/input.mjs",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-lunar-shelter-library-r3-20261015/optional-practice/civilian-fpv/snake-hunt-catalogue.mjs",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-package-qualification-20261014/lunar-library-title-65e92d12/functional-check/runtime/optional-practice/civilian-fpv/snake-hunt-catalogue.mjs",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-lunar-shelter-library-r3-20261015/optional-practice/civilian-fpv/world-pursuit.mjs",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-package-qualification-20261014/lunar-library-title-65e92d12/functional-check/runtime/optional-practice/civilian-fpv/world-pursuit.mjs",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-lunar-shelter-library-r3-20261015/optional-practice/civilian-fpv/flight-sectors.mjs",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-package-qualification-20261014/lunar-library-title-65e92d12/functional-check/runtime/optional-practice/civilian-fpv/flight-sectors.mjs",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-lunar-shelter-library-r3-20261015/optional-practice/civilian-fpv/snake-hunt-presentation.mjs",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-package-qualification-20261014/lunar-library-title-65e92d12/functional-check/runtime/optional-practice/civilian-fpv/snake-hunt-presentation.mjs",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-lunar-shelter-library-r3-20261015/optional-practice/civilian-fpv/flight-support.mjs",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-package-qualification-20261014/lunar-library-title-65e92d12/functional-check/runtime/optional-practice/civilian-fpv/flight-support.mjs",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-lunar-shelter-library-r3-20261015/optional-practice/civilian-fpv/industrial-vehicles.mjs",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-package-qualification-20261014/lunar-library-title-65e92d12/functional-check/runtime/optional-practice/civilian-fpv/industrial-vehicles.mjs",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-lunar-shelter-library-r3-20261015/optional-practice/civilian-fpv/regional-delivery.mjs",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-package-qualification-20261014/lunar-library-title-65e92d12/functional-check/runtime/optional-practice/civilian-fpv/regional-delivery.mjs",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-lunar-shelter-library-r3-20261015/optional-practice/civilian-fpv/radio-session.mjs",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-package-qualification-20261014/lunar-library-title-65e92d12/functional-check/runtime/optional-practice/civilian-fpv/radio-session.mjs",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-lunar-shelter-library-r3-20261015/optional-practice/civilian-fpv/catalogue.mjs",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-package-qualification-20261014/lunar-library-title-65e92d12/functional-check/runtime/optional-practice/civilian-fpv/catalogue.mjs",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-lunar-shelter-library-r3-20261015/optional-practice/civilian-fpv/battlefield-ground.mjs",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-package-qualification-20261014/lunar-library-title-65e92d12/functional-check/runtime/optional-practice/civilian-fpv/battlefield-ground.mjs",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-lunar-shelter-library-r3-20261015/optional-practice/civilian-fpv/world-style.css",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-package-qualification-20261014/lunar-library-title-65e92d12/functional-check/runtime/optional-practice/civilian-fpv/world-style.css",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-lunar-shelter-library-r3-20261015/optional-practice/civilian-fpv/world-themes.mjs",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-package-qualification-20261014/lunar-library-title-65e92d12/functional-check/runtime/optional-practice/civilian-fpv/world-themes.mjs",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-lunar-shelter-library-r3-20261015/optional-practice/civilian-fpv/expressive-hunt-courses.mjs",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-package-qualification-20261014/lunar-library-title-65e92d12/functional-check/runtime/optional-practice/civilian-fpv/expressive-hunt-courses.mjs",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-lunar-shelter-library-r3-20261015/optional-practice/civilian-fpv/world-store.mjs",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-package-qualification-20261014/lunar-library-title-65e92d12/functional-check/runtime/optional-practice/civilian-fpv/world-store.mjs",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-lunar-shelter-library-r3-20261015/optional-practice/civilian-fpv/world-demonstrations.mjs",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-package-qualification-20261014/lunar-library-title-65e92d12/functional-check/runtime/optional-practice/civilian-fpv/world-demonstrations.mjs",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-lunar-shelter-library-r3-20261015/optional-practice/civilian-fpv/README.md",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-package-qualification-20261014/lunar-library-title-65e92d12/functional-check/runtime/optional-practice/civilian-fpv/README.md",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-lunar-shelter-library-r3-20261015/optional-practice/civilian-fpv/radio-profile.mjs",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-package-qualification-20261014/lunar-library-title-65e92d12/functional-check/runtime/optional-practice/civilian-fpv/radio-profile.mjs",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-lunar-shelter-library-r3-20261015/optional-practice/civilian-fpv/world-visuals.mjs",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-package-qualification-20261014/lunar-library-title-65e92d12/functional-check/runtime/optional-practice/civilian-fpv/world-visuals.mjs",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-lunar-shelter-library-r3-20261015/optional-practice/civilian-fpv/beginner-coach.mjs",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-package-qualification-20261014/lunar-library-title-65e92d12/functional-check/runtime/optional-practice/civilian-fpv/beginner-coach.mjs",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-lunar-shelter-library-r3-20261015/optional-practice/civilian-fpv/world-reaction-runtime.mjs",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-package-qualification-20261014/lunar-library-title-65e92d12/functional-check/runtime/optional-practice/civilian-fpv/world-reaction-runtime.mjs",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-lunar-shelter-library-r3-20261015/optional-practice/civilian-fpv/world-content.mjs",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-package-qualification-20261014/lunar-library-title-65e92d12/functional-check/runtime/optional-practice/civilian-fpv/world-content.mjs",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-lunar-shelter-library-r3-20261015/optional-practice/civilian-fpv/content-definitions.mjs",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-package-qualification-20261014/lunar-library-title-65e92d12/functional-check/runtime/optional-practice/civilian-fpv/content-definitions.mjs",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-lunar-shelter-library-r3-20261015/optional-practice/civilian-fpv/regional-session.mjs",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-package-qualification-20261014/lunar-library-title-65e92d12/functional-check/runtime/optional-practice/civilian-fpv/regional-session.mjs",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-lunar-shelter-library-r3-20261015/optional-practice/civilian-fpv/style.css",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-package-qualification-20261014/lunar-library-title-65e92d12/functional-check/runtime/optional-practice/civilian-fpv/style.css",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-lunar-shelter-library-r3-20261015/optional-practice/civilian-fpv/world-assets.mjs",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-package-qualification-20261014/lunar-library-title-65e92d12/functional-check/runtime/optional-practice/civilian-fpv/world-assets.mjs",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-lunar-shelter-library-r3-20261015/optional-practice/civilian-fpv/renderer.mjs",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-package-qualification-20261014/lunar-library-title-65e92d12/functional-check/runtime/optional-practice/civilian-fpv/renderer.mjs",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-lunar-shelter-library-r3-20261015/optional-practice/civilian-fpv/industrial-environment.mjs",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-package-qualification-20261014/lunar-library-title-65e92d12/functional-check/runtime/optional-practice/civilian-fpv/industrial-environment.mjs",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-lunar-shelter-library-r3-20261015/optional-practice/civilian-fpv/radio-setup.mjs",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-package-qualification-20261014/lunar-library-title-65e92d12/functional-check/runtime/optional-practice/civilian-fpv/radio-setup.mjs",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-lunar-shelter-library-r3-20261015/optional-practice/civilian-fpv/snake-hunt.mjs",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-package-qualification-20261014/lunar-library-title-65e92d12/functional-check/runtime/optional-practice/civilian-fpv/snake-hunt.mjs",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-lunar-shelter-library-r3-20261015/optional-practice/civilian-fpv/playlists.mjs",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-package-qualification-20261014/lunar-library-title-65e92d12/functional-check/runtime/optional-practice/civilian-fpv/playlists.mjs",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-lunar-shelter-library-r3-20261015/optional-practice/civilian-fpv/world-records.mjs",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-package-qualification-20261014/lunar-library-title-65e92d12/functional-check/runtime/optional-practice/civilian-fpv/world-records.mjs",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-lunar-shelter-library-r3-20261015/optional-practice/civilian-fpv/world-app.mjs",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-package-qualification-20261014/lunar-library-title-65e92d12/functional-check/runtime/optional-practice/civilian-fpv/world-app.mjs",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-lunar-shelter-library-r3-20261015/optional-practice/civilian-fpv/regional",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-package-qualification-20261014/lunar-library-title-65e92d12/functional-check/runtime/optional-practice/civilian-fpv/regional",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-lunar-shelter-library-r3-20261015/optional-practice/civilian-fpv/world-zip.mjs",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-package-qualification-20261014/lunar-library-title-65e92d12/functional-check/runtime/optional-practice/civilian-fpv/world-zip.mjs",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-lunar-shelter-library-r3-20261015/optional-practice/civilian-fpv/rotation-table.mjs",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-package-qualification-20261014/lunar-library-title-65e92d12/functional-check/runtime/optional-practice/civilian-fpv/rotation-table.mjs",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-lunar-shelter-library-r3-20261015/optional-practice/civilian-fpv/world-collision.mjs",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-package-qualification-20261014/lunar-library-title-65e92d12/functional-check/runtime/optional-practice/civilian-fpv/world-collision.mjs",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-lunar-shelter-library-r3-20261015/optional-practice/civilian-fpv/native-pursuit-courses.mjs",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-package-qualification-20261014/lunar-library-title-65e92d12/functional-check/runtime/optional-practice/civilian-fpv/native-pursuit-courses.mjs",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-lunar-shelter-library-r3-20261015/optional-practice/civilian-fpv/model.mjs",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-package-qualification-20261014/lunar-library-title-65e92d12/functional-check/runtime/optional-practice/civilian-fpv/model.mjs",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-lunar-shelter-library-r3-20261015/optional-practice/civilian-fpv/offline.mjs",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-package-qualification-20261014/lunar-library-title-65e92d12/functional-check/runtime/optional-practice/civilian-fpv/offline.mjs",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-lunar-shelter-library-r3-20261015/optional-practice/civilian-fpv/vendor",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-package-qualification-20261014/lunar-library-title-65e92d12/functional-check/runtime/optional-practice/civilian-fpv/vendor",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-lunar-survey-detail-20261015/optional-practice",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-lunar-regolith-20261015/optional-practice",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-lunar-survey-detail-20261015/game",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-lunar-regolith-20261015/game",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-lunar-survey-detail-20261015/authoring/fpv-worlds/regions/scenery-cell.mjs",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-canal-city-refinement-20261015/optional-practice/civilian-fpv/regional/scenery-cell.mjs",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-lunar-survey-detail-20261015/authoring/fpv-worlds/regions/hillside-town",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-canal-city-refinement-20261015/authoring/fpv-worlds/regions/hillside-town",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-lunar-survey-detail-20261015/authoring/fpv-worlds/regions/rgba-scenery-cell.mjs",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-canal-city-refinement-20261015/authoring/fpv-worlds/regions/rgba-scenery-cell.mjs",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-lunar-survey-detail-20261015/authoring/fpv-worlds/regions/desert-expedition",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-canal-city-refinement-20261015/authoring/fpv-worlds/regions/desert-expedition",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-lunar-survey-detail-20261015/authoring/fpv-worlds/regions/region-manifest.mjs",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-canal-city-refinement-20261015/authoring/fpv-worlds/regions/region-manifest.mjs",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-lunar-survey-detail-20261015/authoring/fpv-worlds/regions/canal-city",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-canal-city-refinement-20261015/authoring/fpv-worlds/regions/canal-city",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-lunar-survey-detail-20261015/authoring/fpv-worlds/regions/prepare-delivery.mjs",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-canal-city-refinement-20261015/authoring/fpv-worlds/regions/prepare-delivery.mjs",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-lunar-survey-detail-20261015/authoring/fpv-worlds/regions/indexed-scenery-cell.mjs",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-canal-city-refinement-20261015/authoring/fpv-worlds/regions/indexed-scenery-cell.mjs",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-lunar-survey-detail-20261015/authoring/fpv-worlds/regions/scenery-preview.mjs.baseline",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-canal-city-refinement-20261015/authoring/fpv-worlds/regions/scenery-preview.mjs.baseline",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-lunar-survey-detail-20261015/authoring/fpv-worlds/regions/terrain-cell.mjs",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-canal-city-refinement-20261015/authoring/fpv-worlds/regions/terrain-cell.mjs",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-lunar-survey-detail-20261015/authoring/fpv-worlds/regions/scenery-lighting.mjs",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-canal-city-refinement-20261015/authoring/fpv-worlds/regions/scenery-lighting.mjs",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-lunar-survey-detail-20261015/authoring/fpv-worlds/regions/verified-mixed-window.mjs",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-canal-city-refinement-20261015/authoring/fpv-worlds/regions/verified-mixed-window.mjs",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-lunar-survey-detail-20261015/authoring/fpv-worlds/regions/scenery-preview.html",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-canal-city-refinement-20261015/authoring/fpv-worlds/regions/scenery-preview.html",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-lunar-survey-detail-20261015/authoring/fpv-worlds/regions/verified-scenery-window.mjs",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-canal-city-refinement-20261015/authoring/fpv-worlds/regions/verified-scenery-window.mjs",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-package-qualification-20261014/regional-continuous-journey/web/region",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-large-worlds-20261014/urban-mixed-r2",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-package-qualification-20261014/regional-host-journey/web/region",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-large-worlds-20261014/urban-mixed-r2",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-package-qualification-20261014/integrity-rejection-journey/web/revealline/practice/fpv-worlds/releases/v0.142.4",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-package-qualification-20261014/corrected-update-journey/web/revealline/practice/fpv-worlds/releases/v0.142.4",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-package-qualification-20261014/integrity-rejection-journey/web/revealline/practice/fpv-worlds/releases/v0.151.1",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-package-qualification-20261014/artwork-journey/web/revealline/practice/fpv-worlds/releases/v0.151.1",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-package-qualification-20261014/native-store-recovery/web/site",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-package-qualification-20261014/regional-continuous-journey/web/revealline/practice/fpv-worlds/releases/v0.151.1/site",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-package-qualification-20261014/batched-storage-103be7a7/independent-storage-checks/authoring/fpv-worlds/regions/urban-bando/delivery-review-r1",
+      "target": "<internal-app-worktrees>/fpv-rgba-isolated-20261015/authoring/fpv-worlds/regions/urban-bando/delivery-review-r1",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-package-qualification-20261014/runtime-lifecycle-pr1273/web/site",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-package-qualification-20261014/regional-continuous-journey/web/revealline/practice/fpv-worlds/releases/v0.151.1/site",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-package-qualification-20261014/runtime-lifecycle-pr1273/web/catalogue",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-package-qualification-20261014/catalogue-render-review/web/catalogue",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-package-qualification-20261014/runtime-lifecycle-pr1269/web/site",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-package-qualification-20261014/regional-host-journey/web/revealline/practice/fpv-worlds/releases/v0.151.1/site",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-package-qualification-20261014/runtime-lifecycle-pr1269/web/catalogue",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-package-qualification-20261014/catalogue-render-review/web/catalogue",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-package-qualification-20261014/catalogue-render-review/web/site",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-package-qualification-20261014/artwork-journey/web/revealline/practice/fpv-worlds/releases/v0.151.1/site",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-package-qualification-20261014/catalogue-render-review/web/catalogue",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-catalogue-reliability-20261014",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-package-qualification-20261014/regional-delivery-native/web/source",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-continuous-package-review-20261014/optional-practice/civilian-fpv",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-package-qualification-20261014/regional-delivery-native/web/region",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-large-worlds-20261014/urban-delivery-review-r1",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-regional-load-cancellation-20261015/optional-practice/civilian-fpv/world-store.mjs",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-package-qualification-20261014/desert-start-headings-e006821b/functional-check/runtime/optional-practice/civilian-fpv/world-store.mjs",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-regional-load-cancellation-20261015/optional-practice/civilian-fpv/regional",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-package-qualification-20261014/desert-start-headings-e006821b/functional-check/runtime/optional-practice/civilian-fpv/regional",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-rgba-native-review-20261015/derived",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-tropical-rgba-review-r3-20261015",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-rgba-native-review-20261015/original",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-tropical-authoring-tools-20261015/converted",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-rgba-native-review-20261015/runtime",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-continuous-package-review-20261014/optional-practice/civilian-fpv",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-temp/fpv-listing-prepare-link-DakYii/source-alias",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-worktrees/fpv-listing-native-evidence-20261016/",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-temp/regional-family-component-review-9213/web/runtime",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-package-qualification-20261014/regional-family-library-81c0d658/functional-check",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-temp/regional-family-component-review-9214/web/runtime",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-package-qualification-20261014/regional-family-library-8ab04b8d/functional-check",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-temp/authored-urban-bounded-report-review-9175/optional-practice",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-package-qualification-20261014/explicit-repair-da5df483/explicit-repair-functional/optional-practice",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-temp/authored-urban-bounded-report-review-9175/game",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-package-qualification-20261014/explicit-repair-da5df483/explicit-repair-functional/game",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-temp/railway-live-host-corrected/canyon-rounded-delivery",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-large-worlds-20261014/canyon-delivery-rounded-r1",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-temp/railway-live-host-corrected/railway-structure-readable",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-large-worlds-20261014/railway-structure-r4",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-temp/authored-urban-lifecycle-review-9169/optional-practice",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-package-qualification-20261014/explicit-repair-da5df483/explicit-repair-functional/optional-practice",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-temp/authored-urban-lifecycle-review-9169/game",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-package-qualification-20261014/explicit-repair-da5df483/explicit-repair-functional/game",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-temp/authored-urban-elapsed-review-9123/optional-practice",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-package-qualification-20261014/coaster-integrated-player-9121/web/revealline/practice/fpv-worlds/releases/v0.151.1/site/optional-practice",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-temp/authored-urban-elapsed-review-9123/game",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-package-qualification-20261014/coaster-integrated-player-9121/web/revealline/practice/fpv-worlds/releases/v0.151.1/site/game",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-temp/regional-elapsed-review-9072/optional-practice",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-package-qualification-20261014/saved-places-2cfe7a25-journey/web/revealline/practice/fpv-worlds/releases/v0.151.1/site/optional-practice",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-temp/regional-elapsed-review-9072/game",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-package-qualification-20261014/saved-places-2cfe7a25-journey/web/revealline/practice/fpv-worlds/releases/v0.151.1/site/game",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-temp/railway-live-quality-check/optional-practice",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-urban-mixed-preparation-20261014/optional-practice",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-temp/railway-live-quality-check/game",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-temp/railway-live-host-1e85a8c48-raw/game",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-temp/railway-live-quality-check/authoring",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-urban-mixed-preparation-20261014/authoring",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-temp/listing-independent-review-20261016-0352/tmp/fpv-listing-prepare-link-hGZRNZ/source-alias",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-worktrees/fpv-listing-native-evidence-20261016/",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-temp/listing-independent-review-20261016-0352/tmp/fpv-listing-prepare-link-gypTJC/source-alias",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-worktrees/fpv-listing-native-evidence-20261016/",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-temp/listing-independent-review-20261016-0352/tmp/fpv-listing-prepare-link-FIHaPP/source-alias",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-worktrees/fpv-listing-native-evidence-20261016/",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-temp/listing-independent-review-20261016-0352/tmp/fpv-listing-prepare-link-GjtIf1/source-alias",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-worktrees/fpv-listing-native-evidence-20261016/",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-temp/authored-urban-visible-review-9162/optional-practice",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-package-qualification-20261014/coaster-integrated-player-9121/web/revealline/practice/fpv-worlds/releases/v0.151.1/site/optional-practice",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-temp/authored-urban-visible-review-9162/game",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-package-qualification-20261014/coaster-integrated-player-9121/web/revealline/practice/fpv-worlds/releases/v0.151.1/site/game",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-temp/canyon-library-host-20261015/canyon-rounded-delivery",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-large-worlds-20261014/canyon-delivery-rounded-r1",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-temp/canyon-library-host-20261015/railway-structure-readable",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-large-worlds-20261014/railway-structure-r4",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-temp/railway-live-host-1e85a8c48-raw/railway-structure-readable",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-large-worlds-20261014/railway-structure-r4",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-tropical-authoring-tools-20261015/vendor",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-continuous-package-review-20261014/optional-practice/civilian-fpv/vendor",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-tropical-coastal-native-20261015/runtime",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-tropical-coastal-native-20261015/runtime-345a185",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-tropical-coastal-native-20261015/region",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-tropical-coast-r1-20261015",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-tropical-districts-native-20261015/runtime",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-tropical-districts-native-20261015/runtime-83fd6525",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-tropical-districts-native-20261015/region",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-tropical-districts-r1-reviewed-20261015",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-tropical-ground-native-20261015/region",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-tropical-settlement-r2c-20261015",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-tropical-settlement-native-20261015/runtime",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-tropical-districts-native-20261015/runtime-83fd6525",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-tropical-settlement-native-20261015/region",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-tropical-settlement-r2c-20261015",
+      "inventories": [
+        "app-files.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-urban-independent-20261014/canyon-regional-study",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-large-worlds-20261014/canyon-study-recovered-r1",
+      "inventories": [
+        "app-supplement-workingtrees.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-urban-independent-20261014/urban-regional-study",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-large-worlds-20261014/urban-regional-r1",
+      "inventories": [
+        "app-supplement-workingtrees.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-urban-mixed-preparation-20261014/urban-hall-final",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-large-worlds-20261014/urban-hall-r3",
+      "inventories": [
+        "app-supplement-workingtrees.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-urban-mixed-preparation-20261014/railway-texture-window",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-temp/railway-texture-window",
+      "inventories": [
+        "app-supplement-workingtrees.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-urban-mixed-preparation-20261014/canyon-landmarks-final",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-large-worlds-20261014/canyon-landmarks-r5",
+      "inventories": [
+        "app-supplement-workingtrees.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-urban-mixed-preparation-20261014/railway-indexed-review",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-temp/railway-indexed-review",
+      "inventories": [
+        "app-supplement-workingtrees.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-urban-mixed-preparation-20261014/canyon-relief-study",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-large-worlds-20261014/canyon-relief-r1",
+      "inventories": [
+        "app-supplement-workingtrees.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-urban-mixed-preparation-20261014/railway-pilot-final",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-large-worlds-20261014/railway-pilot-r3",
+      "inventories": [
+        "app-supplement-workingtrees.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-urban-mixed-preparation-20261014/canyon-relief-reviewed",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-large-worlds-20261014/canyon-relief-r2",
+      "inventories": [
+        "app-supplement-workingtrees.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-urban-mixed-preparation-20261014/railway-comparison",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-temp/railway-comparison",
+      "inventories": [
+        "app-supplement-workingtrees.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-urban-mixed-preparation-20261014/canyon-landmarks-reviewed",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-large-worlds-20261014/canyon-landmarks-r7",
+      "inventories": [
+        "app-supplement-workingtrees.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-urban-mixed-preparation-20261014/urban-loading-study",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-large-worlds-20261014/urban-loading-r1",
+      "inventories": [
+        "app-supplement-workingtrees.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-urban-mixed-preparation-20261014/canyon-relief-rounded",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-large-worlds-20261014/canyon-relief-r6",
+      "inventories": [
+        "app-supplement-workingtrees.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-urban-mixed-preparation-20261014/railway-structure-final",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-large-worlds-20261014/railway-structure-r2",
+      "inventories": [
+        "app-supplement-workingtrees.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-urban-mixed-preparation-20261014/railway-pilot-study",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-large-worlds-20261014/railway-pilot-r2",
+      "inventories": [
+        "app-supplement-workingtrees.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-urban-mixed-preparation-20261014/canyon-landmarks-study",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-large-worlds-20261014/canyon-landmarks-r1",
+      "inventories": [
+        "app-supplement-workingtrees.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-urban-mixed-preparation-20261014/railway-structure-readable",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-large-worlds-20261014/railway-structure-r4",
+      "inventories": [
+        "app-supplement-workingtrees.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-urban-mixed-preparation-20261014/urban-hall-study",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-large-worlds-20261014/urban-hall-r1",
+      "inventories": [
+        "app-supplement-workingtrees.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-urban-mixed-preparation-20261014/urban-parking-study",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-large-worlds-20261014/urban-parking-r1",
+      "inventories": [
+        "app-supplement-workingtrees.jsonl"
+      ]
+    },
+    {
+      "kind": "symlink",
+      "path": "fpv-urban-mixed-preparation-20261014/urban-regional-study",
+      "target": "/Volumes/alex/CodexMigrationStaging/fpv-large-worlds-20261014/urban-regional-r2",
+      "inventories": [
+        "app-supplement-workingtrees.jsonl"
+      ]
+    }
+  ],
+  "scope": "App-owned link metadata only; no target payload files or unrelated private data read. External development/review copies require restored target payloads and relative relinking, not original mount recreation. This does not certify bulk backup completion."
+}

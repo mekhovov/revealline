@@ -343,7 +343,7 @@ html body.sim-worlds #flight-dialog[open]:not([data-flight-menu-open='true']) #w
   .mode-play-name {
     flex: 1;
     min-width: 0;
-    font-size: 0.85rem;
+    font-size: calc(0.85rem * var(--overflight-text-scale, 1));
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -419,7 +419,11 @@ html body.sim-worlds #flight-dialog[open]:not([data-flight-menu-open='true']) #w
   }
   .mode-play-dialog h1 {
     font: inherit;
-    font-size: clamp(1.25rem, 3vw, 2rem);
+    font-size: clamp(
+      calc(1.25rem * var(--overflight-text-scale, 1)),
+      calc(3vw * var(--overflight-text-scale, 1)),
+      calc(2rem * var(--overflight-text-scale, 1))
+    );
     font-weight: 800;
     margin: 0;
   }
@@ -471,7 +475,11 @@ html body.sim-worlds #flight-dialog[open]:not([data-flight-menu-open='true']) #w
     padding-top: 0;
   }
   .mode-play-home .mode-play-wordmark {
-    font-size: clamp(2rem, 7vw, 4rem);
+    font-size: clamp(
+      calc(2rem * var(--overflight-text-scale, 1)),
+      calc(7vw * var(--overflight-text-scale, 1)),
+      calc(4rem * var(--overflight-text-scale, 1))
+    );
   }
   .mode-play-wordmark img {
     display: block;
@@ -485,7 +493,7 @@ html body.sim-worlds #flight-dialog[open]:not([data-flight-menu-open='true']) #w
   .mode-play-mission,
   .mode-play-version {
     color: var(--fk-text-muted, var(--muted, #aebdc4));
-    font-size: 0.9rem;
+    font-size: calc(0.9rem * var(--overflight-text-scale, 1));
     margin: 8px 0 16px;
   }
   .mode-play-edition {
@@ -578,7 +586,7 @@ html body.sim-worlds #flight-dialog[open]:not([data-flight-menu-open='true']) #w
   }
   .mode-play-mission {
     margin: 0 0 12px;
-    font-size: 0.8rem;
+    font-size: calc(0.8rem * var(--overflight-text-scale, 1));
   }
   .mode-play-utilities {
     display: grid;
@@ -592,7 +600,11 @@ html body.sim-worlds #flight-dialog[open]:not([data-flight-menu-open='true']) #w
     min-width: 0;
     min-height: 44px;
     padding: 8px;
-    font-size: clamp(12px, 3.3vw, 16px);
+    font-size: clamp(
+      calc(12px * var(--overflight-text-scale, 1)),
+      calc(3.3vw * var(--overflight-text-scale, 1)),
+      calc(16px * var(--overflight-text-scale, 1))
+    );
     line-height: 1.2;
   }
   .mode-play-utilities > [hidden] + .button {
@@ -609,7 +621,7 @@ html body.sim-worlds #flight-dialog[open]:not([data-flight-menu-open='true']) #w
     border: 0;
   }
   .mode-play-dialog[data-mode-surface='pause'] h1 {
-    font-size: 1rem;
+    font-size: calc(1rem * var(--overflight-text-scale, 1));
     text-transform: uppercase;
     letter-spacing: 0.08em;
   }
@@ -669,7 +681,11 @@ html body .mode-play-home {
 }
 .mode-play-shell .mode-play-utilities .button {
   padding-inline: 6px;
-  font-size: clamp(12px, 3.3vw, 16px);
+  font-size: clamp(
+    calc(12px * var(--overflight-text-scale, 1)),
+    calc(3.3vw * var(--overflight-text-scale, 1)),
+    calc(16px * var(--overflight-text-scale, 1))
+  );
   overflow-wrap: normal;
   word-break: normal;
   --ui-action-fill: var(--iw-button-default-background, var(--fk-panel-raised, #182431));
@@ -709,7 +725,7 @@ html body .mode-play-home {
 }
 
 .mode-play-dialog[data-mode-surface='pause'] h1 {
-  font: 600 18px/1.3 var(--fk-font-ui, sans-serif);
+  font: 600 calc(18px * var(--overflight-text-scale, 1)) / 1.3 var(--fk-font-ui, sans-serif);
   text-transform: none;
   letter-spacing: normal;
 }
@@ -787,7 +803,7 @@ body :is(.shared-pause-menu, #shared-pause-menu) .pause-command-section {
 body :is(.shared-pause-menu, #shared-pause-menu) .pause-command-section > h3 {
   margin: 0;
   color: var(--fk-muted, #bec6c5);
-  font: 600 11px/1.2 var(--fk-font-ui, sans-serif);
+  font: 600 calc(11px * var(--overflight-text-scale, 1)) / 1.2 var(--fk-font-ui, sans-serif);
   text-transform: uppercase;
   letter-spacing: 0.09em;
 }
@@ -811,7 +827,7 @@ body :is(.shared-pause-menu, #shared-pause-menu) :is(button, a, summary) {
   height: auto;
   margin: 0;
   padding: 8px 6px;
-  font-size: 14px;
+  font-size: calc(14px * var(--overflight-text-scale, 1));
   line-height: 1.25;
   text-align: center;
   white-space: normal;
@@ -821,7 +837,11 @@ body :is(.shared-pause-menu, #shared-pause-menu) :is(button, a, summary) {
 body :is(.shared-pause-menu, #shared-pause-menu) [data-pause-group='missions'] :is(button, a) {
   flex-direction: column;
   gap: 4px;
-  font-size: clamp(11px, 2.8vw, 14px);
+  font-size: clamp(
+    calc(11px * var(--overflight-text-scale, 1)),
+    calc(2.8vw * var(--overflight-text-scale, 1)),
+    calc(14px * var(--overflight-text-scale, 1))
+  );
   white-space: nowrap;
   min-height: 58px;
 }
@@ -903,7 +923,7 @@ body[data-text-size='large']
   grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 body[data-text-size='large'] :is(.shared-pause-menu, #shared-pause-menu) :is(button, a, summary) {
-  font-size: 20px;
+  font-size: calc(20px * var(--overflight-text-scale, 1));
 }
 
 body.field-kit[data-coop-paused='true'] #coop-overlay {
@@ -931,7 +951,7 @@ body.field-kit[data-coop-paused='true'] #coop-overlay .overlay-actions {
 body.field-kit[data-coop-paused='true'] #coop-overlay-title,
 body.field-kit[data-couch-status='paused'] #race-title {
   margin: 0 0 12px;
-  font: 600 18px/1.25 var(--fk-font-ui, sans-serif);
+  font: 600 calc(18px * var(--overflight-text-scale, 1)) / 1.25 var(--fk-font-ui, sans-serif);
   letter-spacing: 0.06em;
   text-transform: uppercase;
 }
@@ -945,7 +965,7 @@ body.field-kit[data-coop-paused='true'] #coop-pause-core:empty {
   }
   body :is(.shared-pause-menu, #shared-pause-menu) [data-pause-group='missions'] :is(button, a) {
     padding-inline: 2px;
-    font-size: 11px;
+    font-size: calc(11px * var(--overflight-text-scale, 1));
   }
 }
 
@@ -1024,13 +1044,13 @@ body :is(.shared-pause-menu, #shared-pause-menu) .pause-command-notice {
   border: 1px solid var(--fk-line, #46504f);
   background: transparent !important;
   color: var(--fk-muted, #bec6c5) !important;
-  font-size: 12px;
+  font-size: calc(12px * var(--overflight-text-scale, 1));
 }
 body[data-text-size='large']
   :is(.shared-pause-menu, #shared-pause-menu)
   [data-pause-group='missions']
   :is(button, a) {
-  font-size: 20px;
+  font-size: calc(20px * var(--overflight-text-scale, 1));
   white-space: normal;
 }
 @media (forced-colors: active) {
@@ -1121,7 +1141,8 @@ body .mode-settings-view[open] {
 
 .mode-settings-view > header :is(h1, h2) {
   margin: 0;
-  font: 600 22px/1.3 var(--fk-font-ui, 'Exo 2', system-ui, sans-serif);
+  font: 600 calc(22px * var(--overflight-text-scale, 1)) / 1.3
+    var(--fk-font-ui, 'Exo 2', system-ui, sans-serif);
   letter-spacing: normal;
 }
 
@@ -1150,7 +1171,8 @@ body .mode-settings-view[open] [data-settings-back] {
   min-height: 44px;
   height: auto;
   padding: 8px 12px;
-  font: 600 14px/1.3 var(--fk-font-ui, 'Exo 2', system-ui, sans-serif);
+  font: 600 calc(14px * var(--overflight-text-scale, 1)) / 1.3
+    var(--fk-font-ui, 'Exo 2', system-ui, sans-serif);
 }
 
 body .mode-settings-view[open] [data-settings-back][data-menu-icon]::before {
@@ -1291,7 +1313,7 @@ body .mode-settings-view[open] [data-settings-back][data-menu-icon]::before {
   }
 
   .mode-settings-view > header :is(h1, h2) {
-    font-size: 18px;
+    font-size: calc(18px * var(--overflight-text-scale, 1));
   }
 
   .mode-settings-view .mode-settings-layout {
@@ -1321,7 +1343,7 @@ body .mode-settings-view[open] [data-settings-back][data-menu-icon]::before {
 }
 .global-settings-group > .global-settings-heading {
   margin: 0 0 12px;
-  font: 600 12px/1.4 var(--fk-font-ui, sans-serif);
+  font: 600 calc(12px * var(--overflight-text-scale, 1)) / 1.4 var(--fk-font-ui, sans-serif);
   color: var(--fk-muted, #b8c4ca);
 }
 .global-settings-option {
@@ -1399,7 +1421,11 @@ body .mode-settings-view[open] [data-settings-back][data-menu-icon]::before {
   }
   .journey-chooser h2 {
     margin: 0;
-    font-size: clamp(1.5rem, 4vw, 2.5rem);
+    font-size: clamp(
+      calc(1.5rem * var(--overflight-text-scale, 1)),
+      calc(4vw * var(--overflight-text-scale, 1)),
+      calc(2.5rem * var(--overflight-text-scale, 1))
+    );
   }
   .journey-filters {
     display: flex;
@@ -1475,7 +1501,7 @@ body .mode-settings-view[open] [data-settings-back][data-menu-icon]::before {
     grid-column: 1 / -1;
     overflow: hidden;
     color: #94c6b0;
-    font-size: 0.72rem;
+    font-size: calc(0.72rem * var(--overflight-text-scale, 1));
     font-weight: 700;
     letter-spacing: 0.08em;
     text-overflow: ellipsis;
@@ -1500,10 +1526,10 @@ body .mode-settings-view[open] [data-settings-back][data-menu-icon]::before {
     }
     #journey-chooser > p {
       margin: 0.25rem 0;
-      font-size: 0.85rem;
+      font-size: calc(0.85rem * var(--overflight-text-scale, 1));
     }
     #journey-chooser h2 {
-      font-size: 1.35rem;
+      font-size: calc(1.35rem * var(--overflight-text-scale, 1));
       line-height: 1.1;
     }
     #journey-chooser .journey-filters {
@@ -1518,12 +1544,12 @@ body .mode-settings-view[open] [data-settings-back][data-menu-icon]::before {
   }
   .journey-card-number {
     grid-row: span 3;
-    font-size: 2rem;
+    font-size: calc(2rem * var(--overflight-text-scale, 1));
     color: #c7e78e;
   }
   .journey-card strong {
     min-width: 0;
-    font-size: 1.1rem;
+    font-size: calc(1.1rem * var(--overflight-text-scale, 1));
     overflow-wrap: anywhere;
   }
   .journey-card-campaign {
@@ -1533,7 +1559,7 @@ body .mode-settings-view[open] [data-settings-back][data-menu-icon]::before {
   }
   .journey-card-progress {
     color: #c7e78e;
-    font-size: 0.85rem;
+    font-size: calc(0.85rem * var(--overflight-text-scale, 1));
   }
   .journey-card-edition,
   .journey-card-tags,
@@ -1607,10 +1633,10 @@ body .mode-settings-view[open] [data-settings-back][data-menu-icon]::before {
   }
   .journey-card-edition {
     color: #bacdc0;
-    font-size: 0.85rem;
+    font-size: calc(0.85rem * var(--overflight-text-scale, 1));
   }
   .journey-card-tags {
-    font-size: 0.85rem;
+    font-size: calc(0.85rem * var(--overflight-text-scale, 1));
     color: #f5ffba;
   }
   .journey-card-action {
@@ -1695,7 +1721,7 @@ body .mode-settings-view[open] [data-settings-back][data-menu-icon]::before {
   .journey-card-picture-status {
     grid-column: 1 / -1;
     color: #bacdc0;
-    font-size: 0.75rem;
+    font-size: calc(0.75rem * var(--overflight-text-scale, 1));
     line-height: 1.25;
   }
   .journey-card-challenge,
@@ -1706,16 +1732,16 @@ body .mode-settings-view[open] [data-settings-back][data-menu-icon]::before {
   }
   .journey-card-challenge {
     color: #f5ffba;
-    font-size: 0.8rem;
+    font-size: calc(0.8rem * var(--overflight-text-scale, 1));
     letter-spacing: 0.04em;
   }
   .journey-card-route {
-    font-size: 0.95rem;
+    font-size: calc(0.95rem * var(--overflight-text-scale, 1));
   }
   .journey-card-mastery {
     padding-top: 0.35rem;
     color: #bacdc0;
-    font-size: 0.8rem;
+    font-size: calc(0.8rem * var(--overflight-text-scale, 1));
   }
   @media (max-height: 480px) and (min-width: 600px) {
     .journey-cards {
@@ -1881,7 +1907,7 @@ body .mode-settings-view[open] [data-settings-back][data-menu-icon]::before {
   #journey-chooser #coop-library-status p,
   #journey-chooser #race-library-status p {
     margin: 0;
-    font-size: 0.8rem;
+    font-size: calc(0.8rem * var(--overflight-text-scale, 1));
     line-height: 1.25;
   }
   #journey-chooser #coop-library-remote-feedback {
@@ -1931,7 +1957,7 @@ body .mode-settings-view[open] [data-settings-back][data-menu-icon]::before {
     }
     #journey-chooser.mission-library-chooser h2 {
       margin: 0;
-      font-size: 1.25rem;
+      font-size: calc(1.25rem * var(--overflight-text-scale, 1));
       line-height: 1.2;
     }
     .mission-library-chooser .journey-library-copy {
@@ -2018,7 +2044,7 @@ body .mode-settings-view[open] [data-settings-back][data-menu-icon]::before {
     }
     #journey-chooser.mission-library-chooser #journey-chooser-status {
       margin: 0;
-      font-size: 0.8rem;
+      font-size: calc(0.8rem * var(--overflight-text-scale, 1));
       line-height: 1.25;
     }
     #journey-chooser.mission-library-chooser .journey-cards {
@@ -2034,15 +2060,15 @@ body .mode-settings-view[open] [data-settings-back][data-menu-icon]::before {
       gap: 0.2rem 0.5rem;
     }
     .mission-library-chooser .journey-card-number {
-      font-size: 1.35rem;
+      font-size: calc(1.35rem * var(--overflight-text-scale, 1));
     }
     .mission-library-chooser .journey-card strong {
-      font-size: 1rem;
+      font-size: calc(1rem * var(--overflight-text-scale, 1));
     }
     .mission-library-chooser .journey-card-edition,
     .mission-library-chooser .journey-card-tags,
     .mission-library-chooser .journey-card-progress {
-      font-size: 0.75rem;
+      font-size: calc(0.75rem * var(--overflight-text-scale, 1));
       line-height: 1.2;
     }
     #journey-chooser.mission-library-chooser .journey-card-map {
@@ -2218,7 +2244,7 @@ body .mode-settings-view[open] [data-settings-back][data-menu-icon]::before {
     background: transparent;
     border: 0;
     font-family: var(--fk-font-mono, monospace);
-    font-size: 0.78rem;
+    font-size: calc(0.78rem * var(--overflight-text-scale, 1));
     letter-spacing: 0.08em;
     line-height: 1.2;
     text-overflow: ellipsis;
@@ -2291,7 +2317,7 @@ body .mode-settings-view[open] [data-settings-back][data-menu-icon]::before {
     right: 0.45rem;
     display: none;
     color: var(--level-card-award);
-    font-size: 0.9rem;
+    font-size: calc(0.9rem * var(--overflight-text-scale, 1));
     font-weight: 900;
   }
   #journey-chooser .journey-card[data-completion-state='completed'] .journey-card-check {
@@ -2311,7 +2337,7 @@ body .mode-settings-view[open] [data-settings-back][data-menu-icon]::before {
     grid-row: 1;
     color: var(--level-card-focus);
     font-family: var(--fk-font-mono, monospace);
-    font-size: 0.78rem;
+    font-size: calc(0.78rem * var(--overflight-text-scale, 1));
     font-weight: 800;
     letter-spacing: 0.05em;
     line-height: 1.25;
@@ -2322,7 +2348,7 @@ body .mode-settings-view[open] [data-settings-back][data-menu-icon]::before {
     grid-row: 2;
     display: -webkit-box;
     overflow: hidden;
-    font-size: 0.94rem;
+    font-size: calc(0.94rem * var(--overflight-text-scale, 1));
     line-height: 1.2;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 2;
@@ -2333,7 +2359,7 @@ body .mode-settings-view[open] [data-settings-back][data-menu-icon]::before {
     display: block;
     overflow: hidden;
     color: var(--level-card-muted);
-    font-size: 0.7rem;
+    font-size: calc(0.7rem * var(--overflight-text-scale, 1));
     line-height: 1.2;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -2343,7 +2369,7 @@ body .mode-settings-view[open] [data-settings-back][data-menu-icon]::before {
     grid-row: 3;
     color: var(--level-card-muted);
     font-family: var(--fk-font-mono, monospace);
-    font-size: 0.7rem;
+    font-size: calc(0.7rem * var(--overflight-text-scale, 1));
     font-variant-numeric: tabular-nums;
   }
   #journey-chooser .journey-card-progress {
@@ -2351,7 +2377,7 @@ body .mode-settings-view[open] [data-settings-back][data-menu-icon]::before {
     grid-row: 4;
     overflow: hidden;
     color: var(--level-card-muted);
-    font-size: 0.68rem;
+    font-size: calc(0.68rem * var(--overflight-text-scale, 1));
     line-height: 1.2;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -2361,7 +2387,7 @@ body .mode-settings-view[open] [data-settings-back][data-menu-icon]::before {
     grid-row: 4;
     color: var(--level-card-award);
     font-family: var(--fk-font-mono, monospace);
-    font-size: 0.82rem;
+    font-size: calc(0.82rem * var(--overflight-text-scale, 1));
     letter-spacing: 0.03em;
     line-height: 1;
     white-space: nowrap;
@@ -2400,7 +2426,7 @@ body .mode-settings-view[open] [data-settings-back][data-menu-icon]::before {
     overflow: hidden;
     color: var(--fk-bg, #070b12);
     background: var(--level-card-award);
-    font-size: 0.65rem;
+    font-size: calc(0.65rem * var(--overflight-text-scale, 1));
     line-height: 1.2;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -2609,7 +2635,7 @@ body .mode-settings-view[open] [data-settings-back][data-menu-icon]::before {
     margin: 0;
     overflow-wrap: anywhere;
     color: var(--level-card-muted);
-    font-size: 0.78rem;
+    font-size: calc(0.78rem * var(--overflight-text-scale, 1));
     line-height: 1.25;
   }
   #journey-chooser.mission-library-chooser #journey-goal-status::before {
@@ -2653,7 +2679,7 @@ body .mode-settings-view[open] [data-settings-back][data-menu-icon]::before {
       min-height: 44px;
       margin: 0;
       padding: 0.35rem 0.5rem;
-      font-size: 0.78rem;
+      font-size: calc(0.78rem * var(--overflight-text-scale, 1));
       line-height: 1.15;
     }
     #journey-chooser.mission-library-chooser .journey-footer > .mission-library-setup {
@@ -2663,7 +2689,7 @@ body .mode-settings-view[open] [data-settings-back][data-menu-icon]::before {
       justify-content: center;
       min-height: 44px;
       padding: 0.35rem 0.5rem;
-      font-size: 0.78rem;
+      font-size: calc(0.78rem * var(--overflight-text-scale, 1));
       line-height: 1.15;
       text-align: center;
     }
@@ -2713,7 +2739,7 @@ body .mode-settings-view[open] [data-settings-back][data-menu-icon]::before {
     }
     #journey-chooser.mission-library-chooser #journey-search-clear::before {
       content: '×';
-      font-size: 1.35rem;
+      font-size: calc(1.35rem * var(--overflight-text-scale, 1));
       line-height: 1;
     }
     #journey-chooser.mission-library-chooser #journey-search::-webkit-search-cancel-button {
@@ -2735,7 +2761,7 @@ body .mode-settings-view[open] [data-settings-back][data-menu-icon]::before {
       min-width: 0;
       min-height: 44px;
       padding: 0.3rem;
-      font-size: 0.72rem;
+      font-size: calc(0.72rem * var(--overflight-text-scale, 1));
       line-height: 1.1;
     }
     #journey-chooser.mission-library-chooser .journey-footer > .mission-library-setup {
@@ -2750,7 +2776,7 @@ body .mode-settings-view[open] [data-settings-back][data-menu-icon]::before {
     }
     #journey-chooser.mission-library-chooser .mission-library-setup > summary::before {
       content: '⚙';
-      font-size: 1.1rem;
+      font-size: calc(1.1rem * var(--overflight-text-scale, 1));
       line-height: 1;
     }
     #journey-chooser.mission-library-chooser .journey-goal {
@@ -2769,7 +2795,7 @@ body .mode-settings-view[open] [data-settings-back][data-menu-icon]::before {
     #journey-chooser.mission-library-chooser .journey-goal-actions > button {
       min-width: 44px;
       padding: 0.25rem 0.4rem;
-      font-size: 0.68rem;
+      font-size: calc(0.68rem * var(--overflight-text-scale, 1));
     }
     #journey-chooser.mission-library-chooser
       .journey-goal-actions
@@ -2854,7 +2880,7 @@ body .mode-settings-view[open] [data-settings-back][data-menu-icon]::before {
   }
   #journey-backup h2 {
     margin: 0;
-    font-size: 1.5rem;
+    font-size: calc(1.5rem * var(--overflight-text-scale, 1));
   }
   .journey-backup-content {
     overflow: auto;
@@ -2907,7 +2933,7 @@ body .mode-settings-view[open] [data-settings-back][data-menu-icon]::before {
     height: 1em;
     color: #080d1c;
     background: #f3c84b;
-    font-size: 1rem;
+    font-size: calc(1rem * var(--overflight-text-scale, 1));
     font-weight: bold;
     line-height: 1;
   }
@@ -2947,7 +2973,7 @@ body .mode-settings-view[open] [data-settings-back][data-menu-icon]::before {
 @layer legacy {
   .game-mode-destinations {
     min-width: 0;
-    font-size: var(--fk-text-secondary, 14px);
+    font-size: calc(var(--fk-text-secondary, 14px) * var(--overflight-text-scale, 1));
   }
   .game-mode-destinations > summary {
     min-height: 44px;
@@ -2991,7 +3017,13 @@ body.field-kit #couch-app .game-mode-choice > :is(a, button) {
   min-height: 76px;
   padding: 15px 3px 7px;
   margin: 0;
-  font: 600 clamp(11px, 2.6vw, 16px) / 1.2 var(--fk-font-ui, sans-serif);
+  font: 600
+    clamp(
+      calc(11px * var(--overflight-text-scale, 1)),
+      calc(2.6vw * var(--overflight-text-scale, 1)),
+      calc(16px * var(--overflight-text-scale, 1))
+    ) /
+    1.2 var(--fk-font-ui, sans-serif);
   text-align: center;
   white-space: nowrap;
   text-decoration: none;
@@ -3005,7 +3037,7 @@ body.field-kit #couch-app .game-mode-choice > :is(a, button) {
   position: absolute;
   top: 4px;
   right: 5px;
-  font: 600 9px/1 var(--fk-font-ui, sans-serif);
+  font: 600 calc(9px * var(--overflight-text-scale, 1)) / 1 var(--fk-font-ui, sans-serif);
   letter-spacing: 0.02em;
   opacity: 0.8;
 }
@@ -3029,7 +3061,7 @@ body.field-kit #couch-app .game-mode-choice > :is(a, button) {
 @media (max-width: 360px) {
   body.field-kit .game-mode-choice > :is(a, button),
   body.field-kit #couch-app .game-mode-choice > :is(a, button) {
-    font-size: 11px;
+    font-size: calc(11px * var(--overflight-text-scale, 1));
   }
 }
 @media (max-width: 299px) {
@@ -3163,7 +3195,7 @@ html body .landing-layout :is(.native-menu-actions, .mode-play-main-menu) > :is(
   margin: 0;
   padding: 10px 12px;
   gap: 12px;
-  font: 600 16px/1.3 var(--fk-font-ui, sans-serif);
+  font: 600 calc(16px * var(--overflight-text-scale, 1)) / 1.3 var(--fk-font-ui, sans-serif);
   justify-content: flex-start;
   text-align: start;
   white-space: normal;
@@ -3188,7 +3220,7 @@ html body .landing-layout .native-menu-utilities > :is(button, a) {
   margin: 0;
   padding: 8px;
   justify-content: center;
-  font: 600 14px/1.3 var(--fk-font-ui, sans-serif);
+  font: 600 calc(14px * var(--overflight-text-scale, 1)) / 1.3 var(--fk-font-ui, sans-serif);
 }
 html body .landing-layout .native-menu-utilities:has(> button[hidden]) {
   grid-template-columns: minmax(0, 1fr);
@@ -3200,7 +3232,7 @@ html body .native-landing:has(.landing-layout) .native-menu-footer {
   width: 100%;
   margin-top: 0;
   padding-top: 16px;
-  font-size: 12px;
+  font-size: calc(12px * var(--overflight-text-scale, 1));
 }
 /* The legacy containers retain their hidden hooks and ownership, not layout. */
 html body .native-landing:has(.landing-layout) > :is(.home-content, .menu-copy) {
@@ -3252,7 +3284,7 @@ html body dialog:is(.native-landing, .mode-play-home)[open] {
   inset: 0;
 }
 html body[data-text-size='large'] .landing-layout :is(button, a) {
-  font-size: 20px;
+  font-size: calc(20px * var(--overflight-text-scale, 1));
 }
 
 html body #coop-menu.native-landing:has(.landing-layout) > .menu-copy {
@@ -3260,11 +3292,15 @@ html body #coop-menu.native-landing:has(.landing-layout) > .menu-copy {
 }
 
 html body .landing-layout .game-mode-choice > :is(a, button) {
-  font-size: clamp(12px, 3.5vw, 16px);
+  font-size: clamp(
+    calc(12px * var(--overflight-text-scale, 1)),
+    calc(3.5vw * var(--overflight-text-scale, 1)),
+    calc(16px * var(--overflight-text-scale, 1))
+  );
 }
 html body .landing-layout :is(.home-status, #race-preparation) {
   margin: 12px 0 0;
-  font-size: 14px;
+  font-size: calc(14px * var(--overflight-text-scale, 1));
 }
 html body .landing-identity .mode-play-dialog-head {
   background: transparent;
@@ -3273,7 +3309,7 @@ html body .landing-identity .mode-play-dialog-head {
   box-shadow: none;
 }
 html body[data-text-size='large'] .landing-layout .game-mode-choice > :is(a, button) {
-  font-size: 20px;
+  font-size: calc(20px * var(--overflight-text-scale, 1));
   white-space: normal;
 }
 /* END SHARED MODE SHELL */
@@ -3348,7 +3384,9 @@ html
     :is([data-sim-hud-active='true'], [data-sim-flight-compact='true'])
   )
   > .mode-play-bar
-  > :not([data-mode-action='pause']):not([data-mode-action='camera']) {
+  > :not([data-mode-action='menu']):not([data-mode-action='pause']):not(
+    [data-mode-action='camera']
+  ) {
   display: none !important;
 }
 html
@@ -3357,7 +3395,7 @@ html
     :is([data-sim-hud-active='true'], [data-sim-flight-compact='true'])
   )
   > .mode-play-bar
-  :is([data-mode-action='pause'], [data-mode-action='camera']) {
+  :is([data-mode-action='menu'], [data-mode-action='pause'], [data-mode-action='camera']) {
   min-height: 44px !important;
   min-width: 44px !important;
   margin: 0 !important;
@@ -3549,11 +3587,11 @@ html body .sim-flight-comfort :is(small, p) {
   overflow-wrap: anywhere;
 }
 html body :is(#viewport, #world-viewport)[data-stick-size='compact'] {
-  --sim-monitor-stick-size: 64px;
+  --sim-monitor-stick-size: 80px;
   --sim-touch-stick-size: 104px;
 }
 html body :is(#viewport, #world-viewport)[data-stick-size='large'] {
-  --sim-monitor-stick-size: 112px;
+  --sim-monitor-stick-size: 144px;
   --sim-touch-stick-size: 144px;
 }
 html body :is(#viewport, #world-viewport)[data-stick-opacity='quiet'] {
@@ -3684,4 +3722,74 @@ html body.sim-worlds #flight-dialog[data-sim-flight-compact='true'] > header:not
     top: auto;
     bottom: var(--flight-safe-bottom);
   }
+}
+
+/* Flight overlay controls stay compact across all material themes. */
+html body.field-kit .sim-drone-response .sim-response-close {
+  flex: 0 0 44px !important;
+  width: 44px !important;
+  height: 44px !important;
+  min-width: 44px !important;
+  min-height: 44px !important;
+  max-width: 44px !important;
+  padding: 0 !important;
+  border: 0 !important;
+  border-image: none !important;
+  border-radius: 6px !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  font:
+    24px/1 system-ui,
+    sans-serif !important;
+  opacity: 0.9;
+  transform: none !important;
+}
+html body.field-kit .sim-drone-response .sim-response-close::before,
+html body.field-kit .sim-drone-response .sim-response-close::after {
+  content: none !important;
+}
+html body.field-kit .sim-drone-response .sim-response-close:focus-visible {
+  outline: 2px solid var(--fk-amber);
+  outline-offset: -4px;
+}
+html body.field-kit .sim-drone-response[data-display='compact'] .sim-response-close {
+  top: 0;
+  right: 0;
+}
+
+html body.field-kit .sim-radio-flight-notice:not([hidden]) {
+  position: absolute;
+  left: 50%;
+  bottom: max(24px, env(safe-area-inset-bottom));
+  transform: translateX(-50%);
+  z-index: 20;
+  width: max-content;
+  max-width: min(420px, calc(100% - 32px));
+  margin: 0;
+  padding: 8px 12px;
+  border-radius: 6px;
+  background: #0d1822e8;
+  color: #f4f7fb;
+  font: 600 14px/1.4 var(--fk-font-ui, sans-serif);
+  text-align: center;
+  pointer-events: none;
+}
+@media (max-width: 1100px) {
+  html body.field-kit .sim-radio-flight-notice:not([hidden]) {
+    bottom: max(152px, env(safe-area-inset-bottom));
+  }
+}
+html body.field-kit .sim-stick-trace-path {
+  stroke-opacity: 0.65;
+  stroke-width: 1.75;
+}
+html body.field-kit .sim-stick-trace-arrow {
+  stroke-opacity: 0.9;
+  stroke-width: 1.75;
+}
+
+html body.field-kit #world-viewport > .sim-drone-response {
+  left: max(12px, env(safe-area-inset-left));
+  bottom: max(12px, env(safe-area-inset-bottom));
+  transform: none;
 }

@@ -17,6 +17,8 @@ const sharedBank = 'game/audio/human-reactions/portable.mjs';
 const included = new Set([
   entry,
   'game/ui/audio-output.mjs',
+  'game/ui/gameplay-audio-output.mjs',
+  'game/gameplay-audio-preferences.mjs',
   'game/ui/audio-master.mjs',
   'game/audio-preferences.mjs',
   'game/audio/dialogue-mix.mjs',

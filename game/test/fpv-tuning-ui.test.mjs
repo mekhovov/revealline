@@ -1,5 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import { readFile } from 'node:fs/promises';
 import { Document, Events } from './helpers/couch-dom.mjs';
 import { mountFlightTuning } from '../../optional-practice/civilian-fpv/tuning-ui.mjs';
 import {
@@ -15,6 +16,19 @@ import {
 } from '../../optional-practice/civilian-fpv/aircraft-presets.mjs';
 
 const settle = () => new Promise((resolve) => setImmediate(resolve));
+
+test('shared tuning file pickers opt out of Worlds legacy file-input hiding without exposing explicitly hidden controls', async () => {
+  const css = await readFile(
+    new URL('../../optional-practice/civilian-fpv/tuning.css', import.meta.url),
+    'utf8',
+  );
+  // The native two-app backup round trip covers the full cascade. This source
+  // guard retains the narrow ownership boundary instead of unhiding all inputs.
+  assert.match(
+    css,
+    /\.fpv-tuning input\[type=['"]file['"]\]:not\(\[hidden\]\)\s*\{\s*display:\s*block;/,
+  );
+});
 function fixture(
   t,
   {

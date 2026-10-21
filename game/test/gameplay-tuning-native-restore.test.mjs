@@ -13,7 +13,7 @@ import { createRecorder, verifyReplay, authoritativeCheckpoint } from '../replay
 import { matchReplayInstalledRules } from '../replay-installed-rules.mjs';
 import { createSoloPerformanceBinding } from '../journey/performance-binding.mjs';
 import { restoreCompanySession, companySimulationIdentity } from '../company-session.mjs';
-import { COMPANY_LESSONS } from '../company-campaigns/lessons.mjs';
+import { learningFixture } from './helpers/learning-fixture.mjs';
 import { createLearningAttempt, reduceLearningAttempt } from '../company-campaigns/learning.mjs';
 import { campaignKey, loadLibrary } from '../library.mjs';
 import { soloPage, settle, memoryStorage } from './helpers/solo-dom.mjs';
@@ -135,7 +135,7 @@ test('prepared company restoration retains old learning simulation identity and 
   nativeFirefox(t);
   const options = fixture.saved.replay.options,
     canonical = applyGameplayTuning(source, resolveGameplayTuning('gentle')),
-    lesson = { ...COMPANY_LESSONS[0], missionId: source.id },
+    lesson = { ...learningFixture(), missionId: source.id },
     learning = reduceLearningAttempt(
       lesson,
       createLearningAttempt(lesson, {

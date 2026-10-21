@@ -126,6 +126,24 @@ test('projected preview services are lazy, disposable and retire stale filtered 
   assert.equal(f.document.activeElement, f.opener);
 });
 
+test('projected SIM search recovery resets filters without clearing query or launching a course', (t) => {
+  const f = fixture(t);
+  const get = (id) => f.document.getElementById(id);
+  get('journey-lifecycle').value = 'archive';
+  get('journey-lifecycle').emit('change');
+  get('journey-search').value = 'Course 23';
+  get('journey-search').emit('input');
+  assert.equal(f.chooser.elements.list.children.length, 0);
+  assert.match(get('journey-chooser-status').textContent, /No missions match/);
+  get('journey-filters-reset').focus();
+  get('journey-filters-reset').click();
+  assert.equal(get('journey-lifecycle').value, 'current');
+  assert.equal(get('journey-mode').value, 'solo');
+  assert.equal(get('journey-search').value, 'Course 23');
+  assert.equal(f.chooser.elements.list.children.length, 1);
+  assert.deepEqual(f.launched, []);
+});
+
 for (const initial of [null, '{"format":"future","missionId":"keep-me"}'])
   test(`projected goal preference ${initial === null ? 'round-trips its exact owner' : 'preserves unsupported saved data'}`, (t) => {
     let raw = initial,
@@ -338,6 +356,13 @@ test('offline selector locale admission covers both languages, plural counts and
             `${id}/${locale} must include ${namespace}:${match}`,
           );
       }
+      for (const key of Object.keys(catalogues.interface).filter((key) =>
+        key.startsWith('missionLibrary.search.'),
+      ))
+        assert.ok(
+          selected('interface', key),
+          `${id}/${locale} includes dynamic search recovery copy.`,
+        );
       for (const key of Object.keys(catalogues.errors).filter((key) =>
         key.startsWith('missionLibrary.field.'),
       ))

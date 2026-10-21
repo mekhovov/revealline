@@ -34,9 +34,11 @@ const names = {
   reserve: 'Reserves',
   track: 'Tracks',
 };
-const themes = {fpv: 'FPV Front',
-ukraine: 'Ukraine Atlas',
-retro: '1994 Forever'};
+const themes = {
+  fpv: 'FPV Front',
+  ukraine: 'Ukraine Atlas',
+  retro: '1994 Forever',
+};
 const label = (s) => s.replaceAll('-', ' ');
 
 /** Standalone read-only DOM host. Services are injected; no game/profile/storage imports. */

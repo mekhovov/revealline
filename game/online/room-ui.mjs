@@ -12,6 +12,7 @@ import { classicTargetIdentity } from '../snake/classic-target-identity.mjs';
 import { arcadeActionCapabilities } from '../core/arcade-actions.mjs';
 import { createAudioMaster } from '../ui/audio-master.mjs';
 import { createAudioPreferences } from '../audio-preferences.mjs';
+import { mountGameplayAudioControls } from '../ui/gameplay-audio-controls.mjs';
 import { Soundscape } from '../ui/audio.mjs';
 import { boardPlacement, screenPan } from '../ui/feedback-cues.mjs';
 import { actorPhaseSound } from '../ui/encounter-audio.mjs';
@@ -25,7 +26,16 @@ import { attachRoomSupport } from './room-controls.mjs';
 
 /** The room transport owns readiness and outcomes. This adapter owns only native
  * menu/input presentation and the one page mixer; it never advances a simulation. */
-export function mountRoomUI({ getState, getSeat, canPlay, submit, pause, display, destruction }) {
+export function mountRoomUI({
+  getState,
+  getSeat,
+  canPlay,
+  submit,
+  pause,
+  display,
+  destruction,
+  onSurfaceChange = () => {},
+}) {
   const doc = globalThis.document,
     $ = (id) => doc.getElementById(id),
     uk = getLocale() === 'uk',
@@ -55,6 +65,12 @@ export function mountRoomUI({ getState, getSeat, canPlay, submit, pause, display
   const audioMaster = createAudioMaster(),
     audioPreferences = createAudioPreferences({ audioMaster }),
     sound = new Soundscape({ audioMaster, persistentMusic: true });
+  const stopGameplayAudio = mountGameplayAudioControls({
+    output: sound.gameplayOutput,
+    container: $('room-reaction-settings'),
+    document: doc,
+    idPrefix: 'room-audio',
+  });
   sound.configure({ master: 1, music: 0, sfx: 0.7 });
   sound.setDestructionPreferences(() => encounter.snapshot());
   const reactions = attachContextualReactions({
@@ -107,9 +123,10 @@ export function mountRoomUI({ getState, getSeat, canPlay, submit, pause, display
         option.textContent = names[i];
       });
     const textSize = doc.querySelector('[data-tool-text-size]');
-    [...textSize.options].forEach((option, i) => {
-      option.textContent = ['Звичайний', 'Великий'][i];
-    });
+    for (const option of textSize.options) {
+      const label = { standard: 'Звичайний', large: 'Великий' }[option.value];
+      if (label) option.textContent = label;
+    }
     const textFace = doc.querySelector('[data-tool-text-face]');
     [...textFace.options].forEach((option, i) => {
       option.textContent = [t('interface:themeFont'), t('common:text.plain')][i];
@@ -197,6 +214,7 @@ export function mountRoomUI({ getState, getSeat, canPlay, submit, pause, display
       cards[getState()?.recipe.mode === 'versus' ? getSeat() : 0]?.canvas.focus({
         preventScroll: true,
       }),
+    onSurfaceChange,
     initial: 'home',
   });
   // subscribe() publishes immediately; the title must exist before its first
@@ -567,6 +585,7 @@ export function mountRoomUI({ getState, getSeat, canPlay, submit, pause, display
       supportInput.dispose();
       navigation.destroy();
       reactions.dispose();
+      stopGameplayAudio();
       sound.dispose();
       stopAudio();
       audioPreferences.dispose();

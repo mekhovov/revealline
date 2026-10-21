@@ -424,7 +424,7 @@ test('actual FPV application, native notebook and installation launcher close in
   const policy = OPTIONAL_PACKAGE_POLICIES['civilian-fpv'];
   const inventory = JSON.parse(f.files.get(f.package.sourceInventory.path));
   const sum = (rows) => rows.reduce((total, row) => total + row.bytes, 0);
-  assert.equal(policy.limits.bytes, 12 * 1024 * 1024 + 512 * 1024);
+  assert.equal(policy.limits.bytes, 13 * 1024 * 1024);
   assert.equal(policy.sourceInputBytes, policy.limits.bytes + 192 * 1024);
   assert.ok(sum(inventory.inputs) <= policy.sourceInputBytes);
   assert.equal(OPTIONAL_PACKAGE_POLICIES['fpv-worlds'].limits.bytes, 20 * 1024 * 1024);

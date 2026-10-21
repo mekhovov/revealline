@@ -2000,6 +2000,7 @@ function attachMissionLibraryBrowser({
 document:doc=globalThis.document,
 library,
 mode='solo',
+getHostMode=()=>mode,
 onPause,
 onReturn,
 readState=()=>null,
@@ -2014,6 +2015,8 @@ description=localizedMessage(
 ),
 browsingContext=null,
 random=Math.random,
+randomDownloadable=false,
+randomFilter=()=>true,
 renderPreview=()=>null,
 createArtworkView=null,
 retune={},
@@ -2185,7 +2188,18 @@ t('interface:playRandomLevelFromVisibleResults'),
 const back=node('button','journey-back',localizedMessage('common:navigation.backToGame'));
 back.type='button';
 back.className='button secondary';
-footer.append(randomLevel,back);
+const resetFilters=node(
+'button',
+'journey-filters-reset',
+localizedMessage('interface:missionLibrary.search.resetFilters'),
+);
+resetFilters.type='button';
+resetFilters.className='button secondary';
+resetFilters.setAttribute('aria-controls','journey-cards');
+localizedAttribute(resetFilters,'title',()=>
+t('interface:missionLibrary.search.resetHint'),
+);
+footer.append(resetFilters,randomLevel,back);
 dialog.append(heading,copy,filters,status,campaignRail,list,footer);
 doc.body.append(dialog);
 const cards=new Map(),
@@ -2561,7 +2575,14 @@ mode:modeFilter.value,
 collection:collection.value,
 lifecycle:lifecycle.value,
 })
-.filter((row)=>library.availability(row,modeFilter.value).state==='ready');
+.filter((row)=>{
+if(!randomFilter(row))return false;
+const state=library.availability(row,modeFilter.value);
+return(
+state.state==='ready'||
+(randomDownloadable&&(state.state==='download'||state.retry))
+);
+});
 }
 function playRandom({resetFilters=false}={}){
 if(destroyed|| !dialog.open||doc.hidden||doc.hasFocus?.()===false)return false;
@@ -2681,6 +2702,42 @@ artwork:null,
 completion:null,
 };
 }
+function hostMode(){
+try{
+const accepted=getHostMode();
+if(modes.includes(accepted))return accepted;
+}catch{
+// A retired host callback must not make browse-only recovery unusable.
+}
+return mode;
+}
+const filtersActive=()=>
+!!collection.value||modeFilter.value!==hostMode()||lifecycle.value!=='current';
+function filterDescription(){
+return t('interface:missionLibrary.search.filters',{
+collection:collection.value?t(LIBRARY_TAG_KEYS[collection.value]):t('interface:all'),
+editions:
+lifecycle.value==='current'
+?t('interface:current')
+:lifecycle.value==='archive'
+?t('interface:missionLibrary.lifecycle.archive')
+:t('interface:missionLibrary.lifecycle.all'),
+mode:modeLabel(modeFilter.value),
+});
+}
+function emptyDescription(){
+const query= !!search.value.trim();
+const key= !library.missions.length
+?'emptyLibrary'
+:query&&filtersActive()
+?'emptySearchFilters'
+:query
+?'emptySearch'
+:filtersActive()
+?'emptyFilters'
+:'emptyView';
+return t(`interface:missionLibrary.search.${key}`);
+}
 function render(){
 if(destroyed)return;
 clearSearch.hidden= !search.value;
@@ -2699,18 +2756,22 @@ lifecycle:lifecycle.value,
 // Campaigns are navigation anchors, never a hidden second filter. Every
 // matching campaign remains in this one scroll surface.
 const matches=railRows;
-randomLevel.disabled= !matches.some(
-(row)=>library.availability(row,modeFilter.value).state==='ready',
+randomLevel.disabled= !readyRandomRows().length;
+resetFilters.hidden= !filtersActive();
+localizedText(status,()=>
+[
+t('common:counts.missions',{count:matches.length}),
+browsingContext?.({mode:modeFilter.value,label:modeLabel(modeFilter.value)})??
+modeLabel(modeFilter.value),
+filtersActive()|| !matches.length?filterDescription():'',
+!matches.length?emptyDescription():'',
+message?renderMessage(message):'',
+]
+.filter(Boolean)
+.join(' · '),
 );
-localizedText(
-status,
-()=>
-`${t('common:counts.missions',{count:matches.length})} · ${browsingContext?.({mode:modeFilter.value,label:modeLabel(modeFilter.value)})??modeLabel(modeFilter.value)}${message?` · ${renderMessage(message)}`:''}`,
-);
-const filtersActive=
-!!collection.value||modeFilter.value!==mode||lifecycle.value!=='current';
 localizedText(filterSummary,()=>
-filtersActive?t('interface:filtersActive'):t('interface:filters'),
+filtersActive()?t('interface:filtersActive'):t('interface:filters'),
 );
 const campaignChoices=new Map();
 for(const row of railRows)
@@ -3109,9 +3170,16 @@ if(retune&& !dialog.open)commitMenuRetune(dialog,retuneOrigin);
 }
 function open(
 origin=doc.activeElement,
-{returnLabel=t('common:navigation.backToGame'),retune=true}={},
+{returnLabel=t('common:navigation.backToGame'),retune=true,onOpeningStage}={},
 ){
 if(destroyed)return;
+const observe=onOpeningStage
+?(kind)=>{
+try{
+onOpeningStage(kind);
+}catch{}
+}
+:null;
 const changed= !dialog.open;
 const landing=retune&&changed?menuRetuneOrigin(origin):null;
 retirePendingSelection();
@@ -3124,10 +3192,16 @@ initialOpen=false;
 localizedText(back,()=>returnLabel);
 onPause?.();
 invalidateDiagrams();
+observe?.('missions-campaigns-begin');
 rebuildCampaigns();
+observe?.('missions-campaigns-end');
+observe?.('missions-render-begin');
 render();
+observe?.('missions-render-end');
 if(!dialog.open)nativeReturnFocus=doc.activeElement;
+observe?.('missions-modal-begin');
 dialog.showModal();
+observe?.('missions-modal-end');
 observeDiagrams();
 restoreSelection();
 if(landing){
@@ -3175,6 +3249,42 @@ const first=[...list.querySelectorAll('.journey-card')].find(
 (first??(compact?filterSummary:collection)).focus({
 preventScroll:true,
 });
+remember();
+};
+resetFilters.onclick=()=>{
+if(
+destroyed||
+!dialog.open||
+doc.hidden||
+doc.hasFocus?.()===false||
+!filtersActive()
+)
+return;
+const ticket=visit,
+focused=doc.activeElement,
+acceptedMode=hostMode();
+collection.value='';
+lifecycle.value='current';
+modeFilter.value=acceptedMode;
+// One ordinary filter event owns retirement/rendering and informs native
+// hosts which keep remote metadata or preview controls for the browsed mode.
+const EventType=doc.defaultView?.Event||Event;
+modeFilter.dispatchEvent(new EventType('change',{bubbles:true}));
+if(
+destroyed||
+!dialog.open||
+doc.hidden||
+doc.hasFocus?.()===false||
+visit!==ticket+1||
+modeFilter.value!==acceptedMode||
+(doc.activeElement!==focused&&
+!(focused===resetFilters&&doc.activeElement===doc.body))
+)
+return;
+const first=[...list.querySelectorAll('.journey-card')].find(
+(button)=> !button.disabled,
+);
+(first??search).focus({preventScroll:true});
 remember();
 };
 campaign.addEventListener('change',()=>{
@@ -3328,6 +3438,9 @@ const JOURNEY_PROFILE_DATABASE='revealline-journey-v1';
 return{JOURNEY_PROFILE_DATABASE};
 })();
 modules['game/profile-storage.mjs']=(()=>{
+const boundedJSON=simGlobalData['boundedJSON'];
+const canonicalJSON=simGlobalData['canonicalJSON'];
+const exactKeys=simGlobalData['exactKeys'];
 const required=simGlobalData['required'];
 const JOURNEY_PROFILE_DATABASE=
 modules['game/profile-database.mjs']['JOURNEY_PROFILE_DATABASE'];
@@ -3393,6 +3506,7 @@ validate,
 indexedDB=globalThis.indexedDB,
 canWrite=()=>true,
 operationTimeoutMs=1500,
+validateReceipt,
 }={}){
 required(
 typeof key==='string'&&key.length>0&&key.length<=256,
@@ -3404,6 +3518,28 @@ typeof empty==='function'&&typeof validate==='function',
 );
 required(typeof canWrite==='function','Rewards require a write guard.');
 validateTimeout(operationTimeoutMs);
+if(validateReceipt!==undefined)
+required(typeof validateReceipt==='function','A receipt validator is required.');
+const receiptKey=`${key}.receipt.v1`;
+const receiptOf=(source)=>{
+const value=boundedJSON(source,{
+maxBytes:64*1024,
+maxDepth:16,
+maxArray:256,
+maxString:32768,
+});
+exactKeys(value,['format','id','input','result'],'Profile write receipt');
+required(value.format==='profile-write-receipt.v1','Unsupported profile write receipt.');
+required(
+typeof value.id==='string'&& /^[a-zA-Z0-9._-]{1,128}$/.test(value.id),
+'Invalid profile write identity.',
+);
+required(
+typeof value.input==='string'&&value.input.length<=32768,
+'Invalid profile write input.',
+);
+return{...value,result:validateReceipt(value.result)};
+};
 let opening=null,
 connection=null,
 closed=false;
@@ -3455,7 +3591,7 @@ request.onblocked=()=>fail(new Error('Reward storage is busy in another tab.'));
 });
 return attempt.promise;
 };
-function transaction(update,{signal}={}){
+function transaction(update,{signal}={},once=null){
 let tx,pendingOpen;
 return boundedOperation(
 async(boundedSignal)=>{
@@ -3470,18 +3606,47 @@ if(update)required(canWrite(),'This tab does not own the saving lease.');
 return new Promise((resolve,reject)=>{
 tx=db.transaction('profiles',update?'readwrite':'readonly');
 const store=tx.objectStore('profiles'),
-request=store.get(key);
-let state,failure;
-request.onsuccess=()=>{
+request=store.get(key),
+receiptRequest=once?store.get(receiptKey):null;
+let state,
+result,
+failure,
+remaining=once?2:1;
+const received=()=>{
+if(--remaining)return;
 try{
 boundedSignal.throwIfAborted();
 state=request.result===undefined?empty():validate(request.result);
 if(update){
 required(canWrite(),'This tab does not own the saving lease.');
-state=validate(update(state));
+const previous=
+receiptRequest?.result===undefined
+?null
+:receiptOf(receiptRequest.result);
+if(once&&previous?.id===once.id){
+required(
+previous.input===once.input,
+'A saved result identity cannot describe a different result.',
+);
+result={state,receipt:previous.result,replayed:true};
+}else{
+const updated=update(state);
+state=validate(once?updated.state:updated);
 boundedSignal.throwIfAborted();
+required(canWrite(),'This tab does not own the saving lease.');
+if(once){
+const receipt=receiptOf({
+format:'profile-write-receipt.v1',
+...once,
+result:updated.receipt,
+});
+store.put(receipt,receiptKey);
+result={state,receipt:receipt.result,replayed:false};
+}
 store.put(state,key);
 }
+}
+result??=state;
 }catch(error){
 failure=error;
 try{
@@ -3491,7 +3656,9 @@ tx.abort();
 }
 }
 };
-tx.oncomplete=()=>resolve(state);
+request.onsuccess=received;
+if(receiptRequest)receiptRequest.onsuccess=received;
+tx.oncomplete=()=>resolve(result);
 tx.onerror=tx.onabort=()=>
 reject(failure??tx.error??new Error('Rewards could not be saved.'));
 });
@@ -3515,7 +3682,25 @@ tx.abort();
 return{
 key,
 read:(options)=>transaction(null,options),
-update:transaction,
+update:(update,options)=>transaction(update,options),
+/** Commit one result and its receipt in the same transaction. Historical
+         * profile records retain their exact schema. The caller owns attempt
+         * ordering; this receipt only deduplicates its current durable attempt. */
+updateOnce({id,input},update,options){
+required(
+typeof validateReceipt==='function',
+'This store does not accept result receipts.',
+);
+required(
+typeof id==='string'&& /^[a-zA-Z0-9._-]{1,128}$/.test(id),
+'Invalid profile write identity.',
+);
+const snapshot=canonicalJSON(
+boundedJSON(input,{maxBytes:32768,maxDepth:12,maxArray:256}),
+);
+required(snapshot.length<=32768,'Profile write input is too large.');
+return transaction(update,options,{id,input:snapshot});
+},
 close(){
 if(closed)return;
 closed=true;
@@ -5920,9 +6105,11 @@ const PAPER_COUNT=104;
 const GLINT_COUNT=16;
 // Keep the family IDs stable for existing presentation consumers. Each now
 // selects a paper palette; the firework-like bloom uses paper and stars only.
-const CONFETTI_TONES={'signal-clear':['accent','safe','paper','danger','accent','safe'],
+const CONFETTI_TONES={
+'signal-clear':['accent','safe','paper','danger','accent','safe'],
 'stitch-bloom':['accent','danger','paper','safe','danger','accent'],
-'neon-fireworks':['danger','safe','paper','accent','safe','danger']};
+'neon-fireworks':['danger','safe','paper','accent','safe','danger'],
+};
 // Stateless presentation randomness: sampling a frame never consumes gameplay
 // randomness, accumulates particles or depends on the rendering frame rate.
 function sample(seed,index,channel){
@@ -6522,7 +6709,7 @@ if(!doc.getElementById('continuous-play-style')){
 const style=doc.createElement('style');
 style.id='continuous-play-style';
 style.textContent=`
-.continuous-play-controls {display:flex;align-items:center;flex-wrap:wrap;gap:.35rem .65rem;min-width:0;max-width:100%;margin:0;font-size:.85rem;}
+.continuous-play-controls {display:flex;align-items:center;flex-wrap:wrap;gap:.35rem .65rem;min-width:0;max-width:100%;margin:0;font-size:calc(.85rem * var(--overflight-text-scale, 1));}
 .continuous-play-controls[hidden] {display:none!important;}
 .continuous-play-controls p {margin:0;overflow-wrap:anywhere;}
 .continuous-play-controls .button {min-height:44px;padding:.35rem .65rem;font-size:inherit;}
@@ -6646,7 +6833,7 @@ return value;
 return{TEXT_FACES,DEFAULT_TEXT_FACE,resolveTextFace};
 })();
 modules['game/text-size.mjs']=(()=>{
-const TEXT_SIZES=Object.freeze(['standard','large']);
+const TEXT_SIZES=Object.freeze(['standard','large','extra-large']);
 const DEFAULT_TEXT_SIZE='standard';
 
 function resolveTextSize(value){
@@ -6654,13 +6841,20 @@ if(!TEXT_SIZES.includes(value))throw new TypeError('Unsupported text size.');
 return value;
 }
 
-return{TEXT_SIZES,DEFAULT_TEXT_SIZE,resolveTextSize};
+/** Hosts explicitly opt into their additional layout. The established Large
+     * presentation remains every other host's fallback. */
+function effectiveTextSize(value,{extraLarge=false}={}){
+return resolveTextSize(value)==='extra-large'&& !extraLarge?'large':value;
+}
+
+return{TEXT_SIZES,DEFAULT_TEXT_SIZE,resolveTextSize,effectiveTextSize};
 })();
 modules['game/display-preferences.mjs']=(()=>{
 const DEFAULT_TEXT_FACE=modules['game/text-face.mjs']['DEFAULT_TEXT_FACE'];
 const resolveTextFace=modules['game/text-face.mjs']['resolveTextFace'];
 const DEFAULT_TEXT_SIZE=modules['game/text-size.mjs']['DEFAULT_TEXT_SIZE'];
 const resolveTextSize=modules['game/text-size.mjs']['resolveTextSize'];
+const effectiveTextSize=modules['game/text-size.mjs']['effectiveTextSize'];
 
 const DISPLAY_PREFERENCES_KEY='revealline.display.v1';
 const fields=['textFace','textSize','reducedEffects'];
@@ -6720,6 +6914,7 @@ window:eventTarget=globalThis,
 getStorage=()=>globalThis.localStorage,
 matchMedia=(query)=>eventTarget?.matchMedia?.(query),
 legacyPreferences,
+extraLarge=false,
 writable=()=>true,
 onWarning=()=>{},
 }={}){
@@ -6727,6 +6922,7 @@ let disposed=false,
 explicit=false,
 stored=false,
 unsaved=false,
+writing=false,
 warning='',
 warningKey='',
 systemReduced=false;
@@ -6752,6 +6948,7 @@ stored= !!first.value;
 const initial=first.value??legacy(legacyPreferences);
 let state=Object.freeze({
 ...initial,
+effectiveTextSize:effectiveTextSize(initial.textSize,{extraLarge}),
 effectiveReducedEffects:initial.reducedEffects||systemReduced,
 revision:0,
 });
@@ -6774,6 +6971,7 @@ return state;
 const apply=(values)=>{
 state=Object.freeze({
 ...values,
+effectiveTextSize:effectiveTextSize(values.textSize,{extraLarge}),
 effectiveReducedEffects:values.reducedEffects||systemReduced,
 revision:state.revision+1,
 });
@@ -6789,8 +6987,21 @@ onWarning(message,key);
 }
 };
 const persist=()=>{
+if(writing)return;
+writing=true;
+const revision=state.revision,
+current=()=> !disposed&&state.revision===revision;
+const failed=()=>{
+unsaved=true;
+notice(
+'Display changed for this session, but could not be saved for another page.',
+'common:preferences.displaySaveFailed',
+);
+};
 try{
-if(!writable()){
+const allowed=writable();
+if(!current())return;
+if(!allowed){
 unsaved=true;
 notice(
 'Display changes apply only to this session; saving is disabled here.',
@@ -6799,17 +7010,24 @@ notice(
 return;
 }
 const storage=getStorage();
+if(!current())return;
 if(!storage)throw new Error('Storage unavailable.');
-storage.setItem(DISPLAY_PREFERENCES_KEY,JSON.stringify(raw()));
+const encoded=JSON.stringify(raw());
+storage.setItem(DISPLAY_PREFERENCES_KEY,encoded);
+if(!current())return;
+const confirmed=storage.getItem(DISPLAY_PREFERENCES_KEY);
+if(!current())return;
+if(confirmed!==encoded)throw new Error('The display save could not be confirmed.');
 stored=true;
 unsaved=false;
 notice('');
 }catch{
-unsaved=true;
-notice(
-'Display changed for this session, but could not be saved for another page.',
-'common:preferences.displaySaveFailed',
-);
+if(current())failed();
+}finally{
+writing=false;
+// A nested explicit action is already visible but did not join this write.
+// Never let an older save acknowledge or replace that newer session intent.
+if(!disposed&&state.revision!==revision)failed();
 }
 };
 const receive=(event)=>{
@@ -6879,6 +7097,7 @@ set(value){
 if(disposed)throw new Error('Display preferences are disposed.');
 const next={...raw(),...patch(value)};
 explicit=true;
+unsaved=true;
 try{
 apply(next);
 }finally{
@@ -7051,6 +7270,7 @@ reason:state.pending?state.reason:'',
 };
 return{
 get:()=>getMenuAnimation(win),
+revision:()=>owner(win).action,
 set:(value)=>setMenuAnimation(value,win),
 subscribe:(listener)=>subscribeMenuAnimation(listener,win),
 persistence,
@@ -7449,8 +7669,101 @@ label.hidden=hidden;
 
 return{attachThemeFamilyControls};
 })();
+modules['game/ui/text-size-control.mjs']=(()=>{
+const resolveTextSize=modules['game/text-size.mjs']['resolveTextSize'];
+const localizedText=simGlobalI18n['localizedText'];
+const t=simGlobalI18n['t'];
+
+const notices=new WeakMap();
+const hostNotices=new WeakMap();
+let nextNotice=0;
+
+/** Read-only hosts acknowledge the fallback without creating another owner. */
+function renderTextSizeFallback(container,desired,{locale}={}){
+resolveTextSize(desired);
+if(!container)return;
+let notice=hostNotices.get(container);
+if(!notice&&desired==='extra-large'){
+notice=container.ownerDocument.createElement('p');
+notice.className='micro-note';
+notice.dataset.textSizeFallback='true';
+container.append(notice);
+hostNotices.set(container,notice);
+}
+if(notice){
+localizedText(notice,()=>
+t('interface:textSizeCompatibility.readOnlyFallback',{lng:locale}),
+);
+notice.hidden=desired!=='extra-large';
+}
+}
+
+/** Only an opted-in host offers the additional size; other hosts retain intent
+     * as a disabled choice. Never save, dispatch or move keyboard focus. */
+function renderTextSizeControl(control,desired,{locale,extraLarge=false}={}){
+resolveTextSize(desired);
+if(!control)return;
+let retained=control.querySelector('[data-text-size-retained]');
+let notice=notices.get(control);
+if(extraLarge||desired==='extra-large'){
+if(!retained){
+retained=control.ownerDocument.createElement('option');
+retained.value='extra-large';
+retained.dataset.textSizeRetained='true';
+control.append(retained);
+}
+retained.disabled= !extraLarge;
+localizedText(retained,()=>
+t(
+extraLarge
+?'interface:textSizeCompatibility.extraLarge'
+:'interface:textSizeCompatibility.retained',
+{lng:locale},
+),
+);
+if(!notice&& !extraLarge){
+notice=control.ownerDocument.createElement('span');
+notice.id=`${control.id||`text-size-${++nextNotice}`}-fallback`;
+notice.className='micro-note';
+notice.dataset.textSizeFallback='true';
+control.after(notice);
+notices.set(control,notice);
+}
+if(notice){
+localizedText(notice,()=>
+t('interface:textSizeCompatibility.fallback',{lng:locale}),
+);
+notice.hidden=extraLarge;
+}
+const descriptions=new Set(
+(control.getAttribute('aria-describedby')??'').split(/\s+/).filter(Boolean),
+);
+if(notice){
+if(extraLarge)descriptions.delete(notice.id);
+else descriptions.add(notice.id);
+}
+if(descriptions.size)
+control.setAttribute('aria-describedby',[...descriptions].join(' '));
+else control.removeAttribute('aria-describedby');
+}else{
+retained?.remove();
+if(notice){
+notice.hidden=true;
+const descriptions=(control.getAttribute('aria-describedby')??'')
+.split(/\s+/)
+.filter((value)=>value&&value!==notice.id);
+if(descriptions.length)control.setAttribute('aria-describedby',descriptions.join(' '));
+else control.removeAttribute('aria-describedby');
+}
+}
+control.value=desired;
+}
+
+return{renderTextSizeFallback,renderTextSizeControl};
+})();
 modules['game/ui/global-settings-view.mjs']=(()=>{
 const continuousPlayBindings=modules['game/ui/continuous-play.mjs']['continuousPlayBindings'];
+const renderTextSizeControl=modules['game/ui/text-size-control.mjs']['renderTextSizeControl'];
 // One logical settings inventory. Shared flow preferences have one lightweight
 // owner; hosts retain audio, simulation and profile lifecycle ownership.
 const GLOBAL_SETTINGS=Object.freeze(
@@ -7608,6 +7921,7 @@ function render(row){
 if(!row.input|| !row.binding)return;
 const value=row.binding.get();
 if(row.spec.type==='checkbox')row.input.checked= !!value;
+else if(row.spec.key==='textSize')renderTextSizeControl(row.input,value,{locale});
 else row.input.value=String(value);
 if(row.output)row.output.textContent=`${Math.round(Number(value)*100)}%`;
 const feedback=row.binding.feedback?.(locale),
@@ -7824,12 +8138,152 @@ return{enabled:true,volume:0.35};
 
 return{RADIO_AUDIO_KEY,readRadioAudio};
 })();
+modules['game/ui/gameplay-audio-controls.mjs']=(()=>{
+const getLocale=simGlobalI18n['getLocale'];
+const onLocaleChange=simGlobalI18n['onLocaleChange'];
+
+const copy={
+en:{
+label:'Mono effects and voices',
+help:'Combines game effects, menu sounds and character voices into both channels. Music and videos keep their original audio.',
+inactive:'Applies when game sound starts.',
+mono:'Effects and voices are mixed into both channels.',
+unsupported:'This browser could not confirm the requested channel setting.',
+saved:'Saved',
+retry:'Retry saving',
+full:'Session only: browser storage is full.',
+blocked:'Session only: browser storage is blocked.',
+unavailable:'Session only: browser storage is unavailable.',
+unconfirmed:'Session only: the browser did not confirm the saved choice.',
+preserved:'Session only: an unreadable or newer saved choice was kept.',
+},
+uk:{
+label:'Моно для ефектів і голосів',
+help:'Поєднує ігрові ефекти, звуки меню та голоси персонажів в обох каналах. Музика й відео зберігають початкове звучання.',
+inactive:'Діятиме, коли почнеться ігровий звук.',
+mono:'Ефекти й голоси поєднано в обох каналах.',
+unsupported:'Цей браузер не підтвердив вибране налаштування каналів.',
+saved:'Збережено',
+retry:'Зберегти повторно',
+full:'Лише в цьому сеансі: сховище браузера заповнене.',
+blocked:'Лише в цьому сеансі: сховище браузера заблоковане.',
+unavailable:'Лише в цьому сеансі: сховище браузера недоступне.',
+unconfirmed:'Лише в цьому сеансі: браузер не підтвердив збереження вибору.',
+preserved:
+'Лише в цьому сеансі: нечитабельний або новіший збережений вибір залишено без змін.',
+},
+};
+let serial=0;
+
+/** One presentation setting; neither opening nor changing it starts playback. */
+function mountGameplayAudioControls({
+output,
+container,
+document:doc=container?.ownerDocument??globalThis.document,
+idPrefix='gameplay-audio',
+}={}){
+if(
+!output||
+!container||
+!doc?.createElement||
+container.querySelector('[data-gameplay-audio]')
+)
+return()=>{};
+const group=doc.createElement('div'),
+label=doc.createElement('label'),
+enabled=doc.createElement('input'),
+title=doc.createElement('span'),
+help=doc.createElement('p'),
+status=doc.createElement('p'),
+retry=doc.createElement('button');
+const id=`${idPrefix}-${++serial}`;
+group.dataset.gameplayAudio='';
+group.style.display='grid';
+group.style.gap='0.5rem';
+group.style.minWidth='0';
+label.style.display='flex';
+label.style.alignItems='center';
+label.style.gap='0.6rem';
+enabled.type='checkbox';
+enabled.id=`${id}-enabled`;
+enabled.style.width='auto';
+enabled.style.flexShrink='0';
+enabled.style.margin='0';
+help.id=`${id}-help`;
+status.id=`${id}-status`;
+help.style.margin=status.style.margin='0';
+help.style.overflowWrap=status.style.overflowWrap='anywhere';
+enabled.setAttribute('aria-describedby',`${help.id} ${status.id}`);
+status.setAttribute('role','status');
+status.setAttribute('aria-live','polite');
+retry.type='button';
+retry.style.whiteSpace='normal';
+label.append(enabled,title);
+group.append(label,help,status,retry);
+container.append(group);
+let state=output.snapshot(),
+edited=false,
+disposed=false;
+const render=()=>{
+if(disposed)return;
+const words=copy[getLocale()]??copy.en;
+const restoreFocus=retry===doc.activeElement&&state.durable;
+enabled.checked=state.monoEffects;
+title.textContent=words.label;
+help.textContent=words.help;
+retry.textContent=words.retry;
+retry.hidden= !state.pending;
+const runtime=
+state.status==='unsupported'
+?words.unsupported
+:state.monoEffects
+?(words[state.status]??'')
+:'';
+const persistence=state.durable
+?edited
+?words.saved
+:''
+:(words[state.reason]??words.unavailable);
+status.textContent=[runtime,persistence].filter(Boolean).join(' ');
+status.hidden= !status.textContent;
+if(restoreFocus)enabled.focus();
+};
+const change=()=>{
+edited=true;
+output.choose(enabled.checked);
+};
+const retrySave=()=>{
+edited=true;
+output.retry();
+};
+enabled.addEventListener('change',change);
+retry.addEventListener('click',retrySave);
+const stop=output.subscribe((next)=>{
+state=next;
+render();
+});
+const stopLocale=onLocaleChange(render);
+return()=>{
+if(disposed)return;
+disposed=true;
+stop();
+stopLocale();
+enabled.removeEventListener('change',change);
+retry.removeEventListener('click',retrySave);
+group.remove();
+};
+}
+
+return{mountGameplayAudioControls};
+})();
 modules['game/ui/movement-audio.mjs']=(()=>{
 const MOVEMENT_AUDIO_KEY='revealline.movement-audio.v1';
 
 return{MOVEMENT_AUDIO_KEY};
 })();
 modules['game/ui/menu-audio.mjs']=(()=>{
+const mountGameplayAudioControls=
+modules['game/ui/gameplay-audio-controls.mjs']['mountGameplayAudioControls'];
 const MOVEMENT_AUDIO_KEY=modules['game/ui/movement-audio.mjs']['MOVEMENT_AUDIO_KEY'];
 const RADIO_AUDIO_KEY=modules['game/ui/radio-audio.mjs']['RADIO_AUDIO_KEY'];
 const t=simGlobalI18n['t'];
@@ -7883,7 +8337,14 @@ MOVEMENT_AUDIO_KEY,
 'movementVolume',
 options,
 );
+const mono=mountGameplayAudioControls({
+output:sound.gameplayOutput,
+container:audioTarget(doc,options),
+document:doc,
+idPrefix:options.idPrefix,
+});
 return()=>{
+mono();
 movement();
 menu();
 radio();
@@ -7894,13 +8355,7 @@ if(!sound[property]|| !doc?.createElement)return()=>{};
 const win=options.window??globalThis,
 getStorage=options.getStorage??(()=>globalThis.localStorage),
 idPrefix=options.idPrefix?`${options.idPrefix}-`:'';
-const target=
-options.target??
-doc.getElementById('sfx-volume')?.parentElement?.parentElement??
-doc.getElementById('race-settings-panel-audio')??
-doc.getElementById('coop-settings-panel-audio')??
-doc.getElementById('settings-panel-audio')??
-doc.getElementById('settings-dialog');
+const target=audioTarget(doc,options);
 if(!target||target.querySelector(`[data-${prefix}-audio]`))return()=>{};
 const group=doc.createElement('div');
 group.dataset[`${prefix}Audio`]='';
@@ -7967,6 +8422,17 @@ group.remove();
 };
 }
 
+function audioTarget(doc,options){
+return(
+options.target??
+doc?.getElementById('sfx-volume')?.parentElement?.parentElement??
+doc?.getElementById('race-settings-panel-audio')??
+doc?.getElementById('coop-settings-panel-audio')??
+doc?.getElementById('settings-panel-audio')??
+doc?.getElementById('settings-dialog')
+);
+}
+
 return{MENU_AUDIO_KEY,readMenuAudio,attachMenuAudioSettings};
 })();
 return{
@@ -8024,7 +8490,7 @@ export const readSimRadioAudio=sharedGlobalSettings.readSimRadioAudio;
 export const SIM_RADIO_AUDIO_KEY=sharedGlobalSettings.SIM_RADIO_AUDIO_KEY;
 export const attachSimMenuAudioSettings=sharedGlobalSettings.attachSimMenuAudioSettings;
 export const readSimMenuAudio=sharedGlobalSettings.readSimMenuAudio;
-// Canonical source sha256: a5ebd172991cc1269a3e7abc132b967f47fbc405f8897435a55935203de3b8ae
+// Canonical source sha256: a878605004fbfd49d3809deb02e4081e808243f1a2a43d5499a981ff0e335055
 const sharedModeShell=(()=>{
 // Dependency-free presentation shared with bundled simulator builds.
 const GAME_MODE_ORDER=Object.freeze([
@@ -8300,6 +8766,7 @@ function attachSettingsPanels({
 root,
 document:doc=globalThis.document,
 beforeSelect=()=>false,
+onPresentationChange=()=>{},
 }={}){
 const list=root?.querySelector?.('.field-kit-settings-tabs'),
 records=[...(list?.querySelectorAll('[role="tab"]')??[])].map((tab)=>({
@@ -8313,9 +8780,15 @@ generation=0;
 const compact=()=>
 root?.classList?.contains('native-settings')&&
 (doc.defaultView?.innerWidth??doc.documentElement?.clientWidth??Infinity)<=700;
+let previousCompact=compact();
 function view(name){
-if(root?.classList?.contains('native-settings'))
+if(
+!root?.classList?.contains('native-settings')||
+root.getAttribute('data-settings-view')===name
+)
+return false;
 root.setAttribute('data-settings-view',name);
+return true;
 }
 const owned=(record)=> !destroyed&&owns(root,doc,list,record);
 const available=()=>records.filter((record)=>owned(record)&&enabled(record));
@@ -8336,12 +8809,18 @@ const ticket= ++generation,
 returnFocus=beforeSelect(next.tab)===true;
 // A host hook may retire this surface, disable the target or start a newer selection.
 if(ticket!==generation|| !owned(next)|| !enabled(next))return false;
+const selectionChanged=current!==next;
 paint(next);
 if(drill&&compact()){
-view('panel');
+const viewChanged=view('panel');
+if(selectionChanged||viewChanged)onPresentationChange();
+if(ticket!==generation|| !owned(next)|| !enabled(next)||current!==next)
+return false;
 if(!focusPanel())next.panel.focus?.();
 return true;
 }
+if(selectionChanged)onPresentationChange();
+if(ticket!==generation|| !owned(next)|| !enabled(next)||current!==next)return false;
 if(focus||returnFocus)next.tab.focus();
 return true;
 }
@@ -8351,8 +8830,10 @@ paint(initial.find(({tab})=>tab.getAttribute('aria-selected')==='true')||initial
 view('categories');
 const back=()=>{
 if(!destroyed&&compact()&&root.getAttribute('data-settings-view')==='panel'){
+const ticket= ++generation;
 view('categories');
-current?.tab.focus();
+onPresentationChange();
+if(ticket===generation&& !destroyed)current?.tab.focus();
 return true;
 }
 return false;
@@ -8367,6 +8848,7 @@ element.getClientRects().length&&
 doc.defaultView?.getComputedStyle(element)?.visibility!=='hidden';
 const restoreFocus=(opener)=>{
 if(!current|| !owned(current)|| !enabled(current))return false;
+const ticket= ++generation;
 // Reveal only the still-selected category. A retired/hidden control must
 // not change categories or be made available by closing a child tool.
 if(
@@ -8374,14 +8856,18 @@ current.panel.contains(opener)&&
 !opener.disabled&&
 !opener.closest('[hidden],[inert],[aria-hidden="true"]')
 ){
-if(compact())view('panel');
+if(compact()&&view('panel'))onPresentationChange();
+if(ticket!==generation||destroyed|| !current|| !owned(current)|| !enabled(current))
+return false;
 if(focusable(opener)){
 opener.focus({preventScroll:true});
 if(compact())opener.scrollIntoView?.({block:'nearest',inline:'nearest'});
 return true;
 }
 }
-view('categories');
+if(view('categories'))onPresentationChange();
+if(ticket!==generation||destroyed|| !current|| !owned(current)|| !enabled(current))
+return false;
 if(!focusable(current.tab))return false;
 current.tab.focus({preventScroll:true});
 if(compact())current.tab.scrollIntoView?.({block:'nearest',inline:'nearest'});
@@ -8410,13 +8896,27 @@ event.stopImmediatePropagation?.();
 };
 root?.addEventListener('click',backClick,true);
 const resize=()=>{
-if(destroyed|| !root?.contains(doc.activeElement))return;
-if(current?.panel.contains(doc.activeElement))view('panel');
-else if(list?.contains(doc.activeElement))view('categories');
+if(destroyed)return;
+// CSS can hide Data at the breakpoint without changing the selected panel
+// or view attribute. That owner change does not depend on current focus.
+const nextCompact=compact(),
+breakpointChanged=nextCompact!==previousCompact;
+previousCompact=nextCompact;
+const viewChanged= !root?.contains(doc.activeElement)
+?false
+:current?.panel.contains(doc.activeElement)
+?view('panel')
+:list?.contains(doc.activeElement)
+?view('categories')
+:false;
+if(breakpointChanged||(nextCompact&&viewChanged)){
+generation++;
+onPresentationChange();
+}
 };
 doc.defaultView?.addEventListener?.('resize',resize);
 function focusPanel(){
-if(!current|| !owned(current))return false;
+if(!current|| !owned(current)|| !enabled(current))return false;
 const target=[
 ...current.panel.querySelectorAll(
 'button,a[href],select,input:not([type="hidden"]),textarea,summary,[tabindex]',
@@ -8472,13 +8972,17 @@ primary:()=>(current&&owned(current)?current.tab:null),
 panel:()=>(current&&owned(current)?current.panel:null),
 focusCategories(){
 if(!current|| !owned(current)|| !enabled(current))return false;
-view('categories');
+const ticket= ++generation;
+if(view('categories'))onPresentationChange();
+if(ticket!==generation||destroyed|| !current|| !owned(current)|| !enabled(current))
+return false;
 current.tab.focus();
 return true;
 },
 focusPanel(){
-view('panel');
-return focusPanel();
+const ticket= ++generation;
+if(view('panel'))onPresentationChange();
+return ticket===generation&& !destroyed&&focusPanel();
 },
 back,
 destroy(){
@@ -8490,6 +8994,7 @@ root?.removeEventListener('cancel',cancel);
 root?.removeEventListener('click',backClick,true);
 doc.defaultView?.removeEventListener?.('resize',resize);
 removers.forEach((remove)=>remove());
+onPresentationChange();
 },
 });
 }
@@ -8542,6 +9047,7 @@ locale='en',
 setMenuIcon=()=>{},
 attachPanels,
 beforeSelect,
+onPresentationChange,
 }={}){
 const doc=root?.ownerDocument;
 if(!doc|| !content|| !root.contains(content)||typeof attachPanels!=='function')
@@ -8603,7 +9109,7 @@ layout.append(panel);
 rootClasses.forEach((name)=>root.classList.add(name));
 if(contentClass)content.classList.add('mode-settings-content');
 content.append(layout);
-const navigation=attachPanels({root,document:doc,beforeSelect});
+const navigation=attachPanels({root,document:doc,beforeSelect,onPresentationChange});
 let destroyed=false;
 const api=Object.freeze({
 navigation,
@@ -9226,6 +9732,16 @@ else if(node===buttons.sound||node===buttons['pause-sound'])
 value=`${COPY[language].sound}: ${COPY[language][state.muted?'off':'on']}`;
 else if(node===briefingTitle)value=text(state.missionName)||value;
 put(node,'textContent',value);
+}
+const pauseIcon=
+state.phase==='paused'&& !state.pauseOpensMenu
+?'play'
+:state.pauseOpensMenu&&state.phase!=='playing'
+?'menu'
+:'pause';
+if(buttons.pause.dataset.modePauseIcon!==pauseIcon){
+buttons.pause.dataset.modePauseIcon=pauseIcon;
+services.setMenuIcon?.(buttons.pause,pauseIcon);
 }
 attribute(buttons.menu,'aria-label',COPY[language].menu);
 put(modeLabel,'textContent',text(modeName));
