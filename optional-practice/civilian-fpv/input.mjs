@@ -554,8 +554,9 @@ export function createFlightGamepad({
           reason = 'active';
         }
       }
-      const stalled =
-        !Number.isFinite(now) || (lastTime !== null && (now < lastTime || now - lastTime > 250));
+      // Long foreground frames do not disconnect a controller. The host bounds
+      // simulation time; only an invalid/backwards clock invalidates this poll.
+      const stalled = !Number.isFinite(now) || (lastTime !== null && now < lastTime);
       lastTime = Number.isFinite(now) ? now : null;
       if (stalled || !focused) {
         if (wasActive && !actions.includes('pause')) actions.push('pause');

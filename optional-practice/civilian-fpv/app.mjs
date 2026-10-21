@@ -1478,17 +1478,18 @@ export function mountFlightApp({
   }
   function frame(now) {
     if (disposed || suspended) return;
-    const delta = lastTime === null ? 0 : now - lastTime,
-      executedAt = win.performance?.now?.() ?? now,
+    let delta = lastTime === null ? 0 : now - lastTime;
+    const executedAt = win.performance?.now?.() ?? now,
       executionDelta = lastExecutionTime === null ? 0 : executedAt - lastExecutionTime;
     lastTime = now;
     lastExecutionTime = executedAt;
-    // Freeze before polling actions or advancing a countdown. A queued rAF can
-    // retain its pre-stall timestamp, so also check the callback execution gap.
+    // Drop missed wall time after foreground work, not input ownership. A queued
+    // rAF may retain an old timestamp; compare execution time as well. Continuing
+    // with one fresh interval avoids both catch-up jumps and a pause at low FPS.
     if (delta > 250 || executionDelta > 250) {
-      pause('focusLost');
-      frameId = win.requestAnimationFrame(frame);
-      return;
+      continuousPlay.cancel('interrupted');
+      accumulator = 0;
+      delta = 1000 / FLIGHT_HZ;
     }
     pollGamepad(now);
     pollMenu(now);

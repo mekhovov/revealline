@@ -5370,7 +5370,7 @@ class SchedulerWorker extends RegionalWorker {
   }
 }
 
-async function schedulerFixture(t, { regional = false } = {}) {
+async function schedulerFixture(t, { regional = false, activity = 'continuous' } = {}) {
   const [radio, tuning] = await Promise.all([
     import('../../optional-practice/civilian-fpv/radio-profile.mjs'),
     import('../../optional-practice/civilian-fpv/tuning-library.mjs'),
@@ -5418,7 +5418,7 @@ async function schedulerFixture(t, { regional = false } = {}) {
   await h.app.startFlight(entry, {
     mode: 'self-level',
     paused: true,
-    encounter: { activity: 'continuous', difficulty: 'easy', population: 6, seed: 8 },
+    encounter: { activity, difficulty: 'easy', population: 6, seed: 8 },
   });
   h.tick(2);
   await new Promise((resolve) => setImmediate(resolve));
@@ -5488,14 +5488,24 @@ test('Async World scheduler does not pump rejected or paused worker results', as
 test('Async World scheduler completion respects hidden, unfocused and stalled page ownership', async (t) => {
   for (const stop of ['hidden', 'unfocused', 'stalled'])
     await t.test(stop, async (t) => {
-      const h = await schedulerFixture(t);
+      const h = await schedulerFixture(t, {
+        activity: stop === 'stalled' ? 'survival' : 'continuous',
+      });
       h.tick(8);
       if (stop === 'hidden') h.doc.visibilityState = 'hidden';
       if (stop === 'unfocused') h.doc.hasFocus = () => false;
       if (stop === 'stalled') h.elapse(300);
       await h.worker.release();
       assert.equal(h.worker.held.length, 0, 'Completion cannot bypass lifecycle guards');
-      if (stop === 'stalled') assert.equal(h.app.snapshot().state.status, 'paused');
+      if (stop === 'stalled') {
+        assert.equal(h.app.snapshot().state.status, 'active', 'late completion does not disarm');
+        const before = h.app.snapshot().state.ticks;
+        h.tick(2);
+        assert.equal(h.worker.held.length, 1, 'next display frame resumes worker dispatch');
+        for (let count = 0; h.worker.held.length && count < 6; count++) await h.worker.release();
+        assert.equal(h.worker.held.length, 0, 'resumed debt stays bounded');
+        assert.ok(h.app.snapshot().state.ticks > before);
+      }
     });
 });
 
@@ -6300,4 +6310,34 @@ test('World historical Continue disposes its detached recovered world when prese
     prototype.createCollider = allocate;
     prototype.free = release;
   }
+});
+
+test('foreground stalls keep every World activity active with bounded catch-up', async (t) => {
+  for (const activity of ['original', 'continuous', 'hunting', 'elimination', 'strike', 'survival'])
+    await t.test(activity, async (t) => {
+      const h = fixture(t, { combat: activity !== 'original' });
+      await h.app.ready;
+      await h.app.startFlight(
+        WORLD_CATALOGUE.find((entry) => !entry.legacy),
+        {
+          encounter: { activity, difficulty: 'easy', population: 12, seed: 8 },
+        },
+      );
+      h.$('world-arm').click();
+      h.tick(2);
+      assert.equal(h.app.snapshot().state.encounter?.activity ?? 'original', activity);
+      for (const gap of [300, 1000, 5000]) {
+        const before = h.app.snapshot().state.ticks;
+        h.elapse(gap);
+        h.tick();
+        assert.equal(h.app.snapshot().state.status, 'active');
+        assert.equal(
+          h.app.snapshot().state.ticks,
+          before + 1,
+          'one fresh interval, no catch-up jump',
+        );
+      }
+      h.win.emit('blur');
+      assert.equal(h.app.snapshot().state.status, 'paused');
+    });
 });

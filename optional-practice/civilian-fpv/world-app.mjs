@@ -9162,7 +9162,9 @@ export function mountWorldApp({
       return;
     const executedAt = win.performance?.now?.() ?? lastExecutionTime;
     if (lastExecutionTime !== null && executedAt - lastExecutionTime > 250) {
-      pauseFlight(true, 'focus-lost');
+      // A late worker completion cannot spend stale wall-clock debt. Keep the
+      // accepted flight armed; the next display frame samples fresh controls.
+      accumulator = 0;
       return;
     }
     while (accumulator >= 20) {
@@ -9370,13 +9372,15 @@ export function mountWorldApp({
     const executedAt = win.performance?.now?.() ?? now,
       executionDelta = lastExecutionTime === null ? 0 : executedAt - lastExecutionTime;
     lastExecutionTime = executedAt;
-    // A queued rAF may retain a pre-stall timestamp. Freeze before polling
-    // device actions or advancing flight, actors and projectiles in that callback.
+    // A busy foreground frame is not focus loss. Discard missed wall time,
+    // including a queued rAF's stale timestamp, and accept one fresh interval.
+    // Real blur, hidden-page and device-loss handlers still pause explicitly.
     if (
       flight &&
       $('flight-dialog').open &&
       (executionDelta > 250 || (lastTime !== null && now - lastTime > 250))
     ) {
+      continuousPlay.cancel('interrupted');
       // A paused flight cannot consume elapsed time. Checkpoint/terrain work
       // may delay this callback; pausing again would cancel its recovery.
       // Explicit pause, blur and context-loss handlers still clear ownership.
@@ -9385,8 +9389,8 @@ export function mountWorldApp({
         accumulator = 0;
         return;
       }
-      pauseFlight(true, 'focus-lost');
-      return;
+      accumulator = 0;
+      lastTime = now - 20;
     }
     pollGamepad(executedAt);
     pollMenu(executedAt);
@@ -9404,10 +9408,6 @@ export function mountWorldApp({
     const elapsed = lastTime === null ? 0 : now - lastTime;
     continuousPlay.advance(elapsed);
     lastTime = now;
-    if (elapsed > 250) {
-      pauseFlight(true, 'focus-lost');
-      return;
-    }
     // Observe a deliberate radio OFF→ON edge while paused as well as flying.
     // freeze() requires seeing OFF again after blur/setup; a held ON switch
     // therefore cannot resume a flight simply because the tab regained focus.
