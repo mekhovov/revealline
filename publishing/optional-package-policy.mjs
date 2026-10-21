@@ -625,6 +625,7 @@ const FPV_TUNING_FILES = Object.freeze([
   'advanced-ghost-path.mjs',
   'propulsion-evidence.mjs',
   'propulsion-evidence-ui.mjs',
+  'propulsion-load.mjs',
   'aircraft-challenge.mjs',
   'aircraft-challenge-ui.mjs',
   'advanced-worker.mjs',
@@ -721,11 +722,13 @@ export const OPTIONAL_PACKAGE_POLICIES = Object.freeze(
           // Standalone Academy remains below 12 MiB; World stays at 20 MiB.
           // World also admits its single Regional Advanced adapter.
           // Academy now carries the same pinned 4.35 MB Rapier build as World.
+          // The evidence inspector adds one explicitly admitted load solver;
+          // complete source inventories are now 151 and 211 files respectively.
           files:
             id === 'civilian-fpv'
-              ? 150
+              ? 151
               : id === 'fpv-worlds'
-                ? 210 // Includes World's same-scope flight and response-bench workers.
+                ? 211 // Includes World's same-scope flight and response-bench workers.
                 : id === 'civilian-flight'
                   ? 100
                   : policy.limits.files,

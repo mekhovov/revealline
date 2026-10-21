@@ -3,6 +3,20 @@ import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { Document } from './helpers/couch-dom.mjs';
 import {
+  ACTOR_FAMILIES,
+  ACTOR_CASTS,
+  ACTOR_VISUALS,
+  actorDefinition,
+  actorVisual,
+  actorFieldGuide,
+  actorCapability,
+} from '../hunt/actor-catalog.mjs';
+import {
+  INDUSTRIAL_SOLDIER_KIT_REVISION,
+  INDUSTRIAL_SOLDIER_KITS,
+} from '../hunt/industrial-soldier-kit.mjs';
+import { actorArtReviewRevision, nativeArtReviewURL } from '../ui/art-review-navigation.mjs';
+import {
   attachSimMissionLibraryChooser,
   createSimMissionLibrary,
 } from '../../optional-practice/civilian-fpv/flight-fullscreen.mjs';
@@ -25,7 +39,7 @@ const entries = Array.from({ length: 24 }, (_, index) => ({
   diagram: { width: 24, height: 16, course: index },
 }));
 
-function fixture(t) {
+function fixture(t, storage = null) {
   const document = new Document(),
     launched = [],
     painted = [],
@@ -52,7 +66,7 @@ function fixture(t) {
     document,
     library,
     supportedModes: ['solo'],
-    goalPreferenceOptions: { editionId: 'sim-worlds', getStorage: () => null },
+    goalPreferenceOptions: { editionId: 'sim-worlds', getStorage: () => storage },
     renderPreview({ container, diagram, row, mode, document: doc }) {
       assert.equal(doc, document);
       assert.equal(mode, 'solo');
@@ -130,6 +144,41 @@ test('projected SIM search recovery resets filters without clearing query or lau
   assert.deepEqual(f.launched, []);
 });
 
+for (const initial of [null, '{"format":"future","missionId":"keep-me"}'])
+  test(`projected goal preference ${initial === null ? 'round-trips its exact owner' : 'preserves unsupported saved data'}`, (t) => {
+    let raw = initial,
+      writes = 0;
+    const storage = {
+      getItem: () => raw,
+      setItem(key, value) {
+        assert.equal(key, 'revealline.mission-goal.v1.sim-worlds.solo');
+        raw = value;
+        writes++;
+      },
+    };
+    const f = fixture(t, storage),
+      row = f.chooser.elements.list.children[0];
+    row.focus();
+    f.document.getElementById('journey-goal-pin').click();
+    assert.deepEqual(f.launched, [], 'Saving a preference never launches a mission.');
+    if (initial === null) {
+      assert.equal(writes, 1);
+      assert.deepEqual(JSON.parse(raw), {
+        format: 'revealline-mission-goal.v1',
+        editionId: 'sim-worlds',
+        mode: 'solo',
+        missionId: row.dataset.missionId,
+      });
+      f.chooser.close();
+      f.chooser.open(f.opener);
+      assert.equal(f.document.getElementById('journey-goal-find').disabled, false);
+      assert.equal(writes, 1, 'Reopening reads the same preference without rewriting it.');
+    } else {
+      assert.equal(raw, initial);
+      assert.equal(writes, 0);
+    }
+  });
+
 test('SIM selector projection stays inside existing optional executable and stylesheet slots', async () => {
   const file = 'optional-practice/civilian-fpv/flight-fullscreen.mjs',
     bytes = await readFile(new URL('../../' + file, import.meta.url));
@@ -158,6 +207,114 @@ test('SIM selector projection stays inside existing optional executable and styl
     /modules\[['"]game\/ui\/mission-library-browser\.mjs['"]\]/.test(bytes.toString()),
     'SIM uses the projected canonical browser implementation.',
   );
+  assert.match(
+    bytes.toString(),
+    /import\s*\*\s*as simGlobalData from\s*['"]\.\.\/\.\.\/game\/data-json\.mjs['"]/,
+    'Projected preferences share the already shipped canonical JSON boundary.',
+  );
+  assert.doesNotMatch(
+    bytes.toString(),
+    /modules\[['"]game\/data-json\.mjs['"]\]/,
+    'No second validator implementation is embedded in the finite source budget.',
+  );
+  for (const name of ['boundedJSON', 'dataIdentity', 'exactKeys', 'required', 'stableId'])
+    assert.ok(
+      bytes.toString().includes(`simGlobalData['${name}']`),
+      `${name} uses the same canonical export as the remaining runtime.`,
+    );
+  assert.match(
+    bytes.toString(),
+    /import\s*\*\s*as simGlobalActorCatalog from\s*['"]\.\.\/\.\.\/game\/hunt\/actor-catalog\.mjs['"]/,
+    'Projected presentation reuses the already shipped immutable actor catalog.',
+  );
+  assert.doesNotMatch(bytes.toString(), /modules\[['"]game\/hunt\/actor-catalog\.mjs['"]\]/);
+  for (const name of ['ACTOR_CASTS', 'resolveActorFamily', 'actorDefinition', 'actorVisual'])
+    assert.ok(bytes.toString().includes(`simGlobalActorCatalog['${name}']`));
+  for (const [module, namespace, names] of [
+    ['hunt/industrial-soldier-kit', 'simGlobalActorKit', ['INDUSTRIAL_SOLDIER_KITS']],
+    [
+      'ui/art-review-navigation',
+      'simGlobalArtReview',
+      ['actorArtReviewRevision', 'nativeArtReviewURL'],
+    ],
+  ]) {
+    assert.ok(
+      bytes.toString().includes(`import*as ${namespace} from'../../game/${module}.mjs';`),
+      'Shared stateless presentation services use the already admitted canonical module.',
+    );
+    assert.equal(bytes.toString().includes(`modules['game/${module}.mjs']`), false);
+    for (const name of names) assert.ok(bytes.toString().includes(`${namespace}['${name}']`));
+  }
+});
+
+test('shared artwork kits remain deeply immutable without changing their revision', () => {
+  assert.equal(INDUSTRIAL_SOLDIER_KIT_REVISION, 'industrial-roster-v3');
+  const frozen = (value) => {
+    if (!value || typeof value !== 'object') return;
+    assert.ok(Object.isFrozen(value));
+    Object.values(value).forEach(frozen);
+  };
+  frozen(INDUSTRIAL_SOLDIER_KITS);
+  for (const kit of Object.values(INDUSTRIAL_SOLDIER_KITS)) {
+    assert.throws(() => (kit.anchor[0] = 0), TypeError);
+    assert.throws(() => kit.rectangles.push(['#ffffff', 0, 0, 1, 1]), TypeError);
+  }
+});
+
+test('shared art-review navigation keeps exact native URL rules and no cross-call state', () => {
+  const root = 'https://example.test/revealline/',
+    source = root + 'optional-practice/fpv-worlds/index.html?artReview=industrial-roster-v3',
+    target = root + 'game/index.html?mode=solo#play',
+    selected = root + 'game/index.html?artReview=industrial-pilot-v1',
+    expected = root + 'game/index.html?mode=solo&artReview=industrial-roster-v3#play';
+  assert.equal(actorArtReviewRevision({ href: source }), 'industrial-roster-v3');
+  assert.equal(nativeArtReviewURL(target, source), expected);
+  assert.equal(nativeArtReviewURL('../../game/index.html?mode=solo#play', source), expected);
+  assert.equal(nativeArtReviewURL(selected, source), selected);
+  for (const rejected of [
+    'https://other.test/revealline/game/index.html',
+    'https://example.test/other/game/index.html',
+    root + 'community/index.html',
+    'https://user@example.test/revealline/game/index.html',
+    'http://[invalid',
+  ])
+    assert.equal(nativeArtReviewURL(rejected, source), rejected);
+  for (const rejected of [
+    source + '&artReview=industrial-roster-v3',
+    source.replace('industrial-roster-v3', 'future'),
+    'http://[invalid',
+  ]) {
+    assert.equal(actorArtReviewRevision({ href: rejected }), null);
+    assert.equal(nativeArtReviewURL(target, rejected), target);
+  }
+  assert.equal(nativeArtReviewURL(target, source), expected, 'Rejected calls retain no state.');
+});
+
+test('shared presentation catalog values stay deeply immutable and retain exact lookup capabilities', () => {
+  const frozen = (value) => {
+    if (!value || typeof value !== 'object') return;
+    assert.ok(Object.isFrozen(value));
+    Object.values(value).forEach(frozen);
+  };
+  for (const values of [ACTOR_FAMILIES, ACTOR_CASTS, ACTOR_VISUALS]) frozen(values);
+  for (const family of ACTOR_FAMILIES) {
+    assert.equal(actorDefinition(family.id), family);
+    for (const cast of ACTOR_CASTS) {
+      const visual = actorVisual(family.id, cast.id);
+      assert.ok(ACTOR_VISUALS.includes(visual));
+      assert.equal(actorVisual(visual.id), visual);
+      assert.throws(() => (visual.palette.coat = '#ffffff'), TypeError);
+    }
+    for (const locale of ['en', 'uk']) frozen(actorFieldGuide(family.id, locale));
+  }
+  assert.equal(actorDefinition('still'), actorDefinition('lookout'));
+  for (const family of ['guard', 'relay-warden'])
+    assert.equal(actorCapability(family, 'flight'), null);
+  for (const invalid of [null, {}, '__proto__', 'constructor', 'unregistered']) {
+    assert.equal(actorDefinition(invalid), null);
+    assert.equal(actorVisual(invalid), null);
+    assert.equal(actorFieldGuide(invalid), null);
+  }
 });
 
 test('offline selector locale admission covers both languages, plural counts and exact-owner errors', async () => {

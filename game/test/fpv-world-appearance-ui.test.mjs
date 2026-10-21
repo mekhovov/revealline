@@ -2553,6 +2553,17 @@ test('Apply & restart waits for explicit Arm after delayed World, Legacy and Reg
           'all initial controls and any native-world action bits stay neutral',
         );
         assert.equal(h.$('world-fov').value, '103');
+        const observed = h.app.snapshot().observedSplits;
+        if (host === 'Regional') {
+          assert.equal(observed, null);
+          assert.match(
+            h.doc.querySelector('[data-practice-splits]').textContent,
+            /No course splits in free flight/,
+          );
+        } else if (configuration === 'Meteor75') {
+          assert.equal(observed.ticks, 0);
+          assert.deepEqual(observed.rows, []);
+        } else assert.equal(observed, null);
         assert.equal(h.$('flight-mode').value, 'self-level');
         const store = tuning.createTuningLibraryStore({
           storage: {
@@ -2590,6 +2601,8 @@ test('Apply & restart waits for explicit Arm after delayed World, Legacy and Reg
         await tick(8);
         assert.equal(h.app.snapshot().state.status, 'active');
         assert.ok(h.app.snapshot().state.ticks > 0, 'explicit Arm starts the saved configuration');
+        if (configuration === 'Meteor75' && host !== 'Regional')
+          assert.equal(h.app.snapshot().observedSplits.ticks, h.app.snapshot().state.ticks);
         assert.equal(storage.get(tuning.TUNING_LIBRARY_KEY), store.export());
         if (host !== 'Regional') {
           await h.app.startFlight(entry, { mode: 'self-level' });
@@ -2967,7 +2980,7 @@ test('Flight School explicit practice uses the selected aircraft and exact custo
         assert.ok(h.app.snapshot().state.ticks > 0);
         assert.equal(
           h.app.snapshot().state.advancedTelemetry.backend,
-          'civilian-quad-aircraft-regional.v2',
+          'civilian-quad-aircraft-regional.v3',
         );
         assert.equal(storage.get(tuning.TUNING_LIBRARY_KEY), saved);
         h.app.pause();
@@ -3037,8 +3050,8 @@ test('saved aircraft prepares World, Beginner and Regional hosts with physical g
       const state = h.app.snapshot().state;
       assert.equal(state.reason, 'prepared', h.$('flight-status').textContent);
       assert.equal(state.unscored, true);
-      assert.equal(state.advancedTelemetry.backend, 'civilian-quad-aircraft-regional.v2');
-      assert.equal(state.advancedTelemetry.frequency, 500);
+      assert.equal(state.advancedTelemetry.backend, 'civilian-quad-aircraft-regional.v3');
+      assert.equal(state.advancedTelemetry.frequency, 1000);
       assert.deepEqual(displayedAircraft.geometry, preset.aircraft.geometry);
       assert.equal(displayedAircraft.radius, preset.aircraft.radius);
       const worker = RegionalWorker.instances.at(-1);

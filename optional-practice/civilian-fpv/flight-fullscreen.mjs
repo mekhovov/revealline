@@ -993,9 +993,14 @@ export function mountFlightPractice({
 }
 
 // BEGIN GENERATED SHARED MODE SHELL
+import*as simGlobalData from'../../game/data-json.mjs';
+import*as simGlobalActorCatalog from'../../game/hunt/actor-catalog.mjs';
+import*as simGlobalActorKit from'../../game/hunt/industrial-soldier-kit.mjs';
+import*as simGlobalArtReview from'../../game/ui/art-review-navigation.mjs';
 import*as simGlobalI18n from'../../game/i18n/index.mjs';
 import*as simGlobalThemes from'../../game/presentation/theme-system.mjs';
 import*as simGlobalActorPreferences from'../../game/hunt/preferences.mjs';
+import*as simGlobalEnemyAppearance from'../../game/ui/enemy-appearance-controls.mjs';
 const sharedGlobalSettings=(()=>{
 const modules=Object.create(null);
 modules['game/mission-library/library.mjs']=(()=>{
@@ -1450,148 +1455,6 @@ libraryMissionId,
 createMissionLibrary,
 };
 })();
-modules['game/data-json.mjs']=(()=>{
-const t=simGlobalI18n['t'];
-
-/** Shared boundary for user-owned files. Does not invoke getters or toJSON. */
-const plainObject=(value)=>
-value!==null&&
-typeof value==='object'&&
-!Array.isArray(value)&&
-(Object.getPrototypeOf(value)===Object.prototype||Object.getPrototypeOf(value)===null);
-const stableId=(value)=>
-typeof value==='string'&&
-/^[a-zA-Z0-9][a-zA-Z0-9._-]{0,79}$/.test(value)&&
-!['constructor','prototype','__proto__'].includes(value);
-function boundedJSON(
-source,
-{
-maxBytes=4*1024*1024,
-maxNodes=100000,
-maxDepth=16,
-maxArray=4096,
-maxString=4096,
-}={},
-){
-const encoder=new TextEncoder();
-// Repeated field names and short text have identical encoded lengths. Keep
-// this scalar-only cache bounded and local to one call: every external graph
-// still receives the full descriptor, structure and byte-budget traversal.
-const stringBytes=new Map();
-const encodedBytes=(value)=>{
-const known=stringBytes.get(value);
-if(known!==undefined)return known;
-const length=encoder.encode(JSON.stringify(value)).byteLength;
-if(value.length<=512&&stringBytes.size<512)stringBytes.set(value,length);
-return length;
-};
-if(typeof source==='string'){
-if(source.length>maxBytes||encoder.encode(source).byteLength>maxBytes)
-throw new TypeError(t('errors:dataJson.fileByteBudget'));
-try{
-source=JSON.parse(source);
-}catch{
-throw new TypeError(t('errors:dataJson.invalid'));
-}
-}
-let nodes=0,
-size=0;
-const ancestors=new Set();
-const add=(n)=>{
-size+=n;
-if(size>maxBytes)throw new TypeError(t('errors:dataJson.byteBudget'));
-};
-function copy(value,depth){
-if(++nodes>maxNodes||depth>maxDepth)
-throw new TypeError(t('errors:dataJson.structuralBudget'));
-if(value===null||typeof value==='boolean'){
-add(value===false?5:4);
-return value;
-}
-if(typeof value==='number'){
-if(!Number.isFinite(value))throw new TypeError(t('errors:dataJson.finiteNumbers'));
-add(JSON.stringify(value).length);
-return value;
-}
-if(typeof value==='string'){
-if(value.length>maxString)throw new TypeError(t('errors:dataJson.stringBudget'));
-add(encodedBytes(value));
-return value;
-}
-const array=Array.isArray(value);
-if(
-!value||
-typeof value!=='object'||
-(array?Object.getPrototypeOf(value)!==Array.prototype:!plainObject(value))
-)
-throw new TypeError(t('errors:dataJson.plainData'));
-if(ancestors.has(value))throw new TypeError(t('errors:dataJson.cyclesUnsupported'));
-if(array&&value.length>maxArray)
-throw new TypeError(t('errors:dataJson.arrayItemBudget'));
-ancestors.add(value);
-add(2);// JSON container delimiters.
-const out=array?[]:{},
-descriptors=Object.getOwnPropertyDescriptors(value);
-let count=0;
-for(const key of Reflect.ownKeys(descriptors)){
-if(typeof key!=='string')throw new TypeError(t('errors:dataJson.symbolKeys'));
-if(array&&key==='length')continue;
-if(['__proto__','constructor','prototype'].includes(key))
-throw new TypeError(t('errors:dataJson.forbiddenKey',{key}));
-const descriptor=descriptors[key];
-if(!descriptor.enumerable|| !Object.hasOwn(descriptor,'value'))
-throw new TypeError(t('errors:dataJson.ordinaryFields'));
-if(key.length>512)throw new TypeError(t('errors:dataJson.fieldNameBudget'));
-if(array&&(!/^(0|[1-9]\d*)$/.test(key)||Number(key)>=value.length))
-throw new TypeError(t('errors:dataJson.arrayCustomProperties'));
-if(count)add(1);// Comma before every subsequent entry.
-if(!array)add(encodedBytes(key)+1);// Object key and colon; array indexes are not serialized.
-out[key]=copy(descriptor.value,depth+1);
-count++;
-}
-if(array&&count!==value.length)throw new TypeError(t('errors:dataJson.sparseArrays'));
-ancestors.delete(value);
-return out;
-}
-const copied=copy(source,0);
-if(encoder.encode(JSON.stringify(copied)).byteLength>maxBytes)
-throw new TypeError(t('errors:dataJson.encodedByteBudget'));
-return copied;
-}
-function exactKeys(value,allowed,label,messages={}){
-if(!plainObject(value))
-throw new TypeError(
-messages.object?.({label})??t('errors:dataJson.objectRequired',{label}),
-);
-for(const key of Object.keys(value))
-if(!allowed.includes(key))
-throw new TypeError(
-messages.unsupported?.({label,key})??
-t('errors:dataJson.unsupportedField',{path:`${label}.${key}`}),
-);
-}
-function required(condition,message){
-if(!condition)throw new TypeError(message);
-}
-function canonicalJSON(value){
-if(Array.isArray(value))return`[${value.map(canonicalJSON).join(',')}]`;
-if(plainObject(value))
-return`{${Object.keys(value)
-.sort()
-.map((key)=>`${JSON.stringify(key)}:${canonicalJSON(value[key])}`)
-.join(',')}}`;
-return JSON.stringify(value);
-}
-/** Stable local partition identity, not a signature or an anti-cheat service. */
-function dataIdentity(value){
-let hash=0xcbf29ce484222325n;
-for(const byte of new TextEncoder().encode(canonicalJSON(value)))
-hash=BigInt.asUintN(64,(hash^BigInt(byte))*0x100000001b3n);
-return hash.toString(16).padStart(16,'0');
-}
-
-return{plainObject,stableId,boundedJSON,exactKeys,required,canonicalJSON,dataIdentity};
-})();
 modules['game/edition-context.mjs']=(()=>{
 /** Distribution identity is independent of Journey's logical campaign progress. */
 const editionPattern= /^[a-z][a-z0-9]*(?:-[a-z0-9]+)*$/;
@@ -1601,27 +1464,10 @@ const versionPattern= /^v?(0|[1-9]\d{0,4})\.(0|[1-9]\d{0,4})\.(0|[1-9]\d{0,4})$/
 // IDs keep the original edition identity. This is an alias, never a new edition.
 const publicSlugs=Object.freeze({'droneaid-nl-community':'droneaid'});
 
-function editionIdentityId(selector){
-validateEditionId(selector);
-return Object.keys(publicSlugs).find((id)=>publicSlugs[id]===selector)??selector;
-}
-
-function editionPublicSlug(editionId){
-validateEditionId(editionId);
-return publicSlugs[editionId]??editionId;
-}
-
 function validateEditionId(editionId){
 if(typeof editionId!=='string'||editionId.length>64|| !editionPattern.test(editionId))
 throw new TypeError('Invalid edition identity.');
 return editionId;
-}
-
-function editionIdFromLocation(locationRef=globalThis.location){
-if(!locationRef?.href)return undefined;
-const path=new URL(locationRef.href).pathname;
-const match= /\/editions\/([^/]+)\//.exec(path);
-return match?editionIdentityId(match[1]):undefined;
 }
 
 function resolveEditionContext({editionId,version}={}){
@@ -1650,120 +1496,20 @@ externalJournalKey:`${profileKey}.external-chapter-journal.v1`,
 });
 }
 
-function parseEditionChannel(channel){
-if(typeof channel!=='string')return null;
-const match=
-/^edition-([a-z][a-z0-9]*(?:-[a-z0-9]+)*)\.(dev|release-(v?\d+\.\d+\.\d+))$/.exec(channel);
-if(!match)return null;
-try{
-return resolveEditionContext({
-editionId:match[1],
-version:match[2]==='dev'?'DEV':match[3],
-});
-}catch{
-return null;
-}
-}
-
-function installedStateKey(editionId){
-return editionId===undefined
-?'revealline.installed-app.v1'
-:`revealline.installed-app.edition-${validateEditionId(editionId)}.v1`;
-}
-
 /** Stable explicit manifest IDs avoid origin-wide './' identity collisions. */
-function editionAppIdentity({editionId,basePath='/'}={}){
-validateEditionId(editionId);
-if(typeof basePath!=='string'|| !/^\/(?:[A-Za-z0-9_-]+\/)*$/.test(basePath))
-throw new TypeError('Edition base path must be an absolute directory path.');
-const root=`${basePath}editions/${editionPublicSlug(editionId)}/`;
-return Object.freeze({
-id:`${basePath}editions/${editionId}/`,
-start_url:`${root}app/`,
-scope:root,
-});
-}
 
 /** A launcher may select only a retained immutable release of its own edition.
      * Relative current.json pointers are resolved against the document, never a
      * stored origin. This module also ships inside the stable launcher directory. */
-function validateCompanyInstallationReference(value,{editionId,baseURL,editionRoot}={}){
-validateEditionId(editionId);
-if(
-!value||
-typeof value!=='object'||
-Array.isArray(value)||
-value.editionId!==editionId||
-!versionPattern.test(value.version)||
-typeof value.version!=='string'||
-typeof value.scope!=='string'||
-value.scope.length>2048||
-value.entry!=='game/company.html'||
-(value.buildId!==undefined&& !/^[a-f0-9]{64}$/.test(value.buildId))
-)
-throw new TypeError('Edition installation identity differs.');
-const base=new URL(baseURL),
-scope=new URL(value.scope,base);
-const root=
-typeof editionRoot==='string'
-? /^(\/(?:[A-Za-z0-9_-]+\/)*)editions\/([^/]+)\/$/.exec(editionRoot)
-:null;
-const aliases=[editionId,editionPublicSlug(editionId)];
-if(
-!root||
-!aliases.includes(root[2])||
-!/^https?:$/.test(base.protocol)||
-scope.origin!==base.origin||
-scope.username||
-scope.password||
-scope.search||
-scope.hash||
-!aliases.some(
-(slug)=>
-scope.pathname===
-`${root[1]}editions/${slug}/releases/v${value.version.replace(/^v/,'')}/site/`,
-)
-)
-throw new TypeError('Install from the matching published edition address.');
-return Object.freeze({
-editionId,
-version:value.version,
-scope:scope.href,
-entry:value.entry,
-...(value.buildId===undefined?{}:{buildId:value.buildId}),
-});
-}
 
 /** Hash caches may share bytes; ownership and removal must remain separate. */
-function officialContentOwner({editionId,packId,revision}={}){
-if(
-typeof packId!=='string'||
-!editionPattern.test(packId)||
-packId.length>100||
-typeof revision!=='string'||
-!/^[A-Za-z0-9][A-Za-z0-9.-]{0,63}$/.test(revision)
-)
-throw new TypeError('Invalid official content ownership.');
-return`${editionId===undefined?'default':validateEditionId(editionId)}:${packId}:${revision}`;
-}
 
-return{
-editionIdentityId,
-editionPublicSlug,
-validateEditionId,
-editionIdFromLocation,
-resolveEditionContext,
-parseEditionChannel,
-installedStateKey,
-editionAppIdentity,
-validateCompanyInstallationReference,
-officialContentOwner,
-};
+return{validateEditionId,resolveEditionContext};
 })();
 modules['game/mission-library/goal-preferences.mjs']=(()=>{
-const boundedJSON=modules['game/data-json.mjs']['boundedJSON'];
-const exactKeys=modules['game/data-json.mjs']['exactKeys'];
-const required=modules['game/data-json.mjs']['required'];
+const boundedJSON=simGlobalData['boundedJSON'];
+const exactKeys=simGlobalData['exactKeys'];
+const required=simGlobalData['required'];
 const validateEditionId=modules['game/edition-context.mjs']['validateEditionId'];
 const LIBRARY_MODES=modules['game/mission-library/library.mjs']['LIBRARY_MODES'];
 
@@ -3692,10 +3438,10 @@ const JOURNEY_PROFILE_DATABASE='revealline-journey-v1';
 return{JOURNEY_PROFILE_DATABASE};
 })();
 modules['game/profile-storage.mjs']=(()=>{
-const boundedJSON=modules['game/data-json.mjs']['boundedJSON'];
-const canonicalJSON=modules['game/data-json.mjs']['canonicalJSON'];
-const exactKeys=modules['game/data-json.mjs']['exactKeys'];
-const required=modules['game/data-json.mjs']['required'];
+const boundedJSON=simGlobalData['boundedJSON'];
+const canonicalJSON=simGlobalData['canonicalJSON'];
+const exactKeys=simGlobalData['exactKeys'];
+const required=simGlobalData['required'];
 const JOURNEY_PROFILE_DATABASE=
 modules['game/profile-database.mjs']['JOURNEY_PROFILE_DATABASE'];
 
@@ -3968,10 +3714,10 @@ connection=null;
 return{validateTimeout,boundedOperation,createProfileRecordBackend};
 })();
 modules['game/enemy-stats.mjs']=(()=>{
-const boundedJSON=modules['game/data-json.mjs']['boundedJSON'];
-const dataIdentity=modules['game/data-json.mjs']['dataIdentity'];
-const exactKeys=modules['game/data-json.mjs']['exactKeys'];
-const required=modules['game/data-json.mjs']['required'];
+const boundedJSON=simGlobalData['boundedJSON'];
+const dataIdentity=simGlobalData['dataIdentity'];
+const exactKeys=simGlobalData['exactKeys'];
+const required=simGlobalData['required'];
 const createProfileRecordBackend=
 modules['game/profile-storage.mjs']['createProfileRecordBackend'];
 
@@ -4155,11 +3901,6 @@ return value;
 /** A locally played branch retains its visible run totals and replay boundary,
      * but cannot share receipt identity with another tab's continued simulation.
      * This pure helper neither awards counters nor retires an existing token. */
-function forkEnemyStatsSession(source,{randomId=uid}={}){
-const fork=validateEnemyStatsSession(source);
-fork.attemptId=randomId();
-return validateEnemyStatsSession(fork);
-}
 
 function add(table,key,n=1){
 const next=(table[key]??0)+n;
@@ -4641,16 +4382,15 @@ validateEnemyStats,
 inspectEnemyStatsBackup,
 mergeEnemyStats,
 validateEnemyStatsSession,
-forkEnemyStatsSession,
 createEnemyStats,
 createEnemyStatsHost,
 };
 })();
 modules['game/presentation/actor-animation.mjs']=(()=>{
-const boundedJSON=modules['game/data-json.mjs']['boundedJSON'];
-const exactKeys=modules['game/data-json.mjs']['exactKeys'];
-const required=modules['game/data-json.mjs']['required'];
-const stableId=modules['game/data-json.mjs']['stableId'];
+const boundedJSON=simGlobalData['boundedJSON'];
+const exactKeys=simGlobalData['exactKeys'];
+const required=simGlobalData['required'];
+const stableId=simGlobalData['stableId'];
 
 const ACTOR_ANIMATION_FORMAT='revealline-actor-animation.v1';
 const ACTOR_CLIPS=Object.freeze([
@@ -4856,677 +4596,6 @@ sampleActorAnimation,
 createSoldierAnimation,
 };
 })();
-modules['game/hunt/industrial-soldier-kit.mjs']=(()=>{
-/** Exact original v3 live accessory geometry. Data only: positions are artwork
-     * pixels, never collider dimensions, capability declarations or simulation state.
-     * Both live renderers and defeat presentation resolve color roles from the same
-     * accepted actor palette. Historical art continues using its original recipes. */
-const INDUSTRIAL_SOLDIER_KIT_REVISION='industrial-roster-v3';
-const freeze=(value)=>{
-if(value&&typeof value==='object'){
-for(const child of Object.values(value))freeze(child);
-Object.freeze(value);
-}
-return value;
-};
-const INDUSTRIAL_SOLDIER_KITS=freeze({
-lookout:{
-id:'binoculars',
-material:'optics',
-anchor:[9,8],
-size:[14,4],
-rectangles:[
-['#192820',0,0,6,4],
-['#192820',8,0,6,4],
-['#81b1ac',1,0,3,2],
-['#b7d9cf',9,0,3,2],
-],
-},
-patroller:{
-id:'bedroll',
-material:'cloth',
-anchor:[9,21],
-size:[14,5],
-rectangles:[
-['#192820',0,0,14,5],
-['coat',1,1,12,3],
-['trim',2,1,2,3],
-['trim',10,1,2,3],
-],
-},
-runner:{
-id:'harness',
-material:'cloth',
-anchor:[11,19],
-size:[10,6],
-rectangles:[
-['#192820',0,0,3,6],
-['#192820',7,0,3,6],
-['trim',1,1,1,4],
-['trim',8,1,1,4],
-['dark',2,1,6,2],
-],
-},
-sprinter:{
-id:'headset',
-material:'electronics',
-anchor:[8,12],
-size:[16,5],
-rectangles:[
-['#192820',0,0,3,5],
-['#192820',13,0,3,5],
-['trim',1,0,1,4],
-['trim',14,0,1,4],
-],
-},
-courier:{
-id:'satchel',
-material:'canvas',
-anchor:[22,17],
-size:[7,7],
-rectangles:[
-['#192820',0,0,7,7],
-['#795e3f',1,1,5,5],
-['#be9b65',1,1,5,2],
-['#d9c296',3,1,1,5],
-],
-},
-guard:{
-id:'pouches',
-material:'cloth',
-anchor:[10,20],
-size:[14,4],
-rectangles:[
-['#192820',0,0,4,4],
-['trim',1,1,2,2],
-['#192820',5,0,4,4],
-['trim',6,1,2,2],
-['#192820',10,0,4,4],
-['trim',11,1,2,2],
-],
-},
-'refuge-seeker':{
-id:'shelter-roll',
-material:'cloth',
-anchor:[9,20],
-size:[14,7],
-rectangles:[
-['#192820',0,0,14,7],
-['dark',1,1,12,5],
-['light',1,1,12,2],
-['trim',4,1,2,5],
-['trim',10,1,2,5],
-],
-},
-switchback:{
-id:'scarf',
-material:'cloth',
-anchor:[23,20],
-size:[5,4],
-rectangles:[
-['#192820',0,0,5,4],
-['trim',0,0,4,2],
-['patch',1,2,2,2],
-],
-},
-'rendezvous-pair':{
-id:'radio',
-material:'electronics',
-anchor:[11,20],
-size:[11,6],
-rectangles:[
-['#192820',0,0,11,6],
-['dark',1,1,9,4],
-['trim',1,1,9,2],
-],
-},
-'shield-bearer':{
-id:'front-plate',
-material:'armor',
-anchor:[5,5],
-size:[22,5],
-rectangles:[
-['#192820',0,0,22,5],
-['#84928a',1,0,20,3],
-['#c8d0bd',2,0,18,1],
-['#384c46',6,1,10,2],
-['dark',2,3,4,2],
-['dark',16,3,4,2],
-],
-},
-'brace-trooper':{
-id:'brace-pack',
-material:'armor',
-anchor:[11,21],
-size:[10,5],
-rectangles:[
-['#192820',0,0,10,5],
-['dark',1,1,8,3],
-],
-},
-'relay-warden':{
-id:'command-pack',
-material:'electronics',
-anchor:[10,19],
-size:[13,8],
-rectangles:[
-['#192820',0,0,13,8],
-['dark',1,1,11,6],
-['trim',2,1,9,2],
-['light',2,4,3,1],
-],
-},
-});
-
-return{INDUSTRIAL_SOLDIER_KIT_REVISION,INDUSTRIAL_SOLDIER_KITS};
-})();
-modules['game/hunt/actor-catalog.mjs']=(()=>{
-/** Shared identities, not a grant of gameplay capability. Native engines must
-     * accept a versioned policy before an actor can enter an attempt. */
-const ACTOR_CATALOG_VERSION='humanoid-actors.v1';
-const ACTOR_ART_REVISION='overhead-field-kit.v2';
-const ACTOR_ART_BUDGET=Object.freeze({
-decodedBytes:64*1024*1024,
-compactDecodedBytes:32*1024*1024,
-sharedBoards:2,
-});
-const freeze=(value)=>{
-if(value&&typeof value==='object'){
-for(const child of Object.values(value))freeze(child);
-Object.freeze(value);
-}
-return value;
-};
-
-const ACTOR_CASTS=freeze([
-{
-id:'tactical',
-name:{en:'Field kit',uk:'Польове спорядження'},
-accessory:'field-kit',
-},
-{
-id:'rivals',
-name:{en:'Worn field kit',uk:'Зношене польове спорядження'},
-accessory:'mixed-kit',
-},
-{
-id:'arcade',
-name:{en:'Winter kit',uk:'Зимове спорядження'},
-accessory:'winter-kit',
-},
-]);
-const ACTOR_STATES=Object.freeze([
-'idle',
-'walk',
-'notice',
-'flee',
-'warning',
-'burst',
-'recover',
-'blocked',
-'caught',
-]);
-
-const descriptions=[
-[
-'lookout',
-'Lookout',
-'Спостерігач',
-'binoculars',
-false,
-['Watches a post.','Спостерігає за постом.'],
-['Binoculars rise while the lookout scans.','Під час огляду піднімає бінокль.'],
-[
-'Approach directly. This introductory target does not flee.',
-'Наближайтеся прямо. Ця навчальна ціль не тікає.',
-],
-],
-[
-'patroller',
-'Patroller',
-'Патрульний',
-'cap',
-false,
-['Completes a circuit or shuttle route.','Проходить коло або маршрут туди й назад.'],
-[
-'A patrol pack, measured steps and the body heading identify the route.',
-'Патрульний рюкзак, рівні кроки та поворот тіла показують напрямок маршруту.',
-],
-[
-'Intercept a crossing; a blocked patrol waits.',
-'Перехопіть на перетині; заблокований патруль чекає.',
-],
-],
-[
-'runner',
-'Runner',
-'Бігун',
-'light-jacket',
-false,
-['Seeks space away from nearby players.','Шукає простір подалі від гравців.'],
-[
-'Looks back, then commits to a short escape.',
-'Озирається, потім виконує короткий ривок утечі.',
-],
-[
-'Cut off the next opening instead of following directly.',
-'Перекрийте наступний вихід замість переслідування слідом.',
-],
-],
-[
-'sprinter',
-'Sprinter',
-'Спринтер',
-'headset',
-false,
-['Reaches an open straight for a burst.','Шукає пряму ділянку для ривка.'],
-[
-'A light headset and crouched warning precede the dash; breathing marks recovery.',
-'Легка гарнітура та присідання попереджають про ривок; важке дихання означає відпочинок.',
-],
-[
-'Predict the straight dash and catch the recovery.',
-'Передбачте прямий ривок і перехопіть під час відпочинку.',
-],
-],
-[
-'courier',
-'Courier',
-'Кур’єр',
-'satchel',
-false,
-[
-'Visits delivery checkpoints for an optional reward.',
-'Відвідує пункти доставки заради необов’язкової нагороди.',
-],
-[
-'A bouncing satchel and parcel symbol distinguish the bonus target.',
-'Сумка та символ пакунка позначають бонусну ціль.',
-],
-[
-'Choose a safe interception; ordinary completion does not require the courier.',
-'Оберіть безпечне перехоплення; кур’єр не потрібен для звичайного завершення.',
-],
-],
-[
-'guard',
-'Guard',
-'Охоронець',
-'helmet',
-false,
-[
-'Defends a post with warned shots in Capture combat.',
-'Захищає пост попередженими пострілами в бойових місіях захоплення.',
-],
-[
-'A helmet and locked aim precede each shot.',
-'Шолом та зафіксоване прицілювання позначають постріл.',
-],
-[
-'Evade the shot and touch the body during an opening.',
-'Ухиліться від пострілу й торкніться тіла у вдалий момент.',
-],
-],
-[
-'refuge-seeker',
-'Refuge seeker',
-'Шукач укриття',
-'hood',
-false,
-[
-'Commits to a reachable shelter and briefly rests there.',
-'Прямує до доступного укриття й ненадовго відпочиває там.',
-],
-[
-'A hood and pointing gesture announce the selected goal.',
-'Каптур та жест указують на обрану ціль.',
-],
-[
-'Intercept the shelter approach; shelter gives no invulnerability.',
-'Перехопіть біля укриття; воно не дає невразливості.',
-],
-],
-[
-'switchback',
-'Switchback',
-'Маневрувальник',
-'scarf',
-false,
-[
-'Escapes through an announced alternative exit.',
-'Тікає через заздалегідь показаний інший вихід.',
-],
-[
-'A scarf and fork symbol introduce a committed direction change.',
-'Шарф і розгалужена стрілка попереджають про зміну напрямку.',
-],
-[
-'Read the next direction and cover that exit.',
-'Стежте за наступним напрямком і перекрийте цей вихід.',
-],
-],
-[
-'rendezvous-pair',
-'Rendezvous pair',
-'Пара для зустрічі',
-'paired-badge',
-false,
-['Two actors seek a shared meeting point.','Двоє прямують до спільного місця зустрічі.'],
-[
-'Paired radio packs and greeting gestures identify the partners.',
-'Парні радіорюкзаки та вітальні жести позначають напарників.',
-],
-[
-'Separate their routes; each counts once, and the survivor becomes a Runner.',
-'Розділіть їхні маршрути; кожен зараховується один раз, а вцілілий стає Бігуном.',
-],
-],
-[
-'shield-bearer',
-'Shield bearer',
-'Щитоносець',
-'shield',
-true,
-[
-'Keeps its front protected while committing to a heading.',
-'Тримає фронт захищеним і дотримується обраного напрямку.',
-],
-[
-'A solid shield marks the hazardous front; a hollow arrow warns of its next turn.',
-'Суцільний щит позначає небезпечний фронт; порожня стрілка попереджає про поворот.',
-],
-[
-'Touch a side or the rear. The exact side boundary is exposed; enclosure also works in Capture.',
-'Торкніться збоку або ззаду. Межа бічної сторони відкрита; у захопленні також діє оточення.',
-],
-],
-[
-'brace-trooper',
-'Brace trooper',
-'Броньований спринтер',
-'opening-armor',
-true,
-[
-'Braces for a burst, then opens its armor to recover.',
-'Закриває броню для ривка, потім відкриває її на відпочинок.',
-],
-[
-'Closed armor during warning and burst is hazardous; split panels mark recovery.',
-'Закрита броня під час попередження та ривка небезпечна; відкриті панелі позначають відпочинок.',
-],
-[
-'Catch the open recovery. Pulse freezes the visible armor state; it does not open it.',
-'Перехопіть під час відкритого відпочинку. Імпульс фіксує поточний стан броні, а не відкриває її.',
-],
-],
-[
-'relay-warden',
-'Relay warden',
-'Вартовий ретранслятора',
-'command-radio',
-true,
-[
-'Holds a native Capture relay or stronghold objective.',
-'Утримує ціль ретранслятора або фортеці в режимі захоплення.',
-],
-[
-'A command radio pack and relay indicators show its objective role.',
-'Командний радіорюкзак та індикатори ретранслятора позначають роль цілі.',
-],
-[
-'Follow the mission’s relay or stronghold rules; this is not ordinary contact prey.',
-'Виконуйте правила ретранслятора або фортеці; це не звичайна контактна ціль.',
-],
-],
-];
-
-const engines=(capture,snake,flight)=>({capture,snake,flight});
-const supported=(policy,requires=[])=>({policy,requires});
-// Required policies are intentionally namespaced. Catalogue presence, costume
-// and field-guide text never upgrade a historical recipe or imply an adapter.
-const capabilities={
-lookout:engines(
-null,
-supported('stationary'),
-supported('ground-patrol',['stationary-route']),
-),
-patroller:engines(
-supported('authored-patrol',['successor-recipe']),
-supported('patroller'),
-supported('ground-patrol'),
-),
-runner:engines(
-supported('humanoid-runner'),
-supported('runner'),
-supported('ground-pursuit',['successor-recipe']),
-),
-sprinter:engines(
-supported('burst-pursuit',['successor-recipe']),
-supported('sprinter'),
-supported('ground-burst',['successor-recipe']),
-),
-courier:engines(
-supported('optional-courier',['successor-recipe','bonus-objective']),
-supported('courier',['bonus-objective']),
-supported('optional-courier',['successor-recipe','bonus-objective']),
-),
-guard:engines(supported('humanoid-guard',['projectiles']),null,null),
-'refuge-seeker':engines(
-supported('refuge',['successor-recipe','goal-waypoints']),
-supported('refuge',['successor-recipe','goal-waypoints']),
-supported('ground-refuge',['successor-recipe','goal-waypoints']),
-),
-switchback:engines(
-supported('switchback',['successor-recipe']),
-supported('switchback',['successor-recipe']),
-supported('ground-switchback',['successor-recipe']),
-),
-'rendezvous-pair':engines(
-supported('rendezvous',['successor-recipe','pair']),
-supported('pair',['successor-recipe','pair']),
-supported('ground-rendezvous',['successor-recipe','pair']),
-),
-'shield-bearer':engines(
-supported('directional-shield',['successor-recipe','specialist-opt-in']),
-supported('shield',['successor-recipe','specialist-opt-in']),
-supported('ground-shield',['successor-recipe','specialist-opt-in']),
-),
-'brace-trooper':engines(
-supported('brace',['successor-recipe','specialist-opt-in']),
-supported('brace',['successor-recipe','specialist-opt-in']),
-supported('ground-brace',['successor-recipe','specialist-opt-in']),
-),
-'relay-warden':engines(
-supported('relay-stronghold',['native-boss-objective','specialist-opt-in']),
-null,
-null,
-),
-};
-
-const ACTOR_FAMILIES=freeze(
-descriptions.map(([id,en,uk,accessory,specialist,goal,tell,counter])=>({
-id,
-name:{en,uk},
-accessory,
-specialist,
-contact:
-id==='relay-warden'?'native-objective':specialist?'conditional':'instant',
-guide:{
-en:{goal:goal[0],tell:tell[0],counter:counter[0]},
-uk:{goal:goal[1],tell:tell[1],counter:counter[1]},
-},
-capabilities:capabilities[id],
-reactionIds:['notice','caught'].map((event)=>`${ACTOR_CATALOG_VERSION}/${id}/${event}`),
-})),
-);
-
-const aliases=freeze({
-still:'lookout',
-refuge:'refuge-seeker',
-pair:'rendezvous-pair',
-shield:'shield-bearer',
-brace:'brace-trooper',
-warden:'relay-warden',
-});
-const families=new Map(ACTOR_FAMILIES.map((entry)=>[entry.id,entry]));
-// Uniform wardrobes are presentation only. Family equipment remains the primary
-// identifier; soft webbing never implies the specialist's protected contact.
-const wardrobes={
-tactical:{
-coat:'#778665',
-light:'#b0bb8c',
-dark:'#45553f',
-pants:'#576647',
-trim:'#a0a17a',
-camo:'#536248',
-patch:'#b9ac84',
-glove:'#857c5e',
-edge:'#d2d3ac',
-},
-rivals:{
-coat:'#958560',
-light:'#c8b88a',
-dark:'#5d6047',
-pants:'#5f6850',
-trim:'#b3a078',
-camo:'#716949',
-patch:'#706b56',
-glove:'#9b815f',
-edge:'#e0d1aa',
-},
-arcade:{
-coat:'#d4d9cc',
-light:'#f4f2df',
-dark:'#697564',
-pants:'#aab4a4',
-trim:'#8c987e',
-camo:'#939d8b',
-patch:'#a3af9e',
-glove:'#6f786a',
-edge:'#edeedd',
-},
-};
-// Tiny accents keep all families distinguishable without replacing equipment
-// silhouettes with rainbow uniforms.
-const familyTrim={
-lookout:'#b0a078',
-patroller:'#a4af87',
-runner:'#89976b',
-sprinter:'#b2a782',
-courier:'#b89967',
-guard:'#94a183',
-'refuge-seeker':'#7c9981',
-switchback:'#ae9270',
-'rendezvous-pair':'#9aacaa',
-'shield-bearer':'#9ba8a0',
-'brace-trooper':'#b2a287',
-'relay-warden':'#b9b38c',
-};
-
-const ACTOR_VISUALS=freeze(
-ACTOR_FAMILIES.flatMap((family)=>
-ACTOR_CASTS.map((cast)=>{
-const wardrobe=wardrobes[cast.id];
-return{
-id:`${ACTOR_CATALOG_VERSION}/${family.id}/${cast.id}`,
-family:family.id,
-cast:cast.id,
-material:'flesh',
-accessory:family.accessory,
-castAccessory:cast.accessory,
-artRevision:ACTOR_ART_REVISION,
-palette:{
-...wardrobe,
-ink:'#192820',
-skin:'#cba984',
-skinLight:'#e3c29b',
-trim:familyTrim[family.id],
-},
-detailPixels:32,
-compactPixels:16,
-decodedBytes:0,
-};
-}),
-),
-);
-const visuals=new Map(ACTOR_VISUALS.map((entry)=>[entry.id,entry]));
-
-function resolveActorFamily(id){
-if(typeof id!=='string')return null;
-const candidate=Object.hasOwn(aliases,id)?aliases[id]:id;
-return families.has(candidate)?candidate:null;
-}
-function actorDefinition(id){
-return families.get(resolveActorFamily(id))??null;
-}
-function actorVisual(id,cast='rivals'){
-if(visuals.has(id))return visuals.get(id);
-const family=resolveActorFamily(id);
-if(!family|| !ACTOR_CASTS.some((entry)=>entry.id===cast))return null;
-return visuals.get(`${ACTOR_CATALOG_VERSION}/${family}/${cast}`)??null;
-}
-function actorFieldGuide(id,locale='en'){
-const entry=actorDefinition(id);
-if(!entry)return null;
-const language=locale==='uk'?'uk':'en';
-return Object.freeze({
-id:entry.id,
-name:entry.name[language],
-specialist:entry.specialist,
-contact:entry.contact,
-...entry.guide[language],
-});
-}
-function actorCapability(id,engine){
-const entry=actorDefinition(id);
-return entry&&Object.hasOwn(entry.capabilities,engine)?entry.capabilities[engine]:null;
-}
-
-/** Accepted failure feedback; optional identity refines advice without changing rules. */
-function specialistFailureCopy(family,locale='en'){
-const uk=locale==='uk';
-if(['shield','shield-bearer'].includes(family))
-return{
-reason:uk
-?'Ви торкнулися захищеного боку щита.'
-:'You touched the protected shield front.',
-tip:uk
-?'Обійдіть щит збоку чи ззаду, або оточіть ціль. Стрілка показує захищений напрямок.'
-:'Approach from the side or rear, or enclose the target. The arrow marks the protected front.',
-};
-if(['brace','brace-trooper'].includes(family))
-return{
-reason:uk?'Ви торкнулися закритої броні.':'You touched closed armor.',
-tip:uk
-?'Дочекайтеся відкритої броні під час відновлення, або оточіть ціль. Замороження не відкриває броню.'
-:'Wait for exposed recovery, or enclose the target. Freezing does not open armor.',
-};
-return{
-reason:uk
-?'Захищений контакт зупинив ваш апарат.'
-:'Protected armor stopped your craft.',
-tip:uk
-?'Заходьте до Щита збоку чи ззаду. Броньований ривок уразливий під час відновлення. Оточення долає обох.'
-:'Catch Shield from the side or rear; catch Brace during recovery. Enclosure defeats either.',
-};
-}
-
-return{
-ACTOR_CATALOG_VERSION,
-ACTOR_ART_REVISION,
-ACTOR_ART_BUDGET,
-ACTOR_CASTS,
-ACTOR_STATES,
-ACTOR_FAMILIES,
-ACTOR_VISUALS,
-resolveActorFamily,
-actorDefinition,
-actorVisual,
-actorFieldGuide,
-actorCapability,
-specialistFailureCopy,
-};
-})();
 modules['game/hunt/actor-art.mjs']=(()=>{
 const createSoldierAnimation=
 modules['game/presentation/actor-animation.mjs']['createSoldierAnimation'];
@@ -5535,10 +4604,9 @@ modules['game/presentation/actor-animation.mjs']['sampleActorAnimation'];
 const validateActorAnimation=
 modules['game/presentation/actor-animation.mjs']['validateActorAnimation'];
 const runtimeActorArtRevision=simGlobalActorPreferences['runtimeActorArtRevision'];
-const INDUSTRIAL_SOLDIER_KITS=
-modules['game/hunt/industrial-soldier-kit.mjs']['INDUSTRIAL_SOLDIER_KITS'];
-const actorVisual=modules['game/hunt/actor-catalog.mjs']['actorVisual'];
-const resolveActorFamily=modules['game/hunt/actor-catalog.mjs']['resolveActorFamily'];
+const INDUSTRIAL_SOLDIER_KITS=simGlobalActorKit['INDUSTRIAL_SOLDIER_KITS'];
+const actorVisual=simGlobalActorCatalog['actorVisual'];
+const resolveActorFamily=simGlobalActorCatalog['resolveActorFamily'];
 /** Original overhead pixel rigs. The host owns time, facing and vulnerability;
      * this renderer never advances AI, reads a clock or consumes randomness. */
 const UNIT=32;
@@ -6682,8 +5750,8 @@ drawHuntActor,
 modules['game/ui/enemy-stats.mjs']=(()=>{
 const canonicalEnemyFamily=modules['game/enemy-stats.mjs']['canonicalEnemyFamily'];
 const drawHuntActor=modules['game/hunt/actor-art.mjs']['drawHuntActor'];
-const actorDefinition=modules['game/hunt/actor-catalog.mjs']['actorDefinition'];
-const resolveActorFamily=modules['game/hunt/actor-catalog.mjs']['resolveActorFamily'];
+const actorDefinition=simGlobalActorCatalog['actorDefinition'];
+const resolveActorFamily=simGlobalActorCatalog['resolveActorFamily'];
 
 const copy={
 en:{
@@ -7068,17 +6136,7 @@ reduced:!!reduced,
 skipped:false,
 };
 }
-function advanceCelebration(state,dt,{paused=false,reduced=false}={}){
-if(!state)return null;
-if(!Number.isFinite(dt)||dt<0)
-throw new TypeError(t('interface:celebrationDtMustBeFiniteAndNonnegative'));
-if(reduced)return{...state,reduced:true,elapsed:state.duration};
-if(paused||state.elapsed>=state.duration)return state;
-return{...state,elapsed:Math.min(state.duration,state.elapsed+Math.min(dt,0.25))};
-}
-function skipCelebration(state){
-return state?{...state,elapsed:state.duration,skipped:true}:null;
-}
+
 function celebrationFrame(state){
 if(!state)
 return{
@@ -7209,8 +6267,6 @@ return{
 CELEBRATION_SECONDS,
 finaleKind,
 createCelebration,
-advanceCelebration,
-skipCelebration,
 celebrationFrame,
 drawCelebration,
 };
@@ -7774,16 +6830,7 @@ if(!TEXT_FACES.includes(value))throw new TypeError('Unsupported text style.');
 return value;
 }
 
-function canvasTextFonts(face,themeFonts,{useThemeFont=false}={}){
-if(resolveTextFace(face)==='plain')return PLAIN_CANVAS_FONTS;
-return Object.freeze({
-...themeFonts,
-ui:useThemeFont&&themeFonts?.ui?themeFonts.ui:PIXEL_CANVAS_UI,
-numeric:themeFonts?.numeric??"'Field Kit Mono', ui-monospace, monospace",
-});
-}
-
-return{TEXT_FACES,DEFAULT_TEXT_FACE,resolveTextFace,canvasTextFonts};
+return{TEXT_FACES,DEFAULT_TEXT_FACE,resolveTextFace};
 })();
 modules['game/text-size.mjs']=(()=>{
 const TEXT_SIZES=Object.freeze(['standard','large','extra-large']);
@@ -8351,244 +7398,6 @@ panel.remove();
 
 return{mountThemeMaterialPreview};
 })();
-modules['game/ui/art-review-navigation.mjs']=(()=>{
-/** Explicit, session-only art review pin; never changes a saved appearance or a
-     * gameplay recipe. Unrecognized revisions use the released artwork. */
-function actorArtReviewRevision(location=globalThis.location){
-try{
-const params=new URL(location.href).searchParams;
-return params.getAll('artReview').length===1&&
-['industrial-pilot-v1','industrial-overhead-v2','industrial-roster-v3'].includes(
-params.get('artReview'),
-)
-?params.get('artReview')
-:null;
-}catch{
-return null;
-}
-}
-
-// These are routes owned by this build, not a general-purpose URL allowlist.
-// Do not transfer preview choices to community/provider links or another edition.
-const ART_REVIEW_NATIVE_PAGE=
-/^(.*\/)(?:game\/(?:(?:index|company)\.html|couch\/(?:index\.html|relay-rescue\.html)?|snake\/(?:(?:index|play)\.html)?|overflight\/(?:play|raid)\.html|studio\/(?:(?:index|snake|overflight|raid)\.html)?|(?:hunt\/military-levels\.html|(?:playground|hunt|online|replay-theater|controller-lab)\/(?:index\.html)?))?|authoring\/(?:asset-studio|motion-lab|enemy-catalog|still-media|video-poster|design-atlas|industrial-art-review)\/(?:index\.html)?|optional-practice\/(?:civilian-fpv|fpv-worlds)\/(?:index\.html)?)$/;
-
-/** Inherit an explicit review-only art pin along a caller-owned native link.
-     * Does not validate arbitrary navigation, persist preferences, transfer content,
-     * or change an explicit destination choice. Missing/ambiguous pins stay absent.
-     */
-function nativeArtReviewURL(href,sourceHref){
-let source,target;
-try{
-source=new URL(sourceHref);
-target=new URL(href,source);
-}catch{
-return href;
-}
-const revision=actorArtReviewRevision(source),
-sourceRoot=ART_REVIEW_NATIVE_PAGE.exec(source.pathname)?.[1],
-targetRoot=ART_REVIEW_NATIVE_PAGE.exec(target.pathname)?.[1];
-if(
-revision&&
-['http:','https:','file:','capacitor:'].includes(source.protocol)&&
-source.protocol===target.protocol&&
-source.origin===target.origin&&
-source.host===target.host&&
-!source.username&&
-!source.password&&
-!target.username&&
-!target.password&&
-sourceRoot&&
-sourceRoot===targetRoot&&
-!target.searchParams.has('artReview')
-){
-target.searchParams.set('artReview',revision);
-return target.href;
-}
-return href;
-}
-
-return{actorArtReviewRevision,nativeArtReviewURL};
-})();
-modules['game/ui/enemy-appearance-controls.mjs']=(()=>{
-const sharedEnemyArtwork=simGlobalActorPreferences['sharedEnemyArtwork'];
-const sharedActorAppearance=simGlobalActorPreferences['sharedActorAppearance'];
-const ACTOR_CASTS=modules['game/hunt/actor-catalog.mjs']['ACTOR_CASTS'];
-const actorArtReviewRevision=
-modules['game/ui/art-review-navigation.mjs']['actorArtReviewRevision'];
-const nativeArtReviewURL=modules['game/ui/art-review-navigation.mjs']['nativeArtReviewURL'];
-
-const COPY={
-en:{
-label:'Enemy appearance preset',
-authored:'Original level artwork',
-military:'Military Field · soldiers and vehicles',
-uniform:'Soldier uniform',
-castAuthored:'As designed',
-about:'What changes?',
-help:'Military Field applies the matching game appearance and detailed military artwork. Choose a uniform under Character appearance. It uses the level’s existing enemies; Running enemies adds optional humanoids. Snake targets stay humanoid.',
-next:'Applies when starting a new attempt. Retry and Continue keep accepted artwork. Creator-owned custom artwork is retained.',
-preview:'Preview artwork is active. Choosing a preset ends this preview.',
-saving:'This choice applies here, but could not be saved for another page.',
-failure:'The appearance could not be prepared. Select it again to retry.',
-},
-uk:{
-label:'Набір оформлення ворогів',
-authored:'Початкове оформлення рівня',
-military:'Військове поле · солдати й техніка',
-uniform:'Форма солдатів',
-castAuthored:'За задумом',
-about:'Що змінюється?',
-help:'Військове поле застосовує відповідне оформлення гри та детальні військові образи. Форму можна вибрати в розділі «Вигляд персонажів». Використовуються наявні вороги рівня; «Рухливі вороги» додають необов’язкових гуманоїдів. Цілі Snake залишаються гуманоїдами.',
-next:'Діє з початком нової спроби. Повтор і продовження зберігають прийняте оформлення. Власні авторські зображення зберігаються.',
-preview:'Активний попередній перегляд зображень. Вибір набору завершує цей перегляд.',
-saving:'Вибір діє тут, але його не вдалося зберегти для іншої сторінки.',
-failure:'Не вдалося підготувати оформлення. Виберіть його знову, щоб повторити.',
-},
-};
-let sequence=0;
-
-function clearExplicitReviewPin(location,history){
-if(!actorArtReviewRevision(location))return;
-const source=new URL(location.href),
-target=new URL(source);
-target.searchParams.delete('artReview');
-// Use the same fixed native-route contract as review-link propagation. An
-// unrelated URL, unsupported protocol or ambiguous pin is never rewritten.
-if(nativeArtReviewURL(target.href,source.href)===target.href)return;
-if(typeof history?.replaceState!=='function')
-throw new Error('The current review appearance cannot be replaced.');
-history.replaceState(history.state,'',target.href);
-}
-
-/** Shared explicit preset, not a gameplay/population switch. Each native host
-     * retains ownership of the current attempt and its next preparation boundary. */
-function mountEnemyAppearanceControls({
-document:doc=globalThis.document,
-location=doc.defaultView?.location??globalThis.location,
-history=doc.defaultView?.history??globalThis.history,
-container,
-preferences=sharedEnemyArtwork(),
-locale=()=>doc.documentElement?.lang??'en',
-includeUniform=false,
-applyMilitary,
-applyAuthored,
-}={}){
-if(!container||typeof applyMilitary!=='function'||typeof applyAuthored!=='function')
-throw new TypeError('Enemy appearance controls require native appearance actions.');
-const root=doc.createElement('div'),
-label=doc.createElement('label'),
-title=doc.createElement('span'),
-select=doc.createElement('select'),
-details=doc.createElement('details'),
-summary=doc.createElement('summary'),
-help=doc.createElement('p'),
-status=doc.createElement('p');
-root.className='enemy-appearance-controls';
-root.dataset.enemyAppearanceControls='true';
-label.className='settings-row';
-select.id=`enemy-appearance-${++sequence}`;
-select.name='enemy-appearance';
-select.dataset.enemyAppearance='true';
-help.id=`${select.id}-help`;
-help.className=status.className='micro-note';
-status.setAttribute('role','status');
-select.setAttribute('aria-describedby',help.id);
-for(const value of['authored','military']){
-const option=doc.createElement('option');
-option.value=value;
-select.append(option);
-}
-label.append(title,select);
-details.append(summary,help);
-root.append(label,status,details);
-const cast=includeUniform?sharedActorAppearance():null;
-let uniform;
-if(cast){
-const uniformLabel=doc.createElement('label');
-uniform={title:doc.createElement('span'),select:doc.createElement('select')};
-uniformLabel.className='settings-row';
-uniform.select.name='soldier-uniform';
-for(const value of['authored',...ACTOR_CASTS.map((entry)=>entry.id)]){
-const option=doc.createElement('option');
-option.value=value;
-uniform.select.append(option);
-}
-uniformLabel.append(uniform.title,uniform.select);
-root.insertBefore(uniformLabel,status);
-}
-container.append(root);
-let disposed=false,
-failed=false,
-generation=0;
-function refresh(){
-if(disposed)return;
-const words=COPY[locale()]??COPY.en,
-state=preferences.snapshot(),
-reviewing=actorArtReviewRevision(location)!==null;
-title.textContent=words.label;
-for(const option of select.options)option.textContent=words[option.value];
-select.value=reviewing?'military':state.style;
-help.textContent=words.help;
-summary.textContent=words.about;
-if(uniform){
-uniform.title.textContent=words.uniform;
-uniform.select.value=cast.snapshot().cast;
-for(const option of uniform.select.options)
-option.textContent=
-ACTOR_CASTS.find((entry)=>entry.id===option.value)?.name[
-locale()==='uk'?'uk':'en'
-]??words.castAuthored;
-}
-status.textContent=failed
-?words.failure
-:reviewing
-?words.preview
-:state.durable===false
-?words.saving
-:words.next;
-}
-const change=async()=>{
-const ticket= ++generation,
-style=select.value;
-if(!['authored','military'].includes(style))return;
-failed=false;
-try{
-// An explicit preset supersedes only this page's supported cosmetic review
-// pin. Do this before notifying preferences so native subscribers observe
-// the new intent; visiting settings or receiving another tab's choice
-// must preserve the current review link.
-clearExplicitReviewPin(location,history);
-preferences.set({style});
-await(style==='military'?applyMilitary():applyAuthored());
-}catch{
-if(!disposed&&generation===ticket)failed=true;
-}
-if(!disposed&&generation===ticket)refresh();
-};
-select.addEventListener('change',change);
-const changeUniform=()=>cast.set({cast:uniform.select.value});
-uniform?.select.addEventListener('change',changeUniform);
-const unsubscribe=preferences.subscribe(refresh);
-const unsubscribeCast=cast?.subscribe(refresh);
-return Object.freeze({
-element:root,
-refresh,
-dispose(){
-if(disposed)return;
-disposed=true;
-generation++;
-unsubscribe();
-unsubscribeCast?.();
-select.removeEventListener('change',change);
-uniform?.select.removeEventListener('change',changeUniform);
-root.remove();
-},
-});
-}
-
-return{clearExplicitReviewPin,mountEnemyAppearanceControls};
-})();
 modules['game/ui/theme-family-controls.mjs']=(()=>{
 const t=simGlobalI18n['t'];
 const localizedText=simGlobalI18n['localizedText'];
@@ -8599,8 +7408,7 @@ const BUILTIN_THEME_FAMILIES=simGlobalThemes['BUILTIN_THEME_FAMILIES'];
 const resolvePresentation=simGlobalThemes['resolvePresentation'];
 const mountThemeMaterialPreview=
 modules['game/ui/theme-material-preview.mjs']['mountThemeMaterialPreview'];
-const mountEnemyAppearanceControls=
-modules['game/ui/enemy-appearance-controls.mjs']['mountEnemyAppearanceControls'];
+const mountEnemyAppearanceControls=simGlobalEnemyAppearance['mountEnemyAppearanceControls'];
 
 /** One immediate appearance choice; the host owns atomic loads and flight boundaries. */
 function attachThemeFamilyControls({
@@ -9470,23 +8278,8 @@ return{mountGameplayAudioControls};
 })();
 modules['game/ui/movement-audio.mjs']=(()=>{
 const MOVEMENT_AUDIO_KEY='revealline.movement-audio.v1';
-function readMovementAudio(storage){
-try{
-storage??=globalThis.localStorage;
-const value=JSON.parse(storage?.getItem(MOVEMENT_AUDIO_KEY)??'null');
-return{
-enabled:typeof value?.enabled==='boolean'?value.enabled:true,
-volume:
-Number.isFinite(value?.volume)&&value.volume>=0&&value.volume<=1
-?value.volume
-:0.5,
-};
-}catch{
-return{enabled:true,volume:0.5};
-}
-}
 
-return{MOVEMENT_AUDIO_KEY,readMovementAudio};
+return{MOVEMENT_AUDIO_KEY};
 })();
 modules['game/ui/menu-audio.mjs']=(()=>{
 const mountGameplayAudioControls=
@@ -9512,13 +8305,7 @@ Number.isFinite(value?.volume)&&value.volume>=0&&value.volume<=1
 return{enabled:true,volume:0.35};
 }
 }
-function saveMenuAudio(value){
-try{
-globalThis.localStorage?.setItem(MENU_AUDIO_KEY,JSON.stringify(value));
-}catch{
-/* Session intent stays on Soundscape. */
-}
-}
+
 function attachMenuAudioSettings(sound,doc=globalThis.document,options={}){
 const menu=attachPreference(
 sound,
@@ -9646,7 +8433,7 @@ doc?.getElementById('settings-dialog')
 );
 }
 
-return{MENU_AUDIO_KEY,readMenuAudio,saveMenuAudio,attachMenuAudioSettings};
+return{MENU_AUDIO_KEY,readMenuAudio,attachMenuAudioSettings};
 })();
 return{
 createSimMissionLibrary:modules['game/mission-library/library.mjs']['createMissionLibrary'],

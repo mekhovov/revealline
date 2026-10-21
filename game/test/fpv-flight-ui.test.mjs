@@ -306,7 +306,8 @@ test('Academy prepares a saved aircraft and waits for a pending flight step befo
   });
   const preset = presets.createPresetConfiguration('meteor75-analog-2022');
   assert.equal(h.view.snapshot().reason, 'prepared');
-  assert.equal(h.view.snapshot().advancedTelemetry.frequency, 500);
+  assert.equal(h.view.observedSplits().ticks, 0);
+  assert.equal(h.view.snapshot().advancedTelemetry.frequency, 1000);
   assert.deepEqual(shownAircraft.geometry, preset.aircraft.geometry);
   assert.match(h.doc.body.textContent, /All courses remain available in practice/);
   assert.equal(h.doc.querySelector('.aircraft-practice-controls').hidden, false);
@@ -323,6 +324,8 @@ test('Academy prepares a saved aircraft and waits for a pending flight step befo
   h.tick();
   await new Promise((resolve) => setImmediate(resolve));
   assert.ok(worker.pendingStep);
+  const observationsBeforePending = h.view.observedSplits();
+  assert.equal(observationsBeforePending.ticks, h.view.snapshot().ticks);
   h.view.pause();
   assert.equal(h.view.arm(), false);
   assert.equal(h.view.snapshot().status, 'paused');
@@ -331,6 +334,11 @@ test('Academy prepares a saved aircraft and waits for a pending flight step befo
   worker.postMessage(worker.pendingStep);
   await new Promise((resolve) => setImmediate(resolve));
   const paused = h.view.snapshot();
+  assert.equal(
+    h.view.observedSplits().ticks,
+    paused.ticks,
+    'only the accepted pending interval is observed',
+  );
   assert.ok(paused.lastInput.throttle > 0);
   assert.equal(paused.status, 'paused', 'worker completion cannot arm on its own');
   assert.equal(h.view.arm(), true);
@@ -394,6 +402,8 @@ test('Academy prepares a saved aircraft and waits for a pending flight step befo
     }
     assert.notEqual(h.view.snapshot().status, 'active', `${action} must wait for explicit Arm`);
     assert.equal(h.view.snapshot().ticks, 0, `${action} must not advance while ready`);
+    assert.equal(h.view.observedSplits().ticks, 0);
+    assert.deepEqual(h.view.observedSplits().rows, []);
     h.$('arm').click();
     for (let tick = 0; tick < 8; tick++) {
       h.tick();
