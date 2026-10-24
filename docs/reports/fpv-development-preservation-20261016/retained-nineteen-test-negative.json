@@ -1,0 +1,13 @@
+{
+  "format": "FPVRetainedRegressionNegative.v1",
+  "testLog": "tool-tests-final-nineteen.log",
+  "testLogSHA256": "a66d22f289049a4e38ef8cd0e68ab74afbeef358199ed8e9597b83b3c0ca4bb1",
+  "tests": 19,
+  "passed": 18,
+  "failedPositiveFixture": "strict final index valid closed JSONL fixture",
+  "exception": "Final manifest changed during index creation",
+  "disposition": "Production final-input identity guard retained. Immutable external SMB fixture now receives an explicit historical timestamp before the valid positive-case read, matching the stable-fixture practice already used by source tests. All corrupt-middle/truncated/missing-newline cases still refuse.",
+  "replacementLog": "tool-tests-final-twenty.log",
+  "replacementNotYetClaimed": true,
+  "overallCoverageClaimed": false
+}

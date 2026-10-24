@@ -1,0 +1,51 @@
+{
+  "format": "FPVRadioActionUXDelivery.v1",
+  "date": "2026-10-21",
+  "parent": "070648ea0d0c8b533b9fcc566b6ee6ae5ff0f695",
+  "sourceHashes": {
+    "optional-practice/civilian-fpv/radio-setup.mjs": "4175bd37fc8dd37d0456541acd286d07d9b5400060a9ec1c127111860733ba51",
+    "optional-practice/civilian-fpv/radio-guide.mjs": "6656691bd78c3f3ecca15dfded56aa43e32b48e93a3072d138dc8086a2bf4339",
+    "optional-practice/civilian-fpv/style.css": "0a530612076a073baeceac35c27ebe9c49ac3543283ab8c664055f5c24313798",
+    "game/test/fpv-radio-guide.test.mjs": "6561da0a35a825d616e299a52ef517fb60d841f1b85a8c86987c442ea581067d"
+  },
+  "findings": [
+    "Generic verified/ready wording could imply physical switch correctness after stick setup.",
+    "Radio input numbers dominated roles and repeated generic assignment buttons did not name the intended action.",
+    "Preset application could retain an earlier cancelled/unchanged message after a silent autosave made the subsequent save a no-op.",
+    "Live role indicators retained old-binding hysteresis after swapping assignments.",
+    "An untouched new controller could expose a JSON finite-number validation error and an all-OFF summary despite having no switch assignments.",
+    "The setup DOM helper ignored a fourth class argument, leaving the new live badge class unapplied.",
+    "Generic fieldset flex wrapping caused action controls to shift within otherwise similar cards."
+  ],
+  "delivered": [
+    "Stick-specific readiness labels; presets described as suggestions requiring physical action review.",
+    "Named assignment buttons and live ON-now action summary; unassigned differs from disconnected/missing sample.",
+    "Explicit Fire/Deploy conflict feedback and swap recovery hint.",
+    "Correct saved/session-only messages even on repeated preset application.",
+    "Reset live-preview hysteresis when a role changes binding; style live badges explicitly.",
+    "Friendly incomplete-stick instructions instead of JSON internals.",
+    "Aligned action cards; USB axis/button details collapsed by default.",
+    "Automatic saving remains; no checkbox, extra save click or new arm gate."
+  ],
+  "checks": {
+    "targetedUXTests": {
+      "command": "node --test --test-name-pattern='action UX' game/test/fpv-radio-guide.test.mjs",
+      "passed": 5,
+      "failed": 0,
+      "skippedLegacyTests": 12,
+      "cases": [
+        "Stick-specific readiness labels and named assignment controls",
+        "Misassigned Fire lights Deploy; swap lights Fire and retains stick calibration",
+        "Fire/Deploy capture conflict names the current action and preserves the layout",
+        "Storage-unavailable warning remains session-only",
+        "New-controller empty fields show guidance and unassigned roles"
+      ]
+    },
+    "syntax": "passed",
+    "diffWhitespace": "passed",
+    "packageConstruction": "both packages within unchanged policies",
+    "browser": "Isolated localhost:8872 preview; actual live action label and computed grid layout inspected. Screenshot shows Fire ON and Deploy OFF. No changes made to the corrected localhost:8768 radio assignments.",
+    "remaining": "Full legacy suite adaptation, complete browser/mobile/layout catalogue and new formative usability sessions remain pending."
+  },
+  "capture": "radio-action-ux-preview.png"
+}

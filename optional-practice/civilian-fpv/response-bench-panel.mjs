@@ -10,6 +10,7 @@ const groupTranslations = {
   controller: 'Контролер',
   camera: 'Камера',
   assistance: 'Допомога',
+  timing: 'Версія й частота фізики',
 };
 
 /** This panel never saves a setup. Selection hands a copied controller tune to
@@ -134,8 +135,8 @@ export function mountResponseBenchPanel({
   output.className = 'tuning-bench-results';
   el(
     'p',
-    'The bench is a controlled Acro response rig without gravity or contacts. Metrics use every 500 Hz physics step; the chart shows 50 Hz samples. Results assess this SIM model, not real-aircraft tuning.',
-    'Стенд перевіряє реакцію в Acro без гравітації та зіткнень. Показники враховують кожен крок фізики 500 Гц; графік показує 50 Гц. Результати стосуються моделі SIM, а не налаштування реального дрона.',
+    'The bench is a controlled Acro response rig without gravity or contacts. Metrics use every physics step; the chart shows 50 Hz samples. Results assess this SIM model, not real-aircraft tuning.',
+    'Стенд перевіряє реакцію в Acro без гравітації та зіткнень. Показники враховують кожен крок фізики; графік показує 50 Гц. Результати стосуються моделі SIM, а не налаштування реального дрона.',
     root,
   );
 
@@ -505,8 +506,8 @@ export function mountResponseBenchPanel({
       );
       el(
         'p',
-        'Tracking must improve by more than the larger of 0.005°/s or 0.5%. Each validation case allows at most one physics step (2 ms) of time regression. Other limits use the larger of the displayed absolute and relative tolerances.',
-        'Похибка має покращитися більше ніж на більше з 0,005°/с або 0,5%. Кожен контрольний випадок допускає погіршення часу не більше одного кроку фізики (2 мс). Інші межі використовують більше з наведених абсолютного й відносного допусків.',
+        `Tracking must improve by more than the larger of 0.005°/s or 0.5%. Each validation case allows at most one physics step (${value.gates.timeToleranceSeconds * 1000} ms) of time regression. Other limits use the larger of the displayed absolute and relative tolerances.`,
+        `Похибка має покращитися більше ніж на більше з 0,005°/с або 0,5%. Кожен контрольний випадок допускає погіршення часу не більше одного кроку фізики (${value.gates.timeToleranceSeconds * 1000} мс). Інші межі використовують більше з наведених абсолютного й відносного допусків.`,
         gates,
       );
       const list = el('ul', undefined, undefined, gates);
@@ -537,7 +538,7 @@ export function mountResponseBenchPanel({
       el('h4', `${t('Changed groups', 'Змінені групи')}: ${changed}`, undefined, output);
       el(
         'p',
-        `${t('Axis', 'Вісь')}: ${lang() === 'uk' ? axisTranslations[value.axis] : value.axis} · 500 Hz · ${t('Same 3-second input sequence, starting state and seed', 'Однакова 3-секундна послідовність вводу, початковий стан і зерно шуму')}`,
+        `${t('Axis', 'Вісь')}: ${lang() === 'uk' ? axisTranslations[value.axis] : value.axis} · ${value.conditions?.physicsHz ?? value.baseline.metrics.physicsHz} ${t('Hz', 'Гц')} · ${t('Same 3-second input sequence, starting state and seed', 'Однакова 3-секундна послідовність вводу, початковий стан і зерно шуму')}`,
         undefined,
         output,
       );

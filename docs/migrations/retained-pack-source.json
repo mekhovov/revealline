@@ -1,0 +1,18 @@
+{
+  "format": "revealline-retained-pack-source.v1",
+  "scope": "Derived retained authoring sources; not original historical byte identities.",
+  "items": [
+    {
+      "path": "authoring/library/equipment-workshop/pack-source.json",
+      "previousSHA256": "8a34e99e0ba0b8ab0a171d707a2348cee0ee466f4161a670eee6f556f376ca13",
+      "sha256": "4ddd0f80dcbac5cacdcd1226c22c920a3679601501902766346c7fb7f6293bb8",
+      "change": "Description follows the retained two-level selection; all other fields unchanged."
+    },
+    {
+      "path": "authoring/library/equipment-workshop/previous/equipment-workshop-1.0.0.json",
+      "previousSHA256": "51853bcabf671b32b2cb5fc58c6b8105636f32c7b03593269cf8bb7985cc5dbf",
+      "sha256": "f6be571a46086ed78ce18178d90326456eb4ebd114baef5e127d7656cee77002",
+      "change": "Description follows the retained two-level selection; all other fields unchanged."
+    }
+  ]
+}

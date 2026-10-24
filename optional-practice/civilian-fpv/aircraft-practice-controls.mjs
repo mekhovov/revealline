@@ -1,4 +1,4 @@
-import { boundedJSON, exactKeys, required } from '../../game/data-json.mjs';
+import { boundedJSON, dataIdentity, exactKeys, required } from '../../game/data-json.mjs';
 import { exportJSONFile } from '../../game/platform.mjs';
 import { mountAircraftArchiveControls } from './aircraft-archive-controls.mjs';
 
@@ -14,6 +14,12 @@ const bounds = {
 };
 const abortError = () => new DOMException('Recovery operation cancelled', 'AbortError');
 const tickValid = (tick) => Number.isSafeInteger(tick) && tick >= 0;
+const recoveryStages = new WeakMap();
+function recoveryFailure(error, stage) {
+  if (error && typeof error === 'object' && error.name !== 'AbortError')
+    recoveryStages.set(error, stage);
+  return error;
+}
 export function aircraftRecoveryTick(data) {
   if (data?.format === 'AircraftChallengeRecovery.v1') {
     required(
@@ -47,6 +53,11 @@ export function createAircraftRecoveryStore({
     database = null,
     closed = false;
   const active = new Set();
+  function forget(connection) {
+    if (database !== connection) return;
+    database = null;
+    opening = null;
+  }
   function open() {
     if (closed) return Promise.reject(abortError());
     if (!indexedDB) return Promise.reject(new Error('Checkpoint storage is unavailable'));
@@ -73,13 +84,14 @@ export function createAircraftRecoveryStore({
             reject(abortError());
             return;
           }
-          database = request.result;
-          database.onversionchange = () => {
-            database?.close();
-            database = null;
-            opening = null;
+          const connection = request.result;
+          database = connection;
+          connection.onversionchange = () => {
+            connection.close();
+            forget(connection);
           };
-          resolve(database);
+          connection.onclose = () => forget(connection);
+          resolve(connection);
         };
       }).catch((error) => {
         opening = null;
@@ -88,13 +100,31 @@ export function createAircraftRecoveryStore({
     return opening;
   }
   async function transaction(mode, operation, signal) {
-    signal?.throwIfAborted();
-    const db = await open();
-    signal?.throwIfAborted();
-    if (closed) throw abortError();
+    let tx;
+    for (let attempt = 0; ; attempt++) {
+      signal?.throwIfAborted();
+      const db = await open();
+      signal?.throwIfAborted();
+      if (closed) throw abortError();
+      try {
+        tx = db.transaction(STORE, mode);
+        break;
+      } catch (error) {
+        if (error.name !== 'InvalidStateError') throw error;
+        forget(db);
+        try {
+          db.close();
+        } catch {}
+        signal?.throwIfAborted();
+        if (closed) throw abortError();
+        // Only admission failed: no request or write has been issued. Once a
+        // transaction exists, its outcome is never retried automatically.
+        if (attempt) throw error;
+      }
+    }
     return new Promise((resolve, reject) => {
-      let tx,
-        value,
+      let value,
+        requestError = null,
         complete = false;
       const finish = (failure) => {
         if (complete) return;
@@ -111,13 +141,20 @@ export function createAircraftRecoveryStore({
         finish(abortError());
       };
       try {
-        tx = db.transaction(STORE, mode);
         active.add(cancel);
         signal?.addEventListener('abort', cancel, { once: true });
         tx.oncomplete = () => finish();
-        tx.onabort = tx.onerror = () =>
-          finish(tx.error ?? new Error('Checkpoint storage transaction failed'));
+        tx.onabort = tx.onerror = (event) =>
+          finish(
+            requestError ??
+              tx.error ??
+              event?.target?.error ??
+              new Error('Checkpoint storage transaction failed'),
+          );
         const request = operation(tx.objectStore(STORE));
+        request.onerror = () => {
+          requestError = request.error;
+        };
         request.onsuccess = () => {
           value = request.result;
         };
@@ -132,19 +169,47 @@ export function createAircraftRecoveryStore({
   return {
     async save(source, { signal } = {}) {
       signal?.throwIfAborted();
-      const data = boundedJSON(source, bounds),
+      let missionTick, payload;
+      try {
+        const data = boundedJSON(source, bounds);
         missionTick = aircraftRecoveryTick(data);
-      const payload = JSON.stringify(data);
+        payload = JSON.stringify(data);
+      } catch (error) {
+        throw recoveryFailure(error, 'validation');
+      }
       await transaction(
         'readwrite',
         (store) =>
           store.put({ format: 'AircraftRecoverySlot.v1', host: key, missionTick, payload }, key),
         signal,
-      );
+      ).catch((error) => {
+        throw recoveryFailure(error, 'storage');
+      });
       return { missionTick, bytes: new TextEncoder().encode(payload).byteLength };
     },
-    async load({ signal } = {}) {
-      const saved = await transaction('readonly', (store) => store.get(key), signal);
+    async preserveOriginal(source, { signal } = {}) {
+      const data = boundedJSON(source, bounds),
+        missionTick = aircraftRecoveryTick(data),
+        payload = JSON.stringify(data),
+        originalKey = `${key}:original:${dataIdentity(data)}`;
+      await transaction(
+        'readwrite',
+        (store) => {
+          store.put(
+            { format: 'AircraftRecoverySlot.v1', host: key, missionTick, payload },
+            originalKey,
+          );
+          return store.put(originalKey, `${key}:original`);
+        },
+        signal,
+      );
+    },
+    async load({ signal, original = false } = {}) {
+      const selected = original
+        ? await transaction('readonly', (store) => store.get(`${key}:original`), signal)
+        : key;
+      if (!selected) return null;
+      const saved = await transaction('readonly', (store) => store.get(selected), signal);
       if (saved === undefined) return null;
       exactKeys(saved, ['format', 'host', 'missionTick', 'payload'], 'Stored recovery');
       required(
@@ -186,6 +251,11 @@ export function mountAircraftPracticeControls({
   locale = () => 'en',
   getSession,
   onPause = () => {},
+  onRestored = () => {},
+  onReference = () => false,
+  hasSplitReference = () => true,
+  onVisualReference = () => false,
+  hasVisualReference = () => true,
   key = 'academy',
   platformOptions = {},
   workerURL,
@@ -209,6 +279,7 @@ export function mountAircraftPracticeControls({
   const controls = [],
     removers = [];
   let disposed = false,
+    operationMessage = () => '',
     owner = null,
     state = null,
     lastAttempt = -1,
@@ -232,9 +303,15 @@ export function mountAircraftPracticeControls({
   }
   const same = (session) => !disposed && getSession() === session && owner === session;
   function paint() {
+    const message = operationMessage();
+    if (operationStatus.textContent !== message) operationStatus.textContent = message;
     heading.textContent = t('Practice clips & recovery', 'Записи практики й відновлення');
     exportClip.textContent = t('Export recent clip', 'Експортувати останній запис');
     exportRecovery.textContent = t('Export recovery checkpoint', 'Експортувати точку відновлення');
+    exportOriginal.textContent = t(
+      'Export preserved original checkpoint',
+      'Експортувати збережену початкову точку',
+    );
     restore.textContent = t('Restore last saved checkpoint', 'Відновити останню збережену точку');
     fileLabel.firstChild.textContent = t(
       'Import recovery checkpoint',
@@ -257,7 +334,17 @@ export function mountAircraftPracticeControls({
         : t('unavailable', 'недоступно');
     const recoverable = durableTick === null ? recording?.lastRecoverableSeconds : durableTick / 50;
     const storage = storageError
-      ? t('Storage unavailable; flying continues.', 'Сховище недоступне; політ триває.')
+      ? `${
+          storageError.stage === 'storage'
+            ? t('Storage unavailable; flying continues.', 'Сховище недоступне; політ триває.')
+            : t('Checkpoint unavailable; flying continues.', 'Точка недоступна; політ триває.')
+        } ${
+          storageError.stage === 'capture'
+            ? t('Checkpoint capture', 'Створення точки')
+            : storageError.stage === 'validation'
+              ? t('Checkpoint validation', 'Перевірка точки')
+              : t('Storage', 'Сховище')
+        }: ${storageError.name}: ${storageError.detail}`
       : pendingSave
         ? t('Saving checkpoint…', 'Збереження точки…')
         : Number.isFinite(recoverable)
@@ -284,7 +371,7 @@ export function mountAircraftPracticeControls({
     cancelled?.controller.abort();
     if (cancelled) {
       operation = null;
-      operationStatus.textContent = t('Recovery cancelled.', 'Відновлення скасовано.');
+      operationMessage = () => t('Recovery cancelled.', 'Відновлення скасовано.');
       if (!disposed) paint();
     }
   }
@@ -294,13 +381,13 @@ export function mountAircraftPracticeControls({
     cancelSave();
     const job = { controller: new AbortController(), cancellable };
     operation = job;
-    operationStatus.textContent = t('Preparing…', 'Підготовка…');
+    operationMessage = () => t('Preparing…', 'Підготовка…');
     paint();
     try {
       await action(session, job.controller.signal);
     } catch (error) {
       if (same(session) && operation === job)
-        operationStatus.textContent =
+        operationMessage = () =>
           error.name === 'AbortError'
             ? t('Recovery cancelled.', 'Відновлення скасовано.')
             : `${t('Could not complete', 'Не вдалося завершити')}: ${error.message}`;
@@ -319,7 +406,7 @@ export function mountAircraftPracticeControls({
       ...platformOptions,
     });
     if (!same(session)) return;
-    operationStatus.textContent =
+    operationMessage = () =>
       result?.status === 'cancelled'
         ? t('Export cancelled.', 'Експорт скасовано.')
         : t(
@@ -337,6 +424,19 @@ export function mountAircraftPracticeControls({
       download(session, signal, () => session.exportRecovery(), 'aircraft-practice-recovery.json'),
     ),
   );
+  const exportOriginal = button(() =>
+    run(async (session, signal) => {
+      const original = await store.load({ signal, original: true });
+      if (!original)
+        throw new Error(
+          t(
+            'No migrated original checkpoint is stored.',
+            'Немає збереженої початкової точки міграції.',
+          ),
+        );
+      await download(session, signal, () => original.data, 'aircraft-original-checkpoint.json');
+    }),
+  );
   async function restoreData(session, data, signal) {
     signal.throwIfAborted();
     if (!same(session)) throw abortError();
@@ -345,14 +445,41 @@ export function mountAircraftPracticeControls({
     if (!same(session)) throw abortError();
     await session.restoreRecovery(data, { signal });
     signal.throwIfAborted();
+    if (
+      same(session) &&
+      session.migrateActorRules &&
+      (session.supportsLiveActorRules?.() ?? true)
+    ) {
+      const packet = data?.format === 'AircraftChallengeRecovery.v1' ? data.session : data;
+      if (packet?.identity && !packet.identity.actorRules && packet.mission) {
+        if (!store.preserveOriginal)
+          throw new Error(
+            t(
+              'Original checkpoint storage is unavailable. Recovery remains paused.',
+              'Сховище початкових точок недоступне. Відновлення залишається на паузі.',
+            ),
+          );
+        await store.preserveOriginal(data, { signal });
+      }
+      signal.throwIfAborted();
+      if (!same(session)) throw abortError();
+      await session.migrateActorRules();
+    }
+    signal.throwIfAborted();
     if (!same(session)) throw abortError();
     state = session.snapshot();
+    try {
+      onRestored(session, state);
+    } catch {
+      /* Optional observations cannot fail a committed restore. */
+    }
     lastAttempt = state.ticks ?? 0;
     durableTick = null;
-    operationStatus.textContent = t(
-      'Checkpoint restored. The flight remains paused; arm when ready.',
-      'Точку відновлено. Політ залишається на паузі; запустіть двигуни, коли будете готові.',
-    );
+    operationMessage = () =>
+      t(
+        'Checkpoint restored. The flight remains paused; arm when ready.',
+        'Точку відновлено. Політ залишається на паузі; запустіть двигуни, коли будете готові.',
+      );
   }
   const restore = button(() =>
     run(
@@ -406,10 +533,12 @@ export function mountAircraftPracticeControls({
     pendingSave = job;
     lastAttempt = ticks;
     paint();
+    let stage = 'capture';
     try {
       const data = await session.exportRecovery();
       job.controller.signal.throwIfAborted();
       if (!same(session)) throw abortError();
+      stage = 'storage';
       const saved = await store.save(data, { signal: job.controller.signal });
       if (!same(session)) return;
       durableTick = saved.missionTick;
@@ -417,7 +546,11 @@ export function mountAircraftPracticeControls({
       await report(session, { savedThroughMission: saved.missionTick });
     } catch (error) {
       if (same(session) && error.name !== 'AbortError') {
-        storageError = error.message;
+        storageError = {
+          stage: recoveryStages.get(error) === 'validation' ? 'validation' : stage,
+          name: String(error.name ?? 'Error').slice(0, 80),
+          detail: String(error.message ?? error).slice(0, 300),
+        };
         await report(session, { error: error.message });
       }
     } finally {
@@ -431,6 +564,10 @@ export function mountAircraftPracticeControls({
     locale,
     getSession,
     onPause,
+    onReference,
+    hasSplitReference,
+    onVisualReference,
+    hasVisualReference,
     key,
     platformOptions,
     workerURL,
@@ -449,7 +586,7 @@ export function mountAircraftPracticeControls({
         lastAttempt = -1;
         durableTick = null;
         storageError = null;
-        operationStatus.textContent = '';
+        operationMessage = () => '';
       }
       state = next;
       archives.update(next);

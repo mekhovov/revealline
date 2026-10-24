@@ -244,7 +244,7 @@ export function createVerifiedMixedWindow(
         ),
         "Mixed local origins disagree",
       );
-      if (supportPose?.requireClearRestore) await pair.scenery.prepareRestoreProof();
+      if (supportPose?.requireClearRestore) await pair.scenery.prepareRestoreProof(() => current(token), supportPose.positionMm, supportPose.radiusMm);
       current(token);
       pair.group.add(pair.terrain.group, pair.scenery.group);
       const buildingReceipts = new Map(

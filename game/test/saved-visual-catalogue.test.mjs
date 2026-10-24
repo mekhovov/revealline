@@ -28,8 +28,8 @@ test('shipped catalogue retains exact released FPV revisions and First Signal co
     (row) => row.difficulty === 'standard',
   );
   const releases = new Map([
-    [54, "8ea2d74576591eaba4bdf67ed506d2ed766a10e1cd3ce972ec14861a4d097501"],
-    [58, "b3a79b85a00b8bc8b70a12fcc7aedfe6667ea8d3da64ea4baab85fb28b52e12c"],
+    [54, '8ea2d74576591eaba4bdf67ed506d2ed766a10e1cd3ce972ec14861a4d097501'],
+    [58, 'b3a79b85a00b8bc8b70a12fcc7aedfe6667ea8d3da64ea4baab85fb28b52e12c'],
   ]);
   for (const [revision, sha256] of releases) {
     const published = source.entries.find(

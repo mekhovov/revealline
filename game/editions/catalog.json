@@ -66,9 +66,7 @@
     {
       "approved": true,
       "bytes": 10429,
-      "dependencies": [
-        "droneaid-logo"
-      ],
+      "dependencies": ["droneaid-logo"],
       "derivative": {
         "background": "#FFFFFF",
         "height": 192,
@@ -90,10 +88,7 @@
     {
       "approved": true,
       "bytes": 42167,
-      "dependencies": [
-        "droneaid-logo",
-        "droneaid-icon-192"
-      ],
+      "dependencies": ["droneaid-logo", "droneaid-icon-192"],
       "derivative": {
         "background": "#FFFFFF",
         "height": 512,
@@ -124,9 +119,7 @@
     {
       "approved": true,
       "bytes": 1245,
-      "dependencies": [
-        "droneaid-nl-logo-source"
-      ],
+      "dependencies": ["droneaid-nl-logo-source"],
       "id": "droneaid-nl-propeller-source",
       "path": "game/editions/assets/droneaid-nl/propeller-source.svg",
       "publication": "public",
@@ -153,9 +146,7 @@
     {
       "approved": true,
       "bytes": 6925,
-      "dependencies": [
-        "droneaid-nl-propeller"
-      ],
+      "dependencies": ["droneaid-nl-propeller"],
       "derivative": {
         "background": "#FFFFFF",
         "height": 192,
@@ -177,10 +168,7 @@
     {
       "approved": true,
       "bytes": 21710,
-      "dependencies": [
-        "droneaid-nl-propeller",
-        "droneaid-nl-icon-192"
-      ],
+      "dependencies": ["droneaid-nl-propeller", "droneaid-nl-icon-192"],
       "derivative": {
         "background": "#FFFFFF",
         "height": 512,
@@ -2424,9 +2412,7 @@
     },
     {
       "actorSetId": "social-drone-ua-marker",
-      "assetIds": [
-        "social-drone-ua-home"
-      ],
+      "assetIds": ["social-drone-ua-home"],
       "description": "People, careful records and shared learning in a fictional community workshop. An independent educational tribute, not an official service.",
       "fontAssetId": null,
       "format": "revealline-brand-pack.v1",
@@ -2453,9 +2439,7 @@
     },
     {
       "actorSetId": "victory-drones-marker",
-      "assetIds": [
-        "victory-drones-home"
-      ],
+      "assetIds": ["victory-drones-home"],
       "description": "Sources, questions and shared understanding in an imagined learning observatory. Independent educational content; no endorsement implied.",
       "fontAssetId": null,
       "format": "revealline-brand-pack.v1",
@@ -2482,10 +2466,7 @@
     },
     {
       "actorSetId": "ukraine-culture-marker",
-      "assetIds": [
-        "ukraine-culture-home",
-        "reward-textile-discovery-shuttle-v1"
-      ],
+      "assetIds": ["ukraine-culture-home", "reward-textile-discovery-shuttle-v1"],
       "description": "Explore individual objects, makers and living traditions through a fictional exhibition with source-linked discoveries.",
       "fontAssetId": null,
       "format": "revealline-brand-pack.v1",
@@ -2516,10 +2497,7 @@
     },
     {
       "actorSetId": "fpv-learning-marker",
-      "assetIds": [
-        "fpv-learning-home",
-        "reward-fpv-discovery-courier-v1"
-      ],
+      "assetIds": ["fpv-learning-home", "reward-fpv-discovery-courier-v1"],
       "description": "Discover the roles of a civilian training aircraft’s components in a fictional science workshop. Arcade routes are not wiring diagrams.",
       "fontAssetId": null,
       "format": "revealline-brand-pack.v1",
@@ -2560,9 +2538,7 @@
       ],
       "brandId": "droneaid",
       "id": "droneaid-community-relay",
-      "modes": [
-        "solo"
-      ],
+      "modes": ["solo"],
       "name": "Community Relay",
       "publication": "public",
       "revision": "1",
@@ -2579,9 +2555,7 @@
       ],
       "brandId": "droneaid-nl",
       "id": "droneaid-nl-workshop-lights",
-      "modes": [
-        "solo"
-      ],
+      "modes": ["solo"],
       "name": "Workshop Lights",
       "publication": "public",
       "revision": "2",
@@ -2599,9 +2573,7 @@
       ],
       "brandId": "droneaid-nl",
       "id": "droneaid-nl-parts-in-motion",
-      "modes": [
-        "solo"
-      ],
+      "modes": ["solo"],
       "name": "Parts in Motion",
       "publication": "public",
       "revision": "2",
@@ -2618,9 +2590,7 @@
       ],
       "brandId": "droneaid-nl",
       "id": "droneaid-nl-makers-together",
-      "modes": [
-        "solo"
-      ],
+      "modes": ["solo"],
       "name": "Makers Together",
       "publication": "public",
       "revision": "2",
@@ -2637,9 +2607,7 @@
       ],
       "brandId": "droneaid-nl",
       "id": "droneaid-nl-careful-handoff",
-      "modes": [
-        "solo"
-      ],
+      "modes": ["solo"],
       "name": "The Careful Handoff",
       "publication": "public",
       "revision": "2",
@@ -2656,9 +2624,7 @@
       ],
       "brandId": "droneaid-nl",
       "id": "droneaid-nl-signals-of-support",
-      "modes": [
-        "solo"
-      ],
+      "modes": ["solo"],
       "name": "Signals of Support",
       "publication": "public",
       "revision": "2",
@@ -2675,9 +2641,7 @@
       ],
       "brandId": "droneaid-nl",
       "id": "droneaid-nl-shared-horizon",
-      "modes": [
-        "solo"
-      ],
+      "modes": ["solo"],
       "name": "Shared Horizon",
       "publication": "public",
       "revision": "2",
@@ -2698,9 +2662,7 @@
       "id": "social-drone-people-workshop",
       "localizationPath": "game/content/company-campaigns/social-drone-people-workshop.localization.json",
       "localizationSha256": "b631f8f7e026c184244ce2ad3f6ce6ea1e22eca1515852fe7d7d91a3a50eb3d9",
-      "modes": [
-        "solo"
-      ],
+      "modes": ["solo"],
       "name": "People Behind the Workshop",
       "publication": "public",
       "revision": "1",
@@ -2722,9 +2684,7 @@
       "id": "victory-drones-knowledge-connects",
       "localizationPath": "game/content/company-campaigns/victory-drones-knowledge-connects.localization.json",
       "localizationSha256": "77271ecf17eecdcfff3b6d24504ed3df62d7068640c66bdefe415b501802dfd6",
-      "modes": [
-        "solo"
-      ],
+      "modes": ["solo"],
       "name": "Knowledge Connects",
       "publication": "public",
       "revision": "1",
@@ -2753,9 +2713,7 @@
       "lessonPath": "game/content/company-campaigns/ukraine-threads.lessons.json",
       "localizationPath": "game/content/company-campaigns/ukraine-threads.localization.json",
       "localizationSha256": "68aba75dfa564557314eeb4ed0bba6bf7f6cf149bdfaa6c7e0b87b03c885abcc",
-      "modes": [
-        "solo"
-      ],
+      "modes": ["solo"],
       "name": "Threads Across Ukraine",
       "publication": "public",
       "revision": "1",
@@ -2786,9 +2744,7 @@
       "lessonPath": "game/content/company-campaigns/fpv-meet-aircraft.lessons.json",
       "localizationPath": "game/content/company-campaigns/fpv-meet-aircraft.localization.json",
       "localizationSha256": "d1721f4d2e172c38c1540d53d77d2a5d38fc19fa0627552d253f8fb3a7114c4a",
-      "modes": [
-        "solo"
-      ],
+      "modes": ["solo"],
       "name": "Meet the Aircraft",
       "publication": "public",
       "revision": "1",
@@ -2817,9 +2773,7 @@
       "lessonPath": "game/content/company-campaigns/social-drone-community-connections.lessons.json",
       "localizationPath": "game/content/company-campaigns/social-drone-community-connections.localization.json",
       "localizationSha256": "362b141518daa61eaf7402ef9698889f49b14dc7b78f4e3e01d5a32a25359dd4",
-      "modes": [
-        "solo"
-      ],
+      "modes": ["solo"],
       "name": "Community Connections",
       "publication": "public",
       "revision": "1",
@@ -2842,9 +2796,7 @@
       "lessonPath": "game/content/company-campaigns/victory-drones-ideas-understanding.lessons.json",
       "localizationPath": "game/content/company-campaigns/victory-drones-ideas-understanding.localization.json",
       "localizationSha256": "2bb53e7caf2c55f251bd15859e74ac729cac78720e337ee07093c806cdd4db7a",
-      "modes": [
-        "solo"
-      ],
+      "modes": ["solo"],
       "name": "Ideas into Understanding",
       "publication": "public",
       "revision": "1",
@@ -2866,9 +2818,7 @@
       "id": "ukraine-colour-clay-spring",
       "localizationPath": "game/content/company-campaigns/ukraine-colour-clay-spring.localization.json",
       "localizationSha256": "cfb3b6427242b4f7d027c1ba78cedb20b08c13ed809c7c8e4ddb713085614af6",
-      "modes": [
-        "solo"
-      ],
+      "modes": ["solo"],
       "name": "Colour, Clay and Spring",
       "publication": "public",
       "revision": "1",
@@ -2890,9 +2840,7 @@
       "id": "ukraine-crimea-ornek",
       "localizationPath": "game/content/company-campaigns/ukraine-crimea-ornek.localization.json",
       "localizationSha256": "cd48c4d20bdacdad533920c05dae8982eec49b202a6891d9876b9d4723a725de",
-      "modes": [
-        "solo"
-      ],
+      "modes": ["solo"],
       "name": "Crimea: Ornament and Community",
       "publication": "public",
       "revision": "1",
@@ -2914,9 +2862,7 @@
       "id": "ukraine-voices-travel",
       "localizationPath": "game/content/company-campaigns/ukraine-voices-travel.localization.json",
       "localizationSha256": "5a61767cc4cd4bb7a5fd96c9d87876d9588c5cdfc33005b6dcdcecf195aba491",
-      "modes": [
-        "solo"
-      ],
+      "modes": ["solo"],
       "name": "Voices That Travel",
       "publication": "public",
       "revision": "1",
@@ -2940,9 +2886,7 @@
       "id": "ukraine-cities-symbols-time",
       "localizationPath": "game/content/company-campaigns/ukraine-cities-symbols-time.localization.json",
       "localizationSha256": "c1d12577ab7a938e3ca82a9a4daa11c654086fc3f06cdc378e742c612797e39a",
-      "modes": [
-        "solo"
-      ],
+      "modes": ["solo"],
       "name": "Cities, Symbols and Time",
       "publication": "public",
       "revision": "1",
@@ -2964,9 +2908,7 @@
       "id": "ukraine-everyday-culture",
       "localizationPath": "game/content/company-campaigns/ukraine-everyday-culture.localization.json",
       "localizationSha256": "22dd1c44251a227be717a267f07a7efec4461435de94773c8aafb6500f00f395",
-      "modes": [
-        "solo"
-      ],
+      "modes": ["solo"],
       "name": "Words, Tables and Everyday Culture",
       "publication": "public",
       "revision": "1",
@@ -2988,9 +2930,7 @@
       "id": "fpv-parts-bench",
       "localizationPath": "game/content/company-campaigns/fpv-parts-bench.localization.json",
       "localizationSha256": "a5c5448bb138439ca343460d7bb215e8315a85f5b4d62af4122486a138df071f",
-      "modes": [
-        "solo"
-      ],
+      "modes": ["solo"],
       "name": "From Parts to a Bench Model",
       "publication": "public",
       "revision": "1",
@@ -3015,9 +2955,7 @@
       "id": "fpv-soldering-workshop",
       "localizationPath": "game/content/company-campaigns/fpv-soldering-workshop.localization.json",
       "localizationSha256": "0f3e4d7f969bcb896284198d8903b20334b7608f0ea62ad26381c1414a22e756",
-      "modes": [
-        "solo"
-      ],
+      "modes": ["solo"],
       "name": "Soldering Workshop",
       "publication": "public",
       "revision": "1",
@@ -3039,9 +2977,7 @@
       "id": "fpv-four-controls",
       "localizationPath": "game/content/company-campaigns/fpv-four-controls.localization.json",
       "localizationSha256": "ec0feea7e5a69f45c39b7189384c5de0f73b12ef3d9d0a7d7e51a9a04f05c548",
-      "modes": [
-        "solo"
-      ],
+      "modes": ["solo"],
       "name": "Understand the Four Controls",
       "publication": "public",
       "revision": "1",
@@ -3063,9 +2999,7 @@
       "id": "fpv-first-flight",
       "localizationPath": "game/content/company-campaigns/fpv-first-flight.localization.json",
       "localizationSha256": "0253a481e05cbbf364e63b92ccaf7801b97b85d7cdbd34aa4d0567aa15acbcc8",
-      "modes": [
-        "solo"
-      ],
+      "modes": ["solo"],
       "name": "First Flight Patterns",
       "publication": "public",
       "revision": "1",
@@ -3088,9 +3022,7 @@
       "id": "fpv-drone-families",
       "localizationPath": "game/content/company-campaigns/fpv-drone-families.localization.json",
       "localizationSha256": "44083de08798104d0f443056016ff4c2bbf1265a06a9e23151154146c2fd65d8",
-      "modes": [
-        "solo"
-      ],
+      "modes": ["solo"],
       "name": "Drone Families",
       "publication": "public",
       "revision": "1",
@@ -3112,9 +3044,7 @@
       "id": "fpv-drones-ukraine",
       "localizationPath": "game/content/company-campaigns/fpv-drones-ukraine.localization.json",
       "localizationSha256": "9a71f4f0e6eb01940216c9cb052e5c217314b7b2f691d20c2040aadbb3e61657",
-      "modes": [
-        "solo"
-      ],
+      "modes": ["solo"],
       "name": "Drones in Ukraine",
       "publication": "public",
       "revision": "1",
@@ -3136,9 +3066,7 @@
       "id": "fpv-care-repair",
       "localizationPath": "game/content/company-campaigns/fpv-care-repair.localization.json",
       "localizationSha256": "d1882486c83dd56bc2ab5bbd26f22c3b7eba16903449be50c3bbf3826ed41c00",
-      "modes": [
-        "solo"
-      ],
+      "modes": ["solo"],
       "name": "Care, Diagnosis and Repair Decisions",
       "publication": "public",
       "revision": "1",
@@ -3158,9 +3086,7 @@
       "id": "social-drone-sky-watch",
       "localizationPath": "game/content/company-campaigns/social-drone-sky-watch.localization.json",
       "localizationSha256": "daf6d512ab34450cf3c0c1ed55d6544927028d6c9e515592d12ed8c917d10be0",
-      "modes": [
-        "solo"
-      ],
+      "modes": ["solo"],
       "name": "Sky Watch",
       "publication": "public",
       "revision": "3",
@@ -3168,6 +3094,7 @@
       "sourcePath": "game/content/company-campaigns/social-drone-sky-watch.json"
     }
   ],
+  "defaultEditionId": "social-drone-ua",
   "editions": [
     {
       "audience": "learners",
@@ -3188,9 +3115,7 @@
       "entryCampaignId": "social-drone-people-workshop",
       "format": "revealline-edition.v1",
       "id": "social-drone-ua",
-      "modes": [
-        "solo"
-      ],
+      "modes": ["solo"],
       "name": "Social Drone UA / LINE",
       "presentationHistory": [
         {
@@ -3262,16 +3187,11 @@
         "themes": "game/content/company-boot/victory-drones/themes.json"
       },
       "brandId": "victory-drones",
-      "campaignIds": [
-        "victory-drones-knowledge-connects",
-        "victory-drones-ideas-understanding"
-      ],
+      "campaignIds": ["victory-drones-knowledge-connects", "victory-drones-ideas-understanding"],
       "entryCampaignId": "victory-drones-knowledge-connects",
       "format": "revealline-edition.v1",
       "id": "victory-drones",
-      "modes": [
-        "solo"
-      ],
+      "modes": ["solo"],
       "name": "Victory Drones / LINE",
       "presentationHistory": [
         {
@@ -3330,9 +3250,7 @@
       "entryCampaignId": "ukraine-threads",
       "format": "revealline-edition.v1",
       "id": "ukraine-culture",
-      "modes": [
-        "solo"
-      ],
+      "modes": ["solo"],
       "name": "Ukraine: Living Culture / LINE",
       "presentationHistory": [
         {
@@ -3405,9 +3323,7 @@
       "entryCampaignId": "fpv-meet-aircraft",
       "format": "revealline-edition.v1",
       "id": "fpv-learning",
-      "modes": [
-        "solo"
-      ],
+      "modes": ["solo"],
       "name": "FPV Learning / LINE",
       "presentationHistory": [
         {
@@ -3473,15 +3389,11 @@
         "themes": "game/content/company-boot/droneaid-community/themes.json"
       },
       "brandId": "droneaid",
-      "campaignIds": [
-        "droneaid-community-relay"
-      ],
+      "campaignIds": ["droneaid-community-relay"],
       "entryCampaignId": "droneaid-community-relay",
       "format": "revealline-edition.v1",
       "id": "droneaid-community",
-      "modes": [
-        "solo"
-      ],
+      "modes": ["solo"],
       "name": "Community Relay / LINE",
       "publication": "public",
       "revision": 1
@@ -3508,9 +3420,7 @@
       "entryCampaignId": "droneaid-nl-workshop-lights",
       "format": "revealline-edition.v1",
       "id": "droneaid-nl-community",
-      "modes": [
-        "solo"
-      ],
+      "modes": ["solo"],
       "name": "DroneAid / LINE",
       "presentationHistory": [
         {
@@ -3552,15 +3462,11 @@
         "themes": "game/content/company-boot/droneaid-nl-workshop-lights/themes.json"
       },
       "brandId": "droneaid-nl",
-      "campaignIds": [
-        "droneaid-nl-workshop-lights"
-      ],
+      "campaignIds": ["droneaid-nl-workshop-lights"],
       "entryCampaignId": "droneaid-nl-workshop-lights",
       "format": "revealline-edition.v1",
       "id": "droneaid-nl-workshop-lights",
-      "modes": [
-        "solo"
-      ],
+      "modes": ["solo"],
       "name": "Workshop Lights / LINE",
       "presentationHistory": [
         {
@@ -3596,15 +3502,11 @@
         "themes": "game/content/company-boot/droneaid-nl-parts-in-motion/themes.json"
       },
       "brandId": "droneaid-nl",
-      "campaignIds": [
-        "droneaid-nl-parts-in-motion"
-      ],
+      "campaignIds": ["droneaid-nl-parts-in-motion"],
       "entryCampaignId": "droneaid-nl-parts-in-motion",
       "format": "revealline-edition.v1",
       "id": "droneaid-nl-parts-in-motion",
-      "modes": [
-        "solo"
-      ],
+      "modes": ["solo"],
       "name": "Parts in Motion / LINE",
       "presentationHistory": [
         {
@@ -3640,15 +3542,11 @@
         "themes": "game/content/company-boot/droneaid-nl-makers-together/themes.json"
       },
       "brandId": "droneaid-nl",
-      "campaignIds": [
-        "droneaid-nl-makers-together"
-      ],
+      "campaignIds": ["droneaid-nl-makers-together"],
       "entryCampaignId": "droneaid-nl-makers-together",
       "format": "revealline-edition.v1",
       "id": "droneaid-nl-makers-together",
-      "modes": [
-        "solo"
-      ],
+      "modes": ["solo"],
       "name": "Makers Together / LINE",
       "presentationHistory": [
         {
@@ -3678,15 +3576,11 @@
         "themes": "game/content/company-boot/droneaid-nl-careful-handoff/themes.json"
       },
       "brandId": "droneaid-nl",
-      "campaignIds": [
-        "droneaid-nl-careful-handoff"
-      ],
+      "campaignIds": ["droneaid-nl-careful-handoff"],
       "entryCampaignId": "droneaid-nl-careful-handoff",
       "format": "revealline-edition.v1",
       "id": "droneaid-nl-careful-handoff",
-      "modes": [
-        "solo"
-      ],
+      "modes": ["solo"],
       "name": "The Careful Handoff / LINE",
       "presentationHistory": [
         {
@@ -3716,15 +3610,11 @@
         "themes": "game/content/company-boot/droneaid-nl-signals-of-support/themes.json"
       },
       "brandId": "droneaid-nl",
-      "campaignIds": [
-        "droneaid-nl-signals-of-support"
-      ],
+      "campaignIds": ["droneaid-nl-signals-of-support"],
       "entryCampaignId": "droneaid-nl-signals-of-support",
       "format": "revealline-edition.v1",
       "id": "droneaid-nl-signals-of-support",
-      "modes": [
-        "solo"
-      ],
+      "modes": ["solo"],
       "name": "Signals of Support / LINE",
       "presentationHistory": [
         {
@@ -3754,15 +3644,11 @@
         "themes": "game/content/company-boot/droneaid-nl-shared-horizon/themes.json"
       },
       "brandId": "droneaid-nl",
-      "campaignIds": [
-        "droneaid-nl-shared-horizon"
-      ],
+      "campaignIds": ["droneaid-nl-shared-horizon"],
       "entryCampaignId": "droneaid-nl-shared-horizon",
       "format": "revealline-edition.v1",
       "id": "droneaid-nl-shared-horizon",
-      "modes": [
-        "solo"
-      ],
+      "modes": ["solo"],
       "name": "Shared Horizon / LINE",
       "presentationHistory": [
         {

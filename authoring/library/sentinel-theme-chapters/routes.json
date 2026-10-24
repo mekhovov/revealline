@@ -5,10 +5,7 @@
     "sha256": "eb235f9bc26ea3670137f3f7d7ac86ac5e8c4b56b98502b8ef61f0ad98d95e70"
   },
   "sourcePackSha256": "cf6009eeadef504d033de0dd27f33aa3d6405caf1954a6417cbdfc09bc566b40",
-  "themeOrder": [
-    "ukraine",
-    "retro"
-  ],
+  "themeOrder": ["ukraine", "retro"],
   "editions": [
     {
       "descriptor": {
@@ -281,41 +278,6 @@
           "pixelsSha256": "e3c52571e80cca0d48e5a457980b89652201c700bc5e42d4d635a18529ae8561"
         }
       ]
-    },
-    {
-      "inputPins": [
-        {
-          "path": "authoring/library/sentinel-circuit/build.mjs",
-          "bytes": 9256,
-          "sha256": "e76f204cbe240bdedac79f2d92c85ab767846be32cfae50cd76ef983340c4d41"
-        },
-        {
-          "path": "authoring/library/sentinel-circuit-external/build.mjs",
-          "bytes": 10172,
-          "sha256": "ee481bcaef80d86778fdda295f8660d0bfa2d6e0950bd24fddc59e051d463e88"
-        },
-        {
-          "path": "authoring/library/sentinel-circuit/routes.json",
-          "bytes": 1296963,
-          "sha256": "eb235f9bc26ea3670137f3f7d7ac86ac5e8c4b56b98502b8ef61f0ad98d95e70"
-        },
-        {
-          "path": "game/content/themes.json",
-          "bytes": 4266,
-          "sha256": "93582f7d9ba53753106df7b63928f086820fc0f68357d3c08f26c0b89fb84774"
-        },
-        {
-          "path": "authoring/library/sentinel-theme-art/provenance.json",
-          "bytes": 16174,
-          "sha256": "48cfad28a7454317d4f16dbdbd0c593ee6ad0bf5aa2a94152a7f27be9ef5e948"
-        },
-        {
-          "path": "authoring/library/sentinel-theme-chapters/editions.json",
-          "bytes": 8414,
-          "sha256": "1e14923784d75f59f2537cf9a14fa2c127b92ad77b3feaebfb80658e88136b88"
-        }
-      ],
-      "images": []
     }
   ],
   "geometry": "Three existing Sentinel layouts reused across three themes; zero new geometries.",

@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import { attachCouchInput } from '../couch/couch-input.mjs';
 import { createCoopCommandBatch, COOP_INPUT_CAPABILITIES } from '../coop/input-policy.mjs';
 import { createCoop, startCoop, pauseCoop, resumeCoop, stepCoop, FIXED_DT } from '../coop/core.mjs';
+import { resolveCouchKeyboard, replaceCouchKey } from '../couch/keyboard-bindings.mjs';
 import { Document, Events } from './helpers/couch-dom.mjs';
 
 const pad = (index) => ({
@@ -15,7 +16,7 @@ const pad = (index) => ({
 });
 
 /** Real capture-aware input, command policy and simulation; only the DOM/devices are fixtures. */
-function arena(t, pads = []) {
+function arena(t, pads = [], keyboardBindings = null) {
   const win = new Events();
   const doc = new Document();
   doc.parentNode = win;
@@ -61,6 +62,7 @@ function arena(t, pads = []) {
   }
   input = attachCouchInput({
     ...COOP_INPUT_CAPABILITIES,
+    keyboardBindings,
     window: win,
     document: doc,
     arena: canvas,
@@ -367,4 +369,46 @@ test('resetting one controller preserves a second controller continuous directio
     null,
     'first controller stays blocked until physical release',
   );
+});
+
+test('remapped Team Support remains held per seat, releases independently and respects pause neutralization', (t) => {
+  const team = replaceCouchKey(
+    replaceCouchKey(resolveCouchKeyboard(null, 'team'), 0, 'action', 'KeyE', 'team'),
+    1,
+    'action',
+    'Slash',
+    'team',
+  );
+  const a = arena(t, [], team);
+  a.key('KeyQ');
+  a.key('Enter');
+  assert.deepEqual(
+    a.tick().map((command) => command.support),
+    [false, false],
+  );
+  a.key('KeyQ', false);
+  a.key('Enter', false);
+  a.key('KeyE');
+  a.key('Slash');
+  for (let index = 0; index < 30; index++)
+    assert.deepEqual(
+      a.tick().map((command) => command.support),
+      [true, true],
+    );
+  a.key('KeyE', false);
+  assert.deepEqual(
+    a.tick().map((command) => command.support),
+    [false, true],
+  );
+  a.pause();
+  a.resume();
+  assert.deepEqual(
+    a.tick().map((command) => command.support),
+    [false, false],
+  );
+  a.key('Slash', false);
+  a.key('Slash');
+  assert.equal(a.tick()[1].support, true);
+  a.key('Slash', false);
+  assert.equal(a.tick()[1].support, false);
 });

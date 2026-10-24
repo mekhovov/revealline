@@ -51,9 +51,7 @@ export function validateAbilityPresets(config) {
   }
   for(const pad of stage.supplyPads)if(!bounded(pad.radius,.5,4))fail("invalid pad radius");
   for(const haze of stage.haze)if(!bounded(haze.x,0,47)||!bounded(haze.y,0,35)||!bounded(haze.width,1,48-haze.x)||!bounded(haze.height,1,36-haze.y)||!bounded(haze.displaySignal,0,1))fail("invalid synthetic haze");
-  for(const family of ["fpv-front",
-"ukraine-atlas",
-"retro-1994"]){
+  for(const family of ["fpv-front","ukraine-atlas","retro-1994"]){
     const vocab=config.vocabulary?.[family];
     if(!vocab||config.classes.some(item=>typeof vocab.classLabels?.[item.id]!=="string")||config.equipment.some(item=>typeof vocab.equipmentLabels?.[item.id]!=="string"))fail("missing family vocabulary");
     for(const key of ["supplyLabel","hazeLabel","budgetLabel"])if(typeof vocab[key]!=="string"||!vocab[key].trim()||vocab[key].length>100)fail(t("tools:invalidVocabulary", { value1: key }));

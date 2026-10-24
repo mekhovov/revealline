@@ -178,7 +178,8 @@ class FullTests(unittest.TestCase):
         self.assertEqual(q['format'], 'revealline-source-qualification.v1')
         self.assertTrue(q['passed'])
         self.assertEqual(q['testFiles'], 4)
-        self.assertEqual(len(q['gates']), 6)
+        self.assertEqual([gate['gate'] for gate in q['gates']],
+                         ['validate', 'motion-syntax', 'test'])
         self.assertNotIn('waiverEvidence', q)
         self.assertFalse((self.root / 'out/source.tar').exists())
         with zipfile.ZipFile(self.root / 'out/source-qualification-evidence.zip') as archive:

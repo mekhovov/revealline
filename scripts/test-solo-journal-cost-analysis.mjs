@@ -1,5 +1,6 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
+import { assessEmpiricalClockOverhead } from './solo-overhead-acceptance.mjs';
 import { createHash } from 'node:crypto';
 import { PROSPECTIVE_OVERHEAD_METHOD } from './solo-overhead-interval.mjs';
 import { createBrowserJournalCostProbe } from './solo-qualification-journal-cost.mjs';
@@ -385,3 +386,25 @@ test('active terminal costs are included in the last sample and total, not silen
   assert(Math.abs(result.totalMs - sum - cost.unassignedTailByPhase[2]) < 1e-6);
   assert(cost.unassignedTailByPhase[2] > 0);
 });
+
+for (const method of [undefined, PROSPECTIVE_OVERHEAD_METHOD]) {
+  test(
+    (method ?? 'historical-default') +
+      ': apparently passing journal envelope cannot clear qualification',
+    () => {
+      const f = cohort();
+      if (method) f.manifest.analysisMethod = method;
+      const arithmetic = analyzeJournalCost(f.manifest, f.reports);
+      const original = JSON.stringify(arithmetic);
+      assert.equal(arithmetic.status, 'pass-scoped-envelope');
+      assert(arithmetic.interval.upper95 < 0.05);
+      const assessed = assessEmpiricalClockOverhead(arithmetic);
+      assert.equal(assessed.status, 'unresolved');
+      assert.equal(assessed.conditionalStatus, 'pass-scoped-envelope');
+      assert.equal(assessed.qualificationAssessment.eligible, false);
+      assert.deepEqual(assessed.interval, arithmetic.interval);
+      assert.equal(assessed.scope, arithmetic.scope);
+      assert.equal(JSON.stringify(arithmetic), original);
+    },
+  );
+}
