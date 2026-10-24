@@ -272,8 +272,8 @@ export function mountEncounterControls({
             'Виконуйте початкові завдання. Бойові режими мають окремі результати.',
           )
         : txt(
-            'Two weapons and one payload. C: switch · L: reload · G: deploy · H: detonate. Changing these choices restarts the attempt.',
-            'Дві зброї та один заряд. C: змінити · L: перезарядити · G: застосувати · H: підірвати. Зміна параметрів починає нову спробу.',
+            'Fire shoots the active primary or secondary gun. The payload is separate: Deploy drops the bomb or charge; Detonate triggers an armed charge. Switch weapon changes guns only. Changing these choices restarts the attempt.',
+            'Вогонь стріляє з активної основної або другої зброї. Заряд окремий: застосування скидає бомбу чи заряд; підрив запускає зведений заряд. Перемикання зброї змінює лише гармати. Зміна параметрів починає нову спробу.',
           );
     if (selection.activity !== 'original' && selection.ammoPreset === 'arcade')
       help.textContent += txt(
@@ -515,7 +515,7 @@ export function mountCombatVitals({ document: doc, parent, weaponRules }) {
       return;
     }
     attribute(ammo.node, 'data-tone', ammoTone);
-    text(ammo.label, `${t('Ammo', 'Набої')} · ${weaponName}`);
+    text(ammo.label, `${t('Gun', 'Зброя')} · ${weaponName}`);
     text(ammo.value, String(rounds));
     text(ammo.max, `/ ${magazine}`);
     let ammoStatus = {
@@ -586,7 +586,7 @@ export function mountCombatVitals({ document: doc, parent, weaponRules }) {
             : payloadCount === 0 && !arcade
               ? t('Empty', 'Порожньо')
               : '';
-    let payloadText = `${payloadName} ${payloadCount}${payloadState ? ` · ${payloadState}` : ''}`;
+    let payloadText = `${t('Payload', 'Заряд')} · ${payloadName} ×${payloadCount}${payloadState ? ` · ${payloadState}` : ''}`;
     if (health > 0 && !arcade && !payloadCount && !c.payloadArmed && !deployed.length)
       payloadText += ` · ${supplyHelp}`;
     if (health > 0 && arcade && payloadCount < capacity)

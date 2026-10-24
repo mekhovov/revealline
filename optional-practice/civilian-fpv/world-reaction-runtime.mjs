@@ -86,7 +86,7 @@ const sourceHashes = {
   'optional-practice/civilian-fpv/encounter-session.mjs':
     '81405ee2439c0359b32b1df1dd4409bd469dae7b8731bb45ab888f606de25600',
   'optional-practice/civilian-fpv/encounter-controls.mjs':
-    '4590c51253dc9b869a0769d04cffad9ba5367ac2182d2c3a3eed6b16d964a7c0',
+    '10aef487e51d431dad687e073ac2466864480a925801a09a4d9b9be15eaeca8e',
   'optional-practice/civilian-fpv/combat-presentation.mjs':
     '44abdb7ed340d7d058c23711cca9a27d1916039c5b5f4182768c78e35ac567ea',
   'optional-practice/civilian-fpv/combat-actors.mjs':
@@ -18037,8 +18037,8 @@ modules['optional-practice/civilian-fpv/encounter-controls.mjs'] = (() => {
               'Виконуйте початкові завдання. Бойові режими мають окремі результати.',
             )
           : txt(
-              'Two weapons and one payload. C: switch · L: reload · G: deploy · H: detonate. Changing these choices restarts the attempt.',
-              'Дві зброї та один заряд. C: змінити · L: перезарядити · G: застосувати · H: підірвати. Зміна параметрів починає нову спробу.',
+              'Fire shoots the active primary or secondary gun. The payload is separate: Deploy drops the bomb or charge; Detonate triggers an armed charge. Switch weapon changes guns only. Changing these choices restarts the attempt.',
+              'Вогонь стріляє з активної основної або другої зброї. Заряд окремий: застосування скидає бомбу чи заряд; підрив запускає зведений заряд. Перемикання зброї змінює лише гармати. Зміна параметрів починає нову спробу.',
             );
       if (selection.activity !== 'original' && selection.ammoPreset === 'arcade')
         help.textContent += txt(
@@ -18281,7 +18281,7 @@ modules['optional-practice/civilian-fpv/encounter-controls.mjs'] = (() => {
         return;
       }
       attribute(ammo.node, 'data-tone', ammoTone);
-      text(ammo.label, `${t('Ammo', 'Набої')} · ${weaponName}`);
+      text(ammo.label, `${t('Gun', 'Зброя')} · ${weaponName}`);
       text(ammo.value, String(rounds));
       text(ammo.max, `/ ${magazine}`);
       let ammoStatus = {
@@ -18359,7 +18359,7 @@ modules['optional-practice/civilian-fpv/encounter-controls.mjs'] = (() => {
               : payloadCount === 0 && !arcade
                 ? t('Empty', 'Порожньо')
                 : '';
-      let payloadText = `${payloadName} ${payloadCount}${payloadState ? ` · ${payloadState}` : ''}`;
+      let payloadText = `${t('Payload', 'Заряд')} · ${payloadName} ×${payloadCount}${payloadState ? ` · ${payloadState}` : ''}`;
       if (health > 0 && !arcade && !payloadCount && !c.payloadArmed && !deployed.length)
         payloadText += ` · ${supplyHelp}`;
       if (health > 0 && arcade && payloadCount < capacity)

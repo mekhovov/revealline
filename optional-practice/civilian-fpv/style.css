@@ -3010,6 +3010,68 @@
   }
 }
 
+/* Setup previews name the action each physical switch actually activates. */
+.radio-six-switch .radio-switch-live {
+  display: inline-block;
+  margin: 8px;
+  padding: 3px 8px;
+  border: 1px solid #aab5a4;
+  border-radius: 4px;
+  font: 600 13px/1.4 system-ui, sans-serif;
+}
+.radio-six-switch [data-switch-active='true'] {
+  outline: 2px solid #9be5c5;
+  outline-offset: -2px;
+}
+.radio-six-switch [data-switch-active='true'] .radio-switch-live {
+  color: #10251b;
+  background: #9be5c5;
+  border-color: #9be5c5;
+}
+
+/* Shared camera/weapon aim point: fixed CSS pixels, open centre and a hard
+   light/dark edge remain readable against sky, terrain and analog noise. */
+:is(#world-viewport, #viewport) :is(.aim-reticle, .crosshair) {
+  width: 30px;
+  height: 30px;
+  font-size: 0;
+  line-height: 0;
+  color: #fafff5;
+  text-shadow: none;
+  pointer-events: none;
+  z-index: 3;
+}
+:is(#world-viewport, #viewport) :is(.aim-reticle, .crosshair)::before,
+:is(#world-viewport, #viewport) :is(.aim-reticle, .crosshair)::after {
+  content: '';
+  position: absolute;
+  pointer-events: none;
+}
+:is(#world-viewport, #viewport) :is(.aim-reticle, .crosshair)::before {
+  inset: 0;
+  background:
+    linear-gradient(currentColor 0 0) center top / 2px 8px no-repeat,
+    linear-gradient(currentColor 0 0) center bottom / 2px 8px no-repeat,
+    linear-gradient(currentColor 0 0) left center / 8px 2px no-repeat,
+    linear-gradient(currentColor 0 0) right center / 8px 2px no-repeat;
+  filter: drop-shadow(1px 0 #071219) drop-shadow(-1px 0 #071219)
+    drop-shadow(0 1px #071219) drop-shadow(0 -1px #071219);
+}
+:is(#world-viewport, #viewport) :is(.aim-reticle, .crosshair)::after {
+  width: 3px;
+  height: 3px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  background: currentColor;
+  box-shadow: 0 0 0 1px #071219;
+}
+:is(#world-viewport, #viewport)[data-hud-widget-reticle='false']
+  :is(.aim-reticle, .crosshair) {
+  display: none;
+}
+
 /* BEGIN SHARED SIM FULLSCREEN */
 .flight-immersive-bar {
   display: none;

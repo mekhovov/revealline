@@ -3357,6 +3357,32 @@ export function mountWorldApp({
     encounterControls.root.append(label);
     combatFeedbackFields.push({ label, caption, en, uk });
   }
+  function combatWeaponName(id) {
+    return (
+      {
+        autocannon: txt('Autocannon', 'Автогармата'),
+        scatter: txt('Scatter', 'Картеч'),
+        precision: txt('Precision', 'Точна зброя'),
+        rocket: txt('Rockets', 'Ракети'),
+      }[id] ?? txt('Weapon', 'Зброя')
+    );
+  }
+  function combatActionHint(action) {
+    const source = $('flight-source').value;
+    if (source === 'radio') {
+      const binding = radio.controlLayout()?.switches[action];
+      return binding
+        ? Object.hasOwn(binding, 'axis')
+          ? `${txt('Channel', 'Канал')} ${binding.axis}`
+          : `${txt('Button', 'Кнопка')} ${binding.button}`
+        : txt('Radio menu', 'Меню пульта');
+    }
+    if (source === 'keyboard')
+      return { weapon: 'C', reload: 'L', payload: 'G', detonate: 'H' }[action] ?? '';
+    if (source === 'controller' && combatFeedback.combatDpad)
+      return { weapon: '← / →', reload: '↑', payload: '↓', detonate: 'L3' }[action] ?? '';
+    return '';
+  }
   function combatPayloadControls(encounter, payload, ammoPreset = 'balanced') {
     const remote = encounter?.ordnance?.find((item) => item.kind === 'remote');
     const armed = payload === 'drone' && encounter?.payloadArmed;
@@ -3452,7 +3478,9 @@ export function mountWorldApp({
       const seconds = Math.max(0, Math.floor(remaining / 50));
       combatSummary.textContent = `${encounterActivityLabel(c.activity, locale)}${c.activity === 'continuous' ? ` · ${c.wave}` : ''} · ${Math.floor(seconds / 60)}:${String(seconds % 60).padStart(2, '0')}\n${c.kills} ${txt('defeats', 'знищено')} · ${c.actors.filter((actor) => actor.status === 'active').length} ${txt('active', 'активних')}${c.outsideArea ? ` · ${txt('Targets waiting', 'Цілі чекають')}` : c.geometryWaiting ? ` · ${txt('Loading terrain', 'Завантаження місцевості')}` : c.phase === 'intermission' ? ` · ${txt('Next wave', 'Наступна хвиля')}` : ''}`;
     }
-    weaponSummary.textContent = txt('Weapons', 'Зброя');
+    weaponSummary.textContent = c?.weapons
+      ? `${txt('Weapons', 'Зброя')} · ${combatWeaponName(c.weapons[c.weaponIndex]?.id)}`
+      : txt('Weapons', 'Зброя');
     weaponActions.hidden = !c?.weapons || !visible || Boolean(combatReplaySource);
     servicePadButton.textContent =
       combatNavigation === 'service'
@@ -3466,8 +3494,24 @@ export function mountWorldApp({
     servicePadButton.hidden = !c?.servicePad;
     if (!c?.servicePad && combatNavigation === 'service') combatNavigation = 'target';
     for (const item of weaponActionButtons) {
-      item.control.textContent =
-        item.action === 'payload' ? payloadControls.label : txt(item.en, item.uk);
+      const actionLabel =
+        item.action === 'weapon'
+          ? `${txt('Switch to', 'Змінити на')} ${combatWeaponName(c?.weapons?.[1 - (c.weaponIndex ?? 0)]?.id)}`
+          : (item.action === 'payload' ? payloadControls.label : txt(item.en, item.uk)).split(
+              ' · ',
+            )[0];
+      const hint = combatActionHint(item.action);
+      item.control.textContent = `${actionLabel}${hint ? ` · ${hint}` : ''}`;
+      item.control.setAttribute('aria-label', item.control.textContent);
+      item.control.title =
+        item.action === 'weapon'
+          ? `${txt('Active gun', 'Активна зброя')}: ${combatWeaponName(c?.weapons?.[c.weaponIndex]?.id)}. ${txt('Switching guns does not change the payload.', 'Перемикання зброї не змінює заряд.')}`
+          : item.action === 'payload'
+            ? txt(
+                'Deploy the separate payload. Fire shoots the active gun.',
+                'Застосувати окремий заряд. Вогонь стріляє з активної зброї.',
+              )
+            : actionLabel;
       item.control.disabled =
         state.status !== 'active' ||
         c?.outsideArea ||
