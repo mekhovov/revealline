@@ -1,4 +1,4 @@
-name: Overflight text scaling complete native cohort
+name: Overflight Raid family44 complete native cohort
 
 on:
   pull_request:
@@ -24,12 +24,12 @@ permissions:
   actions: read
 
 concurrency:
-  group: overflight28-${{ github.event.pull_request.number }}
+  group: overflight44-${{ github.event.pull_request.number }}
   cancel-in-progress: false
 
 jobs:
   native:
-    name: overflight28-group-${{ matrix.group }}
+    name: overflight44-group-${{ matrix.group }}
     strategy:
       fail-fast: false
       max-parallel: 1
@@ -65,7 +65,7 @@ jobs:
           python3 -B - <<'PYCODE'
           import os, shutil
           assert min(shutil.disk_usage(os.environ['GITHUB_WORKSPACE']).free,
-                     shutil.disk_usage(os.environ['RUNNER_TEMP']).free) > 2 * 1024 ** 3
+                     shutil.disk_usage(os.environ['RUNNER_TEMP']).free) > 2550000000
           PYCODE
       - name: Install locked tools without package scripts
         run: npm ci --ignore-scripts
@@ -110,7 +110,7 @@ jobs:
           identity += '-g' + group
           assert re.fullmatch('[0-9]+-[0-9]+-g[1-4]', identity)
           temporary = pathlib.Path(os.environ['RUNNER_TEMP']).resolve(strict=True)
-          trusted = temporary / ('overflight28-trusted-' + identity)
+          trusted = temporary / ('overflight44-trusted-' + identity)
           trusted.mkdir()
           request = urllib.request.Request('https://api.github.com/repos/mekhovov/revealline/git/blobs/' + expected_oid,
               headers={'Authorization': 'Bearer ' + os.environ['AUDIT_READ_TOKEN'], 'Accept': 'application/vnd.github+json',
@@ -134,14 +134,14 @@ jobs:
           with open(os.environ['GITHUB_ENV'], 'a') as stream:
               stream.write('OVERFLIGHT_SOURCE_TREE=' + tree + '\n')
               stream.write('OVERFLIGHT_AUDIT_HELPER=' + str(helper) + '\n')
-              stream.write('OVERFLIGHT_EVIDENCE=' + str(temporary / ('overflight28-evidence-' + identity)) + '\n')
+              stream.write('OVERFLIGHT_EVIDENCE=' + str(temporary / ('overflight44-evidence-' + identity)) + '\n')
           PYCODE
       - name: Verify reviewed guard, aggregator and toy source bytes
         shell: bash
         run: |
           python3 -B - <<'PYCODE'
           import hashlib, pathlib
-          expected = {'scripts/overflight-text-scaling-native-guard.py': 'a3585ad5906912976dc16be1a91998955e583810913b95749fe51349af6099c0', 'scripts/aggregate-overflight-text-scaling-native.py': 'd81c45b605ec66d0d7d417f79830af8e796612d14e87e8a25f413a062c31cd67', 'scripts/test_overflight_text_scaling_native_guard.py': '91a98d41620e337b05357f463cc39ce2808d93aa2141d216dcca95fe6d8e76bf'}
+          expected = {'scripts/overflight-text-scaling-native-guard.py': '7a7e86d1a2c187a000560f9865b69c54cc66ce3371a11bf58ce51282a9200154', 'scripts/aggregate-overflight-text-scaling-native.py': 'fe6069b19c5395d96ee4534ede46443dfe101f47afae7377e291ec3477f9bcb2', 'scripts/test_overflight_text_scaling_native_guard.py': 'b2c2d8544ed713262e13f682421e0c278f9049fa95eac7fb7270d641dcb45609'}
           for name, digest in expected.items():
               path = pathlib.Path(name)
               assert path.is_file() and not path.is_symlink()
@@ -153,10 +153,10 @@ jobs:
           python3 -B - <<'PYCODE'
           import os, shutil
           assert min(shutil.disk_usage(os.environ['GITHUB_WORKSPACE']).free,
-                     shutil.disk_usage(os.environ['RUNNER_TEMP']).free) > 2 * 1024 ** 3
+                     shutil.disk_usage(os.environ['RUNNER_TEMP']).free) > 2550000000
           PYCODE
           python3 -B scripts/test_overflight_text_scaling_native_guard.py
-      - name: Run fixed seven-file group and mandatory group-one host
+      - name: Run fixed eleven-file group with original seven and required additions
         env:
           SOURCE_SHA: ${{ github.event.pull_request.head.sha }}
         shell: bash
@@ -172,13 +172,13 @@ jobs:
         if: always()
         uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
         with:
-          name: overflight28-${{ github.event.pull_request.head.sha }}-${{ github.run_id }}-${{ github.run_attempt }}-g${{ matrix.group }}
-          path: ${{ runner.temp }}/overflight28-evidence-${{ github.run_id }}-${{ github.run_attempt }}-g${{ matrix.group }}/
+          name: overflight44-${{ github.event.pull_request.head.sha }}-${{ github.run_id }}-${{ github.run_attempt }}-g${{ matrix.group }}
+          path: ${{ runner.temp }}/overflight44-evidence-${{ github.run_id }}-${{ github.run_attempt }}-g${{ matrix.group }}/
           if-no-files-found: warn
           retention-days: 7
 
   aggregate:
-    name: overflight28-complete-exact-head
+    name: overflight44-complete-exact-head
     needs: native
     if: always() && needs.native.result != 'skipped'
     runs-on: ubuntu-24.04
@@ -199,13 +199,13 @@ jobs:
         run: |
           python3 -B - <<'PYCODE'
           import hashlib, pathlib
-          expected = {'scripts/overflight-text-scaling-native-guard.py': 'a3585ad5906912976dc16be1a91998955e583810913b95749fe51349af6099c0', 'scripts/aggregate-overflight-text-scaling-native.py': 'd81c45b605ec66d0d7d417f79830af8e796612d14e87e8a25f413a062c31cd67', 'scripts/test_overflight_text_scaling_native_guard.py': '91a98d41620e337b05357f463cc39ce2808d93aa2141d216dcca95fe6d8e76bf'}
+          expected = {'scripts/overflight-text-scaling-native-guard.py': '7a7e86d1a2c187a000560f9865b69c54cc66ce3371a11bf58ce51282a9200154', 'scripts/aggregate-overflight-text-scaling-native.py': 'fe6069b19c5395d96ee4534ede46443dfe101f47afae7377e291ec3477f9bcb2', 'scripts/test_overflight_text_scaling_native_guard.py': 'b2c2d8544ed713262e13f682421e0c278f9049fa95eac7fb7270d641dcb45609'}
           for name, digest in expected.items():
               path = pathlib.Path(name)
               assert path.is_file() and not path.is_symlink()
               assert hashlib.sha256(path.read_bytes()).hexdigest() == digest
           PYCODE
-      - name: Require the complete exact-head union of all28 whole files
+      - name: Require the complete exact-head union of all44 whole files
         env:
           SOURCE_HEAD: ${{ github.event.pull_request.head.sha }}
           ARTIFACT_READ_TOKEN: ${{ github.token }}
@@ -214,15 +214,15 @@ jobs:
           test "$(git --no-replace-objects rev-parse HEAD)" = "$SOURCE_HEAD"
           SOURCE_TREE="$(git --no-replace-objects rev-parse 'HEAD^{tree}')"
           python3 -B scripts/aggregate-overflight-text-scaling-native.py \
-            --artifacts "$RUNNER_TEMP/overflight28-aggregate-$GITHUB_RUN_ID-$GITHUB_RUN_ATTEMPT" \
+            --artifacts "$RUNNER_TEMP/overflight44-aggregate-$GITHUB_RUN_ID-$GITHUB_RUN_ATTEMPT" \
             --source-head "$SOURCE_HEAD" --source-tree "$SOURCE_TREE" \
             --run "$GITHUB_RUN_ID-$GITHUB_RUN_ATTEMPT" --root "$GITHUB_WORKSPACE" \
-            --download --receipt "$RUNNER_TEMP/overflight28-complete-$GITHUB_RUN_ID-$GITHUB_RUN_ATTEMPT.json"
+            --download --receipt "$RUNNER_TEMP/overflight44-complete-$GITHUB_RUN_ID-$GITHUB_RUN_ATTEMPT.json"
       - name: Preserve the bounded aggregate receipt
         if: always()
         uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
         with:
-          name: overflight28-complete-${{ github.event.pull_request.head.sha }}-${{ github.run_id }}-${{ github.run_attempt }}
-          path: ${{ runner.temp }}/overflight28-complete-${{ github.run_id }}-${{ github.run_attempt }}.json
+          name: overflight44-complete-${{ github.event.pull_request.head.sha }}-${{ github.run_id }}-${{ github.run_attempt }}
+          path: ${{ runner.temp }}/overflight44-complete-${{ github.run_id }}-${{ github.run_attempt }}.json
           if-no-files-found: warn
           retention-days: 7

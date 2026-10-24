@@ -1,4 +1,4 @@
-/* Only Single Drone/Riy's native entry opts in. Authored sizes multiply once;
+/* Native Single Drone/Riy and Raid-family entries opt in. Sizes multiply once;
  * inherited/em text follows its parent. Logical field/camera values do not change. */
 html[data-text-scaling='overflight'][data-theme-text-size='extra-large'] {
   --overflight-text-scale: 2;
@@ -540,4 +540,75 @@ html[data-text-scaling='overflight']
     grid-area: 2 / 2;
     block-size: auto;
   }
+}
+
+/* Raid, Time Attack and Contract Marathon share the same live instruments.
+ * Extra large reflows their full score, objective and Rush text. */
+html[data-text-scaling='overflight']
+  body.overflight-raid[data-text-size='extra-large']
+  .raid-hunt-strip {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 4px;
+  padding: 4px 8px;
+}
+html[data-text-scaling='overflight']
+  body.overflight-raid[data-text-size='extra-large']
+  :is(#hud-objective, #hud-chain, #hud-score) {
+  min-inline-size: 0;
+  max-inline-size: 100%;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  text-overflow: clip;
+}
+html[data-text-scaling='overflight']
+  body.overflight-raid[data-text-size='extra-large']
+  .raid-boost {
+  min-inline-size: 0;
+  max-inline-size: 100%;
+  text-align: start;
+}
+html[data-text-scaling='overflight']
+  body.overflight-raid[data-text-size='extra-large']
+  #overflight-field-status
+  > .raid-boost {
+  font: calc(12px * var(--overflight-text-scale, 1)) / normal var(--fk-font-mono, monospace);
+}
+html[data-text-scaling='overflight']
+  body.overflight-raid[data-text-size='extra-large']
+  #overflight-field-status
+  > :is(#hud-chain, #hud-score) {
+  font-family: var(--fk-font-mono, monospace);
+  font-size: clamp(
+    calc(0.65rem * var(--overflight-text-scale, 1)),
+    calc(1.4vw * var(--overflight-text-scale, 1)),
+    calc(0.95rem * var(--overflight-text-scale, 1))
+  );
+  line-height: normal;
+}
+html[data-text-scaling='overflight']
+  body.overflight-raid[data-text-size='extra-large']
+  .raid-upgrade-comparison
+  .upgrade-comparison-state {
+  display: grid;
+  gap: 4px;
+}
+html[data-text-scaling='overflight']
+  body.overflight-raid[data-text-size='extra-large']
+  .raid-upgrade-preview-amount {
+  font-size: 40px;
+  line-height: 1.3;
+}
+html[data-text-scaling='overflight']
+  body.overflight-raid[data-text-size='extra-large']
+  .overflight-result-actions {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 8px;
+}
+html[data-text-scaling='overflight']
+  body.overflight-raid[data-text-size='extra-large']
+  .overflight-result-actions
+  > button {
+  inline-size: 100%;
 }

@@ -453,3 +453,108 @@ test('Results reveals its existing accepted action without reordering or stealin
     view.dispose();
   }
 });
+
+import { updateOverflightHuntHUD } from '../overflight/raid-mode.mjs';
+import { overflightHuntText } from '../overflight/raid-copy.mjs';
+
+test('Raid reflow retains live Rush/score owners and exact anchors across scale, layout, locale and disposal', () => {
+  const f = fixture(),
+    make = (tag, id, parent) => {
+      const element = f.doc.createElement(tag);
+      element.id = id;
+      parent.append(element);
+      return element;
+    };
+  const objective = make('span', 'hud-objective', f.tally),
+    chain = make('span', 'hud-chain', f.tally),
+    score = make('span', 'hud-score', f.tally),
+    boost = f.doc.createElement('div');
+  boost.className = 'raid-boost';
+  f.bottom.insertBefore(boost, f.boost);
+  boost.append(f.boost);
+  const rush = make('span', 'hud-rush', boost),
+    meter = make('div', 'raid-rush-meter', boost);
+  meter.setAttribute('role', 'progressbar');
+  make('span', 'raid-rush-fill', meter);
+  make('span', 'xp-fill', f.hud);
+  make('p', 'raid-event-status', f.game);
+  const originals = new Map(
+    [f.game, f.hud, f.tally, f.bottom, boost].map((node) => [node, [...node.children]]),
+  );
+  const run = {
+    phase: 'playing',
+    hunt: {
+      sector: 0,
+      chain: 3,
+      multiplier: 2,
+      chainRemaining: 4.2,
+      score: 1234567,
+      rushRemaining: 0,
+      rushCharge: 20,
+      objectivesCompleted: 1,
+      objectives: [{}, {}],
+    },
+  };
+  const compiled = { encounters: [{ title: { en: 'Targets', uk: 'Цілі' } }] };
+  let locale = 'en';
+  const update = () => {
+    f.doc.documentElement.lang = locale;
+    updateOverflightHuntHUD({
+      run,
+      compiled,
+      document: f.doc,
+      text: (key) => overflightHuntText(locale, key),
+      local: (value) => value?.[locale] ?? '',
+    });
+  };
+  const view = createOverflightTextScalingView({
+    document: f.doc,
+    readingRoot: f.reading,
+    label: () => 'Details',
+  });
+  const checkpoint = structuredClone(run);
+  try {
+    for (const enabled of [false, true])
+      for (const landscape of [false, true])
+        for (const touch of [false, true]) {
+          f.landscape.matches = landscape;
+          f.game.classList.toggle('has-touch-controls', touch);
+          f.game.classList.toggle('has-touch-layout', touch);
+          view.refresh(enabled);
+          view.refreshCaptionLayout();
+          for (const language of ['en', 'uk']) {
+            locale = language;
+            update();
+            const parent =
+              enabled && landscape ? f.doc.getElementById('overflight-field-status') : null;
+            for (const node of [boost, chain, score])
+              assert.ok(node.parentNode === (parent ?? (node === boost ? f.bottom : f.tally)));
+            for (const node of [objective, f.level, f.kills])
+              assert.ok(node.parentNode === f.tally);
+            assert.ok(f.doc.getElementById('hud-rush') === rush);
+            assert.ok(f.doc.getElementById('raid-rush-meter') === meter);
+            assert.equal(meter.getAttribute('aria-valuetext'), rush.textContent);
+            assert.equal(meter.getAttribute('aria-valuenow'), '20');
+            assert.equal(meter.getAttribute('aria-label'), overflightHuntText(locale, 'rush'));
+            assert.ok(score.textContent.includes((1234567).toLocaleString(locale)));
+            assert.deepEqual(run, checkpoint);
+          }
+        }
+    run.hunt.rushRemaining = 3.25;
+    update();
+    assert.equal(meter.getAttribute('aria-valuemax'), '5');
+    assert.equal(meter.getAttribute('aria-valuenow'), '3.25');
+    assert.equal(meter.getAttribute('aria-valuetext'), rush.textContent);
+    view.refresh(false);
+    for (const [parent, children] of originals) assert.deepEqual([...parent.children], children);
+    view.refresh(true);
+    view.dispose();
+    for (const [parent, children] of originals) assert.deepEqual([...parent.children], children);
+    f.landscape.matches = !f.landscape.matches;
+    f.landscape.emit('change');
+    f.doc.defaultView.emit('resize');
+    assert.equal(f.doc.getElementById('overflight-field-status'), null);
+  } finally {
+    view.dispose();
+  }
+});

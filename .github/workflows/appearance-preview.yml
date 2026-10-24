@@ -265,6 +265,19 @@ on:
       - 'game/test/studio-appearance-basis.test.mjs'
       - 'game/test/asset-studio-host-loading.test.mjs'
       - 'game/test/company-studio-preview.test.mjs'
+      - '.github/workflows/overflight-text-scaling-native.yml'
+      - 'docs/accessibility/overflight-native-qualification.md'
+      - 'game/overflight/raid-upgrade-card.mjs'
+      - 'game/overflight/raid.html'
+      - 'game/overflight/text-scaling-view.mjs'
+      - 'game/overflight/text-scaling.css'
+      - 'game/test/overflight-raid-presentation.test.mjs'
+      - 'game/test/overflight-text-scaling-declarations.test.mjs'
+      - 'game/test/overflight-text-scaling-host.test.mjs'
+      - 'game/test/overflight-text-scaling-view.test.mjs'
+      - 'scripts/aggregate-overflight-text-scaling-native.py'
+      - 'scripts/overflight-text-scaling-native-guard.py'
+      - 'scripts/test_overflight_text_scaling_native_guard.py'
 
 permissions:
   contents: read

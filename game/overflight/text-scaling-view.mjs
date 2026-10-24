@@ -77,12 +77,17 @@ export function createOverflightTextScalingView({
   const notices = doc.createElement('div');
   notices.id = 'overflight-field-notices';
   notices.setAttribute('aria-live', 'off');
-  const boostStatus = doc.getElementById('hud-boost'),
+  const raidBoost = hud.querySelector('.raid-boost');
+  const boostStatus = raidBoost ?? doc.getElementById('hud-boost'),
     squadStatus = squad?.querySelector('span');
-  const statusNodes = [boostStatus, squadStatus].filter(Boolean);
-  const summaryNodes = ['hud-level', 'hud-kills']
-    .map((id) => doc.getElementById(id))
-    .filter(Boolean);
+  const raidMetrics = raidBoost
+    ? ['hud-chain', 'hud-score'].map((id) => doc.getElementById(id)).filter(Boolean)
+    : [];
+  const statusNodes = [boostStatus, ...raidMetrics, squadStatus].filter(Boolean);
+  // Raid's kill/level instruments stay live alongside its objective and Rush.
+  const summaryNodes = raidBoost
+    ? []
+    : ['hud-level', 'hud-kills'].map((id) => doc.getElementById(id)).filter(Boolean);
   const summaryMoves = remember(summaryNodes);
   const status = doc.createElement('div');
   status.id = 'overflight-field-status';
@@ -115,7 +120,9 @@ export function createOverflightTextScalingView({
     status.remove();
     statusMode = next;
     if (next) {
-      const current = [boostStatus, next === 'touch' ? squad : squadStatus].filter(Boolean);
+      const current = [boostStatus, ...raidMetrics, next === 'touch' ? squad : squadStatus].filter(
+        Boolean,
+      );
       activeStatusMoves = remember(current);
       status.append(...current);
       game.insertBefore(status, doc.getElementById('render-host'));

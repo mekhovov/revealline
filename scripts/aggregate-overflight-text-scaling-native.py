@@ -1,4 +1,4 @@
-"""Verify all four immutable seven-file groups. No game imports or test execution."""
+"""Verify four immutable11-file Raid-family groups. No game imports or test execution."""
 import argparse
 import hashlib
 import importlib.util
@@ -21,11 +21,13 @@ SPEC.loader.exec_module(guard)
 MIB = 1024 * 1024
 GROUP_RAW = 8 * MIB
 GROUP_ARTIFACT = 12 * MIB
+# 121 exact files +36 stage directories +optional tmp directory; byte limits unchanged.
+GROUP_ZIP_MEMBERS = 158
 START = time.monotonic()
 
 
 def artifact_names(source, run):
-    return [f"overflight28-{source}-{run}-g{number}" for number in range(1, 5)]
+    return [f"overflight44-{source}-{run}-g{number}" for number in range(1, 5)]
 
 
 def expected_files(number):
@@ -33,8 +35,9 @@ def expected_files(number):
     extra = guard.additional_phases("NODE", Path("SOURCE"), number)
     names = {"node-version", "initial-source", "final-source"}
     names.update(label for label, _, _ in phases + extra)
-    if extra:
-        names.update(("additional-host-before-source", "additional-host-after-source"))
+    for label, _, _ in extra:
+        prefix = guard.additional_audit_prefix(label)
+        names.update((f"{prefix}-before-source", f"{prefix}-after-source"))
     names.update(f"{index:02}-{when}-source" for index in range(1, 8) for when in ("before", "after"))
     files = {"campaign.json", "helper-source.json"}
     for name in names:
@@ -45,6 +48,8 @@ def expected_files(number):
 
 def validate_archive(entries, number):
     directories, files = expected_files(number)
+    if len(directories) != 36 or len(files) != 121 or len(entries) > GROUP_ZIP_MEMBERS:
+        raise RuntimeError("Exact11-file/158-member namespace bound")
     seen, total, raw = set(), 0, 0
     for entry in entries:
         name = entry.filename
@@ -144,7 +149,7 @@ def download_groups(directory, source, run):
             "archiveSHA256": digest[7:], "archiveBytes": len(archive), "serviceSizeBytes": item["size_in_bytes"]})
         with zipfile.ZipFile(io.BytesIO(archive)) as zipped:
             entries = zipped.infolist()
-            if len(entries) > 128:
+            if len(entries) > GROUP_ZIP_MEMBERS:
                 raise RuntimeError("ZIP member count bound")
             validate_archive(entries, number)
             group = directory / name
@@ -219,19 +224,22 @@ def finite_between(value, minimum, maximum):
 def validate_metadata(groups, source, tree):
     if len(groups) != 4 or [row.get("group") for row in groups] != [1, 2, 3, 4]:
         raise RuntimeError("Four unique ordered groups are mandatory")
-    joined, total_raw, common = [], 0, None
+    joined, additions, total_raw, common = [], [], 0, None
     for number, row in enumerate(groups, 1):
         expected = list(guard.WHOLE_FILES[(number - 1) * 7:number * 7])
         extra = guard.additional_phases("NODE", Path("SOURCE"), number)
         if (row.get("status") != "PASS" or row.get("sourceHead") != source or row.get("sourceTree") != tree or
                 row.get("git", {}).get("head") != source or row.get("git", {}).get("tree") != tree or
                 row.get("wholeFiles") != expected or row.get("all28Inventory") != list(guard.WHOLE_FILES) or
+                row.get("all44Inventory") != list(guard.complete_inventory()) or
                 len(row.get("phases", [])) != 7 or len(set(row["phases"])) != 7 or
                 row.get("feature", {}).get("initialReferenceManifestSHA256") != guard.FEATURE_MANIFEST_SHA256 or
-                row["feature"].get("featurePaths") != 63 or row["feature"].get("stackAdmitted") is not True or
+                row["feature"].get("featurePaths") != 66 or row["feature"].get("stackAdmitted") is not True or
                 row["feature"].get("dependencyHead") != guard.STACK_HEAD or
                 row["feature"].get("dependencyAdmittedAtMain") != guard.ADMITTED_AT_MAIN or
-                row["feature"].get("additionalCompleteFiles") != 1 or
+                row["feature"].get("additionalCompleteFiles") != 16 or
+                row["feature"].get("raidFamilyCompleteFiles") != 15 or
+                row["feature"].get("totalCompleteFiles") != 44 or
                 row.get("additionalPhases") != [label for label, _, _ in extra] or
                 row.get("additionalWholeFiles") != [filename for _, _, filename in extra]):
             raise RuntimeError("Group does not bind the complete exact-head selection")
@@ -245,10 +253,10 @@ def validate_metadata(groups, source, tree):
         feature = row["feature"]
         inventory = feature.get("inventory", [])
         digest = hashlib.sha256(guard.json_bytes(inventory)).hexdigest()
-        if (len(inventory) != 63 or [item.get("path") for item in inventory] != sorted(guard.FEATURE_PATHS) or
+        if (len(inventory) != 66 or [item.get("path") for item in inventory] != sorted(guard.FEATURE_PATHS) or
                 feature.get("inventorySHA256") != digest or
                 feature.get("matchesInitialReference") != (digest == guard.INITIAL_REFERENCE_LEAF_SHA256)):
-            raise RuntimeError("Actual immutable63 feature inventory is incomplete or inconsistent")
+            raise RuntimeError("Actual immutable66 feature inventory is incomplete or inconsistent")
         for item in inventory:
             if (item.get("mode") not in ("100644", "100755") or
                     not re.fullmatch("[a-f0-9]{40}", item.get("OID", "")) or
@@ -271,10 +279,15 @@ def validate_metadata(groups, source, tree):
         elif signature != common:
             raise RuntimeError("Cross-job dependency/Node/control content differs")
         joined.extend(row["wholeFiles"])
+        additions.extend(row["additionalWholeFiles"])
     if joined != list(guard.WHOLE_FILES) or len(set(joined)) != 28 or total_raw > 32 * MIB:
         raise RuntimeError("Missing/duplicated/reordered whole-file union or raw overflow")
-    return {"wholeFiles": joined, "additionalWholeFiles": list(guard.ADDITIONAL_WHOLE_FILES),
-            "additionalCompleteFiles": 1, "rawBytes": total_raw, "commonContent": common}
+    if (additions != list(guard.ADDITIONAL_WHOLE_FILES + guard.FAMILY_FILES) or
+            joined + additions != list(guard.complete_inventory()) or len(set(joined + additions)) != 44):
+        raise RuntimeError("Missing/duplicated/reordered complete Raid-family44 union")
+    return {"wholeFiles": joined, "additionalWholeFiles": additions,
+            "all44WholeFiles": joined + additions, "additionalCompleteFiles": 16,
+            "rawBytes": total_raw, "commonContent": common}
 
 
 def read_terminal(directory):
@@ -355,7 +368,7 @@ def read_group(directory, number, source, tree, expected_controls):
         raise RuntimeError("Exact Node version not demonstrated")
     bindings = [(label, filename, f"{index:02}", row["phases"], index - 1, False)
                 for index, (label, _, filename) in enumerate(phases, 1)]
-    bindings += [(label, filename, "additional-host", row.get("additionalPhases", []), index, True)
+    bindings += [(label, filename, guard.additional_audit_prefix(label), row.get("additionalPhases", []), index, True)
                  for index, (label, _, filename) in enumerate(extra)]
     for label, filename, audit_prefix, phase_list, phase_index, additional in bindings:
         qualified = document(directory / label / "qualified.json")
@@ -383,6 +396,7 @@ def read_group(directory, number, source, tree, expected_controls):
 
 
 def main():
+    guard.require_formatted_raid_reference()
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--artifacts", required=True)
     parser.add_argument("--source-head", required=True)
@@ -436,7 +450,7 @@ def main():
             "helperReceiptSHA256": row["helperProvenance"]["SHA256"], "auditorPath": row["auditorPath"], "phases": phases, "additionalPhases": additional_links})
     tick(directory)
     result = {"status": "PASS", "sourceHead": args.source_head, "sourceTree": args.source_tree,
-              "groups": 4, "completeFiles": 28, "artifactProofs": links, **summary, "browserPackageDeviceQualification": False}
+              "groups": 4, "completeFiles": 44, "originalCompleteFiles": 28, "artifactProofs": links, **summary, "browserPackageDeviceQualification": False}
     data = (json.dumps(result) + "\n").encode()
     receipt = Path(args.receipt)
     if len(data) > 65536 or receipt.parent.resolve(strict=True) != Path(os.environ["RUNNER_TEMP"]).resolve(strict=True):
