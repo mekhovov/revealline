@@ -314,3 +314,107 @@ test('optional Fire conflicts cannot overwrite the verified radio profile or its
   assert.deepEqual(updated.switches.reset, saved.switches.reset);
   assert.deepEqual(updated.switches.fire, { axis: 5, off: -1, on: 1 });
 });
+
+test('action UX labels calibration separately from physical switch correctness', (t) => {
+  const f = fixture(t, { known: true });
+  f.container.querySelector('select').emit('change');
+  f.tick();
+  const saved = f.container
+    .querySelectorAll('option')
+    .map((node) => node.textContent)
+    .join(' ');
+  assert.match(saved, /sticks configured/);
+  assert.doesNotMatch(saved, / · verified/);
+  assert.match(f.container.textContent, /STICKS READY/);
+  assert.match(
+    f.container.textContent,
+    /Stick calibration does not identify your intended Fire or Deploy switch/,
+  );
+  assert.ok(
+    f.container.querySelectorAll('button').some((node) => node.textContent === 'Assign Fire gun'),
+  );
+  assert.equal(f.container.querySelector('.radio-confirm'), null);
+});
+
+function useActionSuggestion(f) {
+  const model = f.container.querySelector('[data-radio-model]');
+  const transport = f.container.querySelector('[data-radio-transport]');
+  model.value = 'oxbot-r1';
+  transport.value = 'oxbot-aetr';
+  model.emit('change');
+  f.tick();
+  f.click('Apply suggested switch assignments');
+}
+
+test('action UX shows the actual payload action when the intended Fire input is misassigned', (t) => {
+  const f = fixture(t, { known: true });
+  useActionSuggestion(f);
+  assert.match(
+    f.container.querySelector('[data-six-status]').textContent,
+    /Check physical switch choices/,
+  );
+  f.pad.buttons[0].value = 1;
+  f.tick(1);
+  assert.equal(
+    f.container.querySelector('[data-radio-action-preview]').textContent,
+    'ON now: Deploy payload',
+  );
+  assert.equal(f.container.querySelector('[data-six-role="fire"]').dataset.switchActive, 'false');
+  assert.equal(f.container.querySelector('[data-six-role="payload"]').dataset.switchActive, 'true');
+  assert.equal(f.runtime.status().active, false);
+  const before = structuredClone(f.setup.store.snapshot().radio.channels);
+  f.click('Swap Fire gun ↔ Deploy payload');
+  assert.equal(
+    f.container.querySelector('[data-radio-action-preview]').textContent,
+    'ON now: Fire gun',
+  );
+  assert.deepEqual(f.setup.store.snapshot().radio.channels, before);
+  assert.deepEqual(f.runtime.controlLayout().switches.fire, {
+    button: 0,
+    threshold: 0.5,
+    invert: false,
+  });
+  assert.deepEqual(f.runtime.controlLayout().switches.payload, { axis: 5, off: -1, on: 1 });
+});
+
+test('action UX explains Fire and Deploy conflicts without overwriting assignments', (t) => {
+  const f = fixture(t, { known: true });
+  useActionSuggestion(f);
+  const before = structuredClone(f.runtime.controlLayout());
+  f.click('Assign Fire gun');
+  f.tick(4);
+  f.pad.buttons[0].value = 1;
+  f.tick(4);
+  f.pad.buttons[0].value = 0;
+  f.tick(4);
+  const feedback = f.container.querySelector('[data-six-status]').textContent;
+  assert.match(feedback, /Fire gun: not changed/);
+  assert.match(feedback, /currently activates Deploy payload/);
+  assert.match(feedback, /Swap Fire gun ↔ Deploy payload/);
+  assert.deepEqual(f.runtime.controlLayout(), before);
+});
+
+test('action UX preserves the session-only warning when storage is unavailable', (t) => {
+  const f = fixture(t, { known: true, denyStorage: true });
+  useActionSuggestion(f);
+  const feedback = f.container.querySelector('[data-six-status]').textContent;
+  assert.match(feedback, /Switches work for this session/);
+  assert.doesNotMatch(feedback, /Assignments saved automatically/);
+  assert.equal(f.runtime.status().active, false);
+});
+
+test('action UX gives a new controller a next step instead of JSON errors or false OFF status', (t) => {
+  const f = fixture(t);
+  f.tick();
+  assert.doesNotMatch(f.container.querySelector('.radio-feedback').textContent, /JSON|finite/);
+  assert.match(
+    f.container.querySelector('[data-radio-action-preview]').textContent,
+    /No switch actions assigned yet/,
+  );
+  assert.match(
+    f.container.querySelector('[data-six-role="fire"]').querySelector('.radio-switch-live')
+      .textContent,
+    /Not assigned/,
+  );
+  assert.equal(f.runtime.status().active, false);
+});

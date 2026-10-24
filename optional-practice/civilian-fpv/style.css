@@ -3011,6 +3011,48 @@
 }
 
 /* Setup previews name the action each physical switch actually activates. */
+html body .radio-setup .radio-six-switch fieldset {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 8px;
+  align-content: start;
+}
+.radio-six-switch fieldset > p {
+  grid-column: 1 / -1;
+  grid-row: 1;
+  min-height: 2.8em;
+}
+.radio-six-switch fieldset > details {
+  grid-column: 1;
+  grid-row: 2;
+  min-width: 0;
+}
+.radio-six-switch fieldset > .radio-switch-live {
+  grid-column: 2;
+  grid-row: 2;
+  align-self: start;
+  margin: 0;
+}
+.radio-six-switch fieldset > button {
+  grid-column: 1 / -1;
+  grid-row: 3;
+  min-height: 44px;
+  width: 100%;
+}
+.radio-six-switch .radio-action-preview {
+  margin: 0;
+  padding: 10px 12px;
+  border: 1px solid #a0cab8;
+  border-radius: 6px;
+  background: #10251b;
+  color: #f3fff7;
+  font: 600 15px/1.4 system-ui, sans-serif;
+}
+.radio-six-switch fieldset > details {
+  margin: 8px 0;
+  font-size: 13px;
+}
+
 .radio-six-switch .radio-switch-live {
   display: inline-block;
   margin: 8px;
