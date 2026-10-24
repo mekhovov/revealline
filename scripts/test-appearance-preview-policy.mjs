@@ -532,6 +532,8 @@ const admissionFiles = [
   'game/test/library-entry.test.mjs',
   'game/test/solo-lazy-library-host.test.mjs',
   'game/test/solo-transition-performance-host.test.mjs',
+  'game/test/performance-session.test.mjs',
+  'game/test/mission-library-stage-observation.test.mjs',
 ];
 const demoFiles = [
   'game/test/demo-scene-transition.test.mjs',
@@ -678,7 +680,7 @@ test('separate predecessor gates each declared complete regression file without 
     .trim()
     .split(/\s+/);
   assert.deepEqual(declared, admissionFiles);
-  assert.equal(new Set(declared).size, 17);
+  assert.equal(new Set(declared).size, 19);
   const existing = workflow
     .match(/APPEARANCE_TEST_FILES: >-\n([\s\S]*?)\n    steps:/)[1]
     .trim()
@@ -1029,7 +1031,7 @@ test('preview requires all same-source predecessor proofs and binds distinct Tea
     );
 });
 
-test('Demo proof has a separate finite envelope, a separate six-file partition of the original twenty-three', async () => {
+test('Demo proof retains its separate six files alongside the expanded source admission', async () => {
   const job = workflow.split('  demo_admission:\n')[1]?.split('  team_admission:\n')[0];
   assert(job, 'The separate Demo predecessor must exist.');
   assert.match(job, /runs-on: ubuntu-latest\s+timeout-minutes: 19/);
@@ -1048,8 +1050,8 @@ test('Demo proof has a separate finite envelope, a separate six-file partition o
     .split(/\s+/);
   assert.deepEqual(declared, demoFiles);
   assert.equal(new Set(declared).size, 6);
-  assert.equal(admissionFiles.length + demoFiles.length, 23);
-  assert.equal(new Set([...admissionFiles, ...demoFiles]).size, 23);
+  assert.equal(admissionFiles.length + demoFiles.length, 25);
+  assert.equal(new Set([...admissionFiles, ...demoFiles]).size, 25);
   for (const path of demoFiles) assert(!teamFiles.includes(path));
   const original = workflow
     .match(/APPEARANCE_TEST_FILES: >-\n([\s\S]*?)\n    steps:/)[1]

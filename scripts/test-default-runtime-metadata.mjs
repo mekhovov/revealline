@@ -1,6 +1,8 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs/promises';
+import { createHash } from 'node:crypto';
+import { parse } from 'acorn';
 import { compactContentRegistry } from './localization.mjs';
 import {
   projectDefaultContentRegistry,
@@ -250,4 +252,66 @@ test('versioned actor voices remain optional in every core while catalogs and ca
     'game/audio/reactions/actors-v1/a-fr.m4a',
   ])
     assert.equal(isOptionalReactionVoiceBody(path), false, path);
+});
+
+test('bundled FPV presentation packing preserves exact code, embedded assets and source identities', async () => {
+  const prefix = 'optional-practice/civilian-fpv/',
+    name = prefix + 'sim-presentation.mjs',
+    untouched = [
+      'advanced-simulation.mjs',
+      'advanced-aircraft-runtime.mjs',
+      'advanced-controller.mjs',
+      'aircraft-course-session.mjs',
+      'aircraft-presets.mjs',
+      'aircraft-recording.mjs',
+      'demonstrations.mjs',
+      'vendor/rapier/rapier.mjs',
+      'vendor/three.core.js',
+    ].map((file) => prefix + file),
+    entries = await Promise.all(
+      [name, ...untouched].map(async (name) => ({
+        name,
+        bytes: await fs.readFile(new URL('../' + name, import.meta.url)),
+      })),
+    ),
+    originals = new Map(entries.map((entry) => [entry.name, entry.bytes]));
+  const inspect = (bytes) => {
+    const source = bytes.toString(),
+      tokens = [],
+      comments = [],
+      ast = parse(source, {
+        ecmaVersion: 'latest',
+        sourceType: 'module',
+        onToken: tokens,
+        onComment: comments,
+      }),
+      assets = ast.body
+        .flatMap((node) => node.declarations ?? [])
+        .find((node) => node.id.name === 'SHARED_ASSETS').init;
+    return {
+      syntax: JSON.stringify(ast, (key, value) =>
+        key === 'start' || key === 'end' ? undefined : value,
+      ),
+      tokens: tokens.map((token) => source.slice(token.start, token.end)),
+      comments: comments.map((comment) => source.slice(comment.start, comment.end)),
+      newlines: source.match(/[\r\n\u2028\u2029]/g),
+      assets: JSON.parse(source.slice(assets.start, assets.end)),
+    };
+  };
+  await projectDefaultRuntimeMetadata(root, entries);
+  const projected = entries[0].bytes,
+    original = originals.get(name),
+    inspected = inspect(projected);
+  assert.ok(projected.length < original.length, 'Only the distribution copy is compacted.');
+  assert.deepEqual(inspected, inspect(original));
+  for (const asset of Object.values(inspected.assets)) {
+    const bytes = Buffer.from(asset.base64, 'base64');
+    assert.equal(bytes.length, asset.bytes, asset.source);
+    assert.equal(createHash('sha256').update(bytes).digest('hex'), asset.sha256, asset.source);
+  }
+  for (const entry of entries.slice(1))
+    assert.strictEqual(entry.bytes, originals.get(entry.name), entry.name);
+  assert.deepEqual(await fs.readFile(new URL('../' + name, import.meta.url)), original);
+  await projectDefaultRuntimeMetadata(root, entries);
+  assert.strictEqual(entries[0].bytes, projected, 'The admitted projection is idempotent.');
 });

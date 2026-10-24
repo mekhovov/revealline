@@ -1,0 +1,28 @@
+{
+  "member": "optional-practice/civilian-fpv/vendor/rapier/rapier.mjs",
+  "bytes": 4340292,
+  "sha256": "02dc6a4e2fffc013bab08fbb44fa68f501d8303615e9afe4c7d89ad4eedda0d0",
+  "matchesExactCommittedPublicVendor": true,
+  "hits": [
+    {
+      "offset": 740491,
+      "length": 20,
+      "patternPrefix": "AKIA",
+      "hitSHA256": "523b33d016c5e0616450f7cafd355c3a1266d2447048ff16082c18f28300db15",
+      "enclosingStringStart": 225764,
+      "enclosingStringPrefix": "AGFzbQEAAAAB0hHcAWACf38AYAN/f3",
+      "wasmDataURLMarkerBefore": -1,
+      "precedingSource": "on FC(){return DC(this,void 0,void 0,(function*(){yield EI({module_or_path:oC.toByteArray(\""
+    },
+    {
+      "offset": 3766826,
+      "length": 20,
+      "patternPrefix": "AKIA",
+      "hitSHA256": "b2c6e697b0b5db75ee08a92cbd04a9d1da4329ce68e8a7bacb180d8100357ecd",
+      "enclosingStringStart": 225764,
+      "enclosingStringPrefix": "AGFzbQEAAAAB0hHcAWACf38AYAN/f3",
+      "wasmDataURLMarkerBefore": -1,
+      "precedingSource": "on FC(){return DC(this,void 0,void 0,(function*(){yield EI({module_or_path:oC.toByteArray(\""
+    }
+  ]
+}

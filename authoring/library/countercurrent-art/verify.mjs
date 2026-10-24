@@ -22,10 +22,11 @@ const documents = [
   'derivatives.json',
   'render-previews.mjs',
   'verify.mjs',
+  'gallery.mjs',
+  'gallery.css',
+  'sources.mjs',
 ];
-const themes = ['fpv',
-'ukraine',
-'retro'];
+const themes = ['fpv', 'ukraine', 'retro'];
 const slots = ['offset-docks', 'sandbar-braid', 'crossing-watch'];
 const expectedIds = themes.flatMap((theme) =>
   slots.map((slot) => `countercurrent/${slot}/${theme}`),
@@ -55,11 +56,11 @@ async function inventory(directory, prefix = '') {
   }
   return result.sort();
 }
-async function verify(toolOriginals) {
+export async function verify(toolOriginals = false) {
   const manifestRaw = await bytes(resolve(folder, 'manifest.json'));
   assert.equal(
     hash(manifestRaw),
-    '27f31bdaa91db438066107e221ed77f16ad5325873b1512566edb7881475e6b1',
+    'c563bcdbcd0503081f24aa451437540b67ceabd545b4edb05b3256d0ccd75543',
   );
   const cells = JSON.parse(manifestRaw).images;
   const readJSON = async (p) => JSON.parse(await bytes(resolve(folder, p)));
@@ -194,9 +195,9 @@ async function verify(toolOriginals) {
     assert.equal(header.height, 192);
     thumbnails.push(thumb);
   }
-  assert.equal(new Set(originals.map((r) => r.sha256)).size, 12);
-  assert.equal(new Set(originals.map((r) => r.pixelsSha256)).size, 12);
-  assert.equal(new Set(cells.map((r) => r.originalToolPath)).size, 12);
+  assert.equal(new Set(originals.map((r) => r.sha256)).size, 9);
+  assert.equal(new Set(originals.map((r) => r.pixelsSha256)).size, 9);
+  assert.equal(new Set(cells.map((r) => r.originalToolPath)).size, 9);
   const paths = [
     ...documents,
     ...cells.map((r) => r.path),
@@ -211,7 +212,13 @@ async function verify(toolOriginals) {
   return {
     format: 'revealline-source-art-verification.v1',
     baseCommit: provenance.baseCommit,
-    sourceCandidates: 12,
+    sourceCandidates: 9,
+    ownershipProjection: {
+      sourceRevision: 'c00894649ff759d0895f45baec58b6183bdb2896',
+      previousSHA256: 'e06d202f7b5803ffa0eb3288b2a331d0f17ce9f4e95f965bd4e7305ee78c14f6',
+      scope:
+        'Fresh verification of retained originals, derivatives and current source context. This derived record is not the original historical verification. The original twelve generation calls remain recorded in provenance.',
+    },
     newGeometries: 0,
     runtimeBindings: 0,
     totalOriginalBytes: originals.reduce((n, r) => n + r.bytes, 0),
@@ -228,15 +235,17 @@ async function verify(toolOriginals) {
     protectedContext: context,
   };
 }
-const args = process.argv.slice(2);
-assert.equal(new Set(args).size, args.length);
-assert.ok(args.every((a) => ['--record', '--tool-originals'].includes(a)));
-assert.ok(!args.includes('--record') || args.includes('--tool-originals'));
-const result = await verify(args.includes('--tool-originals'));
-const file = resolve(folder, 'verification.json');
-if (args.includes('--record'))
-  await writeFile(file, `${JSON.stringify(result, null, 2)}\n`, { flag: 'wx' });
-else assert.deepEqual(JSON.parse(await bytes(file)), result);
-console.log(
-  `PASS: ${result.sourceCandidates} originals / ${result.totalOriginalBytes} bytes; twelve review derivatives / ${result.totalThumbnailBytes} bytes.`,
-);
+if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
+  const args = process.argv.slice(2);
+  assert.equal(new Set(args).size, args.length);
+  assert.ok(args.every((a) => ['--record', '--tool-originals'].includes(a)));
+  assert.ok(!args.includes('--record') || args.includes('--tool-originals'));
+  const result = await verify(args.includes('--tool-originals'));
+  const file = resolve(folder, 'verification.json');
+  if (args.includes('--record'))
+    await writeFile(file, `${JSON.stringify(result, null, 2)}\n`, { flag: 'wx' });
+  else assert.deepEqual(JSON.parse(await bytes(file)), result);
+  console.log(
+    `PASS: ${result.sourceCandidates} originals / ${result.totalOriginalBytes} bytes; ${result.thumbnails.length} review derivatives / ${result.totalThumbnailBytes} bytes.`,
+  );
+}

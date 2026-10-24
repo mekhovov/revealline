@@ -1,0 +1,54 @@
+{
+  "measuredAt": "2026-10-20T02:03:05.044Z",
+  "qualification": "Local closure measurement with synthetic commit identity; not publication/release evidence.",
+  "packages": [
+    {
+      "id": "civilian-fpv",
+      "runtime": {
+        "files": 145,
+        "bytes": 11956364,
+        "headroomFiles": 5,
+        "headroomBytes": 1150836
+      },
+      "source": {
+        "files": 147,
+        "bytes": 11998313,
+        "headroomFiles": 3,
+        "headroomBytes": 1108887
+      },
+      "input": {
+        "bytes": 13170931,
+        "headroomBytes": 132877
+      },
+      "policy": {
+        "files": 150,
+        "bytes": 13107200
+      },
+      "inputLimit": 13303808
+    },
+    {
+      "id": "fpv-worlds",
+      "runtime": {
+        "files": 208,
+        "bytes": 19032099,
+        "headroomFiles": 2,
+        "headroomBytes": 1939421
+      },
+      "source": {
+        "files": 210,
+        "bytes": 19082324,
+        "headroomFiles": 0,
+        "headroomBytes": 1889196
+      },
+      "input": {
+        "bytes": 20224240,
+        "headroomBytes": 747280
+      },
+      "policy": {
+        "files": 210,
+        "bytes": 20971520
+      },
+      "inputLimit": 20971520
+    }
+  ]
+}

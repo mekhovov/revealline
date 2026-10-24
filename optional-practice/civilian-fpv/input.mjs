@@ -1,4 +1,4 @@
-import { neutralFlightInput } from './radio-profile.mjs';
+import { neutralFlightInput, STICK_LAYOUTS } from './radio-profile.mjs';
 import { menuGroupNeighbor } from '../../game/ui/menu-navigation-groups.mjs';
 
 export const KEYBOARD_PRESET_KEY = 'revealline.fpv.keyboard-preset.v1';
@@ -62,7 +62,7 @@ export function keyboardFlightHelp(preset, locale = 'en', { actions = true, comb
   const p = keyboardFlightPreset(preset),
     uk = locale === 'uk',
     text = `${p.labels.throttle} ${uk ? 'газ' : 'throttle'} · ${p.labels.yaw} ${uk ? 'поворот' : 'yaw'} · ${p.labels.pitch} ${uk ? 'нахил уперед/назад' : 'pitch forward/back'} · ${p.labels.roll} ${uk ? 'крен' : 'roll'} · Shift ${uk ? 'точніше' : 'fine control'}`;
-  return `${text}${actions ? (p.arm ? (uk ? ' · Пробіл — увімкнути / пауза · R — почати заново · Esc / P — меню' : ' · Space arm / pause · R reset · Esc / P menu') : uk ? ' · Esc / P — пауза' : ' · Esc / P pause') : ''}${combat ? ` · ${p.fire === 'Space' ? (uk ? 'Пробіл' : 'Space') : 'F'} ${uk ? 'вогонь' : 'fire'}` : ''}`;
+  return `${text}${actions ? (p.arm ? (uk ? ' · Пробіл — увімкнути / пауза · R — почати заново · Esc / P — меню' : ' · Space arm / pause · R reset · Esc / P menu') : uk ? ' · Esc / P — пауза' : ' · Esc / P pause') : ''}${combat ? ` · ${p.fire === 'Space' ? (uk ? 'Пробіл' : 'Space') : 'F'} ${uk ? 'вогонь · C зброя · L перезарядка · G заряд · H підрив' : 'fire · C weapon · L reload · G payload · H detonate'}` : ''}`;
 }
 const clamp = (n, low, high) => Math.max(low, Math.min(high, n));
 const editable = (target) =>
@@ -409,8 +409,9 @@ export function createFlightInput({ window: win, document: doc, onPause = () => 
 export function createFlightGamepad({
   window: win = globalThis.window,
   document: doc = globalThis.document,
+  combatLayout = () => false,
 } = {}) {
-  const mappedButtons = [0, 1, 2, 3, 4, 5, 6, 7, 9, 11, 12, 13, 14, 15];
+  const mappedButtons = [0, 1, 2, 3, 4, 5, 6, 7, 9, 10, 11, 12, 13, 14, 15];
   const actionButtons = new Map([
     [0, 'arm'],
     [1, 'back'],
@@ -451,8 +452,9 @@ export function createFlightGamepad({
       trigger = (index) => Math.max(0, (button(pad, index) - 0.12) / 0.88);
     return {
       rotation: {
-        roll: values[2] || (Number(pressed(15)) - Number(pressed(14))) * 0.5,
-        pitch: -values[3] || (Number(pressed(12)) - Number(pressed(13))) * 0.5,
+        roll: values[2] || (combatLayout() ? 0 : (Number(pressed(15)) - Number(pressed(14))) * 0.5),
+        pitch:
+          -values[3] || (combatLayout() ? 0 : (Number(pressed(12)) - Number(pressed(13))) * 0.5),
         yaw: values[0] || (Number(pressed(5)) - Number(pressed(4))) * 0.5,
       },
       throttleRate: -values[1] || trigger(7) - trigger(6),
@@ -552,8 +554,9 @@ export function createFlightGamepad({
           reason = 'active';
         }
       }
-      const stalled =
-        !Number.isFinite(now) || (lastTime !== null && (now < lastTime || now - lastTime > 250));
+      // Long foreground frames do not disconnect a controller. The host bounds
+      // simulation time; only an invalid/backwards clock invalidates this poll.
+      const stalled = !Number.isFinite(now) || (lastTime !== null && now < lastTime);
       lastTime = Number.isFinite(now) ? now : null;
       if (stalled || !focused) {
         if (wasActive && !actions.includes('pause')) actions.push('pause');
@@ -617,7 +620,17 @@ export function createFlightGamepad({
         return { ...status(), actions };
       }
       const pressed = (i) => button(pad, i) > 0.5;
-      const heldActions = [...actionButtons.keys()].filter(pressed);
+      const currentActions = combatLayout()
+        ? new Map([
+            ...actionButtons,
+            [12, 'reload'],
+            [13, 'payload'],
+            [14, 'weaponA'],
+            [15, 'weaponB'],
+            [10, 'detonate'],
+          ])
+        : actionButtons;
+      const heldActions = [...currentActions.keys()].filter(pressed);
       if (heldActions.length > 1) {
         clear('neutral');
         // The host must stop before it can sample the cleared throttle. A
@@ -625,14 +638,18 @@ export function createFlightGamepad({
         if (wasActive) actions.push('pause');
       } else if (pending !== null) {
         if (!pressed(pending)) {
-          const action = actionButtons.get(pending);
+          const action = currentActions.get(pending);
           pending = null;
           if (heldActions.length) {
             clear('neutral');
             if (wasActive) actions.push('pause');
           } else if (action !== 'arm' || (scope === 'ready' && centred && released)) {
             if (action !== 'arm' || scope === 'ready') actions.push(action);
-            if (action !== 'arm' && action !== 'camera')
+            if (
+              !['arm', 'camera', 'weaponA', 'weaponB', 'reload', 'payload', 'detonate'].includes(
+                action,
+              )
+            )
               clear(action === 'reset' ? 'reset' : 'neutral');
           }
         }
@@ -694,9 +711,9 @@ export function createFlightGamepad({
  * can set blockRadio for setup, or blockDevices during raw-channel capture,
  * keeping ordinary keyboard navigation available in either case. Radio
  * controls must be a verified, calibrated preview; raw USB axes are not mappings.
- * Roll/pitch navigate; hold yaw right/left for 650 ms then centre to confirm/back.
- * The first Confirm joins only. Throttle, arm, reset and fire are never read.
- * OS pickers/text entry still require native keyboard or pointer interaction. */
+ * Legacy radio menus use roll/pitch and held yaw gestures. Six-switch layouts
+ * use the centering gimbal and fresh switch cycles, never flight commands.
+ * The first Confirm joins only. Native file pickers still need a host gesture. */
 export function createFlightMenuNavigation({
   window: win = globalThis.window,
   document: doc = globalThis.document,
@@ -704,6 +721,10 @@ export function createFlightMenuNavigation({
   onBack = () => {},
   onAction = () => {},
   onHint = () => {},
+  onRadioShortcut = () => {},
+  onCommand = () => false,
+  onDeviceJoin = () => false,
+  keyboard = true,
   locale = () => 'en',
   ownsKeyboardEvent = () => false,
 } = {}) {
@@ -719,7 +740,9 @@ export function createFlightMenuNavigation({
     marked = null,
     disposed = false,
     lastTime = null,
-    captureEscape = null;
+    captureEscape = null,
+    radioCaptureEscape = null,
+    editorSerial = 0;
   const text = (en, uk) => (locale() === 'uk' ? uk : en);
   const hint = (en, uk) => onHint(text(en, uk));
   const listen = (node, type, fn) => {
@@ -749,12 +772,16 @@ export function createFlightMenuNavigation({
     }
     return true;
   };
-  const controls = () => [...(context?.root?.querySelectorAll(selector) ?? [])].filter(available);
-  function cancelEdit() {
+  const controls = () =>
+    [...((editing?.panel ?? context?.root)?.querySelectorAll(selector) ?? [])].filter(available);
+  function cancelEdit({ restoreFocus = false } = {}) {
     if (!editing) return;
-    editing.element.value = editing.value;
-    delete editing.element.dataset.fpvMenuEditing;
+    const previous = editing;
+    if (!previous.panel) previous.element.value = previous.value;
+    delete previous.element.dataset.fpvMenuEditing;
+    previous.panel?.remove();
     editing = null;
+    if (restoreFocus && available(previous.element)) focus(previous.element);
   }
   function reset({ leaveDevice = false } = {}) {
     cancelEdit();
@@ -764,6 +791,7 @@ export function createFlightMenuNavigation({
     marked = null;
     lastTime = null;
     captureEscape = null;
+    radioCaptureEscape = null;
   }
   function sync() {
     const candidate = !disposed && !doc.hidden ? getContext() : null;
@@ -771,9 +799,11 @@ export function createFlightMenuNavigation({
     if (
       next?.root !== context?.root ||
       next?.key !== context?.key ||
+      Boolean(next?.frameFocused) !== Boolean(context?.frameFocused) ||
       next?.blockRadio !== context?.blockRadio ||
       next?.blockDevices !== context?.blockDevices ||
       next?.captureControllerIndex !== context?.captureControllerIndex ||
+      next?.captureRadioBack !== context?.captureRadioBack ||
       Boolean(next?.onCaptureBack) !== Boolean(context?.onCaptureBack)
     ) {
       reset();
@@ -816,6 +846,226 @@ export function createFlightMenuNavigation({
     element.focus({ preventScroll: true });
     element.scrollIntoView?.({ block: 'nearest', inline: 'nearest' });
   }
+  function openEditor(element) {
+    if (element.readOnly) {
+      hint('This value is read-only.', 'Це значення доступне лише для читання.');
+      return;
+    }
+    const numeric = element.type === 'number',
+      original = element.value ?? '',
+      requestedLimit = Number(element.maxLength),
+      limit = numeric
+        ? 64
+        : Number.isInteger(requestedLimit) && requestedLimit >= 0
+          ? Math.min(4096, requestedLimit)
+          : 4096,
+      panel = doc.createElement('section'),
+      title = doc.createElement('h3'),
+      preview = doc.createElement('output'),
+      keys = doc.createElement('div'),
+      actions = doc.createElement('div'),
+      status = doc.createElement('p');
+    panel.className = 'fpv-menu-editor';
+    panel.dataset.fpvMenuEditor = numeric ? 'number' : 'text';
+    panel.setAttribute('role', 'dialog');
+    panel.setAttribute('aria-modal', 'true');
+    title.className = 'fpv-menu-editor__title';
+    title.id = `fpv-menu-editor-title-${++editorSerial}`;
+    title.textContent =
+      element.getAttribute('aria-label') ||
+      element.labels?.[0]?.textContent ||
+      element.placeholder ||
+      text(numeric ? 'Edit number' : 'Edit text', numeric ? 'Змінити число' : 'Змінити текст');
+    panel.setAttribute('aria-labelledby', title.id);
+    preview.className = 'fpv-menu-editor__preview';
+    keys.className = 'fpv-menu-editor__keys';
+    keys.dataset.menuLayout = 'grid';
+    keys.dataset.menuEdgeExit = 'true';
+    actions.className = 'fpv-menu-editor__actions';
+    actions.dataset.menuLayout = 'horizontal';
+    actions.dataset.menuEdgeExit = 'true';
+    status.className = 'fpv-menu-editor__status';
+    status.setAttribute('role', 'status');
+    panel.append(title, preview, keys, actions, status);
+    const state = {
+      element,
+      value: original,
+      draft: original,
+      panel,
+      numeric,
+      limit,
+      alphabet: locale() === 'uk' ? 'uk' : 'en',
+      uppercase: false,
+    };
+    editing = state;
+    element.dataset.fpvMenuEditing = '';
+    const show = () => {
+      preview.textContent =
+        element.type === 'password' ? '•'.repeat(Math.min(256, state.draft.length)) : state.draft;
+      status.textContent = `${state.draft.length} / ${limit} · ${text(
+        'Select applies a key. Apply saves; Back cancels.',
+        'Вибір додає символ. «Застосувати» зберігає; «Назад» скасовує.',
+      )}`;
+    };
+    const append = (value) => {
+      if (editing !== state) return;
+      if (state.draft.length + value.length > limit) {
+        status.textContent = text('Character limit reached.', 'Досягнуто межі символів.');
+        return;
+      }
+      state.draft += value;
+      show();
+    };
+    const erase = () => {
+      if (editing !== state) return;
+      state.draft = [...state.draft].slice(0, -1).join('');
+      show();
+    };
+    const keyButton = (owner, caption, action, name) => {
+      const button = doc.createElement('button');
+      button.type = 'button';
+      button.textContent = caption;
+      if (name) button.dataset.fpvEditorAction = name;
+      button.addEventListener('click', () => {
+        if (editing === state) action();
+      });
+      owner.append(button);
+      return button;
+    };
+    const numberBound = (key, fallback) =>
+      element[key] !== '' && element[key] != null && Number.isFinite(Number(element[key]))
+        ? Number(element[key])
+        : fallback;
+    const apply = () => {
+      let value = state.draft;
+      if (value.length > limit) {
+        status.textContent = text(
+          'Shorten the value before saving.',
+          'Скоротіть значення перед збереженням.',
+        );
+        return;
+      }
+      if (numeric && value !== '') {
+        const number = Number(value),
+          minimum = numberBound('min', -Infinity),
+          maximum = numberBound('max', Infinity);
+        if (
+          !/^[+-]?(?:\d+(?:\.\d*)?|\.\d+)(?:e[+-]?\d+)?$/i.test(value) ||
+          !Number.isFinite(number) ||
+          number < minimum ||
+          number > maximum
+        ) {
+          status.textContent = text(
+            'Enter a number within the allowed range.',
+            'Введіть число в дозволених межах.',
+          );
+          return;
+        }
+        value = String(number);
+      }
+      element.value = value;
+      if (element.checkValidity?.() === false) {
+        element.value = original;
+        status.textContent = text(
+          'Check the value and its allowed format.',
+          'Перевірте значення та дозволений формат.',
+        );
+        return;
+      }
+      delete element.dataset.fpvMenuEditing;
+      editing = null;
+      panel.remove();
+      if (available(element)) focus(element);
+      if (value !== original) {
+        element.dispatchEvent(new win.Event('input', { bubbles: true }));
+        element.dispatchEvent(new win.Event('change', { bubbles: true }));
+      }
+      hint('Change applied.', 'Зміну застосовано.');
+      sources.clear();
+    };
+    const paintKeys = () => {
+      keys.replaceChildren();
+      const alphabet =
+        state.alphabet === 'uk'
+          ? 'абвгґдеєжзиіїйклмнопрстуфхцчшщьюя'
+          : 'abcdefghijklmnopqrstuvwxyz';
+      const values = numeric
+        ? '789456123-0.e+'
+        : `${state.uppercase ? alphabet.toUpperCase() : alphabet}0123456789.,!?-_/@:;#()'"+=`;
+      for (const value of values) {
+        const button = keyButton(keys, value, () => append(value));
+        button.dataset.fpvEditorKey = value;
+      }
+    };
+    paintKeys();
+    keyButton(actions, text('Apply', 'Застосувати'), apply, 'apply');
+    keyButton(
+      actions,
+      text('Cancel', 'Скасувати'),
+      () => cancelEdit({ restoreFocus: true }),
+      'cancel',
+    );
+    keyButton(actions, text('Delete last', 'Стерти останнє'), erase, 'erase');
+    keyButton(
+      actions,
+      text('Clear', 'Очистити'),
+      () => {
+        state.draft = '';
+        show();
+      },
+      'clear',
+    );
+    if (numeric) {
+      for (const multiple of [-10, -1, 1, 10])
+        keyButton(
+          actions,
+          `${multiple > 0 ? '+' : '−'}${Math.abs(multiple)}×`,
+          () => {
+            const step = element.step === 'any' ? 0.1 : numberBound('step', 1),
+              current = Number(state.draft);
+            state.draft = String(
+              Number(
+                clamp(
+                  (Number.isFinite(current) ? current : 0) + multiple * (step > 0 ? step : 1),
+                  numberBound('min', -Infinity),
+                  numberBound('max', Infinity),
+                ).toPrecision(12),
+              ),
+            );
+            show();
+          },
+          `step-${multiple}`,
+        );
+    } else {
+      keyButton(actions, text('Space', 'Пробіл'), () => append(' '), 'space');
+      if (element.tagName === 'TEXTAREA')
+        keyButton(actions, text('New line', 'Новий рядок'), () => append('\n'), 'newline');
+      keyButton(
+        actions,
+        'ABC / abc',
+        () => {
+          state.uppercase = !state.uppercase;
+          paintKeys();
+        },
+        'case',
+      );
+      keyButton(
+        actions,
+        'EN / УК',
+        () => {
+          state.alphabet = state.alphabet === 'en' ? 'uk' : 'en';
+          paintKeys();
+        },
+        'alphabet',
+      );
+    }
+    state.append = append;
+    state.erase = erase;
+    context.root.append(panel);
+    show();
+    focus(keys.querySelector('button'));
+    sources.clear();
+  }
   function command(action) {
     if (!sync()) return;
     onAction(action);
@@ -823,9 +1073,10 @@ export function createFlightMenuNavigation({
       context.handleFrameCommand?.({ back: action === 'back' });
       return;
     }
+    if (onCommand(action, context) === true) return;
     if (action === 'back') {
       if (editing) {
-        cancelEdit();
+        cancelEdit({ restoreFocus: true });
         hint('Change cancelled.', 'Зміну скасовано.');
       } else onBack(context);
       return;
@@ -838,7 +1089,7 @@ export function createFlightMenuNavigation({
       // A first gesture finds focus; it cannot activate an arbitrary fallback.
       return;
     }
-    if (editing) {
+    if (editing && !editing.panel) {
       const element = editing.element;
       if (element !== current) {
         cancelEdit();
@@ -877,6 +1128,10 @@ export function createFlightMenuNavigation({
       return;
     }
     if (action === 'confirm') {
+      if (editing?.panel) {
+        current.click();
+        return;
+      }
       if (
         current.tagName === 'SELECT' ||
         (current.tagName === 'INPUT' && current.type === 'range')
@@ -887,11 +1142,13 @@ export function createFlightMenuNavigation({
           'Directions change the value. Confirm applies; Back cancels.',
           'Напрямки змінюють значення. Підтвердьте для застосування; Назад — скасування.',
         );
-      } else if (textEntry(current) || current.type === 'file') {
+      } else if (current.type === 'file') {
         hint(
-          'Use the keyboard or touch to enter text or choose a file.',
-          'Введіть текст або виберіть файл клавіатурою чи дотиком.',
+          'Choosing an external file needs a click or touch. Saved in-app files remain available.',
+          'Для вибору зовнішнього файла потрібен клік або дотик. Збережені в застосунку файли доступні.',
         );
+      } else if (textEntry(current)) {
+        openEditor(current);
       } else current.click();
       return;
     }
@@ -923,16 +1180,41 @@ export function createFlightMenuNavigation({
   function sample(source, now) {
     let state = sources.get(source.key);
     if (!state) {
+      if (source.sixSwitch && !context.frameFocused)
+        hint(
+          joined === source.key
+            ? source.provisional
+              ? 'Setup buttons ready. Fire selects; Weapon goes back. Measure the sticks before stick navigation.'
+              : 'Radio menus ready. Centering stick moves. Fire selects; Weapon goes back.'
+            : source.provisional
+              ? 'Release the setup switches. Turn Fire on then off to join; Weapon on then off goes back. Stick navigation starts after calibration.'
+              : 'Centre the spring-loaded stick and release the switches. Turn Fire on then off to join; Weapon goes back.',
+          joined === source.key
+            ? source.provisional
+              ? 'Кнопки налаштування готові. Вогонь — підтвердити; Зброя — назад. Спочатку виміряйте стіки для навігації.'
+              : 'Меню пульта готове. Пружинний стік — вибір. Вогонь — підтвердити; Зброя — назад.'
+            : source.provisional
+              ? 'Відпустіть перемикачі налаштування. Увімкніть і вимкніть Вогонь для підключення; Зброя — назад. Навігація стіком почнеться після калібрування.'
+              : 'Відцентруйте пружинний стік і відпустіть перемикачі. Увімкніть і вимкніть Вогонь для підключення; Зброя — назад.',
+        );
       state = {
         ready: false,
         pending: null,
         since: 0,
         qualified: false,
+        target: null,
         heldAt: 0,
         direction: null,
         repeatAt: 0,
+        arm: source.arm,
       };
       sources.set(source.key, state);
+    }
+    if (source.blocked || (source.arm !== undefined && state.arm !== source.arm)) {
+      state.ready = false;
+      state.pending = state.direction = null;
+      state.arm = source.arm;
+      return;
     }
     if (!state.ready) {
       if (source.neutral) state.ready = true;
@@ -948,6 +1230,7 @@ export function createFlightMenuNavigation({
       if (state.pending !== source.action) {
         onAction(source.action);
         state.pending = source.action;
+        state.target = doc.activeElement;
         state.since = now;
       }
       state.qualified = now - state.since >= source.hold;
@@ -964,7 +1247,18 @@ export function createFlightMenuNavigation({
         state.ready = source.neutral;
         return;
       }
+      if (action === 'confirm' && state.target !== doc.activeElement) return;
       if (context.frameFocused) {
+        command(action);
+        return;
+      }
+      if (source.sixSwitch && ['camera', 'retry', 'settings'].includes(action)) {
+        const owner = context;
+        reset();
+        onRadioShortcut(action, owner);
+        return;
+      }
+      if (source.sixSwitch && action === 'back' && joined !== source.key) {
         command(action);
         return;
       }
@@ -973,14 +1267,23 @@ export function createFlightMenuNavigation({
         joined = source.key;
         reset();
         const items = controls();
-        if (items.length) focus(items.includes(doc.activeElement) ? doc.activeElement : items[0]);
+        if (onDeviceJoin(source, context) !== true && items.length)
+          focus(items.includes(doc.activeElement) ? doc.activeElement : items[0]);
         hint(
-          source.kind === 'radio'
-            ? 'Radio menus ready. Roll/pitch move; hold yaw right then centre to confirm, left then centre to go back.'
-            : 'Controller menus ready. D-pad moves, A confirms, B goes back. Release between actions.',
-          source.kind === 'radio'
-            ? 'Меню пульта готове. Крен/тангаж — вибір; утримайте рискання праворуч і поверніть у центр для підтвердження, ліворуч — назад.'
-            : 'Меню геймпада готове. Хрестовина — вибір, A — підтвердити, B — назад. Відпускайте між діями.',
+          source.provisional
+            ? 'Setup buttons ready. Fire selects; Weapon goes back. Measure the sticks before stick navigation.'
+            : source.sixSwitch
+              ? 'Radio menus ready. Centering stick moves. Fire selects; Weapon goes back.'
+              : source.kind === 'radio'
+                ? 'Radio menus ready. Roll/pitch move; hold yaw right then centre to confirm, left then centre to go back.'
+                : 'Controller menus ready. D-pad moves, A confirms, B goes back. Release between actions.',
+          source.provisional
+            ? 'Кнопки налаштування готові. Вогонь — підтвердити; Зброя — назад. Спочатку виміряйте стіки для навігації.'
+            : source.sixSwitch
+              ? 'Меню пульта готове. Пружинний стік — вибір. Вогонь — підтвердити; Зброя — назад.'
+              : source.kind === 'radio'
+                ? 'Меню пульта готове. Крен/тангаж — вибір; утримайте рискання праворуч і поверніть у центр для підтвердження, ліворуч — назад.'
+                : 'Меню геймпада готове. Хрестовина — вибір, A — підтвердити, B — назад. Відпускайте між діями.',
         );
         return;
       }
@@ -1061,6 +1364,38 @@ export function createFlightMenuNavigation({
       reset();
     }
   }
+  const sixSwitchState = (radio) =>
+    radio?.layout === 'six-switch' &&
+    (radio.verified === true || (radio.verified === false && radio.provisional === true)) &&
+    typeof radio.key === 'string' &&
+    Number.isInteger(radio.index) &&
+    radio.index >= 0 &&
+    ['arm', 'fire', 'weapon', 'reload', 'payload', 'detonate'].every(
+      (key) => typeof radio.switches?.[key] === 'boolean',
+    );
+  function pollRadioCaptureEscape(radio) {
+    if (
+      context.captureRadioBack === false ||
+      typeof context.onCaptureBack !== 'function' ||
+      !sixSwitchState(radio)
+    ) {
+      radioCaptureEscape = null;
+      return;
+    }
+    const key = `${radio.key}:${radio.index}`;
+    if (radioCaptureEscape?.key !== key) radioCaptureEscape = { key, ready: false, pending: false };
+    const escape = radioCaptureEscape;
+    if (!escape.ready) {
+      if (!radio.switches.weapon) escape.ready = true;
+      return;
+    }
+    if (radio.switches.weapon) escape.pending = true;
+    else if (escape.pending) {
+      const leave = context.onCaptureBack;
+      reset({ leaveDevice: true });
+      leave();
+    }
+  }
   function poll({ now = win.performance.now(), gamepads = [], radio = null } = {}) {
     if (!sync()) return;
     if (!Number.isFinite(now)) {
@@ -1071,12 +1406,16 @@ export function createFlightMenuNavigation({
     lastTime = now;
     if (context.blockDevices && typeof context.onCaptureBack === 'function') {
       pollCaptureEscape(gamepads);
+      if (sync() && context.blockDevices) pollRadioCaptureEscape(radio);
       return;
     }
     const sampled = [];
+    const radioInFrame =
+      context.frameFocused &&
+      context.handleFrameCommand?.({ source: 'radio', radio, now }) === true;
     for (const pad of context.blockDevices ? [] : Array.from(gamepads ?? [])) {
       if (!pad || pad.connected === false || pad.mapping !== 'standard') continue;
-      if (radio?.verified && pad.index === radio.index) continue;
+      if ((radio?.verified || radio?.provisional) && pad.index === radio.index) continue;
       const pressed = (index) =>
         (typeof pad.buttons[index] === 'number'
           ? pad.buttons[index]
@@ -1106,26 +1445,74 @@ export function createFlightMenuNavigation({
       });
     }
     if (
+      !radioInFrame &&
       !context.blockDevices &&
       !context.blockRadio &&
-      radio?.verified &&
-      typeof radio.key === 'string' &&
-      radio.controls &&
-      ['roll', 'pitch', 'yaw'].every(
-        (key) => Number.isFinite(radio.controls[key]) && Math.abs(radio.controls[key]) <= 1,
-      )
+      radio &&
+      typeof radio.key === 'string'
     ) {
-      const { roll, pitch, yaw } = radio.controls;
-      const centered = Math.abs(roll) < 0.25 && Math.abs(pitch) < 0.25;
-      sampled.push({
-        key: `radio:${radio.key}`,
-        kind: 'radio',
-        hold: 650,
-        neutral: centered && Math.abs(yaw) < 0.25,
-        releasing: centered && Math.abs(yaw) <= 0.75,
-        action: centered && Math.abs(yaw) > 0.75 ? (yaw > 0 ? 'confirm' : 'back') : null,
-        direction: Math.abs(yaw) < 0.25 ? axisDirection(roll, -pitch) : null,
-      });
+      if (radio.layout === 'six-switch') {
+        const calibrated =
+          radio.verified === true &&
+          STICK_LAYOUTS[radio.stickMode] &&
+          ['roll', 'pitch', 'yaw'].every(
+            (key) => Number.isFinite(radio.controls?.[key]) && Math.abs(radio.controls[key]) <= 1,
+          );
+        if (
+          sixSwitchState(radio) &&
+          (calibrated || (radio.verified === false && radio.provisional === true))
+        ) {
+          const layout = STICK_LAYOUTS[radio.stickMode] ?? STICK_LAYOUTS[2],
+            offset = layout.indexOf('throttle') < 2 ? 2 : 0,
+            x = calibrated ? radio.controls[layout[offset]] : 0,
+            y = calibrated ? -radio.controls[layout[offset + 1]] : 0,
+            centered = Math.abs(x) < 0.25 && Math.abs(y) < 0.25,
+            held = ['fire', 'weapon', 'reload', 'payload', 'detonate'].filter(
+              (key) => radio.switches[key],
+            );
+          sampled.push({
+            key: `radio:${radio.key}:${radio.index}:six-switch:${calibrated ? radio.stickMode : 'provisional'}`,
+            kind: 'radio',
+            sixSwitch: true,
+            provisional: !calibrated,
+            arm: radio.switches.arm,
+            hold: 0,
+            neutral: centered && held.length === 0,
+            blocked:
+              held.length > 1 ||
+              (held.length > 0 && !centered) ||
+              (!calibrated && held.some((key) => !['fire', 'weapon'].includes(key))),
+            action:
+              centered && held.length === 1
+                ? {
+                    fire: 'confirm',
+                    weapon: 'back',
+                    reload: 'camera',
+                    payload: 'retry',
+                    detonate: 'settings',
+                  }[held[0]]
+                : null,
+            direction: held.length === 0 ? axisDirection(x, y) : null,
+          });
+        }
+      } else if (
+        radio.verified &&
+        ['roll', 'pitch', 'yaw'].every(
+          (key) => Number.isFinite(radio.controls?.[key]) && Math.abs(radio.controls[key]) <= 1,
+        )
+      ) {
+        const { roll, pitch, yaw } = radio.controls;
+        const centered = Math.abs(roll) < 0.25 && Math.abs(pitch) < 0.25;
+        sampled.push({
+          key: `radio:${radio.key}`,
+          kind: 'radio',
+          hold: 650,
+          neutral: centered && Math.abs(yaw) < 0.25,
+          releasing: centered && Math.abs(yaw) <= 0.75,
+          action: centered && Math.abs(yaw) > 0.75 ? (yaw > 0 ? 'confirm' : 'back') : null,
+          direction: Math.abs(yaw) < 0.25 ? axisDirection(roll, -pitch) : null,
+        });
+      }
     }
     const keys = new Set(sampled.map((source) => source.key));
     if (joined && !keys.has(joined)) {
@@ -1136,6 +1523,7 @@ export function createFlightMenuNavigation({
     for (const source of sampled) sample(source, now);
   }
   listen(doc, 'keydown', (event) => {
+    if (!keyboard) return;
     const navigates = directions[event.key] || ['Enter', ' ', 'Escape'].includes(event.key);
     const active = sync();
     if (navigates) heldKeys.add(event.key);
@@ -1155,6 +1543,26 @@ export function createFlightMenuNavigation({
     ) {
       event.preventDefault();
       event.stopPropagation();
+      return;
+    }
+    if (editing?.panel && event.key === 'Tab') {
+      const items = controls(),
+        index = items.indexOf(doc.activeElement);
+      event.preventDefault();
+      event.stopPropagation();
+      if (items.length)
+        focus(items[(index + (event.shiftKey ? -1 : 1) + items.length) % items.length]);
+      return;
+    }
+    if (
+      editing?.panel &&
+      (event.key === 'Backspace' || event.key.length === 1) &&
+      ![' ', 'Enter'].includes(event.key)
+    ) {
+      event.preventDefault();
+      event.stopPropagation();
+      if (event.key === 'Backspace') editing.erase();
+      else editing.append(event.key);
       return;
     }
     if (editing && !directions[event.key] && !['Enter', ' ', 'Escape'].includes(event.key))
@@ -1185,6 +1593,7 @@ export function createFlightMenuNavigation({
     }
   });
   listen(doc, 'keyup', (event) => {
+    if (!keyboard) return;
     if (blockedKeys.has(event.key)) {
       event.preventDefault();
       event.stopPropagation();
@@ -1192,8 +1601,11 @@ export function createFlightMenuNavigation({
     heldKeys.delete(event.key);
     blockedKeys.delete(event.key);
   });
-  listen(doc, 'pointerdown', () => {
-    reset();
+  listen(doc, 'pointerdown', (event) => {
+    if (editing?.panel?.contains(event.target)) {
+      sources.clear();
+      captureEscape = radioCaptureEscape = null;
+    } else reset();
   });
   const suspend = () => {
     context = null;

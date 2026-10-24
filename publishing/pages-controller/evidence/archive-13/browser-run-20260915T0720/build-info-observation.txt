@@ -1,1 +1,0 @@
-"{\"formatVersion\":1,\"version\":\"v0.54.0\",\"sourceRevision\":\"1af33851e93ee95110de20cc73622ed43d85a4da\",\"entry\":\"game/index.html\"}"

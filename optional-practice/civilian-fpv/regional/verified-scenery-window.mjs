@@ -213,7 +213,7 @@ export function createVerifiedSceneryWindow(
       };
       preparing = staged;
       current(token);
-      if (supportPose?.requireClearRestore) await staged.prepareRestoreProof(() => current(token));
+      if (supportPose?.requireClearRestore) await staged.prepareRestoreProof(() => current(token), supportPose.positionMm, supportPose.radiusMm);
       if (frameTransaction?.prepare)
         await prepareVerifiedFrame(frameTransaction, staged.group, () => current(token), () => {
           current(token);
@@ -267,10 +267,10 @@ export function createVerifiedSceneryWindow(
   }
   return Object.freeze({
     snapshot,
-    async prepareRestoreProof() {
+    async prepareRestoreProof(assertCurrent = () => {}, positionMm = null, radiusMm = 220) {
       if (!queryReady()) throw new Error('Scenery is unavailable for saved-location verification');
       const owner = committed, token = generation;
-      await owner.prepareRestoreProof(() => current(token));
+      await owner.prepareRestoreProof(() => { current(token); assertCurrent(); }, positionMm, radiusMm);
       current(token);
       if (owner !== committed) throw abortError();
     },

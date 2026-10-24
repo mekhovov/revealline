@@ -257,7 +257,7 @@ test('v5 restores gameplay tuning with the exact published fpv58 owner and never
     source: { id: 'field-kit', revision: 58 },
     theme: { id: 'fpv', revision: 58 },
     collection: null,
-    sha256: "b3a79b85a00b8bc8b70a12fcc7aedfe6667ea8d3da64ea4baab85fb28b52e12c",
+    sha256: 'b3a79b85a00b8bc8b70a12fcc7aedfe6667ea8d3da64ea4baab85fb28b52e12c',
   });
   const exact58 = {
       format: 'revealline-visual-theme-pin.v1',

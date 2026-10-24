@@ -1,0 +1,113 @@
+{
+  "started": "2026-10-20T05:18:30.519Z",
+  "scope": "Outside performance timing. Import the complete 42,134-tick archive through Watch combat file, choose the visible supported 4x speed control, and verify the entire accepted chain.",
+  "errors": [],
+  "progress": [],
+  "archiveSha256": "3d796ee62f5015097b0491c09ca2096fc9f2c86fbf470c9863ea5cddb89d6e74",
+  "sources": {
+    "world-app.mjs": "aa35bb4c1dc6fb35aa3128c70ce0b4d52e9f6dae5b1dc36f8df93856f806b794",
+    "style.css": "707fe0823c0888e979152a029e502009b590ee18eb88ac8409bcb57fb1876f4a",
+    "world-reaction-runtime.mjs": "b8d87796987de4953a3a62ef3094c069046e94628a7465d26161428c205da703"
+  },
+  "harnessSha256": "6e463d5ebc45fe4869ea8b7a783b1c6ebcee52f808ac6d8813684c363cd4d867",
+  "controls": {
+    "ancestors": [
+      {
+        "tag": "SELECT",
+        "id": "world-replay-rate",
+        "class": "",
+        "hidden": false,
+        "display": "block",
+        "visibility": "visible"
+      },
+      {
+        "tag": "LABEL",
+        "id": "",
+        "class": "",
+        "hidden": false,
+        "display": "flex",
+        "visibility": "visible"
+      },
+      {
+        "tag": "DIV",
+        "id": "world-replay-controls",
+        "class": "replay-controls",
+        "hidden": false,
+        "display": "none",
+        "visibility": "visible"
+      },
+      {
+        "tag": "DIALOG",
+        "id": "flight-dialog",
+        "class": "flight-dialog combat-playback",
+        "hidden": false,
+        "display": "flex",
+        "visibility": "visible"
+      },
+      {
+        "tag": "BODY",
+        "id": "",
+        "class": "field-kit sim-worlds mode-play-page",
+        "hidden": false,
+        "display": "block",
+        "visibility": "visible"
+      },
+      {
+        "tag": "HTML",
+        "id": "",
+        "class": "",
+        "hidden": false,
+        "display": "block",
+        "visibility": "visible"
+      }
+    ],
+    "rules": [
+      "* { box-sizing: border-box; }",
+      ".replay-controls { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; padding: 10px 16px; background: rgb(39, 60, 50); border-bottom: 1px solid rgb(82, 103, 76); font-size: 12px; }",
+      "[data-theme-styled=\"true\"] :where(fieldset, details, .drop, .drop-zone, .setting-row, .settings-row, .settings-preset, .device-card, .controller-card, .controller-mapping, .range-field, .settings-metric, .settings-note, .settings-warning, .mission-brief, .enemy-guide, .soundtrack-choice, .soundtrack-advanced, .soundtrack-online-results, .school-flight-map, .replay-controls, .radio-device-card, .radio-monitor, .coach-tip, .checkpoint, .encounter-cue, .demo-board, .demo-settings, .seat, .control-card, .batch-card-media, .creator-media-poster, .creator-poster-option, #mission-brief-reading, [data-ui-surface=\"inset\"]) { color: var(--iw-text); background: var(--ui-inset-finish, none), var(--iw-ink); border-color: var(--iw-line); border-image: none; border-radius: 0px; box-shadow: var(--ui-inset-depth, none); }",
+      "[data-theme-styled=\"true\"] :where(*) { scrollbar-color: var(--iw-control-line) var(--iw-ink); }"
+    ],
+    "visible": false,
+    "display": "block",
+    "rect": {
+      "x": 0,
+      "y": 0,
+      "width": 0,
+      "height": 0,
+      "top": 0,
+      "right": 0,
+      "bottom": 0,
+      "left": 0
+    },
+    "options": [
+      {
+        "value": "0.25",
+        "disabled": false,
+        "hidden": false
+      },
+      {
+        "value": "0.5",
+        "disabled": false,
+        "hidden": false
+      },
+      {
+        "value": "1",
+        "disabled": false,
+        "hidden": false
+      },
+      {
+        "value": "2",
+        "disabled": false,
+        "hidden": false
+      },
+      {
+        "value": "4",
+        "disabled": false,
+        "hidden": false
+      }
+    ],
+    "combatClass": true
+  },
+  "failure": "Error: Playback speed control is hidden\n    at /Users/oleksandr.mekhovov/work/my_projects/go_test_radio_fix/docs/evidence/fpv-combat/overhaul-long-archive-replay.cjs:24:39",
+  "finished": "2026-10-20T05:18:34.986Z"
+}

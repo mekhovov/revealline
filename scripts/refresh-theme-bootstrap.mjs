@@ -159,7 +159,8 @@ export async function buildThemeBootstrap() {
   let display = null;
   try { if (typeof legacyDisplay === 'string' && legacyDisplay.length <= 2048) display = JSON.parse(legacyDisplay); } catch { /* Ignore damaged local data. */ }
   const studio = doc.currentScript?.dataset.themeDensity === 'studio';
-  const large = display?.textSize === 'large';
+  const extraLarge = display?.textSize === 'extra-large' && root.dataset.textScaling === 'overflight';
+  const large = display?.textSize === 'large' || (display?.textSize === 'extra-large' && !extraLarge);
   const plain = display?.textFace === 'plain';
   let coarse = false, reduced = display?.reducedEffects === true;
   try { coarse = globalThis.matchMedia?.('(pointer: coarse)').matches === true; reduced ||= globalThis.matchMedia?.('(prefers-reduced-motion: reduce)').matches === true; } catch { /* Optional media-query API. */ }
@@ -168,10 +169,11 @@ export async function buildThemeBootstrap() {
   const textured = seed.textured && intent.ornaments !== 'off' && !high;
   const variables = { ...seed.variables, ...(textured ? seed.material : seed.quietMaterial), ...(high ? contrast : {}) };
   if (plain) variables['--iw-font-display'] = variables['--iw-font-ui'] = "'Field Kit UI', 'Exo 2', sans-serif";
-  variables['--iw-target'] = studio && !coarse && !large ? '32px' : '44px';
+  variables['--iw-target'] = studio && !coarse && !large && !extraLarge ? '32px' : '44px';
   variables['--iw-text-size'] = large ? '20px' : '16px';
+  if (root.dataset.textScaling === 'overflight') variables['--overflight-text-scale'] = extraLarge ? '2' : '1';
   for (const [key, value] of Object.entries(variables)) root.style.setProperty(key, value);
-  Object.assign(root.dataset, { interfaceTheme: id, themeFamily: id, themeStyled: String(styled), themeContrast: high ? 'high' : 'normal', themeTexture: textured ? 'on' : 'off', themeSurface: high ? 'flat' : seed.surface, themeMaterial: seed.materialStyle, themeFinish: seed.materialVariant ?? seed.materialStyle, themeHud: high || intent.opaqueHud ? 'opaque' : 'normal', themeMotion: reduced ? 'reduced' : 'full', themeDensity: studio ? 'studio' : 'player', themeTextSize: large ? 'large' : 'standard', themeBootstrapped: 'true' });
+  Object.assign(root.dataset, { interfaceTheme: id, themeFamily: id, themeStyled: String(styled), themeContrast: high ? 'high' : 'normal', themeTexture: textured ? 'on' : 'off', themeSurface: high ? 'flat' : seed.surface, themeMaterial: seed.materialStyle, themeFinish: seed.materialVariant ?? seed.materialStyle, themeHud: high || intent.opaqueHud ? 'opaque' : 'normal', themeMotion: reduced ? 'reduced' : 'full', themeDensity: studio ? 'studio' : 'player', themeTextSize: extraLarge ? 'extra-large' : large ? 'large' : 'standard', themeBootstrapped: 'true' });
   const meta = doc.querySelector?.('meta[name="theme-color"]');
   if (meta && styled) meta.setAttribute('content', variables['--iw-ink']);
 })();`,

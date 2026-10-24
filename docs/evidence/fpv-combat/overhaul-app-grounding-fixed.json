@@ -1,0 +1,995 @@
+{
+  "started": "2026-10-20T01:42:55.397Z",
+  "browser": "155.0.8059.85",
+  "hardware": {
+    "platform": "darwin",
+    "release": "25.6.0",
+    "cpu": "Apple M4 Pro",
+    "logicalCpus": 14,
+    "memoryBytes": 51539607552
+  },
+  "scope": "Full local application, native stadium-01, actual simulation and renderer, scripted keyboard yaw, vertical hover control and sustained firing near the starting point. Assisted invulnerability and Balanced resources. This is not a human gameplay or physical radio qualification.",
+  "timing": "Aggregated synchronous requestAnimationFrame callback CPU work per display frame; asynchronous worker CPU and GPU execution excluded. Frame intervals include scheduling/GL presentation. Ten-minute wall-clock windows are not guaranteed ten minutes accepted simulation when frames are slow.",
+  "runs": [
+    {
+      "population": 20,
+      "seconds": 20,
+      "started": "2026-10-20T01:42:56.425Z",
+      "samples": [
+        {
+          "status": "active",
+          "ticks": 364,
+          "encounterTicks": 364,
+          "health": 100,
+          "kills": 7,
+          "shots": 55,
+          "hits": 7,
+          "wave": 1,
+          "active": 13,
+          "waiting": 0,
+          "position": {
+            "x": 0,
+            "y": 2562,
+            "z": 18000
+          },
+          "velocity": {
+            "x": 0,
+            "y": 90,
+            "z": 0
+          },
+          "geometryWaiting": false,
+          "phase": "wave",
+          "heapBytes": 112135993,
+          "resources": {
+            "renderer": {
+              "calls": 92,
+              "triangles": 18466,
+              "geometries": 84,
+              "textures": 21,
+              "programs": 18,
+              "contextLost": false
+            },
+            "actors": {
+              "actors": 13,
+              "instances": 302,
+              "calls": 4,
+              "skinnedActors": 0,
+              "skinnedCalls": 0,
+              "templates": 20,
+              "capacity": 128,
+              "healthBars": 0,
+              "appearanceReady": false,
+              "appearanceHash": null,
+              "appearanceCharacters": 0,
+              "equipmentCalls": 0,
+              "maxSkinnedActors": 20
+            },
+            "effects": {
+              "moving": 0,
+              "settled": 116,
+              "marks": 23,
+              "bursts": 0,
+              "calls": 9,
+              "triangles": 0,
+              "tier": "high",
+              "runId": "encounter-de65989630acacb9",
+              "tick": 364,
+              "stored": 7,
+              "storedImpacts": 15,
+              "capacity": 1024,
+              "impactCapacity": 1024,
+              "evicted": 0,
+              "presentationClock": 7.28,
+              "pendingFragments": 1,
+              "maxDrawCalls": 24,
+              "registeredPools": 11,
+              "appearanceReady": false,
+              "appearanceHash": null,
+              "appearanceDrawCalls": 0,
+              "appearanceCharacters": 0,
+              "maxAppearanceTriangles": 600000
+            }
+          },
+          "statusText": "Continuous combat · Active · local practice",
+          "seconds": 5
+        },
+        {
+          "status": "active",
+          "ticks": 614,
+          "encounterTicks": 614,
+          "health": 100,
+          "kills": 11,
+          "shots": 87,
+          "hits": 11,
+          "wave": 1,
+          "active": 9,
+          "waiting": 0,
+          "position": {
+            "x": 0,
+            "y": 2966,
+            "z": 18000
+          },
+          "velocity": {
+            "x": 0,
+            "y": 83,
+            "z": 0
+          },
+          "geometryWaiting": false,
+          "phase": "wave",
+          "heapBytes": 100105713,
+          "resources": {
+            "renderer": {
+              "calls": 93,
+              "triangles": 20320,
+              "geometries": 84,
+              "textures": 21,
+              "programs": 18,
+              "contextLost": false
+            },
+            "actors": {
+              "actors": 9,
+              "instances": 245,
+              "calls": 4,
+              "skinnedActors": 0,
+              "skinnedCalls": 0,
+              "templates": 20,
+              "capacity": 128,
+              "healthBars": 0,
+              "appearanceReady": false,
+              "appearanceHash": null,
+              "appearanceCharacters": 0,
+              "equipmentCalls": 0,
+              "maxSkinnedActors": 20
+            },
+            "effects": {
+              "moving": 109,
+              "settled": 150,
+              "marks": 31,
+              "bursts": 3,
+              "calls": 11,
+              "triangles": 0,
+              "tier": "high",
+              "runId": "encounter-de65989630acacb9",
+              "tick": 614,
+              "stored": 11,
+              "storedImpacts": 27,
+              "capacity": 1024,
+              "impactCapacity": 1024,
+              "evicted": 0,
+              "presentationClock": 12.28,
+              "pendingFragments": 1,
+              "maxDrawCalls": 24,
+              "registeredPools": 11,
+              "appearanceReady": false,
+              "appearanceHash": null,
+              "appearanceDrawCalls": 0,
+              "appearanceCharacters": 0,
+              "maxAppearanceTriangles": 600000
+            }
+          },
+          "statusText": "Continuous combat · Active · local practice",
+          "seconds": 10
+        },
+        {
+          "status": "active",
+          "ticks": 864,
+          "encounterTicks": 864,
+          "health": 100,
+          "kills": 11,
+          "shots": 119,
+          "hits": 11,
+          "wave": 1,
+          "active": 9,
+          "waiting": 0,
+          "position": {
+            "x": 0,
+            "y": 3290,
+            "z": 18000
+          },
+          "velocity": {
+            "x": 0,
+            "y": 31,
+            "z": 0
+          },
+          "geometryWaiting": false,
+          "phase": "wave",
+          "heapBytes": 102993089,
+          "resources": {
+            "renderer": {
+              "calls": 64,
+              "triangles": 16618,
+              "geometries": 84,
+              "textures": 21,
+              "programs": 18,
+              "contextLost": false
+            },
+            "actors": {
+              "actors": 9,
+              "instances": 246,
+              "calls": 4,
+              "skinnedActors": 0,
+              "skinnedCalls": 0,
+              "templates": 20,
+              "capacity": 128,
+              "healthBars": 0,
+              "appearanceReady": false,
+              "appearanceHash": null,
+              "appearanceCharacters": 0,
+              "equipmentCalls": 0,
+              "maxSkinnedActors": 20
+            },
+            "effects": {
+              "moving": 12,
+              "settled": 183,
+              "marks": 31,
+              "bursts": 2,
+              "calls": 9,
+              "triangles": 0,
+              "tier": "high",
+              "runId": "encounter-de65989630acacb9",
+              "tick": 864,
+              "stored": 11,
+              "storedImpacts": 48,
+              "capacity": 1024,
+              "impactCapacity": 1024,
+              "evicted": 0,
+              "presentationClock": 17.28,
+              "pendingFragments": 1,
+              "maxDrawCalls": 24,
+              "registeredPools": 11,
+              "appearanceReady": false,
+              "appearanceHash": null,
+              "appearanceDrawCalls": 0,
+              "appearanceCharacters": 0,
+              "maxAppearanceTriangles": 600000
+            }
+          },
+          "statusText": "Continuous combat · Active · local practice",
+          "seconds": 15
+        },
+        {
+          "status": "active",
+          "ticks": 1114,
+          "encounterTicks": 1114,
+          "health": 100,
+          "kills": 11,
+          "shots": 140,
+          "hits": 11,
+          "wave": 1,
+          "active": 9,
+          "waiting": 0,
+          "position": {
+            "x": 0,
+            "y": 3475,
+            "z": 18000
+          },
+          "velocity": {
+            "x": 0,
+            "y": 11,
+            "z": 0
+          },
+          "geometryWaiting": false,
+          "phase": "wave",
+          "heapBytes": 103759383,
+          "resources": {
+            "renderer": {
+              "calls": 64,
+              "triangles": 16114,
+              "geometries": 84,
+              "textures": 21,
+              "programs": 18,
+              "contextLost": false
+            },
+            "actors": {
+              "actors": 9,
+              "instances": 246,
+              "calls": 4,
+              "skinnedActors": 0,
+              "skinnedCalls": 0,
+              "templates": 20,
+              "capacity": 128,
+              "healthBars": 0,
+              "appearanceReady": false,
+              "appearanceHash": null,
+              "appearanceCharacters": 0,
+              "equipmentCalls": 0,
+              "maxSkinnedActors": 20
+            },
+            "effects": {
+              "moving": 0,
+              "settled": 183,
+              "marks": 31,
+              "bursts": 0,
+              "calls": 9,
+              "triangles": 0,
+              "tier": "high",
+              "runId": "encounter-de65989630acacb9",
+              "tick": 1114,
+              "stored": 11,
+              "storedImpacts": 52,
+              "capacity": 1024,
+              "impactCapacity": 1024,
+              "evicted": 0,
+              "presentationClock": 22.28,
+              "pendingFragments": 1,
+              "maxDrawCalls": 24,
+              "registeredPools": 11,
+              "appearanceReady": false,
+              "appearanceHash": null,
+              "appearanceDrawCalls": 0,
+              "appearanceCharacters": 0,
+              "maxAppearanceTriangles": 600000
+            }
+          },
+          "statusText": "Continuous combat · Active · local practice",
+          "seconds": 20
+        }
+      ],
+      "errors": [],
+      "consoleErrors": {},
+      "sources": {
+        "world-app.mjs": "44fb16a3f17e8b973e8a993ca45fad08a3df711c406b873f831cfcd5b0f1467f",
+        "world-reaction-runtime.mjs": "b39a99f7e98fb82256232d4689714ea77d9a5d5b8bd3e65e2555614f9ef8da2c",
+        "renderer.mjs": "001c22a1fee8953b4d79a4be15315145d7cd90ca5994fe8ede4872a5c86dfd2c",
+        "combat-presentation.mjs": "15b271996b37111d8cdda0638cdcc9c6fb7f9044c92bdf687669ada43d7c89a0",
+        "combat-actors.mjs": "599ddcacbae167e99f5098cddf7ea65c96b93a2ef66b294204335723999ee4c0"
+      },
+      "hardware": {
+        "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/155.0.0.0 Safari/537.36",
+        "hardwareConcurrency": 14,
+        "pixelRatio": 1,
+        "width": 1920,
+        "height": 1080,
+        "gpu": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4 Pro, Unspecified Version)",
+        "gpuTimingAvailable": true,
+        "gpuTimingMeasured": false
+      },
+      "profileSelfTime": [
+        {
+          "function": "(idle)",
+          "url": "",
+          "line": 0,
+          "ms": 9999.35
+        },
+        {
+          "function": "(program)",
+          "url": "",
+          "line": 0,
+          "ms": 3175.289
+        },
+        {
+          "function": "snapshot",
+          "url": "http://127.0.0.1:8768/optional-practice/civilian-fpv/world-reaction-runtime.mjs",
+          "line": 5088,
+          "ms": 506.747
+        },
+        {
+          "function": "clone",
+          "url": "http://127.0.0.1:8768/optional-practice/civilian-fpv/world-reaction-runtime.mjs",
+          "line": 3023,
+          "ms": 437.398
+        },
+        {
+          "function": "snapshot",
+          "url": "http://127.0.0.1:8768/optional-practice/civilian-fpv/world-reaction-runtime.mjs",
+          "line": 5088,
+          "ms": 184.263
+        },
+        {
+          "function": "clone",
+          "url": "http://127.0.0.1:8768/optional-practice/civilian-fpv/world-reaction-runtime.mjs",
+          "line": 3023,
+          "ms": 177.53
+        },
+        {
+          "function": "(garbage collector)",
+          "url": "",
+          "line": 0,
+          "ms": 168.969
+        },
+        {
+          "function": "clone",
+          "url": "http://127.0.0.1:8768/optional-practice/civilian-fpv/world-reaction-runtime.mjs",
+          "line": 3023,
+          "ms": 167.812
+        },
+        {
+          "function": "refresh",
+          "url": "http://127.0.0.1:8768/optional-practice/civilian-fpv/world-reaction-runtime.mjs",
+          "line": 15831,
+          "ms": 136.213
+        },
+        {
+          "function": "querySelector",
+          "url": "",
+          "line": 0,
+          "ms": 135.723
+        },
+        {
+          "function": "snapshot",
+          "url": "http://127.0.0.1:8768/optional-practice/civilian-fpv/world-model.mjs",
+          "line": 1026,
+          "ms": 124.242
+        },
+        {
+          "function": "getBoundingClientRect",
+          "url": "",
+          "line": 0,
+          "ms": 120.422
+        },
+        {
+          "function": "update",
+          "url": "http://127.0.0.1:8768/optional-practice/civilian-fpv/world-reaction-runtime.mjs",
+          "line": 17329,
+          "ms": 108.363
+        },
+        {
+          "function": "flight.stageEncounterActors",
+          "url": "http://127.0.0.1:8768/optional-practice/civilian-fpv/world-model.mjs",
+          "line": 1634,
+          "ms": 101.893
+        },
+        {
+          "function": "clone",
+          "url": "http://127.0.0.1:8768/optional-practice/civilian-fpv/world-model.mjs",
+          "line": 99,
+          "ms": 82.562
+        },
+        {
+          "function": "bufferSubData",
+          "url": "",
+          "line": 0,
+          "ms": 77.388
+        },
+        {
+          "function": "",
+          "url": "http://127.0.0.1:8768/optional-practice/civilian-fpv/world-reaction-runtime.mjs",
+          "line": 18808,
+          "ms": 75.222
+        },
+        {
+          "function": "snapshot",
+          "url": "http://127.0.0.1:8768/optional-practice/civilian-fpv/world-reaction-runtime.mjs",
+          "line": 5088,
+          "ms": 72.864
+        },
+        {
+          "function": "querySelector",
+          "url": "",
+          "line": 0,
+          "ms": 64.888
+        },
+        {
+          "function": "querySelector",
+          "url": "",
+          "line": 0,
+          "ms": 61.937
+        },
+        {
+          "function": "snapshot",
+          "url": "http://127.0.0.1:8768/optional-practice/civilian-fpv/world-reaction-runtime.mjs",
+          "line": 5088,
+          "ms": 60.865
+        },
+        {
+          "function": "snapshot",
+          "url": "http://127.0.0.1:8768/optional-practice/civilian-fpv/world-reaction-runtime.mjs",
+          "line": 5088,
+          "ms": 60.504
+        },
+        {
+          "function": "snapshot",
+          "url": "http://127.0.0.1:8768/optional-practice/civilian-fpv/world-reaction-runtime.mjs",
+          "line": 5088,
+          "ms": 59.611
+        },
+        {
+          "function": "paintCombatHUD",
+          "url": "http://127.0.0.1:8768/optional-practice/civilian-fpv/world-app.mjs",
+          "line": 2510,
+          "ms": 59.412
+        },
+        {
+          "function": "clone",
+          "url": "http://127.0.0.1:8768/optional-practice/civilian-fpv/world-reaction-runtime.mjs",
+          "line": 3023,
+          "ms": 59.253
+        },
+        {
+          "function": "clone",
+          "url": "http://127.0.0.1:8768/optional-practice/civilian-fpv/world-reaction-runtime.mjs",
+          "line": 3023,
+          "ms": 58.873
+        },
+        {
+          "function": "querySelector",
+          "url": "",
+          "line": 0,
+          "ms": 58.45
+        },
+        {
+          "function": "snapshot",
+          "url": "http://127.0.0.1:8768/optional-practice/civilian-fpv/world-reaction-runtime.mjs",
+          "line": 5088,
+          "ms": 56.275
+        },
+        {
+          "function": "clone",
+          "url": "http://127.0.0.1:8768/optional-practice/civilian-fpv/world-reaction-runtime.mjs",
+          "line": 3023,
+          "ms": 55.775
+        },
+        {
+          "function": "snapshot",
+          "url": "http://127.0.0.1:8768/optional-practice/civilian-fpv/world-reaction-runtime.mjs",
+          "line": 5088,
+          "ms": 52.877
+        },
+        {
+          "function": "snapshot",
+          "url": "http://127.0.0.1:8768/optional-practice/civilian-fpv/world-reaction-runtime.mjs",
+          "line": 5088,
+          "ms": 51.213
+        },
+        {
+          "function": "clone",
+          "url": "http://127.0.0.1:8768/optional-practice/civilian-fpv/world-reaction-runtime.mjs",
+          "line": 3023,
+          "ms": 50.693
+        },
+        {
+          "function": "clone",
+          "url": "http://127.0.0.1:8768/optional-practice/civilian-fpv/world-reaction-runtime.mjs",
+          "line": 3023,
+          "ms": 50.615
+        },
+        {
+          "function": "clone",
+          "url": "http://127.0.0.1:8768/optional-practice/civilian-fpv/world-reaction-runtime.mjs",
+          "line": 3023,
+          "ms": 49.13
+        },
+        {
+          "function": "clone",
+          "url": "http://127.0.0.1:8768/optional-practice/civilian-fpv/world-reaction-runtime.mjs",
+          "line": 3023,
+          "ms": 49.104
+        },
+        {
+          "function": "snapshot",
+          "url": "http://127.0.0.1:8768/optional-practice/civilian-fpv/world-reaction-runtime.mjs",
+          "line": 5088,
+          "ms": 47.901
+        },
+        {
+          "function": "snapshot",
+          "url": "http://127.0.0.1:8768/optional-practice/civilian-fpv/world-reaction-runtime.mjs",
+          "line": 5088,
+          "ms": 47.583
+        },
+        {
+          "function": "clone",
+          "url": "http://127.0.0.1:8768/optional-practice/civilian-fpv/world-reaction-runtime.mjs",
+          "line": 3023,
+          "ms": 45.498
+        },
+        {
+          "function": "clone",
+          "url": "http://127.0.0.1:8768/optional-practice/civilian-fpv/world-reaction-runtime.mjs",
+          "line": 3023,
+          "ms": 45.325
+        },
+        {
+          "function": "snapshot",
+          "url": "http://127.0.0.1:8768/optional-practice/civilian-fpv/world-reaction-runtime.mjs",
+          "line": 5088,
+          "ms": 43.792
+        }
+      ],
+      "actualSeconds": 20.04,
+      "pilotCPU": 152.6000000834465,
+      "groundProbe": {
+        "calls": 27833,
+        "nulls": 77,
+        "clear": 4408,
+        "contacts": 23348,
+        "errors": 0,
+        "examples": [
+          {
+            "args": [
+              {
+                "x": 229.42227701704414,
+                "y": 7,
+                "z": 11989.207410851339
+              },
+              {
+                "x": 0,
+                "y": 1,
+                "z": 0
+              }
+            ],
+            "result": {
+              "position": {
+                "x": 229.42227701704414,
+                "y": -10.000000000003329,
+                "z": 11989.207410851339
+              },
+              "normal": {
+                "x": 0,
+                "y": 1,
+                "z": 2.220446049250313e-16
+              },
+              "surfaceId": "world:56afd89:ec3f4595",
+              "localPosition": {
+                "x": 0.22942227701704415,
+                "y": -14.98920741085134,
+                "z": 0
+              }
+            }
+          },
+          {
+            "args": [
+              {
+                "x": 563.8503295969106,
+                "y": 7,
+                "z": 12251.472310614228
+              },
+              {
+                "x": 0,
+                "y": 1,
+                "z": 0
+              }
+            ],
+            "result": {
+              "position": {
+                "x": 563.8503295969106,
+                "y": -10.000000000003386,
+                "z": 12251.472310614228
+              },
+              "normal": {
+                "x": 0,
+                "y": 1,
+                "z": 2.220446049250313e-16
+              },
+              "surfaceId": "world:56afd89:ec3f4595",
+              "localPosition": {
+                "x": 0.5638503295969106,
+                "y": -15.25147231061423,
+                "z": 0
+              }
+            }
+          },
+          {
+            "args": [
+              {
+                "x": 898.2783821767769,
+                "y": 7,
+                "z": 12513.737210377116
+              },
+              {
+                "x": 0,
+                "y": 1,
+                "z": 0
+              }
+            ],
+            "result": {
+              "position": {
+                "x": 898.2783821767769,
+                "y": -10.000000000003459,
+                "z": 12513.737210377116
+              },
+              "normal": {
+                "x": 0,
+                "y": 1,
+                "z": 2.220446049250313e-16
+              },
+              "surfaceId": "world:56afd89:ec3f4595",
+              "localPosition": {
+                "x": 0.8982783821767769,
+                "y": -15.513737210377116,
+                "z": -1.3877787807814457e-17
+              }
+            }
+          },
+          {
+            "args": [
+              {
+                "x": -216.42805257986652,
+                "y": 6.9999999999999725,
+                "z": 12557.735100237112
+              },
+              {
+                "x": 0,
+                "y": 1,
+                "z": 0
+              }
+            ],
+            "result": {
+              "position": {
+                "x": -216.42805257986652,
+                "y": -10.000000000003467,
+                "z": 12557.735100237112
+              },
+              "normal": {
+                "x": 0,
+                "y": 1,
+                "z": 2.220446049250313e-16
+              },
+              "surfaceId": "world:56afd89:ec3f4595",
+              "localPosition": {
+                "x": -0.21642805257986653,
+                "y": -15.557735100237112,
+                "z": -1.3877787807814457e-17
+              }
+            }
+          },
+          {
+            "args": [
+              {
+                "x": 118,
+                "y": 7,
+                "z": 12820
+              },
+              {
+                "x": 0,
+                "y": 1,
+                "z": 0
+              }
+            ],
+            "result": {
+              "position": {
+                "x": 118,
+                "y": -10.000000000003514,
+                "z": 12820
+              },
+              "normal": {
+                "x": 0,
+                "y": 1,
+                "z": 2.220446049250313e-16
+              },
+              "surfaceId": "world:56afd89:ec3f4595",
+              "localPosition": {
+                "x": 0.118,
+                "y": -15.82,
+                "z": 0
+              }
+            }
+          },
+          {
+            "args": [
+              {
+                "x": 452.4280525798665,
+                "y": 7.0000000000000275,
+                "z": 13082.26489976289
+              },
+              {
+                "x": 0,
+                "y": 1,
+                "z": 0
+              }
+            ],
+            "result": {
+              "position": {
+                "x": 452.4280525798665,
+                "y": -10.000000000003572,
+                "z": 13082.26489976289
+              },
+              "normal": {
+                "x": 0,
+                "y": 1,
+                "z": 2.220446049250313e-16
+              },
+              "surfaceId": "world:56afd89:ec3f4595",
+              "localPosition": {
+                "x": 0.4524280525798665,
+                "y": -16.08226489976289,
+                "z": 0
+              }
+            }
+          },
+          {
+            "args": [
+              {
+                "x": -662.278382176777,
+                "y": 7,
+                "z": 13126.262789622884
+              },
+              {
+                "x": 0,
+                "y": 1,
+                "z": 0
+              }
+            ],
+            "result": {
+              "position": {
+                "x": -662.278382176777,
+                "y": -10.000000000003595,
+                "z": 13126.262789622884
+              },
+              "normal": {
+                "x": 0,
+                "y": 1,
+                "z": 2.220446049250313e-16
+              },
+              "surfaceId": "world:56afd89:ec3f4595",
+              "localPosition": {
+                "x": -0.6622783821767769,
+                "y": -16.126262789622885,
+                "z": -1.3877787807814457e-17
+              }
+            }
+          },
+          {
+            "args": [
+              {
+                "x": -327.8503295969106,
+                "y": 7,
+                "z": 13388.527689385774
+              },
+              {
+                "x": 0,
+                "y": 1,
+                "z": 0
+              }
+            ],
+            "result": {
+              "position": {
+                "x": -327.8503295969106,
+                "y": -10.000000000003654,
+                "z": 13388.527689385775
+              },
+              "normal": {
+                "x": 0,
+                "y": 1,
+                "z": 2.220446049250313e-16
+              },
+              "surfaceId": "world:56afd89:ec3f4595",
+              "localPosition": {
+                "x": -0.32785032959691063,
+                "y": -16.388527689385775,
+                "z": -1.3877787807814457e-17
+              }
+            }
+          },
+          {
+            "args": [
+              {
+                "x": 6.5777229829558355,
+                "y": 7,
+                "z": 13650.792589148661
+              },
+              {
+                "x": 0,
+                "y": 1,
+                "z": 0
+              }
+            ],
+            "result": {
+              "position": {
+                "x": 6.5777229829558355,
+                "y": -10.000000000003697,
+                "z": 13650.792589148661
+              },
+              "normal": {
+                "x": 0,
+                "y": 1,
+                "z": 2.220446049250313e-16
+              },
+              "surfaceId": "world:56afd89:ec3f4595",
+              "localPosition": {
+                "x": 0.006577722982955835,
+                "y": -16.65079258914866,
+                "z": 0
+              }
+            }
+          },
+          {
+            "args": [
+              {
+                "x": 388.1364770314779,
+                "y": 6.999999999999983,
+                "z": 12695.368854766231
+              },
+              {
+                "x": 0,
+                "y": 1,
+                "z": 0
+              }
+            ],
+            "result": {
+              "position": {
+                "x": 388.1364770314779,
+                "y": -10.0000000000035,
+                "z": 12695.368854766231
+              },
+              "normal": {
+                "x": 0,
+                "y": 1,
+                "z": 2.220446049250313e-16
+              },
+              "surfaceId": "world:56afd89:ec3f4595",
+              "localPosition": {
+                "x": 0.3881364770314779,
+                "y": -15.695368854766231,
+                "z": -1.3877787807814457e-17
+              }
+            }
+          },
+          {
+            "args": [
+              {
+                "x": 349.26062665789266,
+                "y": 7,
+                "z": 12736.435795183846
+              },
+              {
+                "x": 0,
+                "y": 1,
+                "z": 0
+              }
+            ],
+            "result": {
+              "position": {
+                "x": 349.26062665789266,
+                "y": -10.000000000003508,
+                "z": 12736.435795183846
+              },
+              "normal": {
+                "x": 0,
+                "y": 1,
+                "z": 2.220446049250313e-16
+              },
+              "surfaceId": "world:56afd89:ec3f4595",
+              "localPosition": {
+                "x": 0.34926062665789265,
+                "y": -15.736435795183846,
+                "z": -1.3877787807814457e-17
+              }
+            }
+          },
+          {
+            "args": [
+              {
+                "x": 310.38477628430735,
+                "y": 7.000000000000014,
+                "z": 12777.50273560146
+              },
+              {
+                "x": 0,
+                "y": 1,
+                "z": 0
+              }
+            ],
+            "result": {
+              "position": {
+                "x": 310.38477628430735,
+                "y": -10.000000000003505,
+                "z": 12777.50273560146
+              },
+              "normal": {
+                "x": 0,
+                "y": 1,
+                "z": 2.220446049250313e-16
+              },
+              "surfaceId": "world:56afd89:ec3f4595",
+              "localPosition": {
+                "x": 0.31038477628430733,
+                "y": -15.777502735601459,
+                "z": 0
+              }
+            }
+          }
+        ]
+      },
+      "frames": 1203,
+      "cpuP50": 5.8,
+      "cpuP95": 7.8,
+      "cpuP99": 9,
+      "intervalP50": 16.7,
+      "intervalP95": 16.8,
+      "intervalP99": 16.8,
+      "averageFps": 59.40936611886781
+    }
+  ],
+  "finished": "2026-10-20T01:43:20.135Z"
+}

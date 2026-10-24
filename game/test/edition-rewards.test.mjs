@@ -8,7 +8,7 @@ import { mountEditionRewards } from '../ui/edition-rewards.mjs';
 import { createRewardMissionBindings } from '../rewards/bindings.mjs';
 import { rewardContext } from '../rewards/context.mjs';
 import { completionLearningReference } from '../rewards/learning.mjs';
-import { COMPANY_LESSONS } from '../company-campaigns/lessons.mjs';
+import { learningFixture } from './helpers/learning-fixture.mjs';
 import { projectRewardProgress } from '../rewards/model.mjs';
 import { createRewardBackend } from '../rewards/store.mjs';
 import { emptyJourneyProfile, applyJourneyEvent } from '../journey/profile.mjs';
@@ -116,7 +116,7 @@ async function fixture(
   const selection = resolveEditionSelection(catalog);
   const lesson = learning
     ? {
-        ...copy(COMPANY_LESSONS[0]),
+        ...copy(learningFixture()),
         missionId: source.missions[0].id,
         campaignId: source.campaigns[0].id,
       }
