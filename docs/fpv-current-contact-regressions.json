@@ -1,0 +1,1838 @@
+{
+  "format": "AircraftCurrentContactRegressionEvidence.v1",
+  "sourceRevision": "68f9a39362ac50e483d9a1447ead5e68af168c5b",
+  "physicsHz": 1000,
+  "missionHz": 50,
+  "testLogs": [
+    {
+      "localPath": "/private/tmp/fpv-r20-1000hz-current-contact-final.log",
+      "sha256": "b7982ff337ce351f8a6069e9952f0149c9a466565a44982c79fdd8e59dee6aa7",
+      "passed": 64,
+      "failed": 0,
+      "skipped": 0,
+      "scope": "Final current-contact file, including 30 ordinary centered Academy flights; precommit final core source."
+    },
+    {
+      "localPath": "/private/tmp/fpv-r20-1000hz-focused.log",
+      "sha256": "b3843cc15b835197482fd070c16414b472cff5110094212f75e7efcb03092303",
+      "passed": 113,
+      "failed": 1,
+      "skipped": 0,
+      "scope": "Mixed six-file run; one duplicate current-contact case passed before its missing sparse historical fixture stopped loading. Other five suites passed 112 cases, including 30 World missions; no runtime test failure."
+    },
+    {
+      "localPath": "/private/tmp/fpv-r20-bench-final.log",
+      "sha256": "eb71283f9344988a64aa34233c8c66efadfb19b9b97828752086b0ccbe758c67",
+      "passed": 37,
+      "failed": 0,
+      "skipped": 0,
+      "scope": "Response bench/assistant/worker/panel final companion source, subsequently committed 965962775."
+    },
+    {
+      "localPath": "/private/tmp/fpv-r20-static-proof-68f9a3936.log",
+      "sha256": "f688217a69d967efaddc29e68b9bab5f9978fe408282f5fbcb7eef8299c8f7ce",
+      "passed": 42,
+      "failed": 0,
+      "skipped": 0,
+      "scope": "Clean committed 68f9a3936; shared static-course proof matrix including 15 aircraft × 2 modes and historical v2/500 fixture."
+    },
+    {
+      "localPath": "/private/tmp/fpv-r20-sustained-68f9a3936.log",
+      "sha256": "b52e036662a76f6df1af227e1d9f7235986c77466e189b7b35e729eb138e56b4",
+      "passed": 31,
+      "failed": 4,
+      "scope": "Clean committed 68f9a3936; four Regional starts lacked the committed authored sparse fixture; 31 actual flights passed."
+    },
+    {
+      "localPath": "/private/tmp/fpv-r20-sustained-regional-68f9a3936.log",
+      "sha256": "43232a97d1ebd00dd147aaa491d837e5e0b838815fbb182aef062561e4ab0c83",
+      "passed": 4,
+      "failed": 0,
+      "scope": "Exact same committed source after restoring authored sparse fixture; only four blocked Regional cases rerun."
+    }
+  ],
+  "aggregateCoreTapPasses": {
+    "passed": 176,
+    "explanation": "112 companion-suite TAP passes plus the final 64-pass current-contact file, including grouped-test parents; the preliminary current-contact pass is duplicated, not an extra pass. The original sparse fixture loader failure remains recorded."
+  },
+  "courseCases": {
+    "academy": [
+      {
+        "aircraft": "air65-ii-racing-2026",
+        "mode": "acro",
+        "backend": "civilian-quad-aircraft-regional.v3",
+        "completed": 2,
+        "seconds": 5.76,
+        "airborneSeconds": 5.3,
+        "peakMetres": 1.542,
+        "landingSpeedMps": 0,
+        "landingTiltDegrees": 0,
+        "transitions": [
+          [1, 106],
+          [2, 288]
+        ],
+        "support": "course-boundary-y-min"
+      },
+      {
+        "aircraft": "air65-ii-racing-2026",
+        "mode": "self-level",
+        "backend": "civilian-quad-aircraft-regional.v3",
+        "completed": 2,
+        "seconds": 5.76,
+        "airborneSeconds": 5.3,
+        "peakMetres": 1.542,
+        "landingSpeedMps": 0,
+        "landingTiltDegrees": 0,
+        "transitions": [
+          [1, 106],
+          [2, 288]
+        ],
+        "support": "course-boundary-y-min"
+      },
+      {
+        "aircraft": "meteor75-analog-2022",
+        "mode": "acro",
+        "backend": "civilian-quad-aircraft-regional.v3",
+        "completed": 2,
+        "seconds": 5.66,
+        "airborneSeconds": 5.18,
+        "peakMetres": 1.553,
+        "landingSpeedMps": 0,
+        "landingTiltDegrees": 0,
+        "transitions": [
+          [1, 108],
+          [2, 283]
+        ],
+        "support": "course-boundary-y-min"
+      },
+      {
+        "aircraft": "meteor75-analog-2022",
+        "mode": "self-level",
+        "backend": "civilian-quad-aircraft-regional.v3",
+        "completed": 2,
+        "seconds": 5.66,
+        "airborneSeconds": 5.18,
+        "peakMetres": 1.553,
+        "landingSpeedMps": 0,
+        "landingTiltDegrees": 0,
+        "transitions": [
+          [1, 108],
+          [2, 283]
+        ],
+        "support": "course-boundary-y-min"
+      },
+      {
+        "aircraft": "meteor75-pro-matrix",
+        "mode": "acro",
+        "backend": "civilian-quad-aircraft-regional.v3",
+        "completed": 2,
+        "seconds": 5.8,
+        "airborneSeconds": 5.34,
+        "peakMetres": 1.546,
+        "landingSpeedMps": 0,
+        "landingTiltDegrees": 0.09,
+        "transitions": [
+          [1, 107],
+          [2, 290]
+        ],
+        "support": "course-boundary-y-min"
+      },
+      {
+        "aircraft": "meteor75-pro-matrix",
+        "mode": "self-level",
+        "backend": "civilian-quad-aircraft-regional.v3",
+        "completed": 2,
+        "seconds": 5.8,
+        "airborneSeconds": 5.34,
+        "peakMetres": 1.546,
+        "landingSpeedMps": 0,
+        "landingTiltDegrees": 0,
+        "transitions": [
+          [1, 107],
+          [2, 290]
+        ],
+        "support": "course-boundary-y-min"
+      },
+      {
+        "aircraft": "meteor85-analog",
+        "mode": "acro",
+        "backend": "civilian-quad-aircraft-regional.v3",
+        "completed": 2,
+        "seconds": 5.8,
+        "airborneSeconds": 5.34,
+        "peakMetres": 1.538,
+        "landingSpeedMps": 0,
+        "landingTiltDegrees": 0,
+        "transitions": [
+          [1, 106],
+          [2, 290]
+        ],
+        "support": "course-boundary-y-min"
+      },
+      {
+        "aircraft": "meteor85-analog",
+        "mode": "self-level",
+        "backend": "civilian-quad-aircraft-regional.v3",
+        "completed": 2,
+        "seconds": 5.8,
+        "airborneSeconds": 5.34,
+        "peakMetres": 1.538,
+        "landingSpeedMps": 0,
+        "landingTiltDegrees": 0,
+        "transitions": [
+          [1, 106],
+          [2, 290]
+        ],
+        "support": "course-boundary-y-min"
+      },
+      {
+        "aircraft": "mobula8-analog-2023",
+        "mode": "acro",
+        "backend": "civilian-quad-aircraft-regional.v3",
+        "completed": 2,
+        "seconds": 5.8,
+        "airborneSeconds": 5.34,
+        "peakMetres": 1.537,
+        "landingSpeedMps": 0,
+        "landingTiltDegrees": 0,
+        "transitions": [
+          [1, 106],
+          [2, 290]
+        ],
+        "support": "course-boundary-y-min"
+      },
+      {
+        "aircraft": "mobula8-analog-2023",
+        "mode": "self-level",
+        "backend": "civilian-quad-aircraft-regional.v3",
+        "completed": 2,
+        "seconds": 5.8,
+        "airborneSeconds": 5.34,
+        "peakMetres": 1.537,
+        "landingSpeedMps": 0,
+        "landingTiltDegrees": 0,
+        "transitions": [
+          [1, 106],
+          [2, 290]
+        ],
+        "support": "course-boundary-y-min"
+      },
+      {
+        "aircraft": "cetus-x-betaflight-2022",
+        "mode": "acro",
+        "backend": "civilian-quad-aircraft-regional.v3",
+        "completed": 2,
+        "seconds": 5.76,
+        "airborneSeconds": 5.28,
+        "peakMetres": 1.541,
+        "landingSpeedMps": 0,
+        "landingTiltDegrees": 0,
+        "transitions": [
+          [1, 106],
+          [2, 288]
+        ],
+        "support": "course-boundary-y-min"
+      },
+      {
+        "aircraft": "cetus-x-betaflight-2022",
+        "mode": "self-level",
+        "backend": "civilian-quad-aircraft-regional.v3",
+        "completed": 2,
+        "seconds": 5.76,
+        "airborneSeconds": 5.28,
+        "peakMetres": 1.541,
+        "landingSpeedMps": 0,
+        "landingTiltDegrees": 0,
+        "transitions": [
+          [1, 106],
+          [2, 288]
+        ],
+        "support": "course-boundary-y-min"
+      },
+      {
+        "aircraft": "protos-16-aio-1-0",
+        "mode": "acro",
+        "backend": "civilian-quad-aircraft-regional.v3",
+        "completed": 2,
+        "seconds": 5.66,
+        "airborneSeconds": 5.1,
+        "peakMetres": 1.558,
+        "landingSpeedMps": 0,
+        "landingTiltDegrees": 0,
+        "transitions": [
+          [1, 112],
+          [2, 283]
+        ],
+        "support": "course-boundary-y-min"
+      },
+      {
+        "aircraft": "protos-16-aio-1-0",
+        "mode": "self-level",
+        "backend": "civilian-quad-aircraft-regional.v3",
+        "completed": 2,
+        "seconds": 5.66,
+        "airborneSeconds": 5.1,
+        "peakMetres": 1.558,
+        "landingSpeedMps": 0,
+        "landingTiltDegrees": 0,
+        "transitions": [
+          [1, 112],
+          [2, 283]
+        ],
+        "support": "course-boundary-y-min"
+      },
+      {
+        "aircraft": "pavo20-pro-ii-o4-4s",
+        "mode": "acro",
+        "backend": "civilian-quad-aircraft-regional.v3",
+        "completed": 2,
+        "seconds": 5.8,
+        "airborneSeconds": 5.32,
+        "peakMetres": 1.536,
+        "landingSpeedMps": 0,
+        "landingTiltDegrees": 0,
+        "transitions": [
+          [1, 106],
+          [2, 290]
+        ],
+        "support": "course-boundary-y-min"
+      },
+      {
+        "aircraft": "pavo20-pro-ii-o4-4s",
+        "mode": "self-level",
+        "backend": "civilian-quad-aircraft-regional.v3",
+        "completed": 2,
+        "seconds": 5.8,
+        "airborneSeconds": 5.32,
+        "peakMetres": 1.536,
+        "landingSpeedMps": 0,
+        "landingTiltDegrees": 0,
+        "transitions": [
+          [1, 106],
+          [2, 290]
+        ],
+        "support": "course-boundary-y-min"
+      },
+      {
+        "aircraft": "smart35-analog",
+        "mode": "acro",
+        "backend": "civilian-quad-aircraft-regional.v3",
+        "completed": 2,
+        "seconds": 5.8,
+        "airborneSeconds": 5.32,
+        "peakMetres": 1.536,
+        "landingSpeedMps": 0,
+        "landingTiltDegrees": 0,
+        "transitions": [
+          [1, 106],
+          [2, 290]
+        ],
+        "support": "course-boundary-y-min"
+      },
+      {
+        "aircraft": "smart35-analog",
+        "mode": "self-level",
+        "backend": "civilian-quad-aircraft-regional.v3",
+        "completed": 2,
+        "seconds": 5.8,
+        "airborneSeconds": 5.32,
+        "peakMetres": 1.536,
+        "landingSpeedMps": 0,
+        "landingTiltDegrees": 0.09,
+        "transitions": [
+          [1, 106],
+          [2, 290]
+        ],
+        "support": "course-boundary-y-min"
+      },
+      {
+        "aircraft": "nazgul-eco-xl5-v11",
+        "mode": "acro",
+        "backend": "civilian-quad-aircraft-regional.v3",
+        "completed": 2,
+        "seconds": 5.86,
+        "airborneSeconds": 5.38,
+        "peakMetres": 1.53,
+        "landingSpeedMps": 0,
+        "landingTiltDegrees": 0,
+        "transitions": [
+          [1, 106],
+          [2, 293]
+        ],
+        "support": "course-boundary-y-min"
+      },
+      {
+        "aircraft": "nazgul-eco-xl5-v11",
+        "mode": "self-level",
+        "backend": "civilian-quad-aircraft-regional.v3",
+        "completed": 2,
+        "seconds": 5.86,
+        "airborneSeconds": 5.38,
+        "peakMetres": 1.53,
+        "landingSpeedMps": 0,
+        "landingTiltDegrees": 0,
+        "transitions": [
+          [1, 106],
+          [2, 293]
+        ],
+        "support": "course-boundary-y-min"
+      },
+      {
+        "aircraft": "mach-r5-sport-2050",
+        "mode": "acro",
+        "backend": "civilian-quad-aircraft-regional.v3",
+        "completed": 2,
+        "seconds": 5.86,
+        "airborneSeconds": 5.4,
+        "peakMetres": 1.522,
+        "landingSpeedMps": 0,
+        "landingTiltDegrees": 0,
+        "transitions": [
+          [1, 105],
+          [2, 293]
+        ],
+        "support": "course-boundary-y-min"
+      },
+      {
+        "aircraft": "mach-r5-sport-2050",
+        "mode": "self-level",
+        "backend": "civilian-quad-aircraft-regional.v3",
+        "completed": 2,
+        "seconds": 5.86,
+        "airborneSeconds": 5.4,
+        "peakMetres": 1.522,
+        "landingSpeedMps": 0,
+        "landingTiltDegrees": 0,
+        "transitions": [
+          [1, 105],
+          [2, 293]
+        ],
+        "support": "course-boundary-y-min"
+      },
+      {
+        "aircraft": "rekon7-pro-o3",
+        "mode": "acro",
+        "backend": "civilian-quad-aircraft-regional.v3",
+        "completed": 2,
+        "seconds": 5.88,
+        "airborneSeconds": 5.38,
+        "peakMetres": 1.534,
+        "landingSpeedMps": 0,
+        "landingTiltDegrees": 0,
+        "transitions": [
+          [1, 107],
+          [2, 294]
+        ],
+        "support": "course-boundary-y-min"
+      },
+      {
+        "aircraft": "rekon7-pro-o3",
+        "mode": "self-level",
+        "backend": "civilian-quad-aircraft-regional.v3",
+        "completed": 2,
+        "seconds": 5.9,
+        "airborneSeconds": 5.4,
+        "peakMetres": 1.534,
+        "landingSpeedMps": 0,
+        "landingTiltDegrees": 0,
+        "transitions": [
+          [1, 107],
+          [2, 295]
+        ],
+        "support": "course-boundary-y-min"
+      },
+      {
+        "aircraft": "chimera7-pro-v2-o4",
+        "mode": "acro",
+        "backend": "civilian-quad-aircraft-regional.v3",
+        "completed": 2,
+        "seconds": 5.84,
+        "airborneSeconds": 5.32,
+        "peakMetres": 1.539,
+        "landingSpeedMps": 0,
+        "landingTiltDegrees": 0,
+        "transitions": [
+          [1, 107],
+          [2, 292]
+        ],
+        "support": "course-boundary-y-min"
+      },
+      {
+        "aircraft": "chimera7-pro-v2-o4",
+        "mode": "self-level",
+        "backend": "civilian-quad-aircraft-regional.v3",
+        "completed": 2,
+        "seconds": 5.84,
+        "airborneSeconds": 5.32,
+        "peakMetres": 1.539,
+        "landingSpeedMps": 0,
+        "landingTiltDegrees": 0,
+        "transitions": [
+          [1, 107],
+          [2, 292]
+        ],
+        "support": "course-boundary-y-min"
+      },
+      {
+        "aircraft": "helion-pro-o4",
+        "mode": "acro",
+        "backend": "civilian-quad-aircraft-regional.v3",
+        "completed": 2,
+        "seconds": 5.88,
+        "airborneSeconds": 5.34,
+        "peakMetres": 1.538,
+        "landingSpeedMps": 0,
+        "landingTiltDegrees": 0,
+        "transitions": [
+          [1, 108],
+          [2, 294]
+        ],
+        "support": "course-boundary-y-min"
+      },
+      {
+        "aircraft": "helion-pro-o4",
+        "mode": "self-level",
+        "backend": "civilian-quad-aircraft-regional.v3",
+        "completed": 2,
+        "seconds": 5.88,
+        "airborneSeconds": 5.34,
+        "peakMetres": 1.538,
+        "landingSpeedMps": 0,
+        "landingTiltDegrees": 0,
+        "transitions": [
+          [1, 108],
+          [2, 294]
+        ],
+        "support": "course-boundary-y-min"
+      },
+      {
+        "aircraft": "holybro-x650-v2",
+        "mode": "acro",
+        "backend": "civilian-quad-aircraft-regional.v3",
+        "completed": 2,
+        "seconds": 5.94,
+        "airborneSeconds": 5.28,
+        "peakMetres": 1.548,
+        "landingSpeedMps": 0,
+        "landingTiltDegrees": 0,
+        "transitions": [
+          [1, 110],
+          [2, 297]
+        ],
+        "support": "course-boundary-y-min"
+      },
+      {
+        "aircraft": "holybro-x650-v2",
+        "mode": "self-level",
+        "backend": "civilian-quad-aircraft-regional.v3",
+        "completed": 2,
+        "seconds": 5.86,
+        "airborneSeconds": 5.24,
+        "peakMetres": 1.548,
+        "landingSpeedMps": 0,
+        "landingTiltDegrees": 0,
+        "transitions": [
+          [1, 110],
+          [2, 293]
+        ],
+        "support": "course-boundary-y-min"
+      }
+    ],
+    "world": [
+      {
+        "kind": "aircraftMissionQualification",
+        "catalogRevision": 4,
+        "aircraft": "air65-ii-racing-2026",
+        "presetRevision": 1,
+        "mode": "self-level",
+        "course": "beginner-01",
+        "missionModel": "aircraft-course-practice.v2",
+        "passed": true,
+        "completedObjectives": 3,
+        "elapsedSeconds": 6.14,
+        "airborneSeconds": 4.68,
+        "maximumHeightMetres": 1.122,
+        "maxGroundedLandingSpeedMps": 0.674,
+        "maxGroundedLandingTiltDegrees": 0.26,
+        "objectiveTransitions": [
+          {
+            "completedObjectives": 1,
+            "seconds": 0.8
+          },
+          {
+            "completedObjectives": 2,
+            "seconds": 2.6
+          },
+          {
+            "completedObjectives": 3,
+            "seconds": 6.14
+          }
+        ],
+        "missionSupport": "$floor",
+        "physicalSupport": "course-boundary-y-min",
+        "backend": "civilian-quad-aircraft-regional.v3",
+        "physicsFrequencyHz": 1000,
+        "aircraftIdentity": "c61d09f7c9d3a953",
+        "controllerIdentity": "6a2b9a719e64115c",
+        "responseIdentity": "4b9042ea35b7f12d",
+        "physicalConfigurationIdentity": "a68c8e3b62215049"
+      },
+      {
+        "kind": "aircraftMissionQualification",
+        "catalogRevision": 4,
+        "aircraft": "air65-ii-racing-2026",
+        "presetRevision": 1,
+        "mode": "acro",
+        "course": "beginner-01",
+        "missionModel": "aircraft-course-practice.v2",
+        "passed": true,
+        "completedObjectives": 3,
+        "elapsedSeconds": 6.14,
+        "airborneSeconds": 4.68,
+        "maximumHeightMetres": 1.122,
+        "maxGroundedLandingSpeedMps": 0.674,
+        "maxGroundedLandingTiltDegrees": 0.65,
+        "objectiveTransitions": [
+          {
+            "completedObjectives": 1,
+            "seconds": 0.8
+          },
+          {
+            "completedObjectives": 2,
+            "seconds": 2.6
+          },
+          {
+            "completedObjectives": 3,
+            "seconds": 6.14
+          }
+        ],
+        "missionSupport": "$floor",
+        "physicalSupport": "course-boundary-y-min",
+        "backend": "civilian-quad-aircraft-regional.v3",
+        "physicsFrequencyHz": 1000,
+        "aircraftIdentity": "c61d09f7c9d3a953",
+        "controllerIdentity": "6a2b9a719e64115c",
+        "responseIdentity": "4b9042ea35b7f12d",
+        "physicalConfigurationIdentity": "7e3ea549dde756e7"
+      },
+      {
+        "kind": "aircraftMissionQualification",
+        "catalogRevision": 4,
+        "aircraft": "meteor75-analog-2022",
+        "presetRevision": 1,
+        "mode": "self-level",
+        "course": "beginner-01",
+        "missionModel": "aircraft-course-practice.v2",
+        "passed": true,
+        "completedObjectives": 3,
+        "elapsedSeconds": 6.04,
+        "airborneSeconds": 4.56,
+        "maximumHeightMetres": 1.128,
+        "maxGroundedLandingSpeedMps": 0.038,
+        "maxGroundedLandingTiltDegrees": 0.09,
+        "objectiveTransitions": [
+          {
+            "completedObjectives": 1,
+            "seconds": 0.8
+          },
+          {
+            "completedObjectives": 2,
+            "seconds": 2.62
+          },
+          {
+            "completedObjectives": 3,
+            "seconds": 6.04
+          }
+        ],
+        "missionSupport": "$floor",
+        "physicalSupport": "course-boundary-y-min",
+        "backend": "civilian-quad-aircraft-regional.v3",
+        "physicsFrequencyHz": 1000,
+        "aircraftIdentity": "59fd4bf2d9127db9",
+        "controllerIdentity": "cd65674761c01135",
+        "responseIdentity": "4b9042ea35b7f12d",
+        "physicalConfigurationIdentity": "4b6b72d0e51582a7"
+      },
+      {
+        "kind": "aircraftMissionQualification",
+        "catalogRevision": 4,
+        "aircraft": "meteor75-analog-2022",
+        "presetRevision": 1,
+        "mode": "acro",
+        "course": "beginner-01",
+        "missionModel": "aircraft-course-practice.v2",
+        "passed": true,
+        "completedObjectives": 3,
+        "elapsedSeconds": 6.04,
+        "airborneSeconds": 4.56,
+        "maximumHeightMetres": 1.128,
+        "maxGroundedLandingSpeedMps": 0.161,
+        "maxGroundedLandingTiltDegrees": 2.51,
+        "objectiveTransitions": [
+          {
+            "completedObjectives": 1,
+            "seconds": 0.8
+          },
+          {
+            "completedObjectives": 2,
+            "seconds": 2.62
+          },
+          {
+            "completedObjectives": 3,
+            "seconds": 6.04
+          }
+        ],
+        "missionSupport": "$floor",
+        "physicalSupport": "course-boundary-y-min",
+        "backend": "civilian-quad-aircraft-regional.v3",
+        "physicsFrequencyHz": 1000,
+        "aircraftIdentity": "59fd4bf2d9127db9",
+        "controllerIdentity": "cd65674761c01135",
+        "responseIdentity": "4b9042ea35b7f12d",
+        "physicalConfigurationIdentity": "8fd92a6aadc23c9d"
+      },
+      {
+        "kind": "aircraftMissionQualification",
+        "catalogRevision": 4,
+        "aircraft": "meteor75-pro-matrix",
+        "presetRevision": 1,
+        "mode": "self-level",
+        "course": "beginner-01",
+        "missionModel": "aircraft-course-practice.v2",
+        "passed": true,
+        "completedObjectives": 3,
+        "elapsedSeconds": 6.16,
+        "airborneSeconds": 4.68,
+        "maximumHeightMetres": 1.121,
+        "maxGroundedLandingSpeedMps": 0.64,
+        "maxGroundedLandingTiltDegrees": 0,
+        "objectiveTransitions": [
+          {
+            "completedObjectives": 1,
+            "seconds": 0.8
+          },
+          {
+            "completedObjectives": 2,
+            "seconds": 2.6
+          },
+          {
+            "completedObjectives": 3,
+            "seconds": 6.16
+          }
+        ],
+        "missionSupport": "$floor",
+        "physicalSupport": "course-boundary-y-min",
+        "backend": "civilian-quad-aircraft-regional.v3",
+        "physicsFrequencyHz": 1000,
+        "aircraftIdentity": "a1af0afcc0de1f66",
+        "controllerIdentity": "791be99b54bacb9f",
+        "responseIdentity": "4b9042ea35b7f12d",
+        "physicalConfigurationIdentity": "9e544f9f23baf171"
+      },
+      {
+        "kind": "aircraftMissionQualification",
+        "catalogRevision": 4,
+        "aircraft": "meteor75-pro-matrix",
+        "presetRevision": 1,
+        "mode": "acro",
+        "course": "beginner-01",
+        "missionModel": "aircraft-course-practice.v2",
+        "passed": true,
+        "completedObjectives": 3,
+        "elapsedSeconds": 6.16,
+        "airborneSeconds": 4.68,
+        "maximumHeightMetres": 1.121,
+        "maxGroundedLandingSpeedMps": 0.64,
+        "maxGroundedLandingTiltDegrees": 0.12,
+        "objectiveTransitions": [
+          {
+            "completedObjectives": 1,
+            "seconds": 0.8
+          },
+          {
+            "completedObjectives": 2,
+            "seconds": 2.6
+          },
+          {
+            "completedObjectives": 3,
+            "seconds": 6.16
+          }
+        ],
+        "missionSupport": "$floor",
+        "physicalSupport": "course-boundary-y-min",
+        "backend": "civilian-quad-aircraft-regional.v3",
+        "physicsFrequencyHz": 1000,
+        "aircraftIdentity": "a1af0afcc0de1f66",
+        "controllerIdentity": "791be99b54bacb9f",
+        "responseIdentity": "4b9042ea35b7f12d",
+        "physicalConfigurationIdentity": "3cc9fd43976399fb"
+      },
+      {
+        "kind": "aircraftMissionQualification",
+        "catalogRevision": 4,
+        "aircraft": "meteor85-analog",
+        "presetRevision": 1,
+        "mode": "self-level",
+        "course": "beginner-01",
+        "missionModel": "aircraft-course-practice.v2",
+        "passed": true,
+        "completedObjectives": 3,
+        "elapsedSeconds": 6.16,
+        "airborneSeconds": 4.68,
+        "maximumHeightMetres": 1.114,
+        "maxGroundedLandingSpeedMps": 0.063,
+        "maxGroundedLandingTiltDegrees": 0.33,
+        "objectiveTransitions": [
+          {
+            "completedObjectives": 1,
+            "seconds": 0.8
+          },
+          {
+            "completedObjectives": 2,
+            "seconds": 2.58
+          },
+          {
+            "completedObjectives": 3,
+            "seconds": 6.16
+          }
+        ],
+        "missionSupport": "$floor",
+        "physicalSupport": "course-boundary-y-min",
+        "backend": "civilian-quad-aircraft-regional.v3",
+        "physicsFrequencyHz": 1000,
+        "aircraftIdentity": "573fe7e7ca7a50ac",
+        "controllerIdentity": "9cce8fe95d1d14ef",
+        "responseIdentity": "4b9042ea35b7f12d",
+        "physicalConfigurationIdentity": "84411e96c7721269"
+      },
+      {
+        "kind": "aircraftMissionQualification",
+        "catalogRevision": 4,
+        "aircraft": "meteor85-analog",
+        "presetRevision": 1,
+        "mode": "acro",
+        "course": "beginner-01",
+        "missionModel": "aircraft-course-practice.v2",
+        "passed": true,
+        "completedObjectives": 3,
+        "elapsedSeconds": 6.16,
+        "airborneSeconds": 4.68,
+        "maximumHeightMetres": 1.114,
+        "maxGroundedLandingSpeedMps": 0.633,
+        "maxGroundedLandingTiltDegrees": 0,
+        "objectiveTransitions": [
+          {
+            "completedObjectives": 1,
+            "seconds": 0.8
+          },
+          {
+            "completedObjectives": 2,
+            "seconds": 2.58
+          },
+          {
+            "completedObjectives": 3,
+            "seconds": 6.16
+          }
+        ],
+        "missionSupport": "$floor",
+        "physicalSupport": "course-boundary-y-min",
+        "backend": "civilian-quad-aircraft-regional.v3",
+        "physicsFrequencyHz": 1000,
+        "aircraftIdentity": "573fe7e7ca7a50ac",
+        "controllerIdentity": "9cce8fe95d1d14ef",
+        "responseIdentity": "4b9042ea35b7f12d",
+        "physicalConfigurationIdentity": "f3e76f6c8388b0bb"
+      },
+      {
+        "kind": "aircraftMissionQualification",
+        "catalogRevision": 4,
+        "aircraft": "mobula8-analog-2023",
+        "presetRevision": 1,
+        "mode": "self-level",
+        "course": "beginner-01",
+        "missionModel": "aircraft-course-practice.v2",
+        "passed": true,
+        "completedObjectives": 3,
+        "elapsedSeconds": 6.16,
+        "airborneSeconds": 4.68,
+        "maximumHeightMetres": 1.113,
+        "maxGroundedLandingSpeedMps": 0.602,
+        "maxGroundedLandingTiltDegrees": 0,
+        "objectiveTransitions": [
+          {
+            "completedObjectives": 1,
+            "seconds": 0.8
+          },
+          {
+            "completedObjectives": 2,
+            "seconds": 2.58
+          },
+          {
+            "completedObjectives": 3,
+            "seconds": 6.16
+          }
+        ],
+        "missionSupport": "$floor",
+        "physicalSupport": "course-boundary-y-min",
+        "backend": "civilian-quad-aircraft-regional.v3",
+        "physicsFrequencyHz": 1000,
+        "aircraftIdentity": "45d42ea9adbca476",
+        "controllerIdentity": "2bb679311244fd2c",
+        "responseIdentity": "4b9042ea35b7f12d",
+        "physicalConfigurationIdentity": "d0907324cba0009e"
+      },
+      {
+        "kind": "aircraftMissionQualification",
+        "catalogRevision": 4,
+        "aircraft": "mobula8-analog-2023",
+        "presetRevision": 1,
+        "mode": "acro",
+        "course": "beginner-01",
+        "missionModel": "aircraft-course-practice.v2",
+        "passed": true,
+        "completedObjectives": 3,
+        "elapsedSeconds": 6.16,
+        "airborneSeconds": 4.68,
+        "maximumHeightMetres": 1.113,
+        "maxGroundedLandingSpeedMps": 0.634,
+        "maxGroundedLandingTiltDegrees": 0.12,
+        "objectiveTransitions": [
+          {
+            "completedObjectives": 1,
+            "seconds": 0.8
+          },
+          {
+            "completedObjectives": 2,
+            "seconds": 2.58
+          },
+          {
+            "completedObjectives": 3,
+            "seconds": 6.16
+          }
+        ],
+        "missionSupport": "$floor",
+        "physicalSupport": "course-boundary-y-min",
+        "backend": "civilian-quad-aircraft-regional.v3",
+        "physicsFrequencyHz": 1000,
+        "aircraftIdentity": "45d42ea9adbca476",
+        "controllerIdentity": "2bb679311244fd2c",
+        "responseIdentity": "4b9042ea35b7f12d",
+        "physicalConfigurationIdentity": "40c83a891701a38c"
+      },
+      {
+        "kind": "aircraftMissionQualification",
+        "catalogRevision": 4,
+        "aircraft": "cetus-x-betaflight-2022",
+        "presetRevision": 1,
+        "mode": "self-level",
+        "course": "beginner-01",
+        "missionModel": "aircraft-course-practice.v2",
+        "passed": true,
+        "completedObjectives": 3,
+        "elapsedSeconds": 6.16,
+        "airborneSeconds": 4.66,
+        "maximumHeightMetres": 1.121,
+        "maxGroundedLandingSpeedMps": 0.194,
+        "maxGroundedLandingTiltDegrees": 2.68,
+        "objectiveTransitions": [
+          {
+            "completedObjectives": 1,
+            "seconds": 0.8
+          },
+          {
+            "completedObjectives": 2,
+            "seconds": 2.6
+          },
+          {
+            "completedObjectives": 3,
+            "seconds": 6.16
+          }
+        ],
+        "missionSupport": "$floor",
+        "physicalSupport": "course-boundary-y-min",
+        "backend": "civilian-quad-aircraft-regional.v3",
+        "physicsFrequencyHz": 1000,
+        "aircraftIdentity": "637a0580e6f0136a",
+        "controllerIdentity": "28145ed95fe59609",
+        "responseIdentity": "4b9042ea35b7f12d",
+        "physicalConfigurationIdentity": "7a381d7bb7ef152f"
+      },
+      {
+        "kind": "aircraftMissionQualification",
+        "catalogRevision": 4,
+        "aircraft": "cetus-x-betaflight-2022",
+        "presetRevision": 1,
+        "mode": "acro",
+        "course": "beginner-01",
+        "missionModel": "aircraft-course-practice.v2",
+        "passed": true,
+        "completedObjectives": 3,
+        "elapsedSeconds": 6.16,
+        "airborneSeconds": 4.66,
+        "maximumHeightMetres": 1.121,
+        "maxGroundedLandingSpeedMps": 0.114,
+        "maxGroundedLandingTiltDegrees": 0.29,
+        "objectiveTransitions": [
+          {
+            "completedObjectives": 1,
+            "seconds": 0.8
+          },
+          {
+            "completedObjectives": 2,
+            "seconds": 2.6
+          },
+          {
+            "completedObjectives": 3,
+            "seconds": 6.16
+          }
+        ],
+        "missionSupport": "$floor",
+        "physicalSupport": "course-boundary-y-min",
+        "backend": "civilian-quad-aircraft-regional.v3",
+        "physicsFrequencyHz": 1000,
+        "aircraftIdentity": "637a0580e6f0136a",
+        "controllerIdentity": "28145ed95fe59609",
+        "responseIdentity": "4b9042ea35b7f12d",
+        "physicalConfigurationIdentity": "a2bd9a461c45ef11"
+      },
+      {
+        "kind": "aircraftMissionQualification",
+        "catalogRevision": 4,
+        "aircraft": "protos-16-aio-1-0",
+        "presetRevision": 1,
+        "mode": "self-level",
+        "course": "beginner-01",
+        "missionModel": "aircraft-course-practice.v2",
+        "passed": true,
+        "completedObjectives": 3,
+        "elapsedSeconds": 6.08,
+        "airborneSeconds": 4.54,
+        "maximumHeightMetres": 1.139,
+        "maxGroundedLandingSpeedMps": 0.064,
+        "maxGroundedLandingTiltDegrees": 0.09,
+        "objectiveTransitions": [
+          {
+            "completedObjectives": 1,
+            "seconds": 0.8
+          },
+          {
+            "completedObjectives": 2,
+            "seconds": 2.7
+          },
+          {
+            "completedObjectives": 3,
+            "seconds": 6.08
+          }
+        ],
+        "missionSupport": "$floor",
+        "physicalSupport": "course-boundary-y-min",
+        "backend": "civilian-quad-aircraft-regional.v3",
+        "physicsFrequencyHz": 1000,
+        "aircraftIdentity": "1450dd8ebc961f6c",
+        "controllerIdentity": "e08c04d43d9c4fa9",
+        "responseIdentity": "ac45438a844c9f8e",
+        "physicalConfigurationIdentity": "2d55c54f055bb028"
+      },
+      {
+        "kind": "aircraftMissionQualification",
+        "catalogRevision": 4,
+        "aircraft": "protos-16-aio-1-0",
+        "presetRevision": 1,
+        "mode": "acro",
+        "course": "beginner-01",
+        "missionModel": "aircraft-course-practice.v2",
+        "passed": true,
+        "completedObjectives": 3,
+        "elapsedSeconds": 6.08,
+        "airborneSeconds": 4.54,
+        "maximumHeightMetres": 1.139,
+        "maxGroundedLandingSpeedMps": 0.642,
+        "maxGroundedLandingTiltDegrees": 0.7,
+        "objectiveTransitions": [
+          {
+            "completedObjectives": 1,
+            "seconds": 0.8
+          },
+          {
+            "completedObjectives": 2,
+            "seconds": 2.7
+          },
+          {
+            "completedObjectives": 3,
+            "seconds": 6.08
+          }
+        ],
+        "missionSupport": "$floor",
+        "physicalSupport": "course-boundary-y-min",
+        "backend": "civilian-quad-aircraft-regional.v3",
+        "physicsFrequencyHz": 1000,
+        "aircraftIdentity": "1450dd8ebc961f6c",
+        "controllerIdentity": "e08c04d43d9c4fa9",
+        "responseIdentity": "ac45438a844c9f8e",
+        "physicalConfigurationIdentity": "7ae21e28623f44f2"
+      },
+      {
+        "kind": "aircraftMissionQualification",
+        "catalogRevision": 4,
+        "aircraft": "pavo20-pro-ii-o4-4s",
+        "presetRevision": 1,
+        "mode": "self-level",
+        "course": "beginner-01",
+        "missionModel": "aircraft-course-practice.v2",
+        "passed": true,
+        "completedObjectives": 3,
+        "elapsedSeconds": 6.16,
+        "airborneSeconds": 4.68,
+        "maximumHeightMetres": 1.113,
+        "maxGroundedLandingSpeedMps": 0.059,
+        "maxGroundedLandingTiltDegrees": 0.09,
+        "objectiveTransitions": [
+          {
+            "completedObjectives": 1,
+            "seconds": 0.8
+          },
+          {
+            "completedObjectives": 2,
+            "seconds": 2.58
+          },
+          {
+            "completedObjectives": 3,
+            "seconds": 6.16
+          }
+        ],
+        "missionSupport": "$floor",
+        "physicalSupport": "course-boundary-y-min",
+        "backend": "civilian-quad-aircraft-regional.v3",
+        "physicsFrequencyHz": 1000,
+        "aircraftIdentity": "ef0554f4efe66aef",
+        "controllerIdentity": "571b78b06076e57f",
+        "responseIdentity": "ac45438a844c9f8e",
+        "physicalConfigurationIdentity": "efa54ce3a2bb2bab"
+      },
+      {
+        "kind": "aircraftMissionQualification",
+        "catalogRevision": 4,
+        "aircraft": "pavo20-pro-ii-o4-4s",
+        "presetRevision": 1,
+        "mode": "acro",
+        "course": "beginner-01",
+        "missionModel": "aircraft-course-practice.v2",
+        "passed": true,
+        "completedObjectives": 3,
+        "elapsedSeconds": 6.16,
+        "airborneSeconds": 4.68,
+        "maximumHeightMetres": 1.113,
+        "maxGroundedLandingSpeedMps": 0.634,
+        "maxGroundedLandingTiltDegrees": 0,
+        "objectiveTransitions": [
+          {
+            "completedObjectives": 1,
+            "seconds": 0.8
+          },
+          {
+            "completedObjectives": 2,
+            "seconds": 2.58
+          },
+          {
+            "completedObjectives": 3,
+            "seconds": 6.16
+          }
+        ],
+        "missionSupport": "$floor",
+        "physicalSupport": "course-boundary-y-min",
+        "backend": "civilian-quad-aircraft-regional.v3",
+        "physicsFrequencyHz": 1000,
+        "aircraftIdentity": "ef0554f4efe66aef",
+        "controllerIdentity": "571b78b06076e57f",
+        "responseIdentity": "ac45438a844c9f8e",
+        "physicalConfigurationIdentity": "077637cdb76b65c9"
+      },
+      {
+        "kind": "aircraftMissionQualification",
+        "catalogRevision": 4,
+        "aircraft": "smart35-analog",
+        "presetRevision": 1,
+        "mode": "self-level",
+        "course": "beginner-01",
+        "missionModel": "aircraft-course-practice.v2",
+        "passed": true,
+        "completedObjectives": 3,
+        "elapsedSeconds": 6.16,
+        "airborneSeconds": 4.68,
+        "maximumHeightMetres": 1.113,
+        "maxGroundedLandingSpeedMps": 0.022,
+        "maxGroundedLandingTiltDegrees": 0.36,
+        "objectiveTransitions": [
+          {
+            "completedObjectives": 1,
+            "seconds": 0.8
+          },
+          {
+            "completedObjectives": 2,
+            "seconds": 2.58
+          },
+          {
+            "completedObjectives": 3,
+            "seconds": 6.16
+          }
+        ],
+        "missionSupport": "$floor",
+        "physicalSupport": "course-boundary-y-min",
+        "backend": "civilian-quad-aircraft-regional.v3",
+        "physicsFrequencyHz": 1000,
+        "aircraftIdentity": "8663e95bf0a8a7e5",
+        "controllerIdentity": "12b71126ae38ebad",
+        "responseIdentity": "c57fb9f4934026fb",
+        "physicalConfigurationIdentity": "43e34842b4525fc6"
+      },
+      {
+        "kind": "aircraftMissionQualification",
+        "catalogRevision": 4,
+        "aircraft": "smart35-analog",
+        "presetRevision": 1,
+        "mode": "acro",
+        "course": "beginner-01",
+        "missionModel": "aircraft-course-practice.v2",
+        "passed": true,
+        "completedObjectives": 3,
+        "elapsedSeconds": 6.16,
+        "airborneSeconds": 4.68,
+        "maximumHeightMetres": 1.113,
+        "maxGroundedLandingSpeedMps": 0.63,
+        "maxGroundedLandingTiltDegrees": 3.45,
+        "objectiveTransitions": [
+          {
+            "completedObjectives": 1,
+            "seconds": 0.8
+          },
+          {
+            "completedObjectives": 2,
+            "seconds": 2.58
+          },
+          {
+            "completedObjectives": 3,
+            "seconds": 6.16
+          }
+        ],
+        "missionSupport": "$floor",
+        "physicalSupport": "course-boundary-y-min",
+        "backend": "civilian-quad-aircraft-regional.v3",
+        "physicsFrequencyHz": 1000,
+        "aircraftIdentity": "8663e95bf0a8a7e5",
+        "controllerIdentity": "12b71126ae38ebad",
+        "responseIdentity": "c57fb9f4934026fb",
+        "physicalConfigurationIdentity": "e1f669cacec5ef3c"
+      },
+      {
+        "kind": "aircraftMissionQualification",
+        "catalogRevision": 4,
+        "aircraft": "nazgul-eco-xl5-v11",
+        "presetRevision": 2,
+        "mode": "self-level",
+        "course": "beginner-01",
+        "missionModel": "aircraft-course-practice.v2",
+        "passed": true,
+        "completedObjectives": 3,
+        "elapsedSeconds": 6.16,
+        "airborneSeconds": 4.68,
+        "maximumHeightMetres": 1.104,
+        "maxGroundedLandingSpeedMps": 0.056,
+        "maxGroundedLandingTiltDegrees": 1.72,
+        "objectiveTransitions": [
+          {
+            "completedObjectives": 1,
+            "seconds": 0.8
+          },
+          {
+            "completedObjectives": 2,
+            "seconds": 2.56
+          },
+          {
+            "completedObjectives": 3,
+            "seconds": 6.16
+          }
+        ],
+        "missionSupport": "$floor",
+        "physicalSupport": "course-boundary-y-min",
+        "backend": "civilian-quad-aircraft-regional.v3",
+        "physicsFrequencyHz": 1000,
+        "aircraftIdentity": "56272055695d1515",
+        "controllerIdentity": "513ae479d6d9dcfd",
+        "responseIdentity": "c57fb9f4934026fb",
+        "physicalConfigurationIdentity": "b76ef536cbc41c30"
+      },
+      {
+        "kind": "aircraftMissionQualification",
+        "catalogRevision": 4,
+        "aircraft": "nazgul-eco-xl5-v11",
+        "presetRevision": 2,
+        "mode": "acro",
+        "course": "beginner-01",
+        "missionModel": "aircraft-course-practice.v2",
+        "passed": true,
+        "completedObjectives": 3,
+        "elapsedSeconds": 6.16,
+        "airborneSeconds": 4.68,
+        "maximumHeightMetres": 1.104,
+        "maxGroundedLandingSpeedMps": 0.624,
+        "maxGroundedLandingTiltDegrees": 0.76,
+        "objectiveTransitions": [
+          {
+            "completedObjectives": 1,
+            "seconds": 0.8
+          },
+          {
+            "completedObjectives": 2,
+            "seconds": 2.56
+          },
+          {
+            "completedObjectives": 3,
+            "seconds": 6.16
+          }
+        ],
+        "missionSupport": "$floor",
+        "physicalSupport": "course-boundary-y-min",
+        "backend": "civilian-quad-aircraft-regional.v3",
+        "physicsFrequencyHz": 1000,
+        "aircraftIdentity": "56272055695d1515",
+        "controllerIdentity": "513ae479d6d9dcfd",
+        "responseIdentity": "c57fb9f4934026fb",
+        "physicalConfigurationIdentity": "945d86ff98d52ba6"
+      },
+      {
+        "kind": "aircraftMissionQualification",
+        "catalogRevision": 4,
+        "aircraft": "mach-r5-sport-2050",
+        "presetRevision": 1,
+        "mode": "self-level",
+        "course": "beginner-01",
+        "missionModel": "aircraft-course-practice.v2",
+        "passed": true,
+        "completedObjectives": 3,
+        "elapsedSeconds": 6.16,
+        "airborneSeconds": 4.7,
+        "maximumHeightMetres": 1.098,
+        "maxGroundedLandingSpeedMps": 0.036,
+        "maxGroundedLandingTiltDegrees": 0.73,
+        "objectiveTransitions": [
+          {
+            "completedObjectives": 1,
+            "seconds": 0.8
+          },
+          {
+            "completedObjectives": 2,
+            "seconds": 2.54
+          },
+          {
+            "completedObjectives": 3,
+            "seconds": 6.16
+          }
+        ],
+        "missionSupport": "$floor",
+        "physicalSupport": "course-boundary-y-min",
+        "backend": "civilian-quad-aircraft-regional.v3",
+        "physicsFrequencyHz": 1000,
+        "aircraftIdentity": "d7c8f07c6f2eae5f",
+        "controllerIdentity": "e6ebf528af28689a",
+        "responseIdentity": "2ab0a61725c79aca",
+        "physicalConfigurationIdentity": "bf0e4303682e59b3"
+      },
+      {
+        "kind": "aircraftMissionQualification",
+        "catalogRevision": 4,
+        "aircraft": "mach-r5-sport-2050",
+        "presetRevision": 1,
+        "mode": "acro",
+        "course": "beginner-01",
+        "missionModel": "aircraft-course-practice.v2",
+        "passed": true,
+        "completedObjectives": 3,
+        "elapsedSeconds": 6.16,
+        "airborneSeconds": 4.7,
+        "maximumHeightMetres": 1.097,
+        "maxGroundedLandingSpeedMps": 0.071,
+        "maxGroundedLandingTiltDegrees": 2.9,
+        "objectiveTransitions": [
+          {
+            "completedObjectives": 1,
+            "seconds": 0.8
+          },
+          {
+            "completedObjectives": 2,
+            "seconds": 2.54
+          },
+          {
+            "completedObjectives": 3,
+            "seconds": 6.16
+          }
+        ],
+        "missionSupport": "$floor",
+        "physicalSupport": "course-boundary-y-min",
+        "backend": "civilian-quad-aircraft-regional.v3",
+        "physicsFrequencyHz": 1000,
+        "aircraftIdentity": "d7c8f07c6f2eae5f",
+        "controllerIdentity": "e6ebf528af28689a",
+        "responseIdentity": "2ab0a61725c79aca",
+        "physicalConfigurationIdentity": "eee1e0ce21c2f771"
+      },
+      {
+        "kind": "aircraftMissionQualification",
+        "catalogRevision": 4,
+        "aircraft": "rekon7-pro-o3",
+        "presetRevision": 1,
+        "mode": "self-level",
+        "course": "beginner-01",
+        "missionModel": "aircraft-course-practice.v2",
+        "passed": true,
+        "completedObjectives": 3,
+        "elapsedSeconds": 6.18,
+        "airborneSeconds": 4.66,
+        "maximumHeightMetres": 1.108,
+        "maxGroundedLandingSpeedMps": 0.056,
+        "maxGroundedLandingTiltDegrees": 1.21,
+        "objectiveTransitions": [
+          {
+            "completedObjectives": 1,
+            "seconds": 0.8
+          },
+          {
+            "completedObjectives": 2,
+            "seconds": 2.58
+          },
+          {
+            "completedObjectives": 3,
+            "seconds": 6.18
+          }
+        ],
+        "missionSupport": "$floor",
+        "physicalSupport": "course-boundary-y-min",
+        "backend": "civilian-quad-aircraft-regional.v3",
+        "physicsFrequencyHz": 1000,
+        "aircraftIdentity": "bd9cb3853450d10a",
+        "controllerIdentity": "59c83bdcf842e48f",
+        "responseIdentity": "ac45438a844c9f8e",
+        "physicalConfigurationIdentity": "908ca963b4d10c7a"
+      },
+      {
+        "kind": "aircraftMissionQualification",
+        "catalogRevision": 4,
+        "aircraft": "rekon7-pro-o3",
+        "presetRevision": 1,
+        "mode": "acro",
+        "course": "beginner-01",
+        "missionModel": "aircraft-course-practice.v2",
+        "passed": true,
+        "completedObjectives": 3,
+        "elapsedSeconds": 6.2,
+        "airborneSeconds": 4.68,
+        "maximumHeightMetres": 1.108,
+        "maxGroundedLandingSpeedMps": 0.59,
+        "maxGroundedLandingTiltDegrees": 0.65,
+        "objectiveTransitions": [
+          {
+            "completedObjectives": 1,
+            "seconds": 0.8
+          },
+          {
+            "completedObjectives": 2,
+            "seconds": 2.58
+          },
+          {
+            "completedObjectives": 3,
+            "seconds": 6.2
+          }
+        ],
+        "missionSupport": "$floor",
+        "physicalSupport": "course-boundary-y-min",
+        "backend": "civilian-quad-aircraft-regional.v3",
+        "physicsFrequencyHz": 1000,
+        "aircraftIdentity": "bd9cb3853450d10a",
+        "controllerIdentity": "59c83bdcf842e48f",
+        "responseIdentity": "ac45438a844c9f8e",
+        "physicalConfigurationIdentity": "1b91075a0abad3e8"
+      },
+      {
+        "kind": "aircraftMissionQualification",
+        "catalogRevision": 4,
+        "aircraft": "chimera7-pro-v2-o4",
+        "presetRevision": 1,
+        "mode": "self-level",
+        "course": "beginner-01",
+        "missionModel": "aircraft-course-practice.v2",
+        "passed": true,
+        "completedObjectives": 3,
+        "elapsedSeconds": 6.22,
+        "airborneSeconds": 4.68,
+        "maximumHeightMetres": 1.121,
+        "maxGroundedLandingSpeedMps": 0.042,
+        "maxGroundedLandingTiltDegrees": 0.65,
+        "objectiveTransitions": [
+          {
+            "completedObjectives": 1,
+            "seconds": 0.8
+          },
+          {
+            "completedObjectives": 2,
+            "seconds": 2.62
+          },
+          {
+            "completedObjectives": 3,
+            "seconds": 6.22
+          }
+        ],
+        "missionSupport": "$floor",
+        "physicalSupport": "course-boundary-y-min",
+        "backend": "civilian-quad-aircraft-regional.v3",
+        "physicsFrequencyHz": 1000,
+        "aircraftIdentity": "75505452ed824a31",
+        "controllerIdentity": "a7e8e0654f4dc4d7",
+        "responseIdentity": "ac45438a844c9f8e",
+        "physicalConfigurationIdentity": "a34335663087a953"
+      },
+      {
+        "kind": "aircraftMissionQualification",
+        "catalogRevision": 4,
+        "aircraft": "chimera7-pro-v2-o4",
+        "presetRevision": 1,
+        "mode": "acro",
+        "course": "beginner-01",
+        "missionModel": "aircraft-course-practice.v2",
+        "passed": true,
+        "completedObjectives": 3,
+        "elapsedSeconds": 6.22,
+        "airborneSeconds": 4.68,
+        "maximumHeightMetres": 1.121,
+        "maxGroundedLandingSpeedMps": 0.576,
+        "maxGroundedLandingTiltDegrees": 1.51,
+        "objectiveTransitions": [
+          {
+            "completedObjectives": 1,
+            "seconds": 0.8
+          },
+          {
+            "completedObjectives": 2,
+            "seconds": 2.62
+          },
+          {
+            "completedObjectives": 3,
+            "seconds": 6.22
+          }
+        ],
+        "missionSupport": "$floor",
+        "physicalSupport": "course-boundary-y-min",
+        "backend": "civilian-quad-aircraft-regional.v3",
+        "physicsFrequencyHz": 1000,
+        "aircraftIdentity": "75505452ed824a31",
+        "controllerIdentity": "a7e8e0654f4dc4d7",
+        "responseIdentity": "ac45438a844c9f8e",
+        "physicalConfigurationIdentity": "4f3583b53b324c85"
+      },
+      {
+        "kind": "aircraftMissionQualification",
+        "catalogRevision": 4,
+        "aircraft": "helion-pro-o4",
+        "presetRevision": 1,
+        "mode": "self-level",
+        "course": "beginner-01",
+        "missionModel": "aircraft-course-practice.v2",
+        "passed": true,
+        "completedObjectives": 3,
+        "elapsedSeconds": 6.24,
+        "airborneSeconds": 4.68,
+        "maximumHeightMetres": 1.117,
+        "maxGroundedLandingSpeedMps": 0.062,
+        "maxGroundedLandingTiltDegrees": 0.74,
+        "objectiveTransitions": [
+          {
+            "completedObjectives": 1,
+            "seconds": 0.8
+          },
+          {
+            "completedObjectives": 2,
+            "seconds": 2.62
+          },
+          {
+            "completedObjectives": 3,
+            "seconds": 6.24
+          }
+        ],
+        "missionSupport": "$floor",
+        "physicalSupport": "course-boundary-y-min",
+        "backend": "civilian-quad-aircraft-regional.v3",
+        "physicsFrequencyHz": 1000,
+        "aircraftIdentity": "83feab6ccd25d0d0",
+        "controllerIdentity": "203a53d58af8cc67",
+        "responseIdentity": "ac45438a844c9f8e",
+        "physicalConfigurationIdentity": "ea8d87ac7891334d"
+      },
+      {
+        "kind": "aircraftMissionQualification",
+        "catalogRevision": 4,
+        "aircraft": "helion-pro-o4",
+        "presetRevision": 1,
+        "mode": "acro",
+        "course": "beginner-01",
+        "missionModel": "aircraft-course-practice.v2",
+        "passed": true,
+        "completedObjectives": 3,
+        "elapsedSeconds": 6.24,
+        "airborneSeconds": 4.68,
+        "maximumHeightMetres": 1.117,
+        "maxGroundedLandingSpeedMps": 0.029,
+        "maxGroundedLandingTiltDegrees": 0.2,
+        "objectiveTransitions": [
+          {
+            "completedObjectives": 1,
+            "seconds": 0.8
+          },
+          {
+            "completedObjectives": 2,
+            "seconds": 2.62
+          },
+          {
+            "completedObjectives": 3,
+            "seconds": 6.24
+          }
+        ],
+        "missionSupport": "$floor",
+        "physicalSupport": "course-boundary-y-min",
+        "backend": "civilian-quad-aircraft-regional.v3",
+        "physicsFrequencyHz": 1000,
+        "aircraftIdentity": "83feab6ccd25d0d0",
+        "controllerIdentity": "203a53d58af8cc67",
+        "responseIdentity": "ac45438a844c9f8e",
+        "physicalConfigurationIdentity": "92b0579357f7db97"
+      },
+      {
+        "kind": "aircraftMissionQualification",
+        "catalogRevision": 4,
+        "aircraft": "holybro-x650-v2",
+        "presetRevision": 1,
+        "mode": "self-level",
+        "course": "beginner-01",
+        "missionModel": "aircraft-course-practice.v2",
+        "passed": true,
+        "completedObjectives": 3,
+        "elapsedSeconds": 6.28,
+        "airborneSeconds": 4.64,
+        "maximumHeightMetres": 1.134,
+        "maxGroundedLandingSpeedMps": 0.049,
+        "maxGroundedLandingTiltDegrees": 0.48,
+        "objectiveTransitions": [
+          {
+            "completedObjectives": 1,
+            "seconds": 0.8
+          },
+          {
+            "completedObjectives": 2,
+            "seconds": 2.7
+          },
+          {
+            "completedObjectives": 3,
+            "seconds": 6.28
+          }
+        ],
+        "missionSupport": "$floor",
+        "physicalSupport": "course-boundary-y-min",
+        "backend": "civilian-quad-aircraft-regional.v3",
+        "physicsFrequencyHz": 1000,
+        "aircraftIdentity": "25a28ae8ee13b5bb",
+        "controllerIdentity": "d467cd4ec406f60c",
+        "responseIdentity": "be1f69048c054000",
+        "physicalConfigurationIdentity": "804bfb7e2820f7e2"
+      },
+      {
+        "kind": "aircraftMissionQualification",
+        "catalogRevision": 4,
+        "aircraft": "holybro-x650-v2",
+        "presetRevision": 1,
+        "mode": "acro",
+        "course": "beginner-01",
+        "missionModel": "aircraft-course-practice.v2",
+        "passed": true,
+        "completedObjectives": 3,
+        "elapsedSeconds": 6.26,
+        "airborneSeconds": 4.62,
+        "maximumHeightMetres": 1.134,
+        "maxGroundedLandingSpeedMps": 0.049,
+        "maxGroundedLandingTiltDegrees": 0.59,
+        "objectiveTransitions": [
+          {
+            "completedObjectives": 1,
+            "seconds": 0.8
+          },
+          {
+            "completedObjectives": 2,
+            "seconds": 2.7
+          },
+          {
+            "completedObjectives": 3,
+            "seconds": 6.26
+          }
+        ],
+        "missionSupport": "$floor",
+        "physicalSupport": "course-boundary-y-min",
+        "backend": "civilian-quad-aircraft-regional.v3",
+        "physicsFrequencyHz": 1000,
+        "aircraftIdentity": "25a28ae8ee13b5bb",
+        "controllerIdentity": "d467cd4ec406f60c",
+        "responseIdentity": "be1f69048c054000",
+        "physicalConfigurationIdentity": "7e9875737215dc94"
+      }
+    ]
+  },
+  "rejectedProposal": {
+    "shipped": false,
+    "runtimeSha256": "fff2bc398f79554a5eefce0ccecb1c472b866d0cc1c1cd3967ec7aaf74baeea6",
+    "summary": {
+      "v3": 37.02580726983157,
+      "v2Same": 0.8030990313875424,
+      "v2Own": 0.8030990313875424,
+      "v3V2": 33.30865046382097,
+      "firstPhysicalDifference": 278,
+      "firstGroundedDifference": 280,
+      "firstThrottleDifference": 281,
+      "completed": {
+        "v3": 317,
+        "v2Same": 311,
+        "v2Own": 307,
+        "v3V2": 316
+      }
+    },
+    "firstPrematureSupportAfterSubstep": 2774,
+    "consumedAtSubstep": 2775,
+    "currentShapeDistancesMetres": [
+      0.00008082491694949567, 0.00008903196430765092, 0.000027776335628004745,
+      0.000045632696128450334, 0.00012115019490011036
+    ],
+    "upwardVelocityMps": 0.08707914501428604,
+    "cause": "Positive current-pose gap was incorrectly admitted as supplemental support, clearing the grounded controller integral one substep early; native normals were near unit/upward and actual body tilt increased."
+  },
+  "correctedAt500Hz": {
+    "summary": {
+      "v3": 0.8030990313875424,
+      "v2Same": 0.8030990313875424,
+      "v2Own": 0.8030990313875424,
+      "v3V2": 0.8030990313875424,
+      "firstPhysicalDifference": 0,
+      "firstGroundedDifference": 0,
+      "firstThrottleDifference": 0,
+      "completed": {
+        "v3": 307,
+        "v2Same": 307,
+        "v2Own": 307,
+        "v3V2": 307
+      }
+    },
+    "complete400RowsEqual": true,
+    "scope": "Same ordinary input commands; mission rows include raw position, orientation, velocity, grounded state and support. Physical hashes intentionally differ by backend identity."
+  },
+  "initial500HzGate": {
+    "sourceRevision": "4ea49fe9cc3ec008234c7c5bf38419029f812647",
+    "qualified": false,
+    "reason": "Nazgul 1 m hard drop exceeded 3 mm ground penetration at 500 Hz; fixed 1000 Hz was the lowest frequency passing all gates.",
+    "comparison": [
+      {
+        "backendVersion": 2,
+        "frequency": 500,
+        "minimumSupportYMetres": -0.0040846251155782914
+      },
+      {
+        "backendVersion": 2,
+        "frequency": 1000,
+        "minimumSupportYMetres": -0.0004280796566962092
+      },
+      {
+        "backendVersion": 2,
+        "frequency": 2000,
+        "minimumSupportYMetres": -0.00041853669932073734
+      },
+      {
+        "backendVersion": 3,
+        "frequency": 500,
+        "minimumSupportYMetres": -0.0040846251155782914
+      },
+      {
+        "backendVersion": 3,
+        "frequency": 1000,
+        "minimumSupportYMetres": -0.0004280796566962092
+      },
+      {
+        "backendVersion": 3,
+        "frequency": 2000,
+        "minimumSupportYMetres": -0.00041853669932073734
+      }
+    ],
+    "sameInputTraceEquality": [
+      {
+        "frequency": 500,
+        "traceEqualsV2": true
+      },
+      {
+        "frequency": 1000,
+        "traceEqualsV2": true
+      },
+      {
+        "frequency": 2000,
+        "traceEqualsV2": true
+      }
+    ]
+  },
+  "evidenceInputs": [
+    {
+      "localPath": "/private/tmp/fpv-r20-qualification-965962775.json",
+      "sha256": "3a5c329b10b6f1f28ee58c3f4b1f46178f3790264e395fd5c91b0c6caccb42e0"
+    },
+    {
+      "localPath": "/private/tmp/fpv-r20-sustained-68f9a3936.json",
+      "sha256": "90fa94ed03779acddedbb252bb233204f8827a5d8b7cf6d3933ed3dbf9821b84"
+    },
+    {
+      "localPath": "/private/tmp/fpv-r20-sustained-regional-68f9a3936.json",
+      "sha256": "bd8e0489c5647f5d62b7245f6b9fa8dcdc1dab356bc543ae650b1a78b6b4d481"
+    },
+    {
+      "localPath": "/private/tmp/fpv-r20-rejected-per-part-proposal.patch",
+      "sha256": "f8136fc14e9f25180e6aef0127ec7df6ad1bbf758e2d3c73c86869ebb2d04aef"
+    },
+    {
+      "localPath": "/private/tmp/fpv-r20-air65-version-comparison.json",
+      "sha256": "db12d47e62c8b375fcc00609244fab3c564b2920af726c3492e16122473ede23"
+    },
+    {
+      "localPath": "/private/tmp/fpv-r20-air65-substep-observation.json",
+      "sha256": "2a511f97c7d09923f458bc14047ecd810efa376797e4fadc5ac3f722f209b64c"
+    },
+    {
+      "localPath": "/private/tmp/fpv-r20-air65-gap-observation.json",
+      "sha256": "5d50cbb11847a3fd9b7366a8730458ab1ebbb2bcf05f9ae888d7cbe035954640"
+    },
+    {
+      "localPath": "/private/tmp/fpv-r20-air65-overlap-comparison.json",
+      "sha256": "43076254259f49602915744ea096b8aaba9bebba549e8a4c735fbe21ed4abb6a"
+    },
+    {
+      "localPath": "/private/tmp/fpv-r20-nazgul-drop-comparison.json",
+      "sha256": "b0b022e07e2ed7720bab15d9660efbf36bc5fedbe1645e7fbc482c7893b7c0f6"
+    },
+    {
+      "localPath": "/private/tmp/fpv-r20-qualification-4ea49fe9c.json",
+      "sha256": "9beb980419a0a959c9ce3537bcc7604a3affe62eb4cd1ff22d9e9e7885730729"
+    },
+    {
+      "localPath": "/private/tmp/fpv-r11e-centered-academy-contact.json",
+      "sha256": "01fed4833355c2335ac37b8e0a39a624c6779f51247ea92b78f64a22965d8981"
+    },
+    {
+      "localPath": "/private/tmp/fpv-r20-live-manifold-observation.json",
+      "sha256": "e75c61717ae76d674ecc66d90baf2eef037b01e99d60cf11e7f27f2b52f0dd95"
+    }
+  ],
+  "limitations": [
+    "Focused core tests ran before their source commit; the clean committed numerical/proof/sustained checks are separately identified.",
+    "Sixty mission cases cover two authored courses, not every map/objective/aircraft combination.",
+    "Synthetic contact boundary tests hold the solver and stale manifold reporting while using the native current-shape query; they are not ordinary flight evidence.",
+    "The rejected contact proposal was never shipped; current-v3 and old-v2 comparison traces at 500 Hz must not be confused with final 1,000 Hz trajectories.",
+    "Numerical precision and direct-client replay are not measured real-aircraft, browser, device, native or public-site qualification."
+  ]
+}

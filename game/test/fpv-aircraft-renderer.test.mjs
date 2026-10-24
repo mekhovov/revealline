@@ -6,6 +6,7 @@ import { parse } from 'acorn';
 import * as THREE from '../../optional-practice/civilian-fpv/vendor/three.module.js';
 import {
   buildPhysicalAircraftVisual,
+  createAircraftReferenceVisual,
   createFlightViewFrame,
   createCombatSurfaceAttachments,
   combatWeaponVisualOffset,
@@ -482,6 +483,183 @@ test('new civilian whoops use original guarded geometry, distinct canopies and c
     }
   }
   assert.equal(colors.size, 2);
+});
+
+const presentation = (id = 'meteor75-analog-2022', end = 2) => ({
+  format: 'AircraftCoursePresentation.v1',
+  aircraft: createPresetConfiguration(id).aircraft,
+  completedAtTick: end,
+  pathStride: end === 2 ? 1 : 65536,
+  sourceSampleCount: end + 1,
+  maxPathSamples: 8192,
+  path:
+    end === 2
+      ? [
+          [0, 1, 2, 3, 0, 0, 0, 1],
+          [1, 2, 3, 4, 0, 0, 0, 1],
+          [2, 3, 4, 5, 0, 0, 0, 1],
+        ]
+      : [
+          [0, 1, 2, 3, 0, 0, 0, 1],
+          [end, 3, 4, 5, 0, 0, 0, 1],
+        ],
+});
+function referenceVisual({ fail = false, failRelease = () => false } = {}) {
+  const parent = new THREE.Group(),
+    live = new Set(),
+    disposed = new Set();
+  const legacy = new THREE.Mesh(new THREE.BoxGeometry(1, 1, 1), new THREE.MeshBasicMaterial());
+  legacy.name = 'legacy-pb';
+  parent.add(legacy);
+  const own = (resource) => {
+    live.add(resource);
+    resource.addEventListener('dispose', () => {
+      live.delete(resource);
+      disposed.add(resource);
+    });
+    return resource;
+  };
+  const ref = createAircraftReferenceVisual({
+    parent,
+    material: (color, extras) => own(new THREE.MeshStandardMaterial({ color, ...extras })),
+    mesh: (shape, paint, group) => {
+      own(shape);
+      const part = new THREE.Mesh(shape, paint);
+      group.add(part);
+      if (fail) throw new Error('preview build failed');
+      return part;
+    },
+    release: (group) => {
+      if (failRelease()) throw new Error('preview cleanup failed');
+      const owned = new Set(group.userData.ownedMaterials ?? []);
+      group.traverse((part) => {
+        if (part.geometry) owned.add(part.geometry);
+        if (part.material) owned.add(part.material);
+      });
+      for (const item of owned) item.dispose();
+      group.userData.ownedMaterials = [];
+      group.clear();
+    },
+  });
+  return {
+    ref,
+    parent,
+    legacy,
+    live,
+    disposed,
+    root: parent.getObjectByName('aircraft-practice-reference'),
+  };
+}
+test('all aircraft reference models use metre COM poses, exact rotor geometry and independent resources', () => {
+  for (const preset of listAircraftPresets()) {
+    const f = referenceVisual(),
+      source = presentation(preset.id),
+      aircraft = structuredClone(source.aircraft);
+    assert.equal(f.ref.set(source), true);
+    source.path[1][1] = 999;
+    source.aircraft.geometry.propellerRadius = 999;
+    f.ref.draw(1, { view: 'chase' });
+    f.parent.updateMatrixWorld(true);
+    assert.deepEqual(f.ref.snapshot().pose.position, [2, 3, 4]);
+    assert.equal(f.ref.snapshot().aircraftId, preset.id);
+    assert.equal(f.root.visible, true);
+    const rotors = [];
+    f.root.traverse((part) => {
+      if (part.userData.spin) rotors.push(part);
+    });
+    assert.equal(rotors.length, 4);
+    for (const [index, rotor] of rotors.entries()) {
+      const world = rotor.getWorldPosition(new THREE.Vector3());
+      for (const [axis, origin] of [
+        ['x', 2],
+        ['y', 3],
+        ['z', 4],
+      ])
+        close(
+          world[axis],
+          origin + aircraft.geometry.rotors[index].position[axis],
+          preset.id + axis,
+        );
+      close(rotor.rotation.y, 0.72 * rotor.userData.spin, 'physical spin direction');
+    }
+    f.ref.draw(1, { view: 'chase', reducedMotion: true });
+    for (const rotor of rotors) assert.equal(rotor.rotation.y, 0);
+    const count = f.live.size;
+    assert.ok(count > 0);
+    f.ref.set(presentation(preset.id));
+    assert.equal(f.live.size, count, 'replacement releases old resources');
+    f.ref.clear();
+    assert.equal(f.live.size, 0);
+    assert.ok(f.disposed.size > count);
+    assert.equal(f.legacy.parent, f.parent);
+    assert.equal(f.legacy.material.opacity, 1);
+    assert.equal(f.ref.snapshot().samples, 0);
+    assert.equal(f.root.visible, false);
+  }
+});
+test('reference orientation/COM, overlap, long clocks, finish hold and clear are presentation only', () => {
+  const f = referenceVisual(),
+    source = presentation('holybro-x650-v2', 40000);
+  const q = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0, 1, 0), Math.PI / 2);
+  source.path[1].splice(4, 4, ...q.toArray());
+  f.ref.set(source);
+  f.ref.draw(50000, { view: 'chase' });
+  assert.deepEqual(f.ref.snapshot().pose.position, [3, 4, 5]);
+  assert.equal(f.ref.snapshot().pose.finished, true);
+  assert.equal(f.ref.snapshot().pose.tick, 40000);
+  f.parent.updateMatrixWorld(true);
+  const rotor = [];
+  f.root.traverse((p) => {
+    if (p.userData.spin) rotor.push(p);
+  });
+  const p = source.aircraft.geometry.rotors[0].position;
+  const expected = new THREE.Vector3(p.x, p.y, p.z)
+    .applyQuaternion(q)
+    .add(new THREE.Vector3(3, 4, 5));
+  assert.ok(rotor[0].getWorldPosition(new THREE.Vector3()).distanceTo(expected) < 1e-8);
+  const camera = new THREE.PerspectiveCamera();
+  camera.position.set(3, 4, 5);
+  f.ref.draw(40000, { camera, view: 'fpv' });
+  assert.equal(f.root.visible, false);
+  camera.position.set(30, 40, 50);
+  f.ref.draw(40000, { camera, view: 'fpv' });
+  assert.equal(f.root.visible, true);
+  f.ref.draw(40000, { camera, view: 'editor' });
+  assert.equal(f.root.visible, false);
+  const before = f.ref.snapshot();
+  assert.throws(() => f.ref.set({ ...source, path: [] }), /presentation/);
+  assert.deepEqual(f.ref.snapshot(), before, 'invalid replacement retains the accepted visual');
+  f.ref.clear();
+  f.ref.draw(1);
+  assert.equal(f.ref.snapshot().samples, 0);
+  const failed = referenceVisual({ fail: true });
+  assert.equal(failed.ref.set(presentation()), false);
+  assert.equal(failed.live.size, 0);
+  assert.equal(failed.ref.snapshot().samples, 0);
+});
+
+test('optional reference draw and cleanup failures cannot escape into flight rendering', () => {
+  const f = referenceVisual();
+  f.ref.set(presentation());
+  f.root.position.fromArray = () => {
+    throw new Error('presentation failure');
+  };
+  assert.doesNotThrow(() => f.ref.draw(1, { view: 'chase' }));
+  assert.equal(f.ref.active(), false);
+  assert.equal(f.root.visible, false);
+  assert.equal(f.live.size, 0);
+  let failRelease = false;
+  const g = referenceVisual({ failRelease: () => failRelease });
+  g.ref.set(presentation());
+  failRelease = true;
+  assert.doesNotThrow(() => g.ref.clear());
+  assert.equal(g.ref.active(), false);
+  assert.equal(g.root.visible, false);
+  assert.equal(g.root.children.length, 0);
+  const allocated = g.live.size;
+  assert.equal(g.ref.set(presentation()), false);
+  assert.equal(g.live.size, allocated, 'failed cleanup prevents further optional allocations');
+  assert.equal(g.legacy.parent, g.parent);
 });
 
 test('close chase camera preserves heading through roll, clamps distance and respects collision resolution', () => {

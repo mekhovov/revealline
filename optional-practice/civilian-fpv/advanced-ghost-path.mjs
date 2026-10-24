@@ -1,3 +1,5 @@
+import { validateAircraftPhysics } from './aircraft-physics.mjs';
+
 // Ghost geometry is a bounded visual summary, never replay verification data.
 export const MAX_GHOST_PATH_SAMPLES = 8192;
 
@@ -83,4 +85,50 @@ export function sampleGhostPath(path, tick) {
     ...a.slice(1, 4).map((value, i) => value + fraction * (b[i + 1] - value)),
     ...q.map((value) => value / norm),
   ];
+}
+
+/** Owned visual summary only; this envelope grants no replay or scoring authority. */
+export function validateAircraftCoursePresentation(source) {
+  const {
+    aircraft,
+    completedAtTick: tick,
+    path,
+    pathStride: stride,
+    sourceSampleCount: count,
+  } = source ?? {};
+  if (
+    source?.format !== 'AircraftCoursePresentation.v1' ||
+    source.maxPathSamples !== MAX_GHOST_PATH_SAMPLES ||
+    !Number.isSafeInteger(tick) ||
+    tick < 0 ||
+    !Number.isSafeInteger(tick + 1) ||
+    count !== tick + 1 ||
+    !Number.isSafeInteger(stride) ||
+    stride < 1 ||
+    2 ** Math.floor(Math.log2(stride)) !== stride ||
+    !Array.isArray(path) ||
+    path.length > MAX_GHOST_PATH_SAMPLES ||
+    path.length !== Math.floor(tick / stride) + 1 + Number(Boolean(tick % stride)) ||
+    Array.from(path).some((point, index) => {
+      if (
+        !Array.isArray(point) ||
+        point.length !== 8 ||
+        !Array.from(point).every(Number.isFinite) ||
+        point[0] !== (index === path.length - 1 ? tick : index * stride)
+      )
+        return true;
+      const norm = Math.hypot(...point.slice(4));
+      return !Number.isFinite(norm) || norm < 1e-12;
+    })
+  )
+    throw new Error('Invalid aircraft course presentation');
+  return {
+    format: source.format,
+    aircraft: validateAircraftPhysics(aircraft),
+    completedAtTick: tick,
+    path: path.map((point) => [...point]),
+    pathStride: stride,
+    sourceSampleCount: count,
+    maxPathSamples: MAX_GHOST_PATH_SAMPLES,
+  };
 }

@@ -51,7 +51,11 @@ function fixture(t, options = {}) {
     getSettingsOpen: () => settings.open,
     getOwner: () => visit,
     isOwnerCurrent: (owner) => owner === visit,
-    onOpen: () => calls.opened++,
+    onOpen: () => {
+      calls.opened++;
+      options.onOpen?.({ settings });
+    },
+    onPresentationChange: options.onPresentationChange,
     coreURL: new URL('https://game.invalid/game/'),
     loadRecovery: () => {
       calls.loads++;
@@ -583,4 +587,71 @@ test('About uses plain localized copy through its nested title and returns focus
   assert.equal(heading.textContent, translate('interface:nativeMenu.creatorTools'));
   assert.equal(h.calls.persist, 0);
   assert.equal(h.calls.readers, 0);
+});
+
+test('global tools notify committed native child opens, not rejected or already-open attempts', async (t) => {
+  let presentations = 0;
+  const h = fixture(t, {
+    onPresentationChange: () => {
+      presentations++;
+      assert.equal(Boolean(h.api.root()?.open), true);
+    },
+  });
+  const opener = h.api.controls.about.querySelector('button');
+  opener.focus();
+  opener.click();
+  assert.equal(presentations, 1);
+  opener.click();
+  assert.equal(presentations, 1);
+  h.api.back();
+  opener.click();
+  assert.equal(presentations, 2);
+  h.api.back();
+  h.settings.close();
+  opener.click();
+  assert.equal(presentations, 2);
+  assert.equal(h.api.root(), null);
+});
+
+test('global tools forward committed Recovery presentation from the Data category', async (t) => {
+  let presentations = 0;
+  const h = fixture(t, { onPresentationChange: () => presentations++ });
+  await h.doc.getElementById('profile-recovery-open').onclick();
+  assert.equal(h.api.root()?.id, 'profile-recovery-dialog');
+  assert.equal(presentations, 1);
+  h.api.back();
+  await settle();
+  assert.equal(h.api.root(), null);
+  assert.equal(presentations, 1);
+});
+
+test('global tools preserve a rejected pre-open owner without a presentation notification', (t) => {
+  let presentations = 0;
+  const h = fixture(t, {
+    onOpen: ({ settings }) => settings.close(),
+    onPresentationChange: () => presentations++,
+  });
+  h.api.controls.about.querySelector('button').click();
+  assert.equal(h.api.root(), null);
+  assert.equal(presentations, 0);
+});
+
+test('global tools notify a committed open even when native focus immediately returns to Settings', (t) => {
+  let presentations = 0;
+  const h = fixture(t, { onPresentationChange: () => presentations++ });
+  const create = h.doc.createElement.bind(h.doc);
+  h.doc.createElement = (tag) => {
+    const node = create(tag);
+    if (tag === 'dialog') {
+      const show = node.showModal.bind(node);
+      node.showModal = () => {
+        show();
+        node.close();
+      };
+    }
+    return node;
+  };
+  h.api.controls.about.querySelector('button').click();
+  assert.equal(h.api.root(), null);
+  assert.equal(presentations, 1);
 });

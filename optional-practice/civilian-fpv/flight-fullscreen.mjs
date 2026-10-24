@@ -1380,14 +1380,14 @@ export function mountFlightPractice({
 }
 
 // BEGIN GENERATED SHARED MODE SHELL
+import*as simGlobalData from'../../game/data-json.mjs';
+import*as simGlobalActorCatalog from'../../game/hunt/actor-catalog.mjs';
+import*as simGlobalActorKit from'../../game/hunt/industrial-soldier-kit.mjs';
+import*as simGlobalArtReview from'../../game/ui/art-review-navigation.mjs';
 import*as simGlobalI18n from'../../game/i18n/index.mjs';
 import*as simGlobalThemes from'../../game/presentation/theme-system.mjs';
 import*as simGlobalActorPreferences from'../../game/hunt/preferences.mjs';
-import*as simGlobalDataJson from'../../game/data-json.mjs';
-import*as simGlobalActorCatalog from'../../game/hunt/actor-catalog.mjs';
-import*as simGlobalSoldierKit from'../../game/hunt/industrial-soldier-kit.mjs';
-import*as simGlobalArtNavigation from'../../game/ui/art-review-navigation.mjs';
-import*as simGlobalAppearanceControls from'../../game/ui/enemy-appearance-controls.mjs';
+import*as simGlobalEnemyAppearance from'../../game/ui/enemy-appearance-controls.mjs';
 const sharedGlobalSettings=(()=>{
 const modules=Object.create(null);
 modules['game/mission-library/library.mjs']=(()=>{
@@ -1851,27 +1851,10 @@ const versionPattern= /^v?(0|[1-9]\d{0,4})\.(0|[1-9]\d{0,4})\.(0|[1-9]\d{0,4})$/
 // IDs keep the original edition identity. This is an alias, never a new edition.
 const publicSlugs=Object.freeze({'droneaid-nl-community':'droneaid'});
 
-function editionIdentityId(selector){
-validateEditionId(selector);
-return Object.keys(publicSlugs).find((id)=>publicSlugs[id]===selector)??selector;
-}
-
-function editionPublicSlug(editionId){
-validateEditionId(editionId);
-return publicSlugs[editionId]??editionId;
-}
-
 function validateEditionId(editionId){
 if(typeof editionId!=='string'||editionId.length>64|| !editionPattern.test(editionId))
 throw new TypeError('Invalid edition identity.');
 return editionId;
-}
-
-function editionIdFromLocation(locationRef=globalThis.location){
-if(!locationRef?.href)return undefined;
-const path=new URL(locationRef.href).pathname;
-const match= /\/editions\/([^/]+)\//.exec(path);
-return match?editionIdentityId(match[1]):undefined;
 }
 
 function resolveEditionContext({editionId,version}={}){
@@ -1900,120 +1883,20 @@ externalJournalKey:`${profileKey}.external-chapter-journal.v1`,
 });
 }
 
-function parseEditionChannel(channel){
-if(typeof channel!=='string')return null;
-const match=
-/^edition-([a-z][a-z0-9]*(?:-[a-z0-9]+)*)\.(dev|release-(v?\d+\.\d+\.\d+))$/.exec(channel);
-if(!match)return null;
-try{
-return resolveEditionContext({
-editionId:match[1],
-version:match[2]==='dev'?'DEV':match[3],
-});
-}catch{
-return null;
-}
-}
-
-function installedStateKey(editionId){
-return editionId===undefined
-?'revealline.installed-app.v1'
-:`revealline.installed-app.edition-${validateEditionId(editionId)}.v1`;
-}
-
 /** Stable explicit manifest IDs avoid origin-wide './' identity collisions. */
-function editionAppIdentity({editionId,basePath='/'}={}){
-validateEditionId(editionId);
-if(typeof basePath!=='string'|| !/^\/(?:[A-Za-z0-9_-]+\/)*$/.test(basePath))
-throw new TypeError('Edition base path must be an absolute directory path.');
-const root=`${basePath}editions/${editionPublicSlug(editionId)}/`;
-return Object.freeze({
-id:`${basePath}editions/${editionId}/`,
-start_url:`${root}app/`,
-scope:root,
-});
-}
 
 /** A launcher may select only a retained immutable release of its own edition.
      * Relative current.json pointers are resolved against the document, never a
      * stored origin. This module also ships inside the stable launcher directory. */
-function validateCompanyInstallationReference(value,{editionId,baseURL,editionRoot}={}){
-validateEditionId(editionId);
-if(
-!value||
-typeof value!=='object'||
-Array.isArray(value)||
-value.editionId!==editionId||
-!versionPattern.test(value.version)||
-typeof value.version!=='string'||
-typeof value.scope!=='string'||
-value.scope.length>2048||
-value.entry!=='game/company.html'||
-(value.buildId!==undefined&& !/^[a-f0-9]{64}$/.test(value.buildId))
-)
-throw new TypeError('Edition installation identity differs.');
-const base=new URL(baseURL),
-scope=new URL(value.scope,base);
-const root=
-typeof editionRoot==='string'
-? /^(\/(?:[A-Za-z0-9_-]+\/)*)editions\/([^/]+)\/$/.exec(editionRoot)
-:null;
-const aliases=[editionId,editionPublicSlug(editionId)];
-if(
-!root||
-!aliases.includes(root[2])||
-!/^https?:$/.test(base.protocol)||
-scope.origin!==base.origin||
-scope.username||
-scope.password||
-scope.search||
-scope.hash||
-!aliases.some(
-(slug)=>
-scope.pathname===
-`${root[1]}editions/${slug}/releases/v${value.version.replace(/^v/,'')}/site/`,
-)
-)
-throw new TypeError('Install from the matching published edition address.');
-return Object.freeze({
-editionId,
-version:value.version,
-scope:scope.href,
-entry:value.entry,
-...(value.buildId===undefined?{}:{buildId:value.buildId}),
-});
-}
 
 /** Hash caches may share bytes; ownership and removal must remain separate. */
-function officialContentOwner({editionId,packId,revision}={}){
-if(
-typeof packId!=='string'||
-!editionPattern.test(packId)||
-packId.length>100||
-typeof revision!=='string'||
-!/^[A-Za-z0-9][A-Za-z0-9.-]{0,63}$/.test(revision)
-)
-throw new TypeError('Invalid official content ownership.');
-return`${editionId===undefined?'default':validateEditionId(editionId)}:${packId}:${revision}`;
-}
 
-return{
-editionIdentityId,
-editionPublicSlug,
-validateEditionId,
-editionIdFromLocation,
-resolveEditionContext,
-parseEditionChannel,
-installedStateKey,
-editionAppIdentity,
-validateCompanyInstallationReference,
-officialContentOwner,
-};
+return{validateEditionId,resolveEditionContext};
 })();
 modules['game/mission-library/goal-preferences.mjs']=(()=>{
-const boundedJSON=simGlobalDataJson['boundedJSON'];
-const exactKeys=simGlobalDataJson['exactKeys'];
-const required=simGlobalDataJson['required'];
+const boundedJSON=simGlobalData['boundedJSON'];
+const exactKeys=simGlobalData['exactKeys'];
+const required=simGlobalData['required'];
 const validateEditionId=modules['game/edition-context.mjs']['validateEditionId'];
 const LIBRARY_MODES=modules['game/mission-library/library.mjs']['LIBRARY_MODES'];
 
@@ -3942,10 +3825,10 @@ const JOURNEY_PROFILE_DATABASE='revealline-journey-v1';
 return{JOURNEY_PROFILE_DATABASE};
 })();
 modules['game/profile-storage.mjs']=(()=>{
-const boundedJSON=simGlobalDataJson['boundedJSON'];
-const canonicalJSON=simGlobalDataJson['canonicalJSON'];
-const exactKeys=simGlobalDataJson['exactKeys'];
-const required=simGlobalDataJson['required'];
+const boundedJSON=simGlobalData['boundedJSON'];
+const canonicalJSON=simGlobalData['canonicalJSON'];
+const exactKeys=simGlobalData['exactKeys'];
+const required=simGlobalData['required'];
 const JOURNEY_PROFILE_DATABASE=
 modules['game/profile-database.mjs']['JOURNEY_PROFILE_DATABASE'];
 
@@ -4218,10 +4101,10 @@ connection=null;
 return{validateTimeout,boundedOperation,createProfileRecordBackend};
 })();
 modules['game/enemy-stats.mjs']=(()=>{
-const boundedJSON=simGlobalDataJson['boundedJSON'];
-const dataIdentity=simGlobalDataJson['dataIdentity'];
-const exactKeys=simGlobalDataJson['exactKeys'];
-const required=simGlobalDataJson['required'];
+const boundedJSON=simGlobalData['boundedJSON'];
+const dataIdentity=simGlobalData['dataIdentity'];
+const exactKeys=simGlobalData['exactKeys'];
+const required=simGlobalData['required'];
 const createProfileRecordBackend=
 modules['game/profile-storage.mjs']['createProfileRecordBackend'];
 
@@ -4405,11 +4288,6 @@ return value;
 /** A locally played branch retains its visible run totals and replay boundary,
      * but cannot share receipt identity with another tab's continued simulation.
      * This pure helper neither awards counters nor retires an existing token. */
-function forkEnemyStatsSession(source,{randomId=uid}={}){
-const fork=validateEnemyStatsSession(source);
-fork.attemptId=randomId();
-return validateEnemyStatsSession(fork);
-}
 
 function add(table,key,n=1){
 const next=(table[key]??0)+n;
@@ -4891,16 +4769,15 @@ validateEnemyStats,
 inspectEnemyStatsBackup,
 mergeEnemyStats,
 validateEnemyStatsSession,
-forkEnemyStatsSession,
 createEnemyStats,
 createEnemyStatsHost,
 };
 })();
 modules['game/presentation/actor-animation.mjs']=(()=>{
-const boundedJSON=simGlobalDataJson['boundedJSON'];
-const exactKeys=simGlobalDataJson['exactKeys'];
-const required=simGlobalDataJson['required'];
-const stableId=simGlobalDataJson['stableId'];
+const boundedJSON=simGlobalData['boundedJSON'];
+const exactKeys=simGlobalData['exactKeys'];
+const required=simGlobalData['required'];
+const stableId=simGlobalData['stableId'];
 
 const ACTOR_ANIMATION_FORMAT='revealline-actor-animation.v1';
 const ACTOR_CLIPS=Object.freeze([
@@ -5114,7 +4991,7 @@ modules['game/presentation/actor-animation.mjs']['sampleActorAnimation'];
 const validateActorAnimation=
 modules['game/presentation/actor-animation.mjs']['validateActorAnimation'];
 const runtimeActorArtRevision=simGlobalActorPreferences['runtimeActorArtRevision'];
-const INDUSTRIAL_SOLDIER_KITS=simGlobalSoldierKit['INDUSTRIAL_SOLDIER_KITS'];
+const INDUSTRIAL_SOLDIER_KITS=simGlobalActorKit['INDUSTRIAL_SOLDIER_KITS'];
 const actorVisual=simGlobalActorCatalog['actorVisual'];
 const resolveActorFamily=simGlobalActorCatalog['resolveActorFamily'];
 /** Original overhead pixel rigs. The host owns time, facing and vulnerability;
@@ -6615,9 +6492,11 @@ const PAPER_COUNT=104;
 const GLINT_COUNT=16;
 // Keep the family IDs stable for existing presentation consumers. Each now
 // selects a paper palette; the firework-like bloom uses paper and stars only.
-const CONFETTI_TONES={'signal-clear':['accent','safe','paper','danger','accent','safe'],
+const CONFETTI_TONES={
+'signal-clear':['accent','safe','paper','danger','accent','safe'],
 'stitch-bloom':['accent','danger','paper','safe','danger','accent'],
-'neon-fireworks':['danger','safe','paper','accent','safe','danger']};
+'neon-fireworks':['danger','safe','paper','accent','safe','danger'],
+};
 // Stateless presentation randomness: sampling a frame never consumes gameplay
 // randomness, accumulates particles or depends on the rendering frame rate.
 function sample(seed,index,channel){
@@ -6644,17 +6523,7 @@ reduced:!!reduced,
 skipped:false,
 };
 }
-function advanceCelebration(state,dt,{paused=false,reduced=false}={}){
-if(!state)return null;
-if(!Number.isFinite(dt)||dt<0)
-throw new TypeError(t('interface:celebrationDtMustBeFiniteAndNonnegative'));
-if(reduced)return{...state,reduced:true,elapsed:state.duration};
-if(paused||state.elapsed>=state.duration)return state;
-return{...state,elapsed:Math.min(state.duration,state.elapsed+Math.min(dt,0.25))};
-}
-function skipCelebration(state){
-return state?{...state,elapsed:state.duration,skipped:true}:null;
-}
+
 function celebrationFrame(state){
 if(!state)
 return{
@@ -6785,8 +6654,6 @@ return{
 CELEBRATION_SECONDS,
 finaleKind,
 createCelebration,
-advanceCelebration,
-skipCelebration,
 celebrationFrame,
 drawCelebration,
 };
@@ -7229,7 +7096,7 @@ if(!doc.getElementById('continuous-play-style')){
 const style=doc.createElement('style');
 style.id='continuous-play-style';
 style.textContent=`
-.continuous-play-controls {display:flex;align-items:center;flex-wrap:wrap;gap:.35rem .65rem;min-width:0;max-width:100%;margin:0;font-size:.85rem;}
+.continuous-play-controls {display:flex;align-items:center;flex-wrap:wrap;gap:.35rem .65rem;min-width:0;max-width:100%;margin:0;font-size:calc(.85rem * var(--overflight-text-scale, 1));}
 .continuous-play-controls[hidden] {display:none!important;}
 .continuous-play-controls p {margin:0;overflow-wrap:anywhere;}
 .continuous-play-controls .button {min-height:44px;padding:.35rem .65rem;font-size:inherit;}
@@ -7350,19 +7217,10 @@ if(!TEXT_FACES.includes(value))throw new TypeError('Unsupported text style.');
 return value;
 }
 
-function canvasTextFonts(face,themeFonts,{useThemeFont=false}={}){
-if(resolveTextFace(face)==='plain')return PLAIN_CANVAS_FONTS;
-return Object.freeze({
-...themeFonts,
-ui:useThemeFont&&themeFonts?.ui?themeFonts.ui:PIXEL_CANVAS_UI,
-numeric:themeFonts?.numeric??"'Field Kit Mono', ui-monospace, monospace",
-});
-}
-
-return{TEXT_FACES,DEFAULT_TEXT_FACE,resolveTextFace,canvasTextFonts};
+return{TEXT_FACES,DEFAULT_TEXT_FACE,resolveTextFace};
 })();
 modules['game/text-size.mjs']=(()=>{
-const TEXT_SIZES=Object.freeze(['standard','large']);
+const TEXT_SIZES=Object.freeze(['standard','large','extra-large']);
 const DEFAULT_TEXT_SIZE='standard';
 
 function resolveTextSize(value){
@@ -7370,13 +7228,20 @@ if(!TEXT_SIZES.includes(value))throw new TypeError('Unsupported text size.');
 return value;
 }
 
-return{TEXT_SIZES,DEFAULT_TEXT_SIZE,resolveTextSize};
+/** Hosts explicitly opt into their additional layout. The established Large
+     * presentation remains every other host's fallback. */
+function effectiveTextSize(value,{extraLarge=false}={}){
+return resolveTextSize(value)==='extra-large'&& !extraLarge?'large':value;
+}
+
+return{TEXT_SIZES,DEFAULT_TEXT_SIZE,resolveTextSize,effectiveTextSize};
 })();
 modules['game/display-preferences.mjs']=(()=>{
 const DEFAULT_TEXT_FACE=modules['game/text-face.mjs']['DEFAULT_TEXT_FACE'];
 const resolveTextFace=modules['game/text-face.mjs']['resolveTextFace'];
 const DEFAULT_TEXT_SIZE=modules['game/text-size.mjs']['DEFAULT_TEXT_SIZE'];
 const resolveTextSize=modules['game/text-size.mjs']['resolveTextSize'];
+const effectiveTextSize=modules['game/text-size.mjs']['effectiveTextSize'];
 
 const DISPLAY_PREFERENCES_KEY='revealline.display.v1';
 const fields=['textFace','textSize','reducedEffects'];
@@ -7436,6 +7301,7 @@ window:eventTarget=globalThis,
 getStorage=()=>globalThis.localStorage,
 matchMedia=(query)=>eventTarget?.matchMedia?.(query),
 legacyPreferences,
+extraLarge=false,
 writable=()=>true,
 onWarning=()=>{},
 }={}){
@@ -7469,6 +7335,7 @@ stored= !!first.value;
 const initial=first.value??legacy(legacyPreferences);
 let state=Object.freeze({
 ...initial,
+effectiveTextSize:effectiveTextSize(initial.textSize,{extraLarge}),
 effectiveReducedEffects:initial.reducedEffects||systemReduced,
 revision:0,
 });
@@ -7491,6 +7358,7 @@ return state;
 const apply=(values)=>{
 state=Object.freeze({
 ...values,
+effectiveTextSize:effectiveTextSize(values.textSize,{extraLarge}),
 effectiveReducedEffects:values.reducedEffects||systemReduced,
 revision:state.revision+1,
 });
@@ -7927,8 +7795,7 @@ const BUILTIN_THEME_FAMILIES=simGlobalThemes['BUILTIN_THEME_FAMILIES'];
 const resolvePresentation=simGlobalThemes['resolvePresentation'];
 const mountThemeMaterialPreview=
 modules['game/ui/theme-material-preview.mjs']['mountThemeMaterialPreview'];
-const mountEnemyAppearanceControls=
-simGlobalAppearanceControls['mountEnemyAppearanceControls'];
+const mountEnemyAppearanceControls=simGlobalEnemyAppearance['mountEnemyAppearanceControls'];
 
 /** One immediate appearance choice; the host owns atomic loads and flight boundaries. */
 function attachThemeFamilyControls({
@@ -8189,8 +8056,101 @@ label.hidden=hidden;
 
 return{attachThemeFamilyControls};
 })();
+modules['game/ui/text-size-control.mjs']=(()=>{
+const resolveTextSize=modules['game/text-size.mjs']['resolveTextSize'];
+const localizedText=simGlobalI18n['localizedText'];
+const t=simGlobalI18n['t'];
+
+const notices=new WeakMap();
+const hostNotices=new WeakMap();
+let nextNotice=0;
+
+/** Read-only hosts acknowledge the fallback without creating another owner. */
+function renderTextSizeFallback(container,desired,{locale}={}){
+resolveTextSize(desired);
+if(!container)return;
+let notice=hostNotices.get(container);
+if(!notice&&desired==='extra-large'){
+notice=container.ownerDocument.createElement('p');
+notice.className='micro-note';
+notice.dataset.textSizeFallback='true';
+container.append(notice);
+hostNotices.set(container,notice);
+}
+if(notice){
+localizedText(notice,()=>
+t('interface:textSizeCompatibility.readOnlyFallback',{lng:locale}),
+);
+notice.hidden=desired!=='extra-large';
+}
+}
+
+/** Only an opted-in host offers the additional size; other hosts retain intent
+     * as a disabled choice. Never save, dispatch or move keyboard focus. */
+function renderTextSizeControl(control,desired,{locale,extraLarge=false}={}){
+resolveTextSize(desired);
+if(!control)return;
+let retained=control.querySelector('[data-text-size-retained]');
+let notice=notices.get(control);
+if(extraLarge||desired==='extra-large'){
+if(!retained){
+retained=control.ownerDocument.createElement('option');
+retained.value='extra-large';
+retained.dataset.textSizeRetained='true';
+control.append(retained);
+}
+retained.disabled= !extraLarge;
+localizedText(retained,()=>
+t(
+extraLarge
+?'interface:textSizeCompatibility.extraLarge'
+:'interface:textSizeCompatibility.retained',
+{lng:locale},
+),
+);
+if(!notice&& !extraLarge){
+notice=control.ownerDocument.createElement('span');
+notice.id=`${control.id||`text-size-${++nextNotice}`}-fallback`;
+notice.className='micro-note';
+notice.dataset.textSizeFallback='true';
+control.after(notice);
+notices.set(control,notice);
+}
+if(notice){
+localizedText(notice,()=>
+t('interface:textSizeCompatibility.fallback',{lng:locale}),
+);
+notice.hidden=extraLarge;
+}
+const descriptions=new Set(
+(control.getAttribute('aria-describedby')??'').split(/\s+/).filter(Boolean),
+);
+if(notice){
+if(extraLarge)descriptions.delete(notice.id);
+else descriptions.add(notice.id);
+}
+if(descriptions.size)
+control.setAttribute('aria-describedby',[...descriptions].join(' '));
+else control.removeAttribute('aria-describedby');
+}else{
+retained?.remove();
+if(notice){
+notice.hidden=true;
+const descriptions=(control.getAttribute('aria-describedby')??'')
+.split(/\s+/)
+.filter((value)=>value&&value!==notice.id);
+if(descriptions.length)control.setAttribute('aria-describedby',descriptions.join(' '));
+else control.removeAttribute('aria-describedby');
+}
+}
+control.value=desired;
+}
+
+return{renderTextSizeFallback,renderTextSizeControl};
+})();
 modules['game/ui/global-settings-view.mjs']=(()=>{
 const continuousPlayBindings=modules['game/ui/continuous-play.mjs']['continuousPlayBindings'];
+const renderTextSizeControl=modules['game/ui/text-size-control.mjs']['renderTextSizeControl'];
 // One logical settings inventory. Shared flow preferences have one lightweight
 // owner; hosts retain audio, simulation and profile lifecycle ownership.
 const GLOBAL_SETTINGS=Object.freeze(
@@ -8348,6 +8308,7 @@ function render(row){
 if(!row.input|| !row.binding)return;
 const value=row.binding.get();
 if(row.spec.type==='checkbox')row.input.checked= !!value;
+else if(row.spec.key==='textSize')renderTextSizeControl(row.input,value,{locale});
 else row.input.value=String(value);
 if(row.output)row.output.textContent=`${Math.round(Number(value)*100)}%`;
 const feedback=row.binding.feedback?.(locale),
@@ -8704,23 +8665,8 @@ return{mountGameplayAudioControls};
 })();
 modules['game/ui/movement-audio.mjs']=(()=>{
 const MOVEMENT_AUDIO_KEY='revealline.movement-audio.v1';
-function readMovementAudio(storage){
-try{
-storage??=globalThis.localStorage;
-const value=JSON.parse(storage?.getItem(MOVEMENT_AUDIO_KEY)??'null');
-return{
-enabled:typeof value?.enabled==='boolean'?value.enabled:true,
-volume:
-Number.isFinite(value?.volume)&&value.volume>=0&&value.volume<=1
-?value.volume
-:0.5,
-};
-}catch{
-return{enabled:true,volume:0.5};
-}
-}
 
-return{MOVEMENT_AUDIO_KEY,readMovementAudio};
+return{MOVEMENT_AUDIO_KEY};
 })();
 modules['game/ui/menu-audio.mjs']=(()=>{
 const mountGameplayAudioControls=
@@ -8746,13 +8692,7 @@ Number.isFinite(value?.volume)&&value.volume>=0&&value.volume<=1
 return{enabled:true,volume:0.35};
 }
 }
-function saveMenuAudio(value){
-try{
-globalThis.localStorage?.setItem(MENU_AUDIO_KEY,JSON.stringify(value));
-}catch{
-/* Session intent stays on Soundscape. */
-}
-}
+
 function attachMenuAudioSettings(sound,doc=globalThis.document,options={}){
 const menu=attachPreference(
 sound,
@@ -8880,7 +8820,7 @@ doc?.getElementById('settings-dialog')
 );
 }
 
-return{MENU_AUDIO_KEY,readMenuAudio,saveMenuAudio,attachMenuAudioSettings};
+return{MENU_AUDIO_KEY,readMenuAudio,attachMenuAudioSettings};
 })();
 return{
 createSimMissionLibrary:modules['game/mission-library/library.mjs']['createMissionLibrary'],
@@ -8937,7 +8877,7 @@ export const readSimRadioAudio=sharedGlobalSettings.readSimRadioAudio;
 export const SIM_RADIO_AUDIO_KEY=sharedGlobalSettings.SIM_RADIO_AUDIO_KEY;
 export const attachSimMenuAudioSettings=sharedGlobalSettings.attachSimMenuAudioSettings;
 export const readSimMenuAudio=sharedGlobalSettings.readSimMenuAudio;
-// Canonical source sha256: e35af79d78f4fea9f291249c562c676cbb2e1d7cca927290fd7bfe3e6925a432
+// Canonical source sha256: a878605004fbfd49d3809deb02e4081e808243f1a2a43d5499a981ff0e335055
 const sharedModeShell=(()=>{
 // Dependency-free presentation shared with bundled simulator builds.
 const GAME_MODE_ORDER=Object.freeze([
@@ -9213,6 +9153,7 @@ function attachSettingsPanels({
 root,
 document:doc=globalThis.document,
 beforeSelect=()=>false,
+onPresentationChange=()=>{},
 }={}){
 const list=root?.querySelector?.('.field-kit-settings-tabs'),
 records=[...(list?.querySelectorAll('[role="tab"]')??[])].map((tab)=>({
@@ -9226,9 +9167,15 @@ generation=0;
 const compact=()=>
 root?.classList?.contains('native-settings')&&
 (doc.defaultView?.innerWidth??doc.documentElement?.clientWidth??Infinity)<=700;
+let previousCompact=compact();
 function view(name){
-if(root?.classList?.contains('native-settings'))
+if(
+!root?.classList?.contains('native-settings')||
+root.getAttribute('data-settings-view')===name
+)
+return false;
 root.setAttribute('data-settings-view',name);
+return true;
 }
 const owned=(record)=> !destroyed&&owns(root,doc,list,record);
 const available=()=>records.filter((record)=>owned(record)&&enabled(record));
@@ -9249,12 +9196,18 @@ const ticket= ++generation,
 returnFocus=beforeSelect(next.tab)===true;
 // A host hook may retire this surface, disable the target or start a newer selection.
 if(ticket!==generation|| !owned(next)|| !enabled(next))return false;
+const selectionChanged=current!==next;
 paint(next);
 if(drill&&compact()){
-view('panel');
+const viewChanged=view('panel');
+if(selectionChanged||viewChanged)onPresentationChange();
+if(ticket!==generation|| !owned(next)|| !enabled(next)||current!==next)
+return false;
 if(!focusPanel())next.panel.focus?.();
 return true;
 }
+if(selectionChanged)onPresentationChange();
+if(ticket!==generation|| !owned(next)|| !enabled(next)||current!==next)return false;
 if(focus||returnFocus)next.tab.focus();
 return true;
 }
@@ -9264,8 +9217,10 @@ paint(initial.find(({tab})=>tab.getAttribute('aria-selected')==='true')||initial
 view('categories');
 const back=()=>{
 if(!destroyed&&compact()&&root.getAttribute('data-settings-view')==='panel'){
+const ticket= ++generation;
 view('categories');
-current?.tab.focus();
+onPresentationChange();
+if(ticket===generation&& !destroyed)current?.tab.focus();
 return true;
 }
 return false;
@@ -9280,6 +9235,7 @@ element.getClientRects().length&&
 doc.defaultView?.getComputedStyle(element)?.visibility!=='hidden';
 const restoreFocus=(opener)=>{
 if(!current|| !owned(current)|| !enabled(current))return false;
+const ticket= ++generation;
 // Reveal only the still-selected category. A retired/hidden control must
 // not change categories or be made available by closing a child tool.
 if(
@@ -9287,14 +9243,18 @@ current.panel.contains(opener)&&
 !opener.disabled&&
 !opener.closest('[hidden],[inert],[aria-hidden="true"]')
 ){
-if(compact())view('panel');
+if(compact()&&view('panel'))onPresentationChange();
+if(ticket!==generation||destroyed|| !current|| !owned(current)|| !enabled(current))
+return false;
 if(focusable(opener)){
 opener.focus({preventScroll:true});
 if(compact())opener.scrollIntoView?.({block:'nearest',inline:'nearest'});
 return true;
 }
 }
-view('categories');
+if(view('categories'))onPresentationChange();
+if(ticket!==generation||destroyed|| !current|| !owned(current)|| !enabled(current))
+return false;
 if(!focusable(current.tab))return false;
 current.tab.focus({preventScroll:true});
 if(compact())current.tab.scrollIntoView?.({block:'nearest',inline:'nearest'});
@@ -9323,13 +9283,27 @@ event.stopImmediatePropagation?.();
 };
 root?.addEventListener('click',backClick,true);
 const resize=()=>{
-if(destroyed|| !root?.contains(doc.activeElement))return;
-if(current?.panel.contains(doc.activeElement))view('panel');
-else if(list?.contains(doc.activeElement))view('categories');
+if(destroyed)return;
+// CSS can hide Data at the breakpoint without changing the selected panel
+// or view attribute. That owner change does not depend on current focus.
+const nextCompact=compact(),
+breakpointChanged=nextCompact!==previousCompact;
+previousCompact=nextCompact;
+const viewChanged= !root?.contains(doc.activeElement)
+?false
+:current?.panel.contains(doc.activeElement)
+?view('panel')
+:list?.contains(doc.activeElement)
+?view('categories')
+:false;
+if(breakpointChanged||(nextCompact&&viewChanged)){
+generation++;
+onPresentationChange();
+}
 };
 doc.defaultView?.addEventListener?.('resize',resize);
 function focusPanel(){
-if(!current|| !owned(current))return false;
+if(!current|| !owned(current)|| !enabled(current))return false;
 const target=[
 ...current.panel.querySelectorAll(
 'button,a[href],select,input:not([type="hidden"]),textarea,summary,[tabindex]',
@@ -9385,13 +9359,17 @@ primary:()=>(current&&owned(current)?current.tab:null),
 panel:()=>(current&&owned(current)?current.panel:null),
 focusCategories(){
 if(!current|| !owned(current)|| !enabled(current))return false;
-view('categories');
+const ticket= ++generation;
+if(view('categories'))onPresentationChange();
+if(ticket!==generation||destroyed|| !current|| !owned(current)|| !enabled(current))
+return false;
 current.tab.focus();
 return true;
 },
 focusPanel(){
-view('panel');
-return focusPanel();
+const ticket= ++generation;
+if(view('panel'))onPresentationChange();
+return ticket===generation&& !destroyed&&focusPanel();
 },
 back,
 destroy(){
@@ -9403,6 +9381,7 @@ root?.removeEventListener('cancel',cancel);
 root?.removeEventListener('click',backClick,true);
 doc.defaultView?.removeEventListener?.('resize',resize);
 removers.forEach((remove)=>remove());
+onPresentationChange();
 },
 });
 }
@@ -9455,6 +9434,7 @@ locale='en',
 setMenuIcon=()=>{},
 attachPanels,
 beforeSelect,
+onPresentationChange,
 }={}){
 const doc=root?.ownerDocument;
 if(!doc|| !content|| !root.contains(content)||typeof attachPanels!=='function')
@@ -9516,7 +9496,7 @@ layout.append(panel);
 rootClasses.forEach((name)=>root.classList.add(name));
 if(contentClass)content.classList.add('mode-settings-content');
 content.append(layout);
-const navigation=attachPanels({root,document:doc,beforeSelect});
+const navigation=attachPanels({root,document:doc,beforeSelect,onPresentationChange});
 let destroyed=false;
 const api=Object.freeze({
 navigation,

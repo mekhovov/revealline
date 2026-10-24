@@ -1,0 +1,22 @@
+{
+  "format": "revealline-retained-animation-history.v1",
+  "scope": "Remove an unused retired animation definition from two historical catalog projections. Existing retained characters and animations remain unchanged. New identities describe the projected artifacts, not the original historical bytes.",
+  "items": [
+    {
+      "previousPath": "authoring/production/history/c4c2adbc3f787e0f7db52859b98d9bc54239fdb7e8e44af02a0f4cefcf5bda73.json",
+      "path": "authoring/production/history/ea9cf4d7fce6b4b9afdbcd709819d0f5d7b35ed117a47868fea69209b037d912.json",
+      "previousSHA256": "c4c2adbc3f787e0f7db52859b98d9bc54239fdb7e8e44af02a0f4cefcf5bda73",
+      "sha256": "ea9cf4d7fce6b4b9afdbcd709819d0f5d7b35ed117a47868fea69209b037d912",
+      "previousBytes": 20699,
+      "bytes": 19910
+    },
+    {
+      "previousPath": "authoring/production/history/f28b92cdfe4e9ccd402d6e3a625cf9d23c804a5a0b82fb1a3fc25065e7c0d9aa.json",
+      "path": "authoring/production/history/e16731f4065e5d1e76b84abc985874187c5133cf55776ea352a4479bded5cdb0.json",
+      "previousSHA256": "f28b92cdfe4e9ccd402d6e3a625cf9d23c804a5a0b82fb1a3fc25065e7c0d9aa",
+      "sha256": "e16731f4065e5d1e76b84abc985874187c5133cf55776ea352a4479bded5cdb0",
+      "previousBytes": 35307,
+      "bytes": 34518
+    }
+  ]
+}

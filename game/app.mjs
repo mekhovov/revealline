@@ -1,3 +1,5 @@
+import './i18n/main-entry.mjs';
+import { renderTextSizeControl } from './ui/text-size-control.mjs';
 import { loadBaseArtwork } from './base-artwork.mjs';
 import { continuousPlayPreferences } from './ui/continuous-play.mjs';
 import { nativeArtReviewURL } from './ui/art-review-navigation.mjs';
@@ -1870,7 +1872,9 @@ try {
     const pictureEntry = pictureExecutionForEntry(entry),
       pictureLevel = pictureLevelForRun(nextRun, entry, pictureEntry);
     const guarded = (owner) =>
-      runtimeContent && candidateHost?.owns(entry)
+      // Installed editions own their complete picture closure, including their
+      // practice adapters. They have no main-game download controller.
+      runtimeContent
         ? owner
         : withOfflinePictureGate(owner, async ({ signal }) => {
             if (candidateHost?.owns(entry)) {
@@ -8853,11 +8857,11 @@ try {
   function applyDisplayPreferences(state) {
     const effects = state.effectiveReducedEffects ? 'reduced' : 'full';
     const boardChanged =
-      document.body.dataset.textSize !== state.textSize ||
+      document.body.dataset.textSize !== (state.effectiveTextSize ?? state.textSize) ||
       document.body.dataset.textFace !== state.textFace ||
       document.body.dataset.effects !== effects;
-    $('text-size').value = state.textSize;
-    document.body.dataset.textSize = state.textSize;
+    renderTextSizeControl($('text-size'), state.textSize);
+    document.body.dataset.textSize = state.effectiveTextSize ?? state.textSize;
     $('text-face').value = state.textFace;
     document.body.dataset.textFace = state.textFace;
     $('reduced-effects').checked = state.reducedEffects;
@@ -8969,9 +8973,7 @@ try {
       () =>
         `${contentText(theme, 'labels.enemy')} · ${contentText(theme, 'labels.boss')} · ${contentText(theme, 'labels.supply')}`,
     );
-    localizedText($('footer-note'), () =>
-      t('interface:originalWorldsMakeEveryLineCount'),
-    );
+    localizedText($('footer-note'), () => t('interface:originalWorldsMakeEveryLineCount'));
     painter.style = scenario?.presentation?.style || library.preferences.style;
     updateBodies();
     painter.setLook(theme, bodyId, painterVisuals());
@@ -12003,6 +12005,8 @@ try {
           controls,
         });
         if (beforeStatus === 'respawning' || run.status === 'respawning') {
+          pendingAction = false;
+          pendingPickup = false;
           input.clear();
           controller.clear();
           controls = { direction: null, boost: false, action: false, pickup: false };
@@ -12013,6 +12017,8 @@ try {
           controller.clear();
           controllerFrame = null;
           controls = { direction: null, boost: false, action: false, pickup: false };
+          pendingAction = false;
+          pendingPickup = false;
           pendingSwitch = null;
         }
         refreshControllerBoostCue();
@@ -12028,9 +12034,13 @@ try {
               message: t('interface:liveGoalTrackingIsUnavailableYourPictureProgressIsKept'),
             };
           }
-        pendingAction = false;
-        pendingPickup = false;
-        if (!resuming) pendingSwitch = null;
+        // A fresh request after accepted Resume waits behind its neutral tick.
+        // Recovery and capture-stop above still retire these pending actions.
+        if (!resuming) {
+          pendingAction = false;
+          pendingPickup = false;
+          pendingSwitch = null;
+        }
         accumulator -= FIXED_DT;
         if (!recordingStopped)
           try {
@@ -14032,6 +14042,7 @@ try {
             })
           : originalThemes;
         const views = publishedRouteViews(route);
+        trace?.mark('missions-solo-host-begin');
         const host =
           candidateHost ||
           views?.solo ||
@@ -14045,6 +14056,7 @@ try {
               ? { ensurePackage: (groupId, options) => gameplayDownloads.ensure(groupId, options) }
               : {}),
           }));
+        trace?.mark('missions-solo-host-end');
         if (!candidateHost && !views?.solo) ownedHost = host;
         assertCurrent();
         const profile = candidateHost
@@ -14064,7 +14076,9 @@ try {
                 );
               },
             });
+        trace?.mark('missions-profile-load-begin');
         if (!candidateHost) await profile.load();
+        trace?.mark('missions-profile-load-end');
         assertCurrent();
         const launchSolo = async (mission, context) => {
           if (context.isCurrent?.() === false) return false;
@@ -14155,11 +14169,13 @@ try {
           // combined browsing identity never grants this Solo host Versus ownership.
           const { createCandidateVersusHost } = await import('./content-design/versus-host.mjs');
           assertCurrent();
+          trace?.mark('missions-versus-host-begin');
           const versusPreview = createCandidateVersusHost(route.source, {
             themes: libraryThemes,
             corePackIds: route.corePackIds,
             optionalCampaignIds: route.optionalCampaignIds,
           });
+          trace?.mark('missions-versus-host-end');
           const manifestFor = (
             mission,
             difficulty = browsingJourneyPreferences.snapshot().difficulty,
@@ -14167,6 +14183,7 @@ try {
             host
               .select(mission, difficulty)
               ?.manifests.find((manifest) => manifest.missionId === mission.levelId);
+          trace?.mark('missions-solo-source-begin');
           const source = journeyLibrarySource({
             editionId: route.id,
             edition: route.id === DEFAULT_JOURNEY_ROUTES.solo ? 'New Journey' : route.label,
@@ -14182,6 +14199,8 @@ try {
             card: (mission) => host.card(mission, browsingJourneyPreferences.snapshot().difficulty),
             launch: launchSolo,
           });
+          trace?.mark('missions-solo-source-end');
+          trace?.mark('missions-versus-source-begin');
           const versusSource = journeyLibrarySource({
             editionId: route.id,
             edition: route.id === DEFAULT_JOURNEY_ROUTES.solo ? 'New Journey' : route.label,
@@ -14200,18 +14219,26 @@ try {
               versusPreview.card(mission, browsingJourneyPreferences.snapshot().difficulty),
             launch: (_mission, context) => departLibraryMission(context),
           });
+          trace?.mark('missions-versus-source-end');
+          trace?.mark('missions-remote-team-import-begin');
           const { createRemoteTeamLibrarySources } = await import(
             './mission-library/remote-team.mjs'
           );
+          trace?.mark('missions-remote-team-import-end');
           assertCurrent();
+          trace?.mark('missions-remote-team-sources-begin');
           const teamSources = createRemoteTeamLibrarySources({
             launch: departLibraryMission,
             difficulty: () => browsingJourneyPreferences.snapshot().difficulty,
           });
+          trace?.mark('missions-remote-team-sources-end');
+          trace?.mark('missions-prior-import-begin');
           const { createSpatialNextEditionSources } = await import(
             './mission-library/spatial-next-editions.mjs'
           );
+          trace?.mark('missions-prior-import-end');
           assertCurrent();
+          trace?.mark('missions-prior-editions-begin');
           spatialEditions = await createSpatialNextEditionSources({
             assertCurrent,
             activeRouteId: route.id,
@@ -14219,6 +14246,7 @@ try {
             difficulty: () => browsingJourneyPreferences.snapshot().difficulty,
             launch: departLibraryMission,
           });
+          trace?.mark('missions-prior-editions-end');
           assertCurrent();
           journeySources = [
             combineJourneyLibrarySources([

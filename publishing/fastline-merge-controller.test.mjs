@@ -1576,6 +1576,36 @@ test("draft and closed PRs fail closed and disarm existing auto-merge", () => {
   }
 });
 
+test("draft or unknown readiness blocks every merge path and disarms existing requests", () => {
+  let combinations = 0;
+  for (const draft of [true, undefined, null]) {
+    for (const mergeable_state of [
+      "clean",
+      "unstable",
+      "behind",
+      "has_hooks",
+    ]) {
+      for (const auto_merge of [null, { enabled_at: "now" }]) {
+        for (const stack of [undefined, { number: 7, size: 2, position: 2 }]) {
+          const input = fixture({
+            draft,
+            mergeable_state,
+            auto_merge,
+            labels: [{ name: "fastline-stack-merge" }],
+            stack,
+          });
+          assert.deepEqual(decideMergeAction(input), {
+            action: auto_merge ? "disarm" : "wait",
+            reason: "pull request is draft or draft state is unknown",
+          });
+          combinations++;
+        }
+      }
+    }
+  }
+  assert.equal(combinations, 48);
+});
+
 test("labels, milestones and review state do not change exact-head admission", () => {
   for (const overrides of [
     { labels: [{ name: "hold: ux" }, { name: "release-train-hold" }] },
@@ -1869,6 +1899,28 @@ test("approval inventory is strict, unique and cannot come from candidate input"
   assert.equal(reviewedPolicyChangeMatches(input, bad), false);
   assert.equal(reviewedPolicyChangeMatches({ ...input, approvals: [] }), false);
   assert.equal(reviewedPolicyChangeMatches(null), false);
+});
+
+test("legacy approval profile is complete and cannot be replaced with shorter or reordered subsets", () => {
+  assert.equal(reviewedPolicyChangeMatches(policyFixture()), true);
+  for (const mutate of [
+    (entries) => entries.slice(0, -1),
+    (entries) => entries.slice(1),
+    (entries) => [entries[1], entries[0], ...entries.slice(2)],
+    (entries) => [...entries, entries[0]],
+    (entries) =>
+      entries.map((entry, index) =>
+        index === 3 ? ["publishing/focused-compact.mjs", entry[1]] : entry,
+      ),
+  ]) {
+    const input = policyFixture();
+    const approvals = structuredClone(REVIEWED_POLICY_CHANGES);
+    for (const key of ["trustedPolicyBlobs", "candidatePolicyBlobs"]) {
+      input[key] = mutate(input[key]);
+      approvals[0][key] = mutate(approvals[0][key]);
+    }
+    assert.equal(reviewedPolicyChangeMatches(input, approvals), false);
+  }
 });
 
 test("main freshness requires exact valid checkout and live branch identities", () => {
@@ -2340,8 +2392,10 @@ test('workflow mutations, source failure and manual/native runs never become ski
       if (Array.isArray(result) && result[0]?.sha) result[0].sha = 'f'.repeat(40);
     },
     ({ result }) => {
-      if (result.workflows)
-        result.workflows.find((row) => row.id === 302).state = 'disabled_manually';
+      if (result.workflows) {
+        const workflow = result.workflows.find((row) => row.id === 302);
+        if (workflow) workflow.state = 'disabled_manually';
+      }
     },
     ({ result }) => {
       if (result.workflow_runs) result.workflow_runs.at(-1).event = 'workflow_dispatch';

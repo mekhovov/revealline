@@ -117,6 +117,7 @@ function save(page, key = journeyKey) {
 test('fresh Journey defaults to separately pinned FPV actors and saves the exact owner', async (t) => {
   const page = await setup(t);
   assert.equal(page.$('menu-actor-style').value, 'fpv');
+  await waitFor(() => typeof page.doc.documentElement.dataset.presentationTheme === 'string');
   const wholeTheme = page.doc.documentElement.dataset.presentationTheme;
   await start(page);
   assert.equal(page.rendered.actorAppearance.style, 'fpv');

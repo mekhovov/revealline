@@ -1,3 +1,4 @@
+import { renderTextSizeControl } from '../ui/text-size-control.mjs';
 import { classicOperationStatus } from './classic-operation-status.mjs';
 import { CLASSIC_SNAKE_CAMPAIGN_REVISION } from './classic-campaign.mjs';
 import { classicBoardPreferences, isClassicWorldStyle } from './classic-worlds.mjs';
@@ -23,6 +24,9 @@ import {
 } from '../ui/celebration.mjs';
 import { createSignalReception } from '../ui/signal-reception.mjs';
 import { mountGlobalSettingsTools } from '../ui/global-settings-tools.mjs';
+import { attachLocalSupportSummary } from '../ui/local-support-summary.mjs';
+import { offlineAvailability } from '../offline.mjs';
+import { nativePlatform } from '../platform.mjs';
 import { attachInstallOfflinePanel } from '../ui/install-offline-panel.mjs';
 import { attachMenuAudioSettings } from '../ui/menu-audio.mjs';
 import { attachDefeatSoundControls } from '../ui/defeat-sound-controls.mjs';
@@ -242,6 +246,7 @@ let playShell = null,
   libraryInfo = null,
   libraryToolsRefresh = null,
   snakeSettingsView = null,
+  snakeSupportSummary = null,
   snakeGlobalSettings = null,
   snakeOfflinePanel = null,
   touchPresentationControls = null,
@@ -286,6 +291,9 @@ const transition = createContinuousPlayController({
 });
 const gamepadState = new Map(),
   gamepadSeats = new Map();
+// Latest presence/assignment only, from the existing polling owner. Snake does
+// not produce the primary shell's neutral/Confirm readiness observations.
+const supportController = { sampledAt: null, status: 'unavailable', assigned: null };
 const effects = [createHuntDestruction(), createHuntDestruction()];
 let acceptedArtRevision = runtimeActorArtRevision(),
   acceptedAppearance = null,
@@ -2056,7 +2064,8 @@ remains.subscribe(primeEffects);
 display.subscribe(primeEffects);
 display.subscribe((choice) => {
   doc.body.dataset.textFace = $('snake-text-face').value = choice.textFace;
-  doc.body.dataset.textSize = $('snake-text-size').value = choice.textSize;
+  doc.body.dataset.textSize = choice.effectiveTextSize ?? choice.textSize;
+  renderTextSizeControl($('snake-text-size'), choice.textSize);
   footprint?.refresh();
 });
 $('snake-text-face').addEventListener('change', () =>
@@ -2277,9 +2286,10 @@ doc.addEventListener('keydown', (event) => {
   event.preventDefault();
   if (!event.repeat) turn(mode !== 'solo' && key.startsWith('arrow') ? 1 : 0, direction);
 });
-function pollGamepads() {
+function pollGamepads(now) {
   const pads = Array.from(globalThis.navigator.getGamepads?.() ?? []).filter(Boolean),
     present = new Set();
+  let assigned = false;
   for (const pad of pads) {
     present.add(pad.index);
     if (!gamepadSeats.has(pad.index)) {
@@ -2291,6 +2301,7 @@ function pollGamepads() {
     }
     const seat = gamepadSeats.get(pad.index);
     if (mode === 'solo' && seat !== 0) continue;
+    assigned = true;
     const buttons = [
       pad.buttons[12]?.pressed || pad.axes[1] < -0.55,
       pad.buttons[15]?.pressed || pad.axes[0] > 0.55,
@@ -2342,6 +2353,16 @@ function pollGamepads() {
       gamepadSeats.delete(id);
       pause();
     }
+  const available = typeof globalThis.navigator.getGamepads === 'function';
+  supportController.sampledAt = now;
+  supportController.status = !available
+    ? 'unavailable'
+    : pads.length
+      ? 'observed'
+      : ['observed', 'disconnected'].includes(supportController.status)
+        ? 'disconnected'
+        : 'waiting-controller';
+  supportController.assigned = available ? assigned : null;
 }
 doc
   .querySelectorAll('#snake-settings details, #snake-help details, #snake-workshop details')
@@ -2351,6 +2372,7 @@ doc
     }),
   );
 function suspendAudio() {
+  snakeSupportSummary?.invalidate();
   if (disposed || audioInactive) return;
   audioInactive = true;
   pause();
@@ -2444,7 +2466,7 @@ function frame(now) {
   }
   const elapsed = previousFrame === null ? 0 : Math.max(0, now - previousFrame);
   previousFrame = now;
-  pollGamepads();
+  pollGamepads(now);
   if (!ready && !paused && !result()) {
     if (elapsed > 1000 || !pageActive()) pause();
     else {
@@ -2678,6 +2700,7 @@ playShell = mountModePlayShell({
   },
   initial: params.has('level') || communityIdentity ? 'play' : 'home',
   onSurfaceChange: (surface) => {
+    snakeSupportSummary?.invalidate();
     if (surface === 'results' && result()) beginResultPlayback();
     if (!['play', 'results'].includes(surface)) {
       transition.cancel(surface);
@@ -2705,6 +2728,7 @@ music = attachCouchMusicHost({
     playShell?.topDialog()?.dataset.modeSurface === 'settings',
   getOwner: () => playShell?.topDialog(),
   onOpen: () => pause({ showMenu: false }),
+  onPresentationChange: () => snakeSupportSummary?.invalidate(),
   onClose: () => refresh(),
 });
 const snakeSettingsSections = [...$('snake-settings').children].filter(
@@ -2717,6 +2741,7 @@ snakeSettingsView = mountModeSettings({
   locale,
   setMenuIcon,
   attachPanels: attachSettingsPanels,
+  onPresentationChange: () => snakeSupportSummary?.invalidate(),
   groups: {
     gameplay: [playShell.elements.buttons.expert, playShell.elements.buttons['home-retry']],
     controls: [$('steering').closest('label')],
@@ -2817,6 +2842,7 @@ const snakeGlobalTools = mountGlobalSettingsTools({
   panels: snakeSettingsView.panels,
   prefix: 'snake-global-tools',
   onOpen: pause,
+  onPresentationChange: () => snakeSupportSummary?.invalidate(),
   offlinePanel: snakeOfflinePanel,
   coreURL: new URL('../', globalThis.location.href),
 });
@@ -2825,6 +2851,57 @@ snakeGlobalSettings.update({
     audioCues: snakeAudioCues,
     touchPresentation: snakeTouchSettings,
     ...snakeGlobalTools.controls,
+  },
+});
+const snakeSupportRoot = el('section');
+snakeSupportRoot.id = 'support-summary-root';
+snakeSettingsView.panels.data.append(snakeSupportRoot);
+snakeSupportSummary = attachLocalSupportSummary({
+  document: doc,
+  window: globalThis,
+  root: snakeSupportRoot,
+  settings: playShell.elements.dialogs.settings,
+  getSettingsOpen: () => {
+    const settings = playShell.elements.dialogs.settings,
+      data = snakeSettingsView.panels.data,
+      compact =
+        settings.classList.contains('native-settings') &&
+        (doc.defaultView?.innerWidth ?? doc.documentElement.clientWidth ?? Infinity) <= 700;
+    return (
+      !disposed &&
+      !pageDeparted &&
+      playShell.topDialog() === settings &&
+      settings.open === true &&
+      snakeSettingsView.navigation.panel() === data &&
+      !data.hidden &&
+      !data.inert &&
+      (!compact || settings.getAttribute('data-settings-view') === 'panel')
+    );
+  },
+  getHost: () => {
+    const offline = offlineAvailability(),
+      version = doc.documentElement.dataset.buildVersion,
+      packaged = !!version && !version.includes('__');
+    return {
+      version: packaged ? version : null,
+      packaged,
+      kind: `snake-${mode}`,
+      state: result()
+        ? ['won', 'lost'].includes(result())
+          ? result()
+          : 'finished'
+        : ready
+          ? 'idle'
+          : paused
+            ? 'paused'
+            : 'running',
+      locale,
+      writable: sessionWriter.writable,
+      writerReason: sessionWriter.writable ? 'owned' : sessionWriter.reasonCode,
+      platform: nativePlatform() ?? 'browser',
+      offline: offline.available ? 'configured' : offline.messageCode,
+      controller: supportController,
+    };
   },
 });
 $('snake-settings').hidden = true;

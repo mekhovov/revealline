@@ -1,3 +1,4 @@
+import { renderTextSizeControl } from '../ui/text-size-control.mjs';
 import { OVERFLIGHT_BATTLEFIELDS } from './battlefields.mjs';
 import { updateOverflightSurvivalHUD } from './survival-hud.mjs';
 import { createOverflightRecords } from './records.mjs';
@@ -77,6 +78,7 @@ import {
 } from './community.mjs';
 import { overflightBuildItems } from './upgrades.mjs';
 import { createOverflightUpgradeCard } from './upgrade-card.mjs';
+import { createOverflightTextScalingView, overflightCaptionFits } from './text-scaling-view.mjs';
 import {
   pilot,
   selectCard,
@@ -354,6 +356,8 @@ let lastHUD = 0,
   missionRegistry = null,
   selectedInstalled = false,
   cacheHintKey = '',
+  captionLayoutKey = '',
+  requestCaptionLayout = () => {},
   progressEpoch = 0,
   missionProgress = new Map(),
   commentator = null,
@@ -403,6 +407,7 @@ const el = (tag, value = '', className = '') => {
 };
 const display = createDisplayPreferences({
   window: win,
+  extraLarge: doc.documentElement.dataset.textScaling === 'overflight',
   onWarning: (message) => showStatus(message),
 });
 const context = contextualAppearance(doc);
@@ -788,6 +793,7 @@ function updateHUD() {
     $('hud-cache').hidden = !openCaches;
     $('hud-cache').textContent = openCaches ? text('cacheReady') : '';
     $('hud-cache').title = overflightCacheHint(compiled, getLocale());
+    requestCaptionLayout();
   }
   $('hud-level').textContent = `${text('level')} ${run.progression.choices + 1}`;
   const cooldown = Math.max(0, mode.boostRecovery?.(run) ?? run.player.boostCooldown ?? 0);
@@ -831,9 +837,22 @@ function updateHUD() {
   }
   if (mode.updateHUD) {
     mode.updateHUD({ run, compiled, document: doc, text, local });
-    return;
+  } else updateOverflightSurvivalHUD({ run, compiled, document: doc, text });
+  const layoutKey = [
+    $('hud-protection').textContent,
+    cooldown > 0,
+    run.player.overdriveRemaining > 0,
+    run.player.overdriveReady,
+    !!run.riy?.queued,
+    run.riy?.phase,
+    run.riy?.focusRemaining > 0,
+    run.riy?.cooldown > 0,
+    run.riy?.targetId,
+  ].join('|');
+  if (layoutKey !== captionLayoutKey) {
+    captionLayoutKey = layoutKey;
+    requestCaptionLayout();
   }
-  updateOverflightSurvivalHUD({ run, compiled, document: doc, text });
 }
 function refreshCharacters() {
   const select = $('character-select');
@@ -868,9 +887,11 @@ function rewardToast(offer) {
   );
   toast.dataset.evolution = String(offer.kind === 'evolution');
   toast.hidden = false;
+  requestCaptionLayout();
   rewardTimer = win.setTimeout(() => {
     toast.hidden = true;
     rewardTimer = null;
+    requestCaptionLayout();
   }, 2200);
 }
 function result() {
@@ -1083,6 +1104,7 @@ function syncUpgrade(force = false) {
           riySettings: run.riy?.rules,
           locale: getLocale(),
           reducedEffects: display.snapshot().effectiveReducedEffects,
+          expandedComparison: display.snapshot().effectiveTextSize === 'extra-large',
           disabled: review.active(),
           moduleIcon,
           paintSprite: renderer?.paintPreviewSprite,
@@ -1895,7 +1917,13 @@ hudContext.dataset.operationContext = 'true';
 $('overflight-hud').append(hudContext);
 const offlineSettings = el('section', '', 'overflight-offline-settings');
 const touchSettings = el('section');
-$('overflight-settings').append(touchSettings);
+const touchVisitSettings =
+  doc.documentElement.dataset.textScaling === 'overflight' ? el('section') : null;
+$('overflight-settings').append(...[touchVisitSettings, touchSettings].filter(Boolean));
+const compactTouchActions = () =>
+  doc.documentElement.dataset.textScaling === 'overflight' &&
+  display.snapshot().effectiveTextSize === 'extra-large' &&
+  $('overflight-game').classList.contains('has-touch-controls');
 touchInput = createOverflightTouch({
   document: doc,
   window: win,
@@ -1910,8 +1938,18 @@ touchInput = createOverflightTouch({
     !contextGuard.blocked() &&
     run?.phase === 'playing' &&
     !activeModal(),
-  actionLabel: () => text('boost'),
+  actionLabel: () => text(compactTouchActions() ? 'boostCompact' : 'boost'),
+  actionName: () => text('boost'),
   onInterrupt: () => pause({ menu: false }),
+  onLayoutChange: () => requestCaptionLayout(),
+  visibilitySettings:
+    doc.documentElement.dataset.textScaling === 'overflight'
+      ? {
+          help: () => text('touchVisibilityHelp'),
+          title: () => text('touchVisitTitle'),
+          mount: touchVisitSettings,
+        }
+      : null,
 });
 const offlineHeading = el('h3');
 localizedText(offlineHeading, () => t('interface:nativeMenu.content'));
@@ -1981,12 +2019,22 @@ commentator = createOverflightCommentator({
   window: win,
   getReduced: () => display.snapshot().effectiveReducedEffects,
   acquireGain: (settings) => music?.player.acquireGain(settings),
+  captionReader:
+    doc.documentElement.dataset.textScaling === 'overflight'
+      ? {
+          root: shell.elements.content.pause,
+          pauseButton: shell.elements.buttons.pause,
+          active: () => display.snapshot().effectiveTextSize === 'extra-large',
+          fits: (panel) => overflightCaptionFits({ document: doc, panel }),
+        }
+      : null,
 });
 const disposeModeActions = mode.installActions?.({
   document: doc,
   prepare,
   getSeed: () => run?.raidVariant?.seed ?? seed,
   getRun: () => run,
+  compactTouchActions,
   onVariantResultRefresh: () => result(),
   canContinueContract: () => !preparing && !runtimeFailed && !contextGuard.blocked() && !retired,
   onContinueContract: () => {
@@ -2021,6 +2069,21 @@ const fieldControls = $('overflight-field-controls');
 const squadControls = $('overflight-game').querySelector('.overflight-riy-controls');
 if (squadControls) fieldControls.prepend(squadControls);
 $('overflight-review-controls').append($('overflight-diagnostics'));
+const textScalingView = createOverflightTextScalingView({
+  document: doc,
+  readingRoot: shell.elements.content.pause,
+  home: shell.elements.home,
+  results: shell.elements.dialogs.results,
+  label: () => text('flightDetails'),
+  onLayoutChange: () => commentator?.refreshCaptionLayout(),
+});
+requestCaptionLayout = () => textScalingView.refreshCaptionLayout();
+cleanup.push(() => textScalingView.dispose());
+cleanup.push(
+  onLocaleChange(() =>
+    textScalingView.refresh(display.snapshot().effectiveTextSize === 'extra-large'),
+  ),
+);
 if ($('survivor-same-seed')) {
   listen($('survivor-same-seed'), 'click', () => {
     void prepare({ launch: true }).catch(() => {});
@@ -2331,7 +2394,7 @@ settingsView = mountModeSettings({
       $('overflight-settings').querySelector('[data-copy="nextSortie"]'),
       shell.elements.buttons['home-retry'],
     ],
-    controls: [touchSettings],
+    controls: [touchVisitSettings, touchSettings].filter(Boolean),
     audio: [
       field('muted'),
       field('volume'),
@@ -2397,9 +2460,13 @@ cleanup.push(onLocaleChange(refreshCopy));
 cleanup.push(
   display.subscribe((value) => {
     $('text-face').value = value.textFace;
-    $('text-size').value = value.textSize;
+    renderTextSizeControl($('text-size'), value.textSize, {
+      extraLarge: doc.documentElement.dataset.textScaling === 'overflight',
+    });
     $('reduced-effects').checked = value.reducedEffects;
-    doc.body.dataset.textSize = value.textSize;
+    doc.body.dataset.textSize = value.effectiveTextSize ?? value.textSize;
+    textScalingView.refresh(value.effectiveTextSize === 'extra-large');
+    commentator?.refreshCaptionLayout();
     doc.body.dataset.textFace = value.textFace;
     doc.body.dataset.effects = value.effectiveReducedEffects ? 'reduced' : 'full';
     if (appearance) appearance.reducedEffects = value.effectiveReducedEffects;

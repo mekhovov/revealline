@@ -7,6 +7,7 @@ import { createDefaultThemeBundle } from '../game/presentation/catalog.mjs';
 import { adoptStudioBundle } from '../game/presentation/studio-session.mjs';
 import {
   createIndustrialEnvironmentBatch,
+  compatibleStudioBaseline,
   encodeIndustrialEnvironmentModule,
   INDUSTRIAL_ENVIRONMENT_DIRECTORY,
 } from './produce-industrial-environments.mjs';
@@ -99,19 +100,52 @@ test('all fourteen bounded native Studio packages regenerate retained sources an
   }
 });
 
-test('chapter transport does not authorize unpublished picture slots in the loaded Studio', async () => {
+test('chapter transport does not authorize an unpublished picture slot in the loaded Studio', async () => {
   const studio = await loadPublishedStudio({
-      baseURL: new URL('../game/presentation/compiled/', import.meta.url),
-      fetch: async (url) => new Response(await readFile(new URL(url))),
-    }),
-    broader = createDefaultThemeBundle(),
-    ids = new Set(studio.document.slots.map(({ id }) => id)),
-    missing = broader.slots.filter(({ id }) => !ids.has(id));
-  assert.ok(missing.some(({ id }) => id.startsWith('picture.retro.')));
+    baseURL: new URL('../game/presentation/compiled/', import.meta.url),
+    fetch: async (url) => new Response(await readFile(new URL(url))),
+  });
+  const unpublished = structuredClone(
+    studio.document.slots.find((slot) => slot.id.startsWith('picture.retro.')),
+  );
+  unpublished.id = 'picture.retro.unpublished';
+  unpublished.owner.levelId = 'unpublished-picture';
+  const broader = createDefaultThemeBundle({ slots: [...studio.document.slots, unpublished] });
   const before = JSON.stringify(studio.document);
   assert.throws(
     () => adoptStudioBundle(studio.document, broader),
-    /Unsupported imported slot contract: picture\.retro\./,
+    /Unsupported imported slot contract: picture\.retro\.unpublished/,
   );
   assert.equal(JSON.stringify(studio.document), before);
+});
+
+test('published compatibility admits exact retained picture slots and rejects altered contracts', async () => {
+  const studio = await loadPublishedStudio({
+    baseURL: new URL('../game/presentation/compiled/', import.meta.url),
+    fetch: async (url) => new Response(await readFile(new URL(url))),
+  });
+  const retained = JSON.parse(
+    await readFile(
+      new URL(
+        '../authoring/library/fpv-field-kit/picture-migration-baseline.json',
+        import.meta.url,
+      ),
+    ),
+  );
+  const current = new Set(createDefaultThemeBundle().slots.map((slot) => slot.id));
+  const historical = studio.document.slots.filter((slot) => !current.has(slot.id));
+  assert.equal(historical.length, 4);
+  assert.deepEqual(
+    compatibleStudioBaseline(studio.document, retained).slots,
+    studio.document.slots,
+  );
+  const changed = structuredClone(studio.document);
+  changed.slots.find((slot) => slot.id === historical[0].id).label += ' changed';
+  assert.throws(() => compatibleStudioBaseline(changed, retained), /explicit compatible producer/);
+  const changedPredecessor = structuredClone(retained);
+  changedPredecessor.slots[0].label += ' changed';
+  assert.throws(
+    () => compatibleStudioBaseline(studio.document, changedPredecessor),
+    /pinned predecessor/,
+  );
 });

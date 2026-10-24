@@ -1,7 +1,10 @@
 import { boundedJSON } from '../../game/data-json.mjs';
 import { AIRCRAFT_RECORDING_FORMAT, AIRCRAFT_RECORDING_BYTES } from './aircraft-recording.mjs';
-import { AIRCRAFT_BACKEND, LEGACY_AIRCRAFT_BACKEND } from './advanced-aircraft-runtime.mjs';
-import { verifyAircraftArchive } from './aircraft-archive-verifier.mjs';
+import { AIRCRAFT_ARENA_BACKENDS } from './advanced-aircraft-runtime.mjs';
+import {
+  verifyAircraftArchive,
+  verifyAircraftCourseArchive,
+} from './aircraft-archive-verifier.mjs';
 import { createGhostPathCollector } from './advanced-ghost-path.mjs';
 import {
   ADVANCED_BACKEND,
@@ -16,7 +19,7 @@ import {
 
 /** Serial request processing keeps init, steps and restores in one ownership
  * order. Device polling belongs to the window; this worker never calls it. */
-export function createAdvancedWorkerHandler(postMessage) {
+export function createAdvancedWorkerHandler(postMessage, { courseAdapter } = {}) {
   let simulation = null,
     session = null,
     archiveVerification = null,
@@ -114,14 +117,23 @@ export function createAdvancedWorkerHandler(postMessage) {
               throw new Error('Session archives require aircraft physics');
             result = simulation.finalizeArchive(message.afterIndex);
             break;
-          case 'verify-archive': {
+          case 'verify-archive':
+          case 'verify-course-archive': {
             const controller = new AbortController();
             archiveVerification = controller;
             try {
-              result = await verifyAircraftArchive(message.archive, {
+              const options = {
                 signal: controller.signal,
                 onProgress: (progress) => postMessage({ id, session: requestSession, progress }),
-              });
+              };
+              result =
+                type === 'verify-course-archive'
+                  ? await verifyAircraftCourseArchive(message.archive, message.course, {
+                      ...options,
+                      courseAdapter,
+                      collectReference: message.collectReference,
+                    })
+                  : await verifyAircraftArchive(message.archive, options);
             } finally {
               if (archiveVerification === controller) archiveVerification = null;
             }
@@ -137,7 +149,7 @@ export function createAdvancedWorkerHandler(postMessage) {
             });
             if (
               !['AdvancedRecording.v1', AIRCRAFT_RECORDING_FORMAT].includes(record.format) ||
-              ![ADVANCED_BACKEND, AIRCRAFT_BACKEND, LEGACY_AIRCRAFT_BACKEND].includes(
+              ![ADVANCED_BACKEND, ...AIRCRAFT_ARENA_BACKENDS].includes(
                 simulation.configuration().backend,
               )
             )
@@ -227,9 +239,30 @@ export function createAdvancedWorkerHandler(postMessage) {
   };
 }
 
-if (typeof self !== 'undefined' && typeof document === 'undefined') {
-  const handler = createAdvancedWorkerHandler((message) => self.postMessage(message));
-  self.addEventListener('message', ({ data }) => {
-    void handler.receive(data);
-  });
+// Shared imports must not auto-install the Academy adapter in a World worker.
+export function isAdvancedWorkerEntry(url, scope = globalThis.self) {
+  if (!scope?.location?.href || typeof document !== 'undefined') return false;
+  const entry = new URL(scope.location.href),
+    module = new URL(url);
+  return entry.origin === module.origin && entry.pathname === module.pathname;
 }
+const installedWorkers = new WeakMap();
+export function installAdvancedWorker(scope, options = {}) {
+  if (installedWorkers.has(scope)) throw new Error('Advanced worker is already installed');
+  const handler = createAdvancedWorkerHandler((message) => scope.postMessage(message), options);
+  const listener = ({ data }) => {
+    void handler.receive(data);
+  };
+  const owner = {
+    dispose() {
+      if (installedWorkers.get(scope) !== owner) return;
+      scope.removeEventListener('message', listener);
+      installedWorkers.delete(scope);
+      handler.dispose();
+    },
+  };
+  scope.addEventListener('message', listener);
+  installedWorkers.set(scope, owner);
+  return owner;
+}
+if (isAdvancedWorkerEntry(import.meta.url)) installAdvancedWorker(self);

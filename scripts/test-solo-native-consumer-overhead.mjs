@@ -1,3 +1,4 @@
+import { assertDeclaredOverheadTool } from './solo-overhead-declared-source.mjs';
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
 import { readFile } from 'node:fs/promises';
@@ -174,11 +175,12 @@ test('actual manual job guards reject forks, other events, refs and lanes withou
   }
 });
 
-test('every actual frozen app input is current and available in the precise sparse job', async () => {
+test('every frozen app input is current or exactly witnessed and available in the precise sparse job', async () => {
   const paths = [...body(workflow).matchAll(/^            \/(.+)$/gm)].map((m) => m[1]);
   assert.equal(new Set(paths).size, paths.length);
   for (const ref of [...held.adapterInputs, ...held.frozenTools]) {
     assert(paths.includes(ref.path), ref.path);
+    if (await assertDeclaredOverheadTool(planPath, ref)) continue;
     const bytes = await read(ref.path);
     assert.equal(bytes.length, ref.bytes, ref.path);
     assert.equal(sha(bytes), ref.sha256, ref.path);
@@ -215,4 +217,29 @@ test('changed adapter input rejects at actual setup boundary before package/nati
     }),
   );
   assert.equal(inspected, 0);
+});
+
+test('unchanged frozen app declaration cannot execute changed current tools after historical readback', async () => {
+  const plan = bindDiagnosticsJob(reviewedFixture(), 'chromium');
+  let admitted = 0;
+  const digested = [];
+  await assert.rejects(
+    () =>
+      prepareDiagnosticsMode({
+        plan,
+        repository: fileURLToPath(new URL('../', import.meta.url)).replace(/\/$/, ''),
+        digest: async (path) => {
+          digested.push(path);
+          const bytes = await readFile(path);
+          return { bytes: bytes.length, sha256: sha(bytes) };
+        },
+        get admitted() {
+          admitted++;
+          throw new Error('Historical readback must never grant package or native admission');
+        },
+      }),
+    { code: 'ERR_ASSERTION' },
+  );
+  assert(digested.some((path) => path.endsWith('/solo-remote-diagnostics.mjs')));
+  assert.equal(admitted, 0);
 });
