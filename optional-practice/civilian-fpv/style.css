@@ -988,6 +988,118 @@
     background: #f6ca7533;
     box-shadow: 0 0 0 5px #f6ca7522;
   }
+  .radio-setup .radio-stick i {
+    z-index: 4;
+    background: #d9ffed;
+    border: 2px solid #18352a;
+    box-shadow: 0 0 0 2px #d9ffed88;
+    transition: transform 80ms linear;
+  }
+  .radio-setup .radio-stick.is-guided {
+    border-color: var(--fk-amber);
+  }
+  .radio-setup .radio-stick-target {
+    z-index: 2;
+  }
+  .radio-setup .radio-stick-ghost {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 14px;
+    height: 14px;
+    margin: -7px;
+    border: 2px dashed #f6ca75;
+    border-radius: 50%;
+    z-index: 3;
+    pointer-events: none;
+    animation: radio-stick-follow 2.2s ease-in-out infinite;
+  }
+  .radio-setup .radio-stick-trail {
+    position: absolute;
+    height: 2px;
+    transform-origin: 0 50%;
+    background: #f6ca7599;
+    z-index: 1;
+    pointer-events: none;
+  }
+  .radio-setup .radio-stick-trail::after {
+    content: '';
+    position: absolute;
+    right: 0;
+    top: -3px;
+    width: 7px;
+    height: 7px;
+    border-top: 2px solid #f6ca75;
+    border-right: 2px solid #f6ca75;
+    transform: rotate(45deg);
+  }
+  .radio-setup .radio-stick-circuit {
+    position: absolute;
+    inset: 16%;
+    border: 2px dashed #f6ca7588;
+    border-radius: 50%;
+    pointer-events: none;
+  }
+  .radio-setup .radio-stick.is-sweeping .radio-stick-ghost {
+    animation: radio-stick-circle 3.2s linear infinite;
+  }
+  @keyframes radio-stick-circle {
+    0%,
+    100% {
+      transform: translate(0, calc(-1 * var(--guide-radius)));
+    }
+    12.5% {
+      transform: translate(calc(0.707 * var(--guide-radius)), calc(-0.707 * var(--guide-radius)));
+    }
+    25% {
+      transform: translate(var(--guide-radius), 0);
+    }
+    37.5% {
+      transform: translate(calc(0.707 * var(--guide-radius)), calc(0.707 * var(--guide-radius)));
+    }
+    50% {
+      transform: translate(0, var(--guide-radius));
+    }
+    62.5% {
+      transform: translate(calc(-0.707 * var(--guide-radius)), calc(0.707 * var(--guide-radius)));
+    }
+    75% {
+      transform: translate(calc(-1 * var(--guide-radius)), 0);
+    }
+    87.5% {
+      transform: translate(calc(-0.707 * var(--guide-radius)), calc(-0.707 * var(--guide-radius)));
+    }
+  }
+  .radio-stick-legend {
+    font-size: 12px;
+    line-height: 1.5;
+    margin: 0 0 14px;
+  }
+  @keyframes radio-stick-follow {
+    0%,
+    12% {
+      transform: translate(var(--guide-from-x), var(--guide-from-y));
+      opacity: 0.55;
+    }
+    55%,
+    85% {
+      transform: translate(var(--guide-to-x), var(--guide-to-y));
+      opacity: 1;
+    }
+    100% {
+      transform: translate(var(--guide-from-x), var(--guide-from-y));
+      opacity: 0.55;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .radio-setup .radio-stick-ghost {
+      display: none;
+    }
+  }
+  [data-effects='reduced'] .radio-setup .radio-stick-ghost,
+  [data-theme-motion='reduced'] .radio-setup .radio-stick-ghost {
+    display: none;
+  }
   .radio-values {
     display: grid;
     grid-template-columns: 1fr 1fr;
