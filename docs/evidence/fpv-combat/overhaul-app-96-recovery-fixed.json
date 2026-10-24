@@ -1,0 +1,42 @@
+{
+  "started": "2026-10-20T02:55:56.379Z",
+  "browser": "155.0.8059.85",
+  "hardware": {
+    "platform": "darwin",
+    "release": "25.6.0",
+    "cpu": "Apple M4 Pro",
+    "logicalCpus": 14,
+    "memoryBytes": 51539607552
+  },
+  "scope": "Full local application, native stadium-01, actual simulation and renderer, scripted keyboard yaw, vertical hover control and sustained firing near the starting point. Assisted invulnerability and Balanced resources. This is not a human gameplay or physical radio qualification.",
+  "timing": "Aggregated synchronous requestAnimationFrame callback CPU work per display frame; asynchronous worker CPU and GPU execution excluded. Frame intervals include scheduling/GL presentation. Ten-minute wall-clock windows are not guaranteed ten minutes accepted simulation when frames are slow.",
+  "runs": [],
+  "recoverySmoke": {
+    "status": "paused",
+    "ticks": 7788,
+    "encounterTicks": 7788,
+    "kills": 142,
+    "shots": 945,
+    "waiting": 1,
+    "recording": {
+      "format": "FPVEncounterRecordingStatus.v1",
+      "retainedFrom": 0,
+      "retainedTo": 7788,
+      "complete": true,
+      "practiceOnly": true
+    },
+    "archive": {
+      "id": "combat-mvg3cui4-0nbak2r",
+      "state": "recording",
+      "error": null,
+      "durableFrom": 0,
+      "durableTo": 0,
+      "segments": 0,
+      "bytes": 0,
+      "complete": false,
+      "capacityBytes": 33554432
+    },
+    "flightStatus": "Preparing scene…"
+  },
+  "finished": "2026-10-20T02:55:59.795Z"
+}

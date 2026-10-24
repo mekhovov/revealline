@@ -207,6 +207,33 @@ async function bundledFPVEntries() {
   );
 }
 
+test('optional character art stays hosted without entering the core offline download', async () => {
+  const root = fileURLToPath(new URL('../', import.meta.url));
+  const art = ['manifest.json', 'characters.glb', 'provenance.json'].map((name) => ({
+    name: `authoring/library/fpv-character-art/r1/${name}`,
+    bytes: Buffer.from(`independent appearance fixture: ${name}`),
+  }));
+  const unrelated = {
+    name: 'authoring/library/other-art/provenance.json',
+    bytes: Buffer.from('{}'),
+  };
+  const entries = [
+    { name: 'game/offline.mjs', bytes: Buffer.from('export {};') },
+    ...art,
+    unrelated,
+  ];
+  await addOfflineEntries(root, entries, { version: 'v1.2.3' }, {});
+  const core = JSON.parse(entries.find((entry) => entry.name === 'offline-cache.json').bytes);
+  for (const entry of art) {
+    assert.deepEqual(entries.find((row) => row.name === entry.name).bytes, entry.bytes);
+    assert.equal(
+      core.files.some((row) => row.path === entry.name),
+      false,
+    );
+  }
+  assert.ok(core.files.some((row) => row.path === unrelated.name));
+});
+
 test('bundled FPV pins final default bytes and has its own bounded cache outside core', async () => {
   const root = fileURLToPath(new URL('../', import.meta.url)),
     policy = OPTIONAL_PACKAGE_POLICIES['civilian-fpv'],
@@ -417,6 +444,17 @@ test('actual FPV application, native notebook and installation launcher close in
   assert.equal(manifest.id, '/revealline/practice/civilian-fpv/');
   const source = readEditionZip(f.files.get(f.package.sourceArchive.path));
   assert.equal(source.size, 151);
+  const projectedAudio = source
+    .get('optional-practice/civilian-fpv/sim-presentation.mjs')
+    .toString();
+  for (const name of [
+    'game/audio/human-reactions/portable.mjs',
+    'game/ui/human-reaction-policy.mjs',
+    'game/ui/destruction-level.mjs',
+  ]) {
+    assert.ok(projectedAudio.includes(name), `Canonical audio scope and source hash: ${name}`);
+    assert.equal(source.has(name), true, `Current shared audio dependency: ${name}`);
+  }
   assertSharedRadioClosure(first, source);
   assert.ok(
     [...source.values()].reduce((total, bytes) => total + bytes.length, 0) <= 12 * 1024 * 1024,

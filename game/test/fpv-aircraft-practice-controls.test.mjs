@@ -155,7 +155,9 @@ function fixture(t, { store, exportFile, onRestored } = {}) {
     restoreRecovery: async (data, { signal }) => {
       signal.throwIfAborted();
       assert.ok(pauses > 0);
-      if (data.identity !== 'flight-a') throw new Error('Recovery belongs to another flight');
+      const packet = data.format === 'AircraftChallengeRecovery.v1' ? data.session : data;
+      if (packet.identity !== 'flight-a' && packet.identity?.course !== 'flight-a')
+        throw new Error('Recovery belongs to another flight');
       restores.push(data);
       current = { ...current, ticks: aircraftRecoveryTick(data) };
     },
@@ -754,4 +756,153 @@ test('concurrent stale-handle operations share one reopen and never invent a mis
     writes,
     'absence is reported, never replaced or repaired by a write',
   );
+});
+
+const actorCheckpoint = (tick, live = false) =>
+  checkpoint(tick, {
+    model: 'aircraft-course-practice.v2',
+    course: 'flight-a',
+    ...(live ? { actorRules: 'destructible-subjects.v1' } : {}),
+  });
+
+test('preserved Advanced originals survive autosaves and duplicate preservation without duplicate slots', async () => {
+  const memory = managedIndexedDB(),
+    store = createAircraftRecoveryStore({ indexedDB: memory.indexedDB, key: 'world' }),
+    original = actorCheckpoint(250),
+    next = actorCheckpoint(500, true);
+  try {
+    await store.save(original);
+    await store.preserveOriginal(original);
+    await store.save(next);
+    await store.preserveOriginal(structuredClone(original));
+    assert.deepEqual((await store.load()).data, next);
+    assert.deepEqual((await store.load({ original: true })).data, original);
+    const keys = new Set(
+      memory.allPuts.map(([, key]) => key).filter((key) => key.startsWith('world:original:')),
+    );
+    assert.equal(keys.size, 1);
+    original.mission.state.ticks = 999;
+    assert.equal((await store.load({ original: true })).data.mission.state.ticks, 250);
+  } finally {
+    store.close();
+  }
+});
+
+test('failed original pointer write keeps the earlier complete original and current recovery', async () => {
+  const memory = managedIndexedDB(),
+    store = createAircraftRecoveryStore({ indexedDB: memory.indexedDB }),
+    original = actorCheckpoint(250),
+    replacement = actorCheckpoint(750);
+  try {
+    await store.save(actorCheckpoint(500, true));
+    await store.preserveOriginal(original);
+    memory.failAnyPutAt = 2;
+    await assert.rejects(() => store.preserveOriginal(replacement), /storage write failure/);
+    memory.failAnyPutAt = null;
+    assert.deepEqual((await store.load({ original: true })).data, original);
+    assert.equal((await store.load()).missionTick, 500);
+  } finally {
+    store.close();
+  }
+});
+
+test('restoring real native and Challenge envelope shapes preserves before migration and exports exact original', async (t) => {
+  for (const wrapped of [false, true]) {
+    const memory = managedIndexedDB(),
+      store = createAircraftRecoveryStore({ indexedDB: memory.indexedDB }),
+      base = actorCheckpoint(250),
+      original = wrapped
+        ? { format: 'AircraftChallengeRecovery.v1', progress: { missionTick: 250 }, session: base }
+        : base;
+    await store.save(original);
+    const f = fixture(t, { store });
+    let migrated = 0;
+    f.active.migrateActorRules = async () => {
+      assert.deepEqual((await store.load({ original: true })).data, original);
+      migrated++;
+    };
+    await f.click('Restore last saved checkpoint');
+    assert.equal(migrated, 1);
+    assert.deepEqual(f.restores[0], original);
+    f.active.exportRecovery = async () => actorCheckpoint(f.active.snapshot().ticks, true);
+    f.update(500);
+    await settle();
+    await settle();
+    assert.equal((await store.load()).missionTick, 500);
+    assert.deepEqual((await store.load({ original: true })).data, original);
+    await f.click('Export preserved original checkpoint');
+    assert.deepEqual(f.exports.at(-1), {
+      data: original,
+      name: 'aircraft-original-checkpoint.json',
+    });
+  }
+});
+
+test('original storage failure prevents migration while leaving verified recovery paused', async (t) => {
+  const original = actorCheckpoint(250),
+    f = fixture(t, {
+      store: {
+        load: async () => ({ data: original, missionTick: 250 }),
+        preserveOriginal: async () => {
+          throw new Error('backup quota');
+        },
+        close() {},
+      },
+    });
+  let migrated = 0;
+  f.active.migrateActorRules = async () => {
+    migrated++;
+  };
+  await f.click('Restore last saved checkpoint');
+  assert.equal(f.restores.length, 1);
+  assert.equal(f.pauses, 1);
+  assert.equal(migrated, 0);
+  assert.match(f.ui.root.textContent, /backup quota/);
+});
+
+test('cancel after original backup starts cannot migrate the restored flight', async (t) => {
+  let finish;
+  const original = actorCheckpoint(250),
+    f = fixture(t, {
+      store: {
+        load: async () => ({ data: original, missionTick: 250 }),
+        preserveOriginal: () =>
+          new Promise((resolve) => {
+            finish = resolve;
+          }),
+        close() {},
+      },
+    });
+  let migrated = 0;
+  f.active.migrateActorRules = async () => {
+    migrated++;
+  };
+  await f.click('Restore last saved checkpoint');
+  await f.click('Cancel recovery');
+  finish();
+  await settle();
+  assert.equal(migrated, 0);
+  assert.match(f.ui.root.textContent, /cancelled/);
+});
+
+test('new actor-rule checkpoints do not replace preserved originals and unsupported legacy missions skip migration', async (t) => {
+  const f = fixture(t, {
+    store: {
+      load: async () => ({ data: actorCheckpoint(250, true), missionTick: 250 }),
+      preserveOriginal: async () => {
+        throw new Error('must not rewrite original');
+      },
+      close() {},
+    },
+  });
+  let migrated = 0;
+  f.active.migrateActorRules = async () => {
+    migrated++;
+  };
+  await f.click('Restore last saved checkpoint');
+  assert.equal(migrated, 1);
+  f.active.supportsLiveActorRules = () => false;
+  await f.click('Restore last saved checkpoint');
+  assert.equal(migrated, 1);
+  assert.match(f.ui.root.textContent, /flight remains paused/);
 });

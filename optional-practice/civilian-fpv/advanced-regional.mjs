@@ -23,6 +23,7 @@ import { validateRegionManifest, createRegionPlanner } from './regional/region-m
 import { createVerifiedFlightGeometry } from './regional/verified-flight-geometry.mjs';
 import { validateRegionalLocationStart } from './regional-locations.mjs';
 import { validateAircraftChallengeRules } from './aircraft-challenge.mjs';
+import { COMBAT_SHAPE_FORMAT } from './world-collision.mjs';
 
 const axes = ['x', 'y', 'z'];
 // Match the verified support-pose tolerance while retaining Rapier's actual pose.
@@ -82,6 +83,15 @@ export function createAdvancedRegionalSession(
   const globalPoint = (value) => {
     const point = rotate(value);
     return Object.fromEntries(axes.map((key) => [key, frame[key] + point[key] * 1000]));
+  };
+  const localPoint = (value) => {
+    const x = (value.x - frame.x) / 1000,
+      z = (value.z - frame.z) / 1000;
+    return {
+      x: Math.cos(angle) * x - Math.sin(angle) * z,
+      y: (value.y - frame.y) / 1000,
+      z: Math.sin(angle) * x + Math.cos(angle) * z,
+    };
   };
   const aircraftPhysics = configuration.advanced?.aircraft?.format === 'AdvancedAircraft.v2';
   const challenge =
@@ -146,6 +156,13 @@ export function createAdvancedRegionalSession(
     initialized = false,
     disposed = false,
     sequence = 0;
+  let encounterActors = [],
+    encounterProposal = null,
+    acceptedEncounterMotion = null;
+  const actorLift = (actor) =>
+    ['patrol', 'sentry'].includes(actor.type) ? actor.height / 2 : actor.radius;
+  const actorPoint = (actor, position) =>
+    localPoint({ ...position, y: position.y + actorLift(actor) });
   let status = 'paused',
     reason = 'terrain-required',
     failure = null,
@@ -230,9 +247,7 @@ export function createAdvancedRegionalSession(
       recentres,
       grounded: telemetry.terrain?.grounded ?? false,
       support: telemetry.terrain?.grounded
-        ? {
-            normal: rotate(telemetry.terrain.normal ?? { x: 0, y: 1, z: 0 }),
-          }
+        ? { normal: rotate(telemetry.terrain.normal ?? { x: 0, y: 1, z: 0 }) }
         : null,
       landingSpeed: Math.round((telemetry.terrain?.impactSpeed ?? 0) * 1000),
       landingTilt: aircraftPhysics ? atan2(Math.hypot(angles.up.x, angles.up.z), angles.up.y) : 0,
@@ -264,6 +279,9 @@ export function createAdvancedRegionalSession(
             aircraftSupportHeightMm: supportHeightMm,
             recordingStatus: clone(telemetry.recordingStatus ?? null),
           }
+        : {}),
+      ...(encounterActors.length && !aircraftPhysics
+        ? { aircraftRadiusMm: radius, recordingStatus: clone(telemetry.recordingStatus ?? null) }
         : {}),
       step: 0,
       total: 0,
@@ -609,7 +627,48 @@ export function createAdvancedRegionalSession(
     };
     const job = (async () => {
       try {
-        const proposal = await client.propose(sample);
+        const stagedActors = encounterProposal;
+        const incomingVelocity = clone(telemetry.velocity);
+        const motions = encounterActors.map((actor) => {
+          const id = actor.slotId ?? actor.id,
+            motion = stagedActors?.motions?.find((row) => row.id === id);
+          const liveActor = stagedActors?.actors?.find((row) => (row.slotId ?? row.id) === id);
+          const accepted = telemetry.dynamicColliders?.find((row) => row.id === id);
+          requireValue(accepted, 'Missing accepted Regional encounter collider');
+          const intendedFrom = stagedActors
+            ? actorPoint(actor, motion?.from ?? liveActor?.position ?? actor.position)
+            : accepted.position;
+          const spawnId = liveActor?.spawnId ?? actor.spawnId ?? id;
+          const shapeVersioned = options.dynamicShapeFormat === COMBAT_SHAPE_FORMAT;
+          const relocating =
+            axes.some((axis) => Math.abs(accepted.position[axis] - intendedFrom[axis]) >= 0.001) ||
+            (shapeVersioned && accepted.spawnId !== spawnId);
+          return {
+            id,
+            ...(shapeVersioned
+              ? {
+                  shapeDescriptor: {
+                    shape: ['patrol', 'sentry'].includes(actor.type) ? 'cylinder' : 'sphere',
+                    radius: actor.radius / 1000,
+                    height: (actorLift(actor) * 2) / 1000,
+                    spawnId,
+                  },
+                }
+              : {}),
+            from: { ...accepted.position },
+            to: stagedActors
+              ? actorPoint(actor, motion?.to ?? liveActor?.position ?? actor.position)
+              : { ...accepted.position },
+            enabled:
+              !relocating &&
+              Boolean(
+                stagedActors
+                  ? (motion?.enabled ?? liveActor?.status === 'active')
+                  : accepted.enabled,
+              ),
+          };
+        });
+        const proposal = await client.propose(sample, motions.length ? motions : undefined);
         if (disposed) return snapshot();
         let decision = { accepted: false };
         try {
@@ -626,6 +685,54 @@ export function createAdvancedRegionalSession(
         // An already dispatched commit linearizes before a later pause. Its
         // final pose is retained, but a late response can never re-arm the host.
         telemetry = result.telemetry;
+        encounterProposal = null;
+        acceptedEncounterMotion =
+          decision.accepted && encounterActors.length
+            ? {
+                trace: proposal.trace.map((point) => {
+                  const position = globalPoint(point.position ?? point);
+                  position.y -= (point.supportHeight ?? telemetry.supportHeight ?? 0.22) * 1000;
+                  return {
+                    position: Object.fromEntries(
+                      axes.map((axis) => [axis, Math.round(position[axis])]),
+                    ),
+                  };
+                }),
+                contacts: (
+                  proposal.movingContacts ??
+                  telemetry.contact?.entries ??
+                  telemetry.terrain?.entries ??
+                  []
+                )
+                  .filter((hit) => proposal.movingContacts || hit.moving)
+                  .map((hit) => {
+                    const moving = motions.find((row) => row.id === hit.id),
+                      normal = hit.normal ?? { x: 0, y: 1, z: 0 };
+                    const relative = Math.max(
+                      0,
+                      ...[incomingVelocity, telemetry.velocity].map(
+                        (velocity) =>
+                          -axes.reduce(
+                            (sum, axis) =>
+                              sum +
+                              ((velocity?.[axis] ?? 0) -
+                                (moving ? (moving.to[axis] - moving.from[axis]) * 50 : 0)) *
+                                normal[axis],
+                            0,
+                          ),
+                      ),
+                    );
+                    return {
+                      actorId: hit.id,
+                      normal: rotate(normal),
+                      relativeNormalSpeedMmS: Math.round(
+                        (hit.relativeNormalSpeed ?? Math.max(relative, hit.impactSpeed ?? 0)) *
+                          1000,
+                      ),
+                    };
+                  }),
+              }
+            : null;
         if (!decision.accepted && token === generation) {
           status = 'paused';
           reason = decision.reason ?? 'prepared';
@@ -686,9 +793,110 @@ export function createAdvancedRegionalSession(
       .catch(() => {});
     return operation;
   }
-  return Object.freeze({
+  const sessionApi = {
+    get identity() {
+      return { model: environment.model, configuration: dataIdentity(options) };
+    },
     root,
     snapshot,
+    encounterGeometry: () => ({
+      castMotion: (...args) => terrain.castMotion(...args),
+      support: (...args) => terrain.support(...args),
+      motionCoverage: (...args) => terrain.motionCoverage(...args),
+      ready: () => terrain.snapshot().terrainReady && !frameCommitOwner && !recoveryJob,
+    }),
+    async configureEncounterActors(actors) {
+      live();
+      const token = generation;
+      // Host preparation may already be publishing an initial recovery/archive.
+      // Drain that accepted boundary, then own the same queue during worker replacement.
+      while (checkpointJob) await checkpointJob;
+      live();
+      requireValue(
+        token === generation &&
+          initialized &&
+          telemetry.missionTick === 0 &&
+          status !== 'active' &&
+          !stepJob &&
+          !frameJob &&
+          !checkpointJob,
+        'Configure combat before arming',
+      );
+      requireValue(
+        Array.isArray(actors) && actors.length > 0 && actors.length <= 128,
+        'Invalid combat actor pool',
+      );
+      const operation = (async () => {
+        const candidate = createClient(),
+          descriptors = clone(actors);
+        const dynamicColliders = descriptors.map((actor) => ({
+          id: actor.slotId ?? actor.id,
+          position: actorPoint(actor, actor.position),
+          radius: actor.radius / 1000,
+          height: (actorLift(actor) * 2) / 1000,
+          shape: ['patrol', 'sentry'].includes(actor.type) ? 'cylinder' : 'sphere',
+          enabled: false,
+        }));
+        const nextEnvironment = { ...environment, encounter: dataIdentity(dynamicColliders) };
+        const candidateOptions = {
+          ...options,
+          dynamicColliders,
+          ...(!aircraftPhysics ? { dynamicMotionFormat: 'AdvancedMovingActors.v1' } : {}),
+          ...(actors.some((a) => a.appearance?.archetype)
+            ? { dynamicShapeFormat: COMBAT_SHAPE_FORMAT }
+            : {}),
+          configuration: { ...options.configuration, environment: nextEnvironment },
+        };
+        let adopted = false;
+        try {
+          await candidate.initialize(clone(candidateOptions));
+          const staged = await candidate.stageTerrainFrame(workerFrame(terrain.collisionFrame()));
+          const committed = await candidate.commitTerrainFrame({
+            transaction: staged.transaction,
+            accepted: true,
+          });
+          live();
+          requireValue(
+            token === generation && status !== 'active' && telemetry.missionTick === 0,
+            'Combat setup changed',
+          );
+          const previous = client;
+          client = candidate;
+          telemetry = committed.telemetry;
+          encounterActors = descriptors;
+          options.dynamicColliders = dynamicColliders;
+          if (candidateOptions.dynamicMotionFormat)
+            options.dynamicMotionFormat = candidateOptions.dynamicMotionFormat;
+          if (candidateOptions.dynamicShapeFormat)
+            options.dynamicShapeFormat = candidateOptions.dynamicShapeFormat;
+          environment.encounter = nextEnvironment.encounter;
+          sourceFrameIdentity = staged.identity;
+          sequence = 0;
+          archiveGeneration++;
+          adopted = true;
+          previous.dispose();
+        } finally {
+          if (!adopted) candidate.dispose();
+        }
+        return snapshot();
+      })();
+      checkpointJob = operation;
+      checkpointKind = 'encounter-setup';
+      try {
+        return await operation;
+      } finally {
+        if (checkpointJob === operation) {
+          checkpointJob = null;
+          checkpointKind = null;
+        }
+      }
+    },
+    stageEncounterActors(proposal) {
+      encounterProposal = clone(proposal);
+    },
+    encounterMotion: () => clone(acceptedEncounterMotion),
+    encounterCheckpoint: () => sessionApi.captureRecovery(),
+    restoreEncounterCheckpoint: (saved, options) => sessionApi.restoreRecovery(saved, options),
     prepare,
     pause,
     step,
@@ -704,7 +912,7 @@ export function createAdvancedRegionalSession(
         frameCommitOwner ||
         frameJob ||
         recoveryJob ||
-        checkpointKind === 'archive-finalize' ||
+        ['archive-finalize', 'encounter-setup'].includes(checkpointKind) ||
         !terrain.snapshot().terrainReady ||
         !Number.isFinite(input?.throttle) ||
         input.throttle < 0 ||
@@ -795,7 +1003,7 @@ export function createAdvancedRegionalSession(
       return {
         format: aircraftPhysics ? 'AdvancedRegionalRecovery.v2' : 'AdvancedRegionalRecovery.v1',
         environment: clone(environment),
-        ...(aircraftPhysics ? { terrainOriginMm: clone(origin) } : {}),
+        ...(aircraftPhysics || encounterActors.length ? { terrainOriginMm: clone(origin) } : {}),
         simulation: await client.snapshot(),
       };
     },
@@ -819,7 +1027,7 @@ export function createAdvancedRegionalSession(
       if (savedOrigin !== undefined) {
         const grid = manifest.grid;
         requireValue(
-          aircraftPhysics &&
+          (aircraftPhysics || encounterActors.length) &&
             savedOrigin &&
             !Array.isArray(savedOrigin) &&
             Object.keys(savedOrigin).length === 3 &&
@@ -871,7 +1079,15 @@ export function createAdvancedRegionalSession(
               : {}),
           });
           current();
-          const restored = await candidate.restore(saved.simulation);
+          const localPractice =
+            !aircraftPhysics && saved.simulation?.recording?.retention?.complete === false;
+          requireValue(
+            !localPractice || (encounterActors.length && savedOrigin && candidate.restorePractice),
+            'This local-practice recovery requires its original encounter and terrain window',
+          );
+          const restored = await (localPractice
+            ? candidate.restorePractice(saved.simulation)
+            : candidate.restore(saved.simulation));
           current();
           // Once verified, terrain adoption owns its existing commit/rollback
           // cleanup. Cancellation during replay instead terminates its CPU owner.
@@ -886,7 +1102,11 @@ export function createAdvancedRegionalSession(
               pose: () => supportPose(restored),
               targetClient: candidate,
               ...(savedOrigin
-                ? { expectedFrameIdentity: saved.simulation.checkpoint.terrain.identity }
+                ? {
+                    expectedFrameIdentity: aircraftPhysics
+                      ? saved.simulation.checkpoint.terrain.identity
+                      : saved.simulation.terrain.frameIdentity,
+                  }
                 : {}),
             },
           );
@@ -902,7 +1122,9 @@ export function createAdvancedRegionalSession(
               : saved.simulation.state.acceptedSequence) + 1;
           pendingTarget = null;
           flightStopReason =
-            !aircraftPhysics && telemetry.missionTick >= ADVANCED_MAX_SECONDS * ADVANCED_MISSION_HZ
+            !aircraftPhysics &&
+            !encounterActors.length &&
+            telemetry.missionTick >= ADVANCED_MAX_SECONDS * ADVANCED_MISSION_HZ
               ? 'duration-limit'
               : null;
           reason = flightStopReason ?? 'prepared';
@@ -948,5 +1170,6 @@ export function createAdvancedRegionalSession(
       root.removeFromParent();
       await terrain.dispose();
     },
-  });
+  };
+  return Object.freeze(sessionApi);
 }

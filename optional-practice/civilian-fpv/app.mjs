@@ -61,6 +61,8 @@ import {
   createSimModeLinks,
 } from './flight-fullscreen.mjs';
 import {
+  mountRadioMenuControls,
+  radioFlightHelp,
   mountSimPresentation,
   mountSimGlobalTools,
   createSimFlightAudio,
@@ -70,6 +72,7 @@ import {
   paintStickDirections,
   mountStickTrace,
   mountFlightHud,
+  mountFlightInstruments,
   flightGoalFeedback,
 } from './sim-presentation.mjs';
 import {
@@ -349,6 +352,10 @@ export function mountFlightApp({
     /* Session preferences remain available. */
   }
   $('viewport').dataset.simHudHost = 'academy';
+  const flightInstruments = mountFlightInstruments({
+    container: $('viewport'),
+    locale: () => locale,
+  });
   const flightHud = mountFlightHud({
     container: $('viewport'),
     storage: hudStorage,
@@ -392,7 +399,11 @@ export function mountFlightApp({
       win.localStorage?.setItem(
         'revealline.fpv.academy-guide.v1',
         JSON.stringify({
-          display: $('academy-drone-guide').value,
+          display:
+            $('viewport').dataset.hudSettingDrone === 'on' &&
+            $('academy-drone-guide').value === 'off'
+              ? 'compact'
+              : $('academy-drone-guide').value,
           scale: $('academy-guide-scale').value,
         }),
       );
@@ -420,7 +431,13 @@ export function mountFlightApp({
   const input = createFlightInput({
     window: win,
     document: doc,
-    onPause: (reason) => (reason === 'paused' ? setFlightMenu(true) : pause(reason)),
+    onPause: (reason) => {
+      if (advancedPractice) {
+        advancedPractice.pause();
+        return;
+      }
+      return reason === 'paused' ? setFlightMenu(true) : pause(reason);
+    },
   });
   const inputDiagnostics = createFlightInputDiagnostics({ now: () => win.performance.now() });
   input.touchResponse($('touch-response').value);
@@ -507,6 +524,10 @@ export function mountFlightApp({
         : undefined,
     onCamera: () => cameraControls?.cycle(),
     onFreeze(reason) {
+      if (advancedPractice) {
+        advancedPractice.pause(undefined, { notify: false });
+        return;
+      }
       flight?.pause();
       audio.pause();
       if (input.owner() === 'radio') input.enable(false);
@@ -514,20 +535,33 @@ export function mountFlightApp({
       lastTime = null;
       lastExecutionTime = null;
       message = reason;
+      if (reason === 'menu') setFlightMenu(true);
     },
     onReset() {
+      if (advancedPractice) {
+        void advancedPractice.restart();
+        return;
+      }
       resetCurrentFlight();
     },
   });
   const restoreRadio = () => {
-    if (input.owner() !== 'radio') return;
+    if (input.owner() !== 'radio' && !replay && !advancedPractice?.menuState().radio) return;
     let store;
     try {
       store = createFlightProfileStore({ storage: win.localStorage });
     } catch {
       // The tested built-in mapping remains usable when storage is unavailable.
     }
-    return restoreVerifiedRadio(radio, store);
+    return restoreVerifiedRadio(radio, store, {
+      storage: (() => {
+        try {
+          return win.localStorage;
+        } catch {
+          return undefined;
+        }
+      })(),
+    });
   };
   const renderer = rendererFactory({
     canvas: $('flight-canvas'),
@@ -859,7 +893,7 @@ export function mountFlightApp({
     if (input.owner() === 'radio') {
       restoreRadio();
       radio.poll();
-      if (!radio.requestArm()) {
+      if (!radio.status().active && !radio.requestArm()) {
         message = radio.status().reason;
         paint(true);
         return false;
@@ -1184,6 +1218,7 @@ export function mountFlightApp({
       cameraMode: $('camera').value || 'fpv',
       cameraFov: Number($('camera-fov').value) || 82,
       cameraTilt: Number($('camera-tilt').value) || 0,
+      ...cameraControls?.presentationOptions(),
     });
     const goal = flightGoalFeedback({
       course: currentCourse(),
@@ -1197,6 +1232,10 @@ export function mountFlightApp({
     const hudActive = hudVisible && state.status === 'active' && !pausedReplay;
     $('flight-app').dataset.simHudActive = String(hudActive);
     $('viewport').dataset.simHudActive = String(hudActive);
+    flightInstruments.update(state, {
+      visible: hudVisible,
+      preferences: cameraControls?.presentationOptions(),
+    });
     flightHud.update(goal, {
       visible: hudVisible,
       active: hudActive,
@@ -1221,7 +1260,9 @@ export function mountFlightApp({
         .join('\n'),
     });
     flightHud.setAim(renderer.aimScreen?.());
-    const cue = $('camera').value === 'fpv' ? renderer.objectiveScreen?.(state) : null;
+    const cue = ['fpv', 'chase'].includes($('camera').value)
+      ? renderer.objectiveScreen?.(state)
+      : null;
     flightHud.setWorldCue(
       cue
         ? {
@@ -1229,7 +1270,7 @@ export function mountFlightApp({
             label: cue.approach
               ? locale === 'uk'
                 ? 'Поверніться на захід'
-                : 'Return to approach'
+                : 'Return to entry side'
               : cue.heightOnly
                 ? cue.vertical > 0
                   ? locale === 'uk'
@@ -1286,7 +1327,10 @@ export function mountFlightApp({
       unavailable: !replay && input.owner() === 'radio' && !radioPreview?.controls,
       locale,
       mode,
-      display: $('academy-drone-guide').value,
+      display:
+        $('viewport').dataset.hudSettingDrone === 'on' && $('academy-drone-guide').value === 'off'
+          ? 'compact'
+          : $('academy-drone-guide').value,
       scale: $('academy-guide-scale').value,
       reducedMotion,
     });
@@ -1802,9 +1846,30 @@ export function mountFlightApp({
   menuHint.className = 'sim-menu-hint';
   menuHint.id = 'academy-menu-hint';
   $('flight-app').append(menuHint);
+  const radioMenus = mountRadioMenuControls({
+    document: doc,
+    window: win,
+    runtime: radio,
+    locale: () => locale,
+    onResume: () => {
+      if (advancedPractice) return advancedPractice.start();
+      playShell?.enterPlay();
+      return arm();
+    },
+    onCamera: () =>
+      advancedPractice ? advancedPractice.showView() : cameraControls?.cycle({ menu: true }),
+    onRetry: () => {
+      if (advancedPractice) return advancedPractice.restart();
+      playShell?.enterPlay();
+      resetCurrentFlight();
+    },
+    onSettings: () =>
+      advancedPractice ? advancedPractice.openSettings() : playShell?.open('settings'),
+  });
   const menuContext = () => {
+    if (radioMenus.context()) return radioMenus.context();
     // The reference arena owns its flight keys and raw controller preview.
-    if (advancedPractice) return null;
+    if (advancedPractice) return advancedPractice.menuContext();
     if (tuning?.root.open)
       return {
         root: tuning.root,
@@ -1827,8 +1892,11 @@ export function mountFlightApp({
       return {
         root: dialog,
         key: dialog.id,
-        blockRadio: dialog.id === 'setup-dialog',
+        radioSetup: dialog.id === 'setup-dialog',
+        blockRadio: dialog.id === 'setup-dialog' && Boolean(setup?.captureActive()),
         blockDevices: dialog.id === 'setup-dialog' && Boolean(setup?.captureActive()),
+        captureRadioBack: setup?.captureRadioBack?.() !== false,
+        onCaptureBack: () => setup?.cancelCapture?.(),
       };
     if (missionChooser?.elements.dialog.open)
       return {
@@ -1847,6 +1915,7 @@ export function mountFlightApp({
     };
   };
   const menuNavigation = createFlightMenuNavigation({
+    onRadioShortcut: (action, context) => radioMenus.shortcut(action, context),
     onAction: () => continuousPlay.cancel('controller'),
     document: doc,
     window: win,
@@ -1874,6 +1943,11 @@ export function mountFlightApp({
       if (menuHint.textContent !== value) menuHint.textContent = value;
     },
     onBack() {
+      if (radioMenus.back()) return;
+      if (advancedPractice) {
+        advancedPractice.back();
+        return;
+      }
       if (tuning?.root.open) {
         tuning.close();
         return;
@@ -1890,10 +1964,6 @@ export function mountFlightApp({
     },
   });
   function pollMenu(now) {
-    if (!menuContext()) {
-      menuNavigation.poll({ now });
-      return;
-    }
     let gamepads = [];
     try {
       gamepads = win.navigator.getGamepads?.() ?? [];
@@ -1904,16 +1974,48 @@ export function mountFlightApp({
       lastRadioDiscovery = now;
       restoreRadio();
     }
-    const observed = radio.preview();
+    const context = menuContext();
+    const pauseRoot = context?.root === playShell?.elements.dialogs.pause;
+    const viewportRoot =
+      context?.root === $('flight-app') &&
+      !$('academy-flight-options').open &&
+      !immersive.snapshot().toolsOpen;
+    const available = Boolean(flight && sceneReady && renderer.available && !graphicsLost);
+    const arena = advancedPractice?.menuState();
+    const observed = radioMenus.sync(
+      arena
+        ? {
+            context,
+            flightActive: arena.active,
+            flightAvailable: arena.available,
+            playback: false,
+            canResume:
+              arena.available &&
+              arena.resumeReady &&
+              !menuNavigation.snapshot().editing &&
+              context?.root === advancedPractice.element,
+            enabled: arena.radio,
+          }
+        : {
+            context,
+            flightActive: replay ? !replay.paused : flight?.snapshot().status === 'active',
+            flightAvailable: available,
+            playback: Boolean(replay),
+            canResume:
+              available &&
+              !menuNavigation.snapshot().editing &&
+              !pendingFlightSteps.has(flight) &&
+              (pauseRoot || viewportRoot) &&
+              (replay
+                ? replay.at < replay.proof.frames.length
+                : ['paused', 'disarmed'].includes(flight.snapshot().status)),
+            enabled: input.owner() === 'radio' || Boolean(replay),
+          },
+    );
     menuNavigation.poll({
       now,
       gamepads,
-      radio: {
-        key: radio.status().selected?.key,
-        controls: observed.controls,
-        verified: observed.verified,
-        index: radio.status().selected?.index,
-      },
+      radio: setup?.menuPreview?.() ?? observed,
     });
   }
   const fullscreenButtons = [];
@@ -2418,11 +2520,15 @@ export function mountFlightApp({
         response: configuration.response,
         profile: configuration.response.rates,
         camera: { tilt: configuration.camera.tilt, fov: configuration.camera.verticalFov },
+        inputSource: radio.status().verified ? 'radio' : 'keyboard',
+        requestRadioStart: () => radio.status().active || radio.requestArm(),
         getControls: () => {
           const sample = radio.preview();
           return sample.verified ? sample.controls : null;
         },
-        onPause: () => pause(),
+        onPause: () => {
+          if (radio.status().active) radio.freeze('paused');
+        },
         async onSaveConfiguration(advanced, metadata = {}) {
           await tuning.savePracticeDraft(advanced, metadata);
         },
@@ -2455,7 +2561,10 @@ export function mountFlightApp({
   aircraftAdviceText = doc.createElement('p');
   aircraftAdviceText.hidden = true;
   shellBriefing.append(aircraftAdviceText);
-  practiceSplits = mountPracticeSplits({ parent: playShell.elements.content.pause, locale: () => locale });
+  practiceSplits = mountPracticeSplits({
+    parent: playShell.elements.content.pause,
+    locale: () => locale,
+  });
   aircraftControls = mountAircraftPracticeControls({
     parent: playShell.elements.content.pause,
     window: win,
@@ -2466,8 +2575,10 @@ export function mountFlightApp({
     onRestored: (session, state) => practiceSplits.restored(session, state),
     onReference: (session, value) => practiceSplits.setReference(session, value),
     hasSplitReference: (session) => practiceSplits.hasReference(session),
-    onVisualReference: (session, value) => session === flight && renderer?.setAircraftReference?.(value) === true,
-    hasVisualReference: (session) => session === flight && renderer?.hasAircraftReference?.() === true,
+    onVisualReference: (session, value) =>
+      session === flight && renderer?.setAircraftReference?.(value) === true,
+    hasVisualReference: (session) =>
+      session === flight && renderer?.hasAircraftReference?.() === true,
   });
   aircraftChallengeControls = mountAircraftChallengeControls({
     parents: [shellBriefing, playShell.elements.content.pause],
@@ -2719,10 +2830,7 @@ export function mountFlightApp({
           ' · V / R3: ' +
           (locale === 'uk' ? 'камера' : 'camera')
         );
-      if (source === 'radio')
-        return locale === 'uk'
-          ? 'Призначте мотори, скидання, паузу й камеру в «Налаштувати пульт». Камера: увімкніть і вимкніть перемикач. Без вільного перемикача виберіть камеру в меню паузи. У меню: крен/тангаж — навігація; утримайте рискання праворуч/ліворуч і поверніть у центр для підтвердження/назад.'
-          : 'Assign Arm, Reset, Pause and View in Set up radio. View: switch ON, then OFF. Without a spare switch, choose the camera in Pause. Menus: roll/pitch navigate; hold yaw right/left, then centre to confirm/go back.';
+      if (source === 'radio') return radioFlightHelp(radio.controlLayout(), locale);
       return locale === 'uk'
         ? 'Лівий стік: рискання/газ. Правий: крен/тангаж. Газ зберігається після відпускання. Для ввімкнення натисніть «Продовжити»; камера та пауза — у кутку екрана.'
         : 'Left stick: yaw/throttle. Right: roll/pitch. Throttle stays where you release it. Use Resume to arm; View and Pause stay in the screen corner.';
@@ -2852,8 +2960,10 @@ export function mountFlightApp({
       practiceFlow?.dispose();
       replayPracticeFlow?.dispose();
       cameraControls?.dispose();
+      flightInstruments.destroy();
       playShell?.dispose();
       menuNavigation.dispose();
+      radioMenus.dispose();
       menuHint.remove();
       input.dispose();
       gamepad.dispose();

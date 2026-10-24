@@ -28,6 +28,7 @@ export function mountRadioGuide({
   saveProfile,
   stopCaptures,
   externalCaptureActive = () => false,
+  skipLegacySwitches = () => false,
   onDone,
   groups,
 }) {
@@ -198,7 +199,10 @@ export function mountRadioGuide({
   switchCard.open = true;
   el(
     'summary',
-    t('Arm, reset & view · your flight switches', 'Мотори, скидання й камера · перемикачі польоту'),
+    t(
+      'Arm, reset, view & fire · your flight switches',
+      'Мотори, скидання, камера й вогонь · перемикачі польоту',
+    ),
     switchCard,
   );
   const switchContent = el('div', undefined, switchCard, 'radio-extra-body');
@@ -509,7 +513,10 @@ export function mountRadioGuide({
         }
         readProfile(false);
         checked.checked = false;
-        beginAction('arm');
+        if (skipLegacySwitches()) {
+          phase = 'check';
+          clearConfirmation();
+        } else beginAction('arm');
         status.textContent = clearedSwitch
           ? t(
               'Sticks calibrated. A switch used the same channel as a stick and was cleared. Assign it again below if needed.',
@@ -583,6 +590,7 @@ export function mountRadioGuide({
     return now - dwell.start >= duration;
   }
   function beginAction(action) {
+    switchCard.open = true;
     clearConfirmation();
     phase = action;
     if (switchRows[action].startCapture) switchRows[action].startCapture();
@@ -613,7 +621,7 @@ export function mountRadioGuide({
     let switchesOff = true;
     try {
       const profile = readProfile(false);
-      switchesOff = ['arm', 'pause', 'reset', 'camera'].every(
+      switchesOff = ['arm', 'pause', 'reset', 'camera', 'fire'].every(
         (action) => !radioSwitch(profile, pad, action),
       );
     } catch {
@@ -966,6 +974,8 @@ export function mountRadioGuide({
   return {
     update,
     completeSave,
+    start,
+    cancel: cancelCalibration,
     captureActive: () => isMapping() || isAction(),
     reset() {
       clearConfirmation();

@@ -8,11 +8,44 @@ import { adoptStudioBundle } from '../game/presentation/studio-session.mjs';
 import {
   createIndustrialEnvironmentBatch,
   compatibleStudioBaseline,
+  encodeIndustrialEnvironmentModule,
   INDUSTRIAL_ENVIRONMENT_DIRECTORY,
 } from './produce-industrial-environments.mjs';
 import { INDUSTRIAL_ENVIRONMENT_DATA } from '../game/presentation/industrial-environments-data.mjs';
 import { importThemeBundle, verifyThemeAssets } from '../game/presentation/bundle.mjs';
 import { resolvePresentation } from '../game/presentation/model.mjs';
+
+test('generated admission dictionary preserves exact JSON, all source pins and independent objects', async () => {
+  const before = JSON.stringify(INDUSTRIAL_ENVIRONMENT_DATA),
+    bytes = encodeIndustrialEnvironmentModule(INDUSTRIAL_ENVIRONMENT_DATA),
+    decoded = (await import(`data:text/javascript;base64,${bytes.toString('base64')}`))
+      .INDUSTRIAL_ENVIRONMENT_DATA;
+  assert.equal(JSON.stringify(decoded), before);
+  assert.deepEqual(decoded, INDUSTRIAL_ENVIRONMENT_DATA);
+  assert.deepEqual(bytes, encodeIndustrialEnvironmentModule(decoded));
+  assert.ok(Buffer.byteLength(before) - bytes.length > 150000);
+  assert.notEqual(decoded.sources[0], INDUSTRIAL_ENVIRONMENT_DATA.sources[0]);
+  const repeated = {
+    rows: Array.from({ length: 100 }, () => ({
+      title: 'Repeated admission text',
+      values: [1, 2, 3],
+    })),
+  };
+  const sample = encodeIndustrialEnvironmentModule(repeated),
+    result = (await import(`data:text/javascript;base64,${sample.toString('base64')}`))
+      .INDUSTRIAL_ENVIRONMENT_DATA;
+  assert.deepEqual(result, repeated);
+  assert.notEqual(result.rows[0], result.rows[1]);
+  result.rows[0].values[0] = 999;
+  assert.equal(result.rows[1].values[0], 1);
+  const reserved = { title: '\ue000', other: 'literal dictionary marker' },
+    fallback = encodeIndustrialEnvironmentModule(reserved);
+  assert.deepEqual(
+    (await import(`data:text/javascript;base64,${fallback.toString('base64')}`))
+      .INDUSTRIAL_ENVIRONMENT_DATA,
+    reserved,
+  );
+});
 
 test('all fourteen bounded native Studio packages regenerate retained sources and match terrain bindings', async () => {
   const batch = await createIndustrialEnvironmentBatch({ previous: INDUSTRIAL_ENVIRONMENT_DATA }),

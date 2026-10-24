@@ -1,4 +1,5 @@
 import { readSimMenuAudio } from './flight-fullscreen.mjs';
+import { createFlightMenuNavigation } from './input.mjs';
 import {
   createSimAppearancePreferences,
   resolveSimAppearance,
@@ -20,6 +21,269 @@ import {
   loadAppearanceContext,
   saveAppearanceContext,
 } from '../../game/presentation/theme-system.mjs';
+
+export function radioFlightHelp(layout, locale = 'en') {
+  if (layout?.layout === 'six-switch')
+    return locale === 'uk'
+      ? 'Flight OFF: пауза й меню. У меню: стік із центруванням — навігація; увімкніть і вимкніть Fire для вибору, Weapon — назад. Reload: камера; Payload: повтор із підтвердженням; Detonate: налаштування. Для продовження поверніться на головний екран паузи й увімкніть Flight.'
+      : 'Flight OFF: pause and menu. Menus: use the centering stick; cycle Fire to select or Weapon to go back. Reload: view; Payload: confirmed retry; Detonate: settings. Return to the main pause screen and switch Flight ON to resume.';
+  return locale === 'uk'
+    ? 'Призначте мотори, скидання, паузу й камеру в «Налаштувати пульт». Камера: увімкніть і вимкніть перемикач. Без вільного перемикача виберіть камеру в меню паузи. У меню: крен/тангаж — навігація; утримайте рискання праворуч/ліворуч і поверніть у центр для підтвердження/назад.'
+    : 'Assign Arm, Reset, Pause and View in Set up radio. View: switch ON, then OFF. Without a spare switch, choose the camera in Pause. Menus: roll/pitch navigate; hold yaw right/left, then centre to confirm/go back.';
+}
+
+/** Presentation ownership for the six physical switches, shared by both SIM hosts.
+ * Menu actions never enter the aircraft's accepted command queue. */
+export function mountRadioMenuControls({
+  document: doc,
+  window: win,
+  runtime,
+  locale = () => 'en',
+  onResume = () => {},
+  onCamera = () => {},
+  onRetry = () => {},
+  onSettings = () => {},
+  onError = () => {},
+}) {
+  const t = (en, uk) => (locale() === 'uk' ? uk : en);
+  const status = doc.createElement('section');
+  status.className = 'sim-radio-ready';
+  status.hidden = true;
+  const title = doc.createElement('strong');
+  const help = doc.createElement('p');
+  const readings = doc.createElement('div');
+  readings.className = 'sim-radio-ready__axes';
+  status.append(title, help, readings);
+  const axes = ['roll', 'pitch', 'yaw', 'throttle'].map((axis) => {
+    const row = doc.createElement('span');
+    readings.append(row);
+    return { axis, row };
+  });
+  const confirm = doc.createElement('dialog');
+  confirm.className = 'sim-radio-confirm';
+  confirm.id = `radio-retry-${doc.querySelectorAll('.sim-radio-confirm').length}`;
+  const heading = doc.createElement('h2');
+  heading.id = `${confirm.id}-title`;
+  confirm.setAttribute('aria-labelledby', heading.id);
+  const description = doc.createElement('p');
+  const cancel = doc.createElement('button');
+  const retry = doc.createElement('button');
+  cancel.type = retry.type = 'button';
+  confirm.append(heading, description, cancel, retry);
+  doc.body.append(confirm);
+  let resumePending = false,
+    lastState = {},
+    returnFocus = null,
+    disposed = false,
+    revision = 0,
+    ownershipKey = '';
+  const close = () => {
+    if (confirm.open) confirm.close();
+    if (returnFocus?.isConnected) returnFocus.focus({ preventScroll: true });
+    returnFocus = null;
+  };
+  const cancelNative = (event) => {
+    event.preventDefault();
+    close();
+  };
+  cancel.addEventListener('click', close);
+  confirm.addEventListener('cancel', cancelNative);
+  const retryClick = () => {
+    close();
+    onRetry();
+  };
+  retry.addEventListener('click', retryClick);
+  return {
+    context() {
+      return confirm.open ? { root: confirm, key: confirm.id, radioResumeBlocked: true } : null;
+    },
+    back() {
+      if (!confirm.open) return false;
+      close();
+      return true;
+    },
+    shortcut(action, context) {
+      if (context?.blockDevices || context?.radioSetup || confirm.open) return;
+      if (action === 'camera') onCamera();
+      else if (action === 'settings') onSettings();
+      else if (action === 'retry' && lastState.flightAvailable) {
+        returnFocus = doc.activeElement;
+        heading.textContent = t('Restart this attempt?', 'Почати цю спробу заново?');
+        description.textContent = t(
+          'Your current attempt will end. The same level, loadout and seed will be kept.',
+          'Поточну спробу буде завершено. Рівень, спорядження та початкові умови збережуться.',
+        );
+        cancel.textContent = t('Keep playing', 'Залишити спробу');
+        retry.textContent = t('Restart attempt', 'Почати заново');
+        confirm.showModal();
+        cancel.focus();
+      }
+    },
+    sync(state) {
+      if (disposed) return null;
+      lastState = state;
+      const { context, flightActive, flightAvailable, canResume, playback, enabled = true } = state;
+      const six = runtime.controlLayout?.()?.layout === 'six-switch';
+      if (!six) {
+        status.hidden = true;
+        return (
+          runtime.menuPreview?.() ?? {
+            ...runtime.preview(),
+            key: runtime.status().selected?.key,
+            index: runtime.status().selected?.index,
+          }
+        );
+      }
+      const focused = doc.visibilityState !== 'hidden' && (!doc.hasFocus || doc.hasFocus());
+      const allowed = Boolean(enabled && focused && canResume && !confirm.open);
+      const nextOwnershipKey = `${context?.key ?? ''}:${flightActive}:${allowed}:${playback}:${Boolean(context?.blockDevices)}`;
+      if (nextOwnershipKey !== ownershipKey) {
+        ownershipKey = nextOwnershipKey;
+        revision++;
+      }
+      const generation = revision;
+      runtime.setContext({
+        owner:
+          !focused || context?.blockDevices
+            ? 'capture'
+            : flightActive
+              ? playback
+                ? 'playback'
+                : 'flight'
+              : 'menu',
+        key: context?.key ?? (playback ? 'playback' : 'flight'),
+        resumeAllowed: allowed,
+        playback: Boolean(playback),
+      });
+      runtime.poll();
+      const observed = runtime.menuPreview();
+      const resume =
+        runtime.consumeResumeRequest?.() ||
+        (!flightActive && allowed && !playback && runtime.status().active);
+      if (resume && !resumePending) {
+        resumePending = true;
+        Promise.resolve()
+          .then(() => {
+            if (
+              disposed ||
+              generation !== revision ||
+              confirm.open ||
+              doc.visibilityState === 'hidden' ||
+              doc.hasFocus?.() === false
+            )
+              return;
+            return onResume();
+          })
+          .catch(onError)
+          .finally(() => {
+            resumePending = false;
+          });
+      }
+      status.hidden = !(context && flightAvailable && canResume);
+      if (!status.hidden) {
+        if (status.parentElement !== context.root) context.root.append(status);
+        title.textContent = t('Resume with your radio', 'Продовження з пульта');
+        const pickup = observed.pickup;
+        const readable =
+          observed.verified &&
+          observed.controls &&
+          axes.every(({ axis }) => Number.isFinite(observed.controls[axis]));
+        help.textContent = !readable
+          ? t(
+              'Reconnect your radio or finish setup before resuming.',
+              'Під’єднайте пульт або завершіть налаштування перед продовженням.',
+            )
+          : playback
+            ? t(
+                'Flight OFF pauses playback. Flight ON continues from this screen.',
+                'Flight OFF призупиняє перегляд. Flight ON продовжує з цього екрана.',
+              )
+            : pickup
+              ? t(
+                  'Match the saved stick positions, then switch Flight OFF → ON. Green values are ready.',
+                  'Поверніть стіки до збережених положень, потім Flight OFF → ON. Зелені значення готові.',
+                )
+              : t(
+                  'Lower throttle, centre the other controls, then switch Flight OFF → ON.',
+                  'Опустіть газ, відцентруйте інші стіки, потім Flight OFF → ON.',
+                );
+        readings.hidden = Boolean(playback || !readable);
+        const names =
+          locale() === 'uk'
+            ? ['Крен', 'Тангаж', 'Курс', 'Газ']
+            : ['Roll', 'Pitch', 'Yaw', 'Throttle'];
+        axes.forEach(({ axis, row }, index) => {
+          const value = observed.controls?.[axis] ?? 0,
+            target = pickup?.[axis] ?? 0;
+          const tolerance = pickup ? 0.07 : axis === 'throttle' ? 0.04 : 0.08;
+          row.dataset.ready = String(Boolean(readable && Math.abs(value - target) <= tolerance));
+          row.textContent = `${names[index]} ${Math.round(value * 100)}% → ${Math.round(target * 100)}%`;
+        });
+      }
+      return observed;
+    },
+    dispose() {
+      disposed = true;
+      revision++;
+      cancel.removeEventListener('click', close);
+      retry.removeEventListener('click', retryClick);
+      confirm.removeEventListener('cancel', cancelNative);
+      status.remove();
+      confirm.remove();
+    },
+  };
+}
+
+/** A paused choice is a UI intent until a new Fire activation explicitly executes it. */
+export function createRadioStagedAction({ execute = () => false } = {}) {
+  let pending = null,
+    released = false,
+    suppress = false;
+  return {
+    stage(action, identity) {
+      if (!['weapon', 'reload', 'payload', 'detonate'].includes(action)) return false;
+      pending = { action, identity };
+      released = false;
+      suppress = true;
+      return true;
+    },
+    pending: () => pending?.action ?? null,
+    clear() {
+      pending = null;
+      released = false;
+    },
+    direct() {
+      if (pending) suppress = true;
+      pending = null;
+      released = false;
+    },
+    validate(identity) {
+      if (pending && pending.identity !== identity) {
+        pending = null;
+        released = false;
+      }
+    },
+    fire(held, identity) {
+      this.validate(identity);
+      if (!held) {
+        released = true;
+        suppress = false;
+        return false;
+      }
+      if (pending) {
+        if (released) {
+          const selected = pending;
+          pending = null;
+          released = false;
+          suppress = true;
+          if (execute(selected.action) === false) pending = selected;
+        }
+        return false;
+      }
+      return !suppress;
+    },
+  };
+}
 
 /** Read-only teaching feedback from the runtime's matching criterion state. */
 export function practiceSkillFeedback(target, state, locale = 'en') {
@@ -3363,2074 +3627,2298 @@ export function paintStickDirections(element, { horizontal, vertical, locale = '
 // BEGIN GENERATED ACADEMY SHARED AUDIO
 // Generated by scripts/refresh-fpv-academy-audio.mjs; edit canonical audio sources instead.
 // Existing package slot, compact CC0 reactions, no gameplay clocks or simulation state.
-import * as academyAudioExternal0 from '../../game/audio/human-reactions/portable.mjs';
-import * as academyAudioExternal1 from '../../game/i18n/index.mjs';
-export const createSimFlightAudio = (() => {
-  const sourceHashes = Object.freeze({
-    'optional-practice/civilian-fpv/world-audio.mjs':
-      '0682921ac27879c76a3b63666d9685ede0844db7d616109df31b6ade6b7301b7',
-    'game/ui/gameplay-audio-output.mjs':
-      '9aa56a400d417db362a366a74790c7703b3f2bcde720ef0cc8944dea8a42ebd2',
-    'game/gameplay-audio-preferences.mjs':
-      'e7e6f8ae31d760879d97dddf9bfc7fe27b38a48888c60bc9028fa2232fb4eb20',
-    'game/ui/audio-output.mjs': '66047e07247684f9f3069f9561898f33b5566d0d997e950adac17c0eed0ff790',
-    'game/ui/human-reaction-policy.mjs':
-      'dd5992bca561093f9a8c31c4e2cd51ddb239e97719df8d2567f27e4330f7b731',
-    'game/ui/destruction-audio.mjs':
-      'b9a52dbf64e751536a171a0e0d26223bd01e3e8d3fee5c0dffb4556b8775d85b',
-    'game/ui/destruction-level.mjs':
-      'ffbdf16469259f5ef6be0197aa8efd458038106d39cae6b25a57231aff790f61',
-    'game/audio/dialogue-mix.mjs':
-      '43ffa5b261e585e59b515fab19d1b6d0ccf636152ca6107602dbdb9143ddb00a',
-    'game/ui/audio-master.mjs': '6bf14bc5268c0eff8f38c21c819f398917712fdc2607c33977ac873111d1dca8',
-    'game/audio-preferences.mjs':
-      '9212831a3524c9e1ebe8c595783f9f53a112e02e3d51280d775ac103b94a9239',
-    'game/ui/encounter-audio.mjs':
-      'ad58592952c55444713911a27df525b2c2d1f2a47c8a909a96597fda85e46dbd',
-    'game/ui/world-ambience.mjs':
-      '95b506a5cd1c34323a2bed5be3444be55ea38ddfc6036903757cccd3c301b260',
-    'game/ui/movement-audio.mjs':
-      '685d8e458401354028a2cacda0c7b1009b3c1e480a08d4cafce46d8f98b69020',
-    'game/ui/dialogue-channel.mjs':
-      'f4839f3a1634189a03eed6a3096dc595dfc88ee6437277ee82d78de05c300142',
-  });
-  const modules = Object.create(null);
-  modules['game/gameplay-audio-preferences.mjs'] = (() => {
-    // Separate from the strict legacy mute/volume record: older pages cannot erase
-    // this new choice when they save their existing audio controls.
-    const GAMEPLAY_AUDIO_KEY = 'revealline.gameplay-audio-output.v1';
-    const format = 'GameplayAudioOutputV1';
-    const observers = new WeakMap();
+import*as academyAudioExternal0 from'../../game/audio/human-reactions/portable.mjs';
+import*as academyAudioExternal1 from'../../game/i18n/index.mjs';
+export const createSimFlightAudio=(()=>{
+const sourceHashes=Object.freeze({
+'optional-practice/civilian-fpv/world-audio.mjs':
+'d922fc283424b7460bf477db7970fa0c8a1aa578c2d481e505c8bd7282eba7be',
+'game/ui/gameplay-audio-output.mjs':
+'9aa56a400d417db362a366a74790c7703b3f2bcde720ef0cc8944dea8a42ebd2',
+'game/gameplay-audio-preferences.mjs':
+'e7e6f8ae31d760879d97dddf9bfc7fe27b38a48888c60bc9028fa2232fb4eb20',
+'game/ui/audio-output.mjs':'66047e07247684f9f3069f9561898f33b5566d0d997e950adac17c0eed0ff790',
+'game/ui/human-reaction-policy.mjs':
+'dd5992bca561093f9a8c31c4e2cd51ddb239e97719df8d2567f27e4330f7b731',
+'game/ui/destruction-audio.mjs':
+'b9a52dbf64e751536a171a0e0d26223bd01e3e8d3fee5c0dffb4556b8775d85b',
+'game/ui/destruction-level.mjs':
+'ffbdf16469259f5ef6be0197aa8efd458038106d39cae6b25a57231aff790f61',
+'game/audio/dialogue-mix.mjs':
+'43ffa5b261e585e59b515fab19d1b6d0ccf636152ca6107602dbdb9143ddb00a',
+'game/ui/audio-master.mjs':'6bf14bc5268c0eff8f38c21c819f398917712fdc2607c33977ac873111d1dca8',
+'game/audio-preferences.mjs':
+'9212831a3524c9e1ebe8c595783f9f53a112e02e3d51280d775ac103b94a9239',
+'game/ui/encounter-audio.mjs':
+'c507ea003207fd28b0783fe1d47a80daf24261b1fbece181e8829b081003bbe9',
+'game/ui/world-ambience.mjs':
+'95b506a5cd1c34323a2bed5be3444be55ea38ddfc6036903757cccd3c301b260',
+'game/ui/movement-audio.mjs':
+'685d8e458401354028a2cacda0c7b1009b3c1e480a08d4cafce46d8f98b69020',
+'game/ui/dialogue-channel.mjs':
+'f4839f3a1634189a03eed6a3096dc595dfc88ee6437277ee82d78de05c300142',
+});
+const modules=Object.create(null);
+modules['game/gameplay-audio-preferences.mjs']=(()=>{
+// Separate from the strict legacy mute/volume record: older pages cannot erase
+// this new choice when they save their existing audio controls.
+const GAMEPLAY_AUDIO_KEY='revealline.gameplay-audio-output.v1';
+const format='GameplayAudioOutputV1';
+const observers=new WeakMap();
 
-    function decode(raw) {
-      if (raw === null) return false;
-      if (typeof raw !== 'string' || raw.length > 256) throw new Error('preserved');
-      const value = JSON.parse(raw);
-      if (
-        !value ||
-        typeof value !== 'object' ||
-        Array.isArray(value) ||
-        Object.keys(value).length !== 2 ||
-        value.format !== format ||
-        typeof value.monoEffects !== 'boolean'
-      )
-        throw new Error('preserved');
-      return value.monoEffects;
-    }
+function decode(raw){
+if(raw===null)return false;
+if(typeof raw!=='string'||raw.length>256)throw new Error('preserved');
+const value=JSON.parse(raw);
+if(
+!value||
+typeof value!=='object'||
+Array.isArray(value)||
+Object.keys(value).length!==2||
+value.format!==format||
+typeof value.monoEffects!=='boolean'
+)
+throw new Error('preserved');
+return value.monoEffects;
+}
 
-    /** One output choice, no playback or profile writes. Failed intent survives
+/** One output choice, no playback or profile writes. Failed intent survives
      * peer/storage events; only explicit choice or Retry attempts persistence. */
-    function createGameplayAudioPreferences({
-      getStorage = () => globalThis.localStorage,
-      window: target = globalThis.window ?? globalThis,
-    } = {}) {
-      let monoEffects = false,
-        durable = true,
-        reason = '',
-        pending = false,
-        disposed = false,
-        revision = 0;
-      const listeners = new Set();
-      const pageKey = target && ['object', 'function'].includes(typeof target) ? target : null;
-      const peers = (pageKey && observers.get(pageKey)) ?? new Set();
-      if (pageKey) observers.set(pageKey, peers);
-      const snapshot = () => ({ monoEffects, durable, reason, pending });
-      const notify = () => {
-        for (const listener of [...listeners]) if (listeners.has(listener)) listener(snapshot());
-        return snapshot();
-      };
-      const read = () => {
-        const storage = getStorage();
-        if (!storage?.getItem || !storage?.setItem) throw new Error('unavailable');
-        const raw = storage.getItem(GAMEPLAY_AUDIO_KEY);
-        let value;
-        try {
-          value = decode(raw);
-        } catch {
-          throw new Error('preserved');
-        }
-        return { storage, raw, value };
-      };
-      const failure = (error) => {
-        durable = false;
-        reason = ['preserved', 'unconfirmed', 'unavailable'].includes(error?.message)
-          ? error.message
-          : error?.name === 'QuotaExceededError'
-            ? 'full'
-            : 'blocked';
-      };
-      const load = () => {
-        const token = revision;
-        try {
-          const record = read();
-          if (disposed || revision !== token || pending) return;
-          monoEffects = record.value;
-          durable = true;
-          reason = '';
-        } catch (error) {
-          if (!disposed && revision === token && !pending) failure(error);
-        }
-      };
-      load();
-      const receivePage = (state) => {
-        if (disposed || pending) return;
-        revision++;
-        ({ monoEffects, durable, reason, pending } = state);
-        notify();
-      };
-      peers.add(receivePage);
-      const save = () => {
-        if (disposed || !pending) return snapshot();
-        const token = revision;
-        try {
-          const { storage } = read();
-          if (disposed || revision !== token) return snapshot();
-          const raw = JSON.stringify({ format, monoEffects });
-          storage.setItem(GAMEPLAY_AUDIO_KEY, raw);
-          if (disposed) return snapshot();
-          if (revision !== token) {
-            // A reentrant newer choice must not inherit this older write's success.
-            if (read().value !== monoEffects) {
-              pending = true;
-              failure(new Error('unconfirmed'));
-              notify();
-            }
-            return snapshot();
-          }
-          if (storage.getItem(GAMEPLAY_AUDIO_KEY) !== raw) throw new Error('unconfirmed');
-          if (disposed || revision !== token) return snapshot();
-          durable = true;
-          pending = false;
-          reason = '';
-        } catch (error) {
-          if (!disposed && revision === token) failure(error);
-        }
-        if (disposed || revision !== token) return snapshot();
-        const result = notify();
-        if (!disposed && revision === token)
-          for (const receive of [...peers]) if (receive !== receivePage) receive(result);
-        return snapshot();
-      };
-      const receive = (event) => {
-        if (disposed || pending) return;
-        if (event.type === 'pageshow' && event.persisted !== true) return;
-        if (event.type === 'storage') {
-          if (event.key !== null && event.key !== GAMEPLAY_AUDIO_KEY) return;
-          try {
-            const current = read();
-            if (
-              current.storage !== event.storageArea ||
-              (event.key === null ? current.raw !== null : current.raw !== event.newValue)
-            )
-              return;
-          } catch {
-            return;
-          }
-        }
-        load();
-        if (!disposed) notify();
-      };
-      target?.addEventListener?.('storage', receive);
-      target?.addEventListener?.('pageshow', receive);
-      return Object.freeze({
-        snapshot,
-        choose(value) {
-          if (disposed) return snapshot();
-          if (typeof value !== 'boolean') throw new TypeError('Mono effects must be a boolean.');
-          revision++;
-          monoEffects = value;
-          pending = true;
-          return save();
-        },
-        retry: save,
-        subscribe(listener) {
-          if (disposed) return () => {};
-          listeners.add(listener);
-          listener(snapshot());
-          return () => listeners.delete(listener);
-        },
-        dispose() {
-          disposed = true;
-          revision++;
-          listeners.clear();
-          peers.delete(receivePage);
-          if (pageKey && !peers.size) observers.delete(pageKey);
-          target?.removeEventListener?.('storage', receive);
-          target?.removeEventListener?.('pageshow', receive);
-        },
-      });
-    }
+function createGameplayAudioPreferences({
+getStorage=()=>globalThis.localStorage,
+window:target=globalThis.window??globalThis,
+}={}){
+let monoEffects=false,
+durable=true,
+reason='',
+pending=false,
+disposed=false,
+revision=0;
+const listeners=new Set();
+const pageKey=target&&['object','function'].includes(typeof target)?target:null;
+const peers=(pageKey&&observers.get(pageKey))??new Set();
+if(pageKey)observers.set(pageKey,peers);
+const snapshot=()=>({monoEffects,durable,reason,pending});
+const notify=()=>{
+for(const listener of[...listeners])if(listeners.has(listener))listener(snapshot());
+return snapshot();
+};
+const read=()=>{
+const storage=getStorage();
+if(!storage?.getItem|| !storage?.setItem)throw new Error('unavailable');
+const raw=storage.getItem(GAMEPLAY_AUDIO_KEY);
+let value;
+try{
+value=decode(raw);
+}catch{
+throw new Error('preserved');
+}
+return{storage,raw,value};
+};
+const failure=(error)=>{
+durable=false;
+reason=['preserved','unconfirmed','unavailable'].includes(error?.message)
+?error.message
+:error?.name==='QuotaExceededError'
+?'full'
+:'blocked';
+};
+const load=()=>{
+const token=revision;
+try{
+const record=read();
+if(disposed||revision!==token||pending)return;
+monoEffects=record.value;
+durable=true;
+reason='';
+}catch(error){
+if(!disposed&&revision===token&& !pending)failure(error);
+}
+};
+load();
+const receivePage=(state)=>{
+if(disposed||pending)return;
+revision++;
+({monoEffects,durable,reason,pending}=state);
+notify();
+};
+peers.add(receivePage);
+const save=()=>{
+if(disposed|| !pending)return snapshot();
+const token=revision;
+try{
+const{storage}=read();
+if(disposed||revision!==token)return snapshot();
+const raw=JSON.stringify({format,monoEffects});
+storage.setItem(GAMEPLAY_AUDIO_KEY,raw);
+if(disposed)return snapshot();
+if(revision!==token){
+// A reentrant newer choice must not inherit this older write's success.
+if(read().value!==monoEffects){
+pending=true;
+failure(new Error('unconfirmed'));
+notify();
+}
+return snapshot();
+}
+if(storage.getItem(GAMEPLAY_AUDIO_KEY)!==raw)throw new Error('unconfirmed');
+if(disposed||revision!==token)return snapshot();
+durable=true;
+pending=false;
+reason='';
+}catch(error){
+if(!disposed&&revision===token)failure(error);
+}
+if(disposed||revision!==token)return snapshot();
+const result=notify();
+if(!disposed&&revision===token)
+for(const receive of[...peers])if(receive!==receivePage)receive(result);
+return snapshot();
+};
+const receive=(event)=>{
+if(disposed||pending)return;
+if(event.type==='pageshow'&&event.persisted!==true)return;
+if(event.type==='storage'){
+if(event.key!==null&&event.key!==GAMEPLAY_AUDIO_KEY)return;
+try{
+const current=read();
+if(
+current.storage!==event.storageArea||
+(event.key===null?current.raw!==null:current.raw!==event.newValue)
+)
+return;
+}catch{
+return;
+}
+}
+load();
+if(!disposed)notify();
+};
+target?.addEventListener?.('storage',receive);
+target?.addEventListener?.('pageshow',receive);
+return Object.freeze({
+snapshot,
+choose(value){
+if(disposed)return snapshot();
+if(typeof value!=='boolean')throw new TypeError('Mono effects must be a boolean.');
+revision++;
+monoEffects=value;
+pending=true;
+return save();
+},
+retry:save,
+subscribe(listener){
+if(disposed)return()=>{};
+listeners.add(listener);
+listener(snapshot());
+return()=>listeners.delete(listener);
+},
+dispose(){
+disposed=true;
+revision++;
+listeners.clear();
+peers.delete(receivePage);
+if(pageKey&& !peers.size)observers.delete(pageKey);
+target?.removeEventListener?.('storage',receive);
+target?.removeEventListener?.('pageshow',receive);
+},
+});
+}
 
-    return {
-      GAMEPLAY_AUDIO_KEY: GAMEPLAY_AUDIO_KEY,
-      createGameplayAudioPreferences: createGameplayAudioPreferences,
-    };
-  })();
-  modules['game/ui/audio-output.mjs'] = (() => {
-    /** Shared output topology for Capture, Snake and native flight presentation.
+return{
+GAMEPLAY_AUDIO_KEY:GAMEPLAY_AUDIO_KEY,
+createGameplayAudioPreferences:createGameplayAudioPreferences,
+};
+})();
+modules['game/ui/audio-output.mjs']=(()=>{
+/** Shared output topology for Capture, Snake and native flight presentation.
      * A page owns one context. Construction is called only from its gesture owner. */
-    function createGameAudioContext(host = globalThis) {
-      const Context = host.AudioContext ?? host.webkitAudioContext;
-      return Context ? new Context({ latencyHint: 'interactive' }) : null;
-    }
+function createGameAudioContext(host=globalThis){
+const Context=host.AudioContext??host.webkitAudioContext;
+return Context?new Context({latencyHint:'interactive'}):null;
+}
 
-    function createGameAudioOutput(context) {
-      const output = {};
-      for (const key of [
-        'master',
-        'gameplayBus',
-        'musicBus',
-        'sfxBus',
-        'menuBus',
-        'movementBus',
-        'radioBus',
-        'dialogueBus',
-      ])
-        output[key] = context.createGain();
-      output.musicBus.connect(output.master);
-      for (const key of ['sfxBus', 'menuBus', 'dialogueBus'])
-        output[key].connect(output.gameplayBus);
-      output.gameplayBus.connect(output.master);
-      for (const key of ['movementBus', 'radioBus']) output[key].connect(output.sfxBus);
-      output.compressor = context.createDynamicsCompressor?.();
-      if (output.compressor) {
-        output.compressor.threshold.value = -12;
-        output.compressor.knee.value = 12;
-        output.compressor.ratio.value = 5;
-        output.master.connect(output.compressor);
-        output.compressor.connect(context.destination);
-      } else output.master.connect(context.destination);
-      return output;
-    }
+function createGameAudioOutput(context){
+const output={};
+for(const key of[
+'master',
+'gameplayBus',
+'musicBus',
+'sfxBus',
+'menuBus',
+'movementBus',
+'radioBus',
+'dialogueBus',
+])
+output[key]=context.createGain();
+output.musicBus.connect(output.master);
+for(const key of['sfxBus','menuBus','dialogueBus'])
+output[key].connect(output.gameplayBus);
+output.gameplayBus.connect(output.master);
+for(const key of['movementBus','radioBus'])output[key].connect(output.sfxBus);
+output.compressor=context.createDynamicsCompressor?.();
+if(output.compressor){
+output.compressor.threshold.value= -12;
+output.compressor.knee.value=12;
+output.compressor.ratio.value=5;
+output.master.connect(output.compressor);
+output.compressor.connect(context.destination);
+}else output.master.connect(context.destination);
+return output;
+}
 
-    /** Down-mix effects after their panners, without touching music, media elements,
+/** Down-mix effects after their panners, without touching music, media elements,
      * the master fader, or recording taps. A rejected configuration is not a pass. */
-    function setGameEffectsMono(output, enabled) {
-      const node = output?.gameplayBus;
-      if (!node || typeof enabled !== 'boolean') return false;
-      const previous = {
-        channelCount: node.channelCount,
-        channelCountMode: node.channelCountMode,
-        channelInterpretation: node.channelInterpretation,
-      };
-      try {
-        node.channelInterpretation = 'speakers';
-        node.channelCount = enabled ? 1 : 2;
-        node.channelCountMode = enabled ? 'explicit' : 'max';
-        if (
-          node.channelCount !== (enabled ? 1 : 2) ||
-          node.channelCountMode !== (enabled ? 'explicit' : 'max') ||
-          node.channelInterpretation !== 'speakers'
-        )
-          throw new Error('Channel configuration was not applied.');
-        return true;
-      } catch {
-        for (const [key, value] of Object.entries(previous)) {
-          try {
-            node[key] = value;
-          } catch {
-            /* Preserve the browser's accepted path. */
-          }
-        }
-        return false;
-      }
-    }
+function setGameEffectsMono(output,enabled){
+const node=output?.gameplayBus;
+if(!node||typeof enabled!=='boolean')return false;
+const previous={
+channelCount:node.channelCount,
+channelCountMode:node.channelCountMode,
+channelInterpretation:node.channelInterpretation,
+};
+try{
+node.channelInterpretation='speakers';
+node.channelCount=enabled?1:2;
+node.channelCountMode=enabled?'explicit':'max';
+if(
+node.channelCount!==(enabled?1:2)||
+node.channelCountMode!==(enabled?'explicit':'max')||
+node.channelInterpretation!=='speakers'
+)
+throw new Error('Channel configuration was not applied.');
+return true;
+}catch{
+for(const[key,value]of Object.entries(previous)){
+try{
+node[key]=value;
+}catch{
+/* Preserve the browser's accepted path. */
+}
+}
+return false;
+}
+}
 
-    /** Request the same audible iOS playback category before creating/resuming audio. */
-    function requestPlaybackAudioSession(audioSession = globalThis.navigator?.audioSession) {
-      if (!audioSession || typeof audioSession !== 'object') return false;
-      try {
-        if (audioSession.type !== 'playback') audioSession.type = 'playback';
-        return audioSession.type === 'playback';
-      } catch {
-        return false;
-      }
-    }
-    function releasePlaybackAudioSession(audioSession = globalThis.navigator?.audioSession) {
-      if (!audioSession || typeof audioSession !== 'object') return false;
-      try {
-        if (audioSession.type === 'playback') audioSession.type = 'auto';
-        return audioSession.type !== 'playback';
-      } catch {
-        return false;
-      }
-    }
+/** Request the same audible iOS playback category before creating/resuming audio. */
+function requestPlaybackAudioSession(audioSession=globalThis.navigator?.audioSession){
+if(!audioSession||typeof audioSession!=='object')return false;
+try{
+if(audioSession.type!=='playback')audioSession.type='playback';
+return audioSession.type==='playback';
+}catch{
+return false;
+}
+}
+function releasePlaybackAudioSession(audioSession=globalThis.navigator?.audioSession){
+if(!audioSession||typeof audioSession!=='object')return false;
+try{
+if(audioSession.type==='playback')audioSession.type='auto';
+return audioSession.type!=='playback';
+}catch{
+return false;
+}
+}
 
-    return {
-      createGameAudioContext: createGameAudioContext,
-      createGameAudioOutput: createGameAudioOutput,
-      setGameEffectsMono: setGameEffectsMono,
-      requestPlaybackAudioSession: requestPlaybackAudioSession,
-      releasePlaybackAudioSession: releasePlaybackAudioSession,
-    };
-  })();
-  modules['game/ui/gameplay-audio-output.mjs'] = (() => {
-    const createGameplayAudioPreferences =
-      modules['game/gameplay-audio-preferences.mjs']['createGameplayAudioPreferences'];
-    const setGameEffectsMono = modules['game/ui/audio-output.mjs']['setGameEffectsMono'];
+return{
+createGameAudioContext:createGameAudioContext,
+createGameAudioOutput:createGameAudioOutput,
+setGameEffectsMono:setGameEffectsMono,
+requestPlaybackAudioSession:requestPlaybackAudioSession,
+releasePlaybackAudioSession:releasePlaybackAudioSession,
+};
+})();
+modules['game/ui/gameplay-audio-output.mjs']=(()=>{
+const createGameplayAudioPreferences=
+modules['game/gameplay-audio-preferences.mjs']['createGameplayAudioPreferences'];
+const setGameEffectsMono=modules['game/ui/audio-output.mjs']['setGameEffectsMono'];
 
-    /** Presentation-only owner. Selecting a policy never constructs or resumes a
+/** Presentation-only owner. Selecting a policy never constructs or resumes a
      * context. The engine attaches its already gesture-created graph explicitly. */
-    function createGameplayAudioOutput(options = {}) {
-      const preferences = createGameplayAudioPreferences(options),
-        listeners = new Set();
-      let output = null,
-        state = preferences.snapshot(),
-        status = 'inactive',
-        disposed = false;
-      const snapshot = () => ({ ...state, status });
-      const apply = () => {
-        if (disposed) return;
-        status = !output
-          ? 'inactive'
-          : setGameEffectsMono(output, state.monoEffects)
-            ? state.monoEffects
-              ? 'mono'
-              : 'original'
-            : 'unsupported';
-        for (const listener of [...listeners]) if (listeners.has(listener)) listener(snapshot());
-      };
-      const stop = preferences.subscribe((next) => {
-        state = next;
-        apply();
-      });
-      return Object.freeze({
-        snapshot,
-        choose: (enabled) => preferences.choose(enabled),
-        retry: () => preferences.retry(),
-        attach(graph) {
-          if (!disposed) {
-            output = graph;
-            apply();
-          }
-        },
-        subscribe(listener) {
-          if (disposed) return () => {};
-          listeners.add(listener);
-          listener(snapshot());
-          return () => listeners.delete(listener);
-        },
-        dispose() {
-          if (disposed) return;
-          disposed = true;
-          stop();
-          preferences.dispose();
-          listeners.clear();
-          output = null;
-        },
-      });
-    }
+function createGameplayAudioOutput(options={}){
+const preferences=createGameplayAudioPreferences(options),
+listeners=new Set();
+let output=null,
+state=preferences.snapshot(),
+status='inactive',
+disposed=false;
+const snapshot=()=>({...state,status});
+const apply=()=>{
+if(disposed)return;
+status= !output
+?'inactive'
+:setGameEffectsMono(output,state.monoEffects)
+?state.monoEffects
+?'mono'
+:'original'
+:'unsupported';
+for(const listener of[...listeners])if(listeners.has(listener))listener(snapshot());
+};
+const stop=preferences.subscribe((next)=>{
+state=next;
+apply();
+});
+return Object.freeze({
+snapshot,
+choose:(enabled)=>preferences.choose(enabled),
+retry:()=>preferences.retry(),
+attach(graph){
+if(!disposed){
+output=graph;
+apply();
+}
+},
+subscribe(listener){
+if(disposed)return()=>{};
+listeners.add(listener);
+listener(snapshot());
+return()=>listeners.delete(listener);
+},
+dispose(){
+if(disposed)return;
+disposed=true;
+stop();
+preferences.dispose();
+listeners.clear();
+output=null;
+},
+});
+}
 
-    return { createGameplayAudioOutput: createGameplayAudioOutput };
-  })();
-  modules['game/ui/destruction-audio.mjs'] = (() => {
-    /** Presentation-only vocabulary shared by every destruction adapter and Studio.
+return{createGameplayAudioOutput:createGameplayAudioOutput};
+})();
+modules['game/ui/destruction-audio.mjs']=(()=>{
+/** Presentation-only vocabulary shared by every destruction adapter and Studio.
      * Classify before coalescing crowds; never consume the simulation random stream. */
-    const DESTRUCTION_CATEGORIES = Object.freeze([
-      'soft',
-      'armored',
-      'light',
-      'heavy',
-      'electronic',
-    ]);
-    const DESTRUCTION_CUES = Object.freeze(DESTRUCTION_CATEGORIES.map((id) => `destroy-${id}`));
+const DESTRUCTION_CATEGORIES=Object.freeze([
+'soft',
+'armored',
+'light',
+'heavy',
+'electronic',
+]);
+const DESTRUCTION_CUES=Object.freeze(DESTRUCTION_CATEGORIES.map((id)=>`destroy-${id}`));
 
-    // Separate slots preserve the dry impact when Classic sounds is selected. Human identity
-    // is independent of armor/electronics material (for example a relay operator).
-    const HUMAN_REACTION_CUES = Object.freeze(
-      Array.from({ length: 8 }, (_, index) => `human-reaction-${index + 1}`),
-    );
-    const humanoidFamilies = new Set([
-      'lookout',
-      'patroller',
-      'runner',
-      'sprinter',
-      'courier',
-      'guard',
-      'refuge',
-      'refuge-seeker',
-      'switchback',
-      'pair',
-      'rendezvous-pair',
-      'shield',
-      'shield-bearer',
-      'brace',
-      'brace-trooper',
-      'relay-warden',
-    ]);
-    function isHumanoidDestruction(details = {}) {
-      if (details.machine || details.humanoid === false || details.flesh === false) return false;
-      return details.humanoid === true || humanoidFamilies.has(details.family ?? details.kind);
-    }
+// Separate slots preserve the dry impact when Classic sounds is selected. Human identity
+// is independent of armor/electronics material (for example a relay operator).
+const HUMAN_REACTION_CUES=Object.freeze(
+Array.from({length:8},(_,index)=>`human-reaction-${index+1}`),
+);
+const humanoidFamilies=new Set([
+'lookout',
+'patroller',
+'runner',
+'sprinter',
+'courier',
+'guard',
+'refuge',
+'refuge-seeker',
+'switchback',
+'pair',
+'rendezvous-pair',
+'shield',
+'shield-bearer',
+'brace',
+'brace-trooper',
+'relay-warden',
+]);
+function isHumanoidDestruction(details={}){
+if(details.machine||details.humanoid===false||details.flesh===false)return false;
+return details.humanoid===true||humanoidFamilies.has(details.family??details.kind);
+}
 
-    function destructionCategory(details = {}) {
-      if (DESTRUCTION_CATEGORIES.includes(details.category)) return details.category;
-      const family = String(details.family ?? details.kind ?? '').toLowerCase();
-      const machine = String(details.machine ?? '').toLowerCase();
-      if (/relay|jammer|radar|electronic|generator|core|sentry|turret/.test(family))
-        return 'electronic';
-      if (/tank|carrier|tracked|heavy/.test(family + ' ' + machine)) return 'heavy';
-      if (/shield|brace|guard|armored/.test(family) && !details.machine) return 'armored';
-      if (details.machine || /car|truck|rover|buggy|vehicle|transport/.test(family)) return 'light';
-      return details.material === 'metal' ? 'armored' : 'soft';
-    }
+function destructionCategory(details={}){
+if(DESTRUCTION_CATEGORIES.includes(details.category))return details.category;
+const family=String(details.family??details.kind??'').toLowerCase();
+const machine=String(details.machine??'').toLowerCase();
+if(/relay|jammer|radar|electronic|generator|core|sentry|turret/.test(family))
+return'electronic';
+if(/tank|carrier|tracked|heavy/.test(family+' '+machine))return'heavy';
+if(/shield|brace|guard|armored/.test(family)&& !details.machine)return'armored';
+if(details.machine|| /car|truck|rover|buggy|vehicle|transport/.test(family))return'light';
+return details.material==='metal'?'armored':'soft';
+}
 
-    // Shape and decay, not loudness alone, separate infantry, equipment and engines.
-    const profiles = Object.freeze({
-      soft: [0.52, 0.24, 0.09, 190, 64, 'sine', 900, 280],
-      armored: [0.54, 0.32, 0.11, 250, 72, 'triangle', 1300, 320],
-      light: [0.58, 0.48, 0.16, 130, 38, 'triangle', 690, 100],
-      heavy: [0.64, 0.8, 0.22, 86, 32, 'sine', 420, 70],
-      electronic: [0.48, 0.33, 0.14, 710, 76, 'triangle', 1150, 145],
-    });
+// Shape and decay, not loudness alone, separate infantry, equipment and engines.
+const profiles=Object.freeze({
+soft:[0.52,0.24,0.09,190,64,'sine',900,280],
+armored:[0.54,0.32,0.11,250,72,'triangle',1300,320],
+light:[0.58,0.48,0.16,130,38,'triangle',690,100],
+heavy:[0.64,0.8,0.22,86,32,'sine',420,70],
+electronic:[0.48,0.33,0.14,710,76,'triangle',1150,145],
+});
 
-    function destructionSoundRecipe(details = {}) {
-      const category = destructionCategory(details);
-      const [baseGain, maxDuration, cooldown, from, to, type, accentFrom, accentTo] =
-        profiles[category];
-      const scale = Number.isFinite(details.gainScale)
-        ? Math.max(0, Math.min(1, details.gainScale))
-        : 1;
-      const organic = category === 'soft' || category === 'armored';
-      const brutal = organic && details.brutal === true;
-      const rate = /sprinter|courier/.test(details.family ?? '')
-        ? 1.06
-        : /brace|guard/.test(details.family ?? '')
-          ? 0.96
-          : 1;
-      const gain = baseGain * scale * (brutal ? 1.12 : 1);
-      return {
-        category,
-        name: `destroy-${category}`,
-        gain,
-        priority: category === 'heavy' ? 4 : 3,
-        movement: false,
-        rate,
-        maxDuration,
-        cooldown,
-        // The recorded bank has quiet calibrated peaks. A full-scale oscillator
-        // needs matching attenuation or initial/offline kills are much louder.
-        tone: { from, to, duration: maxDuration * 0.7, gain: gain * (0.2 / 3), type },
-        layers: [
-          {
-            from: accentFrom,
-            to: accentTo,
-            duration: brutal ? 0.16 : 0.08,
-            gain: gain * ((brutal ? 0.085 : 0.045) / 3),
-            type: 'triangle',
-            kind: 'snare',
-            delay: 0.008,
-          },
-        ],
-      };
-    }
+function destructionSoundRecipe(details={}){
+const category=destructionCategory(details);
+const[baseGain,maxDuration,cooldown,from,to,type,accentFrom,accentTo]=
+profiles[category];
+const scale=Number.isFinite(details.gainScale)
+?Math.max(0,Math.min(1,details.gainScale))
+:1;
+const organic=category==='soft'||category==='armored';
+const brutal=organic&&details.brutal===true;
+const rate= /sprinter|courier/.test(details.family??'')
+?1.06
+:/brace|guard/.test(details.family??'')
+?0.96
+:1;
+const gain=baseGain*scale*(brutal?1.12:1);
+return{
+category,
+name:`destroy-${category}`,
+gain,
+priority:category==='heavy'?4:3,
+movement:false,
+rate,
+maxDuration,
+cooldown,
+// The recorded bank has quiet calibrated peaks. A full-scale oscillator
+// needs matching attenuation or initial/offline kills are much louder.
+tone:{from,to,duration:maxDuration*0.7,gain:gain*(0.2/3),type},
+layers:[
+{
+from:accentFrom,
+to:accentTo,
+duration:brutal?0.16:0.08,
+gain:gain*((brutal?0.085:0.045)/3),
+type:'triangle',
+kind:'snare',
+delay:0.008,
+},
+],
+};
+}
 
-    return {
-      DESTRUCTION_CATEGORIES: DESTRUCTION_CATEGORIES,
-      DESTRUCTION_CUES: DESTRUCTION_CUES,
-      HUMAN_REACTION_CUES: HUMAN_REACTION_CUES,
-      isHumanoidDestruction: isHumanoidDestruction,
-      destructionCategory: destructionCategory,
-      destructionSoundRecipe: destructionSoundRecipe,
-    };
-  })();
-  modules['game/ui/human-reaction-policy.mjs'] = (() => {
-    const HUMAN_REACTION_CUES = modules['game/ui/destruction-audio.mjs']['HUMAN_REACTION_CUES'];
-    const isHumanoidDestruction = modules['game/ui/destruction-audio.mjs']['isHumanoidDestruction'];
+return{
+DESTRUCTION_CATEGORIES:DESTRUCTION_CATEGORIES,
+DESTRUCTION_CUES:DESTRUCTION_CUES,
+HUMAN_REACTION_CUES:HUMAN_REACTION_CUES,
+isHumanoidDestruction:isHumanoidDestruction,
+destructionCategory:destructionCategory,
+destructionSoundRecipe:destructionSoundRecipe,
+};
+})();
+modules['game/ui/human-reaction-policy.mjs']=(()=>{
+const HUMAN_REACTION_CUES=modules['game/ui/destruction-audio.mjs']['HUMAN_REACTION_CUES'];
+const isHumanoidDestruction=modules['game/ui/destruction-audio.mjs']['isHumanoidDestruction'];
 
-    /** Cosmetic scheduling only. It never queues deaths or consumes gameplay RNG. */
-    function createHumanReactionPolicy({ random = Math.random } = {}) {
-      let tokens = 2,
-        lastTime = null,
-        lastOnset = -Infinity,
-        quietUntil = -Infinity;
-      let bag = [],
-        previous = null;
-      const metrics = { attempted: 0, admitted: 0, rejected: 0 };
-      return {
-        interrupt(now, duration = 0.35) {
-          quietUntil = Math.max(quietUntil, now + duration);
-        },
-        request(now, details = {}, activeVoices = 0) {
-          metrics.attempted++;
-          if (!Number.isFinite(now)) {
-            metrics.rejected++;
-            return null;
-          }
-          if (lastTime !== null) tokens = Math.min(2, tokens + Math.max(0, now - lastTime));
-          lastTime = now;
-          if (
-            !Number.isFinite(now) ||
-            details.vocals === false ||
-            !isHumanoidDestruction(details) ||
-            details.audible === false ||
-            activeVoices >= 2 ||
-            now < quietUntil ||
-            now - lastOnset < 0.25 ||
-            tokens < 1
-          ) {
-            metrics.rejected++;
-            return null;
-          }
-          if (!bag.length) {
-            bag = [...HUMAN_REACTION_CUES];
-            for (let i = bag.length - 1; i > 0; i--) {
-              const j = Math.floor(Math.max(0, Math.min(0.999999, random())) * (i + 1));
-              [bag[i], bag[j]] = [bag[j], bag[i]];
-            }
-            if (bag.at(-1) === previous) [bag[0], bag[bag.length - 1]] = [bag.at(-1), bag[0]];
-          }
-          previous = bag.pop();
-          tokens--;
-          lastOnset = now;
-          metrics.admitted++;
-          return previous;
-        },
-        snapshot: () => ({ ...metrics, tokens }),
-        reset() {
-          tokens = 2;
-          lastTime = null;
-          lastOnset = -Infinity;
-          quietUntil = -Infinity;
-          // Keep shuffle history across retries so every launch does not repeat take 1.
-          metrics.attempted = metrics.admitted = metrics.rejected = 0;
-        },
-      };
-    }
+/** Cosmetic scheduling only. It never queues deaths or consumes gameplay RNG. */
+function createHumanReactionPolicy({random=Math.random}={}){
+let tokens=2,
+lastTime=null,
+lastOnset= -Infinity,
+quietUntil= -Infinity;
+let bag=[],
+previous=null;
+const metrics={attempted:0,admitted:0,rejected:0};
+return{
+interrupt(now,duration=0.35){
+quietUntil=Math.max(quietUntil,now+duration);
+},
+request(now,details={},activeVoices=0){
+metrics.attempted++;
+if(!Number.isFinite(now)){
+metrics.rejected++;
+return null;
+}
+if(lastTime!==null)tokens=Math.min(2,tokens+Math.max(0,now-lastTime));
+lastTime=now;
+if(
+!Number.isFinite(now)||
+details.vocals===false||
+!isHumanoidDestruction(details)||
+details.audible===false||
+activeVoices>=2||
+now<quietUntil||
+now-lastOnset<0.25||
+tokens<1
+){
+metrics.rejected++;
+return null;
+}
+if(!bag.length){
+bag=[...HUMAN_REACTION_CUES];
+for(let i=bag.length-1;i>0;i--){
+const j=Math.floor(Math.max(0,Math.min(0.999999,random()))*(i+1));
+[bag[i],bag[j]]=[bag[j],bag[i]];
+}
+if(bag.at(-1)===previous)[bag[0],bag[bag.length-1]]=[bag.at(-1),bag[0]];
+}
+previous=bag.pop();
+tokens--;
+lastOnset=now;
+metrics.admitted++;
+return previous;
+},
+snapshot:()=>({...metrics,tokens}),
+reset(){
+tokens=2;
+lastTime=null;
+lastOnset= -Infinity;
+quietUntil= -Infinity;
+// Keep shuffle history across retries so every launch does not repeat take 1.
+metrics.attempted=metrics.admitted=metrics.rejected=0;
+},
+};
+}
 
-    return { createHumanReactionPolicy: createHumanReactionPolicy };
-  })();
-  modules['game/ui/destruction-level.mjs'] = (() => {
-    const HUMAN_REACTION_CUES = modules['game/ui/destruction-audio.mjs']['HUMAN_REACTION_CUES'];
-    /** Match imported destruction recordings to the admitted bank without changing
+return{createHumanReactionPolicy:createHumanReactionPolicy};
+})();
+modules['game/ui/destruction-level.mjs']=(()=>{
+const HUMAN_REACTION_CUES=modules['game/ui/destruction-audio.mjs']['HUMAN_REACTION_CUES'];
+/** Match imported destruction recordings to the admitted bank without changing
      * their original samples. Summed channel magnitudes bound stereo/downmix peaks
      * even when channels cancel in a mono audition. This runs once after decoding. */
-    const targets = Object.freeze({
-      ...Object.fromEntries(HUMAN_REACTION_CUES.map((name) => [name, -30])),
-      'destroy-soft': -30,
-      'destroy-armored': -30,
-      'destroy-light': -29,
-      'destroy-heavy': -28,
-      'destroy-electronic': -31,
-    });
+const targets=Object.freeze({
+...Object.fromEntries(HUMAN_REACTION_CUES.map((name)=>[name,-30])),
+'destroy-soft':-30,
+'destroy-armored':-30,
+'destroy-light':-29,
+'destroy-heavy':-28,
+'destroy-electronic':-31,
+});
 
-    function destructionBufferGain(name, buffer) {
-      if (!Object.hasOwn(targets, name)) return 1;
-      const { length, numberOfChannels, sampleRate, duration } = buffer ?? {};
-      if (
-        !Number.isSafeInteger(length) ||
-        length <= 0 ||
-        !Number.isSafeInteger(numberOfChannels) ||
-        numberOfChannels <= 0 ||
-        numberOfChannels > 32 ||
-        length * numberOfChannels > 4 * 1024 * 1024 ||
-        !Number.isFinite(sampleRate) ||
-        sampleRate <= 0 ||
-        !Number.isFinite(duration) ||
-        duration <= 0 ||
-        duration > 1 ||
-        typeof buffer.getChannelData !== 'function'
-      )
-        throw new TypeError('Invalid destruction audio buffer.');
-      const envelope = new Float64Array(length);
-      for (let channel = 0; channel < numberOfChannels; channel++) {
-        const data = buffer.getChannelData(channel);
-        if (data.length !== length) throw new TypeError('Incomplete destruction audio channel.');
-        for (let index = 0; index < length; index++) {
-          const value = data[index];
-          if (!Number.isFinite(value)) throw new TypeError('Nonfinite destruction audio sample.');
-          envelope[index] += Math.abs(value);
-        }
-      }
-      const window = Math.max(1, Math.min(length, Math.round(sampleRate * 0.05)));
-      let peak = 0,
-        energy = 0,
-        maximumEnergy = 0;
-      for (let index = 0; index < length; index++) {
-        const value = envelope[index];
-        peak = Math.max(peak, value);
-        energy += value * value;
-        if (index >= window) energy -= envelope[index - window] ** 2;
-        maximumEnergy = Math.max(maximumEnergy, energy);
-      }
-      const rms = Math.sqrt(maximumEnergy / window);
-      return Math.min(1, peak > 0 ? 0.1 / peak : 1, rms > 0 ? 10 ** (targets[name] / 20) / rms : 1);
-    }
+function destructionBufferGain(name,buffer){
+if(!Object.hasOwn(targets,name))return 1;
+const{length,numberOfChannels,sampleRate,duration}=buffer??{};
+if(
+!Number.isSafeInteger(length)||
+length<=0||
+!Number.isSafeInteger(numberOfChannels)||
+numberOfChannels<=0||
+numberOfChannels>32||
+length*numberOfChannels>4*1024*1024||
+!Number.isFinite(sampleRate)||
+sampleRate<=0||
+!Number.isFinite(duration)||
+duration<=0||
+duration>1||
+typeof buffer.getChannelData!=='function'
+)
+throw new TypeError('Invalid destruction audio buffer.');
+const envelope=new Float64Array(length);
+for(let channel=0;channel<numberOfChannels;channel++){
+const data=buffer.getChannelData(channel);
+if(data.length!==length)throw new TypeError('Incomplete destruction audio channel.');
+for(let index=0;index<length;index++){
+const value=data[index];
+if(!Number.isFinite(value))throw new TypeError('Nonfinite destruction audio sample.');
+envelope[index]+=Math.abs(value);
+}
+}
+const window=Math.max(1,Math.min(length,Math.round(sampleRate*0.05)));
+let peak=0,
+energy=0,
+maximumEnergy=0;
+for(let index=0;index<length;index++){
+const value=envelope[index];
+peak=Math.max(peak,value);
+energy+=value*value;
+if(index>=window)energy-=envelope[index-window]**2;
+maximumEnergy=Math.max(maximumEnergy,energy);
+}
+const rms=Math.sqrt(maximumEnergy/window);
+return Math.min(1,peak>0?0.1/peak:1,rms>0?10**(targets[name]/20)/rms:1);
+}
 
-    return { destructionBufferGain: destructionBufferGain };
-  })();
-  modules['game/audio/dialogue-mix.mjs'] = (() => {
-    /** Decorative spoken reactions sit behind music and gameplay warnings.
+return{destructionBufferGain:destructionBufferGain};
+})();
+modules['game/audio/dialogue-mix.mjs']=(()=>{
+/** Decorative spoken reactions sit behind music and gameplay warnings.
      * The mix trim also applies to saved slider choices without rewriting preferences. */
-    const DEFAULT_DIALOGUE_VOLUME = 0.25;
-    const DIALOGUE_MIX_GAIN = 0.4;
-    const DIALOGUE_MUSIC_GAIN = 0.9;
+const DEFAULT_DIALOGUE_VOLUME=0.25;
+const DIALOGUE_MIX_GAIN=0.4;
+const DIALOGUE_MUSIC_GAIN=0.9;
 
-    return {
-      DEFAULT_DIALOGUE_VOLUME: DEFAULT_DIALOGUE_VOLUME,
-      DIALOGUE_MIX_GAIN: DIALOGUE_MIX_GAIN,
-      DIALOGUE_MUSIC_GAIN: DIALOGUE_MUSIC_GAIN,
-    };
-  })();
-  modules['game/ui/audio-master.mjs'] = (() => {
-    const t = academyAudioExternal1['t'];
-    const volumeValue = (value) => {
-      if (!Number.isFinite(value) || value < 0 || value > 1)
-        throw new TypeError(t('interface:audioVolumeMustBeBetweenZeroAndOne'));
-      return value;
-    };
-    const mutedValue = (value) => {
-      if (typeof value !== 'boolean') throw new TypeError(t('interface:audioMuteMustBeABoolean'));
-      return value;
-    };
+return{
+DEFAULT_DIALOGUE_VOLUME:DEFAULT_DIALOGUE_VOLUME,
+DIALOGUE_MIX_GAIN:DIALOGUE_MIX_GAIN,
+DIALOGUE_MUSIC_GAIN:DIALOGUE_MUSIC_GAIN,
+};
+})();
+modules['game/ui/audio-master.mjs']=(()=>{
+const t=academyAudioExternal1['t'];
+const volumeValue=(value)=>{
+if(!Number.isFinite(value)||value<0||value>1)
+throw new TypeError(t('interface:audioVolumeMustBeBetweenZeroAndOne'));
+return value;
+};
+const mutedValue=(value)=>{
+if(typeof value!=='boolean')throw new TypeError(t('interface:audioMuteMustBeABoolean'));
+return value;
+};
 
-    /** Shared output policy only. Hosts retain persistence, gestures and transport. */
-    function createAudioMaster({ muted = true, volume = 1 } = {}) {
-      let state = Object.freeze({
-        muted: mutedValue(muted),
-        volume: volumeValue(volume),
-        revision: 0,
-      });
-      let disposed = false;
-      const listeners = new Set();
-      function publish(next) {
-        state = Object.freeze({ ...next, revision: state.revision + 1 });
-        const errors = [];
-        for (const listener of [...listeners]) {
-          if (!listeners.has(listener)) continue;
-          try {
-            // A preceding observer may have applied a newer explicit intent.
-            listener(state);
-          } catch (error) {
-            errors.push(error);
-          }
-        }
-        if (errors.length)
-          throw new AggregateError(errors, t('interface:audioMasterOutputCouldNotBeApplied'));
-        return state;
-      }
-      function change(patch) {
-        if (disposed) throw new Error(t('interface:audioMasterIsDisposed'));
-        return publish({ ...state, ...patch });
-      }
-      return Object.freeze({
-        snapshot: () => state,
-        setMuted: (value) => change({ muted: mutedValue(value) }),
-        setVolume: (value) => change({ volume: volumeValue(value) }),
-        subscribe(listener) {
-          if (disposed) throw new Error(t('interface:audioMasterIsDisposed'));
-          if (typeof listener !== 'function')
-            throw new TypeError(t('interface:audioMasterListenerRequired'));
-          if (listeners.has(listener))
-            throw new Error(t('interface:audioMasterListenerAlreadySubscribed'));
-          listeners.add(listener);
-          try {
-            listener(state);
-          } catch (error) {
-            listeners.delete(listener);
-            throw error;
-          }
-          return () => listeners.delete(listener);
-        },
-        dispose() {
-          if (disposed) return;
-          disposed = true;
-          try {
-            publish({ ...state, muted: true });
-          } finally {
-            listeners.clear();
-          }
-        },
-      });
-    }
+/** Shared output policy only. Hosts retain persistence, gestures and transport. */
+function createAudioMaster({muted=true,volume=1}={}){
+let state=Object.freeze({
+muted:mutedValue(muted),
+volume:volumeValue(volume),
+revision:0,
+});
+let disposed=false;
+const listeners=new Set();
+function publish(next){
+state=Object.freeze({...next,revision:state.revision+1});
+const errors=[];
+for(const listener of[...listeners]){
+if(!listeners.has(listener))continue;
+try{
+// A preceding observer may have applied a newer explicit intent.
+listener(state);
+}catch(error){
+errors.push(error);
+}
+}
+if(errors.length)
+throw new AggregateError(errors,t('interface:audioMasterOutputCouldNotBeApplied'));
+return state;
+}
+function change(patch){
+if(disposed)throw new Error(t('interface:audioMasterIsDisposed'));
+return publish({...state,...patch});
+}
+return Object.freeze({
+snapshot:()=>state,
+setMuted:(value)=>change({muted:mutedValue(value)}),
+setVolume:(value)=>change({volume:volumeValue(value)}),
+subscribe(listener){
+if(disposed)throw new Error(t('interface:audioMasterIsDisposed'));
+if(typeof listener!=='function')
+throw new TypeError(t('interface:audioMasterListenerRequired'));
+if(listeners.has(listener))
+throw new Error(t('interface:audioMasterListenerAlreadySubscribed'));
+listeners.add(listener);
+try{
+listener(state);
+}catch(error){
+listeners.delete(listener);
+throw error;
+}
+return()=>listeners.delete(listener);
+},
+dispose(){
+if(disposed)return;
+disposed=true;
+try{
+publish({...state,muted:true});
+}finally{
+listeners.clear();
+}
+},
+});
+}
 
-    const mediaOwners = new WeakSet();
-    /** Native media keeps its own local fader. Queued native events cannot rewrite
+const mediaOwners=new WeakSet();
+/** Native media keeps its own local fader. Queued native events cannot rewrite
      * master or local intent; explicit local controls call setLocal instead. */
-    function bindAudioMasterMedia({ audioMaster, element, volume = 1, muted = false } = {}) {
-      if (!audioMaster?.snapshot || !audioMaster?.subscribe)
-        throw new TypeError(t('interface:audioMasterRequired'));
-      if (!element?.addEventListener || !element?.removeEventListener)
-        throw new TypeError(t('interface:audioMediaElementRequired'));
-      if (mediaOwners.has(element))
-        throw new Error(t('interface:audioMediaElementAlreadyHasAMasterOwner'));
-      let local = { volume: volumeValue(volume), muted: mutedValue(muted) };
-      let master = audioMaster.snapshot();
-      let disposed = false;
-      let applying = false;
-      const attempted = new Map();
-      const write = (key, value) => {
-        const observed = element[key];
-        const previous = attempted.get(key);
-        if (observed === value || (previous?.value === value && previous.observed === observed))
-          return;
-        element[key] = value;
-        // Some native platforms ignore/quantize volume. Their queued notification
-        // must not cause an endless attempt to write the same unsupported value.
-        attempted.set(key, { value, observed: element[key] });
-      };
-      const apply = () => {
-        if (disposed || applying) return;
-        const muted = local.muted || master.muted || local.volume === 0 || master.volume === 0;
-        const volume = local.volume * master.volume;
-        // Setting an unchanged property may still enqueue a native volumechange.
-        // Mute first so a simultaneous volume increase cannot escape the gate.
-        applying = true;
-        try {
-          if (muted) write('muted', true);
-          write('volume', volume);
-          if (!muted) write('muted', false);
-        } finally {
-          applying = false;
-        }
-      };
-      mediaOwners.add(element);
-      let unsubscribe;
-      try {
-        unsubscribe = audioMaster.subscribe((next) => {
-          master = next;
-          apply();
-        });
-        element.addEventListener('volumechange', apply);
-        element.addEventListener('play', apply);
-      } catch (error) {
-        unsubscribe?.();
-        element.removeEventListener('volumechange', apply);
-        element.removeEventListener('play', apply);
-        mediaOwners.delete(element);
-        throw error;
-      }
-      return Object.freeze({
-        setLocal(patch) {
-          if (disposed) return;
-          if (!patch || typeof patch !== 'object' || Array.isArray(patch))
-            throw new TypeError(t('interface:localAudioSettingsRequired'));
-          const next = { ...local };
-          for (const key of Object.keys(patch)) {
-            if (key === 'volume') next.volume = volumeValue(patch.volume);
-            else if (key === 'muted') next.muted = mutedValue(patch.muted);
-            else throw new TypeError(t('interface:unknownLocalAudioSetting'));
-          }
-          local = next;
-          apply();
-        },
-        dispose() {
-          if (disposed) return;
-          disposed = true;
-          unsubscribe();
-          element.removeEventListener('volumechange', apply);
-          element.removeEventListener('play', apply);
-          mediaOwners.delete(element);
-          if (element.muted !== true) element.muted = true;
-        },
-      });
-    }
+function bindAudioMasterMedia({audioMaster,element,volume=1,muted=false}={}){
+if(!audioMaster?.snapshot|| !audioMaster?.subscribe)
+throw new TypeError(t('interface:audioMasterRequired'));
+if(!element?.addEventListener|| !element?.removeEventListener)
+throw new TypeError(t('interface:audioMediaElementRequired'));
+if(mediaOwners.has(element))
+throw new Error(t('interface:audioMediaElementAlreadyHasAMasterOwner'));
+let local={volume:volumeValue(volume),muted:mutedValue(muted)};
+let master=audioMaster.snapshot();
+let disposed=false;
+let applying=false;
+const attempted=new Map();
+const write=(key,value)=>{
+const observed=element[key];
+const previous=attempted.get(key);
+if(observed===value||(previous?.value===value&&previous.observed===observed))
+return;
+element[key]=value;
+// Some native platforms ignore/quantize volume. Their queued notification
+// must not cause an endless attempt to write the same unsupported value.
+attempted.set(key,{value,observed:element[key]});
+};
+const apply=()=>{
+if(disposed||applying)return;
+const muted=local.muted||master.muted||local.volume===0||master.volume===0;
+const volume=local.volume*master.volume;
+// Setting an unchanged property may still enqueue a native volumechange.
+// Mute first so a simultaneous volume increase cannot escape the gate.
+applying=true;
+try{
+if(muted)write('muted',true);
+write('volume',volume);
+if(!muted)write('muted',false);
+}finally{
+applying=false;
+}
+};
+mediaOwners.add(element);
+let unsubscribe;
+try{
+unsubscribe=audioMaster.subscribe((next)=>{
+master=next;
+apply();
+});
+element.addEventListener('volumechange',apply);
+element.addEventListener('play',apply);
+}catch(error){
+unsubscribe?.();
+element.removeEventListener('volumechange',apply);
+element.removeEventListener('play',apply);
+mediaOwners.delete(element);
+throw error;
+}
+return Object.freeze({
+setLocal(patch){
+if(disposed)return;
+if(!patch||typeof patch!=='object'||Array.isArray(patch))
+throw new TypeError(t('interface:localAudioSettingsRequired'));
+const next={...local};
+for(const key of Object.keys(patch)){
+if(key==='volume')next.volume=volumeValue(patch.volume);
+else if(key==='muted')next.muted=mutedValue(patch.muted);
+else throw new TypeError(t('interface:unknownLocalAudioSetting'));
+}
+local=next;
+apply();
+},
+dispose(){
+if(disposed)return;
+disposed=true;
+unsubscribe();
+element.removeEventListener('volumechange',apply);
+element.removeEventListener('play',apply);
+mediaOwners.delete(element);
+if(element.muted!==true)element.muted=true;
+},
+});
+}
 
-    return { createAudioMaster: createAudioMaster, bindAudioMasterMedia: bindAudioMasterMedia };
-  })();
-  modules['game/audio-preferences.mjs'] = (() => {
-    const AUDIO_PREFERENCES_KEY = 'revealline.audio-master.v1';
-    const MAX_RECORD_LENGTH = 256;
+return{createAudioMaster:createAudioMaster,bindAudioMasterMedia:bindAudioMasterMedia};
+})();
+modules['game/audio-preferences.mjs']=(()=>{
+const AUDIO_PREFERENCES_KEY='revealline.audio-master.v1';
+const MAX_RECORD_LENGTH=256;
 
-    function values(value) {
-      if (
-        !value ||
-        typeof value !== 'object' ||
-        Array.isArray(value) ||
-        Object.keys(value).length !== 2 ||
-        !Object.hasOwn(value, 'muted') ||
-        !Object.hasOwn(value, 'volume') ||
-        typeof value.muted !== 'boolean' ||
-        !Number.isFinite(value.volume) ||
-        value.volume < 0 ||
-        value.volume > 1
-      )
-        throw new TypeError(
-          'Audio preferences require a mute boolean and volume between zero and one.',
-        );
-      return { muted: value.muted, volume: value.volume };
-    }
+function values(value){
+if(
+!value||
+typeof value!=='object'||
+Array.isArray(value)||
+Object.keys(value).length!==2||
+!Object.hasOwn(value,'muted')||
+!Object.hasOwn(value,'volume')||
+typeof value.muted!=='boolean'||
+!Number.isFinite(value.volume)||
+value.volume<0||
+value.volume>1
+)
+throw new TypeError(
+'Audio preferences require a mute boolean and volume between zero and one.',
+);
+return{muted:value.muted,volume:value.volume};
+}
 
-    function decode(raw) {
-      if (typeof raw !== 'string' || raw.length > MAX_RECORD_LENGTH) return null;
-      try {
-        return values(JSON.parse(raw));
-      } catch {
-        return null;
-      }
-    }
+function decode(raw){
+if(typeof raw!=='string'||raw.length>MAX_RECORD_LENGTH)return null;
+try{
+return values(JSON.parse(raw));
+}catch{
+return null;
+}
+}
 
-    /** Page-owned persistence for the shared output authority. This adapter never
+/** Page-owned persistence for the shared output authority. This adapter never
      * starts media or writes a player profile. Only its explicit setters save. */
-    function createAudioPreferences({
-      audioMaster,
-      getStorage = () => globalThis.localStorage,
-      window: eventTarget = globalThis,
-      fallback = { muted: true, volume: 0.65 },
-      writable = () => true,
-      onWarning = () => {},
-    } = {}) {
-      const initial = values(fallback);
-      let disposed = false,
-        explicit = false,
-        stored = false,
-        unsaved = false,
-        warning = '';
-      const notify = (message) => {
-        warning = message;
-        try {
-          onWarning(message);
-        } catch {
-          // A notice cannot prevent the synchronous sound change.
-        }
-      };
-      const read = () => {
-        try {
-          const storage = getStorage(),
-            raw = storage?.getItem(AUDIO_PREFERENCES_KEY);
-          return { storage, raw, value: decode(raw) };
-        } catch {
-          return { storage: null, raw: null, value: null };
-        }
-      };
-      const apply = (record) => {
-        let revision = audioMaster.snapshot().revision;
-        // Close the mute gate before increasing volume; open it after the fader.
-        for (const key of record.muted ? ['muted', 'volume'] : ['volume', 'muted']) {
-          const current = audioMaster.snapshot();
-          if (disposed || current.revision !== revision) return false;
-          if (current[key] === record[key]) continue;
-          audioMaster[key === 'muted' ? 'setMuted' : 'setVolume'](record[key]);
-          revision++;
-          // A subscriber's newer intent must also win over this synchronous seed.
-          if (audioMaster.snapshot().revision !== revision) return false;
-        }
-        return true;
-      };
-      let seedRevision = audioMaster.snapshot().revision;
-      explicit = seedRevision !== 0;
-      const first = read();
-      if (first.value) {
-        stored = true;
-        apply(first.value);
-      } else if (seedRevision === 0 && apply(initial)) {
-        seedRevision = audioMaster.snapshot().revision;
-      }
-      const persist = () => {
-        try {
-          const allowed = writable();
-          if (disposed) return;
-          if (!allowed) {
-            unsaved = true;
-            notify('Sound changes apply only to this session; saving is disabled here.');
-            return;
-          }
-          const { muted, volume } = audioMaster.snapshot(),
-            storage = getStorage();
-          if (disposed) return;
-          if (!storage) throw new Error('Storage unavailable.');
-          storage.setItem(AUDIO_PREFERENCES_KEY, JSON.stringify(values({ muted, volume })));
-          if (disposed) return;
-          stored = true;
-          unsaved = false;
-          notify('');
-        } catch {
-          if (disposed) return;
-          unsaved = true;
-          notify('Sound changed for this session, but could not be saved for another page.');
-        }
-      };
-      const change = (key, value) => {
-        if (disposed) throw new Error('Audio preferences are disposed.');
-        const before = audioMaster.snapshot();
-        values({ muted: before.muted, volume: before.volume, [key]: value });
-        explicit = true;
-        try {
-          audioMaster[key === 'muted' ? 'setMuted' : 'setVolume'](value);
-        } finally {
-          // Output listeners may throw after the authority accepted the intent.
-          if (!disposed && audioMaster.snapshot().revision !== before.revision) persist();
-        }
-        return audioMaster.snapshot();
-      };
-      const receive = (event) => {
-        if (disposed || unsaved || event.key !== AUDIO_PREFERENCES_KEY) return;
-        const revision = audioMaster.snapshot().revision,
-          current = read();
-        if (
-          disposed ||
-          unsaved ||
-          audioMaster.snapshot().revision !== revision ||
-          !current.storage ||
-          event.storageArea !== current.storage ||
-          event.newValue !== current.raw ||
-          !current.value
-        )
-          return;
-        stored = true;
-        apply(current.value);
-      };
-      // Reconcile a restored page with fresh storage rather than a missed event's
-      // payload, without discarding local intent that could not be saved.
-      const restored = (event) => {
-        if (disposed || unsaved || event.persisted !== true) return;
-        const revision = audioMaster.snapshot().revision,
-          current = read();
-        if (disposed || unsaved || audioMaster.snapshot().revision !== revision || !current.value)
-          return;
-        stored = true;
-        apply(current.value);
-      };
-      eventTarget?.addEventListener?.('storage', receive);
-      eventTarget?.addEventListener?.('pageshow', restored);
-      return Object.freeze({
-        setMuted: (value) => change('muted', value),
-        setVolume: (value) => change('volume', value),
-        seed(candidate) {
-          if (disposed || stored || explicit || audioMaster.snapshot().revision !== seedRevision)
-            return false;
-          const current = read();
-          if (current.value) {
-            stored = true;
-            apply(current.value);
-            return false;
-          }
-          if (!apply(values(candidate))) return false;
-          seedRevision = audioMaster.snapshot().revision;
-          return true;
-        },
-        getWarning: () => warning,
-        dispose() {
-          if (disposed) return;
-          disposed = true;
-          eventTarget?.removeEventListener?.('storage', receive);
-          eventTarget?.removeEventListener?.('pageshow', restored);
-        },
-      });
-    }
+function createAudioPreferences({
+audioMaster,
+getStorage=()=>globalThis.localStorage,
+window:eventTarget=globalThis,
+fallback={muted:true,volume:0.65},
+writable=()=>true,
+onWarning=()=>{},
+}={}){
+const initial=values(fallback);
+let disposed=false,
+explicit=false,
+stored=false,
+unsaved=false,
+warning='';
+const notify=(message)=>{
+warning=message;
+try{
+onWarning(message);
+}catch{
+// A notice cannot prevent the synchronous sound change.
+}
+};
+const read=()=>{
+try{
+const storage=getStorage(),
+raw=storage?.getItem(AUDIO_PREFERENCES_KEY);
+return{storage,raw,value:decode(raw)};
+}catch{
+return{storage:null,raw:null,value:null};
+}
+};
+const apply=(record)=>{
+let revision=audioMaster.snapshot().revision;
+// Close the mute gate before increasing volume; open it after the fader.
+for(const key of record.muted?['muted','volume']:['volume','muted']){
+const current=audioMaster.snapshot();
+if(disposed||current.revision!==revision)return false;
+if(current[key]===record[key])continue;
+audioMaster[key==='muted'?'setMuted':'setVolume'](record[key]);
+revision++;
+// A subscriber's newer intent must also win over this synchronous seed.
+if(audioMaster.snapshot().revision!==revision)return false;
+}
+return true;
+};
+let seedRevision=audioMaster.snapshot().revision;
+explicit=seedRevision!==0;
+const first=read();
+if(first.value){
+stored=true;
+apply(first.value);
+}else if(seedRevision===0&&apply(initial)){
+seedRevision=audioMaster.snapshot().revision;
+}
+const persist=()=>{
+try{
+const allowed=writable();
+if(disposed)return;
+if(!allowed){
+unsaved=true;
+notify('Sound changes apply only to this session; saving is disabled here.');
+return;
+}
+const{muted,volume}=audioMaster.snapshot(),
+storage=getStorage();
+if(disposed)return;
+if(!storage)throw new Error('Storage unavailable.');
+storage.setItem(AUDIO_PREFERENCES_KEY,JSON.stringify(values({muted,volume})));
+if(disposed)return;
+stored=true;
+unsaved=false;
+notify('');
+}catch{
+if(disposed)return;
+unsaved=true;
+notify('Sound changed for this session, but could not be saved for another page.');
+}
+};
+const change=(key,value)=>{
+if(disposed)throw new Error('Audio preferences are disposed.');
+const before=audioMaster.snapshot();
+values({muted:before.muted,volume:before.volume,[key]:value});
+explicit=true;
+try{
+audioMaster[key==='muted'?'setMuted':'setVolume'](value);
+}finally{
+// Output listeners may throw after the authority accepted the intent.
+if(!disposed&&audioMaster.snapshot().revision!==before.revision)persist();
+}
+return audioMaster.snapshot();
+};
+const receive=(event)=>{
+if(disposed||unsaved||event.key!==AUDIO_PREFERENCES_KEY)return;
+const revision=audioMaster.snapshot().revision,
+current=read();
+if(
+disposed||
+unsaved||
+audioMaster.snapshot().revision!==revision||
+!current.storage||
+event.storageArea!==current.storage||
+event.newValue!==current.raw||
+!current.value
+)
+return;
+stored=true;
+apply(current.value);
+};
+// Reconcile a restored page with fresh storage rather than a missed event's
+// payload, without discarding local intent that could not be saved.
+const restored=(event)=>{
+if(disposed||unsaved||event.persisted!==true)return;
+const revision=audioMaster.snapshot().revision,
+current=read();
+if(disposed||unsaved||audioMaster.snapshot().revision!==revision|| !current.value)
+return;
+stored=true;
+apply(current.value);
+};
+eventTarget?.addEventListener?.('storage',receive);
+eventTarget?.addEventListener?.('pageshow',restored);
+return Object.freeze({
+setMuted:(value)=>change('muted',value),
+setVolume:(value)=>change('volume',value),
+seed(candidate){
+if(disposed||stored||explicit||audioMaster.snapshot().revision!==seedRevision)
+return false;
+const current=read();
+if(current.value){
+stored=true;
+apply(current.value);
+return false;
+}
+if(!apply(values(candidate)))return false;
+seedRevision=audioMaster.snapshot().revision;
+return true;
+},
+getWarning:()=>warning,
+dispose(){
+if(disposed)return;
+disposed=true;
+eventTarget?.removeEventListener?.('storage',receive);
+eventTarget?.removeEventListener?.('pageshow',restored);
+},
+});
+}
 
-    return {
-      AUDIO_PREFERENCES_KEY: AUDIO_PREFERENCES_KEY,
-      createAudioPreferences: createAudioPreferences,
-    };
-  })();
-  modules['game/ui/world-ambience.mjs'] = (() => {
-    /** Shared, original atmosphere recipes. They use the existing SFX owner and
+return{
+AUDIO_PREFERENCES_KEY:AUDIO_PREFERENCES_KEY,
+createAudioPreferences:createAudioPreferences,
+};
+})();
+modules['game/ui/world-ambience.mjs']=(()=>{
+/** Shared, original atmosphere recipes. They use the existing SFX owner and
      * require no decoded files, independent context or background scheduler. */
-    const WORLDS = Object.freeze({
-      'field-crossing': { filter: 760, air: 0.009, hum: 108, humGain: 0.0015 },
-      'freight-depot': { filter: 310, air: 0.006, hum: 61, humGain: 0.0035 },
-      'relay-ruins': { filter: 480, air: 0.008, hum: 89, humGain: 0.002 },
-      'river-port': { filter: 570, air: 0.008, hum: 74, humGain: 0.0016 },
-      'chalk-quarry': { filter: 930, air: 0.007, hum: 48, humGain: 0.0022 },
-      'orchard-strongpoint': { filter: 1120, air: 0.006, hum: 123, humGain: 0.0012 },
-    });
+const WORLDS=Object.freeze({
+'field-crossing':{filter:760,air:0.009,hum:108,humGain:0.0015},
+'freight-depot':{filter:310,air:0.006,hum:61,humGain:0.0035},
+'relay-ruins':{filter:480,air:0.008,hum:89,humGain:0.002},
+'river-port':{filter:570,air:0.008,hum:74,humGain:0.0016},
+'chalk-quarry':{filter:930,air:0.007,hum:48,humGain:0.0022},
+'orchard-strongpoint':{filter:1120,air:0.006,hum:123,humGain:0.0012},
+});
 
-    function worldAmbienceRecipe(world) {
-      const profile = WORLDS[world];
-      if (!profile) return null;
-      return {
-        name: `ambience-${world}`,
-        procedural: true,
-        ambience: true,
-        gain: 1,
-        priority: 0,
-        movement: false,
-        cooldown: 1.25,
-        tone: {
-          kind: 'snare',
-          from: profile.filter,
-          to: profile.filter,
-          filterFrequency: profile.filter,
-          duration: 1.75,
-          gain: profile.air,
-          type: 'sine',
-        },
-        layers: [
-          {
-            from: profile.hum,
-            to: profile.hum * 0.985,
-            duration: 1.7,
-            gain: profile.humGain,
-            type: 'sine',
-          },
-        ],
-      };
-    }
+function worldAmbienceRecipe(world){
+const profile=WORLDS[world];
+if(!profile)return null;
+return{
+name:`ambience-${world}`,
+procedural:true,
+ambience:true,
+gain:1,
+priority:0,
+movement:false,
+cooldown:1.25,
+tone:{
+kind:'snare',
+from:profile.filter,
+to:profile.filter,
+filterFrequency:profile.filter,
+duration:1.75,
+gain:profile.air,
+type:'sine',
+},
+layers:[
+{
+from:profile.hum,
+to:profile.hum*0.985,
+duration:1.7,
+gain:profile.humGain,
+type:'sine',
+},
+],
+};
+}
 
-    return { worldAmbienceRecipe: worldAmbienceRecipe };
-  })();
-  modules['game/ui/encounter-audio.mjs'] = (() => {
-    /** Shared semantic cues; both recorded and offline procedural renditions use
+return{worldAmbienceRecipe:worldAmbienceRecipe};
+})();
+modules['game/ui/encounter-audio.mjs']=(()=>{
+/** Shared semantic cues; both recorded and offline procedural renditions use
      * these recipes. No context, clock, randomness or actor mutation lives here. */
-    const destructionSoundRecipe =
-      modules['game/ui/destruction-audio.mjs']['destructionSoundRecipe'];
-    const worldAmbienceRecipe = modules['game/ui/world-ambience.mjs']['worldAmbienceRecipe'];
-    const FAMILY_PITCH = Object.freeze({
-      lookout: 1.1,
-      patroller: 0.94,
-      runner: 1.06,
-      sprinter: 1.18,
-      courier: 1.24,
-      guard: 0.84,
-      refuge: 0.98,
-      switchback: 1.14,
-      pair: 1.04,
-      shield: 0.72,
-      brace: 0.68,
-      'refuge-seeker': 0.98,
-      'rendezvous-pair': 1.04,
-      'shield-bearer': 0.72,
-      'brace-trooper': 0.68,
-      'relay-warden': 0.62,
-    });
-    // Original material accents reuse the admitted bank. Cadence follows observed
-    // movement, never a sprite frame, random choice or simulation mutation.
-    const ACTOR_SOUNDS = Object.freeze({
-      runner: Object.freeze({
-        cadence: 0.32,
-        rate: 1.08,
-        equipment: 'paper',
-        from: 240,
-        to: 150,
-      }),
-      courier: Object.freeze({
-        cadence: 0.29,
-        rate: 1.19,
-        equipment: 'ratchet',
-        from: 360,
-        to: 210,
-      }),
-      guard: Object.freeze({
-        cadence: 0.41,
-        rate: 0.87,
-        equipment: 'contact-metal',
-        from: 210,
-        to: 90,
-      }),
-      shield: Object.freeze({
-        cadence: 0.48,
-        rate: 0.7,
-        equipment: 'contact-metal',
-        from: 135,
-        to: 48,
-      }),
-    });
-    function actorSoundProfile(family) {
-      return ACTOR_SOUNDS[family === 'shield-bearer' ? 'shield' : family] ?? ACTOR_SOUNDS.runner;
-    }
-    function encounterSoundRecipe(type, details = {}) {
-      if (type === 'catch') return destructionSoundRecipe(details);
-      if (type === 'ambience') return worldAmbienceRecipe(details.world);
-      if (type === 'warning-charge') {
-        const progress = Math.max(0, Math.min(1, details.progress ?? 0));
-        return {
-          name: 'warning-charge',
-          procedural: true,
-          gain: 0.18,
-          priority: 5,
-          movement: false,
-          cooldown: 0.16,
-          tone: {
-            from: 660 + progress * 360,
-            to: 740 + progress * 360,
-            duration: 0.055,
-            gain: 0.024,
-            type: 'sine',
-          },
-        };
-      }
-      if (type === 'escort-shot') {
-        const breaker = details.role === 'breaker';
-        return {
-          name: breaker ? 'escort-breaker' : 'escort-sweeper',
-          procedural: true,
-          gain: 0.15,
-          priority: 2,
-          movement: false,
-          cooldown: 0.65,
-          tone: {
-            from: breaker ? 520 : 160,
-            to: breaker ? 180 : 60,
-            duration: breaker ? 0.075 : 0.12,
-            gain: 0.016,
-            type: breaker ? 'triangle' : 'sine',
-          },
-        };
-      }
-      const pitch = FAMILY_PITCH[details.family] ?? 1;
-      const actor = actorSoundProfile(details.family),
-        tracked = details.machine === 'tracked',
-        metal =
-          details.material === 'metal' || [true, 'tracked', 'wheeled'].includes(details.machine);
-      const recipes = {
-        step: ['grain', 0.11, 0, 130 * actor.rate, 65 * actor.rate, 0.055],
-        equipment: [actor.equipment, 0.12, 1, actor.from, actor.to, 0.085],
-        drive: [
-          tracked ? 'ratchet' : 'wheels',
-          0.17,
-          1,
-          tracked ? 110 : 210,
-          tracked ? 48 : 90,
-          0.16,
-        ],
-        notice: ['switch', 0.17, 2, 360, 520, 0.09],
-        warning: ['warning', 0.44, 5, 620, 860, 0.13],
-        burst: ['paper', 0.19, 2, 190, 320, 0.09],
-        recover: ['cancel', 0.13, 1, 310, 210, 0.08],
-        blocked: ['contact-soft', 0.1, 1, 150, 100, 0.055],
-        fire: ['attack', 0.34, 4, 620, 110, 0.08],
-        impact: ['impact', 0.48, 5, 170, 38, 0.15],
-        pulse: ['deploy', 0.33, 3, 880, 260, 0.19],
-        reel: ['ratchet', 0.3, 3, 220, 510, 0.16],
-        supply: ['pickup', 0.2, 2, 520, 780, 0.09],
-        shutter: [
-          details.closed ? 'closure' : 'gate',
-          0.22,
-          3,
-          details.closed ? 360 : 260,
-          details.closed ? 160 : 520,
-          0.13,
-        ],
-        objective: ['confirm', 0.4, 4, 660, 990, 0.18],
-        failure: ['loss', 0.42, 5, 260, 65, 0.23],
-      };
-      const row = recipes[type];
-      if (!row) return null;
-      const [name, gain, priority, from, to, duration] = row;
-      const scale = Number.isFinite(details.gainScale)
-        ? Math.max(0, Math.min(1, details.gainScale))
-        : 1;
-      const movement = ['step', 'equipment', 'drive'].includes(type);
-      return {
-        name,
-        gain: gain * scale,
-        priority:
-          details.semantic === 'armor-break'
-            ? 4
-            : details.semantic === 'harmful-contact'
-              ? 5
-              : details.semantic === 'friendly-impact'
-                ? 3
-                : priority,
-        movement,
-        // Loop textures are deliberately sampled as short envelopes for footsteps.
-        maxDuration: movement ? duration : null,
-        cooldown:
-          type === 'step'
-            ? actor.cadence
-            : type === 'equipment'
-              ? 0.7
-              : type === 'drive'
-                ? 1.2
-                : null,
-        rate: type === 'step' ? actor.rate : pitch,
-        tone: {
-          from: from * pitch,
-          to: to * pitch,
-          duration,
-          gain: gain * scale * 0.14,
-          type: metal || type === 'equipment' ? 'triangle' : 'sine',
-        },
-      };
-    }
+const destructionSoundRecipe=
+modules['game/ui/destruction-audio.mjs']['destructionSoundRecipe'];
+const worldAmbienceRecipe=modules['game/ui/world-ambience.mjs']['worldAmbienceRecipe'];
+const FAMILY_PITCH=Object.freeze({
+lookout:1.1,
+patroller:0.94,
+runner:1.06,
+sprinter:1.18,
+courier:1.24,
+guard:0.84,
+refuge:0.98,
+switchback:1.14,
+pair:1.04,
+shield:0.72,
+brace:0.68,
+'refuge-seeker':0.98,
+'rendezvous-pair':1.04,
+'shield-bearer':0.72,
+'brace-trooper':0.68,
+'relay-warden':0.62,
+});
+// Original material accents reuse the admitted bank. Cadence follows observed
+// movement, never a sprite frame, random choice or simulation mutation.
+const ACTOR_SOUNDS=Object.freeze({
+runner:Object.freeze({
+cadence:0.32,
+rate:1.08,
+equipment:'paper',
+from:240,
+to:150,
+}),
+courier:Object.freeze({
+cadence:0.29,
+rate:1.19,
+equipment:'ratchet',
+from:360,
+to:210,
+}),
+guard:Object.freeze({
+cadence:0.41,
+rate:0.87,
+equipment:'contact-metal',
+from:210,
+to:90,
+}),
+shield:Object.freeze({
+cadence:0.48,
+rate:0.7,
+equipment:'contact-metal',
+from:135,
+to:48,
+}),
+});
+function actorSoundProfile(family){
+return ACTOR_SOUNDS[family==='shield-bearer'?'shield':family]??ACTOR_SOUNDS.runner;
+}
+/** Version-two flight cues are semantic and deterministic; old courses keep their bank. */
+function combatSoundRecipe(type,details={}){
+const profiles={
+autocannon:[230,64,0.065,0.055,0.032],
+scatter:[115,35,0.18,0.09,0.085],
+precision:[1240,180,0.09,0.065,0.02],
+rocket:[95,28,0.26,0.085,0.18],
+};
+const profile=profiles[details.weapon];
+let tint=0;
+for(const char of String(details.eventId??''))
+tint=(Math.imul(tint,31)+char.charCodeAt(0))>>>0;
+const variant=0.97+(tint%61)/1000;
+const tone=(from,to,duration,gain=0.025,extra={})=>({
+from,
+to,
+duration,
+gain,
+type:'triangle',
+...extra,
+});
+const recipe=(name,priority,voice,layers=[],cooldown=0.08)=>({
+name,
+procedural:true,
+gain:0.3,
+priority,
+movement:false,
+cooldown,
+tone:voice,
+layers,
+});
+if(type==='player-damage')
+return recipe(
+'hull-damage',
+5,
+tone(175,38,0.15,0.045),
+[tone(0,0,0.055,0.024,{kind:'snare'})],
+0.12,
+);
+if(type==='fire'&&profile){
+const[from,to,duration,gain,noise]=profile;
+return recipe(
+`weapon-${details.weapon}`,
+3,
+tone(from*variant,to*variant,duration,gain),
+[tone(0,0,noise,gain*0.6,{kind:'snare'})],
+details.weapon==='autocannon'?0.08:0.12,
+);
+}
+if(type==='reload-start')
+return recipe(
+'reload-start',
+2,
+tone(170,310,0.065,0.018),
+[tone(260,130,0.055,0.012,{delay:0.09})],
+0.2,
+);
+if(type==='reload-ready')
+return recipe(
+'reload-ready',
+4,
+tone(660,880,0.065,0.025),
+[tone(990,1320,0.08,0.018,{delay:0.07})],
+0.15,
+);
+if(type==='weapon-empty')
+return recipe('weapon-empty',4,tone(155,80,0.045,0.025),[],0.3);
+if(type==='weapon-selected')
+return recipe('weapon-selected',2,tone(profile?.[0]??320,540,0.06,0.014),[],0.15);
+if(type==='payload')
+return recipe(
+'payload-release',
+3,
+tone(220,70,0.13,0.03),
+[tone(0,0,0.07,0.02,{kind:'snare'})],
+0.2,
+);
+if(type==='payload-armed'||type==='payload-ready')
+return recipe(
+type,
+4,
+tone(510,720,0.07,0.025),
+[tone(720,1040,0.1,0.02,{delay:0.1})],
+0.3,
+);
+if(type==='explosion')
+return recipe(
+'combat-explosion',
+3,
+tone(82,25,0.4,0.075,{type:'sine'}),
+[tone(0,0,0.25,0.07,{kind:'snare'})],
+0.12,
+);
+if(type==='component')
+return recipe(
+'component-break',
+4,
+tone(740,130,0.13,0.04),
+[tone(0,0,0.05,0.02,{kind:'snare'})],
+0.12,
+);
+if(type==='surface-impact'||(type==='impact'&&details.weapon)){
+const organic=details.material==='organic'&& !details.protected;
+const glass=details.material==='glass';
+return recipe(
+details.protected?'shield-hit':`hit-${details.material??'stone'}`,
+2,
+tone(
+organic?160:glass?1800:650,
+organic?45:130,
+organic?0.07:0.095,
+0.028,
+),
+organic?[]:[tone(0,0,0.035,0.012,{kind:'snare'})],
+0.09,
+);
+}
+if(['repair','resupply','challenge'].includes(type))
+return recipe(
+type,
+4,
+tone(440,660,0.08),
+[tone(880,1040,0.09,0.02,{delay:0.1})],
+0.2,
+);
+return null;
+}
 
-    /** Phase changes are incidental cues; blocked/idling actors never emit per frame. */
-    function actorPhaseSound(previous, next) {
-      if (!previous || previous === next) return null;
-      if (['warning', 'telegraph', 'turning'].includes(next)) return 'warning';
-      if (['burst', 'dash'].includes(next)) return 'burst';
-      if (['recover', 'recovering', 'recovery', 'rest'].includes(next)) return 'recover';
-      if (next === 'blocked') return 'blocked';
-      if (['flee', 'fleeing', 'notice', 'committed'].includes(next)) return 'notice';
-      return null;
-    }
+function encounterSoundRecipe(type,details={}){
+const combat=combatSoundRecipe(type,details);
+if(combat)return combat;
+if(type==='catch')return destructionSoundRecipe(details);
+if(type==='ambience')return worldAmbienceRecipe(details.world);
+if(type==='warning-charge'){
+const progress=Math.max(0,Math.min(1,details.progress??0));
+return{
+name:'warning-charge',
+procedural:true,
+gain:0.18,
+priority:5,
+movement:false,
+cooldown:0.16,
+tone:{
+from:660+progress*360,
+to:740+progress*360,
+duration:0.055,
+gain:0.024,
+type:'sine',
+},
+};
+}
+if(type==='escort-shot'){
+const breaker=details.role==='breaker';
+return{
+name:breaker?'escort-breaker':'escort-sweeper',
+procedural:true,
+gain:0.15,
+priority:2,
+movement:false,
+cooldown:0.65,
+tone:{
+from:breaker?520:160,
+to:breaker?180:60,
+duration:breaker?0.075:0.12,
+gain:0.016,
+type:breaker?'triangle':'sine',
+},
+};
+}
+const pitch=FAMILY_PITCH[details.family]??1;
+const actor=actorSoundProfile(details.family),
+tracked=details.machine==='tracked',
+metal=
+details.material==='metal'||[true,'tracked','wheeled'].includes(details.machine);
+const recipes={
+step:['grain',0.11,0,130*actor.rate,65*actor.rate,0.055],
+equipment:[actor.equipment,0.12,1,actor.from,actor.to,0.085],
+drive:[
+tracked?'ratchet':'wheels',
+0.17,
+1,
+tracked?110:210,
+tracked?48:90,
+0.16,
+],
+notice:['switch',0.17,2,360,520,0.09],
+warning:['warning',0.44,5,620,860,0.13],
+burst:['paper',0.19,2,190,320,0.09],
+recover:['cancel',0.13,1,310,210,0.08],
+blocked:['contact-soft',0.1,1,150,100,0.055],
+fire:['attack',0.34,4,620,110,0.08],
+impact:['impact',0.48,5,170,38,0.15],
+pulse:['deploy',0.33,3,880,260,0.19],
+reel:['ratchet',0.3,3,220,510,0.16],
+supply:['pickup',0.2,2,520,780,0.09],
+shutter:[
+details.closed?'closure':'gate',
+0.22,
+3,
+details.closed?360:260,
+details.closed?160:520,
+0.13,
+],
+objective:['confirm',0.4,4,660,990,0.18],
+failure:['loss',0.42,5,260,65,0.23],
+};
+const row=recipes[type];
+if(!row)return null;
+const[name,gain,priority,from,to,duration]=row;
+const scale=Number.isFinite(details.gainScale)
+?Math.max(0,Math.min(1,details.gainScale))
+:1;
+const movement=['step','equipment','drive'].includes(type);
+return{
+name,
+gain:gain*scale,
+priority:
+details.semantic==='armor-break'
+?4
+:details.semantic==='harmful-contact'
+?5
+:details.semantic==='friendly-impact'
+?3
+:priority,
+movement,
+// Loop textures are deliberately sampled as short envelopes for footsteps.
+maxDuration:movement?duration:null,
+cooldown:
+type==='step'
+?actor.cadence
+:type==='equipment'
+?0.7
+:type==='drive'
+?1.2
+:null,
+rate:type==='step'?actor.rate:pitch,
+tone:{
+from:from*pitch,
+to:to*pitch,
+duration,
+gain:gain*scale*0.14,
+type:metal||type==='equipment'?'triangle':'sine',
+},
+};
+}
 
-    return {
-      actorSoundProfile: actorSoundProfile,
-      encounterSoundRecipe: encounterSoundRecipe,
-      actorPhaseSound: actorPhaseSound,
-    };
-  })();
-  modules['game/ui/movement-audio.mjs'] = (() => {
-    const MOVEMENT_AUDIO_KEY = 'revealline.movement-audio.v1';
-    function readMovementAudio(storage) {
-      try {
-        storage ??= globalThis.localStorage;
-        const value = JSON.parse(storage?.getItem(MOVEMENT_AUDIO_KEY) ?? 'null');
-        return {
-          enabled: typeof value?.enabled === 'boolean' ? value.enabled : true,
-          volume:
-            Number.isFinite(value?.volume) && value.volume >= 0 && value.volume <= 1
-              ? value.volume
-              : 0.5,
-        };
-      } catch {
-        return { enabled: true, volume: 0.5 };
-      }
-    }
+/** Phase changes are incidental cues; blocked/idling actors never emit per frame. */
+function actorPhaseSound(previous,next){
+if(!previous||previous===next)return null;
+if(['warning','telegraph','turning'].includes(next))return'warning';
+if(['burst','dash'].includes(next))return'burst';
+if(['recover','recovering','recovery','rest'].includes(next))return'recover';
+if(next==='blocked')return'blocked';
+if(['flee','fleeing','notice','committed'].includes(next))return'notice';
+return null;
+}
 
-    return { MOVEMENT_AUDIO_KEY: MOVEMENT_AUDIO_KEY, readMovementAudio: readMovementAudio };
-  })();
-  modules['game/ui/dialogue-channel.mjs'] = (() => {
-    /** One spoken line per page, including radio and Studio auditions. */
-    let active = null;
-    const dialogueChannel = Object.freeze({
-      get active() {
-        return active;
-      },
-      claim(voice) {
-        if (active !== voice) active?.stop();
-        active = voice;
-      },
-      release(voice) {
-        if (active === voice) active = null;
-      },
-      interrupt() {
-        active?.stop();
-      },
-      snapshot() {
-        return Object.freeze({
-          voices: active ? 1 : 0,
-          kind: active?.radio ? 'radio' : active ? 'dialogue' : null,
-        });
-      },
-    });
+return{
+actorSoundProfile:actorSoundProfile,
+combatSoundRecipe:combatSoundRecipe,
+encounterSoundRecipe:encounterSoundRecipe,
+actorPhaseSound:actorPhaseSound,
+};
+})();
+modules['game/ui/movement-audio.mjs']=(()=>{
+const MOVEMENT_AUDIO_KEY='revealline.movement-audio.v1';
+function readMovementAudio(storage){
+try{
+storage??=globalThis.localStorage;
+const value=JSON.parse(storage?.getItem(MOVEMENT_AUDIO_KEY)??'null');
+return{
+enabled:typeof value?.enabled==='boolean'?value.enabled:true,
+volume:
+Number.isFinite(value?.volume)&&value.volume>=0&&value.volume<=1
+?value.volume
+:0.5,
+};
+}catch{
+return{enabled:true,volume:0.5};
+}
+}
 
-    return { dialogueChannel: dialogueChannel };
-  })();
-  modules['optional-practice/civilian-fpv/world-audio.mjs'] = (() => {
-    const createGameplayAudioOutput =
-      modules['game/ui/gameplay-audio-output.mjs']['createGameplayAudioOutput'];
-    const createHumanReactionPolicy =
-      modules['game/ui/human-reaction-policy.mjs']['createHumanReactionPolicy'];
-    const HUMAN_REACTION_BANK = academyAudioExternal0['HUMAN_REACTION_BANK'];
-    const destructionBufferGain = modules['game/ui/destruction-level.mjs']['destructionBufferGain'];
-    const DEFAULT_DIALOGUE_VOLUME =
-      modules['game/audio/dialogue-mix.mjs']['DEFAULT_DIALOGUE_VOLUME'];
-    const DIALOGUE_MIX_GAIN = modules['game/audio/dialogue-mix.mjs']['DIALOGUE_MIX_GAIN'];
-    const createGameAudioContext = modules['game/ui/audio-output.mjs']['createGameAudioContext'];
-    const createGameAudioOutput = modules['game/ui/audio-output.mjs']['createGameAudioOutput'];
-    const requestPlaybackAudioSession =
-      modules['game/ui/audio-output.mjs']['requestPlaybackAudioSession'];
-    const releasePlaybackAudioSession =
-      modules['game/ui/audio-output.mjs']['releasePlaybackAudioSession'];
-    const createAudioMaster = modules['game/ui/audio-master.mjs']['createAudioMaster'];
-    const createAudioPreferences = modules['game/audio-preferences.mjs']['createAudioPreferences'];
-    const destructionCategory = modules['game/ui/destruction-audio.mjs']['destructionCategory'];
-    const encounterSoundRecipe = modules['game/ui/encounter-audio.mjs']['encounterSoundRecipe'];
-    const actorPhaseSound = modules['game/ui/encounter-audio.mjs']['actorPhaseSound'];
-    const readMovementAudio = modules['game/ui/movement-audio.mjs']['readMovementAudio'];
-    const MOVEMENT_AUDIO_KEY = modules['game/ui/movement-audio.mjs']['MOVEMENT_AUDIO_KEY'];
-    const dialogueChannel = modules['game/ui/dialogue-channel.mjs']['dialogueChannel'];
+return{MOVEMENT_AUDIO_KEY:MOVEMENT_AUDIO_KEY,readMovementAudio:readMovementAudio};
+})();
+modules['game/ui/dialogue-channel.mjs']=(()=>{
+/** One spoken line per page, including radio and Studio auditions. */
+let active=null;
+const dialogueChannel=Object.freeze({
+get active(){
+return active;
+},
+claim(voice){
+if(active!==voice)active?.stop();
+active=voice;
+},
+release(voice){
+if(active===voice)active=null;
+},
+interrupt(){
+active?.stop();
+},
+snapshot(){
+return Object.freeze({
+voices:active?1:0,
+kind:active?.radio?'radio':active?'dialogue':null,
+});
+},
+});
 
-    /** Optional presentation-only sound. Embedded CC0 vocals decode on activation; no media requests or gameplay clocks. */
-    const PREFERENCE = 'revealline.fpv.world-audio.v1';
-    const clamp = (value, min, max) => Math.max(min, Math.min(max, value));
-    const AMBIENCES = {
-      hangar: { filter: 380, gain: 0.013, hum: 74, humGain: 0.006 },
-      woodland: { filter: 1250, gain: 0.023, hum: 156, humGain: 0.002 },
-      stadium: { filter: 730, gain: 0.016, hum: 110, humGain: 0.008 },
-      industrial: { filter: 220, gain: 0.024, hum: 58, humGain: 0.009 },
-    };
+return{dialogueChannel:dialogueChannel};
+})();
+modules['optional-practice/civilian-fpv/world-audio.mjs']=(()=>{
+const createGameplayAudioOutput=
+modules['game/ui/gameplay-audio-output.mjs']['createGameplayAudioOutput'];
+const createHumanReactionPolicy=
+modules['game/ui/human-reaction-policy.mjs']['createHumanReactionPolicy'];
+const HUMAN_REACTION_BANK=academyAudioExternal0['HUMAN_REACTION_BANK'];
+const destructionBufferGain=modules['game/ui/destruction-level.mjs']['destructionBufferGain'];
+const DEFAULT_DIALOGUE_VOLUME=
+modules['game/audio/dialogue-mix.mjs']['DEFAULT_DIALOGUE_VOLUME'];
+const DIALOGUE_MIX_GAIN=modules['game/audio/dialogue-mix.mjs']['DIALOGUE_MIX_GAIN'];
+const createGameAudioContext=modules['game/ui/audio-output.mjs']['createGameAudioContext'];
+const createGameAudioOutput=modules['game/ui/audio-output.mjs']['createGameAudioOutput'];
+const requestPlaybackAudioSession=
+modules['game/ui/audio-output.mjs']['requestPlaybackAudioSession'];
+const releasePlaybackAudioSession=
+modules['game/ui/audio-output.mjs']['releasePlaybackAudioSession'];
+const createAudioMaster=modules['game/ui/audio-master.mjs']['createAudioMaster'];
+const createAudioPreferences=modules['game/audio-preferences.mjs']['createAudioPreferences'];
+const destructionCategory=modules['game/ui/destruction-audio.mjs']['destructionCategory'];
+const encounterSoundRecipe=modules['game/ui/encounter-audio.mjs']['encounterSoundRecipe'];
+const actorPhaseSound=modules['game/ui/encounter-audio.mjs']['actorPhaseSound'];
+const readMovementAudio=modules['game/ui/movement-audio.mjs']['readMovementAudio'];
+const MOVEMENT_AUDIO_KEY=modules['game/ui/movement-audio.mjs']['MOVEMENT_AUDIO_KEY'];
+const dialogueChannel=modules['game/ui/dialogue-channel.mjs']['dialogueChannel'];
 
-    function createWorldAudio(options = {}) {
-      const host = options.window ?? globalThis.window ?? globalThis;
-      let storage;
-      try {
-        storage = options.storage ?? host.localStorage;
-      } catch {
-        // Sound works for this visit even when browser preferences are unavailable.
-      }
-      const gameplayOutput = createGameplayAudioOutput({ window: host, getStorage: () => storage });
-      const AudioContext = host.AudioContext ?? host.webkitAudioContext;
-      let enabled = false;
-      try {
-        enabled = storage?.getItem(PREFERENCE) === 'on';
-      } catch {
-        // Muted is the default when preferences cannot be read.
-      }
-      let context;
-      let graph;
-      let disposed = false;
-      let wanted = false;
-      let transition = 0;
-      let lastPlaying = false;
-      let lastTick = null;
-      let lastStep = null;
-      let lastContacts = null;
-      let ambience = AMBIENCES.hangar;
-      let motorStyle = 'quad';
-      let gateStyle = 'chime';
-      let dialogue = { enabled: false, volume: DEFAULT_DIALOGUE_VOLUME };
-      let dialogueVoice = null;
-      const effects = new Set();
-      const humanReactions = createHumanReactionPolicy();
-      const humanBuffers = new Map();
-      let preparingHumans = false;
-      const audioMaster = options.audioMaster ?? createAudioMaster();
-      const preferences =
-        options.audioPreferences ??
-        createAudioPreferences({
-          audioMaster,
-          getStorage: () => storage,
-          window: host,
-          fallback: options.audioMaster
-            ? { muted: audioMaster.snapshot().muted, volume: audioMaster.snapshot().volume }
-            : { muted: !enabled, volume: 0.65 },
-        });
-      let movement = readMovementAudio(storage);
-      let masterState = audioMaster.snapshot();
-      enabled = !masterState.muted;
-      const applyOutput = () => {
-        if (!graph || context.state === 'closed') return;
-        graph.master.gain.cancelScheduledValues(context.currentTime);
-        graph.master.gain.setValueAtTime(enabled ? masterState.volume : 0, context.currentTime);
-        graph.output.movementBus.gain.setTargetAtTime(
-          movement.enabled ? movement.volume : 0,
-          context.currentTime,
-          0.025,
-        );
-      };
-      const releaseMaster = audioMaster.subscribe((value) => {
-        masterState = value;
-        enabled = !value.muted;
-        if (!enabled || value.volume === 0) silence();
-        applyOutput();
-      });
-      const changed = (event) => {
-        if (event.key === MOVEMENT_AUDIO_KEY) {
-          movement = readMovementAudio(storage);
-          applyOutput();
-        }
-      };
-      host.addEventListener?.('storage', changed);
-      const recentCues = new Map();
-      let actorDefinitions = new Map();
-      let actorPositions = new Map();
-      let actorPhases = new Map();
-      let actorFamilies = new Map();
-      let lastFootstep = -Infinity;
+/** Optional presentation-only sound. Embedded CC0 vocals decode on activation; no media requests or gameplay clocks. */
+const PREFERENCE='revealline.fpv.world-audio.v1';
+const clamp=(value,min,max)=>Math.max(min,Math.min(max,value));
+const AMBIENCES={
+hangar:{filter:380,gain:0.013,hum:74,humGain:0.006},
+woodland:{filter:1250,gain:0.023,hum:156,humGain:0.002},
+stadium:{filter:730,gain:0.016,hum:110,humGain:0.008},
+industrial:{filter:220,gain:0.024,hum:58,humGain:0.009},
+};
 
-      const volume = (value) =>
-        typeof value === 'number' && Number.isFinite(value) ? clamp(value, 0, 1) : 1;
-      let levels = Object.fromEntries(
-        ['interface', 'motor', 'ambience'].map((key) => [key, volume(options.volumes?.[key])]),
-      );
+function createWorldAudio(options={}){
+const host=options.window??globalThis.window??globalThis;
+let storage;
+try{
+storage=options.storage??host.localStorage;
+}catch{
+// Sound works for this visit even when browser preferences are unavailable.
+}
+const gameplayOutput=createGameplayAudioOutput({window:host,getStorage:()=>storage});
+const AudioContext=host.AudioContext??host.webkitAudioContext;
+let enabled=false;
+try{
+enabled=storage?.getItem(PREFERENCE)==='on';
+}catch{
+// Muted is the default when preferences cannot be read.
+}
+let context;
+let graph;
+let disposed=false;
+let wanted=false;
+let transition=0;
+let lastPlaying=false;
+let lastTick=null;
+let lastStep=null;
+let lastContacts=null;
+let ambience=AMBIENCES.hangar;
+let motorStyle='quad';
+let gateStyle='chime';
+let dialogue={enabled:false,volume:DEFAULT_DIALOGUE_VOLUME};
+let dialogueVoice=null;
+const effects=new Set();
+const humanReactions=createHumanReactionPolicy();
+const humanBuffers=new Map();
+let preparingHumans=false;
+const audioMaster=options.audioMaster??createAudioMaster();
+const preferences=
+options.audioPreferences??
+createAudioPreferences({
+audioMaster,
+getStorage:()=>storage,
+window:host,
+fallback:options.audioMaster
+?{muted:audioMaster.snapshot().muted,volume:audioMaster.snapshot().volume}
+:{muted:!enabled,volume:0.65},
+});
+let movement=readMovementAudio(storage);
+let masterState=audioMaster.snapshot();
+enabled= !masterState.muted;
+const applyOutput=()=>{
+if(!graph||context.state==='closed')return;
+graph.master.gain.cancelScheduledValues(context.currentTime);
+graph.master.gain.setValueAtTime(enabled?masterState.volume:0,context.currentTime);
+graph.output.movementBus.gain.setTargetAtTime(
+movement.enabled?movement.volume:0,
+context.currentTime,
+0.025,
+);
+};
+const releaseMaster=audioMaster.subscribe((value)=>{
+masterState=value;
+enabled= !value.muted;
+if(!enabled||value.volume===0)silence();
+applyOutput();
+});
+const changed=(event)=>{
+if(event.key===MOVEMENT_AUDIO_KEY){
+movement=readMovementAudio(storage);
+applyOutput();
+}
+};
+host.addEventListener?.('storage',changed);
+const recentCues=new Map();
+const observedEvents=new Set();
+let actorDefinitions=new Map();
+let liveActors=new Map();
+let actorPositions=new Map();
+let actorPhases=new Map();
+let actorFamilies=new Map();
+let lastFootstep= -Infinity;
 
-      function ramp(parameter, value, seconds = 0.04) {
-        parameter.setTargetAtTime(value, context.currentTime, seconds);
-      }
+const volume=(value)=>
+typeof value==='number'&&Number.isFinite(value)?clamp(value,0,1):1;
+let levels=Object.fromEntries(
+['interface','motor','ambience'].map((key)=>[key,volume(options.volumes?.[key])]),
+);
 
-      function stopEffects() {
-        for (const effect of effects) effect.stop();
-        effects.clear();
-      }
+function ramp(parameter,value,seconds=0.04){
+parameter.setTargetAtTime(value,context.currentTime,seconds);
+}
 
-      function prepareHumans() {
-        if (
-          preparingHumans ||
-          !context?.decodeAudioData ||
-          options.getDestruction?.()?.vocals === false
-        )
-          return;
-        preparingHumans = true;
-        for (const [name, clip] of Object.entries(HUMAN_REACTION_BANK)) {
-          const bytes = Uint8Array.from(atob(clip.base64), (character) => character.charCodeAt(0));
-          void context
-            .decodeAudioData(bytes.buffer)
-            .then((buffer) => {
-              if (!disposed)
-                humanBuffers.set(name, { buffer, gain: destructionBufferGain(name, buffer) });
-            })
-            .catch(() => {});
-        }
-      }
-      function humanReaction(details) {
-        prepareHumans();
-        if (
-          !graph ||
-          !enabled ||
-          !wanted ||
-          masterState.volume === 0 ||
-          !levels.interface ||
-          context.state !== 'running' ||
-          dialogueVoice ||
-          dialogueChannel.active ||
-          [...effects].some((effect) => effect.priority >= 5) ||
-          effects.size >= 12
-        )
-          return;
-        const name = humanReactions.request(
-          context.currentTime,
-          details,
-          [...effects].filter((effect) => effect.humanReaction).length,
-        );
-        const clip = name && humanBuffers.get(name);
-        if (!clip) return;
-        const source = context.createBufferSource(),
-          volume = context.createGain(),
-          now = context.currentTime;
-        const duration = Math.min(0.7, clip.buffer.duration);
-        source.buffer = clip.buffer;
-        volume.gain.setValueAtTime(0.45 * clip.gain, now);
-        volume.gain.setValueAtTime(0.45 * clip.gain, now + Math.max(0, duration - 0.025));
-        volume.gain.linearRampToValueAtTime(0, now + duration);
-        source.connect(volume).connect(graph.buses.interface);
-        let stopped = false;
-        const voice = {
-          humanReaction: true,
-          priority: 2,
-          stop() {
-            if (stopped) return;
-            stopped = true;
-            try {
-              source.stop();
-            } catch {}
-            source.disconnect();
-            volume.disconnect();
-            effects.delete(voice);
-          },
-        };
-        effects.add(voice);
-        source.onended = voice.stop;
-        source.start(now);
-        source.stop(now + duration);
-      }
-      function silence() {
-        dialogueVoice?.stop();
-        if (!graph || context.state === 'closed') return;
-        for (const node of [graph.motor, graph.vehicleGain, graph.wind, graph.humGain]) {
-          node.gain.cancelScheduledValues(context.currentTime);
-          node.gain.setValueAtTime(0, context.currentTime);
-        }
-        stopEffects();
-      }
+function stopEffects(){
+for(const effect of effects)effect.stop();
+effects.clear();
+}
 
-      function initialize() {
-        if (context) return true;
-        if (!AudioContext || disposed) return false;
-        let candidate;
-        try {
-          candidate = createGameAudioContext(host);
-          const output = createGameAudioOutput(candidate);
-          const master = output.master;
-          master.gain.value = enabled ? masterState.volume : 0;
-          output.movementBus.gain.value = movement.enabled ? movement.volume : 0;
-          const buses = Object.fromEntries(
-            Object.entries(levels).map(([key, level]) => {
-              const bus = candidate.createGain();
-              bus.gain.value = level;
-              bus.connect(key === 'motor' ? output.movementBus : output.sfxBus);
-              return [key, bus];
-            }),
-          );
-          const dialogueBus = output.dialogueBus;
-          dialogueBus.gain.value = dialogue.enabled ? dialogue.volume * DIALOGUE_MIX_GAIN : 0;
-          const motor = candidate.createGain();
-          motor.gain.value = 0;
-          const motorFilter = candidate.createBiquadFilter();
-          motorFilter.type = 'lowpass';
-          motorFilter.frequency.value = 1200;
-          motor.connect(motorFilter).connect(buses.motor);
-          const rotors = [1, 1.013, 2.007].map((ratio, index) => {
-            const oscillator = candidate.createOscillator();
-            oscillator.type = index === 2 ? 'sine' : 'triangle';
-            oscillator.frequency.value = 90 * ratio;
-            oscillator.connect(motor);
-            oscillator.start();
-            return { oscillator, ratio };
-          });
+function prepareHumans(){
+if(
+preparingHumans||
+!context?.decodeAudioData||
+options.getDestruction?.()?.vocals===false
+)
+return;
+preparingHumans=true;
+for(const[name,clip]of Object.entries(HUMAN_REACTION_BANK)){
+const bytes=Uint8Array.from(atob(clip.base64),(character)=>character.charCodeAt(0));
+void context
+.decodeAudioData(bytes.buffer)
+.then((buffer)=>{
+if(!disposed)
+humanBuffers.set(name,{buffer,gain:destructionBufferGain(name,buffer)});
+})
+.catch(()=>{});
+}
+}
+function humanReaction(details){
+prepareHumans();
+if(
+!graph||
+!enabled||
+!wanted||
+masterState.volume===0||
+!levels.interface||
+context.state!=='running'||
+dialogueVoice||
+dialogueChannel.active||
+[...effects].some((effect)=>effect.priority>=5)||
+effects.size>=12
+)
+return;
+const name=humanReactions.request(
+context.currentTime,
+details,
+[...effects].filter((effect)=>effect.humanReaction).length,
+);
+const clip=name&&humanBuffers.get(name);
+if(!clip)return;
+const source=context.createBufferSource(),
+volume=context.createGain(),
+now=context.currentTime;
+const duration=Math.min(0.7,clip.buffer.duration);
+source.buffer=clip.buffer;
+volume.gain.setValueAtTime(0.45*clip.gain,now);
+volume.gain.setValueAtTime(0.45*clip.gain,now+Math.max(0,duration-0.025));
+volume.gain.linearRampToValueAtTime(0,now+duration);
+source.connect(volume).connect(graph.buses.interface);
+let stopped=false;
+const voice={
+humanReaction:true,
+priority:2,
+stop(){
+if(stopped)return;
+stopped=true;
+try{
+source.stop();
+}catch{}
+source.disconnect();
+volume.disconnect();
+effects.delete(voice);
+},
+};
+effects.add(voice);
+source.onended=voice.stop;
+source.start(now);
+source.stop(now+duration);
+}
+function silence(){
+dialogueVoice?.stop();
+if(!graph||context.state==='closed')return;
+for(const node of[graph.motor,graph.vehicleGain,graph.wind,graph.humGain]){
+node.gain.cancelScheduledValues(context.currentTime);
+node.gain.setValueAtTime(0,context.currentTime);
+}
+stopEffects();
+}
 
-          // A small, locally synthesized loop avoids remote media and autoplay fetches.
-          const buffer = candidate.createBuffer(1, candidate.sampleRate * 2, candidate.sampleRate);
-          const samples = buffer.getChannelData(0);
-          let seed = 73471;
-          let low = 0;
-          for (let i = 0; i < samples.length; i++) {
-            seed = (Math.imul(seed, 1664525) + 1013904223) >>> 0;
-            low = 0.985 * low + 0.015 * (seed / 2147483648 - 1);
-            samples[i] = low * 4;
-          }
-          const noise = candidate.createBufferSource();
-          noise.buffer = buffer;
-          noise.loop = true;
-          const windFilter = candidate.createBiquadFilter();
-          windFilter.type = 'lowpass';
-          windFilter.frequency.value = ambience.filter;
-          const wind = candidate.createGain();
-          wind.gain.value = 0;
-          noise.connect(windFilter).connect(wind).connect(buses.ambience);
-          noise.start();
-          const hum = candidate.createOscillator();
-          hum.type = 'sine';
-          hum.frequency.value = ambience.hum;
-          const humGain = candidate.createGain();
-          humGain.gain.value = 0;
-          hum.connect(humGain).connect(buses.ambience);
-          hum.start();
-          const vehicleMotor = candidate.createOscillator(),
-            vehicleGain = candidate.createGain();
-          vehicleMotor.type = 'triangle';
-          vehicleMotor.frequency.value = 62;
-          vehicleGain.gain.value = 0;
-          vehicleMotor.connect(vehicleGain).connect(buses.motor);
-          vehicleMotor.start();
-          context = candidate;
-          graph = {
-            vehicleMotor,
-            vehicleGain,
-            output,
-            master,
-            buses,
-            dialogueBus,
-            motor,
-            motorFilter,
-            rotors,
-            noise,
-            windFilter,
-            wind,
-            hum,
-            humGain,
-          };
-          gameplayOutput.attach(output);
-          return true;
-        } catch {
-          candidate?.close().catch(() => {});
-          return false;
-        }
-      }
+function initialize(){
+if(context)return true;
+if(!AudioContext||disposed)return false;
+let candidate;
+try{
+candidate=createGameAudioContext(host);
+const output=createGameAudioOutput(candidate);
+const master=output.master;
+master.gain.value=enabled?masterState.volume:0;
+output.movementBus.gain.value=movement.enabled?movement.volume:0;
+const buses=Object.fromEntries(
+Object.entries(levels).map(([key,level])=>{
+const bus=candidate.createGain();
+bus.gain.value=level;
+bus.connect(key==='motor'?output.movementBus:output.sfxBus);
+return[key,bus];
+}),
+);
+const dialogueBus=output.dialogueBus;
+dialogueBus.gain.value=dialogue.enabled?dialogue.volume*DIALOGUE_MIX_GAIN:0;
+const motor=candidate.createGain();
+motor.gain.value=0;
+const motorFilter=candidate.createBiquadFilter();
+motorFilter.type='lowpass';
+motorFilter.frequency.value=1200;
+motor.connect(motorFilter).connect(buses.motor);
+const rotors=[1,1.013,2.007].map((ratio,index)=>{
+const oscillator=candidate.createOscillator();
+oscillator.type=index===2?'sine':'triangle';
+oscillator.frequency.value=90*ratio;
+oscillator.connect(motor);
+oscillator.start();
+return{oscillator,ratio};
+});
 
-      function tone({
-        from,
-        to = from,
-        duration = 0.12,
-        gain = 0.05,
-        delay = 0,
-        type = 'sine',
-        kind = 'tone',
-        destruction = false,
-        movementCue = false,
-        priority = 2,
-      }) {
-        if (
-          !graph ||
-          !enabled ||
-          masterState.volume === 0 ||
-          !levels.interface ||
-          !wanted ||
-          context.state !== 'running'
-        )
-          return;
-        if (
-          movementCue &&
-          (!movement.enabled ||
-            movement.volume === 0 ||
-            [...effects].some((effect) => effect.priority >= 4))
-        )
-          return;
-        if (priority >= 4) for (const effect of [...effects]) if (effect.movementCue) effect.stop();
-        // Crowd feedback cannot use the warning reserve. A warning may reclaim
-        // a lower-priority tail, without adding a second output or context.
-        if (destruction && [...effects].filter((effect) => effect.destruction).length >= 10) return;
-        if (effects.size >= 12) {
-          const victim = [...effects].find((effect) => effect.priority < priority);
-          if (!victim) return;
-          victim.stop();
-        }
-        const oscillator =
-          kind === 'snare' ? context.createBufferSource() : context.createOscillator();
-        const envelope = context.createGain();
-        const start = context.currentTime + delay;
-        if (kind === 'snare') {
-          const samples = Math.max(1, Math.ceil(context.sampleRate * duration));
-          const buffer = context.createBuffer(1, samples, context.sampleRate);
-          const data = buffer.getChannelData(0);
-          let seed = 73471,
-            low = 0;
-          for (let index = 0; index < data.length; index++) {
-            seed = (Math.imul(seed, 1664525) + 1013904223) >>> 0;
-            low = low * 0.65 + (seed / 2147483648 - 1) * 0.35;
-            data[index] = low;
-          }
-          oscillator.buffer = buffer;
-        } else {
-          oscillator.type = type;
-          oscillator.frequency.setValueAtTime(from, start);
-          oscillator.frequency.exponentialRampToValueAtTime(Math.max(20, to), start + duration);
-        }
-        envelope.gain.setValueAtTime(0, context.currentTime);
-        envelope.gain.setValueAtTime(0, start);
-        envelope.gain.linearRampToValueAtTime(gain, start + 0.008);
-        envelope.gain.exponentialRampToValueAtTime(0.0001, start + duration);
-        oscillator
-          .connect(envelope)
-          .connect(movementCue ? graph.output.movementBus : graph.buses.interface);
-        let stopped = false;
-        const effect = {
-          priority,
-          destruction,
-          movementCue,
-          stop() {
-            if (stopped) return;
-            stopped = true;
-            try {
-              oscillator.stop();
-            } catch {
-              // The one-shot may already have ended before a pause.
-            }
-            oscillator.disconnect();
-            envelope.disconnect();
-            effects.delete(effect);
-          },
-        };
-        effects.add(effect);
-        oscillator.onended = () => effect.stop();
-        oscillator.start(start);
-        oscillator.stop(start + duration + 0.02);
-      }
+// A small, locally synthesized loop avoids remote media and autoplay fetches.
+const buffer=candidate.createBuffer(1,candidate.sampleRate*2,candidate.sampleRate);
+const samples=buffer.getChannelData(0);
+let seed=73471;
+let low=0;
+for(let i=0;i<samples.length;i++){
+seed=(Math.imul(seed,1664525)+1013904223)>>>0;
+low=0.985*low+0.015*(seed/2147483648-1);
+samples[i]=low*4;
+}
+const noise=candidate.createBufferSource();
+noise.buffer=buffer;
+noise.loop=true;
+const windFilter=candidate.createBiquadFilter();
+windFilter.type='lowpass';
+windFilter.frequency.value=ambience.filter;
+const wind=candidate.createGain();
+wind.gain.value=0;
+noise.connect(windFilter).connect(wind).connect(buses.ambience);
+noise.start();
+const hum=candidate.createOscillator();
+hum.type='sine';
+hum.frequency.value=ambience.hum;
+const humGain=candidate.createGain();
+humGain.gain.value=0;
+hum.connect(humGain).connect(buses.ambience);
+hum.start();
+const vehicleMotor=candidate.createOscillator(),
+vehicleGain=candidate.createGain();
+vehicleMotor.type='triangle';
+vehicleMotor.frequency.value=62;
+vehicleGain.gain.value=0;
+vehicleMotor.connect(vehicleGain).connect(buses.motor);
+vehicleMotor.start();
+context=candidate;
+graph={
+vehicleMotor,
+vehicleGain,
+output,
+master,
+buses,
+dialogueBus,
+motor,
+motorFilter,
+rotors,
+noise,
+windFilter,
+wind,
+hum,
+humGain,
+};
+gameplayOutput.attach(output);
+return true;
+}catch{
+candidate?.close().catch(()=>{});
+return false;
+}
+}
 
-      function actorSoundDetails(event = {}) {
-        const actor = actorDefinitions.get(event.actor);
-        const machine =
-          event.machine ??
-          (actor?.type === 'vehicle'
-            ? actor.vehicleModel === 'field-tank'
-              ? 'tracked'
-              : 'wheeled'
-            : false);
-        const machineFamily =
-          actor?.type === 'vehicle'
-            ? ({
-                'field-utility': 'utility-car',
-                'field-tank': 'tracked-tank',
-                'relay-truck': 'radar-truck',
-              }[actor.vehicleModel] ?? actor.vehicleModel)
-            : null;
-        return {
-          family:
-            event.family ??
-            machineFamily ??
-            actorFamilies.get(event.actor) ??
-            (actor?.speed > 0 ? 'patroller' : 'lookout'),
-          machine,
-          brutal: options.getDestruction?.()?.brutal === true,
-          vocals: options.getDestruction?.()?.vocals,
-          // Patrols and sentries use the humanoid painter. Drones, hazards and
-          // vehicles must never inherit a human voice from the family fallback.
-          humanoid:
-            event.humanoid ?? (actor ? ['patrol', 'sentry'].includes(actor.type) : undefined),
-          flesh: event.flesh,
-        };
-      }
+function tone({
+from,
+to=from,
+duration=0.12,
+gain=0.05,
+delay=0,
+type='sine',
+kind='tone',
+destruction=false,
+movementCue=false,
+priority=2,
+}){
+if(
+!graph||
+!enabled||
+masterState.volume===0||
+!levels.interface||
+!wanted||
+context.state!=='running'
+)
+return;
+if(
+movementCue&&
+(!movement.enabled||
+movement.volume===0||
+[...effects].some((effect)=>effect.priority>=4))
+)
+return;
+if(priority>=4)for(const effect of[...effects])if(effect.movementCue)effect.stop();
+// Crowd feedback cannot use the warning reserve. A warning may reclaim
+// a lower-priority tail, without adding a second output or context.
+if(priority<5&&[...effects].filter((effect)=>effect.priority<5).length>=10){
+const victim=[...effects].find((effect)=>effect.priority<priority);
+if(!victim)return;
+victim.stop();
+}
+if(effects.size>=12){
+const victim=[...effects].find((effect)=>effect.priority<priority);
+if(!victim)return;
+victim.stop();
+}
+const oscillator=
+kind==='snare'?context.createBufferSource():context.createOscillator();
+const envelope=context.createGain();
+const start=context.currentTime+delay;
+if(kind==='snare'){
+const samples=Math.max(1,Math.ceil(context.sampleRate*duration));
+const buffer=context.createBuffer(1,samples,context.sampleRate);
+const data=buffer.getChannelData(0);
+let seed=73471,
+low=0;
+for(let index=0;index<data.length;index++){
+seed=(Math.imul(seed,1664525)+1013904223)>>>0;
+low=low*0.65+(seed/2147483648-1)*0.35;
+data[index]=low;
+}
+oscillator.buffer=buffer;
+}else{
+oscillator.type=type;
+oscillator.frequency.setValueAtTime(from,start);
+oscillator.frequency.exponentialRampToValueAtTime(Math.max(20,to),start+duration);
+}
+envelope.gain.setValueAtTime(0,context.currentTime);
+envelope.gain.setValueAtTime(0,start);
+envelope.gain.linearRampToValueAtTime(gain,start+0.008);
+envelope.gain.exponentialRampToValueAtTime(0.0001,start+duration);
+oscillator
+.connect(envelope)
+.connect(movementCue?graph.output.movementBus:graph.buses.interface);
+let stopped=false;
+const effect={
+priority,
+destruction,
+movementCue,
+stop(){
+if(stopped)return;
+stopped=true;
+try{
+oscillator.stop();
+}catch{
+// The one-shot may already have ended before a pause.
+}
+oscillator.disconnect();
+envelope.disconnect();
+effects.delete(effect);
+},
+};
+effects.add(effect);
+oscillator.onended=()=>effect.stop();
+oscillator.start(start);
+oscillator.stop(start+duration+0.02);
+}
 
-      function cue(type, player = true, event = {}) {
-        const kind = {
-          catch: 'catch',
-          'hunt-tail': 'failure',
-          objective: 'objective',
-          fire: 'fire',
-          impact: 'impact',
-          defeat: 'catch',
-          'protected-contact': 'impact',
-          warning: 'warning',
-          notice: 'notice',
-          burst: 'burst',
-          recover: 'recover',
-          blocked: 'blocked',
-          equipment: 'equipment',
-          drive: 'drive',
-        }[type];
-        if (!kind) return;
-        const details = actorSoundDetails(event);
-        const recipe = encounterSoundRecipe(kind, details);
-        const now = context?.currentTime ?? 0;
-        const cueKey = kind === 'catch' ? `catch:${recipe.category}` : kind;
-        if (now - (recentCues.get(cueKey) ?? -Infinity) < (recipe.cooldown ?? 0.12)) return;
-        recentCues.set(cueKey, now);
-        if (recipe.priority >= 5 || (type === 'fire' && !player)) {
-          humanReactions.interrupt(now);
-          for (const effect of [...effects]) if (effect.humanReaction) effect.stop();
-        }
-        if (kind === 'catch') humanReaction(details);
-        if (recipe.priority >= 5 || (type === 'fire' && !player)) dialogueChannel.interrupt();
-        const voice = { ...recipe.tone, priority: recipe.priority, movementCue: recipe.movement };
-        if (recipe.movement) voice.gain *= levels.interface;
-        if (type === 'fire' && !player) voice.gain *= 0.65;
-        if (type === 'objective' && gateStyle === 'digital') voice.type = 'triangle';
-        tone({ ...voice, destruction: kind === 'catch' });
-        for (const layer of recipe.layers ?? [])
-          tone({ ...layer, priority: recipe.priority, destruction: kind === 'catch' });
-      }
+function actorSoundDetails(event={}){
+const live=liveActors.get(event.actor);
+const definition=
+actorDefinitions.get(event.actor)??
+actorDefinitions.get(event.sourceId??live?.sourceId);
+const actor=live?{...definition,...live}:definition;
+const material=event.material??actor?.material;
+const type=event.appearance?.type??actor?.type;
+const machine=
+event.machine??
+(actor?.type==='vehicle'
+?actor.vehicleModel==='field-tank'
+?'tracked'
+:'wheeled'
+:false);
+const machineFamily=
+actor?.type==='vehicle'
+?({
+'field-utility':'utility-car',
+'field-tank':'tracked-tank',
+'relay-truck':'radar-truck',
+}[actor.vehicleModel]??actor.vehicleModel)
+:null;
+return{
+weapon:event.weapon,
+eventId:event.eventId,
+severity:event.severity,
+protected:event.protected===true,
+family:
+event.family??
+event.appearance?.family??
+machineFamily??
+actorFamilies.get(event.actor)??
+(actor?.speed>0?'patroller':'lookout'),
+machine,
+material,
+category:event.category??(material==='electronic'?'electronic':undefined),
+cast:event.appearance?.cast??actor?.appearance?.cast,
+brutal:options.getDestruction?.()?.brutal===true,
+vocals:options.getDestruction?.()?.vocals,
+// Patrols and sentries use the humanoid painter. Drones, hazards and
+// vehicles must never inherit a human voice from the family fallback.
+humanoid:
+event.humanoid??
+(type
+?['patrol','sentry','humanoid'].includes(type)
+:material
+?material==='organic'
+:undefined),
+flesh:event.flesh??(material?material==='organic':undefined),
+};
+}
 
-      async function resume() {
-        if (!enabled || disposed) return false;
-        requestPlaybackAudioSession(host.navigator?.audioSession);
-        if (!initialize()) return false;
-        wanted = true;
-        const epoch = ++transition;
-        try {
-          await context.resume();
-          if (disposed || !enabled || !wanted) {
-            if (context.state !== 'closed') await context.suspend();
-            return false;
-          }
-          prepareHumans();
-          return epoch === transition && context.state === 'running';
-        } catch {
-          return false;
-        }
-      }
+function cue(type,player=true,event={}){
+const kind={
+catch:'catch',
+'hunt-tail':'failure',
+objective:'objective',
+fire:'fire',
+impact:'impact',
+'player-damage':'player-damage',
+telegraph:'warning',
+defeat:'catch',
+'protected-contact':'impact',
+warning:'warning',
+notice:'notice',
+burst:'burst',
+recover:'recover',
+blocked:'blocked',
+equipment:'equipment',
+drive:'drive',
+'surface-impact':'surface-impact',
+explosion:'explosion',
+component:'component',
+'weapon-selected':'weapon-selected',
+'weapon-empty':'weapon-empty',
+'reload-start':'reload-start',
+'reload-ready':'reload-ready',
+payload:'payload',
+'payload-armed':'payload-armed',
+'payload-ready':'payload-ready',
+repair:'repair',
+resupply:'resupply',
+challenge:'challenge',
+supply:'supply',
+}[type];
+if(!kind)return;
+const details=actorSoundDetails(event);
+const recipe=encounterSoundRecipe(kind,details);
+const now=context?.currentTime??0;
+if(!recipe)return;
+const cueKey=
+kind==='catch'
+?`catch:${recipe.category}`
+:`${kind}:${event.weapon??''}:${player?'player':'enemy'}`;
+if(now-(recentCues.get(cueKey)?? -Infinity)<(recipe.cooldown??0.12))return;
+recentCues.set(cueKey,now);
+if(recipe.priority>=5||(type==='fire'&& !player)){
+humanReactions.interrupt(now);
+for(const effect of[...effects])if(effect.humanReaction)effect.stop();
+}
+if(kind==='catch')humanReaction(details);
+if(recipe.priority>=5||(type==='fire'&& !player))dialogueChannel.interrupt();
+const voice={...recipe.tone,priority:recipe.priority,movementCue:recipe.movement};
+if(recipe.movement)voice.gain*=levels.interface;
+if(type==='fire'&& !player)voice.gain*=0.65;
+if(type==='objective'&&gateStyle==='digital')voice.type='triangle';
+tone({...voice,destruction:kind==='catch'});
+for(const layer of recipe.layers??[])
+tone({
+...layer,
+gain:layer.gain*(type==='fire'&& !player?0.65:1),
+priority:recipe.priority,
+destruction:kind==='catch',
+});
+}
 
-      function pause() {
-        wanted = false;
-        transition++;
-        silence();
-        if (context && context.state !== 'closed') context.suspend().catch(() => {});
-        releasePlaybackAudioSession(host.navigator?.audioSession);
-      }
+async function resume(){
+if(!enabled||disposed)return false;
+requestPlaybackAudioSession(host.navigator?.audioSession);
+if(!initialize())return false;
+wanted=true;
+const epoch= ++transition;
+try{
+await context.resume();
+if(disposed|| !enabled|| !wanted){
+if(context.state!=='closed')await context.suspend();
+return false;
+}
+prepareHumans();
+return epoch===transition&&context.state==='running';
+}catch{
+return false;
+}
+}
 
-      return {
-        gameplayOutput,
-        get context() {
-          return context;
-        },
-        get menuBus() {
-          return graph?.output.menuBus;
-        },
-        subscribe(listener) {
-          return audioMaster.subscribe(() => listener(enabled));
-        },
-        configureDialogue({ enabled = dialogue.enabled, volume: value = dialogue.volume } = {}) {
-          if (typeof enabled !== 'boolean' || !Number.isFinite(value) || value < 0 || value > 1)
-            throw new TypeError(
-              'Dialogue requires an enabled boolean and volume from zero to one.',
-            );
-          dialogue = { enabled, volume: value };
-          if (!enabled || !value) dialogueVoice?.stop();
-          if (graph && context.state !== 'closed')
-            ramp(graph.dialogueBus.gain, enabled ? value * DIALOGUE_MIX_GAIN : 0);
-        },
-        /** Uses the existing flight context and the shared one-line dialogue arbiter. */
-        playDialogue(buffer, { onended = () => {} } = {}) {
-          if (
-            !buffer ||
-            disposed ||
-            !enabled ||
-            !wanted ||
-            !dialogue.enabled ||
-            !dialogue.volume ||
-            !graph ||
-            context.state !== 'running'
-          )
-            return null;
-          dialogueVoice?.stop();
-          const source = context.createBufferSource();
-          source.buffer = buffer;
-          source.connect(graph.dialogueBus);
-          let ended = false;
-          const voice = {
-            get ended() {
-              return ended;
-            },
-            stop() {
-              if (ended) return;
-              ended = true;
-              try {
-                source.stop();
-              } catch {
-                /* An ended source is already silent. */
-              }
-              source.disconnect();
-              if (dialogueVoice === voice) dialogueVoice = null;
-              dialogueChannel.release(voice);
-              try {
-                onended();
-              } catch {
-                /* Presentation callbacks cannot interrupt flight. */
-              }
-            },
-          };
-          source.onended = voice.stop;
-          dialogueChannel.claim(voice);
-          dialogueVoice = voice;
-          try {
-            source.start();
-          } catch {
-            voice.stop();
-            return null;
-          }
-          return voice;
-        },
-        get movementSettings() {
-          return movement;
-        },
-        set movementSettings(value) {
-          if (
-            typeof value?.enabled !== 'boolean' ||
-            !Number.isFinite(value.volume) ||
-            value.volume < 0 ||
-            value.volume > 1
-          )
-            throw new TypeError(
-              'Movement sound requires an enabled boolean and volume between zero and one.',
-            );
-          movement = { enabled: value.enabled, volume: value.volume };
-        },
-        applyVolumes: applyOutput,
-        masterSnapshot: () => audioMaster.snapshot(),
-        subscribeMaster: (listener) => audioMaster.subscribe(listener),
-        setMasterVolume: (value) => preferences.setVolume(value),
-        enabled: () => enabled,
-        volumes: () => ({ ...levels }),
-        setVolumes(values = {}) {
-          if (disposed) return;
-          levels = Object.fromEntries(
-            Object.keys(levels).map((key) => [
-              key,
-              Object.hasOwn(values, key) ? volume(values[key]) : levels[key],
-            ]),
-          );
-          if (!graph || context.state === 'closed') return;
-          for (const [key, bus] of Object.entries(graph.buses)) {
-            bus.gain.cancelScheduledValues(context.currentTime);
-            ramp(bus.gain, levels[key], 0.025);
-          }
-          if (!levels.interface) stopEffects();
-        },
-        status: () => ({
-          enabled,
-          volumes: { ...levels },
-          available: Boolean(AudioContext) && !disposed,
-          running: Boolean(wanted && context?.state === 'running'),
-        }),
-        async setEnabled(value) {
-          if (disposed) return false;
-          enabled = Boolean(value);
-          preferences.setMuted(!enabled);
-          try {
-            storage?.setItem(PREFERENCE, enabled ? 'on' : 'off');
-          } catch {
-            // A privacy setting must not interrupt flight or the mute control.
-          }
-          if (enabled) return resume();
-          pause();
-          return true;
-        },
-        resume,
-        pause,
-        setCourse(course = {}) {
-          dialogueVoice?.stop();
-          const theme = course.world?.theme ?? course.theme ?? 'academy';
-          const profile = course.world?.themeProfile?.audio ?? course.themeProfile?.audio ?? {};
-          const fallback =
-            theme === 'ukrainian'
-              ? 'woodland'
-              : theme === 'pixel'
-                ? 'stadium'
-                : theme === 'operations'
-                  ? 'industrial'
-                  : 'hangar';
-          ambience = AMBIENCES[profile.ambience] ?? AMBIENCES[fallback];
-          motorStyle =
-            profile.motor ??
-            (theme === 'pixel' ? 'arcade' : theme === 'operations' ? 'utility' : 'quad');
-          gateStyle =
-            profile.gate ??
-            (theme === 'pixel' ? 'digital' : theme === 'ukrainian' ? 'bell' : 'chime');
-          lastPlaying = false;
-          lastTick = null;
-          lastStep = null;
-          lastContacts = null;
-          recentCues.clear();
-          humanReactions.reset();
-          actorPositions.clear();
-          actorPhases.clear();
-          actorFamilies = new Map(
-            (course.pursuit?.actors ?? []).map((policy) => [policy.id, policy.family]),
-          );
-          lastFootstep = -Infinity;
-          actorDefinitions = new Map((course.actors ?? []).map((actor) => [actor.id, actor]));
-          stopEffects();
-          if (graph && context.state !== 'closed') {
-            ramp(graph.windFilter.frequency, ambience.filter);
-            ramp(graph.hum.frequency, ambience.hum);
-          }
-        },
-        update(snapshot, { active = true } = {}) {
-          if (disposed || !snapshot) return;
-          const tick = snapshot.ticks;
-          const step = snapshot.step;
-          const fresh = Number.isSafeInteger(tick) && lastTick !== null && tick > lastTick;
-          const advanced = Number.isSafeInteger(step) && lastStep !== null && step > lastStep;
-          const playing = active && !['paused', 'disarmed'].includes(snapshot.status);
-          const finalCue = fresh && lastPlaying && ['complete', 'failed'].includes(snapshot.status);
-          if (enabled && wanted && graph && context.state === 'running' && (playing || finalCue)) {
-            const flying = snapshot.status === 'active';
-            const throttle = clamp((snapshot.lastInput?.throttle ?? 0) / 1000, 0, 1);
-            const velocity = snapshot.velocity ?? {};
-            const speed = Math.hypot(velocity.x ?? 0, velocity.y ?? 0, velocity.z ?? 0);
-            const airflow = clamp(speed / 16000, 0, 1);
-            const fundamental =
-              (motorStyle === 'utility' ? 65 : motorStyle === 'arcade' ? 125 : 95) +
-              throttle * 230 +
-              airflow * 35;
-            for (const rotor of graph.rotors)
-              ramp(rotor.oscillator.frequency, fundamental * rotor.ratio);
-            ramp(graph.motorFilter.frequency, 850 + throttle * 2400);
-            ramp(graph.motor.gain, flying ? 0.009 + throttle * 0.025 : 0);
-            ramp(graph.wind.gain, ambience.gain + (flying ? airflow * 0.028 : 0));
-            ramp(graph.humGain.gain, ambience.humGain);
-            if (fresh) {
-              let nearestVehicle = Infinity,
-                nearestFoot = Infinity,
-                footActor = null,
-                startingVehicle = null;
-              for (const actor of snapshot.actors ?? []) {
-                const previous = actorPositions.get(actor.id),
-                  position = actor.position;
-                if (!position) continue;
-                const moving =
-                  previous && Math.hypot(position.x - previous.x, position.z - previous.z) > 0;
-                if (moving && actor.status === 'active') {
-                  const d = Math.hypot(
-                    position.x - snapshot.position.x,
-                    position.y - snapshot.position.y,
-                    position.z - snapshot.position.z,
-                  );
-                  if (actor.type === 'vehicle') {
-                    nearestVehicle = Math.min(nearestVehicle, d);
-                    if (
-                      !previous.moving &&
-                      d < 16000 &&
-                      (!startingVehicle || d < startingVehicle.distance)
-                    )
-                      startingVehicle = { actor: actor.id, distance: d };
-                  } else if (['patrol', 'sentry'].includes(actor.type) && d < nearestFoot) {
-                    nearestFoot = d;
-                    footActor = actor;
-                  }
-                }
-              }
-              ramp(
-                graph.vehicleGain.gain,
-                flying && nearestVehicle < 16000 ? 0.012 * (1 - nearestVehicle / 16000) : 0,
-              );
-              if (flying && startingVehicle) cue('drive', false, { actor: startingVehicle.actor });
-              const step = encounterSoundRecipe('step', {
-                family: footActor?.pursuit?.family ?? actorFamilies.get(footActor?.id),
-              });
-              if (
-                flying &&
-                nearestFoot < 6000 &&
-                context.currentTime - lastFootstep >= step.cooldown
-              ) {
-                lastFootstep = context.currentTime;
-                tone({
-                  ...step.tone,
-                  gain: step.tone.gain * (1 - nearestFoot / 6000) * levels.interface,
-                  movementCue: true,
-                  priority: 0,
-                });
-              }
-              for (const actor of snapshot.actors ?? []) {
-                if (!actor.pursuit || actor.status !== 'active') continue;
-                const phase = actor.blocked ? 'blocked' : actor.pursuit.phase;
-                const sound = actorPhaseSound(actorPhases.get(actor.id), phase);
-                if (sound) {
-                  cue(sound, false, { actor: actor.id, family: actor.pursuit.family });
-                  if (sound !== 'warning')
-                    cue('equipment', false, { actor: actor.id, family: actor.pursuit.family });
-                }
-              }
-              const events = snapshot.events ?? [];
-              const types = new Set();
-              const destructionTypes = new Set();
-              // Bound cue overlap independently of simulation actor/projectile counts.
-              for (const event of events) {
-                if (['catch', 'defeat'].includes(event.type)) {
-                  const category = destructionCategory(actorSoundDetails(event));
-                  if (destructionTypes.has(category)) continue;
-                  destructionTypes.add(category);
-                } else if (types.has(event.type)) continue;
-                types.add(event.type);
-                cue(event.type, event.actor === 'player', event);
-              }
-              if (advanced && !types.has('objective')) cue('objective');
-              if (lastContacts !== null && snapshot.contacts > lastContacts && !types.has('impact'))
-                cue('impact');
-            }
-          } else if (graph && context.state !== 'closed') {
-            ramp(graph.motor.gain, 0);
-            ramp(graph.vehicleGain.gain, 0);
-            ramp(graph.wind.gain, 0);
-            ramp(graph.humGain.gain, 0);
-          }
-          actorPositions = new Map(
-            (snapshot.actors ?? []).map((actor) => {
-              const previous = actorPositions.get(actor.id);
-              return [
-                actor.id,
-                {
-                  ...actor.position,
-                  moving:
-                    fresh && previous && actor.position
-                      ? Math.hypot(actor.position.x - previous.x, actor.position.z - previous.z) > 0
-                      : previous?.moving,
-                },
-              ];
-            }),
-          );
-          actorPhases = new Map(
-            (snapshot.actors ?? [])
-              .filter((actor) => actor.pursuit)
-              .map((actor) => [actor.id, actor.blocked ? 'blocked' : actor.pursuit.phase]),
-          );
-          lastTick = tick;
-          lastStep = step;
-          lastContacts = snapshot.contacts ?? null;
-          lastPlaying = playing;
-        },
-        dispose() {
-          if (disposed) return;
-          disposed = true;
-          humanBuffers.clear();
-          gameplayOutput.dispose();
-          pause();
-          releaseMaster();
-          host.removeEventListener?.('storage', changed);
-          if (!options.audioPreferences) preferences.dispose();
-          if (!options.audioMaster) audioMaster.dispose();
-          if (!graph) return;
-          for (const node of [
-            ...graph.rotors.map((rotor) => rotor.oscillator),
-            graph.noise,
-            graph.hum,
-            graph.vehicleMotor,
-          ]) {
-            node.stop();
-            node.disconnect();
-          }
-          for (const node of [
-            graph.motor,
-            graph.vehicleGain,
-            graph.motorFilter,
-            graph.windFilter,
-            graph.wind,
-            graph.humGain,
-            ...Object.values(graph.buses),
-            ...Object.values(graph.output).filter(Boolean),
-          ])
-            node.disconnect();
-          context.close().catch(() => {});
-          graph = null;
-        },
-      };
-    }
+function pause(){
+wanted=false;
+transition++;
+silence();
+if(context&&context.state!=='closed')context.suspend().catch(()=>{});
+releasePlaybackAudioSession(host.navigator?.audioSession);
+}
 
-    return { createWorldAudio: createWorldAudio };
-  })();
-  return modules['optional-practice/civilian-fpv/world-audio.mjs'].createWorldAudio;
+return{
+gameplayOutput,
+get context(){
+return context;
+},
+get menuBus(){
+return graph?.output.menuBus;
+},
+subscribe(listener){
+return audioMaster.subscribe(()=>listener(enabled));
+},
+configureDialogue({enabled=dialogue.enabled,volume:value=dialogue.volume}={}){
+if(typeof enabled!=='boolean'|| !Number.isFinite(value)||value<0||value>1)
+throw new TypeError(
+'Dialogue requires an enabled boolean and volume from zero to one.',
+);
+dialogue={enabled,volume:value};
+if(!enabled|| !value)dialogueVoice?.stop();
+if(graph&&context.state!=='closed')
+ramp(graph.dialogueBus.gain,enabled?value*DIALOGUE_MIX_GAIN:0);
+},
+/** Uses the existing flight context and the shared one-line dialogue arbiter. */
+playDialogue(buffer,{onended=()=>{}}={}){
+if(
+!buffer||
+disposed||
+!enabled||
+!wanted||
+!dialogue.enabled||
+!dialogue.volume||
+!graph||
+context.state!=='running'
+)
+return null;
+dialogueVoice?.stop();
+const source=context.createBufferSource();
+source.buffer=buffer;
+source.connect(graph.dialogueBus);
+let ended=false;
+const voice={
+get ended(){
+return ended;
+},
+stop(){
+if(ended)return;
+ended=true;
+try{
+source.stop();
+}catch{
+/* An ended source is already silent. */
+}
+source.disconnect();
+if(dialogueVoice===voice)dialogueVoice=null;
+dialogueChannel.release(voice);
+try{
+onended();
+}catch{
+/* Presentation callbacks cannot interrupt flight. */
+}
+},
+};
+source.onended=voice.stop;
+dialogueChannel.claim(voice);
+dialogueVoice=voice;
+try{
+source.start();
+}catch{
+voice.stop();
+return null;
+}
+return voice;
+},
+get movementSettings(){
+return movement;
+},
+set movementSettings(value){
+if(
+typeof value?.enabled!=='boolean'||
+!Number.isFinite(value.volume)||
+value.volume<0||
+value.volume>1
+)
+throw new TypeError(
+'Movement sound requires an enabled boolean and volume between zero and one.',
+);
+movement={enabled:value.enabled,volume:value.volume};
+},
+applyVolumes:applyOutput,
+masterSnapshot:()=>audioMaster.snapshot(),
+subscribeMaster:(listener)=>audioMaster.subscribe(listener),
+setMasterVolume:(value)=>preferences.setVolume(value),
+enabled:()=>enabled,
+volumes:()=>({...levels}),
+setVolumes(values={}){
+if(disposed)return;
+levels=Object.fromEntries(
+Object.keys(levels).map((key)=>[
+key,
+Object.hasOwn(values,key)?volume(values[key]):levels[key],
+]),
+);
+if(!graph||context.state==='closed')return;
+for(const[key,bus]of Object.entries(graph.buses)){
+bus.gain.cancelScheduledValues(context.currentTime);
+ramp(bus.gain,levels[key],0.025);
+}
+if(!levels.interface)stopEffects();
+},
+status:()=>({
+enabled,
+volumes:{...levels},
+available:Boolean(AudioContext)&& !disposed,
+running:Boolean(wanted&&context?.state==='running'),
+}),
+async setEnabled(value){
+if(disposed)return false;
+enabled=Boolean(value);
+preferences.setMuted(!enabled);
+try{
+storage?.setItem(PREFERENCE,enabled?'on':'off');
+}catch{
+// A privacy setting must not interrupt flight or the mute control.
+}
+if(enabled)return resume();
+pause();
+return true;
+},
+resume,
+pause,
+setCourse(course={}){
+dialogueVoice?.stop();
+const theme=course.world?.theme??course.theme??'academy';
+const profile=course.world?.themeProfile?.audio??course.themeProfile?.audio??{};
+const fallback=
+theme==='ukrainian'
+?'woodland'
+:theme==='pixel'
+?'stadium'
+:theme==='operations'
+?'industrial'
+:'hangar';
+ambience=AMBIENCES[profile.ambience]??AMBIENCES[fallback];
+motorStyle=
+profile.motor??
+(theme==='pixel'?'arcade':theme==='operations'?'utility':'quad');
+gateStyle=
+profile.gate??
+(theme==='pixel'?'digital':theme==='ukrainian'?'bell':'chime');
+lastPlaying=false;
+lastTick=null;
+lastStep=null;
+lastContacts=null;
+recentCues.clear();
+observedEvents.clear();
+liveActors.clear();
+humanReactions.reset();
+actorPositions.clear();
+actorPhases.clear();
+actorFamilies=new Map(
+(course.pursuit?.actors??[]).map((policy)=>[policy.id,policy.family]),
+);
+lastFootstep= -Infinity;
+actorDefinitions=new Map((course.actors??[]).map((actor)=>[actor.id,actor]));
+stopEffects();
+if(graph&&context.state!=='closed'){
+ramp(graph.windFilter.frequency,ambience.filter);
+ramp(graph.hum.frequency,ambience.hum);
+}
+},
+update(snapshot,{active=true}={}){
+if(disposed|| !snapshot)return;
+liveActors=new Map((snapshot.actors??[]).map((actor)=>[actor.id,actor]));
+// Observe identifiers even while muted/paused or priming a restored state.
+// Historical accepted events must never become delayed audio on resume.
+const events=[];
+for(const event of snapshot.events??[]){
+if(typeof event.eventId==='string'){
+if(observedEvents.has(event.eventId))continue;
+observedEvents.add(event.eventId);
+if(observedEvents.size>2048)
+observedEvents.delete(observedEvents.values().next().value);
+}
+events.push(event);
+}
+if(options.getDestruction?.()?.vocals===false)
+for(const effect of[...effects])if(effect.humanReaction)effect.stop();
+const tick=snapshot.ticks;
+const step=snapshot.step;
+const fresh=Number.isSafeInteger(tick)&&lastTick!==null&&tick>lastTick;
+const advanced=Number.isSafeInteger(step)&&lastStep!==null&&step>lastStep;
+const playing=active&& !['paused','disarmed'].includes(snapshot.status);
+const finalCue=fresh&&lastPlaying&&['complete','failed'].includes(snapshot.status);
+if(enabled&&wanted&&graph&&context.state==='running'&&(playing||finalCue)){
+const flying=snapshot.status==='active';
+const throttle=clamp((snapshot.lastInput?.throttle??0)/1000,0,1);
+const velocity=snapshot.velocity??{};
+const speed=Math.hypot(velocity.x??0,velocity.y??0,velocity.z??0);
+const airflow=clamp(speed/16000,0,1);
+const fundamental=
+(motorStyle==='utility'?65:motorStyle==='arcade'?125:95)+
+throttle*230+
+airflow*35;
+for(const rotor of graph.rotors)
+ramp(rotor.oscillator.frequency,fundamental*rotor.ratio);
+ramp(graph.motorFilter.frequency,850+throttle*2400);
+ramp(graph.motor.gain,flying?0.009+throttle*0.025:0);
+ramp(graph.wind.gain,ambience.gain+(flying?airflow*0.028:0));
+ramp(graph.humGain.gain,ambience.humGain);
+if(fresh){
+let nearestVehicle=Infinity,
+nearestFoot=Infinity,
+footActor=null,
+startingVehicle=null;
+for(const actor of snapshot.actors??[]){
+const previous=actorPositions.get(actor.id),
+position=actor.position;
+if(!position)continue;
+const moving=
+previous&&Math.hypot(position.x-previous.x,position.z-previous.z)>0;
+if(moving&&actor.status==='active'){
+const d=Math.hypot(
+position.x-snapshot.position.x,
+position.y-snapshot.position.y,
+position.z-snapshot.position.z,
+);
+if(actor.type==='vehicle'){
+nearestVehicle=Math.min(nearestVehicle,d);
+if(
+!previous.moving&&
+d<16000&&
+(!startingVehicle||d<startingVehicle.distance)
+)
+startingVehicle={actor:actor.id,distance:d};
+}else if(['patrol','sentry'].includes(actor.type)&&d<nearestFoot){
+nearestFoot=d;
+footActor=actor;
+}
+}
+}
+ramp(
+graph.vehicleGain.gain,
+flying&&nearestVehicle<16000?0.012*(1-nearestVehicle/16000):0,
+);
+if(flying&&startingVehicle)cue('drive',false,{actor:startingVehicle.actor});
+const step=encounterSoundRecipe('step',{
+family:footActor?.pursuit?.family??actorFamilies.get(footActor?.id),
+});
+if(
+flying&&
+nearestFoot<6000&&
+context.currentTime-lastFootstep>=step.cooldown
+){
+lastFootstep=context.currentTime;
+tone({
+...step.tone,
+gain:step.tone.gain*(1-nearestFoot/6000)*levels.interface,
+movementCue:true,
+priority:0,
+});
+}
+for(const actor of snapshot.actors??[]){
+if(actor.status!=='active')continue;
+const phase=actor.blocked
+?'blocked'
+:actor.warning
+?'warning'
+:(actor.pursuit?.phase??'idle');
+const sound=actorPhaseSound(actorPhases.get(actor.id),phase);
+if(sound){
+cue(sound,false,{
+actor:actor.id,
+family:actor.pursuit?.family??actor.appearance?.family,
+});
+if(sound!=='warning')
+cue('equipment',false,{
+actor:actor.id,
+family:actor.pursuit?.family??actor.appearance?.family,
+});
+}
+}
+const types=new Set();
+const destructionTypes=new Set();
+// Bound cue overlap independently of simulation actor/projectile counts.
+for(const event of[...events].sort(
+(a,b)=>
+Number(['telegraph','player-damage','warning'].includes(b.type))-
+Number(['telegraph','player-damage','warning'].includes(a.type)),
+)){
+const eventKey=`${event.type}:${event.weapon??''}:${event.material??''}:${event.actor==='player'||event.owner==='player'?'player':'enemy'}`;
+if(['catch','defeat'].includes(event.type)){
+const category=destructionCategory(actorSoundDetails(event));
+if(destructionTypes.has(category))continue;
+destructionTypes.add(category);
+}else if(types.has(eventKey))continue;
+types.add(eventKey);
+types.add(event.type);
+cue(
+event.type,
+event.actor==='player'||
+event.owner==='player'||
+(!event.actor&& !event.sourceId),
+event,
+);
+}
+if(advanced&& !types.has('objective'))cue('objective');
+if(lastContacts!==null&&snapshot.contacts>lastContacts&& !types.has('impact'))
+cue('impact');
+}
+}else if(graph&&context.state!=='closed'){
+ramp(graph.motor.gain,0);
+ramp(graph.vehicleGain.gain,0);
+ramp(graph.wind.gain,0);
+ramp(graph.humGain.gain,0);
+}
+actorPositions=new Map(
+(snapshot.actors??[]).map((actor)=>{
+const previous=actorPositions.get(actor.id);
+return[
+actor.id,
+{
+...actor.position,
+moving:
+fresh&&previous&&actor.position
+?Math.hypot(actor.position.x-previous.x,actor.position.z-previous.z)>0
+:previous?.moving,
+},
+];
+}),
+);
+actorPhases=new Map(
+(snapshot.actors??[]).map((actor)=>[
+actor.id,
+actor.blocked
+?'blocked'
+:actor.warning
+?'warning'
+:(actor.pursuit?.phase??'idle'),
+]),
+);
+lastTick=tick;
+lastStep=step;
+lastContacts=snapshot.contacts??null;
+lastPlaying=playing;
+},
+dispose(){
+if(disposed)return;
+disposed=true;
+humanBuffers.clear();
+gameplayOutput.dispose();
+pause();
+releaseMaster();
+host.removeEventListener?.('storage',changed);
+if(!options.audioPreferences)preferences.dispose();
+if(!options.audioMaster)audioMaster.dispose();
+if(!graph)return;
+for(const node of[
+...graph.rotors.map((rotor)=>rotor.oscillator),
+graph.noise,
+graph.hum,
+graph.vehicleMotor,
+]){
+node.stop();
+node.disconnect();
+}
+for(const node of[
+graph.motor,
+graph.vehicleGain,
+graph.motorFilter,
+graph.windFilter,
+graph.wind,
+graph.humGain,
+...Object.values(graph.buses),
+...Object.values(graph.output).filter(Boolean),
+])
+node.disconnect();
+context.close().catch(()=>{});
+graph=null;
+},
+};
+}
+
+return{createWorldAudio:createWorldAudio};
+})();
+return modules['optional-practice/civilian-fpv/world-audio.mjs'].createWorldAudio;
 })();
 // END GENERATED ACADEMY SHARED AUDIO
 
@@ -5515,6 +6003,7 @@ export function mountSimGlobalTools({
           prefix: 'sim-global-tools',
           coreURL,
           onOpen,
+          createRadioNavigation: (options) => createFlightMenuNavigation({ ...options, locale }),
         });
         fallback.hidden = true;
         onControls(provider.controls);
@@ -5698,7 +6187,8 @@ const FLIGHT_HUD_STYLE = `
 [data-sim-hud='flight'][data-hud-component] [data-hud-part='brackets'] > i:nth-child(3) { bottom: 0; right: 0; transform: rotate(180deg); }
 [data-sim-hud='flight'][data-hud-component] [data-hud-part='brackets'] > i:nth-child(4) { bottom: 0; left: 0; transform: rotate(270deg); }
 [data-sim-hud='flight'][data-hud-component] [data-hud-part='cue-arrow'] { position: absolute; inset: 0; display: grid; place-items: center; font: 32px/1 system-ui, sans-serif; text-shadow: 0 1px 3px #000; }
-[data-sim-hud='flight'][data-hud-component] [data-hud-part='cue-label'] { position: absolute; top: 51px; left: 50%; transform: translateX(-50%); width: max-content; max-width: 120px; color: var(--hud-ink); font-size: 12px; text-align: center; text-shadow: 0 1px 3px #000, 0 0 4px #000; }
+[data-sim-hud='flight'][data-hud-component] [data-hud-part='cue-label'] { position: absolute; top: 51px; left: 50%; transform: translateX(-50%); width: max-content; max-width: 220px; padding: 4px 7px; border-radius: 4px; background: var(--hud-bg); color: var(--hud-ink); font: 600 18px/1.2 system-ui, sans-serif; text-align: center; text-shadow: 0 1px 3px #000, 0 0 4px #000; }
+[data-sim-hud='flight'][data-hud-component] [data-hud-part='cue-preview'] { position: absolute; transform: translate(-50%, -50%); padding: 3px 6px; color: var(--hud-muted); background: var(--hud-bg); border: 1px dashed currentColor; border-radius: 4px; font: 600 14px/1.2 system-ui, sans-serif; }
 [data-sim-hud='flight'][data-hud-component] [data-hud-part='announcement'] { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
 [data-sim-hud='details'][data-hud-component] { width: min(480px, calc(100vw - 24px)); max-height: calc(100dvh - 24px); margin: auto; padding: 20px; border: 1px solid #ffffff65; border-radius: 8px; background: #0a111b; overflow: auto; }
 [data-sim-hud='details'][data-hud-component]::backdrop { background: #0009; }
@@ -5777,6 +6267,11 @@ export function mountFlightHud({
   root.dataset.simHud = 'flight';
   root.dataset.hudComponent = 'true';
   root.hidden = true;
+  const navigation = make('div', null, container);
+  navigation.dataset.simHud = 'flight';
+  navigation.dataset.hudComponent = 'true';
+  navigation.dataset.hudNavigation = 'true';
+  navigation.hidden = true;
   const card = make('div', 'card', root),
     action = make('div', 'action', card),
     navigationLabel = make('div', 'navigation-label', card),
@@ -5792,10 +6287,11 @@ export function mountFlightHud({
     hide = make('button', 'hide', root, '×'),
     details = make('div', 'details', card),
     telemetry = make('div', 'telemetry', root),
-    cue = make('div', 'cue', root),
+    cue = make('div', 'cue', navigation),
     brackets = make('div', 'brackets', cue),
     cueArrow = make('span', 'cue-arrow', cue, '➜'),
     cueLabel = make('span', 'cue-label', cue),
+    previewCue = make('div', 'cue-preview', navigation),
     announcement = make('span', 'announcement', root);
   explain.type = hide.type = 'button';
   hide.addEventListener('click', (event) => {
@@ -5810,6 +6306,7 @@ export function mountFlightHud({
   direction.setAttribute('aria-hidden', 'true');
   cue.setAttribute('aria-hidden', 'true');
   cue.hidden = true;
+  previewCue.hidden = true;
   for (let i = 0; i < 4; i++) make('i', null, brackets);
   const gaugeTrack = doc.createElementNS('http://www.w3.org/2000/svg', 'svg');
   gaugeTrack.dataset.hudPart = 'gauge-track';
@@ -6002,7 +6499,7 @@ export function mountFlightHud({
     (onExplain ?? onMenu)?.(feedback);
   });
   const paintPreferences = () => {
-    for (const element of [root, dialog]) {
+    for (const element of [root, dialog, navigation]) {
       element.dataset.hudMode = preferences.mode;
       element.dataset.hudSize = preferences.textSize;
       element.dataset.hudContrast = preferences.highContrast ? 'high' : 'normal';
@@ -6021,6 +6518,7 @@ export function mountFlightHud({
       options.visible === false ||
       !feedback ||
       (options.active === false && !options.paused && !options.replay);
+    navigation.hidden = preferences.mode === 'off' || options.visible === false || !feedback;
     if (!feedback) return;
     telemetry.hidden = !options.telemetry;
     setText(telemetry, options.telemetry ?? '');
@@ -6048,7 +6546,10 @@ export function mountFlightHud({
       t('Explain the current objective', 'Пояснити поточну ціль'),
     );
     explain.title = t('Objective details', 'Умови завдання');
-    hide.title = t('Hide flight guidance · restore in Settings', 'Сховати підказки · відновити в налаштуваннях');
+    hide.title = t(
+      'Hide flight guidance · restore in Settings',
+      'Сховати підказки · відновити в налаштуваннях',
+    );
     setAttribute(hide, 'aria-label', hide.title);
     gauge.hidden = !g;
     explain.hidden = options.explain === false;
@@ -6169,7 +6670,10 @@ export function mountFlightHud({
         next.hidden === true ||
         !Number.isFinite(next.x) ||
         !Number.isFinite(next.y);
-      if (cue.hidden) return;
+      if (cue.hidden) {
+        previewCue.hidden = true;
+        return;
+      }
       const offscreen = Boolean(
           next.offscreen || next.behind || next.occluded || next.directionOnly,
         ),
@@ -6180,10 +6684,34 @@ export function mountFlightHud({
       cue.style.top = `${(dock ? 0.5 : y) * 100}%`;
       cue.dataset.targetId = String(next.targetId ?? next.worldTargetId ?? '');
       cue.dataset.occluded = String(Boolean(next.occluded));
+      cue.dataset.wrongSide = String(Boolean(next.wrongSide || next.approach));
+      navigation.style.setProperty(
+        '--hud-accent',
+        { amber: '#ffd378', cyan: '#9bf5ed', white: '#fff', lime: '#d9ff92' }[
+          next.guidanceAccent
+        ] ?? '#ffd378',
+      );
       brackets.hidden = offscreen;
       cueArrow.hidden = !offscreen;
       cueArrow.style.transform = `rotate(${Number.isFinite(next.angle) ? next.angle : 0}rad)`;
-      setText(cueLabel, copy(next.label));
+      const label =
+        next.wrongSide || next.approach
+          ? t('Return to entry side', 'Поверніться до входу')
+          : next.occluded
+            ? t('Obstructed · destination bearing', 'За перешкодою · напрямок цілі')
+            : copy(next.label);
+      const distance = Number.isFinite(next.distance) ? ` · ${format(next.distance, 0)} m` : '';
+      setText(cueLabel, `${label}${distance}`);
+      const upcoming = next.preview;
+      previewCue.hidden = !upcoming || upcoming.offscreen || upcoming.behind || upcoming.occluded;
+      if (!previewCue.hidden) {
+        previewCue.style.left = `${Math.max(0.05, Math.min(0.95, upcoming.x)) * 100}%`;
+        previewCue.style.top = `${Math.max(0.1, Math.min(0.72, upcoming.y)) * 100}%`;
+        setText(
+          previewCue,
+          `${t('Next', 'Далі')} ${upcoming.number ?? (Number.isInteger(upcoming.index) ? upcoming.index + 1 : Number.isInteger(upcoming.step) ? upcoming.step + 1 : '')}`.trim(),
+        );
+      }
     },
     preferenceControls(target) {
       if (!target?.ownerDocument || disposed) return { destroy() {} };
@@ -6285,7 +6813,94 @@ export function mountFlightHud({
       closeDetails();
       dialog.remove();
       root.remove();
+      navigation.remove();
       sheet.remove();
+    },
+  };
+}
+
+/** Instruments observe accepted aircraft state independently of objective visibility. */
+export function flightInstrumentReadings(state) {
+  const heading = Number.isFinite(state?.attitude?.yaw)
+    ? ((Math.round(state.attitude.yaw / 100) % 360) + 360) % 360
+    : null;
+  const horizontalSpeed = [state?.velocity?.x, state?.velocity?.z].every(Number.isFinite)
+    ? Math.hypot(state.velocity.x, state.velocity.z) / 1000
+    : null;
+  return {
+    heading,
+    horizontalSpeed,
+    mapHeight: Number.isFinite(state?.position?.y) ? state.position.y / 1000 : null,
+  };
+}
+
+export function mountFlightInstruments({ container, locale = () => 'en' }) {
+  const doc = container.ownerDocument;
+  const root = doc.createElement('div');
+  root.className = 'sim-flight-instruments';
+  root.hidden = true;
+  const compass = doc.createElement('div'),
+    readouts = doc.createElement('div'),
+    extra = doc.createElement('div'),
+    notice = doc.createElement('div');
+  compass.className = 'sim-flight-compass';
+  readouts.className = 'sim-flight-readouts';
+  extra.className = 'sim-flight-extra';
+  notice.className = 'sim-flight-notice';
+  notice.setAttribute('role', 'status');
+  root.append(compass, readouts, extra, notice);
+  container.append(root);
+  let disposed = false;
+  const text = (node, value) => {
+    if (node.textContent !== value) node.textContent = value;
+  };
+  const t = (en, uk) => (locale() === 'uk' ? uk : en);
+  return {
+    update(state, { visible = true, preferences = {}, routeUnavailable = '' } = {}) {
+      if (disposed) return;
+      root.hidden = !visible || !state;
+      if (root.hidden) return;
+      const { heading, horizontalSpeed, mapHeight } = flightInstrumentReadings(state);
+      const enabled = preferences.flightInstruments !== false;
+      compass.hidden = readouts.hidden = !enabled;
+      const bearing = heading === null ? '—' : String(heading).padStart(3, '0');
+      const cardinal =
+        heading === null
+          ? ''
+          : ['N', 'NE', 'E', 'SE', 'S', 'SW', 'W', 'NW'][Math.round(heading / 45) % 8];
+      text(compass, `‹  ${cardinal}  ${bearing}°  ›`);
+      text(
+        readouts,
+        `${t('Speed', 'Швидкість')} ${horizontalSpeed?.toFixed(1) ?? '—'} m/s  ·  ${t('Height · map', 'Висота · карта')} ${mapHeight?.toFixed(1) ?? '—'} m`,
+      );
+      const telemetry = state.advancedTelemetry;
+      const values = [];
+      for (const [key, unit] of [
+        ['voltage', 'V'],
+        ['current', 'A'],
+        ['usedAh', 'Ah'],
+      ])
+        if (Number.isFinite(telemetry?.[key])) values.push(`${telemetry[key].toFixed(2)} ${unit}`);
+      extra.hidden = !preferences.extraTelemetry || !values.length;
+      text(extra, values.join(' · '));
+      const pending = (state.actors ?? []).filter((actor) =>
+        Number.isInteger(actor.replacementTick),
+      );
+      const waiting = pending.some((actor) => actor.replacementTick <= state.ticks);
+      const message = pending.length
+        ? waiting
+          ? t('Replacement waiting for a clear area', 'Заміна очікує вільне місце')
+          : t('Replacing lesson target', 'Відновлення навчальної цілі')
+        : preferences.routeGuideVisible
+          ? routeUnavailable
+          : '';
+      notice.hidden = !message;
+      text(notice, message);
+      root.dataset.combat = String(Boolean(state.encounter));
+    },
+    destroy() {
+      disposed = true;
+      root.remove();
     },
   };
 }

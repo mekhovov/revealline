@@ -1,0 +1,403 @@
+{
+  "started": "2026-10-20T05:22:14.226Z",
+  "scope": "Outside performance timing. Import the complete 42,134-tick archive through Watch combat file, choose the visible supported 4x speed control, and verify the entire accepted chain.",
+  "errors": [],
+  "progress": [
+    {
+      "wallSeconds": 30.013,
+      "playback": {
+        "cursor": 4434,
+        "total": 42134,
+        "done": false,
+        "verified": false,
+        "playing": true,
+        "rate": 4,
+        "error": null,
+        "verification": null
+      },
+      "status": "active",
+      "ticks": 4434,
+      "encounterTicks": 4434,
+      "message": "Playing recorded combat · no rewards."
+    },
+    {
+      "wallSeconds": 60.043,
+      "playback": {
+        "cursor": 8565,
+        "total": 42134,
+        "done": false,
+        "verified": false,
+        "playing": true,
+        "rate": 4,
+        "error": null,
+        "verification": null
+      },
+      "status": "active",
+      "ticks": 8565,
+      "encounterTicks": 8565,
+      "message": "Playing recorded combat · no rewards."
+    },
+    {
+      "wallSeconds": 90.076,
+      "playback": {
+        "cursor": 12469,
+        "total": 42134,
+        "done": false,
+        "verified": false,
+        "playing": true,
+        "rate": 4,
+        "error": null,
+        "verification": null
+      },
+      "status": "active",
+      "ticks": 12469,
+      "encounterTicks": 12469,
+      "message": "Playing recorded combat · no rewards."
+    },
+    {
+      "wallSeconds": 120.1,
+      "playback": {
+        "cursor": 15674,
+        "total": 42134,
+        "done": false,
+        "verified": false,
+        "playing": true,
+        "rate": 4,
+        "error": null,
+        "verification": null
+      },
+      "status": "active",
+      "ticks": 15674,
+      "encounterTicks": 15674,
+      "message": "Playing recorded combat · no rewards."
+    },
+    {
+      "wallSeconds": 150.108,
+      "playback": {
+        "cursor": 18704,
+        "total": 42134,
+        "done": false,
+        "verified": false,
+        "playing": true,
+        "rate": 4,
+        "error": null,
+        "verification": null
+      },
+      "status": "active",
+      "ticks": 18704,
+      "encounterTicks": 18704,
+      "message": "Playing recorded combat · no rewards."
+    },
+    {
+      "wallSeconds": 180.133,
+      "playback": {
+        "cursor": 22216,
+        "total": 42134,
+        "done": false,
+        "verified": false,
+        "playing": true,
+        "rate": 4,
+        "error": null,
+        "verification": null
+      },
+      "status": "active",
+      "ticks": 22216,
+      "encounterTicks": 22216,
+      "message": "Playing recorded combat · no rewards."
+    },
+    {
+      "wallSeconds": 210.17,
+      "playback": {
+        "cursor": 26026,
+        "total": 42134,
+        "done": false,
+        "verified": false,
+        "playing": true,
+        "rate": 4,
+        "error": null,
+        "verification": null
+      },
+      "status": "active",
+      "ticks": 26026,
+      "encounterTicks": 26026,
+      "message": "Playing recorded combat · no rewards."
+    },
+    {
+      "wallSeconds": 240.211,
+      "playback": {
+        "cursor": 29376,
+        "total": 42134,
+        "done": false,
+        "verified": false,
+        "playing": true,
+        "rate": 4,
+        "error": null,
+        "verification": null
+      },
+      "status": "active",
+      "ticks": 29376,
+      "encounterTicks": 29376,
+      "message": "Playing recorded combat · no rewards."
+    },
+    {
+      "wallSeconds": 270.212,
+      "playback": {
+        "cursor": 32646,
+        "total": 42134,
+        "done": false,
+        "verified": false,
+        "playing": true,
+        "rate": 4,
+        "error": null,
+        "verification": null
+      },
+      "status": "active",
+      "ticks": 32646,
+      "encounterTicks": 32646,
+      "message": "Playing recorded combat · no rewards."
+    },
+    {
+      "wallSeconds": 300.231,
+      "playback": {
+        "cursor": 36184,
+        "total": 42134,
+        "done": false,
+        "verified": false,
+        "playing": true,
+        "rate": 4,
+        "error": null,
+        "verification": null
+      },
+      "status": "active",
+      "ticks": 36184,
+      "encounterTicks": 36184,
+      "message": "Playing recorded combat · no rewards."
+    },
+    {
+      "wallSeconds": 330.279,
+      "playback": {
+        "cursor": 39537,
+        "total": 42134,
+        "done": false,
+        "verified": false,
+        "playing": true,
+        "rate": 4,
+        "error": null,
+        "verification": null
+      },
+      "status": "active",
+      "ticks": 39537,
+      "encounterTicks": 39537,
+      "message": "Playing recorded combat · no rewards."
+    },
+    {
+      "wallSeconds": 360.29,
+      "playback": {
+        "cursor": 42134,
+        "total": 42134,
+        "done": true,
+        "verified": true,
+        "playing": false,
+        "rate": 4,
+        "error": null,
+        "verification": {
+          "format": "FPVCombatReplayVerification.v2",
+          "verified": true,
+          "practiceOnly": true,
+          "physicalBoundary": "accepted-dynamics-v1",
+          "identity": {
+            "format": "FPVEncounterSession.v2",
+            "base": {
+              "model": "civilian-world-fixed.v2",
+              "backend": "rapier3d-compat-0.21.0:02dc6a4e2fffc013bab08fbb44fa68f501d8303615e9afe4c7d89ad4eedda0d0",
+              "course": "stadium-01",
+              "courseIdentity": "ba603cfd277fc808",
+              "worldIdentity": "9aab8697da0e74b0",
+              "mode": "self-level",
+              "responseIdentity": "73833493634ba989",
+              "rulesIdentity": "189ebd24739c7f4a",
+              "conditionsIdentity": "030d08b3879ad283"
+            },
+            "encounter": "ec3fff2d9bf72219"
+          },
+          "definitionIdentity": "ec3fff2d9bf72219",
+          "acceptedTicks": 42134,
+          "sessionTicks": 42134,
+          "retainedFrom": 0,
+          "retainedTo": 42134,
+          "result": null
+        }
+      },
+      "status": "paused",
+      "ticks": 42134,
+      "encounterTicks": 42134,
+      "message": "Combat playback verified · no rewards."
+    }
+  ],
+  "archiveSha256": "3d796ee62f5015097b0491c09ca2096fc9f2c86fbf470c9863ea5cddb89d6e74",
+  "sources": {
+    "world-app.mjs": "aa35bb4c1dc6fb35aa3128c70ce0b4d52e9f6dae5b1dc36f8df93856f806b794",
+    "style.css": "7dad1405769dd54501623495fb7b6174b780e32709d5b94f7dfc959cc503da93",
+    "world-reaction-runtime.mjs": "b8d87796987de4953a3a62ef3094c069046e94628a7465d26161428c205da703"
+  },
+  "harnessSha256": "0889c1f5e7d90752960a8ff261ea2b766f7ab0a11e54f00283231d25dce9e050",
+  "controls": {
+    "resultPanelHidden": true,
+    "styleSheets": [
+      {
+        "href": null,
+        "count": 1
+      },
+      {
+        "href": "http://127.0.0.1:8768/game/access-gate.css",
+        "count": 1
+      },
+      {
+        "href": "http://127.0.0.1:8768/optional-practice/civilian-fpv/world-style.css",
+        "count": 32
+      },
+      {
+        "href": "http://127.0.0.1:8768/optional-practice/civilian-fpv/tuning.css",
+        "count": 140
+      },
+      {
+        "href": null,
+        "count": 41
+      },
+      {
+        "href": null,
+        "count": 197
+      },
+      {
+        "href": null,
+        "count": 50
+      }
+    ],
+    "ancestors": [
+      {
+        "tag": "SELECT",
+        "id": "world-replay-rate",
+        "class": "",
+        "hidden": false,
+        "display": "block",
+        "visibility": "visible"
+      },
+      {
+        "tag": "LABEL",
+        "id": "",
+        "class": "",
+        "hidden": false,
+        "display": "flex",
+        "visibility": "visible"
+      },
+      {
+        "tag": "DIV",
+        "id": "world-replay-controls",
+        "class": "replay-controls",
+        "hidden": false,
+        "display": "flex",
+        "visibility": "visible"
+      },
+      {
+        "tag": "DIALOG",
+        "id": "flight-dialog",
+        "class": "flight-dialog combat-playback",
+        "hidden": false,
+        "display": "flex",
+        "visibility": "visible"
+      },
+      {
+        "tag": "BODY",
+        "id": "",
+        "class": "field-kit sim-worlds mode-play-page",
+        "hidden": false,
+        "display": "block",
+        "visibility": "visible"
+      },
+      {
+        "tag": "HTML",
+        "id": "",
+        "class": "",
+        "hidden": false,
+        "display": "block",
+        "visibility": "visible"
+      }
+    ],
+    "rules": [
+      "* { box-sizing: border-box; }",
+      ".replay-controls { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; padding: 10px 16px; background: rgb(39, 60, 50); border-bottom: 1px solid rgb(82, 103, 76); font-size: 12px; }",
+      "[data-theme-styled=\"true\"] :where(fieldset, details, .drop, .drop-zone, .setting-row, .settings-row, .settings-preset, .device-card, .controller-card, .controller-mapping, .range-field, .settings-metric, .settings-note, .settings-warning, .mission-brief, .enemy-guide, .soundtrack-choice, .soundtrack-advanced, .soundtrack-online-results, .school-flight-map, .replay-controls, .radio-device-card, .radio-monitor, .coach-tip, .checkpoint, .encounter-cue, .demo-board, .demo-settings, .seat, .control-card, .batch-card-media, .creator-media-poster, .creator-poster-option, #mission-brief-reading, [data-ui-surface=\"inset\"]) { color: var(--iw-text); background: var(--ui-inset-finish, none), var(--iw-ink); border-color: var(--iw-line); border-image: none; border-radius: 0px; box-shadow: var(--ui-inset-depth, none); }",
+      "[data-theme-styled=\"true\"] :where(*) { scrollbar-color: var(--iw-control-line) var(--iw-ink); }"
+    ],
+    "visible": true,
+    "display": "block",
+    "rect": {
+      "x": 1114.2734375,
+      "y": 1011,
+      "width": 67,
+      "height": 44,
+      "top": 1011,
+      "right": 1181.2734375,
+      "bottom": 1055,
+      "left": 1114.2734375
+    },
+    "options": [
+      {
+        "value": "0.25",
+        "disabled": false,
+        "hidden": false
+      },
+      {
+        "value": "0.5",
+        "disabled": false,
+        "hidden": false
+      },
+      {
+        "value": "1",
+        "disabled": false,
+        "hidden": false
+      },
+      {
+        "value": "2",
+        "disabled": false,
+        "hidden": false
+      },
+      {
+        "value": "4",
+        "disabled": false,
+        "hidden": false
+      }
+    ],
+    "combatClass": true
+  },
+  "verified": true,
+  "verification": {
+    "format": "FPVCombatReplayVerification.v2",
+    "verified": true,
+    "practiceOnly": true,
+    "physicalBoundary": "accepted-dynamics-v1",
+    "identity": {
+      "format": "FPVEncounterSession.v2",
+      "base": {
+        "model": "civilian-world-fixed.v2",
+        "backend": "rapier3d-compat-0.21.0:02dc6a4e2fffc013bab08fbb44fa68f501d8303615e9afe4c7d89ad4eedda0d0",
+        "course": "stadium-01",
+        "courseIdentity": "ba603cfd277fc808",
+        "worldIdentity": "9aab8697da0e74b0",
+        "mode": "self-level",
+        "responseIdentity": "73833493634ba989",
+        "rulesIdentity": "189ebd24739c7f4a",
+        "conditionsIdentity": "030d08b3879ad283"
+      },
+      "encounter": "ec3fff2d9bf72219"
+    },
+    "definitionIdentity": "ec3fff2d9bf72219",
+    "acceptedTicks": 42134,
+    "sessionTicks": 42134,
+    "retainedFrom": 0,
+    "retainedTo": 42134,
+    "result": null
+  },
+  "playbackWallSeconds": 360.291,
+  "finished": "2026-10-20T05:28:19.586Z"
+}

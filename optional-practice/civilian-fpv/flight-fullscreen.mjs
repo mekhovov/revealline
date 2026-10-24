@@ -271,6 +271,223 @@ export function createSimModeLinks({
 }
 
 /** Cosmetic camera access shared by both SIM hosts. Never changes flight ownership. */
+export function mountFlightHudControls({
+  document: doc,
+  window: win,
+  shell,
+  viewport,
+  locale = () => 'en',
+  available = () => true,
+}) {
+  const storageKey = 'revealline.fpv.hud-layout.v1';
+  const defaults = {
+    layout: 'auto',
+    activity: true,
+    vitals: true,
+    lesson: true,
+    actions: true,
+    compass: true,
+    readouts: true,
+    sticks: 'auto',
+    drone: 'auto',
+  };
+  const normalize = (value) =>
+    Object.fromEntries(
+      Object.entries(defaults).map(([key, fallback]) => [
+        key,
+        typeof fallback === 'boolean'
+          ? typeof value?.[key] === 'boolean'
+            ? value[key]
+            : fallback
+          : (key === 'layout' ? ['auto', 'compact', 'detailed'] : ['auto', 'on', 'off']).includes(
+                value?.[key],
+              )
+            ? value[key]
+            : fallback,
+      ]),
+    );
+  let preferences;
+  try {
+    const saved = JSON.parse(win.localStorage?.getItem(storageKey) ?? 'null');
+    preferences = normalize(saved);
+    const camera = JSON.parse(
+      win.localStorage?.getItem('revealline.fpv.camera-immersion.v1') ?? 'null',
+    );
+    if (camera?.flightInstruments === false)
+      for (const key of ['compass', 'readouts'])
+        if (typeof saved?.[key] !== 'boolean') preferences[key] = false;
+  } catch {
+    preferences = { ...defaults };
+  }
+  const root = doc.createElement('details'),
+    title = doc.createElement('summary'),
+    fields = {},
+    quick = doc.createElement('button'),
+    help = doc.createElement('p');
+  root.className = 'sim-hud-settings';
+  root.dataset.hudSettings = '';
+  root.append(title);
+  quick.type = 'button';
+  quick.className = 'sim-camera-quick sim-hud-quick';
+  quick.dataset.modeAction = 'hud';
+  shell.elements.buttons.pause.before(quick);
+  const definitions = [
+    ['layout', 'HUD layout', 'Вигляд HUD'],
+    ['activity', 'Activity & score', 'Режим і рахунок'],
+    ['vitals', 'Health & ammunition', 'Здоров’я та набої'],
+    ['lesson', 'Lesson instruction card', 'Картка інструкцій уроку'],
+    ['actions', 'On-screen weapon actions', 'Екранні дії зброї'],
+    ['compass', 'Compass', 'Компас'],
+    ['readouts', 'Speed & height', 'Швидкість і висота'],
+    ['sticks', 'Stick movement display', 'Відображення руху стіків'],
+    ['drone', 'Drone response diagram', 'Схема реакції дрона'],
+  ].filter(
+    ([key]) =>
+      !['activity', 'vitals', 'actions'].includes(key) ||
+      viewport.querySelector('[data-combat-overlay]'),
+  );
+  function apply() {
+    const bounds = viewport.getBoundingClientRect?.(),
+      width = bounds?.width || win.innerWidth || 1440,
+      height = bounds?.height || win.innerHeight || 900;
+    const compact =
+      preferences.layout === 'compact' ||
+      (preferences.layout === 'auto' && (width <= 900 || height <= 600));
+    const density = compact ? 'compact' : 'detailed';
+    if (viewport.dataset.hudDensity !== density) {
+      const drawer = viewport.querySelector('[data-combat-weapon-actions]');
+      if (drawer) drawer.open = !compact;
+      viewport.dataset.hudDensity = density;
+    }
+    for (const [key, value] of Object.entries(preferences)) {
+      if (key === 'layout') continue;
+      const enabled = value === 'auto' ? !compact : value !== false && value !== 'off';
+      viewport.setAttribute(`data-hud-widget-${key}`, String(enabled));
+      if (key === 'drone' || key === 'sticks')
+        viewport.setAttribute(`data-hud-setting-${key}`, value);
+    }
+  }
+  const change = (key) => {
+    preferences[key] =
+      fields[key].control.type === 'checkbox'
+        ? fields[key].control.checked
+        : fields[key].control.value;
+    preferences = normalize(preferences);
+    try {
+      win.localStorage?.setItem(storageKey, JSON.stringify(preferences));
+    } catch {
+      /* Session settings remain usable. */
+    }
+    apply();
+  };
+  for (const [key] of definitions) {
+    const canonical = ['activity', 'vitals'].includes(key)
+      ? doc.querySelector(`[data-combat-feedback="${key === 'activity' ? 'hud' : key}"]`)
+      : null;
+    const label = doc.createElement('label'),
+      caption = doc.createElement('span'),
+      control = doc.createElement(typeof defaults[key] === 'boolean' ? 'input' : 'select');
+    if (canonical) preferences[key] = canonical.checked;
+    control.dataset.hudWidget = key;
+    if (typeof defaults[key] === 'boolean') control.type = 'checkbox';
+    else
+      for (const value of key === 'layout'
+        ? ['auto', 'compact', 'detailed']
+        : ['auto', 'on', 'off']) {
+        const option = doc.createElement('option');
+        option.value = value;
+        control.append(option);
+      }
+    const listener = () => {
+      change(key);
+      if (canonical) {
+        canonical.checked = control.checked;
+        canonical.dispatchEvent(new win.Event('input', { bubbles: true }));
+      }
+    };
+    control.addEventListener('change', listener);
+    label.append(caption, control);
+    root.append(label);
+    const synchronize = () => {
+      preferences[key] = canonical.checked;
+      control.checked = canonical.checked;
+      try {
+        win.localStorage?.setItem(storageKey, JSON.stringify(preferences));
+      } catch {
+        /* Session only. */
+      }
+      apply();
+    };
+    canonical?.addEventListener('input', synchronize);
+    fields[key] = { caption, control, listener, canonical, synchronize };
+  }
+  root.append(help);
+  const open = () => {
+    shell.open('pause');
+    root.open = true;
+    root.scrollIntoView?.({ block: 'nearest' });
+    title.focus?.({ preventScroll: true });
+  };
+  quick.addEventListener('click', open);
+  const resize = () => apply();
+  win.addEventListener('resize', resize);
+  const observer = win.ResizeObserver ? new win.ResizeObserver(resize) : null;
+  observer?.observe(viewport);
+  let renderedLocale;
+  function refresh() {
+    quick.hidden = !available() || Boolean(shell.topDialog());
+    const uk = locale() === 'uk';
+    if (renderedLocale === uk) return;
+    renderedLocale = uk;
+    title.textContent = uk ? 'HUD та віджети' : 'HUD & widgets';
+    quick.textContent = 'HUD';
+    quick.setAttribute('aria-label', title.textContent);
+    quick.hidden = !available() || Boolean(shell.topDialog());
+    help.textContent = uk
+      ? 'Авто звільняє огляд на малих екранах. Сенсорні стіки керування та Пауза залишаються доступними. Інші прилади й позначки налаштовуються нижче.'
+      : 'Auto frees the view on small screens. Active touch sticks and Pause stay available. Instruments and objective markers have separate switches below.';
+    for (const [key, en, ua] of definitions) {
+      const { caption, control } = fields[key];
+      caption.textContent = uk ? ua : en;
+      if (control.type === 'checkbox') control.checked = preferences[key];
+      else {
+        for (const option of control.options)
+          option.textContent = {
+            auto: uk ? 'Авто' : 'Auto',
+            compact: uk ? 'Компактний' : 'Compact',
+            detailed: uk ? 'Докладний' : 'Detailed',
+            on: uk ? 'Увімкнено' : 'On',
+            off: uk ? 'Вимкнено' : 'Off',
+          }[option.value];
+        control.value = preferences[key];
+      }
+    }
+  }
+  apply();
+  refresh();
+  return {
+    root,
+    refresh,
+    preferences: () => ({ ...preferences }),
+    dispose() {
+      observer?.disconnect();
+      win.removeEventListener('resize', resize);
+      quick.removeEventListener('click', open);
+      for (const { control, listener, canonical, synchronize } of Object.values(fields)) {
+        control.removeEventListener('change', listener);
+        canonical?.removeEventListener('input', synchronize);
+      }
+      root.remove();
+      quick.remove();
+      delete viewport.dataset.hudDensity;
+      for (const key of Object.keys(defaults))
+        if (key !== 'layout') viewport.removeAttribute(`data-hud-widget-${key}`);
+      viewport.removeAttribute('data-hud-setting-drone');
+      viewport.removeAttribute('data-hud-setting-sticks');
+    },
+  };
+}
+
 export function mountFlightCameraControls({
   document: doc,
   window: win,
@@ -294,6 +511,15 @@ export function mountFlightCameraControls({
   group.className = 'sim-camera-choices';
   const legend = doc.createElement('legend');
   group.append(legend);
+  const hud = mountFlightHudControls({
+    document: doc,
+    window: win,
+    shell,
+    viewport,
+    locale,
+    available,
+  });
+  group.append(hud.root);
   const choices = modes.map((mode) => {
     const button = doc.createElement('button');
     button.type = 'button';
@@ -304,6 +530,127 @@ export function mountFlightCameraControls({
   });
   const hint = doc.createElement('small');
   group.append(hint);
+  const cameraKey = 'revealline.fpv.camera-immersion.v1';
+  let immersion = {
+    chaseDistance: 1.6,
+    showFpvProps: false,
+    showFpvKnife: true,
+    analogVideo: false,
+    analogStrength: 35,
+    guidanceVisible: true,
+    guidanceAccent: 'amber',
+    routeGuideVisible: false,
+    flightInstruments: true,
+    extraTelemetry: false,
+  };
+  try {
+    const saved = JSON.parse(win.localStorage?.getItem(cameraKey) ?? 'null');
+    if (Number.isFinite(saved?.chaseDistance))
+      immersion.chaseDistance = Math.max(0.75, Math.min(6, saved.chaseDistance));
+    if (typeof saved?.showFpvProps === 'boolean') immersion.showFpvProps = saved.showFpvProps;
+    if (typeof saved?.analogVideo === 'boolean') immersion.analogVideo = saved.analogVideo;
+    for (const key of [
+      'showFpvKnife',
+      'guidanceVisible',
+      'routeGuideVisible',
+      'flightInstruments',
+      'extraTelemetry',
+    ])
+      if (typeof saved?.[key] === 'boolean') immersion[key] = saved[key];
+    if (['amber', 'cyan', 'white', 'lime'].includes(saved?.guidanceAccent))
+      immersion.guidanceAccent = saved.guidanceAccent;
+    if (Number.isFinite(saved?.analogStrength))
+      immersion.analogStrength = Math.max(0, Math.min(100, saved.analogStrength));
+  } catch {
+    /* Camera choices remain available without storage. */
+  }
+  const distanceLabel = doc.createElement('label'),
+    distanceCaption = doc.createElement('span'),
+    distance = doc.createElement('input'),
+    propsLabel = doc.createElement('label'),
+    propsCaption = doc.createElement('span'),
+    props = doc.createElement('input'),
+    analogLabel = doc.createElement('label'),
+    analogCaption = doc.createElement('span'),
+    analog = doc.createElement('input'),
+    noiseLabel = doc.createElement('label'),
+    noiseCaption = doc.createElement('span'),
+    noise = doc.createElement('input'),
+    analogHint = doc.createElement('small');
+  distance.type = 'range';
+  distance.min = '0.75';
+  distance.max = '6';
+  distance.step = '0.05';
+  distance.value = String(immersion.chaseDistance);
+  distance.dataset.chaseDistance = '';
+  props.type = 'checkbox';
+  props.checked = immersion.showFpvProps;
+  props.dataset.fpvProps = '';
+  distanceLabel.append(distanceCaption, distance);
+  propsLabel.append(props, propsCaption);
+  analog.type = 'checkbox';
+  analog.checked = immersion.analogVideo;
+  analog.dataset.analogVideo = '';
+  noise.type = 'range';
+  noise.min = '0';
+  noise.max = '100';
+  noise.step = '5';
+  noise.value = String(immersion.analogStrength);
+  noise.dataset.analogStrength = '';
+  analogLabel.append(analog, analogCaption);
+  noiseLabel.append(noiseCaption, noise);
+  group.append(distanceLabel, propsLabel, analogLabel, noiseLabel, analogHint);
+  const presentationFields = [
+    ['showFpvKnife', 'Mounted knife · cosmetic', 'Ніж на корпусі · декоративний'],
+    ['guidanceVisible', 'Objective markers', 'Позначки завдань'],
+    ['routeGuideVisible', 'Validated route guide', 'Перевірений маршрут'],
+    ['extraTelemetry', 'Extra aircraft telemetry', 'Додаткова телеметрія'],
+  ].map(([key, en, uk]) => {
+    const label = doc.createElement('label'),
+      control = doc.createElement('input'),
+      caption = doc.createElement('span');
+    control.type = 'checkbox';
+    control.checked = immersion[key];
+    control.dataset.cameraPreference = key;
+    label.append(control, caption);
+    group.append(label);
+    return { key, en, uk, control, caption };
+  });
+  const accentLabel = doc.createElement('label'),
+    accentCaption = doc.createElement('span'),
+    accent = doc.createElement('select');
+  accent.dataset.cameraPreference = 'guidanceAccent';
+  for (const value of ['amber', 'cyan', 'white', 'lime']) {
+    const option = doc.createElement('option');
+    option.value = value;
+    accent.append(option);
+  }
+  accent.value = immersion.guidanceAccent;
+  accentLabel.append(accentCaption, accent);
+  group.append(accentLabel);
+  const saveImmersion = () => {
+    immersion = {
+      chaseDistance: Number(distance.value),
+      showFpvProps: props.checked,
+      analogVideo: analog.checked,
+      analogStrength: Number(noise.value),
+      ...Object.fromEntries(presentationFields.map(({ key, control }) => [key, control.checked])),
+      guidanceAccent: accent.value,
+    };
+    try {
+      win.localStorage?.setItem(cameraKey, JSON.stringify(immersion));
+    } catch {
+      /* Session only. */
+    }
+    previous = '';
+    refresh();
+  };
+  distance.addEventListener('input', saveImmersion);
+  props.addEventListener('change', saveImmersion);
+  analog.addEventListener('change', saveImmersion);
+  noise.addEventListener('input', saveImmersion);
+  for (const { control } of presentationFields) control.addEventListener('change', saveImmersion);
+  accent.addEventListener('change', saveImmersion);
   shell.elements.content.pause.prepend(group);
   let previous = '',
     disposed = false;
@@ -313,26 +660,46 @@ export function mountFlightCameraControls({
     select.dispatchEvent(new win.Event('change', { bubbles: true }));
     refresh();
   }
-  function cycle() {
-    if (!canShortcut() || !available() || disposed) return;
+  function cycle({ menu = false } = {}) {
+    if ((!menu && !canShortcut()) || !available() || disposed) return;
     change(modes[(modes.indexOf(select.value) + 1) % modes.length]);
-    viewport.focus({ preventScroll: true });
+    if (!menu) viewport.focus({ preventScroll: true });
   }
   function refresh() {
     if (disposed) return;
+    hud.refresh();
     const uk = locale() === 'uk',
       enabled = available();
-    const key = `${uk}:${select.value}:${enabled}:${Boolean(shell.topDialog())}`;
+    const key = `${uk}:${select.value}:${enabled}:${Boolean(shell.topDialog())}:${viewport.dataset.hudDensity}`;
     if (previous === key) return;
     previous = key;
     const names = labels(),
       name = names[modes.indexOf(select.value)] ?? names[0];
-    quick.textContent = `${uk ? 'Вид' : 'View'}: ${name}`;
+    quick.textContent =
+      viewport.dataset.hudDensity === 'compact' ? name : `${uk ? 'Вид' : 'View'}: ${name}`;
     quick.title = uk ? 'Змінити камеру · V / R3' : 'Change camera · V / R3';
     quick.setAttribute('aria-label', `${quick.title} · ${name}`);
     quick.hidden = !enabled || Boolean(shell.topDialog());
     group.hidden = !enabled;
     legend.textContent = uk ? 'Камера' : 'Camera view';
+    distanceCaption.textContent = `${uk ? 'Відстань камери' : 'Chase distance'} · ${immersion.chaseDistance.toFixed(2)} m`;
+    propsCaption.textContent = uk ? 'Показувати пропелери у FPV' : 'Show drone props in FPV';
+    analogCaption.textContent = uk ? 'Аналогове відео FPV' : 'Analog FPV video';
+    noiseCaption.textContent = `${uk ? 'Сила відеоперешкод' : 'Video interference'} · ${immersion.analogStrength}%`;
+    noise.disabled = !immersion.analogVideo;
+    for (const field of presentationFields) {
+      field.caption.textContent = uk ? field.uk : field.en;
+      field.control.disabled = field.key === 'showFpvKnife' && !immersion.showFpvProps;
+    }
+    accentCaption.textContent = uk ? 'Колір позначок' : 'Marker accent';
+    [...accent.options].forEach((option, index) => {
+      option.textContent = (
+        uk ? ['Бурштин', 'Блакитний', 'Білий', 'Лайм'] : ['Amber', 'Cyan', 'White', 'Lime']
+      )[index];
+    });
+    analogHint.textContent = uk
+      ? 'Зерно, рядки та перетікання кольорів лише у FPV. Індикатори залишаються чіткими. Зменшення руху зупиняє анімацію шуму.'
+      : 'Grain, scan lines and colour bleed in FPV only. Your HUD stays clear. Reduced motion keeps the noise still.';
     hint.textContent = uk
       ? 'V · R3 — натисніть правий стік. Пульт: оберіть вид у цьому меню.'
       : 'V · R3: click the right stick. Radio: choose a view in this menu.';
@@ -369,12 +736,21 @@ export function mountFlightCameraControls({
   return {
     cycle,
     refresh,
+    presentationOptions: () => ({ ...immersion, flightInstruments: true }),
     element: group,
     dispose() {
       disposed = true;
+      hud.dispose();
       win.removeEventListener('keydown', keydown);
       select.removeEventListener('change', refresh);
       quick.removeEventListener('click', cycle);
+      distance.removeEventListener('input', saveImmersion);
+      props.removeEventListener('change', saveImmersion);
+      analog.removeEventListener('change', saveImmersion);
+      noise.removeEventListener('input', saveImmersion);
+      for (const { control } of presentationFields)
+        control.removeEventListener('change', saveImmersion);
+      accent.removeEventListener('change', saveImmersion);
       quick.remove();
       group.remove();
     },
@@ -642,8 +1018,7 @@ export function mountFlightComfort({
   function cameraChanged() {
     if (updatingCamera) return;
     // Manual values remain authoritative; presets never silently re-apply.
-    if (canPersistCamera())
-      save(cameraKey, { fov: Number(fov.value), tilt: Number(tilt.value) });
+    if (canPersistCamera()) save(cameraKey, { fov: Number(fov.value), tilt: Number(tilt.value) });
     refresh();
   }
   listen(fov, 'input', cameraChanged);
@@ -838,7 +1213,8 @@ export function mountFlightPractice({
     return { action, button, click };
   });
   const changeRate = () => {
-    if (visible() && read()?.replay && rates.includes(Number(speed.value)))
+    const state = read();
+    if (visible() && state?.replay && (state.rates ?? rates).includes(Number(speed.value)))
       setRate?.(Number(speed.value));
   };
   speed.addEventListener('change', changeRate);
@@ -863,34 +1239,45 @@ export function mountFlightPractice({
       state.checkpoint,
       state.regional,
       state.rate,
+      state.rates,
     ]);
     if (key !== last) {
       last = key;
+      for (const option of speed.querySelectorAll('option')) {
+        option.disabled = !(state.rates ?? rates).includes(Number(option.value));
+        option.hidden = option.disabled;
+      }
       title.textContent = state.regional
-        ? uk ? 'Вільний політ у регіоні' : 'Regional free flight'
-        : uk ? 'Дивіться → спробуйте → повторіть' : 'Watch → Try → Repeat';
+        ? uk
+          ? 'Вільний політ у регіоні'
+          : 'Regional free flight'
+        : uk
+          ? 'Дивіться → спробуйте → повторіть'
+          : 'Watch → Try → Repeat';
       description.textContent = state.title;
       note.textContent = state.regional
-        ? uk ? 'Повторіть завантаження недоступної ділянки або поверніться на старт. Політ залишиться на паузі до ввімкнення керування.' : 'Retry an unavailable area or return to launch. Flight stays paused until you arm.'
-        : state.replay
         ? uk
-          ? 'Записані стіки показують приклад. Спроба почнеться з вимкненими двигунами; увімкніть їх, коли будете готові.'
-          : 'Recorded sticks show the example. Trying starts disarmed; Arm when you are ready.'
-        : state.section
+          ? 'Повторіть завантаження недоступної ділянки або поверніться на старт. Політ залишиться на паузі до ввімкнення керування.'
+          : 'Retry an unavailable area or return to launch. Flight stays paused until you arm.'
+        : state.replay
           ? uk
-            ? 'Тренування ділянки відновлює записаний вхід і не змінює результати. Нова спроба потребує ввімкнення двигунів.'
-            : 'Section practice restores its recorded entry without changing records. A new attempt waits for Arm.'
-          : state.fullPractice
+            ? 'Записані стіки показують приклад. Спроба почнеться з вимкненими двигунами; увімкніть їх, коли будете готові.'
+            : 'Recorded sticks show the example. Trying starts disarmed; Arm when you are ready.'
+          : state.section
             ? uk
-              ? 'Тренування всього маршруту починається зі старту без заліку й збереження запису. Увімкніть двигуни, коли будете готові.'
-              : 'Full-route practice starts at launch without score or saved recordings. Arm when you are ready.'
-            : state.watch
+              ? 'Тренування ділянки відновлює записаний вхід і не змінює результати. Нова спроба потребує ввімкнення двигунів.'
+              : 'Section practice restores its recorded entry without changing records. A new attempt waits for Arm.'
+            : state.fullPractice
               ? uk
-                ? 'Перегляньте приклад, потім спробуйте весь маршрут. Нова спроба потребує ввімкнення двигунів.'
-                : 'Watch the example, then try the full route. A new attempt waits for Arm.'
-              : uk
-                ? 'Повторна спроба повертає на старт. Увімкніть двигуни, коли будете готові.'
-                : 'Retry returns to launch. Arm when you are ready.';
+                ? 'Тренування всього маршруту починається зі старту без заліку й збереження запису. Увімкніть двигуни, коли будете готові.'
+                : 'Full-route practice starts at launch without score or saved recordings. Arm when you are ready.'
+              : state.watch
+                ? uk
+                  ? 'Перегляньте приклад, потім спробуйте весь маршрут. Нова спроба потребує ввімкнення двигунів.'
+                  : 'Watch the example, then try the full route. A new attempt waits for Arm.'
+                : uk
+                  ? 'Повторна спроба повертає на старт. Увімкніть двигуни, коли будете готові.'
+                  : 'Retry returns to launch. Arm when you are ready.';
       const labels = {
         retry: uk ? 'Ще раз' : 'Retry',
         watch: uk ? 'Переглянути приклад' : 'Watch example',

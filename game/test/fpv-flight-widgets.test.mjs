@@ -46,6 +46,32 @@ for (const lang of ['en', 'uk']) {
   });
 }
 
+test('World renderer objective indices identify the next preview and keep occluded goals hidden', () => {
+  const doc = new Document();
+  doc.createElementNS = (_ns, tag) => doc.createElement(tag);
+  const container = doc.createElement('div');
+  doc.body.append(container);
+  const hud = mountFlightHud({ container });
+  hud.update({ id: 'height', action: 'Climb gently' }, { visible: true, active: true });
+  const preview = container.querySelector('[data-hud-part="cue-preview"]');
+  const cue = {
+    visible: true,
+    index: 0,
+    x: 0.5,
+    y: 0.3,
+    label: 'Climb gently',
+    distance: 2,
+    preview: { visible: true, index: 1, x: 0.6, y: 0.4 },
+  };
+  hud.setWorldCue(cue);
+  assert.equal(Boolean(preview.hidden), false);
+  assert.equal(preview.textContent, 'Next 2');
+  hud.setWorldCue({ ...cue, preview: { ...cue.preview, occluded: true } });
+  assert.equal(preview.hidden, true);
+  assert.match(container.querySelector('[data-hud-part="cue-label"]').textContent, /2 m/);
+  hud.destroy();
+});
+
 test('Shared stick trails retain movement direction and reset for unavailable inputs', () => {
   const doc = new Document();
   doc.createElementNS = (_ns, tag) => doc.createElement(tag);

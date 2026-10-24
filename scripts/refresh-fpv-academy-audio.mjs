@@ -6,6 +6,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { parse } from 'acorn';
 import { format, resolveConfig } from 'prettier';
+import { projectEditionModuleIndentation } from './edition-code-indentation.mjs';
 import { OPTIONAL_PACKAGE_POLICIES } from '../publishing/optional-package-policy.mjs';
 
 const root = fileURLToPath(new URL('../', import.meta.url));
@@ -192,11 +193,14 @@ const projected = [
   '})();',
   end,
 ].join('\n');
-const generated = await format(projected, {
+const formatted = await format(projected, {
   ...(await resolveConfig(path.join(root, target))),
   filepath: path.join(root, target),
   parser: 'babel',
 });
+// This generated copy repeats private module scopes. Preserve every token,
+// comment, literal and line ending while avoiding duplicated indentation bytes.
+const generated = projectEditionModuleIndentation(target, Buffer.from(formatted)).toString('utf8');
 // Read only after generation so concurrent manual edits outside our markers are
 // preserved. A broken/duplicate marker pair must never overwrite native code.
 const current = await readFile(path.join(root, target), 'utf8');

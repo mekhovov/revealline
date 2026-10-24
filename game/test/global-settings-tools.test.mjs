@@ -6,6 +6,7 @@ import { getLocale, setLocale, t as translate } from '../i18n/index.mjs';
 import { attachProfileRecoveryView } from '../ui/profile-recovery.mjs';
 import { mountModeSettings } from '../ui/mode-settings-view.mjs';
 import { attachSettingsPanels } from '../ui/settings-panels.mjs';
+import { createFlightMenuNavigation } from '../../optional-practice/civilian-fpv/input.mjs';
 
 const settle = () => new Promise((resolve) => setImmediate(resolve));
 function fixture(t, options = {}) {
@@ -71,6 +72,7 @@ function fixture(t, options = {}) {
         attachView: attachProfileRecoveryView,
       };
     },
+    ...options,
   });
   t.after(() => api.dispose());
   return {
@@ -136,6 +138,269 @@ test('About Back reveals its current Settings panel after resizing while the chi
   assert.equal(frame.getAttribute('src'), null);
   assert.equal(h.calls.persist, 0);
   assert.equal(h.calls.readers, 0);
+});
+
+function radioToolFixture(t) {
+  const h = fixture(t, { createRadioNavigation: createFlightMenuNavigation }),
+    opener = h.api.controls.creatorTools.querySelector('button');
+  opener.click();
+  const frame = h.api.root().querySelector('iframe'),
+    enter = h.doc.getElementById('test-tools-tool-enter');
+  const child = () => {
+    const document = new Document(),
+      window = document.defaultView,
+      first = document.createElement('button'),
+      second = document.createElement('button');
+    window.location = new URL(frame.src);
+    window.focus = () => {};
+    document.body.dataset.menuLayout = 'vertical';
+    document.body.append(first, second);
+    return { document, window, first, second };
+  };
+  const load = (c) => {
+    frame.contentDocument = c.document;
+    frame.contentWindow = c.window;
+    frame.emit('load');
+  };
+  const radio = {
+    key: 'menu-radio',
+    index: 2,
+    verified: true,
+    layout: 'six-switch',
+    stickMode: 2,
+    controls: { roll: 0, pitch: 0, yaw: 0, throttle: 0 },
+    switches: {
+      arm: false,
+      fire: false,
+      weapon: false,
+      reload: false,
+      payload: false,
+      detonate: false,
+    },
+  };
+  let now = 0;
+  const poll = () => h.api.handleFrameCommand({ source: 'radio', radio, now: (now += 20) });
+  const cycle = (key) => {
+    poll();
+    radio.switches[key] = true;
+    poll();
+    radio.switches[key] = false;
+    poll();
+  };
+  return { ...h, child, load, frame, enter, radio, poll, cycle };
+}
+
+test('radio Enter tool hands off once to an ownerless child and Back restores Settings', (t) => {
+  const h = radioToolFixture(t),
+    c = h.child();
+  assert.equal(h.enter.disabled, true, 'wait for the child document');
+  h.load(c);
+  h.enter.click();
+  assert.equal(h.doc.activeElement, h.frame);
+  let clicks = 0;
+  c.first.onclick = () => clicks++;
+  h.cycle('fire');
+  assert.equal(c.document.activeElement, c.first);
+  assert.equal(clicks, 0, 'first complete Confirm joins only');
+  h.cycle('fire');
+  assert.equal(clicks, 1);
+  h.radio.controls.pitch = -1;
+  h.poll();
+  assert.equal(c.document.activeElement, c.second);
+  h.radio.controls.pitch = 0;
+  h.poll();
+  h.cycle('reload');
+  assert.ok(h.api.root(), 'a child radio shortcut cannot change the paused flight');
+  h.cycle('weapon');
+  assert.equal(h.api.root(), null);
+  assert.equal(c.document.querySelector('[data-radio-menu-hint]'), null);
+});
+
+test('radio tools delegate fields and canvases to the existing child owner and release it on reload', (t) => {
+  const h = radioToolFixture(t),
+    c = h.child(),
+    actions = [],
+    leases = [],
+    releases = [];
+  c.document[Symbol.for('revealline.page-radio-menu')] = {
+    claim: (lease) => {
+      leases.push(lease);
+      return true;
+    },
+    handle: (token, action) => {
+      actions.push(action);
+      return true;
+    },
+    release: (token) => releases.push(token),
+  };
+  h.load(c);
+  h.enter.click();
+  h.cycle('fire');
+  h.cycle('fire');
+  h.radio.controls.roll = 1;
+  h.poll();
+  h.radio.controls.roll = 0;
+  h.poll();
+  assert.deepEqual(actions, ['join', 'confirm', 'right']);
+  assert.ok(leases.every((lease) => lease.index === 2 && lease.isCurrent()));
+  h.radio.switches.fire = true;
+  h.poll();
+  const replacement = h.child();
+  h.load(replacement);
+  assert.equal(releases.length, 1);
+  let clicks = 0;
+  replacement.first.onclick = () => clicks++;
+  h.poll();
+  h.radio.switches.fire = false;
+  h.poll();
+  assert.equal(clicks, 0, 'a switch held through reload cannot commit');
+  h.cycle('fire');
+  assert.equal(clicks, 0, 'fresh Confirm joins the replacement document');
+  h.cycle('fire');
+  assert.equal(clicks, 1);
+  h.doc.focused = false;
+  assert.equal(h.api.frameFocused(), false);
+  assert.equal(replacement.document.querySelector('[data-radio-menu-hint]'), null);
+});
+
+test('radio tools never acquire an opaque frame and its outer Back remains available', (t) => {
+  const h = radioToolFixture(t),
+    c = h.child();
+  c.window.location = new URL('https://other.invalid/tool');
+  h.load(c);
+  h.enter.click();
+  assert.equal(h.poll(), false);
+  assert.equal(c.document.querySelector('[data-radio-menu-hint]'), null);
+  assert.equal(h.api.handleFrameCommand({ back: true }), true);
+  assert.equal(h.api.root(), null);
+});
+
+test('radio tools follow entered native preview menus and return one level with fresh input', (t) => {
+  const h = radioToolFixture(t),
+    parent = h.child(),
+    child = h.child(),
+    nested = parent.document.createElement('iframe'),
+    actions = [],
+    releases = [];
+  parent.document.body.append(nested);
+  nested.contentDocument = child.document;
+  nested.contentWindow = child.window;
+  let lease;
+  const owner = {
+    claim: (value) => {
+      lease = value;
+      return true;
+    },
+    handle: (token, action) => {
+      actions.push(action);
+      if (action === 'back') lease.onBack();
+      return true;
+    },
+    release: (token) => releases.push(token),
+  };
+  child.document[Symbol.for('revealline.page-radio-menu')] = owner;
+  parent.document[Symbol.for('revealline.page-radio-menu')] = {
+    claim: () => true,
+    handle: () => true,
+    release: () => {},
+    preview: () =>
+      parent.document.activeElement === nested
+        ? {
+            frame: nested,
+            back: () => parent.first.focus(),
+          }
+        : null,
+  };
+  h.load(parent);
+  h.enter.click();
+  h.cycle('fire');
+  nested.focus();
+  h.radio.switches.fire = true;
+  h.poll();
+  h.radio.switches.fire = false;
+  h.poll();
+  assert.deepEqual(actions, [], 'held entry cannot join or activate the preview');
+  h.cycle('fire');
+  h.cycle('fire');
+  h.radio.controls.roll = 1;
+  h.poll();
+  h.radio.controls.roll = 0;
+  h.poll();
+  assert.deepEqual(actions, ['join', 'confirm', 'right']);
+  const oldLease = lease;
+  h.cycle('weapon');
+  assert.ok(h.api.root(), 'Back keeps the parent tool and Settings open');
+  assert.equal(parent.document.activeElement, parent.first);
+  assert.equal(oldLease.isCurrent(), false);
+  assert.equal(releases.length, 1);
+  assert.equal(child.document.querySelector('[data-radio-menu-hint]'), null);
+  nested.focus();
+  h.poll();
+  const replacement = h.child();
+  replacement.document[Symbol.for('revealline.page-radio-menu')] = owner;
+  h.radio.switches.fire = true;
+  h.poll();
+  nested.contentDocument = replacement.document;
+  nested.contentWindow = replacement.window;
+  h.poll();
+  h.radio.switches.fire = false;
+  h.poll();
+  assert.equal(
+    actions.filter((action) => action === 'confirm').length,
+    1,
+    'reload cannot complete the previous document gesture',
+  );
+  assert.equal(releases.length, 2);
+});
+
+test('radio preview Back returns to its editor when the child is opaque or owns live controls', (t) => {
+  for (const opaque of [false, true]) {
+    const h = radioToolFixture(t),
+      parent = h.child(),
+      child = h.child(),
+      nested = parent.document.createElement('iframe');
+    parent.document.body.append(nested);
+    nested.contentDocument = child.document;
+    nested.contentWindow = child.window;
+    if (opaque)
+      Object.defineProperty(nested, 'contentDocument', {
+        get() {
+          throw new Error('Opaque child');
+        },
+      });
+    parent.document[Symbol.for('revealline.page-radio-menu')] = {
+      claim: () => true,
+      handle: () => true,
+      release: () => {},
+      preview: () =>
+        parent.document.activeElement === nested
+          ? {
+              frame: nested,
+              back: () => parent.first.focus(),
+            }
+          : null,
+    };
+    h.load(parent);
+    h.enter.click();
+    nested.focus();
+    h.cycle('fire');
+    assert.equal(
+      child.document.querySelector('[data-radio-menu-hint]'),
+      null,
+      'an unowned live or opaque child does not acquire a menu navigator',
+    );
+    h.cycle('weapon');
+    assert.equal(parent.document.activeElement, parent.first);
+    assert.ok(h.api.root());
+  }
+});
+
+test('a fresh radio Back exits an entered tool before any Fire join', (t) => {
+  const h = radioToolFixture(t);
+  h.load(h.child());
+  h.enter.click();
+  h.cycle('weapon');
+  assert.equal(h.api.root(), null);
 });
 
 for (const unavailable of ['hidden', 'removed', 'disabled']) {

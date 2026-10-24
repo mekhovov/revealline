@@ -108,6 +108,7 @@ export function createAdvancedWorkerClient({
     telemetry: () => request('telemetry'),
     snapshot: () => request('snapshot'),
     restore: (snapshot) => request('restore', { snapshot }),
+    restorePractice: (snapshot) => request('restore-practice', { snapshot }),
     recording: () => request('recording'),
     recordingStatus: () => request('recording-status'),
     reportPersistence: (status) => request('recording-persistence', { status }),
