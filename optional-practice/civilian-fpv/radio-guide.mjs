@@ -24,8 +24,7 @@ export function mountRadioGuide({
   readProfile,
   loadProfile,
   invalidate,
-  verifyProfile,
-  saveProfile,
+  autoSaveProfile,
   stopCaptures,
   externalCaptureActive = () => false,
   skipLegacySwitches = () => false,
@@ -99,7 +98,7 @@ export function mountRadioGuide({
   const stepNodes = [
     t('Connect', 'Під’єднайте'),
     t('Calibrate', 'Відкалібруйте'),
-    t('Check & save', 'Перевірте й збережіть'),
+    t('Ready', 'Готово'),
   ].map((name, i) => {
     const node = el('li', undefined, steps);
     el('span', String(i + 1).padStart(2, '0'), node);
@@ -132,17 +131,6 @@ export function mountRadioGuide({
     'Springs to centre (gamepad)',
     'Повертається в центр (геймпад)',
   );
-  const confirmation = el('label', undefined, task, 'radio-confirm');
-  const checked = el('input', undefined, confirmation);
-  checked.type = 'checkbox';
-  el(
-    'span',
-    t(
-      'Both sticks move in the correct direction.',
-      'Обидва стіки рухаються в правильному напрямку.',
-    ),
-    confirmation,
-  );
   const automaticHint = el('p', undefined, task, 'radio-monitor-caption');
   const holdProgress = el('progress', undefined, task);
   holdProgress.max = 1;
@@ -164,7 +152,7 @@ export function mountRadioGuide({
     cancelCalibration,
   );
   status.classList.add('radio-feedback');
-  task.append(status);
+  task.insertBefore(status, automaticHint);
   const returnHint = el(
     'p',
     t(
@@ -288,7 +276,6 @@ export function mountRadioGuide({
     identity = null;
     interrupted = false;
     phase = 'manual';
-    checked.checked = false;
     // Keep measurements already collected by the wizard; provide editable
     // standard ranges for the remaining axes so automatic capture is optional.
     const used = new Set(
@@ -310,13 +297,13 @@ export function mountRadioGuide({
     invalidate();
     status.textContent = '';
     panels.manual.open = true;
-    panels.diagnostics.open = true;
-    extra.prepend(panels.diagnostics);
-    shell.insertBefore(extra, switchCard);
+    panels.diagnostics.open = false;
+    task.insertBefore(panels.manual, automaticHint);
     switchCard.open = false;
     focusStep();
   }
   function start() {
+    if (panels.manual.parentNode === task) extra.prepend(panels.manual);
     try {
       const pad = raw();
       stopCaptures();
@@ -340,7 +327,6 @@ export function mountRadioGuide({
       clearConfirmation();
       lastSample = null;
       phase = 'prepare';
-      checked.checked = false;
       invalidate();
       status.textContent = '';
       focusStep();
@@ -365,7 +351,6 @@ export function mountRadioGuide({
     identity = null;
     interrupted = false;
     phase = prior?.form ? 'check' : 'connect';
-    checked.checked = false;
     status.textContent = t(
       'Calibration cancelled. Your saved profile is unchanged.',
       'Калібрування скасовано. Збережений профіль не змінено.',
@@ -400,10 +385,13 @@ export function mountRadioGuide({
             'Підключення змінилося. Скасуйте й почніть калібрування знову.',
           ),
         );
-      if (phase === 'connect' || phase === 'manual') {
+      if (phase === 'manual') {
+        if (autoSaveProfile()) onDone();
+        return;
+      }
+      if (phase === 'connect') {
         if (validProfile(pad)) {
           phase = 'check';
-          checked.checked = false;
           focusStep();
         } else start();
         return;
@@ -512,28 +500,24 @@ export function mountRadioGuide({
           }
         }
         readProfile(false);
-        checked.checked = false;
-        if (skipLegacySwitches()) {
-          phase = 'check';
-          clearConfirmation();
-        } else beginAction('arm');
+        // Stick calibration is complete here. Switch assignment is independent
+        // and must never postpone saving the measured stick channels.
+        phase = 'check';
+        clearConfirmation();
         status.textContent = clearedSwitch
           ? t(
               'Sticks calibrated. A switch used the same channel as a stick and was cleared. Assign it again below if needed.',
               'Стіки відкалібровано. Перемикач використовував канал стіка, тому його призначення очищено. За потреби призначте його нижче.',
             )
           : t(
-              'Sticks calibrated. Check the result before saving.',
+              'Sticks calibrated. Settings save automatically; watch the live preview.',
               'Стіки відкалібровано. Перевірте результат перед збереженням.',
             );
       } else if (isAction()) {
         beginAction(phase);
       } else if (phase === 'check') {
-        if (!checked.checked || externalCaptureActive()) return;
-        if (!verifyProfile()) return;
-        const result = saveProfile();
-        if (!result) return;
-        completeSave(result);
+        if (externalCaptureActive()) return;
+        if (autoSaveProfile()) onDone();
         return;
       }
       focusStep();
@@ -604,7 +588,6 @@ export function mountRadioGuide({
     else {
       phase = 'check';
       clearConfirmation();
-      checked.checked = false;
     }
     if (skipped)
       status.textContent = t(
@@ -680,12 +663,6 @@ export function mountRadioGuide({
         const capture = switchRows[phase].captureStatus?.();
         if ((capture?.state ?? capture) === 'done') finishAction();
         else if (confirmationGesture(pad, validProfile(pad), now)) finishAction(true);
-      } else if (phase === 'check') {
-        if (externalCaptureActive()) clearConfirmation();
-        else if (confirmationGesture(pad, validProfile(pad), now)) {
-          checked.checked = true;
-          advance();
-        }
       } else if (phase === 'prepare') {
         if (held(pad, 'prepare', true, now, 850)) advance();
       } else if (phase === 'positive') {
@@ -758,7 +735,7 @@ export function mountRadioGuide({
     extra.hidden = mapping || actionMapping;
     switchCard.hidden = mapping;
     skip.hidden = !actionMapping;
-    holdProgress.hidden = !mapping && !actionMapping && phase !== 'check';
+    holdProgress.hidden = !mapping && !actionMapping;
     automaticHint.hidden = holdProgress.hidden;
     setText(
       automaticHint,
@@ -778,11 +755,10 @@ export function mountRadioGuide({
                 'Щоб залишити поточне призначення: стіки у спокій, рискання праворуч на 1 секунду, потім у центр.',
               )
             : t(
-                'After checking, rest sticks with switches OFF. Hold yaw right for 1 second, then centre to save and return. Or use the checkbox and Save.',
-                'Після перевірки поверніть стіки у спокій, перемикачі ВИМК. Утримуйте рискання праворуч 1 секунду, потім поверніть у центр, щоб зберегти й повернутися. Або скористайтеся прапорцем і кнопкою збереження.',
+                'Complete assignments save automatically. Close setup whenever you are ready.',
+                'Завершені призначення зберігаються автоматично. Закрийте налаштування, коли будете готові.',
               ),
     );
-    confirmation.hidden = phase !== 'check';
     returnHint.hidden = mapping || actionMapping;
     back.hidden = !['positive', 'return', 'negative', 'centre'].includes(phase);
     cancel.hidden = !mapping && !actionMapping;
@@ -794,7 +770,7 @@ export function mountRadioGuide({
       !pad ||
       interrupted ||
       (phase === 'manual' && (!input || externalCaptureActive())) ||
-      (phase === 'check' && (!input || !checked.checked || externalCaptureActive()));
+      (phase === 'check' && (!input || externalCaptureActive()));
     for (const key of order) setText(values[key], input ? `${Math.round(input[key] * 100)}%` : '—');
     setText(
       armHint,
@@ -815,11 +791,11 @@ export function mountRadioGuide({
       setText(
         instruction,
         t(
-          'Move one stick at a time and watch the raw channels below. Set its axis number, minimum, centre, maximum and reverse direction if needed. Then check the live sticks and save.',
-          'Рухайте по одному стіку та стежте за каналами нижче. Укажіть номер осі, мінімум, центр, максимум і за потреби змініть напрямок. Потім перевірте стіки наживо та збережіть.',
+          'Choose Map this movement, move the indicated stick to the edge, then to the opposite edge. Watch the live dots. Complete assignments save automatically. Use Reverse if a dot moves the wrong way.',
+          'Натисніть «Призначити цей рух», перемістіть указаний стік до краю, потім до протилежного. Стежте за точками наживо. Завершені призначення зберігаються автоматично. Якщо напрямок зворотний, увімкніть інверсію.',
         ),
       );
-      setText(primary, t('Check my sticks', 'Перевірити стіки'));
+      setText(primary, t('Done', 'Готово'));
     } else if (phase === 'connect') {
       setText(progress, t('01 / CONNECT', '01 / ПІД’ЄДНАННЯ'));
       setText(
@@ -913,7 +889,7 @@ export function mountRadioGuide({
         setText(primary, t('Continue', 'Далі'));
       }
     } else {
-      setText(progress, t('03 / CHECK & SAVE', '03 / ПЕРЕВІРКА Й ЗБЕРЕЖЕННЯ'));
+      setText(progress, t('03 / READY · AUTO-SAVE', '03 / ГОТОВО · АВТОЗБЕРЕЖЕННЯ'));
       setText(
         title,
         phase === 'saved'
@@ -939,9 +915,7 @@ export function mountRadioGuide({
       );
       setText(
         primary,
-        phase === 'saved'
-          ? t('Return to flight', 'Повернутися до польоту')
-          : t('Save & return', 'Зберегти й повернутися'),
+        phase === 'saved' ? t('Return to flight', 'Повернутися до польоту') : t('Done', 'Готово'),
       );
     }
     if (interrupted)
@@ -953,10 +927,8 @@ export function mountRadioGuide({
         ),
       );
   }
-  on(checked, 'change', () => update(runtime.raw()));
   on(container, 'change', (event) => {
-    if (event.target !== checked) {
-      checked.checked = false;
+    {
       clearConfirmation();
       update(runtime.raw());
     }
@@ -983,7 +955,6 @@ export function mountRadioGuide({
       phase = 'connect';
       identity = null;
       interrupted = false;
-      checked.checked = false;
     },
     dispose() {
       for (const remove of listeners) remove();

@@ -844,9 +844,17 @@ export function createFlightProfileStore({ storage, key = 'revealline.flight-pro
     }
     return { saved, error };
   };
-  const save = (input) => {
+  const save = (input, { replaceKey = null } = {}) => {
     const value = validate(input);
-    return commit(value, [...radios, ...(value.radio ? [value.radio] : [])]);
+    // Setup may replace only its own preceding autosave. Existing named and
+    // imported profiles remain separate; one slider edit is not a new profile.
+    required(
+      replaceKey === null || radios.some((item) => radioProfileKey(item) === replaceKey),
+      'Autosave predecessor is not in this library',
+    );
+    const removeKey =
+      value.radio && radioProfileKey(value.radio) === replaceKey ? null : replaceKey;
+    return commit(value, [...radios, ...(value.radio ? [value.radio] : [])], { removeKey });
   };
   return {
     snapshot: () => structuredClone(current),
