@@ -1,3 +1,4 @@
+import { renderTextSizeControl } from '../ui/text-size-control.mjs';
 import { t, localizedText, localizedMessage } from '../i18n/index.mjs';
 import { createDisplayPreferences } from '../display-preferences.mjs';
 import { attachPreferenceRestoration } from '../ui/preference-restoration.mjs';
@@ -33,10 +34,10 @@ export function mountReplayDisplay({
   const render = (state) => {
     if (disposed) return;
     doc.body.dataset.textFace = state.textFace;
-    doc.body.dataset.textSize = state.textSize;
+    doc.body.dataset.textSize = state.effectiveTextSize ?? state.textSize;
     doc.body.dataset.effects = state.effectiveReducedEffects ? 'reduced' : 'full';
     font.value = state.textFace;
-    size.value = state.textSize;
+    renderTextSizeControl(size, state.textSize);
     reduced.checked = state.reducedEffects;
     const systemCap = state.effectiveReducedEffects && !state.reducedEffects;
     localizedText(cap, () =>

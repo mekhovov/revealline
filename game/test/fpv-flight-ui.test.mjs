@@ -24,12 +24,59 @@ import { mountFlightCameraControls } from '../../optional-practice/civilian-fpv/
 import { Document, Events } from './helpers/couch-dom.mjs';
 import { waitFor } from './helpers/wait-for.mjs';
 
+function registerOfflineFeedbackTests() {
+  for (const locale of ['en', 'uk'])
+    for (const kind of ['overall', 'cancelled', 'unknown'])
+      test(`Academy offline feedback ${locale} ${kind} uses safe localized reasons`, async (t) => {
+        const previous = getLocale();
+        t.after(() => setLocale(previous));
+        const error =
+          kind === 'cancelled'
+            ? new DOMException('secret', 'AbortError')
+            : new Error(
+                kind === 'overall'
+                  ? 'Download exceeded five minutes. Retry on a faster connection.'
+                  : 'secret backend detail',
+              );
+        const f = await fixture(t, {
+          notebookFactory: null,
+          studioFactory: null,
+          url: `https://example.test/optional-practice/civilian-fpv/?lang=${locale}`,
+          serviceWorker: {
+            getRegistration: async () => undefined,
+            register: async () => {
+              throw error;
+            },
+          },
+        });
+        f.$('install-offline').click();
+        await waitFor(() => !f.$('install-offline').disabled);
+        const text = f.$('transfer-status').textContent;
+        assert.doesNotMatch(text, /secret/);
+        assert.match(
+          text,
+          kind === 'overall'
+            ? locale === 'uk'
+              ? /п’ять хвилин/
+              : /five minutes/
+            : kind === 'cancelled'
+              ? locale === 'uk'
+                ? /скасовано/
+                : /cancelled/
+              : locale === 'uk'
+                ? /Не вдалося/
+                : /failed/,
+        );
+      });
+}
+
 const html = parse(
   await readFile(
     new URL('../../optional-practice/civilian-fpv/index.html', import.meta.url),
     'utf8',
   ),
 );
+registerOfflineFeedbackTests();
 async function fixture(
   t,
   {
@@ -261,7 +308,8 @@ test('Academy prepares a saved aircraft and waits for a pending flight step befo
   });
   const preset = presets.createPresetConfiguration('meteor75-analog-2022');
   assert.equal(h.view.snapshot().reason, 'prepared');
-  assert.equal(h.view.snapshot().advancedTelemetry.frequency, 500);
+  assert.equal(h.view.observedSplits().ticks, 0);
+  assert.equal(h.view.snapshot().advancedTelemetry.frequency, 1000);
   assert.deepEqual(shownAircraft.geometry, preset.aircraft.geometry);
   assert.match(h.doc.body.textContent, /All courses remain available in practice/);
   assert.equal(h.doc.querySelector('.aircraft-practice-controls').hidden, false);
@@ -278,6 +326,8 @@ test('Academy prepares a saved aircraft and waits for a pending flight step befo
   h.tick();
   await new Promise((resolve) => setImmediate(resolve));
   assert.ok(worker.pendingStep);
+  const observationsBeforePending = h.view.observedSplits();
+  assert.equal(observationsBeforePending.ticks, h.view.snapshot().ticks);
   h.view.pause();
   assert.equal(h.view.arm(), false);
   assert.equal(h.view.snapshot().status, 'paused');
@@ -286,6 +336,11 @@ test('Academy prepares a saved aircraft and waits for a pending flight step befo
   worker.postMessage(worker.pendingStep);
   await new Promise((resolve) => setImmediate(resolve));
   const paused = h.view.snapshot();
+  assert.equal(
+    h.view.observedSplits().ticks,
+    paused.ticks,
+    'only the accepted pending interval is observed',
+  );
   assert.ok(paused.lastInput.throttle > 0);
   assert.equal(paused.status, 'paused', 'worker completion cannot arm on its own');
   assert.equal(h.view.arm(), true);
@@ -349,6 +404,8 @@ test('Academy prepares a saved aircraft and waits for a pending flight step befo
     }
     assert.notEqual(h.view.snapshot().status, 'active', `${action} must wait for explicit Arm`);
     assert.equal(h.view.snapshot().ticks, 0, `${action} must not advance while ready`);
+    assert.equal(h.view.observedSplits().ticks, 0);
+    assert.deepEqual(h.view.observedSplits().rows, []);
     h.$('arm').click();
     for (let tick = 0; tick < 8; tick++) {
       h.tick();
@@ -1735,7 +1792,8 @@ test('unavailable offline capability stays explanatory and a failed prepare neve
   });
   f.$('install-offline').click();
   await new Promise((resolve) => setImmediate(resolve));
-  assert.equal(f.$('transfer-status').textContent, 'Offline package unavailable');
+  assert.match(f.$('transfer-status').textContent, /Offline preparation failed/);
+  assert.doesNotMatch(f.$('transfer-status').textContent, /Offline package unavailable/);
   assert.equal(f.$('install-offline').disabled, false);
   assert.equal(f.$('remove-offline').disabled, false);
 });
@@ -3331,6 +3389,27 @@ test('Academy ordinary verified success retains current course copy and one admi
     );
   assert.equal(h.deliveries.length, 1);
   await academyTerminalResetLanguage(h, FLIGHT_COURSES[0]);
+});
+
+test('Academy retains extra-large desired size without exposing an unqualified selectable setting', async (t) => {
+  let raw = JSON.stringify({ textFace: 'plain', textSize: 'extra-large', reducedEffects: false });
+  const writes = [];
+  const storage = {
+    getItem: (key) => (key === 'revealline.display.v1' ? raw : null),
+    setItem(key, value) {
+      writes.push(key);
+      if (key === 'revealline.display.v1') raw = value;
+    },
+  };
+  const f = await fixture(t, { home: true, storage });
+  const control = f.$('academy-global-textSize');
+  assert.equal(control.value, 'extra-large');
+  assert.equal(control.querySelector('[data-text-size-retained]').disabled, true);
+  assert.equal(f.doc.body.dataset.textSize, 'large');
+  assert.equal(writes.includes('revealline.display.v1'), false);
+  f.$('academy-global-reducedEffects').checked = true;
+  f.$('academy-global-reducedEffects').emit('change');
+  assert.equal(JSON.parse(raw).textSize, 'extra-large');
 });
 
 test('optional combat D-pad commands require release and retain controller flight ownership', () => {

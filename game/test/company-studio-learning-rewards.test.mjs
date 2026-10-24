@@ -6,7 +6,7 @@ import { readFile } from 'node:fs/promises';
 import { createCompanyWorkspaceFiles } from '../../scripts/company-studio.mjs';
 import { createStudioReward } from '../../authoring/company-studio/reward-editor.mjs';
 import { validateStudioData } from '../../authoring/company-studio/model.mjs';
-import { COMPANY_LESSONS } from '../company-campaigns/lessons.mjs';
+import { learningFixture } from './helpers/learning-fixture.mjs';
 import { completionLearningReference } from '../rewards/learning.mjs';
 import { Document } from './helpers/couch-dom.mjs';
 
@@ -20,7 +20,7 @@ test('Company Studio actual author action binds only its explicitly checked less
     campaign = catalog.campaigns[0],
     source = JSON.parse(workspace.files.get(campaign.sourcePath)),
     lesson = {
-      ...structuredClone(COMPANY_LESSONS[0]),
+      ...structuredClone(learningFixture()),
       missionId: source.missions[0].id,
       campaignId: campaign.id,
     };

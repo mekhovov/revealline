@@ -81,7 +81,7 @@ export function createAdvancedWorkerClient({
         dispose(new Error('Advanced worker did not respond. Practice is paused.'));
       const timer = setTimeout(
         timeout,
-        ['verify-recording', 'verify-archive', 'restore'].includes(type)
+        ['verify-recording', 'verify-archive', 'verify-course-archive', 'restore'].includes(type)
           ? verificationWatchdogMs
           : watchdogMs,
       );
@@ -117,6 +117,11 @@ export function createAdvancedWorkerClient({
     verifyRecording: (recording) => request('verify-recording', { recording }),
     verifyArchive: (archive, { onProgress = () => {} } = {}) =>
       request('verify-archive', { archive }, { onProgress }),
+    verifyCourseArchive: (
+      archive,
+      course,
+      { onProgress = () => {}, collectReference = false } = {},
+    ) => request('verify-course-archive', { archive, course, collectReference }, { onProgress }),
     reset: () => request('reset'),
     dispose,
   };

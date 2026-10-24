@@ -1,5 +1,5 @@
 /** Deterministic projection of canonical flight sound into an already admitted
- * Academy module. Keeps the existing package file bound and isolates module state. */
+ * Academy module. Keeps existing package slots and isolates mutable module state. */
 import { readFile, writeFile } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
 import path from 'node:path';
@@ -14,6 +14,7 @@ const target = 'optional-practice/civilian-fpv/sim-presentation.mjs';
 const entry = 'optional-practice/civilian-fpv/world-audio.mjs';
 const begin = '// BEGIN GENERATED ACADEMY SHARED AUDIO';
 const end = '// END GENERATED ACADEMY SHARED AUDIO';
+const sharedBank = 'game/audio/human-reactions/portable.mjs';
 const included = new Set([
   entry,
   'game/ui/audio-output.mjs',
@@ -27,19 +28,19 @@ const included = new Set([
   'game/ui/destruction-audio.mjs',
   'game/ui/human-reaction-policy.mjs',
   'game/ui/destruction-level.mjs',
-  'game/audio/human-reactions/portable.mjs',
   'game/ui/movement-audio.mjs',
   'game/ui/dialogue-channel.mjs',
 ]);
-// Localization already belongs to Academy. No art, recordings, voice library or
-// unrelated runtime may quietly enter this narrow generated audio closure.
-const external = new Set(['game/i18n/index.mjs']);
+// These canonical sources already belong to every host of sim-presentation.
+// Share only the literal sample bank; mutable audio state stays in the closure.
+const external = new Set(['game/i18n/index.mjs', sharedBank]);
 const policy = OPTIONAL_PACKAGE_POLICIES['civilian-fpv'];
 if (!policy.localFiles.includes(path.posix.basename(target)))
   throw new Error('The Academy audio projection must use an existing package slot.');
-for (const file of external)
-  if (!policy.sharedFiles.includes(file))
-    throw new Error(`Unadmitted Academy audio external: ${file}`);
+for (const host of ['civilian-flight', 'civilian-fpv', 'fpv-worlds'])
+  for (const file of external)
+    if (!OPTIONAL_PACKAGE_POLICIES[host].sharedFiles.includes(file))
+      throw new Error(`Unadmitted shared audio external for ${host}: ${file}`);
 const check = process.argv.includes('--check');
 if (process.argv.slice(2).some((arg) => arg !== '--check')) throw new Error('Use [--check].');
 const modules = new Map(),
@@ -72,6 +73,55 @@ function checkStatic(node, file) {
     if (Array.isArray(value)) value.forEach((child) => checkStatic(child, file));
     else if (value && typeof value === 'object') checkStatic(value, file);
 }
+// A future stateful bank must be reviewed before sharing its module instance.
+// This deliberately admits only the current eight literal clip records.
+function checkSharedBank(source) {
+  const tree = parse(source, { ecmaVersion: 'latest', sourceType: 'module' });
+  const exported = tree.body[0],
+    declaration = exported?.declaration,
+    row = declaration?.declarations?.[0],
+    call = row?.init;
+  const properties = (node) =>
+    node?.type === 'ObjectExpression' &&
+    node.properties.every(
+      (item) => item.type === 'Property' && !item.computed && !item.method && item.kind === 'init',
+    )
+      ? node.properties.map((item) => [item.key.name ?? item.key.value, item.value])
+      : [];
+  const clips = properties(call?.arguments?.[0]);
+  if (
+    tree.body.length !== 1 ||
+    exported.type !== 'ExportNamedDeclaration' ||
+    declaration?.kind !== 'const' ||
+    declaration.declarations.length !== 1 ||
+    row.id?.name !== 'HUMAN_REACTION_BANK' ||
+    call?.type !== 'CallExpression' ||
+    call.callee?.type !== 'MemberExpression' ||
+    call.callee.computed ||
+    call.callee.object?.name !== 'Object' ||
+    call.callee.property?.name !== 'freeze' ||
+    call.arguments.length !== 1 ||
+    clips.length !== 8 ||
+    clips.some(([name, clip], index) => {
+      const fields = properties(clip);
+      return (
+        name !== `human-reaction-${index + 1}` ||
+        fields.length !== 3 ||
+        fields.some(([key, value], field) =>
+          key !== ['mime', 'base64', 'duration'][field] || value.type !== 'Literal'
+            ? true
+            : field === 2
+              ? !Number.isFinite(value.value) || value.value <= 0 || value.value > 1
+              : typeof value.value !== 'string',
+        )
+      );
+    })
+  )
+    throw new Error(
+      'Shared reaction bank must remain a frozen bank of eight literal clip records.',
+    );
+}
+checkSharedBank(await readFile(path.join(root, sharedBank), 'utf8'));
 async function visit(file) {
   if (external.has(file)) {
     if (!externals.has(file)) externals.set(file, `academyAudioExternal${externals.size}`);

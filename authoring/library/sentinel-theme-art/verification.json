@@ -186,5 +186,9 @@
       "bytes": 4104,
       "sha256": "286114f072ac5f73f4aa1d840553d2a03eab7a40a828ef71343a89d5ef579133"
     }
-  ]
+  ],
+  "ownershipProjection": {
+    "scope": "Retained artwork verification with two retired context references omitted; this is a derived record, not the original verification artifact.",
+    "originalSHA256": "7f7a3a66487eba9d5abd124f1daabb988e6443e97ff8a2674e3dc2b12963f24f"
+  }
 }

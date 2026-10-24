@@ -24,7 +24,7 @@
     background: #070914;
     color: #edf2ff;
     font:
-      17px/1.5 'Field Kit UI',
+      calc(17px * var(--overflight-text-scale, 1)) / 1.5 'Field Kit UI',
       system-ui,
       sans-serif;
   }
@@ -40,7 +40,11 @@
 
   .access-gate-card h1 {
     margin: 4px 0 12px;
-    font-size: clamp(2rem, 8vw, 3.4rem);
+    font-size: clamp(
+      calc(2rem * var(--overflight-text-scale, 1)),
+      calc(8vw * var(--overflight-text-scale, 1)),
+      calc(3.4rem * var(--overflight-text-scale, 1))
+    );
     line-height: 0.95;
   }
 

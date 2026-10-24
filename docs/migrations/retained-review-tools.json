@@ -1,0 +1,33 @@
+{
+  "format": "revealline-retained-review-tools.v1",
+  "items": [
+    {
+      "path": "docs/verification/journey-performance.html",
+      "previousSHA256": "cd99d5cda6358b76703896af3913508714603e0bf942f6bd44d215a11cf5b3e1",
+      "sha256": "5b2681729c2e255f5744396ed0ef7f7f1a9d75ea8982f3dff9631889bbf74a92",
+      "bytes": 4451,
+      "scope": "Current performance review selector uses retained editions only."
+    },
+    {
+      "path": "docs/verification/pr781-deferred-overlaps/scripts/prepare-menu-scenes.py",
+      "previousSHA256": "320b8fdfb4144ac97c98872e1d7fb7c887ccb9cf9aaf1d4498203b7e06b0cfdb",
+      "sha256": "4d2ce647b9fd0f1ea2ca4193086144fb4d857575c176d352aba3a0ae8651453f",
+      "bytes": 4629,
+      "scope": "Historical generator projection: only retired scene registry rows removed; retained generator operations are unchanged."
+    },
+    {
+      "path": "docs/qualification/neon-level-completion/picture-presentation.json",
+      "previousSHA256": "e1b7a642383f88eb4bc85e7d3819210e8fcb22fc3643fa62032aeda0e4531b07",
+      "sha256": "d9dd064f417e2855503d881d0662b4bfe3f8630d7f395b5e9c680b3ac82f03fc",
+      "bytes": 37141,
+      "scope": "Historical retained picture rows, not a new browser or visual approval. Original aggregate counts describe the original scope. Exact original bytes are preserved separately."
+    },
+    {
+      "path": "docs/performance/fixtures/solo-remote-offline/installed-starter.catalogue.fixture",
+      "previousSHA256": "560fd576e796456413e04719944be48a70b0922f6bf980cc98c9f7edf630e00c",
+      "sha256": "5d1582d815e4e53c464bbd756a6d49ece48c8df13810c969c178ab867a195e85",
+      "bytes": 88767,
+      "scope": "Retained Starter test fixture; immutable chapter and mission definitions unchanged. Only unrelated retired catalogue members removed. Original transport authority is labelled historical."
+    }
+  ]
+}

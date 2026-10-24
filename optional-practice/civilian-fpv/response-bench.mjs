@@ -12,9 +12,14 @@ import {
   validateAircraftResponseDescriptor,
 } from './aircraft-response.mjs';
 import { createAdvancedSimulation, initAdvancedRuntime } from './advanced-simulation.mjs';
+import {
+  AIRCRAFT_BACKEND,
+  AIRCRAFT_ARENA_BACKENDS,
+  AIRCRAFT_FREQUENCY,
+} from './advanced-aircraft-runtime.mjs';
 
 export const RESPONSE_BENCH_FORMAT = 'FpvResponseBench.v1';
-export const RESPONSE_BENCH_HZ = 500;
+export const RESPONSE_BENCH_HZ = AIRCRAFT_FREQUENCY;
 export const RESPONSE_BENCH_TRACE_LIMIT = 152;
 export const RESPONSE_BENCH_LIMITATION =
   'Controlled Acro response rig with no gravity or contacts. These measurements describe the SIM model, not a real-aircraft tune.';
@@ -49,6 +54,8 @@ export const RESPONSE_BENCH_GATES = freeze({
   measuredWindow: 'entire-three-second-case',
   unavailableTimePolicy: 'A candidate must reach the target; an unreached time never equals zero.',
 });
+const supportedFrequency = (hz) => [500, RESPONSE_BENCH_HZ].includes(hz);
+const gatesAt = (hz) => ({ ...copy(RESPONSE_BENCH_GATES), timeToleranceSeconds: 1 / hz });
 
 /** Copies only the validated simulation inputs. Names, library IDs and receipts
  * are deliberately excluded; workers never consult a mutable setup library. */
@@ -70,10 +77,10 @@ export function normalizeBenchConfiguration(source) {
       camera.verticalFov <= 140,
     'Invalid comparison camera',
   );
-  required(
-    value.frequency === undefined || value.frequency === RESPONSE_BENCH_HZ,
-    'The response bench uses the fixed 500 Hz aircraft backend',
-  );
+  const backend = value.backend ?? AIRCRAFT_BACKEND,
+    frequency = value.frequency ?? (backend === AIRCRAFT_BACKEND ? RESPONSE_BENCH_HZ : 500);
+  required(AIRCRAFT_ARENA_BACKENDS.includes(backend), 'Unsupported response bench backend');
+  required(supportedFrequency(frequency), 'The response bench requires fixed 500 or 1000 Hz');
   // The name of a reference aircraft is not a physical difference.
   aircraft.id = 'response-bench-aircraft';
   return freeze({
@@ -81,7 +88,8 @@ export function normalizeBenchConfiguration(source) {
     controller,
     response,
     camera: { tilt: camera.tilt, verticalFov: camera.verticalFov },
-    frequency: RESPONSE_BENCH_HZ,
+    backend,
+    frequency,
   });
 }
 
@@ -93,6 +101,7 @@ export function responseBenchDifferences(saved, draft) {
     ['rates', before.response.response, after.response.response],
     ['controller', before.controller, after.controller],
     ['camera', before.camera, after.camera],
+    ['timing', [before.backend, before.frequency], [after.backend, after.frequency]],
     [
       'assistance',
       { mode: before.response.mode, levelGain: before.response.levelGain },
@@ -203,7 +212,7 @@ export function responseBenchCases(axis = 'roll', { validation = false } = {}) {
  * retained. null means not reached (or not applicable for a ramp), never zero. */
 export function createResponseMetrics({ axis, frequency = RESPONSE_BENCH_HZ, testCase }) {
   validateAxis(axis);
-  required(frequency === RESPONSE_BENCH_HZ, 'Unsupported response metric resolution');
+  required(supportedFrequency(frequency), 'Unsupported response metric resolution');
   const dt = 1 / frequency,
     c = validateCase(testCase),
     sign = c.direction;
@@ -352,12 +361,13 @@ export async function runResponseCase(source, testCase, { signal, retainTrace = 
   checkAbort(signal);
   await initAdvancedRuntime();
   checkAbort(signal);
-  const metrics = createResponseMetrics({ axis: c.axis, testCase: c });
+  const metrics = createResponseMetrics({ axis: c.axis, frequency: config.frequency, testCase: c });
   const sim = createAdvancedSimulation({
     aircraft: config.aircraft,
     controller: config.controller,
     response: createAircraftResponseDescriptor(config.response.response, { mode: 'acro' }),
-    frequency: RESPONSE_BENCH_HZ,
+    backend: config.backend,
+    frequency: config.frequency,
     recording: false,
     floor: false,
     gravity: { x: 0, y: 0, z: 0 },
@@ -427,6 +437,10 @@ export async function runResponseComparison(request, { signal, onProgress = () =
     changedGroups = responseBenchDifferences(saved, draft);
   required(['controller', 'setup'].includes(scope), 'Choose PID comparison or complete setups');
   required(
+    !changedGroups.includes('timing'),
+    'Controlled comparisons require the same backend and fixed frequency',
+  );
+  required(
     scope === 'setup' || changedGroups.every((group) => group === 'controller'),
     'PID comparison changes controller settings only. Choose Compare complete setups for other changes.',
   );
@@ -447,7 +461,8 @@ export async function runResponseComparison(request, { signal, onProgress = () =
     savedIdentity: dataIdentity(saved),
     draftIdentity: dataIdentity(draft),
     conditions: {
-      physicsHz: RESPONSE_BENCH_HZ,
+      backend: saved.backend,
+      physicsHz: saved.frequency,
       inputHz: 50,
       traceHz: 50,
       mode: 'acro',
@@ -459,7 +474,7 @@ export async function runResponseComparison(request, { signal, onProgress = () =
       savedSensorNoise: saved.aircraft.sensorNoise,
       draftSensorNoise: draft.aircraft.sensorNoise,
     },
-    gates: copy(RESPONSE_BENCH_GATES),
+    gates: gatesAt(saved.frequency),
     baseline,
     candidate,
     limitation: RESPONSE_BENCH_LIMITATION,
@@ -495,8 +510,19 @@ export function responseGainCandidates(source, axis = 'roll') {
 
 /** Absolute floors handle zero/near-zero values; time tolerance is one physics
  * step, not a percentage of an unreached or arbitrarily small measurement. */
-export function responseValidationVerdict(baseline, candidate, { shape = 'step' } = {}) {
+export function responseValidationVerdict(
+  baseline,
+  candidate,
+  { shape = 'step', frequency = RESPONSE_BENCH_HZ } = {},
+) {
   const reasons = [];
+  if (
+    !supportedFrequency(frequency) ||
+    [baseline, candidate].some(
+      (metrics) => metrics.physicsHz !== undefined && metrics.physicsHz !== frequency,
+    )
+  )
+    reasons.push('physicsHz');
   for (const [metric, { absolute: floor, relative }] of Object.entries(
     RESPONSE_BENCH_GATES.regression,
   )) {
@@ -518,8 +544,7 @@ export function responseValidationVerdict(baseline, candidate, { shape = 'step' 
     if (
       !finite(b) ||
       b < 0 ||
-      (a !== null &&
-        (!finite(a) || a < 0 || b > a + RESPONSE_BENCH_GATES.timeToleranceSeconds + 1e-12))
+      (a !== null && (!finite(a) || a < 0 || b > a + 1 / frequency + 1e-12))
     )
       reasons.push(metric);
   }
@@ -582,7 +607,8 @@ export async function suggestResponseTune(
     if (
       result &&
       trackingImproved(baseline.metrics.trackingError, result.metrics.trackingError) &&
-      responseValidationVerdict(baseline.metrics, result.metrics).pass
+      responseValidationVerdict(baseline.metrics, result.metrics, { frequency: source.frequency })
+        .pass
     )
       qualified.push({ ...candidate, fit: result });
     onProgress({ stage: 'fitting', completed: index + 2, total: candidates.length + 1 });
@@ -609,11 +635,10 @@ export async function suggestResponseTune(
           baseline: validationBaseline[caseIndex].metrics,
           candidate: result?.metrics ?? null,
           verdict: result
-            ? responseValidationVerdict(
-                validationBaseline[caseIndex].metrics,
-                result.metrics,
-                testCase,
-              )
+            ? responseValidationVerdict(validationBaseline[caseIndex].metrics, result.metrics, {
+                ...testCase,
+                frequency: source.frequency,
+              })
             : { pass: false, reasons: ['simulation-failed'] },
         });
         onProgress({
@@ -649,13 +674,13 @@ export async function suggestResponseTune(
     evaluatedCandidates: candidates.length,
     validatedCandidates: finalists.length,
     failedCases,
-    physicsHz: RESPONSE_BENCH_HZ,
+    physicsHz: source.frequency,
     conditions: {
       sensorNoise: source.aircraft.sensorNoise,
       vibration: source.aircraft.vibration,
       seededSensorNoiseEnabled: source.aircraft.sensorNoise > 0,
     },
-    gates: copy(RESPONSE_BENCH_GATES),
+    gates: gatesAt(source.frequency),
     limitation: RESPONSE_BENCH_LIMITATION,
   };
 }

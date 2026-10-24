@@ -27,6 +27,7 @@ const oldSource = await readJSON('../content/packs/night-shift.json');
 const goalsSource = await readJSON('../content/packs/equipment-workshop.json');
 // Preserve these format/encounter fixtures' identity-only scope; real Workshop image transport is tested separately.
 goalsSource.levelVisuals = [];
+oldSource.levelVisuals = [];
 const oracle = await readJSON('./fixtures/compatibility-v0100.json');
 const noImage = async () => {
   throw new Error('These fixtures have no image decoder work.');
@@ -111,7 +112,7 @@ test('mixed v1/v2/v3 expansion library roundtrip preserves old bytes and current
     };
   });
   const catalog = createMasteryCatalog(entries);
-  assert.equal(catalog.registrations.length, 3);
+  assert.equal(catalog.registrations.length, 2);
   assert.equal(catalog.get(key, campaign.levels[0].id), null);
 });
 test('format, engine, level and mastery mismatches reject before any image decode', async () => {
