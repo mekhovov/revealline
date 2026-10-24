@@ -1478,3 +1478,24 @@ test('Advanced reference radio pauses its own flight, navigates with switches an
   assert.equal(closed, 1, 'paused Weapon Back returns to tuning');
   assert.equal(gameplayActions, 0, 'menu switches never emit combat actions');
 });
+
+test('foreground stalls in Advanced practice accept one interval and schedule the next without pausing', async (t) => {
+  let f;
+  class SlowWorker extends LocalWorker {
+    postMessage(message) {
+      if (message.type === 'step') f.advanceClock(500);
+      super.postMessage(message);
+    }
+  }
+  f = await fixture(t, { Worker: SlowWorker });
+  f.button('Start practice').click();
+  await waitFor(() => f.session.getTelemetry()?.missionTick === 1);
+  assert.equal(f.timers.size, 1, 'delayed accepted step schedules another interval');
+  const [id, tick] = f.timers.entries().next().value;
+  f.timers.delete(id);
+  await tick();
+  assert.equal(f.session.getTelemetry().missionTick, 2);
+  assert.equal(f.timers.size, 1);
+  f.button('Pause').click();
+  assert.equal(f.timers.size, 0, 'explicit pause still stops scheduling');
+});

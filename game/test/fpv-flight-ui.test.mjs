@@ -1518,7 +1518,7 @@ test('disposing releases generated course callbacks; retained old buttons are in
   assert.equal(hostClicks, 1);
 });
 
-test('stale queued animation timestamps cannot advance after a long execution gap; explicit resume keeps input ownership', async (t) => {
+test('foreground stalls keep Academy flight active with fresh controls and bounded elapsed time', async (t) => {
   for (const mode of ['self-level', 'acro'])
     for (const owner of ['keyboard', 'radio']) {
       const f = await fixture(t),
@@ -1532,7 +1532,6 @@ test('stale queued animation timestamps cannot advance after a long execution ga
         };
       let clock = 0;
       f.win.performance = { now: () => clock };
-      // This lifecycle fixture exercises the original KeyE yaw mapping.
       f.$('keyboard-preset').value = 'classic';
       f.$('keyboard-preset').emit('change');
       f.$('mode').value = mode;
@@ -1553,30 +1552,27 @@ test('stale queued animation timestamps cannot advance after a long execution ga
       clock = 20;
       f.tick();
       assert.equal(f.view.snapshot().lastInput.yaw, 500);
-      const before = f.view.snapshot().ticks,
-        frames = f.view.exportAttempt().frames.length;
-      // The rAF timestamp moves only 20 ms, while callback execution was delayed 300 ms.
-      clock = 320;
-      f.tick();
-      assert.equal(f.view.snapshot().status, 'paused', `${mode}/${owner}`);
-      assert.equal(f.view.snapshot().ticks, before);
-      assert.equal(f.view.exportAttempt().frames.length, frames);
-      clock = 340;
-      f.tick(4);
-      assert.equal(f.view.snapshot().ticks, before, 'no queued catch-up');
-      if (owner === 'radio') {
-        pad.axes[2] = 0;
-        assert.equal(f.view.arm(), false, 'radio still requires matching pickup');
-        pad.axes[2] = 0.5;
-      } else f.key('KeyE', 'keyup');
-      assert.equal(f.view.arm(), true);
-      clock = 2000;
-      f.tick();
-      clock = 2020;
+      // A queued rAF advances 20 ms, but callback execution stalls 500 ms.
+      // Repeat at a sustained slow cadence: it must still accept fresh intervals.
+      for (let i = 0; i < 3; i++) {
+        const before = f.view.snapshot().ticks;
+        if (owner === 'radio') pad.axes[2] = i % 2 ? 0.5 : -0.5;
+        else if (i === 0) f.key('KeyE', 'keyup');
+        clock += 500;
+        f.tick();
+        assert.equal(f.view.snapshot().status, 'active', `${mode}/${owner}`);
+        assert.equal(f.view.snapshot().ticks, before + 1, 'no wall-clock catch-up');
+        assert.equal(f.view.snapshot().lastInput.yaw, owner === 'radio' ? (i % 2 ? 500 : -500) : 0);
+      }
+      const before = f.view.snapshot().ticks;
+      // A long rAF timestamp gap is bounded too, even if the execution clock is short.
+      f.jump(1000);
+      clock += 20;
       f.tick();
       assert.equal(f.view.snapshot().status, 'active');
-      assert(f.view.snapshot().ticks > before);
-      assert.equal(f.view.snapshot().lastInput.yaw, owner === 'radio' ? 500 : 0);
+      assert.equal(f.view.snapshot().ticks, before + 1);
+      f.win.emit('blur');
+      assert.equal(f.view.snapshot().status, 'paused', 'real focus loss still pauses');
       assert.equal(f.deliveries.length, 0);
     }
 });

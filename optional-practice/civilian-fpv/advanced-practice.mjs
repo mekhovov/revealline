@@ -1025,8 +1025,9 @@ export function mountAdvancedPractice({
       keepComparison.disabled = verifying || !telemetry.missionTick;
       if (telemetry.consumedSequence === sample.sequence) lastConsumedPollAt = started;
       const elapsed = win.performance.now() - started;
-      if (elapsed > 250) pause(copy.slow);
-      else if (running) timer = win.setTimeout(tick, Math.max(0, 20 - elapsed));
+      // Worker completion owns exactly one accepted interval, however late it
+      // arrives. Continue without catching up missed wall time or auto-pausing.
+      if (running) timer = win.setTimeout(tick, Math.max(0, 20 - elapsed));
     } catch (error) {
       if (!disposed && owner === generation) {
         if (['ADVANCED_DURATION_LIMIT', 'ADVANCED_RECORDING_LIMIT'].includes(error.code)) {
