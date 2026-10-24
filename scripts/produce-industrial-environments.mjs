@@ -28,6 +28,7 @@ import {
   industrialMaterialPixels,
 } from '../game/presentation/industrial-materials.mjs';
 import { createDefaultThemeBundle } from '../game/presentation/catalog.mjs';
+import { PICTURE_PRODUCTION_MIGRATION } from './picture-production-history.mjs';
 import { decodePresentationDocument } from '../game/presentation/document-codec.mjs';
 import { FORMATS, validateThemeBundle, resolvePresentation } from '../game/presentation/model.mjs';
 import { exportThemeBundle, importThemeBundle } from '../game/presentation/bundle.mjs';
@@ -432,30 +433,37 @@ export function assertIndustrialEnvironmentRetention(previous, next) {
 // Source catalogues may contain newly authored picture slots which the published
 // Studio has not adopted. A full transport must use the actual loaded contract,
 // not prove compatibility by importing into its own broader source registry.
+/** Only current slots or the exact admitted predecessor contract can be used.
+ * Retained picture slots preserve old gallery owners after membership changes;
+ * their inclusion creates source recipes, never a new artwork approval. */
+export function compatibleStudioBaseline(publishedSource, retainedSource) {
+  const published = validateThemeBundle(publishedSource);
+  const retained = validateThemeBundle(retainedSource);
+  const pin = PICTURE_PRODUCTION_MIGRATION.baseline.slots;
+  if (retained.slots.length !== pin.count || sha(canonicalJSON(retained.slots)) !== pin.sha256)
+    throw new Error('Retained Studio slot contract differs from the pinned predecessor.');
+  const current = new Map(createDefaultThemeBundle().slots.map((slot) => [slot.id, slot]));
+  const previous = new Map(retained.slots.map((slot) => [slot.id, slot]));
+  for (const slot of published.slots) {
+    const expected = current.get(slot.id) ?? previous.get(slot.id);
+    if (!expected || canonicalJSON(slot) !== canonicalJSON(expected))
+      throw new Error('The published Studio slot contract needs an explicit compatible producer.');
+  }
+  return createDefaultThemeBundle({ slots: published.slots });
+}
+
 async function publishedStudioBaseline() {
   const bytes = await readFile(resolve(root, 'game/presentation/compiled/studio.json')),
     published = validateThemeBundle(decodePresentationDocument(bytes.toString('utf8'))),
-    base = structuredClone(createDefaultThemeBundle()),
-    approved = new Map(published.slots.map((slot) => [slot.id, slot]));
-  base.slots = base.slots.filter((slot) => approved.has(slot.id));
-  if (
-    base.slots.length !== published.slots.length ||
-    base.slots.some((slot) => canonicalJSON(slot) !== canonicalJSON(approved.get(slot.id)))
-  )
-    throw new Error('The published Studio slot contract needs an explicit compatible producer.');
-  base.slots = structuredClone(published.slots);
-  for (const theme of base.themes)
-    theme.bindings = Object.fromEntries(
-      Object.entries(theme.bindings).filter(([id]) => approved.has(id)),
-    );
-  const used = new Set(
-    base.themes.flatMap(({ bindings }) =>
-      Object.values(bindings).map(({ id, revision }) => `${id}@${revision}`),
+    retained = JSON.parse(
+      await readFile(
+        resolve(root, 'authoring/library/fpv-field-kit/picture-migration-baseline.json'),
+        'utf8',
+      ),
     ),
-  );
-  base.assets = base.assets.filter(({ id, revision }) => used.has(`${id}@${revision}`));
+    base = compatibleStudioBaseline(published, retained);
   return {
-    base: validateThemeBundle(base),
+    base,
     published,
     contract: { slots: published.slots.length, sourceSha256: sha(bytes) },
   };

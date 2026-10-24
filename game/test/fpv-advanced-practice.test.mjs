@@ -91,7 +91,7 @@ test('aircraft arena keeps Legacy rates explicitly, applies preset starter rates
   let worker = LocalWorker.instances.at(-1);
   assert.equal(worker.messages[0].options.aircraft.format, 'AdvancedAircraft.v2');
   assert.deepEqual(worker.messages[0].options.response.response, DEFAULT_RESPONSE);
-  assert.equal(f.session.getTelemetry().frequency, 500);
+  assert.equal(f.session.getTelemetry().frequency, 1000);
   const chooseAircraft = f.container
     .querySelectorAll('select')
     .find((select) => select.children.some((option) => option.value === 'holybro-x650-v2'));

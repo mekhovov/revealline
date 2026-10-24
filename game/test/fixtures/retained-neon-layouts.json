@@ -1,0 +1,153 @@
+{
+  "sourceRevision": "eb39e198d5f230e8e6cbd613952d52cd745fb8ae",
+  "entries": [
+    {
+      "id": "fpv",
+      "sha256": "c482a4d220bdd5416236fe61e03fb0aaaf8ef4bef648da9aeb847702b07e1013"
+    },
+    {
+      "id": "ukraine",
+      "sha256": "7ef52e8c88103c0c5247224deb32fcb4dafef34ca9e1efe3fad13ff3da959c93"
+    },
+    {
+      "id": "drone-aid",
+      "sha256": "36c6c107cf02235c433fef589678de79a1523efaa139fabc0f016b595f71440a"
+    },
+    {
+      "id": "social-drone",
+      "sha256": "e409985ce582974017454ab07751db777b9a587604850547a5652ad85368f5e2"
+    },
+    {
+      "id": "sdua",
+      "sha256": "c714a5cbb6d3da4acbab314198a5fe8408496fd391690845d4f2d450f6a8c8b8"
+    },
+    {
+      "id": "victory-drones",
+      "sha256": "1396d963b9ce498c3c32127c1d9715a1a4d63d0a129d6ff2fbde09cf83cf45b4"
+    },
+    {
+      "id": "vd",
+      "sha256": "d86040546ecc48430967b82ebacdedcf9b5a18b72dc670b253193ff69d914a5f"
+    },
+    {
+      "id": "fpv-line",
+      "sha256": "98eed33ca4bdff27476446f60ad7f257adf6e5530c61eb39437d4ebdcc348e9b"
+    },
+    {
+      "id": "reveal",
+      "sha256": "ddc48abaada3f0ed43273dad5318dd479cf82da4580b67844fc7934c1a88ec40"
+    },
+    {
+      "id": "fly-free",
+      "sha256": "935e4f5b53a61f419760ab87aafd14522b171a3708bc049408449271ffbe21ce"
+    },
+    {
+      "id": "fpv-drone",
+      "sha256": "5fd3ae1919a1a2e9116dbf4d87d5a3ea3fbbce919199daa1ec86b7d0a2592d5a"
+    },
+    {
+      "id": "tryzub",
+      "sha256": "110bddf98564523b17119bd514abe221f15ed37ef56bdaf890bc2b9987170bd4"
+    },
+    {
+      "id": "vyshyvanka",
+      "sha256": "cf1bbf983682a0c5efe0f7a03b897fe8b6bcf3a4d7fd544ab1b3a4a3dc345b57"
+    },
+    {
+      "id": "ruzha",
+      "sha256": "35252940822f8b9353eb053d975ba710b45227b11f1a3ec466c7622163cc1c54"
+    },
+    {
+      "id": "kalyna",
+      "sha256": "97a3e83ce1202406dcf943cb3eeef2ef309bca8a34d9986e8cdab5b944a4cf56"
+    },
+    {
+      "id": "tree-of-life",
+      "sha256": "8e37a4b8a6a4f05b5bcd751829bc3594bf8399806829f0f17aac643ef0b32063"
+    },
+    {
+      "id": "pysanka",
+      "sha256": "c412ee666078ed7f6a4fd1c2f3bef1b9bc0a2038250923a17fd9dcb9dc854b49"
+    },
+    {
+      "id": "barvinok",
+      "sha256": "042f9eb09bda5499b33ec1d189e0362adb90280ca318fc5d10731caa7fa04cfb"
+    },
+    {
+      "id": "wheat",
+      "sha256": "9ee8d59c83ff6a99d38fc656278ad3456dad978609d1706ed675b2694e0e5e86"
+    },
+    {
+      "id": "vinok",
+      "sha256": "886cc80bac1bd48e87f8bf52da87c63935f6da3e10a04f9e52420b13621de949"
+    },
+    {
+      "id": "didukh",
+      "sha256": "648b61ad4f1374577288d7ebf3c55fbacf0001d62a1436a7007df3171ca63b78"
+    },
+    {
+      "id": "rushnyk",
+      "sha256": "57620d570543926e5eb793f2e5ab149bb0e0ffd620821f7143b51df2beed04e6"
+    },
+    {
+      "id": "bandura",
+      "sha256": "5fbe84f359b122b82a4fe8c0b5276e47118e2ac77ee0ebdcd44eba14b4f4ebcd"
+    },
+    {
+      "id": "trembita",
+      "sha256": "06b168e48955d2bf3262ca23eeec6fe0d8007c7fb85ceb09d1bfba449fce2506"
+    },
+    {
+      "id": "tsymbaly",
+      "sha256": "05478bcd30ea8d12c9217103d1409eacdc53e0119643b2defc5c38721b95bbb1"
+    },
+    {
+      "id": "kosiv-pitcher",
+      "sha256": "2efa108483f18864af5d473f86bf8ace6eae627107c973655997bfe12aae79d6"
+    },
+    {
+      "id": "opishnia-ram",
+      "sha256": "78dbfa4cb633aba50aba5527ccfb42b4fe2ddbf435088a2c23fdbf9efd44cb6e"
+    },
+    {
+      "id": "petrykivka",
+      "sha256": "cba5235bc8c796db6ace54f280b672f1a3ea1da6c3930fff53235b9e45622641"
+    },
+    {
+      "id": "oak",
+      "sha256": "9092dd9ab1f8efeb4befc92e8755c1333cf030dbadf3bf6a1923e82390705d44"
+    },
+    {
+      "id": "stork",
+      "sha256": "a159e814ab91d4bca3326fbfb2f2548bd7e95030b9b38d75fbd221c7a966cb30"
+    },
+    {
+      "id": "swallow",
+      "sha256": "237b539cdd3452767e08f438325ecd9492125d1a415ed748a613f45addb832c2"
+    },
+    {
+      "id": "horse",
+      "sha256": "9a4f637a3afe5c5391b89cc8bf53a5ee4971b8933fa0e554b6f9bcd362a08c86"
+    },
+    {
+      "id": "deer",
+      "sha256": "a919414b08f0f79c8825ac210e8bd5a4cfbb355b06cde8de6cbe2c33fece8b9d"
+    },
+    {
+      "id": "fish",
+      "sha256": "eee6591dfa40a49b946558a78bacc93445ec0029ee0c9f12c6c9788cafe39786"
+    },
+    {
+      "id": "berehynia",
+      "sha256": "8d40a77acb8f353b12da132adaff3c2593b33fde8a6f5461b1b190de1427c0b1"
+    },
+    {
+      "id": "bezkonechnyk",
+      "sha256": "b64b994a618ce1d4aae71a027d92111efcdfb800e78fbf2f786d498dd3b5a207"
+    },
+    {
+      "id": "ornek-tulip",
+      "sha256": "d932c133bcee12f95c83704c7a9dd2239e760b46242df0f1b22e8e46003f3c72"
+    }
+  ]
+}

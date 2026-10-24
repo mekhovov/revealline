@@ -1,0 +1,23 @@
+{
+  "format": "FpvSharedJsonDedupAudit.v1",
+  "baseline": "39475b46d31e910daab1cd60b5c3469b4fd89621",
+  "target": "optional-practice/civilian-fpv/flight-fullscreen.mjs",
+  "beforeBytes": 324774,
+  "afterBytes": 319741,
+  "savedBytes": 5033,
+  "beforeSha256": "54d3db054b4c2d405df6b11f77e18f00b81880989293cd3a7d95a6788d948b27",
+  "afterSha256": "d96e7a6fd880f7e07f5a66232e5eeed8ee009b7b018665adca2c4a2a36dd828e",
+  "removedFactory": 1,
+  "removedImport": 1,
+  "replacedBindings": 12,
+  "allOtherModuleAstEqual": true,
+  "outsideGeneratedBlockByteIdentical": true,
+  "unchangedFiles": [
+    "game/data-json.mjs",
+    "optional-practice/civilian-fpv/flight-fullscreen.css",
+    "publishing/optional-package-policy.mjs",
+    "optional-practice/civilian-fpv/aircraft-physics.mjs",
+    "optional-practice/civilian-fpv/advanced-aircraft-runtime.mjs",
+    "optional-practice/civilian-fpv/aircraft-recording.mjs"
+  ]
+}

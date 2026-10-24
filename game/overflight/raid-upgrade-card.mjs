@@ -132,13 +132,36 @@ function shieldRefitConsequence(shield, locale) {
   return [comparison, refill, objective].filter(Boolean).join(' ');
 }
 
+function fieldRewardCaption(model, locale) {
+  const uk = locale === 'uk';
+  const label =
+    model.field === 'field-repair'
+      ? uk
+        ? 'міцності'
+        : 'hull'
+      : model.field === 'field-reroll'
+        ? uk
+          ? 'перевибір'
+          : 'reroll'
+        : uk
+          ? 'очок'
+          : 'score';
+  return `+${model.amount.toLocaleString(locale === 'uk' ? 'uk' : 'en')} ${label}`;
+}
+
 /** Native sprite demonstrations, not another combat simulation. Values are the
  * same parameter projection used by Raid. The app drives repaint only while
  * the upgrade modal is visible, so removal needs no animation cleanup. */
 export function paintOverflightHuntPreview(
   context,
   model,
-  { time = 0, locale = 'en', reducedEffects = false, paintSprite = () => {} } = {},
+  {
+    time = 0,
+    locale = 'en',
+    reducedEffects = false,
+    expandedComparison = false,
+    paintSprite = () => {},
+  } = {},
 ) {
   const still = reducedEffects,
     cycle = still ? 0.58 : (time % 3) / 3;
@@ -164,7 +187,7 @@ export function paintOverflightHuntPreview(
             ? 'очок'
             : 'score';
     context.globalAlpha = still ? 1 : 0.65 + Math.sin(cycle * Math.PI) * 0.35;
-    context.fillText(`+${model.amount} ${label}`, 160, 127);
+    if (!expandedComparison) context.fillText(`+${model.amount} ${label}`, 160, 127);
     context.globalAlpha = 1;
     return;
   }
@@ -186,7 +209,12 @@ export function paintOverflightHuntPreview(
     context.fillStyle = index ? palette.gold : palette.light;
     context.font = 'bold 10px system-ui';
     context.textAlign = 'left';
-    context.fillText(locale === 'uk' ? (index ? 'ДАЛІ' : 'ЗАРАЗ') : index ? 'NEXT' : 'NOW', 10, 17);
+    if (!expandedComparison)
+      context.fillText(
+        locale === 'uk' ? (index ? 'ДАЛІ' : 'ЗАРАЗ') : index ? 'NEXT' : 'NOW',
+        10,
+        17,
+      );
     const native = (kind, x, y, size) => paintSprite(context, kind, x, y, size, still ? 0 : time);
     const line = (x, y, w, h, color) => {
       context.fillStyle = color;
@@ -283,7 +311,7 @@ export function paintOverflightHuntPreview(
         context.fillStyle = palette.danger;
         context.textAlign = 'center';
         context.font = 'bold 12px system-ui';
-        context.fillText(`−${damage}`, 80, 95);
+        if (!expandedComparison) context.fillText(`−${damage}`, 80, 95);
       }
       bar(cycle > 0.5 || still ? 1 - damage / 100 : 1);
     } else {
@@ -314,7 +342,7 @@ export function paintOverflightHuntPreview(
     context.fillStyle = palette.light;
     context.textAlign = 'center';
     context.font = '10px system-ui';
-    context.fillText(previewCaption(model, index, locale), 78, 139, 144);
+    if (!expandedComparison) context.fillText(previewCaption(model, index, locale), 78, 139, 144);
     context.restore();
   }
 }
@@ -327,6 +355,7 @@ export function createOverflightHuntUpgradeCard({
   rulesVersion,
   locale = 'en',
   reducedEffects = false,
+  expandedComparison = false,
   disabled = false,
   moduleIcon,
   paintSprite,
@@ -376,6 +405,7 @@ export function createOverflightHuntUpgradeCard({
       time,
       locale,
       reducedEffects,
+      expandedComparison,
       paintSprite,
     });
   button.paintPreview();
@@ -396,17 +426,55 @@ export function createOverflightHuntUpgradeCard({
     ? `${current} → ${local(offer.next)}`
     : `${text('current')}: ${previewCaption(model, 0, locale)}. ${text('next')}: ${previewCaption(model, 1, locale)}`;
   const consequence = shieldRefitConsequence(model.shieldRefit, locale);
-  button.append(
-    heading,
-    canvas,
-    node('span', showRerollCount ? comparison : local(offer.next), 'upgrade-description'),
-  );
+  button.append(heading, canvas);
+  const projectedFacts = [];
+  if (expandedComparison) {
+    // Keep sprite geometry; project every fixed canvas label into wrapping text.
+    const expanded = node('span', '', 'upgrade-comparison raid-upgrade-comparison');
+    for (const index of [0, 1]) {
+      const row = node('span', '', 'upgrade-comparison-state');
+      const value = model.field
+        ? index
+          ? local(offer.next)
+          : current
+        : previewCaption(model, index, locale);
+      row.append(node('strong', text(index ? 'next' : 'current')), node('span', value));
+      if (!model.field) {
+        const system = index === 0 && model.beforeSystem ? model.beforeSystem : model.system;
+        const parameters = index ? model.after : model.before;
+        if (system === 'plating') {
+          const damage = (20 * (1 - parameters.armorReduction)).toLocaleString(
+            locale === 'uk' ? 'uk' : 'en',
+          );
+          const fact = `${text('damageTaken')}: −${damage}`;
+          row.append(node('span', fact));
+          projectedFacts.push(`${text(index ? 'next' : 'current')}: ${fact}`);
+        }
+      }
+      expanded.append(row);
+    }
+    if (model.field) {
+      const fact = fieldRewardCaption(model, locale);
+      expanded.append(node('strong', fact, 'raid-upgrade-preview-amount'));
+      projectedFacts.push(fact);
+    }
+    button.append(expanded);
+  }
+  if (!expandedComparison || !model.field)
+    button.append(
+      node('span', showRerollCount ? comparison : local(offer.next), 'upgrade-description'),
+    );
   if (consequence)
     button.append(node('span', consequence, 'upgrade-description upgrade-consequence'));
   button.setAttribute(
     'aria-label',
     `${local(offer.title)}. ${comparison}. ${current}. ${local(offer.next)}${consequence ? ` ${consequence}` : ''}`,
   );
+  if (projectedFacts.length)
+    button.setAttribute(
+      'aria-label',
+      `${button.getAttribute('aria-label')} ${projectedFacts.join('. ')}.`,
+    );
   button.addEventListener('click', () => onChoose(offer.id));
   return button;
 }

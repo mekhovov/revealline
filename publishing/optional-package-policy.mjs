@@ -33,10 +33,10 @@ const BASE_OPTIONAL_PACKAGE_POLICIES = Object.freeze({
     root: 'optional-practice/civilian-flight/',
     entry: 'optional-practice/civilian-flight/index.html',
     // The installed archive includes the reviewed launcher, access gate and
-    // shared menu CSS, battlefield artwork and ambience closure. The runtime has 96 files; the
+    // shared menu CSS, battlefield artwork and ambience closure. The runtime has 98 files; the
     // selected source archive adds two reviewed templates within this finite
     // envelope.
-    limits: Object.freeze({ files: 98, bytes: 8 * 1024 * 1024 }),
+    limits: Object.freeze({ files: 100, bytes: 8 * 1024 * 1024 }),
     localFiles: Object.freeze([
       'index.html',
       'app.mjs',
@@ -51,6 +51,8 @@ const BASE_OPTIONAL_PACKAGE_POLICIES = Object.freeze({
       'README.md',
     ]),
     sharedFiles: Object.freeze([
+      'game/gameplay-audio-preferences.mjs',
+      'game/ui/gameplay-audio-output.mjs',
       'game/ui/mode-play-shell.mjs',
       'game/ui/mode-play-shell.css',
       'game/ui/mode-choice.css',
@@ -63,6 +65,7 @@ const BASE_OPTIONAL_PACKAGE_POLICIES = Object.freeze({
       'optional-practice/civilian-fpv/radio-profile.mjs',
       'optional-practice/civilian-fpv/flight-response.mjs',
       'optional-practice/civilian-fpv/rates.mjs',
+      'optional-practice/civilian-fpv/world-audio.mjs',
       'optional-practice/civilian-fpv/flight-fullscreen.mjs',
       'optional-practice/civilian-fpv/flight-fullscreen.css',
       'optional-practice/civilian-fpv/sim-presentation.mjs',
@@ -622,6 +625,7 @@ const FPV_TUNING_FILES = Object.freeze([
   'advanced-ghost-path.mjs',
   'propulsion-evidence.mjs',
   'propulsion-evidence-ui.mjs',
+  'propulsion-load.mjs',
   'aircraft-challenge.mjs',
   'aircraft-challenge-ui.mjs',
   'advanced-worker.mjs',
@@ -645,11 +649,11 @@ export const OPTIONAL_PACKAGE_POLICIES = Object.freeze(
       Object.freeze({
         ...policy,
         // Original aggregate locale files are retained as source hashes, while
-        // only selected messages ship. Academy's reviewed input inventory is
-        // 13,156,199 bytes with the visual workbench and isolated response bench.
-        // The 12 MiB + 704 KiB input allowance retains aggregate locale hashes;
+        // only selected messages ship. Academy's reviewed input inventory includes
+        // the visual workbench and isolated response bench.
+        // The runtime envelope plus 192 KiB retains aggregate locale hashes;
         // those full locale inputs do not ship in standalone SIM archives.
-        ...(id === 'civilian-fpv' ? { sourceInputBytes: 12 * 1024 * 1024 + 704 * 1024 } : {}),
+        ...(id === 'civilian-fpv' ? { sourceInputBytes: 13 * 1024 * 1024 + 192 * 1024 } : {}),
         // The canonical browser is projected into an existing package module.
         // Admit only its message families, including plural and dynamic keys.
         localeKeyPrefixes: Object.freeze({
@@ -714,23 +718,25 @@ export const OPTIONAL_PACKAGE_POLICIES = Object.freeze(
           // The visual workbench and isolated response bench add nine explicit
           // files to each complete runtime/source envelope. The installed-core
           // Academy cache includes the shared full locale catalog; its measured
-          // 12,976,707-byte closure requires a 512 KiB allowance above 12 MiB.
+          // 13,125,579-byte closure, including shared navigation, fits 13 MiB.
           // Standalone Academy remains below 12 MiB; World stays at 20 MiB.
           // World also admits its single Regional Advanced adapter.
           // Academy now carries the same pinned 4.35 MB Rapier build as World.
+          // The evidence inspector adds one explicitly admitted load solver;
+          // complete source inventories are now 151 and 211 files respectively.
           files:
             id === 'civilian-fpv'
-              ? 150
+              ? 151
               : id === 'fpv-worlds'
-                ? 210 // Includes World's same-scope flight and response-bench workers.
+                ? 211 // Includes World's same-scope flight and response-bench workers.
                 : id === 'civilian-flight'
-                  ? 98
+                  ? 100
                   : policy.limits.files,
           bytes:
             id === 'fpv-worlds'
               ? 20 * 1024 * 1024
               : id === 'civilian-fpv'
-                ? 12 * 1024 * 1024 + 512 * 1024
+                ? 13 * 1024 * 1024
                 : policy.limits.bytes,
         }),
         localFiles: Object.freeze([
@@ -791,16 +797,9 @@ export const OPTIONAL_PACKAGE_POLICIES = Object.freeze(
             'game/ui/enemy-appearance-controls.mjs',
             'game/ui/defeat-sound-controls.mjs',
             'game/ui/destruction-audio.mjs',
-            // Academy's checked shared-audio projection already contains these
-            // exact canonical scopes and hashes; no other Academy module imports
-            // them. Avoid shipping a second unused copy of the recorded bank.
-            ...(id === 'civilian-fpv'
-              ? []
-              : [
-                  'game/ui/destruction-level.mjs',
-                  'game/ui/human-reaction-policy.mjs',
-                  'game/audio/human-reactions/portable.mjs',
-                ]),
+            'game/ui/destruction-level.mjs',
+            'game/ui/human-reaction-policy.mjs',
+            'game/audio/human-reactions/portable.mjs',
           ]),
         ]),
       }),

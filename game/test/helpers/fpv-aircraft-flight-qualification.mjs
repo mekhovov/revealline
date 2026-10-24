@@ -1,3 +1,4 @@
+import { AIRCRAFT_FREQUENCY } from '../../../optional-practice/civilian-fpv/advanced-aircraft-runtime.mjs';
 import {
   createAdvancedSimulation,
   initAdvancedRuntime,
@@ -186,7 +187,7 @@ export async function runAircraftFlightQualification({ onPreset } = {}) {
   return {
     format: 'AircraftFlightQualification.v1',
     gravity: 9.81,
-    frequency: 500,
+    frequency: AIRCRAFT_FREQUENCY,
     aircraft,
     limitation:
       'Software controllability with default catalog settings; not measured flight fidelity.',

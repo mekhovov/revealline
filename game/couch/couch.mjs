@@ -1,3 +1,4 @@
+import { renderTextSizeControl } from '../ui/text-size-control.mjs';
 import { acceptAttemptAppearance } from '../presentation/attempt-appearance.mjs';
 import { prepareIndustrialEnvironmentSource } from '../presentation/industrial-environments.mjs';
 import { runtimeActorArtRevision } from '../hunt/preferences.mjs';
@@ -249,10 +250,10 @@ const displayPreferences = createDisplayPreferences({
 });
 const renderDisplayPreferences = (state) => {
   document.body.dataset.textFace = state.textFace;
-  document.body.dataset.textSize = state.textSize;
+  document.body.dataset.textSize = state.effectiveTextSize ?? state.textSize;
   document.body.dataset.effects = state.effectiveReducedEffects ? 'reduced' : 'full';
   $('race-text-face').value = state.textFace;
-  $('race-text-size').value = state.textSize;
+  renderTextSizeControl($('race-text-size'), state.textSize);
   $('race-reduced').checked = state.reducedEffects;
   localizedText($('race-system-reduction'), () =>
     state.effectiveReducedEffects && !state.reducedEffects
@@ -1133,6 +1134,8 @@ try {
         );
       painters.forEach((p) => p.setAttemptAppearance(roundRecipe.attemptAppearance));
     }
+    // The accepted action starts a new clock boundary; menu time is never play time.
+    last = 0;
     resumeDuel(match, { preserveContinuation: true });
     if (cue) beginStartCue(cue);
     else {
@@ -4864,18 +4867,18 @@ try {
         while (accumulator + 1e-9 >= FIXED_DT && match.status === 'running') {
           const before = match.runs.map((r) => r.tick);
           const beforeStatus = match.runs.map((r) => r.status);
-          const commands = input.consume().map((command, i) =>
-            beforeStatus[i] === 'respawning'
-              ? {
-                  direction: null,
-                  boost: false,
-                  action: false,
-                  pickup: false,
-                }
-              : neutralResumeTick
-                ? { ...command, boost: false, action: false, pickup: false }
+          const commands = input
+            .consume(neutralResumeTick ? { neutralActions: true } : undefined)
+            .map((command, i) =>
+              beforeStatus[i] === 'respawning'
+                ? {
+                    direction: null,
+                    boost: false,
+                    action: false,
+                    pickup: false,
+                  }
                 : command,
-          );
+            );
           localRecordings.get(match)?.append(commands);
           stepDuel(match, commands);
           match.runs.forEach((run, i) =>

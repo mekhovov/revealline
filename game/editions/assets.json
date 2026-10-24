@@ -69,9 +69,7 @@
     "bytes": 10429,
     "publication": "public",
     "approved": true,
-    "dependencies": [
-      "droneaid-logo"
-    ],
+    "dependencies": ["droneaid-logo"],
     "derivative": {
       "sourceAssetId": "droneaid-logo",
       "sourceSha256": "66dc87ce501a118189c768e81f665a0393e2452e000846374ba5c5e197cb7e1e",
@@ -93,10 +91,7 @@
     "bytes": 42167,
     "publication": "public",
     "approved": true,
-    "dependencies": [
-      "droneaid-logo",
-      "droneaid-icon-192"
-    ],
+    "dependencies": ["droneaid-logo", "droneaid-icon-192"],
     "derivative": {
       "sourceAssetId": "droneaid-logo",
       "sourceSha256": "66dc87ce501a118189c768e81f665a0393e2452e000846374ba5c5e197cb7e1e",
@@ -127,9 +122,7 @@
     "bytes": 1245,
     "publication": "public",
     "approved": true,
-    "dependencies": [
-      "droneaid-nl-logo-source"
-    ]
+    "dependencies": ["droneaid-nl-logo-source"]
   },
   {
     "id": "droneaid-nl-logo",
@@ -156,9 +149,7 @@
     "bytes": 6925,
     "publication": "public",
     "approved": true,
-    "dependencies": [
-      "droneaid-nl-propeller"
-    ],
+    "dependencies": ["droneaid-nl-propeller"],
     "derivative": {
       "sourceAssetId": "droneaid-nl-propeller",
       "sourceSha256": "dac6c71006d1bdf0b29cad9a7825a5ed2874936a29debccafaba2a6ddb765ef2",
@@ -180,10 +171,7 @@
     "bytes": 21710,
     "publication": "public",
     "approved": true,
-    "dependencies": [
-      "droneaid-nl-propeller",
-      "droneaid-nl-icon-192"
-    ],
+    "dependencies": ["droneaid-nl-propeller", "droneaid-nl-icon-192"],
     "derivative": {
       "sourceAssetId": "droneaid-nl-propeller",
       "sourceSha256": "dac6c71006d1bdf0b29cad9a7825a5ed2874936a29debccafaba2a6ddb765ef2",

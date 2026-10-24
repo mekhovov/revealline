@@ -277,3 +277,24 @@ test('actual complete-backup import and Undo adopt text size while preserving th
   assert.equal(page.rendered.run.tick, 0);
   assert.deepEqual(page.errors, []);
 });
+
+test('Solo retains imported extra-large through an unrelated display edit and paused flight', async (t) => {
+  const storage = initialStorage({ textSize: 'extra-large' });
+  const page = await soloPage(t, { campaign, storage });
+  assert.equal(page.$('text-size').value, 'extra-large');
+  assert.equal(page.$('text-size').querySelector('[data-text-size-retained]').disabled, true);
+  assert.equal(page.doc.body.dataset.textSize, 'large');
+  await startCut(page);
+  openSettings(page);
+  const before = snapshot(page);
+  page.change('text-face', 'plain');
+  assert.equal(profile(storage).library.preferences.textSize, 'extra-large');
+  assert.equal(JSON.parse(storage.getItem('revealline.display.v1')).textSize, 'extra-large');
+  assert.match(page.$('text-size').parentElement.textContent, /currently uses Large/);
+  assertPausedUnchanged(page, before);
+  page.change('text-size', 'large');
+  assert.equal(profile(storage).library.preferences.textSize, 'large');
+  assert.equal(page.$('text-size').querySelector('[data-text-size-retained]'), null);
+  assertPausedUnchanged(page, before);
+  assert.deepEqual(page.errors, []);
+});

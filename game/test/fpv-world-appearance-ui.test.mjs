@@ -41,6 +41,62 @@ const unifiedMissionCount =
   WORLD_LIBRARY_CATALOGUE.reduce((total, row) => total + row.courses, 0) +
   REGIONAL_LIBRARY_PINS.length;
 
+function registerOfflineFeedbackTests() {
+  for (const locale of ['en', 'uk'])
+    for (const kind of ['overall', 'cancelled', 'unknown'])
+      test(`Worlds offline feedback ${locale} ${kind} uses safe localized reasons in both panels`, async (t) => {
+        const previous = getLocale();
+        setLocale(locale);
+        t.after(() => setLocale(previous));
+        const error =
+          kind === 'cancelled'
+            ? new DOMException('secret', 'AbortError')
+            : new Error(
+                kind === 'overall'
+                  ? 'Download exceeded five minutes. Retry on a faster connection.'
+                  : 'secret backend detail',
+              );
+        const f = fixture(t, {
+          url: `https://example.test/optional-practice/fpv-worlds/index.html?lang=${locale}`,
+          serviceWorker: {
+            getRegistration: async () => undefined,
+            register: async () => {
+              throw error;
+            },
+          },
+        });
+        await f.app.ready;
+        f.$('prepare-runtime').click();
+        await waitFor(() => !f.$('prepare-runtime').disabled);
+        const text = f.$('runtime-offline-status').textContent;
+        assert.equal(f.$('settings-runtime-offline-status').textContent, text);
+        assert.doesNotMatch(text, /secret|packaged simulator|пакунку симулятора/);
+        assert.match(
+          text,
+          kind === 'overall'
+            ? locale === 'uk'
+              ? /п’ять хвилин/
+              : /five minutes/
+            : kind === 'cancelled'
+              ? locale === 'uk'
+                ? /скасовано/
+                : /cancelled/
+              : locale === 'uk'
+                ? /Не вдалося/
+                : /failed/,
+        );
+        if (locale === 'en' && kind === 'overall') {
+          f.$('world-language').value = 'uk';
+          f.$('world-language').dispatchEvent(new Event('change'));
+          assert.match(f.$('runtime-offline-status').textContent, /п’ять хвилин/);
+          assert.equal(
+            f.$('settings-runtime-offline-status').textContent,
+            f.$('runtime-offline-status').textContent,
+          );
+        }
+      });
+}
+
 const requireAuthoring = createRequire(
   new URL('../../authoring/fpv-worlds/package.json', import.meta.url),
 );
@@ -49,9 +105,94 @@ const html = parse(
   await readFile(new URL('../../optional-practice/fpv-worlds/index.html', import.meta.url), 'utf8'),
 );
 
+// Scalar-only diagnostic proposal; no fixture or payload history is retained.
+let fixtureMemoryCreated = 0;
+let fixtureMemoryDisposeStarted = 0;
+let fixtureMemoryDisposeCompleted = 0;
+let fixtureMemoryRows = 0;
+let fixtureMemoryOmitted = 0;
+function recordFixtureMemory(phase, fixtureId, inspectWorkers = false) {
+  if (fixtureMemoryRows >= 512) {
+    fixtureMemoryOmitted += 1;
+    return;
+  }
+  const memory = process.memoryUsage();
+  let liveWorkers = null;
+  let terminatedWorkers = null;
+  let retainedMessages = null;
+  if (inspectWorkers) {
+    liveWorkers = 0;
+    terminatedWorkers = 0;
+    retainedMessages = 0;
+    for (const worker of RegionalWorker.instances) {
+      if (worker.terminated) terminatedWorkers += 1;
+      else liveWorkers += 1;
+      retainedMessages += worker.messages.length;
+    }
+  }
+  const line =
+    '# world-fixture-memory ' +
+    JSON.stringify({
+      sequence: fixtureMemoryRows + 1,
+      phase,
+      fixtureId,
+      created: fixtureMemoryCreated,
+      disposeStarted: fixtureMemoryDisposeStarted,
+      disposeCompleted: fixtureMemoryDisposeCompleted,
+      omitted: fixtureMemoryOmitted,
+      heapUsed: memory.heapUsed,
+      heapTotal: memory.heapTotal,
+      external: memory.external,
+      arrayBuffers: memory.arrayBuffers,
+      rss: memory.rss,
+      liveWorkers,
+      terminatedWorkers,
+      retainedMessages,
+    }) +
+    '\n';
+  if (Buffer.byteLength(line, 'utf8') > 1024) {
+    fixtureMemoryOmitted += 1;
+    return;
+  }
+  fixtureMemoryRows += 1;
+  process.stdout.write(line);
+}
+
+function createOptionRestoreHook(optionOwner) {
+  return () => {
+    try {
+      if (optionOwner.value) globalThis.Option = optionOwner.value;
+      else delete globalThis.Option;
+    } finally {
+      optionOwner.value = null;
+    }
+  };
+}
+
+function createFixtureDisposeHook(appOwner, fixtureMemoryId) {
+  return async () => {
+    try {
+      fixtureMemoryDisposeStarted += 1;
+      recordFixtureMemory('before-dispose', fixtureMemoryId, true);
+      await appOwner.app.dispose();
+      fixtureMemoryDisposeCompleted += 1;
+      recordFixtureMemory('after-dispose', fixtureMemoryId, true);
+      for (let index = RegionalWorker.instances.length - 1; index >= 0; index -= 1) {
+        if (RegionalWorker.instances[index].terminated) RegionalWorker.instances.splice(index, 1);
+      }
+      recordFixtureMemory('after-worker-prune', fixtureMemoryId, true);
+    } finally {
+      appOwner.app = null;
+    }
+  };
+}
+
+registerOfflineFeedbackTests();
 function fixture(t, options = {}) {
+  const fixtureMemoryId = ++fixtureMemoryCreated;
   const {
     storage = new Map(),
+    serviceWorker,
     combat = false,
     url = 'https://example.test/optional-practice/fpv-worlds/index.html',
     indexedDB = options?.open ? options : new IDBFactory(),
@@ -96,10 +237,7 @@ function fixture(t, options = {}) {
     option.value = value;
     return option;
   };
-  t.after(() => {
-    if (priorOption) globalThis.Option = priorOption;
-    else delete globalThis.Option;
-  });
+  t.after(createOptionRestoreHook({ value: priorOption }));
   doc.createElementNS = (_namespace, name) => doc.createElement(name);
   function copy(source, parent) {
     if (!source.tagName) return;
@@ -133,7 +271,7 @@ function fixture(t, options = {}) {
     CustomEvent,
     location: new URL(url),
     performance: { now: () => now },
-    navigator: { getGamepads: () => pads },
+    navigator: { getGamepads: () => pads, ...(serviceWorker ? { serviceWorker } : {}) },
     localStorage: {
       getItem: (key) => storage.get(key) ?? null,
       setItem: (key, value) => storage.set(key, value),
@@ -196,7 +334,8 @@ function fixture(t, options = {}) {
     rendererFactory: () => renderer,
     ...factories,
   });
-  t.after(() => app.dispose());
+  recordFixtureMemory('constructed', fixtureMemoryId);
+  t.after(createFixtureDisposeHook({ app }, fixtureMemoryId));
   return {
     app,
     doc,
@@ -2443,6 +2582,17 @@ test('Apply & restart waits for explicit Arm after delayed World, Legacy and Reg
           'all initial controls and any native-world action bits stay neutral',
         );
         assert.equal(h.$('world-fov').value, '103');
+        const observed = h.app.snapshot().observedSplits;
+        if (host === 'Regional') {
+          assert.equal(observed, null);
+          assert.match(
+            h.doc.querySelector('[data-practice-splits]').textContent,
+            /No course splits in free flight/,
+          );
+        } else if (configuration === 'Meteor75') {
+          assert.equal(observed.ticks, 0);
+          assert.deepEqual(observed.rows, []);
+        } else assert.equal(observed, null);
         assert.equal(h.$('flight-mode').value, 'self-level');
         const store = tuning.createTuningLibraryStore({
           storage: {
@@ -2480,6 +2630,8 @@ test('Apply & restart waits for explicit Arm after delayed World, Legacy and Reg
         await tick(8);
         assert.equal(h.app.snapshot().state.status, 'active');
         assert.ok(h.app.snapshot().state.ticks > 0, 'explicit Arm starts the saved configuration');
+        if (configuration === 'Meteor75' && host !== 'Regional')
+          assert.equal(h.app.snapshot().observedSplits.ticks, h.app.snapshot().state.ticks);
         assert.equal(storage.get(tuning.TUNING_LIBRARY_KEY), store.export());
         if (host !== 'Regional') {
           await h.app.startFlight(entry, { mode: 'self-level' });
@@ -2857,7 +3009,7 @@ test('Flight School explicit practice uses the selected aircraft and exact custo
         assert.ok(h.app.snapshot().state.ticks > 0);
         assert.equal(
           h.app.snapshot().state.advancedTelemetry.backend,
-          'civilian-quad-aircraft-regional.v2',
+          'civilian-quad-aircraft-regional.v3',
         );
         assert.equal(storage.get(tuning.TUNING_LIBRARY_KEY), saved);
         h.app.pause();
@@ -2927,8 +3079,8 @@ test('saved aircraft prepares World, Beginner and Regional hosts with physical g
       const state = h.app.snapshot().state;
       assert.equal(state.reason, 'prepared', h.$('flight-status').textContent);
       assert.equal(state.unscored, true);
-      assert.equal(state.advancedTelemetry.backend, 'civilian-quad-aircraft-regional.v2');
-      assert.equal(state.advancedTelemetry.frequency, 500);
+      assert.equal(state.advancedTelemetry.backend, 'civilian-quad-aircraft-regional.v3');
+      assert.equal(state.advancedTelemetry.frequency, 1000);
       assert.deepEqual(displayedAircraft.geometry, preset.aircraft.geometry);
       assert.equal(displayedAircraft.radius, preset.aircraft.radius);
       const worker = RegionalWorker.instances.at(-1);
@@ -3977,6 +4129,24 @@ test('Random from a paused lesson keeps the learning context and can exclude all
   h.$('world-random-levels').value = 'mixed';
   h.$('world-random-levels').emit('change');
   assert.equal(h.$('journey-random-level').disabled, false);
+});
+
+test('World preserves incoming extra-large through generated controls and an unrelated display change', async (t) => {
+  const storage = new Map([
+    [
+      'revealline.display.v1',
+      JSON.stringify({ textFace: 'plain', textSize: 'extra-large', reducedEffects: false }),
+    ],
+  ]);
+  const h = fixture(t, { storage });
+  await h.app.ready;
+  const control = h.$('worlds-global-textSize');
+  assert.equal(control.value, 'extra-large');
+  assert.equal(control.querySelector('[data-text-size-retained]').disabled, true);
+  assert.equal(h.doc.body.dataset.textSize, 'large');
+  h.$('worlds-global-reducedEffects').checked = true;
+  h.$('worlds-global-reducedEffects').emit('change');
+  assert.equal(JSON.parse(storage.get('revealline.display.v1')).textSize, 'extra-large');
 });
 
 function combatFixture(t, options = {}) {
