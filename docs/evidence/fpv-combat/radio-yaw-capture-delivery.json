@@ -1,0 +1,46 @@
+{
+  "format": "FPVRadioYawCaptureFix.v1",
+  "date": "2026-10-21",
+  "parent": "7df7908223ed48dc9fb34c7e5d1ea100b35df44e",
+  "sourceSha256": "1553ea8ce202a4f133f0f3942bebf5936bea63c232bdd6a7ac2185aae4e9a4fa",
+  "rootCause": "Previously mapped throttle still participated in otherAxesStill, atRest and all-axis dwell stability; moving it to halfway blocked the new yaw channel.",
+  "before": {
+    "device": "Oxbot RC USB JoyStick",
+    "phase": "positive;index1;yaw",
+    "rawAxes": [
+      0.001,
+      0.001,
+      0.022,
+      1,
+      -1,
+      -1,
+      -1,
+      -1
+    ],
+    "completedThrottleAxis": 2,
+    "yawAxis": 3,
+    "holdProgress": 0,
+    "userIsolationConfirmation": "It advances now: yaw held right while already-calibrated throttle was lowered fully"
+  },
+  "after": {
+    "userHardwareConfirmation": "Yaw advances automatically now",
+    "procedure": "User refreshed corrected build and repeated guided calibration, leaving already-mapped throttle near halfway during yaw movements, without Continue.",
+    "observedUI": [
+      "03 / READY \u00b7 AUTO-SAVE",
+      "Saved automatically on this device.",
+      "Oxbot verified profile selected",
+      "Live stick values available"
+    ]
+  },
+  "checks": [
+    "Syntax check passed",
+    "Diff-whitespace check passed",
+    "Academy and Worlds packages construct within unchanged policies",
+    "Physical Oxbot yaw calibration confirmed by user"
+  ],
+  "limits": [
+    "No automated suite run",
+    "No physical check across every radio model or transport",
+    "Preserves ambiguity checks for unassigned axes, endpoint span checks, current-axis return, final low-throttle validation and focus/reconnect interruption"
+  ]
+}

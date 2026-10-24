@@ -532,16 +532,27 @@ export function mountRadioGuide({
     if (result.saved) onDone();
     else focusStep();
   }
+  // Completed channels no longer participate in identifying the next stick.
+  // In particular, a spring-centred or nudged throttle must not block yaw.
+  // Unassigned channels still enforce one unambiguous movement at a time.
   function otherAxesStill(pad, axis) {
     return (
-      baseline && pad.axes.every((value, i) => i === axis || Math.abs(value - baseline[i]) <= 0.14)
+      baseline &&
+      pad.axes.every(
+        (value, i) =>
+          i === axis || assignments.includes(i) || Math.abs(value - baseline[i]) <= 0.14,
+      )
     );
   }
   function atRest(pad) {
     return (
       baseline &&
       pad.axes.length === baseline.length &&
-      pad.axes.every((value, i) => Math.abs(value - baseline[i]) <= 0.12)
+      pad.axes.every(
+        (value, i) =>
+          (assignments.includes(i) && i !== positive?.axis) ||
+          Math.abs(value - baseline[i]) <= 0.12,
+      )
     );
   }
   function positiveCandidate(pad) {
@@ -558,7 +569,7 @@ export function mountRadioGuide({
       ? first
       : null;
   }
-  function held(pad, key, condition, now, duration = 650) {
+  function held(pad, key, condition, now, duration = 650, observedAxes = null) {
     if (!condition) {
       clearDwell();
       return false;
@@ -567,7 +578,10 @@ export function mountRadioGuide({
       !dwell ||
       dwell.key !== key ||
       dwell.axes.length !== pad.axes.length ||
-      pad.axes.some((value, i) => Math.abs(value - dwell.axes[i]) > 0.035)
+      pad.axes.some(
+        (value, i) =>
+          (!observedAxes || observedAxes.includes(i)) && Math.abs(value - dwell.axes[i]) > 0.035,
+      )
     )
       dwell = { key, start: now, axes: [...pad.axes] };
     holdProgress.value = Math.min(1, (now - dwell.start) / duration);
@@ -667,9 +681,13 @@ export function mountRadioGuide({
         if (held(pad, 'prepare', true, now, 850)) advance();
       } else if (phase === 'positive') {
         const candidate = positiveCandidate(pad);
-        if (held(pad, 'positive:' + candidate?.axis, !!candidate, now)) advance();
+        if (held(pad, 'positive:' + candidate?.axis, !!candidate, now, 650, [candidate?.axis]))
+          advance();
       } else if (phase === 'return') {
-        if (held(pad, 'return:' + returnFor, atRest(pad), now)) advance();
+        const observed = pad.axes
+          .map((_, axis) => axis)
+          .filter((axis) => !assignments.includes(axis) || axis === positive?.axis);
+        if (held(pad, 'return:' + returnFor, atRest(pad), now, 650, observed)) advance();
       } else if (phase === 'negative') {
         const end = pad.axes[positive.axis],
           delta = end - positive.value;
@@ -682,6 +700,8 @@ export function mountRadioGuide({
             'negative',
             Math.abs(delta) >= minimumSpan && opposite && otherAxesStill(pad, positive.axis),
             now,
+            650,
+            [positive.axis],
           )
         )
           advance();
@@ -695,7 +715,7 @@ export function mountRadioGuide({
             ? Math.abs(value - (row.invert.checked ? max : min)) <= (max - min) * 0.08
             : value >= min + (max - min) * 0.25 && value <= max - (max - min) * 0.25;
         });
-        if (held(pad, 'centre', ready, now)) advance();
+        if (held(pad, 'centre', ready, now, 650, assignments)) advance();
       }
     } finally {
       automaticAdvance = false;
