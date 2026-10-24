@@ -84,6 +84,7 @@ export function reconcileEncounterSource(bundleInput, incoming) {
     'seed',
     'survivalMode',
     'crowdModel',
+    'contactModel',
     'loadout',
     'payload',
     'ammoPreset',
@@ -102,6 +103,7 @@ export function reconcileEncounterSource(bundleInput, incoming) {
       format: ENCOUNTER_FORMAT_V2,
       revision: 'r2',
       crowdModel: 'squad-lanes-v1',
+      contactModel: 'arcade-ram-v1',
     });
     definition.actors = definition.actors.map(resolveMilitaryEncounterActor);
   }
@@ -536,6 +538,7 @@ export function mountEncounterEditor({
             format: ENCOUNTER_FORMAT_V2,
             revision: 'r2',
             crowdModel: 'squad-lanes-v1',
+            contactModel: 'arcade-ram-v1',
             ...normalizeEncounterConfig({
               activity: activity.value,
               difficulty: difficulty.value,
