@@ -12,10 +12,13 @@ export const COUCH_KEYBOARD_ACTIONS = Object.freeze([
   'pickup',
   'boost',
 ]);
+export const SNAKE_KEYBOARD_VERSION = 'revealline-snake-keyboard.v1';
+const snakeActions = Object.freeze(['up', 'down', 'left', 'right']);
 export const TEAM_KEYBOARD_VERSION = 'revealline-team-keyboard.v1';
 const teamActions = Object.freeze(COUCH_KEYBOARD_ACTIONS.filter((action) => action !== 'pickup'));
 export function couchKeyboardActions(mode = 'duel') {
   if (mode === 'team') return teamActions;
+  if (mode === 'snake') return snakeActions;
   if (mode === 'duel') return COUCH_KEYBOARD_ACTIONS;
   throw new TypeError('Unknown keyboard mode.');
 }
@@ -46,14 +49,23 @@ export class CouchKeyboardError extends TypeError {
     this.values = values;
   }
 }
-function checkCode(code, seat, action) {
+function checkCode(code, seat, action, mode) {
   const legacyEnter = seat === 1 && action === 'action' && code === 'Enter';
-  if ((!isBindablePhysicalKey(code) && !legacyEnter) || ['Escape', 'KeyP'].includes(code))
+  if (
+    (!isBindablePhysicalKey(code) && !legacyEnter) ||
+    ['Escape', 'KeyP'].includes(code) ||
+    (mode === 'snake' && code === 'KeyR')
+  )
     throw new CouchKeyboardError('reserved', { key: keyLabel(code) || String(code) });
 }
 export function resolveCouchKeyboard(source = null, mode = 'duel') {
   const actions = couchKeyboardActions(mode),
-    version = mode === 'team' ? TEAM_KEYBOARD_VERSION : COUCH_KEYBOARD_VERSION;
+    version =
+      mode === 'team'
+        ? TEAM_KEYBOARD_VERSION
+        : mode === 'snake'
+          ? SNAKE_KEYBOARD_VERSION
+          : COUCH_KEYBOARD_VERSION;
   const value =
     source === null
       ? {
@@ -79,7 +91,7 @@ export function resolveCouchKeyboard(source = null, mode = 'duel') {
       const code = bindings[action];
       // Preserve the existing second-seat Enter action. Native focused controls
       // keep ownership of Enter, and capture cannot newly assign it elsewhere.
-      checkCode(code, seat, action);
+      checkCode(code, seat, action, mode);
       if (claimed.has(code)) {
         const [player, usedAction] = claimed.get(code);
         throw new CouchKeyboardError('conflict', {
@@ -97,7 +109,7 @@ export function replaceCouchKey(source, seat, action, code, mode = 'duel') {
   const actions = couchKeyboardActions(mode);
   if (![0, 1].includes(seat) || !actions.includes(action)) throw new CouchKeyboardError('format');
   const value = resolveCouchKeyboard(source, mode);
-  checkCode(code, seat, action);
+  checkCode(code, seat, action, mode);
   for (const [player, bindings] of value.seats.entries())
     for (const usedAction of actions)
       if ((player !== seat || usedAction !== action) && bindings[usedAction] === code)

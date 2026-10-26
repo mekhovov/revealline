@@ -7,7 +7,7 @@ const tr = (key, values = {}) => t(`interface:couchKeyboard.${key}`, values);
 export function mountCouchKeyboardSettings({
   root,
   mode = 'duel',
-  prefix = mode === 'team' ? 'coop' : 'race',
+  prefix = mode === 'team' ? 'coop' : mode === 'snake' ? 'snake' : 'race',
   preferences,
   isOpen,
   document: doc = globalThis.document,
@@ -88,8 +88,12 @@ export function mountCouchKeyboardSettings({
   function render() {
     if (disposed) return;
     const state = preferences.snapshot();
-    heading.textContent = tr(mode === 'team' ? 'teamTitle' : 'title');
-    intro.textContent = tr(mode === 'team' ? 'teamIntro' : 'intro');
+    heading.textContent = tr(
+      mode === 'team' ? 'teamTitle' : mode === 'snake' ? 'snakeTitle' : 'title',
+    );
+    intro.textContent = tr(
+      mode === 'team' ? 'teamIntro' : mode === 'snake' ? 'snakeIntro' : 'intro',
+    );
     seats.forEach((seat, player) => {
       seat.textContent = tr('player', { player: player + 1 });
     });
