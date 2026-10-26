@@ -1,4 +1,6 @@
 import test from 'node:test';
+import { REMOTE_TEAM_NAVIGATION } from '../game/content-design/remote-team-navigation-registry.mjs';
+import { loadRemoteTeamLibrarySources } from '../game/mission-library/remote-team-display.mjs';
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
 import { mkdtemp, readFile, rm } from 'node:fs/promises';
@@ -70,6 +72,20 @@ export function registerRemoteTeamNavigationTest(target) {
     const produced = await runRemoteTeamNavigationCLI(['produce', target, path]);
     const bytes = await readFile(path);
     const payload = inspectRemoteTeamNavigation(bytes, target);
+    const committedDescriptor = REMOTE_TEAM_NAVIGATION.find((entry) => entry.target === target);
+    assert(committedDescriptor);
+    assert.equal(committedDescriptor.editionId, editionAuthorities[target]);
+    assert.deepEqual(
+      await readFile(
+        new URL(`../game/content-design/${committedDescriptor.path}`, import.meta.url),
+      ),
+      bytes,
+      'Committed runtime display bytes exactly match this fresh registered-source production.',
+    );
+    assert.equal(committedDescriptor.bytes, bytes.length);
+    assert.equal(committedDescriptor.sha256, createHash('sha256').update(bytes).digest('hex'));
+    assert.deepEqual(committedDescriptor.project, payload.project);
+    assert.equal(committedDescriptor.factory, payload.factory);
     assert.equal(produced.bytes, bytes.length);
     assert.equal(produced.sha256, createHash('sha256').update(bytes).digest('hex'));
     assert.equal(payload.mode, 'team');
@@ -126,6 +142,29 @@ export function registerRemoteTeamNavigationTest(target) {
         },
       }),
     ]);
+    const displayCalls = [];
+    const displayedSources = await loadRemoteTeamLibrarySources({
+      fetchAsset: async (assetPath) =>
+        new Response(
+          await readFile(new URL(`../game/content-design/${assetPath}`, import.meta.url)),
+        ),
+      difficulty: () => selectedPreset,
+      launch: (context) => {
+        displayCalls.push(context);
+        return true;
+      },
+    });
+    const displayed = displayedSources.find(
+      (entry) => entry.id === teamJourneyLibraryOwner(payload.editionId),
+    );
+    assert(displayed);
+    const displayedLibrary = createMissionLibrary([displayed]);
+    assert.deepEqual(
+      displayedLibrary.missions.map((entry) => entry.id),
+      receiving.missions.map((entry) => entry.id),
+    );
+    assert.equal(displayed.row, undefined);
+    assert.equal(displayed.executionMetadata, undefined);
     const projectedLibraryId = (mission) =>
       libraryMissionId({
         owner: teamJourneyLibraryOwner(payload.editionId),
@@ -158,6 +197,14 @@ export function registerRemoteTeamNavigationTest(target) {
     const referencedCards = new Set();
     for (const mission of metadata.missions) {
       const native = host.catalog.find(mission.id);
+      const displayMission = displayed.entries.find((entry) => entry.id === mission.id);
+      assert(displayMission);
+      assert.equal(
+        host.row(displayMission, 'standard'),
+        null,
+        'Runtime display metadata has no native row authority.',
+      );
+      assert.deepEqual(displayed.describe(displayMission).levelIndex, native.levelIndex);
       assert.equal(
         host.row(mission, 'standard'),
         null,
@@ -172,6 +219,17 @@ export function registerRemoteTeamNavigationTest(target) {
         const presentation = payload.view.presentations[mission.id][preset];
         const manifest = host.manifest(native, preset);
         selectedPreset = preset;
+        const displayContext = Object.freeze({
+          mode: 'team',
+          libraryMissionId: projectedLibraryId(mission),
+        });
+        assert.equal(displayed.launch(displayMission, displayContext), true);
+        assert.equal(displayCalls.at(-1), displayContext);
+        assert.deepEqual(
+          displayed.describe(displayMission).tags,
+          authoredJourneyMissionTags(native, manifest),
+        );
+        assert.throws(() => displayed.launch({ ...displayMission }, displayContext));
         const receivingRow = receiving.find(projectedLibraryId(mission));
         assert(receivingRow);
         assert.equal(await receiving.launch(receivingRow, { mode: 'team' }), true);
@@ -234,12 +292,18 @@ export function registerRemoteTeamNavigationTest(target) {
           host.card(native, preset),
           'Complete initial cells/terrain/spawns/actors and guidance match the core-backed diagram.',
         );
+        assert.deepEqual(displayed.card(displayMission), host.card(native, preset));
         for (const locale of ['en', 'uk']) {
           setLocale(locale);
           assert.equal(contentText(mission, 'name'), contentText(native, 'name'));
           assert.equal(contentText(mission, 'campaignTitle'), contentText(native, 'campaignTitle'));
           assert.equal(contentText(mission, 'hook'), contentText(native, 'hook'));
           const expected = journeyMissionDetails(manifest);
+          assert.deepEqual(displayed.details(displayMission), expected);
+          const displayCopy = displayed.presentation(displayMission);
+          assert.equal(displayCopy.name, contentText(native, 'name'));
+          assert.equal(displayCopy.campaignTitle, contentText(native, 'campaignTitle'));
+          assert.equal(displayCopy.hook, contentText(native, 'hook'));
           assert.equal(translatedField(presentation, 'routeDecision', locale), expected.route);
           assert.equal(translatedField(presentation, 'mastery', locale), expected.mastery);
           assert.equal(

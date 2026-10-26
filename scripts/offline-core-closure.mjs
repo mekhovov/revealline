@@ -28,6 +28,7 @@ const PUBLISHED_SOLO_BOUNDARIES = new Set([
   'game/couch/couch.mjs',
   'game/couch/relay-rescue.mjs',
   'game/mission-library/remote-team.mjs',
+  'game/mission-library/remote-team-display.mjs',
   'game/mission-library/spatial-next-editions.mjs',
 ]);
 

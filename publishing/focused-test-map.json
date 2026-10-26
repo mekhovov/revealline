@@ -4,7 +4,10 @@
     {
       "id": "mission-library-solo-native",
       "pathPatterns": [
-        "^game/test/mission-library-solo-(?:fixture\\.mjs|(?:(?:custom|incoming|handoff)-)?host\\.test\\.mjs)$"
+        "^game/test/mission-library-solo-(?:fixture\\.mjs|(?:(?:custom|incoming|handoff)-)?host\\.test\\.mjs)$",
+        "^game/mission-library/remote-team-display\\.mjs$",
+        "^game/content-design/remote-team-navigation-registry\\.mjs$",
+        "^game/content-design/runtime/remote-team-(?:cultural|expedition|hunt)\\.json$"
       ],
       "commands": [
         {
@@ -450,7 +453,12 @@
     },
     {
       "id": "mission-library-solo-cold-opening-diagnostic",
-      "pathPatterns": ["^game/test/mission-library-solo-cold-opening\\.probe\\.mjs$"],
+      "pathPatterns": [
+        "^game/test/mission-library-solo-cold-opening\\.probe\\.mjs$",
+        "^game/mission-library/remote-team-display\\.mjs$",
+        "^game/content-design/remote-team-navigation-registry\\.mjs$",
+        "^game/content-design/runtime/remote-team-(?:cultural|expedition|hunt)\\.json$"
+      ],
       "commands": [
         {
           "id": "mission-library-solo-cold-opening-diagnostic",
@@ -603,6 +611,58 @@
           "command": "npm",
           "args": ["run", "validate"],
           "timeoutMs": 1800000
+        }
+      ]
+    },
+    {
+      "id": "remote-team-display-runtime",
+      "pathPatterns": [
+        "^game/mission-library/remote-team-display\\.mjs$",
+        "^game/content-design/remote-team-navigation-registry\\.mjs$",
+        "^game/content-design/runtime/remote-team-(?:cultural|expedition|hunt)\\.json$",
+        "^game/test/mission-library-remote-team-display\\.test\\.mjs$",
+        "^scripts/test-remote-team-display-distribution\\.mjs$"
+      ],
+      "commands": [
+        {
+          "id": "remote-team-display-reader",
+          "command": "node",
+          "args": [
+            "--test",
+            "--test-concurrency=1",
+            "game/test/mission-library-remote-team-display.test.mjs"
+          ],
+          "timeoutMs": 300000
+        },
+        {
+          "id": "remote-team-display-distribution",
+          "command": "node",
+          "args": [
+            "--test",
+            "--test-concurrency=1",
+            "scripts/test-remote-team-display-distribution.mjs"
+          ],
+          "timeoutMs": 300000
+        },
+        {
+          "id": "remote-team-display-lifecycle",
+          "command": "node",
+          "args": [
+            "--test",
+            "--test-concurrency=1",
+            "game/test/mission-library-solo-lifecycle-host.test.mjs"
+          ],
+          "timeoutMs": 300000
+        },
+        {
+          "id": "remote-team-display-result-supersession",
+          "command": "node",
+          "args": [
+            "--test",
+            "--test-concurrency=1",
+            "game/test/mission-library-solo-result-supersession-host.test.mjs"
+          ],
+          "timeoutMs": 300000
         }
       ]
     }

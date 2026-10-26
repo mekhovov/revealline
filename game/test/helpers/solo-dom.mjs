@@ -12,6 +12,13 @@ import { audioHarness } from './soundtrack-audio.mjs';
 import { memoryIndexedDB } from './soundtrack-fixtures.mjs';
 import { waitFor } from './wait-for.mjs';
 
+const remoteTeamDisplayURLs = new Set(
+  ['cultural', 'expedition', 'hunt'].map(
+    (target) =>
+      new URL(`../../content-design/runtime/remote-team-${target}.json`, import.meta.url).href,
+  ),
+);
+
 // Model only the known theme stylesheet's asynchronous native load boundary.
 // CSS bytes remain real; this host makes no parsing, layout or font claim.
 export function installSoloStylesheets(document, { read = readFile } = {}) {
@@ -413,6 +420,12 @@ export async function soloPage(
     fetch: async (path, options) => {
       const custom = await fetchResponse?.(path, options);
       if (custom !== undefined && custom !== null) return custom;
+      if (remoteTeamDisplayURLs.has(String(path))) {
+        if (options?.signal?.aborted) throw new DOMException('Cancelled.', 'AbortError');
+        const bytes = await readFile(new URL(String(path)));
+        if (options?.signal?.aborted) throw new DOMException('Cancelled.', 'AbortError');
+        return new Response(bytes);
+      }
       const presentation = String(path).match(/(?:^|\/)presentation\/(.+)$/);
       if (presentation) {
         if (options?.signal?.aborted) throw new DOMException('Cancelled.', 'AbortError');

@@ -14288,15 +14288,16 @@ try {
           });
           trace?.mark('missions-versus-source-end');
           trace?.mark('missions-remote-team-import-begin');
-          const { createRemoteTeamLibrarySources } = await import(
-            './mission-library/remote-team.mjs'
+          const { loadRemoteTeamLibrarySources } = await import(
+            './mission-library/remote-team-display.mjs'
           );
           trace?.mark('missions-remote-team-import-end');
           assertCurrent();
           trace?.mark('missions-remote-team-sources-begin');
-          const teamSources = createRemoteTeamLibrarySources({
+          const teamSources = await loadRemoteTeamLibrarySources({
             launch: departLibraryMission,
             difficulty: () => browsingJourneyPreferences.snapshot().difficulty,
+            assertCurrent,
           });
           trace?.mark('missions-remote-team-sources-end');
           trace?.mark('missions-prior-import-begin');
