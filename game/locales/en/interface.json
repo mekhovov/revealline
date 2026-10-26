@@ -5982,6 +5982,7 @@
   "world": "World",
   "supportSummary.presence.connected": "Connected controller observed. Assignment and menu readiness are not confirmed by this observation.",
   "supportSummary.presence.disconnected": "No connected controller was observed.",
+  "supportSummary.game.failed": "Flight failed",
   "worldIdsCommaSeparated": "Worlds (comma separated: retro, fpv, ukraine)",
   "worldPagesContainTwoOrFourCards": "World pages contain two or four cards.",
   "worldPreparationCancelledYourCurrentPictureIsKept": "World preparation cancelled. Your current picture is kept.",

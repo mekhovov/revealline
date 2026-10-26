@@ -6511,3 +6511,425 @@ test('foreground stalls keep every World activity active with bounded catch-up',
       assert.equal(h.app.snapshot().state.status, 'paused');
     });
 });
+
+const worldsSupportSettle = () => new Promise((resolve) => setImmediate(resolve));
+async function worldsSupportFixture(t, options = {}) {
+  const previous = getLocale();
+  setLocale('en', { persist: false });
+  t.after(() => setLocale(previous, { persist: false }));
+  const h = fixture(t, options);
+  await h.app.ready;
+  assert.ok(h.$('worlds-support-summary-root'));
+  let reads = 0;
+  const original = h.win.navigator.getGamepads;
+  t.mock.method(h.win.navigator, 'getGamepads', function () {
+    reads++;
+    return original.call(this);
+  });
+  return { ...h, supportReads: () => reads };
+}
+function openWorldsSupport(h) {
+  h.$('lobby-settings').click();
+  h.$('worlds-settings-tab-data').click();
+  assert.equal(h.$('sim-settings').open, true);
+  assert.equal(h.$('worlds-settings-panel-data').hidden, false);
+}
+async function prepareWorldsSupport(h) {
+  h.$('support-summary-prepare').focus();
+  h.$('support-summary-prepare').click();
+  await waitFor(() => !h.$('support-summary-download').disabled);
+  return JSON.parse(h.$('support-summary-json').textContent);
+}
+
+test('Worlds native lobby Data reports unknown owners using its actual environment without device polls', async (t) => {
+  const h = await worldsSupportFixture(t);
+  h.win.navigator.storage = {
+    persisted: async () => true,
+    estimate: async () => ({ usage: 1, quota: 2 }),
+  };
+  openWorldsSupport(h);
+  const before = h.app.snapshot(),
+    reads = h.supportReads();
+  const value = await prepareWorldsSupport(h);
+  assert.equal(value.scope, 'worlds-game-shell');
+  assert.equal(value.game.host, 'fpv-worlds');
+  assert.equal(value.game.state, 'idle');
+  assert.deepEqual(value.build, { version: null, sourceRevision: null, packaged: null });
+  assert.equal(value.controller.freshness, 'unavailable');
+  assert.equal(value.game.saving.writable, null);
+  assert.equal(value.offline.support, 'unavailable');
+  assert.equal(value.storage.retention, 'granted');
+  assert.equal(h.supportReads(), reads);
+  assert.deepEqual(h.app.snapshot(), before);
+});
+
+for (const owner of [
+  'category',
+  'compact-back',
+  'close',
+  'tuning',
+  'blur',
+  'hidden',
+  'bfcache',
+  'width',
+  'dispose',
+])
+  test(`Worlds native Data retires pending support across ${owner} away/back`, async (t) => {
+    let finish,
+      calls = 0;
+    const held = new Promise((resolve) => {
+      finish = resolve;
+    });
+    const h = await worldsSupportFixture(t);
+    h.win.innerWidth = h.doc.defaultView.innerWidth = owner === 'compact-back' ? 390 : 1000;
+    h.doc.defaultView.emit('resize');
+    h.win.navigator.storage = { persisted: () => (++calls === 1 ? held : Promise.resolve(false)) };
+    openWorldsSupport(h);
+    const output = h.$('support-summary-json'),
+      prepare = h.$('support-summary-prepare'),
+      download = h.$('support-summary-download');
+    prepare.click();
+    await worldsSupportSettle();
+    let closing;
+    if (owner === 'category') {
+      h.$('worlds-settings-tab-data').emit('keydown', { key: 'ArrowUp' });
+      h.$('worlds-settings-tab-data').click();
+    } else if (owner === 'compact-back') {
+      h.$('close-sim-settings').click();
+      assert.equal(h.$('sim-settings').open, true);
+      assert.equal(h.$('sim-settings').getAttribute('data-settings-view'), 'categories');
+      h.$('worlds-settings-tab-data').click();
+    } else if (owner === 'close') {
+      h.$('sim-settings').close();
+      openWorldsSupport(h);
+    } else if (owner === 'tuning') {
+      await openWorldTuning(h);
+      prepare.click();
+      assert.equal(calls, 1, 'An overlaid Settings dialog cannot prepare a report.');
+      const tuning = h.doc.querySelector('.fpv-tuning');
+      h.doc.emit('keydown', { key: 'Escape', code: 'Escape', target: tuning.querySelector('h2') });
+      h.doc.emit('keyup', { key: 'Escape', code: 'Escape', target: h.doc.activeElement });
+      assert.equal(tuning.open, false);
+      assert.equal(h.$('sim-settings').open, true);
+      h.$('worlds-settings-tab-data').click();
+    } else if (owner === 'blur') {
+      h.doc.focused = false;
+      h.win.emit('blur');
+      prepare.click();
+      assert.equal(calls, 1);
+      h.doc.focused = true;
+      h.win.emit('focus');
+    } else if (owner === 'hidden') {
+      h.doc.hidden = true;
+      h.doc.visibilityState = 'hidden';
+      h.doc.emit('visibilitychange');
+      prepare.click();
+      assert.equal(calls, 1);
+      h.doc.hidden = false;
+      h.doc.visibilityState = 'visible';
+      h.doc.emit('visibilitychange');
+    } else if (owner === 'bfcache') {
+      h.win.emit('pagehide', { persisted: true });
+      prepare.click();
+      assert.equal(calls, 1, 'A history-cached page cannot prepare before pageshow.');
+      h.win.emit('pageshow', { persisted: true });
+    } else if (owner === 'width') {
+      h.$('worlds-settings-tab-data').focus();
+      h.win.innerWidth = h.doc.defaultView.innerWidth = 320;
+      h.doc.defaultView.emit('resize');
+      h.win.innerWidth = h.doc.defaultView.innerWidth = 1000;
+      h.doc.defaultView.emit('resize');
+    } else {
+      closing = h.app.dispose();
+      assert.equal(output.textContent, '');
+      assert.equal(
+        prepare.getAttribute('aria-busy'),
+        'false',
+        'Disposal retires before asynchronous cleanup.',
+      );
+    }
+    const focused = h.doc.activeElement;
+    finish(true);
+    await worldsSupportSettle();
+    await worldsSupportSettle();
+    assert.equal(output.textContent, '');
+    assert.equal(download.disabled, true);
+    assert.equal(h.doc.activeElement, focused);
+    if (owner === 'dispose') {
+      prepare.click();
+      download.click();
+      assert.equal(calls, 1);
+      await closing;
+    } else assert.equal((await prepareWorldsSupport(h)).storage.retention, 'not-granted');
+  });
+
+for (const preview of [false, true])
+  test(`Worlds support preserves a paused ${preview ? 'authoring preview' : 'flight'}, reuses physical presence and exports the exact EN/UK document`, async (t) => {
+    const writes = [];
+    const values = new Map();
+    const h = await worldsSupportFixture(t, {
+      storage: {
+        get: (key) => values.get(key),
+        set(key, value) {
+          writes.push(key);
+          values.set(key, value);
+        },
+      },
+    });
+    const pad = menuPad();
+    pad.id = 'private-worlds-controller';
+    h.pads.push(pad);
+    await h.app.startFlight(
+      WORLD_CATALOGUE.find((entry) => !entry.legacy && !entry.beginner),
+      { preview },
+    );
+    h.$('world-arm').click();
+    h.tick(5);
+    const recoveryKey = 'revealline.world-enemy-stats-recovery.v1',
+      beforePause = writes.length,
+      checkpointWrites = writes.filter((key) => key === recoveryKey).length;
+    h.app.pause();
+    assert.equal(h.app.snapshot().state.status, 'paused');
+    h.win.innerWidth = h.doc.defaultView.innerWidth = 1000;
+    h.doc.defaultView.emit('resize');
+    openWorldsSupport(h);
+    h.tick();
+    if (!preview) {
+      // Both native pause actions finish their existing IndexedDB checkpoint
+      // before saveRecovery writes this exact local metadata completion marker.
+      await waitFor(
+        () => writes.filter((key) => key === recoveryKey).length === checkpointWrites + 2,
+      );
+      assert.deepEqual(writes.slice(beforePause), [recoveryKey, recoveryKey]);
+    } else assert.deepEqual(writes.slice(beforePause), []);
+    const before = h.app.snapshot(),
+      reads = h.supportReads(),
+      saveWrites = writes.length;
+    const report = await prepareWorldsSupport(h);
+    assert.equal(report.game.state, 'paused');
+    assert.equal(report.controller.status, 'connected');
+    assert.equal(report.controller.assigned, null);
+    assert.equal(report.controller.neutral, null);
+    assert.equal(report.controller.confirmBlocked, null);
+    assert.equal(report.game.saving.writable, null);
+    assert.match(h.$('support-summary-controller').textContent, /Connected controller observed/);
+    assert.doesNotMatch(JSON.stringify(report), /private-worlds|buttons|axes|profile|devices/);
+    assert.equal(h.supportReads(), reads);
+    assert.equal(writes.length, saveWrites);
+    assert.deepEqual(h.app.snapshot().state, before.state);
+    assert.deepEqual(h.app.snapshot().records, before.records);
+    assert.deepEqual(h.app.snapshot().checkpointPractice, before.checkpointPractice);
+    h.tick(3);
+    assert.deepEqual(JSON.parse(h.$('support-summary-json').textContent), report);
+    h.$('worlds-settings-tab-data').focus();
+    h.win.innerWidth = h.doc.defaultView.innerWidth = 900;
+    h.doc.defaultView.emit('resize');
+    assert.deepEqual(JSON.parse(h.$('support-summary-json').textContent), report);
+    const blobs = [];
+    h.win.URL = {
+      createObjectURL(blob) {
+        blobs.push(blob);
+        return 'blob:worlds-support';
+      },
+      revokeObjectURL() {},
+    };
+    h.$('support-summary-download').focus();
+    h.$('support-summary-download').click();
+    await waitFor(() => blobs.length === 1);
+    assert.deepEqual(JSON.parse(await blobs[0].text()), report);
+    setLocale('uk', { persist: false });
+    assert.match(h.$('support-summary-controller').textContent, /Виявлено під’єднаний контролер/);
+    assert.equal(h.doc.activeElement, h.$('support-summary-download'));
+    assert.equal(writes.length, saveWrites);
+  });
+
+for (const section of [false, true])
+  test(`Worlds support distinguishes exhausted ${section ? 'section' : 'unfinished'} playback from flight completion`, async (t) => {
+    const h = await worldsSupportFixture(t);
+    await initWorldRuntime();
+    const entry = WORLD_CATALOGUE.find((item) => !item.legacy),
+      flight = createWorldFlight({ course: entry.course }),
+      recorder = createWorldRecorder(flight);
+    flight.arm();
+    for (let i = 0; i < 4; i++) {
+      flight.step({ roll: 0, pitch: 0, yaw: 0, throttle: 0, actions: 0 });
+      recorder.record();
+    }
+    assert.equal(flight.snapshot().status, 'active');
+    const proof = recorder.export(),
+      original = structuredClone(proof);
+    flight.dispose();
+    await h.app.startFlight(
+      entry,
+      section
+        ? { checkpoint: { mode: proof.mode, index: 0, proof, watch: true } }
+        : { replayProof: proof },
+    );
+    h.tick(12);
+    const before = h.app.snapshot();
+    assert.equal(before.replay.finished, true);
+    assert.equal(before.state.status, 'paused');
+    openWorldsSupport(h);
+    const reads = h.supportReads(),
+      report = await prepareWorldsSupport(h);
+    assert.equal(report.game.state, 'playback-ended');
+    assert.match(h.$('support-summary-game').textContent, /Playback ended/);
+    assert.deepEqual(h.app.snapshot().state, before.state);
+    assert.deepEqual(h.app.snapshot().records, before.records);
+    assert.deepEqual(h.app.snapshot().checkpointPractice, before.checkpointPractice);
+    assert.deepEqual(proof, original);
+    assert.equal(h.supportReads(), reads);
+    setLocale('uk', { persist: false });
+    assert.match(h.$('support-summary-game').textContent, /Перегляд завершено/);
+    assert.equal(h.doc.activeElement, h.$('support-summary-prepare'));
+  });
+
+test('Worlds support leaves in-progress playback paused until its existing Resume action', async (t) => {
+  const h = await worldsSupportFixture(t);
+  await initWorldRuntime();
+  const entry = WORLD_CATALOGUE.find((item) => !item.legacy),
+    flight = createWorldFlight({ course: entry.course }),
+    recorder = createWorldRecorder(flight);
+  flight.arm();
+  for (let i = 0; i < 8; i++) {
+    flight.step({ roll: 0, pitch: 0, yaw: 0, throttle: 0, actions: 0 });
+    recorder.record();
+  }
+  const proof = recorder.export();
+  flight.dispose();
+  await h.app.startFlight(entry, { replayProof: proof });
+  h.tick(3);
+  h.win.innerWidth = h.doc.defaultView.innerWidth = 1000;
+  h.doc.defaultView.emit('resize');
+  openWorldsSupport(h);
+  const before = h.app.snapshot();
+  assert.equal(before.replay.finished, false);
+  assert.equal(before.state.status, 'paused');
+  assert.equal((await prepareWorldsSupport(h)).game.state, 'paused');
+  assert.deepEqual(h.app.snapshot().state, before.state);
+  h.$('close-sim-settings').click();
+  assert.equal(h.$('sim-settings').open, false);
+  h.$('world-arm').click();
+  h.tick(2);
+  assert.ok(h.app.snapshot().state.ticks > before.state.ticks);
+  assert.deepEqual(h.app.snapshot().records, before.records);
+});
+
+test('Worlds support keeps native unscored regional preparation paused and unchanged', async (t) => {
+  const [{ createEnduranceFixture }, { regionalReviewEntry }] = await Promise.all([
+    import('../../authoring/fpv-worlds/regions/endurance-fixture.mjs'),
+    import('../../optional-practice/civilian-fpv/regional-session.mjs'),
+  ]);
+  const { terrain } = await createEnduranceFixture();
+  const h = await worldsSupportFixture(t, {
+    rendererFactory: () => ({
+      available: true,
+      setPresentation() {},
+      setCourse() {},
+      setQuality() {},
+      setDrone() {},
+      setGhost() {},
+      setPath() {},
+      draw() {},
+      dispose() {},
+      setRegional() {},
+      async prepareRegionalFrame() {},
+      async prepare() {
+        return true;
+      },
+    }),
+  });
+  await h.app.startFlight(
+    regionalReviewEntry({ manifest: terrain.manifest, source: terrain.source }),
+  );
+  openWorldsSupport(h);
+  h.tick();
+  const before = h.app.snapshot(),
+    reads = h.supportReads();
+  assert.equal(before.state.status, 'paused');
+  assert.equal(before.state.unscored, true);
+  const report = await prepareWorldsSupport(h);
+  assert.equal(report.game.state, 'paused');
+  assert.equal(report.game.saving.writable, null);
+  assert.equal(h.supportReads(), reads);
+  assert.deepEqual(h.app.snapshot().state, before.state);
+  assert.deepEqual(h.app.snapshot().records, before.records);
+  assert.deepEqual(h.app.snapshot().checkpointPractice, before.checkpointPractice);
+});
+
+test('Worlds support reports actual fatal contact as failed while the flight remains owned and inspectable', async (t) => {
+  const h = await worldsSupportFixture(t);
+  const source = WORLD_CATALOGUE.find((entry) => !entry.legacy && !entry.beginner),
+    course = structuredClone(source.course);
+  course.rules.playerHealth = 1;
+  course.rules.collisionDamage = 1000;
+  course.spawn.y = Math.min(course.bounds.max.y - 1000, course.bounds.min.y + 6000);
+  await h.app.startFlight(
+    { ...source, course, sourceCourse: course, appearanceCourse: course },
+    { preview: true },
+  );
+  h.$('world-arm').click();
+  for (let i = 0; i < 250 && h.app.snapshot().state.status === 'active'; i++) h.tick();
+  const failed = h.app.snapshot().state;
+  assert.equal(failed.status, 'failed');
+  assert.equal(failed.health, 0);
+  assert.ok(failed.ticks > 0, 'A real model transaction produced the failure before disposal.');
+  openWorldsSupport(h);
+  const before = h.app.snapshot();
+  const report = await prepareWorldsSupport(h);
+  assert.equal(report.game.state, 'failed');
+  assert.match(h.$('support-summary-game').textContent, /Flight failed/);
+  assert.deepEqual(h.app.snapshot().state, before.state);
+  setLocale('uk', { persist: false });
+  assert.match(h.$('support-summary-game').textContent, /Політ завершився невдачею/);
+  assert.equal(h.doc.activeElement, h.$('support-summary-prepare'));
+});
+
+test('Worlds retains exactly one explicit controller Arm observation and preparation cannot reuse it as a normal frame', async (t) => {
+  const h = await worldsSupportFixture(t);
+  await h.app.startFlight(WORLD_CATALOGUE.find((entry) => !entry.legacy && !entry.beginner));
+  h.pads.push(menuPad());
+  h.$('flight-source').value = 'controller';
+  h.$('flight-source').emit('change');
+  const before = h.supportReads();
+  h.$('world-arm').click();
+  assert.equal(
+    h.supportReads() - before,
+    1,
+    'The existing explicit Arm read has no added hardware poll.',
+  );
+  openWorldsSupport(h);
+  const reads = h.supportReads(),
+    report = await prepareWorldsSupport(h);
+  assert.equal(report.controller.freshness, 'unavailable');
+  assert.equal(h.supportReads(), reads);
+});
+
+for (const api of ['empty', 'missing', 'throwing'])
+  test(`Worlds support reports ${api} Gamepad API observations without new reads during Prepare`, async (t) => {
+    const h = await worldsSupportFixture(t);
+    openWorldsSupport(h);
+    let calls = 0;
+    if (api === 'missing') delete h.win.navigator.getGamepads;
+    else
+      h.win.navigator.getGamepads = function () {
+        assert.equal(this, h.win.navigator);
+        calls++;
+        if (api === 'throwing') throw new Error('private-worlds-api-error');
+        return [];
+      };
+    h.tick();
+    const before = calls,
+      report = await prepareWorldsSupport(h);
+    assert.equal(report.controller.status, api === 'empty' ? 'disconnected' : 'unavailable');
+    assert.equal(calls, before);
+    assert.equal(report.controller.assigned, null);
+    assert.equal(report.controller.neutral, null);
+    assert.equal(report.controller.confirmBlocked, null);
+    assert.doesNotMatch(JSON.stringify(report), /private-worlds-api-error/);
+    if (api === 'empty')
+      assert.equal(
+        h.$('support-summary-controller').textContent,
+        'No connected controller was observed.',
+      );
+  });

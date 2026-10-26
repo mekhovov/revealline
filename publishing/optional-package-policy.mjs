@@ -661,7 +661,7 @@ export const OPTIONAL_PACKAGE_POLICIES = Object.freeze(
           interface: Object.freeze([
             'missionLibrary.',
             'missionGoal.',
-            ...(id === 'civilian-fpv' ? ['supportSummary.'] : []),
+            ...(['civilian-fpv', 'fpv-worlds'].includes(id) ? ['supportSummary.'] : []),
           ]),
           common: Object.freeze(['counts.missions', 'collections.']),
         }),
@@ -759,7 +759,7 @@ export const OPTIONAL_PACKAGE_POLICIES = Object.freeze(
                 )
               : []),
             ...(['civilian-fpv', 'fpv-worlds'].includes(id) ? ['game/platform.mjs'] : []),
-            ...(id === 'civilian-fpv'
+            ...(['civilian-fpv', 'fpv-worlds'].includes(id)
               ? ['game/ui/local-support-summary.mjs', 'game/local-support-summary.mjs']
               : []),
             'game/access-gate.mjs',

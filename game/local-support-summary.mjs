@@ -31,6 +31,7 @@ const overflightHosts = [
   'overflight-marathon',
 ];
 const academyHosts = ['fpv-academy'];
+const worldsHosts = ['fpv-worlds'];
 
 /** A fixed projection of current owners. No raw URL, identity, input history,
  * game data, storage key or exception text is accepted into this document. */
@@ -68,7 +69,9 @@ export function supportSnapshot(host = {}, env = globalThis, clock = {}) {
           ? 'overflight-game-shell'
           : academyHosts.includes(host.kind)
             ? 'academy-game-shell'
-            : 'primary-game-shell',
+            : worldsHosts.includes(host.kind)
+              ? 'worlds-game-shell'
+              : 'primary-game-shell',
     build: {
       version: version(host.version),
       sourceRevision:
@@ -88,6 +91,7 @@ export function supportSnapshot(host = {}, env = globalThis, clock = {}) {
         ...overflightHosts,
         ...versusHosts,
         ...academyHosts,
+        ...worldsHosts,
       ]),
       state: oneOf(host.state, [
         'idle',
@@ -100,6 +104,7 @@ export function supportSnapshot(host = {}, env = globalThis, clock = {}) {
         'complete',
         'expired',
         'playback-ended',
+        'failed',
       ]),
       locale: oneOf(host.locale, ['en', 'uk']),
       saving: {
