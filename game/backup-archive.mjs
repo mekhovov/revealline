@@ -108,21 +108,24 @@ Journey evidence and excluded profiles cannot be recovered from this archive.
 1. Keep this ZIP somewhere separate from the game's browser storage. A requested
    download does not confirm that the browser saved a file. Check its size and
    that it opens. This archive is unencrypted; share it only intentionally.
-2. In Saves & loads, choose Inspect an archive and extract files, then download
-   the checked component files. Or extract the ZIP using your device's archive
-   tool. On iPhone or iPad, find it in Files and tap it to create a folder. Keep
-   all the extracted filenames intact.
-3. Restore pictures (.rlmedia), stories (.rlstory) and music (.rlsound) through
-   their existing import reviews. If listed, review game-data JSON in Saves & loads.
-   Authored Journey archives exclude Legacy game data and the unfinished flight;
-   export that attempt separately if needed.
-4. If a Journey JSON is listed in the manifest, open the same edition's Keep your
-   Journey screen, inspect the file and explicitly restore that progress.
+2. In Saves & loads, choose Inspect and restore an archive. Inspect this ZIP,
+   then review the included components in the shown order. Confirm each import
+   only after reading its scope and replacement consequences. A cancelled or
+   failed step does not count as restored; review it again or explicitly leave it.
+3. If your version offers extraction only, download the checked component files
+   or extract the ZIP using your device's archive tool. On iPhone or iPad, find
+   it in Files and tap it to create a folder. Keep all filenames intact. Use the
+   existing import reviews for pictures (.rlmedia), stories (.rlstory), music
+   (.rlsound) and compatible game-data JSON; use Keep your Journey for Journey JSON.
+4. Authored Journey archives exclude Legacy game data and the unfinished flight;
+   export that attempt separately if needed. Journey progress requires the same
+   edition. Read the coverage report for other unavailable or excluded data.
 5. Each restore has its own review. This is not an automatic, atomic multi-store
-   replacement. Keep a backup of the destination's current data before restoring.
+   replacement. Earlier completed components remain saved if a later one fails.
+   Keep this ZIP and a backup of the destination's current data before restoring.
 
-The game does not restore the ZIP automatically. Its inspector checks and offers
-the original component files; each still needs its separate import review.
+The game does not restore the ZIP automatically. Inspection alone writes nothing;
+only explicitly confirmed component reviews can apply their separate imports.
 The SHA-256 and byte lengths in the manifest identify the original bytes; ZIP CRC32
 checks accidental transport damage and is not proof of a trusted source.
 
@@ -135,21 +138,25 @@ checks accidental transport damage and is not proof of a trusted source.
 
 1. Зберігайте ZIP окремо від сховища гри. Запит завантаження не підтверджує, що
    файл збережено. Перевірте розмір і відкриття. Архів не зашифровано.
-2. На екрані збережень перевірте архів і завантажте перевірені компоненти. Або
-   розпакуйте ZIP засобами пристрою. На iPhone або iPad знайдіть його у «Файлах»
-   і торкніться, щоб створити папку. Не змінюйте назви розпакованих файлів.
-3. Через наявні екрани перевірки імпорту відновіть зображення (.rlmedia), історії
-   (.rlstory) та музику (.rlsound). Якщо є JSON даних гри, перевірте його у
-   «Збереження й завантаження». Архів авторського Journey не містить даних Legacy
-   та незавершеного польоту; за потреби експортуйте цю спробу окремо.
-4. Якщо маніфест містить JSON Journey, відкрийте екран збереження Journey у тому
-   самому виданні, перевірте файл і явно відновіть поступ.
+2. На екрані збережень виберіть перевірку й відновлення архіву. Перевірте ZIP,
+   потім перегляньте компоненти у вказаному порядку. Підтверджуйте кожен імпорт,
+   прочитавши його обсяг і наслідки заміни. Скасований або невдалий крок не
+   вважається відновленим: перевірте його знову або явно залиште без змін.
+3. Якщо версія пропонує лише вилучення файлів, завантажте перевірені компоненти
+   або розпакуйте ZIP засобами пристрою. На iPhone або iPad знайдіть його у «Файлах»
+   і торкніться, щоб створити папку. Не змінюйте назви файлів. Через наявні перевірки
+   імпорту відновіть зображення (.rlmedia), історії (.rlstory), музику (.rlsound)
+   і сумісний JSON гри; для JSON Journey скористайтеся збереженням Journey.
+4. Архів авторського Journey не містить даних Legacy та незавершеного польоту;
+   за потреби експортуйте цю спробу окремо. Поступ Journey потребує того самого
+   видання. Інші відсутні або виключені дані зазначено у звіті про покриття.
 5. Кожне відновлення перевіряється окремо. Це не автоматична спільна транзакція.
-   Перед відновленням збережіть резервну копію поточних даних на іншому пристрої.
+   Уже завершені компоненти залишаються збереженими, якщо наступний крок не вдався.
+   Залиште цей ZIP і резервну копію поточних даних призначення перед відновленням.
 
-Гра не відновлює ZIP автоматично: перевірка надає початкові файли компонентів,
-кожен з яких потребує окремої перевірки імпорту. SHA-256 та розміри у маніфесті
-визначають початкові байти; CRC32 ZIP виявляє випадкове пошкодження,
+Гра не відновлює ZIP автоматично. Сама перевірка нічого не записує; лише явно
+підтверджені перевірки компонентів застосовують їхні окремі імпорти. SHA-256
+та розміри у маніфесті визначають початкові байти; CRC32 ZIP виявляє пошкодження,
 але не доводить надійність джерела.
 `;
 
@@ -235,7 +242,7 @@ export async function prepareBackupArchive(source, { signal, onProgress = () => 
         ? []
         : ['Inspect and restore Journey JSON through Keep your Journey in the same edition']),
     ],
-    note: 'Extract before importing. Components retain their existing separate reviews; restore is not atomic. Download requested does not confirm a saved file.',
+    note: 'Use guided component reviews, or extract files for the existing import reviews. Restore is not atomic. Download requested does not confirm a saved file.',
   };
   const metadata = (filename, text) => {
     const blob = new Blob([text], { type: 'text/plain;charset=utf-8' });

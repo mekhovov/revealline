@@ -54,7 +54,16 @@ test('portable archive preserves actual component bytes and records current scop
   assert.ok(report.exclusions.some((value) => /no current Journey owner/.test(value)));
   assert.ok(report.exclusions.some((value) => /reference-only/.test(value)));
   assert.ok(report.exclusions.some((value) => /simulator records/.test(value)));
-  assert.match(members.get('README.txt').toString(), /does not restore the ZIP automatically/);
+  const instructions = members.get('README.txt').toString();
+  assert.match(instructions, /Inspect and restore an archive/);
+  assert.match(instructions, /Confirm each import/);
+  assert.match(instructions, /If your version offers extraction only/);
+  assert.match(instructions, /Earlier completed components remain saved/);
+  assert.match(instructions, /перевірку й відновлення архіву/);
+  assert.match(instructions, /Залиште цей ZIP/);
+  assert.doesNotMatch(report.note, /Extract before importing/);
+  assert.match(report.note, /guided component reviews/);
+  assert.match(instructions, /does not restore the ZIP automatically/);
   assert.match(members.get('README.txt').toString(), /розпакуйте ZIP/);
   const coverage = JSON.parse(members.get(report.coverageReport));
   assert.match(coverage.coverage, /reference-only music/);
