@@ -1,5 +1,7 @@
 import { getLocale, setLocale } from '../../game/i18n/index.mjs';
-import { exportJSONFile, onNativeInactive } from '../../game/platform.mjs';
+import { attachLocalSupportSummary } from '../../game/ui/local-support-summary.mjs';
+import { collectSupportSummary } from '../../game/local-support-summary.mjs';
+import { exportJSONFile, nativePlatform, onNativeInactive } from '../../game/platform.mjs';
 import {
   WORLD_CATALOGUE,
   BEGINNER_LESSONS,
@@ -1263,6 +1265,9 @@ export function mountWorldApp({
     disposed = false,
     closing = null,
     playShell = null,
+    supportSummary = null,
+    supportController = null,
+    supportPageActive = true,
     cameraControls = null,
     flightSetup = null,
     flightComfort = null,
@@ -4263,13 +4268,28 @@ export function mountWorldApp({
       ? 'ready'
       : 'blocked';
   }
-  function readGamepad(now, scope = gamepadScope()) {
-    let pads = [];
+  function readGamepad(now, scope = gamepadScope(), observeSupport = false) {
+    let pads = [],
+      unavailable = false;
     try {
-      pads = win.navigator.getGamepads?.() ?? [];
+      const readPads = win.navigator?.getGamepads;
+      if (typeof readPads === 'function') pads = readPads.call(win.navigator) ?? [];
+      else unavailable = true;
     } catch {
+      unavailable = true;
       /* Other controls remain usable. */
     }
+    if (observeSupport)
+      supportController = {
+        sampledAt: win.performance?.now?.() ?? now,
+        status: unavailable
+          ? 'unavailable'
+          : Array.from(pads)
+                .slice(0, 32)
+                .some((pad) => pad?.connected === true)
+            ? 'connected'
+            : 'disconnected',
+      };
     return gamepad.poll({
       gamepads: pads,
       now,
@@ -4278,7 +4298,7 @@ export function mountWorldApp({
     });
   }
   function pollGamepad(now) {
-    const sampled = readGamepad(now);
+    const sampled = readGamepad(now, gamepadScope(), true);
     for (const action of sampled.actions) {
       if (action === 'arm') {
         if ($('flight-source').value !== 'controller') {
@@ -7373,6 +7393,8 @@ export function mountWorldApp({
   // Background checkpoint reads must not consume a deliberate Arm click.
   const pendingFlightSteps = new WeakSet();
   function pauseFlight(freezeRadio = true, reason = 'paused') {
+    supportController = null;
+    supportSummary?.invalidate();
     continuousPlay.cancel('paused');
     regionalManifestRequest?.abort();
     if (pausing) return;
@@ -12354,7 +12376,15 @@ export function mountWorldApp({
       radio.disconnect(e.gamepad.index);
   });
   on(win, 'focus', () => restoreRadio());
-  on(win, 'pagehide', () => pauseFlight(true, 'focus-lost'));
+  on(win, 'pagehide', () => {
+    supportPageActive = false;
+    pauseFlight(true, 'focus-lost');
+  });
+  on(win, 'pageshow', () => {
+    supportPageActive = true;
+    supportController = null;
+    supportSummary?.invalidate();
+  });
   const ready = (async () => {
     const results = await Promise.allSettled([
       openWorldStore({ indexedDB: win.indexedDB }),
@@ -12741,7 +12771,10 @@ export function mountWorldApp({
     },
     initial: 'home',
     // Recovery menus must render even when a lost graphics context stops drawing.
-    onSurfaceChange: refreshFlightMenus,
+    onSurfaceChange: () => {
+      refreshFlightMenus();
+      supportSummary?.invalidate();
+    },
     focusPlay: () => $('world-viewport').focus(),
   });
   playShell.elements.content.pause.append(radioActionPanel);
@@ -13408,12 +13441,15 @@ export function mountWorldApp({
         )
         .catch(reportError);
     });
+  const supportRoot = el('section');
+  supportRoot.id = 'worlds-support-summary-root';
   modeSettingsView = mountSimModeSettings({
     root: $('sim-settings'),
     content: settingsContent,
     prefix: 'worlds-settings',
     locale,
     attachPanels: simAttachSettingsPanels,
+    onPresentationChange: () => supportSummary?.invalidate(),
     setMenuIcon(node, name) {
       node.dataset.simIcon = name;
       presentation.refresh(node);
@@ -13457,6 +13493,7 @@ export function mountWorldApp({
         settingLabel('import-proofs'),
         $('storage-status'),
         $('proof-records').closest('details'),
+        supportRoot,
       ],
       content: [
         doc.querySelector('[data-tab="creator"]'),
@@ -13473,6 +13510,69 @@ export function mountWorldApp({
         settingsContent.querySelector('[data-i18n="settingsPaused"]'),
       ],
     },
+  });
+  supportSummary = attachLocalSupportSummary({
+    document: doc,
+    window: win,
+    root: supportRoot,
+    settings: $('sim-settings'),
+    getSettingsOpen: () =>
+      !disposed &&
+      supportPageActive &&
+      !advancedPractice &&
+      !tuning?.root.open &&
+      menuContext()?.root === $('sim-settings') &&
+      $('sim-settings').open &&
+      !modeSettingsView.panels.data.hidden &&
+      !modeSettingsView.panels.data.inert &&
+      ((doc.defaultView?.innerWidth ?? doc.documentElement.clientWidth ?? Infinity) > 700 ||
+        $('sim-settings').getAttribute('data-settings-view') === 'panel'),
+    getHost: () => {
+      const status = flight?.snapshot().status;
+      return {
+        kind: 'fpv-worlds',
+        state:
+          (replayProof || combatReplaySource) && finished
+            ? 'playback-ended'
+            : status === 'active'
+              ? 'running'
+              : (status ?? 'idle'),
+        locale,
+        // Stores, installer availability and saved records establish neither a
+        // public runtime build identity nor a current save-writer lease.
+        version: null,
+        sourceRevision: null,
+        packaged: null,
+        writable: null,
+        writerReason: null,
+        platform: nativePlatform(win.location) ?? 'browser',
+        offline: null,
+        controller: supportController,
+      };
+    },
+    collect: (options) =>
+      collectSupportSummary({
+        ...options,
+        env: {
+          document: doc,
+          navigator: win.navigator,
+          performance: win.performance,
+          isSecureContext: win.isSecureContext,
+          matchMedia: win.matchMedia?.bind(win),
+          indexedDB: win.indexedDB,
+          crypto: win.crypto,
+          AudioContext: win.AudioContext,
+          webkitAudioContext: win.webkitAudioContext,
+        },
+      }),
+    exportFile: (value, name) =>
+      exportJSONFile(value, name, {
+        locationRef: win.location,
+        documentRef: doc,
+        URLImpl: win.URL,
+        BlobImpl: win.Blob ?? globalThis.Blob,
+        schedule: win.setTimeout.bind(win),
+      }),
   });
   flightComfort = mountFlightComfort({
     document: doc,
@@ -13750,6 +13850,8 @@ export function mountWorldApp({
     dispose() {
       if (closing) return closing;
       disposed = true;
+      supportController = null;
+      supportSummary?.destroy();
       regionalManifestRequest?.abort();
       closing = Promise.resolve().then(async () => {
         courseClassFilter?.dispose();

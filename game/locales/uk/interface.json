@@ -6096,6 +6096,7 @@
   "world": "Світ",
   "supportSummary.presence.connected": "Виявлено під’єднаний контролер. Це спостереження не підтверджує його призначення чи готовність до керування меню.",
   "supportSummary.presence.disconnected": "Під’єднаного контролера не виявлено.",
+  "supportSummary.game.failed": "Політ завершився невдачею",
   "worldIdsCommaSeparated": "Світи (через кому: retro, fpv, ukraine)",
   "worldPagesContainTwoOrFourCards": "Сторінки світів містять дві або чотири картки.",
   "worldPreparationCancelledYourCurrentPictureIsKept": "Підготовку світу скасовано. Поточне зображення збережено.",
