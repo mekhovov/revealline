@@ -20,6 +20,7 @@ import { attachContextualReactions } from '../ui/contextual-reactions.mjs';
 import { attachEncounterDisplayControls } from '../ui/encounter-display-controls.mjs';
 import { attachMenuStyleControls } from '../ui/menu-style-controls.mjs';
 import { mountToolDisplay } from '../ui/tool-display.mjs';
+import { mountComfortPresets } from '../ui/comfort-presets.mjs';
 import { getLocale, t } from '../i18n/index.mjs';
 import { createRoomAudioActivation, createRoomEventCursor } from './room-events.mjs';
 import { attachRoomSupport } from './room-controls.mjs';
@@ -103,6 +104,12 @@ export function mountRoomUI({
   });
   const style = attachMenuStyleControls({ prefix: 'room-' });
   const toolDisplay = mountToolDisplay({ preferences: display });
+  const comfortPresets = mountComfortPresets({
+    document: doc,
+    root: $('room-display'),
+    display,
+  });
+  $('room-display').prepend(comfortPresets.element);
   const labels = {
     'room-sound-title': ['Sound', 'Звук'],
     'master-label': ['Master volume', 'Загальна гучність'],
@@ -638,6 +645,7 @@ export function mountRoomUI({
       audioMaster.dispose();
       encounter.dispose();
       style.dispose();
+      comfortPresets.destroy();
       toolDisplay.dispose();
       stopDisplay();
       shell.dispose();
