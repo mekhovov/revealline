@@ -1,0 +1,761 @@
+{
+  "started": "2026-10-20T03:18:26.915Z",
+  "scope": "Isolated Chrome with component updates/background networking disabled and 1 MiB disk/media caches; Continue an existing real-minute archive, advance, export the preserved complete history and close. No new capture minute, replay repetition, or performance qualification.",
+  "targetTicks": 3050,
+  "fullMinuteCapture": false,
+  "pageErrors": [],
+  "consoleErrors": [
+    {
+      "message": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+      "location": {
+        "url": "http://127.0.0.1:8768/favicon.ico",
+        "line": 0,
+        "column": 0,
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    }
+  ],
+  "failedResponses": [],
+  "checkpoints": [
+    {
+      "name": "full-minute-continue-restored",
+      "at": "2026-10-20T03:18:29.213Z",
+      "course": "stadium-01",
+      "ticks": 3056,
+      "status": "paused",
+      "position": {
+        "x": 0,
+        "y": 2619,
+        "z": 18000
+      },
+      "encounterTicks": 3056,
+      "runId": "encounter-c85f6d18f219861f",
+      "kills": 0,
+      "shots": 0,
+      "recording": {
+        "format": "FPVEncounterRecordingStatus.v1",
+        "retainedFrom": 0,
+        "retainedTo": 3056,
+        "complete": true,
+        "practiceOnly": true
+      },
+      "archive": {
+        "id": "combat-mvg45rtl-vu7hhqw",
+        "state": "recording",
+        "error": null,
+        "durableFrom": 0,
+        "durableTo": 0,
+        "segments": 0,
+        "bytes": 0,
+        "complete": false,
+        "capacityBytes": 33554432
+      },
+      "playback": null,
+      "mode": "self-level",
+      "statusText": "Preparing scene…",
+      "archiveText": "Saved through 0 s · recording",
+      "dialogOpen": true,
+      "otherDialogs": []
+    },
+    {
+      "name": "minute-progress",
+      "at": "2026-10-20T03:18:30.477Z",
+      "course": "stadium-01",
+      "ticks": 3111,
+      "status": "active",
+      "position": {
+        "x": 0,
+        "y": 1,
+        "z": 18000
+      },
+      "encounterTicks": 3111,
+      "runId": "encounter-c85f6d18f219861f",
+      "kills": 0,
+      "shots": 0,
+      "recording": {
+        "format": "FPVEncounterRecordingStatus.v1",
+        "retainedFrom": 0,
+        "retainedTo": 3111,
+        "complete": true,
+        "practiceOnly": true
+      },
+      "archive": {
+        "id": "combat-mvg45rtl-vu7hhqw",
+        "state": "recording",
+        "error": null,
+        "durableFrom": 0,
+        "durableTo": 3000,
+        "segments": 1,
+        "bytes": 61168,
+        "complete": false,
+        "capacityBytes": 33554432
+      },
+      "playback": null,
+      "mode": "self-level",
+      "statusText": "Target hunting · 3 minutes · Active · local practice",
+      "archiveText": "Saved through 60 s · recording",
+      "dialogOpen": true,
+      "otherDialogs": []
+    },
+    {
+      "name": "full-minute-continue-advanced",
+      "at": "2026-10-20T03:18:30.500Z",
+      "course": "stadium-01",
+      "ticks": 3111,
+      "status": "paused",
+      "position": {
+        "x": 0,
+        "y": 1,
+        "z": 18000
+      },
+      "encounterTicks": 3111,
+      "runId": "encounter-c85f6d18f219861f",
+      "kills": 0,
+      "shots": 0,
+      "recording": {
+        "format": "FPVEncounterRecordingStatus.v1",
+        "retainedFrom": 0,
+        "retainedTo": 3111,
+        "complete": true,
+        "practiceOnly": true
+      },
+      "archive": {
+        "id": "combat-mvg45rtl-vu7hhqw",
+        "state": "recording",
+        "error": null,
+        "durableFrom": 0,
+        "durableTo": 3000,
+        "segments": 1,
+        "bytes": 61168,
+        "complete": false,
+        "capacityBytes": 33554432
+      },
+      "playback": null,
+      "mode": "self-level",
+      "statusText": "Paused. Arm deliberately to continue.",
+      "archiveText": "Saved through 60 s · recording",
+      "dialogOpen": true,
+      "otherDialogs": []
+    }
+  ],
+  "browser": "155.0.8059.85",
+  "sources": {
+    "world-app.mjs": {
+      "servedSha256": "b87ca022167a531137e3c190184888d358764411fe2b6ceee0439a320a92456c",
+      "workspaceSha256": "b87ca022167a531137e3c190184888d358764411fe2b6ceee0439a320a92456c"
+    },
+    "encounter-session.mjs": {
+      "servedSha256": "5e6bfa08a169277c8134dc971b989837a057714f6c225afb48aff1a5afa1e469",
+      "workspaceSha256": "5e6bfa08a169277c8134dc971b989837a057714f6c225afb48aff1a5afa1e469"
+    },
+    "aircraft-archive.mjs": {
+      "servedSha256": "569422bf0f5171d7631c9b89dd820aeda99a35806f5f42dbba5ab571f567126b",
+      "workspaceSha256": "569422bf0f5171d7631c9b89dd820aeda99a35806f5f42dbba5ab571f567126b"
+    }
+  },
+  "importedFullMinute": true,
+  "continueOnly": true,
+  "import": {
+    "file": "docs/evidence/fpv-combat/overhaul-archive-host-browser-current.json",
+    "bytes": 141868,
+    "sha256": "c4859c0494a79671e94167b521258b4f6559ff856d3197fabfed8e4d0fd8e9c6",
+    "summary": {
+      "id": "combat-mvg3ebwc-197n0db",
+      "name": "Starting grid · 2026-10-20T02:57:08.796Z",
+      "from": 0,
+      "to": 3056,
+      "segments": 2,
+      "complete": true
+    },
+    "launch": {
+      "format": "FPVCombatLaunch.v1",
+      "configuration": {
+        "format": "FpvEffectiveFlightConfig.v1",
+        "response": {
+          "format": "FlightResponseProfile.v1",
+          "id": "gentle-v1",
+          "name": "Gentle",
+          "maxRate": 240,
+          "maxTilt": 30,
+          "expo": 30,
+          "responseTicks": 8
+        },
+        "camera": {
+          "tilt": 10,
+          "verticalFov": 82
+        },
+        "profileId": "legacy-feel",
+        "profileRevision": 0,
+        "setupId": "my-drone",
+        "simulationIdentity": "a4f86ed840e4781e"
+      },
+      "mode": "self-level"
+    }
+  },
+  "continuedExport": {
+    "bytes": 142891,
+    "summary": {
+      "id": "combat-mvg45rtl-vu7hhqw",
+      "name": "Starting grid · 2026-10-20T03:18:29.145Z",
+      "from": 0,
+      "to": 3111,
+      "segments": 2,
+      "complete": true
+    },
+    "originalSealedTicks": 3000,
+    "originalPartialTicks": 56,
+    "originalPrefixMatches": true
+  },
+  "closedRows": [
+    {
+      "format": "FPVCombatArchive.v1",
+      "id": "combat-mvg45rtl-vu7hhqw",
+      "host": "combat",
+      "name": "Starting grid · 2026-10-20T03:18:29.145Z",
+      "createdAt": 1792466309195,
+      "revision": 3,
+      "identity": "fd1bc4dc1d750599",
+      "config": {
+        "identity": {
+          "format": "FPVEncounterSession.v2",
+          "base": {
+            "model": "civilian-world-fixed.v2",
+            "backend": "rapier3d-compat-0.21.0:02dc6a4e2fffc013bab08fbb44fa68f501d8303615e9afe4c7d89ad4eedda0d0",
+            "course": "stadium-01",
+            "courseIdentity": "ba603cfd277fc808",
+            "worldIdentity": "9aab8697da0e74b0",
+            "mode": "self-level",
+            "responseIdentity": "73833493634ba989",
+            "rulesIdentity": "189ebd24739c7f4a",
+            "conditionsIdentity": "030d08b3879ad283"
+          },
+          "encounter": "c85f6d18f219861f"
+        },
+        "definition": {
+          "activity": "hunting",
+          "difficulty": "normal",
+          "population": 12,
+          "survivalMode": "timed",
+          "loadout": [
+            "autocannon",
+            "rocket"
+          ],
+          "payload": "bomb",
+          "ammoPreset": "balanced",
+          "playerDamage": "invulnerable",
+          "enemyDamage": "one-hit",
+          "servicePad": {
+            "x": 0,
+            "y": 0,
+            "z": 18000
+          },
+          "format": "FPVEncounterDefinition.v2",
+          "revision": "r2",
+          "baseIdentity": "82d988664b913009",
+          "seed": 101,
+          "bounds": {
+            "min": {
+              "x": -38000,
+              "y": 0,
+              "z": -38000
+            },
+            "max": {
+              "x": 38000,
+              "y": 18000,
+              "z": 32000
+            }
+          },
+          "spawn": {
+            "x": 0,
+            "y": 0,
+            "z": 18000
+          },
+          "actors": [
+            {
+              "id": "encounter-target-2",
+              "type": "drone",
+              "role": "hostile",
+              "position": {
+                "x": -25116,
+                "y": 2500,
+                "z": 16760
+              },
+              "path": [
+                {
+                  "x": -25116,
+                  "y": 2500,
+                  "z": 16760
+                },
+                {
+                  "x": -21116,
+                  "y": 2500,
+                  "z": 18760
+                }
+              ],
+              "speed": 1362,
+              "radius": 450,
+              "height": 900,
+              "health": 50,
+              "fireEveryTicks": 100,
+              "damage": 10,
+              "projectileSpeed": 8000,
+              "range": 20000,
+              "family": "patroller",
+              "material": "electronic",
+              "appearance": {
+                "family": "patroller",
+                "cast": "tactical",
+                "archetype": "military-uav"
+              },
+              "destructible": true
+            },
+            {
+              "id": "encounter-target-3",
+              "type": "patrol",
+              "role": "hostile",
+              "position": {
+                "x": 11692,
+                "y": 13,
+                "z": 6369
+              },
+              "path": [
+                {
+                  "x": 11692,
+                  "y": 13,
+                  "z": 6369
+                },
+                {
+                  "x": 7692,
+                  "y": 13,
+                  "z": 8369
+                }
+              ],
+              "speed": 1453,
+              "radius": 350,
+              "height": 1800,
+              "health": 50,
+              "fireEveryTicks": 100,
+              "damage": 10,
+              "projectileSpeed": 8000,
+              "range": 20000,
+              "family": "runner",
+              "material": "organic",
+              "appearance": {
+                "family": "runner",
+                "cast": "tactical",
+                "archetype": "military-trooper"
+              },
+              "destructible": true,
+              "groundMotion": "support-v1"
+            },
+            {
+              "id": "encounter-target-4",
+              "type": "vehicle",
+              "role": "hostile",
+              "position": {
+                "x": 13661,
+                "y": 13,
+                "z": -6343
+              },
+              "path": [
+                {
+                  "x": 13661,
+                  "y": 13,
+                  "z": -6343
+                },
+                {
+                  "x": 9661,
+                  "y": 13,
+                  "z": -4343
+                }
+              ],
+              "speed": 1469,
+              "radius": 900,
+              "height": 1800,
+              "health": 100,
+              "fireEveryTicks": 100,
+              "damage": 10,
+              "projectileSpeed": 8000,
+              "range": 20000,
+              "family": "sprinter",
+              "material": "metal",
+              "appearance": {
+                "family": "sprinter",
+                "cast": "tactical",
+                "archetype": "field-utility"
+              },
+              "destructible": true,
+              "groundMotion": "support-v1"
+            },
+            {
+              "id": "encounter-target-5",
+              "type": "hazard",
+              "role": "hostile",
+              "position": {
+                "x": -21667,
+                "y": 2500,
+                "z": 918
+              },
+              "path": [
+                {
+                  "x": -21667,
+                  "y": 2500,
+                  "z": 918
+                },
+                {
+                  "x": -17667,
+                  "y": 2500,
+                  "z": 2918
+                }
+              ],
+              "speed": 1480,
+              "radius": 600,
+              "height": 1200,
+              "health": 50,
+              "fireEveryTicks": 0,
+              "damage": 10,
+              "projectileSpeed": 8000,
+              "range": 20000,
+              "family": "refuge-seeker",
+              "material": "metal",
+              "appearance": {
+                "family": "refuge-seeker",
+                "cast": "tactical",
+                "archetype": "interceptor-uav"
+              },
+              "destructible": true
+            },
+            {
+              "id": "encounter-target-6",
+              "type": "prop",
+              "role": "hostile",
+              "position": {
+                "x": 24826,
+                "y": 13,
+                "z": -8930
+              },
+              "path": [
+                {
+                  "x": 24826,
+                  "y": 13,
+                  "z": -8930
+                },
+                {
+                  "x": 28826,
+                  "y": 13,
+                  "z": -10930
+                }
+              ],
+              "speed": 600,
+              "radius": 450,
+              "height": 900,
+              "health": 50,
+              "fireEveryTicks": 0,
+              "damage": 10,
+              "projectileSpeed": 8000,
+              "range": 20000,
+              "family": "switchback",
+              "material": "metal",
+              "appearance": {
+                "family": "switchback",
+                "cast": "tactical",
+                "archetype": "tracked-robot"
+              },
+              "destructible": true,
+              "groundMotion": "support-v1"
+            },
+            {
+              "id": "encounter-target-7",
+              "type": "patrol",
+              "role": "hostile",
+              "position": {
+                "x": 16594,
+                "y": 13,
+                "z": -5306
+              },
+              "path": [
+                {
+                  "x": 16594,
+                  "y": 13,
+                  "z": -5306
+                },
+                {
+                  "x": 20594,
+                  "y": 13,
+                  "z": -3306
+                }
+              ],
+              "speed": 1700,
+              "radius": 350,
+              "height": 1800,
+              "health": 50,
+              "fireEveryTicks": 100,
+              "damage": 10,
+              "projectileSpeed": 8000,
+              "range": 20000,
+              "family": "rendezvous-pair",
+              "material": "organic",
+              "appearance": {
+                "family": "rendezvous-pair",
+                "cast": "tactical",
+                "archetype": "military-trooper"
+              },
+              "destructible": true,
+              "groundMotion": "support-v1"
+            },
+            {
+              "id": "encounter-target-8",
+              "type": "drone",
+              "role": "hostile",
+              "position": {
+                "x": -10357,
+                "y": 2500,
+                "z": 12046
+              },
+              "path": [
+                {
+                  "x": -10357,
+                  "y": 2500,
+                  "z": 12046
+                },
+                {
+                  "x": -6357,
+                  "y": 2500,
+                  "z": 10046
+                }
+              ],
+              "speed": 1373,
+              "radius": 450,
+              "height": 900,
+              "health": 50,
+              "fireEveryTicks": 100,
+              "damage": 10,
+              "projectileSpeed": 8000,
+              "range": 20000,
+              "family": "courier",
+              "material": "electronic",
+              "appearance": {
+                "family": "courier",
+                "cast": "tactical",
+                "archetype": "military-uav"
+              },
+              "destructible": true
+            },
+            {
+              "id": "encounter-target-9",
+              "type": "patrol",
+              "role": "hostile",
+              "position": {
+                "x": -16196,
+                "y": 13,
+                "z": 12796
+              },
+              "path": [
+                {
+                  "x": -16196,
+                  "y": 13,
+                  "z": 12796
+                },
+                {
+                  "x": -20196,
+                  "y": 13,
+                  "z": 14796
+                }
+              ],
+              "speed": 1074,
+              "radius": 350,
+              "height": 1800,
+              "health": 50,
+              "fireEveryTicks": 100,
+              "damage": 10,
+              "projectileSpeed": 8000,
+              "range": 20000,
+              "family": "shield-bearer",
+              "material": "organic",
+              "appearance": {
+                "family": "shield-bearer",
+                "cast": "tactical",
+                "archetype": "military-trooper"
+              },
+              "destructible": true,
+              "groundMotion": "support-v1"
+            },
+            {
+              "id": "encounter-target-10",
+              "type": "vehicle",
+              "role": "hostile",
+              "position": {
+                "x": -26739,
+                "y": 13,
+                "z": 23237
+              },
+              "path": [
+                {
+                  "x": -26739,
+                  "y": 13,
+                  "z": 23237
+                },
+                {
+                  "x": -22739,
+                  "y": 13,
+                  "z": 25237
+                }
+              ],
+              "speed": 1035,
+              "radius": 900,
+              "height": 1800,
+              "health": 100,
+              "fireEveryTicks": 100,
+              "damage": 10,
+              "projectileSpeed": 8000,
+              "range": 20000,
+              "family": "brace-trooper",
+              "material": "metal",
+              "appearance": {
+                "family": "brace-trooper",
+                "cast": "tactical",
+                "archetype": "field-utility"
+              },
+              "destructible": true,
+              "groundMotion": "support-v1"
+            },
+            {
+              "id": "encounter-target-11",
+              "type": "hazard",
+              "role": "hostile",
+              "position": {
+                "x": 19046,
+                "y": 2500,
+                "z": 29571
+              },
+              "path": [
+                {
+                  "x": 19046,
+                  "y": 2500,
+                  "z": 29571
+                },
+                {
+                  "x": 23046,
+                  "y": 2500,
+                  "z": 31400
+                }
+              ],
+              "speed": 1702,
+              "radius": 600,
+              "height": 1200,
+              "health": 50,
+              "fireEveryTicks": 0,
+              "damage": 10,
+              "projectileSpeed": 8000,
+              "range": 20000,
+              "family": "lookout",
+              "material": "metal",
+              "appearance": {
+                "family": "lookout",
+                "cast": "tactical",
+                "archetype": "interceptor-uav"
+              },
+              "destructible": true
+            },
+            {
+              "id": "encounter-target-12",
+              "type": "prop",
+              "role": "hostile",
+              "position": {
+                "x": 7085,
+                "y": 13,
+                "z": 25105
+              },
+              "path": [
+                {
+                  "x": 7085,
+                  "y": 13,
+                  "z": 25105
+                },
+                {
+                  "x": 3085,
+                  "y": 13,
+                  "z": 23105
+                }
+              ],
+              "speed": 600,
+              "radius": 450,
+              "height": 900,
+              "health": 50,
+              "fireEveryTicks": 0,
+              "damage": 10,
+              "projectileSpeed": 8000,
+              "range": 20000,
+              "family": "patroller",
+              "material": "metal",
+              "appearance": {
+                "family": "patroller",
+                "cast": "tactical",
+                "archetype": "explosive-rover"
+              },
+              "destructible": true,
+              "groundMotion": "support-v1"
+            },
+            {
+              "id": "encounter-target-13",
+              "type": "patrol",
+              "role": "hostile",
+              "position": {
+                "x": -36,
+                "y": 13,
+                "z": 12897
+              },
+              "path": [
+                {
+                  "x": -36,
+                  "y": 13,
+                  "z": 12897
+                },
+                {
+                  "x": 3964,
+                  "y": 13,
+                  "z": 10897
+                }
+              ],
+              "speed": 1245,
+              "radius": 350,
+              "height": 1800,
+              "health": 50,
+              "fireEveryTicks": 100,
+              "damage": 10,
+              "projectileSpeed": 8000,
+              "range": 20000,
+              "family": "runner",
+              "material": "organic",
+              "appearance": {
+                "family": "runner",
+                "cast": "tactical",
+                "archetype": "military-trooper"
+              },
+              "destructible": true,
+              "groundMotion": "support-v1"
+            }
+          ]
+        },
+        "runId": "encounter-c85f6d18f219861f"
+      },
+      "origin": {
+        "kind": "fresh",
+        "startTick": 0
+      },
+      "state": "ended",
+      "firstIndex": 0,
+      "lastIndex": 1,
+      "startTick": 0,
+      "endTick": 3111,
+      "segmentCount": 2,
+      "payloadBytes": 142417,
+      "finalHash": "850f0a4c1e56e2b0",
+      "scored": false
+    }
+  ],
+  "passed": true,
+  "finished": "2026-10-20T03:18:32.874Z",
+  "browserClosed": true
+}

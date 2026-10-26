@@ -4,10 +4,7 @@
     {
       "version": "v0.39.0",
       "sourceCommit": "23b886bbdbea717be79a54d9c0fffe5eded46bdf",
-      "channels": [
-        "release-v0.39.0",
-        "release-0.39.0"
-      ],
+      "channels": ["release-v0.39.0", "release-0.39.0"],
       "registeredEntries": [
         {
           "campaign": {
@@ -59,10 +56,7 @@
                   "graceSeconds": 0.7,
                   "playerRadius": 0.18,
                   "pointsPerCell": 10,
-                  "timeMedals": [
-                    40,
-                    73
-                  ]
+                  "timeMedals": [40, 73]
                 }
               },
               {
@@ -116,10 +110,7 @@
                   "graceSeconds": 0.7,
                   "playerRadius": 0.18,
                   "pointsPerCell": 10,
-                  "timeMedals": [
-                    45,
-                    81
-                  ]
+                  "timeMedals": [45, 81]
                 }
               },
               {
@@ -174,10 +165,7 @@
                   "graceSeconds": 0.7,
                   "playerRadius": 0.18,
                   "pointsPerCell": 10,
-                  "timeMedals": [
-                    50,
-                    89
-                  ]
+                  "timeMedals": [50, 89]
                 }
               },
               {
@@ -253,10 +241,7 @@
                   "graceSeconds": 0.7,
                   "playerRadius": 0.18,
                   "pointsPerCell": 10,
-                  "timeMedals": [
-                    55,
-                    97
-                  ]
+                  "timeMedals": [55, 97]
                 }
               },
               {
@@ -310,10 +295,7 @@
                   "graceSeconds": 0.7,
                   "playerRadius": 0.18,
                   "pointsPerCell": 10,
-                  "timeMedals": [
-                    60,
-                    105
-                  ]
+                  "timeMedals": [60, 105]
                 }
               },
               {
@@ -383,10 +365,7 @@
                   "graceSeconds": 0.7,
                   "playerRadius": 0.18,
                   "pointsPerCell": 10,
-                  "timeMedals": [
-                    65,
-                    113
-                  ]
+                  "timeMedals": [65, 113]
                 }
               },
               {
@@ -451,10 +430,7 @@
                   "graceSeconds": 0.7,
                   "playerRadius": 0.18,
                   "pointsPerCell": 10,
-                  "timeMedals": [
-                    70,
-                    121
-                  ]
+                  "timeMedals": [70, 121]
                 }
               },
               {
@@ -535,10 +511,7 @@
                   "graceSeconds": 0.7,
                   "playerRadius": 0.18,
                   "pointsPerCell": 10,
-                  "timeMedals": [
-                    75,
-                    129
-                  ]
+                  "timeMedals": [75, 129]
                 }
               },
               {
@@ -601,10 +574,7 @@
                   "graceSeconds": 0.7,
                   "playerRadius": 0.18,
                   "pointsPerCell": 10,
-                  "timeMedals": [
-                    50,
-                    89
-                  ]
+                  "timeMedals": [50, 89]
                 },
                 "signalZones": [
                   {
@@ -684,10 +654,7 @@
                   "graceSeconds": 0.7,
                   "playerRadius": 0.18,
                   "pointsPerCell": 10,
-                  "timeMedals": [
-                    45,
-                    81
-                  ]
+                  "timeMedals": [45, 81]
                 },
                 "signalZones": [
                   {
@@ -767,10 +734,7 @@
                   "graceSeconds": 0.7,
                   "playerRadius": 0.18,
                   "pointsPerCell": 10,
-                  "timeMedals": [
-                    60,
-                    105
-                  ],
+                  "timeMedals": [60, 105],
                   "cutTimeLimitSeconds": 6,
                   "timeLimitSeconds": 70,
                   "maxTrailCells": 50
@@ -847,10 +811,7 @@
                   "graceSeconds": 0.7,
                   "playerRadius": 0.18,
                   "pointsPerCell": 10,
-                  "timeMedals": [
-                    70,
-                    121
-                  ],
+                  "timeMedals": [70, 121],
                   "timeLimitSeconds": 95,
                   "cutTimeLimitSeconds": 8,
                   "maxTrailCells": 60
@@ -1687,10 +1648,7 @@
     {
       "version": "v0.40.0",
       "sourceCommit": "57bee98f23a6bf5882f19065f1d70473ece7a12e",
-      "channels": [
-        "release-v0.40.0",
-        "release-0.40.0"
-      ],
+      "channels": ["release-v0.40.0", "release-0.40.0"],
       "registeredEntries": [
         {
           "campaign": {
@@ -1742,10 +1700,7 @@
                   "graceSeconds": 0.7,
                   "playerRadius": 0.18,
                   "pointsPerCell": 10,
-                  "timeMedals": [
-                    40,
-                    73
-                  ]
+                  "timeMedals": [40, 73]
                 }
               },
               {
@@ -1799,10 +1754,7 @@
                   "graceSeconds": 0.7,
                   "playerRadius": 0.18,
                   "pointsPerCell": 10,
-                  "timeMedals": [
-                    45,
-                    81
-                  ]
+                  "timeMedals": [45, 81]
                 }
               },
               {
@@ -1857,10 +1809,7 @@
                   "graceSeconds": 0.7,
                   "playerRadius": 0.18,
                   "pointsPerCell": 10,
-                  "timeMedals": [
-                    50,
-                    89
-                  ]
+                  "timeMedals": [50, 89]
                 }
               },
               {
@@ -1936,10 +1885,7 @@
                   "graceSeconds": 0.7,
                   "playerRadius": 0.18,
                   "pointsPerCell": 10,
-                  "timeMedals": [
-                    55,
-                    97
-                  ]
+                  "timeMedals": [55, 97]
                 }
               },
               {
@@ -1993,10 +1939,7 @@
                   "graceSeconds": 0.7,
                   "playerRadius": 0.18,
                   "pointsPerCell": 10,
-                  "timeMedals": [
-                    60,
-                    105
-                  ]
+                  "timeMedals": [60, 105]
                 }
               },
               {
@@ -2066,10 +2009,7 @@
                   "graceSeconds": 0.7,
                   "playerRadius": 0.18,
                   "pointsPerCell": 10,
-                  "timeMedals": [
-                    65,
-                    113
-                  ]
+                  "timeMedals": [65, 113]
                 }
               },
               {
@@ -2134,10 +2074,7 @@
                   "graceSeconds": 0.7,
                   "playerRadius": 0.18,
                   "pointsPerCell": 10,
-                  "timeMedals": [
-                    70,
-                    121
-                  ]
+                  "timeMedals": [70, 121]
                 }
               },
               {
@@ -2218,10 +2155,7 @@
                   "graceSeconds": 0.7,
                   "playerRadius": 0.18,
                   "pointsPerCell": 10,
-                  "timeMedals": [
-                    75,
-                    129
-                  ]
+                  "timeMedals": [75, 129]
                 }
               },
               {
@@ -2284,10 +2218,7 @@
                   "graceSeconds": 0.7,
                   "playerRadius": 0.18,
                   "pointsPerCell": 10,
-                  "timeMedals": [
-                    50,
-                    89
-                  ]
+                  "timeMedals": [50, 89]
                 },
                 "signalZones": [
                   {
@@ -2367,10 +2298,7 @@
                   "graceSeconds": 0.7,
                   "playerRadius": 0.18,
                   "pointsPerCell": 10,
-                  "timeMedals": [
-                    45,
-                    81
-                  ]
+                  "timeMedals": [45, 81]
                 },
                 "signalZones": [
                   {
@@ -2450,10 +2378,7 @@
                   "graceSeconds": 0.7,
                   "playerRadius": 0.18,
                   "pointsPerCell": 10,
-                  "timeMedals": [
-                    60,
-                    105
-                  ],
+                  "timeMedals": [60, 105],
                   "cutTimeLimitSeconds": 6,
                   "timeLimitSeconds": 70,
                   "maxTrailCells": 50
@@ -2530,10 +2455,7 @@
                   "graceSeconds": 0.7,
                   "playerRadius": 0.18,
                   "pointsPerCell": 10,
-                  "timeMedals": [
-                    70,
-                    121
-                  ],
+                  "timeMedals": [70, 121],
                   "timeLimitSeconds": 95,
                   "cutTimeLimitSeconds": 8,
                   "maxTrailCells": 60
@@ -3370,10 +3292,7 @@
     {
       "version": "v0.41.0",
       "sourceCommit": "4d0357a14f9640b884a429475035f20731d94773",
-      "channels": [
-        "release-v0.41.0",
-        "release-0.41.0"
-      ],
+      "channels": ["release-v0.41.0", "release-0.41.0"],
       "registeredEntries": [
         {
           "campaign": {
@@ -3425,10 +3344,7 @@
                   "graceSeconds": 0.7,
                   "playerRadius": 0.18,
                   "pointsPerCell": 10,
-                  "timeMedals": [
-                    40,
-                    73
-                  ]
+                  "timeMedals": [40, 73]
                 }
               },
               {
@@ -3482,10 +3398,7 @@
                   "graceSeconds": 0.7,
                   "playerRadius": 0.18,
                   "pointsPerCell": 10,
-                  "timeMedals": [
-                    45,
-                    81
-                  ]
+                  "timeMedals": [45, 81]
                 }
               },
               {
@@ -3540,10 +3453,7 @@
                   "graceSeconds": 0.7,
                   "playerRadius": 0.18,
                   "pointsPerCell": 10,
-                  "timeMedals": [
-                    50,
-                    89
-                  ]
+                  "timeMedals": [50, 89]
                 }
               },
               {
@@ -3619,10 +3529,7 @@
                   "graceSeconds": 0.7,
                   "playerRadius": 0.18,
                   "pointsPerCell": 10,
-                  "timeMedals": [
-                    55,
-                    97
-                  ]
+                  "timeMedals": [55, 97]
                 }
               },
               {
@@ -3676,10 +3583,7 @@
                   "graceSeconds": 0.7,
                   "playerRadius": 0.18,
                   "pointsPerCell": 10,
-                  "timeMedals": [
-                    60,
-                    105
-                  ]
+                  "timeMedals": [60, 105]
                 }
               },
               {
@@ -3749,10 +3653,7 @@
                   "graceSeconds": 0.7,
                   "playerRadius": 0.18,
                   "pointsPerCell": 10,
-                  "timeMedals": [
-                    65,
-                    113
-                  ]
+                  "timeMedals": [65, 113]
                 }
               },
               {
@@ -3817,10 +3718,7 @@
                   "graceSeconds": 0.7,
                   "playerRadius": 0.18,
                   "pointsPerCell": 10,
-                  "timeMedals": [
-                    70,
-                    121
-                  ]
+                  "timeMedals": [70, 121]
                 }
               },
               {
@@ -3901,10 +3799,7 @@
                   "graceSeconds": 0.7,
                   "playerRadius": 0.18,
                   "pointsPerCell": 10,
-                  "timeMedals": [
-                    75,
-                    129
-                  ]
+                  "timeMedals": [75, 129]
                 }
               },
               {
@@ -3967,10 +3862,7 @@
                   "graceSeconds": 0.7,
                   "playerRadius": 0.18,
                   "pointsPerCell": 10,
-                  "timeMedals": [
-                    50,
-                    89
-                  ]
+                  "timeMedals": [50, 89]
                 },
                 "signalZones": [
                   {
@@ -4050,10 +3942,7 @@
                   "graceSeconds": 0.7,
                   "playerRadius": 0.18,
                   "pointsPerCell": 10,
-                  "timeMedals": [
-                    45,
-                    81
-                  ]
+                  "timeMedals": [45, 81]
                 },
                 "signalZones": [
                   {
@@ -4133,10 +4022,7 @@
                   "graceSeconds": 0.7,
                   "playerRadius": 0.18,
                   "pointsPerCell": 10,
-                  "timeMedals": [
-                    60,
-                    105
-                  ],
+                  "timeMedals": [60, 105],
                   "cutTimeLimitSeconds": 6,
                   "timeLimitSeconds": 70,
                   "maxTrailCells": 50
@@ -4213,10 +4099,7 @@
                   "graceSeconds": 0.7,
                   "playerRadius": 0.18,
                   "pointsPerCell": 10,
-                  "timeMedals": [
-                    70,
-                    121
-                  ],
+                  "timeMedals": [70, 121],
                   "timeLimitSeconds": 95,
                   "cutTimeLimitSeconds": 8,
                   "maxTrailCells": 60
@@ -5218,10 +5101,7 @@
     {
       "version": "v0.42.0",
       "sourceCommit": "e9928cdaad2f55d912aadd2ef25f635fb99e938c",
-      "channels": [
-        "release-v0.42.0",
-        "release-0.42.0"
-      ],
+      "channels": ["release-v0.42.0", "release-0.42.0"],
       "registeredEntries": [
         {
           "campaign": {
@@ -5273,10 +5153,7 @@
                   "graceSeconds": 0.7,
                   "playerRadius": 0.18,
                   "pointsPerCell": 10,
-                  "timeMedals": [
-                    40,
-                    73
-                  ]
+                  "timeMedals": [40, 73]
                 }
               },
               {
@@ -5330,10 +5207,7 @@
                   "graceSeconds": 0.7,
                   "playerRadius": 0.18,
                   "pointsPerCell": 10,
-                  "timeMedals": [
-                    45,
-                    81
-                  ]
+                  "timeMedals": [45, 81]
                 }
               },
               {
@@ -5388,10 +5262,7 @@
                   "graceSeconds": 0.7,
                   "playerRadius": 0.18,
                   "pointsPerCell": 10,
-                  "timeMedals": [
-                    50,
-                    89
-                  ]
+                  "timeMedals": [50, 89]
                 }
               },
               {
@@ -5467,10 +5338,7 @@
                   "graceSeconds": 0.7,
                   "playerRadius": 0.18,
                   "pointsPerCell": 10,
-                  "timeMedals": [
-                    55,
-                    97
-                  ]
+                  "timeMedals": [55, 97]
                 }
               },
               {
@@ -5524,10 +5392,7 @@
                   "graceSeconds": 0.7,
                   "playerRadius": 0.18,
                   "pointsPerCell": 10,
-                  "timeMedals": [
-                    60,
-                    105
-                  ]
+                  "timeMedals": [60, 105]
                 }
               },
               {
@@ -5597,10 +5462,7 @@
                   "graceSeconds": 0.7,
                   "playerRadius": 0.18,
                   "pointsPerCell": 10,
-                  "timeMedals": [
-                    65,
-                    113
-                  ]
+                  "timeMedals": [65, 113]
                 }
               },
               {
@@ -5665,10 +5527,7 @@
                   "graceSeconds": 0.7,
                   "playerRadius": 0.18,
                   "pointsPerCell": 10,
-                  "timeMedals": [
-                    70,
-                    121
-                  ]
+                  "timeMedals": [70, 121]
                 }
               },
               {
@@ -5749,10 +5608,7 @@
                   "graceSeconds": 0.7,
                   "playerRadius": 0.18,
                   "pointsPerCell": 10,
-                  "timeMedals": [
-                    75,
-                    129
-                  ]
+                  "timeMedals": [75, 129]
                 }
               },
               {
@@ -5815,10 +5671,7 @@
                   "graceSeconds": 0.7,
                   "playerRadius": 0.18,
                   "pointsPerCell": 10,
-                  "timeMedals": [
-                    50,
-                    89
-                  ]
+                  "timeMedals": [50, 89]
                 },
                 "signalZones": [
                   {
@@ -5898,10 +5751,7 @@
                   "graceSeconds": 0.7,
                   "playerRadius": 0.18,
                   "pointsPerCell": 10,
-                  "timeMedals": [
-                    45,
-                    81
-                  ]
+                  "timeMedals": [45, 81]
                 },
                 "signalZones": [
                   {
@@ -5981,10 +5831,7 @@
                   "graceSeconds": 0.7,
                   "playerRadius": 0.18,
                   "pointsPerCell": 10,
-                  "timeMedals": [
-                    60,
-                    105
-                  ],
+                  "timeMedals": [60, 105],
                   "cutTimeLimitSeconds": 6,
                   "timeLimitSeconds": 70,
                   "maxTrailCells": 50
@@ -6061,10 +5908,7 @@
                   "graceSeconds": 0.7,
                   "playerRadius": 0.18,
                   "pointsPerCell": 10,
-                  "timeMedals": [
-                    70,
-                    121
-                  ],
+                  "timeMedals": [70, 121],
                   "timeLimitSeconds": 95,
                   "cutTimeLimitSeconds": 8,
                   "maxTrailCells": 60

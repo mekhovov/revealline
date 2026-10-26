@@ -7,7 +7,8 @@ import {
 } from './curriculum-brands.mjs';
 import { CURRICULUM_CAMPAIGNS } from './curriculum.mjs';
 
-export const COMPANY_BRANDS = Object.freeze([{
+export const COMPANY_BRANDS = Object.freeze([
+  {
     format: 'revealline-brand-pack.v1',
     id: 'droneaid',
     revision: 1,
@@ -45,7 +46,7 @@ export const COMPANY_BRANDS = Object.freeze([{
       },
     ],
   },
-{
+  {
     format: 'revealline-brand-pack.v1',
     id: 'droneaid-nl',
     revision: 2,
@@ -82,9 +83,11 @@ export const COMPANY_BRANDS = Object.freeze([{
       },
     ],
   },
-...CURRICULUM_BRANDS]);
+  ...CURRICULUM_BRANDS,
+]);
 
-const choices = [...CURRICULUM_IDENTITIES.map((item) => [
+const choices = [
+  ...CURRICULUM_IDENTITIES.map((item) => [
     item.id,
     item.id,
     item.name,
@@ -94,23 +97,25 @@ const choices = [...CURRICULUM_IDENTITIES.map((item) => [
       ...(item.id === 'social-drone-ua' ? ['social-drone-sky-watch'] : []),
     ],
   ]),
-['droneaid-community', 'droneaid', 'Community Relay', 'public', ['droneaid-community-relay']],
-[
+  ['droneaid-community', 'droneaid', 'Community Relay', 'public', ['droneaid-community-relay']],
+  [
     'droneaid-nl-community',
     'droneaid-nl',
     'DroneAid',
     'public',
     COMPANY_CAMPAIGNS.filter((c) => c.brandId === 'droneaid-nl').map((c) => c.id),
   ],
-...COMPANY_CAMPAIGNS.filter((c) => c.brandId === 'droneaid-nl').map((c) => [
+  ...COMPANY_CAMPAIGNS.filter((c) => c.brandId === 'droneaid-nl').map((c) => [
     c.id,
     c.brandId,
     c.name,
     'public',
     [c.id],
-  ])];
+  ]),
+];
 // Exact pre-art snapshots; their bytes must never be reformatted or overwritten.
-const retainedPresentations = Object.freeze({'victory-drones': [
+const retainedPresentations = Object.freeze({
+  'victory-drones': [
     {
       id: '9685f48ccc6c053c69aebb695a1f31e66e54a839806e8956d816258cc07906d8',
       path: 'game/editions/retained/victory-drones-before-showcase-learning.json',
@@ -142,7 +147,7 @@ const retainedPresentations = Object.freeze({'victory-drones': [
       bytes: 114051,
     },
   ],
-'social-drone-ua': [
+  'social-drone-ua': [
     {
       id: 'ef26881b40bfc01a8ac1ef4ce5d746d11b253a64d2c44316dde458659f541195',
       path: 'game/editions/retained/social-drone-ua-before-iphone-video-gallery.json',
@@ -198,7 +203,7 @@ const retainedPresentations = Object.freeze({'victory-drones': [
       bytes: 114183,
     },
   ],
-'ukraine-culture': [
+  'ukraine-culture': [
     {
       id: '3e868c83c369a31d78e3a551e8b83b6179bba80543dca9df19cbb73566deb295',
       path: 'game/editions/retained/ukraine-culture-before-showcase-learning.json',
@@ -242,7 +247,7 @@ const retainedPresentations = Object.freeze({'victory-drones': [
       bytes: 61157,
     },
   ],
-'fpv-learning': [
+  'fpv-learning': [
     {
       id: '2b0c8781faf178c7e7952018a07ad290af67cf32217eedcbeeacf9a42c732ace',
       path: 'game/editions/retained/fpv-learning-before-showcase-learning.json',
@@ -292,7 +297,7 @@ const retainedPresentations = Object.freeze({'victory-drones': [
       bytes: 59411,
     },
   ],
-'droneaid-nl-community': [
+  'droneaid-nl-community': [
     {
       id: '13bf4f80b1b055d9fb5abdc137dfc93b94fe4ba55072104e697fb29615374679',
       path: 'game/editions/retained/droneaid-nl-community-fb207466c.json',
@@ -318,7 +323,7 @@ const retainedPresentations = Object.freeze({'victory-drones': [
       bytes: 148338,
     },
   ],
-'droneaid-nl-workshop-lights': [
+  'droneaid-nl-workshop-lights': [
     {
       id: '4e9e2e8ebc38f4bf6ae0b5a06144c103947cb90704b6646800bec534bcbf5c14',
       path: 'game/editions/retained/droneaid-nl-workshop-lights-fb207466c.json',
@@ -338,7 +343,7 @@ const retainedPresentations = Object.freeze({'victory-drones': [
       bytes: 34100,
     },
   ],
-'droneaid-nl-parts-in-motion': [
+  'droneaid-nl-parts-in-motion': [
     {
       id: '0b402f348a0d84f534c5db803d731394f7120160d7fd9c538887a4361a20ae40',
       path: 'game/editions/retained/droneaid-nl-parts-in-motion-fb207466c.json',
@@ -358,7 +363,7 @@ const retainedPresentations = Object.freeze({'victory-drones': [
       bytes: 39189,
     },
   ],
-'droneaid-nl-makers-together': [
+  'droneaid-nl-makers-together': [
     {
       id: '609db6d6c7ea54120531b53b2b5c54b26d1484306195a426c39bd40d5236b478',
       path: 'game/editions/retained/droneaid-nl-makers-together-fb207466c.json',
@@ -372,7 +377,7 @@ const retainedPresentations = Object.freeze({'victory-drones': [
       bytes: 39429,
     },
   ],
-'droneaid-nl-careful-handoff': [
+  'droneaid-nl-careful-handoff': [
     {
       id: 'fb9dafae437c37905dcdd07cec0f67b53ead801a8894c2bf2070309dfd16a913',
       path: 'game/editions/retained/droneaid-nl-careful-handoff-fb207466c.json',
@@ -386,7 +391,7 @@ const retainedPresentations = Object.freeze({'victory-drones': [
       bytes: 40708,
     },
   ],
-'droneaid-nl-signals-of-support': [
+  'droneaid-nl-signals-of-support': [
     {
       id: '013849c9507447451ca1f9a58d845da2d44436dbf776b231162ab8715cc61863',
       path: 'game/editions/retained/droneaid-nl-signals-of-support-fb207466c.json',
@@ -400,7 +405,7 @@ const retainedPresentations = Object.freeze({'victory-drones': [
       bytes: 42294,
     },
   ],
-'droneaid-nl-shared-horizon': [
+  'droneaid-nl-shared-horizon': [
     {
       id: '1c5fc1701fb224c9a548d1540b19e2f8c893b43c6bc81d2b91a0bb65d3bcf0a6',
       path: 'game/editions/retained/droneaid-nl-shared-horizon-fb207466c.json',
@@ -413,35 +418,35 @@ const retainedPresentations = Object.freeze({'victory-drones': [
       sha256: 'e1e31c174b40a97cfe0d43998bd91a4dd3eb314183f7bd5c29de618a51859977',
       bytes: 42871,
     },
-  ]});
+  ],
+});
 
 export const COMPANY_EDITIONS = Object.freeze(
   choices.map(([id, brandId, name, audience, campaignIds]) => ({
     format: 'revealline-edition.v1',
     id,
-    revision:
-      ['droneaid-nl-community'].includes(id)
-            ? 6
-            : ['droneaid-nl-workshop-lights', 'droneaid-nl-parts-in-motion'].includes(id)
-                ? 5
-                : brandId === 'droneaid-nl'
-                  ? 4
-                  : id === 'fpv-learning'
-                    ? 9
-                    : id === 'social-drone-ua'
-                      ? 10
-                      : id === 'ukraine-culture'
-                        ? 8
-                        : id === 'victory-drones'
-                          ? 6
-                          : [
-                                'social-drone-ua',
-                                'victory-drones',
-                                'ukraine-culture',
-                                'fpv-learning',
-                              ].includes(id)
-                            ? 5
-                            : 1,
+    revision: ['droneaid-nl-community'].includes(id)
+      ? 6
+      : ['droneaid-nl-workshop-lights', 'droneaid-nl-parts-in-motion'].includes(id)
+        ? 5
+        : brandId === 'droneaid-nl'
+          ? 4
+          : id === 'fpv-learning'
+            ? 9
+            : id === 'social-drone-ua'
+              ? 10
+              : id === 'ukraine-culture'
+                ? 8
+                : id === 'victory-drones'
+                  ? 6
+                  : [
+                        'social-drone-ua',
+                        'victory-drones',
+                        'ukraine-culture',
+                        'fpv-learning',
+                      ].includes(id)
+                    ? 5
+                    : 1,
     name: `${name} / LINE`,
     brandId,
     audience,
@@ -459,8 +464,9 @@ export const COMPANY_EDITIONS = Object.freeze(
   })),
 );
 
-const palettes = {...Object.fromEntries(CURRICULUM_IDENTITIES.map((item) => [item.id, item.palette])),
-'droneaid-nl': {
+const palettes = {
+  ...Object.fromEntries(CURRICULUM_IDENTITIES.map((item) => [item.id, item.palette])),
+  'droneaid-nl': {
     ink: '#0D0B2E',
     paper: '#FFFFFF',
     muted: '#BFCBF3',
@@ -472,7 +478,7 @@ const palettes = {...Object.fromEntries(CURRICULUM_IDENTITIES.map((item) => [ite
     sky: '#DCEBFD',
     land: '#4238EB',
   },
-droneaid: {
+  droneaid: {
     ink: '#12251C',
     paper: '#FAFBF7',
     muted: '#B8CEBA',
@@ -483,7 +489,8 @@ droneaid: {
     grid: '#284638',
     sky: '#DDEDE0',
     land: '#14532D',
-  }};
+  },
+};
 export function createCompanyTheme(brandId) {
   const brand = COMPANY_BRANDS.find((item) => item.id === brandId);
   if (!brand) throw new TypeError('Choose a registered company.');
@@ -545,13 +552,13 @@ export function createCompanyTheme(brandId) {
           scale: curriculum.genre === 'ambient' ? 'dorian' : 'major',
         }
       : {
-            id: brandId === 'droneaid-nl' ? 'workshop-first-light' : 'workshop-after-rain',
-            name: brandId === 'droneaid-nl' ? 'Workshop First Light' : 'Workshop After Rain',
-            genre: 'ambient',
-            tempo: 72,
-            root: 57,
-            scale: 'dorian',
-          },
+          id: brandId === 'droneaid-nl' ? 'workshop-first-light' : 'workshop-after-rain',
+          name: brandId === 'droneaid-nl' ? 'Workshop First Light' : 'Workshop After Rain',
+          genre: 'ambient',
+          tempo: 72,
+          root: 57,
+          scale: 'dorian',
+        },
     classBodies: Object.fromEntries(
       ['scout', 'bomber', 'carrier', 'interceptor', 'fiber', 'impact', 'trapper'].map((id) => [
         id,
@@ -595,16 +602,16 @@ export function createCompanyPresets(brandId) {
         ...neutral,
         label: 'Community courier',
         ...(brandId === 'droneaid-nl'
-            ? {
-                label: 'DroneAid Netherlands propeller',
-                src: '../../game/editions/assets/droneaid-nl/propeller.png',
-                sourceStatus:
-                  'Exact four propeller paths from the official Netherlands logo; gameplay rotation user-selected',
-                widthCells: 2.3,
-                heightCells: 2.3,
-                bodyMotion: { kind: 'rigid-spin', radiansPerSecond: 4 * Math.PI, travelGain: 0 },
-              }
-            : {}),
+          ? {
+              label: 'DroneAid Netherlands propeller',
+              src: '../../game/editions/assets/droneaid-nl/propeller.png',
+              sourceStatus:
+                'Exact four propeller paths from the official Netherlands logo; gameplay rotation user-selected',
+              widthCells: 2.3,
+              heightCells: 2.3,
+              bodyMotion: { kind: 'rigid-spin', radiansPerSecond: 4 * Math.PI, travelGain: 0 },
+            }
+          : {}),
       },
     },
     animationRecipes: { still: { label: 'Rigid body', components: [] } },
@@ -613,7 +620,8 @@ export function createCompanyPresets(brandId) {
 
 // Campaign palettes, material metaphors and sound are presentation only. All
 // physical actor cues and deterministic movement remain owned by the engine.
-const campaignLooks = {'droneaid-nl-workshop-lights': [
+const campaignLooks = {
+  'droneaid-nl-workshop-lights': [
     'FPV Workshop',
     '#0D0B2E',
     '#4238EB',
@@ -624,7 +632,7 @@ const campaignLooks = {'droneaid-nl-workshop-lights': [
     104,
     60,
   ],
-'droneaid-nl-parts-in-motion': [
+  'droneaid-nl-parts-in-motion': [
     'FPV Component Depot',
     '#111339',
     '#4D55DA',
@@ -635,7 +643,7 @@ const campaignLooks = {'droneaid-nl-workshop-lights': [
     112,
     62,
   ],
-'droneaid-nl-makers-together': [
+  'droneaid-nl-makers-together': [
     'Drone Building Together',
     '#21163A',
     '#6550C9',
@@ -646,7 +654,7 @@ const campaignLooks = {'droneaid-nl-workshop-lights': [
     88,
     65,
   ],
-'droneaid-nl-careful-handoff': [
+  'droneaid-nl-careful-handoff': [
     'FPV Donation Depot',
     '#111A36',
     '#4552BC',
@@ -657,7 +665,7 @@ const campaignLooks = {'droneaid-nl-workshop-lights': [
     98,
     60,
   ],
-'droneaid-nl-signals-of-support': [
+  'droneaid-nl-signals-of-support': [
     'Workshop Open Day',
     '#20133C',
     '#6042CD',
@@ -668,7 +676,7 @@ const campaignLooks = {'droneaid-nl-workshop-lights': [
     116,
     67,
   ],
-'droneaid-nl-shared-horizon': [
+  'droneaid-nl-shared-horizon': [
     'Ukraine Support Horizon',
     '#10112F',
     '#4740AD',
@@ -678,7 +686,8 @@ const campaignLooks = {'droneaid-nl-workshop-lights': [
     'ambient',
     82,
     62,
-  ]};
+  ],
+};
 export function createCompanyThemes(brandId) {
   const base = createCompanyTheme(brandId);
   return [

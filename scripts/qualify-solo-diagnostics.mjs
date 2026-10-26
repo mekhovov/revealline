@@ -10,6 +10,8 @@ import {
   DIAGNOSTICS_FORMAT,
 } from './solo-diagnostics-analysis.mjs';
 
+import { assessEmpiricalClockOverhead } from './solo-overhead-acceptance.mjs';
+
 const observer = fileURLToPath(new URL('./observe-solo-performance.mjs', import.meta.url));
 const observerLifecycle = new URL('./solo-observation-lifecycle.mjs', import.meta.url);
 const sha256 = (bytes) => createHash('sha256').update(bytes).digest('hex');
@@ -314,10 +316,18 @@ async function main(args) {
     return;
   }
   if (mode === 'analyze' && address && directory === undefined) {
-    const report = await analyzeDirectory(resolve(address));
+    const report = assessEmpiricalClockOverhead(await analyzeDirectory(resolve(address)));
     const output = join(resolve(address), `analysis-${Date.now()}.json`);
     await writeFile(output, JSON.stringify(report, null, 2), { flag: 'wx' });
-    console.log(JSON.stringify({ status: report.status, output, reasons: report.reasons }));
+    console.log(
+      JSON.stringify({
+        status: report.status,
+        conditionalStatus: report.conditionalStatus,
+        qualificationAssessment: report.qualificationAssessment,
+        output,
+        reasons: report.reasons,
+      }),
+    );
     process.exitCode = report.status === 'pass' ? 0 : 1;
     return;
   }
@@ -431,7 +441,7 @@ async function main(args) {
     process.off('SIGTERM', interrupt);
     manifest.finishedAt = new Date().toISOString();
     await persist({ kind: controller.signal.aborted ? 'interrupted' : 'finished' });
-    const analysis = await analyzeDirectory(configuration.directory);
+    const analysis = assessEmpiricalClockOverhead(await analyzeDirectory(configuration.directory));
     await writeFile(
       join(configuration.directory, 'analysis.json'),
       JSON.stringify(analysis, null, 2),
@@ -440,6 +450,8 @@ async function main(args) {
     console.log(
       JSON.stringify({
         status: analysis.status,
+        conditionalStatus: analysis.conditionalStatus,
+        qualificationAssessment: analysis.qualificationAssessment,
         pairs: analysis.completePairs,
         reasons: analysis.reasons,
       }),

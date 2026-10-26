@@ -1,0 +1,86 @@
+{
+  "format": "FPVWeaponReticleDelivery.v1",
+  "date": "2026-10-21",
+  "parent": "79811b2c52715511f92966559dde51176077f066",
+  "sourceHashes": {
+    "optional-practice/civilian-fpv/encounter-controls.mjs": "10aef487e51d431dad687e073ac2466864480a925801a09a4d9b9be15eaeca8e",
+    "optional-practice/civilian-fpv/flight-fullscreen.mjs": "31a6b7ead42b5d37c2a2805d0f44e98709e253bc864b538d4b5c6e2daa2b3dc9",
+    "optional-practice/civilian-fpv/radio-setup.mjs": "bb5d253e33d5ff7e3b5be01f7c50678d2fe5e422d201ab597950f7b062088ee7",
+    "optional-practice/civilian-fpv/style.css": "d48dc707e17933de740d928d60005e1eaa4dc8d0ca069fb93911f5bea26472e9",
+    "optional-practice/civilian-fpv/world-app.mjs": "077723b7beb21ef50c21b17612d9f859d2eb8f9b0b95ed32b6e5f2a0b663fdfb",
+    "optional-practice/civilian-fpv/world-reaction-runtime.mjs": "0cccc2e7cc42ecf8d2de241ed86999913da50f939de8d74926d248c1b9a787d2"
+  },
+  "diagnosis": {
+    "initialReport": "Scatter never becomes active; later clarified physical Fire drops bombs",
+    "observedSwitching": "Live HUD showed Scatter 6/6 after radio switching; not a primary loadout selection mismatch",
+    "before": {
+      "fire": {
+        "axis": 5,
+        "off": -1,
+        "on": 1
+      },
+      "payload": {
+        "button": 0,
+        "threshold": 0.5,
+        "invert": false
+      }
+    },
+    "heldFireObservation": {
+      "axes4through7": [
+        -1,
+        -1,
+        -1,
+        -1
+      ],
+      "button0": 1,
+      "otherButtons": 0
+    },
+    "cause": "The physical Fire switch sends Button 0, which the saved six-switch layout assigned to payload deployment. Gun fire was assigned to Channel 5.",
+    "correction": "Used the visible Swap Fire gun ↔ Deploy payload action to exchange only these bindings and automatically save. Stick calibration and other assignments preserved.",
+    "after": {
+      "fire": {
+        "button": 0,
+        "threshold": 0.5,
+        "invert": false
+      },
+      "payload": {
+        "axis": 5,
+        "off": -1,
+        "on": 1
+      }
+    }
+  },
+  "physicalConfirmation": {
+    "question": "Does it now shoot the selected gun without dropping a bomb?",
+    "reply": "Yes, gun fires correctly",
+    "scope": "User Oxbot walkthrough; not all-model or root release qualification"
+  },
+  "visibleEvidence": {
+    "activity": "Survival Endless",
+    "gun": "Autocannon",
+    "magazine": "23/30",
+    "shots": 187,
+    "hits": 14,
+    "bombsRemaining": 3,
+    "capture": "weapon-reticle-delivered.png"
+  },
+  "presentation": {
+    "reticle": "30 CSS pixel open-center cross with outlined centre dot; shared Worlds/Academy, existing projected aim position unchanged",
+    "toggle": "Remembered Aiming marker checkbox under HUD & widgets",
+    "radio": "Live ON/OFF indicators; explicit Fire gun versus Deploy labels; reversible Fire/Deploy swap using existing validation and autosave",
+    "weaponActions": "Names next equipped gun and active input source binding; HUD distinguishes Gun from Payload"
+  },
+  "checks": {
+    "syntax": "passed",
+    "diffWhitespace": "passed",
+    "packageConstruction": "both within unchanged limits",
+    "automatedSuite": "not added or run",
+    "remaining": "Full browser/input/layout catalogue and performance qualification remain pending"
+  },
+  "references": [
+    "https://store.steampowered.com/app/2862860/",
+    "https://steamcommunity.com/app/2862860/announcements/",
+    "https://betaflight.com/docs/wiki/app/osd-tab",
+    "https://learn.microsoft.com/en-us/xbox/accessibility/xbox-accessibility-guidelines/102"
+  ]
+}

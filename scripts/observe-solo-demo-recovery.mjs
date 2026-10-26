@@ -16,6 +16,7 @@ import { installDemoRecoveryProbe } from './solo-demo-recovery-probe.mjs';
 import {
   DEMO_ARMS,
   DEMO_CLOSE_ACTIVATION_POLICY,
+  DEMO_PAUSED_GEOMETRY_POLICY,
   unchanged,
   validQuality,
   validateDemoResourceContract,
@@ -185,8 +186,14 @@ const pausedDraw = async ({ afterDraw = -1, differentRun = null } = {}) => {
   );
 };
 const pause = async (practice) => {
+  const before = plan.resourceCycles?.pausedGeometryPolicy
+    ? await page.evaluate(() => window.demoRecoveryProbe.pausedGeometryState())
+    : null;
   await click(practice ? '#demo-pause' : '#demo-watch-pause');
-  await pausedDraw();
+  await pausedDraw({ afterDraw: before?.drawCount ?? -1 });
+  return before
+    ? { runId: before.runId, painterId: before.painterId, afterDraw: before.drawCount, practice }
+    : null;
 };
 const openDemo = async (differentRun = null, beforeOpen = null) => {
   // Back restores the Settings owner for this public entry route. A repeated
@@ -360,7 +367,7 @@ const resourceCycles = async () => {
       row.actions.push('open');
       row.opened = await page.evaluate(() => window.demoRecoveryProbe.readiness());
       assert(row.opened.tick > 0 && row.opened.paused === false);
-      await pause(false);
+      let pauseOwner = await pause(false);
       row.actions.push('watch-pause');
       if (mode === 'practice') {
         const source = await page.evaluate(
@@ -399,8 +406,29 @@ const resourceCycles = async () => {
         } finally {
           await page.keyboard.up('ArrowRight');
         }
-        await pause(true);
+        pauseOwner = await pause(true);
         row.actions.push('pause');
+      }
+      if (plan.resourceCycles.pausedGeometryPolicy) {
+        try {
+          row.pausedGeometry = await bounded('paused geometry readiness', () =>
+            page.evaluate(
+              (owner) => window.demoRecoveryProbe.settlePausedGeometry(owner),
+              pauseOwner,
+            ),
+          );
+        } catch (error) {
+          try {
+            row.pausedGeometryFailure = await bounded('paused geometry failure receipt', () =>
+              page.evaluate(() => window.demoRecoveryProbe.pausedGeometryFailure()),
+            );
+          } catch (readbackError) {
+            row.pausedGeometryFailureReadback = String(
+              readbackError?.message ?? readbackError,
+            ).slice(0, 1024);
+          }
+          throw error;
+        }
       }
       const paused = await snap(`${mode}-${cycle}-paused`);
       row.paused = report.snapshots.length - 1;
@@ -681,6 +709,13 @@ const observation = async () => {
       (contract) => window.demoRecoveryProbe.configureResources(contract),
       plan.resourceCycles.resources,
     );
+  if (plan.resourceCycles?.pausedGeometryPolicy) {
+    assert.equal(plan.resourceCycles.pausedGeometryPolicy, DEMO_PAUSED_GEOMETRY_POLICY);
+    await page.evaluate(
+      (policy) => window.demoRecoveryProbe.configurePausedGeometry(policy),
+      plan.resourceCycles.pausedGeometryPolicy,
+    );
+  }
   await click('#shell-featured');
   await phase('running');
   await page.keyboard.down('ArrowRight');

@@ -1,0 +1,62 @@
+{
+  "schema": "fpv-native-library-tiny-contract-http-v1",
+  "checkedAt": "2026-10-16T02:01:49.467534+00:00",
+  "identitySha256": "00cc410e9deb212e5e0dc942156ab530567d961c1526779b624d53695ff76229",
+  "allServedDependenciesExact": true,
+  "imports": [
+    {
+      "from": "harness.mjs",
+      "to": "./contract.mjs"
+    },
+    {
+      "from": "contract.mjs",
+      "to": "./packaged-world-store.mjs"
+    }
+  ],
+  "files": [
+    {
+      "path": "index.html",
+      "bytes": 1930,
+      "sha256": "ee7b1343ca521480f02dbe51b022ee7ae0ea118cbad312d6ee89f9ba9d97d95c",
+      "HTTP": 200,
+      "mime": "text/html; charset=utf-8"
+    },
+    {
+      "path": "style.css",
+      "bytes": 771,
+      "sha256": "0c7aef2cbbc6afaaafaf7f7a6f7875bf5fa571c1227f4b566fcf7d522541bef7",
+      "HTTP": 200,
+      "mime": "text/css; charset=utf-8"
+    },
+    {
+      "path": "harness.mjs",
+      "bytes": 1668,
+      "sha256": "d37599b6a90bfb1b6d8d276a905e02a5141a511c5ca226abe3b93e04bc2c4aca",
+      "HTTP": 200,
+      "mime": "text/javascript; charset=utf-8"
+    },
+    {
+      "path": "contract.mjs",
+      "bytes": 14755,
+      "sha256": "c2d819373994e2ac9e87b93fb04fe8df522d75d7a4167dcf6361a52496533f62",
+      "HTTP": 200,
+      "mime": "text/javascript; charset=utf-8"
+    },
+    {
+      "path": "packaged-world-store.mjs",
+      "bytes": 17516,
+      "sha256": "6050ac77adf52c2b757b851c444a4b1430a8cbca34a9048713e540601ebcca22",
+      "HTTP": 200,
+      "mime": "text/javascript; charset=utf-8"
+    },
+    {
+      "path": "README.md",
+      "bytes": 3603,
+      "sha256": "5c605552207524481d8d18780f4c59ea97566c49decd26eda42f9ad9c208c6c3",
+      "HTTP": 200,
+      "mime": "text/plain; charset=utf-8"
+    }
+  ],
+  "browserOpened": false,
+  "nativeAccepted": false
+}
