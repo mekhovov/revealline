@@ -32,6 +32,7 @@ export function attachGameShell({
   titleRecommendation,
   navigationContext = () =>
     t('interface:captureNavigation.context', { mode: t('interface:solo2') }),
+  titleActionDetail,
   onWorlds,
   onMissions,
   getTopDialog,
@@ -251,6 +252,12 @@ export function attachGameShell({
     }
     $('shell-continue').hidden = !continued;
     if ($('shell-featured')) $('shell-featured').hidden = isolated || continued;
+    if ($('shell-action-context')) $('shell-action-context').hidden = isolated;
+    if ($('shell-action-detail')) {
+      $('shell-action-detail').hidden = isolated || !titleActionDetail;
+      if (!isolated && titleActionDetail)
+        localizedText($('shell-action-detail'), titleActionDetail);
+    }
     if ($('shell-destination'))
       localizedText($('shell-destination'), () =>
         isolated
@@ -258,7 +265,7 @@ export function attachGameShell({
           : continued
             ? copy('title.continueDestination', {
                 destination: !$('continue-saved').hidden
-                  ? $('continue-saved').title
+                  ? $('continue-saved').getAttribute('title') || t('interface:loadSavedFlight2')
                   : titleContinueDestination?.() || $('mission-brief-title').textContent,
               })
             : titleDestination?.() || copy('title.deployDestination'),

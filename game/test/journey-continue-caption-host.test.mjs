@@ -84,6 +84,10 @@ for (const completed of [false, true])
       });
     const { p, backend, before } = await setup(t, { events });
     assert.equal(p.$('shell-destination').textContent, 'Continue · Choose your share');
+    assert.equal(
+      p.$('shell-action-detail').textContent,
+      'Solo · Starts a new attempt at this mission.',
+    );
     assert.deepEqual(await backend.read(), before);
     await activate(p, 'shell-continue', 'choose-your-share');
   });
@@ -123,8 +127,10 @@ test('an active Journey caption continues to name its paused flight', async (t) 
   p.$('overlay-menu').click();
   assert.equal(p.$('shell-home').open, true);
   assert.equal(p.$('shell-destination').textContent, 'Continue · First return');
+  assert.equal(p.$('shell-action-detail').textContent, 'Solo · Resumes your paused flight.');
   setLocale('uk', { persist: false });
   assert.equal(p.$('shell-continue').textContent.trim(), 'Продовжити→');
+  assert.equal(p.$('shell-action-detail').textContent, 'Одиночна · Продовжує призупинений політ.');
   assert.equal(p.$('mission-brief-title').textContent, 'Перше повернення');
   assert.equal(p.$('shell-destination').textContent, 'Продовжити · Перше повернення');
   setLocale('en', { persist: false });

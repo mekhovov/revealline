@@ -6128,5 +6128,8 @@
   "touchSave.blocked": "Session only. Browser storage blocked saving. Your selected touch controls remain active for this visit.",
   "touchSave.unavailable": "Session only. Saving is unavailable. Your selected touch controls remain active for this visit.",
   "touchSave.preserved": "Session only. Existing saved touch settings could not be read safely and were kept. Your selected controls apply for this visit.",
-  "touchSave.changed": "Session only. Touch settings changed while saving. Retry to save your current selection."
+  "touchSave.changed": "Session only. Touch settings changed while saving. Retry to save your current selection.",
+  "home.resumePausedFlight": "{{mode}} · Resumes your paused flight.",
+  "home.resumeSavedFlight": "{{mode}} · Verifies the saved flight, then resumes it.",
+  "home.startMissionAttempt": "{{mode}} · Starts a new attempt at this mission."
 }

@@ -15196,6 +15196,15 @@ try {
         ? contentText(journeyDestination(), 'name')
         : undefined,
     titleRecommendation: homeMissionRecommendation,
+    titleActionDetail: () =>
+      t(
+        started && !['won', 'lost'].includes(run?.status)
+          ? 'interface:home.resumePausedFlight'
+          : !$('continue-saved').hidden
+            ? 'interface:home.resumeSavedFlight'
+            : 'interface:home.startMissionAttempt',
+        { mode: t('interface:solo2') },
+      ),
     onTitleStart: (options) => {
       const destination = journeyDestination();
       if (destination && !started && $('continue-saved').hidden) {

@@ -181,8 +181,7 @@ export function prepareNativeMenus({
     copy($('shell-workshop'), 'creatorTools');
     copy($('shell-workshop-title'), 'creatorTools');
     if ($('settings-offline')) $('settings-offline').hidden = true;
-    for (const id of ['shell-title-edition', 'shell-destination'])
-      if ($(id)) $(id).dataset.nativeQuiet = 'true';
+    if ($('shell-title-edition')) $('shell-title-edition').dataset.nativeQuiet = 'true';
     moveId('shell-now-playing', panels.audio);
     root.querySelector('.home-art-caption')?.setAttribute('data-native-quiet', 'true');
     if ($('shell-play-options')) $('shell-play-options').open = true;
