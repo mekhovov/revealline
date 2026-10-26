@@ -1,0 +1,34 @@
+{
+  "format": "FPVExactPublicExtraLegacyAssetReadbacks.v1",
+  "assets": [
+    {
+      "assetId": 565105372,
+      "sha256": "96085dafb2c7f8083564e9923647b914efe29a5704a35b23d7fe337f4be4ae56",
+      "bytes": 120099,
+      "serverDigestMatch": true,
+      "authenticatedFullReadbackSHA256Match": true,
+      "payloadOutputPersisted": false
+    },
+    {
+      "assetId": 581564885,
+      "sha256": "f28ad08403db215de393ac562ca1d3fe7dfc6791f49194513af60bf5db1b7e3d",
+      "bytes": 192123,
+      "serverDigestMatch": true,
+      "authenticatedFullReadbackSHA256Match": true,
+      "payloadOutputPersisted": false
+    },
+    {
+      "assetId": 581564918,
+      "sha256": "f723ddb7c5150353cb58d9f032da5acfa53f8f89018716c364038c51fc45aff8",
+      "bytes": 34101,
+      "serverDigestMatch": true,
+      "authenticatedFullReadbackSHA256Match": true,
+      "payloadOutputPersisted": false
+    }
+  ],
+  "selectedLogicalPaths": 4,
+  "scope": "Only3existingrelease identities reused by the exact next-two positive public subset",
+  "allVolumeInputSetFinal": false,
+  "overallDisconnectSafetyClaimed": false,
+  "createdAtUnix": 1792132180.268806
+}

@@ -1,0 +1,118 @@
+Browser tab: 12, Title: "FPV / LINE · Simulator", URL: "http://127.0.0.1:9243/optional-practice/fpv-worlds/index.html".
+0 AXWebArea FPV / LINE · Simulator, URL: 127.0.0.1:9243/optional-practice/fpv-worlds/index.html
+	1 container Setup workbench
+		2 container
+			3 heading Setup workbench, Value: 2
+				4 text Setup workbench
+			5 text Meteor75 Regional check · BETAFPV Meteor75 · SIM starter rates · 0 changes · Used by this flight
+			6 checkbox Basic, Value: 1
+			7 checkbox Expert, Value: 0
+			8 text Search all settings
+			9 search text field (settable) Search all settings
+		10 container Setup sections
+			11 button Overview
+			12 button Aircraft
+			13 button Rates & throttle
+			14 button Camera
+			15 button Flight response / PID
+			16 button Library
+		17 container
+			18 heading Aircraft, Value: 3
+				19 text Aircraft
+			20 heading Built-in aircraft, Value: 3
+				21 text Built-in aircraft
+			22 text Choose an aircraft for practice in every environment. Each preset includes its battery, independent SIM controller, camera and editable starter rates. Your saved setups keep their changes.
+			23 container
+				24 text Search aircraft
+				25 search text field (settable) Search aircraft
+			26 container
+				27 text Aircraft preset
+				28 pop up button (collapsed, settable) Description: Aircraft preset, Value: BETAFPV Meteor75 · 2022 · analog · 19500 KV, Secondary Actions: Expand
+					29 menu
+						30 BETAFPV Air65 II Racing · 2026 · analog · 30000 KV
+						31 (selected) BETAFPV Meteor75 · 2022 · analog · 19500 KV
+						32 BETAFPV Meteor75 Pro · Matrix · analog · 21000 KV
+						33 BETAFPV Meteor85 · Analog · 11000 KV · LAVA battery
+						34 Happymodel Mobula8 · 2023 · analog · SPI ELRS · 11000 KV
+						35 BETAFPV Cetus X · 2022 · analog · Betaflight SPI ELRS · original 30C cells
+						36 CADDXFPV Protos 1.6 · AIO 1.0 · Ascent Lite · inferred flying mass · SIM response
+						37 BETAFPV Pavo20 Pro II · O4 Pro · ELRS · 4S · 5500 KV
+						38 GEPRC SMART35 · Analog · 3850 KV · 3.5 inch
+						39 iFlight Nazgul ECO XL5 · V1.1 · analog · 6S · 1800 KV
+						40 iFlight Mach R5 Sport · European 2050 KV · analog · canopy
+						41 HGLRC Rekon7 PRO · DJI O3 · 1350 KV · 7 inch
+						42 iFlight Chimera7 Pro V2 · O4 · 1250 KV · 7.5 inch
+						43 iFlight Helion Pro · O4 · 900 KV · 10 inch
+						44 Holybro X650 V2 · MN4014 330 KV · Gemfan 1555
+			45 text Built-in references are read-only. Use in draft creates your own editable setup.
+			46 container
+				47 text Rates when selecting an aircraft
+				48 pop up button (collapsed, settable) Description: Rates when selecting an aircraft, Value: Use aircraft defaults, Secondary Actions: Expand
+					49 menu
+						50 (selected) Use aircraft defaults
+						51 Keep my current rates
+			52 text 37.68 g flying weight · 40 mm propellers · 75 mm wheelbase · BT2.0 1S 450 mAh 30C
+			53 container
+				54 container Help: BETAFPV Meteor75, Description: BETAFPV Meteor75. Top view, front points up. Ducted rotors. Model span: 93.0 × 93.0 mm · Propellers: 40.0 mm · Wheelbase: 75 mm
+				55 text Simplified model · top view · scaled to fit. Estimated body shape; rotor spacing and propeller size follow the SIM geometry. Model span: 93.0 × 93.0 mm · Propellers: 40.0 mm · Wheelbase: 75 mm
+			56 button (collapsed) Specifications and model evidence, Secondary Actions: Expand
+				57 text Specifications and model evidence
+			58 button Use in draft
+			59 button Reset draft to aircraft defaults
+			60 heading Drone setup and camera, Value: 3
+				61 text Drone setup and camera
+			62 container
+				63 text Drone name
+				64 text field (settable) Description: Drone name, Value: Meteor75 Regional check
+			65 container
+				66 text Rates used by this drone
+				67 pop up button (collapsed, settable) Description: Rates used by this drone, Value: BETAFPV Meteor75 · SIM starter rates, Secondary Actions: Expand
+					68 menu
+						69 Player default
+						70 Legacy feel
+						71 (selected) BETAFPV Meteor75 · SIM starter rates
+			72 container Battery & physical camera
+				73 text Battery & physical camera
+				74 container
+					75 text Battery
+					76 pop up button (collapsed, settable) Description: Battery, Value: Reference battery, Secondary Actions: Expand
+						77 menu
+							78 (selected) Reference battery
+							79 Custom battery · same cells and chemistry
+				80 container
+					81 text Battery capacity (mAh)
+					82 stepper (disabled, settable, integer) Description: Battery capacity (mAh), Value: 450
+				83 container
+					84 text Battery mass (g)
+					85 stepper (disabled, settable, float) Description: Battery mass (g), Value: 12.699999809265137, Details: 12,7
+				86 container
+					87 text Physical camera payload
+					88 pop up button (collapsed, settable) Description: Physical camera payload, Value: No additional camera, Secondary Actions: Expand
+						89 menu
+							90 (selected) No additional camera
+							91 Additional central camera payload
+				92 container
+					93 text Additional camera mass (g)
+					94 stepper (disabled, settable, integer) Description: Additional camera mass (g), Value: 0
+				95 text Estimated installed mass: 37.68 g · COM height: 0.00 mm · Added camera: 0 g · Hover: 49.7% · Thrust/weight: 3.04
+				96 text Any video system supplied with the reference aircraft is already counted; this adds a separate payload. Custom components use estimated positions and dimensions inside the central body. Check real pack fit separately. Capacity affects endurance only when battery depletion is enabled; mass always affects handling. Existing motor, electrical, drag and controller adjustments are retained.
+			97 container Optional battery endurance
+				98 text Optional battery endurance
+				99 container
+					100 text Battery depletion (optional)
+					101 checkbox (settable, integer) Description: Battery depletion (optional), Value: 0
+				102 text Enabled: using charge gradually reduces available motor power. Disabled: charge stays full while battery mass, power limits and voltage sag still affect handling. Ordinary practice has no time limit.
+				103 text Save for next flight keeps the current flight unchanged. A fresh-battery restart saves this draft and starts a new flight from the launch point with full charge. Pause, resume and checkpoint recovery preserve the flight’s remaining charge and original conditions. Use the same course, mode and setup for repeatable tests.
+				104 button Fresh battery & restart flight
+			105 text Camera tilt and vertical FOV change the view, not aircraft mass. They belong to the drone and are excluded from portable rate exports. Skins do not select a drone setup.
+			106 button Duplicate drone setup
+			107 text The assigned profile is the saved source. Edited rates shown in the header will be saved as a copy unless you choose to update the shared profile in Library.
+		108 button Save for next flight
+		109 button Apply & restart
+		110 button Test draft · unscored
+		111 button Revert draft
+		112 button Close
+		113 button Undo last edit
+		114 text Tab/arrows move; Enter selects; Esc goes back. Controller: release, then press/release A to connect. Calibrated radio: hold yaw right for 0.7 s, then centre to connect; roll/pitch move, hold yaw right/left then centre to confirm/go back.
+
+The focused UI element is 3 heading Setup workbench, Value: 2

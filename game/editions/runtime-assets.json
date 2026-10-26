@@ -169,8 +169,8 @@
   {
     "id": "runtime-menu-scene-provenance",
     "path": "game/ui/art/menu-scenes/provenance.json",
-    "sha256": "92bd0e5a43f92dbc4bab270a86332b16b26e638b5935a956e6d7788f3b514cfc",
-    "bytes": 21201,
+    "sha256": "47c67be77307c63702c43f1bc43e5e116aef95fc3af7d9dde4a37de926fb9aa5",
+    "bytes": 14660,
     "publication": "public",
     "approved": true,
     "dependencies": []

@@ -1,0 +1,348 @@
+{
+  "pin": "891835944510139a7bed6a99305c0e22b71ba9ccfe84801a07ea6e215ca25c87",
+  "results": [
+    {
+      "delta": 0,
+      "restored": true
+    },
+    {
+      "delta": 1,
+      "restored": true
+    },
+    {
+      "delta": 10,
+      "restored": true
+    },
+    {
+      "delta": 100,
+      "restored": true
+    },
+    {
+      "delta": 220,
+      "restored": true
+    },
+    {
+      "delta": 500,
+      "restored": true
+    }
+  ],
+  "initial": {
+    "position": {
+      "x": 304000,
+      "y": 3000,
+      "z": 304000
+    },
+    "velocity": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "orientation": [
+      0,
+      0,
+      0,
+      1000000
+    ],
+    "angular": {
+      "roll": 0,
+      "pitch": 0,
+      "yaw": 0
+    },
+    "ticks": 0,
+    "grounded": false,
+    "support": null,
+    "landingSpeed": 0,
+    "landingTilt": 0,
+    "mode": "acro",
+    "status": "paused",
+    "reason": "prepared",
+    "contacts": 0,
+    "recentres": 1,
+    "originMm": {
+      "x": 320000,
+      "y": 0,
+      "z": 320000
+    },
+    "localPositionMm": {
+      "x": -16000,
+      "y": 3000,
+      "z": -16000
+    },
+    "pendingTargetMm": null,
+    "terrain": {
+      "state": "ready",
+      "terrainReady": true,
+      "flightReady": false,
+      "hasRetainedTerrain": true,
+      "geometryProfile": "terrain-scenery-v1",
+      "geometryBytes": 590416,
+      "textureBytes": 468316,
+      "resourceBytes": 1058732,
+      "sourceBytes": 2805612,
+      "reservedSourceBytes": 2805612,
+      "reservedGeometryBytes": 1058732,
+      "provenance": {
+        "regionId": "canal-city-study",
+        "revision": "district-r2",
+        "positionMm": {
+          "x": 304000,
+          "y": 3000,
+          "z": 304000
+        },
+        "originMm": {
+          "x": 320000,
+          "y": 0,
+          "z": 320000
+        },
+        "compiler": "FPV regional mixed owner v1",
+        "chunks": [
+          {
+            "chunkId": "canal-2-2",
+            "terrain": {
+              "chunkId": "canal-2-2",
+              "collision": {
+                "id": "canal-2-2-collision",
+                "url": "https://fixture.invalid/terrain/canal-2-2.json",
+                "bytes": 6086,
+                "sha256": "423eb2c4a1fd878a31168acb9ba04f3223c977054e6cd79b6014b9c2ed93445b"
+              },
+              "scene": {
+                "id": "canal-2-2-scene",
+                "url": "https://fixture.invalid/terrain/canal-2-2.glb",
+                "bytes": 38404,
+                "sha256": "f19caf0f825cbbc1b8d78e0e583c1e1b11bca4e34f6b49c4d23e2267b413fdfe"
+              }
+            },
+            "scenery": {
+              "chunkId": "canal-2-2",
+              "collision": {
+                "id": "canal-2-2-collision",
+                "url": "https://fixture.invalid/scenery/canal-2-2.json",
+                "bytes": 412082,
+                "sha256": "8b178f08253c85bb77690b84da7408026090d37cbd66fd6abdcd76490fbe8e60"
+              },
+              "scene": {
+                "id": "canal-2-2-scene",
+                "url": "https://fixture.invalid/scenery/canal-2-2.glb",
+                "bytes": 308892,
+                "sha256": "b47159fa0ea8f1fb1f1d8164c52103affd4748408d73426f5e9c1b748ea994a6"
+              }
+            }
+          },
+          {
+            "chunkId": "canal-1-2",
+            "terrain": {
+              "chunkId": "canal-1-2",
+              "collision": {
+                "id": "canal-1-2-collision",
+                "url": "https://fixture.invalid/terrain/canal-1-2.json",
+                "bytes": 5747,
+                "sha256": "86f5cbf69c7ceda79348b683c44e15244a8ce89d4b5699c6f0a143dacf56f743"
+              },
+              "scene": {
+                "id": "canal-1-2-scene",
+                "url": "https://fixture.invalid/terrain/canal-1-2.glb",
+                "bytes": 38404,
+                "sha256": "f5ae37e6a959ed84e9086156981c12d46253fea20150a6cb2057c28b826517c4"
+              }
+            },
+            "scenery": {
+              "chunkId": "canal-1-2",
+              "collision": {
+                "id": "canal-1-2-collision",
+                "url": "https://fixture.invalid/scenery/canal-1-2.json",
+                "bytes": 501993,
+                "sha256": "6b411d1944be0221f01d84f1f5869e2216ba5109dfa7428ce1a97309fe5ae962"
+              },
+              "scene": {
+                "id": "canal-1-2-scene",
+                "url": "https://fixture.invalid/scenery/canal-1-2.glb",
+                "bytes": 355836,
+                "sha256": "5f45ecf32ae09783a65aafcd9defd0173efd8c22d067747115d9ef1bd0cda2d8"
+              }
+            }
+          },
+          {
+            "chunkId": "canal-2-1",
+            "terrain": {
+              "chunkId": "canal-2-1",
+              "collision": {
+                "id": "canal-2-1-collision",
+                "url": "https://fixture.invalid/terrain/canal-2-1.json",
+                "bytes": 5908,
+                "sha256": "c8831a4be44dcd15fd04e57549505c1b3dea5e2a95dc74cbdafbe4d8c43ba3fd"
+              },
+              "scene": {
+                "id": "canal-2-1-scene",
+                "url": "https://fixture.invalid/terrain/canal-2-1.glb",
+                "bytes": 38404,
+                "sha256": "36c4eb16034d28865ea5d9d566087d68d7e3e2f2a77bf61dff827c9c5f51e2c5"
+              }
+            },
+            "scenery": {
+              "chunkId": "canal-2-1",
+              "collision": {
+                "id": "canal-2-1-collision",
+                "url": "https://fixture.invalid/scenery/canal-2-1.json",
+                "bytes": 382558,
+                "sha256": "5737d8ba4eca4a5ea72110e983ad0db9a05f98bbfb98a699104a8bc5a4782ef2"
+              },
+              "scene": {
+                "id": "canal-2-1-scene",
+                "url": "https://fixture.invalid/scenery/canal-2-1.glb",
+                "bytes": 286396,
+                "sha256": "1c6368ed7275411cc11a2c0cb0bfdef8cca6ae6c6cfe74fd137fcb4f3978a1a7"
+              }
+            }
+          },
+          {
+            "chunkId": "canal-1-1",
+            "terrain": {
+              "chunkId": "canal-1-1",
+              "collision": {
+                "id": "canal-1-1-collision",
+                "url": "https://fixture.invalid/terrain/canal-1-1.json",
+                "bytes": 5980,
+                "sha256": "769c5dfb4c05be1fb84c02240d26f888c2246c0d1c8993d92412015ca48d04f6"
+              },
+              "scene": {
+                "id": "canal-1-1-scene",
+                "url": "https://fixture.invalid/terrain/canal-1-1.glb",
+                "bytes": 38404,
+                "sha256": "ea5b67ea5491dc151e6aba109cbe34a51c120a1482795c54cd758cab0caf4dff"
+              }
+            },
+            "scenery": {
+              "chunkId": "canal-1-1",
+              "collision": {
+                "id": "canal-1-1-collision",
+                "url": "https://fixture.invalid/scenery/canal-1-1.json",
+                "bytes": 212574,
+                "sha256": "e5b76e152492d436ccfb84e283118fb0adf3dc032b501b11784d043a12bd6e72"
+              },
+              "scene": {
+                "id": "canal-1-1-scene",
+                "url": "https://fixture.invalid/scenery/canal-1-1.glb",
+                "bytes": 167944,
+                "sha256": "712ca875b398bd4aceb8c33295584619e4ff9cff27a714e63cbf0521545bb206"
+              }
+            }
+          }
+        ]
+      },
+      "failure": null
+    },
+    "geometryProfile": "terrain-scenery-v1",
+    "streaming": {
+      "enabled": true,
+      "pending": false,
+      "failure": null
+    },
+    "model": "regional-authoring-flight-prototype.v1",
+    "unscored": true,
+    "playerReady": false,
+    "attitude": {
+      "roll": 0,
+      "pitch": 0,
+      "yaw": 0,
+      "up": {
+        "x": 0,
+        "y": 1000000,
+        "z": 0
+      }
+    },
+    "lastInput": {
+      "roll": 0,
+      "pitch": 0,
+      "yaw": 0,
+      "throttle": 0
+    },
+    "step": 0,
+    "total": 0,
+    "hold": 0,
+    "events": [],
+    "actors": [],
+    "projectiles": [],
+    "score": 0
+  },
+  "saved": {
+    "format": "RegionalEncounterFlight.v2",
+    "identity": "38170acd71bc6b75",
+    "body": {
+      "position": {
+        "x": 304000,
+        "y": 2976,
+        "z": 304000
+      },
+      "velocity": {
+        "x": 0,
+        "y": -585,
+        "z": 0
+      },
+      "orientation": [
+        0,
+        0,
+        0,
+        1000000
+      ],
+      "angular": {
+        "roll": 0,
+        "pitch": 0,
+        "yaw": 0
+      },
+      "ticks": 3,
+      "grounded": false,
+      "support": null,
+      "landingSpeed": 0,
+      "landingTilt": 0
+    },
+    "mode": "acro",
+    "origin": {
+      "x": 320000,
+      "y": 0,
+      "z": 320000
+    },
+    "contacts": 0,
+    "recentres": 1
+  },
+  "candidateComponents": [
+    {
+      "name": "canal-2-2",
+      "bounds": [
+        -64,
+        -3,
+        -64,
+        64,
+        3.9000000953674316,
+        64
+      ],
+      "closed": false,
+      "convex": false,
+      "faces": 2048,
+      "point": [
+        -16,
+        3.196,
+        -16
+      ]
+    },
+    {
+      "name": "canal-2-2",
+      "bounds": [
+        -64,
+        -3,
+        -64,
+        64,
+        4,
+        64
+      ],
+      "closed": false,
+      "convex": false,
+      "faces": 241,
+      "point": [
+        -16,
+        3.196,
+        -16
+      ]
+    }
+  ]
+}

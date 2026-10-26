@@ -1,0 +1,110 @@
+TAP version 13
+# Subtest: native encounter session preserves course state and saves a paired paused boundary
+ok 1 - native encounter session preserves course state and saves a paired paused boundary # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.479375
+  ...
+# Subtest: continuous session rolls its bounded recording and restores the retained chain
+ok 2 - continuous session rolls its bounded recording and restores the retained chain # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.046875
+  ...
+# Subtest: regional return keeps its roster and combat clock while accepted flight moves home
+ok 3 - regional return keeps its roster and combat clock while accepted flight moves home # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.03325
+  ...
+# Subtest: rejected and failed async aircraft steps never consume encounter time or fire
+ok 4 - rejected and failed async aircraft steps never consume encounter time or fire # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.030417
+  ...
+# Subtest: a synchronous combat checkpoint cannot consume a fresh Arm or capture later frames
+ok 5 - a synchronous combat checkpoint cannot consume a fresh Arm or capture later frames # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.083959
+  ...
+# Subtest: v2 queued commands survive rejected steps, are recorded once, and restore without duplicate execution
+ok 6 - v2 queued commands survive rejected steps, are recorded once, and restore without duplicate execution # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.0285
+  ...
+# Subtest: v2 pause cancels unsent commands and cannot trigger ordnance upon resume
+ok 7 - v2 pause cancels unsent commands and cannot trigger ordnance upon resume # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.027333
+  ...
+# Subtest: Strike aftermath is separately recorded, can pause, and restores paused
+ok 8 - Strike aftermath is separately recorded, can pause, and restores paused # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.032167
+  ...
+# Subtest: Strike aftermath publishes terminal timeout and never steps a finished encounter
+ok 9 - Strike aftermath publishes terminal timeout and never steps a finished encounter # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.084917
+  ...
+# Subtest: Strike delayed bomb victory reaches the host result and exposes its selected target
+ok 10 - Strike delayed bomb victory reaches the host result and exposes its selected target # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.084333
+  ...
+# Subtest: v2 Start next wave is accepted once, recorded with bit64, and held through rejected physics
+ok 11 - v2 Start next wave is accepted once, recorded with bit64, and held through rejected physics # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.037542
+  ...
+# Subtest: geometry rejection holds aircraft, encounter, recording and commands including aftermath
+ok 12 - geometry rejection holds aircraft, encounter, recording and commands including aftermath # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.035917
+  ...
+# Subtest: v2 recovery rejects command/recording inconsistencies without changing the accepted boundary
+ok 13 - v2 recovery rejects command/recording inconsistencies without changing the accepted boundary # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.026334
+  ...
+# Subtest: v2 native combat replay reproduces quantized radio controls and accepted commands through physical simulation
+ok 14 - v2 native combat replay reproduces quantized radio controls and accepted commands through physical simulation # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.06725
+  ...
+# Subtest: v2 replay rejects rewritten accepted controls despite an updated recovery checksum
+ok 15 - v2 replay rejects rewritten accepted controls despite an updated recovery checksum # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.029709
+  ...
+# Subtest: v2 playback exposes accepted progress and cancellation without continuing rewards
+ok 16 - v2 playback exposes accepted progress and cancellation without continuing rewards # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.091042
+  ...
+# Subtest: v2 replay rejects truncated recording intervals and a different backend before playback
+ok 17 - v2 replay rejects truncated recording intervals and a different backend before playback # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.033292
+  ...
+# Subtest: v2 retains a complete six-minute attempt and rolls only beyond twelve full segments
+ok 18 - v2 retains a complete six-minute attempt and rolls only beyond twelve full segments # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.129291
+  ...
+# Subtest: optional launch metadata preserves exact regional start while remaining independent of gameplay validity
+ok 19 - optional launch metadata preserves exact regional start while remaining independent of gameplay validity # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.035417
+  ...
+# Subtest: accepted combat step reuses committed snapshots while public snapshots retain copy isolation
+ok 20 - accepted combat step reuses committed snapshots while public snapshots retain copy isolation
+  ---
+  duration_ms: 40.124583
+  ...
+1..20
+# tests 20
+# suites 0
+# pass 1
+# fail 0
+# cancelled 0
+# skipped 19
+# todo 0
+# duration_ms 643.837833

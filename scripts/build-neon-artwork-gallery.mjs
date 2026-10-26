@@ -41,8 +41,8 @@ header{max-width:850px;margin-bottom:48px}p{color:#adc0d5}a{color:#9fe8ff}nav{di
 .gallery{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,350px),1fr));gap:24px}
 article{overflow:hidden;background:#101b2c;border:1px solid #28435c;border-radius:12px}article a{display:block}.play{margin:0 18px 18px;padding:10px 14px;border:1px solid #99edff;border-radius:6px}img{display:block;width:100%;height:auto;aspect-ratio:2/1;object-fit:contain;background:#030810}h3{font-size:1rem;margin:14px 18px}a:focus-visible{outline:3px solid #ffd785;outline-offset:4px}
 }</style></head><body><header><p>FPV / LINE · Art collection</p><h1>Pictures worth revealing.</h1>
-<p>54 original illustrations, each matched to its arena. Cinematic neon environments for the reference layouts; lettering, craft, nature and cultural motifs for Words &amp; Symbols.</p>
-<nav aria-label="Artwork sections"><a href="#neon-reference-pack">16 reference levels</a><a href="#neon-mosaic-pack">38 words &amp; symbols</a><a href="../neon-mosaic/">View symbol layouts</a><a href="../../../game/?journey=legacy">Open game</a></nav>
+<p>${images.length} original illustrations, each matched to its arena. Cinematic neon environments for the reference layouts; lettering, craft, nature and cultural motifs for Words &amp; Symbols.</p>
+<nav aria-label="Artwork sections"><a href="#neon-reference-pack">${images.filter((entry) => entry.packId === 'neon-reference-pack').length} reference levels</a><a href="#neon-mosaic-pack">${images.filter((entry) => entry.packId === 'neon-mosaic-pack').length} words &amp; symbols</a><a href="../neon-mosaic/">View symbol layouts</a><a href="../../../game/?journey=legacy">Open game</a></nav>
 <p>AI-assisted original illustrations created with the built-in image generation tool. Cultural pictures are artistic interpretations; <a href="../neon-mosaic/references.json">research references</a> and <a href="prompts.json">effective prompts</a> are retained.</p></header>
 <main>${sections}</main></body></html>\n`;
   return protectPageHTML(html, 'authoring/library/neon-artwork/index.html', accessConfig);

@@ -1,0 +1,18 @@
+{
+  "started": "2026-10-20T02:47:31.817Z",
+  "sources": {
+    "world-app.mjs": "01988ad7bbf10bc9b3fd8efb0725536660f61c0c7f4f25409d739e4f65d82183",
+    "world-reaction-runtime.mjs": "9636aec03278c48b161b39f583fd20d886ec122f0b7a76c8cc69860a5e87f89a",
+    "renderer.mjs": "277de38a0acded3da5b52f668bf77688478cdd420dcb603e8a7c9eeb855d2fc0",
+    "combat-actors.mjs": "b1fcab3f836088ca0abfcef57ac7183e70988c2ea0717990b9d1bcaecc8b9086"
+  },
+  "errors": [],
+  "consoleErrors": [
+    "Failed to load resource: the server responded with a status of 404 (Not Found)",
+    "Failed to load resource: the server responded with a status of 404 (Not Found)"
+  ],
+  "attempts": [],
+  "scope": "Three full-app Realistic Survival attempts with scripted hover, no player firing, invulnerability. Renderer resource/heap snapshots are leak diagnostics, not garbage-collection proof or human/radio acceptance.",
+  "failure": "page.waitForFunction: Timeout 120000ms exceeded.\n    at /Users/oleksandr.mekhovov/work/my_projects/go_test_radio_fix/docs/evidence/fpv-combat/overhaul-app-lifecycle.cjs:34:20",
+  "finished": "2026-10-20T02:49:33.173Z"
+}

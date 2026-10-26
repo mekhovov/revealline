@@ -707,22 +707,20 @@ export function mountFlightTuning({
     'checkbox',
     preview,
   );
-  const captureStatus = el(
-    'p',
-    t(
-      'Sticks navigate menus. Enable capture to drive the rotation preview.',
-      'Стіки керують меню. Увімкніть перехоплення для перегляду обертання.',
-    ),
-    preview,
-  );
-  listen(capturePreview, 'change', () => {
+  const captureStatus = el('p', '', preview, false);
+  function paintCaptureStatus() {
     captureStatus.textContent = capturePreview.checked
       ? t(
           'Preview owns sticks; menu navigation is paused. Press and release controller B to return.',
           'Стіки керують переглядом; навігацію меню призупинено. Натисніть і відпустіть B контролера для повернення.',
         )
-      : t('Sticks navigate menus.', 'Стіки керують меню.');
-  });
+      : t(
+          'Sticks navigate menus. Enable capture to drive the rotation preview.',
+          'Стіки керують меню. Увімкніть перехоплення для перегляду обертання.',
+        );
+  }
+  listen(capturePreview, 'change', paintCaptureStatus);
+  paintCaptureStatus();
   const previewExact = field(
     t('Preview stick position · exact (%)', 'Положення стіка · точно (%)'),
     'number',
@@ -1608,14 +1606,15 @@ export function mountFlightTuning({
     },
     transfer,
   );
-  function portable() {
+  function portable(legacyMessage) {
     commitNumericInputs();
     if (draft.format !== TUNED_RESPONSE_FORMAT)
       throw new Error(
-        t(
-          'Legacy feel has no Betaflight equivalent',
-          'Класична реакція не має еквівалента Betaflight',
-        ),
+        legacyMessage ??
+          t(
+            'Legacy feel has no Betaflight equivalent',
+            'Класична реакція не має еквівалента Betaflight',
+          ),
       );
     return draft.rates;
   }
@@ -1852,7 +1851,7 @@ export function mountFlightTuning({
       if (!store.snapshot().setups.some((item) => item.id === editedSetupId))
         editedSetupId = store.snapshot().selectedSetupId;
       completeDraft = null;
-      load();
+      load(undefined, true);
     },
     actions,
   );
@@ -1876,7 +1875,13 @@ export function mountFlightTuning({
       () => {
         const setup = readSetup();
         if (setup.advanced?.aircraft.format === 'AdvancedAircraft.v2') commitNumericInputs();
-        else portable();
+        else
+          portable(
+            t(
+              'Choose a physical aircraft preset or modern rates for Advanced practice.',
+              'Для практики Advanced виберіть фізичний пресет дрона або сучасні рейти.',
+            ),
+          );
         remember();
         close();
         return onAdvanced({
@@ -1946,7 +1951,7 @@ export function mountFlightTuning({
     }
     node.value = value;
   }
-  function load(profileId) {
+  function load(profileId, clearFailure = false) {
     clearImportPreview();
     uploadGeneration++;
     library = store.snapshot();
@@ -2062,6 +2067,7 @@ export function mountFlightTuning({
         'This draft predates a library change. Export it before refreshing; saving over newer settings is blocked.',
         'Ця чернетка старіша за зміну бібліотеки. Експортуйте її перед оновленням; перезапис новіших налаштувань заблоковано.',
       );
+    else if (clearFailure && !root.querySelector('[aria-invalid="true"]')) status.textContent = '';
   }
   function paintAssignment(profileId = assignment.value || null) {
     setOptions(
@@ -2731,6 +2737,7 @@ export function mountFlightTuning({
     if (frame !== null) win.cancelAnimationFrame(frame);
     frame = null;
     capturePreview.checked = false;
+    paintCaptureStatus();
     returnButton.hidden = !draftFlightActive;
     onClose({ testing });
     if (opener?.isConnected) opener.focus();
@@ -2777,7 +2784,7 @@ export function mountFlightTuning({
       if (section === 'rates') return;
       releaseCurvePointer();
       capturePreview.checked = false;
-      captureStatus.textContent = t('Sticks navigate menus.', 'Стіки керують меню.');
+      paintCaptureStatus();
     },
   });
   workbench.add('overview', introduction);
@@ -2904,6 +2911,7 @@ export function mountFlightTuning({
     el,
     field,
     action,
+    translatedAttribute,
     listen,
     aircraftParent: workbench.panel('aircraft'),
     controllerParent: workbench.panel('controller'),
@@ -2999,7 +3007,7 @@ export function mountFlightTuning({
           components: clone(editor.components),
           baseRevision: editRevision,
         });
-        load(editor.profileId);
+        load(editor.profileId, true);
         return;
       }
       const state = completeDraft.snapshot();
@@ -3019,7 +3027,7 @@ export function mountFlightTuning({
         components: state.setup.components,
         baseRevision: editRevision,
       });
-      load(state.profile.sourceId);
+      load(state.profile.sourceId, true);
     },
     actions,
   );
@@ -3300,10 +3308,7 @@ export function mountFlightTuning({
     captureActive: () => root.open && capturePreview.checked,
     releaseCapture() {
       capturePreview.checked = false;
-      captureStatus.textContent = t(
-        'Sticks navigate menus. Enable capture to drive the rotation preview.',
-        'Стіки керують меню. Увімкніть захоплення для попереднього перегляду обертання.',
-      );
+      paintCaptureStatus();
       capturePreview.focus();
     },
     async savePracticeDraft(advanced, metadata = {}) {
@@ -3359,6 +3364,7 @@ export function mountFlightTuning({
         }
       }
       for (const { node, name, pair } of attributeBindings) node.setAttribute(name, t(...pair));
+      paintCaptureStatus();
       controllerTunes?.refresh();
       responseBench?.refresh();
       paintImportReview();

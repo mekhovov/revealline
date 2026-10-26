@@ -1,34 +1,49 @@
 {
   "format": "revealline-source-art-verification.v1",
   "baseCommit": "58f96f3fa0189d60230d4797b4d456b1804167fa",
-  "sourceCandidates": 12,
+  "sourceCandidates": 9,
+  "ownershipProjection": {
+    "sourceRevision": "c00894649ff759d0895f45baec58b6183bdb2896",
+    "previousSHA256": "e06d202f7b5803ffa0eb3288b2a331d0f17ce9f4e95f965bd4e7305ee78c14f6",
+    "scope": "Fresh verification of retained originals, derivatives and current source context. This derived record is not the original historical verification. The original twelve generation calls remain recorded in provenance."
+  },
   "newGeometries": 0,
   "runtimeBindings": 0,
-  "totalOriginalBytes": 31692501,
-  "totalThumbnailBytes": 483255,
+  "totalOriginalBytes": 23175876,
+  "totalThumbnailBytes": 345995,
   "originalMethod": "Unchanged bounded RGB8 PNG decoder: full chunk CRC/order, inflate and scanline reconstruction, exact original bytes/hash/dimensions. Record mode requires all default tool files to match.",
   "thumbnailMethod": "Declared 384x192 proportional nearest-neighbor JPEG review copies; exact bytes/hash/header/source identity here. The recorded Canvas production run decoded every JPEG and recorded its RGBA hash; portable verification does not replay an optional platform encoder.",
   "limits": "Authoring candidates only. No runtime/catalog/production-count adoption, native/partial-reveal/gameplay/animation/device/human quality or rights certification. Root visual review is separate.",
   "files": [
     {
       "path": "README.md",
-      "bytes": 5552,
-      "sha256": "58f9b5ae620949b1070e0ba165e07bf5d776113f54f2ead53c7f2d412ec6bc66"
+      "bytes": 2034,
+      "sha256": "f9a1c023decef7e12a244b0322e907d0424ef22088f9eb5519b1fb685f63d9ec"
     },
     {
       "path": "derivatives.json",
-      "bytes": 7315,
-      "sha256": "b0224ff32cc1885504323184bb575409e696a44b556c451afebe3de35858bbe4"
+      "bytes": 6009,
+      "sha256": "b88a9524eae2edfc9f67d69570cd50269aa473a5424cde5340718ef763cb1154"
+    },
+    {
+      "path": "gallery.css",
+      "bytes": 2484,
+      "sha256": "9276e573ed26dc636a8fb791f56009e50b363446a2688cf0101b2bd04929ef19"
+    },
+    {
+      "path": "gallery.mjs",
+      "bytes": 2010,
+      "sha256": "c62568e0881f8463a781c05a028445190c3f38e60e01a141f572b09d205a84c8"
     },
     {
       "path": "generation-results.json",
-      "bytes": 16317,
-      "sha256": "31a1785c53536964a548b483b48f0250041d0d42090b520d1f5ecef44ee2e8fc"
+      "bytes": 12276,
+      "sha256": "048cd4755daccdaf0e54ff2bfa24e6eb7c1c0b5c53e0147f5d6f65487fef2027"
     },
     {
       "path": "index.html",
-      "bytes": 5120,
-      "sha256": "43ab3a42f490c0eed8e8f6d0ef5df429282d50f382c642dd345c5240ba0111b8"
+      "bytes": 7330,
+      "sha256": "a0376797c9c27dc075b117c241af553b1ac21b5918b6e8d790077af03c961f70"
     },
     {
       "path": "layout-briefs.json",
@@ -37,8 +52,8 @@
     },
     {
       "path": "manifest.json",
-      "bytes": 9279,
-      "sha256": "27f31bdaa91db438066107e221ed77f16ad5325873b1512566edb7881475e6b1"
+      "bytes": 6976,
+      "sha256": "c563bcdbcd0503081f24aa451437540b67ceabd545b4edb05b3256d0ccd75543"
     },
     {
       "path": "originals/crossing-watch-fpv.png",
@@ -87,18 +102,23 @@
     },
     {
       "path": "prompts.json",
-      "bytes": 27895,
-      "sha256": "02652252288ebb936463d2417733cefd07903f287b36fe5c91e8d214d646120f"
+      "bytes": 20879,
+      "sha256": "552c084d8ec1e8c686b94311c85123d1146e8f15005c534c16886896bd01d8ea"
     },
     {
       "path": "provenance.json",
-      "bytes": 25236,
-      "sha256": "72137c0459d22aa1adc5acc53cb3ac95ca526d26fc53e76deca53552f107c435"
+      "bytes": 21198,
+      "sha256": "9aef6fc68783f8fa46f65916ccee492c255cef03bff1c3d3df636cc1522a9f98"
     },
     {
       "path": "render-previews.mjs",
-      "bytes": 4721,
-      "sha256": "2d82878118567c9f68006f7d7715f0c8c0e1bff727f3d527a594992f7233d389"
+      "bytes": 4715,
+      "sha256": "8878ac859ffbe8c492bafc02c11dfed53cd7ec4c88a61e959d780fbb76df771d"
+    },
+    {
+      "path": "sources.mjs",
+      "bytes": 3541,
+      "sha256": "58a546a8c94ea42ebcd7bd644aee8a71812ff5a62b441f7fe1cabc5a326087db"
     },
     {
       "path": "thumbnails/crossing-watch-fpv.jpg",
@@ -147,8 +167,8 @@
     },
     {
       "path": "verify.mjs",
-      "bytes": 10266,
-      "sha256": "64bd97fc4f5e9b1037f815c1bca82de45c7c80274bd2f6a01b5989e7f7a9f40c"
+      "bytes": 10881,
+      "sha256": "164f6819610bd7a5d1210e0e55e8325a5e38b7fefcf4c1fb9a48738e784f3239"
     }
   ],
   "originals": [
@@ -347,13 +367,13 @@
   "protectedContext": [
     {
       "path": ".gitattributes",
-      "bytes": 485,
-      "sha256": "367c1353565ebf4b355e01413a282349d799716976daf32147c20d5de858038f"
+      "bytes": 1863,
+      "sha256": "8dd156e88b414536d758e79fafa59029dcd53f69a63e7f2f6cc19c2ebe70aefb"
     },
     {
       "path": ".gitignore",
-      "bytes": 124,
-      "sha256": "38812e650ec5d06647adbf4a940526cb422f1b50ae44a73181ef35860c25b8d2"
+      "bytes": 1300,
+      "sha256": "fbb0c01f5e63841162bc40bdf2077e1e7c5000e579951d55b2691643e5af69c3"
     },
     {
       "path": "authoring/library/four-worlds-chapters/verify-images.mjs",
@@ -362,28 +382,28 @@
     },
     {
       "path": "eslint.config.mjs",
-      "bytes": 1610,
-      "sha256": "418e718b4c0d2eff5092693fddebf57b553bfc45c1b40d9b5bfb144ea9447873"
+      "bytes": 2029,
+      "sha256": "ce9d823ac847931751e88c02ae8528eaebb84b851178361c9eeb1f7b8beb503d"
     },
     {
       "path": "game/campaign-contexts.mjs",
-      "bytes": 4403,
-      "sha256": "3243fc2fc9d0db9fb6cf913609a86105d87bf80270a24fde10ec3b46d5eb92b8"
+      "bytes": 4711,
+      "sha256": "0cfbc653dedff1bb47d6f98b498580e06a66e82325e27973b7d5b88eb707e11a"
     },
     {
       "path": "game/campaign-difficulty.mjs",
-      "bytes": 7336,
-      "sha256": "7890880e30df503b69fef0e44e8d58bfa919243aa535ed33c6a1afaa83367b97"
+      "bytes": 7692,
+      "sha256": "d1e7aa765d4dd63b3c7cbae074b2f33f7bd444229353041d37de35c8ae810aa1"
     },
     {
       "path": "game/content-launch.mjs",
-      "bytes": 9259,
-      "sha256": "cec26626541e3a7bb89ff07d7b787040668ff308c7833fd8e6636098d60c80a2"
+      "bytes": 9534,
+      "sha256": "0ca69612aec298a0d918d4e1d435b0038f44e437912c43920f58dc0953368f2b"
     },
     {
       "path": "game/content.mjs",
-      "bytes": 23214,
-      "sha256": "305dfa4d5fb4c4c27856b59abd0e71779d431f68221ac592989be8f828d75b38"
+      "bytes": 27811,
+      "sha256": "d092bccc466e10d37fa993829ae6037e5c10f8d6a067ef36f20888d7cc197e00"
     },
     {
       "path": "game/core/abilities.mjs",
@@ -397,8 +417,8 @@
     },
     {
       "path": "game/core/capture.mjs",
-      "bytes": 8038,
-      "sha256": "960ebb9ecf19a656fd4fb0877cc5a1d967d1e83617b0262ba62dad4c2189aaef"
+      "bytes": 7865,
+      "sha256": "8847c26ec7459a706261303f185b86c2a4f83691f110bf1809173bc2cc43a6b3"
     },
     {
       "path": "game/core/classic-contour.mjs",
@@ -407,38 +427,38 @@
     },
     {
       "path": "game/core/classic-definition.mjs",
-      "bytes": 7266,
-      "sha256": "fa49c1e2442a393b2be8e3d3b34a0eef188bbe158243f7c13cb824d18d1d3638"
+      "bytes": 11053,
+      "sha256": "a1663a97efb2d04dc2d3e9dc20983740c9be32bc6a84494612b77144892a9270"
     },
     {
       "path": "game/core/classic-motion.mjs",
-      "bytes": 12271,
-      "sha256": "d593680e715467fd4ebfd50bf68bfdd2c3690e79ebbc579a64cdbab093c0a020"
+      "bytes": 12889,
+      "sha256": "23ded4bc7e90cddb838ea08d320b6ac8a6df3755cf12dc362ea10e5d7bcc8c2b"
     },
     {
       "path": "game/core/classic-state.mjs",
-      "bytes": 2306,
-      "sha256": "1964712c73cbb2c793881ccf74a2899ef173eff6cc48251274cb738aa0473377"
+      "bytes": 2896,
+      "sha256": "6b8001326238729541bb9515bfa1f92fdb4d18c961f49e7b2a6c68e41a42726f"
     },
     {
       "path": "game/core/classic-step.mjs",
-      "bytes": 16343,
-      "sha256": "c6078d7ce18dc8d5b4ecf3414bbf943bcb68dd80951d68e2cc7b8f1bf5b29fca"
+      "bytes": 19358,
+      "sha256": "468441bee309496488e34497dcf673382197694610e596a89828bb0575aa61b6"
     },
     {
       "path": "game/core/classic-topology.mjs",
-      "bytes": 6357,
-      "sha256": "aae16753e999d4829dab13503f3ef603e42b73f4b44e782180881160651db3ff"
+      "bytes": 6531,
+      "sha256": "c63830a351caa1c45938382d7793aa7ccbc308fac60b5cd477a14fb1962d5131"
     },
     {
       "path": "game/core/contacts.mjs",
-      "bytes": 5168,
-      "sha256": "aadd6aceee0380ff8e9389f305fe96b6642d553ee255ebfb7bcc1251c2c7c67b"
+      "bytes": 5263,
+      "sha256": "d8c8294bf7141471a125dc325ab1202e2a705ca62ad7632d89129907c8072df4"
     },
     {
       "path": "game/core/encounter.mjs",
-      "bytes": 8716,
-      "sha256": "7b98eb4ec29998ce902a62388b089a0a26b41675199bb9601e4b2a55f0df44ba"
+      "bytes": 10043,
+      "sha256": "5543956a0dc81a613c33e1244a6f02621d1c089ec6cade4e34ff1fcc569d279b"
     },
     {
       "path": "game/core/enemy-pressure.mjs",
@@ -447,28 +467,28 @@
     },
     {
       "path": "game/core/geometry.mjs",
-      "bytes": 3989,
-      "sha256": "8ca7877a89ea203f072fbf3b85f304844f3a3abcf992e8ba1a54f39957e6f331"
+      "bytes": 4290,
+      "sha256": "ad980ff30fef2cb8afd307f2a8dccf0329d1dc996dbd9fa3d13e3d2e9f2ae3d4"
     },
     {
       "path": "game/core/index.mjs",
-      "bytes": 17291,
-      "sha256": "787d7cdc759b04ae2a475e8d5ac49e0618dd26f153336ea71b5920232532e1a2"
+      "bytes": 23285,
+      "sha256": "d5fead46c41a9651da86003f70417a9d2bbd5a61830c007011b205581b2a3330"
     },
     {
       "path": "game/core/level.mjs",
-      "bytes": 14178,
-      "sha256": "0a9fa39cdfa6bb6ed4c9b07a231491529777ab099f2cd6528c54fde84d5e41b8"
+      "bytes": 18861,
+      "sha256": "4d0b9f171ace4d8ff4c35ae7d50b4fccaabee218605e422c098aa23d2c5c5b5c"
     },
     {
       "path": "game/core/line-impact.mjs",
-      "bytes": 9000,
-      "sha256": "cf6e1b509d6789f3bd922f1374ba4ba7a80933bb8a117058dfe579bb95b547e6"
+      "bytes": 9142,
+      "sha256": "e3a11756a9fb7272ad660dbf9a2c175095f89e26f889e3f3edb25865b2b7c5a0"
     },
     {
       "path": "game/core/movement.mjs",
-      "bytes": 10912,
-      "sha256": "3f9ee5115eb94c001fe38595f39763b188ea276114ca21d1bc7a426be6e6922a"
+      "bytes": 11398,
+      "sha256": "216e03da20b388c8278be19a9829a8ef642fea30291125b645c5373e5902c261"
     },
     {
       "path": "game/core/registry.mjs",
@@ -482,18 +502,18 @@
     },
     {
       "path": "game/core/versions.mjs",
-      "bytes": 3074,
-      "sha256": "9bc39659dde70e76c63c9f9bfaa267b3cdfa07966d9096cc079383c71478eec3"
+      "bytes": 8109,
+      "sha256": "715a8990f897e7605e3fe045e5c1a064e163ccbbae7a26ba060214443d1b22f2"
     },
     {
       "path": "game/data-json.mjs",
-      "bytes": 4640,
-      "sha256": "e765ace4b34cc64d8948b73d896e5f8d4666ba5984385f6b2de81c1babefba0c"
+      "bytes": 5594,
+      "sha256": "9ce33d6173f3cba8587ed7a7f1924c66e9d9c86ffa59b37a743764ea0b01f7bd"
     },
     {
       "path": "game/mastery-catalog.mjs",
-      "bytes": 13632,
-      "sha256": "2d7d7679b084ff1dcf6c15579605a00dd71cf611f822b79e198703fc4ac045be"
+      "bytes": 15111,
+      "sha256": "7c49112e908ae97c5cf1cbed83b299f74651b00eb6b1ad3c1594b04a86ce1e1c"
     },
     {
       "path": "game/mastery-equipment.mjs",
@@ -507,28 +527,28 @@
     },
     {
       "path": "game/media-library.mjs",
-      "bytes": 12188,
-      "sha256": "ed1f1abe0b95b9889741ec8929522f0fcaba29a5438b09df18016d3ffffc6eb4"
+      "bytes": 12207,
+      "sha256": "41c65098bae7161466670f4cb138b72f078e638bc8cd28c40652b57dd1836c86"
     },
     {
       "path": "game/platform.mjs",
-      "bytes": 2524,
-      "sha256": "737f4e6dabcc08cd45ad5e5b1fb3b16792881897e89927ce5fe7fc609c0f3260"
+      "bytes": 4198,
+      "sha256": "29682ff18fd1571eeaf5c53a21c1bda5e60f4a93e542bfc718c2ca9bfd6a20ec"
     },
     {
       "path": "game/ui/music.mjs",
-      "bytes": 7050,
-      "sha256": "a1ecafd319417d075ec584d8b2f54008a8b877e49848e364bd91603896c44fda"
+      "bytes": 7205,
+      "sha256": "cb52db174666ea9bc4448a71c56bc53cf593db58183f665705fa4727f93fef50"
     },
     {
       "path": "package.json",
-      "bytes": 1819,
-      "sha256": "fc95490babde1090db3de255b114fd4e4282eae162d77fbb55e5ce3f5a117500"
+      "bytes": 10242,
+      "sha256": "0b7facf42b38bc112a28bb985c207f5d5a6455b3c8c646e1f64d245ff0aba701"
     },
     {
       "path": "scripts/game-cli.mjs",
-      "bytes": 58005,
-      "sha256": "93805cedc9abe70298df782504eacf352c68f258bcfe74157bc58b1736365b2e"
+      "bytes": 94572,
+      "sha256": "889a835029c3de3750ccc7e7b14609f31319e23f1448076ed1f5740573d15c74"
     },
     {
       "path": "scripts/pack-indexes.mjs",

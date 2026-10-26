@@ -1,0 +1,76 @@
+{
+  "writtenAt": "2026-10-20T02:44:23.004858+00:00",
+  "localization": {
+    "passed": true,
+    "locales": [
+      "en",
+      "uk"
+    ],
+    "messages": 13799,
+    "references": 7441
+  },
+  "fullValidate": {
+    "passed": false,
+    "blocker": "Sparse checkout omits authoring/community required by game-cli validate. Exact tracked JSON inputs were temporarily materialized for localization and removed unchanged afterwards."
+  },
+  "temporaryInputsRemoved": [
+    "authoring/library/four-worlds-chapters/packs/original-fpv-pressure.json",
+    "authoring/library/four-worlds-chapters/packs/original-retro-1994.json",
+    "authoring/library/four-worlds-chapters/packs/original-spend-network.json",
+    "authoring/library/four-worlds-chapters/packs/original-ukraine-atlas.json",
+    "authoring/library/fpv-route-choices/packs/fpv-route-choices.json",
+    "authoring/motion-lab/presets.json",
+    "authoring/motion-lab/collection-presets.json",
+    "authoring/motion-lab/ability-presets.json"
+  ],
+  "industrialCheck": {
+    "passed": false,
+    "blocker": "Sparse checkout omits authoring/industrial-art-review/environments-v1/pursuit-patrol-district.rltheme required by produce-industrial-environments --check."
+  },
+  "individualChecksPassed": [
+    "presentation metadata",
+    "academy audio projection",
+    "play shell projection",
+    "presentation assets projection",
+    "optional worker projection",
+    "world visuals projection"
+  ],
+  "sparseFlagsRestored": true,
+  "finalSourceLocalization": {
+    "passed": true,
+    "checkedAt": "2026-10-20T05:21:48.562563+00:00",
+    "catalogsAndReferences": true,
+    "bundleRegenerationCompared": false,
+    "locales": [
+      "en",
+      "uk"
+    ],
+    "messages": 13799,
+    "references": 7441,
+    "scope": "Final replay-control and complete autosave fallback source: catalog/reference validation with checkBundle:false; earlier complete bundle comparison remains recorded above.",
+    "log": "/tmp/fpv-overhaul-autosave-final-localization.log",
+    "worldAppSha256": "aa35bb4c1dc6fb35aa3128c70ce0b4d52e9f6dae5b1dc36f8df93856f806b794"
+  },
+  "rendererFollowup": {
+    "checkedAt": "2026-10-20T06:20:00.044704+00:00",
+    "presentationSha256": "8c1402c122840b859263edffadd3d1cd99734221a1acdb1cc8b8ea4b7556fe9f",
+    "reactionBundleSha256": "e13a1fd21b79cf0cb50b64a22f494b0fdbe9b3a4afb1cf6fb5945cb4580deb06",
+    "presentationTests": {
+      "passed": 54,
+      "failed": 0,
+      "log": "/tmp/fpv-overhaul-renderer-followup-tests.log"
+    },
+    "lintPassed": true,
+    "projectionByteIdentical": true,
+    "projectionLog": "/tmp/fpv-overhaul-renderer-final-projection.log",
+    "packageLog": "/tmp/fpv-overhaul-renderer-final-package.log",
+    "localization": {
+      "passed": true,
+      "checkBundle": false,
+      "messages": 13799,
+      "references": 7441,
+      "log": "/tmp/fpv-overhaul-renderer-final-localization.log"
+    },
+    "generatorFix": "Use tabWidth:2 before the existing lexical indentation projection; tabWidth:0 loops indefinitely in Prettier multiline template alignment. Default-heap generation and byte-identical verification pass."
+  }
+}

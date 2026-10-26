@@ -1,3 +1,5 @@
+import { effectiveTextSize } from '../text-size.mjs';
+import { renderTextSizeControl } from '../ui/text-size-control.mjs';
 import { CLASSIC_SNAKE_CAMPAIGN_REVISION } from '../snake/classic-campaign.mjs';
 const SAVE_KEY = `revealline.classic-snake.round.${CLASSIC_SNAKE_CAMPAIGN_REVISION}`;
 import { classicOperationStatus } from '../snake/classic-operation-status.mjs';
@@ -13,6 +15,7 @@ import {
 import {
   classicSnakeRatingForRecord,
   classicSnakeRatingCriteriaText,
+  classicSnakeRatingResultText,
 } from '../snake/classic-ratings.mjs';
 import {
   createEnemyStats,
@@ -25,9 +28,17 @@ import * as flowHelpers from '../ui/continuous-play.mjs';
 import * as celebrationHelpers from '../ui/celebration.mjs';
 import { createSignalReception } from '../ui/signal-reception.mjs';
 import { mountGlobalSettingsTools } from '../ui/global-settings-tools.mjs';
+import { attachLocalSupportSummary } from '../ui/local-support-summary.mjs';
+import { collectSupportSummary } from '../local-support-summary.mjs';
+import { offlineAvailability } from '../offline.mjs';
+import { nativePlatform } from '../platform.mjs';
+import { waitFor } from './helpers/wait-for.mjs';
 import { attachInstallOfflinePanel } from '../ui/install-offline-panel.mjs';
 import { menuPad } from './helpers/global-tools-fixture.mjs';
 import { mountGlobalSettings } from '../ui/global-settings-view.mjs';
+import { menuAnimationBinding, MENU_ANIMATION_KEY } from '../ui/menu-animation-preferences.mjs';
+import { mountComfortPresets } from '../ui/comfort-presets.mjs';
+import { createDisplayPreferences, DISPLAY_PREFERENCES_KEY } from '../display-preferences.mjs';
 import { mountBattlefieldGroundControls } from '../ui/battlefield-ground-controls.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
@@ -85,7 +96,7 @@ import {
   advanceClassicReactionTime,
   observeClassicWorldReactions,
 } from '../snake/classic-world-reactions.mjs';
-import { t } from '../i18n/index.mjs';
+import { t, getLocale as summaryLocale, setLocale as setSummaryLocale } from '../i18n/index.mjs';
 import { mountEnemyAppearanceControls } from '../ui/enemy-appearance-controls.mjs';
 import { prepareClassicEnvironments } from '../snake/classic-environment.mjs';
 import { selectedArcadeCollection } from '../presentation/industrial-arcade.mjs';
@@ -129,6 +140,7 @@ async function harness({
   activity = 'campaign',
   sharedTools = false,
   liveLocale = false,
+  realDisplay = false,
   directEntry = true,
   focused = true,
   artReview = null,
@@ -137,10 +149,16 @@ async function harness({
   savedRound = null,
   legacySavedRound = null,
   recordReceipt = { verified: true, saved: true },
+  recordBest = null,
   catalogue = CLASSIC_SNAKE_LEVELS,
+  language = 'en',
+  initialTextSize = 'standard',
+  supportCollect = null,
+  supportExport = null,
+  sharedToolOptions = {},
 } = {}) {
   const document = new Document();
-  let harnessLocale = 'en';
+  let harnessLocale = language;
   const localeListeners = new Set();
   document.hasFocus = () => focused;
   const writerClaims = [];
@@ -172,6 +190,10 @@ async function harness({
   mount(parseHTML(html), document.body);
   const window = new Events();
   const pads = [];
+  const supportExports = [];
+  let supportUI = null;
+  let supportNow = 0,
+    padReads = 0;
   let tools, offlinePanel, offlineOptions;
   const storage = new Map();
   if (savedRound) storage.set(SAVE_KEY, JSON.stringify(savedRound));
@@ -187,9 +209,11 @@ async function harness({
     optionalEntries = [];
   const display = {
     textFace: 'pixel',
-    textSize: 'standard',
+    textSize: initialTextSize,
+    effectiveTextSize: effectiveTextSize(initialTextSize),
     reducedEffects: false,
     effectiveReducedEffects: false,
+    revision: 0,
   };
   const displayListeners = new Set();
   const location = {
@@ -258,6 +282,7 @@ async function harness({
     createClassicSnakeRatings: () => ({ refresh: async () => {}, close() {} }),
     classicSnakeRatingForRecord,
     classicSnakeRatingCriteriaText,
+    classicSnakeRatingResultText,
     ...replayHelpers,
     ...flowHelpers,
     continuousPlayPreferences: () =>
@@ -302,7 +327,7 @@ async function harness({
     },
     mountGlobalSettingsTools: (options) =>
       (tools = sharedTools
-        ? mountGlobalSettingsTools(options)
+        ? mountGlobalSettingsTools({ ...options, ...sharedToolOptions })
         : {
             controls: {},
             root: () => null,
@@ -311,6 +336,26 @@ async function harness({
             handleFrameCommand: () => false,
             dispose() {},
           }),
+    attachLocalSupportSummary: (options) =>
+      (supportUI = attachLocalSupportSummary({
+        ...options,
+        collect: (options) => {
+          const collect = () => collectSupportSummary({ ...options, env: context });
+          return supportCollect ? supportCollect({ collect, options }) : collect();
+        },
+        exportFile: async (value) => {
+          supportExports.push(structuredClone(value));
+          return supportExport ? supportExport(value) : { status: 'requested' };
+        },
+      })),
+    offlineAvailability: () =>
+      offlineAvailability({
+        documentRef: document,
+        locationRef: location,
+        navigatorRef: context.navigator,
+        secure: true,
+      }),
+    nativePlatform: () => nativePlatform(location),
     attachInstallOfflinePanel: (options) => {
       offlineOptions = options;
       offlinePanel = attachInstallOfflinePanel({
@@ -323,9 +368,8 @@ async function harness({
     },
     attachMenuAudioSettings() {},
     attachDefeatSoundControls,
-    getMenuAnimation: () => true,
-    setMenuAnimation() {},
-    subscribeMenuAnimation: () => () => {},
+    menuAnimationBinding,
+    mountComfortPresets,
     mountModeSettings,
     attachSettingsPanels,
     settingsPanelBack,
@@ -411,11 +455,14 @@ async function harness({
     matchMedia: () => Object.assign(new Events(), { matches: false }),
     addEventListener: window.addEventListener.bind(window),
     removeEventListener: window.removeEventListener.bind(window),
+    dispatchEvent: window.dispatchEvent.bind(window),
+    CustomEvent,
     requestAnimationFrame(callback) {
       scheduledFrames.push(callback);
     },
     screen: { orientation: new Events() },
-    navigator: { getGamepads: () => pads },
+    navigator: { getGamepads: () => (++padReads, pads) },
+    performance: { now: () => supportNow },
     setTimeout,
     getLocale: () => harnessLocale,
     t,
@@ -436,18 +483,39 @@ async function harness({
         }),
       }),
     createEncounterDisplayPreferences: () => preferences({ showRemains: true }),
-    createDisplayPreferences: () => ({
-      snapshot: () => display,
-      subscribe(listener) {
-        displayListeners.add(listener);
-        listener(display);
-        return () => displayListeners.delete(listener);
-      },
-      set(patch) {
-        Object.assign(display, patch);
-        for (const listener of displayListeners) listener(display);
-      },
-    }),
+    createDisplayPreferences: (options) => {
+      if (realDisplay) {
+        const owner = createDisplayPreferences({
+          ...options,
+          window,
+          getStorage: () => context.localStorage,
+        });
+        owner.subscribe((state) => Object.assign(display, state));
+        return {
+          ...owner,
+          // The host runs in a VM realm; transfer its ordinary patches to the
+          // canonical owner just as the browser's same-realm calls would.
+          set: (patch) => owner.set(structuredClone(patch)),
+        };
+      }
+      return {
+        snapshot: () => display,
+        getWarning: () => '',
+        getWarningKey: () => '',
+        subscribe(listener) {
+          displayListeners.add(listener);
+          listener(display);
+          return () => displayListeners.delete(listener);
+        },
+        set(patch) {
+          Object.assign(display, patch);
+          display.effectiveTextSize = effectiveTextSize(display.textSize);
+          display.revision++;
+          for (const listener of displayListeners) listener(display);
+        },
+      };
+    },
+    renderTextSizeControl,
     nextInputModality,
     showScreenControls,
     attachTouchSteering,
@@ -506,7 +574,7 @@ async function harness({
       },
       chapter: () => 0,
       cleared: () => false,
-      get: () => null,
+      get: () => recordBest,
       recent: () => null,
     }),
     createHuntDestruction: () => ({ reset() {}, advance() {}, draw() {} }),
@@ -578,6 +646,13 @@ async function harness({
     shell,
     optionalEntries,
     pads,
+    supportExports,
+    supportUI,
+    setFocused: (value) => (focused = value),
+    get padReads() {
+      return padReads;
+    },
+    removeGamepadAPI: () => delete context.navigator.getGamepads,
     offlinePanel,
     canActivateOffline: () => offlineOptions.canActivate(),
     disposeTools: () => {
@@ -593,11 +668,104 @@ async function harness({
       shell.elements.buttons['home-retry'].click();
     },
     frame(now) {
+      supportNow = now;
       scheduledFrames.shift()(now);
     },
     $: (id) => document.getElementById(id),
   };
 }
+
+for (const mode of ['solo', 'versus', 'team'])
+  test(`${mode} Snake support reuses observed controllers and preserves paused play and storage`, async (t) => {
+    const oldLocale = summaryLocale();
+    setSummaryLocale('en', { persist: false });
+    t.after(() => setSummaryLocale(oldLocale, { persist: false }));
+    const state = await harness({ mode, directEntry: false });
+    t.after(() => state.window.emit('pagehide', { persisted: false }));
+    state.start();
+    state.frame(0);
+    state.frame(100);
+    state.shell.open('settings');
+    state.$('snake-menu-settings-tab-data').click();
+    const pad = menuPad();
+    pad.id = 'private-snake-device';
+    state.pads.push(pad);
+    state.frame(110);
+    const paused = state.created.map((run) => core.exportClassicSnakeReplay(run)),
+      stored = [...state.storage],
+      polls = state.padReads;
+    const prepare = state.$('support-summary-prepare');
+    prepare.focus();
+    prepare.click();
+    await waitFor(() => !state.$('support-summary-download').disabled);
+    const report = JSON.parse(state.$('support-summary-json').textContent);
+    assert.equal(report.scope, 'snake-game-shell');
+    assert.equal(report.game.host, `snake-${mode}`);
+    assert.equal(report.game.state, 'paused');
+    assert.equal(report.game.saving.writable, true);
+    assert.equal(report.controller.status, 'observed');
+    assert.equal(report.controller.assigned, true);
+    assert.equal(report.controller.freshness, 'recent');
+    assert.equal(report.controller.neutral, null);
+    assert.equal(report.controller.confirmBlocked, null);
+    assert.equal(report.controller.confirmReason, 'unavailable');
+    assert.match(state.$('support-summary-controller').textContent, /not reported/);
+    assert.doesNotMatch(JSON.stringify(report), /private-snake-device|axes|buttons|https:/);
+    assert.equal(state.padReads, polls, 'Preparing a summary must not poll controllers.');
+    assert.equal(state.document.activeElement, prepare);
+    assert.deepEqual(
+      state.created.map((run) => core.exportClassicSnakeReplay(run)),
+      paused,
+    );
+    assert.deepEqual([...state.storage], stored);
+    state.$('support-summary-download').click();
+    await waitFor(() => state.supportExports.length === 1);
+    assert.deepEqual(state.supportExports[0], report);
+    state.pads.length = 0;
+    state.frame(120);
+    prepare.click();
+    await waitFor(() => !state.$('support-summary-download').disabled);
+    assert.equal(
+      JSON.parse(state.$('support-summary-json').textContent).controller.status,
+      'disconnected',
+    );
+    state.shell.elements.dialogs.settings.close();
+    assert.equal(state.$('support-summary-json').textContent, '');
+    assert.equal(state.$('support-summary-download').disabled, true);
+  });
+
+test('Snake support exposes unknown APIs and released writer honestly, with Ukrainian copy and lifecycle reset', async (t) => {
+  const oldLocale = summaryLocale();
+  setSummaryLocale('uk', { persist: false });
+  t.after(() => setSummaryLocale(oldLocale, { persist: false }));
+  const state = await harness({ directEntry: false, language: 'uk' });
+  t.after(() => state.window.emit('pagehide', { persisted: false }));
+  state.shell.open('settings');
+  state.$('snake-menu-settings-tab-data').click();
+  state.removeGamepadAPI();
+  state.writerClaims.at(-1).release();
+  state.frame(100);
+  state.$('support-summary-prepare').click();
+  await waitFor(() => !state.$('support-summary-download').disabled);
+  const report = JSON.parse(state.$('support-summary-json').textContent);
+  assert.equal(report.game.state, 'idle');
+  assert.equal(report.game.locale, 'uk');
+  assert.equal(report.game.saving.writable, false);
+  assert.equal(report.game.saving.reason, 'unavailable');
+  assert.equal(report.controller.status, 'unavailable');
+  assert.equal(report.controller.assigned, null);
+  assert.equal(report.storage.retention, 'unavailable');
+  assert.equal(report.build.version, null);
+  assert.equal(report.offline.files, 'not-verified-here');
+  assert.match(state.$('support-summary-title').textContent, /Локальний звіт/);
+  assert.doesNotMatch(
+    state.$('support-summary-root').textContent,
+    /interface:|supportSummary\.|\{\{/,
+  );
+  state.window.emit('pagehide', { persisted: true });
+  assert.equal(state.$('support-summary-download').disabled, true);
+  assert.equal(state.$('support-summary-json').textContent, '');
+});
 
 for (const mode of ['solo', 'versus', 'team']) {
   test(`${mode} Snake can finish offline setup from Ready but defers during a paused flight`, async (t) => {
@@ -1436,6 +1604,48 @@ test('the Snake library shows all missions and filters without changing the paus
   );
 });
 
+for (const mode of ['solo', 'versus', 'team']) {
+  test(`${mode} Snake mission recovery preserves the paused native attempt and its accepted host`, async () => {
+    const state = await harness({ mode });
+    state.frame(0);
+    state.frame(200);
+    state.shell.open('missions');
+    const before = state.created.map((run) => core.exportClassicSnakeReplay(run));
+    const location = state.location.href;
+    state.$('journey-lifecycle').value = 'archive';
+    state.$('journey-lifecycle').emit('change');
+    assert.equal(state.$('journey-lifecycle').value, 'archive');
+    state.$('journey-mode').value = mode === 'team' ? 'solo' : 'team';
+    state.$('journey-mode').emit('change');
+    state.$('journey-search').value = 'No such mission here';
+    state.$('journey-search').emit('input');
+    state.$('journey-filters-reset').focus();
+    state.$('journey-filters-reset').click();
+    assert.equal(state.$('journey-mode').value, mode);
+    assert.equal(state.$('journey-lifecycle').value, 'current');
+    assert.equal(state.$('journey-search').value, 'No such mission here');
+    assert.equal(state.$('journey-cards').children.length, 0);
+    assert.equal(state.document.activeElement, state.$('journey-search'));
+    state.frame(2000);
+    assert.deepEqual(
+      state.created.map((run) => core.exportClassicSnakeReplay(run)),
+      before,
+    );
+    assert.equal(state.location.href, location);
+    assert.equal(state.document.body.dataset.playing, 'false');
+    state.$('journey-search-clear').focus();
+    state.$('journey-search-clear').click();
+    assert.ok(state.$('journey-cards').children.length > 0);
+    state.$('journey-back').click();
+    assert.equal(state.$('journey-chooser').open, false);
+    assert.equal(state.document.body.dataset.playing, 'false');
+    assert.deepEqual(
+      state.created.map((run) => core.exportClassicSnakeReplay(run)),
+      before,
+    );
+  });
+}
+
 test('Snake library mode selection launches the exact chosen Team mission with one activation', async () => {
   const state = await harness();
   state.shell.open('missions');
@@ -1457,6 +1667,23 @@ test('Snake library mode selection launches the exact chosen Team mission with o
   assert.equal(state.shell.topDialog(), null);
   assert.equal(state.document.body.dataset.playing, 'true');
   state.shell.openHome();
+  state.shell.open('missions');
+  const accepted = state.created.map((run) => core.exportClassicSnakeReplay(run));
+  state.$('journey-mode').value = 'solo';
+  state.$('journey-mode').emit('change');
+  state.$('journey-filters-reset').focus();
+  state.$('journey-filters-reset').click();
+  assert.equal(
+    state.$('journey-mode').value,
+    'team',
+    'The reused chooser follows the accepted Team owner.',
+  );
+  assert.deepEqual(
+    state.created.map((run) => core.exportClassicSnakeReplay(run)),
+    accepted,
+  );
+  assert.equal(state.document.body.dataset.playing, 'false');
+  state.$('journey-back').click();
   assert.equal(state.$('snake-navigation-context').textContent, 'SNAKE · Team · Campaign');
   assert.equal(
     state.shell.elements.home.querySelector('.mode-play-mission').textContent,
@@ -2760,6 +2987,25 @@ test('transient status wrapping never inherits the operation-only rule that hide
   );
 });
 
+for (const mode of ['solo', 'versus', 'team'])
+  test(`${mode}: Snake retains extra-large selected with a Large fallback while the attempt stays paused`, async () => {
+    const h = await harness({ mode, initialTextSize: 'extra-large' });
+    h.shell.open('settings');
+    const before = h.created.map((run) => core.exportClassicSnakeReplay(run));
+    const control = h.$('snake-text-size');
+    assert.equal(control.value, 'extra-large');
+    assert.equal(control.querySelector('[data-text-size-retained]').disabled, true);
+    assert.equal(h.document.body.dataset.textSize, 'large');
+    h.$('snake-text-face').value = 'plain';
+    h.$('snake-text-face').emit('change');
+    assert.equal(h.display.textSize, 'extra-large');
+    assert.deepEqual(
+      h.created.map((run) => core.exportClassicSnakeReplay(run)),
+      before,
+    );
+    assert.equal(h.shell.blocksPlay(), true);
+  });
+
 test('Snake live language refresh translates every stats view without changing the paused attempt', async (t) => {
   const state = await harness({ liveLocale: true });
   t.after(() => state.disposeTools());
@@ -2848,4 +3094,514 @@ test('Snake live language refresh translates every stats view without changing t
     assert.equal(state.shell.elements.root.dataset.phase, 'paused');
     assert.equal(state.shell.topDialog(), state.shell.elements.dialogs.settings);
   }
+});
+
+test('actual Snake settings keep an unsaved menu animation choice and Retry the same checkbox', async () => {
+  const h = await harness(),
+    write = h.storage.set.bind(h.storage);
+  let working = false;
+  h.storage.set = (key, value) => {
+    if (key === MENU_ANIMATION_KEY && !working)
+      throw new DOMException('Modeled blocked storage', 'SecurityError');
+    return write(key, value);
+  };
+  h.shell.open('settings');
+  const input = h.$('snake-global-menuAnimation');
+  input.checked = false;
+  input.emit('change');
+  const status = h.$(`${input.id}-status`),
+    retry = status.parentNode.querySelector('.global-settings-save-retry');
+  assert.equal(input.checked, false);
+  assert.match(status.textContent, /Session only.*blocked/);
+  retry.focus();
+  working = true;
+  retry.click();
+  assert.equal(h.storage.get(MENU_ANIMATION_KEY), 'off');
+  assert.equal(status.textContent, 'Saved');
+  assert.equal(h.document.activeElement, input);
+  assert.equal(retry.hidden, true);
+});
+
+// Legal detours before the archived opening route preserve the same seed,
+// recipe and targets while producing independently earned lower ratings.
+function flyRatingRoute(state, circuits) {
+  const run = state.created[0];
+  let now = 0;
+  state.frame(now);
+  const turn = (direction) => {
+    const key = { up: 'w', right: 'd', down: 's', left: 'a' }[direction];
+    state.document.emit('keydown', {
+      target: state.document.querySelector('canvas'),
+      key,
+      code: `Key${key.toUpperCase()}`,
+      repeat: false,
+    });
+  };
+  const step = () => {
+    now += core.classicSnakeSummary(run).stepMs;
+    state.frame(now);
+  };
+  for (let circuit = 0; circuit < circuits; circuit++)
+    for (const direction of ['down', 'left', 'up', 'right']) {
+      turn(direction);
+      for (let move = 0; move < 3; move++) step();
+    }
+  let cursor = 0;
+  for (let tick = 0; tick < clearedReplay.steps; tick++) {
+    while (clearedReplay.turns[cursor]?.tick === tick)
+      turn(clearedReplay.turns[cursor++].direction);
+    step();
+  }
+  assert.equal(run.status, 'won');
+  assert.equal(run.tick, 93 + circuits * 12);
+  return now;
+}
+
+for (const [circuits, stars, expected] of [
+  [0, 3, /This attempt: 93 moves.*3 stars earned.*highest rating/],
+  [3, 2, /This attempt: 129 moves.*3 stars.*117 moves.*12 fewer moves/],
+  [7, 1, /This attempt: 177 moves.*2 stars.*163 moves.*14 fewer moves/],
+])
+  test(`Snake earned ${stars}-star result explains this attempt without substituting its historical best`, async (t) => {
+    const state = await harness({
+      liveLocale: true,
+      recordBest: { score: 800, fastest: { value: 18600 }, fewest: { value: 93 } },
+    });
+    t.after(() => state.disposeTools());
+    assert.equal(state.$('snake-rating-goal').hidden, true);
+    const now = flyRatingRoute(state, circuits);
+    await flush();
+    state.shell.open('results');
+    const goal = state.$('snake-rating-goal');
+    assert.equal(goal.hidden, false);
+    assert.equal(goal.parentNode.className, 'snake-result-summary');
+    assert.match(goal.textContent, expected);
+    assert.equal(state.$('snake-stars').textContent, '★'.repeat(stars) + '☆'.repeat(3 - stars));
+    const run = state.created[0],
+      replay = core.exportClassicSnakeReplay(run);
+    const saved = state.storage.get(SAVE_KEY);
+    const retry = state.shell.elements.buttons.retry;
+    retry.focus();
+    for (const locale of ['uk', 'en']) {
+      state.$('language').value = locale;
+      state.$('language').emit('change');
+      assert.match(goal.textContent, locale === 'uk' ? /Ця спроба:.*ход/ : expected);
+      assert.equal(state.document.activeElement, retry);
+      assert.equal(state.created[0], run);
+      assert.deepEqual(core.exportClassicSnakeReplay(run), replay);
+      assert.equal(state.storage.get(SAVE_KEY), saved);
+    }
+    const writes = observeLiveStatusWrites(goal);
+    for (let i = 1; i <= 4; i++) state.frame(now + i * 50);
+    assert.equal(
+      writes.text,
+      0,
+      'unchanged frames do not repeatedly replace the result explanation',
+    );
+    retry.click();
+    assert.equal(state.$('snake-rating-goal').hidden, true);
+    assert.equal(state.$('snake-rating-goal').textContent, '');
+    assert.equal(state.created.at(-1).levelIdentity, run.levelIdentity);
+    assert.equal(state.created.at(-1).tick, 0);
+  });
+
+test('Snake result waits for accepted completion and never advertises new star goals for imported recordings', async (t) => {
+  let accept;
+  const pending = new Promise((resolve) => {
+    accept = resolve;
+  });
+  const state = await harness({ recordReceipt: pending });
+  t.after(() => state.disposeTools());
+  flyRatingRoute(state, 3);
+  assert.equal(state.$('snake-rating-goal').hidden, true);
+  assert.equal(state.$('snake-rating-goal').textContent, '');
+  accept({ verified: true, saved: false });
+  await flush();
+  assert.match(state.$('snake-rating-goal').textContent, /12 fewer moves/);
+  assert.equal(state.$('result-save-notice').hidden, false);
+  await importSession(state.$, clearedSession());
+  assert.match(state.$('snake-stars').textContent, /no new awards/);
+  assert.equal(state.$('snake-rating-goal').hidden, true);
+  assert.equal(state.$('snake-rating-goal').textContent, '');
+});
+
+// Use actual native host/menu owners and the public summary API promise as the
+// completion fence. No private generation, run state or controller sample is set.
+async function pausedSnakeSupportVisit(mode = 'solo', options = {}) {
+  const h = await harness({ mode, directEntry: false, ...options });
+  h.document.defaultView.innerWidth = 1000;
+  h.start();
+  h.frame(0);
+  h.frame(100);
+  h.shell.open('settings');
+  h.$('snake-menu-settings-tab-data').click();
+  assert.equal(h.shell.topDialog() === h.shell.elements.dialogs.settings, true);
+  assert.equal(h.document.body.dataset.playing, 'false');
+  return h;
+}
+function heldSnakeObservation() {
+  let release;
+  return {
+    collect: async ({ collect }) => {
+      const report = await collect();
+      return new Promise((resolve) => {
+        release = () => resolve(report);
+      });
+    },
+    ready: () => typeof release === 'function',
+    release: () => release(),
+  };
+}
+for (const mode of ['solo', 'versus', 'team'])
+  for (const phase of ['pending', 'prepared'])
+    test(`${mode} Snake ${phase} support retires on native category away/back without changing its paused round`, async (t) => {
+      const held = heldSnakeObservation();
+      const h = await pausedSnakeSupportVisit(mode, {
+        supportCollect: phase === 'pending' ? held.collect : null,
+      });
+      t.after(() => h.window.emit('pagehide', { persisted: false }));
+      const paused = h.created.map((run) => core.exportClassicSnakeReplay(run));
+      const stored = [...h.storage],
+        polls = h.padReads;
+      const older = h.supportUI.refresh();
+      if (phase === 'pending') await waitFor(held.ready);
+      else await older;
+      h.$('snake-menu-settings-tab-display').click();
+      assert.equal(h.$('support-summary-json').textContent, '');
+      assert.equal(h.$('support-summary-download').disabled, true);
+      h.$('snake-menu-settings-tab-data').click();
+      const writes = observeLiveStatusWrites(h.$('support-summary-json'));
+      const focus = h.document.activeElement;
+      if (phase === 'pending') held.release();
+      await older;
+      assert.equal(
+        writes.text,
+        0,
+        'The retired visit cannot write even an identical JSON document.',
+      );
+      assert.equal(h.$('support-summary-json').textContent, '');
+      assert.equal(h.$('support-summary-download').disabled, true);
+      assert.equal(h.document.activeElement === focus, true);
+      assert.equal(h.padReads, polls, 'UI retirement and late completion add no controller polls.');
+      assert.deepEqual(
+        h.created.map((run) => core.exportClassicSnakeReplay(run)),
+        paused,
+      );
+      assert.deepEqual([...h.storage], stored);
+    });
+
+test('Snake support modal away/back cannot admit a late Data observation', async (t) => {
+  const held = heldSnakeObservation();
+  const h = await pausedSnakeSupportVisit('solo', { supportCollect: held.collect });
+  t.after(() => h.window.emit('pagehide', { persisted: false }));
+  const paused = h.created.map((run) => core.exportClassicSnakeReplay(run)),
+    stored = [...h.storage];
+  const older = h.supportUI.refresh();
+  await waitFor(held.ready);
+  h.shell.open('help');
+  assert.equal(h.shell.topDialog() === h.shell.elements.dialogs.help, true);
+  assert.equal(h.$('support-summary-json').textContent, '');
+  assert.equal(h.$('support-summary-download').disabled, true);
+  h.shell.back();
+  assert.equal(h.shell.topDialog() === h.shell.elements.dialogs.settings, true);
+  const focus = h.document.activeElement;
+  held.release();
+  await older;
+  assert.equal(h.$('support-summary-json').textContent, '');
+  assert.equal(h.$('support-summary-download').disabled, true);
+  assert.equal(h.document.activeElement === focus, true);
+  assert.deepEqual(
+    h.created.map((run) => core.exportClassicSnakeReplay(run)),
+    paused,
+  );
+  assert.deepEqual([...h.storage], stored);
+});
+
+for (const phase of ['pending', 'prepared'])
+  for (const focusOwner of ['tab', 'outside'])
+    test(`Snake ${phase} support retires on a CSS breakpoint round trip with ${focusOwner} focus`, async (t) => {
+      const held = heldSnakeObservation();
+      const h = await pausedSnakeSupportVisit('solo', {
+        supportCollect: phase === 'pending' ? held.collect : null,
+      });
+      t.after(() => h.window.emit('pagehide', { persisted: false }));
+      const settings = h.shell.elements.dialogs.settings;
+      const older = h.supportUI.refresh();
+      if (phase === 'pending') await waitFor(held.ready);
+      else await older;
+      // Desktop Data is visible while the committed compact view is categories.
+      assert.equal(settings.dataset.settingsView, 'categories');
+      if (focusOwner === 'tab') h.$('snake-menu-settings-tab-data').focus();
+      else h.document.body.focus();
+      const focus = h.document.activeElement;
+      for (const width of [320, 1000]) {
+        h.document.defaultView.innerWidth = width;
+        h.document.defaultView.emit('resize');
+        assert.equal(settings.dataset.settingsView, 'categories');
+      }
+      if (phase === 'pending') held.release();
+      await older;
+      assert.equal(h.$('support-summary-json').textContent, '');
+      assert.equal(h.$('support-summary-download').disabled, true);
+      assert.equal(h.document.activeElement === focus, true);
+    });
+
+test('ordinary paused Snake frames and same-side resizes retain a prepared report', async (t) => {
+  const h = await pausedSnakeSupportVisit();
+  t.after(() => h.window.emit('pagehide', { persisted: false }));
+  const polls = h.padReads;
+  await h.supportUI.refresh();
+  assert.equal(h.padReads, polls);
+  const exact = h.$('support-summary-json').textContent;
+  assert.ok(exact);
+  const paused = h.created.map((run) => core.exportClassicSnakeReplay(run));
+  h.$('support-summary-prepare').focus();
+  const focus = h.document.activeElement;
+  for (const width of [1000, 900, 701]) {
+    h.document.defaultView.innerWidth = width;
+    h.document.defaultView.emit('resize');
+  }
+  h.frame(150);
+  h.frame(200);
+  assert.equal(h.$('support-summary-json').textContent, exact);
+  assert.equal(h.$('support-summary-download').disabled, false);
+  assert.equal(h.document.activeElement === focus, true);
+  assert.deepEqual(
+    h.created.map((run) => core.exportClassicSnakeReplay(run)),
+    paused,
+  );
+});
+
+test('Snake old export retains single ownership across category retirement and cannot label a newer report', async (t) => {
+  let finishExport;
+  const held = new Promise((resolve) => {
+    finishExport = resolve;
+  });
+  const h = await pausedSnakeSupportVisit('team', { supportExport: () => held });
+  t.after(() => h.window.emit('pagehide', { persisted: false }));
+  await h.supportUI.refresh();
+  const exported = JSON.parse(h.$('support-summary-json').textContent);
+  const older = h.supportUI.download();
+  await waitFor(() => h.supportExports.length === 1);
+  assert.deepEqual(h.supportExports[0], exported);
+  const paused = h.created.map((run) => core.exportClassicSnakeReplay(run)),
+    stored = [...h.storage];
+  h.$('snake-menu-settings-tab-display').click();
+  h.$('snake-menu-settings-tab-data').click();
+  await h.supportUI.refresh();
+  const newer = h.$('support-summary-json').textContent;
+  assert.equal(h.$('support-summary-download').disabled, true);
+  assert.equal(await h.supportUI.download(), false);
+  assert.equal(h.supportExports.length, 1);
+  h.$('support-summary-prepare').focus();
+  finishExport({ status: 'shared' });
+  await older;
+  assert.equal(h.$('support-summary-json').textContent, newer);
+  assert.equal(h.$('support-summary-download').disabled, false);
+  assert.doesNotMatch(h.$('support-summary-status').textContent, /Shared with/);
+  assert.equal(h.document.activeElement === h.$('support-summary-prepare'), true);
+  assert.deepEqual(
+    h.created.map((run) => core.exportClassicSnakeReplay(run)),
+    paused,
+  );
+  assert.deepEqual([...h.storage], stored);
+});
+
+test('Snake blur/focus retires a pending summary without reviving its old visit', async (t) => {
+  const held = heldSnakeObservation();
+  const h = await pausedSnakeSupportVisit('solo', { supportCollect: held.collect });
+  t.after(() => h.window.emit('pagehide', { persisted: false }));
+  const older = h.supportUI.refresh();
+  await waitFor(held.ready);
+  h.setFocused(false);
+  h.window.emit('blur');
+  h.setFocused(true);
+  h.window.emit('focus');
+  const focus = h.document.activeElement;
+  held.release();
+  await older;
+  assert.equal(h.$('support-summary-json').textContent, '');
+  assert.equal(h.$('support-summary-download').disabled, true);
+  assert.equal(h.document.activeElement === focus, true);
+});
+
+function snakeRecoveryRuntime() {
+  return {
+    createReader: () => ({ close: async () => {} }),
+    attachView: () => ({ cancel() {}, close: async () => {}, dispose() {} }),
+  };
+}
+for (const phase of ['pending', 'prepared'])
+  test(`Snake ${phase} Data support retires through actual Recovery open and native Back`, async (t) => {
+    const held = heldSnakeObservation();
+    const h = await pausedSnakeSupportVisit('team', {
+      sharedTools: true,
+      sharedToolOptions: {
+        resolveSourceVersion: async () => 'v0.142.4',
+        loadRecovery: async () => snakeRecoveryRuntime(),
+      },
+      supportCollect: phase === 'pending' ? held.collect : null,
+    });
+    t.after(() => h.disposeTools());
+    const paused = h.created.map((run) => core.exportClassicSnakeReplay(run));
+    const stored = [...h.storage],
+      polls = h.padReads;
+    const older = h.supportUI.refresh();
+    if (phase === 'pending') await waitFor(held.ready);
+    else await older;
+    const opener = h.$('profile-recovery-open');
+    assert.equal(opener.closest('[hidden],[inert]'), null);
+    opener.focus();
+    const opened = opener.onclick();
+    assert.equal(h.$('profile-recovery-dialog').open, true);
+    assert.equal(h.$('support-summary-json').textContent, '');
+    assert.equal(h.$('support-summary-download').disabled, true);
+    await opened;
+    await h.$('profile-recovery-back').onclick();
+    assert.equal(h.$('profile-recovery-dialog').open, false);
+    assert.equal(h.document.activeElement === opener, true);
+    const writes = observeLiveStatusWrites(h.$('support-summary-json'));
+    if (phase === 'pending') held.release();
+    await older;
+    assert.equal(writes.text, 0);
+    assert.equal(h.$('support-summary-json').textContent, '');
+    assert.equal(h.$('support-summary-download').disabled, true);
+    assert.equal(h.document.activeElement === opener, true);
+    assert.equal(h.padReads, polls);
+    assert.deepEqual(
+      h.created.map((run) => core.exportClassicSnakeReplay(run)),
+      paused,
+    );
+    assert.deepEqual([...h.storage], stored);
+  });
+
+test('Snake Recovery away/back keeps an old export single-owned without relabeling a newer report', async (t) => {
+  let finish;
+  const held = new Promise((resolve) => {
+    finish = resolve;
+  });
+  const h = await pausedSnakeSupportVisit('solo', {
+    sharedTools: true,
+    sharedToolOptions: {
+      resolveSourceVersion: async () => 'v0.142.4',
+      loadRecovery: async () => snakeRecoveryRuntime(),
+    },
+    supportExport: () => held,
+  });
+  t.after(() => h.disposeTools());
+  await h.supportUI.refresh();
+  const original = JSON.parse(h.$('support-summary-json').textContent);
+  const older = h.supportUI.download();
+  await waitFor(() => h.supportExports.length === 1);
+  const paused = h.created.map((run) => core.exportClassicSnakeReplay(run)),
+    stored = [...h.storage];
+  await h.$('profile-recovery-open').onclick();
+  await h.$('profile-recovery-back').onclick();
+  await h.supportUI.refresh();
+  const newer = h.$('support-summary-json').textContent;
+  assert.equal(await h.supportUI.download(), false);
+  assert.deepEqual(h.supportExports, [original]);
+  h.$('support-summary-prepare').focus();
+  finish({ status: 'shared' });
+  await older;
+  assert.equal(h.$('support-summary-json').textContent, newer);
+  assert.doesNotMatch(h.$('support-summary-status').textContent, /Shared with/);
+  assert.equal(h.$('support-summary-download').disabled, false);
+  assert.equal(h.document.activeElement === h.$('support-summary-prepare'), true);
+  assert.deepEqual(
+    h.created.map((run) => core.exportClassicSnakeReplay(run)),
+    paused,
+  );
+  assert.deepEqual([...h.storage], stored);
+});
+
+test('Snake compact native Settings Back retires Data before re-entering the same panel', async (t) => {
+  const held = heldSnakeObservation();
+  const h = await pausedSnakeSupportVisit('solo', { supportCollect: held.collect });
+  t.after(() => h.window.emit('pagehide', { persisted: false }));
+  h.document.defaultView.innerWidth = 320;
+  h.document.defaultView.emit('resize');
+  h.$('snake-menu-settings-tab-data').click();
+  assert.equal(h.shell.elements.dialogs.settings.dataset.settingsView, 'panel');
+  const older = h.supportUI.refresh();
+  await waitFor(held.ready);
+  h.shell.back();
+  assert.equal(h.shell.elements.dialogs.settings.open, true);
+  assert.equal(h.shell.elements.dialogs.settings.dataset.settingsView, 'categories');
+  assert.equal(h.$('support-summary-json').textContent, '');
+  h.$('snake-menu-settings-tab-data').click();
+  const focus = h.document.activeElement;
+  held.release();
+  await older;
+  assert.equal(h.$('support-summary-json').textContent, '');
+  assert.equal(h.$('support-summary-download').disabled, true);
+  assert.equal(h.document.activeElement === focus, true);
+});
+
+for (const mode of ['solo', 'team', 'versus'])
+  test(`${mode} Snake comfort preview, Apply and Undo preserve the paused boards with real preference owners`, async () => {
+    const h = await harness({ mode, realDisplay: true });
+    h.start();
+    h.frame(0);
+    h.frame(100);
+    h.shell.open('settings');
+    h.$('snake-menu-settings-tab-accessibility').click();
+    const before = h.created.map((run) => core.exportClassicSnakeReplay(run)),
+      prefix = 'snake-menu-settings-panel-accessibility-comfort-';
+    h.$(`${prefix}choice`).value = 'comfort';
+    h.$(`${prefix}choice`).emit('change');
+    assert.equal(h.storage.has(DISPLAY_PREFERENCES_KEY), false);
+    assert.equal(h.storage.has(MENU_ANIMATION_KEY), false);
+    h.$(`${prefix}apply`).click();
+    assert.deepEqual(JSON.parse(h.storage.get(DISPLAY_PREFERENCES_KEY)), {
+      textFace: 'plain',
+      textSize: 'large',
+      reducedEffects: true,
+    });
+    assert.equal(h.storage.get(MENU_ANIMATION_KEY), 'off');
+    h.frame(800);
+    assert.deepEqual(
+      h.created.map((run) => core.exportClassicSnakeReplay(run)),
+      before,
+    );
+    h.$(`${prefix}undo`).focus();
+    h.$(`${prefix}undo`).click();
+    assert.deepEqual(JSON.parse(h.storage.get(DISPLAY_PREFERENCES_KEY)), {
+      textFace: 'pixel',
+      textSize: 'standard',
+      reducedEffects: false,
+    });
+    assert.equal(h.storage.get(MENU_ANIMATION_KEY), 'on');
+    assert.equal(h.document.activeElement, h.$(`${prefix}apply`));
+    h.frame(1600);
+    assert.deepEqual(
+      h.created.map((run) => core.exportClassicSnakeReplay(run)),
+      before,
+    );
+    assert.equal(h.shell.elements.dialogs.settings.open, true);
+  });
+
+test('Snake comfort retries failed shared saves without replacing its original Undo target', async () => {
+  const h = await harness({ realDisplay: true }),
+    write = h.storage.set.bind(h.storage),
+    prefix = 'snake-menu-settings-panel-accessibility-comfort-';
+  let working = false;
+  h.storage.set = (key, value) => {
+    if (!working && [DISPLAY_PREFERENCES_KEY, MENU_ANIMATION_KEY].includes(key))
+      throw new DOMException('Modeled full storage', 'QuotaExceededError');
+    return write(key, value);
+  };
+  h.shell.open('settings');
+  h.$('snake-menu-settings-tab-accessibility').click();
+  h.$(`${prefix}apply`).click();
+  assert.equal(h.display.textFace, 'plain');
+  assert.equal(h.$('snake-global-menuAnimation').checked, false);
+  assert.match(h.$(`${prefix}status`).textContent, /could not be saved/);
+  working = true;
+  h.$(`${prefix}apply`).click();
+  assert.equal(h.storage.get(MENU_ANIMATION_KEY), 'off');
+  h.$(`${prefix}undo`).click();
+  assert.equal(h.display.textFace, 'pixel');
+  assert.equal(h.display.textSize, 'standard');
+  assert.equal(h.storage.get(MENU_ANIMATION_KEY), 'on');
 });

@@ -23,6 +23,7 @@ import {
 } from '../../optional-practice/civilian-fpv/aircraft-presets.mjs';
 import { aircraftPerformance } from '../../optional-practice/civilian-fpv/aircraft-physics.mjs';
 import { withAircraftChallenge } from '../../optional-practice/civilian-fpv/aircraft-challenge.mjs';
+import { createPracticeSectorObserver } from '../../optional-practice/civilian-fpv/flight-sectors.mjs';
 
 const LEGACY = 'aircraft-course-practice.v1';
 const CURRENT = 'aircraft-course-practice.v2';
@@ -56,11 +57,11 @@ const telemetryAt = (height, { grounded = true, id = 'course-boundary-y-min' } =
   },
 });
 
-function createClient() {
+function createClient({ backend } = {}) {
   let simulation;
   return {
     async initialize(options) {
-      simulation = createAdvancedSimulation(options);
+      simulation = createAdvancedSimulation({ ...options, ...(backend ? { backend } : {}) });
       return { telemetry: simulation.telemetry() };
     },
     async stageTerrainFrame(frame) {
@@ -248,6 +249,9 @@ test('every catalog aircraft completes ground check, takeoff and soft landing wi
         };
         try {
           await session.prepare();
+          const observer = createPracticeSectorObserver(),
+            commands = [];
+          observer.reset(session.snapshot());
           session.arm();
           const hover = aircraftPerformance(settings.advanced.aircraft).hoverThrottle;
           let airborneTicks = 0,
@@ -265,7 +269,10 @@ test('every catalog aircraft completes ground check, takeoff and soft landing wi
               (state.step >= 2 && (state.grounded || (height < 0.025 && climb < 0.1)))
                 ? 0
                 : Math.max(0, Math.min(0.65, hover + 0.1 * (target - height) - 0.12 * climb));
-            const next = await session.step({ ...neutral, throttle });
+            const command = { ...neutral, throttle };
+            commands.push(command);
+            const next = await session.step(command);
+            assert.equal(observer.consume(next), true);
             airborneTicks += next.grounded ? 0 : 1;
             maxHeight = Math.max(maxHeight, next.position.y / 1000);
             if (next.step !== state.step)
@@ -302,8 +309,17 @@ test('every catalog aircraft completes ground check, takeoff and soft landing wi
             [1, 2, 3],
           );
           assert.equal(result.advancedTelemetry.contact.support.id, 'course-boundary-y-min');
+          assert.deepEqual(
+            observer.snapshot().rows.map((row) => row.endTick / 50),
+            transitions.map((entry) => entry.seconds),
+          );
+          assert.equal(
+            observer.snapshot().rows.reduce((sum, row) => sum + row.ticks, 0),
+            result.ticks,
+          );
           const tick = result.ticks;
           await session.step(neutral);
+          commands.push(neutral);
           assert.equal(session.snapshot().ticks, tick + 1);
           session.pause();
           const saved = await session.exportRecovery();
@@ -311,6 +327,20 @@ test('every catalog aircraft completes ground check, takeoff and soft landing wi
           assert.deepEqual(saved.physical.config.aircraft, settings.advanced.aircraft);
           assert.deepEqual(saved.physical.config.controller, settings.advanced.controller);
           assert.deepEqual(saved.physical.config.response.response, settings.response);
+          const unobserved = build(CURRENT, { mode, configuration: settings });
+          try {
+            await unobserved.prepare();
+            unobserved.arm();
+            for (const command of commands) await unobserved.step(command);
+            unobserved.pause();
+            assert.deepEqual(
+              await unobserved.exportRecovery(),
+              saved,
+              'observed and unobserved flight preserve exact physical hashes, recorded inputs and mission recovery',
+            );
+          } finally {
+            await unobserved.dispose();
+          }
           Object.assign(report, {
             physicsFrequencyHz: saved.physical.config.frequency,
             aircraftIdentity: dataIdentity(saved.physical.config.aircraft),
@@ -339,7 +369,10 @@ test('pre-change v1 fixture retains exact raw floor behavior and worker-verified
   const fixture = JSON.parse(
     await readFile(new URL('./fixtures/fpv-aircraft-mission-v1.json', import.meta.url), 'utf8'),
   );
-  const old = build(LEGACY);
+  // The pre-change fixture predates v3; retain its frozen physical backend.
+  const old = build(LEGACY, {}, () =>
+    createClient({ backend: 'civilian-quad-aircraft-regional.v2' }),
+  );
   const current = build(CURRENT, {}, createVerifiedClient);
   t.after(() => Promise.all([old.dispose(), current.dispose()]));
   await old.prepare();

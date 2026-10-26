@@ -1,0 +1,22 @@
+Browser tab: 12, Title: "FPV / LINE · Simulator", URL: "http://127.0.0.1:9243/optional-practice/fpv-worlds/index.html".
+0 AXWebArea FPV / LINE · Simulator, URL: 127.0.0.1:9243/optional-practice/fpv-worlds/index.html
+	1 container flight-dialog
+		15 container
+			16 button Description: Change camera · V / R3 · FPV, Help: Change camera · V / R3
+			17 button Menu, ID: worlds-shell-action-pause
+				18 text Menu
+		4 container ID: world-viewport, Arm / resume Yaw 0%, Throttle 0% Roll 0%, Pitch 0% Drone response. Paused · actual pose retained vertical speed near zero. 5.0 m · +0.0 m/s vertical · 0.0 m/s drift Unscored · Ready to arm
+			5 image world-canvas
+			6 button Arm / resume, ID: world-flight-resume
+			7 container world-touch
+				8 container Description: Yaw 0%, Throttle 0%, ID: world-left-stick
+				9 container Description: Roll 0%, Pitch 0%, ID: world-right-stick
+			10 container ID: flight-drone-response, Description: Drone response. Paused · actual pose retained vertical speed near zero. 5.0 m · +0.0 m/s vertical · 0.0 m/s drift
+				11 button Hide drone response
+				12 text Paused · actual pose retained · Drone upright
+			13 container
+				14 container Unscored · Ready to arm
+					19 text Unscored · Ready to arm
+				20 text Unscored · Ready to arm
+
+The focused UI element is 4 container ID: world-viewport, Arm / resume Yaw 0%, Throttle 0% Roll 0%, Pitch 0% Drone response. Paused · actual pose retained vertical speed near zero. 5.0 m · +0.0 m/s vertical · 0.0 m/s drift Unscored · Ready to arm

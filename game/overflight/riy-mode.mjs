@@ -15,6 +15,7 @@ const copy = {
     briefing:
       'Lead two escorts through the swarm. Sweeper covers your rear; Breaker fires ahead. Your squad shares the two combat slots: choose clearing or control for Sweeper, and bursts or linked strikes for Breaker. Press F, the controller Ability button, or Focus target to send both toward the marked priority target, leaving your formation uncovered until they return.',
     focus: 'F · Focus target',
+    focusCompact: 'F · Focus',
     locked: 'Focusing priority target',
     approach: 'Escorts approaching target',
     returning: 'Escorts returning to formation',
@@ -28,6 +29,7 @@ const copy = {
     briefing:
       'Ведіть два дрони супроводу крізь натовп. Зачисник прикриває тил, Пробійник стріляє вперед. Супровід займає два бойові слоти: оберіть зачищення або сповільнення для Зачисника, залпи або ланцюгові удари для Пробійника. Натисніть F, кнопку здібності на контролері або «Зосередити вогонь», щоб спрямувати обох на позначену ціль, залишивши стрій без прикриття до їхнього повернення.',
     focus: 'F · Зосередити вогонь',
+    focusCompact: 'F · Зосередити',
     locked: 'Атака пріоритетної цілі',
     approach: 'Супровід наближається до цілі',
     returning: 'Супровід повертається у стрій',
@@ -142,7 +144,8 @@ export function createOverflightRiyMode(base) {
       const state = run.riy;
       controls.title.textContent = label(locale, 'title');
       controls.roles.textContent = label(locale, state.version === 2 ? 'squadRoles' : 'roles');
-      controls.button.textContent = label(locale, 'focus');
+      const compact = controls.compactTouchActions();
+      controls.button.textContent = label(locale, compact ? 'focusCompact' : 'focus');
       controls.button.disabled =
         run.phase !== 'playing' || state.cooldown > 0 || !overflightRiyTarget(run);
       controls.status.textContent =
@@ -155,8 +158,14 @@ export function createOverflightRiyMode(base) {
               : state.cooldown > 0
                 ? `${label(locale, 'cooldown')} ${state.cooldown.toFixed(1)}s`
                 : label(locale, 'following');
+      if (compact)
+        controls.button.setAttribute(
+          'aria-label',
+          `${label(locale, 'focus')} · ${controls.status.textContent}`,
+        );
+      else controls.button.removeAttribute('aria-label');
     },
-    installActions({ document, getRun, canAct }) {
+    installActions({ document, getRun, canAct, compactTouchActions = () => false }) {
       const root = document.createElement('aside');
       root.className = 'overflight-riy-controls';
       const title = document.createElement('strong');
@@ -189,7 +198,7 @@ export function createOverflightRiyMode(base) {
       document.defaultView.addEventListener('keydown', keydown);
       root.append(title, roles, status, button);
       document.getElementById('overflight-game').append(root);
-      controls = { root, title, roles, status, button };
+      controls = { root, title, roles, status, button, compactTouchActions };
       return () => {
         document.defaultView.removeEventListener('keydown', keydown);
         button.removeEventListener('click', request);

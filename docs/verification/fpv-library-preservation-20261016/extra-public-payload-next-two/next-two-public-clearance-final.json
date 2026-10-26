@@ -1,0 +1,49 @@
+{
+  "format": "ExactNextTwoPublicExtraPayloadClearance.v1",
+  "createdUTC": "2026-10-16T06:24:05.724475+00:00",
+  "repository": "mekhovov/revealline",
+  "approvedPublicPayloadPublication": true,
+  "selectionMustMatchExactManifest": true,
+  "publicOnlyManifest": "next-two-approved-public-files-final.jsonl",
+  "publicOnlyManifestSHA256": "c91fa011daa5589a27d0953a5eae07fe0a97f240f5f4f27066b96280334de755",
+  "files": 6147,
+  "bytes": 1843256598,
+  "roots": [
+    {
+      "rootAlias": "rl-pages-recovery-startup.94zqSi",
+      "files": 3226,
+      "bytes": 810686987
+    },
+    {
+      "rootAlias": "solo-performance-b1174522",
+      "files": 2921,
+      "bytes": 1032569611
+    }
+  ],
+  "allSourceFilesRehashedWithStableSizeMtimeBeforeAfter": true,
+  "allFileBodiesExactlyMatchDeclaredExistingPublicGitLeaves": true,
+  "distinctPublicGitBlobIdentities": 3110,
+  "publicBaselineLeafSetSHA256": "6bab0727362768c67bc57359c91d4efb8c33322b417d42b59c556d7576513937",
+  "publicBaselineDeclaredObjectCount": 56541,
+  "finitePatternFamilies": [
+    "private-key",
+    "aws-access-key",
+    "github-token",
+    "slack-token",
+    "google-api-key",
+    "url-userinfo"
+  ],
+  "finitePatternFindings": 0,
+  "approvedBodyReviewSHA256": "d4086f83eaeff74638dbb4e7d38d7eeb4ee8912072fb40847da30ade34eedd47",
+  "privateAndUnresolvedOriginSubtreesExcludedBeforePublicOutput": true,
+  "privatePrefixValuesOrDigestsIncluded": false,
+  "unapprovedFileHashesOrPathsIncluded": false,
+  "sourceChangedFilesExcluded": true,
+  "rawLogsContainersRangeAndAcquisitionStreamsExcluded": true,
+  "noContainingDirectoryHEADClaim": true,
+  "noMixedInventoryDigestComputed": true,
+  "noSourceMutationOrDirectUploadByReviewer": true,
+  "bulkPackingOwner": "listing_evidence_review",
+  "otherExtraPayloadOrSourceHistoryClearedByThisReceipt": false,
+  "qualification": "Exact positive-public-leaf ordinary app file list only, selected from a fixed candidate snapshot. Full source rehash/stability, Git leaf identity and six finite-pattern checks passed for every listed file. Source mismatches, unknown leaf bodies, unresolved origins, private origins and unlisted/opaque/acquisition data remain outside this public clearance. No full container/root closure, native player, persistence or physical-disconnection claim."
+}
