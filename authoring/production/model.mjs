@@ -1,8 +1,6 @@
 /** Pure authoring data: never imports a runtime, reads files or grants media authority. */
 export const FORMAT = 'revealline-production-register.v1';
-export const THEMES = Object.freeze(['fpv',
-'ukraine',
-'retro']);
+export const THEMES = Object.freeze(['fpv', 'ukraine', 'retro']);
 export const CLASSES = Object.freeze([
   'scout',
   'bomber',

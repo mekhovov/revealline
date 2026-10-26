@@ -1,0 +1,127 @@
+{
+  "sourceRevision": "9dd87a9c1aeb05107b4d13f0e5f6806f75f38faf",
+  "sourceTree": "3f99693d2821d8c50d42e360a77e6e6bea531d63",
+  "version": "v0.151.1",
+  "verification": {
+    "uniqueInputs": 243,
+    "exactCommittedBytesAndHashes": true
+  },
+  "packages": [
+    {
+      "id": "civilian-flight",
+      "inputBytes": 4899193,
+      "inputLimit": 8388608,
+      "inputHeadroom": 3489415,
+      "sourceFiles": 98,
+      "sourceFileLimit": 98,
+      "runtimeFiles": 96,
+      "runtimeBytes": 3695740
+    },
+    {
+      "id": "civilian-fpv",
+      "inputBytes": 13255277,
+      "inputLimit": 13303808,
+      "inputHeadroom": 48531,
+      "sourceFiles": 151,
+      "sourceFileLimit": 151,
+      "runtimeFiles": 149,
+      "runtimeBytes": 12067284
+    },
+    {
+      "id": "fpv-worlds",
+      "inputBytes": 19745531,
+      "inputLimit": 20971520,
+      "inputHeadroom": 1225989,
+      "sourceFiles": 211,
+      "sourceFileLimit": 211,
+      "runtimeFiles": 209,
+      "runtimeBytes": 18579048
+    }
+  ],
+  "checks": {
+    "focused": {
+      "tests": 776,
+      "passed": 776,
+      "failed": 0,
+      "skipped": 0
+    },
+    "packages": {
+      "tests": 19,
+      "passed": 19,
+      "failed": 0,
+      "skipped": 0
+    },
+    "lint": "passed",
+    "format": "passed",
+    "generatedShell": "canonical-projection-match",
+    "generatedAudio": "canonical-projection-match"
+  },
+  "logs": {
+    ".cache/fpv-practice-9dd87a9c1a-tests.log": {
+      "sha256": "3db03137493007950df56ff4743aeebf451af7d62398a247e771bcf8ea19edb7",
+      "bytes": 192843
+    },
+    ".cache/fpv-practice-9dd87a9c1a-packages.log": {
+      "sha256": "80a16090377a364bb82f82e1f49dbf8caaacf5e9d902b5133aacbcef7b14140d",
+      "bytes": 4674
+    }
+  },
+  "rendered": [
+    {
+      "host": "World-host Flight School",
+      "sourceRevision": "cf26a2a083420c48e58f7430f44a50e4cac2c61f",
+      "sourceTree": "9a6f53cf75df014fb5dfdbf5c0b7dd4d4f73c8ce",
+      "aircraft": "iFlight Nazgul ECO XL5",
+      "course": "Meet your drone",
+      "mode": "Self-level",
+      "completionSeconds": 14.34,
+      "archiveName": "World \u00b7 2026-10-19T04:17:18.397Z",
+      "scope": [
+        "native best-practice search",
+        "explicit split and visual selection",
+        "cancel retained after later observation",
+        "repeat search"
+      ],
+      "warnings": 0,
+      "errors": 0
+    },
+    {
+      "host": "Academy",
+      "sourceRevision": "9dd87a9c1aeb05107b4d13f0e5f6806f75f38faf",
+      "sourceTree": "3f99693d2821d8c50d42e360a77e6e6bea531d63",
+      "aircraft": "BETAFPV Meteor75",
+      "course": "Lift and land",
+      "mode": "Self-level",
+      "completionSeconds": 17.2,
+      "archiveName": "Academy \u00b7 2026-10-19T04:21:30.754Z",
+      "scope": [
+        "native best-practice search",
+        "explicit split and visual selection",
+        "selection retained across resume/pause",
+        "English/Ukrainian/English feedback without rerunning search"
+      ],
+      "warnings": 0,
+      "errors": 0
+    }
+  ],
+  "publicMetadata": {
+    "checkedAt": "2026-10-19T04:51:00.795Z",
+    "url": "https://mekhovov.github.io/revealline/main-deployment.json",
+    "metadata": {
+      "format": "revealline-main-deployment.v1",
+      "channel": "main",
+      "sourceRevision": "dd337c8120fd6f875544c1479713d3aa4299c323",
+      "sourceCommittedAt": "2026-10-18T21:38:52Z",
+      "buildVersion": "main-dd337c8120fd",
+      "play": "game/",
+      "releases": "https://github.com/mekhovov/revealline/releases"
+    }
+  },
+  "limits": [
+    "Each rendered local inventory had one completed compatible candidate; multiple winner/tie behavior has synthetic tests",
+    "No archive deletion or public storage interaction",
+    "No all-map/platform performance or measured aircraft fidelity claim",
+    "Final public deployment acceptance remains open",
+    "No scores, medals, defaults, accounts or public rankings introduced"
+  ]
+}

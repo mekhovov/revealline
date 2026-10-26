@@ -1,0 +1,15 @@
+{
+  "format": "FPVPendingDerivedAuditDisposition.v1",
+  "sourceManifestSHA256": "63bd5a897e7c874b814102543d1d44ace2ad5bdf8e7f567c35593c5601202642",
+  "prefix": "fpv-temp/source-preservation-audit-20261016/",
+  "reason": "Root classified active source-audit outputs as newly derived, not original app files. Final delta must refresh stable bytes or establish reproducibility from a durable GitHub ref/bundle before final coverage.",
+  "coverageClaimed": false,
+  "deferredFileBytes": 31545178,
+  "failedBatch": "batch-002",
+  "partialPreserved": true,
+  "deferredRowCount": 610,
+  "fullInternalDispositionSHA256": "527c554bb8c5deebbd9ce6dc90586c4e6480530df806fa2cbb8d80e0100d2237",
+  "originalErrorLogSHA256": "dfdc523ece3653f8943b265ef4b3633ca63b5bd129470344cde8c4f7d202bbc2",
+  "error": "No unchanged source candidate: fpv-temp/source-preservation-audit-20261016/direct-object-cache/4b762e46631af2b0a79b401c6ad644e6eec1398c",
+  "partialArchiveCreditedAsCoverage": false
+}

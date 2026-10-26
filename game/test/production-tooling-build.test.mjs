@@ -123,11 +123,11 @@ test('the default package contains the two Production views, local input owners 
   );
 });
 
-test('all 43 selected PNG previews ship unchanged with their recorded byte, hash and dimensions', async () => {
+test('all 33 selected PNG previews ship unchanged with their recorded byte, hash and dimensions', async () => {
   const files = new Set(await collectBuildFiles(root, await readBuildConfig(root)));
   const { previews, sources } = await selectedSources();
-  assert.equal(previews.size, 43);
-  assert.equal(sources.size, 34);
+  assert.equal(previews.size, 33);
+  assert.equal(sources.size, 30);
   for (const [name, entry] of previews) {
     assert.ok(files.has(name), name);
     const bytes = await read(name);
@@ -208,7 +208,7 @@ test('the Production additions are Workshop optional candidates in every mode an
       )
       .map(productionSourceDocumentPath),
   ]);
-  assert.equal(tooling.size, 86, 'Only the reviewed, bounded Production addition is optional');
+  assert.equal(tooling.size, 73, 'Only the reviewed, bounded Production addition is optional');
   // The selector reads text references, never binary image bodies. Their exact
   // real bytes are independently verified above; this is graph qualification.
   const entries = await Promise.all(

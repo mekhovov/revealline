@@ -75,6 +75,32 @@ const seconds = (n) =>
       })
     : t('interface:timingUnavailable');
 const section = (id, title, lines) => Object.freeze({ id, title, lines: Object.freeze(lines) });
+const progressSection = (progress) => {
+  const text = (key, values) => t(`interface:flightDetails.progress.${key}`, values),
+    number = (value) => formatNumber(value, { maximumFractionDigits: 1, useGrouping: false });
+  if (!progress) return section('progress', text('title'), [text('unavailable')]);
+  const { kind, basis, current, target, remaining } = progress,
+    lines = [];
+  if (kind === 'hunt') {
+    if (current !== null && target !== null)
+      lines.push(text('hunt', { current: number(current), target: number(target) }));
+    else lines.push(text('unavailable'));
+  } else if (['picture', 'routes'].includes(basis)) {
+    const coverageText = (key, values) => text(basis === 'routes' ? `routes.${key}` : key, values);
+    if (current !== null) lines.push(coverageText('revealed', { value: number(current * 100) }));
+    if (target !== null) lines.push(coverageText('target', { value: number(target * 100) }));
+    if (remaining === null) lines.push(text('unavailable'));
+    else if (remaining === 0) lines.push(coverageText('reached'));
+    else
+      lines.push(
+        remaining * 100 < 0.1
+          ? coverageText('lessThan', { value: number(0.1) })
+          : coverageText('remaining', { value: number(remaining * 100) }),
+      );
+    if (basis === 'routes') lines.push(text('routes.bonus'));
+  } else lines.push(text('unavailable'));
+  return section('progress', text('title'), lines);
+};
 const group = (lines) => {
   const counts = new Map();
   for (const line of lines) counts.set(line, (counts.get(line) || 0) + 1);
@@ -218,6 +244,7 @@ export function flightDetailsModel(information, context) {
         t('interface:theExistingFieldCuesRemainAvailableCloseThisViewTo'),
       ]),
     ]);
+  parts.push(progressSection(s.progress));
   parts.push(
     section('state', localizedMessage('interface:flightState'), [
       `${s.status === 'respawning' ? t('interface:recovering2') : s.paused ? t('interface:paused') : { running: t('interface:inFlight'), won: t('interface:missionComplete'), lost: t('interface:flightEnded') }[s.status] || t('interface:stateUnavailable')}. ${s.player.cutting === true ? t('interface:yourUnfinishedLineRemainsExposed') : s.player.cutting === false ? t('interface:noUnfinishedLine') : t('interface:lineStateIsUnavailable')}`,

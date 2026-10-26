@@ -1,0 +1,122 @@
+Browser tab: 12, Title: "FPV / LINE · Simulator", URL: "http://127.0.0.1:9243/optional-practice/fpv-worlds/index.html".
+0 AXWebArea FPV / LINE · Simulator, URL: 127.0.0.1:9243/optional-practice/fpv-worlds/index.html
+	1 container Pause, ID: worlds-shell-pause-dialog
+		2 heading Pause, Value: 1, ID: worlds-shell-pause-title
+			3 text Pause
+		4 container
+			5 button Resume, ID: worlds-shell-action-pause-resume
+			6 heading Flight setup, Value: 2
+				7 text Flight setup
+			8 container
+				9 text Flight mode
+				10 pop up button (collapsed, settable) Flight mode, Value: Self-level, Secondary Actions: Expand
+					11 menu
+						12 (selected) Self-level
+						13 Acro
+			14 container
+				15 text Controls
+				16 pop up button (collapsed, settable) Controls, Value: Keyboard, Secondary Actions: Expand
+					17 menu
+						18 (selected) Keyboard
+						19 Touch
+						20 Controller / Steam Deck
+						21 USB radio
+			22 button Set up radio
+			23 text Changing mode starts a new paused attempt. Changing input keeps flight paused.
+			24 container Camera view
+				25 text Camera view
+				26 checkbox FPV, Value: 1
+				27 checkbox Chase, Value: 0
+				28 checkbox Overview, Value: 0
+				29 text V · R3: click the right stick. Radio: choose a view in this menu.
+			30 button (collapsed) Your device controls, Secondary Actions: Expand
+				31 text Your device controls
+			32 heading Regional free flight, Value: 2
+				33 text Regional free flight
+			34 text Urban earthworks — regional preview
+			35 button Retry
+			36 text Retry an unavailable area or return to launch. Flight stays paused until you arm.
+			37 container
+				38 text Starting point
+				39 pop up button (collapsed, settable) Starting point, Value: 2 · Tower court, ID: regional-starting-point, Secondary Actions: Expand
+					40 menu
+						41 1 · Mill court
+						42 (selected) 2 · Tower court
+				43 button Guide me there
+				44 button Restart here
+				45 button (disabled) Turn guidance off
+				46 text Direction guidance is off.
+				47 text Restart moves to the selected start and stays disarmed. Guide me there only shows direction from the drone nose; obstacles and a safe route are not checked. Resume flight explicitly when ready.
+			48 container
+				49 heading Saved places, Value: 3
+					50 text Saved places
+				51 text Name this place
+				52 text field (settable) Name this place, Value: Place 1, ID: regional-place-name
+				53 button Save current place
+				54 text Choose a saved place
+				55 pop up button (disabled, collapsed, settable) Choose a saved place, ID: regional-saved-place, Secondary Actions: Expand
+				56 button (disabled) Guide me there
+				57 button (disabled) Restore here
+				58 button (disabled) Remove…
+				59 button Refresh places
+				60 text Places belong to this world version. Restore levelled and disarmed; mode and view stay the same.
+			61 heading MISSIONS, Value: 3
+				62 text MISSIONS
+			63 button Skip, ID: worlds-shell-action-pause-skip
+			64 button Random, ID: worlds-shell-action-pause-random
+			65 button Choose, ID: worlds-shell-action-pause-choose
+			66 heading SOUND, Value: 3
+				67 text SOUND
+			68 checkbox Sound: off, Value: 0, ID: worlds-shell-action-pause-sound
+			69 heading SETTINGS, Value: 3
+				70 text SETTINGS
+			71 button Settings, ID: worlds-shell-action-pause-settings
+			72 button Full screen, ID: worlds-shell-action-pause-fullscreen
+			73 button Home, ID: worlds-shell-action-pause-home
+			74 button Aircraft, rates & throttle
+			75 heading Practice splits · unscored, Value: 3
+				76 text Practice splits · unscored
+			77 text No course splits in free flight.
+			78 heading Practice clips & recovery, Value: 3
+				123 text Practice clips & recovery
+			124 text Recent clip: 0:00.00–0:13.14. Last durable checkpoint: 0:10.00. Checkpoint saved.
+			81 button Export recent clip
+			82 button Export recovery checkpoint
+			83 button Restore last saved checkpoint
+			84 container
+				85 text Import recovery checkpoint
+				86 button Import recovery checkpoint
+			87 container
+				88 heading Saved flight sessions, Value: 3
+					125 text Saved flight sessions
+				126 text Archive finished through 0:13. Sessions save locally after flight begins, up to 32 MiB each, 128 MiB total and 16 sessions. Nothing is deleted automatically. Finish an archive to save its final segment; flying can continue. All aircraft archives are unscored.
+				91 pop up button (collapsed, settable) Description: Saved session archive, Value: World · 2026-10-19T05:22:49.289Z · 0:00–0:13 · finished, Secondary Actions: Expand
+					119 menu
+						120 (selected) World · 2026-10-19T05:22:49.289Z · 0:00–0:13 · finished
+						121 World · 2026-10-19T05:22:17.256Z · 0:00–0:03 · open / incomplete
+						122 World · 2026-10-19T05:21:22.595Z · 0:00–0:03 · open / incomplete
+				127 text Course completion checks are available in Academy and World course practice. Physics verification remains available here. Complete session physics verified from reset. Unscored.
+				93 button (disabled) Finish current archive
+				94 button Refresh saved sessions
+				95 button Export selected archive
+				96 button Verify selected archive
+				97 button (disabled) Verify course completion
+				98 button (disabled) Find best verified practice flight
+				99 button Delete selected local archive
+				128 text Import session archive
+				101 button Import session archive
+			102 container Optional practice challenges
+				103 text Optional practice challenges
+				104 container
+					105 text Rules for a new attempt
+					106 pop up button (collapsed, settable) Rules for a new attempt, Value: Unlimited practice, Secondary Actions: Expand
+						107 menu
+							108 (selected) Unlimited practice
+							109 Timed practice
+							110 Battery endurance
+				111 button Restart with selected rules
+				112 text Restart returns to launch with a fresh battery and the same aircraft, mode and conditions. Arm when ready. Pause and recovery retain charge and challenge progress. Ordinary practice has no time limit.
+				113 text Current flight: unlimited practice
+		114 text Tab/arrows move; Enter selects; Esc goes back. Controller: release, then press/release A to connect. Calibrated radio: hold yaw right for 0.7 s, then centre to connect; roll/pitch move, hold yaw right/left then centre to confirm/go back.
+
+The focused UI element is 99 button Delete selected local archive

@@ -195,14 +195,8 @@
       "revision": 58,
       "name": "FPV Field Kit · v0.93 retained",
       "presentation": {
-        "source": {
-          "id": "field-kit",
-          "revision": 58
-        },
-        "theme": {
-          "id": "fpv",
-          "revision": 58
-        },
+        "source": { "id": "field-kit", "revision": 58 },
+        "theme": { "id": "fpv", "revision": 58 },
         "collection": null,
         "sha256": "b3a79b85a00b8bc8b70a12fcc7aedfe6667ea8d3da64ea4baab85fb28b52e12c"
       },
@@ -211,10 +205,7 @@
           "editionId": "field-kit",
           "contentThemeId": "fpv",
           "mode": "solo",
-          "owner": {
-            "kind": "campaign",
-            "baseCampaignKey": "first-signal/2/88639f3aab7b6cc1"
-          },
+          "owner": { "kind": "campaign", "baseCampaignKey": "first-signal/2/88639f3aab7b6cc1" },
           "level": {
             "id": "signal-01",
             "revision": "1",
@@ -225,10 +216,7 @@
           "editionId": "field-kit",
           "contentThemeId": "fpv",
           "mode": "solo",
-          "owner": {
-            "kind": "campaign",
-            "baseCampaignKey": "first-signal/2/88639f3aab7b6cc1"
-          },
+          "owner": { "kind": "campaign", "baseCampaignKey": "first-signal/2/88639f3aab7b6cc1" },
           "level": {
             "id": "signal-02",
             "revision": "1",
@@ -239,10 +227,7 @@
           "editionId": "field-kit",
           "contentThemeId": "fpv",
           "mode": "solo",
-          "owner": {
-            "kind": "campaign",
-            "baseCampaignKey": "first-signal/2/88639f3aab7b6cc1"
-          },
+          "owner": { "kind": "campaign", "baseCampaignKey": "first-signal/2/88639f3aab7b6cc1" },
           "level": {
             "id": "signal-03",
             "revision": "1",
@@ -253,10 +238,7 @@
           "editionId": "field-kit",
           "contentThemeId": "fpv",
           "mode": "solo",
-          "owner": {
-            "kind": "campaign",
-            "baseCampaignKey": "first-signal/2/88639f3aab7b6cc1"
-          },
+          "owner": { "kind": "campaign", "baseCampaignKey": "first-signal/2/88639f3aab7b6cc1" },
           "level": {
             "id": "signal-04",
             "revision": "1",
@@ -267,10 +249,7 @@
           "editionId": "field-kit",
           "contentThemeId": "fpv",
           "mode": "solo",
-          "owner": {
-            "kind": "campaign",
-            "baseCampaignKey": "first-signal/2/88639f3aab7b6cc1"
-          },
+          "owner": { "kind": "campaign", "baseCampaignKey": "first-signal/2/88639f3aab7b6cc1" },
           "level": {
             "id": "signal-05",
             "revision": "1",
@@ -281,10 +260,7 @@
           "editionId": "field-kit",
           "contentThemeId": "fpv",
           "mode": "solo",
-          "owner": {
-            "kind": "campaign",
-            "baseCampaignKey": "first-signal/2/88639f3aab7b6cc1"
-          },
+          "owner": { "kind": "campaign", "baseCampaignKey": "first-signal/2/88639f3aab7b6cc1" },
           "level": {
             "id": "signal-06",
             "revision": "1",
@@ -295,10 +271,7 @@
           "editionId": "field-kit",
           "contentThemeId": "fpv",
           "mode": "solo",
-          "owner": {
-            "kind": "campaign",
-            "baseCampaignKey": "first-signal/2/88639f3aab7b6cc1"
-          },
+          "owner": { "kind": "campaign", "baseCampaignKey": "first-signal/2/88639f3aab7b6cc1" },
           "level": {
             "id": "signal-07",
             "revision": "1",
@@ -309,10 +282,7 @@
           "editionId": "field-kit",
           "contentThemeId": "fpv",
           "mode": "solo",
-          "owner": {
-            "kind": "campaign",
-            "baseCampaignKey": "first-signal/2/88639f3aab7b6cc1"
-          },
+          "owner": { "kind": "campaign", "baseCampaignKey": "first-signal/2/88639f3aab7b6cc1" },
           "level": {
             "id": "signal-08",
             "revision": "1",
@@ -323,10 +293,7 @@
           "editionId": "field-kit",
           "contentThemeId": "fpv",
           "mode": "solo",
-          "owner": {
-            "kind": "campaign",
-            "baseCampaignKey": "first-signal/2/88639f3aab7b6cc1"
-          },
+          "owner": { "kind": "campaign", "baseCampaignKey": "first-signal/2/88639f3aab7b6cc1" },
           "level": {
             "id": "signal-09",
             "revision": "1",
@@ -337,10 +304,7 @@
           "editionId": "field-kit",
           "contentThemeId": "fpv",
           "mode": "solo",
-          "owner": {
-            "kind": "campaign",
-            "baseCampaignKey": "first-signal/2/88639f3aab7b6cc1"
-          },
+          "owner": { "kind": "campaign", "baseCampaignKey": "first-signal/2/88639f3aab7b6cc1" },
           "level": {
             "id": "signal-10",
             "revision": "1",
@@ -351,10 +315,7 @@
           "editionId": "field-kit",
           "contentThemeId": "fpv",
           "mode": "solo",
-          "owner": {
-            "kind": "campaign",
-            "baseCampaignKey": "first-signal/2/88639f3aab7b6cc1"
-          },
+          "owner": { "kind": "campaign", "baseCampaignKey": "first-signal/2/88639f3aab7b6cc1" },
           "level": {
             "id": "signal-11",
             "revision": "1",
@@ -365,10 +326,7 @@
           "editionId": "field-kit",
           "contentThemeId": "fpv",
           "mode": "solo",
-          "owner": {
-            "kind": "campaign",
-            "baseCampaignKey": "first-signal/2/88639f3aab7b6cc1"
-          },
+          "owner": { "kind": "campaign", "baseCampaignKey": "first-signal/2/88639f3aab7b6cc1" },
           "level": {
             "id": "signal-12",
             "revision": "1",

@@ -1,0 +1,61 @@
+{
+  "metrics": {
+    "downloadBytes": 14703667,
+    "decodedBytes": 107334216,
+    "gpuBytes": 129733792,
+    "vertices": 63117
+  },
+  "regions": [
+    "head",
+    "pelvis",
+    "abdomen",
+    "chest",
+    "leftForearm",
+    "leftUpperArm",
+    "rightForearm",
+    "rightUpperArm",
+    "leftShin",
+    "leftThigh",
+    "rightShin",
+    "rightThigh"
+  ],
+  "hash": "9940f5d75727b52d067cf1be2ce75e254f52e0b6670643bc28a308291969e009",
+  "renderer": "WebKit WebGL",
+  "crowd": {
+    "actors": 128,
+    "instances": 12,
+    "calls": 87,
+    "skinnedActors": 20,
+    "skinnedCalls": 40,
+    "crowdActors": 108,
+    "crowdInstances": 216,
+    "crowdCalls": 20,
+    "templates": 128,
+    "capacity": 128,
+    "healthBars": 0,
+    "appearanceReady": true,
+    "appearanceHash": "9940f5d75727b52d067cf1be2ce75e254f52e0b6670643bc28a308291969e009",
+    "appearanceCharacters": 36,
+    "equipmentCalls": 25,
+    "maxSkinnedActors": 20,
+    "crowdPaletteBytes": 6311280,
+    "crowdPalettes": 1,
+    "crowdPoses": 10,
+    "crowdPaletteByteLimit": 8388608,
+    "appearanceResourceMetrics": {
+      "decodedBytes": 113888696,
+      "gpuBytes": 136220432
+    },
+    "crowdPaletteGpuBytes": 6243440,
+    "equipmentInstanceBytes": 243200,
+    "triangles": 2858822,
+    "expectedWarningInstances": 12,
+    "currentBodyFallbackActors": 0
+  },
+  "errors": [],
+  "scope": "Actual r2 GLB decoded in headless Chrome; 128 organic actors span all36 family/cast variants, mixed idle/walk/run/warning roles and spawn-relative phases. Static render/admission evidence, not a sustained performance qualification.",
+  "sourceHashes": {
+    "optional-practice/civilian-fpv/combat-actors.mjs": "b1fcab3f836088ca0abfcef57ac7183e70988c2ea0717990b9d1bcaecc8b9086",
+    "optional-practice/civilian-fpv/combat-appearance.mjs": "36ea06b21fcf1b6670f11f709966554f74d610f72b89164e59e722ae743e0b93"
+  }
+}
