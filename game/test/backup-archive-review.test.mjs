@@ -54,6 +54,7 @@ test('guided inspection offers original native files in restore order and keeps 
     setLocale('en', { persist: false });
     const h = await harness(),
       original = structuredClone(h.contents);
+    assert.match(h.$('backup-archive-help').textContent, /To restore, extract the ZIP/);
     assert.equal(await h.$('prepare-backup-archive').onclick(), true);
     const old = h.$('download-backup-archive');
     h.choose();
@@ -66,6 +67,7 @@ test('guided inspection offers original native files in restore order and keeps 
     assert.equal(h.urls.size, 7);
     const results = h.$('backup-review-results');
     assert.equal(results.hidden, false);
+    assert.match(results.textContent, /Download first, then review in this order/);
     assert.deepEqual(
       results.querySelectorAll('ol li').map((row) => row.id),
       [
