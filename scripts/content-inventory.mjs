@@ -25,6 +25,7 @@ import {
   GAMEPLAY_TUNING_VERSION,
 } from '../game/gameplay-tuning.mjs';
 import { decodeOriginalPNG } from '../authoring/library/four-worlds-chapters/verify-images.mjs';
+import { inspectImageDataUrl } from '../game/content.mjs';
 
 const ROOT = fileURLToPath(new URL('../', import.meta.url));
 export const CONTENT_INVENTORY_FORMAT = 'revealline-content-inventory.v1';
@@ -205,7 +206,26 @@ export async function buildContentInventory({
     const bytes = await read(sourcePath);
     if (bytes.length !== asset.bytes || sha(bytes) !== asset.sha256)
       throw new Error(`Original image differs: ${sourcePath}`);
-    const decoded = decodeOriginalPNG(`data:image/png;base64,${bytes.toString('base64')}`);
+    const mime = bytes.subarray(0, 8).equals(Buffer.from([137, 80, 78, 71, 13, 10, 26, 10]))
+      ? 'image/png'
+      : bytes[0] === 255 && bytes[1] === 216 && bytes[2] === 255
+        ? 'image/jpeg'
+        : bytes.toString('ascii', 0, 4) === 'RIFF' && bytes.toString('ascii', 8, 12) === 'WEBP'
+          ? 'image/webp'
+          : null;
+    if (!mime) throw new Error(`Unsupported source raster: ${sourcePath}`);
+    const dataURL = `data:${mime};base64,${bytes.toString('base64')}`;
+    const header = inspectImageDataUrl(dataURL);
+    if (!header.valid) throw new Error(`Invalid source raster header: ${sourcePath}`);
+    const portableRGB =
+      mime === 'image/png' && bytes.subarray(24, 29).equals(Buffer.from([8, 2, 0, 0, 0]));
+    const decoded = portableRGB
+      ? decodeOriginalPNG(dataURL)
+      : {
+          naturalWidth: header.width,
+          naturalHeight: header.height,
+          pixelsSha256: null,
+        };
     artwork.set(asset.sha256, {
       id: asset.sha256,
       kind: 'original',
@@ -214,6 +234,8 @@ export async function buildContentInventory({
       width: decoded.naturalWidth,
       height: decoded.naturalHeight,
       pixelsSha256: decoded.pixelsSha256,
+      mime,
+      pixelVerification: decoded.pixelsSha256 ? 'full-rgb8-png' : 'not-decoded',
       description: asset.alt ?? asset.description ?? '',
     });
     return asset.sha256;
@@ -375,9 +397,9 @@ export async function buildContentInventory({
       missionCount: source.missions.length,
       profileKey: route.profileKey ?? null,
       sessionKey: route.sessionKey ?? null,
-      assets: source.assets.map((asset) => asset.sha256).sort(),
+      assets: (source.assets ?? []).map((asset) => asset.sha256).sort(),
     });
-    for (const asset of source.assets) await addArt(asset, `game/${asset.path}`);
+    for (const asset of source.assets ?? []) await addArt(asset, `game/${asset.path}`);
     for (const mode of modes) {
       const resolved = resolveContentJourney(source, { mode, difficulty: 'standard' });
       for (const campaign of resolved.campaigns) {
@@ -521,6 +543,7 @@ export async function buildContentInventory({
       coverage:
         'All registered fixed Solo/Versus authored routes and Team lifecycle routes; Classic base/bundled/archived/optional/external; legacy Team arenas. Company editions and their presentation overrides are not yet inventoried. Imported user content is not classified.',
       limitations: [
+        'Only non-interlaced RGB8 PNG originals receive full portable pixel decoding. Other accepted PNG variants and JPEG/WebP originals receive exact byte and header checks; null pixel hashes cannot establish pixel or visual uniqueness.',
         'Company-edition missions, presentation overrides and retained artwork revisions remain outside this inventory. The complete shipped-content inventory gate is not yet satisfied.',
         'Perceptual, crop, rotation/reflection and human visual checks remain required before uniqueness approval.',
         'Package artwork counts are not complete download totals; use the generated offline catalogue for dependency closures and full sizes.',

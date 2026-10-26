@@ -1,0 +1,41 @@
+{
+  "format": "FPVRadioSweepCalibrationDelivery.v1",
+  "date": "2026-10-21",
+  "parent": "e9678e107bee73bf602035dc25fbe68d1fd0d77f",
+  "sourceHashes": {
+    "optional-practice/civilian-fpv/radio-guide.mjs": "ca5aa32724fdd57c88ec8f1d2ae5e0871d17e8d79266fea8c166c3a573c10dcd",
+    "optional-practice/civilian-fpv/radio-setup.mjs": "40c3d748e64e4d95f6368214b4af6f6720c0f096a43b4f36b2c854b92a2dd355",
+    "optional-practice/civilian-fpv/style.css": "5a1996a94e648aadcc0f8f36a7257bb2e30a1ae93a5510fae767c209c73bc271"
+  },
+  "workflow": [
+    "Center preparation: unknown devices wait for Ready; verified calibration may prove center automatically",
+    "One indicated direction per control identifies axis and polarity; completed axes do not block later assignments",
+    "Move both sticks around their full outer edges; collect extrema at animation-frame cadence on assigned channels only",
+    "Require at least 0.5 raw span, three alternating-end transitions per channel and 2.5 seconds before measured-range center dwell",
+    "Measure center from stable post-sweep position; final low-throttle check for full-travel radios; automatic save"
+  ],
+  "visuals": [
+    "Solid live dots, endpoint rings, animated direction arrows, animated circle paths, per-axis range coverage, measured-center return guidance, final throttle-down path",
+    "Modes 1\u20134 derive guide positions from STICK_LAYOUTS",
+    "New-device preview is approximate until measured; existing verified calibration can inform presentation without mutating assignments",
+    "Reduced motion retains static paths/targets and hides animated outlines"
+  ],
+  "checks": {
+    "syntax": "passed",
+    "diffWhitespace": "passed",
+    "packageConstruction": "Academy and Worlds within unchanged limits",
+    "physicalWalkthrough": {
+      "status": "user confirmed",
+      "device": "Oxbot RC USB JoyStick",
+      "scope": "Replacement directions-and-circles workflow: center recognition and live stick movement",
+      "reply": "Yes, this works clearly now",
+      "limitation": "User hardware observation; not complete model, transport, layout or release qualification"
+    },
+    "automatedSuite": "not run"
+  },
+  "references": [
+    "https://www.velocidrone.com/mobile_manual",
+    "https://steamcommunity.com/app/1682970/discussions/0/3117046824717525711/",
+    "https://cdn.cloudflare.steamstatic.com/steam/apps/1278060/manuals/FPV.SkyDive_Calibration_FAQ__4_2022_.pdf?t=1650637488"
+  ]
+}

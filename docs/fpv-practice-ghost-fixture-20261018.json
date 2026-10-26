@@ -1,0 +1,73 @@
+{
+  "format": "FpvScriptedRenderedFixture.v1",
+  "createdAt": "2026-10-18T22:06:43.149Z",
+  "sourceRevision": "7d4e043d7a7a4ffa764189bee17c9b3259418e88",
+  "sourceTree": "da724cc1534c79c2eca3d037bda8173343f92c88",
+  "scripted": true,
+  "humanFlight": false,
+  "realAircraftValidation": false,
+  "scored": false,
+  "purpose": "Single isolated rendered reference-aircraft acceptance fixture. Original Academy lesson predicates and default Meteor75 components, rates and controller retained.",
+  "pilot": "Normal50Hz stick inputs: height feedback targets1.8m thenlanding; lateralfeedback target0.15m avoids the separate centered-contact failure. No state injection or course alteration.",
+  "file": "/private/tmp/fpv-r11e-meteor75-rendered-fixture.json",
+  "bytes": 93018,
+  "fileSha256": "e38d1f003a51cb4bca35d74b4a6479e39cddb3c704684c1fec570776f001b969",
+  "course": {
+    "id": "flight-01",
+    "revision": "r1",
+    "title": "Lift and land",
+    "format": "FlightCourse.v1",
+    "canonicalSha256": "409ca0ffadbe24ac745a9eac986f42304b48e22487da61099299b14c2cfd0613",
+    "unchanged": true
+  },
+  "aircraftId": "meteor75-analog-2022",
+  "mode": "self-level",
+  "completedAtTick": 283,
+  "seconds": 5.66,
+  "referenceIdentity": {
+    "configurationClass": "3e94a0fd4e9285ed",
+    "terrainIdentity": "c737cde8666c22db"
+  },
+  "physics": {
+    "verified": true,
+    "verificationScope": "complete-session"
+  },
+  "courseProof": {
+    "verified": true,
+    "splits": [
+      {
+        "index": 0,
+        "endTick": 108,
+        "ticks": 108
+      },
+      {
+        "index": 1,
+        "endTick": 283,
+        "ticks": 175
+      }
+    ]
+  },
+  "presentation": {
+    "samples": 284,
+    "sourceSampleCount": 284,
+    "pathStride": 1,
+    "completedAtTick": 283
+  },
+  "segmentCount": 4,
+  "selectedSourceSha256": {
+    "optional-practice/civilian-fpv/aircraft-course-session.mjs": "e4f22f378096872147169ae5df2453f7cc98a7b6a7741d4447684c76404239f8",
+    "optional-practice/civilian-fpv/aircraft-presets.mjs": "c3bceb64f9cfef85c6894c2b69814c70886b6f30b7301e2659382e24bbee56e6",
+    "optional-practice/civilian-fpv/aircraft-physics.mjs": "7bc651f151e0729541a9323c075ea40a1bcccb0fb9cd0379c202b1a77421351a",
+    "optional-practice/civilian-fpv/advanced-aircraft-runtime.mjs": "e820690dd0aff89b3adecb6ba1b4870a86c57e3121a0a7daf1482cb0e0f412b8",
+    "optional-practice/civilian-fpv/advanced-simulation.mjs": "b1bd0944ae095ab05ffb85e78deddee757ab9641053b981f4f78a52c2640d69c",
+    "optional-practice/civilian-fpv/aircraft-archive-verifier.mjs": "11c244bcb87d48cc4651871d3bfaa0cc01d42112275837bd5b9b2f4d02a846b3",
+    "optional-practice/civilian-fpv/advanced-ghost-path.mjs": "e76917246417af0467bdb0c41e52c61b2fb53cf8a83480a1d3d2f2973b42055f",
+    "optional-practice/civilian-fpv/catalogue.mjs": "98338353d17eb585414538c9905040752fd5cd6699c48b17fa1706832b750997",
+    "optional-practice/civilian-fpv/model.mjs": "0b10fc11948bbca05e23eb6d096a95b97c02aad0573e17d68ac9404ba6694909"
+  },
+  "scopeLimits": [
+    "Scripted SIM diagnostic, not human flight or real-aircraft validation.",
+    "One original Academy course and one aircraft in self-level mode.",
+    "Centered zero-lateral-input attempt did not complete landing by30s; tracked separately, not fixed by this fixture."
+  ]
+}

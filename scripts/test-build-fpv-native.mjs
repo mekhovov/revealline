@@ -62,6 +62,7 @@ test('simulator qualification build retains both complete package closures, iden
     'advanced-ghost-path.mjs',
     'propulsion-evidence.mjs',
     'propulsion-evidence-ui.mjs',
+    'propulsion-load.mjs',
     'aircraft-challenge.mjs',
     'aircraft-challenge-ui.mjs',
     'vendor/rapier/rapier.mjs',

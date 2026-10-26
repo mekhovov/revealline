@@ -1,3 +1,4 @@
+import { matchesRetainedReviewEvidence } from './retained-review-evidence.mjs';
 /** Assemble original production assets into the existing immutable theme model. */
 import fs from 'node:fs/promises';
 import path from 'node:path';
@@ -309,7 +310,9 @@ export function verifyFieldKitBulkQueueReview(currentBytes, predecessors) {
     hash(currentBytes) === '5ec246c93cf5dfe6d5a3f6538788d618575037a11d2c1890d88d0257f2e7d0b3' &&
     Array.isArray(predecessors) &&
     predecessors.length === Object.keys(expected).length &&
-    Object.values(expected).every((pin, index) => hash(predecessors[index]) === pin.sha256)
+    Object.values(expected).every((pin, index) =>
+      matchesRetainedReviewEvidence(pin.path, predecessors[index], pin.sha256),
+    )
   );
 }
 
@@ -368,7 +371,7 @@ export function verifyFieldKitAudioStyleMenuCorrectionReview(
     hash(currentBytes) === '62c1dac1be4286acdb8201aab99b6d3c5e2e2b282e1c88cb34d88af527172e09' &&
     hash(priorBytes) === 'bc87031d46ded1ace2cc62c6ca87e2ce90ccbb043db7c5fdb653d262c3b94f49' &&
     hash(predecessorOracleBytes) ===
-      'e397af798928a72502c970276fe212eaad8d2a4889f5afe02587559244496714'
+      '5d1f445c48e2954d506175c3d9057b5621577c2a4e6df320d6b3e6cd7ddc2b35'
   );
 }
 
@@ -381,7 +384,7 @@ export function verifyFieldKitSteamDeckAudioContinuationReview(
     hash(currentBytes) === 'a059520f6ce0c394c3425355c711b641b4b23f9321e11c7d384317e7f814798c' &&
     hash(priorBytes) === '62c1dac1be4286acdb8201aab99b6d3c5e2e2b282e1c88cb34d88af527172e09' &&
     hash(predecessorOracleBytes) ===
-      '528361f4e7823a23b02b261ca1de0c9b3157d1a17cbba643e4ff7e67073bc0a7'
+      '33d7957966e0b5983dcadca1be2b49fe095def2682bd3d723103e8955e2d832b'
   );
 }
 
@@ -396,7 +399,7 @@ export function verifyFieldKitDiscoveryAudioContinuationReview(
     hash(steamDeckBytes) === 'a059520f6ce0c394c3425355c711b641b4b23f9321e11c7d384317e7f814798c' &&
     hash(predecessorBytes) === '62c1dac1be4286acdb8201aab99b6d3c5e2e2b282e1c88cb34d88af527172e09' &&
     hash(production100OracleBytes) ===
-      'cf19ad831cc0347f4f84c2ac310a1168354858e75f40991b35ffec18ea58d0b7'
+      '75699191934948a2a1aa6e0edb450f467d4dbefeeddabdd7a983c1b89b7be01e'
   );
 }
 
@@ -409,7 +412,7 @@ export function verifyFieldKitDiscoveryWebPUIContinuationReview(
     hash(currentBytes) === '2496cbfe4e885a931f22cbf5287efac45344074bb14dc4cf96f09a2d5a0a366f' &&
     hash(priorReviewBytes) === '15b9ef304ba6e8ec6c2120e4e766fe630af327f2a54325bd0e9043ba875e9867' &&
     hash(production101OracleBytes) ===
-      'bb8ef5f69c674d36737dcfd8a23267eb5207fd0bc2757965ae841da552b2551c'
+      'c5c018b7a4995c226e77c77e84d53883b10163f26ed60f4bc004664f8f189093'
   );
 }
 
@@ -422,7 +425,7 @@ export function verifyFieldKitGP4RestoreAudioContinuationReview(
     hash(currentBytes) === '27c3663b72c1ccf1b78b2bf641952ff5d011e10520f0044d981f5c8166741b0d' &&
     hash(priorReviewBytes) === 'edeecf9fbafdabd7e4fdb653be58baf8deaa3483a6ee426552d611d2fff768ea' &&
     hash(production102OracleBytes) ===
-      '88f08a4ed55e2d7a26e491828d808d1a2c6784ab5e811acce7537009a68ad315'
+      '9490e504b3b0c4e29d86193f758d958b1d668a79d48f8a997287a0fdebdcd4c2'
   );
 }
 
@@ -435,7 +438,7 @@ export function verifyFieldKitSelectorAudioContinuationReview(
     hash(currentBytes) === 'f2cf0cc93f8de8e959eabf6e6313a0af306dfae87e2cb663bfe7bef805df6fe6' &&
     hash(priorBytes) === 'a059520f6ce0c394c3425355c711b641b4b23f9321e11c7d384317e7f814798c' &&
     hash(predecessorOracleBytes) ===
-      'db9cc258d79aaa0caaf587fa3c73be5fcc55cea5f6129524c59255f04f3bbeb0'
+      'e5c733a6d2df9f69cfe93a89ce3b5d6ba5566c5c8596b9eef852d2f18b9ef254'
   );
 }
 
@@ -444,9 +447,9 @@ export function verifyFieldKitMainReconciliationReview(...inputs) {
     'f2b3a2724cf48455dbe98d5ca12a2b081ef1f982531e91838c0291a64bbed976',
     'f2cf0cc93f8de8e959eabf6e6313a0af306dfae87e2cb663bfe7bef805df6fe6',
     '27c3663b72c1ccf1b78b2bf641952ff5d011e10520f0044d981f5c8166741b0d',
-    'aeb03a91c4da24fe300a9312b79ef986265d6bc78ce6f1f3893549d5fb5a8daa',
-    '9aac97ef9ded7270148887d8148fc01fec378f5e5ef612ca86b3353015263e91',
-    'a11e83533645783b6e35fd815e4494480527febe45d1f3afca86754d5a9a43d6',
+    '05555eed2da70ffe09a5f40e742c839acf7fe5908b1fcf857478da5db857561c',
+    '421c40d4fa67ffcaffe7394b060757bb0392a82a56981a2a42c2982eb96f2e22',
+    'd1a741aa984902dfe8f383986b794012a14659704461029f50b5cfc7ecaa646b',
     'b4b40e42fc155e8bd7223654a1464332d535b6850de32d8b09b103b0184a9fd9',
   ];
   return (
@@ -459,7 +462,7 @@ export function verifyFieldKitRadioAudioContinuationReview(currentBytes, priorBy
   return (
     hash(currentBytes) === '93fdb14773e7ef58cdcaebcf1db3d4a3100d77aa13081d25ff799aa0e24c84e3' &&
     hash(priorBytes) === 'f2b3a2724cf48455dbe98d5ca12a2b081ef1f982531e91838c0291a64bbed976' &&
-    hash(oracleBytes) === '83c4153ec97c693526b6d00baf722b4494a107cd48f03a991f7e2de64b7de3d2'
+    hash(oracleBytes) === 'b11eb41978ef730661a0ece2d128e71ac790f0d073080173c7f1d43fd1dc9ce0'
   );
 }
 
@@ -468,7 +471,7 @@ export function verifyFieldKitNativeMenuContinuationReview(...inputs) {
     '950d4dc78138e5c4ac9c9b529fcc11b0e0b3e631975f0cc44fe3b5ceef2d59c0',
     '2496cbfe4e885a931f22cbf5287efac45344074bb14dc4cf96f09a2d5a0a366f',
     '93fdb14773e7ef58cdcaebcf1db3d4a3100d77aa13081d25ff799aa0e24c84e3',
-    '21e92eaf18e5ed619c91d47c734ef1602aa8dac5ae859d7c1837d71b0b161257',
+    '382488d5ffab564d185cfcc5530fab6a50e69cddf74848c22275ee2c37809fe7',
   ];
   return (
     inputs.length === expected.length &&
@@ -1060,7 +1063,7 @@ async function generate(args) {
   } catch (error) {
     if (error.code !== 'ENOENT') throw error;
   }
-  // The current candidate introduces the pinned 54-picture successor. Keep the
+  // The current candidate introduces the pinned source-picture successor. Keep the
   // older Team-only writer strict and route this one explicit contract through
   // its dedicated history validator.
   production.document = retainPictureProductionHistory(production.document, history?.document);

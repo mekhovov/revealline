@@ -3,10 +3,10 @@
   "distribution": "manual-optional-import",
   "includedInDefaultBuild": false,
   "sourceCatalog": "authoring/library/four-worlds-source/catalog.json",
-  "sourceCatalogSha256": "dcc82dfcf403ad86e83e1d985e8c9ecd530fbfad1c7bf9d556eaff9ba0530d29",
-  "distinctImages": 12,
+  "sourceCatalogSha256": "ecbeb480cdf7b42da4b945fef50c54ee5bfd29c84d46219d928b66b4d0bd922d",
+  "distinctImages": 9,
   "distinctReusedGeometries": 3,
-  "combinedLibraryBytes": 44439900,
+  "combinedLibraryBytes": 33381550,
   "packs": [
     {
       "id": "original-fpv-pressure",

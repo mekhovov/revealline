@@ -1,7 +1,12 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import { execFileSync } from 'node:child_process';
 import { createAdvancedWorkerClient } from '../../optional-practice/civilian-fpv/advanced-worker-client.mjs';
-import { createAdvancedWorkerHandler } from '../../optional-practice/civilian-fpv/advanced-worker.mjs';
+import {
+  createAdvancedWorkerHandler,
+  installAdvancedWorker,
+  isAdvancedWorkerEntry,
+} from '../../optional-practice/civilian-fpv/advanced-worker.mjs';
 import { createRateProfile } from '../../optional-practice/civilian-fpv/rates.mjs';
 import {
   ADVANCED_MAX_SECONDS,
@@ -103,9 +108,17 @@ test('complete recording verification has a bounded duration budget without weak
   const client = createAdvancedWorkerClient({ Worker: FakeWorker });
   try {
     const worker = FakeWorker.instances.at(-1);
-    const pending = [client.initialize({}), client.verifyRecording({}), client.restore({})];
+    const pending = [
+      client.initialize({}),
+      client.verifyRecording({}),
+      client.restore({}),
+      client.verifyArchive({}),
+      client.verifyCourseArchive({}, {}),
+    ];
     assert.deepEqual(delays, [
       10000,
+      (ADVANCED_MAX_SECONDS * 1000) / 2 + 60000,
+      (ADVANCED_MAX_SECONDS * 1000) / 2 + 60000,
       (ADVANCED_MAX_SECONDS * 1000) / 2 + 60000,
       (ADVANCED_MAX_SECONDS * 1000) / 2 + 60000,
     ]);
@@ -337,5 +350,65 @@ test('arena comparison verifies its own frozen rates, rejects tampering and clas
     );
   } finally {
     handler.dispose();
+  }
+});
+
+test('worker bootstrap distinguishes entry URLs and rejects duplicate owners without replacing the first', () => {
+  const listeners = new Set(),
+    sent = [];
+  const scope = {
+    location: { href: 'https://example.test/prefix/advanced-worker.mjs?version=1#worker' },
+    addEventListener(type, listener) {
+      assert.equal(type, 'message');
+      listeners.add(listener);
+    },
+    removeEventListener(_type, listener) {
+      listeners.delete(listener);
+    },
+    postMessage(value) {
+      sent.push(value);
+    },
+  };
+  assert.equal(
+    isAdvancedWorkerEntry('https://example.test/prefix/advanced-worker.mjs', scope),
+    true,
+  );
+  assert.equal(
+    isAdvancedWorkerEntry('https://other.test/prefix/advanced-worker.mjs', scope),
+    false,
+  );
+  assert.equal(
+    isAdvancedWorkerEntry('https://example.test/shared/advanced-worker.mjs', scope),
+    false,
+  );
+  const owner = installAdvancedWorker(scope);
+  assert.equal(listeners.size, 1);
+  assert.throws(() => installAdvancedWorker(scope), /already installed/);
+  assert.equal(listeners.size, 1);
+  assert.equal(sent.length, 0);
+  owner.dispose();
+  assert.equal(listeners.size, 0);
+  installAdvancedWorker(scope).dispose();
+  assert.equal(listeners.size, 0);
+});
+
+test('actual Academy and World module entries install exactly one listener; shared World import installs none', () => {
+  const shared = new URL(
+    '../../optional-practice/civilian-fpv/advanced-worker.mjs',
+    import.meta.url,
+  ).href;
+  const world = new URL('../../optional-practice/fpv-worlds/advanced-worker.mjs', import.meta.url)
+    .href;
+  for (const entry of [shared, world]) {
+    const source = `
+      import assert from 'node:assert/strict';
+      let count=0;
+      globalThis.self={location:{href:${JSON.stringify(entry)}+'?build=1'},postMessage(){},addEventListener(type){assert.equal(type,'message');count++;},removeEventListener(){}};
+      await import(${JSON.stringify(shared)});
+      assert.equal(count,${entry === shared ? 1 : 0});
+      await import(${JSON.stringify(entry)});
+      assert.equal(count,1);
+    `;
+    execFileSync(process.execPath, ['--input-type=module', '--eval', source], { stdio: 'pipe' });
   }
 });

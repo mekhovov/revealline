@@ -1,0 +1,247 @@
+TAP version 13
+# Subtest: strict opt-in and historical URL reject current versions, foreign hosts and locales
+ok 1 - strict opt-in and historical URL reject current versions, foreign hosts and locales
+  ---
+  duration_ms: 8.165167
+  ...
+# Subtest: strict visible HUD parser rejects hidden metrics, wrong phases and unsafe height
+ok 2 - strict visible HUD parser rejects hidden metrics, wrong phases and unsafe height
+  ---
+  duration_ms: 3.287
+  ...
+# Subtest: motion requires positive height gain and rejects gravity falls or reset to ground
+ok 3 - motion requires positive height gain and rejects gravity falls or reset to ground
+  ---
+  duration_ms: 0.50825
+  ...
+# Subtest: unit route preserves actual DOM-reader restrictions and explicit pause/resume ordering
+ok 4 - unit route preserves actual DOM-reader restrictions and explicit pause/resume ordering
+  ---
+  duration_ms: 1266.222833
+  ...
+# Subtest: identity, URL, navigation, paused-height and auto-resume changes fail closed
+ok 5 - identity, URL, navigation, paused-height and auto-resume changes fail closed
+  ---
+  duration_ms: 3945.305125
+  ...
+# Subtest: missing opt-in, out-of-order verification, and fabricated guards cannot qualify
+ok 6 - missing opt-in, out-of-order verification, and fabricated guards cannot qualify
+  ---
+  duration_ms: 659.7075
+  ...
+# Subtest: failed native focus transfer preserves one bounded last public snapshot
+ok 7 - failed native focus transfer preserves one bounded last public snapshot
+  ---
+  duration_ms: 2181.264417
+  ...
+# Subtest: native key failure releases owned key; handle failure does not skip listener cleanup
+ok 8 - native key failure releases owned key; handle failure does not skip listener cleanup
+  ---
+  duration_ms: 1.162875
+  ...
+# Subtest: one shared expired deadline rejects the later stage and still permits independent disposal
+ok 9 - one shared expired deadline rejects the later stage and still permits independent disposal
+  ---
+  duration_ms: 657.535584
+  ...
+# Subtest: late visibility or enabled results cannot emit an activation after timeout/disposal
+ok 10 - late visibility or enabled results cannot emit an activation after timeout/disposal
+  ---
+  duration_ms: 246.471792
+  ...
+# Subtest: already in-flight activation prevents a verified cleanup even if it settles later
+ok 11 - already in-flight activation prevents a verified cleanup even if it settles later
+  ---
+  duration_ms: 122.705333
+  ...
+# Subtest: a late native key-down is released again and cannot qualify cleanup
+ok 12 - a late native key-down is released again and cannot qualify cleanup
+  ---
+  duration_ms: 123.189875
+  ...
+# Subtest: a disarmed Start is recorded, then only visible enabled native Arm permits another action
+ok 13 - a disarmed Start is recorded, then only visible enabled native Arm permits another action
+  ---
+  duration_ms: 758.34975
+  ...
+# Subtest: strict opt-in and pinned ownership reject before browser modification
+ok 14 - strict opt-in and pinned ownership reject before browser modification
+  ---
+  duration_ms: 8.575583
+  ...
+# Subtest: normal distinct windows use only native focus configuration/minimize/restore, with independent cleanup
+ok 15 - normal distinct windows use only native focus configuration/minimize/restore, with independent cleanup
+  ---
+  duration_ms: 4.284083
+  ...
+# Subtest: same-window or initially minimized ownership fails and detaches both sessions
+ok 16 - same-window or initially minimized ownership fails and detaches both sessions
+  ---
+  duration_ms: 1.845375
+  ...
+# Subtest: a failed bounds restore does not skip either default restoration or detach
+ok 17 - a failed bounds restore does not skip either default restoration or detach
+  ---
+  duration_ms: 3003.717041
+  ...
+# Subtest: late in-flight focus configuration cannot be reported as clean after defaults restore
+ok 18 - late in-flight focus configuration cannot be reported as clean after defaults restore
+  ---
+  duration_ms: 39.103333
+  ...
+# Subtest: asynchronous native minimize/normal transitions are observed, never inferred from command acknowledgement
+ok 19 - asynchronous native minimize/normal transitions are observed, never inferred from command acknowledgement
+  ---
+  duration_ms: 314.763
+  ...
+# Subtest: unsupported/no-op minimize preserves the last normal state and fails within its declared bound
+ok 20 - unsupported/no-op minimize preserves the last normal state and fails within its declared bound
+  ---
+  duration_ms: 81.448709
+  ...
+# Subtest: unsupported restore fails both verification and cleanup but never skips default restoration or detach
+ok 21 - unsupported restore fails both verification and cleanup but never skips default restoration or detach
+  ---
+  duration_ms: 244.974833
+  ...
+# Subtest: a valid bounds result delivered after event-loop blocking cannot beat the monotonic deadline
+ok 22 - a valid bounds result delivered after event-loop blocking cannot beat the monotonic deadline
+  ---
+  duration_ms: 45.831291
+  ...
+# Subtest: a stalled bounds read is bounded and leaves cleanup unverified
+ok 23 - a stalled bounds read is bounded and leaves cleanup unverified
+  ---
+  duration_ms: 123.776417
+  ...
+# Subtest: launcher readiness binds actual owner revision and exact retained caches, not just active state
+ok 24 - launcher readiness binds actual owner revision and exact retained caches, not just active state
+  ---
+  duration_ms: 9.584125
+  ...
+# Subtest: exact historical worker supports its absent status field, never explicit unknown or false readiness
+ok 25 - exact historical worker supports its absent status field, never explicit unknown or false readiness
+  ---
+  duration_ms: 0.176375
+  ...
+# (node:94181) ExperimentalWarning: The MockTimers API is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: launcher waiter retains transition states and rejects timeout without creating or repairing caches
+ok 26 - launcher waiter retains transition states and rejects timeout without creating or repairing caches
+  ---
+  duration_ms: 60.839333
+  ...
+# Subtest: Academy/Worlds actual worker activation preserves exactly one prior stable shell and unrelated runtime
+ok 27 - Academy/Worlds actual worker activation preserves exactly one prior stable shell and unrelated runtime
+  ---
+  duration_ms: 0.398042
+  ...
+# Subtest: Gym actual worker activation preserves exactly one prior stable shell and unrelated runtime
+ok 28 - Gym actual worker activation preserves exactly one prior stable shell and unrelated runtime
+  ---
+  duration_ms: 0.276583
+  ...
+# Subtest: read-only launcher status closes both owned ports after reply
+ok 29 - read-only launcher status closes both owned ports after reply
+  ---
+  duration_ms: 0.500375
+  ...
+# Subtest: read-only launcher status closes both owned ports after legacy
+ok 30 - read-only launcher status closes both owned ports after legacy
+  ---
+  duration_ms: 1.214042
+  ...
+# Subtest: read-only launcher status closes both owned ports after null
+ok 31 - read-only launcher status closes both owned ports after null
+  ---
+  duration_ms: 1.085833
+  ...
+# Subtest: read-only launcher status closes both owned ports after false
+ok 32 - read-only launcher status closes both owned ports after false
+  ---
+  duration_ms: 0.946125
+  ...
+# Subtest: read-only launcher status closes both owned ports after garbage
+ok 33 - read-only launcher status closes both owned ports after garbage
+  ---
+  duration_ms: 0.417916
+  ...
+# Subtest: read-only launcher status closes both owned ports after throw
+ok 34 - read-only launcher status closes both owned ports after throw
+  ---
+  duration_ms: 0.54225
+  ...
+# Subtest: read-only launcher status closes both owned ports after timeout
+ok 35 - read-only launcher status closes both owned ports after timeout
+  ---
+  duration_ms: 7.426708
+  ...
+# Subtest: strict opt-in preserves omitted/default selection and rejects combined lanes
+ok 36 - strict opt-in preserves omitted/default selection and rejects combined lanes
+  ---
+  duration_ms: 4.273709
+  ...
+# Subtest: retained runtime ownership requires exact pointer scopes and active workers/cache for both versions
+ok 37 - retained runtime ownership requires exact pointer scopes and active workers/cache for both versions
+  ---
+  duration_ms: 8.561125
+  ...
+# Subtest: unrelated packages remain exact during selected update/removal
+ok 38 - unrelated packages remain exact during selected update/removal
+  ---
+  duration_ms: 0.366667
+  ...
+# Subtest: retained stable launcher has both exact admitted shell caches but only one worker
+ok 39 - retained stable launcher has both exact admitted shell caches but only one worker
+  ---
+  duration_ms: 0.8965
+  ...
+# Subtest: migration data receipt requires all seven ordered nonempty unchanged world witnesses
+ok 40 - migration data receipt requires all seven ordered nonempty unchanged world witnesses
+  ---
+  duration_ms: 1.306959
+  ...
+# Subtest: historical Gym route uses visible Settings→Help, not current Content controls
+ok 41 - historical Gym route uses visible Settings→Help, not current Content controls
+  ---
+  duration_ms: 0.419958
+  ...
+# Subtest: historical Worlds routes use visible Missions→Creator/Library
+ok 42 - historical Worlds routes use visible Missions→Creator/Library
+  ---
+  duration_ms: 0.302417
+  ...
+# Subtest: historical routing rejects wrong releases, blocking dialogs, hidden/disabled controls and arbitrary actions
+ok 43 - historical routing rejects wrong releases, blocking dialogs, hidden/disabled controls and arbitrary actions
+  ---
+  duration_ms: 0.948417
+  ...
+# Subtest: historical world seeding uses ordinary clone/title/install controls after empty-store check
+ok 44 - historical world seeding uses ordinary clone/title/install controls after empty-store check
+  ---
+  duration_ms: 0.453416
+  ...
+# Subtest: historical seed rejects populated stores before public mutations
+ok 45 - historical seed rejects populated stores before public mutations
+  ---
+  duration_ms: 0.1445
+  ...
+# Subtest: historical seed stops after a late readonly result before any mutations
+ok 46 - historical seed stops after a late readonly result before any mutations
+  ---
+  duration_ms: 0.092208
+  ...
+# Subtest: historical seed rechecks liveness after native fill before later Tab/install actions
+ok 47 - historical seed rechecks liveness after native fill before later Tab/install actions
+  ---
+  duration_ms: 0.345459
+  ...
+1..47
+# tests 47
+# suites 0
+# pass 47
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 10091.309875

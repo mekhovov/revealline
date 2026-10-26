@@ -20,16 +20,14 @@ import { canonicalJSON, exactKeys } from '../../../game/data-json.mjs';
 export const ROOT = fileURLToPath(new URL('../../../', import.meta.url));
 export const SOURCE = 'authoring/library/fpv-route-choices/packs/fpv-route-choices.json';
 export const SOURCE_SHA = '589543f693e650355216aa702844a7726b7cd6e318900b8583702fd0650ae989';
-const THEME_SHA = '93582f7d9ba53753106df7b63928f086820fc0f68357d3c08f26c0b89fb84774';
-export const THEME_IDS = Object.freeze(['ukraine',
-'retro']);
+const THEME_SHA = '77f3e7e8f0951172bd0c11649b0203808b3d1b00ca434c2a576ef631899958b2';
+export const THEME_IDS = Object.freeze(['ukraine', 'retro']);
 export const SOURCE_LEVEL_IDS = Object.freeze([
   'route-choices-foundry',
   'route-choices-depot',
   'route-choices-switchback',
 ]);
-const ART_ROOTS = ['ukraine-route-art',
-'retro-route-art'];
+const ART_ROOTS = ['ukraine-route-art', 'retro-route-art'];
 const SOURCE_AUDIT_NOTE =
   'This is an original route-choice study with fixed Standard grades, not a human-qualified difficulty rating.';
 export const physicalLevel = (level) => {

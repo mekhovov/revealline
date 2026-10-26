@@ -1,0 +1,269 @@
+{
+  "revision": "cb8dddd3d3c11d24c56b014fa48ac0e6417d6465",
+  "standardHome": {
+    "items": [
+      {
+        "client": 509,
+        "font": "66px",
+        "h": 72,
+        "id": "shell-title",
+        "line": "69.3px",
+        "scroll": 509,
+        "text": "FPV / LINE",
+        "w": 508.953125
+      },
+      {
+        "client": 556,
+        "font": "16px",
+        "h": 44,
+        "id": "shell-featured",
+        "line": "20.8px",
+        "scroll": 556,
+        "text": "Start\n            \u2192",
+        "w": 559.8515625
+      },
+      {
+        "client": 556,
+        "font": "16px",
+        "h": 44,
+        "id": "shell-options",
+        "line": "20.8px",
+        "scroll": 556,
+        "text": "Settings",
+        "w": 559.8515625
+      },
+      {
+        "client": 117,
+        "font": "16px",
+        "h": 94.390625,
+        "id": "solo-current-mode",
+        "line": "19.2px",
+        "scroll": 117,
+        "text": "Solo1P",
+        "w": 121.234375
+      },
+      {
+        "client": 85,
+        "font": "14px",
+        "h": 20.296875,
+        "id": "landing-version",
+        "line": "20.3px",
+        "scroll": 85,
+        "text": "Version DEV",
+        "w": 84.546875
+      }
+    ],
+    "size": "standard",
+    "viewport": {
+      "h": 720,
+      "w": 1280
+    }
+  },
+  "largeHome": {
+    "items": [
+      {
+        "client": 509,
+        "font": "66px",
+        "h": 72,
+        "id": "shell-title",
+        "line": "69.3px",
+        "scroll": 509,
+        "text": "FPV / LINE",
+        "w": 508.953125
+      },
+      {
+        "client": 556,
+        "font": "20px",
+        "h": 46,
+        "id": "shell-featured",
+        "line": "26px",
+        "scroll": 556,
+        "text": "Start\n            \u2192",
+        "w": 559.8515625
+      },
+      {
+        "client": 556,
+        "font": "20px",
+        "h": 46,
+        "id": "shell-options",
+        "line": "26px",
+        "scroll": 556,
+        "text": "Settings",
+        "w": 559.8515625
+      },
+      {
+        "client": 117,
+        "font": "20px",
+        "h": 104,
+        "id": "solo-current-mode",
+        "line": "24px",
+        "scroll": 117,
+        "text": "Solo1P",
+        "w": 121.234375
+      },
+      {
+        "client": 109,
+        "font": "18px",
+        "h": 26.09375,
+        "id": "landing-version",
+        "line": "26.1px",
+        "scroll": 109,
+        "text": "Version DEV",
+        "w": 108.703125
+      }
+    ],
+    "size": "large",
+    "viewport": {
+      "h": 720,
+      "w": 1280
+    }
+  },
+  "standardSettings": [
+    {
+      "font": "22px",
+      "h": 44,
+      "id": "settings-title",
+      "line": "27.5px",
+      "w": 1028
+    },
+    {
+      "font": "16px",
+      "h": 44,
+      "id": "settings-tab-accessibility",
+      "line": "21.6px",
+      "w": 292.3984375
+    },
+    {
+      "font": "16px",
+      "h": 44,
+      "id": "text-face",
+      "line": "normal",
+      "w": 367.1796875
+    },
+    {
+      "font": "16px",
+      "h": 44,
+      "id": "text-size",
+      "line": "normal",
+      "w": 367.1796875
+    }
+  ],
+  "largeSettings": [
+    {
+      "font": "22px",
+      "h": 47,
+      "id": "settings-title",
+      "line": "27.5px",
+      "w": 1028
+    },
+    {
+      "font": "20px",
+      "h": 47,
+      "id": "settings-tab-accessibility",
+      "line": "27px",
+      "w": 292.3984375
+    },
+    {
+      "font": "20px",
+      "h": 44,
+      "id": "text-face",
+      "line": "normal",
+      "w": 367.1796875
+    },
+    {
+      "font": "20px",
+      "h": 44,
+      "id": "text-size",
+      "line": "normal",
+      "w": 367.1796875
+    }
+  ],
+  "largePaused": [
+    {
+      "font": "30px",
+      "h": 37.5,
+      "id": "time",
+      "line": "37.5px",
+      "w": 176.3984375
+    },
+    {
+      "font": "30px",
+      "h": 37.5,
+      "id": "score",
+      "line": "37.5px",
+      "w": 176.390625
+    },
+    {
+      "font": "20px",
+      "h": 25,
+      "id": "run-message",
+      "line": "25px",
+      "w": 920
+    },
+    {
+      "font": "20px",
+      "h": 47,
+      "id": "start-button",
+      "line": "27px",
+      "w": 644
+    },
+    {
+      "font": "20px",
+      "h": 47,
+      "id": "overlay-settings",
+      "line": "27px",
+      "w": 644
+    },
+    {
+      "font": "11px",
+      "h": 20.6484375,
+      "id": "pause-missions-heading",
+      "line": "12.65px",
+      "w": 644
+    }
+  ],
+  "standardPaused": [
+    {
+      "font": "26px",
+      "h": 32.5,
+      "id": "time",
+      "line": "32.5px",
+      "w": 189.3046875
+    },
+    {
+      "font": "26px",
+      "h": 32.5,
+      "id": "score",
+      "line": "32.5px",
+      "w": 189.296875
+    },
+    {
+      "font": "16px",
+      "h": 20,
+      "id": "run-message",
+      "line": "20px",
+      "w": 980
+    },
+    {
+      "font": "16px",
+      "h": 44,
+      "id": "start-button",
+      "line": "21.6px",
+      "w": 644
+    },
+    {
+      "font": "16px",
+      "h": 44,
+      "id": "overlay-settings",
+      "line": "21.6px",
+      "w": 118
+    },
+    {
+      "font": "11px",
+      "h": 118.1875,
+      "id": "pause-missions-heading",
+      "line": "12.65px",
+      "w": 72
+    }
+  ]
+}

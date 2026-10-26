@@ -1,0 +1,21 @@
+{
+  "format": "FPVPropellerPlaneDelivery.v1",
+  "date": "2026-10-21",
+  "parent": "2951625582f63bf4d8e78461a1177507a6c840ef",
+  "rendererSha256": "2bb26216de6b742752fbbcd300a044b1ce6bf26cb25b054a1662338f03601d59",
+  "scope": "FPV cosmetic propeller orientation and peripheral framing only",
+  "checks": [
+    "node --check optional-practice/civilian-fpv/renderer.mjs",
+    "git diff --check",
+    "Academy and Worlds package construction under unchanged policies",
+    "Manual browser production-geometry previews: 16:9 FOV82 tilt0 phase25; square FOV82 tilt25 phase140; portrait0.6 FOV60 tilt0 phase300"
+  ],
+  "limitations": [
+    "No automated test suite run",
+    "Preview captures use production foreground geometry and positioning in a simple scene, not full gameplay screenshots",
+    "No exhaustive rotor-phase/FOV/aspect matrix or hardware/performance qualification"
+  ],
+  "references": [
+    "https://store.steampowered.com/app/2862860/Ukrainian_Fight_Drone_Simulator_UFDS__FPV_drone_simulator/"
+  ]
+}

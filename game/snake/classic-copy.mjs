@@ -1,6 +1,9 @@
 export const CLASSIC_COPY = {
   en: {
     title: 'SNAKE',
+    browsingContext: 'Browsing {mode} · from {context}',
+    browseHint:
+      'Activate a mission to play. Browsing and Back keep your current round. Chapters help you find your next challenge.',
     displaySettings: 'Display & appearance',
     soundSettings: 'Sound & reactions',
     preyDetails: 'Targets, supplies and shutters',
@@ -217,6 +220,9 @@ export const CLASSIC_COPY = {
     variableSignalRecord:
       '★ Перевірене завершення · спалахи змінюються щоразу. Особисті рекорди за змінних умов.',
     title: 'ЗМІЙКА',
+    browsingContext: 'Перегляд: {mode} · поточна гра: {context}',
+    browseHint:
+      'Натисніть місію, щоб почати гру. Перегляд і «Назад» зберігають поточний раунд. Розділи допоможуть знайти наступне випробування.',
     displaySettings: 'Екран і вигляд',
     soundSettings: 'Звук і реакції',
     preyDetails: 'Цілі, припаси та заслінки',

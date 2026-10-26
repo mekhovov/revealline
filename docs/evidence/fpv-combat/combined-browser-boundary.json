@@ -1,0 +1,1074 @@
+{
+  "format": "FPVCombinedBrowserAcceptance.v1",
+  "hardware": {
+    "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/155.0.0.0 Safari/537.36",
+    "width": 1920,
+    "height": 1080,
+    "pixelRatio": 1,
+    "gpu": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4 Pro, Unspecified Version)"
+  },
+  "scope": "Actual World host + Standard regional streaming + renderer + calibrated synthetic radio. Verified endurance fixture boundary/return/recovery; not physical USB, Railway Valley or mobile qualification.",
+  "status": "complete",
+  "elapsedMs": 76187.39999999851,
+  "errors": [],
+  "workers": {
+    "created": 0,
+    "terminated": 0,
+    "proposals": 0,
+    "accepted": 0,
+    "rejected": 0,
+    "errors": 0,
+    "live": 0
+  },
+  "audio": [
+    "closed"
+  ],
+  "radioProfileUnchanged": true,
+  "recoveries": [
+    {
+      "label": "regional-boundary-return",
+      "tick": 3320,
+      "bytes": 21025,
+      "saveMs": 31.200000002980232,
+      "restoreMs": 350.1000000014901,
+      "retainedFrom": 0,
+      "physicalRecording": null,
+      "remains": {
+        "moving": 0,
+        "settled": 0,
+        "marks": 0,
+        "bursts": 0,
+        "calls": 0,
+        "triangles": 0,
+        "tier": "high",
+        "runId": "encounter-6a108018698e6e57",
+        "tick": 714,
+        "stored": 0,
+        "capacity": 1024,
+        "evicted": 0,
+        "maxDrawCalls": 24,
+        "registeredPools": 11,
+        "appearanceReady": false,
+        "appearanceHash": null,
+        "appearanceDrawCalls": 0,
+        "appearanceCharacters": 0,
+        "maxAppearanceTriangles": 600000
+      },
+      "activeWorkers": 0
+    }
+  ],
+  "phases": [
+    {
+      "name": "regional-standard-browser-boundary-return",
+      "windows": [
+        {
+          "minute": 0,
+          "rafCpu": {
+            "count": 3603,
+            "min": 0,
+            "mean": 2.746933111373481,
+            "p50": 2.899999998509884,
+            "p95": 3.2999999970197678,
+            "p99": 3.5,
+            "max": 6.9000000059604645
+          },
+          "drawCpu": {
+            "count": 3601,
+            "min": 0.19999999552965164,
+            "mean": 0.37597889488553116,
+            "p50": 0.3999999985098839,
+            "p95": 0.5,
+            "p99": 0.5999999940395355,
+            "max": 2.399999998509884
+          },
+          "frameIntervals": {
+            "count": 3602,
+            "min": 0,
+            "mean": 16.656746252082176,
+            "p50": 16.69999999999709,
+            "p95": 16.700000000004366,
+            "p99": 16.80000000000291,
+            "max": 16.80000000000291
+          },
+          "drawIntervals": {
+            "count": 3600,
+            "min": 14,
+            "mean": 16.66574999999876,
+            "p50": 16.69999999552965,
+            "p95": 17.899999998509884,
+            "p99": 18.600000001490116,
+            "max": 19.200000002980232
+          },
+          "workerRoundTrip": {
+            "count": 0
+          },
+          "heap": {
+            "count": 60,
+            "min": 85888939,
+            "mean": 99046407.05,
+            "p50": 98213267,
+            "p95": 112591771,
+            "p99": 113402880,
+            "max": 113402880
+          },
+          "resources": [
+            {
+              "tick": 15,
+              "encounterTicks": 15,
+              "shots": 1,
+              "defeats": 0,
+              "activeWorkers": 0,
+              "renderer": {
+                "calls": 6,
+                "triangles": 4396,
+                "geometries": 7,
+                "textures": 3,
+                "programs": 8,
+                "contextLost": false
+              },
+              "registered": {
+                "geometries": 37,
+                "materials": 24,
+                "textures": 3
+              },
+              "combat": {
+                "moving": 0,
+                "settled": 0,
+                "marks": 0,
+                "bursts": 0,
+                "calls": 0,
+                "triangles": 0,
+                "tier": "high",
+                "runId": "encounter-6a108018698e6e57",
+                "tick": 15,
+                "stored": 0,
+                "capacity": 1024,
+                "evicted": 0,
+                "maxDrawCalls": 24,
+                "registeredPools": 11,
+                "appearanceReady": false,
+                "appearanceHash": null,
+                "appearanceDrawCalls": 0,
+                "appearanceCharacters": 0,
+                "maxAppearanceTriangles": 600000
+              },
+              "actors": {
+                "actors": 6,
+                "instances": 126,
+                "calls": 4,
+                "skinnedActors": 0,
+                "skinnedCalls": 0,
+                "templates": 6,
+                "capacity": 20,
+                "appearanceReady": false,
+                "appearanceHash": null,
+                "appearanceCharacters": 0,
+                "equipmentCalls": 0,
+                "maxSkinnedActors": 20
+              }
+            },
+            {
+              "tick": 2957,
+              "encounterTicks": 714,
+              "shots": 88,
+              "defeats": 0,
+              "activeWorkers": 0,
+              "renderer": {
+                "calls": 7,
+                "triangles": 6468,
+                "geometries": 7,
+                "textures": 3,
+                "programs": 8,
+                "contextLost": false
+              },
+              "registered": {
+                "geometries": 37,
+                "materials": 24,
+                "textures": 3
+              },
+              "combat": {
+                "moving": 0,
+                "settled": 0,
+                "marks": 0,
+                "bursts": 0,
+                "calls": 0,
+                "triangles": 0,
+                "tier": "high",
+                "runId": "encounter-6a108018698e6e57",
+                "tick": 714,
+                "stored": 0,
+                "capacity": 1024,
+                "evicted": 0,
+                "maxDrawCalls": 24,
+                "registeredPools": 11,
+                "appearanceReady": false,
+                "appearanceHash": null,
+                "appearanceDrawCalls": 0,
+                "appearanceCharacters": 0,
+                "maxAppearanceTriangles": 600000
+              },
+              "actors": {
+                "actors": 6,
+                "instances": 125,
+                "calls": 4,
+                "skinnedActors": 0,
+                "skinnedCalls": 0,
+                "templates": 6,
+                "capacity": 20,
+                "appearanceReady": false,
+                "appearanceHash": null,
+                "appearanceCharacters": 0,
+                "equipmentCalls": 0,
+                "maxSkinnedActors": 20
+              }
+            }
+          ]
+        },
+        {
+          "minute": 1,
+          "rafCpu": {
+            "count": 522,
+            "min": 0,
+            "mean": 2.8463601535221854,
+            "p50": 3,
+            "p95": 3.5,
+            "p99": 4.199999995529652,
+            "max": 13.5
+          },
+          "drawCpu": {
+            "count": 516,
+            "min": 0.19999999552965164,
+            "mean": 0.4556201550416475,
+            "p50": 0.3999999985098839,
+            "p95": 0.5,
+            "p99": 2.2000000029802322,
+            "max": 11.100000001490116
+          },
+          "frameIntervals": {
+            "count": 522,
+            "min": 0,
+            "mean": 16.633908045977,
+            "p50": 16.69999999999709,
+            "p95": 16.70000000001164,
+            "p99": 16.80000000000291,
+            "max": 33.30000000000291
+          },
+          "drawIntervals": {
+            "count": 516,
+            "min": 12.299999997019768,
+            "mean": 16.82790697674996,
+            "p50": 16.69999999552965,
+            "p95": 18.19999999552965,
+            "p99": 19.100000001490116,
+            "max": 85.10000000149012
+          },
+          "workerRoundTrip": {
+            "count": 0
+          },
+          "heap": {
+            "count": 9,
+            "min": 90082624,
+            "mean": 101201867.77777778,
+            "p50": 99056342,
+            "p95": 112972715,
+            "p99": 112972715,
+            "max": 112972715
+          },
+          "resources": [
+            {
+              "tick": 3007,
+              "encounterTicks": 714,
+              "shots": 88,
+              "defeats": 0,
+              "activeWorkers": 0,
+              "renderer": {
+                "calls": 7,
+                "triangles": 6468,
+                "geometries": 7,
+                "textures": 3,
+                "programs": 8,
+                "contextLost": false
+              },
+              "registered": {
+                "geometries": 37,
+                "materials": 24,
+                "textures": 3
+              },
+              "combat": {
+                "moving": 0,
+                "settled": 0,
+                "marks": 0,
+                "bursts": 0,
+                "calls": 0,
+                "triangles": 0,
+                "tier": "high",
+                "runId": "encounter-6a108018698e6e57",
+                "tick": 714,
+                "stored": 0,
+                "capacity": 1024,
+                "evicted": 0,
+                "maxDrawCalls": 24,
+                "registeredPools": 11,
+                "appearanceReady": false,
+                "appearanceHash": null,
+                "appearanceDrawCalls": 0,
+                "appearanceCharacters": 0,
+                "maxAppearanceTriangles": 600000
+              },
+              "actors": {
+                "actors": 6,
+                "instances": 125,
+                "calls": 4,
+                "skinnedActors": 0,
+                "skinnedCalls": 0,
+                "templates": 6,
+                "capacity": 20,
+                "appearanceReady": false,
+                "appearanceHash": null,
+                "appearanceCharacters": 0,
+                "equipmentCalls": 0,
+                "maxSkinnedActors": 20
+              }
+            },
+            {
+              "tick": 3335,
+              "encounterTicks": 729,
+              "shots": 89,
+              "defeats": 0,
+              "activeWorkers": 0,
+              "renderer": {
+                "calls": 6,
+                "triangles": 4384,
+                "geometries": 7,
+                "textures": 3,
+                "programs": 8,
+                "contextLost": false
+              },
+              "registered": {
+                "geometries": 37,
+                "materials": 24,
+                "textures": 3
+              },
+              "combat": {
+                "moving": 0,
+                "settled": 0,
+                "marks": 0,
+                "bursts": 0,
+                "calls": 0,
+                "triangles": 0,
+                "tier": "high",
+                "runId": "encounter-6a108018698e6e57",
+                "tick": 729,
+                "stored": 0,
+                "capacity": 1024,
+                "evicted": 0,
+                "maxDrawCalls": 24,
+                "registeredPools": 11,
+                "appearanceReady": false,
+                "appearanceHash": null,
+                "appearanceDrawCalls": 0,
+                "appearanceCharacters": 0,
+                "maxAppearanceTriangles": 600000
+              },
+              "actors": {
+                "actors": 6,
+                "instances": 125,
+                "calls": 4,
+                "skinnedActors": 0,
+                "skinnedCalls": 0,
+                "templates": 6,
+                "capacity": 20,
+                "appearanceReady": false,
+                "appearanceHash": null,
+                "appearanceCharacters": 0,
+                "equipmentCalls": 0,
+                "maxSkinnedActors": 20
+              }
+            }
+          ]
+        }
+      ],
+      "startedAt": "2026-10-19T22:43:16.988Z",
+      "viewport": {
+        "width": 1920,
+        "height": 1080,
+        "pixelRatio": 1,
+        "canvasWidth": 1916,
+        "canvasHeight": 1076
+      },
+      "boundary": {
+        "outside": {
+          "ticks": 714,
+          "position": {
+            "x": 104006,
+            "y": 18353,
+            "z": 6000
+          }
+        },
+        "maxXMm": 150231,
+        "returnedPosition": {
+          "x": 103987,
+          "y": 20208,
+          "z": 6000
+        },
+        "recentres": 3,
+        "terrainRequests": 26,
+        "streamWaits": 0,
+        "frozenCombatPreserved": true
+      },
+      "elapsedMs": 68689,
+      "finalState": {
+        "ticks": 3335,
+        "status": "paused",
+        "encounter": {
+          "format": "FPVEncounterState.v1",
+          "definitionIdentity": "6a108018698e6e57",
+          "runId": "encounter-6a108018698e6e57",
+          "ticks": 729,
+          "rng": 815,
+          "status": "active",
+          "phase": "wave",
+          "waitingForClearSpawn": false,
+          "wave": 1,
+          "nextWaveTick": null,
+          "lastDamageTick": -10000,
+          "health": 100,
+          "maxHealth": 100,
+          "score": 0,
+          "kills": 0,
+          "shots": 89,
+          "hits": 0,
+          "successfulImpacts": 0,
+          "streak": 0,
+          "bestStreak": 0,
+          "nextSpawn": 7,
+          "nextProjectile": 90,
+          "nextEvent": 90,
+          "cooldown": 5,
+          "actors": [
+            {
+              "id": "encounter-6a108018698e6e57:1",
+              "type": "patrol",
+              "role": "hostile",
+              "position": {
+                "x": 38811,
+                "y": 0,
+                "z": 22044
+              },
+              "path": [
+                {
+                  "x": 38811,
+                  "y": 0,
+                  "z": 22044
+                },
+                {
+                  "x": 42811,
+                  "y": 0,
+                  "z": 24044
+                }
+              ],
+              "speed": 1089,
+              "radius": 350,
+              "height": 1800,
+              "health": 50,
+              "fireEveryTicks": 100,
+              "damage": 10,
+              "projectileSpeed": 8000,
+              "range": 20000,
+              "family": "lookout",
+              "material": "organic",
+              "appearance": {
+                "family": "lookout",
+                "cast": "authored"
+              },
+              "destructible": true,
+              "groundMotion": "support-v1",
+              "slotId": "encounter-slot-01",
+              "sourceId": "encounter-target-1",
+              "velocity": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+              },
+              "status": "active",
+              "maxHealth": 50,
+              "pathIndex": 0,
+              "cooldown": 50,
+              "warning": false,
+              "heading": {
+                "x": 0.894454,
+                "y": 0,
+                "z": 0.447227
+              },
+              "spawnTick": 0,
+              "defeatedTick": null,
+              "spawnId": "encounter-6a108018698e6e57:1",
+              "blocked": false,
+              "pursuit": {
+                "family": "lookout",
+                "node": "route-0",
+                "next": null,
+                "goal": "route-0",
+                "previous": null,
+                "phase": "idle",
+                "phaseTicks": 0,
+                "decision": 0,
+                "cursor": 0,
+                "heading": {
+                  "x": 894454,
+                  "z": 447227
+                },
+                "nextHeading": null,
+                "delivered": 0
+              }
+            },
+            {
+              "id": "encounter-6a108018698e6e57:2",
+              "type": "drone",
+              "role": "hostile",
+              "position": {
+                "x": 77783,
+                "y": 12500,
+                "z": 16109
+              },
+              "path": [
+                {
+                  "x": 79002,
+                  "y": 12500,
+                  "z": 15491
+                },
+                {
+                  "x": 75002,
+                  "y": 12500,
+                  "z": 17491
+                }
+              ],
+              "speed": 1147,
+              "radius": 450,
+              "height": 900,
+              "health": 50,
+              "fireEveryTicks": 100,
+              "damage": 10,
+              "projectileSpeed": 8000,
+              "range": 20000,
+              "family": "patroller",
+              "material": "electronic",
+              "appearance": {
+                "family": "patroller",
+                "cast": "authored"
+              },
+              "destructible": true,
+              "slotId": "encounter-slot-02",
+              "sourceId": "encounter-target-2",
+              "velocity": {
+                "x": 1000,
+                "y": 0,
+                "z": -500
+              },
+              "status": "active",
+              "maxHealth": 50,
+              "pathIndex": 0,
+              "cooldown": 50,
+              "warning": false,
+              "heading": {
+                "x": 0.8919661067674212,
+                "y": 0,
+                "z": -0.4521022720338503
+              },
+              "spawnTick": 0,
+              "defeatedTick": null,
+              "spawnId": "encounter-6a108018698e6e57:2",
+              "blocked": false
+            },
+            {
+              "id": "encounter-6a108018698e6e57:3",
+              "type": "patrol",
+              "role": "hostile",
+              "position": {
+                "x": 81079,
+                "y": 0,
+                "z": 26206
+              },
+              "path": [
+                {
+                  "x": 84820,
+                  "y": 0,
+                  "z": 24336
+                },
+                {
+                  "x": 80820,
+                  "y": 0,
+                  "z": 26336
+                }
+              ],
+              "speed": 1591,
+              "radius": 350,
+              "height": 1800,
+              "health": 50,
+              "fireEveryTicks": 100,
+              "damage": 10,
+              "projectileSpeed": 8000,
+              "range": 20000,
+              "family": "runner",
+              "material": "organic",
+              "appearance": {
+                "family": "runner",
+                "cast": "authored"
+              },
+              "destructible": true,
+              "groundMotion": "support-v1",
+              "slotId": "encounter-slot-03",
+              "sourceId": "encounter-target-3",
+              "velocity": {
+                "x": -1450,
+                "y": 0,
+                "z": 750
+              },
+              "status": "active",
+              "maxHealth": 50,
+              "pathIndex": 0,
+              "cooldown": 50,
+              "warning": false,
+              "heading": {
+                "x": -0.894988,
+                "y": 0,
+                "z": 0.451074
+              },
+              "spawnTick": 0,
+              "defeatedTick": null,
+              "spawnId": "encounter-6a108018698e6e57:3",
+              "blocked": false,
+              "pursuit": {
+                "family": "runner",
+                "node": "route-0",
+                "next": "route-1",
+                "goal": "route-1",
+                "previous": "route-1",
+                "phase": "committed",
+                "phaseTicks": 0,
+                "decision": 22,
+                "cursor": 0,
+                "heading": {
+                  "x": -894988,
+                  "z": 451074
+                },
+                "nextHeading": null,
+                "delivered": 0
+              }
+            },
+            {
+              "id": "encounter-6a108018698e6e57:4",
+              "type": "vehicle",
+              "role": "hostile",
+              "position": {
+                "x": 71258,
+                "y": 0,
+                "z": 16400
+              },
+              "path": [
+                {
+                  "x": 73581,
+                  "y": 0,
+                  "z": 15254
+                },
+                {
+                  "x": 69581,
+                  "y": 0,
+                  "z": 17254
+                }
+              ],
+              "speed": 1145,
+              "radius": 900,
+              "height": 1800,
+              "health": 100,
+              "fireEveryTicks": 100,
+              "damage": 10,
+              "projectileSpeed": 8000,
+              "range": 20000,
+              "family": "sprinter",
+              "material": "metal",
+              "appearance": {
+                "family": "sprinter",
+                "cast": "authored"
+              },
+              "destructible": true,
+              "groundMotion": "support-v1",
+              "slotId": "encounter-slot-04",
+              "sourceId": "encounter-target-4",
+              "velocity": {
+                "x": -350,
+                "y": 0,
+                "z": 150
+              },
+              "status": "active",
+              "maxHealth": 100,
+              "pathIndex": 1,
+              "cooldown": 50,
+              "warning": false,
+              "heading": {
+                "x": -0.8912292429541774,
+                "y": 0,
+                "z": 0.45355312423499405
+              },
+              "spawnTick": 0,
+              "defeatedTick": null,
+              "spawnId": "encounter-6a108018698e6e57:4",
+              "blocked": false
+            },
+            {
+              "id": "encounter-6a108018698e6e57:5",
+              "type": "hazard",
+              "role": "hostile",
+              "position": {
+                "x": 85461,
+                "y": 0,
+                "z": 10714
+              },
+              "path": [
+                {
+                  "x": 81546,
+                  "y": 0,
+                  "z": 8757
+                },
+                {
+                  "x": 85546,
+                  "y": 0,
+                  "z": 10757
+                }
+              ],
+              "speed": 1493,
+              "radius": 600,
+              "height": 1200,
+              "health": 50,
+              "fireEveryTicks": 0,
+              "damage": 10,
+              "projectileSpeed": 8000,
+              "range": 20000,
+              "family": "refuge-seeker",
+              "material": "metal",
+              "appearance": {
+                "family": "refuge-seeker",
+                "cast": "authored"
+              },
+              "destructible": true,
+              "slotId": "encounter-slot-05",
+              "sourceId": "encounter-target-5",
+              "velocity": {
+                "x": 1350,
+                "y": 0,
+                "z": 700
+              },
+              "status": "active",
+              "maxHealth": 50,
+              "pathIndex": 1,
+              "cooldown": 50,
+              "warning": false,
+              "heading": {
+                "x": 0.8912216026549971,
+                "y": 0,
+                "z": 0.4535681370654896
+              },
+              "spawnTick": 0,
+              "defeatedTick": null,
+              "spawnId": "encounter-6a108018698e6e57:5",
+              "blocked": false
+            },
+            {
+              "id": "encounter-6a108018698e6e57:6",
+              "type": "prop",
+              "role": "hostile",
+              "position": {
+                "x": 59207,
+                "y": 0,
+                "z": 23906
+              },
+              "path": [
+                {
+                  "x": 59328,
+                  "y": 0,
+                  "z": 23849
+                },
+                {
+                  "x": 55328,
+                  "y": 0,
+                  "z": 25849
+                }
+              ],
+              "speed": 600,
+              "radius": 450,
+              "height": 900,
+              "health": 50,
+              "fireEveryTicks": 0,
+              "damage": 10,
+              "projectileSpeed": 8000,
+              "range": 20000,
+              "family": "switchback",
+              "material": "metal",
+              "appearance": {
+                "family": "switchback",
+                "cast": "authored"
+              },
+              "destructible": true,
+              "groundMotion": "support-v1",
+              "slotId": "encounter-slot-06",
+              "sourceId": "encounter-target-6",
+              "velocity": {
+                "x": -550,
+                "y": 0,
+                "z": 250
+              },
+              "status": "active",
+              "maxHealth": 50,
+              "pathIndex": 1,
+              "cooldown": 50,
+              "warning": false,
+              "heading": {
+                "x": -0.8941511901727496,
+                "y": 0,
+                "z": 0.4477651718397214
+              },
+              "spawnTick": 0,
+              "defeatedTick": null,
+              "spawnId": "encounter-6a108018698e6e57:6",
+              "blocked": false
+            }
+          ],
+          "projectiles": [
+            {
+              "id": 89,
+              "owner": "player",
+              "position": {
+                "x": 103495,
+                "y": 20428,
+                "z": 4400
+              },
+              "velocity": {
+                "x": 0,
+                "y": 0,
+                "z": -20000
+              },
+              "damage": 25,
+              "ttl": 146
+            }
+          ],
+          "events": [],
+          "contactLocks": {},
+          "result": null,
+          "accuracy": 0,
+          "outsideArea": false,
+          "returning": false,
+          "admittedCount": 6,
+          "activity": "hunting",
+          "difficulty": "easy",
+          "population": 6
+        },
+        "combatRecording": {
+          "format": "FPVEncounterRecordingStatus.v1",
+          "retainedFrom": 0,
+          "retainedTo": 729,
+          "complete": true,
+          "practiceOnly": true
+        },
+        "position": {
+          "x": 103375,
+          "y": 20184,
+          "z": 6000
+        },
+        "recentres": 3
+      },
+      "finalResources": {
+        "renderer": {
+          "calls": 6,
+          "triangles": 4384,
+          "geometries": 7,
+          "textures": 3,
+          "programs": 8,
+          "contextLost": false
+        },
+        "registered": {
+          "geometries": 37,
+          "materials": 24,
+          "textures": 3
+        },
+        "combat": {
+          "moving": 0,
+          "settled": 0,
+          "marks": 0,
+          "bursts": 0,
+          "calls": 0,
+          "triangles": 0,
+          "tier": "high",
+          "runId": "encounter-6a108018698e6e57",
+          "tick": 729,
+          "stored": 0,
+          "capacity": 1024,
+          "evicted": 0,
+          "maxDrawCalls": 24,
+          "registeredPools": 11,
+          "appearanceReady": false,
+          "appearanceHash": null,
+          "appearanceDrawCalls": 0,
+          "appearanceCharacters": 0,
+          "maxAppearanceTriangles": 600000
+        },
+        "actors": {
+          "actors": 6,
+          "instances": 125,
+          "calls": 4,
+          "skinnedActors": 0,
+          "skinnedCalls": 0,
+          "templates": 6,
+          "capacity": 20,
+          "appearanceReady": false,
+          "appearanceHash": null,
+          "appearanceCharacters": 0,
+          "equipmentCalls": 0,
+          "maxSkinnedActors": 20
+        }
+      }
+    }
+  ],
+  "cleanup": {
+    "workers": 0,
+    "renderers": [
+      {
+        "available": true,
+        "disposed": true,
+        "quality": "balanced",
+        "drone": "racer",
+        "presentation": {
+          "collectionId": "authored",
+          "revision": "r1",
+          "profileId": null,
+          "actors": [],
+          "actorGoals": [],
+          "projectileBatches": 0,
+          "activeProjectiles": 0,
+          "surfaceDetailGroups": 0
+        },
+        "effects": {
+          "playerPulse": 9233635,
+          "hostilePulse": 16232561,
+          "ghost": 9824751,
+          "ghostEmissive": 2390144,
+          "trail": 9824751,
+          "goalOutline": 9169660,
+          "goalActive": 15266215,
+          "goalComplete": 9808542,
+          "goalInactive": 8366516,
+          "goalGlow": 11069917,
+          "goalGlowInactive": 9030085,
+          "goalEmissive": 8577493,
+          "goalBadge": 10872788,
+          "directionArrow": 15264432
+        },
+        "hunt": null,
+        "combat": null,
+        "combatActors": null,
+        "combatAppearance": {
+          "state": "current",
+          "error": null
+        },
+        "importedMaterialBindings": {
+          "applied": 0,
+          "diagnostics": []
+        },
+        "registered": {
+          "geometries": 0,
+          "materials": 0,
+          "textures": 0
+        },
+        "renderer": {
+          "calls": 6,
+          "triangles": 4384,
+          "geometries": 0,
+          "textures": 1,
+          "programs": 0,
+          "contextLost": true
+        }
+      }
+    ],
+    "controls": 0,
+    "drawsStopped": true
+  },
+  "sourceHashes": {
+    "capturedAt": "2026-10-19T22:39:54.818899+00:00",
+    "files": {
+      "optional-practice/civilian-fpv/world-app.mjs": "2e88aa9d742bf8d13ed4236f4f909c6492e7318d5a183eb8f240e1ed90d07d3c",
+      "optional-practice/civilian-fpv/world-assets.mjs": "e1b987e2580b8b1e2d1afdfa3e9f0bc2d36a37e0bf516681cb0e94f045afd34c",
+      "optional-practice/civilian-fpv/renderer.mjs": "6a52aeffeb878299c88390e15ee9dddf2fc55db612ef54202053878e75522625",
+      "optional-practice/civilian-fpv/encounter-runtime.mjs": "f93d575b05e30cd709fafc40b89d929230acd172aebad37892d7a392025a997f",
+      "optional-practice/civilian-fpv/encounter-session.mjs": "1d24a38f58fc4c1e32689ee54580303a30c1380c83e7046949aa88d176465ae9",
+      "optional-practice/civilian-fpv/encounter-geometry.mjs": "70b1eab68d6b48ff0a467b7217637906892f45281523298446e415c54891ba20",
+      "optional-practice/civilian-fpv/advanced-regional.mjs": "763463971f2ebfee7e8697038870b90a876d233d8ef83c1005ba5f4a862c7bc6",
+      "optional-practice/civilian-fpv/aircraft-course-session.mjs": "eb997aa6e5f8ff4e5995b9fc389019c79fdb36fdae76cf0f957b34c6fdd06d04",
+      "optional-practice/civilian-fpv/advanced-aircraft-runtime.mjs": "d3b9059862dbbbf8d591a857b4188c5179e1a4f9c6a7acc260c20615cd8dd1fe",
+      "optional-practice/civilian-fpv/advanced-simulation.mjs": "3c20341d953fd525790308aeecf066c7a10d10eaa8c831c941c295f419a3b7d3",
+      "optional-practice/civilian-fpv/combat-actors.mjs": "02a043ee8e54daf84a2df4b6ea333e5a11a4f1a0f8b12e29050e71627ad042d2",
+      "optional-practice/civilian-fpv/combat-presentation.mjs": "01af43d16cdc40a82712dd91a7a882a473cdc17987d7f2485886fcd5222f2150",
+      "optional-practice/civilian-fpv/combat-appearance.mjs": "f6f119499945170ee037912c5848295ecf17ebeff59c1013407a0f6a5b0bde80"
+    }
+  },
+  "harnessSha256": "bd3218836110a7409619e2d7e9c16883e0c0d357e3eebdc15a332b2843e41cfe",
+  "browserWorkerTargets": {
+    "boundary-disposed-targets.json": [
+      {
+        "description": "",
+        "devtoolsFrontendUrl": "https://chrome-devtools-frontend.appspot.com/serve_rev/@0e66b94549a8bd85f03fbdf189b752d6e7b63c32/inspector.html?ws=127.0.0.1:64298/devtools/page/3483F8608020067A437BFFC0DFA6D2A3",
+        "id": "3483F8608020067A437BFFC0DFA6D2A3",
+        "title": "FPV / LINE \u00b7 Simulator",
+        "type": "page",
+        "url": "http://127.0.0.1:8894/optional-practice/fpv-worlds/index.html?lang=en",
+        "webSocketDebuggerUrl": "ws://127.0.0.1:64298/devtools/page/3483F8608020067A437BFFC0DFA6D2A3"
+      },
+      {
+        "description": "",
+        "devtoolsFrontendUrl": "https://chrome-devtools-frontend.appspot.com/serve_rev/@0e66b94549a8bd85f03fbdf189b752d6e7b63c32/inspector.html?ws=127.0.0.1:64298/devtools/page/ABABE9E9B6D01DF8B04EE08A5A2F48D7",
+        "id": "ABABE9E9B6D01DF8B04EE08A5A2F48D7",
+        "title": "chrome://newtab-footer",
+        "type": "browser_ui",
+        "url": "chrome://newtab-footer/",
+        "webSocketDebuggerUrl": "ws://127.0.0.1:64298/devtools/page/ABABE9E9B6D01DF8B04EE08A5A2F48D7"
+      },
+      {
+        "description": "",
+        "devtoolsFrontendUrl": "https://chrome-devtools-frontend.appspot.com/serve_rev/@0e66b94549a8bd85f03fbdf189b752d6e7b63c32/inspector.html?ws=127.0.0.1:64298/devtools/page/C2D410F1763FCA3F332553F035CBDBED",
+        "id": "C2D410F1763FCA3F332553F035CBDBED",
+        "title": "Omnibox Popup",
+        "type": "browser_ui",
+        "url": "chrome://omnibox-popup.top-chrome/",
+        "webSocketDebuggerUrl": "ws://127.0.0.1:64298/devtools/page/C2D410F1763FCA3F332553F035CBDBED"
+      },
+      {
+        "description": "",
+        "devtoolsFrontendUrl": "https://chrome-devtools-frontend.appspot.com/serve_rev/@0e66b94549a8bd85f03fbdf189b752d6e7b63c32/inspector.html?ws=127.0.0.1:64298/devtools/page/D15941C140F17F1C9B3E171334799873",
+        "id": "D15941C140F17F1C9B3E171334799873",
+        "title": "Omnibox Popup",
+        "type": "browser_ui",
+        "url": "chrome://omnibox-popup.top-chrome/omnibox_popup_aim.html",
+        "webSocketDebuggerUrl": "ws://127.0.0.1:64298/devtools/page/D15941C140F17F1C9B3E171334799873"
+      },
+      {
+        "description": "",
+        "devtoolsFrontendUrl": "https://chrome-devtools-frontend.appspot.com/serve_rev/@0e66b94549a8bd85f03fbdf189b752d6e7b63c32/inspector.html?ws=127.0.0.1:64298/devtools/page/E4D8D878CDCF21929006AB67413425F6",
+        "id": "E4D8D878CDCF21929006AB67413425F6",
+        "title": "New Tab",
+        "type": "page",
+        "url": "chrome://newtab/",
+        "webSocketDebuggerUrl": "ws://127.0.0.1:64298/devtools/page/E4D8D878CDCF21929006AB67413425F6"
+      },
+      {
+        "description": "",
+        "devtoolsFrontendUrl": "https://chrome-devtools-frontend.appspot.com/serve_rev/@0e66b94549a8bd85f03fbdf189b752d6e7b63c32/inspector.html?ws=127.0.0.1:64298/devtools/page/E3E2288167C0AEE65D9E8A74E5EF8458",
+        "id": "E3E2288167C0AEE65D9E8A74E5EF8458",
+        "parentId": "E4D8D878CDCF21929006AB67413425F6",
+        "title": "chrome-untrusted://new-tab-page/one-google-bar?paramsencoded=",
+        "type": "iframe",
+        "url": "chrome-untrusted://new-tab-page/one-google-bar?paramsencoded=",
+        "webSocketDebuggerUrl": "ws://127.0.0.1:64298/devtools/page/E3E2288167C0AEE65D9E8A74E5EF8458"
+      }
+    ]
+  },
+  "measurementConditions": "Dedicated QA browser; parent and effects agents held heavy workloads.1920x1080 CSS viewport, DPR1; exact active canvas dimensions recorded per phase. Current art. Static access gate replaced by documented local QA bootstrap; production World host, input, renderer, solver and worker sources unchanged.",
+  "qaFixtureCorrection": "An initial excluded attempt used the host default heading and travelled toward a terrain edge; the final measured attempt explicitly authored heading0 to match the reference boundary pilot. No production source changed."
+}
