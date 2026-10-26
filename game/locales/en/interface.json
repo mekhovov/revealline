@@ -6103,5 +6103,9 @@
   "readiness.stale": "Check files in this visit before relying on offline play.",
   "readiness.filesReady": "Your selected game files are verified here. App selection is shown below.",
   "readiness.incomplete": "Some selected files need preparation. Review the download or repair options below.",
-  "readiness.note": "These results apply to this browser or app. Safari and an iPhone Home Screen app have separate storage. Keep a portable backup: the browser or device can still clear saved data."
+  "readiness.note": "These results apply to this browser or app. Safari and an iPhone Home Screen app have separate storage. Keep a portable backup: the browser or device can still clear saved data.",
+  "captureHomeRecommendation.first": "Suggested mission: {{mission}}. It is the first mission in this Journey.",
+  "captureHomeRecommendation.selected": "Suggested mission: {{mission}}. Continue your selected mission in this Journey.",
+  "captureHomeRecommendation.retry": "Suggested mission: {{mission}}. Your last attempt here ended; try this mission again.",
+  "captureHomeRecommendation.recordedNext": "Suggested mission: {{mission}}. It follows your recorded completion of {{previous}}."
 }
