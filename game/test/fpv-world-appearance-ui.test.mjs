@@ -7466,3 +7466,172 @@ for (const locale of ['en', 'uk'])
     assert.equal(writes.length, finalWrites);
     assert.equal(h.doc.querySelector('.comfort-presets'), null);
   });
+
+test('World ordinary result copy changes language in place before and after verification and retires on a new flight', async (t) => {
+  const priorLocale = getLocale();
+  setLocale('en', { persist: false });
+  t.after(() => setLocale(priorLocale, { persist: false }));
+  const storage = new Map(),
+    h = fixture(t, { storage });
+  await h.app.ready;
+  const source = WORLD_CATALOGUE.find((item) => !item.legacy && !item.beginner);
+  const entry = {
+    ...source,
+    course: {
+      ...source.course,
+      actors: [],
+      steps: {
+        'self-level': [{ type: 'survive', ticks: 1 }],
+        acro: [{ type: 'survive', ticks: 1 }],
+      },
+    },
+  };
+  await h.app.startFlight(entry);
+  h.$('world-arm').click();
+  h.tick(3);
+  const panel = h.$('result-panel'),
+    details = panel.children[0],
+    checking = details.querySelector('p'),
+    actions = panel.querySelector('.continuous-result-actions'),
+    choose = [...actions.querySelectorAll('button')].find(
+      (node) => node.textContent === 'Choose mission',
+    );
+  choose.focus();
+  const language = (value) => {
+    h.$('world-language').value = value;
+    h.$('world-language').emit('change');
+  };
+  language('uk');
+  assert.equal(details.querySelector('h2').textContent, 'Завдання виконано');
+  assert.equal(checking.textContent, 'Перевірка запису…');
+  assert.equal(choose.textContent, 'Вибрати місію');
+  assert.equal(h.doc.activeElement, choose);
+  assert.equal(panel.querySelector('.continuous-result-actions'), actions);
+  await waitFor(() => details.textContent.includes('Запис перевірено.'));
+  const state = h.app.snapshot().state,
+    records = h.app.snapshot().records,
+    nodes = [...panel.querySelectorAll('h2,p,small,button,summary,th,td,strong')],
+    verified = details.querySelector('p'),
+    metrics = details.querySelector('small'),
+    stars = details.querySelector('.result-stars'),
+    splits = panel.querySelector('.sector-summary');
+  assert.equal(records.length, 1);
+  assert.equal(records[0].status, 'verified');
+  assert.ok(splits, 'The real completed sector has a retained disclosure.');
+  splits.open = true;
+  const saved = () => [...storage].filter(([key]) => key !== 'revealline.fpv.world-settings.v1');
+  const stored = saved();
+  const buttonNames = [
+    'Fly again',
+    'Back to lobby',
+    'Random level',
+    'Choose mission',
+    'Home',
+    'Watch this section',
+    'Practise longest section',
+    'Watch your flight',
+    'Random next flight',
+  ];
+  for (const value of ['en', 'uk', 'en']) {
+    language(value);
+    assert.deepEqual([...panel.querySelectorAll('h2,p,small,button,summary,th,td,strong')], nodes);
+    assert.equal(h.doc.activeElement, choose);
+    assert.equal(splits.open, true);
+    assert.deepEqual(h.app.snapshot().state, state);
+    assert.deepEqual(h.app.snapshot().records, records);
+    assert.deepEqual(saved(), stored);
+    assert.equal(
+      verified.textContent,
+      value === 'uk' ? 'Запис перевірено.' : 'Recording verified.',
+    );
+    assert.equal(
+      metrics.textContent,
+      `${(state.ticks / 50).toFixed(2)} ${value === 'uk' ? 'с' : 's'} · 0 ${value === 'uk' ? 'контактів' : 'contacts'}`,
+    );
+    assert.equal(stars.getAttribute('aria-label'), value === 'uk' ? '3 з 3 зірок' : '3 of 3 stars');
+    assert.match(
+      details.textContent,
+      value === 'uk' ? /Медаль: золото · Бали: \d+/ : /Medal: gold · Score: \d+/,
+    );
+    assert.equal(
+      splits.querySelector('summary').textContent,
+      value === 'uk' ? 'Час пройдених ділянок' : 'Completed sector times',
+    );
+    const labels = [...panel.querySelectorAll('button')].map((node) => node.textContent);
+    if (value === 'en') for (const name of buttonNames) assert.ok(labels.includes(name), name);
+    else
+      for (const name of [
+        'Летіти ще раз',
+        'До меню',
+        'Випадковий рівень',
+        'Вибрати місію',
+        'Додому',
+        'Переглянути цю ділянку',
+        'Тренувати найдовшу ділянку',
+        'Переглянути свій політ',
+        'Випадковий наступний політ',
+      ])
+        assert.ok(labels.includes(name), name);
+    const flow = actions.querySelector('.continuous-play-controls');
+    assert.equal(
+      flow.querySelector('button').textContent,
+      value === 'uk' ? 'Залишитися тут' : 'Stay here',
+    );
+  }
+  const retired = details.querySelector('h2');
+  await h.app.startFlight(entry);
+  assert.equal(panel.hidden, true);
+  const nextAttempt = h.app.snapshot().state;
+  language('uk');
+  assert.equal(
+    retired.textContent,
+    'Challenge complete',
+    'Starting a new attempt retires the previous result bindings.',
+  );
+  assert.deepEqual(h.app.snapshot().state, nextAttempt);
+  assert.deepEqual(h.app.snapshot().records, records);
+});
+
+test('World ordinary preview defeat keeps its unscored result and action nodes across language changes', async (t) => {
+  const priorLocale = getLocale();
+  setLocale('en', { persist: false });
+  t.after(() => setLocale(priorLocale, { persist: false }));
+  const h = fixture(t);
+  await h.app.ready;
+  const source = WORLD_CATALOGUE.find((item) => !item.legacy && !item.beginner);
+  const entry = {
+    ...source,
+    course: { ...source.course, rules: { ...source.course.rules, maxTicks: 1 } },
+  };
+  await h.app.startFlight(entry, { preview: true });
+  h.$('world-arm').click();
+  h.tick(3);
+  const panel = h.$('result-panel'),
+    actions = panel.querySelector('.continuous-result-actions'),
+    retry = [...actions.querySelectorAll('button')].find(
+      (node) => node.textContent === 'Fly again',
+    );
+  await waitFor(() =>
+    panel.textContent.includes('Authoring preview · no rewards or completion earned.'),
+  );
+  const heading = panel.querySelector('h2'),
+    state = h.app.snapshot().state;
+  retry.focus();
+  for (const value of ['uk', 'en']) {
+    h.$('world-language').value = value;
+    h.$('world-language').emit('change');
+    assert.equal(panel.querySelector('h2'), heading);
+    assert.equal(heading.textContent, value === 'uk' ? 'Політ завершено' : 'Flight ended');
+    assert.match(
+      panel.textContent,
+      value === 'uk'
+        ? /Авторський перегляд · без нагород і зарахування./
+        : /Authoring preview · no rewards or completion earned./,
+    );
+    assert.equal(retry.textContent, value === 'uk' ? 'Летіти ще раз' : 'Fly again');
+    assert.equal(h.doc.activeElement, retry);
+    assert.equal(panel.querySelector('.continuous-result-actions'), actions);
+    assert.deepEqual(h.app.snapshot().state, state);
+    assert.deepEqual(h.app.snapshot().records, []);
+  }
+});
