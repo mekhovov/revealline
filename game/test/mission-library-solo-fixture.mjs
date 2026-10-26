@@ -1,3 +1,4 @@
+import { authoritativeCheckpoint } from '../replay.mjs';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { soloPage } from './helpers/solo-dom.mjs';
@@ -212,7 +213,8 @@ function showAllLifecycles(p) {
 }
 async function startPrepared(p, id) {
   let activated = false,
-    acceptedRun;
+    acceptedRun,
+    acceptedCheckpoint;
   await running(p, id, () => {
     if (activated) return;
     const start = p.$('start-button');
@@ -230,11 +232,25 @@ async function startPrepared(p, id) {
     )
       return;
     acceptedRun = p.rendered.run;
+    acceptedCheckpoint = authoritativeCheckpoint(acceptedRun);
+    assert.equal(p.rendered.paused, true);
+    assert.equal(acceptedRun.tick, 0);
+    assert.equal(p.doc.activeElement, start);
+    assert.equal(p.$('journey-chooser').open, false);
+    assert.equal(p.$('shell-home').open, false);
+    p.frame(100);
+    assert.equal(p.rendered.run, acceptedRun);
+    assert.deepEqual(
+      authoritativeCheckpoint(acceptedRun),
+      acceptedCheckpoint,
+      'Viewing a prepared briefing must not simulate or replace the accepted attempt.',
+    );
     activated = true;
     start.click();
   });
   assert.equal(activated, true, 'The exact prepared briefing needs one explicit Start.');
   assert.equal(p.rendered.run === acceptedRun, true, 'Start retains the accepted mission run.');
+  assert.deepEqual(authoritativeCheckpoint(acceptedRun), acceptedCheckpoint);
   assert.equal(p.rendered.paused, false);
   assert.equal(p.$('game-overlay').hidden, true);
 }

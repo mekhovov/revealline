@@ -16,7 +16,11 @@ const datasetKey = (name) => {
 const selectorSyntax = new Map();
 function parseSelector(selector) {
   const cached = selectorSyntax.get(selector);
-  if (cached) return cached;
+  if (cached) {
+    selectorSyntax.delete(selector);
+    selectorSyntax.set(selector, cached);
+    return cached;
+  }
   const parsed = selector.split(',').map((part) => {
     part = part.trim();
     if (/\s/.test(part)) {

@@ -1,3 +1,7 @@
+import { readFile } from 'node:fs/promises';
+import { createMissionLibrary } from '../mission-library/library.mjs';
+import { createRemoteTeamLibrarySources } from '../mission-library/remote-team.mjs';
+import { duelExpeditionLibrarySources } from '../mission-library/multiplayer-expeditions.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { soloPage } from './helpers/solo-dom.mjs';
@@ -65,6 +69,23 @@ test('Solo mode filter exposes the same qualified Journey identities in Versus w
     cards.filter((card) => owner(card) === 'journey:duel-expedition-v1').length,
     MULTIPLAYER_EXPANSION_LAYOUTS.filter((row) => row.mode === 'versus').length,
   );
+  const themes = JSON.parse(
+    await readFile(new URL('../content-design/themes.json', import.meta.url), 'utf8'),
+  ).themes;
+  const sources = duelExpeditionLibrarySources({ themes, launch: () => true });
+  assert.deepEqual(
+    sources.map((source) => source.id),
+    ['journey:humanoid-hunt-v1', 'journey:duel-expedition-v1'],
+  );
+  const admitted = createMissionLibrary(sources).missions;
+  assert.ok(admitted.every((mission) => mission.modes.includes('versus')));
+  const expected = [...original, ...admitted.map((mission) => mission.id)];
+  assert.equal(
+    new Set(expected).size,
+    expected.length,
+    'Registered owners do not alias Solo rows.',
+  );
+  assert.deepEqual(cards.map((card) => card.dataset.missionId).sort(), expected.sort());
   const target = cards.find((card) => card.dataset.missionId === original[1]);
   assert.match(target.textContent, /Journey.*Band 1\/12/);
   assertReadyCard(target);
@@ -100,12 +121,33 @@ for (const collection of ['Journey', 'Classic'])
     );
     assert.equal(cards.length, 14 + 6 + expeditionCount);
     assert.equal(new Set(cards.map((card) => card.dataset.missionId)).size, cards.length);
+    const sources = createRemoteTeamLibrarySources({ launch: () => true });
+    assert.deepEqual(
+      sources.map((source) => source.id),
+      [
+        'journey:team-expedition-v1',
+        'team-journey:humanoid-hunt-v1',
+        'journey:team-cultural-specialist-originals-2',
+        'team-classic:relay-rescue-starter',
+      ],
+    );
+    const admitted = createMissionLibrary(sources).missions;
+    assert.ok(admitted.every((mission) => mission.modes.includes('team')));
+    assert.deepEqual(
+      cards.map((card) => card.dataset.missionId).sort(),
+      admitted.map((mission) => mission.id).sort(),
+    );
+    const retainedMissions = admitted.filter((mission) => retained.has(mission.ownerId));
+    assert.equal(retainedMissions.length, 14, 'Every original Team Journey and Classic identity remains.');
+    const exact = retainedMissions.find((mission) => mission.collection === collection);
+    assert.ok(exact);
     const targetOwner =
       collection === 'Journey'
         ? 'journey:team-cultural-specialist-originals-2'
         : 'team-classic:relay-rescue-starter';
     const target = cards.find((card) => owner(card) === targetOwner);
     assert.match(target.querySelector('.journey-card-tags').textContent, new RegExp(collection));
+    assert.equal(target.dataset.missionId, exact.id, 'The current receiving owner is the authored source mission.');
     assertReadyCard(target);
     target.click();
     await settle(() => globalThis.location.href.includes('library-mission='));
