@@ -238,6 +238,18 @@ test('ordinary authored Home exports an archive with truthful exclusions while l
     ['media', 'story', 'audio', 'coverage', 'journey'],
   );
   assert.ok(report.exclusions.some((value) => /unfinished authored flight/.test(value)));
+  h.$('backup-review-file').files = [blob];
+  h.$('backup-review-file').emit('change');
+  assert.equal(
+    await h.$('backup-review-inspect').onclick(),
+    true,
+    h.$('backup-set-status').textContent,
+  );
+  assert.equal(h.$('backup-review-step-game'), null);
+  assert.ok(h.$('backup-review-step-journey'));
+  assert.equal(h.doc.activeElement.id, 'backup-review-download-media');
+  assert.equal(h.$('backup-review-download-media').emit('click').defaultPrevented, false);
+  assert.match(h.$('backup-set-status').textContent, /Nothing has been imported or restored/);
   assert.deepEqual(h.storage.map, stored);
   assert.deepEqual(authoritativeCheckpoint(h.rendered.run), before);
   assert.deepEqual(h.errors, []);
@@ -509,7 +521,7 @@ test('Title Settings Library cancel consumes filename detail before native dialo
   // A file input emits its own bubbling, non-cancelable cancel. The native
   // dialog close request below is a separate event with the dialog as target.
   h.$('backup-set-filenames').open = true;
-  for (const id of ['save-file', 'pack-file']) {
+  for (const id of ['save-file', 'pack-file', 'backup-review-file']) {
     const input = h.$(id),
       status = h.$('backup-set-status').textContent;
     input.focus();
@@ -520,7 +532,7 @@ test('Title Settings Library cancel consumes filename detail before native dialo
     assert.equal(h.doc.activeElement, input);
     assert.equal(h.$('backup-set-files').children.length, 5);
   }
-  assert.deepEqual(cancelStates, [false, false]);
+  assert.deepEqual(cancelStates, [false, false, false]);
   cancelStates.length = 0;
   // The browser owns native summary activation; retain its resulting open state.
   summary.focus();
