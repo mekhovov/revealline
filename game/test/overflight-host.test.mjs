@@ -1021,6 +1021,7 @@ test('native Settings initialization preserves operation cards and navigation on
       $: get,
       field: get,
       el: (tag) => document.createElement(tag),
+      touchVisitSettings: null,
       touchSettings: get('touch-settings'),
       audioCues: get('audio-cues'),
       offlineSettings: get('offline-settings'),

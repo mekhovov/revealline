@@ -473,6 +473,28 @@
       ]
     },
     {
+      "id": "expansion-proof-dispatch",
+      "pathPatterns": [
+        "^scripts/(verify-packs|verify-neon-routes|test-expansion-proof-dispatch|test-neon-proof-dispatch)\\.mjs$",
+        "^game/test/expansion-playthrough\\.test\\.mjs$",
+        "^game/replays/(expansion|sentinel)-routes\\.json$",
+        "^docs/qualification/neon-level-completion/winning-routes\\.json$"
+      ],
+      "commands": [
+        {
+          "id": "expansion-proof-dispatch",
+          "command": "node",
+          "args": [
+            "--test",
+            "game/test/expansion-playthrough.test.mjs",
+            "scripts/test-expansion-proof-dispatch.mjs",
+            "scripts/test-neon-proof-dispatch.mjs"
+          ],
+          "timeoutMs": 1800000
+        }
+      ]
+    },
+    {
       "id": "remote-team-display-authoring",
       "pathPatterns": [
         "^scripts/(?:remote-team-navigation(?:-test-fixture)?|test-remote-team-navigation)\\.mjs$",
@@ -487,6 +509,108 @@
           "command": "node",
           "args": ["--test", "--test-concurrency=1", "scripts/test-remote-team-navigation.mjs"],
           "timeoutMs": 300000
+        }
+      ]
+    },
+    {
+      "id": "compiled-menu-browser-contract",
+      "pathPatterns": [
+        "^scripts/(compiled-menu-browser[^/]*|run-compiled-menu-browser|test-compiled-menu-browser-consumer)\\.mjs$",
+        "^scripts/compiled-menu-browser-tools/(package|package-lock)\\.json$",
+        "^docs/verification/compiled-menu-browser-37ec(?:-plan\\.json|\\.md)$",
+        "^\\.github/workflows/compiled-menu-browser-37ec\\.yml$"
+      ],
+      "commands": [
+        {
+          "id": "compiled-menu-browser-contract",
+          "command": "node",
+          "args": ["--test", "scripts/test-compiled-menu-browser-consumer.mjs"]
+        }
+      ]
+    },
+    {
+      "id": "community-readiness-complete-contract",
+      "pathPatterns": ["^game/test/community-readiness(?:-host)?\\.test\\.mjs$"],
+      "commands": [
+        {
+          "id": "community-readiness-unit",
+          "command": "node",
+          "args": ["--test", "--test-concurrency=1", "game/test/community-readiness.test.mjs"],
+          "timeoutMs": 180000
+        },
+        {
+          "id": "community-readiness-host",
+          "command": "node",
+          "args": ["--test", "--test-concurrency=1", "game/test/community-readiness-host.test.mjs"],
+          "timeoutMs": 180000
+        },
+        {
+          "id": "community-readiness-store",
+          "command": "node",
+          "args": ["--test", "--test-concurrency=1", "game/test/community-store.test.mjs"],
+          "timeoutMs": 180000
+        },
+        {
+          "id": "community-readiness-moderation-client",
+          "command": "node",
+          "args": [
+            "--test",
+            "--test-concurrency=1",
+            "game/test/community-moderation-client.test.mjs"
+          ],
+          "timeoutMs": 180000
+        },
+        {
+          "id": "unknown-runtime-validate",
+          "command": "npm",
+          "args": ["run", "validate"],
+          "timeoutMs": 1800000
+        }
+      ]
+    },
+    {
+      "id": "couch-touch-localization-complete-contract",
+      "pathPatterns": ["^game/test/couch-touch-localization-host\\.test\\.mjs$"],
+      "commands": [
+        {
+          "id": "couch-touch-live-locale",
+          "command": "node",
+          "args": [
+            "--test",
+            "--test-concurrency=1",
+            "game/test/couch-touch-localization-host.test.mjs"
+          ],
+          "timeoutMs": 180000
+        },
+        {
+          "id": "couch-touch-shared-gestures",
+          "command": "node",
+          "args": ["--test", "--test-concurrency=1", "game/test/couch-shared-touch.test.mjs"],
+          "timeoutMs": 180000
+        },
+        {
+          "id": "couch-touch-steering",
+          "command": "node",
+          "args": ["--test", "--test-concurrency=1", "game/test/touch-steering.test.mjs"],
+          "timeoutMs": 180000
+        },
+        {
+          "id": "couch-touch-preferences",
+          "command": "node",
+          "args": ["--test", "--test-concurrency=1", "game/test/shared-touch-preferences.test.mjs"],
+          "timeoutMs": 180000
+        },
+        {
+          "id": "couch-touch-coop-input-policy",
+          "command": "node",
+          "args": ["--test", "--test-concurrency=1", "game/test/coop-input-policy.test.mjs"],
+          "timeoutMs": 180000
+        },
+        {
+          "id": "unknown-runtime-validate",
+          "command": "npm",
+          "args": ["run", "validate"],
+          "timeoutMs": 1800000
         }
       ]
     },

@@ -1,5 +1,9 @@
 export const OVERFLIGHT_COPY = Object.freeze({
   en: {
+    touchVisitTitle: 'This visit',
+    boostCompact: 'Boost',
+    touchVisibilityHelp:
+      'Control visibility lasts for this visit. Always keeps steering and Boost available with a mouse. Menus still hide the controls.',
     suspendRetryHelp:
       'Retry when device storage is available. Restore requires the same complete game package and appearance settings.',
     suspendOpen: 'Saved flight',
@@ -204,6 +208,7 @@ export const OVERFLIGHT_COPY = Object.freeze({
     elapsed: 'Time',
     salvage: 'Salvage',
     build: 'Your build',
+    flightDetails: 'Flight details',
     resultHint: 'Try another combination on the same battlefield.',
     workshop: 'Overflight Studio',
     workshopHelp: 'Edit an encounter and preview it with this same runtime.',
@@ -264,6 +269,10 @@ export const OVERFLIGHT_COPY = Object.freeze({
     runtimeError: 'The sortie stopped after an error. Retry to prepare a new attempt.',
   },
   uk: {
+    touchVisitTitle: 'Це відвідування',
+    boostCompact: 'Ривок',
+    touchVisibilityHelp:
+      'Видимість керування діє до кінця цього відвідування. «Завжди» залишає керування й прискорення доступними для миші. У меню вони приховані.',
     suspendRetryHelp:
       'Повторіть спробу, коли сховище пристрою стане доступним. Відновлення потребує того самого повного пакета гри й оформлення.',
     suspendOpen: 'Збережений політ',
@@ -480,6 +489,7 @@ export const OVERFLIGHT_COPY = Object.freeze({
     elapsed: 'Час',
     salvage: 'Ресурси',
     build: 'Ваше спорядження',
+    flightDetails: 'Подробиці польоту',
     resultHint: 'Спробуйте іншу комбінацію на тому самому полі.',
     workshop: 'Студія «Проліт»',
     workshopHelp: 'Редагуйте сутичку й перевіряйте її в цьому самому рушії.',

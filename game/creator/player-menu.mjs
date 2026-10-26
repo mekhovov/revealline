@@ -8,6 +8,7 @@ import { libraryMissionId } from '../mission-library/library.mjs';
 import { missionLibraryHref } from '../mission-library/handoff.mjs';
 import { createDisplayPreferences } from '../display-preferences.mjs';
 import { attachMenuAnimationFeedback } from '../ui/menu-animation-feedback.mjs';
+import { mountComfortPresets } from '../ui/comfort-presets.mjs';
 
 /** Preserve the qualified installed-edition lookup used by the ordinary Versus host. */
 export function creatorVersusHref(pack, missionId, baseURL) {
@@ -160,6 +161,13 @@ export function attachCreatorPlayerMenu({
   );
   const animationFeedback = attachMenuAnimationFeedback($('creator-background-animation'), win);
   listeners.push(() => animationFeedback.destroy());
+  const comfortPresets = mountComfortPresets({
+    document: doc,
+    window: win,
+    root: $('creator-panel-display'),
+    display,
+  });
+  $('creator-panel-display').prepend(comfortPresets.element);
   listen($('creator-open-settings'), 'click', () => {
     open(settings, panels.primary());
     panels.focusCategories();
@@ -335,6 +343,7 @@ export function attachCreatorPlayerMenu({
       listeners.forEach((remove) => remove());
       fullscreen.forEach((remove) => remove());
       panels.destroy();
+      comfortPresets.destroy();
       stopDisplay();
       display.dispose();
       scene.dispose();

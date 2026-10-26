@@ -12,6 +12,7 @@ import {
   AIRCRAFT_BACKENDS,
   AIRCRAFT_SNAPSHOT_FORMAT,
   createAircraftSimulation,
+  observeMovingContact,
   aircraftFlightIdentities,
   replayAircraftRecording,
   verifyAircraftRecovery,
@@ -23,7 +24,12 @@ import {
 } from './aircraft-recording.mjs';
 import { validateAircraftPhysics, createAircraftControllerTune } from './aircraft-physics.mjs';
 export { AIRCRAFT_BACKEND, AIRCRAFT_REGIONAL_BACKEND } from './advanced-aircraft-runtime.mjs';
-import { initWorldRuntime, WORLD_COLLISION_BACKEND } from './world-collision.mjs';
+import {
+  initWorldRuntime,
+  WORLD_COLLISION_BACKEND,
+  COMBAT_SHAPE_FORMAT,
+  validateCombatShapeDescriptor,
+} from './world-collision.mjs';
 import {
   ADVANCED_AXES,
   createAdvancedController,
@@ -383,6 +389,17 @@ export function createAdvancedSimulation(options = {}) {
   )
     return createAircraftSimulation(options);
   const terrainEnabled = options.terrain !== undefined;
+  const movingEnabled = options.dynamicColliders !== undefined;
+  const shapeVersioned = options.dynamicShapeFormat === COMBAT_SHAPE_FORMAT;
+  required(
+    options.dynamicShapeFormat === undefined || (shapeVersioned && movingEnabled),
+    'Unsupported combat shape protocol',
+  );
+  required(
+    options.dynamicMotionFormat === undefined ||
+      (movingEnabled && options.dynamicMotionFormat === 'AdvancedMovingActors.v1'),
+    'Unsupported moving actor physics',
+  );
   if (terrainEnabled) {
     exactKeys(options.terrain, ['format'], 'Advanced terrain mode');
     required(
@@ -397,6 +414,7 @@ export function createAdvancedSimulation(options = {}) {
     'inputs',
     'hashes',
     'checkpoints',
+    ...(movingEnabled ? ['motionEvents'] : []),
     ...(terrainEnabled ? ['terrainColliders', 'terrainFrames', 'terrainEvents'] : []),
   ];
   const airframe = validateAdvancedAircraft(options.aircraft);
@@ -458,6 +476,34 @@ export function createAdvancedSimulation(options = {}) {
     );
   }
   boxes.sort((a, b) => (a.id < b.id ? -1 : a.id > b.id ? 1 : 0));
+  const dynamic = movingEnabled
+    ? boundedJSON(options.dynamicColliders, {
+        maxBytes: 65536,
+        maxNodes: 3000,
+        maxArray: 128,
+        maxDepth: 5,
+      })
+    : [];
+  required(Array.isArray(dynamic) && dynamic.length <= 128, 'Invalid moving obstacles');
+  for (const item of dynamic) {
+    exactKeys(item, ['id', 'position', 'radius', 'height', 'enabled', 'shape'], 'Moving obstacle');
+    required(
+      typeof item.id === 'string' &&
+        item.id.length > 0 &&
+        item.id.length <= 128 &&
+        !ids.has(item.id),
+      'Unique moving obstacle IDs required',
+    );
+    ids.add(item.id);
+    vector(item.position, 'Moving obstacle position');
+    required(
+      finite(item.radius, 0.01, 100) &&
+        finite(item.height, 0.01, 100) &&
+        (item.enabled === undefined || typeof item.enabled === 'boolean') &&
+        (item.shape === undefined || ['sphere', 'cylinder'].includes(item.shape)),
+      'Invalid moving obstacle shape',
+    );
+  }
   const config = {
     backend,
     ...(terrainEnabled ? { terrain: { format: 'AdvancedRegionalTerrain.v1' } } : {}),
@@ -470,7 +516,11 @@ export function createAdvancedSimulation(options = {}) {
     gravity,
     floor: options.floor !== false,
     obstacles: boxes,
+    ...(movingEnabled
+      ? { dynamicMotionFormat: 'AdvancedMovingActors.v1', dynamicColliders: dynamic }
+      : {}),
     configuration: frozen,
+    ...(shapeVersioned ? { dynamicShapeFormat: COMBAT_SHAPE_FORMAT } : {}),
   };
   const identity = configurationIdentity(config);
   const recordingOverheadBytes =
@@ -484,6 +534,7 @@ export function createAdvancedSimulation(options = {}) {
   let world,
     body,
     bodyHandle,
+    actors = [],
     disposed = false,
     pending = [],
     state,
@@ -546,6 +597,29 @@ export function createAdvancedSimulation(options = {}) {
       body,
     );
     bodyHandle = body.handle;
+    actors = dynamic.map((item) => {
+      const moving = world.createRigidBody(
+        RAPIER.RigidBodyDesc.kinematicPositionBased().setTranslation(
+          item.position.x,
+          item.position.y,
+          item.position.z,
+        ),
+      );
+      const collider = world.createCollider(
+        (item.shape === 'sphere'
+          ? RAPIER.ColliderDesc.ball(item.radius)
+          : RAPIER.ColliderDesc.cylinder(item.height / 2, item.radius)
+        ).setFriction(0.5),
+        moving,
+      );
+      moving.setEnabled(item.enabled !== false);
+      return {
+        id: item.id,
+        bodyHandle: moving.handle,
+        handle: collider.handle,
+        ...(shapeVersioned ? { spawnId: 'initial' } : {}),
+      };
+    });
     if (terrainEnabled) regionalWorldProperties = terrainWorldProperties(world, bodyHandle);
     controller.reset();
     pending = [];
@@ -581,6 +655,12 @@ export function createAdvancedSimulation(options = {}) {
       current: 0,
       inputBytes: 0,
       checkpointBytes: 0,
+      ...(movingEnabled
+        ? {
+            motionBytes: 0,
+            contact: { touching: false, entries: [], ids: [], normal: zero(), impactSpeed: 0 },
+          }
+        : {}),
     };
     record = {
       format: recordingFormat,
@@ -590,6 +670,12 @@ export function createAdvancedSimulation(options = {}) {
       inputs: [],
       hashes: [],
       checkpoints: [],
+      ...(movingEnabled
+        ? {
+            motionEvents: [],
+            retention: { format: 'AdvancedPracticeRetention.v1', complete: true, fromMission: 0 },
+          }
+        : {}),
       missionTicks: 0,
       ...(terrainEnabled ? { terrainColliders: [], terrainFrames: [], terrainEvents: [] } : {}),
     };
@@ -600,6 +686,7 @@ export function createAdvancedSimulation(options = {}) {
       state: clone(state),
       controller: controller.snapshot(),
       ...(terrainEnabled ? { terrain: clone(terrainState) } : {}),
+      ...(movingEnabled ? { actors: clone(actors) } : {}),
     };
   }
   function stateHash() {
@@ -625,6 +712,7 @@ export function createAdvancedSimulation(options = {}) {
         inputs: record.inputs.length,
         hashes: record.hashes.length,
         checkpoints: record.checkpoints.length,
+        ...(movingEnabled ? { motionEvents: record.motionEvents.length } : {}),
         ...(terrainEnabled
           ? {
               terrainColliders: record.terrainColliders.length,
@@ -638,7 +726,12 @@ export function createAdvancedSimulation(options = {}) {
         : {}),
     };
   }
-  function restoreInternal(saved, includeRecording = false, terrainFrame = null) {
+  function restoreInternal(
+    saved,
+    includeRecording = false,
+    terrainFrame = null,
+    localPractice = false,
+  ) {
     required(
       saved.format === snapshotFormat &&
         saved.identity === identity &&
@@ -655,7 +748,9 @@ export function createAdvancedSimulation(options = {}) {
       throw new TypeError('Snapshot has no reference aircraft');
     }
     try {
+      if (movingEnabled) validateMovingWorld(nextWorld, saved);
       if (terrainEnabled && includeRecording) validateTerrainWorld(nextWorld, saved, terrainFrame);
+      if (localPractice) validatePracticeWorld(nextWorld);
       controller.restore(saved.controller);
     } catch (error) {
       nextWorld.free();
@@ -664,6 +759,7 @@ export function createAdvancedSimulation(options = {}) {
     world.free();
     world = nextWorld;
     body = world.getRigidBody(bodyHandle);
+    if (movingEnabled) actors = clone(saved.actors);
     state = clone(saved.state);
     if (terrainEnabled) terrainState = clone(saved.terrain);
     pending = clone(saved.pending);
@@ -704,16 +800,18 @@ export function createAdvancedSimulation(options = {}) {
         });
       }
       flightLimit(
-        record.terrainFrames.length <= ADVANCED_TERRAIN_LIMITS.frames &&
-          record.terrainEvents.length < ADVANCED_TERRAIN_LIMITS.events,
+        movingEnabled ||
+          (record.terrainFrames.length <= ADVANCED_TERRAIN_LIMITS.frames &&
+            record.terrainEvents.length < ADVANCED_TERRAIN_LIMITS.events),
         'ADVANCED_RECORDING_LIMIT',
         'Regional terrain history capacity reached',
       );
       record.terrainEvents.push([state.substep, frameIndex]);
       const historyBytes = terrainHistoryBytes(record);
       flightLimit(
-        historyBytes + state.inputBytes + state.checkpointBytes + recordingOverheadBytes <=
-          ADVANCED_RECORDING_BYTES,
+        movingEnabled ||
+          historyBytes + state.inputBytes + state.checkpointBytes + recordingOverheadBytes <=
+            ADVANCED_RECORDING_BYTES,
         'ADVANCED_RECORDING_LIMIT',
         'Advanced recording capacity reached while adopting terrain',
       );
@@ -766,7 +864,272 @@ export function createAdvancedSimulation(options = {}) {
     );
     if (!accepted && terrainProposal.before) restoreInternal(terrainProposal.before);
     terrainProposal = null;
+    if (accepted && movingEnabled) retainPracticeHistory();
     return { adopted: accepted, telemetry: telemetry() };
+  }
+  function validateMovingWorld(candidate, saved) {
+    required(
+      Array.isArray(saved.actors) &&
+        saved.actors.length === actors.length &&
+        saved.actors.every((entry, index) => {
+          const expected = actors[index];
+          if (!shapeVersioned) return canonicalJSON(entry) === canonicalJSON(expected);
+          return (
+            Object.keys(entry).sort().join('/') === 'bodyHandle/handle/id/spawnId' &&
+            entry.id === expected.id &&
+            entry.handle === expected.handle &&
+            entry.bodyHandle === expected.bodyHandle &&
+            typeof entry.spawnId === 'string' &&
+            entry.spawnId.length > 0 &&
+            entry.spawnId.length <= 512
+          );
+        }),
+      'Moving actor handles changed',
+    );
+    for (let index = 0; index < actors.length; index++) {
+      const actor = actors[index],
+        expected = dynamic[index],
+        moving = candidate.getRigidBody(actor.bodyHandle),
+        hull = candidate.getCollider(actor.handle);
+      required(
+        moving &&
+          moving.isKinematic() &&
+          hull &&
+          moving.numColliders() === 1 &&
+          moving.collider(0).handle === hull.handle &&
+          !hull.isSensor(),
+        'Moving actor physics changed',
+      );
+      required(
+        hull.shapeType() ===
+          (expected.shape === 'sphere' ? RAPIER.ShapeType.Ball : RAPIER.ShapeType.Cylinder) &&
+          hull.shape.radius === Math.fround(expected.radius) &&
+          (expected.shape === 'sphere' ||
+            hull.shape.halfHeight === Math.fround(expected.height / 2)),
+        'Moving actor shape changed',
+      );
+      vector({ ...moving.translation() }, 'Moving actor position');
+    }
+  }
+  function validatePracticeWorld(candidate) {
+    required(
+      terrainEnabled &&
+        movingEnabled &&
+        candidate.impulseJoints.len() === 0 &&
+        candidate.multibodyJoints.len() === 0,
+      'Practice recovery contains unsupported physics',
+    );
+    const reference = new RAPIER.World(zero());
+    const properties = (item) =>
+      Object.fromEntries(
+        [
+          'bodyType',
+          'mass',
+          'invMass',
+          'localCom',
+          'principalInertia',
+          'invPrincipalInertia',
+          'principalInertiaLocalFrame',
+          'isCcdEnabled',
+          'gravityScale',
+          'linearDamping',
+          'angularDamping',
+          'dominanceGroup',
+          'additionalSolverIterations',
+          'softCcdPrediction',
+        ].map((key) => [key, item[key]()]),
+      );
+    try {
+      for (const [index, actor] of actors.entries()) {
+        const moving = candidate.getRigidBody(actor.bodyHandle),
+          expected = dynamic[index];
+        const normal = reference.createRigidBody(RAPIER.RigidBodyDesc.kinematicPositionBased());
+        const hull = reference.createCollider(
+          (expected.shape === 'sphere'
+            ? RAPIER.ColliderDesc.ball(expected.radius)
+            : RAPIER.ColliderDesc.cylinder(expected.height / 2, expected.radius)
+          ).setFriction(0.5),
+          normal,
+        );
+        const receivedHull = candidate.getCollider(actor.handle);
+        normal.setEnabled(moving.isEnabled());
+        // Rapier applies parent-enabled flags to colliders at a physics step.
+        // Resolve that detached reference state before comparing saved actors.
+        reference.step();
+        moving.recomputeMassPropertiesFromColliders();
+        normal.recomputeMassPropertiesFromColliders();
+        required(
+          canonicalJSON(properties(moving)) === canonicalJSON(properties(normal)) &&
+            canonicalJSON(colliderProperties(receivedHull)) ===
+              canonicalJSON(colliderProperties(hull)) &&
+            canonicalJSON(receivedHull.translationWrtParent()) ===
+              canonicalJSON(hull.translationWrtParent()) &&
+            canonicalJSON(receivedHull.rotationWrtParent()) ===
+              canonicalJSON(hull.rotationWrtParent()),
+          'Practice recovery moving physics properties changed',
+        );
+        for (const key of ['translation', 'nextTranslation', 'linvel']) {
+          const value = moving[key]();
+          required(
+            axes.every((axis) => finite(value[axis], -1e7, 1e7)),
+            'Invalid practice actor motion',
+          );
+        }
+        for (const key of ['rotation', 'nextRotation']) {
+          const value = moving[key]();
+          required(
+            axes.every((axis) => value[axis] === 0) && value.w === 1,
+            'Practice actor rotation changed',
+          );
+        }
+        required(
+          axes.every((axis) => moving.angvel()[axis] === 0),
+          'Practice actor angular velocity changed',
+        );
+        reference.removeRigidBody(normal);
+      }
+    } finally {
+      reference.free();
+    }
+  }
+  function validateMotions(source = []) {
+    const motions = boundedJSON(source, {
+        maxBytes: shapeVersioned ? 128 * 1024 : 65536,
+        maxNodes: shapeVersioned ? 6000 : 4000,
+        maxArray: 128,
+        maxDepth: 5,
+      }),
+      seen = new Set();
+    required(
+      Array.isArray(motions) && motions.length <= actors.length,
+      'Invalid actor motion list',
+    );
+    for (const motion of motions) {
+      exactKeys(
+        motion,
+        [
+          'id',
+          'from',
+          'to',
+          'enabled',
+          ...(shapeVersioned && motion.shapeDescriptor ? ['shapeDescriptor'] : []),
+        ],
+        'Actor motion',
+      );
+      const actor = actors.find((item) => item.id === motion.id);
+      required(
+        actor &&
+          !seen.has(motion.id) &&
+          (motion.enabled === undefined || typeof motion.enabled === 'boolean'),
+        'Unknown, duplicate or invalid actor motion',
+      );
+      if (motion.shapeDescriptor !== undefined)
+        validateCombatShapeDescriptor(
+          motion.shapeDescriptor,
+          dynamic.find((item) => item.id === motion.id),
+        );
+      seen.add(motion.id);
+      vector(motion.from, 'Actor motion start');
+      vector(motion.to, 'Actor motion end');
+      const current = world.getRigidBody(actor.bodyHandle).translation();
+      required(
+        axes.every((axis) => Math.abs(current[axis] - motion.from[axis]) < 0.001),
+        'Actor motion starts outside its accepted pose',
+      );
+    }
+    return motions;
+  }
+  function updateMovingContacts(previousVelocity, observation) {
+    const result = {
+      touching: false,
+      entries: [],
+      ids: [],
+      normal: zero(),
+      impactSpeed: state.contact.impactSpeed,
+    };
+    for (const actor of actors) {
+      if (!world.getRigidBody(actor.bodyHandle).isEnabled()) continue;
+      let chosen = null;
+      world.contactPair(world.getCollider(actor.handle), body.collider(0), (manifold, flipped) => {
+        let close = false;
+        for (let index = 0; index < manifold.numContacts(); index++)
+          close ||= manifold.contactDist(index) <= 0.003;
+        if (!close) return;
+        const normal = manifold.normal(),
+          sign = flipped ? -1 : 1;
+        chosen = Object.fromEntries(axes.map((axis) => [axis, normal[axis] * sign]));
+        if (observation)
+          observeMovingContact(observation, actor.id, chosen, previousVelocity, state.substep);
+        result.impactSpeed = Math.max(
+          result.impactSpeed,
+          -axes.reduce((sum, axis) => sum + previousVelocity[axis] * chosen[axis], 0),
+        );
+      });
+      if (chosen) {
+        result.touching = true;
+        result.ids.push(actor.id);
+        result.entries.push({ id: actor.id, normal: chosen, moving: true });
+        if (result.entries.length === 1 || chosen.y > result.normal.y) result.normal = chosen;
+      }
+    }
+    state.contact = result;
+  }
+  // Only accepted missions/terrain commits may roll the retained history. A
+  // speculative mission can therefore restore arrays by their original lengths.
+  // The rolling checkpoint is a local-practice diagnostic; it cannot establish
+  // replay proof from the beginning of the flight and exports say so explicitly.
+  function retainPracticeHistory() {
+    const bytes =
+      state.inputBytes +
+      state.motionBytes +
+      state.checkpointBytes +
+      (terrainState?.historyBytes ?? 0) +
+      recordingOverheadBytes;
+    if (
+      bytes < 4 * 1024 * 1024 &&
+      state.missionTick - record.retention.fromMission < ADVANCED_MAX_SECONDS * ADVANCED_MISSION_HZ
+    )
+      return;
+    if (terrainEnabled && record.terrainEvents.length) {
+      const frame = record.terrainFrames[record.terrainEvents.at(-1)[1]],
+        known = new Map(record.terrainColliders.map((item) => [item.key, item]));
+      record.terrainColliders = frame.colliders.map((key) => known.get(key));
+      record.terrainFrames = [frame];
+      record.terrainEvents = [[state.substep, 0]];
+      terrainState.historyBytes = terrainHistoryBytes(record);
+      terrainState.historyIdentity = terrainHistoryIdentity(record);
+    }
+    record.inputs = [];
+    record.hashes = [];
+    record.motionEvents = [];
+    record.checkpoints = [];
+    state.inputBytes = 0;
+    state.motionBytes = 0;
+    state.checkpointBytes = 0;
+    record.retention = {
+      format: 'AdvancedPracticeRetention.v1',
+      complete: false,
+      fromMission: state.missionTick,
+    };
+    const checkpoint = {
+      format: 'AdvancedPracticeCheckpoint.v1',
+      missionTick: state.missionTick,
+      substep: state.substep,
+      state: clone(state),
+      controller: controller.snapshot(),
+      body: {
+        position: { ...body.translation() },
+        velocity: { ...body.linvel() },
+        orientation: { ...body.rotation() },
+        angularVelocity: { ...body.angvel() },
+      },
+      actors: actors.map((actor) => {
+        const moving = world.getRigidBody(actor.bodyHandle);
+        return { id: actor.id, position: { ...moving.translation() }, enabled: moving.isEnabled() };
+      }),
+    };
+    record.checkpoints.push(checkpoint);
+    state.checkpointBytes = JSON.stringify(checkpoint).length + 1;
   }
   function updateTerrainContacts(previousVelocity) {
     const collider = body.collider(0);
@@ -829,8 +1192,21 @@ export function createAdvancedSimulation(options = {}) {
     );
     const terrain = saved.terrain;
     exactKeys(terrain, Object.keys(terrainState), 'Advanced terrain snapshot');
-    const frames = validateTerrainHistory(saved.recording, {
-      substeps: saved.state.substep,
+    const offset =
+      movingEnabled && !saved.recording.retention.complete
+        ? saved.recording.retention.fromMission * missionSteps
+        : 0;
+    const history = offset
+      ? {
+          ...saved.recording,
+          terrainEvents: saved.recording.terrainEvents.map(([tick, frame]) => [
+            tick - offset,
+            frame,
+          ]),
+        }
+      : saved.recording;
+    const frames = validateTerrainHistory(history, {
+      substeps: saved.state.substep - offset,
       missionSteps,
     });
     const current = frames[saved.recording.terrainEvents.at(-1)?.[1]];
@@ -993,8 +1369,8 @@ export function createAdvancedSimulation(options = {}) {
       'Terrain snapshot physics properties changed',
     );
     required(
-      candidate.bodies.len() === 1 &&
-        candidate.colliders.len() === (frame?.colliders.length ?? 0) + 1 &&
+      candidate.bodies.len() === 1 + actors.length &&
+        candidate.colliders.len() === (frame?.colliders.length ?? 0) + 1 + actors.length &&
         aircraftBody.numColliders() === 1,
       'Terrain snapshot contains unexpected physics bodies',
     );
@@ -1072,6 +1448,28 @@ export function createAdvancedSimulation(options = {}) {
           }
         : {}),
       experimental: true,
+      ...(movingEnabled
+        ? {
+            contact: clone(state.contact),
+            dynamicColliders: actors.map((actor) => {
+              const moving = world.getRigidBody(actor.bodyHandle);
+              return {
+                id: actor.id,
+                position: { ...moving.translation() },
+                enabled: moving.isEnabled(),
+                ...(shapeVersioned ? { spawnId: actor.spawnId } : {}),
+              };
+            }),
+            recordingStatus: {
+              complete: record.retention.complete,
+              localPractice: !record.retention.complete,
+              fromMission: record.retention.fromMission,
+              toMission: state.missionTick,
+              retainedSeconds:
+                (state.missionTick - record.retention.fromMission) / ADVANCED_MISSION_HZ,
+            },
+          }
+        : {}),
       scored: false,
       frequency: hz,
       missionHz: ADVANCED_MISSION_HZ,
@@ -1114,7 +1512,7 @@ export function createAdvancedSimulation(options = {}) {
       'Input samples must have increasing sequences and monotonic timestamps',
     );
     required(
-      pending.length < 4096 && sample.timestampUs <= ADVANCED_MAX_SECONDS * 1e6,
+      pending.length < 4096 && (movingEnabled || sample.timestampUs <= ADVANCED_MAX_SECONDS * 1e6),
       'Input queue exceeds duration or capacity',
     );
     state.acceptedSequence = sample.sequence;
@@ -1129,7 +1527,7 @@ export function createAdvancedSimulation(options = {}) {
     state.noiseState = bits >>> 0;
     return state.noiseState / 2147483648 - 1;
   }
-  function substep() {
+  function substep(motions = [], fraction = 1, observation) {
     const timestampUs = Math.round((state.substep * 1e6) / hz);
     let sample;
     while (pending.length && pending[0].timestampUs <= timestampUs) sample = pending.shift();
@@ -1153,17 +1551,31 @@ export function createAdvancedSimulation(options = {}) {
         : [state.substep, sample.sequence, sample.timestampUs];
       state.inputBytes += JSON.stringify(event).length + 1;
       flightLimit(
-        state.inputBytes <= 6 * 1024 * 1024 &&
-          state.inputBytes +
-            state.checkpointBytes +
-            (terrainState?.historyBytes ?? 0) +
-            recordingOverheadBytes <=
-            ADVANCED_RECORDING_BYTES &&
-          record.inputs.length < 300000,
+        movingEnabled ||
+          (state.inputBytes <= 6 * 1024 * 1024 &&
+            state.inputBytes +
+              state.checkpointBytes +
+              (terrainState?.historyBytes ?? 0) +
+              recordingOverheadBytes <=
+              ADVANCED_RECORDING_BYTES &&
+            record.inputs.length < 300000),
         'ADVANCED_RECORDING_LIMIT',
         'Advanced recording capacity reached; export the flight before continuing',
       );
       record.inputs.push(event);
+    }
+    for (const motion of motions) {
+      const actor = actors.find((item) => item.id === motion.id),
+        moving = world.getRigidBody(actor.bodyHandle);
+      if (motion.enabled !== undefined) moving.setEnabled(motion.enabled);
+      const position = Object.fromEntries(
+        axes.map((axis) => [
+          axis,
+          motion.from[axis] + (motion.to[axis] - motion.from[axis]) * fraction,
+        ]),
+      );
+      if (!moving.isEnabled()) moving.setTranslation(position, false);
+      moving.setNextKinematicTranslation(position);
     }
     const quaternion = body.rotation(),
       velocity = body.linvel(),
@@ -1235,6 +1647,7 @@ export function createAdvancedSimulation(options = {}) {
     body.addTorque(rotate(quaternion, torque), true);
     world.step();
     if (terrainEnabled) updateTerrainContacts(velocity);
+    if (movingEnabled) updateMovingContacts(velocity, observation);
     state.substep++;
   }
   function finishMission() {
@@ -1266,12 +1679,13 @@ export function createAdvancedSimulation(options = {}) {
       checkpoint.state.acceptedTimestampUs = checkpoint.state.consumedTimestampUs;
       const checkpointBytes = JSON.stringify(checkpoint).length + 1;
       flightLimit(
-        state.inputBytes +
-          state.checkpointBytes +
-          checkpointBytes +
-          (terrainState?.historyBytes ?? 0) +
-          recordingOverheadBytes <=
-          ADVANCED_RECORDING_BYTES,
+        movingEnabled ||
+          state.inputBytes +
+            state.checkpointBytes +
+            checkpointBytes +
+            (terrainState?.historyBytes ?? 0) +
+            recordingOverheadBytes <=
+            ADVANCED_RECORDING_BYTES,
         'ADVANCED_RECORDING_LIMIT',
         'Advanced recording capacity reached; export the flight before continuing',
       );
@@ -1279,31 +1693,55 @@ export function createAdvancedSimulation(options = {}) {
       record.checkpoints.push(checkpoint);
     }
   }
-  function runMission() {
+  function runMission(motionSource, observation) {
     required(
       !terrainEnabled || terrainState.frameIdentity,
       'Verified terrain must be committed before flight',
     );
     if (terrainEnabled) terrainState.impactSpeed = 0;
+    const motions = validateMotions(motionSource);
+    if (observation) observation.motions = motions;
+    for (const motion of motions) {
+      if (!motion.shapeDescriptor) continue;
+      const actor = actors.find((item) => item.id === motion.id),
+        descriptor = motion.shapeDescriptor;
+      if (actor.spawnId === descriptor.spawnId) continue;
+      world
+        .getCollider(actor.handle)
+        .setShape(
+          descriptor.shape === 'sphere'
+            ? new RAPIER.Ball(descriptor.radius)
+            : new RAPIER.Cylinder(descriptor.height / 2, descriptor.radius),
+        );
+      actor.spawnId = descriptor.spawnId;
+    }
+    if (movingEnabled) {
+      state.contact.impactSpeed = 0;
+      if (motions.length) {
+        const event = [state.missionTick, motions];
+        state.motionBytes += JSON.stringify(event).length + 1;
+        record.motionEvents.push(event);
+      }
+    }
     const trace = [{ ...body.translation() }];
     for (let index = 0; index < missionSteps; index++) {
-      substep();
+      substep(motions, (index + 1) / missionSteps, observation);
       trace.push({ ...body.translation() });
     }
     finishMission();
     return trace;
   }
-  function stepMission({ admitMotion } = {}) {
+  function stepMission({ admitMotion, motions } = {}) {
     assertLive();
     required(!proposal && !terrainProposal, 'A mission transaction is pending');
     flightLimit(
-      state.missionTick < ADVANCED_MAX_SECONDS * ADVANCED_MISSION_HZ,
+      movingEnabled || state.missionTick < ADVANCED_MAX_SECONDS * ADVANCED_MISSION_HZ,
       'ADVANCED_DURATION_LIMIT',
       'Advanced flight duration limit reached',
     );
     const before = capture();
     try {
-      const trace = runMission();
+      const trace = runMission(motions);
       if (admitMotion) {
         const admitted = admitMotion(trace[0], trace.at(-1), clone(trace));
         required(
@@ -1315,6 +1753,7 @@ export function createAdvancedSimulation(options = {}) {
           return { admitted: false, telemetry: telemetry(), trace };
         }
       }
+      if (movingEnabled) retainPracticeHistory();
       return { admitted: true, telemetry: telemetry(), trace };
     } catch (error) {
       restoreInternal(before);
@@ -1330,6 +1769,7 @@ export function createAdvancedSimulation(options = {}) {
     enqueueInput,
     stepMission,
     telemetry,
+    ...(movingEnabled ? { recordingStatus: () => telemetry().recordingStatus } : {}),
     stateHash,
     stageTerrainFrame,
     commitTerrainFrame,
@@ -1340,7 +1780,7 @@ export function createAdvancedSimulation(options = {}) {
     },
     // Structural restore is for trusted snapshots and transactional recovery.
     // User-owned files must pass verifyAdvancedRecovery before adoption.
-    restore(source) {
+    restore(source, { localPractice = false } = {}) {
       assertLive();
       required(!proposal && !terrainProposal, 'A mission transaction is pending');
       const saved = boundedJSON(source, {
@@ -1358,7 +1798,7 @@ export function createAdvancedSimulation(options = {}) {
           saved.pending.length <= 4096 &&
           Number.isSafeInteger(saved.state?.missionTick) &&
           saved.state.missionTick >= 0 &&
-          saved.state.missionTick <= ADVANCED_MAX_SECONDS * ADVANCED_MISSION_HZ,
+          (movingEnabled || saved.state.missionTick <= ADVANCED_MAX_SECONDS * ADVANCED_MISSION_HZ),
         'Invalid complete Advanced snapshot',
       );
       exactKeys(
@@ -1374,11 +1814,65 @@ export function createAdvancedSimulation(options = {}) {
           'recorderLengths',
           'recording',
           ...(terrainEnabled ? ['terrain'] : []),
+          ...(movingEnabled ? ['actors'] : []),
         ],
         'Advanced snapshot',
       );
       exactKeys(saved.state, Object.keys(state), 'Advanced snapshot state');
       const next = saved.state;
+      if (localPractice)
+        required(
+          terrainEnabled && movingEnabled && saved.recording.retention?.complete === false,
+          'Only retained Regional encounter checkpoints support local-practice import',
+        );
+      if (movingEnabled) {
+        const retention = saved.recording.retention;
+        exactKeys(retention, ['format', 'complete', 'fromMission'], 'Practice recording retention');
+        required(
+          retention.format === 'AdvancedPracticeRetention.v1' &&
+            typeof retention.complete === 'boolean' &&
+            Number.isSafeInteger(retention.fromMission) &&
+            retention.fromMission >= 0 &&
+            retention.fromMission <= next.missionTick &&
+            (!retention.complete || retention.fromMission === 0),
+          'Invalid practice recording interval',
+        );
+        required(
+          Number.isSafeInteger(next.motionBytes) &&
+            next.motionBytes >= 0 &&
+            Array.isArray(saved.recording.motionEvents) &&
+            saved.recording.motionEvents.reduce(
+              (sum, event) => sum + JSON.stringify(event).length + 1,
+              0,
+            ) === next.motionBytes,
+          'Invalid moving actor recording budget',
+        );
+        exactKeys(
+          next.contact,
+          ['touching', 'entries', 'ids', 'normal', 'impactSpeed'],
+          'Moving actor contact',
+        );
+        required(
+          typeof next.contact.touching === 'boolean' &&
+            Array.isArray(next.contact.entries) &&
+            next.contact.entries.length <= actors.length &&
+            Array.isArray(next.contact.ids) &&
+            next.contact.ids.length === next.contact.entries.length &&
+            finite(next.contact.impactSpeed, 0, 1e6),
+          'Invalid moving actor contacts',
+        );
+        vector(next.contact.normal, 'Moving contact normal');
+        for (const [index, entry] of next.contact.entries.entries()) {
+          exactKeys(entry, ['id', 'normal', 'moving'], 'Moving contact entry');
+          required(
+            actors.some((actor) => actor.id === entry.id) &&
+              next.contact.ids[index] === entry.id &&
+              entry.moving === true,
+            'Unknown moving contact',
+          );
+          vector(entry.normal, 'Moving contact normal');
+        }
+      }
       required(
         Number.isSafeInteger(next.substep) &&
           next.substep === next.missionTick * missionSteps &&
@@ -1422,7 +1916,7 @@ export function createAdvancedSimulation(options = {}) {
         required(
           Number.isSafeInteger(next[key]) &&
             next[key] >= 0 &&
-            next[key] <= ADVANCED_MAX_SECONDS * 1e6,
+            (movingEnabled || next[key] <= ADVANCED_MAX_SECONDS * 1e6),
           'Invalid Advanced input timestamp',
         );
       let priorSequence = next.consumedSequence,
@@ -1455,8 +1949,15 @@ export function createAdvancedSimulation(options = {}) {
           'Invalid Advanced recording history',
         );
       required(
-        saved.recording.hashes.length === Math.floor(next.missionTick / 50) &&
-          saved.recording.checkpoints.length === Math.floor(next.missionTick / 1500) &&
+        saved.recording.hashes.length ===
+          Math.floor(next.missionTick / 50) -
+            Math.floor((saved.recording.retention?.fromMission ?? 0) / 50) &&
+          saved.recording.checkpoints.length ===
+            (movingEnabled && !saved.recording.retention.complete
+              ? 1 +
+                Math.floor(next.missionTick / 1500) -
+                Math.floor(saved.recording.retention.fromMission / 1500)
+              : Math.floor(next.missionTick / 1500)) &&
           saved.recording.checkpoints.reduce(
             (sum, checkpoint) => sum + JSON.stringify(checkpoint).length + 1,
             0,
@@ -1465,22 +1966,105 @@ export function createAdvancedSimulation(options = {}) {
       );
       const savedFrame = terrainEnabled ? validateSavedTerrain(saved) : null;
       recordingComparison(saved.recording);
-      restoreInternal(saved, true, savedFrame);
+      if (localPractice) {
+        const from = saved.recording.retention.fromMission;
+        required(
+          next.missionTick - from <= ADVANCED_MAX_SECONDS * ADVANCED_MISSION_HZ &&
+            next.inputBytes +
+              next.motionBytes +
+              next.checkpointBytes +
+              saved.terrain.historyBytes +
+              recordingOverheadBytes <=
+              ADVANCED_RECORDING_BYTES,
+          'Practice recovery exceeds its retained interval',
+        );
+        let previous = -1,
+          previousStep = from * missionSteps - 1,
+          previousTime = -1;
+        for (const sample of saved.recording.inputs) {
+          required(
+            Array.isArray(sample) &&
+              [3, 7].includes(sample.length) &&
+              Number.isSafeInteger(sample[0]) &&
+              sample[0] > previousStep &&
+              sample[0] < next.substep &&
+              Number.isSafeInteger(sample[1]) &&
+              sample[1] > previous &&
+              Number.isSafeInteger(sample[2]) &&
+              sample[2] >= previousTime &&
+              sample[2] <= next.acceptedTimestampUs &&
+              (sample.length === 3 ||
+                (sample.slice(3, 6).every((n) => finite(n, -1, 1)) && finite(sample[6], 0, 1))),
+            'Invalid retained practice inputs',
+          );
+          previousStep = sample[0];
+          previous = sample[1];
+          previousTime = sample[2];
+        }
+        required(
+          saved.recording.inputs.reduce(
+            (sum, sample) => sum + JSON.stringify(sample).length + 1,
+            0,
+          ) === next.inputBytes,
+          'Invalid retained practice input budget',
+        );
+        previous = from - 1;
+        for (const event of saved.recording.motionEvents) {
+          required(
+            Array.isArray(event) &&
+              event.length === 2 &&
+              Number.isSafeInteger(event[0]) &&
+              event[0] >= from &&
+              event[0] < next.missionTick &&
+              event[0] > previous &&
+              Array.isArray(event[1]) &&
+              event[1].length <= actors.length,
+            'Invalid retained practice motion interval',
+          );
+          previous = event[0];
+          const seen = new Set();
+          for (const motion of event[1]) {
+            exactKeys(
+              motion,
+              ['id', 'from', 'to', ...(Object.hasOwn(motion, 'enabled') ? ['enabled'] : [])],
+              'Retained actor motion',
+            );
+            required(
+              actors.some((actor) => actor.id === motion.id) &&
+                !seen.has(motion.id) &&
+                (motion.enabled === undefined || typeof motion.enabled === 'boolean'),
+              'Invalid retained actor identity',
+            );
+            seen.add(motion.id);
+            vector(motion.from, 'Retained actor position');
+            vector(motion.to, 'Retained actor position');
+          }
+        }
+      }
+      restoreInternal(saved, true, savedFrame, localPractice);
       return telemetry();
     },
-    proposeMission() {
+    proposeMission({ motions } = {}) {
       assertLive();
       required(!proposal && !terrainProposal, 'A mission transaction is already pending');
       flightLimit(
-        state.missionTick < ADVANCED_MAX_SECONDS * ADVANCED_MISSION_HZ,
+        movingEnabled || state.missionTick < ADVANCED_MAX_SECONDS * ADVANCED_MISSION_HZ,
         'ADVANCED_DURATION_LIMIT',
         'Advanced flight duration limit reached',
       );
       const before = capture();
       try {
-        const trace = runMission();
+        const observation = { contacts: new Map() };
+        const trace = runMission(motions, observation);
         proposal = { id: ++proposalSerial, before };
-        return { transaction: proposal.id, trace, telemetry: telemetry() };
+        return {
+          transaction: proposal.id,
+          trace,
+          telemetry: telemetry(),
+          movingContacts: [...observation.contacts.values()].sort((a, b) =>
+            a.id < b.id ? -1 : a.id > b.id ? 1 : 0,
+          ),
+        };
       } catch (error) {
         restoreInternal(before);
         throw error;
@@ -1494,6 +2078,7 @@ export function createAdvancedSimulation(options = {}) {
       );
       if (!accepted) restoreInternal(proposal.before);
       proposal = null;
+      if (accepted && movingEnabled) retainPracticeHistory();
       return { admitted: accepted, telemetry: telemetry() };
     },
     recording() {
@@ -1539,10 +2124,44 @@ export function createAdvancedSimulation(options = {}) {
   };
 }
 
-/** Verify a user-owned recovery without modifying the receiving simulation.
- * Future queued input is not part of the consumed history; its shape/order is
- * checked by restore, while all consumed dynamics must match an exact replay.
- * Run this in a disposable worker so cancellation terminates the replay. */
+/** Validate a bounded, unscored checkpoint whose earlier history was discarded.
+ * This establishes safe configuration/physics structure, never flight proof.
+ * The Regional host also re-admits the exact window from verified source data. */
+export async function validateAdvancedPracticeRecovery(source, { expectedIdentity } = {}) {
+  const saved = boundedJSON(source, {
+    maxBytes: ADVANCED_REGIONAL_SNAPSHOT_BYTES,
+    maxNodes: 2000000,
+    maxArray: 300000,
+    maxString: 12 * 1024 * 1024,
+    maxDepth: 30,
+  });
+  required(
+    typeof expectedIdentity === 'string' &&
+      saved.identity === expectedIdentity &&
+      saved.format === 'AdvancedRegionalSnapshot.v1' &&
+      saved.recording?.config?.backend === ADVANCED_REGIONAL_BACKEND &&
+      saved.recording.config.dynamicMotionFormat === 'AdvancedMovingActors.v1' &&
+      saved.recording.retention?.complete === false &&
+      saved.recording.scored === false,
+    'Local-practice recovery requires the exact Regional encounter configuration',
+  );
+  await initAdvancedRuntime();
+  const candidate = createAdvancedSimulation(saved.recording.config);
+  try {
+    candidate.restore(saved, { localPractice: true });
+    required(
+      candidate.recordingStatus().localPractice === true,
+      'Practice recovery cannot qualify as verified proof',
+    );
+    return saved;
+  } finally {
+    candidate.dispose();
+  }
+}
+
+/** Verify complete consumed dynamics by exact replay in a disposable worker.
+ * Future queued input is shape/order checked separately; retained practice
+ * checkpoints must use the explicitly unscored import route above. */
 export async function verifyAdvancedRecovery(source, { expectedIdentity } = {}) {
   if (typeof source === 'string')
     source = boundedJSON(source, {
@@ -1565,6 +2184,10 @@ export async function verifyAdvancedRecovery(source, { expectedIdentity } = {}) 
     expectedIdentity === undefined || saved.identity === expectedIdentity,
     'Recovery belongs to another Advanced configuration',
   );
+  required(
+    saved.recording?.retention?.complete !== false,
+    'This local-practice recovery has a retained interval, not a complete verified flight',
+  );
   await initAdvancedRuntime();
   const candidate = createAdvancedSimulation({
     ...saved.recording?.config,
@@ -1584,6 +2207,7 @@ export async function verifyAdvancedRecovery(source, { expectedIdentity } = {}) 
         state,
         controller: snapshot.controller,
         ...(snapshot.terrain ? { terrain: snapshot.terrain } : {}),
+        ...(snapshot.actors ? { actors: snapshot.actors } : {}),
       };
     };
     // Compare complete data, not just the small replay verification hash. This
@@ -1632,6 +2256,38 @@ export async function replayAdvancedRecording(
     maxDepth: 30,
   });
   const regional = record.format === 'AdvancedRegionalRecording.v1';
+  const moving = record.config?.dynamicColliders !== undefined;
+  if (moving) {
+    exactKeys(
+      record.retention,
+      ['format', 'complete', 'fromMission'],
+      'Practice recording retention',
+    );
+    required(
+      record.retention.format === 'AdvancedPracticeRetention.v1' &&
+        record.retention.complete === true &&
+        record.retention.fromMission === 0,
+      'A retained local-practice interval cannot be verified as a complete recording',
+    );
+    required(
+      Array.isArray(record.motionEvents) && record.motionEvents.length <= record.missionTicks,
+      'Moving actor event history required',
+    );
+    let prior = -1;
+    for (const event of record.motionEvents) {
+      required(
+        Array.isArray(event) &&
+          event.length === 2 &&
+          Number.isSafeInteger(event[0]) &&
+          event[0] > prior &&
+          event[0] < record.missionTicks &&
+          Array.isArray(event[1]) &&
+          event[1].length > 0,
+        'Invalid actor motion event order',
+      );
+      prior = event[0];
+    }
+  }
   required(
     (regional || record.format === 'AdvancedRecording.v1') &&
       record.scored === false &&
@@ -1686,7 +2342,8 @@ export async function replayAdvancedRecording(
       sequence = -1,
       step = -1,
       hashCursor = 0,
-      terrainCursor = 0;
+      terrainCursor = 0,
+      motionCursor = 0;
     const applyTerrain = (substep) => {
       while (regional && record.terrainEvents[terrainCursor]?.[0] === substep) {
         const frame = frames[record.terrainEvents[terrainCursor++][1]];
@@ -1744,7 +2401,11 @@ export async function replayAdvancedRecording(
         sequence = item[1];
         step = item[0];
       }
-      sim.stepMission();
+      const motions =
+        moving && record.motionEvents[motionCursor]?.[0] === mission
+          ? record.motionEvents[motionCursor++][1]
+          : undefined;
+      sim.stepMission({ motions });
       const expected = record.hashes[hashCursor];
       if (expected && expected[0] === sim.telemetry().substep) {
         required(
@@ -1765,6 +2426,7 @@ export async function replayAdvancedRecording(
       required(
         cursor === record.inputs.length &&
           hashCursor === record.hashes.length &&
+          (!moving || motionCursor === record.motionEvents.length) &&
           (!regional || terrainCursor === record.terrainEvents.length),
         'Unconsumed Advanced recording entries',
       );

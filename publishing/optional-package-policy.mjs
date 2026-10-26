@@ -625,6 +625,7 @@ const FPV_TUNING_FILES = Object.freeze([
   'advanced-ghost-path.mjs',
   'propulsion-evidence.mjs',
   'propulsion-evidence-ui.mjs',
+  'propulsion-load.mjs',
   'aircraft-challenge.mjs',
   'aircraft-challenge-ui.mjs',
   'advanced-worker.mjs',
@@ -648,16 +649,20 @@ export const OPTIONAL_PACKAGE_POLICIES = Object.freeze(
       Object.freeze({
         ...policy,
         // Original aggregate locale files are retained as source hashes, while
-        // only selected messages ship. Academy's reviewed input inventory is
-        // within 13 MiB + 192 KiB with the visual workbench and isolated response bench.
-        // The 13 MiB + 192 KiB input allowance retains aggregate locale hashes;
+        // only selected messages ship. Academy's reviewed input inventory includes
+        // the visual workbench and isolated response bench.
+        // The runtime envelope plus 192 KiB retains aggregate locale hashes;
         // those full locale inputs do not ship in standalone SIM archives.
         ...(id === 'civilian-fpv' ? { sourceInputBytes: 13 * 1024 * 1024 + 192 * 1024 } : {}),
         // The canonical browser is projected into an existing package module.
         // Admit only its message families, including plural and dynamic keys.
         localeKeyPrefixes: Object.freeze({
           errors: Object.freeze(['missionLibrary.']),
-          interface: Object.freeze(['missionLibrary.', 'missionGoal.']),
+          interface: Object.freeze([
+            'missionLibrary.',
+            'missionGoal.',
+            ...(['civilian-fpv', 'fpv-worlds'].includes(id) ? ['supportSummary.'] : []),
+          ]),
           common: Object.freeze(['counts.missions', 'collections.']),
         }),
         localeKeys: Object.freeze({
@@ -717,15 +722,17 @@ export const OPTIONAL_PACKAGE_POLICIES = Object.freeze(
           // The visual workbench and isolated response bench add nine explicit
           // files to each complete runtime/source envelope. The installed-core
           // Academy cache includes the shared full locale catalog; its measured
-          // 13,132,631-byte closure requires a 13 MiB runtime allowance.
+          // 13,125,579-byte closure, including shared navigation, fits 13 MiB.
           // Standalone Academy remains below 12 MiB; World stays at 20 MiB.
           // World also admits its single Regional Advanced adapter.
           // Academy now carries the same pinned 4.35 MB Rapier build as World.
+          // The evidence inspector adds one explicitly admitted load solver;
+          // complete source inventories are now 151 and 211 files respectively.
           files:
             id === 'civilian-fpv'
-              ? 150
+              ? 151
               : id === 'fpv-worlds'
-                ? 210 // Includes World's same-scope flight and response-bench workers.
+                ? 211 // Includes World's same-scope flight and response-bench workers.
                 : id === 'civilian-flight'
                   ? 100
                   : policy.limits.files,
@@ -752,6 +759,9 @@ export const OPTIONAL_PACKAGE_POLICIES = Object.freeze(
                 )
               : []),
             ...(['civilian-fpv', 'fpv-worlds'].includes(id) ? ['game/platform.mjs'] : []),
+            ...(['civilian-fpv', 'fpv-worlds'].includes(id)
+              ? ['game/ui/local-support-summary.mjs', 'game/local-support-summary.mjs']
+              : []),
             'game/access-gate.mjs',
             'game/access-gate.css',
             // The legacy civilian-flight archive also hosts the shared SIM

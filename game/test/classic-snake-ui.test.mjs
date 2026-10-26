@@ -37,6 +37,8 @@ import { attachInstallOfflinePanel } from '../ui/install-offline-panel.mjs';
 import { menuPad } from './helpers/global-tools-fixture.mjs';
 import { mountGlobalSettings } from '../ui/global-settings-view.mjs';
 import { menuAnimationBinding, MENU_ANIMATION_KEY } from '../ui/menu-animation-preferences.mjs';
+import { mountComfortPresets } from '../ui/comfort-presets.mjs';
+import { createDisplayPreferences, DISPLAY_PREFERENCES_KEY } from '../display-preferences.mjs';
 import { mountBattlefieldGroundControls } from '../ui/battlefield-ground-controls.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
@@ -138,6 +140,7 @@ async function harness({
   activity = 'campaign',
   sharedTools = false,
   liveLocale = false,
+  realDisplay = false,
   directEntry = true,
   focused = true,
   artReview = null,
@@ -153,6 +156,7 @@ async function harness({
   supportCollect = null,
   supportExport = null,
   sharedToolOptions = {},
+  touchStorage = null,
 } = {}) {
   const document = new Document();
   let harnessLocale = language;
@@ -210,6 +214,7 @@ async function harness({
     effectiveTextSize: effectiveTextSize(initialTextSize),
     reducedEffects: false,
     effectiveReducedEffects: false,
+    revision: 0,
   };
   const displayListeners = new Set();
   const location = {
@@ -365,6 +370,7 @@ async function harness({
     attachMenuAudioSettings() {},
     attachDefeatSoundControls,
     menuAnimationBinding,
+    mountComfortPresets,
     mountModeSettings,
     attachSettingsPanels,
     settingsPanelBack,
@@ -478,19 +484,38 @@ async function harness({
         }),
       }),
     createEncounterDisplayPreferences: () => preferences({ showRemains: true }),
-    createDisplayPreferences: () => ({
-      snapshot: () => display,
-      subscribe(listener) {
-        displayListeners.add(listener);
-        listener(display);
-        return () => displayListeners.delete(listener);
-      },
-      set(patch) {
-        Object.assign(display, patch);
-        display.effectiveTextSize = effectiveTextSize(display.textSize);
-        for (const listener of displayListeners) listener(display);
-      },
-    }),
+    createDisplayPreferences: (options) => {
+      if (realDisplay) {
+        const owner = createDisplayPreferences({
+          ...options,
+          window,
+          getStorage: () => context.localStorage,
+        });
+        owner.subscribe((state) => Object.assign(display, state));
+        return {
+          ...owner,
+          // The host runs in a VM realm; transfer its ordinary patches to the
+          // canonical owner just as the browser's same-realm calls would.
+          set: (patch) => owner.set(structuredClone(patch)),
+        };
+      }
+      return {
+        snapshot: () => display,
+        getWarning: () => '',
+        getWarningKey: () => '',
+        subscribe(listener) {
+          displayListeners.add(listener);
+          listener(display);
+          return () => displayListeners.delete(listener);
+        },
+        set(patch) {
+          Object.assign(display, patch);
+          display.effectiveTextSize = effectiveTextSize(display.textSize);
+          display.revision++;
+          for (const listener of displayListeners) listener(display);
+        },
+      };
+    },
     renderTextSizeControl,
     nextInputModality,
     showScreenControls,
@@ -502,7 +527,9 @@ async function harness({
         ...options,
         storage: {
           getItem: (key) => storage.get(key) ?? null,
-          setItem: (key, value) => storage.set(key, value),
+          setItem: (key, value) => {
+            if (touchStorage?.mode !== 'silent') storage.set(key, value);
+          },
         },
         eventTarget: window,
       }),
@@ -3513,3 +3540,121 @@ test('Snake compact native Settings Back retires Data before re-entering the sam
   assert.equal(h.$('support-summary-download').disabled, true);
   assert.equal(h.document.activeElement === focus, true);
 });
+
+for (const mode of ['solo', 'team', 'versus'])
+  test(`${mode} Snake comfort preview, Apply and Undo preserve the paused boards with real preference owners`, async () => {
+    const h = await harness({ mode, realDisplay: true });
+    h.start();
+    h.frame(0);
+    h.frame(100);
+    h.shell.open('settings');
+    h.$('snake-menu-settings-tab-accessibility').click();
+    const before = h.created.map((run) => core.exportClassicSnakeReplay(run)),
+      prefix = 'snake-menu-settings-panel-accessibility-comfort-';
+    h.$(`${prefix}choice`).value = 'comfort';
+    h.$(`${prefix}choice`).emit('change');
+    assert.equal(h.storage.has(DISPLAY_PREFERENCES_KEY), false);
+    assert.equal(h.storage.has(MENU_ANIMATION_KEY), false);
+    h.$(`${prefix}apply`).click();
+    assert.deepEqual(JSON.parse(h.storage.get(DISPLAY_PREFERENCES_KEY)), {
+      textFace: 'plain',
+      textSize: 'large',
+      reducedEffects: true,
+    });
+    assert.equal(h.storage.get(MENU_ANIMATION_KEY), 'off');
+    h.frame(800);
+    assert.deepEqual(
+      h.created.map((run) => core.exportClassicSnakeReplay(run)),
+      before,
+    );
+    h.$(`${prefix}undo`).focus();
+    h.$(`${prefix}undo`).click();
+    assert.deepEqual(JSON.parse(h.storage.get(DISPLAY_PREFERENCES_KEY)), {
+      textFace: 'pixel',
+      textSize: 'standard',
+      reducedEffects: false,
+    });
+    assert.equal(h.storage.get(MENU_ANIMATION_KEY), 'on');
+    assert.equal(h.document.activeElement, h.$(`${prefix}apply`));
+    h.frame(1600);
+    assert.deepEqual(
+      h.created.map((run) => core.exportClassicSnakeReplay(run)),
+      before,
+    );
+    assert.equal(h.shell.elements.dialogs.settings.open, true);
+  });
+
+test('Snake comfort retries failed shared saves without replacing its original Undo target', async () => {
+  const h = await harness({ realDisplay: true }),
+    write = h.storage.set.bind(h.storage),
+    prefix = 'snake-menu-settings-panel-accessibility-comfort-';
+  let working = false;
+  h.storage.set = (key, value) => {
+    if (!working && [DISPLAY_PREFERENCES_KEY, MENU_ANIMATION_KEY].includes(key))
+      throw new DOMException('Modeled full storage', 'QuotaExceededError');
+    return write(key, value);
+  };
+  h.shell.open('settings');
+  h.$('snake-menu-settings-tab-accessibility').click();
+  h.$(`${prefix}apply`).click();
+  assert.equal(h.display.textFace, 'plain');
+  assert.equal(h.$('snake-global-menuAnimation').checked, false);
+  assert.match(h.$(`${prefix}status`).textContent, /could not be saved/);
+  working = true;
+  h.$(`${prefix}apply`).click();
+  assert.equal(h.storage.get(MENU_ANIMATION_KEY), 'off');
+  h.$(`${prefix}undo`).click();
+  assert.equal(h.display.textFace, 'pixel');
+  assert.equal(h.display.textSize, 'standard');
+  assert.equal(h.storage.get(MENU_ANIMATION_KEY), 'on');
+});
+
+for (const mode of ['solo', 'versus', 'team']) {
+  test(`${mode} Snake touch save Retry preserves the paused replay, other storage and input focus`, async (t) => {
+    const touchStorage = { mode: 'silent' };
+    const state = await harness({ mode, touchStorage });
+    t.after(() => state.disposeTools());
+    state.start();
+    const surface = state.$('snake-touch-0-surface');
+    surface.emit('pointerdown', {
+      pointerId: 41,
+      pointerType: 'touch',
+      button: 0,
+      clientX: 80,
+      clientY: 100,
+    });
+    surface.emit('pointermove', { pointerId: 41, pointerType: 'touch', clientX: 80, clientY: 65 });
+    assert.equal(state.created[0].history.at(-1).direction, 'up');
+    state.frame(0);
+    state.frame(100);
+    state.shell.elements.buttons.pause.click();
+    state.shell.elements.buttons.settings.click();
+    const paused = state.created.map((run) => core.exportClassicSnakeReplay(run));
+    const unrelated = () => [...state.storage].filter(([key]) => key !== 'revealline.touch.v1');
+    const saved = unrelated();
+    const field = state.$('snake-global-touch-mode');
+    const status = state.$('snake-global-touch-save-status');
+    const retry = state.$('snake-global-touch-save-retry');
+    field.focus();
+    field.value = 'dpad';
+    field.emit('change');
+    assert.match(status.textContent, /Session only.*did not confirm/);
+    state.window.emit('pageshow', { persisted: true });
+    assert.equal(field.value, 'dpad');
+    assert.equal(surface.hasPointerCapture(41), false);
+    touchStorage.mode = 'working';
+    retry.focus();
+    retry.click();
+    assert.equal(state.document.activeElement, field);
+    assert.equal(retry.hidden, true);
+    assert.equal(JSON.parse(state.storage.get('revealline.touch.v1')).mode, 'dpad');
+    state.frame(1000);
+    assert.deepEqual(
+      state.created.map((run) => core.exportClassicSnakeReplay(run)),
+      paused,
+    );
+    assert.deepEqual(unrelated(), saved);
+    assert.equal(state.document.body.dataset.playing, 'false');
+    assert.equal(state.shell.elements.root.dataset.phase, 'paused');
+  });
+}

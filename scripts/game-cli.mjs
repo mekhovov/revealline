@@ -1,5 +1,7 @@
 #!/usr/bin/env node
 import { validateLocalization } from './localization.mjs';
+const validatePublishedContentOwnership = async (...args) =>
+  (await import('./published-content-ownership.mjs')).validatePublishedContentOwnership(...args);
 /** Local browser-game tooling, including catalog validation for localized builds. */
 import { createHash } from 'node:crypto';
 import { createServer } from 'node:http';
@@ -589,7 +591,7 @@ export function addPublicEntries(entries, info) {
     bytes: Buffer.from(
       makePage(
         'Credits and notices',
-        '<p><a href="./" data-i18n="website:gameHome">← Game home</a></p><h1 data-i18n="website:creditsAndNotices">Credits and notices</h1><p data-i18n="website:revealLineIsAnOriginalTerritoryCaptureGameInspiredBy">FPV / LINE is an original territory-capture game inspired by the Xonix/Qix tradition. Reference games informed design research; their proprietary music, pictures, code and logos are not bundled as game assets.</p><p data-i18n-rich="website:theIncludedPhaserEngineRetainsItsSlot0BuiltInMusic">The included Phaser engine retains its <a data-i18n-slot="slot0" href="./game/vendor/PHASER-LICENSE.md" data-i18n="website:mitLicenseAndCopyrightNotice">MIT license and copyright notice</a>. Built-in music uses original procedural score recipes. Uploaded MP3s retain their author-supplied metadata and source records.</p><p data-i18n="website:theWorldsBackgroundsAndCharacterRigsAreChangeableFpvGameplay">The worlds, backgrounds and character rigs are changeable. FPV gameplay is a fictional arcade abstraction. The business-spend theme is a design concept and does not claim endorsement or actual business-product functionality.</p><p data-i18n="website:theTelegramEmojiCollectionResearchedForInspirationIsNotIncluded">The Telegram emoji collection researched for inspiration is not included as imported artwork. A pack author must supply appropriate attribution and rights for every asset they distribute; importing a file is not a redistribution license.</p>' +
+        '<p><a href="./" data-i18n="website:gameHome">← Game home</a></p><h1 data-i18n="website:creditsAndNotices">Credits and notices</h1><p data-i18n="website:revealLineIsAnOriginalTerritoryCaptureGameInspiredBy">FPV / LINE is an original territory-capture game inspired by the Xonix/Qix tradition. Reference games informed design research; their proprietary music, pictures, code and logos are not bundled as game assets.</p><p data-i18n-rich="website:theIncludedPhaserEngineRetainsItsSlot0BuiltInMusic">The included Phaser engine retains its <a data-i18n-slot="slot0" href="./game/vendor/PHASER-LICENSE.md" data-i18n="website:mitLicenseAndCopyrightNotice">MIT license and copyright notice</a>. Built-in music uses original procedural score recipes. Uploaded MP3s retain their author-supplied metadata and source records.</p><p data-i18n="website:theWorldsBackgroundsAndCharacterRigsAreChangeableFpvGameplay">The worlds, backgrounds and character rigs are changeable. FPV gameplay is a fictional arcade abstraction.</p><p data-i18n="website:theTelegramEmojiCollectionResearchedForInspirationIsNotIncluded">The Telegram emoji collection researched for inspiration is not included as imported artwork. A pack author must supply appropriate attribution and rights for every asset they distribute; importing a file is not a redistribution license.</p>' +
           (has('game/vendor/MEDIABUNNY-LICENSE.txt') && has('game/vendor/mediabunny-1.59.1.json')
             ? '<p data-i18n-rich="website:page.mediabunnyNotice">The optional local video trimmer uses pinned Mediabunny 1.59.1 under its <a data-i18n-slot="license" data-i18n="website:page.mplLicense" href="./game/vendor/MEDIABUNNY-LICENSE.txt">MPL-2.0 license</a>; its <a data-i18n-slot="source" data-i18n="website:page.sourceChecksumRecord" href="./game/vendor/mediabunny-1.59.1.json">source and checksum record</a> is included.</p>'
             : '') +
@@ -856,6 +858,11 @@ export async function addOfflineEntries(
     ...entries
       .filter((entry) => entry.name.startsWith('optional-practice/'))
       .map((entry) => entry.name),
+    // Character art has its own explicit verified download and cache. Hosting
+    // the pack must not add its models to every core-game offline installation.
+    ...entries
+      .filter((entry) => entry.name.startsWith('authoring/library/fpv-character-art/'))
+      .map((entry) => entry.name),
     // Demo recordings and the large landing photograph remain published for
     // online playback, but they are optional bodies rather than core offline boot.
     // Excluding only their bodies preserves URLs, provenance and on-demand tests
@@ -1091,6 +1098,7 @@ export async function prepareBuildProject({
   if (out !== null) await assertOutput(root, out, config.include);
   await phase('references');
   await validateBuildReferences(root, files);
+  await validatePublishedContentOwnership(root, files);
   await phase('content-snapshots');
   const { contentSnapshots = [] } = await validateContentSnapshots(root, files);
   if (files.includes('game/coop/library.mjs')) {
@@ -1761,11 +1769,13 @@ export async function main(argv = process.argv.slice(2)) {
     const files = await collectBuildFiles(PROJECT_ROOT, config);
     const references = await validateBuildReferences(PROJECT_ROOT, files);
     const contentSnapshots = await validateContentSnapshots(PROJECT_ROOT, files);
+    const ownership = await validatePublishedContentOwnership(PROJECT_ROOT, files);
     process.stdout.write(
       json({
         version: config.version,
         files: files.length,
         ...references,
+        ...ownership,
         ...contentSnapshots,
         ...(await validateLevels()),
         ...(await validateThemes()),

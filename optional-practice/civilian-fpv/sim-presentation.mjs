@@ -1,4 +1,5 @@
 import { readSimMenuAudio } from './flight-fullscreen.mjs';
+import { createFlightMenuNavigation } from './input.mjs';
 import {
   createSimAppearancePreferences,
   resolveSimAppearance,
@@ -20,6 +21,269 @@ import {
   loadAppearanceContext,
   saveAppearanceContext,
 } from '../../game/presentation/theme-system.mjs';
+
+export function radioFlightHelp(layout, locale = 'en') {
+  if (layout?.layout === 'six-switch')
+    return locale === 'uk'
+      ? 'Flight OFF: пауза й меню. У меню: стік із центруванням — навігація; увімкніть і вимкніть Fire для вибору, Weapon — назад. Reload: камера; Payload: повтор із підтвердженням; Detonate: налаштування. Для продовження поверніться на головний екран паузи й увімкніть Flight.'
+      : 'Flight OFF: pause and menu. Menus: use the centering stick; cycle Fire to select or Weapon to go back. Reload: view; Payload: confirmed retry; Detonate: settings. Return to the main pause screen and switch Flight ON to resume.';
+  return locale === 'uk'
+    ? 'Призначте мотори, скидання, паузу й камеру в «Налаштувати пульт». Камера: увімкніть і вимкніть перемикач. Без вільного перемикача виберіть камеру в меню паузи. У меню: крен/тангаж — навігація; утримайте рискання праворуч/ліворуч і поверніть у центр для підтвердження/назад.'
+    : 'Assign Arm, Reset, Pause and View in Set up radio. View: switch ON, then OFF. Without a spare switch, choose the camera in Pause. Menus: roll/pitch navigate; hold yaw right/left, then centre to confirm/go back.';
+}
+
+/** Presentation ownership for the six physical switches, shared by both SIM hosts.
+ * Menu actions never enter the aircraft's accepted command queue. */
+export function mountRadioMenuControls({
+  document: doc,
+  window: win,
+  runtime,
+  locale = () => 'en',
+  onResume = () => {},
+  onCamera = () => {},
+  onRetry = () => {},
+  onSettings = () => {},
+  onError = () => {},
+}) {
+  const t = (en, uk) => (locale() === 'uk' ? uk : en);
+  const status = doc.createElement('section');
+  status.className = 'sim-radio-ready';
+  status.hidden = true;
+  const title = doc.createElement('strong');
+  const help = doc.createElement('p');
+  const readings = doc.createElement('div');
+  readings.className = 'sim-radio-ready__axes';
+  status.append(title, help, readings);
+  const axes = ['roll', 'pitch', 'yaw', 'throttle'].map((axis) => {
+    const row = doc.createElement('span');
+    readings.append(row);
+    return { axis, row };
+  });
+  const confirm = doc.createElement('dialog');
+  confirm.className = 'sim-radio-confirm';
+  confirm.id = `radio-retry-${doc.querySelectorAll('.sim-radio-confirm').length}`;
+  const heading = doc.createElement('h2');
+  heading.id = `${confirm.id}-title`;
+  confirm.setAttribute('aria-labelledby', heading.id);
+  const description = doc.createElement('p');
+  const cancel = doc.createElement('button');
+  const retry = doc.createElement('button');
+  cancel.type = retry.type = 'button';
+  confirm.append(heading, description, cancel, retry);
+  doc.body.append(confirm);
+  let resumePending = false,
+    lastState = {},
+    returnFocus = null,
+    disposed = false,
+    revision = 0,
+    ownershipKey = '';
+  const close = () => {
+    if (confirm.open) confirm.close();
+    if (returnFocus?.isConnected) returnFocus.focus({ preventScroll: true });
+    returnFocus = null;
+  };
+  const cancelNative = (event) => {
+    event.preventDefault();
+    close();
+  };
+  cancel.addEventListener('click', close);
+  confirm.addEventListener('cancel', cancelNative);
+  const retryClick = () => {
+    close();
+    onRetry();
+  };
+  retry.addEventListener('click', retryClick);
+  return {
+    context() {
+      return confirm.open ? { root: confirm, key: confirm.id, radioResumeBlocked: true } : null;
+    },
+    back() {
+      if (!confirm.open) return false;
+      close();
+      return true;
+    },
+    shortcut(action, context) {
+      if (context?.blockDevices || context?.radioSetup || confirm.open) return;
+      if (action === 'camera') onCamera();
+      else if (action === 'settings') onSettings();
+      else if (action === 'retry' && lastState.flightAvailable) {
+        returnFocus = doc.activeElement;
+        heading.textContent = t('Restart this attempt?', 'Почати цю спробу заново?');
+        description.textContent = t(
+          'Your current attempt will end. The same level, loadout and seed will be kept.',
+          'Поточну спробу буде завершено. Рівень, спорядження та початкові умови збережуться.',
+        );
+        cancel.textContent = t('Keep playing', 'Залишити спробу');
+        retry.textContent = t('Restart attempt', 'Почати заново');
+        confirm.showModal();
+        cancel.focus();
+      }
+    },
+    sync(state) {
+      if (disposed) return null;
+      lastState = state;
+      const { context, flightActive, flightAvailable, canResume, playback, enabled = true } = state;
+      const six = runtime.controlLayout?.()?.layout === 'six-switch';
+      if (!six) {
+        status.hidden = true;
+        return (
+          runtime.menuPreview?.() ?? {
+            ...runtime.preview(),
+            key: runtime.status().selected?.key,
+            index: runtime.status().selected?.index,
+          }
+        );
+      }
+      const focused = doc.visibilityState !== 'hidden' && (!doc.hasFocus || doc.hasFocus());
+      const allowed = Boolean(enabled && focused && canResume && !confirm.open);
+      const nextOwnershipKey = `${context?.key ?? ''}:${flightActive}:${allowed}:${playback}:${Boolean(context?.blockDevices)}`;
+      if (nextOwnershipKey !== ownershipKey) {
+        ownershipKey = nextOwnershipKey;
+        revision++;
+      }
+      const generation = revision;
+      runtime.setContext({
+        owner:
+          !focused || context?.blockDevices
+            ? 'capture'
+            : flightActive
+              ? playback
+                ? 'playback'
+                : 'flight'
+              : 'menu',
+        key: context?.key ?? (playback ? 'playback' : 'flight'),
+        resumeAllowed: allowed,
+        playback: Boolean(playback),
+      });
+      runtime.poll();
+      const observed = runtime.menuPreview();
+      const resume =
+        runtime.consumeResumeRequest?.() ||
+        (!flightActive && allowed && !playback && runtime.status().active);
+      if (resume && !resumePending) {
+        resumePending = true;
+        Promise.resolve()
+          .then(() => {
+            if (
+              disposed ||
+              generation !== revision ||
+              confirm.open ||
+              doc.visibilityState === 'hidden' ||
+              doc.hasFocus?.() === false
+            )
+              return;
+            return onResume();
+          })
+          .catch(onError)
+          .finally(() => {
+            resumePending = false;
+          });
+      }
+      status.hidden = !(context && flightAvailable && canResume);
+      if (!status.hidden) {
+        if (status.parentElement !== context.root) context.root.append(status);
+        title.textContent = t('Resume with your radio', 'Продовження з пульта');
+        const pickup = observed.pickup;
+        const readable =
+          observed.verified &&
+          observed.controls &&
+          axes.every(({ axis }) => Number.isFinite(observed.controls[axis]));
+        help.textContent = !readable
+          ? t(
+              'Reconnect your radio or finish setup before resuming.',
+              'Під’єднайте пульт або завершіть налаштування перед продовженням.',
+            )
+          : playback
+            ? t(
+                'Flight OFF pauses playback. Flight ON continues from this screen.',
+                'Flight OFF призупиняє перегляд. Flight ON продовжує з цього екрана.',
+              )
+            : pickup
+              ? t(
+                  'Match the saved stick positions, then switch Flight OFF → ON. Green values are ready.',
+                  'Поверніть стіки до збережених положень, потім Flight OFF → ON. Зелені значення готові.',
+                )
+              : t(
+                  'Lower throttle, centre the other controls, then switch Flight OFF → ON.',
+                  'Опустіть газ, відцентруйте інші стіки, потім Flight OFF → ON.',
+                );
+        readings.hidden = Boolean(playback || !readable);
+        const names =
+          locale() === 'uk'
+            ? ['Крен', 'Тангаж', 'Курс', 'Газ']
+            : ['Roll', 'Pitch', 'Yaw', 'Throttle'];
+        axes.forEach(({ axis, row }, index) => {
+          const value = observed.controls?.[axis] ?? 0,
+            target = pickup?.[axis] ?? 0;
+          const tolerance = pickup ? 0.07 : axis === 'throttle' ? 0.04 : 0.08;
+          row.dataset.ready = String(Boolean(readable && Math.abs(value - target) <= tolerance));
+          row.textContent = `${names[index]} ${Math.round(value * 100)}% → ${Math.round(target * 100)}%`;
+        });
+      }
+      return observed;
+    },
+    dispose() {
+      disposed = true;
+      revision++;
+      cancel.removeEventListener('click', close);
+      retry.removeEventListener('click', retryClick);
+      confirm.removeEventListener('cancel', cancelNative);
+      status.remove();
+      confirm.remove();
+    },
+  };
+}
+
+/** A paused choice is a UI intent until a new Fire activation explicitly executes it. */
+export function createRadioStagedAction({ execute = () => false } = {}) {
+  let pending = null,
+    released = false,
+    suppress = false;
+  return {
+    stage(action, identity) {
+      if (!['weapon', 'reload', 'payload', 'detonate'].includes(action)) return false;
+      pending = { action, identity };
+      released = false;
+      suppress = true;
+      return true;
+    },
+    pending: () => pending?.action ?? null,
+    clear() {
+      pending = null;
+      released = false;
+    },
+    direct() {
+      if (pending) suppress = true;
+      pending = null;
+      released = false;
+    },
+    validate(identity) {
+      if (pending && pending.identity !== identity) {
+        pending = null;
+        released = false;
+      }
+    },
+    fire(held, identity) {
+      this.validate(identity);
+      if (!held) {
+        released = true;
+        suppress = false;
+        return false;
+      }
+      if (pending) {
+        if (released) {
+          const selected = pending;
+          pending = null;
+          released = false;
+          suppress = true;
+          if (execute(selected.action) === false) pending = selected;
+        }
+        return false;
+      }
+      return !suppress;
+    },
+  };
+}
 
 /** Read-only teaching feedback from the runtime's matching criterion state. */
 export function practiceSkillFeedback(target, state, locale = 'en') {
@@ -3183,7 +3447,7 @@ const SHARED_ASSETS = {
 };
 // Exact shared material sheet; fonts are acquired from the embedded source assets.
 // prettier-ignore
-const SHARED_THEME_CSS = "/* Shared appearance recipes. Existing screen layout is in @layer legacy so\n   component paint has one authority, independent of a screen's ID selectors.\n   The aliases below are the migration boundary for existing semantic classes;\n   new components should use data-ui-surface / data-ui-action / data-ui-tone. */\n[data-theme-styled='true'] {\n  color-scheme: var(--iw-color-scheme, dark);\n  color: var(--iw-text);\n  background: var(--iw-ink);\n  font-family: var(--iw-font-ui);\n  --ui-shadow: color-mix(in srgb, var(--iw-ink) 78%, black);\n  --ui-hover: color-mix(in srgb, var(--iw-panel-raised) 90%, var(--iw-text));\n  --ui-disabled: var(--iw-muted);\n  --ui-control-border: var(--iw-control-line);\n}\n[data-theme-family] {\n  /* Each presentation owns its finish, including nested Studio specimens.\n     Material paint never leaks from an enclosing theme or accessibility mode. */\n  --ui-panel-finish: none;\n  --ui-control-finish: none;\n  --ui-hover-finish: initial;\n  --ui-selected-finish: initial;\n  --ui-active-finish: none;\n  --ui-inset-finish: none;\n  --ui-toolbar-finish: none;\n  --ui-thumb-finish: none;\n  --ui-inset-depth: initial;\n  --ui-input-hover-depth: initial;\n  --ui-material-travel: none;\n  --ui-loading-rail: 3px;\n  --ui-hover-face: initial;\n  --ui-hover-ink: initial;\n  --ui-hover-frame: initial;\n  --ui-panel-frame: none;\n  --ui-raised-frame: none;\n  --ui-primary-frame: none;\n  --ui-panel-depth: initial;\n  --ui-action-depth: initial;\n  --ui-hover-depth: initial;\n  --ui-pressed-depth: initial;\n  --ui-selected-depth: initial;\n  --ui-gallery-depth: none;\n  --ui-press-travel: none;\n  --ui-scene-motif: none;\n  --ui-scene-motif-size: 48px 48px;\n  --ui-scene-inset: 24px 24px auto auto;\n  --ui-scene-width: min(24vw, 192px);\n  --ui-scene-height: 96px;\n  --ui-scene-repeat: no-repeat;\n  --ui-scene-opacity: 0.18;\n}\n/* Rebind older semantic variables on their owning scope. Authored image, video,\n   Canvas and 3D assets remain in their own renderer; none are filtered/recolored. */\n[data-theme-styled='true'],\n[data-theme-styled='true']\n  :where(\n    body,\n    .field-kit,\n    dialog,\n    .race-screen,\n    .race-shell,\n    .overlay-card,\n    .native-landing,\n    .native-settings,\n    [data-ui-surface]\n  ) {\n  --fk-bg: var(--iw-ink);\n  --fk-panel: var(--iw-panel);\n  --fk-panel-raised: var(--iw-panel-raised);\n  --fk-text: var(--iw-text);\n  --fk-muted: var(--iw-muted);\n  --fk-line: var(--iw-line);\n  --fk-control-line: var(--iw-control-line);\n  --fk-cyan: var(--iw-accent);\n  --fk-amber: var(--iw-amber);\n  --fk-hazard: var(--iw-hazard);\n  --fk-success: var(--iw-safe);\n  --fk-accent: var(--iw-accent);\n  --fk-on-accent: var(--iw-on-accent, var(--iw-ink));\n  --fk-focus: var(--iw-focus, var(--iw-control-line));\n  --fk-font-ui: var(--iw-font-ui);\n  --fk-font-pixel: var(--iw-font-ui);\n  --fk-font-mono: var(--iw-font-mono);\n  --fk-font-display: var(--iw-font-display);\n  --fk-text-body: var(--iw-text-size);\n  --fk-text-control: var(--iw-text-size);\n  --fk-text-secondary: max(14px, calc(var(--iw-text-size) - 2px));\n  --fk-target-size: var(--iw-target);\n  --rl-menu-skin-bg: var(--iw-ink);\n  --rl-menu-skin-panel: var(--iw-panel);\n  --rl-menu-skin-panel-raised: var(--iw-panel-raised);\n  --rl-menu-skin-text: var(--iw-text);\n  --rl-menu-skin-muted: var(--iw-muted);\n  --rl-menu-skin-line: var(--iw-line);\n  --rl-menu-skin-control-line: var(--iw-control-line);\n  --rl-menu-skin-cyan: var(--iw-accent);\n  --rl-menu-skin-amber: var(--iw-amber);\n  --rl-menu-skin-hazard: var(--iw-hazard);\n  --rl-menu-skin-decorative: var(--iw-line);\n  --native-ink: var(--iw-ink);\n  --native-panel: var(--iw-panel);\n  --native-surface: var(--iw-panel-raised);\n  --paper: var(--iw-ink);\n  --ink: var(--iw-text);\n  --bg: var(--iw-ink);\n  --panel: var(--iw-panel);\n  --panel-raised: var(--iw-panel-raised);\n  --text: var(--iw-text);\n  --muted: var(--iw-muted);\n  --line: var(--iw-line);\n  --accent: var(--iw-accent);\n  --safe: var(--iw-safe);\n  --danger: var(--iw-hazard);\n  --sky: var(--iw-accent);\n  --sun: var(--iw-amber);\n  --mint: var(--iw-safe);\n}\n[data-theme-styled='true']\n  :where(\n    body,\n    .access-gate,\n    .launch-screen,\n    .native-landing,\n    .native-mission-library,\n    .race-screen,\n    .race-shell,\n    #coop-menu,\n    [data-ui-surface='page']\n  ) {\n  color: var(--iw-text);\n  background: var(--iw-ink);\n  font-family: var(--iw-font-ui);\n  color-scheme: inherit;\n}\n[data-theme-styled='true']\n  :where(p, li, dd, dt, label, legend, summary, h1, h2, h3, h4, h5, h6, strong, b, em, span) {\n  color: inherit;\n  text-shadow: none;\n}\n[data-theme-styled='true'] :where(h1, .display-heading, .native-game-title) {\n  color: var(--iw-text);\n  font-family: var(--iw-font-display);\n  letter-spacing: 0.02em;\n}\n[data-theme-styled='true'] :where(h2, h3, h4, legend, label, summary) {\n  font-family: var(--iw-font-ui);\n}\n[data-theme-styled='true'] :where(a) {\n  color: var(--iw-link, var(--iw-accent));\n  text-underline-offset: 0.2em;\n}\n[data-theme-styled='true']\n  :where(\n    .micro-note,\n    .muted,\n    small,\n    .help,\n    .description,\n    .quiet,\n    .smallprint,\n    .race-footnote,\n    .race-menu-status,\n    .soundtrack-advanced-description,\n    .native-menu-footer,\n    #demo-status,\n    #demo-picture-note,\n    #demo-audio-artist,\n    .demo-audio-status,\n    .sidebar-note,\n    [data-ui-tone='muted']\n  ) {\n  color: var(--iw-muted);\n}\n[data-theme-styled='true']\n  :where(.eyebrow, .launch-kicker, .access-gate-eyebrow, [data-ui-tone='accent']) {\n  color: var(--iw-accent);\n}\n[data-theme-styled='true'] :where(kbd, code, pre, .telemetry, .hud-value, .metric-value) {\n  font-family: var(--iw-font-mono);\n}\n\n/* Reading surfaces receive a bounded material finish over semantic colors.\n   Asset frames supply the edges; their opaque nine-slice centers are not used. */\n[data-theme-styled='true']\n  :where(\n    dialog,\n    .overlay-card,\n    .panel,\n    .field-kit-panel,\n    .inspection-card,\n    .mission-detail,\n    .settings-group,\n    .inspector,\n    .tool-panel,\n    .editor-panel,\n    .launch-card,\n    .access-gate-card,\n    .hud-card,\n    .sim-panel,\n    .workshop-card,\n    .iw-panel,\n    .studio-panel,\n    .sidebar,\n    .creator-inspector,\n    .controller-settings-section,\n    .settings-section,\n    .settings-card,\n    .info-card,\n    .choice-card,\n    .mission-card,\n    .campaign-card,\n    .library-card,\n    .community-card,\n    .candidate-entry,\n    .version-control,\n    .pack-instructions,\n    .content-card,\n    .pack-card,\n    .profile-card,\n    .recovery-card,\n    .download-card,\n    .story-card,\n    .flight-dialog,\n    .soundtrack-section,\n    .soundtrack-now-card,\n    .soundtrack-listen-card,\n    .soundtrack-online-card,\n    .soundtrack-settings-style-card,\n    .soundtrack-source-row,\n    .first-flight-card,\n    .school-lesson-card,\n    .school-after,\n    .coach-card,\n    .result-panel,\n    .sim-academy #complete,\n    .sim-academy #fallback,\n    .optional-world-card,\n    .team-level-card,\n    .team-review-card,\n    .creator-media-card,\n    .creator-mission-review-card,\n    .batch-card,\n    .watch,\n    [role='tooltip'],\n    [data-component='panel'],\n    [data-ui-surface='panel'],\n    [data-ui-surface='dialog']\n  ) {\n  color: var(--iw-text);\n  font-family: var(--iw-font-ui);\n  background: var(--ui-panel-finish, none), var(--iw-panel);\n  border: 2px solid var(--iw-line);\n  border-image: var(--ui-panel-frame, none);\n  border-radius: 0;\n  box-shadow: var(\n    --ui-panel-depth,\n    inset 0 1px 0 color-mix(in srgb, var(--iw-text) 8%, transparent),\n    0 2px 0 var(--ui-shadow),\n    0 8px 18px #0002\n  );\n}\n[data-theme-styled='true']\n  :where(\n    .masthead,\n    .shell-bar,\n    body > header,\n    .toolbar,\n    .studio-toolbar,\n    .authoring-input-rail,\n    .authoring-section-menu,\n    .sim-toolbar,\n    .hud,\n    .telemetry,\n    .workspace-bar,\n    .studio-header,\n    .flight-controls,\n    .flight-immersive-bar,\n    .sim-drone-response,\n    .flight-instruments,\n    .flight-coaching,\n    .coaching,\n    .sim-menu-hint,\n    .coach-heading,\n    .coach-lab-toolbar,\n    .coach-lab-telemetry,\n    .coach-drone-figure figcaption,\n    .handheld-flight-identity,\n    .sim-worlds #flight-objective,\n    .sim-worlds .flight-brief p,\n    .beginner-coach[data-stage='live'] :is(.coach-target, .coach-explain),\n    .settings-heading,\n    .dialog-header,\n    .dialog-footer,\n    .field-kit-settings-tabs,\n    .soundtrack-footer,\n    #soundtrack-operation,\n    .optional-worlds-top,\n    .race-heading,\n    .reading-toolbar,\n    .shell-dialog-heading,\n    .demo-panel,\n    .demo-notes,\n    .demo-transport,\n    #demo-audio,\n    [data-ui-surface='toolbar']\n  ) {\n  color: var(--iw-text);\n  background: var(--ui-toolbar-finish, none), var(--iw-panel);\n  border-color: var(--iw-line);\n  border-image: none;\n  text-shadow: none;\n}\n[data-theme-styled='true']\n  :where(\n    fieldset,\n    details,\n    .drop,\n    .drop-zone,\n    .setting-row,\n    .settings-row,\n    .settings-preset,\n    .device-card,\n    .controller-card,\n    .controller-mapping,\n    .range-field,\n    .settings-metric,\n    .settings-note,\n    .settings-warning,\n    .mission-brief,\n    .enemy-guide,\n    .soundtrack-choice,\n    .soundtrack-advanced,\n    .soundtrack-online-results,\n    .school-flight-map,\n    .replay-controls,\n    .radio-device-card,\n    .radio-monitor,\n    .coach-tip,\n    .checkpoint,\n    .encounter-cue,\n    .demo-board,\n    .demo-settings,\n    .seat,\n    .control-card,\n    .batch-card-media,\n    .creator-media-poster,\n    .creator-poster-option,\n    #mission-brief-reading,\n    [data-ui-surface='inset']\n  ) {\n  color: var(--iw-text);\n  background: var(--ui-inset-finish, none), var(--iw-ink);\n  border-color: var(--iw-line);\n  border-image: none;\n  border-radius: 0;\n  box-shadow: var(--ui-inset-depth, none);\n}\n[data-theme-styled='true'] :where(table, .asset-grid, .inventory-grid, [data-ui-surface='table']) {\n  color: var(--iw-text);\n  background: var(--ui-panel-finish, none), var(--iw-panel);\n}\n[data-theme-styled='true'] :where(th, td, hr) {\n  color: inherit;\n  border-color: var(--iw-line);\n}\n[data-theme-styled='true'] :where(th, thead) {\n  background: var(--iw-panel-raised);\n}\n[data-theme-styled='true']\n  :where(tr[aria-selected='true'], [data-ui-surface='slot'][aria-selected='true']) {\n  color: var(--iw-on-selection, var(--iw-text));\n  background: var(--iw-selection, var(--iw-panel-raised));\n  box-shadow: inset 3px 0 var(--iw-focus, var(--iw-accent));\n}\n\n/* Each action chooses paired local roles; one painter handles every state. */\n[data-theme-styled='true']\n  :where(\n    button,\n    .button,\n    .button-link,\n    #profile-recovery-root a,\n    .action,\n    .community-entry,\n    [role='button'],\n    [data-ui-action],\n    .launch-action,\n    .file-button,\n    .native-menu-actions > a,\n    .game-mode-choice > a\n  ) {\n  --ui-action-status-depth: 0 0 0 0 transparent;\n  --ui-action-fill: var(--iw-button-default-background, var(--iw-panel-raised));\n  --ui-action-ink: var(--iw-button-default-foreground, var(--iw-text));\n  --ui-action-hover-fill: var(\n    --ui-hover-face,\n    var(--iw-button-hover-background, var(--iw-panel-raised))\n  );\n  --ui-action-hover-ink: var(--ui-hover-ink, var(--iw-button-hover-foreground, var(--iw-text)));\n  --ui-action-pressed-fill: var(--iw-button-pressed-background, var(--iw-selection));\n  --ui-action-pressed-ink: var(--iw-button-pressed-foreground, var(--iw-on-selection));\n  --ui-action-edge: var(--iw-control-line);\n  --ui-action-frame: var(--ui-raised-frame, none);\n  --ui-action-hover-frame: var(--ui-hover-frame, var(--ui-raised-frame, none));\n  --ui-action-pressed-frame: var(--ui-primary-frame, none);\n  color: var(--ui-action-ink);\n  background: var(--ui-control-finish, none), var(--ui-action-fill);\n  border: 2px solid var(--ui-action-edge);\n  border-image: var(--ui-action-frame, none);\n  border-radius: 0;\n  min-height: var(--iw-target);\n  box-sizing: border-box;\n  padding: 8px 14px;\n  font-family: var(--iw-font-ui);\n  font-size: var(--iw-text-size);\n  font-weight: 600;\n  line-height: 1.35;\n  text-shadow: none;\n  text-decoration: none;\n  box-shadow:\n    var(--ui-action-status-depth, 0 0 0 0 transparent),\n    var(\n      --ui-action-depth,\n      inset 0 1px 0 color-mix(in srgb, var(--ui-action-ink) 12%, transparent),\n      inset 0 -1px 0 #0002,\n      0 2px 0 var(--ui-shadow)\n    );\n  cursor: pointer;\n}\n[data-theme-styled='true']\n  :where(\n    .primary,\n    .primary-action,\n    .field-kit-primary,\n    .race-primary,\n    .soundtrack-primary-action,\n    .community-entry,\n    [data-ui-action='primary']\n  ) {\n  --ui-action-fill: var(--iw-primary-default-background, var(--iw-accent));\n  --ui-action-ink: var(--iw-primary-default-foreground, var(--iw-on-accent, var(--iw-ink)));\n  --ui-action-hover-fill: var(--iw-primary-hover-background, var(--iw-accent));\n  --ui-action-hover-ink: var(--iw-primary-hover-foreground, var(--iw-on-accent, var(--iw-ink)));\n  --ui-action-pressed-fill: var(--iw-primary-pressed-background, var(--iw-selection));\n  --ui-action-pressed-ink: var(--iw-primary-pressed-foreground, var(--iw-on-selection));\n  --ui-action-edge: var(--iw-accent);\n  --ui-action-frame: var(--ui-primary-frame, none);\n  --ui-action-hover-frame: var(--ui-primary-frame, none);\n}\n[data-theme-styled='true'] :where(.danger, .danger-action, [data-ui-action='danger']) {\n  --ui-action-fill: var(--iw-danger-default-background, var(--iw-hazard));\n  --ui-action-ink: var(--iw-danger-default-foreground, var(--iw-on-hazard));\n  --ui-action-hover-fill: var(--iw-danger-hover-background, var(--iw-hazard));\n  --ui-action-hover-ink: var(--iw-danger-hover-foreground, var(--iw-on-hazard));\n  --ui-action-pressed-fill: var(--iw-danger-pressed-background, var(--iw-hazard));\n  --ui-action-pressed-ink: var(--iw-danger-pressed-foreground, var(--iw-on-hazard));\n  --ui-action-edge: var(--iw-hazard);\n  --ui-action-frame: none;\n  --ui-action-hover-frame: none;\n  --ui-action-pressed-frame: none;\n}\n[data-theme-styled='true']\n  :where(\n    button,\n    .button,\n    .button-link,\n    #profile-recovery-root a,\n    .action,\n    .community-entry,\n    [role='button'],\n    [data-ui-action],\n    .launch-action,\n    .file-button,\n    .native-menu-actions > a,\n    .game-mode-choice > a\n  ):is(:hover, [data-state='hover']):not(:disabled, [aria-disabled='true']) {\n  background: var(--ui-hover-finish, var(--ui-control-finish, none)), var(--ui-action-hover-fill);\n  border-image: var(--ui-action-hover-frame, none);\n  color: var(--ui-action-hover-ink);\n  box-shadow:\n    var(--ui-action-status-depth, 0 0 0 0 transparent),\n    var(--ui-hover-depth, inset 0 0 0 1px var(--ui-action-edge), 0 2px 0 var(--ui-shadow));\n}\n[data-theme-styled='true']\n  :where(\n    button,\n    .button,\n    .button-link,\n    #profile-recovery-root a,\n    .action,\n    .community-entry,\n    [role='button'],\n    [data-ui-action],\n    .launch-action,\n    .file-button,\n    .native-menu-actions > a,\n    .game-mode-choice > a\n  ):is(:active, [data-state='pressed']):not(:disabled, [aria-disabled='true']) {\n  background: var(--ui-active-finish, none), var(--ui-action-pressed-fill);\n  color: var(--ui-action-pressed-ink);\n  border-image: var(--ui-action-pressed-frame, none);\n  box-shadow:\n    var(--ui-action-status-depth, 0 0 0 0 transparent),\n    var(--ui-pressed-depth, inset 0 2px 3px #0005);\n}\n[data-theme-styled='true']\n  :where(button, .button, [role='button'], a, [role='tab']):is(\n    [aria-pressed='true'],\n    [aria-selected='true'],\n    [aria-current]:where(:not([aria-current='false'])),\n    .selected,\n    .active-tab\n  ) {\n  --ui-action-fill: var(--iw-selection, var(--iw-panel-raised));\n  --ui-action-ink: var(--iw-on-selection, var(--iw-text));\n  --ui-action-hover-fill: var(--ui-action-fill);\n  --ui-action-hover-ink: var(--ui-action-ink);\n  color: var(--ui-action-ink);\n  background: var(--ui-selected-finish, var(--ui-active-finish, none)), var(--ui-action-fill);\n  border-color: var(--iw-focus, var(--iw-accent));\n  border-image: var(--ui-primary-frame, none);\n  box-shadow:\n    var(--ui-action-status-depth, 0 0 0 0 transparent),\n    var(--ui-selected-depth, inset 3px 0 var(--iw-focus, var(--iw-accent)));\n  text-decoration-thickness: 2px;\n}\n[data-theme-styled='true']\n  :where(button, .button, [role='button'], a, [role='tab']):is(\n    [aria-pressed='true'],\n    [aria-selected='true'],\n    [aria-current]:where(:not([aria-current='false'])),\n    .selected,\n    .active-tab\n  ):is(:active, [data-state='pressed']):not(:disabled, [aria-disabled='true']) {\n  background: var(--ui-active-finish, none), var(--ui-action-fill);\n  box-shadow:\n    var(--ui-action-status-depth, 0 0 0 0 transparent),\n    var(--ui-pressed-depth, inset 0 2px 3px #0005);\n}\n/* Busy paint is a stable progress rail, not a second label or a spinning\n   pseudo-element that could collide with a control's existing icon. */\n[data-theme-styled='true']\n  :where(button, .button, [role='button'], [data-ui-action])[aria-busy='true']:not(\n    :disabled,\n    [aria-disabled='true']\n  ) {\n  --ui-action-status-depth: inset 0 calc(-1 * var(--ui-loading-rail)) 0 currentColor;\n  cursor: progress;\n}\n[data-theme-styled='true']\n  :where(\n    button,\n    input,\n    select,\n    textarea,\n    a,\n    .button,\n    .button-link,\n    [role='button'],\n    [role='tab'],\n    [data-ui-action]\n  ):is(:disabled, [aria-disabled='true']) {\n  color: var(--iw-muted);\n  background: var(--iw-panel);\n  border-color: var(--iw-line);\n  border-style: dashed;\n  border-image: none;\n  opacity: 1;\n  cursor: not-allowed;\n  box-shadow: none;\n}\n[data-theme-styled='true']\n  :where(button, .button, [role='button'])\n  :where(span, strong, em, small) {\n  color: inherit;\n}\n\n/* Native value controls retain browser semantics and keyboard operation. */\n[data-theme-styled='true'] :where(input, select, textarea) {\n  color: var(--iw-input-text, var(--iw-text));\n  background: var(--ui-inset-finish, none), var(--iw-input, var(--iw-ink));\n  border: 2px solid var(--iw-control-line);\n  border-image: none;\n  border-radius: 0;\n  font-family: var(--iw-font-ui);\n  font-size: var(--iw-text-size);\n  accent-color: var(--iw-accent);\n  box-shadow: var(--ui-inset-depth, inset 0 1px 2px #0003);\n}\n[data-theme-styled='true']\n  :where(\n    select,\n    textarea,\n    input:not([type='checkbox'], [type='radio'], [type='range'], [type='color'])\n  ) {\n  min-height: var(--iw-target);\n  box-sizing: border-box;\n  padding: 6px 10px;\n}\n[data-theme-styled='true'] :where(input, textarea)::placeholder {\n  color: var(--iw-muted);\n  opacity: 1;\n}\n[data-theme-styled='true'] :where(option, optgroup) {\n  color: var(--iw-input-text, var(--iw-text));\n  background: var(--iw-input, var(--iw-ink));\n}\n[data-theme-styled='true'] :where(input[type='checkbox'], input[type='radio']) {\n  appearance: none;\n  display: inline-grid;\n  place-content: center;\n  inline-size: 22px;\n  block-size: 22px;\n  min-inline-size: 22px;\n  min-block-size: 22px;\n  flex: 0 0 22px;\n  padding: 0;\n  vertical-align: middle;\n  background: var(--ui-inset-finish, none), var(--iw-ink);\n  border: 2px solid var(--iw-control-line);\n  border-image: none;\n  box-shadow: var(--ui-inset-depth, none);\n}\n[data-theme-styled='true'] input[type='radio'] {\n  border-radius: 50%;\n}\n[data-theme-styled='true'] :where(input[type='checkbox'], input[type='radio'])::before {\n  content: '';\n  display: block;\n  width: 12px;\n  height: 12px;\n  background: var(--iw-on-accent, var(--iw-ink));\n  transform: scale(0);\n  clip-path: polygon(0 43%, 17% 26%, 40% 51%, 83% 4%, 100% 20%, 41% 87%);\n}\n[data-theme-styled='true'] input[type='radio']::before {\n  width: 10px;\n  height: 10px;\n  border-radius: 50%;\n  clip-path: none;\n}\n[data-theme-styled='true'] :where(input[type='checkbox'], input[type='radio']):checked {\n  background: var(--ui-active-finish, none), var(--iw-accent);\n  border-color: var(--iw-accent);\n  outline: none;\n  box-shadow: var(--ui-inset-depth, none);\n}\n[data-theme-styled='true'] :where(input[type='checkbox'], input[type='radio']):checked::before {\n  transform: scale(1);\n}\n[data-theme-styled='true'] :where(input[type='checkbox'], input[type='radio']):disabled {\n  background: var(--ui-panel-finish, none), var(--iw-panel);\n  border-color: var(--iw-muted);\n  border-style: dashed;\n  cursor: not-allowed;\n}\n[data-theme-styled='true'] :where(input[type='checkbox'], input[type='radio']):disabled::before {\n  background: var(--iw-muted);\n}\n[data-theme-styled='true'] input[type='checkbox']:indeterminate::before {\n  transform: scale(1);\n  clip-path: inset(40% 0);\n  background: var(--iw-accent);\n}\n[data-theme-styled='true'] label:has(> input:is([type='checkbox'], [type='radio'])) {\n  min-height: var(--iw-target);\n  align-items: center;\n  cursor: pointer;\n}\n[data-theme-styled='true'] input[type='range'] {\n  appearance: none;\n  min-height: var(--iw-target);\n  padding: 0;\n  background: transparent;\n  border: 0;\n  box-shadow: none;\n  cursor: pointer;\n}\n[data-theme-styled='true'] input[type='range']::-webkit-slider-runnable-track {\n  height: 6px;\n  border: 1px solid var(--iw-control-line);\n  background: var(--iw-ink);\n  border-radius: 0;\n}\n[data-theme-styled='true'] input[type='range']::-moz-range-track {\n  height: 4px;\n  border: 1px solid var(--iw-control-line);\n  background: var(--iw-ink);\n  border-radius: 0;\n}\n[data-theme-styled='true'] input[type='range']::-webkit-slider-thumb {\n  appearance: none;\n  width: 24px;\n  height: 24px;\n  margin-top: -10px;\n  background: var(--ui-thumb-finish, none), var(--iw-accent);\n  border: 2px solid var(--iw-on-accent, var(--iw-ink));\n  border-radius: 0;\n  box-shadow: 0 0 0 1px var(--iw-control-line);\n}\n[data-theme-styled='true'] input[type='range']::-moz-range-thumb {\n  width: 20px;\n  height: 20px;\n  background: var(--ui-thumb-finish, none), var(--iw-accent);\n  border: 2px solid var(--iw-on-accent, var(--iw-ink));\n  border-radius: 0;\n  box-shadow: 0 0 0 1px var(--iw-control-line);\n}\n[data-theme-styled='true'] input[type='range']:disabled {\n  cursor: not-allowed;\n  opacity: 0.65;\n}\n[data-theme-styled='true'] :where(progress, meter) {\n  accent-color: var(--iw-accent);\n  color: var(--iw-accent);\n  background: var(--iw-ink);\n  border: 1px solid var(--iw-control-line);\n  border-image: none;\n  border-radius: 0;\n}\n[data-theme-styled='true'] progress::-webkit-progress-bar {\n  background: var(--iw-ink);\n}\n[data-theme-styled='true'] progress::-webkit-progress-value {\n  background: var(--ui-active-finish, none), var(--iw-accent);\n}\n[data-theme-styled='true'] progress::-moz-progress-bar {\n  background: var(--ui-active-finish, none), var(--iw-accent);\n}\n[data-theme-styled='true'] :where(*) {\n  scrollbar-color: var(--iw-control-line) var(--iw-ink);\n}\n[data-theme-styled='true'] ::-webkit-scrollbar-thumb {\n  background: var(--iw-control-line);\n  border: 2px solid var(--iw-ink);\n}\n[data-theme-styled='true'] ::-webkit-scrollbar-track {\n  background: var(--iw-ink);\n}\n\n/* Native controls share the same material authority as action buttons.\n   Errors mark the well; the entered value keeps its readable text pair. */\n[data-theme-styled='true']\n  :where(\n    select,\n    textarea,\n    input:not([type='range'], [type='checkbox'], [type='radio'], [type='color'])\n  ):is(:hover, [data-state='hover']):not(:disabled, [aria-disabled='true']) {\n  border-color: var(--iw-focus);\n  box-shadow: var(\n    --ui-input-hover-depth,\n    var(--ui-inset-depth, inset 0 0 0 1px var(--iw-control-line))\n  );\n}\n[data-theme-styled='true']\n  :where(input, select, textarea)[aria-invalid='true']:not(:disabled, [aria-disabled='true']) {\n  color: var(--iw-input-text, var(--iw-text));\n  border-color: var(--iw-hazard);\n  box-shadow:\n    inset 3px 0 0 var(--iw-hazard),\n    var(--ui-inset-depth, 0 0 0 0 transparent);\n}\n[data-theme-styled='true']\n  :where(input, select, textarea)[data-ui-validation='success']:not(\n    [aria-invalid='true'],\n    :disabled,\n    [aria-disabled='true']\n  ) {\n  border-color: var(--iw-safe);\n  box-shadow:\n    inset 3px 0 0 var(--iw-safe),\n    var(--ui-inset-depth, 0 0 0 0 transparent);\n}\n[data-theme-styled='true']\n  :where(input[type='checkbox'], input[type='radio']):is(:hover, [data-state='hover']):not(\n    :disabled,\n    [aria-disabled='true'],\n    [aria-invalid='true'],\n    [data-ui-validation='success']\n  ) {\n  border-color: var(--iw-focus);\n  box-shadow: var(--ui-input-hover-depth, var(--ui-inset-depth, none));\n}\n[data-theme-styled='true'] input[type='range']::-webkit-slider-runnable-track {\n  background: var(--ui-inset-finish, none), var(--iw-ink);\n  box-shadow: var(--ui-inset-depth, none);\n}\n[data-theme-styled='true'] input[type='range']::-moz-range-track {\n  background: var(--ui-inset-finish, none), var(--iw-ink);\n  box-shadow: var(--ui-inset-depth, none);\n}\n[data-theme-styled='true']\n  input[type='range']:is(:hover, :focus-visible, [data-state='hover'])::-webkit-slider-thumb {\n  box-shadow:\n    0 0 0 2px var(--iw-focus),\n    var(--ui-hover-depth, 0 0 0 0 transparent);\n}\n[data-theme-styled='true']\n  input[type='range']:is(:hover, :focus-visible, [data-state='hover'])::-moz-range-thumb {\n  box-shadow:\n    0 0 0 2px var(--iw-focus),\n    var(--ui-hover-depth, 0 0 0 0 transparent);\n}\n[data-theme-styled='true'] input[type='range']:disabled {\n  opacity: 1;\n}\n[data-theme-styled='true'] input[type='range']:disabled::-webkit-slider-thumb {\n  background: var(--iw-muted);\n  border: 2px dashed var(--iw-panel);\n  box-shadow: 0 0 0 1px var(--iw-line);\n}\n[data-theme-styled='true'] input[type='range']:disabled::-moz-range-thumb {\n  background: var(--iw-muted);\n  border: 2px dashed var(--iw-panel);\n  box-shadow: 0 0 0 1px var(--iw-line);\n}\n\n/* Compiled icon silhouettes are reusable geometry, never a fixed cyan pigment. */\n[data-theme-styled='true'] [data-presentation-icon]:not([data-menu-icon])::before {\n  color: inherit;\n  content: '';\n  display: inline-block;\n  inline-size: 24px;\n  block-size: 24px;\n  flex: 0 0 24px;\n  background: currentColor;\n  mask: var(--fk-current-icon, linear-gradient(transparent, transparent)) center / contain no-repeat;\n  -webkit-mask: var(--fk-current-icon, linear-gradient(transparent, transparent)) center / contain\n    no-repeat;\n  clip-path: none;\n  image-rendering: pixelated;\n}\n[data-theme-styled='true']\n  :where([data-presentation-control], [data-presentation-hud], [data-presentation-reward])::before {\n  background: currentColor;\n  color: inherit;\n  mask: var(--fk-current-glyph, linear-gradient(transparent, transparent)) center / contain\n    no-repeat;\n  -webkit-mask: var(--fk-current-glyph, linear-gradient(transparent, transparent)) center / contain\n    no-repeat;\n}\n[data-theme-styled='true'] :where([data-menu-icon])::before {\n  background: currentColor;\n  mask: var(--native-menu-icon, linear-gradient(transparent, transparent)) center / contain\n    no-repeat;\n  -webkit-mask: var(--native-menu-icon, linear-gradient(transparent, transparent)) center / contain\n    no-repeat;\n}\n[data-theme-styled='true'] :where(.meter > span, .launch-signal i) {\n  background: var(--iw-accent);\n}\n[data-theme-styled='true'] :where(.meter, [role='progressbar']) {\n  color: var(--iw-text);\n  background: var(--iw-ink);\n  border-color: var(--iw-control-line);\n  border-image: none;\n}\n\n/* Focus and state cues retain a shape in every palette. */\n[data-theme-styled='true'] :is(:focus-visible, .controller-focus, [data-state='focus']) {\n  outline: 3px solid var(--iw-focus, var(--iw-control-line));\n  outline-offset: 3px;\n  scroll-margin: 12px;\n}\n[data-theme-styled='true']\n  :where([aria-invalid='true']:not(input, select, textarea), .error, [data-ui-tone='danger']) {\n  color: var(--iw-hazard);\n  border-color: var(--iw-hazard);\n  border-image: none;\n}\n[data-theme-styled='true'] :where([data-ui-tone='success'], .success) {\n  color: var(--iw-safe);\n}\n[data-theme-styled='true'] :where([data-ui-tone='warning'], .warning) {\n  color: var(--iw-amber);\n}\n[data-theme-styled='true'] ::selection {\n  color: var(--iw-on-selection, var(--iw-ink));\n  background: var(--iw-selection, var(--iw-accent));\n}\n[data-theme-styled='true'] :where(dialog)::backdrop {\n  background: color-mix(in srgb, var(--iw-ink) 78%, transparent);\n}\n\n/* Source art stays intact; only its reading veil follows the interface. */\n[data-theme-styled='true'] .menu-scene::after {\n  background:\n    linear-gradient(\n      90deg,\n      color-mix(in srgb, var(--iw-ink) 94%, transparent),\n      color-mix(in srgb, var(--iw-ink) 75%, transparent) 28%,\n      color-mix(in srgb, var(--iw-ink) 22%, transparent) 63%,\n      transparent\n    ),\n    linear-gradient(0deg, color-mix(in srgb, var(--iw-ink) 65%, transparent), transparent 30%);\n}\n[data-theme-styled='true'] .menu-scene {\n  --scene-ink: var(--iw-ink);\n  --scene-accent: var(--iw-panel-raised);\n}\n[data-theme-styled='true'] :where(.menu-ornament, .menu-scene-decoration) {\n  color: var(--iw-line);\n}\n[data-theme-texture='off'] :where(.menu-ornament, .menu-scene-decoration, .menu-retune-layer) {\n  display: none;\n}\n/* Composed action shadows need a transparent zero, not `none`: a shadow\n   list containing `none` is invalid and would also remove semantic busy rails. */\n[data-theme-surface='flat'] {\n  --ui-panel-frame: none;\n  --ui-raised-frame: none;\n  --ui-primary-frame: none;\n  --ui-panel-depth: none;\n  --ui-action-depth: 0 0 0 0 transparent;\n  --ui-hover-depth: 0 0 0 0 transparent;\n  --ui-pressed-depth: 0 0 0 0 transparent;\n  --ui-selected-depth: 0 0 0 0 transparent;\n  --ui-gallery-depth: none;\n}\n[data-theme-hud='opaque']\n  :where(\n    .hud,\n    .hud-card,\n    .hud-panel,\n    .telemetry,\n    .sim-hud,\n    .flight-hud,\n    .flight-instruments,\n    .flight-coaching,\n    .flight-brief p,\n    .scene-heading,\n    #hud,\n    [data-hud]\n  ) {\n  background: var(--iw-ink);\n  color: var(--iw-text);\n  text-shadow: none;\n  backdrop-filter: none;\n  opacity: 1;\n}\n[data-theme-motion='reduced']\n  :where(\n    .menu-ornament,\n    .edition-propeller,\n    .theme-decoration,\n    .menu-scene-decoration,\n    .operation-status-signal i,\n    .win-picture-caption\n  ) {\n  animation: none;\n  transition: none;\n  transform: none;\n}\n[data-theme-motion='reduced'] .menu-retune-layer {\n  display: none;\n}\n[data-theme-text-size='large']:not([data-interface-theme='legacy'])\n  :where(p, label, button, select, input, textarea, .micro-note) {\n  font-size: max(18px, 1em);\n}\n\n.theme-family-controls {\n  display: grid;\n  grid-template-columns: minmax(0, 1fr);\n  min-width: 0;\n  gap: 10px;\n  margin-block: 16px;\n  padding-block: 12px;\n  border-block: 1px solid var(--fk-line, #737c69);\n}\n/* Native select options must not widen the grid's implicit min-content track.\n   Keep help text and nested controls inside narrow settings panels. */\n.theme-family-controls > * {\n  min-width: 0;\n  max-width: 100%;\n  box-sizing: border-box;\n}\n.theme-family-controls > h4 {\n  margin: 2px 0 0;\n}\n.theme-family-controls label {\n  display: flex;\n  flex-wrap: wrap;\n  align-items: center;\n  gap: 8px;\n  justify-content: space-between;\n}\n.theme-family-controls label:has(> input[type='checkbox']) {\n  justify-content: flex-start;\n  min-height: var(--iw-target, 44px);\n}\n.theme-family-controls select {\n  min-width: 0;\n  max-width: 100%;\n  box-sizing: border-box;\n}\n.theme-family-controls [role='status']:empty {\n  display: none;\n}\n.sim-appearance-controls {\n  grid-column: 1 / -1;\n  display: flex;\n  flex-wrap: wrap;\n  align-items: center;\n  gap: 8px 16px;\n  min-width: 0;\n  max-width: 100%;\n}\n.sim-appearance-controls label {\n  display: grid;\n  gap: 6px;\n  min-width: 0;\n  max-width: 100%;\n}\n.sim-appearance-controls select {\n  min-width: 0;\n  max-width: 100%;\n}\n.sim-appearance-controls [role='status'] {\n  flex-basis: 100%;\n}\n.sim-worlds .flight-controls > .sim-appearance-controls {\n  flex: 1 0 100%;\n  box-sizing: border-box;\n  margin-inline: 0;\n}\n[data-theme-styled='true'] .sim-worlds .flight-dialog > header {\n  z-index: 10;\n  background: var(--ui-panel-finish, none), var(--iw-panel);\n  box-shadow: 0 0 0 8px var(--iw-panel);\n}\n@media (pointer: coarse) {\n  [data-theme-density='studio'] {\n    --iw-target: 44px;\n  }\n}\n@media (orientation: portrait) {\n  [data-theme-styled='true'] .menu-scene::after {\n    background: linear-gradient(\n      0deg,\n      color-mix(in srgb, var(--iw-ink) 94%, transparent),\n      color-mix(in srgb, var(--iw-ink) 73%, transparent) 35%,\n      color-mix(in srgb, var(--iw-ink) 23%, transparent) 80%\n    );\n  }\n}\n@media (forced-colors: active) {\n  [data-theme-family][data-theme-material] {\n    --ui-panel-finish: none;\n    --ui-control-finish: none;\n    --ui-hover-finish: none;\n    --ui-selected-finish: none;\n    --ui-active-finish: none;\n    --ui-inset-finish: none;\n    --ui-toolbar-finish: none;\n    --ui-thumb-finish: none;\n    --ui-scene-motif: none;\n  }\n  [data-theme-styled='true']\n    :where(button, .button, input, select, textarea, dialog, .panel, [data-ui-surface]) {\n    border-image: none;\n    box-shadow: none;\n    border-color: ButtonText;\n    forced-color-adjust: auto;\n  }\n  [data-theme-styled='true'] :where(input[type='checkbox'], input[type='radio']) {\n    appearance: auto;\n  }\n  [data-theme-styled='true'] :where(input[type='checkbox'], input[type='radio'])::before {\n    display: none;\n  }\n  [data-theme-styled='true'] :is(:focus-visible, .controller-focus) {\n    outline-color: Highlight;\n  }\n}\n\n/* A filled raster swaps atomically. Interpolating its label separately can\n   briefly create dark-on-dark text while a selected tab changes state. */\n[data-theme-styled='true']\n  :where(button, .button, [role='button'], .native-menu-actions > a, .game-mode-choice > a) {\n  transition:\n    box-shadow 100ms ease,\n    outline-color 100ms ease,\n    translate 70ms ease-out;\n}\n[data-theme-styled='true']\n  :where(button, .button, [role='button'], .native-menu-actions > a, .game-mode-choice > a):is(\n    :active,\n    [data-state='pressed']\n  ):not(:disabled, [aria-disabled='true']) {\n  translate: var(--ui-press-travel);\n}\n/* The game's motion preference applies even when the operating system allows\n   animation. Keep this override after the common action transition recipe. */\n[data-theme-motion='reduced']\n  :where(button, .button, [role='button'], .native-menu-actions > a, .game-mode-choice > a) {\n  transition: none;\n  translate: none;\n}\n[data-theme-styled='true'] label:has(> input:is([type='checkbox'], [type='radio'])) {\n  color: var(--iw-text);\n  background-color: var(--iw-panel-raised);\n  border-color: var(--iw-line);\n  border-image: none;\n  border-radius: 0;\n}\n.theme-gallery {\n  display: grid;\n  grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr));\n  gap: 8px;\n}\n.theme-gallery .theme-preview-card {\n  display: grid;\n  grid-template-columns: 1fr;\n  gap: 5px;\n  align-content: start;\n  min-width: 0;\n  text-align: left;\n  min-height: var(--iw-target, 44px);\n  padding: 8px 10px 9px;\n  border-image: var(--ui-raised-frame, none);\n  background: var(--ui-control-finish, none), var(--iw-panel, var(--fk-panel));\n  color: var(--iw-text, var(--fk-text));\n  box-shadow: var(--ui-gallery-depth, none);\n}\n.theme-preview-swatches {\n  display: grid;\n  grid-template-columns: 2fr 2fr 1fr 1fr;\n  gap: 0;\n  overflow: hidden;\n  border: 1px solid var(--iw-control-line, var(--fk-line));\n}\n.theme-preview-swatches span {\n  display: block;\n  min-width: 0;\n  height: 28px;\n  border: 0;\n}\n.theme-preview-card strong {\n  line-height: 1.2;\n}\n.theme-preview-card small {\n  font-size: 13px;\n  font-weight: 400;\n  line-height: 1.32;\n  opacity: 0.9;\n}\n.theme-gallery\n  .theme-preview-card:hover:not(\n    [aria-pressed='true'],\n    :disabled,\n    [aria-disabled='true'],\n    :active,\n    [data-state='pressed']\n  ) {\n  background: var(--ui-control-finish, none), var(--ui-action-hover-fill);\n  color: var(--ui-action-hover-ink);\n  border-image: var(--ui-action-hover-frame, none);\n  box-shadow: var(--ui-hover-depth, none);\n}\n.theme-gallery .theme-preview-card[aria-pressed='true'] {\n  color: var(--iw-on-selection, var(--fk-text));\n  background: var(--ui-active-finish, none), var(--iw-selection, var(--fk-panel));\n  border-image: var(--ui-primary-frame, none);\n  outline: 2px solid var(--iw-focus, var(--fk-focus));\n  outline-offset: 2px;\n}\n.theme-gallery\n  .theme-preview-card:is(:active, [data-state='pressed']):not(:disabled, [aria-disabled='true']) {\n  color: var(--ui-action-pressed-ink);\n  background: var(--ui-active-finish, none), var(--ui-action-pressed-fill);\n  border-image: var(--ui-primary-frame, none);\n  box-shadow: var(--ui-pressed-depth, inset 0 2px 3px #0005);\n}\n.theme-gallery .theme-preview-card:is(:focus-visible, .controller-focus) {\n  outline: 3px solid var(--iw-focus, var(--fk-focus));\n  outline-offset: 5px;\n}\n.theme-gallery .theme-preview-card:is(:disabled, [aria-disabled='true']) {\n  color: var(--iw-muted);\n  background: var(--iw-panel);\n  border-image: none;\n  box-shadow: none;\n}\n.theme-preview-card[aria-pressed='true'] strong::after {\n  content: ' ✓';\n}\n/* Independent runtime specimens inside the chooser. Only the surrounding card\n   is interactive; its focus and selected frame remain outside the preview. */\n.theme-gallery .theme-preview-card:has([data-theme-card-preview]) {\n  gap: 8px;\n  padding: 10px;\n}\n.theme-preview-card:has([data-theme-card-preview]) .theme-preview-swatches {\n  height: 4px;\n}\n.theme-preview-card:has([data-theme-card-preview]) .theme-preview-swatches span {\n  height: 4px;\n}\n.theme-material-preview {\n  display: block;\n  min-width: 0;\n  padding: 14px;\n  background: var(--iw-ink);\n  color: var(--iw-text);\n  font-family: var(--iw-font-ui);\n  font-size: var(--iw-text-size, 16px);\n  text-align: left;\n  line-height: 1.35;\n  isolation: isolate;\n}\n.theme-material-preview .theme-material-panel {\n  display: grid;\n  min-width: 0;\n  gap: 12px;\n  padding: 14px;\n  color: var(--iw-text);\n}\n.theme-material-actions,\n.theme-material-states {\n  display: flex;\n  flex-wrap: wrap;\n  align-items: stretch;\n  gap: 8px;\n}\n.theme-material-preview .theme-material-action {\n  display: inline-flex;\n  align-items: center;\n  justify-content: center;\n  width: auto;\n  margin: 0;\n  font-family: var(--iw-font-ui);\n  font-size: inherit;\n  font-weight: 600;\n  color: var(--ui-action-ink);\n}\n.theme-material-preview .theme-material-action:is(:hover, [data-state='hover']) {\n  color: var(--ui-action-hover-ink);\n}\n.theme-material-preview .theme-material-action:is(:active, [data-state='pressed']) {\n  color: var(--ui-action-pressed-ink);\n}\n.theme-material-preview .theme-material-action:is(:disabled, [aria-disabled='true']) {\n  color: var(--iw-muted);\n}\n.theme-material-preview .theme-material-field {\n  display: grid;\n  grid-template-columns: auto minmax(0, 1fr);\n  align-items: center;\n  gap: 10px;\n  color: var(--iw-text);\n  margin: 0;\n}\n.theme-material-preview .theme-material-field select {\n  min-width: 0;\n  width: 100%;\n  font-size: inherit;\n}\n.theme-material-preview .theme-material-select {\n  display: flex;\n  align-items: center;\n  justify-content: space-between;\n  gap: 6px;\n  padding: 5px 8px;\n  border: 2px solid var(--iw-control-line);\n  background: var(--ui-inset-finish, none), var(--iw-input);\n  box-shadow: var(--ui-inset-depth, none);\n  color: var(--iw-input-text);\n}\n.theme-material-select::after {\n  content: '⌄';\n}\n.theme-material-preview .theme-material-check {\n  display: flex;\n  align-items: center;\n  gap: 8px;\n  padding: 6px 8px;\n  background: var(--iw-panel-raised);\n  color: var(--iw-text);\n  margin: 0;\n}\n.theme-material-preview span.theme-material-checkbox {\n  display: inline-grid;\n  place-items: center;\n  width: 18px;\n  height: 18px;\n  flex: 0 0 18px;\n  border: 2px solid var(--iw-accent);\n  background: var(--ui-active-finish, none), var(--iw-accent);\n  color: var(--iw-on-accent);\n  font-weight: 700;\n  line-height: 1;\n}\n.theme-material-preview[data-preview-compact='true'] {\n  padding: 8px;\n  font-size: 12px;\n  pointer-events: none;\n}\n.theme-material-preview[data-preview-compact='true'] .theme-material-panel {\n  gap: 7px;\n  padding: 10px;\n}\n.theme-material-preview[data-preview-compact='true'] .theme-material-action {\n  min-height: 30px;\n  min-width: 0;\n  padding: 5px 7px;\n  flex: 1 1 auto;\n}\n.theme-material-preview[data-preview-compact='true']\n  :is(.theme-material-actions, .theme-material-states) {\n  gap: 6px;\n}\n.theme-material-preview[data-theme-text-size='large'] {\n  font-size: 16px;\n}\n.theme-material-preview[data-theme-text-size='large'] .theme-material-field {\n  grid-template-columns: 1fr;\n  gap: 4px;\n}\n.theme-preview-card .theme-material-preview,\n.theme-preview-card .theme-material-preview .theme-material-panel {\n  color: var(--iw-text);\n}\n.theme-accessibility {\n  display: flex;\n  flex-wrap: wrap;\n  gap: 8px 20px;\n}\n.theme-family-controls > details {\n  padding: 12px;\n}\n.theme-family-controls > details > summary {\n  min-height: var(--iw-target, 44px);\n  cursor: pointer;\n}\n@media (max-width: 600px) {\n  .theme-gallery {\n    grid-template-columns: 1fr;\n  }\n}\n/* Compact Settings deliberately gives Back a fixed icon slot. Typography\n   overrides, including Large text, must not reveal its label over the arrow.\n   The real text/accessible name and the 44px target remain intact. */\n@media (max-width: 700px) {\n  [data-theme-styled='true'] .native-settings [data-menu-icon='back'] {\n    font-size: 0;\n    flex: 0 0 44px;\n    width: 44px;\n    min-width: 44px;\n    height: 44px;\n    min-height: 44px;\n    padding: 8px;\n    gap: 0;\n  }\n}\n/* Keep the compiled icon-only controls' real labels available to assistive\n   technology without drawing fallback text beside their replacement glyphs. */\n[data-theme-styled='true']\n  :is(.dialog-close, .icon-button)[data-presentation-icon][aria-label]:not([data-menu-icon]),\n[data-theme-styled='true']\n  :is(\n    [data-presentation-control='up'],\n    [data-presentation-control='down'],\n    [data-presentation-control='left'],\n    [data-presentation-control='right']\n  )[aria-label] {\n  font-size: 0;\n  gap: 0;\n  min-inline-size: var(--iw-target);\n}\n@media (prefers-reduced-motion: reduce) {\n  [data-theme-styled='true']\n    :where(button, .button, [role='button'], .native-menu-actions > a, .game-mode-choice > a) {\n    transition: none;\n    translate: none;\n  }\n}\n\n[data-theme-styled='true'] [data-ui-surface='section-title'] {\n  color: var(--iw-muted);\n  background: var(--iw-ink);\n  border-color: var(--iw-line);\n  border-image: none;\n}\n\n/* Earned media keeps its authored picture. Only the overlaid reading and\n   control surfaces share the active interface's paired colors. */\n[data-theme-styled='true']\n  :where(\n    .story-controls,\n    .story-notice,\n    .story-dialog--immersive > p:not(:empty),\n    .win-picture-caption,\n    #demo-dialog[data-reward='expanded'] .demo-header,\n    #demo-dialog[data-reward='expanded'] .demo-panel\n  ) {\n  color: var(--iw-text);\n  background: var(--ui-panel-finish, none), var(--iw-panel);\n  border-color: var(--iw-line);\n  border-image: none;\n  border-radius: 0;\n  text-shadow: none;\n  backdrop-filter: none;\n}\n[data-theme-styled='true']\n  :where(.story-dialog--immersive, .creator-player[data-earned-view='on'] #earned) {\n  background: var(--iw-ink);\n  border: 0;\n  border-image: none;\n  box-shadow: none;\n}\n/* The image element fills the viewport, including its contain-fit letterbox.\n   Theme only that backing; the authored pixels and fitting remain unchanged. */\n[data-theme-styled='true'] .creator-player #earned-picture {\n  background-color: var(--iw-ink);\n}\n[data-theme-styled='true'] .win-picture-caption {\n  width: fit-content;\n  max-width: calc(100% - 32px);\n  box-sizing: border-box;\n  margin-inline: auto;\n  padding: 12px 20px;\n  border: 1px solid var(--iw-line);\n}\n[data-theme-styled='true'] .win-picture-mark {\n  color: var(--iw-accent);\n}\n[data-theme-styled='true'] [data-win-picture] #shell-menu {\n  padding: 0;\n}\n[data-theme-styled='true'] [data-win-picture] #shell-menu::before {\n  color: inherit;\n}\n\n/* Status, badges and callouts are shared reading surfaces, including tools. */\n[data-theme-styled='true']\n  :where(\n    [role='status'],\n    [role='alert'],\n    .operation-status,\n    .callout,\n    .notice,\n    .pill,\n    .chip,\n    .status,\n    .skip-link,\n    pre\n  ) {\n  color: var(--iw-text);\n  background-color: var(--iw-panel);\n  border-color: var(--iw-line);\n  border-image: none;\n  border-radius: 0;\n}\n[data-theme-styled='true']\n  :where(.status-ready, [role='status'].success, [data-ui-tone='success']) {\n  color: var(--iw-safe);\n}\n[data-theme-styled='true']\n  :where(.status-building, [role='status'].warning, [data-ui-tone='warning']) {\n  color: var(--iw-amber);\n}\n[data-theme-styled='true']\n  :where(\n    [role='alert'],\n    [role='status'].error,\n    [role='status'][data-error='true'],\n    [data-ui-tone='danger']\n  ) {\n  color: var(--iw-hazard);\n}\n[data-theme-styled='true'] :where([role='status'][data-error='true'], [role='status'].error) {\n  border-inline-start: 3px solid var(--iw-hazard);\n  padding-inline-start: 0.75rem;\n}\n[data-theme-styled='true'] .operation-status[data-state='error'] {\n  color: var(--iw-hazard);\n  border-inline-start: 3px solid var(--iw-hazard);\n  padding-inline-start: 0.75rem;\n}\n[data-theme-styled='true'] .operation-status:is([data-state='cancelled'], [data-state='detached']) {\n  color: var(--iw-amber);\n}\n[data-theme-styled='true'] .operation-status .operation-status-label {\n  color: inherit;\n  background: transparent;\n}\n\n/* Deep dialogs and tool results are part of the same interface. Never leave a\n   legacy navy/teal well behind a newly resolved light-theme text color. */\n[data-theme-styled='true'] :where(.soundtrack-quick-status, .race-start-cue strong) {\n  color: var(--iw-on-accent);\n  background: var(--iw-accent);\n  border-color: var(--iw-accent);\n  border-image: none;\n}\n[data-theme-styled='true'] .journey-card-action {\n  color: var(--iw-on-accent);\n  background: var(--iw-accent);\n  border-color: var(--iw-accent);\n  font-size: 0.75rem;\n}\n[data-theme-styled='true'] .soundtrack-now-card::after {\n  background: var(--iw-accent);\n}\n[data-theme-styled='true'] .soundtrack-advanced-summary::after {\n  color: inherit;\n}\n[data-theme-styled='true'] .soundtrack-online-track {\n  border-color: var(--iw-line);\n}\n[data-theme-styled='true'] .soundtrack-online-track:is(:hover, :focus-within) {\n  color: var(--iw-text);\n  background: var(--iw-panel-raised);\n}\n[data-theme-styled='true'] :where(.soundtrack-online-style, .creator-poster-option):focus-within {\n  outline: 3px solid var(--iw-focus);\n  outline-offset: 2px;\n}\n[data-theme-styled='true'] :where(.batch-card-error, .creator-media-card-error) {\n  border-color: var(--iw-hazard);\n  border-image: none;\n}\n[data-theme-styled='true'] :where(.batch-card-preparing, .optional-world-current) {\n  outline: 2px solid var(--iw-focus);\n  outline-offset: 2px;\n}\n[data-theme-styled='true']\n  :where(\n    .asset-row.selected,\n    .candidate-entry.selected,\n    [aria-selected='true'],\n    [aria-pressed='true']\n  )\n  :where(.muted, .micro-note, small) {\n  color: inherit;\n}\n[data-theme-styled='true'] input[type='file']::file-selector-button {\n  color: var(--iw-text);\n  background: var(--ui-control-finish, none), var(--iw-panel-raised);\n  border: 1px solid var(--iw-control-line);\n  border-radius: 0;\n  box-shadow: var(--ui-action-depth, none);\n  min-height: var(--iw-target);\n  padding: 6px 10px;\n  margin-inline-end: 10px;\n  font: inherit;\n  cursor: pointer;\n}\n[data-theme-styled='true'] input[type='file']:not(:disabled)::file-selector-button:hover {\n  background:\n    var(--ui-hover-finish, var(--ui-control-finish, none)),\n    var(--ui-hover-face, var(--iw-panel-raised));\n  color: var(--ui-hover-ink, var(--iw-text));\n  box-shadow: var(--ui-hover-depth, none);\n}\n[data-theme-styled='true'] input[type='file']:not(:disabled)::file-selector-button:active {\n  background: var(--ui-active-finish, none), var(--iw-selection);\n  color: var(--iw-on-selection);\n  box-shadow: var(--ui-pressed-depth, none);\n}\n[data-theme-styled='true'] input[type='file']:disabled::file-selector-button {\n  color: var(--iw-muted);\n  background: var(--iw-panel);\n  border-style: dashed;\n  box-shadow: none;\n  cursor: not-allowed;\n}\n/* Reading state belongs to the message, not a permanent empty painted bar. */\n[data-theme-styled='true'] :where([role='status'], [role='alert']):empty {\n  background: transparent;\n}\n[data-theme-styled='true'] label:has(> input:is([type='checkbox'], [type='radio'])) {\n  padding: 6px 10px;\n  box-sizing: border-box;\n  gap: 10px;\n}\n[data-theme-styled='true'] :where(.soundtrack-dialog, .optional-worlds-dialog) .micro-note {\n  font-size: var(--fk-text-secondary);\n}\n/* Session transport is one control group. Its volume label must not run into\n   the last button when a long translation or enlarged text wraps the row. */\n[data-theme-styled='true'] [data-couch-music] {\n  display: flex;\n  flex-wrap: wrap;\n  gap: 10px;\n  align-items: center;\n}\n[data-theme-styled='true'] [data-couch-music] > :where(h3, p, label, input, section, details) {\n  flex: 1 0 100%;\n  min-width: 0;\n  max-width: 100%;\n  box-sizing: border-box;\n}\n[data-theme-styled='true'] [data-couch-music] > :where(h3, p) {\n  margin-block: 8px;\n}\n[data-theme-styled='true'] [data-couch-music] > label {\n  margin-top: 8px;\n}\n[data-theme-styled='true'] #soundtrack-now-sources {\n  display: flex;\n  flex-wrap: wrap;\n  gap: 8px 16px;\n  margin-block: 12px;\n}\n[data-theme-styled='true'] :where(.page-head, .masthead) > a + a {\n  margin-inline-start: 12px;\n}\n\n[data-theme-styled='true'] :where(.asset-row.selected, .candidate-entry.selected) {\n  color: var(--iw-on-selection);\n  background: var(--iw-selection);\n  border-color: var(--iw-focus);\n  box-shadow: inset 3px 0 var(--iw-focus);\n}\n\n/* Only the application-owned menu backdrop changes with the interface. Authored\n   campaign/edition scenery and logos are separate content and remain visible. */\n[data-theme-styled='true'] .menu-scene[data-backdrop='interface'] {\n  background: var(--iw-ink);\n}\n[data-theme-styled='true']\n  .menu-scene[data-backdrop='interface']\n  > :where(.menu-scene-art-plane, .menu-scene-signal) {\n  display: none;\n}\n[data-theme-styled='true'] .menu-scene[data-backdrop='interface']::before {\n  content: '';\n  position: absolute;\n  inset: var(--ui-scene-inset);\n  inline-size: var(--ui-scene-width);\n  block-size: var(--ui-scene-height);\n  pointer-events: none;\n  background-image: var(--ui-scene-motif, none);\n  background-size: var(--ui-scene-motif-size, 48px 48px);\n  background-position: right top;\n  background-repeat: var(--ui-scene-repeat);\n  opacity: var(--ui-scene-opacity);\n}\n[data-theme-material='linen'] {\n  --ui-scene-motif: url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='64' height='64' shape-rendering='crispEdges'%3E%3Cg fill='none' stroke='%23f48686' stroke-width='2'%3E%3Cpath d='M32 10l22 22-22 22L10 32zM24 24l16 16m0-16L24 40'/%3E%3C/g%3E%3Cpath fill='%23e1ddcf' d='M0 0h2v2H0zm62 0h2v2h-2zM0 62h2v2H0zm62 0h2v2h-2z'/%3E%3C/svg%3E\");\n  --ui-scene-motif-size: 64px 64px;\n}\n[data-theme-material='porcelain'] {\n  --ui-scene-motif: url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='96'%3E%3Cg fill='none' stroke='%230057b7'%3E%3Cpath d='M-30 24q30-28 60 0t60 0t60 0M-30 72q30-28 60 0t60 0t60 0'/%3E%3Cpath d='M60 30q-12 10 0 20q12-10 0-20m0 20v8'/%3E%3C/g%3E%3C/svg%3E\");\n  --ui-scene-motif-size: 120px 96px;\n}\n[data-theme-material='brass'],\n[data-theme-material='copper'] {\n  --ui-scene-motif:\n    repeating-linear-gradient(90deg, transparent 0 95px, var(--iw-line) 95px 96px),\n    repeating-linear-gradient(0deg, transparent 0 95px, var(--iw-line) 95px 96px);\n  --ui-scene-motif-size: 96px 96px;\n}\n[data-theme-material='wood'] {\n  --ui-scene-motif:\n    repeating-linear-gradient(\n      0deg,\n      transparent 0 7px,\n      var(--iw-line) 7px 8px,\n      transparent 8px 62px,\n      var(--iw-line) 62px 64px\n    ),\n    repeating-linear-gradient(90deg, transparent 0 191px, var(--iw-line) 191px 192px);\n  --ui-scene-motif-size: 192px 64px;\n}\n[data-theme-material='composite'] {\n  --ui-scene-motif:\n    linear-gradient(30deg, transparent 0 48%, var(--iw-accent) 49% 50%, transparent 51%),\n    linear-gradient(150deg, transparent 0 48%, var(--iw-line) 49% 50%, transparent 51%);\n  --ui-scene-motif-size: 96px 64px;\n}\n[data-theme-material='classic'],\n[data-theme-material='terminal'],\n[data-theme-material='lcd'] {\n  --ui-scene-motif: none;\n}\n[data-theme-material='classic'] .menu-scene[data-backdrop='interface']::after,\n[data-theme-material='terminal'] .menu-scene[data-backdrop='interface']::after,\n[data-theme-material='lcd'] .menu-scene[data-backdrop='interface']::after {\n  background: none;\n}\n[data-theme-texture='off'] {\n  --ui-scene-motif: none;\n}\n\n/* BEGIN ORIGINAL MATERIAL GRAIN — generated by scripts/refresh-interface-material-grain.mjs */\n[data-theme-family] {\n  --ui-grain-powder: url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='192' height='128' shape-rendering='crispEdges'%3E%3Cpath fill='%23fff' opacity='.055' d='M68 16h2v1h-2zM166 44h2v1h-2zM150 5h2v1h-2zM69 90h1v1h-1zM154 30h2v1h-2zM113 37h1v1h-1zM101 58h1v1h-1zM167 80h1v1h-1zM131 76h1v1h-1zM81 23h2v1h-2zM58 109h2v1h-2zM167 78h2v1h-2zM183 84h2v1h-2zM17 46h2v1h-2zM141 20h2v1h-2zM30 100h2v1h-2zM21 69h1v1h-1zM94 102h1v1h-1zM66 101h1v1h-1zM109 34h2v1h-2zM143 6h2v1h-2zM14 89h1v1h-1zM8 100h2v1h-2zM25 29h1v1h-1zM173 68h1v1h-1zM144 79h1v1h-1zM38 28h2v1h-2zM102 90h2v1h-2zM49 26h2v1h-2zM9 40h1v1h-1zM186 17h2v1h-2zM175 119h1v1h-1zM154 115h1v1h-1zM101 3h1v1h-1zM173 62h1v1h-1zM29 13h1v1h-1zM17 79h2v1h-2zM117 41h2v1h-2zM145 20h2v1h-2zM176 86h1v1h-1zM46 56h2v1h-2zM137 82h2v1h-2zM157 96h1v1h-1zM186 84h1v1h-1zM160 6h1v1h-1zM96 33h2v1h-2zM90 123h2v1h-2zM131 110h2v1h-2zM152 119h2v1h-2zM150 92h1v1h-1zM178 69h2v1h-2zM151 21h1v1h-1zM110 12h2v1h-2zM76 31h1v1h-1zM116 63h2v1h-2zM160 2h1v1h-1z'/%3E%3Cpath fill='%23000' opacity='.09' d='M69 17h2v1h-2zM162 111h1v1h-1zM143 121h2v1h-2zM151 6h2v1h-2zM145 9h2v1h-2zM143 22h1v1h-1zM155 31h2v1h-2zM16 113h2v1h-2zM121 4h2v1h-2zM102 59h2v1h-2zM64 119h2v1h-2zM20 76h2v1h-2zM132 77h2v1h-2zM27 48h2v1h-2zM128 8h2v1h-2zM59 110h2v1h-2zM3 8h1v1h-1zM102 112h1v1h-1zM184 85h2v1h-2zM170 45h1v1h-1zM182 94h1v1h-1zM142 21h2v1h-2zM38 5h1v1h-1zM18 72h1v1h-1zM22 70h2v1h-2zM13 95h2v1h-2zM75 74h1v1h-1zM67 102h2v1h-2zM135 49h2v1h-2zM16 70h1v1h-1zM144 7h2v1h-2zM173 80h2v1h-2zM51 98h1v1h-1zM9 101h2v1h-2zM116 14h2v1h-2zM115 42h2v1h-2zM174 69h2v1h-2zM141 82h1v1h-1zM182 15h2v1h-2zM39 29h2v1h-2zM100 70h1v1h-1zM184 113h1v1h-1zM50 27h2v1h-2zM131 4h2v1h-2zM143 68h1v1h-1zM187 18h2v1h-2zM120 104h2v1h-2zM41 78h2v1h-2zM155 116h2v1h-2zM51 73h1v1h-1zM93 86h1v1h-1zM174 63h2v1h-2zM34 31h2v1h-2zM122 87h2v1h-2zM18 80h2v1h-2zM67 48h1v1h-1zM103 7h2v1h-2zM146 21h2v1h-2zM94 32h2v1h-2zM110 84h2v1h-2zM47 57h2v1h-2zM155 50h2v1h-2zM137 2h2v1h-2zM158 97h2v1h-2zM134 82h1v1h-1zM184 74h2v1h-2zM161 7h2v1h-2zM137 83h2v1h-2zM50 100h2v1h-2zM91 124h2v1h-2zM162 19h2v1h-2zM49 9h1v1h-1zM153 120h2v1h-2zM180 90h2v1h-2zM158 24h1v1h-1zM179 70h2v1h-2zM131 8h1v1h-1zM15 12h1v1h-1zM111 13h2v1h-2zM113 40h1v1h-1zM143 104h2v1h-2zM117 64h2v1h-2zM184 70h2v1h-2zM54 87h2v1h-2z'/%3E%3Cpath fill='%23000' opacity='.023' d='M132 15h18v2h-18zM134 17h15v2h-15zM121 51h9v2h-9zM123 53h6v2h-6zM111 13h6v2h-6zM113 15h3v2h-3zM14 91h12v2h-12zM16 93h9v2h-9zM65 54h16v2h-16zM67 56h13v2h-13zM64 17h13v2h-13zM66 19h10v2h-10zM68 93h7v2h-7zM70 95h4v2h-4zM141 56h15v2h-15zM143 58h12v2h-12zM28 11h18v2h-18zM30 13h15v2h-15zM141 81h18v2h-18zM143 83h15v2h-15zM153 15h14v2h-14zM155 17h11v2h-11zM134 60h8v2h-8zM136 62h5v2h-5zM90 108h17v2h-17zM92 110h14v2h-14zM146 27h17v2h-17zM148 29h14v2h-14zM22 77h17v2h-17zM24 79h14v2h-14zM152 86h10v2h-10zM154 88h7v2h-7zM94 5h9v2h-9zM96 7h6v2h-6zM147 6h11v2h-11zM149 8h8v2h-8z'/%3E%3C/svg%3E\");\n  --ui-grain-brush: url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='192' height='96' shape-rendering='crispEdges'%3E%3Cpath fill='%23fff' opacity='.045' d='M99 35h13v1h-13zM120 79h20v1h-20zM90 63h30v1h-30zM108 57h19v1h-19zM91 60h33v1h-33zM127 70h29v1h-29zM28 81h6v1h-6zM141 88h23v1h-23zM75 28h6v1h-6zM138 54h21v1h-21zM37 68h26v1h-26zM37 32h22v1h-22zM118 72h33v1h-33z'/%3E%3Cpath fill='%23000' opacity='.055' d='M56 73h18v1h-18zM127 41h29v1h-29zM124 72h27v1h-27zM99 53h6v1h-6zM118 51h17v1h-17zM86 83h12v1h-12zM53 53h9v1h-9zM15 9h20v1h-20zM34 36h23v1h-23zM53 84h13v1h-13zM117 62h14v1h-14zM107 45h6v1h-6zM59 86h21v1h-21z'/%3E%3C/svg%3E\");\n  --ui-grain-thread: url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='48' shape-rendering='crispEdges'%3E%3Cpath fill='%23fff' opacity='.021' d='M0 0h2v1h-2zM4 0h1v3h-1zM8 0h3v1h-3zM12 0h1v3h-1zM16 0h3v1h-3zM20 0h1v3h-1zM24 0h3v1h-3zM28 0h1v3h-1zM32 0h3v1h-3zM36 0h1v3h-1zM40 0h3v1h-3zM44 0h1v2h-1zM0 4h1v3h-1zM4 4h3v1h-3zM8 4h1v3h-1zM12 4h3v1h-3zM16 4h1v2h-1zM20 4h3v1h-3zM24 4h1v2h-1zM28 4h3v1h-3zM32 4h1v2h-1zM36 4h3v1h-3zM40 4h1v2h-1zM44 4h3v1h-3zM0 8h3v1h-3zM4 8h1v2h-1zM8 8h3v1h-3zM12 8h1v2h-1zM16 8h3v1h-3zM20 8h1v2h-1zM24 8h3v1h-3zM28 8h1v3h-1zM32 8h3v1h-3zM36 8h1v3h-1zM40 8h3v1h-3zM44 8h1v3h-1zM0 12h1v3h-1zM4 12h3v1h-3zM8 12h1v3h-1zM12 12h3v1h-3zM16 12h1v3h-1zM20 12h3v1h-3zM24 12h1v3h-1zM28 12h3v1h-3zM32 12h1v3h-1zM36 12h2v1h-2zM40 12h1v3h-1zM44 12h2v1h-2zM0 16h3v1h-3zM4 16h1v3h-1zM8 16h2v1h-2zM12 16h1v3h-1zM16 16h2v1h-2zM20 16h1v3h-1zM24 16h2v1h-2zM28 16h1v3h-1zM32 16h2v1h-2zM36 16h1v3h-1zM40 16h2v1h-2zM44 16h1v3h-1zM0 20h1v3h-1zM4 20h2v1h-2zM8 20h1v3h-1zM12 20h2v1h-2zM16 20h1v3h-1zM20 20h3v1h-3zM24 20h1v3h-1zM28 20h3v1h-3zM32 20h1v3h-1zM36 20h3v1h-3zM40 20h1v3h-1zM44 20h3v1h-3zM0 24h3v1h-3zM4 24h1v3h-1zM8 24h3v1h-3zM12 24h1v3h-1zM16 24h3v1h-3zM20 24h1v3h-1zM24 24h3v1h-3zM28 24h1v2h-1zM32 24h3v1h-3zM36 24h1v2h-1zM40 24h3v1h-3zM44 24h1v2h-1zM0 28h1v2h-1zM4 28h3v1h-3zM8 28h1v2h-1zM12 28h3v1h-3zM16 28h1v2h-1zM20 28h3v1h-3zM24 28h1v2h-1zM28 28h3v1h-3zM32 28h1v2h-1zM36 28h3v1h-3zM40 28h1v3h-1zM44 28h3v1h-3zM0 32h3v1h-3zM4 32h1v2h-1zM8 32h3v1h-3zM12 32h1v3h-1zM16 32h3v1h-3zM20 32h1v3h-1zM24 32h3v1h-3zM28 32h1v3h-1zM32 32h3v1h-3zM36 32h1v3h-1zM40 32h3v1h-3zM44 32h1v3h-1zM0 36h1v3h-1zM4 36h3v1h-3zM8 36h1v3h-1zM12 36h3v1h-3zM16 36h1v3h-1zM20 36h2v1h-2zM24 36h1v3h-1zM28 36h2v1h-2zM32 36h1v3h-1zM36 36h2v1h-2zM40 36h1v3h-1zM44 36h2v1h-2zM0 40h2v1h-2zM4 40h1v3h-1zM8 40h2v1h-2zM12 40h1v3h-1zM16 40h2v1h-2zM20 40h1v3h-1zM24 40h2v1h-2zM28 40h1v3h-1zM32 40h3v1h-3zM36 40h1v3h-1zM40 40h3v1h-3zM44 40h1v3h-1zM0 44h1v3h-1zM4 44h3v1h-3zM8 44h1v3h-1zM12 44h3v1h-3zM16 44h1v3h-1zM20 44h3v1h-3zM24 44h1v3h-1zM28 44h3v1h-3zM32 44h1v3h-1zM36 44h3v1h-3zM40 44h1v2h-1zM44 44h3v1h-3z'/%3E%3Cpath fill='%23000' opacity='.065' d='M2 2h1v2h-1zM6 2h2v1h-2zM10 2h1v2h-1zM14 2h2v1h-2zM18 2h1v2h-1zM22 2h2v1h-2zM26 2h1v2h-1zM30 2h2v1h-2zM34 2h1v2h-1zM38 2h2v1h-2zM42 2h1v2h-1zM46 2h2v1h-2zM2 6h2v1h-2zM6 6h1v2h-1zM10 6h2v1h-2zM14 6h1v2h-1zM18 6h2v1h-2zM22 6h1v2h-1zM26 6h2v1h-2zM30 6h1v2h-1zM34 6h2v1h-2zM38 6h1v2h-1zM42 6h2v1h-2zM46 6h1v2h-1zM2 10h1v2h-1zM6 10h2v1h-2zM10 10h1v2h-1zM14 10h2v1h-2zM18 10h1v2h-1zM22 10h2v1h-2zM26 10h1v2h-1zM30 10h2v1h-2zM34 10h1v2h-1zM38 10h2v1h-2zM42 10h1v2h-1zM46 10h2v1h-2zM2 14h2v1h-2zM6 14h1v2h-1zM10 14h2v1h-2zM14 14h1v2h-1zM18 14h2v1h-2zM22 14h1v2h-1zM26 14h2v1h-2zM30 14h1v2h-1zM34 14h2v1h-2zM38 14h1v2h-1zM42 14h2v1h-2zM46 14h1v2h-1zM2 18h1v2h-1zM6 18h2v1h-2zM10 18h1v2h-1zM14 18h2v1h-2zM18 18h1v2h-1zM22 18h2v1h-2zM26 18h1v2h-1zM30 18h2v1h-2zM34 18h1v2h-1zM38 18h2v1h-2zM42 18h1v2h-1zM46 18h2v1h-2zM2 22h2v1h-2zM6 22h1v2h-1zM10 22h2v1h-2zM14 22h1v2h-1zM18 22h2v1h-2zM22 22h1v2h-1zM26 22h2v1h-2zM30 22h1v2h-1zM34 22h2v1h-2zM38 22h1v2h-1zM42 22h2v1h-2zM46 22h1v2h-1zM2 26h1v2h-1zM6 26h2v1h-2zM10 26h1v2h-1zM14 26h2v1h-2zM18 26h1v2h-1zM22 26h2v1h-2zM26 26h1v2h-1zM30 26h2v1h-2zM34 26h1v2h-1zM38 26h2v1h-2zM42 26h1v2h-1zM46 26h2v1h-2zM2 30h2v1h-2zM6 30h1v2h-1zM10 30h2v1h-2zM14 30h1v2h-1zM18 30h2v1h-2zM22 30h1v2h-1zM26 30h2v1h-2zM30 30h1v2h-1zM34 30h2v1h-2zM38 30h1v2h-1zM42 30h2v1h-2zM46 30h1v2h-1zM2 34h1v2h-1zM6 34h2v1h-2zM10 34h1v2h-1zM14 34h2v1h-2zM18 34h1v2h-1zM22 34h2v1h-2zM26 34h1v2h-1zM30 34h2v1h-2zM34 34h1v2h-1zM38 34h2v1h-2zM42 34h1v2h-1zM46 34h2v1h-2zM2 38h2v1h-2zM6 38h1v2h-1zM10 38h2v1h-2zM14 38h1v2h-1zM18 38h2v1h-2zM22 38h1v2h-1zM26 38h2v1h-2zM30 38h1v2h-1zM34 38h2v1h-2zM38 38h1v2h-1zM42 38h2v1h-2zM46 38h1v2h-1zM2 42h1v2h-1zM6 42h2v1h-2zM10 42h1v2h-1zM14 42h2v1h-2zM18 42h1v2h-1zM22 42h2v1h-2zM26 42h1v2h-1zM30 42h2v1h-2zM34 42h1v2h-1zM38 42h2v1h-2zM42 42h1v2h-1zM46 42h2v1h-2zM2 46h2v1h-2zM6 46h1v2h-1zM10 46h2v1h-2zM14 46h1v2h-1zM18 46h2v1h-2zM22 46h1v2h-1zM26 46h2v1h-2zM30 46h1v2h-1zM34 46h2v1h-2zM38 46h1v2h-1zM42 46h2v1h-2zM46 46h1v2h-1z'/%3E%3Cpath fill='%23fff' opacity='.018' d='M1 0h2v1h-2zM21 8h1v2h-1zM41 16h2v1h-2zM13 20h2v1h-2zM33 28h1v2h-1zM5 32h1v2h-1zM25 40h2v1h-2z'/%3E%3C/svg%3E\");\n  --ui-grain-glaze: url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='256' height='192' shape-rendering='crispEdges'%3E%3Cpath fill='%23183858' opacity='.045' d='M19 27h1v1h-1zM107 68h1v1h-1zM214 21h1v1h-1zM64 143h1v1h-1zM182 155h1v1h-1zM236 108h1v1h-1z'/%3E%3Cpath fill='%23fff' opacity='.18' d='M20 28h1v1h-1zM108 69h1v1h-1zM215 22h1v1h-1zM65 144h1v1h-1zM183 156h1v1h-1zM237 109h1v1h-1z'/%3E%3C/svg%3E\");\n  --ui-grain-timber: url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='192' height='128' shape-rendering='crispEdges'%3E%3Cpath fill='none' stroke='%23000' stroke-opacity='.045' d='M81 15h9v3h17v3h13v2h14v1h7v-1h8v-2h10v-3h13v-3h11v-3'/%3E%3Cpath fill='none' stroke='%23000' stroke-opacity='.045' d='M15 105h17v-1h9v-1h8v-1h15v0h17v0h7v1h12v1h10v1'/%3E%3Cpath fill='none' stroke='%23000' stroke-opacity='.045' d='M73 99h14v1h13v1h10v1h15v1h9v0'/%3E%3Cpath fill='none' stroke='%23000' stroke-opacity='.045' d='M64 18h13v1h11v2h16v3'/%3E%3Cpath fill='none' stroke='%23000' stroke-opacity='.045' d='M25 7h16v-1h16v-1h17v0h17v1h17v1h15v1h9v0h15v0h14v-1h8v-1h16v-1'/%3E%3Cpath fill='none' stroke='%23000' stroke-opacity='.045' d='M60 25h15v0h12v1h15v1h13v1h12v1h14v0'/%3E%3Cpath fill='none' stroke='%23000' stroke-opacity='.045' d='M25 79h17v-3h17v-2h8v0h8v1h12v2'/%3E%3Cpath fill='none' stroke='%23fff' stroke-opacity='.028' d='M68 13h7v0h15v1h9v1h7v1h15v1h7v0h8v0h6v0'/%3E%3Cpath fill='none' stroke='%23fff' stroke-opacity='.028' d='M35 90h12v-3h6v-1h10v-1h8v1h10v2h13v3h14v3h7v2h8v2'/%3E%3Cpath fill='none' stroke='%23fff' stroke-opacity='.028' d='M13 94h16v-1h11v-1h6v-1h9v-1h6v0h10v0h16v1h7v1h15v1'/%3E%3Cpath fill='none' stroke='%23fff' stroke-opacity='.028' d='M51 100h12v0h8v0h8v1h10v1'/%3E%3Cpath fill='none' stroke='%23fff' stroke-opacity='.028' d='M55 83h6v0h11v0h10v2h17v3h7v3h11v2h15v1h17v-1h13v-3h6v-3'/%3E%3Cpath fill='none' stroke='%23fff' stroke-opacity='.028' d='M26 82h10v-1h15v-1h11v0h12v0h16v1h13v1h10v1'/%3E%3Cpath fill='none' stroke='%23fff' stroke-opacity='.028' d='M35 28h9v-1h9v-1h14v0h13v0'/%3E%3C/svg%3E\");\n  --ui-grain-stone: url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='192' height='128' shape-rendering='crispEdges'%3E%3Cpath fill='%23fff' opacity='.028' d='M18 33h6v1h2v1h-7v-1h-1zM160 72h6v2h-6zM145 100h4v1h-4zM94 118h3v1h2v1h-4v-1h-1zM62 19h5v1h-5zM147 18h3v1h-3zM85 59h3v1h2v1h-4v-1h-1zM121 47h5v2h-5zM95 56h2v2h-2zM54 77h6v1h2v1h-7v-1h-1zM115 4h3v2h-3zM50 21h5v1h-5zM126 95h6v1h2v1h-7v-1h-1zM127 90h5v2h-5zM159 21h2v2h-2zM153 89h5v1h2v1h-6v-1h-1z'/%3E%3Cpath fill='%23000' opacity='.04' d='M146 23h2v2h-2zM179 84h3v1h2v1h-4v-1h-1zM12 16h5v2h-5zM151 77h5v1h-5zM31 104h5v1h2v1h-6v-1h-1zM137 43h5v1h-5zM70 81h5v2h-5zM124 10h6v1h2v1h-7v-1h-1zM20 118h4v2h-4zM90 69h6v2h-6zM118 30h3v1h2v1h-4v-1h-1zM36 86h2v2h-2zM82 103h4v1h-4zM61 16h3v1h2v1h-4v-1h-1zM115 58h2v1h-2zM106 98h3v2h-3z'/%3E%3C/svg%3E\");\n  --ui-grain-fiber: url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='192' height='128' shape-rendering='crispEdges'%3E%3Cpath fill='%23fff' opacity='.035' d='M137 49h8v1h-3v1h-2v-1h-2zM81 29h6v1h-3v1h-2v-1h-2zM82 31h3v1h-3v1h-2v-1h-2zM54 100h9v1h-3v1h-2v-1h-2zM114 57h4v1h-3v1h-2v-1h-2zM145 26h9v1h-3v1h-2v-1h-2zM129 105h8v1h-3v1h-2v-1h-2zM84 63h3v1h-3v1h-2v-1h-2zM37 44h9v1h-3v1h-2v-1h-2zM136 106h5v1h-3v1h-2v-1h-2zM142 46h8v1h-3v1h-2v-1h-2zM33 60h6v1h-3v1h-2v-1h-2zM16 13h3v1h-3v1h-2v-1h-2z'/%3E%3Cpath fill='%23000' opacity='.033' d='M108 55h4v1h-3v1h-2v-1h-2zM80 108h3v1h-3v1h-2v-1h-2zM36 44h8v1h-3v1h-2v-1h-2zM35 84h4v1h-3v1h-2v-1h-2zM39 91h5v1h-3v1h-2v-1h-2zM83 46h8v1h-3v1h-2v-1h-2zM134 114h9v1h-3v1h-2v-1h-2zM81 45h4v1h-3v1h-2v-1h-2zM75 15h9v1h-3v1h-2v-1h-2zM42 34h4v1h-3v1h-2v-1h-2zM156 90h4v1h-3v1h-2v-1h-2zM89 27h8v1h-3v1h-2v-1h-2z'/%3E%3C/svg%3E\");\n  --ui-grain-machining: url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='256' height='128' shape-rendering='crispEdges'%3E%3Cpath fill='%23000' opacity='.075' d='M12 18h34v1H12zM91 43h19v1H91zM164 12h47v1h-47zM37 95h31v1H37zM146 103h18v1h-18zM208 74h26v1h-26zM118 65h8v1h-8zM68 28h6v1h-6z'/%3E%3Cpath fill='%23fff' opacity='.045' d='M13 19h30v1H13zM92 44h16v1H92zM167 13h40v1h-40zM39 96h26v1H39zM147 104h15v1h-15zM209 75h22v1h-22z'/%3E%3C/svg%3E\");\n  --ui-grain-edge-wear: url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='128' height='6' shape-rendering='crispEdges'%3E%3Cpath fill='%23fff' opacity='.20' d='M7 1h12v1H7zM42 2h5v1h-5zM76 1h17v1H76zM111 2h8v1h-8z'/%3E%3Cpath fill='%23000' opacity='.26' d='M8 2h9v1H8zM42 3h4v1h-4zM78 2h13v1H78zM111 3h6v1h-6z'/%3E%3C/svg%3E\");\n  --ui-grain-vent: url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='96' height='8' shape-rendering='crispEdges'%3E%3Cpath fill='%23000' opacity='.45' d='M4 2h3v4h-3zM10 2h3v4h-3zM16 2h3v4h-3zM22 2h3v4h-3zM28 2h3v4h-3zM34 2h3v4h-3zM40 2h3v4h-3zM46 2h3v4h-3zM52 2h3v4h-3zM58 2h3v4h-3zM64 2h3v4h-3zM70 2h3v4h-3zM76 2h3v4h-3zM82 2h3v4h-3zM88 2h3v4h-3z'/%3E%3Cpath fill='%23fff' opacity='.14' d='M4 6h3v1h-3zM10 6h3v1h-3zM16 6h3v1h-3zM22 6h3v1h-3zM28 6h3v1h-3zM34 6h3v1h-3zM40 6h3v1h-3zM46 6h3v1h-3zM52 6h3v1h-3zM58 6h3v1h-3zM64 6h3v1h-3zM70 6h3v1h-3zM76 6h3v1h-3zM82 6h3v1h-3zM88 6h3v1h-3z'/%3E%3C/svg%3E\");\n  --ui-grain-bulkhead: url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='256' height='192' shape-rendering='crispEdges'%3E%3Cpath fill='%23000' opacity='.42' d='M0 0h256v2H0zM0 2h2v190H0z'/%3E%3Cpath fill='%23fff' opacity='.07' d='M2 2h254v1H2zM2 3h1v189H2z'/%3E%3Cpath fill='%23000' opacity='.32' d='M9 9h6v6H9zM241 9h6v6h-6zM9 177h6v6H9zM241 177h6v6h-6z'/%3E%3Cpath fill='%23fff' opacity='.12' d='M10 10h4v1h-4zM242 10h4v1h-4zM10 178h4v1h-4zM242 178h4v1h-4z'/%3E%3Cpath fill='%23fff' opacity='.055' d='M34 3h26v1H34zM186 3h39v1h-39zM3 88h1v12H3z'/%3E%3C/svg%3E\");\n}\n/* END ORIGINAL MATERIAL GRAIN */\n\n/* Material finishes are independent of the immutable asset frames. The opaque\n   semantic base always supplies the text/state pair; these original, static\n   layers add restrained grain across the face and stronger light at its edges.\n   Grain is not stretched nine-slice art: it contains no screws, seams or labels. */\n@media (forced-colors: none) {\n  [data-theme-texture='on'][data-theme-contrast='normal'][data-theme-surface='bevel'] {\n    --ui-control-finish: linear-gradient(180deg, #ffffff0a, transparent 22%, #00000008);\n    --ui-active-finish: linear-gradient(180deg, #00000008, transparent 40%, #ffffff08);\n    --ui-inset-finish: linear-gradient(180deg, #00000012, transparent 12px);\n    --ui-inset-depth: inset 0 2px 3px #0005, inset 0 -1px 0 #ffffff0c;\n    --ui-toolbar-finish: linear-gradient(180deg, #ffffff08, transparent 8px, #00000008);\n    --ui-action-depth: inset 1px 1px 0 #ffffff20, inset -1px -1px 0 #0005, 0 2px 0 var(--ui-shadow);\n    --ui-hover-depth:\n      inset 0 0 0 1px var(--iw-accent), inset 0 2px 0 #ffffff20, 0 2px 0 var(--ui-shadow);\n    --ui-pressed-depth: inset 0 2px 3px #0005, inset 0 -1px 0 #ffffff14;\n    --ui-selected-depth: inset 3px 0 var(--iw-focus), inset 0 1px 0 #ffffff18, inset 0 -2px 0 #0003;\n    --ui-gallery-depth: var(--ui-action-depth);\n  }\n\n  /* Steel: powder-coated face, rolled edge, dark socket and amber activation.\n     Four riveted corners belong to frames; wear never crosses the label. */\n  :is(\n      [data-theme-material='steel'],\n      [data-theme-material='industrial-workshop']\n    )[data-theme-texture='on'][data-theme-contrast='normal'][data-theme-surface='bevel'] {\n    --ui-loading-rail: 7px;\n    --ui-grain:\n      var(--ui-grain-machining) 0 0 / 256px 128px repeat,\n      var(--ui-grain-powder) 17px 11px / 192px 128px repeat;\n    --ui-panel-finish:\n      var(--ui-grain-vent) right 18px top 7px / 96px 8px no-repeat,\n      var(--ui-grain-edge-wear) left 14px top 2px / 128px 6px repeat-x, var(--ui-grain),\n      linear-gradient(180deg, #ffffff18, transparent 7px, transparent calc(100% - 5px), #00000025);\n    --ui-control-finish:\n      var(--ui-grain-edge-wear) left 14px top 1px / 128px 6px repeat-x, var(--ui-grain),\n      linear-gradient(90deg, #ffffff14, transparent 4px, transparent calc(100% - 4px), #00000020),\n      linear-gradient(\n        180deg,\n        #ffffff38 0 1px,\n        #ffffff14 1px 3px,\n        transparent 6px,\n        transparent calc(100% - 5px),\n        #00000035 calc(100% - 2px),\n        #00000050\n      );\n    --ui-active-finish:\n      var(--ui-grain-edge-wear) left 14px bottom 1px / 128px 6px repeat-x, var(--ui-grain),\n      linear-gradient(180deg, #00000022, transparent 3px, transparent calc(100% - 2px), #ffffff20);\n    --ui-inset-finish:\n      var(--ui-grain-powder) 41px 27px / 192px 128px repeat,\n      linear-gradient(180deg, #00000048, transparent 6px, transparent calc(100% - 2px), #ffffff10);\n    --ui-toolbar-finish:\n      var(--ui-grain-edge-wear) left 14px top 1px / 128px 6px repeat-x, var(--ui-grain),\n      linear-gradient(180deg, #ffffff28, transparent 4px, transparent calc(100% - 4px), #00000025);\n    --ui-thumb-finish:\n      repeating-linear-gradient(90deg, transparent 0 3px, #0006 3px 4px, #fff4 4px 5px) center /\n        15px 60% no-repeat,\n      linear-gradient(180deg, #fff3, transparent 3px, transparent calc(100% - 3px), #0003);\n    --ui-panel-frame: var(--iw-material-panel) 6 / 6px / 0 repeat;\n    --ui-raised-frame: var(--iw-material-raised) 6 / 6px / 0 repeat;\n    --ui-primary-frame: var(--iw-material-primary) 6 / 6px / 0 repeat;\n    --ui-hover-frame: var(--ui-primary-frame);\n    --ui-hover-face: var(--iw-accent);\n    --ui-hover-ink: var(--iw-on-accent);\n    --ui-panel-depth:\n      inset 1px 1px 0 #ffffff18, inset -1px -2px 0 #0008, 0 0 0 1px #0007, 0 4px 0 var(--ui-shadow),\n      0 16px 28px #0006;\n    --ui-action-depth:\n      inset 0 2px 0 #ffffff25, inset 2px 0 0 #ffffff12, inset 0 -3px 0 #0006, inset -2px 0 0 #0003,\n      0 0 0 1px #0008, 0 4px 0 var(--ui-shadow), 0 5px 0 #0003;\n    --ui-hover-depth:\n      inset 0 2px 0 #ffffff65, inset 2px 0 0 #ffffff35, inset 0 -3px 0 #0005, inset -2px 0 0 #0002,\n      0 0 0 1px #0008, 0 4px 0 var(--ui-shadow),\n      0 0 6px color-mix(in srgb, var(--iw-accent) 18%, transparent);\n    --ui-pressed-depth:\n      inset 0 3px 4px #0006, inset 2px 0 0 #0003, inset 0 -1px 0 #ffffff50, 0 0 0 1px #0009,\n      0 1px 0 var(--ui-shadow);\n    --ui-selected-depth:\n      inset 0 2px 0 #ffffff45, inset 3px 0 0 #ffffff30, inset 0 -2px 0 #0004, 0 0 0 1px #0008,\n      0 2px 0 var(--ui-shadow);\n    --ui-inset-depth:\n      inset 0 3px 4px #0007, inset 1px 0 0 #0006, inset 0 -1px 0 #ffffff1c, 0 1px 0 #ffffff10;\n    --ui-scene-inset: 0;\n    --ui-scene-width: auto;\n    --ui-scene-height: auto;\n    --ui-scene-motif:\n      linear-gradient(\n        135deg,\n        transparent 35%,\n        color-mix(in srgb, var(--iw-accent) 7%, transparent)\n      ),\n      var(--ui-grain-bulkhead), var(--ui-grain-machining);\n    --ui-scene-motif-size: 100% 100%, 256px 192px, 256px 128px;\n    --ui-scene-repeat: no-repeat, repeat, repeat;\n    --ui-scene-opacity: 0.8;\n  }\n\n  /* Cloth keeps its stitches on the panel seam. Buttons are woven fabric,\n     never embroidered borders repeated through every navigation row. */\n  [data-theme-material='linen'][data-theme-texture='on'][data-theme-contrast='normal'][data-theme-surface='bevel'] {\n    --ui-weave: var(--ui-grain-thread) 1px 1px / 48px 48px repeat;\n    --ui-panel-finish:\n      repeating-linear-gradient(\n          90deg,\n          color-mix(in srgb, var(--iw-accent) 48%, transparent) 0 3px,\n          transparent 3px 9px\n        )\n        left 12px top 3px / calc(100% - 24px) 2px no-repeat,\n      var(--ui-weave), linear-gradient(180deg, #ffffff06, transparent 72px);\n    --ui-toolbar-finish: var(--ui-weave);\n    --ui-panel-depth:\n      inset 0 2px 0 color-mix(in srgb, var(--iw-accent) 65%, transparent),\n      inset 0 -1px 0 color-mix(in srgb, var(--iw-accent) 32%, transparent), 0 6px 14px #0004;\n    --ui-inset-finish: var(--ui-weave), linear-gradient(180deg, #00000024, transparent 5px);\n  }\n\n  /* Glaze and paper have different grain. Both keep their clean edge relief;\n     material identity is declared on this scope, including custom themes. */\n  [data-theme-material='porcelain'][data-theme-texture='on'][data-theme-contrast='normal'][data-theme-surface='bevel'] {\n    --ui-ceramic: var(--ui-grain-glaze) 0 0 / 256px 192px repeat;\n  }\n  [data-theme-material='sakura'][data-theme-texture='on'][data-theme-contrast='normal'][data-theme-surface='bevel'] {\n    --ui-ceramic: var(--ui-grain-fiber) 0 0 / 192px 128px repeat;\n  }\n  /* Porcelain: a glazed face and cobalt double lip. Sakura is warmer satin. */\n  :is(\n      [data-theme-material='porcelain'],\n      [data-theme-material='sakura']\n    )[data-theme-texture='on'][data-theme-contrast='normal'][data-theme-surface='bevel'] {\n    --ui-panel-finish: var(--ui-ceramic), linear-gradient(180deg, #ffffff30, transparent 9px);\n    --ui-control-finish:\n      var(--ui-ceramic),\n      linear-gradient(180deg, #ffffff80, transparent 4px, transparent calc(100% - 4px), #00000015);\n    --ui-toolbar-finish:\n      var(--ui-ceramic),\n      linear-gradient(180deg, #ffffff30, transparent 4px, transparent calc(100% - 4px), #00000009);\n    --ui-panel-depth:\n      inset 0 0 0 2px color-mix(in srgb, var(--iw-accent) 24%, transparent),\n      inset 0 0 0 5px #ffffff24, 0 4px 0 color-mix(in srgb, var(--iw-line) 28%, transparent),\n      0 8px 18px #0001;\n    --ui-action-depth:\n      inset 0 2px 0 #ffffff80, inset 0 -2px 0 #00000018,\n      0 2px 0 color-mix(in srgb, var(--iw-line) 40%, transparent);\n    --ui-hover-depth:\n      inset 0 0 0 1px var(--iw-accent), inset 0 2px 0 #ffffff80,\n      0 2px 0 color-mix(in srgb, var(--iw-accent) 45%, transparent);\n    --ui-active-finish:\n      var(--ui-ceramic),\n      linear-gradient(180deg, #00000022, transparent 3px, transparent calc(100% - 2px), #ffffff20);\n    --ui-inset-finish: var(--ui-ceramic), linear-gradient(180deg, #00000012, transparent 4px);\n    --ui-pressed-depth: inset 0 2px 0 #00000028, inset 0 -1px 0 #ffffff70;\n  }\n  [data-theme-material='sakura'][data-theme-texture='on'][data-theme-contrast='normal'][data-theme-surface='bevel'] {\n    --ui-panel-finish: var(--ui-ceramic), linear-gradient(180deg, #ffffff18, transparent 6px);\n    --ui-panel-depth:\n      inset 0 2px 0 color-mix(in srgb, var(--iw-accent) 42%, transparent), inset 0 -1px 0 #00000015,\n      0 4px 14px #0001;\n  }\n\n  /* Enamel and instrument copper: hairline inlays, directional satin, no\n     repeated chevrons. Obsidian overrides the enamel with cut stone below. */\n  :is(\n      [data-theme-material='brass'],\n      [data-theme-material='copper']\n    )[data-theme-texture='on'][data-theme-contrast='normal'][data-theme-surface='bevel'] {\n    --ui-panel-finish: var(--ui-metal), linear-gradient(180deg, #ffffff08, transparent 8px);\n    --ui-control-finish:\n      var(--ui-metal),\n      linear-gradient(180deg, #ffffff30, transparent 4px, transparent calc(100% - 4px), #00000030);\n    --ui-toolbar-finish: var(--ui-metal);\n    --ui-panel-depth:\n      inset 0 1px 0 color-mix(in srgb, var(--iw-accent) 45%, transparent),\n      inset 0 0 0 4px #00000018,\n      inset 0 -1px 0 color-mix(in srgb, var(--iw-accent) 22%, transparent),\n      0 4px 0 var(--ui-shadow), 0 10px 20px #0003;\n    --ui-hover-depth:\n      inset 0 2px 0 var(--iw-accent), inset 0 -1px 0 #0005, 0 2px 0 var(--ui-shadow);\n    --ui-metal: var(--ui-grain-powder) 9px 19px / 192px 128px repeat;\n    --ui-active-finish:\n      var(--ui-metal),\n      linear-gradient(180deg, #00000022, transparent 3px, transparent calc(100% - 2px), #ffffff20);\n    --ui-inset-finish: var(--ui-metal), linear-gradient(180deg, #00000030, transparent 5px);\n    --ui-pressed-depth: inset 0 2px 0 #0006, inset 0 -1px 0 #ffffff30;\n  }\n  [data-theme-material='copper'][data-theme-texture='on'][data-theme-contrast='normal'][data-theme-surface='bevel'] {\n    --ui-scene-motif: repeating-radial-gradient(\n      circle at 100% 0,\n      transparent 0 27px,\n      var(--iw-accent) 28px 29px,\n      transparent 30px 44px\n    );\n    --ui-scene-motif-size: 192px 96px;\n    --ui-metal: var(--ui-grain-brush) 0 0 / 192px 96px repeat;\n  }\n\n  /* Fine timber grain remains broad and sparse enough for small labels. */\n  [data-theme-material='wood'][data-theme-texture='on'][data-theme-contrast='normal'][data-theme-surface='bevel'] {\n    --ui-woodgrain: var(--ui-grain-timber) 11px 3px / 192px 128px repeat;\n    --ui-panel-finish: var(--ui-woodgrain), linear-gradient(180deg, #ffffff12, transparent 6px);\n    --ui-panel-depth:\n      inset 0 3px 0 #ffffff20, inset 0 -4px 0 #00000022, inset 2px 0 0 #ffffff10,\n      0 4px 0 color-mix(in srgb, var(--iw-line) 50%, transparent), 0 8px 16px #0002;\n    --ui-active-finish:\n      var(--ui-woodgrain),\n      linear-gradient(180deg, #00000022, transparent 3px, transparent calc(100% - 2px), #ffffff20);\n    --ui-inset-finish: var(--ui-woodgrain), linear-gradient(180deg, #00000025, transparent 4px);\n    --ui-pressed-depth: inset 0 2px 0 #0005, inset 0 -1px 0 #ffffff20;\n  }\n  [data-theme-material='composite'][data-theme-texture='on'][data-theme-contrast='normal'][data-theme-surface='bevel'] {\n    --ui-panel-finish:\n      var(--ui-composite),\n      linear-gradient(135deg, #ffffff20 0 5px, transparent 5px) top left / 18px 18px no-repeat;\n    --ui-panel-depth:\n      inset 2px 0 0 color-mix(in srgb, var(--iw-accent) 28%, transparent), inset 0 1px 0 #ffffff12,\n      inset 0 -2px 0 #0004, 0 4px 0 var(--ui-shadow), 0 10px 24px #0003;\n    --ui-composite: var(--ui-grain-stone) 0 0 / 192px 128px repeat;\n    --ui-active-finish:\n      var(--ui-composite),\n      linear-gradient(180deg, #00000022, transparent 3px, transparent calc(100% - 2px), #ffffff20);\n    --ui-inset-finish: var(--ui-composite), linear-gradient(180deg, #00000030, transparent 4px);\n    --ui-pressed-depth: inset 0 2px 0 #0005, inset 0 -1px 0 #ffffff25;\n  }\n  [data-theme-material='lcd'][data-theme-texture='on'][data-theme-contrast='normal'][data-theme-surface='bevel'] {\n    --ui-panel-finish:\n      repeating-linear-gradient(0deg, transparent 0 3px, #00000003 3px 4px),\n      repeating-linear-gradient(90deg, transparent 0 3px, #00000003 3px 4px);\n    --ui-panel-depth:\n      inset 0 3px 5px #0003, inset 0 -2px 0 #ffffff35,\n      0 0 0 3px color-mix(in srgb, var(--iw-line) 25%, transparent);\n    --ui-active-finish: linear-gradient(\n      180deg,\n      #00000028,\n      transparent 3px,\n      transparent calc(100% - 2px),\n      #ffffff25\n    );\n    --ui-inset-finish:\n      repeating-linear-gradient(0deg, transparent 0 3px, #00000006 3px 4px),\n      repeating-linear-gradient(90deg, transparent 0 3px, #00000006 3px 4px);\n    --ui-pressed-depth: inset 0 2px 0 #0005, inset 0 -1px 0 #ffffff20;\n  }\n\n  /* These variants are resolved from the interface basis, including Studio\n     descendants, rather than testing the current campaign or family name. */\n  [data-theme-finish='ember-foundry'][data-theme-texture='on'][data-theme-contrast='normal'][data-theme-surface='bevel'] {\n    --ui-grain:\n      var(--ui-grain-stone) 0 0 / 192px 128px repeat,\n      var(--ui-grain-powder) 17px 11px / 192px 128px repeat;\n    --ui-panel-finish:\n      var(--ui-grain-vent) right 18px top 7px / 96px 8px no-repeat,\n      linear-gradient(90deg, var(--iw-accent), transparent) left 12px bottom 5px / 72px 2px\n        no-repeat,\n      var(--ui-grain),\n      linear-gradient(180deg, #ffffff12, transparent 6px, transparent calc(100% - 5px), #0005);\n    --ui-toolbar-finish:\n      var(--ui-grain-brush) 0 0 / 192px 96px repeat,\n      linear-gradient(180deg, #ffffff25, transparent 4px, transparent calc(100% - 4px), #0005);\n    --ui-panel-depth:\n      inset 1px 1px 0 #ffffff20, inset -2px -3px 0 #0009, 0 0 0 1px #0008, 0 5px 0 var(--ui-shadow),\n      0 16px 28px #0006;\n  }\n  [data-theme-finish='polar-relay'][data-theme-texture='on'][data-theme-contrast='normal'][data-theme-surface='bevel'] {\n    --ui-grain: var(--ui-grain-brush) 0 0 / 192px 96px repeat;\n    --ui-panel-finish:\n      var(--ui-grain-vent) right 18px top 7px / 96px 8px no-repeat,\n      linear-gradient(\n          90deg,\n          var(--iw-accent) 0 5px,\n          transparent 5px 9px,\n          var(--iw-accent) 9px 14px,\n          transparent 14px 18px,\n          var(--iw-accent) 18px 23px\n        )\n        left 14px top 8px / 23px 2px no-repeat,\n      var(--ui-grain),\n      linear-gradient(180deg, #ffffff20, transparent 8px, transparent calc(100% - 4px), #0004);\n    --ui-control-finish:\n      var(--ui-grain),\n      linear-gradient(90deg, #ffffff18, transparent 3px, transparent calc(100% - 3px), #0003),\n      linear-gradient(\n        180deg,\n        #ffffff40 0 1px,\n        #ffffff12 1px 3px,\n        transparent 5px,\n        transparent calc(100% - 3px),\n        #0005\n      );\n    --ui-panel-depth:\n      inset 1px 1px 0 #ffffff30, inset -1px -2px 0 #0008, 0 0 0 1px #0007, 0 3px 0 var(--ui-shadow),\n      0 12px 24px #0005;\n  }\n  [data-theme-finish='obsidian-reliquary'][data-theme-texture='on'][data-theme-contrast='normal'][data-theme-surface='bevel'] {\n    --ui-panel-finish:\n      var(--ui-metal),\n      linear-gradient(135deg, #ffffff20 0 8px, transparent 8px) top left / 24px 24px no-repeat,\n      linear-gradient(315deg, #0005 0 8px, transparent 8px) bottom right / 24px 24px no-repeat;\n    --ui-panel-depth:\n      inset 2px 2px 0 color-mix(in srgb, var(--iw-accent) 28%, transparent),\n      inset -3px -3px 0 #0006, 0 5px 0 var(--ui-shadow), 0 10px 20px #0005;\n    --ui-scene-motif: linear-gradient(\n      135deg,\n      transparent 42%,\n      var(--iw-accent) 43% 44%,\n      transparent 45% 52%,\n      var(--iw-accent) 53% 54%,\n      transparent 55%\n    );\n    --ui-scene-motif-size: 144px 96px;\n    --ui-metal: var(--ui-grain-stone) 23px 7px / 192px 128px repeat;\n    --ui-pressed-depth: inset 2px 2px 0 #0005, inset -1px -1px 0 #ffffff20;\n  }\n  [data-theme-finish='deep-space'][data-theme-texture='on'][data-theme-contrast='normal'][data-theme-surface='bevel'] {\n    --ui-panel-finish: var(--ui-composite), linear-gradient(180deg, #ffffff18, transparent 4px);\n    --ui-panel-depth:\n      inset 0 2px 0 #ffffff18, inset 0 -3px 0 #0007, inset 3px 0 0 #0003, 0 3px 0 var(--ui-shadow),\n      0 8px 20px #0004;\n    --ui-scene-motif:\n      linear-gradient(0deg, transparent 0 46px, var(--iw-line) 46px 48px, transparent 48px),\n      linear-gradient(90deg, transparent 0 130px, var(--iw-accent) 130px 138px, transparent 138px);\n    --ui-scene-motif-size: 192px 96px;\n    --ui-composite: var(--ui-grain-brush) 23px 11px / 192px 96px repeat;\n  }\n  [data-theme-finish='moonlit-grove'][data-theme-texture='on'][data-theme-contrast='normal'][data-theme-surface='bevel'] {\n    --ui-woodgrain: var(--ui-grain-timber) 53px 47px / 192px 128px repeat;\n    --ui-panel-finish: var(--ui-woodgrain), linear-gradient(180deg, #ffffff12, transparent 6px);\n    --ui-panel-depth:\n      inset 1px 1px 0 #ffffff18, inset -2px -3px 0 #0006, 0 4px 0 var(--ui-shadow),\n      0 12px 24px #0003;\n    --ui-scene-motif:\n      radial-gradient(\n        ellipse at 75% 22%,\n        transparent 25px,\n        var(--iw-accent) 26px 28px,\n        transparent 29px\n      ),\n      linear-gradient(120deg, transparent 64%, var(--iw-line) 65% 66%, transparent 67%);\n    --ui-scene-motif-size: 144px 96px;\n  }\n\n  /* Texture-free systems still have intentional construction. Native desktop\n     bevels and terminal double rules are geometry, not decorative texture. */\n\n  [data-theme-material='terminal'][data-theme-contrast='normal'] {\n    --ui-hover-face: var(--iw-selection);\n    --ui-hover-ink: var(--iw-on-selection);\n  }\n}\n\n/* Material state finishes: grain belongs to the material, relief belongs to the\n   interaction. Faces remain quiet; focus, text and status colors retain their\n   semantic pairings. Existing steel recipes deliberately remain untouched. */\n@media (forced-colors: none) {\n  /* Woven patches compress rather than becoming metal plates. Red embroidery\n     remains on the existing outer panel seam, never on every button. */\n  [data-theme-material='linen'][data-theme-texture='on'][data-theme-contrast='normal'][data-theme-surface='bevel'] {\n    --ui-control-finish:\n      var(--ui-weave),\n      linear-gradient(180deg, #ffffff14, transparent 3px, transparent calc(100% - 3px), #0004);\n    --ui-hover-finish:\n      var(--ui-weave),\n      linear-gradient(180deg, #ffffff20, transparent 3px, transparent calc(100% - 3px), #0004);\n    --ui-active-finish:\n      var(--ui-weave),\n      linear-gradient(180deg, #0004, transparent 3px, transparent calc(100% - 2px), #ffffff18);\n    --ui-selected-finish:\n      var(--ui-weave),\n      linear-gradient(180deg, #ffffff18, transparent 2px, transparent calc(100% - 2px), #0003);\n    --ui-action-depth: inset 1px 1px 0 #ffffff16, inset -1px -1px 0 #0006, 0 2px 2px #0005;\n    --ui-hover-depth: inset 2px 0 0 currentColor, inset 0 1px 0 #ffffff25, 0 2px 3px #0005;\n    --ui-pressed-depth: inset 0 2px 3px #0006, inset 0 -1px 0 #ffffff20;\n    --ui-selected-depth: inset 2px 0 0 currentColor, inset 0 1px 0 #ffffff20, 0 1px 1px #0005;\n    --ui-inset-depth: inset 0 2px 3px #0007, inset 0 -1px 0 #ffffff14;\n    --ui-input-hover-depth: inset 0 2px 3px #0007, inset 0 -1px 0 var(--iw-control-line);\n    --ui-thumb-finish:\n      linear-gradient(90deg, transparent 0 44%, #0003 44% 48%, #ffffff25 48% 52%, transparent 52%)\n        center / 12px 65% no-repeat,\n      var(--ui-weave);\n  }\n\n  /* Glazed ceramic has a broad clean face with a hard rim and a small catch\n     light. The cobalt lip, not scratches, explains its construction. */\n  [data-theme-material='porcelain'][data-theme-texture='on'][data-theme-contrast='normal'][data-theme-surface='bevel'] {\n    --ui-material-travel: 0 1px;\n    --ui-control-finish:\n      var(--ui-ceramic),\n      linear-gradient(\n        180deg,\n        #ffffffb0 0 1px,\n        #ffffff45 1px 3px,\n        transparent 5px,\n        transparent calc(100% - 3px),\n        #00000018\n      );\n    --ui-hover-finish:\n      var(--ui-ceramic),\n      linear-gradient(\n        180deg,\n        #ffffffd0,\n        #ffffff50 2px,\n        transparent 5px,\n        transparent calc(100% - 3px),\n        #00000018\n      );\n    --ui-active-finish:\n      var(--ui-ceramic),\n      linear-gradient(180deg, #00000025, transparent 3px, transparent calc(100% - 2px), #ffffff60);\n    --ui-selected-finish:\n      var(--ui-ceramic),\n      linear-gradient(180deg, #ffffff55, transparent 3px, transparent calc(100% - 2px), #00000020);\n    --ui-action-depth:\n      inset 1px 1px 0 #ffffffa0, inset -1px -2px 0 #00000015,\n      0 2px 0 color-mix(in srgb, var(--iw-line) 45%, transparent), 0 3px 4px #0000000c;\n    --ui-hover-depth:\n      inset 0 0 0 1px currentColor, inset 0 2px 0 #ffffffb0,\n      0 2px 0 color-mix(in srgb, var(--iw-line) 55%, transparent), 0 3px 5px #00000012;\n    --ui-selected-depth: inset 0 1px 0 #ffffff65, inset 0 -2px 0 #0003, 0 1px 0 var(--ui-shadow);\n    --ui-inset-depth: inset 0 2px 3px #00000020, inset 0 -1px 0 #ffffffb0;\n    --ui-input-hover-depth: inset 0 2px 3px #00000020, inset 0 -1px 0 var(--iw-control-line);\n    --ui-thumb-finish:\n      linear-gradient(90deg, #ffffff90 0 1px, transparent 1px),\n      linear-gradient(180deg, #ffffff85, transparent 3px, transparent calc(100% - 2px), #0003);\n  }\n\n  /* Lacquered station signage: restrained satin, crisp printed edges and paper\n     fibers. It shares no glazed ceramic glare or industrial fasteners. */\n  [data-theme-material='sakura'][data-theme-texture='on'][data-theme-contrast='normal'][data-theme-surface='bevel'] {\n    --ui-material-travel: 0 1px;\n    --ui-control-finish:\n      var(--ui-ceramic),\n      linear-gradient(180deg, #ffffff65, transparent 2px, transparent calc(100% - 2px), #00000014);\n    --ui-hover-finish:\n      var(--ui-ceramic),\n      linear-gradient(180deg, #ffffff90, transparent 3px, transparent calc(100% - 2px), #00000016);\n    --ui-selected-finish:\n      var(--ui-ceramic),\n      linear-gradient(180deg, #ffffff30, transparent 2px, transparent calc(100% - 2px), #00000022);\n    --ui-toolbar-finish: var(--ui-ceramic), linear-gradient(180deg, #ffffff50, transparent 2px);\n    --ui-action-depth:\n      inset 0 1px 0 #ffffff80, inset 0 -1px 0 #00000016,\n      0 2px 0 color-mix(in srgb, var(--iw-line) 40%, transparent);\n    --ui-hover-depth:\n      inset 0 -2px 0 currentColor, inset 0 1px 0 #ffffff90,\n      0 2px 0 color-mix(in srgb, var(--iw-line) 45%, transparent);\n    --ui-pressed-depth: inset 0 2px 2px #00000025, inset 0 -1px 0 #ffffff50;\n    --ui-selected-depth: inset 0 -2px 0 currentColor, inset 0 1px 0 #ffffff35;\n    --ui-inset-depth: inset 0 1px 2px #00000024, inset 0 -1px 0 #ffffff70;\n    --ui-input-hover-depth: inset 0 1px 2px #00000024, inset 0 -1px 0 var(--iw-control-line);\n    --ui-thumb-finish: linear-gradient(\n      180deg,\n      #ffffff55,\n      transparent 2px,\n      transparent calc(100% - 2px),\n      #00000022\n    );\n  }\n\n  /* Enamel instrument keys sit in a brass surround. Edge highlights stop after\n     four pixels; there is no bright glaze crossing a label. */\n  [data-theme-material='brass'][data-theme-texture='on'][data-theme-contrast='normal'][data-theme-surface='bevel'] {\n    --ui-material-travel: 0 1px;\n    --ui-control-finish:\n      var(--ui-metal),\n      linear-gradient(\n        180deg,\n        #ffffff35 0 1px,\n        #ffffff14 1px 3px,\n        transparent 5px,\n        transparent calc(100% - 4px),\n        #0005\n      );\n    --ui-hover-finish:\n      var(--ui-metal),\n      linear-gradient(180deg, #ffffff50, transparent 4px, transparent calc(100% - 3px), #0005);\n    --ui-selected-finish:\n      var(--ui-metal),\n      linear-gradient(180deg, #ffffff45, transparent 3px, transparent calc(100% - 3px), #0004);\n    --ui-toolbar-finish:\n      var(--ui-metal),\n      linear-gradient(180deg, #ffffff20, transparent 3px, transparent calc(100% - 2px), #0004);\n    --ui-action-depth:\n      inset 1px 1px 0 #ffffff22, inset -1px -2px 0 #0006, 0 2px 0 var(--ui-shadow), 0 3px 3px #0003;\n    --ui-hover-depth:\n      inset 0 2px 0 currentColor, inset 1px 0 0 #ffffff20, inset 0 -2px 0 #0006,\n      0 2px 0 var(--ui-shadow);\n    --ui-selected-depth: inset 0 1px 0 #ffffff50, inset 0 -2px 0 #0004, 0 1px 0 var(--ui-shadow);\n    --ui-inset-depth: inset 0 3px 3px #0007, inset 0 -1px 0 #ffffff20;\n    --ui-input-hover-depth: inset 0 3px 3px #0007, inset 0 -1px 0 var(--iw-control-line);\n    --ui-thumb-finish:\n      linear-gradient(180deg, transparent 0 40%, #0005 40% 46%, #ffffff40 46% 52%, transparent 52%)\n        center / 65% 12px no-repeat,\n      linear-gradient(90deg, #ffffff45, transparent 3px, transparent calc(100% - 2px), #0004);\n  }\n\n  /* Brushed observatory controls have a narrow metal cap and a darker foot.\n     Directional grain is restrained and coherent with the instrument fascia. */\n  [data-theme-material='copper'][data-theme-texture='on'][data-theme-contrast='normal'][data-theme-surface='bevel'] {\n    --ui-material-travel: 0 1px;\n    --ui-control-finish:\n      var(--ui-metal),\n      linear-gradient(\n        180deg,\n        #ffffff45 0 1px,\n        #ffffff16 1px 3px,\n        transparent 5px,\n        transparent calc(100% - 4px),\n        #0005\n      );\n    --ui-hover-finish:\n      var(--ui-metal),\n      linear-gradient(\n        180deg,\n        #ffffff60 0 1px,\n        #ffffff25 1px 3px,\n        transparent 5px,\n        transparent calc(100% - 4px),\n        #0005\n      );\n    --ui-selected-finish:\n      var(--ui-metal),\n      linear-gradient(180deg, #ffffff45, transparent 3px, transparent calc(100% - 3px), #0004);\n    --ui-toolbar-finish:\n      var(--ui-metal),\n      linear-gradient(180deg, #ffffff20, transparent 3px, transparent calc(100% - 3px), #0004);\n    --ui-action-depth: inset 1px 1px 0 #ffffff28, inset -1px -2px 0 #0007, 0 3px 0 var(--ui-shadow);\n    --ui-hover-depth:\n      inset 0 1px 0 #ffffff60, inset 0 -2px 0 currentColor, 0 3px 0 var(--ui-shadow);\n    --ui-pressed-depth: inset 0 3px 3px #0007, inset 0 -1px 0 #ffffff35, 0 1px 0 #0005;\n    --ui-selected-depth: inset 0 1px 0 #ffffff45, inset 0 -2px 0 #0005, 0 1px 0 var(--ui-shadow);\n    --ui-inset-depth: inset 0 3px 4px #0007, inset 0 -1px 0 #ffffff20;\n    --ui-input-hover-depth: inset 0 3px 4px #0007, inset 0 -1px 0 var(--iw-control-line);\n    --ui-thumb-finish:\n      repeating-linear-gradient(90deg, transparent 0 3px, #0005 3px 4px, #ffffff35 4px 5px) center /\n        15px 55% no-repeat,\n      linear-gradient(180deg, #ffffff60, transparent 3px, transparent calc(100% - 2px), #0004);\n  }\n\n  /* Wood uses planed edges and quiet long fibers; a selected key feels like a\n     stained inlay rather than a metal switch. */\n  [data-theme-material='wood'][data-theme-texture='on'][data-theme-contrast='normal'][data-theme-surface='bevel'] {\n    --ui-material-travel: 0 1px;\n    --ui-control-finish:\n      var(--ui-woodgrain),\n      linear-gradient(180deg, #ffffff40, transparent 3px, transparent calc(100% - 3px), #0000002a);\n    --ui-hover-finish:\n      var(--ui-woodgrain),\n      linear-gradient(180deg, #ffffff60, transparent 3px, transparent calc(100% - 3px), #0000002a);\n    --ui-selected-finish:\n      var(--ui-woodgrain),\n      linear-gradient(180deg, #00000022, transparent 2px, transparent calc(100% - 2px), #ffffff28);\n    --ui-toolbar-finish:\n      var(--ui-woodgrain),\n      linear-gradient(180deg, #ffffff30, transparent 3px, transparent calc(100% - 3px), #00000020);\n    --ui-action-depth:\n      inset 1px 1px 0 #ffffff35, inset -1px -2px 0 #00000030,\n      0 3px 0 color-mix(in srgb, var(--iw-line) 60%, transparent);\n    --ui-hover-depth:\n      inset 0 2px 0 currentColor, inset 0 -2px 0 #00000030,\n      0 3px 0 color-mix(in srgb, var(--iw-line) 70%, transparent);\n    --ui-selected-depth: inset 0 2px 2px #0004, inset 0 -1px 0 #ffffff35, 0 1px 0 var(--ui-shadow);\n    --ui-inset-depth: inset 0 2px 3px #00000035, inset 0 -1px 0 #ffffff50;\n    --ui-input-hover-depth: inset 0 2px 3px #00000035, inset 0 -1px 0 var(--iw-control-line);\n    --ui-thumb-finish:\n      var(--ui-woodgrain),\n      linear-gradient(180deg, #ffffff45, transparent 3px, transparent calc(100% - 2px), #0004);\n  }\n\n  /* Ruins use honed stone and small luminous edge inlays. Glow is an interaction\n     response and never sits behind type or repeats across every resting key. */\n  [data-theme-material='composite'][data-theme-texture='on'][data-theme-contrast='normal'][data-theme-surface='bevel'] {\n    --ui-material-travel: 0 1px;\n    --ui-control-finish:\n      var(--ui-composite),\n      linear-gradient(180deg, #ffffff25 0 1px, transparent 4px, transparent calc(100% - 3px), #0005);\n    --ui-hover-finish:\n      var(--ui-composite),\n      linear-gradient(180deg, #ffffff40, transparent 3px, transparent calc(100% - 3px), #0005);\n    --ui-selected-finish:\n      var(--ui-composite),\n      linear-gradient(180deg, #ffffff30, transparent 2px, transparent calc(100% - 2px), #0004);\n    --ui-toolbar-finish:\n      var(--ui-composite),\n      linear-gradient(180deg, #ffffff1a, transparent 3px, transparent calc(100% - 2px), #0004);\n    --ui-action-depth: inset 1px 1px 0 #ffffff1c, inset -1px -2px 0 #0006, 0 2px 0 var(--ui-shadow);\n    --ui-hover-depth:\n      inset 0 -2px 0 currentColor, inset 0 1px 0 #ffffff30, 0 2px 0 var(--ui-shadow),\n      0 2px 7px color-mix(in srgb, currentColor 12%, transparent);\n    --ui-selected-depth: inset 0 1px 0 #ffffff40, inset 0 -2px 0 #0004, 0 1px 0 var(--ui-shadow);\n    --ui-inset-depth: inset 0 2px 3px #0007, inset 0 -1px 0 #ffffff1c;\n    --ui-input-hover-depth: inset 0 2px 3px #0007, inset 0 -1px 0 var(--iw-control-line);\n    --ui-thumb-finish:\n      linear-gradient(180deg, #ffffff50, transparent 2px, transparent calc(100% - 2px), #0004),\n      linear-gradient(90deg, transparent 0 40%, #0004 40% 50%, transparent 50%) center / 10px 60%\n        no-repeat;\n  }\n\n  /* LCD controls are monochrome molded keys; the display pixel matrix stays\n     inside the recessed readout. No grain or fake bloom on text. */\n  [data-theme-material='lcd'][data-theme-texture='on'][data-theme-contrast='normal'][data-theme-surface='bevel'] {\n    --ui-material-travel: 0 1px;\n    --ui-control-finish: linear-gradient(\n      180deg,\n      #ffffff35,\n      transparent 2px,\n      transparent calc(100% - 3px),\n      #00000022\n    );\n    --ui-hover-finish: linear-gradient(\n      180deg,\n      #ffffff55,\n      transparent 2px,\n      transparent calc(100% - 3px),\n      #00000022\n    );\n    --ui-selected-finish: linear-gradient(\n      180deg,\n      #00000022,\n      transparent 2px,\n      transparent calc(100% - 2px),\n      #ffffff25\n    );\n    --ui-toolbar-finish: linear-gradient(\n      180deg,\n      #ffffff30,\n      transparent 2px,\n      transparent calc(100% - 2px),\n      #00000018\n    );\n    --ui-action-depth:\n      inset 1px 1px 0 #ffffff45, inset -1px -2px 0 #00000035,\n      0 2px 0 color-mix(in srgb, var(--iw-line) 70%, transparent);\n    --ui-hover-depth:\n      inset 0 0 0 1px currentColor, inset 0 1px 0 #ffffff45,\n      0 2px 0 color-mix(in srgb, var(--iw-line) 70%, transparent);\n    --ui-selected-depth: inset 0 2px 2px #0004, inset 0 -1px 0 #ffffff35;\n    --ui-inset-depth: inset 0 2px 3px #00000040, inset 0 -1px 0 #ffffff40;\n    --ui-input-hover-depth: inset 0 2px 3px #00000040, inset 0 -1px 0 var(--iw-control-line);\n    --ui-thumb-finish:\n      linear-gradient(180deg, #ffffff50, transparent 2px, transparent calc(100% - 2px), #0003),\n      linear-gradient(90deg, transparent 0 42%, #0004 42% 52%, transparent 52%) center / 10px 65%\n        no-repeat;\n  }\n\n  /* The variants inherit the full material contract but keep their own finish:\n     carved obsidian, anodized command consoles, and dark waxed timber. */\n  [data-theme-finish='obsidian-reliquary'][data-theme-texture='on'][data-theme-contrast='normal'][data-theme-surface='bevel'] {\n    --ui-control-finish:\n      var(--ui-metal), linear-gradient(135deg, #ffffff18 0 3px, transparent 3px),\n      linear-gradient(180deg, #ffffff20 0 2px, transparent 2px, transparent calc(100% - 3px), #0005);\n    --ui-hover-finish:\n      var(--ui-metal), linear-gradient(135deg, #ffffff30 0 3px, transparent 3px),\n      linear-gradient(180deg, #ffffff30 0 2px, transparent 3px, transparent calc(100% - 3px), #0005);\n    --ui-active-finish:\n      var(--ui-metal), linear-gradient(135deg, #0004 0 3px, transparent 3px),\n      linear-gradient(180deg, #0005, transparent 3px, transparent calc(100% - 2px), #ffffff25);\n    --ui-selected-finish:\n      var(--ui-metal),\n      linear-gradient(180deg, #ffffff30 0 2px, transparent 2px, transparent calc(100% - 2px), #0004);\n    --ui-toolbar-finish:\n      var(--ui-metal),\n      linear-gradient(180deg, #ffffff18 0 2px, transparent 2px, transparent calc(100% - 3px), #0005);\n    --ui-action-depth: inset 2px 2px 0 #ffffff18, inset -2px -2px 0 #0006, 0 3px 0 var(--ui-shadow);\n    --ui-hover-depth:\n      inset 2px 2px 0 currentColor, inset -2px -2px 0 #0007, 0 3px 0 var(--ui-shadow);\n    --ui-selected-depth:\n      inset 2px 2px 0 #ffffff35, inset -2px -2px 0 #0005, 0 1px 0 var(--ui-shadow);\n    --ui-thumb-finish:\n      linear-gradient(135deg, #ffffff40 0 3px, transparent 3px),\n      linear-gradient(180deg, #ffffff25, transparent 2px, transparent calc(100% - 2px), #0005);\n  }\n  [data-theme-finish='deep-space'][data-theme-texture='on'][data-theme-contrast='normal'][data-theme-surface='bevel'] {\n    --ui-control-finish:\n      var(--ui-composite),\n      linear-gradient(180deg, #ffffff30 0 1px, transparent 3px, transparent calc(100% - 3px), #0006);\n    --ui-hover-finish:\n      var(--ui-composite),\n      linear-gradient(180deg, #ffffff45, transparent 3px, transparent calc(100% - 3px), #0006);\n    --ui-action-depth: inset 0 1px 0 #ffffff25, inset 0 -2px 0 #0007, 0 2px 0 var(--ui-shadow);\n    --ui-hover-depth:\n      inset 0 -2px 0 currentColor, inset 0 1px 0 #ffffff40, 0 2px 0 var(--ui-shadow);\n    --ui-selected-depth: inset 0 1px 0 #ffffff40, inset 0 -2px 0 #0005, 0 1px 0 var(--ui-shadow);\n    --ui-thumb-finish:\n      linear-gradient(90deg, transparent 0 40%, #0006 40% 48%, #ffffff40 48% 56%, transparent 56%)\n        center / 12px 65% no-repeat,\n      linear-gradient(180deg, #ffffff55, transparent 2px, transparent calc(100% - 2px), #0005);\n  }\n  [data-theme-finish='moonlit-grove'][data-theme-texture='on'][data-theme-contrast='normal'][data-theme-surface='bevel'] {\n    --ui-control-finish:\n      var(--ui-woodgrain),\n      linear-gradient(180deg, #ffffff25, transparent 3px, transparent calc(100% - 3px), #0005);\n    --ui-hover-finish:\n      var(--ui-woodgrain),\n      linear-gradient(180deg, #ffffff40, transparent 3px, transparent calc(100% - 3px), #0005);\n    --ui-action-depth: inset 1px 1px 0 #ffffff22, inset -1px -2px 0 #0006, 0 3px 0 var(--ui-shadow);\n    --ui-hover-depth: inset 0 2px 0 currentColor, inset 0 -2px 0 #0006, 0 3px 0 var(--ui-shadow);\n    --ui-selected-depth: inset 0 2px 2px #0005, inset 0 -1px 0 #ffffff30, 0 1px 0 var(--ui-shadow);\n    --ui-inset-depth: inset 0 2px 3px #0006, inset 0 -1px 0 #ffffff25;\n    --ui-input-hover-depth: inset 0 2px 3px #0006, inset 0 -1px 0 var(--iw-control-line);\n  }\n\n  /* Texture-free systems have structural states. These are not decoration and\n     remain when decorative detail is Off; high contrast has its own painter. */\n  [data-theme-material='classic'][data-theme-contrast='normal'][data-theme-surface='bevel'] {\n    --ui-material-travel: 0 1px;\n    --ui-control-finish: none;\n    --ui-hover-finish: none;\n    --ui-active-finish: none;\n    --ui-selected-finish: none;\n    --ui-toolbar-finish: none;\n    --ui-thumb-finish: none;\n    --ui-panel-depth:\n      inset 1px 1px #fff, inset 2px 2px #dfdfdf, inset -1px -1px #000, inset -2px -2px #808080,\n      2px 2px 0 #0005;\n    --ui-action-depth:\n      inset 1px 1px #fff, inset 2px 2px #dfdfdf, inset -1px -1px #404040, inset -2px -2px #808080;\n    --ui-hover-depth: var(--ui-action-depth);\n    --ui-pressed-depth: inset 1px 1px #404040, inset 2px 2px #808080, inset -1px -1px #fff;\n    --ui-selected-depth: var(--ui-pressed-depth);\n    --ui-inset-depth: inset 1px 1px #808080, inset 2px 2px #404040, inset -1px -1px #fff;\n    --ui-input-hover-depth: var(--ui-inset-depth);\n    --ui-gallery-depth: var(--ui-action-depth);\n  }\n  [data-theme-material='terminal'][data-theme-contrast='normal'] {\n    --ui-control-finish: none;\n    --ui-hover-finish: none;\n    --ui-active-finish: none;\n    --ui-selected-finish: none;\n    --ui-inset-finish: none;\n    --ui-toolbar-finish: none;\n    --ui-thumb-finish: none;\n    --ui-panel-depth: inset 0 0 0 1px var(--iw-panel), inset 0 0 0 2px var(--iw-control-line);\n    --ui-action-depth: 0 0 0 0 transparent;\n    --ui-hover-depth: inset 2px 0 currentColor, inset -2px 0 currentColor;\n    --ui-pressed-depth: inset 0 0 0 1px currentColor;\n    --ui-selected-depth: inset 2px 0 currentColor, inset -2px 0 currentColor;\n    --ui-inset-depth: inset 0 -1px 0 var(--iw-control-line);\n    --ui-input-hover-depth: inset 0 -2px 0 var(--iw-control-line);\n    --ui-gallery-depth: none;\n  }\n  [data-theme-material='legacy'][data-theme-styled='true'][data-theme-contrast='normal'][data-theme-surface='bevel'] {\n    --ui-panel-finish: none;\n    --ui-control-finish: none;\n    --ui-hover-finish: none;\n    --ui-active-finish: none;\n    --ui-selected-finish: none;\n    --ui-toolbar-finish: none;\n    --ui-thumb-finish: none;\n    --ui-panel-depth:\n      inset 0 1px 0 #ffffff14, inset 0 -2px 0 #0006, 0 3px 0 var(--ui-shadow), 0 8px 16px #0003;\n    --ui-action-depth: inset 0 1px 0 #ffffff20, inset 0 -2px 0 #0005, 0 2px 0 var(--ui-shadow);\n    --ui-hover-depth:\n      inset 0 -2px 0 currentColor, inset 0 1px 0 #ffffff30, 0 2px 0 var(--ui-shadow);\n    --ui-pressed-depth: inset 0 2px 2px #0006, inset 0 -1px 0 #ffffff25;\n    --ui-selected-depth: inset 2px 0 currentColor, inset 0 -2px 0 #0004;\n    --ui-inset-depth: inset 0 2px 3px #0006, inset 0 -1px 0 #ffffff20;\n    --ui-input-hover-depth: inset 0 2px 3px #0006, inset 0 -1px 0 var(--iw-control-line);\n    --ui-gallery-depth: var(--ui-action-depth);\n  }\n}\n\n/* Mechanical travel is an input response, never an idle animation. Both\n   motion preferences opt in; nested flat/HC specimens keep their own reset. */\n@media (prefers-reduced-motion: no-preference) and (forced-colors: none) {\n  [data-theme-texture='on'][data-theme-contrast='normal'][data-theme-surface='bevel'][data-theme-motion='full'] {\n    --ui-press-travel: var(--ui-material-travel);\n  }\n  [data-theme-material='steel'][data-theme-texture='on'][data-theme-contrast='normal'][data-theme-surface='bevel'][data-theme-motion='full'] {\n    --ui-press-travel: 0 2px;\n  }\n}\n";
+const SHARED_THEME_CSS = "/* Shared appearance recipes. Existing screen layout is in @layer legacy so\n   component paint has one authority, independent of a screen's ID selectors.\n   The aliases below are the migration boundary for existing semantic classes;\n   new components should use data-ui-surface / data-ui-action / data-ui-tone. */\n[data-theme-styled='true'] {\n  color-scheme: var(--iw-color-scheme, dark);\n  color: var(--iw-text);\n  background: var(--iw-ink);\n  font-family: var(--iw-font-ui);\n  --ui-shadow: color-mix(in srgb, var(--iw-ink) 78%, black);\n  --ui-hover: color-mix(in srgb, var(--iw-panel-raised) 90%, var(--iw-text));\n  --ui-disabled: var(--iw-muted);\n  --ui-control-border: var(--iw-control-line);\n}\n[data-theme-family] {\n  /* Each presentation owns its finish, including nested Studio specimens.\n     Material paint never leaks from an enclosing theme or accessibility mode. */\n  --ui-panel-finish: none;\n  --ui-control-finish: none;\n  --ui-hover-finish: initial;\n  --ui-selected-finish: initial;\n  --ui-active-finish: none;\n  --ui-inset-finish: none;\n  --ui-toolbar-finish: none;\n  --ui-thumb-finish: none;\n  --ui-inset-depth: initial;\n  --ui-input-hover-depth: initial;\n  --ui-material-travel: none;\n  --ui-loading-rail: 3px;\n  --ui-hover-face: initial;\n  --ui-hover-ink: initial;\n  --ui-hover-frame: initial;\n  --ui-panel-frame: none;\n  --ui-raised-frame: none;\n  --ui-primary-frame: none;\n  --ui-panel-depth: initial;\n  --ui-action-depth: initial;\n  --ui-hover-depth: initial;\n  --ui-pressed-depth: initial;\n  --ui-selected-depth: initial;\n  --ui-gallery-depth: none;\n  --ui-press-travel: none;\n  --ui-scene-motif: none;\n  --ui-scene-motif-size: 48px 48px;\n  --ui-scene-inset: 24px 24px auto auto;\n  --ui-scene-width: min(24vw, 192px);\n  --ui-scene-height: 96px;\n  --ui-scene-repeat: no-repeat;\n  --ui-scene-opacity: 0.18;\n}\n/* Rebind older semantic variables on their owning scope. Authored image, video,\n   Canvas and 3D assets remain in their own renderer; none are filtered/recolored. */\n[data-theme-styled='true'],\n[data-theme-styled='true']\n  :where(\n    body,\n    .field-kit,\n    dialog,\n    .race-screen,\n    .race-shell,\n    .overlay-card,\n    .native-landing,\n    .native-settings,\n    [data-ui-surface]\n  ) {\n  --fk-bg: var(--iw-ink);\n  --fk-panel: var(--iw-panel);\n  --fk-panel-raised: var(--iw-panel-raised);\n  --fk-text: var(--iw-text);\n  --fk-muted: var(--iw-muted);\n  --fk-line: var(--iw-line);\n  --fk-control-line: var(--iw-control-line);\n  --fk-cyan: var(--iw-accent);\n  --fk-amber: var(--iw-amber);\n  --fk-hazard: var(--iw-hazard);\n  --fk-success: var(--iw-safe);\n  --fk-accent: var(--iw-accent);\n  --fk-on-accent: var(--iw-on-accent, var(--iw-ink));\n  --fk-focus: var(--iw-focus, var(--iw-control-line));\n  --fk-font-ui: var(--iw-font-ui);\n  --fk-font-pixel: var(--iw-font-ui);\n  --fk-font-mono: var(--iw-font-mono);\n  --fk-font-display: var(--iw-font-display);\n  --fk-text-body: var(--iw-text-size);\n  --fk-text-control: var(--iw-text-size);\n  --fk-text-secondary: max(14px, calc(var(--iw-text-size) - 2px));\n  --fk-target-size: var(--iw-target);\n  --rl-menu-skin-bg: var(--iw-ink);\n  --rl-menu-skin-panel: var(--iw-panel);\n  --rl-menu-skin-panel-raised: var(--iw-panel-raised);\n  --rl-menu-skin-text: var(--iw-text);\n  --rl-menu-skin-muted: var(--iw-muted);\n  --rl-menu-skin-line: var(--iw-line);\n  --rl-menu-skin-control-line: var(--iw-control-line);\n  --rl-menu-skin-cyan: var(--iw-accent);\n  --rl-menu-skin-amber: var(--iw-amber);\n  --rl-menu-skin-hazard: var(--iw-hazard);\n  --rl-menu-skin-decorative: var(--iw-line);\n  --native-ink: var(--iw-ink);\n  --native-panel: var(--iw-panel);\n  --native-surface: var(--iw-panel-raised);\n  --paper: var(--iw-ink);\n  --ink: var(--iw-text);\n  --bg: var(--iw-ink);\n  --panel: var(--iw-panel);\n  --panel-raised: var(--iw-panel-raised);\n  --text: var(--iw-text);\n  --muted: var(--iw-muted);\n  --line: var(--iw-line);\n  --accent: var(--iw-accent);\n  --safe: var(--iw-safe);\n  --danger: var(--iw-hazard);\n  --sky: var(--iw-accent);\n  --sun: var(--iw-amber);\n  --mint: var(--iw-safe);\n}\n[data-theme-styled='true']\n  :where(\n    body,\n    .access-gate,\n    .launch-screen,\n    .native-landing,\n    .native-mission-library,\n    .race-screen,\n    .race-shell,\n    #coop-menu,\n    [data-ui-surface='page']\n  ) {\n  color: var(--iw-text);\n  background: var(--iw-ink);\n  font-family: var(--iw-font-ui);\n  color-scheme: inherit;\n}\n[data-theme-styled='true']\n  :where(p, li, dd, dt, label, legend, summary, h1, h2, h3, h4, h5, h6, strong, b, em, span) {\n  color: inherit;\n  text-shadow: none;\n}\n[data-theme-styled='true'] :where(h1, .display-heading, .native-game-title) {\n  color: var(--iw-text);\n  font-family: var(--iw-font-display);\n  letter-spacing: 0.02em;\n}\n[data-theme-styled='true'] :where(h2, h3, h4, legend, label, summary) {\n  font-family: var(--iw-font-ui);\n}\n[data-theme-styled='true'] :where(a) {\n  color: var(--iw-link, var(--iw-accent));\n  text-underline-offset: 0.2em;\n}\n[data-theme-styled='true']\n  :where(\n    .micro-note,\n    .muted,\n    small,\n    .help,\n    .description,\n    .quiet,\n    .smallprint,\n    .race-footnote,\n    .race-menu-status,\n    .soundtrack-advanced-description,\n    .native-menu-footer,\n    #demo-status,\n    #demo-picture-note,\n    #demo-audio-artist,\n    .demo-audio-status,\n    .sidebar-note,\n    [data-ui-tone='muted']\n  ) {\n  color: var(--iw-muted);\n}\n[data-theme-styled='true']\n  :where(.eyebrow, .launch-kicker, .access-gate-eyebrow, [data-ui-tone='accent']) {\n  color: var(--iw-accent);\n}\n[data-theme-styled='true'] :where(kbd, code, pre, .telemetry, .hud-value, .metric-value) {\n  font-family: var(--iw-font-mono);\n}\n\n/* Reading surfaces receive a bounded material finish over semantic colors.\n   Asset frames supply the edges; their opaque nine-slice centers are not used. */\n[data-theme-styled='true']\n  :where(\n    dialog,\n    .overlay-card,\n    .panel,\n    .field-kit-panel,\n    .inspection-card,\n    .mission-detail,\n    .settings-group,\n    .inspector,\n    .tool-panel,\n    .editor-panel,\n    .launch-card,\n    .access-gate-card,\n    .hud-card,\n    .sim-panel,\n    .workshop-card,\n    .iw-panel,\n    .studio-panel,\n    .sidebar,\n    .creator-inspector,\n    .controller-settings-section,\n    .settings-section,\n    .settings-card,\n    .info-card,\n    .choice-card,\n    .mission-card,\n    .campaign-card,\n    .library-card,\n    .community-card,\n    .candidate-entry,\n    .version-control,\n    .pack-instructions,\n    .content-card,\n    .pack-card,\n    .profile-card,\n    .recovery-card,\n    .download-card,\n    .story-card,\n    .flight-dialog,\n    .soundtrack-section,\n    .soundtrack-now-card,\n    .soundtrack-listen-card,\n    .soundtrack-online-card,\n    .soundtrack-settings-style-card,\n    .soundtrack-source-row,\n    .first-flight-card,\n    .school-lesson-card,\n    .school-after,\n    .coach-card,\n    .result-panel,\n    .sim-academy #complete,\n    .sim-academy #fallback,\n    .optional-world-card,\n    .team-level-card,\n    .team-review-card,\n    .creator-media-card,\n    .creator-mission-review-card,\n    .batch-card,\n    .watch,\n    [role='tooltip'],\n    [data-component='panel'],\n    [data-ui-surface='panel'],\n    [data-ui-surface='dialog']\n  ) {\n  color: var(--iw-text);\n  font-family: var(--iw-font-ui);\n  background: var(--ui-panel-finish, none), var(--iw-panel);\n  border: 2px solid var(--iw-line);\n  border-image: var(--ui-panel-frame, none);\n  border-radius: 0;\n  box-shadow: var(\n    --ui-panel-depth,\n    inset 0 1px 0 color-mix(in srgb, var(--iw-text) 8%, transparent),\n    0 2px 0 var(--ui-shadow),\n    0 8px 18px #0002\n  );\n}\n[data-theme-styled='true']\n  :where(\n    .masthead,\n    .shell-bar,\n    body > header,\n    .toolbar,\n    .studio-toolbar,\n    .authoring-input-rail,\n    .authoring-section-menu,\n    .sim-toolbar,\n    .hud,\n    .telemetry,\n    .workspace-bar,\n    .studio-header,\n    .flight-controls,\n    .flight-immersive-bar,\n    .sim-drone-response,\n    .flight-instruments,\n    .flight-coaching,\n    .coaching,\n    .sim-menu-hint,\n    .coach-heading,\n    .coach-lab-toolbar,\n    .coach-lab-telemetry,\n    .coach-drone-figure figcaption,\n    .handheld-flight-identity,\n    .sim-worlds #flight-objective,\n    .sim-worlds .flight-brief p,\n    .beginner-coach[data-stage='live'] :is(.coach-target, .coach-explain),\n    .settings-heading,\n    .dialog-header,\n    .dialog-footer,\n    .field-kit-settings-tabs,\n    .soundtrack-footer,\n    #soundtrack-operation,\n    .optional-worlds-top,\n    .race-heading,\n    .reading-toolbar,\n    .shell-dialog-heading,\n    .demo-panel,\n    .demo-notes,\n    .demo-transport,\n    #demo-audio,\n    [data-ui-surface='toolbar']\n  ) {\n  color: var(--iw-text);\n  background: var(--ui-toolbar-finish, none), var(--iw-panel);\n  border-color: var(--iw-line);\n  border-image: none;\n  text-shadow: none;\n}\n[data-theme-styled='true']\n  :where(\n    fieldset,\n    details,\n    .drop,\n    .drop-zone,\n    .setting-row,\n    .settings-row,\n    .settings-preset,\n    .device-card,\n    .controller-card,\n    .controller-mapping,\n    .range-field,\n    .settings-metric,\n    .settings-note,\n    .settings-warning,\n    .mission-brief,\n    .enemy-guide,\n    .soundtrack-choice,\n    .soundtrack-advanced,\n    .soundtrack-online-results,\n    .school-flight-map,\n    .replay-controls,\n    .radio-device-card,\n    .radio-monitor,\n    .coach-tip,\n    .checkpoint,\n    .encounter-cue,\n    .demo-board,\n    .demo-settings,\n    .seat,\n    .control-card,\n    .batch-card-media,\n    .creator-media-poster,\n    .creator-poster-option,\n    #mission-brief-reading,\n    [data-ui-surface='inset']\n  ) {\n  color: var(--iw-text);\n  background: var(--ui-inset-finish, none), var(--iw-ink);\n  border-color: var(--iw-line);\n  border-image: none;\n  border-radius: 0;\n  box-shadow: var(--ui-inset-depth, none);\n}\n[data-theme-styled='true'] :where(table, .asset-grid, .inventory-grid, [data-ui-surface='table']) {\n  color: var(--iw-text);\n  background: var(--ui-panel-finish, none), var(--iw-panel);\n}\n[data-theme-styled='true'] :where(th, td, hr) {\n  color: inherit;\n  border-color: var(--iw-line);\n}\n[data-theme-styled='true'] :where(th, thead) {\n  background: var(--iw-panel-raised);\n}\n[data-theme-styled='true']\n  :where(tr[aria-selected='true'], [data-ui-surface='slot'][aria-selected='true']) {\n  color: var(--iw-on-selection, var(--iw-text));\n  background: var(--iw-selection, var(--iw-panel-raised));\n  box-shadow: inset 3px 0 var(--iw-focus, var(--iw-accent));\n}\n\n/* Each action chooses paired local roles; one painter handles every state. */\n[data-theme-styled='true']\n  :where(\n    button,\n    .button,\n    .button-link,\n    #profile-recovery-root a,\n    .action,\n    .community-entry,\n    [role='button'],\n    [data-ui-action],\n    .launch-action,\n    .file-button,\n    .native-menu-actions > a,\n    .game-mode-choice > a\n  ) {\n  --ui-action-status-depth: 0 0 0 0 transparent;\n  --ui-action-fill: var(--iw-button-default-background, var(--iw-panel-raised));\n  --ui-action-ink: var(--iw-button-default-foreground, var(--iw-text));\n  --ui-action-hover-fill: var(\n    --ui-hover-face,\n    var(--iw-button-hover-background, var(--iw-panel-raised))\n  );\n  --ui-action-hover-ink: var(--ui-hover-ink, var(--iw-button-hover-foreground, var(--iw-text)));\n  --ui-action-pressed-fill: var(--iw-button-pressed-background, var(--iw-selection));\n  --ui-action-pressed-ink: var(--iw-button-pressed-foreground, var(--iw-on-selection));\n  --ui-action-edge: var(--iw-control-line);\n  --ui-action-frame: var(--ui-raised-frame, none);\n  --ui-action-hover-frame: var(--ui-hover-frame, var(--ui-raised-frame, none));\n  --ui-action-pressed-frame: var(--ui-primary-frame, none);\n  color: var(--ui-action-ink);\n  background: var(--ui-control-finish, none), var(--ui-action-fill);\n  border: 2px solid var(--ui-action-edge);\n  border-image: var(--ui-action-frame, none);\n  border-radius: 0;\n  min-height: var(--iw-target);\n  box-sizing: border-box;\n  padding: 8px 14px;\n  font-family: var(--iw-font-ui);\n  font-size: calc(var(--iw-text-size) * var(--overflight-text-scale, 1));\n  font-weight: 600;\n  line-height: 1.35;\n  text-shadow: none;\n  text-decoration: none;\n  box-shadow:\n    var(--ui-action-status-depth, 0 0 0 0 transparent),\n    var(\n      --ui-action-depth,\n      inset 0 1px 0 color-mix(in srgb, var(--ui-action-ink) 12%, transparent),\n      inset 0 -1px 0 #0002,\n      0 2px 0 var(--ui-shadow)\n    );\n  cursor: pointer;\n}\n[data-theme-styled='true']\n  :where(\n    .primary,\n    .primary-action,\n    .field-kit-primary,\n    .race-primary,\n    .soundtrack-primary-action,\n    .community-entry,\n    [data-ui-action='primary']\n  ) {\n  --ui-action-fill: var(--iw-primary-default-background, var(--iw-accent));\n  --ui-action-ink: var(--iw-primary-default-foreground, var(--iw-on-accent, var(--iw-ink)));\n  --ui-action-hover-fill: var(--iw-primary-hover-background, var(--iw-accent));\n  --ui-action-hover-ink: var(--iw-primary-hover-foreground, var(--iw-on-accent, var(--iw-ink)));\n  --ui-action-pressed-fill: var(--iw-primary-pressed-background, var(--iw-selection));\n  --ui-action-pressed-ink: var(--iw-primary-pressed-foreground, var(--iw-on-selection));\n  --ui-action-edge: var(--iw-accent);\n  --ui-action-frame: var(--ui-primary-frame, none);\n  --ui-action-hover-frame: var(--ui-primary-frame, none);\n}\n[data-theme-styled='true'] :where(.danger, .danger-action, [data-ui-action='danger']) {\n  --ui-action-fill: var(--iw-danger-default-background, var(--iw-hazard));\n  --ui-action-ink: var(--iw-danger-default-foreground, var(--iw-on-hazard));\n  --ui-action-hover-fill: var(--iw-danger-hover-background, var(--iw-hazard));\n  --ui-action-hover-ink: var(--iw-danger-hover-foreground, var(--iw-on-hazard));\n  --ui-action-pressed-fill: var(--iw-danger-pressed-background, var(--iw-hazard));\n  --ui-action-pressed-ink: var(--iw-danger-pressed-foreground, var(--iw-on-hazard));\n  --ui-action-edge: var(--iw-hazard);\n  --ui-action-frame: none;\n  --ui-action-hover-frame: none;\n  --ui-action-pressed-frame: none;\n}\n[data-theme-styled='true']\n  :where(\n    button,\n    .button,\n    .button-link,\n    #profile-recovery-root a,\n    .action,\n    .community-entry,\n    [role='button'],\n    [data-ui-action],\n    .launch-action,\n    .file-button,\n    .native-menu-actions > a,\n    .game-mode-choice > a\n  ):is(:hover, [data-state='hover']):not(:disabled, [aria-disabled='true']) {\n  background: var(--ui-hover-finish, var(--ui-control-finish, none)), var(--ui-action-hover-fill);\n  border-image: var(--ui-action-hover-frame, none);\n  color: var(--ui-action-hover-ink);\n  box-shadow:\n    var(--ui-action-status-depth, 0 0 0 0 transparent),\n    var(--ui-hover-depth, inset 0 0 0 1px var(--ui-action-edge), 0 2px 0 var(--ui-shadow));\n}\n[data-theme-styled='true']\n  :where(\n    button,\n    .button,\n    .button-link,\n    #profile-recovery-root a,\n    .action,\n    .community-entry,\n    [role='button'],\n    [data-ui-action],\n    .launch-action,\n    .file-button,\n    .native-menu-actions > a,\n    .game-mode-choice > a\n  ):is(:active, [data-state='pressed']):not(:disabled, [aria-disabled='true']) {\n  background: var(--ui-active-finish, none), var(--ui-action-pressed-fill);\n  color: var(--ui-action-pressed-ink);\n  border-image: var(--ui-action-pressed-frame, none);\n  box-shadow:\n    var(--ui-action-status-depth, 0 0 0 0 transparent),\n    var(--ui-pressed-depth, inset 0 2px 3px #0005);\n}\n[data-theme-styled='true']\n  :where(button, .button, [role='button'], a, [role='tab']):is(\n    [aria-pressed='true'],\n    [aria-selected='true'],\n    [aria-current]:where(:not([aria-current='false'])),\n    .selected,\n    .active-tab\n  ) {\n  --ui-action-fill: var(--iw-selection, var(--iw-panel-raised));\n  --ui-action-ink: var(--iw-on-selection, var(--iw-text));\n  --ui-action-hover-fill: var(--ui-action-fill);\n  --ui-action-hover-ink: var(--ui-action-ink);\n  color: var(--ui-action-ink);\n  background: var(--ui-selected-finish, var(--ui-active-finish, none)), var(--ui-action-fill);\n  border-color: var(--iw-focus, var(--iw-accent));\n  border-image: var(--ui-primary-frame, none);\n  box-shadow:\n    var(--ui-action-status-depth, 0 0 0 0 transparent),\n    var(--ui-selected-depth, inset 3px 0 var(--iw-focus, var(--iw-accent)));\n  text-decoration-thickness: 2px;\n}\n[data-theme-styled='true']\n  :where(button, .button, [role='button'], a, [role='tab']):is(\n    [aria-pressed='true'],\n    [aria-selected='true'],\n    [aria-current]:where(:not([aria-current='false'])),\n    .selected,\n    .active-tab\n  ):is(:active, [data-state='pressed']):not(:disabled, [aria-disabled='true']) {\n  background: var(--ui-active-finish, none), var(--ui-action-fill);\n  box-shadow:\n    var(--ui-action-status-depth, 0 0 0 0 transparent),\n    var(--ui-pressed-depth, inset 0 2px 3px #0005);\n}\n/* Busy paint is a stable progress rail, not a second label or a spinning\n   pseudo-element that could collide with a control's existing icon. */\n[data-theme-styled='true']\n  :where(button, .button, [role='button'], [data-ui-action])[aria-busy='true']:not(\n    :disabled,\n    [aria-disabled='true']\n  ) {\n  --ui-action-status-depth: inset 0 calc(-1 * var(--ui-loading-rail)) 0 currentColor;\n  cursor: progress;\n}\n[data-theme-styled='true']\n  :where(\n    button,\n    input,\n    select,\n    textarea,\n    a,\n    .button,\n    .button-link,\n    [role='button'],\n    [role='tab'],\n    [data-ui-action]\n  ):is(:disabled, [aria-disabled='true']) {\n  color: var(--iw-muted);\n  background: var(--iw-panel);\n  border-color: var(--iw-line);\n  border-style: dashed;\n  border-image: none;\n  opacity: 1;\n  cursor: not-allowed;\n  box-shadow: none;\n}\n[data-theme-styled='true']\n  :where(button, .button, [role='button'])\n  :where(span, strong, em, small) {\n  color: inherit;\n}\n\n/* Native value controls retain browser semantics and keyboard operation. */\n[data-theme-styled='true'] :where(input, select, textarea) {\n  color: var(--iw-input-text, var(--iw-text));\n  background: var(--ui-inset-finish, none), var(--iw-input, var(--iw-ink));\n  border: 2px solid var(--iw-control-line);\n  border-image: none;\n  border-radius: 0;\n  font-family: var(--iw-font-ui);\n  font-size: calc(var(--iw-text-size) * var(--overflight-text-scale, 1));\n  accent-color: var(--iw-accent);\n  box-shadow: var(--ui-inset-depth, inset 0 1px 2px #0003);\n}\n[data-theme-styled='true']\n  :where(\n    select,\n    textarea,\n    input:not([type='checkbox'], [type='radio'], [type='range'], [type='color'])\n  ) {\n  min-height: var(--iw-target);\n  box-sizing: border-box;\n  padding: 6px 10px;\n}\n[data-theme-styled='true'] :where(input, textarea)::placeholder {\n  color: var(--iw-muted);\n  opacity: 1;\n}\n[data-theme-styled='true'] :where(option, optgroup) {\n  color: var(--iw-input-text, var(--iw-text));\n  background: var(--iw-input, var(--iw-ink));\n}\n[data-theme-styled='true'] :where(input[type='checkbox'], input[type='radio']) {\n  appearance: none;\n  display: inline-grid;\n  place-content: center;\n  inline-size: 22px;\n  block-size: 22px;\n  min-inline-size: 22px;\n  min-block-size: 22px;\n  flex: 0 0 22px;\n  padding: 0;\n  vertical-align: middle;\n  background: var(--ui-inset-finish, none), var(--iw-ink);\n  border: 2px solid var(--iw-control-line);\n  border-image: none;\n  box-shadow: var(--ui-inset-depth, none);\n}\n[data-theme-styled='true'] input[type='radio'] {\n  border-radius: 50%;\n}\n[data-theme-styled='true'] :where(input[type='checkbox'], input[type='radio'])::before {\n  content: '';\n  display: block;\n  width: 12px;\n  height: 12px;\n  background: var(--iw-on-accent, var(--iw-ink));\n  transform: scale(0);\n  clip-path: polygon(0 43%, 17% 26%, 40% 51%, 83% 4%, 100% 20%, 41% 87%);\n}\n[data-theme-styled='true'] input[type='radio']::before {\n  width: 10px;\n  height: 10px;\n  border-radius: 50%;\n  clip-path: none;\n}\n[data-theme-styled='true'] :where(input[type='checkbox'], input[type='radio']):checked {\n  background: var(--ui-active-finish, none), var(--iw-accent);\n  border-color: var(--iw-accent);\n  outline: none;\n  box-shadow: var(--ui-inset-depth, none);\n}\n[data-theme-styled='true'] :where(input[type='checkbox'], input[type='radio']):checked::before {\n  transform: scale(1);\n}\n[data-theme-styled='true'] :where(input[type='checkbox'], input[type='radio']):disabled {\n  background: var(--ui-panel-finish, none), var(--iw-panel);\n  border-color: var(--iw-muted);\n  border-style: dashed;\n  cursor: not-allowed;\n}\n[data-theme-styled='true'] :where(input[type='checkbox'], input[type='radio']):disabled::before {\n  background: var(--iw-muted);\n}\n[data-theme-styled='true'] input[type='checkbox']:indeterminate::before {\n  transform: scale(1);\n  clip-path: inset(40% 0);\n  background: var(--iw-accent);\n}\n[data-theme-styled='true'] label:has(> input:is([type='checkbox'], [type='radio'])) {\n  min-height: var(--iw-target);\n  align-items: center;\n  cursor: pointer;\n}\n[data-theme-styled='true'] input[type='range'] {\n  appearance: none;\n  min-height: var(--iw-target);\n  padding: 0;\n  background: transparent;\n  border: 0;\n  box-shadow: none;\n  cursor: pointer;\n}\n[data-theme-styled='true'] input[type='range']::-webkit-slider-runnable-track {\n  height: 6px;\n  border: 1px solid var(--iw-control-line);\n  background: var(--iw-ink);\n  border-radius: 0;\n}\n[data-theme-styled='true'] input[type='range']::-moz-range-track {\n  height: 4px;\n  border: 1px solid var(--iw-control-line);\n  background: var(--iw-ink);\n  border-radius: 0;\n}\n[data-theme-styled='true'] input[type='range']::-webkit-slider-thumb {\n  appearance: none;\n  width: 24px;\n  height: 24px;\n  margin-top: -10px;\n  background: var(--ui-thumb-finish, none), var(--iw-accent);\n  border: 2px solid var(--iw-on-accent, var(--iw-ink));\n  border-radius: 0;\n  box-shadow: 0 0 0 1px var(--iw-control-line);\n}\n[data-theme-styled='true'] input[type='range']::-moz-range-thumb {\n  width: 20px;\n  height: 20px;\n  background: var(--ui-thumb-finish, none), var(--iw-accent);\n  border: 2px solid var(--iw-on-accent, var(--iw-ink));\n  border-radius: 0;\n  box-shadow: 0 0 0 1px var(--iw-control-line);\n}\n[data-theme-styled='true'] input[type='range']:disabled {\n  cursor: not-allowed;\n  opacity: 0.65;\n}\n[data-theme-styled='true'] :where(progress, meter) {\n  accent-color: var(--iw-accent);\n  color: var(--iw-accent);\n  background: var(--iw-ink);\n  border: 1px solid var(--iw-control-line);\n  border-image: none;\n  border-radius: 0;\n}\n[data-theme-styled='true'] progress::-webkit-progress-bar {\n  background: var(--iw-ink);\n}\n[data-theme-styled='true'] progress::-webkit-progress-value {\n  background: var(--ui-active-finish, none), var(--iw-accent);\n}\n[data-theme-styled='true'] progress::-moz-progress-bar {\n  background: var(--ui-active-finish, none), var(--iw-accent);\n}\n[data-theme-styled='true'] :where(*) {\n  scrollbar-color: var(--iw-control-line) var(--iw-ink);\n}\n[data-theme-styled='true'] ::-webkit-scrollbar-thumb {\n  background: var(--iw-control-line);\n  border: 2px solid var(--iw-ink);\n}\n[data-theme-styled='true'] ::-webkit-scrollbar-track {\n  background: var(--iw-ink);\n}\n\n/* Native controls share the same material authority as action buttons.\n   Errors mark the well; the entered value keeps its readable text pair. */\n[data-theme-styled='true']\n  :where(\n    select,\n    textarea,\n    input:not([type='range'], [type='checkbox'], [type='radio'], [type='color'])\n  ):is(:hover, [data-state='hover']):not(:disabled, [aria-disabled='true']) {\n  border-color: var(--iw-focus);\n  box-shadow: var(\n    --ui-input-hover-depth,\n    var(--ui-inset-depth, inset 0 0 0 1px var(--iw-control-line))\n  );\n}\n[data-theme-styled='true']\n  :where(input, select, textarea)[aria-invalid='true']:not(:disabled, [aria-disabled='true']) {\n  color: var(--iw-input-text, var(--iw-text));\n  border-color: var(--iw-hazard);\n  box-shadow:\n    inset 3px 0 0 var(--iw-hazard),\n    var(--ui-inset-depth, 0 0 0 0 transparent);\n}\n[data-theme-styled='true']\n  :where(input, select, textarea)[data-ui-validation='success']:not(\n    [aria-invalid='true'],\n    :disabled,\n    [aria-disabled='true']\n  ) {\n  border-color: var(--iw-safe);\n  box-shadow:\n    inset 3px 0 0 var(--iw-safe),\n    var(--ui-inset-depth, 0 0 0 0 transparent);\n}\n[data-theme-styled='true']\n  :where(input[type='checkbox'], input[type='radio']):is(:hover, [data-state='hover']):not(\n    :disabled,\n    [aria-disabled='true'],\n    [aria-invalid='true'],\n    [data-ui-validation='success']\n  ) {\n  border-color: var(--iw-focus);\n  box-shadow: var(--ui-input-hover-depth, var(--ui-inset-depth, none));\n}\n[data-theme-styled='true'] input[type='range']::-webkit-slider-runnable-track {\n  background: var(--ui-inset-finish, none), var(--iw-ink);\n  box-shadow: var(--ui-inset-depth, none);\n}\n[data-theme-styled='true'] input[type='range']::-moz-range-track {\n  background: var(--ui-inset-finish, none), var(--iw-ink);\n  box-shadow: var(--ui-inset-depth, none);\n}\n[data-theme-styled='true']\n  input[type='range']:is(:hover, :focus-visible, [data-state='hover'])::-webkit-slider-thumb {\n  box-shadow:\n    0 0 0 2px var(--iw-focus),\n    var(--ui-hover-depth, 0 0 0 0 transparent);\n}\n[data-theme-styled='true']\n  input[type='range']:is(:hover, :focus-visible, [data-state='hover'])::-moz-range-thumb {\n  box-shadow:\n    0 0 0 2px var(--iw-focus),\n    var(--ui-hover-depth, 0 0 0 0 transparent);\n}\n[data-theme-styled='true'] input[type='range']:disabled {\n  opacity: 1;\n}\n[data-theme-styled='true'] input[type='range']:disabled::-webkit-slider-thumb {\n  background: var(--iw-muted);\n  border: 2px dashed var(--iw-panel);\n  box-shadow: 0 0 0 1px var(--iw-line);\n}\n[data-theme-styled='true'] input[type='range']:disabled::-moz-range-thumb {\n  background: var(--iw-muted);\n  border: 2px dashed var(--iw-panel);\n  box-shadow: 0 0 0 1px var(--iw-line);\n}\n\n/* Compiled icon silhouettes are reusable geometry, never a fixed cyan pigment. */\n[data-theme-styled='true'] [data-presentation-icon]:not([data-menu-icon])::before {\n  color: inherit;\n  content: '';\n  display: inline-block;\n  inline-size: 24px;\n  block-size: 24px;\n  flex: 0 0 24px;\n  background: currentColor;\n  mask: var(--fk-current-icon, linear-gradient(transparent, transparent)) center / contain no-repeat;\n  -webkit-mask: var(--fk-current-icon, linear-gradient(transparent, transparent)) center / contain\n    no-repeat;\n  clip-path: none;\n  image-rendering: pixelated;\n}\n[data-theme-styled='true']\n  :where([data-presentation-control], [data-presentation-hud], [data-presentation-reward])::before {\n  background: currentColor;\n  color: inherit;\n  mask: var(--fk-current-glyph, linear-gradient(transparent, transparent)) center / contain\n    no-repeat;\n  -webkit-mask: var(--fk-current-glyph, linear-gradient(transparent, transparent)) center / contain\n    no-repeat;\n}\n[data-theme-styled='true'] :where([data-menu-icon])::before {\n  background: currentColor;\n  mask: var(--native-menu-icon, linear-gradient(transparent, transparent)) center / contain\n    no-repeat;\n  -webkit-mask: var(--native-menu-icon, linear-gradient(transparent, transparent)) center / contain\n    no-repeat;\n}\n[data-theme-styled='true'] :where(.meter > span, .launch-signal i) {\n  background: var(--iw-accent);\n}\n[data-theme-styled='true'] :where(.meter, [role='progressbar']) {\n  color: var(--iw-text);\n  background: var(--iw-ink);\n  border-color: var(--iw-control-line);\n  border-image: none;\n}\n\n/* Focus and state cues retain a shape in every palette. */\n[data-theme-styled='true'] :is(:focus-visible, .controller-focus, [data-state='focus']) {\n  outline: 3px solid var(--iw-focus, var(--iw-control-line));\n  outline-offset: 3px;\n  scroll-margin: 12px;\n}\n[data-theme-styled='true']\n  :where([aria-invalid='true']:not(input, select, textarea), .error, [data-ui-tone='danger']) {\n  color: var(--iw-hazard);\n  border-color: var(--iw-hazard);\n  border-image: none;\n}\n[data-theme-styled='true'] :where([data-ui-tone='success'], .success) {\n  color: var(--iw-safe);\n}\n[data-theme-styled='true'] :where([data-ui-tone='warning'], .warning) {\n  color: var(--iw-amber);\n}\n[data-theme-styled='true'] ::selection {\n  color: var(--iw-on-selection, var(--iw-ink));\n  background: var(--iw-selection, var(--iw-accent));\n}\n[data-theme-styled='true'] :where(dialog)::backdrop {\n  background: color-mix(in srgb, var(--iw-ink) 78%, transparent);\n}\n\n/* Source art stays intact; only its reading veil follows the interface. */\n[data-theme-styled='true'] .menu-scene::after {\n  background:\n    linear-gradient(\n      90deg,\n      color-mix(in srgb, var(--iw-ink) 94%, transparent),\n      color-mix(in srgb, var(--iw-ink) 75%, transparent) 28%,\n      color-mix(in srgb, var(--iw-ink) 22%, transparent) 63%,\n      transparent\n    ),\n    linear-gradient(0deg, color-mix(in srgb, var(--iw-ink) 65%, transparent), transparent 30%);\n}\n[data-theme-styled='true'] .menu-scene {\n  --scene-ink: var(--iw-ink);\n  --scene-accent: var(--iw-panel-raised);\n}\n[data-theme-styled='true'] :where(.menu-ornament, .menu-scene-decoration) {\n  color: var(--iw-line);\n}\n[data-theme-texture='off'] :where(.menu-ornament, .menu-scene-decoration, .menu-retune-layer) {\n  display: none;\n}\n/* Composed action shadows need a transparent zero, not `none`: a shadow\n   list containing `none` is invalid and would also remove semantic busy rails. */\n[data-theme-surface='flat'] {\n  --ui-panel-frame: none;\n  --ui-raised-frame: none;\n  --ui-primary-frame: none;\n  --ui-panel-depth: none;\n  --ui-action-depth: 0 0 0 0 transparent;\n  --ui-hover-depth: 0 0 0 0 transparent;\n  --ui-pressed-depth: 0 0 0 0 transparent;\n  --ui-selected-depth: 0 0 0 0 transparent;\n  --ui-gallery-depth: none;\n}\n[data-theme-hud='opaque']\n  :where(\n    .hud,\n    .hud-card,\n    .hud-panel,\n    .telemetry,\n    .sim-hud,\n    .flight-hud,\n    .flight-instruments,\n    .flight-coaching,\n    .flight-brief p,\n    .scene-heading,\n    #hud,\n    [data-hud]\n  ) {\n  background: var(--iw-ink);\n  color: var(--iw-text);\n  text-shadow: none;\n  backdrop-filter: none;\n  opacity: 1;\n}\n[data-theme-motion='reduced']\n  :where(\n    .menu-ornament,\n    .edition-propeller,\n    .theme-decoration,\n    .menu-scene-decoration,\n    .operation-status-signal i,\n    .win-picture-caption\n  ) {\n  animation: none;\n  transition: none;\n  transform: none;\n}\n[data-theme-motion='reduced'] .menu-retune-layer {\n  display: none;\n}\n[data-theme-text-size='large']:not([data-interface-theme='legacy'])\n  :where(p, label, button, select, input, textarea, .micro-note) {\n  font-size: max(calc(18px * var(--overflight-text-scale, 1)), 1em);\n}\n\n.theme-family-controls {\n  display: grid;\n  grid-template-columns: minmax(0, 1fr);\n  min-width: 0;\n  gap: 10px;\n  margin-block: 16px;\n  padding-block: 12px;\n  border-block: 1px solid var(--fk-line, #737c69);\n}\n/* Native select options must not widen the grid's implicit min-content track.\n   Keep help text and nested controls inside narrow settings panels. */\n.theme-family-controls > * {\n  min-width: 0;\n  max-width: 100%;\n  box-sizing: border-box;\n}\n.theme-family-controls > h4 {\n  margin: 2px 0 0;\n}\n.theme-family-controls label {\n  display: flex;\n  flex-wrap: wrap;\n  align-items: center;\n  gap: 8px;\n  justify-content: space-between;\n}\n.theme-family-controls label:has(> input[type='checkbox']) {\n  justify-content: flex-start;\n  min-height: var(--iw-target, 44px);\n}\n.theme-family-controls select {\n  min-width: 0;\n  max-width: 100%;\n  box-sizing: border-box;\n}\n.theme-family-controls [role='status']:empty {\n  display: none;\n}\n.sim-appearance-controls {\n  grid-column: 1 / -1;\n  display: flex;\n  flex-wrap: wrap;\n  align-items: center;\n  gap: 8px 16px;\n  min-width: 0;\n  max-width: 100%;\n}\n.sim-appearance-controls label {\n  display: grid;\n  gap: 6px;\n  min-width: 0;\n  max-width: 100%;\n}\n.sim-appearance-controls select {\n  min-width: 0;\n  max-width: 100%;\n}\n.sim-appearance-controls [role='status'] {\n  flex-basis: 100%;\n}\n.sim-worlds .flight-controls > .sim-appearance-controls {\n  flex: 1 0 100%;\n  box-sizing: border-box;\n  margin-inline: 0;\n}\n[data-theme-styled='true'] .sim-worlds .flight-dialog > header {\n  z-index: 10;\n  background: var(--ui-panel-finish, none), var(--iw-panel);\n  box-shadow: 0 0 0 8px var(--iw-panel);\n}\n@media (pointer: coarse) {\n  [data-theme-density='studio'] {\n    --iw-target: 44px;\n  }\n}\n@media (orientation: portrait) {\n  [data-theme-styled='true'] .menu-scene::after {\n    background: linear-gradient(\n      0deg,\n      color-mix(in srgb, var(--iw-ink) 94%, transparent),\n      color-mix(in srgb, var(--iw-ink) 73%, transparent) 35%,\n      color-mix(in srgb, var(--iw-ink) 23%, transparent) 80%\n    );\n  }\n}\n@media (forced-colors: active) {\n  [data-theme-family][data-theme-material] {\n    --ui-panel-finish: none;\n    --ui-control-finish: none;\n    --ui-hover-finish: none;\n    --ui-selected-finish: none;\n    --ui-active-finish: none;\n    --ui-inset-finish: none;\n    --ui-toolbar-finish: none;\n    --ui-thumb-finish: none;\n    --ui-scene-motif: none;\n  }\n  [data-theme-styled='true']\n    :where(button, .button, input, select, textarea, dialog, .panel, [data-ui-surface]) {\n    border-image: none;\n    box-shadow: none;\n    border-color: ButtonText;\n    forced-color-adjust: auto;\n  }\n  [data-theme-styled='true'] :where(input[type='checkbox'], input[type='radio']) {\n    appearance: auto;\n  }\n  [data-theme-styled='true'] :where(input[type='checkbox'], input[type='radio'])::before {\n    display: none;\n  }\n  [data-theme-styled='true'] :is(:focus-visible, .controller-focus) {\n    outline-color: Highlight;\n  }\n}\n\n/* A filled raster swaps atomically. Interpolating its label separately can\n   briefly create dark-on-dark text while a selected tab changes state. */\n[data-theme-styled='true']\n  :where(button, .button, [role='button'], .native-menu-actions > a, .game-mode-choice > a) {\n  transition:\n    box-shadow 100ms ease,\n    outline-color 100ms ease,\n    translate 70ms ease-out;\n}\n[data-theme-styled='true']\n  :where(button, .button, [role='button'], .native-menu-actions > a, .game-mode-choice > a):is(\n    :active,\n    [data-state='pressed']\n  ):not(:disabled, [aria-disabled='true']) {\n  translate: var(--ui-press-travel);\n}\n/* The game's motion preference applies even when the operating system allows\n   animation. Keep this override after the common action transition recipe. */\n[data-theme-motion='reduced']\n  :where(button, .button, [role='button'], .native-menu-actions > a, .game-mode-choice > a) {\n  transition: none;\n  translate: none;\n}\n[data-theme-styled='true'] label:has(> input:is([type='checkbox'], [type='radio'])) {\n  color: var(--iw-text);\n  background-color: var(--iw-panel-raised);\n  border-color: var(--iw-line);\n  border-image: none;\n  border-radius: 0;\n}\n.theme-gallery {\n  display: grid;\n  grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr));\n  gap: 8px;\n}\n.theme-gallery .theme-preview-card {\n  display: grid;\n  grid-template-columns: 1fr;\n  gap: 5px;\n  align-content: start;\n  min-width: 0;\n  text-align: left;\n  min-height: var(--iw-target, 44px);\n  padding: 8px 10px 9px;\n  border-image: var(--ui-raised-frame, none);\n  background: var(--ui-control-finish, none), var(--iw-panel, var(--fk-panel));\n  color: var(--iw-text, var(--fk-text));\n  box-shadow: var(--ui-gallery-depth, none);\n}\n.theme-preview-swatches {\n  display: grid;\n  grid-template-columns: 2fr 2fr 1fr 1fr;\n  gap: 0;\n  overflow: hidden;\n  border: 1px solid var(--iw-control-line, var(--fk-line));\n}\n.theme-preview-swatches span {\n  display: block;\n  min-width: 0;\n  height: 28px;\n  border: 0;\n}\n.theme-preview-card strong {\n  line-height: 1.2;\n}\n.theme-preview-card small {\n  font-size: calc(13px * var(--overflight-text-scale, 1));\n  font-weight: 400;\n  line-height: 1.32;\n  opacity: 0.9;\n}\n.theme-gallery\n  .theme-preview-card:hover:not(\n    [aria-pressed='true'],\n    :disabled,\n    [aria-disabled='true'],\n    :active,\n    [data-state='pressed']\n  ) {\n  background: var(--ui-control-finish, none), var(--ui-action-hover-fill);\n  color: var(--ui-action-hover-ink);\n  border-image: var(--ui-action-hover-frame, none);\n  box-shadow: var(--ui-hover-depth, none);\n}\n.theme-gallery .theme-preview-card[aria-pressed='true'] {\n  color: var(--iw-on-selection, var(--fk-text));\n  background: var(--ui-active-finish, none), var(--iw-selection, var(--fk-panel));\n  border-image: var(--ui-primary-frame, none);\n  outline: 2px solid var(--iw-focus, var(--fk-focus));\n  outline-offset: 2px;\n}\n.theme-gallery\n  .theme-preview-card:is(:active, [data-state='pressed']):not(:disabled, [aria-disabled='true']) {\n  color: var(--ui-action-pressed-ink);\n  background: var(--ui-active-finish, none), var(--ui-action-pressed-fill);\n  border-image: var(--ui-primary-frame, none);\n  box-shadow: var(--ui-pressed-depth, inset 0 2px 3px #0005);\n}\n.theme-gallery .theme-preview-card:is(:focus-visible, .controller-focus) {\n  outline: 3px solid var(--iw-focus, var(--fk-focus));\n  outline-offset: 5px;\n}\n.theme-gallery .theme-preview-card:is(:disabled, [aria-disabled='true']) {\n  color: var(--iw-muted);\n  background: var(--iw-panel);\n  border-image: none;\n  box-shadow: none;\n}\n.theme-preview-card[aria-pressed='true'] strong::after {\n  content: ' ✓';\n}\n/* Independent runtime specimens inside the chooser. Only the surrounding card\n   is interactive; its focus and selected frame remain outside the preview. */\n.theme-gallery .theme-preview-card:has([data-theme-card-preview]) {\n  gap: 8px;\n  padding: 10px;\n}\n.theme-preview-card:has([data-theme-card-preview]) .theme-preview-swatches {\n  height: 4px;\n}\n.theme-preview-card:has([data-theme-card-preview]) .theme-preview-swatches span {\n  height: 4px;\n}\n.theme-material-preview {\n  display: block;\n  min-width: 0;\n  padding: 14px;\n  background: var(--iw-ink);\n  color: var(--iw-text);\n  font-family: var(--iw-font-ui);\n  font-size: calc(var(--iw-text-size, 16px) * var(--overflight-text-scale, 1));\n  text-align: left;\n  line-height: 1.35;\n  isolation: isolate;\n}\n.theme-material-preview .theme-material-panel {\n  display: grid;\n  min-width: 0;\n  gap: 12px;\n  padding: 14px;\n  color: var(--iw-text);\n}\n.theme-material-actions,\n.theme-material-states {\n  display: flex;\n  flex-wrap: wrap;\n  align-items: stretch;\n  gap: 8px;\n}\n.theme-material-preview .theme-material-action {\n  display: inline-flex;\n  align-items: center;\n  justify-content: center;\n  width: auto;\n  margin: 0;\n  font-family: var(--iw-font-ui);\n  font-size: inherit;\n  font-weight: 600;\n  color: var(--ui-action-ink);\n}\n.theme-material-preview .theme-material-action:is(:hover, [data-state='hover']) {\n  color: var(--ui-action-hover-ink);\n}\n.theme-material-preview .theme-material-action:is(:active, [data-state='pressed']) {\n  color: var(--ui-action-pressed-ink);\n}\n.theme-material-preview .theme-material-action:is(:disabled, [aria-disabled='true']) {\n  color: var(--iw-muted);\n}\n.theme-material-preview .theme-material-field {\n  display: grid;\n  grid-template-columns: auto minmax(0, 1fr);\n  align-items: center;\n  gap: 10px;\n  color: var(--iw-text);\n  margin: 0;\n}\n.theme-material-preview .theme-material-field select {\n  min-width: 0;\n  width: 100%;\n  font-size: inherit;\n}\n.theme-material-preview .theme-material-select {\n  display: flex;\n  align-items: center;\n  justify-content: space-between;\n  gap: 6px;\n  padding: 5px 8px;\n  border: 2px solid var(--iw-control-line);\n  background: var(--ui-inset-finish, none), var(--iw-input);\n  box-shadow: var(--ui-inset-depth, none);\n  color: var(--iw-input-text);\n}\n.theme-material-select::after {\n  content: '⌄';\n}\n.theme-material-preview .theme-material-check {\n  display: flex;\n  align-items: center;\n  gap: 8px;\n  padding: 6px 8px;\n  background: var(--iw-panel-raised);\n  color: var(--iw-text);\n  margin: 0;\n}\n.theme-material-preview span.theme-material-checkbox {\n  display: inline-grid;\n  place-items: center;\n  width: 18px;\n  height: 18px;\n  flex: 0 0 18px;\n  border: 2px solid var(--iw-accent);\n  background: var(--ui-active-finish, none), var(--iw-accent);\n  color: var(--iw-on-accent);\n  font-weight: 700;\n  line-height: 1;\n}\n.theme-material-preview[data-preview-compact='true'] {\n  padding: 8px;\n  font-size: calc(12px * var(--overflight-text-scale, 1));\n  pointer-events: none;\n}\n.theme-material-preview[data-preview-compact='true'] .theme-material-panel {\n  gap: 7px;\n  padding: 10px;\n}\n.theme-material-preview[data-preview-compact='true'] .theme-material-action {\n  min-height: 30px;\n  min-width: 0;\n  padding: 5px 7px;\n  flex: 1 1 auto;\n}\n.theme-material-preview[data-preview-compact='true']\n  :is(.theme-material-actions, .theme-material-states) {\n  gap: 6px;\n}\n.theme-material-preview[data-theme-text-size='large'] {\n  font-size: calc(16px * var(--overflight-text-scale, 1));\n}\n.theme-material-preview[data-theme-text-size='large'] .theme-material-field {\n  grid-template-columns: 1fr;\n  gap: 4px;\n}\n.theme-preview-card .theme-material-preview,\n.theme-preview-card .theme-material-preview .theme-material-panel {\n  color: var(--iw-text);\n}\n.theme-accessibility {\n  display: flex;\n  flex-wrap: wrap;\n  gap: 8px 20px;\n}\n.theme-family-controls > details {\n  padding: 12px;\n}\n.theme-family-controls > details > summary {\n  min-height: var(--iw-target, 44px);\n  cursor: pointer;\n}\n@media (max-width: 600px) {\n  .theme-gallery {\n    grid-template-columns: 1fr;\n  }\n}\n/* Compact Settings deliberately gives Back a fixed icon slot. Typography\n   overrides, including Large text, must not reveal its label over the arrow.\n   The real text/accessible name and the 44px target remain intact. */\n@media (max-width: 700px) {\n  [data-theme-styled='true'] .native-settings [data-menu-icon='back'] {\n    font-size: 0;\n    flex: 0 0 44px;\n    width: 44px;\n    min-width: 44px;\n    height: 44px;\n    min-height: 44px;\n    padding: 8px;\n    gap: 0;\n  }\n}\n/* Keep the compiled icon-only controls' real labels available to assistive\n   technology without drawing fallback text beside their replacement glyphs. */\n[data-theme-styled='true']\n  :is(.dialog-close, .icon-button)[data-presentation-icon][aria-label]:not([data-menu-icon]),\n[data-theme-styled='true']\n  :is(\n    [data-presentation-control='up'],\n    [data-presentation-control='down'],\n    [data-presentation-control='left'],\n    [data-presentation-control='right']\n  )[aria-label] {\n  font-size: 0;\n  gap: 0;\n  min-inline-size: var(--iw-target);\n}\n@media (prefers-reduced-motion: reduce) {\n  [data-theme-styled='true']\n    :where(button, .button, [role='button'], .native-menu-actions > a, .game-mode-choice > a) {\n    transition: none;\n    translate: none;\n  }\n}\n\n[data-theme-styled='true'] [data-ui-surface='section-title'] {\n  color: var(--iw-muted);\n  background: var(--iw-ink);\n  border-color: var(--iw-line);\n  border-image: none;\n}\n\n/* Earned media keeps its authored picture. Only the overlaid reading and\n   control surfaces share the active interface's paired colors. */\n[data-theme-styled='true']\n  :where(\n    .story-controls,\n    .story-notice,\n    .story-dialog--immersive > p:not(:empty),\n    .win-picture-caption,\n    #demo-dialog[data-reward='expanded'] .demo-header,\n    #demo-dialog[data-reward='expanded'] .demo-panel\n  ) {\n  color: var(--iw-text);\n  background: var(--ui-panel-finish, none), var(--iw-panel);\n  border-color: var(--iw-line);\n  border-image: none;\n  border-radius: 0;\n  text-shadow: none;\n  backdrop-filter: none;\n}\n[data-theme-styled='true']\n  :where(.story-dialog--immersive, .creator-player[data-earned-view='on'] #earned) {\n  background: var(--iw-ink);\n  border: 0;\n  border-image: none;\n  box-shadow: none;\n}\n/* The image element fills the viewport, including its contain-fit letterbox.\n   Theme only that backing; the authored pixels and fitting remain unchanged. */\n[data-theme-styled='true'] .creator-player #earned-picture {\n  background-color: var(--iw-ink);\n}\n[data-theme-styled='true'] .win-picture-caption {\n  width: fit-content;\n  max-width: calc(100% - 32px);\n  box-sizing: border-box;\n  margin-inline: auto;\n  padding: 12px 20px;\n  border: 1px solid var(--iw-line);\n}\n[data-theme-styled='true'] .win-picture-mark {\n  color: var(--iw-accent);\n}\n[data-theme-styled='true'] [data-win-picture] #shell-menu {\n  padding: 0;\n}\n[data-theme-styled='true'] [data-win-picture] #shell-menu::before {\n  color: inherit;\n}\n\n/* Status, badges and callouts are shared reading surfaces, including tools. */\n[data-theme-styled='true']\n  :where(\n    [role='status'],\n    [role='alert'],\n    .operation-status,\n    .callout,\n    .notice,\n    .pill,\n    .chip,\n    .status,\n    .skip-link,\n    pre\n  ) {\n  color: var(--iw-text);\n  background-color: var(--iw-panel);\n  border-color: var(--iw-line);\n  border-image: none;\n  border-radius: 0;\n}\n[data-theme-styled='true']\n  :where(.status-ready, [role='status'].success, [data-ui-tone='success']) {\n  color: var(--iw-safe);\n}\n[data-theme-styled='true']\n  :where(.status-building, [role='status'].warning, [data-ui-tone='warning']) {\n  color: var(--iw-amber);\n}\n[data-theme-styled='true']\n  :where(\n    [role='alert'],\n    [role='status'].error,\n    [role='status'][data-error='true'],\n    [data-ui-tone='danger']\n  ) {\n  color: var(--iw-hazard);\n}\n[data-theme-styled='true'] :where([role='status'][data-error='true'], [role='status'].error) {\n  border-inline-start: 3px solid var(--iw-hazard);\n  padding-inline-start: 0.75rem;\n}\n[data-theme-styled='true'] .operation-status[data-state='error'] {\n  color: var(--iw-hazard);\n  border-inline-start: 3px solid var(--iw-hazard);\n  padding-inline-start: 0.75rem;\n}\n[data-theme-styled='true'] .operation-status:is([data-state='cancelled'], [data-state='detached']) {\n  color: var(--iw-amber);\n}\n[data-theme-styled='true'] .operation-status .operation-status-label {\n  color: inherit;\n  background: transparent;\n}\n\n/* Deep dialogs and tool results are part of the same interface. Never leave a\n   legacy navy/teal well behind a newly resolved light-theme text color. */\n[data-theme-styled='true'] :where(.soundtrack-quick-status, .race-start-cue strong) {\n  color: var(--iw-on-accent);\n  background: var(--iw-accent);\n  border-color: var(--iw-accent);\n  border-image: none;\n}\n[data-theme-styled='true'] .journey-card-action {\n  color: var(--iw-on-accent);\n  background: var(--iw-accent);\n  border-color: var(--iw-accent);\n  font-size: calc(0.75rem * var(--overflight-text-scale, 1));\n}\n[data-theme-styled='true'] .soundtrack-now-card::after {\n  background: var(--iw-accent);\n}\n[data-theme-styled='true'] .soundtrack-advanced-summary::after {\n  color: inherit;\n}\n[data-theme-styled='true'] .soundtrack-online-track {\n  border-color: var(--iw-line);\n}\n[data-theme-styled='true'] .soundtrack-online-track:is(:hover, :focus-within) {\n  color: var(--iw-text);\n  background: var(--iw-panel-raised);\n}\n[data-theme-styled='true'] :where(.soundtrack-online-style, .creator-poster-option):focus-within {\n  outline: 3px solid var(--iw-focus);\n  outline-offset: 2px;\n}\n[data-theme-styled='true'] :where(.batch-card-error, .creator-media-card-error) {\n  border-color: var(--iw-hazard);\n  border-image: none;\n}\n[data-theme-styled='true'] :where(.batch-card-preparing, .optional-world-current) {\n  outline: 2px solid var(--iw-focus);\n  outline-offset: 2px;\n}\n[data-theme-styled='true']\n  :where(\n    .asset-row.selected,\n    .candidate-entry.selected,\n    [aria-selected='true'],\n    [aria-pressed='true']\n  )\n  :where(.muted, .micro-note, small) {\n  color: inherit;\n}\n[data-theme-styled='true'] input[type='file']::file-selector-button {\n  color: var(--iw-text);\n  background: var(--ui-control-finish, none), var(--iw-panel-raised);\n  border: 1px solid var(--iw-control-line);\n  border-radius: 0;\n  box-shadow: var(--ui-action-depth, none);\n  min-height: var(--iw-target);\n  padding: 6px 10px;\n  margin-inline-end: 10px;\n  font: inherit;\n  cursor: pointer;\n}\n[data-theme-styled='true'] input[type='file']:not(:disabled)::file-selector-button:hover {\n  background:\n    var(--ui-hover-finish, var(--ui-control-finish, none)),\n    var(--ui-hover-face, var(--iw-panel-raised));\n  color: var(--ui-hover-ink, var(--iw-text));\n  box-shadow: var(--ui-hover-depth, none);\n}\n[data-theme-styled='true'] input[type='file']:not(:disabled)::file-selector-button:active {\n  background: var(--ui-active-finish, none), var(--iw-selection);\n  color: var(--iw-on-selection);\n  box-shadow: var(--ui-pressed-depth, none);\n}\n[data-theme-styled='true'] input[type='file']:disabled::file-selector-button {\n  color: var(--iw-muted);\n  background: var(--iw-panel);\n  border-style: dashed;\n  box-shadow: none;\n  cursor: not-allowed;\n}\n/* Reading state belongs to the message, not a permanent empty painted bar. */\n[data-theme-styled='true'] :where([role='status'], [role='alert']):empty {\n  background: transparent;\n}\n[data-theme-styled='true'] label:has(> input:is([type='checkbox'], [type='radio'])) {\n  padding: 6px 10px;\n  box-sizing: border-box;\n  gap: 10px;\n}\n[data-theme-styled='true'] :where(.soundtrack-dialog, .optional-worlds-dialog) .micro-note {\n  font-size: calc(var(--fk-text-secondary) * var(--overflight-text-scale, 1));\n}\n/* Session transport is one control group. Its volume label must not run into\n   the last button when a long translation or enlarged text wraps the row. */\n[data-theme-styled='true'] [data-couch-music] {\n  display: flex;\n  flex-wrap: wrap;\n  gap: 10px;\n  align-items: center;\n}\n[data-theme-styled='true'] [data-couch-music] > :where(h3, p, label, input, section, details) {\n  flex: 1 0 100%;\n  min-width: 0;\n  max-width: 100%;\n  box-sizing: border-box;\n}\n[data-theme-styled='true'] [data-couch-music] > :where(h3, p) {\n  margin-block: 8px;\n}\n[data-theme-styled='true'] [data-couch-music] > label {\n  margin-top: 8px;\n}\n[data-theme-styled='true'] #soundtrack-now-sources {\n  display: flex;\n  flex-wrap: wrap;\n  gap: 8px 16px;\n  margin-block: 12px;\n}\n[data-theme-styled='true'] :where(.page-head, .masthead) > a + a {\n  margin-inline-start: 12px;\n}\n\n[data-theme-styled='true'] :where(.asset-row.selected, .candidate-entry.selected) {\n  color: var(--iw-on-selection);\n  background: var(--iw-selection);\n  border-color: var(--iw-focus);\n  box-shadow: inset 3px 0 var(--iw-focus);\n}\n\n/* Only the application-owned menu backdrop changes with the interface. Authored\n   campaign/edition scenery and logos are separate content and remain visible. */\n[data-theme-styled='true'] .menu-scene[data-backdrop='interface'] {\n  background: var(--iw-ink);\n}\n[data-theme-styled='true']\n  .menu-scene[data-backdrop='interface']\n  > :where(.menu-scene-art-plane, .menu-scene-signal) {\n  display: none;\n}\n[data-theme-styled='true'] .menu-scene[data-backdrop='interface']::before {\n  content: '';\n  position: absolute;\n  inset: var(--ui-scene-inset);\n  inline-size: var(--ui-scene-width);\n  block-size: var(--ui-scene-height);\n  pointer-events: none;\n  background-image: var(--ui-scene-motif, none);\n  background-size: var(--ui-scene-motif-size, 48px 48px);\n  background-position: right top;\n  background-repeat: var(--ui-scene-repeat);\n  opacity: var(--ui-scene-opacity);\n}\n[data-theme-material='linen'] {\n  --ui-scene-motif: url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='64' height='64' shape-rendering='crispEdges'%3E%3Cg fill='none' stroke='%23f48686' stroke-width='2'%3E%3Cpath d='M32 10l22 22-22 22L10 32zM24 24l16 16m0-16L24 40'/%3E%3C/g%3E%3Cpath fill='%23e1ddcf' d='M0 0h2v2H0zm62 0h2v2h-2zM0 62h2v2H0zm62 0h2v2h-2z'/%3E%3C/svg%3E\");\n  --ui-scene-motif-size: 64px 64px;\n}\n[data-theme-material='porcelain'] {\n  --ui-scene-motif: url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='96'%3E%3Cg fill='none' stroke='%230057b7'%3E%3Cpath d='M-30 24q30-28 60 0t60 0t60 0M-30 72q30-28 60 0t60 0t60 0'/%3E%3Cpath d='M60 30q-12 10 0 20q12-10 0-20m0 20v8'/%3E%3C/g%3E%3C/svg%3E\");\n  --ui-scene-motif-size: 120px 96px;\n}\n[data-theme-material='brass'],\n[data-theme-material='copper'] {\n  --ui-scene-motif:\n    repeating-linear-gradient(90deg, transparent 0 95px, var(--iw-line) 95px 96px),\n    repeating-linear-gradient(0deg, transparent 0 95px, var(--iw-line) 95px 96px);\n  --ui-scene-motif-size: 96px 96px;\n}\n[data-theme-material='wood'] {\n  --ui-scene-motif:\n    repeating-linear-gradient(\n      0deg,\n      transparent 0 7px,\n      var(--iw-line) 7px 8px,\n      transparent 8px 62px,\n      var(--iw-line) 62px 64px\n    ),\n    repeating-linear-gradient(90deg, transparent 0 191px, var(--iw-line) 191px 192px);\n  --ui-scene-motif-size: 192px 64px;\n}\n[data-theme-material='composite'] {\n  --ui-scene-motif:\n    linear-gradient(30deg, transparent 0 48%, var(--iw-accent) 49% 50%, transparent 51%),\n    linear-gradient(150deg, transparent 0 48%, var(--iw-line) 49% 50%, transparent 51%);\n  --ui-scene-motif-size: 96px 64px;\n}\n[data-theme-material='classic'],\n[data-theme-material='terminal'],\n[data-theme-material='lcd'] {\n  --ui-scene-motif: none;\n}\n[data-theme-material='classic'] .menu-scene[data-backdrop='interface']::after,\n[data-theme-material='terminal'] .menu-scene[data-backdrop='interface']::after,\n[data-theme-material='lcd'] .menu-scene[data-backdrop='interface']::after {\n  background: none;\n}\n[data-theme-texture='off'] {\n  --ui-scene-motif: none;\n}\n\n/* BEGIN ORIGINAL MATERIAL GRAIN — generated by scripts/refresh-interface-material-grain.mjs */\n[data-theme-family] {\n  --ui-grain-powder: url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='192' height='128' shape-rendering='crispEdges'%3E%3Cpath fill='%23fff' opacity='.055' d='M68 16h2v1h-2zM166 44h2v1h-2zM150 5h2v1h-2zM69 90h1v1h-1zM154 30h2v1h-2zM113 37h1v1h-1zM101 58h1v1h-1zM167 80h1v1h-1zM131 76h1v1h-1zM81 23h2v1h-2zM58 109h2v1h-2zM167 78h2v1h-2zM183 84h2v1h-2zM17 46h2v1h-2zM141 20h2v1h-2zM30 100h2v1h-2zM21 69h1v1h-1zM94 102h1v1h-1zM66 101h1v1h-1zM109 34h2v1h-2zM143 6h2v1h-2zM14 89h1v1h-1zM8 100h2v1h-2zM25 29h1v1h-1zM173 68h1v1h-1zM144 79h1v1h-1zM38 28h2v1h-2zM102 90h2v1h-2zM49 26h2v1h-2zM9 40h1v1h-1zM186 17h2v1h-2zM175 119h1v1h-1zM154 115h1v1h-1zM101 3h1v1h-1zM173 62h1v1h-1zM29 13h1v1h-1zM17 79h2v1h-2zM117 41h2v1h-2zM145 20h2v1h-2zM176 86h1v1h-1zM46 56h2v1h-2zM137 82h2v1h-2zM157 96h1v1h-1zM186 84h1v1h-1zM160 6h1v1h-1zM96 33h2v1h-2zM90 123h2v1h-2zM131 110h2v1h-2zM152 119h2v1h-2zM150 92h1v1h-1zM178 69h2v1h-2zM151 21h1v1h-1zM110 12h2v1h-2zM76 31h1v1h-1zM116 63h2v1h-2zM160 2h1v1h-1z'/%3E%3Cpath fill='%23000' opacity='.09' d='M69 17h2v1h-2zM162 111h1v1h-1zM143 121h2v1h-2zM151 6h2v1h-2zM145 9h2v1h-2zM143 22h1v1h-1zM155 31h2v1h-2zM16 113h2v1h-2zM121 4h2v1h-2zM102 59h2v1h-2zM64 119h2v1h-2zM20 76h2v1h-2zM132 77h2v1h-2zM27 48h2v1h-2zM128 8h2v1h-2zM59 110h2v1h-2zM3 8h1v1h-1zM102 112h1v1h-1zM184 85h2v1h-2zM170 45h1v1h-1zM182 94h1v1h-1zM142 21h2v1h-2zM38 5h1v1h-1zM18 72h1v1h-1zM22 70h2v1h-2zM13 95h2v1h-2zM75 74h1v1h-1zM67 102h2v1h-2zM135 49h2v1h-2zM16 70h1v1h-1zM144 7h2v1h-2zM173 80h2v1h-2zM51 98h1v1h-1zM9 101h2v1h-2zM116 14h2v1h-2zM115 42h2v1h-2zM174 69h2v1h-2zM141 82h1v1h-1zM182 15h2v1h-2zM39 29h2v1h-2zM100 70h1v1h-1zM184 113h1v1h-1zM50 27h2v1h-2zM131 4h2v1h-2zM143 68h1v1h-1zM187 18h2v1h-2zM120 104h2v1h-2zM41 78h2v1h-2zM155 116h2v1h-2zM51 73h1v1h-1zM93 86h1v1h-1zM174 63h2v1h-2zM34 31h2v1h-2zM122 87h2v1h-2zM18 80h2v1h-2zM67 48h1v1h-1zM103 7h2v1h-2zM146 21h2v1h-2zM94 32h2v1h-2zM110 84h2v1h-2zM47 57h2v1h-2zM155 50h2v1h-2zM137 2h2v1h-2zM158 97h2v1h-2zM134 82h1v1h-1zM184 74h2v1h-2zM161 7h2v1h-2zM137 83h2v1h-2zM50 100h2v1h-2zM91 124h2v1h-2zM162 19h2v1h-2zM49 9h1v1h-1zM153 120h2v1h-2zM180 90h2v1h-2zM158 24h1v1h-1zM179 70h2v1h-2zM131 8h1v1h-1zM15 12h1v1h-1zM111 13h2v1h-2zM113 40h1v1h-1zM143 104h2v1h-2zM117 64h2v1h-2zM184 70h2v1h-2zM54 87h2v1h-2z'/%3E%3Cpath fill='%23000' opacity='.023' d='M132 15h18v2h-18zM134 17h15v2h-15zM121 51h9v2h-9zM123 53h6v2h-6zM111 13h6v2h-6zM113 15h3v2h-3zM14 91h12v2h-12zM16 93h9v2h-9zM65 54h16v2h-16zM67 56h13v2h-13zM64 17h13v2h-13zM66 19h10v2h-10zM68 93h7v2h-7zM70 95h4v2h-4zM141 56h15v2h-15zM143 58h12v2h-12zM28 11h18v2h-18zM30 13h15v2h-15zM141 81h18v2h-18zM143 83h15v2h-15zM153 15h14v2h-14zM155 17h11v2h-11zM134 60h8v2h-8zM136 62h5v2h-5zM90 108h17v2h-17zM92 110h14v2h-14zM146 27h17v2h-17zM148 29h14v2h-14zM22 77h17v2h-17zM24 79h14v2h-14zM152 86h10v2h-10zM154 88h7v2h-7zM94 5h9v2h-9zM96 7h6v2h-6zM147 6h11v2h-11zM149 8h8v2h-8z'/%3E%3C/svg%3E\");\n  --ui-grain-brush: url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='192' height='96' shape-rendering='crispEdges'%3E%3Cpath fill='%23fff' opacity='.045' d='M99 35h13v1h-13zM120 79h20v1h-20zM90 63h30v1h-30zM108 57h19v1h-19zM91 60h33v1h-33zM127 70h29v1h-29zM28 81h6v1h-6zM141 88h23v1h-23zM75 28h6v1h-6zM138 54h21v1h-21zM37 68h26v1h-26zM37 32h22v1h-22zM118 72h33v1h-33z'/%3E%3Cpath fill='%23000' opacity='.055' d='M56 73h18v1h-18zM127 41h29v1h-29zM124 72h27v1h-27zM99 53h6v1h-6zM118 51h17v1h-17zM86 83h12v1h-12zM53 53h9v1h-9zM15 9h20v1h-20zM34 36h23v1h-23zM53 84h13v1h-13zM117 62h14v1h-14zM107 45h6v1h-6zM59 86h21v1h-21z'/%3E%3C/svg%3E\");\n  --ui-grain-thread: url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='48' shape-rendering='crispEdges'%3E%3Cpath fill='%23fff' opacity='.021' d='M0 0h2v1h-2zM4 0h1v3h-1zM8 0h3v1h-3zM12 0h1v3h-1zM16 0h3v1h-3zM20 0h1v3h-1zM24 0h3v1h-3zM28 0h1v3h-1zM32 0h3v1h-3zM36 0h1v3h-1zM40 0h3v1h-3zM44 0h1v2h-1zM0 4h1v3h-1zM4 4h3v1h-3zM8 4h1v3h-1zM12 4h3v1h-3zM16 4h1v2h-1zM20 4h3v1h-3zM24 4h1v2h-1zM28 4h3v1h-3zM32 4h1v2h-1zM36 4h3v1h-3zM40 4h1v2h-1zM44 4h3v1h-3zM0 8h3v1h-3zM4 8h1v2h-1zM8 8h3v1h-3zM12 8h1v2h-1zM16 8h3v1h-3zM20 8h1v2h-1zM24 8h3v1h-3zM28 8h1v3h-1zM32 8h3v1h-3zM36 8h1v3h-1zM40 8h3v1h-3zM44 8h1v3h-1zM0 12h1v3h-1zM4 12h3v1h-3zM8 12h1v3h-1zM12 12h3v1h-3zM16 12h1v3h-1zM20 12h3v1h-3zM24 12h1v3h-1zM28 12h3v1h-3zM32 12h1v3h-1zM36 12h2v1h-2zM40 12h1v3h-1zM44 12h2v1h-2zM0 16h3v1h-3zM4 16h1v3h-1zM8 16h2v1h-2zM12 16h1v3h-1zM16 16h2v1h-2zM20 16h1v3h-1zM24 16h2v1h-2zM28 16h1v3h-1zM32 16h2v1h-2zM36 16h1v3h-1zM40 16h2v1h-2zM44 16h1v3h-1zM0 20h1v3h-1zM4 20h2v1h-2zM8 20h1v3h-1zM12 20h2v1h-2zM16 20h1v3h-1zM20 20h3v1h-3zM24 20h1v3h-1zM28 20h3v1h-3zM32 20h1v3h-1zM36 20h3v1h-3zM40 20h1v3h-1zM44 20h3v1h-3zM0 24h3v1h-3zM4 24h1v3h-1zM8 24h3v1h-3zM12 24h1v3h-1zM16 24h3v1h-3zM20 24h1v3h-1zM24 24h3v1h-3zM28 24h1v2h-1zM32 24h3v1h-3zM36 24h1v2h-1zM40 24h3v1h-3zM44 24h1v2h-1zM0 28h1v2h-1zM4 28h3v1h-3zM8 28h1v2h-1zM12 28h3v1h-3zM16 28h1v2h-1zM20 28h3v1h-3zM24 28h1v2h-1zM28 28h3v1h-3zM32 28h1v2h-1zM36 28h3v1h-3zM40 28h1v3h-1zM44 28h3v1h-3zM0 32h3v1h-3zM4 32h1v2h-1zM8 32h3v1h-3zM12 32h1v3h-1zM16 32h3v1h-3zM20 32h1v3h-1zM24 32h3v1h-3zM28 32h1v3h-1zM32 32h3v1h-3zM36 32h1v3h-1zM40 32h3v1h-3zM44 32h1v3h-1zM0 36h1v3h-1zM4 36h3v1h-3zM8 36h1v3h-1zM12 36h3v1h-3zM16 36h1v3h-1zM20 36h2v1h-2zM24 36h1v3h-1zM28 36h2v1h-2zM32 36h1v3h-1zM36 36h2v1h-2zM40 36h1v3h-1zM44 36h2v1h-2zM0 40h2v1h-2zM4 40h1v3h-1zM8 40h2v1h-2zM12 40h1v3h-1zM16 40h2v1h-2zM20 40h1v3h-1zM24 40h2v1h-2zM28 40h1v3h-1zM32 40h3v1h-3zM36 40h1v3h-1zM40 40h3v1h-3zM44 40h1v3h-1zM0 44h1v3h-1zM4 44h3v1h-3zM8 44h1v3h-1zM12 44h3v1h-3zM16 44h1v3h-1zM20 44h3v1h-3zM24 44h1v3h-1zM28 44h3v1h-3zM32 44h1v3h-1zM36 44h3v1h-3zM40 44h1v2h-1zM44 44h3v1h-3z'/%3E%3Cpath fill='%23000' opacity='.065' d='M2 2h1v2h-1zM6 2h2v1h-2zM10 2h1v2h-1zM14 2h2v1h-2zM18 2h1v2h-1zM22 2h2v1h-2zM26 2h1v2h-1zM30 2h2v1h-2zM34 2h1v2h-1zM38 2h2v1h-2zM42 2h1v2h-1zM46 2h2v1h-2zM2 6h2v1h-2zM6 6h1v2h-1zM10 6h2v1h-2zM14 6h1v2h-1zM18 6h2v1h-2zM22 6h1v2h-1zM26 6h2v1h-2zM30 6h1v2h-1zM34 6h2v1h-2zM38 6h1v2h-1zM42 6h2v1h-2zM46 6h1v2h-1zM2 10h1v2h-1zM6 10h2v1h-2zM10 10h1v2h-1zM14 10h2v1h-2zM18 10h1v2h-1zM22 10h2v1h-2zM26 10h1v2h-1zM30 10h2v1h-2zM34 10h1v2h-1zM38 10h2v1h-2zM42 10h1v2h-1zM46 10h2v1h-2zM2 14h2v1h-2zM6 14h1v2h-1zM10 14h2v1h-2zM14 14h1v2h-1zM18 14h2v1h-2zM22 14h1v2h-1zM26 14h2v1h-2zM30 14h1v2h-1zM34 14h2v1h-2zM38 14h1v2h-1zM42 14h2v1h-2zM46 14h1v2h-1zM2 18h1v2h-1zM6 18h2v1h-2zM10 18h1v2h-1zM14 18h2v1h-2zM18 18h1v2h-1zM22 18h2v1h-2zM26 18h1v2h-1zM30 18h2v1h-2zM34 18h1v2h-1zM38 18h2v1h-2zM42 18h1v2h-1zM46 18h2v1h-2zM2 22h2v1h-2zM6 22h1v2h-1zM10 22h2v1h-2zM14 22h1v2h-1zM18 22h2v1h-2zM22 22h1v2h-1zM26 22h2v1h-2zM30 22h1v2h-1zM34 22h2v1h-2zM38 22h1v2h-1zM42 22h2v1h-2zM46 22h1v2h-1zM2 26h1v2h-1zM6 26h2v1h-2zM10 26h1v2h-1zM14 26h2v1h-2zM18 26h1v2h-1zM22 26h2v1h-2zM26 26h1v2h-1zM30 26h2v1h-2zM34 26h1v2h-1zM38 26h2v1h-2zM42 26h1v2h-1zM46 26h2v1h-2zM2 30h2v1h-2zM6 30h1v2h-1zM10 30h2v1h-2zM14 30h1v2h-1zM18 30h2v1h-2zM22 30h1v2h-1zM26 30h2v1h-2zM30 30h1v2h-1zM34 30h2v1h-2zM38 30h1v2h-1zM42 30h2v1h-2zM46 30h1v2h-1zM2 34h1v2h-1zM6 34h2v1h-2zM10 34h1v2h-1zM14 34h2v1h-2zM18 34h1v2h-1zM22 34h2v1h-2zM26 34h1v2h-1zM30 34h2v1h-2zM34 34h1v2h-1zM38 34h2v1h-2zM42 34h1v2h-1zM46 34h2v1h-2zM2 38h2v1h-2zM6 38h1v2h-1zM10 38h2v1h-2zM14 38h1v2h-1zM18 38h2v1h-2zM22 38h1v2h-1zM26 38h2v1h-2zM30 38h1v2h-1zM34 38h2v1h-2zM38 38h1v2h-1zM42 38h2v1h-2zM46 38h1v2h-1zM2 42h1v2h-1zM6 42h2v1h-2zM10 42h1v2h-1zM14 42h2v1h-2zM18 42h1v2h-1zM22 42h2v1h-2zM26 42h1v2h-1zM30 42h2v1h-2zM34 42h1v2h-1zM38 42h2v1h-2zM42 42h1v2h-1zM46 42h2v1h-2zM2 46h2v1h-2zM6 46h1v2h-1zM10 46h2v1h-2zM14 46h1v2h-1zM18 46h2v1h-2zM22 46h1v2h-1zM26 46h2v1h-2zM30 46h1v2h-1zM34 46h2v1h-2zM38 46h1v2h-1zM42 46h2v1h-2zM46 46h1v2h-1z'/%3E%3Cpath fill='%23fff' opacity='.018' d='M1 0h2v1h-2zM21 8h1v2h-1zM41 16h2v1h-2zM13 20h2v1h-2zM33 28h1v2h-1zM5 32h1v2h-1zM25 40h2v1h-2z'/%3E%3C/svg%3E\");\n  --ui-grain-glaze: url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='256' height='192' shape-rendering='crispEdges'%3E%3Cpath fill='%23183858' opacity='.045' d='M19 27h1v1h-1zM107 68h1v1h-1zM214 21h1v1h-1zM64 143h1v1h-1zM182 155h1v1h-1zM236 108h1v1h-1z'/%3E%3Cpath fill='%23fff' opacity='.18' d='M20 28h1v1h-1zM108 69h1v1h-1zM215 22h1v1h-1zM65 144h1v1h-1zM183 156h1v1h-1zM237 109h1v1h-1z'/%3E%3C/svg%3E\");\n  --ui-grain-timber: url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='192' height='128' shape-rendering='crispEdges'%3E%3Cpath fill='none' stroke='%23000' stroke-opacity='.045' d='M81 15h9v3h17v3h13v2h14v1h7v-1h8v-2h10v-3h13v-3h11v-3'/%3E%3Cpath fill='none' stroke='%23000' stroke-opacity='.045' d='M15 105h17v-1h9v-1h8v-1h15v0h17v0h7v1h12v1h10v1'/%3E%3Cpath fill='none' stroke='%23000' stroke-opacity='.045' d='M73 99h14v1h13v1h10v1h15v1h9v0'/%3E%3Cpath fill='none' stroke='%23000' stroke-opacity='.045' d='M64 18h13v1h11v2h16v3'/%3E%3Cpath fill='none' stroke='%23000' stroke-opacity='.045' d='M25 7h16v-1h16v-1h17v0h17v1h17v1h15v1h9v0h15v0h14v-1h8v-1h16v-1'/%3E%3Cpath fill='none' stroke='%23000' stroke-opacity='.045' d='M60 25h15v0h12v1h15v1h13v1h12v1h14v0'/%3E%3Cpath fill='none' stroke='%23000' stroke-opacity='.045' d='M25 79h17v-3h17v-2h8v0h8v1h12v2'/%3E%3Cpath fill='none' stroke='%23fff' stroke-opacity='.028' d='M68 13h7v0h15v1h9v1h7v1h15v1h7v0h8v0h6v0'/%3E%3Cpath fill='none' stroke='%23fff' stroke-opacity='.028' d='M35 90h12v-3h6v-1h10v-1h8v1h10v2h13v3h14v3h7v2h8v2'/%3E%3Cpath fill='none' stroke='%23fff' stroke-opacity='.028' d='M13 94h16v-1h11v-1h6v-1h9v-1h6v0h10v0h16v1h7v1h15v1'/%3E%3Cpath fill='none' stroke='%23fff' stroke-opacity='.028' d='M51 100h12v0h8v0h8v1h10v1'/%3E%3Cpath fill='none' stroke='%23fff' stroke-opacity='.028' d='M55 83h6v0h11v0h10v2h17v3h7v3h11v2h15v1h17v-1h13v-3h6v-3'/%3E%3Cpath fill='none' stroke='%23fff' stroke-opacity='.028' d='M26 82h10v-1h15v-1h11v0h12v0h16v1h13v1h10v1'/%3E%3Cpath fill='none' stroke='%23fff' stroke-opacity='.028' d='M35 28h9v-1h9v-1h14v0h13v0'/%3E%3C/svg%3E\");\n  --ui-grain-stone: url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='192' height='128' shape-rendering='crispEdges'%3E%3Cpath fill='%23fff' opacity='.028' d='M18 33h6v1h2v1h-7v-1h-1zM160 72h6v2h-6zM145 100h4v1h-4zM94 118h3v1h2v1h-4v-1h-1zM62 19h5v1h-5zM147 18h3v1h-3zM85 59h3v1h2v1h-4v-1h-1zM121 47h5v2h-5zM95 56h2v2h-2zM54 77h6v1h2v1h-7v-1h-1zM115 4h3v2h-3zM50 21h5v1h-5zM126 95h6v1h2v1h-7v-1h-1zM127 90h5v2h-5zM159 21h2v2h-2zM153 89h5v1h2v1h-6v-1h-1z'/%3E%3Cpath fill='%23000' opacity='.04' d='M146 23h2v2h-2zM179 84h3v1h2v1h-4v-1h-1zM12 16h5v2h-5zM151 77h5v1h-5zM31 104h5v1h2v1h-6v-1h-1zM137 43h5v1h-5zM70 81h5v2h-5zM124 10h6v1h2v1h-7v-1h-1zM20 118h4v2h-4zM90 69h6v2h-6zM118 30h3v1h2v1h-4v-1h-1zM36 86h2v2h-2zM82 103h4v1h-4zM61 16h3v1h2v1h-4v-1h-1zM115 58h2v1h-2zM106 98h3v2h-3z'/%3E%3C/svg%3E\");\n  --ui-grain-fiber: url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='192' height='128' shape-rendering='crispEdges'%3E%3Cpath fill='%23fff' opacity='.035' d='M137 49h8v1h-3v1h-2v-1h-2zM81 29h6v1h-3v1h-2v-1h-2zM82 31h3v1h-3v1h-2v-1h-2zM54 100h9v1h-3v1h-2v-1h-2zM114 57h4v1h-3v1h-2v-1h-2zM145 26h9v1h-3v1h-2v-1h-2zM129 105h8v1h-3v1h-2v-1h-2zM84 63h3v1h-3v1h-2v-1h-2zM37 44h9v1h-3v1h-2v-1h-2zM136 106h5v1h-3v1h-2v-1h-2zM142 46h8v1h-3v1h-2v-1h-2zM33 60h6v1h-3v1h-2v-1h-2zM16 13h3v1h-3v1h-2v-1h-2z'/%3E%3Cpath fill='%23000' opacity='.033' d='M108 55h4v1h-3v1h-2v-1h-2zM80 108h3v1h-3v1h-2v-1h-2zM36 44h8v1h-3v1h-2v-1h-2zM35 84h4v1h-3v1h-2v-1h-2zM39 91h5v1h-3v1h-2v-1h-2zM83 46h8v1h-3v1h-2v-1h-2zM134 114h9v1h-3v1h-2v-1h-2zM81 45h4v1h-3v1h-2v-1h-2zM75 15h9v1h-3v1h-2v-1h-2zM42 34h4v1h-3v1h-2v-1h-2zM156 90h4v1h-3v1h-2v-1h-2zM89 27h8v1h-3v1h-2v-1h-2z'/%3E%3C/svg%3E\");\n  --ui-grain-machining: url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='256' height='128' shape-rendering='crispEdges'%3E%3Cpath fill='%23000' opacity='.075' d='M12 18h34v1H12zM91 43h19v1H91zM164 12h47v1h-47zM37 95h31v1H37zM146 103h18v1h-18zM208 74h26v1h-26zM118 65h8v1h-8zM68 28h6v1h-6z'/%3E%3Cpath fill='%23fff' opacity='.045' d='M13 19h30v1H13zM92 44h16v1H92zM167 13h40v1h-40zM39 96h26v1H39zM147 104h15v1h-15zM209 75h22v1h-22z'/%3E%3C/svg%3E\");\n  --ui-grain-edge-wear: url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='128' height='6' shape-rendering='crispEdges'%3E%3Cpath fill='%23fff' opacity='.20' d='M7 1h12v1H7zM42 2h5v1h-5zM76 1h17v1H76zM111 2h8v1h-8z'/%3E%3Cpath fill='%23000' opacity='.26' d='M8 2h9v1H8zM42 3h4v1h-4zM78 2h13v1H78zM111 3h6v1h-6z'/%3E%3C/svg%3E\");\n  --ui-grain-vent: url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='96' height='8' shape-rendering='crispEdges'%3E%3Cpath fill='%23000' opacity='.45' d='M4 2h3v4h-3zM10 2h3v4h-3zM16 2h3v4h-3zM22 2h3v4h-3zM28 2h3v4h-3zM34 2h3v4h-3zM40 2h3v4h-3zM46 2h3v4h-3zM52 2h3v4h-3zM58 2h3v4h-3zM64 2h3v4h-3zM70 2h3v4h-3zM76 2h3v4h-3zM82 2h3v4h-3zM88 2h3v4h-3z'/%3E%3Cpath fill='%23fff' opacity='.14' d='M4 6h3v1h-3zM10 6h3v1h-3zM16 6h3v1h-3zM22 6h3v1h-3zM28 6h3v1h-3zM34 6h3v1h-3zM40 6h3v1h-3zM46 6h3v1h-3zM52 6h3v1h-3zM58 6h3v1h-3zM64 6h3v1h-3zM70 6h3v1h-3zM76 6h3v1h-3zM82 6h3v1h-3zM88 6h3v1h-3z'/%3E%3C/svg%3E\");\n  --ui-grain-bulkhead: url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='256' height='192' shape-rendering='crispEdges'%3E%3Cpath fill='%23000' opacity='.42' d='M0 0h256v2H0zM0 2h2v190H0z'/%3E%3Cpath fill='%23fff' opacity='.07' d='M2 2h254v1H2zM2 3h1v189H2z'/%3E%3Cpath fill='%23000' opacity='.32' d='M9 9h6v6H9zM241 9h6v6h-6zM9 177h6v6H9zM241 177h6v6h-6z'/%3E%3Cpath fill='%23fff' opacity='.12' d='M10 10h4v1h-4zM242 10h4v1h-4zM10 178h4v1h-4zM242 178h4v1h-4z'/%3E%3Cpath fill='%23fff' opacity='.055' d='M34 3h26v1H34zM186 3h39v1h-39zM3 88h1v12H3z'/%3E%3C/svg%3E\");\n}\n/* END ORIGINAL MATERIAL GRAIN */\n\n/* Material finishes are independent of the immutable asset frames. The opaque\n   semantic base always supplies the text/state pair; these original, static\n   layers add restrained grain across the face and stronger light at its edges.\n   Grain is not stretched nine-slice art: it contains no screws, seams or labels. */\n@media (forced-colors: none) {\n  [data-theme-texture='on'][data-theme-contrast='normal'][data-theme-surface='bevel'] {\n    --ui-control-finish: linear-gradient(180deg, #ffffff0a, transparent 22%, #00000008);\n    --ui-active-finish: linear-gradient(180deg, #00000008, transparent 40%, #ffffff08);\n    --ui-inset-finish: linear-gradient(180deg, #00000012, transparent 12px);\n    --ui-inset-depth: inset 0 2px 3px #0005, inset 0 -1px 0 #ffffff0c;\n    --ui-toolbar-finish: linear-gradient(180deg, #ffffff08, transparent 8px, #00000008);\n    --ui-action-depth: inset 1px 1px 0 #ffffff20, inset -1px -1px 0 #0005, 0 2px 0 var(--ui-shadow);\n    --ui-hover-depth:\n      inset 0 0 0 1px var(--iw-accent), inset 0 2px 0 #ffffff20, 0 2px 0 var(--ui-shadow);\n    --ui-pressed-depth: inset 0 2px 3px #0005, inset 0 -1px 0 #ffffff14;\n    --ui-selected-depth: inset 3px 0 var(--iw-focus), inset 0 1px 0 #ffffff18, inset 0 -2px 0 #0003;\n    --ui-gallery-depth: var(--ui-action-depth);\n  }\n\n  /* Steel: powder-coated face, rolled edge, dark socket and amber activation.\n     Four riveted corners belong to frames; wear never crosses the label. */\n  :is(\n      [data-theme-material='steel'],\n      [data-theme-material='industrial-workshop']\n    )[data-theme-texture='on'][data-theme-contrast='normal'][data-theme-surface='bevel'] {\n    --ui-loading-rail: 7px;\n    --ui-grain:\n      var(--ui-grain-machining) 0 0 / 256px 128px repeat,\n      var(--ui-grain-powder) 17px 11px / 192px 128px repeat;\n    --ui-panel-finish:\n      var(--ui-grain-vent) right 18px top 7px / 96px 8px no-repeat,\n      var(--ui-grain-edge-wear) left 14px top 2px / 128px 6px repeat-x, var(--ui-grain),\n      linear-gradient(180deg, #ffffff18, transparent 7px, transparent calc(100% - 5px), #00000025);\n    --ui-control-finish:\n      var(--ui-grain-edge-wear) left 14px top 1px / 128px 6px repeat-x, var(--ui-grain),\n      linear-gradient(90deg, #ffffff14, transparent 4px, transparent calc(100% - 4px), #00000020),\n      linear-gradient(\n        180deg,\n        #ffffff38 0 1px,\n        #ffffff14 1px 3px,\n        transparent 6px,\n        transparent calc(100% - 5px),\n        #00000035 calc(100% - 2px),\n        #00000050\n      );\n    --ui-active-finish:\n      var(--ui-grain-edge-wear) left 14px bottom 1px / 128px 6px repeat-x, var(--ui-grain),\n      linear-gradient(180deg, #00000022, transparent 3px, transparent calc(100% - 2px), #ffffff20);\n    --ui-inset-finish:\n      var(--ui-grain-powder) 41px 27px / 192px 128px repeat,\n      linear-gradient(180deg, #00000048, transparent 6px, transparent calc(100% - 2px), #ffffff10);\n    --ui-toolbar-finish:\n      var(--ui-grain-edge-wear) left 14px top 1px / 128px 6px repeat-x, var(--ui-grain),\n      linear-gradient(180deg, #ffffff28, transparent 4px, transparent calc(100% - 4px), #00000025);\n    --ui-thumb-finish:\n      repeating-linear-gradient(90deg, transparent 0 3px, #0006 3px 4px, #fff4 4px 5px) center /\n        15px 60% no-repeat,\n      linear-gradient(180deg, #fff3, transparent 3px, transparent calc(100% - 3px), #0003);\n    --ui-panel-frame: var(--iw-material-panel) 6 / 6px / 0 repeat;\n    --ui-raised-frame: var(--iw-material-raised) 6 / 6px / 0 repeat;\n    --ui-primary-frame: var(--iw-material-primary) 6 / 6px / 0 repeat;\n    --ui-hover-frame: var(--ui-primary-frame);\n    --ui-hover-face: var(--iw-accent);\n    --ui-hover-ink: var(--iw-on-accent);\n    --ui-panel-depth:\n      inset 1px 1px 0 #ffffff18, inset -1px -2px 0 #0008, 0 0 0 1px #0007, 0 4px 0 var(--ui-shadow),\n      0 16px 28px #0006;\n    --ui-action-depth:\n      inset 0 2px 0 #ffffff25, inset 2px 0 0 #ffffff12, inset 0 -3px 0 #0006, inset -2px 0 0 #0003,\n      0 0 0 1px #0008, 0 4px 0 var(--ui-shadow), 0 5px 0 #0003;\n    --ui-hover-depth:\n      inset 0 2px 0 #ffffff65, inset 2px 0 0 #ffffff35, inset 0 -3px 0 #0005, inset -2px 0 0 #0002,\n      0 0 0 1px #0008, 0 4px 0 var(--ui-shadow),\n      0 0 6px color-mix(in srgb, var(--iw-accent) 18%, transparent);\n    --ui-pressed-depth:\n      inset 0 3px 4px #0006, inset 2px 0 0 #0003, inset 0 -1px 0 #ffffff50, 0 0 0 1px #0009,\n      0 1px 0 var(--ui-shadow);\n    --ui-selected-depth:\n      inset 0 2px 0 #ffffff45, inset 3px 0 0 #ffffff30, inset 0 -2px 0 #0004, 0 0 0 1px #0008,\n      0 2px 0 var(--ui-shadow);\n    --ui-inset-depth:\n      inset 0 3px 4px #0007, inset 1px 0 0 #0006, inset 0 -1px 0 #ffffff1c, 0 1px 0 #ffffff10;\n    --ui-scene-inset: 0;\n    --ui-scene-width: auto;\n    --ui-scene-height: auto;\n    --ui-scene-motif:\n      linear-gradient(\n        135deg,\n        transparent 35%,\n        color-mix(in srgb, var(--iw-accent) 7%, transparent)\n      ),\n      var(--ui-grain-bulkhead), var(--ui-grain-machining);\n    --ui-scene-motif-size: 100% 100%, 256px 192px, 256px 128px;\n    --ui-scene-repeat: no-repeat, repeat, repeat;\n    --ui-scene-opacity: 0.8;\n  }\n\n  /* Cloth keeps its stitches on the panel seam. Buttons are woven fabric,\n     never embroidered borders repeated through every navigation row. */\n  [data-theme-material='linen'][data-theme-texture='on'][data-theme-contrast='normal'][data-theme-surface='bevel'] {\n    --ui-weave: var(--ui-grain-thread) 1px 1px / 48px 48px repeat;\n    --ui-panel-finish:\n      repeating-linear-gradient(\n          90deg,\n          color-mix(in srgb, var(--iw-accent) 48%, transparent) 0 3px,\n          transparent 3px 9px\n        )\n        left 12px top 3px / calc(100% - 24px) 2px no-repeat,\n      var(--ui-weave), linear-gradient(180deg, #ffffff06, transparent 72px);\n    --ui-toolbar-finish: var(--ui-weave);\n    --ui-panel-depth:\n      inset 0 2px 0 color-mix(in srgb, var(--iw-accent) 65%, transparent),\n      inset 0 -1px 0 color-mix(in srgb, var(--iw-accent) 32%, transparent), 0 6px 14px #0004;\n    --ui-inset-finish: var(--ui-weave), linear-gradient(180deg, #00000024, transparent 5px);\n  }\n\n  /* Glaze and paper have different grain. Both keep their clean edge relief;\n     material identity is declared on this scope, including custom themes. */\n  [data-theme-material='porcelain'][data-theme-texture='on'][data-theme-contrast='normal'][data-theme-surface='bevel'] {\n    --ui-ceramic: var(--ui-grain-glaze) 0 0 / 256px 192px repeat;\n  }\n  [data-theme-material='sakura'][data-theme-texture='on'][data-theme-contrast='normal'][data-theme-surface='bevel'] {\n    --ui-ceramic: var(--ui-grain-fiber) 0 0 / 192px 128px repeat;\n  }\n  /* Porcelain: a glazed face and cobalt double lip. Sakura is warmer satin. */\n  :is(\n      [data-theme-material='porcelain'],\n      [data-theme-material='sakura']\n    )[data-theme-texture='on'][data-theme-contrast='normal'][data-theme-surface='bevel'] {\n    --ui-panel-finish: var(--ui-ceramic), linear-gradient(180deg, #ffffff30, transparent 9px);\n    --ui-control-finish:\n      var(--ui-ceramic),\n      linear-gradient(180deg, #ffffff80, transparent 4px, transparent calc(100% - 4px), #00000015);\n    --ui-toolbar-finish:\n      var(--ui-ceramic),\n      linear-gradient(180deg, #ffffff30, transparent 4px, transparent calc(100% - 4px), #00000009);\n    --ui-panel-depth:\n      inset 0 0 0 2px color-mix(in srgb, var(--iw-accent) 24%, transparent),\n      inset 0 0 0 5px #ffffff24, 0 4px 0 color-mix(in srgb, var(--iw-line) 28%, transparent),\n      0 8px 18px #0001;\n    --ui-action-depth:\n      inset 0 2px 0 #ffffff80, inset 0 -2px 0 #00000018,\n      0 2px 0 color-mix(in srgb, var(--iw-line) 40%, transparent);\n    --ui-hover-depth:\n      inset 0 0 0 1px var(--iw-accent), inset 0 2px 0 #ffffff80,\n      0 2px 0 color-mix(in srgb, var(--iw-accent) 45%, transparent);\n    --ui-active-finish:\n      var(--ui-ceramic),\n      linear-gradient(180deg, #00000022, transparent 3px, transparent calc(100% - 2px), #ffffff20);\n    --ui-inset-finish: var(--ui-ceramic), linear-gradient(180deg, #00000012, transparent 4px);\n    --ui-pressed-depth: inset 0 2px 0 #00000028, inset 0 -1px 0 #ffffff70;\n  }\n  [data-theme-material='sakura'][data-theme-texture='on'][data-theme-contrast='normal'][data-theme-surface='bevel'] {\n    --ui-panel-finish: var(--ui-ceramic), linear-gradient(180deg, #ffffff18, transparent 6px);\n    --ui-panel-depth:\n      inset 0 2px 0 color-mix(in srgb, var(--iw-accent) 42%, transparent), inset 0 -1px 0 #00000015,\n      0 4px 14px #0001;\n  }\n\n  /* Enamel and instrument copper: hairline inlays, directional satin, no\n     repeated chevrons. Obsidian overrides the enamel with cut stone below. */\n  :is(\n      [data-theme-material='brass'],\n      [data-theme-material='copper']\n    )[data-theme-texture='on'][data-theme-contrast='normal'][data-theme-surface='bevel'] {\n    --ui-panel-finish: var(--ui-metal), linear-gradient(180deg, #ffffff08, transparent 8px);\n    --ui-control-finish:\n      var(--ui-metal),\n      linear-gradient(180deg, #ffffff30, transparent 4px, transparent calc(100% - 4px), #00000030);\n    --ui-toolbar-finish: var(--ui-metal);\n    --ui-panel-depth:\n      inset 0 1px 0 color-mix(in srgb, var(--iw-accent) 45%, transparent),\n      inset 0 0 0 4px #00000018,\n      inset 0 -1px 0 color-mix(in srgb, var(--iw-accent) 22%, transparent),\n      0 4px 0 var(--ui-shadow), 0 10px 20px #0003;\n    --ui-hover-depth:\n      inset 0 2px 0 var(--iw-accent), inset 0 -1px 0 #0005, 0 2px 0 var(--ui-shadow);\n    --ui-metal: var(--ui-grain-powder) 9px 19px / 192px 128px repeat;\n    --ui-active-finish:\n      var(--ui-metal),\n      linear-gradient(180deg, #00000022, transparent 3px, transparent calc(100% - 2px), #ffffff20);\n    --ui-inset-finish: var(--ui-metal), linear-gradient(180deg, #00000030, transparent 5px);\n    --ui-pressed-depth: inset 0 2px 0 #0006, inset 0 -1px 0 #ffffff30;\n  }\n  [data-theme-material='copper'][data-theme-texture='on'][data-theme-contrast='normal'][data-theme-surface='bevel'] {\n    --ui-scene-motif: repeating-radial-gradient(\n      circle at 100% 0,\n      transparent 0 27px,\n      var(--iw-accent) 28px 29px,\n      transparent 30px 44px\n    );\n    --ui-scene-motif-size: 192px 96px;\n    --ui-metal: var(--ui-grain-brush) 0 0 / 192px 96px repeat;\n  }\n\n  /* Fine timber grain remains broad and sparse enough for small labels. */\n  [data-theme-material='wood'][data-theme-texture='on'][data-theme-contrast='normal'][data-theme-surface='bevel'] {\n    --ui-woodgrain: var(--ui-grain-timber) 11px 3px / 192px 128px repeat;\n    --ui-panel-finish: var(--ui-woodgrain), linear-gradient(180deg, #ffffff12, transparent 6px);\n    --ui-panel-depth:\n      inset 0 3px 0 #ffffff20, inset 0 -4px 0 #00000022, inset 2px 0 0 #ffffff10,\n      0 4px 0 color-mix(in srgb, var(--iw-line) 50%, transparent), 0 8px 16px #0002;\n    --ui-active-finish:\n      var(--ui-woodgrain),\n      linear-gradient(180deg, #00000022, transparent 3px, transparent calc(100% - 2px), #ffffff20);\n    --ui-inset-finish: var(--ui-woodgrain), linear-gradient(180deg, #00000025, transparent 4px);\n    --ui-pressed-depth: inset 0 2px 0 #0005, inset 0 -1px 0 #ffffff20;\n  }\n  [data-theme-material='composite'][data-theme-texture='on'][data-theme-contrast='normal'][data-theme-surface='bevel'] {\n    --ui-panel-finish:\n      var(--ui-composite),\n      linear-gradient(135deg, #ffffff20 0 5px, transparent 5px) top left / 18px 18px no-repeat;\n    --ui-panel-depth:\n      inset 2px 0 0 color-mix(in srgb, var(--iw-accent) 28%, transparent), inset 0 1px 0 #ffffff12,\n      inset 0 -2px 0 #0004, 0 4px 0 var(--ui-shadow), 0 10px 24px #0003;\n    --ui-composite: var(--ui-grain-stone) 0 0 / 192px 128px repeat;\n    --ui-active-finish:\n      var(--ui-composite),\n      linear-gradient(180deg, #00000022, transparent 3px, transparent calc(100% - 2px), #ffffff20);\n    --ui-inset-finish: var(--ui-composite), linear-gradient(180deg, #00000030, transparent 4px);\n    --ui-pressed-depth: inset 0 2px 0 #0005, inset 0 -1px 0 #ffffff25;\n  }\n  [data-theme-material='lcd'][data-theme-texture='on'][data-theme-contrast='normal'][data-theme-surface='bevel'] {\n    --ui-panel-finish:\n      repeating-linear-gradient(0deg, transparent 0 3px, #00000003 3px 4px),\n      repeating-linear-gradient(90deg, transparent 0 3px, #00000003 3px 4px);\n    --ui-panel-depth:\n      inset 0 3px 5px #0003, inset 0 -2px 0 #ffffff35,\n      0 0 0 3px color-mix(in srgb, var(--iw-line) 25%, transparent);\n    --ui-active-finish: linear-gradient(\n      180deg,\n      #00000028,\n      transparent 3px,\n      transparent calc(100% - 2px),\n      #ffffff25\n    );\n    --ui-inset-finish:\n      repeating-linear-gradient(0deg, transparent 0 3px, #00000006 3px 4px),\n      repeating-linear-gradient(90deg, transparent 0 3px, #00000006 3px 4px);\n    --ui-pressed-depth: inset 0 2px 0 #0005, inset 0 -1px 0 #ffffff20;\n  }\n\n  /* These variants are resolved from the interface basis, including Studio\n     descendants, rather than testing the current campaign or family name. */\n  [data-theme-finish='ember-foundry'][data-theme-texture='on'][data-theme-contrast='normal'][data-theme-surface='bevel'] {\n    --ui-grain:\n      var(--ui-grain-stone) 0 0 / 192px 128px repeat,\n      var(--ui-grain-powder) 17px 11px / 192px 128px repeat;\n    --ui-panel-finish:\n      var(--ui-grain-vent) right 18px top 7px / 96px 8px no-repeat,\n      linear-gradient(90deg, var(--iw-accent), transparent) left 12px bottom 5px / 72px 2px\n        no-repeat,\n      var(--ui-grain),\n      linear-gradient(180deg, #ffffff12, transparent 6px, transparent calc(100% - 5px), #0005);\n    --ui-toolbar-finish:\n      var(--ui-grain-brush) 0 0 / 192px 96px repeat,\n      linear-gradient(180deg, #ffffff25, transparent 4px, transparent calc(100% - 4px), #0005);\n    --ui-panel-depth:\n      inset 1px 1px 0 #ffffff20, inset -2px -3px 0 #0009, 0 0 0 1px #0008, 0 5px 0 var(--ui-shadow),\n      0 16px 28px #0006;\n  }\n  [data-theme-finish='polar-relay'][data-theme-texture='on'][data-theme-contrast='normal'][data-theme-surface='bevel'] {\n    --ui-grain: var(--ui-grain-brush) 0 0 / 192px 96px repeat;\n    --ui-panel-finish:\n      var(--ui-grain-vent) right 18px top 7px / 96px 8px no-repeat,\n      linear-gradient(\n          90deg,\n          var(--iw-accent) 0 5px,\n          transparent 5px 9px,\n          var(--iw-accent) 9px 14px,\n          transparent 14px 18px,\n          var(--iw-accent) 18px 23px\n        )\n        left 14px top 8px / 23px 2px no-repeat,\n      var(--ui-grain),\n      linear-gradient(180deg, #ffffff20, transparent 8px, transparent calc(100% - 4px), #0004);\n    --ui-control-finish:\n      var(--ui-grain),\n      linear-gradient(90deg, #ffffff18, transparent 3px, transparent calc(100% - 3px), #0003),\n      linear-gradient(\n        180deg,\n        #ffffff40 0 1px,\n        #ffffff12 1px 3px,\n        transparent 5px,\n        transparent calc(100% - 3px),\n        #0005\n      );\n    --ui-panel-depth:\n      inset 1px 1px 0 #ffffff30, inset -1px -2px 0 #0008, 0 0 0 1px #0007, 0 3px 0 var(--ui-shadow),\n      0 12px 24px #0005;\n  }\n  [data-theme-finish='obsidian-reliquary'][data-theme-texture='on'][data-theme-contrast='normal'][data-theme-surface='bevel'] {\n    --ui-panel-finish:\n      var(--ui-metal),\n      linear-gradient(135deg, #ffffff20 0 8px, transparent 8px) top left / 24px 24px no-repeat,\n      linear-gradient(315deg, #0005 0 8px, transparent 8px) bottom right / 24px 24px no-repeat;\n    --ui-panel-depth:\n      inset 2px 2px 0 color-mix(in srgb, var(--iw-accent) 28%, transparent),\n      inset -3px -3px 0 #0006, 0 5px 0 var(--ui-shadow), 0 10px 20px #0005;\n    --ui-scene-motif: linear-gradient(\n      135deg,\n      transparent 42%,\n      var(--iw-accent) 43% 44%,\n      transparent 45% 52%,\n      var(--iw-accent) 53% 54%,\n      transparent 55%\n    );\n    --ui-scene-motif-size: 144px 96px;\n    --ui-metal: var(--ui-grain-stone) 23px 7px / 192px 128px repeat;\n    --ui-pressed-depth: inset 2px 2px 0 #0005, inset -1px -1px 0 #ffffff20;\n  }\n  [data-theme-finish='deep-space'][data-theme-texture='on'][data-theme-contrast='normal'][data-theme-surface='bevel'] {\n    --ui-panel-finish: var(--ui-composite), linear-gradient(180deg, #ffffff18, transparent 4px);\n    --ui-panel-depth:\n      inset 0 2px 0 #ffffff18, inset 0 -3px 0 #0007, inset 3px 0 0 #0003, 0 3px 0 var(--ui-shadow),\n      0 8px 20px #0004;\n    --ui-scene-motif:\n      linear-gradient(0deg, transparent 0 46px, var(--iw-line) 46px 48px, transparent 48px),\n      linear-gradient(90deg, transparent 0 130px, var(--iw-accent) 130px 138px, transparent 138px);\n    --ui-scene-motif-size: 192px 96px;\n    --ui-composite: var(--ui-grain-brush) 23px 11px / 192px 96px repeat;\n  }\n  [data-theme-finish='moonlit-grove'][data-theme-texture='on'][data-theme-contrast='normal'][data-theme-surface='bevel'] {\n    --ui-woodgrain: var(--ui-grain-timber) 53px 47px / 192px 128px repeat;\n    --ui-panel-finish: var(--ui-woodgrain), linear-gradient(180deg, #ffffff12, transparent 6px);\n    --ui-panel-depth:\n      inset 1px 1px 0 #ffffff18, inset -2px -3px 0 #0006, 0 4px 0 var(--ui-shadow),\n      0 12px 24px #0003;\n    --ui-scene-motif:\n      radial-gradient(\n        ellipse at 75% 22%,\n        transparent 25px,\n        var(--iw-accent) 26px 28px,\n        transparent 29px\n      ),\n      linear-gradient(120deg, transparent 64%, var(--iw-line) 65% 66%, transparent 67%);\n    --ui-scene-motif-size: 144px 96px;\n  }\n\n  /* Texture-free systems still have intentional construction. Native desktop\n     bevels and terminal double rules are geometry, not decorative texture. */\n\n  [data-theme-material='terminal'][data-theme-contrast='normal'] {\n    --ui-hover-face: var(--iw-selection);\n    --ui-hover-ink: var(--iw-on-selection);\n  }\n}\n\n/* Material state finishes: grain belongs to the material, relief belongs to the\n   interaction. Faces remain quiet; focus, text and status colors retain their\n   semantic pairings. Existing steel recipes deliberately remain untouched. */\n@media (forced-colors: none) {\n  /* Woven patches compress rather than becoming metal plates. Red embroidery\n     remains on the existing outer panel seam, never on every button. */\n  [data-theme-material='linen'][data-theme-texture='on'][data-theme-contrast='normal'][data-theme-surface='bevel'] {\n    --ui-control-finish:\n      var(--ui-weave),\n      linear-gradient(180deg, #ffffff14, transparent 3px, transparent calc(100% - 3px), #0004);\n    --ui-hover-finish:\n      var(--ui-weave),\n      linear-gradient(180deg, #ffffff20, transparent 3px, transparent calc(100% - 3px), #0004);\n    --ui-active-finish:\n      var(--ui-weave),\n      linear-gradient(180deg, #0004, transparent 3px, transparent calc(100% - 2px), #ffffff18);\n    --ui-selected-finish:\n      var(--ui-weave),\n      linear-gradient(180deg, #ffffff18, transparent 2px, transparent calc(100% - 2px), #0003);\n    --ui-action-depth: inset 1px 1px 0 #ffffff16, inset -1px -1px 0 #0006, 0 2px 2px #0005;\n    --ui-hover-depth: inset 2px 0 0 currentColor, inset 0 1px 0 #ffffff25, 0 2px 3px #0005;\n    --ui-pressed-depth: inset 0 2px 3px #0006, inset 0 -1px 0 #ffffff20;\n    --ui-selected-depth: inset 2px 0 0 currentColor, inset 0 1px 0 #ffffff20, 0 1px 1px #0005;\n    --ui-inset-depth: inset 0 2px 3px #0007, inset 0 -1px 0 #ffffff14;\n    --ui-input-hover-depth: inset 0 2px 3px #0007, inset 0 -1px 0 var(--iw-control-line);\n    --ui-thumb-finish:\n      linear-gradient(90deg, transparent 0 44%, #0003 44% 48%, #ffffff25 48% 52%, transparent 52%)\n        center / 12px 65% no-repeat,\n      var(--ui-weave);\n  }\n\n  /* Glazed ceramic has a broad clean face with a hard rim and a small catch\n     light. The cobalt lip, not scratches, explains its construction. */\n  [data-theme-material='porcelain'][data-theme-texture='on'][data-theme-contrast='normal'][data-theme-surface='bevel'] {\n    --ui-material-travel: 0 1px;\n    --ui-control-finish:\n      var(--ui-ceramic),\n      linear-gradient(\n        180deg,\n        #ffffffb0 0 1px,\n        #ffffff45 1px 3px,\n        transparent 5px,\n        transparent calc(100% - 3px),\n        #00000018\n      );\n    --ui-hover-finish:\n      var(--ui-ceramic),\n      linear-gradient(\n        180deg,\n        #ffffffd0,\n        #ffffff50 2px,\n        transparent 5px,\n        transparent calc(100% - 3px),\n        #00000018\n      );\n    --ui-active-finish:\n      var(--ui-ceramic),\n      linear-gradient(180deg, #00000025, transparent 3px, transparent calc(100% - 2px), #ffffff60);\n    --ui-selected-finish:\n      var(--ui-ceramic),\n      linear-gradient(180deg, #ffffff55, transparent 3px, transparent calc(100% - 2px), #00000020);\n    --ui-action-depth:\n      inset 1px 1px 0 #ffffffa0, inset -1px -2px 0 #00000015,\n      0 2px 0 color-mix(in srgb, var(--iw-line) 45%, transparent), 0 3px 4px #0000000c;\n    --ui-hover-depth:\n      inset 0 0 0 1px currentColor, inset 0 2px 0 #ffffffb0,\n      0 2px 0 color-mix(in srgb, var(--iw-line) 55%, transparent), 0 3px 5px #00000012;\n    --ui-selected-depth: inset 0 1px 0 #ffffff65, inset 0 -2px 0 #0003, 0 1px 0 var(--ui-shadow);\n    --ui-inset-depth: inset 0 2px 3px #00000020, inset 0 -1px 0 #ffffffb0;\n    --ui-input-hover-depth: inset 0 2px 3px #00000020, inset 0 -1px 0 var(--iw-control-line);\n    --ui-thumb-finish:\n      linear-gradient(90deg, #ffffff90 0 1px, transparent 1px),\n      linear-gradient(180deg, #ffffff85, transparent 3px, transparent calc(100% - 2px), #0003);\n  }\n\n  /* Lacquered station signage: restrained satin, crisp printed edges and paper\n     fibers. It shares no glazed ceramic glare or industrial fasteners. */\n  [data-theme-material='sakura'][data-theme-texture='on'][data-theme-contrast='normal'][data-theme-surface='bevel'] {\n    --ui-material-travel: 0 1px;\n    --ui-control-finish:\n      var(--ui-ceramic),\n      linear-gradient(180deg, #ffffff65, transparent 2px, transparent calc(100% - 2px), #00000014);\n    --ui-hover-finish:\n      var(--ui-ceramic),\n      linear-gradient(180deg, #ffffff90, transparent 3px, transparent calc(100% - 2px), #00000016);\n    --ui-selected-finish:\n      var(--ui-ceramic),\n      linear-gradient(180deg, #ffffff30, transparent 2px, transparent calc(100% - 2px), #00000022);\n    --ui-toolbar-finish: var(--ui-ceramic), linear-gradient(180deg, #ffffff50, transparent 2px);\n    --ui-action-depth:\n      inset 0 1px 0 #ffffff80, inset 0 -1px 0 #00000016,\n      0 2px 0 color-mix(in srgb, var(--iw-line) 40%, transparent);\n    --ui-hover-depth:\n      inset 0 -2px 0 currentColor, inset 0 1px 0 #ffffff90,\n      0 2px 0 color-mix(in srgb, var(--iw-line) 45%, transparent);\n    --ui-pressed-depth: inset 0 2px 2px #00000025, inset 0 -1px 0 #ffffff50;\n    --ui-selected-depth: inset 0 -2px 0 currentColor, inset 0 1px 0 #ffffff35;\n    --ui-inset-depth: inset 0 1px 2px #00000024, inset 0 -1px 0 #ffffff70;\n    --ui-input-hover-depth: inset 0 1px 2px #00000024, inset 0 -1px 0 var(--iw-control-line);\n    --ui-thumb-finish: linear-gradient(\n      180deg,\n      #ffffff55,\n      transparent 2px,\n      transparent calc(100% - 2px),\n      #00000022\n    );\n  }\n\n  /* Enamel instrument keys sit in a brass surround. Edge highlights stop after\n     four pixels; there is no bright glaze crossing a label. */\n  [data-theme-material='brass'][data-theme-texture='on'][data-theme-contrast='normal'][data-theme-surface='bevel'] {\n    --ui-material-travel: 0 1px;\n    --ui-control-finish:\n      var(--ui-metal),\n      linear-gradient(\n        180deg,\n        #ffffff35 0 1px,\n        #ffffff14 1px 3px,\n        transparent 5px,\n        transparent calc(100% - 4px),\n        #0005\n      );\n    --ui-hover-finish:\n      var(--ui-metal),\n      linear-gradient(180deg, #ffffff50, transparent 4px, transparent calc(100% - 3px), #0005);\n    --ui-selected-finish:\n      var(--ui-metal),\n      linear-gradient(180deg, #ffffff45, transparent 3px, transparent calc(100% - 3px), #0004);\n    --ui-toolbar-finish:\n      var(--ui-metal),\n      linear-gradient(180deg, #ffffff20, transparent 3px, transparent calc(100% - 2px), #0004);\n    --ui-action-depth:\n      inset 1px 1px 0 #ffffff22, inset -1px -2px 0 #0006, 0 2px 0 var(--ui-shadow), 0 3px 3px #0003;\n    --ui-hover-depth:\n      inset 0 2px 0 currentColor, inset 1px 0 0 #ffffff20, inset 0 -2px 0 #0006,\n      0 2px 0 var(--ui-shadow);\n    --ui-selected-depth: inset 0 1px 0 #ffffff50, inset 0 -2px 0 #0004, 0 1px 0 var(--ui-shadow);\n    --ui-inset-depth: inset 0 3px 3px #0007, inset 0 -1px 0 #ffffff20;\n    --ui-input-hover-depth: inset 0 3px 3px #0007, inset 0 -1px 0 var(--iw-control-line);\n    --ui-thumb-finish:\n      linear-gradient(180deg, transparent 0 40%, #0005 40% 46%, #ffffff40 46% 52%, transparent 52%)\n        center / 65% 12px no-repeat,\n      linear-gradient(90deg, #ffffff45, transparent 3px, transparent calc(100% - 2px), #0004);\n  }\n\n  /* Brushed observatory controls have a narrow metal cap and a darker foot.\n     Directional grain is restrained and coherent with the instrument fascia. */\n  [data-theme-material='copper'][data-theme-texture='on'][data-theme-contrast='normal'][data-theme-surface='bevel'] {\n    --ui-material-travel: 0 1px;\n    --ui-control-finish:\n      var(--ui-metal),\n      linear-gradient(\n        180deg,\n        #ffffff45 0 1px,\n        #ffffff16 1px 3px,\n        transparent 5px,\n        transparent calc(100% - 4px),\n        #0005\n      );\n    --ui-hover-finish:\n      var(--ui-metal),\n      linear-gradient(\n        180deg,\n        #ffffff60 0 1px,\n        #ffffff25 1px 3px,\n        transparent 5px,\n        transparent calc(100% - 4px),\n        #0005\n      );\n    --ui-selected-finish:\n      var(--ui-metal),\n      linear-gradient(180deg, #ffffff45, transparent 3px, transparent calc(100% - 3px), #0004);\n    --ui-toolbar-finish:\n      var(--ui-metal),\n      linear-gradient(180deg, #ffffff20, transparent 3px, transparent calc(100% - 3px), #0004);\n    --ui-action-depth: inset 1px 1px 0 #ffffff28, inset -1px -2px 0 #0007, 0 3px 0 var(--ui-shadow);\n    --ui-hover-depth:\n      inset 0 1px 0 #ffffff60, inset 0 -2px 0 currentColor, 0 3px 0 var(--ui-shadow);\n    --ui-pressed-depth: inset 0 3px 3px #0007, inset 0 -1px 0 #ffffff35, 0 1px 0 #0005;\n    --ui-selected-depth: inset 0 1px 0 #ffffff45, inset 0 -2px 0 #0005, 0 1px 0 var(--ui-shadow);\n    --ui-inset-depth: inset 0 3px 4px #0007, inset 0 -1px 0 #ffffff20;\n    --ui-input-hover-depth: inset 0 3px 4px #0007, inset 0 -1px 0 var(--iw-control-line);\n    --ui-thumb-finish:\n      repeating-linear-gradient(90deg, transparent 0 3px, #0005 3px 4px, #ffffff35 4px 5px) center /\n        15px 55% no-repeat,\n      linear-gradient(180deg, #ffffff60, transparent 3px, transparent calc(100% - 2px), #0004);\n  }\n\n  /* Wood uses planed edges and quiet long fibers; a selected key feels like a\n     stained inlay rather than a metal switch. */\n  [data-theme-material='wood'][data-theme-texture='on'][data-theme-contrast='normal'][data-theme-surface='bevel'] {\n    --ui-material-travel: 0 1px;\n    --ui-control-finish:\n      var(--ui-woodgrain),\n      linear-gradient(180deg, #ffffff40, transparent 3px, transparent calc(100% - 3px), #0000002a);\n    --ui-hover-finish:\n      var(--ui-woodgrain),\n      linear-gradient(180deg, #ffffff60, transparent 3px, transparent calc(100% - 3px), #0000002a);\n    --ui-selected-finish:\n      var(--ui-woodgrain),\n      linear-gradient(180deg, #00000022, transparent 2px, transparent calc(100% - 2px), #ffffff28);\n    --ui-toolbar-finish:\n      var(--ui-woodgrain),\n      linear-gradient(180deg, #ffffff30, transparent 3px, transparent calc(100% - 3px), #00000020);\n    --ui-action-depth:\n      inset 1px 1px 0 #ffffff35, inset -1px -2px 0 #00000030,\n      0 3px 0 color-mix(in srgb, var(--iw-line) 60%, transparent);\n    --ui-hover-depth:\n      inset 0 2px 0 currentColor, inset 0 -2px 0 #00000030,\n      0 3px 0 color-mix(in srgb, var(--iw-line) 70%, transparent);\n    --ui-selected-depth: inset 0 2px 2px #0004, inset 0 -1px 0 #ffffff35, 0 1px 0 var(--ui-shadow);\n    --ui-inset-depth: inset 0 2px 3px #00000035, inset 0 -1px 0 #ffffff50;\n    --ui-input-hover-depth: inset 0 2px 3px #00000035, inset 0 -1px 0 var(--iw-control-line);\n    --ui-thumb-finish:\n      var(--ui-woodgrain),\n      linear-gradient(180deg, #ffffff45, transparent 3px, transparent calc(100% - 2px), #0004);\n  }\n\n  /* Ruins use honed stone and small luminous edge inlays. Glow is an interaction\n     response and never sits behind type or repeats across every resting key. */\n  [data-theme-material='composite'][data-theme-texture='on'][data-theme-contrast='normal'][data-theme-surface='bevel'] {\n    --ui-material-travel: 0 1px;\n    --ui-control-finish:\n      var(--ui-composite),\n      linear-gradient(180deg, #ffffff25 0 1px, transparent 4px, transparent calc(100% - 3px), #0005);\n    --ui-hover-finish:\n      var(--ui-composite),\n      linear-gradient(180deg, #ffffff40, transparent 3px, transparent calc(100% - 3px), #0005);\n    --ui-selected-finish:\n      var(--ui-composite),\n      linear-gradient(180deg, #ffffff30, transparent 2px, transparent calc(100% - 2px), #0004);\n    --ui-toolbar-finish:\n      var(--ui-composite),\n      linear-gradient(180deg, #ffffff1a, transparent 3px, transparent calc(100% - 2px), #0004);\n    --ui-action-depth: inset 1px 1px 0 #ffffff1c, inset -1px -2px 0 #0006, 0 2px 0 var(--ui-shadow);\n    --ui-hover-depth:\n      inset 0 -2px 0 currentColor, inset 0 1px 0 #ffffff30, 0 2px 0 var(--ui-shadow),\n      0 2px 7px color-mix(in srgb, currentColor 12%, transparent);\n    --ui-selected-depth: inset 0 1px 0 #ffffff40, inset 0 -2px 0 #0004, 0 1px 0 var(--ui-shadow);\n    --ui-inset-depth: inset 0 2px 3px #0007, inset 0 -1px 0 #ffffff1c;\n    --ui-input-hover-depth: inset 0 2px 3px #0007, inset 0 -1px 0 var(--iw-control-line);\n    --ui-thumb-finish:\n      linear-gradient(180deg, #ffffff50, transparent 2px, transparent calc(100% - 2px), #0004),\n      linear-gradient(90deg, transparent 0 40%, #0004 40% 50%, transparent 50%) center / 10px 60%\n        no-repeat;\n  }\n\n  /* LCD controls are monochrome molded keys; the display pixel matrix stays\n     inside the recessed readout. No grain or fake bloom on text. */\n  [data-theme-material='lcd'][data-theme-texture='on'][data-theme-contrast='normal'][data-theme-surface='bevel'] {\n    --ui-material-travel: 0 1px;\n    --ui-control-finish: linear-gradient(\n      180deg,\n      #ffffff35,\n      transparent 2px,\n      transparent calc(100% - 3px),\n      #00000022\n    );\n    --ui-hover-finish: linear-gradient(\n      180deg,\n      #ffffff55,\n      transparent 2px,\n      transparent calc(100% - 3px),\n      #00000022\n    );\n    --ui-selected-finish: linear-gradient(\n      180deg,\n      #00000022,\n      transparent 2px,\n      transparent calc(100% - 2px),\n      #ffffff25\n    );\n    --ui-toolbar-finish: linear-gradient(\n      180deg,\n      #ffffff30,\n      transparent 2px,\n      transparent calc(100% - 2px),\n      #00000018\n    );\n    --ui-action-depth:\n      inset 1px 1px 0 #ffffff45, inset -1px -2px 0 #00000035,\n      0 2px 0 color-mix(in srgb, var(--iw-line) 70%, transparent);\n    --ui-hover-depth:\n      inset 0 0 0 1px currentColor, inset 0 1px 0 #ffffff45,\n      0 2px 0 color-mix(in srgb, var(--iw-line) 70%, transparent);\n    --ui-selected-depth: inset 0 2px 2px #0004, inset 0 -1px 0 #ffffff35;\n    --ui-inset-depth: inset 0 2px 3px #00000040, inset 0 -1px 0 #ffffff40;\n    --ui-input-hover-depth: inset 0 2px 3px #00000040, inset 0 -1px 0 var(--iw-control-line);\n    --ui-thumb-finish:\n      linear-gradient(180deg, #ffffff50, transparent 2px, transparent calc(100% - 2px), #0003),\n      linear-gradient(90deg, transparent 0 42%, #0004 42% 52%, transparent 52%) center / 10px 65%\n        no-repeat;\n  }\n\n  /* The variants inherit the full material contract but keep their own finish:\n     carved obsidian, anodized command consoles, and dark waxed timber. */\n  [data-theme-finish='obsidian-reliquary'][data-theme-texture='on'][data-theme-contrast='normal'][data-theme-surface='bevel'] {\n    --ui-control-finish:\n      var(--ui-metal), linear-gradient(135deg, #ffffff18 0 3px, transparent 3px),\n      linear-gradient(180deg, #ffffff20 0 2px, transparent 2px, transparent calc(100% - 3px), #0005);\n    --ui-hover-finish:\n      var(--ui-metal), linear-gradient(135deg, #ffffff30 0 3px, transparent 3px),\n      linear-gradient(180deg, #ffffff30 0 2px, transparent 3px, transparent calc(100% - 3px), #0005);\n    --ui-active-finish:\n      var(--ui-metal), linear-gradient(135deg, #0004 0 3px, transparent 3px),\n      linear-gradient(180deg, #0005, transparent 3px, transparent calc(100% - 2px), #ffffff25);\n    --ui-selected-finish:\n      var(--ui-metal),\n      linear-gradient(180deg, #ffffff30 0 2px, transparent 2px, transparent calc(100% - 2px), #0004);\n    --ui-toolbar-finish:\n      var(--ui-metal),\n      linear-gradient(180deg, #ffffff18 0 2px, transparent 2px, transparent calc(100% - 3px), #0005);\n    --ui-action-depth: inset 2px 2px 0 #ffffff18, inset -2px -2px 0 #0006, 0 3px 0 var(--ui-shadow);\n    --ui-hover-depth:\n      inset 2px 2px 0 currentColor, inset -2px -2px 0 #0007, 0 3px 0 var(--ui-shadow);\n    --ui-selected-depth:\n      inset 2px 2px 0 #ffffff35, inset -2px -2px 0 #0005, 0 1px 0 var(--ui-shadow);\n    --ui-thumb-finish:\n      linear-gradient(135deg, #ffffff40 0 3px, transparent 3px),\n      linear-gradient(180deg, #ffffff25, transparent 2px, transparent calc(100% - 2px), #0005);\n  }\n  [data-theme-finish='deep-space'][data-theme-texture='on'][data-theme-contrast='normal'][data-theme-surface='bevel'] {\n    --ui-control-finish:\n      var(--ui-composite),\n      linear-gradient(180deg, #ffffff30 0 1px, transparent 3px, transparent calc(100% - 3px), #0006);\n    --ui-hover-finish:\n      var(--ui-composite),\n      linear-gradient(180deg, #ffffff45, transparent 3px, transparent calc(100% - 3px), #0006);\n    --ui-action-depth: inset 0 1px 0 #ffffff25, inset 0 -2px 0 #0007, 0 2px 0 var(--ui-shadow);\n    --ui-hover-depth:\n      inset 0 -2px 0 currentColor, inset 0 1px 0 #ffffff40, 0 2px 0 var(--ui-shadow);\n    --ui-selected-depth: inset 0 1px 0 #ffffff40, inset 0 -2px 0 #0005, 0 1px 0 var(--ui-shadow);\n    --ui-thumb-finish:\n      linear-gradient(90deg, transparent 0 40%, #0006 40% 48%, #ffffff40 48% 56%, transparent 56%)\n        center / 12px 65% no-repeat,\n      linear-gradient(180deg, #ffffff55, transparent 2px, transparent calc(100% - 2px), #0005);\n  }\n  [data-theme-finish='moonlit-grove'][data-theme-texture='on'][data-theme-contrast='normal'][data-theme-surface='bevel'] {\n    --ui-control-finish:\n      var(--ui-woodgrain),\n      linear-gradient(180deg, #ffffff25, transparent 3px, transparent calc(100% - 3px), #0005);\n    --ui-hover-finish:\n      var(--ui-woodgrain),\n      linear-gradient(180deg, #ffffff40, transparent 3px, transparent calc(100% - 3px), #0005);\n    --ui-action-depth: inset 1px 1px 0 #ffffff22, inset -1px -2px 0 #0006, 0 3px 0 var(--ui-shadow);\n    --ui-hover-depth: inset 0 2px 0 currentColor, inset 0 -2px 0 #0006, 0 3px 0 var(--ui-shadow);\n    --ui-selected-depth: inset 0 2px 2px #0005, inset 0 -1px 0 #ffffff30, 0 1px 0 var(--ui-shadow);\n    --ui-inset-depth: inset 0 2px 3px #0006, inset 0 -1px 0 #ffffff25;\n    --ui-input-hover-depth: inset 0 2px 3px #0006, inset 0 -1px 0 var(--iw-control-line);\n  }\n\n  /* Texture-free systems have structural states. These are not decoration and\n     remain when decorative detail is Off; high contrast has its own painter. */\n  [data-theme-material='classic'][data-theme-contrast='normal'][data-theme-surface='bevel'] {\n    --ui-material-travel: 0 1px;\n    --ui-control-finish: none;\n    --ui-hover-finish: none;\n    --ui-active-finish: none;\n    --ui-selected-finish: none;\n    --ui-toolbar-finish: none;\n    --ui-thumb-finish: none;\n    --ui-panel-depth:\n      inset 1px 1px #fff, inset 2px 2px #dfdfdf, inset -1px -1px #000, inset -2px -2px #808080,\n      2px 2px 0 #0005;\n    --ui-action-depth:\n      inset 1px 1px #fff, inset 2px 2px #dfdfdf, inset -1px -1px #404040, inset -2px -2px #808080;\n    --ui-hover-depth: var(--ui-action-depth);\n    --ui-pressed-depth: inset 1px 1px #404040, inset 2px 2px #808080, inset -1px -1px #fff;\n    --ui-selected-depth: var(--ui-pressed-depth);\n    --ui-inset-depth: inset 1px 1px #808080, inset 2px 2px #404040, inset -1px -1px #fff;\n    --ui-input-hover-depth: var(--ui-inset-depth);\n    --ui-gallery-depth: var(--ui-action-depth);\n  }\n  [data-theme-material='terminal'][data-theme-contrast='normal'] {\n    --ui-control-finish: none;\n    --ui-hover-finish: none;\n    --ui-active-finish: none;\n    --ui-selected-finish: none;\n    --ui-inset-finish: none;\n    --ui-toolbar-finish: none;\n    --ui-thumb-finish: none;\n    --ui-panel-depth: inset 0 0 0 1px var(--iw-panel), inset 0 0 0 2px var(--iw-control-line);\n    --ui-action-depth: 0 0 0 0 transparent;\n    --ui-hover-depth: inset 2px 0 currentColor, inset -2px 0 currentColor;\n    --ui-pressed-depth: inset 0 0 0 1px currentColor;\n    --ui-selected-depth: inset 2px 0 currentColor, inset -2px 0 currentColor;\n    --ui-inset-depth: inset 0 -1px 0 var(--iw-control-line);\n    --ui-input-hover-depth: inset 0 -2px 0 var(--iw-control-line);\n    --ui-gallery-depth: none;\n  }\n  [data-theme-material='legacy'][data-theme-styled='true'][data-theme-contrast='normal'][data-theme-surface='bevel'] {\n    --ui-panel-finish: none;\n    --ui-control-finish: none;\n    --ui-hover-finish: none;\n    --ui-active-finish: none;\n    --ui-selected-finish: none;\n    --ui-toolbar-finish: none;\n    --ui-thumb-finish: none;\n    --ui-panel-depth:\n      inset 0 1px 0 #ffffff14, inset 0 -2px 0 #0006, 0 3px 0 var(--ui-shadow), 0 8px 16px #0003;\n    --ui-action-depth: inset 0 1px 0 #ffffff20, inset 0 -2px 0 #0005, 0 2px 0 var(--ui-shadow);\n    --ui-hover-depth:\n      inset 0 -2px 0 currentColor, inset 0 1px 0 #ffffff30, 0 2px 0 var(--ui-shadow);\n    --ui-pressed-depth: inset 0 2px 2px #0006, inset 0 -1px 0 #ffffff25;\n    --ui-selected-depth: inset 2px 0 currentColor, inset 0 -2px 0 #0004;\n    --ui-inset-depth: inset 0 2px 3px #0006, inset 0 -1px 0 #ffffff20;\n    --ui-input-hover-depth: inset 0 2px 3px #0006, inset 0 -1px 0 var(--iw-control-line);\n    --ui-gallery-depth: var(--ui-action-depth);\n  }\n}\n\n/* Mechanical travel is an input response, never an idle animation. Both\n   motion preferences opt in; nested flat/HC specimens keep their own reset. */\n@media (prefers-reduced-motion: no-preference) and (forced-colors: none) {\n  [data-theme-texture='on'][data-theme-contrast='normal'][data-theme-surface='bevel'][data-theme-motion='full'] {\n    --ui-press-travel: var(--ui-material-travel);\n  }\n  [data-theme-material='steel'][data-theme-texture='on'][data-theme-contrast='normal'][data-theme-surface='bevel'][data-theme-motion='full'] {\n    --ui-press-travel: 0 2px;\n  }\n}\n";
 // END SHARED SIM ASSETS
 
 /** Observer-only, bounded input history. Coordinates stay normalized and current dots stay host-owned. */
@@ -3363,2084 +3627,2312 @@ export function paintStickDirections(element, { horizontal, vertical, locale = '
 // BEGIN GENERATED ACADEMY SHARED AUDIO
 // Generated by scripts/refresh-fpv-academy-audio.mjs; edit canonical audio sources instead.
 // Existing package slot, compact CC0 reactions, no gameplay clocks or simulation state.
-import * as academyAudioExternal0 from '../../game/i18n/index.mjs';
-export const createSimFlightAudio = (() => {
-  const sourceHashes = Object.freeze({
-    'optional-practice/civilian-fpv/world-audio.mjs':
-      '0682921ac27879c76a3b63666d9685ede0844db7d616109df31b6ade6b7301b7',
-    'game/ui/gameplay-audio-output.mjs':
-      '9aa56a400d417db362a366a74790c7703b3f2bcde720ef0cc8944dea8a42ebd2',
-    'game/gameplay-audio-preferences.mjs':
-      'e7e6f8ae31d760879d97dddf9bfc7fe27b38a48888c60bc9028fa2232fb4eb20',
-    'game/ui/audio-output.mjs': '66047e07247684f9f3069f9561898f33b5566d0d997e950adac17c0eed0ff790',
-    'game/ui/human-reaction-policy.mjs':
-      'dd5992bca561093f9a8c31c4e2cd51ddb239e97719df8d2567f27e4330f7b731',
-    'game/ui/destruction-audio.mjs':
-      'b9a52dbf64e751536a171a0e0d26223bd01e3e8d3fee5c0dffb4556b8775d85b',
-    'game/audio/human-reactions/portable.mjs':
-      '2f2654e7c6d2bb83d9f1b9e4c139ba348f205a70350328816eb0b3f8161fa696',
-    'game/ui/destruction-level.mjs':
-      'ffbdf16469259f5ef6be0197aa8efd458038106d39cae6b25a57231aff790f61',
-    'game/audio/dialogue-mix.mjs':
-      '43ffa5b261e585e59b515fab19d1b6d0ccf636152ca6107602dbdb9143ddb00a',
-    'game/ui/audio-master.mjs': '6bf14bc5268c0eff8f38c21c819f398917712fdc2607c33977ac873111d1dca8',
-    'game/audio-preferences.mjs':
-      '9212831a3524c9e1ebe8c595783f9f53a112e02e3d51280d775ac103b94a9239',
-    'game/ui/encounter-audio.mjs':
-      'ad58592952c55444713911a27df525b2c2d1f2a47c8a909a96597fda85e46dbd',
-    'game/ui/world-ambience.mjs':
-      '95b506a5cd1c34323a2bed5be3444be55ea38ddfc6036903757cccd3c301b260',
-    'game/ui/movement-audio.mjs':
-      '685d8e458401354028a2cacda0c7b1009b3c1e480a08d4cafce46d8f98b69020',
-    'game/ui/dialogue-channel.mjs':
-      'f4839f3a1634189a03eed6a3096dc595dfc88ee6437277ee82d78de05c300142',
-  });
-  const modules = Object.create(null);
-  modules['game/gameplay-audio-preferences.mjs'] = (() => {
-    // Separate from the strict legacy mute/volume record: older pages cannot erase
-    // this new choice when they save their existing audio controls.
-    const GAMEPLAY_AUDIO_KEY = 'revealline.gameplay-audio-output.v1';
-    const format = 'GameplayAudioOutputV1';
-    const observers = new WeakMap();
+import*as academyAudioExternal0 from'../../game/audio/human-reactions/portable.mjs';
+import*as academyAudioExternal1 from'../../game/i18n/index.mjs';
+export const createSimFlightAudio=(()=>{
+const sourceHashes=Object.freeze({
+'optional-practice/civilian-fpv/world-audio.mjs':
+'d922fc283424b7460bf477db7970fa0c8a1aa578c2d481e505c8bd7282eba7be',
+'game/ui/gameplay-audio-output.mjs':
+'9aa56a400d417db362a366a74790c7703b3f2bcde720ef0cc8944dea8a42ebd2',
+'game/gameplay-audio-preferences.mjs':
+'e7e6f8ae31d760879d97dddf9bfc7fe27b38a48888c60bc9028fa2232fb4eb20',
+'game/ui/audio-output.mjs':'66047e07247684f9f3069f9561898f33b5566d0d997e950adac17c0eed0ff790',
+'game/ui/human-reaction-policy.mjs':
+'dd5992bca561093f9a8c31c4e2cd51ddb239e97719df8d2567f27e4330f7b731',
+'game/ui/destruction-audio.mjs':
+'b9a52dbf64e751536a171a0e0d26223bd01e3e8d3fee5c0dffb4556b8775d85b',
+'game/ui/destruction-level.mjs':
+'ffbdf16469259f5ef6be0197aa8efd458038106d39cae6b25a57231aff790f61',
+'game/audio/dialogue-mix.mjs':
+'43ffa5b261e585e59b515fab19d1b6d0ccf636152ca6107602dbdb9143ddb00a',
+'game/ui/audio-master.mjs':'6bf14bc5268c0eff8f38c21c819f398917712fdc2607c33977ac873111d1dca8',
+'game/audio-preferences.mjs':
+'8baa3a25c6a80981f44e833ba8cb2e10d297f90b51684994d4e8328a7e846a71',
+'game/ui/encounter-audio.mjs':
+'c507ea003207fd28b0783fe1d47a80daf24261b1fbece181e8829b081003bbe9',
+'game/ui/world-ambience.mjs':
+'95b506a5cd1c34323a2bed5be3444be55ea38ddfc6036903757cccd3c301b260',
+'game/ui/movement-audio.mjs':
+'685d8e458401354028a2cacda0c7b1009b3c1e480a08d4cafce46d8f98b69020',
+'game/ui/dialogue-channel.mjs':
+'f4839f3a1634189a03eed6a3096dc595dfc88ee6437277ee82d78de05c300142',
+});
+const modules=Object.create(null);
+modules['game/gameplay-audio-preferences.mjs']=(()=>{
+// Separate from the strict legacy mute/volume record: older pages cannot erase
+// this new choice when they save their existing audio controls.
+const GAMEPLAY_AUDIO_KEY='revealline.gameplay-audio-output.v1';
+const format='GameplayAudioOutputV1';
+const observers=new WeakMap();
 
-    function decode(raw) {
-      if (raw === null) return false;
-      if (typeof raw !== 'string' || raw.length > 256) throw new Error('preserved');
-      const value = JSON.parse(raw);
-      if (
-        !value ||
-        typeof value !== 'object' ||
-        Array.isArray(value) ||
-        Object.keys(value).length !== 2 ||
-        value.format !== format ||
-        typeof value.monoEffects !== 'boolean'
-      )
-        throw new Error('preserved');
-      return value.monoEffects;
-    }
+function decode(raw){
+if(raw===null)return false;
+if(typeof raw!=='string'||raw.length>256)throw new Error('preserved');
+const value=JSON.parse(raw);
+if(
+!value||
+typeof value!=='object'||
+Array.isArray(value)||
+Object.keys(value).length!==2||
+value.format!==format||
+typeof value.monoEffects!=='boolean'
+)
+throw new Error('preserved');
+return value.monoEffects;
+}
 
-    /** One output choice, no playback or profile writes. Failed intent survives
+/** One output choice, no playback or profile writes. Failed intent survives
      * peer/storage events; only explicit choice or Retry attempts persistence. */
-    function createGameplayAudioPreferences({
-      getStorage = () => globalThis.localStorage,
-      window: target = globalThis.window ?? globalThis,
-    } = {}) {
-      let monoEffects = false,
-        durable = true,
-        reason = '',
-        pending = false,
-        disposed = false,
-        revision = 0;
-      const listeners = new Set();
-      const pageKey = target && ['object', 'function'].includes(typeof target) ? target : null;
-      const peers = (pageKey && observers.get(pageKey)) ?? new Set();
-      if (pageKey) observers.set(pageKey, peers);
-      const snapshot = () => ({ monoEffects, durable, reason, pending });
-      const notify = () => {
-        for (const listener of [...listeners]) if (listeners.has(listener)) listener(snapshot());
-        return snapshot();
-      };
-      const read = () => {
-        const storage = getStorage();
-        if (!storage?.getItem || !storage?.setItem) throw new Error('unavailable');
-        const raw = storage.getItem(GAMEPLAY_AUDIO_KEY);
-        let value;
-        try {
-          value = decode(raw);
-        } catch {
-          throw new Error('preserved');
-        }
-        return { storage, raw, value };
-      };
-      const failure = (error) => {
-        durable = false;
-        reason = ['preserved', 'unconfirmed', 'unavailable'].includes(error?.message)
-          ? error.message
-          : error?.name === 'QuotaExceededError'
-            ? 'full'
-            : 'blocked';
-      };
-      const load = () => {
-        const token = revision;
-        try {
-          const record = read();
-          if (disposed || revision !== token || pending) return;
-          monoEffects = record.value;
-          durable = true;
-          reason = '';
-        } catch (error) {
-          if (!disposed && revision === token && !pending) failure(error);
-        }
-      };
-      load();
-      const receivePage = (state) => {
-        if (disposed || pending) return;
-        revision++;
-        ({ monoEffects, durable, reason, pending } = state);
-        notify();
-      };
-      peers.add(receivePage);
-      const save = () => {
-        if (disposed || !pending) return snapshot();
-        const token = revision;
-        try {
-          const { storage } = read();
-          if (disposed || revision !== token) return snapshot();
-          const raw = JSON.stringify({ format, monoEffects });
-          storage.setItem(GAMEPLAY_AUDIO_KEY, raw);
-          if (disposed) return snapshot();
-          if (revision !== token) {
-            // A reentrant newer choice must not inherit this older write's success.
-            if (read().value !== monoEffects) {
-              pending = true;
-              failure(new Error('unconfirmed'));
-              notify();
-            }
-            return snapshot();
-          }
-          if (storage.getItem(GAMEPLAY_AUDIO_KEY) !== raw) throw new Error('unconfirmed');
-          if (disposed || revision !== token) return snapshot();
-          durable = true;
-          pending = false;
-          reason = '';
-        } catch (error) {
-          if (!disposed && revision === token) failure(error);
-        }
-        if (disposed || revision !== token) return snapshot();
-        const result = notify();
-        if (!disposed && revision === token)
-          for (const receive of [...peers]) if (receive !== receivePage) receive(result);
-        return snapshot();
-      };
-      const receive = (event) => {
-        if (disposed || pending) return;
-        if (event.type === 'pageshow' && event.persisted !== true) return;
-        if (event.type === 'storage') {
-          if (event.key !== null && event.key !== GAMEPLAY_AUDIO_KEY) return;
-          try {
-            const current = read();
-            if (
-              current.storage !== event.storageArea ||
-              (event.key === null ? current.raw !== null : current.raw !== event.newValue)
-            )
-              return;
-          } catch {
-            return;
-          }
-        }
-        load();
-        if (!disposed) notify();
-      };
-      target?.addEventListener?.('storage', receive);
-      target?.addEventListener?.('pageshow', receive);
-      return Object.freeze({
-        snapshot,
-        choose(value) {
-          if (disposed) return snapshot();
-          if (typeof value !== 'boolean') throw new TypeError('Mono effects must be a boolean.');
-          revision++;
-          monoEffects = value;
-          pending = true;
-          return save();
-        },
-        retry: save,
-        subscribe(listener) {
-          if (disposed) return () => {};
-          listeners.add(listener);
-          listener(snapshot());
-          return () => listeners.delete(listener);
-        },
-        dispose() {
-          disposed = true;
-          revision++;
-          listeners.clear();
-          peers.delete(receivePage);
-          if (pageKey && !peers.size) observers.delete(pageKey);
-          target?.removeEventListener?.('storage', receive);
-          target?.removeEventListener?.('pageshow', receive);
-        },
-      });
-    }
+function createGameplayAudioPreferences({
+getStorage=()=>globalThis.localStorage,
+window:target=globalThis.window??globalThis,
+}={}){
+let monoEffects=false,
+durable=true,
+reason='',
+pending=false,
+disposed=false,
+revision=0;
+const listeners=new Set();
+const pageKey=target&&['object','function'].includes(typeof target)?target:null;
+const peers=(pageKey&&observers.get(pageKey))??new Set();
+if(pageKey)observers.set(pageKey,peers);
+const snapshot=()=>({monoEffects,durable,reason,pending});
+const notify=()=>{
+for(const listener of[...listeners])if(listeners.has(listener))listener(snapshot());
+return snapshot();
+};
+const read=()=>{
+const storage=getStorage();
+if(!storage?.getItem|| !storage?.setItem)throw new Error('unavailable');
+const raw=storage.getItem(GAMEPLAY_AUDIO_KEY);
+let value;
+try{
+value=decode(raw);
+}catch{
+throw new Error('preserved');
+}
+return{storage,raw,value};
+};
+const failure=(error)=>{
+durable=false;
+reason=['preserved','unconfirmed','unavailable'].includes(error?.message)
+?error.message
+:error?.name==='QuotaExceededError'
+?'full'
+:'blocked';
+};
+const load=()=>{
+const token=revision;
+try{
+const record=read();
+if(disposed||revision!==token||pending)return;
+monoEffects=record.value;
+durable=true;
+reason='';
+}catch(error){
+if(!disposed&&revision===token&& !pending)failure(error);
+}
+};
+load();
+const receivePage=(state)=>{
+if(disposed||pending)return;
+revision++;
+({monoEffects,durable,reason,pending}=state);
+notify();
+};
+peers.add(receivePage);
+const save=()=>{
+if(disposed|| !pending)return snapshot();
+const token=revision;
+try{
+const{storage}=read();
+if(disposed||revision!==token)return snapshot();
+const raw=JSON.stringify({format,monoEffects});
+storage.setItem(GAMEPLAY_AUDIO_KEY,raw);
+if(disposed)return snapshot();
+if(revision!==token){
+// A reentrant newer choice must not inherit this older write's success.
+if(read().value!==monoEffects){
+pending=true;
+failure(new Error('unconfirmed'));
+notify();
+}
+return snapshot();
+}
+if(storage.getItem(GAMEPLAY_AUDIO_KEY)!==raw)throw new Error('unconfirmed');
+if(disposed||revision!==token)return snapshot();
+durable=true;
+pending=false;
+reason='';
+}catch(error){
+if(!disposed&&revision===token)failure(error);
+}
+if(disposed||revision!==token)return snapshot();
+const result=notify();
+if(!disposed&&revision===token)
+for(const receive of[...peers])if(receive!==receivePage)receive(result);
+return snapshot();
+};
+const receive=(event)=>{
+if(disposed||pending)return;
+if(event.type==='pageshow'&&event.persisted!==true)return;
+if(event.type==='storage'){
+if(event.key!==null&&event.key!==GAMEPLAY_AUDIO_KEY)return;
+try{
+const current=read();
+if(
+current.storage!==event.storageArea||
+(event.key===null?current.raw!==null:current.raw!==event.newValue)
+)
+return;
+}catch{
+return;
+}
+}
+load();
+if(!disposed)notify();
+};
+target?.addEventListener?.('storage',receive);
+target?.addEventListener?.('pageshow',receive);
+return Object.freeze({
+snapshot,
+choose(value){
+if(disposed)return snapshot();
+if(typeof value!=='boolean')throw new TypeError('Mono effects must be a boolean.');
+revision++;
+monoEffects=value;
+pending=true;
+return save();
+},
+retry:save,
+subscribe(listener){
+if(disposed)return()=>{};
+listeners.add(listener);
+listener(snapshot());
+return()=>listeners.delete(listener);
+},
+dispose(){
+disposed=true;
+revision++;
+listeners.clear();
+peers.delete(receivePage);
+if(pageKey&& !peers.size)observers.delete(pageKey);
+target?.removeEventListener?.('storage',receive);
+target?.removeEventListener?.('pageshow',receive);
+},
+});
+}
 
-    return {
-      GAMEPLAY_AUDIO_KEY: GAMEPLAY_AUDIO_KEY,
-      createGameplayAudioPreferences: createGameplayAudioPreferences,
-    };
-  })();
-  modules['game/ui/audio-output.mjs'] = (() => {
-    /** Shared output topology for Capture, Snake and native flight presentation.
+return{
+GAMEPLAY_AUDIO_KEY:GAMEPLAY_AUDIO_KEY,
+createGameplayAudioPreferences:createGameplayAudioPreferences,
+};
+})();
+modules['game/ui/audio-output.mjs']=(()=>{
+/** Shared output topology for Capture, Snake and native flight presentation.
      * A page owns one context. Construction is called only from its gesture owner. */
-    function createGameAudioContext(host = globalThis) {
-      const Context = host.AudioContext ?? host.webkitAudioContext;
-      return Context ? new Context({ latencyHint: 'interactive' }) : null;
-    }
+function createGameAudioContext(host=globalThis){
+const Context=host.AudioContext??host.webkitAudioContext;
+return Context?new Context({latencyHint:'interactive'}):null;
+}
 
-    function createGameAudioOutput(context) {
-      const output = {};
-      for (const key of [
-        'master',
-        'gameplayBus',
-        'musicBus',
-        'sfxBus',
-        'menuBus',
-        'movementBus',
-        'radioBus',
-        'dialogueBus',
-      ])
-        output[key] = context.createGain();
-      output.musicBus.connect(output.master);
-      for (const key of ['sfxBus', 'menuBus', 'dialogueBus'])
-        output[key].connect(output.gameplayBus);
-      output.gameplayBus.connect(output.master);
-      for (const key of ['movementBus', 'radioBus']) output[key].connect(output.sfxBus);
-      output.compressor = context.createDynamicsCompressor?.();
-      if (output.compressor) {
-        output.compressor.threshold.value = -12;
-        output.compressor.knee.value = 12;
-        output.compressor.ratio.value = 5;
-        output.master.connect(output.compressor);
-        output.compressor.connect(context.destination);
-      } else output.master.connect(context.destination);
-      return output;
-    }
+function createGameAudioOutput(context){
+const output={};
+for(const key of[
+'master',
+'gameplayBus',
+'musicBus',
+'sfxBus',
+'menuBus',
+'movementBus',
+'radioBus',
+'dialogueBus',
+])
+output[key]=context.createGain();
+output.musicBus.connect(output.master);
+for(const key of['sfxBus','menuBus','dialogueBus'])
+output[key].connect(output.gameplayBus);
+output.gameplayBus.connect(output.master);
+for(const key of['movementBus','radioBus'])output[key].connect(output.sfxBus);
+output.compressor=context.createDynamicsCompressor?.();
+if(output.compressor){
+output.compressor.threshold.value= -12;
+output.compressor.knee.value=12;
+output.compressor.ratio.value=5;
+output.master.connect(output.compressor);
+output.compressor.connect(context.destination);
+}else output.master.connect(context.destination);
+return output;
+}
 
-    /** Down-mix effects after their panners, without touching music, media elements,
+/** Down-mix effects after their panners, without touching music, media elements,
      * the master fader, or recording taps. A rejected configuration is not a pass. */
-    function setGameEffectsMono(output, enabled) {
-      const node = output?.gameplayBus;
-      if (!node || typeof enabled !== 'boolean') return false;
-      const previous = {
-        channelCount: node.channelCount,
-        channelCountMode: node.channelCountMode,
-        channelInterpretation: node.channelInterpretation,
-      };
-      try {
-        node.channelInterpretation = 'speakers';
-        node.channelCount = enabled ? 1 : 2;
-        node.channelCountMode = enabled ? 'explicit' : 'max';
-        if (
-          node.channelCount !== (enabled ? 1 : 2) ||
-          node.channelCountMode !== (enabled ? 'explicit' : 'max') ||
-          node.channelInterpretation !== 'speakers'
-        )
-          throw new Error('Channel configuration was not applied.');
-        return true;
-      } catch {
-        for (const [key, value] of Object.entries(previous)) {
-          try {
-            node[key] = value;
-          } catch {
-            /* Preserve the browser's accepted path. */
-          }
-        }
-        return false;
-      }
-    }
+function setGameEffectsMono(output,enabled){
+const node=output?.gameplayBus;
+if(!node||typeof enabled!=='boolean')return false;
+const previous={
+channelCount:node.channelCount,
+channelCountMode:node.channelCountMode,
+channelInterpretation:node.channelInterpretation,
+};
+try{
+node.channelInterpretation='speakers';
+node.channelCount=enabled?1:2;
+node.channelCountMode=enabled?'explicit':'max';
+if(
+node.channelCount!==(enabled?1:2)||
+node.channelCountMode!==(enabled?'explicit':'max')||
+node.channelInterpretation!=='speakers'
+)
+throw new Error('Channel configuration was not applied.');
+return true;
+}catch{
+for(const[key,value]of Object.entries(previous)){
+try{
+node[key]=value;
+}catch{
+/* Preserve the browser's accepted path. */
+}
+}
+return false;
+}
+}
 
-    /** Request the same audible iOS playback category before creating/resuming audio. */
-    function requestPlaybackAudioSession(audioSession = globalThis.navigator?.audioSession) {
-      if (!audioSession || typeof audioSession !== 'object') return false;
-      try {
-        if (audioSession.type !== 'playback') audioSession.type = 'playback';
-        return audioSession.type === 'playback';
-      } catch {
-        return false;
-      }
-    }
-    function releasePlaybackAudioSession(audioSession = globalThis.navigator?.audioSession) {
-      if (!audioSession || typeof audioSession !== 'object') return false;
-      try {
-        if (audioSession.type === 'playback') audioSession.type = 'auto';
-        return audioSession.type !== 'playback';
-      } catch {
-        return false;
-      }
-    }
+/** Request the same audible iOS playback category before creating/resuming audio. */
+function requestPlaybackAudioSession(audioSession=globalThis.navigator?.audioSession){
+if(!audioSession||typeof audioSession!=='object')return false;
+try{
+if(audioSession.type!=='playback')audioSession.type='playback';
+return audioSession.type==='playback';
+}catch{
+return false;
+}
+}
+function releasePlaybackAudioSession(audioSession=globalThis.navigator?.audioSession){
+if(!audioSession||typeof audioSession!=='object')return false;
+try{
+if(audioSession.type==='playback')audioSession.type='auto';
+return audioSession.type!=='playback';
+}catch{
+return false;
+}
+}
 
-    return {
-      createGameAudioContext: createGameAudioContext,
-      createGameAudioOutput: createGameAudioOutput,
-      setGameEffectsMono: setGameEffectsMono,
-      requestPlaybackAudioSession: requestPlaybackAudioSession,
-      releasePlaybackAudioSession: releasePlaybackAudioSession,
-    };
-  })();
-  modules['game/ui/gameplay-audio-output.mjs'] = (() => {
-    const createGameplayAudioPreferences =
-      modules['game/gameplay-audio-preferences.mjs']['createGameplayAudioPreferences'];
-    const setGameEffectsMono = modules['game/ui/audio-output.mjs']['setGameEffectsMono'];
+return{
+createGameAudioContext:createGameAudioContext,
+createGameAudioOutput:createGameAudioOutput,
+setGameEffectsMono:setGameEffectsMono,
+requestPlaybackAudioSession:requestPlaybackAudioSession,
+releasePlaybackAudioSession:releasePlaybackAudioSession,
+};
+})();
+modules['game/ui/gameplay-audio-output.mjs']=(()=>{
+const createGameplayAudioPreferences=
+modules['game/gameplay-audio-preferences.mjs']['createGameplayAudioPreferences'];
+const setGameEffectsMono=modules['game/ui/audio-output.mjs']['setGameEffectsMono'];
 
-    /** Presentation-only owner. Selecting a policy never constructs or resumes a
+/** Presentation-only owner. Selecting a policy never constructs or resumes a
      * context. The engine attaches its already gesture-created graph explicitly. */
-    function createGameplayAudioOutput(options = {}) {
-      const preferences = createGameplayAudioPreferences(options),
-        listeners = new Set();
-      let output = null,
-        state = preferences.snapshot(),
-        status = 'inactive',
-        disposed = false;
-      const snapshot = () => ({ ...state, status });
-      const apply = () => {
-        if (disposed) return;
-        status = !output
-          ? 'inactive'
-          : setGameEffectsMono(output, state.monoEffects)
-            ? state.monoEffects
-              ? 'mono'
-              : 'original'
-            : 'unsupported';
-        for (const listener of [...listeners]) if (listeners.has(listener)) listener(snapshot());
-      };
-      const stop = preferences.subscribe((next) => {
-        state = next;
-        apply();
-      });
-      return Object.freeze({
-        snapshot,
-        choose: (enabled) => preferences.choose(enabled),
-        retry: () => preferences.retry(),
-        attach(graph) {
-          if (!disposed) {
-            output = graph;
-            apply();
-          }
-        },
-        subscribe(listener) {
-          if (disposed) return () => {};
-          listeners.add(listener);
-          listener(snapshot());
-          return () => listeners.delete(listener);
-        },
-        dispose() {
-          if (disposed) return;
-          disposed = true;
-          stop();
-          preferences.dispose();
-          listeners.clear();
-          output = null;
-        },
-      });
-    }
+function createGameplayAudioOutput(options={}){
+const preferences=createGameplayAudioPreferences(options),
+listeners=new Set();
+let output=null,
+state=preferences.snapshot(),
+status='inactive',
+disposed=false;
+const snapshot=()=>({...state,status});
+const apply=()=>{
+if(disposed)return;
+status= !output
+?'inactive'
+:setGameEffectsMono(output,state.monoEffects)
+?state.monoEffects
+?'mono'
+:'original'
+:'unsupported';
+for(const listener of[...listeners])if(listeners.has(listener))listener(snapshot());
+};
+const stop=preferences.subscribe((next)=>{
+state=next;
+apply();
+});
+return Object.freeze({
+snapshot,
+choose:(enabled)=>preferences.choose(enabled),
+retry:()=>preferences.retry(),
+attach(graph){
+if(!disposed){
+output=graph;
+apply();
+}
+},
+subscribe(listener){
+if(disposed)return()=>{};
+listeners.add(listener);
+listener(snapshot());
+return()=>listeners.delete(listener);
+},
+dispose(){
+if(disposed)return;
+disposed=true;
+stop();
+preferences.dispose();
+listeners.clear();
+output=null;
+},
+});
+}
 
-    return { createGameplayAudioOutput: createGameplayAudioOutput };
-  })();
-  modules['game/ui/destruction-audio.mjs'] = (() => {
-    /** Presentation-only vocabulary shared by every destruction adapter and Studio.
+return{createGameplayAudioOutput:createGameplayAudioOutput};
+})();
+modules['game/ui/destruction-audio.mjs']=(()=>{
+/** Presentation-only vocabulary shared by every destruction adapter and Studio.
      * Classify before coalescing crowds; never consume the simulation random stream. */
-    const DESTRUCTION_CATEGORIES = Object.freeze([
-      'soft',
-      'armored',
-      'light',
-      'heavy',
-      'electronic',
-    ]);
-    const DESTRUCTION_CUES = Object.freeze(DESTRUCTION_CATEGORIES.map((id) => `destroy-${id}`));
+const DESTRUCTION_CATEGORIES=Object.freeze([
+'soft',
+'armored',
+'light',
+'heavy',
+'electronic',
+]);
+const DESTRUCTION_CUES=Object.freeze(DESTRUCTION_CATEGORIES.map((id)=>`destroy-${id}`));
 
-    // Separate slots preserve the dry impact when Classic sounds is selected. Human identity
-    // is independent of armor/electronics material (for example a relay operator).
-    const HUMAN_REACTION_CUES = Object.freeze(
-      Array.from({ length: 8 }, (_, index) => `human-reaction-${index + 1}`),
-    );
-    const humanoidFamilies = new Set([
-      'lookout',
-      'patroller',
-      'runner',
-      'sprinter',
-      'courier',
-      'guard',
-      'refuge',
-      'refuge-seeker',
-      'switchback',
-      'pair',
-      'rendezvous-pair',
-      'shield',
-      'shield-bearer',
-      'brace',
-      'brace-trooper',
-      'relay-warden',
-    ]);
-    function isHumanoidDestruction(details = {}) {
-      if (details.machine || details.humanoid === false || details.flesh === false) return false;
-      return details.humanoid === true || humanoidFamilies.has(details.family ?? details.kind);
-    }
+// Separate slots preserve the dry impact when Classic sounds is selected. Human identity
+// is independent of armor/electronics material (for example a relay operator).
+const HUMAN_REACTION_CUES=Object.freeze(
+Array.from({length:8},(_,index)=>`human-reaction-${index+1}`),
+);
+const humanoidFamilies=new Set([
+'lookout',
+'patroller',
+'runner',
+'sprinter',
+'courier',
+'guard',
+'refuge',
+'refuge-seeker',
+'switchback',
+'pair',
+'rendezvous-pair',
+'shield',
+'shield-bearer',
+'brace',
+'brace-trooper',
+'relay-warden',
+]);
+function isHumanoidDestruction(details={}){
+if(details.machine||details.humanoid===false||details.flesh===false)return false;
+return details.humanoid===true||humanoidFamilies.has(details.family??details.kind);
+}
 
-    function destructionCategory(details = {}) {
-      if (DESTRUCTION_CATEGORIES.includes(details.category)) return details.category;
-      const family = String(details.family ?? details.kind ?? '').toLowerCase();
-      const machine = String(details.machine ?? '').toLowerCase();
-      if (/relay|jammer|radar|electronic|generator|core|sentry|turret/.test(family))
-        return 'electronic';
-      if (/tank|carrier|tracked|heavy/.test(family + ' ' + machine)) return 'heavy';
-      if (/shield|brace|guard|armored/.test(family) && !details.machine) return 'armored';
-      if (details.machine || /car|truck|rover|buggy|vehicle|transport/.test(family)) return 'light';
-      return details.material === 'metal' ? 'armored' : 'soft';
-    }
+function destructionCategory(details={}){
+if(DESTRUCTION_CATEGORIES.includes(details.category))return details.category;
+const family=String(details.family??details.kind??'').toLowerCase();
+const machine=String(details.machine??'').toLowerCase();
+if(/relay|jammer|radar|electronic|generator|core|sentry|turret/.test(family))
+return'electronic';
+if(/tank|carrier|tracked|heavy/.test(family+' '+machine))return'heavy';
+if(/shield|brace|guard|armored/.test(family)&& !details.machine)return'armored';
+if(details.machine|| /car|truck|rover|buggy|vehicle|transport/.test(family))return'light';
+return details.material==='metal'?'armored':'soft';
+}
 
-    // Shape and decay, not loudness alone, separate infantry, equipment and engines.
-    const profiles = Object.freeze({
-      soft: [0.52, 0.24, 0.09, 190, 64, 'sine', 900, 280],
-      armored: [0.54, 0.32, 0.11, 250, 72, 'triangle', 1300, 320],
-      light: [0.58, 0.48, 0.16, 130, 38, 'triangle', 690, 100],
-      heavy: [0.64, 0.8, 0.22, 86, 32, 'sine', 420, 70],
-      electronic: [0.48, 0.33, 0.14, 710, 76, 'triangle', 1150, 145],
-    });
+// Shape and decay, not loudness alone, separate infantry, equipment and engines.
+const profiles=Object.freeze({
+soft:[0.52,0.24,0.09,190,64,'sine',900,280],
+armored:[0.54,0.32,0.11,250,72,'triangle',1300,320],
+light:[0.58,0.48,0.16,130,38,'triangle',690,100],
+heavy:[0.64,0.8,0.22,86,32,'sine',420,70],
+electronic:[0.48,0.33,0.14,710,76,'triangle',1150,145],
+});
 
-    function destructionSoundRecipe(details = {}) {
-      const category = destructionCategory(details);
-      const [baseGain, maxDuration, cooldown, from, to, type, accentFrom, accentTo] =
-        profiles[category];
-      const scale = Number.isFinite(details.gainScale)
-        ? Math.max(0, Math.min(1, details.gainScale))
-        : 1;
-      const organic = category === 'soft' || category === 'armored';
-      const brutal = organic && details.brutal === true;
-      const rate = /sprinter|courier/.test(details.family ?? '')
-        ? 1.06
-        : /brace|guard/.test(details.family ?? '')
-          ? 0.96
-          : 1;
-      const gain = baseGain * scale * (brutal ? 1.12 : 1);
-      return {
-        category,
-        name: `destroy-${category}`,
-        gain,
-        priority: category === 'heavy' ? 4 : 3,
-        movement: false,
-        rate,
-        maxDuration,
-        cooldown,
-        // The recorded bank has quiet calibrated peaks. A full-scale oscillator
-        // needs matching attenuation or initial/offline kills are much louder.
-        tone: { from, to, duration: maxDuration * 0.7, gain: gain * (0.2 / 3), type },
-        layers: [
-          {
-            from: accentFrom,
-            to: accentTo,
-            duration: brutal ? 0.16 : 0.08,
-            gain: gain * ((brutal ? 0.085 : 0.045) / 3),
-            type: 'triangle',
-            kind: 'snare',
-            delay: 0.008,
-          },
-        ],
-      };
-    }
+function destructionSoundRecipe(details={}){
+const category=destructionCategory(details);
+const[baseGain,maxDuration,cooldown,from,to,type,accentFrom,accentTo]=
+profiles[category];
+const scale=Number.isFinite(details.gainScale)
+?Math.max(0,Math.min(1,details.gainScale))
+:1;
+const organic=category==='soft'||category==='armored';
+const brutal=organic&&details.brutal===true;
+const rate= /sprinter|courier/.test(details.family??'')
+?1.06
+:/brace|guard/.test(details.family??'')
+?0.96
+:1;
+const gain=baseGain*scale*(brutal?1.12:1);
+return{
+category,
+name:`destroy-${category}`,
+gain,
+priority:category==='heavy'?4:3,
+movement:false,
+rate,
+maxDuration,
+cooldown,
+// The recorded bank has quiet calibrated peaks. A full-scale oscillator
+// needs matching attenuation or initial/offline kills are much louder.
+tone:{from,to,duration:maxDuration*0.7,gain:gain*(0.2/3),type},
+layers:[
+{
+from:accentFrom,
+to:accentTo,
+duration:brutal?0.16:0.08,
+gain:gain*((brutal?0.085:0.045)/3),
+type:'triangle',
+kind:'snare',
+delay:0.008,
+},
+],
+};
+}
 
-    return {
-      DESTRUCTION_CATEGORIES: DESTRUCTION_CATEGORIES,
-      DESTRUCTION_CUES: DESTRUCTION_CUES,
-      HUMAN_REACTION_CUES: HUMAN_REACTION_CUES,
-      isHumanoidDestruction: isHumanoidDestruction,
-      destructionCategory: destructionCategory,
-      destructionSoundRecipe: destructionSoundRecipe,
-    };
-  })();
-  modules['game/ui/human-reaction-policy.mjs'] = (() => {
-    const HUMAN_REACTION_CUES = modules['game/ui/destruction-audio.mjs']['HUMAN_REACTION_CUES'];
-    const isHumanoidDestruction = modules['game/ui/destruction-audio.mjs']['isHumanoidDestruction'];
+return{
+DESTRUCTION_CATEGORIES:DESTRUCTION_CATEGORIES,
+DESTRUCTION_CUES:DESTRUCTION_CUES,
+HUMAN_REACTION_CUES:HUMAN_REACTION_CUES,
+isHumanoidDestruction:isHumanoidDestruction,
+destructionCategory:destructionCategory,
+destructionSoundRecipe:destructionSoundRecipe,
+};
+})();
+modules['game/ui/human-reaction-policy.mjs']=(()=>{
+const HUMAN_REACTION_CUES=modules['game/ui/destruction-audio.mjs']['HUMAN_REACTION_CUES'];
+const isHumanoidDestruction=modules['game/ui/destruction-audio.mjs']['isHumanoidDestruction'];
 
-    /** Cosmetic scheduling only. It never queues deaths or consumes gameplay RNG. */
-    function createHumanReactionPolicy({ random = Math.random } = {}) {
-      let tokens = 2,
-        lastTime = null,
-        lastOnset = -Infinity,
-        quietUntil = -Infinity;
-      let bag = [],
-        previous = null;
-      const metrics = { attempted: 0, admitted: 0, rejected: 0 };
-      return {
-        interrupt(now, duration = 0.35) {
-          quietUntil = Math.max(quietUntil, now + duration);
-        },
-        request(now, details = {}, activeVoices = 0) {
-          metrics.attempted++;
-          if (!Number.isFinite(now)) {
-            metrics.rejected++;
-            return null;
-          }
-          if (lastTime !== null) tokens = Math.min(2, tokens + Math.max(0, now - lastTime));
-          lastTime = now;
-          if (
-            !Number.isFinite(now) ||
-            details.vocals === false ||
-            !isHumanoidDestruction(details) ||
-            details.audible === false ||
-            activeVoices >= 2 ||
-            now < quietUntil ||
-            now - lastOnset < 0.25 ||
-            tokens < 1
-          ) {
-            metrics.rejected++;
-            return null;
-          }
-          if (!bag.length) {
-            bag = [...HUMAN_REACTION_CUES];
-            for (let i = bag.length - 1; i > 0; i--) {
-              const j = Math.floor(Math.max(0, Math.min(0.999999, random())) * (i + 1));
-              [bag[i], bag[j]] = [bag[j], bag[i]];
-            }
-            if (bag.at(-1) === previous) [bag[0], bag[bag.length - 1]] = [bag.at(-1), bag[0]];
-          }
-          previous = bag.pop();
-          tokens--;
-          lastOnset = now;
-          metrics.admitted++;
-          return previous;
-        },
-        snapshot: () => ({ ...metrics, tokens }),
-        reset() {
-          tokens = 2;
-          lastTime = null;
-          lastOnset = -Infinity;
-          quietUntil = -Infinity;
-          // Keep shuffle history across retries so every launch does not repeat take 1.
-          metrics.attempted = metrics.admitted = metrics.rejected = 0;
-        },
-      };
-    }
+/** Cosmetic scheduling only. It never queues deaths or consumes gameplay RNG. */
+function createHumanReactionPolicy({random=Math.random}={}){
+let tokens=2,
+lastTime=null,
+lastOnset= -Infinity,
+quietUntil= -Infinity;
+let bag=[],
+previous=null;
+const metrics={attempted:0,admitted:0,rejected:0};
+return{
+interrupt(now,duration=0.35){
+quietUntil=Math.max(quietUntil,now+duration);
+},
+request(now,details={},activeVoices=0){
+metrics.attempted++;
+if(!Number.isFinite(now)){
+metrics.rejected++;
+return null;
+}
+if(lastTime!==null)tokens=Math.min(2,tokens+Math.max(0,now-lastTime));
+lastTime=now;
+if(
+!Number.isFinite(now)||
+details.vocals===false||
+!isHumanoidDestruction(details)||
+details.audible===false||
+activeVoices>=2||
+now<quietUntil||
+now-lastOnset<0.25||
+tokens<1
+){
+metrics.rejected++;
+return null;
+}
+if(!bag.length){
+bag=[...HUMAN_REACTION_CUES];
+for(let i=bag.length-1;i>0;i--){
+const j=Math.floor(Math.max(0,Math.min(0.999999,random()))*(i+1));
+[bag[i],bag[j]]=[bag[j],bag[i]];
+}
+if(bag.at(-1)===previous)[bag[0],bag[bag.length-1]]=[bag.at(-1),bag[0]];
+}
+previous=bag.pop();
+tokens--;
+lastOnset=now;
+metrics.admitted++;
+return previous;
+},
+snapshot:()=>({...metrics,tokens}),
+reset(){
+tokens=2;
+lastTime=null;
+lastOnset= -Infinity;
+quietUntil= -Infinity;
+// Keep shuffle history across retries so every launch does not repeat take 1.
+metrics.attempted=metrics.admitted=metrics.rejected=0;
+},
+};
+}
 
-    return { createHumanReactionPolicy: createHumanReactionPolicy };
-  })();
-  modules['game/audio/human-reactions/portable.mjs'] = (() => {
-    // Generated by scripts/produce-human-reactions.py. Exewin CC0; see authoring/audio/human-reactions-v1/sources.json.
-    // Compact identical performances for existing optional-package source projections.
-    // prettier-ignore
-    const HUMAN_REACTION_BANK = Object.freeze({"human-reaction-1":{"mime":"audio/mpeg","base64":"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","duration":0.7},"human-reaction-2":{"mime":"audio/mpeg","base64":"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uisrcj//0////+oYmRkMgbuFoTkmSFZkALABdl8HvC3TIFgK9UEzUkBgiNQy1ov8XhPZsKJIwJ7f2/xAj7K0B1CBJNDf/Lp5j+n/////+lUB1wmHyx4JIAQAWKL/+1TEkwPI5G0WDmsigQoNowG8vGipZ7JuSEaJ0HAfNGKUrGYJiHEiZSGFA28gYwTRq00R8Ejay2VZI+gVh2EeNAXJ4tb2+z////1f+nu/3esAKFuJbRrwdRMuCoxaMQeJgARuYnIglmpyOUrenDG/9WMGAj33L9iSX7PKu/+wt+Hee//W5jBKqAAAVaiC+EVHYQcKB/cfSXzVgYKCwsLCT1itYqLNizf6xTULCsVFWfqFhcVYKirdYoLYsK//9Yr/+1TEo4MJYGUaTecBARENo0W8PHKLf4rVTEFNRTQuMFVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVX/+1TEsQMJAGMSLeWjgNuL4g2GCGhVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVX/+1TExwPHZCatJ7BiQAAANIAAAARVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVU=","duration":0.5076875},"human-reaction-3":{"mime":"audio/mpeg","base64":"SUQzBAAAAAAAIlRTU0UAAAAOAAADTGF2ZjYzLjEuMTAyAAAAAAAAAAAAAAD/+1TEAAAIeHckZ4WQUWOY5jWHibkAAhiSikUoas5hwKhJo850PYicMLt5m7zWX+bYqvjpSBZp2+cF0D6YD5WCgOw/OGY+L47jggL/+TIfyhcn////+n/+cQAABVYADeAEWnYLUYKHPLpiLjRljAMAxudehCYd2o8JW5/bX+9QFe31bnksino9XiVlvNAmxjnpcOUGmXuaPdhEkBzn/Gx///23UAMFOvixJnepzINBmsIywQQUnBAEnADPZBmKQQL/+1TEBwAKwNc7rDzrwWGY6D2GHlhwJRlUDqWphQcy40QKopKuiZuaFvFRj/FKx3c1sQZqNbZEgHeOOh4mycx+luYnWTQjAGIhr//X5QgSG5nmsPkPng/Jkmoo4ReAACA0SzIA82AVUfaqQmDn4VW7KB08qYS0Z688Xhl9eu1gvpQwS6UywvrF5zHb5i514fEAqEUfD1QKxAY7RwQjoXFzf/zxpu6DVCDeh56vRDBwiYagg//9NegwA1wAAzQAvN7/+1TEBQAKMMlBrLzryWEa6fWEnbL4opeJ1w02Z70rqT2fhGUfDT685v7sSEnmtR/99xb3/xLXeaObE8VhB0PQSvTCIKNNTdQsQAKJt//X6beqoYtsqXEUSF+HiRoEJDTSAMcnDmA1dphaxmtgxBiMtWA3EaQyjKyDxs3JZAjG3/wpbS4MDTMI/M1KyonPoEUcOPzj5USA03/+qePGuzPoNSg+OuqRYKhJKDLqeiioqz/6P8upwAKgACpQBrysMsH/+1TEBYAKeNdHTDCtkUcZKHWnlXkQzQAOy8zIoFX63RjRAB7Zwu3H4uL2jar3TNKrE56f+rnejeNmQuJg6E8UiUvBxXMhEVAwqv+teQ6SKr7/d1lLUg0cnKw27/5KgAAFEAAZQAPCv5TpVwBjhYTIllofyRDdLQEEFayu4FXTg/041/zW8kYyMudN2dKeqtXjDCbbjmeq4ngmuIeBwqEQKT//+ilef/VExJRQ750AxaQAAiQABpeA9CvSQBMch8H/+1TECAALHNlDrLyrwVMaqKmWCbjA23WGIAWOrQJAlAKtiVSNapo7DGj/6kzaI2FokNRZbRXu35/lSbZz0OcyT+ONX1sLAMHhxm//06Kg8YHf775FILNMUWh4m3/TgALAAElwE+zxkSbhocln4GV611cLC2FN1U0hg3OKaxc6Y+9qUpATy2zekPXbYJp+Ng5DIIykWwLJG889gcHePpmZn/9GOIOFAyMn+a4U6ra44993UuAAAnQAB7OA1ZMto4j/+1TEBoAKpNNHrDzrwVAaaLWXnbBAfVvA/7Bkx3wai0UUwzWydKzNd30Y4Yknm3qqvPWEqq51p9Cp1eN0/iWqNTpI4mWLlyRUJif//7uaY5QVm/5ytqanYeEifxPQAAEmAANNwIacZuIjHOM4EgNxvJWQU4rSiQhkzepO/YGPStriu9YkTLxGSwY3zCjvGV87IASU8H11odEP7GqAqQO///NoK2JDhckQ/p1ndB4eW/RVYAAEaAAFdn8dbjUFQiT/+1TEBwAKeNtNrCRPUWOe6TWHnXpVTxllkuhdV5WZRR/2Tw9SDwVQIo1efMiMRJM6koQ6pIgRBdYuR6NZmAjig///81RZ2cQEGT/sh7LilOIAIV9P/p/2f+6yAEEFIAARygNwUqbKQNhCs0DsIcxsTlMyWALG1uJBgrTi21cL43SV9mrfG9tXmj9mahDi+IQu1kw1ahP40QRBz//+h5UWBoanGj7EP7NtbVSiONGX7Hn2KHKgEkNIAAWS8LDiyIz/+1TEBgCKnO9NrDxL0VAeKij0qXon+PEYSsHHnbbvBcpOMuSVOZ4iXqsfVxDg/fraO1S4nz5Ntt48Yu4qTxVCIRxYX34YCIZv//0dgShSoDEjfqz0/0DE/yB7//uRgqVtm4cSVOYi4fp+IeexUKVOpUcUCALwZgSpmU5IPV5bQ0xPw3JfprBkF+WRjRS59zFLt//+ecFwEkCcRwBYigWB+XZvZH/+an55GNBwlEwH///XwlH0ABqTh8T2wUaIFxP/+1TEBwCKJO9PR7IJ0WyeaXWGFXrANWho/TwbqAXMCc7jR2yjZKzfUfh9ttOfP9mViTIThYEiGmbEHIaM8rOGB83T///pzdMwnknf/f/6Ts6/Wo4b///01AkhpFODp2lskTQAVLpOOQrpa+wWBXIC45CUeQYh4SC6rcq25XnLl6hgwWzjuYbOvslAUAAA4xEoSAzGcfOKhEOmb//7KUc4mEQ6HRU36//7/1MHQxGf///6JlXEIAJoAAe7gQQxFr3/+1TEBgAKYPFHrDytgVqWKLTzp0gGBClhF/Sx3mnUL+NDCpHYP561Pob2Pq9cX+IrAeTkn2mt5njBDgmWJ2cpLTmLuuEEpqdiBISH3//95DqhWdhW3//3Rl/rFcAARIwABL+Al0LPAEImwJVLmMc6SUxwsJTHSrmJW424yRt11/JRhr1y5voq5X3FYXjwISBiQtRlsIEcREMFCJ4igKEY9///RIiihUI0JEG2UXd8ib6wksNikAASkAkLrQth6bb/+1TEBoCJ7K1HTDyr0SuVaKjym0rORY7OF0OHLGWn0Ok6FWqLOT9uk18/GKZdqidVu4sTbHSOep1LKPVwiJRpFRMsPRxAYKgIz//+iWINE4oQIf+FOoO4FDQYAFUfrIUoUEu+0oGGLCX9lQiGh5+2gQ5G1/qBHx7Uh86j2Tk7HpTI2rOXM4SZEyCuSjllRmA3aGxYHW///oiSRQstBQLt/4ZqqLSLkQALYHBITQlEyLYn0US1Clp0i2BjQRYodlb/+1TEDoAI5K1Rp6TvUSMVaHDzj0kG6iIk6rJVDXOx2b2cZYLHIPNWNoYXdio6Y///3U0dFoXMYuDP////v/bSC0BIADgBIaVwcocTQdStOBYUZooonrMjY1WN5He7g/41ij6GxPn0WJFSL9qZUynwbxey5pZYRBqv4pw8bCo///9kBoqihmN3rVjMcYALYH6Fn6/H8N1HiZjlJA1oVGZIScmC4kvM0XfVr666xNYtgaz97KQPHt4G4S8ntYKdjBz/+1TEHAAJKKdRp7BL0SaWKXTxlirN//7lBBxhA7iLv///+r//+htSsuxEBODjzbSJMhjK1EGUqhFlU9YWA+y+uMaInnIGJVp6lAwsMKNtfwsAgJ1JgcagVEiXQ///5RwM6kNWJAX/+o9/r//+r+okAUCwAIAV1jtaBJRbTQRy6ap08uUUF8o6bg0tDpvX3b2qqnrijj9VUI0o8ro+VBzkLGhBPZThP1DYla6fM2rf8CMBWWEpKKKTiSDs21spAQf/+1TEKAAIlKUlJ4B8AN8LJXQwjdJSLpYCIAjiPX5GqCqsPbjiQoaCqUQ6EnyrvXPZbllHsRSXq/WNdqlXZYO/8lVMQU1FNC4wVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVX/+1TEPwPAAAGkAAAAIAAANIAAAARVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVU=","duration":0.3122083333333333},"human-reaction-4":{"mime":"audio/mpeg","base64":"SUQzBAAAAAAAIlRTU0UAAAAOAAADTGF2ZjYzLjEuMTAyAAAAAAAAAAAAAAD/+1TEAAAJFGsAVPQAAWSS5Zcw8AAAJmvhgLYPQJoLglBvgBADgWBvQ9zYFBUBQFhn6U4oKCiZYufANxe0qRcXt393F3LnxA7lw+Iwf/l385yhz+UBBQIf+CH/5fEACQA4ACxAvNmSSqIZtKfShnDDCLvyAwMDafI16EJQNtofu4w3y97V77LaW1qFLHYoHJWTNeArFIuWRngRJ0/isKC5M7hpoie+6bi2bbX1EhqTUTP/X+TI3F0ccBEMAOaCBWL/+1TEBIAKlJVEOYeAAVOfKeuegAJSA4QhK1AX8sMoO6AhGzJ+jEFDKFlquEA5ITLAYTWkiK98rS+sMGVbU8MpzUZlpinh2Q1WNEREmldG3iVvf/vsbz+5Qqxrf/x/frA0AACAAuugMReyel7GkKEnCbDRMM52CCymAbBeW48e6BwhvaWsBsYIU2rEaNjBG4W6vt2OFDl/8ZDfpP1/I6nv5+fZpJ///0SEhRLcUYkuLihAmubBBcBEkAAlcARIQ9H/+1TEBQAKRL9TR4zRWVue6ajzDiAlwV54nfKXxPsKEGm7R6dUDkh6l2gtzP4iBiIodzjQQCFi6cyuUEX/8PLfO0dr1jAggmgKQ77z9dwcyv9fzJE4EhPbCyJVYfTAgAAAG1/EhSE/BeByk5OIwDdRTkrFwmUOnR1U/Dhn0s6+dSRpzarHydvZwwSfrz+9GoQS/l+1vZvNAYYOGRCLf/rlEnmcEmJcmS5eSRTPQxAWC4QyH+pACBAALJANLqUADkP/+1TEBgAKpNFLTDBryV6eqmj2ITKo/yhDorphiJOaXDcah/ZODGvS+/9FvPYWm1zZ8z/Mu6wdVULVrTT164xhxIys66uKhH7x3JbDbMr/9z6/xhS0EMg/u2gn/zSNMJLKQC45RzRGEexPFYNMxEUpHhSHBWJJegOjM8viFC5iqGBhrs6GDio7W+rHTfuPB+lZpppheIr2jrXQ4xCOGn7y0aI6aFuLqZ46vSGJe8aWFQuYZZ/0rQAgAAA1lAwbwfT/+1TEBQEKJOtLR5hvQV0UKI2GFekL410CM5KJQIlRqV+YDOll5PloBtR2r5AQKcvJbDSgLk+IBwYOVRxvo1xCtEMz3J9k5MaMxxXUjys/jsxfrfbORuSQ6Lou9AADjgHpOpzAo4NuoOqNpAYFbDLbkPuU0dibU4HWH+sIrPK6KyS2kjWuPVgdOny4dLjAZCGtMm6Llx0GMxwCUzKtmS/2NUYcRZ8robd38HPl440TmVbtB0qEAAJEAFSSAFUAsAP/+1TEBgIKxO1Pp5kREUOdqqjzCioqGjFTZJjTIaTkwU0dzMrXqrXS7jodEmm73JWGKrX3XlirtVHOvFfsAKIR1sPmFue2//jvsYfVJ9+v0dfEN3Kvd363ZKjBBUs51IUIF23AM4N8P9DRXifs4ptSmPl4cLNtazhCnrITBO3yaGjyiREnnb99ZgUjSrVHYw0GcLK3+mDI1dd2sgJa0ZE1i3Bl10l67WAgpghA1sI3DuRX5IBMSAiD4B8nkN1Qxw7/+1TECAAJIOtXR5hROSydKZzzFfJgz0WcaTVCMOQvSqL29clUuHnYN6axKhGWzVZHD4IbD4hf0G55CT5z//6lf2dkZgZwTfvp9VYhQaKBxALtoFjZmNcQIhA7wGAjh2oUWB6eKnXDPMkbhtYd2KEjyPQk5J2pTmDaLZtFE2dntnn20NhC//udif7jQ8AokeMzov9nmYWJI8/VlAO0gMuQCpKigP90eRvl5NZOrqIpWCEq4j1WFGIoR+xIsIKyZj7/+1TEEwAJVO9XR5jvsR+YKej2CXq7TBadJ5Dt6+GPXn3W9f/+n/jlRoGT9Tp51ppmlCpUcFpHwuDEAhWoFySgSCMkySJ4jVBki7iZJA0oGkfyMmEopuYoXNRWnjkFRiap1D1JnOTQavQvpWzdL4ctlKVB3QXb///9XCizv/1Bxnk1QAKUAJK0CEWMKGRsmjIA2AjcE0RCSYmadTsyGpxQC0q7K6JESMWR+Q3bZM6xXK9IhTvHSKuHbZmG////2eL/+1TEHwIJOOtJR5ivkSCYKKj0lbJgV/1/2YwmIBV3WGSYABbkAUo+g1AE21A0wY4sAtRkl+czPPGceB1YVOjbke5C11VerDyz0mjEbYXEKSTa8JZaLnZ2h0wIRv/9P8QKIjQdP9KTXyIAApAAUnANvYyZGVb7EgAARGa6jg4Djg6iLg+xwL3DyBjLb1IGR1a7v3pXpD1EqGpo92CYvtA677JKKjl///zpIcDRRv+U/L0YAHYAFduBHm4rApTpxEz/+1TEK4AJDMFFTDCr0SKYKKmDCehELy+ilqmbOmwxVs1qALMHSchabZnM48W6s+/hOsFkQcJQpiTiCoHE6d3iRk//q3oVGcEdw5v66v0rZIJUdaATbgDWK1SGGeQsY7VcdJck+iQnjMeTiWupCiUOtU344CBG7s3eZppWdgRjKeqU6EQ4C7f//1Q7hhiBlf//3oq//cUFDB10AClICjkAquK/TuxNaarihUSVnYHL5VLI898XkapX913vpmxMTIL/+1TEOIAJUQtXp7BLeSihKSmEierm3/skiY6uIbjfT+aQ7MTmBRCN//d90OQIcqrb//1ev/8pQb0sgkxtMByXAYOUekJERRJRI1WW1cKsyU7AetGJwZEzNInz6RJGqVHrsju4mPvZcm3spRdv/+q7XOdjGozf/0KD48n/QUBxouAYgIsQAAK60Bp/wIRlmkSJ6H4GmSw4x/Iafx/tMdGNlU0aPjUcqqFiK1fuo1YcMA9EWLsUePd92UYP//5joMT/+1TEQ4AJZQ9Tp5iu0Sug6XTzFdFzibkFUX//8+Kf/SAqC4hkAFRxMh6SAJMSIvp6cWsKCe6sQCrVHJU3K9nXzr5qOJ1tltIyYSDpdT2OaPDzCoeNbzz/oNBw8n/+qTTnVt3N//5SOUv/kHFUYYVRIAcjJBfkoFRwmggn5aIeZatR6TelhOkrTeQuIwW0o5XPcgJzXdvnyKlmPPIM+en+oXIlv/9CmdmOjGpb//1FmCKf/RggIOQY6miEXbWiZWn/+1TETgAJaQtRp6Su0SShajTzijKAvD3LikT3H0/OIuuV0yCkyvUc2vH8eVBbP24cEQ2p/6GAgQNwT1kfCEd/wYcb//mOg5THKn///QoVnN/kCglBCqEgCVLEQFGWB4DgkHcuEAH4wbHw7GIGYogantCCWkBEI2rOEQg9W9zVoXZS0mZHzP9Qa///hE51QYyCBQkQX//7sIWGf1OcomIAStVohFWyMG+WgIklUchRyIo8DtLpFMWpRTQhOTDKISH/+1TEWQAJGQdZp4xROSmganTDljcdLqbVqKyBwcqG15zq87MVTLFb/ygN/o38yX2HPK7/yTvkQWKVnT/kC3FlmEAGE72gPd8Bk8T8M86xYlUJ0ojraDoBBtj9kwzTjHfvZUshd23h1qionZhQjxZTq31b//9erDQQeRnqdyMhTiFFEDsHTlf/xu2qFcAHtACqTAiChImUda6AYQFUuxOSZmGyE0V6tQ1gVDjHWWsH35OAWFZON/aRw7jEIRhfzVb/+1TEZIAJQQNVp6StGSkfqXTzFWl1/cCp///qzh8GPV8BRJlesgt7//8o+QeiACpIkA8mwFwJyX8U0v4uJ1kYQRzqY6xjIarjgV0pHpYmYGjOxhTgTMM763+3C9pgZMwo+xLL6q9P//9blSyMYXGFHjiKhGfR6zxAOFQ0AAAEaAAeJQEqbGmsXvChEoEZBQbjCMS9UdGx4K5++Xjx5l7WL7bzhUDVXBfMbgaxc7VKQlieQ5t/8+z/v///0QQOZLL/+1TEb4AJhLlHR5ixGTsZabT0leKzOLvmvh/9HaryOGZgsEBG6gAcKUDZCjgLCLMvLsXxcjmeIF2o5oyQYAYEQvXL++jzah7273DjSGYDnrqfvutlt7VP///8lhla9jhzC3yEcUhc/1CEYwOtH0AC5ACoKwgtNJr7HkvVPAhSXa+C4y+IFW7SX3vn4NFEkzYLzKxE1fPb1mWoYGPFg1kyRKdr3251p///zs3pcKAMwzauZkJ/3qyh4uV//7hkAD3/+1TEd4AKJP8/rDBLyS8bKTTzCfCEoZO2VKI3EglYitKmLCWXTzZ10wTS4OjGSy7kc2t/qEDhJC/uT1ImliGYZiJUMN3v+pXZv//+QMqDTGcpnU1UdBExka/3imCxTDH//q/6lWUCS5CgJSmAdogprkhcyueiZIsgJ+oSXOjGo1KuwgKAeETSEQ93Ro1MiJ9umtbbr7Vave9CPqr2///6M6jCKyAYSHiK7zqKHCe0wCApWSAAAEsBI3BgE2xtdzT/+1TEfoCJ9P1DTBhPUUafKGmEieqR4DLBLKhLeJuN83BSreSCS1plSK8TOzM86OIepW2/lttOjV/LLybOYYpRRaed++63Rv//+kioxVDBEA2ZKqtm1+Izn2/kmN9zqkiEjtmSKAIBKYKoOoxWMhyXbE0QT4afUFY5O0mv/Sl7/X2miEkx1tKY4EOnFEiFE8HShhq3/+hwhFRYsIgVg+BopqCoqbrJMA5xUQp9Eh0pgN5AT6LkXMfZxo5AIU5KBDH/+1TEgwAJ0NdNp5ivUVadaHWGCbnPnhEVkhMYtxEvZYg1QQKcehdqiVxPkJS4vN2iVOyv///zGMWhkQDnia9xMfqzlvYRQyP/7RRo9WSWi5CiaCWAbJgk1LcTcgJimYOlxeHKfbDGGTyM8usQQjL+vZU4GWFE6udsw/gnG71s1IEhfqoVCJFBGY///+yvIxwMcYfBAEQcZpS/81AMXpIdIQCJGAUpSHUe5NRaUcbTISc5kU5mrmNPOoRRmb4x6jj/+1TEhgAJTGNNp7Bn4Tgh6Wj0FfMCjaORiSairih1Vbcmt9xTtFkf//+TDhmUMGVWb80xne/6Ky/8HBWsAsN8kjAlgEzCMJUThWIASVGKot6SOYWHbMFEaUfgsgxv/9dMD3zm4gW8WYOCCDvy7s71///+VEMiKWYgo3z0FTpTzJT9OxRKjciKBtYQeAGAykVaHluMzoFPTwHgloLHAFOuEwq1GSobahnrYWqcdlMpzCnq7CAjj2otlZ00///52ij/+1TEjwAJzL9Pp6RN0SyhKKj0CivCiM6mV38jois6H86//0cQqiUYjJIUqCWBztJWbagFNMtBpwcMBQXOd9VLMhMsHH9FD7sN5Em4+YstW73AgpGEt/dHs8y////KjmQPQx239WpU/0Rd/9LGFKgABCJxRkjAGgNonIgCHF2Mk4oyaUSpUhOVMxvVe/Z1evgMgDK+9nokRAi6bcMt2EkAU9fUuv///6zjjKjljfRmRcn//0CuBhih3aAXAr4QOAH/+1TEl4AJQQ1Bp5hNSSmh6DWEiPgA9DLSF0uj7AGHPkak4piwHQoEgWPccrmrqz2nz+OTZcP8XHQzwdCKIxoa3TsHyf///2OokNNUfKdfss5UKQ3//ogoPh6RAQUbJNEnWQCos/VgYI+r3QuagK12UwiTulPO/F6APbffbGufhHMzPMgoPsskSW//rONFQMip///9oTE0FHKhFT6DjIRrN//6CZpIVQAQAb4AOAGBFGkXojQvQFB2Tk81tnN06UD/+1TEooAJDQ9Jp5hPUSqhp/zzChEVkJnclcqnj17FidrUzYXnRuiRgIySwfCxvzTR4HS////mqPDcKlQjIGDcWjBNPjYelzFIo///OHhaVrQARCcQBYAQsIRZnCvHAD6CsfmYUpoHOyLwvRYz+gF55Y2l+t+xcXThuIWRpQqUGAhr/pUY////U+xxYaEWKsXX8q92mjjf/9Th8A88eDH//9fcaATDsZJwAQB7lWLijhGkPJq9Kw/lGTeNYyD8MZD/+1TEroBJfQs7rDCnyTMgp7WDFiOTUcmRL/NNMLj5z06qYhSPR4325GBYdMb///2Iok5UBHKzfikyOdf//hgBmkACgbECaACBEIFUQoFoEDFC5oBMmkeUqiQDDPEOuI3FIvzKYCgQiWRSHEhEOGDxQX/ikCpbP///0moKFGpMwfMLJ+YTn1cx///kirO6gBKBtpJoAVBIiikPITccpoQWY7i6mFhkMlGJqjchcBbts7GGyyUgsz3iJZCGA1k2//z/+1TEt4AKkQk1p4zyiUmhZzT0HerwIG////RTGKEB6qax/5yHnMc7///kZMYSJ/6EACA/iAMJmosUQFZCNmIU3nkm0aeiEhAmdPpSYsSWjs/6q42CJprqpg5IiQKhIGgZ/5ojt////JOowCwDDhqTPJS/UaC8w4SjTxtO//1UCqrVVUAAAgBmgAcAIB9IaelEFEkdM06Bo3E3ilUTqo1BEI7GIfXPvLosiSjX27gfDkVFRxX/zP///7TlUHQbMDD/+1TEuYAJIQk/p6hRWTIg53TyniNM4xvmjo3NEhEp//1HDxkmFMABA6tXvlQI+EmAEh+tSyYWVUapZh0FyvcWRSt+rqHCOyDymRBYwAoEI/6B7f///jRIoROIuA452f48pphZ0f//5BNVFQBAARmoxJKc0TDiug95c6AJTQO0lM1ti0Zlvooj6COhYkE1PoqNlmR0kRqJUuDhq/1Jf///1l0mlAQE4TxMTA4UxhTTzozkoiw/DhLCo3b//oySbAD/+1TExABJsQ09p5lREUegpjWHnKkAANAIrACdo2XqdNFxgssGk8UnwhzTSzJb/uFAUehlCgJSsVAJ2/+rf+X/9EEYBzHaP9DhSJJwqGv///o/kUxBTUU0LjBVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVUCTi0FkSQkCAwMo8y83P0wkZE0wiMjP//////3ZbKRrLPI7KRnY5MrUKCBw0FRQW//wKKigsaAoqLCQ0PFBZvFhYX/+1TEyYCJvQkz7CDtSQ6hJhDxFfCF1UxBTUU0LjBVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVX/+1TE1gAKmQcezAGuSP0aYrTxHfhVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVX/+1TEzAPIaNyaIwRvwAAANIAAAARVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVU=","duration":0.6753958333333333},"human-reaction-5":{"mime":"audio/mpeg","base64":"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","duration":0.3872083333333333},"human-reaction-6":{"mime":"audio/mpeg","base64":"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","duration":0.6211041666666667},"human-reaction-7":{"mime":"audio/mpeg","base64":"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OIJsABXbYIfOpRrloTEtzCeRYmh9JhSmYys79ofyPfA35M6eJH9ji3ZGnrCu7oJ0XjdFX0VRGCAY/27UHBHYY9RsOE3qX/u+j5Wjb04KAAAA6AA4rSk7CeSTGmXR2UyR1XojEPAIDx2X4j9bU/jncwoaF926LHdNaTHK7RFdqrKLt1S6haj5WkCkjLjtMloetFY+yoNh////+1TEpYALTLEzTL1YAV2WJumHqbIxSlf0BHqCkQAAHgAJtrQxwINFU9G6P1eeiq4L6P8FysrksTlFNyd3ljhRPNBsPk04W0pRtnVGw4IDBZd9DSXoI11AoAKcgEqZt+s8cF5//9CEJ6QACLFyCgAEYADSGZDsSmSQgXAMIZAUpU0WBHYgmEOAxWnk92tat361fKa7Bz+lUtVJrygDHr4YpnC0hHAz7KMUA81ydNb1//iMEYBnuphi/OHgsC07rRX/+1TEogAJtLFHp7T4EUOV5imJCwgARMAsAASgAS/AE0BwKVP1nz4NxcV0XjkMJLSwTBdafynJf2pScppbF2CNRDiJBxxgSAGVEgnYeRCe/KcgIABeTjKEm6X7LH8u//6nMCZqD6MjicgADgotmSI0Rqk8GAX8+DKP46jXfopKop1OpzRXF1eJpq02iZGg2jS9Ac0hPr2dAKBaY/64qB8Ac//+aRO/6pb///2af/9aZEjubU5uBs+caecGQRmgcpj/+1TEqAAKDLExTDRYQVATpmmXnspJbVkrAJGZOMvgfdXYuFil6h0NKjW44uNIi1y7wKgBSXUxKeR1NR2IDA0kolPy3nP/8eY3H+l1rolYKCdDVgwOPLKCSmyiVUehWqf+uJgqIi8VzxBLJOEkOgdB0UCWWEcXhEWb+sW1C////+rQFRbin//QDIoSNUxBTUU0LjBVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVX/+1TEqwAKBJ0vrExYQSYTZ3T2HhpVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVX/+1TEs4OJJH0MDLMMgPsNGUQ0sdhVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVU=","duration":0.6655625},"human-reaction-8":{"mime":"audio/mpeg","base64":"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","duration":0.6045625}});
-
-    return { HUMAN_REACTION_BANK: HUMAN_REACTION_BANK };
-  })();
-  modules['game/ui/destruction-level.mjs'] = (() => {
-    const HUMAN_REACTION_CUES = modules['game/ui/destruction-audio.mjs']['HUMAN_REACTION_CUES'];
-    /** Match imported destruction recordings to the admitted bank without changing
+return{createHumanReactionPolicy:createHumanReactionPolicy};
+})();
+modules['game/ui/destruction-level.mjs']=(()=>{
+const HUMAN_REACTION_CUES=modules['game/ui/destruction-audio.mjs']['HUMAN_REACTION_CUES'];
+/** Match imported destruction recordings to the admitted bank without changing
      * their original samples. Summed channel magnitudes bound stereo/downmix peaks
      * even when channels cancel in a mono audition. This runs once after decoding. */
-    const targets = Object.freeze({
-      ...Object.fromEntries(HUMAN_REACTION_CUES.map((name) => [name, -30])),
-      'destroy-soft': -30,
-      'destroy-armored': -30,
-      'destroy-light': -29,
-      'destroy-heavy': -28,
-      'destroy-electronic': -31,
-    });
+const targets=Object.freeze({
+...Object.fromEntries(HUMAN_REACTION_CUES.map((name)=>[name,-30])),
+'destroy-soft':-30,
+'destroy-armored':-30,
+'destroy-light':-29,
+'destroy-heavy':-28,
+'destroy-electronic':-31,
+});
 
-    function destructionBufferGain(name, buffer) {
-      if (!Object.hasOwn(targets, name)) return 1;
-      const { length, numberOfChannels, sampleRate, duration } = buffer ?? {};
-      if (
-        !Number.isSafeInteger(length) ||
-        length <= 0 ||
-        !Number.isSafeInteger(numberOfChannels) ||
-        numberOfChannels <= 0 ||
-        numberOfChannels > 32 ||
-        length * numberOfChannels > 4 * 1024 * 1024 ||
-        !Number.isFinite(sampleRate) ||
-        sampleRate <= 0 ||
-        !Number.isFinite(duration) ||
-        duration <= 0 ||
-        duration > 1 ||
-        typeof buffer.getChannelData !== 'function'
-      )
-        throw new TypeError('Invalid destruction audio buffer.');
-      const envelope = new Float64Array(length);
-      for (let channel = 0; channel < numberOfChannels; channel++) {
-        const data = buffer.getChannelData(channel);
-        if (data.length !== length) throw new TypeError('Incomplete destruction audio channel.');
-        for (let index = 0; index < length; index++) {
-          const value = data[index];
-          if (!Number.isFinite(value)) throw new TypeError('Nonfinite destruction audio sample.');
-          envelope[index] += Math.abs(value);
-        }
-      }
-      const window = Math.max(1, Math.min(length, Math.round(sampleRate * 0.05)));
-      let peak = 0,
-        energy = 0,
-        maximumEnergy = 0;
-      for (let index = 0; index < length; index++) {
-        const value = envelope[index];
-        peak = Math.max(peak, value);
-        energy += value * value;
-        if (index >= window) energy -= envelope[index - window] ** 2;
-        maximumEnergy = Math.max(maximumEnergy, energy);
-      }
-      const rms = Math.sqrt(maximumEnergy / window);
-      return Math.min(1, peak > 0 ? 0.1 / peak : 1, rms > 0 ? 10 ** (targets[name] / 20) / rms : 1);
-    }
+function destructionBufferGain(name,buffer){
+if(!Object.hasOwn(targets,name))return 1;
+const{length,numberOfChannels,sampleRate,duration}=buffer??{};
+if(
+!Number.isSafeInteger(length)||
+length<=0||
+!Number.isSafeInteger(numberOfChannels)||
+numberOfChannels<=0||
+numberOfChannels>32||
+length*numberOfChannels>4*1024*1024||
+!Number.isFinite(sampleRate)||
+sampleRate<=0||
+!Number.isFinite(duration)||
+duration<=0||
+duration>1||
+typeof buffer.getChannelData!=='function'
+)
+throw new TypeError('Invalid destruction audio buffer.');
+const envelope=new Float64Array(length);
+for(let channel=0;channel<numberOfChannels;channel++){
+const data=buffer.getChannelData(channel);
+if(data.length!==length)throw new TypeError('Incomplete destruction audio channel.');
+for(let index=0;index<length;index++){
+const value=data[index];
+if(!Number.isFinite(value))throw new TypeError('Nonfinite destruction audio sample.');
+envelope[index]+=Math.abs(value);
+}
+}
+const window=Math.max(1,Math.min(length,Math.round(sampleRate*0.05)));
+let peak=0,
+energy=0,
+maximumEnergy=0;
+for(let index=0;index<length;index++){
+const value=envelope[index];
+peak=Math.max(peak,value);
+energy+=value*value;
+if(index>=window)energy-=envelope[index-window]**2;
+maximumEnergy=Math.max(maximumEnergy,energy);
+}
+const rms=Math.sqrt(maximumEnergy/window);
+return Math.min(1,peak>0?0.1/peak:1,rms>0?10**(targets[name]/20)/rms:1);
+}
 
-    return { destructionBufferGain: destructionBufferGain };
-  })();
-  modules['game/audio/dialogue-mix.mjs'] = (() => {
-    /** Decorative spoken reactions sit behind music and gameplay warnings.
+return{destructionBufferGain:destructionBufferGain};
+})();
+modules['game/audio/dialogue-mix.mjs']=(()=>{
+/** Decorative spoken reactions sit behind music and gameplay warnings.
      * The mix trim also applies to saved slider choices without rewriting preferences. */
-    const DEFAULT_DIALOGUE_VOLUME = 0.25;
-    const DIALOGUE_MIX_GAIN = 0.4;
-    const DIALOGUE_MUSIC_GAIN = 0.9;
+const DEFAULT_DIALOGUE_VOLUME=0.25;
+const DIALOGUE_MIX_GAIN=0.4;
+const DIALOGUE_MUSIC_GAIN=0.9;
 
-    return {
-      DEFAULT_DIALOGUE_VOLUME: DEFAULT_DIALOGUE_VOLUME,
-      DIALOGUE_MIX_GAIN: DIALOGUE_MIX_GAIN,
-      DIALOGUE_MUSIC_GAIN: DIALOGUE_MUSIC_GAIN,
-    };
-  })();
-  modules['game/ui/audio-master.mjs'] = (() => {
-    const t = academyAudioExternal0['t'];
-    const volumeValue = (value) => {
-      if (!Number.isFinite(value) || value < 0 || value > 1)
-        throw new TypeError(t('interface:audioVolumeMustBeBetweenZeroAndOne'));
-      return value;
-    };
-    const mutedValue = (value) => {
-      if (typeof value !== 'boolean') throw new TypeError(t('interface:audioMuteMustBeABoolean'));
-      return value;
-    };
+return{
+DEFAULT_DIALOGUE_VOLUME:DEFAULT_DIALOGUE_VOLUME,
+DIALOGUE_MIX_GAIN:DIALOGUE_MIX_GAIN,
+DIALOGUE_MUSIC_GAIN:DIALOGUE_MUSIC_GAIN,
+};
+})();
+modules['game/ui/audio-master.mjs']=(()=>{
+const t=academyAudioExternal1['t'];
+const volumeValue=(value)=>{
+if(!Number.isFinite(value)||value<0||value>1)
+throw new TypeError(t('interface:audioVolumeMustBeBetweenZeroAndOne'));
+return value;
+};
+const mutedValue=(value)=>{
+if(typeof value!=='boolean')throw new TypeError(t('interface:audioMuteMustBeABoolean'));
+return value;
+};
 
-    /** Shared output policy only. Hosts retain persistence, gestures and transport. */
-    function createAudioMaster({ muted = true, volume = 1 } = {}) {
-      let state = Object.freeze({
-        muted: mutedValue(muted),
-        volume: volumeValue(volume),
-        revision: 0,
-      });
-      let disposed = false;
-      const listeners = new Set();
-      function publish(next) {
-        state = Object.freeze({ ...next, revision: state.revision + 1 });
-        const errors = [];
-        for (const listener of [...listeners]) {
-          if (!listeners.has(listener)) continue;
-          try {
-            // A preceding observer may have applied a newer explicit intent.
-            listener(state);
-          } catch (error) {
-            errors.push(error);
-          }
-        }
-        if (errors.length)
-          throw new AggregateError(errors, t('interface:audioMasterOutputCouldNotBeApplied'));
-        return state;
-      }
-      function change(patch) {
-        if (disposed) throw new Error(t('interface:audioMasterIsDisposed'));
-        return publish({ ...state, ...patch });
-      }
-      return Object.freeze({
-        snapshot: () => state,
-        setMuted: (value) => change({ muted: mutedValue(value) }),
-        setVolume: (value) => change({ volume: volumeValue(value) }),
-        subscribe(listener) {
-          if (disposed) throw new Error(t('interface:audioMasterIsDisposed'));
-          if (typeof listener !== 'function')
-            throw new TypeError(t('interface:audioMasterListenerRequired'));
-          if (listeners.has(listener))
-            throw new Error(t('interface:audioMasterListenerAlreadySubscribed'));
-          listeners.add(listener);
-          try {
-            listener(state);
-          } catch (error) {
-            listeners.delete(listener);
-            throw error;
-          }
-          return () => listeners.delete(listener);
-        },
-        dispose() {
-          if (disposed) return;
-          disposed = true;
-          try {
-            publish({ ...state, muted: true });
-          } finally {
-            listeners.clear();
-          }
-        },
-      });
-    }
+/** Shared output policy only. Hosts retain persistence, gestures and transport. */
+function createAudioMaster({muted=true,volume=1}={}){
+let state=Object.freeze({
+muted:mutedValue(muted),
+volume:volumeValue(volume),
+revision:0,
+});
+let disposed=false;
+const listeners=new Set();
+function publish(next){
+state=Object.freeze({...next,revision:state.revision+1});
+const errors=[];
+for(const listener of[...listeners]){
+if(!listeners.has(listener))continue;
+try{
+// A preceding observer may have applied a newer explicit intent.
+listener(state);
+}catch(error){
+errors.push(error);
+}
+}
+if(errors.length)
+throw new AggregateError(errors,t('interface:audioMasterOutputCouldNotBeApplied'));
+return state;
+}
+function change(patch){
+if(disposed)throw new Error(t('interface:audioMasterIsDisposed'));
+return publish({...state,...patch});
+}
+return Object.freeze({
+snapshot:()=>state,
+setMuted:(value)=>change({muted:mutedValue(value)}),
+setVolume:(value)=>change({volume:volumeValue(value)}),
+subscribe(listener){
+if(disposed)throw new Error(t('interface:audioMasterIsDisposed'));
+if(typeof listener!=='function')
+throw new TypeError(t('interface:audioMasterListenerRequired'));
+if(listeners.has(listener))
+throw new Error(t('interface:audioMasterListenerAlreadySubscribed'));
+listeners.add(listener);
+try{
+listener(state);
+}catch(error){
+listeners.delete(listener);
+throw error;
+}
+return()=>listeners.delete(listener);
+},
+dispose(){
+if(disposed)return;
+disposed=true;
+try{
+publish({...state,muted:true});
+}finally{
+listeners.clear();
+}
+},
+});
+}
 
-    const mediaOwners = new WeakSet();
-    /** Native media keeps its own local fader. Queued native events cannot rewrite
+const mediaOwners=new WeakSet();
+/** Native media keeps its own local fader. Queued native events cannot rewrite
      * master or local intent; explicit local controls call setLocal instead. */
-    function bindAudioMasterMedia({ audioMaster, element, volume = 1, muted = false } = {}) {
-      if (!audioMaster?.snapshot || !audioMaster?.subscribe)
-        throw new TypeError(t('interface:audioMasterRequired'));
-      if (!element?.addEventListener || !element?.removeEventListener)
-        throw new TypeError(t('interface:audioMediaElementRequired'));
-      if (mediaOwners.has(element))
-        throw new Error(t('interface:audioMediaElementAlreadyHasAMasterOwner'));
-      let local = { volume: volumeValue(volume), muted: mutedValue(muted) };
-      let master = audioMaster.snapshot();
-      let disposed = false;
-      let applying = false;
-      const attempted = new Map();
-      const write = (key, value) => {
-        const observed = element[key];
-        const previous = attempted.get(key);
-        if (observed === value || (previous?.value === value && previous.observed === observed))
-          return;
-        element[key] = value;
-        // Some native platforms ignore/quantize volume. Their queued notification
-        // must not cause an endless attempt to write the same unsupported value.
-        attempted.set(key, { value, observed: element[key] });
-      };
-      const apply = () => {
-        if (disposed || applying) return;
-        const muted = local.muted || master.muted || local.volume === 0 || master.volume === 0;
-        const volume = local.volume * master.volume;
-        // Setting an unchanged property may still enqueue a native volumechange.
-        // Mute first so a simultaneous volume increase cannot escape the gate.
-        applying = true;
-        try {
-          if (muted) write('muted', true);
-          write('volume', volume);
-          if (!muted) write('muted', false);
-        } finally {
-          applying = false;
-        }
-      };
-      mediaOwners.add(element);
-      let unsubscribe;
-      try {
-        unsubscribe = audioMaster.subscribe((next) => {
-          master = next;
-          apply();
-        });
-        element.addEventListener('volumechange', apply);
-        element.addEventListener('play', apply);
-      } catch (error) {
-        unsubscribe?.();
-        element.removeEventListener('volumechange', apply);
-        element.removeEventListener('play', apply);
-        mediaOwners.delete(element);
-        throw error;
-      }
-      return Object.freeze({
-        setLocal(patch) {
-          if (disposed) return;
-          if (!patch || typeof patch !== 'object' || Array.isArray(patch))
-            throw new TypeError(t('interface:localAudioSettingsRequired'));
-          const next = { ...local };
-          for (const key of Object.keys(patch)) {
-            if (key === 'volume') next.volume = volumeValue(patch.volume);
-            else if (key === 'muted') next.muted = mutedValue(patch.muted);
-            else throw new TypeError(t('interface:unknownLocalAudioSetting'));
-          }
-          local = next;
-          apply();
-        },
-        dispose() {
-          if (disposed) return;
-          disposed = true;
-          unsubscribe();
-          element.removeEventListener('volumechange', apply);
-          element.removeEventListener('play', apply);
-          mediaOwners.delete(element);
-          if (element.muted !== true) element.muted = true;
-        },
-      });
-    }
+function bindAudioMasterMedia({audioMaster,element,volume=1,muted=false}={}){
+if(!audioMaster?.snapshot|| !audioMaster?.subscribe)
+throw new TypeError(t('interface:audioMasterRequired'));
+if(!element?.addEventListener|| !element?.removeEventListener)
+throw new TypeError(t('interface:audioMediaElementRequired'));
+if(mediaOwners.has(element))
+throw new Error(t('interface:audioMediaElementAlreadyHasAMasterOwner'));
+let local={volume:volumeValue(volume),muted:mutedValue(muted)};
+let master=audioMaster.snapshot();
+let disposed=false;
+let applying=false;
+const attempted=new Map();
+const write=(key,value)=>{
+const observed=element[key];
+const previous=attempted.get(key);
+if(observed===value||(previous?.value===value&&previous.observed===observed))
+return;
+element[key]=value;
+// Some native platforms ignore/quantize volume. Their queued notification
+// must not cause an endless attempt to write the same unsupported value.
+attempted.set(key,{value,observed:element[key]});
+};
+const apply=()=>{
+if(disposed||applying)return;
+const muted=local.muted||master.muted||local.volume===0||master.volume===0;
+const volume=local.volume*master.volume;
+// Setting an unchanged property may still enqueue a native volumechange.
+// Mute first so a simultaneous volume increase cannot escape the gate.
+applying=true;
+try{
+if(muted)write('muted',true);
+write('volume',volume);
+if(!muted)write('muted',false);
+}finally{
+applying=false;
+}
+};
+mediaOwners.add(element);
+let unsubscribe;
+try{
+unsubscribe=audioMaster.subscribe((next)=>{
+master=next;
+apply();
+});
+element.addEventListener('volumechange',apply);
+element.addEventListener('play',apply);
+}catch(error){
+unsubscribe?.();
+element.removeEventListener('volumechange',apply);
+element.removeEventListener('play',apply);
+mediaOwners.delete(element);
+throw error;
+}
+return Object.freeze({
+setLocal(patch){
+if(disposed)return;
+if(!patch||typeof patch!=='object'||Array.isArray(patch))
+throw new TypeError(t('interface:localAudioSettingsRequired'));
+const next={...local};
+for(const key of Object.keys(patch)){
+if(key==='volume')next.volume=volumeValue(patch.volume);
+else if(key==='muted')next.muted=mutedValue(patch.muted);
+else throw new TypeError(t('interface:unknownLocalAudioSetting'));
+}
+local=next;
+apply();
+},
+dispose(){
+if(disposed)return;
+disposed=true;
+unsubscribe();
+element.removeEventListener('volumechange',apply);
+element.removeEventListener('play',apply);
+mediaOwners.delete(element);
+if(element.muted!==true)element.muted=true;
+},
+});
+}
 
-    return { createAudioMaster: createAudioMaster, bindAudioMasterMedia: bindAudioMasterMedia };
-  })();
-  modules['game/audio-preferences.mjs'] = (() => {
-    const AUDIO_PREFERENCES_KEY = 'revealline.audio-master.v1';
-    const MAX_RECORD_LENGTH = 256;
+return{createAudioMaster:createAudioMaster,bindAudioMasterMedia:bindAudioMasterMedia};
+})();
+modules['game/audio-preferences.mjs']=(()=>{
+const AUDIO_PREFERENCES_KEY='revealline.audio-master.v1';
+const MAX_RECORD_LENGTH=256;
 
-    function values(value) {
-      if (
-        !value ||
-        typeof value !== 'object' ||
-        Array.isArray(value) ||
-        Object.keys(value).length !== 2 ||
-        !Object.hasOwn(value, 'muted') ||
-        !Object.hasOwn(value, 'volume') ||
-        typeof value.muted !== 'boolean' ||
-        !Number.isFinite(value.volume) ||
-        value.volume < 0 ||
-        value.volume > 1
-      )
-        throw new TypeError(
-          'Audio preferences require a mute boolean and volume between zero and one.',
-        );
-      return { muted: value.muted, volume: value.volume };
-    }
+function values(value){
+if(
+!value||
+typeof value!=='object'||
+Array.isArray(value)||
+Object.keys(value).length!==2||
+!Object.hasOwn(value,'muted')||
+!Object.hasOwn(value,'volume')||
+typeof value.muted!=='boolean'||
+!Number.isFinite(value.volume)||
+value.volume<0||
+value.volume>1
+)
+throw new TypeError(
+'Audio preferences require a mute boolean and volume between zero and one.',
+);
+return{muted:value.muted,volume:value.volume};
+}
 
-    function decode(raw) {
-      if (typeof raw !== 'string' || raw.length > MAX_RECORD_LENGTH) return null;
-      try {
-        return values(JSON.parse(raw));
-      } catch {
-        return null;
-      }
-    }
+function decode(raw){
+if(typeof raw!=='string'||raw.length>MAX_RECORD_LENGTH)return null;
+try{
+return values(JSON.parse(raw));
+}catch{
+return null;
+}
+}
 
-    /** Page-owned persistence for the shared output authority. This adapter never
-     * starts media or writes a player profile. Only its explicit setters save. */
-    function createAudioPreferences({
-      audioMaster,
-      getStorage = () => globalThis.localStorage,
-      window: eventTarget = globalThis,
-      fallback = { muted: true, volume: 0.65 },
-      writable = () => true,
-      onWarning = () => {},
-    } = {}) {
-      const initial = values(fallback);
-      let disposed = false,
-        explicit = false,
-        stored = false,
-        unsaved = false,
-        warning = '';
-      const notify = (message) => {
-        warning = message;
-        try {
-          onWarning(message);
-        } catch {
-          // A notice cannot prevent the synchronous sound change.
-        }
-      };
-      const read = () => {
-        try {
-          const storage = getStorage(),
-            raw = storage?.getItem(AUDIO_PREFERENCES_KEY);
-          return { storage, raw, value: decode(raw) };
-        } catch {
-          return { storage: null, raw: null, value: null };
-        }
-      };
-      const apply = (record) => {
-        let revision = audioMaster.snapshot().revision;
-        // Close the mute gate before increasing volume; open it after the fader.
-        for (const key of record.muted ? ['muted', 'volume'] : ['volume', 'muted']) {
-          const current = audioMaster.snapshot();
-          if (disposed || current.revision !== revision) return false;
-          if (current[key] === record[key]) continue;
-          audioMaster[key === 'muted' ? 'setMuted' : 'setVolume'](record[key]);
-          revision++;
-          // A subscriber's newer intent must also win over this synchronous seed.
-          if (audioMaster.snapshot().revision !== revision) return false;
-        }
-        return true;
-      };
-      let seedRevision = audioMaster.snapshot().revision;
-      explicit = seedRevision !== 0;
-      const first = read();
-      if (first.value) {
-        stored = true;
-        apply(first.value);
-      } else if (seedRevision === 0 && apply(initial)) {
-        seedRevision = audioMaster.snapshot().revision;
-      }
-      const persist = () => {
-        try {
-          const allowed = writable();
-          if (disposed) return;
-          if (!allowed) {
-            unsaved = true;
-            notify('Sound changes apply only to this session; saving is disabled here.');
-            return;
-          }
-          const { muted, volume } = audioMaster.snapshot(),
-            storage = getStorage();
-          if (disposed) return;
-          if (!storage) throw new Error('Storage unavailable.');
-          storage.setItem(AUDIO_PREFERENCES_KEY, JSON.stringify(values({ muted, volume })));
-          if (disposed) return;
-          stored = true;
-          unsaved = false;
-          notify('');
-        } catch {
-          if (disposed) return;
-          unsaved = true;
-          notify('Sound changed for this session, but could not be saved for another page.');
-        }
-      };
-      const change = (key, value) => {
-        if (disposed) throw new Error('Audio preferences are disposed.');
-        const before = audioMaster.snapshot();
-        values({ muted: before.muted, volume: before.volume, [key]: value });
-        explicit = true;
-        try {
-          audioMaster[key === 'muted' ? 'setMuted' : 'setVolume'](value);
-        } finally {
-          // Output listeners may throw after the authority accepted the intent.
-          if (!disposed && audioMaster.snapshot().revision !== before.revision) persist();
-        }
-        return audioMaster.snapshot();
-      };
-      const receive = (event) => {
-        if (disposed || unsaved || event.key !== AUDIO_PREFERENCES_KEY) return;
-        const revision = audioMaster.snapshot().revision,
-          current = read();
-        if (
-          disposed ||
-          unsaved ||
-          audioMaster.snapshot().revision !== revision ||
-          !current.storage ||
-          event.storageArea !== current.storage ||
-          event.newValue !== current.raw ||
-          !current.value
-        )
-          return;
-        stored = true;
-        apply(current.value);
-      };
-      // Reconcile a restored page with fresh storage rather than a missed event's
-      // payload, without discarding local intent that could not be saved.
-      const restored = (event) => {
-        if (disposed || unsaved || event.persisted !== true) return;
-        const revision = audioMaster.snapshot().revision,
-          current = read();
-        if (disposed || unsaved || audioMaster.snapshot().revision !== revision || !current.value)
-          return;
-        stored = true;
-        apply(current.value);
-      };
-      eventTarget?.addEventListener?.('storage', receive);
-      eventTarget?.addEventListener?.('pageshow', restored);
-      return Object.freeze({
-        setMuted: (value) => change('muted', value),
-        setVolume: (value) => change('volume', value),
-        seed(candidate) {
-          if (disposed || stored || explicit || audioMaster.snapshot().revision !== seedRevision)
-            return false;
-          const current = read();
-          if (current.value) {
-            stored = true;
-            apply(current.value);
-            return false;
-          }
-          if (!apply(values(candidate))) return false;
-          seedRevision = audioMaster.snapshot().revision;
-          return true;
-        },
-        getWarning: () => warning,
-        dispose() {
-          if (disposed) return;
-          disposed = true;
-          eventTarget?.removeEventListener?.('storage', receive);
-          eventTarget?.removeEventListener?.('pageshow', restored);
-        },
-      });
-    }
+/** Page-owned persistence for the shared output authority. This adapter never
+   * starts media or writes a player profile. Only its explicit setters save. */
+function createAudioPreferences({
+audioMaster,
+getStorage=()=>globalThis.localStorage,
+window:eventTarget=globalThis,
+fallback={muted:true,volume:0.65},
+writable=()=>true,
+onWarning=()=>{},
+}={}){
+const initial=values(fallback);
+let disposed=false,
+explicit=false,
+stored=false,
+unsaved=false,
+warning='',
+warningKey='';
+const notify=(message,key='')=>{
+warning=message;
+warningKey=key;
+try{
+onWarning(message,key);
+}catch{
+// A notice cannot prevent the synchronous sound change.
+}
+};
+const read=()=>{
+try{
+const storage=getStorage(),
+raw=storage?.getItem(AUDIO_PREFERENCES_KEY);
+return{storage,raw,value:decode(raw)};
+}catch{
+return{storage:null,raw:null,value:null};
+}
+};
+const apply=(record)=>{
+let revision=audioMaster.snapshot().revision;
+// Close the mute gate before increasing volume; open it after the fader.
+for(const key of record.muted?['muted','volume']:['volume','muted']){
+const current=audioMaster.snapshot();
+if(disposed||current.revision!==revision)return false;
+if(current[key]===record[key])continue;
+audioMaster[key==='muted'?'setMuted':'setVolume'](record[key]);
+revision++;
+// A subscriber's newer intent must also win over this synchronous seed.
+if(audioMaster.snapshot().revision!==revision)return false;
+}
+return true;
+};
+let seedRevision=audioMaster.snapshot().revision;
+explicit=seedRevision!==0;
+const first=read();
+if(first.value){
+stored=true;
+apply(first.value);
+}else if(seedRevision===0&&apply(initial)){
+seedRevision=audioMaster.snapshot().revision;
+}
+const persist=()=>{
+const{muted,volume,revision}=audioMaster.snapshot();
+const current=()=> !disposed&&audioMaster.snapshot().revision===revision;
+try{
+const allowed=writable();
+if(!current())return;
+if(!allowed){
+unsaved=true;
+notify(
+'Sound changes apply only to this session; saving is disabled here.',
+'common:preferences.audioSessionOnly',
+);
+return;
+}
+const storage=getStorage();
+if(!current())return;
+if(!storage)throw new Error('Storage unavailable.');
+storage.setItem(AUDIO_PREFERENCES_KEY,JSON.stringify(values({muted,volume})));
+if(!current())return;
+const saved=decode(storage.getItem(AUDIO_PREFERENCES_KEY));
+if(!current())return;
+if(!saved||saved.muted!==muted||saved.volume!==volume)
+throw new Error('Saved audio preferences could not be confirmed.');
+stored=true;
+unsaved=false;
+notify('');
+}catch{
+if(!current())return;
+unsaved=true;
+notify(
+'Sound changed for this session, but could not be saved for another page.',
+'common:preferences.audioSaveFailed',
+);
+}
+};
+const change=(key,value)=>{
+if(disposed)throw new Error('Audio preferences are disposed.');
+const before=audioMaster.snapshot();
+values({muted:before.muted,volume:before.volume,[key]:value});
+explicit=true;
+try{
+audioMaster[key==='muted'?'setMuted':'setVolume'](value);
+}finally{
+// Output listeners may throw after the authority accepted the intent.
+if(!disposed&&audioMaster.snapshot().revision!==before.revision)persist();
+}
+return audioMaster.snapshot();
+};
+const receive=(event)=>{
+if(disposed||unsaved||event.key!==AUDIO_PREFERENCES_KEY)return;
+const revision=audioMaster.snapshot().revision,
+current=read();
+if(
+disposed||
+unsaved||
+audioMaster.snapshot().revision!==revision||
+!current.storage||
+event.storageArea!==current.storage||
+event.newValue!==current.raw||
+!current.value
+)
+return;
+stored=true;
+apply(current.value);
+};
+// Reconcile a restored page with fresh storage rather than a missed event's
+// payload, without discarding local intent that could not be saved.
+const restored=(event)=>{
+if(disposed||unsaved||event.persisted!==true)return;
+const revision=audioMaster.snapshot().revision,
+current=read();
+if(disposed||unsaved||audioMaster.snapshot().revision!==revision|| !current.value)
+return;
+stored=true;
+apply(current.value);
+};
+eventTarget?.addEventListener?.('storage',receive);
+eventTarget?.addEventListener?.('pageshow',restored);
+return Object.freeze({
+setMuted:(value)=>change('muted',value),
+setVolume:(value)=>change('volume',value),
+seed(candidate){
+if(disposed||stored||explicit||audioMaster.snapshot().revision!==seedRevision)
+return false;
+const current=read();
+if(current.value){
+stored=true;
+apply(current.value);
+return false;
+}
+if(!apply(values(candidate)))return false;
+seedRevision=audioMaster.snapshot().revision;
+return true;
+},
+getWarning:()=>warning,
+getWarningKey:()=>warningKey,
+dispose(){
+if(disposed)return;
+disposed=true;
+eventTarget?.removeEventListener?.('storage',receive);
+eventTarget?.removeEventListener?.('pageshow',restored);
+},
+});
+}
 
-    return {
-      AUDIO_PREFERENCES_KEY: AUDIO_PREFERENCES_KEY,
-      createAudioPreferences: createAudioPreferences,
-    };
-  })();
-  modules['game/ui/world-ambience.mjs'] = (() => {
-    /** Shared, original atmosphere recipes. They use the existing SFX owner and
+return{
+AUDIO_PREFERENCES_KEY:AUDIO_PREFERENCES_KEY,
+createAudioPreferences:createAudioPreferences,
+};
+})();
+modules['game/ui/world-ambience.mjs']=(()=>{
+/** Shared, original atmosphere recipes. They use the existing SFX owner and
      * require no decoded files, independent context or background scheduler. */
-    const WORLDS = Object.freeze({
-      'field-crossing': { filter: 760, air: 0.009, hum: 108, humGain: 0.0015 },
-      'freight-depot': { filter: 310, air: 0.006, hum: 61, humGain: 0.0035 },
-      'relay-ruins': { filter: 480, air: 0.008, hum: 89, humGain: 0.002 },
-      'river-port': { filter: 570, air: 0.008, hum: 74, humGain: 0.0016 },
-      'chalk-quarry': { filter: 930, air: 0.007, hum: 48, humGain: 0.0022 },
-      'orchard-strongpoint': { filter: 1120, air: 0.006, hum: 123, humGain: 0.0012 },
-    });
+const WORLDS=Object.freeze({
+'field-crossing':{filter:760,air:0.009,hum:108,humGain:0.0015},
+'freight-depot':{filter:310,air:0.006,hum:61,humGain:0.0035},
+'relay-ruins':{filter:480,air:0.008,hum:89,humGain:0.002},
+'river-port':{filter:570,air:0.008,hum:74,humGain:0.0016},
+'chalk-quarry':{filter:930,air:0.007,hum:48,humGain:0.0022},
+'orchard-strongpoint':{filter:1120,air:0.006,hum:123,humGain:0.0012},
+});
 
-    function worldAmbienceRecipe(world) {
-      const profile = WORLDS[world];
-      if (!profile) return null;
-      return {
-        name: `ambience-${world}`,
-        procedural: true,
-        ambience: true,
-        gain: 1,
-        priority: 0,
-        movement: false,
-        cooldown: 1.25,
-        tone: {
-          kind: 'snare',
-          from: profile.filter,
-          to: profile.filter,
-          filterFrequency: profile.filter,
-          duration: 1.75,
-          gain: profile.air,
-          type: 'sine',
-        },
-        layers: [
-          {
-            from: profile.hum,
-            to: profile.hum * 0.985,
-            duration: 1.7,
-            gain: profile.humGain,
-            type: 'sine',
-          },
-        ],
-      };
-    }
+function worldAmbienceRecipe(world){
+const profile=WORLDS[world];
+if(!profile)return null;
+return{
+name:`ambience-${world}`,
+procedural:true,
+ambience:true,
+gain:1,
+priority:0,
+movement:false,
+cooldown:1.25,
+tone:{
+kind:'snare',
+from:profile.filter,
+to:profile.filter,
+filterFrequency:profile.filter,
+duration:1.75,
+gain:profile.air,
+type:'sine',
+},
+layers:[
+{
+from:profile.hum,
+to:profile.hum*0.985,
+duration:1.7,
+gain:profile.humGain,
+type:'sine',
+},
+],
+};
+}
 
-    return { worldAmbienceRecipe: worldAmbienceRecipe };
-  })();
-  modules['game/ui/encounter-audio.mjs'] = (() => {
-    /** Shared semantic cues; both recorded and offline procedural renditions use
+return{worldAmbienceRecipe:worldAmbienceRecipe};
+})();
+modules['game/ui/encounter-audio.mjs']=(()=>{
+/** Shared semantic cues; both recorded and offline procedural renditions use
      * these recipes. No context, clock, randomness or actor mutation lives here. */
-    const destructionSoundRecipe =
-      modules['game/ui/destruction-audio.mjs']['destructionSoundRecipe'];
-    const worldAmbienceRecipe = modules['game/ui/world-ambience.mjs']['worldAmbienceRecipe'];
-    const FAMILY_PITCH = Object.freeze({
-      lookout: 1.1,
-      patroller: 0.94,
-      runner: 1.06,
-      sprinter: 1.18,
-      courier: 1.24,
-      guard: 0.84,
-      refuge: 0.98,
-      switchback: 1.14,
-      pair: 1.04,
-      shield: 0.72,
-      brace: 0.68,
-      'refuge-seeker': 0.98,
-      'rendezvous-pair': 1.04,
-      'shield-bearer': 0.72,
-      'brace-trooper': 0.68,
-      'relay-warden': 0.62,
-    });
-    // Original material accents reuse the admitted bank. Cadence follows observed
-    // movement, never a sprite frame, random choice or simulation mutation.
-    const ACTOR_SOUNDS = Object.freeze({
-      runner: Object.freeze({
-        cadence: 0.32,
-        rate: 1.08,
-        equipment: 'paper',
-        from: 240,
-        to: 150,
-      }),
-      courier: Object.freeze({
-        cadence: 0.29,
-        rate: 1.19,
-        equipment: 'ratchet',
-        from: 360,
-        to: 210,
-      }),
-      guard: Object.freeze({
-        cadence: 0.41,
-        rate: 0.87,
-        equipment: 'contact-metal',
-        from: 210,
-        to: 90,
-      }),
-      shield: Object.freeze({
-        cadence: 0.48,
-        rate: 0.7,
-        equipment: 'contact-metal',
-        from: 135,
-        to: 48,
-      }),
-    });
-    function actorSoundProfile(family) {
-      return ACTOR_SOUNDS[family === 'shield-bearer' ? 'shield' : family] ?? ACTOR_SOUNDS.runner;
-    }
-    function encounterSoundRecipe(type, details = {}) {
-      if (type === 'catch') return destructionSoundRecipe(details);
-      if (type === 'ambience') return worldAmbienceRecipe(details.world);
-      if (type === 'warning-charge') {
-        const progress = Math.max(0, Math.min(1, details.progress ?? 0));
-        return {
-          name: 'warning-charge',
-          procedural: true,
-          gain: 0.18,
-          priority: 5,
-          movement: false,
-          cooldown: 0.16,
-          tone: {
-            from: 660 + progress * 360,
-            to: 740 + progress * 360,
-            duration: 0.055,
-            gain: 0.024,
-            type: 'sine',
-          },
-        };
-      }
-      if (type === 'escort-shot') {
-        const breaker = details.role === 'breaker';
-        return {
-          name: breaker ? 'escort-breaker' : 'escort-sweeper',
-          procedural: true,
-          gain: 0.15,
-          priority: 2,
-          movement: false,
-          cooldown: 0.65,
-          tone: {
-            from: breaker ? 520 : 160,
-            to: breaker ? 180 : 60,
-            duration: breaker ? 0.075 : 0.12,
-            gain: 0.016,
-            type: breaker ? 'triangle' : 'sine',
-          },
-        };
-      }
-      const pitch = FAMILY_PITCH[details.family] ?? 1;
-      const actor = actorSoundProfile(details.family),
-        tracked = details.machine === 'tracked',
-        metal =
-          details.material === 'metal' || [true, 'tracked', 'wheeled'].includes(details.machine);
-      const recipes = {
-        step: ['grain', 0.11, 0, 130 * actor.rate, 65 * actor.rate, 0.055],
-        equipment: [actor.equipment, 0.12, 1, actor.from, actor.to, 0.085],
-        drive: [
-          tracked ? 'ratchet' : 'wheels',
-          0.17,
-          1,
-          tracked ? 110 : 210,
-          tracked ? 48 : 90,
-          0.16,
-        ],
-        notice: ['switch', 0.17, 2, 360, 520, 0.09],
-        warning: ['warning', 0.44, 5, 620, 860, 0.13],
-        burst: ['paper', 0.19, 2, 190, 320, 0.09],
-        recover: ['cancel', 0.13, 1, 310, 210, 0.08],
-        blocked: ['contact-soft', 0.1, 1, 150, 100, 0.055],
-        fire: ['attack', 0.34, 4, 620, 110, 0.08],
-        impact: ['impact', 0.48, 5, 170, 38, 0.15],
-        pulse: ['deploy', 0.33, 3, 880, 260, 0.19],
-        reel: ['ratchet', 0.3, 3, 220, 510, 0.16],
-        supply: ['pickup', 0.2, 2, 520, 780, 0.09],
-        shutter: [
-          details.closed ? 'closure' : 'gate',
-          0.22,
-          3,
-          details.closed ? 360 : 260,
-          details.closed ? 160 : 520,
-          0.13,
-        ],
-        objective: ['confirm', 0.4, 4, 660, 990, 0.18],
-        failure: ['loss', 0.42, 5, 260, 65, 0.23],
-      };
-      const row = recipes[type];
-      if (!row) return null;
-      const [name, gain, priority, from, to, duration] = row;
-      const scale = Number.isFinite(details.gainScale)
-        ? Math.max(0, Math.min(1, details.gainScale))
-        : 1;
-      const movement = ['step', 'equipment', 'drive'].includes(type);
-      return {
-        name,
-        gain: gain * scale,
-        priority:
-          details.semantic === 'armor-break'
-            ? 4
-            : details.semantic === 'harmful-contact'
-              ? 5
-              : details.semantic === 'friendly-impact'
-                ? 3
-                : priority,
-        movement,
-        // Loop textures are deliberately sampled as short envelopes for footsteps.
-        maxDuration: movement ? duration : null,
-        cooldown:
-          type === 'step'
-            ? actor.cadence
-            : type === 'equipment'
-              ? 0.7
-              : type === 'drive'
-                ? 1.2
-                : null,
-        rate: type === 'step' ? actor.rate : pitch,
-        tone: {
-          from: from * pitch,
-          to: to * pitch,
-          duration,
-          gain: gain * scale * 0.14,
-          type: metal || type === 'equipment' ? 'triangle' : 'sine',
-        },
-      };
-    }
+const destructionSoundRecipe=
+modules['game/ui/destruction-audio.mjs']['destructionSoundRecipe'];
+const worldAmbienceRecipe=modules['game/ui/world-ambience.mjs']['worldAmbienceRecipe'];
+const FAMILY_PITCH=Object.freeze({
+lookout:1.1,
+patroller:0.94,
+runner:1.06,
+sprinter:1.18,
+courier:1.24,
+guard:0.84,
+refuge:0.98,
+switchback:1.14,
+pair:1.04,
+shield:0.72,
+brace:0.68,
+'refuge-seeker':0.98,
+'rendezvous-pair':1.04,
+'shield-bearer':0.72,
+'brace-trooper':0.68,
+'relay-warden':0.62,
+});
+// Original material accents reuse the admitted bank. Cadence follows observed
+// movement, never a sprite frame, random choice or simulation mutation.
+const ACTOR_SOUNDS=Object.freeze({
+runner:Object.freeze({
+cadence:0.32,
+rate:1.08,
+equipment:'paper',
+from:240,
+to:150,
+}),
+courier:Object.freeze({
+cadence:0.29,
+rate:1.19,
+equipment:'ratchet',
+from:360,
+to:210,
+}),
+guard:Object.freeze({
+cadence:0.41,
+rate:0.87,
+equipment:'contact-metal',
+from:210,
+to:90,
+}),
+shield:Object.freeze({
+cadence:0.48,
+rate:0.7,
+equipment:'contact-metal',
+from:135,
+to:48,
+}),
+});
+function actorSoundProfile(family){
+return ACTOR_SOUNDS[family==='shield-bearer'?'shield':family]??ACTOR_SOUNDS.runner;
+}
+/** Version-two flight cues are semantic and deterministic; old courses keep their bank. */
+function combatSoundRecipe(type,details={}){
+const profiles={
+autocannon:[230,64,0.065,0.055,0.032],
+scatter:[115,35,0.18,0.09,0.085],
+precision:[1240,180,0.09,0.065,0.02],
+rocket:[95,28,0.26,0.085,0.18],
+};
+const profile=profiles[details.weapon];
+let tint=0;
+for(const char of String(details.eventId??''))
+tint=(Math.imul(tint,31)+char.charCodeAt(0))>>>0;
+const variant=0.97+(tint%61)/1000;
+const tone=(from,to,duration,gain=0.025,extra={})=>({
+from,
+to,
+duration,
+gain,
+type:'triangle',
+...extra,
+});
+const recipe=(name,priority,voice,layers=[],cooldown=0.08)=>({
+name,
+procedural:true,
+gain:0.3,
+priority,
+movement:false,
+cooldown,
+tone:voice,
+layers,
+});
+if(type==='player-damage')
+return recipe(
+'hull-damage',
+5,
+tone(175,38,0.15,0.045),
+[tone(0,0,0.055,0.024,{kind:'snare'})],
+0.12,
+);
+if(type==='fire'&&profile){
+const[from,to,duration,gain,noise]=profile;
+return recipe(
+`weapon-${details.weapon}`,
+3,
+tone(from*variant,to*variant,duration,gain),
+[tone(0,0,noise,gain*0.6,{kind:'snare'})],
+details.weapon==='autocannon'?0.08:0.12,
+);
+}
+if(type==='reload-start')
+return recipe(
+'reload-start',
+2,
+tone(170,310,0.065,0.018),
+[tone(260,130,0.055,0.012,{delay:0.09})],
+0.2,
+);
+if(type==='reload-ready')
+return recipe(
+'reload-ready',
+4,
+tone(660,880,0.065,0.025),
+[tone(990,1320,0.08,0.018,{delay:0.07})],
+0.15,
+);
+if(type==='weapon-empty')
+return recipe('weapon-empty',4,tone(155,80,0.045,0.025),[],0.3);
+if(type==='weapon-selected')
+return recipe('weapon-selected',2,tone(profile?.[0]??320,540,0.06,0.014),[],0.15);
+if(type==='payload')
+return recipe(
+'payload-release',
+3,
+tone(220,70,0.13,0.03),
+[tone(0,0,0.07,0.02,{kind:'snare'})],
+0.2,
+);
+if(type==='payload-armed'||type==='payload-ready')
+return recipe(
+type,
+4,
+tone(510,720,0.07,0.025),
+[tone(720,1040,0.1,0.02,{delay:0.1})],
+0.3,
+);
+if(type==='explosion')
+return recipe(
+'combat-explosion',
+3,
+tone(82,25,0.4,0.075,{type:'sine'}),
+[tone(0,0,0.25,0.07,{kind:'snare'})],
+0.12,
+);
+if(type==='component')
+return recipe(
+'component-break',
+4,
+tone(740,130,0.13,0.04),
+[tone(0,0,0.05,0.02,{kind:'snare'})],
+0.12,
+);
+if(type==='surface-impact'||(type==='impact'&&details.weapon)){
+const organic=details.material==='organic'&& !details.protected;
+const glass=details.material==='glass';
+return recipe(
+details.protected?'shield-hit':`hit-${details.material??'stone'}`,
+2,
+tone(
+organic?160:glass?1800:650,
+organic?45:130,
+organic?0.07:0.095,
+0.028,
+),
+organic?[]:[tone(0,0,0.035,0.012,{kind:'snare'})],
+0.09,
+);
+}
+if(['repair','resupply','challenge'].includes(type))
+return recipe(
+type,
+4,
+tone(440,660,0.08),
+[tone(880,1040,0.09,0.02,{delay:0.1})],
+0.2,
+);
+return null;
+}
 
-    /** Phase changes are incidental cues; blocked/idling actors never emit per frame. */
-    function actorPhaseSound(previous, next) {
-      if (!previous || previous === next) return null;
-      if (['warning', 'telegraph', 'turning'].includes(next)) return 'warning';
-      if (['burst', 'dash'].includes(next)) return 'burst';
-      if (['recover', 'recovering', 'recovery', 'rest'].includes(next)) return 'recover';
-      if (next === 'blocked') return 'blocked';
-      if (['flee', 'fleeing', 'notice', 'committed'].includes(next)) return 'notice';
-      return null;
-    }
+function encounterSoundRecipe(type,details={}){
+const combat=combatSoundRecipe(type,details);
+if(combat)return combat;
+if(type==='catch')return destructionSoundRecipe(details);
+if(type==='ambience')return worldAmbienceRecipe(details.world);
+if(type==='warning-charge'){
+const progress=Math.max(0,Math.min(1,details.progress??0));
+return{
+name:'warning-charge',
+procedural:true,
+gain:0.18,
+priority:5,
+movement:false,
+cooldown:0.16,
+tone:{
+from:660+progress*360,
+to:740+progress*360,
+duration:0.055,
+gain:0.024,
+type:'sine',
+},
+};
+}
+if(type==='escort-shot'){
+const breaker=details.role==='breaker';
+return{
+name:breaker?'escort-breaker':'escort-sweeper',
+procedural:true,
+gain:0.15,
+priority:2,
+movement:false,
+cooldown:0.65,
+tone:{
+from:breaker?520:160,
+to:breaker?180:60,
+duration:breaker?0.075:0.12,
+gain:0.016,
+type:breaker?'triangle':'sine',
+},
+};
+}
+const pitch=FAMILY_PITCH[details.family]??1;
+const actor=actorSoundProfile(details.family),
+tracked=details.machine==='tracked',
+metal=
+details.material==='metal'||[true,'tracked','wheeled'].includes(details.machine);
+const recipes={
+step:['grain',0.11,0,130*actor.rate,65*actor.rate,0.055],
+equipment:[actor.equipment,0.12,1,actor.from,actor.to,0.085],
+drive:[
+tracked?'ratchet':'wheels',
+0.17,
+1,
+tracked?110:210,
+tracked?48:90,
+0.16,
+],
+notice:['switch',0.17,2,360,520,0.09],
+warning:['warning',0.44,5,620,860,0.13],
+burst:['paper',0.19,2,190,320,0.09],
+recover:['cancel',0.13,1,310,210,0.08],
+blocked:['contact-soft',0.1,1,150,100,0.055],
+fire:['attack',0.34,4,620,110,0.08],
+impact:['impact',0.48,5,170,38,0.15],
+pulse:['deploy',0.33,3,880,260,0.19],
+reel:['ratchet',0.3,3,220,510,0.16],
+supply:['pickup',0.2,2,520,780,0.09],
+shutter:[
+details.closed?'closure':'gate',
+0.22,
+3,
+details.closed?360:260,
+details.closed?160:520,
+0.13,
+],
+objective:['confirm',0.4,4,660,990,0.18],
+failure:['loss',0.42,5,260,65,0.23],
+};
+const row=recipes[type];
+if(!row)return null;
+const[name,gain,priority,from,to,duration]=row;
+const scale=Number.isFinite(details.gainScale)
+?Math.max(0,Math.min(1,details.gainScale))
+:1;
+const movement=['step','equipment','drive'].includes(type);
+return{
+name,
+gain:gain*scale,
+priority:
+details.semantic==='armor-break'
+?4
+:details.semantic==='harmful-contact'
+?5
+:details.semantic==='friendly-impact'
+?3
+:priority,
+movement,
+// Loop textures are deliberately sampled as short envelopes for footsteps.
+maxDuration:movement?duration:null,
+cooldown:
+type==='step'
+?actor.cadence
+:type==='equipment'
+?0.7
+:type==='drive'
+?1.2
+:null,
+rate:type==='step'?actor.rate:pitch,
+tone:{
+from:from*pitch,
+to:to*pitch,
+duration,
+gain:gain*scale*0.14,
+type:metal||type==='equipment'?'triangle':'sine',
+},
+};
+}
 
-    return {
-      actorSoundProfile: actorSoundProfile,
-      encounterSoundRecipe: encounterSoundRecipe,
-      actorPhaseSound: actorPhaseSound,
-    };
-  })();
-  modules['game/ui/movement-audio.mjs'] = (() => {
-    const MOVEMENT_AUDIO_KEY = 'revealline.movement-audio.v1';
-    function readMovementAudio(storage) {
-      try {
-        storage ??= globalThis.localStorage;
-        const value = JSON.parse(storage?.getItem(MOVEMENT_AUDIO_KEY) ?? 'null');
-        return {
-          enabled: typeof value?.enabled === 'boolean' ? value.enabled : true,
-          volume:
-            Number.isFinite(value?.volume) && value.volume >= 0 && value.volume <= 1
-              ? value.volume
-              : 0.5,
-        };
-      } catch {
-        return { enabled: true, volume: 0.5 };
-      }
-    }
+/** Phase changes are incidental cues; blocked/idling actors never emit per frame. */
+function actorPhaseSound(previous,next){
+if(!previous||previous===next)return null;
+if(['warning','telegraph','turning'].includes(next))return'warning';
+if(['burst','dash'].includes(next))return'burst';
+if(['recover','recovering','recovery','rest'].includes(next))return'recover';
+if(next==='blocked')return'blocked';
+if(['flee','fleeing','notice','committed'].includes(next))return'notice';
+return null;
+}
 
-    return { MOVEMENT_AUDIO_KEY: MOVEMENT_AUDIO_KEY, readMovementAudio: readMovementAudio };
-  })();
-  modules['game/ui/dialogue-channel.mjs'] = (() => {
-    /** One spoken line per page, including radio and Studio auditions. */
-    let active = null;
-    const dialogueChannel = Object.freeze({
-      get active() {
-        return active;
-      },
-      claim(voice) {
-        if (active !== voice) active?.stop();
-        active = voice;
-      },
-      release(voice) {
-        if (active === voice) active = null;
-      },
-      interrupt() {
-        active?.stop();
-      },
-      snapshot() {
-        return Object.freeze({
-          voices: active ? 1 : 0,
-          kind: active?.radio ? 'radio' : active ? 'dialogue' : null,
-        });
-      },
-    });
+return{
+actorSoundProfile:actorSoundProfile,
+combatSoundRecipe:combatSoundRecipe,
+encounterSoundRecipe:encounterSoundRecipe,
+actorPhaseSound:actorPhaseSound,
+};
+})();
+modules['game/ui/movement-audio.mjs']=(()=>{
+const MOVEMENT_AUDIO_KEY='revealline.movement-audio.v1';
+function readMovementAudio(storage){
+try{
+storage??=globalThis.localStorage;
+const value=JSON.parse(storage?.getItem(MOVEMENT_AUDIO_KEY)??'null');
+return{
+enabled:typeof value?.enabled==='boolean'?value.enabled:true,
+volume:
+Number.isFinite(value?.volume)&&value.volume>=0&&value.volume<=1
+?value.volume
+:0.5,
+};
+}catch{
+return{enabled:true,volume:0.5};
+}
+}
 
-    return { dialogueChannel: dialogueChannel };
-  })();
-  modules['optional-practice/civilian-fpv/world-audio.mjs'] = (() => {
-    const createGameplayAudioOutput =
-      modules['game/ui/gameplay-audio-output.mjs']['createGameplayAudioOutput'];
-    const createHumanReactionPolicy =
-      modules['game/ui/human-reaction-policy.mjs']['createHumanReactionPolicy'];
-    const HUMAN_REACTION_BANK =
-      modules['game/audio/human-reactions/portable.mjs']['HUMAN_REACTION_BANK'];
-    const destructionBufferGain = modules['game/ui/destruction-level.mjs']['destructionBufferGain'];
-    const DEFAULT_DIALOGUE_VOLUME =
-      modules['game/audio/dialogue-mix.mjs']['DEFAULT_DIALOGUE_VOLUME'];
-    const DIALOGUE_MIX_GAIN = modules['game/audio/dialogue-mix.mjs']['DIALOGUE_MIX_GAIN'];
-    const createGameAudioContext = modules['game/ui/audio-output.mjs']['createGameAudioContext'];
-    const createGameAudioOutput = modules['game/ui/audio-output.mjs']['createGameAudioOutput'];
-    const requestPlaybackAudioSession =
-      modules['game/ui/audio-output.mjs']['requestPlaybackAudioSession'];
-    const releasePlaybackAudioSession =
-      modules['game/ui/audio-output.mjs']['releasePlaybackAudioSession'];
-    const createAudioMaster = modules['game/ui/audio-master.mjs']['createAudioMaster'];
-    const createAudioPreferences = modules['game/audio-preferences.mjs']['createAudioPreferences'];
-    const destructionCategory = modules['game/ui/destruction-audio.mjs']['destructionCategory'];
-    const encounterSoundRecipe = modules['game/ui/encounter-audio.mjs']['encounterSoundRecipe'];
-    const actorPhaseSound = modules['game/ui/encounter-audio.mjs']['actorPhaseSound'];
-    const readMovementAudio = modules['game/ui/movement-audio.mjs']['readMovementAudio'];
-    const MOVEMENT_AUDIO_KEY = modules['game/ui/movement-audio.mjs']['MOVEMENT_AUDIO_KEY'];
-    const dialogueChannel = modules['game/ui/dialogue-channel.mjs']['dialogueChannel'];
+return{MOVEMENT_AUDIO_KEY:MOVEMENT_AUDIO_KEY,readMovementAudio:readMovementAudio};
+})();
+modules['game/ui/dialogue-channel.mjs']=(()=>{
+/** One spoken line per page, including radio and Studio auditions. */
+let active=null;
+const dialogueChannel=Object.freeze({
+get active(){
+return active;
+},
+claim(voice){
+if(active!==voice)active?.stop();
+active=voice;
+},
+release(voice){
+if(active===voice)active=null;
+},
+interrupt(){
+active?.stop();
+},
+snapshot(){
+return Object.freeze({
+voices:active?1:0,
+kind:active?.radio?'radio':active?'dialogue':null,
+});
+},
+});
 
-    /** Optional presentation-only sound. Embedded CC0 vocals decode on activation; no media requests or gameplay clocks. */
-    const PREFERENCE = 'revealline.fpv.world-audio.v1';
-    const clamp = (value, min, max) => Math.max(min, Math.min(max, value));
-    const AMBIENCES = {
-      hangar: { filter: 380, gain: 0.013, hum: 74, humGain: 0.006 },
-      woodland: { filter: 1250, gain: 0.023, hum: 156, humGain: 0.002 },
-      stadium: { filter: 730, gain: 0.016, hum: 110, humGain: 0.008 },
-      industrial: { filter: 220, gain: 0.024, hum: 58, humGain: 0.009 },
-    };
+return{dialogueChannel:dialogueChannel};
+})();
+modules['optional-practice/civilian-fpv/world-audio.mjs']=(()=>{
+const createGameplayAudioOutput=
+modules['game/ui/gameplay-audio-output.mjs']['createGameplayAudioOutput'];
+const createHumanReactionPolicy=
+modules['game/ui/human-reaction-policy.mjs']['createHumanReactionPolicy'];
+const HUMAN_REACTION_BANK=academyAudioExternal0['HUMAN_REACTION_BANK'];
+const destructionBufferGain=modules['game/ui/destruction-level.mjs']['destructionBufferGain'];
+const DEFAULT_DIALOGUE_VOLUME=
+modules['game/audio/dialogue-mix.mjs']['DEFAULT_DIALOGUE_VOLUME'];
+const DIALOGUE_MIX_GAIN=modules['game/audio/dialogue-mix.mjs']['DIALOGUE_MIX_GAIN'];
+const createGameAudioContext=modules['game/ui/audio-output.mjs']['createGameAudioContext'];
+const createGameAudioOutput=modules['game/ui/audio-output.mjs']['createGameAudioOutput'];
+const requestPlaybackAudioSession=
+modules['game/ui/audio-output.mjs']['requestPlaybackAudioSession'];
+const releasePlaybackAudioSession=
+modules['game/ui/audio-output.mjs']['releasePlaybackAudioSession'];
+const createAudioMaster=modules['game/ui/audio-master.mjs']['createAudioMaster'];
+const createAudioPreferences=modules['game/audio-preferences.mjs']['createAudioPreferences'];
+const destructionCategory=modules['game/ui/destruction-audio.mjs']['destructionCategory'];
+const encounterSoundRecipe=modules['game/ui/encounter-audio.mjs']['encounterSoundRecipe'];
+const actorPhaseSound=modules['game/ui/encounter-audio.mjs']['actorPhaseSound'];
+const readMovementAudio=modules['game/ui/movement-audio.mjs']['readMovementAudio'];
+const MOVEMENT_AUDIO_KEY=modules['game/ui/movement-audio.mjs']['MOVEMENT_AUDIO_KEY'];
+const dialogueChannel=modules['game/ui/dialogue-channel.mjs']['dialogueChannel'];
 
-    function createWorldAudio(options = {}) {
-      const host = options.window ?? globalThis.window ?? globalThis;
-      let storage;
-      try {
-        storage = options.storage ?? host.localStorage;
-      } catch {
-        // Sound works for this visit even when browser preferences are unavailable.
-      }
-      const gameplayOutput = createGameplayAudioOutput({ window: host, getStorage: () => storage });
-      const AudioContext = host.AudioContext ?? host.webkitAudioContext;
-      let enabled = false;
-      try {
-        enabled = storage?.getItem(PREFERENCE) === 'on';
-      } catch {
-        // Muted is the default when preferences cannot be read.
-      }
-      let context;
-      let graph;
-      let disposed = false;
-      let wanted = false;
-      let transition = 0;
-      let lastPlaying = false;
-      let lastTick = null;
-      let lastStep = null;
-      let lastContacts = null;
-      let ambience = AMBIENCES.hangar;
-      let motorStyle = 'quad';
-      let gateStyle = 'chime';
-      let dialogue = { enabled: false, volume: DEFAULT_DIALOGUE_VOLUME };
-      let dialogueVoice = null;
-      const effects = new Set();
-      const humanReactions = createHumanReactionPolicy();
-      const humanBuffers = new Map();
-      let preparingHumans = false;
-      const audioMaster = options.audioMaster ?? createAudioMaster();
-      const preferences =
-        options.audioPreferences ??
-        createAudioPreferences({
-          audioMaster,
-          getStorage: () => storage,
-          window: host,
-          fallback: options.audioMaster
-            ? { muted: audioMaster.snapshot().muted, volume: audioMaster.snapshot().volume }
-            : { muted: !enabled, volume: 0.65 },
-        });
-      let movement = readMovementAudio(storage);
-      let masterState = audioMaster.snapshot();
-      enabled = !masterState.muted;
-      const applyOutput = () => {
-        if (!graph || context.state === 'closed') return;
-        graph.master.gain.cancelScheduledValues(context.currentTime);
-        graph.master.gain.setValueAtTime(enabled ? masterState.volume : 0, context.currentTime);
-        graph.output.movementBus.gain.setTargetAtTime(
-          movement.enabled ? movement.volume : 0,
-          context.currentTime,
-          0.025,
-        );
-      };
-      const releaseMaster = audioMaster.subscribe((value) => {
-        masterState = value;
-        enabled = !value.muted;
-        if (!enabled || value.volume === 0) silence();
-        applyOutput();
-      });
-      const changed = (event) => {
-        if (event.key === MOVEMENT_AUDIO_KEY) {
-          movement = readMovementAudio(storage);
-          applyOutput();
-        }
-      };
-      host.addEventListener?.('storage', changed);
-      const recentCues = new Map();
-      let actorDefinitions = new Map();
-      let actorPositions = new Map();
-      let actorPhases = new Map();
-      let actorFamilies = new Map();
-      let lastFootstep = -Infinity;
+/** Optional presentation-only sound. Embedded CC0 vocals decode on activation; no media requests or gameplay clocks. */
+const PREFERENCE='revealline.fpv.world-audio.v1';
+const clamp=(value,min,max)=>Math.max(min,Math.min(max,value));
+const AMBIENCES={
+hangar:{filter:380,gain:0.013,hum:74,humGain:0.006},
+woodland:{filter:1250,gain:0.023,hum:156,humGain:0.002},
+stadium:{filter:730,gain:0.016,hum:110,humGain:0.008},
+industrial:{filter:220,gain:0.024,hum:58,humGain:0.009},
+};
 
-      const volume = (value) =>
-        typeof value === 'number' && Number.isFinite(value) ? clamp(value, 0, 1) : 1;
-      let levels = Object.fromEntries(
-        ['interface', 'motor', 'ambience'].map((key) => [key, volume(options.volumes?.[key])]),
-      );
+function createWorldAudio(options={}){
+const host=options.window??globalThis.window??globalThis;
+let storage;
+try{
+storage=options.storage??host.localStorage;
+}catch{
+// Sound works for this visit even when browser preferences are unavailable.
+}
+const gameplayOutput=createGameplayAudioOutput({window:host,getStorage:()=>storage});
+const AudioContext=host.AudioContext??host.webkitAudioContext;
+let enabled=false;
+try{
+enabled=storage?.getItem(PREFERENCE)==='on';
+}catch{
+// Muted is the default when preferences cannot be read.
+}
+let context;
+let graph;
+let disposed=false;
+let wanted=false;
+let transition=0;
+let lastPlaying=false;
+let lastTick=null;
+let lastStep=null;
+let lastContacts=null;
+let ambience=AMBIENCES.hangar;
+let motorStyle='quad';
+let gateStyle='chime';
+let dialogue={enabled:false,volume:DEFAULT_DIALOGUE_VOLUME};
+let dialogueVoice=null;
+const effects=new Set();
+const humanReactions=createHumanReactionPolicy();
+const humanBuffers=new Map();
+let preparingHumans=false;
+const audioMaster=options.audioMaster??createAudioMaster();
+const preferences=
+options.audioPreferences??
+createAudioPreferences({
+audioMaster,
+getStorage:()=>storage,
+window:host,
+fallback:options.audioMaster
+?{muted:audioMaster.snapshot().muted,volume:audioMaster.snapshot().volume}
+:{muted:!enabled,volume:0.65},
+});
+let movement=readMovementAudio(storage);
+let masterState=audioMaster.snapshot();
+enabled= !masterState.muted;
+const applyOutput=()=>{
+if(!graph||context.state==='closed')return;
+graph.master.gain.cancelScheduledValues(context.currentTime);
+graph.master.gain.setValueAtTime(enabled?masterState.volume:0,context.currentTime);
+graph.output.movementBus.gain.setTargetAtTime(
+movement.enabled?movement.volume:0,
+context.currentTime,
+0.025,
+);
+};
+const releaseMaster=audioMaster.subscribe((value)=>{
+masterState=value;
+enabled= !value.muted;
+if(!enabled||value.volume===0)silence();
+applyOutput();
+});
+const changed=(event)=>{
+if(event.key===MOVEMENT_AUDIO_KEY){
+movement=readMovementAudio(storage);
+applyOutput();
+}
+};
+host.addEventListener?.('storage',changed);
+const recentCues=new Map();
+const observedEvents=new Set();
+let actorDefinitions=new Map();
+let liveActors=new Map();
+let actorPositions=new Map();
+let actorPhases=new Map();
+let actorFamilies=new Map();
+let lastFootstep= -Infinity;
 
-      function ramp(parameter, value, seconds = 0.04) {
-        parameter.setTargetAtTime(value, context.currentTime, seconds);
-      }
+const volume=(value)=>
+typeof value==='number'&&Number.isFinite(value)?clamp(value,0,1):1;
+let levels=Object.fromEntries(
+['interface','motor','ambience'].map((key)=>[key,volume(options.volumes?.[key])]),
+);
 
-      function stopEffects() {
-        for (const effect of effects) effect.stop();
-        effects.clear();
-      }
+function ramp(parameter,value,seconds=0.04){
+parameter.setTargetAtTime(value,context.currentTime,seconds);
+}
 
-      function prepareHumans() {
-        if (
-          preparingHumans ||
-          !context?.decodeAudioData ||
-          options.getDestruction?.()?.vocals === false
-        )
-          return;
-        preparingHumans = true;
-        for (const [name, clip] of Object.entries(HUMAN_REACTION_BANK)) {
-          const bytes = Uint8Array.from(atob(clip.base64), (character) => character.charCodeAt(0));
-          void context
-            .decodeAudioData(bytes.buffer)
-            .then((buffer) => {
-              if (!disposed)
-                humanBuffers.set(name, { buffer, gain: destructionBufferGain(name, buffer) });
-            })
-            .catch(() => {});
-        }
-      }
-      function humanReaction(details) {
-        prepareHumans();
-        if (
-          !graph ||
-          !enabled ||
-          !wanted ||
-          masterState.volume === 0 ||
-          !levels.interface ||
-          context.state !== 'running' ||
-          dialogueVoice ||
-          dialogueChannel.active ||
-          [...effects].some((effect) => effect.priority >= 5) ||
-          effects.size >= 12
-        )
-          return;
-        const name = humanReactions.request(
-          context.currentTime,
-          details,
-          [...effects].filter((effect) => effect.humanReaction).length,
-        );
-        const clip = name && humanBuffers.get(name);
-        if (!clip) return;
-        const source = context.createBufferSource(),
-          volume = context.createGain(),
-          now = context.currentTime;
-        const duration = Math.min(0.7, clip.buffer.duration);
-        source.buffer = clip.buffer;
-        volume.gain.setValueAtTime(0.45 * clip.gain, now);
-        volume.gain.setValueAtTime(0.45 * clip.gain, now + Math.max(0, duration - 0.025));
-        volume.gain.linearRampToValueAtTime(0, now + duration);
-        source.connect(volume).connect(graph.buses.interface);
-        let stopped = false;
-        const voice = {
-          humanReaction: true,
-          priority: 2,
-          stop() {
-            if (stopped) return;
-            stopped = true;
-            try {
-              source.stop();
-            } catch {}
-            source.disconnect();
-            volume.disconnect();
-            effects.delete(voice);
-          },
-        };
-        effects.add(voice);
-        source.onended = voice.stop;
-        source.start(now);
-        source.stop(now + duration);
-      }
-      function silence() {
-        dialogueVoice?.stop();
-        if (!graph || context.state === 'closed') return;
-        for (const node of [graph.motor, graph.vehicleGain, graph.wind, graph.humGain]) {
-          node.gain.cancelScheduledValues(context.currentTime);
-          node.gain.setValueAtTime(0, context.currentTime);
-        }
-        stopEffects();
-      }
+function stopEffects(){
+for(const effect of effects)effect.stop();
+effects.clear();
+}
 
-      function initialize() {
-        if (context) return true;
-        if (!AudioContext || disposed) return false;
-        let candidate;
-        try {
-          candidate = createGameAudioContext(host);
-          const output = createGameAudioOutput(candidate);
-          const master = output.master;
-          master.gain.value = enabled ? masterState.volume : 0;
-          output.movementBus.gain.value = movement.enabled ? movement.volume : 0;
-          const buses = Object.fromEntries(
-            Object.entries(levels).map(([key, level]) => {
-              const bus = candidate.createGain();
-              bus.gain.value = level;
-              bus.connect(key === 'motor' ? output.movementBus : output.sfxBus);
-              return [key, bus];
-            }),
-          );
-          const dialogueBus = output.dialogueBus;
-          dialogueBus.gain.value = dialogue.enabled ? dialogue.volume * DIALOGUE_MIX_GAIN : 0;
-          const motor = candidate.createGain();
-          motor.gain.value = 0;
-          const motorFilter = candidate.createBiquadFilter();
-          motorFilter.type = 'lowpass';
-          motorFilter.frequency.value = 1200;
-          motor.connect(motorFilter).connect(buses.motor);
-          const rotors = [1, 1.013, 2.007].map((ratio, index) => {
-            const oscillator = candidate.createOscillator();
-            oscillator.type = index === 2 ? 'sine' : 'triangle';
-            oscillator.frequency.value = 90 * ratio;
-            oscillator.connect(motor);
-            oscillator.start();
-            return { oscillator, ratio };
-          });
+function prepareHumans(){
+if(
+preparingHumans||
+!context?.decodeAudioData||
+options.getDestruction?.()?.vocals===false
+)
+return;
+preparingHumans=true;
+for(const[name,clip]of Object.entries(HUMAN_REACTION_BANK)){
+const bytes=Uint8Array.from(atob(clip.base64),(character)=>character.charCodeAt(0));
+void context
+.decodeAudioData(bytes.buffer)
+.then((buffer)=>{
+if(!disposed)
+humanBuffers.set(name,{buffer,gain:destructionBufferGain(name,buffer)});
+})
+.catch(()=>{});
+}
+}
+function humanReaction(details){
+prepareHumans();
+if(
+!graph||
+!enabled||
+!wanted||
+masterState.volume===0||
+!levels.interface||
+context.state!=='running'||
+dialogueVoice||
+dialogueChannel.active||
+[...effects].some((effect)=>effect.priority>=5)||
+effects.size>=12
+)
+return;
+const name=humanReactions.request(
+context.currentTime,
+details,
+[...effects].filter((effect)=>effect.humanReaction).length,
+);
+const clip=name&&humanBuffers.get(name);
+if(!clip)return;
+const source=context.createBufferSource(),
+volume=context.createGain(),
+now=context.currentTime;
+const duration=Math.min(0.7,clip.buffer.duration);
+source.buffer=clip.buffer;
+volume.gain.setValueAtTime(0.45*clip.gain,now);
+volume.gain.setValueAtTime(0.45*clip.gain,now+Math.max(0,duration-0.025));
+volume.gain.linearRampToValueAtTime(0,now+duration);
+source.connect(volume).connect(graph.buses.interface);
+let stopped=false;
+const voice={
+humanReaction:true,
+priority:2,
+stop(){
+if(stopped)return;
+stopped=true;
+try{
+source.stop();
+}catch{}
+source.disconnect();
+volume.disconnect();
+effects.delete(voice);
+},
+};
+effects.add(voice);
+source.onended=voice.stop;
+source.start(now);
+source.stop(now+duration);
+}
+function silence(){
+dialogueVoice?.stop();
+if(!graph||context.state==='closed')return;
+for(const node of[graph.motor,graph.vehicleGain,graph.wind,graph.humGain]){
+node.gain.cancelScheduledValues(context.currentTime);
+node.gain.setValueAtTime(0,context.currentTime);
+}
+stopEffects();
+}
 
-          // A small, locally synthesized loop avoids remote media and autoplay fetches.
-          const buffer = candidate.createBuffer(1, candidate.sampleRate * 2, candidate.sampleRate);
-          const samples = buffer.getChannelData(0);
-          let seed = 73471;
-          let low = 0;
-          for (let i = 0; i < samples.length; i++) {
-            seed = (Math.imul(seed, 1664525) + 1013904223) >>> 0;
-            low = 0.985 * low + 0.015 * (seed / 2147483648 - 1);
-            samples[i] = low * 4;
-          }
-          const noise = candidate.createBufferSource();
-          noise.buffer = buffer;
-          noise.loop = true;
-          const windFilter = candidate.createBiquadFilter();
-          windFilter.type = 'lowpass';
-          windFilter.frequency.value = ambience.filter;
-          const wind = candidate.createGain();
-          wind.gain.value = 0;
-          noise.connect(windFilter).connect(wind).connect(buses.ambience);
-          noise.start();
-          const hum = candidate.createOscillator();
-          hum.type = 'sine';
-          hum.frequency.value = ambience.hum;
-          const humGain = candidate.createGain();
-          humGain.gain.value = 0;
-          hum.connect(humGain).connect(buses.ambience);
-          hum.start();
-          const vehicleMotor = candidate.createOscillator(),
-            vehicleGain = candidate.createGain();
-          vehicleMotor.type = 'triangle';
-          vehicleMotor.frequency.value = 62;
-          vehicleGain.gain.value = 0;
-          vehicleMotor.connect(vehicleGain).connect(buses.motor);
-          vehicleMotor.start();
-          context = candidate;
-          graph = {
-            vehicleMotor,
-            vehicleGain,
-            output,
-            master,
-            buses,
-            dialogueBus,
-            motor,
-            motorFilter,
-            rotors,
-            noise,
-            windFilter,
-            wind,
-            hum,
-            humGain,
-          };
-          gameplayOutput.attach(output);
-          return true;
-        } catch {
-          candidate?.close().catch(() => {});
-          return false;
-        }
-      }
+function initialize(){
+if(context)return true;
+if(!AudioContext||disposed)return false;
+let candidate;
+try{
+candidate=createGameAudioContext(host);
+const output=createGameAudioOutput(candidate);
+const master=output.master;
+master.gain.value=enabled?masterState.volume:0;
+output.movementBus.gain.value=movement.enabled?movement.volume:0;
+const buses=Object.fromEntries(
+Object.entries(levels).map(([key,level])=>{
+const bus=candidate.createGain();
+bus.gain.value=level;
+bus.connect(key==='motor'?output.movementBus:output.sfxBus);
+return[key,bus];
+}),
+);
+const dialogueBus=output.dialogueBus;
+dialogueBus.gain.value=dialogue.enabled?dialogue.volume*DIALOGUE_MIX_GAIN:0;
+const motor=candidate.createGain();
+motor.gain.value=0;
+const motorFilter=candidate.createBiquadFilter();
+motorFilter.type='lowpass';
+motorFilter.frequency.value=1200;
+motor.connect(motorFilter).connect(buses.motor);
+const rotors=[1,1.013,2.007].map((ratio,index)=>{
+const oscillator=candidate.createOscillator();
+oscillator.type=index===2?'sine':'triangle';
+oscillator.frequency.value=90*ratio;
+oscillator.connect(motor);
+oscillator.start();
+return{oscillator,ratio};
+});
 
-      function tone({
-        from,
-        to = from,
-        duration = 0.12,
-        gain = 0.05,
-        delay = 0,
-        type = 'sine',
-        kind = 'tone',
-        destruction = false,
-        movementCue = false,
-        priority = 2,
-      }) {
-        if (
-          !graph ||
-          !enabled ||
-          masterState.volume === 0 ||
-          !levels.interface ||
-          !wanted ||
-          context.state !== 'running'
-        )
-          return;
-        if (
-          movementCue &&
-          (!movement.enabled ||
-            movement.volume === 0 ||
-            [...effects].some((effect) => effect.priority >= 4))
-        )
-          return;
-        if (priority >= 4) for (const effect of [...effects]) if (effect.movementCue) effect.stop();
-        // Crowd feedback cannot use the warning reserve. A warning may reclaim
-        // a lower-priority tail, without adding a second output or context.
-        if (destruction && [...effects].filter((effect) => effect.destruction).length >= 10) return;
-        if (effects.size >= 12) {
-          const victim = [...effects].find((effect) => effect.priority < priority);
-          if (!victim) return;
-          victim.stop();
-        }
-        const oscillator =
-          kind === 'snare' ? context.createBufferSource() : context.createOscillator();
-        const envelope = context.createGain();
-        const start = context.currentTime + delay;
-        if (kind === 'snare') {
-          const samples = Math.max(1, Math.ceil(context.sampleRate * duration));
-          const buffer = context.createBuffer(1, samples, context.sampleRate);
-          const data = buffer.getChannelData(0);
-          let seed = 73471,
-            low = 0;
-          for (let index = 0; index < data.length; index++) {
-            seed = (Math.imul(seed, 1664525) + 1013904223) >>> 0;
-            low = low * 0.65 + (seed / 2147483648 - 1) * 0.35;
-            data[index] = low;
-          }
-          oscillator.buffer = buffer;
-        } else {
-          oscillator.type = type;
-          oscillator.frequency.setValueAtTime(from, start);
-          oscillator.frequency.exponentialRampToValueAtTime(Math.max(20, to), start + duration);
-        }
-        envelope.gain.setValueAtTime(0, context.currentTime);
-        envelope.gain.setValueAtTime(0, start);
-        envelope.gain.linearRampToValueAtTime(gain, start + 0.008);
-        envelope.gain.exponentialRampToValueAtTime(0.0001, start + duration);
-        oscillator
-          .connect(envelope)
-          .connect(movementCue ? graph.output.movementBus : graph.buses.interface);
-        let stopped = false;
-        const effect = {
-          priority,
-          destruction,
-          movementCue,
-          stop() {
-            if (stopped) return;
-            stopped = true;
-            try {
-              oscillator.stop();
-            } catch {
-              // The one-shot may already have ended before a pause.
-            }
-            oscillator.disconnect();
-            envelope.disconnect();
-            effects.delete(effect);
-          },
-        };
-        effects.add(effect);
-        oscillator.onended = () => effect.stop();
-        oscillator.start(start);
-        oscillator.stop(start + duration + 0.02);
-      }
+// A small, locally synthesized loop avoids remote media and autoplay fetches.
+const buffer=candidate.createBuffer(1,candidate.sampleRate*2,candidate.sampleRate);
+const samples=buffer.getChannelData(0);
+let seed=73471;
+let low=0;
+for(let i=0;i<samples.length;i++){
+seed=(Math.imul(seed,1664525)+1013904223)>>>0;
+low=0.985*low+0.015*(seed/2147483648-1);
+samples[i]=low*4;
+}
+const noise=candidate.createBufferSource();
+noise.buffer=buffer;
+noise.loop=true;
+const windFilter=candidate.createBiquadFilter();
+windFilter.type='lowpass';
+windFilter.frequency.value=ambience.filter;
+const wind=candidate.createGain();
+wind.gain.value=0;
+noise.connect(windFilter).connect(wind).connect(buses.ambience);
+noise.start();
+const hum=candidate.createOscillator();
+hum.type='sine';
+hum.frequency.value=ambience.hum;
+const humGain=candidate.createGain();
+humGain.gain.value=0;
+hum.connect(humGain).connect(buses.ambience);
+hum.start();
+const vehicleMotor=candidate.createOscillator(),
+vehicleGain=candidate.createGain();
+vehicleMotor.type='triangle';
+vehicleMotor.frequency.value=62;
+vehicleGain.gain.value=0;
+vehicleMotor.connect(vehicleGain).connect(buses.motor);
+vehicleMotor.start();
+context=candidate;
+graph={
+vehicleMotor,
+vehicleGain,
+output,
+master,
+buses,
+dialogueBus,
+motor,
+motorFilter,
+rotors,
+noise,
+windFilter,
+wind,
+hum,
+humGain,
+};
+gameplayOutput.attach(output);
+return true;
+}catch{
+candidate?.close().catch(()=>{});
+return false;
+}
+}
 
-      function actorSoundDetails(event = {}) {
-        const actor = actorDefinitions.get(event.actor);
-        const machine =
-          event.machine ??
-          (actor?.type === 'vehicle'
-            ? actor.vehicleModel === 'field-tank'
-              ? 'tracked'
-              : 'wheeled'
-            : false);
-        const machineFamily =
-          actor?.type === 'vehicle'
-            ? ({
-                'field-utility': 'utility-car',
-                'field-tank': 'tracked-tank',
-                'relay-truck': 'radar-truck',
-              }[actor.vehicleModel] ?? actor.vehicleModel)
-            : null;
-        return {
-          family:
-            event.family ??
-            machineFamily ??
-            actorFamilies.get(event.actor) ??
-            (actor?.speed > 0 ? 'patroller' : 'lookout'),
-          machine,
-          brutal: options.getDestruction?.()?.brutal === true,
-          vocals: options.getDestruction?.()?.vocals,
-          // Patrols and sentries use the humanoid painter. Drones, hazards and
-          // vehicles must never inherit a human voice from the family fallback.
-          humanoid:
-            event.humanoid ?? (actor ? ['patrol', 'sentry'].includes(actor.type) : undefined),
-          flesh: event.flesh,
-        };
-      }
+function tone({
+from,
+to=from,
+duration=0.12,
+gain=0.05,
+delay=0,
+type='sine',
+kind='tone',
+destruction=false,
+movementCue=false,
+priority=2,
+}){
+if(
+!graph||
+!enabled||
+masterState.volume===0||
+!levels.interface||
+!wanted||
+context.state!=='running'
+)
+return;
+if(
+movementCue&&
+(!movement.enabled||
+movement.volume===0||
+[...effects].some((effect)=>effect.priority>=4))
+)
+return;
+if(priority>=4)for(const effect of[...effects])if(effect.movementCue)effect.stop();
+// Crowd feedback cannot use the warning reserve. A warning may reclaim
+// a lower-priority tail, without adding a second output or context.
+if(priority<5&&[...effects].filter((effect)=>effect.priority<5).length>=10){
+const victim=[...effects].find((effect)=>effect.priority<priority);
+if(!victim)return;
+victim.stop();
+}
+if(effects.size>=12){
+const victim=[...effects].find((effect)=>effect.priority<priority);
+if(!victim)return;
+victim.stop();
+}
+const oscillator=
+kind==='snare'?context.createBufferSource():context.createOscillator();
+const envelope=context.createGain();
+const start=context.currentTime+delay;
+if(kind==='snare'){
+const samples=Math.max(1,Math.ceil(context.sampleRate*duration));
+const buffer=context.createBuffer(1,samples,context.sampleRate);
+const data=buffer.getChannelData(0);
+let seed=73471,
+low=0;
+for(let index=0;index<data.length;index++){
+seed=(Math.imul(seed,1664525)+1013904223)>>>0;
+low=low*0.65+(seed/2147483648-1)*0.35;
+data[index]=low;
+}
+oscillator.buffer=buffer;
+}else{
+oscillator.type=type;
+oscillator.frequency.setValueAtTime(from,start);
+oscillator.frequency.exponentialRampToValueAtTime(Math.max(20,to),start+duration);
+}
+envelope.gain.setValueAtTime(0,context.currentTime);
+envelope.gain.setValueAtTime(0,start);
+envelope.gain.linearRampToValueAtTime(gain,start+0.008);
+envelope.gain.exponentialRampToValueAtTime(0.0001,start+duration);
+oscillator
+.connect(envelope)
+.connect(movementCue?graph.output.movementBus:graph.buses.interface);
+let stopped=false;
+const effect={
+priority,
+destruction,
+movementCue,
+stop(){
+if(stopped)return;
+stopped=true;
+try{
+oscillator.stop();
+}catch{
+// The one-shot may already have ended before a pause.
+}
+oscillator.disconnect();
+envelope.disconnect();
+effects.delete(effect);
+},
+};
+effects.add(effect);
+oscillator.onended=()=>effect.stop();
+oscillator.start(start);
+oscillator.stop(start+duration+0.02);
+}
 
-      function cue(type, player = true, event = {}) {
-        const kind = {
-          catch: 'catch',
-          'hunt-tail': 'failure',
-          objective: 'objective',
-          fire: 'fire',
-          impact: 'impact',
-          defeat: 'catch',
-          'protected-contact': 'impact',
-          warning: 'warning',
-          notice: 'notice',
-          burst: 'burst',
-          recover: 'recover',
-          blocked: 'blocked',
-          equipment: 'equipment',
-          drive: 'drive',
-        }[type];
-        if (!kind) return;
-        const details = actorSoundDetails(event);
-        const recipe = encounterSoundRecipe(kind, details);
-        const now = context?.currentTime ?? 0;
-        const cueKey = kind === 'catch' ? `catch:${recipe.category}` : kind;
-        if (now - (recentCues.get(cueKey) ?? -Infinity) < (recipe.cooldown ?? 0.12)) return;
-        recentCues.set(cueKey, now);
-        if (recipe.priority >= 5 || (type === 'fire' && !player)) {
-          humanReactions.interrupt(now);
-          for (const effect of [...effects]) if (effect.humanReaction) effect.stop();
-        }
-        if (kind === 'catch') humanReaction(details);
-        if (recipe.priority >= 5 || (type === 'fire' && !player)) dialogueChannel.interrupt();
-        const voice = { ...recipe.tone, priority: recipe.priority, movementCue: recipe.movement };
-        if (recipe.movement) voice.gain *= levels.interface;
-        if (type === 'fire' && !player) voice.gain *= 0.65;
-        if (type === 'objective' && gateStyle === 'digital') voice.type = 'triangle';
-        tone({ ...voice, destruction: kind === 'catch' });
-        for (const layer of recipe.layers ?? [])
-          tone({ ...layer, priority: recipe.priority, destruction: kind === 'catch' });
-      }
+function actorSoundDetails(event={}){
+const live=liveActors.get(event.actor);
+const definition=
+actorDefinitions.get(event.actor)??
+actorDefinitions.get(event.sourceId??live?.sourceId);
+const actor=live?{...definition,...live}:definition;
+const material=event.material??actor?.material;
+const type=event.appearance?.type??actor?.type;
+const machine=
+event.machine??
+(actor?.type==='vehicle'
+?actor.vehicleModel==='field-tank'
+?'tracked'
+:'wheeled'
+:false);
+const machineFamily=
+actor?.type==='vehicle'
+?({
+'field-utility':'utility-car',
+'field-tank':'tracked-tank',
+'relay-truck':'radar-truck',
+}[actor.vehicleModel]??actor.vehicleModel)
+:null;
+return{
+weapon:event.weapon,
+eventId:event.eventId,
+severity:event.severity,
+protected:event.protected===true,
+family:
+event.family??
+event.appearance?.family??
+machineFamily??
+actorFamilies.get(event.actor)??
+(actor?.speed>0?'patroller':'lookout'),
+machine,
+material,
+category:event.category??(material==='electronic'?'electronic':undefined),
+cast:event.appearance?.cast??actor?.appearance?.cast,
+brutal:options.getDestruction?.()?.brutal===true,
+vocals:options.getDestruction?.()?.vocals,
+// Patrols and sentries use the humanoid painter. Drones, hazards and
+// vehicles must never inherit a human voice from the family fallback.
+humanoid:
+event.humanoid??
+(type
+?['patrol','sentry','humanoid'].includes(type)
+:material
+?material==='organic'
+:undefined),
+flesh:event.flesh??(material?material==='organic':undefined),
+};
+}
 
-      async function resume() {
-        if (!enabled || disposed) return false;
-        requestPlaybackAudioSession(host.navigator?.audioSession);
-        if (!initialize()) return false;
-        wanted = true;
-        const epoch = ++transition;
-        try {
-          await context.resume();
-          if (disposed || !enabled || !wanted) {
-            if (context.state !== 'closed') await context.suspend();
-            return false;
-          }
-          prepareHumans();
-          return epoch === transition && context.state === 'running';
-        } catch {
-          return false;
-        }
-      }
+function cue(type,player=true,event={}){
+const kind={
+catch:'catch',
+'hunt-tail':'failure',
+objective:'objective',
+fire:'fire',
+impact:'impact',
+'player-damage':'player-damage',
+telegraph:'warning',
+defeat:'catch',
+'protected-contact':'impact',
+warning:'warning',
+notice:'notice',
+burst:'burst',
+recover:'recover',
+blocked:'blocked',
+equipment:'equipment',
+drive:'drive',
+'surface-impact':'surface-impact',
+explosion:'explosion',
+component:'component',
+'weapon-selected':'weapon-selected',
+'weapon-empty':'weapon-empty',
+'reload-start':'reload-start',
+'reload-ready':'reload-ready',
+payload:'payload',
+'payload-armed':'payload-armed',
+'payload-ready':'payload-ready',
+repair:'repair',
+resupply:'resupply',
+challenge:'challenge',
+supply:'supply',
+}[type];
+if(!kind)return;
+const details=actorSoundDetails(event);
+const recipe=encounterSoundRecipe(kind,details);
+const now=context?.currentTime??0;
+if(!recipe)return;
+const cueKey=
+kind==='catch'
+?`catch:${recipe.category}`
+:`${kind}:${event.weapon??''}:${player?'player':'enemy'}`;
+if(now-(recentCues.get(cueKey)?? -Infinity)<(recipe.cooldown??0.12))return;
+recentCues.set(cueKey,now);
+if(recipe.priority>=5||(type==='fire'&& !player)){
+humanReactions.interrupt(now);
+for(const effect of[...effects])if(effect.humanReaction)effect.stop();
+}
+if(kind==='catch')humanReaction(details);
+if(recipe.priority>=5||(type==='fire'&& !player))dialogueChannel.interrupt();
+const voice={...recipe.tone,priority:recipe.priority,movementCue:recipe.movement};
+if(recipe.movement)voice.gain*=levels.interface;
+if(type==='fire'&& !player)voice.gain*=0.65;
+if(type==='objective'&&gateStyle==='digital')voice.type='triangle';
+tone({...voice,destruction:kind==='catch'});
+for(const layer of recipe.layers??[])
+tone({
+...layer,
+gain:layer.gain*(type==='fire'&& !player?0.65:1),
+priority:recipe.priority,
+destruction:kind==='catch',
+});
+}
 
-      function pause() {
-        wanted = false;
-        transition++;
-        silence();
-        if (context && context.state !== 'closed') context.suspend().catch(() => {});
-        releasePlaybackAudioSession(host.navigator?.audioSession);
-      }
+async function resume(){
+if(!enabled||disposed)return false;
+requestPlaybackAudioSession(host.navigator?.audioSession);
+if(!initialize())return false;
+wanted=true;
+const epoch= ++transition;
+try{
+await context.resume();
+if(disposed|| !enabled|| !wanted){
+if(context.state!=='closed')await context.suspend();
+return false;
+}
+prepareHumans();
+return epoch===transition&&context.state==='running';
+}catch{
+return false;
+}
+}
 
-      return {
-        gameplayOutput,
-        get context() {
-          return context;
-        },
-        get menuBus() {
-          return graph?.output.menuBus;
-        },
-        subscribe(listener) {
-          return audioMaster.subscribe(() => listener(enabled));
-        },
-        configureDialogue({ enabled = dialogue.enabled, volume: value = dialogue.volume } = {}) {
-          if (typeof enabled !== 'boolean' || !Number.isFinite(value) || value < 0 || value > 1)
-            throw new TypeError(
-              'Dialogue requires an enabled boolean and volume from zero to one.',
-            );
-          dialogue = { enabled, volume: value };
-          if (!enabled || !value) dialogueVoice?.stop();
-          if (graph && context.state !== 'closed')
-            ramp(graph.dialogueBus.gain, enabled ? value * DIALOGUE_MIX_GAIN : 0);
-        },
-        /** Uses the existing flight context and the shared one-line dialogue arbiter. */
-        playDialogue(buffer, { onended = () => {} } = {}) {
-          if (
-            !buffer ||
-            disposed ||
-            !enabled ||
-            !wanted ||
-            !dialogue.enabled ||
-            !dialogue.volume ||
-            !graph ||
-            context.state !== 'running'
-          )
-            return null;
-          dialogueVoice?.stop();
-          const source = context.createBufferSource();
-          source.buffer = buffer;
-          source.connect(graph.dialogueBus);
-          let ended = false;
-          const voice = {
-            get ended() {
-              return ended;
-            },
-            stop() {
-              if (ended) return;
-              ended = true;
-              try {
-                source.stop();
-              } catch {
-                /* An ended source is already silent. */
-              }
-              source.disconnect();
-              if (dialogueVoice === voice) dialogueVoice = null;
-              dialogueChannel.release(voice);
-              try {
-                onended();
-              } catch {
-                /* Presentation callbacks cannot interrupt flight. */
-              }
-            },
-          };
-          source.onended = voice.stop;
-          dialogueChannel.claim(voice);
-          dialogueVoice = voice;
-          try {
-            source.start();
-          } catch {
-            voice.stop();
-            return null;
-          }
-          return voice;
-        },
-        get movementSettings() {
-          return movement;
-        },
-        set movementSettings(value) {
-          if (
-            typeof value?.enabled !== 'boolean' ||
-            !Number.isFinite(value.volume) ||
-            value.volume < 0 ||
-            value.volume > 1
-          )
-            throw new TypeError(
-              'Movement sound requires an enabled boolean and volume between zero and one.',
-            );
-          movement = { enabled: value.enabled, volume: value.volume };
-        },
-        applyVolumes: applyOutput,
-        masterSnapshot: () => audioMaster.snapshot(),
-        subscribeMaster: (listener) => audioMaster.subscribe(listener),
-        setMasterVolume: (value) => preferences.setVolume(value),
-        enabled: () => enabled,
-        volumes: () => ({ ...levels }),
-        setVolumes(values = {}) {
-          if (disposed) return;
-          levels = Object.fromEntries(
-            Object.keys(levels).map((key) => [
-              key,
-              Object.hasOwn(values, key) ? volume(values[key]) : levels[key],
-            ]),
-          );
-          if (!graph || context.state === 'closed') return;
-          for (const [key, bus] of Object.entries(graph.buses)) {
-            bus.gain.cancelScheduledValues(context.currentTime);
-            ramp(bus.gain, levels[key], 0.025);
-          }
-          if (!levels.interface) stopEffects();
-        },
-        status: () => ({
-          enabled,
-          volumes: { ...levels },
-          available: Boolean(AudioContext) && !disposed,
-          running: Boolean(wanted && context?.state === 'running'),
-        }),
-        async setEnabled(value) {
-          if (disposed) return false;
-          enabled = Boolean(value);
-          preferences.setMuted(!enabled);
-          try {
-            storage?.setItem(PREFERENCE, enabled ? 'on' : 'off');
-          } catch {
-            // A privacy setting must not interrupt flight or the mute control.
-          }
-          if (enabled) return resume();
-          pause();
-          return true;
-        },
-        resume,
-        pause,
-        setCourse(course = {}) {
-          dialogueVoice?.stop();
-          const theme = course.world?.theme ?? course.theme ?? 'academy';
-          const profile = course.world?.themeProfile?.audio ?? course.themeProfile?.audio ?? {};
-          const fallback =
-            theme === 'ukrainian'
-              ? 'woodland'
-              : theme === 'pixel'
-                ? 'stadium'
-                : theme === 'operations'
-                  ? 'industrial'
-                  : 'hangar';
-          ambience = AMBIENCES[profile.ambience] ?? AMBIENCES[fallback];
-          motorStyle =
-            profile.motor ??
-            (theme === 'pixel' ? 'arcade' : theme === 'operations' ? 'utility' : 'quad');
-          gateStyle =
-            profile.gate ??
-            (theme === 'pixel' ? 'digital' : theme === 'ukrainian' ? 'bell' : 'chime');
-          lastPlaying = false;
-          lastTick = null;
-          lastStep = null;
-          lastContacts = null;
-          recentCues.clear();
-          humanReactions.reset();
-          actorPositions.clear();
-          actorPhases.clear();
-          actorFamilies = new Map(
-            (course.pursuit?.actors ?? []).map((policy) => [policy.id, policy.family]),
-          );
-          lastFootstep = -Infinity;
-          actorDefinitions = new Map((course.actors ?? []).map((actor) => [actor.id, actor]));
-          stopEffects();
-          if (graph && context.state !== 'closed') {
-            ramp(graph.windFilter.frequency, ambience.filter);
-            ramp(graph.hum.frequency, ambience.hum);
-          }
-        },
-        update(snapshot, { active = true } = {}) {
-          if (disposed || !snapshot) return;
-          const tick = snapshot.ticks;
-          const step = snapshot.step;
-          const fresh = Number.isSafeInteger(tick) && lastTick !== null && tick > lastTick;
-          const advanced = Number.isSafeInteger(step) && lastStep !== null && step > lastStep;
-          const playing = active && !['paused', 'disarmed'].includes(snapshot.status);
-          const finalCue = fresh && lastPlaying && ['complete', 'failed'].includes(snapshot.status);
-          if (enabled && wanted && graph && context.state === 'running' && (playing || finalCue)) {
-            const flying = snapshot.status === 'active';
-            const throttle = clamp((snapshot.lastInput?.throttle ?? 0) / 1000, 0, 1);
-            const velocity = snapshot.velocity ?? {};
-            const speed = Math.hypot(velocity.x ?? 0, velocity.y ?? 0, velocity.z ?? 0);
-            const airflow = clamp(speed / 16000, 0, 1);
-            const fundamental =
-              (motorStyle === 'utility' ? 65 : motorStyle === 'arcade' ? 125 : 95) +
-              throttle * 230 +
-              airflow * 35;
-            for (const rotor of graph.rotors)
-              ramp(rotor.oscillator.frequency, fundamental * rotor.ratio);
-            ramp(graph.motorFilter.frequency, 850 + throttle * 2400);
-            ramp(graph.motor.gain, flying ? 0.009 + throttle * 0.025 : 0);
-            ramp(graph.wind.gain, ambience.gain + (flying ? airflow * 0.028 : 0));
-            ramp(graph.humGain.gain, ambience.humGain);
-            if (fresh) {
-              let nearestVehicle = Infinity,
-                nearestFoot = Infinity,
-                footActor = null,
-                startingVehicle = null;
-              for (const actor of snapshot.actors ?? []) {
-                const previous = actorPositions.get(actor.id),
-                  position = actor.position;
-                if (!position) continue;
-                const moving =
-                  previous && Math.hypot(position.x - previous.x, position.z - previous.z) > 0;
-                if (moving && actor.status === 'active') {
-                  const d = Math.hypot(
-                    position.x - snapshot.position.x,
-                    position.y - snapshot.position.y,
-                    position.z - snapshot.position.z,
-                  );
-                  if (actor.type === 'vehicle') {
-                    nearestVehicle = Math.min(nearestVehicle, d);
-                    if (
-                      !previous.moving &&
-                      d < 16000 &&
-                      (!startingVehicle || d < startingVehicle.distance)
-                    )
-                      startingVehicle = { actor: actor.id, distance: d };
-                  } else if (['patrol', 'sentry'].includes(actor.type) && d < nearestFoot) {
-                    nearestFoot = d;
-                    footActor = actor;
-                  }
-                }
-              }
-              ramp(
-                graph.vehicleGain.gain,
-                flying && nearestVehicle < 16000 ? 0.012 * (1 - nearestVehicle / 16000) : 0,
-              );
-              if (flying && startingVehicle) cue('drive', false, { actor: startingVehicle.actor });
-              const step = encounterSoundRecipe('step', {
-                family: footActor?.pursuit?.family ?? actorFamilies.get(footActor?.id),
-              });
-              if (
-                flying &&
-                nearestFoot < 6000 &&
-                context.currentTime - lastFootstep >= step.cooldown
-              ) {
-                lastFootstep = context.currentTime;
-                tone({
-                  ...step.tone,
-                  gain: step.tone.gain * (1 - nearestFoot / 6000) * levels.interface,
-                  movementCue: true,
-                  priority: 0,
-                });
-              }
-              for (const actor of snapshot.actors ?? []) {
-                if (!actor.pursuit || actor.status !== 'active') continue;
-                const phase = actor.blocked ? 'blocked' : actor.pursuit.phase;
-                const sound = actorPhaseSound(actorPhases.get(actor.id), phase);
-                if (sound) {
-                  cue(sound, false, { actor: actor.id, family: actor.pursuit.family });
-                  if (sound !== 'warning')
-                    cue('equipment', false, { actor: actor.id, family: actor.pursuit.family });
-                }
-              }
-              const events = snapshot.events ?? [];
-              const types = new Set();
-              const destructionTypes = new Set();
-              // Bound cue overlap independently of simulation actor/projectile counts.
-              for (const event of events) {
-                if (['catch', 'defeat'].includes(event.type)) {
-                  const category = destructionCategory(actorSoundDetails(event));
-                  if (destructionTypes.has(category)) continue;
-                  destructionTypes.add(category);
-                } else if (types.has(event.type)) continue;
-                types.add(event.type);
-                cue(event.type, event.actor === 'player', event);
-              }
-              if (advanced && !types.has('objective')) cue('objective');
-              if (lastContacts !== null && snapshot.contacts > lastContacts && !types.has('impact'))
-                cue('impact');
-            }
-          } else if (graph && context.state !== 'closed') {
-            ramp(graph.motor.gain, 0);
-            ramp(graph.vehicleGain.gain, 0);
-            ramp(graph.wind.gain, 0);
-            ramp(graph.humGain.gain, 0);
-          }
-          actorPositions = new Map(
-            (snapshot.actors ?? []).map((actor) => {
-              const previous = actorPositions.get(actor.id);
-              return [
-                actor.id,
-                {
-                  ...actor.position,
-                  moving:
-                    fresh && previous && actor.position
-                      ? Math.hypot(actor.position.x - previous.x, actor.position.z - previous.z) > 0
-                      : previous?.moving,
-                },
-              ];
-            }),
-          );
-          actorPhases = new Map(
-            (snapshot.actors ?? [])
-              .filter((actor) => actor.pursuit)
-              .map((actor) => [actor.id, actor.blocked ? 'blocked' : actor.pursuit.phase]),
-          );
-          lastTick = tick;
-          lastStep = step;
-          lastContacts = snapshot.contacts ?? null;
-          lastPlaying = playing;
-        },
-        dispose() {
-          if (disposed) return;
-          disposed = true;
-          humanBuffers.clear();
-          gameplayOutput.dispose();
-          pause();
-          releaseMaster();
-          host.removeEventListener?.('storage', changed);
-          if (!options.audioPreferences) preferences.dispose();
-          if (!options.audioMaster) audioMaster.dispose();
-          if (!graph) return;
-          for (const node of [
-            ...graph.rotors.map((rotor) => rotor.oscillator),
-            graph.noise,
-            graph.hum,
-            graph.vehicleMotor,
-          ]) {
-            node.stop();
-            node.disconnect();
-          }
-          for (const node of [
-            graph.motor,
-            graph.vehicleGain,
-            graph.motorFilter,
-            graph.windFilter,
-            graph.wind,
-            graph.humGain,
-            ...Object.values(graph.buses),
-            ...Object.values(graph.output).filter(Boolean),
-          ])
-            node.disconnect();
-          context.close().catch(() => {});
-          graph = null;
-        },
-      };
-    }
+function pause(){
+wanted=false;
+transition++;
+silence();
+if(context&&context.state!=='closed')context.suspend().catch(()=>{});
+releasePlaybackAudioSession(host.navigator?.audioSession);
+}
 
-    return { createWorldAudio: createWorldAudio };
-  })();
-  return modules['optional-practice/civilian-fpv/world-audio.mjs'].createWorldAudio;
+return{
+gameplayOutput,
+get context(){
+return context;
+},
+get menuBus(){
+return graph?.output.menuBus;
+},
+subscribe(listener){
+return audioMaster.subscribe(()=>listener(enabled));
+},
+configureDialogue({enabled=dialogue.enabled,volume:value=dialogue.volume}={}){
+if(typeof enabled!=='boolean'|| !Number.isFinite(value)||value<0||value>1)
+throw new TypeError(
+'Dialogue requires an enabled boolean and volume from zero to one.',
+);
+dialogue={enabled,volume:value};
+if(!enabled|| !value)dialogueVoice?.stop();
+if(graph&&context.state!=='closed')
+ramp(graph.dialogueBus.gain,enabled?value*DIALOGUE_MIX_GAIN:0);
+},
+/** Uses the existing flight context and the shared one-line dialogue arbiter. */
+playDialogue(buffer,{onended=()=>{}}={}){
+if(
+!buffer||
+disposed||
+!enabled||
+!wanted||
+!dialogue.enabled||
+!dialogue.volume||
+!graph||
+context.state!=='running'
+)
+return null;
+dialogueVoice?.stop();
+const source=context.createBufferSource();
+source.buffer=buffer;
+source.connect(graph.dialogueBus);
+let ended=false;
+const voice={
+get ended(){
+return ended;
+},
+stop(){
+if(ended)return;
+ended=true;
+try{
+source.stop();
+}catch{
+/* An ended source is already silent. */
+}
+source.disconnect();
+if(dialogueVoice===voice)dialogueVoice=null;
+dialogueChannel.release(voice);
+try{
+onended();
+}catch{
+/* Presentation callbacks cannot interrupt flight. */
+}
+},
+};
+source.onended=voice.stop;
+dialogueChannel.claim(voice);
+dialogueVoice=voice;
+try{
+source.start();
+}catch{
+voice.stop();
+return null;
+}
+return voice;
+},
+get movementSettings(){
+return movement;
+},
+set movementSettings(value){
+if(
+typeof value?.enabled!=='boolean'||
+!Number.isFinite(value.volume)||
+value.volume<0||
+value.volume>1
+)
+throw new TypeError(
+'Movement sound requires an enabled boolean and volume between zero and one.',
+);
+movement={enabled:value.enabled,volume:value.volume};
+},
+applyVolumes:applyOutput,
+masterSnapshot:()=>audioMaster.snapshot(),
+subscribeMaster:(listener)=>audioMaster.subscribe(listener),
+setMasterVolume:(value)=>preferences.setVolume(value),
+enabled:()=>enabled,
+volumes:()=>({...levels}),
+setVolumes(values={}){
+if(disposed)return;
+levels=Object.fromEntries(
+Object.keys(levels).map((key)=>[
+key,
+Object.hasOwn(values,key)?volume(values[key]):levels[key],
+]),
+);
+if(!graph||context.state==='closed')return;
+for(const[key,bus]of Object.entries(graph.buses)){
+bus.gain.cancelScheduledValues(context.currentTime);
+ramp(bus.gain,levels[key],0.025);
+}
+if(!levels.interface)stopEffects();
+},
+status:()=>({
+enabled,
+volumes:{...levels},
+available:Boolean(AudioContext)&& !disposed,
+running:Boolean(wanted&&context?.state==='running'),
+}),
+async setEnabled(value){
+if(disposed)return false;
+enabled=Boolean(value);
+preferences.setMuted(!enabled);
+try{
+storage?.setItem(PREFERENCE,enabled?'on':'off');
+}catch{
+// A privacy setting must not interrupt flight or the mute control.
+}
+if(enabled)return resume();
+pause();
+return true;
+},
+resume,
+pause,
+setCourse(course={}){
+dialogueVoice?.stop();
+const theme=course.world?.theme??course.theme??'academy';
+const profile=course.world?.themeProfile?.audio??course.themeProfile?.audio??{};
+const fallback=
+theme==='ukrainian'
+?'woodland'
+:theme==='pixel'
+?'stadium'
+:theme==='operations'
+?'industrial'
+:'hangar';
+ambience=AMBIENCES[profile.ambience]??AMBIENCES[fallback];
+motorStyle=
+profile.motor??
+(theme==='pixel'?'arcade':theme==='operations'?'utility':'quad');
+gateStyle=
+profile.gate??
+(theme==='pixel'?'digital':theme==='ukrainian'?'bell':'chime');
+lastPlaying=false;
+lastTick=null;
+lastStep=null;
+lastContacts=null;
+recentCues.clear();
+observedEvents.clear();
+liveActors.clear();
+humanReactions.reset();
+actorPositions.clear();
+actorPhases.clear();
+actorFamilies=new Map(
+(course.pursuit?.actors??[]).map((policy)=>[policy.id,policy.family]),
+);
+lastFootstep= -Infinity;
+actorDefinitions=new Map((course.actors??[]).map((actor)=>[actor.id,actor]));
+stopEffects();
+if(graph&&context.state!=='closed'){
+ramp(graph.windFilter.frequency,ambience.filter);
+ramp(graph.hum.frequency,ambience.hum);
+}
+},
+update(snapshot,{active=true}={}){
+if(disposed|| !snapshot)return;
+liveActors=new Map((snapshot.actors??[]).map((actor)=>[actor.id,actor]));
+// Observe identifiers even while muted/paused or priming a restored state.
+// Historical accepted events must never become delayed audio on resume.
+const events=[];
+for(const event of snapshot.events??[]){
+if(typeof event.eventId==='string'){
+if(observedEvents.has(event.eventId))continue;
+observedEvents.add(event.eventId);
+if(observedEvents.size>2048)
+observedEvents.delete(observedEvents.values().next().value);
+}
+events.push(event);
+}
+if(options.getDestruction?.()?.vocals===false)
+for(const effect of[...effects])if(effect.humanReaction)effect.stop();
+const tick=snapshot.ticks;
+const step=snapshot.step;
+const fresh=Number.isSafeInteger(tick)&&lastTick!==null&&tick>lastTick;
+const advanced=Number.isSafeInteger(step)&&lastStep!==null&&step>lastStep;
+const playing=active&& !['paused','disarmed'].includes(snapshot.status);
+const finalCue=fresh&&lastPlaying&&['complete','failed'].includes(snapshot.status);
+if(enabled&&wanted&&graph&&context.state==='running'&&(playing||finalCue)){
+const flying=snapshot.status==='active';
+const throttle=clamp((snapshot.lastInput?.throttle??0)/1000,0,1);
+const velocity=snapshot.velocity??{};
+const speed=Math.hypot(velocity.x??0,velocity.y??0,velocity.z??0);
+const airflow=clamp(speed/16000,0,1);
+const fundamental=
+(motorStyle==='utility'?65:motorStyle==='arcade'?125:95)+
+throttle*230+
+airflow*35;
+for(const rotor of graph.rotors)
+ramp(rotor.oscillator.frequency,fundamental*rotor.ratio);
+ramp(graph.motorFilter.frequency,850+throttle*2400);
+ramp(graph.motor.gain,flying?0.009+throttle*0.025:0);
+ramp(graph.wind.gain,ambience.gain+(flying?airflow*0.028:0));
+ramp(graph.humGain.gain,ambience.humGain);
+if(fresh){
+let nearestVehicle=Infinity,
+nearestFoot=Infinity,
+footActor=null,
+startingVehicle=null;
+for(const actor of snapshot.actors??[]){
+const previous=actorPositions.get(actor.id),
+position=actor.position;
+if(!position)continue;
+const moving=
+previous&&Math.hypot(position.x-previous.x,position.z-previous.z)>0;
+if(moving&&actor.status==='active'){
+const d=Math.hypot(
+position.x-snapshot.position.x,
+position.y-snapshot.position.y,
+position.z-snapshot.position.z,
+);
+if(actor.type==='vehicle'){
+nearestVehicle=Math.min(nearestVehicle,d);
+if(
+!previous.moving&&
+d<16000&&
+(!startingVehicle||d<startingVehicle.distance)
+)
+startingVehicle={actor:actor.id,distance:d};
+}else if(['patrol','sentry'].includes(actor.type)&&d<nearestFoot){
+nearestFoot=d;
+footActor=actor;
+}
+}
+}
+ramp(
+graph.vehicleGain.gain,
+flying&&nearestVehicle<16000?0.012*(1-nearestVehicle/16000):0,
+);
+if(flying&&startingVehicle)cue('drive',false,{actor:startingVehicle.actor});
+const step=encounterSoundRecipe('step',{
+family:footActor?.pursuit?.family??actorFamilies.get(footActor?.id),
+});
+if(
+flying&&
+nearestFoot<6000&&
+context.currentTime-lastFootstep>=step.cooldown
+){
+lastFootstep=context.currentTime;
+tone({
+...step.tone,
+gain:step.tone.gain*(1-nearestFoot/6000)*levels.interface,
+movementCue:true,
+priority:0,
+});
+}
+for(const actor of snapshot.actors??[]){
+if(actor.status!=='active')continue;
+const phase=actor.blocked
+?'blocked'
+:actor.warning
+?'warning'
+:(actor.pursuit?.phase??'idle');
+const sound=actorPhaseSound(actorPhases.get(actor.id),phase);
+if(sound){
+cue(sound,false,{
+actor:actor.id,
+family:actor.pursuit?.family??actor.appearance?.family,
+});
+if(sound!=='warning')
+cue('equipment',false,{
+actor:actor.id,
+family:actor.pursuit?.family??actor.appearance?.family,
+});
+}
+}
+const types=new Set();
+const destructionTypes=new Set();
+// Bound cue overlap independently of simulation actor/projectile counts.
+for(const event of[...events].sort(
+(a,b)=>
+Number(['telegraph','player-damage','warning'].includes(b.type))-
+Number(['telegraph','player-damage','warning'].includes(a.type)),
+)){
+const eventKey=`${event.type}:${event.weapon??''}:${event.material??''}:${event.actor==='player'||event.owner==='player'?'player':'enemy'}`;
+if(['catch','defeat'].includes(event.type)){
+const category=destructionCategory(actorSoundDetails(event));
+if(destructionTypes.has(category))continue;
+destructionTypes.add(category);
+}else if(types.has(eventKey))continue;
+types.add(eventKey);
+types.add(event.type);
+cue(
+event.type,
+event.actor==='player'||
+event.owner==='player'||
+(!event.actor&& !event.sourceId),
+event,
+);
+}
+if(advanced&& !types.has('objective'))cue('objective');
+if(lastContacts!==null&&snapshot.contacts>lastContacts&& !types.has('impact'))
+cue('impact');
+}
+}else if(graph&&context.state!=='closed'){
+ramp(graph.motor.gain,0);
+ramp(graph.vehicleGain.gain,0);
+ramp(graph.wind.gain,0);
+ramp(graph.humGain.gain,0);
+}
+actorPositions=new Map(
+(snapshot.actors??[]).map((actor)=>{
+const previous=actorPositions.get(actor.id);
+return[
+actor.id,
+{
+...actor.position,
+moving:
+fresh&&previous&&actor.position
+?Math.hypot(actor.position.x-previous.x,actor.position.z-previous.z)>0
+:previous?.moving,
+},
+];
+}),
+);
+actorPhases=new Map(
+(snapshot.actors??[]).map((actor)=>[
+actor.id,
+actor.blocked
+?'blocked'
+:actor.warning
+?'warning'
+:(actor.pursuit?.phase??'idle'),
+]),
+);
+lastTick=tick;
+lastStep=step;
+lastContacts=snapshot.contacts??null;
+lastPlaying=playing;
+},
+dispose(){
+if(disposed)return;
+disposed=true;
+humanBuffers.clear();
+gameplayOutput.dispose();
+pause();
+releaseMaster();
+host.removeEventListener?.('storage',changed);
+if(!options.audioPreferences)preferences.dispose();
+if(!options.audioMaster)audioMaster.dispose();
+if(!graph)return;
+for(const node of[
+...graph.rotors.map((rotor)=>rotor.oscillator),
+graph.noise,
+graph.hum,
+graph.vehicleMotor,
+]){
+node.stop();
+node.disconnect();
+}
+for(const node of[
+graph.motor,
+graph.vehicleGain,
+graph.motorFilter,
+graph.windFilter,
+graph.wind,
+graph.humGain,
+...Object.values(graph.buses),
+...Object.values(graph.output).filter(Boolean),
+])
+node.disconnect();
+context.close().catch(()=>{});
+graph=null;
+},
+};
+}
+
+return{createWorldAudio:createWorldAudio};
+})();
+return modules['optional-practice/civilian-fpv/world-audio.mjs'].createWorldAudio;
 })();
 // END GENERATED ACADEMY SHARED AUDIO
 
@@ -5525,6 +6017,7 @@ export function mountSimGlobalTools({
           prefix: 'sim-global-tools',
           coreURL,
           onOpen,
+          createRadioNavigation: (options) => createFlightMenuNavigation({ ...options, locale }),
         });
         fallback.hidden = true;
         onControls(provider.controls);
@@ -5708,7 +6201,8 @@ const FLIGHT_HUD_STYLE = `
 [data-sim-hud='flight'][data-hud-component] [data-hud-part='brackets'] > i:nth-child(3) { bottom: 0; right: 0; transform: rotate(180deg); }
 [data-sim-hud='flight'][data-hud-component] [data-hud-part='brackets'] > i:nth-child(4) { bottom: 0; left: 0; transform: rotate(270deg); }
 [data-sim-hud='flight'][data-hud-component] [data-hud-part='cue-arrow'] { position: absolute; inset: 0; display: grid; place-items: center; font: 32px/1 system-ui, sans-serif; text-shadow: 0 1px 3px #000; }
-[data-sim-hud='flight'][data-hud-component] [data-hud-part='cue-label'] { position: absolute; top: 51px; left: 50%; transform: translateX(-50%); width: max-content; max-width: 120px; color: var(--hud-ink); font-size: 12px; text-align: center; text-shadow: 0 1px 3px #000, 0 0 4px #000; }
+[data-sim-hud='flight'][data-hud-component] [data-hud-part='cue-label'] { position: absolute; top: 51px; left: 50%; transform: translateX(-50%); width: max-content; max-width: 220px; padding: 4px 7px; border-radius: 4px; background: var(--hud-bg); color: var(--hud-ink); font: 600 18px/1.2 system-ui, sans-serif; text-align: center; text-shadow: 0 1px 3px #000, 0 0 4px #000; }
+[data-sim-hud='flight'][data-hud-component] [data-hud-part='cue-preview'] { position: absolute; transform: translate(-50%, -50%); padding: 3px 6px; color: var(--hud-muted); background: var(--hud-bg); border: 1px dashed currentColor; border-radius: 4px; font: 600 14px/1.2 system-ui, sans-serif; }
 [data-sim-hud='flight'][data-hud-component] [data-hud-part='announcement'] { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
 [data-sim-hud='details'][data-hud-component] { width: min(480px, calc(100vw - 24px)); max-height: calc(100dvh - 24px); margin: auto; padding: 20px; border: 1px solid #ffffff65; border-radius: 8px; background: #0a111b; overflow: auto; }
 [data-sim-hud='details'][data-hud-component]::backdrop { background: #0009; }
@@ -5787,6 +6281,11 @@ export function mountFlightHud({
   root.dataset.simHud = 'flight';
   root.dataset.hudComponent = 'true';
   root.hidden = true;
+  const navigation = make('div', null, container);
+  navigation.dataset.simHud = 'flight';
+  navigation.dataset.hudComponent = 'true';
+  navigation.dataset.hudNavigation = 'true';
+  navigation.hidden = true;
   const card = make('div', 'card', root),
     action = make('div', 'action', card),
     navigationLabel = make('div', 'navigation-label', card),
@@ -5802,10 +6301,11 @@ export function mountFlightHud({
     hide = make('button', 'hide', root, '×'),
     details = make('div', 'details', card),
     telemetry = make('div', 'telemetry', root),
-    cue = make('div', 'cue', root),
+    cue = make('div', 'cue', navigation),
     brackets = make('div', 'brackets', cue),
     cueArrow = make('span', 'cue-arrow', cue, '➜'),
     cueLabel = make('span', 'cue-label', cue),
+    previewCue = make('div', 'cue-preview', navigation),
     announcement = make('span', 'announcement', root);
   explain.type = hide.type = 'button';
   hide.addEventListener('click', (event) => {
@@ -5820,6 +6320,7 @@ export function mountFlightHud({
   direction.setAttribute('aria-hidden', 'true');
   cue.setAttribute('aria-hidden', 'true');
   cue.hidden = true;
+  previewCue.hidden = true;
   for (let i = 0; i < 4; i++) make('i', null, brackets);
   const gaugeTrack = doc.createElementNS('http://www.w3.org/2000/svg', 'svg');
   gaugeTrack.dataset.hudPart = 'gauge-track';
@@ -6012,7 +6513,7 @@ export function mountFlightHud({
     (onExplain ?? onMenu)?.(feedback);
   });
   const paintPreferences = () => {
-    for (const element of [root, dialog]) {
+    for (const element of [root, dialog, navigation]) {
       element.dataset.hudMode = preferences.mode;
       element.dataset.hudSize = preferences.textSize;
       element.dataset.hudContrast = preferences.highContrast ? 'high' : 'normal';
@@ -6031,6 +6532,7 @@ export function mountFlightHud({
       options.visible === false ||
       !feedback ||
       (options.active === false && !options.paused && !options.replay);
+    navigation.hidden = preferences.mode === 'off' || options.visible === false || !feedback;
     if (!feedback) return;
     telemetry.hidden = !options.telemetry;
     setText(telemetry, options.telemetry ?? '');
@@ -6058,7 +6560,10 @@ export function mountFlightHud({
       t('Explain the current objective', 'Пояснити поточну ціль'),
     );
     explain.title = t('Objective details', 'Умови завдання');
-    hide.title = t('Hide flight guidance · restore in Settings', 'Сховати підказки · відновити в налаштуваннях');
+    hide.title = t(
+      'Hide flight guidance · restore in Settings',
+      'Сховати підказки · відновити в налаштуваннях',
+    );
     setAttribute(hide, 'aria-label', hide.title);
     gauge.hidden = !g;
     explain.hidden = options.explain === false;
@@ -6179,7 +6684,10 @@ export function mountFlightHud({
         next.hidden === true ||
         !Number.isFinite(next.x) ||
         !Number.isFinite(next.y);
-      if (cue.hidden) return;
+      if (cue.hidden) {
+        previewCue.hidden = true;
+        return;
+      }
       const offscreen = Boolean(
           next.offscreen || next.behind || next.occluded || next.directionOnly,
         ),
@@ -6190,10 +6698,34 @@ export function mountFlightHud({
       cue.style.top = `${(dock ? 0.5 : y) * 100}%`;
       cue.dataset.targetId = String(next.targetId ?? next.worldTargetId ?? '');
       cue.dataset.occluded = String(Boolean(next.occluded));
+      cue.dataset.wrongSide = String(Boolean(next.wrongSide || next.approach));
+      navigation.style.setProperty(
+        '--hud-accent',
+        { amber: '#ffd378', cyan: '#9bf5ed', white: '#fff', lime: '#d9ff92' }[
+          next.guidanceAccent
+        ] ?? '#ffd378',
+      );
       brackets.hidden = offscreen;
       cueArrow.hidden = !offscreen;
       cueArrow.style.transform = `rotate(${Number.isFinite(next.angle) ? next.angle : 0}rad)`;
-      setText(cueLabel, copy(next.label));
+      const label =
+        next.wrongSide || next.approach
+          ? t('Return to entry side', 'Поверніться до входу')
+          : next.occluded
+            ? t('Obstructed · destination bearing', 'За перешкодою · напрямок цілі')
+            : copy(next.label);
+      const distance = Number.isFinite(next.distance) ? ` · ${format(next.distance, 0)} m` : '';
+      setText(cueLabel, `${label}${distance}`);
+      const upcoming = next.preview;
+      previewCue.hidden = !upcoming || upcoming.offscreen || upcoming.behind || upcoming.occluded;
+      if (!previewCue.hidden) {
+        previewCue.style.left = `${Math.max(0.05, Math.min(0.95, upcoming.x)) * 100}%`;
+        previewCue.style.top = `${Math.max(0.1, Math.min(0.72, upcoming.y)) * 100}%`;
+        setText(
+          previewCue,
+          `${t('Next', 'Далі')} ${upcoming.number ?? (Number.isInteger(upcoming.index) ? upcoming.index + 1 : Number.isInteger(upcoming.step) ? upcoming.step + 1 : '')}`.trim(),
+        );
+      }
     },
     preferenceControls(target) {
       if (!target?.ownerDocument || disposed) return { destroy() {} };
@@ -6295,7 +6827,94 @@ export function mountFlightHud({
       closeDetails();
       dialog.remove();
       root.remove();
+      navigation.remove();
       sheet.remove();
+    },
+  };
+}
+
+/** Instruments observe accepted aircraft state independently of objective visibility. */
+export function flightInstrumentReadings(state) {
+  const heading = Number.isFinite(state?.attitude?.yaw)
+    ? ((Math.round(state.attitude.yaw / 100) % 360) + 360) % 360
+    : null;
+  const horizontalSpeed = [state?.velocity?.x, state?.velocity?.z].every(Number.isFinite)
+    ? Math.hypot(state.velocity.x, state.velocity.z) / 1000
+    : null;
+  return {
+    heading,
+    horizontalSpeed,
+    mapHeight: Number.isFinite(state?.position?.y) ? state.position.y / 1000 : null,
+  };
+}
+
+export function mountFlightInstruments({ container, locale = () => 'en' }) {
+  const doc = container.ownerDocument;
+  const root = doc.createElement('div');
+  root.className = 'sim-flight-instruments';
+  root.hidden = true;
+  const compass = doc.createElement('div'),
+    readouts = doc.createElement('div'),
+    extra = doc.createElement('div'),
+    notice = doc.createElement('div');
+  compass.className = 'sim-flight-compass';
+  readouts.className = 'sim-flight-readouts';
+  extra.className = 'sim-flight-extra';
+  notice.className = 'sim-flight-notice';
+  notice.setAttribute('role', 'status');
+  root.append(compass, readouts, extra, notice);
+  container.append(root);
+  let disposed = false;
+  const text = (node, value) => {
+    if (node.textContent !== value) node.textContent = value;
+  };
+  const t = (en, uk) => (locale() === 'uk' ? uk : en);
+  return {
+    update(state, { visible = true, preferences = {}, routeUnavailable = '' } = {}) {
+      if (disposed) return;
+      root.hidden = !visible || !state;
+      if (root.hidden) return;
+      const { heading, horizontalSpeed, mapHeight } = flightInstrumentReadings(state);
+      const enabled = preferences.flightInstruments !== false;
+      compass.hidden = readouts.hidden = !enabled;
+      const bearing = heading === null ? '—' : String(heading).padStart(3, '0');
+      const cardinal =
+        heading === null
+          ? ''
+          : ['N', 'NE', 'E', 'SE', 'S', 'SW', 'W', 'NW'][Math.round(heading / 45) % 8];
+      text(compass, `‹  ${cardinal}  ${bearing}°  ›`);
+      text(
+        readouts,
+        `${t('Speed', 'Швидкість')} ${horizontalSpeed?.toFixed(1) ?? '—'} m/s  ·  ${t('Height · map', 'Висота · карта')} ${mapHeight?.toFixed(1) ?? '—'} m`,
+      );
+      const telemetry = state.advancedTelemetry;
+      const values = [];
+      for (const [key, unit] of [
+        ['voltage', 'V'],
+        ['current', 'A'],
+        ['usedAh', 'Ah'],
+      ])
+        if (Number.isFinite(telemetry?.[key])) values.push(`${telemetry[key].toFixed(2)} ${unit}`);
+      extra.hidden = !preferences.extraTelemetry || !values.length;
+      text(extra, values.join(' · '));
+      const pending = (state.actors ?? []).filter((actor) =>
+        Number.isInteger(actor.replacementTick),
+      );
+      const waiting = pending.some((actor) => actor.replacementTick <= state.ticks);
+      const message = pending.length
+        ? waiting
+          ? t('Replacement waiting for a clear area', 'Заміна очікує вільне місце')
+          : t('Replacing lesson target', 'Відновлення навчальної цілі')
+        : preferences.routeGuideVisible
+          ? routeUnavailable
+          : '';
+      notice.hidden = !message;
+      text(notice, message);
+      root.dataset.combat = String(Boolean(state.encounter));
+    },
+    destroy() {
+      disposed = true;
+      root.remove();
     },
   };
 }

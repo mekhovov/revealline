@@ -45,8 +45,8 @@ export const isOptionalReactionVoiceBody = (name) =>
 // These exact older Team import themes are selectable recovery dependencies,
 // not part of every fresh installation. Other retained manifests stay core.
 export const OPTIONAL_TEAM_IMPORT_MANIFESTS = Object.freeze([
-  "game/presentation/compiled/runtime.e4d16e7b206f50023a1f67249c9be63f9968975071cf16ea0802891ca122e3b3.json",
-  "game/presentation/compiled/runtime.666e68e92f7472368ed915fdf434dff25958553121bc504c8a9b71724386bcae.json",
+  'game/presentation/compiled/runtime.e4d16e7b206f50023a1f67249c9be63f9968975071cf16ea0802891ca122e3b3.json',
+  'game/presentation/compiled/runtime.666e68e92f7472368ed915fdf434dff25958553121bc504c8a9b71724386bcae.json',
 ]);
 const optionalTeamImportManifests = new Set(OPTIONAL_TEAM_IMPORT_MANIFESTS);
 export const isOptionalTeamImportManifest = (name) => optionalTeamImportManifests.has(name);

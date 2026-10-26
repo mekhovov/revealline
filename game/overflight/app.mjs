@@ -35,6 +35,10 @@ import { DESTRUCTION_CUES, HUMAN_REACTION_CUES } from '../ui/destruction-audio.m
 import { mountModeSettings } from '../ui/mode-settings-view.mjs';
 import { mountGlobalSettings } from '../ui/global-settings-view.mjs';
 import { mountGlobalSettingsTools } from '../ui/global-settings-tools.mjs';
+import { attachLocalSupportSummary } from '../ui/local-support-summary.mjs';
+import { overflightSupportHost } from './support-summary.mjs';
+import { offlineAvailability } from '../offline.mjs';
+import { nativePlatform } from '../platform.mjs';
 import {
   attachSettingsPanels,
   settingsPanelBack,
@@ -42,6 +46,7 @@ import {
 } from '../ui/settings-panels.mjs';
 import { attachMenuAudioSettings } from '../ui/menu-audio.mjs';
 import { menuAnimationBinding } from '../ui/menu-animation-preferences.mjs';
+import { mountComfortPresets } from '../ui/comfort-presets.mjs';
 import { mountModePlayShell } from '../ui/mode-play-shell.mjs';
 import { attachModalNavigation } from '../ui/modal-navigation.mjs';
 import { attachFullscreen } from '../ui/fullscreen.mjs';
@@ -78,6 +83,7 @@ import {
 } from './community.mjs';
 import { overflightBuildItems } from './upgrades.mjs';
 import { createOverflightUpgradeCard } from './upgrade-card.mjs';
+import { createOverflightTextScalingView, overflightCaptionFits } from './text-scaling-view.mjs';
 import {
   pilot,
   selectCard,
@@ -325,6 +331,7 @@ let run = null,
   navigator = null,
   controller = null,
   controllerStatus = null,
+  controllerBuildVersion = null,
   appearance = null;
 let suspendCoordinator = null,
   suspendView = null,
@@ -355,6 +362,8 @@ let lastHUD = 0,
   missionRegistry = null,
   selectedInstalled = false,
   cacheHintKey = '',
+  captionLayoutKey = '',
+  requestCaptionLayout = () => {},
   progressEpoch = 0,
   missionProgress = new Map(),
   commentator = null,
@@ -404,6 +413,7 @@ const el = (tag, value = '', className = '') => {
 };
 const display = createDisplayPreferences({
   window: win,
+  extraLarge: doc.documentElement.dataset.textScaling === 'overflight',
   onWarning: (message) => showStatus(message),
 });
 const context = contextualAppearance(doc);
@@ -789,6 +799,7 @@ function updateHUD() {
     $('hud-cache').hidden = !openCaches;
     $('hud-cache').textContent = openCaches ? text('cacheReady') : '';
     $('hud-cache').title = overflightCacheHint(compiled, getLocale());
+    requestCaptionLayout();
   }
   $('hud-level').textContent = `${text('level')} ${run.progression.choices + 1}`;
   const cooldown = Math.max(0, mode.boostRecovery?.(run) ?? run.player.boostCooldown ?? 0);
@@ -832,9 +843,22 @@ function updateHUD() {
   }
   if (mode.updateHUD) {
     mode.updateHUD({ run, compiled, document: doc, text, local });
-    return;
+  } else updateOverflightSurvivalHUD({ run, compiled, document: doc, text });
+  const layoutKey = [
+    $('hud-protection').textContent,
+    cooldown > 0,
+    run.player.overdriveRemaining > 0,
+    run.player.overdriveReady,
+    !!run.riy?.queued,
+    run.riy?.phase,
+    run.riy?.focusRemaining > 0,
+    run.riy?.cooldown > 0,
+    run.riy?.targetId,
+  ].join('|');
+  if (layoutKey !== captionLayoutKey) {
+    captionLayoutKey = layoutKey;
+    requestCaptionLayout();
   }
-  updateOverflightSurvivalHUD({ run, compiled, document: doc, text });
 }
 function refreshCharacters() {
   const select = $('character-select');
@@ -869,9 +893,11 @@ function rewardToast(offer) {
   );
   toast.dataset.evolution = String(offer.kind === 'evolution');
   toast.hidden = false;
+  requestCaptionLayout();
   rewardTimer = win.setTimeout(() => {
     toast.hidden = true;
     rewardTimer = null;
+    requestCaptionLayout();
   }, 2200);
 }
 function result() {
@@ -1084,6 +1110,7 @@ function syncUpgrade(force = false) {
           riySettings: run.riy?.rules,
           locale: getLocale(),
           reducedEffects: display.snapshot().effectiveReducedEffects,
+          expandedComparison: display.snapshot().effectiveTextSize === 'extra-large',
           disabled: review.active(),
           moduleIcon,
           paintSprite: renderer?.paintPreviewSprite,
@@ -1896,7 +1923,13 @@ hudContext.dataset.operationContext = 'true';
 $('overflight-hud').append(hudContext);
 const offlineSettings = el('section', '', 'overflight-offline-settings');
 const touchSettings = el('section');
-$('overflight-settings').append(touchSettings);
+const touchVisitSettings =
+  doc.documentElement.dataset.textScaling === 'overflight' ? el('section') : null;
+$('overflight-settings').append(...[touchVisitSettings, touchSettings].filter(Boolean));
+const compactTouchActions = () =>
+  doc.documentElement.dataset.textScaling === 'overflight' &&
+  display.snapshot().effectiveTextSize === 'extra-large' &&
+  $('overflight-game').classList.contains('has-touch-controls');
 touchInput = createOverflightTouch({
   document: doc,
   window: win,
@@ -1911,8 +1944,18 @@ touchInput = createOverflightTouch({
     !contextGuard.blocked() &&
     run?.phase === 'playing' &&
     !activeModal(),
-  actionLabel: () => text('boost'),
+  actionLabel: () => text(compactTouchActions() ? 'boostCompact' : 'boost'),
+  actionName: () => text('boost'),
   onInterrupt: () => pause({ menu: false }),
+  onLayoutChange: () => requestCaptionLayout(),
+  visibilitySettings:
+    doc.documentElement.dataset.textScaling === 'overflight'
+      ? {
+          help: () => text('touchVisibilityHelp'),
+          title: () => text('touchVisitTitle'),
+          mount: touchVisitSettings,
+        }
+      : null,
 });
 const offlineHeading = el('h3');
 localizedText(offlineHeading, () => t('interface:nativeMenu.content'));
@@ -1982,12 +2025,22 @@ commentator = createOverflightCommentator({
   window: win,
   getReduced: () => display.snapshot().effectiveReducedEffects,
   acquireGain: (settings) => music?.player.acquireGain(settings),
+  captionReader:
+    doc.documentElement.dataset.textScaling === 'overflight'
+      ? {
+          root: shell.elements.content.pause,
+          pauseButton: shell.elements.buttons.pause,
+          active: () => display.snapshot().effectiveTextSize === 'extra-large',
+          fits: (panel) => overflightCaptionFits({ document: doc, panel }),
+        }
+      : null,
 });
 const disposeModeActions = mode.installActions?.({
   document: doc,
   prepare,
   getSeed: () => run?.raidVariant?.seed ?? seed,
   getRun: () => run,
+  compactTouchActions,
   onVariantResultRefresh: () => result(),
   canContinueContract: () => !preparing && !runtimeFailed && !contextGuard.blocked() && !retired,
   onContinueContract: () => {
@@ -2022,6 +2075,21 @@ const fieldControls = $('overflight-field-controls');
 const squadControls = $('overflight-game').querySelector('.overflight-riy-controls');
 if (squadControls) fieldControls.prepend(squadControls);
 $('overflight-review-controls').append($('overflight-diagnostics'));
+const textScalingView = createOverflightTextScalingView({
+  document: doc,
+  readingRoot: shell.elements.content.pause,
+  home: shell.elements.home,
+  results: shell.elements.dialogs.results,
+  label: () => text('flightDetails'),
+  onLayoutChange: () => commentator?.refreshCaptionLayout(),
+});
+requestCaptionLayout = () => textScalingView.refreshCaptionLayout();
+cleanup.push(() => textScalingView.dispose());
+cleanup.push(
+  onLocaleChange(() =>
+    textScalingView.refresh(display.snapshot().effectiveTextSize === 'extra-large'),
+  ),
+);
 if ($('survivor-same-seed')) {
   listen($('survivor-same-seed'), 'click', () => {
     void prepare({ launch: true }).catch(() => {});
@@ -2332,7 +2400,7 @@ settingsView = mountModeSettings({
       $('overflight-settings').querySelector('[data-copy="nextSortie"]'),
       shell.elements.buttons['home-retry'],
     ],
-    controls: [touchSettings],
+    controls: [touchVisitSettings, touchSettings].filter(Boolean),
     audio: [
       field('muted'),
       field('volume'),
@@ -2381,6 +2449,13 @@ globalSettings = mountGlobalSettings({
     menuAnimation: menuAnimationBinding(win),
   },
 });
+const comfortPresets = mountComfortPresets({
+  document: doc,
+  window: win,
+  root: settingsView.panels.accessibility,
+  display,
+});
+cleanup.push(() => comfortPresets.destroy());
 settingsTools = mountGlobalSettingsTools({
   document: doc,
   window: win,
@@ -2393,14 +2468,38 @@ settingsTools = mountGlobalSettingsTools({
   onOpen: () => pause({ menu: false }),
 });
 globalSettings.update({ controls: settingsTools.controls });
+const supportRoot = el('section');
+supportRoot.id = 'support-summary-root';
+settingsView.panels.data.append(supportRoot);
+const supportSummary = attachLocalSupportSummary({
+  document: doc,
+  window: win,
+  root: supportRoot,
+  settings: settingsRoot,
+  getHost: () =>
+    overflightSupportHost({
+      mode,
+      run,
+      version: controllerBuildVersion,
+      locale: getLocale(),
+      controller,
+      offline: offlineAvailability(),
+      platform: nativePlatform() ?? 'browser',
+      practice: !!(studio || fixture || reviewBuild),
+    }),
+});
 $('overflight-settings').hidden = true;
 cleanup.push(onLocaleChange(refreshCopy));
 cleanup.push(
   display.subscribe((value) => {
     $('text-face').value = value.textFace;
-    renderTextSizeControl($('text-size'), value.textSize);
+    renderTextSizeControl($('text-size'), value.textSize, {
+      extraLarge: doc.documentElement.dataset.textScaling === 'overflight',
+    });
     $('reduced-effects').checked = value.reducedEffects;
     doc.body.dataset.textSize = value.effectiveTextSize ?? value.textSize;
+    textScalingView.refresh(value.effectiveTextSize === 'extra-large');
+    commentator?.refreshCaptionLayout();
     doc.body.dataset.textFace = value.textFace;
     doc.body.dataset.effects = value.effectiveReducedEffects ? 'reduced' : 'full';
     if (appearance) appearance.reducedEffects = value.effectiveReducedEffects;
@@ -2690,6 +2789,7 @@ async function dispose() {
   offlinePanel?.dispose();
   modeChoices?.dispose();
   await settingsTools?.dispose();
+  supportSummary.destroy();
   globalSettings?.destroy();
   settingsView?.destroy();
   shell.dispose();
@@ -2740,6 +2840,7 @@ try {
   const controllerPreferences = await loadOverflightControllerPreferences({
     window: win,
   });
+  controllerBuildVersion = controllerPreferences.version;
   controller = createOverflightController({
     window: win,
     ...controllerPreferences,

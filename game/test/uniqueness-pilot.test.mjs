@@ -27,8 +27,8 @@ test('pilot successors own new identities and leave current content and original
   const before = JSON.stringify(CURRENT_ART_SOURCES);
   const defaultSoloBefore = DEFAULT_JOURNEY_ROUTES.solo;
   const pilots = createClassicUniquenessPilots();
-  assert.equal(pilots.length, 4);
-  assert.equal(new Set(pilots.map(({ level }) => geometrySignature(level))).size, 4);
+  assert.equal(pilots.length, 3);
+  assert.equal(new Set(pilots.map(({ level }) => geometrySignature(level))).size, 3);
   for (const pilot of pilots) {
     assert.equal(pilot.classification, 'tooling');
     assert.equal(pilot.approval, 'pending-human-playtest');

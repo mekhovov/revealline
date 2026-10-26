@@ -139,9 +139,7 @@ class SoloDocument extends Document {
     return new SoloElement(this, tag);
   }
   createTextNode(value) {
-    const node = new SoloElement(this, 'span');
-    node.textContent = value;
-    return node;
+    return super.createTextNode(value);
   }
 }
 function mount(document, html) {

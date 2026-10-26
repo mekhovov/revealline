@@ -97,6 +97,86 @@ export function evaluateWorldResult(
       : Math.min(state.step, course.steps[proof.mode].length - 1),
   };
 }
+
+/** Explain the current accepted grade; never award, recalibrate or persist it.
+ * Worlds medals use exact 50 Hz ticks AND contact caps, without a time penalty. */
+export function worldMedalGoal(result, ticks) {
+  const integer = (value) => Number.isSafeInteger(value) && value >= 0;
+  if (
+    result?.eligible !== true ||
+    !integer(ticks) ||
+    result.seconds !== ticks / 50 ||
+    !integer(result.contacts) ||
+    !['gold', 'silver', 'bronze'].includes(result.medal)
+  )
+    return null;
+  const targets = result.targets;
+  if (
+    !targets ||
+    !['goldTicks', 'silverTicks', 'goldContacts', 'silverContacts'].every((key) =>
+      integer(targets[key]),
+    ) ||
+    targets.silverTicks < targets.goldTicks ||
+    targets.silverContacts < targets.goldContacts
+  )
+    return null;
+  const accepted =
+    ticks <= targets.goldTicks && result.contacts <= targets.goldContacts
+      ? 'gold'
+      : ticks <= targets.silverTicks && result.contacts <= targets.silverContacts
+        ? 'silver'
+        : 'bronze';
+  if (accepted !== result.medal) return null;
+  if (accepted === 'gold') return Object.freeze({ medal: accepted, next: null });
+  const next = accepted === 'silver' ? 'gold' : 'silver';
+  return Object.freeze({
+    medal: accepted,
+    next,
+    targetTicks: targets[`${next}Ticks`],
+    targetContacts: targets[`${next}Contacts`],
+    remainingTicks: Math.max(0, ticks - targets[`${next}Ticks`]),
+    excessContacts: Math.max(0, result.contacts - targets[`${next}Contacts`]),
+  });
+}
+
+export function worldMedalGoalText(goal, locale = 'en') {
+  if (!goal) return '';
+  const uk = locale === 'uk';
+  if (goal.next === null)
+    return uk
+      ? 'Золото здобуто: цей політ відповідає обмеженням часу й контактів.'
+      : 'Gold earned: this flight met the time and contact limits.';
+  const seconds = (ticks) =>
+    new Intl.NumberFormat(uk ? 'uk' : 'en', {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+      useGrouping: false,
+    }).format(ticks / 50);
+  const medal = uk
+    ? goal.next === 'gold'
+      ? 'золото'
+      : 'срібло'
+    : goal.next === 'gold'
+      ? 'Gold'
+      : 'Silver';
+  const time = goal.remainingTicks
+    ? uk
+      ? `У наступній спробі скоротіть час на ${seconds(goal.remainingTicks)} с.`
+      : `On your next attempt, finish ${seconds(goal.remainingTicks)} s sooner.`
+    : uk
+      ? 'Умова часу вже виконана.'
+      : 'The time requirement is already met.';
+  const contacts = goal.excessContacts
+    ? uk
+      ? `Потрібно менше контактів у наступній спробі: на ${goal.excessContacts}.`
+      : `Your next attempt needs ${goal.excessContacts} fewer ${goal.excessContacts === 1 ? 'contact' : 'contacts'}.`
+    : uk
+      ? 'Умова контактів уже виконана.'
+      : 'The contact requirement is already met.';
+  return uk
+    ? `Наступна медаль: ${medal} — не більше ${seconds(goal.targetTicks)} с; максимум контактів: ${goal.targetContacts}. ${time} ${contacts}`
+    : `Next: ${medal} — at most ${seconds(goal.targetTicks)} s; contact limit: ${goal.targetContacts}. ${time} ${contacts}`;
+}
 /** A shortlist only: selected ghosts and sector references still replay their own proof. */
 export function compatibleFlightComparison(a, b) {
   if (!a || !b) return false;

@@ -1,4 +1,5 @@
 @import url('../ui/field-kit-fonts.css');
+@import url('../ui/comfort-presets.css');
 
 :root {
   color-scheme: var(--iw-color-scheme, dark);
@@ -161,7 +162,7 @@ button:disabled {
   inset: 0;
   pointer-events: none;
   font-family: var(--fk-font-mono, monospace);
-  font-size: 14px;
+  font-size: calc(14px * var(--overflight-text-scale, 1));
   color: #f3f0db;
   text-shadow: 1px 1px 2px #070b12;
 }
@@ -188,7 +189,7 @@ button:disabled {
 }
 #hud-time {
   text-align: center;
-  font-size: 18px;
+  font-size: calc(18px * var(--overflight-text-scale, 1));
 }
 #hud-level {
   text-align: right;
@@ -198,7 +199,7 @@ button:disabled {
   margin: 0;
   padding: 4px 8px;
   background: #07111ce8;
-  font-size: 11px;
+  font-size: calc(11px * var(--overflight-text-scale, 1));
   color: #e6b85c;
 }
 .overflight-bottomline {
@@ -206,7 +207,7 @@ button:disabled {
   bottom: 0;
   left: 0;
   right: 0;
-  font-size: 12px;
+  font-size: calc(12px * var(--overflight-text-scale, 1));
 }
 #hud-build {
   overflow: hidden;
@@ -234,7 +235,11 @@ button:disabled {
 .overflight-upgrade h1 {
   font-family: var(--fk-font-display, inherit);
   margin: 0;
-  font-size: clamp(24px, 3vw, 40px);
+  font-size: clamp(
+    calc(24px * var(--overflight-text-scale, 1)),
+    calc(3vw * var(--overflight-text-scale, 1)),
+    calc(40px * var(--overflight-text-scale, 1))
+  );
 }
 .overflight-upgrade p {
   margin: 8px 0 0;
@@ -256,7 +261,7 @@ button:disabled {
   border-color: var(--fk-accent, #e6b85c);
 }
 .overflight-upgrade-card .upgrade-title {
-  font-size: 21px;
+  font-size: calc(21px * var(--overflight-text-scale, 1));
   line-height: 1.15;
   color: inherit;
 }
@@ -273,7 +278,7 @@ button:disabled {
   min-width: 0;
 }
 .upgrade-kind {
-  font-size: 12px;
+  font-size: calc(12px * var(--overflight-text-scale, 1));
   font-weight: 600;
   margin-bottom: 5px;
 }
@@ -288,7 +293,7 @@ button:disabled {
   height: auto;
 }
 .upgrade-description {
-  font-size: 15px;
+  font-size: calc(15px * var(--overflight-text-scale, 1));
   line-height: 1.4;
   font-weight: 500;
 }
@@ -302,7 +307,7 @@ button:disabled {
 .overflight-upgrade-card .upgrade-evolution {
   margin-top: auto;
   color: inherit;
-  font-size: 12px;
+  font-size: calc(12px * var(--overflight-text-scale, 1));
   font-weight: 500;
 }
 .overflight-upgrade-card .upgrade-ranks {
@@ -323,10 +328,10 @@ button:disabled {
   opacity: 0.6;
 }
 [data-text-size='large'] .upgrade-description {
-  font-size: 18px;
+  font-size: calc(18px * var(--overflight-text-scale, 1));
 }
 [data-text-size='large'] :is(.upgrade-kind, .upgrade-evolution) {
-  font-size: 15px;
+  font-size: calc(15px * var(--overflight-text-scale, 1));
 }
 #result-stats {
   display: grid;
@@ -344,7 +349,7 @@ button:disabled {
   color: #f3f0db;
   max-height: max(120px, calc(100dvh - 300px));
   overflow: auto;
-  font: 12px var(--fk-font-mono, monospace);
+  font: calc(12px * var(--overflight-text-scale, 1)) var(--fk-font-mono, monospace);
 }
 #diagnostic-values {
   white-space: pre-wrap;
@@ -363,7 +368,7 @@ button:disabled {
     grid-template-columns: 1fr;
   }
   #overflight-hud {
-    font-size: 12px;
+    font-size: calc(12px * var(--overflight-text-scale, 1));
   }
 }
 @media (prefers-reduced-motion: reduce) {
@@ -390,7 +395,7 @@ button:disabled {
   max-width: 50%;
   padding: 6px 10px;
   background: #07111cb8;
-  font-size: 11px;
+  font-size: calc(11px * var(--overflight-text-scale, 1));
 }
 .overflight-music-credit span {
   display: block;
@@ -433,10 +438,10 @@ button:disabled {
 }
 
 [data-theme-text-size='large'] #overflight-hud {
-  font-size: 18px;
+  font-size: calc(18px * var(--overflight-text-scale, 1));
 }
 [data-theme-text-size='large'] .overflight-bottomline {
-  font-size: 16px;
+  font-size: calc(16px * var(--overflight-text-scale, 1));
 }
 [data-theme-hud='opaque']
   :is(.overflight-topline, .overflight-bottomline, .overflight-music-credit) {
@@ -464,7 +469,7 @@ button:disabled {
   resize: vertical;
   color: inherit;
   background: #07111c;
-  font: 11px var(--fk-font-mono, monospace);
+  font: calc(11px * var(--overflight-text-scale, 1)) var(--fk-font-mono, monospace);
 }
 #review-clip-video {
   display: block;
@@ -495,36 +500,40 @@ button:disabled {
   justify-items: center;
 }
 .overflight-eyebrow {
-  font: 600 11px var(--fk-font-mono, monospace);
+  font: 600 calc(11px * var(--overflight-text-scale, 1)) var(--fk-font-mono, monospace);
   letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--fk-accent, #e6b85c);
   margin: 0;
 }
 #hud-time {
-  font-size: clamp(20px, 2vw, 29px);
+  font-size: clamp(
+    calc(20px * var(--overflight-text-scale, 1)),
+    calc(2vw * var(--overflight-text-scale, 1)),
+    calc(29px * var(--overflight-text-scale, 1))
+  );
   line-height: 1;
 }
 #hud-hull {
   font-weight: 700;
 }
 #hud-airframes {
-  font-size: 11px;
+  font-size: calc(11px * var(--overflight-text-scale, 1));
   color: #c1cbbd;
 }
 #hud-kills {
   color: #edc363;
-  font-size: 16px;
+  font-size: calc(16px * var(--overflight-text-scale, 1));
   font-weight: 700;
   font-variant-numeric: tabular-nums;
 }
 #hud-level {
-  font-size: 12px;
+  font-size: calc(12px * var(--overflight-text-scale, 1));
   color: #9aebda;
 }
 #hud-salvage,
 #hud-final-objective {
-  font-size: 11px;
+  font-size: calc(11px * var(--overflight-text-scale, 1));
   line-height: 1.3;
   max-width: 210px;
 }
@@ -580,7 +589,7 @@ button:disabled {
 }
 .overflight-hangar .micro-note {
   margin-bottom: 0;
-  font-size: 13px;
+  font-size: calc(13px * var(--overflight-text-scale, 1));
   color: #bcc8bf;
 }
 .overflight-character-preview {
@@ -636,7 +645,7 @@ button:disabled {
   place-items: center;
 }
 .upgrade-celebration > span {
-  font-size: 64px;
+  font-size: calc(64px * var(--overflight-text-scale, 1));
   line-height: 1;
   color: #edc363;
   filter: drop-shadow(0 0 10px #edc36344);
@@ -724,13 +733,13 @@ button:disabled {
   align-self: center;
 }
 .overflight-reward-toast span {
-  font-size: 10px;
+  font-size: calc(10px * var(--overflight-text-scale, 1));
   text-transform: uppercase;
   color: #edc363;
   letter-spacing: 0.08em;
 }
 .overflight-reward-toast strong {
-  font-size: 16px;
+  font-size: calc(16px * var(--overflight-text-scale, 1));
 }
 .overflight-reward-toast[data-evolution='true'] {
   border-color: #9aebda;
@@ -764,11 +773,11 @@ button:disabled {
   clip-path: polygon(0 0, 100% 0, 100% 80%, 50% 100%, 0 80%);
 }
 .overflight-result-insignia span {
-  font-size: 64px;
+  font-size: calc(64px * var(--overflight-text-scale, 1));
   color: var(--result-accent);
 }
 #result-title {
-  font: 36px var(--fk-font-display, inherit);
+  font: calc(36px * var(--overflight-text-scale, 1)) var(--fk-font-display, inherit);
   margin: 8px 0;
 }
 #result-message {
@@ -787,22 +796,34 @@ button:disabled {
 }
 .overflight-result-stat dt {
   color: #b6c3b7;
-  font-size: 12px;
+  font-size: calc(12px * var(--overflight-text-scale, 1));
 }
 .overflight-result-stat dd {
   color: #f3eddd;
-  font: 700 clamp(22px, 3vw, 36px) var(--fk-font-mono, monospace);
+  font: 700
+    clamp(
+      calc(22px * var(--overflight-text-scale, 1)),
+      calc(3vw * var(--overflight-text-scale, 1)),
+      calc(36px * var(--overflight-text-scale, 1))
+    )
+    var(--fk-font-mono, monospace);
   margin-top: 8px !important;
 }
 .overflight-result-detail {
   grid-column: 1 / -1;
 }
 #result-stats .overflight-result-detail dd {
-  font: 600 clamp(16px, 1.6vw, 20px) / 1.45 var(--fk-font-ui, 'Exo 2', sans-serif);
+  font: 600
+    clamp(
+      calc(16px * var(--overflight-text-scale, 1)),
+      calc(1.6vw * var(--overflight-text-scale, 1)),
+      calc(20px * var(--overflight-text-scale, 1))
+    ) /
+    1.45 var(--fk-font-ui, 'Exo 2', sans-serif);
   overflow-wrap: anywhere;
 }
 [data-text-size='large'] #result-stats .overflight-result-detail dd {
-  font-size: 22px;
+  font-size: calc(22px * var(--overflight-text-scale, 1));
 }
 .overflight-result-milestones {
   display: flex;
@@ -815,7 +836,7 @@ button:disabled {
   border: 1px solid #667e68;
   color: #b9e4a5;
   background: #17251b;
-  font-size: 12px;
+  font-size: calc(12px * var(--overflight-text-scale, 1));
 }
 .overflight-result-build {
   display: grid;
@@ -832,7 +853,7 @@ button:disabled {
 }
 .overflight-result-module span {
   margin-left: auto;
-  font-size: 12px;
+  font-size: calc(12px * var(--overflight-text-scale, 1));
   white-space: nowrap;
   color: #a7c9b7;
 }
@@ -938,11 +959,11 @@ button:disabled {
   }
   #hud-hull,
   #hud-kills {
-    font-size: 12px;
+    font-size: calc(12px * var(--overflight-text-scale, 1));
   }
   #hud-airframes,
   #hud-level {
-    font-size: 10px;
+    font-size: calc(10px * var(--overflight-text-scale, 1));
   }
   .overflight-hangar {
     grid-template-columns: 90px minmax(0, 1fr);
@@ -960,7 +981,7 @@ button:disabled {
     flex-basis: 42px;
   }
   .upgrade-celebration > span {
-    font-size: 48px;
+    font-size: calc(48px * var(--overflight-text-scale, 1));
   }
   .overflight-upgrade .mode-play-dialog-head {
     padding: 12px 16px;
@@ -977,10 +998,10 @@ button:disabled {
     height: 64px;
   }
   .overflight-result-insignia span {
-    font-size: 44px;
+    font-size: calc(44px * var(--overflight-text-scale, 1));
   }
   #result-title {
-    font-size: 28px;
+    font-size: calc(28px * var(--overflight-text-scale, 1));
   }
 }
 
@@ -993,7 +1014,11 @@ button:disabled {
   padding: 0.35rem 0.65rem;
   background: rgb(9 18 15 / 82%);
   border-left: 3px solid #f4c765;
-  font-size: clamp(0.65rem, 1.4vw, 0.95rem);
+  font-size: clamp(
+    calc(0.65rem * var(--overflight-text-scale, 1)),
+    calc(1.4vw * var(--overflight-text-scale, 1)),
+    calc(0.95rem * var(--overflight-text-scale, 1))
+  );
 }
 .raid-hunt-strip p {
   margin: 0;
@@ -1109,7 +1134,7 @@ button:disabled {
 }
 .overflight-operation-group > h2 {
   margin: 7px 2px;
-  font-size: 1rem;
+  font-size: calc(1rem * var(--overflight-text-scale, 1));
 }
 .overflight-operation-group > canvas {
   display: block;
@@ -1148,12 +1173,12 @@ button:disabled {
   image-rendering: pixelated;
 }
 .overflight-operation-card strong {
-  font-size: 1.2rem;
+  font-size: calc(1.2rem * var(--overflight-text-scale, 1));
   color: var(--fk-accent, #f4c765);
 }
 .overflight-operation-card span {
   line-height: 1.35;
-  font-size: 0.9rem;
+  font-size: calc(0.9rem * var(--overflight-text-scale, 1));
 }
 .overflight-operation-card small {
   color: var(--fk-accent, #f4c765);
@@ -1169,7 +1194,7 @@ button:disabled {
 .overflight-operation-context,
 .overflight-home-setup {
   color: var(--fk-text-muted, #aebeb2);
-  font-size: 0.8rem;
+  font-size: calc(0.8rem * var(--overflight-text-scale, 1));
   line-height: 1.4;
   margin: 5px 0 12px;
 }
@@ -1192,7 +1217,7 @@ button:disabled {
   left: 12px;
   max-width: 65%;
   color: #b7c5b9;
-  font-size: 0.65rem;
+  font-size: calc(0.65rem * var(--overflight-text-scale, 1));
   text-shadow: 1px 1px #06120e;
   pointer-events: none;
 }
@@ -1254,12 +1279,16 @@ button:disabled {
   height: 32px;
 }
 .mode-play-home-choices .overflight-operation-card strong {
-  font-size: clamp(0.75rem, 3.5vw, 0.9rem);
+  font-size: clamp(
+    calc(0.75rem * var(--overflight-text-scale, 1)),
+    calc(3.5vw * var(--overflight-text-scale, 1)),
+    calc(0.9rem * var(--overflight-text-scale, 1))
+  );
   overflow-wrap: normal;
 }
 .mode-play-home-choices .overflight-operation-card :is(span, small) {
   grid-column: 1 / -1;
-  font-size: 0.75rem;
+  font-size: calc(0.75rem * var(--overflight-text-scale, 1));
   line-height: 1.3;
 }
 @media (orientation: landscape) and (max-height: 820px) {
@@ -1295,7 +1324,7 @@ button:disabled {
 }
 .overflight-role-card p {
   margin: 7px 0 0;
-  font-size: 0.9rem;
+  font-size: calc(0.9rem * var(--overflight-text-scale, 1));
 }
 .overflight-role-guide summary {
   cursor: pointer;
@@ -1309,11 +1338,11 @@ button:disabled {
   color: #f4c765;
   background: #10201ee8;
   border-left: 3px solid #f4c765;
-  font-size: 0.8rem;
+  font-size: calc(0.8rem * var(--overflight-text-scale, 1));
 }
 #hud-protection {
   color: #f4c765;
-  font-size: 0.75rem;
+  font-size: calc(0.75rem * var(--overflight-text-scale, 1));
 }
 .overflight-installed-tools {
   width: 100%;
@@ -1332,10 +1361,10 @@ button:disabled {
     padding: 7px;
   }
   .overflight-operation-card strong {
-    font-size: 1.1rem;
+    font-size: calc(1.1rem * var(--overflight-text-scale, 1));
   }
   .overflight-operation-card span {
-    font-size: 0.75rem;
+    font-size: calc(0.75rem * var(--overflight-text-scale, 1));
   }
   .overflight-role-grid {
     grid-template-columns: 1fr;
@@ -1345,7 +1374,7 @@ button:disabled {
   }
   .overflight-cache-hint {
     max-width: 82%;
-    font-size: 0.7rem;
+    font-size: calc(0.7rem * var(--overflight-text-scale, 1));
   }
 }
 /* Controls flow beneath the HUD instead of guessing its height. */
@@ -1378,7 +1407,7 @@ button:disabled {
   background: rgb(10 24 21 / 90%);
   color: #eef0d9;
   font:
-    12px/1.3 system-ui,
+    calc(12px * var(--overflight-text-scale, 1)) / 1.3 system-ui,
     sans-serif;
   pointer-events: none;
 }

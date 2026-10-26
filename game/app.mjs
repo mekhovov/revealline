@@ -1,5 +1,5 @@
-import { renderTextSizeControl } from './ui/text-size-control.mjs';
 import './i18n/main-entry.mjs';
+import { renderTextSizeControl } from './ui/text-size-control.mjs';
 import { loadBaseArtwork } from './base-artwork.mjs';
 import { continuousPlayPreferences } from './ui/continuous-play.mjs';
 import { nativeArtReviewURL } from './ui/art-review-navigation.mjs';
@@ -143,6 +143,7 @@ import {
 import { createMissionPictureThumbnails } from './ui/mission-thumbnails.mjs';
 import { drawResultPicture } from './ui/result-picture.mjs';
 import { resultContinuationLabel } from './ui/result-continuation.mjs';
+import { captureHomeRecommendation } from './ui/capture-home-recommendation.mjs';
 import { loadExternalCatalog, prepareExternalDownload } from './external-chapter-catalog.mjs';
 import { createExternalChapterHost } from './external-chapter-host.mjs';
 import { createExternalChapterBackup } from './external-chapter-backup.mjs';
@@ -802,6 +803,7 @@ try {
     optionalVerificationPreparation
       ? optionalVerificationPreparation.run('main', work, { signal })
       : work();
+  let gameShell = null;
   const journeyProfile = journeyEnabled
     ? createJourneyProfileStore({
         profileKey: authoredRoute?.profileKey,
@@ -825,6 +827,7 @@ try {
           journeySaveNotice.update(
             previewSession ? { ...status, durable: false, error: null } : status,
           );
+          if (document.getElementById('shell-home')?.open) gameShell?.refreshHome();
         },
       })
     : null;
@@ -1352,6 +1355,7 @@ try {
     bodyId = theme.player;
   }
   const audioMaster = createAudioMaster();
+  let audioSaveWarningOwner = null;
   const audioPreferences = createAudioPreferences({
     audioMaster,
     window,
@@ -1362,8 +1366,19 @@ try {
     },
     writable: () =>
       !practice && !courseSession && !courseEntry && persistenceReady && writer.writable,
-    onWarning: (message) => {
-      if (message) warning(message);
+    onWarning: (message, key) => {
+      if (message) {
+        if (warning(key ? localizedMessage(key) : message, null, 'host.audio-preferences'))
+          audioSaveWarningOwner = flightInformation.token();
+      } else if (audioSaveWarningOwner) {
+        const expected = audioSaveWarningOwner;
+        audioSaveWarningOwner = null;
+        // A recovered save owns only its own current caption, never a later
+        // gameplay notice, replacement attempt or restored-page message.
+        flightInformation.commitWarning(expected, '', null, 'host.audio-preferences', {
+          allowTerminal: true,
+        });
+      }
     },
   });
   const displayPreferences = createDisplayPreferences({
@@ -1572,8 +1587,7 @@ try {
     render: renderMasterPreferences,
   });
   let neutralResumeTick = false;
-  let gameShell = null,
-    missionPicker = null,
+  let missionPicker = null,
     enemyGuide = null,
     optionalWorlds = null,
     optionalWorldsDisposed = false;
@@ -1872,7 +1886,9 @@ try {
     const pictureEntry = pictureExecutionForEntry(entry),
       pictureLevel = pictureLevelForRun(nextRun, entry, pictureEntry);
     const guarded = (owner) =>
-      runtimeContent && candidateHost?.owns(entry)
+      // Installed editions own their complete picture closure, including their
+      // practice adapters. They have no main-game download controller.
+      runtimeContent
         ? owner
         : withOfflinePictureGate(owner, async ({ signal }) => {
             if (candidateHost?.owns(entry)) {
@@ -2177,15 +2193,19 @@ try {
     activateDeferredAudio();
     // Only explicit player actions mirror the legacy preference. Playback promises never do.
     const saved = preferences({ musicEnabled: !audioMaster.snapshot().muted });
-    const warning = audioPreferences.getWarning() || saved.warning || '';
+    const warning = audioPreferenceWarning() || saved.warning || '';
     return { ok: !warning, warning };
   }
   function setMasterVolume(volume) {
     audioPreferences.setVolume(volume);
     activateDeferredAudio();
     const saved = preferences({ masterVolume: audioMaster.snapshot().volume });
-    const warning = audioPreferences.getWarning() || saved.warning || '';
+    const warning = audioPreferenceWarning() || saved.warning || '';
     return { ok: !warning, warning };
+  }
+  function audioPreferenceWarning() {
+    const key = audioPreferences.getWarningKey();
+    return key ? t(key) : audioPreferences.getWarning();
   }
   function activateDeferredAudio() {
     const master = audioMaster.snapshot();
@@ -6348,7 +6368,7 @@ try {
       }),
     );
   }
-  function journeyDestination() {
+  function journeyDestinationFacts() {
     const state = journeyProfile?.snapshot();
     const current = state && journeyCatalog.find(state.cursors.solo);
     const selected =
@@ -6359,9 +6379,57 @@ try {
           selected.campaign.levels.findIndex((level) => level.id === current.levelId),
         )?.id ?? current.id)
       : current?.id;
-    return current && Object.hasOwn(state.clears.solo, receiptId)
-      ? nextJourneyMission(current.id) || current
-      : current || (candidateHost ? journeyCatalog.missions[0] : null);
+    const recordedClear = !!current && Object.hasOwn(state.clears.solo, receiptId);
+    return {
+      destination: recordedClear
+        ? nextJourneyMission(current.id) || current
+        : current || (candidateHost ? journeyCatalog.missions[0] : null),
+      cursorId: state?.cursors.solo ?? null,
+      recordedClear,
+    };
+  }
+  function journeyDestination() {
+    return journeyDestinationFacts().destination;
+  }
+  function homeMissionRecommendation() {
+    if (
+      practice ||
+      scenario ||
+      courseSession ||
+      previewSession ||
+      runtimeContent ||
+      authoredRoute?.id !== DEFAULT_JOURNEY_ROUTES.solo ||
+      !candidateHost?.owns(activeEntry)
+    )
+      return '';
+    let storedAttempt;
+    try {
+      // Preserve recovery priority even when saved bytes cannot be previewed.
+      storedAttempt = profileStorage().getItem(sessionKey) !== null;
+    } catch {
+      return '';
+    }
+    const facts = journeyDestinationFacts();
+    const recommendation = captureHomeRecommendation({
+      ...facts,
+      catalog: journeyCatalog,
+      resume: (!started && storedAttempt) || (started && !['won', 'lost'].includes(run?.status)),
+      lastAttempt:
+        started && selectedJourneyRun === run
+          ? { status: run?.status, mission: journeyMission() }
+          : null,
+    });
+    if (!recommendation) return '';
+    const keys = {
+      first: 'interface:captureHomeRecommendation.first',
+      selected: 'interface:captureHomeRecommendation.selected',
+      retry: 'interface:captureHomeRecommendation.retry',
+      'recorded-next': 'interface:captureHomeRecommendation.recordedNext',
+    };
+    return t(keys[recommendation.reason], {
+      mission: contentText(recommendation.destination, 'name'),
+      previous: recommendation.current ? contentText(recommendation.current, 'name') : '',
+    });
   }
   function journeySkipMission() {
     return journeyEnabled && !practice && !scenario && !courseSession && !campaignOverview
@@ -7291,6 +7359,7 @@ try {
       'title',
       () => preview?.title || t('interface:loadSavedFlight2'),
     );
+    if (document.getElementById('shell-home')?.open) gameShell?.refreshHome();
   }
   function assertWriter() {
     if (courseSession) throw new Error(t('interface:trainingDoesNotWriteCampaignData'));
@@ -8971,9 +9040,7 @@ try {
       () =>
         `${contentText(theme, 'labels.enemy')} · ${contentText(theme, 'labels.boss')} · ${contentText(theme, 'labels.supply')}`,
     );
-    localizedText($('footer-note'), () =>
-      t('interface:originalWorldsMakeEveryLineCount'),
-    );
+    localizedText($('footer-note'), () => t('interface:originalWorldsMakeEveryLineCount'));
     painter.style = scenario?.presentation?.style || library.preferences.style;
     updateBodies();
     painter.setLook(theme, bodyId, painterVisuals());
@@ -15128,6 +15195,7 @@ try {
       !started || ['won', 'lost'].includes(run?.status)
         ? contentText(journeyDestination(), 'name')
         : undefined,
+    titleRecommendation: homeMissionRecommendation,
     onTitleStart: (options) => {
       const destination = journeyDestination();
       if (destination && !started && $('continue-saved').hidden) {
