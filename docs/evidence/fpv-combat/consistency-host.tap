@@ -1,0 +1,1355 @@
+TAP version 13
+# Subtest: imported actor settings cannot override the scene marker identity, declared type or transformed position
+ok 1 - imported actor settings cannot override the scene marker identity, declared type or transformed position
+  ---
+  duration_ms: 1.39275
+  ...
+# Subtest: shipped actor inventory has stable unique IDs within every exact course and explicit supported types/roles
+ok 2 - shipped actor inventory has stable unique IDs within every exact course and explicit supported types/roles
+  ---
+  duration_ms: 20.08425
+  ...
+# Subtest: ownership-only encounter projection retains every shipped authored actor and removes the second native owner
+ok 3 - ownership-only encounter projection retains every shipped authored actor and removes the second native owner
+  ---
+  duration_ms: 101.662458
+  ...
+# Subtest: live pulses destroy every role and gameplay actor type; historical civilians remain protected
+ok 4 - live pulses destroy every role and gameplay actor type; historical civilians remain protected
+  ---
+  duration_ms: 43.144041
+  ...
+# Subtest: required subject returns after250 accepted ticks with a new generation; blocked spawn waits
+ok 5 - required subject returns after250 accepted ticks with a new generation; blocked spawn waits
+  ---
+  duration_ms: 23.827083
+  ...
+# Subtest: cancelled accepted-physics preparation rolls back a due replacement and events
+ok 6 - cancelled accepted-physics preparation rolls back a due replacement and events
+  ---
+  duration_ms: 17.298125
+  ...
+# Subtest: future subject replacement preserves current unfinished objective progress
+ok 7 - future subject replacement preserves current unfinished objective progress
+  ---
+  duration_ms: 15.279625
+  ...
+# Subtest: impact requires separation and13ticks; lethal damage precedes catch
+ok 8 - impact requires separation and13ticks; lethal damage precedes catch
+  ---
+  duration_ms: 1.262625
+  ...
+# Subtest: new proof dispatch replays damage; old proof identity remains unchanged
+ok 9 - new proof dispatch replays damage; old proof identity remains unchanged
+  ---
+  duration_ms: 305.7615
+  ...
+# Subtest: live mission checkpoints validate generation and events; restore keeps required replacement
+ok 10 - live mission checkpoints validate generation and events; restore keeps required replacement
+  ---
+  duration_ms: 2.449875
+  ...
+# Subtest: verified old native Continue becomes paused unscored live practice without rewriting old evidence
+ok 11 - verified old native Continue becomes paused unscored live practice without rewriting old evidence
+  ---
+  duration_ms: 1.781458
+  ...
+# Subtest: Advanced native accepts live generation checkpoints and migrates old verified Continue
+ok 12 - Advanced native accepts live generation checkpoints and migrates old verified Continue
+  ---
+  duration_ms: 110.5215
+  ...
+# Subtest: same-step lethal contact cannot catch; replacement can later complete the same logical Hunt
+ok 13 - same-step lethal contact cannot catch; replacement can later complete the same logical Hunt
+  ---
+  duration_ms: 11.964417
+  ...
+# Subtest: live momentum catches keep accepted speed; ordinary and wrong-order contacts still stop
+ok 14 - live momentum catches keep accepted speed; ordinary and wrong-order contacts still stop
+  ---
+  duration_ms: 37.705666
+  ...
+# Subtest: native continuation stores a new bounded timeline and verifies its original boundary
+ok 15 - native continuation stores a new bounded timeline and verifies its original boundary
+  ---
+  duration_ms: 20.667959
+  ...
+# Subtest: full continuation keeps a verified retained boundary while practice keeps flying
+ok 16 - full continuation keeps a verified retained boundary while practice keeps flying
+  ---
+  duration_ms: 2740.150417
+  ...
+# Subtest: accepted Advanced contact trace damages an actor; a cancelled worker proposal does not
+ok 17 - accepted Advanced contact trace damages an actor; a cancelled worker proposal does not
+  ---
+  duration_ms: 13.35525
+  ...
+# Subtest: native accepted defeat history reconstructs on replay and cannot mutate proof identity
+ok 18 - native accepted defeat history reconstructs on replay and cannot mutate proof identity
+  ---
+  duration_ms: 5.540167
+  ...
+# Subtest: destroying the current tracked subject resets only that unfinished hold
+ok 19 - destroying the current tracked subject resets only that unfinished hold
+  ---
+  duration_ms: 1.479208
+  ...
+# Subtest: logical elimination credit survives an earlier required-subject replacement
+ok 20 - logical elimination credit survives an earlier required-subject replacement
+  ---
+  duration_ms: 35.1535
+  ...
+# THREE.WebGLRenderer: THREE.WebGLRenderer: Error creating WebGL context.
+# THREE.WebGLRenderer: THREE.WebGLRenderer: Error creating WebGL context.
+# Subtest: World radio setup saves through guided controls and activates radio flight
+ok 21 - World radio setup saves through guided controls and activates radio flight
+  ---
+  duration_ms: 400.442083
+  ...
+# THREE.WebGLRenderer: THREE.WebGLRenderer: Error creating WebGL context.
+# Subtest: World radio setup saves through manual controls and activates radio flight
+ok 22 - World radio setup saves through manual controls and activates radio flight
+  ---
+  duration_ms: 217.521125
+  ...
+# THREE.WebGLRenderer: THREE.WebGLRenderer: Error creating WebGL context.
+# Subtest: World lesson mode action restarts paused in the matching mode and preserves unscored continuation
+ok 23 - World lesson mode action restarts paused in the matching mode and preserves unscored continuation
+  ---
+  duration_ms: 280.246667
+  ...
+# Subtest: World random flight from the shared chooser follows displayed filters, preserves mode and avoids repeats
+ok 24 - World random flight from the shared chooser follows displayed filters, preserves mode and avoids repeats
+  ---
+  duration_ms: 1061.834375
+  ...
+# THREE.WebGLRenderer: THREE.WebGLRenderer: Error creating WebGL context.
+# THREE.WebGLRenderer: THREE.WebGLRenderer: Error creating WebGL context.
+# Subtest: World random flight includes the active installed revision and excludes retained archived courses
+ok 25 - World random flight includes the active installed revision and excludes retained archived courses
+  ---
+  duration_ms: 348.272125
+  ...
+# THREE.WebGLRenderer: THREE.WebGLRenderer: Error creating WebGL context.
+# Subtest: World ordinary results offer a filtered random next flight through unarmed preparation
+ok 26 - World ordinary results offer a filtered random next flight through unarmed preparation
+  ---
+  duration_ms: 303.4345
+  ...
+# THREE.WebGLRenderer: THREE.WebGLRenderer: Error creating WebGL context.
+# Subtest: World disposal retires menu and renderer owners before their reparented controls disappear
+ok 27 - World disposal retires menu and renderer owners before their reparented controls disappear
+  ---
+  duration_ms: 152.388458
+  ...
+# THREE.WebGLRenderer: THREE.WebGLRenderer: Error creating WebGL context.
+# Subtest: World Reset unapplied fields discards Hunt and pursuit drafts without changing the accepted course
+ok 28 - World Reset unapplied fields discards Hunt and pursuit drafts without changing the accepted course
+  ---
+  duration_ms: 191.928583
+  ...
+# THREE.WebGLRenderer: THREE.WebGLRenderer: Error creating WebGL context.
+# Subtest: World app prepares a pinned appearance and queues drone/theme changes after arming
+ok 29 - World app prepares a pinned appearance and queues drone/theme changes after arming
+  ---
+  duration_ms: 616.622375
+  ...
+# THREE.WebGLRenderer: THREE.WebGLRenderer: Error creating WebGL context.
+# Subtest: World route thumbnails share selected palettes without modifying source geometry or authored scene references
+ok 30 - World route thumbnails share selected palettes without modifying source geometry or authored scene references
+  ---
+  duration_ms: 118.198958
+  ...
+# THREE.WebGLRenderer: THREE.WebGLRenderer: Error creating WebGL context.
+# Subtest: World recovery retains its saved theme and drone while new appearance choices remain queued
+ok 31 - World recovery retains its saved theme and drone while new appearance choices remain queued
+  ---
+  duration_ms: 162.982417
+  ...
+# THREE.WebGLRenderer: THREE.WebGLRenderer: Error creating WebGL context.
+# Subtest: World replay visibly falls back from an unavailable pinned revision (legacy environment) without changing its record
+ok 32 - World replay visibly falls back from an unavailable pinned revision (legacy environment) without changing its record
+  ---
+  duration_ms: 161.138584
+  ...
+# THREE.WebGLRenderer: THREE.WebGLRenderer: Error creating WebGL context.
+# Subtest: World replay visibly falls back from an unavailable pinned revision (saved authored profile) without changing its record
+ok 33 - World replay visibly falls back from an unavailable pinned revision (saved authored profile) without changing its record
+  ---
+  duration_ms: 158.790833
+  ...
+# THREE.WebGLRenderer: THREE.WebGLRenderer: Error creating WebGL context.
+# Subtest: World pre-arm appearance refresh keeps focus on the control the player is using
+ok 34 - World pre-arm appearance refresh keeps focus on the control the player is using
+  ---
+  duration_ms: 171.298083
+  ...
+# THREE.WebGLRenderer: THREE.WebGLRenderer: Error creating WebGL context.
+# Subtest: World Home context stays localized with its current flight while browsing and returning
+ok 35 - World Home context stays localized with its current flight while browsing and returning
+  ---
+  duration_ms: 789.708791
+  ...
+# THREE.WebGLRenderer: THREE.WebGLRenderer: Error creating WebGL context.
+# Subtest: World title retains connected catalogue nodes and transfers the common bar into native flight
+ok 36 - World title retains connected catalogue nodes and transfers the common bar into native flight
+  ---
+  duration_ms: 313.997791
+  ...
+# THREE.WebGLRenderer: THREE.WebGLRenderer: Error creating WebGL context.
+# Subtest: World keyboard and native pause actions open the same shared menu without resuming on Back
+ok 37 - World keyboard and native pause actions open the same shared menu without resuming on Back
+  ---
+  duration_ms: 178.429666
+  ...
+# THREE.WebGLRenderer: THREE.WebGLRenderer: Error creating WebGL context.
+# Subtest: World language refresh preserves native mission ownership and menu phase without another animation frame
+ok 38 - World language refresh preserves native mission ownership and menu phase without another animation frame
+  ---
+  duration_ms: 304.252084
+  ...
+# THREE.WebGLRenderer: THREE.WebGLRenderer: Error creating WebGL context.
+# Subtest: World terminal preview offers Retry and prepares a fresh disarmed attempt
+ok 39 - World terminal preview offers Retry and prepares a fresh disarmed attempt
+  ---
+  duration_ms: 198.355042
+  ...
+# THREE.WebGLRenderer: THREE.WebGLRenderer: Error creating WebGL context.
+# Subtest: World native HUD details retain instructions across blur and focus
+ok 40 - World native HUD details retain instructions across blur and focus
+  ---
+  duration_ms: 171.838166
+  ...
+# THREE.WebGLRenderer: THREE.WebGLRenderer: Error creating WebGL context.
+# Subtest: World menu Back dismisses the visible surface without closing its paused native flight
+ok 41 - World menu Back dismisses the visible surface without closing its paused native flight
+  ---
+  duration_ms: 171.751583
+  ...
+# THREE.WebGLRenderer: THREE.WebGLRenderer: Error creating WebGL context.
+# Subtest: World native Hunt guide remains reachable from the shared pause menu without consuming controls or changing the flight
+ok 42 - World native Hunt guide remains reachable from the shared pause menu without consuming controls or changing the flight
+  ---
+  duration_ms: 192.071084
+  ...
+# THREE.WebGLRenderer: THREE.WebGLRenderer: Error creating WebGL context.
+# Subtest: World exhausted unfinished playback keeps native Results reachable without Continue
+ok 43 - World exhausted unfinished playback keeps native Results reachable without Continue
+  ---
+  duration_ms: 211.316584
+  ...
+# THREE.WebGLRenderer: THREE.WebGLRenderer: Error creating WebGL context.
+# Subtest: World exhausted section playback keeps native Results reachable without Continue
+ok 44 - World exhausted section playback keeps native Results reachable without Continue
+  ---
+  duration_ms: 210.300375
+  ...
+# THREE.WebGLRenderer: THREE.WebGLRenderer: Error creating WebGL context.
+# Subtest: native industrial Start and Retry retain source-authenticated art while the next attempt uses changed preferences
+ok 45 - native industrial Start and Retry retain source-authenticated art while the next attempt uses changed preferences
+  ---
+  duration_ms: 219.91125
+  ...
+# THREE.WebGLRenderer: THREE.WebGLRenderer: Error creating WebGL context.
+# Subtest: native host rejects changed retained source before replacing the active renderer
+ok 46 - native host rejects changed retained source before replacing the active renderer
+  ---
+  duration_ms: 178.987
+  ...
+# THREE.WebGLRenderer: THREE.WebGLRenderer: Error creating WebGL context.
+# Subtest: Studio imports exact retained Acro appearance, exports it, and explicitly detaches on creator-theme change
+ok 47 - Studio imports exact retained Acro appearance, exports it, and explicitly detaches on creator-theme change
+  ---
+  duration_ms: 220.287042
+  ...
+# THREE.WebGLRenderer: THREE.WebGLRenderer: Error creating WebGL context.
+# Subtest: an explicit native mode change prepares a new mode pin while Retry keeps that pin
+ok 48 - an explicit native mode change prepares a new mode pin while Retry keeps that pin
+  ---
+  duration_ms: 226.352083
+  ...
+# THREE.WebGLRenderer: THREE.WebGLRenderer: Error creating WebGL context.
+# Subtest: World categories retain every authored preference and restore Home and Pause openers
+ok 49 - World categories retain every authored preference and restore Home and Pause openers
+  ---
+  duration_ms: 202.04775
+  ...
+# THREE.WebGLRenderer: THREE.WebGLRenderer: Error creating WebGL context.
+# THREE.WebGLRenderer: THREE.WebGLRenderer: Error creating WebGL context.
+# Subtest: Worlds existing HUD guidance controls are reachable in Accessibility in EN and UK
+ok 50 - Worlds existing HUD guidance controls are reachable in Accessibility in EN and UK
+  ---
+  duration_ms: 330.289042
+  ...
+# THREE.WebGLRenderer: THREE.WebGLRenderer: Error creating WebGL context.
+# Subtest: World Library records shortcut reaches the existing localized controls and keyboard Back restores its opener
+ok 51 - World Library records shortcut reaches the existing localized controls and keyboard Back restores its opener
+  ---
+  duration_ms: 272.296625
+  ...
+# THREE.WebGLRenderer: THREE.WebGLRenderer: Error creating WebGL context.
+# Subtest: World Library records controller confirmation cannot activate backup or resume its paused flight
+ok 52 - World Library records controller confirmation cannot activate backup or resume its paused flight
+  ---
+  duration_ms: 405.910666
+  ...
+# THREE.WebGLRenderer: THREE.WebGLRenderer: Error creating WebGL context.
+# Subtest: World Library records refuses a foreign settings target and a disposed shortcut cannot reopen the host
+ok 53 - World Library records refuses a foreign settings target and a disposed shortcut cannot reopen the host
+  ---
+  duration_ms: 186.446541
+  ...
+# THREE.WebGLRenderer: THREE.WebGLRenderer: Error creating WebGL context.
+# Subtest: Worlds uses shared display and master settings ahead of old SIM-local preferences
+ok 54 - Worlds uses shared display and master settings ahead of old SIM-local preferences
+  ---
+  duration_ms: 189.775625
+  ...
+# THREE.WebGLRenderer: THREE.WebGLRenderer: Error creating WebGL context.
+# Subtest: World shared tools keep iframe focus through D-pad and return to paused Settings on controller Back
+ok 55 - World shared tools keep iframe focus through D-pad and return to paused Settings on controller Back
+  ---
+  duration_ms: 204.591083
+  ...
+# THREE.WebGLRenderer: THREE.WebGLRenderer: Error creating WebGL context.
+# Subtest: fresh Ukrainian World launch localizes shared Appearance and cue controls immediately
+ok 56 - fresh Ukrainian World launch localizes shared Appearance and cue controls immediately
+  ---
+  duration_ms: 241.146709
+  ...
+# THREE.WebGLRenderer: THREE.WebGLRenderer: Error creating WebGL context.
+# Subtest: World flight feedback and shared menu sound retain separate sliders and preference records
+ok 57 - World flight feedback and shared menu sound retain separate sliders and preference records
+  ---
+  duration_ms: 192.907833
+  ...
+# THREE.WebGLRenderer: THREE.WebGLRenderer: Error creating WebGL context.
+# Subtest: World result shortcuts are immediately available while the result is being verified
+ok 58 - World result shortcuts are immediately available while the result is being verified
+  ---
+  duration_ms: 357.4245
+  ...
+# Subtest: World defeat focuses Retry and verification preserves the connected action row and chosen focus
+ok 59 - World defeat focuses Retry and verification preserves the connected action row and chosen focus
+  ---
+  duration_ms: 229.820042
+  ...
+# THREE.WebGLRenderer: THREE.WebGLRenderer: Error creating WebGL context.
+# THREE.WebGLRenderer: THREE.WebGLRenderer: Error creating WebGL context.
+# Subtest: World results embed one compact live statistics disclosure without replacing verified actions
+ok 60 - World results embed one compact live statistics disclosure without replacing verified actions
+  ---
+  duration_ms: 350.235542
+  ...
+# Subtest: Worlds and School share one complete scrollable library with direct native launches
+ok 61 - Worlds and School share one complete scrollable library with direct native launches
+  ---
+  duration_ms: 736.588625
+  ...
+# THREE.WebGLRenderer: THREE.WebGLRenderer: Error creating WebGL context.
+# THREE.WebGLRenderer: THREE.WebGLRenderer: Error creating WebGL context.
+# Subtest: World aircraft class advice narrows browsing and All courses restores every launch
+ok 62 - World aircraft class advice narrows browsing and All courses restores every launch
+  ---
+  duration_ms: 779.7925
+  ...
+# THREE.WebGLRenderer: THREE.WebGLRenderer: Error creating WebGL context.
+# Subtest: World route preview uses the selected Acro route and changes no course geometry
+ok 63 - World route preview uses the selected Acro route and changes no course geometry
+  ---
+  duration_ms: 183.806833
+  ...
+# THREE.WebGLRenderer: THREE.WebGLRenderer: Error creating WebGL context.
+# Subtest: World mission library owns controller navigation and isolated pinned goals
+ok 64 - World mission library owns controller navigation and isolated pinned goals
+  ---
+  duration_ms: 359.45875
+  ...
+# THREE.WebGLRenderer: THREE.WebGLRenderer: Error creating WebGL context.
+# Subtest: World mission launch cannot steal Home focus after deferred scene preparation
+ok 65 - World mission launch cannot steal Home focus after deferred scene preparation
+  ---
+  duration_ms: 503.506417
+  ...
+# THREE.WebGLRenderer: THREE.WebGLRenderer: Error creating WebGL context.
+# Subtest: World Hunt schemes expose actual targets, patrols and collision footprints without inventing an unordered route
+ok 66 - World Hunt schemes expose actual targets, patrols and collision footprints without inventing an unordered route
+  ---
+  duration_ms: 160.9375
+  ...
+# THREE.WebGLRenderer: THREE.WebGLRenderer: Error creating WebGL context.
+# Subtest: World shared chooser remains usable when native scene loading fails
+ok 67 - World shared chooser remains usable when native scene loading fails
+  ---
+  duration_ms: 451.927
+  ...
+# THREE.WebGLRenderer: THREE.WebGLRenderer: Error creating WebGL context.
+# Subtest: World tuning retains the committed keyboard sample and never presents radio data for that owner
+ok 68 - World tuning retains the committed keyboard sample and never presents radio data for that owner
+  ---
+  duration_ms: 362.192833
+  ...
+# THREE.WebGLRenderer: THREE.WebGLRenderer: Error creating WebGL context.
+# Subtest: World tuning uses saved rates and camera only in a new flight, retaining the previous attempt configuration
+ok 69 - World tuning uses saved rates and camera only in a new flight, retaining the previous attempt configuration
+  ---
+  duration_ms: 349.589125
+  ...
+# THREE.WebGLRenderer: THREE.WebGLRenderer: Error creating WebGL context.
+# Subtest: World draft testing enters unscored free flight and returns to the unsaved camera and rate draft
+ok 70 - World draft testing enters unscored free flight and returns to the unsaved camera and rate draft
+  ---
+  duration_ms: 311.7935
+  ...
+# THREE.WebGLRenderer: THREE.WebGLRenderer: Error creating WebGL context.
+# Subtest: a normal World launch replaces the prior tuning-test origin
+ok 71 - a normal World launch replaces the prior tuning-test origin
+  ---
+  duration_ms: 331.812167
+  ...
+# Subtest: a normal Regional launch replaces the prior tuning-test origin
+ok 72 - a normal Regional launch replaces the prior tuning-test origin
+  ---
+  duration_ms: 357.08825
+  ...
+# THREE.WebGLRenderer: THREE.WebGLRenderer: Error creating WebGL context.
+# Subtest: Regional host freezes its assigned rates and camera until the next flight
+ok 73 - Regional host freezes its assigned rates and camera until the next flight
+  ---
+  duration_ms: 346.986167
+  ...
+# THREE.WebGLRenderer: THREE.WebGLRenderer: Error creating WebGL context.
+# THREE.WebGLRenderer: THREE.WebGLRenderer: Error creating WebGL context.
+# Subtest: Apply & restart waits for explicit Arm after delayed World, Legacy and Regional preparation
+    # Subtest: World / Legacy
+    ok 1 - World / Legacy
+      ---
+      duration_ms: 372.35775
+      ...
+# THREE.WebGLRenderer: THREE.WebGLRenderer: Error creating WebGL context.
+    # Subtest: World / Actual
+    ok 2 - World / Actual
+      ---
+      duration_ms: 381.866125
+      ...
+# THREE.WebGLRenderer: THREE.WebGLRenderer: Error creating WebGL context.
+    # Subtest: World / Meteor75
+    ok 3 - World / Meteor75
+      ---
+      duration_ms: 472.904
+      ...
+# THREE.WebGLRenderer: THREE.WebGLRenderer: Error creating WebGL context.
+    # Subtest: Legacy / Legacy
+    ok 4 - Legacy / Legacy
+      ---
+      duration_ms: 372.000042
+      ...
+# THREE.WebGLRenderer: THREE.WebGLRenderer: Error creating WebGL context.
+    # Subtest: Legacy / Actual
+    ok 5 - Legacy / Actual
+      ---
+      duration_ms: 406.039375
+      ...
+# THREE.WebGLRenderer: THREE.WebGLRenderer: Error creating WebGL context.
+    # Subtest: Legacy / Meteor75
+    ok 6 - Legacy / Meteor75
+      ---
+      duration_ms: 446.407333
+      ...
+# THREE.WebGLRenderer: THREE.WebGLRenderer: Error creating WebGL context.
+    # Subtest: Regional / Legacy
+    ok 7 - Regional / Legacy
+      ---
+      duration_ms: 379.663167
+      ...
+# THREE.WebGLRenderer: THREE.WebGLRenderer: Error creating WebGL context.
+    # Subtest: Regional / Actual
+    ok 8 - Regional / Actual
+      ---
+      duration_ms: 418.663375
+      ...
+    # Subtest: Regional / Meteor75
+    ok 9 - Regional / Meteor75
+      ---
+      duration_ms: 515.211917
+      ...
+    1..9
+ok 74 - Apply & restart waits for explicit Arm after delayed World, Legacy and Regional preparation
+  ---
+  duration_ms: 3855.056875
+  ...
+# THREE.WebGLRenderer: THREE.WebGLRenderer: Error creating WebGL context.
+# THREE.WebGLRenderer: THREE.WebGLRenderer: Error creating WebGL context.
+# Subtest: World and Regional explicit keyboard resume keeps accepted aircraft throttle only
+    # Subtest: World button
+    ok 1 - World button
+      ---
+      duration_ms: 537.35075
+      ...
+# THREE.WebGLRenderer: THREE.WebGLRenderer: Error creating WebGL context.
+    # Subtest: World shortcut
+    ok 2 - World shortcut
+      ---
+      duration_ms: 491.285
+      ...
+# THREE.WebGLRenderer: THREE.WebGLRenderer: Error creating WebGL context.
+    # Subtest: World pending-button
+    ok 3 - World pending-button
+      ---
+      duration_ms: 500.093375
+      ...
+# THREE.WebGLRenderer: THREE.WebGLRenderer: Error creating WebGL context.
+    # Subtest: Regional button
+    ok 4 - Regional button
+      ---
+      duration_ms: 550.046375
+      ...
+# THREE.WebGLRenderer: THREE.WebGLRenderer: Error creating WebGL context.
+    # Subtest: Regional shortcut
+    ok 5 - Regional shortcut
+      ---
+      duration_ms: 554.90325
+      ...
+# THREE.WebGLRenderer: THREE.WebGLRenderer: Error creating WebGL context.
+    # Subtest: Regional pending-button
+    ok 6 - Regional pending-button
+      ---
+      duration_ms: 566.293375
+      ...
+    1..6
+ok 75 - World and Regional explicit keyboard resume keeps accepted aircraft throttle only
+  ---
+  duration_ms: 3298.68025
+  ...
+# THREE.WebGLRenderer: THREE.WebGLRenderer: Error creating WebGL context.
+# Subtest: World mode preserves the tested draft aircraft until an explicit normal launch
+ok 76 - World mode preserves the tested draft aircraft until an explicit normal launch
+  ---
+  duration_ms: 421.123
+  ...
+# Subtest: World retry preserves the tested draft aircraft until an explicit normal launch
+ok 77 - World retry preserves the tested draft aircraft until an explicit normal launch
+  ---
+  duration_ms: 867.839708
+  ...
+# THREE.WebGLRenderer: THREE.WebGLRenderer: Error creating WebGL context.
+# Subtest: Regional mode preserves the tested draft aircraft until an explicit normal launch
+ok 78 - Regional mode preserves the tested draft aircraft until an explicit normal launch
+  ---
+  duration_ms: 575.12725
+  ...
+# THREE.WebGLRenderer: THREE.WebGLRenderer: Error creating WebGL context.
+# THREE.WebGLRenderer: THREE.WebGLRenderer: Error creating WebGL context.
+# Subtest: Regional retry preserves the tested draft aircraft until an explicit normal launch
+ok 79 - Regional retry preserves the tested draft aircraft until an explicit normal launch
+  ---
+  duration_ms: 944.729958
+  ...
+# THREE.WebGLRenderer: THREE.WebGLRenderer: Error creating WebGL context.
+# Subtest: Flight School explicit practice uses the selected aircraft and exact customized rates and PID tune
+    # Subtest: meteor75-analog-2022
+    ok 1 - meteor75-analog-2022
+      ---
+      duration_ms: 418.223875
+      ...
+    # Subtest: helion-pro-o4
+    ok 2 - helion-pro-o4
+      ---
+      duration_ms: 396.444875
+      ...
+    1..2
+ok 80 - Flight School explicit practice uses the selected aircraft and exact customized rates and PID tune
+  ---
+  duration_ms: 929.74575
+  ...
+# THREE.WebGLRenderer: THREE.WebGLRenderer: Error creating WebGL context.
+# THREE.WebGLRenderer: THREE.WebGLRenderer: Error creating WebGL context.
+# Subtest: saved aircraft prepares World, Beginner and Regional hosts with physical geometry and continuous controls
+    # Subtest: World
+    ok 1 - World
+      ---
+      duration_ms: 803.576875
+      ...
+# THREE.WebGLRenderer: THREE.WebGLRenderer: Error creating WebGL context.
+    # Subtest: Beginner
+    ok 2 - Beginner
+      ---
+      duration_ms: 555.061125
+      ...
+    # Subtest: Regional
+    ok 3 - Regional
+      ---
+      duration_ms: 737.678791
+      ...
+    1..3
+ok 81 - saved aircraft prepares World, Beginner and Regional hosts with physical geometry and continuous controls
+  ---
+  duration_ms: 2210.189
+  ...
+# THREE.WebGLRenderer: THREE.WebGLRenderer: Error creating WebGL context.
+# Subtest: Regional host explicitly switches into the real Advanced worker and preserves pause, export and recovery ownership
+ok 82 - Regional host explicitly switches into the real Advanced worker and preserves pause, export and recovery ownership
+  ---
+  duration_ms: 790.711958
+  ...
+# THREE.WebGLRenderer: THREE.WebGLRenderer: Error creating WebGL context.
+# Subtest: Regional aircraft stops explain disabled Resume in both languages and Restart prepares a fresh flight
+    # Subtest: region-edge · en
+    ok 1 - region-edge · en
+      ---
+      duration_ms: 504.046333
+      ...
+# THREE.WebGLRenderer: THREE.WebGLRenderer: Error creating WebGL context.
+    # Subtest: worker-error · en
+    ok 2 - worker-error · en
+      ---
+      duration_ms: 512.142375
+      ...
+# THREE.WebGLRenderer: THREE.WebGLRenderer: Error creating WebGL context.
+    # Subtest: terrain-error · en
+    ok 3 - terrain-error · en
+      ---
+      duration_ms: 352.058375
+      ...
+# THREE.WebGLRenderer: THREE.WebGLRenderer: Error creating WebGL context.
+    # Subtest: region-edge · uk
+    ok 4 - region-edge · uk
+      ---
+      duration_ms: 521.231875
+      ...
+# THREE.WebGLRenderer: THREE.WebGLRenderer: Error creating WebGL context.
+    # Subtest: worker-error · uk
+    ok 5 - worker-error · uk
+      ---
+      duration_ms: 511.519416
+      ...
+# THREE.WebGLRenderer: THREE.WebGLRenderer: Error creating WebGL context.
+    # Subtest: terrain-error · uk
+    ok 6 - terrain-error · uk
+      ---
+      duration_ms: 351.756041
+      ...
+    1..6
+ok 83 - Regional aircraft stops explain disabled Resume in both languages and Restart prepares a fresh flight
+  ---
+  duration_ms: 2814.8675
+  ...
+# THREE.WebGLRenderer: THREE.WebGLRenderer: Error creating WebGL context.
+# THREE.WebGLRenderer: THREE.WebGLRenderer: Error creating WebGL context.
+# Subtest: Regional limit stops retain exports and restart while fatal worker failures remain unavailable
+    # Subtest: ADVANCED_DURATION_LIMIT · en
+    ok 1 - ADVANCED_DURATION_LIMIT · en
+      ---
+      duration_ms: 763.10075
+      ...
+# THREE.WebGLRenderer: THREE.WebGLRenderer: Error creating WebGL context.
+    # Subtest: ADVANCED_RECORDING_LIMIT · uk
+    ok 2 - ADVANCED_RECORDING_LIMIT · uk
+      ---
+      duration_ms: 686.051542
+      ...
+# THREE.WebGLRenderer: THREE.WebGLRenderer: Error creating WebGL context.
+    # Subtest: UNKNOWN_LIMIT · en
+    ok 3 - UNKNOWN_LIMIT · en
+      ---
+      duration_ms: 486.532417
+      ...
+    # Subtest: untyped limit text · en
+    ok 4 - untyped limit text · en
+      ---
+      duration_ms: 476.643125
+      ...
+    1..4
+ok 84 - Regional limit stops retain exports and restart while fatal worker failures remain unavailable
+  ---
+  duration_ms: 2459.09725
+  ...
+# THREE.WebGLRenderer: THREE.WebGLRenderer: Error creating WebGL context.
+# THREE.WebGLRenderer: THREE.WebGLRenderer: Error creating WebGL context.
+# Subtest: Regional Advanced is explicitly unavailable when workers cannot run
+ok 85 - Regional Advanced is explicitly unavailable when workers cannot run
+  ---
+  duration_ms: 229.6505
+  ...
+# THREE.WebGLRenderer: THREE.WebGLRenderer: Error creating WebGL context.
+# Subtest: World tuning owns Back without closing the underlying settings dialog
+ok 86 - World tuning owns Back without closing the underlying settings dialog
+  ---
+  duration_ms: 221.735583
+  ...
+# THREE.WebGLRenderer: THREE.WebGLRenderer: Error creating WebGL context.
+# Subtest: World tuning keeps its hint through pointer blur and releases it after closing
+ok 87 - World tuning keeps its hint through pointer blur and releases it after closing
+  ---
+  duration_ms: 319.423416
+  ...
+# THREE.WebGLRenderer: THREE.WebGLRenderer: Error creating WebGL context.
+# Subtest: World captures legacy comfort camera before its first tuning configuration
+ok 88 - World captures legacy comfort camera before its first tuning configuration
+  ---
+  duration_ms: 302.133625
+  ...
+# THREE.WebGLRenderer: THREE.WebGLRenderer: Error creating WebGL context.
+# Subtest: World captures saved drone camera before its first tuning configuration
+ok 89 - World captures saved drone camera before its first tuning configuration
+  ---
+  duration_ms: 301.160041
+  ...
+# THREE.WebGLRenderer: THREE.WebGLRenderer: Error creating WebGL context.
+# Subtest: World captures unreadable comfort camera before its first tuning configuration
+ok 90 - World captures unreadable comfort camera before its first tuning configuration
+  ---
+  duration_ms: 301.703041
+  ...
+# THREE.WebGLRenderer: THREE.WebGLRenderer: Error creating WebGL context.
+# Subtest: World captures World settings camera before its first tuning configuration
+ok 91 - World captures World settings camera before its first tuning configuration
+  ---
+  duration_ms: 309.387834
+  ...
+# Subtest: actual World settings keep an unsaved menu animation choice and Retry the same checkbox
+ok 92 - actual World settings keep an unsaved menu animation choice and Retry the same checkbox
+  ---
+  duration_ms: 329.573916
+  ...
+# THREE.WebGLRenderer: THREE.WebGLRenderer: Error creating WebGL context.
+# THREE.WebGLRenderer: THREE.WebGLRenderer: Error creating WebGL context.
+# Subtest: Regional flight keeps the saved radio, arms, flies and pauses with accurate menu state
+ok 93 - Regional flight keeps the saved radio, arms, flies and pauses with accurate menu state
+  ---
+  duration_ms: 303.366834
+  ...
+# THREE.WebGLRenderer: THREE.WebGLRenderer: Error creating WebGL context.
+# Subtest: Unified map cards and search follow the current language without changing installed identities
+ok 94 - Unified map cards and search follow the current language without changing installed identities
+  ---
+  duration_ms: 676.882459
+  ...
+# THREE.WebGLRenderer: THREE.WebGLRenderer: Error creating WebGL context.
+# Subtest: Random defaults to learning levels in that activity
+ok 95 - Random defaults to learning levels in that activity
+  ---
+  duration_ms: 484.244708
+  ...
+# THREE.WebGLRenderer: THREE.WebGLRenderer: Error creating WebGL context.
+# Subtest: Random defaults to flight levels in that activity
+ok 96 - Random defaults to flight levels in that activity
+  ---
+  duration_ms: 581.394167
+  ...
+# THREE.WebGLRenderer: THREE.WebGLRenderer: Error creating WebGL context.
+# THREE.WebGLRenderer: THREE.WebGLRenderer: Error creating WebGL context.
+# Subtest: Mixed Random can choose a learning level from flight mode and remembers the explicit choice
+ok 97 - Mixed Random can choose a learning level from flight mode and remembers the explicit choice
+  ---
+  duration_ms: 1053.495167
+  ...
+# THREE.WebGLRenderer: THREE.WebGLRenderer: Error creating WebGL context.
+# Subtest: Random from a paused lesson keeps the learning context and can exclude all mismatched search results
+ok 98 - Random from a paused lesson keeps the learning context and can exclude all mismatched search results
+  ---
+  duration_ms: 1024.333125
+  ...
+# THREE.WebGLRenderer: THREE.WebGLRenderer: Error creating WebGL context.
+# Subtest: Combat host defaults to continuous flight and original learning with explicit opt-in
+ok 99 - Combat host defaults to continuous flight and original learning with explicit opt-in
+  ---
+  duration_ms: 426.752375
+  ...
+# THREE.WebGLRenderer: THREE.WebGLRenderer: Error creating WebGL context.
+# Subtest: Combat host Retry preserves selected activity, difficulty, population and seed
+ok 100 - Combat host Retry preserves selected activity, difficulty, population and seed
+  ---
+  duration_ms: 443.964334
+  ...
+# THREE.WebGLRenderer: THREE.WebGLRenderer: Error creating WebGL context.
+# Subtest: Combat host manual pause autosave does not consume an immediate Resume click
+ok 101 - Combat host manual pause autosave does not consume an immediate Resume click
+  ---
+  duration_ms: 496.548125
+  ...
+# THREE.WebGLRenderer: THREE.WebGLRenderer: Error creating WebGL context.
+# THREE.WebGLRenderer: THREE.WebGLRenderer: Error creating WebGL context.
+# Subtest: Combat host Continue restores large cosmetic autosave after a fresh host
+ok 102 - Combat host Continue restores large cosmetic autosave after a fresh host
+  ---
+  duration_ms: 1344.517458
+  ...
+# THREE.WebGLRenderer: THREE.WebGLRenderer: Error creating WebGL context.
+# THREE.WebGLRenderer: THREE.WebGLRenderer: Error creating WebGL context.
+# Subtest: Combat host ignores a saved Continue read after another attempt replaces its owner
+ok 103 - Combat host ignores a saved Continue read after another attempt replaces its owner
+  ---
+  duration_ms: 876.80725
+  ...
+# THREE.WebGLRenderer: THREE.WebGLRenderer: Error creating WebGL context.
+# Subtest: Combat host restores exact Studio prototypes across population and appearance changes
+ok 104 - Combat host restores exact Studio prototypes across population and appearance changes
+  ---
+  duration_ms: 717.7535
+  ...
+# Subtest: Combat host rejects damaged recovery and resolves valid recovery to its exact saved map
+ok 105 - Combat host rejects damaged recovery and resolves valid recovery to its exact saved map
+  ---
+  duration_ms: 582.365875
+  ...
+# THREE.WebGLRenderer: THREE.WebGLRenderer: Error creating WebGL context.
+# THREE.WebGLRenderer: THREE.WebGLRenderer: Error creating WebGL context.
+# Subtest: Radio Fire reaches real combat hosts and requires release after arm and pause
+    # Subtest: native Standard
+    ok 1 - native Standard
+      ---
+      duration_ms: 856.232666
+      ...
+# THREE.WebGLRenderer: THREE.WebGLRenderer: Error creating WebGL context.
+    # Subtest: legacy Standard
+    ok 2 - legacy Standard
+      ---
+      duration_ms: 961.318083
+      ...
+# THREE.WebGLRenderer: THREE.WebGLRenderer: Error creating WebGL context.
+    # Subtest: native Advanced
+    ok 3 - native Advanced
+      ---
+      duration_ms: 1232.026167
+      ...
+# THREE.WebGLRenderer: THREE.WebGLRenderer: Error creating WebGL context.
+    # Subtest: regional Standard
+    ok 4 - regional Standard
+      ---
+      duration_ms: 899.968833
+      ...
+# THREE.WebGLRenderer: THREE.WebGLRenderer: Error creating WebGL context.
+    # Subtest: regional Advanced
+    ok 5 - regional Advanced
+      ---
+      duration_ms: 2063.742834
+      ...
+    1..5
+ok 106 - Radio Fire reaches real combat hosts and requires release after arm and pause
+  ---
+  duration_ms: 6022.176416
+  ...
+# THREE.WebGLRenderer: THREE.WebGLRenderer: Error creating WebGL context.
+# Subtest: Radio without optional Fire keeps its profile and can still shoot using keyboard
+ok 107 - Radio without optional Fire keeps its profile and can still shoot using keyboard
+  ---
+  duration_ms: 533.77525
+  ...
+# THREE.WebGLRenderer: THREE.WebGLRenderer: Error creating WebGL context.
+# Subtest: Combat Settings exposes activity, destruction, comfort and radio Fire help in their categories
+ok 108 - Combat Settings exposes activity, destruction, comfort and radio Fire help in their categories
+  ---
+  duration_ms: 405.187666
+  ...
+# THREE.WebGLRenderer: THREE.WebGLRenderer: Error creating WebGL context.
+# THREE.WebGLRenderer: THREE.WebGLRenderer: Error creating WebGL context.
+# Subtest: Combat home Settings shows the default or saved flight activity before a level is loaded
+ok 109 - Combat home Settings shows the default or saved flight activity before a level is loaded
+  ---
+  duration_ms: 724.175958
+  ...
+# THREE.WebGLRenderer: THREE.WebGLRenderer: Error creating WebGL context.
+# THREE.WebGLRenderer: THREE.WebGLRenderer: Error creating WebGL context.
+# Subtest: Combat home Settings changes persist for flight without changing the learning default
+ok 110 - Combat home Settings changes persist for flight without changing the learning default
+  ---
+  duration_ms: 1005.03225
+  ...
+# THREE.WebGLRenderer: THREE.WebGLRenderer: Error creating WebGL context.
+# Subtest: Combat settings retain the selected activity during a rapid following loadout change
+ok 111 - Combat settings retain the selected activity during a rapid following loadout change
+  ---
+  duration_ms: 525.43775
+  ...
+# THREE.WebGLRenderer: THREE.WebGLRenderer: Error creating WebGL context.
+# Subtest: Radio pause menu can guide to supplies and back to targets without a spare switch
+ok 112 - Radio pause menu can guide to supplies and back to targets without a spare switch
+  ---
+  duration_ms: 613.381042
+  ...
+# THREE.WebGLRenderer: THREE.WebGLRenderer: Error creating WebGL context.
+# Subtest: Staged radio Worlds reload uses one accepted command and never doubles as Fire
+ok 113 - Staged radio Worlds reload uses one accepted command and never doubles as Fire
+  ---
+  duration_ms: 1421.905708
+  ...
+# THREE.WebGLRenderer: THREE.WebGLRenderer: Error creating WebGL context.
+# Subtest: Staged radio Worlds clears pending reload on attempt change
+ok 114 - Staged radio Worlds clears pending reload on attempt change
+  ---
+  duration_ms: 661.766667
+  ...
+# THREE.WebGLRenderer: THREE.WebGLRenderer: Error creating WebGL context.
+# Subtest: Staged radio Worlds clears pending reload on profile change
+ok 115 - Staged radio Worlds clears pending reload on profile change
+  ---
+  duration_ms: 615.04475
+  ...
+# THREE.WebGLRenderer: THREE.WebGLRenderer: Error creating WebGL context.
+# Subtest: Staged radio Worlds clears pending reload on focus change
+ok 116 - Staged radio Worlds clears pending reload on focus change
+  ---
+  duration_ms: 605.020375
+  ...
+# Subtest: Staged radio Worlds explains a missing Fire binding instead of offering unusable choices
+ok 117 - Staged radio Worlds explains a missing Fire binding instead of offering unusable choices
+  ---
+  duration_ms: 472.366042
+  ...
+# THREE.WebGLRenderer: THREE.WebGLRenderer: Error creating WebGL context.
+# THREE.WebGLRenderer: THREE.WebGLRenderer: Error creating WebGL context.
+# Subtest: Staged radio Worlds retains an outside-area rejection and requires a new Fire cycle after return
+ok 118 - Staged radio Worlds retains an outside-area rejection and requires a new Fire cycle after return
+  ---
+  duration_ms: 797.053625
+  ...
+# THREE.WebGLRenderer: THREE.WebGLRenderer: Error creating WebGL context.
+# Subtest: Six-switch Worlds opens the pause deck, consumes nested Flight ON, changes view and confirms Retry
+ok 119 - Six-switch Worlds opens the pause deck, consumes nested Flight ON, changes view and confirms Retry
+  ---
+  duration_ms: 717.691792
+  ...
+# THREE.WebGLRenderer: THREE.WebGLRenderer: Error creating WebGL context.
+# Subtest: Six-switch Worlds keeps Fire and all four combat actions live without leaking menu gestures
+ok 120 - Six-switch Worlds keeps Fire and all four combat actions live without leaking menu gestures
+  ---
+  duration_ms: 824.392292
+  ...
+# THREE.WebGLRenderer: THREE.WebGLRenderer: Error creating WebGL context.
+# Subtest: Six-switch Worlds playback Flight resumes and pauses the recording without live radio ownership
+ok 121 - Six-switch Worlds playback Flight resumes and pauses the recording without live radio ownership
+  ---
+  duration_ms: 439.367833
+  ...
+# Subtest: Radio Fire help matches Original native combat and noncombat course capabilities
+ok 122 - Radio Fire help matches Original native combat and noncombat course capabilities
+  ---
+  duration_ms: 478.680042
+  ...
+# THREE.WebGLRenderer: THREE.WebGLRenderer: Error creating WebGL context.
+# THREE.WebGLRenderer: THREE.WebGLRenderer: Error creating WebGL context.
+# Subtest: Regional encounter boundaries keep radio flight active and guide return without rearming
+ok 123 - Regional encounter boundaries keep radio flight active and guide return without rearming
+  ---
+  duration_ms: 735.325917
+  ...
+# THREE.WebGLRenderer: THREE.WebGLRenderer: Error creating WebGL context.
+# Subtest: World character art switches preserve the combat attempt and safely use Current when a pack is missing
+ok 124 - World character art switches preserve the combat attempt and safely use Current when a pack is missing
+  ---
+  duration_ms: 290.692208
+  ...
+# THREE.WebGLRenderer: THREE.WebGLRenderer: Error creating WebGL context.
+# Subtest: Async World scheduler pumps bounded accepted debt between display frames with fresh radio input
+ok 125 - Async World scheduler pumps bounded accepted debt between display frames with fresh radio input
+  ---
+  duration_ms: 665.303667
+  ...
+# THREE.WebGLRenderer: THREE.WebGLRenderer: Error creating WebGL context.
+# Subtest: Async World scheduler does not pump rejected or paused worker results
+    # Subtest: rejected
+    ok 1 - rejected
+      ---
+      duration_ms: 1192.202917
+      ...
+# THREE.WebGLRenderer: THREE.WebGLRenderer: Error creating WebGL context.
+    # Subtest: paused
+    ok 2 - paused
+      ---
+      duration_ms: 585.9725
+      ...
+    1..2
+ok 126 - Async World scheduler does not pump rejected or paused worker results
+  ---
+  duration_ms: 1778.484
+  ...
+# THREE.WebGLRenderer: THREE.WebGLRenderer: Error creating WebGL context.
+# Subtest: Async World scheduler completion respects hidden, unfocused and stalled page ownership
+    # Subtest: hidden
+    ok 1 - hidden
+      ---
+      duration_ms: 568.973417
+      ...
+# THREE.WebGLRenderer: THREE.WebGLRenderer: Error creating WebGL context.
+    # Subtest: unfocused
+    ok 2 - unfocused
+      ---
+      duration_ms: 577.781375
+      ...
+# THREE.WebGLRenderer: THREE.WebGLRenderer: Error creating WebGL context.
+    # Subtest: stalled
+    ok 3 - stalled
+      ---
+      duration_ms: 581.209958
+      ...
+    1..3
+ok 127 - Async World scheduler completion respects hidden, unfocused and stalled page ownership
+  ---
+  duration_ms: 1728.348834
+  ...
+# THREE.WebGLRenderer: THREE.WebGLRenderer: Error creating WebGL context.
+# Subtest: Synchronous World flight preserves accepted elapsed time through a visible 200ms frame gap
+ok 128 - Synchronous World flight preserves accepted elapsed time through a visible 200ms frame gap
+  ---
+  duration_ms: 265.343083
+  ...
+# THREE.WebGLRenderer: THREE.WebGLRenderer: Error creating WebGL context.
+# Subtest: Async World scheduler cannot dispatch an old flight after replacement begins
+ok 129 - Async World scheduler cannot dispatch an old flight after replacement begins
+  ---
+  duration_ms: 607.90425
+  ...
+# THREE.WebGLRenderer: THREE.WebGLRenderer: Error creating WebGL context.
+# Subtest: Full gore visibly confirms its preset in Gameplay and saves all three independent preferences
+ok 130 - Full gore visibly confirms its preset in Gameplay and saves all three independent preferences
+  ---
+  duration_ms: 395.11925
+  ...
+# THREE.WebGLRenderer: THREE.WebGLRenderer: Error creating WebGL context.
+# Subtest: Full gore Gameplay toggles and Display controls stay independent and synchronized both ways
+ok 131 - Full gore Gameplay toggles and Display controls stay independent and synchronized both ways
+  ---
+  duration_ms: 508.233542
+  ...
+# THREE.WebGLRenderer: THREE.WebGLRenderer: Error creating WebGL context.
+# THREE.WebGLRenderer: THREE.WebGLRenderer: Error creating WebGL context.
+# Subtest: Full gore reflects external preference changes and restores the saved choice in a fresh host
+ok 132 - Full gore reflects external preference changes and restores the saved choice in a fresh host
+  ---
+  duration_ms: 756.60725
+  ...
+# THREE.WebGLRenderer: THREE.WebGLRenderer: Error creating WebGL context.
+# Subtest: Full gore keeps session choices visible and reports unavailable persistence in Gameplay
+ok 133 - Full gore keeps session choices visible and reports unavailable persistence in Gameplay
+  ---
+  duration_ms: 382.703083
+  ...
+# THREE.WebGLRenderer: THREE.WebGLRenderer: Error creating WebGL context.
+# Subtest: Full gore changes reach the active combat renderer through its live preference callback
+ok 134 - Full gore changes reach the active combat renderer through its live preference callback
+  ---
+  duration_ms: 498.157375
+  ...
+# THREE.WebGLRenderer: THREE.WebGLRenderer: Error creating WebGL context.
+# Subtest: Combat home actions visibly explain unavailable Watch and empty Continue without launching a level
+ok 135 - Combat home actions visibly explain unavailable Watch and empty Continue without launching a level
+  ---
+  duration_ms: 411.536625
+  ...
+# THREE.WebGLRenderer: THREE.WebGLRenderer: Error creating WebGL context.
+# Subtest: Combat file buttons activate their file input and keep picker feedback inside Gameplay
+ok 136 - Combat file buttons activate their file input and keep picker feedback inside Gameplay
+  ---
+  duration_ms: 385.564708
+  ...
+# THREE.WebGLRenderer: THREE.WebGLRenderer: Error creating WebGL context.
+# Subtest: Combat recordings expands from home and explicitly reports an empty archive
+ok 137 - Combat recordings expands from home and explicitly reports an empty archive
+  ---
+  duration_ms: 376.816375
+  ...
+# THREE.WebGLRenderer: THREE.WebGLRenderer: Error creating WebGL context.
+# THREE.WebGLRenderer: THREE.WebGLRenderer: Error creating WebGL context.
+# Subtest: Combat continue from home resolves the exact saved native map and closes Settings
+ok 138 - Combat continue from home resolves the exact saved native map and closes Settings
+  ---
+  duration_ms: 890.655792
+  ...
+# THREE.WebGLRenderer: THREE.WebGLRenderer: Error creating WebGL context.
+# THREE.WebGLRenderer: THREE.WebGLRenderer: Error creating WebGL context.
+# Subtest: Combat load from home resolves the exact saved native map and closes Settings
+ok 139 - Combat load from home resolves the exact saved native map and closes Settings
+  ---
+  duration_ms: 1193.834708
+  ...
+# THREE.WebGLRenderer: THREE.WebGLRenderer: Error creating WebGL context.
+# THREE.WebGLRenderer: THREE.WebGLRenderer: Error creating WebGL context.
+# Subtest: Combat watch from home resolves the exact saved native map and closes Settings
+ok 140 - Combat watch from home resolves the exact saved native map and closes Settings
+  ---
+  duration_ms: 850.315084
+  ...
+# THREE.WebGLRenderer: THREE.WebGLRenderer: Error creating WebGL context.
+# Subtest: Combat file validation and cancellation report inside the open Gameplay settings
+ok 141 - Combat file validation and cancellation report inside the open Gameplay settings
+  ---
+  duration_ms: 398.577666
+  ...
+# THREE.WebGLRenderer: THREE.WebGLRenderer: Error creating WebGL context.
+# THREE.WebGLRenderer: THREE.WebGLRenderer: Error creating WebGL context.
+# Subtest: Combat recovery rejects an unavailable exact revision before replacing the current flight
+ok 142 - Combat recovery rejects an unavailable exact revision before replacing the current flight
+  ---
+  duration_ms: 960.870792
+  ...
+# THREE.WebGLRenderer: THREE.WebGLRenderer: Error creating WebGL context.
+# Subtest: World continuation Watch starts at its verified boundary and consumes only suffix frames
+ok 143 - World continuation Watch starts at its verified boundary and consumes only suffix frames
+  ---
+  duration_ms: 357.760542
+  ...
+# THREE.WebGLRenderer: THREE.WebGLRenderer: Error creating WebGL context.
+# Subtest: World continuation Continue inherits its original mode and persists an independent suffix
+ok 144 - World continuation Continue inherits its original mode and persists an independent suffix
+  ---
+  duration_ms: 691.972417
+  ...
+# Subtest: World continuation archive imports its saved Acro industrial pin and immutable boundary
+ok 145 - World continuation archive imports its saved Acro industrial pin and immutable boundary
+  ---
+  duration_ms: 344.2795
+  ...
+# THREE.WebGLRenderer: THREE.WebGLRenderer: Error creating WebGL context.
+# THREE.WebGLRenderer: THREE.WebGLRenderer: Error creating WebGL context.
+# Subtest: World route guide host selects only the current mode and actual aircraft clearance
+ok 146 - World route guide host selects only the current mode and actual aircraft clearance
+  ---
+  duration_ms: 307.497167
+  ...
+# THREE.WebGLRenderer: THREE.WebGLRenderer: Error creating WebGL context.
+# Subtest: World historical Continue preserves the original proof and labels independent practice
+ok 147 - World historical Continue preserves the original proof and labels independent practice
+  ---
+  duration_ms: 272.878292
+  ...
+# THREE.WebGLRenderer: THREE.WebGLRenderer: Error creating WebGL context.
+# Subtest: World continuation recording cap keeps flight active and exports only its retained recovery boundary
+ok 148 - World continuation recording cap keeps flight active and exports only its retained recovery boundary
+  ---
+  duration_ms: 15740.199625
+  ...
+# Subtest: World historical Continue disposes its detached recovered world when preserving the proof fails
+ok 149 - World historical Continue disposes its detached recovered world when preserving the proof fails
+  ---
+  duration_ms: 565.114542
+  ...
+# Subtest: spatial editor applies current presentation before every course build without changing authored source or scene bytes
+ok 150 - spatial editor applies current presentation before every course build without changing authored source or scene bytes
+  ---
+  duration_ms: 1.531667
+  ...
+# Subtest: spatial editor preserves an authenticated retained binding when a proposed drag is rejected
+ok 151 - spatial editor preserves an authenticated retained binding when a proposed drag is rejected
+  ---
+  duration_ms: 5.651542
+  ...
+# Subtest: spatial editor offers bounded-renderer camera actions for radio menus without editing source
+ok 152 - spatial editor offers bounded-renderer camera actions for radio menus without editing source
+  ---
+  duration_ms: 0.477875
+  ...
+# Subtest: unavailable spatial graphics cannot break later course or appearance form refreshes
+ok 153 - unavailable spatial graphics cannot break later course or appearance form refreshes
+  ---
+  duration_ms: 0.303333
+  ...
+# Subtest: checksummed export/import keeps a genuine published demonstration but never trusts verification
+ok 154 - checksummed export/import keeps a genuine published demonstration but never trusts verification
+  ---
+  duration_ms: 470.853167
+  ...
+# Subtest: legacy v1 and current archives preserve unavailable/invalid raw records without importing trust
+ok 155 - legacy v1 and current archives preserve unavailable/invalid raw records without importing trust
+  ---
+  duration_ms: 1.410583
+  ...
+# Subtest: v3 retains a genuine legacy proof appearance and includes it in the recording identity
+ok 156 - v3 retains a genuine legacy proof appearance and includes it in the recording identity
+  ---
+  duration_ms: 5.890791
+  ...
+# Subtest: transport checksum and recording identity each reject tampering independently
+ok 157 - transport checksum and recording identity each reject tampering independently
+  ---
+  duration_ms: 10.256792
+  ...
+# Subtest: empty and multipart archives preserve order, duplicates and independent part import
+ok 158 - empty and multipart archives preserve order, duplicates and independent part import
+  ---
+  duration_ms: 52.897833
+  ...
+# Subtest: invalid archive format, part indices and excessive selections are rejected
+ok 159 - invalid archive format, part indices and excessive selections are rejected
+  ---
+  duration_ms: 8.756542
+  ...
+# Subtest: malformed records cannot enter an otherwise well formed legacy archive
+ok 160 - malformed records cannot enter an otherwise well formed legacy archive
+  ---
+  duration_ms: 0.78175
+  ...
+# Subtest: archive boundaries reject oversized files/records, deep data and getters without invoking them
+ok 161 - archive boundaries reject oversized files/records, deep data and getters without invoking them
+  ---
+  duration_ms: 20.213084
+  ...
+# Subtest: duplicate saves retain one identity, existing pins and unrelated recordings
+ok 162 - duplicate saves retain one identity, existing pins and unrelated recordings
+  ---
+  duration_ms: 9.28125
+  ...
+# Subtest: concurrent duplicate and distinct writes do not lose or duplicate unrelated recordings
+ok 163 - concurrent duplicate and distinct writes do not lose or duplicate unrelated recordings
+  ---
+  duration_ms: 1.492334
+  ...
+# Subtest: a pinned deletion aborts atomically and unpinning is required before removal
+ok 164 - a pinned deletion aborts atomically and unpinning is required before removal
+  ---
+  duration_ms: 2.08825
+  ...
+# Subtest: caller mutations and connection reopening do not alter saved recordings or session data
+ok 165 - caller mutations and connection reopening do not alter saved recordings or session data
+  ---
+  duration_ms: 1.805042
+  ...
+# Subtest: full record capacity refuses a new identity atomically but permits replacement and recovery
+ok 166 - full record capacity refuses a new identity atomically but permits replacement and recovery
+  ---
+  duration_ms: 2411.161125
+  ...
+# Subtest: an aborted write after put is queued retains the old recording and unrelated session
+ok 167 - an aborted write after put is queued retains the old recording and unrelated session
+  ---
+  duration_ms: 1.441167
+  ...
+# Subtest: invalid or oversized data reject without changing existing records and session
+ok 168 - invalid or oversized data reject without changing existing records and session
+  ---
+  duration_ms: 21.882
+  ...
+# Subtest: unavailable IndexedDB rejects explicitly instead of claiming recordings are saved
+ok 169 - unavailable IndexedDB rejects explicitly instead of claiming recordings are saved
+  ---
+  duration_ms: 0.122083
+  ...
+# Subtest: admitted guides preserve source identity and select only their exact current objective/mode/radius
+ok 170 - admitted guides preserve source identity and select only their exact current objective/mode/radius
+  ---
+  duration_ms: 66.348917
+  ...
+# Subtest: guide schema rejects stale objective bindings, reversed passage, duplicate IDs and insufficient whole-body clearance
+ok 171 - guide schema rejects stale objective bindings, reversed passage, duplicate IDs and insufficient whole-body clearance
+  ---
+  duration_ms: 1.393708
+  ...
+# Subtest: static admission rejects blocked full segments and accepts an authored detour without inventing a joining line
+ok 172 - static admission rejects blocked full segments and accepts an authored detour without inventing a joining line
+  ---
+  duration_ms: 3.198833
+  ...
+# Subtest: landing route reaches the actual floor and hold route must finish inside its objective
+ok 173 - landing route reaches the actual floor and hold route must finish inside its objective
+  ---
+  duration_ms: 1.346458
+  ...
+# Subtest: reimport keeps guide and waypoint IDs; geometry changes require fresh admission
+ok 174 - reimport keeps guide and waypoint IDs; geometry changes require fresh admission
+  ---
+  duration_ms: 1.294417
+  ...
+# Subtest: static skill crossings retain their direction and exact objective binding
+ok 175 - static skill crossings retain their direction and exact objective binding
+  ---
+  duration_ms: 1.159667
+  ...
+# Subtest: project compile and pack round trip preserve guide IDs without adding course fields; admission repeats against imported geometry
+ok 176 - project compile and pack round trip preserve guide IDs without adding course fields; admission repeats against imported geometry
+  ---
+  duration_ms: 350.856834
+  ...
+# Subtest: mounted Studio route editor previews and applies stable waypoint IDs and clears preview when drafts change
+ok 177 - mounted Studio route editor previews and applies stable waypoint IDs and clears preview when drafts change
+  ---
+  duration_ms: 6.152541
+  ...
+# Subtest: mounted Studio reports blocked guides and discards late admission after course ownership changes
+ok 178 - mounted Studio reports blocked guides and discards late admission after course ownership changes
+  ---
+  duration_ms: 16.029292
+  ...
+# Subtest: Studio repairs or removes multiple stale guides independently while export still requires all guides
+ok 179 - Studio repairs or removes multiple stale guides independently while export still requires all guides
+  ---
+  duration_ms: 7.554417
+  ...
+# Subtest: world validation rejects unsupported rules, duplicate actors, malformed geometry and unknown targets
+ok 180 - world validation rejects unsupported rules, duplicate actors, malformed geometry and unknown targets
+  ---
+  duration_ms: 2.682625
+  ...
+# Subtest: static sphere sweep cannot tunnel through a thin wall or rotated box
+ok 181 - static sphere sweep cannot tunnel through a thin wall or rotated box
+  ---
+  duration_ms: 27.7935
+  ...
+# Subtest: drone takes off from support and refuses a solid-overlap spawn
+ok 182 - drone takes off from support and refuses a solid-overlap spawn
+  ---
+  duration_ms: 6.95725
+  ...
+# Subtest: elevated triangle platform supports a landing objective with exact surface identity
+ok 183 - elevated triangle platform supports a landing objective with exact surface identity
+  ---
+  duration_ms: 355.132875
+  ...
+# Subtest: moving actor relative sweep catches crossing trajectories between endpoints
+ok 184 - moving actor relative sweep catches crossing trajectories between endpoints
+  ---
+  duration_ms: 1.081959
+  ...
+# Subtest: a moving hazard contacts a resting drone after its floor movement is resolved
+ok 185 - a moving hazard contacts a resting drone after its floor movement is resolved
+  ---
+  duration_ms: 0.29475
+  ...
+# Subtest: fictional pulses damage targets, obey cooldown and complete verified combat
+ok 186 - fictional pulses damage targets, obey cooldown and complete verified combat
+  ---
+  duration_ms: 7.584
+  ...
+# Subtest: enemy pulses can defeat the drone, while intervening geometry blocks both sides
+ok 187 - enemy pulses can defeat the drone, while intervening geometry blocks both sides
+  ---
+  duration_ms: 10.800334
+  ...
+# Subtest: authored ground and vehicle patrols stop at solid map obstacles
+ok 188 - authored ground and vehicle patrols stop at solid map obstacles
+  ---
+  duration_ms: 26.641542
+  ...
+# Subtest: ground patrols climb authored 0.15 m steps and supported slopes
+ok 189 - ground patrols climb authored 0.15 m steps and supported slopes
+  ---
+  duration_ms: 16.317208
+  ...
+# Subtest: projectile admission remains bounded while firing continuously
+ok 190 - projectile admission remains bounded while firing continuously
+  ---
+  duration_ms: 46.415958
+  ...
+# Subtest: pause freezes every subsystem; recovered command prefix resumes with the same final hash
+ok 191 - pause freezes every subsystem; recovered command prefix resumes with the same final hash
+  ---
+  duration_ms: 12.407083
+  ...
+# Subtest: reset is deterministic; themes can change but rules, visibility and tampered commands cannot
+ok 192 - reset is deterministic; themes can change but rules, visibility and tampered commands cannot
+  ---
+  duration_ms: 10.974083
+  ...
+# Subtest: recorder requires the consumed command and rejects skipped ticks
+ok 193 - recorder requires the consumed command and rejects skipped ticks
+  ---
+  duration_ms: 0.682166
+  ...
+1..193
+# tests 233
+# suites 0
+# pass 233
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 106153.260916

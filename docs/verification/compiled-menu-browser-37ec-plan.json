@@ -1,0 +1,91 @@
+{
+  "format": "RevealLineFixedCompiledMenuConsumerV1",
+  "status": "PROPOSED_UNRUN",
+  "target": {
+    "repository": "mekhovov/revealline",
+    "source": "37ec4fc6af9ee62747339459d28decc2a5283501",
+    "tree": "873e9dfdd85350b56b4d6b9cb957073e18dbdd81",
+    "run": 39356263374,
+    "attempt": 1,
+    "artifact": 12236777601,
+    "outerBytes": 1096242271,
+    "outerSha256": "60603890fee36244379db56669f73b4c12cd3eae1505beb3a7cf3ceee92f17a7",
+    "innerBytes": 1077235917,
+    "innerSha256": "3ed7b527ba57a3fc51006cc3b2d7b4d0558dffe217cb8ff896b765bdd385c2e4",
+    "manifestBytes": 533939,
+    "manifestSha256": "a8679cf79dc70feabb600c908a481cc3878223fe2736bcc87c285a92707e2efe"
+  },
+  "reusedSource": [
+    {
+      "path": "scripts/solo-remote-archive.py",
+      "oid": "7a56298d0509ebe0a33c257bef3efe2d0cbdbddc",
+      "byteSize": 22756
+    },
+    {
+      "path": "scripts/serve-production-preview.mjs",
+      "oid": "0176a28b0eb56e634a12112d5737211a6ec6de8f",
+      "byteSize": 10414
+    },
+    {
+      "path": "scripts/run-solo-remote-correctness.mjs",
+      "oid": "ce977d2d6c0c2bf58d3357f9276b602542b4312b",
+      "byteSize": 74932
+    },
+    {
+      "path": "scripts/solo-pages-smoke.mjs",
+      "oid": "0ecaaff2fcb6197d951d32ae3281b1bf02f04252",
+      "byteSize": 42990
+    },
+    {
+      "path": "scripts/solo-qualification-shared-mode.mjs",
+      "oid": "be3198b72a2ebd3073550dc1d11a04e72c8a150c",
+      "byteSize": 23296
+    },
+    {
+      "path": "scripts/check-source-identity.mjs",
+      "oid": "56ad477033516d565fbb7f85cea70d0430ceae1c",
+      "byteSize": 7275
+    },
+    {
+      "path": "scripts/game-cli.mjs",
+      "oid": "3ce84995abde98459aa5a1a25ea1057d33677d54",
+      "byteSize": 95884
+    },
+    {
+      "path": "scripts/solo-pages-backup.mjs",
+      "oid": "83c3f25b4618d88622dbc47b92270f16e80f7c66",
+      "byteSize": 13571
+    }
+  ],
+  "runtime": "Node22.22.2 Linux x64; immutable package producer separately Node22.13.1",
+  "credential": "REVEALLINE_PAGES_TEST_PASSWORD",
+  "credentialEntry": "ordinary-generated-package-password-form",
+  "engine": "chromium",
+  "playwright": "1.62.1",
+  "browserRegistrySha256": "f306eed529599b1eaf2f8a85db9de2b23e1a3fe36c2b66434b7c9434fb627a99",
+  "browserRevision": "1234",
+  "browserVersion": "151.0.7922.34",
+  "browserBinaryAuthority": "Fixed official registry revision plus locked playwright-core integrity; actual installed executable SHA/inode captured before and after. No pre-existing independently witnessed binary SHA is claimed.",
+  "performanceExcluded": true,
+  "retries": 0,
+  "limits": {
+    "preparationFreeBytes": 8589934592,
+    "continuousFreeBytes": 2147483648,
+    "privateAllocatedBytes": 8589934592,
+    "ownerRSSBytes": 6442450944,
+    "validatorRSSBytes": 2147483648,
+    "browserOwnerMs": 600000,
+    "flowMs": 570000,
+    "cleanupMs": 10000,
+    "validatorMs": 180000,
+    "downloadMs": 300000,
+    "campaignMs": 1800000,
+    "publicEvidenceBytes": 4194304,
+    "browserRawBytes": 1048576,
+    "otherRawBytes": 4194304,
+    "jobMinutes": 50,
+    "provisionMinutes": 15
+  },
+  "ordinarySourceState": "37ec source20/22 + explicit probe0/1 remain RED. No deadline/helper/production change.",
+  "physicalDevices": "Not observed; no offline-installed/PWA/cold-start/performance qualification."
+}

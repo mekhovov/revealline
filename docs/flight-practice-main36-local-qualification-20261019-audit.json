@@ -1,0 +1,22 @@
+{
+  "format": "PracticeEvidenceArchiveAudit.v1",
+  "passed": true,
+  "archive": "/Volumes/alex/CodexMigrationStaging/practice-main36-qualified-packet-gys7tV/practice-main36-local-qualification-20261019-evidence.tgz",
+  "bytes": 19121762,
+  "sha256": "1cc4525f978ed2ca42bd2558d2d2e23c82846d132832cb91e12fe982a9ce81ff",
+  "files": 221,
+  "expandedBytes": 69584736,
+  "extractedAndRehashed": true,
+  "localExtractionMs": 1010,
+  "localAuditDirectory": "/private/tmp/practice-main36-packet-audit-36gdWI",
+  "initialShareExtraction": {
+    "passed": false,
+    "deadlineMs": 120000,
+    "error": "spawnSync /usr/bin/tar ETIMEDOUT",
+    "signal": "SIGTERM",
+    "partialOutput": "/Volumes/alex/CodexMigrationStaging/practice-main36-qualified-audit-I5HwGh",
+    "sourceScript": "/private/tmp/practice-main36-retain-20261019.mjs"
+  },
+  "scope": "Same immutable archive independently extracted locally and all 221 inventoried files rehashed. The initial share extraction timed out and remains retained. No test result, deadline, source or package was altered.",
+  "auditorSource": "import fs from 'node:fs/promises';\nimport assert from 'node:assert/strict';\nimport {createHash} from 'node:crypto';\nimport {execFileSync} from 'node:child_process';\nconst base='/Volumes/alex/CodexMigrationStaging';\nconst name='practice-main36-local-qualification-20261019-evidence';\nconst archive=base+'/practice-main36-qualified-packet-gys7tV/'+name+'.tgz';\nconst hash=b=>createHash('sha256').update(b).digest('hex');\nconst free=await fs.statfs('/private/tmp');assert(free.bavail*free.bsize>=2*1024**3);\nconst owned=await fs.mkdtemp('/private/tmp/practice-main36-packet-audit-');\nconst b=await fs.readFile(archive);assert.equal(b.length,19121762);\nconst local=owned+'/'+name+'.tgz';await fs.writeFile(local,b,{flag:'wx'});\nconst started=Date.now();execFileSync('/usr/bin/tar',['-xzf',local,'-C',owned],{timeout:120000});\nconst inventory=JSON.parse(await fs.readFile(owned+'/'+name+'/inventory.json'));\nconst original=JSON.parse(await fs.readFile(base+'/practice-main36-qualified-packet-gys7tV/'+name+'/inventory.json'));\nassert.deepEqual(inventory,original);assert.equal(inventory.files.length,221);\nfor(const f of inventory.files){assert(!f.path.startsWith('/')&&!f.path.split('/').includes('..'));const v=await fs.readFile(owned+'/'+name+'/'+f.path);assert.equal(v.length,f.bytes);assert.equal(hash(v),f.sha256);}\nassert.equal(hash(await fs.readFile(archive)),hash(b));\nconst r={format:'PracticeEvidenceArchiveAudit.v1',passed:true,archive,bytes:b.length,sha256:hash(b),files:inventory.files.length,expandedBytes:inventory.files.reduce((n,r)=>n+r.bytes,0),extractedAndRehashed:true,localExtractionMs:Date.now()-started,localAuditDirectory:owned,initialShareExtraction:{passed:false,deadlineMs:120000,error:'spawnSync /usr/bin/tar ETIMEDOUT',signal:'SIGTERM',partialOutput:base+'/practice-main36-qualified-audit-I5HwGh',sourceScript:'/private/tmp/practice-main36-retain-20261019.mjs'},scope:'Same immutable archive independently extracted locally and all 221 inventoried files rehashed. The initial share extraction timed out and remains retained. No test result, deadline, source or package was altered.'};\nawait fs.writeFile(base+'/practice-main36-local-qualification-packet-20261019.json',JSON.stringify(r,null,2)+'\\n',{flag:'wx'});console.log(JSON.stringify(r));\n"
+}

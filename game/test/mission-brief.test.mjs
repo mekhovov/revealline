@@ -2,6 +2,8 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import { missionBriefing } from '../mission-brief.mjs';
+import { createRun, validateLevel } from '../core/index.mjs';
+import { retryFixture } from './fixtures/retry-scenarios.mjs';
 import { getLocale, setLocale } from '../i18n/index.mjs';
 
 const json = (path) => JSON.parse(fs.readFileSync(new URL(path, import.meta.url)));
@@ -164,4 +166,46 @@ test('pressure brief explains locked commitment while preserving the full author
   assert.match(result.copy, /close before TRAIL catches up/);
   assert.match(result.status, /turn away from a heading lock/);
   assert.equal(result.fullBrief, level.metadata.description);
+});
+
+test('native reachable-route brief localizes its goal and bonus territory without changing authored content', (t) => {
+  const locale = getLocale();
+  t.after(() => setLocale(locale, { persist: false }));
+  const level = {
+    ...retryFixture('self-contact').level,
+    version: 'xonix-level.v4',
+    name: 'My authored route',
+    metadata: { description: 'My authored hazard instructions.' },
+    width: 72,
+    encounter: null,
+    goal: { coverage: 0.65 },
+    rules: { lives: 3 },
+    enemies: [{ id: 'remote', type: 'bouncer', x: 60.5, y: 28.5, vx: 0, vy: 0 }],
+    classic: {
+      version: 'classic.v1',
+      coverage: { version: 'reachable-routes.v1' },
+      terrain: [{ id: 'pocket', kind: 'lethal', x: 30, y: 10, w: 4, h: 4 }],
+      powerups: [],
+    },
+  };
+  const admission = validateLevel(level);
+  assert.equal(admission.valid, true, admission.errors.join('; '));
+  const run = createRun(level),
+    before = JSON.stringify(run),
+    authored = structuredClone(level);
+  const goals = {
+    en: 'Capture 65% of reachable routes. Hazard pockets are bonus reveal territory.',
+    uk: 'Захопи 65% доступних маршрутів. Небезпечні ділянки — додаткова територія для відкриття.',
+  };
+  for (const language of ['en', 'uk', 'en']) {
+    setLocale(language, { persist: false });
+    const brief = missionBriefing(run.level);
+    assert.equal(brief.goal, goals[language]);
+    assert.ok(brief.copy.startsWith(goals[language]));
+    assert.doesNotMatch(brief.copy, /\{\{|\[\[slot/);
+    assert.equal(brief.fullTitle, level.name);
+    assert.equal(brief.fullBrief, level.metadata.description);
+    assert.equal(JSON.stringify(run), before);
+    assert.deepEqual(level, authored);
+  }
 });

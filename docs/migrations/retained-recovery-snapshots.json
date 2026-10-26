@@ -1,0 +1,18 @@
+{
+  "format": "revealline-retained-recovery-snapshots.v1",
+  "scope": "Only retired registry members removed from historical configuration snapshots. These files have new identities and do not qualify the original artifact. Exact originals are preserved separately.",
+  "items": [
+    {
+      "path": "recovery/ornament-port-20261009/conflict-stages/game__build-config.json.stage2",
+      "previousSHA256": "0733b61462a6eccdcd1853b32ff13ac21d8847a7f993a9bf7fd0a33ba74036e1",
+      "sha256": "04ff0fb83e32c49f6237e3efc51ff00ae2ed77b9b92deb6ed1f71e29638a53a7",
+      "bytes": 18674
+    },
+    {
+      "path": "docs/verification/cross-mode/p01/offline-visibility/local-browser/artifact-authority/game/index.html",
+      "previousSHA256": "60918b4dc5f3c6cfc926b07356fc7e91e49a84ae94a05721225aabd617729819",
+      "sha256": "1dd0a37ab9f8398e3433e55d0161b80f4a80f2a16249da2912886222a7cae4fb",
+      "bytes": 71001
+    }
+  ]
+}
