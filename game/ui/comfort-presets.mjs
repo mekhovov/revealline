@@ -23,6 +23,7 @@ const copy = {
     retry: 'Retry saving preset',
     undo: 'Undo last preset',
     applied: 'Preset applied. You can adjust individual settings.',
+    partial: 'Newer choices were kept. Undo affects only preset settings that remain unchanged.',
     undone: 'The preset’s unchanged settings were restored. Newer choices were kept.',
     superseded: 'Newer choices were kept. Undo is no longer available for this preset.',
     restored: 'This page was restored. The earlier preset can no longer be undone.',
@@ -53,6 +54,7 @@ const copy = {
     retry: 'Повторити збереження набору',
     undo: 'Скасувати останній набір',
     applied: 'Набір застосовано. Окремі налаштування можна змінювати.',
+    partial: 'Новіший вибір залишено без змін. Скасування стосується лише незмінених налаштувань набору.',
     undone: 'Незмінені налаштування набору відновлено. Новіші зміни збережено.',
     superseded: 'Новіші зміни збережено. Скасування цього набору більше недоступне.',
     restored: 'Сторінку відновлено. Попередній набір більше не можна скасувати.',
@@ -135,12 +137,35 @@ export function mountComfortPresets({
     ]
       .filter(Boolean)
       .join(' ');
+  function revoke(part) {
+    if (!last?.[part]) return;
+    last.superseded = true;
+    last[part] = null;
+    reported[part] = false;
+  }
+  const resultMessage = () =>
+    last?.superseded ? (last.display || last.menu ? 'partial' : 'superseded') : 'applied';
   function reconcile() {
     if (!last || acting) return;
-    if (last.display && display.snapshot().revision !== last.display.revision) last.display = null;
-    if (last.menu && (menu.revision() !== last.menu.revision || menu.get() !== last.menu.value))
-      last.menu = null;
-    if (!last.display && !last.menu && message === 'applied') message = 'superseded';
+    if (last.display && display.snapshot().revision !== last.display.revision) revoke('display');
+    if (last.menu && (menu.get() !== last.menu.value || menu.revision() !== last.menu.revision))
+      revoke('menu');
+    if (message === 'applied' || message === 'partial') message = resultMessage();
+  }
+  function retryScope(previous, current, menuRevision, target) {
+    return {
+      display:
+        Object.keys(target).some((key) => key !== 'menuAnimation') &&
+        !!previous?.display &&
+        previous.display.revision === current.revision &&
+        !!displayWarning(),
+      menu:
+        Object.hasOwn(target, 'menuAnimation') &&
+        !!previous?.menu &&
+        previous.menu.value === current.menuAnimation &&
+        previous.menu.revision === menuRevision &&
+        menu.persistence().status === 'session',
+    };
   }
   function render() {
     if (disposed) return;
@@ -171,7 +196,8 @@ export function mountComfortPresets({
     }
     system.textContent = labels.system;
     system.hidden = !current.effectiveReducedEffects || current.reducedEffects;
-    apply.textContent = last?.preset === choice.value && warning() ? labels.retry : labels.apply;
+    const pending = retryScope(last?.preset === choice.value ? last : null, current, menu.revision(), target);
+    apply.textContent = pending.display || pending.menu ? labels.retry : labels.apply;
     undo.textContent = labels.undo;
     undo.disabled = !last?.display && !last?.menu;
     const text = [labels[message], message ? warning() : ''].filter(Boolean).join(' ');
@@ -181,64 +207,86 @@ export function mountComfortPresets({
   function applyPreset() {
     reconcile();
     const before = snapshot(),
+      menuRevision = menu.revision(),
       target = presets[choice.value],
       previous = last?.preset === choice.value ? last : null,
       scope = {
         display: Object.keys(target).some((key) => key !== 'menuAnimation'),
         menu: Object.hasOwn(target, 'menuAnimation'),
       },
-      retry = !!previous && !!warning(scope),
-      retryDisplay = retry && scope.display && !!displayWarning(),
-      retryMenu = retry && scope.menu && menu.persistence().status === 'session',
+      pending = retryScope(previous, before, menuRevision, target),
+      retry = pending.display || pending.menu,
       displayPatch = Object.fromEntries(
         Object.entries(target).filter(
-          ([key, value]) => key !== 'menuAnimation' && (retryDisplay || before[key] !== value),
+          ([key, value]) => key !== 'menuAnimation' && (retry ? pending.display : before[key] !== value),
         ),
       ),
-      menuChanged =
-        Object.hasOwn(target, 'menuAnimation') && before.menuAnimation !== target.menuAnimation,
-      menuRevision = menu.revision();
-    reported = scope;
+      menuChanged = !retry && scope.menu && before.menuAnimation !== target.menuAnimation;
+    reported = retry ? pending : scope;
     if (!Object.keys(displayPatch).length && !menuChanged && !retry) {
       message = 'same';
       render();
       return;
     }
     acting = true;
-    let failed = false;
+    let failed = false,
+      menuSkipped = false,
+      menuAttempted = false;
     try {
       if (Object.keys(displayPatch).length) setDisplay(displayPatch);
     } catch {
       failed = true;
     }
     try {
-      if (menuChanged) menu.set(target.menuAnimation);
-      else if (retryMenu) menu.retry();
+      if (menuChanged || pending.menu) {
+        const menuStillCurrent =
+          menu.get() === before.menuAnimation && menu.revision() === menuRevision;
+        if (!menuStillCurrent) menuSkipped = true;
+        else if (menuChanged) {
+          menuAttempted = true;
+          menu.set(target.menuAnimation);
+        } else menu.retry();
+      }
     } catch {
       failed = true;
     }
     const after = snapshot(),
+      menuValueAfter = menu.get(),
+      menuRevisionAfter = menu.revision(),
+      menuOwned = menuAttempted && menuValueAfter === target.menuAnimation && menuRevisionAfter === menuRevision + 1,
       displayOwned =
         Object.keys(displayPatch).length &&
         after.revision === before.revision + 1 &&
-        Object.entries(displayPatch).every(([key, value]) => after[key] === value);
-    last = {
-      preset: choice.value,
-      display: displayOwned
+        Object.entries(displayPatch).every(([key, value]) => after[key] === value),
+      nextDisplay = displayOwned
         ? {
             revision: after.revision,
             before:
               previous?.display?.before ??
               Object.fromEntries(Object.keys(displayPatch).map((key) => [key, before[key]])),
           }
-        : (previous?.display ?? null),
-      menu:
-        menuChanged && menu.revision() === menuRevision + 1 && menu.get() === target.menuAnimation
-          ? { before: before.menuAnimation, value: target.menuAnimation, revision: menu.revision() }
-          : (previous?.menu ?? null),
+        : previous?.display?.revision === after.revision ? previous.display : null,
+      nextMenu =
+        menuOwned
+          ? { before: before.menuAnimation, value: target.menuAnimation, revision: menuRevisionAfter }
+          : previous?.menu && menuValueAfter === previous.menu.value && menuRevisionAfter === previous.menu.revision
+            ? previous.menu
+            : null;
+    last = {
+      preset: choice.value,
+      display: nextDisplay,
+      menu: nextMenu,
+      superseded: !!(
+        (retry && previous?.superseded) || menuSkipped ||
+        (previous?.display && !nextDisplay) || (previous?.menu && !nextMenu) ||
+        (Object.keys(displayPatch).length > 0 && after.revision > before.revision && !displayOwned) ||
+        (menuAttempted && menuRevisionAfter > menuRevision && !menuOwned)
+      ),
     };
+    reported.display = reported.display && !!nextDisplay;
+    reported.menu = reported.menu && !!nextMenu;
     acting = false;
-    message = failed ? 'failed' : 'applied';
+    message = failed ? 'failed' : resultMessage();
     render();
   }
   function undoPreset() {
@@ -279,9 +327,9 @@ export function mountComfortPresets({
     } catch {
       return;
     }
-    if (event.key === DISPLAY_PREFERENCES_KEY && !displayWarning()) last.display = null;
+    if (event.key === DISPLAY_PREFERENCES_KEY && !displayWarning()) revoke('display');
     if (event.key === MENU_ANIMATION_KEY && menu.persistence().status !== 'session')
-      last.menu = null;
+      revoke('menu');
     render();
   };
   const restored = (event) => {

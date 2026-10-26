@@ -1,0 +1,208 @@
+{
+  "format": "FPVGitHubDependencyLinkVerification.v1",
+  "linkPath": "fpv-package-qualification-20261014/batched-storage-103be7a7/independent-storage-checks/authoring/fpv-worlds/regions/urban-bando/delivery-review-r1",
+  "relativeLinkValue": "../../../../../../../_github-review-dependencies/urban-bando-delivery-review-r1",
+  "targetWithinRestoreRoot": "_github-review-dependencies/urban-bando-delivery-review-r1",
+  "pinnedSourceCommit": "0959055975afe3a929c8f2c8602a6ab77488277c",
+  "treeGitSHA1": "032814d85295c4bc54652eeb5e62e0001e1914b5",
+  "filesFollowingTheActualLinkVerified": [
+    {
+      "path": "delivery.json",
+      "sha256": "1ba27d2242d61d61c0552564d75baa5f3e313e63a78c2ef434f63cdc7dbab94c",
+      "bytes": 6615
+    },
+    {
+      "path": "scenery/region.json",
+      "sha256": "d0794c442362dcf95885ef7db417e8d3480db179a2dce2d0f026b65cf075de17",
+      "bytes": 5824
+    },
+    {
+      "path": "scenery/urban-0-0.glb",
+      "sha256": "ea88472d836bdfbfeeecf2b26c9e33b340c6d4390a8532818de4169414eea3bf",
+      "bytes": 24396
+    },
+    {
+      "path": "scenery/urban-0-0.json",
+      "sha256": "bfdf16df8d6b5f204e54961ef1886bcdc0c7c644b351835fb6c390250ad3651a",
+      "bytes": 47621
+    },
+    {
+      "path": "scenery/urban-0-1.glb",
+      "sha256": "52ffcfffd336cba1fbe85d22aa4e9479dc146b37bde62aecb9590f864b987d03",
+      "bytes": 17660
+    },
+    {
+      "path": "scenery/urban-0-1.json",
+      "sha256": "52f304a9a765a7f3e75af01ed5f66306aebe69ebab55a5cb4a942a12bc57b180",
+      "bytes": 36085
+    },
+    {
+      "path": "scenery/urban-0-2.glb",
+      "sha256": "66761db49021f4615d4dc48880dd52aedfe63c72780f5364e82ee7ec71224e05",
+      "bytes": 19796
+    },
+    {
+      "path": "scenery/urban-0-2.json",
+      "sha256": "871bc12b5bbdac48b6bb16e7fa40d6f86055b77cf7bb9b6c8e36cc8afa5f6df4",
+      "bytes": 39343
+    },
+    {
+      "path": "scenery/urban-1-0.glb",
+      "sha256": "21d4190faa61860f0902809ab169f9befb33af10e6992d59923bd4ba4c1d079d",
+      "bytes": 14464
+    },
+    {
+      "path": "scenery/urban-1-0.json",
+      "sha256": "e6a9eb1bf7ab8e730b7974dce431724dda097cd05b0d1b26031fcfbad5ce837a",
+      "bytes": 28469
+    },
+    {
+      "path": "scenery/urban-1-1.glb",
+      "sha256": "3a3aec1211306e568f642db849b5b3e22819e94ba8cbc17e8a343bd472b4cf2f",
+      "bytes": 6076
+    },
+    {
+      "path": "scenery/urban-1-1.json",
+      "sha256": "3ca379e7c9cb382f6b96c7bad17f375dd94d23869cd8849858112bd5d6524f83",
+      "bytes": 12561
+    },
+    {
+      "path": "scenery/urban-1-2.glb",
+      "sha256": "3101e74d00d7f831b23da942ceb3a5ab7a65c534a97f8f916de2cdca45c08f17",
+      "bytes": 6060
+    },
+    {
+      "path": "scenery/urban-1-2.json",
+      "sha256": "ed48ac6b708e03a50a14182829542d70e980d33cdc25d6dfb396535073a0f9f7",
+      "bytes": 11913
+    },
+    {
+      "path": "scenery/urban-2-0.glb",
+      "sha256": "0dbf4872ffec556a53ba113c4c2e3fe7d848b846a0e7c0e0ef7a399f02eced59",
+      "bytes": 60452
+    },
+    {
+      "path": "scenery/urban-2-0.json",
+      "sha256": "c114a5fd7c4cca71228a80552547b3b13a759af63f12a203fece546cf52fd2dc",
+      "bytes": 200210
+    },
+    {
+      "path": "scenery/urban-2-1.glb",
+      "sha256": "229fbdf3f9666cfa241c7a13c2f3f5490b43208d96f3b14d617644e0952f571e",
+      "bytes": 49456
+    },
+    {
+      "path": "scenery/urban-2-1.json",
+      "sha256": "357bacefebef823efd5f35f84f9f47a4d6ef437d5a647d7e00220f643d753468",
+      "bytes": 175601
+    },
+    {
+      "path": "scenery/urban-2-2.glb",
+      "sha256": "c00b2cfb0358a0fc9dd8e4aa843747968c3c1d27f5d49ca014db838e6d5f3035",
+      "bytes": 62256
+    },
+    {
+      "path": "scenery/urban-2-2.json",
+      "sha256": "2cb94395248e57fa939a19ffc659d4bc42cce905a6ebeeee1319d2b5765aff16",
+      "bytes": 214348
+    },
+    {
+      "path": "terrain/region.json",
+      "sha256": "d0ec271c419a4b2032e359e5e8106e8089a10f26dd5e0251536629e3fa35f25f",
+      "bytes": 5814
+    },
+    {
+      "path": "terrain/urban-0-0.glb",
+      "sha256": "ef72d57cd102a17c63c8dd390b79a6369666741bc814c93a76830018d50cb82d",
+      "bytes": 38404
+    },
+    {
+      "path": "terrain/urban-0-0.json",
+      "sha256": "5092461f2f7e5e1404c078b5ed09ecc7846a993f206562d4bcef5d35ad8e01e9",
+      "bytes": 7826
+    },
+    {
+      "path": "terrain/urban-0-1.glb",
+      "sha256": "c099282cf60bda2cb84e30051e675fd11656e1ac43dec362fde0ebcdf26ccdff",
+      "bytes": 38388
+    },
+    {
+      "path": "terrain/urban-0-1.json",
+      "sha256": "fac844c2a8946b181af11881607bfdcebf404771db79e5e2330744a3778f7bda",
+      "bytes": 8088
+    },
+    {
+      "path": "terrain/urban-0-2.glb",
+      "sha256": "3cd9d2c0e3d8e1136da710dc7978a36c61885f1154329f54633959760c0625a4",
+      "bytes": 38388
+    },
+    {
+      "path": "terrain/urban-0-2.json",
+      "sha256": "c68fc44b0b7c02deadbe69b78b2b582b6b1d12d941c5093c62879819f7ce6636",
+      "bytes": 7771
+    },
+    {
+      "path": "terrain/urban-1-0.glb",
+      "sha256": "7b9ac0bb3725eec3fddb839700feb7270981c5bc11094043148f0e9264e74e13",
+      "bytes": 38404
+    },
+    {
+      "path": "terrain/urban-1-0.json",
+      "sha256": "184d28f0bc7bd63f2e4661447f79708d158be579c42e90dcde18667d69cf652c",
+      "bytes": 7775
+    },
+    {
+      "path": "terrain/urban-1-1.glb",
+      "sha256": "fbef12c0f0eacb34d2b2f940fa8783890907ce1b0aa703e5b448cdb745aa8acc",
+      "bytes": 38404
+    },
+    {
+      "path": "terrain/urban-1-1.json",
+      "sha256": "cdc8276a907dc303e981b5632a3e6c678b68903406694e28538ccc7bee531f84",
+      "bytes": 8021
+    },
+    {
+      "path": "terrain/urban-1-2.glb",
+      "sha256": "2595e7e01e03c52cc09af06de88674114fc676676b205b897fcb3ed7a8e54731",
+      "bytes": 38388
+    },
+    {
+      "path": "terrain/urban-1-2.json",
+      "sha256": "2970a55598f8ccdc3fe1d1f93d47424eb6b327d9484c5fbf0d3bc54a516ca00e",
+      "bytes": 7771
+    },
+    {
+      "path": "terrain/urban-2-0.glb",
+      "sha256": "346950c01db4ad82e0c5027c6d5344cd07daf2eab8708402661b408797dff4de",
+      "bytes": 38404
+    },
+    {
+      "path": "terrain/urban-2-0.json",
+      "sha256": "d8f36d38f1d83dd2d84450cd535ffdec892f3a17e035272eda0567b3b1bd8c86",
+      "bytes": 7882
+    },
+    {
+      "path": "terrain/urban-2-1.glb",
+      "sha256": "a0261ec550bcf520930edd6f07e93dfcd5b70315bbc7b433fbd1be8ffc28fd64",
+      "bytes": 38404
+    },
+    {
+      "path": "terrain/urban-2-1.json",
+      "sha256": "10d2c0278113a9aebbae5486d5f5bd7af8ab7072513d9ebb3d7450cee68e49c1",
+      "bytes": 8208
+    },
+    {
+      "path": "terrain/urban-2-2.glb",
+      "sha256": "256f31c06c760eabe7b29495a8720f7531af8a5f62d9da85cd301d6af80d6b99",
+      "bytes": 38388
+    },
+    {
+      "path": "terrain/urban-2-2.json",
+      "sha256": "03ffee01ab31c6537f4fa38a1cfd084f878b62aebb807b1b02da7a50062eaaba",
+      "bytes": 7771
+    }
+  ],
+  "all39HashesMatch": true,
+  "originalAbsolutePathRecreated": false,
+  "overallCoverageClaimed": false
+}

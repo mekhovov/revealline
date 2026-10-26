@@ -331,6 +331,8 @@ export function prepareNativeMenus({
         : 'coop-lobby-modes',
     identity,
   );
+  if (mode === 'versus') moveId('race-summary', commands);
+  if (mode === 'team') moveId('coop-navigation-context', commands);
   move(actions, commands);
   move(utilities, commands);
   if (mode === 'versus') moveId('race-preparation', commands);
@@ -557,7 +559,7 @@ export function prepareNativeMenus({
       masterVolume: row(`${fieldPrefix}master-volume`),
       audioCues: [
         ...settings.querySelectorAll(
-          '[data-menu-audio], [data-radio-audio], [data-movement-audio]',
+          '[data-menu-audio], [data-radio-audio], [data-movement-audio], [data-gameplay-audio]',
         ),
       ],
       touchPresentation: touchRows,

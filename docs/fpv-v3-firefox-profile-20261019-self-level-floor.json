@@ -1,0 +1,3984 @@
+{
+  "format": "AircraftBrowserProfile.v1",
+  "startedAt": "2026-10-19T00:07:33.165Z",
+  "sources": [
+    {
+      "path": "game/test/helpers/fpv-aircraft-qualification.mjs",
+      "sha256": "3bfb3139964b3957595a1598fb42b43af3892e6cebb41e7509c823051fe1f001",
+      "bytes": 13288
+    },
+    {
+      "path": "optional-practice/civilian-fpv/advanced-worker.mjs",
+      "sha256": "46cbbb5b3a79cd2f973bf9ac1ee2b637e0d44027143b7de115623a6fdc13b4e9",
+      "bytes": 9983
+    },
+    {
+      "path": "scripts/qualify-fpv-aircraft.mjs",
+      "sha256": "a1966a547773e9f0d728e9150eff391c9b9a9634a12b85c291a3fd15b8efa63b",
+      "bytes": 12282
+    },
+    {
+      "path": "optional-practice/civilian-fpv/advanced-simulation.mjs",
+      "sha256": "b1bd0944ae095ab05ffb85e78deddee757ab9641053b981f4f78a52c2640d69c",
+      "bytes": 65908
+    },
+    {
+      "path": "optional-practice/civilian-fpv/aircraft-presets.mjs",
+      "sha256": "c3bceb64f9cfef85c6894c2b69814c70886b6f30b7301e2659382e24bbee56e6",
+      "bytes": 39094
+    },
+    {
+      "path": "optional-practice/civilian-fpv/rates.mjs",
+      "sha256": "12b66e90c2b59d2495131f42dcd4281cfbfa87a705245ce73aa1a2abc6dfdec5",
+      "bytes": 9599
+    },
+    {
+      "path": "optional-practice/civilian-fpv/aircraft-course-session.mjs",
+      "sha256": "0d71939840f1e09b5328581a267bce1df732dc948756bf9d96f82eb97ceeec6e",
+      "bytes": 23083
+    },
+    {
+      "path": "optional-practice/civilian-fpv/catalogue.mjs",
+      "sha256": "98338353d17eb585414538c9905040752fd5cd6699c48b17fa1706832b750997",
+      "bytes": 10565
+    },
+    {
+      "path": "optional-practice/civilian-fpv/advanced-aircraft-runtime.mjs",
+      "sha256": "2a38134de98562ae426e22737684c6e690321b148a1ed3e4f3209527ca0585b2",
+      "bytes": 53750
+    },
+    {
+      "path": "optional-practice/civilian-fpv/advanced-worker-client.mjs",
+      "sha256": "0ffaa9b15d1be1c1cda45f7ebbf54ca9b2e3deb400b0d9c9984bd0e976e37813",
+      "bytes": 5385
+    },
+    {
+      "path": "game/data-json.mjs",
+      "sha256": "9ce33d6173f3cba8587ed7a7f1924c66e9d9c86ffa59b37a743764ea0b01f7bd",
+      "bytes": 5594
+    },
+    {
+      "path": "optional-practice/civilian-fpv/aircraft-recording.mjs",
+      "sha256": "79bf6f61f982c1c45186e494f64a0ee0a55d07dbf6e405f121f2d8ec0b665cce",
+      "bytes": 11357
+    },
+    {
+      "path": "optional-practice/civilian-fpv/aircraft-archive-verifier.mjs",
+      "sha256": "6bded97c9ca1b8d2f167a25b885c00eea1c2e68af9438bdbd59ce80df6694c16",
+      "bytes": 19011
+    },
+    {
+      "path": "optional-practice/civilian-fpv/advanced-ghost-path.mjs",
+      "sha256": "e76917246417af0467bdb0c41e52c61b2fb53cf8a83480a1d3d2f2973b42055f",
+      "bytes": 4455
+    },
+    {
+      "path": "optional-practice/civilian-fpv/vendor/rapier/rapier.mjs",
+      "sha256": "02dc6a4e2fffc013bab08fbb44fa68f501d8303615e9afe4c7d89ad4eedda0d0",
+      "bytes": 4340292
+    },
+    {
+      "path": "optional-practice/civilian-fpv/aircraft-physics.mjs",
+      "sha256": "7bc651f151e0729541a9323c075ea40a1bcccb0fb9cd0379c202b1a77421351a",
+      "bytes": 28637
+    },
+    {
+      "path": "optional-practice/civilian-fpv/world-collision.mjs",
+      "sha256": "72bbf0933877adb9c014df95b176acdf6eb7dcc745c84e8f9f5acce3e5650538",
+      "bytes": 12607
+    },
+    {
+      "path": "optional-practice/civilian-fpv/advanced-controller.mjs",
+      "sha256": "b1a35e143d2c992a9504708d48b11b21b3f58a7d1f2eaaaf600951196df0cc30",
+      "bytes": 9865
+    },
+    {
+      "path": "optional-practice/civilian-fpv/advanced-terrain.mjs",
+      "sha256": "58c1805ceb24bd616c3e53e7cfbcc1d1fe80619c94e0cd0ca2f2988e9ab8ea95",
+      "bytes": 11987
+    },
+    {
+      "path": "optional-practice/civilian-fpv/flight-response.mjs",
+      "sha256": "89ec7b85d787ac077de36bba66c9e9a851c49721d8f2d598db8c461ecb6ae363",
+      "bytes": 1722
+    },
+    {
+      "path": "optional-practice/civilian-fpv/model.mjs",
+      "sha256": "0b10fc11948bbca05e23eb6d096a95b97c02aad0573e17d68ac9404ba6694909",
+      "bytes": 23402
+    },
+    {
+      "path": "optional-practice/civilian-fpv/aircraft-terrain.mjs",
+      "sha256": "1c01431247de1bbaed839e0fa2f577d39911f868d1b4d9f29690b3bb4062f077",
+      "bytes": 2269
+    },
+    {
+      "path": "optional-practice/civilian-fpv/math.mjs",
+      "sha256": "555c8b6ea170b46992133507d2a3d867f06185bca060239cab7db9c9b87f9f98",
+      "bytes": 3062
+    },
+    {
+      "path": "optional-practice/civilian-fpv/flight-support.mjs",
+      "sha256": "4d759128114e24fde4ec011357edd3f334f9b0a92499eba99199e1d6088dd4af",
+      "bytes": 1815
+    },
+    {
+      "path": "optional-practice/civilian-fpv/aircraft-challenge.mjs",
+      "sha256": "daa4938b85125c01d6cdd36f706703d256ebd11fb5da39c8f39c557a66cd8c33",
+      "bytes": 14954
+    },
+    {
+      "path": "optional-practice/civilian-fpv/aircraft-response.mjs",
+      "sha256": "c89d28ca2b504b880c1b8e77fe1be9d197129b18d4273f8d72b548bba5169303",
+      "bytes": 3951
+    },
+    {
+      "path": "game/i18n/index.mjs",
+      "sha256": "29f40a6d92826ced1eb53283ed32e342ac6e95920abbf8d549f2d78e65b48d07",
+      "bytes": 417
+    },
+    {
+      "path": "optional-practice/civilian-fpv/aircraft-archive.mjs",
+      "sha256": "1519bc331b91d9b72bb77110c30f7f8fd5bd0469b6cf06618681f49c6f982bc9",
+      "bytes": 21575
+    },
+    {
+      "path": "optional-practice/civilian-fpv/flight-sectors.mjs",
+      "sha256": "0bb1c11caebdc9dd97a4a9091553b992ca6afbb731f5ea94a6f2050a1a4ccf51",
+      "bytes": 10783
+    },
+    {
+      "path": "optional-practice/civilian-fpv/flight-contact.mjs",
+      "sha256": "bb58ec29aeaa865b19343a3e58ea9c35f94df6bdc44b995e43bb4b269c8169b6",
+      "bytes": 2482
+    },
+    {
+      "path": "optional-practice/civilian-fpv/radio-profile.mjs",
+      "sha256": "d972a03be9f62d390894958b8fa58ae7ac3f97bab2d797b165fca4ab98c506ed",
+      "bytes": 18846
+    },
+    {
+      "path": "optional-practice/civilian-fpv/aircraft-mission-checkpoint.mjs",
+      "sha256": "edb527183c021f7e1fc2495715c976f7c243550107cc0dc3d95b5c37dac346a6",
+      "bytes": 20539
+    },
+    {
+      "path": "optional-practice/civilian-fpv/rotation-table.mjs",
+      "sha256": "2ddab304ac99a2e70fc7e84fc6c27eedb49f1f3dac976baed680effa659cef41",
+      "bytes": 7509
+    },
+    {
+      "path": "game/vendor/i18next-26.4.2.min.js",
+      "sha256": "eb0dd6d72e8f756b90faf864853af2a17870fe97b54473b7c34494870c65901c",
+      "bytes": 43702
+    },
+    {
+      "path": "game/i18n/catalogs.mjs",
+      "sha256": "2c9517b6e6bc9f7a7a40d813b4f100be4db8e62f6f8a3346e60cf4256adfcc80",
+      "bytes": 1268207
+    },
+    {
+      "path": "game/i18n/bootstrap.mjs",
+      "sha256": "f7757adb8ee1f9c53fc0f249bbed6bc9377ff175453543198d3561338fcfc3af",
+      "bytes": 13699
+    },
+    {
+      "path": "game/test/helpers/fpv-aircraft-profile.mjs",
+      "sha256": "657e04cdb8cf48e48fbc41228294e4a89635c0f2ea63e94300bf7b7aa4f465ae",
+      "bytes": 5206
+    },
+    {
+      "path": "scripts/profile-fpv-aircraft-browser.mjs",
+      "sha256": "f92cff93a710eda96c1d76b4ba5dc78422bec202f9a7f0923a8e42c464b0310e",
+      "bytes": 6093
+    },
+    {
+      "path": "qualification-baseline-worker.mjs",
+      "sha256": "9b2f9afe8cbe273f7f58f071aa6525f6974f458652549ad293ea0b5be33b27aa",
+      "bytes": 489
+    },
+    {
+      "path": "qualification-profile-worker.mjs",
+      "sha256": "130b6e6be119625d8ff2911cd1bbf5bdfb41c33e7a5ace3ac7de19f9919346b6",
+      "bytes": 509
+    }
+  ],
+  "results": [
+    {
+      "runtime": "firefox",
+      "version": "153.0",
+      "cases": [
+        {
+          "scenario": "cetus-floor",
+          "preset": "cetus-x-betaflight-2022",
+          "worker": false,
+          "instrumented": false,
+          "backend": "civilian-quad-aircraft-regional.v3",
+          "initializationMs": 9,
+          "elapsedMs": 1511,
+          "capacity": 0.9927200529450695,
+          "finalHash": "0fb73a22",
+          "counters": {},
+          "perMissionMs": [
+            6,
+            3,
+            2,
+            2,
+            2,
+            2,
+            1,
+            2,
+            1,
+            2,
+            2,
+            2,
+            2,
+            0,
+            2,
+            2,
+            1,
+            1,
+            2,
+            1,
+            2,
+            1,
+            8,
+            29,
+            28,
+            31,
+            30,
+            24,
+            27,
+            25,
+            29,
+            24,
+            25,
+            28,
+            24,
+            30,
+            32,
+            33,
+            27,
+            30,
+            50,
+            30,
+            33,
+            25,
+            24,
+            26,
+            26,
+            27,
+            26,
+            29,
+            29,
+            25,
+            25,
+            24,
+            26,
+            25,
+            25,
+            24,
+            23,
+            24,
+            26,
+            27,
+            52,
+            29,
+            28,
+            39,
+            27,
+            28,
+            25,
+            28,
+            24,
+            27,
+            28,
+            25,
+            26
+          ],
+          "minimumSupportY": -0.00013195637416504175,
+          "contacts": 2,
+          "finalTelemetry": {
+            "backend": "civilian-quad-aircraft-regional.v3",
+            "experimental": true,
+            "scored": false,
+            "frequency": 1000,
+            "missionHz": 50,
+            "missionTick": 75,
+            "substep": 1500,
+            "seconds": 1.5,
+            "position": {
+              "x": -0.0035362127237021923,
+              "y": 0.024987971410155296,
+              "z": 0.047731854021549225
+            },
+            "velocity": {
+              "x": 2.479554268575157e-7,
+              "y": 2.8007477226310584e-7,
+              "z": -1.170561176877527e-7
+            },
+            "orientation": {
+              "x": -0.000013592908544524107,
+              "y": 0.07878600805997849,
+              "z": 0.000014189089597493876,
+              "w": 0.9968916177749634
+            },
+            "requestedRates": {
+              "roll": 0.04,
+              "pitch": -0.04,
+              "yaw": 0
+            },
+            "achievedRates": {
+              "roll": 0.00032488058251519916,
+              "pitch": -0.00005260451238564797,
+              "yaw": 1.8530938426460195e-7
+            },
+            "calibratedInput": {
+              "roll": 0,
+              "pitch": 0,
+              "yaw": 0,
+              "throttle": 0
+            },
+            "motorSpeeds": [
+              0.08005017520299285,
+              0.08002517655962857,
+              0.08000000000000014,
+              0.08002500494519381
+            ],
+            "voltage": 8.699184198102216,
+            "current": 0.00906446553093013,
+            "usedAh": 0,
+            "consumedSequence": -1,
+            "consumedTimestampUs": 0,
+            "sampleAgeUs": null,
+            "devicePollHz": null,
+            "saturated": true,
+            "radius": 0.0862670273047588,
+            "supportHeight": 0.025002851957558244,
+            "topHeight": 0.025002851957558244,
+            "contact": {
+              "touching": true,
+              "grounded": true,
+              "normal": {
+                "x": -0.001210469868965447,
+                "y": 0.9999993443489075,
+                "z": 0.00019046751549467444
+              },
+              "impactSpeed": 2.1822504633406206e-7,
+              "contacts": 2,
+              "ids": [
+                "course-boundary-y-min"
+              ],
+              "entries": [
+                {
+                  "id": "course-boundary-y-min",
+                  "normal": {
+                    "x": -0.001210469868965447,
+                    "y": 0.9999993443489075,
+                    "z": 0.00019046751549467444
+                  },
+                  "moving": false
+                }
+              ],
+              "support": {
+                "id": "course-boundary-y-min",
+                "normal": {
+                  "x": -0.001210469868965447,
+                  "y": 0.9999993443489075,
+                  "z": 0.00019046751549467444
+                }
+              }
+            },
+            "dynamicColliders": [],
+            "recordingStatus": {
+              "format": "AircraftRecordingStatus.v1",
+              "state": "recording",
+              "retainedFromSeconds": 0,
+              "retainedThroughSeconds": 1.5,
+              "lastRecoverableSeconds": null,
+              "currentSeconds": 1.5,
+              "retainedSegments": 1,
+              "retainedBytes": 7612,
+              "error": null
+            },
+            "archiveStatus": {
+              "generation": 1,
+              "origin": {
+                "kind": "fresh",
+                "startTick": 0
+              },
+              "earliestIndex": 0,
+              "lastSealedIndex": -1,
+              "latestTick": 75
+            },
+            "terrain": {
+              "frameIdentity": "c737cde8666c22db",
+              "touching": true,
+              "grounded": true,
+              "normal": {
+                "x": -0.001210469868965447,
+                "y": 0.9999993443489075,
+                "z": 0.00019046751549467444
+              },
+              "impactSpeed": 2.1822504633406206e-7,
+              "contacts": 2,
+              "ids": [
+                "course-boundary-y-min"
+              ],
+              "entries": [
+                {
+                  "id": "course-boundary-y-min",
+                  "normal": {
+                    "x": -0.001210469868965447,
+                    "y": 0.9999993443489075,
+                    "z": 0.00019046751549467444
+                  },
+                  "moving": false
+                }
+              ],
+              "support": {
+                "id": "course-boundary-y-min",
+                "normal": {
+                  "x": -0.001210469868965447,
+                  "y": 0.9999993443489075,
+                  "z": 0.00019046751549467444
+                }
+              }
+            }
+          },
+          "repeat": 0
+        },
+        {
+          "scenario": "cetus-floor",
+          "preset": "cetus-x-betaflight-2022",
+          "worker": false,
+          "instrumented": false,
+          "backend": "civilian-quad-aircraft-regional.v3",
+          "initializationMs": 4,
+          "elapsedMs": 1444,
+          "capacity": 1.0387811634349031,
+          "finalHash": "0fb73a22",
+          "counters": {},
+          "perMissionMs": [
+            2,
+            2,
+            1,
+            1,
+            2,
+            1,
+            19,
+            2,
+            2,
+            1,
+            1,
+            1,
+            2,
+            1,
+            2,
+            1,
+            2,
+            1,
+            1,
+            2,
+            1,
+            3,
+            9,
+            28,
+            28,
+            27,
+            27,
+            28,
+            27,
+            26,
+            26,
+            25,
+            28,
+            26,
+            26,
+            28,
+            26,
+            26,
+            25,
+            26,
+            26,
+            26,
+            27,
+            25,
+            24,
+            27,
+            24,
+            25,
+            25,
+            26,
+            25,
+            31,
+            50,
+            36,
+            28,
+            27,
+            25,
+            25,
+            25,
+            26,
+            28,
+            25,
+            27,
+            30,
+            25,
+            26,
+            24,
+            25,
+            23,
+            24,
+            25,
+            23,
+            22,
+            24,
+            26
+          ],
+          "minimumSupportY": -0.00013195637416504175,
+          "contacts": 2,
+          "finalTelemetry": {
+            "backend": "civilian-quad-aircraft-regional.v3",
+            "experimental": true,
+            "scored": false,
+            "frequency": 1000,
+            "missionHz": 50,
+            "missionTick": 75,
+            "substep": 1500,
+            "seconds": 1.5,
+            "position": {
+              "x": -0.0035362127237021923,
+              "y": 0.024987971410155296,
+              "z": 0.047731854021549225
+            },
+            "velocity": {
+              "x": 2.479554268575157e-7,
+              "y": 2.8007477226310584e-7,
+              "z": -1.170561176877527e-7
+            },
+            "orientation": {
+              "x": -0.000013592908544524107,
+              "y": 0.07878600805997849,
+              "z": 0.000014189089597493876,
+              "w": 0.9968916177749634
+            },
+            "requestedRates": {
+              "roll": 0.04,
+              "pitch": -0.04,
+              "yaw": 0
+            },
+            "achievedRates": {
+              "roll": 0.00032488058251519916,
+              "pitch": -0.00005260451238564797,
+              "yaw": 1.8530938426460195e-7
+            },
+            "calibratedInput": {
+              "roll": 0,
+              "pitch": 0,
+              "yaw": 0,
+              "throttle": 0
+            },
+            "motorSpeeds": [
+              0.08005017520299285,
+              0.08002517655962857,
+              0.08000000000000014,
+              0.08002500494519381
+            ],
+            "voltage": 8.699184198102216,
+            "current": 0.00906446553093013,
+            "usedAh": 0,
+            "consumedSequence": -1,
+            "consumedTimestampUs": 0,
+            "sampleAgeUs": null,
+            "devicePollHz": null,
+            "saturated": true,
+            "radius": 0.0862670273047588,
+            "supportHeight": 0.025002851957558244,
+            "topHeight": 0.025002851957558244,
+            "contact": {
+              "touching": true,
+              "grounded": true,
+              "normal": {
+                "x": -0.001210469868965447,
+                "y": 0.9999993443489075,
+                "z": 0.00019046751549467444
+              },
+              "impactSpeed": 2.1822504633406206e-7,
+              "contacts": 2,
+              "ids": [
+                "course-boundary-y-min"
+              ],
+              "entries": [
+                {
+                  "id": "course-boundary-y-min",
+                  "normal": {
+                    "x": -0.001210469868965447,
+                    "y": 0.9999993443489075,
+                    "z": 0.00019046751549467444
+                  },
+                  "moving": false
+                }
+              ],
+              "support": {
+                "id": "course-boundary-y-min",
+                "normal": {
+                  "x": -0.001210469868965447,
+                  "y": 0.9999993443489075,
+                  "z": 0.00019046751549467444
+                }
+              }
+            },
+            "dynamicColliders": [],
+            "recordingStatus": {
+              "format": "AircraftRecordingStatus.v1",
+              "state": "recording",
+              "retainedFromSeconds": 0,
+              "retainedThroughSeconds": 1.5,
+              "lastRecoverableSeconds": null,
+              "currentSeconds": 1.5,
+              "retainedSegments": 1,
+              "retainedBytes": 7612,
+              "error": null
+            },
+            "archiveStatus": {
+              "generation": 1,
+              "origin": {
+                "kind": "fresh",
+                "startTick": 0
+              },
+              "earliestIndex": 0,
+              "lastSealedIndex": -1,
+              "latestTick": 75
+            },
+            "terrain": {
+              "frameIdentity": "c737cde8666c22db",
+              "touching": true,
+              "grounded": true,
+              "normal": {
+                "x": -0.001210469868965447,
+                "y": 0.9999993443489075,
+                "z": 0.00019046751549467444
+              },
+              "impactSpeed": 2.1822504633406206e-7,
+              "contacts": 2,
+              "ids": [
+                "course-boundary-y-min"
+              ],
+              "entries": [
+                {
+                  "id": "course-boundary-y-min",
+                  "normal": {
+                    "x": -0.001210469868965447,
+                    "y": 0.9999993443489075,
+                    "z": 0.00019046751549467444
+                  },
+                  "moving": false
+                }
+              ],
+              "support": {
+                "id": "course-boundary-y-min",
+                "normal": {
+                  "x": -0.001210469868965447,
+                  "y": 0.9999993443489075,
+                  "z": 0.00019046751549467444
+                }
+              }
+            }
+          },
+          "repeat": 1
+        },
+        {
+          "scenario": "cetus-floor",
+          "preset": "cetus-x-betaflight-2022",
+          "worker": false,
+          "instrumented": true,
+          "backend": "civilian-quad-aircraft-regional.v3",
+          "initializationMs": 2,
+          "elapsedMs": 1285,
+          "capacity": 1.1673151750972763,
+          "finalHash": "0fb73a22",
+          "counters": {
+            "physicsSnapshot": {
+              "calls": 150,
+              "elapsedMs": 18
+            },
+            "solverStep": {
+              "calls": 1500,
+              "elapsedMs": 1174
+            },
+            "trackedContactPair": {
+              "calls": 45000,
+              "elapsedMs": 29
+            },
+            "currentShapeContact": {
+              "calls": 35,
+              "elapsedMs": 1
+            }
+          },
+          "perMissionMs": [
+            3,
+            2,
+            1,
+            1,
+            2,
+            1,
+            2,
+            2,
+            2,
+            1,
+            1,
+            2,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            3,
+            1,
+            1,
+            7,
+            24,
+            27,
+            23,
+            26,
+            26,
+            25,
+            24,
+            24,
+            24,
+            23,
+            25,
+            25,
+            26,
+            25,
+            23,
+            25,
+            23,
+            24,
+            23,
+            24,
+            24,
+            22,
+            24,
+            24,
+            25,
+            24,
+            23,
+            23,
+            23,
+            24,
+            24,
+            25,
+            24,
+            24,
+            22,
+            24,
+            25,
+            22,
+            24,
+            24,
+            24,
+            24,
+            24,
+            24,
+            23,
+            23,
+            22,
+            23,
+            23,
+            23,
+            26,
+            24
+          ],
+          "minimumSupportY": -0.00013195637416504175,
+          "contacts": 2,
+          "finalTelemetry": {
+            "backend": "civilian-quad-aircraft-regional.v3",
+            "experimental": true,
+            "scored": false,
+            "frequency": 1000,
+            "missionHz": 50,
+            "missionTick": 75,
+            "substep": 1500,
+            "seconds": 1.5,
+            "position": {
+              "x": -0.0035362127237021923,
+              "y": 0.024987971410155296,
+              "z": 0.047731854021549225
+            },
+            "velocity": {
+              "x": 2.479554268575157e-7,
+              "y": 2.8007477226310584e-7,
+              "z": -1.170561176877527e-7
+            },
+            "orientation": {
+              "x": -0.000013592908544524107,
+              "y": 0.07878600805997849,
+              "z": 0.000014189089597493876,
+              "w": 0.9968916177749634
+            },
+            "requestedRates": {
+              "roll": 0.04,
+              "pitch": -0.04,
+              "yaw": 0
+            },
+            "achievedRates": {
+              "roll": 0.00032488058251519916,
+              "pitch": -0.00005260451238564797,
+              "yaw": 1.8530938426460195e-7
+            },
+            "calibratedInput": {
+              "roll": 0,
+              "pitch": 0,
+              "yaw": 0,
+              "throttle": 0
+            },
+            "motorSpeeds": [
+              0.08005017520299285,
+              0.08002517655962857,
+              0.08000000000000014,
+              0.08002500494519381
+            ],
+            "voltage": 8.699184198102216,
+            "current": 0.00906446553093013,
+            "usedAh": 0,
+            "consumedSequence": -1,
+            "consumedTimestampUs": 0,
+            "sampleAgeUs": null,
+            "devicePollHz": null,
+            "saturated": true,
+            "radius": 0.0862670273047588,
+            "supportHeight": 0.025002851957558244,
+            "topHeight": 0.025002851957558244,
+            "contact": {
+              "touching": true,
+              "grounded": true,
+              "normal": {
+                "x": -0.001210469868965447,
+                "y": 0.9999993443489075,
+                "z": 0.00019046751549467444
+              },
+              "impactSpeed": 2.1822504633406206e-7,
+              "contacts": 2,
+              "ids": [
+                "course-boundary-y-min"
+              ],
+              "entries": [
+                {
+                  "id": "course-boundary-y-min",
+                  "normal": {
+                    "x": -0.001210469868965447,
+                    "y": 0.9999993443489075,
+                    "z": 0.00019046751549467444
+                  },
+                  "moving": false
+                }
+              ],
+              "support": {
+                "id": "course-boundary-y-min",
+                "normal": {
+                  "x": -0.001210469868965447,
+                  "y": 0.9999993443489075,
+                  "z": 0.00019046751549467444
+                }
+              }
+            },
+            "dynamicColliders": [],
+            "recordingStatus": {
+              "format": "AircraftRecordingStatus.v1",
+              "state": "recording",
+              "retainedFromSeconds": 0,
+              "retainedThroughSeconds": 1.5,
+              "lastRecoverableSeconds": null,
+              "currentSeconds": 1.5,
+              "retainedSegments": 1,
+              "retainedBytes": 7612,
+              "error": null
+            },
+            "archiveStatus": {
+              "generation": 1,
+              "origin": {
+                "kind": "fresh",
+                "startTick": 0
+              },
+              "earliestIndex": 0,
+              "lastSealedIndex": -1,
+              "latestTick": 75
+            },
+            "terrain": {
+              "frameIdentity": "c737cde8666c22db",
+              "touching": true,
+              "grounded": true,
+              "normal": {
+                "x": -0.001210469868965447,
+                "y": 0.9999993443489075,
+                "z": 0.00019046751549467444
+              },
+              "impactSpeed": 2.1822504633406206e-7,
+              "contacts": 2,
+              "ids": [
+                "course-boundary-y-min"
+              ],
+              "entries": [
+                {
+                  "id": "course-boundary-y-min",
+                  "normal": {
+                    "x": -0.001210469868965447,
+                    "y": 0.9999993443489075,
+                    "z": 0.00019046751549467444
+                  },
+                  "moving": false
+                }
+              ],
+              "support": {
+                "id": "course-boundary-y-min",
+                "normal": {
+                  "x": -0.001210469868965447,
+                  "y": 0.9999993443489075,
+                  "z": 0.00019046751549467444
+                }
+              }
+            }
+          },
+          "repeat": 0
+        },
+        {
+          "scenario": "cetus-floor",
+          "preset": "cetus-x-betaflight-2022",
+          "worker": false,
+          "instrumented": true,
+          "backend": "civilian-quad-aircraft-regional.v3",
+          "initializationMs": 4,
+          "elapsedMs": 1389,
+          "capacity": 1.079913606911447,
+          "finalHash": "0fb73a22",
+          "counters": {
+            "physicsSnapshot": {
+              "calls": 150,
+              "elapsedMs": 21
+            },
+            "solverStep": {
+              "calls": 1500,
+              "elapsedMs": 1242
+            },
+            "trackedContactPair": {
+              "calls": 45000,
+              "elapsedMs": 29
+            },
+            "currentShapeContact": {
+              "calls": 35,
+              "elapsedMs": 0
+            }
+          },
+          "perMissionMs": [
+            1,
+            1,
+            2,
+            1,
+            3,
+            2,
+            1,
+            1,
+            2,
+            1,
+            1,
+            2,
+            2,
+            1,
+            2,
+            1,
+            3,
+            2,
+            2,
+            1,
+            1,
+            3,
+            6,
+            28,
+            23,
+            24,
+            25,
+            22,
+            23,
+            24,
+            23,
+            23,
+            23,
+            24,
+            24,
+            23,
+            27,
+            25,
+            24,
+            23,
+            23,
+            24,
+            23,
+            22,
+            23,
+            23,
+            24,
+            24,
+            23,
+            23,
+            27,
+            33,
+            26,
+            29,
+            31,
+            29,
+            25,
+            27,
+            24,
+            25,
+            26,
+            25,
+            31,
+            27,
+            24,
+            22,
+            27,
+            37,
+            28,
+            26,
+            27,
+            36,
+            27,
+            27,
+            41
+          ],
+          "minimumSupportY": -0.00013195637416504175,
+          "contacts": 2,
+          "finalTelemetry": {
+            "backend": "civilian-quad-aircraft-regional.v3",
+            "experimental": true,
+            "scored": false,
+            "frequency": 1000,
+            "missionHz": 50,
+            "missionTick": 75,
+            "substep": 1500,
+            "seconds": 1.5,
+            "position": {
+              "x": -0.0035362127237021923,
+              "y": 0.024987971410155296,
+              "z": 0.047731854021549225
+            },
+            "velocity": {
+              "x": 2.479554268575157e-7,
+              "y": 2.8007477226310584e-7,
+              "z": -1.170561176877527e-7
+            },
+            "orientation": {
+              "x": -0.000013592908544524107,
+              "y": 0.07878600805997849,
+              "z": 0.000014189089597493876,
+              "w": 0.9968916177749634
+            },
+            "requestedRates": {
+              "roll": 0.04,
+              "pitch": -0.04,
+              "yaw": 0
+            },
+            "achievedRates": {
+              "roll": 0.00032488058251519916,
+              "pitch": -0.00005260451238564797,
+              "yaw": 1.8530938426460195e-7
+            },
+            "calibratedInput": {
+              "roll": 0,
+              "pitch": 0,
+              "yaw": 0,
+              "throttle": 0
+            },
+            "motorSpeeds": [
+              0.08005017520299285,
+              0.08002517655962857,
+              0.08000000000000014,
+              0.08002500494519381
+            ],
+            "voltage": 8.699184198102216,
+            "current": 0.00906446553093013,
+            "usedAh": 0,
+            "consumedSequence": -1,
+            "consumedTimestampUs": 0,
+            "sampleAgeUs": null,
+            "devicePollHz": null,
+            "saturated": true,
+            "radius": 0.0862670273047588,
+            "supportHeight": 0.025002851957558244,
+            "topHeight": 0.025002851957558244,
+            "contact": {
+              "touching": true,
+              "grounded": true,
+              "normal": {
+                "x": -0.001210469868965447,
+                "y": 0.9999993443489075,
+                "z": 0.00019046751549467444
+              },
+              "impactSpeed": 2.1822504633406206e-7,
+              "contacts": 2,
+              "ids": [
+                "course-boundary-y-min"
+              ],
+              "entries": [
+                {
+                  "id": "course-boundary-y-min",
+                  "normal": {
+                    "x": -0.001210469868965447,
+                    "y": 0.9999993443489075,
+                    "z": 0.00019046751549467444
+                  },
+                  "moving": false
+                }
+              ],
+              "support": {
+                "id": "course-boundary-y-min",
+                "normal": {
+                  "x": -0.001210469868965447,
+                  "y": 0.9999993443489075,
+                  "z": 0.00019046751549467444
+                }
+              }
+            },
+            "dynamicColliders": [],
+            "recordingStatus": {
+              "format": "AircraftRecordingStatus.v1",
+              "state": "recording",
+              "retainedFromSeconds": 0,
+              "retainedThroughSeconds": 1.5,
+              "lastRecoverableSeconds": null,
+              "currentSeconds": 1.5,
+              "retainedSegments": 1,
+              "retainedBytes": 7612,
+              "error": null
+            },
+            "archiveStatus": {
+              "generation": 1,
+              "origin": {
+                "kind": "fresh",
+                "startTick": 0
+              },
+              "earliestIndex": 0,
+              "lastSealedIndex": -1,
+              "latestTick": 75
+            },
+            "terrain": {
+              "frameIdentity": "c737cde8666c22db",
+              "touching": true,
+              "grounded": true,
+              "normal": {
+                "x": -0.001210469868965447,
+                "y": 0.9999993443489075,
+                "z": 0.00019046751549467444
+              },
+              "impactSpeed": 2.1822504633406206e-7,
+              "contacts": 2,
+              "ids": [
+                "course-boundary-y-min"
+              ],
+              "entries": [
+                {
+                  "id": "course-boundary-y-min",
+                  "normal": {
+                    "x": -0.001210469868965447,
+                    "y": 0.9999993443489075,
+                    "z": 0.00019046751549467444
+                  },
+                  "moving": false
+                }
+              ],
+              "support": {
+                "id": "course-boundary-y-min",
+                "normal": {
+                  "x": -0.001210469868965447,
+                  "y": 0.9999993443489075,
+                  "z": 0.00019046751549467444
+                }
+              }
+            }
+          },
+          "repeat": 1
+        },
+        {
+          "scenario": "meteor-worker",
+          "preset": "meteor75-analog-2022",
+          "worker": true,
+          "instrumented": false,
+          "backend": "civilian-quad-aircraft.v3",
+          "initializationMs": 481,
+          "elapsedMs": 944,
+          "capacity": 1.694915254237288,
+          "finalHash": "42fc00f7",
+          "counters": {},
+          "perMissionMs": [
+            16,
+            4,
+            4,
+            5,
+            5,
+            4,
+            5,
+            5,
+            3,
+            2,
+            4,
+            3,
+            3,
+            2,
+            2,
+            3,
+            3,
+            2,
+            3,
+            2,
+            2,
+            3,
+            1,
+            4,
+            3,
+            1,
+            2,
+            4,
+            2,
+            3,
+            3,
+            1,
+            3,
+            1,
+            3,
+            3,
+            2,
+            3,
+            2,
+            6,
+            2,
+            4,
+            4,
+            2,
+            3,
+            2,
+            3,
+            4,
+            12,
+            37,
+            44,
+            33,
+            28,
+            32,
+            33,
+            32,
+            26,
+            22,
+            34,
+            28,
+            32,
+            24,
+            24,
+            22,
+            20,
+            21,
+            20,
+            22,
+            21,
+            18,
+            21,
+            18,
+            19,
+            24,
+            25,
+            19,
+            21,
+            20,
+            17,
+            18
+          ],
+          "minimumSupportY": -0.0000098069226451801,
+          "contacts": 1,
+          "finalTelemetry": {
+            "backend": "civilian-quad-aircraft.v3",
+            "experimental": true,
+            "scored": false,
+            "frequency": 1000,
+            "missionHz": 50,
+            "missionTick": 80,
+            "substep": 1600,
+            "seconds": 1.6,
+            "position": {
+              "x": 0.05004875361919403,
+              "y": 0.017498547211289406,
+              "z": 0.002832278609275818
+            },
+            "velocity": {
+              "x": 3.529981285055328e-8,
+              "y": -2.531832024033065e-7,
+              "z": 1.5818665133338072e-7
+            },
+            "orientation": {
+              "x": -7.852031913557767e-9,
+              "y": 0.0024827769957482815,
+              "z": -1.1550948642025105e-7,
+              "w": 0.9999969601631165
+            },
+            "requestedRates": {
+              "roll": 0,
+              "pitch": 0,
+              "yaw": 23.438923828125
+            },
+            "achievedRates": {
+              "roll": -0.00028011061043581683,
+              "pitch": -0.000054799665517805173,
+              "yaw": 1.5812093093613298e-7
+            },
+            "calibratedInput": {
+              "roll": 0,
+              "pitch": 0,
+              "yaw": 0.15,
+              "throttle": 0.45
+            },
+            "motorSpeeds": [
+              0.44145156055014256,
+              0.45838904320162965,
+              0.44145153358679495,
+              0.4583890795514314
+            ],
+            "voltage": 4.267773881039599,
+            "current": 1.2650172147753957,
+            "usedAh": 0,
+            "consumedSequence": 79,
+            "consumedTimestampUs": 1580000,
+            "sampleAgeUs": 20000,
+            "devicePollHz": null,
+            "saturated": false,
+            "radius": 0.06929646455628166,
+            "supportHeight": 0.017500011154601532,
+            "topHeight": 0.017500011154601532,
+            "contact": {
+              "touching": true,
+              "grounded": true,
+              "normal": {
+                "x": 0,
+                "y": 1,
+                "z": 0
+              },
+              "impactSpeed": 2.5543806714267703e-7,
+              "contacts": 1,
+              "ids": [
+                "floor"
+              ],
+              "entries": [
+                {
+                  "id": "floor",
+                  "normal": {
+                    "x": 0,
+                    "y": 1,
+                    "z": 0
+                  },
+                  "moving": false
+                }
+              ],
+              "support": {
+                "id": "floor",
+                "normal": {
+                  "x": 0,
+                  "y": 1,
+                  "z": 0
+                }
+              }
+            },
+            "dynamicColliders": [],
+            "recordingStatus": {
+              "format": "AircraftRecordingStatus.v1",
+              "state": "recording",
+              "retainedFromSeconds": 0,
+              "retainedThroughSeconds": 1.6,
+              "lastRecoverableSeconds": null,
+              "currentSeconds": 1.6,
+              "retainedSegments": 1,
+              "retainedBytes": 9050,
+              "error": null
+            },
+            "archiveStatus": {
+              "generation": 1,
+              "origin": {
+                "kind": "fresh",
+                "startTick": 0
+              },
+              "earliestIndex": 0,
+              "lastSealedIndex": -1,
+              "latestTick": 80
+            }
+          },
+          "repeat": 0
+        },
+        {
+          "scenario": "meteor-worker",
+          "preset": "meteor75-analog-2022",
+          "worker": true,
+          "instrumented": false,
+          "backend": "civilian-quad-aircraft.v3",
+          "initializationMs": 448,
+          "elapsedMs": 781,
+          "capacity": 2.0486555697823303,
+          "finalHash": "42fc00f7",
+          "counters": {},
+          "perMissionMs": [
+            14,
+            5,
+            2,
+            3,
+            5,
+            3,
+            3,
+            3,
+            3,
+            5,
+            3,
+            2,
+            4,
+            2,
+            2,
+            6,
+            2,
+            5,
+            3,
+            3,
+            2,
+            3,
+            5,
+            2,
+            3,
+            3,
+            3,
+            3,
+            3,
+            2,
+            2,
+            3,
+            4,
+            3,
+            3,
+            3,
+            3,
+            1,
+            3,
+            5,
+            2,
+            2,
+            4,
+            5,
+            2,
+            2,
+            2,
+            2,
+            6,
+            21,
+            19,
+            19,
+            22,
+            19,
+            19,
+            19,
+            18,
+            21,
+            20,
+            21,
+            20,
+            22,
+            21,
+            20,
+            20,
+            19,
+            19,
+            18,
+            20,
+            20,
+            21,
+            19,
+            22,
+            20,
+            22,
+            20,
+            19,
+            20,
+            18,
+            18
+          ],
+          "minimumSupportY": -0.0000098069226451801,
+          "contacts": 1,
+          "finalTelemetry": {
+            "backend": "civilian-quad-aircraft.v3",
+            "experimental": true,
+            "scored": false,
+            "frequency": 1000,
+            "missionHz": 50,
+            "missionTick": 80,
+            "substep": 1600,
+            "seconds": 1.6,
+            "position": {
+              "x": 0.05004875361919403,
+              "y": 0.017498547211289406,
+              "z": 0.002832278609275818
+            },
+            "velocity": {
+              "x": 3.529981285055328e-8,
+              "y": -2.531832024033065e-7,
+              "z": 1.5818665133338072e-7
+            },
+            "orientation": {
+              "x": -7.852031913557767e-9,
+              "y": 0.0024827769957482815,
+              "z": -1.1550948642025105e-7,
+              "w": 0.9999969601631165
+            },
+            "requestedRates": {
+              "roll": 0,
+              "pitch": 0,
+              "yaw": 23.438923828125
+            },
+            "achievedRates": {
+              "roll": -0.00028011061043581683,
+              "pitch": -0.000054799665517805173,
+              "yaw": 1.5812093093613298e-7
+            },
+            "calibratedInput": {
+              "roll": 0,
+              "pitch": 0,
+              "yaw": 0.15,
+              "throttle": 0.45
+            },
+            "motorSpeeds": [
+              0.44145156055014256,
+              0.45838904320162965,
+              0.44145153358679495,
+              0.4583890795514314
+            ],
+            "voltage": 4.267773881039599,
+            "current": 1.2650172147753957,
+            "usedAh": 0,
+            "consumedSequence": 79,
+            "consumedTimestampUs": 1580000,
+            "sampleAgeUs": 20000,
+            "devicePollHz": null,
+            "saturated": false,
+            "radius": 0.06929646455628166,
+            "supportHeight": 0.017500011154601532,
+            "topHeight": 0.017500011154601532,
+            "contact": {
+              "touching": true,
+              "grounded": true,
+              "normal": {
+                "x": 0,
+                "y": 1,
+                "z": 0
+              },
+              "impactSpeed": 2.5543806714267703e-7,
+              "contacts": 1,
+              "ids": [
+                "floor"
+              ],
+              "entries": [
+                {
+                  "id": "floor",
+                  "normal": {
+                    "x": 0,
+                    "y": 1,
+                    "z": 0
+                  },
+                  "moving": false
+                }
+              ],
+              "support": {
+                "id": "floor",
+                "normal": {
+                  "x": 0,
+                  "y": 1,
+                  "z": 0
+                }
+              }
+            },
+            "dynamicColliders": [],
+            "recordingStatus": {
+              "format": "AircraftRecordingStatus.v1",
+              "state": "recording",
+              "retainedFromSeconds": 0,
+              "retainedThroughSeconds": 1.6,
+              "lastRecoverableSeconds": null,
+              "currentSeconds": 1.6,
+              "retainedSegments": 1,
+              "retainedBytes": 9050,
+              "error": null
+            },
+            "archiveStatus": {
+              "generation": 1,
+              "origin": {
+                "kind": "fresh",
+                "startTick": 0
+              },
+              "earliestIndex": 0,
+              "lastSealedIndex": -1,
+              "latestTick": 80
+            }
+          },
+          "repeat": 1
+        },
+        {
+          "scenario": "meteor-worker",
+          "preset": "meteor75-analog-2022",
+          "worker": true,
+          "instrumented": true,
+          "backend": "civilian-quad-aircraft.v3",
+          "initializationMs": 349,
+          "elapsedMs": 740,
+          "capacity": 2.1621621621621623,
+          "finalHash": "42fc00f7",
+          "counters": {
+            "physicsSnapshot": {
+              "calls": 162,
+              "elapsedMs": 11
+            },
+            "solverStep": {
+              "calls": 1600,
+              "elapsedMs": 602
+            },
+            "trackedContactPair": {
+              "calls": 8000,
+              "elapsedMs": 16
+            },
+            "currentShapeContact": {
+              "calls": 4905,
+              "elapsedMs": 4
+            }
+          },
+          "perMissionMs": [
+            8,
+            3,
+            3,
+            8,
+            4,
+            4,
+            2,
+            3,
+            2,
+            4,
+            4,
+            2,
+            2,
+            3,
+            3,
+            2,
+            3,
+            1,
+            3,
+            1,
+            2,
+            3,
+            2,
+            2,
+            3,
+            3,
+            2,
+            2,
+            2,
+            2,
+            3,
+            1,
+            2,
+            2,
+            2,
+            2,
+            3,
+            2,
+            3,
+            4,
+            2,
+            2,
+            3,
+            2,
+            3,
+            1,
+            3,
+            1,
+            7,
+            19,
+            21,
+            19,
+            21,
+            20,
+            21,
+            19,
+            22,
+            19,
+            18,
+            19,
+            19,
+            20,
+            18,
+            19,
+            19,
+            21,
+            19,
+            20,
+            18,
+            20,
+            19,
+            20,
+            20,
+            20,
+            19,
+            19,
+            18,
+            18,
+            20,
+            20
+          ],
+          "minimumSupportY": -0.0000098069226451801,
+          "contacts": 1,
+          "finalTelemetry": {
+            "backend": "civilian-quad-aircraft.v3",
+            "experimental": true,
+            "scored": false,
+            "frequency": 1000,
+            "missionHz": 50,
+            "missionTick": 80,
+            "substep": 1600,
+            "seconds": 1.6,
+            "position": {
+              "x": 0.05004875361919403,
+              "y": 0.017498547211289406,
+              "z": 0.002832278609275818
+            },
+            "velocity": {
+              "x": 3.529981285055328e-8,
+              "y": -2.531832024033065e-7,
+              "z": 1.5818665133338072e-7
+            },
+            "orientation": {
+              "x": -7.852031913557767e-9,
+              "y": 0.0024827769957482815,
+              "z": -1.1550948642025105e-7,
+              "w": 0.9999969601631165
+            },
+            "requestedRates": {
+              "roll": 0,
+              "pitch": 0,
+              "yaw": 23.438923828125
+            },
+            "achievedRates": {
+              "roll": -0.00028011061043581683,
+              "pitch": -0.000054799665517805173,
+              "yaw": 1.5812093093613298e-7
+            },
+            "calibratedInput": {
+              "roll": 0,
+              "pitch": 0,
+              "yaw": 0.15,
+              "throttle": 0.45
+            },
+            "motorSpeeds": [
+              0.44145156055014256,
+              0.45838904320162965,
+              0.44145153358679495,
+              0.4583890795514314
+            ],
+            "voltage": 4.267773881039599,
+            "current": 1.2650172147753957,
+            "usedAh": 0,
+            "consumedSequence": 79,
+            "consumedTimestampUs": 1580000,
+            "sampleAgeUs": 20000,
+            "devicePollHz": null,
+            "saturated": false,
+            "radius": 0.06929646455628166,
+            "supportHeight": 0.017500011154601532,
+            "topHeight": 0.017500011154601532,
+            "contact": {
+              "touching": true,
+              "grounded": true,
+              "normal": {
+                "x": 0,
+                "y": 1,
+                "z": 0
+              },
+              "impactSpeed": 2.5543806714267703e-7,
+              "contacts": 1,
+              "ids": [
+                "floor"
+              ],
+              "entries": [
+                {
+                  "id": "floor",
+                  "normal": {
+                    "x": 0,
+                    "y": 1,
+                    "z": 0
+                  },
+                  "moving": false
+                }
+              ],
+              "support": {
+                "id": "floor",
+                "normal": {
+                  "x": 0,
+                  "y": 1,
+                  "z": 0
+                }
+              }
+            },
+            "dynamicColliders": [],
+            "recordingStatus": {
+              "format": "AircraftRecordingStatus.v1",
+              "state": "recording",
+              "retainedFromSeconds": 0,
+              "retainedThroughSeconds": 1.6,
+              "lastRecoverableSeconds": null,
+              "currentSeconds": 1.6,
+              "retainedSegments": 1,
+              "retainedBytes": 9050,
+              "error": null
+            },
+            "archiveStatus": {
+              "generation": 1,
+              "origin": {
+                "kind": "fresh",
+                "startTick": 0
+              },
+              "earliestIndex": 0,
+              "lastSealedIndex": -1,
+              "latestTick": 80
+            }
+          },
+          "repeat": 0
+        },
+        {
+          "scenario": "meteor-worker",
+          "preset": "meteor75-analog-2022",
+          "worker": true,
+          "instrumented": true,
+          "backend": "civilian-quad-aircraft.v3",
+          "initializationMs": 413,
+          "elapsedMs": 953,
+          "capacity": 1.6789087093389297,
+          "finalHash": "42fc00f7",
+          "counters": {
+            "physicsSnapshot": {
+              "calls": 162,
+              "elapsedMs": 14
+            },
+            "solverStep": {
+              "calls": 1600,
+              "elapsedMs": 735
+            },
+            "trackedContactPair": {
+              "calls": 8000,
+              "elapsedMs": 32
+            },
+            "currentShapeContact": {
+              "calls": 4905,
+              "elapsedMs": 6
+            }
+          },
+          "perMissionMs": [
+            10,
+            4,
+            5,
+            2,
+            4,
+            2,
+            13,
+            9,
+            16,
+            24,
+            14,
+            6,
+            7,
+            4,
+            4,
+            6,
+            5,
+            2,
+            3,
+            3,
+            2,
+            3,
+            2,
+            3,
+            2,
+            4,
+            3,
+            4,
+            3,
+            4,
+            2,
+            5,
+            5,
+            2,
+            3,
+            4,
+            3,
+            4,
+            2,
+            4,
+            3,
+            2,
+            4,
+            3,
+            2,
+            3,
+            3,
+            2,
+            8,
+            23,
+            19,
+            23,
+            24,
+            21,
+            21,
+            20,
+            21,
+            19,
+            23,
+            21,
+            23,
+            24,
+            23,
+            26,
+            45,
+            22,
+            22,
+            22,
+            22,
+            21,
+            23,
+            23,
+            22,
+            27,
+            29,
+            22,
+            20,
+            22,
+            21,
+            22
+          ],
+          "minimumSupportY": -0.0000098069226451801,
+          "contacts": 1,
+          "finalTelemetry": {
+            "backend": "civilian-quad-aircraft.v3",
+            "experimental": true,
+            "scored": false,
+            "frequency": 1000,
+            "missionHz": 50,
+            "missionTick": 80,
+            "substep": 1600,
+            "seconds": 1.6,
+            "position": {
+              "x": 0.05004875361919403,
+              "y": 0.017498547211289406,
+              "z": 0.002832278609275818
+            },
+            "velocity": {
+              "x": 3.529981285055328e-8,
+              "y": -2.531832024033065e-7,
+              "z": 1.5818665133338072e-7
+            },
+            "orientation": {
+              "x": -7.852031913557767e-9,
+              "y": 0.0024827769957482815,
+              "z": -1.1550948642025105e-7,
+              "w": 0.9999969601631165
+            },
+            "requestedRates": {
+              "roll": 0,
+              "pitch": 0,
+              "yaw": 23.438923828125
+            },
+            "achievedRates": {
+              "roll": -0.00028011061043581683,
+              "pitch": -0.000054799665517805173,
+              "yaw": 1.5812093093613298e-7
+            },
+            "calibratedInput": {
+              "roll": 0,
+              "pitch": 0,
+              "yaw": 0.15,
+              "throttle": 0.45
+            },
+            "motorSpeeds": [
+              0.44145156055014256,
+              0.45838904320162965,
+              0.44145153358679495,
+              0.4583890795514314
+            ],
+            "voltage": 4.267773881039599,
+            "current": 1.2650172147753957,
+            "usedAh": 0,
+            "consumedSequence": 79,
+            "consumedTimestampUs": 1580000,
+            "sampleAgeUs": 20000,
+            "devicePollHz": null,
+            "saturated": false,
+            "radius": 0.06929646455628166,
+            "supportHeight": 0.017500011154601532,
+            "topHeight": 0.017500011154601532,
+            "contact": {
+              "touching": true,
+              "grounded": true,
+              "normal": {
+                "x": 0,
+                "y": 1,
+                "z": 0
+              },
+              "impactSpeed": 2.5543806714267703e-7,
+              "contacts": 1,
+              "ids": [
+                "floor"
+              ],
+              "entries": [
+                {
+                  "id": "floor",
+                  "normal": {
+                    "x": 0,
+                    "y": 1,
+                    "z": 0
+                  },
+                  "moving": false
+                }
+              ],
+              "support": {
+                "id": "floor",
+                "normal": {
+                  "x": 0,
+                  "y": 1,
+                  "z": 0
+                }
+              }
+            },
+            "dynamicColliders": [],
+            "recordingStatus": {
+              "format": "AircraftRecordingStatus.v1",
+              "state": "recording",
+              "retainedFromSeconds": 0,
+              "retainedThroughSeconds": 1.6,
+              "lastRecoverableSeconds": null,
+              "currentSeconds": 1.6,
+              "retainedSegments": 1,
+              "retainedBytes": 9050,
+              "error": null
+            },
+            "archiveStatus": {
+              "generation": 1,
+              "origin": {
+                "kind": "fresh",
+                "startTick": 0
+              },
+              "earliestIndex": 0,
+              "lastSealedIndex": -1,
+              "latestTick": 80
+            }
+          },
+          "repeat": 1
+        }
+      ]
+    },
+    {
+      "runtime": "chrome",
+      "version": "155.0.8059.85",
+      "cases": [
+        {
+          "scenario": "cetus-floor",
+          "preset": "cetus-x-betaflight-2022",
+          "worker": false,
+          "instrumented": false,
+          "backend": "civilian-quad-aircraft-regional.v3",
+          "initializationMs": 11.699999999254942,
+          "elapsedMs": 242.80000000074506,
+          "capacity": 6.177924217443975,
+          "finalHash": "0fb73a22",
+          "counters": {},
+          "perMissionMs": [
+            58.600000001490116,
+            3.399999998509884,
+            1.5,
+            1,
+            1.199999999254942,
+            1.5,
+            1.5,
+            0.9000000022351742,
+            0.8999999985098839,
+            0.6999999992549419,
+            0.8000000007450581,
+            0.8999999985098839,
+            0.8000000007450581,
+            0.9000000022351742,
+            0.6999999992549419,
+            1.0999999977648258,
+            1.2000000029802322,
+            0.7999999970197678,
+            1,
+            1,
+            0.8000000007450581,
+            2.800000000745058,
+            8.299999997019768,
+            6.400000002235174,
+            3.899999998509884,
+            3,
+            2.699999999254942,
+            3.2000000029802322,
+            2.399999998509884,
+            2.399999998509884,
+            3.2000000029802322,
+            3.599999997764826,
+            5.5,
+            2.100000001490116,
+            2.199999999254942,
+            2.300000000745058,
+            2.300000000745058,
+            2.5,
+            2.2999999970197678,
+            2.100000001490116,
+            2.100000001490116,
+            2.199999999254942,
+            5.199999999254942,
+            7,
+            2.199999999254942,
+            6.900000002235174,
+            2.5,
+            2.100000001490116,
+            2,
+            9.300000000745058,
+            2.300000000745058,
+            1.8999999985098839,
+            2,
+            2.100000001490116,
+            2.300000000745058,
+            2.099999997764826,
+            2.2000000029802322,
+            2.199999999254942,
+            2.399999998509884,
+            2,
+            2.400000002235174,
+            2.399999998509884,
+            2,
+            2.199999999254942,
+            2.5,
+            2.300000000745058,
+            2.100000001490116,
+            2.099999997764826,
+            2.600000001490116,
+            2.300000000745058,
+            2.699999999254942,
+            2.399999998509884,
+            2.199999999254942,
+            2.399999998509884,
+            2.400000002235174
+          ],
+          "minimumSupportY": -0.00013195637416504175,
+          "contacts": 2,
+          "finalTelemetry": {
+            "backend": "civilian-quad-aircraft-regional.v3",
+            "experimental": true,
+            "scored": false,
+            "frequency": 1000,
+            "missionHz": 50,
+            "missionTick": 75,
+            "substep": 1500,
+            "seconds": 1.5,
+            "position": {
+              "x": -0.0035362127237021923,
+              "y": 0.024987971410155296,
+              "z": 0.047731854021549225
+            },
+            "velocity": {
+              "x": 2.479554268575157e-7,
+              "y": 2.8007477226310584e-7,
+              "z": -1.170561176877527e-7
+            },
+            "orientation": {
+              "x": -0.000013592908544524107,
+              "y": 0.07878600805997849,
+              "z": 0.000014189089597493876,
+              "w": 0.9968916177749634
+            },
+            "requestedRates": {
+              "roll": 0.04,
+              "pitch": -0.04,
+              "yaw": 0
+            },
+            "achievedRates": {
+              "roll": 0.00032488058251519916,
+              "pitch": -0.00005260451238564797,
+              "yaw": 1.8530938426460195e-7
+            },
+            "calibratedInput": {
+              "roll": 0,
+              "pitch": 0,
+              "yaw": 0,
+              "throttle": 0
+            },
+            "motorSpeeds": [
+              0.08005017520299285,
+              0.08002517655962857,
+              0.08000000000000014,
+              0.08002500494519381
+            ],
+            "voltage": 8.699184198102216,
+            "current": 0.00906446553093013,
+            "usedAh": 0,
+            "consumedSequence": -1,
+            "consumedTimestampUs": 0,
+            "sampleAgeUs": null,
+            "devicePollHz": null,
+            "saturated": true,
+            "radius": 0.0862670273047588,
+            "supportHeight": 0.025002851957558244,
+            "topHeight": 0.025002851957558244,
+            "contact": {
+              "touching": true,
+              "grounded": true,
+              "normal": {
+                "x": -0.001210469868965447,
+                "y": 0.9999993443489075,
+                "z": 0.00019046751549467444
+              },
+              "impactSpeed": 2.1822504633406206e-7,
+              "contacts": 2,
+              "ids": [
+                "course-boundary-y-min"
+              ],
+              "entries": [
+                {
+                  "id": "course-boundary-y-min",
+                  "normal": {
+                    "x": -0.001210469868965447,
+                    "y": 0.9999993443489075,
+                    "z": 0.00019046751549467444
+                  },
+                  "moving": false
+                }
+              ],
+              "support": {
+                "id": "course-boundary-y-min",
+                "normal": {
+                  "x": -0.001210469868965447,
+                  "y": 0.9999993443489075,
+                  "z": 0.00019046751549467444
+                }
+              }
+            },
+            "dynamicColliders": [],
+            "recordingStatus": {
+              "format": "AircraftRecordingStatus.v1",
+              "state": "recording",
+              "retainedFromSeconds": 0,
+              "retainedThroughSeconds": 1.5,
+              "lastRecoverableSeconds": null,
+              "currentSeconds": 1.5,
+              "retainedSegments": 1,
+              "retainedBytes": 7612,
+              "error": null
+            },
+            "archiveStatus": {
+              "generation": 1,
+              "origin": {
+                "kind": "fresh",
+                "startTick": 0
+              },
+              "earliestIndex": 0,
+              "lastSealedIndex": -1,
+              "latestTick": 75
+            },
+            "terrain": {
+              "frameIdentity": "c737cde8666c22db",
+              "touching": true,
+              "grounded": true,
+              "normal": {
+                "x": -0.001210469868965447,
+                "y": 0.9999993443489075,
+                "z": 0.00019046751549467444
+              },
+              "impactSpeed": 2.1822504633406206e-7,
+              "contacts": 2,
+              "ids": [
+                "course-boundary-y-min"
+              ],
+              "entries": [
+                {
+                  "id": "course-boundary-y-min",
+                  "normal": {
+                    "x": -0.001210469868965447,
+                    "y": 0.9999993443489075,
+                    "z": 0.00019046751549467444
+                  },
+                  "moving": false
+                }
+              ],
+              "support": {
+                "id": "course-boundary-y-min",
+                "normal": {
+                  "x": -0.001210469868965447,
+                  "y": 0.9999993443489075,
+                  "z": 0.00019046751549467444
+                }
+              }
+            }
+          },
+          "repeat": 0
+        },
+        {
+          "scenario": "cetus-floor",
+          "preset": "cetus-x-betaflight-2022",
+          "worker": false,
+          "instrumented": false,
+          "backend": "civilian-quad-aircraft-regional.v3",
+          "initializationMs": 3,
+          "elapsedMs": 123.69999999925494,
+          "capacity": 12.12611156029939,
+          "finalHash": "0fb73a22",
+          "counters": {},
+          "perMissionMs": [
+            1.1000000014901161,
+            0.6999999992549419,
+            1,
+            0.8999999985098839,
+            1,
+            0.6000000014901161,
+            0.6000000014901161,
+            0.6999999992549419,
+            0.5,
+            0.3999999985098839,
+            0.5,
+            0.5,
+            0.5,
+            0.5,
+            0.4000000022351742,
+            0.3999999985098839,
+            0.8999999985098839,
+            0.4000000022351742,
+            0.5,
+            0.3999999985098839,
+            0.5,
+            0.4000000022351742,
+            1.0999999977648258,
+            2.199999999254942,
+            2.100000001490116,
+            2.100000001490116,
+            2.099999997764826,
+            2.100000001490116,
+            2,
+            2.099999997764826,
+            2.100000001490116,
+            2.100000001490116,
+            2.199999999254942,
+            1.8999999985098839,
+            2,
+            1.9000000022351742,
+            2.099999997764826,
+            1.8999999985098839,
+            1.9000000022351742,
+            1.9000000022351742,
+            2,
+            2,
+            2,
+            2,
+            2.199999999254942,
+            2.699999999254942,
+            2.199999999254942,
+            2,
+            2.100000001490116,
+            2.5,
+            2,
+            2,
+            2.199999999254942,
+            2.399999998509884,
+            2,
+            2.100000001490116,
+            2,
+            2.100000001490116,
+            1.800000000745058,
+            2.199999999254942,
+            2.199999999254942,
+            2,
+            2.100000001490116,
+            2.2999999970197678,
+            2.100000001490116,
+            2.099999997764826,
+            1.9000000022351742,
+            1.8999999985098839,
+            2,
+            2,
+            2.099999997764826,
+            2.100000001490116,
+            2,
+            2.5,
+            2.099999997764826
+          ],
+          "minimumSupportY": -0.00013195637416504175,
+          "contacts": 2,
+          "finalTelemetry": {
+            "backend": "civilian-quad-aircraft-regional.v3",
+            "experimental": true,
+            "scored": false,
+            "frequency": 1000,
+            "missionHz": 50,
+            "missionTick": 75,
+            "substep": 1500,
+            "seconds": 1.5,
+            "position": {
+              "x": -0.0035362127237021923,
+              "y": 0.024987971410155296,
+              "z": 0.047731854021549225
+            },
+            "velocity": {
+              "x": 2.479554268575157e-7,
+              "y": 2.8007477226310584e-7,
+              "z": -1.170561176877527e-7
+            },
+            "orientation": {
+              "x": -0.000013592908544524107,
+              "y": 0.07878600805997849,
+              "z": 0.000014189089597493876,
+              "w": 0.9968916177749634
+            },
+            "requestedRates": {
+              "roll": 0.04,
+              "pitch": -0.04,
+              "yaw": 0
+            },
+            "achievedRates": {
+              "roll": 0.00032488058251519916,
+              "pitch": -0.00005260451238564797,
+              "yaw": 1.8530938426460195e-7
+            },
+            "calibratedInput": {
+              "roll": 0,
+              "pitch": 0,
+              "yaw": 0,
+              "throttle": 0
+            },
+            "motorSpeeds": [
+              0.08005017520299285,
+              0.08002517655962857,
+              0.08000000000000014,
+              0.08002500494519381
+            ],
+            "voltage": 8.699184198102216,
+            "current": 0.00906446553093013,
+            "usedAh": 0,
+            "consumedSequence": -1,
+            "consumedTimestampUs": 0,
+            "sampleAgeUs": null,
+            "devicePollHz": null,
+            "saturated": true,
+            "radius": 0.0862670273047588,
+            "supportHeight": 0.025002851957558244,
+            "topHeight": 0.025002851957558244,
+            "contact": {
+              "touching": true,
+              "grounded": true,
+              "normal": {
+                "x": -0.001210469868965447,
+                "y": 0.9999993443489075,
+                "z": 0.00019046751549467444
+              },
+              "impactSpeed": 2.1822504633406206e-7,
+              "contacts": 2,
+              "ids": [
+                "course-boundary-y-min"
+              ],
+              "entries": [
+                {
+                  "id": "course-boundary-y-min",
+                  "normal": {
+                    "x": -0.001210469868965447,
+                    "y": 0.9999993443489075,
+                    "z": 0.00019046751549467444
+                  },
+                  "moving": false
+                }
+              ],
+              "support": {
+                "id": "course-boundary-y-min",
+                "normal": {
+                  "x": -0.001210469868965447,
+                  "y": 0.9999993443489075,
+                  "z": 0.00019046751549467444
+                }
+              }
+            },
+            "dynamicColliders": [],
+            "recordingStatus": {
+              "format": "AircraftRecordingStatus.v1",
+              "state": "recording",
+              "retainedFromSeconds": 0,
+              "retainedThroughSeconds": 1.5,
+              "lastRecoverableSeconds": null,
+              "currentSeconds": 1.5,
+              "retainedSegments": 1,
+              "retainedBytes": 7612,
+              "error": null
+            },
+            "archiveStatus": {
+              "generation": 1,
+              "origin": {
+                "kind": "fresh",
+                "startTick": 0
+              },
+              "earliestIndex": 0,
+              "lastSealedIndex": -1,
+              "latestTick": 75
+            },
+            "terrain": {
+              "frameIdentity": "c737cde8666c22db",
+              "touching": true,
+              "grounded": true,
+              "normal": {
+                "x": -0.001210469868965447,
+                "y": 0.9999993443489075,
+                "z": 0.00019046751549467444
+              },
+              "impactSpeed": 2.1822504633406206e-7,
+              "contacts": 2,
+              "ids": [
+                "course-boundary-y-min"
+              ],
+              "entries": [
+                {
+                  "id": "course-boundary-y-min",
+                  "normal": {
+                    "x": -0.001210469868965447,
+                    "y": 0.9999993443489075,
+                    "z": 0.00019046751549467444
+                  },
+                  "moving": false
+                }
+              ],
+              "support": {
+                "id": "course-boundary-y-min",
+                "normal": {
+                  "x": -0.001210469868965447,
+                  "y": 0.9999993443489075,
+                  "z": 0.00019046751549467444
+                }
+              }
+            }
+          },
+          "repeat": 1
+        },
+        {
+          "scenario": "cetus-floor",
+          "preset": "cetus-x-betaflight-2022",
+          "worker": false,
+          "instrumented": true,
+          "backend": "civilian-quad-aircraft-regional.v3",
+          "initializationMs": 2.699999999254942,
+          "elapsedMs": 131,
+          "capacity": 11.450381679389313,
+          "finalHash": "0fb73a22",
+          "counters": {
+            "physicsSnapshot": {
+              "calls": 150,
+              "elapsedMs": 4.399999994784594
+            },
+            "solverStep": {
+              "calls": 1500,
+              "elapsedMs": 87.09999999403954
+            },
+            "trackedContactPair": {
+              "calls": 45000,
+              "elapsedMs": 8.900000017136335
+            },
+            "currentShapeContact": {
+              "calls": 35,
+              "elapsedMs": 0
+            }
+          },
+          "perMissionMs": [
+            1.199999999254942,
+            0.5999999977648258,
+            0.6000000014901161,
+            0.6000000014901161,
+            0.5999999977648258,
+            0.6000000014901161,
+            0.5999999977648258,
+            0.6000000014901161,
+            0.6000000014901161,
+            0.5999999977648258,
+            0.5,
+            0.5,
+            0.5,
+            0.6000000014901161,
+            0.5,
+            0.5,
+            0.5999999977648258,
+            0.5,
+            0.5,
+            0.5,
+            0.6000000014901161,
+            0.6999999992549419,
+            1.9000000022351742,
+            2.5,
+            2.099999997764826,
+            2.100000001490116,
+            2.800000000745058,
+            2.2999999970197678,
+            2.100000001490116,
+            2.099999997764826,
+            2.100000001490116,
+            2.5,
+            2.199999999254942,
+            2.100000001490116,
+            2.199999999254942,
+            2.099999997764826,
+            2.100000001490116,
+            2,
+            2.5,
+            2.199999999254942,
+            2.199999999254942,
+            2.199999999254942,
+            2.100000001490116,
+            2.099999997764826,
+            2.300000000745058,
+            2.400000002235174,
+            2.399999998509884,
+            2.100000001490116,
+            2.399999998509884,
+            2.399999998509884,
+            2.100000001490116,
+            2.600000001490116,
+            2.2999999970197678,
+            2.400000002235174,
+            2.099999997764826,
+            2.2000000029802322,
+            2.199999999254942,
+            2.199999999254942,
+            2,
+            2.199999999254942,
+            2,
+            2.099999997764826,
+            2.199999999254942,
+            2.199999999254942,
+            2,
+            2.300000000745058,
+            2.300000000745058,
+            2.199999999254942,
+            2.199999999254942,
+            2,
+            2.300000000745058,
+            2,
+            2.199999999254942,
+            2.300000000745058,
+            2.300000000745058
+          ],
+          "minimumSupportY": -0.00013195637416504175,
+          "contacts": 2,
+          "finalTelemetry": {
+            "backend": "civilian-quad-aircraft-regional.v3",
+            "experimental": true,
+            "scored": false,
+            "frequency": 1000,
+            "missionHz": 50,
+            "missionTick": 75,
+            "substep": 1500,
+            "seconds": 1.5,
+            "position": {
+              "x": -0.0035362127237021923,
+              "y": 0.024987971410155296,
+              "z": 0.047731854021549225
+            },
+            "velocity": {
+              "x": 2.479554268575157e-7,
+              "y": 2.8007477226310584e-7,
+              "z": -1.170561176877527e-7
+            },
+            "orientation": {
+              "x": -0.000013592908544524107,
+              "y": 0.07878600805997849,
+              "z": 0.000014189089597493876,
+              "w": 0.9968916177749634
+            },
+            "requestedRates": {
+              "roll": 0.04,
+              "pitch": -0.04,
+              "yaw": 0
+            },
+            "achievedRates": {
+              "roll": 0.00032488058251519916,
+              "pitch": -0.00005260451238564797,
+              "yaw": 1.8530938426460195e-7
+            },
+            "calibratedInput": {
+              "roll": 0,
+              "pitch": 0,
+              "yaw": 0,
+              "throttle": 0
+            },
+            "motorSpeeds": [
+              0.08005017520299285,
+              0.08002517655962857,
+              0.08000000000000014,
+              0.08002500494519381
+            ],
+            "voltage": 8.699184198102216,
+            "current": 0.00906446553093013,
+            "usedAh": 0,
+            "consumedSequence": -1,
+            "consumedTimestampUs": 0,
+            "sampleAgeUs": null,
+            "devicePollHz": null,
+            "saturated": true,
+            "radius": 0.0862670273047588,
+            "supportHeight": 0.025002851957558244,
+            "topHeight": 0.025002851957558244,
+            "contact": {
+              "touching": true,
+              "grounded": true,
+              "normal": {
+                "x": -0.001210469868965447,
+                "y": 0.9999993443489075,
+                "z": 0.00019046751549467444
+              },
+              "impactSpeed": 2.1822504633406206e-7,
+              "contacts": 2,
+              "ids": [
+                "course-boundary-y-min"
+              ],
+              "entries": [
+                {
+                  "id": "course-boundary-y-min",
+                  "normal": {
+                    "x": -0.001210469868965447,
+                    "y": 0.9999993443489075,
+                    "z": 0.00019046751549467444
+                  },
+                  "moving": false
+                }
+              ],
+              "support": {
+                "id": "course-boundary-y-min",
+                "normal": {
+                  "x": -0.001210469868965447,
+                  "y": 0.9999993443489075,
+                  "z": 0.00019046751549467444
+                }
+              }
+            },
+            "dynamicColliders": [],
+            "recordingStatus": {
+              "format": "AircraftRecordingStatus.v1",
+              "state": "recording",
+              "retainedFromSeconds": 0,
+              "retainedThroughSeconds": 1.5,
+              "lastRecoverableSeconds": null,
+              "currentSeconds": 1.5,
+              "retainedSegments": 1,
+              "retainedBytes": 7612,
+              "error": null
+            },
+            "archiveStatus": {
+              "generation": 1,
+              "origin": {
+                "kind": "fresh",
+                "startTick": 0
+              },
+              "earliestIndex": 0,
+              "lastSealedIndex": -1,
+              "latestTick": 75
+            },
+            "terrain": {
+              "frameIdentity": "c737cde8666c22db",
+              "touching": true,
+              "grounded": true,
+              "normal": {
+                "x": -0.001210469868965447,
+                "y": 0.9999993443489075,
+                "z": 0.00019046751549467444
+              },
+              "impactSpeed": 2.1822504633406206e-7,
+              "contacts": 2,
+              "ids": [
+                "course-boundary-y-min"
+              ],
+              "entries": [
+                {
+                  "id": "course-boundary-y-min",
+                  "normal": {
+                    "x": -0.001210469868965447,
+                    "y": 0.9999993443489075,
+                    "z": 0.00019046751549467444
+                  },
+                  "moving": false
+                }
+              ],
+              "support": {
+                "id": "course-boundary-y-min",
+                "normal": {
+                  "x": -0.001210469868965447,
+                  "y": 0.9999993443489075,
+                  "z": 0.00019046751549467444
+                }
+              }
+            }
+          },
+          "repeat": 0
+        },
+        {
+          "scenario": "cetus-floor",
+          "preset": "cetus-x-betaflight-2022",
+          "worker": false,
+          "instrumented": true,
+          "backend": "civilian-quad-aircraft-regional.v3",
+          "initializationMs": 2.399999998509884,
+          "elapsedMs": 132.10000000149012,
+          "capacity": 11.355034064974108,
+          "finalHash": "0fb73a22",
+          "counters": {
+            "physicsSnapshot": {
+              "calls": 150,
+              "elapsedMs": 9.199999988079071
+            },
+            "solverStep": {
+              "calls": 1500,
+              "elapsedMs": 81.6000000052154
+            },
+            "trackedContactPair": {
+              "calls": 45000,
+              "elapsedMs": 8
+            },
+            "currentShapeContact": {
+              "calls": 35,
+              "elapsedMs": 0.10000000149011612
+            }
+          },
+          "perMissionMs": [
+            2.400000002235174,
+            0.5999999977648258,
+            0.6999999992549419,
+            0.5,
+            0.5,
+            0.5,
+            0.5,
+            0.6000000014901161,
+            0.5,
+            0.3999999985098839,
+            0.5,
+            0.5,
+            0.5,
+            0.5,
+            0.5,
+            0.5,
+            0.6000000014901161,
+            0.6000000014901161,
+            0.5999999977648258,
+            0.6000000014901161,
+            0.8000000007450581,
+            0.8999999985098839,
+            3,
+            3.199999999254942,
+            2.900000002235174,
+            2.399999998509884,
+            2.199999999254942,
+            2.199999999254942,
+            2.2000000029802322,
+            2.199999999254942,
+            5.199999999254942,
+            2.899999998509884,
+            2,
+            2.199999999254942,
+            2.600000001490116,
+            2,
+            1.8999999985098839,
+            2.100000001490116,
+            1.8999999985098839,
+            2.100000001490116,
+            2,
+            2.199999999254942,
+            2.300000000745058,
+            1.8999999985098839,
+            2.100000001490116,
+            2.199999999254942,
+            2,
+            1.8999999985098839,
+            2,
+            2.100000001490116,
+            2.100000001490116,
+            2,
+            2,
+            1.9000000022351742,
+            2.099999997764826,
+            1.9000000022351742,
+            1.8999999985098839,
+            2,
+            2.199999999254942,
+            2.300000000745058,
+            2,
+            2.399999998509884,
+            2.100000001490116,
+            2.199999999254942,
+            2.199999999254942,
+            2,
+            1.8999999985098839,
+            2,
+            2.2000000029802322,
+            2,
+            2,
+            1.8999999985098839,
+            1.8999999985098839,
+            2.2000000029802322,
+            2.199999999254942
+          ],
+          "minimumSupportY": -0.00013195637416504175,
+          "contacts": 2,
+          "finalTelemetry": {
+            "backend": "civilian-quad-aircraft-regional.v3",
+            "experimental": true,
+            "scored": false,
+            "frequency": 1000,
+            "missionHz": 50,
+            "missionTick": 75,
+            "substep": 1500,
+            "seconds": 1.5,
+            "position": {
+              "x": -0.0035362127237021923,
+              "y": 0.024987971410155296,
+              "z": 0.047731854021549225
+            },
+            "velocity": {
+              "x": 2.479554268575157e-7,
+              "y": 2.8007477226310584e-7,
+              "z": -1.170561176877527e-7
+            },
+            "orientation": {
+              "x": -0.000013592908544524107,
+              "y": 0.07878600805997849,
+              "z": 0.000014189089597493876,
+              "w": 0.9968916177749634
+            },
+            "requestedRates": {
+              "roll": 0.04,
+              "pitch": -0.04,
+              "yaw": 0
+            },
+            "achievedRates": {
+              "roll": 0.00032488058251519916,
+              "pitch": -0.00005260451238564797,
+              "yaw": 1.8530938426460195e-7
+            },
+            "calibratedInput": {
+              "roll": 0,
+              "pitch": 0,
+              "yaw": 0,
+              "throttle": 0
+            },
+            "motorSpeeds": [
+              0.08005017520299285,
+              0.08002517655962857,
+              0.08000000000000014,
+              0.08002500494519381
+            ],
+            "voltage": 8.699184198102216,
+            "current": 0.00906446553093013,
+            "usedAh": 0,
+            "consumedSequence": -1,
+            "consumedTimestampUs": 0,
+            "sampleAgeUs": null,
+            "devicePollHz": null,
+            "saturated": true,
+            "radius": 0.0862670273047588,
+            "supportHeight": 0.025002851957558244,
+            "topHeight": 0.025002851957558244,
+            "contact": {
+              "touching": true,
+              "grounded": true,
+              "normal": {
+                "x": -0.001210469868965447,
+                "y": 0.9999993443489075,
+                "z": 0.00019046751549467444
+              },
+              "impactSpeed": 2.1822504633406206e-7,
+              "contacts": 2,
+              "ids": [
+                "course-boundary-y-min"
+              ],
+              "entries": [
+                {
+                  "id": "course-boundary-y-min",
+                  "normal": {
+                    "x": -0.001210469868965447,
+                    "y": 0.9999993443489075,
+                    "z": 0.00019046751549467444
+                  },
+                  "moving": false
+                }
+              ],
+              "support": {
+                "id": "course-boundary-y-min",
+                "normal": {
+                  "x": -0.001210469868965447,
+                  "y": 0.9999993443489075,
+                  "z": 0.00019046751549467444
+                }
+              }
+            },
+            "dynamicColliders": [],
+            "recordingStatus": {
+              "format": "AircraftRecordingStatus.v1",
+              "state": "recording",
+              "retainedFromSeconds": 0,
+              "retainedThroughSeconds": 1.5,
+              "lastRecoverableSeconds": null,
+              "currentSeconds": 1.5,
+              "retainedSegments": 1,
+              "retainedBytes": 7612,
+              "error": null
+            },
+            "archiveStatus": {
+              "generation": 1,
+              "origin": {
+                "kind": "fresh",
+                "startTick": 0
+              },
+              "earliestIndex": 0,
+              "lastSealedIndex": -1,
+              "latestTick": 75
+            },
+            "terrain": {
+              "frameIdentity": "c737cde8666c22db",
+              "touching": true,
+              "grounded": true,
+              "normal": {
+                "x": -0.001210469868965447,
+                "y": 0.9999993443489075,
+                "z": 0.00019046751549467444
+              },
+              "impactSpeed": 2.1822504633406206e-7,
+              "contacts": 2,
+              "ids": [
+                "course-boundary-y-min"
+              ],
+              "entries": [
+                {
+                  "id": "course-boundary-y-min",
+                  "normal": {
+                    "x": -0.001210469868965447,
+                    "y": 0.9999993443489075,
+                    "z": 0.00019046751549467444
+                  },
+                  "moving": false
+                }
+              ],
+              "support": {
+                "id": "course-boundary-y-min",
+                "normal": {
+                  "x": -0.001210469868965447,
+                  "y": 0.9999993443489075,
+                  "z": 0.00019046751549467444
+                }
+              }
+            }
+          },
+          "repeat": 1
+        },
+        {
+          "scenario": "meteor-worker",
+          "preset": "meteor75-analog-2022",
+          "worker": true,
+          "instrumented": false,
+          "backend": "civilian-quad-aircraft.v3",
+          "initializationMs": 226,
+          "elapsedMs": 118.60000000149012,
+          "capacity": 13.490725126306048,
+          "finalHash": "42fc00f7",
+          "counters": {},
+          "perMissionMs": [
+            4.800000000745058,
+            1.5999999977648258,
+            1.1000000014901161,
+            1.199999999254942,
+            1.4000000022351742,
+            1.2999999970197678,
+            1.300000000745058,
+            0.9000000022351742,
+            1,
+            1.699999999254942,
+            0.8999999985098839,
+            0.6000000014901161,
+            1.199999999254942,
+            1.199999999254942,
+            1.300000000745058,
+            1.300000000745058,
+            1,
+            1.300000000745058,
+            1,
+            1.199999999254942,
+            1.1000000014901161,
+            2.300000000745058,
+            0.8999999985098839,
+            1,
+            0.8000000007450581,
+            0.6999999992549419,
+            0.6999999992549419,
+            0.5,
+            0.6999999992549419,
+            0.6999999992549419,
+            0.6000000014901161,
+            1.199999999254942,
+            0.5,
+            0.5999999977648258,
+            0.7000000029802322,
+            0.6999999992549419,
+            0.6999999992549419,
+            0.8999999985098839,
+            0.8000000007450581,
+            1.5,
+            0.6999999992549419,
+            0.8000000007450581,
+            0.5,
+            0.6000000014901161,
+            1.300000000745058,
+            0.5999999977648258,
+            1.1000000014901161,
+            0.5,
+            1.7000000029802322,
+            3.699999999254942,
+            1.800000000745058,
+            4.299999997019768,
+            1.800000000745058,
+            1.6000000014901161,
+            1.699999999254942,
+            2,
+            2.5,
+            2,
+            1.800000000745058,
+            1.800000000745058,
+            1.699999999254942,
+            1.800000000745058,
+            2,
+            2,
+            2,
+            2.099999997764826,
+            1.699999999254942,
+            2.2000000029802322,
+            2.399999998509884,
+            2.5,
+            1.800000000745058,
+            1.800000000745058,
+            1.8999999985098839,
+            2.199999999254942,
+            1.699999999254942,
+            2,
+            1.800000000745058,
+            2.100000001490116,
+            2.899999998509884,
+            1.9000000022351742
+          ],
+          "minimumSupportY": -0.0000098069226451801,
+          "contacts": 1,
+          "finalTelemetry": {
+            "backend": "civilian-quad-aircraft.v3",
+            "experimental": true,
+            "scored": false,
+            "frequency": 1000,
+            "missionHz": 50,
+            "missionTick": 80,
+            "substep": 1600,
+            "seconds": 1.6,
+            "position": {
+              "x": 0.05004875361919403,
+              "y": 0.017498547211289406,
+              "z": 0.002832278609275818
+            },
+            "velocity": {
+              "x": 3.529981285055328e-8,
+              "y": -2.531832024033065e-7,
+              "z": 1.5818665133338072e-7
+            },
+            "orientation": {
+              "x": -7.852031913557767e-9,
+              "y": 0.0024827769957482815,
+              "z": -1.1550948642025105e-7,
+              "w": 0.9999969601631165
+            },
+            "requestedRates": {
+              "roll": 0,
+              "pitch": 0,
+              "yaw": 23.438923828125
+            },
+            "achievedRates": {
+              "roll": -0.00028011061043581683,
+              "pitch": -0.000054799665517805173,
+              "yaw": 1.5812093093613298e-7
+            },
+            "calibratedInput": {
+              "roll": 0,
+              "pitch": 0,
+              "yaw": 0.15,
+              "throttle": 0.45
+            },
+            "motorSpeeds": [
+              0.44145156055014256,
+              0.45838904320162965,
+              0.44145153358679495,
+              0.4583890795514314
+            ],
+            "voltage": 4.267773881039599,
+            "current": 1.2650172147753957,
+            "usedAh": 0,
+            "consumedSequence": 79,
+            "consumedTimestampUs": 1580000,
+            "sampleAgeUs": 20000,
+            "devicePollHz": null,
+            "saturated": false,
+            "radius": 0.06929646455628166,
+            "supportHeight": 0.017500011154601532,
+            "topHeight": 0.017500011154601532,
+            "contact": {
+              "touching": true,
+              "grounded": true,
+              "normal": {
+                "x": 0,
+                "y": 1,
+                "z": 0
+              },
+              "impactSpeed": 2.5543806714267703e-7,
+              "contacts": 1,
+              "ids": [
+                "floor"
+              ],
+              "entries": [
+                {
+                  "id": "floor",
+                  "normal": {
+                    "x": 0,
+                    "y": 1,
+                    "z": 0
+                  },
+                  "moving": false
+                }
+              ],
+              "support": {
+                "id": "floor",
+                "normal": {
+                  "x": 0,
+                  "y": 1,
+                  "z": 0
+                }
+              }
+            },
+            "dynamicColliders": [],
+            "recordingStatus": {
+              "format": "AircraftRecordingStatus.v1",
+              "state": "recording",
+              "retainedFromSeconds": 0,
+              "retainedThroughSeconds": 1.6,
+              "lastRecoverableSeconds": null,
+              "currentSeconds": 1.6,
+              "retainedSegments": 1,
+              "retainedBytes": 9050,
+              "error": null
+            },
+            "archiveStatus": {
+              "generation": 1,
+              "origin": {
+                "kind": "fresh",
+                "startTick": 0
+              },
+              "earliestIndex": 0,
+              "lastSealedIndex": -1,
+              "latestTick": 80
+            }
+          },
+          "repeat": 0
+        },
+        {
+          "scenario": "meteor-worker",
+          "preset": "meteor75-analog-2022",
+          "worker": true,
+          "instrumented": false,
+          "backend": "civilian-quad-aircraft.v3",
+          "initializationMs": 193.20000000298023,
+          "elapsedMs": 109.19999999925494,
+          "capacity": 14.652014652114621,
+          "finalHash": "42fc00f7",
+          "counters": {},
+          "perMissionMs": [
+            4.099999997764826,
+            1.9000000022351742,
+            1.199999999254942,
+            1.0999999977648258,
+            1.300000000745058,
+            0.6999999992549419,
+            1.199999999254942,
+            1.199999999254942,
+            1.5,
+            1.300000000745058,
+            0.9000000022351742,
+            0.5,
+            0.7999999970197678,
+            0.9000000022351742,
+            0.5,
+            0.8999999985098839,
+            0.8000000007450581,
+            0.8000000007450581,
+            0.5999999977648258,
+            0.9000000022351742,
+            1,
+            0.5,
+            0.8000000007450581,
+            0.8999999985098839,
+            0.8000000007450581,
+            0.6999999992549419,
+            0.8999999985098839,
+            0.7000000029802322,
+            1.199999999254942,
+            0.5999999977648258,
+            0.5,
+            0.7000000029802322,
+            0.7999999970197678,
+            0.9000000022351742,
+            0.8000000007450581,
+            0.5999999977648258,
+            0.4000000022351742,
+            0.6999999992549419,
+            0.5,
+            1.3999999985098839,
+            1.300000000745058,
+            0.6999999992549419,
+            0.6000000014901161,
+            0.5999999977648258,
+            0.7000000029802322,
+            0.7999999970197678,
+            0.9000000022351742,
+            0.8999999985098839,
+            1.5,
+            2.599999997764826,
+            1.9000000022351742,
+            1.800000000745058,
+            2,
+            1.699999999254942,
+            1.8999999985098839,
+            1.699999999254942,
+            1.6000000014901161,
+            2.199999999254942,
+            1.800000000745058,
+            2,
+            2.100000001490116,
+            2.199999999254942,
+            1.8999999985098839,
+            1.800000000745058,
+            1.8999999985098839,
+            2.2000000029802322,
+            1.8999999985098839,
+            1.8999999985098839,
+            1.5,
+            1.9000000022351742,
+            2.099999997764826,
+            1.9000000022351742,
+            2,
+            2,
+            2.300000000745058,
+            3.699999999254942,
+            1.5999999977648258,
+            2.5,
+            2.2000000029802322,
+            1.699999999254942
+          ],
+          "minimumSupportY": -0.0000098069226451801,
+          "contacts": 1,
+          "finalTelemetry": {
+            "backend": "civilian-quad-aircraft.v3",
+            "experimental": true,
+            "scored": false,
+            "frequency": 1000,
+            "missionHz": 50,
+            "missionTick": 80,
+            "substep": 1600,
+            "seconds": 1.6,
+            "position": {
+              "x": 0.05004875361919403,
+              "y": 0.017498547211289406,
+              "z": 0.002832278609275818
+            },
+            "velocity": {
+              "x": 3.529981285055328e-8,
+              "y": -2.531832024033065e-7,
+              "z": 1.5818665133338072e-7
+            },
+            "orientation": {
+              "x": -7.852031913557767e-9,
+              "y": 0.0024827769957482815,
+              "z": -1.1550948642025105e-7,
+              "w": 0.9999969601631165
+            },
+            "requestedRates": {
+              "roll": 0,
+              "pitch": 0,
+              "yaw": 23.438923828125
+            },
+            "achievedRates": {
+              "roll": -0.00028011061043581683,
+              "pitch": -0.000054799665517805173,
+              "yaw": 1.5812093093613298e-7
+            },
+            "calibratedInput": {
+              "roll": 0,
+              "pitch": 0,
+              "yaw": 0.15,
+              "throttle": 0.45
+            },
+            "motorSpeeds": [
+              0.44145156055014256,
+              0.45838904320162965,
+              0.44145153358679495,
+              0.4583890795514314
+            ],
+            "voltage": 4.267773881039599,
+            "current": 1.2650172147753957,
+            "usedAh": 0,
+            "consumedSequence": 79,
+            "consumedTimestampUs": 1580000,
+            "sampleAgeUs": 20000,
+            "devicePollHz": null,
+            "saturated": false,
+            "radius": 0.06929646455628166,
+            "supportHeight": 0.017500011154601532,
+            "topHeight": 0.017500011154601532,
+            "contact": {
+              "touching": true,
+              "grounded": true,
+              "normal": {
+                "x": 0,
+                "y": 1,
+                "z": 0
+              },
+              "impactSpeed": 2.5543806714267703e-7,
+              "contacts": 1,
+              "ids": [
+                "floor"
+              ],
+              "entries": [
+                {
+                  "id": "floor",
+                  "normal": {
+                    "x": 0,
+                    "y": 1,
+                    "z": 0
+                  },
+                  "moving": false
+                }
+              ],
+              "support": {
+                "id": "floor",
+                "normal": {
+                  "x": 0,
+                  "y": 1,
+                  "z": 0
+                }
+              }
+            },
+            "dynamicColliders": [],
+            "recordingStatus": {
+              "format": "AircraftRecordingStatus.v1",
+              "state": "recording",
+              "retainedFromSeconds": 0,
+              "retainedThroughSeconds": 1.6,
+              "lastRecoverableSeconds": null,
+              "currentSeconds": 1.6,
+              "retainedSegments": 1,
+              "retainedBytes": 9050,
+              "error": null
+            },
+            "archiveStatus": {
+              "generation": 1,
+              "origin": {
+                "kind": "fresh",
+                "startTick": 0
+              },
+              "earliestIndex": 0,
+              "lastSealedIndex": -1,
+              "latestTick": 80
+            }
+          },
+          "repeat": 1
+        },
+        {
+          "scenario": "meteor-worker",
+          "preset": "meteor75-analog-2022",
+          "worker": true,
+          "instrumented": true,
+          "backend": "civilian-quad-aircraft.v3",
+          "initializationMs": 165.39999999850988,
+          "elapsedMs": 105.40000000223517,
+          "capacity": 15.180265654327036,
+          "finalHash": "42fc00f7",
+          "counters": {
+            "physicsSnapshot": {
+              "calls": 162,
+              "elapsedMs": 2.899999987334013
+            },
+            "solverStep": {
+              "calls": 1600,
+              "elapsedMs": 47.29999999329448
+            },
+            "trackedContactPair": {
+              "calls": 8000,
+              "elapsedMs": 4.699999984353781
+            },
+            "currentShapeContact": {
+              "calls": 4905,
+              "elapsedMs": 1.1000000089406967
+            }
+          },
+          "perMissionMs": [
+            4.400000002235174,
+            1.3999999985098839,
+            1.300000000745058,
+            1.300000000745058,
+            1.199999999254942,
+            0.9000000022351742,
+            1.3999999985098839,
+            1.1000000014901161,
+            1.0999999977648258,
+            1.5,
+            0.6999999992549419,
+            0.6999999992549419,
+            0.9000000022351742,
+            0.6999999992549419,
+            0.8999999985098839,
+            1.2000000029802322,
+            0.8999999985098839,
+            0.6000000014901161,
+            0.6999999992549419,
+            0.5999999977648258,
+            0.8000000007450581,
+            0.5,
+            0.6000000014901161,
+            0.8000000007450581,
+            0.5999999977648258,
+            0.6999999992549419,
+            0.6999999992549419,
+            1,
+            0.6999999992549419,
+            0.8000000007450581,
+            0.6000000014901161,
+            0.3999999985098839,
+            0.6000000014901161,
+            0.5,
+            0.5,
+            0.8999999985098839,
+            0.6000000014901161,
+            0.5,
+            0.5,
+            1.3999999985098839,
+            0.9000000022351742,
+            0.7999999970197678,
+            0.8000000007450581,
+            0.6999999992549419,
+            0.6000000014901161,
+            0.6999999992549419,
+            1.1000000014901161,
+            0.8000000007450581,
+            1.3999999985098839,
+            2.899999998509884,
+            2.100000001490116,
+            2.100000001490116,
+            1.8999999985098839,
+            1.5,
+            1.699999999254942,
+            1.800000000745058,
+            2,
+            2.199999999254942,
+            1.699999999254942,
+            1.699999999254942,
+            1.699999999254942,
+            2.100000001490116,
+            1.8999999985098839,
+            1.7000000029802322,
+            2,
+            2,
+            2,
+            1.699999999254942,
+            1.800000000745058,
+            1.7999999970197678,
+            2,
+            2.100000001490116,
+            1.699999999254942,
+            1.699999999254942,
+            2.2000000029802322,
+            2.099999997764826,
+            1.800000000745058,
+            1.8999999985098839,
+            2.2000000029802322,
+            2
+          ],
+          "minimumSupportY": -0.0000098069226451801,
+          "contacts": 1,
+          "finalTelemetry": {
+            "backend": "civilian-quad-aircraft.v3",
+            "experimental": true,
+            "scored": false,
+            "frequency": 1000,
+            "missionHz": 50,
+            "missionTick": 80,
+            "substep": 1600,
+            "seconds": 1.6,
+            "position": {
+              "x": 0.05004875361919403,
+              "y": 0.017498547211289406,
+              "z": 0.002832278609275818
+            },
+            "velocity": {
+              "x": 3.529981285055328e-8,
+              "y": -2.531832024033065e-7,
+              "z": 1.5818665133338072e-7
+            },
+            "orientation": {
+              "x": -7.852031913557767e-9,
+              "y": 0.0024827769957482815,
+              "z": -1.1550948642025105e-7,
+              "w": 0.9999969601631165
+            },
+            "requestedRates": {
+              "roll": 0,
+              "pitch": 0,
+              "yaw": 23.438923828125
+            },
+            "achievedRates": {
+              "roll": -0.00028011061043581683,
+              "pitch": -0.000054799665517805173,
+              "yaw": 1.5812093093613298e-7
+            },
+            "calibratedInput": {
+              "roll": 0,
+              "pitch": 0,
+              "yaw": 0.15,
+              "throttle": 0.45
+            },
+            "motorSpeeds": [
+              0.44145156055014256,
+              0.45838904320162965,
+              0.44145153358679495,
+              0.4583890795514314
+            ],
+            "voltage": 4.267773881039599,
+            "current": 1.2650172147753957,
+            "usedAh": 0,
+            "consumedSequence": 79,
+            "consumedTimestampUs": 1580000,
+            "sampleAgeUs": 20000,
+            "devicePollHz": null,
+            "saturated": false,
+            "radius": 0.06929646455628166,
+            "supportHeight": 0.017500011154601532,
+            "topHeight": 0.017500011154601532,
+            "contact": {
+              "touching": true,
+              "grounded": true,
+              "normal": {
+                "x": 0,
+                "y": 1,
+                "z": 0
+              },
+              "impactSpeed": 2.5543806714267703e-7,
+              "contacts": 1,
+              "ids": [
+                "floor"
+              ],
+              "entries": [
+                {
+                  "id": "floor",
+                  "normal": {
+                    "x": 0,
+                    "y": 1,
+                    "z": 0
+                  },
+                  "moving": false
+                }
+              ],
+              "support": {
+                "id": "floor",
+                "normal": {
+                  "x": 0,
+                  "y": 1,
+                  "z": 0
+                }
+              }
+            },
+            "dynamicColliders": [],
+            "recordingStatus": {
+              "format": "AircraftRecordingStatus.v1",
+              "state": "recording",
+              "retainedFromSeconds": 0,
+              "retainedThroughSeconds": 1.6,
+              "lastRecoverableSeconds": null,
+              "currentSeconds": 1.6,
+              "retainedSegments": 1,
+              "retainedBytes": 9050,
+              "error": null
+            },
+            "archiveStatus": {
+              "generation": 1,
+              "origin": {
+                "kind": "fresh",
+                "startTick": 0
+              },
+              "earliestIndex": 0,
+              "lastSealedIndex": -1,
+              "latestTick": 80
+            }
+          },
+          "repeat": 0
+        },
+        {
+          "scenario": "meteor-worker",
+          "preset": "meteor75-analog-2022",
+          "worker": true,
+          "instrumented": true,
+          "backend": "civilian-quad-aircraft.v3",
+          "initializationMs": 157.30000000074506,
+          "elapsedMs": 118.90000000223517,
+          "capacity": 13.456686290747871,
+          "finalHash": "42fc00f7",
+          "counters": {
+            "physicsSnapshot": {
+              "calls": 162,
+              "elapsedMs": 4.7999999932944775
+            },
+            "solverStep": {
+              "calls": 1600,
+              "elapsedMs": 50.80000000819564
+            },
+            "trackedContactPair": {
+              "calls": 8000,
+              "elapsedMs": 6.49999999627471
+            },
+            "currentShapeContact": {
+              "calls": 4905,
+              "elapsedMs": 0.9999999962747097
+            }
+          },
+          "perMissionMs": [
+            3.900000002235174,
+            1.5999999977648258,
+            1.5,
+            1.300000000745058,
+            1.6000000014901161,
+            1.0999999977648258,
+            0.8000000007450581,
+            1.199999999254942,
+            1.4000000022351742,
+            1.699999999254942,
+            0.6999999992549419,
+            0.8000000007450581,
+            0.8000000007450581,
+            0.5,
+            0.6999999992549419,
+            0.8000000007450581,
+            0.6999999992549419,
+            0.8000000007450581,
+            0.5999999977648258,
+            1.300000000745058,
+            1.199999999254942,
+            1.300000000745058,
+            0.8000000007450581,
+            0.8999999985098839,
+            1,
+            0.8000000007450581,
+            0.8999999985098839,
+            3.2000000029802322,
+            0.7999999970197678,
+            0.7000000029802322,
+            0.7999999970197678,
+            0.7000000029802322,
+            0.5999999977648258,
+            0.6999999992549419,
+            0.4000000022351742,
+            1.0999999977648258,
+            0.7000000029802322,
+            0.7999999970197678,
+            0.6000000014901161,
+            1.3999999985098839,
+            1.300000000745058,
+            0.8000000007450581,
+            0.6000000014901161,
+            0.5,
+            0.5999999977648258,
+            1.199999999254942,
+            0.6000000014901161,
+            0.8000000007450581,
+            1.300000000745058,
+            2.399999998509884,
+            2.399999998509884,
+            2.300000000745058,
+            1.800000000745058,
+            2,
+            1.8999999985098839,
+            2.099999997764826,
+            1.9000000022351742,
+            2,
+            2.2999999970197678,
+            1.9000000022351742,
+            1.8999999985098839,
+            2.100000001490116,
+            2,
+            2,
+            1.7000000029802322,
+            2,
+            4.099999997764826,
+            1.9000000022351742,
+            1.7999999970197678,
+            3.900000002235174,
+            2,
+            2.2000000029802322,
+            2.5,
+            2.399999998509884,
+            2.199999999254942,
+            1.800000000745058,
+            1.699999999254942,
+            2,
+            1.9000000022351742,
+            2.5
+          ],
+          "minimumSupportY": -0.0000098069226451801,
+          "contacts": 1,
+          "finalTelemetry": {
+            "backend": "civilian-quad-aircraft.v3",
+            "experimental": true,
+            "scored": false,
+            "frequency": 1000,
+            "missionHz": 50,
+            "missionTick": 80,
+            "substep": 1600,
+            "seconds": 1.6,
+            "position": {
+              "x": 0.05004875361919403,
+              "y": 0.017498547211289406,
+              "z": 0.002832278609275818
+            },
+            "velocity": {
+              "x": 3.529981285055328e-8,
+              "y": -2.531832024033065e-7,
+              "z": 1.5818665133338072e-7
+            },
+            "orientation": {
+              "x": -7.852031913557767e-9,
+              "y": 0.0024827769957482815,
+              "z": -1.1550948642025105e-7,
+              "w": 0.9999969601631165
+            },
+            "requestedRates": {
+              "roll": 0,
+              "pitch": 0,
+              "yaw": 23.438923828125
+            },
+            "achievedRates": {
+              "roll": -0.00028011061043581683,
+              "pitch": -0.000054799665517805173,
+              "yaw": 1.5812093093613298e-7
+            },
+            "calibratedInput": {
+              "roll": 0,
+              "pitch": 0,
+              "yaw": 0.15,
+              "throttle": 0.45
+            },
+            "motorSpeeds": [
+              0.44145156055014256,
+              0.45838904320162965,
+              0.44145153358679495,
+              0.4583890795514314
+            ],
+            "voltage": 4.267773881039599,
+            "current": 1.2650172147753957,
+            "usedAh": 0,
+            "consumedSequence": 79,
+            "consumedTimestampUs": 1580000,
+            "sampleAgeUs": 20000,
+            "devicePollHz": null,
+            "saturated": false,
+            "radius": 0.06929646455628166,
+            "supportHeight": 0.017500011154601532,
+            "topHeight": 0.017500011154601532,
+            "contact": {
+              "touching": true,
+              "grounded": true,
+              "normal": {
+                "x": 0,
+                "y": 1,
+                "z": 0
+              },
+              "impactSpeed": 2.5543806714267703e-7,
+              "contacts": 1,
+              "ids": [
+                "floor"
+              ],
+              "entries": [
+                {
+                  "id": "floor",
+                  "normal": {
+                    "x": 0,
+                    "y": 1,
+                    "z": 0
+                  },
+                  "moving": false
+                }
+              ],
+              "support": {
+                "id": "floor",
+                "normal": {
+                  "x": 0,
+                  "y": 1,
+                  "z": 0
+                }
+              }
+            },
+            "dynamicColliders": [],
+            "recordingStatus": {
+              "format": "AircraftRecordingStatus.v1",
+              "state": "recording",
+              "retainedFromSeconds": 0,
+              "retainedThroughSeconds": 1.6,
+              "lastRecoverableSeconds": null,
+              "currentSeconds": 1.6,
+              "retainedSegments": 1,
+              "retainedBytes": 9050,
+              "error": null
+            },
+            "archiveStatus": {
+              "generation": 1,
+              "origin": {
+                "kind": "fresh",
+                "startTick": 0
+              },
+              "earliestIndex": 0,
+              "lastSealedIndex": -1,
+              "latestTick": 80
+            }
+          },
+          "repeat": 1
+        }
+      ]
+    }
+  ],
+  "loadBefore": [
+    10.5830078125,
+    12.77294921875,
+    12.5478515625
+  ],
+  "limitations": [
+    "Diagnostic wrappers add timer/counter overhead; inclusive method timings overlap and are not exclusive CPU.",
+    "Same original arguments/results; verify final hashes and exact final telemetry match uninstrumented case.",
+    "Two fixtures only; no threshold qualification or replacement for preserved failed matrix.",
+    "No runtime files modified; test-owned worker bootstraps and isolated headless contexts."
+  ],
+  "meanHostBusyPercent": 75.99950944321805,
+  "loadAfter": [
+    10.7666015625,
+    12.7021484375,
+    12.52587890625
+  ],
+  "finishedAt": "2026-10-19T00:07:50.770Z",
+  "sourcesUnchanged": true,
+  "trajectoriesUnchanged": true
+}

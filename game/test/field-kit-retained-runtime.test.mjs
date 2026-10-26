@@ -30,9 +30,8 @@ function boundedBytesEqual(actual, expected, message) {
 }
 import fs from 'node:fs/promises';
 import { createHash } from 'node:crypto';
-import { importThemeBundle, exportThemeBundle } from '../presentation/bundle.mjs';
+import { importThemeBundle } from '../presentation/bundle.mjs';
 import { canonicalJSON } from '../data-json.mjs';
-import { validateThemeBundle } from '../presentation/model.mjs';
 import { inspectPresentationDependencies } from '../presentation/dependencies.mjs';
 import {
   FIELD_KIT_RETAINED_RUNTIME as pin,
@@ -85,43 +84,27 @@ const TEAM_EQUIPMENT_PAYLOADS = [
   },
 ];
 
+// Independent frozen payload inventory from the pre-migration authoring bundle.
+// Metadata successors are different files; the shared images/audio/fonts stay exact.
 async function authenticateCanonicalOriginals(production) {
-  const oracle = JSON.parse(await read('game/test/fixtures/production-main-reconciliation.json'));
-  const checkpoint = oracle.canonical;
-  assert.equal(checkpoint.revision, 57);
-  const source = {
-    format: 'revealline-theme-bundle.v1',
-    id: 'field-kit',
-    revision: 57,
-    selection: {
-      base: { id: 'base', revision: 1 },
-      collection: null,
-      theme: { id: 'fpv', revision: 57 },
-    },
-  };
-  for (const group of ['slots', 'assets', 'themes', 'collections']) {
-    const expected = oracle.shared[group] ?? checkpoint[group];
-    source[group] = production.document[group].slice(0, expected.count);
-    assert.equal(source[group].length, expected.count, `canonical57 ${group} count`);
-    assert.equal(sha(canonicalJSON(source[group])), expected.sha256, `canonical57 ${group} hash`);
-  }
-  const document = validateThemeBundle(source);
-  const assets = new Map(),
-    originals = new Map();
-  for (const asset of document.assets) {
-    if (!asset.file || assets.has(asset.file.sha256)) continue;
-    const blob = production.assets.get(asset.file.sha256);
-    assert.ok(blob, `canonical original ${asset.file.sha256}`);
-    assert.equal(blob.size, asset.file.bytes, `canonical original bytes ${asset.file.sha256}`);
+  const oracle = JSON.parse(await read('game/test/fixtures/shared-presentation-payloads.json'));
+  assert.equal(
+    sha(canonicalJSON(production.document.assets.slice(0, oracle.retainedAssets.count))),
+    oracle.retainedAssets.sha256,
+    'retained assets hash',
+  );
+  assert.equal(oracle.payloads.length, 132);
+  const equipment = new Set(TEAM_EQUIPMENT_PAYLOADS.map((item) => item.sha256));
+  const originals = new Map();
+  for (const file of oracle.payloads) {
+    const blob = production.assets.get(file.sha256);
+    assert.ok(blob, `shared payload ${file.sha256}`);
+    assert.equal(blob.size, file.bytes);
     const bytes = Buffer.from(await blob.arrayBuffer());
-    assert.equal(sha(bytes), asset.file.sha256, `canonical original hash ${asset.file.sha256}`);
-    assets.set(asset.file.sha256, blob);
-    originals.set(asset.file.sha256, bytes);
+    assert.equal(sha(bytes), file.sha256);
+    if (!equipment.has(file.sha256)) originals.set(file.sha256, bytes);
   }
-  assert.equal(originals.size, 127, 'independently authenticated original payload count');
-  const bundle = Buffer.from(await (await exportThemeBundle(document, assets)).arrayBuffer());
-  assert.equal(bundle.length, checkpoint.bytes);
-  assert.equal(sha(bundle), checkpoint.sha256, 'complete canonical57 bundle');
+  assert.equal(originals.size, 127);
   return originals;
 }
 
@@ -192,35 +175,35 @@ test('retained production inputs preserve thirteen exact paths across independen
     pinNative103.path,
     pinCanonical104.path,
   ]);
-  // Independently authenticated original Git bytes, including the canonical104
-  // lineage. Numeric revisions never substitute for exact retained identities.
+  // Exact successor bytes, with original source commits retained as provenance.
+  // Numeric revisions never substitute for authenticated manifest identities.
   for (const [item, commit, bytes, sha256] of [
     [
       pin38,
       '432110b51c570b838cdae390790b67dfa76f0785',
-      968465,
-      "e4d16e7b206f50023a1f67249c9be63f9968975071cf16ea0802891ca122e3b3",
+      808787,
+      'e4d16e7b206f50023a1f67249c9be63f9968975071cf16ea0802891ca122e3b3',
     ],
     [
       pin50,
       'e9434d03feb30bf8767051b2832a4ab987b2fa41',
-      977958,
-      "666e68e92f7472368ed915fdf434dff25958553121bc504c8a9b71724386bcae",
+      818280,
+      '666e68e92f7472368ed915fdf434dff25958553121bc504c8a9b71724386bcae',
     ],
     [
       pinNative103,
       '1b99d2ea791074ff79f6be9b8176594b0733874f',
-      1250579,
-      "7acb0bb2793781d0d5bbb774eeda05f38bfa30dcf71dc6a600a652bb7718f589",
+      1075486,
+      '7acb0bb2793781d0d5bbb774eeda05f38bfa30dcf71dc6a600a652bb7718f589',
     ],
     [
       pinCanonical104,
       'c5e22bc860e9021d42ce326761d0f4decba3fc40',
-      1264907,
-      "087e920b6c20d5f8adb64b4824a954c998799a18becd5dbe1030fd007de69ce8",
+      1089502,
+      '087e920b6c20d5f8adb64b4824a954c998799a18becd5dbe1030fd007de69ce8',
     ],
   ]) {
-    assert.equal(item.commit, commit);
+    assert.equal(item.predecessorCommit, commit);
     assert.equal(item.originalPath, 'game/presentation/compiled/runtime.json');
     assert.equal(item.bytes, bytes);
     assert.equal(item.sha256, sha256);
@@ -233,30 +216,30 @@ test('retained production inputs preserve thirteen exact paths across independen
     );
   }
   boundedBytesEqual(files.get(`runtime.${pinRadio102.sha256}.json`), await read(pinRadio102.path));
-  assert.equal(pin.commit, 'b810521a53af7be145acb8dedce0a01a747339cf');
+  assert.equal(pin.predecessorCommit, 'b810521a53af7be145acb8dedce0a01a747339cf');
   assert.equal(pin.originalPath, 'game/presentation/compiled/runtime.json');
   assert.equal(sha(files.get('runtime.json')), pinCanonical104.sha256);
   assert.deepEqual(files.get('runtime.json'), await read(pinCanonical104.path));
   assert.deepEqual(files.get(`runtime.${pinMain101.sha256}.json`), await read(pinMain101.path));
-  assert.equal(pinRadio102.commit, '280321ca77eef81d1bce9de8c23247548ae9dd03');
+  assert.equal(pinRadio102.predecessorCommit, '280321ca77eef81d1bce9de8c23247548ae9dd03');
   assert.equal(pinRadio102.bytes, 1073942);
   assert.equal(
     pinRadio102.sha256,
-    "649a6f8b94cac1fd2f81e05c5647e0e85e16cd7858c592ae5bdbdc85481b384f",
+    '649a6f8b94cac1fd2f81e05c5647e0e85e16cd7858c592ae5bdbdc85481b384f',
   );
   assert.deepEqual(files.get(`runtime.${pin.sha256}.json`), original);
-  assert.equal(pin58.commit, '6842203fbf24db198da21759e23d5c5c64d499dd');
+  assert.equal(pin58.predecessorCommit, '6842203fbf24db198da21759e23d5c5c64d499dd');
   assert.equal(pin58.originalPath, 'game/presentation/compiled/runtime.json');
   assert.equal(pin58.bytes, 820068);
-  assert.equal(pin58.sha256, "b3a79b85a00b8bc8b70a12fcc7aedfe6667ea8d3da64ea4baab85fb28b52e12c");
+  assert.equal(pin58.sha256, 'b3a79b85a00b8bc8b70a12fcc7aedfe6667ea8d3da64ea4baab85fb28b52e12c');
   assert.deepEqual(files.get(`runtime.${pin58.sha256}.json`), await read(pin58.path));
-  assert.equal(pin60.commit, 'bc8b7565f2c4277145b4763d76d928c45e024f1c');
-  assert.equal(pin60.sha256, "3d1cfb93d141f08b1f9cee06a3a528e10aab688634a36eed665a7d4e7e912b9b");
+  assert.equal(pin60.predecessorCommit, 'bc8b7565f2c4277145b4763d76d928c45e024f1c');
+  assert.equal(pin60.sha256, '3d1cfb93d141f08b1f9cee06a3a528e10aab688634a36eed665a7d4e7e912b9b');
   assert.deepEqual(files.get(`runtime.${pin60.sha256}.json`), await read(pin60.path));
-  assert.equal(pin62.commit, '2e64c130d219dfece5134ba9119b85a5bf34904d');
+  assert.equal(pin62.predecessorCommit, '2e64c130d219dfece5134ba9119b85a5bf34904d');
   assert.equal(pin62.originalPath, 'game/presentation/compiled/runtime.json');
   assert.equal(pin62.bytes, 921950);
-  assert.equal(pin62.sha256, "af2d1d398ca56ec365899940d27f790c2b406d385461e89a1dc8fcbbcede6972");
+  assert.equal(pin62.sha256, 'af2d1d398ca56ec365899940d27f790c2b406d385461e89a1dc8fcbbcede6972');
   await verifyPresentationOutput(files);
   const corrupt = Buffer.from(original);
   corrupt[10] ^= 1;
@@ -447,7 +430,7 @@ test('the authenticated exact payload set rejects missing, substituted, extra an
   rewrittenHistory.assets[0].description += ' changed';
   await assert.rejects(
     authenticateCanonicalOriginals({ ...production, document: rewrittenHistory }),
-    /canonical57 assets hash/,
+    /retained assets hash/,
   );
 });
 
@@ -484,7 +467,7 @@ test('explicit60 rejects changed raw bytes and missing or corrupt Team-only payl
 test('accepted58 is byte-exact, dependency-complete and fails closed without losing other history', async () => {
   const { production } = await fixture();
   const original58 = await read(pin58.path);
-  assert.equal(original58.length, 979746);
+  assert.equal(original58.length, 820068);
   assert.equal(sha(original58), pin58.sha256);
   const files = await readFieldKitRetainedOutput({ assets: production.assets, read });
   boundedBytesEqual(files.get(`runtime.${pin58.sha256}.json`), original58);

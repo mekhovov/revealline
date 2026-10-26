@@ -2,6 +2,7 @@ import fs from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import assert from 'node:assert/strict';
+import { inspectImageDataUrl } from '../game/content.mjs';
 import {
   SCREENING_VERSION,
   DECODER_PATH,
@@ -90,6 +91,28 @@ export async function buildArtworkScreening({
     const bytes = await read(original.path);
     assert.equal(sha256(bytes), original.id, `Changed source original: ${original.path}`);
     assert.equal(bytes.length, original.bytes);
+    if (original.pixelVerification === 'not-decoded' && original.pixelsSha256 === null) {
+      const mime = original.mime;
+      assert.ok(['image/png', 'image/jpeg', 'image/webp'].includes(mime));
+      assert.ok(
+        !(mime === 'image/png' && bytes.subarray(24, 29).equals(Buffer.from([8, 2, 0, 0, 0]))),
+        'Portable RGB8 PNG must receive pixel screening.',
+      );
+      const header = inspectImageDataUrl(`data:${mime};base64,${bytes.toString('base64')}`);
+      assert.ok(header.valid, 'Undecoded original has an invalid header.');
+      assert.equal(header.width, original.width);
+      assert.equal(header.height, original.height);
+      const owned = ownership.get(original.id);
+      images.push({
+        ...original,
+        currentOwners: sorted(owned.current),
+        historicalOwners: sorted(owned.historical),
+        exactTransforms: [],
+        canonicalPixels: null,
+        thumbnail: null,
+      });
+      continue;
+    }
     const decoded = decodeScreeningPNG(bytes);
     assert.equal(
       sha256(decoded.pixels),
@@ -124,6 +147,8 @@ export async function buildArtworkScreening({
       const left = current[a],
         right = current[b];
       if (
+        !signatures.has(left.id) ||
+        !signatures.has(right.id) ||
         left.canonicalPixels === right.canonicalPixels ||
         !left.currentOwners.some((owner) => right.currentOwners.some((other) => owner !== other))
       )
@@ -171,7 +196,8 @@ export async function buildArtworkScreening({
         'Derived maximum 96px RGB area-average thumbnail, PNG with explicitly stored DEFLATE blocks. Source originals and game delivery bytes unchanged.',
       gate: 'Default/check records the existing baseline without rejecting publication. Strict new-art comparison rejects introduced exact cross-owner copies and requires explicit visual approval of each changed current assignment. Similarity scores never automatically approve or reject originality.',
       limitations: [
-        'Only RGB8 non-interlaced PNG originals supported by the pinned decoder are screened. Unsupported formats fail closed.',
+        'Undecoded originals retain byte-level ownership evidence only. Pixel transforms, similarity and crop checks are unavailable for these files; their assignments still require explicit visual review under the strict new-art gate.',
+        'Pixel screening requires RGB8 non-interlaced PNG originals supported by the pinned decoder. Other admitted raster formats remain explicitly undecoded; unknown formats and invalid headers fail closed.',
         'No browser color management is applied. Browser decoding, accessibility and composition review remain required.',
         'Perceptual matches are suspected, not confirmed: simple structure, flat skies and similar genres may match. Recolorings, crops and edits may be missed.',
         'Procedural backgrounds are outside this original-image screen; the inventory retains their separate renderer/seed evidence.',
@@ -184,6 +210,8 @@ export async function buildArtworkScreening({
     },
     summary: {
       originals: images.length,
+      pixelScreenedOriginals: images.filter((image) => image.canonicalPixels !== null).length,
+      undecodedOriginals: images.filter((image) => image.canonicalPixels === null).length,
       currentOriginals: current.length,
       currentExactCrossOwnerGroups: exactCurrent.length,
       distinctByteRotatedOrReflectedGroups: exactCurrent.filter(
@@ -229,7 +257,7 @@ export function artworkScreeningHTML(
   };
   const card = (id) => {
     const image = images.get(id);
-    return `<figure><a href="../../${escape(image.path)}"><img loading="lazy" width="160" src="${escape(image.thumbnail.path)}" alt="${escape(image.description)}"></a><figcaption><a href="#image-${id}">${escape(image.description || image.path)}</a><br><small>${escape(id.slice(0, 16))}</small></figcaption></figure>`;
+    return `<figure><a href="../../${escape(image.path)}"><img loading="lazy" width="160" src="${escape(image.thumbnail?.path ?? `../../${image.path}`)}" alt="${escape(image.description)}"></a><figcaption><a href="#image-${id}">${escape(image.description || image.path)}</a><br><small>${escape(id.slice(0, 16))}</small></figcaption></figure>`;
   };
   return `<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width"><title>Reveal Line artwork screening</title><style>body{max-width:1160px;margin:2rem auto;padding:0 1rem;font:16px/1.5 system-ui;background:#111722;color:#e5edf5}a{color:#8edfff}h1,h2,h3{line-height:1.2}code,small{overflow-wrap:anywhere}.pairs{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:1rem}article,details{border:1px solid #435166;border-radius:.4rem;padding:.8rem;margin:.5rem 0}.images{display:flex;gap:1rem;flex-wrap:wrap}figure{margin:0;flex:1;min-width:120px}img{max-width:100%;height:auto}summary{cursor:pointer}.suspect{border-color:#dcac5e}.warning{color:#ffdf9c}pre{white-space:pre-wrap}</style><h1>Artwork screening · visual review pending</h1><p>This is reproducible screening evidence, not an originality approval. <a href="${escape(inventoryFile)}">Complete ownership inventory</a> · <a href="${escape(reportFile)}">Machine-readable results</a>. Thumbnails are review derivatives; click one to inspect the unchanged original.</p><pre>${escape(JSON.stringify(report.summary, null, 2))}</pre><p class="warning">Exact current copies require replacement decisions. Historical reuse is retained. Nearest matches may be false positives; low distances do not establish plagiarism, uniqueness or gameplay variety. No visual approval has been recorded.</p><h2>Exact current cross-owner copies</h2>${report.exactCurrent.map((group) => `<details><summary>${escape(group.kind)} · ${group.assignments.length} assignments · ${group.artwork.length} originals</summary><div class="images">${group.artwork.map(card).join('')}</div><ul>${group.assignments.map(({ owner }) => `<li>${ownerLink(owner)}</li>`).join('')}</ul></details>`).join('')}<h2>Nearest-match contact sheets</h2><p>Top ${report.method.thresholds.nearest} neighbours per current original after exact matches are removed, deduplicated into pairs. Scores range from 0 to 1216; at most ${report.method.thresholds.suspectDistance} is a conservative <em>suspected</em> label, not a calibrated probability. Crop/transform applies in the named direction.</p><div class="pairs">${report.pairs.map((pair) => `<article${pair.suspected ? ' class="suspect"' : ''}><h3>${pair.suspected ? 'Suspected similarity — review' : 'Nearest neighbour — review'} · ${pair.distance}/1216</h3><div class="images">${card(pair.left)}${card(pair.right)}</div><p>${escape(pair.direction)} · ${escape(pair.crop)} · ${escape(pair.transform)}${pair.lowInformation ? ' · low-information comparison' : ''}</p></article>`).join('')}</div><h2>All originals and ownership</h2>${report.images.map((image) => `<details id="image-${image.id}"><summary>${escape(image.description || image.path)} · ${image.currentOwners.length} current / ${image.historicalOwners.length} historical owners</summary><div class="images">${card(image.id)}</div><p><code>${escape(image.path)}</code><br>Source SHA-256: <code>${image.id}</code><br>Pixel SHA-256: <code>${image.pixelsSha256}</code></p><h3>Current owners</h3><ul>${image.currentOwners.map((id) => `<li>${ownerLink(id)}</li>`).join('')}</ul><details><summary>Historical / tooling references (preserved)</summary><ul>${image.historicalOwners.map((id) => `<li>${ownerLink(id)}</li>`).join('')}</ul></details></details>`).join('')}<h2>Method and limits</h2><p>${escape(report.method.exact)}</p><p>${escape(report.method.similarity)}</p><p>${escape(report.method.crops)}</p><ul>${report.method.limitations.map((value) => `<li>${escape(value)}</li>`).join('')}</ul><p><a href="${report.method.reference}">PDQ implementation guidance</a>: ${escape(report.method.referenceNote)}</p><p>Reproduce: <code>${escape(command)}</code>. Method SHA-256: <code>${report.method.algorithmSha256}</code>.</p></html>\n`;
 }

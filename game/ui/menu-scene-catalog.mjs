@@ -1,9 +1,10 @@
 /** Presentation-only IDs. Scene choice never changes campaign, rules or saves. */
-const rows = [['fpv', 'hangar', '#080e18', '#f4c56c', '#83dae7', '68% 50%', '50% 50%', 'drone'],
-['ukraine', 'meadow', '#0b1730', '#ffd876', '#83c4ed', '68% 50%', '71% 50%', 'bird'],
-['retro', 'rain', '#080e26', '#ffcd80', '#80dcf2', '68% 50%', '68% 50%', 'reflection'],
-['droneaid-community', 'relay', '#152b39', '#f0c777', '#94d1cd', '64% 50%', '67% 50%', 'drone'],
-[
+const rows = [
+  ['fpv', 'hangar', '#080e18', '#f4c56c', '#83dae7', '68% 50%', '50% 50%', 'drone'],
+  ['ukraine', 'meadow', '#0b1730', '#ffd876', '#83c4ed', '68% 50%', '71% 50%', 'bird'],
+  ['retro', 'rain', '#080e26', '#ffcd80', '#80dcf2', '68% 50%', '68% 50%', 'reflection'],
+  ['droneaid-community', 'relay', '#152b39', '#f0c777', '#94d1cd', '64% 50%', '67% 50%', 'drone'],
+  [
     'droneaid-nl-community',
     'workshop',
     '#0a0c0e',
@@ -13,7 +14,7 @@ const rows = [['fpv', 'hangar', '#080e18', '#f4c56c', '#83dae7', '68% 50%', '50%
     '90% 50%',
     'drone',
   ],
-[
+  [
     'droneaid-nl-workshop-lights-theme',
     'lamplight',
     '#242436',
@@ -23,7 +24,7 @@ const rows = [['fpv', 'hangar', '#080e18', '#f4c56c', '#83dae7', '68% 50%', '50%
     '68% 50%',
     'drone',
   ],
-[
+  [
     'droneaid-nl-parts-in-motion-theme',
     'parts',
     '#152d3a',
@@ -33,7 +34,7 @@ const rows = [['fpv', 'hangar', '#080e18', '#f4c56c', '#83dae7', '68% 50%', '50%
     '10% 50%',
     'parcel',
   ],
-[
+  [
     'droneaid-nl-makers-together-theme',
     'makers',
     '#183832',
@@ -43,7 +44,7 @@ const rows = [['fpv', 'hangar', '#080e18', '#f4c56c', '#83dae7', '68% 50%', '50%
     '59% 50%',
     'drone',
   ],
-[
+  [
     'droneaid-nl-careful-handoff-theme',
     'handoff',
     '#1c3047',
@@ -53,7 +54,7 @@ const rows = [['fpv', 'hangar', '#080e18', '#f4c56c', '#83dae7', '68% 50%', '50%
     '64% 50%',
     'parcel',
   ],
-[
+  [
     'droneaid-nl-signals-of-support-theme',
     'signal',
     '#162642',
@@ -63,7 +64,7 @@ const rows = [['fpv', 'hangar', '#080e18', '#f4c56c', '#83dae7', '68% 50%', '50%
     '66% 50%',
     'signal',
   ],
-[
+  [
     'droneaid-nl-shared-horizon-theme',
     'horizon',
     '#162f42',
@@ -72,22 +73,25 @@ const rows = [['fpv', 'hangar', '#080e18', '#f4c56c', '#83dae7', '68% 50%', '50%
     '65% 50%',
     '66% 50%',
     'bird',
-  ]];
+  ],
+];
 
 // The capture route is composed against each artwork instead of floating at a
 // single global position. Values are percentages of the visible menu frame;
 // the route stays in the quieter half of the image and outside the menu copy.
-const routeRows = {fpv: ['rise', 48, 5, 48, 0.5, 27, 3, 72],
-ukraine: ['horizon', 47, 4, 50, 0.48, 24, 2, 75],
-retro: ['circuit', 50, 8, 47, 0.58, 30, 4, 68],
-'droneaid-community': ['bridge', 49, 6, 48, 0.46, 28, 4, 70],
-'droneaid-nl-community': ['horizon', 49, 5, 49, 0.5, 28, 3, 71],
-'droneaid-nl-workshop-lights-theme': ['rise', 50, 5, 47, 0.52, 29, 3, 69],
-'droneaid-nl-parts-in-motion-theme': ['circuit', 49, 6, 48, 0.52, 28, 4, 70],
-'droneaid-nl-makers-together-theme': ['bridge', 48, 5, 49, 0.48, 27, 3, 71],
-'droneaid-nl-careful-handoff-theme': ['horizon', 49, 6, 48, 0.5, 28, 4, 70],
-'droneaid-nl-signals-of-support-theme': ['circuit', 48, 4, 50, 0.58, 27, 3, 72],
-'droneaid-nl-shared-horizon-theme': ['horizon', 47, 4, 51, 0.48, 26, 2, 73]};
+const routeRows = {
+  fpv: ['rise', 48, 5, 48, 0.5, 27, 3, 72],
+  ukraine: ['horizon', 47, 4, 50, 0.48, 24, 2, 75],
+  retro: ['circuit', 50, 8, 47, 0.58, 30, 4, 68],
+  'droneaid-community': ['bridge', 49, 6, 48, 0.46, 28, 4, 70],
+  'droneaid-nl-community': ['horizon', 49, 5, 49, 0.5, 28, 3, 71],
+  'droneaid-nl-workshop-lights-theme': ['rise', 50, 5, 47, 0.52, 29, 3, 69],
+  'droneaid-nl-parts-in-motion-theme': ['circuit', 49, 6, 48, 0.52, 28, 4, 70],
+  'droneaid-nl-makers-together-theme': ['bridge', 48, 5, 49, 0.48, 27, 3, 71],
+  'droneaid-nl-careful-handoff-theme': ['horizon', 49, 6, 48, 0.5, 28, 4, 70],
+  'droneaid-nl-signals-of-support-theme': ['circuit', 48, 4, 50, 0.58, 27, 3, 72],
+  'droneaid-nl-shared-horizon-theme': ['horizon', 47, 4, 51, 0.48, 26, 2, 73],
+};
 const routes = Object.fromEntries(
   Object.entries(routeRows).map(
     ([id, [variant, left, top, width, opacity, portraitLeft, portraitTop, portraitWidth]]) => [
@@ -109,52 +113,54 @@ const routes = Object.fromEntries(
 // Top-left rectangles in the uncropped source image, measured in percentages.
 // Effects stay attached to scenery when the image is cropped or the camera moves.
 // Water patches deliberately avoid bridge, shoreline and building silhouettes.
-const environmentRows = {fpv: [
+const environmentRows = {
+  fpv: [
     ['cloud', 63, 9, 28, 12, -4, 16],
     ['beam', 68, 27, 29, 34, -2, 8],
     ['lamp', 41, 24, 5, 4, -1, 4.8],
     ['foliage', 61, 35, 28, 20, -2, 7],
   ],
-ukraine: [
+  ukraine: [
     ['cloud', 48, 7, 44, 17, -6, 18],
     ['water', 72, 67, 12, 4, -2, 5.2],
     ['beam', 74, 28, 21, 35, -3, 9],
   ],
-retro: [
+  retro: [
     ['water', 58, 86, 21, 8, -1.2, 4.8],
     ['lamp', 68, 29, 6, 7, -1, 4.2],
     ['lamp', 94, 20, 5, 10, -3, 5.6],
   ],
-'droneaid-community': [
+  'droneaid-community': [
     ['lamp', 46, 5, 5, 12, -1, 5.2],
     ['lamp', 57, 19, 5, 10, -2.4, 6],
     ['steam', 58, 61, 4, 13, -1.6, 5.8],
   ],
-'droneaid-nl-community': [],
-'droneaid-nl-workshop-lights-theme': [
+  'droneaid-nl-community': [],
+  'droneaid-nl-workshop-lights-theme': [
     ['beam', 8, 9, 34, 53, -2, 8],
     ['lamp', 93, 0, 7, 12, -1, 5.2],
   ],
-'droneaid-nl-parts-in-motion-theme': [
+  'droneaid-nl-parts-in-motion-theme': [
     ['lamp', 4, 12, 10, 18, -1, 5.6],
     ['beam', 22, 4, 24, 38, -3, 8],
   ],
-'droneaid-nl-makers-together-theme': [
+  'droneaid-nl-makers-together-theme': [
     ['lamp', 77, 0, 13, 13, -2, 5.2],
     ['beam', 7, 0, 34, 40, -3, 8.6],
   ],
-'droneaid-nl-careful-handoff-theme': [
+  'droneaid-nl-careful-handoff-theme': [
     ['lamp', 55, 0, 10, 12, -1, 5.6],
     ['beam', 4, 4, 29, 39, -2, 8],
   ],
-'droneaid-nl-signals-of-support-theme': [
+  'droneaid-nl-signals-of-support-theme': [
     ['lamp', 19, 0, 10, 14, -1.6, 5.2],
     ['beam', 1, 4, 27, 37, -3, 8.4],
   ],
-'droneaid-nl-shared-horizon-theme': [
+  'droneaid-nl-shared-horizon-theme': [
     ['lamp', 85, 6, 14, 19, -2, 5.4],
     ['beam', 2, 13, 23, 45, -3, 8.6],
-  ]};
+  ],
+};
 const freezeEnvironment = (values) =>
   Object.freeze(
     values.map(([kind, x, y, width, height, delay, duration]) =>
@@ -194,17 +200,20 @@ const portraitEnvironments = Object.fromEntries(
     'droneaid-nl-shared-horizon-theme': [['beam', 54, 26, 17, 14, -3, 8.6]],
   }).map(([id, values]) => [id, freezeEnvironment(values)]),
 );
-const indoorActors = new Set(['droneaid-community',
-'droneaid-nl-workshop-lights-theme',
-'droneaid-nl-parts-in-motion-theme',
-'droneaid-nl-makers-together-theme',
-'droneaid-nl-careful-handoff-theme',
-'droneaid-nl-signals-of-support-theme',
-'droneaid-nl-shared-horizon-theme']);
+const indoorActors = new Set([
+  'droneaid-community',
+  'droneaid-nl-workshop-lights-theme',
+  'droneaid-nl-parts-in-motion-theme',
+  'droneaid-nl-makers-together-theme',
+  'droneaid-nl-careful-handoff-theme',
+  'droneaid-nl-signals-of-support-theme',
+  'droneaid-nl-shared-horizon-theme',
+]);
 
 // Mode artwork belongs to its existing world; it is not a theme, campaign or
 // capability. Selected Solo editions project this map to an empty object.
-export const MENU_SCENE_COMPOSITIONS = Object.freeze({fpv: Object.freeze({
+export const MENU_SCENE_COMPOSITIONS = Object.freeze({
+  fpv: Object.freeze({
     versus: Object.freeze({
       composition: 'fpv-versus',
       landscape: './art/menu-scenes/fpv-versus.webp',
@@ -244,7 +253,7 @@ export const MENU_SCENE_COMPOSITIONS = Object.freeze({fpv: Object.freeze({
       ]),
     }),
   }),
-ukraine: Object.freeze({
+  ukraine: Object.freeze({
     versus: Object.freeze({
       composition: 'ukraine-versus',
       landscape: './art/menu-scenes/ukraine-versus.webp',
@@ -284,7 +293,7 @@ ukraine: Object.freeze({
       ]),
     }),
   }),
-retro: Object.freeze({
+  retro: Object.freeze({
     versus: Object.freeze({
       composition: 'retro-versus',
       landscape: './art/menu-scenes/retro-versus.webp',
@@ -323,7 +332,8 @@ retro: Object.freeze({
         ['foliage', 44, 44, 9, 10, -2, 7],
       ]),
     }),
-  })});
+  }),
+});
 const compositionProfiles = new WeakMap();
 
 export const MENU_SCENES = Object.freeze(
@@ -374,9 +384,10 @@ export const MENU_SCENES = Object.freeze(
   ),
 );
 
-const EDITION_SCENES = Object.freeze({'droneaid-community': 'droneaid-community',
-'droneaid-nl-community': 'droneaid-nl-community',
-...Object.fromEntries(
+const EDITION_SCENES = Object.freeze({
+  'droneaid-community': 'droneaid-community',
+  'droneaid-nl-community': 'droneaid-nl-community',
+  ...Object.fromEntries(
     [
       'workshop-lights',
       'parts-in-motion',
@@ -385,7 +396,8 @@ const EDITION_SCENES = Object.freeze({'droneaid-community': 'droneaid-community'
       'signals-of-support',
       'shared-horizon',
     ].map((id) => [`droneaid-nl-${id}`, `droneaid-nl-${id}-theme`]),
-  )});
+  ),
+});
 
 export function resolveMenuScene({ themeId, editionId, mode } = {}) {
   const edition = Object.hasOwn(EDITION_SCENES, editionId) ? EDITION_SCENES[editionId] : null;

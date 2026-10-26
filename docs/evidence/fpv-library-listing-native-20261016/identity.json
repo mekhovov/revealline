@@ -1,0 +1,81 @@
+{
+  "schema": "fpv-native-library-tiny-contract-identity-v1",
+  "frozenAt": "2026-10-16T02:01:24.336156+00:00",
+  "origin": "http://127.0.0.1:9212",
+  "sourceRevision": "bc9bc71f192729f0661a0483d7d64609c1973343",
+  "packageRevision": "c4f5766f9d8801aaf319f9101dd90ac848f52eb5e5838c979e5602f46c580995",
+  "runtimeArchiveSha256": "90d2cabcebd8c4647f6abced993dfb5c40f4a19bd5829a0e15c0b5bfc321f692",
+  "exactMember": "optional-practice/civilian-fpv/world-store.mjs",
+  "memberBytesUnchanged": true,
+  "testDatabaseName": "codex-authoring-native-library-listing-bc9-20261016-contract-v1",
+  "fixture": {
+    "retainedRows": 32,
+    "retainedBlobReferences": 2016,
+    "activeShadowBlobReferences": 32,
+    "totalPersistedBlobReferences": 2048,
+    "uniqueOneByteBlobValues": 32,
+    "generation": 7
+  },
+  "softwareExpectedContentSha256": "09cfa923824af62692dc1cc6b3747a1331fbc11d1782823b91a4fe4dc340087a",
+  "softwareSafetyTests": {
+    "cases": 4,
+    "pass": 4,
+    "nativeEvidence": false
+  },
+  "files": [
+    {
+      "path": "index.html",
+      "bytes": 1930,
+      "sha256": "ee7b1343ca521480f02dbe51b022ee7ae0ea118cbad312d6ee89f9ba9d97d95c"
+    },
+    {
+      "path": "style.css",
+      "bytes": 771,
+      "sha256": "0c7aef2cbbc6afaaafaf7f7a6f7875bf5fa571c1227f4b566fcf7d522541bef7"
+    },
+    {
+      "path": "harness.mjs",
+      "bytes": 1668,
+      "sha256": "d37599b6a90bfb1b6d8d276a905e02a5141a511c5ca226abe3b93e04bc2c4aca"
+    },
+    {
+      "path": "contract.mjs",
+      "bytes": 14755,
+      "sha256": "c2d819373994e2ac9e87b93fb04fe8df522d75d7a4167dcf6361a52496533f62"
+    },
+    {
+      "path": "packaged-world-store.mjs",
+      "bytes": 17516,
+      "sha256": "6050ac77adf52c2b757b851c444a4b1430a8cbca34a9048713e540601ebcca22"
+    },
+    {
+      "path": "README.md",
+      "bytes": 3603,
+      "sha256": "5c605552207524481d8d18780f4c59ea97566c49decd26eda42f9ad9c208c6c3"
+    },
+    {
+      "path": "serve.py",
+      "bytes": 1428,
+      "sha256": "5088e285d8030c1c8021f2a2908429889446b65d26c1e1108f2a618c4ed36b1b"
+    },
+    {
+      "path": "verify.mjs",
+      "bytes": 4699,
+      "sha256": "1277731f18110d91f4fe7d26e5bf2f05faa0fd999141696e5e45af9afc241397"
+    },
+    {
+      "path": "safety-checks.tap",
+      "bytes": 950,
+      "sha256": "2330fdab72b04645307ee437bca3dfadc59eb513f14ee125efbcdb8cd8b08273"
+    },
+    {
+      "path": "software-fixture-report.json",
+      "bytes": 3958,
+      "sha256": "54563f38e22a079fcb3077c02b8d8489bcb97a605e0f0e8ab59597f4dffffe99"
+    }
+  ],
+  "nativeAccepted": false,
+  "normalPlayerAccepted": false,
+  "publicPersistenceAccepted": false,
+  "scope": "Tiny synthetic native component fixture only; explicit supplied-factory Proxy identities disclosed, no native/global monkeypatch or player storage. No performance, public closing/zero-visible-saves repair, offline/restart/quota/endurance claim."
+}

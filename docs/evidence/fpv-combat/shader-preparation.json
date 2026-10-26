@@ -1,0 +1,147 @@
+{
+  "empty": {
+    "available": true,
+    "combat": {
+      "bursts": 0,
+      "calls": 0,
+      "capacity": 1024,
+      "evicted": 0,
+      "marks": 0,
+      "maxDrawCalls": 24,
+      "moving": 0,
+      "registeredPools": 11,
+      "runId": "prewarm",
+      "settled": 0,
+      "stored": 0,
+      "tick": 0,
+      "tier": "high"
+    },
+    "combatActors": {
+      "actors": 0,
+      "calls": 0,
+      "capacity": 20,
+      "instances": 0,
+      "templates": 0
+    },
+    "disposed": false,
+    "drone": "racer",
+    "effects": {
+      "directionArrow": 15264432,
+      "ghost": 9824751,
+      "ghostEmissive": 2390144,
+      "goalActive": 15266215,
+      "goalBadge": 10872788,
+      "goalComplete": 9808542,
+      "goalEmissive": 8577493,
+      "goalGlow": 11069917,
+      "goalGlowInactive": 9030085,
+      "goalInactive": 8366516,
+      "goalOutline": 9169660,
+      "hostilePulse": 16232561,
+      "playerPulse": 9233635,
+      "trail": 9824751
+    },
+    "hunt": null,
+    "importedMaterialBindings": {
+      "applied": 0,
+      "diagnostics": []
+    },
+    "presentation": {
+      "activeProjectiles": 0,
+      "actorGoals": [],
+      "actors": [],
+      "collectionId": "authored",
+      "profileId": "academy",
+      "projectileBatches": 2,
+      "revision": "r1",
+      "surfaceDetailGroups": 0
+    },
+    "quality": "high",
+    "registered": {
+      "geometries": 124,
+      "materials": 69,
+      "textures": 13
+    },
+    "renderer": {
+      "calls": 54,
+      "contextLost": false,
+      "geometries": 53,
+      "programs": 9,
+      "textures": 8,
+      "triangles": 3506
+    }
+  },
+  "populated": {
+    "available": true,
+    "combat": {
+      "bursts": 0,
+      "calls": 9,
+      "capacity": 1024,
+      "evicted": 0,
+      "marks": 48,
+      "maxDrawCalls": 40,
+      "moving": 0,
+      "registeredPools": 11,
+      "runId": "stress",
+      "settled": 482,
+      "stored": 20,
+      "tick": 5050,
+      "tier": "ultra"
+    },
+    "combatActors": {
+      "actors": 20,
+      "calls": 4,
+      "capacity": 20,
+      "instances": 653,
+      "templates": 20
+    },
+    "disposed": false,
+    "drone": "racer",
+    "effects": {
+      "directionArrow": 15264432,
+      "ghost": 9824751,
+      "ghostEmissive": 2390144,
+      "goalActive": 15266215,
+      "goalBadge": 10872788,
+      "goalComplete": 9808542,
+      "goalEmissive": 8577493,
+      "goalGlow": 11069917,
+      "goalGlowInactive": 9030085,
+      "goalInactive": 8366516,
+      "goalOutline": 9169660,
+      "hostilePulse": 16232561,
+      "playerPulse": 9233635,
+      "trail": 9824751
+    },
+    "hunt": null,
+    "importedMaterialBindings": {
+      "applied": 0,
+      "diagnostics": []
+    },
+    "presentation": {
+      "activeProjectiles": 0,
+      "actorGoals": [],
+      "actors": [],
+      "collectionId": "authored",
+      "profileId": "academy",
+      "projectileBatches": 2,
+      "revision": "r1",
+      "surfaceDetailGroups": 0
+    },
+    "quality": "high",
+    "registered": {
+      "geometries": 124,
+      "materials": 69,
+      "textures": 13
+    },
+    "renderer": {
+      "calls": 63,
+      "contextLost": false,
+      "geometries": 66,
+      "programs": 9,
+      "textures": 8,
+      "triangles": 36526
+    }
+  },
+  "prepared": true
+}

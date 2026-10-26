@@ -2,13 +2,14 @@ import { editionIdentityId } from './edition-context.mjs';
 
 /** Public navigation aliases never replace edition, save or presentation identities. */
 export const COMMUNITY_ROUTES = Object.freeze(
-  [...['social-drone-ua', 'victory-drones', 'ukraine-culture', 'fpv-learning'].map((id) => ({
+  [
+    ...['social-drone-ua', 'victory-drones', 'ukraine-culture', 'fpv-learning'].map((id) => ({
       slug: id,
       brandId: id,
       editionId: id,
       editionIds: [id],
     })),
-{
+    {
       slug: 'droneaid',
       brandId: 'droneaid-nl',
       editionId: 'droneaid-nl-community',
@@ -22,12 +23,13 @@ export const COMMUNITY_ROUTES = Object.freeze(
         'droneaid-nl-shared-horizon',
       ],
     },
-{
+    {
       slug: 'droneaid-community',
       brandId: 'droneaid',
       editionId: 'droneaid-community',
       editionIds: ['droneaid-community'],
-    }].map((route) => Object.freeze({ ...route, editionIds: Object.freeze(route.editionIds) })),
+    },
+  ].map((route) => Object.freeze({ ...route, editionIds: Object.freeze(route.editionIds) })),
 );
 
 export function communityRouteFromURL(href) {

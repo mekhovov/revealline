@@ -1,0 +1,48 @@
+{
+  "date": "2026-10-20T07:19:39.162Z",
+  "note": "Working-tree candidate with synthetic commit/tree binding. Admission is not release qualification.",
+  "packages": [
+    {
+      "packageId": "civilian-flight",
+      "runtimeFiles": 95,
+      "runtimeBytes": 3751549,
+      "sourceFiles": 97,
+      "sourceBytes": 3786409,
+      "inputBytes": 4980650,
+      "fileLimit": 98,
+      "byteLimit": 8388608,
+      "inputLimit": 8388608,
+      "sourceHeadroom": 4602199,
+      "inputHeadroom": 3407958,
+      "publicEligible": false
+    },
+    {
+      "packageId": "civilian-fpv",
+      "runtimeFiles": 145,
+      "runtimeBytes": 11959312,
+      "sourceFiles": 147,
+      "sourceBytes": 12001261,
+      "inputBytes": 13173879,
+      "fileLimit": 150,
+      "byteLimit": 13107200,
+      "inputLimit": 13303808,
+      "sourceHeadroom": 1105939,
+      "inputHeadroom": 129929,
+      "publicEligible": false
+    },
+    {
+      "packageId": "fpv-worlds",
+      "runtimeFiles": 208,
+      "runtimeBytes": 19138396,
+      "sourceFiles": 210,
+      "sourceBytes": 19188622,
+      "inputBytes": 20330535,
+      "fileLimit": 210,
+      "byteLimit": 20971520,
+      "inputLimit": 20971520,
+      "sourceHeadroom": 1782898,
+      "inputHeadroom": 640985,
+      "publicEligible": false
+    }
+  ]
+}

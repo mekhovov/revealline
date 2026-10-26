@@ -3,6 +3,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { admissionBinding, validationPolicyDigest } from './admission-binding.mjs';
 import { focusedTestPlan } from './focused-tests.mjs';
+import { admissionPaths } from './admission-paths.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const event = JSON.parse(await fs.readFile(process.env.GITHUB_EVENT_PATH, 'utf8'));
@@ -18,23 +19,9 @@ async function api(endpoint) {
   return response.json();
 }
 const pull = await api(`pulls/${event.pull_request.number}`);
-if (
-  pull.head.sha !== event.pull_request.head.sha ||
-  pull.base.sha !== event.pull_request.base.sha
-)
+if (pull.head.sha !== event.pull_request.head.sha || pull.base.sha !== event.pull_request.base.sha)
   throw new Error('PR changed before preflight; await its new gate.');
-const paths = new Set();
-let count = 0;
-for (let page = 1; page <= 30; page++) {
-  const rows = await api(`pulls/${pull.number}/files?per_page=100&page=${page}`);
-  count += rows.length;
-  for (const row of rows) {
-    paths.add(row.filename);
-    if (row.previous_filename) paths.add(row.previous_filename);
-  }
-  if (rows.length < 100) break;
-}
-if (count !== pull.changed_files) throw new Error('Incomplete changed-file inventory.');
+const paths = await admissionPaths(pull, api);
 const receipt = admissionBinding(pull, {
   workflowRevision: process.env.WORKFLOW_REVISION,
   policyDigest: await validationPolicyDigest(root),

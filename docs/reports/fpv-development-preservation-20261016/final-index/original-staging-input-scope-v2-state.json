@@ -1,0 +1,35 @@
+{
+  "format": "RootOriginalStagingPayloadScopeCheckpoint.v1",
+  "createdUTC": "2026-10-16T06:24:23.088350+00:00",
+  "complete": true,
+  "inventorySetFinalForOriginalStagingScope": true,
+  "allVolumeInputSetFinal": false,
+  "scope": "Original staged app payload only plus26frozen Original16 generated/source-cold reports. Expanded volume-root/old worktree/private family gates remain separate and OPEN.",
+  "canonicalCounts": {
+    "file": 122680,
+    "excluded": 101,
+    "symlink": 282
+  },
+  "frozenReports": 26,
+  "frozenReportBytes": 3079782,
+  "inputs": [
+    {
+      "name": "app-staging-canonical-scope-closed-v1.jsonl",
+      "bytes": 32606517,
+      "sha256": "b0e6e1bebbe0f6563901f98b672101a003116c0a3a30aaaccfa5fa633fb922ee"
+    },
+    {
+      "name": "original16-frozen-public-files-v1.jsonl",
+      "bytes": 6258,
+      "sha256": "5016d79c3aa727535c7446afbcc475caca94aecbc7a32acdcf562c09008e67c8"
+    },
+    {
+      "name": "original16-frozen-cold-supplement-public-files-v1.jsonl",
+      "bytes": 1551,
+      "sha256": "4833ec545f96bb86ab2c2b969a2e58554f16524f5c67975bef85c512b3c72c9a"
+    }
+  ],
+  "normalization": "Two original deferred generated-output roots converted to explicit scoped exclusions; original initial and canonical inventories remain byte-preserved. No original app data deleted or silently superseded.",
+  "cloudOriginalSourceAcceptanceRun": 38860055058,
+  "originalSourceIndependentAcceptanceSHA256": "b4eaf35c23147ec4fc87eee8f8a5f05e09dee39929914358137b6156591b07e2"
+}

@@ -1,0 +1,446 @@
+{
+  "started": "2026-10-20T03:09:09.359Z",
+  "scope": "Isolated Chrome with component updates/background networking disabled and 1 MiB disk/media caches; import existing real-minute archive, verify playback, Continue and export continued complete chain. No new minute capture or performance qualification.",
+  "targetTicks": 3050,
+  "fullMinuteCapture": true,
+  "pageErrors": [],
+  "consoleErrors": [
+    {
+      "message": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+      "location": {
+        "url": "http://127.0.0.1:8768/favicon.ico",
+        "line": 0,
+        "column": 0,
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    }
+  ],
+  "failedResponses": [],
+  "checkpoints": [
+    {
+      "name": "full-minute-file-verified-progress",
+      "at": "2026-10-20T03:09:22.245Z",
+      "course": "stadium-01",
+      "ticks": 504,
+      "status": "active",
+      "position": {
+        "x": 0,
+        "y": 2521,
+        "z": 18000
+      },
+      "encounterTicks": 504,
+      "runId": "encounter-c85f6d18f219861f",
+      "kills": 0,
+      "shots": 0,
+      "recording": {
+        "format": "FPVEncounterRecordingStatus.v1",
+        "retainedFrom": 0,
+        "retainedTo": 504,
+        "complete": true,
+        "practiceOnly": true
+      },
+      "archive": null,
+      "playback": {
+        "cursor": 504,
+        "total": 3056,
+        "done": false,
+        "verified": false,
+        "playing": true,
+        "rate": 1,
+        "error": null,
+        "verification": null
+      },
+      "mode": "self-level",
+      "statusText": "Playing recorded combat. Verification runs when playback finishes.",
+      "archiveText": "A new combat attempt starts a local recording.",
+      "dialogOpen": true,
+      "otherDialogs": []
+    },
+    {
+      "name": "full-minute-file-verified-progress",
+      "at": "2026-10-20T03:09:32.261Z",
+      "course": "stadium-01",
+      "ticks": 1005,
+      "status": "active",
+      "position": {
+        "x": 0,
+        "y": 2623,
+        "z": 18000
+      },
+      "encounterTicks": 1005,
+      "runId": "encounter-c85f6d18f219861f",
+      "kills": 0,
+      "shots": 0,
+      "recording": {
+        "format": "FPVEncounterRecordingStatus.v1",
+        "retainedFrom": 0,
+        "retainedTo": 1005,
+        "complete": true,
+        "practiceOnly": true
+      },
+      "archive": null,
+      "playback": {
+        "cursor": 1005,
+        "total": 3056,
+        "done": false,
+        "verified": false,
+        "playing": true,
+        "rate": 1,
+        "error": null,
+        "verification": null
+      },
+      "mode": "self-level",
+      "statusText": "Playing recorded combat. Verification runs when playback finishes.",
+      "archiveText": "A new combat attempt starts a local recording.",
+      "dialogOpen": true,
+      "otherDialogs": []
+    },
+    {
+      "name": "full-minute-file-verified-progress",
+      "at": "2026-10-20T03:09:42.278Z",
+      "course": "stadium-01",
+      "ticks": 1506,
+      "status": "active",
+      "position": {
+        "x": 0,
+        "y": 2619,
+        "z": 18000
+      },
+      "encounterTicks": 1506,
+      "runId": "encounter-c85f6d18f219861f",
+      "kills": 0,
+      "shots": 0,
+      "recording": {
+        "format": "FPVEncounterRecordingStatus.v1",
+        "retainedFrom": 0,
+        "retainedTo": 1506,
+        "complete": true,
+        "practiceOnly": true
+      },
+      "archive": null,
+      "playback": {
+        "cursor": 1506,
+        "total": 3056,
+        "done": false,
+        "verified": false,
+        "playing": true,
+        "rate": 1,
+        "error": null,
+        "verification": null
+      },
+      "mode": "self-level",
+      "statusText": "Playing recorded combat. Verification runs when playback finishes.",
+      "archiveText": "A new combat attempt starts a local recording.",
+      "dialogOpen": true,
+      "otherDialogs": []
+    },
+    {
+      "name": "full-minute-file-verified-progress",
+      "at": "2026-10-20T03:09:52.295Z",
+      "course": "stadium-01",
+      "ticks": 2007,
+      "status": "active",
+      "position": {
+        "x": 0,
+        "y": 2626,
+        "z": 18000
+      },
+      "encounterTicks": 2007,
+      "runId": "encounter-c85f6d18f219861f",
+      "kills": 0,
+      "shots": 0,
+      "recording": {
+        "format": "FPVEncounterRecordingStatus.v1",
+        "retainedFrom": 0,
+        "retainedTo": 2007,
+        "complete": true,
+        "practiceOnly": true
+      },
+      "archive": null,
+      "playback": {
+        "cursor": 2007,
+        "total": 3056,
+        "done": false,
+        "verified": false,
+        "playing": true,
+        "rate": 1,
+        "error": null,
+        "verification": null
+      },
+      "mode": "self-level",
+      "statusText": "Playing recorded combat. Verification runs when playback finishes.",
+      "archiveText": "A new combat attempt starts a local recording.",
+      "dialogOpen": true,
+      "otherDialogs": []
+    },
+    {
+      "name": "full-minute-file-verified-progress",
+      "at": "2026-10-20T03:10:02.311Z",
+      "course": "stadium-01",
+      "ticks": 2508,
+      "status": "active",
+      "position": {
+        "x": 0,
+        "y": 2619,
+        "z": 18000
+      },
+      "encounterTicks": 2508,
+      "runId": "encounter-c85f6d18f219861f",
+      "kills": 0,
+      "shots": 0,
+      "recording": {
+        "format": "FPVEncounterRecordingStatus.v1",
+        "retainedFrom": 0,
+        "retainedTo": 2508,
+        "complete": true,
+        "practiceOnly": true
+      },
+      "archive": null,
+      "playback": {
+        "cursor": 2508,
+        "total": 3056,
+        "done": false,
+        "verified": false,
+        "playing": true,
+        "rate": 1,
+        "error": null,
+        "verification": null
+      },
+      "mode": "self-level",
+      "statusText": "Playing recorded combat. Verification runs when playback finishes.",
+      "archiveText": "A new combat attempt starts a local recording.",
+      "dialogOpen": true,
+      "otherDialogs": []
+    },
+    {
+      "name": "full-minute-file-verified-progress",
+      "at": "2026-10-20T03:10:12.328Z",
+      "course": "stadium-01",
+      "ticks": 3009,
+      "status": "active",
+      "position": {
+        "x": 0,
+        "y": 2622,
+        "z": 18000
+      },
+      "encounterTicks": 3009,
+      "runId": "encounter-c85f6d18f219861f",
+      "kills": 0,
+      "shots": 0,
+      "recording": {
+        "format": "FPVEncounterRecordingStatus.v1",
+        "retainedFrom": 0,
+        "retainedTo": 3009,
+        "complete": true,
+        "practiceOnly": true
+      },
+      "archive": null,
+      "playback": {
+        "cursor": 3009,
+        "total": 3056,
+        "done": false,
+        "verified": false,
+        "playing": true,
+        "rate": 1,
+        "error": null,
+        "verification": null
+      },
+      "mode": "self-level",
+      "statusText": "Playing recorded combat. Verification runs when playback finishes.",
+      "archiveText": "A new combat attempt starts a local recording.",
+      "dialogOpen": true,
+      "otherDialogs": []
+    },
+    {
+      "name": "full-minute-file-verified-progress",
+      "at": "2026-10-20T03:10:22.342Z",
+      "course": "stadium-01",
+      "ticks": 3056,
+      "status": "paused",
+      "position": {
+        "x": 0,
+        "y": 2619,
+        "z": 18000
+      },
+      "encounterTicks": 3056,
+      "runId": "encounter-c85f6d18f219861f",
+      "kills": 0,
+      "shots": 0,
+      "recording": {
+        "format": "FPVEncounterRecordingStatus.v1",
+        "retainedFrom": 0,
+        "retainedTo": 3056,
+        "complete": true,
+        "practiceOnly": true
+      },
+      "archive": null,
+      "playback": {
+        "cursor": 3056,
+        "total": 3056,
+        "done": true,
+        "verified": true,
+        "playing": false,
+        "rate": 1,
+        "error": null,
+        "verification": {
+          "format": "FPVCombatReplayVerification.v2",
+          "verified": true,
+          "practiceOnly": true,
+          "physicalBoundary": "accepted-dynamics-v1",
+          "identity": {
+            "format": "FPVEncounterSession.v2",
+            "base": {
+              "model": "civilian-world-fixed.v2",
+              "backend": "rapier3d-compat-0.21.0:02dc6a4e2fffc013bab08fbb44fa68f501d8303615e9afe4c7d89ad4eedda0d0",
+              "course": "stadium-01",
+              "courseIdentity": "ba603cfd277fc808",
+              "worldIdentity": "9aab8697da0e74b0",
+              "mode": "self-level",
+              "responseIdentity": "73833493634ba989",
+              "rulesIdentity": "189ebd24739c7f4a",
+              "conditionsIdentity": "030d08b3879ad283"
+            },
+            "encounter": "c85f6d18f219861f"
+          },
+          "definitionIdentity": "c85f6d18f219861f",
+          "acceptedTicks": 3056,
+          "sessionTicks": 3056,
+          "retainedFrom": 0,
+          "retainedTo": 3056,
+          "result": null
+        }
+      },
+      "mode": "self-level",
+      "statusText": "Combat playback verified · no rewards.",
+      "archiveText": "A new combat attempt starts a local recording.",
+      "dialogOpen": true,
+      "otherDialogs": []
+    },
+    {
+      "name": "full-minute-file-verified",
+      "at": "2026-10-20T03:10:22.353Z",
+      "course": "stadium-01",
+      "ticks": 3056,
+      "status": "paused",
+      "position": {
+        "x": 0,
+        "y": 2619,
+        "z": 18000
+      },
+      "encounterTicks": 3056,
+      "runId": "encounter-c85f6d18f219861f",
+      "kills": 0,
+      "shots": 0,
+      "recording": {
+        "format": "FPVEncounterRecordingStatus.v1",
+        "retainedFrom": 0,
+        "retainedTo": 3056,
+        "complete": true,
+        "practiceOnly": true
+      },
+      "archive": null,
+      "playback": {
+        "cursor": 3056,
+        "total": 3056,
+        "done": true,
+        "verified": true,
+        "playing": false,
+        "rate": 1,
+        "error": null,
+        "verification": {
+          "format": "FPVCombatReplayVerification.v2",
+          "verified": true,
+          "practiceOnly": true,
+          "physicalBoundary": "accepted-dynamics-v1",
+          "identity": {
+            "format": "FPVEncounterSession.v2",
+            "base": {
+              "model": "civilian-world-fixed.v2",
+              "backend": "rapier3d-compat-0.21.0:02dc6a4e2fffc013bab08fbb44fa68f501d8303615e9afe4c7d89ad4eedda0d0",
+              "course": "stadium-01",
+              "courseIdentity": "ba603cfd277fc808",
+              "worldIdentity": "9aab8697da0e74b0",
+              "mode": "self-level",
+              "responseIdentity": "73833493634ba989",
+              "rulesIdentity": "189ebd24739c7f4a",
+              "conditionsIdentity": "030d08b3879ad283"
+            },
+            "encounter": "c85f6d18f219861f"
+          },
+          "definitionIdentity": "c85f6d18f219861f",
+          "acceptedTicks": 3056,
+          "sessionTicks": 3056,
+          "retainedFrom": 0,
+          "retainedTo": 3056,
+          "result": null
+        }
+      },
+      "mode": "self-level",
+      "statusText": "Combat playback verified · no rewards.",
+      "archiveText": "A new combat attempt starts a local recording.",
+      "dialogOpen": true,
+      "otherDialogs": []
+    }
+  ],
+  "browser": "155.0.8059.85",
+  "sources": {
+    "world-app.mjs": {
+      "servedSha256": "b87ca022167a531137e3c190184888d358764411fe2b6ceee0439a320a92456c",
+      "workspaceSha256": "b87ca022167a531137e3c190184888d358764411fe2b6ceee0439a320a92456c"
+    },
+    "encounter-session.mjs": {
+      "servedSha256": "5e6bfa08a169277c8134dc971b989837a057714f6c225afb48aff1a5afa1e469",
+      "workspaceSha256": "5e6bfa08a169277c8134dc971b989837a057714f6c225afb48aff1a5afa1e469"
+    },
+    "aircraft-archive.mjs": {
+      "servedSha256": "569422bf0f5171d7631c9b89dd820aeda99a35806f5f42dbba5ab571f567126b",
+      "workspaceSha256": "569422bf0f5171d7631c9b89dd820aeda99a35806f5f42dbba5ab571f567126b"
+    }
+  },
+  "import": {
+    "file": "docs/evidence/fpv-combat/overhaul-archive-host-browser-current.json",
+    "bytes": 141868,
+    "sha256": "c4859c0494a79671e94167b521258b4f6559ff856d3197fabfed8e4d0fd8e9c6",
+    "summary": {
+      "id": "combat-mvg3ebwc-197n0db",
+      "name": "Starting grid · 2026-10-20T02:57:08.796Z",
+      "from": 0,
+      "to": 3056,
+      "segments": 2,
+      "complete": true
+    },
+    "launch": {
+      "format": "FPVCombatLaunch.v1",
+      "configuration": {
+        "format": "FpvEffectiveFlightConfig.v1",
+        "response": {
+          "format": "FlightResponseProfile.v1",
+          "id": "gentle-v1",
+          "name": "Gentle",
+          "maxRate": 240,
+          "maxTilt": 30,
+          "expo": 30,
+          "responseTicks": 8
+        },
+        "camera": {
+          "tilt": 10,
+          "verticalFov": 82
+        },
+        "profileId": "legacy-feel",
+        "profileRevision": 0,
+        "setupId": "my-drone",
+        "simulationIdentity": "a4f86ed840e4781e"
+      },
+      "mode": "self-level"
+    }
+  },
+  "failure": "AssertionError [ERR_ASSERTION]: Continue runtime confirmation did not arrive within three minutes\n    at /Users/oleksandr.mekhovov/work/my_projects/go_test_radio_fix/docs/evidence/fpv-combat/overhaul-archive-host-browser.cjs:243:9",
+  "failureUI": {
+    "flight": "Combat playback paused. Resume to watch.",
+    "studio": "",
+    "body": "ch line\nWoodland park\n☆☆☆\n4 flight objectives\nLEVEL #106\n8/8\nWoodland survey\nWoodland park\n☆☆☆\n5 flight objectives\nUKRAINIAN COURTYARD\nLEVEL #107\n1/8\nCourtyard welcome\nUkrainian courtyard\n☆☆☆\n3 flight objectives\nLEVEL #108\n2/8\nGarden markers\nUkrainian courtyard\n☆☆☆\n4 flight objectives\nLEVEL #109\n3/8\nRoofline survey\nUkrainian courtyard\n☆☆☆\n5 flight objectives\nLEVEL #110\n4/8\nWell-side landing\nUkrainian courtyard\n☆☆☆\n4 flight objectives\nLEVEL #111\n5/8\nWindow alignment\nUkrainian courtyard\n☆☆☆\n4 flight objectives\nLEVEL #112\n6/8\nDelivery crossing\nUkrainian courtyard\n☆☆☆\n4 flight objectives\nLEVEL #113\n7/8\nLaneway traffic\nUkrainian courtyard\n☆☆☆\n4 flight objectives\nLEVEL #114\n8/8\nCourtyard collection\nUkrainian courtyard\n☆☆☆\n5 flight objectives\nPIXEL WAREHOUSE\nLEVEL #115\n20/27\nLoading bay\nPixel warehouse\n☆☆☆\n3 flight objectives\nLEVEL #116\n21/27\nCentral aisle\nPixel warehouse\n☆☆☆\n5 flight objectives\nLEVEL #117\n22/27\nPallet switchback\nPixel warehouse\n☆☆☆\n5 flight objectives\nLEVEL #118\n23/27\nBeam circuit\nPixel warehouse\n☆☆☆\n6 flight objectives\nLEVEL #119\n24/27\nHigh-low sprint\nPixel warehouse\n☆☆☆\n5 flight objectives\nLEVEL #120\n25/27\nShelf clearance\nPixel warehouse\n☆☆☆\n4 flight objectives\nLEVEL #121\n26/27\nMoving freight\nPixel warehouse\n☆☆☆\n4 flight objectives\nLEVEL #122\n27/27\nWarehouse circuit\nPixel warehouse\n☆☆☆\n6 flight objectives\nCIRCUIT STADIUM\nLEVEL #123\n23/30\nStarting grid\nCircuit stadium\n☆☆☆\n3 flight objectives\nLEVEL #124\n24/30\nWide oval\nCircuit stadium\n☆☆☆\n6 flight objectives\nLEVEL #125\n25/30\nNeon chicane\nCircuit stadium\n☆☆☆\n6 flight objectives\nLEVEL #126\n26/30\nAltitude ladder\nCircuit stadium\n☆☆☆\n6 flight objectives\nLEVEL #127\n27/30\nDouble hairpin\nCircuit stadium\n☆☆☆\n7 flight objectives\nLEVEL #128\n28/30\nPodium approach\nCircuit stadium\n☆☆☆\n4 flight objectives\nLEVEL #129\n29/30\nCrossing lights\nCircuit stadium\n☆☆☆\n4 flight objectives\nLEVEL #130\n30/30\nStadium final\nCircuit stadium\n☆☆☆\n6 flight objectives\nCONTAINER YARD\nLEVEL #131\n7/14\nYard check-in\nContainer yard\n☆☆☆\n3 flight objectives\nLEVEL #132\n8/14\nContainer survey\nContainer yard\n☆☆☆\n4 flight objectives\nLEVEL #133\n9/14\nCrossing crane\nContainer yard\n☆☆☆\n4 flight objectives\nLEVEL #134\n10/14\nTarget lane\nContainer yard\n☆☆☆\n1 targets · choose your route\nLEVEL #135\n11/14\nPatrol interruption\nContainer yard\n☆☆☆\n2 targets · choose your route\nLEVEL #136\n12/14\nDrone interception\nContainer yard\n☆☆☆\n2 targets · choose your route\nLEVEL #137\n13/14\nConvoy challenge\nContainer yard\n☆☆☆\n2 targets · choose your route\nLEVEL #138\n14/14\nYard extraction\nContainer yard\n☆☆☆\n2 targets · choose your route\nPARKING GARAGE\nLEVEL #139\n10/17\nParking approach\nParking garage\n☆☆☆\n3 flight objectives\nLEVEL #140\n11/17\nUpper deck survey\nParking garage\n☆☆☆\n5 flight objectives\nLEVEL #141\n12/17\nBarrier timing\nParking garage\n☆☆☆\n4 flight objectives\nLEVEL #142\n13/17\nSentry aisle\nParking garage\n☆☆☆\n2 targets · choose your route\nLEVEL #143\n14/17\nGround patrol\nParking garage\n☆☆☆\n2 targets · choose your route\nLEVEL #144\n15/17\nGarage intercept\nParking garage\n☆☆☆\n2 targets · choose your route\nLEVEL #145\n16/17\nVehicle watch\nParking garage\n☆☆☆\n2 targets · choose your route\nLEVEL #146\n17/17\nGarage extraction\nParking garage\n☆☆☆\n2 targets · choose your route\nFLIGHT SCHOOL · OPTIONAL SELF-LEVEL\nLEVEL #147\n1/12\nMeet your drone\nFlight School · Optional self-level\n☆☆☆\n3 flight objectives\nLEVEL #148\n2/12\nUp, down, under control\nFlight School · Optional self-level\n☆☆☆\n3 flight objectives\nLEVEL #149\n3/12\nFind your hover\nFlight School · Optional self-level\n☆☆☆\n3 flight objectives\nLEVEL #150\n4/12\nTurn the nose: yaw\nFlight School · Optional self-level\n☆☆☆\n5 flight objectives\nLEVEL #151\n5/12\nForward with pitch\nFlight School · Optional self-level\n☆☆☆\n4 flight objectives\nLEVEL #152\n6/12\nSlide with roll\nFlight School · Optional self-level\n☆☆☆\n4 flight objectives\nLEVEL #153\n7/12\nBrake, do not chase\nFlight School · Optional self-level\n☆☆☆\n5 flight objectives\nLEVEL #154\n8/12\nKeep height while moving\nFlight School · Optional self-level\n☆☆☆\n4 flight objectives\nLEVEL #155\n9/12\nYour first corner\nFlight School · Optional self-level\n☆☆☆\n5 flight objectives\nLEVEL #156\n10/12\nSee through the goggles\nFlight School · Optional self-level\n☆☆☆\n4 flight objectives\nLEVEL #157\n11/12\nThree friendly gates\nFlight School · Optional self-level\n☆☆☆\n5 flight objectives\nLEVEL #158\n12/12\nYour first solo route\nFlight School · Optional self-level\n☆☆☆\n6 flight objectives\nFLIGHT SCHOOL · BEGINNER\nLEVEL #159\n1/14\nAcro: the tilt stays\nFlight School · Beginner\n☆☆☆\n4 flight objectives\nLEVEL #160\n2/14\nAcro: your first line\nFlight School · Beginner\n☆☆☆\n4 flight objectives\nLEVEL #161\n3/14\nYour first Acro takeoff\nFlight School · Beginner\n☆☆☆\n3 flight objectives\nLEVEL #162\n4/14\nThrust, climb and descent\nFlight School · Beginner\n☆☆☆\n4 flight objectives\nLEVEL #163\n5/14\nLevel, then find your hover\nFlight School · Beginner\n☆☆☆\n4 flight objectives\nLEVEL #164\n6/14\nRoll and lateral braking\nFlight School · Beginner\n☆☆☆\n4 flight objectives\nLEVEL #165\n7/14\nYaw: heading is not travel\nFlight School · Beginner\n☆☆☆\n6 flight objectives\nLEVEL #166\n8/14\nKeep height while tilted\nFlight School · Beginner\n☆☆☆\n5 flight objectives\nLEVEL #167\n9/14\nCoordinated left and right turns\nFlight School · Beginner\n☆☆☆\n5 flight objectives\nLEVEL #168\n10/14\nA gentle figure eight\nFlight School · Beginner\n☆☆☆\n10 flight objectives\nLEVEL #169\n11/14\nRead the FPV horizon\nFlight School · Beginner\n☆☆☆\n5 flight objectives\nLEVEL #170\n12/14\nThree gates, one smooth line\nFlight School · Beginner\n☆☆☆\n5 flight objectives\nLEVEL #171\n13/14\nRecover and land precisely\nFlight School · Beginner\n☆☆☆\n4 flight objectives\nLEVEL #172\n14/14\nYour first solo Acro route\nFlight School · Beginner\n☆☆☆\n8 flight objectives\nFLIGHT SCHOOL · EXPERIENCED\nLEVEL #173\n1/8\nBraking marks\nFlight School · Experienced\n☆☆☆\n7 flight objectives\nLEVEL #174\n2/8\nAltitude staircase\nFlight School · Experienced\n☆☆☆\n5 flight objectives\nLEVEL #175\n3/8\nCompass cross\nFlight School · Experienced\n☆☆☆\n7 flight objectives\nLEVEL #176\n4/8\nBackward return\nFlight School · Experienced\n☆☆☆\n6 flight objectives\nLEVEL #177\n5/8\nS-turn handover\nFlight School · Experienced\n☆☆☆\n8 flight objectives\nLEVEL #178\n6/8\nWide corner, tight exit\nFlight School · Experienced\n☆☆☆\n8 flight objectives\nLEVEL #179\n7/8\nThree landing approaches\nFlight School · Experienced\n☆☆☆\n9 flight objectives\nLEVEL #180\n8/8\nLandmark rally\nFlight School · Experienced\n☆☆☆\n10 flight objectives\nFLIGHT SCHOOL · ADVANCED\nLEVEL #181\n1/8\nSlalom rhythm\nFlight School · Advanced\n☆☆☆\n8 flight objectives\nLEVEL #182\n2/8\nHigh–low ribbon\nFlight School · Advanced\n☆☆☆\n9 flight objectives\nLEVEL #183\n3/8\nPlatform approach\nFlight School · Advanced\n☆☆☆\n9 flight objectives\nLEVEL #184\n4/8\nCorridor turnaround\nFlight School · Advanced\n☆☆☆\n9 flight objectives\nLEVEL #185\n5/8\nOver, around, under\nFlight School · Advanced\n☆☆☆\n10 flight objectives\nLEVEL #186\n6/8\nRead the landmarks\nFlight School · Advanced\n☆☆☆\n9 flight objectives\nLEVEL #187\n7/8\nBetween floors\nFlight School · Advanced\n☆☆☆\n11 flight objectives\nLEVEL #188\n8/8\nPrecision pilot route\nFlight School · Advanced\n☆☆☆\n12 flight objectives\nFLIGHT SCHOOL · PRO\nLEVEL #189\n1/8\nRoll and recover\nFlight School · Pro\n☆☆☆\n6 flight objectives\nLEVEL #190\n2/8\nForward and backward flip\nFlight School · Pro\n☆☆☆\n6 flight objectives\nLEVEL #191\n3/8\nYaw through 360 degrees\nFlight School · Pro\n☆☆☆\n6 flight objectives\nLEVEL #192\n4/8\nRecognize inverted, recover\nFlight School · Pro\n☆☆☆\n6 flight objectives\nLEVEL #193\n5/8\nSplit-S return\nFlight School · Pro\n☆☆☆\n6 flight objectives\nLEVEL #194\n6/8\nImmelmann climb-out\nFlight School · Pro\n☆☆☆\n6 flight objectives\nLEVEL #195\n7/8\nDive, judge, pull out\nFlight School · Pro\n☆☆☆\n6 flight objectives\nLEVEL #196\n8/8\nFirst power loop\nFlight School · Pro\n☆☆☆\n5 flight objectives\nFLIGHT SCHOOL · MASTER\nLEVEL #197\n1/8\nBarrel path\nFlight School · Master\n☆☆☆\n5 flight objectives\nLEVEL #198\n2/8\nOrbit the landmark\nFlight School · Master\n☆☆☆\n7 flight objectives\nLEVEL #199\n3/8\nClimbing corkscrew\nFlight School · Master\n☆☆☆\n5 flight objectives\nLEVEL #200\n4/8\nInverted turn and exit\nFlight School · Master\n☆☆☆\n7 flight objectives\nLEVEL #201\n5/8\nLoop into a roll\nFlight School · Master\n☆☆☆\n7 flight objectives\nLEVEL #202\n6/8\nSplit-S into an orbit\nFlight School · Master\n☆☆☆\n8 flight objectives\nLEVEL #203\n7/8\nRace line with trick zones\nFlight School · Master\n☆☆☆\n12 flight objectives\nLEVEL #204\n8/8\nMaster flight\nFlight School · Master\n☆☆☆\n17 flight objectives\nMOUNTAIN RESERVOIR\nCUSTOM LEVEL\n1/8\nShoreline check-in\nMountain Reservoir\n☆☆☆\nDownload & play · 1.3 MiB\nCUSTOM LEVEL\n2/8\nWestern dam crest\nMountain Reservoir\n☆☆☆\nDownload & play · 1.3 MiB\nCUSTOM LEVEL\n3/8\nIntake controls\nMountain Reservoir\n☆☆☆\nDownload & play · 1.3 MiB\nCUSTOM LEVEL\n4/8\nDry spillway descent\nMountain Reservoir\n☆☆☆\nDownload & play · 1.3 MiB\nCUSTOM LEVEL\n5/8\nExterior service passage\nMountain Reservoir\n☆☆☆\nDownload & play · 1.3 MiB\nCUSTOM LEVEL\n6/8\nRock terrace climb\nMountain Reservoir\n☆☆☆\nDownload & play · 1.3 MiB\nCUSTOM LEVEL\n7/8\nShoreline circuit\nMountain Reservoir\n☆☆☆\nDownload & play · 1.3 MiB\nCUSTOM LEVEL\n8/8\nMaintenance roof landing\nMountain Reservoir\n☆☆☆\nDownload & play · 1.3 MiB\nFESTIVAL GROUNDS\nCUSTOM LEVEL\n1/8\nEntry check-in\nFestival Grounds\n☆☆☆\nDownload & play · 1.2 MiB\nCUSTOM LEVEL\n2/8\nMain lawn loop\nFestival Grounds\n☆☆☆\nDownload & play · 1.2 MiB\nCUSTOM LEVEL\n3/8\nMarket slalom\nFestival Grounds\n☆☆☆\nDownload & play · 1.2 MiB\nCUSTOM LEVEL\n4/8\nStage-side sprint\nFestival Grounds\n☆☆☆\nDownload & play · 1.2 MiB\nCUSTOM LEVEL\n5/8\nSound-desk landing\nFestival Grounds\n☆☆☆\nDownload & play · 1.2 MiB\nCUSTOM LEVEL\n6/8\nService cart escort\nFestival Grounds\n☆☆☆\nDownload & play · 1.2 MiB\nCUSTOM LEVEL\n7/8\nFestival guide\nFestival Grounds\n☆☆☆\nDownload & play · 1.2 MiB\nCUSTOM LEVEL\n8/8\nGrounds circuit\nFestival Grounds\n☆☆☆\nDownload & play · 1.2 MiB\nHARBOR DOCKS\nCUSTOM LEVEL\n1/8\nQuay check-in\nHarbor Docks\n☆☆☆\nDownload & play · 859 KiB\nCUSTOM LEVEL\n2/8\nContainer perimeter\nHarbor Docks\n☆☆☆\nDownload & play · 859 KiB\nCUSTOM LEVEL\n3/8\nGantry height line\nHarbor Docks\n☆☆☆\nDownload & play · 859 KiB\nCUSTOM LEVEL\n4/8\nService-deck landing\nHarbor Docks\n☆☆☆\nDownload & play · 859 KiB\nCUSTOM LEVEL\n5/8\nTerminal cart escort\nHarbor Docks\n☆☆☆\nDownload & play · 859 KiB\nCUSTOM LEVEL\n6/8\nDeck inspection\nHarbor Docks\n☆☆☆\nDownload & play · 859 KiB\nCUSTOM LEVEL\n7/8\nTraining-drone bay\nHarbor Docks\n☆☆☆\nDownload & play · 859 KiB\nCUSTOM LEVEL\n8/8\nHarbor circuit\nHarbor Docks\n☆☆☆\nDownload & play · 859 KiB\nCASTLE COURTYARD\nCUSTOM LEVEL\n1/1\nCastle Courtyard · discovery\nCastle Courtyard\n☆☆☆\nDownload & play · 157 KiB\nCITY PLAZA\nCUSTOM LEVEL\n1/1\nCity Plaza · discovery\nCity Plaza\n☆☆☆\nDownload & play · 1.2 MiB\nHOUSE CONSTRUCTION SITE\nCUSTOM LEVEL\n1/1\nHouse Construction Site · discovery\nHouse Construction Site\n☆☆☆\nDownload & play · 2.3 MiB\nFRONTIER CAMP\nCUSTOM LEVEL\n1/1\nFrontier Camp · discovery\nFrontier Camp\n☆☆☆\nDownload & play · 169 KiB\nINDUSTRIAL SERVICE YARD\nCUSTOM LEVEL\n1/1\nIndustrial Service Yard · discovery\nIndustrial Service Yard\n☆☆☆\nDownload & play · 1.0 MiB\nORBITAL WORKSHOP\nCUSTOM LEVEL\n1/1\nOrbital Workshop · discovery\nOrbital Workshop\n☆☆☆\nDownload & play · 153 KiB\nPINE CLEARING\nCUSTOM LEVEL\n1/1\nPine Clearing · discovery\nPine Clearing\n☆☆☆\nDownload & play · 129 KiB\nPLATFORM GARDEN\nCUSTOM LEVEL\n1/1\nPlatform Garden · discovery\nPlatform Garden\n☆☆☆\nDownload & play · 156 KiB\nRACE PADDOCK\nCUSTOM LEVEL\n1/1\nRace Paddock · discovery\nRace Paddock\n☆☆☆\nDownload & play · 386 KiB\nROADWORKS PRACTICE PARK\nCUSTOM LEVEL\n1/1\nRoadworks Practice Park · discovery\nRoadworks Practice Park\n☆☆☆\nDownload & play · 63 KiB\nROCK GROTTO\nCUSTOM LEVEL\n1/1\nRock Grotto · discovery\nRock Grotto\n☆☆☆\nDownload & play · 1.4 MiB\nRUINED HALLS\nCUSTOM LEVEL\n1/1\nRuined Halls · discovery\nRuined Halls\n☆☆☆\nDownload & play · 1.7 MiB\nDRY-DOCK SHIPYARD\nCUSTOM LEVEL\n1/1\nDry-dock Shipyard · discovery\nDry-dock Shipyard\n☆☆☆\nDownload & play · 594 KiB\nSKATE PLAZA\nCUSTOM LEVEL\n1/1\nSkate Plaza · discovery\nSkate Plaza\n☆☆☆\nDownload & play · 210 KiB\nVILLAGE GREEN\nCUSTOM LEVEL\n1/1\nVillage Green · discovery\nVillage Green\n☆☆☆\nDownload & play · 606 KiB\nWOODLAND CAMP\nCUSTOM LEVEL\n1/1\nWoodland Camp · discovery\nWoodland Camp\n☆☆☆\nDownload & play · 304 KiB\nCOASTER PRACTICE PARK\nCUSTOM LEVEL\n1/1\nCoaster Practice Park · discovery\nCoaster Practice Park\n☆☆☆\nDownload & play · 1.1 MiB\nALPINE HIGHLANDS\nCUSTOM LEVEL\n1/6\nAlpine Highlands — connected mountain study\nAlpine Highlands\n☆☆☆\nDownload & play · 21.8 MiB\nCUSTOM LEVEL\n2/6\nAlpine Highlands — connected mountain study\nAlpine Highlands\n☆☆☆\nDownload & play · 21.6 MiB\nCUSTOM LEVEL\n3/6\nAlpine Highlands — connected mountain study\nAlpine Highlands\n☆☆☆\nDownload & play · 21.6 MiB\nCUSTOM LEVEL\n4/6\nAlpine Highlands — connected mountain study\nAlpine Highlands\n☆☆☆\nDownload & play · 21.6 MiB\nCUSTOM LEVEL\n5/6\nAlpine Highlands — connected mountain study\nAlpine Highlands\n☆☆☆\nDownload & play · 20.8 MiB\nCUSTOM LEVEL\n6/6\nAlpine Highlands — connected mountain study\nAlpine Highlands\n☆☆☆\nDownload & play · 20.1 MiB\nLUNAR BASIN\nCUSTOM LEVEL\n1/2\nLunar Basin — flight study\nLunar Basin\n☆☆☆\nDownload & play · 2.0 MiB\nCUSTOM LEVEL\n2/2\nLunar Basin — flight study\nLunar Basin\n☆☆☆\nDownload & play · 1.9 MiB\nCANAL CITY\nCUSTOM LEVEL\n1/1\nCanal City — bridges and courtyards\nCanal City\n☆☆☆\nDownload & play · 6.5 MiB\nDESERT EXPEDITION\nCUSTOM LEVEL\n1/2\nDesert Expedition — rock routes\nDesert Expedition\n☆☆☆\nDownload & play · 45.9 MiB\nCUSTOM LEVEL\n2/2\nDesert Expedition — 16 km relief study\nDesert Expedition\n☆☆☆\nDownload & play · 45.7 MiB\nTROPICAL COAST\nCUSTOM LEVEL\n1/3\nTropical coast — connected harbour\nTropical coast\n☆☆☆\nDownload & play · 7.6 MiB\nCUSTOM LEVEL\n2/3\nTropical coast — six flight districts\nTropical coast\n☆☆☆\nDownload & play · 7.5 MiB\nCUSTOM LEVEL\n3/3\nTropical coast — bounded flight study\nTropical coast\n☆☆☆\nDownload & play · 5.7 MiB\nRAILWAY VALLEY\nCUSTOM LEVEL\n1/2\nRailway Valley — six districts\nRailway Valley\n☆☆☆\nDownload & play · 17.1 MiB\nCUSTOM LEVEL\n2/2\nRailway Valley — regional preview\nRailway Valley\n☆☆☆\nDownload & play · 5.4 MiB\nCOASTER GARDENS\nCUSTOM LEVEL\n1/2\nCoaster Gardens — connected park study\nCoaster Gardens\n☆☆☆\nDownload & play · 32.6 MiB\nCUSTOM LEVEL\n2/2\nCoaster Gardens — 2 km study\nCoaster Gardens\n☆☆☆\nDownload & play · 32.3 MiB\nHILLSIDE TOWN\nCUSTOM LEVEL\n1/2\nHillside Town — civic court materials\nHillside Town\n☆☆☆\nDownload & play · 8.3 MiB\nCUSTOM LEVEL\n2/2\nHillside Town — terraces and courtyards\nHillside Town\n☆☆☆\nDownload & play · 8.0 MiB\nCANYON WORLDS\nCUSTOM LEVEL\n1/3\nCanyon Expanse — broad relief study\nCanyon worlds\n☆☆☆\nDownload & play · 45.8 MiB\nCUSTOM LEVEL\n2/3\nCanyon Badlands — six districts\nCanyon worlds\n☆☆☆\nDownload & play · 3.2 MiB\nCUSTOM LEVEL\n3/3\nCanyon Badlands — regional preview\nCanyon worlds\n☆☆☆\nDownload & play · 1.1 MiB\nURBAN EARTHWORKS\nCUSTOM LEVEL\n1/1\nUrban earthworks — regional preview\nUrban earthworks\n☆☆☆\nDownload & play · 2.2 MiB\nRandom levels\nFlight levels only\nLearning + flight levels\nRandom level\nBack to game\n\nNo mission pinned.\n\nPin focused mission\nFind goal\nClear goal\nSIM tools\nFPV SIM · Worlds\nFlight setup\nPause"
+  },
+  "finished": "2026-10-20T03:13:24.015Z",
+  "browserClosed": true
+}

@@ -16,7 +16,14 @@ import {
   createPresetConfiguration,
   applyAircraftComponents,
 } from '../../optional-practice/civilian-fpv/aircraft-presets.mjs';
-import { DEFAULT_RESPONSE } from '../../optional-practice/civilian-fpv/radio-profile.mjs';
+import {
+  DEFAULT_RESPONSE,
+  defaultRadioProfile,
+  createRadioControlLayout,
+} from '../../optional-practice/civilian-fpv/radio-profile.mjs';
+import { createRadioRuntime } from '../../optional-practice/civilian-fpv/radio-runtime.mjs';
+import { mountRadioMenuControls } from '../../optional-practice/civilian-fpv/sim-presentation.mjs';
+import { createFlightMenuNavigation } from '../../optional-practice/civilian-fpv/input.mjs';
 import { createTuningLibraryStore } from '../../optional-practice/civilian-fpv/tuning-library.mjs';
 import { createAircraftArchiveStore } from '../../optional-practice/civilian-fpv/aircraft-archive.mjs';
 import { verifyAircraftArchive } from '../../optional-practice/civilian-fpv/aircraft-archive-verifier.mjs';
@@ -84,7 +91,7 @@ test('aircraft arena keeps Legacy rates explicitly, applies preset starter rates
   let worker = LocalWorker.instances.at(-1);
   assert.equal(worker.messages[0].options.aircraft.format, 'AdvancedAircraft.v2');
   assert.deepEqual(worker.messages[0].options.response.response, DEFAULT_RESPONSE);
-  assert.equal(f.session.getTelemetry().frequency, 500);
+  assert.equal(f.session.getTelemetry().frequency, 1000);
   const chooseAircraft = f.container
     .querySelectorAll('select')
     .find((select) => select.children.some((option) => option.value === 'holybro-x650-v2'));
@@ -1347,4 +1354,148 @@ test('repeatable maneuver cues use simulation time and a kept reference survives
   assert.equal(f.session.getTelemetry().missionTick, 0);
   assert.equal(f.session.getComparison().visible, true);
   assert.match(f.container.textContent, /0.0 s · Raise throttle/);
+});
+
+test('Advanced reference radio pauses its own flight, navigates with switches and requires fresh resume', async (t) => {
+  const profile = defaultRadioProfile(),
+    pad = {
+      index: 0,
+      id: profile.device.id,
+      mapping: '',
+      connected: true,
+      axes: [0.004, 0.004, -1, 0.004, -1, 0, 0, 0],
+      buttons: Array.from({ length: 24 }, () => ({ value: 0 })),
+    };
+  let session,
+    now = 0,
+    closed = 0,
+    gameplayActions = 0;
+  const radio = createRadioRuntime({
+    getGamepads: () => [pad],
+    now: () => now,
+    onFreeze: () => session?.pause(undefined, { notify: false }),
+    onCombatAction: () => gameplayActions++,
+  });
+  radio.select(0);
+  radio.setProfile(profile);
+  assert.equal(radio.verify(), true);
+  const layout = createRadioControlLayout(profile);
+  for (const [index, name] of ['arm', 'fire', 'weapon', 'reload', 'payload', 'detonate'].entries())
+    layout.switches[name] = { button: index, threshold: 0.5, invert: false };
+  radio.setControlLayout(layout);
+  const f = await fixture(t, {
+    inputSource: 'radio',
+    getControls: () => radio.preview().controls,
+    requestRadioStart: () => radio.status().active || radio.requestArm(),
+    onPause: () => {
+      if (radio.status().active) radio.freeze('paused');
+    },
+    onClose: () => closed++,
+  });
+  session = f.session;
+  const menus = mountRadioMenuControls({
+    document: f.doc,
+    window: f.win,
+    runtime: radio,
+    onResume: () => session.start(),
+    onSettings: () => session.openSettings(),
+    onRetry: () => session.restart(),
+  });
+  const navigator = createFlightMenuNavigation({
+    document: f.doc,
+    window: f.doc.defaultView,
+    getContext: () => menus.context() ?? session.menuContext(),
+    onBack: () => session.back(),
+  });
+  t.after(() => {
+    navigator.dispose();
+    menus.dispose();
+  });
+  const poll = async () => {
+    now += 20;
+    const state = session.menuState(),
+      context = menus.context() ?? session.menuContext();
+    const observed = menus.sync({
+      context,
+      flightActive: state.active,
+      flightAvailable: state.available,
+      canResume:
+        state.available &&
+        state.resumeReady &&
+        !navigator.snapshot().editing &&
+        context?.root === session.element,
+      enabled: state.radio,
+      playback: false,
+    });
+    navigator.poll({ now, radio: observed });
+    await Promise.resolve();
+  };
+  const cycle = async (index) => {
+    await poll();
+    pad.buttons[index].value = 1;
+    await poll();
+    pad.buttons[index].value = 0;
+    await poll();
+  };
+  assert.equal(session.menuContext().root, session.element);
+  assert.equal(session.start(), false, 'Start cannot bypass the Flight switch');
+  await poll();
+  await cycle(1);
+  assert.equal(navigator.snapshot().device, 'radio');
+  await cycle(1);
+  assert.equal(session.menuState().active, false, 'Select cannot arm while Flight is OFF');
+  pad.buttons[0].value = 1;
+  await poll();
+  await waitFor(() => session.getTelemetry()?.missionTick === 1 && session.menuState().active);
+  await waitFor(() => session.menuState().available);
+  assert.equal(session.menuContext(), null);
+  await poll();
+  pad.buttons[0].value = 0;
+  await poll();
+  assert.equal(session.menuState().active, false);
+  assert.equal(session.menuContext().root, session.element);
+  const tick = session.getTelemetry().missionTick;
+  session.openSettings();
+  assert.equal(session.menuState().resumeReady, false);
+  await poll();
+  pad.buttons[0].value = 1;
+  await poll();
+  assert.equal(session.menuState().active, false, 'Flight ON is consumed while settings are open');
+  session.back();
+  await poll();
+  assert.equal(session.menuState().active, false, 'closing settings never reuses held Flight ON');
+  assert.equal(session.getTelemetry().missionTick, tick);
+  await cycle(0);
+  pad.buttons[0].value = 1;
+  await poll();
+  await waitFor(() => session.getTelemetry().missionTick > tick);
+  await waitFor(() => session.menuState().available);
+  await poll();
+  pad.buttons[0].value = 0;
+  await poll();
+  await cycle(1);
+  await cycle(2);
+  assert.equal(closed, 1, 'paused Weapon Back returns to tuning');
+  assert.equal(gameplayActions, 0, 'menu switches never emit combat actions');
+});
+
+test('foreground stalls in Advanced practice accept one interval and schedule the next without pausing', async (t) => {
+  let f;
+  class SlowWorker extends LocalWorker {
+    postMessage(message) {
+      if (message.type === 'step') f.advanceClock(500);
+      super.postMessage(message);
+    }
+  }
+  f = await fixture(t, { Worker: SlowWorker });
+  f.button('Start practice').click();
+  await waitFor(() => f.session.getTelemetry()?.missionTick === 1);
+  assert.equal(f.timers.size, 1, 'delayed accepted step schedules another interval');
+  const [id, tick] = f.timers.entries().next().value;
+  f.timers.delete(id);
+  await tick();
+  assert.equal(f.session.getTelemetry().missionTick, 2);
+  assert.equal(f.timers.size, 1);
+  f.button('Pause').click();
+  assert.equal(f.timers.size, 0, 'explicit pause still stops scheduling');
 });

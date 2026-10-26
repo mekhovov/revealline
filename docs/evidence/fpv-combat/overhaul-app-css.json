@@ -1,0 +1,148 @@
+{
+  "tree": [
+    {
+      "href": null,
+      "rules": 1
+    },
+    {
+      "href": "http://127.0.0.1:8768/game/access-gate.css",
+      "rules": 1
+    },
+    {
+      "href": "http://127.0.0.1:8768/optional-practice/civilian-fpv/world-style.css",
+      "rules": 32
+    },
+    {
+      "href": "./style.css",
+      "rules": 266
+    },
+    {
+      "href": "http://127.0.0.1:8768/optional-practice/civilian-fpv/tuning.css",
+      "rules": 140
+    },
+    {
+      "href": null,
+      "rules": 41
+    },
+    {
+      "href": null,
+      "rules": 197
+    },
+    {
+      "href": null,
+      "rules": 50
+    }
+  ],
+  "matches": [
+    {
+      "parents": [
+        "http://127.0.0.1:8768/optional-practice/civilian-fpv/world-style.css",
+        "./style.css"
+      ],
+      "css": ".field-kit .mode-play-wordmark { font-family: var(--fk-font-display); }"
+    },
+    {
+      "parents": [
+        "http://127.0.0.1:8768/optional-practice/civilian-fpv/world-style.css",
+        "./style.css",
+        "legacy"
+      ],
+      "css": ".mode-play-home .mode-play-wordmark { font-size: clamp(2rem, 7vw, 4rem); }"
+    },
+    {
+      "parents": [
+        "http://127.0.0.1:8768/optional-practice/civilian-fpv/world-style.css",
+        "./style.css",
+        "legacy"
+      ],
+      "css": ".mode-play-wordmark img { display: block; width: min(100%, 430px); max-height: 115px; object-fit: contain; object-position: left center; image-rendering: pixelated; }"
+    },
+    {
+      "parents": [
+        "http://127.0.0.1:8768/optional-practice/civilian-fpv/world-style.css",
+        "./style.css",
+        "legacy"
+      ],
+      "css": ".mode-play-shell .mode-play-brand-button::before { display: none; }"
+    },
+    {
+      "parents": [
+        "http://127.0.0.1:8768/optional-practice/civilian-fpv/world-style.css",
+        "./style.css",
+        "legacy"
+      ],
+      "css": ".mode-play-brand-button img { width: 118px; height: 34px; object-fit: contain; image-rendering: pixelated; }"
+    },
+    {
+      "parents": [
+        "http://127.0.0.1:8768/optional-practice/civilian-fpv/world-style.css",
+        "./style.css",
+        "legacy"
+      ],
+      "css": ".mode-play-home .mode-play-wordmark img { width: min(100%, 430px); margin-inline: 0px; object-position: left center; }"
+    },
+    {
+      "parents": [
+        "http://127.0.0.1:8768/optional-practice/civilian-fpv/world-style.css",
+        "./style.css"
+      ],
+      "css": ".mode-play-shell .mode-play-brand-button { display: inline-flex; align-items: center; justify-content: center; min-height: 44px; line-height: 1; padding: 4px 8px; }"
+    },
+    {
+      "parents": [
+        "http://127.0.0.1:8768/optional-practice/civilian-fpv/world-style.css",
+        "./style.css"
+      ],
+      "css": ".mode-play-shell .mode-play-brand-button::before, .mode-play-shell .mode-play-brand-button::after { display: none; }"
+    },
+    {
+      "parents": [
+        "http://127.0.0.1:8768/optional-practice/civilian-fpv/world-style.css",
+        "./style.css"
+      ],
+      "css": "html body .landing-layout :is(.fpv-line-wordmark, .mode-play-wordmark img) { display: block; width: min(100%, 430px); max-height: 100px; aspect-ratio: 5.7 / 1; height: auto; object-fit: cover; object-position: center 42%; margin: 0px; }"
+    },
+    {
+      "parents": [
+        "http://127.0.0.1:8768/optional-practice/civilian-fpv/world-style.css",
+        "./style.css",
+        "(orientation: landscape) and (min-width: 560px)"
+      ],
+      "css": "html body .landing-layout :is(.fpv-line-wordmark, .mode-play-wordmark img) { max-height: 72px; }"
+    }
+  ],
+  "image": {
+    "html": "<img class=\"\" src=\"http://127.0.0.1:8768/game/ui/art/identity/fpv-line/wordmark.png\" alt=\"\">",
+    "computed": {
+      "width": "118px",
+      "height": "34px"
+    },
+    "rect": {
+      "x": 22,
+      "y": 10,
+      "width": 118,
+      "height": 34,
+      "top": 10,
+      "right": 140,
+      "bottom": 44,
+      "left": 22
+    }
+  },
+  "railwayButtons": [
+    {
+      "text": "Railway Valley · 2 missions",
+      "html": "<button type=\"button\" class=\"journey-campaign-shortcut\" data-campaign-key=\"[&quot;worlds:regions&quot;,&quot;worlds:regions&quot;,&quot;railway&quot;]\" aria-pressed=\"false\" title=\"FPV SIM · Maps\">Railway Valley · 2 missions</button>",
+      "visible": true
+    },
+    {
+      "text": "Railway ValleyCustom level1/2Railway Valley — six districtsRailway Valley☆☆☆Download & play · 17.1 MiB✓FPV SIM · MapsCustom · FPV · Practice4.096 × 4.096 km · six starting areas · unscored free flight. Explore a freight hall, viaduct, quarry conveyor, station canopy, foundry and timber yard. Early landscape study with static trains and sparse scenery between districts.",
+      "html": "<button type=\"button\" class=\"level-card journey-card journey-card-illustrated\" data-mission-id=\"[&quot;worlds:regions&quot;,&quot;worlds:regions&quot;,&quot;railway&quot;,&quot;railway-valley-expanse:38bddc6a19c8ba5965992b68ed9b80398cb515dc99de7ce07cac11c9436606c7&quot;,&quot;38bddc6a19c8ba5965992b68ed9b80398cb515dc99de7ce07cac11c9436606c7&quot;]\" data-campaign-title=\"Railway Valley\" data-completion-state=\"new\" data-best-stars=\"\" data-level-number=\"\" data-campaign-key=\"[&quot;worlds:regions&quot;,&quot;worlds:regions&quot;,&quot;railway&quot;]\" data-campaign-start=\"true\" data-availability-state=\"download\" data-picture-state=\"unfinished\" data-current=\"false\" aria-label=\"Custom level · Railway Valley — six districts · Railway Valley · 1/2 · Not completed\" aria-busy=\"false\"><span class=\"level-card-campaign-heading journey-campaign-heading\" role=\"heading\" aria-level=\"3\">Railway Valley</span><span class=\"level-card-meta journey-card-meta\"><span class=\"level-card-number journey-card-number\">Custom level</span><span class=\"level-card-position journey-card-position\">1/2</span></span><strong class=\"level-card-title journey-card-title\">Railway Valley — six districts</strong><span class=\"level-card-campaign journey-card-campaign\">Railway Valley</span><span class=\"level-card-progress-group journey-card-progress-group\"><span class=\"level-card-progress journey-card-progress\" hidden=\"\"></span><span class=\"level-card-stars journey-card-stars\" aria-label=\"Not completed\">☆☆☆</span></span><span class=\"level-card-status journey-card-action\">Download &amp; play · 17.1 MiB</span><span class=\"level-card-preview journey-card-preview\" aria-hidden=\"true\"></span><span class=\"level-card-check journey-card-check\" aria-hidden=\"true\">✓</span><span class=\"journey-card-edition\">FPV SIM · Maps</span><span class=\"journey-card-tags\">Custom · FPV · Practice</span><span class=\"journey-card-challenge\" hidden=\"\"></span><span class=\"journey-card-route\">4.096 × 4.096 km · six starting areas · unscored free flight. Explore a freight hall, viaduct, quarry conveyor, station canopy, foundry and timber yard. Early landscape study with static trains and sparse scenery between districts.</span><span class=\"journey-card-mastery\" hidden=\"\"></span></button>",
+      "visible": true
+    },
+    {
+      "text": "Railway ValleyCustom level2/2Railway Valley — regional previewRailway Valley☆☆☆Download & play · 5.4 MiB✓FPV SIM · MapsCustom · FPV · Practice384 × 384 m · bridge, freight yard and open workshop · unscored free flight. An early regional preview with static trains and clear practice corridors.",
+      "html": "<button type=\"button\" class=\"level-card journey-card journey-card-illustrated\" data-mission-id=\"[&quot;worlds:regions&quot;,&quot;worlds:regions&quot;,&quot;railway&quot;,&quot;railway-valley-study:431b2dfb4be228e094174f1ccdd8eb72f906f09eb39a62c31b16e2bfb1239f15&quot;,&quot;431b2dfb4be228e094174f1ccdd8eb72f906f09eb39a62c31b16e2bfb1239f15&quot;]\" data-campaign-title=\"Railway Valley\" data-completion-state=\"new\" data-best-stars=\"\" data-level-number=\"\" data-campaign-key=\"[&quot;worlds:regions&quot;,&quot;worlds:regions&quot;,&quot;railway&quot;]\" data-campaign-start=\"false\" data-availability-state=\"download\" data-picture-state=\"unfinished\" data-current=\"false\" aria-label=\"Custom level · Railway Valley — regional preview · Railway Valley · 2/2 · Not completed\" aria-busy=\"false\"><span class=\"level-card-campaign-heading journey-campaign-heading\" role=\"heading\" aria-level=\"3\" hidden=\"\">Railway Valley</span><span class=\"level-card-meta journey-card-meta\"><span class=\"level-card-number journey-card-number\">Custom level</span><span class=\"level-card-position journey-card-position\">2/2</span></span><strong class=\"level-card-title journey-card-title\">Railway Valley — regional preview</strong><span class=\"level-card-campaign journey-card-campaign\">Railway Valley</span><span class=\"level-card-progress-group journey-card-progress-group\"><span class=\"level-card-progress journey-card-progress\" hidden=\"\"></span><span class=\"level-card-stars journey-card-stars\" aria-label=\"Not completed\">☆☆☆</span></span><span class=\"level-card-status journey-card-action\">Download &amp; play · 5.4 MiB</span><span class=\"level-card-preview journey-card-preview\" aria-hidden=\"true\"></span><span class=\"level-card-check journey-card-check\" aria-hidden=\"true\">✓</span><span class=\"journey-card-edition\">FPV SIM · Maps</span><span class=\"journey-card-tags\">Custom · FPV · Practice</span><span class=\"journey-card-challenge\" hidden=\"\"></span><span class=\"journey-card-route\">384 × 384 m · bridge, freight yard and open workshop · unscored free flight. An early regional preview with static trains and clear practice corridors.</span><span class=\"journey-card-mastery\" hidden=\"\"></span></button>",
+      "visible": true
+    }
+  ]
+}

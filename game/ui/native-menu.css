@@ -396,7 +396,7 @@
     max-width: var(--native-menu-width);
   }
   body.field-kit #coop-menu.native-landing :is(.lead, .objective, .coop-picture-preview),
-  body.field-kit #race-main.native-landing :is(.race-kicker, #race-journey-note, #race-summary),
+  body.field-kit #race-main.native-landing :is(.race-kicker, #race-journey-note),
   body.field-kit:not([data-couch-status='paused']):not([data-couch-status='finished'])
     #race-main.native-landing
     :is(.race-seats, #race-message) {
