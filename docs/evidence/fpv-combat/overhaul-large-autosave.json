@@ -1,0 +1,68 @@
+{
+  "started": "2026-10-20T05:29:04.869Z",
+  "scope": "Actual7.18MB recovery imported through the host, automatically saved on pause with real browser localStorage quota, then page reloaded and Continue saved combat invoked without importing again. Functional test, outside performance timing.",
+  "errors": [],
+  "importBytes": 7180019,
+  "expectedTicks": 42134,
+  "hostSha256": "aa35bb4c1dc6fb35aa3128c70ce0b4d52e9f6dae5b1dc36f8df93856f806b794",
+  "harnessSha256": "1b849a774cc33f6cc1e7297d42e4700c323b13325c64215061b77dd6ce09593c",
+  "stored": {
+    "format": "FPVCombatAutosave.v1",
+    "bytes": 7180077,
+    "localPointer": {
+      "format": "FPVCombatAutosavePointer.v1",
+      "savedAt": 1792474148452
+    },
+    "tick": 42134,
+    "presentationRecords": 1024,
+    "presentationImpacts": 1024,
+    "counts": {
+      "kills": 1730,
+      "shots": 4194
+    },
+    "status": "Checking saved best…"
+  },
+  "restored": {
+    "status": "paused",
+    "ticks": 42134,
+    "encounterTicks": 42134,
+    "kills": 1730,
+    "shots": 4194,
+    "recording": {
+      "format": "FPVEncounterRecordingStatus.v1",
+      "retainedFrom": 6000,
+      "retainedTo": 42134,
+      "complete": false,
+      "practiceOnly": true
+    },
+    "effects": {
+      "moving": 0,
+      "settled": 767,
+      "marks": 38,
+      "bursts": 0,
+      "calls": 4,
+      "triangles": 0,
+      "surfaceQueries": 0,
+      "tier": "high",
+      "runId": "encounter-ec3fff2d9bf72219",
+      "tick": 42134,
+      "stored": 1024,
+      "storedImpacts": 1024,
+      "capacity": 1024,
+      "impactCapacity": 1024,
+      "evicted": 0,
+      "presentationClock": 842.68,
+      "pendingFragments": 1043,
+      "maxDrawCalls": 24,
+      "registeredPools": 11,
+      "appearanceReady": false,
+      "appearanceHash": null,
+      "appearanceDrawCalls": 0,
+      "appearanceCharacters": 0,
+      "maxAppearanceTriangles": 600000
+    },
+    "statusText": "Survival · Ready. Arm when ready."
+  },
+  "passed": true,
+  "finished": "2026-10-20T05:29:13.443Z"
+}

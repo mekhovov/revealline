@@ -1,0 +1,83 @@
+{
+  "capturedAt": "2026-10-16T03:03:18.559299+00:00",
+  "totalBytesBeforeInventory": 572879,
+  "files": [
+    {
+      "name": "capacity-artifact-12021229581-manifests.json",
+      "bytes": 230230,
+      "sha256": "b6114614e187d504d2d33e7002f29111ec7983b971ff5b723b3bd2cbc422a0b9"
+    },
+    {
+      "name": "cloud-all-edition-summary.log",
+      "bytes": 1954,
+      "sha256": "5491315d87f1f4280014792ab7ed29ee1d145834bfbbb665479ea3fe269487cb"
+    },
+    {
+      "name": "cloud-company-summary.log",
+      "bytes": 19228,
+      "sha256": "76511ebd62f99a72ef73102cb95f9a3082adf581142710e73ad781726933ffc6"
+    },
+    {
+      "name": "cloud-optional-summary.log",
+      "bytes": 28995,
+      "sha256": "43e2b2bf1b169e1cba98e9a58d877fb9a5512e3c051866347b39e7c14b3e7361"
+    },
+    {
+      "name": "cloud-snapshot.json",
+      "bytes": 24651,
+      "sha256": "9924021f1ac559f1a4ca8c44359b67bb234d2a887e0ea69427f75dc5f739a374"
+    },
+    {
+      "name": "cloud-source-gate.log",
+      "bytes": 8012,
+      "sha256": "dedb03cfac3bd41f2962099a7c39220a575720f8ed3f69ed125ec913711b0f7a"
+    },
+    {
+      "name": "company-receipt.json",
+      "bytes": 2208,
+      "sha256": "ee6715716ae19a6e9f9e0c684d93d2f261191433905f9ce18f9264606b84c572"
+    },
+    {
+      "name": "optional-allmembers-recovery-audit.json",
+      "bytes": 2260,
+      "sha256": "53e7a8d615095f16e70f74a5aeb1eb1f20af75ea470826e2b3ec695c00dc8003"
+    },
+    {
+      "name": "optional-artifact-12021476397-manifests.json",
+      "bytes": 236678,
+      "sha256": "e98e48f0e61ced47af1e8696616c5716205a72f887d6d379329e3100cb0dd5a9"
+    },
+    {
+      "name": "optional-artifact-directory.json",
+      "bytes": 3503,
+      "sha256": "368f0a6ca7f89333d472505358c5d4f07778399b7bebae54819b6e02eeec013f"
+    },
+    {
+      "name": "optional-closure-recovery-audit.json",
+      "bytes": 1240,
+      "sha256": "09accb97b434e1b4c6b89308a7b675fa5325ea290364da8036e905d37f851bff"
+    },
+    {
+      "name": "optional-recovery-audit.json",
+      "bytes": 1728,
+      "sha256": "41627cbc822bbc2636ad57ec0c295a64302259a59ecc202a80b407efb41d96de"
+    },
+    {
+      "name": "preserved-evidence-inventory.json",
+      "bytes": 2111,
+      "sha256": "33794d39f17ce38d20c331efbe2b8776a7d153f16717d91fd0c6052e8e85cc63"
+    },
+    {
+      "name": "recovery-report.md",
+      "bytes": 7791,
+      "sha256": "dcf18b35d84e36e4c56ba0c2b52f1e72e1f00a2407d5cf42e5f79e17cb8c778b"
+    },
+    {
+      "name": "stage-9214-recovery-audit.json",
+      "bytes": 2290,
+      "sha256": "8518999c2c42dd7ca32986aa670aec696150054d1ba240dd8c85a5e994ff3806"
+    }
+  ],
+  "boundedMetadataOnly": true,
+  "largeOriginalsRemainExternal": true
+}

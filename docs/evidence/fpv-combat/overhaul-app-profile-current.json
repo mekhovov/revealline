@@ -1,0 +1,748 @@
+{
+  "started": "2026-10-20T01:39:36.057Z",
+  "browser": "155.0.8059.85",
+  "hardware": {
+    "platform": "darwin",
+    "release": "25.6.0",
+    "cpu": "Apple M4 Pro",
+    "logicalCpus": 14,
+    "memoryBytes": 51539607552
+  },
+  "scope": "Full local application, native stadium-01, actual simulation and renderer, scripted keyboard yaw, vertical hover control and sustained firing near the starting point. Assisted invulnerability and Balanced resources. This is not a human gameplay or physical radio qualification.",
+  "timing": "Aggregated synchronous requestAnimationFrame callback CPU work per display frame; asynchronous worker CPU and GPU execution excluded. Frame intervals include scheduling/GL presentation. Ten-minute wall-clock windows are not guaranteed ten minutes accepted simulation when frames are slow.",
+  "runs": [
+    {
+      "population": 20,
+      "seconds": 30,
+      "started": "2026-10-20T01:39:37.031Z",
+      "samples": [
+        {
+          "status": "active",
+          "ticks": 364,
+          "encounterTicks": 364,
+          "health": 100,
+          "kills": 6,
+          "shots": 55,
+          "hits": 6,
+          "wave": 1,
+          "active": 14,
+          "waiting": 0,
+          "position": {
+            "x": 0,
+            "y": 1827,
+            "z": 18000
+          },
+          "velocity": {
+            "x": 0,
+            "y": 117,
+            "z": 0
+          },
+          "geometryWaiting": false,
+          "phase": "wave",
+          "heapBytes": 100970222,
+          "resources": {
+            "renderer": {
+              "calls": 85,
+              "triangles": 14748,
+              "geometries": 82,
+              "textures": 21,
+              "programs": 18,
+              "contextLost": false
+            },
+            "actors": {
+              "actors": 14,
+              "instances": 317,
+              "calls": 6,
+              "skinnedActors": 0,
+              "skinnedCalls": 0,
+              "templates": 20,
+              "capacity": 128,
+              "healthBars": 1,
+              "appearanceReady": false,
+              "appearanceHash": null,
+              "appearanceCharacters": 0,
+              "equipmentCalls": 0,
+              "maxSkinnedActors": 20
+            },
+            "effects": {
+              "moving": 0,
+              "settled": 0,
+              "marks": 0,
+              "bursts": 0,
+              "calls": 0,
+              "triangles": 0,
+              "tier": "high",
+              "runId": "encounter-de65989630acacb9",
+              "tick": 364,
+              "stored": 6,
+              "storedImpacts": 15,
+              "capacity": 1024,
+              "impactCapacity": 1024,
+              "evicted": 0,
+              "presentationClock": 7.28,
+              "pendingFragments": 46,
+              "maxDrawCalls": 24,
+              "registeredPools": 11,
+              "appearanceReady": false,
+              "appearanceHash": null,
+              "appearanceDrawCalls": 0,
+              "appearanceCharacters": 0,
+              "maxAppearanceTriangles": 600000
+            }
+          },
+          "statusText": "Continuous combat · Active · local practice",
+          "seconds": 5
+        },
+        {
+          "status": "active",
+          "ticks": 614,
+          "encounterTicks": 614,
+          "health": 100,
+          "kills": 6,
+          "shots": 87,
+          "hits": 6,
+          "wave": 1,
+          "active": 14,
+          "waiting": 0,
+          "position": {
+            "x": 0,
+            "y": 2084,
+            "z": 18000
+          },
+          "velocity": {
+            "x": 0,
+            "y": 61,
+            "z": 0
+          },
+          "geometryWaiting": false,
+          "phase": "wave",
+          "heapBytes": 102168900,
+          "resources": {
+            "renderer": {
+              "calls": 84,
+              "triangles": 14962,
+              "geometries": 82,
+              "textures": 21,
+              "programs": 18,
+              "contextLost": false
+            },
+            "actors": {
+              "actors": 14,
+              "instances": 315,
+              "calls": 4,
+              "skinnedActors": 0,
+              "skinnedCalls": 0,
+              "templates": 20,
+              "capacity": 128,
+              "healthBars": 0,
+              "appearanceReady": false,
+              "appearanceHash": null,
+              "appearanceCharacters": 0,
+              "equipmentCalls": 0,
+              "maxSkinnedActors": 20
+            },
+            "effects": {
+              "moving": 6,
+              "settled": 0,
+              "marks": 0,
+              "bursts": 1,
+              "calls": 1,
+              "triangles": 0,
+              "tier": "high",
+              "runId": "encounter-de65989630acacb9",
+              "tick": 614,
+              "stored": 6,
+              "storedImpacts": 29,
+              "capacity": 1024,
+              "impactCapacity": 1024,
+              "evicted": 0,
+              "presentationClock": 12.28,
+              "pendingFragments": 46,
+              "maxDrawCalls": 24,
+              "registeredPools": 11,
+              "appearanceReady": false,
+              "appearanceHash": null,
+              "appearanceDrawCalls": 0,
+              "appearanceCharacters": 0,
+              "maxAppearanceTriangles": 600000
+            }
+          },
+          "statusText": "Continuous combat · Active · local practice",
+          "seconds": 10
+        },
+        {
+          "status": "active",
+          "ticks": 866,
+          "encounterTicks": 866,
+          "health": 100,
+          "kills": 6,
+          "shots": 119,
+          "hits": 6,
+          "wave": 1,
+          "active": 14,
+          "waiting": 0,
+          "position": {
+            "x": 0,
+            "y": 2253,
+            "z": 18000
+          },
+          "velocity": {
+            "x": 0,
+            "y": 10,
+            "z": 0
+          },
+          "geometryWaiting": false,
+          "phase": "wave",
+          "heapBytes": 105959493,
+          "resources": {
+            "renderer": {
+              "calls": 57,
+              "triangles": 13372,
+              "geometries": 82,
+              "textures": 21,
+              "programs": 18,
+              "contextLost": false
+            },
+            "actors": {
+              "actors": 14,
+              "instances": 317,
+              "calls": 4,
+              "skinnedActors": 0,
+              "skinnedCalls": 0,
+              "templates": 20,
+              "capacity": 128,
+              "healthBars": 0,
+              "appearanceReady": false,
+              "appearanceHash": null,
+              "appearanceCharacters": 0,
+              "equipmentCalls": 0,
+              "maxSkinnedActors": 20
+            },
+            "effects": {
+              "moving": 12,
+              "settled": 0,
+              "marks": 0,
+              "bursts": 2,
+              "calls": 1,
+              "triangles": 0,
+              "tier": "high",
+              "runId": "encounter-de65989630acacb9",
+              "tick": 866,
+              "stored": 6,
+              "storedImpacts": 50,
+              "capacity": 1024,
+              "impactCapacity": 1024,
+              "evicted": 0,
+              "presentationClock": 17.32,
+              "pendingFragments": 46,
+              "maxDrawCalls": 24,
+              "registeredPools": 11,
+              "appearanceReady": false,
+              "appearanceHash": null,
+              "appearanceDrawCalls": 0,
+              "appearanceCharacters": 0,
+              "maxAppearanceTriangles": 600000
+            }
+          },
+          "statusText": "Continuous combat · Active · local practice",
+          "seconds": 15
+        },
+        {
+          "status": "active",
+          "ticks": 1171,
+          "encounterTicks": 1171,
+          "health": 100,
+          "kills": 7,
+          "shots": 150,
+          "hits": 7,
+          "wave": 1,
+          "active": 13,
+          "waiting": 0,
+          "position": {
+            "x": 0,
+            "y": 2380,
+            "z": 18000
+          },
+          "velocity": {
+            "x": 0,
+            "y": 32,
+            "z": 0
+          },
+          "geometryWaiting": false,
+          "phase": "wave",
+          "heapBytes": 104759012,
+          "resources": {
+            "renderer": {
+              "calls": 89,
+              "triangles": 14768,
+              "geometries": 82,
+              "textures": 21,
+              "programs": 18,
+              "contextLost": false
+            },
+            "actors": {
+              "actors": 13,
+              "instances": 304,
+              "calls": 4,
+              "skinnedActors": 0,
+              "skinnedCalls": 0,
+              "templates": 20,
+              "capacity": 128,
+              "healthBars": 0,
+              "appearanceReady": false,
+              "appearanceHash": null,
+              "appearanceCharacters": 0,
+              "equipmentCalls": 0,
+              "maxSkinnedActors": 20
+            },
+            "effects": {
+              "moving": 12,
+              "settled": 0,
+              "marks": 0,
+              "bursts": 2,
+              "calls": 1,
+              "triangles": 0,
+              "tier": "high",
+              "runId": "encounter-de65989630acacb9",
+              "tick": 1171,
+              "stored": 7,
+              "storedImpacts": 58,
+              "capacity": 1024,
+              "impactCapacity": 1024,
+              "evicted": 0,
+              "presentationClock": 23.42,
+              "pendingFragments": 58,
+              "maxDrawCalls": 24,
+              "registeredPools": 11,
+              "appearanceReady": false,
+              "appearanceHash": null,
+              "appearanceDrawCalls": 0,
+              "appearanceCharacters": 0,
+              "maxAppearanceTriangles": 600000
+            }
+          },
+          "statusText": "Continuous combat · Active · local practice",
+          "seconds": 21
+        },
+        {
+          "status": "active",
+          "ticks": 1422,
+          "encounterTicks": 1422,
+          "health": 100,
+          "kills": 7,
+          "shots": 180,
+          "hits": 7,
+          "wave": 1,
+          "active": 13,
+          "waiting": 0,
+          "position": {
+            "x": 0,
+            "y": 2382,
+            "z": 18000
+          },
+          "velocity": {
+            "x": 0,
+            "y": -7,
+            "z": 0
+          },
+          "geometryWaiting": false,
+          "phase": "wave",
+          "heapBytes": 117751849,
+          "resources": {
+            "renderer": {
+              "calls": 57,
+              "triangles": 12924,
+              "geometries": 82,
+              "textures": 21,
+              "programs": 18,
+              "contextLost": false
+            },
+            "actors": {
+              "actors": 13,
+              "instances": 303,
+              "calls": 4,
+              "skinnedActors": 0,
+              "skinnedCalls": 0,
+              "templates": 20,
+              "capacity": 128,
+              "healthBars": 0,
+              "appearanceReady": false,
+              "appearanceHash": null,
+              "appearanceCharacters": 0,
+              "equipmentCalls": 0,
+              "maxSkinnedActors": 20
+            },
+            "effects": {
+              "moving": 6,
+              "settled": 0,
+              "marks": 0,
+              "bursts": 1,
+              "calls": 1,
+              "triangles": 0,
+              "tier": "high",
+              "runId": "encounter-de65989630acacb9",
+              "tick": 1422,
+              "stored": 7,
+              "storedImpacts": 70,
+              "capacity": 1024,
+              "impactCapacity": 1024,
+              "evicted": 0,
+              "presentationClock": 28.44,
+              "pendingFragments": 58,
+              "maxDrawCalls": 24,
+              "registeredPools": 11,
+              "appearanceReady": false,
+              "appearanceHash": null,
+              "appearanceDrawCalls": 0,
+              "appearanceCharacters": 0,
+              "maxAppearanceTriangles": 600000
+            }
+          },
+          "statusText": "Continuous combat · Active · local practice",
+          "seconds": 26
+        },
+        {
+          "status": "active",
+          "ticks": 1614,
+          "encounterTicks": 1614,
+          "health": 100,
+          "kills": 8,
+          "shots": 204,
+          "hits": 8,
+          "wave": 1,
+          "active": 12,
+          "waiting": 0,
+          "position": {
+            "x": 0,
+            "y": 2330,
+            "z": 18000
+          },
+          "velocity": {
+            "x": 0,
+            "y": 17,
+            "z": 0
+          },
+          "geometryWaiting": false,
+          "phase": "wave",
+          "heapBytes": 105354046,
+          "resources": {
+            "renderer": {
+              "calls": 57,
+              "triangles": 12788,
+              "geometries": 82,
+              "textures": 21,
+              "programs": 18,
+              "contextLost": false
+            },
+            "actors": {
+              "actors": 12,
+              "instances": 291,
+              "calls": 4,
+              "skinnedActors": 0,
+              "skinnedCalls": 0,
+              "templates": 20,
+              "capacity": 128,
+              "healthBars": 0,
+              "appearanceReady": false,
+              "appearanceHash": null,
+              "appearanceCharacters": 0,
+              "equipmentCalls": 0,
+              "maxSkinnedActors": 20
+            },
+            "effects": {
+              "moving": 12,
+              "settled": 0,
+              "marks": 0,
+              "bursts": 2,
+              "calls": 1,
+              "triangles": 0,
+              "tier": "high",
+              "runId": "encounter-de65989630acacb9",
+              "tick": 1614,
+              "stored": 8,
+              "storedImpacts": 82,
+              "capacity": 1024,
+              "impactCapacity": 1024,
+              "evicted": 0,
+              "presentationClock": 32.28,
+              "pendingFragments": 70,
+              "maxDrawCalls": 24,
+              "registeredPools": 11,
+              "appearanceReady": false,
+              "appearanceHash": null,
+              "appearanceDrawCalls": 0,
+              "appearanceCharacters": 0,
+              "maxAppearanceTriangles": 600000
+            }
+          },
+          "statusText": "Continuous combat · Active · local practice",
+          "seconds": 30
+        }
+      ],
+      "errors": [],
+      "hardware": {
+        "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/155.0.0.0 Safari/537.36",
+        "hardwareConcurrency": 14,
+        "pixelRatio": 1,
+        "width": 1920,
+        "height": 1080,
+        "gpu": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4 Pro, Unspecified Version)",
+        "gpuTimingAvailable": true,
+        "gpuTimingMeasured": false
+      },
+      "profileSelfTime": [
+        {
+          "function": "(idle)",
+          "url": "",
+          "line": 0,
+          "ms": 14966.745
+        },
+        {
+          "function": "(program)",
+          "url": "",
+          "line": 0,
+          "ms": 4611.281
+        },
+        {
+          "function": "clone",
+          "url": "http://127.0.0.1:8768/optional-practice/civilian-fpv/world-reaction-runtime.mjs",
+          "line": 3023,
+          "ms": 861.27
+        },
+        {
+          "function": "snapshot",
+          "url": "http://127.0.0.1:8768/optional-practice/civilian-fpv/world-reaction-runtime.mjs",
+          "line": 5088,
+          "ms": 519.449
+        },
+        {
+          "function": "clone",
+          "url": "http://127.0.0.1:8768/optional-practice/civilian-fpv/world-reaction-runtime.mjs",
+          "line": 3023,
+          "ms": 341.569
+        },
+        {
+          "function": "clone",
+          "url": "http://127.0.0.1:8768/optional-practice/civilian-fpv/world-reaction-runtime.mjs",
+          "line": 3023,
+          "ms": 298.94
+        },
+        {
+          "function": "(garbage collector)",
+          "url": "",
+          "line": 0,
+          "ms": 291.743
+        },
+        {
+          "function": "error",
+          "url": "http://127.0.0.1:8768/optional-practice/civilian-fpv/vendor/three.core.js",
+          "line": 2041,
+          "ms": 224.774
+        },
+        {
+          "function": "clone",
+          "url": "http://127.0.0.1:8768/optional-practice/civilian-fpv/world-model.mjs",
+          "line": 99,
+          "ms": 206.889
+        },
+        {
+          "function": "raycast",
+          "url": "http://127.0.0.1:8768/optional-practice/civilian-fpv/vendor/three.core.js",
+          "line": 22561,
+          "ms": 201.391
+        },
+        {
+          "function": "snapshot",
+          "url": "http://127.0.0.1:8768/optional-practice/civilian-fpv/world-reaction-runtime.mjs",
+          "line": 5088,
+          "ms": 192.166
+        },
+        {
+          "function": "refresh",
+          "url": "http://127.0.0.1:8768/optional-practice/civilian-fpv/world-reaction-runtime.mjs",
+          "line": 15831,
+          "ms": 191.715
+        },
+        {
+          "function": "flight.stageEncounterActors",
+          "url": "http://127.0.0.1:8768/optional-practice/civilian-fpv/world-model.mjs",
+          "line": 1634,
+          "ms": 180.969
+        },
+        {
+          "function": "error",
+          "url": "http://127.0.0.1:8768/optional-practice/civilian-fpv/vendor/three.core.js",
+          "line": 2041,
+          "ms": 175.659
+        },
+        {
+          "function": "querySelector",
+          "url": "",
+          "line": 0,
+          "ms": 167.836
+        },
+        {
+          "function": "getBoundingClientRect",
+          "url": "",
+          "line": 0,
+          "ms": 167.022
+        },
+        {
+          "function": "raycast",
+          "url": "http://127.0.0.1:8768/optional-practice/civilian-fpv/vendor/three.core.js",
+          "line": 22561,
+          "ms": 140.958
+        },
+        {
+          "function": "",
+          "url": "http://127.0.0.1:8768/optional-practice/civilian-fpv/world-reaction-runtime.mjs",
+          "line": 18808,
+          "ms": 139.343
+        },
+        {
+          "function": "texturesOf",
+          "url": "http://127.0.0.1:8768/optional-practice/civilian-fpv/renderer.mjs",
+          "line": 1456,
+          "ms": 134.954
+        },
+        {
+          "function": "clone",
+          "url": "http://127.0.0.1:8768/optional-practice/civilian-fpv/world-reaction-runtime.mjs",
+          "line": 3023,
+          "ms": 122.445
+        },
+        {
+          "function": "clone",
+          "url": "http://127.0.0.1:8768/optional-practice/civilian-fpv/world-reaction-runtime.mjs",
+          "line": 3023,
+          "ms": 121.663
+        },
+        {
+          "function": "clone",
+          "url": "http://127.0.0.1:8768/optional-practice/civilian-fpv/world-reaction-runtime.mjs",
+          "line": 3023,
+          "ms": 120.824
+        },
+        {
+          "function": "clone",
+          "url": "http://127.0.0.1:8768/optional-practice/civilian-fpv/world-reaction-runtime.mjs",
+          "line": 3023,
+          "ms": 115.247
+        },
+        {
+          "function": "update",
+          "url": "http://127.0.0.1:8768/optional-practice/civilian-fpv/world-reaction-runtime.mjs",
+          "line": 17329,
+          "ms": 109.109
+        },
+        {
+          "function": "snapshot",
+          "url": "http://127.0.0.1:8768/optional-practice/civilian-fpv/world-model.mjs",
+          "line": 1026,
+          "ms": 106.876
+        },
+        {
+          "function": "querySelector",
+          "url": "",
+          "line": 0,
+          "ms": 105.056
+        },
+        {
+          "function": "querySelector",
+          "url": "",
+          "line": 0,
+          "ms": 101.062
+        },
+        {
+          "function": "clone",
+          "url": "http://127.0.0.1:8768/optional-practice/civilian-fpv/world-reaction-runtime.mjs",
+          "line": 3023,
+          "ms": 99.618
+        },
+        {
+          "function": "clone",
+          "url": "http://127.0.0.1:8768/optional-practice/civilian-fpv/world-reaction-runtime.mjs",
+          "line": 3023,
+          "ms": 99.202
+        },
+        {
+          "function": "clone",
+          "url": "http://127.0.0.1:8768/optional-practice/civilian-fpv/world-reaction-runtime.mjs",
+          "line": 3023,
+          "ms": 94.785
+        },
+        {
+          "function": "paintCombatHUD",
+          "url": "http://127.0.0.1:8768/optional-practice/civilian-fpv/world-app.mjs",
+          "line": 2510,
+          "ms": 93.858
+        },
+        {
+          "function": "clone",
+          "url": "http://127.0.0.1:8768/optional-practice/civilian-fpv/world-reaction-runtime.mjs",
+          "line": 3023,
+          "ms": 92.029
+        },
+        {
+          "function": "clone",
+          "url": "http://127.0.0.1:8768/optional-practice/civilian-fpv/world-reaction-runtime.mjs",
+          "line": 3023,
+          "ms": 86.858
+        },
+        {
+          "function": "clone",
+          "url": "http://127.0.0.1:8768/optional-practice/civilian-fpv/world-reaction-runtime.mjs",
+          "line": 3023,
+          "ms": 86.71
+        },
+        {
+          "function": "querySelector",
+          "url": "",
+          "line": 0,
+          "ms": 79.469
+        },
+        {
+          "function": "snapshot",
+          "url": "http://127.0.0.1:8768/optional-practice/civilian-fpv/world-reaction-runtime.mjs",
+          "line": 5088,
+          "ms": 76.014
+        },
+        {
+          "function": "update",
+          "url": "http://127.0.0.1:8768/optional-practice/civilian-fpv/world-reaction-runtime.mjs",
+          "line": 18812,
+          "ms": 73.504
+        },
+        {
+          "function": "snapshot",
+          "url": "http://127.0.0.1:8768/optional-practice/civilian-fpv/world-reaction-runtime.mjs",
+          "line": 5088,
+          "ms": 71.916
+        },
+        {
+          "function": "clone",
+          "url": "http://127.0.0.1:8768/optional-practice/civilian-fpv/world-reaction-runtime.mjs",
+          "line": 3023,
+          "ms": 66.998
+        },
+        {
+          "function": "clone",
+          "url": "http://127.0.0.1:8768/optional-practice/civilian-fpv/world-model.mjs",
+          "line": 99,
+          "ms": 66.258
+        }
+      ],
+      "actualSeconds": 30.061,
+      "pilotCPU": 217.99999995529652,
+      "frames": 1803,
+      "cpuP50": 5.8,
+      "cpuP95": 8.5,
+      "cpuP99": 9.3,
+      "intervalP50": 16.7,
+      "intervalP95": 16.7,
+      "intervalP99": 16.8,
+      "averageFps": 59.60551863747443
+    }
+  ],
+  "finished": "2026-10-20T01:40:09.577Z"
+}

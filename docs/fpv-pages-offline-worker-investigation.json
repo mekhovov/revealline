@@ -1,0 +1,80 @@
+{
+  "format": "FPVPagesOfflineWorkerInvestigation.v1",
+  "generatedAt": "2026-10-16T00:52:47.052Z",
+  "manifestSha256": "42380dab9596756d13327c9fec26c9e313f99c7adace9f262dd43aa7e2a508f4",
+  "runnerSha256": "8d9d3dc1ba2a939e5102ed6b879e12c1e55e773c1f2c230134449bb102f0b337",
+  "stage": "Isolated World offline reference practice after successful World online worker flight and package preparation",
+  "failure": "locator.click: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('.fpv-advanced-practice').getByRole('button', { name: 'Start practice', exact: true })\u001b[22m\n\u001b[2m    - locator resolved to <button disabled type=\"button\">Start practice</button>\u001b[22m\n\u001b[2m  - attempting click action\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is not enabled\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m    - waiting 20ms\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is not enabled\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m      - waiting 100ms\u001b[22m\n\u001b[2m    56 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m       - element is not enabled\u001b[22m\n\u001b[2m     - retrying click action\u001b[22m\n\u001b[2m       - waiting 500ms\u001b[22m\n\n    at advanced (/Users/oleksandr.mekhovov/work/my_projects/go_test/scripts/smoke-fpv-pages.mjs:311:79)\n    at async smokeFPVPages (/Users/oleksandr.mekhovov/work/my_projects/go_test/scripts/smoke-fpv-pages.mjs:445:24)\n    at async file:///Users/oleksandr.mekhovov/work/my_projects/go_test/scripts/smoke-fpv-pages.mjs:535:18",
+  "failedWorkerRequests": [
+    {
+      "url": "http://127.0.0.1:56857/revealline/optional-practice/civilian-fpv/advanced-worker.mjs",
+      "error": "net::ERR_ABORTED",
+      "offline": true,
+      "packageId": "fpv-worlds"
+    }
+  ],
+  "browserStatus": "Advanced reference practice\n\nExperimental · unscored. The independent controller and reference aircraft are awaiting device, measurement and pilot qualification.\n\nArrow keys: pitch/roll · A/D: yaw · W/S: throttle · Escape: pause. Touch controls are below. The supplied radio calibration is used when a radio is connected. Camera FOV is vertical.\n\nPractice stopped: Advanced worker is unavailable.\n\nStart practice\nPause\nRestart practice\nReturn to tuning\nExport practice recording\nAircraft template\nFreestyle\nWhoop\nRacing\nInput source\nKeyboard / touch\nCalibrated radio\nRoll\nPitch\nYaw\nThrottle\nAircraft and controller tuning",
+  "academyOnlineAndOfflinePassed": true,
+  "expectedWorkerScope": "/revealline/optional-practice/fpv-worlds/",
+  "disposition": "Fixed by an explicit same-scope World worker bootstrap; final generated Pages probe verified initial worker creation and restart online and in an isolated offline context. Both workers were disposed on return.",
+  "resolution": {
+    "verifiedAt": "2026-10-16T01:09:43.147Z",
+    "evidence": "docs/fpv-pages-live-testing-evidence.json",
+    "manifestSha256": "8d95e2bb366fef294bbf2b788d36bd47aaa5c148df2ab20cf0f3039954510c9d",
+    "runnerSha256": "e6bacfae6628e6012d726033020bbb9902863d88812e91ef50e61325de121298",
+    "sourceSha256": {
+      "world": "e4bb41954da38d97770239942bb11a9b9d301e035a9183fbfef8bff45b38ce91",
+      "practice": "ed34c7081069ca78d6fde9b75ab28930b3da4a7a6b0f774373a3340143318f8b",
+      "bootstrap": "51b67155430c594d4a1299d386cb1b719d2ce03f0e83f0076e65c3d7e9cb8514"
+    },
+    "packages": [
+      {
+        "id": "civilian-fpv",
+        "online": {
+          "missionTicks": 11,
+          "restarted": true,
+          "workerURL": "http://127.0.0.1:64475/revealline/optional-practice/civilian-fpv/advanced-worker.mjs",
+          "disposedWorkerState": {
+            "created": 2,
+            "terminated": 2,
+            "lastMissionTick": 11
+          }
+        },
+        "offline": {
+          "missionTicks": 12,
+          "restarted": true,
+          "workerURL": "http://127.0.0.1:64475/revealline/optional-practice/civilian-fpv/advanced-worker.mjs",
+          "disposedWorkerState": {
+            "created": 2,
+            "terminated": 2,
+            "lastMissionTick": 12
+          }
+        }
+      },
+      {
+        "id": "fpv-worlds",
+        "online": {
+          "missionTicks": 12,
+          "restarted": true,
+          "workerURL": "http://127.0.0.1:64475/revealline/optional-practice/fpv-worlds/advanced-worker.mjs",
+          "disposedWorkerState": {
+            "created": 2,
+            "terminated": 2,
+            "lastMissionTick": 12
+          }
+        },
+        "offline": {
+          "missionTicks": 11,
+          "restarted": true,
+          "workerURL": "http://127.0.0.1:64475/revealline/optional-practice/fpv-worlds/advanced-worker.mjs",
+          "disposedWorkerState": {
+            "created": 2,
+            "terminated": 2,
+            "lastMissionTick": 11
+          }
+        }
+      }
+    ],
+    "passed": true
+  }
+}

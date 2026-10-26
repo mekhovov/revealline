@@ -1,4 +1,4 @@
-/** Deterministic, checked source projection for the unchanged 104-file FPV pack.
+/** Deterministic, checked source projection for the bounded FPV packages.
  * Shared services keep their canonical source; this generated module merely
  * co-locates their isolated module scopes, as SIM already does for shared art. */
 import { readFile, writeFile, rename, rm } from 'node:fs/promises';
@@ -23,6 +23,15 @@ const entries = [
   'world-hunt-reactions.mjs',
   'world-enemy-guide.mjs',
   'world-library.mjs',
+  // Keep shared combat state and presentation in this existing bounded package
+  // slot. Academy receives factories only when its host explicitly supplies them.
+  'encounter-runtime.mjs',
+  'encounter-session.mjs',
+  'encounter-controls.mjs',
+  'encounter-geometry.mjs',
+  'combat-presentation.mjs',
+  'combat-actors.mjs',
+  'combat-appearance.mjs',
 ].map((file) => native + file);
 const policy = OPTIONAL_PACKAGE_POLICIES['fpv-worlds'];
 const external = new Set(policy.sharedFiles.filter((file) => file !== target));
@@ -169,10 +178,10 @@ const formatted = await format(lines.join('\n'), {
   ...(await resolveConfig(path.join(root, target))),
   filepath: path.join(root, target),
   parser: 'babel',
-  // This generated projection repeats nested source scopes. Keep newlines for
-  // inspection without charging their indentation to the offline source budget.
-  // Canonical modules and packed recordings retain their original bytes.
-  tabWidth: 0,
+  // Use a real indentation width: zero makes Prettier's multiline template
+  // interpolation indentation pathological. The lexical projection below removes
+  // code indentation for the offline budget while preserving literal contents.
+  tabWidth: 2,
 });
 // Reuse the checked lexical projection only on this generated copy. It retains
 // every token, comment, literal and line terminator, including packed recordings.

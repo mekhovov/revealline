@@ -1,0 +1,721 @@
+{
+  "scope": "Controlled actual flight-renderer fixture; synthetic accepted defeat/surface-impact facts and 128 fixed living actors. No gameplay authority, player controls or production terrain admission. Short diagnostic: native r2 only, High overall graphics and High effect detail; 30 measured seconds per condition. This does not replace the longer forced-Ultra comparison. Infinite flat fixture floor with stable surface attachment and radius-aware swept contact. Every phase checks actual Current/r2 activation identity and enabled phases require visible settled remains with no invalid support returns. Every enabled phase begins with 1,024 destruction records and 1,024 surface-impact records, then eight mixed-material defeats plus eight impacts every two seconds. Full gore stays enabled for every measured On frame; no Blood/Remains toggles dilute the workload. Matched phase-local movement, camera, seeds, timeline and thirty-second restoration schedule. Phase screenshots are captured while paused after measurement, before changing the scene. CPU covers event ingestion, actor staging and synchronous draw; GPU uses bounded asynchronous timers around the actual renderer render call, including internal passes, sampled every 15 renders. Probe overhead is included identically in both conditions; no blocking GPU readback. Not a full-app or human gameplay acceptance.",
+  "startedAt": "2026-10-20T05:52:01.604Z",
+  "hardware": {
+    "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/155.0.0.0 Safari/537.36",
+    "cores": 14,
+    "pixelRatio": 1,
+    "width": 1920,
+    "height": 1080,
+    "gpu": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4 Pro, Unspecified Version)",
+    "timerQuery": true
+  },
+  "appearanceHash": "9940f5d75727b52d067cf1be2ce75e254f52e0b6670643bc28a308291969e009",
+  "elapsedMs": 80465.29999999702,
+  "completed": true,
+  "phaseIndex": 1,
+  "phases": [
+    {
+      "mode": "native",
+      "art": "realistic-r2",
+      "effects": false,
+      "frames": 1800,
+      "cpuP50": 2.4,
+      "cpuP95": 2.7,
+      "cpuP99": 2.8,
+      "drawP95": 2.4,
+      "effectUpdateP95": 0.1,
+      "actorUpdateP95": 1.4,
+      "intervalP95": 16.7,
+      "gpu": {
+        "available": true,
+        "measured": true,
+        "samples": 120,
+        "gpuP50": 4.484,
+        "gpuP95": 4.749,
+        "gpuP99": 4.792,
+        "gpuMax": 5.430208,
+        "issued": 120,
+        "pending": 0,
+        "discarded": 0,
+        "skipped": 0,
+        "globalDisjointEvents": 0,
+        "globalContextLosses": 0,
+        "errors": [],
+        "sampleEvery": 15,
+        "maxPending": 8,
+        "method": "https://registry.khronos.org/webgl/extensions/EXT_disjoint_timer_query_webgl2/",
+        "scope": "Sampled flight-view render GPU work: elapsed time around the actual flight renderer render call, including its shadow and other internal passes. Excludes browser compositor, worker CPU and other contexts. Availability polling only; no finish, flush or synchronous result readback before availability."
+      },
+      "gpuP95": 4.749,
+      "heapBytes": [
+        171355586,
+        169618906,
+        167859985,
+        165903769,
+        164000417,
+        162090045,
+        160179377,
+        158899645,
+        183925073,
+        181995653,
+        146117631,
+        121295187,
+        120691506,
+        131677859,
+        129762559
+      ],
+      "resources": {
+        "available": true,
+        "disposed": false,
+        "quality": "high",
+        "drone": "racer",
+        "presentation": {
+          "collectionId": "authored",
+          "revision": "r1",
+          "profileId": "academy",
+          "actors": [],
+          "actorGoals": [],
+          "projectileBatches": 17,
+          "activeProjectiles": 0,
+          "surfaceDetailGroups": 0
+        },
+        "effects": {
+          "playerPulse": 9233635,
+          "hostilePulse": 16232561,
+          "ghost": 9824751,
+          "ghostEmissive": 2390144,
+          "trail": 9824751,
+          "goalOutline": 9169660,
+          "goalActive": 15266215,
+          "goalComplete": 9808542,
+          "goalInactive": 8366516,
+          "goalGlow": 11069917,
+          "goalGlowInactive": 9030085,
+          "goalEmissive": 8577493,
+          "goalBadge": 10872788,
+          "directionArrow": 15264432
+        },
+        "hunt": null,
+        "combat": {
+          "moving": 0,
+          "settled": 0,
+          "marks": 0,
+          "bursts": 0,
+          "calls": 0,
+          "triangles": 0,
+          "surfaceQueries": 0,
+          "tier": "high",
+          "runId": "",
+          "tick": 0,
+          "stored": 0,
+          "storedImpacts": 0,
+          "capacity": 1024,
+          "impactCapacity": 1024,
+          "evicted": 0,
+          "presentationClock": 134.05999999999753,
+          "pendingFragments": 0,
+          "maxDrawCalls": 24,
+          "registeredPools": 73,
+          "appearanceReady": true,
+          "appearanceHash": "9940f5d75727b52d067cf1be2ce75e254f52e0b6670643bc28a308291969e009",
+          "appearanceDrawCalls": 32,
+          "appearanceCharacters": 36,
+          "maxAppearanceTriangles": 600000
+        },
+        "combatActors": {
+          "actors": 128,
+          "instances": 2464,
+          "calls": 64,
+          "skinnedActors": 20,
+          "skinnedCalls": 40,
+          "crowdActors": 12,
+          "crowdInstances": 24,
+          "crowdCalls": 2,
+          "templates": 128,
+          "capacity": 128,
+          "healthBars": 128,
+          "appearanceReady": true,
+          "appearanceHash": "9940f5d75727b52d067cf1be2ce75e254f52e0b6670643bc28a308291969e009",
+          "appearanceCharacters": 36,
+          "equipmentCalls": 17,
+          "maxSkinnedActors": 20,
+          "crowdPaletteBytes": 6311280,
+          "crowdPalettes": 1,
+          "crowdPoses": 10,
+          "crowdPaletteByteLimit": 8388608,
+          "appearanceResourceMetrics": {
+            "decodedBytes": 113888696,
+            "gpuBytes": 136220432
+          },
+          "crowdPaletteGpuBytes": 6243440,
+          "equipmentInstanceBytes": 243200
+        },
+        "combatAppearance": {
+          "state": "ready",
+          "error": null,
+          "sha256": "9940f5d75727b52d067cf1be2ce75e254f52e0b6670643bc28a308291969e009",
+          "characterIndex": null,
+          "characters": 36
+        },
+        "importedMaterialBindings": {
+          "applied": 0,
+          "diagnostics": []
+        },
+        "registered": {
+          "geometries": 139,
+          "materials": 99,
+          "textures": 13
+        },
+        "renderer": {
+          "calls": 134,
+          "triangles": 673644,
+          "geometries": 104,
+          "textures": 58,
+          "programs": 28,
+          "contextLost": false
+        }
+      },
+      "recordCounts": {
+        "remains": 0,
+        "impacts": 0
+      },
+      "emittedBurstGroups": 0,
+      "maxFrameIntervalMs": 16.80000000000291,
+      "support": {
+        "queries": 0,
+        "clear": 0,
+        "contact": 0,
+        "attached": 0,
+        "invalid": 0
+      },
+      "actualAppearance": {
+        "activation": {
+          "state": "ready",
+          "error": null,
+          "sha256": "9940f5d75727b52d067cf1be2ce75e254f52e0b6670643bc28a308291969e009",
+          "characterIndex": null,
+          "characters": 36
+        },
+        "actors": {
+          "ready": true,
+          "hash": "9940f5d75727b52d067cf1be2ce75e254f52e0b6670643bc28a308291969e009"
+        },
+        "effects": {
+          "ready": true,
+          "hash": "9940f5d75727b52d067cf1be2ce75e254f52e0b6670643bc28a308291969e009"
+        }
+      },
+      "visibleSamples": [
+        {
+          "elapsed": 6.07,
+          "blood": true,
+          "remains": true,
+          "settled": 0,
+          "moving": 0,
+          "marks": 0,
+          "bursts": 0,
+          "pending": 0
+        },
+        {
+          "elapsed": 8.07,
+          "blood": true,
+          "remains": true,
+          "settled": 0,
+          "moving": 0,
+          "marks": 0,
+          "bursts": 0,
+          "pending": 0
+        },
+        {
+          "elapsed": 10.07,
+          "blood": true,
+          "remains": true,
+          "settled": 0,
+          "moving": 0,
+          "marks": 0,
+          "bursts": 0,
+          "pending": 0
+        },
+        {
+          "elapsed": 12.07,
+          "blood": true,
+          "remains": true,
+          "settled": 0,
+          "moving": 0,
+          "marks": 0,
+          "bursts": 0,
+          "pending": 0
+        },
+        {
+          "elapsed": 14.07,
+          "blood": true,
+          "remains": true,
+          "settled": 0,
+          "moving": 0,
+          "marks": 0,
+          "bursts": 0,
+          "pending": 0
+        },
+        {
+          "elapsed": 16.07,
+          "blood": true,
+          "remains": true,
+          "settled": 0,
+          "moving": 0,
+          "marks": 0,
+          "bursts": 0,
+          "pending": 0
+        },
+        {
+          "elapsed": 18.07,
+          "blood": true,
+          "remains": true,
+          "settled": 0,
+          "moving": 0,
+          "marks": 0,
+          "bursts": 0,
+          "pending": 0
+        },
+        {
+          "elapsed": 20.07,
+          "blood": true,
+          "remains": true,
+          "settled": 0,
+          "moving": 0,
+          "marks": 0,
+          "bursts": 0,
+          "pending": 0
+        },
+        {
+          "elapsed": 22.07,
+          "blood": true,
+          "remains": true,
+          "settled": 0,
+          "moving": 0,
+          "marks": 0,
+          "bursts": 0,
+          "pending": 0
+        },
+        {
+          "elapsed": 24.07,
+          "blood": true,
+          "remains": true,
+          "settled": 0,
+          "moving": 0,
+          "marks": 0,
+          "bursts": 0,
+          "pending": 0
+        },
+        {
+          "elapsed": 26.07,
+          "blood": true,
+          "remains": true,
+          "settled": 0,
+          "moving": 0,
+          "marks": 0,
+          "bursts": 0,
+          "pending": 0
+        },
+        {
+          "elapsed": 28.07,
+          "blood": true,
+          "remains": true,
+          "settled": 0,
+          "moving": 0,
+          "marks": 0,
+          "bursts": 0,
+          "pending": 0
+        },
+        {
+          "elapsed": 30.07,
+          "blood": true,
+          "remains": true,
+          "settled": 0,
+          "moving": 0,
+          "marks": 0,
+          "bursts": 0,
+          "pending": 0
+        },
+        {
+          "elapsed": 32.07,
+          "blood": true,
+          "remains": true,
+          "settled": 0,
+          "moving": 0,
+          "marks": 0,
+          "bursts": 0,
+          "pending": 0
+        },
+        {
+          "elapsed": 34.07,
+          "blood": true,
+          "remains": true,
+          "settled": 0,
+          "moving": 0,
+          "marks": 0,
+          "bursts": 0,
+          "pending": 0
+        }
+      ],
+      "invariantErrors": []
+    },
+    {
+      "mode": "native",
+      "art": "realistic-r2",
+      "effects": true,
+      "frames": 1770,
+      "cpuP50": 5,
+      "cpuP95": 6,
+      "cpuP99": 6.6,
+      "drawP95": 5.7,
+      "effectUpdateP95": 3.6,
+      "actorUpdateP95": 1.2,
+      "intervalP95": 16.8,
+      "gpu": {
+        "available": true,
+        "measured": true,
+        "samples": 118,
+        "gpuP50": 4.597,
+        "gpuP95": 4.865,
+        "gpuP99": 5.664,
+        "gpuMax": 6.458374,
+        "issued": 118,
+        "pending": 0,
+        "discarded": 0,
+        "skipped": 0,
+        "globalDisjointEvents": 0,
+        "globalContextLosses": 0,
+        "errors": [],
+        "sampleEvery": 15,
+        "maxPending": 8,
+        "method": "https://registry.khronos.org/webgl/extensions/EXT_disjoint_timer_query_webgl2/",
+        "scope": "Sampled flight-view render GPU work: elapsed time around the actual flight renderer render call, including its shadow and other internal passes. Excludes browser compositor, worker CPU and other contexts. Availability polling only; no finish, flush or synchronous result readback before availability."
+      },
+      "gpuP95": 4.865,
+      "heapBytes": [
+        162343973,
+        161781209,
+        154031860,
+        152127796,
+        162629197,
+        177627217,
+        190384849,
+        188341172,
+        211612308,
+        221356228,
+        213957424,
+        152685141,
+        164618584,
+        189960592,
+        192550664
+      ],
+      "resources": {
+        "available": true,
+        "disposed": false,
+        "quality": "high",
+        "drone": "racer",
+        "presentation": {
+          "collectionId": "authored",
+          "revision": "r1",
+          "profileId": "academy",
+          "actors": [],
+          "actorGoals": [],
+          "projectileBatches": 17,
+          "activeProjectiles": 0,
+          "surfaceDetailGroups": 0
+        },
+        "effects": {
+          "playerPulse": 9233635,
+          "hostilePulse": 16232561,
+          "ghost": 9824751,
+          "ghostEmissive": 2390144,
+          "trail": 9824751,
+          "goalOutline": 9169660,
+          "goalActive": 15266215,
+          "goalComplete": 9808542,
+          "goalInactive": 8366516,
+          "goalGlow": 11069917,
+          "goalGlowInactive": 9030085,
+          "goalEmissive": 8577493,
+          "goalBadge": 10872788,
+          "directionArrow": 15264432
+        },
+        "hunt": null,
+        "combat": {
+          "moving": 254,
+          "settled": 766,
+          "marks": 74,
+          "bursts": 4,
+          "calls": 11,
+          "triangles": 0,
+          "surfaceQueries": 107,
+          "tier": "high",
+          "runId": "stress",
+          "tick": 6700,
+          "stored": 1024,
+          "storedImpacts": 1024,
+          "capacity": 1024,
+          "impactCapacity": 1024,
+          "evicted": 32,
+          "presentationClock": 134.54000000000224,
+          "pendingFragments": 246,
+          "maxDrawCalls": 24,
+          "registeredPools": 73,
+          "appearanceReady": true,
+          "appearanceHash": "9940f5d75727b52d067cf1be2ce75e254f52e0b6670643bc28a308291969e009",
+          "appearanceDrawCalls": 32,
+          "appearanceCharacters": 36,
+          "maxAppearanceTriangles": 600000
+        },
+        "combatActors": {
+          "actors": 128,
+          "instances": 2464,
+          "calls": 64,
+          "skinnedActors": 20,
+          "skinnedCalls": 40,
+          "crowdActors": 12,
+          "crowdInstances": 24,
+          "crowdCalls": 2,
+          "templates": 128,
+          "capacity": 128,
+          "healthBars": 128,
+          "appearanceReady": true,
+          "appearanceHash": "9940f5d75727b52d067cf1be2ce75e254f52e0b6670643bc28a308291969e009",
+          "appearanceCharacters": 36,
+          "equipmentCalls": 17,
+          "maxSkinnedActors": 20,
+          "crowdPaletteBytes": 6311280,
+          "crowdPalettes": 1,
+          "crowdPoses": 10,
+          "crowdPaletteByteLimit": 8388608,
+          "appearanceResourceMetrics": {
+            "decodedBytes": 113888696,
+            "gpuBytes": 136220432
+          },
+          "crowdPaletteGpuBytes": 6243440,
+          "equipmentInstanceBytes": 243200
+        },
+        "combatAppearance": {
+          "state": "ready",
+          "error": null,
+          "sha256": "9940f5d75727b52d067cf1be2ce75e254f52e0b6670643bc28a308291969e009",
+          "characterIndex": null,
+          "characters": 36
+        },
+        "importedMaterialBindings": {
+          "applied": 0,
+          "diagnostics": []
+        },
+        "registered": {
+          "geometries": 139,
+          "materials": 99,
+          "textures": 13
+        },
+        "renderer": {
+          "calls": 145,
+          "triangles": 710320,
+          "geometries": 115,
+          "textures": 58,
+          "programs": 28,
+          "contextLost": false
+        }
+      },
+      "recordCounts": {
+        "remains": 1024,
+        "impacts": 1024
+      },
+      "emittedBurstGroups": 18,
+      "maxFrameIntervalMs": 66.69999999999709,
+      "support": {
+        "queries": 665002,
+        "clear": 519963,
+        "contact": 76806,
+        "attached": 68233,
+        "invalid": 0
+      },
+      "actualAppearance": {
+        "activation": {
+          "state": "ready",
+          "error": null,
+          "sha256": "9940f5d75727b52d067cf1be2ce75e254f52e0b6670643bc28a308291969e009",
+          "characterIndex": null,
+          "characters": 36
+        },
+        "actors": {
+          "ready": true,
+          "hash": "9940f5d75727b52d067cf1be2ce75e254f52e0b6670643bc28a308291969e009"
+        },
+        "effects": {
+          "ready": true,
+          "hash": "9940f5d75727b52d067cf1be2ce75e254f52e0b6670643bc28a308291969e009"
+        }
+      },
+      "visibleSamples": [
+        {
+          "elapsed": 6.08,
+          "blood": true,
+          "remains": true,
+          "settled": 761,
+          "moving": 256,
+          "marks": 70,
+          "bursts": 5,
+          "pending": 0
+        },
+        {
+          "elapsed": 8.12,
+          "blood": true,
+          "remains": true,
+          "settled": 767,
+          "moving": 256,
+          "marks": 76,
+          "bursts": 6,
+          "pending": 0
+        },
+        {
+          "elapsed": 10.15,
+          "blood": true,
+          "remains": true,
+          "settled": 768,
+          "moving": 256,
+          "marks": 80,
+          "bursts": 5,
+          "pending": 0
+        },
+        {
+          "elapsed": 12.18,
+          "blood": true,
+          "remains": true,
+          "settled": 768,
+          "moving": 256,
+          "marks": 82,
+          "bursts": 4,
+          "pending": 0
+        },
+        {
+          "elapsed": 14.22,
+          "blood": true,
+          "remains": true,
+          "settled": 767,
+          "moving": 256,
+          "marks": 76,
+          "bursts": 4,
+          "pending": 0
+        },
+        {
+          "elapsed": 16.25,
+          "blood": true,
+          "remains": true,
+          "settled": 767,
+          "moving": 256,
+          "marks": 76,
+          "bursts": 5,
+          "pending": 0
+        },
+        {
+          "elapsed": 18.28,
+          "blood": true,
+          "remains": true,
+          "settled": 767,
+          "moving": 256,
+          "marks": 79,
+          "bursts": 4,
+          "pending": 0
+        },
+        {
+          "elapsed": 20.3,
+          "blood": true,
+          "remains": true,
+          "settled": 766,
+          "moving": 256,
+          "marks": 74,
+          "bursts": 4,
+          "pending": 0
+        },
+        {
+          "elapsed": 22.32,
+          "blood": true,
+          "remains": true,
+          "settled": 766,
+          "moving": 256,
+          "marks": 71,
+          "bursts": 4,
+          "pending": 0
+        },
+        {
+          "elapsed": 24.35,
+          "blood": true,
+          "remains": true,
+          "settled": 766,
+          "moving": 256,
+          "marks": 74,
+          "bursts": 4,
+          "pending": 0
+        },
+        {
+          "elapsed": 26.38,
+          "blood": true,
+          "remains": true,
+          "settled": 766,
+          "moving": 256,
+          "marks": 75,
+          "bursts": 4,
+          "pending": 0
+        },
+        {
+          "elapsed": 28.4,
+          "blood": true,
+          "remains": true,
+          "settled": 766,
+          "moving": 256,
+          "marks": 70,
+          "bursts": 5,
+          "pending": 0
+        },
+        {
+          "elapsed": 30.48,
+          "blood": true,
+          "remains": true,
+          "settled": 768,
+          "moving": 108,
+          "marks": 74,
+          "bursts": 0,
+          "pending": 246
+        },
+        {
+          "elapsed": 32.52,
+          "blood": true,
+          "remains": true,
+          "settled": 766,
+          "moving": 256,
+          "marks": 74,
+          "bursts": 4,
+          "pending": 246
+        },
+        {
+          "elapsed": 34.55,
+          "blood": true,
+          "remains": true,
+          "settled": 766,
+          "moving": 254,
+          "marks": 74,
+          "bursts": 4,
+          "pending": 246
+        }
+      ],
+      "invariantErrors": []
+    }
+  ],
+  "sources": {
+    "renderer.mjs": "277de38a0acded3da5b52f668bf77688478cdd420dcb603e8a7c9eeb855d2fc0",
+    "combat-presentation.mjs": "90ca6075002ae3bc8303aa5e3d26dbd523ca995d4e579ddc29a5ef4b16070611",
+    "combat-actors.mjs": "b1fcab3f836088ca0abfcef57ac7183e70988c2ea0717990b9d1bcaecc8b9086",
+    "combat-appearance.mjs": "36ea06b21fcf1b6670f11f709966554f74d610f72b89164e59e722ae743e0b93"
+  },
+  "harnessHashes": {
+    "overhaul-effects-high-diagnostic.cjs": "37ff804cd253cb77021272cb3bd321a1ad343c97b934205abb448d77d81c5899",
+    "overhaul-effects-high-diagnostic.js": "a9d10f0e2a84efa7dc9b7000bafbdd559c006c86c861b4b9015c472358262e7c",
+    "overhaul-gpu-probe.js": "4b34fce30f8bf3afb408dde375b85eaa6addc5ed952749ca6a2ce242410d8ccd"
+  },
+  "errors": []
+}

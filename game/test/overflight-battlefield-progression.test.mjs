@@ -17,20 +17,25 @@ import {
 
 const oldThresholds = [12, 45, 100, 180, 300, 480, 750, 1150, 1750, 2400];
 const worldThresholds = [12, 45, 100, 180, 300, 480, 700, 1000, 1400, 1900];
+const battlefieldThresholds = [...worldThresholds.slice(0, 8), 1250, 1550];
 const modes = [
   ['Survivor', createOverflightProject, compileOverflightProject, upgradeOverflightProjectCopy],
   ['Riy', createOverflightRiyProject, compileOverflightRiyProject, upgradeOverflightRiyProjectCopy],
 ];
 
 for (const [name, create, compile, upgrade] of modes) {
-  test(`${name} built-in battlefields retain the accepted V3 world progression and opening`, () => {
+  test(`${name} built-in battlefields retain the opening and shorten only the last two choices`, () => {
     for (const { id: layout, world } of OVERFLIGHT_BATTLEFIELDS) {
       const intended = create({ rulesVersion: 3, world });
       assert.deepEqual(intended.upgrades.thresholds, worldThresholds);
       for (const difficulty of ['relaxed', 'standard', 'veteran']) {
         const project = create({ rulesVersion: 4, layout, difficulty });
         const compiled = compile(project);
-        assert.deepEqual(compiled.upgrades.thresholds, intended.upgrades.thresholds, layout);
+        assert.deepEqual(compiled.upgrades.thresholds, battlefieldThresholds, layout);
+        assert.deepEqual(
+          compiled.upgrades.thresholds.slice(0, 8),
+          intended.upgrades.thresholds.slice(0, 8),
+        );
         assert.deepEqual(compiled.upgrades.thresholds.slice(0, 6), oldThresholds.slice(0, 6));
       }
     }

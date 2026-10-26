@@ -1,0 +1,13 @@
+{
+  "format": "FPVToolPublicationRetainedNegative.v1",
+  "publishedHead": "cd41090b1e83c1cdecb741c5fe9e4421ea4b6771",
+  "failedStep": "Post-publication nested-path lookup in the Git tree creation response",
+  "reason": "The returned tree contains root entries, so the client lookup of a nested file raised KeyError before any readback. This was a publication receipt client error, not a payload/source validation bypass.",
+  "originalLogSHA256": "c975f150412c6530ef16f7c38c63fc872484c9005f9a5d9f3550f90cd05c30f2",
+  "originalLogBytes": 311,
+  "refWasAlreadyPublishedNormally": true,
+  "recovery": "All25 changed blobs were read via exact pinned contents/blob endpoints and matched their expected byte SHA256; no second commit, reset or force update.",
+  "recoveryReceiptSHA256": "a18c6e30de125c2e3006b85603d24eb398d5f6ca3390980f42efbec63cb77d7a",
+  "sourceGuardsChanged": false,
+  "overallDisconnectSafetyClaimed": false
+}

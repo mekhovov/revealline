@@ -1,0 +1,29 @@
+{
+  "format": "IndependentFivePublicHeadTypedLeafProjectionReview.v1",
+  "createdUTC": "2026-10-16T08:35:21.583412+00:00",
+  "repository": "mekhovov/revealline",
+  "anchorHead": "a5fb2f2119d6e6d53fcac6fd7109e95b869bbc0d",
+  "anchorParentsExactly": [
+    "e016e7317637e75ebe853ec4bbce4bc9b586ee09",
+    "08a71f934e76f183adea68d8088bf0bc3fdae9b5",
+    "091d486aeb378ecec4381d8b4e68c06e85edf1d0",
+    "37d80d937ff7b55f1dd6f3ca62c9c79eb843b534",
+    "88867270621a9d59f8041056e2653d21421ad374",
+    "f2ce6f2b26dc1fa903b29b89afd4b474af55904e"
+  ],
+  "unchangedApplicationTree": "e6a6410d051bf2fc6aa21e0e1c520c9aa0d87306",
+  "publicBranchStillContainsAnchor": true,
+  "fiveGitHubCommitRootTreesAndParentMetadataVerified": true,
+  "typedLeafSetSHA256": "a8aa115a25b08ff1dff7ccdcc4e880bf5f8abbd2973b6b6f63b95c0a41d45f32",
+  "treeReadbackJournalSHA256": "62f82526aff8879e1a7c528f79b92113372fe59c063043833fd6ea3066529ee9",
+  "rawTreeObjectsSHA1SHA256SizeIndependentlyVerified": 3308,
+  "rawTreeBytes": 3335989,
+  "exactReachableTypedBlobLeafCount": 35072,
+  "newLeafIDsBeyondPrior65071": 449,
+  "unionWithPrior65071": 65520,
+  "actualGitHubOnlyRecoveredMetadataRead": true,
+  "noSourceBlobBodyOriginalStoreOrAppDataReads": true,
+  "noAlternatesNoLazyInvalidRemote": true,
+  "sourceIndexObjectMembershipIsSeparateFromWorkingFileCoverage": true,
+  "allVolumeComplete": false
+}

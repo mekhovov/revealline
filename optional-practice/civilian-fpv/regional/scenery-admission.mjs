@@ -1,5 +1,9 @@
 import { createRestoreContainment } from './restore-containment.mjs';
-import { createRegionMotionQuery, createRegionFlightSupportQuery } from './region-motion-query.mjs';
+import {
+  createRegionMotionQuery,
+  createRegionMotionCoverageQuery,
+  createRegionFlightSupportQuery,
+} from './region-motion-query.mjs';
 import * as THREE from '../vendor/three.module.js';
 import RAPIER from '../vendor/rapier/rapier.mjs';
 import {
@@ -15,7 +19,11 @@ import {
 } from './indexed-scenery-cell.mjs';
 import { initWorldRuntime } from '../world-collision.mjs';
 
-import { createScenerySurface, validateScenerySurface, sceneryMaterialStyle } from './scenery-surface.mjs';
+import {
+  createScenerySurface,
+  validateScenerySurface,
+  sceneryMaterialStyle,
+} from './scenery-surface.mjs';
 
 const fail = (condition, message) => {
   if (!condition) throw new TypeError(message);
@@ -295,9 +303,25 @@ export async function prepareSceneryWindow(
     return true;
   }
   return Object.freeze({
-    prepareRestoreProof: (assertCurrent) => {
+    motionCoverage: createRegionMotionCoverageQuery({ covers, live }),
+    prepareRestoreProof: (assertCurrent, positionMm = null, radiusMm = 220) => {
       live();
-      return restoreContainment.prepare(assertCurrent);
+      if (!positionMm) return restoreContainment.prepare(assertCurrent);
+      fail(
+        finitePosition(positionMm) &&
+          Number.isSafeInteger(radiusMm) &&
+          radiusMm > 0 &&
+          radiusMm <= 2000,
+        'Invalid restore proof footprint',
+      );
+      const point = local(positionMm),
+        radius = radiusMm / 1000;
+      return restoreContainment.prepare(assertCurrent, {
+        minX: point.x - radius,
+        maxX: point.x + radius,
+        minZ: point.z - radius,
+        maxZ: point.z + radius,
+      });
     },
     restoreClearance(positionMm, radiusMm = 220) {
       live();
@@ -310,7 +334,24 @@ export async function prepareSceneryWindow(
       );
       if (!covers(positionMm, positionMm, radiusMm))
         return { status: 'ambiguous', reason: 'unknown-cell' };
-      return restoreContainment.classify(local(positionMm));
+      const destination = local(positionMm);
+      const classified = restoreContainment.classify(destination, radiusMm / 1000);
+      if (classified.reason !== 'unverified-solid') return classified;
+      // Open/clipped scenery often has a broad bound enclosing navigable space.
+      // Admit it only with a clear whole-body path from a proven exterior point.
+      // Closed interiors, boundaries, missing cells and exhausted proofs never bypass.
+      const anchor = restoreContainment.exteriorAbove(destination, radiusMm / 1000);
+      if (!anchor) return classified;
+      const hit = world.castShape(
+        anchor,
+        { x: 0, y: 0, z: 0, w: 1 },
+        { x: 0, y: destination.y - anchor.y, z: 0 },
+        new RAPIER.Ball(radiusMm / 1000),
+        0,
+        1,
+        true,
+      );
+      return hit ? classified : { status: 'outside-solids', proof: 'clear-exterior-sweep' };
     },
     restoreSnapshot: restoreContainment.snapshot,
     flightSupport: createRegionFlightSupportQuery({
@@ -332,6 +373,28 @@ export async function prepareSceneryWindow(
     }),
     group,
     // Read actual Rapier sets only on explicit diagnostic demand, never after free().
+    collisionMeshes() {
+      live();
+      return sources.flatMap((source) => {
+        const cell = scenerySourceCell(source);
+        return compileScenerySource(source).surfaces.flatMap((surface, index) =>
+          surface.collision === 'visual-only'
+            ? []
+            : [
+                {
+                  id: `scenery:${cell.chunkId}:${index}`,
+                  vertices: Array.from(surface.positions),
+                  indices: Array.from(surface.indices),
+                  translation: {
+                    x: (cell.x * cell.cellSizeMm - originMm.x) / 1000,
+                    y: -originMm.y / 1000,
+                    z: (cell.z * cell.cellSizeMm - originMm.z) / 1000,
+                  },
+                },
+              ],
+        );
+      });
+    },
     collisionSnapshot: () => ({
       worlds: disposed ? 0 : 1,
       colliders: disposed ? 0 : world.colliders.len(),

@@ -42,6 +42,8 @@ export function createCommunityLibrary({
     classicInstalled ?? (globalThis.indexedDB ? createCommunityClassicInstalled() : null);
   const natives =
     nativeInstalled ?? (globalThis.indexedDB ? createCommunityNativeInstalled() : null);
+  // Online metadata is optional decoration; it never determines local inventory.
+  const knownEditions = new Map();
   const isNative = (family) =>
     ['team', 'fpv', 'overflight', 'overflight-hunt', 'overflight-riy'].includes(family);
   const runtimeStorage = async (linked) => {
@@ -145,6 +147,7 @@ export function createCommunityLibrary({
   async function installBytes(edition, blob) {
     const safe = validateCommunityEdition(edition);
     const inspected = await verifyPackage(safe, blob);
+    knownEditions.set(safe.editionId, safe);
     const prepared = inspected.family === 'creator' ? inspected.prepared : inspected;
     const approval = inspected.family === 'creator' ? approveCreatorBundle(prepared) : null;
     let review =
@@ -210,10 +213,87 @@ export function createCommunityLibrary({
       journalComplete,
     });
   }
+  async function localCatalog({ query, cursor, limit, signal }) {
+    signal?.throwIfAborted();
+    required(
+      Number.isSafeInteger(limit) && limit >= 1 && limit <= 100,
+      'Catalog limit is invalid.',
+    );
+    required(
+      cursor === null || /^local:ed_[a-f0-9]{64}$/u.test(cursor),
+      'Local catalog cursor is invalid.',
+    );
+    const state = await stateStore.read();
+    const needle = query.trim().toLocaleLowerCase();
+    const after = cursor?.slice('local:'.length) ?? '';
+    const rows = [];
+    for (const linked of [...state.editions].sort((a, b) =>
+      a.editionId.localeCompare(b.editionId),
+    )) {
+      signal?.throwIfAborted();
+      if (linked.editionId <= after) continue;
+      let current;
+      try {
+        current = await status(linked.editionId);
+      } catch {
+        // One damaged/unavailable runtime owner must not hide other local games.
+        // Keep its journal identity visible, without claiming it is playable.
+        current = { installed: false, localUnavailable: true, family: linked.family };
+      }
+      signal?.throwIfAborted();
+      // A journal entry, retained download or offloaded manifest alone does not
+      // prove that this exact runtime edition is currently installed.
+      if (!current.installed && !current.localUnavailable) continue;
+      const cached = knownEditions.get(linked.editionId);
+      const metadata =
+        cached &&
+        ['packageSha256', 'collectionId', 'slug', 'version'].every(
+          (key) => cached[key] === linked[key],
+        )
+          ? cached
+          : null;
+      const title = metadata?.title ?? linked.slug;
+      const description = metadata?.description ?? '';
+      if (
+        needle &&
+        !`${title}\n${description}\n${linked.slug}`.toLocaleLowerCase().includes(needle)
+      )
+        continue;
+      rows.push(
+        Object.freeze({
+          ...metadata,
+          ...current,
+          editionId: linked.editionId,
+          collectionId: linked.collectionId,
+          slug: linked.slug,
+          version: linked.version,
+          packageSha256: linked.packageSha256,
+          title,
+          description,
+          local: true,
+          managementAvailable: !!metadata,
+          previewAvailable: false,
+          updateAvailable: false,
+        }),
+      );
+      if (rows.length > limit) break;
+    }
+    const more = rows.length > limit;
+    if (more) rows.pop();
+    return Object.freeze({
+      editions: Object.freeze(rows),
+      nextCursor: more ? `local:${rows.at(-1).editionId}` : null,
+    });
+  }
   return Object.freeze({
-    async catalog({ query = '', installed = 'all', cursor = null, limit = 20 } = {}) {
+    async catalog({ query = '', installed = 'all', cursor = null, limit = 20, signal } = {}) {
       required(['all', 'installed', 'available'].includes(installed), 'Catalog filter is invalid.');
-      const page = await client.catalog({ query, cursor, limit });
+      if (installed === 'installed') return localCatalog({ query, cursor, limit, signal });
+      const page = await client.catalog({ query, cursor, limit, signal });
+      for (const edition of page.editions) {
+        const safe = validateCommunityEdition(edition);
+        knownEditions.set(safe.editionId, safe);
+      }
       const state = await stateStore.read();
       const local = await installedSet();
       const needle = query.trim().toLocaleLowerCase();

@@ -15,11 +15,37 @@ import {
 } from './radio-profile.mjs';
 import { Q, attitude, clamp, integrateOrientation, isqrt, mul, roundDiv } from './math.mjs';
 import { createSectorTracker } from './flight-sectors.mjs';
+import { TUNED_RESPONSE_FORMAT, responseComparisonIdentity } from './flight-response.mjs';
+import { createRateEvaluator } from './rates.mjs';
+import { validateAircraftMissionCheckpoint } from './aircraft-mission-checkpoint.mjs';
 export const FLIGHT_MODEL = 'civilian-quad-fixed.v1';
 export const FLIGHT_HZ = 50;
 export const MAX_FLIGHT_TICKS = 50 * 60 * 12;
 export const FLIGHT_MODES = Object.freeze(['self-level', 'acro']);
+/** Full replay identity stays exact; comparison replaces only personal rotation curves. */
+export function flightComparisonIdentity(identity, response) {
+  const context = Object.fromEntries(
+    [
+      'model',
+      'backend',
+      'course',
+      'courseIdentity',
+      'worldIdentity',
+      'mode',
+      'rulesIdentity',
+      'conditionsIdentity',
+    ]
+      .filter((key) => Object.hasOwn(identity, key))
+      .map((key) => [key, identity[key]]),
+  );
+  return dataIdentity({
+    format: 'FlightComparison.v1',
+    ...context,
+    responseIdentity: responseComparisonIdentity(response),
+  });
+}
 const unscoredFlights = new WeakSet();
+const rateEvaluators = new WeakMap();
 const int = (n, a, b) => Number.isSafeInteger(n) && n >= a && n <= b;
 const vector = (v, min, max) => {
   exactKeys(v, ['x', 'y', 'z'], 'position');
@@ -213,16 +239,23 @@ function sweepBox(a, b, box) {
  */
 export function advanceFlightAir(state, command, mode, rates, displacement) {
   const angles = attitude(state.orientation);
+  const tuned = rates.format === TUNED_RESPONSE_FORMAT;
+  if (tuned && !rateEvaluators.has(rates))
+    rateEvaluators.set(rates, createRateEvaluator(rates.rates));
+  const evaluator = tuned ? rateEvaluators.get(rates) : null;
   for (const key of ['roll', 'pitch', 'yaw']) {
-    const shaped = responseCurve(command[key], rates.expo);
+    const shaped = tuned ? command[key] : responseCurve(command[key], rates.expo);
+    const maximum = tuned ? rates.rates.axes[key].limit : rates.maxRate;
     const desired =
       mode === 'self-level' && key !== 'yaw'
         ? clamp(
             (roundDiv(shaped * rates.maxTilt * 100, 1000) - angles[key]) * 4,
-            -rates.maxRate * 100,
-            rates.maxRate * 100,
+            -maximum * 100,
+            maximum * 100,
           )
-        : roundDiv(shaped * rates.maxRate * 100, 1000);
+        : tuned
+          ? Math.round(evaluator.rate(key, command[key] / 1000) * 100)
+          : roundDiv(shaped * rates.maxRate * 100, 1000);
     const difference = desired - state.angular[key];
     state.angular[key] += difference
       ? Math.sign(difference) * Math.max(1, Math.abs(roundDiv(difference, rates.responseTicks)))
@@ -230,7 +263,11 @@ export function advanceFlightAir(state, command, mode, rates, displacement) {
   }
   state.orientation = integrateOrientation(state.orientation, state.angular, FLIGHT_HZ);
   const nextAttitude = attitude(state.orientation),
-    thrust = roundDiv(command.throttle * 19620, 1000);
+    thrust = roundDiv(
+      (tuned ? Math.round(evaluator.throttle(command.throttle / 1000) * 1000) : command.throttle) *
+        19620,
+      1000,
+    );
   for (const axis of ['x', 'y', 'z']) {
     const acceleration = mul(nextAttitude.up[axis], thrust) - (axis === 'y' ? 9810 : 0);
     state.velocity[axis] = clamp(
@@ -248,11 +285,13 @@ export function createFlight({
   mode = 'self-level',
   response = DEFAULT_RESPONSE,
   unscoredPractice = false,
+  physicalPractice = false,
 }) {
   const source = validateFlightCourse(course),
     rates = validateFlightResponse(response);
   required(FLIGHT_MODES.includes(mode), 'Unsupported flight mode');
   required(typeof unscoredPractice === 'boolean', 'Invalid unscored practice option');
+  required(!physicalPractice || unscoredPractice, 'Physical mission hosting requires practice');
   const identity = {
     model: FLIGHT_MODEL,
     course: source.id,
@@ -260,6 +299,9 @@ export function createFlight({
     mode,
     responseIdentity: responseIdentity(rates),
   };
+  if (rates.format === TUNED_RESPONSE_FORMAT)
+    identity.comparisonIdentity = flightComparisonIdentity(identity, rates);
+  Object.freeze(identity);
   let state,
     lastObjectiveFeedback = null;
   const reset = () => {
@@ -287,7 +329,7 @@ export function createFlight({
     target: structuredClone(source.steps[mode][state.step] ?? null),
     attitude: attitude(state.orientation),
   });
-  function step(input, { quantized = false } = {}) {
+  function step(input, { quantized = false, motion = null } = {}) {
     const command = quantized ? input : quantizeFlightInput(input);
     validateQuantized(command);
     if (state.status !== 'active') return snapshot();
@@ -297,12 +339,27 @@ export function createFlight({
     }
     const before = { ...state.position },
       next = {};
-    const nextAttitude = advanceFlightAir(state, command, mode, rates, next);
-    for (const axis of ['x', 'y', 'z']) next[axis] += before[axis];
+    required(Boolean(motion) === physicalPractice, 'Physical mission motion is required');
+    const nextAttitude = motion
+      ? attitude(motion.orientation)
+      : advanceFlightAir(state, command, mode, rates, next);
+    if (motion) {
+      state.velocity = { ...motion.velocity };
+      state.orientation = [...motion.orientation];
+      state.angular = { ...motion.angular };
+      state.contacts += motion.contacts.length;
+      state.landingSpeed = motion.landingSpeed;
+      state.landingTilt = motion.landingTilt;
+      state.grounded = motion.grounded;
+      state.support = structuredClone(motion.support);
+      Object.assign(next, motion.position);
+    } else for (const axis of ['x', 'y', 'z']) next[axis] += before[axis];
     const speed = isqrt(Object.values(state.velocity).reduce((n, v) => n + v * v, 0)),
       tilt = Math.max(Math.abs(nextAttitude.roll), Math.abs(nextAttitude.pitch));
     let collision = null;
-    for (const obstacle of [...source.obstacles].sort((a, b) => (a.id < b.id ? -1 : 1))) {
+    for (const obstacle of (motion ? [] : [...source.obstacles]).sort((a, b) =>
+      a.id < b.id ? -1 : 1,
+    )) {
       const hit = sweepBox(before, next, obstacle);
       if (hit && (!collision || hit.at < collision.at)) collision = hit;
     }
@@ -316,9 +373,10 @@ export function createFlight({
     }
     for (const axis of ['x', 'y', 'z']) {
       if (
-        next[axis] < source.bounds.min[axis] ||
-        next[axis] > source.bounds.max[axis] ||
-        (axis === 'y' && next.y === 0)
+        !motion &&
+        (next[axis] < source.bounds.min[axis] ||
+          next[axis] > source.bounds.max[axis] ||
+          (axis === 'y' && next.y === 0))
       ) {
         const floor = axis === 'y' && next.y <= 0;
         if (floor && before.y > 0) {
@@ -340,6 +398,7 @@ export function createFlight({
     state.heightRange.min = Math.min(state.heightRange.min, next.y);
     state.heightRange.max = Math.max(state.heightRange.max, next.y);
     const target = source.steps[mode][state.step];
+    if (!target) return snapshot();
     let accepted = false;
     if (target.type === 'gate') {
       accepted = crossesGate(before, next, target);
@@ -371,7 +430,7 @@ export function createFlight({
         (!target.centred ||
           ['pitch', 'roll', 'yaw'].every((key) => Math.abs(command[key]) <= 50)) &&
         (target.type !== 'land' ||
-          (next.y === 0 &&
+          ((motion ? motion.grounded : next.y === 0) &&
             command.throttle <= 100 &&
             state.landingSpeed <= target.maxSpeed &&
             state.landingTilt <= target.maxTilt));
@@ -389,7 +448,7 @@ export function createFlight({
         heading: heading <= 1500,
         centred:
           !target.centred || ['pitch', 'roll', 'yaw'].every((key) => Math.abs(command[key]) <= 50),
-        grounded: target.type !== 'land' || next.y === 0,
+        grounded: target.type !== 'land' || (motion ? motion.grounded : next.y === 0),
         throttle: target.type !== 'land' || command.throttle <= 100,
         landingSpeed: target.type !== 'land' || state.landingSpeed <= target.maxSpeed,
         landingTilt: target.type !== 'land' || state.landingTilt <= target.maxTilt,
@@ -410,7 +469,7 @@ export function createFlight({
         headingError: heading,
         centred: ['pitch', 'roll', 'yaw'].every((key) => Math.abs(command[key]) <= 50),
         throttle: command.throttle,
-        grounded: next.y === 0,
+        grounded: motion ? motion.grounded : next.y === 0,
         landingSpeed: state.landingSpeed,
         landingTilt: state.landingTilt,
         conditions,
@@ -419,14 +478,14 @@ export function createFlight({
     if (accepted) {
       state.step++;
       state.hold = 0;
-      if (state.step === source.steps[mode].length) state.status = 'complete';
+      if (state.step === source.steps[mode].length && !physicalPractice) state.status = 'complete';
     }
     return snapshot();
   }
   const flight = {
     identity,
     course: () => structuredClone(source),
-    response: () => ({ ...rates }),
+    response: () => structuredClone(rates),
     snapshot,
     objectiveFeedback: () => structuredClone(lastObjectiveFeedback),
     step,
@@ -439,6 +498,23 @@ export function createFlight({
     },
   };
   // An unbounded controls sandbox never produces scored/replay proof bytes.
+  if (physicalPractice) {
+    flight.physicalCheckpoint = () => ({
+      format: 'AircraftMissionCheckpoint.v1',
+      identity: dataIdentity(identity),
+      state: structuredClone(state),
+      feedback: structuredClone(lastObjectiveFeedback),
+    });
+    flight.validatePhysicalCheckpoint = (value) =>
+      validateAircraftMissionCheckpoint(value, { identity, source, mode });
+    flight.restorePhysicalCheckpoint = (value) => {
+      const saved = flight.validatePhysicalCheckpoint(value);
+      state = structuredClone(saved.state);
+      state.status = state.status === 'active' ? 'paused' : state.status;
+      lastObjectiveFeedback = structuredClone(saved.feedback);
+      return snapshot();
+    };
+  }
   // Keep its runtime policy outside the unchanged v1 identity and snapshots.
   if (unscoredPractice) unscoredFlights.add(flight);
   return flight;
@@ -493,6 +569,7 @@ function prepareFlightReplay(course, input, sampleEvery, includeSectors) {
       'courseIdentity',
       'mode',
       'responseIdentity',
+      'comparisonIdentity',
       'response',
       'frames',
     ],
@@ -507,7 +584,9 @@ function prepareFlightReplay(course, input, sampleEvery, includeSectors) {
   );
   const flight = createFlight({ course, mode: proof.mode, response: proof.response });
   required(
-    Object.entries(flight.identity).every(([key, value]) => proof[key] === value),
+    Object.hasOwn(proof, 'comparisonIdentity') ===
+      Object.hasOwn(flight.identity, 'comparisonIdentity') &&
+      Object.entries(flight.identity).every(([key, value]) => proof[key] === value),
     'Exact flight model, course, mode and response required',
   );
   flight.arm();

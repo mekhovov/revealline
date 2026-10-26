@@ -1,0 +1,58 @@
+{
+  "format": "SoloFirstEightReviewedOutcomeV1",
+  "proof": {
+    "format": "SoloFirstEightCorrectnessEvidenceV1",
+    "sourceRevision": "797e03f28743921842df6aa57520a72016ba3dfc",
+    "runId": 39109911286,
+    "artifactId": 12130067688,
+    "artifactSHA256": "5c5f84eb082d13123410b0c1939aab3c9af4ef981ad9b3150b215c3a16aba916",
+    "summarySHA256": "5ff787c26c962ec31c9fbe2d635b679fb393caa5ea2eaa84e41fbcc3061804b8",
+    "correctness": "passed",
+    "ownersClosed": true
+  },
+  "toolingRevision": "1255a79a90268316f8ea768d3e0c56610b26df52",
+  "artifactBytes": 817140,
+  "zipMembers": 80,
+  "verifiedInventoryEntries": 71,
+  "correctnessPassed": 8,
+  "strictSameEngineNativeReplaysPassed": 4,
+  "ownedCommandsClosed": 14,
+  "rawNumericalFailuresRetained": 3,
+  "nodePortabilityMismatchesRetained": 4,
+  "candidateChromium": "single-observed-window-pass-only",
+  "candidateWebKit": {
+    "rawStatus": "failed",
+    "missedOpportunities": 34,
+    "opportunities": 1914,
+    "missedFraction": 0.017763845350052248,
+    "limit": 0.01,
+    "p95ApplicationWorkMs": 3,
+    "cadenceAndInputP95": "inconclusive",
+    "quality": "reduced-at-ready-first-active-and-paused",
+    "pauseBoundary": {
+      "rafStart": 41493,
+      "nextRaf": 41630,
+      "acceptedPause": 41513,
+      "misses": 8,
+      "attribution": "Interval crosses accepted Pause; not137ms of active application work."
+    },
+    "sensitivityOnly": {
+      "removedWholeBoundary": true,
+      "missedOpportunities": 26,
+      "opportunities": 1905,
+      "missedFraction": 0.013648293963254593,
+      "status": "failed",
+      "changesAcceptanceGate": false
+    },
+    "recentFrameLimit": {
+      "retained": 600,
+      "earlierOmitted": 1361,
+      "activeLongIntervals": 7,
+      "intervalMs": [24, 30],
+      "combinedAppWorkMs": [0, 2]
+    },
+    "nativeLongTaskSupport": "unsupported",
+    "gpuBackend": "unobserved"
+  },
+  "scope": "Correctness prerequisite only for exact797 package. Preserve all raw numerical failures and Node cross-engine portability mismatches. Linux headless WebKit is not physical iPhone/display qualification. Every future lane retains fresh owner/package/replay/phase gates; no automatic dispatch, retry or continuation."
+}

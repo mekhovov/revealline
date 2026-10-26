@@ -214,6 +214,12 @@ export function attachLibraryPanel(api) {
   }
   const pictureDifficultyLabel = (picture) =>
     picture?.labelKey ? galleryDifficultyLabel(picture) : contentText(picture, 'label');
+  const savedDifficultyLabel = (session) => {
+    const entry = api.resolveSavedExecution?.(session);
+    return entry
+      ? createGalleryDifficultyResolver([entry]).label(session.campaignKey)
+      : contentText(difficulties(), 'label')(session.campaignKey);
+  };
   const pictureMeta = (picture) =>
     `${contentText(picture.theme, 'name')} · ${pictureDifficultyLabel(picture)} · ${collectionResultLabels(picture.item, api.get().library).detail}`;
   const storyButton = document.createElement('button');
@@ -535,7 +541,7 @@ export function attachLibraryPanel(api) {
       saved
         ? t('gameplay:savedFlight', {
             value1: contentText(saved.replay?.level, 'name') || t('interface:unknown'),
-            value2: contentText(difficulties(), 'label')(saved.campaignKey),
+            value2: savedDifficultyLabel(saved),
             value3:
               typeof saved.savedAt === 'string'
                 ? saved.savedAt.replace('T', ' ').slice(0, 19)
@@ -817,7 +823,7 @@ export function attachLibraryPanel(api) {
         t('gameplay:attemptPrepared', {
           value1: prepared.source === 'stored' ? t('interface:saved') : t('interface:current'),
           value2: contentText(session.replay.level, 'name'),
-          value3: contentText(difficulties(), 'label')(session.campaignKey),
+          value3: savedDifficultyLabel(session),
           value4: session.savedAt.replace('T', ' ').slice(0, 19),
           value5:
             prepared.context === 'replay-only'
@@ -1110,6 +1116,7 @@ export function attachLibraryPanel(api) {
           'xonix-session.v4',
           'xonix-session.v5',
           'xonix-session.v6',
+          'xonix-session.v7',
           CAPTURE_PRESENTATION_SESSION_FORMAT,
         ].includes(parsed.format)
       ) {
@@ -1199,6 +1206,85 @@ export function attachLibraryPanel(api) {
     setStatus: (message, state) => status('transfer-status', message, state),
     applyPrepared,
   });
+  async function restoreArchiveComponent(file, { isCurrent }) {
+    const copy = (key, values) => t(`interface:backupApply.${key}`, values);
+    let outcome = { state: 'cancelled' };
+    await task(
+      'backup-set-status',
+      async (operation) => {
+        let prepared,
+          committing = false;
+        const check = () => {
+          operation.check();
+          if (!isCurrent()) throw new DOMException(copy('selectionChanged'), 'AbortError');
+        };
+        const commit = (message) => {
+          check();
+          operation.commit(message);
+          committing = true;
+        };
+        try {
+          check();
+          if (file.id === 'game') {
+            if (file.blob.size > MAX_BACKUP_BYTES) throw new Error(copy('gameTooLarge'));
+            const options = await backupOptions();
+            check();
+            const parsed = JSON.parse(await file.blob.text());
+            if (!['xonix-backup.v1', 'xonix-backup.v2', 'xonix-backup.v3'].includes(parsed.format))
+              throw new Error(copy('gameFormat'));
+            const game = await prepareBackup(parsed, { ...options, signal: operation.signal });
+            check();
+            const result = await applyPrepared(
+              game,
+              { ...operation, commit },
+              { verifySource: check },
+            );
+            outcome = { state: 'saved', ...(result.warning ? { error: result.warning } : {}) };
+          } else {
+            prepared = await api.backupSet.restore.prepare(file, { signal: operation.signal });
+            check();
+            await operation.reviewReplacement(copy(`review.${file.id}`, prepared.review), {
+              keepLabel: copy('cancelReview'),
+              replaceLabel: copy('confirm'),
+            });
+            check();
+            commit(copy('saving'));
+            outcome = await prepared.commit();
+          }
+        } catch (error) {
+          outcome = {
+            state: committing
+              ? 'unconfirmed'
+              : error.name === 'AbortError'
+                ? 'cancelled'
+                : 'failed',
+            ...(error.name === 'AbortError' ? {} : { error: error.message }),
+          };
+        } finally {
+          try {
+            await prepared?.dispose();
+          } catch {
+            outcome.notice = 'cleanup';
+          }
+        }
+        if (!operation.signal.aborted && isCurrent())
+          status(
+            'backup-set-status',
+            () =>
+              [
+                copy(`state.${outcome.state}`),
+                outcome.notice ? copy(`notice.${outcome.notice}`) : '',
+                outcome.error,
+              ]
+                .filter(Boolean)
+                .join(' '),
+            ['failed', 'unconfirmed', 'partial'].includes(outcome.state) ? 'error' : 'ready',
+          );
+      },
+      copy('checking'),
+    );
+    return outcome;
+  }
   $('library-button').onclick = () => open();
   for (const b of document.querySelectorAll('[data-library-panel]'))
     b.onclick = () => open(b.dataset.libraryPanel);
@@ -1224,6 +1310,7 @@ export function attachLibraryPanel(api) {
       },
       refresh,
       presentFeedback: () => feedbackRail.present('backup-set-status', ['cancel-backup-set']),
+      restore: api.backupSet.restore ? restoreArchiveComponent : undefined,
     });
   sessionOriginals =
     api.sessionPictures && $('session-originals')

@@ -3,11 +3,14 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {
   exportJSONFile,
+  exportTextFile,
+  MAX_TEXT_EXPORT_BYTES,
   nativePlatform,
   onNativeInactive,
   MAX_EXPORT_BYTES,
 } from '../platform.mjs';
 import { offlineAvailability, prepareOffline } from '../offline.mjs';
+import { MAX_EXPORT_BYTES as NATIVE_MAX_EXPORT_BYTES } from '../../platforms/ios/bridge/bridge-entry.mjs';
 
 test('native origin detection does not mistake web previews or lookalike hosts for shells', () => {
   for (const [href, expected] of [
@@ -138,6 +141,7 @@ test('native apps explain bundled offline files and never install a service work
 
 test('transfer envelope fits compact complete backups without pretty-print inflation', async () => {
   assert.ok(MAX_EXPORT_BYTES >= MAX_BACKUP_BYTES);
+  assert.equal(NATIVE_MAX_EXPORT_BYTES, MAX_EXPORT_BYTES);
   const payload = { nested: Array.from({ length: 100 }, () => [1, 2, 3]) };
   await exportJSONFile(payload, 'backup.json', {
     locationRef: { href: 'capacitor://localhost/game/' },
@@ -149,4 +153,28 @@ test('transfer envelope fits compact complete backups without pretty-print infla
       },
     }),
   });
+});
+
+test('plain CLI export preserves bytes on iOS, reports unavailable old bridges and rejects unsafe input', async () => {
+  const text = '# Україна\nset rates_type = ACTUAL\n',
+    options = {
+      locationRef: { href: 'capacitor://localhost/game/' },
+      loadBridge: async () => ({
+        exportText(candidate) {
+          assert.deepEqual(candidate, { text, name: 'rates.txt' });
+          return { status: 'cancelled' };
+        },
+      }),
+    };
+  assert.equal((await exportTextFile(text, 'rates.txt', options)).status, 'cancelled');
+  await assert.rejects(
+    exportTextFile(text, 'rates.txt', {
+      ...options,
+      loadBridge: async () => ({}),
+    }),
+    /unavailable in this app version/,
+  );
+  for (const name of ['../rates.txt', 'rates.js', 'rates..txt', 'rates.json'])
+    await assert.rejects(exportTextFile(text, name), /simple .txt filename/);
+  await assert.rejects(exportTextFile('і'.repeat(MAX_TEXT_EXPORT_BYTES), 'rates.txt'), /1 MiB/);
 });

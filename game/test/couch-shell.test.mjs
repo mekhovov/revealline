@@ -1,11 +1,12 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
-import { couchPage } from './helpers/couch-host.mjs';
-import { couchEquipment } from '../couch/couch-shell.mjs';
+import { couchPage, mountCouch } from './helpers/couch-host.mjs';
+import { createCouchShell, couchEquipment } from '../couch/couch-shell.mjs';
 import { createRun } from '../core/index.mjs';
 import { retryFixture } from './fixtures/retry-scenarios.mjs';
 import { waitFor } from './helpers/wait-for.mjs';
+import { authoritativeCheckpoint } from '../replay.mjs';
 
 const pad = (index) => ({
   index,
@@ -37,6 +38,52 @@ const settings = (f, category) => {
     'The selected category is visible.',
   );
 };
+
+test('Couch Start explanation preserves other descriptions and changes no focus or match state', async (t) => {
+  const { Document } = await import('./helpers/couch-dom.mjs');
+  const { createDuel } = await import('../multiplayer.mjs');
+  const doc = new Document();
+  mountCouch(doc, await readFile(new URL('../couch/index.html', import.meta.url), 'utf8'));
+  doc.getElementById('couch-app').hidden = false;
+  doc.getElementById('couch-app').inert = false;
+  const start = doc.getElementById('race-start');
+  const originalExplanationParent = doc.getElementById('race-home-recommendation').parentNode;
+  start.setAttribute('aria-describedby', 'race-format-help');
+  const shell = createCouchShell({ document: doc });
+  t.after(() => shell.destroy());
+  const match = createDuel(retryFixture('enemy-player').level);
+  const checkpoint = match.runs.map(authoritativeCheckpoint);
+  const focus = doc.activeElement;
+  shell.update({
+    match,
+    summary: 'Selected mission',
+    won: [0, 0],
+    focusTransition: false,
+    startRecommendation: () => 'Why this exact mission is selected.',
+  });
+  const explanation = doc.getElementById('race-home-recommendation');
+  assert.equal(explanation.hidden, false);
+  assert.equal(explanation.textContent, 'Why this exact mission is selected.');
+  assert.equal(start.getAttribute('aria-describedby'), 'race-format-help race-home-recommendation');
+  assert.equal(explanation.parentNode === start.closest('.race-menu-actions').parentNode, true);
+  assert.equal(start.closest('[hidden],[inert]') === null, true, 'Start has no hidden ancestor.');
+  assert.equal(
+    explanation.closest('[hidden],[inert]') === null,
+    true,
+    'Its description is visible.',
+  );
+  assert.equal(doc.activeElement === focus, true, 'Description updates retain exact focus.');
+  assert.deepEqual(match.runs.map(authoritativeCheckpoint), checkpoint);
+  shell.update({ match, summary: 'Selected mission', won: [0, 0], focusTransition: false });
+  assert.equal(explanation.hidden, true);
+  assert.equal(start.getAttribute('aria-describedby'), 'race-format-help');
+  assert.equal(doc.activeElement === focus, true, 'Removing the description retains exact focus.');
+  assert.deepEqual(match.runs.map(authoritativeCheckpoint), checkpoint);
+  shell.destroy();
+  assert.equal(explanation.parentNode === originalExplanationParent, true);
+  assert.equal(explanation.nextSibling === start.closest('.race-menu-actions'), true);
+  assert.equal(start.getAttribute('aria-describedby'), 'race-format-help');
+});
 
 test('ordinary running frames retain the Pause label node between pointer edges', async (t) => {
   const f = await couchPage(t);
@@ -863,4 +910,137 @@ test('Couch timed clock retains accessible meaning in its compact display', asyn
   f.$('race-pause').click();
   assert.deepEqual(f.checkpoint(), before);
   assert.equal(f.$('race-clock').textContent, '0:30');
+});
+
+test('Setup preparation nodes restore exact authored parents through destroy and remount', async (t) => {
+  const { Document } = await import('./helpers/couch-dom.mjs');
+  const { createDuel } = await import('../multiplayer.mjs');
+  const doc = new Document();
+  mountCouch(doc, await readFile(new URL('../couch/index.html', import.meta.url), 'utf8'));
+  // This presentation-only fixture mounts the app container after its boot veil.
+  doc.getElementById('couch-app').hidden = false;
+  doc.getElementById('couch-app').inert = false;
+  const originals = ['race-preparation', 'race-picture-cancel'].map((id) => {
+    const element = doc.getElementById(id);
+    return { element, parent: element.parentNode, next: element.nextSibling };
+  });
+  for (const leave of ['destroy-in-setup', 'return-before-destroy']) {
+    const shell = createCouchShell({ document: doc });
+    let disposed = false;
+    const dispose = () => {
+      if (!disposed) {
+        disposed = true;
+        shell.destroy();
+      }
+    };
+    t.after(dispose);
+    shell.update({
+      match: createDuel(retryFixture('enemy-player').level),
+      summary: 'Preparation lifecycle',
+      won: [0, 0],
+    });
+    const homes = originals.map(({ element }) => ({
+      element,
+      parent: element.parentNode,
+      next: element.nextSibling,
+    }));
+    doc.getElementById('race-options').click();
+    doc.getElementById('race-settings-tab-gameplay').click();
+    assert.equal(
+      doc.getElementById('race-focus').closest('[hidden],[inert]')?.id ?? null,
+      null,
+      'Visible Advanced setup in ' + shell.scope(),
+    );
+    doc.getElementById('race-focus').click();
+    assert.equal(shell.scope(), 'setup');
+    for (const { element } of originals) {
+      assert.equal(element.parentNode === doc.getElementById('race-setup'), true);
+      assert.equal(doc.querySelectorAll('#' + element.id).length, 1);
+    }
+    if (leave === 'return-before-destroy') {
+      doc.getElementById('race-setup-back').click();
+      for (const { element, parent, next } of homes) {
+        assert.equal(element.parentNode === parent, true);
+        assert.equal(element.nextSibling === next, true);
+      }
+    }
+    dispose();
+    for (const { element, parent, next } of originals) {
+      assert.equal(
+        element.parentNode === parent,
+        true,
+        element.id + ' returns to its authored parent.',
+      );
+      assert.equal(
+        element.nextSibling === next,
+        true,
+        element.id + ' retains its authored sibling anchor.',
+      );
+      assert.equal(doc.querySelectorAll('#' + element.id).length, 1);
+    }
+    shell.destroy();
+    for (const { element, parent, next } of originals) {
+      assert.equal(
+        element.parentNode === parent,
+        true,
+        'Repeated destroy keeps the authored owner.',
+      );
+      assert.equal(element.nextSibling === next, true);
+    }
+  }
+});
+
+test('Versus settings notifications follow committed programmatic, compact Back and status-driven screen owners', async () => {
+  const { Document } = await import('./helpers/couch-dom.mjs');
+  const { createDuel } = await import('../multiplayer.mjs');
+  const doc = new Document();
+  mountCouch(doc, await readFile(new URL('../couch/index.html', import.meta.url), 'utf8'));
+  doc.getElementById('couch-app').hidden = false;
+  doc.getElementById('couch-app').inert = false;
+  doc.defaultView.innerWidth = 390;
+  const observations = [];
+  let transitions = 0;
+  const shell = createCouchShell({
+    document: doc,
+    onTransition() {
+      transitions++;
+    },
+    onSettingsPresentationChange() {
+      const root = doc.getElementById('race-options-panel');
+      observations.push({
+        hidden: root.hidden,
+        inert: root.inert,
+        view: root.getAttribute('data-settings-view'),
+        data: doc.getElementById('race-settings-panel-data').hidden,
+      });
+    },
+  });
+  const match = createDuel(retryFixture('enemy-player').level);
+  const update = () => shell.update({ match, summary: 'Settings owner', won: [0, 0] });
+  update();
+  shell.openSettings('data');
+  assert.deepEqual(observations.at(-1), {
+    hidden: false,
+    inert: false,
+    view: 'panel',
+    data: false,
+  });
+  doc.getElementById('race-options-back').click();
+  assert.equal(observations.at(-1).view, 'categories');
+  assert.equal(observations.at(-1).hidden, false);
+  shell.openSettings('data');
+  const previous = transitions;
+  match.status = 'running';
+  update();
+  assert.equal(transitions, previous, 'Status updates do not pass through onTransition.');
+  assert.equal(observations.at(-1).hidden, true);
+  assert.equal(observations.at(-1).inert, true);
+  match.status = 'paused';
+  update();
+  shell.openSettings('data');
+  const count = observations.length;
+  shell.destroy();
+  assert.ok(observations.length > count);
+  shell.destroy();
+  assert.equal(observations.length, count + 2, 'Panel and shell retire once each.');
 });

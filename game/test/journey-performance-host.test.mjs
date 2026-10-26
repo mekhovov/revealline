@@ -5,7 +5,7 @@ import { managedIndexedDB } from './helpers/managed-idb.mjs';
 import { editionProviderFixture } from './helpers/edition-provider-fixture.mjs';
 import { compileContentProject, resolveMission } from '../content-design/project.mjs';
 import { FIXED_DT, stepRun } from '../core/index.mjs';
-import { authoritativeCheckpoint } from '../replay.mjs';
+import { authoritativeCheckpoint, verifyReplay } from '../replay.mjs';
 
 const PHYSICS_TICKS_PER_FRAME = 4;
 const MOVEMENT_TICK_BUDGET = 1800;
@@ -21,11 +21,12 @@ async function fixture(t) {
     difficulty: 'standard',
   });
   f.data.campaign.levels = [manifest.level];
+  const database = managedIndexedDB();
   const page = await soloPage(t, {
     search: '?edition=sample-public',
     titleScreen: true,
     storage: memoryStorage(),
-    journeyIndexedDB: managedIndexedDB().indexedDB,
+    journeyIndexedDB: database.indexedDB,
     fetchResponse: f.fetcher,
   });
   page.$('shell-featured').click();
@@ -33,6 +34,7 @@ async function fixture(t) {
     page.frame(0);
     return page.doc.body.dataset.flightState === 'running';
   });
+  page.journeyRows = () => [...(database.contents().get('profiles')?.values() ?? [])];
   return page;
 }
 function win(page, idle = 0) {
@@ -120,6 +122,7 @@ test(
   async (t) => {
     const page = await fixture(t);
     win(page);
+    const won = authoritativeCheckpoint(page.rendered.run);
     page.$('retry-button').click();
     await settle(() => {
       page.frame(0);
@@ -127,6 +130,25 @@ test(
     });
     assert.equal(page.rendered.run.status, 'running');
     await new Promise((resolve) => setTimeout(resolve, 200));
+    assert.equal(page.$('journey-best').hidden, true);
+    assert.equal(page.$('journey-best').dataset.state, 'hidden');
+    // Next/Retry replaces only the result UI owner. The accepted old clear still
+    // deserves its exact verified best once the new flight reaches a safe pause.
+    page.$('pause-button').click();
+    const next = authoritativeCheckpoint(page.rendered.run);
+    let record;
+    await settle(() => {
+      record = page.journeyRows().find((row) => row?.format === 'revealline-journey-performance.v1')
+        ?.records[0];
+      return Boolean(record);
+    });
+    assert.deepEqual(record.replay.checkpoint, won);
+    assert.equal(verifyReplay(record.replay).match, true);
+    const profile = page
+      .journeyRows()
+      .find((row) => row?.format === 'revealline-journey-profile.v1');
+    assert.equal(profile.clears.solo[record.missionId].runId, record.runId);
+    assert.deepEqual(authoritativeCheckpoint(page.rendered.run), next);
     assert.equal(page.$('journey-best').hidden, true);
     assert.equal(page.$('journey-best').dataset.state, 'hidden');
     assert.deepEqual(page.errors, []);

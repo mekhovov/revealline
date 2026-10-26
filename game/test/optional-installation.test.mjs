@@ -5,6 +5,7 @@ import {
   recordOptionalInstallation,
   removeOptionalInstallation,
   validateOptionalInstallationReference,
+  optionalOfflineFailureMessage,
 } from '../../optional-practice/install-context.mjs';
 import { preparePracticeOffline } from '../../optional-practice/civilian-flight/offline.mjs';
 import { installOptionalLauncher } from '../../optional-practice/launcher-template.mjs';
@@ -136,12 +137,15 @@ test('an installation pointer is recorded only after a verified worker activates
   assert.equal(callbacks.size, 0);
 });
 
-function launcher(fetcher, query = '', { storage = memory(), offlineReady = false } = {}) {
+function launcher(
+  fetcher,
+  query = '',
+  { storage = memory(), offlineReady = false, services = {} } = {},
+) {
   const elements = Object.fromEntries(
-    ['locale', 'title', 'check', 'open', 'prepare', 'previous', 'status', 'remove'].map((id) => [
-      id,
-      { hidden: true, textContent: '', disabled: false },
-    ]),
+    ['locale', 'title', 'check', 'open', 'prepare', 'previous', 'status', 'remove', 'download'].map(
+      (id) => [id, { hidden: true, textContent: '', disabled: false }],
+    ),
   );
   const events = new Map(),
     timers = new Map(),
@@ -163,6 +167,7 @@ function launcher(fetcher, query = '', { storage = memory(), offlineReady = fals
     validateOptionalInstallationReference,
     inspectOptionalOffline: async (base) =>
       typeof offlineReady === 'function' ? offlineReady(base) : offlineReady,
+    services,
     setTimeout(callback) {
       timers.set(callback, callback);
       return callback;
@@ -175,11 +180,107 @@ function launcher(fetcher, query = '', { storage = memory(), offlineReady = fals
     },
   };
   const ready = runInNewContext(
-    `(${installOptionalLauncher.toString()})(${JSON.stringify({ packageId, root })}, { optionalInstallationKey, validateOptionalInstallationReference, inspectOptionalOffline })`,
+    `(${installOptionalLauncher.toString()})(${JSON.stringify({ packageId, root })}, { optionalInstallationKey, validateOptionalInstallationReference, inspectOptionalOffline, ...services })`,
     context,
   );
   return { elements, events, timers, locations, ready };
 }
+
+test('launcher failures use localized safe copy, retain usable actions and retranslate without retrying', async () => {
+  const current = {
+    id: packageId,
+    version: 'v1.2.3',
+    scope: '../releases/v1.2.3/site/',
+    entry: 'optional-practice/civilian-flight/index.html',
+  };
+  for (const locale of ['en', 'uk']) {
+    for (const operation of ['prepare', 'remove']) {
+      for (const reason of ['idle-timeout', 'overall-timeout', 'cancelled', 'unknown']) {
+        for (const legacyService of [false, true]) {
+          const error = Object.assign(new Error('SECRET https://private.test/<script>'), {
+            offlineCode: reason,
+          });
+          let calls = 0;
+          const fail = async () => {
+            calls++;
+            throw error;
+          };
+          const storage = memory();
+          recordOptionalInstallation({ packageId, storage, location: locationFor('v1.2.3') });
+          const saved = storage.getItem(optionalInstallationKey(packageId, root));
+          const f = launcher(async () => new Response(JSON.stringify(current)), '?lang=' + locale, {
+            storage,
+            offlineReady: true,
+            services: {
+              prepareOptionalOffline: fail,
+              removeOptionalOffline: fail,
+              ...(!legacyService ? { optionalOfflineFailureMessage } : {}),
+            },
+          });
+          await f.ready;
+          const open = f.elements.open.href;
+          await f.elements[operation === 'prepare' ? 'download' : 'remove'].onclick();
+          for (const language of [locale, locale === 'en' ? 'uk' : 'en']) {
+            f.elements.locale.value = language;
+            f.elements.locale.onchange();
+            const text = f.elements.status.textContent;
+            assert.doesNotMatch(
+              text,
+              /SECRET|private\.test|script|Needs repair|Потрібне відновлення/,
+            );
+            if (!legacyService)
+              assert.equal(text, optionalOfflineFailureMessage(error, language, operation));
+            else
+              assert.match(
+                text,
+                language === 'uk' ? /Не вдалося/ : /not completed|Could not remove/,
+              );
+          }
+          assert.equal(calls, 1, 'Changing language must not repeat the failed operation');
+          assert.equal(f.elements.open.hidden, false);
+          assert.equal(new URL(f.elements.open.href).pathname, new URL(open).pathname);
+          assert.equal(f.elements.remove.hidden, false);
+          assert.equal(storage.getItem(optionalInstallationKey(packageId, root)), saved);
+          assert.equal(f.elements.download.disabled, false);
+          await f.elements.check.onclick();
+          assert.match(f.elements.status.textContent, /Ready offline|Готово офлайн/);
+        }
+      }
+    }
+  }
+});
+
+test('legacy launcher failure never invents an available saved copy', async () => {
+  const current = {
+    id: packageId,
+    version: 'v1.2.3',
+    scope: '../releases/v1.2.3/site/',
+    entry: 'optional-practice/civilian-flight/index.html',
+  };
+  for (const locale of ['en', 'uk']) {
+    for (const readiness of ['no-pointer', false, { status: 'unknown' }]) {
+      const storage = memory();
+      if (readiness !== 'no-pointer')
+        recordOptionalInstallation({ packageId, storage, location: locationFor('v1.2.3') });
+      const f = launcher(async () => new Response(JSON.stringify(current)), '?lang=' + locale, {
+        storage,
+        offlineReady: readiness === 'no-pointer' ? false : readiness,
+        services: {
+          prepareOptionalOffline: async () => {
+            throw new Error('SECRET');
+          },
+        },
+      });
+      await f.ready;
+      await f.elements.download.onclick();
+      assert.equal(f.elements.open.hidden, true);
+      assert.doesNotMatch(
+        f.elements.status.textContent,
+        /SECRET|remain available|залишаються доступними|Ready offline|Готово офлайн/,
+      );
+    }
+  }
+});
 
 test('stable launcher forwards a bounded cosmetic pin without admitting navigation or storage context', async () => {
   const current = {
@@ -257,7 +358,9 @@ test('launcher keeps missing-file repair and removal visible after checking an a
         offlineReady: async (base) => {
           reads++;
           if (failedPrevious && base.href.includes('/v1.2.2/')) return false;
-          return hold ? new Promise((resolve) => (release = resolve)) : true;
+          return hold && base.href.includes('/v1.2.3/')
+            ? new Promise((resolve) => (release = resolve))
+            : true;
         },
       },
     );
@@ -357,6 +460,172 @@ test('launcher distinguishes unfinished verification from missing files without 
       saved,
       'Verification does not mutate saved versions',
     );
+  }
+});
+
+test('verified app actions do not wait for unrelated retained-version or launcher checks', async () => {
+  for (const delayed of ['previous', 'launcher']) {
+    const storage = memory();
+    recordOptionalInstallation({ packageId, storage, location: locationFor('v1.2.2') });
+    recordOptionalInstallation({ packageId, storage, location: locationFor('v1.2.3') });
+    let finish;
+    const f = launcher(
+      async () => {
+        throw new Error('Offline');
+      },
+      '',
+      {
+        storage,
+        offlineReady: async (base) => {
+          if (delayed === 'previous' ? base.href.includes('/v1.2.2/') : base.href.endsWith('/app/'))
+            return new Promise((resolve) => {
+              finish = resolve;
+            });
+          return { status: 'ready' };
+        },
+      },
+    );
+    await waitFor(() => finish);
+    await new Promise((resolve) => setImmediate(resolve));
+    try {
+      assert.equal(f.elements.open.hidden, false, `${delayed} check cannot hide a verified app`);
+      assert.match(f.elements.open.href, /\/v1\.2\.3\//);
+      assert.match(f.elements.status.textContent, /Checking prepared/);
+      assert.equal(f.elements.check.disabled, true);
+    } finally {
+      finish({ status: 'unknown' });
+      await f.ready;
+    }
+    assert.equal(f.elements.open.hidden, false);
+    assert.match(f.elements.status.textContent, /Offline verification could not finish/);
+  }
+});
+
+test('retained ready copy stays reachable while active verification stalls, including locale changes', async () => {
+  const storage = memory();
+  recordOptionalInstallation({ packageId, storage, location: locationFor('v1.2.2') });
+  recordOptionalInstallation({ packageId, storage, location: locationFor('v1.2.3') });
+  let finish;
+  const f = launcher(
+    async () => {
+      throw new Error('Offline');
+    },
+    '',
+    {
+      storage,
+      offlineReady: (base) =>
+        base.href.includes('/v1.2.3/')
+          ? new Promise((resolve) => {
+              finish = resolve;
+            })
+          : { status: 'ready' },
+    },
+  );
+  await waitFor(() => finish);
+  await new Promise((resolve) => setImmediate(resolve));
+  try {
+    assert.equal(f.elements.open.hidden, true, 'No saved pointer alone certifies active readiness');
+    assert.equal(f.elements.previous.hidden, false);
+    assert.match(f.elements.previous.href, /\/v1\.2\.2\//);
+    f.elements.locale.value = 'uk';
+    f.elements.locale.onchange();
+    assert.equal(new URL(f.elements.previous.href).searchParams.get('lang'), 'uk');
+  } finally {
+    finish({ status: 'unavailable' });
+    await f.ready;
+  }
+  assert.equal(f.elements.previous.hidden, false);
+  assert.equal(f.elements.open.hidden, true);
+  assert.match(f.elements.status.textContent, /Потрібне відновлення/);
+});
+
+test('invalid retained metadata cannot blank a separately verified active app', async () => {
+  const storage = memory();
+  recordOptionalInstallation({ packageId, storage, location: locationFor('v1.2.3') });
+  const key = optionalInstallationKey(packageId, root),
+    saved = JSON.parse(storage.getItem(key));
+  saved.previous = { ...saved.active, scope: 'https://untrusted.example/' };
+  storage.setItem(key, JSON.stringify(saved));
+  const checked = [];
+  const f = launcher(
+    async () => {
+      throw new Error('Offline');
+    },
+    '',
+    {
+      storage,
+      offlineReady: (base) => {
+        checked.push(base.href);
+        return { status: 'ready' };
+      },
+    },
+  );
+  await f.ready;
+  assert.equal(f.elements.open.hidden, false);
+  assert.equal(f.elements.previous.hidden, true);
+  assert.equal(checked.length, 2);
+  assert.ok(checked.every((url) => url.startsWith('https://example.test/')));
+  assert.equal(storage.getItem(key), JSON.stringify(saved), 'Inspection never rewrites pointers');
+});
+
+test('leaving during readiness checks cancels publication and play intent even after pageshow', async () => {
+  for (const returnToPage of [false, true]) {
+    const storage = memory();
+    recordOptionalInstallation({ packageId, storage, location: locationFor('v1.2.3') });
+    const pending = [];
+    let requests = 0;
+    const f = launcher(
+      async () => {
+        requests++;
+        throw new Error('Offline');
+      },
+      '?action=play',
+      {
+        storage,
+        offlineReady: () => new Promise((resolve) => pending.push(resolve)),
+      },
+    );
+    await waitFor(() => pending.length === 2);
+    f.events.get('pagehide')();
+    if (returnToPage) f.events.get('pageshow')();
+    for (const finish of pending) finish({ status: 'ready' });
+    await f.ready;
+    assert.equal(f.elements.open.hidden, true);
+    assert.equal(requests, 0);
+    assert.deepEqual(f.locations, []);
+    assert.equal(f.elements.check.disabled, false);
+  }
+});
+
+test('abandoned fetch cannot replay play intent after pageshow, but a live timeout can fall back offline', async () => {
+  for (const abandoned of [true, false]) {
+    const storage = memory();
+    recordOptionalInstallation({ packageId, storage, location: locationFor('v1.2.3') });
+    let fail, signal;
+    const f = launcher(
+      (_url, options) => {
+        signal = options.signal;
+        return new Promise((_resolve, reject) => {
+          fail = reject;
+        });
+      },
+      '?action=play',
+      { storage, offlineReady: true },
+    );
+    await waitFor(() => fail);
+    if (abandoned) {
+      f.events.get('pagehide')();
+      f.events.get('pageshow')();
+    } else {
+      assert.equal(f.timers.size, 1);
+      [...f.timers.values()][0]();
+    }
+    assert.equal(signal.aborted, true);
+    fail(new Error('Aborted'));
+    await f.ready;
+    assert.equal(f.locations.length, abandoned ? 0 : 1);
+    assert.equal(f.elements.open.hidden, false, 'Verified manual Open stays available');
+    assert.equal(f.timers.size, 0);
   }
 });
 

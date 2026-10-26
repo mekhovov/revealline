@@ -9,7 +9,7 @@ const json = async (path) => JSON.parse(await readFile(new URL(path, import.meta
 test('native menu inventory covers every shipped edition and both launch routes', async () => {
   const catalog = await json('../editions/catalog.json');
   const inventory = await json('../../docs/native-menu-inventory.json');
-  assert.equal(Object.keys(MENU_SCENES).length, 18);
+  assert.equal(Object.keys(MENU_SCENES).length, 11);
   assert.equal(inventory.editions.length, catalog.editions.length);
   for (const edition of catalog.editions) {
     const row = inventory.editions.find(({ id }) => id === edition.id);

@@ -1,0 +1,24 @@
+{
+  "format": "FpvShellSourceDedupAst.v1",
+  "checkedAt": "2026-10-18T22:51:49.010Z",
+  "baseRevision": "af7e3cb112b3fbeb1d819b6d91db0a6a592f2845",
+  "sourceRevision": "db42e52853b1cea8d869e1badea50ec5e203c184",
+  "file": "optional-practice/civilian-fpv/flight-fullscreen.mjs",
+  "status": "exact-normalized-AST-match",
+  "allowedDifferences": {
+    "factories": 2,
+    "imports": 2,
+    "bindings": 3
+  },
+  "method": "Acorn module AST deep equality after removing only the two named old factories and two new namespace imports, and replacing three namespace references with their original modules[path] references. Only start/end offsets are omitted; all other nodes and RegExp values compare exactly.",
+  "externalModules": [
+    "game/hunt/industrial-soldier-kit.mjs",
+    "game/ui/art-review-navigation.mjs"
+  ],
+  "beforeBytes": 304054,
+  "afterBytes": 298948,
+  "savedBytes": 5106,
+  "beforeSha256": "9d02b9e39ae8cb21f19beb9ec9b65b687d43384f0fe7369c74ed076715134728",
+  "afterSha256": "2c23242d85ab9d0b7e30c893fc4655ec792d5d9e7c9de36d8d43989b0edc155f",
+  "normalizedAstSha256": "731a6770111f01b3809ef3b9ca0ab57826a47d8a4b3d1dfe880524e9e8f2a02b"
+}

@@ -1,3 +1,4 @@
+import { dataIdentity } from '../../game/data-json.mjs';
 import { attitude, rotate, Q } from './math.mjs';
 import { quantizeFlightInput } from './model.mjs';
 import { createRegionalFlightPrototype } from './regional/flight-prototype.mjs';
@@ -115,15 +116,30 @@ export function regionalLibraryEntry(configuration, { sha256, descriptor = null 
     throw new TypeError('Installed regional identity is required');
   const entry = regionalReviewEntry(configuration, { installedIdentity: sha256 });
   if (descriptor) {
-    if (descriptor.id !== entry.course.id ||
-        typeof descriptor.revision !== 'string' || !/^[a-z][a-z0-9-]{0,63}$/.test(descriptor.revision) ||
-        !['en', 'uk'].every((locale) => typeof descriptor.title?.[locale] === 'string' &&
-          descriptor.title[locale].trim() && descriptor.title[locale].length <= 120))
+    if (
+      descriptor.id !== entry.course.id ||
+      typeof descriptor.revision !== 'string' ||
+      !/^[a-z][a-z0-9-]{0,63}$/.test(descriptor.revision) ||
+      !['en', 'uk'].every(
+        (locale) =>
+          typeof descriptor.title?.[locale] === 'string' &&
+          descriptor.title[locale].trim() &&
+          descriptor.title[locale].length <= 120,
+      )
+    )
       throw new TypeError('Installed regional presentation identity is invalid');
-    // Delivery revisions may intentionally retain the older source manifest title.
-    // Keep the exact installed name/version visible without changing source authority.
+    // Catalogue labels are presentation-only aliases for an exact approved pin.
+    // Retained unoffered versions keep their immutable descriptor title.
+    const title = configuration.catalogueTitle ?? descriptor.title;
+    if (
+      !['en', 'uk'].every(
+        (locale) =>
+          typeof title[locale] === 'string' && title[locale].trim() && title[locale].length <= 120,
+      )
+    )
+      throw new TypeError('Installed regional catalogue title is invalid');
     entry.installedRevision = descriptor.revision;
-    for (const locale of ['en', 'uk']) entry.course.locales[locale].title = descriptor.title[locale];
+    for (const locale of ['en', 'uk']) entry.course.locales[locale].title = title[locale];
   }
   return entry;
 }
@@ -255,6 +271,18 @@ export function createRegionalSession(configuration) {
     };
   };
   return Object.freeze({
+    get identity() {
+      return {
+        format: 'FPVRegionalEncounterBase.v1',
+        environment: runtime.identity,
+        terrain: dataIdentity(configuration.manifest),
+        scenery: configuration.scenery?.manifest
+          ? dataIdentity(configuration.scenery.manifest)
+          : null,
+        mode: configuration.mode ?? 'self-level',
+        response: configuration.response ? dataIdentity(configuration.response) : null,
+      };
+    },
     root: runtime.root,
     snapshot: () => present(runtime.snapshot()),
     prepare: runtime.prepare,
@@ -262,6 +290,12 @@ export function createRegionalSession(configuration) {
     arm: runtime.arm,
     pause: runtime.pause,
     dispose: runtime.dispose,
+    encounterGeometry: runtime.encounterGeometry,
+    configureEncounterActors: runtime.configureEncounterActors,
+    stageEncounterActors: runtime.stageEncounterActors,
+    encounterMotion: runtime.encounterMotion,
+    encounterCheckpoint: runtime.encounterCheckpoint,
+    restoreEncounterCheckpoint: runtime.restoreEncounterCheckpoint,
     step(input) {
       const axes = Object.fromEntries(
         ['roll', 'pitch', 'yaw', 'throttle'].map((key) => [key, input[key]]),

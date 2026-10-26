@@ -59,6 +59,7 @@
         "game/test/snake-studio-preview.test.mjs",
         "game/test/snake-studio-launch.test.mjs",
         "game/test/team-installed-host.test.mjs",
+        "game/test/team-installed-media-results-host.test.mjs",
         "game/test/asset-studio-return.test.mjs",
         "game/test/asset-studio-actor-animation.test.mjs",
         "game/test/asset-studio-preview-motion.test.mjs",
@@ -66,6 +67,7 @@
         "game/test/installed-team-presentation.test.mjs",
         "game/test/fpv-world-editor-appearance.test.mjs",
         "game/test/creator-player-navigation.test.mjs",
+        "game/test/creator-storage-retention.test.mjs",
         "game/test/overflight-project.test.mjs",
         "game/test/overflight-content.test.mjs",
         "game/test/overflight-reuse.test.mjs",
@@ -108,6 +110,8 @@
         "game/test/coop-view-presentation.test.mjs",
         "game/test/fpv-world-textures.test.mjs",
         "game/test/fpv-objective-labels.test.mjs",
+        "game/test/fpv-regional-library-families.test.mjs",
+        "game/test/fpv-regional-library-labels.test.mjs",
         "game/test/industrial-environments.test.mjs",
         "game/test/attempt-appearance.test.mjs",
         "game/test/capture-presentation-session.test.mjs",
@@ -124,11 +128,13 @@
     {
       "id": "recordings",
       "files": [
+        "game/test/fpv-endurance-attribution.test.mjs",
         "game/test/multiplayer-recording.test.mjs",
         "game/test/terminal-recording-export.test.mjs",
         "game/test/recording-verification-navigation.test.mjs",
         "game/test/multiplayer-finale-strategies.test.mjs",
-        "game/test/multiplayer-finale-mistakes.test.mjs"
+        "game/test/multiplayer-finale-mistakes.test.mjs",
+        "game/test/fpv-world-record-archive.test.mjs"
       ]
     },
     {
@@ -185,7 +191,8 @@
         "game/test/overflight-world-audio.test.mjs",
         "game/test/team-discovery-host.test.mjs",
         "game/test/couch-audio-master.test.mjs",
-        "game/test/coop-picture-landing-recovery.test.mjs"
+        "game/test/coop-picture-landing-recovery.test.mjs",
+        "game/test/fpv-world-record-storage.test.mjs"
       ]
     },
     {

@@ -1,0 +1,53 @@
+{
+  "format": "FPVConsistencyRegressionEvidence.v1",
+  "date": "2026-10-20T20:14:18.383666+00:00",
+  "tests": [
+    {
+      "name": "host",
+      "summary": {
+        "tests": 233,
+        "pass": 233,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0,
+        "duration_ms": 106153.260916
+      },
+      "log": "consistency-host.tap"
+    },
+    {
+      "name": "presentation",
+      "summary": {
+        "tests": 374,
+        "pass": 374,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0,
+        "duration_ms": 55115.281875
+      },
+      "log": "consistency-presentation.tap"
+    }
+  ],
+  "sources": {
+    "optional-practice/civilian-fpv/world-model.mjs": "435c38d39bbf95c8e91b518e521b13440855806ce9092fde2ef9b882c44f6d09",
+    "optional-practice/civilian-fpv/world-app.mjs": "655de7da9c31214f51a717a349e8a6f7a7802e44a991a33d5eef7bac0c6530f8",
+    "optional-practice/civilian-fpv/world-editor.mjs": "75dac6449a4f6d9d4589d8c2ea268ab48234bc5ca04a5bd5b05a8d921db4e952",
+    "optional-practice/civilian-fpv/world-content.mjs": "4ed45e79db3d73e7d8961b69bc290aeebca494045c6d6a3e5944c7bf0758a1d9",
+    "optional-practice/civilian-fpv/renderer.mjs": "a85e546c7cee1f263de34f7c6ecfbf9765cc3580b3197233d7570a29aa7c8cfd",
+    "optional-practice/civilian-fpv/sim-presentation.mjs": "5fff7508f43e46dceb9a69ffff6c5ed2f1564012fef2649ddadbdac85170aeeb",
+    "optional-practice/civilian-fpv/flight-fullscreen.mjs": "d84d1a762d9d53a9786c0d4d38bb2c3b6d7b6c43912e528840c6fa80c2c18088",
+    "optional-practice/civilian-fpv/flight-fullscreen.css": "d9b68a7052d24e45b7b89ec2f5f3644ca1bc768b47873aca3cddf21baa38305b",
+    "optional-practice/civilian-fpv/style.css": "166f8e9c4ea21365aaf82e622c1733ab039d82978086ee9a8c2707fe856d2bce",
+    "optional-practice/civilian-fpv/world-reaction-runtime.mjs": "bbc7dd21299850983bb58fe3aa5282a2d01492106a49bc28beaf752339d37ac1",
+    "optional-practice/civilian-fpv/aircraft-course-session.mjs": "56772df6a5c57437732f9ae4ad6533c6ab1b8fd13abaf3a8aac614bbce3862fc",
+    "optional-practice/civilian-fpv/aircraft-mission-checkpoint.mjs": "e62beb7389d80788c7aeac1558c81c7711cee42a25f9fa5e9f67260c9dc06e76",
+    "optional-practice/civilian-fpv/aircraft-practice-controls.mjs": "caa049ddd315ec2920dac1df1d337e275ccc6e8b793fa23af91e86e591c38043"
+  },
+  "notes": [
+    "607 passing tests across two disjoint file sets.",
+    "Final HUD cue styling and preview numbering are covered by the presentation run and inspected in the browser.",
+    "The host run precedes the final presentation-only changes; those changes are covered by the subsequent presentation run.",
+    "These model and mounted-host tests do not establish physical radio, human readability or sustained performance acceptance."
+  ]
+}

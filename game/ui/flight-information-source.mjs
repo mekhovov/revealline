@@ -1,5 +1,6 @@
 import { t } from '../i18n/index.mjs';
 import { EPS } from '../core/geometry.mjs';
+import { ROUTE_COVERAGE } from '../core/coverage.mjs';
 import {
   baseLevelVersion,
   isClassicRuleset,
@@ -80,8 +81,36 @@ const rulesets = new Set([
 ]);
 const finite = (value) => Number.isFinite(value) && value >= 0;
 const integer = (value) => Number.isSafeInteger(value) && value >= 0;
-const check = (condition, message) => {
-  if (!condition) throw new TypeError(message);
+const proportion = (value) => finite(value) && value <= 1;
+const flightProgress = (run) => {
+  const hunt = run.level?.classic?.hunt?.mode === 'hunt',
+    current = hunt ? run.classic?.hunt?.kills : run.coverage,
+    target = hunt ? run.level.classic.hunt.quota : run.level?.goal?.coverage,
+    currentValid = hunt ? integer(current) : proportion(current),
+    targetValid = hunt ? integer(target) && target > 0 : proportion(target) && target >= 0.01;
+  // Match the engine's coverage tolerance without claiming that other required
+  // objectives are complete. Missing facts are not reconstructed from captions.
+  return {
+    kind: hunt ? 'hunt' : 'coverage',
+    basis: hunt
+      ? 'targets'
+      : run.level?.classic?.coverage
+        ? run.level.classic.coverage.version === ROUTE_COVERAGE
+          ? 'routes'
+          : null
+        : 'picture',
+    current: currentValid ? current : null,
+    target: targetValid ? target : null,
+    remaining:
+      currentValid && targetValid
+        ? current + (hunt ? 0 : EPS) >= target
+          ? 0
+          : target - current
+        : null,
+  };
+};
+const check = (condition, key) => {
+  if (!condition) throw new TypeError(t(key));
 };
 const freeze = (value) => {
   if (value && typeof value === 'object' && !Object.isFrozen(value)) {
@@ -102,10 +131,10 @@ export function flightEventKind(type) {
  * No DOM, wall clock, simulation mutation, arbitration or layout qualification.
  */
 export function flightInformationSnapshot(run, { started, paused }) {
-  check(run && typeof run === 'object', t('interface:anAcceptedRunIsRequired'));
+  check(run && typeof run === 'object', 'interface:anAcceptedRunIsRequired');
   check(
     typeof started === 'boolean' && typeof paused === 'boolean',
-    t('interface:hostStateIsRequired'),
+    'interface:hostStateIsRequired',
   );
   const issues = [];
   const classicExpected = isClassicRuleset(
@@ -227,6 +256,7 @@ export function flightInformationSnapshot(run, { started, paused }) {
     time: run.time,
     player,
     objectives,
+    progress: flightProgress(run),
     classicExpected,
     encounterExpected,
     classic,
@@ -247,12 +277,12 @@ export function flightInformationSnapshot(run, { started, paused }) {
 export function flightInformationBatch({ owner, sequence, events, messages }) {
   check(
     typeof owner?.attempt === 'string' && owner.attempt.length > 0 && integer(owner.generation),
-    t('interface:anAcceptedAttemptAndPresentationGenerationAreRequired'),
+    'interface:anAcceptedAttemptAndPresentationGenerationAreRequired',
   );
-  check(integer(sequence), t('interface:aHostFeedbackSequenceIsRequired'));
+  check(integer(sequence), 'interface:aHostFeedbackSequenceIsRequired');
   check(
     Array.isArray(events) && Array.isArray(messages),
-    t('interface:aCompleteEventBatchIsRequired'),
+    'interface:aCompleteEventBatchIsRequired',
   );
   const facts = events.map((event, index) => {
     check(
@@ -261,7 +291,7 @@ export function flightInformationBatch({ owner, sequence, events, messages }) {
         event.type.length > 0 &&
         integer(event.tick) &&
         finite(event.time),
-      t('interface:typedEngineEventIdentityAndClockAreRequired'),
+      'interface:typedEngineEventIdentityAndClockAreRequired',
     );
     return {
       index,
@@ -284,13 +314,13 @@ export function flightInformationBatch({ owner, sequence, events, messages }) {
       integer(message.eventIndex) &&
         message.eventIndex < facts.length &&
         message.eventIndex >= previous,
-      t('interface:warningObservationsMustFollowTheirSourceEventOrder'),
+      'interface:warningObservationsMustFollowTheirSourceEventOrder',
     );
     check(
       typeof message.fullText === 'string' &&
         (message.cue === null || typeof message.cue === 'string') &&
         finite(message.expiresAt),
-      t('interface:retainTheCompleteWarningTextCueAndSimulationExpiry'),
+      'interface:retainTheCompleteWarningTextCueAndSimulationExpiry',
     );
     previous = message.eventIndex;
     const fact = facts[message.eventIndex];
