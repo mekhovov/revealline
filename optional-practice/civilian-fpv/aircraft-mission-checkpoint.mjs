@@ -178,7 +178,7 @@ function pursuitActor(value, policy, source, ticks) {
       'Invalid pursuit meeting clock',
     );
 }
-function validateWorldState(state, source, mode, steps) {
+function validateWorldState(state, source, mode, steps, liveActors = false) {
   const descriptors = new Map(source.actors.map((actor) => [actor.id, actor]));
   const policies = new Map((source.pursuit?.actors ?? []).map((p) => [p.id, p]));
   required(
@@ -211,6 +211,9 @@ function validateWorldState(state, source, mode, steps) {
         'blocked',
         ...(original.role ? ['role'] : []),
         ...(policies.has(actor.id) ? ['pursuit'] : []),
+        ...(liveActors
+          ? ['generation', 'spawnId', 'defeatedTick', 'replacementTick', 'impactTick', 'touching']
+          : []),
       ],
       'Mission actor',
     );
@@ -226,9 +229,47 @@ function validateWorldState(state, source, mode, steps) {
         typeof actor.blocked === 'boolean',
       'Invalid mission actor state',
     );
+    if (liveActors)
+      required(
+        integer(actor.generation, 0, Math.floor(state.ticks / 250) + 1) &&
+          actor.spawnId === `${actor.id}:${actor.generation}` &&
+          (actor.defeatedTick === null
+            ? actor.status !== 'defeated'
+            : actor.status === 'defeated' && integer(actor.defeatedTick, 0, state.ticks)) &&
+          (actor.replacementTick === null ||
+            (actor.status === 'defeated' && actor.replacementTick === actor.defeatedTick + 250)) &&
+          integer(actor.impactTick, -13, state.ticks) &&
+          typeof actor.touching === 'boolean',
+        'Invalid live actor generation',
+      );
     vector(actor.position, 'actor position');
     if (policies.has(actor.id))
       pursuitActor(actor.pursuit, policies.get(actor.id), source.pursuit, state.ticks);
+  }
+  if (liveActors) {
+    record(state.actorLives, ['defeated', 'deaths', 'impacts'], 'Live actor credit');
+    strings(state.actorLives.defeated, [...descriptors.keys()], 'live actor credit');
+    required(
+      state.actors.every(
+        (actor) =>
+          state.actorLives.defeated.includes(actor.id) ===
+          (actor.generation > 0 || actor.status !== 'active'),
+      ) &&
+        state.actorLives.deaths ===
+          state.actors.reduce(
+            (sum, actor) => sum + actor.generation + (actor.status === 'defeated' ? 1 : 0),
+            0,
+          ),
+      'Live actor credit differs from its generations',
+    );
+    required(
+      integer(
+        state.actorLives.deaths,
+        0,
+        Math.max(descriptors.size, state.ticks * descriptors.size),
+      ) && integer(state.actorLives.impacts, 0, state.ticks * descriptors.size),
+      'Invalid live actor counters',
+    );
   }
   required(
     integer(state.health, 0, source.rules.playerHealth) &&
@@ -278,7 +319,73 @@ function validateWorldState(state, source, mode, steps) {
   }
   required(Array.isArray(state.events) && state.events.length <= 256, 'Invalid mission events');
   for (const event of state.events) {
-    if (event?.type === 'objective') {
+    if (liveActors && event?.type === 'replacement') {
+      record(event, ['type', 'actor', 'spawnId', 'generation'], 'Actor replacement');
+      required(
+        descriptors.has(event.actor) &&
+          integer(event.generation, 1, state.ticks) &&
+          event.spawnId === `${event.actor}:${event.generation}`,
+        'Invalid actor replacement',
+      );
+    } else if (liveActors && ['actor-hit', 'defeat', 'catch'].includes(event?.type)) {
+      record(
+        event,
+        [
+          'type',
+          'actor',
+          'sourceId',
+          'spawnId',
+          'generation',
+          'eventId',
+          'tick',
+          'actorType',
+          'position',
+          'radius',
+          'height',
+          'family',
+          'material',
+          'appearance',
+          'cause',
+          'weapon',
+          'damage',
+          'impactPosition',
+          'impactDirection',
+          'velocity',
+          'seed',
+          'rewardEligible',
+        ],
+        'Actor damage event',
+        ['optional'],
+      );
+      const actor = descriptors.get(event.actor);
+      required(
+        actor &&
+          event.sourceId === event.actor &&
+          integer(event.tick, 0, state.ticks) &&
+          event.eventId === `${event.spawnId}:${event.tick}:${event.type}` &&
+          integer(event.generation, 0, state.ticks) &&
+          event.spawnId === `${event.actor}:${event.generation}` &&
+          event.actorType === actor.type &&
+          event.radius === actor.radius &&
+          event.height === actor.height &&
+          text(event.family) &&
+          ['organic', 'electronic'].includes(event.material) &&
+          ['impact', 'pulse', 'catch'].includes(event.cause) &&
+          event.weapon === event.cause &&
+          integer(event.damage, 0, 1000) &&
+          integer(event.seed, 0, 0xffffffff) &&
+          typeof event.rewardEligible === 'boolean' &&
+          (event.optional === undefined || (event.type === 'catch' && event.optional === true)),
+        'Invalid actor damage event',
+      );
+      record(event.appearance, ['family', 'type'], 'Actor damage appearance');
+      required(
+        event.appearance.type === actor.type && event.appearance.family === event.family,
+        'Invalid actor appearance',
+      );
+      for (const key of ['position', 'impactPosition', 'velocity']) vector(event[key], key);
+      vector(event.impactDirection, 'impact direction', axes, 1000001);
+    } else if (event?.type === 'objective') {
       record(event, ['type', 'index'], 'Mission objective event');
       required(integer(event.index, 0, steps.length - 1), 'Invalid objective event');
     } else {
@@ -475,7 +582,10 @@ export function validateAircraftMissionCheckpoint(
   });
   record(saved, ['format', 'identity', 'state', 'feedback'], 'Aircraft mission checkpoint');
   required(
-    saved.format === 'AircraftMissionCheckpoint.v1' && saved.identity === dataIdentity(identity),
+    saved.format ===
+      (identity.actorRules === 'destructible-subjects.v1'
+        ? 'AircraftMissionCheckpoint.v2'
+        : 'AircraftMissionCheckpoint.v1') && saved.identity === dataIdentity(identity),
     'Mission checkpoint belongs to another flight',
   );
   const state = saved.state,
@@ -517,6 +627,7 @@ export function validateAircraftMissionCheckpoint(
         : []),
       ...(world && huntContact(source, mode) ? ['hunt'] : []),
       ...(world && source.pursuit ? ['pursuit'] : []),
+      ...(world && identity.actorRules === 'destructible-subjects.v1' ? ['actorLives'] : []),
       ...(hasSkills ? ['skill'] : []),
       ...(hasTracking ? ['actorTrack'] : []),
     ],
@@ -579,7 +690,13 @@ export function validateAircraftMissionCheckpoint(
   }
   if (world) {
     required(saved.feedback === null, 'Unexpected world feedback');
-    validateWorldState(state, source, mode, steps);
+    validateWorldState(
+      state,
+      source,
+      mode,
+      steps,
+      identity.actorRules === 'destructible-subjects.v1',
+    );
   } else feedback(saved.feedback, state, steps);
   return saved;
 }

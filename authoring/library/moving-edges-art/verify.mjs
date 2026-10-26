@@ -23,9 +23,7 @@ const documents = [
   'render-previews.mjs',
   'verify.mjs',
 ];
-const themes = ['fpv',
-'ukraine',
-'retro'];
+const themes = ['fpv', 'ukraine', 'retro'];
 const slots = ['terrace-stitch', 'survey-wheel', 'breakwater-return'];
 const expectedIds = themes.flatMap((theme) => slots.map((slot) => `moving-edges/${slot}/${theme}`));
 async function bytes(file, maximum = 4 * 1024 * 1024) {

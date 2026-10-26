@@ -1,0 +1,1595 @@
+{
+  "scope": "Controlled actual flight-renderer fixture; synthetic accepted defeat/surface-impact facts and 128 fixed living actors. No gameplay authority, player controls or production terrain admission. High overall graphics with forced Ultra effect detail. Infinite flat fixture floor with stable surface attachment and radius-aware swept contact. Every phase checks actual Current/r2 activation identity and enabled phases require visible settled remains with no invalid support returns. Every enabled phase begins with 1,024 destruction records and 1,024 surface-impact records, then eight mixed-material defeats plus eight impacts every two seconds. Matched phase-local movement, camera, seeds, timeline and restoration schedule. CPU covers event ingestion, actor staging and synchronous draw; GPU uses bounded asynchronous timers around the actual renderer render call, including internal passes, sampled every 15 renders. Probe overhead is included identically in both conditions; no blocking GPU readback. Not a full-app or human gameplay acceptance.",
+  "startedAt": "2026-10-20T05:37:33.383Z",
+  "hardware": {
+    "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/155.0.0.0 Safari/537.36",
+    "cores": 14,
+    "pixelRatio": 1,
+    "width": 1920,
+    "height": 1080,
+    "gpu": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4 Pro, Unspecified Version)",
+    "timerQuery": true
+  },
+  "appearanceHash": "9940f5d75727b52d067cf1be2ce75e254f52e0b6670643bc28a308291969e009",
+  "elapsedMs": 74551.90000000596,
+  "completed": true,
+  "phaseIndex": 7,
+  "phases": [
+    {
+      "mode": "native",
+      "art": "current",
+      "effects": false,
+      "frames": 240,
+      "cpuP50": 2.7,
+      "cpuP95": 3,
+      "cpuP99": 3.3,
+      "drawP95": 2.7,
+      "effectUpdateP95": 0.1,
+      "actorUpdateP95": 2.1,
+      "intervalP95": 16.7,
+      "gpu": {
+        "available": true,
+        "measured": true,
+        "samples": 16,
+        "gpuP50": 2.466,
+        "gpuP95": 2.721,
+        "gpuP99": 2.721,
+        "gpuMax": 2.742833,
+        "issued": 16,
+        "pending": 0,
+        "discarded": 0,
+        "skipped": 0,
+        "globalDisjointEvents": 0,
+        "globalContextLosses": 0,
+        "errors": [],
+        "sampleEvery": 15,
+        "maxPending": 8,
+        "method": "https://registry.khronos.org/webgl/extensions/EXT_disjoint_timer_query_webgl2/",
+        "scope": "Sampled flight-view render GPU work: elapsed time around the actual flight renderer render call, including its shadow and other internal passes. Excludes browser compositor, worker CPU and other contexts. Availability polling only; no finish, flush or synchronous result readback before availability."
+      },
+      "gpuP95": 2.721,
+      "heapBytes": [
+        117862706,
+        100900950
+      ],
+      "resources": {
+        "available": true,
+        "disposed": false,
+        "quality": "high",
+        "drone": "racer",
+        "presentation": {
+          "collectionId": "authored",
+          "revision": "r1",
+          "profileId": "academy",
+          "actors": [],
+          "actorGoals": [],
+          "projectileBatches": 17,
+          "activeProjectiles": 0,
+          "surfaceDetailGroups": 0
+        },
+        "effects": {
+          "playerPulse": 9233635,
+          "hostilePulse": 16232561,
+          "ghost": 9824751,
+          "ghostEmissive": 2390144,
+          "trail": 9824751,
+          "goalOutline": 9169660,
+          "goalActive": 15266215,
+          "goalComplete": 9808542,
+          "goalInactive": 8366516,
+          "goalGlow": 11069917,
+          "goalGlowInactive": 9030085,
+          "goalEmissive": 8577493,
+          "goalBadge": 10872788,
+          "directionArrow": 15264432
+        },
+        "hunt": null,
+        "combat": {
+          "moving": 0,
+          "settled": 0,
+          "marks": 0,
+          "bursts": 0,
+          "calls": 0,
+          "triangles": 0,
+          "surfaceQueries": 0,
+          "tier": "ultra",
+          "runId": "",
+          "tick": 0,
+          "stored": 0,
+          "storedImpacts": 0,
+          "capacity": 1024,
+          "impactCapacity": 1024,
+          "evicted": 0,
+          "presentationClock": 108.03999999999841,
+          "pendingFragments": 0,
+          "maxDrawCalls": 40,
+          "registeredPools": 11,
+          "appearanceReady": false,
+          "appearanceHash": null,
+          "appearanceDrawCalls": 0,
+          "appearanceCharacters": 0,
+          "maxAppearanceTriangles": 1200000
+        },
+        "combatActors": {
+          "actors": 128,
+          "instances": 3427,
+          "calls": 6,
+          "skinnedActors": 0,
+          "skinnedCalls": 0,
+          "crowdActors": 0,
+          "crowdInstances": 0,
+          "crowdCalls": 0,
+          "templates": 128,
+          "capacity": 128,
+          "healthBars": 128,
+          "appearanceReady": false,
+          "appearanceHash": null,
+          "appearanceCharacters": 0,
+          "equipmentCalls": 0,
+          "maxSkinnedActors": 20,
+          "crowdPaletteBytes": 0,
+          "crowdPalettes": 0,
+          "crowdPoses": 0,
+          "crowdPaletteByteLimit": 8388608,
+          "appearanceResourceMetrics": null,
+          "crowdPaletteGpuBytes": 0,
+          "equipmentInstanceBytes": 0
+        },
+        "combatAppearance": {
+          "state": "current",
+          "error": null
+        },
+        "importedMaterialBindings": {
+          "applied": 0,
+          "diagnostics": []
+        },
+        "registered": {
+          "geometries": 139,
+          "materials": 99,
+          "textures": 13
+        },
+        "renderer": {
+          "calls": 76,
+          "triangles": 81884,
+          "geometries": 68,
+          "textures": 10,
+          "programs": 12,
+          "contextLost": false
+        }
+      },
+      "recordCounts": {
+        "remains": 0,
+        "impacts": 0
+      },
+      "support": {
+        "queries": 0,
+        "clear": 0,
+        "contact": 0,
+        "attached": 0,
+        "invalid": 0
+      },
+      "actualAppearance": {
+        "activation": {
+          "state": "current",
+          "error": null
+        },
+        "actors": {
+          "ready": false,
+          "hash": null
+        },
+        "effects": {
+          "ready": false,
+          "hash": null
+        }
+      },
+      "visibleSamples": [
+        {
+          "elapsed": 6.05,
+          "blood": true,
+          "remains": true,
+          "settled": 0,
+          "moving": 0,
+          "marks": 0,
+          "bursts": 0,
+          "pending": 0
+        },
+        {
+          "elapsed": 8.05,
+          "blood": true,
+          "remains": true,
+          "settled": 0,
+          "moving": 0,
+          "marks": 0,
+          "bursts": 0,
+          "pending": 0
+        }
+      ],
+      "invariantErrors": []
+    },
+    {
+      "mode": "native",
+      "art": "current",
+      "effects": true,
+      "frames": 236,
+      "cpuP50": 5.9,
+      "cpuP95": 6.4,
+      "cpuP99": 6.8,
+      "drawP95": 6,
+      "effectUpdateP95": 3.3,
+      "actorUpdateP95": 2.3,
+      "intervalP95": 16.8,
+      "gpu": {
+        "available": true,
+        "measured": true,
+        "samples": 16,
+        "gpuP50": 2.572,
+        "gpuP95": 2.771,
+        "gpuP99": 2.771,
+        "gpuMax": 2.975375,
+        "issued": 16,
+        "pending": 0,
+        "discarded": 0,
+        "skipped": 0,
+        "globalDisjointEvents": 0,
+        "globalContextLosses": 0,
+        "errors": [],
+        "sampleEvery": 15,
+        "maxPending": 8,
+        "method": "https://registry.khronos.org/webgl/extensions/EXT_disjoint_timer_query_webgl2/",
+        "scope": "Sampled flight-view render GPU work: elapsed time around the actual flight renderer render call, including its shadow and other internal passes. Excludes browser compositor, worker CPU and other contexts. Availability polling only; no finish, flush or synchronous result readback before availability."
+      },
+      "gpuP95": 2.771,
+      "heapBytes": [
+        175837665,
+        120682233
+      ],
+      "resources": {
+        "available": true,
+        "disposed": false,
+        "quality": "high",
+        "drone": "racer",
+        "presentation": {
+          "collectionId": "authored",
+          "revision": "r1",
+          "profileId": "academy",
+          "actors": [],
+          "actorGoals": [],
+          "projectileBatches": 17,
+          "activeProjectiles": 0,
+          "surfaceDetailGroups": 0
+        },
+        "effects": {
+          "playerPulse": 9233635,
+          "hostilePulse": 16232561,
+          "ghost": 9824751,
+          "ghostEmissive": 2390144,
+          "trail": 9824751,
+          "goalOutline": 9169660,
+          "goalActive": 15266215,
+          "goalComplete": 9808542,
+          "goalInactive": 8366516,
+          "goalGlow": 11069917,
+          "goalGlowInactive": 9030085,
+          "goalEmissive": 8577493,
+          "goalBadge": 10872788,
+          "directionArrow": 15264432
+        },
+        "hunt": null,
+        "combat": {
+          "moving": 502,
+          "settled": 1529,
+          "marks": 90,
+          "bursts": 8,
+          "calls": 10,
+          "triangles": 0,
+          "surfaceQueries": 64,
+          "tier": "ultra",
+          "runId": "stress",
+          "tick": 5400,
+          "stored": 1024,
+          "storedImpacts": 1024,
+          "capacity": 1024,
+          "impactCapacity": 1024,
+          "evicted": 80,
+          "presentationClock": 108.07999999999842,
+          "pendingFragments": 0,
+          "maxDrawCalls": 40,
+          "registeredPools": 11,
+          "appearanceReady": false,
+          "appearanceHash": null,
+          "appearanceDrawCalls": 0,
+          "appearanceCharacters": 0,
+          "maxAppearanceTriangles": 1200000
+        },
+        "combatActors": {
+          "actors": 128,
+          "instances": 3427,
+          "calls": 6,
+          "skinnedActors": 0,
+          "skinnedCalls": 0,
+          "crowdActors": 0,
+          "crowdInstances": 0,
+          "crowdCalls": 0,
+          "templates": 128,
+          "capacity": 128,
+          "healthBars": 128,
+          "appearanceReady": false,
+          "appearanceHash": null,
+          "appearanceCharacters": 0,
+          "equipmentCalls": 0,
+          "maxSkinnedActors": 20,
+          "crowdPaletteBytes": 0,
+          "crowdPalettes": 0,
+          "crowdPoses": 0,
+          "crowdPaletteByteLimit": 8388608,
+          "appearanceResourceMetrics": null,
+          "crowdPaletteGpuBytes": 0,
+          "equipmentInstanceBytes": 0
+        },
+        "combatAppearance": {
+          "state": "current",
+          "error": null
+        },
+        "importedMaterialBindings": {
+          "applied": 0,
+          "diagnostics": []
+        },
+        "registered": {
+          "geometries": 139,
+          "materials": 99,
+          "textures": 13
+        },
+        "renderer": {
+          "calls": 86,
+          "triangles": 155916,
+          "geometries": 79,
+          "textures": 10,
+          "programs": 12,
+          "contextLost": false
+        }
+      },
+      "recordCounts": {
+        "remains": 1024,
+        "impacts": 1024
+      },
+      "support": {
+        "queries": 526577,
+        "clear": 482436,
+        "contact": 30163,
+        "attached": 13978,
+        "invalid": 0
+      },
+      "actualAppearance": {
+        "activation": {
+          "state": "current",
+          "error": null
+        },
+        "actors": {
+          "ready": false,
+          "hash": null
+        },
+        "effects": {
+          "ready": false,
+          "hash": null
+        }
+      },
+      "visibleSamples": [
+        {
+          "elapsed": 6.07,
+          "blood": true,
+          "remains": true,
+          "settled": 1529,
+          "moving": 500,
+          "marks": 83,
+          "bursts": 8,
+          "pending": 0
+        },
+        {
+          "elapsed": 8.1,
+          "blood": true,
+          "remains": true,
+          "settled": 1529,
+          "moving": 502,
+          "marks": 90,
+          "bursts": 8,
+          "pending": 0
+        }
+      ],
+      "invariantErrors": []
+    },
+    {
+      "mode": "native",
+      "art": "realistic-r2",
+      "effects": false,
+      "frames": 240,
+      "cpuP50": 2.3,
+      "cpuP95": 2.5,
+      "cpuP99": 2.6,
+      "drawP95": 2.1,
+      "effectUpdateP95": 0.1,
+      "actorUpdateP95": 1.2,
+      "intervalP95": 16.7,
+      "gpu": {
+        "available": true,
+        "measured": true,
+        "samples": 16,
+        "gpuP50": 4.421,
+        "gpuP95": 4.441,
+        "gpuP99": 4.441,
+        "gpuMax": 4.479875,
+        "issued": 16,
+        "pending": 0,
+        "discarded": 0,
+        "skipped": 0,
+        "globalDisjointEvents": 0,
+        "globalContextLosses": 0,
+        "errors": [],
+        "sampleEvery": 15,
+        "maxPending": 8,
+        "method": "https://registry.khronos.org/webgl/extensions/EXT_disjoint_timer_query_webgl2/",
+        "scope": "Sampled flight-view render GPU work: elapsed time around the actual flight renderer render call, including its shadow and other internal passes. Excludes browser compositor, worker CPU and other contexts. Availability polling only; no finish, flush or synchronous result readback before availability."
+      },
+      "gpuP95": 4.441,
+      "heapBytes": [
+        157608598,
+        155867014
+      ],
+      "resources": {
+        "available": true,
+        "disposed": false,
+        "quality": "high",
+        "drone": "racer",
+        "presentation": {
+          "collectionId": "authored",
+          "revision": "r1",
+          "profileId": "academy",
+          "actors": [],
+          "actorGoals": [],
+          "projectileBatches": 17,
+          "activeProjectiles": 0,
+          "surfaceDetailGroups": 0
+        },
+        "effects": {
+          "playerPulse": 9233635,
+          "hostilePulse": 16232561,
+          "ghost": 9824751,
+          "ghostEmissive": 2390144,
+          "trail": 9824751,
+          "goalOutline": 9169660,
+          "goalActive": 15266215,
+          "goalComplete": 9808542,
+          "goalInactive": 8366516,
+          "goalGlow": 11069917,
+          "goalGlowInactive": 9030085,
+          "goalEmissive": 8577493,
+          "goalBadge": 10872788,
+          "directionArrow": 15264432
+        },
+        "hunt": null,
+        "combat": {
+          "moving": 0,
+          "settled": 0,
+          "marks": 0,
+          "bursts": 0,
+          "calls": 0,
+          "triangles": 0,
+          "surfaceQueries": 0,
+          "tier": "ultra",
+          "runId": "",
+          "tick": 0,
+          "stored": 0,
+          "storedImpacts": 0,
+          "capacity": 1024,
+          "impactCapacity": 1024,
+          "evicted": 0,
+          "presentationClock": 108.05999999999841,
+          "pendingFragments": 0,
+          "maxDrawCalls": 40,
+          "registeredPools": 73,
+          "appearanceReady": true,
+          "appearanceHash": "9940f5d75727b52d067cf1be2ce75e254f52e0b6670643bc28a308291969e009",
+          "appearanceDrawCalls": 32,
+          "appearanceCharacters": 36,
+          "maxAppearanceTriangles": 1200000
+        },
+        "combatActors": {
+          "actors": 128,
+          "instances": 2464,
+          "calls": 64,
+          "skinnedActors": 20,
+          "skinnedCalls": 40,
+          "crowdActors": 12,
+          "crowdInstances": 24,
+          "crowdCalls": 2,
+          "templates": 128,
+          "capacity": 128,
+          "healthBars": 128,
+          "appearanceReady": true,
+          "appearanceHash": "9940f5d75727b52d067cf1be2ce75e254f52e0b6670643bc28a308291969e009",
+          "appearanceCharacters": 36,
+          "equipmentCalls": 17,
+          "maxSkinnedActors": 20,
+          "crowdPaletteBytes": 6311280,
+          "crowdPalettes": 1,
+          "crowdPoses": 10,
+          "crowdPaletteByteLimit": 8388608,
+          "appearanceResourceMetrics": {
+            "decodedBytes": 113888696,
+            "gpuBytes": 136220432
+          },
+          "crowdPaletteGpuBytes": 6243440,
+          "equipmentInstanceBytes": 243200
+        },
+        "combatAppearance": {
+          "state": "ready",
+          "error": null,
+          "sha256": "9940f5d75727b52d067cf1be2ce75e254f52e0b6670643bc28a308291969e009",
+          "characterIndex": null,
+          "characters": 36
+        },
+        "importedMaterialBindings": {
+          "applied": 0,
+          "diagnostics": []
+        },
+        "registered": {
+          "geometries": 139,
+          "materials": 99,
+          "textures": 13
+        },
+        "renderer": {
+          "calls": 134,
+          "triangles": 673644,
+          "geometries": 116,
+          "textures": 58,
+          "programs": 28,
+          "contextLost": false
+        }
+      },
+      "recordCounts": {
+        "remains": 0,
+        "impacts": 0
+      },
+      "support": {
+        "queries": 0,
+        "clear": 0,
+        "contact": 0,
+        "attached": 0,
+        "invalid": 0
+      },
+      "actualAppearance": {
+        "activation": {
+          "state": "ready",
+          "error": null,
+          "sha256": "9940f5d75727b52d067cf1be2ce75e254f52e0b6670643bc28a308291969e009",
+          "characterIndex": null,
+          "characters": 36
+        },
+        "actors": {
+          "ready": true,
+          "hash": "9940f5d75727b52d067cf1be2ce75e254f52e0b6670643bc28a308291969e009"
+        },
+        "effects": {
+          "ready": true,
+          "hash": "9940f5d75727b52d067cf1be2ce75e254f52e0b6670643bc28a308291969e009"
+        }
+      },
+      "visibleSamples": [
+        {
+          "elapsed": 6.07,
+          "blood": true,
+          "remains": true,
+          "settled": 0,
+          "moving": 0,
+          "marks": 0,
+          "bursts": 0,
+          "pending": 0
+        },
+        {
+          "elapsed": 8.07,
+          "blood": true,
+          "remains": true,
+          "settled": 0,
+          "moving": 0,
+          "marks": 0,
+          "bursts": 0,
+          "pending": 0
+        }
+      ],
+      "invariantErrors": []
+    },
+    {
+      "mode": "native",
+      "art": "realistic-r2",
+      "effects": true,
+      "frames": 237,
+      "cpuP50": 5.9,
+      "cpuP95": 6.6,
+      "cpuP99": 6.8,
+      "drawP95": 6.2,
+      "effectUpdateP95": 3.4,
+      "actorUpdateP95": 1.5,
+      "intervalP95": 16.7,
+      "gpu": {
+        "available": true,
+        "measured": true,
+        "samples": 16,
+        "gpuP50": 5.591,
+        "gpuP95": 5.911,
+        "gpuP99": 5.911,
+        "gpuMax": 5.929916,
+        "issued": 16,
+        "pending": 0,
+        "discarded": 0,
+        "skipped": 0,
+        "globalDisjointEvents": 0,
+        "globalContextLosses": 0,
+        "errors": [],
+        "sampleEvery": 15,
+        "maxPending": 8,
+        "method": "https://registry.khronos.org/webgl/extensions/EXT_disjoint_timer_query_webgl2/",
+        "scope": "Sampled flight-view render GPU work: elapsed time around the actual flight renderer render call, including its shadow and other internal passes. Excludes browser compositor, worker CPU and other contexts. Availability polling only; no finish, flush or synchronous result readback before availability."
+      },
+      "gpuP95": 5.911,
+      "heapBytes": [
+        176324428,
+        169360588
+      ],
+      "resources": {
+        "available": true,
+        "disposed": false,
+        "quality": "high",
+        "drone": "racer",
+        "presentation": {
+          "collectionId": "authored",
+          "revision": "r1",
+          "profileId": "academy",
+          "actors": [],
+          "actorGoals": [],
+          "projectileBatches": 17,
+          "activeProjectiles": 0,
+          "surfaceDetailGroups": 0
+        },
+        "effects": {
+          "playerPulse": 9233635,
+          "hostilePulse": 16232561,
+          "ghost": 9824751,
+          "ghostEmissive": 2390144,
+          "trail": 9824751,
+          "goalOutline": 9169660,
+          "goalActive": 15266215,
+          "goalComplete": 9808542,
+          "goalInactive": 8366516,
+          "goalGlow": 11069917,
+          "goalGlowInactive": 9030085,
+          "goalEmissive": 8577493,
+          "goalBadge": 10872788,
+          "directionArrow": 15264432
+        },
+        "hunt": null,
+        "combat": {
+          "moving": 354,
+          "settled": 1529,
+          "marks": 70,
+          "bursts": 8,
+          "calls": 38,
+          "triangles": 251032,
+          "surfaceQueries": 130,
+          "tier": "ultra",
+          "runId": "stress",
+          "tick": 5400,
+          "stored": 1024,
+          "storedImpacts": 1024,
+          "capacity": 1024,
+          "impactCapacity": 1024,
+          "evicted": 80,
+          "presentationClock": 108.11999999999843,
+          "pendingFragments": 0,
+          "maxDrawCalls": 40,
+          "registeredPools": 73,
+          "appearanceReady": true,
+          "appearanceHash": "9940f5d75727b52d067cf1be2ce75e254f52e0b6670643bc28a308291969e009",
+          "appearanceDrawCalls": 32,
+          "appearanceCharacters": 36,
+          "maxAppearanceTriangles": 1200000
+        },
+        "combatActors": {
+          "actors": 128,
+          "instances": 2464,
+          "calls": 64,
+          "skinnedActors": 20,
+          "skinnedCalls": 40,
+          "crowdActors": 12,
+          "crowdInstances": 24,
+          "crowdCalls": 2,
+          "templates": 128,
+          "capacity": 128,
+          "healthBars": 128,
+          "appearanceReady": true,
+          "appearanceHash": "9940f5d75727b52d067cf1be2ce75e254f52e0b6670643bc28a308291969e009",
+          "appearanceCharacters": 36,
+          "equipmentCalls": 17,
+          "maxSkinnedActors": 20,
+          "crowdPaletteBytes": 6311280,
+          "crowdPalettes": 1,
+          "crowdPoses": 10,
+          "crowdPaletteByteLimit": 8388608,
+          "appearanceResourceMetrics": {
+            "decodedBytes": 113888696,
+            "gpuBytes": 136220432
+          },
+          "crowdPaletteGpuBytes": 6243440,
+          "equipmentInstanceBytes": 243200
+        },
+        "combatAppearance": {
+          "state": "ready",
+          "error": null,
+          "sha256": "9940f5d75727b52d067cf1be2ce75e254f52e0b6670643bc28a308291969e009",
+          "characterIndex": null,
+          "characters": 36
+        },
+        "importedMaterialBindings": {
+          "applied": 0,
+          "diagnostics": []
+        },
+        "registered": {
+          "geometries": 139,
+          "materials": 99,
+          "textures": 13
+        },
+        "renderer": {
+          "calls": 172,
+          "triangles": 964432,
+          "geometries": 150,
+          "textures": 58,
+          "programs": 28,
+          "contextLost": false
+        }
+      },
+      "recordCounts": {
+        "remains": 1024,
+        "impacts": 1024
+      },
+      "support": {
+        "queries": 490189,
+        "clear": 447019,
+        "contact": 25112,
+        "attached": 18058,
+        "invalid": 0
+      },
+      "actualAppearance": {
+        "activation": {
+          "state": "ready",
+          "error": null,
+          "sha256": "9940f5d75727b52d067cf1be2ce75e254f52e0b6670643bc28a308291969e009",
+          "characterIndex": null,
+          "characters": 36
+        },
+        "actors": {
+          "ready": true,
+          "hash": "9940f5d75727b52d067cf1be2ce75e254f52e0b6670643bc28a308291969e009"
+        },
+        "effects": {
+          "ready": true,
+          "hash": "9940f5d75727b52d067cf1be2ce75e254f52e0b6670643bc28a308291969e009"
+        }
+      },
+      "visibleSamples": [
+        {
+          "elapsed": 6.12,
+          "blood": true,
+          "remains": true,
+          "settled": 1529,
+          "moving": 354,
+          "marks": 69,
+          "bursts": 8,
+          "pending": 0
+        },
+        {
+          "elapsed": 8.13,
+          "blood": true,
+          "remains": true,
+          "settled": 1529,
+          "moving": 354,
+          "marks": 70,
+          "bursts": 8,
+          "pending": 0
+        }
+      ],
+      "invariantErrors": []
+    },
+    {
+      "mode": "regional",
+      "art": "current",
+      "effects": false,
+      "frames": 240,
+      "cpuP50": 2,
+      "cpuP95": 2.2,
+      "cpuP99": 2.2,
+      "drawP95": 1.8,
+      "effectUpdateP95": 0.1,
+      "actorUpdateP95": 1.6,
+      "intervalP95": 16.8,
+      "gpu": {
+        "available": true,
+        "measured": true,
+        "samples": 16,
+        "gpuP50": 1.057,
+        "gpuP95": 1.201,
+        "gpuP99": 1.201,
+        "gpuMax": 1.20225,
+        "issued": 16,
+        "pending": 0,
+        "discarded": 0,
+        "skipped": 0,
+        "globalDisjointEvents": 0,
+        "globalContextLosses": 0,
+        "errors": [],
+        "sampleEvery": 15,
+        "maxPending": 8,
+        "method": "https://registry.khronos.org/webgl/extensions/EXT_disjoint_timer_query_webgl2/",
+        "scope": "Sampled flight-view render GPU work: elapsed time around the actual flight renderer render call, including its shadow and other internal passes. Excludes browser compositor, worker CPU and other contexts. Availability polling only; no finish, flush or synchronous result readback before availability."
+      },
+      "gpuP95": 1.201,
+      "heapBytes": [
+        166452887,
+        186020611
+      ],
+      "resources": {
+        "available": true,
+        "disposed": false,
+        "quality": "high",
+        "drone": "racer",
+        "presentation": {
+          "collectionId": "authored",
+          "revision": "r1",
+          "profileId": null,
+          "actors": [],
+          "actorGoals": [],
+          "projectileBatches": 17,
+          "activeProjectiles": 0,
+          "surfaceDetailGroups": 0
+        },
+        "effects": {
+          "playerPulse": 9233635,
+          "hostilePulse": 16232561,
+          "ghost": 9824751,
+          "ghostEmissive": 2390144,
+          "trail": 9824751,
+          "goalOutline": 9169660,
+          "goalActive": 15266215,
+          "goalComplete": 9808542,
+          "goalInactive": 8366516,
+          "goalGlow": 11069917,
+          "goalGlowInactive": 9030085,
+          "goalEmissive": 8577493,
+          "goalBadge": 10872788,
+          "directionArrow": 15264432
+        },
+        "hunt": null,
+        "combat": {
+          "moving": 0,
+          "settled": 0,
+          "marks": 0,
+          "bursts": 0,
+          "calls": 0,
+          "triangles": 0,
+          "surfaceQueries": 0,
+          "tier": "ultra",
+          "runId": "",
+          "tick": 0,
+          "stored": 0,
+          "storedImpacts": 0,
+          "capacity": 1024,
+          "impactCapacity": 1024,
+          "evicted": 0,
+          "presentationClock": 107.99999999999841,
+          "pendingFragments": 0,
+          "maxDrawCalls": 40,
+          "registeredPools": 11,
+          "appearanceReady": false,
+          "appearanceHash": null,
+          "appearanceDrawCalls": 0,
+          "appearanceCharacters": 0,
+          "maxAppearanceTriangles": 1200000
+        },
+        "combatActors": {
+          "actors": 128,
+          "instances": 3427,
+          "calls": 6,
+          "skinnedActors": 0,
+          "skinnedCalls": 0,
+          "crowdActors": 0,
+          "crowdInstances": 0,
+          "crowdCalls": 0,
+          "templates": 128,
+          "capacity": 128,
+          "healthBars": 128,
+          "appearanceReady": false,
+          "appearanceHash": null,
+          "appearanceCharacters": 0,
+          "equipmentCalls": 0,
+          "maxSkinnedActors": 20,
+          "crowdPaletteBytes": 0,
+          "crowdPalettes": 0,
+          "crowdPoses": 0,
+          "crowdPaletteByteLimit": 8388608,
+          "appearanceResourceMetrics": null,
+          "crowdPaletteGpuBytes": 0,
+          "equipmentInstanceBytes": 0
+        },
+        "combatAppearance": {
+          "state": "current",
+          "error": null
+        },
+        "importedMaterialBindings": {
+          "applied": 0,
+          "diagnostics": []
+        },
+        "registered": {
+          "geometries": 63,
+          "materials": 60,
+          "textures": 3
+        },
+        "renderer": {
+          "calls": 7,
+          "triangles": 78120,
+          "geometries": 6,
+          "textures": 3,
+          "programs": 10,
+          "contextLost": false
+        }
+      },
+      "recordCounts": {
+        "remains": 0,
+        "impacts": 0
+      },
+      "support": {
+        "queries": 0,
+        "clear": 0,
+        "contact": 0,
+        "attached": 0,
+        "invalid": 0
+      },
+      "actualAppearance": {
+        "activation": {
+          "state": "current",
+          "error": null
+        },
+        "actors": {
+          "ready": false,
+          "hash": null
+        },
+        "effects": {
+          "ready": false,
+          "hash": null
+        }
+      },
+      "visibleSamples": [
+        {
+          "elapsed": 6.02,
+          "blood": true,
+          "remains": true,
+          "settled": 0,
+          "moving": 0,
+          "marks": 0,
+          "bursts": 0,
+          "pending": 0
+        },
+        {
+          "elapsed": 8.02,
+          "blood": true,
+          "remains": true,
+          "settled": 0,
+          "moving": 0,
+          "marks": 0,
+          "bursts": 0,
+          "pending": 0
+        }
+      ],
+      "invariantErrors": []
+    },
+    {
+      "mode": "regional",
+      "art": "current",
+      "effects": true,
+      "frames": 236,
+      "cpuP50": 4.6,
+      "cpuP95": 5.1,
+      "cpuP99": 5.5,
+      "drawP95": 4.7,
+      "effectUpdateP95": 3.1,
+      "actorUpdateP95": 1.3,
+      "intervalP95": 16.8,
+      "gpu": {
+        "available": true,
+        "measured": true,
+        "samples": 16,
+        "gpuP50": 1.257,
+        "gpuP95": 1.293,
+        "gpuP99": 1.293,
+        "gpuMax": 1.303249,
+        "issued": 16,
+        "pending": 0,
+        "discarded": 0,
+        "skipped": 0,
+        "globalDisjointEvents": 0,
+        "globalContextLosses": 0,
+        "errors": [],
+        "sampleEvery": 15,
+        "maxPending": 8,
+        "method": "https://registry.khronos.org/webgl/extensions/EXT_disjoint_timer_query_webgl2/",
+        "scope": "Sampled flight-view render GPU work: elapsed time around the actual flight renderer render call, including its shadow and other internal passes. Excludes browser compositor, worker CPU and other contexts. Availability polling only; no finish, flush or synchronous result readback before availability."
+      },
+      "gpuP95": 1.293,
+      "heapBytes": [
+        224935691,
+        234794511
+      ],
+      "resources": {
+        "available": true,
+        "disposed": false,
+        "quality": "high",
+        "drone": "racer",
+        "presentation": {
+          "collectionId": "authored",
+          "revision": "r1",
+          "profileId": null,
+          "actors": [],
+          "actorGoals": [],
+          "projectileBatches": 17,
+          "activeProjectiles": 0,
+          "surfaceDetailGroups": 0
+        },
+        "effects": {
+          "playerPulse": 9233635,
+          "hostilePulse": 16232561,
+          "ghost": 9824751,
+          "ghostEmissive": 2390144,
+          "trail": 9824751,
+          "goalOutline": 9169660,
+          "goalActive": 15266215,
+          "goalComplete": 9808542,
+          "goalInactive": 8366516,
+          "goalGlow": 11069917,
+          "goalGlowInactive": 9030085,
+          "goalEmissive": 8577493,
+          "goalBadge": 10872788,
+          "directionArrow": 15264432
+        },
+        "hunt": null,
+        "combat": {
+          "moving": 502,
+          "settled": 1529,
+          "marks": 86,
+          "bursts": 8,
+          "calls": 10,
+          "triangles": 0,
+          "surfaceQueries": 150,
+          "tier": "ultra",
+          "runId": "stress",
+          "tick": 5400,
+          "stored": 1024,
+          "storedImpacts": 1024,
+          "capacity": 1024,
+          "impactCapacity": 1024,
+          "evicted": 80,
+          "presentationClock": 108.05999999999842,
+          "pendingFragments": 0,
+          "maxDrawCalls": 40,
+          "registeredPools": 11,
+          "appearanceReady": false,
+          "appearanceHash": null,
+          "appearanceDrawCalls": 0,
+          "appearanceCharacters": 0,
+          "maxAppearanceTriangles": 1200000
+        },
+        "combatActors": {
+          "actors": 128,
+          "instances": 3427,
+          "calls": 6,
+          "skinnedActors": 0,
+          "skinnedCalls": 0,
+          "crowdActors": 0,
+          "crowdInstances": 0,
+          "crowdCalls": 0,
+          "templates": 128,
+          "capacity": 128,
+          "healthBars": 128,
+          "appearanceReady": false,
+          "appearanceHash": null,
+          "appearanceCharacters": 0,
+          "equipmentCalls": 0,
+          "maxSkinnedActors": 20,
+          "crowdPaletteBytes": 0,
+          "crowdPalettes": 0,
+          "crowdPoses": 0,
+          "crowdPaletteByteLimit": 8388608,
+          "appearanceResourceMetrics": null,
+          "crowdPaletteGpuBytes": 0,
+          "equipmentInstanceBytes": 0
+        },
+        "combatAppearance": {
+          "state": "current",
+          "error": null
+        },
+        "importedMaterialBindings": {
+          "applied": 0,
+          "diagnostics": []
+        },
+        "registered": {
+          "geometries": 63,
+          "materials": 60,
+          "textures": 3
+        },
+        "renderer": {
+          "calls": 17,
+          "triangles": 152080,
+          "geometries": 18,
+          "textures": 3,
+          "programs": 10,
+          "contextLost": false
+        }
+      },
+      "recordCounts": {
+        "remains": 1024,
+        "impacts": 1024
+      },
+      "support": {
+        "queries": 526491,
+        "clear": 482350,
+        "contact": 30120,
+        "attached": 14021,
+        "invalid": 0
+      },
+      "actualAppearance": {
+        "activation": {
+          "state": "current",
+          "error": null
+        },
+        "actors": {
+          "ready": false,
+          "hash": null
+        },
+        "effects": {
+          "ready": false,
+          "hash": null
+        }
+      },
+      "visibleSamples": [
+        {
+          "elapsed": 6.03,
+          "blood": true,
+          "remains": true,
+          "settled": 1529,
+          "moving": 500,
+          "marks": 80,
+          "bursts": 8,
+          "pending": 0
+        },
+        {
+          "elapsed": 8.07,
+          "blood": true,
+          "remains": true,
+          "settled": 1529,
+          "moving": 502,
+          "marks": 86,
+          "bursts": 8,
+          "pending": 0
+        }
+      ],
+      "invariantErrors": []
+    },
+    {
+      "mode": "regional",
+      "art": "realistic-r2",
+      "effects": false,
+      "frames": 240,
+      "cpuP50": 2.3,
+      "cpuP95": 2.6,
+      "cpuP99": 2.6,
+      "drawP95": 2.2,
+      "effectUpdateP95": 0.1,
+      "actorUpdateP95": 1.4,
+      "intervalP95": 16.7,
+      "gpu": {
+        "available": true,
+        "measured": true,
+        "samples": 16,
+        "gpuP50": 3.173,
+        "gpuP95": 3.338,
+        "gpuP99": 3.338,
+        "gpuMax": 3.374749,
+        "issued": 16,
+        "pending": 0,
+        "discarded": 0,
+        "skipped": 0,
+        "globalDisjointEvents": 0,
+        "globalContextLosses": 0,
+        "errors": [],
+        "sampleEvery": 15,
+        "maxPending": 8,
+        "method": "https://registry.khronos.org/webgl/extensions/EXT_disjoint_timer_query_webgl2/",
+        "scope": "Sampled flight-view render GPU work: elapsed time around the actual flight renderer render call, including its shadow and other internal passes. Excludes browser compositor, worker CPU and other contexts. Availability polling only; no finish, flush or synchronous result readback before availability."
+      },
+      "gpuP95": 3.338,
+      "heapBytes": [
+        213117484,
+        209224392
+      ],
+      "resources": {
+        "available": true,
+        "disposed": false,
+        "quality": "high",
+        "drone": "racer",
+        "presentation": {
+          "collectionId": "authored",
+          "revision": "r1",
+          "profileId": null,
+          "actors": [],
+          "actorGoals": [],
+          "projectileBatches": 17,
+          "activeProjectiles": 0,
+          "surfaceDetailGroups": 0
+        },
+        "effects": {
+          "playerPulse": 9233635,
+          "hostilePulse": 16232561,
+          "ghost": 9824751,
+          "ghostEmissive": 2390144,
+          "trail": 9824751,
+          "goalOutline": 9169660,
+          "goalActive": 15266215,
+          "goalComplete": 9808542,
+          "goalInactive": 8366516,
+          "goalGlow": 11069917,
+          "goalGlowInactive": 9030085,
+          "goalEmissive": 8577493,
+          "goalBadge": 10872788,
+          "directionArrow": 15264432
+        },
+        "hunt": null,
+        "combat": {
+          "moving": 0,
+          "settled": 0,
+          "marks": 0,
+          "bursts": 0,
+          "calls": 0,
+          "triangles": 0,
+          "surfaceQueries": 0,
+          "tier": "ultra",
+          "runId": "",
+          "tick": 0,
+          "stored": 0,
+          "storedImpacts": 0,
+          "capacity": 1024,
+          "impactCapacity": 1024,
+          "evicted": 0,
+          "presentationClock": 108.03999999999841,
+          "pendingFragments": 0,
+          "maxDrawCalls": 40,
+          "registeredPools": 73,
+          "appearanceReady": true,
+          "appearanceHash": "9940f5d75727b52d067cf1be2ce75e254f52e0b6670643bc28a308291969e009",
+          "appearanceDrawCalls": 32,
+          "appearanceCharacters": 36,
+          "maxAppearanceTriangles": 1200000
+        },
+        "combatActors": {
+          "actors": 128,
+          "instances": 2464,
+          "calls": 64,
+          "skinnedActors": 20,
+          "skinnedCalls": 40,
+          "crowdActors": 12,
+          "crowdInstances": 24,
+          "crowdCalls": 2,
+          "templates": 128,
+          "capacity": 128,
+          "healthBars": 128,
+          "appearanceReady": true,
+          "appearanceHash": "9940f5d75727b52d067cf1be2ce75e254f52e0b6670643bc28a308291969e009",
+          "appearanceCharacters": 36,
+          "equipmentCalls": 17,
+          "maxSkinnedActors": 20,
+          "crowdPaletteBytes": 6311280,
+          "crowdPalettes": 1,
+          "crowdPoses": 10,
+          "crowdPaletteByteLimit": 8388608,
+          "appearanceResourceMetrics": {
+            "decodedBytes": 113888696,
+            "gpuBytes": 136220432
+          },
+          "crowdPaletteGpuBytes": 6243440,
+          "equipmentInstanceBytes": 243200
+        },
+        "combatAppearance": {
+          "state": "ready",
+          "error": null,
+          "sha256": "9940f5d75727b52d067cf1be2ce75e254f52e0b6670643bc28a308291969e009",
+          "characterIndex": null,
+          "characters": 36
+        },
+        "importedMaterialBindings": {
+          "applied": 0,
+          "diagnostics": []
+        },
+        "registered": {
+          "geometries": 63,
+          "materials": 60,
+          "textures": 3
+        },
+        "renderer": {
+          "calls": 65,
+          "triangles": 669880,
+          "geometries": 44,
+          "textures": 51,
+          "programs": 26,
+          "contextLost": false
+        }
+      },
+      "recordCounts": {
+        "remains": 0,
+        "impacts": 0
+      },
+      "support": {
+        "queries": 0,
+        "clear": 0,
+        "contact": 0,
+        "attached": 0,
+        "invalid": 0
+      },
+      "actualAppearance": {
+        "activation": {
+          "state": "ready",
+          "error": null,
+          "sha256": "9940f5d75727b52d067cf1be2ce75e254f52e0b6670643bc28a308291969e009",
+          "characterIndex": null,
+          "characters": 36
+        },
+        "actors": {
+          "ready": true,
+          "hash": "9940f5d75727b52d067cf1be2ce75e254f52e0b6670643bc28a308291969e009"
+        },
+        "effects": {
+          "ready": true,
+          "hash": "9940f5d75727b52d067cf1be2ce75e254f52e0b6670643bc28a308291969e009"
+        }
+      },
+      "visibleSamples": [
+        {
+          "elapsed": 6.05,
+          "blood": true,
+          "remains": true,
+          "settled": 0,
+          "moving": 0,
+          "marks": 0,
+          "bursts": 0,
+          "pending": 0
+        },
+        {
+          "elapsed": 8.05,
+          "blood": true,
+          "remains": true,
+          "settled": 0,
+          "moving": 0,
+          "marks": 0,
+          "bursts": 0,
+          "pending": 0
+        }
+      ],
+      "invariantErrors": []
+    },
+    {
+      "mode": "regional",
+      "art": "realistic-r2",
+      "effects": true,
+      "frames": 237,
+      "cpuP50": 5.5,
+      "cpuP95": 5.9,
+      "cpuP99": 6.3,
+      "drawP95": 5.5,
+      "effectUpdateP95": 3.3,
+      "actorUpdateP95": 1.3,
+      "intervalP95": 16.8,
+      "gpu": {
+        "available": true,
+        "measured": true,
+        "samples": 16,
+        "gpuP50": 4.271,
+        "gpuP95": 4.301,
+        "gpuP99": 4.301,
+        "gpuMax": 4.335249,
+        "issued": 16,
+        "pending": 0,
+        "discarded": 0,
+        "skipped": 0,
+        "globalDisjointEvents": 0,
+        "globalContextLosses": 0,
+        "errors": [],
+        "sampleEvery": 15,
+        "maxPending": 8,
+        "method": "https://registry.khronos.org/webgl/extensions/EXT_disjoint_timer_query_webgl2/",
+        "scope": "Sampled flight-view render GPU work: elapsed time around the actual flight renderer render call, including its shadow and other internal passes. Excludes browser compositor, worker CPU and other contexts. Availability polling only; no finish, flush or synchronous result readback before availability."
+      },
+      "gpuP95": 4.301,
+      "heapBytes": [
+        189174328,
+        137284626
+      ],
+      "resources": {
+        "available": true,
+        "disposed": false,
+        "quality": "high",
+        "drone": "racer",
+        "presentation": {
+          "collectionId": "authored",
+          "revision": "r1",
+          "profileId": null,
+          "actors": [],
+          "actorGoals": [],
+          "projectileBatches": 17,
+          "activeProjectiles": 0,
+          "surfaceDetailGroups": 0
+        },
+        "effects": {
+          "playerPulse": 9233635,
+          "hostilePulse": 16232561,
+          "ghost": 9824751,
+          "ghostEmissive": 2390144,
+          "trail": 9824751,
+          "goalOutline": 9169660,
+          "goalActive": 15266215,
+          "goalComplete": 9808542,
+          "goalInactive": 8366516,
+          "goalGlow": 11069917,
+          "goalGlowInactive": 9030085,
+          "goalEmissive": 8577493,
+          "goalBadge": 10872788,
+          "directionArrow": 15264432
+        },
+        "hunt": null,
+        "combat": {
+          "moving": 354,
+          "settled": 1529,
+          "marks": 71,
+          "bursts": 8,
+          "calls": 38,
+          "triangles": 251032,
+          "surfaceQueries": 130,
+          "tier": "ultra",
+          "runId": "stress",
+          "tick": 5400,
+          "stored": 1024,
+          "storedImpacts": 1024,
+          "capacity": 1024,
+          "impactCapacity": 1024,
+          "evicted": 80,
+          "presentationClock": 108.09999999999842,
+          "pendingFragments": 0,
+          "maxDrawCalls": 40,
+          "registeredPools": 73,
+          "appearanceReady": true,
+          "appearanceHash": "9940f5d75727b52d067cf1be2ce75e254f52e0b6670643bc28a308291969e009",
+          "appearanceDrawCalls": 32,
+          "appearanceCharacters": 36,
+          "maxAppearanceTriangles": 1200000
+        },
+        "combatActors": {
+          "actors": 128,
+          "instances": 2464,
+          "calls": 64,
+          "skinnedActors": 20,
+          "skinnedCalls": 40,
+          "crowdActors": 12,
+          "crowdInstances": 24,
+          "crowdCalls": 2,
+          "templates": 128,
+          "capacity": 128,
+          "healthBars": 128,
+          "appearanceReady": true,
+          "appearanceHash": "9940f5d75727b52d067cf1be2ce75e254f52e0b6670643bc28a308291969e009",
+          "appearanceCharacters": 36,
+          "equipmentCalls": 17,
+          "maxSkinnedActors": 20,
+          "crowdPaletteBytes": 6311280,
+          "crowdPalettes": 1,
+          "crowdPoses": 10,
+          "crowdPaletteByteLimit": 8388608,
+          "appearanceResourceMetrics": {
+            "decodedBytes": 113888696,
+            "gpuBytes": 136220432
+          },
+          "crowdPaletteGpuBytes": 6243440,
+          "equipmentInstanceBytes": 243200
+        },
+        "combatAppearance": {
+          "state": "ready",
+          "error": null,
+          "sha256": "9940f5d75727b52d067cf1be2ce75e254f52e0b6670643bc28a308291969e009",
+          "characterIndex": null,
+          "characters": 36
+        },
+        "importedMaterialBindings": {
+          "applied": 0,
+          "diagnostics": []
+        },
+        "registered": {
+          "geometries": 63,
+          "materials": 60,
+          "textures": 3
+        },
+        "renderer": {
+          "calls": 103,
+          "triangles": 960686,
+          "geometries": 87,
+          "textures": 51,
+          "programs": 26,
+          "contextLost": false
+        }
+      },
+      "recordCounts": {
+        "remains": 1024,
+        "impacts": 1024
+      },
+      "support": {
+        "queries": 490123,
+        "clear": 446953,
+        "contact": 25172,
+        "attached": 17998,
+        "invalid": 0
+      },
+      "actualAppearance": {
+        "activation": {
+          "state": "ready",
+          "error": null,
+          "sha256": "9940f5d75727b52d067cf1be2ce75e254f52e0b6670643bc28a308291969e009",
+          "characterIndex": null,
+          "characters": 36
+        },
+        "actors": {
+          "ready": true,
+          "hash": "9940f5d75727b52d067cf1be2ce75e254f52e0b6670643bc28a308291969e009"
+        },
+        "effects": {
+          "ready": true,
+          "hash": "9940f5d75727b52d067cf1be2ce75e254f52e0b6670643bc28a308291969e009"
+        }
+      },
+      "visibleSamples": [
+        {
+          "elapsed": 6.08,
+          "blood": true,
+          "remains": true,
+          "settled": 1529,
+          "moving": 354,
+          "marks": 68,
+          "bursts": 8,
+          "pending": 0
+        },
+        {
+          "elapsed": 8.12,
+          "blood": true,
+          "remains": true,
+          "settled": 1529,
+          "moving": 354,
+          "marks": 71,
+          "bursts": 8,
+          "pending": 0
+        }
+      ],
+      "invariantErrors": []
+    }
+  ],
+  "sources": {
+    "renderer.mjs": "277de38a0acded3da5b52f668bf77688478cdd420dcb603e8a7c9eeb855d2fc0",
+    "combat-presentation.mjs": "90ca6075002ae3bc8303aa5e3d26dbd523ca995d4e579ddc29a5ef4b16070611",
+    "combat-actors.mjs": "b1fcab3f836088ca0abfcef57ac7183e70988c2ea0717990b9d1bcaecc8b9086",
+    "combat-appearance.mjs": "36ea06b21fcf1b6670f11f709966554f74d610f72b89164e59e722ae743e0b93"
+  },
+  "harnessHashes": {
+    "overhaul-effects-workload.cjs": "389df2f3da73127c08a4dcf006d6d81c3f1aa7f00c378d7764f9432b26bf0258",
+    "overhaul-effects-workload.js": "6b1d9ca444c204aabff94ce49bd489a8974a0e41b056c33f463f1d6dd39c0f18",
+    "overhaul-gpu-probe.js": "4b34fce30f8bf3afb408dde375b85eaa6addc5ed952749ca6a2ce242410d8ccd"
+  },
+  "errors": []
+}

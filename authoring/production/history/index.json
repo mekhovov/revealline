@@ -20,6 +20,11 @@
       "path": "game/enemy-catalog.mjs",
       "bytes": 5837,
       "sha256": "95d6f3c7ff15f32892d1ef826238a7a7de2992c70c4c26b97cc29fb909efcd3a"
+    },
+    {
+      "path": "game/ui/music.mjs",
+      "bytes": 7050,
+      "sha256": "a1ecafd319417d075ec584d8b2f54008a8b877e49848e364bd91603896c44fda"
     }
   ]
 }

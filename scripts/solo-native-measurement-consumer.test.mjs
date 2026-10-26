@@ -1,3 +1,4 @@
+import { assertDeclaredOverheadTool } from './solo-overhead-declared-source.mjs';
 import { assertDeclaredReadinessTool } from './solo-readiness-rejoin-declared-source.mjs';
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
@@ -420,6 +421,7 @@ test('every plan reference is current or exactly witnessed and retained in each 
       ];
       for (const ref of refs) {
         assert(paths.includes(ref.path), lane + ': ' + ref.path);
+        if (await assertDeclaredOverheadTool(pathFor(lane, phase), ref)) continue;
         if (await assertDeclaredReadinessTool(pathFor(lane, phase), ref)) continue;
         const bytes = await read(ref.path);
         assert.equal(bytes.length, ref.bytes, ref.path);

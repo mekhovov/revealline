@@ -1,0 +1,149 @@
+{
+  "format": "IndependentAdditionalMainSourceColdAcceptanceFinal.v1",
+  "createdUTC": "2026-10-16T07:25:58.897109+00:00",
+  "repository": "mekhovov/revealline",
+  "acceptedScope": "203 additional captured main-app commits and four annotated tags, exact 815-object archive with reproduced captured shallow boundary",
+  "accepted": true,
+  "publicCheckpoint": "a3e9201d3b3075d1fe1a2336b1b0eaa974055db8",
+  "allFivePublishedInputsFullGitHubReadbackVerified": {
+    "captured-source-shallow-boundary.json": {
+      "gitBlob": "ce79d3b602db1092ec5c79751463a6d653e5c4a3",
+      "bytes": 2023,
+      "sha256": "8435776f9879171ed0735d9fec0dec34b98ea524bf84fd549130e8c98422879a"
+    },
+    "additional-main-source-bundle-allowlist.json": {
+      "gitBlob": "9f1cea1587d8376df72b4e9156f1d00be9272899",
+      "bytes": 1434379,
+      "sha256": "0ae8839cee1d03f3b4a1fdde9149e101facbd75cf448cb0243744bf2619c1062"
+    },
+    "additional-main-source-bundle-receipt.json": {
+      "gitBlob": "604d0e3c559752d931db3b27518084fc4f922db0",
+      "bytes": 749,
+      "sha256": "99c2c385471f24fc2436430245771ac7acf39355c09cffd93ca773dae1a588c0"
+    },
+    "additional-source-asset-full-readback.json": {
+      "gitBlob": "df83e7b9cc631467bd37f26817c5bc6d06d6be15",
+      "bytes": 344,
+      "sha256": "e7884404c2a65ef6789059e08b43773c9c1a48cb11a354301a3069638a8c72cb"
+    },
+    "README.md": {
+      "gitBlob": "bb5438911d6083f2568c9c7aed3889cc46f0b157",
+      "bytes": 1878,
+      "sha256": "d28b52ba55454332ba264e3753b8255861cbb9b404e77302fded6fd6ba968feb"
+    }
+  },
+  "nineAdditionalAlreadyPublicCheckpointParentsReadbackVerified": true,
+  "asset": {
+    "assetId": 646421685,
+    "bytes": 16420788,
+    "sha256": "d9e35b9a98f2e337fb1236d9a6e1857ad7fdb39c9dad2df6bf04203498913f4d",
+    "serverDigestAndSizeVerified": true,
+    "authenticatedFullStreamReadback": true,
+    "localPayloadCopyCreated": false,
+    "seconds": 50.74
+  },
+  "allowlistObjectCount": 815,
+  "types": {
+    "tree": 445,
+    "blob": 163,
+    "commit": 203,
+    "tag": 4
+  },
+  "all815ExactPackIDsAndRawObjectSHA1IndependentReadbacksPassed": true,
+  "rawObjectBytes": 37966616,
+  "ownerRawObjectReadbackManifestMatchedExactly": true,
+  "independentFiniteCredentialPatterns": [
+    "private-key",
+    "aws-access-key",
+    "github-token",
+    "slack-token",
+    "google-api-key",
+    "url-userinfo"
+  ],
+  "independentFiniteCredentialCandidates": 0,
+  "all203CommitIDsAndFourTagTargetsMatched": true,
+  "ownerColdAll203ReachabilityAndFsckReceiptReviewed": true,
+  "independentBulkHistoryOrFsckRerun": false,
+  "declaredGitHubPublicPrerequisites": 13537,
+  "originalAcceptedArchiveDependency": 646261949,
+  "noObjectAlternatesOrDirectorySymlinks": true,
+  "remoteInvalidAndLazyFetchDisabled": true,
+  "shallowSetExactlyPublicPrerequisitesPlusCapturedBoundary": true,
+  "capturedSourceShallowCommit": "91f3f76fe347fde44dd0ec6c854c272182423219",
+  "unmaterializedOriginalParentCommitSHAs": [
+    "81415edaf9efd6147f7d1bf41bb46cf5619dbdf8",
+    "54c7c38b0cfae74b6c520830095de3e794cb7f00"
+  ],
+  "fullPreBoundaryAncestryClaim": false,
+  "firstFsckNegativeRetained": {
+    "sha256": "18ba2e84ec5a2b225d852326e556e316b35b458c4ee1a2d09677cf3c1d31e6dd",
+    "bytes": 848970,
+    "returncode": 2,
+    "cause": "Two parents across recorded pre-existing source shallow boundary are not materialized. No causal data-loss claim."
+  },
+  "sourceSidecarGitBlob": "ce79d3b602db1092ec5c79751463a6d653e5c4a3",
+  "sourceSidecarSHA256": "8435776f9879171ed0735d9fec0dec34b98ea524bf84fd549130e8c98422879a",
+  "excludedRawPrivateObjectCount": 12,
+  "all12ForbiddenObjectsAbsent": true,
+  "recoveryHelpersReviewed": {
+    "verify-additional-main-source-GitHub-only.py": {
+      "sha256": "bcd314e2f8bd3537755f086df1f33f8b149ee127303ab15981dd07d7c8ce02ad",
+      "bytes": 6142
+    },
+    "resume-additional-main-source-cold-with-captured-boundary.py": {
+      "sha256": "1fb58c3688b4da50afae864323205aec3fe54034f0409bb9281316d3a795dcfe",
+      "bytes": 5712
+    }
+  },
+  "ownerColdReceiptSHA256": "dcaf818a927c42cccf3488315ffa21a194a50faaa51f2d06addbc4a1abe1a2ea",
+  "ownerColdReceiptPublished": true,
+  "original16ArchiveUnchanged": true,
+  "otherPrivateAppFamiliesOrOpaquePayloadCleared": false,
+  "sourceOrPlayerMutation": false,
+  "allVolumeComplete": false,
+  "qualification": "Source-byte and captured shallow-state recovery only. Sparse public prerequisites require ordinary GitHub access for omitted public history/bodies. Two pre-boundary parent commits remain unavailable. Existing original16 acceptance is separate; no feature/player/native/full-volume qualification.",
+  "ownerColdProofPublicCommit": "854d9dbcbba2ad13f92db7cf671c7fe418462237",
+  "ownerColdProofAllSixGitHubFullBodiesReadbackVerified": [
+    {
+      "path": "docs/preservation/fpv-source-audit-20261016/expanded-main-source-checkpoint/GitHub-only-additional-main-source-cold-restore-receipt.json",
+      "gitBlob": "8d6e54aeb046fc4c2b4d377438cc77dae6f24aaa",
+      "bytes": 1981,
+      "sha256": "dcaf818a927c42cccf3488315ffa21a194a50faaa51f2d06addbc4a1abe1a2ea"
+    },
+    {
+      "path": "docs/preservation/fpv-source-audit-20261016/expanded-main-source-checkpoint/GitHub-only-restored-new-source-object-hashes.json",
+      "gitBlob": "2054e0f3144d7123158f1c9e0a4a779f5f97fc0a",
+      "bytes": 153350,
+      "sha256": "cfc1bcfcd4cc4a2ddb99299cee39c85af0c72637b5deecd97ef4ad0d0581eaf1"
+    },
+    {
+      "path": "docs/preservation/fpv-source-audit-20261016/expanded-main-source-checkpoint/README.md",
+      "gitBlob": "3cdc328cbebfd956614231c5259b7b1e279fe262",
+      "bytes": 3764,
+      "sha256": "203dcc844bad25eb9df41473828a9938b541a589c95cb3b67173faf5e750a658"
+    },
+    {
+      "path": "docs/preservation/fpv-source-audit-20261016/expanded-main-source-checkpoint/additional-source-cold-attempt1-fsck-negative.json",
+      "gitBlob": "5705d80bbeb9915953df0770de38c09b99f63bef",
+      "bytes": 848970,
+      "sha256": "18ba2e84ec5a2b225d852326e556e316b35b458c4ee1a2d09677cf3c1d31e6dd"
+    },
+    {
+      "path": "docs/preservation/fpv-source-audit-20261016/expanded-main-source-checkpoint/retained-first-cold-attempt-helper.py",
+      "gitBlob": "721e08a3efde4697ffa44362f47cf133d4939610",
+      "bytes": 6142,
+      "sha256": "bcd314e2f8bd3537755f086df1f33f8b149ee127303ab15981dd07d7c8ce02ad"
+    },
+    {
+      "path": "docs/preservation/fpv-source-audit-20261016/expanded-main-source-checkpoint/successful-captured-boundary-recovery-helper.py",
+      "gitBlob": "aa597a5dc1b52c49efa7cf52c0712873901949f7",
+      "bytes": 5712,
+      "sha256": "1fb58c3688b4da50afae864323205aec3fe54034f0409bb9281316d3a795dcfe"
+    }
+  ],
+  "ownerNormalSingleParentPublicationVerified": true,
+  "boundedNewGraphSupplementSHA256": "d7c7c94da4691f42dbcb28cd3000d60d9e25c45f3db3f460a47798c87b2d9b4c",
+  "actualRecoveredHeadParentsExactlyDeclaredOriginalHeadPlus88Tips": true,
+  "all203AdditionalCommitIDsReachableWithinNewGraph": true,
+  "initialIndependentAcceptanceSHA256": "909f07d6926133d6562efa8511543a3646054f59e92196bcf9ff43828d349fe5"
+}

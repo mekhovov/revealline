@@ -154,7 +154,7 @@ test('worker handler production comparison returns bounded results and reports u
   await handler.receive({ id: 'real-job', type: 'compare', request: request() });
   const result = messages.at(-1).result;
   assert.equal(result.format, 'FpvResponseBench.v1');
-  assert.equal(result.baseline.metrics.sampleCount, 1500);
+  assert.equal(result.baseline.metrics.sampleCount, 3000);
   assert.equal(result.baseline.trace.length, 150);
   handler.dispose();
   const badMessages = [],

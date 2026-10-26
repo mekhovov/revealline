@@ -1,7 +1,7 @@
 {
   "format": "revealline-source-art-derivatives.v1",
   "purpose": "Review previews only; original PNGs remain the future compiler inputs.",
-  "originalManifestSha256": "27f31bdaa91db438066107e221ed77f16ad5325873b1512566edb7881475e6b1",
+  "originalManifestSha256": "c563bcdbcd0503081f24aa451437540b67ceabd545b4edb05b3256d0ccd75543",
   "recipe": {
     "renderer": "@napi-rs/canvas",
     "moduleSha256": "bbdad32cab670261983ea56d4625fc7d07b1382f8bb7d6d31232bb2834861597",
@@ -123,5 +123,10 @@
       "sha256": "ec0944d7cb367c03a9d65afb1b917441a960bcc79ca2ae0ca518437c9db0b7a7",
       "decodedRGBASha256": "2d43a87994ece065d404eea710ca8f5364394feb4843e054b2dbde9b5d9e0db7"
     }
-  ]
+  ],
+  "ownershipProjection": {
+    "previousSHA256": "4b09c8ec6e7f52d79d40db0fea3723eb6b8a31ed79f8ee4e94a08207bc95a827",
+    "previousManifestSHA256": "27f31bdaa91db438066107e221ed77f16ad5325873b1512566edb7881475e6b1",
+    "scope": "Retained source selection; unchanged JPEG originals, new manifest identity."
+  }
 }

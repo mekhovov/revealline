@@ -1,6 +1,9 @@
 import { validateNativeIndustrialCourses } from './industrial-environment.mjs';
 import { WORLD_SURFACE_COATING_EXTENSION, validateWorldSurfaceCoatings } from './world-themes.mjs';
 import { assertCriterionAnchorTranslation, compileContentProject } from './content-definitions.mjs';
+import { dataIdentity } from '../../game/data-json.mjs';
+import { validateWorldCourse } from './world-model.mjs';
+import { createWorldCollision, initWorldRuntime } from './world-collision.mjs';
 /** Browser/Node boundary for user-owned FPV worlds. No network or renderer dependencies. */
 export const WORLD_PROJECT_FORMAT = 'FPVWorldProject.v1';
 export const WORLD_PACK_FORMAT = 'FPVWorldPack.v2';
@@ -872,6 +875,202 @@ export async function inspectImport({
   };
 }
 
+export const WORLD_ROUTE_GUIDES_FORMAT = 'FPVRouteGuides.v1';
+const routeAxes = ['x', 'y', 'z'];
+const routeModes = ['self-level', 'acro'];
+const routeKeys = (value, keys, label) =>
+  assert(
+    value &&
+      !Array.isArray(value) &&
+      Object.keys(value).sort().join('/') === [...keys].sort().join('/'),
+    `Invalid ${label} fields.`,
+  );
+export const routeObjectiveSignature = (criterion) => dataIdentity(criterion);
+
+/** Optional presentation data stays outside the deterministic course identity.
+ * A guide is an authored approach, not proof that a pilot completed its objective. */
+export function validateWorldRouteGuides(input, source) {
+  const course = validateWorldCourse(source),
+    bundle = safeJSON(input);
+  routeKeys(bundle, ['format', 'courseId', 'routes'], 'route guide');
+  assert(
+    bundle.format === WORLD_ROUTE_GUIDES_FORMAT && bundle.courseId === course.id,
+    'Route guides belong to an exact course ID.',
+  );
+  assert(
+    Array.isArray(bundle.routes) && bundle.routes.length <= 32,
+    'At most 32 route guides are supported.',
+  );
+  const ids = new Set(),
+    objectives = new Set();
+  let points = 0;
+  for (const route of bundle.routes) {
+    routeKeys(
+      route,
+      ['id', 'mode', 'objectiveIndex', 'objectiveSignature', 'clearanceMm', 'waypoints'],
+      'route',
+    );
+    assert(validId(route.id) && !ids.has(route.id), 'Route IDs must be unique and stable.');
+    ids.add(route.id);
+    assert(
+      routeModes.includes(route.mode) && integer(route.objectiveIndex, 127),
+      'Invalid route objective.',
+    );
+    const step = course.steps[route.mode][route.objectiveIndex],
+      key = `${route.mode}:${route.objectiveIndex}`;
+    assert(step && !objectives.has(key), 'Only one route may guide each objective.');
+    objectives.add(key);
+    assert(
+      route.objectiveSignature === routeObjectiveSignature(step),
+      'Route objective changed. Review and rebind the route.',
+    );
+    assert(
+      ['hold', 'land', 'gate', 'crossing-v1'].includes(step.type),
+      'This objective has no supported static approach route.',
+    );
+    assert(
+      Number.isSafeInteger(route.clearanceMm) &&
+        route.clearanceMm >= course.rules.droneRadius &&
+        route.clearanceMm <= 2000,
+      'Route clearance must cover the aircraft radius and be at most 2 m.',
+    );
+    assert(
+      Array.isArray(route.waypoints) &&
+        route.waypoints.length >= 2 &&
+        route.waypoints.length <= 64 &&
+        (points += route.waypoints.length) <= 256,
+      'Routes need 2–64 waypoints and at most 256 waypoints per course.',
+    );
+    const waypointIds = new Set(),
+      radius = route.clearanceMm;
+    for (const point of route.waypoints) {
+      routeKeys(point, ['id', 'position'], 'waypoint');
+      routeKeys(point.position, routeAxes, 'waypoint position');
+      assert(
+        validId(point.id) && !waypointIds.has(point.id),
+        'Waypoint IDs must be unique and stable.',
+      );
+      waypointIds.add(point.id);
+      assert(
+        routeAxes.every(
+          (axis) =>
+            Number.isSafeInteger(point.position[axis]) &&
+            point.position[axis] >= course.bounds.min[axis] + (axis === 'y' ? 0 : radius) &&
+            point.position[axis] <= course.bounds.max[axis] - (axis === 'y' ? 2 * radius : radius),
+        ),
+        'Waypoint clearance leaves the course bounds.',
+      );
+    }
+    for (let i = 1; i < route.waypoints.length; i++) {
+      const before = route.waypoints[i - 1].position,
+        after = route.waypoints[i].position;
+      assert(
+        Math.hypot(...routeAxes.map((axis) => after[axis] - before[axis])) >= 100,
+        'Consecutive waypoints must be at least 0.1 m apart.',
+      );
+    }
+    const end = route.waypoints.at(-1).position,
+      before = route.waypoints.at(-2).position;
+    if (step.type === 'gate' || step.type === 'crossing-v1') {
+      const axis = step.axis,
+        distance = end[axis] - before[axis];
+      assert(
+        (before[axis] - step.at) * step.direction < 0 &&
+          (end[axis] - step.at) * step.direction > 0 &&
+          distance * step.direction > 0,
+        'The final route segment must cross the objective in its required direction.',
+      );
+      const t = (step.at - before[axis]) / distance,
+        crossing = Object.fromEntries(
+          routeAxes.map((k) => [k, before[k] + (end[k] - before[k]) * t]),
+        ),
+        spans =
+          step.type === 'gate'
+            ? [
+                [axis === 'x' ? 'z' : 'x', step.minSide, step.maxSide],
+                ['y', step.minY, step.maxY],
+              ]
+            : routeAxes
+                .filter((k) => k !== axis)
+                .map((k, i) => [k, step[i ? 'minB' : 'minA'], step[i ? 'maxB' : 'maxA']]);
+      assert(
+        spans.every(
+          ([k, lo, hi]) =>
+            crossing[k] >= lo + (k === 'y' ? 0 : radius) &&
+            crossing[k] <= hi - (k === 'y' ? 2 * radius : radius),
+        ),
+        'Route crossing must fit inside the objective opening with clearance.',
+      );
+    } else
+      assert(
+        routeAxes.every((axis) => end[axis] >= step.min[axis] && end[axis] <= step.max[axis]),
+        'The route must end inside its objective volume.',
+      );
+  }
+  return bundle;
+}
+
+/** Exact static geometry admission is deliberately asynchronous and performed
+ * once before preview/play, never in a frame callback. Moving actors remain hazards. */
+export async function admitWorldRouteGuides(input, source) {
+  const course = validateWorldCourse(source),
+    bundle = validateWorldRouteGuides(input, course);
+  if (!bundle.routes.length) return bundle;
+  await initWorldRuntime();
+  const collision = createWorldCollision(course);
+  try {
+    for (const route of bundle.routes) {
+      const radius = route.clearanceMm,
+        objective = course.steps[route.mode][route.objectiveIndex];
+      for (const point of route.waypoints)
+        assert(
+          collision.clearSpawn(point.position, radius),
+          `Waypoint ${point.id} lacks obstacle clearance.`,
+        );
+      for (let i = 1; i < route.waypoints.length; i++) {
+        const from = route.waypoints[i - 1].position,
+          to = route.waypoints[i].position,
+          hit = collision.castStatic(
+            { ...from, y: from.y + radius },
+            Object.fromEntries(routeAxes.map((axis) => [axis, to[axis] - from[axis]])),
+            radius,
+          );
+        assert(
+          !hit ||
+            (hit.id === (objective.surface ?? '$floor') &&
+              hit.toi >= 0.999999 &&
+              i === route.waypoints.length - 1 &&
+              objective.type === 'land'),
+          `Route ${route.id} crosses an obstacle between ${route.waypoints[i - 1].id} and ${route.waypoints[i].id}.`,
+        );
+      }
+    }
+    return bundle;
+  } finally {
+    collision.dispose();
+  }
+}
+
+/** Selection is pure; hosts pass only bundles admitted for the current geometry. */
+export function selectWorldRouteGuide(bundle, { mode, step, aircraftRadiusMm = 0 } = {}) {
+  return (
+    bundle?.routes.find(
+      (route) =>
+        route.mode === mode &&
+        route.objectiveIndex === step &&
+        route.clearanceMm >= aircraftRadiusMm,
+    ) ?? null
+  );
+}
+
+async function admitProjectRouteGuides(project) {
+  for (const bundle of project.routeGuides ?? [])
+    await admitWorldRouteGuides(
+      bundle,
+      project.courses.find((course) => course.id === bundle.courseId),
+    );
+}
+
 function records(value, label, max = WORLD_LIMITS.courses) {
   assert(Array.isArray(value) && value.length <= max, `${label} count budget exceeded.`);
   const ids = new Set();
@@ -894,6 +1093,22 @@ export function resolveProject(input) {
   for (const field of ['courses', 'themes', 'campaigns', 'playlists'])
     p[field] = records(p[field] ?? [], field);
   if (p.definitions) p.courses = compileContentProject(p.definitions).map((entry) => entry.course);
+  if (p.routeGuides !== undefined) {
+    assert(
+      Array.isArray(p.routeGuides) && p.routeGuides.length <= WORLD_LIMITS.courses,
+      'Route guide course count exceeds budget.',
+    );
+    const guidedCourses = new Set();
+    p.routeGuides = p.routeGuides.map((bundle) => {
+      const course = p.courses.find((item) => item.id === bundle?.courseId);
+      assert(
+        course && !guidedCourses.has(course.id),
+        'Route guides require a unique existing course.',
+      );
+      guidedCourses.add(course.id);
+      return validateWorldRouteGuides(bundle, course);
+    });
+  }
   const courses = new Set(p.courses.map((c) => c.id));
   for (const list of [...p.campaigns, ...p.playlists])
     for (const id of list.courseIds ?? []) assert(courses.has(id), `Missing course ${id}.`);
@@ -973,6 +1188,7 @@ export function compilePlayable(input) {
       colliders: p.source.colliders.map(apply).filter(Boolean),
     },
     courses: p.courses,
+    ...(p.routeGuides ? { routeGuides: p.routeGuides } : {}),
     themes: p.themes,
     campaigns: p.campaigns,
     playlists: p.playlists,
@@ -1198,6 +1414,20 @@ export function previewReimport(input, imported, { createCourse, createCollider,
         id: change.id,
         message: `${change.id}: new route marker is available; existing route order is retained.`,
       });
+  for (const bundle of next.routeGuides ?? []) {
+    try {
+      validateWorldRouteGuides(
+        bundle,
+        next.courses.find((course) => course.id === bundle.courseId),
+      );
+    } catch (error) {
+      note(
+        'route-guide-review',
+        bundle.courseId,
+        `${bundle.courseId}: authored guide retained for review; ${error.message}`,
+      );
+    }
+  }
   return result;
 }
 export function resolveExperience(input, { courseId, themeId, playlistId, campaignId } = {}) {
@@ -1220,6 +1450,7 @@ export async function preparePack(input, { assets = new Map() } = {}) {
     map = await fileMap(assets, WORLD_LIMITS.packBytes),
     entries = [];
   await validateNativeIndustrialCourses(project.courses);
+  await admitProjectRouteGuides(project);
   for (const [path, bytes] of [...map].sort(([a], [b]) => a.localeCompare(b)))
     entries.push({ path, bytes: bytes.length, sha256: await worldSHA256(bytes) });
   if (project.world.modelAsset)
@@ -1251,6 +1482,7 @@ export async function inspectPack(value) {
   assert(manifest.format === WORLD_PACK_FORMAT, 'Unsupported FPV pack format.');
   const project = resolveProject(manifest.project);
   await validateNativeIndustrialCourses(project.courses);
+  await admitProjectRouteGuides(project);
   assert(
     Array.isArray(manifest.assets) && manifest.assets.length <= WORLD_LIMITS.files,
     'Invalid asset list.',
