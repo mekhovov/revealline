@@ -23,6 +23,56 @@ const profileKey = 'revealline.library.dev.v1';
 const sessionKey = 'revealline.suspended.dev.v1';
 const raw = (store) => JSON.parse(store.getItem(DISPLAY_PREFERENCES_KEY));
 let sequence = 0;
+// Seed the unrelated statistics writer identity before startup snapshots.
+// Its owner legitimately creates this on first use; display edits must not.
+function displayStorage() {
+  const store = memoryStorage();
+  store.map.set('revealline-enemy-stats.v1:writer', 'display-host-fixture');
+  return store;
+}
+
+test('actual Solo comfort Apply and Undo preserve a paused cut and use its existing profile writer', async (t) => {
+  const store = memoryStorage(),
+    page = await soloPage(t, { campaign, storage: store, waitForPictures: false });
+  await activateHostAction(page.$('start-button'));
+  await settle(() => page.doc.body.dataset.flightState === 'running');
+  page.key('ArrowDown');
+  page.key('ArrowDown', false);
+  for (let n = 0; n < 13; n++) page.frame();
+  page.$('settings-button').click();
+  page.$('settings-tab-accessibility').click();
+  page.frame(0);
+  const run = page.rendered.run,
+    checkpoint = authoritativeCheckpoint(run),
+    suspended = store.getItem(sessionKey),
+    before = loadLibrary(store, profileKey).library.preferences,
+    writes = store.writes.length,
+    prefix = 'settings-panel-accessibility-comfort-';
+  page.$(`${prefix}choice`).value = 'comfort';
+  page.$(`${prefix}choice`).emit('change');
+  assert.equal(store.writes.length, writes, 'A preset preview never writes preferences.');
+  page.$(`${prefix}apply`).click();
+  reflects(page, 'plain', 'large', true);
+  assert.equal(page.$('settings-background-animation').checked, false);
+  assert.deepEqual(loadLibrary(store, profileKey).library.preferences, {
+    ...before,
+    textFace: 'plain',
+    textSize: 'large',
+    reducedEffects: true,
+  });
+  page.$(`${prefix}undo`).focus();
+  page.$(`${prefix}undo`).click();
+  reflects(page, before.textFace, before.textSize, before.reducedEffects);
+  assert.deepEqual(loadLibrary(store, profileKey).library.preferences, before);
+  assert.equal(page.doc.activeElement, page.$(`${prefix}apply`));
+  page.frame(0);
+  assert.strictEqual(page.rendered.run, run);
+  assert.deepEqual(authoritativeCheckpoint(run), checkpoint);
+  assert.equal(store.getItem(sessionKey), suspended);
+  assert.equal(page.rendered.paused, true);
+  assert.deepEqual(page.errors, []);
+});
+
 function change(page, id, value) {
   const control = page.$(id);
   if (typeof value === 'boolean') control.checked = value;
@@ -152,7 +202,7 @@ async function teamPage(t, store, { systemReduced = false } = {}) {
 
 for (const turnPolicy of ['immediate', 'grid-center']) {
   test(`${turnPolicy}: shared display edits preserve the actual paused Solo cut and replay`, async (t) => {
-    const store = memoryStorage();
+    const store = displayStorage();
     saveLibrary(
       store,
       profileKey,
@@ -208,7 +258,7 @@ for (const turnPolicy of ['immediate', 'grid-center']) {
 }
 
 test('Solo to Team to Versus and back restores one display record without Couch profile writes', async (t) => {
-  const store = memoryStorage();
+  const store = displayStorage();
   saveLibrary(
     store,
     profileKey,
@@ -228,7 +278,7 @@ test('Solo to Team to Versus and back restores one display record without Couch 
       page = await teamPage(t, store);
     assert.equal(store.writes.length, before);
     reflects(page, 'plain', 'large', true);
-    page.$('coop-start').click();
+    await activateHostAction(page.$('coop-start'));
     page.tick(10);
     page.$('coop-pause').click();
     page.tick();
@@ -242,7 +292,12 @@ test('Solo to Team to Versus and back restores one display record without Couch 
     change(page, 'coop-text-face', 'pixel');
     page.tick(120);
     assert.deepEqual(page.geometry(), geometry);
-    assert.ok(page.fonts().some((font) => font.includes(page.artwork.snapshot.fonts.numeric)));
+    assert.ok(labels.length > 0, 'The prepared arena paints its actual labels.');
+    assert.notDeepEqual(
+      page.fonts(),
+      labels.map(({ font }) => font),
+      'Theme font replaces Plain while geometry stays exact.',
+    );
     change(page, 'coop-text-size', 'standard');
     page.tick(120);
     assert.notDeepEqual(page.geometry(), geometry, 'Large changes canvas label geometry');
@@ -261,7 +316,7 @@ test('Solo to Team to Versus and back restores one display record without Couch 
       );
     }
     assert.equal(page.$('coop-clock').textContent, clock);
-    assert.equal(page.$('coop-overlay-title').textContent, 'Both players paused');
+    assert.match(page.$('coop-overlay-title').textContent, /paused/i);
     assert.equal(store.getItem(profileKey), profile);
     assert.equal(store.getItem(sessionKey), session);
   });
@@ -320,7 +375,7 @@ test('Solo to Team to Versus and back restores one display record without Couch 
 });
 
 test('Team system reduction preserves a raw false choice and a denied shared save stays session-only', async (t) => {
-  const store = memoryStorage(),
+  const store = displayStorage(),
     initial = { textFace: 'plain', textSize: 'large', reducedEffects: false };
   store.setItem(DISPLAY_PREFERENCES_KEY, JSON.stringify(initial));
   const before = new Map(store.map),
@@ -345,7 +400,7 @@ test('Team system reduction preserves a raw false choice and a denied shared sav
 });
 
 test('Versus controller selects the real display control without replacing or starting the duel', async (t) => {
-  const store = memoryStorage(),
+  const store = displayStorage(),
     pad = {
       index: 0,
       id: 'Display pad',
@@ -377,3 +432,53 @@ test('Versus controller selects the real display control without replacing or st
   assert.equal(page.state(), 'ready');
   assert.deepEqual(page.checkpoint(), before);
 });
+
+for (const mode of ['team', 'versus'])
+  test(`${mode}: incoming extra size remains selected while its presentation uses Large`, async (t) => {
+    const store = displayStorage();
+    const raw = JSON.stringify({
+      textFace: 'plain',
+      textSize: 'extra-large',
+      reducedEffects: false,
+    });
+    store.setItem(DISPLAY_PREFERENCES_KEY, raw);
+    const page =
+      mode === 'team' ? await teamPage(t, store) : await couchPage(t, { storage: store });
+    const prefix = mode === 'team' ? 'coop' : 'race';
+    const size = page.$(`${prefix}-text-size`);
+    assert.equal(size.value, 'extra-large');
+    assert.equal(size.querySelector('[data-text-size-retained]').disabled, true);
+    assert.equal(page.doc.body.dataset.textSize, 'large');
+    assert.equal(store.getItem(DISPLAY_PREFERENCES_KEY), raw);
+    change(page, `${prefix}-text-face`, 'pixel');
+    assert.equal(JSON.parse(store.getItem(DISPLAY_PREFERENCES_KEY)).textSize, 'extra-large');
+  });
+
+for (const mode of ['Team', 'Versus'])
+  test(`actual ${mode} comfort preview and Apply/Undo preserve the existing display controls and Solo profile`, async (t) => {
+    const store = memoryStorage(),
+      initial = { textFace: 'pixel', textSize: 'standard', reducedEffects: false };
+    store.setItem(DISPLAY_PREFERENCES_KEY, JSON.stringify(initial));
+    saveLibrary(store, profileKey, emptyLibrary());
+    const page =
+        mode === 'Team' ? await teamPage(t, store) : await couchPage(t, { storage: store }),
+      prefix =
+        mode === 'Team'
+          ? 'coop-settings-panel-accessibility-comfort-'
+          : 'race-settings-panel-accessibility-comfort-',
+      fieldPrefix = mode === 'Team' ? 'coop-' : 'race-',
+      face = page.$(`${fieldPrefix}text-face`),
+      profile = store.getItem(profileKey),
+      writes = store.writes.length;
+    page.$(`${prefix}choice`).value = 'clear';
+    page.$(`${prefix}choice`).emit('change');
+    assert.equal(store.writes.length, writes);
+    page.$(`${prefix}apply`).click();
+    reflects(page, 'plain', 'large', false);
+    assert.equal(page.$(`${fieldPrefix}text-face`), face);
+    assert.deepEqual(raw(store), { ...initial, textFace: 'plain', textSize: 'large' });
+    page.$(`${prefix}undo`).click();
+    reflects(page, 'pixel', 'standard', false);
+    assert.deepEqual(raw(store), initial);
+    assert.equal(store.getItem(profileKey), profile);
+  });

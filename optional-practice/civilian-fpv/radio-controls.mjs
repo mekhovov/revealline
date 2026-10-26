@@ -1,4 +1,4 @@
-import { STICK_LAYOUTS } from './radio-profile.mjs';
+import { STICK_LAYOUTS, radioDeviceIdentity, radioSwitch } from './radio-profile.mjs';
 
 export function radioControlLabel(control, mode = 2, locale = 'en') {
   const uk = locale === 'uk';
@@ -152,6 +152,151 @@ export function createRadioSwitchCapture({ flightAxes = [], holdMs = 160 } = {})
         since = null;
       }
       return { state, binding: candidate, before: baseline, after: candidateValues };
+    },
+  };
+}
+
+/** Uncalibrated discovery owns no flight axes. Two movement/rest cycles nominate
+ * one exact device, then two complete cycles verify Select and Back separately. */
+export function createRadioBootstrap({ timeoutMs = 20000 } = {}) {
+  let phase = 'nominate',
+    candidate = null,
+    stageAt = null,
+    activeAt = null,
+    restingAt = null,
+    cycles = 0,
+    detector = null,
+    firstBinding = null,
+    bindings = {},
+    error = null,
+    previousTime = null;
+  const baselines = new Map();
+  const identity = (pad) => JSON.stringify(radioDeviceIdentity(pad));
+  const values = (pad) => ({
+    axes: [...pad.axes],
+    buttons: pad.buttons.map((button) => button.value ?? button),
+  });
+  const changed = (a, b, threshold) =>
+    a.axes.length !== b.axes.length ||
+    a.buttons.length !== b.buttons.length ||
+    a.axes.some((value, i) => Math.abs(value - b.axes[i]) > threshold) ||
+    a.buttons.some((value, i) => Math.abs(value - b.buttons[i]) > threshold);
+  const snapshot = () => ({
+    phase,
+    cycles,
+    error,
+    device: candidate ? structuredClone(candidate.device) : null,
+    index: candidate?.index ?? null,
+    switches: structuredClone(bindings),
+  });
+  function reset(reason = null) {
+    phase = 'nominate';
+    candidate = detector = firstBinding = null;
+    stageAt = activeAt = restingAt = null;
+    cycles = 0;
+    bindings = {};
+    baselines.clear();
+    error = reason;
+  }
+  return {
+    reset,
+    snapshot,
+    sample(pads, now) {
+      if (!Number.isFinite(now)) return snapshot();
+      if (previousTime !== null && (now < previousTime || now - previousTime > 500))
+        reset('interrupted');
+      previousTime = now;
+      if (phase === 'done') return snapshot();
+      const valid = [];
+      for (const pad of (pads ?? []).slice(0, 16)) {
+        try {
+          if (pad?.connected === false) continue;
+          const device = radioDeviceIdentity(pad),
+            key = `${pad.index}:${identity(pad)}`,
+            current = values(pad);
+          if (
+            !current.axes.every((v) => Number.isFinite(v) && v >= -1 && v <= 1) ||
+            !current.buttons.every((v) => Number.isFinite(v) && v >= 0 && v <= 1)
+          )
+            continue;
+          valid.push({ pad, device, key, current });
+          if (!baselines.has(key)) baselines.set(key, { current, at: now });
+        } catch {
+          /* Invalid USB reports cannot nominate a radio. */
+        }
+      }
+      if (candidate && !valid.some(({ key }) => key === candidate.key)) {
+        reset('device-lost');
+        return snapshot();
+      }
+      const moved = valid.filter(({ key, current }) => {
+        const base = baselines.get(key);
+        return now - base.at >= 250 && changed(base.current, current, 0.35);
+      });
+      if (moved.length > 1 || (candidate && moved.some(({ key }) => key !== candidate.key))) {
+        reset('multiple-devices');
+        return snapshot();
+      }
+      if (stageAt !== null && now - stageAt > timeoutMs) {
+        reset('timed-out');
+        return snapshot();
+      }
+      if (phase === 'nominate') {
+        if (!candidate && moved.length === 1) {
+          const match = moved[0];
+          candidate = { index: match.pad.index, device: match.device, key: match.key };
+          stageAt = now;
+          error = null;
+        }
+        if (!candidate) return snapshot();
+        const current = valid.find(({ key }) => key === candidate.key).current;
+        const away = changed(baselines.get(candidate.key).current, current, 0.12);
+        if (away) {
+          restingAt = null;
+          if (activeAt === null) activeAt = now;
+        } else if (activeAt !== null) {
+          if (now - activeAt < 180) activeAt = null;
+          else if (restingAt === null) restingAt = now;
+          else if (now - restingAt >= 200) {
+            cycles++;
+            activeAt = restingAt = null;
+            if (cycles === 2) {
+              phase = 'confirm';
+              cycles = 0;
+              stageAt = now;
+              detector = createRadioSwitchCapture({ holdMs: 180 });
+            }
+          }
+        }
+        return snapshot();
+      }
+      const pad = valid.find(({ key }) => key === candidate.key).pad,
+        result = detector.sample(pad, now);
+      if (result.state !== 'done') return snapshot();
+      if (
+        phase === 'back' &&
+        radioSwitch({ switches: { fire: bindings.fire } }, result.before, 'fire') !==
+          radioSwitch({ switches: { fire: bindings.fire } }, result.after, 'fire')
+      ) {
+        reset('switch-conflict');
+        return snapshot();
+      }
+      if (firstBinding && JSON.stringify(firstBinding) !== JSON.stringify(result.binding)) {
+        reset('different-switch');
+        return snapshot();
+      }
+      firstBinding = result.binding;
+      cycles++;
+      if (cycles < 2) detector = createRadioSwitchCapture({ holdMs: 180 });
+      else {
+        bindings[phase === 'confirm' ? 'fire' : 'weapon'] = firstBinding;
+        firstBinding = null;
+        cycles = 0;
+        phase = phase === 'confirm' ? 'back' : 'done';
+        stageAt = now;
+        detector = phase === 'done' ? null : createRadioSwitchCapture({ holdMs: 180 });
+      }
+      return snapshot();
     },
   };
 }

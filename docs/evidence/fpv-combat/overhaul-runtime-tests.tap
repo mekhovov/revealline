@@ -1,0 +1,791 @@
+TAP version 13
+# Subtest: combat archive export remains live, finishes atomically and replays the accepted command chain
+ok 1 - combat archive export remains live, finishes atomically and replays the accepted command chain
+  ---
+  duration_ms: 3656.895209
+  ...
+# Subtest: combat archives preserve complete playback after the bounded live recording has rolled
+ok 2 - combat archives preserve complete playback after the bounded live recording has rolled
+  ---
+  duration_ms: 17500.113959
+  ...
+# Subtest: combat archive stops with an explicit gap after restore and never claims the replacement chain
+ok 3 - combat archive stops with an explicit gap after restore and never claims the replacement chain
+  ---
+  duration_ms: 211.731708
+  ...
+# Subtest: combat archive quota failure preserves the durable prefix and leaves flight available
+ok 4 - combat archive quota failure preserves the durable prefix and leaves flight available
+  ---
+  duration_ms: 170.350125
+  ...
+# Subtest: combat archive command tampering is rejected even with recomputed transport checksums
+ok 5 - combat archive command tampering is rejected even with recomputed transport checksums
+  ---
+  duration_ms: 350.998042
+  ...
+# Subtest: archive finish and disposal wait for an in-flight export and persist only one final boundary
+ok 6 - archive finish and disposal wait for an in-flight export and persist only one final boundary
+  ---
+  duration_ms: 27.046625
+  ...
+# Subtest: native-standard migrates only old v2 absent-slot bookkeeping while preserving replay and rejecting active caught actors
+ok 7 - native-standard migrates only old v2 absent-slot bookkeeping while preserving replay and rejecting active caught actors
+  ---
+  duration_ms: 693.945791
+  ...
+# Subtest: native-advanced migrates only old v2 absent-slot bookkeeping while preserving replay and rejecting active caught actors
+ok 8 - native-advanced migrates only old v2 absent-slot bookkeeping while preserving replay and rejecting active caught actors
+  ---
+  duration_ms: 927.812625
+  ...
+# Subtest: native-advanced replays accepted combat commands against the exact physical world
+ok 9 - native-advanced replays accepted combat commands against the exact physical world
+  ---
+  duration_ms: 186.444417
+  ...
+# Subtest: regional-standard replays accepted combat commands against the exact physical world
+ok 10 - regional-standard replays accepted combat commands against the exact physical world
+  ---
+  duration_ms: 97.607834
+  ...
+# Subtest: regional-advanced replays accepted combat commands against the exact physical world
+ok 11 - regional-advanced replays accepted combat commands against the exact physical world
+  ---
+  duration_ms: 637.699666
+  ...
+# Subtest: Advanced regional replay tolerates rejected transport sequence gaps while checking accepted dynamics
+ok 12 - Advanced regional replay tolerates rejected transport sequence gaps while checking accepted dynamics
+  ---
+  duration_ms: 485.566375
+  ...
+# Subtest: old v2 definitions without the crowd revision replay through the legacy rule dispatch
+ok 13 - old v2 definitions without the crowd revision replay through the legacy rule dispatch
+  ---
+  duration_ms: 43.534167
+  ...
+# Subtest: Regional reference imports a rolled unscored encounter checkpoint and re-admits its exact terrain window
+ok 14 - Regional reference imports a rolled unscored encounter checkpoint and re-admits its exact terrain window
+  ---
+  duration_ms: 11470.431959
+  ...
+# Subtest: aircraft encounter wrapper advances accepted substeps and restores paired gameplay/physics recovery
+ok 15 - aircraft encounter wrapper advances accepted substeps and restores paired gameplay/physics recovery
+  ---
+  duration_ms: 339.294
+  ...
+# Subtest: native Standard reserved combat slots recover without course caught state
+ok 16 - native Standard reserved combat slots recover without course caught state
+  ---
+  duration_ms: 2.177208
+  ...
+# Subtest: native Advanced reserved combat slots recover without course caught state
+ok 17 - native Advanced reserved combat slots recover without course caught state
+  ---
+  duration_ms: 38.87625
+  ...
+# Subtest: ordinary course checkpoints still reject caught actors outside contact hunting
+ok 18 - ordinary course checkpoints still reject caught actors outside contact hunting
+  ---
+  duration_ms: 0.81875
+  ...
+# Subtest: aircraft encounter pool relocates replacements disabled before activating at the accepted spawn
+ok 19 - aircraft encounter pool relocates replacements disabled before activating at the accepted spawn
+  ---
+  duration_ms: 12.908417
+  ...
+# Subtest: Regional reference combat pool relocates safely and exposes accepted integer traces
+ok 20 - Regional reference combat pool relocates safely and exposes accepted integer traces
+  ---
+  duration_ms: 195.073125
+  ...
+# Subtest: Regional aircraft combat pool relocates safely and exposes accepted integer traces
+ok 21 - Regional aircraft combat pool relocates safely and exposes accepted integer traces
+  ---
+  duration_ms: 371.149959
+  ...
+# Subtest: Regional reference wrapper cancels rejected intervals and restores paired recovery
+ok 22 - Regional reference wrapper cancels rejected intervals and restores paired recovery
+  ---
+  duration_ms: 343.778667
+  ...
+# Subtest: Regional aircraft wrapper cancels rejected intervals and restores paired recovery
+ok 23 - Regional aircraft wrapper cancels rejected intervals and restores paired recovery
+  ---
+  duration_ms: 440.068292
+  ...
+# Subtest: v2 native keeps 128 admitted slots and collider generation during recovery
+ok 24 - v2 native keeps 128 admitted slots and collider generation during recovery
+  ---
+  duration_ms: 202.904084
+  ...
+# Subtest: v2 regional-reference keeps 128 admitted slots and collider generation during recovery
+ok 25 - v2 regional-reference keeps 128 admitted slots and collider generation during recovery
+  ---
+  duration_ms: 254.968667
+  ...
+# Subtest: v2 regional-aircraft keeps 128 admitted slots and collider generation during recovery
+ok 26 - v2 regional-aircraft keeps 128 admitted slots and collider generation during recovery
+  ---
+  duration_ms: 447.317667
+  ...
+# Subtest: native admission creates supported distinct routes and preserves course
+ok 27 - native admission creates supported distinct routes and preserves course
+  ---
+  duration_ms: 94.238084
+  ...
+# Subtest: admission shortfalls are bounded and a map with no usable targets gives a clear error
+ok 28 - admission shortfalls are bounded and a map with no usable targets gives a clear error
+  ---
+  duration_ms: 28.878
+  ...
+# Subtest: cancel and rejected commit preserve RNG, actor, projectile and event state
+ok 29 - cancel and rejected commit preserve RNG, actor, projectile and event state
+  ---
+  duration_ms: 3.058542
+  ...
+# Subtest: closing normal speed uses a continuous threshold and bounded damage
+ok 30 - closing normal speed uses a continuous threshold and bounded damage
+  ---
+  duration_ms: 0.077917
+  ...
+# Subtest: one lethal accepted impact produces one defeat and completes finite elimination
+ok 31 - one lethal accepted impact produces one defeat and completes finite elimination
+  ---
+  duration_ms: 2.879792
+  ...
+# Subtest: contact separation and thirteen accepted ticks are both required before another impact
+ok 32 - contact separation and thirteen accepted ticks are both required before another impact
+  ---
+  duration_ms: 73.282542
+  ...
+# Subtest: player shots can destroy hazards and civilians; verified walls block shots
+ok 33 - player shots can destroy hazards and civilians; verified walls block shots
+  ---
+  duration_ms: 36.722208
+  ...
+# Subtest: Hunt has no return fire and completes after exactly 9000 accepted ticks
+ok 34 - Hunt has no return fire and completes after exactly 9000 accepted ticks
+  ---
+  duration_ms: 541.39275
+  ...
+# Subtest: Hunt replaces a target after 50 ticks with a new logical identity and stable physics slot
+ok 35 - Hunt replaces a target after 50 ticks with a new logical identity and stable physics slot
+  ---
+  duration_ms: 8.609583
+  ...
+# Subtest: Continuous wave delay is fixed by final five seconds of damage; skip creates a new life
+ok 36 - Continuous wave delay is fixed by final five seconds of damage; skip creates a new life
+  ---
+  duration_ms: 3.241417
+  ...
+# Subtest: checkpoint restores settled facts without replaying old effects and rejects tampering
+ok 37 - checkpoint restores settled facts without replaying old effects and rejects tampering
+  ---
+  duration_ms: 3.220041
+  ...
+# Subtest: native physics-only bridge suppresses course completion and reports accepted actor contact
+ok 38 - native physics-only bridge suppresses course completion and reports accepted actor contact
+  ---
+  duration_ms: 13.381875
+  ...
+# Subtest: authored prototype roster survives population changes while active slots obey the selected count
+ok 39 - authored prototype roster survives population changes while active slots obey the selected count
+  ---
+  duration_ms: 7.172083
+  ...
+# Subtest: optional props do not block finite elimination or completion of a wave
+ok 40 - optional props do not block finite elimination or completion of a wave
+  ---
+  duration_ms: 9.574
+  ...
+# Subtest: impact counters remain separate from pulse accuracy and damage breaks the streak
+ok 41 - impact counters remain separate from pulse accuracy and damage breaks the streak
+  ---
+  duration_ms: 2.164292
+  ...
+# Subtest: same accepted inputs produce varied deterministic next waves with stable physics archetypes
+ok 42 - same accepted inputs produce varied deterministic next waves with stable physics archetypes
+  ---
+  duration_ms: 2.948917
+  ...
+# Subtest: incoming attackers obey difficulty limits and hunting never returns fire
+ok 43 - incoming attackers obey difficulty limits and hunting never returns fire
+  ---
+  duration_ms: 49.225917
+  ...
+# Subtest: a mutual fatal collision records the target once and fails the run before success
+ok 44 - a mutual fatal collision records the target once and fails the run before success
+  ---
+  duration_ms: 7.295958
+  ...
+# Subtest: checkpoint validation rejects forged nested state even with recomputed checksums
+ok 45 - checkpoint validation rejects forged nested state even with recomputed checksums
+  ---
+  duration_ms: 24.644708
+  ...
+# Subtest: native physical checkpoint uses configured collision slots and validates their shapes
+ok 46 - native physical checkpoint uses configured collision slots and validates their shapes
+  ---
+  duration_ms: 4.246875
+  ...
+# Subtest: humanoid motion reuses pursuit warning, burst, recovery and restore state
+ok 47 - humanoid motion reuses pursuit warning, burst, recovery and restore state
+  ---
+  duration_ms: 8.984917
+  ...
+# Subtest: a full settled-remains ledger is retained outside per-tick snapshots
+ok 48 - a full settled-remains ledger is retained outside per-tick snapshots
+  ---
+  duration_ms: 360.550625
+  ...
+# Mean accepted tick with full remains ledger: 0.030 ms
+# Subtest: all shipped world and learning catalogue courses admit at least one verified combat target
+ok 49 - all shipped world and learning catalogue courses admit at least one verified combat target
+  ---
+  duration_ms: 1058.923834
+  ...
+# Subtest: tall narrow humanoids use continuous capsule hits without gaps between sampled heights
+ok 50 - tall narrow humanoids use continuous capsule hits without gaps between sampled heights
+  ---
+  duration_ms: 2.107333
+  ...
+# Subtest: accepted player damage and actor defeat events contain independent presentation facts
+ok 51 - accepted player damage and actor defeat events contain independent presentation facts
+  ---
+  duration_ms: 2.583584
+  ...
+# Subtest: actor movement consumes verified host support instead of linear route height
+ok 52 - actor movement consumes verified host support instead of linear route height
+  ---
+  duration_ms: 1.844875
+  ...
+# Subtest: continuous waves wait for a clear spawn instead of appearing inside the player
+ok 53 - continuous waves wait for a clear spawn instead of appearing inside the player
+  ---
+  duration_ms: 1.726833
+  ...
+# Subtest: authored encounters preserve all prototypes when active population changes
+ok 54 - authored encounters preserve all prototypes when active population changes
+  ---
+  duration_ms: 3.695333
+  ...
+# Subtest: portable recovery retains exact encounter definition and rejects tampering before navigation
+ok 55 - portable recovery retains exact encounter definition and rejects tampering before navigation
+  ---
+  duration_ms: 9.536666
+  ...
+# Subtest: accepted firing and damage facts retain contact direction and actor foot anchor
+ok 56 - accepted firing and damage facts retain contact direction and actor foot anchor
+  ---
+  duration_ms: 4.319958
+  ...
+# Subtest: all companion actors including optional props must be destructible
+ok 57 - all companion actors including optional props must be destructible
+  ---
+  duration_ms: 3.839125
+  ...
+# Subtest: hunting replacement waits when another living target occupies its spawn
+ok 58 - hunting replacement waits when another living target occupies its spawn
+  ---
+  duration_ms: 6.896084
+  ...
+# Subtest: native encounter session preserves course state and saves a paired paused boundary
+ok 59 - native encounter session preserves course state and saves a paired paused boundary
+  ---
+  duration_ms: 525.208
+  ...
+# Subtest: continuous session rolls its bounded recording and restores the retained chain
+ok 60 - continuous session rolls its bounded recording and restores the retained chain
+  ---
+  duration_ms: 2348.766208
+  ...
+# Subtest: regional return keeps its roster and combat clock while accepted flight moves home
+ok 61 - regional return keeps its roster and combat clock while accepted flight moves home
+  ---
+  duration_ms: 11.587875
+  ...
+# Subtest: rejected and failed async aircraft steps never consume encounter time or fire
+ok 62 - rejected and failed async aircraft steps never consume encounter time or fire
+  ---
+  duration_ms: 7.404167
+  ...
+# Subtest: a synchronous combat checkpoint cannot consume a fresh Arm or capture later frames
+ok 63 - a synchronous combat checkpoint cannot consume a fresh Arm or capture later frames
+  ---
+  duration_ms: 10.214333
+  ...
+# Subtest: v2 queued commands survive rejected steps, are recorded once, and restore without duplicate execution
+ok 64 - v2 queued commands survive rejected steps, are recorded once, and restore without duplicate execution
+  ---
+  duration_ms: 20.741792
+  ...
+# Subtest: v2 pause cancels unsent commands and cannot trigger ordnance upon resume
+ok 65 - v2 pause cancels unsent commands and cannot trigger ordnance upon resume
+  ---
+  duration_ms: 6.509917
+  ...
+# Subtest: Strike aftermath is separately recorded, can pause, and restores paused
+ok 66 - Strike aftermath is separately recorded, can pause, and restores paused
+  ---
+  duration_ms: 9.293459
+  ...
+# Subtest: Strike aftermath publishes terminal timeout and never steps a finished encounter
+ok 67 - Strike aftermath publishes terminal timeout and never steps a finished encounter
+  ---
+  duration_ms: 253.065791
+  ...
+# Subtest: Strike delayed bomb victory reaches the host result and exposes its selected target
+ok 68 - Strike delayed bomb victory reaches the host result and exposes its selected target
+  ---
+  duration_ms: 15.698916
+  ...
+# Subtest: v2 Start next wave is accepted once, recorded with bit64, and held through rejected physics
+ok 69 - v2 Start next wave is accepted once, recorded with bit64, and held through rejected physics
+  ---
+  duration_ms: 16.975542
+  ...
+# Subtest: geometry rejection holds aircraft, encounter, recording and commands including aftermath
+ok 70 - geometry rejection holds aircraft, encounter, recording and commands including aftermath
+  ---
+  duration_ms: 5.326375
+  ...
+# Subtest: v2 recovery rejects command/recording inconsistencies without changing the accepted boundary
+ok 71 - v2 recovery rejects command/recording inconsistencies without changing the accepted boundary
+  ---
+  duration_ms: 19.365708
+  ...
+# Subtest: v2 native combat replay reproduces quantized radio controls and accepted commands through physical simulation
+ok 72 - v2 native combat replay reproduces quantized radio controls and accepted commands through physical simulation
+  ---
+  duration_ms: 153.458791
+  ...
+# Subtest: v2 replay rejects rewritten accepted controls despite an updated recovery checksum
+ok 73 - v2 replay rejects rewritten accepted controls despite an updated recovery checksum
+  ---
+  duration_ms: 130.275209
+  ...
+# Subtest: v2 playback exposes accepted progress and cancellation without continuing rewards
+ok 74 - v2 playback exposes accepted progress and cancellation without continuing rewards
+  ---
+  duration_ms: 62.412625
+  ...
+# Subtest: v2 replay rejects truncated recording intervals and a different backend before playback
+ok 75 - v2 replay rejects truncated recording intervals and a different backend before playback
+  ---
+  duration_ms: 62.561917
+  ...
+# Subtest: v2 retains a complete six-minute attempt and rolls only beyond twelve full segments
+ok 76 - v2 retains a complete six-minute attempt and rolls only beyond twelve full segments
+  ---
+  duration_ms: 2342.100666
+  ...
+# Subtest: optional launch metadata preserves exact regional start while remaining independent of gameplay validity
+ok 77 - optional launch metadata preserves exact regional start while remaining independent of gameplay validity
+  ---
+  duration_ms: 14.2925
+  ...
+# Subtest: accepted combat step reuses committed snapshots while public snapshots retain copy isolation
+ok 78 - accepted combat step reuses committed snapshots while public snapshots retain copy isolation
+  ---
+  duration_ms: 4.119125
+  ...
+# Subtest: frame views are frozen, reuse one accepted view and avoid full runtime snapshot copies
+ok 79 - frame views are frozen, reuse one accepted view and avoid full runtime snapshot copies
+  ---
+  duration_ms: 4.070292
+  ...
+# Subtest: Studio companion export/import and undo/redo preserve exact schema and author IDs
+ok 80 - Studio companion export/import and undo/redo preserve exact schema and author IDs
+  ---
+  duration_ms: 4.705708
+  ...
+# Subtest: source reimport resolves missing stable IDs visibly and keeps authored field overrides
+ok 81 - source reimport resolves missing stable IDs visibly and keeps authored field overrides
+  ---
+  duration_ms: 5.228834
+  ...
+# Subtest: invalid geometry, bounds, duplicate IDs and host rejection are atomic
+ok 82 - invalid geometry, bounds, duplicate IDs and host rejection are atomic
+  ---
+  duration_ms: 1.302875
+  ...
+# Subtest: mounted Studio edits metres, shield family and previews the exact accepted runtime definition
+ok 83 - mounted Studio edits metres, shield family and previews the exact accepted runtime definition
+  ---
+  duration_ms: 4.357708
+  ...
+# Subtest: saved companions from an older map revision stay readable for explicit source reimport
+ok 84 - saved companions from an older map revision stay readable for explicit source reimport
+  ---
+  duration_ms: 2.593542
+  ...
+# Subtest: Studio authors version-two loadouts and Survival populations while preserving imported historical definitions
+ok 85 - Studio authors version-two loadouts and Survival populations while preserving imported historical definitions
+  ---
+  duration_ms: 3.9335
+  ...
+# Subtest: Studio target type changes keep body dimensions, material and motion ownership consistent
+ok 86 - Studio target type changes keep body dimensions, material and motion ownership consistent
+  ---
+  duration_ms: 4.846958
+  ...
+# Subtest: Studio rejects Tactical without a supported pad and admits an explicit landing point atomically
+ok 87 - Studio rejects Tactical without a supported pad and admits an explicit landing point atomically
+  ---
+  duration_ms: 2.749042
+  ...
+# Subtest: Studio validates v2 firing access with the equipped weapon and preserves exact service pad admission
+ok 88 - Studio validates v2 firing access with the equipped weapon and preserves exact service pad admission
+  ---
+  duration_ms: 5.693583
+  ...
+# Subtest: Studio round-trips complete 128-target Survival routes and their source baseline
+ok 89 - Studio round-trips complete 128-target Survival routes and their source baseline
+  ---
+  duration_ms: 317.174125
+  ...
+# Subtest: v2 config normalizes distinct loadout and independent survival population
+ok 90 - v2 config normalizes distinct loadout and independent survival population
+  ---
+  duration_ms: 34.4815
+  ...
+# Subtest: v1 authored definition upgrades only when explicitly selected
+ok 91 - v1 authored definition upgrades only when explicitly selected
+  ---
+  duration_ms: 20.599959
+  ...
+# Subtest: v2 rejected/cancelled transactions preserve RNG and one-shot command sequence
+ok 92 - v2 rejected/cancelled transactions preserve RNG and one-shot command sequence
+  ---
+  duration_ms: 21.630167
+  ...
+# Subtest: autocannon uses magazine, reload timing and preserved selected-weapon reload
+ok 93 - autocannon uses magazine, reload timing and preserved selected-weapon reload
+  ---
+  duration_ms: 37.251833
+  ...
+# Subtest: scatter hit accuracy is bounded per trigger rather than per pellet or victim
+ok 94 - scatter hit accuracy is bounded per trigger rather than per pellet or victim
+  ---
+  duration_ms: 39.291334
+  ...
+# Subtest: projectiles leave persistent supported surface impacts
+ok 95 - projectiles leave persistent supported surface impacts
+  ---
+  duration_ms: 41.065208
+  ...
+# Subtest: Hunting replacement waits four to eight accepted seconds and changes route position
+ok 96 - Hunting replacement waits four to eight accepted seconds and changes route position
+  ---
+  duration_ms: 122.668583
+  ...
+# Subtest: payload deployment, gravity, remote settling and detonation persist once
+ok 97 - payload deployment, gravity, remote settling and detonation persist once
+  ---
+  duration_ms: 82.528834
+  ...
+# Subtest: blocked payload release consumes no ammunition
+ok 98 - blocked payload release consumes no ammunition
+  ---
+  duration_ms: 43.33775
+  ...
+# Subtest: Tactical reserve is finite and only pad refills it
+ok 99 - Tactical reserve is finite and only pad refills it
+  ---
+  duration_ms: 113.146125
+  ...
+# Subtest: health pickups remain at full health, heal only living players, and reward count is unique
+ok 100 - health pickups remain at full health, heal only living players, and reward count is unique
+  ---
+  duration_ms: 34.243459
+  ...
+# Subtest: Survival has stable slots over99, a reserved final slot and reversible admission
+ok 101 - Survival has stable slots over99, a reserved final slot and reversible admission
+  ---
+  duration_ms: 118.774542
+  ...
+# Subtest: Timed Survival needs final defeat and time; ordinary survivors do not block completion
+ok 102 - Timed Survival needs final defeat and time; ordinary survivors do not block completion
+  ---
+  duration_ms: 23.111958
+  ...
+# Subtest: Strike continues accepted ordnance aftermath and objective success beats drone death
+ok 103 - Strike continues accepted ordnance aftermath and objective success beats drone death
+  ---
+  duration_ms: 177.551459
+  ...
+# Subtest: component damage provides protection counterplay and one reward per defeated actor
+ok 104 - component damage provides protection counterplay and one reward per defeated actor
+  ---
+  duration_ms: 38.165958
+  ...
+# Subtest: v2 recovery round trips ammo, commands, impacts, pickups and corruption is rejected
+ok 105 - v2 recovery round trips ammo, commands, impacts, pickups and corruption is rejected
+  ---
+  duration_ms: 31.322334
+  ...
+# Subtest: balanced: autocannon + scatter defeats ordinary and armored targets with admitted ammunition
+ok 106 - balanced: autocannon + scatter defeats ordinary and armored targets with admitted ammunition
+  ---
+  duration_ms: 62.9475
+  ...
+# Subtest: balanced: autocannon + precision defeats ordinary and armored targets with admitted ammunition
+ok 107 - balanced: autocannon + precision defeats ordinary and armored targets with admitted ammunition
+  ---
+  duration_ms: 43.434583
+  ...
+# Subtest: balanced: autocannon + rocket defeats ordinary and armored targets with admitted ammunition
+ok 108 - balanced: autocannon + rocket defeats ordinary and armored targets with admitted ammunition
+  ---
+  duration_ms: 38.664292
+  ...
+# Subtest: balanced: scatter + precision defeats ordinary and armored targets with admitted ammunition
+ok 109 - balanced: scatter + precision defeats ordinary and armored targets with admitted ammunition
+  ---
+  duration_ms: 34.759959
+  ...
+# Subtest: balanced: scatter + rocket defeats ordinary and armored targets with admitted ammunition
+ok 110 - balanced: scatter + rocket defeats ordinary and armored targets with admitted ammunition
+  ---
+  duration_ms: 28.218
+  ...
+# Subtest: balanced: precision + rocket defeats ordinary and armored targets with admitted ammunition
+ok 111 - balanced: precision + rocket defeats ordinary and armored targets with admitted ammunition
+  ---
+  duration_ms: 23.836625
+  ...
+# Subtest: arcade: autocannon + scatter defeats ordinary and armored targets with admitted ammunition
+ok 112 - arcade: autocannon + scatter defeats ordinary and armored targets with admitted ammunition
+  ---
+  duration_ms: 23.97725
+  ...
+# Subtest: arcade: autocannon + precision defeats ordinary and armored targets with admitted ammunition
+ok 113 - arcade: autocannon + precision defeats ordinary and armored targets with admitted ammunition
+  ---
+  duration_ms: 20.907625
+  ...
+# Subtest: arcade: autocannon + rocket defeats ordinary and armored targets with admitted ammunition
+ok 114 - arcade: autocannon + rocket defeats ordinary and armored targets with admitted ammunition
+  ---
+  duration_ms: 23.281042
+  ...
+# Subtest: arcade: scatter + precision defeats ordinary and armored targets with admitted ammunition
+ok 115 - arcade: scatter + precision defeats ordinary and armored targets with admitted ammunition
+  ---
+  duration_ms: 18.64875
+  ...
+# Subtest: arcade: scatter + rocket defeats ordinary and armored targets with admitted ammunition
+ok 116 - arcade: scatter + rocket defeats ordinary and armored targets with admitted ammunition
+  ---
+  duration_ms: 33.313834
+  ...
+# Subtest: arcade: precision + rocket defeats ordinary and armored targets with admitted ammunition
+ok 117 - arcade: precision + rocket defeats ordinary and armored targets with admitted ammunition
+  ---
+  duration_ms: 23.252208
+  ...
+# Subtest: tactical: autocannon + scatter defeats ordinary and armored targets with admitted ammunition
+ok 118 - tactical: autocannon + scatter defeats ordinary and armored targets with admitted ammunition
+  ---
+  duration_ms: 21.46125
+  ...
+# Subtest: tactical: autocannon + precision defeats ordinary and armored targets with admitted ammunition
+ok 119 - tactical: autocannon + precision defeats ordinary and armored targets with admitted ammunition
+  ---
+  duration_ms: 21.588
+  ...
+# Subtest: tactical: autocannon + rocket defeats ordinary and armored targets with admitted ammunition
+ok 120 - tactical: autocannon + rocket defeats ordinary and armored targets with admitted ammunition
+  ---
+  duration_ms: 19.25525
+  ...
+# Subtest: tactical: scatter + precision defeats ordinary and armored targets with admitted ammunition
+ok 121 - tactical: scatter + precision defeats ordinary and armored targets with admitted ammunition
+  ---
+  duration_ms: 21.370625
+  ...
+# Subtest: tactical: scatter + rocket defeats ordinary and armored targets with admitted ammunition
+ok 122 - tactical: scatter + rocket defeats ordinary and armored targets with admitted ammunition
+  ---
+  duration_ms: 20.619042
+  ...
+# Subtest: tactical: precision + rocket defeats ordinary and armored targets with admitted ammunition
+ok 123 - tactical: precision + rocket defeats ordinary and armored targets with admitted ammunition
+  ---
+  duration_ms: 17.848917
+  ...
+# Subtest: accepted Survival thresholds, formation relief, support cap and supply times are deterministic
+ok 124 - accepted Survival thresholds, formation relief, support cap and supply times are deterministic
+  ---
+  duration_ms: 89.070541
+  ...
+# Subtest: Endless continues after six minutes while Timed stops ordinary arrivals
+ok 125 - Endless continues after six minutes while Timed stops ordinary arrivals
+  ---
+  duration_ms: 38.888709
+  ...
+# Subtest: Strike commit-time crash retains already deployed bomb and accepts delayed objective success
+ok 126 - Strike commit-time crash retains already deployed bomb and accepts delayed objective success
+  ---
+  duration_ms: 14.895833
+  ...
+# Subtest: crossing projectiles are tested against swept actor bounds in the broadphase
+ok 127 - crossing projectiles are tested against swept actor bounds in the broadphase
+  ---
+  duration_ms: 12.554666
+  ...
+# Subtest: surface archive stays outside ordinary snapshots and restores without replay effects
+ok 128 - surface archive stays outside ordinary snapshots and restores without replay effects
+  ---
+  duration_ms: 14.0085
+  ...
+# Subtest: v2 rejects forged actor attack powers, component grants and ordinary-game victory with a live roster
+ok 129 - v2 rejects forged actor attack powers, component grants and ordinary-game victory with a live roster
+  ---
+  duration_ms: 17.508416
+  ...
+# Subtest: repeated Hunting lives alternate distinct admitted route points, including duplicate route anchors
+ok 130 - repeated Hunting lives alternate distinct admitted route points, including duplicate route anchors
+  ---
+  duration_ms: 79.848792
+  ...
+# Subtest: final UAV attack has an advertised windup, finite salvo and recovery interval
+ok 131 - final UAV attack has an advertised windup, finite salvo and recovery interval
+  ---
+  duration_ms: 32.088333
+  ...
+# Subtest: Survival pursues the player and falls back to its route when pursuit has no support
+ok 132 - Survival pursues the player and falls back to its route when pursuit has no support
+  ---
+  duration_ms: 30.981791
+  ...
+# Subtest: Survival validates full-height pursuit clearance and rejected steps do not move actors
+ok 133 - Survival validates full-height pursuit clearance and rejected steps do not move actors
+  ---
+  duration_ms: 14.39075
+  ...
+# Subtest: Survival keeps readable ground lanes and UAV height bands around a stationary player
+ok 134 - Survival keeps readable ground lanes and UAV height bands around a stationary player
+  ---
+  duration_ms: 737.416625
+  ...
+# Subtest: crowd separation uses overlapping upright bodies rather than only their centres
+ok 135 - crowd separation uses overlapping upright bodies rather than only their centres
+  ---
+  duration_ms: 15.735958
+  ...
+# Subtest: older v2 definitions retain their exact legacy crowd motion and identity
+ok 136 - older v2 definitions retain their exact legacy crowd motion and identity
+  ---
+  duration_ms: 18.686792
+  ...
+# Subtest: contact-only UAVs retain a staggered attack approach through their stand-off lanes
+ok 137 - contact-only UAVs retain a staggered attack approach through their stand-off lanes
+  ---
+  duration_ms: 22.483708
+  ...
+# Subtest: slow contact rovers cross their outer lane after a readable warning under shield-front pressure
+ok 138 - slow contact rovers cross their outer lane after a readable warning under shield-front pressure
+  ---
+  duration_ms: 68.469042
+  ...
+# Subtest: actual native wall hits publish finite positions and unit normals for surface effects
+ok 139 - actual native wall hits publish finite positions and unit normals for surface effects
+  ---
+  duration_ms: 111.407
+  ...
+# Subtest: regional hit normalization, full-area coverage and airborne hazard admission share exact geometry
+ok 140 - regional hit normalization, full-area coverage and airborne hazard admission share exact geometry
+  ---
+  duration_ms: 0.742333
+  ...
+# Subtest: unavailable geometry rejects prepare or commit without consuming state, ammo or command identity
+ok 141 - unavailable geometry rejects prepare or commit without consuming state, ammo or command identity
+  ---
+  duration_ms: 17.995375
+  ...
+# Subtest: earned aerial supplies settle on supported ground and wait when support is unavailable
+ok 142 - earned aerial supplies settle on supported ground and wait when support is unavailable
+  ---
+  duration_ms: 35.57125
+  ...
+# Subtest: Arcade payload recharge restarts on deployment and never consumes a second armed drone charge
+ok 143 - Arcade payload recharge restarts on deployment and never consumes a second armed drone charge
+  ---
+  duration_ms: 161.740292
+  ...
+# Subtest: accepted physical destruction overrides a simultaneous Elimination victory
+ok 144 - accepted physical destruction overrides a simultaneous Elimination victory
+  ---
+  duration_ms: 14.071833
+  ...
+# Subtest: smaller Survival population preserves its reserved final enemy and nonempty opening roster
+ok 145 - smaller Survival population preserves its reserved final enemy and nonempty opening roster
+  ---
+  duration_ms: 35.107958
+  ...
+# Subtest: Advanced muzzle obstruction starts at the admitted aircraft centre instead of its bounding radius
+ok 146 - Advanced muzzle obstruction starts at the admitted aircraft centre instead of its bounding radius
+  ---
+  duration_ms: 17.553959
+  ...
+# Subtest: regional service pads resolve supported floors below an airborne restart and retain exact identities
+ok 147 - regional service pads resolve supported floors below an airborne restart and retain exact identities
+  ---
+  duration_ms: 1.3285
+  ...
+# Subtest: Tactical rejects missing service support and preserves a validated pad through recovery
+ok 148 - Tactical rejects missing service support and preserves a validated pad through recovery
+  ---
+  duration_ms: 79.413208
+  ...
+# Subtest: native service admission grounds an elevated launch and rejects unsupported pads
+ok 149 - native service admission grounds an elevated launch and rejects unsupported pads
+  ---
+  duration_ms: 1.186708
+  ...
+# Subtest: uncovered muzzle and payload release block only weapons, without consuming ammo or the accepted interval
+ok 150 - uncovered muzzle and payload release block only weapons, without consuming ammo or the accepted interval
+  ---
+  duration_ms: 16.641083
+  ...
+# Subtest: payload and secondary explosions never create a null shot identity or invalidate recovery
+ok 151 - payload and secondary explosions never create a null shot identity or invalidate recovery
+  ---
+  duration_ms: 13.082459
+  ...
+# Subtest: a rocket blocked at its muzzle counts its splash victims as one trigger hit
+ok 152 - a rocket blocked at its muzzle counts its splash victims as one trigger hit
+  ---
+  duration_ms: 13.373708
+  ...
+# Subtest: surface marks use the actual wall contact, not the swept projectile centre
+ok 153 - surface marks use the actual wall contact, not the swept projectile centre
+  ---
+  duration_ms: 13.96825
+  ...
+# Subtest: impact self-damage uses actual inflicted health rather than overkill power
+ok 154 - impact self-damage uses actual inflicted health rather than overkill power
+  ---
+  duration_ms: 27.869542
+  ...
+# Subtest: v2 native admission rejects sealed targets but accepts a visible supported route point
+ok 155 - v2 native admission rejects sealed targets but accepts a visible supported route point
+  ---
+  duration_ms: 3.624667
+  ...
+# Subtest: v2 regional admission proves a firing line to at least one complete supported route point
+ok 156 - v2 regional admission proves a firing line to at least one complete supported route point
+  ---
+  duration_ms: 0.98
+  ...
+1..156
+# tests 156
+# suites 0
+# pass 156
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 22290.246209

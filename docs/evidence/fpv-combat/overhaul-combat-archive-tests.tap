@@ -1,0 +1,100 @@
+TAP version 13
+# Subtest: archive persists immutable segments and an exact durable manifest; exports preserve existing identities
+ok 1 - archive persists immutable segments and an exact durable manifest; exports preserve existing identities
+  ---
+  duration_ms: 11.613667
+  ...
+# Subtest: partial writes and cancellation never advance a manifest or leak a segment/quota allocation
+ok 2 - partial writes and cancellation never advance a manifest or leak a segment/quota allocation
+  ---
+  duration_ms: 2.406334
+  ...
+# Subtest: concurrent tabs reject stale edits while exact append and finish retries remain idempotent
+ok 3 - concurrent tabs reject stale edits while exact append and finish retries remain idempotent
+  ---
+  duration_ms: 1.142959
+  ...
+# Subtest: missing, reordered, modified, wrong-aircraft and fabricated durable ranges fail atomically
+ok 4 - missing, reordered, modified, wrong-aircraft and fabricated durable ranges fail atomically
+  ---
+  duration_ms: 6.475459
+  ...
+# Subtest: checkpoint-origin archives retain source indices and never imply a takeoff origin or verified score
+ok 5 - checkpoint-origin archives retain source indices and never imply a takeoff origin or verified score
+  ---
+  duration_ms: 0.951833
+  ...
+# Subtest: archive count limit requires explicit deletion, frees all records atomically, and preserves recent recovery stores
+ok 6 - archive count limit requires explicit deletion, frees all records atomically, and preserves recent recovery stores
+  ---
+  duration_ms: 2.648
+  ...
+# Subtest: per-session segment count is bounded without accepting a growing manifest
+ok 7 - per-session segment count is bounded without accepting a growing manifest
+  ---
+  duration_ms: 77.938125
+  ...
+# Subtest: byte budgets reject oversized packages and manifests before opening storage
+ok 8 - byte budgets reject oversized packages and manifests before opening storage
+  ---
+  duration_ms: 7.502458
+  ...
+# Subtest: actual encoded payload bytes enforce both archive and shared device quotas without deleting saved flights
+ok 9 - actual encoded payload bytes enforce both archive and shared device quotas without deleting saved flights
+  ---
+  duration_ms: 2983.579458
+  ...
+# Subtest: open imports become interrupted, failed multi-segment import rolls back, and empty sessions cannot claim completion
+ok 10 - open imports become interrupted, failed multi-segment import rolls back, and empty sessions cannot claim completion
+  ---
+  duration_ms: 2.203167
+  ...
+# Subtest: unavailable, blocked and closed storage do not report a false archive commit
+ok 11 - unavailable, blocked and closed storage do not report a false archive commit
+  ---
+  duration_ms: 0.268584
+  ...
+# Subtest: unexpected archive database close permits a later operation to reopen without replaying writes
+ok 12 - unexpected archive database close permits a later operation to reopen without replaying writes
+  ---
+  duration_ms: 0.636541
+  ...
+# Subtest: unexpected archive close during a failed write preserves its durable prefix and requires an explicit retry
+ok 13 - unexpected archive close during a failed write preserves its durable prefix and requires an explicit retry
+  ---
+  duration_ms: 0.79925
+  ...
+# Subtest: combat archive export remains live, finishes atomically and replays the accepted command chain
+ok 14 - combat archive export remains live, finishes atomically and replays the accepted command chain
+  ---
+  duration_ms: 2434.890958
+  ...
+# Subtest: combat archives preserve complete playback after the bounded live recording has rolled
+ok 15 - combat archives preserve complete playback after the bounded live recording has rolled
+  ---
+  duration_ms: 8592.265167
+  ...
+# Subtest: combat archive stops with an explicit gap after restore and never claims the replacement chain
+ok 16 - combat archive stops with an explicit gap after restore and never claims the replacement chain
+  ---
+  duration_ms: 211.930875
+  ...
+# Subtest: combat archive quota failure preserves the durable prefix and leaves flight available
+ok 17 - combat archive quota failure preserves the durable prefix and leaves flight available
+  ---
+  duration_ms: 177.599125
+  ...
+# Subtest: combat archive command tampering is rejected even with recomputed transport checksums
+ok 18 - combat archive command tampering is rejected even with recomputed transport checksums
+  ---
+  duration_ms: 347.156041
+  ...
+1..18
+# tests 18
+# suites 0
+# pass 18
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 12038.177459

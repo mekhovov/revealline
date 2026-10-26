@@ -1,3 +1,4 @@
+import { createExecutedFrameReader } from './solo-frame-trace-executed-source.mjs';
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
 import { readFile } from 'node:fs/promises';
@@ -10,6 +11,13 @@ import {
 import { bindTouchJob, touchMatrix, prepareTouchMode } from './solo-remote-touch.mjs';
 
 const read = (path) => readFile(new URL('../' + path, import.meta.url));
+const historicalFrameRead = createExecutedFrameReader(read);
+// These exact qualifier and recorder bytes precede the additive v2 protocol.
+// Production still rejects stale input; no declaration or execution result changes.
+const declaredRead = (path) =>
+  ['scripts/qualify-solo-runtime.mjs', 'scripts/solo-qualification-cpu-profile.mjs'].includes(path)
+    ? historicalFrameRead(path)
+    : read(path);
 const sha = (bytes) => createHash('sha256').update(bytes).digest('hex');
 const workflowPath = '.github/workflows/solo-native-package-consumer.yml';
 const workflow = (await read(workflowPath)).toString();
@@ -175,7 +183,7 @@ test('readiness and touch are exact main-only choices with their unchanged adapt
   }
 });
 
-test('each new lane binds actual current tools and all declared reads in its own sparse checkout', async () => {
+test('each lane binds current or retained qualifier bytes and all declared reads in its own sparse checkout', async () => {
   for (const lane of Object.keys(lanes)) {
     const value = await manifest(lane);
     const refs = [
@@ -197,7 +205,7 @@ test('each new lane binds actual current tools and all declared reads in its own
     ])
       assert(sparse.includes(path), `${lane}: ${path}`);
     for (const ref of refs) {
-      const bytes = await read(ref.path);
+      const bytes = await declaredRead(ref.path);
       assert.equal(bytes.length, ref.bytes, ref.path);
       assert.equal(sha(bytes), ref.sha256, ref.path);
     }

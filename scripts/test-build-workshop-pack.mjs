@@ -56,7 +56,8 @@ async function unchangedOutput(f) {
   assert.deepEqual(await readdir(path.dirname(f.output)), ['equipment-workshop.json']);
 }
 
-test('source baseline pins exact frozen bytes while source recipe changes only pack semver', () => {
+test('retained source baseline pins exact frozen bytes while source recipe changes only pack semver', () => {
+  assert.equal(WORKSHOP_BASELINE.projectionReceipt, 'docs/migrations/retained-pack-source.json');
   assert.equal(baselineBytes.length, WORKSHOP_BASELINE.bytes);
   assert.equal(sha(baselineBytes), WORKSHOP_BASELINE.sha256);
   assert.deepEqual(JSON.parse(sourceBytes), { ...JSON.parse(baselineBytes), version: '1.1.0' });
@@ -80,7 +81,7 @@ test('default check preserves stale output; explicit write embeds exact bytes an
   assert.ok(report.encodedArtworkChars <= CONTENT_LIMITS.maxCombinedImageChars);
   assert.ok(report.decodedArtworkPixels <= CONTENT_LIMITS.maxCombinedImagePixels);
   assert.ok(report.encodedPackBytes <= PACK_LIMITS.maxBytes && report.under12MiBTarget);
-  assert.equal(new Set(report.backgrounds.map(({ sha256 }) => sha256)).size, 3);
+  assert.equal(new Set(report.backgrounds.map(({ sha256 }) => sha256)).size, 2);
   for (const [i, item] of pack.levelVisuals.entries()) {
     const descriptor = item.visualOverrides.background;
     assert.equal(item.levelId, WORKSHOP_PICTURES[i].levelId);
@@ -163,18 +164,19 @@ test('duplicate artwork, wrong aspect and excessive header dimensions are reject
   }
 });
 
-test('combined image pixels are bounded even when each distinct header fits its own limit', async (t) => {
+test('each retained image remains bounded by the decoded pixel limit', async (t) => {
   const f = await fixture(t);
-  for (const [i, original] of fixtureImages.entries()) {
-    const bytes = Buffer.from(original);
-    bytes.writeUInt32BE(4000, 16);
-    bytes.writeUInt32BE(3000, 20);
-    await writeFile(f.image(i), bytes);
-  }
-  await assert.rejects(
-    buildWorkshopPack({ root: f.root, write: true }),
-    /combined encoded or decoded pixel budget/,
+  // Two individually bounded images cannot exceed the combined pixel limit.
+  assert.ok(
+    WORKSHOP_PICTURES.length * CONTENT_LIMITS.maxImagePixels <=
+      CONTENT_LIMITS.maxCombinedImagePixels,
   );
+  const bytes = Buffer.from(fixtureImages[0]);
+  // This 4:3 header stays below the side limit but exceeds 16 megapixels.
+  bytes.writeUInt32BE(4800, 16);
+  bytes.writeUInt32BE(3600, 20);
+  await writeFile(f.image(0), bytes);
+  await assert.rejects(buildWorkshopPack({ root: f.root, write: true }), /16 megapixel budget/);
   await unchangedOutput(f);
 });
 

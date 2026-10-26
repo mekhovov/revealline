@@ -4,7 +4,7 @@ import assert from 'node:assert/strict';
 import { execFileSync } from 'node:child_process';
 import { inspectImageDataUrl } from '../game/content.mjs';
 import { CURRENT_ART_SOURCES } from '../game/presentation/current-art-sources.mjs';
-import { classicReviewCatalog } from './neon-review-catalog.mjs';
+import { classicReviewCatalog, neonReviewCatalog } from './neon-review-catalog.mjs';
 import { readMissionLibraryHandoff } from '../game/mission-library/handoff.mjs';
 
 const root = new URL('../', import.meta.url);
@@ -88,9 +88,13 @@ for (const [folder, entries] of [
     });
   }
 }
-assert.equal(neon.length, 54);
+assert.equal(neon.length, neonReviewCatalog().length);
 assert.equal(classic.length, 23);
-assert.equal(new Set(images.map((row) => row.imageSHA256)).size, 77, 'Repeated artwork');
+assert.equal(
+  new Set(images.map((row) => row.imageSHA256)).size,
+  neon.length + classic.length,
+  'Repeated artwork',
+);
 const report = {
   format: 'revealline-neon-delivery-audit.v1',
   sourceRevision: execFileSync('git', ['rev-parse', 'HEAD'], {
@@ -115,7 +119,8 @@ const report = {
 const output = new URL('../docs/qualification/neon-level-completion/', import.meta.url);
 await mkdir(output, { recursive: true });
 await writeFile(new URL('inventory.json', output), JSON.stringify(report, null, 2) + '\n');
-const baselineCommit = 'dcdad7f7b8c05c20e192564a981c8f9448460653';
+const retirement = await read('docs/migrations/retired-mission-identities.json');
+const baselineCommit = retirement.baselineCommit;
 const baseline = JSON.parse(
   execFileSync('git', ['show', `${baselineCommit}:game/content/mission-library-index.json`], {
     cwd: root,
@@ -126,9 +131,16 @@ const baseline = JSON.parse(
 const identity = ({ source, packId, campaignId, levelId }) =>
   JSON.stringify([source, packId, campaignId, levelId]);
 const present = new Set(index.missions.map(identity));
+const retired = new Set(retirement.retiredIdentitySHA256);
 const missingIdentities = baseline.missions
-  .filter((row) => !present.has(identity(row)))
+  .filter((row) => !present.has(identity(row)) && !retired.has(digest(Buffer.from(identity(row)))))
   .map(identity);
+assert.ok(
+  baseline.missions.every(
+    (row) => !retired.has(digest(Buffer.from(identity(row)))) || !present.has(identity(row)),
+  ),
+  'Retired identity returned to the current catalog',
+);
 assert.equal(missingIdentities.length, 0, 'Previously published catalog identities are missing');
 await writeFile(
   new URL('catalog-preservation.json', output),
@@ -136,6 +148,7 @@ await writeFile(
     {
       baselineCommit,
       baselineIdentities: baseline.missions.length,
+      retiredIdentities: retired.size,
       currentIdentities: index.missions.length,
       missingIdentities,
       scope:

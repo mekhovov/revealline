@@ -42,7 +42,12 @@ test('expansion proof covers every supplied map and rejects altered geometry', a
   );
   const result = await verifyExpansionRoutes();
   assert.equal(result.verified, expected + additionalRoutes);
-  assert.equal(result.verified, 70, 'All 35 indexed expansion maps have both Standard routes.');
+  assert.equal(result.verified, 68, 'All 34 historical expansion maps have both Standard routes.');
+  assert.deepEqual(result.neon, {
+    standard: 106,
+    gentle: 106,
+    packs: ['neon-reference-pack', 'neon-mosaic-pack'],
+  });
   assert.equal(result.supplementalGentleVerified, 30);
   assert.equal(result.pressure.routes.length, 24);
   assert.equal(result.pressure.ordinaryProbes.length, 24);
@@ -63,8 +68,8 @@ test('workshop proof append preserves all 26 earlier entries and discovery metad
   assert.equal(proof.examined, 1484);
   assert.equal(proof.simulatedTicks, 793832);
   const appended = proof.routes.slice(26).filter((route) => route.packId === 'equipment-workshop');
-  assert.equal(appended.length, 6);
-  for (const levelId of ['workshop-01', 'workshop-02', 'workshop-03'])
+  assert.equal(appended.length, 4);
+  for (const levelId of ['workshop-01', 'workshop-02'])
     assert.deepEqual(
       appended.filter((route) => route.levelId === levelId).map((route) => route.turnPolicy),
       ['immediate', 'grid-center'],

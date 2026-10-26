@@ -8108,10 +8108,7 @@
         "hasAlpha": true,
         "recipe": "rgba8-full-frame-nearest-center-stored-deflate.v1",
         "crop": false,
-        "pivot": [
-          0.5,
-          0.5
-        ],
+        "pivot": [0.5, 0.5],
         "transformation": "Existing authoring/sprites compiler; exact full-frame nearest-center sampling of all RGBA channels, deterministic stored-deflate PNG, no crop, threshold, recolour or generative alteration."
       },
       "visualReview": {
@@ -8163,10 +8160,7 @@
         "hasAlpha": true,
         "recipe": "rgba8-full-frame-nearest-center-stored-deflate.v1",
         "crop": false,
-        "pivot": [
-          0.5,
-          0.5
-        ],
+        "pivot": [0.5, 0.5],
         "transformation": "Existing authoring/sprites compiler; exact full-frame nearest-center sampling of all RGBA channels, deterministic stored-deflate PNG, no crop, threshold, recolour or generative alteration."
       },
       "visualReview": {

@@ -1,3 +1,4 @@
+import { renderTextSizeControl } from '../ui/text-size-control.mjs';
 import { localizedText, t } from '../i18n/index.mjs';
 import { attachFullscreen } from '../ui/fullscreen.mjs';
 import { setMenuIcon } from '../ui/native-menu-icons.mjs';
@@ -6,6 +7,8 @@ import { attachMenuScene, getMenuAnimation, setMenuAnimation } from '../ui/menu-
 import { libraryMissionId } from '../mission-library/library.mjs';
 import { missionLibraryHref } from '../mission-library/handoff.mjs';
 import { createDisplayPreferences } from '../display-preferences.mjs';
+import { attachMenuAnimationFeedback } from '../ui/menu-animation-feedback.mjs';
+import { mountComfortPresets } from '../ui/comfort-presets.mjs';
 
 /** Preserve the qualified installed-edition lookup used by the ordinary Versus host. */
 export function creatorVersusHref(pack, missionId, baseURL) {
@@ -96,10 +99,10 @@ export function attachCreatorPlayerMenu({
   });
   const stopDisplay = display.subscribe((state) => {
     doc.body.dataset.textFace = state.textFace;
-    doc.body.dataset.textSize = state.textSize;
+    doc.body.dataset.textSize = state.effectiveTextSize ?? state.textSize;
     doc.body.dataset.effects = state.effectiveReducedEffects ? 'reduced' : 'full';
     $('creator-text-face').value = state.textFace;
-    $('creator-text-size').value = state.textSize;
+    renderTextSizeControl($('creator-text-size'), state.textSize);
     $('creator-reduced-effects').checked = state.reducedEffects;
     scene.update();
   });
@@ -156,6 +159,15 @@ export function attachCreatorPlayerMenu({
   listen($('creator-background-animation'), 'change', () =>
     setMenuAnimation($('creator-background-animation').checked, win),
   );
+  const animationFeedback = attachMenuAnimationFeedback($('creator-background-animation'), win);
+  listeners.push(() => animationFeedback.destroy());
+  const comfortPresets = mountComfortPresets({
+    document: doc,
+    window: win,
+    root: $('creator-panel-display'),
+    display,
+  });
+  $('creator-panel-display').prepend(comfortPresets.element);
   listen($('creator-open-settings'), 'click', () => {
     open(settings, panels.primary());
     panels.focusCategories();
@@ -331,6 +343,7 @@ export function attachCreatorPlayerMenu({
       listeners.forEach((remove) => remove());
       fullscreen.forEach((remove) => remove());
       panels.destroy();
+      comfortPresets.destroy();
       stopDisplay();
       display.dispose();
       scene.dispose();

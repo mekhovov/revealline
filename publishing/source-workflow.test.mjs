@@ -159,13 +159,14 @@ test('focused matrix retains trusted automation, two workers per host, limits an
   assert.match(shards, /timeout-minutes: 90/u);
   assert.match(
     shards,
-    /fail-fast: false\n      max-parallel: 4\n      matrix:\n        shard: \[1, 2, 3, 4\]/u,
+    /fail-fast: false\n      max-parallel: 4\n      matrix: \$\{\{ fromJSON\(needs.preflight.outputs.focusedMatrix\) \}\}/u,
   );
   assert.match(shards, /needs: preflight/u);
   for (const condition of [
     "needs.preflight.result == 'success'",
     "needs.preflight.outputs.admission != 'hold'",
-    "needs.preflight.outputs.focusedRequired == 'true'",
+    "needs.preflight.outputs.focusedContract == 'revealline-focused-plan.v2'",
+    "needs.preflight.outputs.focusedShards != '0'",
   ])
     assert.ok(shards.includes(condition), condition);
   for (const name of ['before', 'after'])
@@ -176,7 +177,8 @@ test('focused matrix retains trusted automation, two workers per host, limits an
   );
   assert.match(shards, /EXPECTED_AUTOMATION: \$\{\{ github.workflow_sha \}\}/u);
   assert.match(shards, /ref: \$\{\{ github.workflow_sha \}\}\n          path: automation/u);
-  assert.ok(shards.includes('--shard ${{ matrix.shard }}/4'));
+  assert.ok(shards.includes('--shard ${{ matrix.shard }}'));
+  assert.ok(shards.includes('--plan-sha256 "$EXPECTED_PLAN_SHA256"'));
   assert.ok(shards.includes('--receipt "$RUNNER_TEMP/focused-shard/receipt.json"'));
   assert.ok(shards.includes('--admission "$RUNNER_TEMP/preflight-admission/admission.json"'));
   assert.match(shards, /set -euo pipefail\n          mkdir -p "\$RUNNER_TEMP\/focused-shard"/u);
@@ -198,9 +200,11 @@ test('focused matrix retains trusted automation, two workers per host, limits an
     /runFocusedCommandsParallel\(partition\?\.commands \?\? execution.commands,\s*\{\s*root,\s*concurrency: 2/u,
   );
   assert.match(runner, /command\.timeoutMs \?\? timeoutMs/u);
+  const compact = await fs.readFile(new URL('./focused-compact.mjs', import.meta.url), 'utf8');
+  assert.match(compact, /execute\(commands, \{ root: options.root, concurrency: 2 \}\)/u);
 });
 
-test('aggregate preserves the required focused status and rejects any nonsuccess matrix result', async () => {
+test('positive-work aggregate preserves focused status and rejects nonsuccess or invalid matrix results', async () => {
   const { spawnSync } = await import('node:child_process');
   const source = await fs.readFile(new URL('deploy-pages.yml', workflows), 'utf8');
   const aggregate = source.split('\n  focused:\n')[1]?.split('\n  test:\n')[0];
@@ -208,7 +212,8 @@ test('aggregate preserves the required focused status and rejects any nonsuccess
   for (const condition of [
     "needs.preflight.result == 'success'",
     "needs.preflight.outputs.admission != 'hold'",
-    "needs.preflight.outputs.focusedRequired == 'true'",
+    "needs.preflight.outputs.focusedContract == 'revealline-focused-plan.v2'",
+    "needs.preflight.outputs.focusedShards != '0'",
   ])
     assert.ok(aggregate.includes(condition), condition);
   assert.match(aggregate, /needs: \[preflight, focused_shards\]/u);
@@ -216,46 +221,314 @@ test('aggregate preserves the required focused status and rejects any nonsuccess
   assert.match(aggregate, /ref: \$\{\{ github.workflow_sha \}\}\n          path: automation/u);
   assert.doesNotMatch(aggregate, /path: source|npm ci|working-directory: source/u);
   assert.match(aggregate, /SHARDS_RESULT: \$\{\{ needs.focused_shards.result \}\}/u);
-  const guard = aggregate.match(/        run: (test "\$SHARDS_RESULT" = success)\n/u)?.[1];
+  const guard = aggregate.match(/        run: \|\n([\s\S]*?)\n\n/u)?.[1];
   assert.ok(guard);
-  for (const status of ['success', 'failure', 'cancelled', 'skipped', '']) {
-    const result = spawnSync('bash', ['-c', guard], {
-      env: { ...process.env, SHARDS_RESULT: status },
-      timeout: 1000,
-    });
-    assert.equal(result.status === 0, status === 'success', status);
-  }
+  for (const count of ['0', '1', '2', '3', '4', '5', ''])
+    for (const status of ['success', 'failure', 'cancelled', 'skipped', '']) {
+      const result = spawnSync('bash', ['-c', guard], {
+        env: { ...process.env, SHARDS_RESULT: status, SHARDS_COUNT: count },
+        timeout: 1000,
+      });
+      assert.equal(
+        result.status === 0,
+        /^[1-4]$/u.test(count) && status === 'success',
+        `${count}/${status}`,
+      );
+    }
   assert.ok(
     aggregate.includes('pattern: focused-shard-${{ github.run_id }}-${{ github.run_attempt }}-*'),
   );
   assert.match(aggregate, /merge-multiple: false/u);
-  assert.ok(aggregate.includes('--verify-shards "$RUNNER_TEMP/focused-shards"'));
+  assert.ok(aggregate.includes('focused-compact-cli.mjs verify'));
+  assert.ok(aggregate.includes('--receipts "$RUNNER_TEMP/focused-shards"'));
   assert.ok(
-    aggregate.includes(
-      '--artifact-prefix "focused-shard-${{ github.run_id }}-${{ github.run_attempt }}-"',
-    ),
+    aggregate.includes('--prefix "focused-shard-${{ github.run_id }}-${{ github.run_attempt }}-"'),
   );
   assert.ok(aggregate.includes('--admission "$RUNNER_TEMP/preflight-admission/admission.json"'));
-  assert.ok(aggregate.includes('--test-policy automation/publishing/test-policy.json'));
+  assert.ok(aggregate.includes('--automation automation'));
+  assert.ok(aggregate.includes('--plan-sha256 "$EXPECTED_PLAN_SHA256"'));
   const ready = source.split('\n  release-ready:\n')[1];
   assert.match(ready, /if: \$\{\{ !cancelled\(\) && github.event_name == 'pull_request' \}\}/u);
-  assert.match(ready, /needs: \[preflight, focused, test, build\]/u);
+  assert.match(ready, /needs: \[preflight, focused_shards, focused, test, build\]/u);
   assert.match(ready, /FOCUSED_RESULT: \$\{\{ needs.focused.result \}\}/u);
   assert.ok(ready.includes('test "$FOCUSED_RESULT" = success'));
-  assert.ok(ready.includes('test "$FOCUSED_RESULT" = skipped'));
+  assert.ok(ready.includes('test "$FOCUSED_CONTRACT" = revealline-focused-plan.v2'));
+});
+async function fieldKitArtifactFixture(t) {
+  const os = await import('node:os');
+  const path = await import('node:path');
+  const { createHash } = await import('node:crypto');
+  const { promisify } = await import('node:util');
+  const { execFile } = await import('node:child_process');
+  const execute = promisify(execFile);
+  const root = await fs.mkdtemp(path.join(os.tmpdir(), 'field-kit-artifact-control-'));
+  t.after(() => fs.rm(root, { recursive: true, force: true }));
+  const output = path.join(root, '.cache/field-kit-candidate');
+  await fs.mkdir(path.join(output, 'compiled'), { recursive: true });
+  const files = new Map([
+    ['production.rltheme', Buffer.from('isolated ledger fixture')],
+    ['compiled/manifest.json', Buffer.from('{"format":"fixture"}\n')],
+    ['compiled/studio.json', Buffer.from('{"id":"fixture"}\n')],
+  ]);
+  for (const [name, bytes] of files) await fs.writeFile(path.join(output, name), bytes);
+  const review = {
+    format: 'revealline-field-kit-candidate.v1',
+    source: {
+      sourceRevision: 'a'.repeat(40),
+      sourceTree: 'b'.repeat(40),
+      aggregateSha256: 'c'.repeat(64),
+    },
+    files: [...files].map(([name, bytes]) => ({
+      path: name,
+      bytes: bytes.length,
+      sha256: createHash('sha256').update(bytes).digest('hex'),
+    })),
+  };
+  const save = () => fs.writeFile(path.join(output, 'review.json'), JSON.stringify(review));
+  await save();
+  const source = await fs.readFile(new URL('company-edition-candidate.yml', workflows), 'utf8');
+  const match = source.match(
+    /node --input-type=module <<'FIELD_KIT_ARTIFACT'\n([\s\S]+?)\n          FIELD_KIT_ARTIFACT/u,
+  );
+  assert(match, 'The exact workflow artifact verifier must be present.');
+  const script = match[1].replace(/^          /gmu, '');
+  const env = {
+    ...process.env,
+    EXPECTED_FIELD_KIT_SOURCE: 'a'.repeat(40),
+    FIELD_KIT_SOURCE_TREE: 'b'.repeat(40),
+    FIELD_KIT_WORKFLOW_SHA: 'a'.repeat(40),
+    GITHUB_SHA: 'a'.repeat(40),
+    GITHUB_REPOSITORY: 'mekhovov/revealline',
+    GITHUB_RUN_ID: '123',
+    GITHUB_RUN_ATTEMPT: '2',
+  };
+  return {
+    root,
+    output,
+    review,
+    env,
+    save,
+    path,
+    run: () =>
+      execute(process.execPath, ['--input-type=module', '-e', script], {
+        cwd: root,
+        env,
+        timeout: 5000,
+        maxBuffer: 256 * 1024,
+      }),
+    binding: () =>
+      fs
+        .readFile(path.join(root, '.cache/field-kit-candidate-binding.json'), 'utf8')
+        .then(JSON.parse),
+  };
+}
+
+test('Field Kit candidate is an optional exact-source manual step without adoption or new jobs', async () => {
+  const source = await fs.readFile(new URL('company-edition-candidate.yml', workflows), 'utf8');
+  assert.deepEqual(
+    [...source.split('\njobs:\n')[1].matchAll(/^  ([a-z-]+):$/gmu)].map((m) => m[1]),
+    ['optional-practice', 'candidate'],
+  );
+  assert.match(source, /field_kit_candidate:\n[\s\S]+?default: false\n        type: boolean/u);
+  const candidate = source.split('\n  candidate:\n')[1];
+  const route = candidate
+    .split('      - name: Create and reproduce isolated Field Kit candidate\n')[1]
+    .split('      - name: Report qualification boundary\n')[0];
+  assert(route);
+  const condition =
+    "github.event_name == 'workflow_dispatch' && inputs.field_kit_candidate && github.repository == 'mekhovov/revealline'";
+  assert.equal(route.split('if: ' + condition).length - 1, 2);
+  assert.match(route, /steps\.field_kit_candidate\.outcome == 'success'/u);
+  assert.match(source, /permissions:\n  contents: read/u);
+  assert.match(candidate, /persist-credentials: false/u);
+  assert.match(route, /EXPECTED_FIELD_KIT_SOURCE: \$\{\{ inputs\.field_kit_source_sha \}\}/u);
+  assert.equal(
+    route.split('test "$(git rev-parse HEAD)" = "$EXPECTED_FIELD_KIT_SOURCE"').length - 1,
+    3,
+  );
+  assert.equal(
+    route.split('test -z "$(git status --porcelain --untracked-files=all)"').length - 1,
+    3,
+  );
+  for (const flag of ['--candidate', '--check-candidate'])
+    assert.ok(
+      route.includes(
+        'timeout --signal=TERM --kill-after=30s 300s node scripts/produce-field-kit-theme.mjs ' +
+          flag +
+          ' .cache/field-kit-candidate',
+      ),
+    );
+  assert.match(route, /timeout-minutes: 15/u);
+  assert.match(route, /timeout-minutes: 5/u);
+  assert.match(
+    route,
+    /name: field-kit-candidate-\$\{\{ github\.sha \}\}-\$\{\{ github\.run_id \}\}-\$\{\{ github\.run_attempt \}\}/u,
+  );
+  assert.match(route, /if-no-files-found: error/u);
+  assert.match(route, /retention-days: 14/u);
+  assert.doesNotMatch(
+    route,
+    /--write|continue-on-error|git (?:add|commit|push)|download-artifact|contents: write/u,
+  );
+});
+
+test('Field Kit artifact verifier binds exact bytes to source and run without granting approval', async (t) => {
+  const fixture = await fieldKitArtifactFixture(t);
+  await fixture.run();
+  const binding = await fixture.binding();
+  assert.equal(binding.sourceRevision, fixture.env.EXPECTED_FIELD_KIT_SOURCE);
+  assert.equal(binding.sourceTree, fixture.env.FIELD_KIT_SOURCE_TREE);
+  assert.equal(binding.runId, 123);
+  assert.equal(binding.runAttempt, 2);
+  assert.equal(binding.files.length, 4);
+  assert.deepEqual(
+    binding.files.map((file) => file.path),
+    ['compiled/manifest.json', 'compiled/studio.json', 'production.rltheme', 'review.json'],
+  );
+  assert(binding.files.every((file) => /^[a-f0-9]{64}$/u.test(file.sha256)));
+  assert.equal(
+    binding.totalBytes,
+    binding.files.reduce((sum, file) => sum + file.bytes, 0),
+  );
+  assert.equal(binding.productionAdopted, false);
+  assert.equal(binding.continuationApproved, false);
+  await assert.rejects(fixture.run(), /EEXIST/u);
+});
+
+test('Field Kit artifacts reject moved or foreign source and inconsistent file declarations', async (t) => {
+  const changes = [
+    (f) => {
+      f.env.GITHUB_SHA = 'd'.repeat(40);
+    },
+    (f) => {
+      f.env.FIELD_KIT_WORKFLOW_SHA = 'd'.repeat(40);
+    },
+    (f) => {
+      f.env.GITHUB_REPOSITORY = 'foreign/repository';
+    },
+    (f) => {
+      f.env.GITHUB_RUN_ATTEMPT = '0';
+    },
+    (f) => {
+      f.review.source.sourceRevision = 'd'.repeat(40);
+    },
+    (f) => {
+      f.review.source.sourceTree = 'd'.repeat(40);
+    },
+    (f) => {
+      f.review.files[0].sha256 = 'd'.repeat(64);
+    },
+    (f) => {
+      f.review.files[0].bytes++;
+    },
+    (f) => {
+      f.review.files.push({ ...f.review.files[0] });
+    },
+    (f) => {
+      f.review.files[0].path = '../production.rltheme';
+    },
+    (f) => {
+      f.review.files[0].path = 'compiled/.hidden';
+    },
+    async (f) => {
+      await fs.unlink(f.path.join(f.output, 'production.rltheme'));
+    },
+    async (f) => {
+      await fs.writeFile(f.path.join(f.output, 'extra.json'), '{}');
+    },
+  ];
+  for (const [index, change] of changes.entries())
+    await t.test(String(index + 1), async (t) => {
+      const fixture = await fieldKitArtifactFixture(t);
+      await change(fixture);
+      await fixture.save();
+      await assert.rejects(fixture.run());
+      await assert.rejects(fixture.binding(), /ENOENT/u);
+    });
+});
+
+test('Field Kit artifact output caps and linked-file rejection apply before upload', async (t) => {
+  const changes = [
+    {
+      name: 'linked candidate file',
+      error: /Candidate links or special files are forbidden/u,
+      mutate: async (f) => {
+        await fs.unlink(f.path.join(f.output, 'production.rltheme'));
+        await fs.symlink('compiled/studio.json', f.path.join(f.output, 'production.rltheme'));
+      },
+    },
+    {
+      name: 'oversized candidate file',
+      error: /Candidate output exceeds its bound/u,
+      mutate: async (f) => {
+        const file = await fs.open(f.path.join(f.output, 'production.rltheme'), 'r+');
+        try {
+          await file.truncate(64 * 1024 * 1024 + 1);
+        } finally {
+          await file.close();
+        }
+      },
+    },
+    {
+      name: 'oversized candidate receipt',
+      error: /Invalid candidate receipt size or type/u,
+      mutate: async (f) => {
+        const file = await fs.open(f.path.join(f.output, 'review.json'), 'r+');
+        try {
+          await file.truncate(2 * 1024 * 1024 + 1);
+        } finally {
+          await file.close();
+        }
+      },
+    },
+    {
+      name: 'too many candidate files',
+      error: /Candidate file count exceeds its bound/u,
+      mutate: async (f) => {
+        while (f.review.files.length < 512)
+          f.review.files.push({
+            path: 'compiled/file-' + f.review.files.length,
+            bytes: 0,
+            sha256: 'd'.repeat(64),
+          });
+        await f.save();
+      },
+    },
+    {
+      name: 'aggregate candidate bytes exceed the upload bound',
+      error: /Declared candidate output exceeds its bound/u,
+      mutate: async (f) => {
+        for (const file of f.review.files) file.bytes = 64 * 1024 * 1024;
+        await f.save();
+      },
+    },
+  ];
+  for (const change of changes)
+    await t.test(change.name, async (t) => {
+      const fixture = await fieldKitArtifactFixture(t);
+      await change.mutate(fixture);
+      await assert.rejects(fixture.run(), change.error);
+      await assert.rejects(fixture.binding(), /ENOENT/u);
+    });
 });
 
 test('release policy rejects failed dependencies and keeps only explicit policy skips', async () => {
   const { spawnSync } = await import('node:child_process');
   const source = await fs.readFile(new URL('deploy-pages.yml', workflows), 'utf8');
   const ready = source.split('\n  release-ready:\n')[1];
-  const body = ready?.split('        run: |\n')[1]?.replace(/^ {10}/gmu, '');
+  // The v2 job first verifies typed zero-work evidence. Select the final policy
+  // step by name; the job's first run block is no longer the admission policy.
+  const policy = ready?.split('      - name: Apply the selected PR gate policy\n')[1];
+  const body = policy?.split('        run: |\n')[1]?.replace(/^ {10}/gmu, '');
   assert.ok(body);
   const passing = {
     ADMISSION: 'release',
     PREFLIGHT_RESULT: 'success',
-    FOCUSED_REQUIRED: 'true',
+    FOCUSED_CONTRACT: 'revealline-focused-plan.v2',
+    FOCUSED_SHARDS: '1',
     FOCUSED_RESULT: 'success',
+    SHARDS_RESULT: 'success',
+    ZERO_FOCUSED_RESULT: 'skipped',
     BUILD_RESULT: 'success',
     FULL_CI: 'true',
     TEST_RESULT: 'success',
@@ -282,10 +555,38 @@ test('release policy rejects failed dependencies and keeps only explicit policy 
     check({ ADMISSION, BUILD_RESULT: 'skipped', TEST_RESULT: 'skipped', FULL_CI: 'false' }, true);
   }
   check({ ADMISSION: 'release-evidence', TEST_RESULT: 'skipped', FULL_CI: 'false' }, true);
-  check({ FOCUSED_REQUIRED: 'false', FOCUSED_RESULT: 'skipped' }, true);
-  check({ FOCUSED_REQUIRED: 'false', FOCUSED_RESULT: 'success' }, false);
-  check({ FOCUSED_REQUIRED: '' }, false);
+  // The former focusedRequired=false case is now authenticated zero work:
+  // both jobs skip, but only an explicit successful v2 zero-work proof admits it.
+  const zeroWork = {
+    FOCUSED_SHARDS: '0',
+    FOCUSED_RESULT: 'skipped',
+    SHARDS_RESULT: 'skipped',
+    ZERO_FOCUSED_RESULT: 'success',
+  };
+  check(zeroWork, true);
+  check({ ...zeroWork, FOCUSED_RESULT: 'success' }, false);
+  for (const FOCUSED_CONTRACT of ['', 'revealline-focused-plan.v1', 'unknown']) {
+    check({ FOCUSED_CONTRACT }, false);
+    check({ ...zeroWork, FOCUSED_CONTRACT }, false);
+  }
+  for (const FOCUSED_SHARDS of ['', '5', '-1', 'true']) {
+    check({ FOCUSED_SHARDS }, false);
+  }
+  for (const SHARDS_RESULT of ['success', 'failure', 'cancelled', '']) {
+    check({ ...zeroWork, SHARDS_RESULT }, false);
+  }
+  for (const ZERO_FOCUSED_RESULT of ['failure', 'cancelled', 'skipped', '']) {
+    check({ ...zeroWork, ZERO_FOCUSED_RESULT }, false);
+  }
+  // The policy trusts nonzero aggregate success only after the existing worker
+  // guard/receipt verifier; assert that those admission dependencies remain.
+  assert.match(ready, /needs: \[preflight, focused_shards, focused, test, build\]/u);
+  assert.match(ready, /ZERO_FOCUSED_RESULT: \$\{\{ steps\.zero_focused\.outcome \}\}/u);
+  assert.ok(ready.includes('test "$WORKERS_RESULT" = skipped'));
+  assert.ok(ready.includes('focused-compact-cli.mjs verify'));
+  assert.ok(ready.includes('--plan-sha256 "$EXPECTED_PLAN_SHA256"'));
   check({ ADMISSION: 'hold' }, false);
   check({ ADMISSION: 'unknown' }, false);
   check({ TEST_RESULT: 'skipped', FULL_CI: 'false' }, true);
 });
+

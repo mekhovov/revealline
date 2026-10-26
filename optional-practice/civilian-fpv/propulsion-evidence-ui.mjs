@@ -4,6 +4,7 @@ import {
   createPropulsionEvidenceEvaluator,
   createSyntheticPropulsionEvidence,
 } from './propulsion-evidence.mjs';
+import { solvePropulsionEvidenceLoad } from './propulsion-load.mjs';
 import {
   validateAircraftPhysics,
   aircraftMotorPoint,
@@ -102,8 +103,51 @@ export function mountPropulsionEvidencePanel({
     comparison = create('p', content),
     comparisonNote = create('p', content);
   comparison.dataset.role = 'comparison';
+  const load = create('fieldset', content),
+    loadHeading = create('legend', load),
+    loadIntro = create('p', load);
+  const loadField = (action, max) => {
+    const label = create('label', load),
+      text = create('span', label),
+      input = create('input', label);
+    label.style.display = 'block';
+    input.type = 'number';
+    input.min = '0';
+    input.max = String(max);
+    input.step = 'any';
+    input.dataset.action = action;
+    return { text, input };
+  };
+  const openVoltage = loadField('load-open-voltage', 1000),
+    resistance = loadField('load-resistance', 1000),
+    copies = loadField('load-copies', 4),
+    currentLimit = loadField('load-current-limit', 40000);
+  copies.input.min = '1';
+  copies.input.step = '1';
+  copies.input.value = '1';
+  const basisLabel = create('label', load),
+    basis = create('input', basisLabel),
+    basisText = create('span', basisLabel);
+  basis.type = 'checkbox';
+  basis.checked = false;
+  basis.dataset.action = 'load-current-basis';
+  const calculate = create('button', load);
+  calculate.type = 'button';
+  calculate.dataset.action = 'calculate-load';
+  const loadStatus = create('p', load),
+    loadSource = create('p', load),
+    loadValues = create('dl', load),
+    loadLimits = create('p', load);
+  loadStatus.dataset.role = 'load-status';
+  loadStatus.setAttribute('role', 'status');
+  loadStatus.setAttribute('aria-live', 'polite');
+  loadSource.dataset.role = 'load-source';
+  loadValues.dataset.role = 'load-values';
+  loadLimits.dataset.role = 'load-limits';
   const disposers = [];
   let evaluator = null,
+    loadResult = null,
+    loadStatusCode = 'idle',
     disposed = false,
     generation = 0,
     statusCode = 'idle';
@@ -126,6 +170,218 @@ export function mountPropulsionEvidencePanel({
       current: t('Current', 'Струм'),
     })[field];
   const unavailable = () => t('Unavailable', 'Недоступно');
+  const loadNumber = (value) => (Number.isFinite(value) ? String(value) : unavailable());
+  function renderLoad() {
+    loadHeading.textContent = t('Battery load calculation', 'Розрахунок навантаження батареї');
+    loadIntro.textContent = t(
+      'Use the imported voltage sweep at its fixed ESC command. Enter hypothetical battery inputs manually; nothing is taken from or applied to an aircraft.',
+      'Використайте імпортований ряд напруг за сталої команди ESC. Введіть гіпотетичні параметри батареї вручну; налаштування дрона не використовуються й не змінюються.',
+    );
+    openVoltage.text.textContent = t('Open-circuit voltage (V)', 'Напруга без навантаження (В)');
+    resistance.text.textContent = t('Series resistance (Ω)', 'Послідовний опір (Ом)');
+    copies.text.textContent = t(
+      'Identical independent copies of this one-rotor path (1–4)',
+      'Однакові незалежні копії цього ряду даних одного ротора (1–4)',
+    );
+    currentLimit.text.textContent = t(
+      'Optional total-current warning threshold (A; blank for none)',
+      'Необов’язковий поріг попередження про сумарний струм (А; можна залишити порожнім)',
+    );
+    basisText.textContent = t(
+      'I declare that the source current is DC input current at the recorded terminal voltage, not motor phase current.',
+      'Я заявляю, що струм джерела є вхідним постійним струмом за зафіксованої напруги на клемах, а не фазним струмом мотора.',
+    );
+    calculate.textContent = t('Calculate load', 'Розрахувати навантаження');
+    calculate.disabled = !evaluator || evaluator.axis.field !== 'voltage';
+    loadLimits.textContent = t(
+      'Calculated central values only; displayed digits do not establish measurement accuracy. Battery voltage and resistance stay fixed; identical loads share one bus without interactions. Current basis is your declaration; measurement wiring is unverified. Uncertainty is not propagated. No command-to-RPM conversion, aircraft prediction, battery discharge or current regulation is modeled.',
+      'Лише розраховані центральні значення; кількість показаних цифр не визначає точність вимірювання. Напруга батареї та опір сталі; однакові навантаження мають спільне живлення без взаємного впливу. Тип струму визначено вашою заявою; схему вимірювання не перевірено. Поширення похибок не розраховується. Перетворення команди на оберти, поведінка дрона, розряд батареї та регулювання струму не моделюються.',
+    );
+    const reasons = {
+      'voltage-axis-required': t(
+        'A voltage-axis dataset is required; command and RPM sweeps cannot be reinterpreted.',
+        'Потрібні дані з віссю напруги; ряди команд або обертів не можна переінтерпретувати.',
+      ),
+      'single-rotor-required': t(
+        'The dataset must describe one rotor, not a whole aircraft or unknown scope.',
+        'Дані мають описувати один ротор, а не весь дрон чи невідомий об’єкт.',
+      ),
+      'static-flow-required': t(
+        'Static-air conditions are required.',
+        'Потрібні умови нерухомого повітря.',
+      ),
+      'known-zero-airspeed-required': t(
+        'Every sample must have known zero airspeed.',
+        'Кожна точка має містити відому нульову швидкість потоку.',
+      ),
+      'command-unavailable': t(
+        'Every sample must include the ESC command.',
+        'Кожна точка має містити команду ESC.',
+      ),
+      'fixed-command-required': t(
+        'The ESC command must stay constant throughout the voltage sweep.',
+        'Команда ESC має бути сталою в усьому ряді напруг.',
+      ),
+      'current-unavailable': t(
+        'Current is required at every sample.',
+        'Струм потрібен у кожній точці.',
+      ),
+      'negative-current': t(
+        'Negative current is unsupported for this load calculation.',
+        'Від’ємний струм не підтримується цим розрахунком навантаження.',
+      ),
+      'nonmonotone-current': t(
+        'Current must not decrease as voltage increases, including across coverage gaps.',
+        'Струм не має зменшуватися зі збільшенням напруги, зокрема між розривами даних.',
+      ),
+      'no-common-coverage': t(
+        'The paths have no common voltage coverage.',
+        'Ряди даних не мають спільного діапазону напруг.',
+      ),
+      'root-below-coverage': t(
+        'The solution lies below documented voltage coverage; no extrapolation is used.',
+        'Розв’язок нижче задокументованого діапазону напруг; екстраполяція не застосовується.',
+      ),
+      'root-above-coverage': t(
+        'The solution lies above documented voltage coverage; no extrapolation is used.',
+        'Розв’язок вище задокументованого діапазону напруг; екстраполяція не застосовується.',
+      ),
+      'root-in-coverage-gap': t(
+        'The solution falls in a gap in the source coverage; no interpolation across gaps is used.',
+        'Розв’язок потрапляє в розрив даних джерела; інтерполяція через розриви не застосовується.',
+      ),
+      'numerical-resolution': t(
+        'Numerical precision cannot resolve this operating point reliably.',
+        'Числова точність не дозволяє надійно визначити цю робочу точку.',
+      ),
+    };
+    const reason =
+      evaluator?.axis.field !== 'voltage'
+        ? reasons['voltage-axis-required']
+        : loadResult?.status === 'unavailable'
+          ? reasons[loadResult.reason]
+          : null;
+    loadStatus.textContent = reason
+      ? `${unavailable()}: ${reason}`
+      : loadResult?.status === 'limit-exceeded'
+        ? t(
+            'Warning threshold exceeded. The calculated current is not clipped or regulated.',
+            'Поріг попередження перевищено. Розрахований струм не обрізається й не регулюється.',
+          )
+        : loadResult?.status === 'solved'
+          ? t(
+              'Calculated operating point within documented coverage.',
+              'Розрахована робоча точка в задокументованих межах даних.',
+            )
+          : loadStatusCode === 'invalid'
+            ? t(
+                'Enter finite voltage and resistance from 0 to 1000, an integer copy count from 1 to 4, and an optional current threshold from 0 to 40000. Confirm the source current basis.',
+                'Введіть скінченні напругу та опір від 0 до 1000, цілу кількість копій від 1 до 4 та необов’язковий поріг струму від 0 до 40000. Підтвердьте тип струму джерела.',
+              )
+            : t(
+                'Enter the manual inputs, confirm the source current basis, then calculate. Results clear when inputs or the dataset change.',
+                'Введіть параметри вручну, підтвердьте тип струму джерела й запустіть розрахунок. Результати очищуються після зміни параметрів або набору даних.',
+              );
+    loadStatus.setAttribute('role', loadStatusCode === 'invalid' ? 'alert' : 'status');
+    loadSource.textContent = '';
+    loadValues.replaceChildren();
+    if (!loadResult) return;
+    const kind = {
+      measured: t('source declares measured data', 'джерело декларує виміряні дані'),
+      calculated: t('calculated source data', 'розраховані дані джерела'),
+      synthetic: t(
+        'synthetic source data, invented values',
+        'синтетичні дані джерела, вигадані значення',
+      ),
+    }[evaluator.evidence.source.kind];
+    const inputs = loadResult.inputs;
+    loadSource.textContent = `${evaluator.evidence.name} — ${kind}. ${t('Manual model', 'Модель із ручними параметрами')}: ${loadNumber(inputs.openVoltage)} V, ${loadNumber(inputs.resistance)} Ω; ${t('identical independent copies', 'однакові незалежні копії')}: ${loadResult.sources.length}.`;
+    if (inputs.currentLimit !== null)
+      loadSource.textContent += ` ${t('Warning threshold', 'Поріг попередження')}: ${loadNumber(inputs.currentLimit)} A.`;
+    const point = loadResult.operatingPoint;
+    if (!point) return;
+    const path = point.paths[0];
+    loadSource.textContent += ` ${
+      path.status === 'sample'
+        ? t('Uses an original source sample.', 'Використано початкову точку джерела.')
+        : t(
+            'Uses linear interpolation within one covered interval.',
+            'Використано лінійну інтерполяцію в одному задокументованому інтервалі.',
+          )
+    }`;
+    for (const [label, value, unit] of [
+      [t('Fixed ESC command', 'Стала команда ESC'), path.values.command, evaluator.units.command],
+      [t('Terminal voltage', 'Напруга на клемах'), point.voltage, 'V'],
+      [t('Total DC input current', 'Сумарний вхідний постійний струм'), point.current, 'A'],
+      [
+        t('Power at open-circuit voltage', 'Потужність за напруги без навантаження'),
+        inputs.openVoltage * point.current,
+        'W',
+      ],
+      [
+        t('Power delivered to loads', 'Потужність, передана навантаженням'),
+        point.electricalWatts,
+        'W',
+      ],
+      [t('Series-resistance loss', 'Втрати на послідовному опорі'), point.batteryLossWatts, 'W'],
+      [
+        t(
+          'Equation residual V + R × I − open voltage',
+          'Нев’язка рівняння V + R × I − напруга без навантаження',
+        ),
+        point.residualVolts,
+        'V',
+      ],
+      [
+        t('Numerical residual tolerance', 'Числовий допуск нев’язки'),
+        point.residualToleranceVolts,
+        'V',
+      ],
+      [
+        t('Current per identical path', 'Струм на один однаковий ряд даних'),
+        path.values.current,
+        'A',
+      ],
+      [t('Thrust per identical path', 'Тяга на один однаковий ряд даних'), path.values.thrust, 'N'],
+      [
+        t('Shaft torque per identical path', 'Крутний момент вала на один однаковий ряд даних'),
+        path.values.torque,
+        'N·m',
+      ],
+    ]) {
+      create('dt', loadValues).textContent = `${label} (${unit})`;
+      create('dd', loadValues).textContent = loadNumber(value);
+    }
+  }
+  function clearLoad() {
+    if (disposed) return;
+    loadResult = null;
+    loadStatusCode = 'idle';
+    renderLoad();
+  }
+  function calculateLoad() {
+    if (disposed || !evaluator) return;
+    clearLoad();
+    if (evaluator.axis.field !== 'voltage') return;
+    const voltage = openVoltage.input.value.trim(),
+      ohms = resistance.input.value.trim(),
+      count = Number(copies.input.value),
+      limit = currentLimit.input.value.trim();
+    try {
+      if (!voltage || !ohms || !basis.checked || !Number.isInteger(count) || count < 1 || count > 4)
+        throw new Error('Invalid manual inputs');
+      loadResult = solvePropulsionEvidenceLoad({
+        evidence: Array.from({ length: count }, () => evaluator.evidence),
+        openVoltage: Number(voltage),
+        resistance: Number(ohms),
+        currentLimit: limit === '' ? null : Number(limit),
+        currentBasis: 'dc-input-at-recorded-voltage',
+      });
+    } catch {
+      loadStatusCode = 'invalid';
+    }
+    renderLoad();
+  }
   function metadataRow(label, value) {
     create('dt', metadataList).textContent = label;
     create('dd', metadataList).textContent = value === null ? unavailable() : String(value);
@@ -313,6 +569,7 @@ export function mountPropulsionEvidencePanel({
     }[statusCode];
     status.setAttribute('role', ['invalid', 'large'].includes(statusCode) ? 'alert' : 'status');
     content.hidden = !evaluator;
+    renderLoad();
     if (!evaluator) return;
     const evidence = evaluator.evidence,
       source = evidence.source;
@@ -416,6 +673,9 @@ export function mountPropulsionEvidencePanel({
   function adopt(source) {
     const candidate = createPropulsionEvidenceEvaluator(source);
     evaluator = candidate;
+    loadResult = null;
+    loadStatusCode = 'idle';
+    basis.checked = false;
     valueInput.value = String(candidate.intervals[0][0]);
     statusCode = 'loaded';
     refresh();
@@ -469,6 +729,10 @@ export function mountPropulsionEvidencePanel({
   });
   listen(valueInput, 'input', renderPoint);
   listen(evaluateButton, 'click', renderPoint);
+  for (const { input } of [openVoltage, resistance, copies, currentLimit])
+    listen(input, 'input', clearLoad);
+  listen(basis, 'change', clearLoad);
+  listen(calculate, 'click', calculateLoad);
   refresh();
   return {
     root,

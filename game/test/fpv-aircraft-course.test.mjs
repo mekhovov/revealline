@@ -26,6 +26,8 @@ import {
 } from '../../optional-practice/civilian-fpv/aircraft-presets.mjs';
 import { Q } from '../../optional-practice/civilian-fpv/math.mjs';
 import { dataIdentity } from '../../game/data-json.mjs';
+import { aircraftFlightIdentities } from '../../optional-practice/civilian-fpv/advanced-aircraft-runtime.mjs';
+import { createAircraftTerrainFrame } from '../../optional-practice/civilian-fpv/aircraft-terrain.mjs';
 
 const controls = { roll: 0, pitch: 0, yaw: 0, throttle: 0.5 };
 const reseal = (value) => {
@@ -47,7 +49,7 @@ function createClient({ backend } = {}) {
   return {
     async initialize(options) {
       simulation = createAdvancedSimulation({ ...options, ...(backend ? { backend } : {}) });
-      return { telemetry: simulation.telemetry() };
+      return { telemetry: simulation.telemetry(), comparison: simulation.comparison() };
     },
     async stageTerrainFrame(frame) {
       return simulation.stageTerrainFrame(frame);
@@ -147,9 +149,21 @@ test('every preset flies Academy and World in both modes with its real geometry 
           { createClient, createMission: legacy ? createFlight : createWorldFlight },
         );
         try {
+          assert.equal(flight.referenceIdentity(), null);
           await flight.prepare();
+          const reference = flight.referenceIdentity();
+          assert.ok(Object.isFrozen(reference));
+          assert.equal(
+            reference.configurationClass,
+            aircraftFlightIdentities((await flight.readSealedSegment()).config).comparisonClass,
+          );
+          assert.equal(
+            reference.terrainIdentity,
+            flight.snapshot().advancedTelemetry.terrain.frameIdentity,
+          );
           flight.arm();
           for (let i = 0; i < 15; i++) await flight.step(controls);
+          assert.equal(flight.referenceIdentity(), reference);
           const state = flight.snapshot();
           assert.equal(state.ticks, 15, `${preset.id}/${legacy}/${mode}`);
           assert.equal(state.unscored, true);
@@ -161,6 +175,7 @@ test('every preset flies Academy and World in both modes with its real geometry 
           assert.equal((await flight.recording()).scored, false);
         } finally {
           await flight.dispose();
+          assert.equal(flight.referenceIdentity(), null);
         }
       }
 });
@@ -174,6 +189,142 @@ test('all authored courses and lessons fit the aircraft collision frame capacity
     const frame = aircraftCourseTerrain(course);
     assert.equal(frame.colliders.length, course.obstacles.length + 6, course.id);
     assert.ok(frame.colliders.every((c) => c.vertices.every(Number.isFinite)));
+  }
+});
+
+test('practice reference classes allow personal rates and camera but partition physical conditions', async (t) => {
+  await initAdvancedRuntime();
+  const references = async ({
+    edit = () => {},
+    mode = 'acro',
+    model,
+    backend,
+    terrain = false,
+  } = {}) => {
+    const settings = configuration('meteor75-analog-2022');
+    const course = structuredClone(FLIGHT_COURSES[0]);
+    edit(settings, course);
+    const flight = createAircraftCourseSession(
+      { course, mode, model, legacy: true, configuration: settings },
+      {
+        createClient: () => {
+          const client = createClient({ backend });
+          return {
+            ...client,
+            stageTerrainFrame: (frame) =>
+              client.stageTerrainFrame(
+                terrain
+                  ? createAircraftTerrainFrame({
+                      sourceIdentity: dataIdentity({ different: true }),
+                      colliders: frame.colliders,
+                    })
+                  : frame,
+              ),
+          };
+        },
+      },
+    );
+    t.after(() => flight.dispose());
+    await flight.prepare();
+    return flight.referenceIdentity();
+  };
+  const original = await references();
+  assert.deepEqual(
+    await references({
+      edit(settings) {
+        settings.response.rates.axes.roll.rate += 20;
+        settings.response.rates.axes.yaw.expo += 10;
+        settings.camera.tilt += 5;
+        settings.camera.verticalFov += 2;
+      },
+    }),
+    original,
+  );
+  for (const changed of [
+    { edit: (s) => (s.response.rates.throttle.limitType = 'scale') },
+    { edit: (s) => (s.response.rates.throttle.expo = 12) },
+    { edit: (s) => (s.advanced.controller.gains.roll.p *= 1.1) },
+    { edit: (s) => (s.advanced.aircraft.mass *= 1.1) },
+    { edit: (s) => (s.response.maxTilt += 1) },
+    { mode: 'self-level' },
+    { model: 'aircraft-course-practice.v1' },
+    { backend: 'civilian-quad-aircraft-regional.v1' },
+    { edit: (_s, c) => c.steps.acro[0].ticks++ },
+  ])
+    assert.notEqual((await references(changed)).configurationClass, original.configurationClass);
+  const alteredTerrain = await references({ terrain: true });
+  assert.equal(alteredTerrain.configurationClass, original.configurationClass);
+  assert.notEqual(alteredTerrain.terrainIdentity, original.terrainIdentity);
+});
+
+test('reference reads leave physical trajectories, mission checkpoints and recordings unchanged', async (t) => {
+  await initAdvancedRuntime();
+  for (const preset of ['meteor75-analog-2022', 'holybro-x650-v2'])
+    for (const mode of ['acro', 'self-level']) {
+      const build = () =>
+        createAircraftCourseSession(
+          { course: FLIGHT_COURSES[0], mode, legacy: true, configuration: configuration(preset) },
+          { createClient },
+        );
+      const observed = build(),
+        untouched = build();
+      t.after(() => Promise.all([observed.dispose(), untouched.dispose()]));
+      await observed.prepare();
+      await untouched.prepare();
+      const reference = observed.referenceIdentity();
+      assert.throws(() => (reference.configurationClass = 'forged'), TypeError);
+      observed.arm();
+      untouched.arm();
+      for (let tick = 0; tick < 40; tick++) {
+        assert.equal(observed.referenceIdentity(), reference);
+        const input = { ...controls, yaw: tick % 7 === 0 ? 0.1 : 0 };
+        assert.deepEqual(await observed.step(input), await untouched.step(input));
+      }
+      observed.pause();
+      untouched.pause();
+      assert.deepEqual(await observed.exportRecovery(), await untouched.exportRecovery());
+      assert.deepEqual(await observed.recording(), await untouched.recording());
+    }
+});
+
+test('missing diagnostic identities remain unavailable and a worker failure withdraws references', async (t) => {
+  await initAdvancedRuntime();
+  for (const missing of ['comparison', 'terrain', null]) {
+    const flight = createAircraftCourseSession(
+      { course: FLIGHT_COURSES[0], mode: 'acro', legacy: true, configuration: configuration() },
+      {
+        createClient: () => {
+          const client = createClient();
+          return {
+            ...client,
+            async initialize(options) {
+              const result = await client.initialize(options);
+              if (missing === 'comparison') delete result.comparison;
+              return result;
+            },
+            async commitTerrainFrame(value) {
+              const result = await client.commitTerrainFrame(value);
+              if (missing === 'terrain') delete result.telemetry.terrain.frameIdentity;
+              return result;
+            },
+            async step(...args) {
+              if (!missing) throw new Error('worker unavailable');
+              return client.step(...args);
+            },
+          };
+        },
+      },
+    );
+    t.after(() => flight.dispose());
+    await flight.prepare();
+    if (missing) assert.equal(flight.referenceIdentity(), null);
+    else assert.ok(flight.referenceIdentity());
+    flight.arm();
+    if (missing) assert.equal((await flight.step(controls)).ticks, 1);
+    else {
+      await assert.rejects(flight.step(controls), /worker unavailable/);
+      assert.equal(flight.referenceIdentity(), null);
+    }
   }
 });
 
@@ -288,12 +439,15 @@ test('current course host resumes historical v1 recovery with its original solve
   t.after(() => Promise.all([historical.dispose(), current.dispose()]));
   await historical.prepare();
   await current.prepare();
-  assert.equal(current.snapshot().advancedTelemetry.backend, 'civilian-quad-aircraft-regional.v2');
+  const freshReference = current.referenceIdentity();
+  assert.notDeepEqual(freshReference, historical.referenceIdentity());
+  assert.equal(current.snapshot().advancedTelemetry.backend, 'civilian-quad-aircraft-regional.v3');
   historical.arm();
   for (let tick = 0; tick < 30; tick++) await historical.step(controls);
   historical.pause();
   const saved = await historical.exportRecovery();
   await current.restoreRecovery(saved);
+  assert.deepEqual(current.referenceIdentity(), historical.referenceIdentity());
   assert.equal(current.snapshot().status, 'paused');
   assert.equal(current.snapshot().advancedTelemetry.backend, 'civilian-quad-aircraft-regional.v1');
   assert.deepEqual(current.snapshot().position, historical.snapshot().position);
@@ -307,6 +461,7 @@ test('current course host resumes historical v1 recovery with its original solve
   current.pause();
   const expected = await historical.exportRecovery();
   const actual = await current.exportRecovery();
+  const restoredReference = current.referenceIdentity();
   assert.equal(
     actual.physical.hash,
     expected.physical.hash,
@@ -318,6 +473,7 @@ test('current course host resumes historical v1 recovery with its original solve
     invalid.physical.config.backend = backend;
     reseal(invalid);
     await assert.rejects(current.restoreRecovery(invalid), /backend/);
+    assert.equal(current.referenceIdentity(), restoredReference);
     assert.equal((await current.exportRecovery()).physical.hash, actual.physical.hash);
   }
 });
@@ -524,9 +680,11 @@ test('failed or cancelled detached mission adoption preserves both current owner
     await flight.step(controls);
     flight.pause();
     const saved = await flight.exportRecovery();
+    const reference = flight.referenceIdentity();
     failMissionRestore = true;
     await assert.rejects(flight.restoreRecovery(saved), /Injected mission/);
     assert.deepEqual(await flight.exportRecovery(), saved);
+    assert.equal(flight.referenceIdentity(), reference);
     failMissionRestore = false;
     let release;
     delayRestore = new Promise((resolve) => {
@@ -545,6 +703,7 @@ test('failed or cancelled detached mission adoption preserves both current owner
     await rejected;
     delayRestore = null;
     assert.deepEqual(await flight.exportRecovery(), saved);
+    assert.equal(flight.referenceIdentity(), reference);
     flight.arm();
     assert.equal((await flight.step(controls)).ticks, 2);
   } finally {

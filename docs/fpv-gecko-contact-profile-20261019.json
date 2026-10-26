@@ -1,0 +1,499 @@
+{
+  "format": "FpvGeckoContactProfile.v1",
+  "startedAt": "2026-10-19T03:44:56.167Z",
+  "sourceRevision": "7571ecc909d04f78dfded8ff17639095a53c2b52",
+  "sourceTree": "64c4bf2180ad294f5e70ef87e8576072236419c7",
+  "sources": [
+    {
+      "path": "game/test/helpers/fpv-contact-tape.mjs",
+      "bytes": 6133,
+      "sha256": "7ccaa9efe91304ede99eb0d0cef5305651b6a35025288179f0eda36544fdfa17"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/vendor/rapier/rapier.mjs",
+      "bytes": 4340292,
+      "sha256": "02dc6a4e2fffc013bab08fbb44fa68f501d8303615e9afe4c7d89ad4eedda0d0"
+    },
+    {
+      "path": "docs/evidence/fpv-contact-tape-20261019.json.gz",
+      "bytes": 194878,
+      "sha256": "f39aef217ef6f356339cdd07221eea672a3d3d8a5cc912daf104e2864fc0c7eb"
+    },
+    {
+      "path": "docs/fpv-contact-tape-diagnostic-20261019.json",
+      "bytes": 26314,
+      "sha256": "b7c2125b80091746a4270e72fd10bea486df3a057f8c59f65ca312dc20b83b85"
+    },
+    {
+      "path": "scripts/profile-fpv-gecko-contact.mjs",
+      "bytes": 8900,
+      "sha256": "0318b2d6cc824636cb450cfc3edc7cc002f415ca2379c518b5b670d370ca4a18"
+    }
+  ],
+  "machine": {
+    "architecture": "arm64",
+    "platform": "darwin",
+    "release": "25.6.0",
+    "cpu": "Apple M4 Pro"
+  },
+  "environment": {
+    "MOZ_PROFILER_STARTUP": "1",
+    "MOZ_PROFILER_STARTUP_ENTRIES": "16777216",
+    "MOZ_PROFILER_STARTUP_DURATION": "15",
+    "MOZ_PROFILER_STARTUP_INTERVAL": "1",
+    "MOZ_PROFILER_STARTUP_FEATURES": "js,stackwalk,cpu,processcpu",
+    "MOZ_PROFILER_STARTUP_FILTERS": "GeckoMain,DOM Worker",
+    "MOZ_PROFILER_SHUTDOWN": "/Users/oleksandr.mekhovov/work/my_projects/fpv-firefox-profile-20261019-results-2/gecko-profile.json"
+  },
+  "results": [
+    {
+      "matched": true,
+      "completedSteps": 1000,
+      "firstMismatch": null,
+      "profilerEnabled": false,
+      "bins": [
+        {
+          "fromSubstep": 501,
+          "steps": 100,
+          "worldStepMs": 170
+        },
+        {
+          "fromSubstep": 601,
+          "steps": 100,
+          "worldStepMs": 127
+        },
+        {
+          "fromSubstep": 701,
+          "steps": 100,
+          "worldStepMs": 119
+        },
+        {
+          "fromSubstep": 801,
+          "steps": 100,
+          "worldStepMs": 121
+        },
+        {
+          "fromSubstep": 901,
+          "steps": 100,
+          "worldStepMs": 117
+        },
+        {
+          "fromSubstep": 1001,
+          "steps": 100,
+          "worldStepMs": 113
+        },
+        {
+          "fromSubstep": 1101,
+          "steps": 100,
+          "worldStepMs": 111
+        },
+        {
+          "fromSubstep": 1201,
+          "steps": 100,
+          "worldStepMs": 118
+        },
+        {
+          "fromSubstep": 1301,
+          "steps": 100,
+          "worldStepMs": 124
+        },
+        {
+          "fromSubstep": 1401,
+          "steps": 100,
+          "worldStepMs": 128
+        }
+      ],
+      "worldStepMs": 1248,
+      "finalWorldSha256": "d0fb6c91f8bf6ca8b5243c3814ee79fcad8a464469fc2779ae415b6b1a64b279",
+      "finalBody": {
+        "position": {
+          "x": 0.0019756571855396032,
+          "y": 0.02498309500515461,
+          "z": 0.048094723373651505
+        },
+        "rotation": {
+          "x": -0.00002141713775927201,
+          "y": 0.06268098205327988,
+          "z": -0.000002236779664599453,
+          "w": 0.9980337023735046
+        },
+        "velocity": {
+          "x": 7.871065008657752e-7,
+          "y": 7.318126904465316e-7,
+          "z": 1.415202319776654e-7
+        },
+        "angularVelocity": {
+          "x": 0.000007771986020088661,
+          "y": 1.217215270798988e-7,
+          "z": -0.00001836241062846966
+        },
+        "sleeping": false,
+        "enabled": true
+      },
+      "initialContact": {
+        "bodies": 1,
+        "colliders": 11,
+        "activeBodies": 1,
+        "pairs": 5,
+        "manifolds": 10,
+        "contacts": 40
+      },
+      "finalContact": {
+        "bodies": 1,
+        "colliders": 11,
+        "activeBodies": 1,
+        "pairs": 5,
+        "manifolds": 10,
+        "contacts": 40
+      },
+      "repeat": 0
+    },
+    {
+      "matched": true,
+      "completedSteps": 1000,
+      "firstMismatch": null,
+      "profilerEnabled": false,
+      "bins": [
+        {
+          "fromSubstep": 501,
+          "steps": 100,
+          "worldStepMs": 113
+        },
+        {
+          "fromSubstep": 601,
+          "steps": 100,
+          "worldStepMs": 119
+        },
+        {
+          "fromSubstep": 701,
+          "steps": 100,
+          "worldStepMs": 112
+        },
+        {
+          "fromSubstep": 801,
+          "steps": 100,
+          "worldStepMs": 116
+        },
+        {
+          "fromSubstep": 901,
+          "steps": 100,
+          "worldStepMs": 136
+        },
+        {
+          "fromSubstep": 1001,
+          "steps": 100,
+          "worldStepMs": 106
+        },
+        {
+          "fromSubstep": 1101,
+          "steps": 100,
+          "worldStepMs": 115
+        },
+        {
+          "fromSubstep": 1201,
+          "steps": 100,
+          "worldStepMs": 106
+        },
+        {
+          "fromSubstep": 1301,
+          "steps": 100,
+          "worldStepMs": 119
+        },
+        {
+          "fromSubstep": 1401,
+          "steps": 100,
+          "worldStepMs": 116
+        }
+      ],
+      "worldStepMs": 1158,
+      "finalWorldSha256": "d0fb6c91f8bf6ca8b5243c3814ee79fcad8a464469fc2779ae415b6b1a64b279",
+      "finalBody": {
+        "position": {
+          "x": 0.0019756571855396032,
+          "y": 0.02498309500515461,
+          "z": 0.048094723373651505
+        },
+        "rotation": {
+          "x": -0.00002141713775927201,
+          "y": 0.06268098205327988,
+          "z": -0.000002236779664599453,
+          "w": 0.9980337023735046
+        },
+        "velocity": {
+          "x": 7.871065008657752e-7,
+          "y": 7.318126904465316e-7,
+          "z": 1.415202319776654e-7
+        },
+        "angularVelocity": {
+          "x": 0.000007771986020088661,
+          "y": 1.217215270798988e-7,
+          "z": -0.00001836241062846966
+        },
+        "sleeping": false,
+        "enabled": true
+      },
+      "initialContact": {
+        "bodies": 1,
+        "colliders": 11,
+        "activeBodies": 1,
+        "pairs": 5,
+        "manifolds": 10,
+        "contacts": 40
+      },
+      "finalContact": {
+        "bodies": 1,
+        "colliders": 11,
+        "activeBodies": 1,
+        "pairs": 5,
+        "manifolds": 10,
+        "contacts": 40
+      },
+      "repeat": 1
+    },
+    {
+      "matched": true,
+      "completedSteps": 1000,
+      "firstMismatch": null,
+      "profilerEnabled": false,
+      "bins": [
+        {
+          "fromSubstep": 501,
+          "steps": 100,
+          "worldStepMs": 117
+        },
+        {
+          "fromSubstep": 601,
+          "steps": 100,
+          "worldStepMs": 111
+        },
+        {
+          "fromSubstep": 701,
+          "steps": 100,
+          "worldStepMs": 113
+        },
+        {
+          "fromSubstep": 801,
+          "steps": 100,
+          "worldStepMs": 113
+        },
+        {
+          "fromSubstep": 901,
+          "steps": 100,
+          "worldStepMs": 109
+        },
+        {
+          "fromSubstep": 1001,
+          "steps": 100,
+          "worldStepMs": 115
+        },
+        {
+          "fromSubstep": 1101,
+          "steps": 100,
+          "worldStepMs": 119
+        },
+        {
+          "fromSubstep": 1201,
+          "steps": 100,
+          "worldStepMs": 126
+        },
+        {
+          "fromSubstep": 1301,
+          "steps": 100,
+          "worldStepMs": 106
+        },
+        {
+          "fromSubstep": 1401,
+          "steps": 100,
+          "worldStepMs": 109
+        }
+      ],
+      "worldStepMs": 1138,
+      "finalWorldSha256": "d0fb6c91f8bf6ca8b5243c3814ee79fcad8a464469fc2779ae415b6b1a64b279",
+      "finalBody": {
+        "position": {
+          "x": 0.0019756571855396032,
+          "y": 0.02498309500515461,
+          "z": 0.048094723373651505
+        },
+        "rotation": {
+          "x": -0.00002141713775927201,
+          "y": 0.06268098205327988,
+          "z": -0.000002236779664599453,
+          "w": 0.9980337023735046
+        },
+        "velocity": {
+          "x": 7.871065008657752e-7,
+          "y": 7.318126904465316e-7,
+          "z": 1.415202319776654e-7
+        },
+        "angularVelocity": {
+          "x": 0.000007771986020088661,
+          "y": 1.217215270798988e-7,
+          "z": -0.00001836241062846966
+        },
+        "sleeping": false,
+        "enabled": true
+      },
+      "initialContact": {
+        "bodies": 1,
+        "colliders": 11,
+        "activeBodies": 1,
+        "pairs": 5,
+        "manifolds": 10,
+        "contacts": 40
+      },
+      "finalContact": {
+        "bodies": 1,
+        "colliders": 11,
+        "activeBodies": 1,
+        "pairs": 5,
+        "manifolds": 10,
+        "contacts": 40
+      },
+      "repeat": 2
+    }
+  ],
+  "limitations": [
+    "Diagnostic Gecko sampling changes overhead; timings do not qualify flight performance.",
+    "Frozen force tape checks all 1000 post-step world digests and unrounded body states; controller and simulator hosts are absent.",
+    "128 MiB circular buffer per process, maximum 15-second entry age, 1 ms requested interval. Output is retained locally, never uploaded.",
+    "No browser security/JIT preference edits, native storage inspection, user profiles, or production dependency/configuration changes.",
+    "Only the explicitly inventoried replay inputs are pinned; this is not whole-client attestation."
+  ],
+  "node": {
+    "matched": true,
+    "completedSteps": 1000,
+    "firstMismatch": null,
+    "profilerEnabled": false,
+    "bins": [
+      {
+        "fromSubstep": 501,
+        "steps": 100,
+        "worldStepMs": 51.729877000000556
+      },
+      {
+        "fromSubstep": 601,
+        "steps": 100,
+        "worldStepMs": 17.85570299999995
+      },
+      {
+        "fromSubstep": 701,
+        "steps": 100,
+        "worldStepMs": 9.977753999999493
+      },
+      {
+        "fromSubstep": 801,
+        "steps": 100,
+        "worldStepMs": 9.267917000000011
+      },
+      {
+        "fromSubstep": 901,
+        "steps": 100,
+        "worldStepMs": 8.741663000000074
+      },
+      {
+        "fromSubstep": 1001,
+        "steps": 100,
+        "worldStepMs": 8.895301000000188
+      },
+      {
+        "fromSubstep": 1101,
+        "steps": 100,
+        "worldStepMs": 8.83332999999999
+      },
+      {
+        "fromSubstep": 1201,
+        "steps": 100,
+        "worldStepMs": 8.812002000000064
+      },
+      {
+        "fromSubstep": 1301,
+        "steps": 100,
+        "worldStepMs": 8.825794999999744
+      },
+      {
+        "fromSubstep": 1401,
+        "steps": 100,
+        "worldStepMs": 8.994925000000194
+      }
+    ],
+    "worldStepMs": 141.93426700000026,
+    "finalWorldSha256": "d0fb6c91f8bf6ca8b5243c3814ee79fcad8a464469fc2779ae415b6b1a64b279",
+    "finalBody": {
+      "position": {
+        "x": 0.0019756571855396032,
+        "y": 0.02498309500515461,
+        "z": 0.048094723373651505
+      },
+      "rotation": {
+        "x": -0.00002141713775927201,
+        "y": 0.06268098205327988,
+        "z": -0.000002236779664599453,
+        "w": 0.9980337023735046
+      },
+      "velocity": {
+        "x": 7.871065008657752e-7,
+        "y": 7.318126904465316e-7,
+        "z": 1.415202319776654e-7
+      },
+      "angularVelocity": {
+        "x": 0.000007771986020088661,
+        "y": 1.217215270798988e-7,
+        "z": -0.00001836241062846966
+      },
+      "sleeping": false,
+      "enabled": true
+    },
+    "initialContact": {
+      "bodies": 1,
+      "colliders": 11,
+      "activeBodies": 1,
+      "pairs": 5,
+      "manifolds": 10,
+      "contacts": 40
+    },
+    "finalContact": {
+      "bodies": 1,
+      "colliders": 11,
+      "activeBodies": 1,
+      "pairs": 5,
+      "manifolds": 10,
+      "contacts": 40
+    }
+  },
+  "browserInputs": [
+    {
+      "path": "game/test/helpers/fpv-contact-tape.mjs",
+      "bytes": 6133,
+      "sha256": "7ccaa9efe91304ede99eb0d0cef5305651b6a35025288179f0eda36544fdfa17"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/vendor/rapier/rapier.mjs",
+      "bytes": 4340292,
+      "sha256": "02dc6a4e2fffc013bab08fbb44fa68f501d8303615e9afe4c7d89ad4eedda0d0"
+    },
+    {
+      "path": "tape.json",
+      "bytes": 956037,
+      "sha256": "0ed4a7bd07930452322e1eeb38454381214d89e31e2da66698d25657ce9e6ca2"
+    },
+    {
+      "path": "contact.html",
+      "bytes": 788,
+      "sha256": "614f4890fbb13a152445b9bdb52a4061dab071bfeac8547b75a065b8b4807200"
+    }
+  ],
+  "executable": {
+    "path": "/Users/oleksandr.mekhovov/Library/Caches/ms-playwright/firefox-1538/firefox/Nightly.app/Contents/MacOS/firefox",
+    "sha256": "65ecab21ee6aa479836eb27aec213e15295f07ca21b5aa995d45bcaff4d09d7d"
+  },
+  "browserVersion": "153.0",
+  "ownedBrowserAndServerClosed": true,
+  "profile": {
+    "path": "/Users/oleksandr.mekhovov/work/my_projects/fpv-firefox-profile-20261019-results-2/gecko-profile.json",
+    "bytes": 12110507,
+    "sha256": "a7d160e76c076697e8dae8bbdd162169120200405c5d52c1ccdb1c231b463a0a"
+  },
+  "sourcesUnchanged": true,
+  "completedAt": "2026-10-19T03:45:03.176Z"
+}

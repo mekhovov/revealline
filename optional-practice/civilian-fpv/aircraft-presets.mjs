@@ -9,7 +9,7 @@ import {
 } from './aircraft-physics.mjs';
 
 export const AIRCRAFT_PRESET_FORMAT = 'FpvAircraftPreset.v1';
-export const AIRCRAFT_CATALOG_REVISION = 2;
+export const AIRCRAFT_CATALOG_REVISION = 4;
 const freeze = (value) => {
   for (const child of Object.values(value)) if (child && typeof child === 'object') freeze(child);
   return Object.freeze(value);
@@ -184,6 +184,199 @@ const references = [
     ],
   },
   {
+    id: 'cetus-x-betaflight-2022',
+    revision: 1,
+    name: 'BETAFPV Cetus X',
+    variant: '2022 · analog · Betaflight SPI ELRS · original 30C cells',
+    category: 'whoop',
+    wheelbase: 95,
+    propeller: 50.3,
+    motor: 'BETAFPV 1103 11000 KV · 1.5 mm shaft',
+    prop: 'Gemfan 2020 four-blade',
+    dry: 56,
+    batteryMass: 25.4,
+    cells: 2,
+    capacity: 450,
+    chemistry: 'lihv',
+    batteryName: '2 × BT2.0 1S 450 mAh 30C · series pair',
+    batteryAssembly: { series: 2, parallel: 1, cellCapacityMah: 450, cellMassGrams: 12.7 },
+    dimensions: [122, 50, 122],
+    thrust: 0.78,
+    lag: 0.022,
+    resistance: 0.09,
+    current: 13.5,
+    tilt: 20,
+    notice: {
+      en: 'Historical 2022 Betaflight ELRS reference. Flying mass is calculated from a published reviewer dry weight and two specified cells. SIM controller and starter rates; no proprietary Cetus hold modes.',
+      uk: 'Історичний еталон Betaflight ELRS 2022 року. Польотну масу розраховано з маси без батарей, наведеної в огляді, та двох указаних елементів. Контролер і початкові рейти SIM; фірмові режими утримання Cetus не відтворюються.',
+    },
+    hardware: {
+      frame: 'Cetus X ducted frame · 95 mm motor diagonal; overall collision envelope estimated',
+      flightController: 'Original F4 1S 12A AIO · Betaflight variant',
+      esc: 'Integrated 12 A 4-in-1',
+      receiver: 'SPI ExpressLRS 2.4 GHz',
+      camera: 'C04 module · manufacturer alternatives Caddx Nano Ant / Runcam Nano 4',
+      videoTransmitter: 'M04 analog VTX',
+      battery:
+        'Two original BT2.0 1S 450 mAh 30C cells in series: 2S 450 mAh, not 900 mAh. 25.4 g installed total. Published replacement-cell dimensions are not confirmed for the 2022 sample.',
+      revision:
+        'Frozen November 2022 Betaflight ELRS reference; later boards/cells and the proprietary Cetus controller are separate variants.',
+    },
+    evidence: {
+      assembledMass: {
+        kind: 'reviewer-reported',
+        sources: [2],
+        note: 'Oscar Liang reports 56 g without batteries and a rounded 81 g with two cells. No scale uncertainty supplied. Manufacturer lists 55 g without defining battery inclusion. This preset explicitly uses the reviewer dry-mass basis.',
+      },
+      batteryMass: {
+        kind: 'calculated',
+        sources: [1],
+        note: 'Two manufacturer-specified 12.7 g original BT2.0 450 mAh 30C cells: 2 × 12.7 = 25.4 g. The pair is counted once; replacement-cell dimensional revisions remain unresolved.',
+      },
+      batteryCapacity: {
+        kind: 'calculated',
+        sources: [1, 2],
+        note: 'Two 1S 450 mAh cells in series give 2S 450 mAh. Series connection doubles voltage, not amp-hour capacity.',
+      },
+      flyingMass: {
+        kind: 'calculated',
+        sources: [1, 2],
+        note: '56 g reviewer-reported dry mass + 25.4 g specified series pair = 81.4 g. This is not a measured flying weight; it differs from the reviewer rounded 81 g and manufacturer nominal 55 g dry-basis alternative.',
+      },
+      propeller: manufacturer(
+        [4],
+        'Actual diameter 50.3 mm; four blades. Installed propeller/motor mass is already included in assembled mass.',
+      ),
+      geometry: estimated(
+        '95 mm manufacturer wheelbase and 50.3 mm propeller diameter; 122 × 122 × 50 mm overall envelope and rotor/body shape are estimates, not manufacturer CAD or measured clearance.',
+      ),
+      batteryElectrical: estimated(
+        '7.6 V nominal and 8.7 V full series pack; 0.09 ohm resistance and current model estimated. The 13.5 A ceiling is the arithmetic 30C × 0.45 Ah rating, not measured sag/current performance.',
+      ),
+    },
+    sources: [
+      source(
+        beta('cetus-x-brushless-quadcopter'),
+        'Cetus X manufacturer specification and variant changes',
+        '2026-10-18',
+      ),
+      source(
+        beta('bt2-0-450mah-1s-30c-battery-4pcs'),
+        'Original BT2.0 450 mAh 30C cell specification and dimensional revisions',
+        '2026-10-18',
+      ),
+      source(
+        'https://oscarliang.com/betafpv-cetus-x/',
+        'Oscar Liang November 2022 hands-on dry/flying mass report',
+        '2026-10-18',
+      ),
+      source(
+        'https://support.betafpv.com/hc/en-us/articles/10207774042009-Manual-for-Cetus-X-Quadcopter-F4-1S-12A-AIO-FC',
+        'Original Cetus X F4 1S 12A manufacturer manual',
+        '2026-10-18',
+      ),
+      source(
+        beta('gemfan-2020-4-blade-propellers-1-5mm-shaft'),
+        'Gemfan 2020 four-blade propeller dimensions',
+        '2026-10-18',
+      ),
+    ],
+  },
+  {
+    id: 'protos-16-aio-1-0',
+    revision: 1,
+    name: 'CADDXFPV Protos 1.6',
+    variant: 'AIO 1.0 · Ascent Lite · inferred flying mass · SIM response',
+    category: 'whoop',
+    wheelbase: 78,
+    propeller: 40,
+    motor: 'CADDXFPV 1102 14000 KV',
+    prop: 'HQprop U40mm×3GR-PC-1.5mm three-blade',
+    dry: 62.5,
+    batteryMass: 41.9,
+    cells: 2,
+    capacity: 840,
+    chemistry: 'li-ion',
+    batteryName: 'C0PJ-DC016 · 2S1P 840 mAh Li-ion',
+    batteryAssembly: { series: 2, parallel: 1, cellCapacityMah: 840 },
+    batteryVoltage: { nominal: 7.6, full: 8.5, empty: 6 },
+    dimensions: [110, 41, 102.8],
+    thrust: 0.72,
+    lag: 0.024,
+    resistance: 0.11,
+    current: 12.6,
+    tilt: 20,
+    starterMaximumRate: 500,
+    notice: {
+      en: 'Approximate SIM Acro / self-level reference. The 104.4 g battery-inclusive mass is inferred. Stock Protos position/height hold, Angle limits and factory controller/rates are not reproduced.',
+      uk: 'Наближений еталон для Acro / самовирівнювання SIM. Маса 104,4 г із батареєю є припущенням за джерелами. Штатне утримання позиції/висоти Protos, обмеження Angle, заводський контролер і рейти не відтворюються.',
+    },
+    hardware: {
+      frame: 'Protos 1.6 · model C0CA-FP027 · 78 mm motor diagonal',
+      flightController:
+        'AIO 1.0 reference; independent SIM controller, no stock firmware execution',
+      camera: 'Ascent Lite digital video system',
+      battery:
+        'C0PJ-DC016 2S1P 840 mAh Li-ion, 41.9 ± 0.5 g. 8.5 V maximum charging voltage; 8.70 V operating limit is not the initial charged state.',
+      revision:
+        'Manufacturer manual V1.4 AIO 1.0 / Ascent Lite reference. Approximate SIM Acro and self-level only; no stock position/height hold or factory Angle limits.',
+    },
+    evidence: {
+      assembledMass: {
+        kind: 'calculated',
+        sources: [0, 1, 2],
+        note: '62.5 g = 104.4 g inferred battery-inclusive aircraft − 41.9 g pack. Battery inclusion is not explicit in the manual; a hands-on review reports slightly over 100 g with battery. The summed manufacturer tolerance bound is 2.0 g, not statistical uncertainty.',
+      },
+      batteryMass: manufacturer([1], 'C0PJ-DC016 battery: 41.9 ± 0.5 g, counted once.'),
+      flyingMass: {
+        kind: 'inferred',
+        sources: [0, 2],
+        note: 'Manual states 104.4 ± 1.5 g without battery-inclusion basis. The WE are FPV hands-on review corroborates slightly over 100 g with battery. This preset interprets 104.4 g as flying mass; manufacturer confirmation remains desirable.',
+      },
+      batteryCapacity: manufacturer(
+        [1],
+        '2S1P 840 mAh, 6.384 Wh. Series-cell count does not multiply the stated pack capacity.',
+      ),
+      nominalVoltage: {
+        kind: 'calculated',
+        sources: [1],
+        note: '6.384 Wh / 0.840 Ah = 7.6 V nominal pack voltage.',
+      },
+      fullVoltage: manufacturer(
+        [1],
+        '8.5 V maximum charging voltage; do not use the 8.70 V upper operating limit as full charge.',
+      ),
+      batteryElectrical: estimated(
+        'Resistance, current-versus-command and 6.0 V empty-state boundary are estimates. The 12.6 A current ceiling is 15C × 0.840 Ah arithmetic, not a measured current/sag map.',
+      ),
+      controller: estimated(
+        'Independent SIM Acro/self-level controller only. Stock position/height hold, Angle tilt/throttle limits, factory curves, latency and PID behavior are unsupported. No Betaflight conversion or stock firmware equivalence is claimed.',
+      ),
+    },
+    sources: [
+      source(
+        'https://cdn.shopify.com/s/files/1/0036/3921/4169/files/CADDX_PROTOS_1.6_FPV_Drone_User_Manual.pdf?v=1787640812',
+        'Protos 1.6 official manual V1.4 · AIO 1.0 · Ascent Lite',
+        '2026-10-18',
+      ),
+      source(
+        'https://www.caddxfpv.com/products/caddxfpv-protos-battery',
+        'Protos C0PJ-DC016 battery mass, energy and charge limits',
+        '2026-10-18',
+      ),
+      source(
+        'https://www.wearefpv.fr/test-caddx-protos-ascent-20251124/',
+        'WE are FPV hands-on report of weight with battery',
+        '2026-10-18',
+      ),
+      source(
+        'https://www.caddxfpv.com/products/caddxfpv-1102-14000kv-brushless-motor-1-pc',
+        'Protos replacement motor identity; no propulsion map',
+        '2026-10-18',
+      ),
+    ],
+  },
+  {
     id: 'pavo20-pro-ii-o4-4s',
     name: 'BETAFPV Pavo20 Pro II',
     variant: 'O4 Pro · ELRS · 4S · 5500 KV',
@@ -246,11 +439,12 @@ const references = [
   },
   {
     id: 'nazgul-eco-xl5-v11',
+    revision: 2,
     name: 'iFlight Nazgul ECO XL5',
     variant: 'V1.1 · analog · 6S · 1800 KV',
     category: 'freestyle',
     wheelbase: 245,
-    propeller: 127,
+    propeller: 129.54,
     motor: '2207 1800 KV',
     prop: 'Nazgul F5',
     dry: 427,
@@ -261,6 +455,8 @@ const references = [
     batteryName: '6S 1400 mAh reference pack',
     dimensions: [305, 80, 305],
     thrust: 10,
+    // Preserve the revision 1 estimate: a dimension correction is not a motor measurement.
+    reactionTorque: 0.0127,
     lag: 0.03,
     resistance: 0.045,
     current: 110,
@@ -270,7 +466,26 @@ const references = [
         'https://iflight-rc.eu/en/products/nazgul-xl5-eco-v1-1-6s-analog',
         'Nazgul ECO XL5 V1.1 specifications',
       ),
+      source(
+        'https://shop.iflight.com/Nazgul-XL5-ECO-6S-Pro2193',
+        'Nazgul ECO XL5 V1.1 installed F5 propeller and related SKU 964',
+        '2026-10-18',
+      ),
+      source(
+        'https://shop.iflight.com/nazgul-5140-tri-blades-cw-ccw-propellers-3sets-6-pairs-pro964',
+        'Nazgul F5 SKU 964: 5.1-inch diameter specification',
+        '2026-10-18',
+      ),
     ],
+    evidence: {
+      propeller: manufacturer(
+        [0, 1, 2],
+        'V1.1 specifies Nazgul F5 and links SKU 964; that F5 specification gives 5.1 inches = 129.54 mm. The five-inch aircraft class is not the exact propeller diameter.',
+      ),
+      propulsion: estimated(
+        'Revision 2 preserves the revision 1 nominal-voltage thrust, 0.0127 reaction-torque coefficient and motor lag estimates. The diameter correction supplies no matched propulsion measurements.',
+      ),
+    },
     batteryDerived: true,
   },
   {
@@ -446,6 +661,7 @@ const catalog = freeze(
       motor: r.motor,
       propeller: r.prop,
       ...(r.hardware ? { hardware: r.hardware } : {}),
+      ...(r.notice ? { notice: r.notice } : {}),
       envelopeMm: { width: r.dimensions[0], height: r.dimensions[1], length: r.dimensions[2] },
       battery: {
         name: r.batteryName,
@@ -453,6 +669,7 @@ const catalog = freeze(
         cells: r.cells,
         capacityMah: r.capacity,
         chemistry: r.chemistry,
+        ...(r.batteryAssembly ? { assembly: r.batteryAssembly } : {}),
       },
       components: [
         {
@@ -469,7 +686,7 @@ const catalog = freeze(
         { id: 'battery', massGrams: r.batteryMass, includes: ['battery'] },
       ],
       flyingMassGrams: Math.round((r.dry + (r.receiver ?? 0) + r.batteryMass) * 100) / 100,
-      starterMaximumRate: maxRates[r.category],
+      starterMaximumRate: r.starterMaximumRate ?? maxRates[r.category],
       camera: { tilt: r.tilt, verticalFov: 82 },
       sources: r.sources,
       evidence: {
@@ -524,6 +741,7 @@ const catalog = freeze(
         camera: estimated(
           'SIM view defaults; vertical FOV is not a claim about the physical lens.',
         ),
+        ...r.evidence,
       },
     };
   }),
@@ -803,7 +1021,7 @@ export function createPresetConfiguration(id) {
     inertia,
     maxThrust: r.thrust,
     radius: Math.sqrt(dimensions.x * dimensions.x + dimensions.z * dimensions.z) / 2,
-    reactionTorque: r.propeller / 10000,
+    reactionTorque: r.reactionTorque ?? r.propeller / 10000,
     motorTimeConstant: r.lag,
     linearDrag: 0.02 * mass,
     quadraticDrag: 0.02 * mass,
@@ -812,9 +1030,9 @@ export function createPresetConfiguration(id) {
     sensorNoise: 0,
     vibration: 0,
     battery: {
-      nominalVoltage: nominal * r.cells,
-      fullVoltage: (r.chemistry === 'lihv' ? 4.35 : 4.2) * r.cells,
-      emptyVoltage: (r.chemistry === 'li-ion' ? 2.9 : 3.2) * r.cells,
+      nominalVoltage: r.batteryVoltage?.nominal ?? nominal * r.cells,
+      fullVoltage: r.batteryVoltage?.full ?? (r.chemistry === 'lihv' ? 4.35 : 4.2) * r.cells,
+      emptyVoltage: r.batteryVoltage?.empty ?? (r.chemistry === 'li-ion' ? 2.9 : 3.2) * r.cells,
       resistance: r.resistance,
       fullCurrent: r.current,
       capacityAh: r.capacity / 1000,

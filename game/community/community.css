@@ -1,4 +1,9 @@
 /* Legacy layout and paint share one cascade layer. Theme recipes own opt-in appearance. */
+#account-signed-in[hidden],
+#account-signed-out[hidden] {
+  display: none !important;
+}
+
 @layer legacy {
   :root {
     color-scheme: dark;
@@ -44,6 +49,16 @@
     font-weight: 750;
     letter-spacing: 0.16em;
     color: #8aefcd;
+  }
+  .service-fields {
+    min-width: 0;
+    border: 0;
+    padding: 0;
+    margin: 0;
+  }
+  .service-readiness p {
+    margin-top: 0;
+    overflow-wrap: anywhere;
   }
   .panel,
   .edition {

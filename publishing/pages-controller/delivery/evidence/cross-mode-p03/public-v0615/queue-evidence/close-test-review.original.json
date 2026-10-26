@@ -1,9 +1,0 @@
-{
-  "status": "ROOT_REVIEWED_UNVERSIONED_TEST_ONLY_CANDIDATE",
-  "at": "2026-09-18T11:52:55.351149+00:00",
-  "source": "ef1430174dfd35a9df441233988b8737d0401851",
-  "candidateSha256": "e0cf60be041ffba3e3c22e8ba11a571e96af6143e36e1e59559c24dbbbf2cce1",
-  "hunkReview": "Pre-open Close, real-manager saved-preview/escape/close, fresh-manager byte preservation, and pre-late-failure opener assertions reviewed. No fixture or runtime changes, green test evidence retained on Node20/22.",
-  "scope": "Eligible test-only integration into a later coherent P03 source; no commit/version/phase acceptance.",
-  "separateProbe": "Retained terminal callback direct invocation reproduces focus side effect only in a cache test; this is not an established cause of earlier native observation and does not justify an urgent runtime patch."
-}

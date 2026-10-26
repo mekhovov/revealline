@@ -165,6 +165,8 @@
   "units.cellsPerSecond": "{{speed}} cells/s",
   "preferences.displaySessionOnly": "Display changes apply only to this session; saving is disabled here.",
   "preferences.displaySaveFailed": "Display changed for this session, but could not be saved for another page.",
+  "preferences.audioSessionOnly": "Sound changes apply only to this session; saving is disabled here.",
+  "preferences.audioSaveFailed": "Sound changed for this session, but could not be saved for another page.",
   "preferences.applyFailed": "The preference could not be applied: {{error}}",
   "storage.writerUnavailable": "This browser cannot reserve the player library for safe writing. Progress is session-only; export a backup to keep it.",
   "storage.writerOccupied": "Another game tab owns saving. This tab is session-only; close the other game tab, then reload here to save. Export still works.",

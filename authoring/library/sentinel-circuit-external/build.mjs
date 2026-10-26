@@ -26,7 +26,7 @@ export const SOURCE_PROOF_SHA = 'eb235f9bc26ea3670137f3f7d7ac86ac5e8c4b56b98502b
 const ART = 'authoring/library/sentinel-circuit-art';
 const INPUTS = Object.freeze({
   'authoring/library/sentinel-circuit/build.mjs':
-    'e76f204cbe240bdedac79f2d92c85ab767846be32cfae50cd76ef983340c4d41',
+    '8d5a8751cc814a4eafef80fdc6cdcefc7770aa69f23ab7cc48121d7ff66fa485',
   [SOURCE_PROOF]: SOURCE_PROOF_SHA,
   [`${ART}/provenance.json`]: 'a863d2401e01f9107d59d30b9e54daf1a7ebc27235f04d351584e5e5dd83eda7',
 });
