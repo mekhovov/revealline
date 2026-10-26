@@ -1,7 +1,7 @@
 import { t, localizedText, localizedAttribute, getLocale, onLocaleChange } from '../i18n/index.mjs';
 import { setMenuIcon } from './native-menu-icons.mjs';
 import { attachMenuScene, getMenuAnimation, setMenuAnimation } from './menu-scenes.mjs';
-import { subscribeMenuAnimation } from './menu-animation-preferences.mjs';
+import { attachMenuAnimationFeedback } from './menu-animation-feedback.mjs';
 import { attachFullscreen } from './fullscreen.mjs';
 import { mountLandingBrand, GAME_BRAND_NAME } from './brand-identity.mjs';
 import { attachMenuRetune } from './menu-retune.mjs';
@@ -11,6 +11,7 @@ import { mountModeGuides } from './mode-choice.mjs';
 import { MODE_SETTINGS_CATEGORIES as NATIVE_MENU_CATEGORIES } from './mode-settings-view.mjs';
 import { mountGlobalSettings } from './global-settings-view.mjs';
 import { wireLandingMenuNavigation } from './mode-play-shell.mjs';
+import { mountComfortPresets } from './comfort-presets.mjs';
 
 export { NATIVE_MENU_CATEGORIES };
 const owners = new WeakMap();
@@ -146,11 +147,8 @@ export function prepareNativeMenus({
   const animationChange = () => setMenuAnimation(animation.checked, doc.defaultView);
   animation.addEventListener('change', animationChange);
   listeners.push(() => animation.removeEventListener('change', animationChange));
-  listeners.push(
-    subscribeMenuAnimation((enabled) => {
-      animation.checked = enabled;
-    }, doc.defaultView),
-  );
+  const animationFeedback = attachMenuAnimationFeedback(animation, doc.defaultView);
+  listeners.push(() => animationFeedback.destroy());
   let actions;
   if (mode === 'solo') {
     actions = root.querySelector('.home-actions');
@@ -332,6 +330,8 @@ export function prepareNativeMenus({
         : 'coop-lobby-modes',
     identity,
   );
+  if (mode === 'versus') moveId('race-summary', commands);
+  if (mode === 'team') moveId('coop-navigation-context', commands);
   move(actions, commands);
   move(utilities, commands);
   if (mode === 'versus') moveId('race-preparation', commands);
@@ -520,9 +520,10 @@ export function prepareNativeMenus({
   });
   let globalSettings = null;
   const extraGlobalControls = {};
+  let comfortPresets;
   // Providers mount at different points in the host lifecycle. Adopt their real
   // rows after they are ready; subsequent calls register late tools in place.
-  const refreshGlobalSettings = ({ controls = {} } = {}) => {
+  const refreshGlobalSettings = ({ controls = {}, comfort } = {}) => {
     Object.assign(extraGlobalControls, controls);
     const row = (id) => {
       const node = $(id);
@@ -552,12 +553,12 @@ export function prepareNativeMenus({
       textFace: row(`${fieldPrefix}text-face`),
       textSize: row(`${fieldPrefix}text-size`),
       reducedEffects: row(mode === 'solo' ? 'settings-reduced-effects' : `${fieldPrefix}reduced`),
-      menuAnimation: animationLabel,
+      menuAnimation: animationFeedback.element,
       masterMuted: node(mode === 'solo' ? 'settings-master-mute' : `${fieldPrefix}audio`),
       masterVolume: row(`${fieldPrefix}master-volume`),
       audioCues: [
         ...settings.querySelectorAll(
-          '[data-menu-audio], [data-radio-audio], [data-movement-audio]',
+          '[data-menu-audio], [data-radio-audio], [data-movement-audio], [data-gameplay-audio]',
         ),
       ],
       touchPresentation: touchRows,
@@ -604,6 +605,13 @@ export function prepareNativeMenus({
         offlineTools: [mode === 'team' ? node('coop-offline') : node('settings-offline')],
       },
     });
+    if (comfort && !comfortPresets)
+      comfortPresets = mountComfortPresets({
+        document: doc,
+        window: doc.defaultView,
+        root: panels.accessibility,
+        ...comfort,
+      });
     return globalSettings;
   };
   listeners.push(onLocaleChange(() => globalSettings?.refresh(getLocale())));
@@ -637,6 +645,7 @@ export function prepareNativeMenus({
     showBrandTitle,
     hideBrandTitle,
     destroy() {
+      comfortPresets?.destroy();
       globalSettings?.destroy();
       retune.dispose();
       scene.dispose();

@@ -8,6 +8,9 @@ import { authoringAttribute, authoringLabel } from './authoring-copy.mjs';
 import { onLocaleChange } from '../i18n/index.mjs';
 
 const hosts = new WeakMap();
+// Same-origin parents can pass validated menu edges to this existing owner.
+// The symbol is shared across realms; no keyboard/gamepad events are synthesized.
+const radioBridgeKey = Symbol.for('revealline.page-radio-menu');
 const visible = (element) =>
   element?.isConnected &&
   !element.closest('[hidden],[inert]') &&
@@ -57,6 +60,13 @@ export function attachAuthoringPreview(frame, { document: doc, window: win }) {
     returnButton?.remove();
     returnButton = null;
   };
+  const returnToEditor = () => {
+    if (!entered || doc.activeElement !== frame) return false;
+    entered = false;
+    win.focus();
+    enter.focus();
+    return true;
+  };
   const loaded = () => {
     cleanupChild();
     let child, childWindow;
@@ -102,11 +112,7 @@ export function attachAuthoringPreview(frame, { document: doc, window: win }) {
     setMenuIcon(button, 'back');
     button.style.cssText =
       'position:relative;z-index:30;min-height:44px;margin:8px;padding:8px 16px;font:inherit;';
-    button.onclick = () => {
-      entered = false;
-      win.focus();
-      enter.focus();
-    };
+    button.onclick = returnToEditor;
     const place = () => {
       const dialogs = [...child.querySelectorAll('dialog[open]')];
       const root =
@@ -148,6 +154,9 @@ export function attachAuthoringPreview(frame, { document: doc, window: win }) {
   frame.addEventListener('load', loaded);
   loaded();
   return {
+    radioContext() {
+      return entered && doc.activeElement === frame ? { frame, back: returnToEditor } : null;
+    },
     refresh() {
       const hidden = !visible(frame);
       if (enter.hidden !== hidden) enter.hidden = hidden;
@@ -200,7 +209,16 @@ export function mountPageInputHost({
   doc.body.append(sections);
   let disposed = false,
     animationFrame = null,
-    returnFocus = null;
+    returnFocus = null,
+    radioLease = null;
+  const currentRadioLease = () => {
+    if (!radioLease || disposed) return null;
+    try {
+      return radioLease.isCurrent() === true ? radioLease : null;
+    } catch {
+      return null;
+    }
+  };
   const fileButtons = new Map(),
     previews = new Map(),
     sectionLabels = new Map(),
@@ -230,7 +248,17 @@ export function mountPageInputHost({
     eventTarget: win,
     autoJoin: true,
     navigationAliases: true,
-    ...(readPads ? { readPads } : {}),
+    readPads: () => {
+      const pads = readPads ? readPads() : (win.navigator ?? globalThis.navigator).getGamepads();
+      const lease = currentRadioLease();
+      // A USB radio may expose a standard mapping. Only that claimed device is
+      // excluded; ordinary controllers retain the child's existing owner.
+      return lease
+        ? Array.from(pads ?? [], (pad, index) =>
+            (pad?.index ?? index) === lease.index ? null : pad,
+          )
+        : pads;
+    },
   });
   const topDialog = () => [...doc.querySelectorAll('dialog[open]')].at(-1);
   const closeSections = () => {
@@ -348,7 +376,8 @@ export function mountPageInputHost({
       else if (dialog) {
         const event = new win.Event('cancel', { cancelable: true });
         if (dialog.dispatchEvent(event)) dialog.close();
-      } else if (onPageBack) onPageBack();
+      } else if (currentRadioLease()) currentRadioLease().onBack();
+      else if (onPageBack) onPageBack();
       else openSections();
     },
     onMenu: openSections,
@@ -419,6 +448,49 @@ export function mountPageInputHost({
     lifecycle.cancel('authoring-input-clear');
     navigation.clear();
   };
+  const radioBridge = {
+    preview() {
+      return previews.get(doc.activeElement)?.radioContext() ?? null;
+    },
+    claim(lease) {
+      if (
+        disposed ||
+        !lease?.token ||
+        !Number.isInteger(lease.index) ||
+        lease.index < 0 ||
+        typeof lease.isCurrent !== 'function' ||
+        typeof lease.onBack !== 'function'
+      )
+        return false;
+      if (radioLease?.token !== lease.token || radioLease.index !== lease.index) clear();
+      radioLease = lease;
+      return currentRadioLease() !== null;
+    },
+    handle(token, action) {
+      if (
+        currentRadioLease()?.token !== token ||
+        !active() ||
+        !['join', 'confirm', 'back', 'up', 'down', 'left', 'right'].includes(action)
+      )
+        return false;
+      if (action === 'join') navigation.focusAvailable();
+      else
+        navigation.handle(
+          action === 'confirm'
+            ? { confirm: true }
+            : action === 'back'
+              ? { back: true }
+              : { direction: action },
+        );
+      return true;
+    },
+    release(token) {
+      if (radioLease?.token !== token) return;
+      radioLease = null;
+      clear();
+    },
+  };
+  doc[radioBridgeKey] = radioBridge;
   function poll(now) {
     if (disposed) return;
     if (doc.hidden || doc.hasFocus?.() === false || doc.activeElement?.tagName === 'IFRAME')
@@ -445,6 +517,8 @@ export function mountPageInputHost({
     destroy() {
       if (disposed) return;
       disposed = true;
+      radioLease = null;
+      if (doc[radioBridgeKey] === radioBridge) delete doc[radioBridgeKey];
       win.cancelAnimationFrame(animationFrame);
       observer.disconnect();
       listeners.forEach((remove) => remove());

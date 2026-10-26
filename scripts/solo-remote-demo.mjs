@@ -99,9 +99,15 @@ export const DEMO_RESOURCE_SOURCE_PATHS = Object.freeze([
 export const DEMO_RESOURCE_MODE = 'close-reopen-resources-v1';
 export const DEMO_CLOSE_BOUNDARY_POLICY = 'trusted-click-capture-v1';
 export const DEMO_CLOSE_ACTIVATION_POLICY = 'trusted-activation-capture-v2';
+export const DEMO_PAUSED_GEOMETRY_POLICY = 'paint-matches-stable-geometry-v1';
 export function validateDemoResourceContract(contract, source) {
   assert.match(source, /^[a-f0-9]{40}$/);
   const closeBoundary = contract?.closeBoundaryPolicy !== undefined;
+  const geometry = contract?.pausedGeometryPolicy !== undefined;
+  if (geometry) {
+    assert.equal(contract.pausedGeometryPolicy, DEMO_PAUSED_GEOMETRY_POLICY);
+    assert.equal(contract.closeBoundaryPolicy, DEMO_CLOSE_ACTIVATION_POLICY);
+  }
   if (closeBoundary)
     assert(
       [DEMO_CLOSE_BOUNDARY_POLICY, DEMO_CLOSE_ACTIVATION_POLICY].includes(
@@ -116,6 +122,7 @@ export function validateDemoResourceContract(contract, source) {
     modes: ['spectator', 'practice'],
     snapshotLimit: 64,
     ...(closeBoundary ? { closeBoundaryPolicy: contract.closeBoundaryPolicy } : {}),
+    ...(geometry ? { pausedGeometryPolicy: DEMO_PAUSED_GEOMETRY_POLICY } : {}),
   });
 }
 
@@ -239,6 +246,27 @@ export function validateDemoPlan(plan) {
   ]);
   assert.deepEqual(plan.demo.arms, resources ? [] : DEMO_ARMS);
   assert.deepEqual(plan.demo.qualityWindowsMs, resources ? [] : [5000, 2500]);
+  if (plan.demo.resourceCycles?.pausedGeometryPolicy || plan.geometryReadinessSuccessor) {
+    assert.deepEqual(plan.geometryReadinessSuccessor?.readiness, {
+      policy: 'paint-matches-stable-geometry-v1',
+      nativeCallbacks: 2,
+      deadlineMs: 10000,
+      maximumNativeCallbacks: 2048,
+      retainedSamplesPerCycle: 3,
+      pausedOnly: true,
+      perFrameRPC: false,
+      formula: 'min(clientWidth, clientHeight * intrinsicWidth / intrinsicHeight)',
+      requiresMatchingPaintOwner: true,
+    });
+    const prior = plan.geometryReadinessSuccessor.priorObservation;
+    assert.equal(prior.runId, 39149681708);
+    assert.equal(prior.artifactId, 12144433958);
+    assert.equal(
+      prior.artifactSHA256,
+      '99adb6e5adf9a1d3eea2cbf5755cbc02aba3c8b2c6d62ef317e60d958a6e527e',
+    );
+    assert.equal(prior.disposition, 'failed-reviewed');
+  }
   if (resources) validateDemoResourceContract(plan.demo.resourceCycles, plan.candidate.revision);
   else assert.equal(plan.demo.resourceCycles, undefined);
   assert.equal(plan.demo.observationTimeoutMs, 360000);
@@ -422,6 +450,97 @@ export function assertDemoResult(raw, command, source, browserVersion, resourceC
   assert.equal(raw.errors.length, 0);
   assert.equal(raw.failedRequests.length, 0);
 }
+
+export function assertDemoPausedGeometryReceipt(receipt, paused) {
+  assert.equal(receipt?.format, 'DemoPausedGeometryReadinessV1');
+  assert.equal(receipt.policy, DEMO_PAUSED_GEOMETRY_POLICY);
+  assert.deepEqual(Object.keys(receipt.owner).sort(), [
+    'afterDraw',
+    'painterId',
+    'practice',
+    'runId',
+  ]);
+  assert(Number.isSafeInteger(receipt.owner.afterDraw) && receipt.owner.afterDraw >= 0);
+  assert.equal(receipt.owner.runId, paused.demo.id);
+  assert.equal(receipt.owner.painterId, paused.painterId);
+  assert.equal(receipt.owner.practice, paused.practice);
+  assert(
+    Number.isSafeInteger(receipt.framesObserved) &&
+      receipt.framesObserved >= 2 &&
+      receipt.framesObserved <= 2048,
+  );
+  assert(
+    Number.isSafeInteger(receipt.staleGeometryFrames) &&
+      receipt.staleGeometryFrames >= 0 &&
+      receipt.staleGeometryFrames < receipt.framesObserved,
+  );
+  assert.equal(receipt.accepted.length, 2);
+  const stable = (s) => ({
+    runId: s.runId,
+    painterId: s.painterId,
+    tick: s.tick,
+    geometry: s.geometry,
+    fittedWidth: s.fittedWidth,
+    generation: s.generation,
+    paintRevision: s.paintRevision,
+  });
+  const check = (s, painted) => {
+    assert.equal(s.format, 'DemoPausedGeometrySampleV1');
+    assert.equal(s.runId, receipt.owner.runId);
+    assert.equal(s.painterId, receipt.owner.painterId);
+    assert.equal(s.tick, paused.demo.tick);
+    assert.equal(s.practice, paused.practice);
+    assert.equal(s.paused, true);
+    assert(s.open && s.visible && s.focused);
+    assert(Number.isSafeInteger(s.drawCount) && s.drawCount > receipt.owner.afterDraw);
+    assert(Number.isFinite(s.atMs) && s.atMs >= receipt.first.atMs);
+    const g = s.geometry;
+    for (const value of [
+      g.clientWidth,
+      g.clientHeight,
+      g.intrinsicWidth,
+      g.intrinsicHeight,
+      g.bounds.width,
+      g.bounds.height,
+    ])
+      assert(Number.isFinite(value) && value > 0);
+    assert(Number.isFinite(g.bounds.x) && Number.isFinite(g.bounds.y));
+    assert.equal(
+      s.fittedWidth,
+      Math.min(g.clientWidth, (g.clientHeight * g.intrinsicWidth) / g.intrinsicHeight),
+    );
+    if (painted) {
+      assert.equal(s.paint.drawCount, s.drawCount);
+      assert.equal(s.paint.width, s.fittedWidth);
+      assert.equal(s.paint.intrinsicWidth, g.intrinsicWidth);
+      assert.equal(s.paint.intrinsicHeight, g.intrinsicHeight);
+      assert.equal(s.paint.generation, s.generation);
+      assert.equal(s.paint.paintRevision, s.paintRevision);
+    }
+  };
+  check(receipt.first, false);
+  assert.equal(receipt.first.nativeCallback, null);
+  const [a, b] = receipt.accepted;
+  for (const s of [a, b]) {
+    check(s, true);
+    assert(Number.isSafeInteger(s.nativeCallback.ordinal) && s.nativeCallback.ordinal > 0);
+    assert(Number.isFinite(s.nativeCallback.timestamp));
+    assert(s.atMs - receipt.first.atMs < 10000);
+    assert(s.drawCount >= receipt.first.drawCount);
+  }
+  assert.equal(b.nativeCallback.ordinal, a.nativeCallback.ordinal + 1);
+  assert.equal(b.nativeCallback.ordinal, receipt.framesObserved);
+  assert(b.nativeCallback.timestamp > a.nativeCallback.timestamp);
+  assert(b.atMs >= a.atMs && b.drawCount >= a.drawCount);
+  assert.deepEqual(stable(a), stable(b), 'Native frame geometry changed');
+  check(paused.geometry, true);
+  assert.equal(paused.geometry.nativeCallback, null);
+  assert(paused.geometry.atMs >= b.atMs);
+  assert.deepEqual(stable(paused.geometry), stable(b), 'Paused snapshot geometry changed');
+  assert.equal(paused.geometry.drawCount, paused.drawCount);
+  assert.equal(paused.lastDraw.width, paused.geometry.fittedWidth);
+}
+
 export function assessDemoResourceCycles(raw, source, contract) {
   validateDemoResourceContract(contract, source);
   assert.equal(raw.sourceRevision, source);
@@ -543,6 +662,7 @@ export function assessDemoResourceCycles(raw, source, contract) {
     } else {
       assert.equal(paused.drawCount, closed.drawCount);
     }
+    if (contract.pausedGeometryPolicy) assertDemoPausedGeometryReceipt(row.pausedGeometry, paused);
     assert.equal(paused.lastDraw.paused, true);
     assert.equal(paused.practice, mode === 'practice');
     validQuality(paused);

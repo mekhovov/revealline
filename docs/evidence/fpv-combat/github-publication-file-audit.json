@@ -1,0 +1,5197 @@
+{
+  "timestamp": "2026-10-20T21:15:10.262358+00:00",
+  "originalFiles": 575,
+  "exactFiles": 572,
+  "intentionalHistoryRewriteDifferences": [
+    "game/build-config.json",
+    "optional-practice/civilian-fpv/flight-fullscreen.mjs",
+    "scripts/test-optional-fpv-package.mjs"
+  ],
+  "restoredMissingWorkingFiles": 455,
+  "base": "f49d6185b0ad98c43a375bc58581682f154ecf08",
+  "reviewedMain": "ca016a6eb082b69596ee34e5bbc6f12ecae60152",
+  "head": "d89edf9ea68357161b507e1fb7d0dea25d130fd0",
+  "preservedLocalBranch": "codex/fpv-combat-radio-hud-preserved-20261020",
+  "sourceManifest": [
+    {
+      "path": "authoring/library/fpv-character-art/r1/README.md",
+      "bytes": 5614,
+      "sha256": "5e4eb3a20df31cddb7da5ffbb047b06e32cd5e2d3aa975879707d778eba4e9ab"
+    },
+    {
+      "path": "authoring/library/fpv-character-art/r1/authoring/animate-worker.py",
+      "bytes": 6145,
+      "sha256": "13ac33a9e542e0498377905a67c8baae3811876f03fbad6dfea188d20da8192d"
+    },
+    {
+      "path": "authoring/library/fpv-character-art/r1/authoring/animate.py",
+      "bytes": 840,
+      "sha256": "e9f36639eb4d3527864deacb510c978cbb2b0fae544bb0f670cc6b1d7d9287f3"
+    },
+    {
+      "path": "authoring/library/fpv-character-art/r1/authoring/assemble.py",
+      "bytes": 10867,
+      "sha256": "c896da51d9f60f55c59bf0fe2b3c27ce265683c74684871d9fa5cd3e491153cf"
+    },
+    {
+      "path": "authoring/library/fpv-character-art/r1/authoring/bake.py",
+      "bytes": 5773,
+      "sha256": "7d79abc02185f1c0b47474c67fdcf69adb96cfa457ed1a84830ce4c161529d13"
+    },
+    {
+      "path": "authoring/library/fpv-character-art/r1/authoring/create.py",
+      "bytes": 4719,
+      "sha256": "f3338a3b1769d6450c06b415e93558b4b754cb3e982abb818367184601ea103c"
+    },
+    {
+      "path": "authoring/library/fpv-character-art/r1/authoring/finalize.mjs",
+      "bytes": 5539,
+      "sha256": "81f1921c9cba6dc16eeb16b38680ce9f3b57bbf2da2fbbca958035ca46342d2e"
+    },
+    {
+      "path": "authoring/library/fpv-character-art/r1/authoring/inspect-glb.mjs",
+      "bytes": 1689,
+      "sha256": "4827ed47f8688d158852277aaa289a61038725482723c532cf6597ad8c66f1f1"
+    },
+    {
+      "path": "authoring/library/fpv-character-art/r1/authoring/rebuild.sh",
+      "bytes": 1565,
+      "sha256": "7bf9370641dc1f0313cf9bf6737db4983a6c476cbcdf0f0386bdc750449638fb"
+    },
+    {
+      "path": "authoring/library/fpv-character-art/r1/authoring/review-wardrobe.py",
+      "bytes": 3864,
+      "sha256": "a0d290b970f63e1a90b27ca6b97a68dadb077b7d834444232d62fcf939278499"
+    },
+    {
+      "path": "authoring/library/fpv-character-art/r1/authoring/review.py",
+      "bytes": 1717,
+      "sha256": "ecdc5139c3a34fff133f9674916d5d09b1848bee5e4691125189f71999bbb095"
+    },
+    {
+      "path": "authoring/library/fpv-character-art/r1/authoring/settle-equipment.mjs",
+      "bytes": 7355,
+      "sha256": "b45cf8097b9d373fc5a914d414727542ebb4ee093e072631e6334d0f4009549e"
+    },
+    {
+      "path": "authoring/library/fpv-character-art/r1/authoring/wardrobe.py",
+      "bytes": 18619,
+      "sha256": "8efe70e8e495a40d72f2dc9683dc27a353daa2a8564735c7974dc8f60c3b5314"
+    },
+    {
+      "path": "authoring/library/fpv-character-art/r1/characters.glb",
+      "bytes": 13557808,
+      "sha256": "bf99cfa8cfcdb6d20a11b3594eda0cfd5c0f9a85edf48e2fd55e6f4fa2e5c8ad"
+    },
+    {
+      "path": "authoring/library/fpv-character-art/r1/manifest.json",
+      "bytes": 52499,
+      "sha256": "8121b18a0a6c1ea2c625cb355ef2d5efee0ed6c1486a835d415c3119fc555357"
+    },
+    {
+      "path": "authoring/library/fpv-character-art/r1/provenance.json",
+      "bytes": 10844,
+      "sha256": "82918da92f2b5970cd5319e0819088a3f33ec18ae90313cc34ff1bfdb5a9f626"
+    },
+    {
+      "path": "authoring/library/fpv-character-art/r2/README.md",
+      "bytes": 1222,
+      "sha256": "3212719834894023652a0eb36003cedd9805a4982e4a920afa71bc3d71571b92"
+    },
+    {
+      "path": "authoring/library/fpv-character-art/r2/authoring/repartition.mjs",
+      "bytes": 16140,
+      "sha256": "b1e81859d4951ec02dc83d154d80de6a7d7b31c82ab2a38d678032a53382df1c"
+    },
+    {
+      "path": "authoring/library/fpv-character-art/r2/characters.glb",
+      "bytes": 14644276,
+      "sha256": "bdb1ee921c599389176aa6155276abd3fa72ceb7e338b684f02d54d7214b22d4"
+    },
+    {
+      "path": "authoring/library/fpv-character-art/r2/manifest.json",
+      "bytes": 59391,
+      "sha256": "9940f5d75727b52d067cf1be2ce75e254f52e0b6670643bc28a308291969e009"
+    },
+    {
+      "path": "authoring/library/fpv-character-art/r2/provenance.json",
+      "bytes": 7118,
+      "sha256": "ccf083f339f56279c6674fb054421eecc5eca94b4d91ab51916074383e7cd670"
+    },
+    {
+      "path": "docs/design/fpv-radio-six-switch-concept.html",
+      "bytes": 40603,
+      "sha256": "9681d50ebd09ce0133c9e4bcce1c687078792aaf2913b625256ed5221b96915e"
+    },
+    {
+      "path": "docs/design/fpv-radio-six-switch-concept.png",
+      "bytes": 78657,
+      "sha256": "aa437da41063eaac94a50a486babc95a072af4d78d8f307f850870c8eed1f666"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/README.md",
+      "bytes": 21732,
+      "sha256": "cbc2641065a097024da7f874d89952451575e2e1d448c2f540d5580ac0a9af6f"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/arcade-clean.png",
+      "bytes": 67831,
+      "sha256": "002ec6393a77ed2afdd61bc8b7621b844d69ccd8146aeb587e61b1740785f86e"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/audio-output.json",
+      "bytes": 261,
+      "sha256": "6251601e14492ee69b08f86e715ea62668e9a0b051f3f40f4b082dee5064f5b8"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/catalogue-baseline/overhaul-catalogue-native-0.json",
+      "bytes": 1250234,
+      "sha256": "223becdb0f1a2154e4f1416f2e50215db27ef8aa7c57b1abe744cce8a18c688f"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/catalogue-baseline/overhaul-catalogue-native-1.json",
+      "bytes": 1230339,
+      "sha256": "efc37034882c1a57c8ff99b96cb56c9ea903a09810a06ababb8c1c4ef54c6cf6"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/catalogue-baseline/overhaul-catalogue-native-2.json",
+      "bytes": 1230097,
+      "sha256": "3e63af4795e39fbdf4c0520fce2725f2d670e5117548bdc3b8faa225fbaef1d6"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/catalogue-baseline/overhaul-catalogue-native-3.json",
+      "bytes": 1230132,
+      "sha256": "593f45a93d214f23b56d4d9f720ab3a27bee2f4901196b82c41428683967ac52"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/catalogue-baseline/overhaul-catalogue-regional-0.json",
+      "bytes": 268378,
+      "sha256": "800998209886a7c261d29b55c0af3978108efd7e5d117558f1718071ea4b005e"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/catalogue-baseline/overhaul-catalogue-regional-1.json",
+      "bytes": 250870,
+      "sha256": "ca5fd971e4c7a94fdb3a2e64e20caf5cae38bf44b7d798f2729fc31e5fda3439"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/catalogue-baseline/overhaul-catalogue-regional-2.json",
+      "bytes": 250683,
+      "sha256": "e5a32e9222d5dec8e5cd224f4f8a60b616280eb52e93b49a4cd7e9708147626e"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/catalogue-baseline/overhaul-catalogue-regional-3.json",
+      "bytes": 250691,
+      "sha256": "f522fdd8f775fb919643b0996af66aae6342d5fb89c4f31301163d7d1e88d520"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/catalogue-damage-ownership.json",
+      "bytes": 79611,
+      "sha256": "44894f0789cb5f7dde7a05785bfed15bdbb7b60f3ee6c72ad1d73a9ca8ce6bdb"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/catalogue-damage-ownership.md",
+      "bytes": 7039,
+      "sha256": "62bed49405bcfefbba9ccc230088f21e3f4ffa07e17a60caae99c36e6b815b20"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/catalogue-damage-ownership.mjs",
+      "bytes": 2869,
+      "sha256": "e48050c9054ed85015f3a1ab36a2e10054d818b6b8ecda49c4e5d3c3055e22f9"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/catalogue-pre-hillside-fix/overhaul-catalogue-matrix.json",
+      "bytes": 4532775,
+      "sha256": "f4b987b25be67716914dd61c3acdde8d19fae0948481da926f720c1d2a6caab6"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/catalogue-pre-hillside-fix/overhaul-catalogue-native-0.json",
+      "bytes": 799914,
+      "sha256": "34d98f84894ba654935984569934d37a583befffa1b4723d48e7da1940ce12f1"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/catalogue-pre-hillside-fix/overhaul-catalogue-native-1.json",
+      "bytes": 787300,
+      "sha256": "3a9af0c593521466a8be557ca643e6478a6406dc2c6dfed80713cf436dc7176d"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/catalogue-pre-hillside-fix/overhaul-catalogue-native-2.json",
+      "bytes": 787058,
+      "sha256": "e104a91704ddd487a92528457af2290a4679d36e8dcf476e6cc0b7d3971f888a"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/catalogue-pre-hillside-fix/overhaul-catalogue-native-3.json",
+      "bytes": 787093,
+      "sha256": "84c490eabfd3d64109a7b4609b9195ab2ce72bd1f87a4be0a081755987ba9c45"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/catalogue-pre-hillside-fix/overhaul-catalogue-regional-0.json",
+      "bytes": 177149,
+      "sha256": "ea518e020612ce947d943117584072d8830478d7745a8492e64ba9d6cd4f5460"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/catalogue-pre-hillside-fix/overhaul-catalogue-regional-1.json",
+      "bytes": 177177,
+      "sha256": "cef18e4f306a5113cc83617b4153c0d3bc84b0f53aa7ecd2fd2600e072a8afc6"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/catalogue-pre-hillside-fix/overhaul-catalogue-regional-2.json",
+      "bytes": 177502,
+      "sha256": "7a7c117dffb46ea3a14f2420ac77894bf76ff46a132065396581982fdb465eb1"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/catalogue-pre-hillside-fix/overhaul-catalogue-regional-3.json",
+      "bytes": 177488,
+      "sha256": "37bedb0ab895bd4d963208ecd947c783e209514db42f5166c95000d46b4cfed9"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/catalogue-pre-hillside-fix/overhaul-catalogue-regional-4.json",
+      "bytes": 177175,
+      "sha256": "42442c5b4bea7067af7034230c88204ff06db19451f8baca44a6bf0a853b0709"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/catalogue-pre-hillside-fix/overhaul-catalogue-regional-5.json",
+      "bytes": 177177,
+      "sha256": "307b74047584408a5ac3c36cc341c6e61beb5899e0ccb63f256423f08e3f0b2c"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/catalogue-pre-hillside-fix/overhaul-catalogue-regional-6.json",
+      "bytes": 166306,
+      "sha256": "c3639f04576ca8af951aa29462c862387252909452f518a41bc42b96a2976b62"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/catalogue-pre-hillside-fix/overhaul-catalogue-regional-7.json",
+      "bytes": 166612,
+      "sha256": "17eed35573135e5b7a799093f51cf59771cd6a235f458c434fe2a09da5970a06"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/catalogue-pre-hillside-fix/workers.json",
+      "bytes": 7846,
+      "sha256": "78739bceeda3ea8817fc8dd5f56af5e7fddada9280f137f062a417fb00d188f0"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/combined-browser-acceptance.md",
+      "bytes": 8959,
+      "sha256": "5cc6aef05fbf82ac0a6f2a5ee652cf4fd5e0bae12a3dbdb6b74619bc9d0c1121"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/combined-browser-before.json",
+      "bytes": 184128,
+      "sha256": "cef2a3cad4eee1dae0b4d8340f5c9a9f6f95c8ba2361348035eb574926b01060"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/combined-browser-before.md",
+      "bytes": 6611,
+      "sha256": "33cea7c84e857b81a9f2a23554817736ef02e117f2f7b78b5f01656324b68f40"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/combined-browser-boundary.json",
+      "bytes": 34588,
+      "sha256": "ceb0469abac026df7f14920956182919da0526b4ddf2ae14c98678ee0e86be01"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/combined-browser-late.json",
+      "bytes": 42224,
+      "sha256": "0d0f15e3468762c5d03a9851635f936a7f59224126dc4148ebccc017108c940d"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/combined-browser-scheduler-short.json",
+      "bytes": 91440,
+      "sha256": "f1a78bd6874ae42625138714ca2128a11dac903689b5f41c93f9ea41ac466f27"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/compact-hud-academy.png",
+      "bytes": 29112,
+      "sha256": "305d7b6426fe8c0678d2ad010cd3bfa07fe4f48263f950df6a8d7267db3c702a"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/compact-hud-delivery.md",
+      "bytes": 4368,
+      "sha256": "ddd2220760d4a9b6c17df5bdc88fe7c4276277ad3ddc4256252725204a21a205"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/compact-hud-landscape.png",
+      "bytes": 43573,
+      "sha256": "0de347aa9ba84422ed03a25e87f19c2727e29611034f2725cc63dda08c720b05"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/compact-hud-package-measurement.json",
+      "bytes": 1653,
+      "sha256": "20e6f89d501fbfd9f43f22fda191b8a271d979b3c56acb0f20711b700e54680a"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/compact-hud-phone.png",
+      "bytes": 34653,
+      "sha256": "9f9ff13dc70e4c30349336df9873f9e9a0cdc7648861823fa63597371cb94793"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/consistency-catalogue-matrix.json",
+      "bytes": 4532151,
+      "sha256": "b5ccfe25d191685a6925854aed3bd742f859c08b34e6ad113a98243d5ecf76ca"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/consistency-catalogue-partial.json",
+      "bytes": 458976,
+      "sha256": "9e2a2f81d1a30d9125d2769fc15dd82046cb99af733085a8260cf83a0b4df073"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/consistency-delivery.md",
+      "bytes": 6433,
+      "sha256": "58a5491dba2cfaeee6487f43c1464eb10001ede37e9712b2493eb25735c8aeb6"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/consistency-host.tap",
+      "bytes": 61747,
+      "sha256": "3daf8cf7076c67c95bbb721850d5c5be306ebf9cd4ed425a5e120662c779fb6a"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/consistency-learning-objectives.png",
+      "bytes": 79731,
+      "sha256": "162706ca995a8e8f989d5494e628b5622fb625002b70774baff1cfc59e6d4b3d"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/consistency-matrix-shards/overhaul-catalogue-matrix.json",
+      "bytes": 4532151,
+      "sha256": "b5ccfe25d191685a6925854aed3bd742f859c08b34e6ad113a98243d5ecf76ca"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/consistency-matrix-shards/overhaul-catalogue-native-0.json",
+      "bytes": 530499,
+      "sha256": "6e6595f93236e5d683d5b98a1a6bbf7de6bb074467e0a89337171509e9e40d60"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/consistency-matrix-shards/overhaul-catalogue-native-1.json",
+      "bytes": 530829,
+      "sha256": "ada0f29b846c37c5d8d2eea481e0055bdf91a2b6c22d6f635cbcfe90cbd2c50d"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/consistency-matrix-shards/overhaul-catalogue-native-2.json",
+      "bytes": 530225,
+      "sha256": "634aeff67a2df4b6685beb92e6147d82691f51bc9b865b53b259b3eff67d469b"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/consistency-matrix-shards/overhaul-catalogue-native-3.json",
+      "bytes": 529961,
+      "sha256": "cb96b90f8df0d38af32148b61a94e199677afe2ac92286132e126c17270623e1"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/consistency-matrix-shards/overhaul-catalogue-native-4.json",
+      "bytes": 530236,
+      "sha256": "05b9b9f08cef163a98d5d9a0904ea7a9a0c1c30067d1fdf9b799dbd2448c1975"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/consistency-matrix-shards/overhaul-catalogue-native-5.json",
+      "bytes": 517600,
+      "sha256": "f1e2af2f6c35854f680fbbea59faef30f7f36845e2a93c4d2abb944fe13f2116"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/consistency-matrix-shards/overhaul-catalogue-regional-0.json",
+      "bytes": 231893,
+      "sha256": "20fee0f8082eb40a96fe58a71416010d9401f68ec972b75e2cd389490475be8f"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/consistency-matrix-shards/overhaul-catalogue-regional-1.json",
+      "bytes": 231895,
+      "sha256": "f1fcdfd5e35f15948926bed1a3b8eb92fd7cdee3e14a5ed725d497941927d14c"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/consistency-matrix-shards/overhaul-catalogue-regional-2.json",
+      "bytes": 231889,
+      "sha256": "23fd93e5e9f4152de61739fb841f5a486452ea07f170a1389a4cb58aed2eb13f"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/consistency-matrix-shards/overhaul-catalogue-regional-3.json",
+      "bytes": 231909,
+      "sha256": "a1acbd669562ddb71b1695e10b9704a64444f4f56eeb3c38c79a64474c0a7035"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/consistency-matrix-shards/overhaul-catalogue-regional-4.json",
+      "bytes": 231917,
+      "sha256": "9626848202e3e1653468ba97d00d711a154f93ac5e3d4f561b3a0490fbe82246"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/consistency-matrix-shards/overhaul-catalogue-regional-5.json",
+      "bytes": 231916,
+      "sha256": "1c9cd5b95e27d4efecfc632b89b0ad1f922e2f0ae2c1dd9dcfb09c777d56eb13"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/consistency-matrix-shards/regional-prepartition-0.json",
+      "bytes": 340561,
+      "sha256": "6819eb04b7e8ce3a7fcd6dcdfaab6d90626fc3f910aaafaad4cf3aa86e635aff"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/consistency-matrix-shards/regional-prepartition-1.json",
+      "bytes": 340593,
+      "sha256": "29f4e98330f3646cc3d6589ef62ddea30ec24933680181353796d5aa4d88d52d"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/consistency-package-measurement.json",
+      "bytes": 932,
+      "sha256": "5fbf237452d12b5b91349810c573d9efd002562ff7940dd88abd05b8192b2bc2"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/consistency-presentation.tap",
+      "bytes": 86153,
+      "sha256": "5c8c4a016d62acffdaaea9a487bf4aafd61df4440d8caadd07a485ab6c20d283"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/consistency-regressions.json",
+      "bytes": 2774,
+      "sha256": "5c70effa52ce32f93f10894dddb07bf493e79ceee2cb69199195a47527304133"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/consistency-survival-compact.png",
+      "bytes": 68652,
+      "sha256": "5962dcf9672a1cc6f7a439bd19e3d6612135faf088a5df11e9272d39c08cea91"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/consistency-survival-desktop.png",
+      "bytes": 152472,
+      "sha256": "b0134962185d7ab71f8abac4561da55f461827eeafedffc07982f0c01e0b79af"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/consistency-survival-portrait-active.png",
+      "bytes": 66823,
+      "sha256": "0726eae424c4068037b6b3961d9151ea7be70bd4f8603043db49a1a5e657035c"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/consistency-survival-portrait.png",
+      "bytes": 61843,
+      "sha256": "68bb127b9b977e2acd7f34579fee84667ae33d5454c54c423cb9b9f3be5db325"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/consistency-survival-ultrawide.png",
+      "bytes": 288384,
+      "sha256": "551180270d3c9b1208ad8c8c9e79feb358e2b342e253fb8125ff1e03370724b3"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/final-art-package-regressions.txt",
+      "bytes": 21464,
+      "sha256": "b7596b12d9ef5c65ddf51dceb2940fc62fc0ff68d1f6686e771c496464dc99f4"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/final-route-continuation-regressions-repaired.json",
+      "bytes": 4334,
+      "sha256": "147956e3537298587f4830f8a3e87c6785ed511b2b5a6837fb192712b3a9a5ab"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/final-route-continuation-regressions-repaired.tap",
+      "bytes": 61451,
+      "sha256": "b0c4540077a96955dd6d488dd770010474fd3440255e61cf4725e17bf160927a"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/final-route-continuation-regressions.json",
+      "bytes": 2440,
+      "sha256": "f07e7dc66e6867ed7a89e8292f71e87f8bb7f28a90cbe792ffb31a49f18cb9b7"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/final-route-continuation-regressions.md",
+      "bytes": 2497,
+      "sha256": "c0dfe196031a4f91d366330e1b87fec4ab35cf5f9f9d9d372bb3fcf756344d6c"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/final-route-continuation-regressions.tap",
+      "bytes": 60080,
+      "sha256": "9ffbd4ee750f0d62db070648daa24b143fa349d44fdd96723387275746e22f8a"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/fpv-analog-vitals-packages.json",
+      "bytes": 1276,
+      "sha256": "59f34330916b78420e54943b804f23540d77cbd4cd3501ccdf65edba91426659"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/fpv-analog-vitals-tests.txt",
+      "bytes": 28684,
+      "sha256": "7cdd8550ce01bb0d3983a0d79a9d4dc8e7a9ed22c0edb645cfdda6d7fa6c723d"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/fpv-analog-vitals.md",
+      "bytes": 4652,
+      "sha256": "7192b2507bebae9dae79c8c93cc69b7be5007ebba5b56acc77d6b3199c3468dc"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/fpv-analog-vitals.png",
+      "bytes": 144687,
+      "sha256": "c789c46e6fd9a4c148ea1b1915e80a9e90709f51533d8a5b8f4d5fa9b0ad23a9"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/fpv-camera-crop-packages.json",
+      "bytes": 1277,
+      "sha256": "339685ef1cae9737d963112d22121689da01d9e8e88d9b2fa1a4e022c933afff"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/fpv-camera-crop-update.md",
+      "bytes": 3698,
+      "sha256": "d3f037d5753a52a6d8e605acea30899c70258e155f1f0849842b4f6044983ae2"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/fpv-camera-crop.png",
+      "bytes": 92689,
+      "sha256": "f0682bcba975ecd62c9286361d432a55b80450ae7c0750136274b8c3418d08ff"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/fpv-prop-view-packages.json",
+      "bytes": 1277,
+      "sha256": "fece07fe57adab78210e8ddffb79311e633d1bd0f75f94ba85f395a25bc4bd00"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/fpv-prop-view-update.md",
+      "bytes": 2810,
+      "sha256": "bdd8f4dbb2b44ec03418fbed43dca430899c0a419e6c83684d3d716f8e2a2a2e"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/fpv-prop-view.png",
+      "bytes": 66608,
+      "sha256": "cf355b4d7afab93c9c7f0ee46e2db0706972ff2342dbf3942c390097c7d2cd63"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/full-session-acceptance.json",
+      "bytes": 12742,
+      "sha256": "7dd7ae627beed3b1cd1043223d62aa66e84dfd79238b724d27e5f3a220a931b0"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/full-session-acceptance.md",
+      "bytes": 8586,
+      "sha256": "6f128f13574c6f8b595385f99bc5baea1789caffab35f31282f0b9109cf5916a"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/full-session-acceptance.txt",
+      "bytes": 1095,
+      "sha256": "d84929225254a0d754b4b0ab491e4889a2c5af32ae5289a554416f4115c67d75"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/full-session-final-recheck.txt",
+      "bytes": 1103,
+      "sha256": "13aef203b8b3f1767ceb35ee6d4e04e4989416d2910f80366bffbcf30ff010ae"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/gameplay-settings.png",
+      "bytes": 143677,
+      "sha256": "c8c3dccc6d61d8d8629066bafac0dd2ba11971e2b31d4727dcda83a84ba8bbdd"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/hard-gore-burst.png",
+      "bytes": 76946,
+      "sha256": "0903f4bcff5604c7250618afb45c05a9166bd666593cc2063c90963583f85b36"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/hard-gore-clean.png",
+      "bytes": 74229,
+      "sha256": "134958368ea718041b707073100bcee605f74a51bf2aea1effa4480ce40bb98f"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/hard-gore-packages.json",
+      "bytes": 1277,
+      "sha256": "389b2ebb88c1d506456971a145b51b919390a1d8b9c88248de0d2dc55339bf47"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/hard-gore-settled.png",
+      "bytes": 75750,
+      "sha256": "3ccb64764283893198b30e6e670f9c0899f043a9c89a8c785d85d20b626b8717"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/hard-gore-update.md",
+      "bytes": 3281,
+      "sha256": "d6ea81723e794457a621602b70c92397f0a812839a3ca4544e987bbd2a875b6e"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/host-controls-studio-regressions.txt",
+      "bytes": 4693,
+      "sha256": "a791d28922689d9d4763c1e239e634c212fb3b05e701b3d39ba3da5dfb9125a1"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/implementation-status.md",
+      "bytes": 14252,
+      "sha256": "9e63a7d160afebcdae445261e59809d28f21d51f1b4cd762ae83d22f03d2cf42"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/native-downloadable-admission.json",
+      "bytes": 54905,
+      "sha256": "1e13a989a3348265dd8365a6fec1b48aac4eaffed7dc32d3a04654f82393ddf7"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/native-procedural-regional-stress.json",
+      "bytes": 31417,
+      "sha256": "8d0372aae900327e609fa9e99db8ece6d84b1deb87c84a1c0a05f9a5e7b7993e"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-128-actors.png",
+      "bytes": 331919,
+      "sha256": "3a480e52e8a9bc25a82485ea54ba271b53b0fcb2aa2528fd49dfa2d962f27c71"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-128-recovery.json.gz",
+      "bytes": 835996,
+      "sha256": "5b09aa7992e47d21b44f0b68d248b38c586d8431c21e9e3395d013df6dee4c56"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-ammunition-review.md",
+      "bytes": 7567,
+      "sha256": "e5df213658fceb6c697db74d2e6d39870eab906b808e075fe24e8b62ff63a206"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-app-96-frame-view-diagnostic.json",
+      "bytes": 37261,
+      "sha256": "5373e1922f6b238caed18c882f3db3ad75b6327999a9f18f653ef4474305d43c"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-app-96-optimized-profile-prearmed.cpuprofile.gz",
+      "bytes": 201248,
+      "sha256": "a7462bebb37817467352ce96e2f46a5bf847d8177dd148c3d18d1a47143625ae"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-app-96-optimized-profile-prearmed.json",
+      "bytes": 44873,
+      "sha256": "fda791535db956ee6dafa94ffe0b519527e4c80643b2b8813fcaa2f9e9adaecc"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-app-96-optimized-profile-prearmed.recovery.json",
+      "bytes": 1650600,
+      "sha256": "16943dc10952086b013e1a76e820694686c74242cf7761dfb8cd7d5aee588f2b"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-app-96-optimized-profile.cpuprofile.gz",
+      "bytes": 14826,
+      "sha256": "b87a657f6fb352754e71d9b27b316099f5fb326d92eec3edee3f3332f1c28259"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-app-96-optimized-profile.json",
+      "bytes": 19400,
+      "sha256": "d9df7954ad66560be2b66496feaf6953be60438a696c13e0b0a8978f1e5591fd"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-app-96-optimized-profile.recovery.json",
+      "bytes": 1605265,
+      "sha256": "a82109f20d51e29ecd5ff6f4e9cf35d171791b13517f544e0f4e46ef8f89deef"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-app-96-paused.png",
+      "bytes": 601994,
+      "sha256": "85e807c86ac2540a65420c943d34bf2571ab49d84e1e1362a412dcdb4b8e40a7"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-app-96-profile.cpuprofile.gz",
+      "bytes": 14130,
+      "sha256": "1e9c6336c55338b28852a737edd76406a7507cbc92d9a12f902f2356af0248bf"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-app-96-profile.json",
+      "bytes": 90059,
+      "sha256": "1bc21177de7f7d360917c610f8ebdd6049edfb988527684d2e19a35a7898964c"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-app-96-profile.recovery.json",
+      "bytes": 1571063,
+      "sha256": "188f895a0d63b76563e1d048ef23f2b3aee316ba0ed0a37f889deb9432662838"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-app-96-recovery-fixed.json",
+      "bytes": 1502,
+      "sha256": "fff9a95d385101cf266293b46ae8c80cad2e68c8e2376618738c6d0fb1aaf935"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-app-art-download-failure.json",
+      "bytes": 1123,
+      "sha256": "0f502450fa30b3b40a3a898131646de84dbdc51d357f64e42b4f758db4313a9a"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-app-continuous.png",
+      "bytes": 515805,
+      "sha256": "ea01059da67ad08c013a1c8019faa48f2fe316b084c54c7f9fbd19f90ac38de8"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-app-css.cjs",
+      "bytes": 1930,
+      "sha256": "e633792dba5364195602fe3571ec77b5cdfe7d225db03d9e68d2c0dc2a328be7"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-app-css.json",
+      "bytes": 9782,
+      "sha256": "44e40d4a5068b7cb924d5ee6302e3eb2a641483d57480e76878646f49dc64740"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-app-elimination.png",
+      "bytes": 513623,
+      "sha256": "16c4642f28d2096d20895e4c12203f5f6055be8cf45789227aebf04dee8819a3"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-app-ground-query.cpuprofile.gz",
+      "bytes": 30431,
+      "sha256": "227a621b3f42a2afb1c85a976e4640e4966cc859ca649649e12ddcbad51b2107"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-app-ground-query.json",
+      "bytes": 47206,
+      "sha256": "eef89f75c234db14b030265f08a5d2a1a09cc16849201dd0d93a0806031bf60e"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-app-ground-query.recovery.json",
+      "bytes": 106185,
+      "sha256": "94412fa24b3017bddc1c0f5196cf8b64fe3f7e808103f511efd68897a52971fa"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-app-grounding-fixed.cpuprofile.gz",
+      "bytes": 53368,
+      "sha256": "5e6e30d05dffd89d6e89486006eab2d2bb7d78b055f8392e094b01793fb5f83f"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-app-grounding-fixed.json",
+      "bytes": 29114,
+      "sha256": "51452f431fcd4a8baf8ca26574a1ff7845ded97a2290f2257044cbcaf45bbb28"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-app-grounding-fixed.recovery.json",
+      "bytes": 174106,
+      "sha256": "ab09b2a44c0bdc52b99f4e69c9cf5887f64558a5d954cef5ed99d633ea8734d4"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-app-grounding-probe.cpuprofile.gz",
+      "bytes": 40795,
+      "sha256": "b5666c463db46859acb56066eedbdc47155b323d21a277cc0941de7218e338c6"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-app-grounding-probe.json",
+      "bytes": 16146,
+      "sha256": "cde41c444447352207066136020b5663b6dea4cb7e850883be9656da290582dd"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-app-grounding-probe.recovery.json",
+      "bytes": 135082,
+      "sha256": "d8c535305bd85d87e59510191e45152a3015bf133b307791a9c2b7b84e837011"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-app-hover-check.json",
+      "bytes": 1066,
+      "sha256": "918aebb7396846b062f607f61ba4ecb1e46130d5540dc30b2be8a24347232484"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-app-hunting.png",
+      "bytes": 515609,
+      "sha256": "3af3b9528db4dc9b4986209d9eef2f56ddd5eb3ab2af5e4dcaf2edc187714a60"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-app-initial.png",
+      "bytes": 1483073,
+      "sha256": "1df18c31a4d0a4ad4f3422315279410a964d9e445e67e4dca50675a7ab5c5362"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-app-inspect.cjs",
+      "bytes": 1896,
+      "sha256": "98316e2641e82d643ed790d3b8899a1a1155042b2a59a73653f444c2f5d6f812"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-app-inspect.json",
+      "bytes": 104085,
+      "sha256": "f96f34315793ec23efb34f2fbee42fb2fec6cfa9f995408573b159b6f486ac03"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-app-lifecycle.cjs",
+      "bytes": 6086,
+      "sha256": "c79df3974554ff12a2c609f52ef7a7d09d69fd779819618f6d8682e0f4f4c514"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-app-lifecycle.json",
+      "bytes": 202845,
+      "sha256": "a5f978229608395d7d91a33d854412ec3041476edc409515e6759df7bd99932f"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-app-original.png",
+      "bytes": 492746,
+      "sha256": "fcdb57b40056fac1a2671a9e8e94039e0a13db6ac4a80baa1bc8a550862d5973"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-app-profile-current.cpuprofile.gz",
+      "bytes": 67791,
+      "sha256": "83bb54c2205370065dee91b9b15cd288ca09fb3093e8abb2f6530163692ea296"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-app-profile-current.json",
+      "bytes": 22568,
+      "sha256": "032306c7916119ae397879ee8d7ebbf87104faa40ea95571ea7ce360fa313feb"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-app-railway.png",
+      "bytes": 221026,
+      "sha256": "b77889342a4aad24a44d6f4a131098c82a2ac3da3182eeb4758c0d1ea75fc910"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-app-realistic-attempt-1.png",
+      "bytes": 991474,
+      "sha256": "aa5c0b00325ec8317e7658636597f2563251411c762cc38d1cc3ede4426c3313"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-app-realistic-attempt-2.png",
+      "bytes": 964391,
+      "sha256": "d6eaed873da3007e90e079185eba5d028d75648fd6903f8ce2f830b60d817651"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-app-realistic-attempt-3.png",
+      "bytes": 1041325,
+      "sha256": "33be2e6ff386144d471146492607d367ba41279cafab21b770eed101d09d9c36"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-app-recovery-diagnostic.json",
+      "bytes": 1764,
+      "sha256": "263178ef97c8093c820470987263f4da4739be41103f6248fb9298f07c8c2726"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-app-regional-selector.png",
+      "bytes": 275825,
+      "sha256": "0f4c0af9628fdd4c0fe35f4fd59da7666fbfc476be935b435d23220cbef8f6f2"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-app-regional.cjs",
+      "bytes": 3270,
+      "sha256": "5641b04ae6ea55df3d7ca81375f60bb3aeb8efe7a7ebdd5c0f43de04cf9cc62f"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-app-regional.json",
+      "bytes": 5785,
+      "sha256": "e57a6593e5ccde09a8a935ea52f9ac4d6d971004fe272ba6d56ed22dbc0ff26b"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-app-replay.cjs",
+      "bytes": 3687,
+      "sha256": "bafe418b20ec935306161352115812f0950bde3d9c494c3e463e81b5f379794e"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-app-replay.json",
+      "bytes": 2008,
+      "sha256": "8a0c5d589ac51a057fc066ae78241436ea02821ddf47ba17a956265e533e1db3"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-app-replay.png",
+      "bytes": 455534,
+      "sha256": "047d93c5b15866dd2beab0a72a20df012c5f6aa4100abd839129ff84532ed3cd"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-app-retained-recovery.png",
+      "bytes": 574565,
+      "sha256": "e9b18cdeab7f5b9a0aab4c048f755afda783cb797db639e232046d9819da3506"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-app-smoke.cjs",
+      "bytes": 4979,
+      "sha256": "942b36c9d890437febb70959b6f071643c0ec551a19822fc05ed71d6745a76b5"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-app-smoke.json",
+      "bytes": 32740,
+      "sha256": "d5dfb485d3e3aa02e0eb4c9a77c877a8567ce0ffee00774b55b7c862ffcb7e29"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-app-stress-20.png",
+      "bytes": 548248,
+      "sha256": "b0e28c67b9d8ad37f1dc3502f19815cd36a9392c576b50ec983afac904bb19d4"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-app-stress-64.png",
+      "bytes": 547325,
+      "sha256": "cc07a01c0bdfde77cdd6babc37459193107d40a7cfa355c0789e73552eff484a"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-app-stress-96.png",
+      "bytes": 375504,
+      "sha256": "c68693b3f78750bc6700e33e03fc72852d9a9d56868a52249acb1fc3f45172f3"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-app-stress-final-128-complete-archive.json.gz",
+      "bytes": 227393,
+      "sha256": "4d9ce73b59a1513e362795c269efdb8c8c315119b0922a680f5c77f7066acb54"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-app-stress-final-128.png",
+      "bytes": 598933,
+      "sha256": "3f9508e9a24dd92f5061446a676871822b323ead6261dbe33be2b877b0961be4"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-app-stress-final-20.png",
+      "bytes": 549096,
+      "sha256": "ef92f3b6e524b65cee755d37049346df6cb1c077609ff6fe4bd38ea9491b287d"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-app-stress-final-64.png",
+      "bytes": 552136,
+      "sha256": "4c918791f8eefe043bc1adc761f54ea949333b112505e1fbfc09feed4c790648"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-app-stress-final-96.png",
+      "bytes": 638545,
+      "sha256": "6a9cc42a09ad61d7df2164e4704268982148831a2a22934ba40a3220a8c08624"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-app-stress-final.json",
+      "bytes": 1697136,
+      "sha256": "b4aff793c900eac3a60a5656263b6b72f7a9badcb971c5772115eb2676073bd7"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-app-stress-large.json",
+      "bytes": 95118,
+      "sha256": "85834d3347fa83d8518d0e0981e388fe2b3c2a125e059eb76ae9ea7b207f82f9"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-app-stress-qualified.json",
+      "bytes": 263491,
+      "sha256": "9d4b4870affbc43930df8bdc10bf4ccfdbe9e2b0e3d7cc2a6b5b59b32cabc795"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-app-stress-survival.json",
+      "bytes": 289175,
+      "sha256": "881345c3c89449ecb2de5df6ff9fc794fc28f394e60b38e4ef94eb7771f6be28"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-app-stress.cjs",
+      "bytes": 24324,
+      "sha256": "5271e295812ddfd87c171b302d4d6e8edc9122cf8ce64655ebb22a3b0698c66d"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-app-stress.json",
+      "bytes": 241666,
+      "sha256": "c280117583576d772c300772e53abeb0db09967e6fe6fdb74bb3731d1f86d166"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-app-strike.png",
+      "bytes": 513472,
+      "sha256": "e2cbc0db1f3e12f908b4a773b00d25e2be658f91183842439e493f61e5177ea6"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-app-survival.png",
+      "bytes": 543187,
+      "sha256": "6d478a03451757bac708d5725e0dbc2e4df35d0e9b6547b2404af91b968a955c"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-archive-host-before-modal-fix.json",
+      "bytes": 60156,
+      "sha256": "dc8e8854bec81fba548db0f07667d2b6102c326113dedc42421d0b635ef3419f"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-archive-host-before-modal-fix.png",
+      "bytes": 216122,
+      "sha256": "ef9ac9d9f18f3764b0e5648d8974ceef5df39a457c24ea8d90f69264d5678414"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-archive-host-browser-continue-continued.json.gz",
+      "bytes": 7352,
+      "sha256": "a476693ccf3fb33b7d42f047f527521f49b2232020774e8f7f557ad85b376401"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-archive-host-browser-continue.json",
+      "bytes": 21753,
+      "sha256": "673f83e376af01a8a5babec1711223b485e34231ac82a3387d895ccebd83d376"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-archive-host-browser-continue.png",
+      "bytes": 171915,
+      "sha256": "ce1f69135f2b606319c54ca5cea04b362046ac4ac509f569727b0bfa8296980f"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-archive-host-browser-current.json",
+      "bytes": 141868,
+      "sha256": "c4859c0494a79671e94167b521258b4f6559ff856d3197fabfed8e4d0fd8e9c6"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-archive-host-browser-followup-failure.png",
+      "bytes": 166363,
+      "sha256": "f2dfc93307167eaf1465fabd16568ca1d7f9a4a27bbeb8342bd8690da6b6cfd1"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-archive-host-browser-followup.json",
+      "bytes": 30592,
+      "sha256": "62965484f1169e82f844c98de783ea5eeef8e4dd0d870e89e235684ae7971c33"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-archive-host-browser-short-current.json.gz",
+      "bytes": 4370,
+      "sha256": "e2a0a868aede16bf961c3b7d55afbf0eaab663d3ee847c2c8c516caf472ab81d"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-archive-host-browser-short.json",
+      "bytes": 52488,
+      "sha256": "f3980ea57efb6c40a75ed3d44f0309db5843318551a12a7ce550bbef9154f3ee"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-archive-host-browser-short.png",
+      "bytes": 178006,
+      "sha256": "767e5d4b2418a5612566e3499259f76063380c398efd26b298623449aec4bf77"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-archive-host-browser.cjs",
+      "bytes": 22050,
+      "sha256": "250aac74847e220d2d63c6438d6a903c35094c68714207cb8e4122be0064d0b3"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-archive-host-browser.json",
+      "bytes": 65654,
+      "sha256": "ef7c5a3fda9ef2cd96170303e92a9ce42ccf95ef4251b1dca521f9b568ca9c3f"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-archive-host-browser.md",
+      "bytes": 5131,
+      "sha256": "7d411b2725bd6dc548426d7e16fe3e59c585ef5ee38b935409c638776dc5bbe0"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-archive-host-minute-before-fix.json.gz",
+      "bytes": 7130,
+      "sha256": "4f3a835facea96b387bf3960ba2eb54470b860dc3a2777aa297a8f728a8e49af"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-art-browser.json",
+      "bytes": 1263,
+      "sha256": "dbb90a3921f8a014c84a1627427dd68cbd5eabc88476e002092ae9541684b856"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-art-preview.cjs",
+      "bytes": 8562,
+      "sha256": "e4fd3c9d14fd6a54afb893a8fe3dd5ba1071d509971e7bb069782120db64adbc"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-asset-availability.json",
+      "bytes": 3842,
+      "sha256": "345dec3ba35304c507272e0479d683c2299f6685a1f5bce83ee0c7a939af1938"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-browser-qualification.md",
+      "bytes": 17262,
+      "sha256": "8ee28b8848f934a5cb3effb2df690846705e32a8f78a44fe2d18196f91633d5a"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-cap-batching-browser.cjs",
+      "bytes": 11093,
+      "sha256": "e2bd11cffdb4d8fc6488c2186028c3d75cbdce632dbfd1d3e309ffbf061f9de9"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-cap-batching-browser.json",
+      "bytes": 73468,
+      "sha256": "2090423942f2478968ff925ad710185cdb0712ff8fa558803abfc3ed3eb4a688"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-cap-batching-clean-caps.png",
+      "bytes": 78972,
+      "sha256": "0f25fa2577d8aaea2dd71cd7183857cf1ff448338a622012bb62ce667168fa6d"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-cap-batching-full-gore.png",
+      "bytes": 101006,
+      "sha256": "7448135e1ad8dbe177a99bef35e83ad2c1f2af8ea3d3a5a6996ed36ca5b96ecc"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-cap-batching-initial-completed.png",
+      "bytes": 1334100,
+      "sha256": "e000b3ec63649c2b4b9c4a7aab08a17a1f31b733946d2bb43882cab3357a3c19"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-cap-batching-initial-phase-0.png",
+      "bytes": 1311721,
+      "sha256": "d08388c3df061992670b50947084d5eef34485b05aa2d8787237c5fe97d6c5fa"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-cap-batching-initial-phase-1.png",
+      "bytes": 1338137,
+      "sha256": "9c32f9ad85e5316315fc208d85bb78babe730e41aaa1128409c0a1990ab9024b"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-cap-batching-initial-smoke.json",
+      "bytes": 15844,
+      "sha256": "9a764ed5a15524d7f509f4b8a57ddddbfb8a445c5e81e1a31dcaa63d32d4dbe2"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-catalogue-matrix.json",
+      "bytes": 4532146,
+      "sha256": "98ca3dfa1f00e562dc18ed7f7aa700893af0645cc5d5d8a5573b97beef5ff538"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-catalogue-native-0.json",
+      "bytes": 800186,
+      "sha256": "f85bb30307ab8544b0aef977d6e967825300cf5ccc6a86fe03097c2625b64070"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-catalogue-native-1.json",
+      "bytes": 787572,
+      "sha256": "a6061d18970b8a938fcfaa055464f71642d729b1e4e82876d8daa914d70d5873"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-catalogue-native-2.json",
+      "bytes": 787330,
+      "sha256": "ea1b05d45f6d8eb7069e970bfccdfb4a6583b7544c983017d8f4cc0924d03511"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-catalogue-native-3.json",
+      "bytes": 787365,
+      "sha256": "e61a8b22303bc5efbd0b1bd1eb030bbb7ab2fe3189a5c01c48f3374138f87598"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-catalogue-native.json",
+      "bytes": 753045,
+      "sha256": "1b0dab2aa021becb14e626e90f50a3634ee5045727b80f11b543e98f95ac4c86"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-catalogue-regional-0.json",
+      "bytes": 177421,
+      "sha256": "75cbc6b2558d1c3b8848fa2b890d1d8be2d9443bd10884f12823c32b6af08e3d"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-catalogue-regional-1.json",
+      "bytes": 177449,
+      "sha256": "901c49b2e6a2c3f643730cde70c57ed8cbe86892762495b097f2dd2f025136ac"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-catalogue-regional-2.json",
+      "bytes": 177473,
+      "sha256": "3f3f16e95d8a64c11f9ba84579221c0e6ba26332736b009cebf2a579fd7fe6f9"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-catalogue-regional-3.json",
+      "bytes": 177459,
+      "sha256": "4ee3bf8b975022b58124ffb2c027c4d64cd0d41ee46437d6fba4cb47e0c6a165"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-catalogue-regional-4.json",
+      "bytes": 177447,
+      "sha256": "2d85913fa617481b265a1ff9a479efb40fa5e954a4ed060c641c202c349ff557"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-catalogue-regional-5.json",
+      "bytes": 177449,
+      "sha256": "dc6a1fe61506b153baa64905056b5dcf4a71a730ab7da0bd76a8e1567e9fcdb7"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-catalogue-regional-6.json",
+      "bytes": 166578,
+      "sha256": "572ed41c3137110044abd6238bdcd4bb98a432ea4298e0e860fdf5e93bc15ad8"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-catalogue-regional-7.json",
+      "bytes": 166583,
+      "sha256": "a9943b639aebefad7fd2f75748b091ce8f53dc10cbe5d8987daa2d50b5275ea9"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-catalogue-regional.json",
+      "bytes": 73454,
+      "sha256": "3f8920f6d3d1a5ad68d986ec02f60e0bd0cec5b0e5823fc002ae7b9b88caee3b"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-catalogue-smoke.json",
+      "bytes": 15760,
+      "sha256": "41539f9ba3d7346616b85016acc42ed8e5645113dd3f5d49b2377cbea4c61846"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-combat-archive-contract.md",
+      "bytes": 4001,
+      "sha256": "b016ee22dd3796f0266b7ff8cc484995e9897dcbcca1da68a2e052c395372c08"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-combat-archive-lifecycle.tap",
+      "bytes": 1727,
+      "sha256": "fa63b766b1d3d23eb90eff67334c2f0fb4618c997a4039c591e1a4dcfe82b54c"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-combat-archive-tests.tap",
+      "bytes": 4504,
+      "sha256": "c2eb937d7b0401f8ee860e257aa49da468e4b7e456926f4195d55a615386187d"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-combat-settings-packages.json",
+      "bytes": 1279,
+      "sha256": "b42014589f61f6a7e21a2244693aeced4ad8f6400e28af2512a4a8cae814e796"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-combat-settings-validation.json",
+      "bytes": 2428,
+      "sha256": "edafd8e49f3339a896d0bcb6246621f7db0ac486affc5029389b26d66ad05ffc"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-combat-settings.md",
+      "bytes": 3844,
+      "sha256": "b747db5565970e5b6469f08ead4f6217f372bedf3fa36a4b9b2924ef9203aaa4"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-combat-settings.png",
+      "bytes": 136398,
+      "sha256": "b17976b847b24f237379b13468169348d9fa69b813edc8b82ed36a51f151618d"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-combat-snapshot-regression.tap",
+      "bytes": 5444,
+      "sha256": "79704ab2b203e468ed70e77c059858e05466305b5faeb10992903e2c5f21ec1c"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-crowd-128-realistic.png",
+      "bytes": 469789,
+      "sha256": "39f304b1afdc705020f8f7f437f705b0b432ad8cc90badb8befdeaed28037b98"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-crowd-art-browser.json",
+      "bytes": 1860,
+      "sha256": "73caa8134a73bfb206488cef353c76665821ddcd1aa48190746c9c589abbcf90"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-crowd-art-preview.cjs",
+      "bytes": 8168,
+      "sha256": "01a384b472976fe57516698ceb6bb46d832241dea713bacf672ac6c0f11f4170"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-crowd-r2-regions.png",
+      "bytes": 84836,
+      "sha256": "fdf83bb9c1aaf626d755641a641f2deb4a9052b85b8eb0cee73cdacfdff19173"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-crowd-r2-uniform.png",
+      "bytes": 117288,
+      "sha256": "2e3df3a6194b2c6ac12a0b8930f99c974777883d73a0a7c60c90b116f5bd2b57"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-delivery.md",
+      "bytes": 18765,
+      "sha256": "e3e6f644a23df05d3037ba6d0a2a780f9124c38b3317235eb99a135c5ee1b15c"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-demonstrations-encoding.json",
+      "bytes": 329,
+      "sha256": "af6d34dc8aabddddf5ca0bed6fc9f66f303c0027314fbdabba77bbbf5492d6c1"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-effects-audit.json",
+      "bytes": 5029,
+      "sha256": "b2192a1ee2cffec6c83a758de3baed2cbf18c09e765238d4ea1c24fbe6478873"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-effects-batching-completed.png",
+      "bytes": 1333522,
+      "sha256": "3138e2b805eafe36a106573ea75e670c969f53de3a5cde9589f7601bbf650a0c"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-effects-batching-diagnostic.cjs",
+      "bytes": 4413,
+      "sha256": "5b6c124d8224f28aadd4608320c09b9f2e9f4a5d8ee5bfee8738cc916531dfb3"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-effects-batching-diagnostic.js",
+      "bytes": 16800,
+      "sha256": "b990086bb4248acf5acf9f0344757e5596564724e505b74c94128a857050832e"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-effects-batching-diagnostic.json",
+      "bytes": 53618,
+      "sha256": "2e440177ce31dc03e21ecf68e98d418e005d0b96784afe20fddf682a4b7a6e16"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-effects-batching-phase-0.png",
+      "bytes": 1309869,
+      "sha256": "d06c3736eaa8975628cc8a5e7b63f3c7d0368739453cc3d09c1276469c53dda7"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-effects-batching-phase-1.png",
+      "bytes": 1336050,
+      "sha256": "e3c3d58a92cae8189571ab2db5cbc8aba046e4cee3110c670b56639d83dbbe2f"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-effects-batching-phase-2.png",
+      "bytes": 1310377,
+      "sha256": "78cf5d2bdb5933b579e01c46e7ff956d494bd1a80a9647fe863a1b56bd96e043"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-effects-batching-phase-3.png",
+      "bytes": 1337038,
+      "sha256": "7e1e4f348743bab6623990a3c8647eaaad603f5957197cdf76948ab9af410ce6"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-effects-batching-resource-probe.cjs",
+      "bytes": 3959,
+      "sha256": "600fdf22e534f9f3709968a1d1dcaf497dbd6ec0fafdd7e69333c1eb50fdb892"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-effects-batching-resource-probe.json",
+      "bytes": 1156,
+      "sha256": "d903d1dcf4ded26f88fff8bd6e26488e1c4337cc03d06bb48aecd90f62169bc9"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-effects-completed.png",
+      "bytes": 162566,
+      "sha256": "1824817cf7af16485a0826d1a2faa3ee34e46748116fb65d664eaa7e54884732"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-effects-final-completed.png",
+      "bytes": 162425,
+      "sha256": "267cd0d45a9440ed5fcee7fdaef3f0bf116c83f686bbbace8d90403b6b5d4cca"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-effects-final-phase-0.png",
+      "bytes": 1340691,
+      "sha256": "1127f24824c6a46065c584602ba0dc6c23961714a6e66d09f6f18a19024d0264"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-effects-final-phase-1.png",
+      "bytes": 1362915,
+      "sha256": "a5c2e95178a52ae92e6b501e83cd303b61bef520fc589bc410cfde892c679f60"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-effects-final-phase-2.png",
+      "bytes": 1314348,
+      "sha256": "5e33ee75578cdd38584137c946cb13280d693ba6e96df327d6daaf6cba98602d"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-effects-final-phase-3.png",
+      "bytes": 1341985,
+      "sha256": "cee848d896928dad3e010f2d3f5a5ec22538fb5e001916c923286739b9868f05"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-effects-final-phase-4.png",
+      "bytes": 182634,
+      "sha256": "5fd7699f6376968d5f85be7f0d177bada775e4565e22ebf052ffcbddc1b90c47"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-effects-final-phase-5.png",
+      "bytes": 212005,
+      "sha256": "74019bd10a5c3873357d7fdf55692cc73c6438286855fb2e6bacb96ee82cc29a"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-effects-final-phase-6.png",
+      "bytes": 193835,
+      "sha256": "76faf53f2c904fb344dedd2170184ba111f0413ae07beec295051901be1a44d6"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-effects-final-phase-7.png",
+      "bytes": 233985,
+      "sha256": "434fb6ca76959bd432e67116f6519a5f33e6ba2360016f5290b5b06524694b91"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-effects-fixture-smoke.json",
+      "bytes": 27052,
+      "sha256": "ff4f44a11edab329a8347cfdd7e761070733b5993852eff751ee1496e1110fcb"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-effects-grounding-smoke-completed.png",
+      "bytes": 186594,
+      "sha256": "d28f2a2661698025d6f0a6e4c4a11d40dfe59832aa502e03cf73df1ff4dfbba8"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-effects-grounding-smoke-phase-1.png",
+      "bytes": 1312561,
+      "sha256": "6f567845862147f3ccbdf6b554815718ab74233018554af53d25c4612cdcd253"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-effects-grounding-smoke-phase-2.png",
+      "bytes": 1355390,
+      "sha256": "40ec0019f7cc0ce6e97d1c3acb739c94e616f4380db9121e956ffc28985d678a"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-effects-grounding-smoke-phase-3.png",
+      "bytes": 179868,
+      "sha256": "b532cd0223062cd8773330746c459caebd54b4cebb01fa60fe8bc7d6bbc33d0c"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-effects-grounding-smoke-phase-4.png",
+      "bytes": 225238,
+      "sha256": "8756a9363cca24786aca784763521038722b33bcac314ebcd3bea00258b0a2ba"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-effects-grounding-smoke-phase-5.png",
+      "bytes": 193113,
+      "sha256": "e6562edfddcf611fd7bc4759661e1ddb4645df3608548e1a55a5f5cf96fa60f2"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-effects-grounding-smoke-phase-6.png",
+      "bytes": 256725,
+      "sha256": "22cc99b76a948e032b255bfb3d2606fba4ba0d604cf49407828055da7cd37336"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-effects-grounding-smoke.json",
+      "bytes": 46792,
+      "sha256": "c4e2412a6b67210fc45a79c036ed2628f710f98fce8c1f865e89ae184663effd"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-effects-high-diagnostic-completed.png",
+      "bytes": 1324754,
+      "sha256": "f79b422e0b8847ddeda6904a24442f496b9f47319539b4ebe365817cffa2e55e"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-effects-high-diagnostic-phase-0.png",
+      "bytes": 1313339,
+      "sha256": "1c4ab1c0941343b67d866628baf8c809d090d047a717647b82464f60fff7df9d"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-effects-high-diagnostic-phase-1.png",
+      "bytes": 1333332,
+      "sha256": "2b08b275647752182fb569b960ee392bd75a88bb28d18d68f882969308c52028"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-effects-high-diagnostic.cjs",
+      "bytes": 4244,
+      "sha256": "37ff804cd253cb77021272cb3bd321a1ad343c97b934205abb448d77d81c5899"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-effects-high-diagnostic.js",
+      "bytes": 15961,
+      "sha256": "a9d10f0e2a84efa7dc9b7000bafbdd559c006c86c861b4b9015c472358262e7c"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-effects-high-diagnostic.json",
+      "bytes": 20814,
+      "sha256": "49168d00b0f83b51f3d2a29f6096297db6ae3cb2c6a2e7a52580638b1c5442b1"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-effects-phase-0.png",
+      "bytes": 1354553,
+      "sha256": "45b4a7893c5c549ed5c4cf61d4f64602ce132d735d9c1f1dcfb3fc85dfbf46b5"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-effects-phase-1.png",
+      "bytes": 1313794,
+      "sha256": "69a25c66e30120b9b1c8906978065096ff7a4ecdf527762034aae9e9be2ff722"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-effects-phase-2.png",
+      "bytes": 1338894,
+      "sha256": "c8f491927a4a1655625dafeb6001cfdca31ef214bb0cf7aa98eaeed10f68144c"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-effects-phase-3.png",
+      "bytes": 181650,
+      "sha256": "1b964c8a8af5b3c9c76efbf5ae58a153e5d01f4a949308e3c3dd8f48fcc6506b"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-effects-phase-5.png",
+      "bytes": 130399,
+      "sha256": "1adc56e409a99f385aeb813dd2257a762cf477036d661f878000996271371cf9"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-effects-workload-final.json",
+      "bytes": 113517,
+      "sha256": "ae9d52b89ef7d2272c500219009d91114a41d1d8db3fdc736c93d41775244a16"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-effects-workload-grounding-invalid.json",
+      "bytes": 31044,
+      "sha256": "e8c9bc6fafeefdf1a262639f57886471cce206b80d014a61ed1041e320c32bea"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-effects-workload.cjs",
+      "bytes": 4216,
+      "sha256": "2404eec0683b557739086a3aa8435ce1242dd731dbc3e376865011c74ca197ae"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-effects-workload.js",
+      "bytes": 15618,
+      "sha256": "7fd8e5223e4bdfedf425cae9662dcad6296281eceeaa539253a081008cb6678a"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-final-coverage-audit.md",
+      "bytes": 8359,
+      "sha256": "545cec51fc001a9105009343e986b4f5bd1f520e223c87a16d34cebbf01aa0ca"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-fpv-props-packages.json",
+      "bytes": 1279,
+      "sha256": "04d8f6fa46946d22bf608ddf4c0627e73fc959d53dd9cd77b6730b294fb47504"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-fpv-props-racer.png",
+      "bytes": 102906,
+      "sha256": "2cacd66c4edf575470cab9d3447d4e4d909c1338048bf4de5046d9635e02f812"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-fpv-props-utility.png",
+      "bytes": 102554,
+      "sha256": "693dbf72bfd48c1d143364576644c132d9a4081b4cd902394ea509fd66d3bee8"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-fpv-props.md",
+      "bytes": 4463,
+      "sha256": "757f04233873f1e9e26d5fcd21273a8fc0d7578d26f5cb74633511bbbcf80c5c"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-frame-path-browser.json",
+      "bytes": 4357,
+      "sha256": "66ad93486673f844a4c6ce43e79f1ed70626ef49b31f639b509f728a07140e02"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-frame-path-browser.md",
+      "bytes": 2743,
+      "sha256": "de9dbba1eb306b4095db2c8dba37ff8b2d6bffdada4b1c19fbbb32b3d7503a73"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-gpu-app-smoke-20.png",
+      "bytes": 564653,
+      "sha256": "5392db551e51283a3b1a66fd57c42a7037ceead604251e5fd9f7ccb690c93a52"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-gpu-app-smoke.json",
+      "bytes": 10060,
+      "sha256": "666ae1da0c53547db105da87bea92235764b3955be8376e162ea38da07c8f92f"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-gpu-effects-smoke.json",
+      "bytes": 10193,
+      "sha256": "a83a053d24531507cfc334e104ead0f57030f6cc0d33278748acc24745426a51"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-gpu-probe-check.cjs",
+      "bytes": 2721,
+      "sha256": "0337af51fdcc8b93c7c01f6b700bd28068fc531f9704bf2edfb7435383938726"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-gpu-probe.js",
+      "bytes": 4517,
+      "sha256": "4b34fce30f8bf3afb408dde375b85eaa6addc5ed952749ca6a2ce242410d8ccd"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-hillside-civic-middle-staged-fix.json",
+      "bytes": 15623,
+      "sha256": "f60bdffc9d7d8b22212c80ae0700aaa33fbc400a78d9c0ded81650e2b45f59e5"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-hillside-lower-square-repro.json",
+      "bytes": 15826,
+      "sha256": "d3a68a4d9329b324b818b27836b666fca410e89c5aaedf8098c72665fc55f6ed"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-hillside-lower-square-staged-fix.json",
+      "bytes": 12460,
+      "sha256": "485f69fb87b0e9760aaf513726c5865601dff55da2421969a55c80fe71ff00d1"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-hillside-middle-courtyard-repro.json",
+      "bytes": 18984,
+      "sha256": "987dd498dfb88684d4909eee8587a1c872fd4dfcb481233919ab7bc510f2419e"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-hillside-middle-courtyard-staged-fix.json",
+      "bytes": 15618,
+      "sha256": "13e73b9c0e5080b6971dc28c26555b0613c48732742e80891a5693fb03ac16f8"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-human-playtest.md",
+      "bytes": 8423,
+      "sha256": "0de8a5875d6f4d0304bdaba8bcc6462789a8363772c22fab54274d8bcf370d98"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-large-autosave-boundary.json",
+      "bytes": 1939,
+      "sha256": "27e7e4cb3c10d2ad863fe50e19a82ab51763391e9295291043379d686a4480f8"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-large-autosave-restored.png",
+      "bytes": 587279,
+      "sha256": "eb2c6d60a31fe03732d5563e9c3feadc465fcfd84fc4cd17e9c4332a5bae4933"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-large-autosave.cjs",
+      "bytes": 5696,
+      "sha256": "1b849a774cc33f6cc1e7297d42e4700c323b13325c64215061b77dd6ce09593c"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-large-autosave.json",
+      "bytes": 2010,
+      "sha256": "9c60b9d9d22b4e9d5087a2be778a7f71240333ad36a3e5e3e1c7b913546d2174"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-long-archive-controls.png",
+      "bytes": 477193,
+      "sha256": "ba3a62cd7341c354106896d4eb5fc2878804da6bc4524deabb35e4aa19e44c0b"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-long-archive-replay-ancestor-failure.json",
+      "bytes": 4035,
+      "sha256": "e23cd509d0c9e599aace56a615c93494f1946864b3b13a16e815f7344ea0bce9"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-long-archive-replay-first-css-failure.json",
+      "bytes": 2603,
+      "sha256": "ff31961840244be77dad7b561b14c649e7b0a77f010154e3ea6a70ba79e8802b"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-long-archive-replay-paused-start.json",
+      "bytes": 4881,
+      "sha256": "bb0eda99675064686fa2efc614e3f8083081df289d8bc875e08a332681d589a0"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-long-archive-replay-resume-selector-failure.json",
+      "bytes": 5671,
+      "sha256": "e87f5f993fda12ca5e5116aa83eda6252dd68f63563df44af6c0a8fda7f4694f"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-long-archive-replay.cjs",
+      "bytes": 5723,
+      "sha256": "0889c1f5e7d90752960a8ff261ea2b766f7ab0a11e54f00283231d25dce9e050"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-long-archive-replay.json",
+      "bytes": 11382,
+      "sha256": "2d43fc3395e7ce8207a552b3959d5d880b9f4fcb80cb54fd1421890ccd334eb5"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-long-archive-verified.png",
+      "bytes": 591114,
+      "sha256": "b15517e0f79bd0bed25400a73e2243b83dedc5af40b9d7b4cfda9c6064eb04f3"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-organic-detail-packages.json",
+      "bytes": 1279,
+      "sha256": "6b04f730cad7a172ab367a170bb5aa10edf9d7d3f885044095ab971df10ac4bb"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-organic-detail-realistic.png",
+      "bytes": 50805,
+      "sha256": "877e061233e8a26f61f8eb507f3140da771d7679e7a055f51a8ad188c1682faf"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-organic-detail-validation.json",
+      "bytes": 3174,
+      "sha256": "7cc129a0148ff8d71ce3023ca4ae57a25c70d07d32892ca175a5f40f188a6e7c"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-organic-detail.md",
+      "bytes": 4071,
+      "sha256": "84647a86ab2522d45df55aba0ac41d9b679a9689a14c209ad20b29d7a7ddd400"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-organic-preview.html",
+      "bytes": 1729,
+      "sha256": "d0506f265a697442717f8577f551dd82dc332f3ddc3d012befa0c6c615c57ce8"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-organic-preview.js",
+      "bytes": 8465,
+      "sha256": "f1a9c7b730f3c75503a1156e86a2f031ee6e982dd729b1161cb42f50976d564a"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-package-closure.json",
+      "bytes": 1189,
+      "sha256": "f179e2dbe6345e6ee29a28d048da33481d37b53a0fd697e9c3d66c2f333f57e3"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-package-measurement.json",
+      "bytes": 1279,
+      "sha256": "7ee90230a5b783defb9b6f1762064e52d82164ff18926038e84b7a003f048551"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-performance-qualification.md",
+      "bytes": 22114,
+      "sha256": "13757441c8f799cd8c2b11dcd65a523d3beca5bcb3f382cf187ea4113aec14be"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-project-validation.json",
+      "bytes": 3122,
+      "sha256": "217bc90ef4faaab96684efe20e39e03d8ec0c89544a29995953fddba51fd4a9a"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-r2-admission.json",
+      "bytes": 954,
+      "sha256": "2b27beb5bc1dd3cca1ed5699902dabc590dfde342f6a2a64614b4a4194c952e7"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-r2-regions.png",
+      "bytes": 84836,
+      "sha256": "fdf83bb9c1aaf626d755641a641f2deb4a9052b85b8eb0cee73cdacfdff19173"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-r2-uniform.png",
+      "bytes": 117288,
+      "sha256": "2e3df3a6194b2c6ac12a0b8930f99c974777883d73a0a7c60c90b116f5bd2b57"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-regional-restore-repro.json",
+      "bytes": 9243,
+      "sha256": "90fedaca487b3f75c84719c6767a37a3ab9daabbbc702470e2d26673d092db2d"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-regional-restore-repro.mjs",
+      "bytes": 4549,
+      "sha256": "3c02b70e26c89a0cd15bed55da706bda33955bb731414975f6c3fe6c32405fe4"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-regression-summary.json",
+      "bytes": 2208,
+      "sha256": "ef99946cd6e37c2a9b81baf73128f6c970828b734d38b6419bc925681582ea22"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-release-notes.md",
+      "bytes": 4200,
+      "sha256": "746e4a2ae7e9ca7c6e9bfcf2217d9b5886a9a9f3fe8d490e7b4be5996664d82f"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-roster-arcade-0-0.png",
+      "bytes": 85568,
+      "sha256": "5021cf6930abb371784596708c9d57b367d7d91c32239efc650a33dc14fcb5dd"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-roster-arcade-0-1.png",
+      "bytes": 85764,
+      "sha256": "af6b3ad655860c4d23d043c77962caa7ee5675dcb042e81b51558a680e274feb"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-roster-arcade-0-2.png",
+      "bytes": 85536,
+      "sha256": "2975c24b73d1b50a995e49e8b74065fd7e81b83adcb7cfbf4980aa8650fdee9b"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-roster-arcade-0-3.png",
+      "bytes": 85723,
+      "sha256": "11f4b4a6d4f4777ffaf6d1fa099cd9978b2716b1201efee7b1aed0d5f09a6625"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-roster-arcade-0-4.png",
+      "bytes": 120843,
+      "sha256": "cbb98deae48dc39953789391c9a64435c515cecbc80661a325c41003c307c191"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-roster-arcade-0-5.png",
+      "bytes": 124907,
+      "sha256": "c7f84081e82972e3f6462fe718848f47936f7bd789945b053035af538f7c87c4"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-roster-arcade-0-6.png",
+      "bytes": 120079,
+      "sha256": "f18d1ee17008f2acc378ed55261c15c4553d56180534610af230f028be18fe2c"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-roster-arcade-0-7.png",
+      "bytes": 124240,
+      "sha256": "4168007d07c837d94cffe1a179aa55e21bf00a9e13ea4a71602bfc810efb6c12"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-roster-arcade-6-0.png",
+      "bytes": 91449,
+      "sha256": "470d7cd10b5f625ab6759bb8b40a51369c25dc509c8ff423535d87bd04eb800b"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-roster-arcade-6-1.png",
+      "bytes": 91620,
+      "sha256": "554b7ebd8d351f81d51faf9dbd0abee27676d4b0b99bd35e99b48e334c262eee"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-roster-arcade-6-2.png",
+      "bytes": 91416,
+      "sha256": "ec445d31a22252b2d8684ad58d5aaccae98c472b3b736697a19c42f2f3834de3"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-roster-arcade-6-3.png",
+      "bytes": 91596,
+      "sha256": "5acbc96407a28b114508ec2dea4693591fe685483926477bd7289afbf9d11fe8"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-roster-arcade-6-4.png",
+      "bytes": 127912,
+      "sha256": "a41bff8df5ca50f47a57bcbe9db4c86328dd527a891e7e20695a777806a8cf0c"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-roster-arcade-6-5.png",
+      "bytes": 131944,
+      "sha256": "701d558466420c35a31a2981e3273bb276c57ac62e963d8f28ac93ed3beb2ea0"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-roster-arcade-6-6.png",
+      "bytes": 120116,
+      "sha256": "186db5841b2f53de77be91f050d912d7fcf6eea33c48d74737be4c8f9c44404f"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-roster-arcade-6-7.png",
+      "bytes": 123493,
+      "sha256": "55389d27e9215bbe53fe0d71aa937ca75a0affe17ae06dabd20c4b7be112af0d"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-roster-impact-arcade.png",
+      "bytes": 130253,
+      "sha256": "b493307a773346e399c610c5953aa28d2585695aa5c9471aee5b75b54b85953c"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-roster-impact-rivals.png",
+      "bytes": 135799,
+      "sha256": "9dccdfd925b05eba639fa274a576cfdc30d302c2220df3b1fd96baa363078864"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-roster-impact-tactical.png",
+      "bytes": 135754,
+      "sha256": "d8bd92510ddf8fe0bd93fcb910d78122285151ad5dfe1cf8d00bf6aa7292b978"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-roster-rivals-0-0.png",
+      "bytes": 85873,
+      "sha256": "2f8247c9c180d28622b5992287f0b91324df85d63c3bbecd8dee3534df357772"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-roster-rivals-0-1.png",
+      "bytes": 86359,
+      "sha256": "6d9585015eaff8be21ba24f9b5990a4ef40bf1d7ae368cc4488727ce7023b74a"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-roster-rivals-0-2.png",
+      "bytes": 85944,
+      "sha256": "026afcc6d4727f1265f3672c48d6329e601e011d174bc30b3dd18804b5b26c4c"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-roster-rivals-0-3.png",
+      "bytes": 85968,
+      "sha256": "e96d48134a6901afff99f4d4dd5fc128cef582d4a4f97ddfdd351969ce3a2bdc"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-roster-rivals-0-4.png",
+      "bytes": 121391,
+      "sha256": "38271f4996b1bc9dce9505f7976c9264111fdcf76b2039ab88977ef2df8dbfd5"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-roster-rivals-0-5.png",
+      "bytes": 124856,
+      "sha256": "1b9f10fbd2757a9ad1e8d3685b04c67fe8d14d17b4eb2c97920d11133d8f8df2"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-roster-rivals-0-6.png",
+      "bytes": 119671,
+      "sha256": "fe6650c3f3d2ad88c53f0ba597f29cb5c99e9cc40f3c8d058e938da458fda7ba"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-roster-rivals-0-7.png",
+      "bytes": 125346,
+      "sha256": "318b93e6ec33cd77590cafa4fbe56016a46e421df42a921baf42331a0f376239"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-roster-rivals-6-0.png",
+      "bytes": 91727,
+      "sha256": "3f8cb10c8ec34d0caada5466f41ff7695257bea3f965d36bc309c3b1e644669d"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-roster-rivals-6-1.png",
+      "bytes": 92165,
+      "sha256": "a69807a1c2b05c67321fbcfa86aaed8a50bb480fa2d3092c3945945f1d39006d"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-roster-rivals-6-2.png",
+      "bytes": 91794,
+      "sha256": "1db15a8870465c0e266ded43361dcb78176b0c2c3b77fa8b7a86c8a2dd57b12a"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-roster-rivals-6-3.png",
+      "bytes": 91819,
+      "sha256": "8ba0e5ad87fb41b4554392a99aeb233592321fbf1757caaa5ded8cd3f1bd32a7"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-roster-rivals-6-4.png",
+      "bytes": 128790,
+      "sha256": "3b09c29eac11dc210e20c7af816f2f2b0b4a177ba6c473d57fa010a12dea63b2"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-roster-rivals-6-5.png",
+      "bytes": 132283,
+      "sha256": "cd8a023a682ef25d7be1fb0493331e179cfa2c6565d56c9deeb958790626aacd"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-roster-rivals-6-6.png",
+      "bytes": 128879,
+      "sha256": "1a702fbb0e297767e39c6882c03a5fd8a1ad75b0acec7b360c4cbd3bdfdcf9fd"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-roster-rivals-6-7.png",
+      "bytes": 134606,
+      "sha256": "b5df902b2d878e8d1068cbc4da38f6ce9fd8d730099a96a66c6e5e48931f92c7"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-roster-tactical-0-0.png",
+      "bytes": 85955,
+      "sha256": "0364d52cb09259f91052d10b4c73c177c6f0af03d6ec006a6c253e5635f1ab1d"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-roster-tactical-0-1.png",
+      "bytes": 86242,
+      "sha256": "cf5dfc60b26834d35c3c15abd0ece240cbbb06f1935d752d3bc3122d058f114d"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-roster-tactical-0-2.png",
+      "bytes": 86098,
+      "sha256": "b1b9692b5071415793f1f00b1ed6c0013fb1c2b61cc945a58c79763e40d5a6d7"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-roster-tactical-0-3.png",
+      "bytes": 86127,
+      "sha256": "d4f907983558924417db065b09c4de7084d9ce0c013539cb5dd25fc748e472e4"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-roster-tactical-0-4.png",
+      "bytes": 121970,
+      "sha256": "41c4dc938abec4f80712e54d77952f8de75ebbb9f5940b95d5732623db3ed1d0"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-roster-tactical-0-5.png",
+      "bytes": 125320,
+      "sha256": "c8c2d47a111a7ca600c4224a20f66844f28501900b4a6405edb4a73a10cbc9a9"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-roster-tactical-0-6.png",
+      "bytes": 120066,
+      "sha256": "e57d563572fea6bf2ce677d87e1cf8ad2f59379b914ca3c9a54a123bbb988cbe"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-roster-tactical-0-7.png",
+      "bytes": 125246,
+      "sha256": "1635733a67b12e1f107eb1215ae9e0bee4893dec48f4ef2405fd88f2df577a43"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-roster-tactical-6-0.png",
+      "bytes": 91825,
+      "sha256": "9447ebb08f0e3b01c42f3024b4214f8a11ca6aff9d7529122bdeb2fea96044f3"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-roster-tactical-6-1.png",
+      "bytes": 92090,
+      "sha256": "95a2239b0af82fb4c6b029a8e7fa30899e5629f9548835d74111cce95963f8c8"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-roster-tactical-6-2.png",
+      "bytes": 91962,
+      "sha256": "7f107699adb6d358489da5dbafd20f1033298a24c99e78e4e2f668c9740792bf"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-roster-tactical-6-3.png",
+      "bytes": 91993,
+      "sha256": "7df458f77a3bbaa46ef45e6d71939c1538c3900b9aed065e0dd6ef012d581f99"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-roster-tactical-6-4.png",
+      "bytes": 129398,
+      "sha256": "b8941075c6c11d7a039e586fe14ce81c35af8f7b9510faf79b458c1ea101267f"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-roster-tactical-6-5.png",
+      "bytes": 132773,
+      "sha256": "d6eee041fbc3b26a25ddc363a1ad0729ee7933d1ff793a7f08411fa69751546a"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-roster-tactical-6-6.png",
+      "bytes": 129725,
+      "sha256": "8969aec32d40ac7753b366f3e076bec7b185fb2059023a12b4cf3f7cecd8c252"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-roster-tactical-6-7.png",
+      "bytes": 134935,
+      "sha256": "be688b6db05dedaf4a2f4943a344f2c12b99b6b13d723adcba25eeb6a3fc9c54"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-runtime-qualification.md",
+      "bytes": 10744,
+      "sha256": "3818ff49655469a589ee097f4d2080fa81439c6249e9e1f4c948f261a0f91cce"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-runtime-tests.tap",
+      "bytes": 35613,
+      "sha256": "f72b681035aa5a427bc6edd78b1e6cac692116e9bcb83689056b705438f56aa9"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-seamless-boundary-active.png",
+      "bytes": 85628,
+      "sha256": "bd7de1622f3835ccd13d71f52a9d27d853eda359890194786fa4eee6823d8677"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-seamless-boundary-packages.json",
+      "bytes": 1279,
+      "sha256": "bd638e22519ea19610f307da992be7cff91eca813f482abf258d13b9a15adf02"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-seamless-boundary-return.png",
+      "bytes": 80192,
+      "sha256": "c1e41fb9365c244403b56deae7424a77e5b3be71269ce68867e8159fd3636aa6"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-seamless-boundary-validation.json",
+      "bytes": 2670,
+      "sha256": "5aef9f10ff9791ddcea215c3ea92e9d8d8abdc9d11feb6b2a2286446d1e92092"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-seamless-boundary.md",
+      "bytes": 3844,
+      "sha256": "a5381d8da8bb6d4fb8030d0fe619800039cea1f506de1971ee7a75f7d1892ded"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-source-watch.cjs",
+      "bytes": 957,
+      "sha256": "1b437fc515b9c9040520c482c6bde0032ea451f1c9b8df0b01236f90ec019df0"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-static-admission-risks.json",
+      "bytes": 4874,
+      "sha256": "057e74950b2a2a3961c1f238e472f1f920141370820b794a01f4111de9e33ab2"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-stress-source-history.json",
+      "bytes": 21350,
+      "sha256": "8ccd05cf410c49a6d6344ee3eb3031211f70b67e739084d388fad7df7cbed2c3"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-visual-matrix.js",
+      "bytes": 4601,
+      "sha256": "99ee101d08cb8cbc0edc01eb066c3729edd417790fdc83d16cdd9420b86518c7"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-visual-matrix.json",
+      "bytes": 109266,
+      "sha256": "d0d17ea16522aca3ecefbace164c3f4c3035056419b95be9cae39df413c4321c"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-vitals-low-ammo.png",
+      "bytes": 91048,
+      "sha256": "fd11e2f80c3e2f7e63de3e83cfba305ec60915a03818447fdbc567b8ee0d330c"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-vitals-packages.json",
+      "bytes": 1279,
+      "sha256": "a2bcc19964c688bdffb9f6ed7c54f1a03adae851fb0f5c849b7b04aab6369a97"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-vitals-ready.png",
+      "bytes": 93527,
+      "sha256": "1b35a66b6f74165bc22999a3e9b7a0de5d0a9fe13812a383456ef9c867116806"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/overhaul-vitals.md",
+      "bytes": 3634,
+      "sha256": "d23e49b7a0fa9606c100431752831f8b4abf1de427cd358bdb17be409497c3a3"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/package-admission.json",
+      "bytes": 1276,
+      "sha256": "b7b717f487b1ba8032267c82143694f8e90a6fc995a6154df2961e858f3251f6"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/physics-contact-regressions.txt",
+      "bytes": 17542,
+      "sha256": "042d2a5c2bf116e2f2afab40df8b5e89f0fb6b29ead7345cf934848c6d08fe26"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/plan-status-review.json",
+      "bytes": 3811,
+      "sha256": "46d81c71b19fc2916d10faa0b4c0ccaa58a1cc3fecc3d08a25155a0cf9b72f14"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/player-guide.md",
+      "bytes": 9950,
+      "sha256": "0f6ed8c214b47bef76a0e2a7655733b29360c1388a8f5ad80e139a0595a9fd09"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/radio-six-switch-packages.json",
+      "bytes": 1277,
+      "sha256": "7f14bdc5ef0cb7a593572a392e873406e49c94698621ddd4528c1f733206bec3"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/radio-six-switch-setup.png",
+      "bytes": 145117,
+      "sha256": "8094bc73d000abc2f56a7bafdd0d64bb96a2037d3582013a70a94610bd73b937"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/railway-valley-low.png",
+      "bytes": 697397,
+      "sha256": "39ca5c3ced85a32dca2040ca54d6e7d99dcc8f009e1ee2e6d8917a50e01309fc"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/railway-valley-stress.json",
+      "bytes": 166310,
+      "sha256": "9782134c233261e2aee4757be553740d8a22589d4c3ca47ed9e63b2ff442a586"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/railway-valley-ultra.png",
+      "bytes": 390412,
+      "sha256": "8bdaeb597fa2a1a8605fb44d3a1182b2e344045e91a1f2fe5cfdfd7e063c4889"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/realistic-delivery-download.png",
+      "bytes": 497572,
+      "sha256": "40563938434d80536b9c6e34660df36a22c2a6ab4e42f5384b12e01970ba8a78"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/realistic-delivery-installed.png",
+      "bytes": 494281,
+      "sha256": "ac195c1fdfae55fc5bad33f7662806a4e3966f39df1178f888a323bd451ba500"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/realistic-delivery-studio-bloody.png",
+      "bytes": 293096,
+      "sha256": "7b68f129f49b28a2197d4f39d63ab4a7a69ba466e67a03f92218692feebbdfe2"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/realistic-delivery-studio-clean.png",
+      "bytes": 290814,
+      "sha256": "2d83081ab65f2759fea9f218b5ee48d332f4be7483c4e467fac04d2d668b86fb"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/realistic-delivery-ui.json",
+      "bytes": 62810,
+      "sha256": "82924c2b65384b2c42f3711c90b50b608e77602696af2c1abdbbc1f068054556"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/realistic-delivery-ui.md",
+      "bytes": 2898,
+      "sha256": "2226a5fa952f233948f8ca5e15d9249f678e2955f02902e126bdba20cd18beba"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/realistic-representative-performance.json",
+      "bytes": 8066,
+      "sha256": "55f32a68cafb11a3631ac3e0609cde55f6272564abfb241d8bd3573feafa6c31"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/realistic-roster-admission.json",
+      "bytes": 955,
+      "sha256": "1e192728b38ed86283b658225855765e34ff293e26e0d22a9a3ed2007cc11b01"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/realistic-roster-arcade-bloody.png",
+      "bytes": 123362,
+      "sha256": "88b0e99bdbf182b92b538b85bee0f866038712d8250a07a24b5ad3c82864de74"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/realistic-roster-arcade-brutal-off.png",
+      "bytes": 112540,
+      "sha256": "e62580c77d8432cd75dee03f7d08c31c5f60e739da520a1d82c88a6b1150f614"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/realistic-roster-arcade-clean-closeup.png",
+      "bytes": 131698,
+      "sha256": "59da5a3ce1bb7bd42734bc8e2a2c8d6ab35b2264075497262a32c0fd83709aa0"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/realistic-roster-arcade-clean.png",
+      "bytes": 112079,
+      "sha256": "94d97007c3ebdedb59601bebdfda6a0c696196c8553363423ab647389226da0d"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/realistic-roster-arcade-live.png",
+      "bytes": 131185,
+      "sha256": "349858a02aff407aa07e7f91d2079743d90dd6345dfc6509720574cdda90a1b2"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/realistic-roster-brace-closed.png",
+      "bytes": 157562,
+      "sha256": "171da886f85829398d7256d6abfe5a8a38acf04000c0db71edd007c3bff5a06d"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/realistic-roster-brace-open.png",
+      "bytes": 172246,
+      "sha256": "65755c4f4f04e22edba2ffa28e084d2bf0649fbe41e163edd11b523fcb4016a3"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/realistic-roster-captures.json",
+      "bytes": 10880,
+      "sha256": "4f65bee479d284538dabf215ce003e71effd9cbc64c331b332c3fa993c1f9b89"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/realistic-roster-gallery.js",
+      "bytes": 5533,
+      "sha256": "0c70d4756f1bdfab1c6ad939a0da07b388c5dfa78ec37f6eeff80cecf6a5d491"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/realistic-roster-gallery.json",
+      "bytes": 7828,
+      "sha256": "58be6b8decf42022ef0b26193426722a6477f83a6f044c5a8e32cadd462de775"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/realistic-roster-method.md",
+      "bytes": 6881,
+      "sha256": "76fe40e75d5956737b0c23f9a23078a7648d1eb656edb44bf20c5e374aac6dc5"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/realistic-roster-railway-cleanup.json",
+      "bytes": 3640,
+      "sha256": "709959e4e47e3ac947e9eb4b019087b45c2a69e05a56001cf133cf7d1995c1a0"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/realistic-roster-railway-final.png",
+      "bytes": 561089,
+      "sha256": "2728f26900012887dd174374ccd43e985179ec965b69cef73bc6f0fe76cceda2"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/realistic-roster-railway-harness.js",
+      "bytes": 12699,
+      "sha256": "27728d56cc66922ec50a8257ce3cdf09465d9591d40087b946da17c1e15f00e5"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/realistic-roster-railway-performance.json",
+      "bytes": 175854,
+      "sha256": "1ce413e314add34536e43d4d92b89a51b3b1f0e2ce6c8ac1d37126fa234105ff"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/realistic-roster-release.md",
+      "bytes": 4913,
+      "sha256": "79f532a76422d67a4fd019ca18b30f56f2a05982e5be3206620257b379136c6f"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/realistic-roster-rivals-bloody.png",
+      "bytes": 124015,
+      "sha256": "99d5236804ab7ac709a555122efa698c50b7764bab2d8c56351b9d669ff9b7d0"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/realistic-roster-rivals-clean.png",
+      "bytes": 111376,
+      "sha256": "a9084bd9c167df744ba138e0c3b0cbc0fe490c2ee1d87ddec374ce3eb9259a41"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/realistic-roster-rivals-live.png",
+      "bytes": 129884,
+      "sha256": "4fbe5828605b6116031a6cb5180318f7be540eb05fe8108331932e629e9d1d02"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/realistic-roster-source-hashes.json",
+      "bytes": 638,
+      "sha256": "039f17493384dbb05d0a59839f77c95c8ff38065f4a1f9fac976c5b68811b706"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/realistic-roster-tactical-bloody.png",
+      "bytes": 124667,
+      "sha256": "41bfeefa991f6ccbca3290e215399b32db1b71c59e2c42f8b06820e487af9006"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/realistic-roster-tactical-clean.png",
+      "bytes": 111609,
+      "sha256": "b11c51fe91913a147471c76e9ac9aa9a7ddda9f646fab445bb53927c08808170"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/realistic-roster-tactical-live.png",
+      "bytes": 130549,
+      "sha256": "db1e3944be2a9305fd479a7e43d9760cb24d5c9a1af3b970261a20328f7b7ccf"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/regional-admission.json",
+      "bytes": 29963,
+      "sha256": "1b8c2200241fb22e95ddc39bc14712ca506f90a794a7ad2ade751c076246bdd9"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/regional-projectiles.json",
+      "bytes": 3249,
+      "sha256": "42030fbb2966024a566d199d16619ce0421f991a4a4b83e5e565ce50a7f45823"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/regional-projectiles.png",
+      "bytes": 50406,
+      "sha256": "65a76713bbb01c6e84eccf1d027efea20af220e7cbac4ab9b45c6662229d8b09"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/rivals-bloody.png",
+      "bytes": 105627,
+      "sha256": "47ce7007197f198f9095bd7a9fd41302de2f680a3964d3723d9d3738d21e1c67"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/safe-cache-cleanup.json",
+      "bytes": 2495647,
+      "sha256": "0b197ca98cede8dd49ba2a83255c7258399f572bc9cc54af5642c0871c0b75be"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/safe-cache-cleanup.md",
+      "bytes": 4481,
+      "sha256": "3e3aed1be80ea42bd6f24ce52308e01ab25a341c306bea376432e8e02fc652d7"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/shader-preparation.json",
+      "bytes": 3229,
+      "sha256": "e1afb601068e71471a49218f8392dc03bfddb86c6002e50d7967f0595a2b6f1a"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/tactical-bloody.png",
+      "bytes": 827964,
+      "sha256": "cf4a5ee9b0c2143468b80a6e7b27b8b739609aa1c3afae7e59efe444e61ef347"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/world-scheduler-regressions.txt",
+      "bytes": 26336,
+      "sha256": "8736f34b5626221f9224242bb5b9ee4a58202de90718087d68925a55a74a2039"
+    },
+    {
+      "path": "docs/evidence/fpv-combat/world-ui-regressions.txt",
+      "bytes": 26843,
+      "sha256": "22af7696c600437ae0c39416a3c82e3f137aa0681889307cae6e356033fb28ad"
+    },
+    {
+      "path": "docs/fpv-radio-models.md",
+      "bytes": 5699,
+      "sha256": "7aa3a8b39af84010f739df2a4a4af70761eb57a1a638f457d68efcca7c6c5849"
+    },
+    {
+      "path": "docs/fpv-radio-six-switch-delivery.md",
+      "bytes": 5626,
+      "sha256": "91a482f876c9861faa67acefd10d6721d945d1cb633387047b33fec59a708261"
+    },
+    {
+      "path": "docs/fpv-radio-six-switch-design.md",
+      "bytes": 22995,
+      "sha256": "587cb0055c0f066d6168bc2be4d75882151ce11c3e7cd58be0f13003c457f5c9"
+    },
+    {
+      "path": "docs/fpv-sim-current-plan.md",
+      "bytes": 16389,
+      "sha256": "0dafa220c3da84789b8bbebe3be42ea257c63f66260cab03257b67ea9b4edbd9"
+    },
+    {
+      "path": "game/test/fpv-advanced-moving.test.mjs",
+      "bytes": 11447,
+      "sha256": "f4a23a42b5457853ed148055f3ec384d532d2d81d663ad5ccf8155eb22908d23"
+    },
+    {
+      "path": "game/test/fpv-catalogue-damage-ownership.test.mjs",
+      "bytes": 3872,
+      "sha256": "3f2fee10ce88a8ce7ecaa232e34b24f01374900496f7976c63afdec28135df02"
+    },
+    {
+      "path": "game/test/fpv-combat-actors-overhaul.test.mjs",
+      "bytes": 6730,
+      "sha256": "8e1ad0f49307ee489838012d1266bcf1ca1307d41d5f7650119f5849934674dd"
+    },
+    {
+      "path": "game/test/fpv-combat-appearance-activation.test.mjs",
+      "bytes": 23116,
+      "sha256": "aa7b0396c1ef966b93e3be7d723f3b0d45ea77471c5c4d29021aa97e6cfdb8c9"
+    },
+    {
+      "path": "game/test/fpv-combat-appearance-host.test.mjs",
+      "bytes": 5110,
+      "sha256": "d02329bae1b6f751925cd82a960dd30131ca83a7dc51a0797ef522a7f56299d7"
+    },
+    {
+      "path": "game/test/fpv-combat-appearance.test.mjs",
+      "bytes": 27158,
+      "sha256": "f0838e1217ad2def6570f0a6adc75a3ed8447aceba6315fc21008af82121852c"
+    },
+    {
+      "path": "game/test/fpv-combat-archive.test.mjs",
+      "bytes": 11526,
+      "sha256": "e53b511d59024288c33074ad756e61ac8ce4a7b44eef12045fdf50a5fea5799b"
+    },
+    {
+      "path": "game/test/fpv-combat-autosave.test.mjs",
+      "bytes": 8842,
+      "sha256": "940c758733faba697ca5cdecfce904539b3df45b9c146044156c98fb5c576f4e"
+    },
+    {
+      "path": "game/test/fpv-combat-cap-batching.test.mjs",
+      "bytes": 12993,
+      "sha256": "5a67641091d97ac1151d0aec35522b46a713c4931791131b74e5af261eb50db4"
+    },
+    {
+      "path": "game/test/fpv-combat-collider-generation.test.mjs",
+      "bytes": 4629,
+      "sha256": "7559e04fe121c228f04a770b3408f4e6e40a00a88c343df1e94615932610868a"
+    },
+    {
+      "path": "game/test/fpv-combat-full-session.test.mjs",
+      "bytes": 24097,
+      "sha256": "50b7af6377ca0550e5e4ab7aefe5a4afbb9648721a56479ba494da57212cceb8"
+    },
+    {
+      "path": "game/test/fpv-combat-organic-detail.test.mjs",
+      "bytes": 9881,
+      "sha256": "2b4014156f1c6412efe6fd531a07ed2724017478f87adac060125598f28d25d4"
+    },
+    {
+      "path": "game/test/fpv-combat-presentation.test.mjs",
+      "bytes": 92048,
+      "sha256": "396f5ddad0cfb03281b7915d44c1e97cb8706f232094b71dfa46346b07010b63"
+    },
+    {
+      "path": "game/test/fpv-combat-replay.test.mjs",
+      "bytes": 15340,
+      "sha256": "19428660f223329d16b91d92111e1262c1d2168c2805837e54ba30d59a03ff0e"
+    },
+    {
+      "path": "game/test/fpv-combat-vitals.test.mjs",
+      "bytes": 27893,
+      "sha256": "f504809b07bb95f5e88624ee99da367dc3da8b85a65fd51286fc24784f27fd37"
+    },
+    {
+      "path": "game/test/fpv-demonstration-encoding.test.mjs",
+      "bytes": 648,
+      "sha256": "d05e2b2a6ef41a73faaa09c90624added581188539d32ab6677b318bb394f2de"
+    },
+    {
+      "path": "game/test/fpv-encounter-adapters.test.mjs",
+      "bytes": 22136,
+      "sha256": "159e19adf7f70404bd2a9750a45dfc597863731cc9d7e98a45cb59f0d5f08a65"
+    },
+    {
+      "path": "game/test/fpv-encounter-controls.test.mjs",
+      "bytes": 4722,
+      "sha256": "f463d339bba6c0ea4672539f4eb7cb827453805164ad884d0639cd80840ec72b"
+    },
+    {
+      "path": "game/test/fpv-encounter-host-lifecycle.test.mjs",
+      "bytes": 45457,
+      "sha256": "cf571618834b281c5c06c48bb0ba8451030c2392b2ecebb9087460ba83597fae"
+    },
+    {
+      "path": "game/test/fpv-encounter-runtime.test.mjs",
+      "bytes": 26318,
+      "sha256": "58f8a43c67c9069eab4854b16a8887c5eda8c51516e6d19a134b82744ede9173"
+    },
+    {
+      "path": "game/test/fpv-encounter-session.test.mjs",
+      "bytes": 41200,
+      "sha256": "4c1b1dcb50a293ab2ca47e8704f46f6885c1fe5f3528cb7b6e5c97b142bf69f5"
+    },
+    {
+      "path": "game/test/fpv-encounter-studio.test.mjs",
+      "bytes": 16538,
+      "sha256": "43658358326d9cb2554fb4df2ce85af0b695ce0084510ded732574a9b90e772c"
+    },
+    {
+      "path": "game/test/fpv-encounter-v2.test.mjs",
+      "bytes": 52550,
+      "sha256": "77182d53d1fdfccb1f7c81cbb1ff014eac3c02d46e935f9d15f4b0fcca943a77"
+    },
+    {
+      "path": "game/test/fpv-live-actors.test.mjs",
+      "bytes": 24951,
+      "sha256": "5307a881cfc6b343fff4c4480d4f395108c3279c1e6d866b64ec0ab61437d104"
+    },
+    {
+      "path": "game/test/fpv-presentation-consistency.test.mjs",
+      "bytes": 3206,
+      "sha256": "7e2d1306042bd02a8bec7111e9989173343c451d14950f86a20a32286ee7e129"
+    },
+    {
+      "path": "game/test/fpv-radio-menu-host.test.mjs",
+      "bytes": 7691,
+      "sha256": "915dd8e503eb06eec10fcf43ea7c351bd0f14d833a00924ca596a8fbdef0cf02"
+    },
+    {
+      "path": "game/test/fpv-radio-six-setup.test.mjs",
+      "bytes": 16860,
+      "sha256": "4eeb6b92fb26df837fe3092c817d53f1c959f15dd63e6af188e380372d86d858"
+    },
+    {
+      "path": "game/test/fpv-radio-six-switch.test.mjs",
+      "bytes": 20780,
+      "sha256": "468de08d8670c88caca7e6d2363a775374d88046ea59f51d0b559c341058486c"
+    },
+    {
+      "path": "game/test/fpv-regional-encounter-geometry.test.mjs",
+      "bytes": 3016,
+      "sha256": "39c85c8761706326dbc793b97d2e1a825efe0de6b701d39e2b0cbe0895a1366f"
+    },
+    {
+      "path": "game/test/fpv-regional-encounter-recovery.test.mjs",
+      "bytes": 7206,
+      "sha256": "52eed47dd65d660d889ddb647fabe2dfc36be8fe61cf0476a97bcc39526d4ac6"
+    },
+    {
+      "path": "game/test/fpv-regional-encounter-setup.test.mjs",
+      "bytes": 5118,
+      "sha256": "433bdd66cbddd9460bc819aeba116ed7e975eac29584f1befb0f2f44343aca26"
+    },
+    {
+      "path": "game/test/fpv-regional-restore-clearance.test.mjs",
+      "bytes": 7518,
+      "sha256": "cbcbbedec28350d859f69559b5e2abd26ede2720102e4439f784c8a817057da0"
+    },
+    {
+      "path": "game/test/fpv-six-switch-menu.test.mjs",
+      "bytes": 16936,
+      "sha256": "92802a06428fa6cf2dd116dfc48c81c36f2e8a0433323c67818d289375eb0318"
+    },
+    {
+      "path": "game/test/fpv-transient-contacts.test.mjs",
+      "bytes": 11277,
+      "sha256": "4dd342d972292e9f2405f5f59e19972da8363db6f3e8654caf7f726bb1729001"
+    },
+    {
+      "path": "game/test/fpv-world-route-guides.test.mjs",
+      "bytes": 13627,
+      "sha256": "09d7295887f62c6b7010fbdd613d717b0ea03aa3ac77296b19b8b7fec611a977"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/combat-actors.mjs",
+      "bytes": 55728,
+      "sha256": "b1fcab3f836088ca0abfcef57ac7183e70988c2ea0717990b9d1bcaecc8b9086"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/combat-appearance.mjs",
+      "bytes": 39728,
+      "sha256": "36ea06b21fcf1b6670f11f709966554f74d610f72b89164e59e722ae743e0b93"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/combat-presentation.mjs",
+      "bytes": 121943,
+      "sha256": "44abdb7ed340d7d058c23711cca9a27d1916039c5b5f4182768c78e35ac567ea"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/encounter-controls.mjs",
+      "bytes": 25820,
+      "sha256": "9abac43ca3f476638e4d9ab4e63ddb55ac218e4680e687f4d2411cd628f4fab9"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/encounter-geometry.mjs",
+      "bytes": 11408,
+      "sha256": "9d1254b8f7db0b2dc6499f0dbef59568674a56f5cc014ed982fc9eb1f0d09fde"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/encounter-runtime.mjs",
+      "bytes": 166617,
+      "sha256": "f00cc97b2117b9dd0453b78b903baac7a883006126e25e79324d72ac0378cc80"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/encounter-session.mjs",
+      "bytes": 55420,
+      "sha256": "81405ee2439c0359b32b1df1dd4409bd469dae7b8731bb45ab888f606de25600"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/world-encounter-editor.mjs",
+      "bytes": 35002,
+      "sha256": "e09bbd370f1c321b8aa0fd2240c7cc252f2542004375fb305f59f6306b482d88"
+    },
+    {
+      "path": "scripts/check-fpv-character-art.mjs",
+      "bytes": 3827,
+      "sha256": "fa126e6c568b85c8cc90b90eafe6c6c8c7b3663ea013497fd12ee4e9d917ebf2"
+    },
+    {
+      "path": "scripts/merge-fpv-combat-catalogue.mjs",
+      "bytes": 7851,
+      "sha256": "f768757fa10c9da3a161fe2acf4a0e55545ba802acf6703c1e578e5dd0b479f1"
+    },
+    {
+      "path": "scripts/qualify-fpv-combat-catalogue.mjs",
+      "bytes": 20881,
+      "sha256": "79cb22cbadf8cdd5051e264c450c6e6a66562fe2be49e897d6285c74b9e639f5"
+    },
+    {
+      "path": "docs/fpv-regional-restore-admission.md",
+      "bytes": 6133,
+      "sha256": "74503e436e63937ef3ab66bfb64fd7b35251c42205340a46d19d83beb4d0bf68"
+    },
+    {
+      "path": "game/build-config.json",
+      "bytes": 25290,
+      "sha256": "a481eccdf99c5d0864c2531d31597bb387dca965876fb6689bff1ef92b8e52a9"
+    },
+    {
+      "path": "game/presentation/industrial-environments-data.mjs",
+      "bytes": 242916,
+      "sha256": "2233536b26075c1c6eabbb95516f9d30989f7f75cffdbb238e4228f7f31da2df"
+    },
+    {
+      "path": "game/test/authoring-input.test.mjs",
+      "bytes": 25825,
+      "sha256": "5e6712b7df07e86f8d6fdbd5506220e9bbe20614a9f44cd3a14355e4064264ce"
+    },
+    {
+      "path": "game/test/fpv-advanced-practice.test.mjs",
+      "bytes": 57932,
+      "sha256": "85ea09853b8bbad62d7c1a3943193d385d6d951db1ca537407a0b16629f14b00"
+    },
+    {
+      "path": "game/test/fpv-aircraft-practice-controls.test.mjs",
+      "bytes": 16835,
+      "sha256": "acc0f7525b1125065cd76524a0ac293de6f535927a11e016d236b10a08cb40af"
+    },
+    {
+      "path": "game/test/fpv-aircraft-renderer.test.mjs",
+      "bytes": 38163,
+      "sha256": "e174eb79fbbf95a7e474d9697d27d9d0f98b33c4e85838bd88c522ac2bf920ce"
+    },
+    {
+      "path": "game/test/fpv-flight-ui.test.mjs",
+      "bytes": 127994,
+      "sha256": "39ca3d500c00744a32b1221857f23e7e89adc7e2c148e8283a436e579821054e"
+    },
+    {
+      "path": "game/test/fpv-flight-widgets.test.mjs",
+      "bytes": 3787,
+      "sha256": "f1beca7006e08f586ffcffe8bafacd8f176741c3905468e33591669bd09d9c71"
+    },
+    {
+      "path": "game/test/fpv-objective-labels.test.mjs",
+      "bytes": 29277,
+      "sha256": "8027d3c11a806257260392cf9aa5a069f72eea4917a898914baefc5b22ffaf49"
+    },
+    {
+      "path": "game/test/fpv-radio-guide.test.mjs",
+      "bytes": 11318,
+      "sha256": "cb2ab50ba362427f27e582abe33c3a77d70c9e50ac14359d238c9c50e3a2c7a4"
+    },
+    {
+      "path": "game/test/fpv-radio.test.mjs",
+      "bytes": 20339,
+      "sha256": "b4c6d9b831b84fdbbd61d8f67affa859d5775ec881210150e1537f4b7c6b1819"
+    },
+    {
+      "path": "game/test/fpv-regional-preparation-clock.test.mjs",
+      "bytes": 6127,
+      "sha256": "c35e392fa584d1e51613aa5d1f6c571b2c4c9df6b4ef7fc5b3117afc6a517832"
+    },
+    {
+      "path": "game/test/fpv-world-appearance-ui.test.mjs",
+      "bytes": 251127,
+      "sha256": "7c4fd0832921970c6613bec580c01ee5879ef2c4ae56d18558ba699b75ef0800"
+    },
+    {
+      "path": "game/test/fpv-world-editor-appearance.test.mjs",
+      "bytes": 7601,
+      "sha256": "4eeb8c658c4c5468373786e141b4437a7042cbe00fd67afaaa454c858146c705"
+    },
+    {
+      "path": "game/test/global-settings-tools.test.mjs",
+      "bytes": 20033,
+      "sha256": "6c99d3605b40cc13afbdb9b30ba74ed287f919a2d021f93b35fcd3566ab08047"
+    },
+    {
+      "path": "game/test/shared-encounter-audio.test.mjs",
+      "bytes": 25003,
+      "sha256": "635ab0884a7426a86ce8576cf7d8db184a2a254e04dee57b5552592dcbd887e6"
+    },
+    {
+      "path": "game/ui/encounter-audio.mjs",
+      "bytes": 9040,
+      "sha256": "c507ea003207fd28b0783fe1d47a80daf24261b1fbece181e8829b081003bbe9"
+    },
+    {
+      "path": "game/ui/global-settings-tools.mjs",
+      "bytes": 21734,
+      "sha256": "a05d37c22898f7795c7b694a61af92b28682b38ff676e891cd803a5b945b8eb6"
+    },
+    {
+      "path": "game/ui/page-input-host.mjs",
+      "bytes": 19703,
+      "sha256": "1aa099df4e7cdc25502265df2000ea1ce2f3f79fb38a30bd6bdb8f5b40841f88"
+    },
+    {
+      "path": "optional-practice/civilian-flight/audio.mjs",
+      "bytes": 2232,
+      "sha256": "c10fec223606005b552104a977ab8fe59667472c2dee5cbd0ab5061da6353784"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/advanced-aircraft-runtime.mjs",
+      "bytes": 55975,
+      "sha256": "e9da931893aaf5c2b51de2a5c581279675229c74bb809c99a15c092fe68c3ede"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/advanced-practice.mjs",
+      "bytes": 60673,
+      "sha256": "ffe75a3829f4495e7ba5b9a44d2211970848565f38ad78b623f03d08ea8e06f7"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/advanced-regional.mjs",
+      "bytes": 45683,
+      "sha256": "b8ed104a14c72c323b216ded750c4685945467a5b61a6c4c3f5c83af6691caf3"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/advanced-simulation.mjs",
+      "bytes": 91388,
+      "sha256": "0d9e7b8ddcaf3e12695088da03517e537ac5a94278abdf5ea2663346892dc5ae"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/advanced-worker-client.mjs",
+      "bytes": 5220,
+      "sha256": "c1309774279a5fbb9cbaeea05b0559a17eacfe14d127ef17ccce638d483aee06"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/advanced-worker.mjs",
+      "bytes": 9203,
+      "sha256": "cf08e1f4b996b2370efadd120f8db2cc1e1e719157fbb002194dacdfa854e0a0"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/aircraft-appearance.mjs",
+      "bytes": 16097,
+      "sha256": "e9e8d6e9711029379398dc19e756911ae97104f9a53364beac844386ecda8d71"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/aircraft-archive.mjs",
+      "bytes": 21923,
+      "sha256": "569422bf0f5171d7631c9b89dd820aeda99a35806f5f42dbba5ab571f567126b"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/aircraft-course-session.mjs",
+      "bytes": 29850,
+      "sha256": "56772df6a5c57437732f9ae4ad6533c6ab1b8fd13abaf3a8aac614bbce3862fc"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/aircraft-mission-checkpoint.mjs",
+      "bytes": 24986,
+      "sha256": "e62beb7389d80788c7aeac1558c81c7711cee42a25f9fa5e9f67260c9dc06e76"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/aircraft-practice-controls.mjs",
+      "bytes": 19798,
+      "sha256": "caa049ddd315ec2920dac1df1d337e275ccc6e8b793fa23af91e86e591c38043"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/app.mjs",
+      "bytes": 109620,
+      "sha256": "076fe7f01700996f19f1bccd17a59a44deae0d0f7411ac75d527723ed00c6730"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/demonstrations.mjs",
+      "bytes": 89916,
+      "sha256": "5a0c73bea12738d9074965100536fe137db6cac044a7d49d8544fb7c30c269dc"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/flight-fullscreen.css",
+      "bytes": 133853,
+      "sha256": "ee8a524896d66aabba81fd341eb20a3f4f9ba77d0ac4dcc4d9c1433795d48724"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/flight-fullscreen.mjs",
+      "bytes": 328484,
+      "sha256": "dcd098a4c8c1417e430d0ab702560623f9675febdc01e9bbd0d5d56f4758cc1f"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/input.mjs",
+      "bytes": 64424,
+      "sha256": "869cb6996510bbe6fa43e5cd55477a2a678c8281103bee17b5f394861f8c9066"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/radio-controls.mjs",
+      "bytes": 10982,
+      "sha256": "24c5a64ab23a700b9ec6c4d5ec16422b952c4fad275c309c8c961edbcc44359e"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/radio-guide.mjs",
+      "bytes": 40423,
+      "sha256": "20575cefd35637585da69705bef20006fbaccf7bba312ea7b0d18d1fe6a2c542"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/radio-profile.mjs",
+      "bytes": 33229,
+      "sha256": "ea4360a883beba70d59739ec4ad1d76c9cf72494d8bd4a751e97edbbeaa3adad"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/radio-runtime.mjs",
+      "bytes": 20608,
+      "sha256": "506652e5554b7080db34bd6c5e7a4a6b28f9d15e6df108b3a5425c9b21d8a054"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/radio-session.mjs",
+      "bytes": 5389,
+      "sha256": "be556705e5f05c4e61b3ffb38cf20e0445adf7276d44fd6b8adf257044086e1f"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/radio-setup.mjs",
+      "bytes": 79432,
+      "sha256": "c2b771ca25d0117a10460152371277a7de5c687030c6537633dc0850fe037147"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/regional-session.mjs",
+      "bytes": 15248,
+      "sha256": "d18e9072db4d405e407c366b6b2ba76260b0a4d16c6886050799c9e7ee0771ae"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/regional/flight-prototype.mjs",
+      "bytes": 29019,
+      "sha256": "033888c49d6702ff50d381e9eaa2b36f8bd842137789b699e7c99d4a79ac6e4a"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/regional/restore-containment.mjs",
+      "bytes": 11426,
+      "sha256": "e74c1c5802118ec3e1ead85c012afa1ca84da2a7dabc543ba02355de3c411632"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/regional/scenery-admission.mjs",
+      "bytes": 17513,
+      "sha256": "729bd1404559e256eb83ffd84e3016a9ce3fa836d4fcab466beac5ee3d11cc47"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/regional/verified-mixed-window.mjs",
+      "bytes": 16625,
+      "sha256": "b63659e5f9a663ff77db62c8e7b7c2287c47da5f36e7d0614d8231a1a33dd5ed"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/regional/verified-scenery-window.mjs",
+      "bytes": 14554,
+      "sha256": "5e0c96680f68499779a39d143e08a78cc2ea53a8b6e7f65c92df9846c79ba94f"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/renderer.mjs",
+      "bytes": 223727,
+      "sha256": "a85e546c7cee1f263de34f7c6ecfbf9765cc3580b3197233d7570a29aa7c8cfd"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/sim-presentation.mjs",
+      "bytes": 686624,
+      "sha256": "5fff7508f43e46dceb9a69ffff6c5ed2f1564012fef2649ddadbdac85170aeeb"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/snake-hunt-presentation.mjs",
+      "bytes": 19352,
+      "sha256": "d03a083f96ba1a12f4a2beade82d2292e28b04780f8d53013ff2a1b3a6ff77e6"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/style.css",
+      "bytes": 206661,
+      "sha256": "ae891ea04017536e7643b138dfee86de00ac86b47ca5597026fb35fa8c3076e1"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/world-actor-editor.mjs",
+      "bytes": 66503,
+      "sha256": "844853b958babfc9276ad3cda5ca7169166cc5ce5e4a8c72ce3b257347a965b7"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/world-app.mjs",
+      "bytes": 582265,
+      "sha256": "4b60d679807d780554bc4828cfc6d562975abd9a75658b0b12cc7ab20970053f"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/world-audio.mjs",
+      "bytes": 32559,
+      "sha256": "d922fc283424b7460bf477db7970fa0c8a1aa578c2d481e505c8bd7282eba7be"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/world-collision.mjs",
+      "bytes": 14537,
+      "sha256": "144be8fe1b86100dd9c4276c49c8cccaf0b689bc85bc34e93aa7f0e15b1a3b79"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/world-content.mjs",
+      "bytes": 58822,
+      "sha256": "4ed45e79db3d73e7d8961b69bc290aeebca494045c6d6a3e5944c7bf0758a1d9"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/world-editor.mjs",
+      "bytes": 18669,
+      "sha256": "75dac6449a4f6d9d4589d8c2ea268ab48234bc5ca04a5bd5b05a8d921db4e952"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/world-model.mjs",
+      "bytes": 91816,
+      "sha256": "435c38d39bbf95c8e91b518e521b13440855806ce9092fde2ef9b882c44f6d09"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/world-reaction-runtime.mjs",
+      "bytes": 1356406,
+      "sha256": "bbc7dd21299850983bb58fe3aa5282a2d01492106a49bc28beaf752339d37ac1"
+    },
+    {
+      "path": "publishing/optional-package-policy.mjs",
+      "bytes": 32008,
+      "sha256": "31bc64afeca04ad70034dc65a1a0125ea173722d4870ea1dce726a88c51cfbfa"
+    },
+    {
+      "path": "scripts/game-cli.mjs",
+      "bytes": 94739,
+      "sha256": "b3938a8d3c76d85e7ba8aeb798e00d96e792b665e54298179b42a02e683df358"
+    },
+    {
+      "path": "scripts/produce-industrial-environments.mjs",
+      "bytes": 28721,
+      "sha256": "06c4b474b9406bb53f3781308535e087e47f026918896af6e1c5ec72f9389f04"
+    },
+    {
+      "path": "scripts/refresh-fpv-academy-audio.mjs",
+      "bytes": 8464,
+      "sha256": "0662615ffff84ed8629f9c0579b3f828875db51e52bfaae43d44ddd11a6b88e1"
+    },
+    {
+      "path": "scripts/refresh-fpv-play-shell.mjs",
+      "bytes": 11348,
+      "sha256": "c6bcf950b3a999be11242d80dd0e4f9f06c4760665d5d8932d21449b376d8f60"
+    },
+    {
+      "path": "scripts/refresh-fpv-reaction-runtime.mjs",
+      "bytes": 9774,
+      "sha256": "c1738bbe6014665a6a2f56148e4243cb32aca7d04c9603b9a0dae99eaca92376"
+    },
+    {
+      "path": "scripts/test-optional-fpv-package.mjs",
+      "bytes": 29399,
+      "sha256": "5530f448812c30bc45f2c8957d043bcb14e0612fd9c0f9b44fd58875e2c9a2d6"
+    },
+    {
+      "path": "scripts/test-produce-industrial-environments.mjs",
+      "bytes": 5868,
+      "sha256": "b80d7b3c1aec2fab7965343c04f7548b61e458b5b9c0a8d078a2d264f9bf7c0d"
+    }
+  ],
+  "pr": "https://github.com/mekhovov/revealline/pull/1799",
+  "branch": "codex/fpv-combat-radio-hud-delivery-20261020",
+  "originalTaskChangedPaths": [
+    {
+      "status": "A",
+      "path": "authoring/library/fpv-character-art/r1/README.md"
+    },
+    {
+      "status": "A",
+      "path": "authoring/library/fpv-character-art/r1/authoring/animate-worker.py"
+    },
+    {
+      "status": "A",
+      "path": "authoring/library/fpv-character-art/r1/authoring/animate.py"
+    },
+    {
+      "status": "A",
+      "path": "authoring/library/fpv-character-art/r1/authoring/assemble.py"
+    },
+    {
+      "status": "A",
+      "path": "authoring/library/fpv-character-art/r1/authoring/bake.py"
+    },
+    {
+      "status": "A",
+      "path": "authoring/library/fpv-character-art/r1/authoring/create.py"
+    },
+    {
+      "status": "A",
+      "path": "authoring/library/fpv-character-art/r1/authoring/finalize.mjs"
+    },
+    {
+      "status": "A",
+      "path": "authoring/library/fpv-character-art/r1/authoring/inspect-glb.mjs"
+    },
+    {
+      "status": "A",
+      "path": "authoring/library/fpv-character-art/r1/authoring/rebuild.sh"
+    },
+    {
+      "status": "A",
+      "path": "authoring/library/fpv-character-art/r1/authoring/review-wardrobe.py"
+    },
+    {
+      "status": "A",
+      "path": "authoring/library/fpv-character-art/r1/authoring/review.py"
+    },
+    {
+      "status": "A",
+      "path": "authoring/library/fpv-character-art/r1/authoring/settle-equipment.mjs"
+    },
+    {
+      "status": "A",
+      "path": "authoring/library/fpv-character-art/r1/authoring/wardrobe.py"
+    },
+    {
+      "status": "A",
+      "path": "authoring/library/fpv-character-art/r1/characters.glb"
+    },
+    {
+      "status": "A",
+      "path": "authoring/library/fpv-character-art/r1/manifest.json"
+    },
+    {
+      "status": "A",
+      "path": "authoring/library/fpv-character-art/r1/provenance.json"
+    },
+    {
+      "status": "A",
+      "path": "authoring/library/fpv-character-art/r2/README.md"
+    },
+    {
+      "status": "A",
+      "path": "authoring/library/fpv-character-art/r2/authoring/repartition.mjs"
+    },
+    {
+      "status": "A",
+      "path": "authoring/library/fpv-character-art/r2/characters.glb"
+    },
+    {
+      "status": "A",
+      "path": "authoring/library/fpv-character-art/r2/manifest.json"
+    },
+    {
+      "status": "A",
+      "path": "authoring/library/fpv-character-art/r2/provenance.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/design/fpv-radio-six-switch-concept.html"
+    },
+    {
+      "status": "A",
+      "path": "docs/design/fpv-radio-six-switch-concept.png"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/README.md"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/arcade-clean.png"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/audio-output.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/catalogue-baseline/overhaul-catalogue-native-0.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/catalogue-baseline/overhaul-catalogue-native-1.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/catalogue-baseline/overhaul-catalogue-native-2.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/catalogue-baseline/overhaul-catalogue-native-3.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/catalogue-baseline/overhaul-catalogue-regional-0.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/catalogue-baseline/overhaul-catalogue-regional-1.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/catalogue-baseline/overhaul-catalogue-regional-2.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/catalogue-baseline/overhaul-catalogue-regional-3.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/catalogue-damage-ownership.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/catalogue-damage-ownership.md"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/catalogue-damage-ownership.mjs"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/catalogue-pre-hillside-fix/overhaul-catalogue-matrix.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/catalogue-pre-hillside-fix/overhaul-catalogue-native-0.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/catalogue-pre-hillside-fix/overhaul-catalogue-native-1.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/catalogue-pre-hillside-fix/overhaul-catalogue-native-2.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/catalogue-pre-hillside-fix/overhaul-catalogue-native-3.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/catalogue-pre-hillside-fix/overhaul-catalogue-regional-0.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/catalogue-pre-hillside-fix/overhaul-catalogue-regional-1.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/catalogue-pre-hillside-fix/overhaul-catalogue-regional-2.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/catalogue-pre-hillside-fix/overhaul-catalogue-regional-3.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/catalogue-pre-hillside-fix/overhaul-catalogue-regional-4.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/catalogue-pre-hillside-fix/overhaul-catalogue-regional-5.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/catalogue-pre-hillside-fix/overhaul-catalogue-regional-6.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/catalogue-pre-hillside-fix/overhaul-catalogue-regional-7.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/catalogue-pre-hillside-fix/workers.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/combined-browser-acceptance.md"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/combined-browser-before.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/combined-browser-before.md"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/combined-browser-boundary.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/combined-browser-late.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/combined-browser-scheduler-short.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/compact-hud-academy.png"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/compact-hud-delivery.md"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/compact-hud-landscape.png"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/compact-hud-package-measurement.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/compact-hud-phone.png"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/consistency-catalogue-matrix.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/consistency-catalogue-partial.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/consistency-delivery.md"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/consistency-host.tap"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/consistency-learning-objectives.png"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/consistency-matrix-shards/overhaul-catalogue-matrix.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/consistency-matrix-shards/overhaul-catalogue-native-0.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/consistency-matrix-shards/overhaul-catalogue-native-1.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/consistency-matrix-shards/overhaul-catalogue-native-2.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/consistency-matrix-shards/overhaul-catalogue-native-3.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/consistency-matrix-shards/overhaul-catalogue-native-4.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/consistency-matrix-shards/overhaul-catalogue-native-5.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/consistency-matrix-shards/overhaul-catalogue-regional-0.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/consistency-matrix-shards/overhaul-catalogue-regional-1.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/consistency-matrix-shards/overhaul-catalogue-regional-2.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/consistency-matrix-shards/overhaul-catalogue-regional-3.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/consistency-matrix-shards/overhaul-catalogue-regional-4.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/consistency-matrix-shards/overhaul-catalogue-regional-5.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/consistency-matrix-shards/regional-prepartition-0.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/consistency-matrix-shards/regional-prepartition-1.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/consistency-package-measurement.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/consistency-presentation.tap"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/consistency-regressions.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/consistency-survival-compact.png"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/consistency-survival-desktop.png"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/consistency-survival-portrait-active.png"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/consistency-survival-portrait.png"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/consistency-survival-ultrawide.png"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/final-art-package-regressions.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/final-route-continuation-regressions-repaired.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/final-route-continuation-regressions-repaired.tap"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/final-route-continuation-regressions.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/final-route-continuation-regressions.md"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/final-route-continuation-regressions.tap"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/fpv-analog-vitals-packages.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/fpv-analog-vitals-tests.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/fpv-analog-vitals.md"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/fpv-analog-vitals.png"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/fpv-camera-crop-packages.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/fpv-camera-crop-update.md"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/fpv-camera-crop.png"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/fpv-prop-view-packages.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/fpv-prop-view-update.md"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/fpv-prop-view.png"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/full-session-acceptance.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/full-session-acceptance.md"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/full-session-acceptance.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/full-session-final-recheck.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/gameplay-settings.png"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/hard-gore-burst.png"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/hard-gore-clean.png"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/hard-gore-packages.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/hard-gore-settled.png"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/hard-gore-update.md"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/host-controls-studio-regressions.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/implementation-status.md"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/native-downloadable-admission.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/native-procedural-regional-stress.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-128-actors.png"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-128-recovery.json.gz"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-ammunition-review.md"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-app-96-frame-view-diagnostic.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-app-96-optimized-profile-prearmed.cpuprofile.gz"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-app-96-optimized-profile-prearmed.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-app-96-optimized-profile-prearmed.recovery.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-app-96-optimized-profile.cpuprofile.gz"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-app-96-optimized-profile.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-app-96-optimized-profile.recovery.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-app-96-paused.png"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-app-96-profile.cpuprofile.gz"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-app-96-profile.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-app-96-profile.recovery.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-app-96-recovery-fixed.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-app-art-download-failure.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-app-continuous.png"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-app-css.cjs"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-app-css.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-app-elimination.png"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-app-ground-query.cpuprofile.gz"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-app-ground-query.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-app-ground-query.recovery.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-app-grounding-fixed.cpuprofile.gz"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-app-grounding-fixed.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-app-grounding-fixed.recovery.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-app-grounding-probe.cpuprofile.gz"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-app-grounding-probe.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-app-grounding-probe.recovery.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-app-hover-check.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-app-hunting.png"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-app-initial.png"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-app-inspect.cjs"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-app-inspect.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-app-lifecycle.cjs"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-app-lifecycle.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-app-original.png"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-app-profile-current.cpuprofile.gz"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-app-profile-current.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-app-railway.png"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-app-realistic-attempt-1.png"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-app-realistic-attempt-2.png"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-app-realistic-attempt-3.png"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-app-recovery-diagnostic.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-app-regional-selector.png"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-app-regional.cjs"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-app-regional.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-app-replay.cjs"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-app-replay.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-app-replay.png"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-app-retained-recovery.png"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-app-smoke.cjs"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-app-smoke.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-app-stress-20.png"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-app-stress-64.png"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-app-stress-96.png"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-app-stress-final-128-complete-archive.json.gz"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-app-stress-final-128.png"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-app-stress-final-20.png"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-app-stress-final-64.png"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-app-stress-final-96.png"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-app-stress-final.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-app-stress-large.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-app-stress-qualified.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-app-stress-survival.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-app-stress.cjs"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-app-stress.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-app-strike.png"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-app-survival.png"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-archive-host-before-modal-fix.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-archive-host-before-modal-fix.png"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-archive-host-browser-continue-continued.json.gz"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-archive-host-browser-continue.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-archive-host-browser-continue.png"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-archive-host-browser-current.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-archive-host-browser-followup-failure.png"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-archive-host-browser-followup.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-archive-host-browser-short-current.json.gz"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-archive-host-browser-short.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-archive-host-browser-short.png"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-archive-host-browser.cjs"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-archive-host-browser.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-archive-host-browser.md"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-archive-host-minute-before-fix.json.gz"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-art-browser.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-art-preview.cjs"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-asset-availability.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-browser-qualification.md"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-cap-batching-browser.cjs"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-cap-batching-browser.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-cap-batching-clean-caps.png"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-cap-batching-full-gore.png"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-cap-batching-initial-completed.png"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-cap-batching-initial-phase-0.png"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-cap-batching-initial-phase-1.png"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-cap-batching-initial-smoke.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-catalogue-matrix.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-catalogue-native-0.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-catalogue-native-1.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-catalogue-native-2.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-catalogue-native-3.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-catalogue-native.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-catalogue-regional-0.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-catalogue-regional-1.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-catalogue-regional-2.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-catalogue-regional-3.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-catalogue-regional-4.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-catalogue-regional-5.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-catalogue-regional-6.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-catalogue-regional-7.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-catalogue-regional.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-catalogue-smoke.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-combat-archive-contract.md"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-combat-archive-lifecycle.tap"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-combat-archive-tests.tap"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-combat-settings-packages.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-combat-settings-validation.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-combat-settings.md"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-combat-settings.png"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-combat-snapshot-regression.tap"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-crowd-128-realistic.png"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-crowd-art-browser.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-crowd-art-preview.cjs"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-crowd-r2-regions.png"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-crowd-r2-uniform.png"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-delivery.md"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-demonstrations-encoding.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-effects-audit.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-effects-batching-completed.png"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-effects-batching-diagnostic.cjs"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-effects-batching-diagnostic.js"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-effects-batching-diagnostic.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-effects-batching-phase-0.png"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-effects-batching-phase-1.png"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-effects-batching-phase-2.png"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-effects-batching-phase-3.png"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-effects-batching-resource-probe.cjs"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-effects-batching-resource-probe.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-effects-completed.png"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-effects-final-completed.png"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-effects-final-phase-0.png"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-effects-final-phase-1.png"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-effects-final-phase-2.png"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-effects-final-phase-3.png"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-effects-final-phase-4.png"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-effects-final-phase-5.png"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-effects-final-phase-6.png"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-effects-final-phase-7.png"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-effects-fixture-smoke.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-effects-grounding-smoke-completed.png"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-effects-grounding-smoke-phase-1.png"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-effects-grounding-smoke-phase-2.png"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-effects-grounding-smoke-phase-3.png"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-effects-grounding-smoke-phase-4.png"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-effects-grounding-smoke-phase-5.png"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-effects-grounding-smoke-phase-6.png"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-effects-grounding-smoke.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-effects-high-diagnostic-completed.png"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-effects-high-diagnostic-phase-0.png"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-effects-high-diagnostic-phase-1.png"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-effects-high-diagnostic.cjs"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-effects-high-diagnostic.js"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-effects-high-diagnostic.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-effects-phase-0.png"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-effects-phase-1.png"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-effects-phase-2.png"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-effects-phase-3.png"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-effects-phase-5.png"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-effects-workload-final.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-effects-workload-grounding-invalid.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-effects-workload.cjs"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-effects-workload.js"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-final-coverage-audit.md"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-fpv-props-packages.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-fpv-props-racer.png"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-fpv-props-utility.png"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-fpv-props.md"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-frame-path-browser.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-frame-path-browser.md"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-gpu-app-smoke-20.png"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-gpu-app-smoke.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-gpu-effects-smoke.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-gpu-probe-check.cjs"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-gpu-probe.js"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-hillside-civic-middle-staged-fix.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-hillside-lower-square-repro.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-hillside-lower-square-staged-fix.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-hillside-middle-courtyard-repro.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-hillside-middle-courtyard-staged-fix.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-human-playtest.md"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-large-autosave-boundary.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-large-autosave-restored.png"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-large-autosave.cjs"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-large-autosave.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-long-archive-controls.png"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-long-archive-replay-ancestor-failure.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-long-archive-replay-first-css-failure.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-long-archive-replay-paused-start.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-long-archive-replay-resume-selector-failure.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-long-archive-replay.cjs"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-long-archive-replay.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-long-archive-verified.png"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-organic-detail-packages.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-organic-detail-realistic.png"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-organic-detail-validation.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-organic-detail.md"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-organic-preview.html"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-organic-preview.js"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-package-closure.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-package-measurement.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-performance-qualification.md"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-project-validation.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-r2-admission.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-r2-regions.png"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-r2-uniform.png"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-regional-restore-repro.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-regional-restore-repro.mjs"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-regression-summary.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-release-notes.md"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-roster-arcade-0-0.png"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-roster-arcade-0-1.png"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-roster-arcade-0-2.png"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-roster-arcade-0-3.png"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-roster-arcade-0-4.png"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-roster-arcade-0-5.png"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-roster-arcade-0-6.png"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-roster-arcade-0-7.png"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-roster-arcade-6-0.png"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-roster-arcade-6-1.png"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-roster-arcade-6-2.png"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-roster-arcade-6-3.png"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-roster-arcade-6-4.png"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-roster-arcade-6-5.png"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-roster-arcade-6-6.png"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-roster-arcade-6-7.png"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-roster-impact-arcade.png"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-roster-impact-rivals.png"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-roster-impact-tactical.png"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-roster-rivals-0-0.png"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-roster-rivals-0-1.png"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-roster-rivals-0-2.png"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-roster-rivals-0-3.png"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-roster-rivals-0-4.png"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-roster-rivals-0-5.png"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-roster-rivals-0-6.png"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-roster-rivals-0-7.png"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-roster-rivals-6-0.png"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-roster-rivals-6-1.png"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-roster-rivals-6-2.png"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-roster-rivals-6-3.png"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-roster-rivals-6-4.png"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-roster-rivals-6-5.png"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-roster-rivals-6-6.png"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-roster-rivals-6-7.png"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-roster-tactical-0-0.png"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-roster-tactical-0-1.png"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-roster-tactical-0-2.png"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-roster-tactical-0-3.png"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-roster-tactical-0-4.png"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-roster-tactical-0-5.png"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-roster-tactical-0-6.png"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-roster-tactical-0-7.png"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-roster-tactical-6-0.png"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-roster-tactical-6-1.png"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-roster-tactical-6-2.png"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-roster-tactical-6-3.png"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-roster-tactical-6-4.png"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-roster-tactical-6-5.png"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-roster-tactical-6-6.png"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-roster-tactical-6-7.png"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-runtime-qualification.md"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-runtime-tests.tap"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-seamless-boundary-active.png"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-seamless-boundary-packages.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-seamless-boundary-return.png"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-seamless-boundary-validation.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-seamless-boundary.md"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-source-watch.cjs"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-static-admission-risks.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-stress-source-history.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-visual-matrix.js"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-visual-matrix.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-vitals-low-ammo.png"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-vitals-packages.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-vitals-ready.png"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/overhaul-vitals.md"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/package-admission.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/physics-contact-regressions.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/plan-status-review.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/player-guide.md"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/radio-six-switch-packages.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/radio-six-switch-setup.png"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/railway-valley-low.png"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/railway-valley-stress.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/railway-valley-ultra.png"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/realistic-delivery-download.png"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/realistic-delivery-installed.png"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/realistic-delivery-studio-bloody.png"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/realistic-delivery-studio-clean.png"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/realistic-delivery-ui.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/realistic-delivery-ui.md"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/realistic-representative-performance.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/realistic-roster-admission.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/realistic-roster-arcade-bloody.png"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/realistic-roster-arcade-brutal-off.png"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/realistic-roster-arcade-clean-closeup.png"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/realistic-roster-arcade-clean.png"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/realistic-roster-arcade-live.png"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/realistic-roster-brace-closed.png"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/realistic-roster-brace-open.png"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/realistic-roster-captures.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/realistic-roster-gallery.js"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/realistic-roster-gallery.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/realistic-roster-method.md"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/realistic-roster-railway-cleanup.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/realistic-roster-railway-final.png"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/realistic-roster-railway-harness.js"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/realistic-roster-railway-performance.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/realistic-roster-release.md"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/realistic-roster-rivals-bloody.png"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/realistic-roster-rivals-clean.png"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/realistic-roster-rivals-live.png"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/realistic-roster-source-hashes.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/realistic-roster-tactical-bloody.png"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/realistic-roster-tactical-clean.png"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/realistic-roster-tactical-live.png"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/regional-admission.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/regional-projectiles.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/regional-projectiles.png"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/rivals-bloody.png"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/safe-cache-cleanup.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/safe-cache-cleanup.md"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/shader-preparation.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/tactical-bloody.png"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/world-scheduler-regressions.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/evidence/fpv-combat/world-ui-regressions.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/fpv-radio-models.md"
+    },
+    {
+      "status": "A",
+      "path": "docs/fpv-radio-six-switch-delivery.md"
+    },
+    {
+      "status": "A",
+      "path": "docs/fpv-radio-six-switch-design.md"
+    },
+    {
+      "status": "M",
+      "path": "docs/fpv-regional-restore-admission.md"
+    },
+    {
+      "status": "A",
+      "path": "docs/fpv-sim-current-plan.md"
+    },
+    {
+      "status": "M",
+      "path": "game/build-config.json"
+    },
+    {
+      "status": "M",
+      "path": "game/presentation/industrial-environments-data.mjs"
+    },
+    {
+      "status": "M",
+      "path": "game/test/authoring-input.test.mjs"
+    },
+    {
+      "status": "A",
+      "path": "game/test/fpv-advanced-moving.test.mjs"
+    },
+    {
+      "status": "M",
+      "path": "game/test/fpv-advanced-practice.test.mjs"
+    },
+    {
+      "status": "M",
+      "path": "game/test/fpv-aircraft-practice-controls.test.mjs"
+    },
+    {
+      "status": "M",
+      "path": "game/test/fpv-aircraft-renderer.test.mjs"
+    },
+    {
+      "status": "A",
+      "path": "game/test/fpv-catalogue-damage-ownership.test.mjs"
+    },
+    {
+      "status": "A",
+      "path": "game/test/fpv-combat-actors-overhaul.test.mjs"
+    },
+    {
+      "status": "A",
+      "path": "game/test/fpv-combat-appearance-activation.test.mjs"
+    },
+    {
+      "status": "A",
+      "path": "game/test/fpv-combat-appearance-host.test.mjs"
+    },
+    {
+      "status": "A",
+      "path": "game/test/fpv-combat-appearance.test.mjs"
+    },
+    {
+      "status": "A",
+      "path": "game/test/fpv-combat-archive.test.mjs"
+    },
+    {
+      "status": "A",
+      "path": "game/test/fpv-combat-autosave.test.mjs"
+    },
+    {
+      "status": "A",
+      "path": "game/test/fpv-combat-cap-batching.test.mjs"
+    },
+    {
+      "status": "A",
+      "path": "game/test/fpv-combat-collider-generation.test.mjs"
+    },
+    {
+      "status": "A",
+      "path": "game/test/fpv-combat-full-session.test.mjs"
+    },
+    {
+      "status": "A",
+      "path": "game/test/fpv-combat-organic-detail.test.mjs"
+    },
+    {
+      "status": "A",
+      "path": "game/test/fpv-combat-presentation.test.mjs"
+    },
+    {
+      "status": "A",
+      "path": "game/test/fpv-combat-replay.test.mjs"
+    },
+    {
+      "status": "A",
+      "path": "game/test/fpv-combat-vitals.test.mjs"
+    },
+    {
+      "status": "A",
+      "path": "game/test/fpv-demonstration-encoding.test.mjs"
+    },
+    {
+      "status": "A",
+      "path": "game/test/fpv-encounter-adapters.test.mjs"
+    },
+    {
+      "status": "A",
+      "path": "game/test/fpv-encounter-controls.test.mjs"
+    },
+    {
+      "status": "A",
+      "path": "game/test/fpv-encounter-host-lifecycle.test.mjs"
+    },
+    {
+      "status": "A",
+      "path": "game/test/fpv-encounter-runtime.test.mjs"
+    },
+    {
+      "status": "A",
+      "path": "game/test/fpv-encounter-session.test.mjs"
+    },
+    {
+      "status": "A",
+      "path": "game/test/fpv-encounter-studio.test.mjs"
+    },
+    {
+      "status": "A",
+      "path": "game/test/fpv-encounter-v2.test.mjs"
+    },
+    {
+      "status": "M",
+      "path": "game/test/fpv-flight-ui.test.mjs"
+    },
+    {
+      "status": "M",
+      "path": "game/test/fpv-flight-widgets.test.mjs"
+    },
+    {
+      "status": "A",
+      "path": "game/test/fpv-live-actors.test.mjs"
+    },
+    {
+      "status": "M",
+      "path": "game/test/fpv-objective-labels.test.mjs"
+    },
+    {
+      "status": "A",
+      "path": "game/test/fpv-presentation-consistency.test.mjs"
+    },
+    {
+      "status": "M",
+      "path": "game/test/fpv-radio-guide.test.mjs"
+    },
+    {
+      "status": "A",
+      "path": "game/test/fpv-radio-menu-host.test.mjs"
+    },
+    {
+      "status": "A",
+      "path": "game/test/fpv-radio-six-setup.test.mjs"
+    },
+    {
+      "status": "A",
+      "path": "game/test/fpv-radio-six-switch.test.mjs"
+    },
+    {
+      "status": "M",
+      "path": "game/test/fpv-radio.test.mjs"
+    },
+    {
+      "status": "A",
+      "path": "game/test/fpv-regional-encounter-geometry.test.mjs"
+    },
+    {
+      "status": "A",
+      "path": "game/test/fpv-regional-encounter-recovery.test.mjs"
+    },
+    {
+      "status": "A",
+      "path": "game/test/fpv-regional-encounter-setup.test.mjs"
+    },
+    {
+      "status": "M",
+      "path": "game/test/fpv-regional-preparation-clock.test.mjs"
+    },
+    {
+      "status": "A",
+      "path": "game/test/fpv-regional-restore-clearance.test.mjs"
+    },
+    {
+      "status": "A",
+      "path": "game/test/fpv-six-switch-menu.test.mjs"
+    },
+    {
+      "status": "A",
+      "path": "game/test/fpv-transient-contacts.test.mjs"
+    },
+    {
+      "status": "M",
+      "path": "game/test/fpv-world-appearance-ui.test.mjs"
+    },
+    {
+      "status": "M",
+      "path": "game/test/fpv-world-editor-appearance.test.mjs"
+    },
+    {
+      "status": "A",
+      "path": "game/test/fpv-world-route-guides.test.mjs"
+    },
+    {
+      "status": "M",
+      "path": "game/test/global-settings-tools.test.mjs"
+    },
+    {
+      "status": "M",
+      "path": "game/test/shared-encounter-audio.test.mjs"
+    },
+    {
+      "status": "M",
+      "path": "game/ui/encounter-audio.mjs"
+    },
+    {
+      "status": "M",
+      "path": "game/ui/global-settings-tools.mjs"
+    },
+    {
+      "status": "M",
+      "path": "game/ui/page-input-host.mjs"
+    },
+    {
+      "status": "M",
+      "path": "optional-practice/civilian-flight/audio.mjs"
+    },
+    {
+      "status": "M",
+      "path": "optional-practice/civilian-fpv/advanced-aircraft-runtime.mjs"
+    },
+    {
+      "status": "M",
+      "path": "optional-practice/civilian-fpv/advanced-practice.mjs"
+    },
+    {
+      "status": "M",
+      "path": "optional-practice/civilian-fpv/advanced-regional.mjs"
+    },
+    {
+      "status": "M",
+      "path": "optional-practice/civilian-fpv/advanced-simulation.mjs"
+    },
+    {
+      "status": "M",
+      "path": "optional-practice/civilian-fpv/advanced-worker-client.mjs"
+    },
+    {
+      "status": "M",
+      "path": "optional-practice/civilian-fpv/advanced-worker.mjs"
+    },
+    {
+      "status": "M",
+      "path": "optional-practice/civilian-fpv/aircraft-appearance.mjs"
+    },
+    {
+      "status": "M",
+      "path": "optional-practice/civilian-fpv/aircraft-archive.mjs"
+    },
+    {
+      "status": "M",
+      "path": "optional-practice/civilian-fpv/aircraft-course-session.mjs"
+    },
+    {
+      "status": "M",
+      "path": "optional-practice/civilian-fpv/aircraft-mission-checkpoint.mjs"
+    },
+    {
+      "status": "M",
+      "path": "optional-practice/civilian-fpv/aircraft-practice-controls.mjs"
+    },
+    {
+      "status": "M",
+      "path": "optional-practice/civilian-fpv/app.mjs"
+    },
+    {
+      "status": "A",
+      "path": "optional-practice/civilian-fpv/combat-actors.mjs"
+    },
+    {
+      "status": "A",
+      "path": "optional-practice/civilian-fpv/combat-appearance.mjs"
+    },
+    {
+      "status": "A",
+      "path": "optional-practice/civilian-fpv/combat-presentation.mjs"
+    },
+    {
+      "status": "M",
+      "path": "optional-practice/civilian-fpv/demonstrations.mjs"
+    },
+    {
+      "status": "A",
+      "path": "optional-practice/civilian-fpv/encounter-controls.mjs"
+    },
+    {
+      "status": "A",
+      "path": "optional-practice/civilian-fpv/encounter-geometry.mjs"
+    },
+    {
+      "status": "A",
+      "path": "optional-practice/civilian-fpv/encounter-runtime.mjs"
+    },
+    {
+      "status": "A",
+      "path": "optional-practice/civilian-fpv/encounter-session.mjs"
+    },
+    {
+      "status": "M",
+      "path": "optional-practice/civilian-fpv/flight-fullscreen.css"
+    },
+    {
+      "status": "M",
+      "path": "optional-practice/civilian-fpv/flight-fullscreen.mjs"
+    },
+    {
+      "status": "M",
+      "path": "optional-practice/civilian-fpv/input.mjs"
+    },
+    {
+      "status": "M",
+      "path": "optional-practice/civilian-fpv/radio-controls.mjs"
+    },
+    {
+      "status": "M",
+      "path": "optional-practice/civilian-fpv/radio-guide.mjs"
+    },
+    {
+      "status": "M",
+      "path": "optional-practice/civilian-fpv/radio-profile.mjs"
+    },
+    {
+      "status": "M",
+      "path": "optional-practice/civilian-fpv/radio-runtime.mjs"
+    },
+    {
+      "status": "M",
+      "path": "optional-practice/civilian-fpv/radio-session.mjs"
+    },
+    {
+      "status": "M",
+      "path": "optional-practice/civilian-fpv/radio-setup.mjs"
+    },
+    {
+      "status": "M",
+      "path": "optional-practice/civilian-fpv/regional-session.mjs"
+    },
+    {
+      "status": "M",
+      "path": "optional-practice/civilian-fpv/regional/flight-prototype.mjs"
+    },
+    {
+      "status": "M",
+      "path": "optional-practice/civilian-fpv/regional/restore-containment.mjs"
+    },
+    {
+      "status": "M",
+      "path": "optional-practice/civilian-fpv/regional/scenery-admission.mjs"
+    },
+    {
+      "status": "M",
+      "path": "optional-practice/civilian-fpv/regional/verified-mixed-window.mjs"
+    },
+    {
+      "status": "M",
+      "path": "optional-practice/civilian-fpv/regional/verified-scenery-window.mjs"
+    },
+    {
+      "status": "M",
+      "path": "optional-practice/civilian-fpv/renderer.mjs"
+    },
+    {
+      "status": "M",
+      "path": "optional-practice/civilian-fpv/sim-presentation.mjs"
+    },
+    {
+      "status": "M",
+      "path": "optional-practice/civilian-fpv/snake-hunt-presentation.mjs"
+    },
+    {
+      "status": "M",
+      "path": "optional-practice/civilian-fpv/style.css"
+    },
+    {
+      "status": "M",
+      "path": "optional-practice/civilian-fpv/world-actor-editor.mjs"
+    },
+    {
+      "status": "M",
+      "path": "optional-practice/civilian-fpv/world-app.mjs"
+    },
+    {
+      "status": "M",
+      "path": "optional-practice/civilian-fpv/world-audio.mjs"
+    },
+    {
+      "status": "M",
+      "path": "optional-practice/civilian-fpv/world-collision.mjs"
+    },
+    {
+      "status": "M",
+      "path": "optional-practice/civilian-fpv/world-content.mjs"
+    },
+    {
+      "status": "M",
+      "path": "optional-practice/civilian-fpv/world-editor.mjs"
+    },
+    {
+      "status": "A",
+      "path": "optional-practice/civilian-fpv/world-encounter-editor.mjs"
+    },
+    {
+      "status": "M",
+      "path": "optional-practice/civilian-fpv/world-model.mjs"
+    },
+    {
+      "status": "M",
+      "path": "optional-practice/civilian-fpv/world-reaction-runtime.mjs"
+    },
+    {
+      "status": "M",
+      "path": "publishing/optional-package-policy.mjs"
+    },
+    {
+      "status": "A",
+      "path": "scripts/check-fpv-character-art.mjs"
+    },
+    {
+      "status": "M",
+      "path": "scripts/game-cli.mjs"
+    },
+    {
+      "status": "A",
+      "path": "scripts/merge-fpv-combat-catalogue.mjs"
+    },
+    {
+      "status": "M",
+      "path": "scripts/produce-industrial-environments.mjs"
+    },
+    {
+      "status": "A",
+      "path": "scripts/qualify-fpv-combat-catalogue.mjs"
+    },
+    {
+      "status": "M",
+      "path": "scripts/refresh-fpv-academy-audio.mjs"
+    },
+    {
+      "status": "M",
+      "path": "scripts/refresh-fpv-play-shell.mjs"
+    },
+    {
+      "status": "M",
+      "path": "scripts/refresh-fpv-reaction-runtime.mjs"
+    },
+    {
+      "status": "M",
+      "path": "scripts/test-optional-fpv-package.mjs"
+    },
+    {
+      "status": "M",
+      "path": "scripts/test-produce-industrial-environments.mjs"
+    }
+  ],
+  "scope": "Pre-publication implementation/art transfer audit. Subsequent handoff documentation changes are additional and separately committed. Original commit remains preserved locally; remote branch contains only current-history feature commits."
+}

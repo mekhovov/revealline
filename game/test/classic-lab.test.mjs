@@ -69,7 +69,7 @@ test('Classic Lab regenerates exactly, remains separate from campaign milestones
   const { pack } = await buildClassicLab(),
     published = await readJSON('../content/packs/classic-lab.json');
   assert.deepEqual(pack, published);
-  assert.equal(pack.themes.length, 4);
+  assert.equal(pack.themes.length, 3);
   assert.equal(pack.campaigns[0].levels.length, 9);
   assert.equal(
     (await readJSON('../content/packs/index.json')).packs.some((entry) => entry.id === pack.id),

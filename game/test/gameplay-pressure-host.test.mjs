@@ -13,6 +13,7 @@ import {
 } from '../gameplay-tuning.mjs';
 import * as historicalTuning from '../gameplay-tuning-v1.mjs';
 import { soloPage, settle, memoryStorage } from './helpers/solo-dom.mjs';
+import { PNGImage } from './helpers/png-image.mjs';
 import { JOURNEY_PREFERENCES_KEY } from '../journey/preferences.mjs';
 
 const campaign = JSON.parse(readFileSync(new URL('../content/campaign.json', import.meta.url)));
@@ -105,17 +106,6 @@ test('Solo main menu exposes actual pressure and admin overrides without changin
 });
 
 test('current Journey menus and overlay report lives and normalized pacing without historical percentage claims', async (t) => {
-  class CandidateImage {
-    set src(value) {
-      this.source = value;
-      const bytes = Buffer.from(value.split(',')[1], 'base64');
-      this.width = this.naturalWidth = bytes.readUInt32BE(16);
-      this.height = this.naturalHeight = bytes.readUInt32BE(20);
-      queueMicrotask(() => this.onload?.());
-    }
-    async decode() {}
-    removeAttribute() {}
-  }
   const page = await soloPage(t, {
     search: '?journey=whole-spatial-v5',
     storage: memoryStorage({
@@ -124,7 +114,7 @@ test('current Journey menus and overlay report lives and normalized pacing witho
         difficulty: 'expert',
       }),
     }),
-    pictures: { Image: CandidateImage },
+    pictures: { Image: PNGImage },
     fetchResponse: async (path) =>
       String(path).includes('/content-design/assets/')
         ? new Response(readFileSync(path))

@@ -1,0 +1,26 @@
+{
+  "format": "revealline-retained-historical-excerpt.v1",
+  "scope": "Retained historical excerpt after an ownership migration. Original bytes are preserved separately. Historical counts, hashes and approvals inside the excerpt describe the original record only; this derived document is not a release qualification, executable restore plan, or complete original inventory.",
+  "originalSHA256": "ef9a7e6d4b93b0d5208b9b58f8595c9303a279f6240dfa10c969e7a9ce3588c7",
+  "originalGitBlob": "db802db5a60e1a92ea3d89542ae6e22f75c17fa3",
+  "removedRecordsOrFields": 6,
+  "excerpt": {
+    "format": "fpv-preservation-exact-policy-clearance.v1",
+    "reviewedAt": "2026-10-16T03:58:37.205698+00:00",
+    "mainTree": "2169552a0571b9d62bce116054f1e21aabd10fa1",
+    "rows": [
+      {
+        "path": "flight-practice-publication.sMOWmR/.xonix-build-rNivMM/authoring/production/history/source-index.json",
+        "sha256": "56b95644566df142375ff4153d3634a8393aa1583a3198d7e720b457031f237a",
+        "decision": "allow-app-archive",
+        "reason": "Exact Git blob matches publicly tracked main2169552a at corresponding application path. Game art/chapter descriptor or production build source-history metadata, not private company/browser history."
+      },
+      {
+        "path": "flight-practice-publication.sMOWmR/.xonix-build-rNivMM/authoring/production/history/index.json",
+        "sha256": "97489553e0c6c6a383b00a8d2885266f3a5d7f38b455e61db7d972dc3b49ee1f",
+        "decision": "allow-app-archive",
+        "reason": "Exact Git blob matches publicly tracked main2169552a at corresponding application path. Game art/chapter descriptor or production build source-history metadata, not private company/browser history."
+      }
+    ]
+  }
+}
