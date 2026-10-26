@@ -88,6 +88,7 @@ import {
   mountSimPlayShell,
   mountSimModeSettings,
   mountSimGlobalSettings,
+  mountSimComfortPresets,
   attachSimMenuAudioSettings,
   readSimRadioAudio,
   SIM_RADIO_AUDIO_KEY,
@@ -13653,6 +13654,12 @@ export function mountWorldApp({
     },
     duplicates: { reducedEffects: [settingLabel('sim-motion')] },
   });
+  const comfortPresets = mountSimComfortPresets({
+    document: doc,
+    window: win,
+    root: modeSettingsView.panels.accessibility,
+    display: displayPreferences,
+  });
   const sharedAudioCues = doc.createElement('section');
   let radioCueStorage;
   try {
@@ -13912,6 +13919,7 @@ export function mountWorldApp({
           if (playShell) playShell.elements.root.prepend(playShell.elements.header);
           menuNavigation.dispose();
           radioMenus.dispose();
+          comfortPresets.destroy();
           globalTools?.dispose();
           globalSettingsView?.destroy();
           globalThemeControls?.dispose();
