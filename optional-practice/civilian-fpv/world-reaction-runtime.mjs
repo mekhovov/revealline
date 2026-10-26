@@ -10,7 +10,7 @@ const sourceHashes = {
   'game/ui/audio-output.mjs': '66047e07247684f9f3069f9561898f33b5566d0d997e950adac17c0eed0ff790',
   'game/audio/dialogue-mix.mjs': '43ffa5b261e585e59b515fab19d1b6d0ccf636152ca6107602dbdb9143ddb00a',
   'game/ui/audio-master.mjs': '6bf14bc5268c0eff8f38c21c819f398917712fdc2607c33977ac873111d1dca8',
-  'game/audio-preferences.mjs': '9212831a3524c9e1ebe8c595783f9f53a112e02e3d51280d775ac103b94a9239',
+  'game/audio-preferences.mjs': '8baa3a25c6a80981f44e833ba8cb2e10d297f90b51684994d4e8328a7e846a71',
   'game/ui/encounter-audio.mjs': 'c507ea003207fd28b0783fe1d47a80daf24261b1fbece181e8829b081003bbe9',
   'game/ui/world-ambience.mjs': '95b506a5cd1c34323a2bed5be3444be55ea38ddfc6036903757cccd3c301b260',
   'game/ui/movement-audio.mjs': '685d8e458401354028a2cacda0c7b1009b3c1e480a08d4cafce46d8f98b69020',
@@ -668,191 +668,205 @@ modules['game/ui/audio-master.mjs'] = (() => {
 
   return { createAudioMaster: createAudioMaster, bindAudioMasterMedia: bindAudioMasterMedia };
 })();
-modules['game/audio-preferences.mjs'] = (() => {
-  const AUDIO_PREFERENCES_KEY = 'revealline.audio-master.v1';
-  const MAX_RECORD_LENGTH = 256;
+modules['game/audio-preferences.mjs'] = (()=>{
+const AUDIO_PREFERENCES_KEY='revealline.audio-master.v1';
+const MAX_RECORD_LENGTH=256;
 
-  function values(value) {
-    if (
-      !value ||
-      typeof value !== 'object' ||
-      Array.isArray(value) ||
-      Object.keys(value).length !== 2 ||
-      !Object.hasOwn(value, 'muted') ||
-      !Object.hasOwn(value, 'volume') ||
-      typeof value.muted !== 'boolean' ||
-      !Number.isFinite(value.volume) ||
-      value.volume < 0 ||
-      value.volume > 1
-    )
-      throw new TypeError(
-        'Audio preferences require a mute boolean and volume between zero and one.',
-      );
-    return { muted: value.muted, volume: value.volume };
-  }
+function values(value){
+if(
+!value||
+typeof value!=='object'||
+Array.isArray(value)||
+Object.keys(value).length!==2||
+!Object.hasOwn(value,'muted')||
+!Object.hasOwn(value,'volume')||
+typeof value.muted!=='boolean'||
+!Number.isFinite(value.volume)||
+value.volume<0||
+value.volume>1
+)
+throw new TypeError(
+'Audio preferences require a mute boolean and volume between zero and one.',
+);
+return{muted:value.muted,volume:value.volume};
+}
 
-  function decode(raw) {
-    if (typeof raw !== 'string' || raw.length > MAX_RECORD_LENGTH) return null;
-    try {
-      return values(JSON.parse(raw));
-    } catch {
-      return null;
-    }
-  }
+function decode(raw){
+if(typeof raw!=='string'||raw.length>MAX_RECORD_LENGTH)return null;
+try{
+return values(JSON.parse(raw));
+}catch{
+return null;
+}
+}
 
-  /** Page-owned persistence for the shared output authority. This adapter never
+/** Page-owned persistence for the shared output authority. This adapter never
    * starts media or writes a player profile. Only its explicit setters save. */
-  function createAudioPreferences({
-    audioMaster,
-    getStorage = () => globalThis.localStorage,
-    window: eventTarget = globalThis,
-    fallback = { muted: true, volume: 0.65 },
-    writable = () => true,
-    onWarning = () => {},
-  } = {}) {
-    const initial = values(fallback);
-    let disposed = false,
-      explicit = false,
-      stored = false,
-      unsaved = false,
-      warning = '';
-    const notify = (message) => {
-      warning = message;
-      try {
-        onWarning(message);
-      } catch {
-        // A notice cannot prevent the synchronous sound change.
-      }
-    };
-    const read = () => {
-      try {
-        const storage = getStorage(),
-          raw = storage?.getItem(AUDIO_PREFERENCES_KEY);
-        return { storage, raw, value: decode(raw) };
-      } catch {
-        return { storage: null, raw: null, value: null };
-      }
-    };
-    const apply = (record) => {
-      let revision = audioMaster.snapshot().revision;
-      // Close the mute gate before increasing volume; open it after the fader.
-      for (const key of record.muted ? ['muted', 'volume'] : ['volume', 'muted']) {
-        const current = audioMaster.snapshot();
-        if (disposed || current.revision !== revision) return false;
-        if (current[key] === record[key]) continue;
-        audioMaster[key === 'muted' ? 'setMuted' : 'setVolume'](record[key]);
-        revision++;
-        // A subscriber's newer intent must also win over this synchronous seed.
-        if (audioMaster.snapshot().revision !== revision) return false;
-      }
-      return true;
-    };
-    let seedRevision = audioMaster.snapshot().revision;
-    explicit = seedRevision !== 0;
-    const first = read();
-    if (first.value) {
-      stored = true;
-      apply(first.value);
-    } else if (seedRevision === 0 && apply(initial)) {
-      seedRevision = audioMaster.snapshot().revision;
-    }
-    const persist = () => {
-      try {
-        const allowed = writable();
-        if (disposed) return;
-        if (!allowed) {
-          unsaved = true;
-          notify('Sound changes apply only to this session; saving is disabled here.');
-          return;
-        }
-        const { muted, volume } = audioMaster.snapshot(),
-          storage = getStorage();
-        if (disposed) return;
-        if (!storage) throw new Error('Storage unavailable.');
-        storage.setItem(AUDIO_PREFERENCES_KEY, JSON.stringify(values({ muted, volume })));
-        if (disposed) return;
-        stored = true;
-        unsaved = false;
-        notify('');
-      } catch {
-        if (disposed) return;
-        unsaved = true;
-        notify('Sound changed for this session, but could not be saved for another page.');
-      }
-    };
-    const change = (key, value) => {
-      if (disposed) throw new Error('Audio preferences are disposed.');
-      const before = audioMaster.snapshot();
-      values({ muted: before.muted, volume: before.volume, [key]: value });
-      explicit = true;
-      try {
-        audioMaster[key === 'muted' ? 'setMuted' : 'setVolume'](value);
-      } finally {
-        // Output listeners may throw after the authority accepted the intent.
-        if (!disposed && audioMaster.snapshot().revision !== before.revision) persist();
-      }
-      return audioMaster.snapshot();
-    };
-    const receive = (event) => {
-      if (disposed || unsaved || event.key !== AUDIO_PREFERENCES_KEY) return;
-      const revision = audioMaster.snapshot().revision,
-        current = read();
-      if (
-        disposed ||
-        unsaved ||
-        audioMaster.snapshot().revision !== revision ||
-        !current.storage ||
-        event.storageArea !== current.storage ||
-        event.newValue !== current.raw ||
-        !current.value
-      )
-        return;
-      stored = true;
-      apply(current.value);
-    };
-    // Reconcile a restored page with fresh storage rather than a missed event's
-    // payload, without discarding local intent that could not be saved.
-    const restored = (event) => {
-      if (disposed || unsaved || event.persisted !== true) return;
-      const revision = audioMaster.snapshot().revision,
-        current = read();
-      if (disposed || unsaved || audioMaster.snapshot().revision !== revision || !current.value)
-        return;
-      stored = true;
-      apply(current.value);
-    };
-    eventTarget?.addEventListener?.('storage', receive);
-    eventTarget?.addEventListener?.('pageshow', restored);
-    return Object.freeze({
-      setMuted: (value) => change('muted', value),
-      setVolume: (value) => change('volume', value),
-      seed(candidate) {
-        if (disposed || stored || explicit || audioMaster.snapshot().revision !== seedRevision)
-          return false;
-        const current = read();
-        if (current.value) {
-          stored = true;
-          apply(current.value);
-          return false;
-        }
-        if (!apply(values(candidate))) return false;
-        seedRevision = audioMaster.snapshot().revision;
-        return true;
-      },
-      getWarning: () => warning,
-      dispose() {
-        if (disposed) return;
-        disposed = true;
-        eventTarget?.removeEventListener?.('storage', receive);
-        eventTarget?.removeEventListener?.('pageshow', restored);
-      },
-    });
-  }
+function createAudioPreferences({
+audioMaster,
+getStorage=()=>globalThis.localStorage,
+window:eventTarget=globalThis,
+fallback={muted:true,volume:0.65},
+writable=()=>true,
+onWarning=()=>{},
+}={}){
+const initial=values(fallback);
+let disposed=false,
+explicit=false,
+stored=false,
+unsaved=false,
+warning='',
+warningKey='';
+const notify=(message,key='')=>{
+warning=message;
+warningKey=key;
+try{
+onWarning(message,key);
+}catch{
+// A notice cannot prevent the synchronous sound change.
+}
+};
+const read=()=>{
+try{
+const storage=getStorage(),
+raw=storage?.getItem(AUDIO_PREFERENCES_KEY);
+return{storage,raw,value:decode(raw)};
+}catch{
+return{storage:null,raw:null,value:null};
+}
+};
+const apply=(record)=>{
+let revision=audioMaster.snapshot().revision;
+// Close the mute gate before increasing volume; open it after the fader.
+for(const key of record.muted?['muted','volume']:['volume','muted']){
+const current=audioMaster.snapshot();
+if(disposed||current.revision!==revision)return false;
+if(current[key]===record[key])continue;
+audioMaster[key==='muted'?'setMuted':'setVolume'](record[key]);
+revision++;
+// A subscriber's newer intent must also win over this synchronous seed.
+if(audioMaster.snapshot().revision!==revision)return false;
+}
+return true;
+};
+let seedRevision=audioMaster.snapshot().revision;
+explicit=seedRevision!==0;
+const first=read();
+if(first.value){
+stored=true;
+apply(first.value);
+}else if(seedRevision===0&&apply(initial)){
+seedRevision=audioMaster.snapshot().revision;
+}
+const persist=()=>{
+const{muted,volume,revision}=audioMaster.snapshot();
+const current=()=> !disposed&&audioMaster.snapshot().revision===revision;
+try{
+const allowed=writable();
+if(!current())return;
+if(!allowed){
+unsaved=true;
+notify(
+'Sound changes apply only to this session; saving is disabled here.',
+'common:preferences.audioSessionOnly',
+);
+return;
+}
+const storage=getStorage();
+if(!current())return;
+if(!storage)throw new Error('Storage unavailable.');
+storage.setItem(AUDIO_PREFERENCES_KEY,JSON.stringify(values({muted,volume})));
+if(!current())return;
+const saved=decode(storage.getItem(AUDIO_PREFERENCES_KEY));
+if(!current())return;
+if(!saved||saved.muted!==muted||saved.volume!==volume)
+throw new Error('Saved audio preferences could not be confirmed.');
+stored=true;
+unsaved=false;
+notify('');
+}catch{
+if(!current())return;
+unsaved=true;
+notify(
+'Sound changed for this session, but could not be saved for another page.',
+'common:preferences.audioSaveFailed',
+);
+}
+};
+const change=(key,value)=>{
+if(disposed)throw new Error('Audio preferences are disposed.');
+const before=audioMaster.snapshot();
+values({muted:before.muted,volume:before.volume,[key]:value});
+explicit=true;
+try{
+audioMaster[key==='muted'?'setMuted':'setVolume'](value);
+}finally{
+// Output listeners may throw after the authority accepted the intent.
+if(!disposed&&audioMaster.snapshot().revision!==before.revision)persist();
+}
+return audioMaster.snapshot();
+};
+const receive=(event)=>{
+if(disposed||unsaved||event.key!==AUDIO_PREFERENCES_KEY)return;
+const revision=audioMaster.snapshot().revision,
+current=read();
+if(
+disposed||
+unsaved||
+audioMaster.snapshot().revision!==revision||
+!current.storage||
+event.storageArea!==current.storage||
+event.newValue!==current.raw||
+!current.value
+)
+return;
+stored=true;
+apply(current.value);
+};
+// Reconcile a restored page with fresh storage rather than a missed event's
+// payload, without discarding local intent that could not be saved.
+const restored=(event)=>{
+if(disposed||unsaved||event.persisted!==true)return;
+const revision=audioMaster.snapshot().revision,
+current=read();
+if(disposed||unsaved||audioMaster.snapshot().revision!==revision|| !current.value)
+return;
+stored=true;
+apply(current.value);
+};
+eventTarget?.addEventListener?.('storage',receive);
+eventTarget?.addEventListener?.('pageshow',restored);
+return Object.freeze({
+setMuted:(value)=>change('muted',value),
+setVolume:(value)=>change('volume',value),
+seed(candidate){
+if(disposed||stored||explicit||audioMaster.snapshot().revision!==seedRevision)
+return false;
+const current=read();
+if(current.value){
+stored=true;
+apply(current.value);
+return false;
+}
+if(!apply(values(candidate)))return false;
+seedRevision=audioMaster.snapshot().revision;
+return true;
+},
+getWarning:()=>warning,
+getWarningKey:()=>warningKey,
+dispose(){
+if(disposed)return;
+disposed=true;
+eventTarget?.removeEventListener?.('storage',receive);
+eventTarget?.removeEventListener?.('pageshow',restored);
+},
+});
+}
 
-  return {
-    AUDIO_PREFERENCES_KEY: AUDIO_PREFERENCES_KEY,
-    createAudioPreferences: createAudioPreferences,
-  };
+return{
+AUDIO_PREFERENCES_KEY:AUDIO_PREFERENCES_KEY,
+createAudioPreferences:createAudioPreferences,
+};
 })();
 modules['game/ui/world-ambience.mjs'] = (() => {
   /** Shared, original atmosphere recipes. They use the existing SFX owner and
