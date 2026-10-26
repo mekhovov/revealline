@@ -30,6 +30,7 @@ const overflightHosts = [
   'overflight-time-attack',
   'overflight-marathon',
 ];
+const academyHosts = ['fpv-academy'];
 
 /** A fixed projection of current owners. No raw URL, identity, input history,
  * game data, storage key or exception text is accepted into this document. */
@@ -65,7 +66,9 @@ export function supportSnapshot(host = {}, env = globalThis, clock = {}) {
         ? 'team-game-shell'
         : overflightHosts.includes(host.kind)
           ? 'overflight-game-shell'
-          : 'primary-game-shell',
+          : academyHosts.includes(host.kind)
+            ? 'academy-game-shell'
+            : 'primary-game-shell',
     build: {
       version: version(host.version),
       sourceRevision:
@@ -75,8 +78,29 @@ export function supportSnapshot(host = {}, env = globalThis, clock = {}) {
       packaged: boolean(host.packaged),
     },
     game: {
-      host: oneOf(host.kind, ['solo', 'journey', 'installed-edition', 'practice', ...snakeHosts, ...teamHosts, ...overflightHosts, ...versusHosts]),
-      state: oneOf(host.state, ['idle', 'running', 'paused', 'won', 'lost', 'finished']),
+      host: oneOf(host.kind, [
+        'solo',
+        'journey',
+        'installed-edition',
+        'practice',
+        ...snakeHosts,
+        ...teamHosts,
+        ...overflightHosts,
+        ...versusHosts,
+        ...academyHosts,
+      ]),
+      state: oneOf(host.state, [
+        'idle',
+        'running',
+        'paused',
+        'won',
+        'lost',
+        'finished',
+        'disarmed',
+        'complete',
+        'expired',
+        'playback-ended',
+      ]),
       locale: oneOf(host.locale, ['en', 'uk']),
       saving: {
         writable: boolean(host.writable),
