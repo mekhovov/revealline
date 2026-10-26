@@ -8,6 +8,7 @@ import {
   DEMO_RESOURCE_MODE,
   DEMO_CLOSE_BOUNDARY_POLICY,
   DEMO_CLOSE_ACTIVATION_POLICY,
+  DEMO_PAUSED_GEOMETRY_POLICY,
   DEMO_RESOURCE_SOURCE_PATHS,
   validateDemoResourceContract,
   assessDemoResourceCycles,
@@ -745,6 +746,7 @@ function publicCycleFixture({
   paintAfterClose = false,
   failCloseClick = false,
   failDisarm = false,
+  geometryBoundary = false,
 } = {}) {
   const f = pausedExportFixture(),
     probe = f.env.demoRecoveryProbe;
@@ -776,6 +778,50 @@ function publicCycleFixture({
       throw Error('modeled disarm transport failure');
     };
   }
+
+  let geometryTime = 1000,
+    geometryFrame = 0,
+    pendingResizeFrame = 0;
+  let frameHandle = 0;
+  const nativeFrames = new Map(),
+    readinessTimers = new Map();
+  if (geometryBoundary) {
+    probe.configurePausedGeometry(DEMO_PAUSED_GEOMETRY_POLICY);
+    Object.assign(f.display, {
+      clientWidth: 1268,
+      clientHeight: 734,
+      getBoundingClientRect: () => ({
+        x: 6,
+        y: 50,
+        width: f.display.clientWidth,
+        height: f.display.clientHeight,
+      }),
+    });
+    f.env.performance.now = () => geometryTime;
+    f.env.setTimeout = (fn, ms) => {
+      const id = ++frameHandle;
+      readinessTimers.set(id, { fn, ms });
+      return id;
+    };
+    f.env.clearTimeout = (id) => readinessTimers.delete(id);
+    f.env.cancelAnimationFrame = (id) => nativeFrames.delete(id);
+    f.env.requestAnimationFrame = (fn) => {
+      const id = ++frameHandle;
+      nativeFrames.set(id, fn);
+      queueMicrotask(() => {
+        if (!nativeFrames.delete(id)) return;
+        geometryTime += 16;
+        geometryFrame++;
+        if (pendingResizeFrame && geometryFrame >= pendingResizeFrame) {
+          pendingResizeFrame = 0;
+          draw(true, (f.display.clientHeight * f.display.width) / f.display.height);
+        }
+        fn(geometryTime);
+      });
+      return id;
+    };
+  }
+
   doc.getElementById('demo-dialog').classList.contains = () => practice;
   f.env.crypto = globalThis.crypto;
   for (const name of ['localStorage', 'sessionStorage'])
@@ -808,13 +854,28 @@ function publicCycleFixture({
     running = true;
     current = { ...f.run, tick: 1 };
     doc.getElementById('demo-dialog').open = true;
-    draw(false);
+    if (geometryBoundary) f.display.clientHeight = 734;
+    draw(
+      false,
+      geometryBoundary ? (f.display.clientHeight * f.display.width) / f.display.height : 640,
+    );
   };
   const pause = async (expectedPractice) => {
     assert.equal(expectedPractice, practice);
     actions.push(practice ? 'pause' : 'watch-pause');
+    const before = geometryBoundary ? probe.pausedGeometryState() : null;
     running = false;
-    draw(true);
+    draw(true, geometryBoundary ? (734 * f.display.width) / f.display.height : 640);
+    if (geometryBoundary) {
+      f.display.clientHeight = 424;
+      pendingResizeFrame = geometryFrame + 2;
+      return {
+        runId: before.runId,
+        painterId: before.painterId,
+        afterDraw: before.drawCount,
+        practice,
+      };
+    }
   };
   const click = async (selector) => {
     actions.push(selector);
@@ -872,11 +933,13 @@ function publicCycleFixture({
     ...common,
     DEMO_CLOSE_ACTIVATION_POLICY,
     plan: {
-      resourceCycles: activationBoundary
-        ? activationCycleContract()
-        : closeBoundary
-          ? closeCycleContract()
-          : cycleContract(),
+      resourceCycles: geometryBoundary
+        ? { ...activationCycleContract(), pausedGeometryPolicy: DEMO_PAUSED_GEOMETRY_POLICY }
+        : activationBoundary
+          ? activationCycleContract()
+          : closeBoundary
+            ? closeCycleContract()
+            : cycleContract(),
     },
     snap,
     click,
@@ -903,6 +966,7 @@ function publicCycleFixture({
     snap,
     closeEvents,
     exports: () => exports,
+    geometryHandles: () => nativeFrames.size + readinessTimers.size,
     dispose: () => closeEvents?.destroy?.(),
   };
 }
@@ -2010,3 +2074,6 @@ test('actual activation driver disarms after primary/cleanup failure and leaves 
     }
   }
 });
+
+// Shared modeled browser owner for the successor controls; historical assertions stay unchanged.
+export { publicCycleFixture, activationCycleContract };

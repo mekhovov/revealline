@@ -1,0 +1,83 @@
+{
+  "date": "2026-10-20T06:58:27.129380+00:00",
+  "scope": "Organic destruction visual follow-up; isolated local workspace; no publication",
+  "sourceSha256": {
+    "optional-practice/civilian-fpv/combat-presentation.mjs": "a7bc13e62e8d88ff9f84b909dd46c434908cccb00b24499ffba47c78d9533123",
+    "optional-practice/civilian-fpv/combat-appearance.mjs": "36ea06b21fcf1b6670f11f709966554f74d610f72b89164e59e722ae743e0b93",
+    "optional-practice/civilian-fpv/world-reaction-runtime.mjs": "6095c8f0372225f23f07e6f3192110378f3a07e22104f30d99d7eb87169f52c3",
+    "game/test/fpv-combat-organic-detail.test.mjs": "2b4014156f1c6412efe6fd531a07ed2724017478f87adac060125598f28d25d4",
+    "game/test/fpv-combat-presentation.test.mjs": "da1f55ba9f65efca6caeb878ce08626dfb909239016a1bb31f50aead1a7adcd7",
+    "game/test/fpv-combat-cap-batching.test.mjs": "5a67641091d97ac1151d0aec35522b46a713c4931791131b74e5af261eb50db4",
+    "docs/evidence/fpv-combat/overhaul-organic-preview.js": "f1a9c7b730f3c75503a1156e86a2f031ee6e982dd729b1161cb42f50976d564a",
+    "authoring/library/fpv-character-art/r2/manifest.json": "9940f5d75727b52d067cf1be2ce75e254f52e0b6670643bc28a308291969e009"
+  },
+  "automated": {
+    "passed": 60,
+    "failed": 0,
+    "skipped": 0,
+    "durationMs": 2977.585542,
+    "suites": [
+      "game/test/fpv-combat-organic-detail.test.mjs",
+      "game/test/fpv-combat-presentation.test.mjs",
+      "game/test/fpv-combat-cap-batching.test.mjs"
+    ],
+    "lint": "pass",
+    "format": "pass",
+    "diffWhitespace": "pass",
+    "generatedRuntime": {
+      "status": "verified-byte-identical",
+      "modules": 42,
+      "recordings": 24,
+      "bytes": 1338830
+    }
+  },
+  "browser": {
+    "method": "CUA-operated local preview, production source and actual r2 GLB; results read from visible controls/status",
+    "scope": "Synthetic accepted defeat with supported flat floor; visual/functional checks only",
+    "art": "Realistic r2",
+    "identityChecks": [
+      {
+        "detail": "high",
+        "passed": 36,
+        "outcome": "explosive",
+        "seconds": 3
+      },
+      {
+        "detail": "ultra",
+        "passed": 36,
+        "outcome": "explosive",
+        "seconds": 3
+      }
+    ],
+    "preferences": {
+      "combinationsPassed": 8,
+      "storedRecords": 1,
+      "restoredBursts": 0,
+      "restoredAuthoredRegions": 12,
+      "restoredSettled": 85,
+      "restoredDrawCalls": 23
+    },
+    "representative": {
+      "family": "courier",
+      "detail": "ultra",
+      "outcome": "explosive",
+      "seconds": 3,
+      "regions": 12,
+      "completeClusters": 1,
+      "moving": 0,
+      "settled": 80,
+      "marks": 12,
+      "calls": 18,
+      "maxCalls": 40,
+      "pending": 0,
+      "records": 1
+    },
+    "capture": "overhaul-organic-detail-realistic.png",
+    "localSim": "Refreshed final packed runtime; missing r2 pack downloaded through normal UI earlier in this follow-up"
+  },
+  "limits": [
+    "Stylized existing art with richer geometry overlays, not a newly sculpted photorealistic pack",
+    "No sustained performance qualification of this visual revision",
+    "Deferred physical-radio check and human sessions remain pending"
+  ]
+}

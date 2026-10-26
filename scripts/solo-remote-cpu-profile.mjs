@@ -4,6 +4,11 @@ import { copyFile, lstat, mkdir, open, readFile, realpath, writeFile } from 'nod
 import { join, resolve } from 'node:path';
 import { pathToFileURL } from 'node:url';
 import { setTimeout as delay } from 'node:timers/promises';
+import {
+  FRAME_TASK_TRACE_PROTOCOL,
+  FRAME_TASK_TRACE_CATEGORIES,
+  frameTraceCategories,
+} from './solo-qualification-cpu-profile.mjs';
 import { readSupplementalJSON } from './solo-remote-supplemental.mjs';
 
 const MiB = 1024 ** 2;
@@ -88,7 +93,35 @@ const warmFrameTrace = (plan) =>
 const failureFrameTrace = (plan) =>
   plan?.phase === 'warm-browser-frame-trace' &&
   plan?.sourceCohort === 'warm-frame-9d5139-failure-investigation-v1';
-const anyWarmFrameTrace = (plan) => warmFrameTrace(plan) || failureFrameTrace(plan);
+const tasksFrameTrace = (plan) =>
+  plan?.phase === 'warm-browser-frame-trace' &&
+  plan?.sourceCohort === 'warm-frame-9d5139-tasks-investigation-v2';
+const failedWarmFrameTrace = (plan) => failureFrameTrace(plan) || tasksFrameTrace(plan);
+const anyWarmFrameTrace = (plan) => warmFrameTrace(plan) || failedWarmFrameTrace(plan);
+const traceProtocol = (plan) =>
+  tasksFrameTrace(plan) ? FRAME_TASK_TRACE_PROTOCOL : 'warm-first3-v1';
+const FRAME_TRACE_LOSS_EVIDENCE = Object.freeze({
+  runId: 39142189874,
+  toolingRevision: 'fd78700a0e3167e104da7c854a8b04f2cea9a19f',
+  artifact: {
+    id: 12141982962,
+    bytes: 4780169,
+    sha256: '4db3792a97693d2ab4b600efc36d3c6e8a109bc1e6d3ec80151d1f0e4463c716',
+  },
+  audit: {
+    gitDataBlob: '801ecd268dde667f38add2d9ccb70103f05ea5b2',
+    bytes: 1143213,
+    sha256: 'fdf1589d0e854f2a2fb03f140ea5b54682fabe66bed7cfa56dffa986e7dd71bf',
+  },
+  trace: {
+    bytes: 21173242,
+    sha256: 'd4e4f6d638d10763ff94c468c34d8356ab849e9a50c552f662cd8b9bc8abafaa',
+    dataLossOccurred: true,
+    startAnchorRetained: true,
+    endAnchorRetained: false,
+  },
+  disposition: 'failed-incomplete-trace-no-performance-qualification',
+});
 const FRAME_FAILURE_EVIDENCE = Object.freeze({
   format: 'SoloFailedFirstEightDiagnosticEvidenceV1',
   sourceRevision: '9d5139b9983c700a6a708f65f379fa4d5a8b0395',
@@ -305,6 +338,32 @@ function validateFrameFailurePlan(plan) {
   return plan;
 }
 
+function validateFrameTasksPlan(plan) {
+  assert(tasksFrameTrace(plan));
+  assert.equal(plan.release.scope, 'independent-incomplete-trace-investigation');
+  assert.deepEqual(plan.release.failedFrameTraceEvidence, FRAME_TRACE_LOSS_EVIDENCE);
+  assert.equal(plan.diagnostic.protocol, FRAME_TASK_TRACE_PROTOCOL);
+  assert.deepEqual(plan.diagnostic.trace, {
+    replacesCpuSampling: true,
+    categories: [...FRAME_TASK_TRACE_CATEGORIES],
+    bufferKiB: 8192,
+    maximumMs: 30000,
+    maximumBytes: 64 * MiB,
+    chunkBytes: 65536,
+    maximumReads: 1025,
+    recordMode: 'recordUntilFull',
+    streamFormat: 'json',
+    streamCompression: 'none',
+    sampling: false,
+    systrace: false,
+  });
+  const priorShape = structuredClone(plan);
+  priorShape.sourceCohort = 'warm-frame-9d5139-failure-investigation-v1';
+  priorShape.release.scope = 'independent-first-eight-failure-investigation';
+  validateFrameFailurePlan(priorShape);
+  return plan;
+}
+
 const firstVictory797 = (plan) =>
   plan?.phase === 'first-victory-cpu-profile' &&
   plan?.sourceCohort === 'first-victory-797e03-main8b-v1';
@@ -467,6 +526,7 @@ export function firstVictoryDe332ProfileOrigin() {
 export function validateCpuProfilePlan(plan) {
   if (warmFrameTrace(plan)) return validateFrameTracePlan(plan);
   if (failureFrameTrace(plan)) return validateFrameFailurePlan(plan);
+  if (tasksFrameTrace(plan)) return validateFrameTasksPlan(plan);
   assert.equal(plan.format, 'SoloHostedCpuProfilePlanV1');
   assert.equal(plan.status, 'reviewed-diagnostic-only');
   assert(
@@ -796,7 +856,7 @@ export async function prepareCpuProfileMode(ctx) {
     Object.assign(ctx.report, {
       performanceExclusion: true,
       performanceQualification: 'excluded-browser-frame-tracing',
-      ...(failureFrameTrace(ctx.plan)
+      ...(ctx.plan.release.firstEightRequired === false
         ? {
             firstEightRequired: false,
             firstEightAllCorrectnessPassed: false,
@@ -841,7 +901,7 @@ export function cpuProfileArguments(ctx, url, dir) {
       '--cpu=' + ctx.modeState.cpu,
       '--browser=chromium',
       '--source-revision=' + source(ctx.plan),
-      '--frame-trace=warm-first3-v1',
+      '--frame-trace=' + traceProtocol(ctx.plan),
     ];
   }
   return [
@@ -863,7 +923,8 @@ export function cpuProfileArguments(ctx, url, dir) {
 }
 
 export function frameTraceAssessment(plan, raw, command, readback, mode) {
-  if (failureFrameTrace(plan)) validateFrameFailurePlan(plan);
+  if (tasksFrameTrace(plan)) validateFrameTasksPlan(plan);
+  else if (failureFrameTrace(plan)) validateFrameFailurePlan(plan);
   else validateFrameTracePlan(plan);
   const replay = raw?.replay?.nativeVerification,
     trace = raw?.frameTrace;
@@ -922,7 +983,7 @@ export function frameTraceAssessment(plan, raw, command, readback, mode) {
   const retained =
     readback?.status === 'passed' &&
     trace?.status === 'retained' &&
-    trace.protocol === 'warm-first3-v1' &&
+    trace.protocol === traceProtocol(plan) &&
     trace.backend?.applicationRenderer === 'unobserved' &&
     trace.backend.hardwareGraphics === 'unobserved' &&
     trace.maximumMs === 30000 &&
@@ -967,7 +1028,7 @@ export function frameTraceAssessment(plan, raw, command, readback, mode) {
     traceRetention: retained ? 'pass' : 'fail',
     rawPerformanceGateStatus: raw?.performanceGateStatus ?? 'unobserved',
     performanceQualification: 'excluded-browser-frame-tracing',
-    ...(failureFrameTrace(plan)
+    ...(failedWarmFrameTrace(plan)
       ? {
           firstEightRequired: false,
           firstEightAllCorrectnessPassed: false,
@@ -985,9 +1046,7 @@ export function frameTraceAssessment(plan, raw, command, readback, mode) {
   };
 }
 export async function readFrameTraceEvidence(path, raw) {
-  const { inspectFrameTrace, FRAME_TRACE_CATEGORIES } = await import(
-    './solo-qualification-cpu-profile.mjs'
-  );
+  const { inspectFrameTrace } = await import('./solo-qualification-cpu-profile.mjs');
   assert.equal(raw?.file, path);
   assert.equal(await realpath(path), path);
   const info = await lstat(path);
@@ -1013,7 +1072,7 @@ export async function readFrameTraceEvidence(path, raw) {
     const retained = bytes.subarray(0, offset),
       identity = { bytes: offset, sha256: createHash('sha256').update(retained).digest('hex') };
     assert.deepEqual(identity, { bytes: raw.bytes, sha256: raw.sha256 });
-    assert.deepEqual(raw.categories, FRAME_TRACE_CATEGORIES);
+    assert.deepEqual(raw.categories, frameTraceCategories(raw.protocol));
     assert.deepEqual(inspectFrameTrace(retained, raw.anchors), raw.inspection);
     return { status: 'passed', ...identity, inspectionVerified: true };
   } finally {

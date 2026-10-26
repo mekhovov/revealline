@@ -586,3 +586,29 @@ test('explicit work labels leave every existing interval, failure and phase aggr
     originalFields(legacy.export({ paused: true })),
   );
 });
+
+test('optional Missions markers reuse the bounded numeric ring with explicit incomplete semantics', () => {
+  let time = 0;
+  const session = createPerformanceSession({ now: () => time });
+  session.markEvent('missions-opening', 1, 42);
+  session.markEvent('missions-render-begin', 1, 42, ++time);
+  const pending = session.export({ paused: true }).eventWitnesses;
+  assert.deepEqual(
+    pending.recent.map((event) => event.kind),
+    ['missions-opening', 'missions-render-begin'],
+  );
+  assert.match(pending.definition, /Missing ends remain incomplete/);
+  for (let i = 0; i < 300; i++) session.markEvent('missions-cancelled', 1, 42, ++time);
+  const full = session.export({ paused: true }).eventWitnesses;
+  assert.equal(full.capacity, 256);
+  assert.equal(full.retained, 256);
+  assert.equal(full.omitted, 46);
+  assert.equal(full.rejected, 0);
+  assert(full.recent.every((event) => event.runGeneration === 1 && event.tick === 42));
+  let reads = 0;
+  const disabled = createPerformanceSession({ enabled: false, now: () => ++reads });
+  const initial = reads;
+  disabled.markEvent('missions-opening', 1, 0);
+  disabled.markEvent('missions-render-begin', 1, 0);
+  assert.equal(reads, initial, 'Disabled markers read no clock.');
+});

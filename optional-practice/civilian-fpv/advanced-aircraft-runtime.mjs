@@ -6,7 +6,12 @@ import {
   required,
 } from '../../game/data-json.mjs';
 import RAPIER from './vendor/rapier/rapier.mjs';
-import { initWorldRuntime, WORLD_COLLISION_BACKEND } from './world-collision.mjs';
+import {
+  initWorldRuntime,
+  WORLD_COLLISION_BACKEND,
+  COMBAT_SHAPE_FORMAT,
+  validateCombatShapeDescriptor,
+} from './world-collision.mjs';
 import { packTerrainCollider } from './advanced-terrain.mjs';
 import { validateAircraftTerrainFrame } from './aircraft-terrain.mjs';
 import {
@@ -33,16 +38,48 @@ import {
 
 export const LEGACY_AIRCRAFT_BACKEND = 'civilian-quad-aircraft.v1';
 export const LEGACY_AIRCRAFT_REGIONAL_BACKEND = 'civilian-quad-aircraft-regional.v1';
-export const AIRCRAFT_BACKEND = 'civilian-quad-aircraft.v2';
-export const AIRCRAFT_REGIONAL_BACKEND = 'civilian-quad-aircraft-regional.v2';
-export const AIRCRAFT_BACKENDS = Object.freeze([
+export const AIRCRAFT_BACKEND = 'civilian-quad-aircraft.v3';
+export const AIRCRAFT_FREQUENCY = 1000;
+export const AIRCRAFT_REGIONAL_BACKEND = 'civilian-quad-aircraft-regional.v3';
+export const AIRCRAFT_ARENA_BACKENDS = Object.freeze([
   LEGACY_AIRCRAFT_BACKEND,
-  LEGACY_AIRCRAFT_REGIONAL_BACKEND,
+  'civilian-quad-aircraft.v2',
   AIRCRAFT_BACKEND,
+]);
+export const AIRCRAFT_TERRAIN_BACKENDS = Object.freeze([
+  LEGACY_AIRCRAFT_REGIONAL_BACKEND,
+  'civilian-quad-aircraft-regional.v2',
   AIRCRAFT_REGIONAL_BACKEND,
+]);
+export const AIRCRAFT_BACKENDS = Object.freeze([
+  ...AIRCRAFT_ARENA_BACKENDS,
+  ...AIRCRAFT_TERRAIN_BACKENDS,
 ]);
 export const AIRCRAFT_SNAPSHOT_FORMAT = 'AdvancedAircraftSnapshot.v1';
 const AXES = ['x', 'y', 'z'];
+
+// Proposal-only contact facts; never stored in physical checkpoints or recordings.
+export function observeMovingContact(o, id, normal, velocity, substep, point) {
+  const motion = o.motions.find((item) => item.id === id);
+  const v = { ...velocity };
+  if (point) {
+    const r = Object.fromEntries(AXES.map((axis) => [axis, point[axis] - o.center[axis]])),
+      w = o.angular;
+    v.x += w.y * r.z - w.z * r.y;
+    v.y += w.z * r.x - w.x * r.z;
+    v.z += w.x * r.y - w.y * r.x;
+  }
+  const relativeNormalSpeed = Math.max(
+    0,
+    -AXES.reduce(
+      (sum, axis) =>
+        sum + (v[axis] - (motion ? (motion.to[axis] - motion.from[axis]) * 50 : 0)) * normal[axis],
+      0,
+    ),
+  );
+  if (!o.contacts.has(id) || relativeNormalSpeed > o.contacts.get(id).relativeNormalSpeed)
+    o.contacts.set(id, { id, normal, relativeNormalSpeed, substep });
+}
 const CONTROLS = ['roll', 'pitch', 'yaw', 'throttle'];
 const clone = (value) => structuredClone(value);
 const zero = () => ({ x: 0, y: 0, z: 0 });
@@ -156,10 +193,7 @@ export function aircraftFlightIdentities(config, { terrainIdentity = null } = {}
     simulationIdentity:
       terrainIdentity === null
         ? configurationIdentity(config)
-        : dataIdentity({
-            configuration: configurationIdentity(config),
-            terrain: terrainIdentity,
-          }),
+        : dataIdentity({ configuration: configurationIdentity(config), terrain: terrainIdentity }),
     terrainIdentity,
     scored: false,
   };
@@ -172,19 +206,19 @@ export function createAircraftSimulation(options = {}) {
   const regional = options.terrain !== undefined;
   const backend = options.backend ?? (regional ? AIRCRAFT_REGIONAL_BACKEND : AIRCRAFT_BACKEND);
   required(
-    (regional
-      ? [AIRCRAFT_REGIONAL_BACKEND, LEGACY_AIRCRAFT_REGIONAL_BACKEND]
-      : [AIRCRAFT_BACKEND, LEGACY_AIRCRAFT_BACKEND]
-    ).includes(backend),
+    (regional ? AIRCRAFT_TERRAIN_BACKENDS : AIRCRAFT_ARENA_BACKENDS).includes(backend),
     'Unsupported aircraft backend or terrain mode',
   );
-  const supportedIntegral = [AIRCRAFT_BACKEND, AIRCRAFT_REGIONAL_BACKEND].includes(backend);
+  const supportedIntegral = ![LEGACY_AIRCRAFT_BACKEND, LEGACY_AIRCRAFT_REGIONAL_BACKEND].includes(
+    backend,
+  );
+  const currentContact = [AIRCRAFT_BACKEND, AIRCRAFT_REGIONAL_BACKEND].includes(backend);
   if (regional)
     required(
       options.terrain?.format === 'AdvancedRegionalTerrain.v1' && options.floor === false,
       'Terrain-backed aircraft require an explicit terrain mode and no synthetic floor',
     );
-  const hz = options.frequency ?? 500;
+  const hz = options.frequency ?? (currentContact ? AIRCRAFT_FREQUENCY : 500);
   required(
     [250, 500, 1000].includes(hz) || (options.numericalReference === true && hz === 2000),
     'Unsupported fixed aircraft frequency',
@@ -231,6 +265,11 @@ export function createAircraftSimulation(options = {}) {
       'Empty aircraft obstacle',
     );
   }
+  const shapeVersioned = options.dynamicShapeFormat === COMBAT_SHAPE_FORMAT;
+  required(
+    options.dynamicShapeFormat === undefined || shapeVersioned,
+    'Unsupported combat shape protocol',
+  );
   const dynamic = plain(options.dynamicColliders ?? [], 65536);
   required(Array.isArray(dynamic) && dynamic.length <= 128, 'Invalid moving aircraft obstacles');
   for (const item of dynamic) {
@@ -273,6 +312,7 @@ export function createAircraftSimulation(options = {}) {
     floor: options.floor !== false,
     obstacles,
     dynamicColliders: dynamic,
+    ...(shapeVersioned ? { dynamicShapeFormat: COMBAT_SHAPE_FORMAT } : {}),
     configuration: frozen,
   };
   const identity = configurationIdentity(config);
@@ -394,7 +434,12 @@ export function createAircraftSimulation(options = {}) {
         actor,
       );
       actor.setEnabled(item.enabled !== false);
-      return { id: item.id, bodyHandle: actor.handle, handle: collider.handle };
+      return {
+        id: item.id,
+        bodyHandle: actor.handle,
+        handle: collider.handle,
+        ...(shapeVersioned ? { spawnId: 'initial' } : {}),
+      };
     });
     return { target, reference, fixed, moving };
   }
@@ -507,7 +552,7 @@ export function createAircraftSimulation(options = {}) {
       actors: clone(actors),
     };
   }
-  function contacts(previousVelocity) {
+  function contacts(previousVelocity, observation) {
     const result = idleContact();
     result.contacts = state.contact.contacts;
     const possible = [
@@ -520,21 +565,72 @@ export function createAircraftSimulation(options = {}) {
       const collider = world.getCollider(obstacle.handle);
       if (!collider) continue;
       let chosen = null;
-      for (let index = 0; index < body.numColliders(); index++)
+      const missingParts = [];
+      for (let index = 0; index < body.numColliders(); index++) {
+        let tracked = false,
+          closePart = false;
         world.contactPair(collider, body.collider(index), (manifold, flipped) => {
+          tracked = true;
           let close = false;
           for (let contact = 0; contact < manifold.numContacts(); contact++)
             close ||= manifold.contactDist(contact) <= 0.003;
           if (!close) return;
+          closePart = true;
           const normal = manifold.normal(),
             sign = flipped ? -1 : 1;
           const direction = { x: normal.x * sign, y: normal.y * sign, z: normal.z * sign };
           if (!chosen || direction.y > chosen.y) chosen = direction;
+          if (observation && obstacle.moving)
+            for (let point = 0; point < Math.max(1, manifold.numSolverContacts()); point++)
+              observeMovingContact(
+                observation,
+                obstacle.id,
+                direction,
+                previousVelocity,
+                state.substep,
+                manifold.numSolverContacts() ? manifold.solverContactPoint(point) : null,
+              );
           result.impactSpeed = Math.max(
             result.impactSpeed,
             -AXES.reduce((sum, axis) => sum + previousVelocity[axis] * direction[axis], 0),
           );
         });
+        if (currentContact && tracked && !closePart) missingParts.push(index);
+      }
+      // Preserve an existing obstacle-level contact. Only v3 confirms an
+      // otherwise missing aggregate against those same registered shapes.
+      // A positive query distance is only proximity, not supporting contact.
+      // Do not reset the controller integral for an approaching/rebounding gap.
+      if (currentContact && !chosen)
+        for (const index of missingParts) {
+          const contact = collider.contactCollider(body.collider(index), 0.003);
+          if (
+            contact &&
+            Number.isFinite(contact.distance) &&
+            contact.distance <= 0 &&
+            AXES.every((axis) => finite(contact.normal1[axis], -1.001, 1.001)) &&
+            Math.hypot(...AXES.map((axis) => contact.normal1[axis])) > 0
+          ) {
+            const direction = { ...contact.normal1 };
+            if (!chosen || direction.y > chosen.y) chosen = direction;
+            // v3 shape confirmation is also a moving-target contact fact.
+            // point2 lies on the aircraft (the second queried collider), so the
+            // proposal observes angular closing speed at its contact point.
+            if (observation && obstacle.moving)
+              observeMovingContact(
+                observation,
+                obstacle.id,
+                direction,
+                previousVelocity,
+                state.substep,
+                contact.point2,
+              );
+            result.impactSpeed = Math.max(
+              result.impactSpeed,
+              -AXES.reduce((sum, axis) => sum + previousVelocity[axis] * direction[axis], 0),
+            );
+          }
+        }
       if (chosen) {
         result.touching = true;
         result.ids.push(obstacle.id);
@@ -617,7 +713,12 @@ export function createAircraftSimulation(options = {}) {
       contact: clone(state.contact),
       dynamicColliders: actors.map((actor) => {
         const moving = world.getRigidBody(actor.bodyHandle);
-        return { id: actor.id, position: { ...moving.translation() }, enabled: moving.isEnabled() };
+        return {
+          id: actor.id,
+          position: { ...moving.translation() },
+          enabled: moving.isEnabled(),
+          ...(shapeVersioned ? { spawnId: actor.spawnId } : {}),
+        };
       }),
       recordingStatus: recorder.status(),
       archiveStatus: { generation: archiveGeneration, ...recorder.sealedStatus() },
@@ -648,7 +749,7 @@ export function createAircraftSimulation(options = {}) {
     return state.noiseState / 2147483648 - 1;
   }
   function validateMotions(source = []) {
-    const motions = plain(source, 65536),
+    const motions = plain(source, shapeVersioned ? 128 * 1024 : 65536),
       seen = new Set();
     required(
       Array.isArray(motions) && motions.length <= actors.length,
@@ -657,7 +758,15 @@ export function createAircraftSimulation(options = {}) {
     for (const motion of motions) {
       exactKeys(
         motion,
-        ['id', 'from', 'to', ...(Object.hasOwn(motion, 'enabled') ? ['enabled'] : [])],
+        [
+          'id',
+          'from',
+          'to',
+          ...(Object.hasOwn(motion, 'enabled') ? ['enabled'] : []),
+          ...(shapeVersioned && Object.hasOwn(motion, 'shapeDescriptor')
+            ? ['shapeDescriptor']
+            : []),
+        ],
         'Actor motion',
       );
       required(
@@ -666,6 +775,11 @@ export function createAircraftSimulation(options = {}) {
       );
       const actor = actors.find((value) => value.id === motion.id);
       required(actor && !seen.has(motion.id), 'Unknown or duplicate actor motion');
+      if (motion.shapeDescriptor !== undefined)
+        validateCombatShapeDescriptor(
+          motion.shapeDescriptor,
+          dynamic.find((item) => item.id === motion.id),
+        );
       seen.add(motion.id);
       vector(motion.from);
       vector(motion.to);
@@ -677,7 +791,7 @@ export function createAircraftSimulation(options = {}) {
     }
     return motions;
   }
-  function substep(events, motions, fraction) {
+  function substep(events, motions, fraction, observation) {
     const timestampUs = state.substep * (1e6 / hz);
     let sample;
     while (queue.length && queue[0].timestampUs <= timestampUs) sample = queue.shift();
@@ -757,8 +871,12 @@ export function createAircraftSimulation(options = {}) {
     body.resetTorques(true);
     body.addForce(rotate(q, forces.force), true);
     body.addTorque(rotate(q, forces.torque), true);
+    if (observation) {
+      observation.angular = body.angvel();
+      observation.center = body.worldCom();
+    }
     world.step();
-    contacts(velocity);
+    contacts(velocity, observation);
     state.substep++;
   }
   // Requested explicitly by the isolated response bench. These copied samples
@@ -781,17 +899,34 @@ export function createAircraftSimulation(options = {}) {
       saturated: diagnostic.saturated,
     };
   }
-  function runMission(motionSource, diagnostics = false) {
+  function runMission(motionSource, diagnostics = false, observation) {
     required(!regional || terrain, 'Verified terrain is required before aircraft flight');
     required(safeTick(state.missionTick + 1), 'Aircraft clock exhausted safe integer precision');
     const motions = validateMotions(motionSource),
       events = [];
+    if (observation) observation.motions = motions;
+    for (const motion of motions) {
+      if (!motion.shapeDescriptor) continue;
+      const actor = actors.find((item) => item.id === motion.id),
+        descriptor = motion.shapeDescriptor;
+      if (actor.spawnId === descriptor.spawnId) continue;
+      // Geometry and generation change inside the aircraft proposal. A rejected
+      // proposal restores both collider state and the accepted registry.
+      world
+        .getCollider(actor.handle)
+        .setShape(
+          descriptor.shape === 'sphere'
+            ? new RAPIER.Ball(descriptor.radius)
+            : new RAPIER.Cylinder(descriptor.height / 2, descriptor.radius),
+        );
+      actor.spawnId = descriptor.spawnId;
+    }
     if (motions.length) events.push(['motion', state.missionTick, motions]);
     state.contact.impactSpeed = 0;
     const trace = [{ ...body.translation(), ...hullExtents() }],
       physicsSamples = diagnostics ? [] : null;
     for (let step = 0; step < missionSteps; step++) {
-      substep(events, motions, (step + 1) / missionSteps);
+      substep(events, motions, (step + 1) / missionSteps, observation);
       trace.push({ ...body.translation(), ...hullExtents() });
       if (diagnostics) physicsSamples.push(physicsSample());
     }
@@ -999,7 +1134,20 @@ export function createAircraftSimulation(options = {}) {
       Array.isArray(saved.terrainHandles) &&
         saved.terrainHandles.length === (frame?.colliders.length ?? 0) &&
         Array.isArray(saved.actors) &&
-        canonicalJSON(saved.actors) === canonicalJSON(actors),
+        saved.actors.length === actors.length &&
+        saved.actors.every((entry, index) => {
+          const expected = actors[index];
+          if (!shapeVersioned) return canonicalJSON(entry) === canonicalJSON(expected);
+          return (
+            Object.keys(entry).sort().join('/') === 'bodyHandle/handle/id/spawnId' &&
+            entry.id === expected.id &&
+            entry.handle === expected.handle &&
+            entry.bodyHandle === expected.bodyHandle &&
+            typeof entry.spawnId === 'string' &&
+            entry.spawnId.length > 0 &&
+            entry.spawnId.length <= 512
+          );
+        }),
       'Invalid checkpoint collider registry',
     );
     const probe = RAPIER.World.restoreSnapshot(decode(saved.world));
@@ -1189,9 +1337,17 @@ export function createAircraftSimulation(options = {}) {
       unlocked();
       const before = transactionCapture();
       try {
-        const result = runMission(motions);
+        const observation = { contacts: new Map() };
+        const result = runMission(motions, false, observation);
         transaction = { kind: 'mission', id: ++serial, before, events: result.events };
-        return { transaction: serial, trace: result.trace, telemetry: telemetry() };
+        return {
+          transaction: serial,
+          trace: result.trace,
+          telemetry: telemetry(),
+          movingContacts: [...observation.contacts.values()].sort((a, b) =>
+            a.id < b.id ? -1 : a.id > b.id ? 1 : 0,
+          ),
+        };
       } catch (error) {
         restoreInternal(before);
         throw error;

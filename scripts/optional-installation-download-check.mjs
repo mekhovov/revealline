@@ -87,10 +87,12 @@ export function assertDownloadFaultTiming(receipt, statusSelector) {
       'A no-op Cancel followed by the inactivity timeout cannot pass.',
     );
     assert(
-      statusSelector === '#package-status'
-        ? /^Offline preparation failed\. Online practice remains available\.$/.test(receipt.status)
-        : /cancelled|canceled/i.test(receipt.status),
-      'Require cancellation feedback (Gym uses its documented generic failure copy).',
+      /cancelled|canceled/i.test(receipt.status) ||
+        (statusSelector === '#package-status' &&
+          /^Offline preparation failed\. Online practice remains available\.$/.test(
+            receipt.status,
+          )),
+      'Require explicit cancellation feedback or the exact legacy Gym generic copy with prompt native abort.',
     );
   }
   return true;
@@ -258,10 +260,9 @@ export async function observeInstallationDownloadFault({
     receipt.fault = observed;
     if (mode === 'cancel-hold') {
       receipt.cancelLatencyMs = performance.now() - cancelAt;
-      receipt.cancelFeedback =
-        status === '#package-status'
-          ? 'Gym generic failure; prompt native request abort required'
-          : 'explicit cancelled status';
+      receipt.cancelFeedback = /cancelled|canceled/i.test(receipt.status)
+        ? 'explicit cancelled status'
+        : 'Gym legacy generic failure; prompt native request abort required';
     }
     assertDownloadFaultTiming(receipt, status);
     receipt.passed = true;

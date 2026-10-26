@@ -1,0 +1,149 @@
+{
+  "started": "2026-10-20T03:28:18.728Z",
+  "finished": "2026-10-20T03:28:29.063Z",
+  "passed": true,
+  "recordedFrom": "Completed inline Playwright run and its captured console report; no rerun.",
+  "scope": "Short actual host regression after frameSnapshot/stepFrame integration: start, Fire, pause, archive export, continued play, IndexedDB close, imported Watch, and imported Continue. No performance qualification.",
+  "browser": "155.0.8059.85",
+  "isolation": {
+    "browser": "Fresh headless Chrome with a temporary context",
+    "userBrowserOrRadioTabUsed": false,
+    "browserClosed": true,
+    "arguments": [
+      "--disable-component-update",
+      "--disable-background-networking",
+      "--disk-cache-size=1048576",
+      "--media-cache-size=1048576"
+    ],
+    "productionModulesPatched": false,
+    "simulationClockOrAcceptedTicksPatched": false
+  },
+  "application": {
+    "url": "http://127.0.0.1:8768/optional-practice/fpv-worlds/index.html?lang=en",
+    "course": "stadium-01",
+    "backend": "native",
+    "mode": "self-level",
+    "encounter": {
+      "version": 2,
+      "activity": "hunting",
+      "difficulty": "normal",
+      "population": 12,
+      "loadout": ["autocannon", "rocket"],
+      "payload": "bomb",
+      "ammoPreset": "balanced",
+      "playerDamage": "invulnerable",
+      "enemyDamage": "one-hit",
+      "seed": 101
+    }
+  },
+  "sources": {
+    "servedAndWorkspaceHashesMatched": true,
+    "sha256": {
+      "world-app.mjs": "4b499965ba357d4be13da89fa89cc1adc78bd175a38505af7213d772a8b31894",
+      "encounter-session.mjs": "af0c28b5432e59537e5968e7fab9b6d8df45b831495c044139cfa78a6d4ce8ba",
+      "encounter-runtime.mjs": "8becebc7f3bcd14621726f816fdde7cec8c658ec01b67fdf11c751a96c1651ba",
+      "world-reaction-runtime.mjs": "b8d87796987de4953a3a62ef3094c069046e94628a7465d26161428c205da703"
+    }
+  },
+  "publicSnapshot": {
+    "actorPathPresent": true,
+    "actorPositionDefensiveCopy": true
+  },
+  "runId": "encounter-af9699b4b168d671",
+  "checkpoints": [
+    {
+      "name": "started-with-paused-option",
+      "ticks": 0,
+      "status": "disarmed",
+      "shots": 0
+    },
+    {
+      "name": "fired-and-paused",
+      "ticks": 58,
+      "status": "paused",
+      "shots": 11
+    },
+    {
+      "name": "fire-rejected-while-paused",
+      "ticks": 58,
+      "status": "paused",
+      "shots": 11,
+      "heldFireMilliseconds": 350
+    },
+    {
+      "name": "continued-after-export",
+      "ticks": 80,
+      "status": "paused",
+      "shots": 16,
+      "sameRun": true
+    },
+    {
+      "name": "file-watch-verified",
+      "ticks": 58,
+      "status": "paused",
+      "shots": 11,
+      "verified": true,
+      "cursor": 58,
+      "total": 58,
+      "settingsClosed": true,
+      "launchModeRestored": "self-level"
+    },
+    {
+      "name": "continue-restored",
+      "ticks": 58,
+      "status": "paused",
+      "shots": 11,
+      "exactSavedPosition": true,
+      "exactSavedRun": true,
+      "settingsClosed": true,
+      "previousLaunchMode": "acro",
+      "launchModeRestored": "self-level"
+    },
+    {
+      "name": "continue-advanced",
+      "ticks": 81,
+      "status": "paused",
+      "shots": 16
+    }
+  ],
+  "firstExport": {
+    "bytes": 36313,
+    "id": "combat-mvg4ig7a-9iriad6",
+    "from": 0,
+    "to": 58,
+    "segments": 1,
+    "complete": true,
+    "validatedBy": "inspectEncounterArchive"
+  },
+  "savedIndexedDBRowAfterClose": {
+    "id": "combat-mvg4ig7a-9iriad6",
+    "state": "ended",
+    "startTick": 0,
+    "endTick": 80,
+    "segmentCount": 1,
+    "payloadBytes": 37882
+  },
+  "continuedExport": {
+    "bytes": 38371,
+    "id": "combat-mvg4il5g-q62arg8",
+    "from": 0,
+    "to": 81,
+    "segments": 1,
+    "complete": true,
+    "validatedBy": "inspectEncounterArchive"
+  },
+  "pageErrors": [],
+  "consoleErrors": [
+    {
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+      "url": "http://127.0.0.1:8768/favicon.ico"
+    }
+  ],
+  "failedResponses": [],
+  "limits": [
+    "Short native hunting regression only; no new full-minute or long-history capture.",
+    "No regional-browser, physical-radio, human-usability, quota, or CPU/GPU qualification.",
+    "No screenshots, trace, or downloaded packages retained from this short run.",
+    "Source review was read-only; runtime test suites were owned by other agents."
+  ]
+}

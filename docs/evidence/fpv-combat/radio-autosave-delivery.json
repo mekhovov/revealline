@@ -1,0 +1,26 @@
+{
+  "format": "FPVRadioAutosaveDelivery.v1",
+  "date": "2026-10-20T21:52:18.052905+00:00",
+  "sourceSHA256": {
+    "optional-practice/civilian-fpv/radio-guide.mjs": "9f491c8e8f2af9bb8cfaa9289e1d62cc3469af549131674314e78656afe9c507",
+    "optional-practice/civilian-fpv/radio-profile.mjs": "7025e236caf7cccfc6ffcec5db17fd024ea437ad3710a298d7d143724c714e98",
+    "optional-practice/civilian-fpv/radio-setup.mjs": "92238edd10d4f8f3499bac60ef3b4bb38e0872b4c5383757f455ec34f92a0d0c",
+    "optional-practice/civilian-fpv/style.css": "9b65c095facd942a668ec8875935959bfa3af2a679f31786277262098bf3e5a9"
+  },
+  "scope": "Implemented radio setup flow; no automated gameplay suites added or run for this change.",
+  "browserObservations": [
+    "Real connected RaspberryPi Pico visible with existing calibration.",
+    "No direction-confirmation checkbox or explicit profile/six-switch Save action remains.",
+    "Live two-stick display and per-control movement meters visible in manual setup.",
+    "A valid roll dead-zone edit was retained after closing and reopening without Save; original active value 0.02 restored.",
+    "Automatically saved status visible.",
+    "Latest screenshot shows compact manual cards with hidden technical fields and peripheral live monitor."
+  ],
+  "pending": [
+    "Physical full-endpoint remapping for every channel and capture interruptions.",
+    "Physical six-switch capture persistence check; user feedback requested asynchronously.",
+    "Actual phone/portrait usability and broad radio/USB/receiver hardware checks.",
+    "Automated UI expectations for the superseded manual-save flow must be updated during qualification."
+  ],
+  "packageReceipt": "radio-autosave-package-measurement.json"
+}

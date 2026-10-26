@@ -1,0 +1,28 @@
+{
+  "format": "revealline-optional-package-admission.v1",
+  "version": "v0.151.1",
+  "sourceRevision": "134313f232e45ec2768d02ceb65aa4fac9795748",
+  "sourceTree": "ac1697d2f0a740220512c56a2884fbd7b1c4a986",
+  "packages": [
+    {
+      "id": "civilian-flight",
+      "revision": "d4da2e38be210611261877faf939625a972cd2616df8105129791d2695edade7",
+      "files": 94,
+      "bytes": 3751548
+    },
+    {
+      "id": "civilian-fpv",
+      "revision": "4f5900cedc478e5fadbdaad40cbbaa92c7e6224158614ba42d34ce76011f3b61",
+      "files": 101,
+      "bytes": 6769242
+    },
+    {
+      "id": "fpv-worlds",
+      "revision": "4ec1625aef2dc7f45893e30c6e0308dada0703eceb96916a1de80c434e4b5de6",
+      "files": 162,
+      "bytes": 17566670
+    }
+  ],
+  "zipMembersVerified": true,
+  "publicEligible": false
+}

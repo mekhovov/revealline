@@ -1,0 +1,144 @@
+{
+  "started": "2026-10-20T05:20:31.415Z",
+  "scope": "Outside performance timing. Import the complete 42,134-tick archive through Watch combat file, choose the visible supported 4x speed control, and verify the entire accepted chain.",
+  "errors": [],
+  "progress": [],
+  "archiveSha256": "3d796ee62f5015097b0491c09ca2096fc9f2c86fbf470c9863ea5cddb89d6e74",
+  "sources": {
+    "world-app.mjs": "aa35bb4c1dc6fb35aa3128c70ce0b4d52e9f6dae5b1dc36f8df93856f806b794",
+    "style.css": "7dad1405769dd54501623495fb7b6174b780e32709d5b94f7dfc959cc503da93",
+    "world-reaction-runtime.mjs": "b8d87796987de4953a3a62ef3094c069046e94628a7465d26161428c205da703"
+  },
+  "harnessSha256": "fbf295e812b706d9aa870c22a5ca51f6afef5e5828a0edf0851a6ed847e6485c",
+  "controls": {
+    "resultPanelHidden": true,
+    "styleSheets": [
+      {
+        "href": null,
+        "count": 1
+      },
+      {
+        "href": "http://127.0.0.1:8768/game/access-gate.css",
+        "count": 1
+      },
+      {
+        "href": "http://127.0.0.1:8768/optional-practice/civilian-fpv/world-style.css",
+        "count": 32
+      },
+      {
+        "href": "http://127.0.0.1:8768/optional-practice/civilian-fpv/tuning.css",
+        "count": 140
+      },
+      {
+        "href": null,
+        "count": 41
+      },
+      {
+        "href": null,
+        "count": 197
+      },
+      {
+        "href": null,
+        "count": 50
+      }
+    ],
+    "ancestors": [
+      {
+        "tag": "SELECT",
+        "id": "world-replay-rate",
+        "class": "",
+        "hidden": false,
+        "display": "block",
+        "visibility": "visible"
+      },
+      {
+        "tag": "LABEL",
+        "id": "",
+        "class": "",
+        "hidden": false,
+        "display": "flex",
+        "visibility": "visible"
+      },
+      {
+        "tag": "DIV",
+        "id": "world-replay-controls",
+        "class": "replay-controls",
+        "hidden": false,
+        "display": "flex",
+        "visibility": "visible"
+      },
+      {
+        "tag": "DIALOG",
+        "id": "flight-dialog",
+        "class": "flight-dialog combat-playback",
+        "hidden": false,
+        "display": "flex",
+        "visibility": "visible"
+      },
+      {
+        "tag": "BODY",
+        "id": "",
+        "class": "field-kit sim-worlds mode-play-page",
+        "hidden": false,
+        "display": "block",
+        "visibility": "visible"
+      },
+      {
+        "tag": "HTML",
+        "id": "",
+        "class": "",
+        "hidden": false,
+        "display": "block",
+        "visibility": "visible"
+      }
+    ],
+    "rules": [
+      "* { box-sizing: border-box; }",
+      ".replay-controls { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; padding: 10px 16px; background: rgb(39, 60, 50); border-bottom: 1px solid rgb(82, 103, 76); font-size: 12px; }",
+      "[data-theme-styled=\"true\"] :where(fieldset, details, .drop, .drop-zone, .setting-row, .settings-row, .settings-preset, .device-card, .controller-card, .controller-mapping, .range-field, .settings-metric, .settings-note, .settings-warning, .mission-brief, .enemy-guide, .soundtrack-choice, .soundtrack-advanced, .soundtrack-online-results, .school-flight-map, .replay-controls, .radio-device-card, .radio-monitor, .coach-tip, .checkpoint, .encounter-cue, .demo-board, .demo-settings, .seat, .control-card, .batch-card-media, .creator-media-poster, .creator-poster-option, #mission-brief-reading, [data-ui-surface=\"inset\"]) { color: var(--iw-text); background: var(--ui-inset-finish, none), var(--iw-ink); border-color: var(--iw-line); border-image: none; border-radius: 0px; box-shadow: var(--ui-inset-depth, none); }",
+      "[data-theme-styled=\"true\"] :where(*) { scrollbar-color: var(--iw-control-line) var(--iw-ink); }"
+    ],
+    "visible": true,
+    "display": "block",
+    "rect": {
+      "x": 1114.2734375,
+      "y": 1011,
+      "width": 67,
+      "height": 44,
+      "top": 1011,
+      "right": 1181.2734375,
+      "bottom": 1055,
+      "left": 1114.2734375
+    },
+    "options": [
+      {
+        "value": "0.25",
+        "disabled": false,
+        "hidden": false
+      },
+      {
+        "value": "0.5",
+        "disabled": false,
+        "hidden": false
+      },
+      {
+        "value": "1",
+        "disabled": false,
+        "hidden": false
+      },
+      {
+        "value": "2",
+        "disabled": false,
+        "hidden": false
+      },
+      {
+        "value": "4",
+        "disabled": false,
+        "hidden": false
+      }
+    ],
+    "combatClass": true
+  },
+  "failure": "locator.click: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('#world-arm')\u001b[22m\n\u001b[2m    - locator resolved to <button id=\"world-arm\" class=\"primary\" data-sim-icon=\"play\" data-menu-icon=\"play\">Resume playback</button>\u001b[22m\n\u001b[2m  - attempting click action\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is not visible\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m    - waiting 20ms\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is not visible\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m      - waiting 100ms\u001b[22m\n\u001b[2m    56 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m       - element is not visible\u001b[22m\n\u001b[2m     - retrying click action\u001b[22m\n\u001b[2m       - waiting 500ms\u001b[22m\n\n    at /Users/oleksandr.mekhovov/work/my_projects/go_test_radio_fix/docs/evidence/fpv-combat/overhaul-long-archive-replay.cjs:27:116",
+  "finished": "2026-10-20T05:21:05.782Z"
+}

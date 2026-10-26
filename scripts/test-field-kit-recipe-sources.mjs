@@ -212,7 +212,7 @@ test('current presentation continuation authenticates each immutable predecessor
   }
 });
 
-test('scoped current Team and equipment approval retains every semantic guard', async () => {
+test('historical Team and equipment approval retains semantic guards and reopens changed inputs', async () => {
   const { createFieldKitProduction, fieldKitEquipmentQuality, fieldKitEquipmentSource } =
     await import('./produce-field-kit-theme.mjs');
   const { fieldKitTeamRecipeQuality } = await import('./team-recipe-review.mjs');
@@ -249,6 +249,13 @@ test('scoped current Team and equipment approval retains every semantic guard', 
       continuationReviewBytes,
       bulkContinuationReviewBytes,
     };
+    const reviewedSource = `${review.fingerprints.team.paths} sha256:${review.fingerprints.team.currentSHA256}`;
+    assert.notEqual(args.source, reviewedSource, 'The retained renderer has changed since this historical review.');
+    assert.equal(fieldKitTeamRecipeQuality(args).stage, 'source', slotId);
+    assert.equal(asset.quality.stage, 'source', slotId);
+    // Positive control for the unchanged historical guard. Supplying this
+    // fingerprint in a test does not approve the current renderer's bytes.
+    args.source = reviewedSource;
     assert.equal(fieldKitTeamRecipeQuality(args).stage, 'reviewed', slotId);
     for (const override of [
       { slotId: 'team.not-reviewed' },
@@ -276,10 +283,12 @@ test('scoped current Team and equipment approval retains every semantic guard', 
       );
     }
   }
-  const source = await fieldKitEquipmentSource(read);
+  const actualSource = await fieldKitEquipmentSource(read);
+  const source = review.fingerprints.equipment.currentSHA256;
+  assert.notEqual(actualSource, source, 'Current equipment inputs require a new scoped review.');
   for (const slotId of review.fingerprints.equipment.slots) {
     const asset = production.document.assets.find((entry) => entry.id === slotId + '.field-kit');
-    assert.equal(asset.quality.stage, 'reviewed', slotId);
+    assert.equal(asset.quality.stage, 'produced', slotId);
     const quality = (id, fingerprint, png, current = bulkContinuationReviewBytes) =>
       fieldKitEquipmentQuality(
         id,
@@ -289,6 +298,7 @@ test('scoped current Team and equipment approval retains every semantic guard', 
         continuationReviewBytes,
         current,
       ).stage;
+    assert.equal(quality(slotId, actualSource, asset.file.sha256), 'produced');
     assert.equal(quality(slotId, source, asset.file.sha256), 'reviewed');
     assert.equal(quality(slotId, source + ' altered', asset.file.sha256), 'produced');
     assert.equal(quality(slotId, source, '0'.repeat(64)), 'produced');

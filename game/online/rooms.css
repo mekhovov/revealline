@@ -1,3 +1,5 @@
+@import '../ui/comfort-presets.css';
+
 :root {
   color-scheme: dark;
 }
@@ -67,7 +69,8 @@ select:focus-visible {
   outline: 3px solid #ffda71;
   outline-offset: 3px;
 }
-button:disabled {
+button:disabled,
+.room-invitation-actions button[aria-disabled='true'] {
   opacity: 0.5;
   cursor: default;
 }
@@ -113,6 +116,21 @@ canvas {
 #result {
   color: #ffda71;
   min-height: 1.5em;
+}
+.room-invitation-actions {
+  padding: 0;
+  border: 0;
+  min-width: 0;
+}
+.room-invitation-actions img {
+  display: block;
+  width: min(100%, 20rem);
+  height: auto;
+  margin-block: 12px;
+}
+.room-invitation-actions [role='status'] {
+  min-height: 1.5em;
+  overflow-wrap: anywhere;
 }
 [hidden] {
   display: none !important;

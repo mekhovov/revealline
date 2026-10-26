@@ -1,0 +1,368 @@
+{
+  "checks": [
+    {
+      "authoredInstances": 16,
+      "calls": 17,
+      "cast": "tactical",
+      "family": "lookout",
+      "partsDraws": 16,
+      "pass": true,
+      "triangles": 15155
+    },
+    {
+      "authoredInstances": 15,
+      "calls": 16,
+      "cast": "tactical",
+      "family": "patroller",
+      "partsDraws": 15,
+      "pass": true,
+      "triangles": 15239
+    },
+    {
+      "authoredInstances": 15,
+      "calls": 16,
+      "cast": "tactical",
+      "family": "runner",
+      "partsDraws": 15,
+      "pass": true,
+      "triangles": 14807
+    },
+    {
+      "authoredInstances": 16,
+      "calls": 17,
+      "cast": "tactical",
+      "family": "sprinter",
+      "partsDraws": 16,
+      "pass": true,
+      "triangles": 14963
+    },
+    {
+      "authoredInstances": 15,
+      "calls": 16,
+      "cast": "tactical",
+      "family": "courier",
+      "partsDraws": 15,
+      "pass": true,
+      "triangles": 15023
+    },
+    {
+      "authoredInstances": 15,
+      "calls": 16,
+      "cast": "tactical",
+      "family": "guard",
+      "partsDraws": 15,
+      "pass": true,
+      "triangles": 14915
+    },
+    {
+      "authoredInstances": 15,
+      "calls": 16,
+      "cast": "tactical",
+      "family": "refuge-seeker",
+      "partsDraws": 15,
+      "pass": true,
+      "triangles": 14271
+    },
+    {
+      "authoredInstances": 15,
+      "calls": 16,
+      "cast": "tactical",
+      "family": "switchback",
+      "partsDraws": 15,
+      "pass": true,
+      "triangles": 14815
+    },
+    {
+      "authoredInstances": 16,
+      "calls": 17,
+      "cast": "tactical",
+      "family": "rendezvous-pair",
+      "partsDraws": 16,
+      "pass": true,
+      "triangles": 15023
+    },
+    {
+      "authoredInstances": 16,
+      "calls": 17,
+      "cast": "tactical",
+      "family": "shield-bearer",
+      "partsDraws": 16,
+      "pass": true,
+      "triangles": 15023
+    },
+    {
+      "authoredInstances": 15,
+      "calls": 16,
+      "cast": "tactical",
+      "family": "brace-trooper",
+      "partsDraws": 15,
+      "pass": true,
+      "triangles": 15023
+    },
+    {
+      "authoredInstances": 16,
+      "calls": 17,
+      "cast": "tactical",
+      "family": "relay-warden",
+      "partsDraws": 16,
+      "pass": true,
+      "triangles": 15131
+    },
+    {
+      "authoredInstances": 16,
+      "calls": 17,
+      "cast": "rivals",
+      "family": "lookout",
+      "partsDraws": 16,
+      "pass": true,
+      "triangles": 14935
+    },
+    {
+      "authoredInstances": 15,
+      "calls": 16,
+      "cast": "rivals",
+      "family": "patroller",
+      "partsDraws": 15,
+      "pass": true,
+      "triangles": 15019
+    },
+    {
+      "authoredInstances": 15,
+      "calls": 16,
+      "cast": "rivals",
+      "family": "runner",
+      "partsDraws": 15,
+      "pass": true,
+      "triangles": 14587
+    },
+    {
+      "authoredInstances": 16,
+      "calls": 17,
+      "cast": "rivals",
+      "family": "sprinter",
+      "partsDraws": 16,
+      "pass": true,
+      "triangles": 14743
+    },
+    {
+      "authoredInstances": 15,
+      "calls": 16,
+      "cast": "rivals",
+      "family": "courier",
+      "partsDraws": 15,
+      "pass": true,
+      "triangles": 14803
+    },
+    {
+      "authoredInstances": 15,
+      "calls": 16,
+      "cast": "rivals",
+      "family": "guard",
+      "partsDraws": 15,
+      "pass": true,
+      "triangles": 14695
+    },
+    {
+      "authoredInstances": 15,
+      "calls": 16,
+      "cast": "rivals",
+      "family": "refuge-seeker",
+      "partsDraws": 15,
+      "pass": true,
+      "triangles": 14051
+    },
+    {
+      "authoredInstances": 15,
+      "calls": 16,
+      "cast": "rivals",
+      "family": "switchback",
+      "partsDraws": 15,
+      "pass": true,
+      "triangles": 14595
+    },
+    {
+      "authoredInstances": 16,
+      "calls": 17,
+      "cast": "rivals",
+      "family": "rendezvous-pair",
+      "partsDraws": 16,
+      "pass": true,
+      "triangles": 14803
+    },
+    {
+      "authoredInstances": 16,
+      "calls": 17,
+      "cast": "rivals",
+      "family": "shield-bearer",
+      "partsDraws": 16,
+      "pass": true,
+      "triangles": 14803
+    },
+    {
+      "authoredInstances": 15,
+      "calls": 16,
+      "cast": "rivals",
+      "family": "brace-trooper",
+      "partsDraws": 15,
+      "pass": true,
+      "triangles": 14803
+    },
+    {
+      "authoredInstances": 16,
+      "calls": 17,
+      "cast": "rivals",
+      "family": "relay-warden",
+      "partsDraws": 16,
+      "pass": true,
+      "triangles": 14911
+    },
+    {
+      "authoredInstances": 18,
+      "calls": 19,
+      "cast": "arcade",
+      "family": "lookout",
+      "partsDraws": 18,
+      "pass": true,
+      "triangles": 18711
+    },
+    {
+      "authoredInstances": 17,
+      "calls": 18,
+      "cast": "arcade",
+      "family": "patroller",
+      "partsDraws": 17,
+      "pass": true,
+      "triangles": 18795
+    },
+    {
+      "authoredInstances": 17,
+      "calls": 18,
+      "cast": "arcade",
+      "family": "runner",
+      "partsDraws": 17,
+      "pass": true,
+      "triangles": 18363
+    },
+    {
+      "authoredInstances": 18,
+      "calls": 19,
+      "cast": "arcade",
+      "family": "sprinter",
+      "partsDraws": 18,
+      "pass": true,
+      "triangles": 18519
+    },
+    {
+      "authoredInstances": 17,
+      "calls": 18,
+      "cast": "arcade",
+      "family": "courier",
+      "partsDraws": 17,
+      "pass": true,
+      "triangles": 18579
+    },
+    {
+      "authoredInstances": 17,
+      "calls": 18,
+      "cast": "arcade",
+      "family": "guard",
+      "partsDraws": 17,
+      "pass": true,
+      "triangles": 18471
+    },
+    {
+      "authoredInstances": 17,
+      "calls": 18,
+      "cast": "arcade",
+      "family": "refuge-seeker",
+      "partsDraws": 17,
+      "pass": true,
+      "triangles": 18027
+    },
+    {
+      "authoredInstances": 17,
+      "calls": 18,
+      "cast": "arcade",
+      "family": "switchback",
+      "partsDraws": 17,
+      "pass": true,
+      "triangles": 18371
+    },
+    {
+      "authoredInstances": 18,
+      "calls": 19,
+      "cast": "arcade",
+      "family": "rendezvous-pair",
+      "partsDraws": 18,
+      "pass": true,
+      "triangles": 18579
+    },
+    {
+      "authoredInstances": 18,
+      "calls": 19,
+      "cast": "arcade",
+      "family": "shield-bearer",
+      "partsDraws": 18,
+      "pass": true,
+      "triangles": 18579
+    },
+    {
+      "authoredInstances": 17,
+      "calls": 18,
+      "cast": "arcade",
+      "family": "brace-trooper",
+      "partsDraws": 17,
+      "pass": true,
+      "triangles": 18579
+    },
+    {
+      "authoredInstances": 18,
+      "calls": 19,
+      "cast": "arcade",
+      "family": "relay-warden",
+      "partsDraws": 18,
+      "pass": true,
+      "triangles": 18687
+    }
+  ],
+  "initial": {
+    "actors": {
+      "actors": 12,
+      "appearanceCharacters": 36,
+      "appearanceHash": "8121b18a0a6c1ea2c625cb355ef2d5efee0ed6c1486a835d415c3119fc555357",
+      "appearanceReady": true,
+      "calls": 41,
+      "capacity": 20,
+      "equipmentCalls": 17,
+      "instances": 0,
+      "maxSkinnedActors": 20,
+      "skinnedActors": 12,
+      "skinnedCalls": 24,
+      "templates": 12
+    },
+    "calls": 42,
+    "effects": {
+      "appearanceCharacters": 36,
+      "appearanceDrawCalls": 18,
+      "appearanceHash": "8121b18a0a6c1ea2c625cb355ef2d5efee0ed6c1486a835d415c3119fc555357",
+      "appearanceReady": true,
+      "bursts": 0,
+      "calls": 0,
+      "capacity": 1024,
+      "evicted": 0,
+      "marks": 0,
+      "maxAppearanceTriangles": 1200000,
+      "maxDrawCalls": 40,
+      "moving": 0,
+      "registeredPools": 59,
+      "runId": "gallery",
+      "settled": 0,
+      "stored": 0,
+      "tick": 100,
+      "tier": "ultra",
+      "triangles": 0
+    },
+    "triangles": 382658
+  },
+  "sha256": "8121b18a0a6c1ea2c625cb355ef2d5efee0ed6c1486a835d415c3119fc555357"
+}

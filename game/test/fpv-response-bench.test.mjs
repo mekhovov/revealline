@@ -39,6 +39,124 @@ const healthy = () => ({
   motorActivity: 0.25,
 });
 
+test('bench timing follows the current aircraft while explicit historical timing stays frozen', async () => {
+  const source = config();
+  assert.equal(normalizeBenchConfiguration(source).frequency, 1000);
+  assert.equal(normalizeBenchConfiguration(source).backend, 'civilian-quad-aircraft.v3');
+  for (const backend of ['civilian-quad-aircraft.v1', 'civilian-quad-aircraft.v2']) {
+    const saved = { ...source, backend };
+    assert.equal(normalizeBenchConfiguration(saved).frequency, 500);
+    const result = await runResponseComparison({ saved, draft: saved });
+    assert.equal(result.conditions.backend, backend);
+    assert.equal(result.conditions.physicsHz, 500);
+    assert.equal(result.baseline.metrics.sampleCount, 1500);
+    assert.equal(result.baseline.metrics.resolutionSeconds, 0.002);
+    assert.equal(result.gates.timeToleranceSeconds, 0.002);
+    assert.deepEqual(result.baseline, result.candidate);
+  }
+  assert.equal(normalizeBenchConfiguration({ ...source, frequency: 500 }).frequency, 500);
+  await assert.rejects(
+    runResponseComparison({ saved: source, draft: { ...source, frequency: 500 }, scope: 'setup' }),
+    /same backend and fixed frequency/,
+  );
+  await assert.rejects(
+    runResponseComparison({
+      saved: { ...source, backend: 'civilian-quad-aircraft.v1' },
+      draft: { ...source, frequency: 500 },
+      scope: 'setup',
+    }),
+    /same backend and fixed frequency/,
+  );
+});
+
+test('one-kilohertz metrics measure one millisecond events and retain the three-second window', () => {
+  const accumulator = createResponseMetrics({
+    axis: 'roll',
+    frequency: 1000,
+    testCase: responseBenchCases()[0],
+  });
+  for (let step = 1; step <= 3000; step++) {
+    const active = step > 400 && step <= 1800;
+    const requestedRates = { roll: active ? 100 : 0, pitch: 0, yaw: 0 };
+    accumulator.add({
+      substep: step,
+      requestedRates,
+      achievedRates: requestedRates,
+      motors: [0.5, 0.5, 0.5, 0.5],
+      saturated: step === 401,
+    });
+  }
+  const result = accumulator.finish();
+  assert.equal(result.physicsHz, 1000);
+  assert.equal(result.sampleCount, 3000);
+  assert.equal(result.measuredSeconds, 3);
+  assert.equal(result.saturationSeconds, 0.001);
+  near(result.settlingTimeSeconds, 0.001);
+  near(result.releaseSettlingTimeSeconds, 0.001);
+  for (const frequency of [500, 1000]) {
+    const baseline = { ...healthy(), physicsHz: frequency };
+    assert.equal(
+      responseValidationVerdict(
+        baseline,
+        { ...baseline, settlingTimeSeconds: 0.4015 },
+        { frequency },
+      ).pass,
+      frequency === 500,
+    );
+    assert.equal(
+      responseValidationVerdict(
+        baseline,
+        { ...baseline, physicsHz: frequency === 500 ? 1000 : 500 },
+        { frequency },
+      ).pass,
+      false,
+    );
+  }
+});
+
+test('bench runs the exact historical or current backend and input clock it reports', async () => {
+  await initAdvancedRuntime();
+  const testCase = responseBenchCases()[0];
+  for (const [backend, frequency] of [
+    ['civilian-quad-aircraft.v2', 500],
+    ['civilian-quad-aircraft.v3', 1000],
+  ]) {
+    const source = { ...config(), backend, frequency };
+    const normalized = normalizeBenchConfiguration(source);
+    const sim = createAdvancedSimulation({
+      ...normalized,
+      recording: false,
+      floor: false,
+      gravity: { x: 0, y: 0, z: 0 },
+      wind: { x: 0, y: 0, z: 0 },
+      spawn: { x: 0, y: 0, z: 0 },
+      initialVelocity: { x: 0, y: 0, z: 0 },
+    });
+    try {
+      const start = sim.checkpoint();
+      assert.equal(sim.telemetry().backend, backend);
+      assert.equal(sim.telemetry().frequency, frequency);
+      start.state.noiseState = testCase.seed;
+      sim.restoreCheckpoint(start);
+      for (let tick = 0; tick < 150; tick++) {
+        sim.enqueueInput({
+          sequence: tick,
+          timestampUs: tick * 20000,
+          controls: { roll: tick >= 20 && tick < 90 ? 0.35 : 0, pitch: 0, yaw: 0, throttle: 0.5 },
+        });
+        sim.stepMission();
+      }
+      const result = await runResponseCase(source, testCase);
+      assert.equal(result.finalHash, sim.stateHash());
+      assert.equal(result.metrics.sampleCount, frequency * 3);
+      assert.equal(result.trace.length, 150);
+      assert.equal(result.trace.at(-1).seconds, 3);
+    } finally {
+      sim.dispose();
+    }
+  }
+});
+
 test('configuration snapshots support effective setups and exclude names while identifying every changed group', () => {
   const before = config(),
     original = copy(before),
@@ -68,7 +186,10 @@ test('configuration snapshots support effective setups and exclude names while i
     'camera',
     'assistance',
   ]);
-  assert.throws(() => normalizeBenchConfiguration({ ...original, frequency: 250 }), /fixed 500/);
+  assert.throws(
+    () => normalizeBenchConfiguration({ ...original, frequency: 250 }),
+    /fixed 500 or 1000/,
+  );
   assert.throws(() =>
     normalizeBenchConfiguration({ ...original, controller: { format: 'Betaflight' } }),
   );
@@ -76,8 +197,8 @@ test('configuration snapshots support effective setups and exclude names while i
 
 test('metrics count brief saturation at every physics step, retain zero and distinguish unreached times', () => {
   const testCase = responseBenchCases()[0];
-  const metrics = createResponseMetrics({ axis: 'roll', testCase });
-  const stalled = createResponseMetrics({ axis: 'roll', testCase });
+  const metrics = createResponseMetrics({ axis: 'roll', frequency: 500, testCase });
+  const stalled = createResponseMetrics({ axis: 'roll', frequency: 500, testCase });
   for (let step = 1; step <= 1500; step++) {
     const began = (step - 1) / 500,
       active = began >= 0.4 && began < 1.8;
@@ -106,7 +227,7 @@ test('metrics count brief saturation at every physics step, retain zero and dist
   assert.equal(stalled.finish().riseTimeSeconds, null);
   assert.equal(stalled.finish().settlingTimeSeconds, null);
   assert.throws(() => metrics.add({ substep: 1501 }), /every physics step/);
-  const skipped = createResponseMetrics({ axis: 'roll', testCase });
+  const skipped = createResponseMetrics({ axis: 'roll', frequency: 500, testCase });
   assert.throws(() => skipped.add({ substep: 2 }), /every physics step/);
   assert.throws(() => skipped.finish(), /complete test case/);
 });
@@ -149,8 +270,8 @@ test('optional diagnostics leave physical hashes and recordings identical and di
       const a = plain.stepMission(),
         b = observed.stepMission({ diagnostics: true });
       assert.equal(a.physicsSamples, undefined);
-      assert.equal(b.physicsSamples.length, 10);
-      assert.equal(b.physicsHz, 500);
+      assert.equal(b.physicsSamples.length, 20);
+      assert.equal(b.physicsHz, 1000);
       assert.equal(plain.stateHash(), observed.stateHash());
       b.physicsSamples[0].achievedRates.roll = 1e20;
       b.physicsSamples[0].motors[0] = 0;
@@ -174,8 +295,12 @@ test('production bench repeats identical trajectories, computes full resolution 
   const result = await runResponseComparison({ saved: before, draft: before, axis: 'roll' });
   assert.deepEqual(before, original);
   assert.deepEqual(result.baseline, result.candidate);
-  assert.equal(result.baseline.metrics.physicsHz, 500);
-  assert.equal(result.baseline.metrics.sampleCount, 1500);
+  assert.equal(result.baseline.metrics.physicsHz, 1000);
+  assert.equal(result.baseline.metrics.sampleCount, 3000);
+  assert.equal(result.conditions.physicsHz, 1000);
+  assert.equal(result.conditions.inputHz, 50);
+  assert.equal(result.conditions.traceHz, 50);
+  assert.equal(result.gates.timeToleranceSeconds, 0.001);
   assert.equal(result.baseline.trace.length, 150);
   assert.ok(result.baseline.trace.length <= RESPONSE_BENCH_TRACE_LIMIT);
   assert.ok(result.baseline.metrics.riseTimeSeconds > 0);
@@ -197,7 +322,7 @@ test('every catalog aircraft is supported without changing physical or controlle
       retainTrace: false,
     });
     assert.ok(Number.isFinite(result.metrics.trackingError), preset.id);
-    assert.equal(result.metrics.sampleCount, 1500, preset.id);
+    assert.equal(result.metrics.sampleCount, 3000, preset.id);
     assert.deepEqual(result.trace, []);
     assert.deepEqual(source, original);
   }
@@ -247,6 +372,28 @@ function fakeCaseRunner(source, testCase) {
   }
   return Promise.resolve({ testCase, metrics, trace: [], finalHash: 'test' });
 }
+
+test('assistant permits only one step of time regression at the actual configured frequency', async () => {
+  for (const frequency of [1000, 500]) {
+    const source = { ...config(), frequency };
+    const result = await suggestResponseTune(
+      { draft: source, inputReady: true },
+      {
+        runCase: async (value, c) => {
+          assert.equal(value.frequency, frequency);
+          const measured = await fakeCaseRunner(value, c);
+          measured.metrics.physicsHz = frequency;
+          if (value.controller.gains.roll.p > source.controller.gains.roll.p)
+            measured.metrics.releaseSettlingTimeSeconds += 0.0015;
+          return measured;
+        },
+      },
+    );
+    assert.equal(result.physicsHz, frequency);
+    assert.equal(result.gates.timeToleranceSeconds, 1 / frequency);
+    assert.equal(result.status, frequency === 500 ? 'suggestions' : 'no-clear-improvement');
+  }
+});
 
 test('assistant selects a single gain only after independent direction/ramp/throttle/noise validation', async () => {
   const source = config(),
@@ -339,7 +486,7 @@ test('assistant cancellation stops evaluation and manual A/B cards never claim i
 
 test('settling reports the first following in-band physics endpoint and includes startup disturbances', () => {
   const testCase = responseBenchCases()[0],
-    accumulator = createResponseMetrics({ axis: 'roll', testCase });
+    accumulator = createResponseMetrics({ axis: 'roll', frequency: 500, testCase });
   for (let step = 1; step <= 1500; step++) {
     const active = step > 200 && step <= 900;
     const roll = active ? (step <= 300 ? 0 : 100) : step > 900 && step <= 1000 ? 20 : 0;
@@ -365,8 +512,12 @@ test('ramp release settling uses the actual ramp peak and requires the full hold
   const testCase = responseBenchCases('roll', { validation: true }).find(
     (c) => c.shape === 'ramp' && c.direction === 1,
   );
-  const ramp = createResponseMetrics({ axis: 'roll', testCase });
-  const late = createResponseMetrics({ axis: 'roll', testCase: responseBenchCases()[0] });
+  const ramp = createResponseMetrics({ axis: 'roll', frequency: 500, testCase });
+  const late = createResponseMetrics({
+    axis: 'roll',
+    frequency: 500,
+    testCase: responseBenchCases()[0],
+  });
   for (let step = 1; step <= 1500; step++) {
     const active = step > 200 && step <= 900;
     const requested = active ? (step - 200) / 7 : 0;
@@ -395,7 +546,7 @@ test('ramp release settling uses the actual ramp peak and requires the full hold
 });
 
 test('metric gates are bounded, explicit in their units and reject negative or non-finite evidence', () => {
-  assert.equal(RESPONSE_BENCH_GATES.timeToleranceSeconds, 0.002);
+  assert.equal(RESPONSE_BENCH_GATES.timeToleranceSeconds, 0.001);
   assert.equal(RESPONSE_BENCH_GATES.regression.crossAxisRate.unit, 'degrees/second');
   assert.equal(RESPONSE_BENCH_GATES.regression.motorActivity.unit, 'normalized-speed-squared');
   assert.equal(RESPONSE_BENCH_GATES.regression.controlEffort.absolute, 0.000001);
@@ -444,7 +595,7 @@ test('failed candidate simulations are rejected without suppressing valid candid
   assert.equal(result.failedCases.length, 2);
   assert.ok(result.failedCases.every((c) => c.stage === 'fitting' && c.gain === 'i'));
   assert.equal(result.conditions.seededSensorNoiseEnabled, false);
-  assert.equal(result.gates.timeToleranceSeconds, 0.002);
+  assert.equal(result.gates.timeToleranceSeconds, 0.001);
   const failedValidation = await suggestResponseTune(
     { draft: original, inputReady: true },
     {

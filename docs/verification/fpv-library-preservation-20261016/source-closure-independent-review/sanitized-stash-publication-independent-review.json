@@ -1,0 +1,98 @@
+{
+  "capturedAt": "2026-10-16T04:45:22.361123+00:00",
+  "publicationHead": "38377002020448fb554b3e9ddef9388518bf7c37",
+  "singlePublicParent": "4dbbb495f31b8c673920d3045c595e1773eccab3",
+  "newCommitCount": 1,
+  "newSourceParentExcludesRawStashRoots": true,
+  "newFilesVerified": 8,
+  "allFinitePatternCountsZero": true,
+  "privateExcludedFileContentsRead": false,
+  "privateSourceRootsNotAnchoredByThisPublication": [
+    "8dc2818d315526507119ef036da4c9aee3d510b9",
+    "042733a8cae3d5926dfbb7577c6dba44321e8ba2"
+  ],
+  "trackedIndexEqualVerifiedPublicBase": "a89a34b52ad6be291347b68ebde7e9ebcf8b8e45",
+  "trackedIndexTreeGitSHA1": "2783f5c4e94758847f32da47e133d87055077517",
+  "trackedIndexRawCommitHeaderChecks": [
+    {
+      "commit": "8dc2818d315526507119ef036da4c9aee3d510b9",
+      "tree": "2783f5c4e94758847f32da47e133d87055077517",
+      "sameAlreadyPublicTrackedTree": true,
+      "messageContentPublished": false
+    },
+    {
+      "commit": "69c5a21d392461c630749a878f8b88c89ff49788",
+      "tree": "2783f5c4e94758847f32da47e133d87055077517",
+      "sameAlreadyPublicTrackedTree": true,
+      "messageContentPublished": false
+    }
+  ],
+  "uniqueAppDocument": {
+    "path": "docs/team-duel-expansion-priority-review-2026-10-15.md",
+    "bytes": 24680,
+    "sha256": "c788051d9eda3069535b98c4f76890af38faa656181a82b0f6d470e918a46348",
+    "gitBlob": "231f26ec91631c0e426d4362e44a485f1ea6552f"
+  },
+  "rawPrivateUntrackedTreeNotPublished": true,
+  "privateIndexCommitSafeSeparateTipPendingBundle": "69c5a21d392461c630749a878f8b88c89ff49788",
+  "finalBundleExclusionStillRequiresIndependentObjectListCheck": true,
+  "scope": "Only this additive sanitized app-only publication was checked. No raw private config/migration data read; private ancestry exclusion in future bundles remains a separate final gate.",
+  "files": [
+    {
+      "path": "docs/preservation/fpv-source-audit-20261016/independent-github-restore-initial-negative.txt",
+      "bytes": 396,
+      "gitBlobSHA1": "566802ef025dcf2bc321d95781926a66fcc5d344",
+      "sha256": "41233c2a638c9ad31bdfc39fa199798b9f0861682974bb7852ad7c3d14e16e15",
+      "credentialPatternFindings": 0
+    },
+    {
+      "path": "docs/preservation/fpv-source-audit-20261016/independent-github-restore-receipt.json",
+      "bytes": 29935,
+      "gitBlobSHA1": "37e42b7c764ea5487ca7f24d0dcd31c0190b25d4",
+      "sha256": "e5d93d51a39961a758c9690f9303b89fecb5bb4145572a0c6dffc1b6f37b544c",
+      "credentialPatternFindings": 0
+    },
+    {
+      "path": "docs/preservation/fpv-source-audit-20261016/private-stash-ancestry-exclusion.json",
+      "bytes": 546,
+      "gitBlobSHA1": "168cfbe6d68ab89a431de7a13c9376e837588885",
+      "sha256": "9b37e2cf78059d9ba5c4b80cb38ba0ca3fcca1634be5e58aac48e69918698375",
+      "credentialPatternFindings": 0
+    },
+    {
+      "path": "docs/preservation/fpv-source-audit-20261016/public-reflog-umbrella.json",
+      "bytes": 27034,
+      "gitBlobSHA1": "cfe77982a9f1a4232857be9eb3d183e2e77eb470",
+      "sha256": "0fc4bb369bdc9aa8dcc75e7d542913e50f1f397bf41b3216d10ec7cc6df06073",
+      "credentialPatternFindings": 0
+    },
+    {
+      "path": "docs/preservation/fpv-source-audit-20261016/root-inventory-checkpoint-upload-receipt.json",
+      "bytes": 4663,
+      "gitBlobSHA1": "54f41534dd919070c772f8901033e6873f79664b",
+      "sha256": "0e87a010f7f2afbe68f7dbbe8a57369979c7f9e1fdcc93d01bc072c5c72d1272",
+      "credentialPatternFindings": 0
+    },
+    {
+      "path": "docs/preservation/fpv-source-audit-20261016/sanitized-stash-app-source-manifest.json",
+      "bytes": 1210,
+      "gitBlobSHA1": "6ca06a5de9efa5d23f5249059916eaee51023ea6",
+      "sha256": "0306871c5e168ebf50489b1913b7196b650b77aff611189f39aa5aaf61029d61",
+      "credentialPatternFindings": 0
+    },
+    {
+      "path": "docs/preservation/fpv-source-audit-20261016/snapshots/stash-app-only/docs/team-duel-expansion-priority-review-2026-10-15.md",
+      "bytes": 24680,
+      "gitBlobSHA1": "231f26ec91631c0e426d4362e44a485f1ea6552f",
+      "sha256": "c788051d9eda3069535b98c4f76890af38faa656181a82b0f6d470e918a46348",
+      "credentialPatternFindings": 0
+    },
+    {
+      "path": "docs/preservation/fpv-source-audit-20261016/working-payloads-and-symlinks.json",
+      "bytes": 26930,
+      "gitBlobSHA1": "88d9ccc07e05ebf66f6a4088713610c037b3ea79",
+      "sha256": "fa4f9f0daafa07d7babeaf44c243b8bde6ba2e84f26707c94748e749d84668d0",
+      "credentialPatternFindings": 0
+    }
+  ]
+}
