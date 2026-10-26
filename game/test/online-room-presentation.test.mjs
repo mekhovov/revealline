@@ -63,6 +63,7 @@ for (const action of ['share', 'qr'])
         doc,
         $,
         URL,
+        supportSummary: null,
         getLocale: () => 'en',
         say: (en) => en,
         modes: $('modes'),
@@ -186,6 +187,7 @@ test('private-room title shows the stored mute before joining and follows later 
       `(function () { let shell; ${mountSource}\nreturn {shell, stopAudio}; })()`,
       {
         doc,
+        supportSummary: null,
         $,
         audioMaster,
         getLocale: () => locale,

@@ -71,7 +71,9 @@ export function supportSnapshot(host = {}, env = globalThis, clock = {}) {
             ? 'academy-game-shell'
             : worldsHosts.includes(host.kind)
               ? 'worlds-game-shell'
-              : 'primary-game-shell',
+              : host.kind === 'private-room'
+                ? 'private-room-game-shell'
+                : 'primary-game-shell',
     build: {
       version: version(host.version),
       sourceRevision:
@@ -92,6 +94,7 @@ export function supportSnapshot(host = {}, env = globalThis, clock = {}) {
         ...versusHosts,
         ...academyHosts,
         ...worldsHosts,
+        'private-room',
       ]),
       state: oneOf(host.state, [
         'idle',
@@ -105,6 +108,9 @@ export function supportSnapshot(host = {}, env = globalThis, clock = {}) {
         'expired',
         'playback-ended',
         'failed',
+        ...(host.kind === 'private-room'
+          ? ['connecting', 'recovering', 'waiting', 'playing', 'abandoned']
+          : []),
       ]),
       locale: oneOf(host.locale, ['en', 'uk']),
       saving: {
