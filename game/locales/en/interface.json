@@ -6131,5 +6131,20 @@
   "touchSave.changed": "Session only. Touch settings changed while saving. Retry to save your current selection.",
   "home.resumePausedFlight": "{{mode}} · Resumes your paused flight.",
   "home.resumeSavedFlight": "{{mode}} · Verifies the saved flight, then resumes it.",
-  "home.startMissionAttempt": "{{mode}} · Starts a new attempt at this mission."
+  "home.startMissionAttempt": "{{mode}} · Starts a new attempt at this mission.",
+  "backupArchive.prepare": "Prepare portable archive",
+  "backupArchive.help": "Put supported saved originals and available Journey progress into one ZIP. Compatible Legacy screens also include game-data JSON; authored Journey excludes Legacy data and the unfinished flight. Read its coverage report. To restore, extract the ZIP and use the existing import reviews. The archive is not encrypted.",
+  "backupArchive.download": "Download portable archive",
+  "backupArchive.prepared": "Prepared one ZIP containing {{count}} backup files and restore instructions. No file has been saved to disk.",
+  "backupArchive.scope": "Journey: {{journey}}. Other profiles, device settings and separately stored simulator records are excluded. Read the archive manifest and original coverage report.",
+  "backupArchive.journey.included": "current profile and available saved evidence included",
+  "backupArchive.journey.available-evidence-only": "recovery data only; unread performance comparisons or replays may be missing",
+  "backupArchive.journey.not-included": "not included; no current Journey profile in this screen",
+  "backupArchive.requested": "Download requested. Check the file in your browser destination or Files app; this does not confirm a disk write. Extract the ZIP before using the existing import reviews. This link remains available to retry until you close this screen.",
+  "backupArchive.incompleteOriginals": "Some story originals or music audio are unavailable. The archive preserves the recovery references; it cannot supply the missing originals.",
+  "backupArchive.preparedBytes": "Prepared · {{bytes}} bytes",
+  "backupArchive.requestedBytes": "Download requested · {{bytes}} bytes",
+  "backupArchive.readingJourney": "Reading the current Journey progress and saved evidence…",
+  "backupArchive.packaging": "Packaging the original files into one portable archive…",
+  "backupArchive.authoredExclusions": "Legacy game data and the unfinished authored flight are excluded. Export the attempt separately if needed."
 }

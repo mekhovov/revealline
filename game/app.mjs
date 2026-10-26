@@ -8056,6 +8056,26 @@ try {
         ? profileLocks.request(`${libraryKey}.backup-lock`, { signal }, work)
         : work(),
   });
+  function backupInventoryIdentity({ legacySession = true } = {}) {
+    assertWriter();
+    if (courseSession || courseEntry || contentSwitchBusy || sessionBusy || backupBusy)
+      throw new Error(t('interface:finishTrainingOrThePendingContentSaveOperationBeforePreparing'));
+    if (!storedStateAdopted || !persistenceReady || !writer.writable)
+      throw new Error(
+        t('interface:resolveStorageRecoveryBeforePreparingAllInventoriesIndividualGameData'),
+      );
+    if (started && !paused && !['won', 'lost'].includes(run.status))
+      throw new Error(t('interface:pauseTheFlightBeforePreparingABackupSet'));
+    return JSON.stringify({
+      library,
+      packs,
+      session: legacySession
+        ? currentBackupSession('2000-01-01T00:00:00.000Z')
+        : profileStorage().getItem(sessionKey),
+      runId,
+      backupMarker: profileStorage().getItem(`${libraryKey}.backup-lock`),
+    });
+  }
   const libraryPanelOptions = {
     // Selected editions already scope their pack catalogue; omitted examples
     // must not trigger a request for the default game's unrelated catalogue.
@@ -8078,28 +8098,19 @@ try {
       ? null
       : {
           edition: { version: buildVersion, channel, sourceRevision: buildSourceRevision },
-          gameIdentity: () => {
-            assertWriter();
-            if (courseSession || courseEntry || contentSwitchBusy || sessionBusy || backupBusy)
-              throw new Error(
-                t('interface:finishTrainingOrThePendingContentSaveOperationBeforePreparing'),
-              );
-            if (!storedStateAdopted || !persistenceReady || !writer.writable)
-              throw new Error(
-                t(
-                  'interface:resolveStorageRecoveryBeforePreparingAllInventoriesIndividualGameData',
-                ),
-              );
-            if (started && !paused && !['won', 'lost'].includes(run.status))
-              throw new Error(t('interface:pauseTheFlightBeforePreparingABackupSet'));
-            return JSON.stringify({
-              library,
-              packs,
-              session: currentBackupSession('2000-01-01T00:00:00.000Z'),
-              runId,
-              backupMarker: profileStorage().getItem(`${libraryKey}.backup-lock`),
-            });
-          },
+          journey: journeyProfile
+            ? {
+                identity: () => journeyProfile.stateRevision(),
+                read: (options) => journeyProfile.exportAsync(options),
+              }
+            : null,
+          gameIdentity: () => backupInventoryIdentity(),
+          archiveProfile: candidateHost
+            ? {
+                kind: 'authored-journey',
+                identity: () => backupInventoryIdentity({ legacySession: false }),
+              }
+            : null,
           readContents: ({ savedAt }) =>
             externalBackup
               ? snapshotCurrentBackup(savedAt)
