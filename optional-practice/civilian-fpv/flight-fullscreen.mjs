@@ -8538,7 +8538,7 @@ const sharedGlobalSettings = (() => {
         apply: 'Apply preset',
         retry: 'Retry saving preset',
         undo: 'Undo last preset',
-        applied: 'Preset applied. You can adjust individual settings below.',
+        applied: 'Preset applied. You can adjust individual settings.',
         partial:
           'Newer choices were kept. Undo affects only preset settings that remain unchanged.',
         undone: 'The preset’s unchanged settings were restored. Newer choices were kept.',
@@ -8570,7 +8570,7 @@ const sharedGlobalSettings = (() => {
         apply: 'Застосувати набір',
         retry: 'Повторити збереження набору',
         undo: 'Скасувати останній набір',
-        applied: 'Набір застосовано. Окремі налаштування можна змінити нижче.',
+        applied: 'Набір застосовано. Окремі налаштування можна змінювати.',
         partial:
           'Новіший вибір залишено без змін. Скасування стосується лише незмінених налаштувань набору.',
         undone: 'Незмінені налаштування набору відновлено. Новіші зміни збережено.',
