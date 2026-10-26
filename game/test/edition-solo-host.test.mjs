@@ -458,6 +458,9 @@ test('retained edition chrome does not borrow a newly adopted logo outside its s
 });
 
 test('edition runs the complete Solo host with canonical rules, settings and mission library', async (t) => {
+  const locale = getLocale();
+  t.after(() => setLocale(locale, { persist: false }));
+  setLocale('en', { persist: false });
   const f = await editionProviderFixture();
   const legacyKey = 'revealline.suspended.journey-sample-public.v1';
   const legacy = JSON.stringify({ format: 'revealline-company-session.v1', retained: true });
@@ -523,7 +526,26 @@ test('edition runs the complete Solo host with canonical rules, settings and mis
     [...page.$('journey-collection').options].map((option) => option.value),
     ['', 'Journey'],
   );
-  assert.equal(page.doc.querySelector('.journey-library-copy').textContent, 'Sample public');
+  const chooser = page.$('journey-chooser');
+  const description = chooser.querySelector('.journey-library-copy');
+  const missionTitle = chooser.querySelector('.journey-card-title');
+  assert.equal(chooser.getAttribute('aria-labelledby'), 'journey-chooser-title');
+  assert.equal(page.$('journey-chooser-title').textContent, 'Find your next line');
+  assert.equal(missionTitle.textContent, 'Nearby shore');
+  assert.equal(
+    description.textContent,
+    'Sample public Activate a mission to open its flight or briefing. Browsing and Back do not start a new flight.',
+  );
+  const focus = page.doc.activeElement;
+  setLocale('uk', { persist: false });
+  assert.equal(
+    description.textContent,
+    'Sample public Активуйте місію, щоб відкрити її політ або інструктаж. Перегляд і повернення назад не починають нового польоту.',
+  );
+  assert.equal(missionTitle.textContent, 'Nearby shore');
+  assert.equal(page.doc.activeElement, focus, 'Translating guidance preserves library focus.');
+  assert.equal(chooser.getAttribute('aria-labelledby'), 'journey-chooser-title');
+  setLocale('en', { persist: false });
   for (const id of ['shell-controller-lab', 'shell-replay-theater'])
     assert.equal(new URL(page.$(id).href).searchParams.get('edition'), 'sample-public');
   page.$('journey-chooser').close();

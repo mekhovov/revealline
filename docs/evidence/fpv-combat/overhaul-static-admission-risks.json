@@ -1,0 +1,230 @@
+{
+  "createdAt": "2026-10-20T02:09:02.812Z",
+  "method": "Read-only source metadata only; no collision/visibility or physics simulation. Counts identify cases requiring production admission verification, not unsupported maps.",
+  "courses": 204,
+  "highStarts": [],
+  "farTargets": [],
+  "mostObstacles": [
+    {
+      "id": "adventure-orchard-01",
+      "actors": 1,
+      "obstacles": 34,
+      "launchAboveMin": 0,
+      "horizontalExtent": {
+        "x": 120000,
+        "z": 120000
+      },
+      "authoredFarTargets": 0
+    },
+    {
+      "id": "adventure-orchard-02",
+      "actors": 1,
+      "obstacles": 34,
+      "launchAboveMin": 0,
+      "horizontalExtent": {
+        "x": 120000,
+        "z": 120000
+      },
+      "authoredFarTargets": 0
+    },
+    {
+      "id": "adventure-orchard-03",
+      "actors": 1,
+      "obstacles": 34,
+      "launchAboveMin": 0,
+      "horizontalExtent": {
+        "x": 120000,
+        "z": 120000
+      },
+      "authoredFarTargets": 0
+    },
+    {
+      "id": "adventure-orchard-04",
+      "actors": 1,
+      "obstacles": 34,
+      "launchAboveMin": 0,
+      "horizontalExtent": {
+        "x": 120000,
+        "z": 120000
+      },
+      "authoredFarTargets": 0
+    },
+    {
+      "id": "adventure-orchard-05",
+      "actors": 0,
+      "obstacles": 34,
+      "launchAboveMin": 0,
+      "horizontalExtent": {
+        "x": 120000,
+        "z": 120000
+      },
+      "authoredFarTargets": 0
+    },
+    {
+      "id": "adventure-solar-farm-01",
+      "actors": 1,
+      "obstacles": 34,
+      "launchAboveMin": 0,
+      "horizontalExtent": {
+        "x": 120000,
+        "z": 120000
+      },
+      "authoredFarTargets": 0
+    },
+    {
+      "id": "adventure-solar-farm-02",
+      "actors": 0,
+      "obstacles": 34,
+      "launchAboveMin": 0,
+      "horizontalExtent": {
+        "x": 120000,
+        "z": 120000
+      },
+      "authoredFarTargets": 0
+    },
+    {
+      "id": "adventure-solar-farm-03",
+      "actors": 1,
+      "obstacles": 34,
+      "launchAboveMin": 0,
+      "horizontalExtent": {
+        "x": 120000,
+        "z": 120000
+      },
+      "authoredFarTargets": 0
+    },
+    {
+      "id": "adventure-solar-farm-04",
+      "actors": 2,
+      "obstacles": 34,
+      "launchAboveMin": 0,
+      "horizontalExtent": {
+        "x": 120000,
+        "z": 120000
+      },
+      "authoredFarTargets": 0
+    },
+    {
+      "id": "adventure-solar-farm-05",
+      "actors": 3,
+      "obstacles": 34,
+      "launchAboveMin": 0,
+      "horizontalExtent": {
+        "x": 120000,
+        "z": 120000
+      },
+      "authoredFarTargets": 0
+    },
+    {
+      "id": "adventure-rail-depot-01",
+      "actors": 1,
+      "obstacles": 17,
+      "launchAboveMin": 0,
+      "horizontalExtent": {
+        "x": 120000,
+        "z": 120000
+      },
+      "authoredFarTargets": 0
+    },
+    {
+      "id": "adventure-rail-depot-02",
+      "actors": 1,
+      "obstacles": 17,
+      "launchAboveMin": 0,
+      "horizontalExtent": {
+        "x": 120000,
+        "z": 120000
+      },
+      "authoredFarTargets": 0
+    },
+    {
+      "id": "adventure-rail-depot-03",
+      "actors": 1,
+      "obstacles": 17,
+      "launchAboveMin": 0,
+      "horizontalExtent": {
+        "x": 120000,
+        "z": 120000
+      },
+      "authoredFarTargets": 0
+    },
+    {
+      "id": "adventure-rail-depot-04",
+      "actors": 2,
+      "obstacles": 17,
+      "launchAboveMin": 0,
+      "horizontalExtent": {
+        "x": 120000,
+        "z": 120000
+      },
+      "authoredFarTargets": 0
+    },
+    {
+      "id": "adventure-rail-depot-05",
+      "actors": 3,
+      "obstacles": 17,
+      "launchAboveMin": 0,
+      "horizontalExtent": {
+        "x": 120000,
+        "z": 120000
+      },
+      "authoredFarTargets": 0
+    },
+    {
+      "id": "adventure-quarry-01",
+      "actors": 1,
+      "obstacles": 9,
+      "launchAboveMin": 0,
+      "horizontalExtent": {
+        "x": 120000,
+        "z": 120000
+      },
+      "authoredFarTargets": 0
+    },
+    {
+      "id": "adventure-quarry-02",
+      "actors": 2,
+      "obstacles": 9,
+      "launchAboveMin": 0,
+      "horizontalExtent": {
+        "x": 120000,
+        "z": 120000
+      },
+      "authoredFarTargets": 0
+    },
+    {
+      "id": "adventure-quarry-03",
+      "actors": 1,
+      "obstacles": 9,
+      "launchAboveMin": 0,
+      "horizontalExtent": {
+        "x": 120000,
+        "z": 120000
+      },
+      "authoredFarTargets": 0
+    },
+    {
+      "id": "adventure-quarry-04",
+      "actors": 3,
+      "obstacles": 9,
+      "launchAboveMin": 0,
+      "horizontalExtent": {
+        "x": 120000,
+        "z": 120000
+      },
+      "authoredFarTargets": 0
+    },
+    {
+      "id": "adventure-quarry-05",
+      "actors": 0,
+      "obstacles": 9,
+      "launchAboveMin": 0,
+      "horizontalExtent": {
+        "x": 120000,
+        "z": 120000
+      },
+      "authoredFarTargets": 0
+    }
+  ],
+  "narrowBounds": []
+}

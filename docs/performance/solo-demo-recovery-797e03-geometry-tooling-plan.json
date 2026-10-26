@@ -1,0 +1,372 @@
+{
+  "format": "SoloHostedDemoRecoveryPlanV1",
+  "cohort": "linux-demo-runtime797-recovery-v1",
+  "repository": "mekhovov/revealline",
+  "node": "22.13.1",
+  "playwright": "1.62.1",
+  "runner": "ubuntu-24.04 x64 GitHub-hosted; actual image, CPU, memory, browser version and binary hashes recorded",
+  "performanceExclusion": true,
+  "helperTimeoutMs": 4500000,
+  "evidenceBytes": 268435456,
+  "rows": [
+    {
+      "id": "candidate-demo-quality-recovery",
+      "kind": "demo",
+      "source": "candidate",
+      "engine": "chromium",
+      "timeoutMs": 660000
+    }
+  ],
+  "candidate": {
+    "revision": "797e03f28743921842df6aa57520a72016ba3dfc",
+    "tree": "bd53120f0cdfa462b8d63c2de5aa61e9c6658ac5",
+    "run": 39104551453,
+    "artifact": 12128990483,
+    "outer": {
+      "bytes": 1094639112,
+      "sha256": "76a01b2d29119f1bc4d8aaa8da77846160133067d0eb3036f5791c3198b5b897"
+    },
+    "inner": {
+      "bytes": 1075807530,
+      "sha256": "5eb1c3e70d8fc460ddeba3762137306cf2e6902c315172c633702621883b7e9c"
+    },
+    "manifestSHA256": "497efcff7f399c12030bfa5297f8e67faaa97ef26626ac88a1b924fcb23db6a0",
+    "producer": "Successful Appearance39104551453; compact metadata independently verified. Full payload/source/worker/CSP validation remains mandatory in hosted consumer."
+  },
+  "baseline": {
+    "revision": "8b01991942dc764b8aa4726851699ce1985e53ae",
+    "tree": "9373b6a74aea8fa1ef47aa17ace140b4cf714609",
+    "scope": "Exact source identity only; no baseline row/build."
+  },
+  "acceptance": {
+    "recovery": "Four fixed synthetic display/owned-concealment-layer spectator/practice arms require exact frozen checkpoint/tick, blocked controls, paused restoration repaint without autoplay, explicit Resume, and fresh practice steering.",
+    "quality": "Boundary public policy/calibration and forwarded actual painter tier before/after fixed CPU1 windows. No forced tier/pressure; no observed transition remains not-observed and is not a performance pass.",
+    "replay": "Parent public export bytes unchanged; same-engine/version strict replay of both parent and actual bundled Demo source after observation browser closure. Every spectator snapshot independently reconstructs exact source prefix. Practice has no public recorder: exact takeover prefix plus releaseInputs and paused checkpoint facts only, no full practice replay claim.",
+    "failure": "Any failed assertion, resource/deadline overflow, source mismatch, page error, failed request or unconfirmed owned cleanup fails. No retries. Preserve partial reports and not-run verifier outcomes.",
+    "scope": "Separate headed Linux Chromium functional fault-injection observation; synthetic events are untrusted and do not establish actual GPU context loss, pixel equality, device timing, heat, Safari/iPhone/PWA or authentication qualification.",
+    "access": "Existing local production preview fixtureAccess=true only. Original payload/source/CSP proof remains required; authentication explicitly unqualified."
+  },
+  "resources": {
+    "serial": true,
+    "automaticRetries": 0,
+    "perCommandRSSBytes": 6442450944,
+    "perCommandLogBytes": 4194304,
+    "perRowEvidenceBytes": 33554432,
+    "aggregateEvidenceBytes": 268435456,
+    "minimumInitialMemoryBytes": 12884901888,
+    "minimumInitialDiskBytes": 8589934592,
+    "minimumRemainingDiskBytes": 1073741824,
+    "setupBounds": "Common candidate archive/member/source/CSP verification only; 300s transfer,600s each ZIP verification,480s source proof,75min common helper. No baseline build or calibration in this mode.",
+    "ownership": "Fresh RUNNER_TEMP subtree; Linux process birth+owner token/ancestry, bounded TERM/KILL cleanup and fresh process checks before next row. No blanket browser killing.",
+    "finalizationReserveBytes": 4194304,
+    "setupEvidenceMaximumBytes": 25165824,
+    "scratch": "Fresh RUNNER_TEMP/sc-<random>/rNN owner, <=52 UTF-8 bytes per row; exact root/row device+inode recorded. Separate from descriptive output paths. No shared temporary profile.",
+    "workflow": "Existing fixed manual main-branch guard and original setup/helper/upload margins. This separate reviewed tooling declaration requires complete source CI, normal merge and final source review before any one-time validation.",
+    "browserLaunch": "Original Demo Chrome/CDP lifecycle with explicit Linux --no-sandbox matching pinned Playwright1.62.1 default; fresh exact-owned profile, no local browser and no physical-device inference.",
+    "workflowBudgetMinutes": {
+      "checkoutsAndNode": 7,
+      "dependenciesAndBrowser": 20,
+      "testsAndPlan": 3,
+      "helperStep": 79,
+      "setupRetention": 2,
+      "evidenceUpload": 10,
+      "sum": 121,
+      "job": 125
+    }
+  },
+  "guidance": [
+    {
+      "url": "https://playwright.dev/docs/ci",
+      "application": "One serial worker and helper deadline below job deadline so partial reports can upload. Version1.62.1 is explicitly pinned instead of following current documentation examples."
+    },
+    {
+      "url": "https://playwright.dev/docs/browsers",
+      "application": "Record exact pinned browser builds; Linux WebKit is a separate platform stratum, not Safari/iOS."
+    },
+    {
+      "url": "https://developer.chrome.com/blog/devtools-grounded-real-world",
+      "application": "CPU stress does not reproduce device GPU, memory or thermal conditions; this CPU1 correctness cohort is not physical-device qualification."
+    }
+  ],
+  "status": "pinned-for-execution",
+  "scope": "Source797 Demo recovery unchanged; current helper binding only, no recovery rerun declared.",
+  "rowEvidenceBytes": 33554432,
+  "demo": {
+    "arms": [
+      "spectator-display",
+      "spectator-owned-concealment-layer",
+      "practice-display",
+      "practice-owned-concealment-layer"
+    ],
+    "qualityWindowsMs": [5000, 2500],
+    "observationTimeoutMs": 360000,
+    "replayTimeoutMs": 120000,
+    "cpuThrottle": 1,
+    "retries": 0,
+    "driver": {
+      "path": "scripts/observe-solo-demo-recovery.mjs",
+      "bytes": 40811,
+      "sha256": "15e63cf090353db99c07fa41ce8556984886f189711ed61cc362915c1d4541f7"
+    },
+    "probe": {
+      "path": "scripts/solo-demo-recovery-probe.mjs",
+      "bytes": 16309,
+      "sha256": "95a36472fa0796b8a48fb4a23ac5eb6eed07883e3bfca54d6307efb2cb9db6c9"
+    },
+    "sourcePaths": [
+      "game/build-info.json",
+      "game/index.html",
+      "game/app.mjs",
+      "game/ui/demo-host.mjs",
+      "game/ui/demo-clock.mjs",
+      "game/ui/visual-quality-policy.mjs",
+      "game/demo-experience.mjs",
+      "game/replay-player.mjs",
+      "game/ui/render.mjs",
+      "game/replay.mjs",
+      "game/core/index.mjs"
+    ],
+    "expectedClip": {
+      "id": "first-signal-left",
+      "campaignId": "first-signal",
+      "campaignKey": "first-signal/2/88639f3aab7b6cc1",
+      "levelId": "signal-01",
+      "levelRevision": "1",
+      "identity": "d31dfb37580148ee",
+      "recordingIdentity": "c48b4182e13d1541",
+      "inputTraceIdentity": "004a620b36d19d0d",
+      "title": "First Signal",
+      "provenance": "authored",
+      "tags": ["capture", "bent-cut", "safe-ground"],
+      "durationSeconds": 30.683333333333334,
+      "turnPolicy": "immediate",
+      "replayURL": "./demo-data/first-signal-left.replay.json",
+      "replayVariants": ["./demo-data/first-signal-left.chromium-macos.replay.json"]
+    },
+    "sourceAssets": [
+      {
+        "role": "catalog",
+        "relative": "demo-data/catalog.json",
+        "bytes": 6839,
+        "sha256": "3d4fbe0437fb6dfc7e4140e72e597012e95ec82c007621e6dee358c38baf4078"
+      },
+      {
+        "role": "replay",
+        "relative": "demo-data/first-signal-left.replay.json",
+        "bytes": 10793,
+        "sha256": "900f921146e37324dfefc90f55bfc60c03bd8a2954d53353ecae25df8a55c54a"
+      },
+      {
+        "role": "replay",
+        "relative": "demo-data/first-signal-left.chromium-macos.replay.json",
+        "bytes": 10801,
+        "sha256": "b18d9d343ffca2b7efec6c3ec0266d80ed0603804420f444159e4214533bd11e"
+      }
+    ],
+    "bindingRequired": "Exact source797 Git source/assets/fixture and declared current helper bytes are required before observation."
+  },
+  "adapterInputs": [
+    {
+      "path": "scripts/solo-remote-demo.mjs",
+      "bytes": 36568,
+      "sha256": "dee2e60addfa3aa296a9a2718bbc4703ed0b84bf6324e5f168381b8aa2280533"
+    },
+    {
+      "path": "scripts/observe-solo-demo-recovery.mjs",
+      "bytes": 40811,
+      "sha256": "15e63cf090353db99c07fa41ce8556984886f189711ed61cc362915c1d4541f7"
+    },
+    {
+      "path": "scripts/solo-demo-recovery-probe.mjs",
+      "bytes": 16309,
+      "sha256": "95a36472fa0796b8a48fb4a23ac5eb6eed07883e3bfca54d6307efb2cb9db6c9"
+    }
+  ],
+  "retention": "Common bounded evidence contains plans, exact served source/replay hashes, checkpoint snapshots, full strict replay results and owned command closure. Fresh Chrome profiles remain in exact short scratch until hosted job teardown and are not advertised as preserved archives.",
+  "setupTimeoutMs": 2400000,
+  "release": {
+    "format": "SoloDemoRuntime797DiagnosticReleaseV1",
+    "status": "reviewed",
+    "candidateRevision": "797e03f28743921842df6aa57520a72016ba3dfc",
+    "scope": "independent-demo-synthetic-recovery",
+    "dispatch": {
+      "workflow": ".github/workflows/solo-native-package-consumer.yml",
+      "ref": "refs/heads/main",
+      "lane": "demo-recovery",
+      "source": "797e03f28743921842df6aa57520a72016ba3dfc"
+    },
+    "physicalQualification": "unobserved",
+    "performanceQualification": "excluded",
+    "automaticRetries": 0,
+    "priorProofInspected": true,
+    "noUnclosedOwners": true,
+    "evidence": [
+      {
+        "runId": 39096176143,
+        "artifactId": 12125002138,
+        "artifactSHA256": "d6b5ed1d46c6f89eab6d40361893f2dedb2d6698a50b6ba612cf6058c68c705d",
+        "summarySHA256": "c67a520f87683b2a43479919f27e798c7cb3adff9a0d0896d815d554d5918955"
+      }
+    ],
+    "ownerScope": "The approved source797 first-eight receipt covers14 clean closed commands only. Original Demo observations failed the child-exit cleanup deadline and required forced cleanup with no survivors; they are not clean-owner passes. This successor must independently satisfy the unchanged ownership gate.",
+    "firstEightSourceRevision": "797e03f28743921842df6aa57520a72016ba3dfc",
+    "firstEightAllCorrectnessPassed": true,
+    "firstEightEvidence": {
+      "format": "SoloFirstEightCorrectnessEvidenceV1",
+      "sourceRevision": "797e03f28743921842df6aa57520a72016ba3dfc",
+      "runId": 39109911286,
+      "artifactId": 12130067688,
+      "artifactSHA256": "5c5f84eb082d13123410b0c1939aab3c9af4ef981ad9b3150b215c3a16aba916",
+      "summarySHA256": "5ff787c26c962ec31c9fbe2d635b679fb393caa5ea2eaa84e41fbcc3061804b8",
+      "correctness": "passed",
+      "ownersClosed": true
+    },
+    "publicationScope": "Reviewed eligibility for complete source CI and normal merge, followed by possible one-time fixed manual main-branch validation after final source review and green checks. No new runtime, performance or physical-device qualification is inferred; prior failed observations and forced cleanup remain retained.",
+    "firstEightRequired": true,
+    "firstEightNumericalFailuresRetained": 3,
+    "nodePortabilityMismatchesRetained": 4
+  },
+  "bindingScope": "Exact source797 package/assets and current helper inputs. Resource-only geometry policy observes two consecutive distinct native frame callbacks, actual aspect-fitted canvas geometry and paint ownership before the paused snapshot. Original cross-cycle width, activation-to-closed no-draw, native reconstruction, storage, resource and cleanup gates remain unchanged. Recovery workload is unchanged and is not rerun by this declaration.",
+  "sourceCohort": "demo-runtime797-diagnostic-v1",
+  "runtimeRevision": "797e03f28743921842df6aa57520a72016ba3dfc",
+  "prospectiveTooling": {
+    "status": "proposed-source-review-and-remote-controls-pending",
+    "sparseClosure": null,
+    "finalToolingRevision": null
+  },
+  "frozenTools": [
+    {
+      "path": "scripts/run-solo-remote-correctness.mjs",
+      "bytes": 74932,
+      "sha256": "8417c019cd8efe8956f95b725b87abe71288aec720c796c07d2a649963a4a8a1"
+    },
+    {
+      "path": "scripts/solo-owned-resource-assessment.mjs",
+      "bytes": 28635,
+      "sha256": "7ecf08a9a2955f25f02fd13f568cbbbad7d7102744a9d8c755bbe716d54e0860"
+    },
+    {
+      "path": "scripts/solo-qualification-snapshot-store.mjs",
+      "bytes": 11359,
+      "sha256": "19f1989ca20ded51eebefd0a5fd6f8b01532dcc32150db25d26c80e025c5e51a"
+    },
+    {
+      "path": "scripts/serve-production-preview.mjs",
+      "bytes": 10414,
+      "sha256": "4c63ec2ea6d7b6b3c79793dd1e8dc8f75daa9ee6c783ee076d8bc050602c1cab"
+    },
+    {
+      "path": "scripts/game-cli.mjs",
+      "bytes": 94310,
+      "sha256": "384c26bde0dc3e300f651e7a43c9d5f6d3c70eb28e0e07763f7cb51d94929cb5"
+    }
+  ],
+  "packageBinding": {
+    "producerRun": 39104551453,
+    "producerConclusion": "success",
+    "scope": "Exact verified source797 package; full hosted archive/member/source/CSP verification remains mandatory."
+  },
+  "sourceSuccessor": {
+    "priorDeclaration": "docs/performance/solo-demo-recovery-73a345-plan.json",
+    "priorRevision": "73a345cec696d7789198cf295ca5c37b17ca0e71",
+    "scope": "Prior source73 workloads and retained evidence are preserved. No old scenario outcome is promoted."
+  },
+  "sourceAssetsWitness": {
+    "path": "docs/performance/fixtures/solo-demo-797e03/source-assets.json",
+    "bytes": 2233,
+    "sha256": "bf0871872fb2e2e4818c791b6561e2d49f60537c550f046ff500617ec8ecf9fc"
+  },
+  "firstEightReview": {
+    "path": "docs/performance/fixtures/solo-797e03-consumer/first-eight-39109911286.json",
+    "bytes": 2213,
+    "sha256": "3bedb1f0cc889e21ea2937addd936cbfd7ec78824434b37571d84dbdc1b65f9f"
+  },
+  "toolingSuccessor": {
+    "priorDeclaration": "docs/performance/solo-demo-recovery-797e03-plan.json",
+    "historicalSourceWitness": {
+      "path": "docs/performance/fixtures/solo-demo-797e03/ee9-observer-source.json",
+      "bytes": 39865,
+      "sha256": "2061dcc83c49d0157691f3dacece73c47da0d70ae37b27d2e27f40c93c2c9605"
+    },
+    "priorObservation": {
+      "runId": 39123948345,
+      "artifactId": 12136015967,
+      "artifactBytes": 304948,
+      "artifactSHA256": "c05991c48825f872f538528166b7f82ff442362f2a0640a0fe512f341fe1a2a8",
+      "summarySHA256": "9e5d4a03d8a512ed7b16c5c40ae48767df0d315c85e9f4b45c9a408096b05c2a",
+      "disposition": "failed-reviewed",
+      "failure": "Four fixed fault arms passed, then the reopen route clicked Home Options behind the still-open Settings dialog. Observation cleanup also failed its process-exit deadline.",
+      "forcedCleanup": true,
+      "survivors": 0
+    },
+    "change": "Observer-only public Settings rejoin, protected full storage baseline after Settings and before first Demo activation, and exact-owned Chrome close request before disconnect. Original workload, snapshots, hashes, strict replay, source/package, first-eight proof, all limits and failure/cleanup gates remain unchanged.",
+    "currentObservation": "unobserved"
+  },
+  "closeBoundarySuccessor": {
+    "priorDeclaration": {
+      "path": "docs/performance/solo-demo-recovery-797e03-tooling-plan.json",
+      "bytes": 15421,
+      "sha256": "aa979769f282d8f2c3dc9ad965ab0da9b9c45677cef802fef18bb2e617d3998d"
+    },
+    "historicalSourceWitness": {
+      "path": "docs/performance/fixtures/solo-demo-797e03/d99-close-boundary-source.json",
+      "bytes": 115599,
+      "sha256": "e0ded260781e56c1de8e28c85492ecdc77b4380eb3e8335b3e3592c9834ce660"
+    },
+    "priorObservation": {
+      "runId": 39130879732,
+      "artifactId": 12138410802,
+      "artifactSHA256": "14f0066dc2242ff08f5d7091d4ceb8ad975af3732f336482cdb1302ee5e8f49b",
+      "summarySHA256": "1c17edbbe8d95bc2d04187d708aecf926f8eb1219bc02069113903267de3d6df",
+      "disposition": "passed",
+      "ownersClosed": true,
+      "forcedCleanup": false,
+      "survivors": 0,
+      "scope": "Original hosted recovery flow, parent/storage/export invariants and strict native replay passed. This does not qualify the new tool bytes or native memory, timing, physical devices, live Pages or source9d."
+    },
+    "currentObservation": "unobserved",
+    "executionScope": "Current-tooling recovery declaration keeps the existing selector valid after shared helper changes. Workload and gates are unchanged. It retains the original passed receipt separately; no unchanged recovery rerun is requested or credited.",
+    "reviewedCore": "c5e5aabface4dfe05bc0730daed6ab2d43be0d0c"
+  },
+  "geometryReadinessSuccessor": {
+    "priorDeclaration": {
+      "path": "docs/performance/solo-demo-recovery-797e03-current-tooling-plan.json",
+      "bytes": 16331,
+      "sha256": "6f74a98a954f816f0e465e70646f562496f55433051d4c8ed50dfa59fe3baba5"
+    },
+    "historicalSourceWitness": {
+      "path": "docs/performance/fixtures/solo-demo-797e03/c293-paused-geometry-source.json",
+      "bytes": 150438,
+      "sha256": "e86ea1f6e8f06e57d75c21058bbd6cffe2fc151129afa2b684a82d9acdd1567a"
+    },
+    "priorObservation": {
+      "runId": 39149681708,
+      "artifactId": 12144433958,
+      "artifactBytes": 329925,
+      "artifactSHA256": "99adb6e5adf9a1d3eea2cbf5755cbc02aba3c8b2c6d62ef317e60d958a6e527e",
+      "summarySHA256": "0801478ea4043bdb98d7f8be915d8ebe97ad54144be740151811ad5e28696ced",
+      "rawReportSHA256": "f0ab2b2e48b2b24912769429e2a57a1c0d5938618f8a1f4ab7abe44688af0c02",
+      "disposition": "failed-reviewed",
+      "ownersClosed": true,
+      "forcedCleanup": false,
+      "survivors": 0,
+      "auditBlob": "8e999f638e696af2063141d346b33fcf4f660144",
+      "auditBytes": 44766,
+      "auditSHA256": "2426b6d8a992e33f196e49506dc66fb0fd85781619cadf1280040a725338e29d",
+      "scope": "20 cycles and native reconstruction passed; cross-cycle width failed at spectator5, with stale paused widths also in6/8/10. All activation-to-closed draw counts exact; unchanged parent replay/storage. No resource assessment pass and no recovery result are inferred."
+    },
+    "currentObservation": "unobserved",
+    "executionScope": "Current helper binding only for existing recovery lane; no recovery rerun.",
+    "readiness": {
+      "policy": "paint-matches-stable-geometry-v1",
+      "nativeCallbacks": 2,
+      "deadlineMs": 10000,
+      "maximumNativeCallbacks": 2048,
+      "retainedSamplesPerCycle": 3,
+      "pausedOnly": true,
+      "perFrameRPC": false,
+      "formula": "min(clientWidth, clientHeight * intrinsicWidth / intrinsicHeight)",
+      "requiresMatchingPaintOwner": true
+    }
+  }
+}

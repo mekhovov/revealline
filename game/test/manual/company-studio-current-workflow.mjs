@@ -8,7 +8,7 @@ import {
   validateStudioHistory,
 } from '../../../authoring/company-studio/model.mjs';
 import { readStudioJSON } from '../../../authoring/company-studio/source-reader.mjs';
-import { companyPlaytestTask } from '../../company-campaigns/playtest-fixtures.mjs';
+import { practiceTask } from '../../../authoring/company-studio/practice-fixtures.mjs';
 
 const assert = (condition, message) => {
   if (!condition) throw new Error(message);
@@ -388,7 +388,7 @@ async function qualifyCompanyPractice(p, { originalCatalog }) {
     );
   };
   await p.wait(() => p.doc.querySelector('.authoring-input-rail'));
-  const taskId = 'playtest-foundations-requirement';
+  const taskId = 'practice-open-bridge';
   await select('#practice-select', taskId);
   await p.choose('#open-practice');
   await p.wait(() => !$('practice-workbench').hidden);
@@ -495,7 +495,7 @@ async function qualifyCompanyPractice(p, { originalCatalog }) {
   await p.wait(() => p.downloads.length === taskExports + 1);
   const taskBlob = p.downloads.at(-1).blob,
     task = JSON.parse(await taskBlob.text()),
-    expectedTask = companyPlaytestTask(taskId);
+    expectedTask = practiceTask(taskId);
   assert(
     same(task, expectedTask),
     'Task export differs from the authoritative answer-free task cards.',
@@ -530,7 +530,7 @@ async function qualifyCompanyPractice(p, { originalCatalog }) {
 
 export const companyPracticeCurrent = [
   'Current company transfer practice: read, invalid/valid choices, cancel, restart, reopen and task export',
-  '/authoring/company-studio/playtest.html?task=playtest-foundations-requirement',
+  '/authoring/company-studio/playtest.html?task=practice-open-bridge',
   async (p) => {
     const win = p.doc.defaultView;
     assert(

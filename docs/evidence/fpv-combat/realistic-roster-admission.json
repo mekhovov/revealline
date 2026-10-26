@@ -1,0 +1,30 @@
+{
+  "checkedAt": "2026-10-19T22:38:35.157Z",
+  "status": "admitted-local-working-tree",
+  "manifestSHA256": "8121b18a0a6c1ea2c625cb355ef2d5efee0ed6c1486a835d415c3119fc555357",
+  "provenanceSHA256": "82918da92f2b5970cd5319e0819088a3f33ec18ae90313cc34ff1bfdb5a9f626",
+  "families": 12,
+  "casts": 3,
+  "variants": 36,
+  "checkedBuilderFiles": 12,
+  "metrics": {
+    "downloadBytes": 13610307,
+    "decodedBytes": 103546328,
+    "gpuBytes": 125981328,
+    "vertices": 60691
+  },
+  "downloadWithManifest": 13610307,
+  "limits": {
+    "manifestBytes": 65536,
+    "downloadBytes": 25165824,
+    "modelBytes": 16777216,
+    "decodedBytes": 134217728,
+    "gpuBytes": 167772160,
+    "files": 16,
+    "verticesPerModel": 65536,
+    "accessorValuesPerModel": 2000000,
+    "textureDimension": 2048,
+    "liveActors": 20
+  },
+  "note": "Byte/schema/resource admission. Visual, browser, GPU and lifecycle evidence is separate. No release or publication is implied."
+}

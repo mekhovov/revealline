@@ -1,0 +1,23 @@
+{
+  "sourceRevision": "8ab04b8d948203090b9ae32da3b2d4e7c1f16bf3",
+  "runtimeRoot": "/Volumes/alex/CodexMigrationStaging/fpv-package-qualification-20261014/regional-family-library-8ab04b8d/functional-check",
+  "url": "http://127.0.0.1:9214/index.html",
+  "fixtureFiles": [
+    {
+      "path": "index.html",
+      "bytes": 2820,
+      "sha256": "dc7d7363309cfc57703425b10c4a7fd1ac322ba85550d98edd8164d3d5edfd18"
+    },
+    {
+      "path": "preview.css",
+      "bytes": 708,
+      "sha256": "bb92f1390f6e082789e19c8fa5c9d8c66cc39888bcebe47ba83cb92fc731c49d"
+    },
+    {
+      "path": "preview.mjs",
+      "bytes": 7745,
+      "sha256": "e52bd89c984436412b8c56f410242e65d971cd981be6c329e9b8d0d32cbc755a"
+    }
+  ],
+  "scope": "Synthetic callback-only component; exact packaged Library/input/CSS. No scenery/WebGL/default DB/player storage/real flight/persistence. Not full-player/theme/physical/public acceptance. CSP disallows connection fetches. Native not yet inspected."
+}

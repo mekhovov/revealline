@@ -65,7 +65,7 @@ function nativeFocus(t) {
 }
 // This is the retained picker component, with its actual host rebuild and
 // controller adapter. Public Missions now opens the unified catalogue, covered
-// by mission-library-solo-host/controller-host; do not create that second owner.
+// by mission-library-solo-*/controller-host; do not create that second owner.
 function openRetainedPicker(h) {
   h.$('shell-menu').click();
   h.$('shell-home').close();

@@ -1,0 +1,129 @@
+{
+  "createdAt": "2026-10-20T01:51:55.143Z",
+  "worldPacks": 20,
+  "regionalEditions": 24,
+  "uniqueObjects": 12258,
+  "missing": [],
+  "regions": [
+    {
+      "id": "alpine-highlands-study",
+      "sha256": "92b7ed6acb426a04b007006a72536b8178bd0ad59bba7182637e25fd0d4cf804",
+      "files": 722
+    },
+    {
+      "id": "alpine-highlands-study",
+      "sha256": "32c5338bb3ac7a4279de1f1cf77ddd36bd050c6b5bd971467f9cf5ef0898d2aa",
+      "files": 722
+    },
+    {
+      "id": "lunar-basin-study",
+      "sha256": "e3ec1ebf203e391741e64d218ac2554db3d5b0327dbdc9940e7190726f27ba65",
+      "files": 116
+    },
+    {
+      "id": "alpine-highlands-study",
+      "sha256": "0096934874cb5ad3a8355471242aadbb92a660607d3c04481f6b06eb0937062f",
+      "files": 722
+    },
+    {
+      "id": "alpine-highlands-study",
+      "sha256": "c60fd92ed1dc00136fb8df55bf02bcc211b932c4bbe018917a1f37b549ac3c8d",
+      "files": 722
+    },
+    {
+      "id": "lunar-basin-study",
+      "sha256": "1ec74a074029002f6595bb614ac63a2a52a67e1092c6baf1e45480ffdbb7619a",
+      "files": 116
+    },
+    {
+      "id": "alpine-highlands-study",
+      "sha256": "a442a07717d09c703231279db41dd23c9447e0cc7f5f53aa3964eef4f74573ec",
+      "files": 722
+    },
+    {
+      "id": "alpine-highlands-study",
+      "sha256": "8b49b885b05976b4a114a17d88d9af1b352418cbac16866a5249ae32b43c191a",
+      "files": 720
+    },
+    {
+      "id": "canal-city-study",
+      "sha256": "891835944510139a7bed6a99305c0e22b71ba9ccfe84801a07ea6e215ca25c87",
+      "files": 38
+    },
+    {
+      "id": "desert-expedition-study",
+      "sha256": "fed1f7d18bfe3163cbb52b8b7ecd174a777b89a45ac962c181bd8ca11b727ea7",
+      "files": 2062
+    },
+    {
+      "id": "desert-expedition-study",
+      "sha256": "6ecb919762a9d3fac6519ca80600489cab0cb6b3cb3e0804d01d5f7e8791029d",
+      "files": 2050
+    },
+    {
+      "id": "tropical-coastal-districts",
+      "sha256": "44aa0de26f4b4aa79fb0ca8f4b6c7d39bdd62debbdc5e4c51a3a12368a0f42ce",
+      "files": 38
+    },
+    {
+      "id": "railway-valley-expanse",
+      "sha256": "38bddc6a19c8ba5965992b68ed9b80398cb515dc99de7ce07cac11c9436606c7",
+      "files": 618
+    },
+    {
+      "id": "coaster-gardens-study",
+      "sha256": "935a4a4034c206d5bbce77e333f72530812a50c60135117616887a6dac70b53a",
+      "files": 202
+    },
+    {
+      "id": "coaster-gardens-study",
+      "sha256": "4800da2f8a06134333fad8def9615a96c94b2fb76f7fb3ef41bfa69b4a9872b5",
+      "files": 182
+    },
+    {
+      "id": "hillside-town-study",
+      "sha256": "f6717cb5833932f4ab1be27705802ba0600384e0f4fc2f4d0e2e8f4b06bdf573",
+      "files": 38
+    },
+    {
+      "id": "hillside-town-study",
+      "sha256": "de1dc4726724bf4851e5976191585e04205f81ba3b83f14442e0c94f18b907d9",
+      "files": 38
+    },
+    {
+      "id": "tropical-coastal-districts",
+      "sha256": "dab4be6dd5b782d38c6c01f510137d048b9646d1f14e80c4dc40c6d848720f49",
+      "files": 38
+    },
+    {
+      "id": "canyon-expanse-study",
+      "sha256": "d2c3dce6c39227e85a10256fb3d1082fec2a6c7a47f6347fd664e2840eb57003",
+      "files": 2050
+    },
+    {
+      "id": "tropical-coastal-study",
+      "sha256": "ddd62d4662b873bc97243a414dc4ddc291eeb7e9c084f15af661b449ddcc3443",
+      "files": 38
+    },
+    {
+      "id": "canyon-arrival-landmarks-study",
+      "sha256": "f69cc4d315c254d5b825e2cfbde21d8509da1c8e3ae2a3e743de95782c5300c8",
+      "files": 146
+    },
+    {
+      "id": "canyon-arrival-landmarks-study",
+      "sha256": "5cd92029c88179e94231b4ec4f799372b075cd187421e9feec3fb6ee2eabf6d0",
+      "files": 38
+    },
+    {
+      "id": "railway-valley-study",
+      "sha256": "431b2dfb4be228e094174f1ccdd8eb72f906f09eb39a62c31b16e2bfb1239f15",
+      "files": 38
+    },
+    {
+      "id": "urban-earthworks-study",
+      "sha256": "9a7d157d2d5fd197c632b870bd9b9ebacd62015ad0084605712185064c8ae73a",
+      "files": 38
+    }
+  ]
+}

@@ -1,0 +1,24 @@
+{
+  "format": "FpvCatalogProjectionPreservation.v1",
+  "baseline": "7baa11ca3b99fd4c6a4425f5f84b5c6a87801d64",
+  "oldBytes": 319741,
+  "newBytes": 304054,
+  "savedBytes": 15687,
+  "removedFactoryCount": 1,
+  "addedNamespaceImportCount": 1,
+  "redirectedBindingCount": 5,
+  "normalizedRemainingAstEqual": true,
+  "bytesOutsideGeneratedBlockEqual": true,
+  "unchangedFiles": [
+    "game/hunt/actor-catalog.mjs",
+    "game/profile-storage.mjs",
+    "game/profile-database.mjs",
+    "optional-practice/civilian-fpv/flight-fullscreen.css",
+    "optional-practice/civilian-fpv/aircraft-physics.mjs",
+    "optional-practice/civilian-fpv/advanced-aircraft-runtime.mjs",
+    "optional-practice/civilian-fpv/aircraft-recording.mjs",
+    "publishing/optional-package-policy.mjs"
+  ],
+  "oldSha256": "d96e7a6fd880f7e07f5a66232e5eeed8ee009b7b018665adca2c4a2a36dd828e",
+  "newSha256": "9d02b9e39ae8cb21f19beb9ec9b65b687d43384f0fe7369c74ed076715134728"
+}

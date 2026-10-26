@@ -6,14 +6,15 @@ import path from 'node:path';
 import { parse } from 'acorn';
 import { format, resolveConfig } from 'prettier';
 import { projectEditionModuleIndentation } from './edition-code-indentation.mjs';
+import { simShellPruningPlan } from './fpv-shell-pruning.mjs';
 
 const root = fileURLToPath(new URL('../', import.meta.url));
 const check = process.argv.includes('--check');
 if (process.argv.slice(2).some((arg) => arg !== '--check')) throw new Error('Use [--check].');
 const read = (file) => readFile(path.join(root, file), 'utf8');
 // Project canonical preference/view modules into an existing optional package slot.
-// Module closures preserve private state; shared i18n, themes and actor
-// preferences stay external so appearance controls and renderers share one owner.
+// Module closures preserve private state; shared i18n, themes, actor preferences
+// and already shipped JSON/catalog boundaries remain external rather than duplicated.
 async function projectGlobalServices() {
   const entries = {
     'game/mission-library/library.mjs': {
@@ -39,11 +40,13 @@ async function projectGlobalServices() {
       getMenuAnimation: 'getSimMenuAnimation',
       setMenuAnimation: 'setSimMenuAnimation',
       subscribeMenuAnimation: 'subscribeSimMenuAnimation',
+      menuAnimationBinding: 'simMenuAnimationBinding',
     },
     'game/ui/theme-family-controls.mjs': {
       attachThemeFamilyControls: 'attachSimThemeFamilyControls',
     },
     'game/ui/global-settings-view.mjs': { mountGlobalSettings: 'mountSimGlobalSettings' },
+    'game/ui/comfort-presets.mjs': { mountComfortPresets: 'mountSimComfortPresets' },
     'game/ui/radio-audio.mjs': {
       readRadioAudio: 'readSimRadioAudio',
       RADIO_AUDIO_KEY: 'SIM_RADIO_AUDIO_KEY',
@@ -57,19 +60,16 @@ async function projectGlobalServices() {
     ...Object.keys(entries),
     'game/text-face.mjs',
     'game/text-size.mjs',
+    'game/ui/text-size-control.mjs',
     'game/ui/theme-material-preview.mjs',
     'game/ui/movement-audio.mjs',
+    'game/ui/gameplay-audio-controls.mjs',
     'game/ui/radio-audio.mjs',
     'game/ui/celebration.mjs',
-    'game/data-json.mjs',
     'game/profile-storage.mjs',
     'game/profile-database.mjs',
     'game/hunt/actor-art.mjs',
-    'game/hunt/actor-catalog.mjs',
     'game/presentation/actor-animation.mjs',
-    'game/hunt/industrial-soldier-kit.mjs',
-    'game/ui/art-review-navigation.mjs',
-    'game/ui/enemy-appearance-controls.mjs',
     'game/ui/mission-library-goal.mjs',
     'game/mission-library/goal-preferences.mjs',
     'game/mission-library/opening-intent.mjs',
@@ -77,9 +77,15 @@ async function projectGlobalServices() {
     'game/ui/level-card.mjs',
   ]);
   const external = new Map([
+    ['game/data-json.mjs', 'simGlobalData'],
+    ['game/hunt/actor-catalog.mjs', 'simGlobalActorCatalog'],
+    ['game/hunt/industrial-soldier-kit.mjs', 'simGlobalActorKit'],
+    ['game/ui/art-review-navigation.mjs', 'simGlobalArtReview'],
     ['game/i18n/index.mjs', 'simGlobalI18n'],
     ['game/presentation/theme-system.mjs', 'simGlobalThemes'],
     ['game/hunt/preferences.mjs', 'simGlobalActorPreferences'],
+    // Already shipped by every SIM; share its ID allocator with standalone controls.
+    ['game/ui/enemy-appearance-controls.mjs', 'simGlobalEnemyAppearance'],
   ]);
   const modules = new Map(),
     visiting = new Set();
@@ -91,7 +97,7 @@ async function projectGlobalServices() {
     if (modules.has(file)) return `modules[${JSON.stringify(file)}]`;
     if (visiting.has(file)) throw new Error(`Cyclic shared settings dependency: ${file}`);
     visiting.add(file);
-    let text = await read(file);
+    const text = await read(file);
     const nodes = parse(text, { sourceType: 'module', ecmaVersion: 'latest' }).body;
     const replacements = [],
       names = [];
@@ -123,13 +129,24 @@ async function projectGlobalServices() {
         replacements.push([node.start, declaration.start, '']);
       }
     }
-    for (const [start, end, replacement] of replacements.reverse())
-      text = text.slice(0, start) + replacement + text.slice(end);
     visiting.delete(file);
-    modules.set(file, { text, names });
+    modules.set(file, { text, names, replacements });
     return `modules[${JSON.stringify(file)}]`;
   }
   for (const file of Object.keys(entries)) await visit(file);
+  const pruning = simShellPruningPlan(
+    new Map([...modules].map(([file, { text }]) => [file, text])),
+    entries,
+  );
+  for (const [file, module] of modules) {
+    const omitted = pruning.get(file) ?? [];
+    const replacements = module.replacements
+      .filter(([start]) => !omitted.some((node) => node.start <= start && start < node.end))
+      .concat(omitted.map(({ start, end }) => [start, end, '']));
+    for (const [start, end, replacement] of replacements.sort((a, b) => b[0] - a[0]))
+      module.text = module.text.slice(0, start) + replacement + module.text.slice(end);
+    module.names = module.names.filter((name) => !omitted.some((node) => node.name === name));
+  }
   return [
     ...[...external].map(
       ([file, name]) => `import * as ${name} from ${JSON.stringify('../../' + file)};`,
@@ -219,6 +236,7 @@ const css = [
   await read('game/ui/pause-menu.css'),
   await read('game/ui/mode-settings-view.css'),
   await read('game/ui/global-settings-view.css'),
+  await read('game/ui/comfort-presets.css'),
   await read('game/ui/journey.css'),
   (await read('game/ui/mode-choice.css')).replace(/^@import[^;]+;\s*/, ''),
 ].join('\n');

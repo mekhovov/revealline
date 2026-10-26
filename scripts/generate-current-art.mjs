@@ -29,7 +29,7 @@ export async function inventoryCurrentArt({ projectRoot = root } = {}) {
     const bytes = await fs.readFile(target);
     return { value: JSON.parse(bytes), path: relative, bytes: bytes.length, sha256: hash(bytes) };
   };
-  // Source PNGs are a convenience for the local checkout. Published builds use
+  // Source rasters are a convenience for the local checkout. Published builds use
   // their unchanged embedded packs or exact paired external download instead.
   const sourcePNGs = new Map();
   async function scanPNGs(relative) {
@@ -38,7 +38,7 @@ export async function inventoryCurrentArt({ projectRoot = root } = {}) {
     ).sort((a, b) => a.name.localeCompare(b.name))) {
       const next = `${relative}/${entry.name}`;
       if (entry.isDirectory()) await scanPNGs(next);
-      else if (entry.isFile() && entry.name.endsWith('.png')) {
+      else if (entry.isFile() && /\.(png|jpe?g|webp)$/i.test(entry.name)) {
         const file = path.join(projectRoot, next),
           stat = await fs.stat(file);
         if (stat.size > 4 * 1024 * 1024) continue;

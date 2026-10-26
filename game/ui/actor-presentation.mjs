@@ -1,3 +1,4 @@
+import { drawBrandActor } from '../presentation/brand-actors.mjs';
 import { sampleActorAnimation } from '../presentation/actor-animation.mjs';
 import { aliasSafePhase } from '../../authoring/motion-lab/animation.mjs';
 import { paintRotor } from './rotor-presentation.mjs';
@@ -20,13 +21,9 @@ const clamp = (n, a, b) => Math.max(a, Math.min(b, n));
 const finite = (n, fallback = 0) => (Number.isFinite(n) ? n : fallback);
 const angleDelta = (a, b) => ((((a - b + Math.PI) % TAU) + TAU) % TAU) - Math.PI;
 const family = (id, fallback) =>
-  ['fpv',
-'ukraine',
-'retro'].includes(id)
+  ['fpv', 'ukraine', 'retro'].includes(id)
     ? id
-    : ({fpv: 'fpv',
-atlas: 'ukraine',
-retro: 'retro'}[fallback] ?? 'retro');
+    : ({ fpv: 'fpv', atlas: 'ukraine', retro: 'retro' }[fallback] ?? 'retro');
 export const ACTOR_PRESENTATION_LIMITS = Object.freeze({
   actors: 64,
   tailPoints: 3,
@@ -503,7 +500,6 @@ function retro(c, f, colors) {
   }
 }
 
-
 export function roleColor(type) {
   return (
     {
@@ -701,12 +697,11 @@ function distinctBody(c, f, k) {
 
 /** Original body-only skin; caller owns placement/size and functional badges. */
 export function drawEnemySilhouette(ctx, frame, colors) {
+  if (drawBrandActor(ctx, frame, colors)) return;
   if (drawActorRecipe(ctx, frame, colors)) return;
   if (drawJourneyActorMaterial(ctx, frame, colors)) return;
   if (!distinctBody(ctx, frame, colors))
-    (({fpv,
-ukraine,
-retro})[frame.themeId] ?? retro)(ctx, frame, colors);
+    (({ fpv, ukraine, retro })[frame.themeId] ?? retro)(ctx, frame, colors);
 }
 
 /** Image roles override only the body; collision-center cues retain their physical size. */

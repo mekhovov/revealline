@@ -1,0 +1,95 @@
+{
+  "format": "IndependentSourceBundlePlanAndBaselineReview.v1",
+  "createdUTC": "2026-10-16T04:54:49.843367+00:00",
+  "planReview": "Suitable only subject to the explicit completion gates below. No final bundle or local-source closure acceptance is recorded here.",
+  "inspectedScripts": [
+    {
+      "name": "fetch-public-baselines.py",
+      "sha256": "4d39e2cca959b8546fcfd3fa8dc261922f67585792f6fde081c9a533f9ffd57b"
+    },
+    {
+      "name": "audit-selected-object-closure.py",
+      "sha256": "ec25b0af2cfcc751f6d4f94f469883955e174c76d8706db95a1b65d28c734f21"
+    },
+    {
+      "name": "audit-push-final-primary-head.py",
+      "sha256": "c80b0000e653fe1e2ca1cbbc16aee3fdcbed4167574b05b7e6ba2141ad6a0cab"
+    }
+  ],
+  "publicBaseline": {
+    "anchor": "be46a8344fdc61c65e09ad01a9965a2d8fab8c11",
+    "declaredPrerequisiteCount": 554,
+    "fetchOwnerReceiptSHA256": "8c08e297e81677294d02f02e82c9bef97f7535a430060b4e47cfe3581f24e461",
+    "ownerFetchReturncode": 0,
+    "independentlyObservedLocalConfig": {
+      "bare": true,
+      "origin": "https://github.com/mekhovov/revealline.git",
+      "promisor": true,
+      "partialCloneFilter": "blob:none"
+    },
+    "shallowBoundaryLineCount": 554,
+    "alternatesFileExists": false,
+    "objectDirectorySymlinks": [],
+    "inheritedGitEnvironmentNames": [
+      "GIT_PAGER"
+    ],
+    "scope": "Read-only metadata of a GitHub-fetched sparse public prerequisite baseline; no duplicate fetch or object traversal was performed by this review."
+  },
+  "preservedNegativeEvidence": [
+    {
+      "ownerArtifact": "local-object-closure-audit.json",
+      "allCommitsAudited": false,
+      "auditedCommits": 2441,
+      "targetCommitsAtThatAttempt": 2635,
+      "errors": 1,
+      "ownerSafeForPublicPreservation": false,
+      "disposition": "Superseded by an in-progress selected audit; this failed attempt remains evidence and cannot support closure."
+    },
+    {
+      "ownerOperation": "Public baseline reachable-object rev-list",
+      "outcome": "180 second timeout reported by owner after the 554-commit fetch succeeded",
+      "disposition": "Fetch success alone does not establish restored object closure."
+    }
+  ],
+  "completionGates": [
+    {
+      "gate": "Inventory fixed point",
+      "state": "pending",
+      "required": "Reconcile all selected local source stores, refs/reflogs, discovered commit targets and ancestors; record all bounded inventory timeouts and any scope exclusions explicitly."
+    },
+    {
+      "gate": "Reviewed exact object set",
+      "state": "pending",
+      "required": "Use the explicit SHA-verified selected new-object allowlist, not the entire shared cache. Review all commit metadata and changed blob versions, sensitive paths, symlink/gitlink targets and object types. Record every credential candidate disposition and all excluded private ancestry."
+    },
+    {
+      "gate": "Private-context exclusion",
+      "state": "partly verified",
+      "required": "The sanitized app document and equal tracked/index trees are verified separately. Final bundle input must exclude the raw private-context stash roots and private untracked tree/blob objects; preserve only explicit safe snapshots or safe app DAG tips."
+    },
+    {
+      "gate": "Public prerequisites",
+      "state": "anchors verified; final list pending",
+      "required": "Each exact final declared public prerequisite must be anchored and GitHub readable. Preserve the independently verified earlier tip refs as source seeds. Declare shallow public history and missing public blob hydration honestly."
+    },
+    {
+      "gate": "Cold GitHub-only restoration",
+      "state": "pending",
+      "required": "Use a fresh bare destination and isolated Git configuration/environment, no alternates, object symlinks, source-store path or local object-directory environment. Fetch only declared GitHub prerequisites and the durable bundle. Verify/unbundle, check connectivity, and read back every selected new object identity with lazy fetch disabled. Explicitly report any public sparse/promisor hydration boundary."
+    },
+    {
+      "gate": "Durable original bundle asset",
+      "state": "pending",
+      "required": "Record original bytes/SHA256, release asset identity/server digest and full authenticated downloaded-byte readback; verify the cold restore uses that exact downloaded artifact."
+    }
+  ],
+  "boundedPrivacyReviews": {
+    "sevenHistoricalEnvTemplateVersions": "Individually cleared in the separate exact-blob review; no filename-only exemption.",
+    "earlyTestURLCandidates": "Only the two exact previously reviewed literal fixture match hashes were accepted.",
+    "oldGooglePatternCandidates": "Exact sampled quoted-base64 matches do not satisfy the corrected token boundaries; this is not a general encoding exception."
+  },
+  "sourceMutation": false,
+  "playerBrowserStorageRead": false,
+  "rendererOrBuildRun": false,
+  "finalLocalSourceClosureAccepted": false
+}
