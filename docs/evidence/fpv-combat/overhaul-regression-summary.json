@@ -1,0 +1,31 @@
+{
+  "command": "node --test --test-concurrency=2 game/test/fpv-*encounter*.test.mjs game/test/fpv-combat-*.test.mjs game/test/fpv-radio*.test.mjs game/test/fpv-advanced-moving.test.mjs game/test/fpv-transient-contacts.test.mjs game/test/fpv-aircraft-renderer.test.mjs game/test/fpv-flight-ui.test.mjs game/test/fpv-world-appearance-ui.test.mjs game/test/fpv-regional-preparation-clock.test.mjs",
+  "tests": 605,
+  "passed": 604,
+  "failed": 0,
+  "durationMs": 346369.317167,
+  "scope": "Final frame-view/crowd broad integration: 604 passed and one 240-second timeout under twelve catalogue workers, no assertion failures. All four full-session tests subsequently passed in isolation after the Hillside correction. Later UI reporting/playback changes passed 27 focused + 153 existing UI tests.",
+  "reportWrittenAt": "2026-10-20T03:40:28.235857+00:00",
+  "priorIntegrationRun": {
+    "command": "node --test --test-concurrency=2 game/test/fpv-*encounter*.test.mjs game/test/fpv-combat-*.test.mjs game/test/fpv-radio*.test.mjs game/test/fpv-advanced-moving.test.mjs game/test/fpv-transient-contacts.test.mjs game/test/fpv-aircraft-renderer.test.mjs game/test/fpv-flight-ui.test.mjs game/test/fpv-world-appearance-ui.test.mjs",
+    "tests": 584,
+    "passed": 584,
+    "failed": 0,
+    "durationMs": 165203.923208,
+    "scope": "Integration regression before the disabled-Survival-slot physical recovery fix. Root host lifecycle subsequent focused checks:21/21. Browser performance and physical hardware qualification are separate.",
+    "reportWrittenAt": "2026-10-20T02:41:03.089627+00:00"
+  },
+  "cancelled": 1,
+  "log": "/tmp/fpv-overhaul-final-integration.log",
+  "isolatedEnduranceRerun": {
+    "tests": 4,
+    "passed": 4,
+    "failed": 0,
+    "cancelled": 0,
+    "durationMs": 145585.778167,
+    "regionalEnduranceMs": 128164.61375,
+    "log": "/tmp/fpv-overhaul-isolated-full-session.log",
+    "scope": "Production source after bounded Hillside restore-proof correction; no catalogue workers or browser workloads active. The previously cancelled regional 36,017-tick endurance case passed. Radio signals are simulated, not physical hardware.",
+    "checkedAt": "2026-10-20T03:58:29.383961+00:00"
+  }
+}

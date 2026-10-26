@@ -92,7 +92,7 @@ for (const { id } of listAircraftPresets()) {
   test(`${id}: centering sticks after sustained ground input permits level takeoff`, () => {
     for (const mode of modes) {
       const result = aircraftGroundReleaseQualification(id, mode);
-      assert.equal(result.backend, 'civilian-quad-aircraft.v2');
+      assert.equal(result.backend, 'civilian-quad-aircraft.v3');
       assert.ok(
         result.minimumUpright > 0.99,
         `${mode}: stale ground integral must not tip the aircraft`,

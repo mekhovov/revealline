@@ -1,0 +1,12 @@
+test_actual_relative_link_layout_and_conflict_loop_escape_refusals (test_bounded_restore.BoundedRestoreTests.test_actual_relative_link_layout_and_conflict_loop_escape_refusals) ... ok
+test_bounded_split_restores_every_path_once_and_checks_collection (test_bounded_restore.BoundedRestoreTests.test_bounded_split_restores_every_path_once_and_checks_collection) ... {"format": "FPVPortableRestoreReceipt.v1", "files": 2, "logicalBytes": 42, "allFileHashesMatch": true, "unresolvedInternalLinks": [], "githubDependencyFileCount": 0, "githubDependencyBytes": 0, "allGitHubDependencyFileHashesMatch": true, "complete": false, "scope": "inventoried non-Git payload; Git checkout recovery is a separate receipt", "overallDisconnectSafetyClaimed": false, "inventoryCoverageComplete": false, "deferredExternalDependenciesExplicitlyAccepted": false, "createdAtUnix": 1792126918.3786361}
+{"format": "FPVPortableRestoreReceipt.v1", "files": 2, "logicalBytes": 42, "allFileHashesMatch": true, "unresolvedInternalLinks": [], "githubDependencyFileCount": 0, "githubDependencyBytes": 0, "allGitHubDependencyFileHashesMatch": true, "complete": false, "scope": "inventoried non-Git payload; Git checkout recovery is a separate receipt", "overallDisconnectSafetyClaimed": false, "inventoryCoverageComplete": false, "deferredExternalDependenciesExplicitlyAccepted": false, "createdAtUnix": 1792126924.908297}
+{"format": "FPVPortableRestoreReceipt.v1", "files": 1, "logicalBytes": 21, "allFileHashesMatch": true, "unresolvedInternalLinks": [], "githubDependencyFileCount": 0, "githubDependencyBytes": 0, "allGitHubDependencyFileHashesMatch": true, "complete": false, "scope": "inventoried non-Git payload; Git checkout recovery is a separate receipt", "overallDisconnectSafetyClaimed": false, "inventoryCoverageComplete": false, "deferredExternalDependenciesExplicitlyAccepted": false, "createdAtUnix": 1792126928.0766232}
+ok
+test_disk_guard_and_tampered_plan_refuse_before_any_download (test_bounded_restore.BoundedRestoreTests.test_disk_guard_and_tampered_plan_refuse_before_any_download) ... ok
+test_recipe_binds_captured_target_and_published_commit_subtree (test_bounded_restore.BoundedRestoreTests.test_recipe_binds_captured_target_and_published_commit_subtree) ... ok
+
+----------------------------------------------------------------------
+Ran 4 tests in 22.610s
+
+OK

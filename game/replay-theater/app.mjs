@@ -1,3 +1,4 @@
+import { mountGameplayAudioControls } from '../ui/gameplay-audio-controls.mjs';
 import { Soundscape } from '../ui/audio.mjs';
 import { createAudioMaster } from '../ui/audio-master.mjs';
 import { createAudioPreferences } from '../audio-preferences.mjs';
@@ -34,6 +35,11 @@ globalThis.RevealLineToolLaunch?.attached();
 const replayMaster = createAudioMaster();
 const replayAudioPreferences = createAudioPreferences({ audioMaster: replayMaster });
 const replaySound = new Soundscape({ audioMaster: replayMaster });
+const stopGameplayAudio = mountGameplayAudioControls({
+  output: replaySound.gameplayOutput,
+  container: $('replay-presentation-settings'),
+  idPrefix: 'replay-audio',
+});
 replaySound.configure({ master: 1, music: 0 });
 const releaseAudioLabel = replayMaster.subscribe(({ muted }) =>
   localizedText($('replay-audio'), () =>
@@ -75,6 +81,7 @@ const closeTheater = (event = {}) => {
   if (event.persisted || theaterDisposed) return;
   theaterDisposed = true;
   releaseAudioLabel();
+  stopGameplayAudio();
   replayAudioPreferences.dispose();
   void replaySound.dispose();
   disposeRecording();

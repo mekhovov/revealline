@@ -13,7 +13,7 @@ export const IDS = Object.freeze([
   'fracture-lines-frayed-causeway',
 ]);
 export const SOURCE_PINS = Object.freeze({
-  'game/content/themes.json': '93582f7d9ba53753106df7b63928f086820fc0f68357d3c08f26c0b89fb84774',
+  'game/content/themes.json': '77f3e7e8f0951172bd0c11649b0203808b3d1b00ca434c2a576ef631899958b2',
   'game/content/classes.json': '2f776b0dfd099478ffe78465c7b602cd98896206a222a0ed7fd4405a4a643f84',
   'game/content/packs/fpv-arcade-r5.json':
     '350d89cf41767668b3734b474e5dd3d1d301bb0b5612e5082c5d233a1a081a74',
@@ -22,7 +22,7 @@ export const SOURCE_PINS = Object.freeze({
   'authoring/library/fpv-route-choices/packs/fpv-route-choices.json':
     '589543f693e650355216aa702844a7726b7cd6e318900b8583702fd0650ae989',
   'authoring/library/sentinel-circuit/build.mjs':
-    'e76f204cbe240bdedac79f2d92c85ab767846be32cfae50cd76ef983340c4d41',
+    '8d5a8751cc814a4eafef80fdc6cdcefc7770aa69f23ab7cc48121d7ff66fa485',
   'authoring/library/sentinel-circuit/files.mjs':
     '6420294630e32dd71da8c731bb4291406b2841ee9d6afe8cd5cf4eda8218e275',
 });

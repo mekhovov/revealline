@@ -1,0 +1,148 @@
+{
+  "measuredAt": "2026-10-20T00:54:09.762Z",
+  "environment": {
+    "runtime": "v20.19.5",
+    "platform": "darwin",
+    "arch": "arm64",
+    "cpu": "Apple M4 Pro",
+    "logicalCpus": 14,
+    "memoryBytes": 51539607552
+  },
+  "testSummary": [
+    "1..66",
+    "# tests 66",
+    "# suites 0",
+    "# pass 66",
+    "# fail 0",
+    "# cancelled 0",
+    "# skipped 0",
+    "# todo 0",
+    "# duration_ms 962.522166"
+  ],
+  "presentation": {
+    "piecesPerVictim": 12,
+    "bytes": 5416820,
+    "nodes": 466951,
+    "limitBytes": 8388608,
+    "limitNodes": 1000000
+  },
+  "probe": [
+    {
+      "mode": "ground",
+      "updates": 100,
+      "queries": 12144,
+      "maxMs": 35.191040999999984,
+      "p95Ms": 3.9384580000000255,
+      "medianMs": 3.255124999999964,
+      "resources": {
+        "moving": 0,
+        "settled": 1512,
+        "marks": 112,
+        "bursts": 0,
+        "calls": 7,
+        "triangles": 0,
+        "tier": "ultra",
+        "runId": "run",
+        "tick": 2000,
+        "stored": 1024,
+        "storedImpacts": 0,
+        "capacity": 1024,
+        "impactCapacity": 1024,
+        "evicted": 0,
+        "presentationClock": 41.98,
+        "pendingFragments": 0,
+        "maxDrawCalls": 40,
+        "registeredPools": 11,
+        "appearanceReady": false,
+        "appearanceHash": null,
+        "appearanceDrawCalls": 0,
+        "appearanceCharacters": 0,
+        "maxAppearanceTriangles": 1200000
+      }
+    },
+    {
+      "mode": "missing",
+      "updates": 100,
+      "queries": 3552,
+      "maxMs": 24.23504200000002,
+      "p95Ms": 2.209541999999942,
+      "medianMs": 1.6747919999999112,
+      "resources": {
+        "moving": 0,
+        "settled": 0,
+        "marks": 0,
+        "bursts": 0,
+        "calls": 0,
+        "triangles": 0,
+        "tier": "ultra",
+        "runId": "run",
+        "tick": 2000,
+        "stored": 1024,
+        "storedImpacts": 0,
+        "capacity": 1024,
+        "impactCapacity": 1024,
+        "evicted": 0,
+        "presentationClock": 41.98,
+        "pendingFragments": 444,
+        "maxDrawCalls": 40,
+        "registeredPools": 11,
+        "appearanceReady": false,
+        "appearanceHash": null,
+        "appearanceDrawCalls": 0,
+        "appearanceCharacters": 0,
+        "maxAppearanceTriangles": 1200000
+      }
+    }
+  ],
+  "method": "CPU-only Node update probes; no browser rendering, GPU, full flight workload, physical radio or human qualification. Full 1024 remains ring, Ultra effect budget, 100 updates with static camera.",
+  "priorProbe": {
+    "groundP95Ms": 43.606916,
+    "missingP95Ms": 55.775458,
+    "method": "Pre-admission-fix CPU-only 50-update diagnostic"
+  },
+  "limitations": [
+    "CPU-only diagnostic predates periodic attachment revalidation and latest 64-unit frame support budget; it does not establish the 3 ms full-application effects gate.",
+    "Stable surface attachments are revalidated on a bounded cadence; exact mesh lookup is provided by the host renderer and needs full-application streaming qualification.",
+    "Unsupported streaming geometry remains pending and the whole affected cluster stays hidden until supported."
+  ],
+  "testedAt": "2026-10-20T01:22:41.054Z",
+  "probeIncludesAttachmentRevalidation": false,
+  "latestRegressionCoverage": [
+    "Numeric collider handles in surface-impact records",
+    "Settled-support removal and restoration",
+    "No fallback from a missing upper floor to unrelated lower geometry",
+    "Stable moved-support translation",
+    "Support-query caching while paused",
+    "Blood and surface-mark support revalidation after recovery",
+    "Exact lossless decoding of all 24 historical teaching recordings",
+    "Bounded support checks for full unsupported impact archives",
+    "Studio service pad support and Tactical admission",
+    "Studio 128-actor dual-definition export/import envelope",
+    "Playback pacing, ownership cancellation and no live input/rewards/saves",
+    "Payload readiness and zero-reserve detonation UI",
+    "Incoming hull damage retains warning audio priority",
+    "Distinct physics and render surface identities with exact point admission",
+    "Surface marks follow stable translated supports and wait through renderer replacement",
+    "Settled bodies reproject changed recipe bounds and tilted supports",
+    "Current-to-thicker appearance swaps keep every visible vertex above the accepted floor"
+  ],
+  "latestFocusedTests": {
+    "testedAt": "2026-10-20T02:03:45.010Z",
+    "files": [
+      "game/test/fpv-combat-presentation.test.mjs",
+      "game/test/fpv-encounter-studio.test.mjs",
+      "game/test/shared-encounter-audio.test.mjs"
+    ],
+    "passed": 68,
+    "failed": 0,
+    "durationMs": 1069.762209,
+    "hostLifecycle": {
+      "file": "game/test/fpv-encounter-host-lifecycle.test.mjs",
+      "passed": 14,
+      "failed": 0,
+      "durationMs": 163.5535,
+      "qualification": "Ran before parent launch metadata addition; browser playback not yet qualified."
+    },
+    "lint": "Source and all three focused test files clean"
+  }
+}

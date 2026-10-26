@@ -1,0 +1,50 @@
+{
+  "previousHead": "cd41090b1e83c1cdecb741c5fe9e4421ea4b6771",
+  "head": "6723330a0c109ff428f811fba0404d47665f3a6d",
+  "authenticatedChangedBlobReadbackMatches": true,
+  "sourceHelpersUnchangedFrom": "cd41090b1e83c1cdecb741c5fe9e4421ea4b6771",
+  "files": [
+    {
+      "path": "docs/reports/fpv-development-preservation-20261016/tools-publication-increment-015.json",
+      "gitBlobSHA1": "8ff1869672dfa4b1a9bf61ff740eb905411f65f0",
+      "sha256": "a18c6e30de125c2e3006b85603d24eb398d5f6ca3390980f42efbec63cb77d7a",
+      "bytes": 8282
+    },
+    {
+      "path": "docs/reports/fpv-development-preservation-20261016/publication-increment-015-retained-negative.json",
+      "gitBlobSHA1": "4457b184c095ca0cbae024dd252716cdc637db6f",
+      "sha256": "98cf2589e2e95eb89e5e2a40a8efe9378ba570a1c889161a509fec7b56dbd2ef",
+      "bytes": 923
+    },
+    {
+      "path": "docs/reports/fpv-development-preservation-20261016/interim-verified-staging-coverage-007.json",
+      "gitBlobSHA1": "17df44b74f385b6ffb726d82c5f00825e5bb1e95",
+      "sha256": "d6f4fae3e19f8f58df5ffd81f01d21ec39b5cd0fb55e27efaed779081d053096",
+      "bytes": 101660
+    },
+    {
+      "path": "docs/reports/fpv-development-preservation-20261016/extra-public-first-two-packing-preflight.json",
+      "gitBlobSHA1": "8ff30fda2acd36c0e312e75b927f0a2d49cec681",
+      "sha256": "b7d25c59d9a7aa183c8212e0782e86a403510378041b369d47da8e01ca2a896a",
+      "bytes": 525
+    },
+    {
+      "path": "docs/reports/fpv-development-preservation-20261016/extra-public-first-two-exact-clearances.json",
+      "gitBlobSHA1": "348bbbf1c24773ea8af9b48c9c54eb8c25f0c5a8",
+      "sha256": "77a00fff4b3fb5fa9430b8496ab3186728115ddc4762ea77dc11fc8ca69a71ab",
+      "bytes": 28758
+    },
+    {
+      "path": "docs/reports/fpv-development-preservation-20261016/extra-public-first-two-packing-provenance.json",
+      "gitBlobSHA1": "1dc53c8c1e0c7f6951f0b237a640c5e508197454",
+      "sha256": "c86c59ba9721931a7b32a850e71324f291d3578512200dd3188455d2bb87d217",
+      "bytes": 980
+    },
+    {
+      "path": "docs/reports/fpv-development-preservation-20261016/published-parts/part-ddc6e470b9dfb440e846fd2ba36396b5c4c582e40ec3e540b998c54acd8aa41e.json",
+      "gitBlobSHA1": "4b6a703841a7d25c5d86aad293a4a1d0a4d93a2e",
+      "sha256": "2908a6bfd0bf8188099db12d7aac82a3a2cd848f2aec81bd8280860b997667dd",
+      "bytes": 741111
+    }
+  ]
+}

@@ -1,0 +1,90 @@
+{
+  "sourceRevision": "863449767ffd2390b9b3b86ddf4f68447c1c70fe",
+  "sourceTree": "90d0aebcbd8a988841cfd1ba7ee0bd93e0f3076c",
+  "version": "v0.151.1",
+  "verification": {
+    "uniqueInputs": 243,
+    "exactCommittedBytesAndHashes": true
+  },
+  "packages": [
+    {
+      "id": "civilian-flight",
+      "inputBytes": 4951975,
+      "inputLimit": 8388608,
+      "inputHeadroom": 3436633,
+      "sourceFiles": 98,
+      "sourceFileLimit": 98,
+      "runtimeFiles": 96,
+      "runtimeBytes": 3748522
+    },
+    {
+      "id": "civilian-fpv",
+      "inputBytes": 13301661,
+      "inputLimit": 13303808,
+      "inputHeadroom": 2147,
+      "sourceFiles": 151,
+      "sourceFileLimit": 151,
+      "runtimeFiles": 149,
+      "runtimeBytes": 12113668
+    },
+    {
+      "id": "fpv-worlds",
+      "inputBytes": 19791915,
+      "inputLimit": 20971520,
+      "inputHeadroom": 1179605,
+      "sourceFiles": 211,
+      "sourceFileLimit": 211,
+      "runtimeFiles": 209,
+      "runtimeBytes": 18625432
+    }
+  ],
+  "checks": {
+    "focused": {
+      "tests": 743,
+      "passed": 743,
+      "failed": 0,
+      "skipped": 0
+    },
+    "packages": {
+      "tests": 19,
+      "passed": 19,
+      "failed": 0,
+      "skipped": 0
+    },
+    "lint": "passed",
+    "format": "passed",
+    "generatedShell": "canonical-projection-match"
+  },
+  "logs": {
+    ".cache/fpv-followup-863449767f-tests.log": {
+      "sha256": "f692210013d55c724e7b121bb9550902087c017cefcb3275c117c63f17272bdc",
+      "bytes": 185335
+    },
+    "fpv-followup-863449767f-packages.log": {
+      "sha256": "97547eaca2bf1a95697ba4747d88dfe97d15b61a705a9c7d1f8133497e7528b1",
+      "bytes": 4663
+    }
+  },
+  "rendered": {
+    "sourceRevision": "709222b4311211186a8d10364330d87a6da77d0d",
+    "sourceTree": "7051277fa0e7dc24df143d11a06c4b478f25161e",
+    "host": "fresh local World package",
+    "scope": [
+      "compact PID display with exact focused value",
+      "blank Save blocked",
+      "Revert and Undo restore validity and clear stale error",
+      "native simulation bench completes",
+      "unchanged Save retains exact gain"
+    ],
+    "warnings": 0,
+    "errors": 0,
+    "flightStarted": false,
+    "publicStorageTouched": false
+  },
+  "limits": [
+    "Local keyboard acceptance, not final Pages deployment",
+    "No new platform performance qualification",
+    "Inverse propulsion helper is synthetic diagnostic preparation and flightEligible remains false",
+    "Local best-practice-flight search is separate and not included"
+  ]
+}

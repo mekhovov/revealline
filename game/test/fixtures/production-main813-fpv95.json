@@ -5,42 +5,59 @@
   "provenance": {
     "path": "authoring/library/fpv-field-kit/production.rltheme",
     "gitBlob": "6a32b9a852cb53b30adc9c2232478e5344611a3d",
-    "bytes": 7916418,
-    "sha256": "8e1c09373758982f6cc0092f03998915b60046c8dfb6ce9f665dbe23863dfe24"
+    "bytes": 7807538,
+    "sha256": "18c00827901b908a55f6e72fd0230df6048a74fc0417f2b70c892e24d90cfe46",
+    "scope": "Derived retained-content oracle after an ownership migration. Source commit and tag identify the original artifact; these new bytes are not that release or its historical qualification."
   },
   "metadata": {
     "format": "revealline-theme-bundle.v1",
     "id": "field-kit",
     "revision": 95,
     "selection": {
-      "base": { "id": "base", "revision": 1 },
+      "base": {
+        "id": "base",
+        "revision": 1
+      },
       "collection": null,
-      "theme": { "id": "fpv", "revision": 95 }
+      "theme": {
+        "id": "fpv",
+        "revision": 95
+      }
     }
   },
   "groups": {
     "slots": {
-      "count": 335,
-      "sha256": "f2d853890e884c926450d6cbe7ed2648676e62a079a9e8768fc73a8fc12d1051"
+      "count": 302,
+      "sha256": "93cd0c41cf186805569b72f283fbeb803cf31623b3935cbc3cd0aa494f1fac22"
     },
     "assets": {
-      "count": 2566,
-      "sha256": "3a95d54d578ba16fb6f7cb34182164d74689e67a76e48978f51f621048b56262"
+      "count": 2533,
+      "sha256": "6d15940d3574c8fbdaca2c0d82ee1f8606f6240e063f55553a9f1076bc1f6df9"
     },
     "themes": {
       "count": 96,
-      "sha256": "d640c7f3f4c918af7d19a29f16928b69570cb45a5679dc7d62d9174e639e1a51"
+      "sha256": "ebdac57e1333dfcb2c1a97e29e32a9b7e4ba1869e90873dbe2740a8c7dfd4965"
     },
     "collections": {
       "count": 1,
-      "sha256": "74daee988fe6fe616d1ecc4a6ffd9f6c9c47b2fc00584259232f8f1477db1b57"
+      "sha256": "84f512c5583368c0d68f138d2d3f7821e0492c0693e931751f8ec3311f6f30cc"
     }
   },
   "payloads": {
     "count": 132,
-    "bytes": 4009342,
     "sha256": "4932cc57542adc364f44cb548011a7ca26afa7e0cb1eb00e00647fe5c381738c"
   },
   "audioRecords": 384,
-  "scope": "Exact accepted main95 original ledger decoded locally; not candidate-derived, not generated-output download or publication approval."
+  "scope": "Exact accepted main95 original ledger decoded locally; not candidate-derived, not generated-output download or publication approval.",
+  "migration": {
+    "format": "revealline-retained-production-oracle.v1",
+    "originalBundleSHA256": "8e1c09373758982f6cc0092f03998915b60046c8dfb6ce9f665dbe23863dfe24",
+    "originalFixtureSHA256": "20b7252756047fb392190db6a1413b10d64a96ff1b55f9bcef1d6f52653f01ef",
+    "removedSlots": 33,
+    "removedAssets": 33,
+    "preservedPayloads": {
+      "count": 132,
+      "sha256": "4932cc57542adc364f44cb548011a7ca26afa7e0cb1eb00e00647fe5c381738c"
+    }
+  }
 }

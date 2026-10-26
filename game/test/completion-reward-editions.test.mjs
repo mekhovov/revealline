@@ -18,7 +18,7 @@ import { collectEditionSelectedFiles, compileEdition } from '../../scripts/compi
 import { createCandidateSoloHost } from '../content-design/solo-host.mjs';
 import { resolveGameplayTuning } from '../gameplay-tuning.mjs';
 import { dataIdentity } from '../data-json.mjs';
-import { COMPANY_LESSONS } from '../company-campaigns/lessons.mjs';
+import { learningFixture } from './helpers/learning-fixture.mjs';
 import { completionLearningReference } from '../rewards/learning.mjs';
 import {
   companySourceDraft,
@@ -146,7 +146,7 @@ async function fixture() {
 test('learning reward requirements compile, bootstrap and round trip only with their exact selected lesson sidecar', async () => {
   const f = await fixture();
   const lesson = {
-    ...structuredClone(COMPANY_LESSONS[0]),
+    ...structuredClone(learningFixture()),
     campaignId: f.descriptor.id,
     missionId: f.source.missions[0].id,
   };

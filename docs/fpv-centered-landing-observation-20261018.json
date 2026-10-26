@@ -1,0 +1,146 @@
+{
+  "format": "FpvCenteredLandingObservation.v1",
+  "sourceRevision": "7d4e043d7a7a4ffa764189bee17c9b3259418e88",
+  "scripted": true,
+  "scored": false,
+  "courseId": "flight-01",
+  "courseUnchanged": true,
+  "aircraftId": "meteor75-analog-2022",
+  "mode": "self-level",
+  "normalInputOnly": true,
+  "lateralControls": "roll=pitch=yaw=0",
+  "missionTick": 1500,
+  "objective": 1,
+  "total": 2,
+  "position": {
+    "x": 0,
+    "y": -1,
+    "z": 0
+  },
+  "velocity": {
+    "x": 0,
+    "y": 0,
+    "z": 0
+  },
+  "grounded": false,
+  "support": null,
+  "landingSpeed": 0,
+  "landingTilt": 1,
+  "rawTelemetry": {
+    "backend": "civilian-quad-aircraft-regional.v2",
+    "experimental": true,
+    "scored": false,
+    "frequency": 500,
+    "missionHz": 50,
+    "missionTick": 1500,
+    "substep": 15000,
+    "seconds": 30,
+    "position": {
+      "x": 0.00033026476739905775,
+      "y": 0.017488036304712296,
+      "z": -0.00019733354565687478
+    },
+    "velocity": {
+      "x": -1.8872832185934385e-8,
+      "y": -1.2166621843334724e-7,
+      "z": 4.903669648115283e-8
+    },
+    "orientation": {
+      "x": 0.000007508018370572245,
+      "y": 0.00017349720292259008,
+      "z": 0.000023495662389905192,
+      "w": 1
+    },
+    "requestedRates": {
+      "roll": 0.04,
+      "pitch": 0.04,
+      "yaw": 0
+    },
+    "achievedRates": {
+      "roll": -0.00010996048320473101,
+      "pitch": -0.00006187067519608372,
+      "yaw": 3.175722646952301e-7
+    },
+    "calibratedInput": {
+      "roll": 0,
+      "pitch": 0,
+      "yaw": 0,
+      "throttle": 0
+    },
+    "motorSpeeds": [
+      0.08025128029132668,
+      0.08000000000000003,
+      0.08025303755712163,
+      0.08058207042013861
+    ],
+    "voltage": 4.349515476369813,
+    "current": 0.007454209695170105,
+    "usedAh": 0,
+    "consumedSequence": 1499,
+    "consumedTimestampUs": 29980000,
+    "sampleAgeUs": 20000,
+    "devicePollHz": null,
+    "saturated": true,
+    "radius": 0.06929646455628166,
+    "supportHeight": 0.017502630694065578,
+    "topHeight": 0.017502630694065578,
+    "contact": {
+      "touching": false,
+      "grounded": false,
+      "normal": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "impactSpeed": 0,
+      "contacts": 1,
+      "ids": [],
+      "entries": [],
+      "support": null
+    },
+    "dynamicColliders": [],
+    "recordingStatus": {
+      "format": "AircraftRecordingStatus.v1",
+      "state": "recording",
+      "retainedFromSeconds": 24.44,
+      "retainedThroughSeconds": 30,
+      "lastRecoverableSeconds": null,
+      "currentSeconds": 30,
+      "retainedSegments": 3,
+      "retainedBytes": 124805,
+      "error": null
+    },
+    "archiveStatus": {
+      "generation": 1,
+      "origin": {
+        "kind": "checkpoint",
+        "startTick": 1222
+      },
+      "earliestIndex": 10,
+      "lastSealedIndex": 11,
+      "latestTick": 1500
+    },
+    "terrain": {
+      "frameIdentity": "c737cde8666c22db",
+      "touching": false,
+      "grounded": false,
+      "normal": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "impactSpeed": 0,
+      "contacts": 1,
+      "ids": [],
+      "entries": [],
+      "support": null
+    }
+  },
+  "transitions": [
+    {
+      "completedObjective": 1,
+      "endTick": 108
+    }
+  ],
+  "scope": "One centered scripted run of the original Academy Lift and land. This does not diagnose the physical-contact cause or establish behavior of other courses."
+}

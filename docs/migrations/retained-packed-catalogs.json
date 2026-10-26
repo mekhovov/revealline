@@ -1,0 +1,77 @@
+{
+  "format": "revealline-retained-packed-catalogs.v1",
+  "sourceRevision": "4ec0fb00bf7ca97c54a1fdda3e6a3c5bb67926bf",
+  "scope": "Derived presentation catalogs and recovery excerpts. Original bytes and old replay provenance are preserved externally. Only inventoried retired catalog messages were removed; surrounding source and all retained messages are unchanged. Historical evidence describes its original inputs, not these derived catalogs.",
+  "items": [
+    {
+      "path": "docs/performance/fixtures/solo-replay-portability/node-1255-catalogs.fixture",
+      "originalSHA256": "ba333d67a719078e6fca92094bee9d60e7fdcfd2ed197adadefed115766e9224",
+      "sha256": "0f4661c71926c1f79ad159ef7d8e15d03e72d4f34a8de2e8b194eae915f0cd71",
+      "previousBytes": 1264959,
+      "bytes": 1261607,
+      "payloads": 1,
+      "retainedMessages": 27460,
+      "removedMessages": 78
+    },
+    {
+      "path": "recovery/local-worktrees-20261009/team-terminal-retry-v137/conflict-stages/game/i18n/catalogs.mjs.stage1",
+      "originalSHA256": "b294862d5c63fe0b4edde6dd8dd19b95dc76c60dbad0dd531f0b4d489db2590a",
+      "sha256": "db61d8e4c34671e8e0304f0bd9cefe888be7ba9b8e654a7b7a0c4105216e18cc",
+      "previousBytes": 869535,
+      "bytes": 865691,
+      "payloads": 1,
+      "retainedMessages": 19082,
+      "removedMessages": 68
+    },
+    {
+      "path": "recovery/local-worktrees-20261009/team-terminal-retry-v137/conflict-stages/game/i18n/catalogs.mjs.stage2",
+      "originalSHA256": "8214dca7d56845a9943d9bde25b3ec36a0e522e250849c2b1122f0d902daf020",
+      "sha256": "4ab37277abbaf8292e005d12c31e481c9d3b94461a4d3477b8a129c6c5661e64",
+      "previousBytes": 909247,
+      "bytes": 906467,
+      "payloads": 1,
+      "retainedMessages": 20110,
+      "removedMessages": 68
+    },
+    {
+      "path": "recovery/local-worktrees-20261009/team-terminal-retry-v137/conflict-stages/game/i18n/catalogs.mjs.stage3",
+      "originalSHA256": "95cb3a4dde4c17af4f9b43e1002e95568abddc4cb51b2c4f34c1342321a0ad3d",
+      "sha256": "5647467b0182e47f49c7ee22fd160fc342c8ec9f433b30e7215554736c7bf3e1",
+      "previousBytes": 869499,
+      "bytes": 865831,
+      "payloads": 1,
+      "retainedMessages": 19084,
+      "removedMessages": 68
+    },
+    {
+      "path": "recovery/local-worktrees-20261009/team-terminal-retry-v137/working-tree.patch",
+      "originalSHA256": "2744821805ea3e5d6ab430d544c8e329413d48763e43af2b0419680e4e52a387",
+      "sha256": "3bf527e4ad8c64d4113964012308233ab5f1290998ad80b847cf285d5deec7ef",
+      "previousBytes": 2655128,
+      "bytes": 2644836,
+      "payloads": 3,
+      "retainedMessages": 58276,
+      "removedMessages": 204
+    },
+    {
+      "path": "recovery/local-worktrees-20261009/unified-game-menus/working-tree.patch",
+      "originalSHA256": "1a040b0b2d23d10d4f6c0b45e293bfdeec298e88a50659323b61c540fec6765a",
+      "sha256": "178eb4ba248d39030501b08404650094b2069384a2c684ec0f783a9fe3eb4ef5",
+      "previousBytes": 2958646,
+      "bytes": 2951966,
+      "payloads": 2,
+      "retainedMessages": 52032,
+      "removedMessages": 156
+    },
+    {
+      "path": "recovery/local-worktrees-20261009/v135-replay-audit/local-commits.patch",
+      "originalSHA256": "d9532ba19e67536990c2b3578eb21a48142a85a7f14172dc2c8edd8976b7c01e",
+      "sha256": "12065fc06d46f62159388b1fb8f34424df3e9b39abfcbb1f334323408b011270",
+      "previousBytes": 1868537,
+      "bytes": 1862837,
+      "payloads": 2,
+      "retainedMessages": 38412,
+      "removedMessages": 136
+    }
+  ]
+}

@@ -14,9 +14,11 @@ const PAPER_COUNT = 104;
 const GLINT_COUNT = 16;
 // Keep the family IDs stable for existing presentation consumers. Each now
 // selects a paper palette; the firework-like bloom uses paper and stars only.
-const CONFETTI_TONES = {'signal-clear': ['accent', 'safe', 'paper', 'danger', 'accent', 'safe'],
-'stitch-bloom': ['accent', 'danger', 'paper', 'safe', 'danger', 'accent'],
-'neon-fireworks': ['danger', 'safe', 'paper', 'accent', 'safe', 'danger']};
+const CONFETTI_TONES = {
+  'signal-clear': ['accent', 'safe', 'paper', 'danger', 'accent', 'safe'],
+  'stitch-bloom': ['accent', 'danger', 'paper', 'safe', 'danger', 'accent'],
+  'neon-fireworks': ['danger', 'safe', 'paper', 'accent', 'safe', 'danger'],
+};
 // Stateless presentation randomness: sampling a frame never consumes gameplay
 // randomness, accumulates particles or depends on the rendering frame rate.
 function sample(seed, index, channel) {

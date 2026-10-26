@@ -92,8 +92,8 @@ async function fly(entry, configuration, mode, { ticks = 180, throttle, inspect 
     assert.deepEqual(initialized.controller, expected.advanced.controller);
     assert.deepEqual(initialized.response.response, expected.response);
     assert.equal(initialized.response.mode, mode);
-    assert.equal(initialized.frequency, 500);
-    assert.equal(initialized.backend, 'civilian-quad-aircraft-regional.v2');
+    assert.equal(initialized.frequency, 1000);
+    assert.equal(initialized.backend, 'civilian-quad-aircraft-regional.v3');
     flight.arm();
     for (let tick = 0; tick < ticks; tick++) {
       const command = {
