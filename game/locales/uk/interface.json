@@ -6221,5 +6221,19 @@
   "captureHomeRecommendation.first": "Пропонована місія: {{mission}}. Це перша місія цієї Подорожі.",
   "captureHomeRecommendation.selected": "Пропонована місія: {{mission}}. Продовжте вибрану місію цієї Подорожі.",
   "captureHomeRecommendation.retry": "Пропонована місія: {{mission}}. Ваша остання спроба тут завершилася; спробуйте цю місію знову.",
-  "captureHomeRecommendation.recordedNext": "Пропонована місія: {{mission}}. Вона йде після місії «{{previous}}», завершення якої записано у вашому прогресі."
+  "captureHomeRecommendation.recordedNext": "Пропонована місія: {{mission}}. Вона йде після місії «{{previous}}», завершення якої записано у вашому прогресі.",
+  "flightDetails.progress.title": "Прогрес місії",
+  "flightDetails.progress.unavailable": "Частина даних про прогрес місії недоступна.",
+  "flightDetails.progress.hunt": "Знешкоджено цілей: {{current}} / {{target}}.",
+  "flightDetails.progress.revealed": "Відкрито зображення: {{value}}%.",
+  "flightDetails.progress.target": "Ціль відкриття: {{value}}% зображення.",
+  "flightDetails.progress.remaining": "Ще потрібно відкрити: {{value}}% зображення.",
+  "flightDetails.progress.lessThan": "До цілі відкриття залишилося менше ніж {{value}}% зображення.",
+  "flightDetails.progress.reached": "Ціль відкриття досягнуто. Решту обов’язкових цілей усе ще потрібно виконати.",
+  "flightDetails.progress.routes.revealed": "Захоплено доступних маршрутів: {{value}}%.",
+  "flightDetails.progress.routes.target": "Ціль захоплення маршрутів: {{value}}% доступних маршрутів.",
+  "flightDetails.progress.routes.remaining": "Ще потрібно захопити: {{value}}% доступних маршрутів.",
+  "flightDetails.progress.routes.lessThan": "До цілі залишилося менше ніж {{value}}% доступних маршрутів.",
+  "flightDetails.progress.routes.reached": "Ціль захоплення маршрутів досягнуто. Решту обов’язкових цілей усе ще потрібно виконати.",
+  "flightDetails.progress.routes.bonus": "Небезпечні ділянки — бонусна територія відкриття."
 }
