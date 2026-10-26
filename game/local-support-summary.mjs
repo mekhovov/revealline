@@ -18,7 +18,19 @@ const controllerStates = [
   'waiting-neutral',
   'joined',
   'connected',
+  'observed',
 ];
+const snakeHosts = ['snake-solo', 'snake-versus', 'snake-team'];
+const teamHosts = ['capture-team'];
+const versusHosts = ['capture-versus'];
+const overflightHosts = [
+  'overflight',
+  'overflight-riy',
+  'overflight-hunt',
+  'overflight-time-attack',
+  'overflight-marathon',
+];
+const academyHosts = ['fpv-academy'];
 
 /** A fixed projection of current owners. No raw URL, identity, input history,
  * game data, storage key or exception text is accepted into this document. */
@@ -46,12 +58,15 @@ export function supportSnapshot(host = {}, env = globalThis, clock = {}) {
       Number.isSafeInteger(capturedAt) && capturedAt >= 1e12 && capturedAt < 1e13
         ? new Date(capturedAt).toISOString()
         : null,
-    scope:
-      host.kind === 'capture-team'
+    scope: snakeHosts.includes(host.kind)
+      ? 'snake-game-shell'
+      : versusHosts.includes(host.kind)
+        ? 'versus-game-shell'
+        : teamHosts.includes(host.kind)
         ? 'team-game-shell'
-        : host.kind === 'capture-versus'
-          ? 'versus-game-shell'
-          : host.kind === 'fpv-academy'
+        : overflightHosts.includes(host.kind)
+          ? 'overflight-game-shell'
+          : academyHosts.includes(host.kind)
             ? 'academy-game-shell'
             : 'primary-game-shell',
     build: {
@@ -68,9 +83,11 @@ export function supportSnapshot(host = {}, env = globalThis, clock = {}) {
         'journey',
         'installed-edition',
         'practice',
-        'capture-team',
-        'capture-versus',
-        'fpv-academy',
+        ...snakeHosts,
+        ...teamHosts,
+        ...overflightHosts,
+        ...versusHosts,
+        ...academyHosts,
       ]),
       state: oneOf(host.state, [
         'idle',
@@ -87,7 +104,13 @@ export function supportSnapshot(host = {}, env = globalThis, clock = {}) {
       locale: oneOf(host.locale, ['en', 'uk']),
       saving: {
         writable: boolean(host.writable),
-        reason: oneOf(host.writerReason, ['owned', 'occupied', 'unavailable', 'practice']),
+        reason: oneOf(host.writerReason, [
+          'owned',
+          'occupied',
+          'unavailable',
+          'practice',
+          'released',
+        ]),
       },
     },
     environment: {

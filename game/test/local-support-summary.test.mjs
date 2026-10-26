@@ -117,6 +117,37 @@ test('controller snapshots distinguish readiness, inactive/stale sampling and mi
   assert.equal(supportSnapshot(invalid, env, clock).build.version, null);
 });
 
+test('Snake host scopes and terminal states stay bounded without inventing neutral-input readiness', () => {
+  for (const kind of ['snake-solo', 'snake-versus', 'snake-team']) {
+    const report = supportSnapshot(
+      {
+        kind,
+        state: 'finished',
+        writerReason: 'released',
+        writable: false,
+        controller: { sampledAt: 900, status: 'observed', assigned: true },
+      },
+      environment(),
+      clock,
+    );
+    assert.equal(report.scope, 'snake-game-shell');
+    assert.equal(report.game.host, kind);
+    assert.equal(report.game.state, 'finished');
+    assert.equal(report.game.saving.reason, 'released');
+    assert.equal(report.controller.status, 'observed');
+    assert.equal(report.controller.neutral, null);
+    assert.equal(report.controller.confirmBlocked, null);
+    assert.equal(report.controller.confirmReason, 'unavailable');
+  }
+  const invalid = supportSnapshot(
+    { kind: 'snake-secret', state: 'private-result' },
+    environment(),
+    clock,
+  );
+  assert.equal(invalid.game.host, 'unavailable');
+  assert.equal(invalid.game.state, 'unavailable');
+});
+
 test('hanging storage observations have a bounded deadline and cancellation settles promptly', async () => {
   const env = environment(),
     wait = deferred();
@@ -273,42 +304,6 @@ test('refreshing or reopening while a native export waits cannot start a second 
   h.ui.destroy();
 });
 
-test('Team support accepts only its aggregate scalar observation and does not invent readiness or save permission', () => {
-  const value = supportSnapshot(
-    {
-      kind: 'capture-team',
-      state: 'paused',
-      writable: null,
-      controller: {
-        sampledAt: 900,
-        status: 'connected',
-        assigned: true,
-        seats: ['private-seat'],
-        devices: ['private-device'],
-        buttons: [1],
-        axes: [0.2],
-      },
-    },
-    environment(),
-    clock,
-  );
-  assert.equal(value.scope, 'team-game-shell');
-  assert.equal(value.game.host, 'capture-team');
-  assert.equal(value.game.state, 'paused');
-  assert.equal(value.game.saving.writable, null);
-  assert.equal(value.game.saving.reason, 'unavailable');
-  assert.equal(value.controller.assigned, true);
-  assert.equal(value.controller.neutral, null);
-  assert.equal(value.controller.confirmBlocked, null);
-  assert.equal(value.controller.confirmReason, 'unavailable');
-  assert.doesNotMatch(JSON.stringify(value), /private|seats|devices|buttons|axes/);
-  for (const kind of ['solo', 'journey', 'installed-edition', 'practice']) {
-    const primary = supportSnapshot({ kind }, environment(), clock);
-    assert.equal(primary.scope, 'primary-game-shell');
-    assert.equal(primary.game.host, kind);
-  }
-});
-
 test('explicit section visibility and invalidation retire a pending visit even after away/back', async () => {
   let open = true;
   const held = deferred(),
@@ -360,6 +355,43 @@ test('explicit owner invalidation preserves an outstanding export lease across r
   assert.equal(h.$('download').disabled, false);
   assert.doesNotMatch(h.$('status').textContent, /Shared with/);
   h.ui.destroy();
+});
+
+test('Team support accepts only its aggregate scalar observation and does not invent readiness or save permission', () => {
+  const value = supportSnapshot(
+    {
+      kind: 'capture-team',
+      state: 'paused',
+      writable: null,
+      controller: {
+        sampledAt: 900,
+        status: 'connected',
+        assigned: true,
+        seats: ['private-seat'],
+        devices: ['private-device'],
+        buttons: [1],
+        axes: [0.2],
+      },
+    },
+    environment(),
+    clock,
+  );
+  assert.equal(value.scope, 'team-game-shell');
+  assert.equal(value.game.host, 'capture-team');
+  assert.equal(value.game.state, 'paused');
+  assert.equal(value.game.saving.writable, null);
+  assert.equal(value.game.saving.reason, 'unavailable');
+  assert.equal(value.controller.assigned, true);
+  assert.equal(value.controller.neutral, null);
+  assert.equal(value.controller.confirmBlocked, null);
+  assert.equal(value.controller.confirmReason, 'unavailable');
+  assert.doesNotMatch(JSON.stringify(value), /private|seats|devices|buttons|axes/);
+  for (const kind of ['solo', 'journey', 'installed-edition', 'practice']) {
+    const primary = supportSnapshot({ kind }, environment(), clock);
+    assert.equal(primary.scope, 'primary-game-shell');
+    assert.equal(primary.game.host, kind);
+  }
+
 });
 
 test('Versus finished is an observed round state and preserves primary and Team scopes', () => {

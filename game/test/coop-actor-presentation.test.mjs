@@ -30,7 +30,7 @@ const approvedActors = validateCompiledPresentation(
   JSON.parse(
     await readFile(
       new URL(
-        "../presentation/compiled/runtime.af2d1d398ca56ec365899940d27f790c2b406d385461e89a1dc8fcbbcede6972.json",
+        '../presentation/compiled/runtime.af2d1d398ca56ec365899940d27f790c2b406d385461e89a1dc8fcbbcede6972.json',
         import.meta.url,
       ),
     ),

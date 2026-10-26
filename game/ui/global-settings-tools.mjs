@@ -1,10 +1,12 @@
-import { localizedAttribute, localizedText, t } from '../i18n/index.mjs';
+import { getLocale, localizedAttribute, localizedText, t } from '../i18n/index.mjs';
 import { attachProfileRecoveryDialog } from './profile-recovery-dialog.mjs';
 import { attachStorageRetention } from './storage-retention.mjs';
 import { attachInstallOfflinePanel } from './install-offline-panel.mjs';
 import { setMenuIcon } from './native-menu-icons.mjs';
+import { restoreSettingsPanelFocus } from './settings-panels.mjs';
 
 const owners = new WeakMap();
+const radioBridgeKey = Symbol.for('revealline.page-radio-menu');
 export const globalSettingsToolsRoot = (doc = globalThis.document) =>
   owners.get(doc)?.root() ?? null;
 export const globalSettingsToolFrameFocused = (doc = globalThis.document) =>
@@ -89,6 +91,7 @@ export function mountGlobalSettingsTools({
   getOwner = () => null,
   isOwnerCurrent = () => true,
   onOpen = () => {},
+  onPresentationChange = () => {},
   currentVersion = doc.documentElement.dataset.buildVersion,
   resolveSourceVersion,
   packaged = !!currentVersion && !currentVersion.includes('__'),
@@ -97,6 +100,7 @@ export function mountGlobalSettingsTools({
   offlinePanel,
   coreURL = new URL('../', import.meta.url),
   loadRecovery,
+  createRadioNavigation,
 } = {}) {
   if (owners.has(doc)) return owners.get(doc);
   const controls = { ...existing },
@@ -109,7 +113,18 @@ export function mountGlobalSettingsTools({
     toolFrame,
     toolOpener,
     toolOwner,
-    releaseToolKeyboard = () => {};
+    releaseToolKeyboard = () => {},
+    radioNavigation = null,
+    radioDocument = null,
+    radioNativeOwner = null,
+    radioToken = null,
+    radioHint = null;
+  const releaseToolRadio = () => {
+    radioNativeOwner?.release(radioToken);
+    radioNavigation?.dispose();
+    radioHint?.remove();
+    radioNavigation = radioDocument = radioNativeOwner = radioToken = radioHint = null;
+  };
   const valid = (owner) => !disposed && getSettingsOpen() && isOwnerCurrent(owner);
   const make = (tag, key, copy) => {
     const node = doc.createElement(tag);
@@ -176,6 +191,7 @@ export function mountGlobalSettingsTools({
       getOwner,
       isOwnerCurrent,
       onOpen,
+      onPresentationChange,
       ...(loadRecovery ? { load: loadRecovery } : {}),
     });
   }
@@ -224,6 +240,7 @@ export function mountGlobalSettingsTools({
     };
   }
   const closeTool = () => {
+    releaseToolRadio();
     if (toolDialog?.open) toolDialog.close();
   };
   const openTool = (button, title, url) => {
@@ -237,14 +254,29 @@ export function mountGlobalSettingsTools({
       toolDialog.className = 'global-settings-tool-dialog';
       const header = make('header'),
         back = make('button', 'tool-back', 'interface:backToSettings'),
+        enter = make('button', 'tool-enter'),
         heading = make('h2', 'tool-title');
       toolDialog.setAttribute('aria-labelledby', heading.id);
       back.onclick = closeTool;
       setMenuIcon(back, 'back');
-      header.append(back, heading);
+      localizedText(enter, () => (getLocale() === 'uk' ? 'Перейти до інструмента' : 'Enter tool'));
+      enter.disabled = true;
+      enter.onclick = () => {
+        if (enter.disabled || !valid(toolOwner)) return;
+        releaseToolRadio();
+        toolFrame.focus({ preventScroll: true });
+        try {
+          toolFrame.contentWindow?.focus?.();
+        } catch {
+          // The outer Back button remains available for opaque child pages.
+        }
+      };
+      header.append(back, heading, enter);
       toolFrame = make('iframe', 'tool-frame');
       toolFrame.tabIndex = 0;
       toolFrame.addEventListener('load', () => {
+        releaseToolRadio();
+        enter.disabled = false;
         releaseToolKeyboard();
         releaseToolKeyboard = () => {};
         // Native key events stop at an iframe boundary. Leave inner dialogs and
@@ -287,25 +319,32 @@ export function mountGlobalSettingsTools({
         closeTool();
       });
       toolDialog.addEventListener('close', () => {
+        releaseToolRadio();
         releaseToolKeyboard();
         releaseToolKeyboard = () => {};
         toolFrame.removeAttribute('src');
-        if (
-          valid(toolOwner) &&
-          !doc.hidden &&
-          doc.hasFocus?.() !== false &&
-          toolOpener?.isConnected &&
-          !toolOpener.closest('[hidden],[inert],[aria-hidden="true"]')
-        )
-          toolOpener.focus({ preventScroll: true });
+        if (valid(toolOwner) && !doc.hidden && doc.hasFocus?.() !== false) {
+          if (restoreSettingsPanelFocus(settingsRoot, toolOpener)) return;
+          if (
+            toolOpener?.isConnected &&
+            !toolOpener.disabled &&
+            !toolOpener.closest('[hidden],[inert],[aria-hidden="true"]') &&
+            toolOpener.getClientRects().length
+          )
+            toolOpener.focus({ preventScroll: true });
+        }
       });
     }
     localizedText(doc.getElementById(`${prefix}-tool-title`), () => t(title));
     localizedAttribute(toolFrame, 'title', () => t(title));
+    releaseToolRadio();
+    doc.getElementById(`${prefix}-tool-enter`).disabled = true;
     toolFrame.src = url.href;
     doc.getElementById(`${prefix}-tool-open-page`).href = url.href;
+    const opening = !toolDialog.open;
     toolDialog.showModal();
     doc.getElementById(`${prefix}-tool-back`).focus({ preventScroll: true });
+    if (opening) onPresentationChange();
   };
   if (coreURL)
     for (const [key, category, title, route, icon] of [
@@ -323,6 +362,185 @@ export function mountGlobalSettingsTools({
       const { button } = row(key, category, title, icon);
       button.onclick = () => openTool(button, title, new URL(route, coreURL));
     }
+  const ownsToolFrame = () =>
+    !disposed &&
+    !doc.hidden &&
+    doc.hasFocus?.() !== false &&
+    toolDialog?.open &&
+    valid(toolOwner) &&
+    doc.activeElement === toolFrame;
+  const nativeRadioOwner = (document) => {
+    const candidate = document?.[radioBridgeKey];
+    return candidate &&
+      ['claim', 'handle', 'release'].every((key) => typeof candidate[key] === 'function')
+      ? candidate
+      : null;
+  };
+  const pollToolRadio = ({ radio, now }) => {
+    if (
+      !ownsToolFrame() ||
+      typeof createRadioNavigation !== 'function' ||
+      !radio ||
+      typeof radio.key !== 'string' ||
+      !Number.isInteger(radio.index) ||
+      radio.index < 0 ||
+      (radio.verified !== true && radio.provisional !== true)
+    ) {
+      releaseToolRadio();
+      return false;
+    }
+    let childDocument, childWindow;
+    const route = [];
+    try {
+      childWindow = toolFrame.contentWindow;
+      childDocument = toolFrame.contentDocument;
+      if (
+        !childDocument?.body ||
+        childWindow.location.origin !== win.location.origin ||
+        childDocument.hidden
+      ) {
+        releaseToolRadio();
+        return false;
+      }
+      route.push({ frame: toolFrame, document: childDocument, parent: doc, back: closeTool });
+      // Follow only a deliberately entered authoring preview with its own
+      // native menu owner. Running games keep their existing input authority.
+      for (let depth = 0; depth < 4; depth++) {
+        const preview = nativeRadioOwner(childDocument)?.preview?.();
+        if (
+          !preview?.frame ||
+          typeof preview.back !== 'function' ||
+          childDocument.activeElement !== preview.frame
+        )
+          break;
+        try {
+          const nestedDocument = preview.frame.contentDocument,
+            nestedWindow = preview.frame.contentWindow;
+          if (
+            !nestedDocument?.body ||
+            nestedDocument.hidden ||
+            nestedWindow.location.origin !== win.location.origin ||
+            !nativeRadioOwner(nestedDocument)
+          )
+            break;
+          route.push({
+            frame: preview.frame,
+            document: nestedDocument,
+            parent: childDocument,
+            back: preview.back,
+          });
+          childDocument = nestedDocument;
+          childWindow = nestedWindow;
+        } catch {
+          break;
+        }
+      }
+    } catch {
+      releaseToolRadio();
+      return false;
+    }
+    const childCurrent = () => {
+      try {
+        return (
+          ownsToolFrame() &&
+          !childDocument.hidden &&
+          route.every(
+            (entry) =>
+              entry.parent.activeElement === entry.frame &&
+              entry.frame.contentDocument === entry.document,
+          )
+        );
+      } catch {
+        return false;
+      }
+    };
+    const backToParent = () => {
+      if (!childCurrent()) return;
+      const back = route.at(-1).back;
+      releaseToolRadio();
+      back();
+    };
+    if (radioDocument !== childDocument) {
+      releaseToolRadio();
+      radioDocument = childDocument;
+      radioToken = {};
+      radioHint = childDocument.createElement('p');
+      radioHint.setAttribute('role', 'status');
+      radioHint.dataset.radioMenuHint = '';
+      radioHint.style.cssText =
+        'position:fixed;bottom:4px;left:8px;right:8px;z-index:10000;margin:0;padding:6px;background:#101820;color:#edf2ff;font:13px system-ui;pointer-events:none;';
+      childDocument.body.append(radioHint);
+      radioNavigation = createRadioNavigation({
+        document: childDocument,
+        window: childWindow,
+        keyboard: false,
+        getContext: () => {
+          if (!childCurrent()) return null;
+          const nestedFrame = childDocument.activeElement?.tagName === 'IFRAME',
+            root = [...childDocument.querySelectorAll('dialog[open]')].at(-1) ?? childDocument.body;
+          return {
+            root,
+            key: nestedFrame ? 'tool-preview' : root,
+            frameFocused: nestedFrame,
+            handleFrameCommand: (command) => {
+              if (command.source === 'radio') return false;
+              if (command.back) {
+                const preview = radioNativeOwner?.preview?.();
+                if (preview?.back) {
+                  releaseToolRadio();
+                  preview.back();
+                } else backToParent();
+              }
+              return true;
+            },
+          };
+        },
+        onDeviceJoin: () => radioNativeOwner?.handle(radioToken, 'join') === true,
+        onCommand: (action) => {
+          if (!radioNativeOwner) return false;
+          radioNativeOwner.handle(radioToken, action);
+          return true;
+        },
+        onBack: () => {
+          const dialog = [...childDocument.querySelectorAll('dialog[open]')].at(-1);
+          if (dialog) {
+            const event = new childWindow.Event('cancel', { cancelable: true });
+            if (dialog.dispatchEvent(event)) dialog.close();
+          } else backToParent();
+        },
+        onHint: (message) => {
+          if (radioHint)
+            radioHint.textContent =
+              childDocument.activeElement?.tagName === 'IFRAME'
+                ? getLocale() === 'uk'
+                  ? 'Перегляд має власне керування. Увімкніть і вимкніть Зброя, щоб повернутися до редактора.'
+                  : 'The preview uses its own controls. Turn Weapon on then off to return to the editor.'
+                : message;
+        },
+      });
+    }
+    const bridge = nativeRadioOwner(childDocument);
+    if (bridge !== radioNativeOwner) {
+      radioNativeOwner?.release(radioToken);
+      radioNativeOwner = bridge;
+      radioNavigation.reset({ leaveDevice: true });
+    }
+    if (
+      radio &&
+      (radio.verified === true || radio.provisional === true) &&
+      Number.isInteger(radio.index) &&
+      radio.index >= 0
+    ) {
+      radioNativeOwner?.claim({
+        token: radioToken,
+        index: radio.index,
+        isCurrent: childCurrent,
+        onBack: backToParent,
+      });
+    } else radioNativeOwner?.release(radioToken);
+    radioNavigation.poll({ radio, now, gamepads: [] });
+    return true;
+  };
   const api = {
     controls,
     root() {
@@ -333,14 +551,15 @@ export function mountGlobalSettingsTools({
           ? dialog
           : (offlinePanel?.root() ?? null);
     },
-    frameFocused: () =>
-      !doc.hidden &&
-      doc.hasFocus?.() !== false &&
-      ((toolDialog?.open && doc.activeElement === toolFrame) ||
-        offlinePanel?.frameFocused() === true),
+    frameFocused() {
+      const focused = ownsToolFrame();
+      if (!focused) releaseToolRadio();
+      return focused || offlinePanel?.frameFocused() === true;
+    },
     // A focused child owns ordinary input. Handle only the outer Back/Menu
     // boundary before controller navigation tries to repair its missing root.
     handleFrameCommand(command = {}) {
+      if (command.source === 'radio') return pollToolRadio(command);
       if (!toolDialog?.open || doc.activeElement !== toolFrame) return false;
       if (command.back || command.menu) closeTool();
       return true;

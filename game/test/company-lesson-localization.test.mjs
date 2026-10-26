@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { CURRICULUM_LESSONS } from '../company-campaigns/curriculum-lessons.mjs';
-import { COMPANY_LESSONS } from '../company-campaigns/lessons.mjs';
+import { learningFixture } from './helpers/learning-fixture.mjs';
 import {
   validateCompanyLesson,
   createLearningAttempt,
@@ -40,7 +40,7 @@ test('lesson translations preserve option identities and cannot carry different 
     mutate(altered.locales.uk);
     assert.throws(() => validateCompanyLesson(altered));
   }
-  const legacy = COMPANY_LESSONS[0];
+  const { locales, ...legacy } = learningFixture();
   assert.equal(localizeCompanyLesson(legacy, 'uk'), legacy);
 });
 

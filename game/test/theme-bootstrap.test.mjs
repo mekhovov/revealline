@@ -442,3 +442,17 @@ test('profile-owned players seed appearance without acquiring an auxiliary host 
     assert.ok(!html.includes('presentation/theme-entry.mjs'), `${file}: keeps runtime authority`);
   }
 });
+
+test('unqualified extra size paints established Large before modules without overwriting desired intent', () => {
+  const display = { textFace: 'plain', textSize: 'extra-large', reducedEffects: false };
+  const records = { 'revealline.display.v1': raw(display) };
+  const before = structuredClone(records);
+  const boot = seed(records, { studio: true });
+  assert.equal(boot.dataset.themeTextSize, 'large');
+  assert.equal(boot.variables.get('--iw-text-size'), '20px');
+  assert.equal(boot.variables.get('--iw-target'), '44px');
+  const resolved = resolvePresentation({ accessibility: display, density: 'studio' });
+  assert.equal(resolved.accessibility.textSize, 'large');
+  assert.equal(presentationThemeVariables(resolved)['--iw-text-size'], '20px');
+  assert.deepEqual(records, before);
+});

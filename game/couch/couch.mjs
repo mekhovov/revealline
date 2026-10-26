@@ -1,3 +1,4 @@
+import { renderTextSizeControl } from '../ui/text-size-control.mjs';
 import { acceptAttemptAppearance } from '../presentation/attempt-appearance.mjs';
 import { prepareIndustrialEnvironmentSource } from '../presentation/industrial-environments.mjs';
 import { runtimeActorArtRevision } from '../hunt/preferences.mjs';
@@ -58,6 +59,7 @@ import {
 import { attachCouchTouch } from '../ui/couch-touch.mjs';
 import { mountPresentationPage } from '../presentation/page.mjs';
 import { createCouchShell } from './couch-shell.mjs';
+import { versusHomeRecommendation } from '../ui/versus-home-recommendation.mjs';
 import { createMissionStartCue } from './start-cue.mjs';
 import { attachJourneyReactions } from '../ui/journey-reactions.mjs';
 import { attachJourneySaveCue } from '../ui/journey-save-cue.mjs';
@@ -126,9 +128,9 @@ import { normalizedLevel } from '../core/level.mjs';
 import { boundedJSON, dataIdentity, exactKeys } from '../data-json.mjs';
 import { downloadJSON } from '../content.mjs';
 import { attachTerminalRecordingExport } from '../ui/terminal-recording-export.mjs';
+import { attachLocalSupportSummary } from '../ui/local-support-summary.mjs';
 import { arcadeActionCapabilities } from '../core/arcade-actions.mjs';
 import { onNativeInactive, nativePlatform } from '../platform.mjs';
-import { attachLocalSupportSummary } from '../ui/local-support-summary.mjs';
 import {
   createDuel,
   stepDuel,
@@ -139,6 +141,8 @@ import {
 } from '../multiplayer.mjs';
 import { FIXED_DT, releaseInputs } from '../core/index.mjs';
 import { attachCouchInput } from './couch-input.mjs';
+import { createCouchKeyboardPreferences } from './keyboard-preferences.mjs';
+import { mountCouchKeyboardSettings } from './keyboard-settings.mjs';
 import { createControllerRouter } from '../ui/controller-router.mjs';
 import { attachControllerConfirmGuard } from '../ui/controller-confirm-guard.mjs';
 import { attachControllerNavigation } from '../ui/controller-navigation.mjs';
@@ -247,10 +251,10 @@ const displayPreferences = createDisplayPreferences({
 });
 const renderDisplayPreferences = (state) => {
   document.body.dataset.textFace = state.textFace;
-  document.body.dataset.textSize = state.textSize;
+  document.body.dataset.textSize = state.effectiveTextSize ?? state.textSize;
   document.body.dataset.effects = state.effectiveReducedEffects ? 'reduced' : 'full';
   $('race-text-face').value = state.textFace;
-  $('race-text-size').value = state.textSize;
+  renderTextSizeControl($('race-text-size'), state.textSize);
   $('race-reduced').checked = state.reducedEffects;
   localizedText($('race-system-reduction'), () =>
     state.effectiveReducedEffects && !state.reducedEffects
@@ -853,10 +857,18 @@ try {
   const cursorReceiptId = cursorEntry
     ? (candidateJourney.progressMission?.(cursorEntry)?.id ?? journeyCursor.id)
     : journeyCursor?.id;
-  const initialJourneyMission =
-    journeyCursor && Object.hasOwn(journeyProfile.snapshot().clears.versus, cursorReceiptId)
-      ? (candidateJourney.next(journeyCursor.id) ?? journeyCursor)
-      : (journeyCursor ?? candidateJourney?.catalog.missions[0]);
+  const journeyCursorCleared =
+    journeyCursor && Object.hasOwn(journeyProfile.snapshot().clears.versus, cursorReceiptId);
+  const initialJourneyMission = journeyCursorCleared
+    ? (candidateJourney.next(journeyCursor.id) ?? journeyCursor)
+    : (journeyCursor ?? candidateJourney?.catalog.missions[0]);
+  const initialHomeSelection = {
+    destination: initialJourneyMission,
+    cursor: journeyCursor,
+    cursorId: journeyProfile?.snapshot().cursors.versus ?? null,
+    recordedClear: !!journeyCursorCleared,
+  };
+  let initialHomeRecipe = null;
   $('race-level').value = candidateJourney
     ? candidateJourney.row(initialJourneyMission, journeyPreferences.snapshot().difficulty).key
     : maps[0].key;
@@ -1125,6 +1137,8 @@ try {
         );
       painters.forEach((p) => p.setAttemptAppearance(roundRecipe.attemptAppearance));
     }
+    // The accepted action starts a new clock boundary; menu time is never play time.
+    last = 0;
     resumeDuel(match, { preserveContinuation: true });
     if (cue) beginStartCue(cue);
     else {
@@ -2765,7 +2779,10 @@ try {
     root: $('race-settings-panel-controls'),
     session: controllerSession,
   });
+  const keyboardPreferences = createCouchKeyboardPreferences();
+  let keyboardSettings = null;
   const input = attachCouchInput({
+    keyboardBindings: keyboardPreferences.snapshot().bindings,
     controllerSession,
     initialSlots: incomingContinuation?.slots ?? [null, null],
     getTouchSettings: () => couchTouch.snapshot(),
@@ -2829,6 +2846,7 @@ try {
     return t('interface:captureNavigation.context', { mode });
   }
   shell = createCouchShell({
+    getKeyboardBindings: () => keyboardPreferences.snapshot().bindings,
     onSettingsPresentationChange: () => supportSummary?.invalidate(),
     controllerNeedsTouch: (seat) => slots[seat] !== null && !controllerSession.completeFlight(seat),
     getSceneContext: () => ({
@@ -2857,6 +2875,9 @@ try {
     getTeamJourneyRoute: () =>
       librarySourceReturn?.mode === 'team' ? librarySourceReturn.journey : null,
     onTransition: ({ to, back = false } = {}) => {
+      keyboardSettings?.cancel();
+      if (to === 'options') keyboardSettings?.refresh();
+      else keyboardPreferences.suspend();
       globalSettingsVisit++;
       ++libraryOpenEpoch;
       cancelLibraryDecision();
@@ -2875,6 +2896,15 @@ try {
       void startRace(roundRecipe.entry, { focusOrigin: $('race-retry') });
     },
   });
+
+  keyboardSettings = mountCouchKeyboardSettings({
+    root: $('race-settings-panel-controls'),
+    preferences: keyboardPreferences,
+    isOpen: () => shell.scope() === 'options' && match?.status !== 'running',
+  });
+  const stopKeyboard = keyboardPreferences.subscribe(({ bindings }) =>
+    input.setKeyboardBindings(bindings),
+  );
 
   function catalogueAttempt() {
     return {
@@ -4162,7 +4192,10 @@ try {
     onOpen: clear,
     offlinePanel: installOfflinePanel,
   });
-  shell.refreshGlobalSettings?.({ controls: globalTools.controls });
+  shell.refreshGlobalSettings?.({
+    controls: globalTools.controls,
+    comfort: { display: displayPreferences },
+  });
   supportSummary = attachLocalSupportSummary({
     document,
     window,
@@ -4389,6 +4422,7 @@ try {
       format: roundRecipe.format,
       contentBusy,
       focusTransition,
+      startRecommendation: homeMissionRecommendation,
       summary: () =>
         `${duelNavigationContext()} · ${roundRecipe.tuning.adminOverride ? t('interface:adminPlaytest') + ' ' : ''}${roundRecipe.format === 'first-to-two' ? t('interface:firstToTwo') : t('interface:oneRace')} · ${contentText(entry.level, 'name')}`,
     });
@@ -4411,6 +4445,39 @@ try {
         });
     if ($('race-menu-status').textContent !== text)
       localizedText($('race-menu-status'), () => text);
+  }
+  function homeMissionRecommendation() {
+    if (
+      authoredRoute?.id !== DEFAULT_JOURNEY_ROUTES.versus ||
+      libraryHandoff ||
+      incomingContinuation ||
+      !candidateJourney?.owns(roundRecipe?.entry)
+    )
+      return null;
+    const recommendation = versusHomeRecommendation({
+      catalog: candidateJourney.catalog,
+      mission: roundRecipe.entry.mission,
+      initial: roundRecipe === initialHomeRecipe ? initialHomeSelection : null,
+      ready:
+        match?.status === 'ready' &&
+        contentReady &&
+        !contentBusy &&
+        !contentError &&
+        !nextAttempt &&
+        !libraryContinuation &&
+        !pendingReadyStart,
+    });
+    const key = {
+      first: 'interface:versusHomeRecommendation.first',
+      selected: 'interface:versusHomeRecommendation.selected',
+      recordedNext: 'interface:versusHomeRecommendation.recordedNext',
+    }[recommendation?.kind];
+    return recommendation
+      ? t(key, {
+          mission: contentText(recommendation.mission, 'name'),
+          previous: recommendation.previous ? contentText(recommendation.previous, 'name') : '',
+        })
+      : null;
   }
   localizedText($('race-export-recording'), () => t('interface:recording.exportRound'));
   // Locale bindings can outlive a retired page. Keep verification in the build
@@ -4579,7 +4646,7 @@ try {
       (element.matches('button[data-theme-preview]') &&
         !!element.closest('[data-theme-controls]')) ||
       !!element.closest(
-        '#journey-chooser, #journey-backup, #race-gameplay-tuning, [data-journey-mode-pictures], .multiplayer-controllers',
+        '#journey-chooser, #journey-backup, #race-gameplay-tuning, [data-journey-mode-pictures], .multiplayer-controllers, .multiplayer-keyboard',
       ),
     getControlLabels: () => ({
       directions: t('interface:dPadLeftStick'),
@@ -4794,6 +4861,9 @@ try {
     couchTouch.destroy();
     journeyReactions.dispose();
     controllerSetup.dispose();
+    keyboardSettings.dispose();
+    stopKeyboard();
+    keyboardPreferences.dispose();
     controllerSession.dispose();
     input.destroy();
     controllerConfirmGuard.destroy();
@@ -4850,18 +4920,18 @@ try {
         while (accumulator + 1e-9 >= FIXED_DT && match.status === 'running') {
           const before = match.runs.map((r) => r.tick);
           const beforeStatus = match.runs.map((r) => r.status);
-          const commands = input.consume().map((command, i) =>
-            beforeStatus[i] === 'respawning'
-              ? {
-                  direction: null,
-                  boost: false,
-                  action: false,
-                  pickup: false,
-                }
-              : neutralResumeTick
-                ? { ...command, boost: false, action: false, pickup: false }
+          const commands = input
+            .consume(neutralResumeTick ? { neutralActions: true } : undefined)
+            .map((command, i) =>
+              beforeStatus[i] === 'respawning'
+                ? {
+                    direction: null,
+                    boost: false,
+                    action: false,
+                    pickup: false,
+                  }
                 : command,
-          );
+            );
           localRecordings.get(match)?.append(commands);
           stepDuel(match, commands);
           match.runs.forEach((run, i) =>
@@ -5242,6 +5312,7 @@ try {
   const initialPreparation = prepare(),
     initialMatch = match,
     initialGeneration = generation;
+  initialHomeRecipe = roundRecipe;
   frameId = requestAnimationFrame(frame);
   // Install the usable lobby before waiting for its required picture. Cancel
   // and Back stay reachable; only Start waits for this exact preparation.

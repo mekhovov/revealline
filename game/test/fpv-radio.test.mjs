@@ -2,6 +2,9 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {
   RADIO_FORMAT,
+  FIRE_RADIO_FORMAT,
+  COMBAT_RADIO_FORMAT,
+  RADIO_COMBAT_ACTIONS,
   DEFAULT_RESPONSE,
   STICK_LAYOUTS,
   createFlightProfileStore,
@@ -421,4 +424,163 @@ test('v2 axis switches preserve v1 calibration, reject flight-axis overlap and r
   assert.equal(radioSwitch(config, p, 'reset'), true);
   p.axes[3] = NaN;
   assert.throws(() => radioSwitch(config, p, 'reset'));
+});
+
+test('Paused radio feedback retains the real arm-switch instruction across polling frames', () => {
+  const p = pad(),
+    config = profile(p);
+  config.switches.arm = { button: 0, threshold: 0.5, invert: false };
+  const { radio } = runtime(p, config);
+  for (let i = 0; i < 10; i++) {
+    radio.poll();
+    assert.equal(radio.status().reason, 'arm-switch-off');
+  }
+  p.buttons[0].value = 1;
+  radio.poll();
+  assert.equal(radio.status().active, true);
+  radio.freeze('paused');
+  radio.poll();
+  assert.equal(radio.status().reason, 'arm-off-first');
+  p.buttons[0].value = 0;
+  radio.poll();
+  assert.equal(radio.status().reason, 'arm-switch-off');
+});
+
+test('Fire radio profiles retain legacy bytes and reject reused flight or action channels', () => {
+  const old = profile();
+  assert.deepEqual(validateRadioProfile(old), old);
+  const config = {
+    ...old,
+    format: FIRE_RADIO_FORMAT,
+    switches: { ...old.switches, camera: null, fire: { button: 2, threshold: 0.5, invert: false } },
+  };
+  assert.deepEqual(validateRadioProfile(config), config);
+  for (const change of [
+    (p) => {
+      p.switches.reset = { ...p.switches.fire };
+    },
+    (p) => {
+      p.switches.fire = { axis: p.channels.roll.axis, off: -1, on: 1 };
+    },
+    (p) => {
+      p.switches.arm = { axis: 1, off: -1, on: 1 };
+      p.switches.fire = { axis: 1, off: 1, on: -1 };
+    },
+    (p) => {
+      p.switches.fire = null;
+    },
+    (p) => {
+      p.format = RADIO_FORMAT;
+    },
+  ]) {
+    const rejected = structuredClone(config);
+    change(rejected);
+    assert.throws(() => validateRadioProfile(rejected));
+  }
+});
+
+test('Fire is a held intent requiring release after every radio ownership boundary', () => {
+  const p = pad(),
+    config = profile(p);
+  config.format = FIRE_RADIO_FORMAT;
+  config.switches.camera = null;
+  config.switches.fire = { button: 2, threshold: 0.5, invert: false };
+  p.buttons[2].value = 1;
+  const { radio } = runtime(p, config);
+  const armHeld = () => {
+    assert.equal(radio.requestArm(), true);
+    assert.equal(radio.fireHeld(), false);
+    assert.deepEqual(radio.poll(), normalizeRadioInput(config, p));
+    assert.equal(radio.fireHeld(), false, 'a held switch must not fire on arm');
+    p.buttons[2].value = 0;
+    radio.poll();
+    assert.equal(radio.status().fireReady, true);
+    p.buttons[2].value = 1;
+    for (let i = 0; i < 4; i++) {
+      radio.poll();
+      assert.equal(radio.fireHeld(), true, 'the combat runtime alone schedules repeated shots');
+    }
+  };
+  armHeld();
+  for (const reason of ['paused', 'blur', 'hidden', 'reset']) {
+    radio.freeze(reason);
+    assert.equal(radio.fireHeld(), false);
+    armHeld();
+  }
+  radio.beginSetup();
+  radio.poll();
+  assert.equal(radio.fireHeld(), false);
+  radio.endSetup();
+  armHeld();
+  radio.disconnect(p.index);
+  assert.equal(radio.fireHeld(), false);
+  radio.verify();
+  armHeld();
+});
+
+test('axis Fire binding applies switch hysteresis without changing flight inputs', () => {
+  const p = pad(),
+    config = profile(p);
+  config.format = FIRE_RADIO_FORMAT;
+  config.switches.camera = null;
+  config.switches.fire = { axis: 1, off: -1, on: 1 };
+  p.axes[1] = -1;
+  const { radio } = runtime(p, config);
+  assert.equal(radio.requestArm(), true);
+  radio.poll();
+  p.axes[1] = 1;
+  radio.poll();
+  assert.equal(radio.fireHeld(), true);
+  p.axes[1] = 0;
+  radio.poll();
+  assert.equal(radio.fireHeld(), true);
+  p.axes[1] = -1;
+  radio.poll();
+  assert.equal(radio.fireHeld(), false);
+});
+
+test('v5 combat switches preserve calibration and require a new edge across every ownership boundary', () => {
+  const p = pad();
+  p.buttons = Array.from({ length: 8 }, () => ({ value: 0 }));
+  const config = profile(p);
+  config.format = COMBAT_RADIO_FORMAT;
+  config.switches = {
+    ...config.switches,
+    camera: null,
+    fire: null,
+    ...Object.fromEntries(
+      RADIO_COMBAT_ACTIONS.map((name, i) => [
+        name,
+        { button: i + 3, threshold: 0.5, invert: false },
+      ]),
+    ),
+  };
+  const baseline = structuredClone(config.channels),
+    events = [];
+  const radio = createRadioRuntime({
+    getGamepads: () => [p],
+    onCombatAction: (action) => events.push(action),
+  });
+  assert.deepEqual(validateRadioProfile(config).channels, baseline);
+  const conflicting = structuredClone(config);
+  conflicting.switches.payload = { ...conflicting.switches.reload };
+  assert.throws(() => validateRadioProfile(conflicting));
+  radio.select(p.index);
+  radio.setProfile(config);
+  radio.verify();
+  for (const reason of ['paused', 'blur', 'hidden', 'reset', 'menu']) {
+    radio.freeze(reason);
+    for (const button of p.buttons) button.value = 1;
+    assert.equal(radio.requestArm(), true);
+    const count = events.length;
+    radio.poll();
+    assert.equal(events.length, count);
+    for (const button of p.buttons) button.value = 0;
+    radio.poll();
+    for (const button of p.buttons) button.value = 1;
+    radio.poll();
+    radio.poll();
+    assert.deepEqual(events.slice(count), RADIO_COMBAT_ACTIONS);
+  }
+  assert.deepEqual(config.channels, baseline);
 });

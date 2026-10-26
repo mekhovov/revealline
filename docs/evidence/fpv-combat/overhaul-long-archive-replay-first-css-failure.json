@@ -1,0 +1,57 @@
+{
+  "started": "2026-10-20T05:17:17.119Z",
+  "scope": "Outside performance timing. Import the complete 42,134-tick archive through Watch combat file, choose the visible supported 4x speed control, and verify the entire accepted chain.",
+  "errors": [],
+  "progress": [],
+  "archiveSha256": "3d796ee62f5015097b0491c09ca2096fc9f2c86fbf470c9863ea5cddb89d6e74",
+  "sources": {
+    "world-app.mjs": "166b4ca82ae966e2b4ddbc3ca318356918691b769960a34f54a01a14920eb8c4",
+    "style.css": "707fe0823c0888e979152a029e502009b590ee18eb88ac8409bcb57fb1876f4a",
+    "world-reaction-runtime.mjs": "b8d87796987de4953a3a62ef3094c069046e94628a7465d26161428c205da703"
+  },
+  "harnessSha256": "7f3361b9b66068cab1d44879fafacfece045ab46e57616c1fb3cc5eb5a9438b8",
+  "controls": {
+    "visible": false,
+    "display": "block",
+    "rect": {
+      "x": 0,
+      "y": 0,
+      "width": 0,
+      "height": 0,
+      "top": 0,
+      "right": 0,
+      "bottom": 0,
+      "left": 0
+    },
+    "options": [
+      {
+        "value": "0.25",
+        "disabled": false,
+        "hidden": false
+      },
+      {
+        "value": "0.5",
+        "disabled": false,
+        "hidden": false
+      },
+      {
+        "value": "1",
+        "disabled": false,
+        "hidden": false
+      },
+      {
+        "value": "2",
+        "disabled": false,
+        "hidden": false
+      },
+      {
+        "value": "4",
+        "disabled": false,
+        "hidden": false
+      }
+    ],
+    "combatClass": true
+  },
+  "failure": "locator.selectOption: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('#world-replay-rate')\u001b[22m\n\u001b[2m    - locator resolved to <select id=\"world-replay-rate\">…</select>\u001b[22m\n\u001b[2m  - attempting select option action\u001b[22m\n\u001b[2m    2 × waiting for element to be visible and enabled\u001b[22m\n\u001b[2m      - element is not visible\u001b[22m\n\u001b[2m    - retrying select option action\u001b[22m\n\u001b[2m    - waiting 20ms\u001b[22m\n\u001b[2m    2 × waiting for element to be visible and enabled\u001b[22m\n\u001b[2m      - element is not visible\u001b[22m\n\u001b[2m    - retrying select option action\u001b[22m\n\u001b[2m      - waiting 100ms\u001b[22m\n\u001b[2m    59 × waiting for element to be visible and enabled\u001b[22m\n\u001b[2m       - element is not visible\u001b[22m\n\u001b[2m     - retrying select option action\u001b[22m\n\u001b[2m       - waiting 500ms\u001b[22m\n\n    at /Users/oleksandr.mekhovov/work/my_projects/go_test_radio_fix/docs/evidence/fpv-combat/overhaul-long-archive-replay.cjs:23:16",
+  "finished": "2026-10-20T05:17:51.479Z"
+}

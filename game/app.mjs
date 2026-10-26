@@ -1,3 +1,5 @@
+import './i18n/main-entry.mjs';
+import { renderTextSizeControl } from './ui/text-size-control.mjs';
 import { loadBaseArtwork } from './base-artwork.mjs';
 import { continuousPlayPreferences } from './ui/continuous-play.mjs';
 import { nativeArtReviewURL } from './ui/art-review-navigation.mjs';
@@ -102,6 +104,7 @@ import { publishedRouteViews } from './content-design/published-journey.mjs';
 import { journeyActorThemeCandidates } from './presentation/journey-actor-materials.mjs';
 import { journeyDifficultyCatalog, journeyPreset } from './content-design/catalogs.mjs';
 import { createCandidateFlightPictures } from './ui/candidate-flight-pictures.mjs';
+import { acquireCandidatePicture } from './content-design/picture.mjs';
 import {
   resolveInstalledMissionTarget,
   installedMissionExecutionIndex,
@@ -732,6 +735,8 @@ try {
   const authoredJourney = !!authoredRoute;
   const candidateHost = authoredJourney
     ? await createSoloRouteHost(authoredRoute, {
+        // Main adopts the owned decoded picture, not a portable Studio scenario.
+        serializeArtwork: false,
         getEncounterVariant: () => encounterChoices.snapshot().variant,
         themes:
           runtimeContent?.themes ??
@@ -1491,7 +1496,7 @@ try {
     record: !practiceSession,
   });
   huntResultStatus = attachHuntStatus({
-    container: $('journey-reactions').parentElement,
+    container: $('overlay-reading'),
     mode: 'solo',
     records: huntRecords,
     record: false,
@@ -1867,7 +1872,9 @@ try {
     const pictureEntry = pictureExecutionForEntry(entry),
       pictureLevel = pictureLevelForRun(nextRun, entry, pictureEntry);
     const guarded = (owner) =>
-      runtimeContent && candidateHost?.owns(entry)
+      // Installed editions own their complete picture closure, including their
+      // practice adapters. They have no main-game download controller.
+      runtimeContent
         ? owner
         : withOfflinePictureGate(owner, async ({ signal }) => {
             if (candidateHost?.owns(entry)) {
@@ -1916,6 +1923,7 @@ try {
           },
           asset: manifest.background,
           picture: candidatePicture,
+          acquire: (asset, options) => acquireCandidatePicture(asset, { ...options, binary: true }),
         }),
       );
     }
@@ -8849,11 +8857,11 @@ try {
   function applyDisplayPreferences(state) {
     const effects = state.effectiveReducedEffects ? 'reduced' : 'full';
     const boardChanged =
-      document.body.dataset.textSize !== state.textSize ||
+      document.body.dataset.textSize !== (state.effectiveTextSize ?? state.textSize) ||
       document.body.dataset.textFace !== state.textFace ||
       document.body.dataset.effects !== effects;
-    $('text-size').value = state.textSize;
-    document.body.dataset.textSize = state.textSize;
+    renderTextSizeControl($('text-size'), state.textSize);
+    document.body.dataset.textSize = state.effectiveTextSize ?? state.textSize;
     $('text-face').value = state.textFace;
     document.body.dataset.textFace = state.textFace;
     $('reduced-effects').checked = state.reducedEffects;
@@ -8965,9 +8973,7 @@ try {
       () =>
         `${contentText(theme, 'labels.enemy')} · ${contentText(theme, 'labels.boss')} · ${contentText(theme, 'labels.supply')}`,
     );
-    localizedText($('footer-note'), () =>
-      t('interface:originalWorldsMakeEveryLineCount'),
-    );
+    localizedText($('footer-note'), () => t('interface:originalWorldsMakeEveryLineCount'));
     painter.style = scenario?.presentation?.style || library.preferences.style;
     updateBodies();
     painter.setLook(theme, bodyId, painterVisuals());
@@ -11999,6 +12005,8 @@ try {
           controls,
         });
         if (beforeStatus === 'respawning' || run.status === 'respawning') {
+          pendingAction = false;
+          pendingPickup = false;
           input.clear();
           controller.clear();
           controls = { direction: null, boost: false, action: false, pickup: false };
@@ -12009,6 +12017,8 @@ try {
           controller.clear();
           controllerFrame = null;
           controls = { direction: null, boost: false, action: false, pickup: false };
+          pendingAction = false;
+          pendingPickup = false;
           pendingSwitch = null;
         }
         refreshControllerBoostCue();
@@ -12024,9 +12034,13 @@ try {
               message: t('interface:liveGoalTrackingIsUnavailableYourPictureProgressIsKept'),
             };
           }
-        pendingAction = false;
-        pendingPickup = false;
-        if (!resuming) pendingSwitch = null;
+        // A fresh request after accepted Resume waits behind its neutral tick.
+        // Recovery and capture-stop above still retire these pending actions.
+        if (!resuming) {
+          pendingAction = false;
+          pendingPickup = false;
+          pendingSwitch = null;
+        }
         accumulator -= FIXED_DT;
         if (!recordingStopped)
           try {
@@ -13935,10 +13949,13 @@ try {
     assertCurrent();
     return host.refreshInstalled({ assertCurrent });
   }
-  async function getUnifiedMissionLibrary(isCurrent = () => true) {
+  async function getUnifiedMissionLibrary(isCurrent = () => true, trace = null) {
     const callerCurrent = unifiedLibraryGuard(isCurrent);
     callerCurrent();
-    if (unifiedLibrary) return unifiedLibrary;
+    if (unifiedLibrary) {
+      trace?.mark('missions-build-cached');
+      return unifiedLibrary;
+    }
     let attempt = unifiedLibraryLoading;
     if (attempt) {
       // A new explicit owner may join a still-admitted request. A retired
@@ -13959,7 +13976,11 @@ try {
         attempt = null;
       }
     }
-    if (attempt) return attempt.promise;
+    if (attempt) {
+      // Its original observer retains ownership; a joining request does not inherit its stamps.
+      trace?.mark('missions-build-joined');
+      return attempt.promise;
+    }
     const callers = new Set([callerCurrent]);
     const admitted = unifiedLibraryGuard();
     const assertCurrent = () => {
@@ -13982,6 +14003,7 @@ try {
         result = null,
         committed = false;
       try {
+        trace?.mark('missions-imports-begin');
         const [
           { attachJourneyChooser },
           { createInstalledMissionLibrary },
@@ -13995,7 +14017,9 @@ try {
           import('./mission-library/cross-mode-journey.mjs'),
           import('./multiplayer.mjs'),
         ]);
+        trace?.mark('missions-imports-end');
         assertCurrent();
+        trace?.mark('missions-data-begin');
         const index =
           runtimeContent?.missionIndex ??
           (await getJSON('content/mission-library-index.json', assertCurrent));
@@ -14010,12 +14034,15 @@ try {
           runtimeContent?.themes ??
           (await getJSON('content-design/themes.json', assertCurrent)).themes;
         assertCurrent();
+        trace?.mark('missions-data-end');
+        trace?.mark('missions-sources-begin');
         const libraryThemes = authoredJourneyUsesActorMaterials(route.id)
           ? journeyActorThemeCandidates(originalThemes, {
               includeOriginals: route.preserveOriginalThemes === true,
             })
           : originalThemes;
         const views = publishedRouteViews(route);
+        trace?.mark('missions-solo-host-begin');
         const host =
           candidateHost ||
           views?.solo ||
@@ -14029,6 +14056,7 @@ try {
               ? { ensurePackage: (groupId, options) => gameplayDownloads.ensure(groupId, options) }
               : {}),
           }));
+        trace?.mark('missions-solo-host-end');
         if (!candidateHost && !views?.solo) ownedHost = host;
         assertCurrent();
         const profile = candidateHost
@@ -14048,7 +14076,9 @@ try {
                 );
               },
             });
+        trace?.mark('missions-profile-load-begin');
         if (!candidateHost) await profile.load();
+        trace?.mark('missions-profile-load-end');
         assertCurrent();
         const launchSolo = async (mission, context) => {
           if (context.isCurrent?.() === false) return false;
@@ -14139,11 +14169,13 @@ try {
           // combined browsing identity never grants this Solo host Versus ownership.
           const { createCandidateVersusHost } = await import('./content-design/versus-host.mjs');
           assertCurrent();
+          trace?.mark('missions-versus-host-begin');
           const versusPreview = createCandidateVersusHost(route.source, {
             themes: libraryThemes,
             corePackIds: route.corePackIds,
             optionalCampaignIds: route.optionalCampaignIds,
           });
+          trace?.mark('missions-versus-host-end');
           const manifestFor = (
             mission,
             difficulty = browsingJourneyPreferences.snapshot().difficulty,
@@ -14151,6 +14183,7 @@ try {
             host
               .select(mission, difficulty)
               ?.manifests.find((manifest) => manifest.missionId === mission.levelId);
+          trace?.mark('missions-solo-source-begin');
           const source = journeyLibrarySource({
             editionId: route.id,
             edition: route.id === DEFAULT_JOURNEY_ROUTES.solo ? 'New Journey' : route.label,
@@ -14166,6 +14199,8 @@ try {
             card: (mission) => host.card(mission, browsingJourneyPreferences.snapshot().difficulty),
             launch: launchSolo,
           });
+          trace?.mark('missions-solo-source-end');
+          trace?.mark('missions-versus-source-begin');
           const versusSource = journeyLibrarySource({
             editionId: route.id,
             edition: route.id === DEFAULT_JOURNEY_ROUTES.solo ? 'New Journey' : route.label,
@@ -14184,18 +14219,26 @@ try {
               versusPreview.card(mission, browsingJourneyPreferences.snapshot().difficulty),
             launch: (_mission, context) => departLibraryMission(context),
           });
+          trace?.mark('missions-versus-source-end');
+          trace?.mark('missions-remote-team-import-begin');
           const { createRemoteTeamLibrarySources } = await import(
             './mission-library/remote-team.mjs'
           );
+          trace?.mark('missions-remote-team-import-end');
           assertCurrent();
+          trace?.mark('missions-remote-team-sources-begin');
           const teamSources = createRemoteTeamLibrarySources({
             launch: departLibraryMission,
             difficulty: () => browsingJourneyPreferences.snapshot().difficulty,
           });
+          trace?.mark('missions-remote-team-sources-end');
+          trace?.mark('missions-prior-import-begin');
           const { createSpatialNextEditionSources } = await import(
             './mission-library/spatial-next-editions.mjs'
           );
+          trace?.mark('missions-prior-import-end');
           assertCurrent();
+          trace?.mark('missions-prior-editions-begin');
           spatialEditions = await createSpatialNextEditionSources({
             assertCurrent,
             activeRouteId: route.id,
@@ -14203,6 +14246,7 @@ try {
             difficulty: () => browsingJourneyPreferences.snapshot().difficulty,
             launch: departLibraryMission,
           });
+          trace?.mark('missions-prior-editions-end');
           assertCurrent();
           journeySources = [
             combineJourneyLibrarySources([
@@ -14213,7 +14257,9 @@ try {
             ...teamSources,
           ];
         }
+        trace?.mark('missions-sources-end');
         if (!runtimeContent) {
+          trace?.mark('missions-supplemental-imports-begin');
           const [
             { duelExpeditionLibrarySources, teamExpeditionLibrarySource },
             { TEAM_EXPANSION_ROUTE },
@@ -14223,9 +14269,11 @@ try {
             import('./content-design/multiplayer-expansion.mjs'),
             import('./mission-library/team-source.mjs'),
           ]);
+          trace?.mark('missions-supplemental-imports-end');
           assertCurrent();
           const expansionSources = [
             ...duelExpeditionLibrarySources({
+              onStage: trace?.mark,
               themes: originalThemes,
               activeRouteId: route.id,
               launch: departLibraryMission,
@@ -14237,6 +14285,7 @@ try {
               ? []
               : [
                   teamExpeditionLibrarySource({
+                    onStage: trace?.mark,
                     launch: departLibraryMission,
                     difficulty: () => browsingJourneyPreferences.snapshot().difficulty,
                   }),
@@ -14276,6 +14325,7 @@ try {
         };
         const selectedEditionPacks = runtimeContent ? emptyPackLibrary() : null;
         assertCurrent();
+        trace?.mark('missions-installed-begin');
         result = await createInstalledMissionLibrary({
           assertCurrent,
           getProjectSources: async ({ assertCurrent }) => {
@@ -14384,6 +14434,7 @@ try {
               : { state: 'new', bestStars: null };
           },
         });
+        trace?.mark('missions-installed-end');
         assertCurrent();
         const state = createMissionLibrarySessionState({ mode: 'solo' });
         // Checked return restores the retained runtime independently of browsing.
@@ -14406,6 +14457,7 @@ try {
               );
             })
           : null;
+        trace?.mark('missions-chooser-build-begin');
         unifiedChooser = attachJourneyChooser({
           library: result.library,
           profile,
@@ -14479,6 +14531,7 @@ try {
             });
           },
         });
+        trace?.mark('missions-chooser-build-end');
         if (!journeyPreferences)
           browsingJourneyPreferences.subscribe(() => unifiedChooser?.refresh());
         // Keep the native settings and their guarded handlers, but not the old
@@ -14572,9 +14625,60 @@ try {
     const homeWasOpen = $('shell-home').open,
       oldRun = run,
       wasStarted = started;
+    // No trace, closure, payload or extra clock read exists on the ordinary path.
+    // Console delivery is supplementary, best effort evidence: a received begin
+    // survives a later unresponsive page; an undelivered end stays unobserved.
+    const trace = performanceSession
+      ? {
+          sequence: 0,
+          closed: false,
+          generation: performanceRunGeneration,
+          tick: run?.tick ?? 0,
+          build: unifiedBuildRevision,
+          mark(kind) {
+            if (trace.closed) return;
+            if (++trace.sequence >= 64) {
+              kind = 'missions-observer-overflow';
+              trace.closed = true;
+            }
+            let atMs = null;
+            try {
+              atMs = performance.now();
+              if (trace.generation > 0)
+                performanceSession.markEvent(kind, trace.generation, trace.tick, atMs);
+            } catch {
+              // Diagnostics never cancel or admit a library operation.
+            }
+            try {
+              console.debug(
+                'RevealLineMissionsStageV1 ' +
+                  JSON.stringify([
+                    revision,
+                    trace.build,
+                    trace.sequence,
+                    kind,
+                    trace.generation,
+                    trace.tick,
+                    atMs,
+                    performance.timeOrigin,
+                  ]),
+              );
+            } catch {
+              // The retained numeric ring remains independent of console delivery.
+            }
+          },
+          finish(kind) {
+            if (trace.closed) return;
+            trace.mark(kind);
+            trace.closed = true;
+          },
+        }
+      : null;
+    trace?.mark('missions-opening');
     ++unifiedLaunchRevision;
     pause(true);
     clearInput();
+    trace?.mark('missions-after-pause');
     const feedback = document.createElement('span');
     feedback.id = 'mission-library-opening-status';
     feedback.className = 'micro-note';
@@ -14583,6 +14687,7 @@ try {
     (opener?.isConnected ? opener : $('shell-play')).after(feedback);
     let failed = false;
     const cancel = () => {
+      trace?.finish('missions-cancelled');
       if (revision === unifiedOpenRevision) ++unifiedOpenRevision;
       opening.dispose();
       feedback.remove();
@@ -14600,13 +14705,18 @@ try {
       run === oldRun &&
       started === wasStarted;
     try {
-      const host = await getUnifiedMissionLibrary(isCurrent);
+      const host = await getUnifiedMissionLibrary(isCurrent, trace);
       // The installed-card refresh may move focus while it reconciles an owned
       // catalogue. Claim the still-current opener before that internal work;
       // newer input still retires the claim while the state/revision checks
       // below also reject replaced navigation and game state.
-      if (!opening.claim()) return;
+      if (!opening.claim()) {
+        trace?.finish('missions-cancelled');
+        return;
+      }
+      trace?.mark('missions-refresh-begin');
       await refreshUnifiedInstalled(host, isCurrent);
+      trace?.mark('missions-refresh-end');
       const openingCurrent = opening.current();
       opening.dispose();
       if (
@@ -14620,9 +14730,13 @@ try {
         run !== oldRun ||
         started !== wasStarted ||
         !paused
-      )
+      ) {
+        trace?.finish('missions-cancelled');
         return;
-      unifiedChooser.open(opener, options);
+      }
+      trace?.mark('missions-open-begin');
+      unifiedChooser.open(opener, trace ? { ...options, onOpeningStage: trace.mark } : options);
+      trace?.finish('missions-complete');
       if (options?.random) {
         unifiedChooser.playRandom({ resetFilters: true });
         return;
@@ -14637,6 +14751,7 @@ try {
         }
       }
     } catch (error) {
+      trace?.finish(error?.name === 'AbortError' ? 'missions-cancelled' : 'missions-failed');
       if (revision === unifiedOpenRevision) {
         failed = true;
         localizedText(feedback, () => t('interface:missionsCouldNotLoadChooseMissionsToRetry'));
@@ -14971,6 +15086,11 @@ try {
   }
   gameShell = attachGameShell({
     navigationContext: soloNavigationContext,
+    comfortSettings: {
+      display: displayPreferences,
+      setDisplay: changeDisplay,
+      displayWarning: () => $('display-preferences-status').textContent,
+    },
     getAppearanceDefault: () => {
       const pin = currentAppearanceDefault();
       return pin && runtimeContent?.appearanceThemes.length

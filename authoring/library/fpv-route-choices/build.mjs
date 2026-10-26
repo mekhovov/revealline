@@ -14,16 +14,16 @@ export const PACK_FILE = `${CHAPTER_ROOT}/packs/fpv-route-choices.json`;
 export const sha = (bytes) => createHash('sha256').update(bytes).digest('hex');
 export const SOURCE_PINS = Object.freeze({
   'authoring/library/tactical-challenges/build.mjs':
-    '5286b9ad70c9db945579c63bb1e57de9ccefc4e45f4af0ecb3636f5bb72c3457',
+    'dfa13b16aa7ce8205f2fdfe34d2726873b80c74b84b811f11f5c89d4b14fc412',
   'authoring/library/tactical-challenges/routes.json':
-    'e8b9429a562a445025f03c5375eaab6dd3853bd73b29789859ee2dd2089f95f4',
+    'd15f1de7ba66b289af4599b8d3328bf19f99e5f30b9e9c50ead0a39b50401287',
   'authoring/library/four-worlds-chapters/verify-images.mjs':
     '100995d31bb65ed7797b0941988624cab76a2c37b297c81ec98ab8e16febcc34',
   'authoring/library/challenge-chapter-art/provenance.json':
     '4bea88060c4d5b8b6e484e6ba85afebe4b22ff315ab03c327b8916321caa9d18',
   'authoring/library/challenge-chapter-art/prompts.json':
     'c5de9cd5e54800529b94c84a5ff3fcab21730b87b5c1cc21363db7105752545b',
-  'game/content/themes.json': '93582f7d9ba53753106df7b63928f086820fc0f68357d3c08f26c0b89fb84774',
+  'game/content/themes.json': '77f3e7e8f0951172bd0c11649b0203808b3d1b00ca434c2a576ef631899958b2',
   'game/content/classes.json': '2f776b0dfd099478ffe78465c7b602cd98896206a222a0ed7fd4405a4a643f84',
   'authoring/library/tactical-challenges/scenarios/challenge-crosswind-depot.json':
     '659f65e975d374b7ec6e493d9e2405d6f7bb1dae2e7f410731370be7a6badaf0',

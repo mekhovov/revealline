@@ -40,7 +40,7 @@ async function ordinaryTree(root, relative) {
   }
 }
 const hash = (bytes) => createHash('sha256').update(bytes).digest('hex');
-/** Explicit build only. All producers read the selected source tree; all thirty-two
+/** Explicit build only. All producers read the selected source tree; all selected
  * exact paired bodies join loose/ZIP inventories, never legacy pack metadata. */
 export async function readExternalDistributionEntries(root, option) {
   if (option === undefined) return [];
@@ -56,24 +56,26 @@ export async function readExternalDistributionEntries(root, option) {
     'authoring/library/fpv-route-choices/packs/fpv-route-choices.json',
   ])
     await ordinary(root, relative);
-  for (const name of ['external-chapter-pilot',
-'route-worlds',
-'ukraine-route-art',
-'retro-route-art',
-'sentinel-circuit',
-'sentinel-circuit-art',
-'sentinel-circuit-external',
-'sentinel-theme-art',
-'sentinel-theme-chapters',
-'fracture-lines',
-'fracture-lines-art',
-'fracture-lines-chapter',
-'fracture-ukraine-art',
-'fracture-retro-art',
-'fracture-theme-chapters',
-'countercurrent',
-'countercurrent-art',
-'countercurrent-chapters'])
+  for (const name of [
+    'external-chapter-pilot',
+    'route-worlds',
+    'ukraine-route-art',
+    'retro-route-art',
+    'sentinel-circuit',
+    'sentinel-circuit-art',
+    'sentinel-circuit-external',
+    'sentinel-theme-art',
+    'sentinel-theme-chapters',
+    'fracture-lines',
+    'fracture-lines-art',
+    'fracture-lines-chapter',
+    'fracture-ukraine-art',
+    'fracture-retro-art',
+    'fracture-theme-chapters',
+    'countercurrent',
+    'countercurrent-art',
+    'countercurrent-chapters',
+  ])
     await ordinaryTree(root, `authoring/library/${name}`);
   const { prepareExternalCatalog } = await import(
     pathToFileURL(path.join(root, 'game/external-chapter-catalog.mjs'))
@@ -103,18 +105,20 @@ export async function readExternalDistributionEntries(root, option) {
   const { buildCountercurrentTheme } = await import(
     pathToFileURL(path.join(root, 'authoring/library/countercurrent-chapters/build.mjs'))
   );
-  const producers = new Map([['original-fpv-pressure-external', buildExternalPilot],
-['route-worlds-ukraine', () => buildRouteWorld('ukraine')],
-['route-worlds-retro', () => buildRouteWorld('retro')],
-['sentinel-circuit-fpv', buildExternalSentinel],
-['sentinel-circuit-ukraine', () => buildSentinelTheme('ukraine')],
-['sentinel-circuit-retro', () => buildSentinelTheme('retro')],
-['fracture-lines-fpv', buildFractureChapter],
-['fracture-lines-ukraine', () => buildFractureTheme('ukraine')],
-['fracture-lines-retro', () => buildFractureTheme('retro')],
-['countercurrent-fpv', () => buildCountercurrentTheme('fpv')],
-['countercurrent-ukraine', () => buildCountercurrentTheme('ukraine')],
-['countercurrent-retro', () => buildCountercurrentTheme('retro')]]);
+  const producers = new Map([
+    ['original-fpv-pressure-external', buildExternalPilot],
+    ['route-worlds-ukraine', () => buildRouteWorld('ukraine')],
+    ['route-worlds-retro', () => buildRouteWorld('retro')],
+    ['sentinel-circuit-fpv', buildExternalSentinel],
+    ['sentinel-circuit-ukraine', () => buildSentinelTheme('ukraine')],
+    ['sentinel-circuit-retro', () => buildSentinelTheme('retro')],
+    ['fracture-lines-fpv', buildFractureChapter],
+    ['fracture-lines-ukraine', () => buildFractureTheme('ukraine')],
+    ['fracture-lines-retro', () => buildFractureTheme('retro')],
+    ['countercurrent-fpv', () => buildCountercurrentTheme('fpv')],
+    ['countercurrent-ukraine', () => buildCountercurrentTheme('ukraine')],
+    ['countercurrent-retro', () => buildCountercurrentTheme('retro')],
+  ]);
   required(
     SOURCE_EXTERNAL_CHAPTERS.length === producers.size &&
       catalog.chapters.length === producers.size &&

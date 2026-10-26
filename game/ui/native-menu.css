@@ -1,5 +1,6 @@
 @import url('./menu-retune.css');
 @import url('./global-settings-view.css');
+@import url('./comfort-presets.css');
 
 /* Legacy layout and paint share one cascade layer. Theme recipes own opt-in appearance. */
 @layer legacy {

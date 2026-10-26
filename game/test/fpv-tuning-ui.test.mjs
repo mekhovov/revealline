@@ -1,5 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import { readFile } from 'node:fs/promises';
 import { Document, Events } from './helpers/couch-dom.mjs';
 import { mountFlightTuning } from '../../optional-practice/civilian-fpv/tuning-ui.mjs';
 import {
@@ -15,6 +16,19 @@ import {
 } from '../../optional-practice/civilian-fpv/aircraft-presets.mjs';
 
 const settle = () => new Promise((resolve) => setImmediate(resolve));
+
+test('shared tuning file pickers opt out of Worlds legacy file-input hiding without exposing explicitly hidden controls', async () => {
+  const css = await readFile(
+    new URL('../../optional-practice/civilian-fpv/tuning.css', import.meta.url),
+    'utf8',
+  );
+  // The native two-app backup round trip covers the full cascade. This source
+  // guard retains the narrow ownership boundary instead of unhiding all inputs.
+  assert.match(
+    css,
+    /\.fpv-tuning input\[type=['"]file['"]\]:not\(\[hidden\]\)\s*\{\s*display:\s*block;/,
+  );
+});
 function fixture(
   t,
   {
@@ -417,6 +431,41 @@ test('physical aircraft with retained Legacy feel can open Advanced without conv
   assert.equal(f.store.effective().advanced.aircraft.mass, 0.03768);
   assert.equal(opened[0].components.cameraPayload.massGrams, 4);
 });
+
+for (const locale of ['en', 'uk'])
+  test(`Legacy reference entry explains its supported choices without changing the draft (${locale})`, async (t) => {
+    const opened = [],
+      f = fixture(t, { locale, onAdvanced: (configuration) => opened.push(configuration) }),
+      before = f.store.export(),
+      values = () => f.ui.root.querySelectorAll('input').map((node) => node.value),
+      draft = values();
+    await f.click(
+      locale === 'uk'
+        ? 'Еталонний дрон Advanced · експериментальний'
+        : 'Advanced reference quad · experimental',
+    );
+    assert.match(
+      f.ui.root.querySelector('[role="status"]').textContent,
+      locale === 'uk'
+        ? /Для практики Advanced виберіть фізичний пресет дрона або сучасні рейти/
+        : /Choose a physical aircraft preset or modern rates for Advanced practice/,
+    );
+    assert.equal(f.ui.root.open, true);
+    assert.deepEqual(opened, []);
+    assert.deepEqual(values(), draft);
+    assert.equal(f.store.export(), before);
+    await f.click(locale === 'uk' ? 'Експортувати CLI лише рейтів' : 'Export rate-only CLI');
+    assert.match(
+      f.ui.root.querySelector('[role="status"]').textContent,
+      locale === 'uk'
+        ? /Класична реакція не має еквівалента Betaflight/
+        : /Legacy feel has no Betaflight equivalent/,
+      'the CLI export retains its compatibility explanation',
+    );
+    assert.deepEqual(opened, []);
+    assert.deepEqual(values(), draft);
+    assert.equal(f.store.export(), before);
+  });
 
 test('returning from an Advanced save reloads the saved component inventory without adding an unsaved payload twice', async (t) => {
   const opened = [],
@@ -1888,6 +1937,74 @@ test('switching locale updates accessible controls without changing numeric, nam
   assert.equal(f.store.export(), saved);
 });
 
+test('fine-adjust accessible names start in Ukrainian for inertia and PID gains', (t) => {
+  const f = fixture(t, { locale: 'uk' }),
+    names = f.ui.root
+      .querySelectorAll('.workbench-fine-adjust button')
+      .map((node) => node.getAttribute('aria-label'));
+  assert.equal(names.length, 30);
+  assert.ok(names.every((name) => /^(Зменшити|Збільшити) /.test(name)));
+  assert.ok(names.includes('Зменшити Інерція: Тангаж (кг·м²)'));
+  assert.ok(names.includes('Збільшити Крен P (N·m/(rad/s))'));
+});
+
+test('fine-adjust locale refresh preserves numeric text, commanded values and undo history', async (t) => {
+  const f = fixture(t);
+  f.edit('Aircraft preset', 'meteor75-analog-2022', { tag: 'select', event: 'change' });
+  await f.click('Use in draft');
+  const saved = f.store.export(),
+    inertia = f.find('Pitch inertia (kg·m²)'),
+    gain = f.find('Roll P (N·m/(rad/s))'),
+    originalInertia = inertia.value,
+    originalGain = gain.value;
+  f.edit('Pitch inertia (kg·m²)', '0.000012300');
+  f.edit('Roll P (N·m/(rad/s))', '0.123400');
+  f.edit('Roll P (N·m/(rad/s))', '-');
+  const numericText = () =>
+      f.ui.root
+        .querySelectorAll('input')
+        .filter((node) => node.type === 'number')
+        .map((node) => node.value),
+    before = numericText();
+  for (const locale of ['uk', 'en']) {
+    f.setLocale(locale);
+    const names = f.ui.root
+      .querySelectorAll('.workbench-fine-adjust button')
+      .map((node) => node.getAttribute('aria-label'));
+    assert.equal(names.length, 30);
+    assert.ok(
+      names.every((name) =>
+        (locale === 'uk' ? /^(Зменшити|Збільшити) / : /^(Decrease|Increase) /).test(name),
+      ),
+    );
+    assert.ok(
+      names.includes(
+        locale === 'uk' ? 'Зменшити Інерція: Тангаж (кг·м²)' : 'Decrease Pitch inertia (kg·m²)',
+      ),
+    );
+    assert.ok(
+      names.includes(
+        locale === 'uk' ? 'Збільшити Крен P (N·m/(rad/s))' : 'Increase Roll P (N·m/(rad/s))',
+      ),
+    );
+    assert.deepEqual(numericText(), before);
+    assert.equal(f.store.export(), saved);
+  }
+  await f.click('Undo last edit');
+  assert.equal(gain.value, '0.123400');
+  assert.equal(inertia.value, '0.000012300');
+  await f.click('Test draft · unscored');
+  assert.equal(f.tested[0].advanced.controller.gains.roll.p, 0.1234);
+  assert.equal(f.tested[0].advanced.aircraft.inertia.x, 0.0000123);
+  f.ui.open({ keepDraft: true });
+  await f.click('Undo last edit');
+  assert.equal(gain.value, originalGain);
+  assert.equal(inertia.value, '0.000012300');
+  await f.click('Undo last edit');
+  assert.equal(inertia.value, originalInertia);
+  assert.equal(f.store.export(), saved);
+});
+
 for (const exit of ['cancel', 'close', 'close-and-reopen'])
   test(`${exit} while Apply waits for a browser lock never restarts a flight afterward`, async (t) => {
     let release;
@@ -2348,6 +2465,75 @@ test('settings search reveals expert fields without changing Basic preference an
   assert.equal(f.store.snapshot().revision, 0);
 });
 
+test('visible settings search follows replacement rate fields and preserves keyboard focus', async (t) => {
+  const f = fixture(t),
+    saved = f.store.export();
+  await f.click('Rates & throttle');
+  f.edit('Search all settings', 'Expo');
+  const results = f.ui.root.querySelector('.workbench-search-results'),
+    oldResult = results.querySelectorAll('button')[0],
+    oldInput = f.find('Expo (%)', 'input', f.axis('Roll'), 'number');
+  f.edit('Rate algorithm', 'actual', { tag: 'select', event: 'change' });
+  assert.equal(oldInput.isConnected, false);
+  assert.equal(
+    results.contains(oldResult),
+    false,
+    'The removed Legacy control must lose its result',
+  );
+  results.querySelectorAll('button')[0].emit('click');
+  const actualInput = f.find('Expo (%)', 'input', f.axis('Roll'), 'number');
+  assert.equal(f.document.activeElement, actualInput);
+  assert.equal(actualInput.isConnected, true);
+  assert.equal(results.hidden, true);
+  f.edit('Expo (%)', '17', { scope: f.axis('Roll'), type: 'number' });
+  assert.equal(results.hidden, true, 'Editing a chosen field does not reopen search');
+  oldResult.emit('click');
+  assert.equal(
+    f.document.activeElement,
+    actualInput,
+    'A detached result cannot focus its old field',
+  );
+  assert.equal(f.ui.root.dataset.view, 'basic');
+  assert.notEqual(f.storage.getItem('revealline.fpv.workbench.view.v1'), 'expert');
+  await f.click('Test draft · unscored');
+  assert.equal(f.tested[0].response.rates.axes.roll.expo, 17);
+  assert.equal(f.store.export(), saved);
+});
+
+test('visible settings search refreshes localized labels and targets without losing the query or draft', async (t) => {
+  const f = fixture(t),
+    saved = f.store.export();
+  f.edit('Rate algorithm', 'actual', { tag: 'select', event: 'change' });
+  f.edit('Maximum rate (°/s)', '812.0', { scope: f.axis('Roll'), type: 'number' });
+  f.edit('Search all settings', 'Maximum rate');
+  const results = f.ui.root.querySelector('.workbench-search-results'),
+    oldResult = results.querySelectorAll('button')[0];
+  oldResult.focus();
+  f.setLocale('uk');
+  assert.equal(results.contains(oldResult), false);
+  assert.equal(f.find('Пошук усіх налаштувань').value, 'Maximum rate');
+  const localized = results.querySelectorAll('button')[0];
+  assert.match(localized.textContent, /Максимальний рейт.*Рейти й газ/);
+  assert.equal(f.document.activeElement, localized);
+  localized.emit('click');
+  assert.equal(
+    f.document.activeElement,
+    f.find('Максимальний рейт (°/с)', 'input', f.axis('Крен'), 'number'),
+  );
+  assert.equal(f.document.activeElement.value, '812.0');
+  f.edit('Пошук усіх налаштувань', 'Maximum rate');
+  f.setLocale('en');
+  assert.match(results.querySelectorAll('button')[0].textContent, /Maximum rate.*Rates & throttle/);
+  results.querySelectorAll('button')[0].emit('click');
+  assert.equal(
+    f.document.activeElement,
+    f.find('Maximum rate (°/s)', 'input', f.axis('Roll'), 'number'),
+  );
+  assert.equal(f.document.activeElement.value, '812.0');
+  assert.equal(f.ui.root.dataset.view, 'basic');
+  assert.equal(f.store.export(), saved);
+});
+
 test('direct PID editing enters the tested draft with exact units and invalid text blocks saving', async (t) => {
   const f = fixture(t);
   f.edit('Aircraft preset', 'meteor75-analog-2022', { tag: 'select', event: 'change' });
@@ -2479,6 +2665,48 @@ test('calibration returns to the unchanged draft and input editing keys stay wit
   assert.equal(f.store.snapshot().revision, 0);
 });
 
+test('preview capture status follows ownership across locale and editor lifecycle transitions', async (t) => {
+  const f = fixture(t),
+    saved = f.store.export();
+  await f.click('Rates & throttle');
+  const capture = f.find('Capture live sticks for preview'),
+    status = f.ui.root
+      .querySelectorAll('p')
+      .find((node) => /Sticks navigate menus/.test(node.textContent));
+  capture.checked = true;
+  capture.emit('change');
+  assert.equal(f.ui.captureActive(), true);
+  assert.match(status.textContent, /Preview owns sticks/);
+  for (const locale of ['uk', 'en']) {
+    f.setLocale(locale);
+    assert.equal(f.ui.captureActive(), true, 'Translation cannot release input ownership');
+    assert.match(
+      status.textContent,
+      locale === 'uk' ? /Стіки керують переглядом/ : /Preview owns sticks/,
+    );
+  }
+  f.ui.close();
+  f.ui.open({ keepDraft: true });
+  assert.equal(capture.checked, false);
+  assert.equal(f.ui.captureActive(), false);
+  assert.match(status.textContent, /Sticks navigate menus/);
+  capture.checked = true;
+  capture.emit('change');
+  f.ui.releaseCapture();
+  assert.equal(f.ui.captureActive(), false);
+  assert.equal(f.document.activeElement, capture);
+  assert.match(status.textContent, /Sticks navigate menus/);
+  capture.checked = true;
+  capture.emit('change');
+  await f.click('Camera');
+  assert.equal(f.ui.captureActive(), false);
+  f.setLocale('uk');
+  assert.match(status.textContent, /Стіки керують меню/);
+  assert.equal(f.store.export(), saved);
+  assert.equal(f.applied.length, 0);
+  assert.equal(f.tested.length, 0);
+});
+
 test('animated rotation pauses outside Rates, when backgrounded and for reduced motion', async (t) => {
   const f = fixture(t);
   await f.click('Rates & throttle');
@@ -2576,6 +2804,7 @@ test('saved aircraft remain editable when their catalog reference is no longer b
     /Unknown aircraft preset/,
   );
   await f.click('Flight response / PID');
+  f.find('Roll P (N·m/(rad/s))').focus();
   assert.equal(Number(f.find('Roll P (N·m/(rad/s))').value), config.controller.gains.roll.p);
   await f.click('Test draft · unscored');
   assert.equal(f.tested.length, 1);
@@ -2583,7 +2812,7 @@ test('saved aircraft remain editable when their catalog reference is no longer b
 });
 
 for (const preset of listAircraftPresets())
-  test(`workbench can test ${preset.id} without saving or changing its physical coefficients`, async (t) => {
+  test(`${preset.id} retains exact PID configuration through compact display, test return and no-op saves`, async (t) => {
     const f = fixture(t),
       reference = createPresetConfiguration(preset.id),
       before = f.store.export();
@@ -2600,7 +2829,132 @@ for (const preset of listAircraftPresets())
     assert.deepEqual(f.tested[0].response, reference.response);
     assert.deepEqual(f.tested[0].camera, reference.camera);
     assert.equal(f.store.export(), before);
+    f.ui.open({ keepDraft: true });
+    await f.click('Save for next flight');
+    const saved = f.store.export(),
+      effective = f.store.effective(),
+      summary = () => f.ui.root.querySelector('.workbench-summary').textContent,
+      gains = f.ui.root
+        .querySelectorAll('input')
+        .filter((input) => input.dataset.search?.includes('controller.gains.'));
+    assert.equal(gains.length, 12);
+    assert.deepEqual(effective.advanced, f.tested[0].advanced);
+    for (const input of gains) {
+      const [, axis, term] = input.dataset.search.match(/controller\.gains\.(\w+)\.(\w+)/),
+        exact = reference.controller.gains[axis][term],
+        compact = String(Number(exact.toPrecision(12)));
+      assert.equal(input.value, compact);
+      input.focus();
+      assert.equal(input.value, String(exact), 'focus reveals the exact stored gain');
+      f.ui.refresh();
+      assert.equal(input.value, String(exact), 'refresh preserves the focused exact display');
+      // The DOM fixture does not dispatch focusout from blur, unlike a browser.
+      input.blur();
+      input.emit('focusout');
+      assert.equal(input.value, compact);
+      assert.match(summary(), /0 changes.*Saved for next flight/);
+    }
+    for (const locale of ['uk', 'en']) f.setLocale(locale);
+    await f.click('Save for next flight');
+    assert.equal(f.store.export(), saved, 'display-only changes add no revisions or history');
+    assert.deepEqual(f.store.effective(), effective, 'the exact simulation identity is unchanged');
+    gains[0].focus();
+    await f.click('Test draft · unscored');
+    assert.deepEqual(f.tested[1].advanced, effective.advanced);
+    f.ui.open({ keepDraft: true });
+    assert.match(summary(), /0 changes.*Saved for next flight/);
+    await f.click('Apply & restart');
+    assert.deepEqual(f.applied[0], effective);
+    assert.equal(f.store.export(), saved, 'test return and focused apply remain no-op saves');
   });
+
+test('PID edits retain literal precision and invalid text across blur, locale, practice and undo', async (t) => {
+  const f = fixture(t);
+  f.edit('Aircraft preset', 'nazgul-eco-xl5-v11', { tag: 'select', event: 'change' });
+  await f.click('Use in draft');
+  await f.click('Save for next flight');
+  const gain = f.find('Roll P (N·m/(rad/s))'),
+    baseline = f.store.export(),
+    effective = f.store.effective(),
+    text = '0.123456789949999990000';
+  gain.focus();
+  f.edit('Roll P (N·m/(rad/s))', text);
+  gain.blur();
+  gain.emit('focusout');
+  assert.equal(gain.value, text);
+  f.setLocale('uk');
+  assert.equal(gain.value, text);
+  f.setLocale('en');
+  f.edit('Roll P (N·m/(rad/s))', '-');
+  gain.focus();
+  gain.blur();
+  gain.emit('focusout');
+  assert.equal(gain.value, '-');
+  await f.click('Save for next flight');
+  assert.equal(f.store.export(), baseline);
+  await f.click('Undo last edit');
+  assert.equal(gain.value, text);
+  await f.click('Test draft · unscored');
+  assert.equal(f.tested[0].advanced.controller.gains.roll.p, Number(text));
+  f.ui.open({ keepDraft: true });
+  assert.equal(gain.value, text);
+  gain.focus();
+  gain.blur();
+  gain.emit('focusout');
+  await f.click('Undo last edit');
+  assert.equal(
+    gain.value,
+    String(Number(effective.advanced.controller.gains.roll.p.toPrecision(12))),
+  );
+  await f.click('Save for next flight');
+  assert.equal(f.store.export(), baseline);
+  assert.deepEqual(f.store.effective(), effective);
+});
+
+test('locale refresh keeps a failed PID save message until an explicit valid undo', async (t) => {
+  const f = fixture(t);
+  f.edit('Aircraft preset', 'nazgul-eco-xl5-v11', { tag: 'select', event: 'change' });
+  await f.click('Use in draft');
+  await f.click('Save for next flight');
+  const before = f.store.export(),
+    status = f.ui.root.querySelector('[role="status"]');
+  f.edit('Roll P (N·m/(rad/s))', '');
+  await f.click('Save for next flight');
+  const failure = status.textContent;
+  assert.match(failure, /Could not apply:.*enter a valid number/);
+  for (const locale of ['uk', 'en']) {
+    f.setLocale(locale);
+    assert.equal(status.textContent, failure);
+  }
+  await f.click('Undo last edit');
+  assert.equal(status.textContent, '');
+  assert.equal(f.store.export(), before);
+});
+
+test('PID fine adjustment starts at the exact stored gain, including rounding boundaries', async (t) => {
+  const f = fixture(t),
+    configuration = createPresetConfiguration('meteor75-analog-2022'),
+    original = 0.12345678994999999;
+  configuration.controller.gains.roll.p = original;
+  await f.store.saveSetup({
+    ...f.store.snapshot().setups[0],
+    advanced: { aircraft: configuration.aircraft, controller: configuration.controller },
+  });
+  await f.click('Refresh library');
+  const gain = f.find('Roll P (N·m/(rad/s))'),
+    compact = Number(gain.value),
+    expected = Number((original + 0.001).toPrecision(10));
+  assert.notEqual(compact, original);
+  assert.notEqual(Number((compact + 0.001).toPrecision(10)), expected);
+  await f.click('+', gain.closest('.workbench-physical-field'));
+  assert.equal(Number(gain.value), expected);
+  await f.click('Test draft · unscored');
+  assert.equal(f.tested[0].advanced.controller.gains.roll.p, expected);
+  f.ui.open({ keepDraft: true });
+  await f.click('Undo last edit');
+  await f.click('Test draft · unscored');
+  assert.equal(f.tested[1].advanced.controller.gains.roll.p, original);
+});
 
 test('Library browsing previews each native algorithm without applying it or discarding raw draft text', async (t) => {
   const f = fixture(t);

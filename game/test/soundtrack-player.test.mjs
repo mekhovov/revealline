@@ -2449,3 +2449,48 @@ test('active current-plus-next loading reuses one worker but never carries facts
   assert.equal(workers.scans, 2, 'each acquired original is independently validated exactly once');
   assert.equal(mainReads, 0);
 });
+
+test('effects-only mono leaves an active no-CORS release stream on native media without replay or rerouting', async (t) => {
+  const h = setup({ library: emptySoundtrackLibrary() });
+  t.after(() => {
+    h.player.dispose();
+    return h.soundscape.dispose();
+  });
+  let routed = 0;
+  h.context.createMediaElementSource = () => {
+    routed++;
+    throw new Error('Never reroute native release streams.');
+  };
+  const [remote] = resolvedRemoteTracks([{ sha256: 'a'.repeat(64) }]);
+  assert.equal(await h.player.playRemotePlaylist([remote]), true);
+  h.media.currentTime = 12.5;
+  const before = {
+    src: h.media.src,
+    time: h.media.currentTime,
+    paused: h.media.paused,
+    plays: h.media.plays,
+    volume: h.media.volume,
+    muted: h.media.muted,
+    crossorigin: h.media.crossOrigin,
+  };
+  const original = h.player.snapshot();
+  h.soundscape.gameplayOutput.choose(true);
+  h.soundscape.gameplayOutput.choose(false);
+  assert.deepEqual(
+    {
+      src: h.media.src,
+      time: h.media.currentTime,
+      paused: h.media.paused,
+      plays: h.media.plays,
+      volume: h.media.volume,
+      muted: h.media.muted,
+      crossorigin: h.media.crossOrigin,
+    },
+    before,
+  );
+  assert.equal(h.player.snapshot().track.id, original.track.id);
+  assert.equal(h.player.snapshot().source, 'remote');
+  assert.equal(h.player.snapshot().playing, true);
+  assert.equal(h.media.crossOrigin, null);
+  assert.equal(routed, 0);
+});

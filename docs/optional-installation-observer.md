@@ -1,5 +1,28 @@
 # Optional practice installation observation
 
+## 18 October experimental extra-app session probes
+
+The finite `gym-v0.142.4-98ad851` and `worlds-v0.142.4-98ad851`
+`OPTIONAL_INSTALLATION_ACTIVE_SESSION` modes join only the existing fault-free
+`all-three-98ad851` migration lane, pinned historical input, saved-world seed and
+`owned-pwa-target-activation-98ad851` window mode. Academy's separate mode and
+all original deadlines remain unchanged. These opt-ins are diagnostic, not a
+new publishing authority or a completed all-app safety claim.
+
+Both probes require actual visible lesson HUD values, one public Arm/Start,
+trusted focus loss, the same document, explicit return/resume and further lift.
+Gym/Worlds menu pause is recorded separately without reading numbers covered by
+the menu. Pointer navigation is not general keyboard/controller qualification.
+Overlaid dialogs, unknown IDs, hidden HUD values and automatic Arm retries reject.
+
+Gym's native preparation (lift, menu pause, Continue, further lift) passes.
+Worlds' manual pointer route passes, but the bounded automated preparation still
+remains **disarmed after its first Arm**. Pointer-route and two-native-paint-frame
+experiments did not resolve it; the unproven paint workaround was removed.
+Investigation is paused pending review of that test approach. No full joined
+Gym/Worlds update run has passed, and none is inferred from unit tests. See the
+[execution checkpoint](flight-practice-execution-2026-10-18.md).
+
 This check validates frozen optional-package envelopes, hashes, selected source and
 complete dependency inventories before staging those exact bytes. It accepts local
 frozen candidates or original candidate CI downloads. It does not rebuild or publish
@@ -57,6 +80,33 @@ Network delay cannot deterministically pause local hashing/cache writes; a
 Verifying label alone is insufficient evidence. The fixed real trickle transport
 is used by the separately bounded lane below, never by a shortened-clock substitute.
 
+## Final verification response cancellation
+
+Use `OPTIONAL_INSTALLATION_VERIFICATION_CANCEL=all` with the existing saved-world
+seed, separately from imported-world, download, quota, migration or active-session
+lanes. This English-only protocol delays one original ready reply while the page
+is genuinely awaiting final verification. The worker hashes actual admitted
+cached bytes normally; no fetch, cache, crypto, application deadline or reply
+result is replaced. This is controlled message-delivery latency, not cancellation
+during a per-file digest or a natural slow-device observation.
+
+The owned one-shot relay requires the exact worker scope/revision, visible
+`Verifying · 100%`, one ordinary trusted Cancel click and prompt explicit
+cancellation feedback. Independent absolute monotonic checks enforce a 30-second
+request-match limit and less than ten seconds to cancel/forward, even if a timer
+callback is delayed. Actual screenshots and original ready fields are retained.
+The unchanged reply is forwarded during cleanup, but delivery to the app's
+already-closed reply port is explicitly unverified.
+
+At this late stage a complete, activated but unrecorded cache may remain. The
+observer hashes that exact copy and all original/sibling dependencies, rejects
+unexpected scopes, requires unchanged pointers and proof/profile/World records,
+then retries and removes through normal UI. It never labels this complete copy
+as incomplete staging or deletes it behind the app's back. All three cases and
+all three retry/removal witnesses must pass. Native results are distinct from
+unit fixtures; Ukrainian native cancellation and hash-in-progress interruption
+remain separate acceptance items.
+
 ## Separate real five-minute lane
 
 Use exactly one of `overall-civilian-flight`, `overall-civilian-fpv` or
@@ -79,6 +129,40 @@ timing regressions are not five-minute qualification.
 
 ## Separate historical active-session lane
 
+The fourth installed-window attempt also fails before update: isolated visible
+Chrome acknowledges minimization but its actual bounds remain normal throughout
+the same 1.5-second limit. Neither visible Chrome nor a different CDP routing
+path is a demonstrated repair. Original failed receipts remain failed.
+
+For a separate ordinary-browser window check, use
+`OPTIONAL_INSTALLATION_ACTIVE_WINDOW=ordinary-browser-minimize-98ad851`
+with the same historical, active-session and saved-world flags. It creates one
+new exact historical URL in the observer's isolated context, requires normal
+browser display mode and distinct native window identities, then applies the
+unchanged flight, real blur/pause, update, document identity and explicit-resume
+checks. This lane is headless and does not qualify installed-PWA continuity.
+Its exact owned target, sessions, original bounds and focus defaults must all be
+cleaned up. Late acquisition results retain ownership before deadline checks;
+an unresolved or failed cleanup cannot produce a passing receipt.
+
+The explicit `owned-window-minimize-98ad851` diagnostic uses an isolated
+visible Chrome context. Headless installed-app windows can acknowledge native
+minimization without changing state; the preserved third attempt records that
+failure. Visibility does not waive actual bounds, focus/pause, identity or cleanup
+checks. Default, migration and download lanes remain headless.
+
+The separately named `owned-pwa-target-activation-98ad851` mode also runs headed,
+with the same historical and saved-world flags. It refuses all fault, quota,
+migration, imported-world, verification-cancellation and all-six-offline flags.
+It requires an actual installed standalone A and a separately owned updater B,
+then one native B target activation, a fresh trusted blur and maintained paused
+HUD within 1.5 seconds. Returning requires A actually unfocused before one native
+A activation and actually focused afterward, before the existing verifier may
+bring it forward. No minimize/manual-pause/synthetic-event fallback is allowed.
+The same shared 30-second session budget and exact owning cleanup remain required.
+This is a new unqualified native path until its own browser receipt passes;
+previous minimization failures are not erased or relabelled.
+
 With the pinned historical admission above, set
 `OPTIONAL_INSTALLATION_ACTIVE_SESSION=academy-v0.142.4-98ad851`. Do not combine it
 with download/quota faults. The retained historical standalone window uses normal
@@ -87,8 +171,24 @@ movement and explicit pause/resume. An initially disarmed Start is retained; the
 observer waits for the public Arm control's enabled state rather than hidden
 renderer state. No completed course/proof is manufactured.
 
-Foregrounding the separate update tab naturally pauses the historical flight.
-Only then does the real current package prepare and advance active/previous
+Do not infer natural blur from Playwright's `bringToFront`: this installed
+automation runtime enables focus emulation, and the first native attempt failed
+before update because both separate windows remained logically focused. The
+failed receipt and plain-page probes are preserved. A visible-browser probe with
+the same override is not independent natural-focus proof either.
+
+For the separate minimized-window diagnostic, additionally set
+`OPTIONAL_INSTALLATION_ACTIVE_WINDOW=owned-window-minimize-98ad851`. The observer
+hash-pins the installed Playwright focus-default implementation, acquires only
+the isolated context's exact A/B target sessions, and removes its focus emulation
+on those targets. Native window minimization then produces actual browser blur;
+no DOM event, hidden application state or historical package byte is synthesized.
+Both original normal window geometry and automation defaults are restored, and
+sessions detach independently. Native bounds alone never substitute for the
+application's paused/focus/visible-HUD witness. Ordinary cross-window switching
+and physical-device behavior remain unqualified.
+
+Only after the observed pause does the real current package prepare and advance active/previous
 pointers. The old window must retain its immutable URL, document identity and time
 origin, remain paused with stable visible height after focus returns, and move
 again only after explicit resume. The whole helper, including update, has one
@@ -97,7 +197,183 @@ the parent also requires actual B preparation and exact record retention.
 An original paused screenshot and source hash are retained. This is historical
 Academy session continuity, not uninterrupted background flight, exact simulation
 tick continuity, all-app migration or a human/physical-input review. Native results
-must be recorded separately from its synthetic unit tests.
+must be recorded separately from its synthetic unit tests. Upward movement must
+be positive, not a fall/reset to ground. A failed focus transfer retains its last
+bounded public snapshot and stops after 1.5 seconds inside the unchanged shared
+30-second deadline.
+
+## Imported model and offline flight lane
+
+Use `OPTIONAL_INSTALLATION_IMPORTED_WORLD=roadworks-offline-flight` and
+`OPTIONAL_INSTALLATION_WORLD_SEED=worlds-template-copy`, without a previous bundle
+or historical/fault/session flags. The separately committed, hash-pinned CC0
+Roadworks `.rlpack` is imported through the real file chooser. This is World
+Studio content, not a fourth executable catalogue app. The observer records its
+own committed pack source separately from the admitted app's source.
+
+The baseline must contain both the UI-created project and the imported model's
+exact nonempty asset row. Full content-database fingerprints and the visible
+installed card are checked through offline reopening and browser-process restart.
+After restart, the stable launcher and installed window each open the imported
+challenge, explicitly arm, lift using the visible Detailed Height gauge, and
+explicitly pause. Actual screenshots accompany the card and both paused flights.
+These bounded sub-metre flights do not complete the course or qualify a
+machine-wide outage, OS reboot, physical input or human-learning review.
+All existing admission, cache/worker ownership, record retention and cleanup
+checks remain required.
+
+## Six deliberate restarted-offline flight routes
+
+Add `OPTIONAL_INSTALLATION_OFFLINE_FLIGHT=all-three-en` to the imported-world
+and saved-world flags above. No previous bundle, historical, migration, fault,
+active-session/window or diagnostic flag may be present. The previous imported
+mode remains unchanged when this flag is omitted.
+
+After process restart, each stable launcher and installed window explicitly
+starts a bounded flight: assisted Gym, Academy Self-level and imported Roadworks
+Worlds Self-level. New Gym/Academy adapters read only visible maintained
+measurements and UI identity, not hidden FPV telemetry. They require first-course
+ground start, positive lift below the first completion target, explicit pause,
+four stable paused samples over 600 ms, screenshot, owned-key cleanup and an
+immediate uncached offline probe. The existing World model/content fingerprints
+and proof/profile equality checks remain required. A six-route matrix must pass
+in exact order under the existing overall deadline.
+
+This is English software-input flight/pause, not Acro, a completed exercise,
+physical input, machine-wide outage, OS reboot or human learning. A browser run
+and independent receipt review are required; unit fixtures do not close C4.
+
+## Production directory source and delivery binding
+
+### Narrow package-bound native zoom / keyboard / reduced-motion matrix
+
+`PRACTICE_NATIVE_DIRECTORY_A11Y=1 node
+scripts/observe-practice-directory-native-a11y.mjs PLAN_JSON
+ABSOLUTE_EXISTING_PLAYWRIGHT_MODULE FRESH_OUTPUT_DIRECTORY` requires an exact
+`revealline-practice-directory-native-a11y-plan.v1` plan. Declare protocol
+`practice-directory-native-zoom-a11y.v3`, absolute `repository` and `bundle`,
+clean source-shell `shellRevision`/`shellTree`, original candidate
+`sourceRevision`/`sourceTree`, `envelopeSha256`, Academy `packageRevision`, and
+exactly the six EN/UK-by-package `cases` exported by the adapter. No arbitrary
+selectors, endpoints, scripts or production substitution are accepted.
+
+The owned headed profile uses ordinary native 100→200→100 selection and actual
+geometry. Each fixed case has 90 seconds within ten minutes, ten-second actions,
+32 ordinary Tabs per target and independent five-second cleanup attempts. It
+uses the full committed source shell plus admitted overlay, normal access form,
+directory Details, actual launcher/guide/return controls and Escape focus return.
+Play destinations are inspected but no flight is started. Localization and exact
+descriptor onboarding are checked. Sampled focused controls must be active,
+`:focus-visible`, unobscured, within the approximate viewport bounds below, have computed outlines, and show no
+animation/transition under the explicit browser `reducedMotion: reduce` override.
+Role/live attributes are semantics, not proof that assistive technology speaks.
+
+V2 uses finite positive fractional visual viewport dimensions, scale exactly 1,
+zero offsets and verified DPR at least 1; each visual/layout dimension must differ
+by less than one CSS pixel. Top/left remain nonnegative; right/bottom residuals
+must be strictly less than half a device pixel (`0.5 / DPR` CSS px, with a tiny
+inward numerical guard). Every sampled focus witness records raw residuals,
+tolerance use and the old v1 integer-plus-0.5-CSS-pixel decision. V1 failures stay
+failed; they cannot be relabelled as v2 passes. This is a versioned approximate
+border-box geometry check, not literal zero clipping or proof that the full
+painted focus outline is visible. Missing metrics fail without an integer fallback.
+
+V3 retains every raw request failure, then classifies only the exact source-preview
+pairs `/revealline/game/build-info.json` / `Not a committed regular file.` (when
+absent in the committed tree) and `/favicon.ico` / `Outside local fixture root.`,
+at most twelve each. Both require source-shell mode and non-production scope.
+Every other request failure blocks success; classification repeats after all
+pending operations settle. No generated release identity is fabricated. This
+does not qualify profile recovery, which requires a built release. Original v2
+aggregate failures remain failed even when their individual player cases pass.
+
+Source/overlay/helper identities are checked before and after. Pending native or
+server operations, failed reset/cleanup or unresolved Chrome launch prevent safe
+profile deletion and a passing result. Native PNGs can be cropped/blank; their
+visual review flags remain false. This protocol does not qualify human
+readability, contrast, screen-reader speech, OS preferences, physical input,
+app flight or a production build. Hardware and hosting remain separate.
+
+### Separate native Chrome zoom capability (not package qualification)
+
+`PRACTICE_NATIVE_ZOOM_CAPABILITY=1 node scripts/observe-practice-native-zoom.mjs
+--playwright ABSOLUTE_EXISTING_MODULE --output FRESH_ABSOLUTE_DIRECTORY` creates
+only a disposable headed Chrome profile and literal loopback metrics fixture.
+Ordinary visible Chrome Appearance controls select 100→200→100; unchanged outer
+geometry, halved CSS viewport, doubled DPR, visual scale 1 and unchanged fixture
+CSS corroborate native zoom. No user profile, CSS/pinch zoom, private Settings
+API, device-metrics override or OS preference is used. Symlinked command paths
+must execute the same explicit opt-in guard rather than silently exiting zero.
+
+The 90-second total, ten-second action and independent five-second cleanup bounds
+retain pending operation ownership. Zoom reset, owned browser/server closure and
+profile deletion are required. Unsupported UI fails rather than falling back.
+Native page/locator captures on the tested Chrome can be cropped or blank despite
+valid control geometry. Retain image dimensions and the explicit unreviewed visual
+flag; a successful capability receipt does not establish a visible selected-option
+PNG, package readability/focus, screen-reader speech, reduced motion or devices.
+Those require separately bound protocols and real observations.
+
+The explicit `practice-directory-production-personal-appearance.v2` protocol
+adds exactly `observerRevision` and `observerTree` to the v1 plan. The actual
+observer checkout must be clean and match those pins before and after the run.
+The original built shell's `shellRevision`/`shellTree`, manifest hash and every
+output member are independently checked before and after. Missing production
+files never fall back to source. Package envelope/source pins remain separate.
+This permits a maintained observer to test an earlier exact production build
+without pretending the build came from today's source. V1 remains unchanged.
+
+Original-distribution I/O is separate from browser/player timing: four streams,
+a fixed ten-minute phase, thirty-second per-stream inactivity and five-second
+settlement. Receipts retain before/after counts, bytes, elapsed time, failure
+member and outstanding metadata/stream ownership. Contents are streamed, not
+loaded as a whole distribution. Every original member and external manifest pin
+remain mandatory; pending I/O cannot pass cleanup. The 90/10/600-second browser
+case/action/overall limits are unchanged. These integrity-I/O durations are not
+startup or player-performance measurements.
+
+For the explicit production-v2 comparison only, set
+`PRACTICE_DIRECTORY_DELIVERY=bounded-original-memory-v1`. Omitted/unknown/non-v2
+modes never silently enable it. The manifest deterministically prioritizes bounded
+text/JSON/image/font originals, retaining at most 128 MiB during full before-hash
+verification, not another unverified copy or an entire gigabyte build. Private
+copied pins/buffers are checked on reads; unselected files use the original
+hash-verified path. The receipt names exact policy, retained/delivered members,
+memory/file requests, pending reads and disposal. Full after-verification remains
+mandatory, with no source fallback, startup-budget increase or hosted-performance
+claim. Native qualification requires a new clean observer receipt.
+
+## All-three historical migration details
+
+Set `OPTIONAL_INSTALLATION_MIGRATION=all-three-98ad851`, the pinned historical
+admission and the same saved-world seed. Download, quota and active-session/window
+flags must be absent. This lane has its own
+`OptionalInstallationHistoricalMigrationObservation.v1` report and
+`optional-installation-all-three-historical.v1` protocol; omitted OS-installation
+and process-restart checks cannot pass under the default protocol's name.
+
+All three original historical runtimes/launchers are prepared. The historical
+World project is created through Missions → Workshop and installed normally.
+Each app upgrades to genuinely different admitted current bytes, then returns to
+its retained historical runtime through ordinary current-shell removal and an
+offline stable launcher. Ordinary online Play visits prepare/update launchers;
+workers must activate normally after the old launcher client leaves. There is
+one worker per stable launcher scope; activation retains exactly its current and
+one previous admitted shell cache. The migration lane hashes both and rejects
+extra/missing caches. Read-only status must bind the active worker to the exact
+admitted revision, scope and ready state, with no installing/waiting worker.
+Only genuinely absent historical status fields are compatible; explicit unknown
+or malformed values fail closed. Bounded stage snapshots preserve failures
+without registering/updating workers, opening caches or weakening dependency hashes.
+There is no forced activation, unregister or manual cache deletion.
+
+Seven ordered checkpoints require exact active/previous pointers, every admitted
+runtime **and launcher** response hash, no extra/missing cache/worker scopes,
+unchanged sibling ownership, exact shared synthetic proof/profile exports, and
+the full nonempty historical World project/revision/card fingerprints. Gym has
+no persistent flight-record store to populate. This lane does not qualify
+populated assets/recordings, flights, hardware, OS installation, process restart,
+human reviews or public release. Native execution is required after unit tests.
 
 ## Default journey and evidence boundaries
 

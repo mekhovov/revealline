@@ -25,24 +25,25 @@ import { decodeOriginalPNG } from '../four-worlds-chapters/verify-images.mjs';
 import { boundedJSON, exactKeys } from '../../../game/data-json.mjs';
 
 export { ROOT, IDS, SOURCE_PACK_SHA, SOURCE_PROOF, readPinned, digest };
-export const THEME_IDS = Object.freeze(['ukraine',
-'retro']);
+export const THEME_IDS = Object.freeze(['ukraine', 'retro']);
 export const EDITIONS_FILE = 'authoring/library/fracture-theme-chapters/editions.json';
-export const INPUTS = Object.freeze({'authoring/library/fracture-lines/build.mjs':
-    '56cb05d183ce0406af2949506d6c3f6da78e9e275ce7302360a3d6742d72e59d',
-'authoring/library/fracture-lines/layouts.json':
+export const INPUTS = Object.freeze({
+  'authoring/library/fracture-lines/build.mjs':
+    'b7d56b6222df77ab0a2064bb41ef3118e4823f5585f4f6f29133f22584881b8f',
+  'authoring/library/fracture-lines/layouts.json':
     'af15577704ce673100f7c6d89ae92baffa25c5ebfdae2459ea4c720a9d7ab179',
-'authoring/library/fracture-lines/controls.mjs':
+  'authoring/library/fracture-lines/controls.mjs':
     'a1a1f027838affecc164e239c7f1bc259ba0040f65550be196b47ca9be2008f7',
-'authoring/library/fracture-lines/routes.json':
+  'authoring/library/fracture-lines/routes.json':
     '83f2eef3395a3a28070b25aa663e6e82db6626d8ab65ba5809aa798785231e67',
-'authoring/library/fracture-lines-chapter/build.mjs':
-    '8390c51dbc6be52503f063612bb357dae0c8f1299d24ee22e0b4270c0e62706c',
-'game/content/themes.json': '93582f7d9ba53753106df7b63928f086820fc0f68357d3c08f26c0b89fb84774',
-'authoring/library/fracture-ukraine-art/provenance.json':
+  'authoring/library/fracture-lines-chapter/build.mjs':
+    '06530673d706e0d5c77a1cda813bf939231a5393f7a7f90db0435c8d2eb4a4f9',
+  'game/content/themes.json': '77f3e7e8f0951172bd0c11649b0203808b3d1b00ca434c2a576ef631899958b2',
+  'authoring/library/fracture-ukraine-art/provenance.json':
     'f8a0f11cc6facfb14b3b1e70de0c2ca3005ce46f2e3a197a15e50e0f2212fe2f',
-'authoring/library/fracture-retro-art/provenance.json':
-    '0838b853611aa53f97336e8971b9ec429ec48c13b0b91c91df3a212d7cff2197'});
+  'authoring/library/fracture-retro-art/provenance.json':
+    '0838b853611aa53f97336e8971b9ec429ec48c13b0b91c91df3a212d7cff2197',
+});
 export const artRoot = (themeId) => `authoring/library/fracture-${themeId}-art`;
 // The source IDs and revision remain physical authority. Only these display fields differ.
 export function physicalLevel(level) {
@@ -67,7 +68,7 @@ export function validateFractureThemeEditions(value, provenances) {
     doc.editions.map((e) => e.themeId),
     THEME_IDS,
   );
-  assert.equal(provenances.length, 3);
+  assert.equal(provenances.length, THEME_IDS.length);
   for (const [index, edition] of doc.editions.entries()) {
     exactKeys(
       edition,

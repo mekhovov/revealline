@@ -1,0 +1,142 @@
+{
+  "sourceRevision": "7109710578a48e5d984a713d4bbb53f46c93c515",
+  "sourceTree": "8c9f5a4eb8439bc292de9a37a9e1d003bf320b10",
+  "generators": [
+    {
+      "script": "scripts/refresh-fpv-play-shell.mjs",
+      "result": {
+        "status": "verified-byte-identical",
+        "sourceSha256": "a5ebd172991cc1269a3e7abc132b967f47fbc405f8897435a55935203de3b8ae",
+        "bytes": 258802,
+        "packageSlotsAdded": 0
+      }
+    },
+    {
+      "script": "scripts/refresh-fpv-academy-audio.mjs",
+      "result": {
+        "status": "verified-byte-identical",
+        "modules": 12,
+        "externalModules": 2,
+        "bytes": 69763,
+        "target": "optional-practice/civilian-fpv/sim-presentation.mjs"
+      }
+    },
+    {
+      "script": "scripts/refresh-fpv-reaction-runtime.mjs",
+      "result": {
+        "status": "verified-byte-identical",
+        "modules": 32,
+        "recordings": 24,
+        "bytes": 920513
+      }
+    }
+  ],
+  "logs": [
+    {
+      "path": "fpv-followup-7109710578-focused.log",
+      "sha256": "76d09df1eddd5b1c7b5a46a1001fb1b7e5c7e98d929ac236a7a480ba96a77fe6",
+      "counts": {
+        "tests": 775,
+        "pass": 761,
+        "fail": 14,
+        "cancelled": 0,
+        "skipped": 0
+      }
+    },
+    {
+      "path": "fpv-followup-7109710578-fixture-rerun.log",
+      "sha256": "2379e20339b0803da0f1ca5de84badbb83dda936268cf6a82df5082877eb635d",
+      "counts": {
+        "tests": 49,
+        "pass": 49,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0
+      }
+    },
+    {
+      "path": "fpv-followup-7109710578-packages.log",
+      "sha256": "538662d8d2e46c1d849be5371dff25ef0660891a1d5ee8ef0c7a3719d26f10dc",
+      "counts": {
+        "tests": 19,
+        "pass": 19,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0
+      }
+    }
+  ],
+  "resolution": "Initial focused run had14 missing-fixture errors in menu-scenes.test.mjs and native-global-settings.test.mjs; exact committed fixtures were restored atomically only in frozen extraction, and both full affected files passed. All775 unique focused checks pass across these runs. No source edits or assertion changes.",
+  "inputReview": {
+    "sourceRevision": "7109710578a48e5d984a713d4bbb53f46c93c515",
+    "sourceTree": "8c9f5a4eb8439bc292de9a37a9e1d003bf320b10",
+    "uniqueInputs": 243,
+    "mismatches": 0,
+    "measurementSha256": "7fcb642a4ab6656c02665e28ea1223f9ca05374c8963461ca90d355eac3756d5",
+    "packages": [
+      {
+        "id": "civilian-flight",
+        "inputBytes": 4906472,
+        "inputLimit": 8388608,
+        "inputHeadroom": 3482136,
+        "sourceFiles": 98,
+        "sourceFileLimit": 98,
+        "runtimeFiles": 96,
+        "runtimeBytes": 3700749
+      },
+      {
+        "id": "civilian-fpv",
+        "inputBytes": 13262379,
+        "inputLimit": 13303808,
+        "inputHeadroom": 41429,
+        "sourceFiles": 151,
+        "sourceFileLimit": 151,
+        "runtimeFiles": 149,
+        "runtimeBytes": 12072116
+      },
+      {
+        "id": "fpv-worlds",
+        "inputBytes": 19752688,
+        "inputLimit": 20971520,
+        "inputHeadroom": 1218832,
+        "sourceFiles": 211,
+        "sourceFileLimit": 211,
+        "runtimeFiles": 209,
+        "runtimeBytes": 18583935
+      }
+    ]
+  },
+  "packages": [
+    {
+      "id": "civilian-flight",
+      "inputBytes": 4906472,
+      "inputLimit": 8388608,
+      "inputHeadroom": 3482136,
+      "sourceFiles": 98,
+      "sourceFileLimit": 98,
+      "runtimeFiles": 96,
+      "runtimeBytes": 3700749
+    },
+    {
+      "id": "civilian-fpv",
+      "inputBytes": 13262379,
+      "inputLimit": 13303808,
+      "inputHeadroom": 41429,
+      "sourceFiles": 151,
+      "sourceFileLimit": 151,
+      "runtimeFiles": 149,
+      "runtimeBytes": 12072116
+    },
+    {
+      "id": "fpv-worlds",
+      "inputBytes": 19752688,
+      "inputLimit": 20971520,
+      "inputHeadroom": 1218832,
+      "sourceFiles": 211,
+      "sourceFileLimit": 211,
+      "runtimeFiles": 209,
+      "runtimeBytes": 18583935
+    }
+  ],
+  "packageInventoryFile": "fpv-followup-7109710578-measure.json (local retained receipt)"
+}

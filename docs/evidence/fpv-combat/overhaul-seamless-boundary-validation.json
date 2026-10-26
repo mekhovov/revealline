@@ -1,0 +1,68 @@
+{
+  "date": "2026-10-20T07:37:43.150441+00:00",
+  "scope": "Shared regional encounter continuity and combat geometry holds; local development only",
+  "sourceSha256": {
+    "optional-practice/civilian-fpv/encounter-session.mjs": "81405ee2439c0359b32b1df1dd4409bd469dae7b8731bb45ab888f606de25600",
+    "optional-practice/civilian-fpv/encounter-controls.mjs": "f3f22ed3ce9437e631fd0afe5ef92e664d0d9d5a43d90f65382ec6b6b2ea5c2f",
+    "optional-practice/civilian-fpv/world-app.mjs": "58c3ebec30691aaf74676000f78bbce73b2fe5c8c1166412cfca089210ea1524",
+    "optional-practice/civilian-fpv/world-reaction-runtime.mjs": "7b84b3155aca86fbb6a04bc1f8b445987e64d240ea16e7fa3ab0bfb407f91c49",
+    "game/test/fpv-encounter-session.test.mjs": "4c1b1dcb50a293ab2ca47e8704f46f6885c1fe5f3528cb7b6e5c97b142bf69f5",
+    "game/test/fpv-combat-replay.test.mjs": "19428660f223329d16b91d92111e1262c1d2168c2805837e54ba30d59a03ff0e",
+    "game/test/fpv-world-appearance-ui.test.mjs": "25748704aa3dcc0b710aaec1ba45eb5585b88548d2affb79df9c1ff86d2d9e04"
+  },
+  "tests": {
+    "sessionReplayAdapters": {
+      "passed": 52,
+      "failed": 0,
+      "skipped": 0,
+      "durationMs": 21147.630292
+    },
+    "finalMountedUI": {
+      "passed": 151,
+      "failed": 0,
+      "skipped": 0,
+      "durationMs": 62127.108667
+    },
+    "historicalRegionalSelected": {
+      "passed": 2,
+      "failed": 0,
+      "skippedUnrelated": 37,
+      "durationMs": 972.066417
+    }
+  },
+  "checks": {
+    "lint": "pass",
+    "format": "pass",
+    "diffWhitespace": "pass",
+    "runtimeProjection": {
+      "status": "verified-byte-identical",
+      "modules": 42,
+      "recordings": 24,
+      "bytes": 1339369
+    }
+  },
+  "browser": {
+    "method": "Actual CUA keyboard flight in installed Railway Valley regional preview, production build",
+    "controls": "Temporary Keyboard/Self-level/Hunting, restored USB radio/Acro/Strike afterward",
+    "outside": {
+      "status": "active; Pause button visible",
+      "combatSecondsRemaining": 170,
+      "targetDistanceMetresAtCapture": 84,
+      "capture": "overhaul-seamless-boundary-active.png"
+    },
+    "reentry": {
+      "status": "active without Resume or rearm",
+      "combatSecondsRemainingAfterFire": 161,
+      "shots": 8,
+      "capture": "overhaul-seamless-boundary-return.png"
+    },
+    "explicitPause": "pass",
+    "consoleErrors": []
+  },
+  "limits": [
+    "No all-catalogue flight run or new sustained performance claim",
+    "Physical radio was not used in this turn",
+    "Real outer map/altitude limits still stop aircraft admission",
+    "New regional inside-area flight-only frames need updated playback; older v2 files remain readable"
+  ]
+}

@@ -1,0 +1,80 @@
+{
+  "format": "IndependentFinalVerificationAudit.v1",
+  "passed": true,
+  "receipt": {
+    "path": "/tmp/practice-final-verification-cancel-20261016-run1.json",
+    "sha256": "21400317057cfdaffc666d5ad8e669318a92431e69c5a920ac1354f6803e08b4"
+  },
+  "sourceRevision": "b8aec0821087354ac8a6765a5b95c68d24dd9137",
+  "envelopeSha256": "c271bc6c248844f756ba4c1a191e6008593d48c4d03b9e4d34836d6a174c73a6",
+  "authorityArchive": "/tmp/practice-native-8e29-authority-20261016.tgz",
+  "cases": [
+    {
+      "id": "civilian-flight",
+      "cancelLatencyMs": 46.35491700000057,
+      "files": 92,
+      "screenshot": {
+        "path": "/tmp/practice-final-verification-cancel-20261016-run1.json.final-verifying-civilian-flight.png",
+        "bytes": 76430,
+        "sha256": "caae56a2e6ee0e30faad4d9a6240c3115feff5e4acb154765f1c50ca21fff4e7"
+      },
+      "nativeStatus": "Offline download cancelled."
+    },
+    {
+      "id": "civilian-fpv",
+      "cancelLatencyMs": 48.566374999998516,
+      "files": 99,
+      "screenshot": {
+        "path": "/tmp/practice-final-verification-cancel-20261016-run1.json.final-verifying-civilian-fpv.png",
+        "bytes": 156977,
+        "sha256": "d991eb92dfa58da339fd85391b38144a77092c8d67dac10c2748cee2fa54f518"
+      },
+      "nativeStatus": "Offline download cancelled."
+    },
+    {
+      "id": "fpv-worlds",
+      "cancelLatencyMs": 40.644749999999476,
+      "files": 160,
+      "screenshot": {
+        "path": "/tmp/practice-final-verification-cancel-20261016-run1.json.final-verifying-fpv-worlds.png",
+        "bytes": 198227,
+        "sha256": "5dd10fc8a9b289514f3012143e8137600d3399a99e03076800773cd1d26693b4"
+      },
+      "nativeStatus": "Offline download cancelled."
+    }
+  ],
+  "baselineCacheCounts": [
+    {
+      "name": "revealline.optional.civilian-flight.v1:/revealline/practice/civilian-flight/app/:d784e191fd4b66ca658d2fa1ee7ee7060962817e0379d36a2e4ea4d6f8eba211",
+      "files": 9
+    },
+    {
+      "name": "revealline.optional.civilian-flight.v1:/revealline/practice/civilian-flight/releases/v0.151.1/site/optional-practice/civilian-flight/:7525ba59f03019010aecede5d01f7ab5d8392fffdea32dfe42f6a20c651575fb",
+      "files": 92
+    },
+    {
+      "name": "revealline.optional.package.v1:/revealline/practice/civilian-fpv/app/:5b3884b6df69ee10429cddc6be66488a30bcb49f2e48f296328bdb6494ade956",
+      "files": 9
+    },
+    {
+      "name": "revealline.optional.package.v1:/revealline/practice/civilian-fpv/releases/v0.0.0/site/optional-practice/civilian-fpv/:b0edd5ec4a11c18168a9540992cae721dd6f3e347db3b19bccdcef85aba8e8c6",
+      "files": 99
+    },
+    {
+      "name": "revealline.optional.package.v1:/revealline/practice/fpv-worlds/app/:ad388fda35f406927debc777439bcc78040f610fae8978acdf9757ceef159faa",
+      "files": 9
+    },
+    {
+      "name": "revealline.optional.package.v1:/revealline/practice/fpv-worlds/releases/v0.151.1/site/optional-practice/fpv-worlds/:d96f3c4bc7ba342a2261dcd12f3f7be9157efb25a57fc5345a2cf65eaa59b96a",
+      "files": 160
+    }
+  ],
+  "checkpoints": 22,
+  "limits": [
+    "Controlled final-ready response latency, not digest interruption or naturally slow hardware.",
+    "Same candidate bytes at alternate paths, not historical binary migration.",
+    "Academy proof/profile retention depends on source-bound runtime assertions; raw exports not retained in this receipt.",
+    "One UI-authored World project/revision; assets empty; Gym persistent flight records not populated.",
+    "English only; no human review, physical-input or public-hosting qualification."
+  ]
+}

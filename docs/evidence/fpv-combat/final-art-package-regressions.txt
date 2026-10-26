@@ -1,0 +1,549 @@
+TAP version 13
+# Subtest: optional appearance prewarms every LOD before live activation and preserves accepted records
+ok 1 - optional appearance prewarms every LOD before live activation and preserves accepted records
+  ---
+  duration_ms: 3.603208
+  ...
+# Subtest: staging shader failure retains Current and releases all staging resources
+ok 2 - staging shader failure retains Current and releases all staging resources
+  ---
+  duration_ms: 1.050333
+  ...
+# Subtest: rejected staging parts release both incoming and transferred actor leases
+ok 3 - rejected staging parts release both incoming and transferred actor leases
+  ---
+  duration_ms: 0.163708
+  ...
+# Subtest: rejected live parts release both incoming and transferred actor leases
+ok 4 - rejected live parts release both incoming and transferred actor leases
+  ---
+  duration_ms: 0.227125
+  ...
+# Subtest: already cancelled appearance never starts decoding
+ok 5 - already cancelled appearance never starts decoding
+  ---
+  duration_ms: 0.137458
+  ...
+# Subtest: cancellation while staging cannot activate and releases the candidate
+ok 6 - cancellation while staging cannot activate and releases the candidate
+  ---
+  duration_ms: 0.287083
+  ...
+# Subtest: a superseded decoder cannot replace or clear newer ready art
+ok 7 - a superseded decoder cannot replace or clear newer ready art
+  ---
+  duration_ms: 0.264959
+  ...
+# Subtest: reset during loading leaves Current and releases stale resources
+ok 8 - reset during loading leaves Current and releases stale resources
+  ---
+  duration_ms: 0.145792
+  ...
+# Subtest: generation during loading leaves Current and releases stale resources
+ok 9 - generation during loading leaves Current and releases stale resources
+  ---
+  duration_ms: 0.342125
+  ...
+# Subtest: context-loss during loading leaves Current and releases stale resources
+ok 10 - context-loss during loading leaves Current and releases stale resources
+  ---
+  duration_ms: 0.427666
+  ...
+# Subtest: invalid character and decode errors are plain bounded status with no live activation
+ok 11 - invalid character and decode errors are plain bounded status with no live activation
+  ---
+  duration_ms: 0.388542
+  ...
+# Subtest: default-only presentation consumers remain valid when optional art is cleared
+ok 12 - default-only presentation consumers remain valid when optional art is cleared
+  ---
+  duration_ms: 5.848625
+  ...
+# Subtest: full roster defaults to every character, prewarms shared roots once, and shares one decoded owner
+ok 13 - full roster defaults to every character, prewarms shared roots once, and shares one decoded owner
+  ---
+  duration_ms: 0.533875
+  ...
+# Subtest: explicit representative character retains every LOD without loading other characters
+ok 14 - explicit representative character retains every LOD without loading other characters
+  ---
+  duration_ms: 0.226541
+  ...
+# Subtest: partial roster lease acquisition failure releases previously acquired leases
+ok 15 - partial roster lease acquisition failure releases previously acquired leases
+  ---
+  duration_ms: 0.126667
+  ...
+# Subtest: cancellation releases staged resources even when graphics compilation never completes
+ok 16 - cancellation releases staged resources even when graphics compilation never completes
+  ---
+  duration_ms: 0.1955
+  ...
+# Subtest: full-roster activation drives real consumers, changes LOD without reloading, and preserves remains
+ok 17 - full-roster activation drives real consumers, changes LOD without reloading, and preserves remains
+  ---
+  duration_ms: 48.451125
+  ...
+# Subtest: prewarming includes differing equipment on otherwise shared body roots
+ok 18 - prewarming includes differing equipment on otherwise shared body roots
+  ---
+  duration_ms: 0.258667
+  ...
+# Subtest: art hydration and selection never download; missing Realistic keeps Current playable
+ok 19 - art hydration and selection never download; missing Realistic keeps Current playable
+  ---
+  duration_ms: 1.035208
+  ...
+# Subtest: verified cached art is restored independently of destructive-effects preferences
+ok 20 - verified cached art is restored independently of destructive-effects preferences
+  ---
+  duration_ms: 0.45375
+  ...
+# Subtest: only explicit successful download saves and selects the admitted pack
+ok 21 - only explicit successful download saves and selects the admitted pack
+  ---
+  duration_ms: 0.170708
+  ...
+# Subtest: bad and cancelled downloads preserve current art and never cache partial bytes
+ok 22 - bad and cancelled downloads preserve current art and never cache partial bytes
+  ---
+  duration_ms: 0.21325
+  ...
+# Subtest: quota failure retains an admitted session pack with an explicit storage notice
+ok 23 - quota failure retains an admitted session pack with an explicit storage notice
+  ---
+  duration_ms: 0.106708
+  ...
+# Subtest: late hydration cannot reopen a disposed owner or leave loaded art retained
+ok 24 - late hydration cannot reopen a disposed owner or leave loaded art retained
+  ---
+  duration_ms: 0.09875
+  ...
+# Subtest: invalid cached art stays Current until an explicit verified replacement is saved
+ok 25 - invalid cached art stays Current until an explicit verified replacement is saved
+  ---
+  duration_ms: 0.151833
+  ...
+# Subtest: appearance admits exact cosmetic identity, bounded geometry and immutable bytes
+ok 26 - appearance admits exact cosmetic identity, bounded geometry and immutable bytes
+  ---
+  duration_ms: 9.656541
+  ...
+# Subtest: manifest mutation while hashing cannot substitute metadata behind its pinned identity
+ok 27 - manifest mutation while hashing cannot substitute metadata behind its pinned identity
+  ---
+  duration_ms: 3.881625
+  ...
+# Subtest: appearance requires license, LOD, authored fragments and unique compatible characters
+    # Subtest: provenance
+    ok 1 - provenance
+      ---
+      duration_ms: 3.463792
+      ...
+    # Subtest: LOD
+    ok 2 - LOD
+      ---
+      duration_ms: 1.759667
+      ...
+    # Subtest: caps
+    ok 3 - caps
+      ---
+      duration_ms: 0.712291
+      ...
+    # Subtest: duplicate
+    ok 4 - duplicate
+      ---
+      duration_ms: 2.410958
+      ...
+    # Subtest: unknown family
+    ok 5 - unknown family
+      ---
+      duration_ms: 2.355417
+      ...
+    # Subtest: unsafe path
+    ok 6 - unsafe path
+      ---
+      duration_ms: 0.629334
+      ...
+    # Subtest: download size
+    ok 7 - download size
+      ---
+      duration_ms: 0.475167
+      ...
+    1..7
+ok 28 - appearance requires license, LOD, authored fragments and unique compatible characters
+  ---
+  duration_ms: 13.261333
+  ...
+# Subtest: hash mismatch, missing file and malformed GLB fail before admission
+ok 29 - hash mismatch, missing file and malformed GLB fail before admission
+  ---
+  duration_ms: 8.483291
+  ...
+# Subtest: pack cannot add gameplay markers, omit clips, exceed live draws or skin remains
+    # Subtest: marker
+    ok 1 - marker
+      ---
+      duration_ms: 3.714625
+      ...
+    # Subtest: clip
+    ok 2 - clip
+      ---
+      duration_ms: 4.021208
+      ...
+    # Subtest: draws
+    ok 3 - draws
+      ---
+      duration_ms: 2.093833
+      ...
+    # Subtest: skin
+    ok 4 - skin
+      ---
+      duration_ms: 2.820833
+      ...
+    # Subtest: names
+    ok 5 - names
+      ---
+      duration_ms: 2.821917
+      ...
+    # Subtest: rig outside root
+    ok 6 - rig outside root
+      ---
+      duration_ms: 2.5685
+      ...
+    # Subtest: LOD not animated
+    ok 7 - LOD not animated
+      ---
+      duration_ms: 2.123834
+      ...
+    # Subtest: duplicate clip
+    ok 8 - duplicate clip
+      ---
+      duration_ms: 1.97875
+      ...
+    # Subtest: transparent surface
+    ok 9 - transparent surface
+      ---
+      duration_ms: 1.419416
+      ...
+    # Subtest: unbounded settled draws
+    ok 10 - unbounded settled draws
+      ---
+      duration_ms: 1.18025
+      ...
+    # Subtest: expanded buffers
+    ok 11 - expanded buffers
+      ---
+      duration_ms: 2.13825
+      ...
+    1..11
+ok 30 - pack cannot add gameplay markers, omit clips, exceed live draws or skin remains
+  ---
+  duration_ms: 29.765208
+  ...
+# Subtest: GPU admission counts material texture uses and mip storage independently of compressed image bytes
+ok 31 - GPU admission counts material texture uses and mip storage independently of compressed image bytes
+  ---
+  duration_ms: 2.747167
+  ...
+# Subtest: download verifies manifest before requesting model and retains explicit fetch boundaries
+ok 32 - download verifies manifest before requesting model and retains explicit fetch boundaries
+  ---
+  duration_ms: 18.109167
+  ...
+# Subtest: streaming overrun, interruption and abort cannot return a partially ready pack
+ok 33 - streaming overrun, interruption and abort cannot return a partially ready pack
+  ---
+  duration_ms: 1.637709
+  ...
+# Subtest: download accepts localhost HTTP only and cancels rejected response bodies
+ok 34 - download accepts localhost HTTP only and cancels rejected response bodies
+  ---
+  duration_ms: 1.66125
+  ...
+# Subtest: optional cache accepts only fully admitted packs and rereads exact verified immutable bytes
+ok 35 - optional cache accepts only fully admitted packs and rereads exact verified immutable bytes
+  ---
+  duration_ms: 9.054083
+  ...
+# Subtest: invalid or interrupted replacement leaves the last optional pack available
+ok 36 - invalid or interrupted replacement leaves the last optional pack available
+  ---
+  duration_ms: 10.964333
+  ...
+# Subtest: decoded appearance owns shared resources until the owner and all idempotent leases retire
+ok 37 - decoded appearance owns shared resources until the owner and all idempotent leases retire
+  ---
+  duration_ms: 9.250208
+  ...
+# Subtest: partial decode and cancellation dispose all returned resources before exposing an appearance owner
+ok 38 - partial decode and cancellation dispose all returned resources before exposing an appearance owner
+  ---
+  duration_ms: 5.029125
+  ...
+# Subtest: missing decoded roots or LOD motion and malformed animations reject with complete disposal
+    # Subtest: missing root
+    ok 1 - missing root
+      ---
+      duration_ms: 0.989042
+      ...
+    # Subtest: LOD motion absent
+    ok 2 - LOD motion absent
+      ---
+      duration_ms: 1.054458
+      ...
+    # Subtest: malformed clips
+    ok 3 - malformed clips
+      ---
+      duration_ms: 0.66725
+      ...
+    1..3
+ok 39 - missing decoded roots or LOD motion and malformed animations reject with complete disposal
+  ---
+  duration_ms: 4.764709
+  ...
+# Subtest: actor leases preserve normalization ancestors and animations for both live and LOD roots
+ok 40 - actor leases preserve normalization ancestors and animations for both live and LOD roots
+  ---
+  duration_ms: 16.363416
+  ...
+# Subtest: equipment retains live bone binding and uses its declared rigid remains pose without copying geometry
+ok 41 - equipment retains live bone binding and uses its declared rigid remains pose without copying geometry
+  ---
+  duration_ms: 8.451791
+  ...
+# Subtest: declared remains equipment must be an admitted distinct rigid branch
+    # Subtest: missing
+    ok 1 - missing
+      ---
+      duration_ms: 3.403208
+      ...
+    # Subtest: skinned
+    ok 2 - skinned
+      ---
+      duration_ms: 1.505708
+      ...
+    # Subtest: too many draws
+    ok 3 - too many draws
+      ---
+      duration_ms: 2.057417
+      ...
+    1..3
+ok 42 - declared remains equipment must be an admitted distinct rigid branch
+  ---
+  duration_ms: 7.323542
+  ...
+# Subtest: native and regional pulses share bounded pools and subtract the current render origin
+ok 43 - native and regional pulses share bounded pools and subtract the current render origin
+  ---
+  duration_ms: 5.058083
+  ...
+# Subtest: shader preparation exposes every empty colored pool without fabricating actors or remains
+ok 44 - shader preparation exposes every empty colored pool without fabricating actors or remains
+  ---
+  duration_ms: 8.404416
+  ...
+# Subtest: combat remains are bounded independent facts, survive restore, and reject a foreign attempt atomically
+ok 45 - combat remains are bounded independent facts, survive restore, and reject a foreign attempt atomically
+  ---
+  duration_ms: 80.301709
+  ...
+# Subtest: all shared families and casts keep their wardrobe and exact equipment in clean and graphic recipes
+ok 46 - all shared families and casts keep their wardrobe and exact equipment in clean and graphic recipes
+  ---
+  duration_ms: 1.620667
+  ...
+# Subtest: effect tiers bound complete clusters, motion, surface marks, and draw calls at full ledger capacity
+ok 47 - effect tiers bound complete clusters, motion, surface marks, and draw calls at full ledger capacity
+  ---
+  duration_ms: 53.805791
+  ...
+# Subtest: pause and camera rendering do not advance motion; reduced effects retains grounded remains
+ok 48 - pause and camera rendering do not advance motion; reduced effects retains grounded remains
+  ---
+  duration_ms: 1.447625
+  ...
+# Subtest: effect detail can be supplied by the host preference getter without recreating presentation
+ok 49 - effect detail can be supplied by the host preference getter without recreating presentation
+  ---
+  duration_ms: 1.444834
+  ...
+# Subtest: automatic detail recovers at ordinary 60 Hz while retaining the overall graphics cap
+ok 50 - automatic detail recovers at ordinary 60 Hz while retaining the overall graphics cap
+  ---
+  duration_ms: 3.604958
+  ...
+# Subtest: archive restore rebuilds settled pieces without replaying an historical burst and rebases every matrix
+ok 51 - archive restore rebuilds settled pieces without replaying an historical burst and rebases every matrix
+  ---
+  duration_ms: 1.098083
+  ...
+# Subtest: unknown surfaces receive no blood decals; accepted ground queries and direction produce deterministic effects
+ok 52 - unknown surfaces receive no blood decals; accepted ground queries and direction produce deterministic effects
+  ---
+  duration_ms: 1.109625
+  ...
+# Subtest: new detail preferences do not rewrite strict shared gore preferences and restore chosen detail
+ok 53 - new detail preferences do not rewrite strict shared gore preferences and restore chosen detail
+  ---
+  duration_ms: 0.224375
+  ...
+# Subtest: accepted nonfatal hits provide material feedback without awarding persistent defeat remains
+ok 54 - accepted nonfatal hits provide material feedback without awarding persistent defeat remains
+  ---
+  duration_ms: 1.19
+  ...
+# Subtest: native family rigs render in four shared batches, animate from ticks, retire dead actors, and release resources
+ok 55 - native family rigs render in four shared batches, animate from ticks, retire dead actors, and release resources
+  ---
+  duration_ms: 32.759667
+  ...
+# Subtest: live vehicle rigs follow accepted appearance model changes for the same actor identity
+ok 56 - live vehicle rigs follow accepted appearance model changes for the same actor identity
+  ---
+  duration_ms: 3.407208
+  ...
+# Subtest: admitted appearance leases share model assets, bound skinning, rebase and release each ownership layer
+ok 57 - admitted appearance leases share model assets, bound skinning, rebase and release each ownership layer
+  ---
+  duration_ms: 4.452208
+  ...
+# Subtest: skinned animation uses accepted spawn-relative ticks, pauses, rewinds, and honors reduced motion
+ok 58 - skinned animation uses accepted spawn-relative ticks, pauses, rewinds, and honors reduced motion
+  ---
+  duration_ms: 4.00525
+  ...
+# Subtest: optional positive-Z art follows accepted headings without rotating the source or Current rigs
+ok 59 - optional positive-Z art follows accepted headings without rotating the source or Current rigs
+  ---
+  duration_ms: 1.926917
+  ...
+# Subtest: missing, unready, malformed and failed clone templates fall back atomically to current art
+ok 60 - missing, unready, malformed and failed clone templates fall back atomically to current art
+  ---
+  duration_ms: 2.581667
+  ...
+# Subtest: representative admission rejects excess draws and releases rejected clone-only allocations
+ok 61 - representative admission rejects excess draws and releases rejected clone-only allocations
+  ---
+  duration_ms: 1.734708
+  ...
+# Subtest: authored rigid regions share pack paints, keep caps attached, and preserve archives across art changes
+ok 62 - authored rigid regions share pack paints, keep caps attached, and preserve archives across art changes
+  ---
+  duration_ms: 8.070625
+  ...
+# Subtest: authored remains obey full-ledger budgets, clean treatment and conservative low-detail fallback
+ok 63 - authored remains obey full-ledger budgets, clean treatment and conservative low-detail fallback
+  ---
+  duration_ms: 59.303708
+  ...
+# Subtest: rejected or missing authored regions retain caller ownership and fall back without losing remains
+ok 64 - rejected or missing authored regions retain caller ownership and fall back without losing remains
+  ---
+  duration_ms: 2.11075
+  ...
+# Subtest: settled authored regions and their caps remain above an inclined accepted surface
+ok 65 - settled authored regions and their caps remain above an inclined accepted surface
+  ---
+  duration_ms: 1.4695
+  ...
+# Subtest: bulk actor palettes cover twenty accepted identities with shared gear, stable LOD and recovery-only braces
+ok 66 - bulk actor palettes cover twenty accepted identities with shared gear, stable LOD and recovery-only braces
+  ---
+  duration_ms: 13.736958
+  ...
+# Subtest: all-family remains share source geometry, keep clean clothed regions and enforce whole-cluster budgets
+ok 67 - all-family remains share source geometry, keep clean clothed regions and enforce whole-cluster budgets
+  ---
+  duration_ms: 86.480459
+  ...
+# Subtest: terrain marks reject unsupported corners and retain accepted support across streaming recovery
+ok 68 - terrain marks reject unsupported corners and retain accepted support across streaming recovery
+  ---
+  duration_ms: 1.294375
+  ...
+# Subtest: explicit accepted cast matches the live model and survives later global cast changes
+ok 69 - explicit accepted cast matches the live model and survives later global cast changes
+  ---
+  duration_ms: 1.244083
+  ...
+# Subtest: clean Current bodies use one connected settled transform and keep their clothing
+ok 70 - clean Current bodies use one connected settled transform and keep their clothing
+  ---
+  duration_ms: 0.120208
+  ...
+# Subtest: same-region equipment merges without losing any family or cast at High detail
+ok 71 - same-region equipment merges without losing any family or cast at High detail
+  ---
+  duration_ms: 17.51625
+  ...
+# Subtest: clean remains bake the declared settled gear branch transform into the connected body pose
+ok 72 - clean remains bake the declared settled gear branch transform into the connected body pose
+  ---
+  duration_ms: 1.698334
+  ...
+# Subtest: Academy and World explicitly ship the complete offline tuning and module-worker closure
+ok 73 - Academy and World explicitly ship the complete offline tuning and module-worker closure
+  ---
+  duration_ms: 2446.900042
+  ...
+# Subtest: optional character art stays hosted without entering the core offline download
+ok 74 - optional character art stays hosted without entering the core offline download
+  ---
+  duration_ms: 650.586208
+  ...
+# Subtest: bundled FPV pins final default bytes and has its own bounded cache outside core
+ok 75 - bundled FPV pins final default bytes and has its own bounded cache outside core
+  ---
+  duration_ms: 2146.693959
+  ...
+# Subtest: bundled FPV rejects missing, unadmitted, changed-vendor and oversized dependencies
+ok 76 - bundled FPV rejects missing, unadmitted, changed-vendor and oversized dependencies
+  ---
+  duration_ms: 839.627542
+  ...
+# Subtest: actual FPV application, native notebook and installation launcher close inside admitted runtime/source budgets
+ok 77 - actual FPV application, native notebook and installation launcher close inside admitted runtime/source budgets
+  ---
+  duration_ms: 4102.927625
+  ...
+# Subtest: explicit FPV package remains independently reproducible with complete pinned runtime and source closures
+ok 78 - explicit FPV package remains independently reproducible with complete pinned runtime and source closures
+  ---
+  duration_ms: 1306.884792
+  ...
+# Subtest: vendor pins are checked before parser exemptions while application fetch and foreign imports stay forbidden
+ok 79 - vendor pins are checked before parser exemptions while application fetch and foreign imports stay forbidden
+  ---
+  duration_ms: 482.05075
+  ...
+# Subtest: rewritten archive hashes cannot replace a reviewed vendor dependency
+ok 80 - rewritten archive hashes cannot replace a reviewed vendor dependency
+  ---
+  duration_ms: 816.014208
+  ...
+# Subtest: package selection rejects unknown, duplicate and empty lists before touching frozen inputs
+ok 81 - package selection rejects unknown, duplicate and empty lists before touching frozen inputs
+  ---
+  duration_ms: 0.799667
+  ...
+# Subtest: source budget includes the final source-inventory member, not only its listed dependencies
+ok 82 - source budget includes the final source-inventory member, not only its listed dependencies
+  ---
+  duration_ms: 530.496958
+  ...
+# Subtest: generic optional worker cleanup owns only its exact package scope
+ok 83 - generic optional worker cleanup owns only its exact package scope
+  ---
+  duration_ms: 0.646042
+  ...
+1..83
+# tests 107
+# suites 0
+# pass 107
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 13813.196833
