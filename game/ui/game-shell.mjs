@@ -29,6 +29,8 @@ export function attachGameShell({
   separateTeam = false,
   titleDestination,
   titleContinueDestination,
+  navigationContext = () =>
+    t('interface:captureNavigation.context', { mode: t('interface:solo2') }),
   onWorlds,
   onMissions,
   getTopDialog,
@@ -36,6 +38,7 @@ export function attachGameShell({
   focusBriefing,
   focusGame = () => doc.getElementById('start-button')?.focus(),
   getAppearanceDefault = () => null,
+  comfortSettings,
 } = {}) {
   // A registered embedded lesson already owns a token-checked return action.
   // Its shell must not expose campaign destinations inside the practice frame.
@@ -237,6 +240,14 @@ export function attachGameShell({
   };
   const refreshHomeCopy = () => {
     const continued = !isolated && canContinue();
+    if ($('shell-family-context')) {
+      const context = () => (isolated ? '' : navigationContext());
+      $('shell-family-context').hidden = !context();
+      localizedText($('shell-family-context'), context);
+      if ($('shell-family-context').hidden)
+        $('shell-title-modes')?.removeAttribute('aria-describedby');
+      else $('shell-title-modes')?.setAttribute('aria-describedby', 'shell-family-context');
+    }
     $('shell-continue').hidden = !continued;
     if ($('shell-featured')) $('shell-featured').hidden = isolated || continued;
     if ($('shell-destination'))
@@ -800,9 +811,15 @@ export function attachGameShell({
     event.preventDefault();
   };
   doc.addEventListener('keydown', keydown);
-  surfaces.refreshGlobalSettings();
+  surfaces.refreshGlobalSettings({ comfort: comfortSettings });
   if (initial) openHome({ focus: initialFocus });
   return {
+    get qualityObservationOwner() {
+      return destroyed ? null : surfaces.qualityObservationOwner;
+    },
+    setQuality: (tier) => {
+      if (!destroyed) surfaces.setQuality(tier);
+    },
     primary,
     openHome,
     openMissions,

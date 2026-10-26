@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="en">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Regional v3 worker qualification</title>
+  <style>
+    body {
+      max-width: 68rem;
+      margin: 2rem auto;
+      padding: 0 1rem;
+      font: 16px system-ui;
+      line-height: 1.5;
+      color: #e8eef5;
+      background: #10202d;
+    }
+    button {
+      font: inherit;
+      padding: 0.65rem 1rem;
+      margin: 0.3rem;
+      border: 1px solid #8bb1cc;
+      border-radius: 0.35rem;
+    }
+    pre {
+      white-space: pre-wrap;
+      overflow-wrap: anywhere;
+      background: #172f40;
+      padding: 1rem;
+    }
+    small {
+      display: block;
+    }
+  </style>
+  <h1>Regional v3 worker qualification</h1>
+  <p>
+    Meteor75 Self-level and Nazgul Acro. Compares native dedicated workers with the same direct
+    simulation, at fixed 1,000 Hz.
+  </p>
+  <p>
+    This checks synthetic terrain-frame transactions and short retained-clip recovery. It does not
+    qualify Regional map fetching/rendering, offline installation, performance, real aircraft, or
+    scoring. No browser storage is read or written.
+  </p>
+  <p id="source">Reading frozen source identity…</p>
+  <button id="run" disabled>Run current Regional worker checks</button>
+  <button id="cancel" disabled>Cancel checks</button>
+  <p id="status" role="status" aria-live="polite">Not run.</p>
+  <small
+    >Recording segments rotate at the existing 2 KiB event budget for this test. The production
+    60-second limit and physical clocks are unchanged.</small
+  >
+  <pre id="results" aria-label="Qualification results">No results.</pre>
+  <script type="module">
+    import { createAdvancedWorkerClient } from '../optional-practice/civilian-fpv/advanced-worker-client.mjs';
+    import {
+      REGIONAL_CASES,
+      runRegionalProtocolCase,
+    } from '../game/test/helpers/fpv-aircraft-regional-worker-qualification.mjs';
+    const run = document.getElementById('run'),
+      cancel = document.getElementById('cancel'),
+      status = document.getElementById('status'),
+      results = document.getElementById('results');
+    let source,
+      owner,
+      generation = 0;
+    const render = (report) => {
+      results.textContent = JSON.stringify(report, null, 2);
+    };
+    try {
+      const response = await fetch('/source.json', { cache: 'no-store' });
+      if (!response.ok) throw new Error('Frozen source metadata unavailable');
+      source = await response.json();
+      document.getElementById('source').textContent =
+        `Frozen source ${source.sourceRevision} · ${source.inputs.length} pinned files · ${navigator.userAgent}`;
+      if (typeof Worker !== 'function') throw new Error('Native module workers are unavailable');
+      run.disabled = false;
+    } catch (error) {
+      status.textContent = error.message;
+    }
+    run.addEventListener('click', async () => {
+      if (owner) return;
+      const job = ++generation,
+        controller = new AbortController();
+      owner = controller;
+      run.disabled = true;
+      cancel.disabled = false;
+      const report = {
+        format: 'AircraftRegionalWorkerProtocolQualification.v1',
+        source,
+        userAgent: navigator.userAgent,
+        startedAt: new Date().toISOString(),
+        status: 'running',
+        cases: [],
+        performanceQualified: false,
+        scored: false,
+        defaultEligible: false,
+      };
+      render(report);
+      try {
+        for (const item of REGIONAL_CASES) {
+          const row = { ...item, status: 'running', matched: false };
+          report.cases.push(row);
+          const options = {
+            signal: controller.signal,
+            onProgress: (progress) => {
+              if (job === generation)
+                status.textContent = `${item.preset} · ${phase} · ${progress.tick}/${progress.total} mission steps`;
+            },
+          };
+          let phase = 'direct baseline';
+          status.textContent = `${item.preset} · ${phase}`;
+          const baseline = await runRegionalProtocolCase(item, options);
+          row.baseline = baseline;
+          render(report);
+          phase = 'native worker';
+          status.textContent = `${item.preset} · ${phase}`;
+          const worker = await runRegionalProtocolCase(item, {
+            ...options,
+            createClient: () => createAdvancedWorkerClient({ watchdogMs: 30000 }),
+          });
+          row.worker = worker;
+          if (JSON.stringify(baseline) !== JSON.stringify(worker))
+            throw new Error(`${item.preset}: native worker differs from direct baseline`);
+          row.matched = true;
+          row.status = 'passed';
+          render(report);
+        }
+        controller.signal.throwIfAborted();
+        report.status = 'passed';
+        status.textContent =
+          'Passed: both native worker cases match direct state, input cursors, segment boundaries, rollback and recovery. Performance and streamed-map qualification remain open.';
+      } catch (error) {
+        report.status = error.name === 'AbortError' ? 'cancelled' : 'failed';
+        report.error = String(error.stack ?? error);
+        const active = report.cases.find((row) => row.status === 'running');
+        if (active) {
+          active.status = report.status;
+          active.error = error.message;
+        }
+        if (job === generation)
+          status.textContent = `${report.status === 'cancelled' ? 'Cancelled' : 'Failed'}: ${error.message}`;
+      } finally {
+        report.finishedAt = new Date().toISOString();
+        if (job === generation) {
+          render(report);
+          owner = null;
+          run.disabled = false;
+          cancel.disabled = true;
+        }
+      }
+    });
+    cancel.addEventListener('click', () => {
+      owner?.abort();
+      status.textContent = 'Cancelling owned worker…';
+    });
+    addEventListener('pagehide', () => {
+      generation++;
+      owner?.abort();
+    });
+  </script>
+</html>

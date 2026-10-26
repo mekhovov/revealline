@@ -103,6 +103,8 @@ test('selecting no radio revokes the old device and verified mapping before a la
     );
     runtime.setProfile(profile);
     runtime.verify();
+    assert.equal(runtime.requestArm(), false, 'Setup still owns the controls.');
+    view.dispose();
     assert.equal(runtime.requestArm(), true);
   } finally {
     view.dispose();

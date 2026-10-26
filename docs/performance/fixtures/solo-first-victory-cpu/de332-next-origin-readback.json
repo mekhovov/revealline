@@ -1,0 +1,44 @@
+{
+  "artifact": {
+    "id": 12125224496,
+    "node_id": "MDg6QXJ0aWZhY3QxMjEyNTIyNDQ5Ng==",
+    "name": "solo-linux-de332-geometric-next-next-chromium-r1-39098131087-1",
+    "size_in_bytes": 675224,
+    "url": "https://api.github.com/repos/mekhovov/revealline/actions/artifacts/12125224496",
+    "archive_download_url": "https://api.github.com/repos/mekhovov/revealline/actions/artifacts/12125224496/zip",
+    "expired": false,
+    "digest": "sha256:87cd36fdda0b0703df7ba5407772441df4a19ed2969176f9f9a4f917c8d61f29",
+    "created_at": "2026-10-18T04:54:21Z",
+    "updated_at": "2026-10-18T04:54:21Z",
+    "expires_at": "2026-11-01T04:54:20Z",
+    "workflow_run": {
+      "id": 39098131087,
+      "repository_id": 1367404328,
+      "head_repository_id": 1367404328,
+      "head_branch": "main",
+      "head_sha": "68ad6a4730ae558cbfd14abf59800c8e462b1dc9"
+    }
+  },
+  "members": [
+    {
+      "path": "solo-linux-de332-geometric-next-next-chromium-1/evidence/fresh-mid-calibration.json",
+      "bytes": 3240,
+      "sha256": "b2a2ccb1cee2590ae84b086de14311c5ac64c0926e477bda05b691b37fa5e2fb"
+    },
+    {
+      "path": "solo-linux-de332-geometric-next-next-chromium-1/evidence/next-chromium-r1-candidate/command.json",
+      "bytes": 25565,
+      "sha256": "e376615aceb20d27d024481ce005dfe8580e2379cad59cee53b7a34e104c4306"
+    },
+    {
+      "path": "solo-linux-de332-geometric-next-next-chromium-1/evidence/next-chromium-r1-candidate/report.json",
+      "bytes": 5774357,
+      "sha256": "23d8edf87017318af9d0dd17311a3879e8f0d1b9f093edea052f1c488d1dda81"
+    },
+    {
+      "path": "solo-linux-de332-geometric-next-next-chromium-1/evidence/summary.json",
+      "bytes": 39753,
+      "sha256": "66e40a36013701433f8592f87039cbf243f3a4b571e752c7262b8b2216a7a223"
+    }
+  ]
+}

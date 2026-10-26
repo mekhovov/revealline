@@ -285,7 +285,20 @@ function adjustBudget(source, count, growth) {
 /** One transaction owns the segment, manifest and global budget. No successful
  * write is acknowledged before commit; quota/cancellation preserve the prior
  * durable prefix. Recovery slots and the bounded recent recorder are separate. */
-export function createAircraftArchiveStore({ indexedDB = globalThis.indexedDB } = {}) {
+export function createAircraftArchiveStore({
+  indexedDB = globalThis.indexedDB,
+  codec = null,
+} = {}) {
+  // A trusted codec shares the atomic bounded storage protocol, never the historical format.
+  const protocol = codec ?? {
+    database: DATABASE,
+    format: AIRCRAFT_ARCHIVE_PACKAGE_FORMAT,
+    validateManifest: validateAircraftArchiveManifest,
+    validatePackage: validateAircraftArchivePackage,
+    validateSegment,
+    extend,
+    emptyManifest,
+  };
   let opening = null,
     database = null,
     closed = false;
@@ -296,7 +309,7 @@ export function createAircraftArchiveStore({ indexedDB = globalThis.indexedDB } 
     if (database) return Promise.resolve(database);
     if (!opening)
       opening = new Promise((resolve, reject) => {
-        const request = indexedDB.open(DATABASE, 1);
+        const request = indexedDB.open(protocol.database, 1);
         let rejected = false;
         request.onupgradeneeded = () => {
           for (const name of STORES)
@@ -317,13 +330,21 @@ export function createAircraftArchiveStore({ indexedDB = globalThis.indexedDB } 
             reject(abortError());
             return;
           }
-          database = request.result;
-          database.onversionchange = () => {
-            database?.close();
+          const connection = request.result;
+          database = connection;
+          const forgetConnection = () => {
+            if (database !== connection) return;
             database = null;
             opening = null;
           };
-          resolve(database);
+          connection.onversionchange = () => {
+            connection.close();
+            forgetConnection();
+          };
+          // A browser may close a connection unexpectedly. Let the next operation
+          // reopen it; never replay an in-flight write whose outcome is uncertain.
+          connection.onclose = forgetConnection;
+          resolve(connection);
         };
       }).catch((error) => {
         opening = null;
@@ -393,7 +414,7 @@ export function createAircraftArchiveStore({ indexedDB = globalThis.indexedDB } 
   function readManifest(request, id, callback) {
     request('archives', 'get', [id], (source) => {
       required(source !== undefined, 'Aircraft archive was not found');
-      const manifest = validateAircraftArchiveManifest(source);
+      const manifest = protocol.validateManifest(source);
       required(manifest.id === id, 'Aircraft archive storage key changed');
       callback(manifest);
     });
@@ -416,7 +437,7 @@ export function createAircraftArchiveStore({ indexedDB = globalThis.indexedDB } 
   const api = {
     async begin(source, { signal } = {}) {
       signal?.throwIfAborted();
-      return insert(emptyManifest(source), [], signal);
+      return insert(protocol.emptyManifest(source), [], signal);
     },
     async append(id, source, { expectedRevision, signal } = {}) {
       checkId(id);
@@ -424,7 +445,7 @@ export function createAircraftArchiveStore({ indexedDB = globalThis.indexedDB } 
       const captured = boundedJSON(source, bounds);
       return transaction('readwrite', signal, (request, done) => {
         readManifest(request, id, (manifest) => {
-          const segment = validateSegment(captured, manifest);
+          const segment = protocol.validateSegment(captured, manifest);
           request('segments', 'get', [key(id, segment.index)], (existing) => {
             if (existing !== undefined) {
               required(
@@ -436,7 +457,7 @@ export function createAircraftArchiveStore({ indexedDB = globalThis.indexedDB } 
             }
             expect(manifest, expectedRevision);
             const apply = (previous) => {
-              const next = extend(manifest, segment, previous);
+              const next = protocol.extend(manifest, segment, previous);
               request('budget', 'get', [BUDGET_KEY], (budget) => {
                 const totals = adjustBudget(budget, 0, next.payloadBytes - manifest.payloadBytes);
                 request('segments', 'put', [segment, key(id, segment.index)]);
@@ -455,7 +476,7 @@ export function createAircraftArchiveStore({ indexedDB = globalThis.indexedDB } 
                     previous.finalHash === manifest.finalHash,
                   'Aircraft archive durable tail differs from its manifest',
                 );
-                apply(validateSegment(previous, manifest));
+                apply(protocol.validateSegment(previous, manifest));
               });
           });
         });
@@ -485,7 +506,7 @@ export function createAircraftArchiveStore({ indexedDB = globalThis.indexedDB } 
           }
           expect(manifest, expectedRevision);
           required(manifest.state === 'open', 'Aircraft archive is already closed');
-          const next = validateAircraftArchiveManifest({
+          const next = protocol.validateManifest({
             ...manifest,
             state: ending.reason,
             revision: manifest.revision + 1,
@@ -504,7 +525,7 @@ export function createAircraftArchiveStore({ indexedDB = globalThis.indexedDB } 
           );
           done(
             rows
-              .map(validateAircraftArchiveManifest)
+              .map(protocol.validateManifest)
               .sort((a, b) => b.createdAt - a.createdAt || a.id.localeCompare(b.id)),
           );
         });
@@ -518,8 +539,8 @@ export function createAircraftArchiveStore({ indexedDB = globalThis.indexedDB } 
           const read = (index) => {
             if (segments.length === manifest.segmentCount) {
               if (segments.length)
-                validateAircraftArchivePackage({
-                  format: AIRCRAFT_ARCHIVE_PACKAGE_FORMAT,
+                protocol.validatePackage({
+                  format: protocol.format,
                   manifest,
                   segments,
                 });
@@ -539,13 +560,13 @@ export function createAircraftArchiveStore({ indexedDB = globalThis.indexedDB } 
     async exportPackage(id, { signal } = {}) {
       const data = await api.load(id, { signal });
       signal?.throwIfAborted();
-      return validateAircraftArchivePackage({ format: AIRCRAFT_ARCHIVE_PACKAGE_FORMAT, ...data });
+      return protocol.validatePackage({ format: protocol.format, ...data });
     },
     async importPackage(source, { id, signal } = {}) {
       checkId(id);
       signal?.throwIfAborted();
-      const packet = validateAircraftArchivePackage(source);
-      const manifest = validateAircraftArchiveManifest({
+      const packet = protocol.validatePackage(source);
+      const manifest = protocol.validateManifest({
         ...packet.manifest,
         id,
         revision: 0,

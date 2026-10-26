@@ -935,6 +935,7 @@
   "aCompleteGenerationPrompt": "A complete generation prompt",
   "includeStyleExactOutputRequirementsRequiredStatesForbiddenVisualCollisions": "Include style, exact output requirements, required states, forbidden visual collisions and the current reference version. Copy one slot or a coordinated collection brief.",
   "themeWithoutRuleDrift": "Theme without rule drift",
+  "fpvIsTheCompleteFirstProductionThemeUkrainianRetroAnd": "FPV, Ukrainian and Retro collections share the same gameplay rules and keep their own presentation.",
   "reviewAnIllustrativeAiAssetBrief": "Review an illustrative AI asset brief",
   "proposedExampleProductionPromptsMustDeriveTheirExactGeometryAnd": "Proposed example; production prompts must derive their exact geometry and filenames from the selected registry slot.",
   "copyExampleBrief": "Copy example brief",

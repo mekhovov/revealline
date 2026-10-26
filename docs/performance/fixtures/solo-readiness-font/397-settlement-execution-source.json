@@ -1,0 +1,322 @@
+{
+  "format": "SoloSelectedFont397ExecutedSourceV1",
+  "revision": "39774cce8697d412d138ef4da11ac547a5f8e535",
+  "tree": "cac2369a26cac5282e4260c638b934540d17ced6",
+  "run": 39066188215,
+  "artifact": 12113228769,
+  "scope": "Exact executed V4 inputs; original failed pre-selection observer result remains unchanged.",
+  "records": [
+    {
+      "path": "scripts/brand-icons.mjs",
+      "bytes": 12391,
+      "sha256": "7fa383d043be55befee6ee04302d407f337b9d6ecb522f443b550ceb6767dcda",
+      "blob": "c627f4d23b35a4b0ac3238d5ea389bd44e9d1e61"
+    },
+    {
+      "path": "scripts/build-entry-writer.mjs",
+      "bytes": 1815,
+      "sha256": "08d33395ea8e67fed40cafb57c1e9573178b266b4ee8d595dcec3c9d14d66874",
+      "blob": "9c38c9b83c64816bab76ca6e6d959e058888ce70"
+    },
+    {
+      "path": "scripts/calibrate-solo-performance.mjs",
+      "bytes": 4773,
+      "sha256": "e8a6d45e8cc2a04d65537f2bc0a6d0d8df18caec2766de4cefb9a153ec6bc816",
+      "blob": "639ca78045a4474c81055d5842fbce7993dadc6c"
+    },
+    {
+      "path": "scripts/core-soundtrack-publication.mjs",
+      "bytes": 5789,
+      "sha256": "6986e149248e2c614374a0ccba3f88cf3670f49ac20f0dc1844d655a11bf0726",
+      "blob": "19f0cc1bb36e3c43d647b658951b3f6b1f63344e"
+    },
+    {
+      "path": "scripts/default-runtime-metadata.mjs",
+      "bytes": 10256,
+      "sha256": "a4ee09ad2b169613a4bd2e286151255f1376b939964f37be0f28499afe158107",
+      "blob": "b0ccaf28edad0dc26162e17cd36d552523d4beaa"
+    },
+    {
+      "path": "scripts/edition-code-indentation.mjs",
+      "bytes": 3700,
+      "sha256": "b079b539468827fdbea9e5d9541b805a5fde528b1ef16bc5a7834245ec78244e",
+      "blob": "f223346098c5617055e0cc79a86057f8bae313f7"
+    },
+    {
+      "path": "scripts/external-distribution.mjs",
+      "bytes": 6651,
+      "sha256": "f0d91db8311a483d8d008612760b7ad7ae3741f5a7c6aae9df8fb04f3e1463cd",
+      "blob": "3ed47cde695bb23cd4b80b4b4b4f7c444323cea2"
+    },
+    {
+      "path": "scripts/game-cli.mjs",
+      "bytes": 94310,
+      "sha256": "384c26bde0dc3e300f651e7a43c9d5f6d3c70eb28e0e07763f7cb51d94929cb5",
+      "blob": "099d15b351c504da7e4f1de641d0d5aeadb339a7"
+    },
+    {
+      "path": "scripts/hosted-soundtrack-publication.mjs",
+      "bytes": 10450,
+      "sha256": "62c5a7954084ef0f2971cc62035ff4f3a5fc165c10c88aa09dac23a327977ee6",
+      "blob": "7503e95a3802f989849c88698e3130d2f0cfb1b7"
+    },
+    {
+      "path": "scripts/localization-audit.mjs",
+      "bytes": 10005,
+      "sha256": "56c2759e666fe7c2bf6964b7182d13be177b4c722f9324f59e7d4765cddd403d",
+      "blob": "041499a37a327408517691aa901b0667f07ac224"
+    },
+    {
+      "path": "scripts/localization-content.mjs",
+      "bytes": 16926,
+      "sha256": "32b46390220eb124d7bbcfba60088898b745c966c6cb5c167e47462c7899e393",
+      "blob": "cfdf836d9deb71bddbabd182de6976e878d3658d"
+    },
+    {
+      "path": "scripts/localization.mjs",
+      "bytes": 13957,
+      "sha256": "d66bb70c6a4c7f0ca1f08cf8a313340af5bba4425b001b7e6844b9030687de6b",
+      "blob": "23b5581d83bf42043c6f9ab7d03147c3a290f6f8"
+    },
+    {
+      "path": "scripts/observe-solo-native-lifecycle.mjs",
+      "bytes": 43090,
+      "sha256": "3e31ae563cde7131f94970548180ee844ff43d66bc4b06eab20622ef932697b3",
+      "blob": "5d025ea5778867a2cfb88967e2ddc29054295998"
+    },
+    {
+      "path": "scripts/offline-core-closure.mjs",
+      "bytes": 9292,
+      "sha256": "a7cd339b10379f101406dd67cd2f44e925f366fbc4aba396e7df3025ba208635",
+      "blob": "af7f49bd9c31760b731930d20825c1768494842a"
+    },
+    {
+      "path": "scripts/optional-artwork.mjs",
+      "bytes": 4613,
+      "sha256": "83e456393b4d26bb54b30e4ce1b15499dd5b9aaeeef72bd274f27c2989d9928e",
+      "blob": "e42c4b343b84f34ba2c370718f668b597d25ee61"
+    },
+    {
+      "path": "scripts/optional-distribution.mjs",
+      "bytes": 2584,
+      "sha256": "0fb416bddd39eab244c911d453df383a6488ce3a3a515eae37d07560aec93c71",
+      "blob": "797f6d96f1d882174f277c30ddbcdc7b8c3bea81"
+    },
+    {
+      "path": "scripts/pack-indexes.mjs",
+      "bytes": 5421,
+      "sha256": "34ecdb35caecd581a5477e3972130f1ef67004fcd7add7f055126cb65a52a35e",
+      "blob": "2a4564ee1e88ef4f61b556b79f415aced69523aa"
+    },
+    {
+      "path": "scripts/qualify-solo-runtime.mjs",
+      "bytes": 90506,
+      "sha256": "930d90a6df8b4af6cd351a782b6bf473a2b464c1ca99a42a00d3259dc4f64689",
+      "blob": "7be65ce3a0bd35427f52ece86065dc75f1a68f4b"
+    },
+    {
+      "path": "scripts/reviewed-soundtrack-batches.mjs",
+      "bytes": 16280,
+      "sha256": "3041fa50772034f4666d67c8f9cfad231de963a09d5d40132def422779a9daaa",
+      "blob": "413f94d96d30686a0b76c8ebf3c7f87cdc299665"
+    },
+    {
+      "path": "scripts/run-solo-remote-correctness.mjs",
+      "bytes": 66435,
+      "sha256": "513f2fc3a23897192c7a8fc371f1ec55f085fa79925e836d524f2dfec41da1c8",
+      "blob": "ec606e7b5604959d78b61a7c25b7ae0bb5e8c2dd"
+    },
+    {
+      "path": "scripts/serve-production-preview.mjs",
+      "bytes": 10414,
+      "sha256": "4c63ec2ea6d7b6b3c79793dd1e8dc8f75daa9ee6c783ee076d8bc050602c1cab",
+      "blob": "0176a28b0eb56e634a12112d5737211a6ec6de8f"
+    },
+    {
+      "path": "scripts/solo-build-archive.mjs",
+      "bytes": 5262,
+      "sha256": "25a7c537c777c435d3ca80694c4ba925a9448222945a8f46e0d1b029441cf368",
+      "blob": "236b891c910f696f1b3646442bfb91a77afe5e1f"
+    },
+    {
+      "path": "scripts/solo-build-worker-closure.mjs",
+      "bytes": 1658,
+      "sha256": "19c0663b20bcc2cf2b29016ecc7c09d54d673b62740ec3e9babe25e965936ac1",
+      "blob": "d4266ac6f7f4c76a552bfc7cd373e432fb3d575e"
+    },
+    {
+      "path": "scripts/solo-owned-resource-assessment.mjs",
+      "bytes": 18699,
+      "sha256": "a916dbf4a843a360f573e0723bf20cfcf53b0250867a0553162af54460d01af5",
+      "blob": "be641c875d4604f77280abfa9c7aba20e66c724f"
+    },
+    {
+      "path": "scripts/solo-qualification-audio.mjs",
+      "bytes": 19077,
+      "sha256": "8c076969c30ff342b19526e1df22bd8994659f2ac84e7343b111f2a1d2c20af1",
+      "blob": "0f47c93d792e5532e47e00e57e975a060b0a1f94"
+    },
+    {
+      "path": "scripts/solo-qualification-browser-context.mjs",
+      "bytes": 4026,
+      "sha256": "5f89ceedec155349250283304b38e68dd22eedf32e6c306ff2c25c3258233d7f",
+      "blob": "ccf6ac62a7e456c77e1f48c5973ead2b0cd0b3d9"
+    },
+    {
+      "path": "scripts/solo-qualification-cadence.mjs",
+      "bytes": 7999,
+      "sha256": "d2031f4a32a64b6a9cb4b21dfa1700dab7e5f7d3742ec22da520ce39e53974dc",
+      "blob": "05142bcde221dacd1c53e34f3125533aee4f47c0"
+    },
+    {
+      "path": "scripts/solo-qualification-cpu-profile.mjs",
+      "bytes": 3270,
+      "sha256": "26d125133b4448248918b9ae69350c18db4506bb9ea045053d33325679e5a1d7",
+      "blob": "c61ea6a3b0b120729026f7b4e05417e937fb8954"
+    },
+    {
+      "path": "scripts/solo-qualification-export.mjs",
+      "bytes": 5553,
+      "sha256": "edb2d9efa97fa9e19905f83aa93000219db521f3930fe02fb96c57d2162ceb77",
+      "blob": "adec0f8686908dbf623cd669d9422eda62d618e3"
+    },
+    {
+      "path": "scripts/solo-qualification-hitch-journal.mjs",
+      "bytes": 33228,
+      "sha256": "393afd9eb51c9262168c7382c022de56234d3838357427e947f8d4812954161d",
+      "blob": "60ad79b95fd02492f9ffc26b40d84b337f908683"
+    },
+    {
+      "path": "scripts/solo-qualification-native-replay.mjs",
+      "bytes": 9513,
+      "sha256": "7e5e0337294144449b66519d945e927a0f0e8c586963df9b83e5a4a2aa246d7c",
+      "blob": "3a73ab1789500e68492ac4bf7572ef84d7bf0ab3"
+    },
+    {
+      "path": "scripts/solo-qualification-next-route.mjs",
+      "bytes": 32924,
+      "sha256": "3583627c435d3b36b66ea25048c1ebe85dcf49e6908ef5385fc579d244a2af4a",
+      "blob": "669991c554b697f8bc2f606aef012045b7d952d4"
+    },
+    {
+      "path": "scripts/solo-qualification-observation.mjs",
+      "bytes": 24474,
+      "sha256": "fc8d6b03d49d44e2010acebb4f89188334503ef2a01316e0a9bdd4406e3b3d94",
+      "blob": "d1a27cf253174f1016b5c13b0428da56d9ba9885"
+    },
+    {
+      "path": "scripts/solo-qualification-readiness.mjs",
+      "bytes": 139653,
+      "sha256": "fecd8e6fc6c1493fe6d395cb5905842b52cd028e712b639f1f9d98b671859103",
+      "blob": "77ba1a5211d344703fddfa9c5d7eca0d5c7773af"
+    },
+    {
+      "path": "scripts/solo-qualification-replay-core.mjs",
+      "bytes": 5930,
+      "sha256": "1e96e592ee289685607515bbe14c8845f2c03dc81191a0772071fd9995ceb3ea",
+      "blob": "0580f4b45e6c88e1e943f9b963cfa7f58f0b475b"
+    },
+    {
+      "path": "scripts/solo-qualification-replay-identity.mjs",
+      "bytes": 1866,
+      "sha256": "133c362d1c60bfa8de317a6899d038ce4f1b4c9264b67b95fb0893c84f5fffdb",
+      "blob": "0577102f967889361a72675935ffe194c09da9c7"
+    },
+    {
+      "path": "scripts/solo-qualification-replay.mjs",
+      "bytes": 1260,
+      "sha256": "b5f89a8377a83f5645d6077af54cadfcd1e33905d13161ae6eb667468e8bfacf",
+      "blob": "2ac39051782d5c9ef7a0e5ea49536c9da825663c"
+    },
+    {
+      "path": "scripts/solo-qualification-snapshot-store.mjs",
+      "bytes": 11359,
+      "sha256": "19f1989ca20ded51eebefd0a5fd6f8b01532dcc32150db25d26c80e025c5e51a",
+      "blob": "6e4c4e848ccfe80e61764ec36a7ce4782b9c7c25"
+    },
+    {
+      "path": "scripts/solo-qualification.mjs",
+      "bytes": 27145,
+      "sha256": "2dd2f085608c815ff7946f22272c321ae3d4ed8b7e91483a48730c1304ee1b30",
+      "blob": "fa8424f7fa515f2bd350fac7bae606187818201c"
+    },
+    {
+      "path": "scripts/solo-readiness-gpu.mjs",
+      "bytes": 8190,
+      "sha256": "c9fcf5ba8bcbc12f1bc8ea721192f3432218a603f00c8a7d021f625a4a74a986",
+      "blob": "b236fd231eb5c672b97331e801abd9ae4c474145"
+    },
+    {
+      "path": "scripts/solo-remote-archive.py",
+      "bytes": 22756,
+      "sha256": "822735e979eff256c433b715dcb6cac88de8c99c94bacc1ce10f4cb8d7f8e2f6",
+      "blob": "7a56298d0509ebe0a33c257bef3efe2d0cbdbddc"
+    },
+    {
+      "path": "scripts/solo-remote-lifecycle.mjs",
+      "bytes": 29595,
+      "sha256": "a50701d84e6bf5e1a905c67fb4ff8c76375f47135e0dad7946f6ddffaa6fee37",
+      "blob": "1c42bee88c169e3f37f35bd1a41d87433c53ae82"
+    },
+    {
+      "path": "scripts/solo-remote-sustained.mjs",
+      "bytes": 86564,
+      "sha256": "0e330687b40101636b9a3817de473c1b8c8cc813568b863b62e76a25ca01b6e3",
+      "blob": "cfdf5a49cd1fb3d81348d640732009c099e23ee2"
+    },
+    {
+      "path": "scripts/soundtrack-archive-admissions.mjs",
+      "bytes": 5614,
+      "sha256": "103e246b66045e0a480f41c8c42fa5966ac3f0587943f8307fa89bd3b47b380d",
+      "blob": "1477214eeb1f0d10e83fde01cc598f63874e29be"
+    },
+    {
+      "path": "scripts/soundtrack-distribution.mjs",
+      "bytes": 15378,
+      "sha256": "8f0e7d0178de524a8939fab2c951702f9a315c581f80d703bd834f8a4c492ac2",
+      "blob": "b96deeb1d1e439c302f6c390f0dea5d34300f98b"
+    },
+    {
+      "path": "scripts/vendor/devtools-benchmark.mjs",
+      "bytes": 2739,
+      "sha256": "dc39973cdbf82704a3d623dd57d037ea501eb5761596c66e27f301c9e860af6b",
+      "blob": "6e47f10a898ffc68b514f57d689ec60f73545665"
+    },
+    {
+      "path": "scripts/verify-solo-build.mjs",
+      "bytes": 16212,
+      "sha256": "9294c97bf52596d4c6f76f8200e6b4e16bffe5f221cb1538a0f8e2db9693003d",
+      "blob": "794186eb657f5a898795f70ea3bce3b16643af10"
+    },
+    {
+      "path": "scripts/solo-remote-readiness.mjs",
+      "bytes": 80151,
+      "sha256": "103103935abc370493a855f1ff0d75537bbc1ebd830c82488b12695f4498efcc",
+      "blob": "d10231b464ededad518af479b7eaa72c28e3e1c0"
+    },
+    {
+      "path": "docs/performance/fixtures/solo-readiness-font/selected-font-request-settlement-v4.qualification.fixture",
+      "bytes": 5773,
+      "sha256": "de25a01e745fb70db09642d5f419969e2ca31a69db19aa252f04eb87b015bd3b",
+      "blob": "800ba334df4feaad4a56cfa0024b5fe54790be69"
+    },
+    {
+      "path": "docs/performance/solo-selected-font-settlement-e1cc-plan.json",
+      "bytes": 13619,
+      "sha256": "18d1e34f70bc35c0c98d4a7bc0724cd91bd49257a34e55381f299d4b0a91ec83",
+      "blob": "3898a336e1c510a471b04993bab2bafbabdeda29"
+    },
+    {
+      "path": ".github/workflows/solo-remote-selected-font-settlement-e1cc-temporary.yml",
+      "bytes": 26621,
+      "sha256": "0d574e3352d0d91898d439cedd8dd3a7da45e4845cc963439a352c69bbaca3c0",
+      "blob": "e8488591fcdff2d231a81df02a03c0f622eb8730"
+    },
+    {
+      "path": "scripts/test-solo-selected-font-settlement-release.mjs",
+      "bytes": 16273,
+      "sha256": "94a2393da2fd984d108b5ab47e4ef0ad0ba96efbc44cf3bc1ebc641f44493517",
+      "blob": "69e71c902ef2cf28a28641cd46354e8badf6bcc8"
+    }
+  ]
+}

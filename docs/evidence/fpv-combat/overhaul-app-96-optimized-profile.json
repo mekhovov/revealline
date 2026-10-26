@@ -1,0 +1,579 @@
+{
+  "started": "2026-10-20T03:15:23.521Z",
+  "browser": "155.0.8059.85",
+  "hardware": {
+    "platform": "darwin",
+    "release": "25.6.0",
+    "cpu": "Apple M4 Pro",
+    "logicalCpus": 14,
+    "memoryBytes": 51539607552
+  },
+  "scope": "Full local application, native stadium-01, actual simulation and renderer, scripted keyboard yaw, vertical hover control and sustained firing near the starting point. Assisted invulnerability and Balanced resources. This is not a human gameplay or physical radio qualification.",
+  "timing": "Aggregated synchronous requestAnimationFrame callback CPU work per display frame; asynchronous worker CPU and GPU execution excluded. Frame intervals include scheduling/GL presentation. Ten-minute wall-clock windows are not guaranteed ten minutes accepted simulation when frames are slow.",
+  "runs": [
+    {
+      "population": 96,
+      "seconds": 45,
+      "started": "2026-10-20T03:15:25.288Z",
+      "samples": [
+        {
+          "status": "paused",
+          "ticks": 9296,
+          "recording": {
+            "format": "FPVEncounterRecordingStatus.v1",
+            "retainedFrom": 0,
+            "retainedTo": 9296,
+            "complete": true,
+            "practiceOnly": true
+          },
+          "archive": {
+            "id": "combat-mvg41tti-6f0s3pa",
+            "state": "recording",
+            "error": null,
+            "durableFrom": 0,
+            "durableTo": 9000,
+            "segments": 3,
+            "bytes": 227160,
+            "complete": false,
+            "capacityBytes": 33554432
+          },
+          "encounterTicks": 9296,
+          "health": 100,
+          "kills": 142,
+          "shots": 945,
+          "hits": 48,
+          "wave": 1,
+          "active": 80,
+          "waiting": 1,
+          "position": {
+            "x": -94,
+            "y": 3616,
+            "z": 17898
+          },
+          "velocity": {
+            "x": 0,
+            "y": 9,
+            "z": 0
+          },
+          "geometryWaiting": false,
+          "phase": "wave",
+          "heapBytes": 135601574,
+          "resources": {
+            "renderer": {
+              "calls": 94,
+              "triangles": 67720,
+              "geometries": 82,
+              "textures": 21,
+              "programs": 18,
+              "contextLost": false
+            },
+            "actors": {
+              "actors": 80,
+              "instances": 1983,
+              "calls": 4,
+              "skinnedActors": 0,
+              "skinnedCalls": 0,
+              "crowdActors": 0,
+              "crowdInstances": 0,
+              "crowdCalls": 0,
+              "templates": 80,
+              "capacity": 128,
+              "healthBars": 0,
+              "appearanceReady": false,
+              "appearanceHash": null,
+              "appearanceCharacters": 0,
+              "equipmentCalls": 0,
+              "maxSkinnedActors": 20,
+              "crowdPaletteBytes": 0,
+              "crowdPalettes": 0,
+              "crowdPoses": 0,
+              "crowdPaletteByteLimit": 8388608,
+              "appearanceResourceMetrics": null,
+              "crowdPaletteGpuBytes": 0,
+              "equipmentInstanceBytes": 0
+            },
+            "effects": {
+              "moving": 0,
+              "settled": 764,
+              "marks": 31,
+              "bursts": 0,
+              "calls": 8,
+              "triangles": 0,
+              "surfaceQueries": 0,
+              "tier": "high",
+              "runId": "encounter-24c6f94f660156e1",
+              "tick": 9296,
+              "stored": 142,
+              "storedImpacts": 401,
+              "capacity": 1024,
+              "impactCapacity": 1024,
+              "evicted": 0,
+              "presentationClock": 185.9200000000198,
+              "pendingFragments": 180,
+              "maxDrawCalls": 24,
+              "registeredPools": 11,
+              "appearanceReady": false,
+              "appearanceHash": null,
+              "appearanceDrawCalls": 0,
+              "appearanceCharacters": 0,
+              "maxAppearanceTriangles": 600000
+            }
+          },
+          "statusText": "Paused. Arm deliberately to continue.",
+          "seconds": 5
+        }
+      ],
+      "errors": [],
+      "consoleErrors": {},
+      "failedResources": [],
+      "sources": {
+        "world-app.mjs": "b87ca022167a531137e3c190184888d358764411fe2b6ceee0439a320a92456c",
+        "world-reaction-runtime.mjs": "b8a373409f8a1819de814645f989f1e855b1dc883dd3906150cd35b014e14b0d",
+        "renderer.mjs": "277de38a0acded3da5b52f668bf77688478cdd420dcb603e8a7c9eeb855d2fc0",
+        "combat-presentation.mjs": "90ca6075002ae3bc8303aa5e3d26dbd523ca995d4e579ddc29a5ef4b16070611",
+        "combat-actors.mjs": "b1fcab3f836088ca0abfcef57ac7183e70988c2ea0717990b9d1bcaecc8b9086"
+      },
+      "hardware": {
+        "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/155.0.0.0 Safari/537.36",
+        "hardwareConcurrency": 14,
+        "pixelRatio": 1,
+        "width": 1920,
+        "height": 1080,
+        "gpu": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4 Pro, Unspecified Version)",
+        "gpuTimingAvailable": true,
+        "gpuTimingMeasured": false
+      },
+      "profileStartedAt": 0,
+      "failure": "Flight stopped: Paused. Arm deliberately to continue.",
+      "profileSelfTime": [
+        {
+          "function": "(idle)",
+          "url": "",
+          "line": 0,
+          "ms": 1474.119
+        },
+        {
+          "function": "(program)",
+          "url": "",
+          "line": 0,
+          "ms": 1000.178
+        },
+        {
+          "function": "snapshot",
+          "url": "http://127.0.0.1:8768/optional-practice/civilian-fpv/world-reaction-runtime.mjs",
+          "line": 15650,
+          "ms": 297.393
+        },
+        {
+          "function": "snapshot",
+          "url": "http://127.0.0.1:8768/optional-practice/civilian-fpv/world-reaction-runtime.mjs",
+          "line": 15650,
+          "ms": 279.498
+        },
+        {
+          "function": "snapshot",
+          "url": "http://127.0.0.1:8768/optional-practice/civilian-fpv/world-reaction-runtime.mjs",
+          "line": 15650,
+          "ms": 269.334
+        },
+        {
+          "function": "snapshot",
+          "url": "http://127.0.0.1:8768/optional-practice/civilian-fpv/world-reaction-runtime.mjs",
+          "line": 15650,
+          "ms": 268.872
+        },
+        {
+          "function": "update",
+          "url": "http://127.0.0.1:8768/optional-practice/civilian-fpv/world-reaction-runtime.mjs",
+          "line": 18467,
+          "ms": 150.48
+        },
+        {
+          "function": "snapshot",
+          "url": "http://127.0.0.1:8768/optional-practice/civilian-fpv/world-reaction-runtime.mjs",
+          "line": 15650,
+          "ms": 145.869
+        },
+        {
+          "function": "snapshot",
+          "url": "http://127.0.0.1:8768/optional-practice/civilian-fpv/world-reaction-runtime.mjs",
+          "line": 15650,
+          "ms": 122.751
+        },
+        {
+          "function": "snapshot",
+          "url": "http://127.0.0.1:8768/optional-practice/civilian-fpv/world-reaction-runtime.mjs",
+          "line": 15650,
+          "ms": 122.451
+        },
+        {
+          "function": "snapshot",
+          "url": "http://127.0.0.1:8768/optional-practice/civilian-fpv/world-reaction-runtime.mjs",
+          "line": 15650,
+          "ms": 113.971
+        },
+        {
+          "function": "(garbage collector)",
+          "url": "",
+          "line": 0,
+          "ms": 59.066
+        },
+        {
+          "function": "update",
+          "url": "http://127.0.0.1:8768/optional-practice/civilian-fpv/world-reaction-runtime.mjs",
+          "line": 21403,
+          "ms": 55.436
+        },
+        {
+          "function": "drawCombat",
+          "url": "http://127.0.0.1:8768/optional-practice/civilian-fpv/renderer.mjs",
+          "line": 1461,
+          "ms": 35.347
+        },
+        {
+          "function": "querySelector",
+          "url": "",
+          "line": 0,
+          "ms": 34.354
+        },
+        {
+          "function": "getBoundingClientRect",
+          "url": "",
+          "line": 0,
+          "ms": 32.738
+        },
+        {
+          "function": "",
+          "url": "http://127.0.0.1:8768/optional-practice/civilian-fpv/world-reaction-runtime.mjs",
+          "line": 18574,
+          "ms": 27.512
+        },
+        {
+          "function": "snapshot",
+          "url": "http://127.0.0.1:8768/optional-practice/civilian-fpv/world-reaction-runtime.mjs",
+          "line": 15650,
+          "ms": 25.317
+        },
+        {
+          "function": "refresh",
+          "url": "http://127.0.0.1:8768/optional-practice/civilian-fpv/world-reaction-runtime.mjs",
+          "line": 17153,
+          "ms": 24.782
+        },
+        {
+          "function": "distance",
+          "url": "http://127.0.0.1:8768/optional-practice/civilian-fpv/world-reaction-runtime.mjs",
+          "line": 18571,
+          "ms": 20.216
+        },
+        {
+          "function": "updateMatrixWorld",
+          "url": "http://127.0.0.1:8768/optional-practice/civilian-fpv/vendor/three.core.js",
+          "line": 13067,
+          "ms": 20.213
+        },
+        {
+          "function": "setFromEuler",
+          "url": "http://127.0.0.1:8768/optional-practice/civilian-fpv/vendor/three.core.js",
+          "line": 4191,
+          "ms": 20.065
+        },
+        {
+          "function": "updateMatrixWorld",
+          "url": "http://127.0.0.1:8768/optional-practice/civilian-fpv/vendor/three.core.js",
+          "line": 13067,
+          "ms": 19.865
+        },
+        {
+          "function": "bufferSubData",
+          "url": "",
+          "line": 0,
+          "ms": 18.644
+        },
+        {
+          "function": "paintCombatHUD",
+          "url": "http://127.0.0.1:8768/optional-practice/civilian-fpv/world-app.mjs",
+          "line": 2780,
+          "ms": 17.529
+        },
+        {
+          "function": "setStyle",
+          "url": "http://127.0.0.1:8768/optional-practice/civilian-fpv/vendor/three.core.js",
+          "line": 14353,
+          "ms": 16.25
+        },
+        {
+          "function": "updateMatrixWorld",
+          "url": "http://127.0.0.1:8768/optional-practice/civilian-fpv/vendor/three.core.js",
+          "line": 13067,
+          "ms": 16.191
+        },
+        {
+          "function": "distance",
+          "url": "http://127.0.0.1:8768/optional-practice/civilian-fpv/world-reaction-runtime.mjs",
+          "line": 18571,
+          "ms": 15.274
+        },
+        {
+          "function": "querySelector",
+          "url": "",
+          "line": 0,
+          "ms": 15.133
+        },
+        {
+          "function": "querySelector",
+          "url": "",
+          "line": 0,
+          "ms": 15.092
+        },
+        {
+          "function": "copy",
+          "url": "http://127.0.0.1:8768/optional-practice/civilian-fpv/world-reaction-runtime.mjs",
+          "line": 15385,
+          "ms": 12.586
+        },
+        {
+          "function": "updateMatrixWorld",
+          "url": "http://127.0.0.1:8768/optional-practice/civilian-fpv/vendor/three.core.js",
+          "line": 13067,
+          "ms": 12.405
+        },
+        {
+          "function": "querySelector",
+          "url": "",
+          "line": 0,
+          "ms": 11.338
+        },
+        {
+          "function": "multiplyMatrices",
+          "url": "http://127.0.0.1:8768/optional-practice/civilian-fpv/vendor/three.core.js",
+          "line": 10570,
+          "ms": 10.01
+        },
+        {
+          "function": "update",
+          "url": "http://127.0.0.1:8768/optional-practice/civilian-fpv/world-reaction-runtime.mjs",
+          "line": 1914,
+          "ms": 10.002
+        },
+        {
+          "function": "setFromEuler",
+          "url": "http://127.0.0.1:8768/optional-practice/civilian-fpv/vendor/three.core.js",
+          "line": 4191,
+          "ms": 8.825
+        },
+        {
+          "function": "updateHUD",
+          "url": "http://127.0.0.1:8768/optional-practice/civilian-fpv/world-app.mjs",
+          "line": 7328,
+          "ms": 8.574
+        },
+        {
+          "function": "multiplyMatrices",
+          "url": "http://127.0.0.1:8768/optional-practice/civilian-fpv/vendor/three.core.js",
+          "line": 10570,
+          "ms": 7.621
+        },
+        {
+          "function": "put",
+          "url": "http://127.0.0.1:8768/optional-practice/civilian-fpv/world-reaction-runtime.mjs",
+          "line": 18360,
+          "ms": 7.586
+        },
+        {
+          "function": "canonicalRegion",
+          "url": "http://127.0.0.1:8768/optional-practice/civilian-fpv/world-reaction-runtime.mjs",
+          "line": 17488,
+          "ms": 7.583
+        }
+      ],
+      "actualSeconds": 5.031,
+      "pilotCPU": 343.5000000745058,
+      "cpuMax": 51.5,
+      "intervalMax": 283.3000000000029,
+      "cpuTail": [
+        9.299999997019768,
+        9.200000002980232,
+        9.5,
+        9.299999997019768,
+        9.700000002980232,
+        8.899999998509884,
+        8.900000005960464,
+        9.399999998509884,
+        9,
+        8.700000002980232,
+        8.900000005960464,
+        8.900000005960464,
+        9.200000002980232,
+        8.600000001490116,
+        8.600000001490116,
+        8.700000002980232,
+        8.700000002980232,
+        8.899999998509884,
+        9,
+        8.600000001490116,
+        8.799999997019768,
+        8.5,
+        8.699999995529652,
+        8.300000004470348,
+        8.800000004470348,
+        8.600000001490116,
+        8.700000002980232,
+        8.600000001490116,
+        8.5,
+        8.5,
+        8.5,
+        8.5,
+        8.5,
+        8.799999997019768,
+        8.5,
+        8.700000002980232,
+        8.599999994039536,
+        8.5,
+        8.899999998509884,
+        8.799999997019768,
+        8.5,
+        8.5,
+        8.5,
+        8.5,
+        9,
+        8.600000001490116,
+        8.800000004470348,
+        8.700000002980232,
+        10.5,
+        9.700000002980232,
+        8.799999997019768,
+        8.799999997019768,
+        8.800000004470348,
+        8.900000005960464,
+        8.899999998509884,
+        8.600000001490116,
+        8.5,
+        8.699999995529652,
+        8.800000004470348,
+        8.700000002980232
+      ],
+      "intervalTail": [
+        16.599999999998545,
+        16.80000000000291,
+        16.599999999998545,
+        16.69999999999709,
+        16.599999999998545,
+        16.700000000004366,
+        16.69999999999709,
+        16.700000000004366,
+        16.599999999998545,
+        16.599999999998545,
+        16.69999999999709,
+        16.700000000004366,
+        16.69999999999709,
+        16.700000000004366,
+        16.599999999998545,
+        16.69999999999709,
+        16.599999999998545,
+        16.700000000004366,
+        16.69999999999709,
+        16.599999999998545,
+        16.700000000004366,
+        16.69999999999709,
+        16.599999999998545,
+        16.700000000004366,
+        16.69999999999709,
+        16.599999999998545,
+        16.700000000004366,
+        16.69999999999709,
+        16.599999999998545,
+        16.700000000004366,
+        16.69999999999709,
+        16.599999999998545,
+        16.700000000004366,
+        16.69999999999709,
+        16.599999999998545,
+        16.700000000004366,
+        16.599999999998545,
+        16.69999999999709,
+        16.700000000004366,
+        16.69999999999709,
+        16.599999999998545,
+        16.700000000004366,
+        16.69999999999709,
+        16.599999999998545,
+        16.700000000004366,
+        16.599999999998545,
+        16.69999999999709,
+        16.60000000000582,
+        16.69999999999709,
+        16.80000000000291,
+        16.5,
+        16.799999999995634,
+        16.599999999998545,
+        16.700000000004366,
+        16.599999999998545,
+        16.69999999999709,
+        16.60000000000582,
+        16.69999999999709,
+        16.69999999999709,
+        16.700000000004366
+      ],
+      "pauseProbe": [
+        {
+          "reason": "paused",
+          "at": 655.3999999985099,
+          "lastExecutionTime": 653.1999999955297,
+          "lastTime": null,
+          "focus": true,
+          "visibility": "visible",
+          "stack": "Error\n    at pauseFlight (http://127.0.0.1:8768/optional-practice/civilian-fpv/world-app.mjs:6528:285)\n    at changeFlightVisuals (http://127.0.0.1:8768/optional-practice/civilian-fpv/world-app.mjs:10873:5)\n    at http://127.0.0.1:8768/optional-practice/civilian-fpv/world-app.mjs:10920:5\n    at HTMLSelectElement.fn (http://127.0.0.1:8768/optional-practice/civilian-fpv/world-app.mjs:1503:25)\n    at eval (eval at evaluate (:311:30), <anonymous>:1:256)\n    at UtilityScript.evaluate (<anonymous>:313:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)"
+        },
+        {
+          "reason": "paused",
+          "at": 658.6999999955297,
+          "lastExecutionTime": 655.7999999970198,
+          "lastTime": null,
+          "focus": true,
+          "visibility": "visible",
+          "stack": "Error\n    at pauseFlight (http://127.0.0.1:8768/optional-practice/civilian-fpv/world-app.mjs:6528:285)\n    at Object.startFlight (http://127.0.0.1:8768/optional-practice/civilian-fpv/world-app.mjs:9098:5)\n    at eval (eval at evaluate (:311:30), <anonymous>:1:419)\n    at async <anonymous>:337:30"
+        },
+        {
+          "reason": "paused",
+          "ticks": 0,
+          "at": 929.8999999985099,
+          "lastExecutionTime": 914.5999999940395,
+          "lastTime": 868.2,
+          "focus": true,
+          "visibility": "visible",
+          "stack": "Error\n    at Object.pauseFlight [as pause] (http://127.0.0.1:8768/optional-practice/civilian-fpv/world-app.mjs:6528:285)\n    at eval (eval at evaluate (:311:30), <anonymous>:1:20)\n    at UtilityScript.evaluate (<anonymous>:313:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)"
+        },
+        {
+          "reason": "paused",
+          "ticks": 0,
+          "at": 1209.1999999955297,
+          "lastExecutionTime": 1115.6999999955297,
+          "lastTime": 1101.5,
+          "focus": true,
+          "visibility": "visible",
+          "stack": "Error\n    at pauseFlight (http://127.0.0.1:8768/optional-practice/civilian-fpv/world-app.mjs:6528:285)\n    at startFlight (http://127.0.0.1:8768/optional-practice/civilian-fpv/world-app.mjs:9098:5)\n    at continueCombatRecovery (http://127.0.0.1:8768/optional-practice/civilian-fpv/world-app.mjs:2184:11)\n    at HTMLInputElement.<anonymous> (http://127.0.0.1:8768/optional-practice/civilian-fpv/world-app.mjs:1853:13)"
+        },
+        {
+          "reason": "focus-lost",
+          "ticks": 9296,
+          "at": 31973.09999999404,
+          "lastExecutionTime": 31971.5,
+          "lastTime": 31716.9,
+          "focus": true,
+          "visibility": "visible",
+          "stack": "Error\n    at pauseFlight (http://127.0.0.1:8768/optional-practice/civilian-fpv/world-app.mjs:6528:285)\n    at advanceFrame (http://127.0.0.1:8768/optional-practice/civilian-fpv/world-app.mjs:8492:7)\n    at frame (http://127.0.0.1:8768/optional-practice/civilian-fpv/world-app.mjs:8247:7)\n    at <anonymous>:2:486"
+        }
+      ],
+      "frames": 302,
+      "cpuP50": 8.7,
+      "cpuP95": 9.7,
+      "cpuP99": 13.8,
+      "intervalP50": 16.7,
+      "intervalP95": 16.7,
+      "intervalP99": 16.8,
+      "averageFps": 56.79459602249138
+    }
+  ],
+  "finished": "2026-10-20T03:16:02.313Z"
+}

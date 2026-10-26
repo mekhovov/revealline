@@ -59,6 +59,7 @@ for (const newerNotice of [false, true])
     const beforeResume = page.$('run-message').textContent;
     if (newerNotice) assert.match(beforeResume, /^Flight saved\./);
     page.$('start-button').click();
+    await settle(() => page.doc.body.dataset.flightState === 'running');
     page.frame(0);
     assert.equal(page.rendered.paused, false);
     assert.deepEqual(authoritativeCheckpoint(page.rendered.run), checkpoint);
@@ -160,7 +161,7 @@ for (const stopOnCapture of [false, true])
           levelVisuals: [],
           music: [],
         };
-      page.$('library-button').click();
+      await activateHostAction(page.$('library-button'));
       page.doc.querySelector('[data-library-panel="packs"]').click();
       assert.equal(page.$('library-packs').hidden, false);
       page.$('pack-json').value = JSON.stringify(candidate);

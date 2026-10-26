@@ -24,7 +24,9 @@ const modeKeys = Object.freeze({
 });
 export const worldModeLabel = (mode) => (modeKeys[mode] ? t(modeKeys[mode]) : mode);
 
-const themeKeys = Object.freeze({fpv: 'interface:fpvFront',
-ukraine: 'interface:ukraineAtlas',
-retro: 'content:1994Forever'});
+const themeKeys = Object.freeze({
+  fpv: 'interface:fpvFront',
+  ukraine: 'interface:ukraineAtlas',
+  retro: 'content:1994Forever',
+});
 export const worldThemeLabel = (theme) => (themeKeys[theme] ? t(themeKeys[theme]) : theme);

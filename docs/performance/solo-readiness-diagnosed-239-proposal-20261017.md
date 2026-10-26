@@ -1,0 +1,14 @@
+# 239 diagnosed WebKit readiness follow-up
+
+This independently reviewed declaration binds successful Appearance run 39049194998, production artifact 12107584924, and exactly source `239c574ecddd5bb6d5896e621d9edc53e7f6a313`, tree `1ac7f17971498d2a8be19085f00a9f732db42798`. The compact metadata archive 12107794266 and API/Git readback bind 118 focused files plus the separate eight-file, 46-pass prerequisite. Full archive/source/CSP verification remains mandatory remotely. Later local runtime changes do not belong to that source.
+
+Only two serial WebKit observations are proposed:
+
+- **Warm Resume:** the original route adds a conditional public Settings close only when the compact categories panel is still open, followed by an explicit Settings-closed/Home-open witness. The existing Escape, Start, active interval, replay actions and 240-second scenario bound remain identical. Actual Settings-owner controls reproduce the compact closure problem and check both 400 px and 1024 px layouts. Dialog defaults are modeled; the old native failure did not identify the remaining dialog.
+- **Required-original Cancel:** the existing route opts into trusted initial Start retention before painter invalidation. It still requires actual request AbortSignal/rejection, fresh post-command cancellation, unchanged checkpoint and a later submitted same run. Missing, replaced, active or ambiguous initial references fail. The response, action and cleanup deadlines stay unchanged.
+
+The original twelve-row result remains seven correctness passes and five failures on the e1cc package. Chromium already completed both proposed workloads. Its font row stays failed as executed; separate corrected-reader analysis accounts for the omitted metadata without repeating native work. WebKit's exact-face unloaded/error font failure remains unresolved and is not part of this declaration. There is no cold, saved, DPR or Full/Reduced repeat.
+
+Both proposed rows keep CPU 1, 400×850/DPR 3, the fixed external cadence, strict source-native replay, complete binary journal and owned cleanup. Warm retains the phase-boundary geometry witness. Raw numerical failures remain non-passing and both observations are excluded from performance and physical-device qualification. `firstEightRequired:false` describes this independent correctness diagnostic; it grants no broader performance acceptance.
+
+The workflow is gated to one PR 1544 same-repository synchronize with before `239c574ecddd5bb6d5896e621d9edc53e7f6a313`; it installs both pinned browser engines because the existing runner inventories both, although only WebKit has rows. Existing 130-minute job, 78-minute wrapper, 40-minute setup, 75-minute helper, 480-second row and 32 MiB row evidence bounds remain unchanged. Historical declarations and workflows are preserved.

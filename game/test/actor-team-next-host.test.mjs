@@ -130,18 +130,26 @@ for (const nextStyle of ['fpv', 'campaign'])
     assert.equal(f.$('coop-clock').textContent, '0:00');
     assert.equal(f.$('coop-coverage').textContent, '0.0%');
     assert.equal(f.$('coop-reserves').textContent, reserves);
-    assert.ok(firstActors.every((image) => image.closes === 1));
+    assert.ok(
+      firstActors.every((image) => image.closes === (nextStyle === 'fpv' ? 0 : 1)),
+      'A shared bitmap stays live while the next exact actor lease owns it.',
+    );
     if (nextStyle === 'fpv') {
       assert.ok(
         actorsPainted(f).length > 0,
-        'Next first paint includes its newly prepared actors.',
+        'Next first paint includes its exact prepared actors.',
       );
-      assert.ok(actorsPainted(f).every((image) => !firstActors.includes(image)));
+      assert.ok(actorsPainted(f).every((image) => image.closes === 0));
       assert.ok(f.actorTransport.requests.length > before.length);
     } else {
       assert.equal(actorsPainted(f).length, 0);
       assert.equal(f.actorTransport.requests.length, before.length);
     }
+    f.win.emit('pagehide');
+    assert.ok(
+      firstActors.every((image) => image.closes === 1),
+      'The last actor owner closes each bitmap once.',
+    );
     assert.deepEqual(f.visits, []);
     t.diagnostic(
       JSON.stringify({

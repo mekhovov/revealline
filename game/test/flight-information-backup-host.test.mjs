@@ -78,7 +78,7 @@ for (const turnPolicy of ['immediate', 'grid-center']) {
     page.key('ArrowDown');
     page.key('ArrowDown', false);
     ticks(page);
-    page.$('library-button').click();
+    await activateHostAction(page.$('library-button'));
     const original = JSON.parse(storage.getItem(sessionKey));
     assert.equal(verifyReplay(nativeSession(original).replay).match, true);
     const library = loadLibrary(storage, profileKey, { campaigns: [campaign] }).library;
@@ -120,7 +120,7 @@ test('a real backup commit failure keeps Details and both page lifecycles usable
   const page = await soloPage(t, { campaign, storage });
   page.$('start-button').click();
   await settle(() => page.doc.body.dataset.flightState === 'running');
-  page.$('library-button').click();
+  await activateHostAction(page.$('library-button'));
   const original = JSON.parse(storage.getItem(sessionKey));
   const rawProfile = storage.getItem(profileKey);
   const library = loadLibrary(storage, profileKey, { campaigns: [campaign] }).library;

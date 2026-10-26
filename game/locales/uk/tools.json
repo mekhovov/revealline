@@ -953,6 +953,7 @@
   "aCompleteGenerationPrompt": "Повний запит для генерації",
   "includeStyleExactOutputRequirementsRequiredStatesForbiddenVisualCollisions": "Укажіть стиль, точні вимоги до результату, потрібні стани, заборонені візуальні конфлікти й поточну версію зразка. Скопіюйте завдання для одного слота або узгодженої колекції.",
   "themeWithoutRuleDrift": "Тема без зміни правил",
+  "fpvIsTheCompleteFirstProductionThemeUkrainianRetroAnd": "Колекції FPV, Українська та Ретро мають спільні правила гри й власне оформлення.",
   "reviewAnIllustrativeAiAssetBrief": "Переглянути приклад завдання для ресурсу ШІ",
   "proposedExampleProductionPromptsMustDeriveTheirExactGeometryAnd": "Запропонований приклад; виробничі запити мають отримувати точну геометрію й назви файлів із вибраного слота реєстру.",
   "copyExampleBrief": "Скопіювати приклад завдання",

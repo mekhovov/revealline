@@ -1,12 +1,14 @@
 import { neonRevealBackground } from './neon-reveal-artwork.mjs';
 import { neonReviewCatalog, neonReviewMission } from './neon-review-catalog.mjs';
 import assert from 'node:assert/strict';
-import { mkdir, writeFile } from 'node:fs/promises';
+import { mkdir, readFile, writeFile } from 'node:fs/promises';
+import { protectPageHTML } from './access-pages.mjs';
 import { buildNeonChambers } from './build-neon-chambers.mjs';
 import { buildNeonChannels } from './build-neon-channels.mjs';
 import { buildNeonArrows } from './build-neon-arrows.mjs';
 import { validateScenario } from '../game/content.mjs';
 import { validatePack } from '../game/packs.mjs';
+const accessConfig = await readFile(new URL('../game/index.html', import.meta.url), 'utf8');
 
 import {
   CULTURAL_DESIGNS,
@@ -36,60 +38,62 @@ const font = {
   V: ['10001', '10001', '10001', '10001', '10001', '01010', '00100'],
   Y: ['10001', '10001', '01010', '00100', '00100', '00100', '00100'],
 };
-export const MOSAIC_DESIGNS = [{ id: 'fpv', title: 'FPV', lines: ['FPV'] },
-{ id: 'ukraine', title: 'UKRAINE', lines: ['UKRAINE'] },
-{ id: 'drone-aid', title: 'DRONE AID', lines: ['DRONE', 'AID'] },
-{ id: 'social-drone', title: 'SOCIAL DRONE', lines: ['SOCIAL', 'DRONE'] },
-{ id: 'sdua', title: 'SDUA', lines: ['SDUA'] },
-{ id: 'victory-drones', title: 'VICTORY DRONES', lines: ['VICTORY', 'DRONES'] },
-{ id: 'vd', title: 'VD', lines: ['VD'] },
-{ id: 'fpv-line', title: 'FPV LINE', lines: ['FPV', 'LINE'] },
-{ id: 'reveal', title: 'REVEAL', lines: ['REVEAL'] },
-{ id: 'fly-free', title: 'FLY FREE', lines: ['FLY', 'FREE'] },
-{
+export const MOSAIC_DESIGNS = [
+  { id: 'fpv', title: 'FPV', lines: ['FPV'] },
+  { id: 'ukraine', title: 'UKRAINE', lines: ['UKRAINE'] },
+  { id: 'drone-aid', title: 'DRONE AID', lines: ['DRONE', 'AID'] },
+  { id: 'social-drone', title: 'SOCIAL DRONE', lines: ['SOCIAL', 'DRONE'] },
+  { id: 'sdua', title: 'SDUA', lines: ['SDUA'] },
+  { id: 'victory-drones', title: 'VICTORY DRONES', lines: ['VICTORY', 'DRONES'] },
+  { id: 'vd', title: 'VD', lines: ['VD'] },
+  { id: 'fpv-line', title: 'FPV LINE', lines: ['FPV', 'LINE'] },
+  { id: 'reveal', title: 'REVEAL', lines: ['REVEAL'] },
+  { id: 'fly-free', title: 'FLY FREE', lines: ['FLY', 'FREE'] },
+  {
     id: 'fpv-drone',
     title: 'FPV Drone',
     symbol: 'drone',
     motif:
       'a quadrotor silhouette with four circular rotors, a squashed-X frame, a camera and central fuselage',
   },
-{
+  {
     id: 'tryzub',
     title: 'Ukrainian Trident',
     symbol: 'tryzub',
     motif: 'a stylized Ukrainian tryzub with a central spear and interwoven side prongs',
   },
-{
+  {
     id: 'vyshyvanka',
     title: 'Vyshyvanka Diamonds',
     symbol: 'diamonds',
     motif: 'a vyshyvanka-inspired sequence of embroidered diamonds with cross-shaped centers',
   },
-{
+  {
     id: 'ruzha',
     title: 'Eight-Point Ruzha',
     symbol: 'ruzha',
     motif: 'an eight-point geometric rosette inspired by Ukrainian embroidery',
   },
-{
+  {
     id: 'kalyna',
     title: 'Kalyna',
     symbol: 'kalyna',
     motif: 'a kalyna branch with clustered berries and paired leaves',
   },
-{
+  {
     id: 'tree-of-life',
     title: 'Tree of Life',
     symbol: 'tree',
     motif: 'a branching tree-of-life motif inspired by Ukrainian embroidery',
   },
-{
+  {
     id: 'pysanka',
     title: 'Pysanka',
     symbol: 'pysanka',
     motif: 'a closed pysanka egg outline with a central diamond and staggered ornamental stitches',
   },
-...CULTURAL_DESIGNS];
+  ...CULTURAL_DESIGNS,
+];
 
 // Disjoint maximal row spans, merged vertically; also try the transposed grid.
 function rectangles(cells, kind) {
@@ -374,6 +378,9 @@ function makeBouncers(cells, id, count) {
   return result;
 }
 
+// Permanent layout positions: retired entries stay empty so other missions never change.
+const MOSAIC_LAYOUT_IDS = Object.freeze(["fpv","ukraine","drone-aid",null,"social-drone","sdua","victory-drones","vd","fpv-line","reveal","fly-free","fpv-drone","tryzub","vyshyvanka","ruzha","kalyna","tree-of-life","pysanka","barvinok","wheat","vinok","didukh","rushnyk","bandura","trembita","tsymbaly","kosiv-pitcher","opishnia-ram","petrykivka","oak","stork","swallow","horse","deer","fish","berehynia","bezkonechnyk","ornek-tulip"]);
+
 export async function buildNeonMosaic() {
   const [chambers, channels, arrows] = await Promise.all([
     buildNeonChambers(),
@@ -383,7 +390,9 @@ export async function buildNeonMosaic() {
   const backgrounds = await Promise.all(
     MOSAIC_DESIGNS.map((design) => neonRevealBackground(design.id, `Neon ${design.title}`)),
   );
-  return MOSAIC_DESIGNS.map((design, index) => {
+  return MOSAIC_DESIGNS.map((design, position) => {
+    const index = MOSAIC_LAYOUT_IDS.indexOf(design.id);
+    assert.ok(index >= 0, `Register a permanent layout position for ${design.id}`);
     const { cells, lower } = designCells(design, index),
       scenario = structuredClone(channels.scenario);
     scenario.visualOverrides = {
@@ -394,7 +403,7 @@ export async function buildNeonMosaic() {
     };
     for (const [role, visual] of Object.entries(scenario.visualOverrides))
       visual.name = `Mosaic ${role}`;
-    scenario.visualOverrides.background = backgrounds[index];
+    scenario.visualOverrides.background = backgrounds[position];
     const terrain = [
       ...rectangles(cells, 'B').map((r) => ({ kind: 'slow', ...r })),
       ...rectangles(cells, 'X').map((r) => ({ kind: 'lethal', ...r })),
@@ -496,10 +505,11 @@ export function buildNeonMosaicGallery(sources, missions = neonReviewCatalog()) 
         `<article data-ui-surface="panel"><a href="${neonReviewMission(missions, 'neon-mosaic-pack', `Neon ${design.title}`).href.replaceAll('&', '&amp;')}"><img src="${design.id}/preview.svg" alt="${design.title} level layout"/><span>${i + 1}. ${design.title}</span>Play in the main game</a><button type="button" data-level="${design.id}">Try editable copy</button><a class="download" href="${design.id}/scenario.json" download>Editable level</a></article>`,
     )
     .join('\n');
-  return `<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Neon Words & Symbols · RevealLine</title><script src="../../../game/presentation/theme-bootstrap.mjs" data-theme-density="studio" data-theme-follow-context="true"></script>
+  const html = `<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Neon Words & Symbols · RevealLine</title><script src="../../../game/presentation/theme-bootstrap.mjs" data-theme-density="studio" data-theme-follow-context="true"></script>
 <link rel="stylesheet" href="../../../game/presentation/industrial-workshop.css" data-industrial-workshop>
 <script type="module" src="../../../game/presentation/theme-entry.mjs"></script>
 <style>@layer legacy {:root{color-scheme:dark;font:16px/1.5 system-ui;background:#070b14;color:#dce9fa}body{max-width:1440px;margin:40px auto;padding:24px}h1{font-size:38px;color:#8bebff;margin:0}p{max-width:850px;color:#abbdd5}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,340px),1fr));gap:24px}article{background:#0e1728;border:1px solid #22364e;padding:14px;border-radius:12px}img{display:block;width:100%;height:auto}a{color:#99dcff;text-decoration:none}article span{display:block;font-size:20px;margin:12px 0}button{color:#08111b;background:#8bebff;border:0;padding:10px 16px;border-radius:6px;cursor:pointer;font:inherit;font-weight:600}.download{margin-left:14px;font-size:13px}#status{min-height:24px;color:#fff283}}</style><h1>Neon Words & Symbols</h1><p>${sources.length} playable tile designs. Blue slows your craft; red is lethal until captured. Every arena has distinct terrain, side refuges, passages and enemy starts, plus varied lower routes. The main words and motifs remain intact. Cyan blocks are walls; filled islands are safe return surfaces. The long horizontal bars have been removed.</p><p>Included in Neon Words &amp; Symbols, levels #291–${290 + sources.length}. Every arena has original reveal artwork. Ukrainian translation is deferred.</p><p id="status" role="status"></p><main class="grid">${cards}</main><script type="module" src="launch.mjs"></script></html>`;
+  return protectPageHTML(html, 'authoring/library/neon-mosaic/index.html', accessConfig);
 }
 
 if (process.argv[1] && new URL(process.argv[1], 'file:').href === import.meta.url) {

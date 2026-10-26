@@ -1,5 +1,11 @@
 # Aircraft implementation and remaining evidence gates
 
+Current progress and priorities: [SIM completion plan](fpv-current-completion-plan.md).
+The current catalog has fifteen aircraft after the [Mobula8 addition](fpv-civilian-kits.md)
+and [Cetus X / Protos additions](fpv-civilian-candidate-implementation.md).
+The twelve-aircraft release receipts below retain their original scope; newer
+flight corrections have their own publication and acceptance gates in the plan.
+
 This record follows the approved twelve-aircraft plan of 17 October 2026. The
 first live-testing release is independent of later archive and endurance work.
 Publication is complete only after protected checks, deployment, and public-player
@@ -60,15 +66,52 @@ These checks used an existing authenticated browser session, not a new password 
 The recording correction above and the archive/challenge additions are a separate
 follow-up release; this first-release receipt does not establish their publication.
 
+## Public archive and challenge acceptance
+
+The follow-up GitHub Pages deployment of
+`afac5e3ca403a74e6f60b5867a6c54d4dd8a4a0a` passed build, deployment and
+exact-source verification on 17 October 2026. The public player retained all twelve
+presets and the existing Meteor75 and X650 setups. Battery depletion remained off.
+An X650 Regional flight completed its explicitly selected 30-second challenge and
+continued to 41.22 seconds; its finished local archive then independently verified
+both complete-session physics from reset and the challenge outcome in the replay
+worker. The result remains unscored.
+
+A second public Regional session retained 0–69.88 seconds across the 60-second
+segment boundary, with a durable recovery checkpoint at 65 seconds. Its finished
+archive independently verified complete-session physics and the challenge result.
+The updated Academy host also exposed the shared archives, optional challenges and
+recovery controls, with unlimited practice selected by default.
+
+The local browser check also flew to 12:39.98, retained the recent
+10:27.90–12:39.98 clip, and restored the durable 12:35 checkpoint. Verification
+correctly identified that restored archive as a checkpoint-origin clip, rather
+than claiming to verify the earlier flight. This long-flight receipt is local;
+the public receipt above covers the deployed archive and challenge path.
+
+The public flight also exposed a Regional presentation gap: a boundary stop showed
+only “Paused,” with an enabled Resume action that could not arm the aircraft.
+The follow-up correction exposes boundary, worker and terrain errors in both the
+flight display and pause menu, disables unavailable Resume explicitly, and keeps
+Retry reachable. Ordinary pauses remain resumable. Local browser testing reached
+the Canyon altitude boundary, displayed its reason, and successfully restarted and
+re-armed at launch. This correction does not change physics or recording identities.
+
 ## What numerical qualification establishes
 
 The source-pinned [numerical](fpv-aircraft-numerical-qualification.json) and
 [browser](fpv-aircraft-browser-qualification.json) reports compare 250, 500 and
-1,000 Hz with a 2 kHz reference. The selected 500 Hz backend passes the 2% response,
+1,000 Hz with a 2 kHz reference. The original 500 Hz backend passes the 2% response,
 contact-consistency and twice-real-time gates on the recorded qualification machine.
 Direct and worker traces match across the recorded Node, Chrome, Firefox and WebKit
 versions. These tests establish the consistency and capacity of this implementation.
 They do not measure a real quadrotor or qualify every browser/device architecture.
+
+The later v3 [centered-contact qualification](fpv-current-contact-20261019.md)
+adds a stricter floor-drop probe that exposes a 500 Hz limitation on Nazgul.
+New v3 sessions therefore use 1,000 Hz; historical timing is retained. The fresh
+fifteen-aircraft numerical and replay checks pass locally, but the earlier
+cross-browser report must not be presented as qualification of that new backend.
 
 The catalog remains a specification-based model. Static tables in the active
 physics record are numerical model inputs; the separate evidence inspector does

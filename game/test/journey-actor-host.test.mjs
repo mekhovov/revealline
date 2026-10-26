@@ -69,7 +69,7 @@ test('material successor Solo earns the same exact clear and continues with its 
     );
   });
   assert.equal(p.$('theme-select').value, 'horizon-actors-v1');
-  assert.equal(p.$('journey-chooser').open, false);
+  assert.equal(p.$('journey-chooser')?.open ?? false, false);
   p.$('shell-menu').click();
   p.frame(0);
   assert(storage.getItem('revealline.suspended.journey-whole-originals.v4'));

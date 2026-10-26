@@ -6,7 +6,7 @@ import { addAuthoredRuntimeSnapshots } from '../../scripts/authored-runtime-snap
 import { createCandidateSoloHost } from '../content-design/solo-host.mjs';
 import { journeyActorThemeCandidates } from '../presentation/journey-actor-materials.mjs';
 import { createRun } from '../core/index.mjs';
-import { createRecorder } from '../replay.mjs';
+import { authoritativeCheckpoint, createRecorder } from '../replay.mjs';
 import { suspendSession } from '../sessions.mjs';
 import { campaignKey } from '../library.mjs';
 import { committedCaches } from './helpers/committed-caches.mjs';
@@ -19,6 +19,7 @@ import { managedIndexedDB } from './helpers/managed-idb.mjs';
 import { waitFor } from './helpers/wait-for.mjs';
 import { openMissionLibrary, activateMissionCard } from './helpers/library-selection.mjs';
 import { activateHostAction } from './helpers/host-action.mjs';
+import { createRequiredOfflineDownloadAccess } from '../offline-download-access.mjs';
 
 const entries = [
   {
@@ -218,6 +219,14 @@ test('published Solo boots the starter and starts an unprepared chapter online w
   assert.equal(h.$('journey-cards').children.length, 240);
   assert.equal(h.runtimeReads.length, 2, 'Browsing does not load every chapter.');
   await activateMissionCard(card);
+  h.frame(0);
+  assert.equal(h.page.rendered.run.levelId, mission.id);
+  assert.equal(h.page.rendered.run.tick, 0);
+  assert.equal(h.page.rendered.paused, true);
+  assert.equal(h.$('game-overlay').hidden, false);
+  assert.equal(h.$('game-overlay').dataset.kind, 'ready');
+  // Choosing a chapter adopts its briefing; the visible Start owns departure.
+  await activateHostAction(h.$('start-button'));
   await waitFor(() => {
     h.frame(0);
     return (
@@ -238,7 +247,11 @@ test('published Solo boots the starter and starts an unprepared chapter online w
   assert.equal(h.$('game-overlay').hidden, true);
   assert.equal(h.page.rendered.paused, false);
   assert.equal(h.doc.body.dataset.flightState, 'running');
-  assert.equal(h.page.rendered.run, accepted, 'The card activation starts the exact mission.');
+  assert.equal(
+    h.page.rendered.run,
+    accepted,
+    'Start departs with the exact mission chosen by the card.',
+  );
   assert.equal(h.page.rendered.run.levelId, mission.id);
   assert.deepEqual(h.runtimeReads.slice(2), [chapter.path]);
   assert.equal(h.$('install-offline-dialog')?.open ?? false, false);
@@ -294,46 +307,118 @@ test('an exact saved campaign restores online and retains explicitly prepared of
     assert.equal(h.$('install-offline-dialog')?.open ?? false, false);
     assert.deepEqual(await h.store.states(), []);
   });
-  await t.test('first preparation preserves and pins the exact saved campaign', async (stage) => {
-    const h = await setup(stage, { storage });
-    assert(h.$('continue-saved-note').textContent.includes(level.name));
-    assert.equal(h.runtimeReads.length, 2);
-    await h.prepare(chapter.descriptor.groups.solo);
-    h.$('shell-home').close();
-    h.$('continue-saved').click();
-    await waitFor(() => {
+  await t.test(
+    'prepared bytes restore the saved campaign and explicit retention survives deselection',
+    async (stage) => {
+      const h = await setup(stage, { storage });
+      assert(h.$('continue-saved-note').textContent.includes(level.name));
+      assert.equal(h.runtimeReads.length, 2);
+      await h.prepare(chapter.descriptor.groups.solo);
+      h.$('shell-home').close();
+      h.$('continue-saved').click();
+      await waitFor(() => {
+        h.frame(0);
+        return h.page.rendered.run.levelId === level.id && !h.$('continue-saved').disabled;
+      });
+      assert.equal(h.doc.body.dataset.flightState, 'paused');
+      assert.deepEqual(authoritativeCheckpoint(h.page.rendered.run), authoritativeCheckpoint(run));
+      assert.equal(storage.getItem(generated.route.sessionKey), saved);
+      assert.deepEqual(h.runtimeReads.slice(2), [chapter.path]);
+      caches = h.caches;
+      const groupId = chapter.descriptor.groups.solo;
+      const packageFiles = groups
+        .find((item) => item.id === groupId)
+        .files.map((path) => files.get(path));
+      // Ordinary restore's one-second retention is best effort. Exercise explicit
+      // verified retention before claiming that later deselection preserves bytes.
+      const retention = createRequiredOfflineDownloadAccess({
+        availability: {
+          available: true,
+          packageConsent: true,
+          version,
+          scope: 'http://localhost/',
+        },
+        fetch: async () => Response.json(catalogue),
+        store: h.store,
+        requestPackage: () => assert.fail('Already prepared originals must not download again'),
+      });
+      await retention.ensureMission(
+        { routeId: generated.route.id, missionId: mission.id, mode: 'solo' },
+        { retain: true, prompt: false },
+      );
+      assert(
+        (await h.store.states()).some(
+          (state) => state.edition === 'played-dependencies' && state.package === groupId,
+        ),
+      );
+      // Register the existing bytes as the normal downloaded selection, then remove it.
+      await h.store.download({
+        edition: 'http://localhost/',
+        group: 'gameplay',
+        files: packageFiles,
+        selection: [groupId],
+        baseURL: 'http://localhost/',
+      });
+      await h.store.retain({
+        edition: 'http://localhost/',
+        group: 'gameplay',
+        files: [],
+        selection: [],
+      });
+      assert.equal((await h.store.inspect(packageFiles, { verify: true })).ready, true);
+    },
+  );
+  await t.test(
+    'expired optional retention preserves the paused saved flight without a late pin',
+    async (stage) => {
+      const underlying = committedCaches();
+      let release;
+      const held = new Promise((resolve) => (release = resolve));
+      stage.after(() => release());
+      let armed = false,
+        reads = 0;
+      const delayedCaches = {
+        keys: () => underlying.keys(),
+        async open(name) {
+          const cache = await underlying.open(name);
+          return {
+            ...cache,
+            async match(request) {
+              const url = typeof request === 'string' ? request : request.url;
+              if (armed && url === 'http://localhost/offline-content.json') {
+                reads++;
+                await held;
+              }
+              return cache.match(request);
+            },
+          };
+        },
+      };
+      const onlineStorage = memoryStorage({ [generated.route.sessionKey]: saved });
+      const h = await setup(stage, { storage: onlineStorage, caches: delayedCaches });
+      await h.prepare(chapter.descriptor.groups.solo);
+      armed = true;
+      h.$('shell-home').close();
+      h.$('continue-saved').click();
+      await waitFor(() => {
+        h.frame(0);
+        return h.page.rendered.run.levelId === level.id && !h.$('continue-saved').disabled;
+      });
+      assert(reads > 0, 'Actual optional retention must reach the held local catalogue');
+      assert.equal(h.doc.body.dataset.flightState, 'paused');
+      assert.deepEqual(authoritativeCheckpoint(h.page.rendered.run), authoritativeCheckpoint(run));
+      assert.equal(onlineStorage.getItem(generated.route.sessionKey), saved);
+      assert.deepEqual(await h.store.states(), [], 'Timed-out retention creates no played owner');
+      release();
+      await new Promise((resolve) => setImmediate(resolve));
       h.frame(0);
-      return h.page.rendered.run.levelId === level.id && !h.$('continue-saved').disabled;
-    });
-    assert.equal(h.doc.body.dataset.flightState, 'paused');
-    assert.equal(storage.getItem(generated.route.sessionKey), saved);
-    assert.deepEqual(h.runtimeReads.slice(2), [chapter.path]);
-    caches = h.caches;
-    const groupId = chapter.descriptor.groups.solo;
-    const packageFiles = groups
-      .find((item) => item.id === groupId)
-      .files.map((path) => files.get(path));
-    assert(
-      (await h.store.states()).some(
-        (state) => state.edition === 'played-dependencies' && state.package === groupId,
-      ),
-    );
-    // Register the existing bytes as the normal downloaded selection, then remove it.
-    await h.store.download({
-      edition: 'http://localhost/',
-      group: 'gameplay',
-      files: packageFiles,
-      selection: [groupId],
-      baseURL: 'http://localhost/',
-    });
-    await h.store.retain({
-      edition: 'http://localhost/',
-      group: 'gameplay',
-      files: [],
-      selection: [],
-    });
-    assert.equal((await h.store.inspect(packageFiles, { verify: true })).ready, true);
-  });
+      assert.deepEqual(await h.store.states(), [], 'Late cache settlement cannot create a pin');
+      assert.equal(h.doc.body.dataset.flightState, 'paused');
+      assert.equal(onlineStorage.getItem(generated.route.sessionKey), saved);
+      assert.equal(h.$('install-offline-dialog')?.open ?? false, false);
+      assert.deepEqual(h.errors, []);
+    },
+  );
   await t.test(
     'a reopened page restores the deselected chapter from retained bytes with network blocked',
     async (stage) => {

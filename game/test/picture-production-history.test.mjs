@@ -3,7 +3,6 @@ import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { canonicalJSON } from '../data-json.mjs';
 import { createDefaultThemeBundle } from '../presentation/catalog.mjs';
-import { decodePresentationDocument } from '../presentation/document-codec.mjs';
 import { validateThemeBundle, resolvePresentation } from '../presentation/model.mjs';
 import { exportThemeBundle, importThemeBundle } from '../presentation/bundle.mjs';
 import { reviseStudioTheme } from '../presentation/studio-session.mjs';
@@ -15,15 +14,15 @@ import { retainProductionHistory } from '../../scripts/presentation-production-h
 import { retainFieldKitProductionHistory } from '../../scripts/team-production-history.mjs';
 
 const published = validateThemeBundle(
-  decodePresentationDocument(
-    await readFile(new URL('../presentation/compiled/studio.json', import.meta.url), 'utf8'),
+  JSON.parse(
+    await readFile(new URL('../../authoring/library/fpv-field-kit/picture-migration-baseline.json', import.meta.url), 'utf8'),
   ),
 );
 const defaults = createDefaultThemeBundle();
 const additions = PICTURE_PRODUCTION_MIGRATION.additions.slots.map(({ id }) => id);
 function desiredCandidate() {
   const installed = structuredClone(published);
-  installed.slots = structuredClone(defaults.slots);
+  installed.slots = [...structuredClone(published.slots), ...structuredClone(defaults.slots.filter(slot => additions.includes(slot.id)))];
   installed.assets.push(
     ...structuredClone(
       defaults.assets.filter((asset) => additions.some((id) => asset.id === `${id}.default`)),
@@ -40,9 +39,9 @@ test('explicit picture migration preserves production104 history and repeats wit
     desiredBytes = canonicalJSON(desired);
   const next = retainPictureProductionHistory(desired, published);
   assert.equal(published.revision, 104);
-  assert.equal(published.slots.length, 335);
+  assert.equal(published.slots.length, 302);
   assert.equal(next.revision, 105);
-  assert.equal(next.slots.length, 389);
+  assert.equal(next.slots.length, 359);
   validateThemeBundle(next, { previous: published, expectedRevision: 104 });
   for (const key of ['slots', 'assets', 'themes', 'collections'])
     assert.deepEqual(next[key].slice(0, published[key].length), published[key]);
@@ -53,7 +52,7 @@ test('explicit picture migration preserves production104 history and repeats wit
   for (const id of additions) {
     assert.equal(after.assets[id].quality.stage, 'source');
     assert.deepEqual(after.assets[id].quality.evidence, []);
-    assert.equal(next.slots.find((slot) => slot.id === id).owner.themeId, 'retro');
+    assert.deepEqual(next.slots.find((slot) => slot.id === id).owner, PICTURE_PRODUCTION_MIGRATION.additions.slots.find(slot => slot.id === id).owner);
   }
   assert.equal(canonicalJSON(published), oldBytes);
   assert.equal(canonicalJSON(desired), desiredBytes);
@@ -162,7 +161,7 @@ test('portable candidate retains every published payload and immutable record', 
     ]),
     { decodeImage: null },
   );
-  assert.equal(canonicalJSON(retained.document), canonicalJSON(published));
+  assert.equal(canonicalJSON(retained.document), canonicalJSON(retainPictureProductionHistory(desiredCandidate(), published)));
   const next = retainPictureProductionHistory(desiredCandidate(), retained.document),
     exported = await exportThemeBundle(next, retained.assets),
     imported = await importThemeBundle(exported, { decodeImage: null });

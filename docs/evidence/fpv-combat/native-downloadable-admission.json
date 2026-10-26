@@ -1,0 +1,1858 @@
+{
+  "format": "FPVEncounterAdmissionCoverage.v1",
+  "generatedAt": "2026-10-19T21:19:30.063Z",
+  "population": 12,
+  "movementTicks": 0,
+  "scope": "Static geometry spawn and route admission only; no accepted movement, renderer, GPU, real-radio or frame-rate qualification.",
+  "builtins": [
+    {
+      "catalogue": "fpv-snake-hunt:0a73f7def9f067b8",
+      "course": "snake-hunt-loops-01",
+      "baseIdentity": "3760a2de192eea8d",
+      "admitted": 12,
+      "requiredTargets": 11
+    },
+    {
+      "catalogue": "fpv-snake-hunt:0a73f7def9f067b8",
+      "course": "snake-hunt-loops-02",
+      "baseIdentity": "77d36083abc50aff",
+      "admitted": 12,
+      "requiredTargets": 11
+    },
+    {
+      "catalogue": "fpv-snake-hunt:0a73f7def9f067b8",
+      "course": "snake-hunt-loops-03",
+      "baseIdentity": "27657892c87436b1",
+      "admitted": 12,
+      "requiredTargets": 11
+    },
+    {
+      "catalogue": "fpv-snake-hunt:0a73f7def9f067b8",
+      "course": "snake-hunt-loops-04",
+      "baseIdentity": "99130b0d560c0ee7",
+      "admitted": 12,
+      "requiredTargets": 11
+    },
+    {
+      "catalogue": "fpv-snake-hunt:0a73f7def9f067b8",
+      "course": "snake-hunt-loops-05",
+      "baseIdentity": "49fe8c5ebf2a69aa",
+      "admitted": 12,
+      "requiredTargets": 12
+    },
+    {
+      "catalogue": "fpv-snake-hunt:0a73f7def9f067b8",
+      "course": "snake-hunt-loops-06",
+      "baseIdentity": "ad6c210e17238c1d",
+      "admitted": 12,
+      "requiredTargets": 12
+    },
+    {
+      "catalogue": "fpv-snake-hunt:0a73f7def9f067b8",
+      "course": "snake-hunt-weave-01",
+      "baseIdentity": "9bbdf66eccbfb0b0",
+      "admitted": 12,
+      "requiredTargets": 11
+    },
+    {
+      "catalogue": "fpv-snake-hunt:0a73f7def9f067b8",
+      "course": "snake-hunt-weave-02",
+      "baseIdentity": "18716d6ad7098efc",
+      "admitted": 12,
+      "requiredTargets": 11
+    },
+    {
+      "catalogue": "fpv-snake-hunt:0a73f7def9f067b8",
+      "course": "snake-hunt-weave-03",
+      "baseIdentity": "0a10341a9d2fed0e",
+      "admitted": 12,
+      "requiredTargets": 11
+    },
+    {
+      "catalogue": "fpv-snake-hunt:0a73f7def9f067b8",
+      "course": "snake-hunt-weave-04",
+      "baseIdentity": "226c6e3c6fe1e702",
+      "admitted": 12,
+      "requiredTargets": 11
+    },
+    {
+      "catalogue": "fpv-snake-hunt:0a73f7def9f067b8",
+      "course": "snake-hunt-weave-05",
+      "baseIdentity": "47207ef15ad18511",
+      "admitted": 12,
+      "requiredTargets": 11
+    },
+    {
+      "catalogue": "fpv-snake-hunt:0a73f7def9f067b8",
+      "course": "snake-hunt-weave-06",
+      "baseIdentity": "5f8173051028b34c",
+      "admitted": 12,
+      "requiredTargets": 12
+    },
+    {
+      "catalogue": "fpv-snake-hunt:0a73f7def9f067b8",
+      "course": "snake-hunt-heights-01",
+      "baseIdentity": "b83da4456db0fc7c",
+      "admitted": 12,
+      "requiredTargets": 11
+    },
+    {
+      "catalogue": "fpv-snake-hunt:0a73f7def9f067b8",
+      "course": "snake-hunt-heights-02",
+      "baseIdentity": "28f8651b72caea48",
+      "admitted": 12,
+      "requiredTargets": 11
+    },
+    {
+      "catalogue": "fpv-snake-hunt:0a73f7def9f067b8",
+      "course": "snake-hunt-heights-03",
+      "baseIdentity": "fe662a8910b86e45",
+      "admitted": 12,
+      "requiredTargets": 11
+    },
+    {
+      "catalogue": "fpv-snake-hunt:0a73f7def9f067b8",
+      "course": "snake-hunt-heights-04",
+      "baseIdentity": "1c722bfebbb583bf",
+      "admitted": 12,
+      "requiredTargets": 11
+    },
+    {
+      "catalogue": "fpv-snake-hunt:0a73f7def9f067b8",
+      "course": "snake-hunt-heights-05",
+      "baseIdentity": "71c1c971237e50d4",
+      "admitted": 12,
+      "requiredTargets": 11
+    },
+    {
+      "catalogue": "fpv-snake-hunt:0a73f7def9f067b8",
+      "course": "snake-hunt-heights-06",
+      "baseIdentity": "42f179e478284baf",
+      "admitted": 12,
+      "requiredTargets": 12
+    },
+    {
+      "catalogue": "fpv-snake-hunt:0a73f7def9f067b8",
+      "course": "snake-hunt-chase-01",
+      "baseIdentity": "8a4bc60e95feace3",
+      "admitted": 12,
+      "requiredTargets": 11
+    },
+    {
+      "catalogue": "fpv-snake-hunt:0a73f7def9f067b8",
+      "course": "snake-hunt-chase-02",
+      "baseIdentity": "a30a569f2d054af3",
+      "admitted": 12,
+      "requiredTargets": 11
+    },
+    {
+      "catalogue": "fpv-snake-hunt:0a73f7def9f067b8",
+      "course": "snake-hunt-chase-03",
+      "baseIdentity": "1809fbd80deb8dec",
+      "admitted": 12,
+      "requiredTargets": 11
+    },
+    {
+      "catalogue": "fpv-snake-hunt:0a73f7def9f067b8",
+      "course": "snake-hunt-chase-04",
+      "baseIdentity": "76c1b92df6d239ae",
+      "admitted": 12,
+      "requiredTargets": 11
+    },
+    {
+      "catalogue": "fpv-snake-hunt:0a73f7def9f067b8",
+      "course": "snake-hunt-chase-05",
+      "baseIdentity": "78bd4f6ad4273284",
+      "admitted": 12,
+      "requiredTargets": 12
+    },
+    {
+      "catalogue": "fpv-snake-hunt:0a73f7def9f067b8",
+      "course": "snake-hunt-chase-06",
+      "baseIdentity": "fe8bd8922c602648",
+      "admitted": 12,
+      "requiredTargets": 12
+    },
+    {
+      "catalogue": "fpv-snake-pursuit:ce49bc419eec7230",
+      "course": "snake-hunt-interception-loop-intercept",
+      "baseIdentity": "6abf23e69b34203c",
+      "admitted": 12,
+      "requiredTargets": 10
+    },
+    {
+      "catalogue": "fpv-snake-pursuit:ce49bc419eec7230",
+      "course": "snake-hunt-interception-two-return-lanes",
+      "baseIdentity": "9e3e17a36b6b0efe",
+      "admitted": 12,
+      "requiredTargets": 10
+    },
+    {
+      "catalogue": "fpv-snake-pursuit:ce49bc419eec7230",
+      "course": "snake-hunt-interception-corner-approach",
+      "baseIdentity": "ec0c6178e38996ba",
+      "admitted": 12,
+      "requiredTargets": 10
+    },
+    {
+      "catalogue": "fpv-snake-pursuit:ce49bc419eec7230",
+      "course": "snake-hunt-interception-crossing-patrols",
+      "baseIdentity": "e31ea0dd1efb860a",
+      "admitted": 12,
+      "requiredTargets": 10
+    },
+    {
+      "catalogue": "fpv-snake-pursuit:ce49bc419eec7230",
+      "course": "snake-hunt-interception-island-bypass",
+      "baseIdentity": "7dc10d50916a29a3",
+      "admitted": 12,
+      "requiredTargets": 10
+    },
+    {
+      "catalogue": "fpv-snake-pursuit:ce49bc419eec7230",
+      "course": "snake-hunt-interception-staggered-interception",
+      "baseIdentity": "21e7483b4210627e",
+      "admitted": 12,
+      "requiredTargets": 10
+    },
+    {
+      "catalogue": "fpv-snake-pursuit:ce49bc419eec7230",
+      "course": "snake-hunt-route-choices-warehouse-return",
+      "baseIdentity": "f8c25d168936cf0c",
+      "admitted": 12,
+      "requiredTargets": 10
+    },
+    {
+      "catalogue": "fpv-snake-pursuit:ce49bc419eec7230",
+      "course": "snake-hunt-route-choices-courtyard-approaches",
+      "baseIdentity": "a2b0e87473164209",
+      "admitted": 12,
+      "requiredTargets": 10
+    },
+    {
+      "catalogue": "fpv-snake-pursuit:ce49bc419eec7230",
+      "course": "snake-hunt-route-choices-platform-perimeter",
+      "baseIdentity": "f93d4f62798fe277",
+      "admitted": 12,
+      "requiredTargets": 11
+    },
+    {
+      "catalogue": "fpv-snake-pursuit:ce49bc419eec7230",
+      "course": "snake-hunt-route-choices-boundary-cutback",
+      "baseIdentity": "8a5f9846f016a588",
+      "admitted": 12,
+      "requiredTargets": 11
+    },
+    {
+      "catalogue": "fpv-snake-pursuit:ce49bc419eec7230",
+      "course": "snake-hunt-route-choices-cross-route-choice",
+      "baseIdentity": "2ef99ed4ee570181",
+      "admitted": 12,
+      "requiredTargets": 10
+    },
+    {
+      "catalogue": "fpv-snake-pursuit:ce49bc419eec7230",
+      "course": "snake-hunt-route-choices-airfield-circuit",
+      "baseIdentity": "ec41dd490a4b09db",
+      "admitted": 12,
+      "requiredTargets": 10
+    },
+    {
+      "catalogue": "fpv-expressive-hunt:298acf478cb32c2d",
+      "course": "snake-hunt-ground-routes-low-pass-depot",
+      "baseIdentity": "a09b6367460e998b",
+      "admitted": 12,
+      "requiredTargets": 11
+    },
+    {
+      "catalogue": "fpv-expressive-hunt:298acf478cb32c2d",
+      "course": "snake-hunt-ground-routes-split-yard-return",
+      "baseIdentity": "b982794f964512af",
+      "admitted": 12,
+      "requiredTargets": 10
+    },
+    {
+      "catalogue": "fpv-expressive-hunt:298acf478cb32c2d",
+      "course": "snake-hunt-ground-routes-crossing-arrivals",
+      "baseIdentity": "af9ded76cd7716d6",
+      "admitted": 12,
+      "requiredTargets": 10
+    },
+    {
+      "catalogue": "fpv-expressive-hunt:298acf478cb32c2d",
+      "course": "snake-hunt-ground-routes-shelter-arc",
+      "baseIdentity": "08c123a2b734a5f6",
+      "admitted": 12,
+      "requiredTargets": 10
+    },
+    {
+      "catalogue": "fpv-expressive-hunt:298acf478cb32c2d",
+      "course": "snake-hunt-ground-routes-freight-slalom",
+      "baseIdentity": "ed3f8e9b74f04dab",
+      "admitted": 12,
+      "requiredTargets": 10
+    },
+    {
+      "catalogue": "fpv-expressive-hunt:298acf478cb32c2d",
+      "course": "snake-hunt-ground-routes-forked-depot",
+      "baseIdentity": "95a88567f2608f4b",
+      "admitted": 12,
+      "requiredTargets": 11
+    },
+    {
+      "catalogue": "fpv-expressive-hunt:298acf478cb32c2d",
+      "course": "snake-hunt-approach-windows-low-roof-window",
+      "baseIdentity": "bf7a22fdbb418337",
+      "admitted": 12,
+      "requiredTargets": 10
+    },
+    {
+      "catalogue": "fpv-expressive-hunt:298acf478cb32c2d",
+      "course": "snake-hunt-approach-windows-roofline-exchange",
+      "baseIdentity": "4c16431dba536f15",
+      "admitted": 12,
+      "requiredTargets": 11
+    },
+    {
+      "catalogue": "fpv-expressive-hunt:298acf478cb32c2d",
+      "course": "snake-hunt-approach-windows-return-slot",
+      "baseIdentity": "839959c16b636ca6",
+      "admitted": 12,
+      "requiredTargets": 10
+    },
+    {
+      "catalogue": "fpv-expressive-hunt:298acf478cb32c2d",
+      "course": "snake-hunt-approach-windows-staggered-roofs",
+      "baseIdentity": "a0437cce2c7c9a03",
+      "admitted": 12,
+      "requiredTargets": 10
+    },
+    {
+      "catalogue": "fpv-expressive-hunt:298acf478cb32c2d",
+      "course": "snake-hunt-approach-windows-window-chain",
+      "baseIdentity": "dc639f24513114d5",
+      "admitted": 12,
+      "requiredTargets": 10
+    },
+    {
+      "catalogue": "fpv-expressive-hunt:298acf478cb32c2d",
+      "course": "snake-hunt-approach-windows-three-yard-finale",
+      "baseIdentity": "8f49c7fb31c1c6d2",
+      "admitted": 12,
+      "requiredTargets": 10
+    },
+    {
+      "catalogue": "fpv-native-pursuit:0233a9dda4d96084",
+      "course": "native-pursuit-refuge-return",
+      "baseIdentity": "e66c91aea780e7b8",
+      "admitted": 12,
+      "requiredTargets": 11
+    },
+    {
+      "catalogue": "fpv-native-pursuit:0233a9dda4d96084",
+      "course": "native-pursuit-meeting-yard",
+      "baseIdentity": "f641492c6b8c33df",
+      "admitted": 12,
+      "requiredTargets": 11
+    },
+    {
+      "catalogue": "fpv-native-pursuit:49a87f729321e198",
+      "course": "native-pursuit-runner-court",
+      "baseIdentity": "484df2945f021257",
+      "admitted": 12,
+      "requiredTargets": 11
+    },
+    {
+      "catalogue": "fpv-native-pursuit:49a87f729321e198",
+      "course": "native-pursuit-burst-lanes",
+      "baseIdentity": "e257ae97626d27e4",
+      "admitted": 12,
+      "requiredTargets": 11
+    },
+    {
+      "catalogue": "fpv-native-pursuit:49a87f729321e198",
+      "course": "native-pursuit-refuge-return",
+      "baseIdentity": "42a1a82a53af08c2",
+      "admitted": 12,
+      "requiredTargets": 11
+    },
+    {
+      "catalogue": "fpv-native-pursuit:49a87f729321e198",
+      "course": "native-pursuit-switchback-crossing",
+      "baseIdentity": "1dd4152e93458c4b",
+      "admitted": 12,
+      "requiredTargets": 11
+    },
+    {
+      "catalogue": "fpv-native-pursuit:49a87f729321e198",
+      "course": "native-pursuit-meeting-yard",
+      "baseIdentity": "650f405d6373b5bf",
+      "admitted": 12,
+      "requiredTargets": 11
+    },
+    {
+      "catalogue": "fpv-native-pursuit:49a87f729321e198",
+      "course": "native-pursuit-armor-windows",
+      "baseIdentity": "7cf2ba7dc8c08ee2",
+      "admitted": 12,
+      "requiredTargets": 11
+    },
+    {
+      "catalogue": "fpv-adventures:7a780beda75af567",
+      "course": "adventure-coast-01",
+      "baseIdentity": "6a77435a26cd51c1",
+      "admitted": 12,
+      "requiredTargets": 10
+    },
+    {
+      "catalogue": "fpv-adventures:7a780beda75af567",
+      "course": "adventure-coast-02",
+      "baseIdentity": "2a8f253b07445673",
+      "admitted": 12,
+      "requiredTargets": 10
+    },
+    {
+      "catalogue": "fpv-adventures:7a780beda75af567",
+      "course": "adventure-coast-03",
+      "baseIdentity": "e9233a498bbd786e",
+      "admitted": 12,
+      "requiredTargets": 10
+    },
+    {
+      "catalogue": "fpv-adventures:7a780beda75af567",
+      "course": "adventure-coast-04",
+      "baseIdentity": "d0062dabb64d060e",
+      "admitted": 12,
+      "requiredTargets": 10
+    },
+    {
+      "catalogue": "fpv-adventures:7a780beda75af567",
+      "course": "adventure-coast-05",
+      "baseIdentity": "215965daef683f2d",
+      "admitted": 12,
+      "requiredTargets": 10
+    },
+    {
+      "catalogue": "fpv-adventures:7a780beda75af567",
+      "course": "adventure-quarry-01",
+      "baseIdentity": "e8daf54f9347377d",
+      "admitted": 12,
+      "requiredTargets": 10
+    },
+    {
+      "catalogue": "fpv-adventures:7a780beda75af567",
+      "course": "adventure-quarry-02",
+      "baseIdentity": "c49031fb4489a9f7",
+      "admitted": 12,
+      "requiredTargets": 11
+    },
+    {
+      "catalogue": "fpv-adventures:7a780beda75af567",
+      "course": "adventure-quarry-03",
+      "baseIdentity": "98fadababbc69ee6",
+      "admitted": 12,
+      "requiredTargets": 10
+    },
+    {
+      "catalogue": "fpv-adventures:7a780beda75af567",
+      "course": "adventure-quarry-04",
+      "baseIdentity": "5afda4f02fb0e454",
+      "admitted": 12,
+      "requiredTargets": 11
+    },
+    {
+      "catalogue": "fpv-adventures:7a780beda75af567",
+      "course": "adventure-quarry-05",
+      "baseIdentity": "6ac54c4823653539",
+      "admitted": 12,
+      "requiredTargets": 10
+    },
+    {
+      "catalogue": "fpv-adventures:7a780beda75af567",
+      "course": "adventure-rooftops-01",
+      "baseIdentity": "e5edb865ad9053d4",
+      "admitted": 12,
+      "requiredTargets": 10
+    },
+    {
+      "catalogue": "fpv-adventures:7a780beda75af567",
+      "course": "adventure-rooftops-02",
+      "baseIdentity": "a0a8f2d5d720f0a1",
+      "admitted": 12,
+      "requiredTargets": 10
+    },
+    {
+      "catalogue": "fpv-adventures:7a780beda75af567",
+      "course": "adventure-rooftops-03",
+      "baseIdentity": "5372e3ec628d637a",
+      "admitted": 12,
+      "requiredTargets": 10
+    },
+    {
+      "catalogue": "fpv-adventures:7a780beda75af567",
+      "course": "adventure-rooftops-04",
+      "baseIdentity": "69c48b588112a61f",
+      "admitted": 12,
+      "requiredTargets": 10
+    },
+    {
+      "catalogue": "fpv-adventures:7a780beda75af567",
+      "course": "adventure-rooftops-05",
+      "baseIdentity": "bd450365950df37e",
+      "admitted": 12,
+      "requiredTargets": 10
+    },
+    {
+      "catalogue": "fpv-adventures:7a780beda75af567",
+      "course": "adventure-orchard-01",
+      "baseIdentity": "3fbba5dbad1c7a5f",
+      "admitted": 12,
+      "requiredTargets": 10
+    },
+    {
+      "catalogue": "fpv-adventures:7a780beda75af567",
+      "course": "adventure-orchard-02",
+      "baseIdentity": "75bd9d390046da45",
+      "admitted": 12,
+      "requiredTargets": 10
+    },
+    {
+      "catalogue": "fpv-adventures:7a780beda75af567",
+      "course": "adventure-orchard-03",
+      "baseIdentity": "fb4a7db76791ecc1",
+      "admitted": 12,
+      "requiredTargets": 10
+    },
+    {
+      "catalogue": "fpv-adventures:7a780beda75af567",
+      "course": "adventure-orchard-04",
+      "baseIdentity": "0aec54d80c49a6f2",
+      "admitted": 12,
+      "requiredTargets": 10
+    },
+    {
+      "catalogue": "fpv-adventures:7a780beda75af567",
+      "course": "adventure-orchard-05",
+      "baseIdentity": "003247497951654c",
+      "admitted": 12,
+      "requiredTargets": 10
+    },
+    {
+      "catalogue": "fpv-adventures:7a780beda75af567",
+      "course": "adventure-solar-farm-01",
+      "baseIdentity": "c912ae602959e426",
+      "admitted": 12,
+      "requiredTargets": 11
+    },
+    {
+      "catalogue": "fpv-adventures:7a780beda75af567",
+      "course": "adventure-solar-farm-02",
+      "baseIdentity": "af10673a3cd440d3",
+      "admitted": 12,
+      "requiredTargets": 11
+    },
+    {
+      "catalogue": "fpv-adventures:7a780beda75af567",
+      "course": "adventure-solar-farm-03",
+      "baseIdentity": "53d3d7e531c44a4e",
+      "admitted": 12,
+      "requiredTargets": 11
+    },
+    {
+      "catalogue": "fpv-adventures:7a780beda75af567",
+      "course": "adventure-solar-farm-04",
+      "baseIdentity": "3c0ec6b56b4f1cf5",
+      "admitted": 12,
+      "requiredTargets": 12
+    },
+    {
+      "catalogue": "fpv-adventures:7a780beda75af567",
+      "course": "adventure-solar-farm-05",
+      "baseIdentity": "cfb835337a8c80b3",
+      "admitted": 12,
+      "requiredTargets": 12
+    },
+    {
+      "catalogue": "fpv-adventures:7a780beda75af567",
+      "course": "adventure-rail-depot-01",
+      "baseIdentity": "0660b35ca1482547",
+      "admitted": 12,
+      "requiredTargets": 10
+    },
+    {
+      "catalogue": "fpv-adventures:7a780beda75af567",
+      "course": "adventure-rail-depot-02",
+      "baseIdentity": "0ec4c2e5d9029430",
+      "admitted": 12,
+      "requiredTargets": 10
+    },
+    {
+      "catalogue": "fpv-adventures:7a780beda75af567",
+      "course": "adventure-rail-depot-03",
+      "baseIdentity": "0f8ad0af86f2f4f8",
+      "admitted": 12,
+      "requiredTargets": 10
+    },
+    {
+      "catalogue": "fpv-adventures:7a780beda75af567",
+      "course": "adventure-rail-depot-04",
+      "baseIdentity": "b088264656d87bcb",
+      "admitted": 12,
+      "requiredTargets": 11
+    },
+    {
+      "catalogue": "fpv-adventures:7a780beda75af567",
+      "course": "adventure-rail-depot-05",
+      "baseIdentity": "fca1f6c3546fa6a2",
+      "admitted": 12,
+      "requiredTargets": 11
+    },
+    {
+      "catalogue": "fpv-academy:e5441eee16783e2c",
+      "course": "flight-01",
+      "baseIdentity": "573db8b71fe99103",
+      "admitted": 12,
+      "requiredTargets": 10
+    },
+    {
+      "catalogue": "fpv-academy:e5441eee16783e2c",
+      "course": "flight-02",
+      "baseIdentity": "8f671907feda67c9",
+      "admitted": 12,
+      "requiredTargets": 10
+    },
+    {
+      "catalogue": "fpv-academy:e5441eee16783e2c",
+      "course": "flight-03",
+      "baseIdentity": "1b240bb932f3f649",
+      "admitted": 12,
+      "requiredTargets": 10
+    },
+    {
+      "catalogue": "fpv-academy:e5441eee16783e2c",
+      "course": "flight-04",
+      "baseIdentity": "9f0f8cfdac49a166",
+      "admitted": 12,
+      "requiredTargets": 10
+    },
+    {
+      "catalogue": "fpv-academy:e5441eee16783e2c",
+      "course": "flight-05",
+      "baseIdentity": "dec5e82c56c5d299",
+      "admitted": 12,
+      "requiredTargets": 10
+    },
+    {
+      "catalogue": "fpv-academy:e5441eee16783e2c",
+      "course": "flight-06",
+      "baseIdentity": "80e5b607f33f1a75",
+      "admitted": 12,
+      "requiredTargets": 10
+    },
+    {
+      "catalogue": "fpv-academy:e5441eee16783e2c",
+      "course": "flight-07",
+      "baseIdentity": "923c2d912d5f865c",
+      "admitted": 12,
+      "requiredTargets": 10
+    },
+    {
+      "catalogue": "fpv-academy:e5441eee16783e2c",
+      "course": "flight-08",
+      "baseIdentity": "0a44f9386d8f14eb",
+      "admitted": 12,
+      "requiredTargets": 10
+    },
+    {
+      "catalogue": "fpv-academy:e5441eee16783e2c",
+      "course": "flight-09",
+      "baseIdentity": "6a883e6da14ef864",
+      "admitted": 12,
+      "requiredTargets": 10
+    },
+    {
+      "catalogue": "fpv-academy:e5441eee16783e2c",
+      "course": "flight-10",
+      "baseIdentity": "17c60cf6ab703346",
+      "admitted": 12,
+      "requiredTargets": 10
+    },
+    {
+      "catalogue": "fpv-academy:e5441eee16783e2c",
+      "course": "flight-11",
+      "baseIdentity": "c1dba4037a711cbe",
+      "admitted": 12,
+      "requiredTargets": 10
+    },
+    {
+      "catalogue": "fpv-academy:e5441eee16783e2c",
+      "course": "flight-12",
+      "baseIdentity": "52cfa145bb51eee1",
+      "admitted": 12,
+      "requiredTargets": 10
+    },
+    {
+      "catalogue": "fpv-worlds:74546db040e0cd3d",
+      "course": "woodland-01",
+      "baseIdentity": "f0429df99d6a0be5",
+      "admitted": 12,
+      "requiredTargets": 11
+    },
+    {
+      "catalogue": "fpv-worlds:74546db040e0cd3d",
+      "course": "woodland-02",
+      "baseIdentity": "8d81a0a9e7d3867a",
+      "admitted": 12,
+      "requiredTargets": 11
+    },
+    {
+      "catalogue": "fpv-worlds:74546db040e0cd3d",
+      "course": "woodland-03",
+      "baseIdentity": "45a738eef97502b9",
+      "admitted": 12,
+      "requiredTargets": 11
+    },
+    {
+      "catalogue": "fpv-worlds:74546db040e0cd3d",
+      "course": "woodland-04",
+      "baseIdentity": "d8e4976677ed1980",
+      "admitted": 12,
+      "requiredTargets": 11
+    },
+    {
+      "catalogue": "fpv-worlds:74546db040e0cd3d",
+      "course": "woodland-05",
+      "baseIdentity": "fdd80865c96968a8",
+      "admitted": 12,
+      "requiredTargets": 11
+    },
+    {
+      "catalogue": "fpv-worlds:74546db040e0cd3d",
+      "course": "woodland-06",
+      "baseIdentity": "c6a2a47128db875c",
+      "admitted": 12,
+      "requiredTargets": 11
+    },
+    {
+      "catalogue": "fpv-worlds:74546db040e0cd3d",
+      "course": "woodland-07",
+      "baseIdentity": "58873d2a74c63d27",
+      "admitted": 12,
+      "requiredTargets": 11
+    },
+    {
+      "catalogue": "fpv-worlds:74546db040e0cd3d",
+      "course": "woodland-08",
+      "baseIdentity": "0c0d2cc13c51388f",
+      "admitted": 12,
+      "requiredTargets": 11
+    },
+    {
+      "catalogue": "fpv-worlds:74546db040e0cd3d",
+      "course": "courtyard-01",
+      "baseIdentity": "b4dfaa7c94cdda59",
+      "admitted": 12,
+      "requiredTargets": 10
+    },
+    {
+      "catalogue": "fpv-worlds:74546db040e0cd3d",
+      "course": "courtyard-02",
+      "baseIdentity": "9154a3109bfef94a",
+      "admitted": 12,
+      "requiredTargets": 10
+    },
+    {
+      "catalogue": "fpv-worlds:74546db040e0cd3d",
+      "course": "courtyard-03",
+      "baseIdentity": "2c4fd148b3f419d7",
+      "admitted": 12,
+      "requiredTargets": 10
+    },
+    {
+      "catalogue": "fpv-worlds:74546db040e0cd3d",
+      "course": "courtyard-04",
+      "baseIdentity": "553e2a3b03a53207",
+      "admitted": 12,
+      "requiredTargets": 10
+    },
+    {
+      "catalogue": "fpv-worlds:74546db040e0cd3d",
+      "course": "courtyard-05",
+      "baseIdentity": "8cee927deba9d5e9",
+      "admitted": 12,
+      "requiredTargets": 10
+    },
+    {
+      "catalogue": "fpv-worlds:74546db040e0cd3d",
+      "course": "courtyard-06",
+      "baseIdentity": "c5a4afb3391e7d18",
+      "admitted": 12,
+      "requiredTargets": 10
+    },
+    {
+      "catalogue": "fpv-worlds:74546db040e0cd3d",
+      "course": "courtyard-07",
+      "baseIdentity": "9c25df5478939a0f",
+      "admitted": 12,
+      "requiredTargets": 10
+    },
+    {
+      "catalogue": "fpv-worlds:74546db040e0cd3d",
+      "course": "courtyard-08",
+      "baseIdentity": "080fa7f5714b60ec",
+      "admitted": 12,
+      "requiredTargets": 10
+    },
+    {
+      "catalogue": "fpv-worlds:74546db040e0cd3d",
+      "course": "warehouse-01",
+      "baseIdentity": "55e317b766d5c708",
+      "admitted": 12,
+      "requiredTargets": 10
+    },
+    {
+      "catalogue": "fpv-worlds:74546db040e0cd3d",
+      "course": "warehouse-02",
+      "baseIdentity": "02bafbdb158d9774",
+      "admitted": 12,
+      "requiredTargets": 10
+    },
+    {
+      "catalogue": "fpv-worlds:74546db040e0cd3d",
+      "course": "warehouse-03",
+      "baseIdentity": "485686b472c9d462",
+      "admitted": 12,
+      "requiredTargets": 10
+    },
+    {
+      "catalogue": "fpv-worlds:74546db040e0cd3d",
+      "course": "warehouse-04",
+      "baseIdentity": "50b6e5ee2414e947",
+      "admitted": 12,
+      "requiredTargets": 10
+    },
+    {
+      "catalogue": "fpv-worlds:74546db040e0cd3d",
+      "course": "warehouse-05",
+      "baseIdentity": "a46a9a4a0c78fa2d",
+      "admitted": 12,
+      "requiredTargets": 10
+    },
+    {
+      "catalogue": "fpv-worlds:74546db040e0cd3d",
+      "course": "warehouse-06",
+      "baseIdentity": "7d78807f064f13eb",
+      "admitted": 12,
+      "requiredTargets": 10
+    },
+    {
+      "catalogue": "fpv-worlds:74546db040e0cd3d",
+      "course": "warehouse-07",
+      "baseIdentity": "c32ba5149f99851d",
+      "admitted": 12,
+      "requiredTargets": 10
+    },
+    {
+      "catalogue": "fpv-worlds:74546db040e0cd3d",
+      "course": "warehouse-08",
+      "baseIdentity": "c693ffa694aa4834",
+      "admitted": 12,
+      "requiredTargets": 10
+    },
+    {
+      "catalogue": "fpv-worlds:74546db040e0cd3d",
+      "course": "stadium-01",
+      "baseIdentity": "82d988664b913009",
+      "admitted": 12,
+      "requiredTargets": 10
+    },
+    {
+      "catalogue": "fpv-worlds:74546db040e0cd3d",
+      "course": "stadium-02",
+      "baseIdentity": "bf103fd19a3ab982",
+      "admitted": 12,
+      "requiredTargets": 10
+    },
+    {
+      "catalogue": "fpv-worlds:74546db040e0cd3d",
+      "course": "stadium-03",
+      "baseIdentity": "e800f54b1f15e444",
+      "admitted": 12,
+      "requiredTargets": 10
+    },
+    {
+      "catalogue": "fpv-worlds:74546db040e0cd3d",
+      "course": "stadium-04",
+      "baseIdentity": "68e635eaaa460b60",
+      "admitted": 12,
+      "requiredTargets": 10
+    },
+    {
+      "catalogue": "fpv-worlds:74546db040e0cd3d",
+      "course": "stadium-05",
+      "baseIdentity": "9831546d8ce52703",
+      "admitted": 12,
+      "requiredTargets": 10
+    },
+    {
+      "catalogue": "fpv-worlds:74546db040e0cd3d",
+      "course": "stadium-06",
+      "baseIdentity": "05bc8fe98c1ac39a",
+      "admitted": 12,
+      "requiredTargets": 10
+    },
+    {
+      "catalogue": "fpv-worlds:74546db040e0cd3d",
+      "course": "stadium-07",
+      "baseIdentity": "28730b387e397a8b",
+      "admitted": 12,
+      "requiredTargets": 10
+    },
+    {
+      "catalogue": "fpv-worlds:74546db040e0cd3d",
+      "course": "stadium-08",
+      "baseIdentity": "a8d8f645d56d149d",
+      "admitted": 12,
+      "requiredTargets": 10
+    },
+    {
+      "catalogue": "fpv-worlds:74546db040e0cd3d",
+      "course": "container-yard-01",
+      "baseIdentity": "8b486b0c7b50e293",
+      "admitted": 12,
+      "requiredTargets": 10
+    },
+    {
+      "catalogue": "fpv-worlds:74546db040e0cd3d",
+      "course": "container-yard-02",
+      "baseIdentity": "cb0655a8b8b12ca3",
+      "admitted": 12,
+      "requiredTargets": 10
+    },
+    {
+      "catalogue": "fpv-worlds:74546db040e0cd3d",
+      "course": "container-yard-03",
+      "baseIdentity": "437ad54e01783edc",
+      "admitted": 12,
+      "requiredTargets": 10
+    },
+    {
+      "catalogue": "fpv-worlds:74546db040e0cd3d",
+      "course": "container-yard-04",
+      "baseIdentity": "e917d11dc8d8351f",
+      "admitted": 12,
+      "requiredTargets": 10
+    },
+    {
+      "catalogue": "fpv-worlds:74546db040e0cd3d",
+      "course": "container-yard-05",
+      "baseIdentity": "cf246703879ff68e",
+      "admitted": 12,
+      "requiredTargets": 11
+    },
+    {
+      "catalogue": "fpv-worlds:74546db040e0cd3d",
+      "course": "container-yard-06",
+      "baseIdentity": "dfd0c2b31a8fb715",
+      "admitted": 12,
+      "requiredTargets": 11
+    },
+    {
+      "catalogue": "fpv-worlds:74546db040e0cd3d",
+      "course": "container-yard-07",
+      "baseIdentity": "fed3e4ecae2b45ff",
+      "admitted": 12,
+      "requiredTargets": 11
+    },
+    {
+      "catalogue": "fpv-worlds:74546db040e0cd3d",
+      "course": "container-yard-08",
+      "baseIdentity": "b12288bf4dbadc4c",
+      "admitted": 12,
+      "requiredTargets": 11
+    },
+    {
+      "catalogue": "fpv-worlds:74546db040e0cd3d",
+      "course": "garage-01",
+      "baseIdentity": "8d74134decc538dc",
+      "admitted": 12,
+      "requiredTargets": 10
+    },
+    {
+      "catalogue": "fpv-worlds:74546db040e0cd3d",
+      "course": "garage-02",
+      "baseIdentity": "d7862fc6315c6d2c",
+      "admitted": 12,
+      "requiredTargets": 10
+    },
+    {
+      "catalogue": "fpv-worlds:74546db040e0cd3d",
+      "course": "garage-03",
+      "baseIdentity": "e0cfc11bf2f31976",
+      "admitted": 12,
+      "requiredTargets": 10
+    },
+    {
+      "catalogue": "fpv-worlds:74546db040e0cd3d",
+      "course": "garage-04",
+      "baseIdentity": "d547a5fc10ddc14f",
+      "admitted": 12,
+      "requiredTargets": 10
+    },
+    {
+      "catalogue": "fpv-worlds:74546db040e0cd3d",
+      "course": "garage-05",
+      "baseIdentity": "eacc7ac7e971cbe1",
+      "admitted": 12,
+      "requiredTargets": 10
+    },
+    {
+      "catalogue": "fpv-worlds:74546db040e0cd3d",
+      "course": "garage-06",
+      "baseIdentity": "fa3957fc011c8b14",
+      "admitted": 12,
+      "requiredTargets": 10
+    },
+    {
+      "catalogue": "fpv-worlds:74546db040e0cd3d",
+      "course": "garage-07",
+      "baseIdentity": "5c3e5b8434ad7b10",
+      "admitted": 12,
+      "requiredTargets": 10
+    },
+    {
+      "catalogue": "fpv-worlds:74546db040e0cd3d",
+      "course": "garage-08",
+      "baseIdentity": "a35d85dd2cf7660a",
+      "admitted": 12,
+      "requiredTargets": 10
+    },
+    {
+      "catalogue": "fpv-beginner:654387e76ace406c",
+      "course": "beginner-01",
+      "baseIdentity": "2b283442c91e80fb",
+      "admitted": 12,
+      "requiredTargets": 10
+    },
+    {
+      "catalogue": "fpv-beginner:654387e76ace406c",
+      "course": "beginner-02",
+      "baseIdentity": "be7038ca265c9eea",
+      "admitted": 12,
+      "requiredTargets": 10
+    },
+    {
+      "catalogue": "fpv-beginner:654387e76ace406c",
+      "course": "beginner-03",
+      "baseIdentity": "55fd503021e009f0",
+      "admitted": 12,
+      "requiredTargets": 10
+    },
+    {
+      "catalogue": "fpv-beginner:654387e76ace406c",
+      "course": "beginner-04",
+      "baseIdentity": "dbaecb9d131f5e8d",
+      "admitted": 12,
+      "requiredTargets": 10
+    },
+    {
+      "catalogue": "fpv-beginner:654387e76ace406c",
+      "course": "beginner-05",
+      "baseIdentity": "7dbce973d81f47f1",
+      "admitted": 12,
+      "requiredTargets": 10
+    },
+    {
+      "catalogue": "fpv-beginner:654387e76ace406c",
+      "course": "beginner-06",
+      "baseIdentity": "617aba71cc2c9a29",
+      "admitted": 12,
+      "requiredTargets": 10
+    },
+    {
+      "catalogue": "fpv-beginner:654387e76ace406c",
+      "course": "beginner-07",
+      "baseIdentity": "49641fb80e59cf0e",
+      "admitted": 12,
+      "requiredTargets": 10
+    },
+    {
+      "catalogue": "fpv-beginner:654387e76ace406c",
+      "course": "beginner-08",
+      "baseIdentity": "4850f1a1932293e7",
+      "admitted": 12,
+      "requiredTargets": 10
+    },
+    {
+      "catalogue": "fpv-beginner:654387e76ace406c",
+      "course": "beginner-09",
+      "baseIdentity": "6583c985edced34a",
+      "admitted": 12,
+      "requiredTargets": 10
+    },
+    {
+      "catalogue": "fpv-beginner:654387e76ace406c",
+      "course": "beginner-10",
+      "baseIdentity": "51abf3ff40a1c7be",
+      "admitted": 12,
+      "requiredTargets": 10
+    },
+    {
+      "catalogue": "fpv-beginner:654387e76ace406c",
+      "course": "beginner-11",
+      "baseIdentity": "cc40e164543aeb8c",
+      "admitted": 12,
+      "requiredTargets": 10
+    },
+    {
+      "catalogue": "fpv-beginner:654387e76ace406c",
+      "course": "beginner-12",
+      "baseIdentity": "0e66863f2b9832b4",
+      "admitted": 12,
+      "requiredTargets": 10
+    },
+    {
+      "catalogue": "fpv-beginner:654387e76ace406c",
+      "course": "beginner-13",
+      "baseIdentity": "bb596f55890dbe1f",
+      "admitted": 12,
+      "requiredTargets": 10
+    },
+    {
+      "catalogue": "fpv-beginner:654387e76ace406c",
+      "course": "beginner-14",
+      "baseIdentity": "db2f668dcb1d1301",
+      "admitted": 12,
+      "requiredTargets": 10
+    },
+    {
+      "catalogue": "fpv-acro-school:376562a567e6ba93",
+      "course": "beginner-15",
+      "baseIdentity": "18e16a885f2617c8",
+      "admitted": 12,
+      "requiredTargets": 10
+    },
+    {
+      "catalogue": "fpv-acro-school:376562a567e6ba93",
+      "course": "beginner-16",
+      "baseIdentity": "fae047e39b4fa767",
+      "admitted": 12,
+      "requiredTargets": 10
+    },
+    {
+      "catalogue": "fpv-acro-school:376562a567e6ba93",
+      "course": "beginner-17",
+      "baseIdentity": "07a2933124cdc68c",
+      "admitted": 12,
+      "requiredTargets": 10
+    },
+    {
+      "catalogue": "fpv-acro-school:376562a567e6ba93",
+      "course": "beginner-18",
+      "baseIdentity": "d8f6a65e0eca4fc5",
+      "admitted": 12,
+      "requiredTargets": 10
+    },
+    {
+      "catalogue": "fpv-acro-school:376562a567e6ba93",
+      "course": "beginner-19",
+      "baseIdentity": "24e8c237f51c72e2",
+      "admitted": 12,
+      "requiredTargets": 10
+    },
+    {
+      "catalogue": "fpv-acro-school:376562a567e6ba93",
+      "course": "beginner-20",
+      "baseIdentity": "4e7052ce3c2454c6",
+      "admitted": 12,
+      "requiredTargets": 10
+    },
+    {
+      "catalogue": "fpv-acro-school:376562a567e6ba93",
+      "course": "beginner-21",
+      "baseIdentity": "a370c561aac9a6a2",
+      "admitted": 12,
+      "requiredTargets": 10
+    },
+    {
+      "catalogue": "fpv-acro-school:376562a567e6ba93",
+      "course": "beginner-22",
+      "baseIdentity": "6b5e47fc9313b27d",
+      "admitted": 12,
+      "requiredTargets": 10
+    },
+    {
+      "catalogue": "fpv-acro-school:376562a567e6ba93",
+      "course": "beginner-23",
+      "baseIdentity": "2f154cdcc393b261",
+      "admitted": 12,
+      "requiredTargets": 10
+    },
+    {
+      "catalogue": "fpv-acro-school:376562a567e6ba93",
+      "course": "beginner-24",
+      "baseIdentity": "f7532ee7b19339c1",
+      "admitted": 12,
+      "requiredTargets": 10
+    },
+    {
+      "catalogue": "fpv-acro-school:376562a567e6ba93",
+      "course": "beginner-25",
+      "baseIdentity": "16e95611ca8c7850",
+      "admitted": 12,
+      "requiredTargets": 10
+    },
+    {
+      "catalogue": "fpv-acro-school:376562a567e6ba93",
+      "course": "beginner-26",
+      "baseIdentity": "5005cc12bfd31b4f",
+      "admitted": 12,
+      "requiredTargets": 10
+    },
+    {
+      "catalogue": "fpv-navigation-school:5c31fce0b5a82b98",
+      "course": "beginner-27",
+      "baseIdentity": "cd1ecbd37f09e2d9",
+      "admitted": 12,
+      "requiredTargets": 10
+    },
+    {
+      "catalogue": "fpv-navigation-school:5c31fce0b5a82b98",
+      "course": "beginner-28",
+      "baseIdentity": "fd8e57c34c2ef2ee",
+      "admitted": 12,
+      "requiredTargets": 10
+    },
+    {
+      "catalogue": "fpv-navigation-school:5c31fce0b5a82b98",
+      "course": "beginner-29",
+      "baseIdentity": "497f73a9eace062a",
+      "admitted": 12,
+      "requiredTargets": 10
+    },
+    {
+      "catalogue": "fpv-navigation-school:5c31fce0b5a82b98",
+      "course": "beginner-30",
+      "baseIdentity": "2a315ccc8c60cf9e",
+      "admitted": 12,
+      "requiredTargets": 10
+    },
+    {
+      "catalogue": "fpv-navigation-school:5c31fce0b5a82b98",
+      "course": "beginner-31",
+      "baseIdentity": "70d877113746fa44",
+      "admitted": 12,
+      "requiredTargets": 10
+    },
+    {
+      "catalogue": "fpv-navigation-school:5c31fce0b5a82b98",
+      "course": "beginner-32",
+      "baseIdentity": "626ccd0ed75c25b6",
+      "admitted": 12,
+      "requiredTargets": 10
+    },
+    {
+      "catalogue": "fpv-navigation-school:5c31fce0b5a82b98",
+      "course": "beginner-33",
+      "baseIdentity": "b1493ce5e3d649d1",
+      "admitted": 12,
+      "requiredTargets": 10
+    },
+    {
+      "catalogue": "fpv-navigation-school:5c31fce0b5a82b98",
+      "course": "beginner-34",
+      "baseIdentity": "f427fe848b865307",
+      "admitted": 12,
+      "requiredTargets": 10
+    },
+    {
+      "catalogue": "fpv-navigation-school:5c31fce0b5a82b98",
+      "course": "beginner-35",
+      "baseIdentity": "00f29619ef00bee2",
+      "admitted": 12,
+      "requiredTargets": 10
+    },
+    {
+      "catalogue": "fpv-navigation-school:5c31fce0b5a82b98",
+      "course": "beginner-36",
+      "baseIdentity": "98a84db2aedd48a5",
+      "admitted": 12,
+      "requiredTargets": 10
+    },
+    {
+      "catalogue": "fpv-navigation-school:5c31fce0b5a82b98",
+      "course": "beginner-37",
+      "baseIdentity": "5059001bf5a3e30d",
+      "admitted": 12,
+      "requiredTargets": 10
+    },
+    {
+      "catalogue": "fpv-navigation-school:5c31fce0b5a82b98",
+      "course": "beginner-38",
+      "baseIdentity": "d445a19b960acbc7",
+      "admitted": 12,
+      "requiredTargets": 10
+    },
+    {
+      "catalogue": "fpv-navigation-school:5c31fce0b5a82b98",
+      "course": "beginner-39",
+      "baseIdentity": "7d7057903d6d209f",
+      "admitted": 12,
+      "requiredTargets": 10
+    },
+    {
+      "catalogue": "fpv-navigation-school:5c31fce0b5a82b98",
+      "course": "beginner-40",
+      "baseIdentity": "e95319cadcaf66e0",
+      "admitted": 12,
+      "requiredTargets": 10
+    },
+    {
+      "catalogue": "fpv-navigation-school:5c31fce0b5a82b98",
+      "course": "beginner-41",
+      "baseIdentity": "8a67e278bdce983b",
+      "admitted": 12,
+      "requiredTargets": 10
+    },
+    {
+      "catalogue": "fpv-navigation-school:5c31fce0b5a82b98",
+      "course": "beginner-42",
+      "baseIdentity": "143fddd38328045f",
+      "admitted": 12,
+      "requiredTargets": 10
+    },
+    {
+      "catalogue": "fpv-skills-school:ccdbc4f61adad55a",
+      "course": "beginner-43",
+      "baseIdentity": "0ad4e82276845af6",
+      "admitted": 12,
+      "requiredTargets": 10
+    },
+    {
+      "catalogue": "fpv-skills-school:ccdbc4f61adad55a",
+      "course": "beginner-44",
+      "baseIdentity": "f9c425aafbc61f9a",
+      "admitted": 12,
+      "requiredTargets": 10
+    },
+    {
+      "catalogue": "fpv-skills-school:ccdbc4f61adad55a",
+      "course": "beginner-45",
+      "baseIdentity": "c797e254b8ba14b7",
+      "admitted": 12,
+      "requiredTargets": 10
+    },
+    {
+      "catalogue": "fpv-skills-school:ccdbc4f61adad55a",
+      "course": "beginner-46",
+      "baseIdentity": "47d8cd0c80a3a4d9",
+      "admitted": 12,
+      "requiredTargets": 10
+    },
+    {
+      "catalogue": "fpv-skills-school:ccdbc4f61adad55a",
+      "course": "beginner-47",
+      "baseIdentity": "dbcb1c9d8ed6d010",
+      "admitted": 12,
+      "requiredTargets": 10
+    },
+    {
+      "catalogue": "fpv-skills-school:ccdbc4f61adad55a",
+      "course": "beginner-48",
+      "baseIdentity": "f30678be5fd7d29a",
+      "admitted": 12,
+      "requiredTargets": 10
+    },
+    {
+      "catalogue": "fpv-skills-school:ccdbc4f61adad55a",
+      "course": "beginner-49",
+      "baseIdentity": "bb6855850a58374f",
+      "admitted": 12,
+      "requiredTargets": 10
+    },
+    {
+      "catalogue": "fpv-skills-school:ccdbc4f61adad55a",
+      "course": "beginner-50",
+      "baseIdentity": "1c87b66d90f7a35e",
+      "admitted": 12,
+      "requiredTargets": 10
+    },
+    {
+      "catalogue": "fpv-skills-school:ccdbc4f61adad55a",
+      "course": "beginner-51",
+      "baseIdentity": "92044cef4de09d99",
+      "admitted": 12,
+      "requiredTargets": 11
+    },
+    {
+      "catalogue": "fpv-skills-school:ccdbc4f61adad55a",
+      "course": "beginner-52",
+      "baseIdentity": "5d3a81d6966bb43d",
+      "admitted": 12,
+      "requiredTargets": 10
+    },
+    {
+      "catalogue": "fpv-skills-school:ccdbc4f61adad55a",
+      "course": "beginner-53",
+      "baseIdentity": "cfa3bb221736eeec",
+      "admitted": 12,
+      "requiredTargets": 10
+    },
+    {
+      "catalogue": "fpv-skills-school:ccdbc4f61adad55a",
+      "course": "beginner-54",
+      "baseIdentity": "b00944bd95cadf0c",
+      "admitted": 12,
+      "requiredTargets": 10
+    },
+    {
+      "catalogue": "fpv-skills-school:ccdbc4f61adad55a",
+      "course": "beginner-55",
+      "baseIdentity": "547e23707ed96c35",
+      "admitted": 12,
+      "requiredTargets": 10
+    },
+    {
+      "catalogue": "fpv-skills-school:ccdbc4f61adad55a",
+      "course": "beginner-56",
+      "baseIdentity": "11724e0b8e844d2f",
+      "admitted": 12,
+      "requiredTargets": 10
+    },
+    {
+      "catalogue": "fpv-skills-school:ccdbc4f61adad55a",
+      "course": "beginner-57",
+      "baseIdentity": "f418dc8b08bea395",
+      "admitted": 12,
+      "requiredTargets": 10
+    },
+    {
+      "catalogue": "fpv-skills-school:ccdbc4f61adad55a",
+      "course": "beginner-58",
+      "baseIdentity": "eae52b2af982fa9f",
+      "admitted": 12,
+      "requiredTargets": 10
+    }
+  ],
+  "downloads": [
+    {
+      "pack": "mountain-reservoir",
+      "revision": "r16",
+      "commit": "ea57d2e321896ab873c2ca6ca06791a88362a674",
+      "sha256": "50ffbb0e5da7dec94862a8f2ca85cfeb60542d3fe9f86bd3c4e288dfa0a2e554",
+      "course": "mountain-reservoir-01",
+      "baseIdentity": "383b4575ad33a5f1",
+      "admitted": 12,
+      "requiredTargets": 11
+    },
+    {
+      "pack": "mountain-reservoir",
+      "revision": "r16",
+      "commit": "ea57d2e321896ab873c2ca6ca06791a88362a674",
+      "sha256": "50ffbb0e5da7dec94862a8f2ca85cfeb60542d3fe9f86bd3c4e288dfa0a2e554",
+      "course": "mountain-reservoir-02",
+      "baseIdentity": "3bda6cd67bfa50a3",
+      "admitted": 12,
+      "requiredTargets": 11
+    },
+    {
+      "pack": "mountain-reservoir",
+      "revision": "r16",
+      "commit": "ea57d2e321896ab873c2ca6ca06791a88362a674",
+      "sha256": "50ffbb0e5da7dec94862a8f2ca85cfeb60542d3fe9f86bd3c4e288dfa0a2e554",
+      "course": "mountain-reservoir-03",
+      "baseIdentity": "bc5720847cf60aea",
+      "admitted": 12,
+      "requiredTargets": 11
+    },
+    {
+      "pack": "mountain-reservoir",
+      "revision": "r16",
+      "commit": "ea57d2e321896ab873c2ca6ca06791a88362a674",
+      "sha256": "50ffbb0e5da7dec94862a8f2ca85cfeb60542d3fe9f86bd3c4e288dfa0a2e554",
+      "course": "mountain-reservoir-04",
+      "baseIdentity": "49f32573bbdc793c",
+      "admitted": 12,
+      "requiredTargets": 11
+    },
+    {
+      "pack": "mountain-reservoir",
+      "revision": "r16",
+      "commit": "ea57d2e321896ab873c2ca6ca06791a88362a674",
+      "sha256": "50ffbb0e5da7dec94862a8f2ca85cfeb60542d3fe9f86bd3c4e288dfa0a2e554",
+      "course": "mountain-reservoir-05",
+      "baseIdentity": "156b59790d1625cf",
+      "admitted": 12,
+      "requiredTargets": 11
+    },
+    {
+      "pack": "mountain-reservoir",
+      "revision": "r16",
+      "commit": "ea57d2e321896ab873c2ca6ca06791a88362a674",
+      "sha256": "50ffbb0e5da7dec94862a8f2ca85cfeb60542d3fe9f86bd3c4e288dfa0a2e554",
+      "course": "mountain-reservoir-06",
+      "baseIdentity": "11d19a5b91033a33",
+      "admitted": 12,
+      "requiredTargets": 11
+    },
+    {
+      "pack": "mountain-reservoir",
+      "revision": "r16",
+      "commit": "ea57d2e321896ab873c2ca6ca06791a88362a674",
+      "sha256": "50ffbb0e5da7dec94862a8f2ca85cfeb60542d3fe9f86bd3c4e288dfa0a2e554",
+      "course": "mountain-reservoir-07",
+      "baseIdentity": "6ffa4b11e67e8968",
+      "admitted": 12,
+      "requiredTargets": 11
+    },
+    {
+      "pack": "mountain-reservoir",
+      "revision": "r16",
+      "commit": "ea57d2e321896ab873c2ca6ca06791a88362a674",
+      "sha256": "50ffbb0e5da7dec94862a8f2ca85cfeb60542d3fe9f86bd3c4e288dfa0a2e554",
+      "course": "mountain-reservoir-08",
+      "baseIdentity": "ff2c758f97eb4ef1",
+      "admitted": 12,
+      "requiredTargets": 11
+    },
+    {
+      "pack": "festival-grounds",
+      "revision": "r5",
+      "commit": "62d0e72f2963a61cc65ef829a320d9a1c2593b0c",
+      "sha256": "87baca276e174f31ba19c02f4f2359c97affa07eefd4a5f4912b4d8664450f51",
+      "course": "festival-grounds-01",
+      "baseIdentity": "78a3e487e76c6ae6",
+      "admitted": 12,
+      "requiredTargets": 10
+    },
+    {
+      "pack": "festival-grounds",
+      "revision": "r5",
+      "commit": "62d0e72f2963a61cc65ef829a320d9a1c2593b0c",
+      "sha256": "87baca276e174f31ba19c02f4f2359c97affa07eefd4a5f4912b4d8664450f51",
+      "course": "festival-grounds-02",
+      "baseIdentity": "b1a4331453ab40e7",
+      "admitted": 12,
+      "requiredTargets": 10
+    },
+    {
+      "pack": "festival-grounds",
+      "revision": "r5",
+      "commit": "62d0e72f2963a61cc65ef829a320d9a1c2593b0c",
+      "sha256": "87baca276e174f31ba19c02f4f2359c97affa07eefd4a5f4912b4d8664450f51",
+      "course": "festival-grounds-03",
+      "baseIdentity": "ae1be760d40301fe",
+      "admitted": 12,
+      "requiredTargets": 10
+    },
+    {
+      "pack": "festival-grounds",
+      "revision": "r5",
+      "commit": "62d0e72f2963a61cc65ef829a320d9a1c2593b0c",
+      "sha256": "87baca276e174f31ba19c02f4f2359c97affa07eefd4a5f4912b4d8664450f51",
+      "course": "festival-grounds-04",
+      "baseIdentity": "c95d0b34de937806",
+      "admitted": 12,
+      "requiredTargets": 10
+    },
+    {
+      "pack": "festival-grounds",
+      "revision": "r5",
+      "commit": "62d0e72f2963a61cc65ef829a320d9a1c2593b0c",
+      "sha256": "87baca276e174f31ba19c02f4f2359c97affa07eefd4a5f4912b4d8664450f51",
+      "course": "festival-grounds-05",
+      "baseIdentity": "2fba2ea5141a83f4",
+      "admitted": 12,
+      "requiredTargets": 10
+    },
+    {
+      "pack": "festival-grounds",
+      "revision": "r5",
+      "commit": "62d0e72f2963a61cc65ef829a320d9a1c2593b0c",
+      "sha256": "87baca276e174f31ba19c02f4f2359c97affa07eefd4a5f4912b4d8664450f51",
+      "course": "festival-grounds-06",
+      "baseIdentity": "70e6216436567014",
+      "admitted": 12,
+      "requiredTargets": 10
+    },
+    {
+      "pack": "festival-grounds",
+      "revision": "r5",
+      "commit": "62d0e72f2963a61cc65ef829a320d9a1c2593b0c",
+      "sha256": "87baca276e174f31ba19c02f4f2359c97affa07eefd4a5f4912b4d8664450f51",
+      "course": "festival-grounds-07",
+      "baseIdentity": "c6f0c6571375dd3a",
+      "admitted": 12,
+      "requiredTargets": 10
+    },
+    {
+      "pack": "festival-grounds",
+      "revision": "r5",
+      "commit": "62d0e72f2963a61cc65ef829a320d9a1c2593b0c",
+      "sha256": "87baca276e174f31ba19c02f4f2359c97affa07eefd4a5f4912b4d8664450f51",
+      "course": "festival-grounds-08",
+      "baseIdentity": "5168abe0e0485af3",
+      "admitted": 12,
+      "requiredTargets": 10
+    },
+    {
+      "pack": "harbor-docks",
+      "revision": "r4",
+      "commit": "8af1b67220be4f26e9b68d821e2b574b63a23904",
+      "sha256": "d5bf4b9bb6829c04dbe1bb398893e5243cefc1f9acf018bf153a2012c8cf49b6",
+      "course": "harbor-docks-01",
+      "baseIdentity": "922ad97cfa6719a3",
+      "admitted": 12,
+      "requiredTargets": 11
+    },
+    {
+      "pack": "harbor-docks",
+      "revision": "r4",
+      "commit": "8af1b67220be4f26e9b68d821e2b574b63a23904",
+      "sha256": "d5bf4b9bb6829c04dbe1bb398893e5243cefc1f9acf018bf153a2012c8cf49b6",
+      "course": "harbor-docks-02",
+      "baseIdentity": "410826277a3df167",
+      "admitted": 12,
+      "requiredTargets": 11
+    },
+    {
+      "pack": "harbor-docks",
+      "revision": "r4",
+      "commit": "8af1b67220be4f26e9b68d821e2b574b63a23904",
+      "sha256": "d5bf4b9bb6829c04dbe1bb398893e5243cefc1f9acf018bf153a2012c8cf49b6",
+      "course": "harbor-docks-03",
+      "baseIdentity": "77bd6c9d78dfc344",
+      "admitted": 12,
+      "requiredTargets": 11
+    },
+    {
+      "pack": "harbor-docks",
+      "revision": "r4",
+      "commit": "8af1b67220be4f26e9b68d821e2b574b63a23904",
+      "sha256": "d5bf4b9bb6829c04dbe1bb398893e5243cefc1f9acf018bf153a2012c8cf49b6",
+      "course": "harbor-docks-04",
+      "baseIdentity": "20e62712387087ce",
+      "admitted": 12,
+      "requiredTargets": 11
+    },
+    {
+      "pack": "harbor-docks",
+      "revision": "r4",
+      "commit": "8af1b67220be4f26e9b68d821e2b574b63a23904",
+      "sha256": "d5bf4b9bb6829c04dbe1bb398893e5243cefc1f9acf018bf153a2012c8cf49b6",
+      "course": "harbor-docks-05",
+      "baseIdentity": "1991dbb2e844046e",
+      "admitted": 12,
+      "requiredTargets": 11
+    },
+    {
+      "pack": "harbor-docks",
+      "revision": "r4",
+      "commit": "8af1b67220be4f26e9b68d821e2b574b63a23904",
+      "sha256": "d5bf4b9bb6829c04dbe1bb398893e5243cefc1f9acf018bf153a2012c8cf49b6",
+      "course": "harbor-docks-06",
+      "baseIdentity": "e7a3b459772fdaa9",
+      "admitted": 12,
+      "requiredTargets": 11
+    },
+    {
+      "pack": "harbor-docks",
+      "revision": "r4",
+      "commit": "8af1b67220be4f26e9b68d821e2b574b63a23904",
+      "sha256": "d5bf4b9bb6829c04dbe1bb398893e5243cefc1f9acf018bf153a2012c8cf49b6",
+      "course": "harbor-docks-07",
+      "baseIdentity": "8e7a31d750a28dbe",
+      "admitted": 12,
+      "requiredTargets": 11
+    },
+    {
+      "pack": "harbor-docks",
+      "revision": "r4",
+      "commit": "8af1b67220be4f26e9b68d821e2b574b63a23904",
+      "sha256": "d5bf4b9bb6829c04dbe1bb398893e5243cefc1f9acf018bf153a2012c8cf49b6",
+      "course": "harbor-docks-08",
+      "baseIdentity": "fad126c3ca9672cf",
+      "admitted": 12,
+      "requiredTargets": 11
+    },
+    {
+      "pack": "cc0-castle-court",
+      "revision": "r1",
+      "commit": "0c05c638bad38a3ae62c4c0a911919bc54f1eb11",
+      "sha256": "ee6d8ee8ea5d981f49cdeaa52282a33d36de3f98321883b0cb7cbcc630356ed0",
+      "course": "cc0-castle-court-route",
+      "baseIdentity": "d70e87b4c8cf06a6",
+      "admitted": 12,
+      "requiredTargets": 10
+    },
+    {
+      "pack": "cc0-city-plaza",
+      "revision": "r1",
+      "commit": "0c05c638bad38a3ae62c4c0a911919bc54f1eb11",
+      "sha256": "08dd572b3812ffeac3ba1e87ef1890afa7e3d3f127493c189197d1739f1e78ce",
+      "course": "cc0-city-plaza-route",
+      "baseIdentity": "40351d6469a0e895",
+      "admitted": 12,
+      "requiredTargets": 10
+    },
+    {
+      "pack": "cc0-construction-site",
+      "revision": "r1",
+      "commit": "0c05c638bad38a3ae62c4c0a911919bc54f1eb11",
+      "sha256": "8d6f217d626c570815722fc23d04cd5297093ab0ff6a1f6886897a5d96ffe062",
+      "course": "cc0-construction-site-route",
+      "baseIdentity": "895ef5f54941fa34",
+      "admitted": 12,
+      "requiredTargets": 10
+    },
+    {
+      "pack": "cc0-frontier-camp",
+      "revision": "r1",
+      "commit": "0c05c638bad38a3ae62c4c0a911919bc54f1eb11",
+      "sha256": "4c9b122ccfb6b28b46dd2b198b8d15477fde456d91a2f416498bf40948a5e92b",
+      "course": "cc0-frontier-camp-route",
+      "baseIdentity": "87779dc9a8db05c7",
+      "admitted": 12,
+      "requiredTargets": 10
+    },
+    {
+      "pack": "cc0-industrial-yard",
+      "revision": "r1",
+      "commit": "0c05c638bad38a3ae62c4c0a911919bc54f1eb11",
+      "sha256": "74fc5afb38af089a0bf58740640b070532d36cdd181011b9ef2fb8742d496273",
+      "course": "cc0-industrial-yard-route",
+      "baseIdentity": "0260d958af450ecf",
+      "admitted": 12,
+      "requiredTargets": 10
+    },
+    {
+      "pack": "cc0-orbital-workshop",
+      "revision": "r1",
+      "commit": "0c05c638bad38a3ae62c4c0a911919bc54f1eb11",
+      "sha256": "916d8da5a1b2b29ddc20ef7bf090fbc38038ea926d7bdd1a0e560ce513c5e71c",
+      "course": "cc0-orbital-workshop-route",
+      "baseIdentity": "3933c3b06aebe6aa",
+      "admitted": 12,
+      "requiredTargets": 10
+    },
+    {
+      "pack": "cc0-pine-clearing",
+      "revision": "r1",
+      "commit": "0c05c638bad38a3ae62c4c0a911919bc54f1eb11",
+      "sha256": "59c448a1226ad03a3881322ff7d9d766cc7ca35ef888267665fe66399cfe8b3f",
+      "course": "cc0-pine-clearing-route",
+      "baseIdentity": "3ce10a80c978cde6",
+      "admitted": 12,
+      "requiredTargets": 10
+    },
+    {
+      "pack": "cc0-platform-garden",
+      "revision": "r1",
+      "commit": "0c05c638bad38a3ae62c4c0a911919bc54f1eb11",
+      "sha256": "019d00195bcb03dd9f202e12cd948d369cdda271517bf4d493e68440b8e406b0",
+      "course": "cc0-platform-garden-route",
+      "baseIdentity": "54ea06b9f216f2e4",
+      "admitted": 12,
+      "requiredTargets": 10
+    },
+    {
+      "pack": "cc0-race-paddock",
+      "revision": "r1",
+      "commit": "0c05c638bad38a3ae62c4c0a911919bc54f1eb11",
+      "sha256": "33443ec2cb18a9d4c8874f564e3644fd0cd36c03680d1b37cfd01bab1f9a949e",
+      "course": "cc0-race-paddock-route",
+      "baseIdentity": "f6620c0a21aa2709",
+      "admitted": 12,
+      "requiredTargets": 10
+    },
+    {
+      "pack": "cc0-road-lab",
+      "revision": "r1",
+      "commit": "0c05c638bad38a3ae62c4c0a911919bc54f1eb11",
+      "sha256": "97fe29db831659500a8850ed0e0a0252c37b6a6c893b37536e1967404683c355",
+      "course": "cc0-road-lab-route",
+      "baseIdentity": "a618e040bad4d634",
+      "admitted": 12,
+      "requiredTargets": 10
+    },
+    {
+      "pack": "cc0-rock-grotto",
+      "revision": "r1",
+      "commit": "0c05c638bad38a3ae62c4c0a911919bc54f1eb11",
+      "sha256": "8f4809f5f07d625046ec58f810fca9d52d14ad177b5564f16f0ee73da187a2f5",
+      "course": "cc0-rock-grotto-route",
+      "baseIdentity": "574d5117e3bd7f70",
+      "admitted": 12,
+      "requiredTargets": 10
+    },
+    {
+      "pack": "cc0-ruined-halls",
+      "revision": "r1",
+      "commit": "0c05c638bad38a3ae62c4c0a911919bc54f1eb11",
+      "sha256": "01eb7bd2874bb07ff7617f792fa765ca1d8d3e6cad72445013a4c72e8c21324a",
+      "course": "cc0-ruined-halls-route",
+      "baseIdentity": "6cfe4331bf60475c",
+      "admitted": 12,
+      "requiredTargets": 10
+    },
+    {
+      "pack": "cc0-shipyard",
+      "revision": "r1",
+      "commit": "0c05c638bad38a3ae62c4c0a911919bc54f1eb11",
+      "sha256": "5b3f2251ff0fcbdfbd645a7f6394b2f13d23f544adc57fe2b8a8ccdcdce14e98",
+      "course": "cc0-shipyard-route",
+      "baseIdentity": "9b6958651840a319",
+      "admitted": 12,
+      "requiredTargets": 10
+    },
+    {
+      "pack": "cc0-skate-plaza",
+      "revision": "r1",
+      "commit": "0c05c638bad38a3ae62c4c0a911919bc54f1eb11",
+      "sha256": "388c68e57c43b4d3d450c57890b112408c0316e4e5e2d0e9eae00d9cb151e03b",
+      "course": "cc0-skate-plaza-route",
+      "baseIdentity": "2b0b863b0e541f02",
+      "admitted": 12,
+      "requiredTargets": 10
+    },
+    {
+      "pack": "cc0-village-green",
+      "revision": "r1",
+      "commit": "0c05c638bad38a3ae62c4c0a911919bc54f1eb11",
+      "sha256": "3ca6c466023b6b764c47c70c15013b64d0af7ca4577104ff777707527d4192af",
+      "course": "cc0-village-green-route",
+      "baseIdentity": "fbc8d6427ae1a672",
+      "admitted": 12,
+      "requiredTargets": 10
+    },
+    {
+      "pack": "cc0-woodland-camp",
+      "revision": "r1",
+      "commit": "0c05c638bad38a3ae62c4c0a911919bc54f1eb11",
+      "sha256": "a7b0f6d52411131f6e03d25f5db1ef25209be2875422e0aad8fd0f155735b93c",
+      "course": "cc0-woodland-camp-route",
+      "baseIdentity": "5a8a21b82870f374",
+      "admitted": 12,
+      "requiredTargets": 10
+    },
+    {
+      "pack": "cc0-coaster-park",
+      "revision": "r1",
+      "commit": "f1b6373996a53c84bca77b485e73630ffe6b00c7",
+      "sha256": "a0483ee22fabdc190fc65858c458ed4730297a0179f8ede793383775a7568025",
+      "course": "cc0-coaster-park-route",
+      "baseIdentity": "971aa269ec1fd460",
+      "admitted": 12,
+      "requiredTargets": 10
+    }
+  ],
+  "failures": [],
+  "summary": {
+    "builtins": 204,
+    "downloadablePacks": 20,
+    "downloadableCourses": 41,
+    "minRequiredTargets": 10,
+    "minAdmitted": 12,
+    "failures": 0
+  }
+}

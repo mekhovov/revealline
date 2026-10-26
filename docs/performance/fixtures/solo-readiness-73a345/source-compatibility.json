@@ -1,0 +1,197 @@
+{
+  "format": "SoloRuntime73PreparationCompatibilityV1",
+  "source": "73a345cec696d7789198cf295ca5c37b17ca0e71",
+  "tree": "ea30e68636b3342f8e60664a79d425e11e27ff1e",
+  "previous": "de3324607c82787c1a1fec9c13d4f8b5cb74cee4",
+  "records": [
+    {
+      "path": "game/core",
+      "sources": [
+        {
+          "revision": "de3324607c82787c1a1fec9c13d4f8b5cb74cee4",
+          "object": "e8d1c3f8281c1a07664e8a1e10e65f29cfa4cc4d",
+          "kind": "tree"
+        },
+        {
+          "revision": "73a345cec696d7789198cf295ca5c37b17ca0e71",
+          "object": "e8d1c3f8281c1a07664e8a1e10e65f29cfa4cc4d",
+          "kind": "tree"
+        }
+      ],
+      "equal": true
+    },
+    {
+      "path": "game/content",
+      "sources": [
+        {
+          "revision": "de3324607c82787c1a1fec9c13d4f8b5cb74cee4",
+          "object": "c28ca8de5c51fd99a1e52d5df095a1aaa7e37764",
+          "kind": "tree"
+        },
+        {
+          "revision": "73a345cec696d7789198cf295ca5c37b17ca0e71",
+          "object": "c28ca8de5c51fd99a1e52d5df095a1aaa7e37764",
+          "kind": "tree"
+        }
+      ],
+      "equal": true
+    },
+    {
+      "path": "game/content-design",
+      "sources": [
+        {
+          "revision": "de3324607c82787c1a1fec9c13d4f8b5cb74cee4",
+          "object": "1bf3586f9ef78ddf077d8d8b8ac02f61a05c312b",
+          "kind": "tree"
+        },
+        {
+          "revision": "73a345cec696d7789198cf295ca5c37b17ca0e71",
+          "object": "b648eddd27edb61fec4a2f9e6c14671df23d2e2c",
+          "kind": "tree"
+        }
+      ],
+      "equal": false
+    },
+    {
+      "path": "game/gameplay-tuning.mjs",
+      "sources": [
+        {
+          "revision": "de3324607c82787c1a1fec9c13d4f8b5cb74cee4",
+          "object": "136c173b33bc36cc7a055851dcd640b4702b50bc",
+          "kind": "blob",
+          "bytes": 23776,
+          "sha256": "6b4123c0668676da01af91393feee274c42faa883e30401f423cb19093d27140"
+        },
+        {
+          "revision": "73a345cec696d7789198cf295ca5c37b17ca0e71",
+          "object": "136c173b33bc36cc7a055851dcd640b4702b50bc",
+          "kind": "blob",
+          "bytes": 23776,
+          "sha256": "6b4123c0668676da01af91393feee274c42faa883e30401f423cb19093d27140"
+        }
+      ],
+      "equal": true
+    },
+    {
+      "path": "game/ui/input.mjs",
+      "sources": [
+        {
+          "revision": "de3324607c82787c1a1fec9c13d4f8b5cb74cee4",
+          "object": "0fa14480cab5c615165f8cc432bf0d34a2189733",
+          "kind": "blob",
+          "bytes": 18973,
+          "sha256": "cc86bb1180e5138fe43308d55ce4d08fda38a25b6fe5e0f10f7b337f60877c49"
+        },
+        {
+          "revision": "73a345cec696d7789198cf295ca5c37b17ca0e71",
+          "object": "0fa14480cab5c615165f8cc432bf0d34a2189733",
+          "kind": "blob",
+          "bytes": 18973,
+          "sha256": "cc86bb1180e5138fe43308d55ce4d08fda38a25b6fe5e0f10f7b337f60877c49"
+        }
+      ],
+      "equal": true
+    },
+    {
+      "path": "game/ui/field-kit-fonts.css",
+      "sources": [
+        {
+          "revision": "de3324607c82787c1a1fec9c13d4f8b5cb74cee4",
+          "object": "4bb558269f18ad1028615255d093a1f9f6d20f40",
+          "kind": "blob",
+          "bytes": 1045,
+          "sha256": "620b327398af390290dd5ce2ed1a1d6b9d26bf22bd0f2b1129daf15c0e49692c"
+        },
+        {
+          "revision": "73a345cec696d7789198cf295ca5c37b17ca0e71",
+          "object": "4bb558269f18ad1028615255d093a1f9f6d20f40",
+          "kind": "blob",
+          "bytes": 1045,
+          "sha256": "620b327398af390290dd5ce2ed1a1d6b9d26bf22bd0f2b1129daf15c0e49692c"
+        }
+      ],
+      "equal": true
+    },
+    {
+      "path": "game/presentation/theme-host.mjs",
+      "sources": [
+        {
+          "revision": "de3324607c82787c1a1fec9c13d4f8b5cb74cee4",
+          "object": "01ab01c6726e561bca8491f5e2241c5c1c1b18e0",
+          "kind": "blob",
+          "bytes": 18674,
+          "sha256": "033b7c05cf1602326ca0d7783f2b45d2c9d04e52d4b38211c34d92d53cf6e76a"
+        },
+        {
+          "revision": "73a345cec696d7789198cf295ca5c37b17ca0e71",
+          "object": "01ab01c6726e561bca8491f5e2241c5c1c1b18e0",
+          "kind": "blob",
+          "bytes": 18674,
+          "sha256": "033b7c05cf1602326ca0d7783f2b45d2c9d04e52d4b38211c34d92d53cf6e76a"
+        }
+      ],
+      "equal": true
+    },
+    {
+      "path": "game/ui/fonts/field-kit/handjet-display-600.woff2",
+      "sources": [
+        {
+          "revision": "de3324607c82787c1a1fec9c13d4f8b5cb74cee4",
+          "object": "c303a79bb404f08950ff90dde89583c2f92e09a0",
+          "kind": "blob",
+          "bytes": 38120,
+          "sha256": "4797c11d5e17c3f5f9b5b3fa96efb4fd2aabb877fb4d625dfc8eb7465464e145"
+        },
+        {
+          "revision": "73a345cec696d7789198cf295ca5c37b17ca0e71",
+          "object": "c303a79bb404f08950ff90dde89583c2f92e09a0",
+          "kind": "blob",
+          "bytes": 38120,
+          "sha256": "4797c11d5e17c3f5f9b5b3fa96efb4fd2aabb877fb4d625dfc8eb7465464e145"
+        }
+      ],
+      "equal": true
+    },
+    {
+      "path": "game/content-design/assets/horizon-r1/first-return.png",
+      "sources": [
+        {
+          "revision": "de3324607c82787c1a1fec9c13d4f8b5cb74cee4",
+          "object": "94d94509e0bd3fca988e15fc000bc53af091a543",
+          "kind": "blob",
+          "bytes": 2366738,
+          "sha256": "3acf496d9a6bc9db2f83ac01d8255223b3913e7ae0a157e48559ac981c80b95d"
+        },
+        {
+          "revision": "73a345cec696d7789198cf295ca5c37b17ca0e71",
+          "object": "94d94509e0bd3fca988e15fc000bc53af091a543",
+          "kind": "blob",
+          "bytes": 2366738,
+          "sha256": "3acf496d9a6bc9db2f83ac01d8255223b3913e7ae0a157e48559ac981c80b95d"
+        }
+      ],
+      "equal": true
+    },
+    {
+      "path": "game/presentation/compiled/assets/d5227e40b6ef6c1d722bbfb09c828789facf18b0021d6e600a456fdd37ba7e11.png",
+      "sources": [
+        {
+          "revision": "de3324607c82787c1a1fec9c13d4f8b5cb74cee4",
+          "object": "75c54bce4d13a4a118195b8140e7258ce97da145",
+          "kind": "blob",
+          "bytes": 162,
+          "sha256": "d5227e40b6ef6c1d722bbfb09c828789facf18b0021d6e600a456fdd37ba7e11"
+        },
+        {
+          "revision": "73a345cec696d7789198cf295ca5c37b17ca0e71",
+          "object": "75c54bce4d13a4a118195b8140e7258ce97da145",
+          "kind": "blob",
+          "bytes": 162,
+          "sha256": "d5227e40b6ef6c1d722bbfb09c828789facf18b0021d6e600a456fdd37ba7e11"
+        }
+      ],
+      "equal": true
+    }
+  ],
+  "scope": "Exact source identities only. Core/input/tuning/font and held media assets are unchanged. Changed content-design execution wrapper and app lifecycle still require actual native execution; no equivalence or native pass inferred."
+}

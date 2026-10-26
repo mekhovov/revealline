@@ -14,6 +14,8 @@ export function createDemoReward({
   let controller = null,
     presentation = null,
     stage = null,
+    poster = null,
+    pendingPreparations = 0,
     attempted = false,
     state = 'idle',
     previousPreferences = null;
@@ -24,6 +26,7 @@ export function createDemoReward({
     presentation = null;
     stage?.remove();
     stage = null;
+    poster = null;
     attempted = false;
     previousPreferences = null;
     state = 'idle';
@@ -36,6 +39,7 @@ export function createDemoReward({
     presentation?.pause();
   }
   async function open(pin, preferences) {
+    pendingPreparations++;
     attempted = true;
     const own = new AbortController();
     controller = own;
@@ -53,7 +57,7 @@ export function createDemoReward({
       stage = doc.createElement('div');
       stage.className = 'demo-reward-story';
       stage.setAttribute('data-demo-ui', '');
-      const poster = doc.createElement('canvas');
+      poster = doc.createElement('canvas');
       poster.width = canvas.width;
       poster.height = canvas.height;
       poster.getContext('2d').drawImage(canvas, 0, 0);
@@ -78,6 +82,7 @@ export function createDemoReward({
     } catch {
       if (!own.signal.aborted) state = 'error';
     } finally {
+      pendingPreparations--;
       clearTimeout(deadline);
     }
   }
@@ -111,5 +116,18 @@ export function createDemoReward({
       return ['preparing', 'starting', 'playing'].includes(state);
     },
     snapshot: () => ({ state, attempted }),
+    resourceSnapshot() {
+      const pixels = (poster?.width || 0) * (poster?.height || 0);
+      return {
+        state,
+        pendingPreparations,
+        poster: { canvases: Number(pixels > 0), pixels, rgbaBytesEstimate: pixels * 4 },
+        presentation: presentation?.resourceSnapshot?.() ?? null,
+        presentationUnavailable:
+          !!presentation && typeof presentation.resourceSnapshot !== 'function',
+        accounting:
+          'Pending acquisitions include canceled work until actual settlement; their native allocation is unknown.',
+      };
+    },
   };
 }
