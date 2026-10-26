@@ -989,3 +989,58 @@ test('Setup preparation nodes restore exact authored parents through destroy and
     }
   }
 });
+
+test('Versus settings notifications follow committed programmatic, compact Back and status-driven screen owners', async () => {
+  const { Document } = await import('./helpers/couch-dom.mjs');
+  const { createDuel } = await import('../multiplayer.mjs');
+  const doc = new Document();
+  mountCouch(doc, await readFile(new URL('../couch/index.html', import.meta.url), 'utf8'));
+  doc.getElementById('couch-app').hidden = false;
+  doc.getElementById('couch-app').inert = false;
+  doc.defaultView.innerWidth = 390;
+  const observations = [];
+  let transitions = 0;
+  const shell = createCouchShell({
+    document: doc,
+    onTransition() {
+      transitions++;
+    },
+    onSettingsPresentationChange() {
+      const root = doc.getElementById('race-options-panel');
+      observations.push({
+        hidden: root.hidden,
+        inert: root.inert,
+        view: root.getAttribute('data-settings-view'),
+        data: doc.getElementById('race-settings-panel-data').hidden,
+      });
+    },
+  });
+  const match = createDuel(retryFixture('enemy-player').level);
+  const update = () => shell.update({ match, summary: 'Settings owner', won: [0, 0] });
+  update();
+  shell.openSettings('data');
+  assert.deepEqual(observations.at(-1), {
+    hidden: false,
+    inert: false,
+    view: 'panel',
+    data: false,
+  });
+  doc.getElementById('race-options-back').click();
+  assert.equal(observations.at(-1).view, 'categories');
+  assert.equal(observations.at(-1).hidden, false);
+  shell.openSettings('data');
+  const previous = transitions;
+  match.status = 'running';
+  update();
+  assert.equal(transitions, previous, 'Status updates do not pass through onTransition.');
+  assert.equal(observations.at(-1).hidden, true);
+  assert.equal(observations.at(-1).inert, true);
+  match.status = 'paused';
+  update();
+  shell.openSettings('data');
+  const count = observations.length;
+  shell.destroy();
+  assert.ok(observations.length > count);
+  shell.destroy();
+  assert.equal(observations.length, count + 2, 'Panel and shell retire once each.');
+});

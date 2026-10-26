@@ -128,8 +128,9 @@ import { normalizedLevel } from '../core/level.mjs';
 import { boundedJSON, dataIdentity, exactKeys } from '../data-json.mjs';
 import { downloadJSON } from '../content.mjs';
 import { attachTerminalRecordingExport } from '../ui/terminal-recording-export.mjs';
+import { attachLocalSupportSummary } from '../ui/local-support-summary.mjs';
 import { arcadeActionCapabilities } from '../core/arcade-actions.mjs';
-import { onNativeInactive } from '../platform.mjs';
+import { onNativeInactive, nativePlatform } from '../platform.mjs';
 import {
   createDuel,
   stepDuel,
@@ -1007,6 +1008,8 @@ try {
     pendingReadyStart = null,
     framePads = [],
     frameReadError = null,
+    supportController = null,
+    supportSummary = null,
     slots = [null, null],
     assignmentsChanged = false,
     pendingPadLoss = false,
@@ -1329,6 +1332,7 @@ try {
   $('race-tap').checked = incomingContinuation?.tap ?? matchMedia('(pointer: coarse)').matches;
 
   function clear({ resetDirection = false } = {}) {
+    supportController = null;
     if (resetDirection) input.clear();
     else input.clearPhysical();
     accumulator = 0;
@@ -2843,6 +2847,7 @@ try {
   }
   shell = createCouchShell({
     getKeyboardBindings: () => keyboardPreferences.snapshot().bindings,
+    onSettingsPresentationChange: () => supportSummary?.invalidate(),
     controllerNeedsTouch: (seat) => slots[seat] !== null && !controllerSession.completeFlight(seat),
     getSceneContext: () => ({
       themeId: theme?.id ?? 'fpv',
@@ -4191,6 +4196,39 @@ try {
     controls: globalTools.controls,
     comfort: { display: displayPreferences },
   });
+  supportSummary = attachLocalSupportSummary({
+    document,
+    window,
+    root: $('race-support-summary-root'),
+    settings: $('race-options-panel'),
+    getSettingsOpen: () =>
+      !disposed &&
+      shell.scope() === 'options' &&
+      !$('race-options-panel').hidden &&
+      !$('race-options-panel').inert &&
+      !$('race-settings-panel-data').hidden &&
+      !$('race-settings-panel-data').inert &&
+      (!(
+        $('race-options-panel').classList.contains('native-settings') &&
+        (window.innerWidth ?? document.documentElement.clientWidth ?? Infinity) <= 700
+      ) ||
+        $('race-options-panel').getAttribute('data-settings-view') === 'panel'),
+    getHost: () => {
+      const offline = offlineAvailability();
+      return {
+        version: buildVersion,
+        kind: 'capture-versus',
+        state: match?.status === 'ready' ? 'idle' : match?.status,
+        locale: getLocale(),
+        // Successful past writes are not a current writer lease.
+        writable: null,
+        writerReason: null,
+        platform: nativePlatform() ?? 'browser',
+        offline: offline.available ? 'configured' : offline.messageCode,
+        controller: supportController,
+      };
+    },
+  });
 
   function couchScope() {
     if (globalSettingsToolsRoot(document)) return `couch:${globalSettingsToolsRoot(document).id}`;
@@ -4210,7 +4248,8 @@ try {
     if (frameReadError) throw frameReadError;
     return controllerSession.frame().menuPads;
   }
-  function capturePads() {
+  function capturePads(now) {
+    let physicalControllerConnected = false;
     framePads = [];
     frameReadError = null;
     try {
@@ -4219,6 +4258,7 @@ try {
       const pads = navigator.getGamepads();
       const count = Number.isInteger(pads?.length) ? Math.max(0, Math.min(32, pads.length)) : 0;
       framePads = Array.from({ length: count }, (_, i) => pads[i] || null);
+      physicalControllerConnected = framePads.some((pad) => pad?.connected === true);
     } catch (error) {
       frameReadError = error || new Error(t('interface:controllerReadFailed'));
     }
@@ -4226,6 +4266,17 @@ try {
       active: match?.status === 'running',
       error: frameReadError,
     });
+    // Cache only the physical frame's scalar facts before virtual menu mapping.
+    // A virtual menu owner cannot establish both players' physical readiness.
+    supportController = {
+      sampledAt: now,
+      status: frameReadError
+        ? 'unavailable'
+        : physicalControllerConnected
+          ? 'connected'
+          : 'disconnected',
+      assigned: sample.slots.some((slot) => slot !== null),
+    };
     framePads = sample.pads;
     controllerSetup.refresh();
   }
@@ -4739,6 +4790,7 @@ try {
     updateMenu();
   }
   function suspend() {
+    supportSummary?.invalidate();
     contextualReactions?.suspend();
     if (libraryContinuation) cancelContent();
     ++libraryOpenEpoch;
@@ -4776,6 +4828,7 @@ try {
   const pagehide = (event) => {
     suspend();
     if (event.persisted) return;
+    supportSummary?.destroy();
     continuousPlay.dispose();
     flowControls.dispose();
     flowCelebration.dispose();
@@ -4849,7 +4902,7 @@ try {
     const wasRunning = match.status === 'running';
     if (available) {
       assignmentsChanged = false;
-      capturePads();
+      capturePads(now);
       input.poll();
       if (!wasRunning) sampleMenu(now);
       if (wasRunning || match.status === 'running')
