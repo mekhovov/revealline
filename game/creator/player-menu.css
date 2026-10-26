@@ -1,5 +1,6 @@
 @import url('../ui/field-kit-fonts.css');
 @import url('../ui/menu-scenes.css');
+@import url('../ui/comfort-presets.css');
 /* Legacy layout and paint share one cascade layer. Theme recipes own opt-in appearance. */
 @layer legacy {
   .creator-player {

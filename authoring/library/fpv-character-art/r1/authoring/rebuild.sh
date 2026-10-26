@@ -1,0 +1,20 @@
+#!/bin/sh
+set -eu
+: "${BLENDER:?Set BLENDER to the pinned Blender 4.5.14 executable}"
+: "${FPV_ASSET_DIR:?Set FPV_ASSET_DIR to a task-owned output directory}"
+: "${FPV_MAKEHUMAN_ASSETS:?Set FPV_MAKEHUMAN_ASSETS to the extracted CC0 asset root}"
+: "${FPV_REPO:?Set FPV_REPO to the application checkout}"
+: "${BLENDER_USER_RESOURCES:?Set isolated Blender user resources}"
+: "${BLENDER_USER_CONFIG:?Set isolated Blender user config}"
+: "${BLENDER_USER_SCRIPTS:?Set isolated Blender user scripts}"
+: "${BLENDER_USER_EXTENSIONS:?Set isolated Blender extensions containing MPFB 2.0.18}"
+FPV_AUTHORING_DIR=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)
+mkdir -p "$FPV_ASSET_DIR"
+"$BLENDER" --background --factory-startup --disable-autoexec --python "$FPV_AUTHORING_DIR/create.py"
+"$BLENDER" --background --factory-startup --disable-autoexec "$FPV_ASSET_DIR/worker-source.blend" --python "$FPV_AUTHORING_DIR/bake.py"
+"$BLENDER" --background --factory-startup --disable-autoexec "$FPV_ASSET_DIR/worker-atlas.blend" --python "$FPV_AUTHORING_DIR/animate.py"
+"$BLENDER" --background --factory-startup --disable-autoexec "$FPV_ASSET_DIR/worker-animated.blend" --python "$FPV_AUTHORING_DIR/assemble.py"
+"$BLENDER" --background --factory-startup --disable-autoexec "$FPV_ASSET_DIR/worker-candidate.blend" --python "$FPV_AUTHORING_DIR/wardrobe.py"
+node "$FPV_AUTHORING_DIR/finalize.mjs"
+node "$FPV_AUTHORING_DIR/settle-equipment.mjs"
+"$BLENDER" --background --factory-startup --disable-autoexec "$FPV_ASSET_DIR/worker-wardrobe.blend" --python "$FPV_AUTHORING_DIR/review-wardrobe.py"

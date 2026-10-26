@@ -1,7 +1,10 @@
-import test from 'node:test';
+import test, { after } from 'node:test';
+import { register } from 'node:module';
+import { MessageChannel } from 'node:worker_threads';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { soloPage, memoryStorage, settle } from './helpers/solo-dom.mjs';
+import { waitFor as waitForStage } from './helpers/wait-for.mjs';
 import { audioHarness } from './helpers/soundtrack-audio.mjs';
 import { fixture, memoryIndexedDB, structuralProbe } from './helpers/soundtrack-fixtures.mjs';
 import { createSoundtrackStore } from '../soundtrack-store.mjs';
@@ -14,6 +17,145 @@ import { publicCatalogueResponse } from './helpers/soundtrack-public-catalogue.m
 import { AUDIO_PREFERENCES_KEY } from '../audio-preferences.mjs';
 import { emptyLibrary, updatePreferences, saveLibrary, loadLibrary } from '../library.mjs';
 import { retryFixture } from './fixtures/retry-scenarios.mjs';
+import * as authoringLoader from './helpers/soundtrack-authoring-loader.mjs';
+
+const { port1, port2 } = new MessageChannel();
+const importGates = new Map();
+let importGateSequence = 0;
+port1.on('message', (message) => {
+  const gate = importGates.get(message.id);
+  if (!gate) return;
+  if (message.type === 'entered') gate.entered++;
+  if (message.type === 'released') gate.released += message.count;
+  if (message.type === 'ack') gate.acknowledged.add(message.action);
+});
+register(new URL('./helpers/soundtrack-authoring-loader.mjs', import.meta.url), {
+  data: { channel: port2 },
+  transferList: [port2],
+});
+after(() => {
+  port1.postMessage({ action: 'dispose' });
+  port1.close();
+});
+async function holdAuthoringImport(t) {
+  const id = ++importGateSequence;
+  const state = { entered: 0, released: 0, acknowledged: new Set() };
+  const actions = [];
+  let page = null;
+  importGates.set(id, state);
+  function diagnostic(stage) {
+    const text = (value) => String(value ?? '').slice(0, 160);
+    const element = (name) => page?.$(name);
+    t.diagnostic(
+      JSON.stringify({
+        stage,
+        gate: {
+          id,
+          entered: state.entered,
+          released: state.released,
+          acknowledged: [...state.acknowledged],
+        },
+        actions: actions.map((action) => ({
+          label: action.label,
+          settled: action.settled,
+          failed: action.failed,
+          error: action.failed ? text(action.error?.message ?? action.error) : null,
+        })),
+        page: page
+          ? {
+              hidden: page.doc.hidden,
+              active: page.doc.activeElement?.id ?? null,
+              flight: page.doc.body.dataset.flightState ?? null,
+              studioOpen: element('soundtrack-dialog')?.open ?? null,
+              studioConnected: element('soundtrack-dialog')?.isConnected ?? null,
+              closeDisabled: element('soundtrack-close')?.disabled ?? null,
+              tracksConnected: element('soundtrack-tracks')?.isConnected ?? null,
+              status: text(element('soundtrack-status')?.textContent),
+              authoring: text(element('soundtrack-authoring-status')?.textContent),
+              errors: page.errors.slice(0, 4).map((error) => text(error?.message ?? error)),
+            }
+          : null,
+      }),
+    );
+  }
+  async function waiting(stage, predicate, { pump = false } = {}) {
+    try {
+      if (pump) await settle(predicate, stage, { timeoutMs: 5000 });
+      else await waitForStage(predicate, { message: stage, timeoutMs: 5000 });
+    } catch (error) {
+      diagnostic(stage);
+      throw error;
+    }
+  }
+  function observe(promise, label) {
+    const action = { label, settled: false, failed: false, error: null, value: undefined };
+    actions.push(action);
+    void Promise.resolve(promise).then(
+      (value) => {
+        action.value = value;
+        action.settled = true;
+      },
+      (error) => {
+        action.error = error;
+        action.failed = true;
+        action.settled = true;
+      },
+    );
+    return action;
+  }
+  async function join(action, stage = action.label) {
+    await waiting(stage, () => action.settled);
+    if (action.failed) {
+      diagnostic(stage);
+      throw action.error;
+    }
+    return action.value;
+  }
+  const send = async (action, fail = false) => {
+    state.acknowledged.delete(action);
+    port1.postMessage({ action, id, fail });
+    await waiting(
+      'authoring gate ' + action + ' acknowledgement',
+      () => state.acknowledged.has(action),
+      { pump: true },
+    );
+  };
+  let released = false;
+  const release = async (fail = false) => {
+    if (released) return;
+    released = true;
+    await send('release', fail);
+  };
+  t.after(async () => {
+    const failures = [];
+    try {
+      await release();
+    } catch (error) {
+      failures.push(error);
+    }
+    for (const action of actions) {
+      try {
+        await join(action, 'cleanup: ' + action.label);
+      } catch (error) {
+        failures.push(error);
+      }
+    }
+    importGates.delete(id);
+    if (failures.length === 1) throw failures[0];
+    if (failures.length > 1) throw new AggregateError(failures, 'Authoring action cleanup failed.');
+  });
+  await send('hold');
+  return {
+    state,
+    release,
+    observe,
+    join,
+    waiting,
+    attach: (value) => {
+      page = value;
+    },
+  };
+}
 
 const classes = JSON.parse(readFileSync(new URL('../content/classes.json', import.meta.url)));
 const base = retryFixture('self-contact').level;
@@ -100,6 +242,7 @@ async function setup(
     fetchResponse,
     publicStyles,
     creatorSource,
+    browserSetup,
   } = {},
 ) {
   const original = await fixture(),
@@ -142,11 +285,307 @@ async function setup(
     audio,
     soundtrackIndexedDB: db.indexedDB,
     fetchResponse,
+    browserSetup,
   });
   if (filePlayback)
     await settle(() => !page.$('soundtrack-open').disabled, 'Real soundtrack host initialized');
   return { page, audio, db, original };
 }
+
+// These controls exercise the hook's actual MessagePort reference ownership in
+// this realm. The existing host cases below still exercise Node's loader worker
+// and the unchanged production action/import boundary.
+function authoringLoaderBoundary(t) {
+  const { port1: control, port2: loader } = new MessageChannel();
+  const messages = [];
+  const actions = [];
+  const beforeCleanup = [];
+  control.on('message', (message) => messages.push(message));
+  authoringLoader.initialize({ channel: loader });
+  const panelURL = new URL('../ui/soundtrack-authoring-view.mjs', import.meta.url).href;
+  const parentURL = new URL('../ui/soundtrack-panel.mjs?loaderOwnership', import.meta.url).href;
+  const send = async (action, id, fail = false) => {
+    const after = messages.length;
+    control.postMessage({ action, id, fail });
+    await settle(
+      () =>
+        messages
+          .slice(after)
+          .some(
+            (message) => message.type === 'ack' && message.action === action && message.id === id,
+          ),
+      'The loader ownership control must acknowledge its command.',
+      { timeoutMs: 5000 },
+    );
+  };
+  const start = (
+    result = { url: panelURL },
+    parent = parentURL,
+    failure = null,
+    delegated = null,
+  ) => {
+    const action = { settled: false, value: null, error: null };
+    action.pending = authoringLoader.resolve(
+      './optional',
+      { parentURL: parent },
+      delegated ??
+        (async () => {
+          if (failure) throw failure;
+          return result;
+        }),
+    );
+    action.pending.then(
+      (value) => {
+        action.settled = true;
+        action.value = value;
+      },
+      (error) => {
+        action.settled = true;
+        action.error = error;
+      },
+    );
+    actions.push(action);
+    return action;
+  };
+  t.after(async () => {
+    try {
+      for (const finish of beforeCleanup) finish();
+      await send('dispose', 'cleanup');
+      await settle(
+        () => actions.every((action) => action.settled),
+        'Every direct loader control must settle during cleanup.',
+        { timeoutMs: 5000 },
+      );
+      await Promise.allSettled(actions.map((action) => action.pending));
+    } finally {
+      control.close();
+      loader.close();
+    }
+  });
+  return {
+    loader,
+    messages,
+    send,
+    start,
+    panelURL,
+    beforeCleanup: (finish) => beforeCleanup.push(finish),
+  };
+}
+
+for (const outcome of ['release', 'reject', 'dispose']) {
+  test(
+    `Soundtrack authoring loader owns concurrent held resolutions through ${outcome} and releases its port`,
+    { timeout: 20000 },
+    async (t) => {
+      const gate = authoringLoaderBoundary(t);
+      assert.equal(gate.loader.hasRef(), false, 'An idle hook must not keep its worker alive.');
+      await gate.send('hold', 1);
+      assert.equal(gate.loader.hasRef(), false, 'Arming a gate does not own a pending import.');
+      const firstResult = { url: gate.panelURL, format: 'module' };
+      const secondResult = { url: gate.panelURL, marker: 'second' };
+      const first = gate.start(firstResult);
+      const second = gate.start(secondResult);
+      await settle(
+        () => gate.messages.filter((message) => message.type === 'entered').length === 2,
+        'Both actual hook promises must enter the held boundary.',
+        { timeoutMs: 5000 },
+      );
+      assert.equal(gate.loader.hasRef(), true);
+      await new Promise((resolve) => setImmediate(resolve));
+      assert.equal(
+        gate.loader.hasRef(),
+        true,
+        'Held imports retain ownership across event-loop turns.',
+      );
+      assert.equal(first.settled, false);
+      assert.equal(second.settled, false);
+      await gate.send('release', 99);
+      assert.equal(
+        gate.loader.hasRef(),
+        true,
+        'An unrelated release cannot retire the current imports.',
+      );
+      assert.equal(first.settled, false);
+      assert.equal(second.settled, false);
+      await gate.send(outcome === 'dispose' ? 'dispose' : 'release', 1, outcome === 'reject');
+      await settle(
+        () => first.settled && second.settled,
+        'Released imports must unwind on both success and failure.',
+        { timeoutMs: 5000 },
+      );
+      assert.equal(
+        gate.loader.hasRef(),
+        false,
+        'The final settled resolver releases the worker reference.',
+      );
+      if (outcome === 'reject') {
+        assert.match(first.error?.message ?? '', /Modeled optional module transport failure/);
+        assert.match(second.error?.message ?? '', /Modeled optional module transport failure/);
+      } else {
+        assert.equal(first.error, null);
+        assert.equal(second.error, null);
+        assert.equal(first.value, firstResult);
+        assert.equal(second.value, secondResult);
+      }
+      await gate.send('hold', 2);
+      const retried = gate.start(firstResult);
+      await settle(
+        () => gate.messages.some((message) => message.type === 'entered' && message.id === 2),
+        'A later gate must acquire its own resolver.',
+        { timeoutMs: 5000 },
+      );
+      assert.equal(gate.loader.hasRef(), true);
+      await gate.send('release', 2);
+      await settle(() => retried.settled, 'The later resolver must settle.', { timeoutMs: 5000 });
+      assert.equal(retried.value, firstResult);
+      assert.equal(retried.error, null);
+      assert.equal(gate.loader.hasRef(), false);
+    },
+  );
+}
+
+test(
+  'Soundtrack authoring loader leaves unrelated resolution and default errors outside its held ownership',
+  { timeout: 20000 },
+  async (t) => {
+    const gate = authoringLoaderBoundary(t);
+    await gate.send('hold', 1);
+    const otherResult = { url: new URL('../ui/help.mjs', import.meta.url).href };
+    const otherModule = gate.start(otherResult);
+    const otherParent = gate.start({ url: gate.panelURL }, import.meta.url);
+    const error = new Error('Default resolution failed.');
+    const failedDefault = gate.start(undefined, undefined, error);
+    await settle(
+      () => otherModule.settled && otherParent.settled && failedDefault.settled,
+      'Unrelated/default-failed resolutions must not enter the optional gate.',
+      { timeoutMs: 5000 },
+    );
+    assert.equal(otherModule.value, otherResult);
+    assert.equal(otherParent.value.url, gate.panelURL);
+    assert.equal(failedDefault.error, error);
+    assert.equal(
+      gate.messages.some((message) => message.type === 'entered'),
+      false,
+    );
+    assert.equal(gate.loader.hasRef(), false);
+  },
+);
+
+test(
+  'Soundtrack authoring loader retains delegated ownership after another held resolution finishes',
+  { timeout: 20000 },
+  async (t) => {
+    const gate = authoringLoaderBoundary(t);
+    const result = { url: gate.panelURL };
+    let finishDelegation;
+    const delegated = new Promise((resolve) => {
+      finishDelegation = resolve;
+    });
+    gate.beforeCleanup(() => finishDelegation(result));
+    await gate.send('hold', 1);
+    const first = gate.start(result, undefined, null, () => delegated);
+    assert.equal(gate.loader.hasRef(), true, 'Acquire before awaiting delegated resolution.');
+    const second = gate.start(result);
+    await settle(
+      () => gate.messages.some((message) => message.type === 'entered'),
+      'The second resolver must reach the gate.',
+      { timeoutMs: 5000 },
+    );
+    await gate.send('release', 1);
+    await settle(() => second.settled, 'The second resolver must settle.', { timeoutMs: 5000 });
+    assert.equal(second.value, result);
+    assert.equal(first.settled, false);
+    assert.equal(
+      gate.loader.hasRef(),
+      true,
+      'Another delegated resolver still owns the reference.',
+    );
+    await new Promise((resolve) => setImmediate(resolve));
+    assert.equal(gate.loader.hasRef(), true);
+    finishDelegation(result);
+    await settle(() => first.settled, 'The delegated resolver must finish.', { timeoutMs: 5000 });
+    assert.equal(first.value, result);
+    assert.equal(gate.loader.hasRef(), false);
+
+    await gate.send('hold', 2);
+    let rejectDelegation;
+    const failed = new Promise((resolve, reject) => {
+      rejectDelegation = reject;
+    });
+    const failure = new Error('Delayed default resolution failure.');
+    gate.beforeCleanup(() => rejectDelegation(failure));
+    const rejected = gate.start(result, undefined, null, () => failed);
+    assert.equal(gate.loader.hasRef(), true);
+    await gate.send('dispose', 2);
+    assert.equal(gate.loader.hasRef(), true, 'Disposal cannot preempt a delegated promise.');
+    rejectDelegation(failure);
+    await settle(() => rejected.settled, 'The rejected delegation must unwind.', {
+      timeoutMs: 5000,
+    });
+    assert.equal(rejected.error, failure);
+    assert.equal(gate.loader.hasRef(), false);
+  },
+);
+
+for (const zeroVolume of [false, true]) {
+  test(`silent Solo Start defers native audio until ${zeroVolume ? 'volume rises' : 'unmute'} in its control gesture`, async (t) => {
+    let constructions = 0;
+    const { page, audio } = await setup(t, {
+      audioPreferences: { musicEnabled: zeroVolume, masterVolume: zeroVolume ? 0 : 0.8 },
+      browserSetup({ globals }) {
+        const create = globals.AudioContext;
+        globals.AudioContext = function () {
+          constructions++;
+          return create();
+        };
+      },
+    });
+    assert.equal(constructions, 0);
+    page.$('start-button').click();
+    await settle(() => page.doc.body.dataset.flightState === 'running', 'Silent flight starts');
+    assert.equal(constructions, 0, 'Muted gameplay never opens a native audio device.');
+    if (zeroVolume) page.change('master-volume', '0.5');
+    else page.$('sound-button').click();
+    assert.equal(
+      constructions,
+      1,
+      'Native activation occurs synchronously in the control gesture.',
+    );
+    await settle(() => audio.context.state === 'running', 'Unmuted audio resumes');
+    assert.equal(page.doc.body.dataset.flightState, 'running');
+    assert.deepEqual(page.errors, []);
+  });
+}
+
+test('deferred Solo activation preserves an explicit music Pause when master sound is restored', async (t) => {
+  let constructions = 0;
+  const { page, audio } = await setup(t, {
+    browserSetup({ globals }) {
+      const create = globals.AudioContext;
+      globals.AudioContext = function () {
+        constructions++;
+        return create();
+      };
+    },
+  });
+  page.$('start-button').click();
+  await settle(() => page.doc.body.dataset.flightState === 'running', 'Silent flight starts');
+  assert.equal(constructions, 0);
+  await openStudio(page);
+  await page.$('soundtrack-pause').onclick();
+  const plays = page.audioElements.map((media) => media.plays);
+  assert.equal(constructions, 0);
+  page.$('soundtrack-master-mute').click();
+  assert.equal(constructions, 1);
+  await settle(() => audio.context.state === 'running', 'Effects activate');
+  assert.deepEqual(
+    page.audioElements.map((media) => media.plays),
+    plays,
+  );
+  assert.equal(musicMedia(page).paused, true);
+  assert.equal(page.$('solo-quick-music-settings-toggle').textContent, 'Play music');
+  assert.deepEqual(page.errors, []);
+});
 
 const onlineRecordingHash = 'a'.repeat(64);
 function onlineCatalogueResponse(status = 200) {
@@ -197,7 +636,7 @@ function onlineCatalogueResponse(status = 200) {
   return response;
 }
 
-test('muted fresh Solo menu and Studio do not acquire admitted hosted recordings before Play', async (t) => {
+test('muted fresh Solo browses metadata only on Studio demand and acquires no recordings before Play', async (t) => {
   assert(
     SOUNDTRACK_CATALOGUE.tracks.some((track) => track.archiveId),
     'This edition has admitted online music.',
@@ -214,11 +653,15 @@ test('muted fresh Solo menu and Studio do not acquire admitted hosted recordings
     () => !page.$('soundtrack-summary').textContent.includes('Loading music library'),
     'Silent library preparation settles',
   );
-  await waitFor(
-    () => !!page.$(`soundtrack-online-play-${onlineRecordingHash}`),
-    'The real bounded catalogue reader admits the metadata before Studio opens',
+  assert.deepEqual(
+    requests.filter((url) => url === ONLINE_SOUNDTRACK_CATALOGUE_URL),
+    [],
+    'The hidden panel does not request public metadata',
   );
+  assert.equal(page.$(`soundtrack-online-play-${onlineRecordingHash}`), null);
+  assert(page.audioElements.every((media) => media.plays === 0));
   await openStudio(page);
+  await waitForPublicCatalogue(page, onlineRecordingHash);
   assert.deepEqual(
     requests.filter((url) => url === ONLINE_SOUNDTRACK_CATALOGUE_URL),
     [ONLINE_SOUNDTRACK_CATALOGUE_URL],
@@ -232,7 +675,7 @@ test('muted fresh Solo menu and Studio do not acquire admitted hosted recordings
   assert.deepEqual(page.errors, []);
 });
 
-test('failed silent catalogue metadata is reported and Studio retries it once without acquiring recordings', async (t) => {
+test('failed explicit Audio catalogue metadata is reported and Studio retries it once without acquiring recordings', async (t) => {
   const requests = [];
   let metadataRequests = 0;
   const { page } = await setup(t, {
@@ -244,16 +687,25 @@ test('failed silent catalogue metadata is reported and Studio retries it once wi
     },
   });
   await waitFor(
-    () => /unavailable/i.test(page.$('soundtrack-online-status').textContent),
-    'A rejected HTTP response stays visible before a fresh explicit Studio visit',
+    () => !page.$('soundtrack-summary').textContent.includes('Loading music library'),
+    'Silent library preparation settles',
+  );
+  assert.equal(metadataRequests, 0, 'The hidden panel does not browse the public catalogue');
+  assert(page.audioElements.every((media) => media.plays === 0));
+  page.$('settings-button').click();
+  page.$('settings-tab-audio').click();
+  assert.equal(page.$('settings-panel-audio').hidden, false);
+  await waitFor(
+    () =>
+      /unavailable/i.test(page.$('soundtrack-online-status').textContent) &&
+      !page.$('soundtrack-online-reload').disabled,
+    'The explicit Audio visit reports and settles its rejected metadata request',
   );
   assert.equal(metadataRequests, 1);
   assert.equal(page.$(`soundtrack-online-play-${onlineRecordingHash}`), null);
+  page.doc.querySelector('[data-close="settings-dialog"]').click();
   await openStudio(page);
-  await waitFor(
-    () => !!page.$(`soundtrack-online-play-${onlineRecordingHash}`),
-    'A normal Studio visit retries failed metadata and admits the successful response',
-  );
+  await waitForPublicCatalogue(page, onlineRecordingHash);
   assert.deepEqual(
     requests.filter((url) => url === ONLINE_SOUNDTRACK_CATALOGUE_URL),
     [ONLINE_SOUNDTRACK_CATALOGUE_URL, ONLINE_SOUNDTRACK_CATALOGUE_URL],
@@ -274,12 +726,20 @@ async function openStudio(page) {
   await waitFor(
     () =>
       page.$('soundtrack-dialog')?.open &&
+      page.$('soundtrack-tracks')?.isConnected &&
       /Saved library loaded|Music library ready|unsaved draft/.test(
         page.$('soundtrack-status')?.textContent,
       ),
-    'Actual studio opens and reads local library',
+    'Actual studio opens, reads the local library and mounts authoring controls',
   );
   assert.equal(page.$('settings-dialog').open, false);
+}
+async function waitForPublicCatalogue(page, hash = '1'.repeat(64)) {
+  await waitFor(
+    () =>
+      !!page.$(`soundtrack-online-play-${hash}`) && !page.$('soundtrack-online-reload').disabled,
+    'The requested catalogue is admitted and its panel reader has settled',
+  );
 }
 const musicMedia = (page) => page.audioElements[0];
 async function playStudio(page) {
@@ -498,6 +958,8 @@ test('actual Settings → Studio uses stored MP3 selection, Next/Pause/Play and 
   assert.equal(page.rendered.paused, true);
   assert.equal(page.rendered.run.tick, flightTick);
   await startFlight(page);
+  page.frame(0);
+  assert.equal(page.rendered.run.tick, flightTick, 'Resume anchors the clock without a step.');
   ticks(page, 2);
   assert.equal(page.rendered.paused, false);
   assert.equal(page.rendered.run.tick, flightTick + 2);
@@ -614,23 +1076,33 @@ test('actual hide/focus restores listening on the same stream while flight stays
   const media = musicMedia(page),
     url = media.src;
   media.currentTime = 0.015;
+  const lastVisiblePaint = page.rendered,
+    lastVisibleTick = page.rendered.run.tick;
   page.doc.hidden = true;
   page.doc.emit('visibilitychange');
   page.win.emit('blur');
   page.frame(0);
   const before = page.rendered.run.tick;
   assert.equal(media.paused, true);
-  assert.equal(page.rendered.paused, true);
+  assert.equal(page.doc.body.dataset.flightState, 'paused');
+  assert.ok(page.rendered === lastVisiblePaint, 'A hidden page retains its last visible paint.');
+  assert.equal(page.rendered.run.tick, lastVisibleTick);
   page.doc.hidden = false;
   page.doc.emit('visibilitychange');
   page.win.emit('focus');
   await waitFor(() => !media.paused, 'Prior audio desire resumes on visible focus');
+  page.frame(0);
+  assert.ok(page.rendered !== lastVisiblePaint, 'Foreground return repaints the paused flight.');
+  assert.equal(page.rendered.paused, true);
+  assert.equal(page.rendered.run.tick, before);
   ticks(page, 12);
   assert.equal(page.rendered.paused, true);
   assert.equal(page.rendered.run.tick, before);
   assert.equal(media.src, url);
   assert.equal(media.currentTime, 0.015);
   await startFlight(page);
+  page.frame(0);
+  assert.equal(page.rendered.run.tick, before, 'Resume anchors the clock without a step.');
   ticks(page, 2);
   assert.equal(page.rendered.run.tick, before + 2);
   assert.deepEqual(page.errors, []);
@@ -1061,7 +1533,8 @@ for (const [styles, action] of [
       },
     });
     await openStudio(page);
-    assert.equal(catalogueRequests, 1, 'only the pre-existing panel discovery runs before Play');
+    await waitForPublicCatalogue(page);
+    assert.equal(catalogueRequests, 1, 'only the explicit Studio discovery runs before Play');
     assert.equal(
       musicMedia(page).src || '',
       '',
@@ -1108,6 +1581,8 @@ test('closing Studio cancels a pending saved-style Play without a late stream', 
     },
   });
   await openStudio(page);
+  await waitForPublicCatalogue(page);
+  assert.equal(catalogueRequests, 1, 'Explicit Studio discovery finishes before this Play');
   const playing = page.$('soundtrack-play').onclick();
   await waitFor(() => catalogueRequests === 2, 'generic Play awaits catalogue');
   page.$('soundtrack-close').click();
@@ -1118,3 +1593,324 @@ test('closing Studio cancels a pending saved-style Play without a late stream', 
   assert.equal(musicMedia(page).src || '', '');
   assert.deepEqual(page.errors, []);
 });
+
+for (const closeWhilePending of [false, true]) {
+  test(`generic saved-style Play ${closeWhilePending ? 'is cancelled on close' : 'wins'} while Studio discovery is still pending`, async (t) => {
+    const requests = [];
+    t.after(() => {
+      for (const request of requests) request.release(publicCatalogueResponse());
+    });
+    const { page, audio, db } = await setup(t, {
+      publicStyles: ['fpv'],
+      fetchResponse: async (url, options) => {
+        if (String(url) !== ONLINE_SOUNDTRACK_CATALOGUE_URL) return;
+        return new Promise((release) => requests.push({ release, signal: options.signal }));
+      },
+    });
+    assert.equal(requests.length, 0, 'The hidden panel does not browse the catalogue');
+    await openStudio(page);
+    await waitFor(() => requests.length === 1, 'Explicit Studio discovery reaches the real fetch');
+    assert.equal(requests[0].signal.aborted, false);
+    assert.equal(page.$(`soundtrack-online-play-${'1'.repeat(64)}`), null);
+    assert.equal(musicMedia(page).src || '', '');
+    assert.equal(musicMedia(page).plays, 0);
+
+    assert.equal(audio.context.state, 'suspended', 'Discovery has not activated audio');
+    const playing = page.$('soundtrack-play').onclick();
+    assert.equal(audio.context.state, 'running', 'Play wakes audio in the activation turn');
+    await waitFor(() => requests.length === 2, 'Generic Play owns its fresh metadata request');
+    assert.equal(requests[0].signal.aborted, true, 'Play supersedes pending Studio discovery');
+    assert.equal(requests[1].signal.aborted, false);
+    if (closeWhilePending) {
+      page.$('soundtrack-close').click();
+      assert.equal(page.$('soundtrack-dialog').open, false);
+      assert.equal(
+        requests[1].signal.aborted,
+        true,
+        'Closing Studio cancels the pending Play owner',
+      );
+    }
+
+    for (const request of requests) request.release(publicCatalogueResponse());
+    await playing;
+    assert.equal(requests.length, 2);
+    if (closeWhilePending) {
+      assert(page.audioElements.every((media) => media.plays === 0));
+      assert.equal(musicMedia(page).src || '', '');
+    } else {
+      await waitFor(
+        () => musicMedia(page).src?.includes('2'.repeat(64)),
+        'The accepted Play uses the saved FPV style after held discovery settles',
+      );
+      assert.equal(musicMedia(page).paused, false);
+    }
+    const manager = createManagedMediaStore({ indexedDB: db.indexedDB, soundtrackCatalogue: true });
+    const saved = await manager.readDomain('audio');
+    manager.close();
+    assert.equal(saved.generation, 1);
+    assert.deepEqual(saved.publicStyles, ['fpv']);
+    assert.deepEqual(page.errors, []);
+  });
+}
+
+test(
+  'cold Solo Start and Audio settings do not load or construct optional soundtrack authoring',
+  { timeout: 20_000 },
+  async (t) => {
+    const gate = await holdAuthoringImport(t);
+    const { page } = await setup(t, {
+      fetchResponse: async (url) =>
+        String(url) === ONLINE_SOUNDTRACK_CATALOGUE_URL ? publicCatalogueResponse() : undefined,
+    });
+    gate.attach(page);
+    assert.equal(gate.state.entered, 0);
+    assert.equal(page.$('soundtrack-tracks'), null);
+    assert.equal(page.$('soundtrack-audition'), null);
+    await gate.join(gate.observe(startFlight(page), 'cold Solo Start'));
+    ticks(page, 20);
+    assert.equal(page.doc.body.dataset.flightState, 'running');
+    assert.equal(gate.state.entered, 0);
+    assert.equal(page.$('soundtrack-tracks'), null);
+    page.$('settings-button').click();
+    page.$('settings-tab-audio').click();
+    await waitFor(
+      () => !page.$('soundtrack-settings-play-styles').disabled,
+      'Settings retains local listening controls without authoring',
+    );
+    assert.equal(gate.state.entered, 0);
+    assert.equal(page.$('soundtrack-audition'), null);
+    assert.deepEqual(page.errors, []);
+  },
+);
+
+async function openHeldAuthoring(page, gate) {
+  page.$('settings-button').click();
+  page.$('settings-tab-audio').click();
+  gate.attach(page);
+  const opening = gate.observe(page.$('soundtrack-open').onclick(), 'first Studio opening');
+  await gate.waiting(
+    'authoring import entry and local hydration',
+    () => opening.settled || (gate.state.entered === 1 && !page.$('soundtrack-close').disabled),
+  );
+  if (opening.settled) await gate.join(opening);
+  assert.ok(
+    gate.state.entered === 1 && !page.$('soundtrack-close').disabled,
+    'The real optional import is held after local hydration',
+  );
+  assert.equal(page.$('soundtrack-dialog').open, true);
+  assert.equal(page.$('soundtrack-tracks'), null);
+  return { opening, dialog: page.$('soundtrack-dialog') };
+}
+
+test(
+  'held authoring leaves same-gesture Studio Play and Close owned by the existing host',
+  { timeout: 20_000 },
+  async (t) => {
+    const gate = await holdAuthoringImport(t);
+    const { page, audio } = await setup(t);
+    const { opening, dialog } = await openHeldAuthoring(page, gate);
+    assert.equal(audio.context.state, 'suspended');
+    const playing = gate.observe(
+      page.$('soundtrack-play').onclick(),
+      'Studio Play while import is held',
+    );
+    assert.equal(audio.context.state, 'running', 'Play wakes audio before optional code completes');
+    await gate.join(playing);
+    assert.equal(page.$('soundtrack-audition'), null);
+    page.$('soundtrack-close').click();
+    assert.equal(dialog.open, false);
+    assert.equal(page.$('settings-dialog').open, true);
+    await gate.release();
+    await gate.join(opening, 'Studio opening after gate release');
+    assert.equal(
+      page.$('soundtrack-tracks'),
+      null,
+      'A closed visit cannot mount delayed authoring',
+    );
+    assert.equal(page.$('soundtrack-audition'), null);
+    assert.deepEqual(page.errors, []);
+  },
+);
+
+for (const retirement of ['hidden', 'terminal']) {
+  test(
+    'late soundtrack authoring import cannot mount after ' + retirement,
+    { timeout: 20_000 },
+    async (t) => {
+      const gate = await holdAuthoringImport(t);
+      const { page } = await setup(t);
+      const { opening, dialog } = await openHeldAuthoring(page, gate);
+      if (retirement === 'hidden') {
+        page.doc.hidden = true;
+        page.doc.emit('visibilitychange');
+      } else page.win.emit('pagehide', { persisted: false });
+      await gate.release();
+      await gate.join(opening, 'Studio opening after gate release');
+      assert.equal(page.$('soundtrack-tracks'), null);
+      assert.equal(page.$('soundtrack-audition'), null);
+      if (retirement === 'hidden') {
+        page.doc.hidden = false;
+        page.doc.emit('visibilitychange');
+        await waitFor(
+          () => page.$('soundtrack-tracks')?.isConnected,
+          'The current visible paused Studio mounts its already loaded view',
+        );
+        assert.equal(page.$('soundtrack-dialog'), dialog);
+        assert.equal(gate.state.entered, 1);
+      } else assert.equal(dialog.isConnected, false);
+      assert.deepEqual(page.errors, []);
+    },
+  );
+}
+
+test(
+  'authoring import failure retries visibly without replacing the modal or source owner',
+  { timeout: 20_000 },
+  async (t) => {
+    const gate = await holdAuthoringImport(t);
+    const { page } = await setup(t);
+    const { opening, dialog } = await openHeldAuthoring(page, gate);
+    const generation = page.$('soundtrack-draft-state').textContent;
+    const media = musicMedia(page);
+    await gate.release(true);
+    await gate.join(opening, 'Studio opening after gate release');
+    const retry = page.$('soundtrack-authoring-retry');
+    assert.equal(retry.hidden, false);
+    assert.equal(retry.disabled, false);
+    assert.equal(page.$('soundtrack-tracks'), null);
+    retry.focus();
+    await gate.join(gate.observe(retry.onclick(), 'explicit authoring retry'));
+    assert.equal(page.$('soundtrack-dialog'), dialog);
+    assert.equal(musicMedia(page), media);
+    assert.equal(page.$('soundtrack-draft-state').textContent, generation);
+    assert.equal(page.doc.activeElement, page.$('soundtrack-close'));
+    assert.equal(page.$('soundtrack-tracks').isConnected, true);
+    assert.equal(page.doc.querySelectorAll('#soundtrack-audition').length, 1);
+    assert.equal(media.plays, 0);
+    assert.deepEqual(page.errors, []);
+  },
+);
+
+test(
+  'a newer Studio visit adopts a shared pending authoring module exactly once',
+  { timeout: 20_000 },
+  async (t) => {
+    const gate = await holdAuthoringImport(t);
+    const { page } = await setup(t);
+    const { opening: first, dialog } = await openHeldAuthoring(page, gate);
+    page.$('soundtrack-close').click();
+    const second = gate.observe(page.$('soundtrack-open').onclick(), 'reopened Studio visit');
+    assert.equal(page.$('soundtrack-dialog'), dialog);
+    assert.equal(dialog.open, true);
+    await gate.release();
+    await gate.join(first, 'first Studio opening after gate release');
+    await gate.join(second, 'reopened Studio after gate release');
+    assert.equal(gate.state.entered, 1);
+    assert.equal(page.doc.querySelectorAll('#soundtrack-audition').length, 1);
+    const tracks = page.$('soundtrack-tracks');
+    assert.equal(tracks.isConnected, true);
+    page.$('soundtrack-close').click();
+    await gate.join(gate.observe(page.$('soundtrack-open').onclick(), 'cached Studio reopening'));
+    assert.equal(page.$('soundtrack-tracks'), tracks);
+    assert.equal(page.$('soundtrack-dialog'), dialog);
+    assert.deepEqual(page.errors, []);
+  },
+);
+
+test(
+  'replacement of the pending Studio modal prevents late authoring attachment',
+  { timeout: 20_000 },
+  async (t) => {
+    const gate = await holdAuthoringImport(t);
+    const { page } = await setup(t);
+    const { opening, dialog } = await openHeldAuthoring(page, gate);
+    dialog.remove();
+    const replacement = page.doc.createElement('dialog');
+    replacement.id = dialog.id;
+    page.doc.body.append(replacement);
+    t.after(() => replacement.remove());
+    await gate.release();
+    await gate.join(opening, 'Studio opening after gate release');
+    assert.equal(page.$('soundtrack-dialog'), replacement);
+    assert.equal(page.$('soundtrack-tracks'), null);
+    assert.equal(page.$('soundtrack-audition'), null);
+    assert.equal(replacement.children.length, 0);
+    assert.deepEqual(page.errors, []);
+  },
+);
+
+// Native dialog.close() changes open state immediately and queues its close event.
+// Deliver that event as a distinct host task without replacing production handlers.
+function queuedNativeDialogClose(t, dialog) {
+  const queued = [];
+  t.mock.method(dialog, 'close', function () {
+    this.open = false;
+    this.removeAttribute('open');
+    queued.push(() => this.emit('close'));
+  });
+  return async () => {
+    assert.equal(queued.length, 1, 'Exactly one native close task is waiting');
+    await new Promise((resolve) =>
+      setImmediate(() => {
+        queued.shift()();
+        resolve();
+      }),
+    );
+  };
+}
+
+test(
+  'a delayed native close event from the prior Studio visit cannot retire a reopened visit',
+  { timeout: 20_000 },
+  async (t) => {
+    const gate = await holdAuthoringImport(t);
+    const { page } = await setup(t);
+    const { opening: first, dialog } = await openHeldAuthoring(page, gate);
+    const deliverClose = queuedNativeDialogClose(t, dialog);
+    page.$('soundtrack-close').click();
+    assert.equal(dialog.open, false);
+    const second = gate.observe(page.$('soundtrack-open').onclick(), 'reopened Studio visit');
+    assert.equal(dialog.open, true, 'The new visit is open before the old close task arrives');
+    await gate.join(gate.observe(deliverClose(), 'queued native close event'));
+    assert.equal(dialog.open, true);
+    assert.equal(page.$('soundtrack-tracks'), null);
+    await gate.release();
+    await gate.join(first, 'first Studio opening after gate release');
+    await gate.join(second, 'reopened Studio after gate release');
+    assert.equal(page.$('soundtrack-dialog'), dialog);
+    assert.equal(page.$('soundtrack-tracks').isConnected, true);
+    assert.equal(page.doc.querySelectorAll('#soundtrack-audition').length, 1);
+    assert.equal(gate.state.entered, 1, 'Both visits share the actual optional module request');
+    assert.equal(musicMedia(page).plays, 0);
+    assert.deepEqual(page.errors, []);
+  },
+);
+
+test(
+  'a genuine external native close prevents pending Studio authoring from attaching',
+  { timeout: 20_000 },
+  async (t) => {
+    const gate = await holdAuthoringImport(t);
+    const { page } = await setup(t);
+    const { opening, dialog } = await openHeldAuthoring(page, gate);
+    const deliverClose = queuedNativeDialogClose(t, dialog);
+    dialog.close();
+    assert.equal(dialog.open, false);
+    await gate.join(gate.observe(deliverClose(), 'queued native close event'));
+    await gate.release();
+    await gate.join(opening, 'Studio opening after gate release');
+    assert.equal(page.$('soundtrack-tracks'), null);
+    assert.equal(page.$('soundtrack-audition'), null);
+    await gate.join(gate.observe(page.$('soundtrack-open').onclick(), 'cached Studio reopening'));
+    assert.equal(page.$('soundtrack-dialog'), dialog);
+    assert.equal(page.$('soundtrack-tracks').isConnected, true);
+    assert.equal(page.doc.querySelectorAll('#soundtrack-audition').length, 1);
+    assert.equal(
+      gate.state.entered,
+      1,
+      'A later accepted visit reuses the module, not stale ownership',
+    );
+    assert.equal(musicMedia(page).plays, 0);
+    assert.deepEqual(page.errors, []);
+  },
+);

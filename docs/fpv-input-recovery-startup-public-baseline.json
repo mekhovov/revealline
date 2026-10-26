@@ -1,0 +1,3164 @@
+{
+  "format": "FpvPublicStartupObservation.v1",
+  "createdAt": "2026-10-17T14:46:33.049Z",
+  "scope": "Three independent fresh World password logins on the existing public baseline; startup observation only, not acceptance of the unpublished input-recovery change.",
+  "pass": true,
+  "attempts": [
+    {
+      "number": 1,
+      "profile": "/tmp/fpv-public-startup-observation-AVzAZU",
+      "errors": [],
+      "pass": true,
+      "startups": [
+        {
+          "stage": "fresh-world-password",
+          "passed": true,
+          "requestsSeen": 145,
+          "requestsOmitted": 0,
+          "requests": [
+            {
+              "resource": "/revealline/optional-practice/fpv-worlds/index.html",
+              "type": "document",
+              "startedMs": 5,
+              "status": 200,
+              "finishedMs": 349
+            },
+            {
+              "resource": "/revealline/game/access-gate.css",
+              "type": "stylesheet",
+              "startedMs": 339,
+              "status": 200,
+              "finishedMs": 532
+            },
+            {
+              "resource": "/revealline/game/access-gate.mjs",
+              "type": "script",
+              "startedMs": 339,
+              "status": 200,
+              "finishedMs": 532
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/world-style.css",
+              "type": "stylesheet",
+              "startedMs": 339,
+              "status": 200,
+              "finishedMs": 562
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/tuning.css",
+              "type": "stylesheet",
+              "startedMs": 339,
+              "status": 200,
+              "finishedMs": 532
+            },
+            {
+              "resource": "/revealline/game/ui/art/identity/fpv-line/wordmark.png",
+              "type": "image",
+              "startedMs": 339,
+              "status": 200,
+              "finishedMs": 1479
+            },
+            {
+              "resource": "/revealline/optional-practice/fpv-worlds/app.webmanifest",
+              "type": "manifest",
+              "startedMs": 349,
+              "status": 200,
+              "finishedMs": 553
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/style.css",
+              "type": "stylesheet",
+              "startedMs": 561,
+              "status": 200,
+              "finishedMs": 1590
+            },
+            {
+              "resource": "/revealline/icons/icon-192.png",
+              "type": "other",
+              "startedMs": 1645,
+              "status": 200,
+              "finishedMs": 1815
+            },
+            {
+              "resource": "/revealline/icons/icon-192.png",
+              "type": "other",
+              "startedMs": 1645,
+              "status": 200,
+              "finishedMs": 1815
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/sim-boot.mjs",
+              "type": "script",
+              "startedMs": 1724,
+              "status": 200,
+              "finishedMs": 1905
+            },
+            {
+              "resource": "/revealline/game/ui/art/menu-scenes/fpv.webp",
+              "type": "image",
+              "startedMs": 1733,
+              "status": 200,
+              "finishedMs": 2719
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/world-app.mjs",
+              "type": "script",
+              "startedMs": 1906,
+              "status": 200,
+              "finishedMs": 2799
+            },
+            {
+              "resource": "/revealline/game/i18n/index.mjs",
+              "type": "script",
+              "startedMs": 2800,
+              "status": 200,
+              "finishedMs": 3810
+            },
+            {
+              "resource": "/revealline/game/platform.mjs",
+              "type": "script",
+              "startedMs": 2800,
+              "status": 200,
+              "finishedMs": 2959
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/world-catalogue.mjs",
+              "type": "script",
+              "startedMs": 2800,
+              "status": 200,
+              "finishedMs": 3054
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/catalogue.mjs",
+              "type": "script",
+              "startedMs": 2800,
+              "status": 200,
+              "finishedMs": 3833
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/snake-hunt-presentation.mjs",
+              "type": "script",
+              "startedMs": 2800,
+              "status": 200,
+              "finishedMs": 5152
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/demonstrations.mjs",
+              "type": "script",
+              "startedMs": 2800,
+              "status": 200,
+              "finishedMs": 3871
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/world-demonstrations.mjs",
+              "type": "script",
+              "startedMs": 2800,
+              "status": 200,
+              "finishedMs": 5679
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/model.mjs",
+              "type": "script",
+              "startedMs": 2800,
+              "status": 200,
+              "finishedMs": 3796
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/world-model.mjs",
+              "type": "script",
+              "startedMs": 2800,
+              "status": 200,
+              "finishedMs": 3826
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/beginner-coach.mjs",
+              "type": "script",
+              "startedMs": 2800,
+              "status": 200,
+              "finishedMs": 5152
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/input.mjs",
+              "type": "script",
+              "startedMs": 2800,
+              "status": 200,
+              "finishedMs": 3811
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/radio-runtime.mjs",
+              "type": "script",
+              "startedMs": 2801,
+              "status": 200,
+              "finishedMs": 4230
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/radio-session.mjs",
+              "type": "script",
+              "startedMs": 2801,
+              "status": 200,
+              "finishedMs": 5107
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/radio-setup.mjs",
+              "type": "script",
+              "startedMs": 2801,
+              "status": 200,
+              "finishedMs": 4041
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/tuning-library.mjs",
+              "type": "script",
+              "startedMs": 2801,
+              "status": 200,
+              "finishedMs": 3811
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/tuning-ui.mjs",
+              "type": "script",
+              "startedMs": 2801,
+              "status": 200,
+              "finishedMs": 3901
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/flight-response.mjs",
+              "type": "script",
+              "startedMs": 2801,
+              "status": 200,
+              "finishedMs": 4227
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/advanced-practice.mjs",
+              "type": "script",
+              "startedMs": 2801,
+              "status": 200,
+              "finishedMs": 4036
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/advanced-regional.mjs",
+              "type": "script",
+              "startedMs": 2801,
+              "status": 200,
+              "finishedMs": 5107
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/advanced-worker-client.mjs",
+              "type": "script",
+              "startedMs": 2801,
+              "status": 200,
+              "finishedMs": 4218
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/advanced-simulation.mjs",
+              "type": "script",
+              "startedMs": 2801,
+              "status": 200,
+              "finishedMs": 3789
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/flight-fullscreen.mjs",
+              "type": "script",
+              "startedMs": 2801,
+              "status": 200,
+              "finishedMs": 4218
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/radio-profile.mjs",
+              "type": "script",
+              "startedMs": 2801,
+              "status": 200,
+              "finishedMs": 3773
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/notebook.mjs",
+              "type": "script",
+              "startedMs": 2801,
+              "status": 200,
+              "finishedMs": 3826
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/playlists.mjs",
+              "type": "script",
+              "startedMs": 2801,
+              "status": 200,
+              "finishedMs": 3053
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/world-records.mjs",
+              "type": "script",
+              "startedMs": 2801,
+              "status": 200,
+              "finishedMs": 2958
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/world-content.mjs",
+              "type": "script",
+              "startedMs": 2801,
+              "status": 200,
+              "finishedMs": 3899
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/world-zip.mjs",
+              "type": "script",
+              "startedMs": 2801,
+              "status": 200,
+              "finishedMs": 2958
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/world-store.mjs",
+              "type": "script",
+              "startedMs": 2801,
+              "status": 200,
+              "finishedMs": 3796
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/offline.mjs",
+              "type": "script",
+              "startedMs": 2801,
+              "status": 200,
+              "finishedMs": 3871
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/world-reaction-runtime.mjs",
+              "type": "script",
+              "startedMs": 2801,
+              "status": 200,
+              "finishedMs": 4859
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/regional-library.mjs",
+              "type": "script",
+              "startedMs": 2801,
+              "status": 200,
+              "finishedMs": 4017
+            },
+            {
+              "resource": "/revealline/game/data-json.mjs",
+              "type": "script",
+              "startedMs": 2801,
+              "status": 200,
+              "finishedMs": 3828
+            },
+            {
+              "resource": "/revealline/game/hunt/preferences.mjs",
+              "type": "script",
+              "startedMs": 2801,
+              "status": 200,
+              "finishedMs": 3845
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/industrial-environment.mjs",
+              "type": "script",
+              "startedMs": 2801,
+              "status": 200,
+              "finishedMs": 2958
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/world-themes.mjs",
+              "type": "script",
+              "startedMs": 2801,
+              "status": 200,
+              "finishedMs": 4868
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/world-editor.mjs",
+              "type": "script",
+              "startedMs": 2801,
+              "status": 200,
+              "finishedMs": 4017
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/sim-presentation.mjs",
+              "type": "script",
+              "startedMs": 2801,
+              "status": 200,
+              "finishedMs": 3768
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/regional-session.mjs",
+              "type": "script",
+              "startedMs": 2801,
+              "status": 200,
+              "finishedMs": 4858
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/regional-locations.mjs",
+              "type": "script",
+              "startedMs": 2801,
+              "status": 200,
+              "finishedMs": 3773
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/content-definitions.mjs",
+              "type": "script",
+              "startedMs": 2801,
+              "status": 200,
+              "finishedMs": 2959
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/world-assets.mjs",
+              "type": "script",
+              "startedMs": 2801,
+              "status": 200,
+              "finishedMs": 5107
+            },
+            {
+              "resource": "/revealline/game/fpv-entry.mjs",
+              "type": "script",
+              "startedMs": 2801,
+              "status": 200,
+              "finishedMs": 4406
+            },
+            {
+              "resource": "/revealline/game/presentation/industrial-environments.mjs",
+              "type": "script",
+              "startedMs": 2958,
+              "status": 200,
+              "finishedMs": 5678
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/native-pursuit-courses.mjs",
+              "type": "script",
+              "startedMs": 2958,
+              "status": 200,
+              "finishedMs": 5678
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/snake-hunt-catalogue.mjs",
+              "type": "script",
+              "startedMs": 2958,
+              "status": 200,
+              "finishedMs": 5678
+            },
+            {
+              "resource": "/revealline/game/ui/native-menu-icons.mjs",
+              "type": "script",
+              "startedMs": 3768,
+              "status": 200,
+              "finishedMs": 5678
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/math.mjs",
+              "type": "script",
+              "startedMs": 3768,
+              "status": 200,
+              "finishedMs": 5680
+            },
+            {
+              "resource": "/revealline/game/ui/enemy-appearance-controls.mjs",
+              "type": "script",
+              "startedMs": 3768,
+              "status": 200,
+              "finishedMs": 5772
+            },
+            {
+              "resource": "/revealline/game/presentation/theme-system.mjs",
+              "type": "script",
+              "startedMs": 3768,
+              "status": 200,
+              "finishedMs": 5773
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/regional/region-manifest.mjs",
+              "type": "script",
+              "startedMs": 3773,
+              "status": 200,
+              "finishedMs": 5679
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/vendor/rapier/rapier.mjs",
+              "type": "script",
+              "startedMs": 3789,
+              "status": 200,
+              "finishedMs": 7739
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/world-collision.mjs",
+              "type": "script",
+              "startedMs": 3789,
+              "status": 200,
+              "finishedMs": 7755
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/advanced-controller.mjs",
+              "type": "script",
+              "startedMs": 3789,
+              "status": 200,
+              "finishedMs": 5827
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/rates.mjs",
+              "type": "script",
+              "startedMs": 3789,
+              "status": 200,
+              "finishedMs": 7755
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/advanced-terrain.mjs",
+              "type": "script",
+              "startedMs": 3789,
+              "status": 200,
+              "finishedMs": 7755
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/flight-sectors.mjs",
+              "type": "script",
+              "startedMs": 3796,
+              "status": 200,
+              "finishedMs": 5827
+            },
+            {
+              "resource": "/revealline/game/vendor/i18next-26.4.2.min.js",
+              "type": "script",
+              "startedMs": 3810,
+              "status": 200,
+              "finishedMs": 7738
+            },
+            {
+              "resource": "/revealline/game/i18n/catalogs.mjs",
+              "type": "script",
+              "startedMs": 3810,
+              "status": 200,
+              "finishedMs": 9653
+            },
+            {
+              "resource": "/revealline/game/i18n/bootstrap.mjs",
+              "type": "script",
+              "startedMs": 3810,
+              "status": 200,
+              "finishedMs": 7776
+            },
+            {
+              "resource": "/revealline/game/ui/menu-navigation-groups.mjs",
+              "type": "script",
+              "startedMs": 3811,
+              "status": 200,
+              "finishedMs": 7776
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/betaflight-import.mjs",
+              "type": "script",
+              "startedMs": 3811,
+              "status": 200,
+              "finishedMs": 7755
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/flight-support.mjs",
+              "type": "script",
+              "startedMs": 3826,
+              "status": 200,
+              "finishedMs": 7885
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/flight-contact.mjs",
+              "type": "script",
+              "startedMs": 3826,
+              "status": 200,
+              "finishedMs": 7755
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/snake-hunt.mjs",
+              "type": "script",
+              "startedMs": 3826,
+              "status": 200,
+              "finishedMs": 7885
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/world-pursuit.mjs",
+              "type": "script",
+              "startedMs": 3826,
+              "status": 200,
+              "finishedMs": 7885
+            },
+            {
+              "resource": "/revealline/game/rewards/model.mjs",
+              "type": "script",
+              "startedMs": 3827,
+              "status": 200,
+              "finishedMs": 7776
+            },
+            {
+              "resource": "/revealline/game/rewards/store.mjs",
+              "type": "script",
+              "startedMs": 3827,
+              "status": 200,
+              "finishedMs": 7775
+            },
+            {
+              "resource": "/revealline/game/ui/reward-knowledge.mjs",
+              "type": "script",
+              "startedMs": 3827,
+              "status": 200,
+              "finishedMs": 7776
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/attempts.mjs",
+              "type": "script",
+              "startedMs": 3827,
+              "status": 200,
+              "finishedMs": 7885
+            },
+            {
+              "resource": "/revealline/game/ui/art-review-navigation.mjs",
+              "type": "script",
+              "startedMs": 3845,
+              "status": 200,
+              "finishedMs": 7885
+            },
+            {
+              "resource": "/revealline/optional-practice/install-context.mjs",
+              "type": "script",
+              "startedMs": 3871,
+              "status": 200,
+              "finishedMs": 7885
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/regional-delivery.mjs",
+              "type": "script",
+              "startedMs": 4017,
+              "status": 200,
+              "finishedMs": 9665
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/regional/terrain-surface.mjs",
+              "type": "script",
+              "startedMs": 4018,
+              "status": 200,
+              "finishedMs": 9673
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/regional/scenery-surface.mjs",
+              "type": "script",
+              "startedMs": 4018,
+              "status": 200,
+              "finishedMs": 9672
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/vendor/three.module.js",
+              "type": "script",
+              "startedMs": 4036,
+              "status": 200,
+              "finishedMs": 9970
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/radio-controls.mjs",
+              "type": "script",
+              "startedMs": 4041,
+              "status": 200,
+              "finishedMs": 9771
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/radio-guide.mjs",
+              "type": "script",
+              "startedMs": 4042,
+              "status": 200,
+              "finishedMs": 9771
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/regional/flight-prototype.mjs",
+              "type": "script",
+              "startedMs": 4858,
+              "status": 200,
+              "finishedMs": 9968
+            },
+            {
+              "resource": "/revealline/game/ui/human-reaction-policy.mjs",
+              "type": "script",
+              "startedMs": 4859,
+              "status": 200,
+              "finishedMs": 10071
+            },
+            {
+              "resource": "/revealline/game/audio/human-reactions/portable.mjs",
+              "type": "script",
+              "startedMs": 4859,
+              "status": 200,
+              "finishedMs": 10018
+            },
+            {
+              "resource": "/revealline/game/ui/destruction-level.mjs",
+              "type": "script",
+              "startedMs": 4859,
+              "status": 200,
+              "finishedMs": 10018
+            },
+            {
+              "resource": "/revealline/game/ui/destruction-audio.mjs",
+              "type": "script",
+              "startedMs": 4859,
+              "status": 200,
+              "finishedMs": 10069
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/world-visuals.mjs",
+              "type": "script",
+              "startedMs": 4859,
+              "status": 200,
+              "finishedMs": 10054
+            },
+            {
+              "resource": "/revealline/game/hunt/actor-catalog.mjs",
+              "type": "script",
+              "startedMs": 4859,
+              "status": 200,
+              "finishedMs": 10072
+            },
+            {
+              "resource": "/revealline/game/hunt/actor-art.mjs",
+              "type": "script",
+              "startedMs": 4859,
+              "status": 200,
+              "finishedMs": 10069
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/battlefield-ground.mjs",
+              "type": "script",
+              "startedMs": 4869,
+              "status": 200,
+              "finishedMs": 10071
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/regional/verified-flight-geometry.mjs",
+              "type": "script",
+              "startedMs": 5107,
+              "status": 200,
+              "finishedMs": 10071
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/renderer.mjs",
+              "type": "script",
+              "startedMs": 5107,
+              "status": 200,
+              "finishedMs": 10118
+            },
+            {
+              "resource": "/revealline/game/hunt/presentation-catalog.mjs",
+              "type": "script",
+              "startedMs": 5152,
+              "status": 200,
+              "finishedMs": 10118
+            },
+            {
+              "resource": "/revealline/game/ui/defeat-sound-controls.mjs",
+              "type": "script",
+              "startedMs": 5152,
+              "status": 200,
+              "finishedMs": 10119
+            },
+            {
+              "resource": "/revealline/game/encounter-display-preferences.mjs",
+              "type": "script",
+              "startedMs": 5152,
+              "status": 200,
+              "finishedMs": 10119
+            },
+            {
+              "resource": "/revealline/game/hunt/industrial-soldier-kit.mjs",
+              "type": "script",
+              "startedMs": 5152,
+              "status": 200,
+              "finishedMs": 10119
+            },
+            {
+              "resource": "/revealline/game/presentation/industrial-machinery.mjs",
+              "type": "script",
+              "startedMs": 5152,
+              "status": 200,
+              "finishedMs": 10118
+            },
+            {
+              "resource": "/revealline/game/presentation/industrial-environments-data.mjs",
+              "type": "script",
+              "startedMs": 5678,
+              "status": 200,
+              "finishedMs": 10203
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/expressive-hunt-courses.mjs",
+              "type": "script",
+              "startedMs": 5678,
+              "status": 200,
+              "finishedMs": 10305
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/rotation-table.mjs",
+              "type": "script",
+              "startedMs": 5680,
+              "status": 200,
+              "finishedMs": 10295
+            },
+            {
+              "resource": "/revealline/game/profile-storage.mjs",
+              "type": "script",
+              "startedMs": 7776,
+              "status": 200,
+              "finishedMs": 10306
+            },
+            {
+              "resource": "/revealline/game/rewards/learning-profiles.mjs",
+              "type": "script",
+              "startedMs": 7776,
+              "status": 200,
+              "finishedMs": 10306
+            },
+            {
+              "resource": "/revealline/game/rewards/exploration.mjs",
+              "type": "script",
+              "startedMs": 7776,
+              "status": 200,
+              "finishedMs": 10306
+            },
+            {
+              "resource": "/revealline/game/rewards/audio-groups.mjs",
+              "type": "script",
+              "startedMs": 7776,
+              "status": 200,
+              "finishedMs": 10306
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/regional/urban-ground-surface.mjs",
+              "type": "script",
+              "startedMs": 9673,
+              "status": 200,
+              "finishedMs": 10306
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/regional/railway-expanse-ground.mjs",
+              "type": "script",
+              "startedMs": 9673,
+              "status": 200,
+              "finishedMs": 10314
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/regional/hillside-ground-surface.mjs",
+              "type": "script",
+              "startedMs": 9673,
+              "status": 200,
+              "finishedMs": 10306
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/vendor/three.core.js",
+              "type": "script",
+              "startedMs": 9970,
+              "status": 200,
+              "finishedMs": 10654
+            },
+            {
+              "resource": "/revealline/game/presentation/industrial-materials.mjs",
+              "type": "script",
+              "startedMs": 10054,
+              "status": 200,
+              "finishedMs": 10652
+            },
+            {
+              "resource": "/revealline/game/presentation/actor-animation.mjs",
+              "type": "script",
+              "startedMs": 10069,
+              "status": 200,
+              "finishedMs": 10666
+            },
+            {
+              "resource": "/revealline/game/overflight/worlds.mjs",
+              "type": "script",
+              "startedMs": 10071,
+              "status": 200,
+              "finishedMs": 10683
+            },
+            {
+              "resource": "/revealline/game/presentation/overflight-world-art.mjs",
+              "type": "script",
+              "startedMs": 10071,
+              "status": 200,
+              "finishedMs": 10667
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/regional/verified-terrain-window.mjs",
+              "type": "script",
+              "startedMs": 10072,
+              "status": 200,
+              "finishedMs": 10668
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/regional/verified-scenery-window.mjs",
+              "type": "script",
+              "startedMs": 10072,
+              "status": 200,
+              "finishedMs": 10683
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/regional/verified-mixed-window.mjs",
+              "type": "script",
+              "startedMs": 10072,
+              "status": 200,
+              "finishedMs": 10667
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/industrial-vehicles.mjs",
+              "type": "script",
+              "startedMs": 10118,
+              "status": 200,
+              "finishedMs": 10683
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/industrial-soldiers.mjs",
+              "type": "script",
+              "startedMs": 10118,
+              "status": 200,
+              "finishedMs": 10684
+            },
+            {
+              "resource": "/revealline/game/hunt/copy.mjs",
+              "type": "script",
+              "startedMs": 10119,
+              "status": 200,
+              "finishedMs": 10684
+            },
+            {
+              "resource": "/revealline/game/profile-database.mjs",
+              "type": "script",
+              "startedMs": 10306,
+              "status": 200,
+              "finishedMs": 10685
+            },
+            {
+              "resource": "/revealline/game/presentation/overflight-world-art-v2.mjs",
+              "type": "script",
+              "startedMs": 10667,
+              "status": 200,
+              "finishedMs": 10821
+            },
+            {
+              "resource": "/revealline/game/presentation/overflight-world-slots.mjs",
+              "type": "script",
+              "startedMs": 10667,
+              "status": 200,
+              "finishedMs": 10867
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/regional/restore-containment.mjs",
+              "type": "script",
+              "startedMs": 10667,
+              "status": 200,
+              "finishedMs": 10891
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/regional/region-motion-query.mjs",
+              "type": "script",
+              "startedMs": 10667,
+              "status": 200,
+              "finishedMs": 10876
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/regional/frame-transaction.mjs",
+              "type": "script",
+              "startedMs": 10667,
+              "status": 200,
+              "finishedMs": 10876
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/regional/source-window.mjs",
+              "type": "script",
+              "startedMs": 10668,
+              "status": 200,
+              "finishedMs": 10864
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/regional/terrain-cell.mjs",
+              "type": "script",
+              "startedMs": 10668,
+              "status": 200,
+              "finishedMs": 10907
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/regional/terrain-admission.mjs",
+              "type": "script",
+              "startedMs": 10668,
+              "status": 200,
+              "finishedMs": 10906
+            },
+            {
+              "resource": "/revealline/game/overflight/terrain.mjs",
+              "type": "script",
+              "startedMs": 10683,
+              "status": 200,
+              "finishedMs": 10891
+            },
+            {
+              "resource": "/revealline/game/overflight/world-layout-presentation.mjs",
+              "type": "script",
+              "startedMs": 10683,
+              "status": 200,
+              "finishedMs": 10849
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/regional/scenery-cell.mjs",
+              "type": "script",
+              "startedMs": 10684,
+              "status": 200,
+              "finishedMs": 10906
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/regional/indexed-scenery-cell.mjs",
+              "type": "script",
+              "startedMs": 10684,
+              "status": 200,
+              "finishedMs": 10851
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/regional/scenery-admission.mjs",
+              "type": "script",
+              "startedMs": 10684,
+              "status": 200,
+              "finishedMs": 10868
+            },
+            {
+              "resource": "/revealline/game/snake/classic-structure-art.mjs",
+              "type": "script",
+              "startedMs": 10821,
+              "status": 200,
+              "finishedMs": 11068
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/regional/rgba-scenery-cell.mjs",
+              "type": "script",
+              "startedMs": 10852,
+              "status": 200,
+              "finishedMs": 11086
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/regional/terrain-normals.mjs",
+              "type": "script",
+              "startedMs": 10906,
+              "status": 200,
+              "finishedMs": 11031
+            }
+          ],
+          "elapsedMs": 11435,
+          "state": {
+            "access": "unlocked",
+            "documentReady": "complete",
+            "shellPending": false,
+            "settingsPresent": true,
+            "passwordFormPresent": false,
+            "inertScriptCount": 0,
+            "serviceWorkerControlled": false
+          },
+          "pendingRequests": 0
+        }
+      ]
+    },
+    {
+      "number": 2,
+      "profile": "/tmp/fpv-public-startup-observation-JtRWLB",
+      "errors": [],
+      "pass": true,
+      "startups": [
+        {
+          "stage": "fresh-world-password",
+          "passed": true,
+          "requestsSeen": 145,
+          "requestsOmitted": 0,
+          "requests": [
+            {
+              "resource": "/revealline/optional-practice/fpv-worlds/index.html",
+              "type": "document",
+              "startedMs": 10,
+              "status": 200,
+              "finishedMs": 263
+            },
+            {
+              "resource": "/revealline/game/access-gate.css",
+              "type": "stylesheet",
+              "startedMs": 262,
+              "status": 200,
+              "finishedMs": 289
+            },
+            {
+              "resource": "/revealline/game/access-gate.mjs",
+              "type": "script",
+              "startedMs": 262,
+              "status": 200,
+              "finishedMs": 852
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/world-style.css",
+              "type": "stylesheet",
+              "startedMs": 262,
+              "status": 200,
+              "finishedMs": 852
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/tuning.css",
+              "type": "stylesheet",
+              "startedMs": 262,
+              "status": 200,
+              "finishedMs": 848
+            },
+            {
+              "resource": "/revealline/game/ui/art/identity/fpv-line/wordmark.png",
+              "type": "image",
+              "startedMs": 262,
+              "status": 200,
+              "finishedMs": 835
+            },
+            {
+              "resource": "/revealline/optional-practice/fpv-worlds/app.webmanifest",
+              "type": "manifest",
+              "startedMs": 263,
+              "status": 200,
+              "finishedMs": 350
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/style.css",
+              "type": "stylesheet",
+              "startedMs": 852,
+              "status": 200,
+              "finishedMs": 891
+            },
+            {
+              "resource": "/revealline/icons/icon-192.png",
+              "type": "other",
+              "startedMs": 941,
+              "status": 200,
+              "finishedMs": 1039
+            },
+            {
+              "resource": "/revealline/icons/icon-192.png",
+              "type": "other",
+              "startedMs": 941,
+              "status": 200,
+              "finishedMs": 1039
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/sim-boot.mjs",
+              "type": "script",
+              "startedMs": 1001,
+              "status": 200,
+              "finishedMs": 1062
+            },
+            {
+              "resource": "/revealline/game/ui/art/menu-scenes/fpv.webp",
+              "type": "image",
+              "startedMs": 1008,
+              "status": 200,
+              "finishedMs": 1641
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/world-app.mjs",
+              "type": "script",
+              "startedMs": 1062,
+              "status": 200,
+              "finishedMs": 1871
+            },
+            {
+              "resource": "/revealline/game/i18n/index.mjs",
+              "type": "script",
+              "startedMs": 1872,
+              "status": 200,
+              "finishedMs": 1891
+            },
+            {
+              "resource": "/revealline/game/platform.mjs",
+              "type": "script",
+              "startedMs": 1872,
+              "status": 200,
+              "finishedMs": 3854
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/world-catalogue.mjs",
+              "type": "script",
+              "startedMs": 1872,
+              "status": 200,
+              "finishedMs": 2627
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/catalogue.mjs",
+              "type": "script",
+              "startedMs": 1872,
+              "status": 200,
+              "finishedMs": 3461
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/snake-hunt-presentation.mjs",
+              "type": "script",
+              "startedMs": 1872,
+              "status": 200,
+              "finishedMs": 3508
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/demonstrations.mjs",
+              "type": "script",
+              "startedMs": 1872,
+              "status": 200,
+              "finishedMs": 3391
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/world-demonstrations.mjs",
+              "type": "script",
+              "startedMs": 1872,
+              "status": 200,
+              "finishedMs": 4552
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/model.mjs",
+              "type": "script",
+              "startedMs": 1873,
+              "status": 200,
+              "finishedMs": 4538
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/world-model.mjs",
+              "type": "script",
+              "startedMs": 1873,
+              "status": 200,
+              "finishedMs": 3228
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/beginner-coach.mjs",
+              "type": "script",
+              "startedMs": 1873,
+              "status": 200,
+              "finishedMs": 2969
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/input.mjs",
+              "type": "script",
+              "startedMs": 1873,
+              "status": 200,
+              "finishedMs": 2318
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/radio-runtime.mjs",
+              "type": "script",
+              "startedMs": 1873,
+              "status": 200,
+              "finishedMs": 2640
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/radio-session.mjs",
+              "type": "script",
+              "startedMs": 1873,
+              "status": 200,
+              "finishedMs": 2474
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/radio-setup.mjs",
+              "type": "script",
+              "startedMs": 1873,
+              "status": 200,
+              "finishedMs": 2858
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/tuning-library.mjs",
+              "type": "script",
+              "startedMs": 1873,
+              "status": 200,
+              "finishedMs": 3461
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/tuning-ui.mjs",
+              "type": "script",
+              "startedMs": 1873,
+              "status": 200,
+              "finishedMs": 4253
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/flight-response.mjs",
+              "type": "script",
+              "startedMs": 1873,
+              "status": 200,
+              "finishedMs": 1934
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/advanced-practice.mjs",
+              "type": "script",
+              "startedMs": 1873,
+              "status": 200,
+              "finishedMs": 3477
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/advanced-regional.mjs",
+              "type": "script",
+              "startedMs": 1873,
+              "status": 200,
+              "finishedMs": 2988
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/advanced-worker-client.mjs",
+              "type": "script",
+              "startedMs": 1873,
+              "status": 200,
+              "finishedMs": 2969
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/advanced-simulation.mjs",
+              "type": "script",
+              "startedMs": 1874,
+              "status": 200,
+              "finishedMs": 2969
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/flight-fullscreen.mjs",
+              "type": "script",
+              "startedMs": 1874,
+              "status": 200,
+              "finishedMs": 2934
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/radio-profile.mjs",
+              "type": "script",
+              "startedMs": 1874,
+              "status": 200,
+              "finishedMs": 1921
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/notebook.mjs",
+              "type": "script",
+              "startedMs": 1874,
+              "status": 200,
+              "finishedMs": 1934
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/playlists.mjs",
+              "type": "script",
+              "startedMs": 1874,
+              "status": 200,
+              "finishedMs": 4010
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/world-records.mjs",
+              "type": "script",
+              "startedMs": 1874,
+              "status": 200,
+              "finishedMs": 3749
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/world-content.mjs",
+              "type": "script",
+              "startedMs": 1874,
+              "status": 200,
+              "finishedMs": 4028
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/world-zip.mjs",
+              "type": "script",
+              "startedMs": 1874,
+              "status": 200,
+              "finishedMs": 1921
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/world-store.mjs",
+              "type": "script",
+              "startedMs": 1874,
+              "status": 200,
+              "finishedMs": 2969
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/offline.mjs",
+              "type": "script",
+              "startedMs": 1874,
+              "status": 200,
+              "finishedMs": 2318
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/world-reaction-runtime.mjs",
+              "type": "script",
+              "startedMs": 1874,
+              "status": 200,
+              "finishedMs": 3459
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/regional-library.mjs",
+              "type": "script",
+              "startedMs": 1874,
+              "status": 200,
+              "finishedMs": 4021
+            },
+            {
+              "resource": "/revealline/game/data-json.mjs",
+              "type": "script",
+              "startedMs": 1874,
+              "status": 200,
+              "finishedMs": 5077
+            },
+            {
+              "resource": "/revealline/game/hunt/preferences.mjs",
+              "type": "script",
+              "startedMs": 1874,
+              "status": 200,
+              "finishedMs": 2988
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/industrial-environment.mjs",
+              "type": "script",
+              "startedMs": 1874,
+              "status": 200,
+              "finishedMs": 2988
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/world-themes.mjs",
+              "type": "script",
+              "startedMs": 1874,
+              "status": 200,
+              "finishedMs": 2970
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/world-editor.mjs",
+              "type": "script",
+              "startedMs": 1874,
+              "status": 200,
+              "finishedMs": 2293
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/sim-presentation.mjs",
+              "type": "script",
+              "startedMs": 1874,
+              "status": 200,
+              "finishedMs": 4555
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/regional-session.mjs",
+              "type": "script",
+              "startedMs": 1874,
+              "status": 200,
+              "finishedMs": 3493
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/regional-locations.mjs",
+              "type": "script",
+              "startedMs": 1874,
+              "status": 200,
+              "finishedMs": 3374
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/content-definitions.mjs",
+              "type": "script",
+              "startedMs": 1874,
+              "status": 200,
+              "finishedMs": 3150
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/world-assets.mjs",
+              "type": "script",
+              "startedMs": 1874,
+              "status": 200,
+              "finishedMs": 3000
+            },
+            {
+              "resource": "/revealline/game/fpv-entry.mjs",
+              "type": "script",
+              "startedMs": 1874,
+              "status": 200,
+              "finishedMs": 3458
+            },
+            {
+              "resource": "/revealline/game/vendor/i18next-26.4.2.min.js",
+              "type": "script",
+              "startedMs": 1891,
+              "status": 200,
+              "finishedMs": 5545
+            },
+            {
+              "resource": "/revealline/game/i18n/catalogs.mjs",
+              "type": "script",
+              "startedMs": 1891,
+              "status": 200,
+              "finishedMs": 5836
+            },
+            {
+              "resource": "/revealline/game/i18n/bootstrap.mjs",
+              "type": "script",
+              "startedMs": 1891,
+              "status": 200,
+              "finishedMs": 3467
+            },
+            {
+              "resource": "/revealline/game/rewards/model.mjs",
+              "type": "script",
+              "startedMs": 1934,
+              "status": 200,
+              "finishedMs": 5853
+            },
+            {
+              "resource": "/revealline/game/rewards/store.mjs",
+              "type": "script",
+              "startedMs": 1934,
+              "status": 200,
+              "finishedMs": 5855
+            },
+            {
+              "resource": "/revealline/game/ui/reward-knowledge.mjs",
+              "type": "script",
+              "startedMs": 1934,
+              "status": 200,
+              "finishedMs": 5853
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/attempts.mjs",
+              "type": "script",
+              "startedMs": 1934,
+              "status": 200,
+              "finishedMs": 5853
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/rates.mjs",
+              "type": "script",
+              "startedMs": 1934,
+              "status": 200,
+              "finishedMs": 5853
+            },
+            {
+              "resource": "/revealline/optional-practice/install-context.mjs",
+              "type": "script",
+              "startedMs": 2318,
+              "status": 200,
+              "finishedMs": 5955
+            },
+            {
+              "resource": "/revealline/game/ui/menu-navigation-groups.mjs",
+              "type": "script",
+              "startedMs": 2318,
+              "status": 200,
+              "finishedMs": 5956
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/native-pursuit-courses.mjs",
+              "type": "script",
+              "startedMs": 2628,
+              "status": 200,
+              "finishedMs": 5956
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/snake-hunt-catalogue.mjs",
+              "type": "script",
+              "startedMs": 2628,
+              "status": 200,
+              "finishedMs": 5956
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/radio-controls.mjs",
+              "type": "script",
+              "startedMs": 2858,
+              "status": 200,
+              "finishedMs": 5956
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/radio-guide.mjs",
+              "type": "script",
+              "startedMs": 2858,
+              "status": 200,
+              "finishedMs": 5968
+            },
+            {
+              "resource": "/revealline/game/ui/art-review-navigation.mjs",
+              "type": "script",
+              "startedMs": 2934,
+              "status": 200,
+              "finishedMs": 5969
+            },
+            {
+              "resource": "/revealline/game/presentation/theme-system.mjs",
+              "type": "script",
+              "startedMs": 2934,
+              "status": 200,
+              "finishedMs": 5983
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/vendor/rapier/rapier.mjs",
+              "type": "script",
+              "startedMs": 2970,
+              "status": 200,
+              "finishedMs": 7624
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/world-collision.mjs",
+              "type": "script",
+              "startedMs": 2970,
+              "status": 200,
+              "finishedMs": 5994
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/advanced-controller.mjs",
+              "type": "script",
+              "startedMs": 2970,
+              "status": 200,
+              "finishedMs": 5990
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/advanced-terrain.mjs",
+              "type": "script",
+              "startedMs": 2970,
+              "status": 200,
+              "finishedMs": 5990
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/math.mjs",
+              "type": "script",
+              "startedMs": 2970,
+              "status": 200,
+              "finishedMs": 5994
+            },
+            {
+              "resource": "/revealline/game/presentation/industrial-environments.mjs",
+              "type": "script",
+              "startedMs": 2970,
+              "status": 200,
+              "finishedMs": 5984
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/battlefield-ground.mjs",
+              "type": "script",
+              "startedMs": 2970,
+              "status": 200,
+              "finishedMs": 5985
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/vendor/three.module.js",
+              "type": "script",
+              "startedMs": 2988,
+              "status": 200,
+              "finishedMs": 7709
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/regional/region-manifest.mjs",
+              "type": "script",
+              "startedMs": 2988,
+              "status": 200,
+              "finishedMs": 7664
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/regional/verified-flight-geometry.mjs",
+              "type": "script",
+              "startedMs": 2988,
+              "status": 200,
+              "finishedMs": 7622
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/renderer.mjs",
+              "type": "script",
+              "startedMs": 3000,
+              "status": 200,
+              "finishedMs": 7754
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/flight-support.mjs",
+              "type": "script",
+              "startedMs": 3229,
+              "status": 200,
+              "finishedMs": 7754
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/flight-contact.mjs",
+              "type": "script",
+              "startedMs": 3229,
+              "status": 200,
+              "finishedMs": 7758
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/flight-sectors.mjs",
+              "type": "script",
+              "startedMs": 3229,
+              "status": 200,
+              "finishedMs": 7851
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/snake-hunt.mjs",
+              "type": "script",
+              "startedMs": 3229,
+              "status": 200,
+              "finishedMs": 7851
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/world-pursuit.mjs",
+              "type": "script",
+              "startedMs": 3229,
+              "status": 200,
+              "finishedMs": 7758
+            },
+            {
+              "resource": "/revealline/game/ui/human-reaction-policy.mjs",
+              "type": "script",
+              "startedMs": 3459,
+              "status": 200,
+              "finishedMs": 7851
+            },
+            {
+              "resource": "/revealline/game/audio/human-reactions/portable.mjs",
+              "type": "script",
+              "startedMs": 3459,
+              "status": 200,
+              "finishedMs": 7889
+            },
+            {
+              "resource": "/revealline/game/ui/destruction-level.mjs",
+              "type": "script",
+              "startedMs": 3459,
+              "status": 200,
+              "finishedMs": 7889
+            },
+            {
+              "resource": "/revealline/game/ui/destruction-audio.mjs",
+              "type": "script",
+              "startedMs": 3459,
+              "status": 200,
+              "finishedMs": 7889
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/world-visuals.mjs",
+              "type": "script",
+              "startedMs": 3459,
+              "status": 200,
+              "finishedMs": 7955
+            },
+            {
+              "resource": "/revealline/game/hunt/actor-catalog.mjs",
+              "type": "script",
+              "startedMs": 3459,
+              "status": 200,
+              "finishedMs": 7955
+            },
+            {
+              "resource": "/revealline/game/hunt/actor-art.mjs",
+              "type": "script",
+              "startedMs": 3459,
+              "status": 200,
+              "finishedMs": 7915
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/betaflight-import.mjs",
+              "type": "script",
+              "startedMs": 3461,
+              "status": 200,
+              "finishedMs": 7889
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/regional/flight-prototype.mjs",
+              "type": "script",
+              "startedMs": 3493,
+              "status": 200,
+              "finishedMs": 7955
+            },
+            {
+              "resource": "/revealline/game/hunt/presentation-catalog.mjs",
+              "type": "script",
+              "startedMs": 3508,
+              "status": 200,
+              "finishedMs": 7955
+            },
+            {
+              "resource": "/revealline/game/ui/defeat-sound-controls.mjs",
+              "type": "script",
+              "startedMs": 3508,
+              "status": 200,
+              "finishedMs": 7955
+            },
+            {
+              "resource": "/revealline/game/encounter-display-preferences.mjs",
+              "type": "script",
+              "startedMs": 3508,
+              "status": 200,
+              "finishedMs": 7955
+            },
+            {
+              "resource": "/revealline/game/hunt/industrial-soldier-kit.mjs",
+              "type": "script",
+              "startedMs": 3508,
+              "status": 200,
+              "finishedMs": 7955
+            },
+            {
+              "resource": "/revealline/game/presentation/industrial-machinery.mjs",
+              "type": "script",
+              "startedMs": 3508,
+              "status": 200,
+              "finishedMs": 7955
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/regional-delivery.mjs",
+              "type": "script",
+              "startedMs": 4022,
+              "status": 200,
+              "finishedMs": 8047
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/regional/terrain-surface.mjs",
+              "type": "script",
+              "startedMs": 4022,
+              "status": 200,
+              "finishedMs": 8075
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/regional/scenery-surface.mjs",
+              "type": "script",
+              "startedMs": 4022,
+              "status": 200,
+              "finishedMs": 8075
+            },
+            {
+              "resource": "/revealline/game/ui/native-menu-icons.mjs",
+              "type": "script",
+              "startedMs": 4555,
+              "status": 200,
+              "finishedMs": 8076
+            },
+            {
+              "resource": "/revealline/game/ui/enemy-appearance-controls.mjs",
+              "type": "script",
+              "startedMs": 4555,
+              "status": 200,
+              "finishedMs": 8076
+            },
+            {
+              "resource": "/revealline/game/rewards/learning-profiles.mjs",
+              "type": "script",
+              "startedMs": 5853,
+              "status": 200,
+              "finishedMs": 8076
+            },
+            {
+              "resource": "/revealline/game/rewards/exploration.mjs",
+              "type": "script",
+              "startedMs": 5853,
+              "status": 200,
+              "finishedMs": 8076
+            },
+            {
+              "resource": "/revealline/game/rewards/audio-groups.mjs",
+              "type": "script",
+              "startedMs": 5853,
+              "status": 200,
+              "finishedMs": 8076
+            },
+            {
+              "resource": "/revealline/game/profile-storage.mjs",
+              "type": "script",
+              "startedMs": 5853,
+              "status": 200,
+              "finishedMs": 8076
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/expressive-hunt-courses.mjs",
+              "type": "script",
+              "startedMs": 5956,
+              "status": 200,
+              "finishedMs": 8076
+            },
+            {
+              "resource": "/revealline/game/presentation/industrial-environments-data.mjs",
+              "type": "script",
+              "startedMs": 5984,
+              "status": 200,
+              "finishedMs": 8186
+            },
+            {
+              "resource": "/revealline/game/overflight/worlds.mjs",
+              "type": "script",
+              "startedMs": 5985,
+              "status": 200,
+              "finishedMs": 8193
+            },
+            {
+              "resource": "/revealline/game/presentation/overflight-world-art.mjs",
+              "type": "script",
+              "startedMs": 5985,
+              "status": 200,
+              "finishedMs": 8186
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/rotation-table.mjs",
+              "type": "script",
+              "startedMs": 5994,
+              "status": 200,
+              "finishedMs": 8209
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/regional/verified-terrain-window.mjs",
+              "type": "script",
+              "startedMs": 7622,
+              "status": 200,
+              "finishedMs": 8647
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/regional/verified-scenery-window.mjs",
+              "type": "script",
+              "startedMs": 7622,
+              "status": 200,
+              "finishedMs": 8226
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/regional/verified-mixed-window.mjs",
+              "type": "script",
+              "startedMs": 7622,
+              "status": 200,
+              "finishedMs": 8209
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/vendor/three.core.js",
+              "type": "script",
+              "startedMs": 7709,
+              "status": 200,
+              "finishedMs": 8644
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/industrial-vehicles.mjs",
+              "type": "script",
+              "startedMs": 7754,
+              "status": 200,
+              "finishedMs": 8646
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/industrial-soldiers.mjs",
+              "type": "script",
+              "startedMs": 7754,
+              "status": 200,
+              "finishedMs": 8647
+            },
+            {
+              "resource": "/revealline/game/presentation/actor-animation.mjs",
+              "type": "script",
+              "startedMs": 7915,
+              "status": 200,
+              "finishedMs": 8647
+            },
+            {
+              "resource": "/revealline/game/presentation/industrial-materials.mjs",
+              "type": "script",
+              "startedMs": 7955,
+              "status": 200,
+              "finishedMs": 8665
+            },
+            {
+              "resource": "/revealline/game/hunt/copy.mjs",
+              "type": "script",
+              "startedMs": 7956,
+              "status": 200,
+              "finishedMs": 8666
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/regional/urban-ground-surface.mjs",
+              "type": "script",
+              "startedMs": 8076,
+              "status": 200,
+              "finishedMs": 8666
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/regional/railway-expanse-ground.mjs",
+              "type": "script",
+              "startedMs": 8076,
+              "status": 200,
+              "finishedMs": 8666
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/regional/hillside-ground-surface.mjs",
+              "type": "script",
+              "startedMs": 8076,
+              "status": 200,
+              "finishedMs": 8666
+            },
+            {
+              "resource": "/revealline/game/profile-database.mjs",
+              "type": "script",
+              "startedMs": 8076,
+              "status": 200,
+              "finishedMs": 8666
+            },
+            {
+              "resource": "/revealline/game/presentation/overflight-world-art-v2.mjs",
+              "type": "script",
+              "startedMs": 8186,
+              "status": 200,
+              "finishedMs": 8686
+            },
+            {
+              "resource": "/revealline/game/presentation/overflight-world-slots.mjs",
+              "type": "script",
+              "startedMs": 8186,
+              "status": 200,
+              "finishedMs": 8687
+            },
+            {
+              "resource": "/revealline/game/overflight/terrain.mjs",
+              "type": "script",
+              "startedMs": 8193,
+              "status": 200,
+              "finishedMs": 8666
+            },
+            {
+              "resource": "/revealline/game/overflight/world-layout-presentation.mjs",
+              "type": "script",
+              "startedMs": 8193,
+              "status": 200,
+              "finishedMs": 8686
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/regional/restore-containment.mjs",
+              "type": "script",
+              "startedMs": 8209,
+              "status": 200,
+              "finishedMs": 8686
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/regional/region-motion-query.mjs",
+              "type": "script",
+              "startedMs": 8209,
+              "status": 200,
+              "finishedMs": 8686
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/regional/frame-transaction.mjs",
+              "type": "script",
+              "startedMs": 8209,
+              "status": 200,
+              "finishedMs": 8686
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/regional/source-window.mjs",
+              "type": "script",
+              "startedMs": 8226,
+              "status": 200,
+              "finishedMs": 8705
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/regional/scenery-cell.mjs",
+              "type": "script",
+              "startedMs": 8226,
+              "status": 200,
+              "finishedMs": 8705
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/regional/indexed-scenery-cell.mjs",
+              "type": "script",
+              "startedMs": 8226,
+              "status": 200,
+              "finishedMs": 8705
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/regional/scenery-admission.mjs",
+              "type": "script",
+              "startedMs": 8226,
+              "status": 200,
+              "finishedMs": 8705
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/regional/terrain-cell.mjs",
+              "type": "script",
+              "startedMs": 8647,
+              "status": 200,
+              "finishedMs": 8705
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/regional/terrain-admission.mjs",
+              "type": "script",
+              "startedMs": 8647,
+              "status": 200,
+              "finishedMs": 8705
+            },
+            {
+              "resource": "/revealline/game/snake/classic-structure-art.mjs",
+              "type": "script",
+              "startedMs": 8686,
+              "status": 200,
+              "finishedMs": 8722
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/regional/rgba-scenery-cell.mjs",
+              "type": "script",
+              "startedMs": 8705,
+              "status": 200,
+              "finishedMs": 8744
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/regional/terrain-normals.mjs",
+              "type": "script",
+              "startedMs": 8705,
+              "status": 200,
+              "finishedMs": 8744
+            }
+          ],
+          "elapsedMs": 9044,
+          "state": {
+            "access": "unlocked",
+            "documentReady": "complete",
+            "shellPending": false,
+            "settingsPresent": true,
+            "passwordFormPresent": false,
+            "inertScriptCount": 0,
+            "serviceWorkerControlled": false
+          },
+          "pendingRequests": 0
+        }
+      ]
+    },
+    {
+      "number": 3,
+      "profile": "/tmp/fpv-public-startup-observation-kN1bF5",
+      "errors": [],
+      "pass": true,
+      "startups": [
+        {
+          "stage": "fresh-world-password",
+          "passed": true,
+          "requestsSeen": 145,
+          "requestsOmitted": 0,
+          "requests": [
+            {
+              "resource": "/revealline/optional-practice/fpv-worlds/index.html",
+              "type": "document",
+              "startedMs": 2,
+              "status": 200,
+              "finishedMs": 251
+            },
+            {
+              "resource": "/revealline/game/access-gate.css",
+              "type": "stylesheet",
+              "startedMs": 250,
+              "status": 200,
+              "finishedMs": 303
+            },
+            {
+              "resource": "/revealline/game/access-gate.mjs",
+              "type": "script",
+              "startedMs": 250,
+              "status": 200,
+              "finishedMs": 487
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/world-style.css",
+              "type": "stylesheet",
+              "startedMs": 250,
+              "status": 200,
+              "finishedMs": 526
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/tuning.css",
+              "type": "stylesheet",
+              "startedMs": 250,
+              "status": 200,
+              "finishedMs": 385
+            },
+            {
+              "resource": "/revealline/game/ui/art/identity/fpv-line/wordmark.png",
+              "type": "image",
+              "startedMs": 250,
+              "status": 200,
+              "finishedMs": 1412
+            },
+            {
+              "resource": "/revealline/optional-practice/fpv-worlds/app.webmanifest",
+              "type": "manifest",
+              "startedMs": 251,
+              "status": 200,
+              "finishedMs": 341
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/style.css",
+              "type": "stylesheet",
+              "startedMs": 525,
+              "status": 200,
+              "finishedMs": 1430
+            },
+            {
+              "resource": "/revealline/icons/icon-192.png",
+              "type": "other",
+              "startedMs": 1468,
+              "status": 200,
+              "finishedMs": 1584
+            },
+            {
+              "resource": "/revealline/icons/icon-192.png",
+              "type": "other",
+              "startedMs": 1468,
+              "status": 200,
+              "finishedMs": 1584
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/sim-boot.mjs",
+              "type": "script",
+              "startedMs": 1524,
+              "status": 200,
+              "finishedMs": 1585
+            },
+            {
+              "resource": "/revealline/game/ui/art/menu-scenes/fpv.webp",
+              "type": "image",
+              "startedMs": 1531,
+              "status": 200,
+              "finishedMs": 2431
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/world-app.mjs",
+              "type": "script",
+              "startedMs": 1585,
+              "status": 200,
+              "finishedMs": 2614
+            },
+            {
+              "resource": "/revealline/game/i18n/index.mjs",
+              "type": "script",
+              "startedMs": 2615,
+              "status": 200,
+              "finishedMs": 2635
+            },
+            {
+              "resource": "/revealline/game/platform.mjs",
+              "type": "script",
+              "startedMs": 2615,
+              "status": 200,
+              "finishedMs": 3421
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/world-catalogue.mjs",
+              "type": "script",
+              "startedMs": 2615,
+              "status": 200,
+              "finishedMs": 2814
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/catalogue.mjs",
+              "type": "script",
+              "startedMs": 2616,
+              "status": 200,
+              "finishedMs": 2676
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/snake-hunt-presentation.mjs",
+              "type": "script",
+              "startedMs": 2616,
+              "status": 200,
+              "finishedMs": 3868
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/demonstrations.mjs",
+              "type": "script",
+              "startedMs": 2616,
+              "status": 200,
+              "finishedMs": 2831
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/world-demonstrations.mjs",
+              "type": "script",
+              "startedMs": 2616,
+              "status": 200,
+              "finishedMs": 4879
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/model.mjs",
+              "type": "script",
+              "startedMs": 2616,
+              "status": 200,
+              "finishedMs": 3476
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/world-model.mjs",
+              "type": "script",
+              "startedMs": 2616,
+              "status": 200,
+              "finishedMs": 3865
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/beginner-coach.mjs",
+              "type": "script",
+              "startedMs": 2616,
+              "status": 200,
+              "finishedMs": 2858
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/input.mjs",
+              "type": "script",
+              "startedMs": 2616,
+              "status": 200,
+              "finishedMs": 3425
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/radio-runtime.mjs",
+              "type": "script",
+              "startedMs": 2616,
+              "status": 200,
+              "finishedMs": 3425
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/radio-session.mjs",
+              "type": "script",
+              "startedMs": 2616,
+              "status": 200,
+              "finishedMs": 2676
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/radio-setup.mjs",
+              "type": "script",
+              "startedMs": 2616,
+              "status": 200,
+              "finishedMs": 2864
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/tuning-library.mjs",
+              "type": "script",
+              "startedMs": 2616,
+              "status": 200,
+              "finishedMs": 3868
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/tuning-ui.mjs",
+              "type": "script",
+              "startedMs": 2616,
+              "status": 200,
+              "finishedMs": 6390
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/flight-response.mjs",
+              "type": "script",
+              "startedMs": 2616,
+              "status": 200,
+              "finishedMs": 6392
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/advanced-practice.mjs",
+              "type": "script",
+              "startedMs": 2617,
+              "status": 200,
+              "finishedMs": 3868
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/advanced-regional.mjs",
+              "type": "script",
+              "startedMs": 2617,
+              "status": 200,
+              "finishedMs": 5323
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/advanced-worker-client.mjs",
+              "type": "script",
+              "startedMs": 2617,
+              "status": 200,
+              "finishedMs": 3421
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/advanced-simulation.mjs",
+              "type": "script",
+              "startedMs": 2617,
+              "status": 200,
+              "finishedMs": 3476
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/flight-fullscreen.mjs",
+              "type": "script",
+              "startedMs": 2617,
+              "status": 200,
+              "finishedMs": 3477
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/radio-profile.mjs",
+              "type": "script",
+              "startedMs": 2617,
+              "status": 200,
+              "finishedMs": 2880
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/notebook.mjs",
+              "type": "script",
+              "startedMs": 2617,
+              "status": 200,
+              "finishedMs": 2872
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/playlists.mjs",
+              "type": "script",
+              "startedMs": 2617,
+              "status": 200,
+              "finishedMs": 3868
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/world-records.mjs",
+              "type": "script",
+              "startedMs": 2617,
+              "status": 200,
+              "finishedMs": 2864
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/world-content.mjs",
+              "type": "script",
+              "startedMs": 2617,
+              "status": 200,
+              "finishedMs": 6358
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/world-zip.mjs",
+              "type": "script",
+              "startedMs": 2617,
+              "status": 200,
+              "finishedMs": 3422
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/world-store.mjs",
+              "type": "script",
+              "startedMs": 2617,
+              "status": 200,
+              "finishedMs": 6389
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/offline.mjs",
+              "type": "script",
+              "startedMs": 2617,
+              "status": 200,
+              "finishedMs": 4800
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/world-reaction-runtime.mjs",
+              "type": "script",
+              "startedMs": 2617,
+              "status": 200,
+              "finishedMs": 4357
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/regional-library.mjs",
+              "type": "script",
+              "startedMs": 2617,
+              "status": 200,
+              "finishedMs": 3422
+            },
+            {
+              "resource": "/revealline/game/data-json.mjs",
+              "type": "script",
+              "startedMs": 2617,
+              "status": 200,
+              "finishedMs": 4888
+            },
+            {
+              "resource": "/revealline/game/hunt/preferences.mjs",
+              "type": "script",
+              "startedMs": 2617,
+              "status": 200,
+              "finishedMs": 3868
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/industrial-environment.mjs",
+              "type": "script",
+              "startedMs": 2617,
+              "status": 200,
+              "finishedMs": 3476
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/world-themes.mjs",
+              "type": "script",
+              "startedMs": 2617,
+              "status": 200,
+              "finishedMs": 4813
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/world-editor.mjs",
+              "type": "script",
+              "startedMs": 2617,
+              "status": 200,
+              "finishedMs": 3463
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/sim-presentation.mjs",
+              "type": "script",
+              "startedMs": 2617,
+              "status": 200,
+              "finishedMs": 5464
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/regional-session.mjs",
+              "type": "script",
+              "startedMs": 2617,
+              "status": 200,
+              "finishedMs": 3421
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/regional-locations.mjs",
+              "type": "script",
+              "startedMs": 2617,
+              "status": 200,
+              "finishedMs": 5323
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/content-definitions.mjs",
+              "type": "script",
+              "startedMs": 2617,
+              "status": 200,
+              "finishedMs": 3832
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/world-assets.mjs",
+              "type": "script",
+              "startedMs": 2617,
+              "status": 200,
+              "finishedMs": 3405
+            },
+            {
+              "resource": "/revealline/game/fpv-entry.mjs",
+              "type": "script",
+              "startedMs": 2618,
+              "status": 200,
+              "finishedMs": 3868
+            },
+            {
+              "resource": "/revealline/game/vendor/i18next-26.4.2.min.js",
+              "type": "script",
+              "startedMs": 2635,
+              "status": 200,
+              "finishedMs": 6389
+            },
+            {
+              "resource": "/revealline/game/i18n/catalogs.mjs",
+              "type": "script",
+              "startedMs": 2635,
+              "status": 200,
+              "finishedMs": 6342
+            },
+            {
+              "resource": "/revealline/game/i18n/bootstrap.mjs",
+              "type": "script",
+              "startedMs": 2635,
+              "status": 200,
+              "finishedMs": 3883
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/native-pursuit-courses.mjs",
+              "type": "script",
+              "startedMs": 2814,
+              "status": 200,
+              "finishedMs": 6395
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/snake-hunt-catalogue.mjs",
+              "type": "script",
+              "startedMs": 2814,
+              "status": 200,
+              "finishedMs": 6404
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/math.mjs",
+              "type": "script",
+              "startedMs": 2858,
+              "status": 200,
+              "finishedMs": 6404
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/radio-controls.mjs",
+              "type": "script",
+              "startedMs": 2865,
+              "status": 200,
+              "finishedMs": 6407
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/radio-guide.mjs",
+              "type": "script",
+              "startedMs": 2865,
+              "status": 200,
+              "finishedMs": 6425
+            },
+            {
+              "resource": "/revealline/game/rewards/model.mjs",
+              "type": "script",
+              "startedMs": 2872,
+              "status": 200,
+              "finishedMs": 6443
+            },
+            {
+              "resource": "/revealline/game/rewards/store.mjs",
+              "type": "script",
+              "startedMs": 2872,
+              "status": 200,
+              "finishedMs": 6434
+            },
+            {
+              "resource": "/revealline/game/ui/reward-knowledge.mjs",
+              "type": "script",
+              "startedMs": 2872,
+              "status": 200,
+              "finishedMs": 6427
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/attempts.mjs",
+              "type": "script",
+              "startedMs": 2872,
+              "status": 200,
+              "finishedMs": 6427
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/renderer.mjs",
+              "type": "script",
+              "startedMs": 3405,
+              "status": 200,
+              "finishedMs": 6489
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/vendor/three.module.js",
+              "type": "script",
+              "startedMs": 3405,
+              "status": 200,
+              "finishedMs": 6685
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/regional/flight-prototype.mjs",
+              "type": "script",
+              "startedMs": 3421,
+              "status": 200,
+              "finishedMs": 6504
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/regional/region-manifest.mjs",
+              "type": "script",
+              "startedMs": 3421,
+              "status": 200,
+              "finishedMs": 6512
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/regional-delivery.mjs",
+              "type": "script",
+              "startedMs": 3422,
+              "status": 200,
+              "finishedMs": 6504
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/regional/terrain-surface.mjs",
+              "type": "script",
+              "startedMs": 3422,
+              "status": 200,
+              "finishedMs": 6504
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/regional/scenery-surface.mjs",
+              "type": "script",
+              "startedMs": 3422,
+              "status": 200,
+              "finishedMs": 6489
+            },
+            {
+              "resource": "/revealline/game/ui/menu-navigation-groups.mjs",
+              "type": "script",
+              "startedMs": 3425,
+              "status": 200,
+              "finishedMs": 6683
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/vendor/rapier/rapier.mjs",
+              "type": "script",
+              "startedMs": 3476,
+              "status": 200,
+              "finishedMs": 8645
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/world-collision.mjs",
+              "type": "script",
+              "startedMs": 3476,
+              "status": 200,
+              "finishedMs": 8686
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/advanced-controller.mjs",
+              "type": "script",
+              "startedMs": 3476,
+              "status": 200,
+              "finishedMs": 8686
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/rates.mjs",
+              "type": "script",
+              "startedMs": 3477,
+              "status": 200,
+              "finishedMs": 8686
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/advanced-terrain.mjs",
+              "type": "script",
+              "startedMs": 3477,
+              "status": 200,
+              "finishedMs": 8686
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/flight-sectors.mjs",
+              "type": "script",
+              "startedMs": 3477,
+              "status": 200,
+              "finishedMs": 8663
+            },
+            {
+              "resource": "/revealline/game/presentation/industrial-environments.mjs",
+              "type": "script",
+              "startedMs": 3477,
+              "status": 200,
+              "finishedMs": 8685
+            },
+            {
+              "resource": "/revealline/game/ui/art-review-navigation.mjs",
+              "type": "script",
+              "startedMs": 3477,
+              "status": 200,
+              "finishedMs": 8686
+            },
+            {
+              "resource": "/revealline/game/presentation/theme-system.mjs",
+              "type": "script",
+              "startedMs": 3477,
+              "status": 200,
+              "finishedMs": 8663
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/flight-support.mjs",
+              "type": "script",
+              "startedMs": 3867,
+              "status": 200,
+              "finishedMs": 8686
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/flight-contact.mjs",
+              "type": "script",
+              "startedMs": 3867,
+              "status": 200,
+              "finishedMs": 8705
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/snake-hunt.mjs",
+              "type": "script",
+              "startedMs": 3867,
+              "status": 200,
+              "finishedMs": 8705
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/world-pursuit.mjs",
+              "type": "script",
+              "startedMs": 3867,
+              "status": 200,
+              "finishedMs": 8722
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/betaflight-import.mjs",
+              "type": "script",
+              "startedMs": 3868,
+              "status": 200,
+              "finishedMs": 8705
+            },
+            {
+              "resource": "/revealline/game/hunt/presentation-catalog.mjs",
+              "type": "script",
+              "startedMs": 3868,
+              "status": 200,
+              "finishedMs": 8704
+            },
+            {
+              "resource": "/revealline/game/ui/defeat-sound-controls.mjs",
+              "type": "script",
+              "startedMs": 3868,
+              "status": 200,
+              "finishedMs": 8705
+            },
+            {
+              "resource": "/revealline/game/encounter-display-preferences.mjs",
+              "type": "script",
+              "startedMs": 3868,
+              "status": 200,
+              "finishedMs": 8705
+            },
+            {
+              "resource": "/revealline/game/hunt/actor-catalog.mjs",
+              "type": "script",
+              "startedMs": 3868,
+              "status": 200,
+              "finishedMs": 8722
+            },
+            {
+              "resource": "/revealline/game/hunt/industrial-soldier-kit.mjs",
+              "type": "script",
+              "startedMs": 3868,
+              "status": 200,
+              "finishedMs": 8705
+            },
+            {
+              "resource": "/revealline/game/presentation/industrial-machinery.mjs",
+              "type": "script",
+              "startedMs": 3868,
+              "status": 200,
+              "finishedMs": 8722
+            },
+            {
+              "resource": "/revealline/game/ui/human-reaction-policy.mjs",
+              "type": "script",
+              "startedMs": 4357,
+              "status": 200,
+              "finishedMs": 8722
+            },
+            {
+              "resource": "/revealline/game/audio/human-reactions/portable.mjs",
+              "type": "script",
+              "startedMs": 4357,
+              "status": 200,
+              "finishedMs": 8918
+            },
+            {
+              "resource": "/revealline/game/ui/destruction-level.mjs",
+              "type": "script",
+              "startedMs": 4357,
+              "status": 200,
+              "finishedMs": 8771
+            },
+            {
+              "resource": "/revealline/game/ui/destruction-audio.mjs",
+              "type": "script",
+              "startedMs": 4357,
+              "status": 200,
+              "finishedMs": 8751
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/world-visuals.mjs",
+              "type": "script",
+              "startedMs": 4357,
+              "status": 200,
+              "finishedMs": 8773
+            },
+            {
+              "resource": "/revealline/game/hunt/actor-art.mjs",
+              "type": "script",
+              "startedMs": 4357,
+              "status": 200,
+              "finishedMs": 8919
+            },
+            {
+              "resource": "/revealline/optional-practice/install-context.mjs",
+              "type": "script",
+              "startedMs": 4800,
+              "status": 200,
+              "finishedMs": 8919
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/battlefield-ground.mjs",
+              "type": "script",
+              "startedMs": 4814,
+              "status": 200,
+              "finishedMs": 8919
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/regional/verified-flight-geometry.mjs",
+              "type": "script",
+              "startedMs": 5323,
+              "status": 200,
+              "finishedMs": 8919
+            },
+            {
+              "resource": "/revealline/game/ui/native-menu-icons.mjs",
+              "type": "script",
+              "startedMs": 5464,
+              "status": 200,
+              "finishedMs": 8919
+            },
+            {
+              "resource": "/revealline/game/ui/enemy-appearance-controls.mjs",
+              "type": "script",
+              "startedMs": 5464,
+              "status": 200,
+              "finishedMs": 8919
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/expressive-hunt-courses.mjs",
+              "type": "script",
+              "startedMs": 6404,
+              "status": 200,
+              "finishedMs": 8928
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/rotation-table.mjs",
+              "type": "script",
+              "startedMs": 6404,
+              "status": 200,
+              "finishedMs": 8942
+            },
+            {
+              "resource": "/revealline/game/profile-storage.mjs",
+              "type": "script",
+              "startedMs": 6427,
+              "status": 200,
+              "finishedMs": 8942
+            },
+            {
+              "resource": "/revealline/game/rewards/learning-profiles.mjs",
+              "type": "script",
+              "startedMs": 6427,
+              "status": 200,
+              "finishedMs": 8943
+            },
+            {
+              "resource": "/revealline/game/rewards/exploration.mjs",
+              "type": "script",
+              "startedMs": 6443,
+              "status": 200,
+              "finishedMs": 8943
+            },
+            {
+              "resource": "/revealline/game/rewards/audio-groups.mjs",
+              "type": "script",
+              "startedMs": 6443,
+              "status": 200,
+              "finishedMs": 8943
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/industrial-vehicles.mjs",
+              "type": "script",
+              "startedMs": 6489,
+              "status": 200,
+              "finishedMs": 8943
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/industrial-soldiers.mjs",
+              "type": "script",
+              "startedMs": 6489,
+              "status": 200,
+              "finishedMs": 8961
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/regional/urban-ground-surface.mjs",
+              "type": "script",
+              "startedMs": 6504,
+              "status": 200,
+              "finishedMs": 8961
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/regional/railway-expanse-ground.mjs",
+              "type": "script",
+              "startedMs": 6504,
+              "status": 200,
+              "finishedMs": 8957
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/regional/hillside-ground-surface.mjs",
+              "type": "script",
+              "startedMs": 6504,
+              "status": 200,
+              "finishedMs": 8957
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/vendor/three.core.js",
+              "type": "script",
+              "startedMs": 6685,
+              "status": 200,
+              "finishedMs": 9191
+            },
+            {
+              "resource": "/revealline/game/presentation/industrial-environments-data.mjs",
+              "type": "script",
+              "startedMs": 8685,
+              "status": 200,
+              "finishedMs": 9266
+            },
+            {
+              "resource": "/revealline/game/hunt/copy.mjs",
+              "type": "script",
+              "startedMs": 8705,
+              "status": 200,
+              "finishedMs": 9266
+            },
+            {
+              "resource": "/revealline/game/presentation/industrial-materials.mjs",
+              "type": "script",
+              "startedMs": 8773,
+              "status": 200,
+              "finishedMs": 9266
+            },
+            {
+              "resource": "/revealline/game/presentation/actor-animation.mjs",
+              "type": "script",
+              "startedMs": 8919,
+              "status": 200,
+              "finishedMs": 9266
+            },
+            {
+              "resource": "/revealline/game/overflight/worlds.mjs",
+              "type": "script",
+              "startedMs": 8919,
+              "status": 200,
+              "finishedMs": 9280
+            },
+            {
+              "resource": "/revealline/game/presentation/overflight-world-art.mjs",
+              "type": "script",
+              "startedMs": 8919,
+              "status": 200,
+              "finishedMs": 9279
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/regional/verified-terrain-window.mjs",
+              "type": "script",
+              "startedMs": 8919,
+              "status": 200,
+              "finishedMs": 9271
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/regional/verified-scenery-window.mjs",
+              "type": "script",
+              "startedMs": 8919,
+              "status": 200,
+              "finishedMs": 9279
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/regional/verified-mixed-window.mjs",
+              "type": "script",
+              "startedMs": 8919,
+              "status": 200,
+              "finishedMs": 9280
+            },
+            {
+              "resource": "/revealline/game/profile-database.mjs",
+              "type": "script",
+              "startedMs": 8942,
+              "status": 200,
+              "finishedMs": 9280
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/regional/region-motion-query.mjs",
+              "type": "script",
+              "startedMs": 9272,
+              "status": 200,
+              "finishedMs": 9395
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/regional/frame-transaction.mjs",
+              "type": "script",
+              "startedMs": 9272,
+              "status": 200,
+              "finishedMs": 9442
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/regional/source-window.mjs",
+              "type": "script",
+              "startedMs": 9272,
+              "status": 200,
+              "finishedMs": 9441
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/regional/terrain-cell.mjs",
+              "type": "script",
+              "startedMs": 9272,
+              "status": 200,
+              "finishedMs": 9442
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/regional/terrain-admission.mjs",
+              "type": "script",
+              "startedMs": 9272,
+              "status": 200,
+              "finishedMs": 9442
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/regional/restore-containment.mjs",
+              "type": "script",
+              "startedMs": 9279,
+              "status": 200,
+              "finishedMs": 9441
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/regional/scenery-cell.mjs",
+              "type": "script",
+              "startedMs": 9279,
+              "status": 200,
+              "finishedMs": 9424
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/regional/indexed-scenery-cell.mjs",
+              "type": "script",
+              "startedMs": 9279,
+              "status": 200,
+              "finishedMs": 9442
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/regional/scenery-admission.mjs",
+              "type": "script",
+              "startedMs": 9279,
+              "status": 200,
+              "finishedMs": 9424
+            },
+            {
+              "resource": "/revealline/game/presentation/overflight-world-art-v2.mjs",
+              "type": "script",
+              "startedMs": 9279,
+              "status": 200,
+              "finishedMs": 9424
+            },
+            {
+              "resource": "/revealline/game/presentation/overflight-world-slots.mjs",
+              "type": "script",
+              "startedMs": 9279,
+              "status": 200,
+              "finishedMs": 9424
+            },
+            {
+              "resource": "/revealline/game/overflight/terrain.mjs",
+              "type": "script",
+              "startedMs": 9280,
+              "status": 200,
+              "finishedMs": 9424
+            },
+            {
+              "resource": "/revealline/game/overflight/world-layout-presentation.mjs",
+              "type": "script",
+              "startedMs": 9281,
+              "status": 200,
+              "finishedMs": 9424
+            },
+            {
+              "resource": "/revealline/game/snake/classic-structure-art.mjs",
+              "type": "script",
+              "startedMs": 9424,
+              "status": 200,
+              "finishedMs": 9446
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/regional/terrain-normals.mjs",
+              "type": "script",
+              "startedMs": 9442,
+              "status": 200,
+              "finishedMs": 9482
+            },
+            {
+              "resource": "/revealline/optional-practice/civilian-fpv/regional/rgba-scenery-cell.mjs",
+              "type": "script",
+              "startedMs": 9442,
+              "status": 200,
+              "finishedMs": 9467
+            }
+          ],
+          "elapsedMs": 9786,
+          "state": {
+            "access": "unlocked",
+            "documentReady": "complete",
+            "shellPending": false,
+            "settingsPresent": true,
+            "passwordFormPresent": false,
+            "inertScriptCount": 0,
+            "serviceWorkerControlled": false
+          },
+          "pendingRequests": 0
+        }
+      ]
+    }
+  ],
+  "deployment": {
+    "format": "revealline-main-deployment.v1",
+    "channel": "main",
+    "sourceRevision": "fb3caf12bd43743670f47c42dc21f7a406223379",
+    "sourceCommittedAt": "2026-10-17T13:58:53Z",
+    "buildVersion": "main-fb3caf12bd43",
+    "play": "game/",
+    "releases": "https://github.com/mekhovov/revealline/releases"
+  },
+  "browser": "155.0.8059.85",
+  "finalDeployment": {
+    "format": "revealline-main-deployment.v1",
+    "channel": "main",
+    "sourceRevision": "fb3caf12bd43743670f47c42dc21f7a406223379",
+    "sourceCommittedAt": "2026-10-17T13:58:53Z",
+    "buildVersion": "main-fb3caf12bd43",
+    "play": "game/",
+    "releases": "https://github.com/mekhovov/revealline/releases"
+  },
+  "deploymentStable": true,
+  "completedAt": "2026-10-17T14:47:05.451Z",
+  "runnerSha256": "2c4a9378b211ce03d1192357ba9ae17ed7861f0489bc471a1a9423907aa58b05",
+  "observerSha256": "2177e895551c37191df2113896cd9540438071cfcfeb42577b9f3fb948aa567c",
+  "retainedRunner": "docs/fpv-input-recovery-evidence/public-startup-observation.mjs",
+  "limits": [
+    "This ad hoc runner uses the fixed local module paths recorded in its source. No password is stored in that file.",
+    "Three independent public baseline logins on one desktop; no offline flight, throughput or physical input-latency qualification.",
+    "Public deployment metadata remained stable. This observation does not repeat the full source-manifest binding or qualify the unpublished input-recovery correction.",
+    "The earlier 60-second startup timeout remains failed and unexplained; these attempts do not establish its cause or universally reliable startup."
+  ]
+}

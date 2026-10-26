@@ -177,8 +177,10 @@ for (const mode of ['Solo', 'Duel'])
       f.draws.some(([image]) => image === picture),
       'earned picture still draws',
     );
-    const ground = f.created.at(-1),
+    // Select the source of span samples, independently of later cached layers.
+    const ground = f.draws.find((args) => args.length === 9 && f.created.includes(args[0]))?.[0],
       samples = f.draws.filter(([image]) => image === ground);
+    assert.ok(ground);
     assert.ok(samples.length > 0 && samples.length < run.cells.length / 2);
     for (const args of samples) {
       const [, , , , , x, y, width, height] = args;

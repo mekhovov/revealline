@@ -191,7 +191,10 @@ test('missing flags, unknown fields, arbitrary physics, invalid disabled placeme
     const team = createTeamOpeningCandidates();
     team.actorCatalogId = 'journey-actors-v8';
     team.missions[0].combat = { version: 'mission-combat.v1', enabled };
-    assert.throws(() => compileContentProject(team), /not qualified for Team/);
+    assert.throws(
+      () => compileContentProject(team),
+      /Optional combat requires the explicitly qualified Team hunt edition\./,
+    );
   }
 });
 

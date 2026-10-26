@@ -107,6 +107,7 @@ export function attachSoundtrackPanel({
   download,
   onOpen = () => {},
   onClose = () => {},
+  onPresentationChange = () => {},
   canRestoreFocus = () => true,
   onVolume = () => {},
   onPlayback = () => {},
@@ -116,6 +117,7 @@ export function attachSoundtrackPanel({
   onMasterVolume = null,
   beforeAudio = async () => {},
   settingsRoot = null,
+  settingsOwner = settingsRoot,
   albumDownload = {},
   onlineCatalogueDownload = {},
   onlineSourceManager = null,
@@ -123,6 +125,7 @@ export function attachSoundtrackPanel({
   catalogue = null,
   availableStyles = PUBLIC_SOUNDTRACK_STYLE_IDS,
   readAsset,
+  loadAuthoringView = () => import('./soundtrack-authoring-view.mjs'),
 } = {}) {
   if (!doc?.body || !store?.read || !store?.commit || !player?.snapshot)
     throw new Error(t('interface:soundtrackPanelRequiresADocumentStoreAndPlayer'));
@@ -170,6 +173,14 @@ export function attachSoundtrackPanel({
     controller = null,
     saved = null,
     preparedBackup = null;
+  const publicationLifetime = new AbortController();
+  const publish = (
+    work,
+    { signal = publicationLifetime.signal, eligible = () => !disposed } = {},
+  ) =>
+    onlineCatalogueDownload.preparation
+      ? onlineCatalogueDownload.preparation.run('main', work, { signal, eligible })
+      : Promise.resolve(work());
   let draftPublicStyles;
   let draft = adopt(emptySoundtrackLibrary()),
     assets = [],
@@ -318,7 +329,7 @@ export function attachSoundtrackPanel({
     assets = [...saved.assets];
     dirty = false;
     privateCollectionPlaylistId = null;
-    localizedText(collectionSummary, () => '');
+    if (authoringView.collectionSummary) localizedText(authoringView.collectionSummary, () => '');
     render();
     setStatus(t('interface:restoredTheSavedLibraryPlaybackIsUnchanged'));
   });
@@ -760,9 +771,12 @@ export function attachSoundtrackPanel({
     if (selected < 0) return matches.slice(0, limit);
     return [...matches.slice(selected), ...matches.slice(0, selected)].slice(0, limit);
   };
-  function selectedSettingsStyles() {
+  function selectedSettingsStyles(includeUnresolved = false) {
     return [...settingsStyleInputs]
-      .filter(([style, checkbox]) => visibleStyleIds.has(style) && checkbox.checked)
+      .filter(
+        ([style, checkbox]) =>
+          (includeUnresolved || visibleStyleIds.has(style)) && checkbox.checked,
+      )
       .map(([style]) => style);
   }
   function savedSettingsStyles() {
@@ -793,7 +807,8 @@ export function attachSoundtrackPanel({
     );
   }
   async function playSettingsStyles() {
-    const selected = selectedSettingsStyles();
+    // Preserve a checked saved style while its optional feed has not been requested yet.
+    const selected = selectedSettingsStyles(true);
     if (!selected.length) {
       renderSettingsStyleStatus(t('interface:soundtrack.chooseAtLeastOneStyle'));
       return false;
@@ -808,14 +823,15 @@ export function attachSoundtrackPanel({
         throwIfSoundtrackAborted(signal);
         const loaded = await loadOnlineCatalogue();
         throwIfSoundtrackAborted(signal);
-        const localGenres = localGenresForPublicStyles(selected);
-        const selection = publicSoundtrackSelection(loaded ?? { tracks: [] }, selected, {
+        const available = selected.filter((style) => visibleStyleIds.has(style));
+        const localGenres = localGenresForPublicStyles(available);
+        const selection = publicSoundtrackSelection(loaded ?? { tracks: [] }, available, {
           recordingMode: Boolean(draft.listening?.recordingMode),
         });
         if (!selection.tracks.length && !localGenres.length)
           throw new Error(t('interface:soundtrack.chooseAtLeastOneStyle'));
         const retainedStyles = new Set([
-          ...selected,
+          ...available,
           ...(saved?.publicStyles ?? []).filter((style) => !visibleStyleIds.has(style)),
         ]);
         const committed = await commitSettingsListening(
@@ -935,6 +951,9 @@ export function attachSoundtrackPanel({
     ),
   );
   onlineArchive.classList.add('soundtrack-online-card');
+  const playButton = button('play', localizedMessage('interface:playMusic2'), () =>
+    controlMusic(() => (musicSession ? musicSession.play() : player.play()), true),
+  );
   const transport = section(
     localizedMessage('interface:nowPlaying'),
     now,
@@ -944,9 +963,7 @@ export function attachSoundtrackPanel({
       button('previous', localizedMessage('common:actions.previous'), () =>
         controlMusic(() => player.previous()),
       ),
-      button('play', localizedMessage('interface:playMusic2'), () =>
-        controlMusic(() => (musicSession ? musicSession.play() : player.play()), true),
-      ),
+      playButton,
       button('pause', localizedMessage('interface:pauseMusic'), () =>
         controlMusic(() => (musicSession ? musicSession.pause() : player.pause())),
       ),
@@ -958,469 +975,140 @@ export function attachSoundtrackPanel({
     volume.field,
   );
   transport.classList.add('soundtrack-now-card');
-  // Hosts without the catalogue still expose built-in and imported playlists.
-  if (!catalogue) transport.append(selection.field, useSelection);
-  const tracksSelect = input('tracks', localizedMessage('interface:tracks'), {
-    tag: 'select',
-    size: '7',
-  });
-  const fileInput = input('mp3-files', localizedMessage('interface:addMp3Files'), {
-    type: 'file',
-    accept: '.mp3,audio/mpeg',
-    multiple: '',
-  });
-  const importButton = button('import-mp3', localizedMessage('interface:importSelectedMp3s'), () =>
-    importMP3Files(),
-  );
-  const collectionTitle = input('collection-title', localizedMessage('interface:playlistTitle'), {
-    maxlength: '120',
-  });
-  const collectionGenre = input(
-    'collection-genre',
-    localizedMessage('interface:primaryMusicFamily'),
-    { tag: 'select' },
-  );
-  options(collectionGenre.element, [['', t('interface:unclassified')], ...genreNames]);
-  const collectionFiles = input('collection-files', localizedMessage('interface:addMp3Files'), {
-    type: 'file',
-    accept: '.mp3,audio/mpeg',
-    multiple: '',
-  });
-  const collectionFolder = input(
-    'collection-folder',
-    localizedMessage('interface:chooseMp3Folder'),
-    {
-      type: 'file',
-      accept: '.mp3,audio/mpeg',
-      multiple: '',
-      webkitdirectory: '',
-      directory: '',
-    },
-  );
-  const collectionSummary = node('p', 'collection-summary', '', {
-    class: 'micro-note',
-    role: 'status',
-    'aria-live': 'polite',
-  });
-  const reviewCollection = button(
-    'review-collection',
-    localizedMessage('interface:reviewAsPlaylist'),
-    () => importPrivateCollection(),
-  );
-  const savePlayCollection = button(
-    'save-play-collection',
-    localizedMessage('interface:saveCollectionAndPlay'),
-    () => {
-      const playlist = draft.playlists.find((item) => item.id === privateCollectionPlaylistId);
-      if (!playlist) return;
-      return usePlaylist(playlist.id, {
-        start: true,
-        onPlaybackResult: (playing) =>
-          localizedText(collectionSummary, () =>
-            playing
-              ? t('interface:soundtrack.privateCollectionSaved', { title: playlist.title })
-              : savedPlaylistPlaybackHint(),
-          ),
-      });
-    },
-  );
-  const trackTitle = input('track-title', localizedMessage('interface:trackTitle'), {
-    maxlength: '120',
-  });
-  const trackArtist = input('track-artist', localizedMessage('interface:artist'), {
-    maxlength: '160',
-  });
-  const rightsKind = input('rights-kind', localizedMessage('interface:sourceDeclaration'), {
-    tag: 'select',
-  });
-  options(rightsKind.element, [
-    ['personal', t('interface:personalLocalUpload')],
-    ['original', t('interface:originalWork')],
-    ['licensed', t('interface:licensedWork')],
-  ]);
-  const rightsCredit = input('rights-credit', localizedMessage('interface:credit'), {
-    maxlength: '280',
-  });
-  const rightsLicense = input('rights-license', localizedMessage('interface:licensePermission'), {
-    maxlength: '280',
-  });
-  const rightsSource = input('rights-source', localizedMessage('interface:sourceProvenance'), {
-    maxlength: '1024',
-  });
-  const trackGenre = input('track-genre', localizedMessage('interface:primaryMusicFamily'), {
-    tag: 'select',
-  });
-  const trackFusion = input('track-fusion', localizedMessage('interface:fusionWith'), {
-    tag: 'select',
-  });
-  options(trackGenre.element, [['', t('interface:unclassified')], ...genreNames]);
-  options(trackFusion.element, [['', t('interface:noSecondFamily')], ...genreNames]);
-  const trackRole = input('track-role', localizedMessage('interface:useIn'), { tag: 'select' });
-  options(trackRole.element, [
-    ['any', t('interface:anyScene')],
-    ['menu', t('interface:menus')],
-    ['gameplay', t('interface:gameplay')],
-    ['intense', t('interface:finalesHighIntensity')],
-  ]);
-  const trackEnergy = input('track-energy', localizedMessage('interface:energy1Calm5Intense'), {
-    type: 'number',
-    min: '1',
-    max: '5',
-  });
-  const trackThemes = input(
-    'track-themes',
-    localizedMessage('interface:worldIdsCommaSeparated'),
-    { maxlength: '160' },
-  );
-  const tagFields = section(
-    t('interface:musicalCharacter'),
-    trackGenre.field,
-    trackFusion.field,
-    trackRole.field,
-    trackEnergy.field,
-    trackThemes.field,
-  );
-  tagFields.hidden = !catalogue;
-  const trackInfo = node('p', 'track-info', '', { class: 'micro-note' });
-  const trackSources = node('div', 'track-sources');
-  const downloadTrack = button(
-    'download-track',
-    localizedMessage('interface:prepareOriginalMp3Download'),
-    () =>
-      task(t('interface:verifyingOriginalMp3ForDownload'), async (signal) => {
-        const track = tracks().find((item) => item.id === tracksSelect.element.value);
-        if (
-          track?.kind !== 'mp3' ||
-          soundtrackRights(track, { catalogue: catalogue ?? undefined }).redistribute !== 'allowed'
-        )
-          throw new Error(t('interface:thisRecordingIsAvailableForInGamePlaybackOnlyStandalone'));
-        const blob =
-          assets.find((asset) => asset.sha256 === track.asset.sha256)?.blob ??
-          (await readAsset?.(track.asset.sha256, { signal, purpose: 'export' }));
-        if (!blob)
-          throw new Error(t('interface:theOriginalRecordingIsUnavailableRestoreItOrGoOnline'));
-        const actual = await inspectMP3(blob, { signal });
-        if (actual.sha256 !== track.asset.sha256 || actual.bytes !== track.asset.bytes)
-          throw new Error(t('interface:theRecordingDiffersFromItsCatalogue'));
-        throwIfSoundtrackAborted(signal);
-        invalidateBackup();
-        preparedBackup = {
-          blob,
-          recording: true,
-          filename:
-            track.fileName ??
-            `${track.title.replace(/[^a-z0-9 -]/gi, '').trim() || 'soundtrack'}.mp3`,
-          url: typeof download === 'function' ? null : URLImpl.createObjectURL(blob),
-        };
-        setStatus(t('interface:originalMp3VerifiedChooseDownloadPreparedMp3BelowToSave'));
-      }),
-  );
-  const discoveryRecording = button(
-    'discovery-recording',
-    localizedMessage('interface:soundtrack.discoveryRecording'),
-    () =>
-      task(t('interface:soundtrack.discoveryChecking'), async (signal) => {
-        const track = tracks().find((item) => item.id === tracksSelect.element.value);
-        if (!canPrepareDiscoveryRecording(track, { catalogue: catalogue ?? undefined }))
-          throw new Error(t('interface:soundtrack.discoveryHelp'));
-        const blob =
-          track?.kind === 'mp3' &&
-          (assets.find((asset) => asset.sha256 === track.asset.sha256)?.blob ??
-            (await readAsset?.(track.asset.sha256, { signal, purpose: 'export' })));
-        const prepared = await prepareDiscoveryRecording(track, blob, {
-          catalogue: catalogue ?? undefined,
-          signal,
-        });
-        throwIfSoundtrackAborted(signal);
-        if (disposed) return;
-        invalidateBackup();
-        preparedBackup = {
-          ...prepared,
-          recording: true,
-          url: typeof download === 'function' ? null : URLImpl.createObjectURL(prepared.blob),
-        };
-        setStatus(t('interface:soundtrack.discoveryPrepared'));
-      }),
-  );
-  const applyTrack = button(
-    'apply-track',
-    localizedMessage('interface:applyTrackDetailsToDraft'),
-    () =>
-      attempt(() => {
-        const id = tracksSelect.element.value;
-        edit((value) => {
-          const track = value.tracks.find((item) => item.id === id);
-          if (!track) throw new Error(t('interface:builtInTracksCannotBeEdited'));
-          Object.assign(track, {
-            title: trackTitle.element.value,
-            artist: trackArtist.element.value,
-            rights: {
-              kind: rightsKind.element.value,
-              credit: rightsCredit.element.value,
-              license: rightsLicense.element.value,
-              source: rightsSource.element.value,
-            },
-          });
-          if (catalogue) {
-            const genres = [
-              ...new Set([trackGenre.element.value, trackFusion.element.value].filter(Boolean)),
-            ];
-            value.tags[id] = {
-              genres,
-              role: trackRole.element.value,
-              energy: Number(trackEnergy.element.value),
-              themes: [
-                ...new Set(
-                  trackThemes.element.value
-                    .split(',')
-                    .map((part) => part.trim())
-                    .filter(Boolean),
-                ),
-              ],
-            };
-          }
-        });
-        render();
-        setStatus(t('interface:trackDetailsAddedToTheDraftSaveAllChangesTo'));
-      }),
-  );
-  const deleteTrack = button(
-    'delete-track',
-    localizedMessage('interface:removeTrackFromDraft'),
-    () =>
-      attempt(() => {
-        const id = tracksSelect.element.value;
-        edit((value) => {
-          if (!value.tracks.some((item) => item.id === id))
-            throw new Error(t('interface:builtInTracksAreRetained'));
-          const references = value.playlists.filter((item) => item.trackIds.includes(id));
-          if (references.length)
-            throw new Error(
-              t('gameplay:removeThisTrackFromItsPlaylistsFirst', {
-                value1: references.map((item) => contentText(item, 'title')).join(', '),
-              }),
-            );
-          value.tracks = value.tracks.filter((item) => item.id !== id);
-          if (value.tags) delete value.tags[id];
-          if (value.bonusAlbums)
-            value.bonusAlbums = value.bonusAlbums
-              .map((album) => ({
-                ...album,
-                trackIds: album.trackIds.filter((trackId) => trackId !== id),
-              }))
-              .filter((album) => album.trackIds.length);
-        });
-        pruneAssets();
-        render();
-        setStatus(t('interface:trackRemovedFromTheDraftTheSavedLibraryIsUnchanged'));
-      }),
-  );
-  const audition = node('audio', 'audition', null, {
-    controls: '',
-    preload: 'metadata',
-    'aria-label': localizedMessage('interface:importedTrackAudition'),
-  });
-  let auditionLocalVolume = 1;
-  const auditionMaster = audioMaster
-    ? bindAudioMasterMedia({
-        audioMaster,
-        element: audition,
-        volume: auditionLocalVolume,
-        muted: true,
-      })
-    : null;
-  audition.hidden = true;
-  const auditionButton = button('audition-track', localizedMessage('interface:auditionMp3'), () =>
-    playback(() => startAudition()),
-  );
-  const stopAuditionButton = button(
-    'stop-audition',
-    localizedMessage('interface:finishAudition'),
-    () => playback(() => stopAudition(true)),
-  );
-  const auditionSeek = input('audition-seek', localizedMessage('interface:auditionPosition'), {
-    type: 'range',
-    min: '0',
-    max: '0',
-    step: '0.5',
-  });
-  const auditionVolume = input('audition-volume', localizedMessage('interface:auditionVolume'), {
-    type: 'range',
-    min: '0',
-    max: '1',
-    step: '0.05',
-  });
-  const toggleAudition = button(
-    'toggle-audition',
-    localizedMessage('interface:pauseAudition'),
-    () =>
-      playback(async () => {
-        if (!auditionURL || disposed || busy) return;
-        const token = auditionToken;
-        if (!audition.paused) {
-          auditionActivity?.clear();
-          auditionActivity = null;
-          audition.pause();
-          auditionMaster?.setLocal({ muted: true });
-        } else {
-          wakeAudio();
-          if (disposed || token !== auditionToken || !auditionURL) return;
-          const lease = auditionFeedback.begin({
-            message: t('interface:resumingAudition'),
-            stage: 'playing',
-            isCurrent: () => !disposed && dialog.open && token === auditionToken,
-          });
-          auditionActivity = lease;
-          try {
-            auditionMaster?.setLocal({ muted: false });
-            await audition.play();
-            lease.finish({ message: t('interface:auditionPlaying') });
-          } catch (error) {
-            lease.finish({ message: () => message(error), state: 'error' });
-            if (token === auditionToken) throw error;
+  // Playback recovery owns its own caption: library/save feedback must not
+  // replace a failure before the player resolves or dismisses it.
+  let playbackFailure = null,
+    observedFailure = null,
+    retryingPlayback = false;
+  const recoveryViews = [];
+  function recoveryView(id, parent, returnTarget) {
+    const root = node('section', id, null, {
+      class: 'soundtrack-recovery',
+      'aria-labelledby': `soundtrack-${id}-title`,
+    });
+    root.hidden = true;
+    const title = node('h3', `${id}-title`, localizedMessage('interface:musicRecovery.title'));
+    const detail = node('p', `${id}-detail`, null, { role: 'status', 'aria-live': 'polite' });
+    const retry = button(
+      `${id}-retry`,
+      localizedMessage('interface:musicRecovery.retry'),
+      async () => {
+        if (disposed || retryingPlayback || !playbackFailure) return;
+        retryingPlayback = true;
+        renderRecovery();
+        // controlMusic invokes play before awaiting so Retry retains browser activation.
+        try {
+          await controlMusic(() => (musicSession ? musicSession.play() : player.play()), true);
+        } finally {
+          retryingPlayback = false;
+          if (!disposed) {
+            update();
+            renderRecovery();
           }
         }
-      }),
-  );
-  const auditionStatus = node('p', 'audition-status');
-  const auditionSources = node('div', 'audition-sources');
-  const auditionFeedback = createOperationStatus(auditionStatus);
-  const auditionControls = section(
-    localizedMessage('interface:auditionControls'),
-    row(toggleAudition),
-    auditionSeek.field,
-    auditionVolume.field,
-  );
-  auditionControls.hidden = true;
-  const tracksSection = advancedSection(
-    'library',
-    t('interface:addEditMusic'),
-    t('interface:uploadMp3sEditCreditsAndAuditionTracks'),
-    node('p', null, localizedMessage('interface:batchImportKeepsOriginalMp3BytesEachFileMustBe'), {
-      class: 'micro-note',
-    }),
-    section(
-      t('interface:privateCollectionQuickAdd'),
-      node('p', null, localizedMessage('interface:privateCollectionQuickAddDescription'), {
-        class: 'micro-note',
-      }),
-      collectionTitle.field,
-      collectionGenre.field,
-      collectionFiles.field,
-      collectionFolder.field,
-      row(reviewCollection, savePlayCollection),
-      collectionSummary,
-    ),
-    fileInput.field,
-    importButton,
-    tracksSelect.field,
-    trackInfo,
-    trackSources,
-    downloadTrack,
-    discoveryRecording,
-    node('p', null, localizedMessage('interface:soundtrack.discoveryHelp'), {
-      class: 'micro-note',
-    }),
-    trackTitle.field,
-    trackArtist.field,
-    rightsKind.field,
-    rightsCredit.field,
-    rightsLicense.field,
-    rightsSource.field,
-    tagFields,
-    row(applyTrack, deleteTrack),
-    auditionStatus,
-    auditionSources,
-    row(auditionButton, stopAuditionButton),
-    audition,
-    auditionControls,
-  );
-  const playlistsSelect = input('playlists', localizedMessage('interface:playlists'), {
-    tag: 'select',
-    size: '5',
-  });
-  const playlistTitle = input('playlist-title', localizedMessage('interface:playlistTitle'), {
-    maxlength: '120',
-  });
-  const order = input('order', localizedMessage('interface:playbackOrder'), { tag: 'select' });
-  options(order.element, [
-    ['ordered', t('interface:inOrder')],
-    ['shuffle', t('interface:shuffleWithoutRepeatsUntilEveryEntryPlayed')],
-  ]);
-  const repeat = input('repeat', localizedMessage('interface:repeat'), { tag: 'select' });
-  options(repeat.element, [
-    ['all', t('interface:repeatAll')],
-    ['one', t('interface:repeatOne')],
-    ['off', t('interface:stopAtTheEnd')],
-  ]);
-  const entries = input('entries', localizedMessage('interface:playlistEntries'), {
-    tag: 'select',
-    size: '7',
-  });
-  const addTrack = input('add-track', localizedMessage('interface:trackToAdd'), { tag: 'select' });
-  const createPlaylist = button(
-    'create-playlist',
-    localizedMessage('interface:newPlaylistWithSelectedTrack'),
-    () =>
-      attempt(() => {
-        const id = makeId('playlist');
-        edit((value) =>
-          value.playlists.push({
-            id,
-            title: t('interface:newPlaylist'),
-            trackIds: [tracksSelect.element.value],
-            order: 'ordered',
-            repeat: 'all',
-          }),
-        );
-        render({ playlistId: id });
-        setStatus(t('interface:newPlaylistAddedToTheDraftEditItsTitleOrder'));
-      }),
-  );
-  const clonePlaylist = button(
-    'clone-playlist',
-    localizedMessage('interface:cloneSelectedPlaylist'),
-    () =>
-      attempt(() => {
-        const source = playlists().find((item) => item.id === playlistsSelect.element.value);
-        const id = makeId('playlist');
-        edit((value) =>
-          value.playlists.push({
-            ...copy(source),
-            id,
-            title: t('gameplay:copy', { value1: contentText(source, 'title').slice(0, 113) }),
-          }),
-        );
-        render({ playlistId: id });
-        setStatus(t('interface:playlistClonedTheDraftCopyIsEditable'));
-      }),
-  );
-  const applyPlaylist = button(
-    'apply-playlist',
-    localizedMessage('interface:applyPlaylistDetailsToDraft'),
-    () =>
-      attempt(() => {
-        changePlaylist((item) =>
-          Object.assign(item, {
-            title: playlistTitle.element.value,
-            order: order.element.value,
-            repeat: repeat.element.value,
-          }),
-        );
-        render();
-        setStatus(t('interface:playlistDetailsAddedToTheDraftTheCurrentSongWill'));
-      }),
-  );
-  const appendEntry = button('add-entry', localizedMessage('interface:addSelectedTrack'), () =>
-    attempt(() => {
-      changePlaylist((item) => item.trackIds.push(addTrack.element.value));
-      renderPlaylist();
-      dirtyState();
-    }),
-  );
+      },
+    );
+    const quiet = button(
+      `${id}-quiet`,
+      localizedMessage('interface:musicRecovery.quiet'),
+      async () => {
+        await controlMusic(() => (musicSession ? musicSession.pause() : player.pause()));
+        if (!disposed && !player.snapshot().desired) clearPlaybackFailure();
+      },
+    );
+    const dismiss = button(
+      `${id}-dismiss`,
+      localizedMessage('interface:musicRecovery.dismiss'),
+      () => clearPlaybackFailure(),
+    );
+    root.append(title, detail, row(retry, quiet, dismiss));
+    parent.append(root);
+    recoveryViews.push({ root, detail, retry, returnTarget });
+  }
+  function clearPlaybackFailure() {
+    playbackFailure = null;
+    renderRecovery();
+  }
+  function renderRecovery() {
+    for (const view of recoveryViews) {
+      // Capture before hiding: a native browser can immediately blur the button.
+      const focused = doc.activeElement;
+      const ownedFocus = view.root.contains(focused);
+      view.root.hidden = !playbackFailure;
+      const failure = playbackFailure;
+      localizedText(view.detail, () =>
+        failure
+          ? t('interface:musicRecovery.detail', {
+              error: message(failure.error),
+            })
+          : '',
+      );
+      // Keep Retry focused while pending; duplicate activation is guarded above.
+      view.retry.setAttribute('aria-disabled', String(retryingPlayback));
+      localizedText(view.retry, () =>
+        t(retryingPlayback ? 'interface:musicRecovery.retrying' : 'interface:musicRecovery.retry'),
+      );
+      if (
+        !playbackFailure &&
+        ownedFocus &&
+        !doc.hidden &&
+        doc.hasFocus?.() !== false &&
+        (doc.activeElement === focused || doc.activeElement === doc.body)
+      ) {
+        const target = view.returnTarget();
+        if (target && !target.disabled && !target.closest?.('[hidden],[inert]'))
+          target.focus({ preventScroll: true });
+      }
+    }
+  }
+  function updateRecovery(snapshot) {
+    const previous = playbackFailure;
+    const failure =
+      snapshot.status === 'error'
+        ? {
+            error: snapshot.error || t('interface:thisTrackCouldNotBePlayed'),
+            track: snapshot.track?.id,
+          }
+        : null;
+    if (
+      failure &&
+      (!observedFailure ||
+        failure.error !== observedFailure.error ||
+        failure.track !== observedFailure.track)
+    )
+      playbackFailure = failure;
+    observedFailure = failure;
+    if (snapshot.playing && snapshot.status === 'playing') playbackFailure = null;
+    if (playbackFailure !== previous) renderRecovery();
+  }
+  recoveryView('playback-recovery', transport, () => (dialog.open ? playButton : null));
+  if (settingsRoot)
+    recoveryView('settings-playback-recovery', settingsRoot, () =>
+      dialog.open
+        ? null
+        : [...settingsRoot.querySelectorAll('button')].find(
+            (control) =>
+              !control.disabled &&
+              !control.hidden &&
+              !control.closest?.('[hidden],[inert]') &&
+              (typeof control.getClientRects !== 'function' ||
+                control.getClientRects().length > 0) &&
+              !recoveryViews.some(({ root }) => root.contains(control)),
+          ),
+    );
+  // Hosts without the catalogue still expose built-in and imported playlists.
+  if (!catalogue) transport.append(selection.field, useSelection);
+  let authoringMounted = false,
+    authoringVisit = 0,
+    authoringLoad = null,
+    authoringModulePromise = null;
+  let authoringView = {};
+  let auditionLocalVolume = 1,
+    auditionMaster = null,
+    auditionFeedback = null;
   const moveEntry = (delta) =>
     attempt(() => {
-      const at = Number(entries.element.value);
+      const at = Number(authoringView.entries.element.value);
       changePlaylist((item) => {
         if (!Number.isInteger(at) || at < 0 || at + delta < 0 || at + delta >= item.trackIds.length)
           throw new Error(t('interface:chooseAnEntryThatCanMoveInThatDirection'));
@@ -1432,317 +1120,602 @@ export function attachSoundtrackPanel({
       renderPlaylist(String(at + delta));
       dirtyState();
     });
-  const up = button('entry-up', localizedMessage('interface:moveEntryUp'), () => moveEntry(-1));
-  const down = button('entry-down', localizedMessage('interface:moveEntryDown'), () =>
-    moveEntry(1),
-  );
-  const removeEntry = button(
-    'remove-entry',
-    localizedMessage('interface:removeSelectedEntry'),
-    () =>
-      attempt(() => {
-        const at = Number(entries.element.value);
-        changePlaylist((item) => {
-          if (item.trackIds.length === 1)
-            throw new Error(t('interface:aPlaylistNeedsAtLeastOneTrackRemoveThePlaylist'));
-          if (!Number.isInteger(at) || at < 0 || at >= item.trackIds.length)
-            throw new Error(t('interface:selectAPlaylistEntry'));
-          item.trackIds.splice(at, 1);
+  function mountAuthoringView(createView) {
+    const actions = {
+      importButton: () => importMP3Files(),
+      reviewCollection: () => importPrivateCollection(),
+      savePlayCollection: () => {
+        const playlist = draft.playlists.find((item) => item.id === privateCollectionPlaylistId);
+        if (!playlist) return;
+        return usePlaylist(playlist.id, {
+          start: true,
+          onPlaybackResult: (playing) =>
+            localizedText(authoringView.collectionSummary, () =>
+              playing
+                ? t('interface:soundtrack.privateCollectionSaved', { title: playlist.title })
+                : savedPlaylistPlaybackHint(),
+            ),
         });
-        renderPlaylist();
-        dirtyState();
-      }),
-  );
-  const deletePlaylist = button(
-    'delete-playlist',
-    localizedMessage('interface:removePlaylistFromDraft'),
-    () =>
-      attempt(() => {
-        const id = playlistsSelect.element.value;
-        edit((value) => {
-          if (!value.playlists.some((item) => item.id === id))
-            throw new Error(t('interface:cloneBuiltInPlaylistsToEditThem'));
+      },
+      downloadTrack: () =>
+        task(t('interface:verifyingOriginalMp3ForDownload'), async (signal) => {
+          const track = tracks().find(
+            (item) => item.id === authoringView.tracksSelect.element.value,
+          );
           if (
-            value.selection.playlistId === id ||
-            value.assignments.some((item) => item.playlistId === id)
+            track?.kind !== 'mp3' ||
+            soundtrackRights(track, { catalogue: catalogue ?? undefined }).redistribute !==
+              'allowed'
           )
-            throw new Error(
-              t('interface:chooseAnotherPlaybackPlaylistAndRemoveAssignmentsBeforeDeletingThis'),
-            );
-          value.playlists = value.playlists.filter((item) => item.id !== id);
-        });
-        render();
-        setStatus(t('interface:playlistRemovedFromTheDraft'));
-      }),
-  );
-  const playlistSection = advancedSection(
-    'playlists',
-    t('interface:createPlaylists'),
-    t('interface:orderShuffleAndRepeatYourOwnSelections'),
-    playlistsSelect.field,
-    row(createPlaylist, clonePlaylist),
-    playlistTitle.field,
-    order.field,
-    repeat.field,
-    applyPlaylist,
-    entries.field,
-    row(up, down, removeEntry),
-    addTrack.field,
-    appendEntry,
-    deletePlaylist,
-  );
-  const scope = input('scope', localizedMessage('interface:assignSelectedPlaylistTo'), {
-    tag: 'select',
-  });
-  options(scope.element, [
-    ['global', t('interface:wholeGame')],
-    ['theme', t('interface:currentTheme')],
-    ['campaign', t('interface:currentCampaignEdition')],
-    ['map', t('interface:currentMapEdition')],
-  ]);
-  const key = node('p', 'context-key', '', { class: 'micro-note' });
-  const assignments = input('assignments', localizedMessage('interface:savedDraftedAssignments'), {
-    tag: 'select',
-    size: '4',
-  });
-  const assign = button('assign', localizedMessage('interface:assignPlaylistToThisContext'), () =>
-    attempt(() => {
-      const current = assignmentContext();
-      edit((value) => {
-        value.assignments = value.assignments.filter(
-          (item) => item.scope !== current.scope || item.key !== current.key,
-        );
-        value.assignments.push({ ...current, playlistId: playlistsSelect.element.value });
-      });
-      renderAssignments();
-      dirtyState();
-      setStatus(t('interface:assignmentAddedToTheDraftAutomaticPlaybackUsesMapCampaign'));
-    }),
-  );
-  const unassign = button('unassign', localizedMessage('interface:removeSelectedAssignment'), () =>
-    attempt(() => {
-      const at = Number(assignments.element.value);
-      edit((value) => {
-        if (!Number.isInteger(at) || at < 0 || at >= value.assignments.length)
-          throw new Error(t('interface:selectAnAssignmentToRemove'));
-        value.assignments.splice(at, 1);
-      });
-      renderAssignments();
-      dirtyState();
-    }),
-  );
-  const assignmentSection = advancedSection(
-    'assignments',
-    t('interface:matchMusicToWorlds'),
-    t('interface:mapCampaignAndThemeAssignments'),
-    node(
-      'p',
-      null,
-      localizedMessage('interface:theseExactEditionKeysComeFromTheGameChooseAutomatic'),
-      { class: 'micro-note' },
-    ),
-    scope.field,
-    key,
-    assign,
-    assignments.field,
-    unassign,
-  );
-  const bundleInput = input(
-    'bundle-file',
-    localizedMessage('interface:soundtrackRecoveryOrAlbumFileRlsound'),
-    {
-      type: 'file',
-      accept: '.rlsound,application/octet-stream',
-    },
-  );
-  const bundleImport = button(
-    'import-bundle',
-    localizedMessage('interface:reviewBackupAsReplacementDraft'),
-    () =>
-      task(t('interface:checkingSoundtrackBackupAndOriginalAudio'), async (signal) => {
-        const source = bundleInput.element.files?.[0];
-        if (!source) throw new Error(t('interface:chooseARlsoundBackupFirst'));
-        const prepared = await importSoundtrackBundle(source, {
-          signal,
-          probeMedia,
-          catalogue: catalogue ?? undefined,
-        });
-        throwIfSoundtrackAborted(signal);
-        invalidateBackup();
-        draft = adopt(prepared.library);
-        // A replacement backup carries its own legacy listening intent. The
-        // device-only public-style sidecar is deliberately not part of .rlsound.
-        draftPublicStyles = null;
-        assets = [...prepared.assets];
-        dirty = true;
-        render();
-        setStatus(() =>
-          t('interface:soundtrack.backupVerified', {
-            tracks: draft.tracks.length,
-            playlists: draft.playlists.length,
-            notice: recoveryNotice(draft),
-          }),
-        );
-        bundleInput.element.value = '';
-      }),
-  );
-  const bundleExport = button(
-    'export-bundle',
-    localizedMessage('interface:prepareSavedLibraryBackupRlsound'),
-    async () => {
-      const complete = await task(
-        t('interface:verifyingSoundtrackRecoveryDataAndPermittedOriginals'),
-        async (signal) => {
-          if (!saved) throw new Error(t('interface:loadTheSavedMusicLibraryFirst'));
+            throw new Error(t('interface:thisRecordingIsAvailableForInGamePlaybackOnlyStandalone'));
+          const blob =
+            assets.find((asset) => asset.sha256 === track.asset.sha256)?.blob ??
+            (await readAsset?.(track.asset.sha256, { signal, purpose: 'export' }));
+          if (!blob)
+            throw new Error(t('interface:theOriginalRecordingIsUnavailableRestoreItOrGoOnline'));
+          const actual = await inspectMP3(blob, { signal });
+          if (actual.sha256 !== track.asset.sha256 || actual.bytes !== track.asset.bytes)
+            throw new Error(t('interface:theRecordingDiffersFromItsCatalogue'));
+          throwIfSoundtrackAborted(signal);
           invalidateBackup();
-          activity?.update({
-            message: t('interface:verifyingAndPackingSoundtrackOriginals'),
-            stage: 'exporting',
-          });
-          const completeAssets = await originalsFor(saved.library, saved.assets, signal);
-          const blob = await exportSoundtrackBundle(saved.library, completeAssets, {
-            signal,
+          preparedBackup = {
+            blob,
+            recording: true,
+            filename:
+              track.fileName ??
+              `${track.title.replace(/[^a-z0-9 -]/gi, '').trim() || 'soundtrack'}.mp3`,
+            url: typeof download === 'function' ? null : URLImpl.createObjectURL(blob),
+          };
+          setStatus(t('interface:originalMp3VerifiedChooseDownloadPreparedMp3BelowToSave'));
+        }),
+      discoveryRecording: () =>
+        task(t('interface:soundtrack.discoveryChecking'), async (signal) => {
+          const track = tracks().find(
+            (item) => item.id === authoringView.tracksSelect.element.value,
+          );
+          if (!canPrepareDiscoveryRecording(track, { catalogue: catalogue ?? undefined }))
+            throw new Error(t('interface:soundtrack.discoveryHelp'));
+          const blob =
+            track?.kind === 'mp3' &&
+            (assets.find((asset) => asset.sha256 === track.asset.sha256)?.blob ??
+              (await readAsset?.(track.asset.sha256, { signal, purpose: 'export' })));
+          const prepared = await prepareDiscoveryRecording(track, blob, {
             catalogue: catalogue ?? undefined,
+            signal,
           });
           throwIfSoundtrackAborted(signal);
           if (disposed) return;
+          invalidateBackup();
+          preparedBackup = {
+            ...prepared,
+            recording: true,
+            url: typeof download === 'function' ? null : URLImpl.createObjectURL(prepared.blob),
+          };
+          setStatus(t('interface:soundtrack.discoveryPrepared'));
+        }),
+      applyTrack: () =>
+        attempt(() => {
+          const id = authoringView.tracksSelect.element.value;
+          edit((value) => {
+            const track = value.tracks.find((item) => item.id === id);
+            if (!track) throw new Error(t('interface:builtInTracksCannotBeEdited'));
+            Object.assign(track, {
+              title: authoringView.trackTitle.element.value,
+              artist: authoringView.trackArtist.element.value,
+              rights: {
+                kind: authoringView.rightsKind.element.value,
+                credit: authoringView.rightsCredit.element.value,
+                license: authoringView.rightsLicense.element.value,
+                source: authoringView.rightsSource.element.value,
+              },
+            });
+            if (catalogue) {
+              const genres = [
+                ...new Set(
+                  [
+                    authoringView.trackGenre.element.value,
+                    authoringView.trackFusion.element.value,
+                  ].filter(Boolean),
+                ),
+              ];
+              value.tags[id] = {
+                genres,
+                role: authoringView.trackRole.element.value,
+                energy: Number(authoringView.trackEnergy.element.value),
+                themes: [
+                  ...new Set(
+                    authoringView.trackThemes.element.value
+                      .split(',')
+                      .map((part) => part.trim())
+                      .filter(Boolean),
+                  ),
+                ],
+              };
+            }
+          });
+          render();
+          setStatus(t('interface:trackDetailsAddedToTheDraftSaveAllChangesTo'));
+        }),
+      deleteTrack: () =>
+        attempt(() => {
+          const id = authoringView.tracksSelect.element.value;
+          edit((value) => {
+            if (!value.tracks.some((item) => item.id === id))
+              throw new Error(t('interface:builtInTracksAreRetained'));
+            const references = value.playlists.filter((item) => item.trackIds.includes(id));
+            if (references.length)
+              throw new Error(
+                t('gameplay:removeThisTrackFromItsPlaylistsFirst', {
+                  value1: references.map((item) => contentText(item, 'title')).join(', '),
+                }),
+              );
+            value.tracks = value.tracks.filter((item) => item.id !== id);
+            if (value.tags) delete value.tags[id];
+            if (value.bonusAlbums)
+              value.bonusAlbums = value.bonusAlbums
+                .map((album) => ({
+                  ...album,
+                  trackIds: album.trackIds.filter((trackId) => trackId !== id),
+                }))
+                .filter((album) => album.trackIds.length);
+          });
+          pruneAssets();
+          render();
+          setStatus(t('interface:trackRemovedFromTheDraftTheSavedLibraryIsUnchanged'));
+        }),
+      auditionButton: () => playback(() => startAudition()),
+      stopAuditionButton: () => playback(() => stopAudition(true)),
+      toggleAudition: () =>
+        playback(async () => {
+          if (!auditionURL || disposed || busy) return;
+          const token = auditionToken;
+          if (!authoringView.audition.paused) {
+            auditionActivity?.clear();
+            auditionActivity = null;
+            authoringView.audition.pause();
+            auditionMaster?.setLocal({ muted: true });
+          } else {
+            wakeAudio();
+            if (disposed || token !== auditionToken || !auditionURL) return;
+            const lease = auditionFeedback.begin({
+              message: t('interface:resumingAudition'),
+              stage: 'playing',
+              isCurrent: () => !disposed && dialog.open && token === auditionToken,
+            });
+            auditionActivity = lease;
+            try {
+              auditionMaster?.setLocal({ muted: false });
+              await authoringView.audition.play();
+              lease.finish({ message: t('interface:auditionPlaying') });
+            } catch (error) {
+              lease.finish({ message: () => message(error), state: 'error' });
+              if (token === auditionToken) throw error;
+            }
+          }
+        }),
+      createPlaylist: () =>
+        attempt(() => {
+          const id = makeId('playlist');
+          edit((value) =>
+            value.playlists.push({
+              id,
+              title: t('interface:newPlaylist'),
+              trackIds: [authoringView.tracksSelect.element.value],
+              order: 'ordered',
+              repeat: 'all',
+            }),
+          );
+          render({ playlistId: id });
+          setStatus(t('interface:newPlaylistAddedToTheDraftEditItsTitleOrder'));
+        }),
+      clonePlaylist: () =>
+        attempt(() => {
+          const source = playlists().find(
+            (item) => item.id === authoringView.playlistsSelect.element.value,
+          );
+          const id = makeId('playlist');
+          edit((value) =>
+            value.playlists.push({
+              ...copy(source),
+              id,
+              title: t('gameplay:copy', { value1: contentText(source, 'title').slice(0, 113) }),
+            }),
+          );
+          render({ playlistId: id });
+          setStatus(t('interface:playlistClonedTheDraftCopyIsEditable'));
+        }),
+      applyPlaylist: () =>
+        attempt(() => {
+          changePlaylist((item) =>
+            Object.assign(item, {
+              title: authoringView.playlistTitle.element.value,
+              order: authoringView.order.element.value,
+              repeat: authoringView.repeat.element.value,
+            }),
+          );
+          render();
+          setStatus(t('interface:playlistDetailsAddedToTheDraftTheCurrentSongWill'));
+        }),
+      appendEntry: () =>
+        attempt(() => {
+          changePlaylist((item) => item.trackIds.push(authoringView.addTrack.element.value));
+          renderPlaylist();
+          dirtyState();
+        }),
+      up: () => moveEntry(-1),
+      down: () => moveEntry(1),
+      removeEntry: () =>
+        attempt(() => {
+          const at = Number(authoringView.entries.element.value);
+          changePlaylist((item) => {
+            if (item.trackIds.length === 1)
+              throw new Error(t('interface:aPlaylistNeedsAtLeastOneTrackRemoveThePlaylist'));
+            if (!Number.isInteger(at) || at < 0 || at >= item.trackIds.length)
+              throw new Error(t('interface:selectAPlaylistEntry'));
+            item.trackIds.splice(at, 1);
+          });
+          renderPlaylist();
+          dirtyState();
+        }),
+      deletePlaylist: () =>
+        attempt(() => {
+          const id = authoringView.playlistsSelect.element.value;
+          edit((value) => {
+            if (!value.playlists.some((item) => item.id === id))
+              throw new Error(t('interface:cloneBuiltInPlaylistsToEditThem'));
+            if (
+              value.selection.playlistId === id ||
+              value.assignments.some((item) => item.playlistId === id)
+            )
+              throw new Error(
+                t('interface:chooseAnotherPlaybackPlaylistAndRemoveAssignmentsBeforeDeletingThis'),
+              );
+            value.playlists = value.playlists.filter((item) => item.id !== id);
+          });
+          render();
+          setStatus(t('interface:playlistRemovedFromTheDraft'));
+        }),
+      assign: () =>
+        attempt(() => {
+          const current = assignmentContext();
+          edit((value) => {
+            value.assignments = value.assignments.filter(
+              (item) => item.scope !== current.scope || item.key !== current.key,
+            );
+            value.assignments.push({
+              ...current,
+              playlistId: authoringView.playlistsSelect.element.value,
+            });
+          });
+          renderAssignments();
+          dirtyState();
+          setStatus(t('interface:assignmentAddedToTheDraftAutomaticPlaybackUsesMapCampaign'));
+        }),
+      unassign: () =>
+        attempt(() => {
+          const at = Number(authoringView.assignments.element.value);
+          edit((value) => {
+            if (!Number.isInteger(at) || at < 0 || at >= value.assignments.length)
+              throw new Error(t('interface:selectAnAssignmentToRemove'));
+            value.assignments.splice(at, 1);
+          });
+          renderAssignments();
+          dirtyState();
+        }),
+      bundleImport: () =>
+        task(t('interface:checkingSoundtrackBackupAndOriginalAudio'), async (signal) => {
+          const source = authoringView.bundleInput.element.files?.[0];
+          if (!source) throw new Error(t('interface:chooseARlsoundBackupFirst'));
+          const prepared = await importSoundtrackBundle(source, {
+            signal,
+            probeMedia,
+            catalogue: catalogue ?? undefined,
+          });
+          throwIfSoundtrackAborted(signal);
+          invalidateBackup();
+          draft = adopt(prepared.library);
+          // A replacement backup carries its own legacy listening intent. The
+          // device-only public-style sidecar is deliberately not part of .rlsound.
+          draftPublicStyles = null;
+          assets = [...prepared.assets];
+          dirty = true;
+          render();
+          setStatus(() =>
+            t('interface:soundtrack.backupVerified', {
+              tracks: draft.tracks.length,
+              playlists: draft.playlists.length,
+              notice: recoveryNotice(draft),
+            }),
+          );
+          authoringView.bundleInput.element.value = '';
+        }),
+      bundleExport: async () => {
+        const complete = await task(
+          t('interface:verifyingSoundtrackRecoveryDataAndPermittedOriginals'),
+          async (signal) => {
+            if (!saved) throw new Error(t('interface:loadTheSavedMusicLibraryFirst'));
+            invalidateBackup();
+            activity?.update({
+              message: t('interface:verifyingAndPackingSoundtrackOriginals'),
+              stage: 'exporting',
+            });
+            const completeAssets = await originalsFor(saved.library, saved.assets, signal);
+            const blob = await exportSoundtrackBundle(saved.library, completeAssets, {
+              signal,
+              catalogue: catalogue ?? undefined,
+            });
+            throwIfSoundtrackAborted(signal);
+            if (disposed) return;
+            preparedBackup = {
+              blob,
+              filename: 'RevealLine-soundtrack.rlsound',
+              generation: saved.generation,
+              recoveryLibrary: saved.library,
+              url: typeof download === 'function' ? null : URLImpl.createObjectURL(blob),
+            };
+            setStatus(() =>
+              t('interface:soundtrack.backupPrepared', {
+                notice: recoveryNotice(preparedBackup.recoveryLibrary),
+              }),
+            );
+          },
+        );
+        if (complete && preparedBackup && dialog.open && !disposed)
+          authoringView.bundleDownload.focus();
+        return complete;
+      },
+      shareImport: () =>
+        task(t('interface:checkingAndAddingTheSharedAlbum'), async (signal) => {
+          const source = authoringView.bundleInput.element.files?.[0];
+          if (!source) throw new Error(t('interface:chooseAnAlbumRlsoundFileFirst'));
+          const incoming = await importSoundtrackBundle(source, {
+            signal,
+            probeMedia,
+            catalogue: catalogue ?? undefined,
+          });
+          const merged = mergeSoundtrackShare(draft, assets, incoming);
+          throwIfSoundtrackAborted(signal);
+          invalidateBackup();
+          draft = adopt(merged.library);
+          assets = merged.assets;
+          dirty = true;
+          setStatus(t('interface:albumAddedToTheDraftYourSelectedMusicAndAssignments'));
+        }),
+      shareExport: () =>
+        task(t('interface:preparingAShareableAlbum'), async (signal) => {
+          const playlist = draft.playlists.find(
+            (item) => item.id === authoringView.playlistsSelect.element.value,
+          );
+          const library = soundtrackPlaylistShare(draft, playlist, {
+            catalogue: catalogue ?? undefined,
+          });
+          const completeAssets = await originalsFor(
+            library,
+            assets,
+            signal,
+            SOUNDTRACK_LIMITS.optionalBundleTargetBytes,
+          );
+          const blob = await exportSoundtrackBundle(library, completeAssets, {
+            signal,
+            catalogue: catalogue ?? undefined,
+          });
+          if (blob.size > SOUNDTRACK_LIMITS.optionalBundleTargetBytes)
+            throw new Error(t('interface:thisAlbumExceeds64MibSplitItsPlaylistIntoSmaller'));
+          throwIfSoundtrackAborted(signal);
+          invalidateBackup();
           preparedBackup = {
             blob,
-            filename: 'RevealLine-soundtrack.rlsound',
+            filename: 'RevealLine-album.rlsound',
             generation: saved.generation,
-            recoveryLibrary: saved.library,
+            share: true,
+            recoveryLibrary: library,
             url: typeof download === 'function' ? null : URLImpl.createObjectURL(blob),
           };
           setStatus(() =>
-            t('interface:soundtrack.backupPrepared', {
+            t('interface:soundtrack.albumPrepared', {
               notice: recoveryNotice(preparedBackup.recoveryLibrary),
             }),
           );
-        },
-      );
-      if (complete && preparedBackup && dialog.open && !disposed) bundleDownload.focus();
-      return complete;
-    },
-  );
-  const shareImport = button('add-share', localizedMessage('interface:addAlbumFileToDraft'), () =>
-    task(t('interface:checkingAndAddingTheSharedAlbum'), async (signal) => {
-      const source = bundleInput.element.files?.[0];
-      if (!source) throw new Error(t('interface:chooseAnAlbumRlsoundFileFirst'));
-      const incoming = await importSoundtrackBundle(source, {
-        signal,
-        probeMedia,
-        catalogue: catalogue ?? undefined,
-      });
-      const merged = mergeSoundtrackShare(draft, assets, incoming);
-      throwIfSoundtrackAborted(signal);
-      invalidateBackup();
-      draft = adopt(merged.library);
-      assets = merged.assets;
-      dirty = true;
-      setStatus(t('interface:albumAddedToTheDraftYourSelectedMusicAndAssignments'));
-    }),
-  );
-  const shareExport = button(
-    'export-share',
-    localizedMessage('interface:prepareSelectedPlaylistAsAlbum'),
-    () =>
-      task(t('interface:preparingAShareableAlbum'), async (signal) => {
-        const playlist = draft.playlists.find((item) => item.id === playlistsSelect.element.value);
-        const library = soundtrackPlaylistShare(draft, playlist, {
-          catalogue: catalogue ?? undefined,
-        });
-        const completeAssets = await originalsFor(
-          library,
-          assets,
-          signal,
-          SOUNDTRACK_LIMITS.optionalBundleTargetBytes,
-        );
-        const blob = await exportSoundtrackBundle(library, completeAssets, {
-          signal,
-          catalogue: catalogue ?? undefined,
-        });
-        if (blob.size > SOUNDTRACK_LIMITS.optionalBundleTargetBytes)
-          throw new Error(t('interface:thisAlbumExceeds64MibSplitItsPlaylistIntoSmaller'));
-        throwIfSoundtrackAborted(signal);
+        }),
+      bundleDownload: (event) => {
+        const prepared = preparedBackup;
+        if (!prepared || busy || disposed || !dialog.open) {
+          event?.preventDefault();
+          return false;
+        }
+        if (typeof download === 'function') {
+          event?.preventDefault();
+          return task(
+            t('interface:requestingThePreparedBackupFromTheDownloadAdapter'),
+            async (signal) => {
+              await download(prepared.blob, prepared.filename, { signal });
+              if (!disposed && preparedBackup === prepared)
+                setStatus(t('interface:downloadRequestHandedToTheHostConfirmTheDestinationThere'));
+            },
+          );
+        }
+        setStatus(t('interface:downloadRequestedConfirmItInYourBrowserIfNoFile'));
+        // No async work, synthetic click or automatic navigation here. The visible
+        // anchor's default action uses the already prepared, retained Blob URL.
+        return true;
+      },
+      discardBackup: () => {
+        if (busy || disposed) return;
         invalidateBackup();
-        preparedBackup = {
-          blob,
-          filename: 'RevealLine-album.rlsound',
-          generation: saved.generation,
-          share: true,
-          recoveryLibrary: library,
-          url: typeof download === 'function' ? null : URLImpl.createObjectURL(blob),
-        };
-        setStatus(() =>
-          t('interface:soundtrack.albumPrepared', {
-            notice: recoveryNotice(preparedBackup.recoveryLibrary),
-          }),
-        );
-      }),
-  );
-  shareImport.hidden = !catalogue;
-  shareExport.hidden = !catalogue;
-  // A real link allows the browser's native keyboard/touch download behavior.
-  // Injected native adapters receive their own button, invoked before any await.
-  const bundleDownload = node(
-    typeof download === 'function' ? 'button' : 'a',
-    'download-prepared',
-    localizedMessage('interface:downloadPreparedBackup'),
-    { class: 'button secondary', ...(typeof download === 'function' ? { type: 'button' } : {}) },
-  );
-  bundleDownload.onclick = (event) => {
-    const prepared = preparedBackup;
-    if (!prepared || busy || disposed || !dialog.open) {
-      event?.preventDefault();
-      return false;
-    }
-    if (typeof download === 'function') {
-      event?.preventDefault();
-      return task(
-        t('interface:requestingThePreparedBackupFromTheDownloadAdapter'),
-        async (signal) => {
-          await download(prepared.blob, prepared.filename, { signal });
-          if (!disposed && preparedBackup === prepared)
-            setStatus(t('interface:downloadRequestHandedToTheHostConfirmTheDestinationThere'));
-        },
+        setStatus(t('interface:preparedCopyDiscardedSavedMusicIsUnchangedTheBrowserControls'));
+      },
+    };
+    const bindingStart = bindings.length;
+    try {
+      authoringView = createView({
+        node,
+        input,
+        button,
+        options,
+        row,
+        section,
+        advancedSection,
+        genreNames,
+        catalogue,
+        download,
+        actions,
+      });
+      auditionMaster = audioMaster
+        ? bindAudioMasterMedia({
+            audioMaster,
+            element: authoringView.audition,
+            volume: auditionLocalVolume,
+            muted: true,
+          })
+        : null;
+      auditionFeedback = createOperationStatus(authoringView.auditionStatus);
+      authoringView.tracksSelect.element.onchange = () => renderTrack();
+      authoringView.playlistsSelect.element.onchange = () => renderPlaylist();
+      authoringView.scope.element.onchange = () => renderAssignments();
+      authoringView.auditionSeek.element.onchange = () =>
+        playback(() => {
+          const value = Number(authoringView.auditionSeek.element.value),
+            duration = authoringView.audition.duration;
+          if (
+            !auditionURL ||
+            busy ||
+            !Number.isFinite(duration) ||
+            duration <= 0 ||
+            !Number.isFinite(value)
+          )
+            return;
+          authoringView.audition.currentTime = Math.max(0, Math.min(duration, value));
+        });
+      authoringView.auditionVolume.element.oninput = () => {
+        const value = Number(authoringView.auditionVolume.element.value);
+        if (auditionURL && !busy && Number.isFinite(value)) {
+          const local = Math.max(0, Math.min(1, value));
+          if (auditionMaster) {
+            auditionLocalVolume = local;
+            auditionMaster.setLocal({ volume: local });
+          } else authoringView.audition.volume = local;
+        }
+      };
+      if (auditionMaster)
+        listen(authoringView.audition, 'play', () => {
+          const active = !disposed && dialog.open && auditionURL !== null;
+          auditionMaster.setLocal({ muted: !active });
+          if (!active) authoringView.audition.pause();
+        });
+      for (const type of [
+        'loadedmetadata',
+        'durationchange',
+        'timeupdate',
+        'play',
+        'pause',
+        'volumechange',
+      ])
+        listen(authoringView.audition, type, updateAudition);
+      listen(authoringView.audition, 'ended', () => {
+        void playback(() => stopAudition(true));
+      });
+      listen(authoringView.audition, 'error', () => {
+        if (!auditionURL) return;
+        void playback(async () => {
+          await stopAudition(true);
+          throw new Error(t('interface:theAuditionCouldNotDecodeThisTrackRestoreOrReplace'));
+        });
+      });
+
+      authoringMounted = true;
+      originalSection.after(
+        authoringView.tracksSection,
+        authoringView.playlistSection,
+        authoringView.assignmentSection,
+        authoringView.transferSection,
       );
+      const restoreRetryFocus = doc.activeElement === authoringRetry;
+      render();
+      authoringPlaceholder.remove();
+      if (restoreRetryFocus && !doc.hidden && dialog.open) closeButton.focus();
+    } catch (error) {
+      authoringMounted = false;
+      auditionMaster?.dispose();
+      auditionMaster = null;
+      auditionFeedback?.dispose();
+      auditionFeedback = null;
+      for (const unbind of bindings.splice(bindingStart)) unbind();
+      for (const section of [
+        authoringView.tracksSection,
+        authoringView.playlistSection,
+        authoringView.assignmentSection,
+        authoringView.transferSection,
+      ])
+        section?.remove();
+      authoringView = {};
+      throw error;
     }
-    setStatus(t('interface:downloadRequestedConfirmItInYourBrowserIfNoFile'));
-    // No async work, synthetic click or automatic navigation here. The visible
-    // anchor's default action uses the already prepared, retained Blob URL.
-    return true;
-  };
-  const discardBackup = button(
-    'discard-backup',
-    localizedMessage('interface:discardPreparedCopy'),
-    () => {
-      if (busy || disposed) return;
-      invalidateBackup();
-      setStatus(t('interface:preparedCopyDiscardedSavedMusicIsUnchangedTheBrowserControls'));
-    },
-  );
-  const backupInfo = node('p', 'backup-info', '', { class: 'micro-note' });
-  const backupReady = node('div', 'backup-ready', null, { class: 'soundtrack-backup-ready' });
-  backupReady.append(backupInfo, row(bundleDownload, discardBackup));
-  const transferSection = advancedSection(
-    'backup',
-    t('interface:backupsAlbumFiles'),
-    t('interface:importExportAndRestoreRlsoundFiles'),
-    node(
-      'p',
-      null,
-      localizedMessage(
-        'interface:thisSeparateSoundtrackFileContainsPermittedPersonalInstalledAndExplicitly',
-      ),
-      { class: 'micro-note' },
-    ),
-    row(bundleExport),
-    backupReady,
-    bundleInput.field,
-    bundleImport,
-    shareImport,
-    shareExport,
-  );
+  }
+  function retireAuthoringLoad() {
+    authoringVisit++;
+    authoringLoad?.controller.abort();
+    authoringLoad = null;
+  }
+  function ensureAuthoringView() {
+    if (authoringMounted || disposed || !dialog.open || doc.hidden)
+      return Promise.resolve(authoringMounted);
+    if (authoringLoad?.visit === authoringVisit) return authoringLoad.promise;
+    const visit = authoringVisit,
+      request = { visit, controller: new AbortController(), promise: null };
+    const current = () =>
+      !disposed &&
+      dialog.open &&
+      dialog.isConnected &&
+      (doc.getElementById?.(dialog.id) ?? dialog) === dialog &&
+      !doc.hidden &&
+      authoringVisit === visit &&
+      authoringLoad === request;
+    authoringLoad = request;
+    authoringRetry.hidden = true;
+    localizedText(authoringStatus, localizedMessage('interface:loadingMusicLibrary'));
+    request.promise = (async () => {
+      try {
+        if (!authoringModulePromise) {
+          const loading = Promise.resolve().then(() => loadAuthoringView());
+          authoringModulePromise = loading;
+          void loading.catch(() => {
+            if (authoringModulePromise === loading) authoringModulePromise = null;
+          });
+        }
+        const module = await authoringModulePromise;
+        if (!current()) return false;
+        await publish(
+          () => {
+            if (!current()) return false;
+            if (typeof module?.createSoundtrackAuthoringView !== 'function')
+              throw new TypeError('Soundtrack authoring view is unavailable.');
+            mountAuthoringView(module.createSoundtrackAuthoringView);
+            return true;
+          },
+          { signal: request.controller.signal, eligible: current },
+        );
+        return authoringMounted;
+      } catch (error) {
+        if (current()) {
+          localizedText(authoringStatus, () =>
+            t('interface:soundtrack.refreshFailed', { error: message(error) }),
+          );
+          authoringRetry.hidden = false;
+          try {
+            onError(error);
+          } catch {}
+        }
+        return false;
+      } finally {
+        if (authoringLoad === request) {
+          authoringLoad = null;
+          authoringRetry.disabled = false;
+        }
+      }
+    })();
+    return request.promise;
+  }
+
   const albumList = node('div', 'album-list');
   const albumBrowse = button(
     'browse-albums',
@@ -1997,16 +1970,20 @@ export function attachSoundtrackPanel({
       href: new URL('../downloads.html', import.meta.url).href,
     }),
   );
-  const columns = node('div', null, null, { class: 'soundtrack-columns' });
-  columns.append(
-    listeningSection,
-    originalSection,
-    tracksSection,
-    playlistSection,
-    assignmentSection,
-    transferSection,
-    albumSection,
+  const authoringStatus = node('p', 'authoring-status', null, {
+    role: 'status',
+    'aria-live': 'polite',
+  });
+  const authoringRetry = button('authoring-retry', localizedMessage('interface:tryAgain2'), () =>
+    ensureAuthoringView(),
   );
+  authoringRetry.hidden = true;
+  const authoringPlaceholder = node('section', 'authoring-placeholder', null, {
+    class: 'soundtrack-section',
+  });
+  authoringPlaceholder.append(authoringStatus, authoringRetry);
+  const columns = node('div', null, null, { class: 'soundtrack-columns' });
+  columns.append(listeningSection, originalSection, authoringPlaceholder, albumSection);
   const operationRow = node('div', 'operation');
   operationRow.append(status, cancelButton);
   dialog.append(
@@ -2198,11 +2175,13 @@ export function attachSoundtrackPanel({
                 .snapshot()
                 .sources.map(({ url, enabled }) => ({ url, enabled })),
             };
-        if (disposed) return null;
-        sourcePreferences = value;
-        sourceManager.setSources(value.sources);
-        renderSources();
-        return value;
+        return await publish(() => {
+          if (disposed) return null;
+          sourcePreferences = value;
+          sourceManager.setSources(value.sources);
+          if (!onlineCatalogueDownload.preparation) renderSources();
+          return value;
+        });
       } catch (error) {
         if (!disposed) showSourceError(error);
         return null;
@@ -2223,12 +2202,15 @@ export function attachSoundtrackPanel({
       if (!previous || !sourceStore) throw new Error(t('interface:musicSourceStorageUnavailable'));
       const committed = await sourceStore.commit(next, { expectedGeneration: previous.generation });
       if (disposed) return false;
-      sourcePreferences = committed;
-      sourceManager.setSources(committed.sources);
-      localizedText(sourceStatus, () => t('interface:musicSourcesSaved'));
-      sourceSaving = false;
-      ownsSave = false;
-      renderSources();
+      await publish(() => {
+        sourcePreferences = committed;
+        sourceManager.setSources(committed.sources);
+        localizedText(sourceStatus, () => t('interface:musicSourcesSaved'));
+        sourceSaving = false;
+        ownsSave = false;
+        renderSources();
+      });
+      if (disposed) return false;
       await loadOnlineCatalogue(true);
       return true;
     } catch (error) {
@@ -2440,7 +2422,9 @@ export function attachSoundtrackPanel({
         throwIfSoundtrackAborted(current.signal);
         const snapshot = await sourceManager.refresh({ signal: current.signal });
         if (disposed || generation !== onlineCatalogueGeneration) return null;
-        receiveSources(snapshot);
+        // Admitted source publication already updated the subscribed view. Do
+        // not rebuild the same catalogue again after an asynchronous boundary.
+        if (!onlineCatalogueDownload.preparation) receiveSources(snapshot);
         if (!onlineCatalogue) {
           const error = snapshot.sources.find((source) => source.enabled && source.error)?.error;
           throw new Error(error || t('interface:thePublicSoundtrackCatalogueIsUnavailable'));
@@ -2663,35 +2647,37 @@ export function attachSoundtrackPanel({
     };
     // Preserve unapplied editor values too: task's full render normally refreshes them.
     const controls = [
-      tracksSelect,
-      trackTitle,
-      trackArtist,
-      rightsKind,
-      rightsCredit,
-      rightsLicense,
-      rightsSource,
-      trackGenre,
-      trackFusion,
-      trackRole,
-      trackEnergy,
-      trackThemes,
-      collectionTitle,
-      collectionGenre,
+      authoringView.tracksSelect,
+      authoringView.trackTitle,
+      authoringView.trackArtist,
+      authoringView.rightsKind,
+      authoringView.rightsCredit,
+      authoringView.rightsLicense,
+      authoringView.rightsSource,
+      authoringView.trackGenre,
+      authoringView.trackFusion,
+      authoringView.trackRole,
+      authoringView.trackEnergy,
+      authoringView.trackThemes,
+      authoringView.collectionTitle,
+      authoringView.collectionGenre,
       listeningMode,
       installedOnly,
       recordingMode,
       ...mixGenres,
-      playlistsSelect,
-      playlistTitle,
-      order,
-      repeat,
-      entries,
-      addTrack,
-      scope,
-      assignments,
+      authoringView.playlistsSelect,
+      authoringView.playlistTitle,
+      authoringView.order,
+      authoringView.repeat,
+      authoringView.entries,
+      authoringView.addTrack,
+      authoringView.scope,
+      authoringView.assignments,
       selection,
     ];
-    albumEditors = controls.map(({ element }) => [element, element.value, element.checked]);
+    albumEditors = controls
+      .filter(Boolean)
+      .map(({ element }) => [element, element.value, element.checked]);
     doc.addEventListener('focusin', followFocus);
     let complete = false;
     try {
@@ -2745,7 +2731,9 @@ export function attachSoundtrackPanel({
   }
   function changePlaylist(work) {
     edit((value) => {
-      const item = value.playlists.find((entry) => entry.id === playlistsSelect.element.value);
+      const item = value.playlists.find(
+        (entry) => entry.id === authoringView.playlistsSelect.element.value,
+      );
       if (!item) throw new Error(t('interface:cloneThisBuiltInPlaylistBeforeEditingIt'));
       work(item);
     });
@@ -2798,13 +2786,18 @@ export function attachSoundtrackPanel({
     undoButton.disabled = busy || !saved || !dirty;
   }
   function invalidateBackup() {
-    if (!disposed && (doc.activeElement === bundleDownload || doc.activeElement === discardBackup))
-      bundleExport.focus();
+    if (
+      !disposed &&
+      authoringMounted &&
+      (doc.activeElement === authoringView.bundleDownload ||
+        doc.activeElement === authoringView.discardBackup)
+    )
+      authoringView.bundleExport.focus();
     if (preparedBackup?.url) URLImpl.revokeObjectURL(preparedBackup.url);
     preparedBackup = null;
-    bundleDownload.removeAttribute('href');
-    bundleDownload.removeAttribute('download');
-    backupReady.hidden = true;
+    authoringView.bundleDownload?.removeAttribute('href');
+    authoringView.bundleDownload?.removeAttribute('download');
+    if (authoringView.backupReady) authoringView.backupReady.hidden = true;
   }
   function recoveryNotice(library) {
     const plan = soundtrackPortableRecoveryPlan(library, { catalogue: catalogue ?? undefined });
@@ -2832,12 +2825,16 @@ export function attachSoundtrackPanel({
     return notices.join(' ');
   }
   function renderBackup() {
-    backupReady.hidden = preparedBackup === null;
-    bundleDownload.disabled = busy || !preparedBackup;
-    bundleDownload.setAttribute('aria-disabled', String(bundleDownload.disabled));
-    discardBackup.disabled = busy || !preparedBackup;
+    if (!authoringMounted) return;
+    authoringView.backupReady.hidden = preparedBackup === null;
+    authoringView.bundleDownload.disabled = busy || !preparedBackup;
+    authoringView.bundleDownload.setAttribute(
+      'aria-disabled',
+      String(authoringView.bundleDownload.disabled),
+    );
+    authoringView.discardBackup.disabled = busy || !preparedBackup;
     if (!preparedBackup) return;
-    localizedText(backupInfo, () => {
+    localizedText(authoringView.backupInfo, () => {
       const backup = preparedBackup;
       if (!backup) return '';
       return backup.recording
@@ -2855,7 +2852,7 @@ export function attachSoundtrackPanel({
               notice: recoveryNotice(backup.recoveryLibrary),
             });
     });
-    localizedText(bundleDownload, () =>
+    localizedText(authoringView.bundleDownload, () =>
       preparedBackup?.recording
         ? t('interface:downloadPreparedMp3')
         : preparedBackup?.share
@@ -2863,9 +2860,9 @@ export function attachSoundtrackPanel({
           : t('interface:downloadPreparedBackup'),
     );
     if (preparedBackup.url) {
-      if (busy) bundleDownload.removeAttribute('href');
-      else bundleDownload.setAttribute('href', preparedBackup.url);
-      bundleDownload.setAttribute('download', preparedBackup.filename);
+      if (busy) authoringView.bundleDownload.removeAttribute('href');
+      else authoringView.bundleDownload.setAttribute('href', preparedBackup.url);
+      authoringView.bundleDownload.setAttribute('download', preparedBackup.filename);
     }
   }
   function recordingAllowed(track) {
@@ -2873,37 +2870,38 @@ export function attachSoundtrackPanel({
     return policy.gameplayVideo === 'allowed' && policy.contentId === 'not-registered';
   }
   function renderTrack() {
-    const track = tracks().find((item) => item.id === tracksSelect.element.value);
+    if (!authoringMounted) return;
+    const track = tracks().find((item) => item.id === authoringView.tracksSelect.element.value);
     const custom = track?.kind === 'mp3' && !track.id.startsWith('builtin.');
-    trackTitle.element.value = track?.title ?? '';
-    trackArtist.element.value = track?.artist ?? '';
-    rightsKind.element.value = track?.rights?.kind ?? 'original';
-    rightsCredit.element.value = track?.rights?.credit ?? 'RevealLine';
-    rightsLicense.element.value = track?.rights?.license ?? '';
-    rightsSource.element.value = track?.rights?.source ?? '';
+    authoringView.trackTitle.element.value = track?.title ?? '';
+    authoringView.trackArtist.element.value = track?.artist ?? '';
+    authoringView.rightsKind.element.value = track?.rights?.kind ?? 'original';
+    authoringView.rightsCredit.element.value = track?.rights?.credit ?? 'RevealLine';
+    authoringView.rightsLicense.element.value = track?.rights?.license ?? '';
+    authoringView.rightsSource.element.value = track?.rights?.source ?? '';
     const tags = track?.tags ?? draft.tags?.[track?.id];
-    trackGenre.element.value = tags?.genres[0] ?? '';
-    trackFusion.element.value = tags?.genres[1] ?? '';
-    trackRole.element.value = tags?.role ?? 'any';
-    trackEnergy.element.value = String(tags?.energy ?? 3);
-    trackThemes.element.value = tags?.themes.join(', ') ?? '';
+    authoringView.trackGenre.element.value = tags?.genres[0] ?? '';
+    authoringView.trackFusion.element.value = tags?.genres[1] ?? '';
+    authoringView.trackRole.element.value = tags?.role ?? 'any';
+    authoringView.trackEnergy.element.value = String(tags?.energy ?? 3);
+    authoringView.trackThemes.element.value = tags?.themes.join(', ') ?? '';
     for (const control of [
-      trackTitle.element,
-      trackArtist.element,
-      rightsKind.element,
-      rightsCredit.element,
-      rightsLicense.element,
-      rightsSource.element,
-      applyTrack,
-      deleteTrack,
-      trackGenre.element,
-      trackFusion.element,
-      trackRole.element,
-      trackEnergy.element,
-      trackThemes.element,
+      authoringView.trackTitle.element,
+      authoringView.trackArtist.element,
+      authoringView.rightsKind.element,
+      authoringView.rightsCredit.element,
+      authoringView.rightsLicense.element,
+      authoringView.rightsSource.element,
+      authoringView.applyTrack,
+      authoringView.deleteTrack,
+      authoringView.trackGenre.element,
+      authoringView.trackFusion.element,
+      authoringView.trackRole.element,
+      authoringView.trackEnergy.element,
+      authoringView.trackThemes.element,
     ])
       control.disabled = busy || !saved || !custom;
-    auditionButton.disabled =
+    authoringView.auditionButton.disabled =
       busy ||
       !saved ||
       track?.kind !== 'mp3' ||
@@ -2911,13 +2909,13 @@ export function attachSoundtrackPanel({
       (draft.listening?.recordingMode && !recordingAllowed(track));
     const policy =
       track?.kind === 'mp3' ? soundtrackRights(track, { catalogue: catalogue ?? undefined }) : null;
-    downloadTrack.disabled = busy || !saved || policy?.redistribute !== 'allowed';
-    discoveryRecording.disabled =
+    authoringView.downloadTrack.disabled = busy || !saved || policy?.redistribute !== 'allowed';
+    authoringView.discoveryRecording.disabled =
       busy || !saved || !canPrepareDiscoveryRecording(track, { catalogue: catalogue ?? undefined });
-    sourceLinks(trackSources, track);
+    sourceLinks(authoringView.trackSources, track);
     const online = catalogue?.tracks.some((item) => item.id === track?.id);
     const offloaded = soundtrackOffloadedBonusTrackIds(draft).includes(track?.id);
-    localizedText(trackInfo, () => {
+    localizedText(authoringView.trackInfo, () => {
       if (track?.kind !== 'mp3')
         return t('interface:builtInProceduralSynthRecipeUseThePlaybackPlaylistTo');
       const availability = assets.some((asset) => asset.sha256 === track.asset.sha256)
@@ -2955,35 +2953,38 @@ export function attachSoundtrackPanel({
     });
   }
   function renderPlaylist(entryIndex) {
-    const item = playlists().find((entry) => entry.id === playlistsSelect.element.value);
+    if (!authoringMounted) return;
+    const item = playlists().find(
+      (entry) => entry.id === authoringView.playlistsSelect.element.value,
+    );
     const custom = !!item && !item.id.startsWith('builtin.');
-    playlistTitle.element.value = item?.title ?? '';
-    order.element.value = item?.order ?? 'ordered';
-    repeat.element.value = item?.repeat ?? 'all';
+    authoringView.playlistTitle.element.value = item?.title ?? '';
+    authoringView.order.element.value = item?.order ?? 'ordered';
+    authoringView.repeat.element.value = item?.repeat ?? 'all';
     const names = new Map(tracks().map((track) => [track.id, track.title]));
     options(
-      entries.element,
+      authoringView.entries.element,
       (item?.trackIds ?? []).map((id, index) => [
         String(index),
         `${index + 1}. ${names.get(id) ?? id}`,
       ]),
-      entryIndex ?? entries.element.value,
+      entryIndex ?? authoringView.entries.element.value,
     );
     for (const control of [
-      playlistTitle.element,
-      order.element,
-      repeat.element,
-      applyPlaylist,
-      appendEntry,
-      up,
-      down,
-      removeEntry,
-      deletePlaylist,
+      authoringView.playlistTitle.element,
+      authoringView.order.element,
+      authoringView.repeat.element,
+      authoringView.applyPlaylist,
+      authoringView.appendEntry,
+      authoringView.up,
+      authoringView.down,
+      authoringView.removeEntry,
+      authoringView.deletePlaylist,
     ])
       control.disabled = busy || !saved || !custom;
   }
   function assignmentContext() {
-    const selectedScope = scope.element.value,
+    const selectedScope = authoringView.scope.element.value,
       context = getContext();
     const contextKey =
       selectedScope === 'global'
@@ -2994,9 +2995,10 @@ export function attachSoundtrackPanel({
     return { scope: selectedScope, key: contextKey };
   }
   function renderAssignments() {
+    if (!authoringMounted) return;
     const names = new Map(playlists().map((item) => [item.id, item.title]));
     options(
-      assignments.element,
+      authoringView.assignments.element,
       draft.assignments.map((item, index) => [
         String(index),
         `${item.scope}: ${item.key ?? 'whole game'} → ${names.get(item.playlistId)}`,
@@ -3004,36 +3006,41 @@ export function attachSoundtrackPanel({
     );
     try {
       const context = assignmentContext();
-      localizedText(key, () => context.key ?? t('interface:globalFallbackForTheWholeGame'));
-      assign.disabled = busy || !saved;
+      localizedText(
+        authoringView.key,
+        () => context.key ?? t('interface:globalFallbackForTheWholeGame'),
+      );
+      authoringView.assign.disabled = busy || !saved;
     } catch (error) {
-      localizedText(key, () => message(error));
-      assign.disabled = true;
+      localizedText(authoringView.key, () => message(error));
+      authoringView.assign.disabled = true;
     }
-    unassign.disabled = busy || !saved || !draft.assignments.length;
+    authoringView.unassign.disabled = busy || !saved || !draft.assignments.length;
   }
   function render({ playlistId, trackId } = {}) {
     refreshAvailableStyles();
-    options(
-      tracksSelect.element,
-      tracks().map((item) => [
-        item.id,
-        `${item.kind === 'synth' ? '' + t('interface:builtIn') + ' ' : ''}${contentText(item, 'title')}`,
-      ]),
-      trackId ?? tracksSelect.element.value,
-    );
-    options(
-      addTrack.element,
-      tracks().map((item) => [item.id, item.title]),
-    );
-    options(
-      playlistsSelect.element,
-      playlists().map((item) => [
-        item.id,
-        `${item.id.startsWith('builtin.') ? '' + t('interface:builtIn') + ' ' : ''}${contentText(item, 'title')}`,
-      ]),
-      playlistId ?? playlistsSelect.element.value,
-    );
+    if (authoringMounted) {
+      options(
+        authoringView.tracksSelect.element,
+        tracks().map((item) => [
+          item.id,
+          `${item.kind === 'synth' ? '' + t('interface:builtIn') + ' ' : ''}${contentText(item, 'title')}`,
+        ]),
+        trackId ?? authoringView.tracksSelect.element.value,
+      );
+      options(
+        authoringView.addTrack.element,
+        tracks().map((item) => [item.id, item.title]),
+      );
+      options(
+        authoringView.playlistsSelect.element,
+        playlists().map((item) => [
+          item.id,
+          `${item.id.startsWith('builtin.') ? '' + t('interface:builtIn') + ' ' : ''}${contentText(item, 'title')}`,
+        ]),
+        playlistId ?? authoringView.playlistsSelect.element.value,
+      );
+    }
     options(
       selection.element,
       [
@@ -3052,7 +3059,8 @@ export function attachSoundtrackPanel({
     const hasPrivateCollection =
       privateCollectionPlaylistId &&
       draft.playlists.some((playlist) => playlist.id === privateCollectionPlaylistId);
-    savePlayCollection.disabled = busy || !saved || !dirty || !hasPrivateCollection;
+    if (authoringMounted)
+      authoringView.savePlayCollection.disabled = busy || !saved || !dirty || !hasPrivateCollection;
     useSelection.disabled = busy || !saved;
     if (catalogue) {
       listeningMode.element.value = draft.listening.mode;
@@ -3093,6 +3101,7 @@ export function attachSoundtrackPanel({
           : t('interface:soundtrack.selectedStyle', { style: modeLabel }),
       );
     }
+    authoringRetry.disabled = !!authoringLoad;
     cancelButton.hidden = !busy;
     closeButton.disabled = busy;
     reloadButton.disabled = busy;
@@ -3195,7 +3204,7 @@ export function attachSoundtrackPanel({
       assets = [...value.assets];
       dirty = false;
       privateCollectionPlaylistId = null;
-      localizedText(collectionSummary, () => '');
+      if (authoringView.collectionSummary) localizedText(authoringView.collectionSummary, () => '');
       const warning = await notifyLibrary(value);
       setStatus(warning || t('interface:savedLibraryLoadedImportsAndEditsRemainDraftsUntilSave'));
     });
@@ -3213,17 +3222,19 @@ export function attachSoundtrackPanel({
     if (settingsLibraryPromise) return settingsLibraryPromise;
     settingsLibraryPromise = store
       .read()
-      .then((value) => {
-        if (disposed) return null;
-        saved = value;
-        draft = adopt(value.library);
-        draftPublicStyles = undefined;
-        assets = [...value.assets];
-        dirty = false;
-        render();
-        renderSettingsStyleStatus();
-        return value;
-      })
+      .then((value) =>
+        publish(() => {
+          if (disposed) return null;
+          saved = value;
+          draft = adopt(value.library);
+          draftPublicStyles = undefined;
+          assets = [...value.assets];
+          dirty = false;
+          render();
+          renderSettingsStyleStatus();
+          return value;
+        }),
+      )
       .catch((error) => {
         if (!disposed) {
           onError(error);
@@ -3344,7 +3355,7 @@ export function attachSoundtrackPanel({
   async function importMP3Files() {
     return task(t('interface:inspectingSelectedMp3Files'), async (signal, progress) => {
       if (!saved) throw new Error(t('interface:loadTheLocalLibraryBeforeImporting'));
-      const files = [...(fileInput.element.files ?? [])];
+      const files = [...(authoringView.fileInput.element.files ?? [])];
       if (!files.length) throw new Error(t('interface:chooseOneOrMoreMp3FilesFirst'));
       if (
         files.length + draft.tracks.length + BUILTIN_SOUNDTRACK_TRACKS.length >
@@ -3399,13 +3410,13 @@ export function attachSoundtrackPanel({
       assets = [...added].map(([sha256, blob]) => ({ sha256, blob }));
       dirty = true;
       render({ trackId: latest });
-      fileInput.element.value = '';
+      authoringView.fileInput.element.value = '';
       setStatus(localizedMessage('interface:soundtrack.filesImported', { count: files.length }));
     });
   }
   function privateCollectionFiles() {
-    const picked = [...(collectionFiles.element.files ?? [])];
-    const folder = [...(collectionFolder.element.files ?? [])];
+    const picked = [...(authoringView.collectionFiles.element.files ?? [])];
+    const folder = [...(authoringView.collectionFolder.element.files ?? [])];
     if (picked.length && folder.length) throw new Error(t('interface:chooseFilesOrAFolderNotBoth'));
     return folder.length ? folder : picked;
   }
@@ -3418,10 +3429,11 @@ export function attachSoundtrackPanel({
     return task(t('interface:inspectingSelectedMp3Files'), async (signal, progress) => {
       if (!saved) throw new Error(t('interface:loadTheLocalLibraryBeforeImporting'));
       const files = privateCollectionFiles();
-      const title = collectionTitle.element.value.trim() || suggestedCollectionTitle(files);
+      const title =
+        authoringView.collectionTitle.element.value.trim() || suggestedCollectionTitle(files);
       const prepared = await preparePrivateSoundtrackCollection(draft, assets, files, {
         title,
-        genre: collectionGenre.element.value,
+        genre: authoringView.collectionGenre.element.value,
         signal,
         probeMedia,
         catalogue: catalogue ?? undefined,
@@ -3441,14 +3453,14 @@ export function attachSoundtrackPanel({
       assets = prepared.assets;
       dirty = true;
       privateCollectionPlaylistId = prepared.playlistId;
-      collectionTitle.element.value = title;
-      collectionFiles.element.value = '';
-      collectionFolder.element.value = '';
+      authoringView.collectionTitle.element.value = title;
+      authoringView.collectionFiles.element.value = '';
+      authoringView.collectionFolder.element.value = '';
       render({
         playlistId: prepared.playlistId,
         trackId: prepared.trackIds.at(-1),
       });
-      localizedText(collectionSummary, () =>
+      localizedText(authoringView.collectionSummary, () =>
         t('interface:soundtrack.privateCollectionReviewed', {
           tracks: prepared.trackIds.length,
           recordings: prepared.uniqueRecordings,
@@ -3472,23 +3484,23 @@ export function attachSoundtrackPanel({
     auditionController?.abort();
     auditionController = null;
     auditionTrack = null;
-    audition.pause();
-    audition.removeAttribute('src');
+    authoringView.audition?.pause();
+    authoringView.audition?.removeAttribute('src');
     try {
-      audition.load();
+      authoringView.audition?.load();
     } catch {}
     if (auditionURL) {
       URLImpl.revokeObjectURL(auditionURL);
       auditionURL = null;
     }
-    audition.hidden = true;
+    if (authoringView.audition) authoringView.audition.hidden = true;
     const shouldResume = restore && restoreMusic;
     restoreMusic = false;
     if (shouldResume && !disposed) await player.play();
     update();
   }
   async function startAudition() {
-    const track = tracks().find((item) => item.id === tracksSelect.element.value);
+    const track = tracks().find((item) => item.id === authoringView.tracksSelect.element.value);
     if (track?.kind !== 'mp3') throw new Error(t('interface:chooseAnMp3ToAudition'));
     if (draft.listening?.recordingMode && !recordingAllowed(track))
       throw new Error(
@@ -3523,11 +3535,11 @@ export function attachSoundtrackPanel({
       if (disposed || token !== auditionToken) return;
       if (!blob) throw new Error(t('interface:thisMp3IsUnavailableDownloadItsAlbumOrRestoreA'));
       auditionURL = URLImpl.createObjectURL(blob);
-      audition.src = auditionURL;
-      audition.hidden = false;
-      audition.load();
+      authoringView.audition.src = auditionURL;
+      authoringView.audition.hidden = false;
+      authoringView.audition.load();
       auditionMaster?.setLocal({ muted: false });
-      const playing = audition.play();
+      const playing = authoringView.audition.play();
       // Keep playback in the activation turn, but expose its status and Finish
       // before waiting; media events may not arrive while playback is pending.
       update();
@@ -3581,28 +3593,33 @@ export function attachSoundtrackPanel({
     if (state.playing && !audioMaster) await onAudioEnabled();
   }
   function updateAudition() {
-    renderMusicCreatorLinks(auditionSources, auditionTrack, { document: doc });
+    if (!authoringMounted || disposed || !dialog.open || doc.hidden) return;
+    renderMusicCreatorLinks(authoringView.auditionSources, auditionTrack, { document: doc });
     const available = auditionURL !== null && !disposed;
-    auditionControls.hidden = !available;
-    toggleAudition.disabled = !available || busy;
-    localizedText(toggleAudition, () =>
-      audition.paused ? t('interface:resumeAudition') : t('interface:pauseAudition'),
+    authoringView.auditionControls.hidden = !available;
+    authoringView.toggleAudition.disabled = !available || busy;
+    localizedText(authoringView.toggleAudition, () =>
+      authoringView.audition.paused ? t('interface:resumeAudition') : t('interface:pauseAudition'),
     );
     const duration =
-      Number.isFinite(audition.duration) && audition.duration > 0 ? audition.duration : 0;
-    auditionSeek.element.max = String(duration);
-    auditionSeek.element.disabled = !available || busy || !duration;
-    auditionVolume.element.disabled = !available || busy;
-    if (doc.activeElement !== auditionSeek.element)
-      auditionSeek.element.value = String(
-        Number.isFinite(audition.currentTime) ? audition.currentTime : 0,
+      Number.isFinite(authoringView.audition.duration) && authoringView.audition.duration > 0
+        ? authoringView.audition.duration
+        : 0;
+    authoringView.auditionSeek.element.max = String(duration);
+    authoringView.auditionSeek.element.disabled = !available || busy || !duration;
+    authoringView.auditionVolume.element.disabled = !available || busy;
+    if (doc.activeElement !== authoringView.auditionSeek.element)
+      authoringView.auditionSeek.element.value = String(
+        Number.isFinite(authoringView.audition.currentTime)
+          ? authoringView.audition.currentTime
+          : 0,
       );
-    if (doc.activeElement !== auditionVolume.element)
-      auditionVolume.element.value = String(
+    if (doc.activeElement !== authoringView.auditionVolume.element)
+      authoringView.auditionVolume.element.value = String(
         auditionMaster
           ? auditionLocalVolume
-          : Number.isFinite(audition.volume)
-            ? audition.volume
+          : Number.isFinite(authoringView.audition.volume)
+            ? authoringView.audition.volume
             : 1,
       );
   }
@@ -3662,8 +3679,18 @@ export function attachSoundtrackPanel({
     suspended: 'interface:soundtrack.playback.suspended',
     disposed: 'interface:soundtrack.playback.disposed',
   });
-  function update(snapshot = player.snapshot()) {
+  function clearTransportPresentation() {
+    transportActivity?.clear();
+    transportActivity = null;
+  }
+  function update(snapshot) {
     if (disposed) return;
+    if (snapshot === undefined) snapshot = player.snapshot();
+    updateRecovery(snapshot);
+    if (!dialog.open || doc.hidden) {
+      clearTransportPresentation();
+      return;
+    }
     localizedText(now, () =>
       t('interface:soundtrack.nowPlaying', {
         track: snapshot.track?.title ?? t('interface:noTrackSelected'),
@@ -3696,16 +3723,24 @@ export function attachSoundtrackPanel({
       seek.element.value = String(snapshot.positionSeconds || 0);
     seek.element.disabled = !snapshot.track || !(snapshot.durationSeconds > 0);
     if (doc.activeElement !== volume.element) volume.element.value = String(snapshot.volume ?? 0.5);
-    stopAuditionButton.disabled = auditionURL === null && auditionController === null;
+    if (authoringView.stopAuditionButton)
+      authoringView.stopAuditionButton.disabled =
+        auditionURL === null && auditionController === null;
     updateAudition();
   }
   async function open() {
     if (disposed || dialog.open) return;
+    retireAuthoringLoad();
     onOpen();
     returnFocus = doc.activeElement;
-    if (!dialog.open) dialog.showModal();
+    const opening = !dialog.open;
+    if (opening) dialog.showModal();
+    update();
     if (!onlineCatalogue && !onlineCatalogueController) void loadOnlineCatalogue();
     closeButton.focus();
+    if (opening) onPresentationChange();
+    if (disposed || !dialog.open) return;
+    const authoring = ensureAuthoringView();
     if (!saved) {
       const focusIsEmpty = () => doc.activeElement === doc.body || doc.activeElement === dialog;
       // Remember the initial target; native blur may arrive later during the read.
@@ -3752,9 +3787,11 @@ export function attachSoundtrackPanel({
             : t('interface:musicLibraryReady'),
       );
     }
+    await authoring;
   }
   function close({ restoreFocus = true, restoreMusic = true } = {}) {
     if (busy || disposed || !dialog.open) return false;
+    retireAuthoringLoad();
     player.cancelPendingPlay?.();
     const catalogueController = onlineCatalogueController;
     onlineCatalogueController = null;
@@ -3764,6 +3801,7 @@ export function attachSoundtrackPanel({
     reloadOnline.disabled = disposed;
     void playback(() => stopAudition(restoreMusic));
     dialog.close();
+    clearTransportPresentation();
     if (
       restoreFocus &&
       !doc.hidden &&
@@ -3776,6 +3814,10 @@ export function attachSoundtrackPanel({
     onClose();
     return true;
   }
+  listen(dialog, 'close', (event) => {
+    // A previous close event can arrive after this dialog has already reopened.
+    if (event.target === dialog && !dialog.open) retireAuthoringLoad();
+  });
   listen(dialog, 'cancel', (event) => {
     if (event.target !== dialog) return;
     event.preventDefault();
@@ -3806,9 +3848,6 @@ export function attachSoundtrackPanel({
     controls[(at + delta + controls.length) % controls.length]?.focus();
     event.preventDefault();
   });
-  tracksSelect.element.onchange = () => renderTrack();
-  playlistsSelect.element.onchange = () => renderPlaylist();
-  scope.element.onchange = () => renderAssignments();
   onlineSearch.element.oninput = () => renderOnlineCatalogue();
   for (const checkbox of onlineStyleInputs.values())
     checkbox.onchange = () => renderOnlineCatalogue();
@@ -3820,57 +3859,10 @@ export function attachSoundtrackPanel({
       player.setVolume(value);
       await onVolume(value);
     });
-  auditionSeek.element.onchange = () =>
-    playback(() => {
-      const value = Number(auditionSeek.element.value),
-        duration = audition.duration;
-      if (
-        !auditionURL ||
-        busy ||
-        !Number.isFinite(duration) ||
-        duration <= 0 ||
-        !Number.isFinite(value)
-      )
-        return;
-      audition.currentTime = Math.max(0, Math.min(duration, value));
-    });
-  auditionVolume.element.oninput = () => {
-    const value = Number(auditionVolume.element.value);
-    if (auditionURL && !busy && Number.isFinite(value)) {
-      const local = Math.max(0, Math.min(1, value));
-      if (auditionMaster) {
-        auditionLocalVolume = local;
-        auditionMaster.setLocal({ volume: local });
-      } else audition.volume = local;
-    }
-  };
-  if (auditionMaster)
-    listen(audition, 'play', () => {
-      const active = !disposed && dialog.open && auditionURL !== null;
-      auditionMaster.setLocal({ muted: !active });
-      if (!active) audition.pause();
-    });
-  for (const type of [
-    'loadedmetadata',
-    'durationchange',
-    'timeupdate',
-    'play',
-    'pause',
-    'volumechange',
-  ])
-    listen(audition, type, updateAudition);
-  listen(audition, 'ended', () => {
-    void playback(() => stopAudition(true));
-  });
-  listen(audition, 'error', () => {
-    if (!auditionURL) return;
-    void playback(async () => {
-      await stopAudition(true);
-      throw new Error(t('interface:theAuditionCouldNotDecodeThisTrackRestoreOrReplace'));
-    });
-  });
   listen(doc, 'visibilitychange', () => {
     if (doc.hidden) {
+      retireAuthoringLoad();
+      clearTransportPresentation();
       const intended = restoreMusic;
       void playback(async () => {
         await stopAudition(false);
@@ -3878,26 +3870,32 @@ export function attachSoundtrackPanel({
         // decides when actual listening may resume; never play a hidden page.
         if (intended && !disposed) player.setIntent(true);
       });
+    } else if (dialog.open) {
+      update();
+      void ensureAuthoringView();
     }
   });
   function dispose() {
     if (disposed) return;
+    retireAuthoringLoad();
     player.cancelPendingPlay?.();
     controller?.abort();
     onlineCatalogueController?.abort();
     onlineCatalogueController = null;
     onlineCatalogueGeneration++;
     disposed = true;
+    publicationLifetime.abort();
     if (ownsSourceManager) sourceManager.dispose();
     if (ownsSourceStore) sourceStore?.close();
     feedback.dispose();
     transportFeedback.dispose();
-    auditionFeedback.dispose();
+    auditionFeedback?.dispose();
     void stopAudition(false);
     auditionMaster?.dispose();
     for (const unbind of bindings) unbind();
     invalidateBackup();
     dialog.remove();
+    for (const { root } of recoveryViews) root.remove();
     settingsStylesSection?.remove();
     style.remove();
   }
@@ -3906,9 +3904,49 @@ export function attachSoundtrackPanel({
   renderSources();
   renderSettingsStyleStatus();
   void loadSourcePreferences();
+  const settingsTab = doc.getElementById?.(settingsOwner?.getAttribute('aria-labelledby'));
+  let settingsBrowseQueued = false;
+  const requestSettingsCatalogue = () => {
+    if (disposed || settingsBrowseQueued) return;
+    settingsBrowseQueued = true;
+    // Native mouse/controller activation may focus before the tab owner selects it.
+    queueMicrotask(() => {
+      settingsBrowseQueued = false;
+      if (
+        disposed ||
+        doc.hidden ||
+        doc.visibilityState === 'hidden' ||
+        !settingsRoot?.isConnected ||
+        !settingsOwner?.isConnected ||
+        !settingsOwner.contains(settingsRoot) ||
+        doc.getElementById?.(settingsOwner.id) !== settingsOwner ||
+        !settingsTab?.isConnected ||
+        settingsTab.disabled ||
+        settingsTab.getAttribute('aria-disabled') === 'true' ||
+        doc.getElementById?.(settingsTab.id) !== settingsTab ||
+        settingsTab.getAttribute('aria-controls') !== settingsOwner.id ||
+        settingsTab.getAttribute('aria-selected') !== 'true' ||
+        settingsOwner.hidden ||
+        settingsOwner.inert ||
+        settingsOwner.closest('[hidden],[inert],[aria-hidden="true"]') ||
+        !settingsOwner.getClientRects?.().length ||
+        settingsRoot.hidden ||
+        settingsRoot.inert ||
+        settingsRoot.closest('[hidden],[inert],[aria-hidden="true"]') ||
+        !settingsRoot.getClientRects?.().length
+      )
+        return;
+      void loadOnlineCatalogue();
+    });
+  };
+  if (settingsTab) {
+    listen(settingsTab, 'click', requestSettingsCatalogue);
+    listen(settingsTab, 'focusin', requestSettingsCatalogue);
+  }
+  // Local choices hydrate immediately. A visible selected Audio tab is an explicit browse demand.
   if (settingsRoot) {
     void loadSettingsLibrary();
-    void loadOnlineCatalogue();
+    requestSettingsCatalogue();
   }
   return Object.freeze({
     open,

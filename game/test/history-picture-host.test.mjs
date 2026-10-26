@@ -1,3 +1,5 @@
+import { activateHostAction } from './helpers/host-action.mjs';
+import { RasterImage } from './helpers/raster-image.mjs';
 import { nativeCaptureSession as nativeSession } from '../capture-presentation-session.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
@@ -34,7 +36,10 @@ class Locks {
     }
   }
 }
-async function pageFor(t, { read, Image = Picture, waitForPictures = true, inspectMemory } = {}) {
+async function pageFor(
+  t,
+  { read, Image = RasterImage, waitForPictures = true, inspectMemory } = {},
+) {
   const releaseBytes = await readFile(
     new URL('../presentation/compiled/runtime.json', import.meta.url),
   );
@@ -184,7 +189,7 @@ test('an unfinished original can be prepared explicitly after history return wit
   assert.equal(memory.allPuts.length, writes);
   assert.equal(locks.calls.filter((key) => key === writerKey).length, 1);
   page.$('pause-button').click();
-  page.$('library-button').click();
+  await activateHostAction(page.$('library-button'));
   await settle(() => !page.$('session-originals').hidden);
   assert.equal(page.$('prepare-session-originals').disabled, false);
   assert.match(page.$('session-originals-note').textContent, /session|tab/i);
@@ -297,7 +302,7 @@ test('history Load saved flight and explicit Resume keep the saved pin and check
   );
   ticks(page, 3);
   assert.deepEqual(authoritativeCheckpoint(page.rendered.run), checkpoint);
-  page.$('library-button').click();
+  await activateHostAction(page.$('library-button'));
   page.doc.querySelector('[data-library-panel="saves"]').click();
   assert.equal(page.$('library-saves').hidden, false);
   page.$('export-session').click();
@@ -311,6 +316,8 @@ test('history Load saved flight and explicit Resume keep the saved pin and check
   );
   page.$('library-dialog').close();
   page.$('start-button').click();
+  await settle(() => page.doc.body.dataset.flightState === 'running');
+  page.frame(0);
   ticks(page, 2);
   assert.equal(page.rendered.paused, false);
   assert.equal(page.doc.querySelectorAll('dialog[open]').length, 0);
@@ -393,7 +400,7 @@ test('unjoined session prewarm becomes ready without starting and exposes export
   assert.notEqual(page.doc.body.dataset.flightState, 'running');
   assert.equal(page.$('flight-preparation-cancel').hidden, true);
   assert.equal(page.$('picture-reload').hidden, true);
-  page.$('library-button').click();
+  await activateHostAction(page.$('library-button'));
   await settle(() => !page.$('session-originals').hidden);
   assert.equal(page.$('prepare-session-originals').disabled, false);
   page.$('library-dialog').close();

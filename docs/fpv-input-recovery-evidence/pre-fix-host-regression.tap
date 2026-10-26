@@ -1,0 +1,32 @@
+TAP version 13
+# Subtest: an unavailable radio before start preserves the healthy session and keyboard restart (en)
+not ok 1 - an unavailable radio before start preserves the healthy session and keyboard restart (en)
+  ---
+  duration_ms: 50.403125
+  type: 'test'
+  location: '/private/tmp/fpv-input-recovery-pre-fix.test.mjs:570:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    The input did not match the regular expression /Input unavailable. Practice is paused./. Input:
+
+    'Advanced reference practiceExperimental · unscored. The independent controller and reference aircraft are awaiting device, measurement and pilot qualification.Arrow keys: pitch/roll · A/D: yaw · W/S: throttle · Escape: pause. Touch controls are below. The supplied radio calibration is used when a radio is connected. Camera FOV is vertical.Practice stopped: Advanced practice is unavailable:Start practicePauseRestart practiceReturn to tuningExport practice recordingAircraft template FreestyleWhoopRacingInput source Keyboard / touchCalibrated radioRepeatable practice Free practiceHover and landTurn and stopThrottle pulseChoose a short exercise, then restart from the same launch point. Follow the cues manually; no controls or scores are automated. Keep a reference or export it before returning to edit rates.Unscored comparisonImport a reference-arena recording or keep this practice. Its complete replay is checked in a separate worker. Rotation rates may differ; aircraft, controller, throttle, timing and arena must match. The cyan ghost has no collisions or score.Import comparison recording Keep this practice as referenceClear referenceCancel verificationShow verified ghost No reference selected.RollPitchYawThrottleAircraft and controller tuningAircraft values use SI units. Controller gains belong to this SIM; they are not Betaflight PID numbers. Changes stay in the draft until you restart. Saving keeps them for the next flight.Nominal maximum thrust / weight: 3.76 · Draft changed. Restart practice to test it.Mass (kg)Motor distance from centre (m)Collision radius (m)Thrust per motor at nominal voltage (N)Reaction torque / thrust (m)Motor response time (s)Motor output limit (0–1)Linear drag (N·s/m)Quadratic drag (N·s²/m²)Angular drag (N·m·s/rad)Gyro noise amplitude (rad/s)Gyro vibration amplitude (rad/s)Nominal battery voltage (V)Full battery voltage (V)Empty battery voltage (V)Battery resistance (Ω)Full motor current (A)Battery capacity (Ah)Gyro low-pass cutoff (Hz; 0 off)D-term low-pass cutoff (Hz; 0 off)Input smoothing cutoff (Hz; 0 off)Feedforward low-pass cutoff (Hz; 0 off)Integral torque limit (N·m)Anti-windup recovery (1/s)Pitch inertia (kg·m²)Yaw inertia (kg·m²)Roll inertia (kg·m²)Roll P (N·m/(rad/s))Roll I (N·m/rad)Roll D (N·m/(rad/s²))Roll FEEDFORWARD (N·m/(rad/s²))Pitch P (N·m/(rad/s))Pitch I (N·m/rad)Pitch D (N·m/(rad/s²))Pitch FEEDFORWARD (N·m/(rad/s²))Yaw P (N·m/(rad/s))Yaw I (N·m/rad)Yaw D (N·m/(rad/s²))Yaw FEEDFORWARD (N·m/(rad/s²))Save aircraft for next flightRevert aircraft draftExport aircraft and controller'
+
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual: 'Advanced reference practiceExperimental · unscored. The independent controller and reference aircraft are awaiting device, measurement and pilot qualification.Arrow keys: pitch/roll · A/D: yaw · W/S: throttle · Escape: pause. Touch controls are below. The supplied radio calibration is used when a radio is connected. Camera FOV is vertical.Practice stopped: Advanced practice is unavailable:Start practicePauseRestart practiceReturn to tuningExport practice recordingAircraft template FreestyleWhoopRacingInput source Keyboard / touchCalibrated radioRepeatable practice Free practiceHover and landTurn and stopThrottle pulseChoose a short exercise, then restart from the same launch point. Follow the cues manually; no controls or scores are automated. Keep a reference or export it before returning to edit rates.Unscored comparisonImport a reference-arena recording or keep this practice. Its complete replay is checked in a separate worker. Rotation rates may differ; aircraft, controller, throttle, timing and arena must match. The cyan ghost has no collisions or score.Import comparison recording Keep this practice as referenceClear referenceCancel verificationShow verified ghost No reference selected.RollPitchYawThrottleAircraft and controller tuningAircraft values use SI units. Controller gains belong to this SIM; they are not Betaflight PID numbers. Changes stay in the draft until you restart. Saving keeps them for the next flight.Nominal maximum thrust / weight: 3.76 · Draft changed. Restart practice to test it.Mass (kg)Motor distance from centre (m)Collision radius (m)Thrust per motor at nominal voltage (N)Reaction torque / thrust (m)Motor response time (s)Motor output limit (0–1)Linear drag (N·s/m)Quadratic drag (N·s²/m²)Angular drag (N·m·s/rad)Gyro noise amplitude (rad/s)Gyro vibration amplitude (rad/s)Nominal battery voltage (V)Full battery voltage (V)Empty battery voltage (V)Battery resistance (Ω)Full motor current (A)Battery capacity (Ah)Gyro low-pass cutoff (Hz; 0 off)D-term low-pass cutoff (Hz; 0 off)Input smoothing cutoff (Hz; 0 off)Feedforward low-pass cutoff (Hz; 0 off)Integral torque limit (N·m)Anti-windup recovery (1/s)Pitch inertia (kg·m²)Yaw inertia (kg·m²)Roll inertia (kg·m²)Roll P (N·m/(rad/s))Roll I (N·m/rad)Roll D (N·m/(rad/s²))Roll FEEDFORWARD (N·m/(rad/s²))Pitch P (N·m/(rad/s))Pitch I (N·m/rad)Pitch D (N·m/(rad/s²))Pitch FEEDFORWARD (N·m/(rad/s²))Yaw P (N·m/(rad/s))Yaw I (N·m/rad)Yaw D (N·m/(rad/s²))Yaw FEEDFORWARD (N·m/(rad/s²))Save aircraft for next flightRevert aircraft draftExport aircraft and controller'
+  operator: 'match'
+  stack: |-
+    TestContext.<anonymous> (file:///private/tmp/fpv-input-recovery-pre-fix.test.mjs:580:12)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:296:3)
+  ...
+1..1
+# tests 1
+# suites 0
+# pass 0
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 284.900041

@@ -332,6 +332,11 @@ test('every production game, authoring and site entry seeds appearance before ot
     const scripts = nodes(tree, 'script');
     const bootstrap = scripts.find((node) => attr(node, 'src')?.endsWith('theme-bootstrap.mjs'));
     const accessGate = scripts.find((node) => attr(node, 'src')?.endsWith('access-gate.mjs'));
+    const accessStyle = nodes(tree, 'style').find(
+      (node) =>
+        node.childNodes.map((child) => child.value ?? '').join('') ===
+        'html:not([data-access-state="unlocked"]) body > :not(#access-gate):not(script) { display: none !important; }',
+    );
     assert.ok(bootstrap, path.relative(root, file));
     if (accessGate) {
       assert.equal(attr(bootstrap, 'type'), 'application/x-revealline-locked');
@@ -355,6 +360,7 @@ test('every production game, authoring and site entry seeds appearance before ot
       if (
         resource === bootstrap ||
         resource === accessGate ||
+        (accessGate && resource === accessStyle) ||
         (accessGate && attr(resource, 'href')?.endsWith('access-gate.css'))
       )
         continue;
@@ -371,6 +377,7 @@ test('every production game, authoring and site entry seeds appearance before ot
         file,
       );
       for (const node of nodes(tree, 'style')) {
+        if (accessGate && node === accessStyle) continue;
         const css = node.childNodes.map((child) => child.value ?? '').join('');
         assert.match(css, /^\s*@layer legacy\s*\{/, file);
       }
@@ -396,6 +403,21 @@ test('Neon gallery generators retain shared appearance and exact authored image 
   ]) {
     assert.equal(html, await fs.readFile(path.join(library, folder, 'index.html'), 'utf8'));
     const tree = parse(html);
+    assert.equal(attr(nodes(tree, 'html')[0], 'data-access-state'), 'locked', folder);
+    const scripts = nodes(tree, 'script');
+    assert.equal(
+      scripts.filter((node) => attr(node, 'src')?.endsWith('access-gate.mjs')).length,
+      1,
+    );
+    for (const node of scripts) {
+      if (attr(node, 'src')?.endsWith('access-gate.mjs')) continue;
+      assert.equal(attr(node, 'type'), 'application/x-revealline-locked', folder);
+      assert.equal(
+        attr(node, 'data-access-type'),
+        attr(node, 'src')?.endsWith('theme-bootstrap.mjs') ? '' : 'module',
+        folder,
+      );
+    }
     assert.deepEqual(
       nodes(tree, 'img').map((image) => attr(image, 'src')),
       expected,
@@ -419,4 +441,18 @@ test('profile-owned players seed appearance without acquiring an auxiliary host 
     assert.ok(html.includes('theme-bootstrap.mjs'), file);
     assert.ok(!html.includes('presentation/theme-entry.mjs'), `${file}: keeps runtime authority`);
   }
+});
+
+test('unqualified extra size paints established Large before modules without overwriting desired intent', () => {
+  const display = { textFace: 'plain', textSize: 'extra-large', reducedEffects: false };
+  const records = { 'revealline.display.v1': raw(display) };
+  const before = structuredClone(records);
+  const boot = seed(records, { studio: true });
+  assert.equal(boot.dataset.themeTextSize, 'large');
+  assert.equal(boot.variables.get('--iw-text-size'), '20px');
+  assert.equal(boot.variables.get('--iw-target'), '44px');
+  const resolved = resolvePresentation({ accessibility: display, density: 'studio' });
+  assert.equal(resolved.accessibility.textSize, 'large');
+  assert.equal(presentationThemeVariables(resolved)['--iw-text-size'], '20px');
+  assert.deepEqual(records, before);
 });

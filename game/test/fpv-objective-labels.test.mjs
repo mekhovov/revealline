@@ -8,6 +8,17 @@ import * as visuals from '../../optional-practice/civilian-fpv/world-visuals.mjs
 import * as themes from '../../optional-practice/civilian-fpv/world-themes.mjs';
 import * as soldiers from '../../optional-practice/civilian-fpv/industrial-soldiers.mjs';
 import * as vehicles from '../../optional-practice/civilian-fpv/industrial-vehicles.mjs';
+import * as aircraftVisuals from '../../optional-practice/civilian-fpv/aircraft-appearance.mjs';
+import {
+  normalizeCombatDefeat,
+  combatFragmentRecipe,
+} from '../../optional-practice/civilian-fpv/combat-presentation.mjs';
+import {
+  createObjectiveGuideVisual,
+  objectiveGuideLabelLayout,
+  createRouteGuideVisual,
+  applyImportedActorOwnership,
+} from '../../optional-practice/civilian-fpv/renderer.mjs';
 import { contrastRatio } from '../presentation/theme-system.mjs';
 import { canonicalJSON } from '../data-json.mjs';
 import { resolveIndustrialEnvironment } from '../presentation/industrial-environments.mjs';
@@ -118,7 +129,7 @@ test('inactive, behind-camera and invalid viewport labels retain original bounds
     });
 });
 
-async function rendererFixture() {
+async function rendererFixture({ cast = null } = {}) {
   let source = await fs.readFile(
     new URL('../../optional-practice/civilian-fpv/renderer.mjs', import.meta.url),
     'utf8',
@@ -160,11 +171,17 @@ async function rendererFixture() {
       this.shadowMap = {};
       this.capabilities = { getMaxAnisotropy: () => 8 };
       this.info = {
+        reset() {},
         programs: [],
         memory: { geometries: 0, textures: 0 },
         render: { calls: 0, triangles: 0 },
       };
     }
+    getRenderTarget() {
+      return null;
+    }
+    setRenderTarget() {}
+    clearDepth() {}
     setPixelRatio() {}
     setSize() {}
     dispose() {}
@@ -185,8 +202,9 @@ async function rendererFixture() {
     ...visuals,
     ...soldiers,
     ...vehicles,
+    ...aircraftVisuals,
     actorVisual,
-    sharedActorAppearance,
+    sharedActorAppearance: cast ? () => ({ snapshot: () => ({ cast }) }) : sharedActorAppearance,
     runtimeActorArtRevision,
     canonicalJSON,
     resolveIndustrialEnvironment,
@@ -220,45 +238,119 @@ async function rendererFixture() {
   return { renderer, sprites, camera: () => drawnCamera, scene: () => drawnScene };
 }
 
-test('real renderer path enlarges only the active themed badge with depth occlusion and authored appearance preserved', async () => {
+test('native defeat presentation retains visible actor identity without changing accepted facts or combat appearances', async () => {
+  const native = structuredClone(course);
+  native.actors = [
+    { id: 'patrol', type: 'patrol', speed: 1000, radius: 350, height: 1800 },
+    { id: 'drone', type: 'drone', speed: 2000, radius: 400, height: 500 },
+    { id: 'tank', type: 'vehicle', vehicleModel: 'field-tank', radius: 900, height: 1200 },
+  ].map((actor, index) => ({
+    ...actor,
+    position: { x: index * 3000, y: 0, z: 5000 },
+    path: [],
+    role: 'hostile',
+  }));
+  for (const cast of ['authored', 'tactical', 'arcade']) {
+    const { renderer } = await rendererFixture({ cast });
+    renderer.setCourse(native);
+    let presented = null,
+      active = false;
+    renderer.configureCombatPresentation({
+      createActors: () => ({
+        active: () => active,
+        reset() {},
+        dispose() {},
+      }),
+      createPresentation: () => ({
+        observe(facts) {
+          presented = facts;
+        },
+        configure() {},
+        dispose() {},
+      }),
+    });
+    const facts = native.actors.map((actor, index) => ({
+      type: 'defeat',
+      eventId: `native-${index}`,
+      sourceId: actor.id,
+      tick: 25,
+      position: actor.position,
+      radius: actor.radius,
+      height: actor.height,
+      material: index === 0 ? 'organic' : 'electronic',
+      appearance: { family: 'lookout', type: actor.type },
+      cause: 'impact',
+      seed: 123,
+    }));
+    const before = structuredClone(facts);
+    renderer.observeCombat(facts, { tick: 25 });
+    assert.notEqual(presented, facts);
+    assert.equal(presented[0].appearance.family, 'patroller');
+    for (const [index, actor] of native.actors.entries()) {
+      assert.equal(presented[index].appearance.cast, cast === 'authored' ? 'rivals' : cast);
+      assert.equal(presented[index].appearance.type, actor.type);
+    }
+    assert.equal(presented[2].appearance.model, 'field-tank');
+    assert.deepEqual(facts, before, 'cosmetic enrichment never enters accepted proof facts');
+    const recipes = presented.map((fact) =>
+      combatFragmentRecipe(normalizeCombatDefeat(fact), { brutal: true, blood: true }),
+    );
+    assert.ok(recipes[0].some((part) => part.region === 'head'));
+    assert.ok(recipes[0].some((part) => part.region === 'chest'));
+    assert.ok(
+      recipes[1].some((part) => part.shape === 'cloth' && part.attachment >= 0),
+      'drone recipe retains rotor fragments attached to arms',
+    );
+    assert.ok(
+      recipes[2].some((part) => part.shape === 'rubber'),
+      'vehicle wheels remain recognizable',
+    );
+    assert.ok(
+      recipes[2].some((part) => part.size[2] > 0.9),
+      'the tank recipe retains its long barrel',
+    );
+    active = true;
+    renderer.observeCombat(facts, { tick: 25 });
+    assert.equal(presented, facts, 'active combat actors retain their configured appearances');
+    renderer.dispose();
+  }
+});
+
+test('real renderer keeps current and next objective labels readable on every collection and camera', async () => {
   for (const collectionId of ['authored', 'industrial-workshop', 'dnipro-porcelain']) {
-    const fixture = await rendererFixture();
-    const { renderer } = fixture;
-    const before = JSON.stringify(course);
+    const fixture = await rendererFixture(),
+      { renderer } = fixture,
+      before = JSON.stringify(course),
+      route = acceptanceRoute(course),
+      sample = acceptanceFrame(course, route, 0, 'far');
     renderer.setPresentation({ collectionId, revision: 'r1' });
     renderer.setCourse(course);
-    const route = acceptanceRoute(course),
-      sample = acceptanceFrame(course, route, 0, 'far');
-    const badge = fixture.sprites.find(
-      (item) =>
-        item.material.map.image.label.text === String(sample.state.step + 1).padStart(2, '0'),
-    );
-    const position = badge.position.clone();
     renderer.draw(sample.state, sample.options);
-    assert.equal(badge.material.depthTest, true);
-    assert.equal(badge.material.depthWrite, false);
-    assert.equal(badge.material.fog, true);
-    assert.equal(badge.material.opacity, 1);
-    assert.deepEqual(badge.position, position);
-    assert.equal(fixture.camera().fov, 82);
-    if (collectionId === 'authored') {
-      assert.equal(badge.scale.x, 0.72);
-      assert.equal(badge.center.y, 0.5);
-      assert.equal(badge.material.map.image.label.font, '700 66px sans-serif');
-    } else {
-      assert.ok(badge.scale.x > 0.72 && badge.scale.x <= 1.44);
-      assert.ok(Math.abs(projection(badge, fixture.camera(), 600).height - 18) < 1e-6);
-      const image = badge.material.map.image;
-      assert.ok(contrastRatio(image.label.foreground, image.background) >= 4.5);
-      // Returning to a near view restores the original world size, not a new permanent enlargement.
-      const near = acceptanceFrame(course, route, 0, 'near');
-      renderer.draw(near.state, near.options);
-      assert.equal(badge.scale.x, 0.72);
-      assert.equal(badge.center.y, 0.5);
-    }
-    const inactive = fixture.sprites.find((item) => item.material.map.image.label.text === '01');
-    assert.equal(inactive.scale.x, 0.72);
-    assert.equal(inactive.material.opacity, 0.35);
+    const labels = fixture.sprites.filter((item) => item.userData.objectiveLabelBaseSize),
+      current = labels[sample.state.step],
+      next = labels[sample.state.step + 1];
+    assert.ok(current.parent.visible);
+    assert.equal(current.material.depthTest, true);
+    assert.equal(current.material.depthWrite, false);
+    assert.equal(current.material.opacity, 1);
+    assert.ok(projection(current, fixture.camera(), 600).height >= 24 - 1e-6);
+    assert.ok(projection(current, fixture.camera(), 600).height <= 42 + 1e-6);
+    assert.ok(next.parent.visible);
+    assert.equal(next.material.opacity, 0.62);
+    assert.equal(labels.filter((item) => item.parent.visible).length, 2);
+    const image = current.material.map.image;
+    assert.ok(contrastRatio(image.label.foreground, image.background) >= 4.5);
+    renderer.draw(sample.state, { ...sample.options, guidanceVisible: false });
+    assert.equal(current.parent.parent.visible, false);
+    assert.equal(renderer.objectiveScreen(sample.state), null);
+    renderer.draw(sample.state, { ...sample.options, cameraMode: 'editor' });
+    assert.ok(labels.every((item) => item.parent.visible));
+    renderer.draw(sample.state, { ...sample.options, cameraMode: 'chase', guidanceAccent: 'cyan' });
+    assert.equal(labels.filter((item) => item.parent.visible).length, 2);
+    const cue = renderer.objectiveScreen(sample.state);
+    assert.equal(cue.guidanceAccent, 'cyan');
+    assert.ok(cue.preview);
+    assert.equal(cue.preview.index, cue.index + 1);
     assert.equal(JSON.stringify(course), before);
     renderer.dispose();
   }
@@ -339,13 +431,12 @@ test('active gate bracket geometry stays outside the original frame on both axes
   );
 });
 
-test('renderer exposes only the active themed gate brackets at every quality and releases shared resources once', async () => {
+test('renderer exposes current and next semantic guides at every quality and releases each resource once', async () => {
   const course = ACCEPTANCE_CASES.find((entry) => entry.id === 'warehouse').course,
     before = JSON.stringify(course),
     route = acceptanceRoute(course),
     far = acceptanceFrame(course, route, 0, 'far');
-  let originalRails;
-  for (const collectionId of ['authored', ...Object.keys(visuals.SIM_VISUAL_COLLECTIONS)])
+  for (const collectionId of ['authored', 'industrial-workshop', 'dnipro-porcelain'])
     for (const quality of ['low', 'balanced', 'high']) {
       const fixture = await rendererFixture(),
         { renderer } = fixture;
@@ -353,66 +444,28 @@ test('renderer exposes only the active themed gate brackets at every quality and
       renderer.setPresentation({ collectionId, revision: 'r1' });
       renderer.setCourse(course);
       renderer.draw(far.state, far.options);
-      const active = fixture.sprites.find(
-        (item) =>
-          item.material.map.image.label.text === String(far.state.step + 1).padStart(2, '0'),
-      ).parent;
-      const rails = active.children
-        .filter(
-          (item) =>
-            !item.isInstancedMesh &&
-            item.geometry?.type === 'BoxGeometry' &&
-            Math.max(
-              item.geometry.parameters.width,
-              item.geometry.parameters.height,
-              item.geometry.parameters.depth,
-            ) > 0.32,
-        )
-        .map((item) => ({
-          dimensions: item.geometry.parameters,
-          position: item.position.toArray(),
-        }));
-      originalRails ??= rails;
-      assert.deepEqual(
-        rails,
-        originalRails,
-        'physical frame dimensions and positions stay original',
-      );
       const cues = [];
       fixture.scene().traverse((item) => {
-        if (item.name === 'active-gate-corner-cue') cues.push(item);
+        if (item.userData.criteriaOnly) cues.push(item);
       });
-      if (collectionId === 'authored') {
-        assert.equal(cues.length, 0);
-      } else {
-        assert.ok(cues.length > 1);
-        assert.equal(cues.filter((item) => item.visible).length, 1);
-        assert.equal(cues.find((item) => item.visible).parent, active);
-        const resourceOwners = new Set();
-        for (const cue of cues)
-          for (const batch of cue.children) {
-            resourceOwners.add(batch);
-            resourceOwners.add(batch.geometry);
-            resourceOwners.add(batch.material);
-            if (batch.customDepthMaterial) resourceOwners.add(batch.customDepthMaterial);
-          }
-        const disposals = new Map();
-        for (const owner of resourceOwners)
-          owner.addEventListener('dispose', () =>
-            disposals.set(owner, (disposals.get(owner) ?? 0) + 1),
-          );
-        // Returning to a non-gate step removes the marker without changing the inactive hierarchy.
-        renderer.draw({ ...far.state, step: 0 }, far.options);
-        assert.equal(cues.filter((item) => item.visible).length, 0);
-        assert.equal(active.children.find((item) => item.isLineSegments).material.opacity, 0.18);
-        renderer.setPresentation({ collectionId: 'authored' });
-        renderer.setCourse(course);
-        for (const owner of resourceOwners) assert.equal(disposals.get(owner), 1);
-        renderer.dispose();
-        for (const owner of resourceOwners) assert.equal(disposals.get(owner), 1);
-        continue;
-      }
+      assert.ok(cues.length > 1);
+      assert.equal(cues.filter((item) => item.parent.visible && item.visible).length, 2);
+      const resources = new Set();
+      for (const cue of cues)
+        cue.traverse((part) => {
+          if (part.geometry) resources.add(part.geometry);
+          if (part.material) resources.add(part.material);
+          if (part.isInstancedMesh) resources.add(part);
+        });
+      const disposals = new Map();
+      for (const resource of resources)
+        resource.addEventListener('dispose', () =>
+          disposals.set(resource, (disposals.get(resource) ?? 0) + 1),
+        );
+      renderer.setCourse(course);
+      for (const resource of resources) assert.equal(disposals.get(resource), 1);
       renderer.dispose();
+      for (const resource of resources) assert.equal(disposals.get(resource), 1);
     }
   assert.equal(JSON.stringify(course), before);
 });
@@ -462,5 +515,225 @@ test('renderer requires a branded native environment before replacing its accept
   } finally {
     renderer.dispose();
   }
+});
+
+function disposeGuide(root) {
+  const geometry = new Set(),
+    materials = new Set();
+  root?.traverse((part) => {
+    if (part.geometry) geometry.add(part.geometry);
+    if (part.material) materials.add(part.material);
+    if (part.isInstancedMesh) part.dispose();
+  });
+  geometry.forEach((value) => value.dispose());
+  materials.forEach((value) => value.dispose());
+}
+
+test('new guidance rails border the exact accepted aperture on every crossing axis', () => {
+  for (const axis of ['x', 'y', 'z'])
+    for (const direction of [-1, 1])
+      for (const span of [200, 3000, 18000]) {
+        const step = {
+            type: 'crossing-v1',
+            axis,
+            direction,
+            at: 5000,
+            minA: -span / 2,
+            maxA: span / 2,
+            minB: 1000,
+            maxB: 3200,
+          },
+          before = structuredClone(step),
+          guide = createObjectiveGuideVisual(step),
+          { a, b, height } = guide.userData.aperture;
+        assert.equal(guide.userData.guidanceSemantic, 'manoeuvre');
+        assert.equal(guide.position[axis], 5);
+        for (const batch of guide.children.filter((item) => item.isInstancedMesh))
+          for (let index = 0; index < batch.count; index++) {
+            const matrix = new THREE.Matrix4();
+            batch.getMatrixAt(index, matrix);
+            const bounds = new THREE.Box3(
+              new THREE.Vector3(-0.5, -0.5, -0.5),
+              new THREE.Vector3(0.5, 0.5, 0.5),
+            ).applyMatrix4(matrix);
+            assert.ok(
+              bounds.min[a] >= span / 2000 - 1e-6 ||
+                bounds.max[a] <= -span / 2000 + 1e-6 ||
+                bounds.min[b] >= height / 2 - 1e-6 ||
+                bounds.max[b] <= -height / 2 + 1e-6,
+              'no visual rail narrows or shifts the accepted opening',
+            );
+            assert.equal(batch.material.depthTest, true);
+            assert.equal(batch.material.depthWrite, false);
+          }
+        const arrow = guide.getObjectByName('objective-entry-direction'),
+          actual = new THREE.Vector3(0, 1, 0).applyQuaternion(arrow.quaternion);
+        assert.ok(actual[axis] * direction > 0.9999);
+        assert.deepEqual(step, before);
+        disposeGuide(guide);
+      }
+});
+
+test('hold, landing and manoeuvre regions have distinct honest cues; unsupported landing pads stay hidden', () => {
+  for (const type of ['hold', 'land', 'rotation-v1', 'attitude-v1', 'path-v1']) {
+    const step = { type, min: { x: -1000, y: 1000, z: -1000 }, max: { x: 1000, y: 3000, z: 1000 } },
+      guide = createObjectiveGuideVisual(step);
+    assert.equal(
+      guide.userData.guidanceSemantic,
+      ['hold', 'land'].includes(type) ? type : 'manoeuvre',
+    );
+    assert.equal(guide.getObjectByName('objective-entry-direction'), undefined);
+    assert.equal(guide.userData.aperture, undefined);
+    if (type === 'land')
+      assert.equal(guide.getObjectByName('objective-supported-landing-pad').visible, false);
+    disposeGuide(guide);
+  }
+  assert.equal(createObjectiveGuideVisual({ type: 'survive', ticks: 500 }), null);
+  assert.equal(createObjectiveGuideVisual({ type: 'actor-track-v1', actorId: 'a' }), null);
+});
+
+test('guidance labels cap near and distant CSS pixels without changing the opening or label lower edge', () => {
+  for (const preview of [false, true])
+    for (const depth of [0.5, 6, 24, 100, 250])
+      for (const height of [360, 1080, 2160]) {
+        const lens = new THREE.PerspectiveCamera(82, 16 / 9, 0.035, 300),
+          projectionY = lens.projectionMatrix.elements[5],
+          result = objectiveGuideLabelLayout({
+            baseSize: 0.72,
+            viewDepth: depth,
+            viewportHeight: height,
+            projectionY,
+            preview,
+          }),
+          pixels = (result.size * projectionY * height) / (2 * depth);
+        assert.ok(pixels >= (preview ? 18 : 24) - 1e-6);
+        assert.ok(pixels <= (preview ? 32 : 42) + 1e-6);
+        assert.ok(Math.abs(result.centerY * result.size - 0.36) < 1e-6);
+      }
+});
+
+test('current objective cue reports wrong-side entry, occlusion and one next preview without revealing a hidden gate', async () => {
+  const fixture = await rendererFixture(),
+    { renderer } = fixture,
+    value = structuredClone(ACCEPTANCE_CASES.find((entry) => entry.id === 'warehouse').course),
+    route = acceptanceRoute(value),
+    sample = acceptanceFrame(value, route, 0, 'far');
+  try {
+    renderer.setCourse(value);
+    renderer.draw(sample.state, sample.options);
+    const step = value.steps['self-level'][sample.state.step],
+      wrong = structuredClone(sample.state);
+    wrong.position[step.axis] = step.at + step.direction * 2000;
+    renderer.draw(wrong, sample.options);
+    const cue = renderer.objectiveScreen(wrong);
+    assert.equal(cue.wrongSide, true);
+    assert.equal(cue.approach, true);
+    assert.equal(cue.semantic, 'gate');
+    assert.equal(cue.preview.index, cue.index + 1);
+    // Add an opaque obstruction around the viewer to the canonical world group.
+    const scene = fixture.scene(),
+      world = scene.children.find(
+        (item) => item.isGroup && item !== fixture.sprites[0].parent.parent,
+      ),
+      wall = new THREE.Mesh(
+        new THREE.SphereGeometry(0.5, 8, 8),
+        new THREE.MeshBasicMaterial({ side: THREE.DoubleSide }),
+      );
+    wall.position.copy(fixture.camera().position);
+    world.add(wall);
+    scene.updateMatrixWorld(true);
+    const advanced = { ...wrong, ticks: wrong.ticks + 5 };
+    const blocked = renderer.objectiveScreen(advanced);
+    assert.equal(blocked.occluded, true);
+    assert.equal(blocked.directionOnly, true);
+    world.remove(wall);
+    wall.geometry.dispose();
+    wall.material.dispose();
+    renderer.draw(wrong, { ...sample.options, cameraMode: 'overview' });
+    assert.equal(renderer.objectiveScreen(wrong), null);
+  } finally {
+    renderer.dispose();
+  }
+});
+
+test('validated route visuals follow only authored consecutive segments, can be hidden independently and are released on omission', async () => {
+  const path = {
+      id: 'bend',
+      waypoints: [
+        { id: 'a', position: { x: 0, y: 2000, z: 0 } },
+        { id: 'b', position: { x: 5000, y: 2000, z: 0 } },
+        { id: 'c', position: { x: 5000, y: 2000, z: 5000 } },
+      ],
+    },
+    before = structuredClone(path),
+    guide = createRouteGuideVisual(path, 'cyan');
+  assert.equal(guide.children.length, 2);
+  assert.equal(guide.children[0].count, 2);
+  const centers = [];
+  for (let i = 0; i < 2; i++) {
+    const matrix = new THREE.Matrix4();
+    guide.children[0].getMatrixAt(i, matrix);
+    centers.push(new THREE.Vector3().setFromMatrixPosition(matrix).toArray());
+  }
+  assert.deepEqual(centers, [
+    [2.5, 2, 0],
+    [5, 2, 2.5],
+  ]);
+  assert.deepEqual(path, before);
+  disposeGuide(guide);
+  assert.equal(createRouteGuideVisual(null), null);
+  assert.equal(
+    createRouteGuideVisual({
+      waypoints: [{ position: { x: NaN, y: 0, z: 0 } }, path.waypoints[0]],
+    }),
+    null,
+  );
+  const fixture = await rendererFixture(),
+    { renderer } = fixture;
+  try {
+    renderer.setCourse(course);
+    const sample = acceptanceFrame(course, acceptanceRoute(course), 0, 'far');
+    renderer.draw(sample.state, {
+      ...sample.options,
+      guidanceVisible: false,
+      routeGuide: path,
+      routeGuideVisible: true,
+    });
+    const route = fixture.scene().getObjectByName('validated-route-guide');
+    assert.equal(route.parent.visible, true);
+    assert.equal(renderer.objectiveScreen(sample.state), null);
+    let disposed = 0;
+    route.children[0].geometry.addEventListener('dispose', () => disposed++);
+    renderer.draw(sample.state, sample.options);
+    assert.equal(fixture.scene().getObjectByName('validated-route-guide'), undefined);
+    assert.equal(disposed, 1);
+  } finally {
+    renderer.dispose();
+  }
+});
+
+test('explicit imported actor ownership hides whole matching subtrees and restores visibility without name heuristics', () => {
+  const root = new THREE.Group(),
+    actor = new THREE.Group(),
+    unrelated = new THREE.Group(),
+    named = new THREE.Group();
+  actor.userData.rl = { kind: 'actor', id: 'soldier-a' };
+  unrelated.userData.rl = { type: 'actor', id: 'soldier-b' };
+  named.name = 'soldier-a';
+  actor.add(new THREE.Group());
+  root.add(actor, unrelated, named);
+  const before = structuredClone(actor.userData),
+    owned = applyImportedActorOwnership(root, new Set(['soldier-a']));
+  assert.equal(actor.visible, false);
+  assert.equal(unrelated.visible, true);
+  assert.equal(named.visible, true);
+  assert.equal(actor.children[0].parent.visible, false);
+  applyImportedActorOwnership(root, new Set(['soldier-b']), owned);
+  assert.equal(actor.visible, true);
+  assert.equal(unrelated.visible, false);
+  applyImportedActorOwnership(root, new Set(), owned);
+  assert.equal(unrelated.visible, true);
+  assert.equal(owned.size, 0);
+  assert.deepEqual(actor.userData, before);
 });
 import { applySimBattlefieldGround } from '../../optional-practice/civilian-fpv/battlefield-ground.mjs';

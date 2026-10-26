@@ -8,11 +8,14 @@ const source = await readFile(
   'utf8',
 );
 const ast = parse(source, { ecmaVersion: 'latest', sourceType: 'module' });
-let frame, pause;
+let frame, pause, stopFeedback, readState;
 function visit(node) {
   if (!node || typeof node !== 'object') return;
   if (node.type === 'FunctionDeclaration' && node.id.name === 'advanceFrame') frame = node;
   if (node.type === 'FunctionDeclaration' && node.id.name === 'pauseFlight') pause = node;
+  if (node.type === 'FunctionDeclaration' && node.id.name === 'regionalStopFeedback')
+    stopFeedback = node;
+  if (node.type === 'FunctionDeclaration' && node.id.name === 'readFlightState') readState = node;
   for (const value of Object.values(node)) {
     if (Array.isArray(value)) value.forEach(visit);
     else if (value?.type) visit(value);
@@ -22,11 +25,11 @@ visit(ast);
 assert(frame, 'Execute the production callback, not a copied timing policy');
 const advance = new Function(
   'state',
-  `with (state) { return (${source.slice(frame.start, frame.end)})(now); }`,
+  `with (state) { ${source.slice(readState.start, readState.end)} return (${source.slice(frame.start, frame.end)})(now); }`,
 );
 const explicitPause = new Function(
   'state',
-  `with (state) { return (${source.slice(pause.start, pause.end)})(); }`,
+  `with (state) { ${source.slice(readState.start, readState.end)} ${source.slice(stopFeedback.start, stopFeedback.end)} return (${source.slice(pause.start, pause.end)})(); }`,
 );
 
 function fixture({
@@ -42,6 +45,8 @@ function fixture({
       win: { performance: { now: () => execution } },
       lastExecutionTime: 20,
       lastTime: 20,
+      lastDemoTime: 20,
+      demoHost: null,
       accumulator: 17,
       current: { regional },
       regionalPreparing: preparing ? Promise.resolve() : null,
@@ -82,11 +87,14 @@ test('active flight still freezes before input, including an inconsistent active
   }
 });
 
-test('ordinary preparation and paused regional flight without a pending preparation retain the existing stall policy', () => {
+test('paused World and Regional callbacks discard stale time without cancelling recovery', () => {
   for (const options of [{ regional: false }, { preparing: false }]) {
     const f = fixture(options);
     advance(f.state);
-    assert.equal(f.events[0], 'pause');
+    assert.deepEqual(f.events, []);
+    assert.equal(f.state.lastTime, null);
+    assert.equal(f.state.accumulator, 0);
+    assert.equal(f.state.lastExecutionTime, 420);
   }
 });
 
@@ -120,15 +128,23 @@ test('explicit shared pause still cancels an already-disarmed preparation and cl
       huntReactions: { suspend: noop },
       audio: { pause: noop },
       presentation: { resume: noop },
+      replayProof: null,
+      combatPlayback: null,
+      combatReplaySource: null,
       input: {
         enable: (value) => events.push(['input', value]),
         clear: () => events.push('clear'),
+        pause: ({ session, retainKeyboardThrottle }) => {
+          assert.equal(session, state.flight);
+          events.push(['input-pause', retainKeyboardThrottle]);
+        },
       },
       radio: { freeze: () => events.push('freeze-radio') },
       regionalPreparing: Promise.resolve(),
       regionalPreparationIssue: null,
       current: { regional: true },
       flight: {
+        snapshot: () => ({ status: 'paused' }),
         cancelPreparation: () => events.push('cancel'),
         pause: () => events.push('pause'),
       },
@@ -141,7 +157,7 @@ test('explicit shared pause still cancels an already-disarmed preparation and cl
       disposed: true,
     };
   explicitPause(state);
-  assert.deepEqual(events, [['input', false], 'clear', 'freeze-radio', 'cancel', 'pause']);
+  assert.deepEqual(events, [['input-pause', false], 'freeze-radio', 'cancel', 'pause']);
   assert.equal(state.lastTime, null);
   assert.equal(state.accumulator, 0);
   assert.equal(state.pausing, false);
@@ -150,6 +166,7 @@ test('explicit shared pause still cancels an already-disarmed preparation and cl
     en: 'Graphics preparation took too long. Retry.',
     uk: 'Підготовка графіки триває надто довго. Повторіть.',
   };
+  state.regionalPreparing = null;
   explicitPause(state);
   assert.equal(status.textContent, state.regionalPreparationIssue.en);
   assert.equal(state.pausing, false);

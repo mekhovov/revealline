@@ -1,4 +1,6 @@
 @import url('../ui/field-kit-fonts.css');
+@import url('../ui/comfort-presets.css');
+@import url('../couch/keyboard-settings.css');
 
 /* Theme recipes own paint; Snake contributes only its legacy layout. */
 @layer legacy {

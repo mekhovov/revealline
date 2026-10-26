@@ -4,8 +4,9 @@
   "provenance": {
     "path": "authoring/library/fpv-field-kit/production.rltheme",
     "gitBlob": "840c70aadea90eea744f1e3ead58467e40902061",
-    "bytes": 8492839,
-    "sha256": "01e8db067359589dc20fcde86b8b36f7617b9229f3d666df8e2524a49378fed0"
+    "bytes": 8383959,
+    "sha256": "fe488ec3c0ee0f4291ebaf65a5a763969b144e4b5fabef0f73d7a99ff870b343",
+    "scope": "Derived retained-content oracle after an ownership migration. Source commit and tag identify the original artifact; these new bytes are not that release or its historical qualification."
   },
   "metadata": {
     "format": "revealline-theme-bundle.v1",
@@ -25,26 +26,36 @@
   },
   "groups": {
     "slots": {
-      "count": 335,
-      "sha256": "f2d853890e884c926450d6cbe7ed2648676e62a079a9e8768fc73a8fc12d1051"
+      "count": 302,
+      "sha256": "93cd0c41cf186805569b72f283fbeb803cf31623b3935cbc3cd0aa494f1fac22"
     },
     "assets": {
-      "count": 2670,
-      "sha256": "1ffa3edcfa71ba34441248b0ce97b408c7655aaa52d1abf4771175be1bcdb9c3"
+      "count": 2637,
+      "sha256": "389549775d6cb4867e8e0c91b7e1381fcec1988397582ab890fd5d2f8d194d08"
     },
     "themes": {
       "count": 104,
-      "sha256": "5ede1adaf64b32a95249f9cfd7c5d3d897276cf410ab691cf81d5965cbba3dcd"
+      "sha256": "316a32d6dd92dcc5c1d923210ce769c3889cf40215e39f3c8c6d8df4f1912dee"
     },
     "collections": {
       "count": 1,
-      "sha256": "74daee988fe6fe616d1ecc4a6ffd9f6c9c47b2fc00584259232f8f1477db1b57"
+      "sha256": "84f512c5583368c0d68f138d2d3f7821e0492c0693e931751f8ec3311f6f30cc"
     }
   },
   "payloads": {
     "count": 132,
-    "bytes": 4009342,
     "sha256": "4932cc57542adc364f44cb548011a7ca26afa7e0cb1eb00e00647fe5c381738c"
   },
-  "scope": "Independent original Git bytes, validated and re-exported byte-identically before main/candidate reconciliation. Numeric revisions are lineage-specific; exact bundle and runtime hashes distinguish them. This historical oracle does not qualify new source, human/device acceptance or publication."
+  "scope": "Independent original Git bytes, validated and re-exported byte-identically before main/candidate reconciliation. Numeric revisions are lineage-specific; exact bundle and runtime hashes distinguish them. This historical oracle does not qualify new source, human/device acceptance or publication.",
+  "migration": {
+    "format": "revealline-retained-production-oracle.v1",
+    "originalBundleSHA256": "01e8db067359589dc20fcde86b8b36f7617b9229f3d666df8e2524a49378fed0",
+    "originalFixtureSHA256": "9aac97ef9ded7270148887d8148fc01fec378f5e5ef612ca86b3353015263e91",
+    "removedSlots": 33,
+    "removedAssets": 33,
+    "preservedPayloads": {
+      "count": 132,
+      "sha256": "4932cc57542adc364f44cb548011a7ca26afa7e0cb1eb00e00647fe5c381738c"
+    }
+  }
 }

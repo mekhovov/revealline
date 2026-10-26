@@ -1,0 +1,62 @@
+{
+  "format": "SoloSharedOwnerDeclaredSourceV1",
+  "revision": "91b2a209591f1c63148d839f49d0f67c9b759a6d",
+  "tree": "183b79e2b15486bb65938941b07dccd96ba21fde",
+  "postHocExactGitReadback": true,
+  "scope": "Test-only immutable input authority. No production historical fallback and no successful native result inferred.",
+  "executions": [
+    {
+      "plan": "docs/performance/solo-remote-9d5139b-correctness-plan.json",
+      "run": 39130685076,
+      "tooling": "557ad1d936f6152b6decefab11db48a5674c05bc",
+      "status": "failed-one-of-eight",
+      "correctnessPassed": 7,
+      "correctnessFailed": 1
+    },
+    {
+      "plan": "docs/performance/solo-shared-mode-public-return-797e03-boot-plan.json",
+      "run": 39131052691,
+      "tooling": "91b2a209591f1c63148d839f49d0f67c9b759a6d",
+      "status": "failed-both-engines"
+    }
+  ],
+  "declarations": [
+    {
+      "path": "docs/performance/solo-remote-9d5139b-correctness-plan.json",
+      "references": ["scripts/qualify-solo-runtime.mjs"]
+    },
+    {
+      "path": "docs/performance/solo-shared-mode-public-return-797e03-boot-plan.json",
+      "references": [
+        "scripts/qualify-solo-runtime.mjs",
+        "scripts/solo-qualification-shared-mode.mjs"
+      ]
+    }
+  ],
+  "records": [
+    {
+      "path": "docs/performance/solo-remote-9d5139b-correctness-plan.json",
+      "blob": "2750d9bb6ef9e72e7af7ccce156a468703aa7a53",
+      "bytes": 22918,
+      "sha256": "96de01992eee1a674923bc8304d1d6af9a59df1d3ddb5a527b71924a715fc97b"
+    },
+    {
+      "path": "docs/performance/solo-shared-mode-public-return-797e03-boot-plan.json",
+      "blob": "52fbf30e1fa74e082761869301cf9b29d5843664",
+      "bytes": 12118,
+      "sha256": "ae7e97b6b4b57bda989869a3e865dcdecb6f999f1d0ac1248b80bff59281baa5"
+    },
+    {
+      "path": "scripts/qualify-solo-runtime.mjs",
+      "blob": "341867f933d6a35f4fb4d2144f09f4a34b6092a6",
+      "bytes": 95197,
+      "sha256": "54e3da78d657e320be2afaa12859877e55941cf708697c34baa594d9550d28b7"
+    },
+    {
+      "path": "scripts/solo-qualification-shared-mode.mjs",
+      "blob": "0bcee6e912dde6acc40a9f7b4d47a2bd44881c94",
+      "bytes": 20094,
+      "sha256": "bd07a0ff01ee37e0fa3541929673667ffafa43e9f0a6a14fca79cdee32c0cdba"
+    }
+  ]
+}

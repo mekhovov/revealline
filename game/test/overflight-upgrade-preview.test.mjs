@@ -13,7 +13,14 @@ import {
   overflightUpgradePreview,
   overflightUpgradePreviewModel,
   createOverflightUpgradePreviewSprites,
+  overflightUpgradePreviewCaptions,
 } from '../overflight/upgrade-preview.mjs';
+
+import {
+  createOverflightRiyBuild,
+  legalOverflightRiyUpgrades,
+  applyOverflightRiyUpgrade,
+} from '../overflight/riy-upgrades.mjs';
 
 const modules = [
   'primary',
@@ -54,6 +61,46 @@ function examples() {
 }
 const walk = (node) => [node, ...(node.childNodes ?? []).flatMap(walk)];
 const attribute = (node, name) => node.attrs?.find((item) => item.name === name)?.value;
+
+test('expanded current/next text retains every existing SVG caption and plating diagram value', () => {
+  const escorts = [];
+  const initial = createOverflightBuild();
+  initial.escorts = createOverflightRiyBuild();
+  for (const first of legalOverflightRiyUpgrades(initial)) {
+    const build = structuredClone(initial);
+    escorts.push({ offer: first, build: structuredClone(build) });
+    assert.ok(applyOverflightRiyUpgrade(build, first, modules));
+    for (const offer of legalOverflightRiyUpgrades(build).filter(
+      (item) => item.role === first.role,
+    ))
+      escorts.push({ offer, build: structuredClone(build) });
+  }
+  assert.equal(escorts.length, 8, 'Both roles, both branches and both legal ranks.');
+  for (const { offer, build } of [...examples(), ...escorts])
+    for (const locale of ['en', 'uk']) {
+      const before = structuredClone(build);
+      const captions = overflightUpgradePreviewCaptions(offer, { build, locale });
+      const svg = parseFragment(overflightUpgradePreview(offer, { build, locale })).childNodes.find(
+        (node) => node.tagName === 'svg',
+      );
+      const panels = svg.childNodes.filter((node) => node.tagName === 'g');
+      assert.equal(panels.length, 2);
+      const text = (node) =>
+        node.nodeName === '#text' ? node.value : (node.childNodes ?? []).map(text).join('');
+      for (const [index, panel] of panels.entries()) {
+        const existing = walk(panel)
+          .filter((node) => node.tagName === 'text')
+          .map(text);
+        const current = captions[index];
+        assert.deepEqual(
+          [current.label, ...current.lines, current.diagramText].filter(Boolean).sort(),
+          existing.sort(),
+          `${locale}: ${offer.id} state ${index}`,
+        );
+      }
+      assert.deepEqual(build, before, 'A text projection cannot apply an upgrade.');
+    }
+});
 
 test('every legal branch, module rank and fallback utility has informative EN/UK SVG before/after views', () => {
   const cases = examples();

@@ -25,6 +25,10 @@ import { OVERFLIGHT_REACTION_FAMILIES } from '../overflight/reactions.mjs';
 
 const recentLines = new Map();
 const HISTORY_KEY = 'revealline.reaction-recent.v1';
+const captionReadingDuration = (text, factor = 1) =>
+  Math.max(3000, Math.ceil((text.split(/\s+/u).length / 2.5) * 1000)) * factor;
+const previewLineId = 'journey-incidental.v1/guide/capture/0';
+let settingsSequence = 0;
 /** Warm the active cast first, then shared pilot lines. Unrelated enemy packs
  * must not displace the current encounter from the bounded decoded cache. */
 export function reactionWarmupLineIds({ families = [], originals = [], available = [], locale }) {
@@ -182,7 +186,7 @@ export class ContextualReactionDirector {
       this.remember(line);
       this.families.add(family);
       this.count++;
-      const duration = Math.max(3000, Math.ceil((selected.text.split(/\s+/u).length / 2.5) * 1000));
+      const duration = captionReadingDuration(selected.text);
       this.busyUntil = time + duration;
       this.quietUntil = this.busyUntil + 12000;
       const presented = this.present(selected, { duration, terminal: false });
@@ -218,6 +222,11 @@ export class ContextualReactionDirector {
   resume() {
     this.suspended = false;
   }
+  extendCaption(duration) {
+    if (this.suspended || !Number.isFinite(duration) || duration <= 0) return;
+    this.busyUntil = Math.max(this.busyUntil, this.now() + duration);
+    this.quietUntil = Math.max(this.quietUntil, this.busyUntil + 12000);
+  }
 }
 
 const labels = {
@@ -228,6 +237,13 @@ const labels = {
   volume: ['Dialogue volume', 'Гучність діалогів'],
   scale: ['Caption size', 'Розмір субтитрів'],
   background: ['Solid caption background', 'Суцільне тло субтитрів'],
+  readingTime: ['Caption reading time', 'Час читання субтитрів'],
+  readingStandard: ['Standard', 'Звичайний'],
+  readingExtended: ['Extended (2×)', 'Подовжений (2×)'],
+  readingHelp: [
+    'Applies to new character captions during play and their timed preview. Result captions stay until you leave the result.',
+    'Діє для нових субтитрів персонажів під час гри та їхнього перегляду з таймером. Субтитри результату залишаються до виходу з нього.',
+  ],
   preview: ['Preview caption', 'Переглянути субтитри'],
   retry: ['Retry saving', 'Зберегти повторно'],
   unavailable: [
@@ -238,6 +254,9 @@ const labels = {
     'Generated voice preview. Missing recordings use captions.',
     'Попередня синтезована озвучка. Відсутні записи замінюються субтитрами.',
   ],
+  lastMessage: ['Last message', 'Останнє повідомлення'],
+  readMessage: ['Read', 'Читати'],
+  pauseToRead: ['Pause to read the message.', 'Призупиніть гру, щоб прочитати повідомлення.'],
 };
 export function attachContextualReactions({
   sound,
@@ -251,6 +270,7 @@ export function attachContextualReactions({
   getStorage,
   acquireGain = () => null,
   voiceLibrary = null,
+  captionReader = null,
 } = {}) {
   if (!sound || !container || !doc)
     throw new TypeError('Reaction sound and caption container are required.');
@@ -283,6 +303,70 @@ export function attachContextualReactions({
     'font-family:system-ui,sans-serif;line-height:1.45;overflow-wrap:anywhere;min-width:0;';
   panel.append(portrait, actorPortrait, caption);
   container.append(panel);
+  // The optional reader belongs to this accepted-caption owner, not a second
+  // history, timer or voice player. Other hosts retain their original path.
+  const reader = captionReader ? create('section') : null;
+  const readerHeading = reader ? create('h3') : null;
+  const readerText = reader ? create('p') : null;
+  const readerHint = reader ? create('span') : null;
+  const readerCue = reader ? create('span') : null;
+  const pauseButton = captionReader?.pauseButton;
+  let lastMessage = null,
+    ownSelfLabel = false;
+  if (reader) {
+    const id = `reaction-last-message-${++settingsSequence}`;
+    reader.dataset.reactionReader = 'true';
+    reader.hidden = true;
+    reader.tabIndex = 0;
+    reader.setAttribute('role', 'region');
+    readerHeading.id = id;
+    reader.setAttribute('aria-labelledby', id);
+    readerHint.id = `${id}-hint`;
+    readerHint.hidden = true;
+    readerCue.id = `${id}-cue`;
+    readerCue.hidden = true;
+    reader.append(readerHeading, readerText, readerHint, readerCue);
+    captionReader.root.append(reader);
+  }
+  function cue(show) {
+    if (!pauseButton) return;
+    const tokens = (name) => (pauseButton.getAttribute(name) ?? '').split(/\s+/u).filter(Boolean);
+    const setTokens = (name, values) => {
+      if (tokens(name).join(' ') === values.join(' ')) return;
+      if (values.length) pauseButton.setAttribute(name, values.join(' '));
+      else pauseButton.removeAttribute(name);
+    };
+    const descriptions = tokens('aria-describedby').filter((id) => id !== readerHint.id);
+    const labels = tokens('aria-labelledby').filter((id) => id !== readerCue.id);
+    if (show) {
+      pauseButton.dataset.captionReadLabel = tr('readMessage');
+      readerHint.textContent = tr('pauseToRead');
+      readerCue.textContent = tr('readMessage');
+      descriptions.push(readerHint.id);
+      if (!labels.length && pauseButton.id) {
+        labels.push(pauseButton.id);
+        ownSelfLabel = true;
+      }
+      labels.push(readerCue.id);
+    } else {
+      delete pauseButton.dataset.captionReadLabel;
+      if (ownSelfLabel) {
+        const index = labels.indexOf(pauseButton.id);
+        if (index >= 0) labels.splice(index, 1);
+        ownSelfLabel = false;
+      }
+    }
+    setTokens('aria-describedby', descriptions);
+    setTokens('aria-labelledby', labels);
+  }
+  function clearReader() {
+    lastMessage = null;
+    if (reader) {
+      reader.hidden = true;
+      readerText.textContent = '';
+    }
+    cue(false);
+  }
   const releaseFeedbackLayout = attachHuntFeedbackLayout({ container, window: target });
   const preferences = createReactionPreferences({
     window: target,
@@ -297,6 +381,7 @@ export function attachContextualReactions({
     lease = null,
     generation = 0,
     captionUntil = 0,
+    captionTimerRevision = 0,
     motion = null;
   const cache = createReactionVoiceCache({ sound, library: voiceLibrary });
   const prepared = new Map(),
@@ -306,8 +391,13 @@ export function attachContextualReactions({
     actorVoiceControls = null,
     status = null,
     pilot = null,
+    readingHelp = null,
     previewSample = null,
-    previewVisible = false;
+    previewVisible = false,
+    previewTimer = null,
+    previewTimerRevision = 0,
+    previewUntil = 0,
+    previewReadingTime = 1;
   const release = () => {
     try {
       if (typeof lease === 'function') lease();
@@ -322,7 +412,44 @@ export function attachContextualReactions({
     activeVoice = null;
     release();
   }
+  function clearCaptionTimer() {
+    captionTimerRevision++;
+    clearTimeout(timer);
+    timer = null;
+  }
+  function scheduleCaption(until) {
+    clearCaptionTimer();
+    captionUntil = until;
+    const revision = captionTimerRevision;
+    timer = setTimeout(
+      () => {
+        if (!closed && revision === captionTimerRevision) hide();
+      },
+      Math.max(0, until - Date.now()),
+    );
+  }
+  function hidePreview() {
+    previewTimerRevision++;
+    clearTimeout(previewTimer);
+    previewTimer = null;
+    previewVisible = false;
+    if (previewSample)
+      renderResultReactionCaption(previewSample, null, options.snapshot(), false, getLocale());
+  }
+  function schedulePreview(until) {
+    previewTimerRevision++;
+    clearTimeout(previewTimer);
+    previewUntil = until;
+    const revision = previewTimerRevision;
+    previewTimer = setTimeout(
+      () => {
+        if (!closed && revision === previewTimerRevision) hidePreview();
+      },
+      Math.max(0, until - Date.now()),
+    );
+  }
   function hide() {
+    clearCaptionTimer();
     motion?.cancel();
     motion = null;
     if (current?.terminal && resultContainer && !journeyOwnsReactionCaption(resultContainer))
@@ -331,6 +458,7 @@ export function attachContextualReactions({
     panel.hidden = true;
     panel.style.display = 'none';
     caption.textContent = '';
+    cue(false);
   }
   function cancel(reason) {
     stopSpeech();
@@ -340,8 +468,16 @@ export function attachContextualReactions({
       void cache.cancel();
     }
     if (reason === 'danger') return; // Preserve readable text even when its audio is interrupted.
-    clearTimeout(timer);
+    if (reason !== 'suspend') clearReader();
+    hidePreview();
     hide();
+  }
+  function localizedCurrentLine(line = current.line) {
+    return (
+      (line.resultContext
+        ? journeyResultReaction(line.resultContext, getLocale())
+        : reactionLine(line.id, getLocale())) ?? line
+    );
   }
   function render() {
     if (closed) return;
@@ -355,11 +491,11 @@ export function attachContextualReactions({
       void cache.cancel();
     }
     if (!enabled) {
-      clearTimeout(timer);
       // Retain an accepted result so its shared checkbox can hide/show the
       // caption without replaying its voice. Incidental lines still expire.
       if (!current?.terminal) hide();
     }
+    if (!enabled || !state.subtitles) hidePreview();
     for (const [key, control] of controls) {
       if (control.type === 'checkbox') control.checked = state[key];
       else control.value = String(state[key]);
@@ -367,6 +503,11 @@ export function attachContextualReactions({
     }
     if (settings) settings.querySelector('legend').textContent = tr('title');
     if (pilot) pilot.textContent = tr('pilot');
+    if (readingHelp) readingHelp.textContent = tr('readingHelp');
+    const readingControl = controls.get('readingTime');
+    if (readingControl)
+      for (const option of readingControl.children)
+        option.textContent = tr(option.value === '1' ? 'readingStandard' : 'readingExtended');
     actorVoiceControls?.refresh();
     if (settings) {
       const preview = settings.querySelector('[data-reaction-preview]');
@@ -377,7 +518,7 @@ export function attachContextualReactions({
     if (previewVisible && previewSample)
       renderResultReactionCaption(
         previewSample,
-        reactionLine('journey-reaction.v1/guide/0', getLocale()),
+        reactionLine(previewLineId, getLocale()),
         state,
         enabled,
         getLocale(),
@@ -386,21 +527,58 @@ export function attachContextualReactions({
       status.textContent = state.durable ? '' : tr('unavailable');
       status.hidden = state.durable;
     }
+    renderCaption(state, enabled);
+  }
+  function renderCaption(state, enabled) {
+    const reading = !!reader && captionReader.active() === true;
+    if (reader) {
+      if (!reading || !enabled || !state.subtitles) clearReader();
+      // Returning to the enlarged view may reuse an unexpired accepted line;
+      // it cannot revive expired copy, reaccept a reaction or alter its clock.
+      else if (!lastMessage && current && !current.terminal)
+        lastMessage = Object.freeze({ ...current.line });
+      readerHeading.textContent = tr('lastMessage');
+      reader.hidden = !lastMessage;
+      if (lastMessage) {
+        readerText.textContent = reactionCaptionText(
+          {
+            ...localizedCurrentLine(lastMessage),
+            board: lastMessage.board,
+            player: lastMessage.player,
+          },
+          getLocale(),
+        );
+        readerText.style.fontSize = `calc(${state.scale}rem * var(--overflight-text-scale, 1))`;
+        readerText.style.background = state.background ? 'var(--panel-bg, #172126)' : 'transparent';
+      }
+    }
     panel.style.background = state.background ? 'var(--panel-bg, #172126)' : 'transparent';
     panel.style.color = 'var(--text-color, #fff)';
-    caption.style.fontSize = `${state.scale}rem`;
+    caption.style.fontSize = `calc(${state.scale}rem * var(--overflight-text-scale, 1))`;
     if (current) {
-      const localized =
-        (current.line.resultContext
-          ? journeyResultReaction(current.line.resultContext, getLocale())
-          : reactionLine(current.line.id, getLocale())) ?? current.line;
+      const localized = localizedCurrentLine();
       caption.textContent = reactionCaptionText(
         { ...localized, board: current.line.board, player: current.line.player },
         getLocale(),
       );
       const visible = enabled && state.subtitles && (!current.terminal || !resultContainer);
+      // Measuring the same panel is synchronous and never exposes an incomplete
+      // live caption to paint or the accessibility tree.
+      const measured = visible && reading && !current.terminal;
+      if (measured) {
+        panel.style.visibility = 'hidden';
+        panel.setAttribute('aria-hidden', 'true');
+      }
       panel.hidden = !visible;
       panel.style.display = visible ? 'flex' : 'none';
+      if (measured) {
+        const fits = captionReader.fits(panel) === true;
+        panel.hidden = !fits;
+        panel.style.display = fits ? 'flex' : 'none';
+        panel.style.visibility = '';
+        panel.removeAttribute('aria-hidden');
+        cue(!fits);
+      } else cue(false);
       if (current.terminal && resultContainer && !journeyOwnsReactionCaption(resultContainer))
         renderResultReactionCaption(resultContainer, localized, state, enabled, getLocale());
     }
@@ -415,6 +593,9 @@ export function attachContextualReactions({
       !preferences.snapshot().enabled ||
       !options.snapshot().speech ||
       !sound.context ||
+      sound.audioMaster?.muted ||
+      sound.audioMaster?.volume === 0 ||
+      ['playing', 'suspended'].includes(sound.mediaPreparation?.snapshot().phase) ||
       doc.hidden
     )
       return;
@@ -457,9 +638,10 @@ export function attachContextualReactions({
             warmup === warmupRevision &&
             getLocale() === locale &&
             !doc.hidden &&
+            !['playing', 'suspended'].includes(sound.mediaPreparation?.snapshot().phase) &&
             sound.context === context
           )
-            await cache.load(ids[index++], locale);
+            await cache.load(ids[index++], locale, { priority: 'background' });
         };
         await Promise.all([warm(), warm()]);
       })
@@ -467,11 +649,17 @@ export function attachContextualReactions({
   }
   function present(line, { duration, terminal, speak = true }) {
     if (closed || !preferences.snapshot().enabled) return;
-    clearTimeout(timer);
+    clearCaptionTimer();
     stopSpeech();
     motion?.cancel();
     motion = null;
-    current = { line, terminal };
+    // A setting change applies to the next accepted line, without truncating or
+    // replaying the current one. A translated line retains this timing policy.
+    current = { line, terminal, readingTime: options.snapshot().readingTime };
+    if (reader && !terminal && captionReader.active() === true && options.snapshot().subtitles)
+      lastMessage = Object.freeze({ ...line });
+    if (!terminal)
+      duration = Math.max(duration, captionReadingDuration(line.text, current.readingTime));
     const appearance = REACTION_PORTRAITS[line.speaker] ?? REACTION_PORTRAITS.guide;
     portrait.src = getReduced() ? appearance.idle : appearance.react;
     const actor = actorDefinition(line.speaker);
@@ -523,8 +711,7 @@ export function attachContextualReactions({
     }
     if (!buffer && state.speech) void cache.load(line.id, getLocale());
     if (!terminal) {
-      captionUntil = Date.now() + duration;
-      timer = setTimeout(hide, duration);
+      scheduleCaption(Date.now() + duration);
     } else if (resultContainer) {
       panel.hidden = true;
       panel.style.display = 'none';
@@ -536,13 +723,26 @@ export function attachContextualReactions({
     settings = create('fieldset');
     settings.dataset.reactionSettings = 'true';
     settings.append(create('legend', tr('title')));
-    for (const key of ['sounds', 'speech', 'subtitles', 'volume', 'scale', 'background']) {
+    for (const key of [
+      'sounds',
+      'speech',
+      'subtitles',
+      'volume',
+      'scale',
+      'background',
+      'readingTime',
+    ]) {
       const label = create('label'),
         text = create('span', tr(key)),
-        control = create(key === 'scale' ? 'select' : 'input');
-      if (key === 'scale')
-        for (const value of [1, 1.5, 2]) {
-          const option = create('option', `${value * 100}%`);
+        control = create(['scale', 'readingTime'].includes(key) ? 'select' : 'input');
+      if (['scale', 'readingTime'].includes(key))
+        for (const value of key === 'scale' ? [1, 1.5, 2] : [1, 2]) {
+          const option = create(
+            'option',
+            key === 'scale'
+              ? `${value * 100}%`
+              : tr(value === 1 ? 'readingStandard' : 'readingExtended'),
+          );
           option.value = String(value);
           control.append(option);
         }
@@ -561,10 +761,19 @@ export function attachContextualReactions({
       };
       label.append(control, text);
       label.style.cssText = 'display:flex;align-items:center;gap:.5rem;margin:.5rem 0;';
+      if (key === 'readingTime') {
+        label.style.flexWrap = 'wrap';
+        control.style.maxWidth = '100%';
+      }
       settings.append(label);
       controls.set(key, control);
       controlLabels.set(key, text);
     }
+    readingHelp = create('p', tr('readingHelp'));
+    readingHelp.id = `reaction-reading-help-${++settingsSequence}`;
+    readingHelp.dataset.reactionReadingHelp = 'true';
+    controls.get('readingTime').setAttribute('aria-describedby', readingHelp.id);
+    settings.append(readingHelp);
     const preview = create('button', tr('preview'));
     preview.type = 'button';
     preview.dataset.reactionPreview = 'true';
@@ -573,8 +782,14 @@ export function attachContextualReactions({
     previewSample.hidden = true;
     previewSample.setAttribute('role', 'status');
     preview.onclick = () => {
+      if (closed || !preferences.snapshot().enabled || !options.snapshot().subtitles) return;
       previewVisible = true;
+      previewReadingTime = options.snapshot().readingTime;
       render();
+      schedulePreview(
+        Date.now() +
+          captionReadingDuration(reactionLine(previewLineId, getLocale()).text, previewReadingTime),
+      );
     };
     const retry = create('button', tr('retry'));
     retry.type = 'button';
@@ -606,9 +821,24 @@ export function attachContextualReactions({
     render();
     prepare();
     if (current && !current.terminal) {
-      clearTimeout(timer);
-      timer = setTimeout(hide, Math.max(3000, captionUntil - Date.now()));
+      const until = Math.max(
+        captionUntil,
+        Date.now() + captionReadingDuration(localizedCurrentLine().text, current.readingTime),
+      );
+      scheduleCaption(until);
+      director.extendCaption(until - Date.now());
     }
+    if (previewVisible)
+      schedulePreview(
+        Math.max(
+          previewUntil,
+          Date.now() +
+            captionReadingDuration(
+              reactionLine(previewLineId, getLocale()).text,
+              previewReadingTime,
+            ),
+        ),
+      );
   });
   const visibility = () => {
     if (doc.hidden) director.suspend();
@@ -639,6 +869,9 @@ export function attachContextualReactions({
     refresh() {
       render();
       prepare();
+    },
+    refreshCaptionLayout() {
+      if (!closed && reader) renderCaption(options.snapshot(), preferences.snapshot().enabled);
     },
     diagnostics: () =>
       Object.freeze({
@@ -672,8 +905,10 @@ export function attachContextualReactions({
     dispose() {
       if (closed) return;
       closed = true;
+      clearReader();
       director.suspend();
-      clearTimeout(timer);
+      clearCaptionTimer();
+      hidePreview();
       cache.dispose();
       prepared.clear();
       unsubPrefs();
@@ -691,6 +926,7 @@ export function attachContextualReactions({
       settings?.remove();
       actorVoiceControls?.dispose();
       panel.remove();
+      reader?.remove();
       releaseFeedbackLayout();
     },
   });

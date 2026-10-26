@@ -1,7 +1,7 @@
 import {
-  COMPANY_PLAYTEST_FIXTURES,
-  companyPlaytestTask,
-} from '../../game/company-campaigns/playtest-fixtures.mjs';
+  PRACTICE_FIXTURES,
+  practiceTask,
+} from './practice-fixtures.mjs';
 import { mountCompanyWorkbench } from '../../game/company-campaigns/workbench.mjs';
 import { attachCompanyReader } from './reading.mjs';
 
@@ -44,7 +44,7 @@ function refreshPracticeReaders() {
     if (ownedFeedback) reader?.entry.focus();
   }
 }
-const fixture = () => COMPANY_PLAYTEST_FIXTURES.find((row) => row.id === select.value);
+const fixture = () => PRACTICE_FIXTURES.find((row) => row.id === select.value);
 const status = (text) => {
   $('status').textContent = text;
 };
@@ -98,7 +98,7 @@ function openPractice() {
   refreshPracticeReaders();
   if (foreground()) $('company-read-practice')?.focus();
 }
-for (const row of COMPANY_PLAYTEST_FIXTURES) {
+for (const row of PRACTICE_FIXTURES) {
   const option = document.createElement('option');
   option.value = row.id;
   option.textContent = `${row.lesson.role} · ${row.lesson.title}`;
@@ -124,7 +124,7 @@ $('restart-practice').addEventListener('click', openPractice);
 $('export-task').addEventListener('click', () => {
   const selected = fixture();
   if (!selected) return;
-  const data = companyPlaytestTask(selected.id);
+  const data = practiceTask(selected.id);
   const url = URL.createObjectURL(
     new Blob([`${JSON.stringify(data, null, 2)}\n`], { type: 'application/json' }),
   );
@@ -136,7 +136,7 @@ $('export-task').addEventListener('click', () => {
   status('Task-card download requested. No answers, feedback or results are included.');
 });
 const requested = new URL(window.location.href).searchParams.get('task');
-if (COMPANY_PLAYTEST_FIXTURES.some((row) => row.id === requested)) {
+if (PRACTICE_FIXTURES.some((row) => row.id === requested)) {
   select.value = requested;
   selectPractice();
 }

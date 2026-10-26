@@ -1384,7 +1384,7 @@ async function launchPreview(source, missionId, difficulty) {
   stopPreviewReadiness();
   $('preview').src = 'about:blank';
   $('preview-panel').hidden = false;
-  localizedText($('preview-status'), localizedMessage('tools:studio.preview.preparing'));
+  localizedText($('preview-status'), localizedMessage('tools:studio.preview.preparingMission'));
   let result,
     previewProject,
     showCombatScrap = null;

@@ -34,7 +34,7 @@ test('candidate CI defaults cover every currently public company audience editio
   assert.deepEqual(manual, expected);
   assert.deepEqual(automatic, expected);
 });
-test('candidate CI reserves a bounded hour for every qualification stage without widening optional work', async () => {
+test('candidate CI keeps separate bounded budgets for edition and optional-practice qualification', async () => {
   const workflow = await fs.readFile(
     new URL('../.github/workflows/company-edition-candidate.yml', import.meta.url),
     'utf8',
@@ -43,7 +43,7 @@ test('candidate CI reserves a bounded hour for every qualification stage without
   const optional = workflow.split('\n  optional-practice:\n')[1]?.split('\n  candidate:\n')[0];
   assert.ok(candidate && optional);
   assert.match(candidate, /^    timeout-minutes: 60$/m);
-  assert.match(optional, /^    timeout-minutes: 8$/m);
+  assert.match(optional, /^    timeout-minutes: 30$/m);
   assert.doesNotMatch(candidate, /continue-on-error: true/);
   for (const command of [
     'npm run company:check',

@@ -1,5 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import { execFileSync } from 'node:child_process';
 import { resolveControllerBindings } from '../controller-bindings.mjs';
 import {
   createControllerRouter,
@@ -756,4 +757,67 @@ test('saved defaults and label/dead-zone choices keep both sticks; explicit rema
   device.buttons[2].pressed = true;
   assert.equal(sample().ui.confirm, false);
   router.destroy();
+});
+
+// A fresh module realm observes the real i18next instance before bootstrap;
+// no production translator hook or mocked input routing is added for the test.
+test('unchanged controller status translates once while every native sample remains fresh', () => {
+  const source = `
+    await import(${JSON.stringify(new URL('../vendor/i18next-26.4.2.min.js', import.meta.url).href)});
+    const create = globalThis.i18next.createInstance;
+    let translations = 0;
+    globalThis.i18next.createInstance = (...args) => {
+      const engine = create(...args), translate = engine.t.bind(engine);
+      engine.t = (...values) => { translations++; return translate(...values); };
+      return engine;
+    };
+    const { createControllerRouter } = await import(${JSON.stringify(new URL('../ui/controller-router.mjs', import.meta.url).href)});
+    const { setLocale } = await import(${JSON.stringify(new URL('../i18n/index.mjs', import.meta.url).href)});
+    setLocale('en', { persist: false });
+    let polls = 0, pads = [];
+    const router = createControllerRouter({ readPads: () => { polls++; return pads; }, eventTarget: null });
+    translations = 0;
+    const counts = [], frames = [];
+    const sample = () => router.sample({ scope: 'flight', timeMs: polls * 1000 / 120 });
+    for (const locale of ['en', 'uk', 'en']) {
+      setLocale(locale, { persist: false });
+      const before = translations;
+      for (let i = 0; i < 120; i++) frames.push(sample());
+      counts.push(translations - before);
+    }
+    pads = [{ index: 0, id: 'Pad', connected: true, mapping: 'standard', axes: [0, 0, 0, 0], buttons: Array.from({ length: 17 }, () => ({ pressed: false, value: 0 })) }];
+    const ready = sample();
+    pads[0].buttons[0].pressed = true;
+    const joined = sample();
+    pads[0].buttons[0].pressed = false;
+    sample();
+    const before = translations;
+    for (let i = 0; i < 120; i++) sample();
+    const connectedTranslations = translations - before;
+    pads[0].buttons[14].pressed = true;
+    const moved = sample();
+    pads = [];
+    const disconnected = sample();
+    const waiting = sample();
+    router.destroy();
+    console.log(JSON.stringify({ counts, polls, connectedTranslations, messages: [frames[0].status.message, frames[120].status.message, frames[240].status.message], neutral: frames.every(f => f.assigned === null && Object.values(f.flight).every(v => !v)), ready: ready.status.code, joined: joined.status.code, moved: moved.flight.direction, disconnected: disconnected.status.code, waiting: waiting.status.code }));
+  `;
+  const observed = JSON.parse(
+    execFileSync(process.execPath, ['--input-type=module', '-e', source], {
+      timeout: 10000,
+      maxBuffer: 65536,
+      encoding: 'utf8',
+    }),
+  );
+  assert.deepEqual(observed.counts, [1, 1, 1]);
+  assert.equal(observed.polls, 486);
+  assert.equal(observed.connectedTranslations, 0);
+  assert.equal(observed.messages[0], observed.messages[2]);
+  assert.notEqual(observed.messages[0], observed.messages[1]);
+  assert.equal(observed.neutral, true);
+  assert.equal(observed.ready, 'ready-to-join');
+  assert.equal(observed.joined, 'joined');
+  assert.equal(observed.moved, 'left');
+  assert.equal(observed.disconnected, 'disconnected');
+  assert.equal(observed.waiting, 'waiting-controller');
 });

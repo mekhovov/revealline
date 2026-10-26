@@ -1,0 +1,815 @@
+{
+  "format": "AircraftRegionalWorkerProtocolQualification.v1",
+  "source": {
+    "sourceRevision": "ecfb4bc01dc3f6d4e7d56062be89725d26d0a491",
+    "sourceTree": "481bd57f1b0d549c4f9f728660673dd0751bd974",
+    "inputs": [
+      {
+        "path": "game/data-json.mjs",
+        "bytes": 5594,
+        "sha256": "9ce33d6173f3cba8587ed7a7f1924c66e9d9c86ffa59b37a743764ea0b01f7bd"
+      },
+      {
+        "path": "game/i18n/bootstrap.mjs",
+        "bytes": 13699,
+        "sha256": "f7757adb8ee1f9c53fc0f249bbed6bc9377ff175453543198d3561338fcfc3af"
+      },
+      {
+        "path": "game/i18n/catalogs.mjs",
+        "bytes": 1269751,
+        "sha256": "82b61c52c1aa29c2125e5cf032fd95f8fa08da2d51f93f09d89ed15c32c61d73"
+      },
+      {
+        "path": "game/i18n/index.mjs",
+        "bytes": 417,
+        "sha256": "29f40a6d92826ced1eb53283ed32e342ac6e95920abbf8d549f2d78e65b48d07"
+      },
+      {
+        "path": "game/test/helpers/fpv-aircraft-regional-worker-qualification.mjs",
+        "bytes": 11436,
+        "sha256": "01a21c9e6abf2be2222ab12452aee7070d98868de8f4bc65a252911fb83c5bc8"
+      },
+      {
+        "path": "game/vendor/i18next-26.4.2.min.js",
+        "bytes": 43702,
+        "sha256": "eb0dd6d72e8f756b90faf864853af2a17870fe97b54473b7c34494870c65901c"
+      },
+      {
+        "path": "optional-practice/civilian-fpv/advanced-aircraft-runtime.mjs",
+        "bytes": 53750,
+        "sha256": "2a38134de98562ae426e22737684c6e690321b148a1ed3e4f3209527ca0585b2"
+      },
+      {
+        "path": "optional-practice/civilian-fpv/advanced-controller.mjs",
+        "bytes": 9865,
+        "sha256": "b1a35e143d2c992a9504708d48b11b21b3f58a7d1f2eaaaf600951196df0cc30"
+      },
+      {
+        "path": "optional-practice/civilian-fpv/advanced-ghost-path.mjs",
+        "bytes": 4455,
+        "sha256": "e76917246417af0467bdb0c41e52c61b2fb53cf8a83480a1d3d2f2973b42055f"
+      },
+      {
+        "path": "optional-practice/civilian-fpv/advanced-simulation.mjs",
+        "bytes": 65908,
+        "sha256": "b1bd0944ae095ab05ffb85e78deddee757ab9641053b981f4f78a52c2640d69c"
+      },
+      {
+        "path": "optional-practice/civilian-fpv/advanced-terrain.mjs",
+        "bytes": 11987,
+        "sha256": "58c1805ceb24bd616c3e53e7cfbcc1d1fe80619c94e0cd0ca2f2988e9ab8ea95"
+      },
+      {
+        "path": "optional-practice/civilian-fpv/advanced-worker-client.mjs",
+        "bytes": 5385,
+        "sha256": "0ffaa9b15d1be1c1cda45f7ebbf54ca9b2e3deb400b0d9c9984bd0e976e37813"
+      },
+      {
+        "path": "optional-practice/civilian-fpv/advanced-worker.mjs",
+        "bytes": 9983,
+        "sha256": "46cbbb5b3a79cd2f973bf9ac1ee2b637e0d44027143b7de115623a6fdc13b4e9"
+      },
+      {
+        "path": "optional-practice/civilian-fpv/aircraft-archive-verifier.mjs",
+        "bytes": 25281,
+        "sha256": "33090700ecb3c5cd72b96983a7f7f2f247f4c898081bd8f43d65d53f33b69a98"
+      },
+      {
+        "path": "optional-practice/civilian-fpv/aircraft-archive.mjs",
+        "bytes": 21575,
+        "sha256": "1519bc331b91d9b72bb77110c30f7f8fd5bd0469b6cf06618681f49c6f982bc9"
+      },
+      {
+        "path": "optional-practice/civilian-fpv/aircraft-challenge.mjs",
+        "bytes": 14954,
+        "sha256": "daa4938b85125c01d6cdd36f706703d256ebd11fb5da39c8f39c557a66cd8c33"
+      },
+      {
+        "path": "optional-practice/civilian-fpv/aircraft-course-session.mjs",
+        "bytes": 23083,
+        "sha256": "0d71939840f1e09b5328581a267bce1df732dc948756bf9d96f82eb97ceeec6e"
+      },
+      {
+        "path": "optional-practice/civilian-fpv/aircraft-mission-checkpoint.mjs",
+        "bytes": 20539,
+        "sha256": "edb527183c021f7e1fc2495715c976f7c243550107cc0dc3d95b5c37dac346a6"
+      },
+      {
+        "path": "optional-practice/civilian-fpv/aircraft-physics.mjs",
+        "bytes": 28637,
+        "sha256": "7bc651f151e0729541a9323c075ea40a1bcccb0fb9cd0379c202b1a77421351a"
+      },
+      {
+        "path": "optional-practice/civilian-fpv/aircraft-presets.mjs",
+        "bytes": 39094,
+        "sha256": "c3bceb64f9cfef85c6894c2b69814c70886b6f30b7301e2659382e24bbee56e6"
+      },
+      {
+        "path": "optional-practice/civilian-fpv/aircraft-recording.mjs",
+        "bytes": 11357,
+        "sha256": "79bf6f61f982c1c45186e494f64a0ee0a55d07dbf6e405f121f2d8ec0b665cce"
+      },
+      {
+        "path": "optional-practice/civilian-fpv/aircraft-response.mjs",
+        "bytes": 3951,
+        "sha256": "c89d28ca2b504b880c1b8e77fe1be9d197129b18d4273f8d72b548bba5169303"
+      },
+      {
+        "path": "optional-practice/civilian-fpv/aircraft-terrain.mjs",
+        "bytes": 2269,
+        "sha256": "1c01431247de1bbaed839e0fa2f577d39911f868d1b4d9f29690b3bb4062f077"
+      },
+      {
+        "path": "optional-practice/civilian-fpv/flight-contact.mjs",
+        "bytes": 2482,
+        "sha256": "bb58ec29aeaa865b19343a3e58ea9c35f94df6bdc44b995e43bb4b269c8169b6"
+      },
+      {
+        "path": "optional-practice/civilian-fpv/flight-response.mjs",
+        "bytes": 1722,
+        "sha256": "89ec7b85d787ac077de36bba66c9e9a851c49721d8f2d598db8c461ecb6ae363"
+      },
+      {
+        "path": "optional-practice/civilian-fpv/flight-sectors.mjs",
+        "bytes": 10783,
+        "sha256": "0bb1c11caebdc9dd97a4a9091553b992ca6afbb731f5ea94a6f2050a1a4ccf51"
+      },
+      {
+        "path": "optional-practice/civilian-fpv/flight-support.mjs",
+        "bytes": 1815,
+        "sha256": "4d759128114e24fde4ec011357edd3f334f9b0a92499eba99199e1d6088dd4af"
+      },
+      {
+        "path": "optional-practice/civilian-fpv/math.mjs",
+        "bytes": 3062,
+        "sha256": "555c8b6ea170b46992133507d2a3d867f06185bca060239cab7db9c9b87f9f98"
+      },
+      {
+        "path": "optional-practice/civilian-fpv/model.mjs",
+        "bytes": 23402,
+        "sha256": "0b10fc11948bbca05e23eb6d096a95b97c02aad0573e17d68ac9404ba6694909"
+      },
+      {
+        "path": "optional-practice/civilian-fpv/radio-profile.mjs",
+        "bytes": 18846,
+        "sha256": "d972a03be9f62d390894958b8fa58ae7ac3f97bab2d797b165fca4ab98c506ed"
+      },
+      {
+        "path": "optional-practice/civilian-fpv/rates.mjs",
+        "bytes": 9599,
+        "sha256": "12b66e90c2b59d2495131f42dcd4281cfbfa87a705245ce73aa1a2abc6dfdec5"
+      },
+      {
+        "path": "optional-practice/civilian-fpv/rotation-table.mjs",
+        "bytes": 7509,
+        "sha256": "2ddab304ac99a2e70fc7e84fc6c27eedb49f1f3dac976baed680effa659cef41"
+      },
+      {
+        "path": "optional-practice/civilian-fpv/vendor/rapier/rapier.mjs",
+        "bytes": 4340292,
+        "sha256": "02dc6a4e2fffc013bab08fbb44fa68f501d8303615e9afe4c7d89ad4eedda0d0"
+      },
+      {
+        "path": "optional-practice/civilian-fpv/world-collision.mjs",
+        "bytes": 12607,
+        "sha256": "72bbf0933877adb9c014df95b176acdf6eb7dcc745c84e8f9f5acce3e5650538"
+      },
+      {
+        "path": "scripts/fpv-regional-worker-qualification.html",
+        "bytes": 5967,
+        "sha256": "5dd229c5faae8d6714af2849a0fb5327346b052896e87c4584ec23cd095a6ec1"
+      },
+      {
+        "path": "scripts/frozen-source.mjs",
+        "bytes": 1308,
+        "sha256": "0c47791e58a64b462d4ae130cad454aa65cc9f287d6334319aa45a10682264e2"
+      },
+      {
+        "path": "scripts/serve-fpv-regional-worker-qualification.mjs",
+        "bytes": 7456,
+        "sha256": "e6b79e3b3848bd2fb81c6900bc83f7e7013968574e07d70d05845cdcd067eb49"
+      }
+    ]
+  },
+  "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/155.0.0.0 Safari/537.36",
+  "startedAt": "2026-10-19T05:19:08.005Z",
+  "status": "passed",
+  "cases": [
+    {
+      "preset": "meteor75-analog-2022",
+      "mode": "self-level",
+      "status": "passed",
+      "matched": true,
+      "baseline": {
+        "preset": "meteor75-analog-2022",
+        "mode": "self-level",
+        "backend": "civilian-quad-aircraft-regional.v3",
+        "frequency": 1000,
+        "identity": "a312a9d57ec56f8a",
+        "finalHash": "8f2a72b1",
+        "recoveredHash": "8f2a72b1",
+        "acceptedSequence": 95,
+        "consumedSequence": 95,
+        "consumedTimestampUs": 1900000,
+        "finalState": {
+          "missionTick": 96,
+          "substep": 1920,
+          "controls": {
+            "roll": 0,
+            "pitch": 0,
+            "yaw": 0.04,
+            "throttle": 0.55
+          },
+          "target": {
+            "throttle": 0.549,
+            "roll": 0.04,
+            "pitch": -0.04,
+            "yaw": 4.600000512
+          },
+          "sensors": {
+            "roll": 0.0006258729997465741,
+            "pitch": 0.0010343619396122271,
+            "yaw": 0.0769608532603871
+          },
+          "motorSpeeds": [
+            0.5488260548152908,
+            0.5491841671111376,
+            0.5488151934867622,
+            0.5491744669623149
+          ],
+          "voltage": 4.205118657613893,
+          "current": 2.228943729017022,
+          "usedAh": 0,
+          "noiseState": 3550677744,
+          "consumedSequence": 95,
+          "consumedTimestampUs": 1900000,
+          "acceptedSequence": 95,
+          "acceptedTimestampUs": 1900000,
+          "contact": {
+            "touching": false,
+            "grounded": false,
+            "normal": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "impactSpeed": 0,
+            "contacts": 1,
+            "ids": [],
+            "entries": [],
+            "support": null
+          }
+        },
+        "finalController": {
+          "identity": "4775dea5806ad12d",
+          "state": {
+            "format": "AircraftControllerState.v1",
+            "integral": {
+              "roll": 2.6361786984369797e-9,
+              "pitch": 4.434292040427243e-9,
+              "yaw": 7.467472253155007e-7
+            },
+            "gyro": {
+              "roll": 0.0006245295457943378,
+              "pitch": 0.0010631908127484895,
+              "yaw": 0.07690933193907191
+            },
+            "derivative": {
+              "roll": 0.0008719790462049631,
+              "pitch": -0.018550992396068045,
+              "yaw": 0.032850083924959465
+            },
+            "feedforward": {
+              "roll": 6.253883706784301e-28,
+              "pitch": -0.000004566122569111562,
+              "yaw": 1.5177611628185984e-38
+            },
+            "target": {
+              "roll": 0.0006981317007977319,
+              "pitch": -0.0006981317007977319,
+              "yaw": 0.08028515452782493
+            },
+            "previousTarget": {
+              "roll": 0.0006981317007977319,
+              "pitch": -0.0006981317007977319,
+              "yaw": 0.08028515452782493
+            },
+            "previousGyro": {
+              "roll": 0.0006245295457943378,
+              "pitch": 0.0010631908127484895,
+              "yaw": 0.07690933193907191
+            },
+            "motors": [
+              0.5488340043298466,
+              0.5491747729474915,
+              0.5488246723654595,
+              0.5491664442154885
+            ],
+            "saturated": false,
+            "requestedTorque": {
+              "roll": 1.0672052631241814e-8,
+              "pitch": -1.888988513226062e-7,
+              "yaw": 0.0000011012889519412308
+            },
+            "achievedTorque": {
+              "roll": 1.0672052642643481e-8,
+              "pitch": -1.8889885151571195e-7,
+              "yaw": 0.0000011012889530579752
+            }
+          }
+        },
+        "maxObservedInputPending": 1,
+        "boundaries": [
+          [
+            41,
+            "90a0e433"
+          ],
+          [
+            78,
+            "0905f91a"
+          ]
+        ],
+        "rollbackAt": 41,
+        "frameCommits": 5,
+        "peakPending": 1,
+        "maxRetained": 3,
+        "replayScope": "checkpoint-clip",
+        "retainedClipReplayExecutor": "caller-thread",
+        "retainedFromTick": 0,
+        "throughTick": 96,
+        "owners": 2,
+        "checks": {
+          "terrainRollback": true,
+          "missionRollback": true,
+          "identicalFrame": true,
+          "pause": true,
+          "reset": true,
+          "newOwnerRecovery": true,
+          "retainedClipReplay": true
+        },
+        "scored": false,
+        "defaultEligible": false
+      },
+      "worker": {
+        "preset": "meteor75-analog-2022",
+        "mode": "self-level",
+        "backend": "civilian-quad-aircraft-regional.v3",
+        "frequency": 1000,
+        "identity": "a312a9d57ec56f8a",
+        "finalHash": "8f2a72b1",
+        "recoveredHash": "8f2a72b1",
+        "acceptedSequence": 95,
+        "consumedSequence": 95,
+        "consumedTimestampUs": 1900000,
+        "finalState": {
+          "missionTick": 96,
+          "substep": 1920,
+          "controls": {
+            "roll": 0,
+            "pitch": 0,
+            "yaw": 0.04,
+            "throttle": 0.55
+          },
+          "target": {
+            "throttle": 0.549,
+            "roll": 0.04,
+            "pitch": -0.04,
+            "yaw": 4.600000512
+          },
+          "sensors": {
+            "roll": 0.0006258729997465741,
+            "pitch": 0.0010343619396122271,
+            "yaw": 0.0769608532603871
+          },
+          "motorSpeeds": [
+            0.5488260548152908,
+            0.5491841671111376,
+            0.5488151934867622,
+            0.5491744669623149
+          ],
+          "voltage": 4.205118657613893,
+          "current": 2.228943729017022,
+          "usedAh": 0,
+          "noiseState": 3550677744,
+          "consumedSequence": 95,
+          "consumedTimestampUs": 1900000,
+          "acceptedSequence": 95,
+          "acceptedTimestampUs": 1900000,
+          "contact": {
+            "touching": false,
+            "grounded": false,
+            "normal": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "impactSpeed": 0,
+            "contacts": 1,
+            "ids": [],
+            "entries": [],
+            "support": null
+          }
+        },
+        "finalController": {
+          "identity": "4775dea5806ad12d",
+          "state": {
+            "format": "AircraftControllerState.v1",
+            "integral": {
+              "roll": 2.6361786984369797e-9,
+              "pitch": 4.434292040427243e-9,
+              "yaw": 7.467472253155007e-7
+            },
+            "gyro": {
+              "roll": 0.0006245295457943378,
+              "pitch": 0.0010631908127484895,
+              "yaw": 0.07690933193907191
+            },
+            "derivative": {
+              "roll": 0.0008719790462049631,
+              "pitch": -0.018550992396068045,
+              "yaw": 0.032850083924959465
+            },
+            "feedforward": {
+              "roll": 6.253883706784301e-28,
+              "pitch": -0.000004566122569111562,
+              "yaw": 1.5177611628185984e-38
+            },
+            "target": {
+              "roll": 0.0006981317007977319,
+              "pitch": -0.0006981317007977319,
+              "yaw": 0.08028515452782493
+            },
+            "previousTarget": {
+              "roll": 0.0006981317007977319,
+              "pitch": -0.0006981317007977319,
+              "yaw": 0.08028515452782493
+            },
+            "previousGyro": {
+              "roll": 0.0006245295457943378,
+              "pitch": 0.0010631908127484895,
+              "yaw": 0.07690933193907191
+            },
+            "motors": [
+              0.5488340043298466,
+              0.5491747729474915,
+              0.5488246723654595,
+              0.5491664442154885
+            ],
+            "saturated": false,
+            "requestedTorque": {
+              "roll": 1.0672052631241814e-8,
+              "pitch": -1.888988513226062e-7,
+              "yaw": 0.0000011012889519412308
+            },
+            "achievedTorque": {
+              "roll": 1.0672052642643481e-8,
+              "pitch": -1.8889885151571195e-7,
+              "yaw": 0.0000011012889530579752
+            }
+          }
+        },
+        "maxObservedInputPending": 1,
+        "boundaries": [
+          [
+            41,
+            "90a0e433"
+          ],
+          [
+            78,
+            "0905f91a"
+          ]
+        ],
+        "rollbackAt": 41,
+        "frameCommits": 5,
+        "peakPending": 1,
+        "maxRetained": 3,
+        "replayScope": "checkpoint-clip",
+        "retainedClipReplayExecutor": "caller-thread",
+        "retainedFromTick": 0,
+        "throughTick": 96,
+        "owners": 2,
+        "checks": {
+          "terrainRollback": true,
+          "missionRollback": true,
+          "identicalFrame": true,
+          "pause": true,
+          "reset": true,
+          "newOwnerRecovery": true,
+          "retainedClipReplay": true
+        },
+        "scored": false,
+        "defaultEligible": false
+      }
+    },
+    {
+      "preset": "nazgul-eco-xl5-v11",
+      "mode": "acro",
+      "status": "passed",
+      "matched": true,
+      "baseline": {
+        "preset": "nazgul-eco-xl5-v11",
+        "mode": "acro",
+        "backend": "civilian-quad-aircraft-regional.v3",
+        "frequency": 1000,
+        "identity": "0806edd77a482ec6",
+        "finalHash": "f9561dce",
+        "recoveredHash": "f9561dce",
+        "acceptedSequence": 95,
+        "consumedSequence": 95,
+        "consumedTimestampUs": 1900000,
+        "finalState": {
+          "missionTick": 96,
+          "substep": 1920,
+          "controls": {
+            "roll": 0,
+            "pitch": 0,
+            "yaw": 0.04,
+            "throttle": 0.55
+          },
+          "target": {
+            "throttle": 0.549,
+            "roll": 0,
+            "pitch": 0,
+            "yaw": 4.8400007168
+          },
+          "sensors": {
+            "roll": 0.017820449934172016,
+            "pitch": 0.018767645289229806,
+            "yaw": 0.08705874074740376
+          },
+          "motorSpeeds": [
+            0.5486750677806258,
+            0.5493256418996492,
+            0.5486775348182167,
+            0.5493213678187562
+          ],
+          "voltage": 24.224710190773514,
+          "current": 21.673106871699787,
+          "usedAh": 0,
+          "noiseState": 3550677744,
+          "consumedSequence": 95,
+          "consumedTimestampUs": 1900000,
+          "acceptedSequence": 95,
+          "acceptedTimestampUs": 1900000,
+          "contact": {
+            "touching": false,
+            "grounded": false,
+            "normal": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "impactSpeed": 0,
+            "contacts": 1,
+            "ids": [],
+            "entries": [],
+            "support": null
+          }
+        },
+        "finalController": {
+          "identity": "b6990910ab22d9fd",
+          "state": {
+            "format": "AircraftControllerState.v1",
+            "integral": {
+              "roll": 0.0003686052023912181,
+              "pitch": 0.0003942308393692542,
+              "yaw": 0.0002502092973041579
+            },
+            "gyro": {
+              "roll": 0.017833332884259354,
+              "pitch": 0.018781283244342806,
+              "yaw": 0.08701065286813027
+            },
+            "derivative": {
+              "roll": -0.008103723993859167,
+              "pitch": -0.008587791917143215,
+              "yaw": 0.030757284758415316
+            },
+            "feedforward": {
+              "roll": -3.633340869727544e-76,
+              "pitch": 9.341819723000822e-54,
+              "yaw": 1.5969487605077083e-38
+            },
+            "target": {
+              "roll": 0,
+              "pitch": 0,
+              "yaw": 0.08447394830704562
+            },
+            "previousTarget": {
+              "roll": 0,
+              "pitch": 0,
+              "yaw": 0.08447394830704562
+            },
+            "previousGyro": {
+              "roll": 0.017833332884259354,
+              "pitch": 0.018781283244342806,
+              "yaw": 0.08701065286813027
+            },
+            "motors": [
+              0.5487083119659215,
+              0.5492924066463761,
+              0.548710799754952,
+              0.5492881744698517
+            ],
+            "saturated": false,
+            "requestedTorque": {
+              "roll": -0.000007611342593119137,
+              "pitch": -0.0000019795275239793952,
+              "yaw": 0.00019285238059057149
+            },
+            "achievedTorque": {
+              "roll": -0.0000076113426479285096,
+              "pitch": -0.0000019795275380540822,
+              "yaw": 0.0001928523819794345
+            }
+          }
+        },
+        "maxObservedInputPending": 1,
+        "boundaries": [
+          [
+            41,
+            "3fad1b40"
+          ],
+          [
+            78,
+            "59f00461"
+          ]
+        ],
+        "rollbackAt": 41,
+        "frameCommits": 5,
+        "peakPending": 1,
+        "maxRetained": 3,
+        "replayScope": "checkpoint-clip",
+        "retainedClipReplayExecutor": "caller-thread",
+        "retainedFromTick": 0,
+        "throughTick": 96,
+        "owners": 2,
+        "checks": {
+          "terrainRollback": true,
+          "missionRollback": true,
+          "identicalFrame": true,
+          "pause": true,
+          "reset": true,
+          "newOwnerRecovery": true,
+          "retainedClipReplay": true
+        },
+        "scored": false,
+        "defaultEligible": false
+      },
+      "worker": {
+        "preset": "nazgul-eco-xl5-v11",
+        "mode": "acro",
+        "backend": "civilian-quad-aircraft-regional.v3",
+        "frequency": 1000,
+        "identity": "0806edd77a482ec6",
+        "finalHash": "f9561dce",
+        "recoveredHash": "f9561dce",
+        "acceptedSequence": 95,
+        "consumedSequence": 95,
+        "consumedTimestampUs": 1900000,
+        "finalState": {
+          "missionTick": 96,
+          "substep": 1920,
+          "controls": {
+            "roll": 0,
+            "pitch": 0,
+            "yaw": 0.04,
+            "throttle": 0.55
+          },
+          "target": {
+            "throttle": 0.549,
+            "roll": 0,
+            "pitch": 0,
+            "yaw": 4.8400007168
+          },
+          "sensors": {
+            "roll": 0.017820449934172016,
+            "pitch": 0.018767645289229806,
+            "yaw": 0.08705874074740376
+          },
+          "motorSpeeds": [
+            0.5486750677806258,
+            0.5493256418996492,
+            0.5486775348182167,
+            0.5493213678187562
+          ],
+          "voltage": 24.224710190773514,
+          "current": 21.673106871699787,
+          "usedAh": 0,
+          "noiseState": 3550677744,
+          "consumedSequence": 95,
+          "consumedTimestampUs": 1900000,
+          "acceptedSequence": 95,
+          "acceptedTimestampUs": 1900000,
+          "contact": {
+            "touching": false,
+            "grounded": false,
+            "normal": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "impactSpeed": 0,
+            "contacts": 1,
+            "ids": [],
+            "entries": [],
+            "support": null
+          }
+        },
+        "finalController": {
+          "identity": "b6990910ab22d9fd",
+          "state": {
+            "format": "AircraftControllerState.v1",
+            "integral": {
+              "roll": 0.0003686052023912181,
+              "pitch": 0.0003942308393692542,
+              "yaw": 0.0002502092973041579
+            },
+            "gyro": {
+              "roll": 0.017833332884259354,
+              "pitch": 0.018781283244342806,
+              "yaw": 0.08701065286813027
+            },
+            "derivative": {
+              "roll": -0.008103723993859167,
+              "pitch": -0.008587791917143215,
+              "yaw": 0.030757284758415316
+            },
+            "feedforward": {
+              "roll": -3.633340869727544e-76,
+              "pitch": 9.341819723000822e-54,
+              "yaw": 1.5969487605077083e-38
+            },
+            "target": {
+              "roll": 0,
+              "pitch": 0,
+              "yaw": 0.08447394830704562
+            },
+            "previousTarget": {
+              "roll": 0,
+              "pitch": 0,
+              "yaw": 0.08447394830704562
+            },
+            "previousGyro": {
+              "roll": 0.017833332884259354,
+              "pitch": 0.018781283244342806,
+              "yaw": 0.08701065286813027
+            },
+            "motors": [
+              0.5487083119659215,
+              0.5492924066463761,
+              0.548710799754952,
+              0.5492881744698517
+            ],
+            "saturated": false,
+            "requestedTorque": {
+              "roll": -0.000007611342593119137,
+              "pitch": -0.0000019795275239793952,
+              "yaw": 0.00019285238059057149
+            },
+            "achievedTorque": {
+              "roll": -0.0000076113426479285096,
+              "pitch": -0.0000019795275380540822,
+              "yaw": 0.0001928523819794345
+            }
+          }
+        },
+        "maxObservedInputPending": 1,
+        "boundaries": [
+          [
+            41,
+            "3fad1b40"
+          ],
+          [
+            78,
+            "59f00461"
+          ]
+        ],
+        "rollbackAt": 41,
+        "frameCommits": 5,
+        "peakPending": 1,
+        "maxRetained": 3,
+        "replayScope": "checkpoint-clip",
+        "retainedClipReplayExecutor": "caller-thread",
+        "retainedFromTick": 0,
+        "throughTick": 96,
+        "owners": 2,
+        "checks": {
+          "terrainRollback": true,
+          "missionRollback": true,
+          "identicalFrame": true,
+          "pause": true,
+          "reset": true,
+          "newOwnerRecovery": true,
+          "retainedClipReplay": true
+        },
+        "scored": false,
+        "defaultEligible": false
+      }
+    }
+  ],
+  "performanceQualified": false,
+  "scored": false,
+  "defaultEligible": false,
+  "finishedAt": "2026-10-19T05:19:09.400Z"
+}

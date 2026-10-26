@@ -17,7 +17,114 @@ No optional-package selector change or optional-package release/promotion is
 needed for direct-route live testing. The repository's existing main-branch
 review and product-release policies still apply.
 
-## Public publication — 17 October 2026
+## Input recovery correction — 17 October 2026
+
+[PR #1565](https://github.com/mekhovov/revealline/pull/1565) preserves Advanced
+practice when the selected radio is unavailable. It also restricts new startup
+request/capture error metadata to fixed categories. The correction is live at
+`3e744a5ef7bede48eafcb79a8377bb46fb37d76f` after 741 practice tests, EN/UK browser recovery,
+actual Electron export/resume, release validation and all 12 product checks.
+The normal [Pages publication](https://github.com/mekhovov/revealline/actions/runs/39045107325) and fresh password/offline/replay acceptance
+pass for both SIMs. Deployed UI checks also pass recording retention after missing
+radio input and explicit keyboard resume on each route. The [delivery receipt](fpv-input-recovery-delivery-verification.json)
+retains exact sources and evidence.
+
+The manual recovery check requires no physical radio:
+
+1. Open either SIM route, unlock normally, then open Settings → Controls →
+   Rates & throttle → Advanced reference quad.
+2. Start a short keyboard practice flight and pause. Keep throttle low.
+3. Choose Calibrated radio with no radio connected and press Start practice.
+   The pane should explain that input is unavailable while Export practice
+   recording and Restart practice remain available.
+4. Choose Keyboard / touch. The flight stays paused until Start practice is
+   pressed. It then continues the same recording; Restart practice starts a new
+   flight. Export and return to tuning to finish.
+
+The [review](fpv-tuning-input-recovery-review.md) records exact scope. The new
+public runner captures bounded startup state and request paths if readiness
+fails; the previous startup timeout remains unexplained. Neither simulated input
+loss nor this no-radio check qualifies physical controller hardware. Advanced
+remains optional and unscored.
+
+## Boundary correction publication — 17 October 2026
+
+[PR #1564](https://github.com/mekhovov/revealline/pull/1564) preserves restored
+profile history against stale imports, matches preset boolean review metadata,
+and keeps Regional recording/recovery export available at flight limits.
+All 12 non-skipped product checks passed for `dcad53bc6`; the general test/build
+jobs were explicitly skipped. The ordinary controller merged the correction as
+`fb3caf12bd43743670f47c42dc21f7a406223379`. Every source pin in the local correction
+receipt is unchanged at that merge.
+
+The normal [Pages publication](https://github.com/mekhovov/revealline/actions/runs/39038793037)
+passed build, deploy and verification. The
+[final public acceptance](fpv-boundary-public-final-acceptance.json) passes both
+fresh installations: ordinary password entry, saved 900°/s rates, visible offline
+preparation and a new browser process reopened offline. Academy's 11-tick record
+verifies hash `13902221`; World's 12-tick record verifies `1d473fbb`. Both workers
+are disposed. Public source bindings and the runner remained stable. Credentials
+are absent from reports.
+
+The first World attempt timed out waiting for startup after password submission.
+Its [failed report](fpv-boundary-public-acceptance.json) is preserved. Reopening
+the same profile without cache clearing or unlock changes succeeded; the full
+fresh rerun also passed. The cause is not established, and this observation is
+retained alongside the passing run.
+
+The [delivery receipt](fpv-boundary-delivery-verification.json) binds the deployed
+revision to hosted archive evidence, public sources, browser acceptance and the
+native fixture. The staged site contains 3,425 files and 960,384,263 bytes; its
+actual uncompressed archive is 963,368,960 bytes, leaving 16,631,040 bytes below
+the unchanged 980,000,000-byte cap. The separate optional catalogue is present and
+empty. Earlier reports below retain their original source and test scope.
+
+The [local boundary review](fpv-tuning-boundary-review.md) records 731 passing
+practice tests, six editor browser cases, actual 720-second Regional worker
+export/replay/recovery/restart and an actual Electron fixture with exact library
+retention. The latter checks short Regional export/recovery, not a native
+12-minute run. Physical devices, pilot feedback, aircraft measurements, iOS and
+wider-platform qualification remain deferred; Advanced is optional and unscored.
+
+## Follow-up publication — 17 October 2026
+
+[PR #1562](https://github.com/mekhovov/revealline/pull/1562) delivers atomic drone
+duplication, case-insensitive preset-option matching and export/reference/restart
+after genuine Advanced flight limits. All 12 non-skipped product checks pass on
+`2af1ee906`; general test/build jobs were explicitly skipped. The normal controller
+merged it as `80494f63db57be3e44586d8271c70c3e7a3cb403`, and the ordinary
+[Pages publication](https://github.com/mekhovov/revealline/actions/runs/39002032297)
+passed build, deploy and verification. A concurrent authoring-page display fix
+changes no source pinned by FPV qualification.
+
+The [current public acceptance](fpv-post-publication-public-acceptance.json)
+passes Academy and World in fresh isolated Chrome profiles. Both start locked,
+accept the normal password form, save 900°/s Actual rates and install offline
+through visible controls. New browser processes reopened offline retain those
+rates and run Advanced reference practice. Academy exports 12 ticks with hash
+`1d473fbb`; World exports 11 ticks with hash `13902221`. Each recording replays
+exactly and returning to tuning disposes its worker. Public metadata, manifest,
+source pins and runner remain unchanged during acceptance. Credentials are
+excluded from reports. These short neutral-input flights verify lifecycle, not
+physical fidelity or performance; the different tick counts are recorded as such.
+
+The [current desktop fixture check](fpv-native-post-publication-runtime.json)
+separately verifies actual Electron UI, OS recording saves, exact library
+retention across process reopen, two successful replays and complete worker
+disposal. The fixture is explicitly labelled and retains locked production pages;
+it does not qualify native production authentication, iOS or a signed installer.
+
+The [final delivery verification](fpv-post-publication-delivery-verification.json)
+pins these receipts and all hosted artifacts. The staged site contains 3,442 files
+and 963,685,141 bytes; the actual uploaded archive is 966,676,480 bytes, leaving
+13,323,520 bytes below the unchanged 980,000,000-byte cap. The optional catalogue
+is present and empty. No manual merge/deploy, forced worker activation or gate
+bypass was used. Current public acceptance covers fresh installations; the
+authentic installed-update evidence below retains its original source scope.
+Advanced remains optional, unscored and default-ineligible, with physical and
+wider-platform qualification deferred.
+
+## Original public publication — 17 October 2026
 
 [PR #1561](https://github.com/mekhovov/revealline/pull/1561) delivered implementation
 `eaecd60562917b7cf47d4995af00d561b154debd`. After its 12 non-skipped product
