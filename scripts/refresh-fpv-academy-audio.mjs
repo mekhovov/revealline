@@ -28,6 +28,12 @@ const included = new Set([
   'game/ui/destruction-audio.mjs',
   'game/ui/human-reaction-policy.mjs',
   'game/ui/destruction-level.mjs',
+  'game/ui/published-cues.mjs',
+  'game/presentation/portable-destruction-audio.mjs',
+  'game/audio/portable-destruction.mjs',
+  'game/ui/media-preparation.mjs',
+  'game/published-cue-inspection.mjs',
+  'game/mp3-inspection.mjs',
   'game/ui/movement-audio.mjs',
   'game/ui/dialogue-channel.mjs',
 ]);
