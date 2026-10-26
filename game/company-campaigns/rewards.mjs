@@ -4,16 +4,19 @@ import { COMPANY_MISSIONS } from './catalog.mjs';
 // Public-source summaries and original fictional reflections. These are authored
 // discoveries, not product certification, workshop instruction or real records.
 // Sources were checked on 2026-09-28. Existing exact mission artwork is reused.
-const sources = {workshop: {
+const sources = {
+  workshop: {
     title: 'DroneAid Netherlands — Public mission and workshops',
     url: 'https://drone-aid.nl/en',
   },
-reports: {
+  reports: {
     title: 'DroneAid Netherlands — Public reports',
     url: 'https://drone-aid.nl/en/reports',
-  }};
+  },
+};
 
-const discoveries = {'droneaid-nl-workshop-lights': [
+const discoveries = {
+  'droneaid-nl-workshop-lights': [
     {
       en: {
         title: 'A workshop is also a community',
@@ -141,9 +144,11 @@ const discoveries = {'droneaid-nl-workshop-lights': [
       },
       refs: ['reports'],
     },
-  ]};
+  ],
+};
 
-const finales = {'droneaid-nl-workshop-lights': {
+const finales = {
+  'droneaid-nl-workshop-lights': {
     en: {
       title: 'A Workshop Built Together',
       teaser:
@@ -168,7 +173,8 @@ const finales = {'droneaid-nl-workshop-lights': {
     },
     refs: ['workshop', 'reports'],
     link: 'workshop',
-  }};
+  },
+};
 
 export const COMPANY_REWARD_CAMPAIGN_IDS = Object.freeze(Object.keys(discoveries));
 

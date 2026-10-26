@@ -94,13 +94,36 @@ export function mountTouchPresentationSettings({
   mount,
   preferences,
   idPrefix,
+  visibility = null,
 }) {
   const root = doc.createElement('section');
   root.className = 'shared-touch-settings';
   const fields = [];
+  const visitRoot = visibility?.mount ? doc.createElement('section') : null;
+  const visitHeading = visitRoot ? doc.createElement('h4') : null;
+  if (visitRoot) {
+    visitRoot.className = 'shared-touch-settings';
+    visitRoot.dataset.touchVisit = 'true';
+    visitRoot.append(visitHeading);
+    visibility.mount.append(visitRoot);
+  }
+  let visibilityHelp = null;
   let disposed = false,
     lastChanged = null;
   for (const [key, title, choices] of [
+    ...(visibility
+      ? [
+          [
+            'visibility',
+            'onScreenSteering',
+            [
+              ['auto', 'autoTouchOnly'],
+              ['always', 'alwaysTouchOrMouse'],
+              ['off', 'offKeyboardOrController'],
+            ],
+          ],
+        ]
+      : []),
     [
       'mode',
       'touchSteering',
@@ -132,7 +155,8 @@ export function mountTouchPresentationSettings({
       caption = doc.createElement('span');
     const input = doc.createElement(choices ? 'select' : 'input');
     input.id = `${idPrefix}-touch-${key}`;
-    input.dataset.touchSetting = key;
+    if (key === 'visibility') input.dataset.touchVisibility = 'true';
+    else input.dataset.touchSetting = key;
     row.htmlFor = input.id;
     if (!choices) {
       input.type = 'range';
@@ -148,16 +172,27 @@ export function mountTouchPresentationSettings({
     });
     const change = () => {
       if (disposed) return;
-      lastChanged = input;
-      preferences.set({
-        ...preferences.snapshot(),
-        [key]: choices ? input.value : Number(input.value),
-      });
+      if (key === 'visibility') visibility.set(input.value);
+      else {
+        lastChanged = input;
+        preferences.set({
+          ...preferences.snapshot(),
+          [key]: choices ? input.value : Number(input.value),
+        });
+      }
       refresh();
     };
     input.addEventListener('change', change);
     row.append(caption, input);
-    root.append(row);
+    const owner = key === 'visibility' && visitRoot ? visitRoot : root;
+    owner.append(row);
+    if (key === 'visibility') {
+      visibilityHelp = doc.createElement('p');
+      visibilityHelp.id = `${idPrefix}-touch-visibility-help`;
+      visibilityHelp.className = 'micro-note';
+      input.setAttribute('aria-describedby', visibilityHelp.id);
+      owner.append(visibilityHelp);
+    }
     fields.push({ key, title, input, caption, options, change });
   }
   const status = doc.createElement('p');
@@ -167,7 +202,8 @@ export function mountTouchPresentationSettings({
   retry.type = 'button';
   retry.id = `${idPrefix}-touch-save-retry`;
   retry.setAttribute('aria-describedby', status.id);
-  for (const field of fields) field.input.setAttribute('aria-describedby', status.id);
+  for (const field of fields)
+    if (field.key !== 'visibility') field.input.setAttribute('aria-describedby', status.id);
   const retrySave = () => {
     if (disposed) return;
     const focused = doc.activeElement === retry;
@@ -175,7 +211,7 @@ export function mountTouchPresentationSettings({
     refresh();
     if (!disposed && focused && preferences.persistence?.().status === 'saved') {
       const target =
-        lastChanged?.isConnected && !lastChanged.disabled ? lastChanged : fields[0].input;
+        lastChanged?.isConnected && !lastChanged.disabled ? lastChanged : fields.find(({ key }) => key === 'mode').input;
       if (target.isConnected && !target.disabled) target.focus({ preventScroll: true });
     }
   };
@@ -187,8 +223,12 @@ export function mountTouchPresentationSettings({
     for (const field of fields) {
       field.caption.textContent = t(`interface:${field.title}`);
       for (const { option, label } of field.options) option.textContent = t(`interface:${label}`);
-      field.input.value = String(settings[field.key]);
+      field.input.value = String(
+        field.key === 'visibility' ? visibility.get() : settings[field.key],
+      );
     }
+    if (visitHeading) visitHeading.textContent = visibility.title();
+    if (visibilityHelp) visibilityHelp.textContent = visibility.help();
     const saved = preferences.persistence?.();
     status.textContent =
       saved?.status === 'saved'
@@ -216,6 +256,7 @@ export function mountTouchPresentationSettings({
       retry.removeEventListener('click', retrySave);
       for (const field of fields) field.input.removeEventListener('change', field.change);
       root.remove();
+      visitRoot?.remove();
     },
   };
 }

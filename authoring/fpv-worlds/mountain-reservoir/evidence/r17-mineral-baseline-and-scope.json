@@ -1,0 +1,81 @@
+{
+  "format": "FPVReservoirMineralFinishBaselineAndScope.v1",
+  "sourceBase": "428329745c3078941338ae6157e2ae1a55c28462",
+  "r4PackExact": "4c4a0aba2c6347f7670b86a40af5a0d9dd8a1be0e0b65e4a66465c4684136c6c",
+  "r16Source": {
+    "bytes": 1234648,
+    "sha256": "2ab983dd2262027084cbd23b48d59be866ac790cc15df30ef4a87bec7e3fa843",
+    "triangles": 12260,
+    "materials": 13,
+    "nodes": 60,
+    "textures": 3,
+    "colliders": 48,
+    "collisionTriangles": 108
+  },
+  "r16Prepared": {
+    "bytes": 1233136,
+    "sha256": "6d7d829e337357b61fa212af3691bd8e3088092ce22de9d93011f7e820142bae",
+    "validatorErrors": 0
+  },
+  "r16Pack": {
+    "bytes": 1379988,
+    "sha256": "50ffbb0e5da7dec94862a8f2ca85cfeb60542d3fe9f86bd3c4e288dfa0a2e554",
+    "identity": "fpv-pack:50ffbb0e5da7dec94862a8f2ca85cfeb60542d3fe9f86bd3c4e288dfa0a2e554"
+  },
+  "candidateValidatorIssues": {
+    "before": {
+      "numErrors": 0,
+      "numWarnings": 0,
+      "numInfos": 1,
+      "numHints": 0,
+      "messages": [
+        {
+          "code": "UNSUPPORTED_EXTENSION",
+          "message": "Cannot validate an extension as it is not supported by the validator: 'REVEALLINE_surface_coating'.",
+          "severity": 2,
+          "pointer": "/extensionsUsed/0"
+        }
+      ],
+      "truncated": false
+    },
+    "after": {
+      "numErrors": 0,
+      "numWarnings": 0,
+      "numInfos": 1,
+      "numHints": 0,
+      "messages": [
+        {
+          "code": "UNSUPPORTED_EXTENSION",
+          "message": "Cannot validate an extension as it is not supported by the validator: 'REVEALLINE_surface_coating'.",
+          "severity": 2,
+          "pointer": "/extensionsUsed/0"
+        }
+      ],
+      "truncated": false
+    }
+  },
+  "assetOwners": {
+    "maps": 3,
+    "pixels": 98304,
+    "materials": 13,
+    "sourceTriangles": 12260,
+    "semanticNodes": 60,
+    "colliders": 48,
+    "collisionTriangles": 108
+  },
+  "sourceImageLicense": "Original RevealLine deterministic art, CC0-1.0; no downloads or competitor assets",
+  "tierEvidence": "Identical serialized geometry/normal/UV/material/sampler/map ownership and unchanged runtime/tier source only; actual rendered tiers not observed.",
+  "unpublished": {
+    "sourceStudy": true,
+    "defaultCatalogueChanges": 0,
+    "newLibraryEdition": false,
+    "newDistributionFiles": false,
+    "candidateProofsExternalOnly": true
+  },
+  "remaining": [
+    "Matched native low-pilot/grazing/approach/chase/overview review and Low/Balanced/High legibility; artistic improvement not established.",
+    "Exact current qualified-player fixture and compatible rendering/disposal measurements, package/import/Watch and normal player journeys if source is accepted.",
+    "Protected source review/publication; any later immutable/world/player/public promotion is a separate gate.",
+    "Full representative Reservoir standard, real-time endurance, hardware, offline/restart and persistence are not qualified by this source study."
+  ]
+}

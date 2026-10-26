@@ -1,0 +1,245 @@
+TAP version 13
+# Subtest: cloning is eligible only for known matching filesystem devices
+ok 1 - cloning is eligible only for known matching filesystem devices
+  ---
+  duration_ms: 1.480542
+  ...
+# Subtest: cross-device entries bypass native copies and retain accepted bytes on both platforms
+ok 2 - cross-device entries bypass native copies and retain accepted bytes on both platforms
+  ---
+  duration_ms: 1.39025
+  ...
+# Subtest: same-device exact clones are verified and need no fallback write
+ok 3 - same-device exact clones are verified and need no fallback write
+  ---
+  duration_ms: 0.697375
+  ...
+# Subtest: failed or changed clones and unavailable source/device checks use exact fallback
+ok 4 - failed or changed clones and unavailable source/device checks use exact fallback
+  ---
+  duration_ms: 2.136541
+  ...
+# Subtest: fallback write errors remain visible instead of reporting a successful build entry
+ok 5 - fallback write errors remain visible instead of reporting a successful build entry
+  ---
+  duration_ms: 0.520875
+  ...
+# Subtest: built bytes remain independent after source changes
+ok 6 - built bytes remain independent after source changes
+  ---
+  duration_ms: 22.292667
+  ...
+# Subtest: generated or changed entries always retain prepared bytes
+ok 7 - generated or changed entries always retain prepared bytes
+  ---
+  duration_ms: 7.249625
+  ...
+# Subtest: published FPV contact and support modules are included in main and optional package inputs
+ok 8 - published FPV contact and support modules are included in main and optional package inputs
+  ---
+  duration_ms: 7.290167
+  ...
+# Subtest: published regional review modules match the installed FPV source closure
+ok 9 - published regional review modules match the installed FPV source closure
+  ---
+  duration_ms: 3.731708
+  ...
+# Subtest: build binds the same release version into Solo, Versus and Team landing HTML
+ok 10 - build binds the same release version into Solo, Versus and Team landing HTML
+  ---
+  duration_ms: 113.812917
+  ...
+# Subtest: strict command parsing rejects typos, duplicates and absent values
+ok 11 - strict command parsing rejects typos, duplicates and absent values
+  ---
+  duration_ms: 0.5725
+  ...
+# Subtest: version and relative-path rules exclude traversal and command-like labels
+ok 12 - version and relative-path rules exclude traversal and command-like labels
+  ---
+  duration_ms: 0.135875
+  ...
+# Subtest: snapshot rejects unsafe refs and index-conflicting labels before any Git command
+ok 13 - snapshot rejects unsafe refs and index-conflicting labels before any Git command
+  ---
+  duration_ms: 0.624667
+  ...
+# Subtest: direct CLI invocation works through an aliased directory and reports command failures
+ok 14 - direct CLI invocation works through an aliased directory and reports command failures
+  ---
+  duration_ms: 914.87125
+  ...
+# Subtest: real Git snapshot runs an older frozen entry through an aliased temp root and preserves immutable source
+ok 15 - real Git snapshot runs an older frozen entry through an aliased temp root and preserves immutable source
+  ---
+  duration_ms: 6593.622583
+  ...
+# Subtest: build is byte-reproducible and each manifest checksum covers exact output bytes
+ok 16 - build is byte-reproducible and each manifest checksum covers exact output bytes
+  ---
+  duration_ms: 104.233875
+  ...
+# Subtest: manifest-only inspection shares exact build preparation without site or ZIP writes
+ok 17 - manifest-only inspection shares exact build preparation without site or ZIP writes
+  ---
+  duration_ms: 69.958958
+  ...
+# Subtest: manifest-only inspection retains the ordinary reference and malformed-input gates
+ok 18 - manifest-only inspection retains the ordinary reference and malformed-input gates
+  ---
+  duration_ms: 19.220875
+  ...
+# Subtest: an existing authoring dependency must be explicitly admitted without its neighboring originals
+ok 19 - an existing authoring dependency must be explicitly admitted without its neighboring originals
+  ---
+  duration_ms: 164.021041
+  ...
+# Subtest: owned rebuild replaces old outputs and changes checksums when source changes
+ok 20 - owned rebuild replaces old outputs and changes checksums when source changes
+  ---
+  duration_ms: 104.901292
+  ...
+# Subtest: build refuses unrelated output, overlapping source and malformed revision
+ok 21 - build refuses unrelated output, overlapping source and malformed revision
+  ---
+  duration_ms: 16.296625
+  ...
+# Subtest: missing dependencies and invalid JSON fail before replacing a working build
+ok 22 - missing dependencies and invalid JSON fail before replacing a working build
+  ---
+  duration_ms: 57.447167
+  ...
+# Subtest: build excludes private include paths and rejects symbolic source links
+ok 23 - build excludes private include paths and rejects symbolic source links
+  ---
+  duration_ms: 10.6715
+  ...
+# Subtest: runtime builds omit source-only game tests while retaining ordinary game files
+ok 24 - runtime builds omit source-only game tests while retaining ordinary game files
+  ---
+  duration_ms: 53.899542
+  ...
+# Subtest: portable resource checks resolve nested relative imports and reject root-only URLs
+ok 25 - portable resource checks resolve nested relative imports and reject root-only URLs
+  ---
+  duration_ms: 12.490292
+  ...
+# Subtest: ZIP uses standard CRC, sorted names, fixed timestamps and stored data
+ok 26 - ZIP uses standard CRC, sorted names, fixed timestamps and stored data
+  ---
+  duration_ms: 0.779875
+  ...
+# Subtest: static server supports portable nested paths, ESM MIME and HEAD
+ok 27 - static server supports portable nested paths, ESM MIME and HEAD
+  ---
+  duration_ms: 28.934375
+  ...
+# Subtest: static server refuses traversal, hidden files, malformed paths and symlink escape
+ok 28 - static server refuses traversal, hidden files, malformed paths and symlink escape
+  ---
+  duration_ms: 41.40175
+  ...
+# Subtest: Git archive reader extracts regular data and rejects links, traversal and duplicates
+ok 29 - Git archive reader extracts regular data and rejects links, traversal and duplicates
+  ---
+  duration_ms: 1.935459
+  ...
+# Subtest: generator produces deterministic explicit valid maps across seeds using the actual core
+ok 30 - generator produces deterministic explicit valid maps across seeds using the actual core
+  ---
+  duration_ms: 7.327375
+  ...
+# Subtest: campaign validation uses the core and rejects duplicate or malformed levels
+ok 31 - campaign validation uses the core and rejects duplicate or malformed levels
+  ---
+  duration_ms: 27.116416
+  ...
+# Subtest: theme validation uses the actual content registry and rejects invalid or duplicate entries
+ok 32 - theme validation uses the actual content registry and rejects invalid or duplicate entries
+  ---
+  duration_ms: 32.221083
+  ...
+# Subtest: class validation accepts current data and rejects unsupported mechanics through the core
+ok 33 - class validation accepts current data and rejects unsupported mechanics through the core
+  ---
+  duration_ms: 62.167584
+  ...
+# Subtest: packaged offline builds generate scoped metadata, generated brand icons, complete integrity inventory and reproducible bytes
+ok 34 - packaged offline builds generate scoped metadata, generated brand icons, complete integrity inventory and reproducible bytes
+  ---
+  duration_ms: 8481.817083
+  ...
+# Subtest: offline source sentinel requires its template and does not silently emit an incomplete installer
+ok 35 - offline source sentinel requires its template and does not silently emit an incomplete installer
+  ---
+  duration_ms: 219.911917
+  ...
+# Subtest: compact offline catalogue and inventory preserve reader results, source text and integrity
+ok 36 - compact offline catalogue and inventory preserve reader results, source text and integrity
+  ---
+  duration_ms: 4836.231875
+  ...
+# Subtest: public package has local entry, accurate storage notices and enforced preview headers without changing source serving
+ok 37 - public package has local entry, accurate storage notices and enforced preview headers without changing source serving
+  ---
+  duration_ms: 307.962792
+  ...
+# Subtest: optional indexed pack keeps exact shipped and ZIP bytes while core cache excludes only the declared source
+ok 38 - optional indexed pack keeps exact shipped and ZIP bytes while core cache excludes only the declared source
+  ---
+  duration_ms: 4594.080459
+  ...
+# Subtest: optional offline policy rejects non-pack, unknown, duplicate, unsafe, missing and excluded sources
+ok 39 - optional offline policy rejects non-pack, unknown, duplicate, unsafe, missing and excluded sources
+  ---
+  duration_ms: 93.589625
+  ...
+# Subtest: archived packs stay downloadable with exact bytes while both navigation catalogs remain in the core cache
+ok 40 - archived packs stay downloadable with exact bytes while both navigation catalogs remain in the core cache
+  ---
+  duration_ms: 4796.156625
+  ...
+# Subtest: declaring an optional pack does not relax the 80 MiB core cache budget
+ok 41 - declaring an optional pack does not relax the 80 MiB core cache budget
+  ---
+  duration_ms: 3747.883792
+  ...
+# Subtest: default input inspection binds all committed include originals with shared source-only exclusions
+ok 42 - default input inspection binds all committed include originals with shared source-only exclusions
+  ---
+  duration_ms: 511.261875
+  ...
+# Subtest: sparse missing unreferenced originals fail with exact hydration bytes instead of undercounting
+ok 43 - sparse missing unreferenced originals fail with exact hydration bytes instead of undercounting
+  ---
+  duration_ms: 643.578417
+  ...
+# Subtest: default input inspection rejects dirty, assumed-unchanged, ignored and linked originals
+ok 44 - default input inspection rejects dirty, assumed-unchanged, ignored and linked originals
+  ---
+  duration_ms: 821.785416
+  ...
+# Subtest: inspection refuses another checkout and malformed CLI arguments without producing output
+ok 45 - inspection refuses another checkout and malformed CLI arguments without producing output
+  ---
+  duration_ms: 2922.295583
+  ...
+# Subtest: committed inspector CLI writes only exact nonpromotable metadata and never overwrites it
+ok 46 - committed inspector CLI writes only exact nonpromotable metadata and never overwrites it
+  ---
+  duration_ms: 1677.342667
+  ...
+# Subtest: source binding verifies available producer originals outside includes, including hidden edits
+ok 47 - source binding verifies available producer originals outside includes, including hidden edits
+  ---
+  duration_ms: 948.501541
+  ...
+1..47
+# tests 47
+# suites 0
+# pass 47
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 36615.209167

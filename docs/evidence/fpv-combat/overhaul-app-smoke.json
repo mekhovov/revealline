@@ -1,0 +1,1369 @@
+{
+  "started": "2026-10-20T01:15:22.674Z",
+  "browser": "155.0.8059.85",
+  "hardware": {
+    "platform": "darwin",
+    "release": "25.6.0",
+    "cpu": "Apple M4 Pro",
+    "logicalCpus": 14,
+    "memoryBytes": 51539607552
+  },
+  "scenarios": [
+    {
+      "activity": "continuous",
+      "before": {
+        "disabled": false,
+        "text": "Arm / resume",
+        "body": "Continuous combat · Ready. Arm when ready.",
+        "status": "disarmed",
+        "phase": "wave"
+      },
+      "after": {
+        "status": "active",
+        "ticks": 239,
+        "position": {
+          "x": 0,
+          "y": 2,
+          "z": 18000
+        },
+        "encounter": {
+          "ticks": 239,
+          "status": "active",
+          "phase": "wave",
+          "health": 100,
+          "kills": 0,
+          "shots": 22,
+          "hits": 0,
+          "weapons": [
+            {
+              "id": "autocannon",
+              "ammo": 10,
+              "reserve": -1,
+              "reloadTicks": 0,
+              "reloadTotal": 90,
+              "cooldown": 0
+            },
+            {
+              "id": "rocket",
+              "ammo": 0,
+              "reserve": 2,
+              "reloadTicks": 0,
+              "reloadTotal": 150,
+              "cooldown": 0
+            }
+          ],
+          "activity": "continuous"
+        }
+      },
+      "resources": {
+        "available": true,
+        "disposed": false,
+        "quality": "high",
+        "drone": "racer",
+        "presentation": {
+          "collectionId": "industrial-workshop",
+          "revision": "r1",
+          "profileId": "industrial-workshop",
+          "actors": [],
+          "actorGoals": [],
+          "projectileBatches": 16,
+          "activeProjectiles": 4,
+          "surfaceDetailGroups": 0
+        },
+        "effects": {
+          "playerPulse": 10211269,
+          "hostilePulse": 15708281,
+          "ghost": 10668760,
+          "ghostEmissive": 3563113,
+          "trail": 10668760,
+          "goalOutline": 10143181,
+          "goalActive": 16765572,
+          "goalComplete": 9808542,
+          "goalInactive": 8366516,
+          "goalGlow": 15250524,
+          "goalGlowInactive": 9092023,
+          "goalEmissive": 11829819,
+          "goalBadge": 15250524,
+          "directionArrow": 15390635
+        },
+        "hunt": {
+          "tailLinks": 0,
+          "cosmeticParticles": 0,
+          "settledPieces": 0,
+          "maxParticles": 128,
+          "maxBursts": 4
+        },
+        "combat": {
+          "moving": 0,
+          "settled": 0,
+          "marks": 0,
+          "bursts": 0,
+          "calls": 0,
+          "triangles": 0,
+          "tier": "high",
+          "runId": "encounter-e1543d814d1bd3ed",
+          "tick": 239,
+          "stored": 0,
+          "storedImpacts": 22,
+          "capacity": 1024,
+          "impactCapacity": 1024,
+          "evicted": 0,
+          "presentationClock": 4.78,
+          "pendingFragments": 0,
+          "maxDrawCalls": 24,
+          "registeredPools": 11,
+          "appearanceReady": false,
+          "appearanceHash": null,
+          "appearanceDrawCalls": 0,
+          "appearanceCharacters": 0,
+          "maxAppearanceTriangles": 600000
+        },
+        "combatActors": {
+          "actors": 20,
+          "instances": 500,
+          "calls": 4,
+          "skinnedActors": 0,
+          "skinnedCalls": 0,
+          "templates": 20,
+          "capacity": 128,
+          "healthBars": 0,
+          "appearanceReady": false,
+          "appearanceHash": null,
+          "appearanceCharacters": 0,
+          "equipmentCalls": 0,
+          "maxSkinnedActors": 20
+        },
+        "combatAppearance": {
+          "state": "current",
+          "error": null
+        },
+        "importedMaterialBindings": {
+          "applied": 0,
+          "diagnostics": [],
+          "diagnosticsTruncated": 0
+        },
+        "registered": {
+          "geometries": 122,
+          "materials": 130,
+          "textures": 21
+        },
+        "renderer": {
+          "calls": 92,
+          "triangles": 19940,
+          "geometries": 72,
+          "textures": 18,
+          "programs": 18,
+          "contextLost": false
+        }
+      }
+    },
+    {
+      "activity": "hunting",
+      "before": {
+        "disabled": false,
+        "text": "Arm / resume",
+        "body": "Target hunting · 3 minutes · Ready. Arm when ready.",
+        "status": "disarmed",
+        "phase": "wave"
+      },
+      "after": {
+        "status": "active",
+        "ticks": 239,
+        "position": {
+          "x": 0,
+          "y": 2,
+          "z": 18000
+        },
+        "encounter": {
+          "ticks": 239,
+          "status": "active",
+          "phase": "wave",
+          "health": 100,
+          "kills": 0,
+          "shots": 22,
+          "hits": 0,
+          "weapons": [
+            {
+              "id": "autocannon",
+              "ammo": 10,
+              "reserve": -1,
+              "reloadTicks": 0,
+              "reloadTotal": 90,
+              "cooldown": 0
+            },
+            {
+              "id": "rocket",
+              "ammo": 0,
+              "reserve": 2,
+              "reloadTicks": 0,
+              "reloadTotal": 150,
+              "cooldown": 0
+            }
+          ],
+          "activity": "hunting"
+        }
+      },
+      "resources": {
+        "available": true,
+        "disposed": false,
+        "quality": "high",
+        "drone": "racer",
+        "presentation": {
+          "collectionId": "industrial-workshop",
+          "revision": "r1",
+          "profileId": "industrial-workshop",
+          "actors": [],
+          "actorGoals": [],
+          "projectileBatches": 14,
+          "activeProjectiles": 1,
+          "surfaceDetailGroups": 0
+        },
+        "effects": {
+          "playerPulse": 10211269,
+          "hostilePulse": 15708281,
+          "ghost": 10668760,
+          "ghostEmissive": 3563113,
+          "trail": 10668760,
+          "goalOutline": 10143181,
+          "goalActive": 16765572,
+          "goalComplete": 9808542,
+          "goalInactive": 8366516,
+          "goalGlow": 15250524,
+          "goalGlowInactive": 9092023,
+          "goalEmissive": 11829819,
+          "goalBadge": 15250524,
+          "directionArrow": 15390635
+        },
+        "hunt": {
+          "tailLinks": 0,
+          "cosmeticParticles": 0,
+          "settledPieces": 0,
+          "maxParticles": 128,
+          "maxBursts": 4
+        },
+        "combat": {
+          "moving": 0,
+          "settled": 0,
+          "marks": 0,
+          "bursts": 0,
+          "calls": 0,
+          "triangles": 0,
+          "tier": "high",
+          "runId": "encounter-53ae5a3b57811a63",
+          "tick": 239,
+          "stored": 0,
+          "storedImpacts": 22,
+          "capacity": 1024,
+          "impactCapacity": 1024,
+          "evicted": 0,
+          "presentationClock": 4.78,
+          "pendingFragments": 0,
+          "maxDrawCalls": 24,
+          "registeredPools": 11,
+          "appearanceReady": false,
+          "appearanceHash": null,
+          "appearanceDrawCalls": 0,
+          "appearanceCharacters": 0,
+          "maxAppearanceTriangles": 600000
+        },
+        "combatActors": {
+          "actors": 20,
+          "instances": 500,
+          "calls": 4,
+          "skinnedActors": 0,
+          "skinnedCalls": 0,
+          "templates": 20,
+          "capacity": 128,
+          "healthBars": 0,
+          "appearanceReady": false,
+          "appearanceHash": null,
+          "appearanceCharacters": 0,
+          "equipmentCalls": 0,
+          "maxSkinnedActors": 20
+        },
+        "combatAppearance": {
+          "state": "current",
+          "error": null
+        },
+        "importedMaterialBindings": {
+          "applied": 0,
+          "diagnostics": [],
+          "diagnosticsTruncated": 0
+        },
+        "registered": {
+          "geometries": 120,
+          "materials": 126,
+          "textures": 21
+        },
+        "renderer": {
+          "calls": 90,
+          "triangles": 19760,
+          "geometries": 70,
+          "textures": 18,
+          "programs": 18,
+          "contextLost": false
+        }
+      }
+    },
+    {
+      "activity": "elimination",
+      "before": {
+        "disabled": false,
+        "text": "Arm / resume",
+        "body": "Elimination · Ready. Arm when ready.",
+        "status": "disarmed",
+        "phase": "wave"
+      },
+      "after": {
+        "status": "active",
+        "ticks": 239,
+        "position": {
+          "x": 0,
+          "y": 2,
+          "z": 18000
+        },
+        "encounter": {
+          "ticks": 239,
+          "status": "active",
+          "phase": "wave",
+          "health": 100,
+          "kills": 0,
+          "shots": 22,
+          "hits": 0,
+          "weapons": [
+            {
+              "id": "autocannon",
+              "ammo": 10,
+              "reserve": -1,
+              "reloadTicks": 0,
+              "reloadTotal": 90,
+              "cooldown": 0
+            },
+            {
+              "id": "rocket",
+              "ammo": 0,
+              "reserve": 2,
+              "reloadTicks": 0,
+              "reloadTotal": 150,
+              "cooldown": 0
+            }
+          ],
+          "activity": "elimination"
+        }
+      },
+      "resources": {
+        "available": true,
+        "disposed": false,
+        "quality": "high",
+        "drone": "racer",
+        "presentation": {
+          "collectionId": "industrial-workshop",
+          "revision": "r1",
+          "profileId": "industrial-workshop",
+          "actors": [],
+          "actorGoals": [],
+          "projectileBatches": 16,
+          "activeProjectiles": 4,
+          "surfaceDetailGroups": 0
+        },
+        "effects": {
+          "playerPulse": 10211269,
+          "hostilePulse": 15708281,
+          "ghost": 10668760,
+          "ghostEmissive": 3563113,
+          "trail": 10668760,
+          "goalOutline": 10143181,
+          "goalActive": 16765572,
+          "goalComplete": 9808542,
+          "goalInactive": 8366516,
+          "goalGlow": 15250524,
+          "goalGlowInactive": 9092023,
+          "goalEmissive": 11829819,
+          "goalBadge": 15250524,
+          "directionArrow": 15390635
+        },
+        "hunt": {
+          "tailLinks": 0,
+          "cosmeticParticles": 0,
+          "settledPieces": 0,
+          "maxParticles": 128,
+          "maxBursts": 4
+        },
+        "combat": {
+          "moving": 0,
+          "settled": 0,
+          "marks": 0,
+          "bursts": 0,
+          "calls": 0,
+          "triangles": 0,
+          "tier": "high",
+          "runId": "encounter-779f481d84e33e95",
+          "tick": 239,
+          "stored": 0,
+          "storedImpacts": 22,
+          "capacity": 1024,
+          "impactCapacity": 1024,
+          "evicted": 0,
+          "presentationClock": 4.78,
+          "pendingFragments": 0,
+          "maxDrawCalls": 24,
+          "registeredPools": 11,
+          "appearanceReady": false,
+          "appearanceHash": null,
+          "appearanceDrawCalls": 0,
+          "appearanceCharacters": 0,
+          "maxAppearanceTriangles": 600000
+        },
+        "combatActors": {
+          "actors": 20,
+          "instances": 500,
+          "calls": 4,
+          "skinnedActors": 0,
+          "skinnedCalls": 0,
+          "templates": 20,
+          "capacity": 128,
+          "healthBars": 0,
+          "appearanceReady": false,
+          "appearanceHash": null,
+          "appearanceCharacters": 0,
+          "equipmentCalls": 0,
+          "maxSkinnedActors": 20
+        },
+        "combatAppearance": {
+          "state": "current",
+          "error": null
+        },
+        "importedMaterialBindings": {
+          "applied": 0,
+          "diagnostics": [],
+          "diagnosticsTruncated": 0
+        },
+        "registered": {
+          "geometries": 122,
+          "materials": 130,
+          "textures": 21
+        },
+        "renderer": {
+          "calls": 92,
+          "triangles": 19940,
+          "geometries": 72,
+          "textures": 18,
+          "programs": 18,
+          "contextLost": false
+        }
+      }
+    },
+    {
+      "activity": "strike",
+      "before": {
+        "disabled": false,
+        "text": "Arm / resume",
+        "body": "Strike · Ready. Arm when ready.",
+        "status": "disarmed",
+        "phase": "wave"
+      },
+      "after": {
+        "status": "active",
+        "ticks": 239,
+        "position": {
+          "x": 0,
+          "y": 2,
+          "z": 18000
+        },
+        "encounter": {
+          "ticks": 239,
+          "status": "active",
+          "phase": "wave",
+          "health": 100,
+          "kills": 0,
+          "shots": 22,
+          "hits": 0,
+          "weapons": [
+            {
+              "id": "autocannon",
+              "ammo": 10,
+              "reserve": -1,
+              "reloadTicks": 0,
+              "reloadTotal": 90,
+              "cooldown": 0
+            },
+            {
+              "id": "rocket",
+              "ammo": 0,
+              "reserve": 2,
+              "reloadTicks": 0,
+              "reloadTotal": 150,
+              "cooldown": 0
+            }
+          ],
+          "activity": "strike"
+        }
+      },
+      "resources": {
+        "available": true,
+        "disposed": false,
+        "quality": "high",
+        "drone": "racer",
+        "presentation": {
+          "collectionId": "industrial-workshop",
+          "revision": "r1",
+          "profileId": "industrial-workshop",
+          "actors": [],
+          "actorGoals": [],
+          "projectileBatches": 16,
+          "activeProjectiles": 4,
+          "surfaceDetailGroups": 0
+        },
+        "effects": {
+          "playerPulse": 10211269,
+          "hostilePulse": 15708281,
+          "ghost": 10668760,
+          "ghostEmissive": 3563113,
+          "trail": 10668760,
+          "goalOutline": 10143181,
+          "goalActive": 16765572,
+          "goalComplete": 9808542,
+          "goalInactive": 8366516,
+          "goalGlow": 15250524,
+          "goalGlowInactive": 9092023,
+          "goalEmissive": 11829819,
+          "goalBadge": 15250524,
+          "directionArrow": 15390635
+        },
+        "hunt": {
+          "tailLinks": 0,
+          "cosmeticParticles": 0,
+          "settledPieces": 0,
+          "maxParticles": 128,
+          "maxBursts": 4
+        },
+        "combat": {
+          "moving": 0,
+          "settled": 0,
+          "marks": 0,
+          "bursts": 0,
+          "calls": 0,
+          "triangles": 0,
+          "tier": "high",
+          "runId": "encounter-4fda763ae1ac47c8",
+          "tick": 239,
+          "stored": 0,
+          "storedImpacts": 22,
+          "capacity": 1024,
+          "impactCapacity": 1024,
+          "evicted": 0,
+          "presentationClock": 4.78,
+          "pendingFragments": 0,
+          "maxDrawCalls": 24,
+          "registeredPools": 11,
+          "appearanceReady": false,
+          "appearanceHash": null,
+          "appearanceDrawCalls": 0,
+          "appearanceCharacters": 0,
+          "maxAppearanceTriangles": 600000
+        },
+        "combatActors": {
+          "actors": 20,
+          "instances": 500,
+          "calls": 4,
+          "skinnedActors": 0,
+          "skinnedCalls": 0,
+          "templates": 20,
+          "capacity": 128,
+          "healthBars": 0,
+          "appearanceReady": false,
+          "appearanceHash": null,
+          "appearanceCharacters": 0,
+          "equipmentCalls": 0,
+          "maxSkinnedActors": 20
+        },
+        "combatAppearance": {
+          "state": "current",
+          "error": null
+        },
+        "importedMaterialBindings": {
+          "applied": 0,
+          "diagnostics": [],
+          "diagnosticsTruncated": 0
+        },
+        "registered": {
+          "geometries": 122,
+          "materials": 130,
+          "textures": 21
+        },
+        "renderer": {
+          "calls": 92,
+          "triangles": 19940,
+          "geometries": 72,
+          "textures": 18,
+          "programs": 18,
+          "contextLost": false
+        }
+      }
+    },
+    {
+      "activity": "survival",
+      "before": {
+        "disabled": false,
+        "text": "Arm / resume",
+        "body": "Survival · Ready. Arm when ready.",
+        "status": "disarmed",
+        "phase": "wave"
+      },
+      "after": {
+        "status": "active",
+        "ticks": 249,
+        "position": {
+          "x": 0,
+          "y": 2,
+          "z": 18000
+        },
+        "encounter": {
+          "ticks": 249,
+          "status": "active",
+          "phase": "wave",
+          "health": 100,
+          "kills": 0,
+          "shots": 23,
+          "hits": 0,
+          "weapons": [
+            {
+              "id": "autocannon",
+              "ammo": 9,
+              "reserve": -1,
+              "reloadTicks": 0,
+              "reloadTotal": 90,
+              "cooldown": 0
+            },
+            {
+              "id": "rocket",
+              "ammo": 0,
+              "reserve": 2,
+              "reloadTicks": 0,
+              "reloadTotal": 150,
+              "cooldown": 0
+            }
+          ],
+          "activity": "survival"
+        }
+      },
+      "resources": {
+        "available": true,
+        "disposed": false,
+        "quality": "high",
+        "drone": "racer",
+        "presentation": {
+          "collectionId": "industrial-workshop",
+          "revision": "r1",
+          "profileId": "industrial-workshop",
+          "actors": [],
+          "actorGoals": [],
+          "projectileBatches": 16,
+          "activeProjectiles": 1,
+          "surfaceDetailGroups": 0
+        },
+        "effects": {
+          "playerPulse": 10211269,
+          "hostilePulse": 15708281,
+          "ghost": 10668760,
+          "ghostEmissive": 3563113,
+          "trail": 10668760,
+          "goalOutline": 10143181,
+          "goalActive": 16765572,
+          "goalComplete": 9808542,
+          "goalInactive": 8366516,
+          "goalGlow": 15250524,
+          "goalGlowInactive": 9092023,
+          "goalEmissive": 11829819,
+          "goalBadge": 15250524,
+          "directionArrow": 15390635
+        },
+        "hunt": {
+          "tailLinks": 0,
+          "cosmeticParticles": 0,
+          "settledPieces": 0,
+          "maxParticles": 128,
+          "maxBursts": 4
+        },
+        "combat": {
+          "moving": 0,
+          "settled": 0,
+          "marks": 0,
+          "bursts": 0,
+          "calls": 0,
+          "triangles": 0,
+          "tier": "low",
+          "runId": "encounter-dcf874088facbaa5",
+          "tick": 249,
+          "stored": 0,
+          "storedImpacts": 23,
+          "capacity": 1024,
+          "impactCapacity": 1024,
+          "evicted": 0,
+          "presentationClock": 4.98,
+          "pendingFragments": 0,
+          "maxDrawCalls": 16,
+          "registeredPools": 11,
+          "appearanceReady": false,
+          "appearanceHash": null,
+          "appearanceDrawCalls": 0,
+          "appearanceCharacters": 0,
+          "maxAppearanceTriangles": 0
+        },
+        "combatActors": {
+          "actors": 50,
+          "instances": 1276,
+          "calls": 4,
+          "skinnedActors": 0,
+          "skinnedCalls": 0,
+          "templates": 50,
+          "capacity": 128,
+          "healthBars": 0,
+          "appearanceReady": false,
+          "appearanceHash": null,
+          "appearanceCharacters": 0,
+          "equipmentCalls": 0,
+          "maxSkinnedActors": 20
+        },
+        "combatAppearance": {
+          "state": "current",
+          "error": null
+        },
+        "importedMaterialBindings": {
+          "applied": 0,
+          "diagnostics": [],
+          "diagnosticsTruncated": 0
+        },
+        "registered": {
+          "geometries": 122,
+          "materials": 130,
+          "textures": 21
+        },
+        "renderer": {
+          "calls": 90,
+          "triangles": 34032,
+          "geometries": 72,
+          "textures": 18,
+          "programs": 18,
+          "contextLost": false
+        }
+      }
+    },
+    {
+      "activity": "original",
+      "before": {
+        "disabled": false,
+        "text": "Arm / resume",
+        "body": "Ready. Choose your controls, then arm.",
+        "status": "disarmed"
+      },
+      "after": {
+        "status": "active",
+        "ticks": 239,
+        "position": {
+          "x": 0,
+          "y": 2,
+          "z": 18000
+        },
+        "encounter": null
+      },
+      "resources": {
+        "available": true,
+        "disposed": false,
+        "quality": "high",
+        "drone": "racer",
+        "presentation": {
+          "collectionId": "industrial-workshop",
+          "revision": "r1",
+          "profileId": "industrial-workshop",
+          "actors": [],
+          "actorGoals": [],
+          "projectileBatches": 14,
+          "activeProjectiles": 10,
+          "surfaceDetailGroups": 0
+        },
+        "effects": {
+          "playerPulse": 10211269,
+          "hostilePulse": 15708281,
+          "ghost": 10668760,
+          "ghostEmissive": 3563113,
+          "trail": 10668760,
+          "goalOutline": 10143181,
+          "goalActive": 16765572,
+          "goalComplete": 9808542,
+          "goalInactive": 8366516,
+          "goalGlow": 15250524,
+          "goalGlowInactive": 9092023,
+          "goalEmissive": 11829819,
+          "goalBadge": 15250524,
+          "directionArrow": 15390635
+        },
+        "hunt": {
+          "tailLinks": 0,
+          "cosmeticParticles": 0,
+          "settledPieces": 0,
+          "maxParticles": 128,
+          "maxBursts": 4
+        },
+        "combat": {
+          "moving": 0,
+          "settled": 0,
+          "marks": 0,
+          "bursts": 0,
+          "calls": 0,
+          "triangles": 0,
+          "tier": "low",
+          "runId": "",
+          "tick": 0,
+          "stored": 0,
+          "storedImpacts": 0,
+          "capacity": 1024,
+          "impactCapacity": 1024,
+          "evicted": 0,
+          "presentationClock": 0,
+          "pendingFragments": 0,
+          "maxDrawCalls": 16,
+          "registeredPools": 11,
+          "appearanceReady": false,
+          "appearanceHash": null,
+          "appearanceDrawCalls": 0,
+          "appearanceCharacters": 0,
+          "maxAppearanceTriangles": 0
+        },
+        "combatActors": {
+          "actors": 0,
+          "instances": 0,
+          "calls": 0,
+          "skinnedActors": 0,
+          "skinnedCalls": 0,
+          "templates": 0,
+          "capacity": 128,
+          "healthBars": 0,
+          "appearanceReady": false,
+          "appearanceHash": null,
+          "appearanceCharacters": 0,
+          "equipmentCalls": 0,
+          "maxSkinnedActors": 20
+        },
+        "combatAppearance": {
+          "state": "current",
+          "error": null
+        },
+        "importedMaterialBindings": {
+          "applied": 0,
+          "diagnostics": [],
+          "diagnosticsTruncated": 0
+        },
+        "registered": {
+          "geometries": 129,
+          "materials": 141,
+          "textures": 24
+        },
+        "renderer": {
+          "calls": 91,
+          "triangles": 9186,
+          "geometries": 73,
+          "textures": 19,
+          "programs": 20,
+          "contextLost": false
+        }
+      }
+    }
+  ],
+  "catalogue": [
+    {
+      "id": "adventure-coast-01",
+      "world": "coast",
+      "activity": "training"
+    },
+    {
+      "id": "adventure-coast-02",
+      "world": "coast",
+      "activity": "race"
+    },
+    {
+      "id": "adventure-coast-03",
+      "world": "coast",
+      "activity": "follow"
+    },
+    {
+      "id": "adventure-coast-04",
+      "world": "coast",
+      "activity": "observe"
+    },
+    {
+      "id": "adventure-coast-05",
+      "world": "coast",
+      "activity": "precision"
+    },
+    {
+      "id": "adventure-quarry-01",
+      "world": "quarry",
+      "activity": "exploration"
+    },
+    {
+      "id": "adventure-quarry-02",
+      "world": "quarry",
+      "activity": "hazard"
+    },
+    {
+      "id": "adventure-quarry-03",
+      "world": "quarry",
+      "activity": "follow"
+    },
+    {
+      "id": "adventure-quarry-04",
+      "world": "quarry",
+      "activity": "combat"
+    },
+    {
+      "id": "adventure-quarry-05",
+      "world": "quarry",
+      "activity": "capstone"
+    },
+    {
+      "id": "adventure-rooftops-01",
+      "world": "rooftops",
+      "activity": "exploration"
+    },
+    {
+      "id": "adventure-rooftops-02",
+      "world": "rooftops",
+      "activity": "race"
+    },
+    {
+      "id": "adventure-rooftops-03",
+      "world": "rooftops",
+      "activity": "follow"
+    },
+    {
+      "id": "adventure-rooftops-04",
+      "world": "rooftops",
+      "activity": "precision"
+    },
+    {
+      "id": "adventure-rooftops-05",
+      "world": "rooftops",
+      "activity": "hazard"
+    },
+    {
+      "id": "adventure-orchard-01",
+      "world": "orchard",
+      "activity": "training"
+    },
+    {
+      "id": "adventure-orchard-02",
+      "world": "orchard",
+      "activity": "exploration"
+    },
+    {
+      "id": "adventure-orchard-03",
+      "world": "orchard",
+      "activity": "observe"
+    },
+    {
+      "id": "adventure-orchard-04",
+      "world": "orchard",
+      "activity": "follow"
+    },
+    {
+      "id": "adventure-orchard-05",
+      "world": "orchard",
+      "activity": "precision"
+    },
+    {
+      "id": "adventure-solar-farm-01",
+      "world": "solar-farm",
+      "activity": "exploration"
+    },
+    {
+      "id": "adventure-solar-farm-02",
+      "world": "solar-farm",
+      "activity": "precision"
+    },
+    {
+      "id": "adventure-solar-farm-03",
+      "world": "solar-farm",
+      "activity": "observe"
+    },
+    {
+      "id": "adventure-solar-farm-04",
+      "world": "solar-farm",
+      "activity": "hazard"
+    },
+    {
+      "id": "adventure-solar-farm-05",
+      "world": "solar-farm",
+      "activity": "combat"
+    },
+    {
+      "id": "adventure-rail-depot-01",
+      "world": "rail-depot",
+      "activity": "exploration"
+    },
+    {
+      "id": "adventure-rail-depot-02",
+      "world": "rail-depot",
+      "activity": "race"
+    },
+    {
+      "id": "adventure-rail-depot-03",
+      "world": "rail-depot",
+      "activity": "follow"
+    },
+    {
+      "id": "adventure-rail-depot-04",
+      "world": "rail-depot",
+      "activity": "hazard"
+    },
+    {
+      "id": "adventure-rail-depot-05",
+      "world": "rail-depot",
+      "activity": "combat"
+    },
+    {
+      "id": "woodland-01",
+      "world": "woodland",
+      "activity": "training"
+    },
+    {
+      "id": "woodland-02",
+      "world": "woodland",
+      "activity": "exploration"
+    },
+    {
+      "id": "woodland-03",
+      "world": "woodland",
+      "activity": "exploration"
+    },
+    {
+      "id": "woodland-04",
+      "world": "woodland",
+      "activity": "precision"
+    },
+    {
+      "id": "woodland-05",
+      "world": "woodland",
+      "activity": "precision"
+    },
+    {
+      "id": "woodland-06",
+      "world": "woodland",
+      "activity": "hazard"
+    },
+    {
+      "id": "woodland-07",
+      "world": "woodland",
+      "activity": "hazard"
+    },
+    {
+      "id": "woodland-08",
+      "world": "woodland",
+      "activity": "capstone"
+    },
+    {
+      "id": "courtyard-01",
+      "world": "courtyard",
+      "activity": "training"
+    },
+    {
+      "id": "courtyard-02",
+      "world": "courtyard",
+      "activity": "exploration"
+    },
+    {
+      "id": "courtyard-03",
+      "world": "courtyard",
+      "activity": "exploration"
+    },
+    {
+      "id": "courtyard-04",
+      "world": "courtyard",
+      "activity": "precision"
+    },
+    {
+      "id": "courtyard-05",
+      "world": "courtyard",
+      "activity": "precision"
+    },
+    {
+      "id": "courtyard-06",
+      "world": "courtyard",
+      "activity": "hazard"
+    },
+    {
+      "id": "courtyard-07",
+      "world": "courtyard",
+      "activity": "hazard"
+    },
+    {
+      "id": "courtyard-08",
+      "world": "courtyard",
+      "activity": "capstone"
+    },
+    {
+      "id": "warehouse-01",
+      "world": "warehouse",
+      "activity": "training"
+    },
+    {
+      "id": "warehouse-02",
+      "world": "warehouse",
+      "activity": "race"
+    },
+    {
+      "id": "warehouse-03",
+      "world": "warehouse",
+      "activity": "race"
+    },
+    {
+      "id": "warehouse-04",
+      "world": "warehouse",
+      "activity": "race"
+    },
+    {
+      "id": "warehouse-05",
+      "world": "warehouse",
+      "activity": "race"
+    },
+    {
+      "id": "warehouse-06",
+      "world": "warehouse",
+      "activity": "precision"
+    },
+    {
+      "id": "warehouse-07",
+      "world": "warehouse",
+      "activity": "hazard"
+    },
+    {
+      "id": "warehouse-08",
+      "world": "warehouse",
+      "activity": "capstone"
+    },
+    {
+      "id": "stadium-01",
+      "world": "stadium",
+      "activity": "training"
+    },
+    {
+      "id": "stadium-02",
+      "world": "stadium",
+      "activity": "race"
+    },
+    {
+      "id": "stadium-03",
+      "world": "stadium",
+      "activity": "race"
+    },
+    {
+      "id": "stadium-04",
+      "world": "stadium",
+      "activity": "race"
+    },
+    {
+      "id": "stadium-05",
+      "world": "stadium",
+      "activity": "race"
+    },
+    {
+      "id": "stadium-06",
+      "world": "stadium",
+      "activity": "precision"
+    },
+    {
+      "id": "stadium-07",
+      "world": "stadium",
+      "activity": "hazard"
+    },
+    {
+      "id": "stadium-08",
+      "world": "stadium",
+      "activity": "capstone"
+    },
+    {
+      "id": "container-yard-01",
+      "world": "container-yard",
+      "activity": "training"
+    },
+    {
+      "id": "container-yard-02",
+      "world": "container-yard",
+      "activity": "exploration"
+    },
+    {
+      "id": "container-yard-03",
+      "world": "container-yard",
+      "activity": "hazard"
+    },
+    {
+      "id": "container-yard-04",
+      "world": "container-yard",
+      "activity": "combat"
+    },
+    {
+      "id": "container-yard-05",
+      "world": "container-yard",
+      "activity": "combat"
+    },
+    {
+      "id": "container-yard-06",
+      "world": "container-yard",
+      "activity": "combat"
+    },
+    {
+      "id": "container-yard-07",
+      "world": "container-yard",
+      "activity": "combat"
+    },
+    {
+      "id": "container-yard-08",
+      "world": "container-yard",
+      "activity": "capstone"
+    },
+    {
+      "id": "garage-01",
+      "world": "garage",
+      "activity": "training"
+    },
+    {
+      "id": "garage-02",
+      "world": "garage",
+      "activity": "exploration"
+    },
+    {
+      "id": "garage-03",
+      "world": "garage",
+      "activity": "hazard"
+    },
+    {
+      "id": "garage-04",
+      "world": "garage",
+      "activity": "combat"
+    },
+    {
+      "id": "garage-05",
+      "world": "garage",
+      "activity": "combat"
+    },
+    {
+      "id": "garage-06",
+      "world": "garage",
+      "activity": "combat"
+    },
+    {
+      "id": "garage-07",
+      "world": "garage",
+      "activity": "combat"
+    },
+    {
+      "id": "garage-08",
+      "world": "garage",
+      "activity": "capstone"
+    }
+  ],
+  "settings": [
+    {
+      "field": "activity",
+      "value": "original",
+      "options": [
+        "original",
+        "continuous",
+        "hunting",
+        "elimination",
+        "strike",
+        "survival"
+      ]
+    },
+    {
+      "field": "difficulty",
+      "value": "normal",
+      "options": [
+        "easy",
+        "normal",
+        "hard"
+      ]
+    },
+    {
+      "field": "population",
+      "value": "20",
+      "options": [
+        "6",
+        "12",
+        "20",
+        "64",
+        "96",
+        "128"
+      ]
+    },
+    {
+      "field": "survivalMode",
+      "value": "endless",
+      "options": [
+        "timed",
+        "endless"
+      ]
+    },
+    {
+      "field": "payload",
+      "value": "bomb",
+      "options": [
+        "bomb",
+        "remote",
+        "drone"
+      ]
+    },
+    {
+      "field": "ammoPreset",
+      "value": "arcade",
+      "options": [
+        "balanced",
+        "arcade",
+        "tactical"
+      ]
+    },
+    {
+      "field": "playerDamage",
+      "value": "invulnerable",
+      "options": [
+        "normal",
+        "invulnerable"
+      ]
+    },
+    {
+      "field": "enemyDamage",
+      "value": "one-hit",
+      "options": [
+        "normal",
+        "one-hit"
+      ]
+    },
+    {
+      "field": "weaponA",
+      "value": "autocannon",
+      "options": [
+        "autocannon",
+        "scatter",
+        "precision",
+        "rocket"
+      ]
+    },
+    {
+      "field": "weaponB",
+      "value": "rocket",
+      "options": [
+        "autocannon",
+        "scatter",
+        "precision",
+        "rocket"
+      ]
+    }
+  ],
+  "gpu": {
+    "renderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4 Pro, Unspecified Version)",
+    "vendor": "Google Inc. (Apple)"
+  },
+  "errors": [],
+  "requests": [],
+  "finished": "2026-10-20T01:15:57.584Z"
+}

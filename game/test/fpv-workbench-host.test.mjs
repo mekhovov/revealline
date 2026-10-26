@@ -245,12 +245,94 @@ test('restoring a saved custom controller keeps its customized gains visible in 
   assert.equal(row.hidden, false);
   f.edit('Roll P (N·m/(rad/s))', savedGain * 1.1);
   await f.click('Restore saved controller');
+  gain.focus();
   assert.equal(Number(gain.value), savedGain);
   assert.equal(row.dataset.customized, 'true');
   assert.equal(row.hidden, false, 'saved customizations still differ from the aircraft defaults');
   await f.click('Test draft · unscored');
   assert.equal(f.tested[0].advanced.controller.gains.roll.p, savedGain);
 });
+
+for (const recovery of ['Revert draft', 'Undo last edit', 'Use in draft'])
+  test(`${recovery} clears stale PID errors and restores a valid comparison`, async (t) => {
+    const f = await fixture(t, { physical: true, enableBench: true });
+    await f.click('Flight response / PID');
+    const gain = f.field('Roll P (N·m/(rad/s))'),
+      before = f.store.export(),
+      original = f.store.effective().advanced.controller.gains.roll.p,
+      summary = () => f.ui.root.querySelector('.workbench-summary').textContent,
+      bench = f.ui.root.querySelector('.tuning-bench');
+    f.edit('Roll P (N·m/(rad/s))', '');
+    await f.click('Save for next flight');
+    assert.equal(f.store.export(), before);
+    assert.equal(gain.getAttribute('aria-invalid'), 'true');
+    assert.match(summary(), /1 unfinished values.*Draft$/);
+    assert.match(bench.textContent, /Unavailable for this backend/);
+    if (recovery === 'Use in draft') {
+      f.edit('Aircraft preset', 'meteor75-analog-2022', 'select');
+      await f.click('Use in draft');
+    } else await f.click(recovery);
+    assert.equal(gain.getAttribute('aria-invalid'), 'false');
+    assert.equal(f.ui.root.querySelector('[aria-invalid="true"]'), null);
+    if (recovery === 'Use in draft') assert.match(summary(), /1 changes.*Draft$/);
+    else assert.match(summary(), /0 changes.*Saved for next flight$/);
+    assert.doesNotMatch(summary(), /unfinished values/);
+    if (recovery !== 'Use in draft')
+      assert.equal(f.ui.root.querySelector('[role="status"]').textContent, '');
+    assert.match(bench.textContent, /Available for this aircraft controller/);
+    await f.click('Run simulation bench', bench);
+    assert.equal(f.workers.length, 1, 'a valid restored controller can start a comparison');
+    assert.equal(f.workers[0].messages[0].request.draft.advanced.controller.gains.roll.p, original);
+    assert.equal(f.store.export(), before, 'restoring validity does not persist a new setup');
+  });
+
+test('undo to another unfinished PID draft retains its error and blocks comparison', async (t) => {
+  const f = await fixture(t, { physical: true, enableBench: true }),
+    before = f.store.export(),
+    status = f.ui.root.querySelector('[role="status"]');
+  f.edit('Roll P (N·m/(rad/s))', '');
+  f.edit('Roll P (N·m/(rad/s))', '-');
+  await f.click('Save for next flight');
+  const failure = status.textContent;
+  assert.match(failure, /Could not apply:.*enter a valid number/);
+  f.ui.refresh();
+  assert.equal(status.textContent, failure, 'ordinary reload must retain the failed-save message');
+  await f.click('Undo last edit');
+  assert.equal(f.field('Roll P (N·m/(rad/s))').value, '');
+  assert.equal(status.textContent, failure);
+  assert.match(
+    f.ui.root.querySelector('.workbench-summary').textContent,
+    /1 unfinished values.*Draft$/,
+  );
+  await f.click('Run simulation bench', f.ui.root.querySelector('.tuning-bench'));
+  assert.equal(f.workers.length, 0);
+  assert.equal(f.store.export(), before);
+  await f.click('Undo last edit');
+  assert.equal(status.textContent, '');
+  assert.match(
+    f.ui.root.querySelector('.workbench-summary').textContent,
+    /0 changes.*Saved for next flight$/,
+  );
+});
+
+for (const raw of ['', '-', '1001'])
+  test(`refresh preserves genuinely invalid PID text ${JSON.stringify(raw)} and its error`, async (t) => {
+    const f = await fixture(t, { physical: true, enableBench: true });
+    const gain = f.field('Roll P (N·m/(rad/s))'),
+      before = f.store.export();
+    f.edit('Roll P (N·m/(rad/s))', raw);
+    f.ui.refresh();
+    assert.equal(gain.value, raw);
+    assert.equal(gain.getAttribute('aria-invalid'), 'true');
+    assert.match(
+      f.ui.root.querySelector('.workbench-summary').textContent,
+      /1 unfinished values.*Draft$/,
+    );
+    await f.click('Save for next flight');
+    await f.click('Run simulation bench', f.ui.root.querySelector('.tuning-bench'));
+    assert.equal(f.workers.length, 0);
+    assert.equal(f.store.export(), before);
+  });
 
 test('installed battery capacity owns the Expert mirror and the tested configuration', async (t) => {
   const f = await fixture(t, { physical: true });
@@ -348,7 +430,7 @@ test('reusable controller tunes copy explicitly into an undoable draft without s
   const f = await fixture(t, { physical: true });
   const tunes = f.ui.root.querySelector('.controller-tune-panel');
   const saved = f.store.export(),
-    original = Number(f.field(gainLabel).value),
+    original = f.store.effective().advanced.controller.gains.roll.p,
     tuned = original * 1.1,
     alternate = original * 1.2;
   f.edit(gainLabel, tuned);
@@ -362,6 +444,7 @@ test('reusable controller tunes copy explicitly into an undoable draft without s
   f.edit('Saved controller tune', tuneLibrary.tunes[0].id, 'select', tunes);
   assert.equal(Number(f.field(gainLabel).value), alternate, 'browsing cannot apply a tune');
   await f.click('Use in draft', tunes);
+  f.field(gainLabel).focus();
   assert.equal(Number(f.field(gainLabel).value), tuned);
   assert.equal(f.store.export(), saved, 'copying cannot save the setup');
   await f.click('Use in draft', tunes);
@@ -371,6 +454,7 @@ test('reusable controller tunes copy explicitly into an undoable draft without s
   f.edit(gainLabel, original * 0.9);
   assert.deepEqual(JSON.parse(f.data.get(CONTROLLER_TUNE_LIBRARY_KEY)), tuneLibrary);
   await f.click('Undo last edit');
+  f.field(gainLabel).focus();
   assert.equal(Number(f.field(gainLabel).value), tuned);
   await f.click('Save for next flight');
   assert.equal(f.store.effective().advanced.controller.gains.roll.p, tuned);
@@ -383,7 +467,7 @@ test('workbench comparison snapshots stay immutable and only configuration edits
   const bench = f.ui.root.querySelector('.tuning-bench'),
     tunes = f.ui.root.querySelector('.controller-tune-panel'),
     saved = f.store.export(),
-    original = Number(f.field(gainLabel).value);
+    original = f.store.effective().advanced.controller.gains.roll.p;
   f.edit(gainLabel, original * 1.1);
   await f.click('Run simulation bench', bench);
   assert.equal(f.workers.length, 1);
@@ -395,6 +479,15 @@ test('workbench comparison snapshots stay immutable and only configuration edits
   assert.equal(request.type, 'compare');
   assert.equal(request.request.saved.advanced.controller.gains.roll.p, original);
   assert.equal(request.request.draft.advanced.controller.gains.roll.p, original * 1.1);
+  const pitch = f.field('Pitch P (N·m/(rad/s))');
+  pitch.focus();
+  assert.equal(pitch.value, String(request.request.saved.advanced.controller.gains.pitch.p));
+  f.ui.refresh();
+  pitch.blur();
+  pitch.emit('focusout');
+  f.ui.refresh();
+  assert.equal(first.terminated, false, 'focus and blur cannot invalidate a running comparison');
+  assert.deepEqual(first.messages[0], frozen);
   const lateMessage = [...first.listeners.get('message')][0];
   const notes = panelControl(bench, 'Draft setup: control and comfort', 'textarea');
   notes.value = 'Manual feedback is independent of the running bench.';
@@ -548,7 +641,7 @@ test('manual A/B flies the frozen saved and draft pair and returns to the latest
   const f = await fixture(t, { physical: true, conditions });
   const bench = f.ui.root.querySelector('.tuning-bench'),
     saved = f.store.export(),
-    original = Number(f.field(gainLabel).value),
+    original = f.store.effective().advanced.controller.gains.roll.p,
     prepared = original * 1.1,
     later = original * 1.2;
   await f.click('Flight response / PID');
@@ -664,7 +757,7 @@ test('Basic never hides a focused customized control while it is being restored 
   await f.click('Expert');
   const gain = f.field('Roll P (N·m/(rad/s))'),
     row = gain.closest('.workbench-physical-field'),
-    original = gain.value;
+    original = String(f.store.effective().advanced.controller.gains.roll.p);
   f.edit('Roll P (N·m/(rad/s))', Number(original) * 1.1);
   await f.click('Basic');
   gain.focus();

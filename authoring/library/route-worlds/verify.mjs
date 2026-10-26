@@ -33,7 +33,7 @@ import {
 
 export const PROOF_FILE = 'authoring/library/route-worlds/routes.json';
 export const SOURCE_PROOF = 'authoring/library/fpv-route-choices/routes.json';
-export const SOURCE_PROOF_SHA = 'd6af87beb11f55b81cf33b6b07254c51d19923d8823d2d80c17606db0e4c1245';
+export const SOURCE_PROOF_SHA = '9f8aba09b7d2825223e75e555922014ec7e0ea3f9d630ba7f2a0e1c890ed7975';
 const sha = (value) =>
   createHash('sha256')
     .update(typeof value === 'string' || Buffer.isBuffer(value) ? value : JSON.stringify(value))
@@ -261,7 +261,7 @@ export async function verifyRouteWorlds({ candidate, record = false } = {}) {
     assert.deepEqual(
       proof.routes.map((r) => r.id),
       THEME_IDS.flatMap((theme) => source.routes.map((r) => `${theme}/${r.id}`)),
-      'Exact114 distinct contexts required.',
+      'Exact76 distinct retained contexts required.',
     );
   }
   const worlds = [],
@@ -330,7 +330,7 @@ export async function verifyRouteWorlds({ candidate, record = false } = {}) {
   };
   assert.deepEqual(
     [totals.contexts, totals.wins, totals.failures, totals.originalPictures],
-    [114, 84, 30, 9],
+    [76, 56, 20, 6],
   );
   assert.deepEqual([...new Set(routes.map((r) => r.turnPolicy))].sort(), [
     'grid-center',

@@ -42,8 +42,8 @@
     {
       "sourcePath": "game/enemy-catalog.mjs",
       "cachePath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/ukraine-enemy-presentations/.cache/source-authority/game/enemy-catalog.mjs",
-      "bytes": 5966,
-      "sha256": "46ce076af222227c5895bec7c8516f4e6e8098cfc81a9432d9fb0d6546e6c447",
+      "bytes": 5837,
+      "sha256": "95d6f3c7ff15f32892d1ef826238a7a7de2992c70c4c26b97cc29fb909efcd3a",
       "gitBlob": "ad9eb4659a16249934b6eefb8582f7b813b0c5b5"
     },
     {
@@ -144,6 +144,6 @@
     "Static invented Ukrainian-inspired ornament, not documented historical patterns. No flag, real unit, place or operational reference.",
     "Substantial complete silhouettes verified;8% margins not achieved on several, serpent only66.7%width. Wheel has5 visible outward teeth instead of6 brief.",
     "North orientation and frame-center are proposals, no runtime anchor/hitbox/rig metadata. Wings/legs/segments/teeth/core all baked.",
-    "Palette aim16\u201320 is not achieved; exact high color counts and alpha histogram retained."
+    "Palette aim16–20 is not achieved; exact high color counts and alpha histogram retained."
   ]
 }

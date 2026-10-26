@@ -1,6 +1,211 @@
 # Flight practice: completion plan and priority review
 
+## Latest review checkpoint — 19 October 2026
+
+The [current status, remaining priorities, estimates and blockers](flight-practice-status-2026-10-19.md)
+is the planning authority. The [execution report](flight-practice-execution-2026-10-19.md)
+retains exact source-bound successes, failures and inconclusive results.
+
+Accepted main `36e8bc426` is integrated without changing any of the 33 Practice
+patches. Candidate `08fc3430c8` reproduces/admitted all three packages twice.
+Observer/full-site/test source `bcc0b61a8` now passes the normal production
+build in 277.874 seconds, all six EN/UK production journeys, ten beginner
+exercises, six restarted-offline short flights, current Gym/Academy historical
+update sessions, and actual Academy proof recovery after native quota eviction.
+
+Full local suites pass: **1,278 Practice / 757 local-UX**, with unchanged limits.
+The initial local-UX setup failure was an omitted committed sparse-checkout
+directory, not a test pass; restoring the exact source and verifying all 44,923
+tracked raw files enabled the successful rerun. Earlier build/setup failures
+remain retained. Local disk headroom recovered enough for guarded checks; the
+previous 661 MiB blocker is historical, not the current status.
+
+**Next:** remaining R3 backup/recovery coverage, an evidence-supported R4 native
+hash-cancellation measurement approach, and required remote CI. Three new World
+recovery observer attempts failed before native eviction and are paused for
+approach review; no recovery pass or simulator defect is inferred. Native digest
+traces confirmed worker activity but did not witness cancellation overlapping
+outstanding hashing. R4 remains inconclusive. Current R2 refresh and R5 are done
+for the frozen bytes, not automatically for subsequent SIM changes.
+
+Arrange R6 performance budgets, R7 actual zoom/spoken review, R8 real novice/
+maintainer walkthroughs, then R9's 24 attributable package decisions. The last
+remote snapshot has all 12 checks queued on draft PR #1554 at `bcc0b61a8`.
+Do not wait idle for CI, fabricate approval, repeat unchanged passing tests or
+change source during frozen runs. No overall completion date is supportable.
+
+Hosting/publication, physical hardware and historical World active-session
+qualification remain explicitly owner-deferred. Nothing here publishes apps,
+waives release requirements, modifies simulator mechanics or touches the shared
+dirty primary checkout. Historical sections below preserve their original
+sources and decisions; their old “next” instructions do not supersede this one.
+
+## Historical accepted-main checkpoint — 237b40543
+
+The [18 October execution status](flight-practice-execution-2026-10-18.md)
+records the second rebase, fresh three-package reproduction/
+admission, 1,270 Practice tests, 756 local-UX tests, ten native exercises, six
+guides, four populated tuning restores and current Gym update continuity pass.
+Evidence source is `6177d2cc8`, not the older runtime receipts below.
+
+At that checkpoint the next steps were safe local disk headroom (at least 4 GiB recommended), fresh remote CI,
+Academy's current-payload update rerun, remaining all-app recovery and native
+hash-overlap cancellation, then the current full production/offline journeys.
+The measured full-build storage guard then refused to start. Only our own
+generated old build was relocated after hash verification; no user data was removed.
+Hosting, hardware and the historical Worlds active check are explicitly deferred,
+not passed. Performance, spoken/visual, real walkthrough and 24 review decisions
+retain their separate prerequisites. Academy's refresh and the six current
+offline routes subsequently passed; the 19 October review supersedes these next
+steps and the historical storage-only blocker.
+
+## Historical execution checkpoint — 18 October 2026
+
+The [integrated execution checkpoint](flight-practice-execution-2026-10-18.md)
+records its original completion and remaining work. Rebase onto main `cb8dddd3d`
+was complete; that checkpoint's packages/build are source `3c6ac5ee0`. Practice passes
+1,232 tests, all six restarted-offline short-flight routes pass, and EN/UK guides
+plus actual populated tuning-library backup restores pass. The production build
+now passes at the unchanged deadline. R2 Worlds preparation still fails first
+Arm and is paused for test-approach review; no all-app safety pass is claimed.
+Continue independent R5 journeys, then remaining R3/R4 and acceptance work.
+Hosting and real hardware stay deferred. The read-only and older checkpoints
+below preserve history, not current blockers or completion claims.
+
+## Historical status and execution order — 18 October 2026
+
+The [current status, completed work, detailed remaining items, estimates and
+blockers](flight-practice-status-2026-10-18.md) supersedes historical “next” and
+priority statements below at that time. The 19 October review above now governs
+planning. Implementation is substantially complete, but
+non-hosting qualification and release approval are not. No completion percentage
+or public-release ETA is claimed.
+
+Fresh review: PR #1554 remains draft at `4768988fb…`, conflicts with main, and
+its local-UX lane hit the unchanged ten-minute suite deadline without a final
+TAP summary. Twelve checks succeeded and two were skipped; neither skipped
+full-test/build jobs nor the green `release-ready` job closes that gap. The
+original failed receipt is retained in the linked status report. Local checkout
+is still `b012f2a9da`; newer remote work must be preserved before integration.
+Live main was `20555cda6…` at the read-only check (620 main-only / 18 PR-only
+commits), so integration is a material task, not an assumed clean rebase.
+
+The exhausted-disk blocker has eased: approximately 13 GiB local and 58 GiB
+external space were available at inspection. No fetch/build was retried; large
+writes still require a fresh space check. The concurrent dirty primary checkout
+remains untouched. This review updates documentation only.
+
+| Order              | Remaining work                                                                                                                    | Focused effort estimate / dependency                                                                |
+| ------------------ | --------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------- |
+| R1 / P0            | Preserve remote changes, integrate main, resolve conflicts and diagnose/rerun the local-UX timeout                                | 1–2 days initially; re-estimate after triage                                                        |
+| R2 / P0            | Gym and Worlds active-flight distinct-package update continuity                                                                   | 6–12 hours after integration/candidate freeze                                                       |
+| R3 / P0            | Actual app browser-managed eviction and public exported-backup restoration                                                        | 1–2 days after integration; controlled disposable profile, safe disk                                |
+| R4 / P0            | Native cancellation while verification is outstanding                                                                             | 4–8 hours; real timing witness or explicit inconclusive result                                      |
+| R5 / P1            | Current integrated production rebuild/admission and affected journeys                                                             | 4–8 hours after relevant fixes; no relabelling old build evidence                                   |
+| R6–R9 / acceptance | Agreed performance workloads/budgets, visual/spoken review, real guide/learning walkthroughs and 24 actual package-gate decisions | Detailed estimates in the status report; calendar ETA depends on setups, participants and reviewers |
+| D1–D2 / deferred   | Physical controller/radio/touch checks and all hosting/capacity/publication/selection work                                        | No scheduled ETA; owner-deferred, not passed                                                        |
+
+Software planning range: **5–9 focused working days**, excluding human/owner
+waiting and major new defects. It is not a calendar commitment or full Phase 1
+ETA. Re-estimate after R1. Existing completed directory, guide, fourth-app,
+offline-flight, migration/rollback and source-specific production evidence must
+not be reopened as absent or claimed for later bytes without comparison.
+
 ## 16 October research and execution update
+
+Historical checkpoint; the 18 October order above is authoritative. Its original
+evidence and limitations remain unchanged.
+
+Current checkpoint: original `1b339bfe6` packages pass all six restarted-offline
+flight routes and historical Academy installed-PWA update continuity; the older
+`b8aec0821` receipts separately cover three real five-minute timeouts and genuine
+all-app migration/rollback. All six native EN/UK directory/launcher/guide-return
+zoom routes now pass at observer `8c93b49ee`, independently audited. The 66 focus
+samples use an explicit fractional-viewport precision policy; one retains a
+0.390625-device-pixel residual and its failed old decision. Screenshots remain
+cropped/blank and visually unqualified. Neither these software checks nor live
+region attributes close the full accessibility gate. Physical hardware and
+hosting remain explicitly owner-deferred; independent evidence and failed first
+attempts keep their original sources.
+
+The complete original-production journey now passes all six EN/UK cases with
+full 3,493-file verification before/after, one Play, no automatic arming and guide
+return. Its explicit bounded original-byte memory delivery changes only test I/O,
+not app bytes or startup limits. Independent audit is retained alongside the
+original failed runs and supporting matched diagnostic. World Studio's old menu
+wording is corrected and its fresh three-app candidate independently passes all
+six offline flights and Academy PWA update continuity again.
+
+Main-entry return language is corrected without overwriting saved preferences;
+the actual EN/UK return documents now pass the native matrix. Outstanding-digest
+cancellation gains four deterministic worker regressions, not a native timing
+claim. EN/UK guides now explain that origin eviction may remove records as well
+as caches and require external exports. Their guide-only candidate `11aa29782` /
+`4258044c…` reproduces twice, passes admission in local/external copies, and passes
+all six packaged guide/navigation checks with independent audit. No simulator
+code changes; old flight receipts are not relabelled. Expanded suites pass 402
+practice tests and 370 observer tests plus one explicit historical-fixture skip.
+
+A genuinely browser-managed eviction capability also passes on a disposable
+1 MiB fixture after Chrome's unchanged five-minute timer, with native counters
+and exact previously persisted bucket/cache loss. Its explicitly reduced pool,
+unavailable numeric baseline and ambient low disk are retained limitations—not
+default-policy or actual practice-backup recovery qualification. The next real-app
+lane has a concrete public-export/import recipe, not another simulated deletion.
+See [current receipts, limits and remaining priorities](flight-practice-continuation-2026-10-16.md).
+
+### Current remaining priorities (supersede historical “next” notes below)
+
+| Priority | Remaining item                                                                                       | Why / benefit                                                                                                                              | Impact if omitted                                                                           |
+| -------- | ---------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------- |
+| P0       | Extend active-flight update continuity beyond Academy to Gym and Worlds                              | Proves a real changed-package update cannot replace the running document or lose its records; explicit pause/resume must remain safe       | All-app update safety would be assumed from one app only                                    |
+| P0       | Browser-managed eviction and exported-backup recovery                                                | Distinguishes browser-selected whole-origin loss from controlled quota denial or manually missing cache files; verifies honest recovery    | Players could be told records survive an event that can delete them                         |
+| P0       | Native cancellation while verification work is outstanding                                           | Complements native final-ready-response cancellation and deterministic delayed-digest unit coverage                                        | Native scheduling/UI timing remains unproven, even though late writes are regression-tested |
+| P1       | Current-main full production rebuild and affected journey checks                                     | Incorporates the main-entry language correction into generated output; original `3a1b5e3c3` production pass stays valid only for its bytes | Local source behavior could differ from the eventual built release                          |
+| P1       | Agreed same-device performance workloads/budgets, then measurements                                  | Separates functional startup checks from actual moving-flight performance acceptance                                                       | No defensible performance-gate or broad device-playability claim                            |
+| P1       | Visual/assistive review, first-time-player walkthroughs and actual package/content/license decisions | Confirms readable focus, spoken status, understandable instructions and real reviewer acceptance                                           | Automated semantics, scripted play and hashes would be mistaken for human approval          |
+| Deferred | Physical controller/radio/touch checks; hosting/capacity/public selection                            | Kept at the owner's explicit boundary, with requirements preserved                                                                         | Cannot claim physical-device acceptance or all three apps publicly available                |
+
+The unpublished fourth-app recipe, all-app distinct-payload migration/rollback,
+six restarted-offline flight routes and original-production six-case journey
+already have scoped evidence. Do not rerun or reopen them as if absent; rerun only
+what a changed input or remaining acceptance case actually affects.
+
+For the next restoration lane, use public exports/imports and compare stable
+proof/course/model/pack identities plus valid re-export/replay. Restored
+`savedAt`, `installedAt` and generation metadata legitimately change; do not reuse
+the exact database-retention predicate as a restoration-equivalence predicate.
+Gym's completion set is memory-only and its transcript has no public restore
+control, so no saved-completion restoration claim may be invented. The active
+Worlds lane can pin the native legacy first flight to avoid automatic recovery
+writes while measuring unchanged paused state; that is not all-world coverage.
+
+Fresh audited software progress: observer `8e29a04c3` passes real imported-model
+offline flight through both restarted Worlds routes, all-three final verification
+response cancellation, and historical Academy ordinary-browser update continuity
+with complete owned cleanup. See the [new receipts and precise limits](flight-practice-continuation-2026-10-16.md).
+Next: the full production-build directory journey and offline Gym/Academy flights.
+Installed-PWA active-session continuity, hash-in-progress cancellation, actual
+eviction, accepted performance/accessibility and human-review evidence remain
+separate gaps. Hosting and physical hardware stay deferred, not passed.
+
+Latest-main follow-up: PR #1512 merged; later work rebased cleanly onto
+`facf1627e`. Real hardware and hosting remain explicitly deferred. Independent
+audit confirms the three-app migration/rollback receipt's 630 cached-member
+pins and seven content witnesses. A fourth installed-window attempt also fails
+before update; do not mark active-session protection complete. Next software
+checks are an explicitly ordinary-browser continuity lane, real imported-model
+retention/offline flight, and the complete production-build directory journey.
+These add no simulator mechanics and require their own native receipts.
+
+Latest follow-up: safe EN/UK offline error feedback and synchronized player guides
+are implemented on reproduced/admitted source `b8aec0821`; the full practice suite
+passes 387/387. Its fresh native short-recovery run passes 22 checkpoints; genuine
+all-three historical upgrades/offline rollbacks pass 10 checkpoints and seven exact
+data witnesses. The earlier failed cache assumption and no-op headless window
+attempts remain retained. Active-session protection is still open; only its
+explicit next diagnostic uses isolated visible Chrome. Production output now
+builds successfully; its full-distribution player journey is still pending.
 
 Build-blocker diagnosis correction: the required Couch verification document and
 FPV baseline directory are committed, but this managed worktree's non-cone sparse
@@ -35,16 +240,38 @@ Current continuation: six personal-appearance source-shell journeys and all six
 native 30-second idle/download-cancel cases pass; the temporary fourth-app recipe
 also passes. See the [integrated-main report](flight-practice-continuation-2026-10-16.md)
 for original failures, exact sources, preserved records and remaining scope.
-Separate active-session and real five-minute observers are implemented but their
-native execution remains pending. The full build's second attempt was cancelled
+All three separate real five-minute cases now pass with exact cache/data
+preservation, pristine retry/removal and independent evidence audit. The first
+active-session attempt fails before update because default automation focus
+emulation prevents genuine blur. A second owned-window attempt records actual
+positive lift/pause/resume but fails before update on an immediate minimization
+state read; bounded actual-transition polling is being checked. The all-three
+genuine migration lane establishes its historical baseline but fails its strict
+cache check during current-launcher opening. Both original failed receipts and
+their executed authority are retained; neither lane is qualified yet.
+The full build's second attempt was cancelled
 at a cross-volume file-cloning bottleneck, not accepted as a distribution pass.
 A narrow same-device writer guard preserves exact-byte checks and fallbacks.
-Next: retry the full production build/player journey and run those separate
-historical active-session/overall-timeout lanes. Real hardware is
+The third build completes successfully: 3,493 original output members,
+1,072,077,940 bytes at source `3a1b5e3c3`. Next: finish its production player journey and run the separate
+historical active-session/all-three migration lanes; improve safe localized
+failure reasons exposed by the long-run results. Real hardware is
 deferred at the owner's subsequent request; hosting remains deferred. SIM flight
 mechanics, lessons and rendering remain outside this workstream.
 
 Fresh primary-source guidance sharpens acceptance rather than adding features:
+
+- [MDN's waiting-worker reference](https://developer.mozilla.org/en-US/docs/Web/API/ServiceWorkerRegistration/waiting)
+  distinguishes an installed waiting worker from the active one. Keep migration
+  acceptance bound to the actual active revision and exact scope, with waiting
+  and installing states reported separately. A registered worker alone is not
+  proof that the selected version owns a working offline installation.
+- [web.dev's offline fallback example](https://web.dev/articles/offline-fallback-page)
+  illustrates keeping navigation and recovery available when a task cannot run
+  offline. Apply this separately to an unavailable app and an unprepared imported
+  or remote world: neither a cached directory nor an installed icon promises
+  that every world asset is available. Keep retry/return and specific errors
+  ahead of additional discovery features.
 
 - [W3C pointer cancellation](https://www.w3.org/WAI/WCAG22/Understanding/pointer-cancellation.html)
   recommends native click/up-event activation. Do not move Home/Retry/Next under
@@ -224,15 +451,15 @@ arbitrary destination or executable query parameter.
 
 ## What is already implemented
 
-| Area                | Implemented                                                                                                                                                         | Remaining proof or refinement                                                                              |
-| ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------- |
-| Discovery           | Three descriptor-driven cards, gameplay previews, purposes, inputs, requirements, versions/sizes, EN/UK, Play/details; six full-source-shell journeys pass | Public selection, complete production build and positive custom-appearance handoff remain unqualified |
-| Compatibility       | v1 index retained, bounded revision-keyed details, safe routes, metadata fallback                                                                                   | Repeat current public compatibility checks after deployment                                                |
-| Failure handling    | Dated last-known catalogue, empty/failure states, retry/navigation; component browser failure/cache/retry checks passed                                             | Full-shell and released-package offline checks remain                                                      |
-| Offline preparation | Hash/dependency/worker readiness, progress/cancel, inactivity and overall bounds, previous version retention, scoped removal; all-three restart and nonempty World project evidence | Distinct-release migration, current cancellation/timing, imported assets/offline flight and wider browser checks remain; hardware deferred |
-| Publishing          | Three-app reproducibility/admission, existing publisher/selector; repaired main workflow deployed and empty catalogue verified                                      | Full retained-site capacity and reviewed release selection remain                                          |
-| Guides              | Corrected EN/UK player HTML/repository help, maintainer descriptor/preflight/preview/release recipe and parity tests                                                | Follow guides from scratch on the qualified real candidate and collect current screenshots/device evidence |
-| Fourth app          | Automated registration and six-checkpoint real-browser launch/start/pause/retry, installation/update/offline reopen/rollback/retirement                             | Complete for the unpublished fixture; does not qualify the three real apps and must never be published     |
+| Area                | Implemented                                                                                                                                                                                    | Remaining proof or refinement                                                                                         |
+| ------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------- |
+| Discovery           | Three descriptor-driven cards, gameplay previews, purposes, inputs, requirements, versions/sizes, EN/UK, Play/details; six exact original-production journeys and positive Tryzub handoff pass | Current-main production rebuild and deferred public selection remain                                                  |
+| Compatibility       | v1 index retained, bounded revision-keyed details, safe routes, metadata fallback                                                                                                              | Repeat current public compatibility checks after deployment                                                           |
+| Failure handling    | Dated last-known catalogue, empty/failure states, retry/navigation; source-shell and package recovery, timeout/retry and six restarted-offline routes pass                                     | Genuine origin-eviction/backup recovery and wider browsers remain                                                     |
+| Offline preparation | Hash/dependency/worker readiness, progress/cancel, bounds, previous version retention, scoped removal; genuine all-app migration/rollback, imported models and six offline flights pass        | All-app active-flight continuity, native outstanding-hash cancellation and genuine eviction remain; hardware deferred |
+| Publishing          | Three-app reproducibility/admission, existing publisher/selector; repaired main workflow deployed and empty catalogue verified                                                                 | Full retained-site capacity and reviewed release selection remain                                                     |
+| Guides              | Corrected EN/UK player HTML/repository help, maintainer descriptor/preflight/preview/release recipe and parity tests                                                                           | Follow guides from scratch on the qualified real candidate and collect current screenshots/device evidence            |
+| Fourth app          | Automated registration and six-checkpoint real-browser launch/start/pause/retry, installation/update/offline reopen/rollback/retirement                                                        | Complete for the unpublished fixture; does not qualify the three real apps and must never be published                |
 
 Prior 290/290 practice and 37/37 SIM recovery checks are useful recorded evidence,
 not automatic approval of a later source. See the

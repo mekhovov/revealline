@@ -509,11 +509,15 @@ async function cohort(t, change = {}) {
   };
 }
 
-test('all20 separately owned arms retain exact schedule/raw hashes and unchanged pass analysis', async (t) => {
+test('all20 separately owned arms retain conditional arithmetic without qualifying an empirical clock', async (t) => {
   const result = await cohort(t);
   assert.equal(result.calls.length, 21);
-  assert.equal(result.row.status, 'passed');
-  assert.equal(result.row.appDiagnosticsOverhead, 'pass');
+  assert.equal(result.row.status, 'failed');
+  assert.equal(result.row.appDiagnosticsOverhead, 'unresolved');
+  assert.equal(result.analysis.status, 'unresolved');
+  assert.equal(result.analysis.conditionalStatus, 'pass');
+  assert.equal(result.analysis.qualificationAssessment.eligible, false);
+  assert(result.analysis.adjustedInterval.upper95 < 0.05);
   assert.equal(result.row.hitchJournalOverhead, 'not-measured');
   assert.equal(result.analysis.limit, 0.05);
   assert.equal(result.analysis.completePairs, 10);
@@ -770,7 +774,12 @@ for (const sourceLabel of ['de332', '797']) {
     assert.equal(result.analysis.analysisMethod, result.manifest.analysisMethod);
     assert.equal(result.analysis.completePairs, 10);
     assert.equal(result.analysis.adjustedInterval.vertices, 1024);
-    assert.equal(result.analysis.status, 'pass');
+    assert.equal(result.analysis.status, 'unresolved');
+    assert.equal(result.analysis.conditionalStatus, 'pass');
+    assert.equal(result.analysis.qualificationAssessment.eligible, false);
+    assert.equal(result.row.status, 'failed');
+    assert.equal(result.row.appDiagnosticsOverhead, 'unresolved');
+    assert(result.analysis.adjustedInterval.upper95 < 0.05);
     assert.match(result.analysis.assumptions.join(' '), /assum|jitter/);
     assert.equal(result.analysis.limit, 0.05);
     assert.deepEqual(

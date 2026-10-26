@@ -141,6 +141,42 @@ export function validateOverflightRecords(source) {
   }
   return value;
 }
+function validateRecordReceipt(value) {
+  exactKeys(value, ['entry', 'previous'], 'Sortie result receipt');
+  const key = dataIdentity(value.entry?.context);
+  const state = validateOverflightRecords({
+    format: OVERFLIGHT_RECORDS_FORMAT,
+    entries: { [key]: value.entry },
+  });
+  validateResult(value.previous);
+  return { entry: state.entries[key], previous: value.previous };
+}
+
+function retainRecords(state, key, entry) {
+  // Keep the current result even at capacity. Preserve the v1 entry schema;
+  // empty contexts are discarded first, then other contexts in stored order.
+  // Each input entry is valid, so only aggregate byte/node/count budgets can
+  // require more eviction. Imported key order is not claimed as a timestamp.
+  validateOverflightRecords({ format: OVERFLIGHT_RECORDS_FORMAT, entries: { [key]: entry } });
+  const retained = Object.entries(state.entries)
+    .filter(([id]) => id !== key)
+    .sort(
+      ([, left], [, right]) =>
+        Number(!!(left.last || left.bestScore || left.fastestClear)) -
+        Number(!!(right.last || right.bestScore || right.fastestClear)),
+    );
+  while (retained.length >= 256) retained.shift();
+  for (;;) {
+    state.entries = Object.fromEntries([...retained, [key, entry]]);
+    try {
+      return validateOverflightRecords(state);
+    } catch (error) {
+      if (!retained.length) throw error;
+      retained.shift();
+    }
+  }
+}
+
 /** Shared profile storage owns persistence. Review runs never write player records. */
 export function createOverflightRecords({ backend, ...options } = {}) {
   const store =
@@ -149,6 +185,7 @@ export function createOverflightRecords({ backend, ...options } = {}) {
       key: OVERFLIGHT_RECORDS_FORMAT,
       empty: () => ({ format: OVERFLIGHT_RECORDS_FORMAT, entries: {} }),
       validate: validateOverflightRecords,
+      validateReceipt: validateRecordReceipt,
       ...options,
     });
   const pending = new Map(),
@@ -201,7 +238,7 @@ export function createOverflightRecords({ backend, ...options } = {}) {
         durable: !pending.has(key),
       };
     },
-    async record(run) {
+    async record(run, { attemptId } = {}) {
       required(
         !closed && !run.fixture && !run.review,
         'Review fixtures cannot set player records.',
@@ -211,6 +248,28 @@ export function createOverflightRecords({ backend, ...options } = {}) {
         result = resultOf(run);
       validateResult(result);
       // Snapshot above before awaiting storage: retry may replace the live run.
+      if (attemptId !== undefined) {
+        required(
+          !run.compiled.riy && !run.riy && !run.hunt && !run.raidVariant,
+          'Only a saved Single Drone flight can claim a result receipt.',
+        );
+        required(
+          /^[a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[89ab][a-f0-9]{3}-[a-f0-9]{12}$/.test(attemptId),
+          'Invalid saved flight identity.',
+        );
+        const saved = await store.updateOnce(
+          { id: attemptId, input: { context, result } },
+          (source) => {
+            const state = validateOverflightRecords(source);
+            const previous = state.entries[key]?.last ?? null;
+            const entry = merge(state.entries[key] ?? empty(context), result);
+            return { state: retainRecords(state, key, entry), receipt: { entry, previous } };
+          },
+        );
+        const receipt = validateRecordReceipt(saved.receipt);
+        known.set(key, validateOverflightRecords(saved.state).entries[key]);
+        return { ...receipt.entry, previous: receipt.previous, durable: true };
+      }
       try {
         known.set(
           key,
@@ -225,8 +284,7 @@ export function createOverflightRecords({ backend, ...options } = {}) {
         const saved = validateOverflightRecords(
           await store.update((source) => {
             const state = validateOverflightRecords(source);
-            state.entries[key] = combined(context, state.entries[key], local);
-            return validateOverflightRecords(state);
+            return retainRecords(state, key, combined(context, state.entries[key], local));
           }),
         );
         known.set(key, saved.entries[key]);

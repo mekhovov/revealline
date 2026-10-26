@@ -49,9 +49,11 @@ function frameFixture({
     lastDemoTime: 20,
     demoHost: null,
     accumulator: 17,
+    continuousPlay: { cancel() {} },
     current: { regional },
     regionalPreparing: preparing ? Promise.resolve() : null,
     flight: flight ?? { snapshot: () => ({ status }) },
+    readFlightState: () => flight?.snapshot() ?? { status },
     $: (id) => {
       assert.equal(id, 'flight-dialog');
       return { open: true };
@@ -84,22 +86,25 @@ test('World and Regional paused/disarmed callbacks discard both stale clocks wit
         }
 });
 
-test('running World and Regional flights still pause before polling after either clock stalls', () => {
+test('running World and Regional foreground stalls discard stale debt before fresh input without pausing', () => {
   for (const regional of [false, true])
-    for (const preparing of [false, true])
-      for (const clocks of [
-        { execution: 420, frameTime: 40 },
-        { execution: 40, frameTime: 420 },
-      ]) {
-        const { state, events } = frameFixture({
-          regional,
-          preparing,
-          status: 'active',
-          ...clocks,
-        });
-        advance(state);
-        assert.deepEqual(events, ['pause']);
-      }
+    for (const clocks of [
+      { execution: 420, frameTime: 40 },
+      { execution: 40, frameTime: 420 },
+    ]) {
+      const { state, events } = frameFixture({ regional, status: 'active', ...clocks });
+      const reached = new Error('Fresh input boundary reached');
+      state.pollGamepad = () => {
+        throw reached;
+      };
+      assert.throws(
+        () => advance(state),
+        (error) => error === reached,
+      );
+      assert.deepEqual(events, []);
+      assert.equal(state.accumulator, 0);
+      assert.equal(state.lastTime, clocks.frameTime - 20);
+    }
 });
 
 const deferred = () => {

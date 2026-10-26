@@ -10,48 +10,43 @@ const read = (name) => fs.readFile(new URL(name, import.meta.url));
 async function inputs() {
   const configuration = JSON.parse(await read('./publication.json'));
   const allocationBytes = await read('./allocations.json');
-  const metadata = new Map();
-  for (const version of ['v0.141.5', 'v0.141.6']) {
-    const recordBytes = await read('./metadata/' + version + '/release.json');
-    metadata.set(version, { recordBytes, record: JSON.parse(recordBytes) });
-  }
+  const metadata = new Map(
+    ['v1.0.0', 'v1.1.0'].map((version) => [version, { record: { version } }]),
+  );
   return { configuration, allocationBytes, metadata };
 }
 
-test('a newly historical current release needs no archive and keeps legacy links', async () => {
+test('retired frozen configuration has no admitted releases or external routes', async () => {
+  const { configuration, allocationBytes } = await inputs();
+  assert.equal(configuration.deploymentEnabled, false);
+  assert.equal(configuration.currentSourceQualification, null);
+  assert.deepEqual(JSON.parse(await read('./catalog.json')).releases, []);
+  assert.deepEqual(JSON.parse(allocationBytes), { formatVersion: 1, shards: [] });
+  assert.deepEqual(configuration.admissions, []);
+  assert.deepEqual(configuration.testingRoutes, {});
+});
+
+test('new main-repository metadata cannot revive a retired external archive', async () => {
   const { configuration, allocationBytes, metadata } = await inputs();
-  configuration.currentVersion = 'v0.142.0';
-  metadata.set('v0.142.0', { record: { version: 'v0.142.0' } });
+  configuration.currentVersion = 'v1.1.0';
   const before = JSON.stringify(configuration);
   const result = mainRepositoryRoutes(configuration, allocationBytes, metadata);
-  assert.deepEqual(result.downloadOnlyVersions, ['v0.141.6']);
-  assert.equal(
-    result.canonicalSites['v0.141.5'],
-    'https://mekhovov.github.io/revealline-archive-99/releases/v0.141.5/site/',
-  );
-  assert.equal(result.canonicalSites['v0.142.0'], undefined);
+  assert.deepEqual(result.downloadOnlyVersions, ['v1.0.0']);
+  assert.deepEqual(result.plan, { formatVersion: 1, shards: [] });
+  assert.deepEqual(result.canonicalSites, {});
   assert.deepEqual(result.admissions, []);
   assert.equal(JSON.stringify(configuration), before);
+  configuration.currentVersion = 'v1.0.0';
+  assert.deepEqual(
+    mainRepositoryRoutes(configuration, allocationBytes, metadata).downloadOnlyVersions,
+    ['v1.1.0'],
+  );
 });
 
-test('rollback keeps its selected current game on main, even if it has a legacy archive', async () => {
-  const { configuration, allocationBytes, metadata } = await inputs();
-  configuration.currentVersion = 'v0.141.5';
-  const result = mainRepositoryRoutes(configuration, allocationBytes, metadata);
-  assert.equal(result.canonicalSites['v0.141.5'], undefined);
-  assert.deepEqual(result.downloadOnlyVersions, ['v0.141.6']);
-});
-
-test('new allocations, admissions and mutations of accepted pins fail closed', async () => {
+test('retired allocations, admissions and changes to the empty registry fail closed', async () => {
   const { configuration, allocationBytes, metadata } = await inputs();
   for (const mutate of [
-    (c) => c.admissions.push({ id: 'archive-100' }),
-    (c) => {
-      c.admissions[0].deploymentId++;
-    },
-    (c) => {
-      c.admissions[0].evidence[0].sha256 = '0'.repeat(64);
-    },
+    (c) => c.admissions.push({ id: 'archive-100', deploymentId: 1, evidence: [] }),
     (c) => {
       c.allocationSha256 = '0'.repeat(64);
     },
@@ -72,23 +67,26 @@ test('new allocations, admissions and mutations of accepted pins fail closed', a
       ),
     /registry is frozen/,
   );
-  const changedMetadata = new Map(metadata);
-  changedMetadata.set('v0.141.5', { ...metadata.get('v0.141.5'), recordBytes: Buffer.from('{}') });
-  assert.throws(
-    () => mainRepositoryRoutes(configuration, allocationBytes, changedMetadata),
-    /accepted record/,
+  const changed = Buffer.from(
+    JSON.stringify({
+      formatVersion: 1,
+      shards: [
+        { id: 'archive-100', repository: 'mekhovov/revealline-archive-100', versions: ['v1.0.0'] },
+      ],
+    }),
   );
+  assert.throws(() => mainRepositoryRoutes(configuration, changed, metadata), /registry is frozen/);
 });
 
-test('active publisher requires the policy and forbids new testing archive routes', async () => {
+test('active publisher requires the main policy and forbids testing archive routes', async () => {
   const { configuration, allocationBytes, metadata } = await inputs();
   assert.throws(() => requireMainRepositoryPolicy({}), /main-repository-only/);
   assert.throws(
     () => requireMainRepositoryPolicy({ hostingPolicy: 'archives' }),
     /main-repository-only/,
   );
-  configuration.testingRoutes['v0.141.6'] =
-    'https://mekhovov.github.io/revealline-archive-100/releases/v0.141.6/site/';
+  configuration.testingRoutes['v1.0.0'] =
+    'https://mekhovov.github.io/revealline-archive-100/releases/v1.0.0/site/';
   assert.throws(
     () => mainRepositoryRoutes(configuration, allocationBytes, metadata),
     /already accepted/,

@@ -48,7 +48,7 @@ async function setup(t, options = {}) {
 // and preparation authorities, not the current registered mission catalogue.
 // Mount only the native old chooser boundary after the real host pauses; its
 // real search, launch, backup and cancellation handlers remain in charge.
-// Current visible entry is covered by mission-library-solo-host/controller-host.
+// Current visible entry is covered by mission-library-solo-*/controller-host.
 function openHistoricalChooser(p) {
   p.$('shell-menu').click();
   p.$('shell-home').close();

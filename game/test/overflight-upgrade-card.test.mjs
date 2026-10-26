@@ -3,7 +3,16 @@ import assert from 'node:assert/strict';
 import { parseFragment } from 'parse5';
 import { Document, Element } from './helpers/couch-dom.mjs';
 import { createOverflightUpgradeCard } from '../overflight/upgrade-card.mjs';
-import { createOverflightBuild, legalOverflightUpgrades } from '../overflight/upgrades.mjs';
+import {
+  createOverflightBuild,
+  legalOverflightUpgrades,
+  utilityOffers,
+} from '../overflight/upgrades.mjs';
+import {
+  createOverflightRiyBuild,
+  legalOverflightRiyUpgrades,
+} from '../overflight/riy-upgrades.mjs';
+import { overflightUpgradePreviewCaptions } from '../overflight/upgrade-preview.mjs';
 
 function cardDocument() {
   const document = new Document();
@@ -25,6 +34,57 @@ function cardDocument() {
   document.createElement = (tag) => new CardElement(document, tag);
   return document;
 }
+
+for (const locale of ['en', 'uk'])
+  test(`${locale}: expanded native cards expose the same facts and retain one offered action`, () => {
+    const build = createOverflightBuild();
+    build.escorts = createOverflightRiyBuild();
+    const offers = [
+      ...legalOverflightUpgrades(build, [
+        'primary',
+        'slow-field',
+        'proximity-pulse',
+        'side-burst',
+        'scanner',
+        'shield',
+        'plating',
+      ]),
+      ...legalOverflightRiyUpgrades(build),
+      ...utilityOffers(build),
+    ];
+    const before = structuredClone(build),
+      player = { hull: 63, maxHull: 100, boostCooldown: 1.2 };
+    for (const offer of offers) {
+      const document = cardDocument(),
+        chosen = [],
+        options = { document, offer, build, player, locale, rulesVersion: 4 };
+      const ordinary = createOverflightUpgradeCard(options);
+      assert.equal(ordinary.querySelector('.upgrade-comparison'), null);
+      const expanded = createOverflightUpgradeCard({
+        ...options,
+        expandedComparison: true,
+        onChoose: (id) => chosen.push(id),
+      });
+      document.body.append(expanded);
+      const rows = expanded.querySelectorAll('.upgrade-comparison-state');
+      assert.equal(rows.length, 2, offer.id);
+      for (const [index, facts] of overflightUpgradePreviewCaptions(offer, options).entries())
+        assert.deepEqual(
+          [...rows[index].children].map((node) => node.textContent),
+          [facts.label, ...facts.lines, facts.diagramText].filter(Boolean),
+          offer.id,
+        );
+      assert.equal(expanded.getAttribute('aria-label'), ordinary.getAttribute('aria-label'));
+      assert.equal(expanded.querySelector('svg').getAttribute('viewBox'), '0 0 320 154');
+      assert.deepEqual(chosen, [], 'Rendering must not select an offer.');
+      expanded.focus();
+      expanded.click();
+      assert.deepEqual(chosen, [offer.id]);
+      assert.ok(document.activeElement === expanded, 'The offered card retains focus.');
+      assert.deepEqual(build, before);
+      assert.deepEqual(player, { hull: 63, maxHull: 100, boostCooldown: 1.2 });
+    }
+  });
 
 test('visual card retains an accessible comparison and chooses the exact offered upgrade', () => {
   const document = cardDocument();

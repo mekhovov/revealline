@@ -4,9 +4,12 @@ import { Document, Events } from './helpers/couch-dom.mjs';
 import { mountGlobalSettingsTools } from '../ui/global-settings-tools.mjs';
 import { getLocale, setLocale, t as translate } from '../i18n/index.mjs';
 import { attachProfileRecoveryView } from '../ui/profile-recovery.mjs';
+import { mountModeSettings } from '../ui/mode-settings-view.mjs';
+import { attachSettingsPanels } from '../ui/settings-panels.mjs';
+import { createFlightMenuNavigation } from '../../optional-practice/civilian-fpv/input.mjs';
 
 const settle = () => new Promise((resolve) => setImmediate(resolve));
-function fixture(t) {
+function fixture(t, options = {}) {
   const doc = new Document(),
     win = new Events();
   win.location = new URL('https://game.invalid/game/couch/');
@@ -48,7 +51,11 @@ function fixture(t) {
     getSettingsOpen: () => settings.open,
     getOwner: () => visit,
     isOwnerCurrent: (owner) => owner === visit,
-    onOpen: () => calls.opened++,
+    onOpen: () => {
+      calls.opened++;
+      options.onOpen?.({ settings });
+    },
+    onPresentationChange: options.onPresentationChange,
     coreURL: new URL('https://game.invalid/game/'),
     loadRecovery: () => {
       calls.loads++;
@@ -65,6 +72,7 @@ function fixture(t) {
         attachView: attachProfileRecoveryView,
       };
     },
+    ...options,
   });
   t.after(() => api.dispose());
   return {
@@ -79,6 +87,365 @@ function fixture(t) {
       visit++;
     },
   };
+}
+
+function responsiveFixture(t) {
+  const h = fixture(t);
+  h.doc.defaultView.innerWidth = 1280;
+  const settings = mountModeSettings({
+    root: h.settings,
+    prefix: 'responsive-settings',
+    groups: Object.fromEntries(Object.entries(h.panels).map(([name, panel]) => [name, [panel]])),
+    attachPanels: attachSettingsPanels,
+  });
+  t.after(() => settings.destroy());
+  settings.navigation.select(settings.tabs.extras.id);
+  const opener = h.api.controls.about.querySelector('button'),
+    rects = opener.getClientRects.bind(opener),
+    focus = opener.focus.bind(opener);
+  // This finite DOM has no stylesheet engine. Model the actual compact rule:
+  // categories hide every panel, and native focus ignores a non-rendered opener.
+  opener.getClientRects = () =>
+    h.doc.defaultView.innerWidth <= 700 && h.settings.dataset.settingsView === 'categories'
+      ? []
+      : rects();
+  opener.focus = (...args) => {
+    if (opener.getClientRects().length) focus(...args);
+  };
+  const resize = () => {
+    h.doc.defaultView.innerWidth = 316;
+    h.doc.defaultView.emit('resize');
+  };
+  opener.focus();
+  opener.click();
+  return { ...h, navigation: settings.navigation, tab: settings.tabs.extras, opener, resize };
+}
+
+test('About Back reveals its current Settings panel after resizing while the child owns focus', async (t) => {
+  const h = responsiveFixture(t),
+    frame = h.api.root().querySelector('iframe');
+  frame.focus();
+  h.resize();
+  assert.equal(h.settings.dataset.settingsView, 'categories');
+  assert.equal(h.opener.getClientRects().length, 0);
+  h.api.back();
+  await settle();
+  assert.equal(h.settings.dataset.settingsView, 'panel');
+  assert.equal(h.doc.activeElement, h.opener);
+  assert.ok(h.opener.getClientRects().length);
+  assert.equal(h.opener.scrolled, 1);
+  assert.equal(h.settings.open, true);
+  assert.equal(frame.getAttribute('src'), null);
+  assert.equal(h.calls.persist, 0);
+  assert.equal(h.calls.readers, 0);
+});
+
+function radioToolFixture(t) {
+  const h = fixture(t, { createRadioNavigation: createFlightMenuNavigation }),
+    opener = h.api.controls.creatorTools.querySelector('button');
+  opener.click();
+  const frame = h.api.root().querySelector('iframe'),
+    enter = h.doc.getElementById('test-tools-tool-enter');
+  const child = () => {
+    const document = new Document(),
+      window = document.defaultView,
+      first = document.createElement('button'),
+      second = document.createElement('button');
+    window.location = new URL(frame.src);
+    window.focus = () => {};
+    document.body.dataset.menuLayout = 'vertical';
+    document.body.append(first, second);
+    return { document, window, first, second };
+  };
+  const load = (c) => {
+    frame.contentDocument = c.document;
+    frame.contentWindow = c.window;
+    frame.emit('load');
+  };
+  const radio = {
+    key: 'menu-radio',
+    index: 2,
+    verified: true,
+    layout: 'six-switch',
+    stickMode: 2,
+    controls: { roll: 0, pitch: 0, yaw: 0, throttle: 0 },
+    switches: {
+      arm: false,
+      fire: false,
+      weapon: false,
+      reload: false,
+      payload: false,
+      detonate: false,
+    },
+  };
+  let now = 0;
+  const poll = () => h.api.handleFrameCommand({ source: 'radio', radio, now: (now += 20) });
+  const cycle = (key) => {
+    poll();
+    radio.switches[key] = true;
+    poll();
+    radio.switches[key] = false;
+    poll();
+  };
+  return { ...h, child, load, frame, enter, radio, poll, cycle };
+}
+
+test('radio Enter tool hands off once to an ownerless child and Back restores Settings', (t) => {
+  const h = radioToolFixture(t),
+    c = h.child();
+  assert.equal(h.enter.disabled, true, 'wait for the child document');
+  h.load(c);
+  h.enter.click();
+  assert.equal(h.doc.activeElement, h.frame);
+  let clicks = 0;
+  c.first.onclick = () => clicks++;
+  h.cycle('fire');
+  assert.equal(c.document.activeElement, c.first);
+  assert.equal(clicks, 0, 'first complete Confirm joins only');
+  h.cycle('fire');
+  assert.equal(clicks, 1);
+  h.radio.controls.pitch = -1;
+  h.poll();
+  assert.equal(c.document.activeElement, c.second);
+  h.radio.controls.pitch = 0;
+  h.poll();
+  h.cycle('reload');
+  assert.ok(h.api.root(), 'a child radio shortcut cannot change the paused flight');
+  h.cycle('weapon');
+  assert.equal(h.api.root(), null);
+  assert.equal(c.document.querySelector('[data-radio-menu-hint]'), null);
+});
+
+test('radio tools delegate fields and canvases to the existing child owner and release it on reload', (t) => {
+  const h = radioToolFixture(t),
+    c = h.child(),
+    actions = [],
+    leases = [],
+    releases = [];
+  c.document[Symbol.for('revealline.page-radio-menu')] = {
+    claim: (lease) => {
+      leases.push(lease);
+      return true;
+    },
+    handle: (token, action) => {
+      actions.push(action);
+      return true;
+    },
+    release: (token) => releases.push(token),
+  };
+  h.load(c);
+  h.enter.click();
+  h.cycle('fire');
+  h.cycle('fire');
+  h.radio.controls.roll = 1;
+  h.poll();
+  h.radio.controls.roll = 0;
+  h.poll();
+  assert.deepEqual(actions, ['join', 'confirm', 'right']);
+  assert.ok(leases.every((lease) => lease.index === 2 && lease.isCurrent()));
+  h.radio.switches.fire = true;
+  h.poll();
+  const replacement = h.child();
+  h.load(replacement);
+  assert.equal(releases.length, 1);
+  let clicks = 0;
+  replacement.first.onclick = () => clicks++;
+  h.poll();
+  h.radio.switches.fire = false;
+  h.poll();
+  assert.equal(clicks, 0, 'a switch held through reload cannot commit');
+  h.cycle('fire');
+  assert.equal(clicks, 0, 'fresh Confirm joins the replacement document');
+  h.cycle('fire');
+  assert.equal(clicks, 1);
+  h.doc.focused = false;
+  assert.equal(h.api.frameFocused(), false);
+  assert.equal(replacement.document.querySelector('[data-radio-menu-hint]'), null);
+});
+
+test('radio tools never acquire an opaque frame and its outer Back remains available', (t) => {
+  const h = radioToolFixture(t),
+    c = h.child();
+  c.window.location = new URL('https://other.invalid/tool');
+  h.load(c);
+  h.enter.click();
+  assert.equal(h.poll(), false);
+  assert.equal(c.document.querySelector('[data-radio-menu-hint]'), null);
+  assert.equal(h.api.handleFrameCommand({ back: true }), true);
+  assert.equal(h.api.root(), null);
+});
+
+test('radio tools follow entered native preview menus and return one level with fresh input', (t) => {
+  const h = radioToolFixture(t),
+    parent = h.child(),
+    child = h.child(),
+    nested = parent.document.createElement('iframe'),
+    actions = [],
+    releases = [];
+  parent.document.body.append(nested);
+  nested.contentDocument = child.document;
+  nested.contentWindow = child.window;
+  let lease;
+  const owner = {
+    claim: (value) => {
+      lease = value;
+      return true;
+    },
+    handle: (token, action) => {
+      actions.push(action);
+      if (action === 'back') lease.onBack();
+      return true;
+    },
+    release: (token) => releases.push(token),
+  };
+  child.document[Symbol.for('revealline.page-radio-menu')] = owner;
+  parent.document[Symbol.for('revealline.page-radio-menu')] = {
+    claim: () => true,
+    handle: () => true,
+    release: () => {},
+    preview: () =>
+      parent.document.activeElement === nested
+        ? {
+            frame: nested,
+            back: () => parent.first.focus(),
+          }
+        : null,
+  };
+  h.load(parent);
+  h.enter.click();
+  h.cycle('fire');
+  nested.focus();
+  h.radio.switches.fire = true;
+  h.poll();
+  h.radio.switches.fire = false;
+  h.poll();
+  assert.deepEqual(actions, [], 'held entry cannot join or activate the preview');
+  h.cycle('fire');
+  h.cycle('fire');
+  h.radio.controls.roll = 1;
+  h.poll();
+  h.radio.controls.roll = 0;
+  h.poll();
+  assert.deepEqual(actions, ['join', 'confirm', 'right']);
+  const oldLease = lease;
+  h.cycle('weapon');
+  assert.ok(h.api.root(), 'Back keeps the parent tool and Settings open');
+  assert.equal(parent.document.activeElement, parent.first);
+  assert.equal(oldLease.isCurrent(), false);
+  assert.equal(releases.length, 1);
+  assert.equal(child.document.querySelector('[data-radio-menu-hint]'), null);
+  nested.focus();
+  h.poll();
+  const replacement = h.child();
+  replacement.document[Symbol.for('revealline.page-radio-menu')] = owner;
+  h.radio.switches.fire = true;
+  h.poll();
+  nested.contentDocument = replacement.document;
+  nested.contentWindow = replacement.window;
+  h.poll();
+  h.radio.switches.fire = false;
+  h.poll();
+  assert.equal(
+    actions.filter((action) => action === 'confirm').length,
+    1,
+    'reload cannot complete the previous document gesture',
+  );
+  assert.equal(releases.length, 2);
+});
+
+test('radio preview Back returns to its editor when the child is opaque or owns live controls', (t) => {
+  for (const opaque of [false, true]) {
+    const h = radioToolFixture(t),
+      parent = h.child(),
+      child = h.child(),
+      nested = parent.document.createElement('iframe');
+    parent.document.body.append(nested);
+    nested.contentDocument = child.document;
+    nested.contentWindow = child.window;
+    if (opaque)
+      Object.defineProperty(nested, 'contentDocument', {
+        get() {
+          throw new Error('Opaque child');
+        },
+      });
+    parent.document[Symbol.for('revealline.page-radio-menu')] = {
+      claim: () => true,
+      handle: () => true,
+      release: () => {},
+      preview: () =>
+        parent.document.activeElement === nested
+          ? {
+              frame: nested,
+              back: () => parent.first.focus(),
+            }
+          : null,
+    };
+    h.load(parent);
+    h.enter.click();
+    nested.focus();
+    h.cycle('fire');
+    assert.equal(
+      child.document.querySelector('[data-radio-menu-hint]'),
+      null,
+      'an unowned live or opaque child does not acquire a menu navigator',
+    );
+    h.cycle('weapon');
+    assert.equal(parent.document.activeElement, parent.first);
+    assert.ok(h.api.root());
+  }
+});
+
+test('a fresh radio Back exits an entered tool before any Fire join', (t) => {
+  const h = radioToolFixture(t);
+  h.load(h.child());
+  h.enter.click();
+  h.cycle('weapon');
+  assert.equal(h.api.root(), null);
+});
+
+for (const unavailable of ['hidden', 'removed', 'disabled']) {
+  test(`About Back returns to its category if the resized opener is ${unavailable}`, async (t) => {
+    const h = responsiveFixture(t);
+    h.resize();
+    if (unavailable === 'removed') h.opener.remove();
+    else h.opener[unavailable] = true;
+    h.api.back();
+    await settle();
+    assert.equal(h.settings.dataset.settingsView, 'categories');
+    assert.equal(h.doc.activeElement, h.tab);
+    assert.equal(h.tab.scrolled, 1);
+    assert.equal(h.settings.open, true);
+  });
+}
+
+test('resized tool close retains a newer selected category instead of revealing the former opener', async (t) => {
+  const h = responsiveFixture(t);
+  h.navigation.select('responsive-settings-tab-controls');
+  h.resize();
+  h.api.back();
+  await settle();
+  assert.equal(h.navigation.selected(), 'responsive-settings-tab-controls');
+  assert.equal(h.settings.dataset.settingsView, 'categories');
+  assert.equal(h.doc.activeElement.id, 'responsive-settings-tab-controls');
+  assert.equal(h.opener.getClientRects().length, 0);
+});
+
+for (const retired of ['visit', 'hidden page', 'unfocused page', 'disposed']) {
+  test(`resized tool close cannot take focus after its ${retired} is retired`, async (t) => {
+    const h = responsiveFixture(t),
+      current = h.doc.createElement('button');
+    h.resize();
+    h.settings.append(current);
+    current.focus();
+    if (retired === 'visit') h.changeVisit();
+    if (retired === 'hidden page') h.doc.hidden = true;
+    if (retired === 'unfocused page') h.doc.hasFocus = () => false;
+    if (retired === 'disposed') await h.api.dispose();
+    else h.api.back();
+    await settle();
+    assert.equal(h.doc.activeElement, current);
+    assert.equal(h.settings.dataset.settingsView, 'categories');
+  });
 }
 
 test('global tools reuse the existing offline owner and lazily open real recovery above a non-Solo parent', async (t) => {
@@ -220,4 +587,71 @@ test('About uses plain localized copy through its nested title and returns focus
   assert.equal(heading.textContent, translate('interface:nativeMenu.creatorTools'));
   assert.equal(h.calls.persist, 0);
   assert.equal(h.calls.readers, 0);
+});
+
+test('global tools notify committed native child opens, not rejected or already-open attempts', async (t) => {
+  let presentations = 0;
+  const h = fixture(t, {
+    onPresentationChange: () => {
+      presentations++;
+      assert.equal(Boolean(h.api.root()?.open), true);
+    },
+  });
+  const opener = h.api.controls.about.querySelector('button');
+  opener.focus();
+  opener.click();
+  assert.equal(presentations, 1);
+  opener.click();
+  assert.equal(presentations, 1);
+  h.api.back();
+  opener.click();
+  assert.equal(presentations, 2);
+  h.api.back();
+  h.settings.close();
+  opener.click();
+  assert.equal(presentations, 2);
+  assert.equal(h.api.root(), null);
+});
+
+test('global tools forward committed Recovery presentation from the Data category', async (t) => {
+  let presentations = 0;
+  const h = fixture(t, { onPresentationChange: () => presentations++ });
+  await h.doc.getElementById('profile-recovery-open').onclick();
+  assert.equal(h.api.root()?.id, 'profile-recovery-dialog');
+  assert.equal(presentations, 1);
+  h.api.back();
+  await settle();
+  assert.equal(h.api.root(), null);
+  assert.equal(presentations, 1);
+});
+
+test('global tools preserve a rejected pre-open owner without a presentation notification', (t) => {
+  let presentations = 0;
+  const h = fixture(t, {
+    onOpen: ({ settings }) => settings.close(),
+    onPresentationChange: () => presentations++,
+  });
+  h.api.controls.about.querySelector('button').click();
+  assert.equal(h.api.root(), null);
+  assert.equal(presentations, 0);
+});
+
+test('global tools notify a committed open even when native focus immediately returns to Settings', (t) => {
+  let presentations = 0;
+  const h = fixture(t, { onPresentationChange: () => presentations++ });
+  const create = h.doc.createElement.bind(h.doc);
+  h.doc.createElement = (tag) => {
+    const node = create(tag);
+    if (tag === 'dialog') {
+      const show = node.showModal.bind(node);
+      node.showModal = () => {
+        show();
+        node.close();
+      };
+    }
+    return node;
+  };
+  h.api.controls.about.querySelector('button').click();
+  assert.equal(h.api.root(), null);
+  assert.equal(presentations, 1);
 });
