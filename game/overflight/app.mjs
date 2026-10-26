@@ -35,6 +35,10 @@ import { DESTRUCTION_CUES, HUMAN_REACTION_CUES } from '../ui/destruction-audio.m
 import { mountModeSettings } from '../ui/mode-settings-view.mjs';
 import { mountGlobalSettings } from '../ui/global-settings-view.mjs';
 import { mountGlobalSettingsTools } from '../ui/global-settings-tools.mjs';
+import { attachLocalSupportSummary } from '../ui/local-support-summary.mjs';
+import { overflightSupportHost } from './support-summary.mjs';
+import { offlineAvailability } from '../offline.mjs';
+import { nativePlatform } from '../platform.mjs';
 import {
   attachSettingsPanels,
   settingsPanelBack,
@@ -327,6 +331,7 @@ let run = null,
   navigator = null,
   controller = null,
   controllerStatus = null,
+  controllerBuildVersion = null,
   appearance = null;
 let suspendCoordinator = null,
   suspendView = null,
@@ -2463,6 +2468,26 @@ settingsTools = mountGlobalSettingsTools({
   onOpen: () => pause({ menu: false }),
 });
 globalSettings.update({ controls: settingsTools.controls });
+const supportRoot = el('section');
+supportRoot.id = 'support-summary-root';
+settingsView.panels.data.append(supportRoot);
+const supportSummary = attachLocalSupportSummary({
+  document: doc,
+  window: win,
+  root: supportRoot,
+  settings: settingsRoot,
+  getHost: () =>
+    overflightSupportHost({
+      mode,
+      run,
+      version: controllerBuildVersion,
+      locale: getLocale(),
+      controller,
+      offline: offlineAvailability(),
+      platform: nativePlatform() ?? 'browser',
+      practice: !!(studio || fixture || reviewBuild),
+    }),
+});
 $('overflight-settings').hidden = true;
 cleanup.push(onLocaleChange(refreshCopy));
 cleanup.push(
@@ -2764,6 +2789,7 @@ async function dispose() {
   offlinePanel?.dispose();
   modeChoices?.dispose();
   await settingsTools?.dispose();
+  supportSummary.destroy();
   globalSettings?.destroy();
   settingsView?.destroy();
   shell.dispose();
@@ -2814,6 +2840,7 @@ try {
   const controllerPreferences = await loadOverflightControllerPreferences({
     window: win,
   });
+  controllerBuildVersion = controllerPreferences.version;
   controller = createOverflightController({
     window: win,
     ...controllerPreferences,
