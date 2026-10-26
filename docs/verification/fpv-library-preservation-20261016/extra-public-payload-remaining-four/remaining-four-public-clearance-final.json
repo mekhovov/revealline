@@ -1,0 +1,54 @@
+{
+  "format": "ExactRemainingFourPublicExtraPayloadClearance.v1",
+  "createdUTC": "2026-10-16T07:02:09.297046+00:00",
+  "repository": "mekhovov/revealline",
+  "approvedPublicPayloadPublication": true,
+  "selectionMustMatchExactManifest": true,
+  "publicOnlyManifest": "remaining-four-approved-public-files-final.jsonl",
+  "publicOnlyManifestSHA256": "98cd9329b4cb0436304d7bacd39232a1f91e11128490ce37565907cbde268527",
+  "files": 29722,
+  "bytes": 2717991896,
+  "roots": [
+    {
+      "rootAlias": "CodexReviewArtifacts/fpv-worlds-20261014",
+      "files": 664,
+      "bytes": 175182963
+    },
+    {
+      "rootAlias": "work/my_projects/go_test",
+      "files": 23430,
+      "bytes": 2058322108
+    },
+    {
+      "rootAlias": "work/my_projects/go_test_company_campaigns",
+      "files": 5628,
+      "bytes": 484486825
+    }
+  ],
+  "allSourceFilesRehashedWithStableSizeMtimeBeforeAfter": true,
+  "allFileBodiesExactlyMatchDeclaredExistingPublicGitLeaves": true,
+  "distinctPublicGitBlobIdentities": 22450,
+  "publicBaselineLeafSetSHA256": "6bab0727362768c67bc57359c91d4efb8c33322b417d42b59c556d7576513937",
+  "publicBaselineDeclaredObjectCount": 56541,
+  "finitePatternFamilies": [
+    "private-key",
+    "aws-access-key",
+    "github-token",
+    "slack-token",
+    "google-api-key",
+    "url-userinfo"
+  ],
+  "finitePatternFindings": 0,
+  "approvedBodyReviewSHA256": "5a810195e64689c971c80d168de578d967b143a0d1915bf6ba0d054b47c4b96e",
+  "privateAndUnresolvedOriginSubtreesExcludedBeforePublicOutput": true,
+  "privatePrefixValuesOrDigestsIncluded": false,
+  "unapprovedFileHashesOrPathsIncluded": false,
+  "sourceChangedFilesExcluded": true,
+  "rawLogsContainersRangeAndAcquisitionStreamsExcluded": true,
+  "noContainingDirectoryHEADClaim": true,
+  "noMixedInventoryDigestComputed": true,
+  "noSourceMutationOrDirectUploadByReviewer": true,
+  "bulkPackingOwner": "listing_evidence_review",
+  "otherExtraPayloadOrSourceHistoryClearedByThisReceipt": false,
+  "qualification": "Exact positive-public-leaf ordinary app file list only, selected from a fixed candidate snapshot. Full source rehash/stability, Git leaf identity and six finite-pattern checks passed for every listed file. Source mismatches, unknown leaf bodies, unresolved origins, private origins and unlisted/opaque/acquisition data remain outside this public clearance. No full container/root closure, native player, persistence or physical-disconnection claim."
+}

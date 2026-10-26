@@ -1,0 +1,562 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="dark">
+    <title>Six switches · FPV radio concept</title>
+    <style>
+      :root {
+        --bg: #0d1215;
+        --panel: #192126;
+        --raised: #222d32;
+        --line: #405158;
+        --muted: #a9b6bb;
+        --text: #f1f0e8;
+        --amber: #f4c16a;
+        --green: #9bd8bb;
+        --red: #f0a098;
+        --mono: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+        --sans: "Avenir Next", Avenir, "Trebuchet MS", sans-serif;
+      }
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        color: var(--text);
+        background: var(--bg);
+        font-family: var(--sans);
+        line-height: 1.5;
+      }
+      button, select { font: inherit; }
+      button { cursor: pointer; }
+      button:focus-visible, select:focus-visible, a:focus-visible {
+        outline: 3px solid var(--amber);
+        outline-offset: 5px;
+      }
+      button:disabled { cursor: default; }
+      [hidden] { display: none !important; }
+      .shell { max-width: 1400px; margin: 0 auto; padding: 24px 40px 36px; }
+      .concept-strip {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        padding-bottom: 18px;
+        border-bottom: 1px solid var(--line);
+        font: 11px/1.5 var(--mono);
+        letter-spacing: .08em;
+        text-transform: uppercase;
+      }
+      .concept-strip strong { color: var(--amber); }
+      .offline { color: var(--muted); display: flex; align-items: center; gap: 8px; }
+      .offline::before {
+        content: ""; width: 6px; height: 6px; border: 1px solid var(--muted); border-radius: 50%;
+      }
+      header { display: grid; grid-template-columns: 1fr 340px; gap: 36px; padding: 36px 0 30px; }
+      .eyebrow {
+        margin: 0 0 12px;
+        color: var(--amber);
+        font: 11px/1.4 var(--mono);
+        letter-spacing: .14em;
+        text-transform: uppercase;
+      }
+      h1 { font-size: clamp(36px, 4.1vw, 58px); line-height: 1.04; letter-spacing: -.055em; margin: 0; font-weight: 650; }
+      h1 span { color: var(--muted); }
+      .intro { max-width: 640px; font-size: 16px; color: var(--muted); margin: 18px 0 0; }
+      .hero-note {
+        align-self: end;
+        padding: 0 0 2px 20px;
+        border-left: 2px solid var(--amber);
+      }
+      .hero-note strong { display: block; font-size: 16px; margin-bottom: 5px; }
+      .hero-note p { margin: 0; color: var(--muted); font-size: 13px; }
+      .mode-bar {
+        display: flex; align-items: center; justify-content: space-between; gap: 20px;
+        border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); padding: 12px 0;
+      }
+      .tabs { display: flex; gap: 5px; flex-wrap: wrap; }
+      .tab {
+        display: flex; gap: 10px; align-items: center; background: transparent; color: var(--muted);
+        border: 1px solid transparent; border-radius: 4px; padding: 11px 16px; font-weight: 650;
+      }
+      .tab small { font: 10px var(--mono); opacity: .8; }
+      .tab[aria-selected="true"] { color: #171a1c; background: var(--amber); border-color: var(--amber); }
+      .tab:not([aria-selected="true"]):hover { border-color: var(--line); color: var(--text); }
+      .mode-state { color: var(--green); font: 11px var(--mono); letter-spacing: .08em; text-align: right; }
+      main { padding-top: 26px; }
+      .workspace { display: grid; grid-template-columns: minmax(0, 1.12fr) minmax(320px, .88fr); gap: 24px; align-items: start; }
+      .section-top { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; margin-bottom: 16px; }
+      h2 { margin: 0; font-size: 19px; font-weight: 600; letter-spacing: -.02em; }
+      .section-top span { color: var(--muted); font: 10px/1.5 var(--mono); text-transform: uppercase; letter-spacing: .1em; }
+      .switch-grid { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+      .switch {
+        position: relative; display: flex; flex-direction: column; align-items: stretch; width: 100%;
+        min-height: 208px; padding: 16px; border: 1px solid var(--line); border-radius: 7px;
+        background: linear-gradient(150deg, #263238, #192126 65%); color: var(--text); text-align: left;
+        box-shadow: inset 0 1px #ffffff09;
+      }
+      .switch:hover { background: #29363c; border-color: #71848d; }
+      .switch.changed { border-color: var(--amber); background: linear-gradient(145deg, #393528, #202426 70%); }
+      .switch-number { font: 11px var(--mono); color: var(--muted); letter-spacing: .1em; }
+      .switch-number em { float: right; font-style: normal; font-size: 9px; letter-spacing: .02em; color: var(--green); }
+      .switch.changed .switch-number em { color: var(--amber); }
+      .switch-label { display: block; font-size: 22px; font-weight: 650; letter-spacing: -.035em; margin-top: 9px; }
+      .switch-hint { display: block; color: var(--muted); font-size: 11px; min-height: 32px; margin-top: 2px; }
+      .hardware { display: flex; align-items: center; justify-content: space-between; margin-top: auto; padding-top: 16px; }
+      .lever {
+        display: block; width: 24px; height: 45px; background: #101619; border: 1px solid #53646c; border-radius: 15px;
+        position: relative; box-shadow: inset 0 2px 5px #0009;
+      }
+      .lever::after {
+        content: ""; position: absolute; width: 12px; height: 23px; left: 5px; top: 15px;
+        background: linear-gradient(90deg, #869496, #e8e9de 48%, #849297); border-radius: 5px;
+        box-shadow: 0 2px 3px #000b; transition: transform 120ms ease;
+      }
+      .switch[aria-pressed="true"] .lever::after { transform: translateY(-11px); }
+      .switch[aria-pressed="true"] .lever { border-color: var(--amber); }
+      .switch-position { color: var(--muted); font: 10px var(--mono); text-align: right; }
+      .switch[aria-pressed="true"] .switch-position { color: var(--amber); }
+      .hardware-menu { font-size: 16px; letter-spacing: .25em; color: var(--muted); }
+      .shift-config {
+        display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 15px;
+        color: var(--muted); font-size: 12px;
+      }
+      select { max-width: 55%; color: var(--text); border: 1px solid var(--line); background: var(--panel); border-radius: 4px; padding: 8px; }
+      .radio-footnote { color: var(--muted); font-size: 12px; margin: 10px 0 0; }
+      .display { border: 1px solid var(--line); background: #131b1f; border-radius: 7px; overflow: hidden; }
+      .display-header {
+        display: flex; align-items: center; justify-content: space-between; padding: 14px 18px;
+        border-bottom: 1px solid #35464e; background: #1c272c; font: 10px var(--mono); letter-spacing: .08em;
+      }
+      .display-header span:last-child { color: var(--green); }
+      .horizon {
+        min-height: 172px; position: relative; display: grid; place-items: center; overflow: hidden;
+        background: linear-gradient(180deg, #24373c 0%, #203238 52%, #455047 52.5%, #25312d 53%, #18211f 100%);
+      }
+      .horizon::before {
+        content: ""; position: absolute; width: 150%; height: 1px; background: #94afa554; transform: rotate(-5deg);
+        box-shadow: 0 34px #94afa51f, 0 -34px #94afa51f;
+      }
+      .crosshair { position: relative; width: 28px; height: 20px; border-bottom: 1px solid #d9e2d3; }
+      .crosshair::after { content: ""; width: 1px; height: 8px; background: #d9e2d3; position: absolute; left: 50%; bottom: -4px; }
+      .horizon-label { position: absolute; bottom: 13px; left: 16px; color: #ced8ce; font: 10px var(--mono); letter-spacing: .09em; }
+      .horizon-label.right { left: auto; right: 16px; }
+      .mode-description { padding: 20px; }
+      .mode-description h3 { margin: 0 0 7px; font-size: 23px; line-height: 1.2; letter-spacing: -.025em; }
+      .mode-description p { color: var(--muted); font-size: 13px; margin: 0; }
+      .mapping { padding: 0 20px 18px; display: grid; gap: 0; }
+      .mapping-row { display: grid; grid-template-columns: 35px 1fr auto; gap: 10px; padding: 12px 0; border-top: 1px solid #314148; align-items: center; }
+      .mapping-row b { font: 11px var(--mono); color: var(--amber); }
+      .mapping-row span { font-size: 14px; }
+      .mapping-row small { color: var(--muted); font: 10px var(--mono); }
+      .permanent { padding: 13px 20px; font-size: 12px; color: var(--muted); border-top: 1px solid var(--line); background: #192328; }
+      .permanent strong { color: var(--text); font-weight: 500; }
+      .deck { padding: 17px; }
+      .deck-intro { margin: 0 0 14px; font-size: 12px; color: var(--muted); }
+      .category-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+      .category {
+        display: flex; flex-direction: column; align-items: flex-start; gap: 13px; min-height: 94px;
+        background: #202c32; color: var(--text); border: 1px solid #465963; border-radius: 5px; padding: 13px;
+        font-size: 13px; text-align: left;
+      }
+      .category:hover { border-color: var(--amber); }
+      .category[aria-pressed="true"] { background: #3a3529; border-color: var(--amber); color: var(--amber); }
+      .category svg { width: 23px; height: 23px; fill: none; stroke: currentColor; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+      .action-heading { margin: 20px 0 9px; font-size: 12px; color: var(--muted); font-weight: 500; }
+      .action-list { display: grid; gap: 6px; }
+      .menu-action {
+        display: flex; justify-content: space-between; align-items: center; gap: 14px; min-height: 44px;
+        padding: 11px 12px; text-align: left; background: #172127; color: var(--text);
+        border: 1px solid #3b4d56; border-radius: 4px; font-size: 13px;
+      }
+      .menu-action:hover { border-color: var(--amber); background: #25343c; }
+      .menu-action span:last-child { color: var(--amber); font: 10px var(--mono); }
+      .navigation-note { margin: 14px 0 0; color: var(--muted); font-size: 11px; }
+      kbd { font: 10px var(--mono); border: 1px solid #52636b; padding: 1px 4px; border-radius: 3px; color: var(--text); }
+      .feedback {
+        display: grid; grid-template-columns: 24px 1fr; gap: 13px; padding: 18px 20px; margin-top: 20px;
+        border: 1px solid #776241; border-radius: 5px; background: #2a271f; min-height: 90px;
+      }
+      .feedback-marker { color: var(--amber); font: 17px var(--mono); padding-top: 3px; }
+      .feedback small { color: var(--amber); font: 9px var(--mono); text-transform: uppercase; letter-spacing: .1em; }
+      .feedback p { margin: 5px 0 0; font-size: 13px; }
+      .principles { margin-top: 30px; padding-top: 24px; border-top: 1px solid var(--line); display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 28px; }
+      .principle-number { color: var(--amber); font: 11px var(--mono); }
+      .principles h3 { margin: 8px 0 6px; font-size: 15px; }
+      .principles p { margin: 0; color: var(--muted); font-size: 12px; }
+      footer { margin-top: 28px; padding-top: 16px; border-top: 1px solid var(--line); color: var(--muted); font: 10px/1.6 var(--mono); }
+      footer strong { color: var(--text); font-weight: 400; }
+      @media (max-width: 1050px) {
+        .shell { padding: 20px 24px 28px; }
+        header { grid-template-columns: 1fr 270px; gap: 24px; }
+        .workspace { grid-template-columns: 1fr 1fr; gap: 18px; }
+        .switch { padding: 12px; }
+        .switch-label { font-size: 19px; }
+        .switch-number em { float: none; display: block; margin-top: 5px; }
+        .category { padding: 10px; font-size: 12px; }
+      }
+      @media (max-width: 760px) {
+        header, .workspace { grid-template-columns: 1fr; }
+        header { padding: 26px 0; gap: 20px; }
+        .hero-note { max-width: 490px; }
+        .mode-state { display: none; }
+        .mode-bar { display: block; }
+        .tabs { display: grid; grid-template-columns: repeat(2, 1fr); }
+        .tab { justify-content: center; padding: 12px 6px; gap: 6px; font-size: 12px; }
+        .tab small { display: none; }
+        .switch { min-height: 180px; }
+        .switch-number em { float: right; display: inline; margin-top: 0; }
+        .principles { gap: 18px; }
+        .display { margin-top: 5px; }
+      }
+      @media (max-width: 450px) {
+        .shell { padding: 18px 16px 24px; }
+        .concept-strip { align-items: flex-start; font-size: 9px; gap: 20px; }
+        .offline { text-align: right; }
+        .switch-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+        .switch { min-height: 170px; padding: 14px; }
+        .principles { grid-template-columns: 1fr; gap: 20px; }
+        .shift-config { align-items: flex-start; }
+        .category { min-height: 87px; }
+      }
+      @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+      .radio-guidance { display: flex; justify-content: space-between; gap: 12px; margin-top: 15px; color: var(--muted); font-size: 12px; }
+      .radio-guidance strong { color: var(--green); font-weight: 500; }
+      .deck-route { display: flex; justify-content: space-between; gap: 10px; align-items: center; margin-bottom: 14px; }
+      .deck-route span { color: var(--green); font: 10px var(--mono); }
+      .back { border: 1px solid var(--line); background: var(--raised); color: var(--text); padding: 8px 12px; border-radius: 4px; font-size: 11px; }
+      .menu-action[aria-pressed="true"] { border-color: var(--amber); background: #353126; }
+      .menu-navigation { border-top: 1px solid var(--line); padding-top: 12px; margin-top: 16px; color: var(--muted); font-size: 12px; }
+      .menu-navigation strong { color: var(--text); font-weight: 500; }
+      .resume-note { padding: 13px; border: 1px solid #527b67; border-radius: 4px; background: #1c2f26; color: #c7e2d1; font-size: 12px; margin-bottom: 14px; }
+    </style>
+  </head>
+  <body>
+    <div class="shell">
+      <div class="concept-strip">
+        <strong>Interactive concept · Not implemented</strong>
+        <span class="offline">No radio connection · No game actions</span>
+      </div>
+      <header>
+        <div>
+          <p class="eyebrow">FPV / Radio command layout / 06 switches</p>
+          <h1>Hands on the radio.<br><span>Every command in reach.</span></h1>
+          <p class="intro">Six dedicated controls, with no Shift layer. Turn Flight OFF to pause and open the command deck. Explore both states below.</p>
+        </div>
+        <aside class="hero-note" aria-label="Design principle">
+          <strong>Sticks fly when ON.<br>Navigate while paused.</strong>
+          <p>Weapons and payloads have dedicated switches. The Flight switch also opens the paused menu, keeping the layout within six controls.</p>
+        </aside>
+      </header>
+      <div class="mode-bar">
+        <div class="tabs" role="tablist" aria-label="Preview control mode">
+          <button class="tab" id="tab-normal" role="tab" aria-selected="true" aria-controls="workspace" data-mode="normal"><small>01</small> Flight ON</button>
+          <button class="tab" id="tab-menu" role="tab" aria-selected="false" aria-controls="workspace" tabindex="-1" data-mode="menu"><small>02</small> Flight OFF · Menu</button>
+        </div>
+        <span class="mode-state" id="mode-state">FLIGHT ON / DEDICATED ACTIONS</span>
+      </div>
+      <main id="workspace" role="tabpanel" aria-labelledby="tab-normal">
+        <div class="workspace">
+          <section aria-labelledby="radio-title">
+            <div class="section-top"><h2 id="radio-title">Your six switches</h2><span>Click to preview</span></div>
+            <ul class="switch-grid">
+              <li><button class="switch" data-switch="1" aria-pressed="true" aria-label="S1 Flight. ON arms or resumes. OFF pauses and opens the menu.">
+                <span class="switch-number">S1 <em>FLIGHT STATE</em></span><span class="switch-label">Flight</span>
+                <span class="switch-hint">ON: arm / resume<br>OFF: pause / menu</span><span class="hardware"><span class="lever" aria-hidden="true"></span><span class="switch-position">ON</span></span>
+              </button></li>
+              <li><button class="switch" data-switch="2" aria-pressed="false" aria-label="S2 Fire. Dedicated trigger while flying. Confirm on fresh ON then OFF while paused.">
+                <span class="switch-number">S2 <em>DEDICATED</em></span><span class="switch-label">Fire</span>
+                <span class="switch-hint" id="s2-hint">Dedicated weapon trigger</span><span class="hardware"><span class="lever" aria-hidden="true"></span><span class="switch-position">OFF</span></span>
+              </button></li>
+              <li><button class="switch" data-switch="3" aria-pressed="false" aria-label="S3 Weapon. Fresh ON cycles equipped weapon. Fresh ON then OFF goes Back while paused.">
+                <span class="switch-number">S3 <em>DEDICATED</em></span><span class="switch-label">Weapon</span>
+                <span class="switch-hint" id="s3-hint">Cycle equipped weapon</span><span class="hardware"><span class="lever" aria-hidden="true"></span><span class="switch-position">OFF → ON</span></span>
+              </button></li>
+              <li><button class="switch" data-switch="4" aria-pressed="false" aria-label="S4 Reload. Fresh ON reloads the current weapon.">
+                <span class="switch-number">S4 <em>DEDICATED</em></span><span class="switch-label">Reload</span>
+                <span class="switch-hint" id="s4-hint">Reload current weapon</span><span class="hardware"><span class="lever" aria-hidden="true"></span><span class="switch-position">OFF → ON</span></span>
+              </button></li>
+              <li><button class="switch" data-switch="5" aria-pressed="false" aria-label="S5 Deploy or arm payload. Fresh ON requests one action.">
+                <span class="switch-number">S5 <em>DEDICATED</em></span><span class="switch-label">Deploy / arm</span>
+                <span class="switch-hint" id="s5-hint">Deploy payload / arm charge</span><span class="hardware"><span class="lever" aria-hidden="true"></span><span class="switch-position">OFF → ON</span></span>
+              </button></li>
+              <li><button class="switch" data-switch="6" aria-pressed="false" aria-label="S6 Detonate. Fresh ON requests a separate detonation.">
+                <span class="switch-number">S6 <em>DEDICATED</em></span><span class="switch-label">Detonate</span>
+                <span class="switch-hint" id="s6-hint">Separate detonation command</span><span class="hardware"><span class="lever" aria-hidden="true"></span><span class="switch-position">OFF → ON</span></span>
+              </button></li>
+            </ul>
+            <div class="radio-guidance"><strong>No Shift. No double taps.</strong><span id="radio-context">Flight mapping preview.</span></div>
+            <p class="radio-footnote">Each click changes a demo switch position. S3–S6 perform one in-flight action on a fresh OFF → ON edge. The board sends no commands to a game or radio.</p>
+          </section>
+          <section aria-label="Mode and command preview">
+            <div class="section-top"><h2 id="preview-title">Flight controls</h2><span id="preview-caption">Six dedicated positions</span></div>
+            <div class="display">
+              <div class="display-header"><span id="screen-label">FLIGHT ON / DEDICATED CONTROLS</span><span id="screen-state">MAPPING PREVIEW</span></div>
+              <div id="flight-panel">
+                <div class="horizon" aria-hidden="true"><span class="crosshair"></span><span class="horizon-label">FPV / ILLUSTRATION</span><span class="horizon-label right">NO LIVE FEED</span></div>
+                <div class="mode-description"><h3>Every combat action has a place.</h3><p>S1 keeps flight active. S2 is the dedicated Fire trigger. Four separate switches select a weapon, reload, deploy or arm, and detonate.</p></div>
+                <div class="mapping">
+                  <div class="mapping-row"><b>S3</b><span>Next weapon</span><small id="weapon-preview">AUTOCANNON</small></div>
+                  <div class="mapping-row"><b>S4</b><span>Reload weapon</span><small>FRESH ON</small></div>
+                  <div class="mapping-row"><b>S5</b><span>Deploy / arm payload</span><small>FRESH ON</small></div>
+                  <div class="mapping-row"><b>S6</b><span>Detonate</span><small>SEPARATE ACTION</small></div>
+                </div>
+                <div class="permanent"><strong>S1 OFF → pause and open menu.</strong><br>Flight stops before sticks become menu controls.</div>
+              </div>
+              <div class="deck" id="menu-panel" hidden>
+                <div class="deck-route"><span id="deck-route">ROOT / RESUME-READY</span><button class="back" id="back" hidden>← Back to root</button></div>
+                <div class="resume-note" id="resume-note">At the root, fresh Flight ON requests Arm / Resume after checks. New flight: low throttle and centered axes. Same flight: pick up the saved stick positions before resuming.</div>
+                <p class="deck-intro">Select a category, then a command. All commands remain available here without chords. Flight ON cannot bypass a nested page or settings capture.</p>
+                <div class="category-grid" role="group" aria-label="Command categories">
+                  <button class="category" data-category="weapons" aria-pressed="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 8h12l5 3v4h-9l-2 5H5l2-5H3zM15 8V5h5M15 11h7"/></svg><span>Weapons</span></button>
+                  <button class="category" data-category="payload" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 3h6l2 5v10l-5 3-5-3V8zM7 8h10M12 3v5M7 15l-3 3M17 15l3 3"/></svg><span>Payload</span></button>
+                  <button class="category" data-category="view" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 5h18v13H3zM8 21h8M12 18v3M7 11h3M14 11h3M12 8v6"/></svg><span>View &amp; HUD</span></button>
+                  <button class="category" data-category="flight" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m4 5 16 14M20 5 4 19M9 8h6v8H9z"/><circle cx="4" cy="5" r="3"/><circle cx="20" cy="5" r="3"/><circle cx="4" cy="19" r="3"/><circle cx="20" cy="19" r="3"/></svg><span>Flight</span></button>
+                  <button class="category" data-category="run" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m10 7 8 5-8 5zM4 6v12M21 4v16"/></svg><span>Run</span></button>
+                  <button class="category" data-category="settings" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 3v18M12 3v18M20 3v18M1 7h6M9 16h6M17 10h6"/></svg><span>Settings</span></button>
+                </div>
+                <div id="commands" hidden><h3 class="action-heading" id="action-heading">Weapons / Example commands</h3><div class="action-list" id="action-list" role="group" aria-labelledby="action-heading"></div></div>
+                <div class="menu-navigation"><strong>S2 Fire: fresh ON → OFF confirms.</strong><br><strong>S3 Weapon: fresh ON → OFF goes Back.</strong><br><strong>S4 Reload: View. S5 Payload: Retry confirmation. S6 Detonate: Settings.</strong><br>Center the navigation stick before selecting. A separate alternate navigation mode supports yaw hold, then center, for Confirm / Back; it never runs alongside yaw-based focus movement. The guided setup can use verified provisional Select / Back before stick calibration.</div>
+                <p class="navigation-note"><strong>Proposed radio:</strong> sticks navigate only while paused. <strong>This board:</strong> click, Tab, or use <kbd>←</kbd> <kbd>↑</kbd> <kbd>↓</kbd> <kbd>→</kbd> in the category grid. No double tap is required.</p>
+              </div>
+            </div>
+          </section>
+        </div>
+        <div class="feedback" role="status" aria-live="polite" aria-atomic="true"><span class="feedback-marker" aria-hidden="true">↳</span><div><small>Concept feedback</small><p id="feedback">Try S3 to preview a weapon change. Turn S1 Flight OFF to explore the paused command deck.</p></div></div>
+        <section class="principles" aria-label="Interaction rules">
+          <div><span class="principle-number">01 / FRESH ACTIVATION</span><h3>A held switch is not a new command.</h3><p>S3–S6 act on a fresh OFF → ON in flight. Menu confirmation and Back use a fresh ON → OFF cycle. After pause or reconnect, reset active controls before reuse. Switch numbers show roles; setup uses the player’s actual control names.</p></div>
+          <div><span class="principle-number">02 / FLIGHT STATE IS EXPLICIT</span><h3>OFF pauses. ON requests flight.</h3><p>Flight OFF opens the paused deck. Flight ON can arm or resume only from the resume-ready root after checks; it cannot bypass nested pages or settings capture.</p></div>
+          <div><span class="principle-number">03 / SEPARATE PAYLOAD COMMANDS</span><h3>Deploy or arm. Then detonate.</h3><p>S5 deploys the selected payload or arms a drone charge. S6 is a distinct detonation command. The paused menu provides the same choices without any chord or double tap.</p></div>
+        </section>
+      </main>
+      <footer><strong>Design exploration only.</strong> This file uses local illustration and example feedback. It does not read a controller, connect to a radio, save SIM preferences, arm a drone, fire a weapon, or implement these controls in the game.</footer>
+    </div>
+    <script>
+      (() => {
+        const $ = query => document.querySelector(query);
+        const tabs = [...document.querySelectorAll('[data-mode]')];
+        const switches = [...document.querySelectorAll('[data-switch]')];
+        const categories = [...document.querySelectorAll('[data-category]')];
+        const positions = [true, false, false, false, false, false];
+        const equipped = ['AUTOCANNON', 'PRECISION'];
+        let mode = 'normal', depth = 'root', category = 'weapons', selectedAction = 0, weaponIndex = 0;
+        const menus = {
+          weapons: ['Weapons', [
+            ['Cycle equipped weapon', 'S3', 'weapon'],
+            ['Reload current weapon', 'S4', 'reload'],
+            ['Choose two-weapon loadout', 'MENU', 'loadout'],
+            ['Inspect Fire control', 'S2', 'fire-control'],
+          ]],
+          payload: ['Payload', [
+            ['Deploy selected payload', 'S5', 'deploy'],
+            ['Arm drone charge', 'S5', 'arm-charge'],
+            ['Detonate eligible ordnance', 'S6', 'detonate'],
+            ['Choose payload type', 'MENU', 'payload-type'],
+          ]],
+          view: ['View & HUD', [
+            ['Switch FPV / Chase view', 'MENU', 'view'],
+            ['Adjust Chase distance', 'MENU', 'distance'],
+            ['Show / hide FPV propellers', 'MENU', 'props'],
+            ['Choose visible HUD widgets', 'MENU', 'hud'],
+          ]],
+          flight: ['Flight', [
+            ['Return to resume-ready root', 'S1 ON NEXT', 'resume-root'],
+            ['Service pad & repair guidance', 'MENU', 'service'],
+            ['Choose Self-level / Acro', 'MENU', 'flight-mode'],
+            ['Radio setup & calibration', 'MENU', 'radio'],
+          ]],
+          run: ['Run', [
+            ['Retry this attempt', 'CONFIRM', 'retry'],
+            ['Start a new run', 'CONFIRM', 'new-run'],
+            ['Choose level or activity', 'MENU', 'level'],
+            ['Save & leave attempt', 'CONFIRM', 'leave'],
+          ]],
+          settings: ['Settings', [
+            ['Sound & feedback', 'MENU', 'sound'],
+            ['Display & effects', 'MENU', 'display'],
+            ['Switch assignments', 'MENU', 'bindings'],
+            ['Menu navigation preferences', 'MENU', 'navigation'],
+          ]],
+        };
+        function say(text) { $('#feedback').textContent = text; }
+        function paintSwitches() {
+          positions[0] = mode === 'normal';
+          switches.forEach((button, index) => {
+            button.setAttribute('aria-pressed', String(positions[index]));
+            button.classList.toggle('changed', mode === 'menu' && (index === 1 || index === 2));
+            button.querySelector('.switch-position').textContent = index === 0
+              ? (positions[0] ? 'ON · FLIGHT' : 'OFF · PAUSED')
+              : positions[index] ? (mode === 'menu' && (index === 1 || index === 2) ? 'ON · RELEASE' : 'ON · RESET OFF')
+              : mode === 'menu' && (index === 1 || index === 2) ? 'ON → OFF' : index === 1 ? 'OFF' : 'OFF → ON';
+          });
+          $('#s2-hint').textContent = mode === 'menu' ? 'Paused: confirm on release' : 'Dedicated weapon trigger';
+          $('#s3-hint').textContent = mode === 'menu' ? 'Paused: Back on release' : 'Cycle equipped weapon';
+          $('#s4-hint').textContent = mode === 'menu' ? 'Paused: View controls' : 'Reload current weapon';
+          $('#s5-hint').textContent = mode === 'menu' ? 'Paused: Retry confirmation' : 'Deploy payload / arm charge';
+          switches[3].setAttribute('aria-label', mode === 'menu' ? 'S4 Reload. Fresh ON opens View controls.' : 'S4 Reload. Fresh ON reloads the current weapon.');
+          switches[4].setAttribute('aria-label', mode === 'menu' ? 'S5 Payload. Fresh ON opens Retry confirmation.' : 'S5 Deploy or arm payload. Fresh ON requests one action.');
+          $('#s6-hint').textContent = mode === 'menu' ? 'Paused: Settings' : 'Separate detonation command';
+          $('#weapon-preview').textContent = equipped[weaponIndex];
+        }
+        function paintDeck() {
+          const atRoot = depth === 'root';
+          $('#deck-route').textContent = atRoot ? 'ROOT / RESUME-READY' : `${menus[category][0].toUpperCase()} / FLIGHT INHIBITED`;
+          $('#resume-note').hidden = !atRoot;
+          $('#back').hidden = atRoot;
+          $('#commands').hidden = atRoot;
+          categories.forEach(button => button.setAttribute('aria-pressed', String(button.dataset.category === category)));
+          $('#action-heading').textContent = `${menus[category][0]} / Example commands`;
+          const list = $('#action-list');
+          list.replaceChildren();
+          menus[category][1].forEach(([label, shortcut, id], index) => {
+            const button = document.createElement('button');
+            button.className = 'menu-action';
+            button.setAttribute('aria-pressed', String(index === selectedAction));
+            const name = document.createElement('span'), key = document.createElement('span');
+            name.textContent = label; key.textContent = shortcut; button.append(name, key);
+            button.addEventListener('focus', () => {
+              selectedAction = index;
+              [...list.children].forEach((node, i) => node.setAttribute('aria-pressed', String(i === index)));
+            });
+            button.addEventListener('click', () => { selectedAction = index; action(id, true); });
+            button.addEventListener('keydown', event => {
+              if (!['ArrowDown', 'ArrowUp'].includes(event.key)) return;
+              event.preventDefault();
+              list.children[(index + (event.key === 'ArrowDown' ? 1 : list.children.length - 1)) % list.children.length].focus();
+            });
+            list.append(button);
+          });
+        }
+        function setMode(next, announce = true) {
+          mode = next; depth = 'root';
+          for (let i = 1; i < positions.length; i++) positions[i] = false;
+          tabs.forEach(tab => {
+            const active = tab.dataset.mode === mode;
+            tab.setAttribute('aria-selected', String(active)); tab.tabIndex = active ? 0 : -1;
+          });
+          const menu = mode === 'menu';
+          $('#workspace').setAttribute('aria-labelledby', `tab-${mode}`);
+          $('#flight-panel').hidden = menu; $('#menu-panel').hidden = !menu;
+          $('#mode-state').textContent = menu ? 'FLIGHT OFF / PAUSED COMMAND DECK' : 'FLIGHT ON / DEDICATED ACTIONS';
+          $('#preview-title').textContent = menu ? 'Paused command deck' : 'Flight controls';
+          $('#preview-caption').textContent = menu ? 'No chords or double taps' : 'Six dedicated positions';
+          $('#screen-label').textContent = menu ? 'FLIGHT OFF / STICK NAVIGATION' : 'FLIGHT ON / DEDICATED CONTROLS';
+          $('#screen-state').textContent = menu ? 'EXAMPLE MENU' : 'MAPPING PREVIEW';
+          $('#radio-context').textContent = menu ? 'Paused navigation preview.' : 'Flight mapping preview.';
+          paintSwitches(); paintDeck();
+          if (announce) say(menu
+            ? 'Concept: Flight OFF pauses before the deck accepts centered-stick navigation. Fresh Fire ON → OFF confirms; Weapon ON → OFF goes Back.'
+            : 'Flight mapping preview. This is an illustration, not an arm or resume command sent to the SIM.');
+        }
+        function back() {
+          if (depth === 'root') { say('Already at the resume-ready root. S1 Flight ON can now request resume after checks.'); return; }
+          depth = 'root'; selectedAction = 0; paintDeck();
+          say('Back to the resume-ready root. Center the sticks and use Flight ON for a new arm / resume request.');
+        }
+        function openCategory(next) {
+          category = next; depth = 'actions'; selectedAction = 0; paintDeck();
+          say(`Concept: ${menus[category][0]} is open. Flight remains paused. Choose an example command, or use fresh Weapon ON → OFF to go Back.`);
+        }
+        function moveSelection(direction) {
+          if (depth === 'root') {
+            const index = categories.findIndex(button => button.dataset.category === category);
+            category = categories[(index + direction + categories.length) % categories.length].dataset.category;
+          } else selectedAction = (selectedAction + direction + menus[category][1].length) % menus[category][1].length;
+          paintDeck();
+          say(`Paused navigation: ${depth === 'root' ? menus[category][0] : menus[category][1][selectedAction][0]} selected. Fresh Fire ON → OFF confirms; no combat action occurs.`);
+        }
+        function action(id, fromMenu = false) {
+          const prefix = fromMenu ? 'Menu concept' : 'Switch concept';
+          if (fromMenu && ['weapon', 'reload', 'deploy', 'arm-charge', 'detonate'].includes(id)) {
+            const entry = Object.values(menus).flatMap(value => value[1]).find(item => item[2] === id);
+            say(`Menu concept: stage “${entry[0]}” as one named operation. It does not execute while paused or on resume. After explicit resume and input pickup, fresh Fire executes it once; Fire must return OFF before ordinary firing. This board only illustrates that flow.`);
+            return;
+          }
+          if (id === 'weapon') {
+            weaponIndex = (weaponIndex + 1) % equipped.length; paintSwitches();
+            say(`${prefix}: selected ${equipped[weaponIndex].toLowerCase()}. One fresh activation advances one equipped slot.`);
+          } else if (id === 'resume-root') back();
+          else if (id === 'reload') say(`${prefix}: request one reload of the current weapon. The menu offers the same command as S4.`);
+          else if (id === 'deploy') say(`${prefix}: request one selected-payload deployment, or arm the selected drone charge. This never also detonates; S6 is a separate command.`);
+          else if (id === 'detonate') say(`${prefix}: request detonation of eligible ordnance. Deployment or arming must happen separately. No explosion or game action is created by this board.`);
+          else if (id === 'arm-charge') say('Menu concept: arm a drone charge. Detonation remains a different fresh command. Nothing is armed by this board.');
+          else if (id === 'fire-control') say('Menu concept: inspect or reassign S2 Fire. While paused, a fresh Fire ON → OFF confirms a menu choice; it cannot fire a weapon.');
+          else {
+            const entry = Object.values(menus).flatMap(value => value[1]).find(item => item[2] === id);
+            say(`Menu concept: “${entry[0]}” would open its control${['retry', 'new-run', 'leave'].includes(id) ? ' with an explicit confirmation' : ''}. Flight remains inhibited until this page is closed and the root is resume-ready. No SIM data changed.`);
+          }
+        }
+        function resumeRequest() {
+          if (depth !== 'root') {
+            say('Resume inhibited: this is a nested menu. Use Weapon ON → OFF to go Back, then make a fresh Flight ON request from the resume-ready root. Settings capture cannot be bypassed.');
+            return;
+          }
+          setMode('normal', false);
+          say('Concept: a fresh Flight ON requests Arm / Resume from the root after normal checks. Fire and payload controls need fresh activation. The actual SIM is unchanged.');
+        }
+        tabs.forEach((tab, index) => {
+          tab.addEventListener('click', () => {
+            if (tab.dataset.mode === 'normal' && mode === 'menu') resumeRequest();
+            else setMode(tab.dataset.mode);
+          });
+          tab.addEventListener('keydown', event => {
+            let target;
+            if (event.key === 'ArrowRight') target = (index + 1) % tabs.length;
+            if (event.key === 'ArrowLeft') target = (index + tabs.length - 1) % tabs.length;
+            if (event.key === 'Home') target = 0;
+            if (event.key === 'End') target = tabs.length - 1;
+            if (target !== undefined) { event.preventDefault(); tabs[target].focus(); tabs[target].click(); }
+          });
+        });
+        switches.forEach((button, index) => button.addEventListener('click', () => {
+          if (index === 0) { if (mode === 'normal') setMode('menu'); else resumeRequest(); return; }
+          if (mode === 'menu') {
+            if (index >= 3) {
+              positions[index] = !positions[index]; paintSwitches();
+              if (positions[index]) {
+                if (index === 3) openCategory('view');
+                else if (index === 4) { openCategory('run'); say('Retry requires a separate confirmation with Cancel first. This concept does not restart anything.'); }
+                else openCategory('settings');
+              } else say(`S${index + 1} reset OFF. Its paused shortcut is ready again. No combat command occurs.`);
+              return;
+            }
+            positions[index] = !positions[index]; paintSwitches();
+            if (positions[index]) {
+              say(`S${index + 1} ON: return it OFF to ${index === 1 ? 'confirm the selected menu item' : 'go Back'}. Holding ON does not repeat a command.`);
+            } else if (index === 2) back();
+            else if (depth === 'root') openCategory(category);
+            else action(menus[category][1][selectedAction][2], true);
+            return;
+          }
+          positions[index] = !positions[index]; paintSwitches();
+          if (index === 1) {
+            say(`S2 concept: ${positions[index] ? 'Fire held ON after fresh activation' : 'Fire released'}. No shots are fired here.`); return;
+          }
+          if (positions[index]) action({2: 'weapon', 3: 'reload', 4: 'deploy', 5: 'detonate'}[index]);
+          else say(`S${index + 1} reset OFF. The next fresh ON activation may perform one action. No held-switch repetition.`);
+        }));
+        $('#back').addEventListener('click', back);
+        categories.forEach((button, index) => {
+          button.addEventListener('click', () => openCategory(button.dataset.category));
+          button.addEventListener('focus', () => {
+            if (depth !== 'root') return;
+            category = button.dataset.category;
+            categories.forEach(item => item.setAttribute('aria-pressed', String(item === button)));
+          });
+          button.addEventListener('keydown', event => {
+            if (mode !== 'menu') return;
+            const movement = { ArrowRight: 1, ArrowLeft: -1, ArrowDown: 3, ArrowUp: -3 }[event.key];
+            if (!movement) return;
+            event.preventDefault();
+            const next = categories[(index + movement + categories.length) % categories.length];
+            category = next.dataset.category;
+            if (depth !== 'root') openCategory(category);
+            else paintDeck();
+            next.focus();
+          });
+        });
+        setMode('normal', false);
+      })();
+    </script>
+  </body>
+</html>

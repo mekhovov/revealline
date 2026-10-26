@@ -1,0 +1,115 @@
+TAP version 13
+# Subtest: art hydration and selection never download; missing Realistic keeps Current playable
+ok 1 - art hydration and selection never download; missing Realistic keeps Current playable
+  ---
+  duration_ms: 0.629459
+  ...
+# Subtest: verified cached art is restored independently of destructive-effects preferences
+ok 2 - verified cached art is restored independently of destructive-effects preferences
+  ---
+  duration_ms: 0.323959
+  ...
+# Subtest: only explicit successful download saves and selects the admitted pack
+ok 3 - only explicit successful download saves and selects the admitted pack
+  ---
+  duration_ms: 0.144125
+  ...
+# Subtest: bad and cancelled downloads preserve current art and never cache partial bytes
+ok 4 - bad and cancelled downloads preserve current art and never cache partial bytes
+  ---
+  duration_ms: 0.210541
+  ...
+# Subtest: quota failure retains an admitted session pack with an explicit storage notice
+ok 5 - quota failure retains an admitted session pack with an explicit storage notice
+  ---
+  duration_ms: 0.103917
+  ...
+# Subtest: late hydration cannot reopen a disposed owner or leave loaded art retained
+ok 6 - late hydration cannot reopen a disposed owner or leave loaded art retained
+  ---
+  duration_ms: 0.068333
+  ...
+# Subtest: invalid cached art stays Current until an explicit verified replacement is saved
+ok 7 - invalid cached art stays Current until an explicit verified replacement is saved
+  ---
+  duration_ms: 0.137166
+  ...
+# Subtest: encounter defaults follow the selected level and explicit historical launches
+ok 8 - encounter defaults follow the selected level and explicit historical launches
+  ---
+  duration_ms: 0.604916
+  ...
+# Subtest: learning and other choices persist independently; invalid choices are ignored
+ok 9 - learning and other choices persist independently; invalid choices are ignored
+  ---
+  duration_ms: 0.366083
+  ...
+# Subtest: retry overrides retain activity, difficulty, population and seed
+ok 10 - retry overrides retain activity, difficulty, population and seed
+  ---
+  duration_ms: 0.119
+  ...
+# Subtest: combat recovery never applies a late presentation to a replacement flight
+ok 11 - combat recovery never applies a late presentation to a replacement flight
+  ---
+  duration_ms: 30.086083
+  ...
+# Subtest: public unscored map launches keep combat defaults and remembered activity while authoring remains original
+ok 12 - public unscored map launches keep combat defaults and remembered activity while authoring remains original
+  ---
+  duration_ms: 1.563
+  ...
+# Subtest: Studio carries a companion baseline across edits to the same source, but not another map
+ok 13 - Studio carries a companion baseline across edits to the same source, but not another map
+  ---
+  duration_ms: 2.11375
+  ...
+# Subtest: closing Studio preview during preparation disposes once and never starts a hidden frame loop
+ok 14 - closing Studio preview during preparation disposes once and never starts a hidden frame loop
+  ---
+  duration_ms: 2.975417
+  ...
+# Subtest: closing Studio during optional art preparation never prepares a disposed renderer
+ok 15 - closing Studio during optional art preparation never prepares a disposed renderer
+  ---
+  duration_ms: 2.904792
+  ...
+# Subtest: Studio preview failures clean up and animation uses the simulator fifty-Hz clock
+ok 16 - Studio preview failures clean up and animation uses the simulator fifty-Hz clock
+  ---
+  duration_ms: 6.54025
+  ...
+# Subtest: Studio companion export/import and undo/redo preserve exact schema and author IDs
+ok 17 - Studio companion export/import and undo/redo preserve exact schema and author IDs
+  ---
+  duration_ms: 4.2615
+  ...
+# Subtest: source reimport resolves missing stable IDs visibly and keeps authored field overrides
+ok 18 - source reimport resolves missing stable IDs visibly and keeps authored field overrides
+  ---
+  duration_ms: 3.598375
+  ...
+# Subtest: invalid geometry, bounds, duplicate IDs and host rejection are atomic
+ok 19 - invalid geometry, bounds, duplicate IDs and host rejection are atomic
+  ---
+  duration_ms: 1.232208
+  ...
+# Subtest: mounted Studio edits metres, shield family and previews the exact accepted runtime definition
+ok 20 - mounted Studio edits metres, shield family and previews the exact accepted runtime definition
+  ---
+  duration_ms: 3.423958
+  ...
+# Subtest: saved companions from an older map revision stay readable for explicit source reimport
+ok 21 - saved companions from an older map revision stay readable for explicit source reimport
+  ---
+  duration_ms: 2.051417
+  ...
+1..21
+# tests 21
+# suites 0
+# pass 21
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 367.860042

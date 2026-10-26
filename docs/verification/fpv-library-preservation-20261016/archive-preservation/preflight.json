@@ -1,0 +1,368 @@
+{
+  "format": "fpv-original-archive-preflight.v1",
+  "capturedAt": "2026-10-16T03:33:07.558431+00:00",
+  "paths": 17,
+  "uniqueDigests": 17,
+  "totalPathBytes": 333550485,
+  "uniqueBytes": 333550485,
+  "archives": [
+    {
+      "originalPath": "/Volumes/alex/CodexMigrationStaging/fpv-package-qualification-20261014/regional-family-library-81c0d658/company-original-artifact.zip",
+      "qualifierDirectory": "regional-family-library-81c0d658",
+      "originalName": "company-original-artifact.zip",
+      "bytes": 78418136,
+      "sha256": "40138377866713e03bf7ce8e4c48ec8f5e28ec865cea904a0e2d3adc6053aeb2",
+      "sourceBefore": {
+        "bytes": 78418136,
+        "mtimeNs": 1792118116455480900
+      },
+      "sourceStableDuringPreflight": true,
+      "memberInspection": {
+        "members": 2288,
+        "uncompressedBytes": 214156200,
+        "nestedArchives": 2,
+        "forbiddenNames": [],
+        "secretPatternMembers": []
+      },
+      "inspectionPassed": true
+    },
+    {
+      "originalPath": "/Volumes/alex/CodexMigrationStaging/fpv-package-qualification-20261014/regional-family-library-81c0d658/distribution-optional-civilian-flight.zip",
+      "qualifierDirectory": "regional-family-library-81c0d658",
+      "originalName": "distribution-optional-civilian-flight.zip",
+      "bytes": 3762262,
+      "sha256": "4bfee7444065b619191d4eca261636c46278d4d3b1b98a23fbafb2f11bda25ab",
+      "sourceBefore": {
+        "bytes": 3762262,
+        "mtimeNs": 1792116456061921800
+      },
+      "sourceStableDuringPreflight": true,
+      "memberInspection": {
+        "members": 94,
+        "uncompressedBytes": 3748578,
+        "nestedArchives": 0,
+        "forbiddenNames": [],
+        "secretPatternMembers": []
+      },
+      "inspectionPassed": true
+    },
+    {
+      "originalPath": "/Volumes/alex/CodexMigrationStaging/fpv-package-qualification-20261014/regional-family-library-81c0d658/distribution-optional-civilian-fpv.zip",
+      "qualifierDirectory": "regional-family-library-81c0d658",
+      "originalName": "distribution-optional-civilian-fpv.zip",
+      "bytes": 6781322,
+      "sha256": "a8fc25331fa42acda229c4f76d5d3a2d233b627c2638aeca624287fd65199c5c",
+      "sourceBefore": {
+        "bytes": 6781322,
+        "mtimeNs": 1792116454818905600
+      },
+      "sourceStableDuringPreflight": true,
+      "memberInspection": {
+        "members": 101,
+        "uncompressedBytes": 6766304,
+        "nestedArchives": 0,
+        "forbiddenNames": [],
+        "secretPatternMembers": []
+      },
+      "inspectionPassed": true
+    },
+    {
+      "originalPath": "/Volumes/alex/CodexMigrationStaging/fpv-package-qualification-20261014/regional-family-library-81c0d658/distribution-optional-fpv-worlds.zip",
+      "qualifierDirectory": "regional-family-library-81c0d658",
+      "originalName": "distribution-optional-fpv-worlds.zip",
+      "bytes": 17600770,
+      "sha256": "c1152ca1a81b451387bce73e5034479d16943565faac05410a1c281893326113",
+      "sourceBefore": {
+        "bytes": 17600770,
+        "mtimeNs": 1792116455698245800
+      },
+      "sourceStableDuringPreflight": true,
+      "memberInspection": {
+        "members": 162,
+        "uncompressedBytes": 17574342,
+        "nestedArchives": 0,
+        "forbiddenNames": [],
+        "secretPatternMembers": [
+          "distribution-optional-fpv-worlds.zip!optional-practice/civilian-fpv/vendor/rapier/rapier.mjs"
+        ]
+      },
+      "inspectionPassed": false
+    },
+    {
+      "originalPath": "/Volumes/alex/CodexMigrationStaging/fpv-package-qualification-20261014/regional-family-library-81c0d658/github-artifact.zip",
+      "qualifierDirectory": "regional-family-library-81c0d658",
+      "originalName": "github-artifact.zip",
+      "bytes": 23157373,
+      "sha256": "5de33cab799f59cd889d54fd979cba95435c461ee0be92c161931072cefbdeb1",
+      "sourceBefore": {
+        "bytes": 23157373,
+        "mtimeNs": 1792116370991002800
+      },
+      "sourceStableDuringPreflight": true,
+      "memberInspection": {
+        "members": 736,
+        "uncompressedBytes": 112880362,
+        "nestedArchives": 6,
+        "forbiddenNames": [],
+        "secretPatternMembers": [
+          "github-artifact.zip!distribution-optional-fpv-worlds.zip!optional-practice/civilian-fpv/vendor/rapier/rapier.mjs",
+          "github-artifact.zip!source-optional-fpv-worlds.zip!optional-practice/civilian-fpv/vendor/rapier/rapier.mjs"
+        ]
+      },
+      "inspectionPassed": false
+    },
+    {
+      "originalPath": "/Volumes/alex/CodexMigrationStaging/fpv-package-qualification-20261014/regional-family-library-81c0d658/source-optional-civilian-flight.zip",
+      "qualifierDirectory": "regional-family-library-81c0d658",
+      "originalName": "source-optional-civilian-flight.zip",
+      "bytes": 3797326,
+      "sha256": "0f055ccd5e09fcda3559ca110c11b3e72b27432fe638e2fb509a1d56fbfdf78e",
+      "sourceBefore": {
+        "bytes": 3797326,
+        "mtimeNs": 1792116458286713800
+      },
+      "sourceStableDuringPreflight": true,
+      "memberInspection": {
+        "members": 96,
+        "uncompressedBytes": 3783306,
+        "nestedArchives": 0,
+        "forbiddenNames": [],
+        "secretPatternMembers": []
+      },
+      "inspectionPassed": true
+    },
+    {
+      "originalPath": "/Volumes/alex/CodexMigrationStaging/fpv-package-qualification-20261014/regional-family-library-81c0d658/source-optional-civilian-fpv.zip",
+      "qualifierDirectory": "regional-family-library-81c0d658",
+      "originalName": "source-optional-civilian-fpv.zip",
+      "bytes": 6817787,
+      "sha256": "6143bf21e99da57cd2ca33b1935f2c1cdf2636cbad8590b3b5ee116a6c7889ee",
+      "sourceBefore": {
+        "bytes": 6817787,
+        "mtimeNs": 1792116458758929700
+      },
+      "sourceStableDuringPreflight": true,
+      "memberInspection": {
+        "members": 103,
+        "uncompressedBytes": 6802465,
+        "nestedArchives": 0,
+        "forbiddenNames": [],
+        "secretPatternMembers": []
+      },
+      "inspectionPassed": true
+    },
+    {
+      "originalPath": "/Volumes/alex/CodexMigrationStaging/fpv-package-qualification-20261014/regional-family-library-81c0d658/source-optional-fpv-worlds.zip",
+      "qualifierDirectory": "regional-family-library-81c0d658",
+      "originalName": "source-optional-fpv-worlds.zip",
+      "bytes": 17645783,
+      "sha256": "8e61b502b1e2822926e0e98fdc4824f202bd7de36997d8b90f5d393909a706e0",
+      "sourceBefore": {
+        "bytes": 17645783,
+        "mtimeNs": 1792116459611076800
+      },
+      "sourceStableDuringPreflight": true,
+      "memberInspection": {
+        "members": 164,
+        "uncompressedBytes": 17619051,
+        "nestedArchives": 0,
+        "forbiddenNames": [],
+        "secretPatternMembers": [
+          "source-optional-fpv-worlds.zip!optional-practice/civilian-fpv/vendor/rapier/rapier.mjs"
+        ]
+      },
+      "inspectionPassed": false
+    },
+    {
+      "originalPath": "/Volumes/alex/CodexMigrationStaging/fpv-package-qualification-20261014/regional-family-library-8ab04b8d/company-original-artifact.zip",
+      "qualifierDirectory": "regional-family-library-8ab04b8d",
+      "originalName": "company-original-artifact.zip",
+      "bytes": 78418184,
+      "sha256": "c12dce2a7f0b333ee101417728baa287b79ad8497f782c3976c9e48cbd0e0df6",
+      "sourceBefore": {
+        "bytes": 78418184,
+        "mtimeNs": 1792119638146920400
+      },
+      "sourceStableDuringPreflight": true,
+      "memberInspection": {
+        "members": 2288,
+        "uncompressedBytes": 214156200,
+        "nestedArchives": 2,
+        "forbiddenNames": [],
+        "secretPatternMembers": []
+      },
+      "inspectionPassed": true
+    },
+    {
+      "originalPath": "/Volumes/alex/CodexMigrationStaging/fpv-package-qualification-20261014/regional-family-library-8ab04b8d/distribution-optional-civilian-flight.zip",
+      "qualifierDirectory": "regional-family-library-8ab04b8d",
+      "originalName": "distribution-optional-civilian-flight.zip",
+      "bytes": 3762262,
+      "sha256": "a3c013d6fe89814860b3988da5d72519d0b091bb312f94d9db5cd7b6f1d47cf7",
+      "sourceBefore": {
+        "bytes": 3762262,
+        "mtimeNs": 1792118167198247600
+      },
+      "sourceStableDuringPreflight": true,
+      "memberInspection": {
+        "members": 94,
+        "uncompressedBytes": 3748578,
+        "nestedArchives": 0,
+        "forbiddenNames": [],
+        "secretPatternMembers": []
+      },
+      "inspectionPassed": true
+    },
+    {
+      "originalPath": "/Volumes/alex/CodexMigrationStaging/fpv-package-qualification-20261014/regional-family-library-8ab04b8d/distribution-optional-civilian-fpv.zip",
+      "qualifierDirectory": "regional-family-library-8ab04b8d",
+      "originalName": "distribution-optional-civilian-fpv.zip",
+      "bytes": 6781322,
+      "sha256": "69d52d6003d6fb8d514fd638e2f2c52f669a3fb50a780c6bbbbb8224091684b8",
+      "sourceBefore": {
+        "bytes": 6781322,
+        "mtimeNs": 1792118167661296800
+      },
+      "sourceStableDuringPreflight": true,
+      "memberInspection": {
+        "members": 101,
+        "uncompressedBytes": 6766304,
+        "nestedArchives": 0,
+        "forbiddenNames": [],
+        "secretPatternMembers": []
+      },
+      "inspectionPassed": true
+    },
+    {
+      "originalPath": "/Volumes/alex/CodexMigrationStaging/fpv-package-qualification-20261014/regional-family-library-8ab04b8d/distribution-optional-fpv-worlds.zip",
+      "qualifierDirectory": "regional-family-library-8ab04b8d",
+      "originalName": "distribution-optional-fpv-worlds.zip",
+      "bytes": 17601020,
+      "sha256": "47ae369ca6fcf448e5a75e552ce1a4323b0f464ec67565535eeab24f3177b1cf",
+      "sourceBefore": {
+        "bytes": 17601020,
+        "mtimeNs": 1792118168743706500
+      },
+      "sourceStableDuringPreflight": true,
+      "memberInspection": {
+        "members": 162,
+        "uncompressedBytes": 17574592,
+        "nestedArchives": 0,
+        "forbiddenNames": [],
+        "secretPatternMembers": [
+          "distribution-optional-fpv-worlds.zip!optional-practice/civilian-fpv/vendor/rapier/rapier.mjs"
+        ]
+      },
+      "inspectionPassed": false
+    },
+    {
+      "originalPath": "/Volumes/alex/CodexMigrationStaging/fpv-package-qualification-20261014/regional-family-library-8ab04b8d/github-artifact.zip",
+      "qualifierDirectory": "regional-family-library-8ab04b8d",
+      "originalName": "github-artifact.zip",
+      "bytes": 23157547,
+      "sha256": "e75ad312329bfe2a8e004855a080f7de0f612de91f209748dddaf75ce2bc29d1",
+      "sourceBefore": {
+        "bytes": 23157547,
+        "mtimeNs": 1792118094567130100
+      },
+      "sourceStableDuringPreflight": true,
+      "memberInspection": {
+        "members": 736,
+        "uncompressedBytes": 112881362,
+        "nestedArchives": 6,
+        "forbiddenNames": [],
+        "secretPatternMembers": [
+          "github-artifact.zip!distribution-optional-fpv-worlds.zip!optional-practice/civilian-fpv/vendor/rapier/rapier.mjs",
+          "github-artifact.zip!source-optional-fpv-worlds.zip!optional-practice/civilian-fpv/vendor/rapier/rapier.mjs"
+        ]
+      },
+      "inspectionPassed": false
+    },
+    {
+      "originalPath": "/Volumes/alex/CodexMigrationStaging/fpv-package-qualification-20261014/regional-family-library-8ab04b8d/source-optional-civilian-flight.zip",
+      "qualifierDirectory": "regional-family-library-8ab04b8d",
+      "originalName": "source-optional-civilian-flight.zip",
+      "bytes": 3797326,
+      "sha256": "8ff04917062cb5486512d160d0cabbed1e55f5e8f7cdf628b7a7d025f3e05241",
+      "sourceBefore": {
+        "bytes": 3797326,
+        "mtimeNs": 1792118171508277100
+      },
+      "sourceStableDuringPreflight": true,
+      "memberInspection": {
+        "members": 96,
+        "uncompressedBytes": 3783306,
+        "nestedArchives": 0,
+        "forbiddenNames": [],
+        "secretPatternMembers": []
+      },
+      "inspectionPassed": true
+    },
+    {
+      "originalPath": "/Volumes/alex/CodexMigrationStaging/fpv-package-qualification-20261014/regional-family-library-8ab04b8d/source-optional-civilian-fpv.zip",
+      "qualifierDirectory": "regional-family-library-8ab04b8d",
+      "originalName": "source-optional-civilian-fpv.zip",
+      "bytes": 6817787,
+      "sha256": "135971f6b79c13b641db1a065e3ae252e4f131950499bcd41b806dc0389cb695",
+      "sourceBefore": {
+        "bytes": 6817787,
+        "mtimeNs": 1792118171930957600
+      },
+      "sourceStableDuringPreflight": true,
+      "memberInspection": {
+        "members": 103,
+        "uncompressedBytes": 6802465,
+        "nestedArchives": 0,
+        "forbiddenNames": [],
+        "secretPatternMembers": []
+      },
+      "inspectionPassed": true
+    },
+    {
+      "originalPath": "/Volumes/alex/CodexMigrationStaging/fpv-package-qualification-20261014/regional-family-library-8ab04b8d/source-optional-fpv-worlds.zip",
+      "qualifierDirectory": "regional-family-library-8ab04b8d",
+      "originalName": "source-optional-fpv-worlds.zip",
+      "bytes": 17646033,
+      "sha256": "341bc2cd2392c88468e252e30ed552a81d7df6fd0280a03c67a75680cf0e637c",
+      "sourceBefore": {
+        "bytes": 17646033,
+        "mtimeNs": 1792118172952769900
+      },
+      "sourceStableDuringPreflight": true,
+      "memberInspection": {
+        "members": 164,
+        "uncompressedBytes": 17619301,
+        "nestedArchives": 0,
+        "forbiddenNames": [],
+        "secretPatternMembers": [
+          "source-optional-fpv-worlds.zip!optional-practice/civilian-fpv/vendor/rapier/rapier.mjs"
+        ]
+      },
+      "inspectionPassed": false
+    },
+    {
+      "originalPath": "/Volumes/alex/CodexMigrationStaging/fpv-package-qualification-20261014/library-metadata-bc9bc71f/distribution-optional-fpv-worlds.zip",
+      "qualifierDirectory": "library-metadata-bc9bc71f",
+      "originalName": "distribution-optional-fpv-worlds.zip",
+      "bytes": 17588245,
+      "sha256": "90d2cabcebd8c4647f6abced993dfb5c40f4a19bd5829a0e15c0b5bfc321f692",
+      "sourceBefore": {
+        "bytes": 17588245,
+        "mtimeNs": 1792113323186480500
+      },
+      "sourceStableDuringPreflight": true,
+      "memberInspection": {
+        "members": 162,
+        "uncompressedBytes": 17561817,
+        "nestedArchives": 0,
+        "forbiddenNames": [],
+        "secretPatternMembers": [
+          "distribution-optional-fpv-worlds.zip!optional-practice/civilian-fpv/vendor/rapier/rapier.mjs"
+        ]
+      },
+      "inspectionPassed": false
+    }
+  ],
+  "allPassed": false,
+  "scope": "Streamed original-file SHA256, stable size/mtime, recursive original ZIP member names and credential-pattern inspection. No extraction, archive mutation, browser or player database access."
+}

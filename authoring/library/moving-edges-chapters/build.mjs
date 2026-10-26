@@ -26,9 +26,7 @@ export async function readPinned(file, limit, expected) {
   if (expected !== undefined) assert.equal(digest(bytes), expected, `Exact source: ${file}`);
   return bytes;
 }
-export const THEME_IDS = Object.freeze(['fpv',
-'ukraine',
-'retro']);
+export const THEME_IDS = Object.freeze(['fpv', 'ukraine', 'retro']);
 export const EDITIONS_FILE = 'authoring/library/moving-edges-chapters/editions.json';
 export const INPUTS = Object.freeze({
   'authoring/library/moving-edges/build.mjs':

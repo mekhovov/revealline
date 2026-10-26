@@ -360,8 +360,10 @@ test('a disposed audio owner ignores persisted pageshow without reading storage'
 
 test('new audio intent or disposal during a restoration read rejects its captured unmute', () => {
   for (const dispose of [false, true]) {
-    const f = fixture({ raw: encode(true, 0.3) });
+    const f = fixture({ raw: encode(true, 0.3) }),
+      read = f.storage.getItem;
     f.storage.getItem = () => {
+      f.storage.getItem = read;
       if (dispose) f.preferences.dispose();
       else f.preferences.setVolume(0.1);
       return encode(false, 0.8);
@@ -371,6 +373,76 @@ test('new audio intent or disposal during a restoration read rejects its capture
     assert.equal(f.writes.length, dispose ? 0 : 1);
   }
 });
+
+test('unconfirmed audio storage keeps session intent and clears its warning only after verified persistence', () => {
+  const notices = [],
+    f = fixture({
+      raw: encode(true, 0.3),
+      onWarning: (message, key) => notices.push({ message, key }),
+    }),
+    write = f.storage.setItem;
+  f.storage.setItem = () => {};
+  f.preferences.setVolume(0.4);
+  assert.equal(f.master.snapshot().volume, 0.4);
+  assert.match(f.preferences.getWarning(), /could not be saved/);
+  assert.equal(f.preferences.getWarningKey(), 'common:preferences.audioSaveFailed');
+  assert.deepEqual(notices.at(-1), {
+    message: f.preferences.getWarning(),
+    key: f.preferences.getWarningKey(),
+  });
+
+  f.data.set(AUDIO_PREFERENCES_KEY, encode(false, 0.9));
+  f.event(encode(false, 0.9));
+  f.restore();
+  assert.deepEqual(state(f.master), { muted: true, volume: 0.4 });
+  f.storage.setItem = write;
+  f.preferences.setVolume(0.4);
+  assert.equal(f.data.get(AUDIO_PREFERENCES_KEY), encode(true, 0.4));
+  assert.equal(f.preferences.getWarning(), '');
+  assert.equal(f.preferences.getWarningKey(), '');
+  assert.deepEqual(notices.at(-1), { message: '', key: '' });
+});
+
+test('read-only audio warning has a distinct localization key until a verified explicit save', () => {
+  let allowed = false;
+  const f = fixture({ writable: () => allowed });
+  f.preferences.setMuted(false);
+  assert.equal(f.preferences.getWarningKey(), 'common:preferences.audioSessionOnly');
+  assert.deepEqual(f.writes, []);
+  allowed = true;
+  f.preferences.setVolume(0.4);
+  assert.equal(f.preferences.getWarningKey(), '');
+  assert.equal(f.preferences.getWarning(), '');
+});
+
+for (const replacement of ['newer-success', 'newer-failure', 'disposed'])
+  test(`an old audio verification read cannot replace ${replacement} feedback`, () => {
+    const f = fixture({ raw: encode(true, 0.3) }),
+      read = f.storage.getItem,
+      write = f.storage.setItem;
+    f.storage.setItem = () => {
+      throw new Error('Storage blocked');
+    };
+    f.preferences.setVolume(0.4);
+    const warning = f.preferences.getWarning();
+    f.storage.setItem = write;
+    f.storage.getItem = () => {
+      f.storage.getItem = read;
+      if (replacement === 'disposed') f.preferences.dispose();
+      else {
+        if (replacement === 'newer-failure') f.storage.setItem = () => {};
+        f.preferences.setVolume(0.8);
+      }
+      return encode(true, 0.5);
+    };
+    f.preferences.setVolume(0.5);
+    assert.equal(f.master.snapshot().volume, replacement === 'disposed' ? 0.5 : 0.8);
+    assert.equal(f.preferences.getWarning(), replacement === 'newer-success' ? '' : warning);
+    assert.equal(
+      f.data.get(AUDIO_PREFERENCES_KEY),
+      encode(true, replacement === 'newer-success' ? 0.8 : 0.5),
+    );
+  });
 
 test('new mute intent or disposal while restoring the fader prevents the later unmute', () => {
   for (const dispose of [false, true]) {
@@ -435,3 +507,37 @@ test('a mute recovered on persisted pageshow wins over late audio activation', a
   assert.deepEqual(state(f.master), { muted: true, volume: 0.7 });
   assert.deepEqual(f.writes, []);
 });
+
+for (const [label, module, name] of [
+  ['World', '../../optional-practice/civilian-fpv/world-reaction-runtime.mjs', 'createWorldAudio'],
+  ['Academy', '../../optional-practice/civilian-fpv/sim-presentation.mjs', 'createSimFlightAudio'],
+])
+  test(`${label} generated audio preserves unconfirmed local volume until a verified save`, async (t) => {
+    const create = (await import(module))[name],
+      host = new EventTarget(),
+      data = new Map([[AUDIO_PREFERENCES_KEY, encode(true, 0.3)]]);
+    let working = false;
+    const storage = {
+      getItem: (key) => data.get(key) ?? null,
+      setItem: (key, value) => {
+        if (working) data.set(key, value);
+      },
+    };
+    const audio = create({ window: host, storage });
+    t.after(() => audio.dispose());
+    audio.setMasterVolume(0.4);
+    const remote = encode(false, 0.9);
+    data.set(AUDIO_PREFERENCES_KEY, remote);
+    host.dispatchEvent(
+      Object.assign(new Event('storage'), {
+        key: AUDIO_PREFERENCES_KEY,
+        storageArea: storage,
+        newValue: remote,
+      }),
+    );
+    assert.equal(audio.masterSnapshot().muted, true);
+    assert.equal(audio.masterSnapshot().volume, 0.4);
+    working = true;
+    audio.setMasterVolume(0.4);
+    assert.equal(data.get(AUDIO_PREFERENCES_KEY), encode(true, 0.4));
+  });

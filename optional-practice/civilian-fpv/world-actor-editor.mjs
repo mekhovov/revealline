@@ -3,6 +3,12 @@ import { renderPursuitEditor, removePursuitActor } from './world-pursuit-editor.
 import { worldEnemyGuide } from './world-enemy-guide.mjs';
 import { boundedJSON, exactKeys } from '../../game/data-json.mjs';
 import { ACTOR_CASTS } from '../../game/hunt/actor-catalog.mjs';
+export {
+  mountEncounterEditor,
+  validateEncounterStudioBundle,
+  createEncounterStudioSession,
+  reconcileEncounterSource,
+} from './world-encounter-editor.mjs';
 import { drawHuntActor } from '../../game/hunt/actor-art.mjs';
 import { sharedActorAppearance } from '../../game/hunt/preferences.mjs';
 
@@ -21,11 +27,11 @@ const LABELS = {
   hazard: ['Moving hazard', 'Рухома перешкода'],
   role: ['Actor role', 'Роль персонажа'],
   hostile: ['Hostile · pulse combat', 'Ворожий · імпульсний бій'],
-  rival: ['Rival · no weapons or damage', 'Суперник · без зброї та шкоди'],
+  rival: ['Rival · does not attack', 'Суперник · не атакує'],
   civilian: ['Civilian · background movement', 'Цивільний · фоновий рух'],
   roleHelp: [
-    'Rivals and civilians cannot be damaged or caught. Changing role removes this actor from defeat and Contact Hunt objectives. An emptied objective is removed; if no objectives remain, a short survival objective is added.',
-    'Суперників і цивільних не можна пошкодити чи спіймати. Зміна ролі вилучає персонажа із завдань знешкодження й контактного полювання. Порожнє завдання видаляється; якщо завдань не лишилось, додається коротке виживання.',
+    'All characters can be destroyed in new live runs. A lesson subject returns after a safe delay if it is still needed. Roles control behavior. Changing role removes this actor from defeat and Contact Hunt objectives; an empty course receives a short survival objective.',
+    'У нових польотах можна знищити всіх персонажів. Потрібний для уроку персонаж повернеться після безпечної затримки. Ролі визначають поведінку. Зміна ролі вилучає персонажа із завдань знешкодження й контактного полювання; порожній курс отримує коротке завдання на виживання.',
   ],
   add: ['Add actor', 'Додати персонажа'],
   remove: ['Remove actor', 'Видалити персонажа'],

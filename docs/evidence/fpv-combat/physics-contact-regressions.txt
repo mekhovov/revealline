@@ -1,0 +1,385 @@
+TAP version 13
+# Subtest: motion coverage preserves collision-query validation without performing collision work
+ok 1 - motion coverage preserves collision-query validation without performing collision work
+  ---
+  duration_ms: 1.139292
+  ...
+# Subtest: verified motion coverage matches complete swept-cell readiness for every geometry profile
+ok 2 - verified motion coverage matches complete swept-cell readiness for every geometry profile
+  ---
+  duration_ms: 85.4945
+  ...
+# Subtest: Advanced admits every substep with coverage only and rolls back coverage failures
+ok 3 - Advanced admits every substep with coverage only and rolls back coverage failures
+  ---
+  duration_ms: 149.193667
+  ...
+# Subtest: Regional Advanced uses verified terrain and frozen portable rates while presenting an unscored 50 Hz flight
+ok 4 - Regional Advanced uses verified terrain and frozen portable rates while presenting an unscored 50 Hz flight
+  ---
+  duration_ms: 54.414125
+  ...
+# Subtest: verified terrain and scenery resolve landings without pausing, and grounded recovery replays exactly
+ok 5 - verified terrain and scenery resolve landings without pausing, and grounded recovery replays exactly
+  ---
+  duration_ms: 865.249792
+  ...
+# Subtest: the verified scenery wall resolves lateral impacts while the flight remains active
+ok 6 - the verified scenery wall resolves lateral impacts while the flight remains active
+  ---
+  duration_ms: 83.143208
+  ...
+# Subtest: unknown cells and region boundaries reject the whole trace before they become clear space
+ok 7 - unknown cells and region boundaries reject the whole trace before they become clear space
+  ---
+  duration_ms: 59.012209
+  ...
+# Subtest: pause while worker proposal is in flight rolls it back and never rearms on its late result
+ok 8 - pause while worker proposal is in flight rolls it back and never rearms on its late result
+  ---
+  duration_ms: 26.420667
+  ...
+# Subtest: paused recovery preserves the entire worker state and verifies region/start before restoring
+ok 9 - paused recovery preserves the entire worker state and verifies region/start before restoring
+  ---
+  duration_ms: 178.306125
+  ...
+# Subtest: a failed worker leaves a paused explicit unavailable state, without advancing presentation
+ok 10 - a failed worker leaves a paused explicit unavailable state, without advancing presentation
+  ---
+  duration_ms: 26.318958
+  ...
+# Subtest: Regional duration-limit remains exportable and cannot be erased by preparation or arming
+ok 11 - Regional duration-limit remains exportable and cannot be erased by preparation or arming
+  ---
+  duration_ms: 296.254625
+  ...
+# Subtest: Regional recording-limit remains exportable and cannot be erased by preparation or arming
+ok 12 - Regional recording-limit remains exportable and cannot be erased by preparation or arming
+  ---
+  duration_ms: 291.11125
+  ...
+# Subtest: Regional freeform limit message with no code remains a fatal worker failure
+ok 13 - Regional freeform limit message with no code remains a fatal worker failure
+  ---
+  duration_ms: 23.395083
+  ...
+# Subtest: Regional freeform limit message with ADVANCED_UNKNOWN_LIMIT remains a fatal worker failure
+ok 14 - Regional freeform limit message with ADVANCED_UNKNOWN_LIMIT remains a fatal worker failure
+  ---
+  duration_ms: 22.65
+  ...
+# Subtest: the real Regional terrain-history frame limit preserves the committed frame and export
+ok 15 - the real Regional terrain-history frame limit preserves the committed frame and export
+  ---
+  duration_ms: 19596.450875
+  ...
+# Subtest: a pending prepare cannot overwrite a late Regional flight-limit stop
+ok 16 - a pending prepare cannot overwrite a late Regional flight-limit stop
+  ---
+  duration_ms: 32.248292
+  ...
+# Subtest: cancelling detached recovery preserves a Regional terminal limit and its recording
+ok 17 - cancelling detached recovery preserves a Regional terminal limit and its recording
+  ---
+  duration_ms: 128.919
+  ...
+# Subtest: the real Regional twelve-minute boundary preserves exact replay and recovery without rearming
+ok 18 - the real Regional twelve-minute boundary preserves exact replay and recovery without rearming
+  ---
+  duration_ms: 35611.101375
+  ...
+# Subtest: streamed terrain adoption waits for the whole in-flight mission and reads the newly committed pose
+ok 19 - streamed terrain adoption waits for the whole in-flight mission and reads the newly committed pose
+  ---
+  duration_ms: 2.385875
+  ...
+# Subtest: cancelled detached recovery cannot overwrite the newer live session or its recording
+ok 20 - cancelled detached recovery cannot overwrite the newer live session or its recording
+  ---
+  duration_ms: 120.697208
+  ...
+# Subtest: cancel preparation terminates pending recovery verification before adopting terrain or flight state
+ok 21 - cancel preparation terminates pending recovery verification before adopting terrain or flight state
+  ---
+  duration_ms: 143.760125
+  ...
+# Subtest: a corrupt recovery remains detached and preserves the current Regional recording
+ok 22 - a corrupt recovery remains detached and preserves the current Regional recording
+  ---
+  duration_ms: 106.412125
+  ...
+# Subtest: verified collider export is detached from mutable renderer geometry and preserves all collision layers
+ok 23 - verified collider export is detached from mutable renderer geometry and preserves all collision layers
+  ---
+  duration_ms: 10.493791
+  ...
+# Subtest: a rejected visible-frame adoption restores the staged worker collision frame and recording
+ok 24 - a rejected visible-frame adoption restores the staged worker collision frame and recording
+  ---
+  duration_ms: 62.546666
+  ...
+# Subtest: cancellation while the worker stages terrain rejects the complete candidate before another prepare
+ok 25 - cancellation while the worker stages terrain rejects the complete candidate before another prepare
+  ---
+  duration_ms: 62.051542
+  ...
+# Subtest: worker failure after source adoption leaves the session paused and unavailable until restart
+ok 26 - worker failure after source adoption leaves the session paused and unavailable until restart
+  ---
+  duration_ms: 40.094292
+  ...
+# Subtest: independent controller bounds motors, unwinds saturation and restores all filters
+ok 27 - independent controller bounds motors, unwinds saturation and restores all filters
+  ---
+  duration_ms: 5.727709
+  ...
+# Subtest: coupled Advanced flight follows frozen rate profile at 50 Hz mission intervals
+ok 28 - coupled Advanced flight follows frozen rate profile at 50 Hz mission intervals
+  ---
+  duration_ms: 35.47675
+  ...
+# Subtest: terrain rejection rolls back physics, controller, battery, noise, input and recording
+ok 29 - terrain rejection rolls back physics, controller, battery, noise, input and recording
+  ---
+  duration_ms: 27.551458
+  ...
+# Subtest: compact recording preserves consumed input, replay, reset and partial recovery
+ok 30 - compact recording preserves consumed input, replay, reset and partial recovery
+  ---
+  duration_ms: 208.065416
+  ...
+# Subtest: radio timestamps are consumed once; late samples and stale sequences are explicit
+ok 31 - radio timestamps are consumed once; late samples and stale sequences are explicit
+  ---
+  duration_ms: 1.722791
+  ...
+# Subtest: replay binds exact consumed substeps while preserving late and queued input at every frequency
+ok 32 - replay binds exact consumed substeps while preserving late and queued input at every frequency
+  ---
+  duration_ms: 221.703625
+  ...
+# Subtest: CCD prevents a reference quad crossing a 2 cm wall at 40 m/s at all candidate frequencies
+ok 33 - CCD prevents a reference quad crossing a 2 cm wall at 40 m/s at all candidate frequencies
+  ---
+  duration_ms: 25.580334
+  ...
+# Subtest: templates are independent physical data; comparison permits rates but keeps throttle limits
+ok 34 - templates are independent physical data; comparison permits rates but keeps throttle limits
+  ---
+  duration_ms: 14.019459
+  ...
+# Subtest: emitted comparison classes bind the frozen physical configuration and nested throttle
+ok 35 - emitted comparison classes bind the frozen physical configuration and nested throttle
+  ---
+  duration_ms: 25.447083
+  ...
+# Subtest: comparison requires genuine complete replay and legacy metadata remains optional
+ok 36 - comparison requires genuine complete replay and legacy metadata remains optional
+  ---
+  duration_ms: 11.302209
+  ...
+# Subtest: snapshot restore rejects another configuration without changing live state
+ok 37 - snapshot restore rejects another configuration without changing live state
+  ---
+  duration_ms: 1.440958
+  ...
+# Subtest: aircraft labels do not change physics identity; fastest motor setting remains bounded
+ok 38 - aircraft labels do not change physics identity; fastest motor setting remains bounded
+  ---
+  duration_ms: 5.674625
+  ...
+# Subtest: all catalog aircraft run physical self-level and Acro sessions with independent mass and geometry
+ok 39 - all catalog aircraft run physical self-level and Acro sessions with independent mass and geometry
+  ---
+  duration_ms: 432.350959
+  ...
+# Subtest: optional depletion consumes real amp-hours, survives recovery, and resets only with a fresh flight
+ok 40 - optional depletion consumes real amp-hours, survives recovery, and resets only with a fresh flight
+  ---
+  duration_ms: 474.224
+  ...
+# Subtest: unrestricted practice passes twelve minutes with bounded clips and unchanged depleted-off battery
+ok 41 - unrestricted practice passes twelve minutes with bounded clips and unchanged depleted-off battery
+  ---
+  duration_ms: 41742.723167
+  ...
+# Subtest: recording disabled, memory quota and persistence failure never change physical state
+ok 42 - recording disabled, memory quota and persistence failure never change physical state
+  ---
+  duration_ms: 164.126959
+  ...
+# Subtest: aircraft identities ignore names and camera, allow personal rotation curves, and bind throttle, battery and wind
+ok 43 - aircraft identities ignore names and camera, allow personal rotation curves, and bind throttle, battery and wind
+  ---
+  duration_ms: 6.668208
+  ...
+# Subtest: deactivated spherical actors retain authoritative poses across restore, and failed recording adoption is atomic
+ok 44 - deactivated spherical actors retain authoritative poses across restore, and failed recording adoption is atomic
+  ---
+  duration_ms: 17.293
+  ...
+# Subtest: terrain rejection and a segment-boundary rejection roll back every physical and recording field
+ok 45 - terrain rejection and a segment-boundary rejection roll back every physical and recording field
+  ---
+  duration_ms: 6462.286334
+  ...
+# Subtest: terrain intersecting only a large aircraft rotor is rejected with complete checkpoint rollback
+ok 46 - terrain intersecting only a large aircraft rotor is rejected with complete checkpoint rollback
+  ---
+  duration_ms: 2.715583
+  ...
+# Subtest: accepted moving actor samples replay, and arbitrary checkpoint hulls are rejected
+ok 47 - accepted moving actor samples replay, and arbitrary checkpoint hulls are rejected
+  ---
+  duration_ms: 22.009708
+  ...
+# Subtest: segments reject missing, reordered and modified data without treating checkpoint-origin clips as complete flights
+ok 48 - segments reject missing, reordered and modified data without treating checkpoint-origin clips as complete flights
+  ---
+  duration_ms: 2.837167
+  ...
+# Subtest: high-cadence clips rotate before the import event limit even with a larger byte budget
+ok 49 - high-cadence clips rotate before the import event limit even with a larger byte budget
+  ---
+  duration_ms: 204.011916
+  ...
+# Subtest: large terrain checkpoints do not consume the stream budget and restored streams rotate identically
+ok 50 - large terrain checkpoints do not consume the stream budget and restored streams rotate identically
+  ---
+  duration_ms: 640.685542
+  ...
+# Subtest: worker transports aircraft descriptors, actor motion and recording persistence without function callbacks
+ok 51 - worker transports aircraft descriptors, actor motion and recording persistence without function callbacks
+  ---
+  duration_ms: 2.633625
+  ...
+# Subtest: optional appearance prewarms every LOD before live activation and preserves accepted records
+ok 52 - optional appearance prewarms every LOD before live activation and preserves accepted records
+  ---
+  duration_ms: 1.480541
+  ...
+# Subtest: staging shader failure retains Current and releases all staging resources
+ok 53 - staging shader failure retains Current and releases all staging resources
+  ---
+  duration_ms: 0.274958
+  ...
+# Subtest: rejected staging parts release both incoming and transferred actor leases
+ok 54 - rejected staging parts release both incoming and transferred actor leases
+  ---
+  duration_ms: 0.128333
+  ...
+# Subtest: rejected live parts release both incoming and transferred actor leases
+ok 55 - rejected live parts release both incoming and transferred actor leases
+  ---
+  duration_ms: 0.203
+  ...
+# Subtest: already cancelled appearance never starts decoding
+ok 56 - already cancelled appearance never starts decoding
+  ---
+  duration_ms: 0.122833
+  ...
+# Subtest: cancellation while staging cannot activate and releases the candidate
+ok 57 - cancellation while staging cannot activate and releases the candidate
+  ---
+  duration_ms: 0.266792
+  ...
+# Subtest: a superseded decoder cannot replace or clear newer ready art
+ok 58 - a superseded decoder cannot replace or clear newer ready art
+  ---
+  duration_ms: 0.242541
+  ...
+# Subtest: reset during loading leaves Current and releases stale resources
+ok 59 - reset during loading leaves Current and releases stale resources
+  ---
+  duration_ms: 0.141334
+  ...
+# Subtest: generation during loading leaves Current and releases stale resources
+ok 60 - generation during loading leaves Current and releases stale resources
+  ---
+  duration_ms: 0.272125
+  ...
+# Subtest: context-loss during loading leaves Current and releases stale resources
+ok 61 - context-loss during loading leaves Current and releases stale resources
+  ---
+  duration_ms: 0.137125
+  ...
+# Subtest: invalid character and decode errors are plain bounded status with no live activation
+ok 62 - invalid character and decode errors are plain bounded status with no live activation
+  ---
+  duration_ms: 0.111416
+  ...
+# Subtest: default-only presentation consumers remain valid when optional art is cleared
+ok 63 - default-only presentation consumers remain valid when optional art is cleared
+  ---
+  duration_ms: 0.059584
+  ...
+# Subtest: full roster defaults to every character, prewarms shared roots once, and shares one decoded owner
+ok 64 - full roster defaults to every character, prewarms shared roots once, and shares one decoded owner
+  ---
+  duration_ms: 0.2275
+  ...
+# Subtest: explicit representative character retains every LOD without loading other characters
+ok 65 - explicit representative character retains every LOD without loading other characters
+  ---
+  duration_ms: 0.169833
+  ...
+# Subtest: partial roster lease acquisition failure releases previously acquired leases
+ok 66 - partial roster lease acquisition failure releases previously acquired leases
+  ---
+  duration_ms: 0.103209
+  ...
+# Subtest: cancellation releases staged resources even when graphics compilation never completes
+ok 67 - cancellation releases staged resources even when graphics compilation never completes
+  ---
+  duration_ms: 0.177167
+  ...
+# Subtest: full-roster activation drives real consumers, changes LOD without reloading, and preserves remains
+ok 68 - full-roster activation drives real consumers, changes LOD without reloading, and preserves remains
+  ---
+  duration_ms: 25.101584
+  ...
+# Subtest: prewarming includes differing equipment on otherwise shared body roots
+ok 69 - prewarming includes differing equipment on otherwise shared body roots
+  ---
+  duration_ms: 0.284166
+  ...
+# Subtest: aircraft retains a fast off-centre moving contact after separation without changing physical hashes
+ok 70 - aircraft retains a fast off-centre moving contact after separation without changing physical hashes
+  ---
+  duration_ms: 533.01075
+  ...
+# Subtest: advanced retains a fast off-centre moving contact after separation without changing physical hashes
+ok 71 - advanced retains a fast off-centre moving contact after separation without changing physical hashes
+  ---
+  duration_ms: 10.662458
+  ...
+# Subtest: native aircraft bridge publishes interval contact facts only after an accepted worker commit
+ok 72 - native aircraft bridge publishes interval contact facts only after an accepted worker commit
+  ---
+  duration_ms: 14.970916
+  ...
+# Subtest: regional aircraft bridge rotates interval contact normals and discards a terrain-rejected interval
+ok 73 - regional aircraft bridge rotates interval contact normals and discards a terrain-rejected interval
+  ---
+  duration_ms: 75.151334
+  ...
+# Subtest: regional advanced bridge rotates interval contact normals and discards a terrain-rejected interval
+ok 74 - regional advanced bridge rotates interval contact normals and discards a terrain-rejected interval
+  ---
+  duration_ms: 52.275875
+  ...
+# Subtest: shared observation uses pre-response angular velocity and retains only the strongest closing contact per actor
+ok 75 - shared observation uses pre-response angular velocity and retains only the strongest closing contact per actor
+  ---
+  duration_ms: 0.181208
+  ...
+1..75
+# tests 75
+# suites 0
+# pass 75
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 58366.767667

@@ -19,6 +19,7 @@ const metrics = () => ({
 });
 const comparison = () => ({
   kind: 'comparison',
+  conditions: { physicsHz: 1000 },
   axis: 'roll',
   changedGroups: ['controller'],
   baseline: {
@@ -135,6 +136,30 @@ function fixture(t, { ready = true, storageFailure = false, onManualTest = () =>
     },
   };
 }
+
+test('bench timing labels follow measured current and historical jobs in both languages', async (t) => {
+  const f = fixture(t);
+  assert.match(f.panel.root.textContent, /every physics step; the chart shows 50 Hz/);
+  assert.doesNotMatch(f.panel.root.textContent, /500 Hz physics step/);
+  for (const physicsHz of [1000, 500]) {
+    await f.click('Run simulation bench');
+    const result = comparison();
+    result.conditions.physicsHz = physicsHz;
+    result.gates = { timeToleranceSeconds: 1 / physicsHz, regression: {} };
+    f.jobs.at(-1).resolve(result);
+    await flush();
+    assert.match(f.panel.root.textContent, new RegExp(`${physicsHz} Hz`));
+    assert.match(
+      f.panel.root.textContent,
+      new RegExp(`one physics step \\(${1000 / physicsHz} ms\\)`),
+    );
+    f.locale('uk');
+    assert.match(f.panel.root.textContent, new RegExp(`${physicsHz} Гц`));
+    assert.match(f.panel.root.textContent, new RegExp(`кроку фізики \\(${1000 / physicsHz} мс\\)`));
+    f.locale('en');
+    assert.equal(f.jobs.length, physicsHz === 1000 ? 1 : 2, 'locale changes never rerun a job');
+  }
+});
 
 test('panel runs only explicit jobs with frozen draft data and World worker URL', async (t) => {
   const f = fixture(t);

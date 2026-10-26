@@ -14,6 +14,7 @@ import {
 } from '../ui/authoring-sources.mjs';
 import { attachAuthoringPreview, mountAuthoringInputHost } from '../ui/authoring-input-host.mjs';
 import { mountPageInputHost } from '../ui/page-input-host.mjs';
+import { createControllerRouter } from '../ui/controller-router.mjs';
 import { getLocale, localizedText, onLocaleChange, setLocale } from '../i18n/index.mjs';
 
 function fixture() {
@@ -217,6 +218,84 @@ test('one authoring host owns one poller, suspends for preview focus, and releas
   assert.equal(destroyed, 2);
 });
 
+test('parent radio lease reuses child field and canvas owners and excludes only its USB device', () => {
+  const { doc, win, node } = fixture(),
+    field = node('input', 'radio-field'),
+    canvas = node('canvas', 'radio-canvas');
+  field.type = 'number';
+  field.value = '2';
+  field.min = '0';
+  field.max = '10';
+  const radio = { index: 2 },
+    controller = { index: 1 },
+    token = {};
+  let readMenuPads,
+    current = true,
+    backs = 0,
+    position = [0, 0],
+    applies = 0;
+  const unregister = registerAuthoringEditor(
+    canvas,
+    createGridEditorAdapter({
+      element: canvas,
+      dimensions: () => [3, 3],
+      position: () => position,
+      move: (value) => {
+        position = value;
+      },
+      apply: () => applies++,
+    }),
+  );
+  const host = mountPageInputHost({
+    document: doc,
+    window: win,
+    readPads: () => [controller, null, radio],
+    createRouter: (options) => {
+      readMenuPads = options.readPads;
+      return createControllerRouter(options);
+    },
+  });
+  const bridge = doc[Symbol.for('revealline.page-radio-menu')];
+  assert.equal(
+    bridge.claim({ token, index: 2, isCurrent: () => current, onBack: () => backs++ }),
+    true,
+  );
+  assert.deepEqual(readMenuPads(), [controller, null, null]);
+  field.focus();
+  assert.equal(bridge.handle(token, 'join'), true);
+  bridge.handle(token, 'confirm');
+  assert.equal(
+    host.navigation.editorState().element,
+    field,
+    'existing in-app field editor owns editing',
+  );
+  bridge.handle(token, 'back');
+  assert.equal(host.navigation.editorState(), null);
+  assert.equal(field.value, '2');
+  canvas.focus();
+  bridge.handle(token, 'confirm');
+  assert.equal(host.navigation.editorState().element, canvas);
+  bridge.handle(token, 'right');
+  assert.deepEqual(position, [1, 0]);
+  bridge.handle(token, 'confirm');
+  assert.equal(applies, 1, 'existing domain adapter performs one edit');
+  bridge.handle(token, 'back');
+  assert.equal(host.navigation.editorState(), null);
+  bridge.handle(token, 'back');
+  assert.equal(backs, 1, 'root Back returns to the parent');
+  current = false;
+  assert.equal(bridge.handle(token, 'confirm'), false);
+  assert.deepEqual(
+    readMenuPads(),
+    [controller, null, radio],
+    'expired ownership never reserves hardware',
+  );
+  bridge.release(token);
+  host.destroy();
+  unregister();
+  assert.equal(doc[Symbol.for('revealline.page-radio-menu')], undefined);
+});
+
 test('preview boot cannot steal input before explicit entry, and Return restores the editor', () => {
   const { doc, win, node } = fixture();
   const frame = node('iframe', 'preview');
@@ -233,9 +312,17 @@ test('preview boot cannot steal input before explicit entry, and Return restores
   const enter = doc.querySelector('.authoring-preview-enter');
   const back = child.querySelector('.authoring-preview-return');
   assert.equal(doc.activeElement, enter);
+  assert.equal(preview.radioContext(), null, 'loading cannot transfer radio ownership');
   enter.onclick();
   assert.equal(doc.activeElement, frame);
   assert.equal(child.activeElement, first);
+  const radioContext = preview.radioContext();
+  assert.equal(radioContext.frame, frame);
+  assert.equal(radioContext.back(), true);
+  assert.equal(doc.activeElement, enter);
+  assert.equal(preview.radioContext(), null);
+  assert.equal(radioContext.back(), false, 'a retired preview handoff cannot move focus');
+  enter.onclick();
   back.onclick();
   assert.equal(doc.activeElement, enter);
   preview.destroy();

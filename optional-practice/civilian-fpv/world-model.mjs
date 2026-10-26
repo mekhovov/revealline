@@ -76,6 +76,8 @@ import {
 
 export { initWorldRuntime };
 export const WORLD_FLIGHT_MODEL = 'civilian-world-fixed.v2';
+export const LIVE_ACTOR_RULES = 'destructible-subjects.v1';
+export const SUBJECT_REPLACEMENT_TICKS = 250;
 export const WORLD_FLIGHT_HZ = FLIGHT_HZ;
 export const WORLD_ACTION_FIRE = 1;
 export const WORLD_MAX_TICKS = 36000;
@@ -876,7 +878,7 @@ function validateCommand(input) {
   return { ...input, actions: input.actions ?? 0 };
 }
 
-function identityForWorldCourse(source, mode, rates) {
+function identityForWorldCourse(source, mode, rates, actorRules = null) {
   const contactHunt = huntContact(source, mode);
   const gameplay = { ...source };
   delete gameplay.locales;
@@ -903,6 +905,7 @@ function identityForWorldCourse(source, mode, rates) {
     responseIdentity: responseIdentity(rates),
     rulesIdentity: dataIdentity(source.rules),
     conditionsIdentity: dataIdentity(source.conditions),
+    ...(actorRules ? { actorRules } : {}),
   };
   if (rates.format === TUNED_RESPONSE_FORMAT)
     identity.comparisonIdentity = flightComparisonIdentity(identity, rates);
@@ -910,17 +913,24 @@ function identityForWorldCourse(source, mode, rates) {
 }
 
 /** Exact portable identity without initializing physics or creating a flight. */
-export function worldFlightIdentity({ course, mode = 'self-level', response = DEFAULT_RESPONSE }) {
+export function worldFlightIdentity({
+  course,
+  mode = 'self-level',
+  response = DEFAULT_RESPONSE,
+  actorRules = null,
+}) {
   const source = validateWorldCourse(course),
     rates = validateFlightResponse(response);
   required(MODES.includes(mode), 'Unsupported flight mode');
-  return identityForWorldCourse(source, mode, rates);
+  required(actorRules === null || actorRules === LIVE_ACTOR_RULES, 'Unsupported actor rules');
+  return identityForWorldCourse(source, mode, rates, actorRules);
 }
 
 /** v2 keeps v1's integer force/attitude integration, replacing only collision,
  * objectives and actor rules. Legacy model.mjs and its replay format are untouched. */
 // Practice is an in-memory host policy, never part of a portable scored proof.
 const unscoredWorldFlights = new WeakSet();
+const liveMigrationBoundaries = new WeakMap();
 export function createWorldFlight({
   course,
   mode = 'self-level',
@@ -929,8 +939,17 @@ export function createWorldFlight({
   practiceEndStep = null,
   physicalPractice = false,
   physicalRadius = null,
+  encounterPhysicsOnly = false,
+  actorRules = null,
 }) {
+  required(actorRules === null || actorRules === LIVE_ACTOR_RULES, 'Unsupported actor rules');
+  required(!encounterPhysicsOnly || actorRules === null, 'Encounter owns its actor rules');
+  const liveActors = actorRules === LIVE_ACTOR_RULES;
   required(typeof unscoredPractice === 'boolean', 'Invalid world practice policy');
+  required(
+    typeof encounterPhysicsOnly === 'boolean' && (!encounterPhysicsOnly || unscoredPractice),
+    'Encounter physics requires unscored practice',
+  );
   required(!physicalPractice || unscoredPractice, 'Physical mission hosting requires practice');
   const source = validateWorldCourse(course);
   const rates = validateFlightResponse(response);
@@ -950,22 +969,66 @@ export function createWorldFlight({
   );
   required(!physicalPractice || int(physicalRadius, 10, 3000), 'Invalid physical aircraft radius');
   const rules = physicalPractice ? { ...source.rules, droneRadius: physicalRadius } : source.rules;
-  const contactHunt = huntContact(source, mode);
+  const contactHunt = encounterPhysicsOnly ? null : huntContact(source, mode);
   const momentumCatch = contactHunt?.contactPolicy === HUNT_MOMENTUM_CONTACT;
   const contactTargets = new Set(contactHunt?.targets ?? []);
   const pursuit =
-    source.format === PURSUIT_COURSE
+    !encounterPhysicsOnly && source.format === PURSUIT_COURSE
       ? createPursuitController(source.pursuit, source.actors)
       : null;
   const pursuitPolicies = new Map((source.pursuit?.actors ?? []).map((p) => [p.id, p]));
   const couriers = new Set(
     (source.pursuit?.actors ?? []).filter((p) => p.family === 'courier').map((p) => p.id),
   );
-  const identity = identityForWorldCourse(source, mode, rates);
+  const identity = identityForWorldCourse(source, mode, rates, actorRules);
   let collision;
   let state;
   let disposed = false;
   let physicalTransaction = null;
+  let acceptedDefeats = [];
+  let encounterPool = null,
+    stagedEncounter = null,
+    acceptedEncounterMotion = null;
+  const encounterActor = (value) => {
+    // Mission health is collision bookkeeping only; encounter authority owns
+    // damage and may promote a reserved slot to an elite with higher health.
+    // Keep the historical mission checkpoint schema bound to its admitted slot.
+    const descriptor = encounterPool?.get(value.slotId ?? value.id);
+    const maximum = descriptor?.health ?? value.maxHealth ?? value.health;
+    const health =
+      value.health <= 0 || ['waiting', 'inactive'].includes(value.status)
+        ? 0
+        : Math.max(
+            1,
+            Math.min(
+              maximum,
+              Math.round((value.health * maximum) / (value.maxHealth ?? value.health)),
+            ),
+          );
+    return {
+      id: value.slotId ?? value.id,
+      type: value.type === 'prop' ? 'hazard' : value.type,
+      ...(value.role ? { role: value.role } : {}),
+      position: clone(value.position),
+      radius: value.radius,
+      height: value.height,
+      health,
+      maxHealth: maximum,
+      status: health === 0 ? 'defeated' : (value.status ?? 'active'),
+      pathIndex: 0,
+      cooldown: 0,
+      blocked: false,
+    };
+  };
+  const encounterSource = () => ({
+    ...source,
+    actors: [...(encounterPool?.values() ?? [])],
+    pursuit: undefined,
+    steps: {
+      'self-level': [{ type: 'survive', ticks: 36000 }],
+      acro: [{ type: 'survive', ticks: 36000 }],
+    },
+  });
   const descriptors = new Map(source.actors.map((a) => [a.id, a]));
   const assertLive = () => {
     if (disposed) throw new Error('World flight has been disposed');
@@ -990,6 +1053,7 @@ export function createWorldFlight({
   }
   function reset() {
     assertLive();
+    acceptedDefeats = [];
     collision?.dispose();
     collision = createWorldCollision(source);
     try {
@@ -1020,17 +1084,20 @@ export function createWorldFlight({
         nextProjectileId: 1,
         projectiles: [],
         actors: [],
+        ...(liveActors ? { actorLives: { defeated: [], deaths: 0, impacts: 0 } } : {}),
         events: [],
         shots: 0,
         hits: 0,
         ...(contactHunt ? { hunt: createContactHuntState(source.spawn, rules.droneRadius) } : {}),
         ...(pursuit ? { pursuit: { bonusCaught: [] } } : {}),
-        ...(hasSkills ? { skill: { index: 0, status: 'entry', reason: 'enter-zone' } } : {}),
-        ...(hasActorTracking
+        ...(hasSkills && !encounterPhysicsOnly
+          ? { skill: { index: 0, status: 'entry', reason: 'enter-zone' } }
+          : {}),
+        ...(hasActorTracking && !encounterPhysicsOnly
           ? { actorTrack: { index: 0, status: 'acquire', reason: 'acquire-subject', travel: 0 } }
           : {}),
       };
-      for (const a of sorted(source.actors)) {
+      for (const a of sorted(encounterPhysicsOnly ? [] : source.actors)) {
         const actor = {
           id: a.id,
           type: a.type,
@@ -1045,6 +1112,16 @@ export function createWorldFlight({
           cooldown:
             a.role === 'hostile' && a.fireEveryTicks ? 1 + (random() % a.fireEveryTicks) : 0,
           blocked: false,
+          ...(liveActors
+            ? {
+                generation: 0,
+                spawnId: `${a.id}:0`,
+                defeatedTick: null,
+                replacementTick: null,
+                impactTick: -13,
+                touching: false,
+              }
+            : {}),
           ...(pursuitPolicies.has(a.id)
             ? { pursuit: createPursuitActorState(pursuitPolicies.get(a.id), source.pursuit) }
             : {}),
@@ -1056,6 +1133,15 @@ export function createWorldFlight({
         );
         state.actors.push(actor);
       }
+      if (encounterPhysicsOnly && encounterPool)
+        for (const descriptor of sorted([...encounterPool.values()])) {
+          const actor = encounterActor(descriptor);
+          collision.addActor(actor, 'support-v1');
+          state.actors.push(actor);
+        }
+      stagedEncounter = null;
+      acceptedEncounterMotion = null;
+      physicalTransaction = null;
       if (pursuit) admitFlightPursuit(source, collision);
       if (contactHunt)
         for (let index = 0; index < HUNT_TAIL_LIMITS.links; index++)
@@ -1074,7 +1160,195 @@ export function createWorldFlight({
     return snapshot();
   }
   reset();
+  const needsSubject = (id) =>
+    source.steps[mode]
+      .slice(state.step)
+      .some(
+        (target) =>
+          (target.type === 'actor-track-v1' && target.actorId === id) ||
+          (target.type === HUNT_CONTACT_CRITERION &&
+            target.targets.includes(id) &&
+            !state.hunt.caught.includes(id)),
+      );
+  function syncLiveColliders() {
+    for (const actor of state.actors) {
+      collision.removeActor(actor.id);
+      if (actor.status === 'active')
+        collision.addActor(actor, descriptors.get(actor.id)?.groundMotion);
+    }
+  }
+  function actorFact(
+    actor,
+    cause,
+    damage,
+    impactPosition,
+    direction,
+    rewardEligible = false,
+    eventType = 'actor-hit',
+  ) {
+    const descriptor = descriptors.get(actor.id);
+    const magnitude = Math.hypot(direction.x, direction.y, direction.z) || 1;
+    return {
+      actor: actor.id,
+      sourceId: actor.id,
+      spawnId: actor.spawnId,
+      generation: actor.generation,
+      eventId: `${actor.spawnId}:${state.ticks}:${eventType}`,
+      tick: state.ticks,
+      actorType: actor.type,
+      position: clone(actor.position),
+      radius: actor.radius,
+      height: actor.height,
+      family: actor.pursuit?.family ?? (descriptor.speed ? 'patroller' : 'lookout'),
+      material: ['patrol', 'sentry'].includes(actor.type) ? 'organic' : 'electronic',
+      appearance: {
+        type: actor.type,
+        family: actor.pursuit?.family ?? (descriptor.speed ? 'patroller' : 'lookout'),
+      },
+      cause,
+      weapon: cause,
+      damage,
+      impactPosition: clone(impactPosition),
+      impactDirection: Object.fromEntries(
+        AXES.map((k) => [k, Math.round((direction[k] / magnitude) * Q)]),
+      ),
+      velocity: clone(state.velocity),
+      seed: (state.rng ^ state.ticks ^ actor.generation) >>> 0,
+      rewardEligible,
+    };
+  }
+  function damageActor(actor, damage, cause, position, direction) {
+    if (!liveActors || actor?.status !== 'active' || damage <= 0) return;
+    const inflicted = Math.min(actor.health, damage);
+    actor.health -= inflicted;
+    state.events.push({
+      type: 'actor-hit',
+      ...actorFact(actor, cause, inflicted, position, direction),
+    });
+    if (actor.health) return;
+    actor.status = 'defeated';
+    actor.defeatedTick = state.ticks;
+    actor.replacementTick = needsSubject(actor.id) ? state.ticks + SUBJECT_REPLACEMENT_TICKS : null;
+    const rewardEligible = !state.actorLives.defeated.includes(actor.id);
+    if (rewardEligible) state.actorLives.defeated.push(actor.id);
+    state.actorLives.deaths++;
+    collision.removeActor(actor.id);
+    if (
+      source.steps[mode][state.step]?.type === 'actor-track-v1' &&
+      source.steps[mode][state.step].actorId === actor.id
+    ) {
+      state.hold = 0;
+      state.actorTrack = {
+        index: state.step,
+        status: 'acquire',
+        reason: 'subject-replacement',
+        travel: 0,
+      };
+    }
+    state.events.push({
+      type: 'defeat',
+      ...actorFact(actor, cause, inflicted, position, direction, rewardEligible, 'defeat'),
+    });
+  }
+  function replaceSubjects() {
+    if (!liveActors) return;
+    for (const actor of state.actors) {
+      if (
+        actor.status !== 'defeated' ||
+        actor.replacementTick === null ||
+        state.ticks < actor.replacementTick ||
+        !needsSubject(actor.id)
+      )
+        continue;
+      const descriptor = descriptors.get(actor.id);
+      const candidates = actor.pursuit
+        ? [descriptor.position]
+        : [descriptor.position, ...descriptor.path];
+      for (let index = 0; index < candidates.length; index++) {
+        const position = clone(candidates[(index + actor.generation + 1) % candidates.length]);
+        const candidate = { ...actor, position, health: actor.maxHealth, status: 'active' };
+        if (['patrol', 'sentry', 'vehicle'].includes(actor.type)) {
+          const support = collision.support(
+            { ...position, y: position.y + 100 },
+            actor.radius,
+            320,
+          );
+          if (!support || Math.abs(support.y - position.y) > 220) continue;
+          position.y = Math.round(support.y);
+        }
+        const centre = actorCentre(candidate);
+        const overlaps = (at, radius, height) =>
+          Math.abs(centre.y - (at.y + height / 2)) < (actor.height + height) / 2 + 200 &&
+          Math.hypot(position.x - at.x, position.z - at.z) < actor.radius + radius + 1000;
+        if (
+          !within(position, source.bounds) ||
+          overlaps(
+            state.position,
+            rules.droneRadius + Math.ceil(length(state.velocity) / WORLD_FLIGHT_HZ),
+            rules.droneRadius * 2,
+          ) ||
+          state.actors.some(
+            (other) =>
+              other !== actor &&
+              other.status === 'active' &&
+              overlaps(other.position, other.radius, other.height),
+          )
+        )
+          continue;
+        collision.addActor(candidate, descriptor.groundMotion);
+        if (!collision.clearActorSpawn(candidate)) {
+          collision.removeActor(actor.id);
+          continue;
+        }
+        Object.assign(actor, {
+          position,
+          health: actor.maxHealth,
+          status: 'active',
+          generation: actor.generation + 1,
+          spawnId: `${actor.id}:${actor.generation + 1}`,
+          defeatedTick: null,
+          replacementTick: null,
+          impactTick: state.ticks,
+          touching: false,
+          pathIndex: 0,
+          cooldown: descriptor.fireEveryTicks,
+          blocked: false,
+        });
+        if (actor.pursuit) {
+          actor.pursuit = createPursuitActorState(pursuitPolicies.get(actor.id), source.pursuit);
+          // A surviving rendezvous member has already changed to independent
+          // pursuit. Its replacement must not wait forever for a retired pair.
+          if (
+            actor.pursuit.family === 'rendezvous-pair' &&
+            state.actors.some(
+              (other) =>
+                other !== actor &&
+                other.status === 'active' &&
+                other.pursuit?.family === 'runner' &&
+                pursuitPolicies.get(other.id)?.pair === pursuitPolicies.get(actor.id).pair,
+            )
+          )
+            actor.pursuit.family = 'runner';
+        }
+        state.events.push({
+          type: 'replacement',
+          actor: actor.id,
+          spawnId: actor.spawnId,
+          generation: actor.generation,
+        });
+        break;
+      }
+    }
+  }
   function moveActors() {
+    if (encounterPhysicsOnly) {
+      const proposal = stagedEncounter;
+      if (!proposal) return [];
+      state.actors = proposal.actors.map(encounterActor).sort((a, b) => a.id.localeCompare(b.id));
+      for (const actor of state.actors) collision.placeActor(actor);
+      return clone(proposal.motions.filter((motion) => motion.enabled !== false));
+    }
+    replaceSubjects();
     const motions = [];
     for (const actor of state.actors) {
       if (actor.status !== 'active') continue;
@@ -1172,9 +1446,10 @@ export function createWorldFlight({
             (a) =>
               a.id === m.id &&
               a.status === 'active' &&
-              !contactTargets.has(a.id) &&
-              !couriers.has(a.id) &&
-              (a.role === 'hostile' || a.type === 'hazard'),
+              (liveActors ||
+                (!contactTargets.has(a.id) &&
+                  !couriers.has(a.id) &&
+                  (a.role === 'hostile' || a.type === 'hazard'))),
           ),
       );
       const hit = collision.castPulse(
@@ -1189,14 +1464,27 @@ export function createWorldFlight({
         if (hit.id === '$player') state.health = Math.max(0, state.health - p.damage);
         else {
           const actor = state.actors.find((a) => a.id === hit.id);
-          if (actor?.role === 'hostile') {
+          if (actor && (liveActors || actor.role === 'hostile')) {
             // Enemy pulses are blocked by allies, but cannot farm player objectives.
             if (p.owner === 'player') {
-              actor.health = Math.max(0, actor.health - p.damage);
-              state.hits++;
-              if (!actor.health) {
-                actor.status = 'defeated';
-                state.events.push({ type: 'defeat', actor: actor.id });
+              if (liveActors) {
+                if (!actor.pursuit || !pursuitContactProtected(actor, p.position)) {
+                  const at = Object.fromEntries(
+                    AXES.map((k) => [
+                      k,
+                      Math.round(p.position[k] + (next[k] - p.position[k]) * (hit.toi ?? 1)),
+                    ]),
+                  );
+                  damageActor(actor, p.damage, 'pulse', at, p.velocity);
+                  state.hits++;
+                }
+              } else {
+                actor.health = Math.max(0, actor.health - p.damage);
+                state.hits++;
+                if (!actor.health) {
+                  actor.status = 'defeated';
+                  state.events.push({ type: 'defeat', actor: actor.id });
+                }
               }
             }
           }
@@ -1215,7 +1503,12 @@ export function createWorldFlight({
       return false;
     };
     const actor = state.actors.find((value) => value.id === target.actorId);
-    if (!actor || actor.status !== 'active') return reset('subject-unavailable');
+    if (!actor || actor.status !== 'active')
+      return reset(
+        liveActors && actor && actor.replacementTick !== null
+          ? 'subject-replacement'
+          : 'subject-unavailable',
+      );
     if (state.grounded) return reset('airborne-clearance');
     const from = { ...state.position, y: state.position.y + rules.droneRadius },
       to = actorCentre(actor),
@@ -1264,8 +1557,10 @@ export function createWorldFlight({
     else if (target.type === 'actor-track-v1') accepted = evaluateActorTrack(target, motions);
     else if (target.type === 'gate') accepted = crossesGate(before, state.position, target);
     else if (target.type === 'eliminate')
-      accepted = target.targets.every(
-        (id) => state.actors.find((a) => a.id === id).status === 'defeated',
+      accepted = target.targets.every((id) =>
+        liveActors
+          ? state.actorLives.defeated.includes(id)
+          : state.actors.find((a) => a.id === id).status === 'defeated',
       );
     else if (target.type === 'survive') accepted = ++state.hold >= target.ticks;
     else {
@@ -1314,7 +1609,7 @@ export function createWorldFlight({
       state.status = 'expired';
       return snapshot();
     }
-    state.events = [];
+    state.events = liveActors && physicalTransaction ? [...physicalTransaction.events] : [];
     const before = { ...state.position };
     const skillBefore = hasSkills
       ? {
@@ -1333,7 +1628,8 @@ export function createWorldFlight({
             .map((a) => [a.id, clone(a)]),
         )
       : null;
-    const pendingCatches = [];
+    const pendingCatches = [],
+      deferredCatchContacts = [];
     const motions = physicalTransaction?.motions ?? moveActors();
     const delta = {};
     if (motion) {
@@ -1341,6 +1637,7 @@ export function createWorldFlight({
       state.orientation = [...motion.orientation];
       state.angular = { ...motion.angular };
     } else advanceFlightAir(state, command, mode, rates, delta);
+    const incomingVelocity = encounterPhysicsOnly || liveActors ? clone(state.velocity) : null;
     const impactSpeed = motion?.landingSpeed ?? length(state.velocity);
     const tailMotions = (state.hunt?.tail ?? []).map((point, index) => ({
       id: huntTailId(index),
@@ -1351,6 +1648,7 @@ export function createWorldFlight({
       motion ??
       collision.moveSphere(before, delta, rules.droneRadius, [...motions, ...tailMotions]);
     state.position = moved.position;
+    const touching = new Set();
     if (state.contactCooldown > 0) state.contactCooldown--;
     for (const hit of moved.contacts) {
       if (contactHunt && hit.id.startsWith('$hunt-tail-')) {
@@ -1360,12 +1658,12 @@ export function createWorldFlight({
       }
       const catchable = contactHunt && (contactTargets.has(hit.id) || couriers.has(hit.id));
       const protectedContact =
-        pursuit &&
-        catchable &&
-        contactPoses.has(hit.id) &&
+        (pursuit || liveActors) &&
+        (catchable || liveActors) &&
+        contactPoses?.has(hit.id) &&
         pursuitContactProtected(contactPoses.get(hit.id), before);
       if (
-        pursuit &&
+        (pursuit || liveActors) &&
         catchable &&
         !protectedContact &&
         source.steps[mode][state.step]?.type === HUNT_CONTACT_CRITERION
@@ -1373,6 +1671,7 @@ export function createWorldFlight({
         pendingCatches.push(hit.id);
       const caught =
         !pursuit &&
+        !liveActors &&
         catchable &&
         source.steps[mode][state.step]?.type === HUNT_CONTACT_CRITERION &&
         catchHuntTarget(
@@ -1384,10 +1683,51 @@ export function createWorldFlight({
         AXES.reduce((n, k) => n + state.velocity[k] * hit.normal[k], 0),
         Q,
       );
+      if (liveActors) {
+        const actor = state.actors.find((item) => item.id === hit.id);
+        if (actor?.status === 'active') {
+          touching.add(actor.id);
+          const actorMotion = motions.find((entry) => entry.id === actor.id);
+          const relative = Math.max(
+            0,
+            -AXES.reduce(
+              (sum, key) =>
+                sum +
+                ((incomingVelocity[key] -
+                  (actorMotion
+                    ? (actorMotion.to[key] - actorMotion.from[key]) * WORLD_FLIGHT_HZ
+                    : 0)) *
+                  hit.normal[key]) /
+                  Q,
+              0,
+            ),
+          );
+          const speed = hit.relativeNormalSpeedMmS ?? relative;
+          const damage = Math.min(100, Math.max(0, Math.floor((speed - 2000) / 100)));
+          if (
+            !protectedContact &&
+            !actor.touching &&
+            state.ticks - actor.impactTick >= 13 &&
+            damage > 0
+          ) {
+            actor.impactTick = state.ticks;
+            state.actorLives.impacts++;
+            damageActor(
+              actor,
+              damage,
+              'impact',
+              actorCentre(actor),
+              Object.fromEntries(AXES.map((key) => [key, -hit.normal[key]])),
+            );
+          }
+        }
+      }
       // Only an accepted opt-in catch retains its incoming momentum. Keep the
       // swept contact position and all other hull/support responses unchanged.
       if (!motion && (!momentumCatch || !caught)) {
-        state.velocity = projectContactVelocity(state.velocity, hit, into);
+        if (liveActors && momentumCatch && pendingCatches.includes(hit.id))
+          deferredCatchContacts.push(hit);
+        else state.velocity = projectContactVelocity(state.velocity, hit, into);
       }
       const hard = hit.moving || hit.normal.y < 866025 || impactSpeed > 1500;
       if (hard) {
@@ -1396,15 +1736,17 @@ export function createWorldFlight({
         state.contacts++;
         if (state.contactCooldown === 0) {
           const actor = descriptors.get(hit.id);
-          const damage = protectedContact
-            ? PURSUIT_RULES.protectedDamage
-            : catchable
-              ? 0
-              : actor?.type === 'hazard'
-                ? actor.damage
-                : actor && actor.role !== 'hostile'
-                  ? 0
-                  : rules.collisionDamage;
+          const damage = encounterPhysicsOnly
+            ? 0
+            : protectedContact
+              ? PURSUIT_RULES.protectedDamage
+              : catchable
+                ? 0
+                : actor?.type === 'hazard'
+                  ? actor.damage
+                  : actor && actor.role !== 'hostile'
+                    ? 0
+                    : rules.collisionDamage;
           state.health = Math.max(0, state.health - damage);
           state.contactCooldown = 20;
           if (protectedContact)
@@ -1429,10 +1771,10 @@ export function createWorldFlight({
       const ground = collision.support(state.position, rules.droneRadius, 60);
       applyFlightSupport(state, ground, wasGrounded, impactSpeed);
     }
-    weapons(command, motions, before);
+    if (!encounterPhysicsOnly) weapons(command, motions, before);
     // Successor contacts are committed only after all native hull damage and
     // projectile impacts. A fatal transaction cannot also award a catch.
-    if (pursuit && state.health > 0)
+    if ((pursuit || liveActors) && state.health > 0)
       for (const id of new Set(pendingCatches)) {
         const actor = state.actors.find((a) => a.id === id);
         if (couriers.has(id) && actor?.status === 'active') {
@@ -1449,15 +1791,88 @@ export function createWorldFlight({
           state.events.push({ type: 'catch', actor: id, optional: true });
         } else catchHuntTarget(state, contactHunt, actor);
       }
+    for (const hit of deferredCatchContacts) {
+      if (state.events.some((event) => event.type === 'catch' && event.actor === hit.id)) continue;
+      const into = roundDiv(
+        AXES.reduce((sum, key) => sum + state.velocity[key] * hit.normal[key], 0),
+        Q,
+      );
+      state.velocity = projectContactVelocity(state.velocity, hit, into);
+    }
+    if (liveActors) {
+      for (const actor of state.actors) {
+        actor.touching = actor.status === 'active' && touching.has(actor.id);
+        if (actor.status === 'caught') collision.removeActor(actor.id);
+      }
+      for (const event of state.events) {
+        if (event.type !== 'catch') continue;
+        const actor = state.actors.find((entry) => entry.id === event.actor);
+        Object.assign(
+          event,
+          actorFact(
+            actor,
+            'catch',
+            0,
+            actorCentre(actor),
+            state.velocity,
+            !state.actorLives.defeated.includes(actor.id),
+            'catch',
+          ),
+        );
+        if (!state.actorLives.defeated.includes(actor.id)) state.actorLives.defeated.push(actor.id);
+      }
+    }
     if (contactHunt) updateHuntTail(state.hunt, contactHunt, state.position, rules.droneRadius);
     state.ticks++;
     state.lastInput = { ...command };
     state.heightRange.min = Math.min(state.heightRange.min, state.position.y);
     state.heightRange.max = Math.max(state.heightRange.max, state.position.y);
     if (state.health === 0) state.status = 'failed';
-    else evaluate(before, command, skillBefore, motions);
+    else if (!encounterPhysicsOnly) evaluate(before, command, skillBefore, motions);
     if (!unscoredPractice && state.status === 'active' && state.ticks >= rules.maxTicks)
       state.status = 'expired';
+    if (encounterPhysicsOnly) {
+      acceptedEncounterMotion = {
+        trace: [
+          { position: clone(before), velocity: clone(incomingVelocity) },
+          { position: clone(state.position), velocity: clone(state.velocity) },
+        ],
+        contacts: moved.contacts
+          .filter((hit) => encounterPool?.has(hit.id))
+          .map((hit) => {
+            const actorMotion = motions.find((entry) => entry.id === hit.id),
+              actorVelocity = actorMotion
+                ? Object.fromEntries(
+                    AXES.map((key) => [
+                      key,
+                      (actorMotion.to[key] - actorMotion.from[key]) * WORLD_FLIGHT_HZ,
+                    ]),
+                  )
+                : { x: 0, y: 0, z: 0 },
+              normalLength = Math.hypot(hit.normal.x, hit.normal.y, hit.normal.z) || 1,
+              unitNormal = Object.fromEntries(
+                AXES.map((key) => [key, hit.normal[key] / normalLength]),
+              );
+            return {
+              actorId: hit.id,
+              normal: unitNormal,
+              relativeNormalSpeedMmS: Math.max(
+                0,
+                -AXES.reduce(
+                  (sum, key) =>
+                    sum + (incomingVelocity[key] - actorVelocity[key]) * unitNormal[key],
+                  0,
+                ),
+              ),
+            };
+          }),
+      };
+      stagedEncounter = null;
+    }
+    if (liveActors) {
+      acceptedDefeats.push(...state.events.filter((event) => event.type === 'defeat').map(clone));
+      if (acceptedDefeats.length > 1024) acceptedDefeats.splice(0, acceptedDefeats.length - 1024);
+    }
     physicalTransaction = null;
     return snapshot();
   }
@@ -1466,6 +1881,7 @@ export function createWorldFlight({
     course: () => clone(source),
     response: () => structuredClone(rates),
     snapshot,
+    defeatHistory: () => clone(acceptedDefeats),
     step,
     reset,
     arm() {
@@ -1483,6 +1899,110 @@ export function createWorldFlight({
       }
     },
   };
+  if (encounterPhysicsOnly) {
+    flight.configureEncounterActors = (actors) => {
+      required(
+        !encounterPool &&
+          state.ticks === 0 &&
+          Array.isArray(actors) &&
+          actors.length > 0 &&
+          actors.length <= 128,
+        'Configure encounter actors once before flight',
+      );
+      const candidatePool = new Map();
+      const admittedActors = [];
+      for (const value of actors) {
+        const actor = encounterActor(value);
+        required(
+          typeof actor.id === 'string' &&
+            !candidatePool.has(actor.id) &&
+            WORLD_ACTOR_TYPES.includes(actor.type) &&
+            int(actor.radius, 100, 2000) &&
+            int(actor.height, 100, 5000),
+          'Invalid encounter collision pool',
+        );
+        vector(actor.position);
+        candidatePool.set(actor.id, {
+          ...clone(actor),
+          health: actor.maxHealth,
+          status: 'active',
+          path: [],
+          fireEveryTicks: 0,
+        });
+        admittedActors.push(actor);
+      }
+      for (const actor of admittedActors) collision.addActor(actor, 'support-v1');
+      encounterPool = candidatePool;
+      state.actors = actors.map(encounterActor).sort((a, b) => a.id.localeCompare(b.id));
+    };
+    flight.stageEncounterActors = (proposal) => {
+      required(
+        encounterPool &&
+          !physicalTransaction &&
+          Array.isArray(proposal?.actors) &&
+          Array.isArray(proposal?.motions) &&
+          proposal.actors.length === encounterPool.size,
+        'Invalid encounter proposal',
+      );
+      for (const actor of proposal.actors) {
+        const shape = encounterPool.get(actor.slotId ?? actor.id);
+        required(
+          shape &&
+            shape.radius === actor.radius &&
+            shape.height === actor.height &&
+            shape.type === (actor.type === 'prop' ? 'hazard' : actor.type),
+          'Encounter collision archetype changed',
+        );
+        vector(actor.position);
+      }
+      const ids = new Set();
+      for (const entry of proposal.motions) {
+        required(
+          encounterPool.has(entry.id) && !ids.has(entry.id),
+          'Unknown or duplicate encounter motion',
+        );
+        ids.add(entry.id);
+        vector(entry.from);
+        vector(entry.to);
+      }
+      required(
+        ids.size === encounterPool.size &&
+          new Set(proposal.actors.map((a) => a.slotId ?? a.id)).size === encounterPool.size,
+        'Incomplete encounter collision proposal',
+      );
+      stagedEncounter = clone(proposal);
+    };
+    flight.encounterMotion = () => clone(acceptedEncounterMotion);
+    flight.encounterCheckpoint = () => ({
+      format: 'FPVEncounterFlightCheckpoint.v1',
+      identity: dataIdentity(identity),
+      state: clone(state),
+    });
+    flight.restoreEncounterCheckpoint = (record) => {
+      required(
+        !physicalTransaction &&
+          record?.format === 'FPVEncounterFlightCheckpoint.v1' &&
+          record.identity === dataIdentity(identity),
+        'Encounter flight checkpoint differs',
+      );
+      required(encounterPool, 'Encounter collision pool must be configured before restore');
+      const saved = validateAircraftMissionCheckpoint(
+        {
+          format: 'AircraftMissionCheckpoint.v1',
+          identity: record.identity,
+          state: record.state,
+          feedback: null,
+        },
+        { identity, source: encounterSource(), mode, world: true },
+      ).state;
+      state = clone(saved);
+      state.status = 'paused';
+      stagedEncounter = null;
+      acceptedEncounterMotion = null;
+      for (const actor of state.actors) collision.placeActor(actor);
+      return snapshot();
+    };
+  }
   if (physicalPractice) {
     flight.physicalTail = () =>
       contactHunt
@@ -1492,35 +2012,100 @@ export function createWorldFlight({
           }
         : null;
     flight.physicalCheckpoint = () => ({
-      format: 'AircraftMissionCheckpoint.v1',
+      format: liveActors ? 'AircraftMissionCheckpoint.v2' : 'AircraftMissionCheckpoint.v1',
       identity: dataIdentity(identity),
       state: clone(state),
       feedback: null,
     });
     flight.validatePhysicalCheckpoint = (value) =>
-      validateAircraftMissionCheckpoint(value, { identity, source, mode, world: true });
+      validateAircraftMissionCheckpoint(value, {
+        identity,
+        source: encounterPhysicsOnly ? encounterSource() : source,
+        mode,
+        world: true,
+      });
     flight.restorePhysicalCheckpoint = (value) => {
       required(!physicalTransaction, 'A physical mission is pending');
       const saved = flight.validatePhysicalCheckpoint(value);
       state = clone(saved.state);
+      acceptedDefeats = [];
       state.status = state.status === 'active' ? 'paused' : state.status;
-      for (const actor of state.actors) collision.placeActor(actor);
+      stagedEncounter = null;
+      acceptedEncounterMotion = null;
+      if (liveActors) syncLiveColliders();
+      else for (const actor of state.actors) collision.placeActor(actor);
       return snapshot();
     };
     flight.preparePhysicalStep = () => {
       required(!physicalTransaction, 'A physical mission is pending');
       const saved = clone(state);
+      if (liveActors) state.events = [];
       const motions = moveActors();
-      physicalTransaction = { saved, motions };
+      physicalTransaction = { saved, motions, events: clone(state.events) };
       return clone(motions);
     };
     flight.cancelPhysicalStep = () => {
       if (!physicalTransaction) return;
       state = physicalTransaction.saved;
-      for (const actor of state.actors) collision.placeActor(actor);
+      if (liveActors) syncLiveColliders();
+      else for (const actor of state.actors) collision.placeActor(actor);
       physicalTransaction = null;
     };
   }
+  if (liveActors && unscoredPractice)
+    flight.adoptLivePractice = (previous) => {
+      required(
+        !physicalTransaction && previous?.identity && previous?.snapshot,
+        'A verified flight is required',
+      );
+      const previousRules = previous.identity.actorRules ?? null;
+      required(
+        dataIdentity(previous.identity) ===
+          dataIdentity(identityForWorldCourse(source, mode, rates, previousRules)),
+        'Live practice belongs to another course',
+      );
+      const value = clone(previous.snapshot());
+      for (const key of ['attitude', 'target', 'total', 'maxHealth']) delete value[key];
+      validateAircraftMissionCheckpoint(
+        {
+          format: previousRules ? 'AircraftMissionCheckpoint.v2' : 'AircraftMissionCheckpoint.v1',
+          identity: dataIdentity(previous.identity),
+          state: value,
+          feedback: null,
+        },
+        { identity: previous.identity, source, mode, world: true },
+      );
+      if (!previousRules) {
+        value.actorLives = {
+          defeated: value.actors.filter((a) => a.status !== 'active').map((a) => a.id),
+          deaths: value.actors.filter((a) => a.status === 'defeated').length,
+          impacts: 0,
+        };
+        for (const actor of value.actors)
+          Object.assign(actor, {
+            generation: 0,
+            spawnId: `${actor.id}:0`,
+            defeatedTick: actor.status === 'defeated' ? value.ticks : null,
+            replacementTick: null,
+            impactTick: -13,
+            touching: false,
+          });
+        value.events = [];
+      }
+      liveMigrationBoundaries.set(flight, {
+        ticks: value.ticks,
+        stateIdentity: worldStateIdentity(previous.snapshot()),
+        identity: clone(previous.identity),
+      });
+      acceptedDefeats = previous.defeatHistory?.().slice(-1024) ?? [];
+      state = value;
+      state.status = 'paused';
+      for (const actor of state.actors)
+        if (actor.status === 'defeated' && needsSubject(actor.id) && actor.replacementTick === null)
+          actor.replacementTick = state.ticks + SUBJECT_REPLACEMENT_TICKS;
+      syncLiveColliders();
+      return snapshot();
+    };
   if (unscoredPractice) unscoredWorldFlights.add(flight);
   return flight;
 }
@@ -1569,9 +2154,12 @@ export function createWorldRecorder(flight, { session = 'practice', prefix = [] 
         'Unrecorded flight ticks cannot be exported',
       );
       return {
-        format: [PURSUIT_MODEL, PURSUIT_MODEL_V2].includes(flight.identity.model)
-          ? 'FlightAttempt.v3'
-          : 'FlightAttempt.v2',
+        format:
+          flight.identity.actorRules === LIVE_ACTOR_RULES
+            ? 'FlightAttempt.v4'
+            : [PURSUIT_MODEL, PURSUIT_MODEL_V2].includes(flight.identity.model)
+              ? 'FlightAttempt.v3'
+              : 'FlightAttempt.v2',
         session,
         ...flight.identity,
         response: flight.response(),
@@ -1621,13 +2209,16 @@ async function replayInternal(
       'response',
       'frames',
       'finalStateIdentity',
+      ...(proof.format === 'FlightAttempt.v4' ? ['actorRules'] : []),
     ],
     'world proof',
   );
   const acceptedCourse = validateWorldCourse(course);
   required(
-    proof.format ===
-      (acceptedCourse.format === PURSUIT_COURSE ? 'FlightAttempt.v3' : 'FlightAttempt.v2') &&
+    (proof.format === 'FlightAttempt.v4'
+      ? proof.actorRules === LIVE_ACTOR_RULES
+      : proof.format ===
+        (acceptedCourse.format === PURSUIT_COURSE ? 'FlightAttempt.v3' : 'FlightAttempt.v2')) &&
       SESSION.includes(proof.session) &&
       Array.isArray(proof.frames) &&
       proof.frames.length <= WORLD_MAX_TICKS &&
@@ -1638,6 +2229,7 @@ async function replayInternal(
     course: acceptedCourse,
     mode: proof.mode,
     response: proof.response,
+    actorRules: proof.format === 'FlightAttempt.v4' ? proof.actorRules : null,
   });
   let keep = false;
   try {
@@ -1701,7 +2293,238 @@ async function replayInternal(
     if (!keep) flight.dispose();
   }
 }
+const continuationFormat = (value) =>
+  typeof value === 'string'
+    ? value.includes('FlightPracticeContinuation.v1')
+    : value?.format === 'FlightPracticeContinuation.v1';
 export const replayWorldFlight = (course, proof, options = {}) =>
-  replayInternal(course, proof, options);
+  continuationFormat(proof)
+    ? replayContinuation(course, proof, options)
+    : replayInternal(course, proof, options);
 export const recoverWorldFlight = (course, proof, options = {}) =>
-  replayInternal(course, proof, { ...options, retain: true });
+  continuationFormat(proof)
+    ? replayContinuation(course, proof, { ...options, retain: true })
+    : replayInternal(course, proof, { ...options, retain: true });
+
+/** Continue old verified runs as a new, explicitly unscored live boundary. */
+export function migrateWorldFlightToLive(previous) {
+  const flight = createWorldFlight({
+    course: previous.course(),
+    mode: previous.identity.mode,
+    response: previous.response(),
+    actorRules: LIVE_ACTOR_RULES,
+    unscoredPractice: true,
+  });
+  try {
+    flight.adoptLivePractice(previous);
+    return flight;
+  } catch (error) {
+    flight.dispose();
+    throw error;
+  }
+}
+
+/** A bounded new timeline anchored to immutable, verified historical evidence. */
+export function createWorldContinuationRecorder(flight, { boundaryProof, prefix = [] } = {}) {
+  const boundary = liveMigrationBoundaries.get(flight);
+  required(boundary && unscoredWorldFlights.has(flight), 'A migrated live practice is required');
+  const proof = boundedJSON(boundaryProof, {
+    maxBytes: 2 * 1024 * 1024,
+    maxNodes: WORLD_MAX_TICKS * 7 + 1000,
+    maxArray: WORLD_MAX_TICKS,
+    maxDepth: 10,
+  });
+  required(
+    ['FlightAttempt.v2', 'FlightAttempt.v3', 'FlightAttempt.v4'].includes(proof.format) &&
+      proof.finalStateIdentity === boundary.stateIdentity &&
+      Object.entries(boundary.identity).every(([key, value]) => proof[key] === value),
+    'Continuation needs its original verified boundary',
+  );
+  const frames = prefix.map((frame) => [...frame]);
+  required(
+    frames.length <= WORLD_MAX_TICKS && frames.length + boundary.ticks === flight.snapshot().ticks,
+    'Continuation clock differs',
+  );
+  let retainedStateIdentity =
+    frames.length === WORLD_MAX_TICKS ? worldStateIdentity(flight.snapshot()) : null;
+  return {
+    record(input, { quantized = false } = {}) {
+      if (frames.length === WORLD_MAX_TICKS) return false;
+      const state = flight.snapshot();
+      required(
+        state.ticks === boundary.ticks + frames.length + 1,
+        'Record exactly one accepted continuation tick',
+      );
+      const command =
+        input === undefined
+          ? state.lastInput
+          : quantized
+            ? validateCommand(input)
+            : quantizeWorldInput(input);
+      required(
+        COMMANDS.every((key) => command[key] === state.lastInput[key]),
+        'Record the consumed continuation command',
+      );
+      frames.push(COMMANDS.map((key) => state.lastInput[key]));
+      if (frames.length === WORLD_MAX_TICKS) retainedStateIdentity = worldStateIdentity(state);
+      return true;
+    },
+    ticks: () => frames.length,
+    recordingStatus: () => ({
+      recordedFrames: frames.length,
+      maxFrames: WORLD_MAX_TICKS,
+      retainedTick: boundary.ticks + frames.length,
+      exhausted: frames.length === WORLD_MAX_TICKS,
+    }),
+    export() {
+      required(
+        retainedStateIdentity !== null ||
+          flight.snapshot().ticks === boundary.ticks + frames.length,
+        'Unrecorded continuation ticks',
+      );
+      return {
+        format: 'FlightPracticeContinuation.v1',
+        unscored: true,
+        actorRules: LIVE_ACTOR_RULES,
+        boundaryProof: clone(proof),
+        frames: frames.map((frame) => [...frame]),
+        finalStateIdentity: retainedStateIdentity ?? worldStateIdentity(flight.snapshot()),
+      };
+    },
+  };
+}
+async function replayContinuation(
+  course,
+  input,
+  {
+    sampleEvery = 0,
+    includeSectors = false,
+    signal,
+    yieldControl = () => new Promise((resolve) => setTimeout(resolve, 0)),
+    retain = false,
+  } = {},
+) {
+  required(int(sampleEvery, 0, WORLD_MAX_TICKS), 'Invalid continuation sample interval');
+  const proof = readContinuationProof(input);
+  const origin = await replayInternal(course, proof.boundaryProof, {
+    signal,
+    yieldControl,
+    retain: true,
+  });
+  let flight,
+    keep = false;
+  try {
+    flight = migrateWorldFlightToLive(origin.flight);
+    const recorder = createWorldContinuationRecorder(flight, {
+      boundaryProof: proof.boundaryProof,
+    });
+    // Migrated practice has no scored sectors and may outlive the original
+    // scored tick ceiling. Its retained proof boundary remains independently
+    // verified without extending the historical sector schema.
+    const path = [];
+    flight.arm();
+    for (let i = 0; i < proof.frames.length; i++) {
+      if (i % 200 === 0) {
+        signal?.throwIfAborted();
+        await yieldControl();
+        signal?.throwIfAborted();
+      }
+      const frame = proof.frames[i];
+      required(
+        Array.isArray(frame) && frame.length === 5 && flight.snapshot().status === 'active',
+        'Invalid continuation interval',
+      );
+      const state = flight.step(Object.fromEntries(COMMANDS.map((key, j) => [key, frame[j]])), {
+        quantized: true,
+      });
+      recorder.record();
+      if (sampleEvery && (i % sampleEvery === 0 || state.status !== 'active'))
+        path.push({
+          tick: state.ticks,
+          position: state.position,
+          orientation: state.orientation,
+          input: state.lastInput,
+        });
+    }
+    required(
+      worldStateIdentity(flight.snapshot()) === proof.finalStateIdentity,
+      'Continuation state does not match its evidence',
+    );
+    if (retain) {
+      required(flight.snapshot().status === 'active', 'Only unfinished practice can continue');
+      flight.pause();
+      keep = true;
+      return {
+        flight,
+        recorder,
+        state: flight.snapshot(),
+        ...(includeSectors ? { sectors: [] } : {}),
+        unscored: true,
+      };
+    }
+    return {
+      identity: flight.identity,
+      state: flight.snapshot(),
+      path,
+      ...(includeSectors ? { sectors: [] } : {}),
+      unscored: true,
+    };
+  } finally {
+    origin.flight.dispose();
+    if (!keep) flight?.dispose();
+  }
+}
+
+function readContinuationProof(input) {
+  const proof = boundedJSON(input, {
+    maxBytes: 4 * 1024 * 1024,
+    maxNodes: WORLD_MAX_TICKS * 14 + 2000,
+    maxArray: WORLD_MAX_TICKS,
+    maxDepth: 12,
+  });
+  exactKeys(
+    proof,
+    ['format', 'unscored', 'actorRules', 'boundaryProof', 'frames', 'finalStateIdentity'],
+    'Practice continuation',
+  );
+  required(
+    proof.format === 'FlightPracticeContinuation.v1' &&
+      proof.unscored === true &&
+      proof.actorRules === LIVE_ACTOR_RULES &&
+      ['FlightAttempt.v2', 'FlightAttempt.v3', 'FlightAttempt.v4'].includes(
+        proof.boundaryProof?.format,
+      ) &&
+      Array.isArray(proof.frames) &&
+      proof.frames.length <= WORLD_MAX_TICKS,
+    'Invalid practice continuation',
+  );
+  return proof;
+}
+
+/** Prepare Watch at the verified migration boundary; the host verifies the full
+ * continuation before offering Watch and owns the returned paused flight. */
+export async function prepareWorldContinuationReplay(course, input, { signal, yieldControl } = {}) {
+  const proof = readContinuationProof(input);
+  for (const frame of proof.frames) {
+    required(Array.isArray(frame) && frame.length === 5, 'Invalid continuation frame');
+    validateCommand(Object.fromEntries(COMMANDS.map((key, index) => [key, frame[index]])));
+  }
+  const origin = await replayInternal(course, proof.boundaryProof, {
+    signal,
+    yieldControl,
+    retain: true,
+  });
+  try {
+    const flight = migrateWorldFlightToLive(origin.flight);
+    return {
+      flight,
+      frames: proof.frames.map((frame) => [...frame]),
+      mode: flight.identity.mode,
+      response: flight.response(),
+      boundaryTicks: flight.snapshot().ticks,
+      unscored: true,
+    };
+  } finally {
+    origin.flight.dispose();
+  }
+}

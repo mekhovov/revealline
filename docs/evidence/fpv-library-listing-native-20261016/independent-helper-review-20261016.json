@@ -1,0 +1,113 @@
+{
+  "format": "FPVListingIndependentReview.v1",
+  "checkedAt": "2026-10-16T03:04:11.922950+00:00",
+  "reviewedParent": "0d18c2ec48375ec51fdca2ff899d558bb970fb82",
+  "inventoryFilesVerified": 20,
+  "nativeReceiptSHA256": "175b89ed7ac8d38a3aec4095d334337ce5947c9a149779a447a630ab779e53ef",
+  "originalNativeFilesVerified": 5,
+  "nativeActionCounts": [
+    4,
+    2
+  ],
+  "sixActionsAccepted": true,
+  "firstSeedReused": false,
+  "reopenSeedReused": true,
+  "allFingerprintsCountsGenerationMatch": true,
+  "pngBytesIdentical": true,
+  "jsonExportsDistinct": true,
+  "fourBrowserFileHashesUnchanged": true,
+  "newNativeObservation": false,
+  "playerStorageAccessed": false,
+  "publicPersistenceAccepted": false,
+  "ciSourceFailure": {
+    "run": 38840992336,
+    "url": "https://github.com/mekhovov/revealline/actions/runs/38840992336",
+    "head": "0d18c2ec48375ec51fdca2ff899d558bb970fb82",
+    "attempt": 1,
+    "conclusion": "failure",
+    "tests": 532,
+    "pass": 531,
+    "fail": 1,
+    "failure": "theme-bootstrap.test.mjs production entry discovery includes the isolated index.html fixture",
+    "infrastructureFailure": false,
+    "originalFailedLogSHA256": "cd9e4e4c4c153ea7dfdb7f63e077fd026a47e606d7f078d69811c4a5a3ff1384"
+  },
+  "focusedChild": {
+    "htmlTemplate": "authoring/fpv-worlds/library-listing/index.html.template",
+    "emittedHTMLByteIdenticalToNativeOriginal": true,
+    "newProductionHTMLTestExemption": false,
+    "resolvedSymlinkParentIntoRepositoryRefusedBeforeArchiveAccess": true,
+    "originalEvidenceModified": false,
+    "planLogModified": false,
+    "prepareBoundaryCases": {
+      "pass": 5,
+      "fail": 0,
+      "skip": 0
+    },
+    "preparedStageSafetyCases": {
+      "pass": 4,
+      "fail": 0,
+      "skip": 0
+    },
+    "redBaseline": {
+      "pass": 2,
+      "fail": 2,
+      "skip": 1,
+      "scope": "Added production-entry and symlink refusal regressions fail against parent helper. Exact original-archive test was not requested in this negative-only run."
+    }
+  },
+  "sourceFiles": [
+    {
+      "path": "authoring/fpv-worlds/library-listing/README.md",
+      "sha256": "817d4bab36c708390cf1a2d3cfb5a043788e7ea526e7499739b0c055c02c0362"
+    },
+    {
+      "path": "authoring/fpv-worlds/library-listing/contract.mjs",
+      "sha256": "c2d819373994e2ac9e87b93fb04fe8df522d75d7a4167dcf6361a52496533f62"
+    },
+    {
+      "path": "authoring/fpv-worlds/library-listing/harness.mjs",
+      "sha256": "d37599b6a90bfb1b6d8d276a905e02a5141a511c5ca226abe3b93e04bc2c4aca"
+    },
+    {
+      "path": "authoring/fpv-worlds/library-listing/index.html.template",
+      "sha256": "ee7b1343ca521480f02dbe51b022ee7ae0ea118cbad312d6ee89f9ba9d97d95c"
+    },
+    {
+      "path": "authoring/fpv-worlds/library-listing/prepare.mjs",
+      "sha256": "cfef3fe8fe527b3df298a8cd4fb4a4e426debfb6c0a61157372d36ac41da82bc"
+    },
+    {
+      "path": "authoring/fpv-worlds/library-listing/style.css",
+      "sha256": "0c7aef2cbbc6afaaafaf7f7a6f7875bf5fa571c1227f4b566fcf7d522541bef7"
+    },
+    {
+      "path": "authoring/fpv-worlds/library-listing/verify-prepare.mjs",
+      "sha256": "dbd737e26132a9b4538742be97ddac8883feae4a94d952adc63d0d1813615e72"
+    },
+    {
+      "path": "authoring/fpv-worlds/library-listing/verify.mjs",
+      "sha256": "23e26e38f42f11cbb3af829282fa30bfd66d8e4375b835e6b0130ad8b0fabc1f"
+    }
+  ],
+  "testReceipts": [
+    {
+      "path": "independent-prepare-boundaries-red.tap.gz",
+      "bytes": 944,
+      "sha256": "4cc465951329fe993d3fd4d25e67a9d0bd417683b71762be626e52aa3d217a3b",
+      "encoding": "gzip",
+      "uncompressedSHA256": "5c983c4979e8bd6ad085bbb276ab30a0ec145b2f5c66f08a65b3af28cd458ea6"
+    },
+    {
+      "path": "independent-prepare-boundaries-pass.tap",
+      "bytes": 1113,
+      "sha256": "94aeedbd04e912c471cc51b0d8b893f7e5a09b9899c0d2cf7541376d8b1a7df9"
+    },
+    {
+      "path": "independent-prepared-stage-safety.tap",
+      "bytes": 943,
+      "sha256": "0338262a1f5f7d1c3e279fb823e716e5d07ee56fb82aeea66e06d55c8f02cfee"
+    }
+  ],
+  "scope": "Static authoring helper/evidence review and small isolated software tests only. All extraction/staging/output is external. Native acceptance remains the original tiny component; no new browser/player/public persistence, performance, all24, restart/offline/quota/endurance/device acceptance."
+}
