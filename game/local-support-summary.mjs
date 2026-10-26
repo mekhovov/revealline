@@ -22,6 +22,7 @@ const controllerStates = [
 ];
 const snakeHosts = ['snake-solo', 'snake-versus', 'snake-team'];
 const teamHosts = ['capture-team'];
+const versusHosts = ['capture-versus'];
 const overflightHosts = [
   'overflight',
   'overflight-riy',
@@ -58,7 +59,9 @@ export function supportSnapshot(host = {}, env = globalThis, clock = {}) {
         : null,
     scope: snakeHosts.includes(host.kind)
       ? 'snake-game-shell'
-      : teamHosts.includes(host.kind)
+      : versusHosts.includes(host.kind)
+        ? 'versus-game-shell'
+        : teamHosts.includes(host.kind)
         ? 'team-game-shell'
         : overflightHosts.includes(host.kind)
           ? 'overflight-game-shell'
@@ -72,7 +75,7 @@ export function supportSnapshot(host = {}, env = globalThis, clock = {}) {
       packaged: boolean(host.packaged),
     },
     game: {
-      host: oneOf(host.kind, ['solo', 'journey', 'installed-edition', 'practice', ...snakeHosts, ...teamHosts, ...overflightHosts]),
+      host: oneOf(host.kind, ['solo', 'journey', 'installed-edition', 'practice', ...snakeHosts, ...teamHosts, ...overflightHosts, ...versusHosts]),
       state: oneOf(host.state, ['idle', 'running', 'paused', 'won', 'lost', 'finished']),
       locale: oneOf(host.locale, ['en', 'uk']),
       saving: {

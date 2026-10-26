@@ -393,3 +393,20 @@ test('Team support accepts only its aggregate scalar observation and does not in
   }
 
 });
+
+test('Versus finished is an observed round state and preserves primary and Team scopes', () => {
+  const value = supportSnapshot(
+    { kind: 'capture-versus', state: 'finished' },
+    environment(),
+    clock,
+  );
+  assert.equal(value.scope, 'versus-game-shell');
+  assert.equal(value.game.host, 'capture-versus');
+  assert.equal(value.game.state, 'finished');
+  assert.equal(value.game.saving.writable, null);
+  assert.equal(
+    supportSnapshot({ kind: 'capture-team' }, environment(), clock).scope,
+    'team-game-shell',
+  );
+  assert.equal(supportSnapshot({ kind: 'solo' }, environment(), clock).scope, 'primary-game-shell');
+});
