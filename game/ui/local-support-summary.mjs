@@ -84,11 +84,22 @@ export function attachLocalSupportSummary({
     row('captured', () => value.capturedAt ?? copy('unavailable'));
     row('build', () => value.build.version ?? copy('unavailable'));
     row('game', () => copy(`game.${value.game.state}`));
-    row('controller', () =>
-      value.controller.freshness === 'recent'
-        ? copy(`controller.${value.controller.status}`)
-        : copy(`freshness.${value.controller.freshness}`),
-    );
+    row('controller', () => {
+      const controller = value.controller;
+      if (controller.freshness !== 'recent') return copy(`freshness.${controller.freshness}`);
+      if (
+        controller.status === 'connected' &&
+        !(
+          controller.assigned === true &&
+          controller.neutral === true &&
+          controller.confirmBlocked === false
+        )
+      )
+        return copy('presence.connected');
+      if (controller.status === 'disconnected' && controller.assigned !== true)
+        return copy('presence.disconnected');
+      return copy(`controller.${controller.status}`);
+    });
     row('saving', () =>
       value.game.saving.writable === null
         ? copy('unavailable')

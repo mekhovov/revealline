@@ -29,6 +29,16 @@ for the current round or for unrelated profile stores. Only a declared page buil
 version is included; absent version/source revision stays unavailable, without
 fetching build metadata.
 
+## Controller-presence wording addition from PR #1731
+
+Controller presence does not establish menu readiness. A recent connected observation uses the existing ready message only when assignment and neutral are both confirmed true and Confirm blocking is confirmed false. Otherwise it reports presence with readiness unconfirmed. A disconnected observation without a confirmed assignment says that no connected controller was observed; the existing assigned-controller disconnect instruction remains for a known assignment. Stale samples and other authoritative controller states retain their existing wording. The exact JSON and exported facts are unchanged by this presentation choice.
+
+PR #1731's source documentation reports an Academy browser observation at `0e9f9e92`: on a disarmed flight with no physical controller, Settings → Progress & Collection → Prepare showed an assigned-controller disconnect instruction while assignment was null; the shared presentation also called aggregate connected presence ready. The PR record reports that the corrected candidate showed **No connected controller was observed.** in English. After changing Data → Display, selecting Ukrainian and returning to Data, the earlier report was retired and Download disabled; a fresh Prepare then showed **Під’єднаного контролера не виявлено.**, retained focus and left the flight disarmed. Those browser observations and screenshots are preserved as claims from the PR record; they were not re-exercised during this composition.
+
+The PR record reports a 27-case component pass and a separate five-file component/native primary/Team/Versus/Academy cohort of 141/141 cases without skips. These are historical author-reported results, not new integration validation. The PR record also says physical connected/assigned-controller behavior and download delivery were not exercised; full-source, built-package and physical-device gates remain pending. This addition does not narrow the existing Snake and Survival/Raid coverage documented above.
+
+The existing Snake and Overflight adapters extend the same collector. Future adapters must union their host kinds, state/reason allowlists and scope mappings with Team rather than replace an existing adapter's collector. Versus uses the explicit visibility and invalidation contract below for its hidden/inert Settings section.
+
 ## Interaction ownership
 
 Only an explicit prepare/refresh action starts the optional observations. Refresh supersedes the prior observation. Closing Settings, hiding the page or leaving clears its prepared report; late results cannot republish it. A native export already awaiting a destination retains its ownership until it settles, including across a close/reopen. The newer report never receives an older export's success message.
@@ -37,7 +47,7 @@ The preview and export use the same captured document. Downloading does not sile
 
 ## Capture Team observations
 
-Team supplies its declared build, run state, locale and platform owner. Its current save permission remains unknown: attempt generation, checkpoint or successful durable write does not establish a current writer lease. Offline configuration is only configuration; content is not verified.
+Team supplies its actual declared build, run state, locale and platform owner. Its current save permission remains unknown: an attempt generation, checkpoint or successful durable write does not establish a current writer lease. Offline configuration is only configuration; content is not verified.
 
 The ordinary Team controller frame caches only sample time, physical connected/disconnected/unavailable status and whether any seat is assigned. Presence is observed before virtual seat mapping. Preparing a summary adds no hardware poll, session sample, raw button/axis read or consumed edge. Team's virtual menu owner cannot establish both players' physical neutral/Confirm readiness, so those values remain unknown. Device identity, seats, profiles and raw controls never enter the cache or report.
 

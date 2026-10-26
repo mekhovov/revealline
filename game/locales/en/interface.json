@@ -5980,6 +5980,8 @@
   "workshopOpenFailedReadItsErrorSavedDataWasNot": "Workshop open failed. Read its error; saved data was not replaced. Audio recovery can be attempted after closing the dialog.",
   "workshopTools": "Workshop tools",
   "world": "World",
+  "supportSummary.presence.connected": "Connected controller observed. Assignment and menu readiness are not confirmed by this observation.",
+  "supportSummary.presence.disconnected": "No connected controller was observed.",
   "worldIdsCommaSeparated": "Worlds (comma separated: retro, fpv, ukraine)",
   "worldPagesContainTwoOrFourCards": "World pages contain two or four cards.",
   "worldPreparationCancelledYourCurrentPictureIsKept": "World preparation cancelled. Your current picture is kept.",

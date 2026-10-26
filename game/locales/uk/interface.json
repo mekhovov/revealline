@@ -6094,6 +6094,8 @@
   "workshopOpenFailedReadItsErrorSavedDataWasNot": "Не вдалося відкрити майстерню. Прочитай помилку; збережені дані не замінено. Відновлення звуку можна спробувати після закриття діалогу.",
   "workshopTools": "Інструменти майстерні",
   "world": "Світ",
+  "supportSummary.presence.connected": "Виявлено під’єднаний контролер. Це спостереження не підтверджує його призначення чи готовність до керування меню.",
+  "supportSummary.presence.disconnected": "Під’єднаного контролера не виявлено.",
   "worldIdsCommaSeparated": "Світи (через кому: retro, fpv, ukraine)",
   "worldPagesContainTwoOrFourCards": "Сторінки світів містять дві або чотири картки.",
   "worldPreparationCancelledYourCurrentPictureIsKept": "Підготовку світу скасовано. Поточне зображення збережено.",
