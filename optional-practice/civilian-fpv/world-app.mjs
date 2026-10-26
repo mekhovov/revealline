@@ -193,6 +193,8 @@ import { mountWorldHuntReactions } from './world-reaction-runtime.mjs';
 import { mountWorldEnemyGuide, worldEnemyGuide } from './world-reaction-runtime.mjs';
 import {
   evaluateWorldResult,
+  worldMedalGoal,
+  worldMedalGoalText,
   createSectorTracker,
   compatibleGhost,
   prepareCheckpointPractice,
@@ -1328,6 +1330,7 @@ export function mountWorldApp({
     industrialPreparation = null,
     flightToken = 0,
     finished = false,
+    resultMedalGoal = null,
     sceneReady = false,
     scenePreparationGeneration = 0,
     qualityPreparing = false,
@@ -4063,6 +4066,8 @@ export function mountWorldApp({
     paintStorageStatus();
     paintRegionalStarts();
     enemyStatsViews.forEach((view) => view.refresh());
+    if (resultMedalGoal?.node.isConnected)
+      resultMedalGoal.node.textContent = worldMedalGoalText(resultMedalGoal.goal, locale);
     const toolNames = {
       learn: txt('Flight School', 'Льотна школа'),
       playlists: txt('Playlists', 'Добірки'),
@@ -8539,6 +8544,7 @@ export function mountWorldApp({
       return;
     }
     finished = true;
+    resultMedalGoal = null;
     enemyStatistics.finish();
     input.enable(false);
     fire = false;
@@ -8902,6 +8908,13 @@ export function mountWorldApp({
         const rating = el('p', '★'.repeat(stars), 'result-stars');
         rating.setAttribute('aria-label', txt(`${stars} of 3 stars`, `${stars} з 3 зірок`));
         resultDetails.append(rating);
+      }
+      const medalGoal = !isPreview && worldMedalGoal(resultSummary, state.ticks);
+      if (medalGoal) {
+        const node = el('p', worldMedalGoalText(medalGoal, locale));
+        node.dataset.worldMedalGoal = '';
+        resultDetails.append(node);
+        resultMedalGoal = { node, goal: medalGoal };
       }
       if (!entry.beginner)
         resultDetails.append(
@@ -9863,6 +9876,7 @@ export function mountWorldApp({
     $('flight-dialog').dataset.optionsOpen = 'false';
     $('world-replay-controls').hidden = true;
     $('result-panel').hidden = true;
+    resultMedalGoal = null;
     $('flight-mode').disabled =
       $('flight-source').disabled =
       $('radio-setup-button').disabled =
@@ -10299,6 +10313,7 @@ export function mountWorldApp({
     lastExecutionTime = win.performance?.now?.() ?? null;
     accumulator = 0;
     $('result-panel').hidden = true;
+    resultMedalGoal = null;
     $('flight-title').textContent = label(entry);
     $('flight-collection').textContent = replayProof
       ? $('world-replay-label').textContent
@@ -10878,6 +10893,7 @@ export function mountWorldApp({
     if (flight === previousFlight) await previousFlight?.dispose?.();
     if (token !== flightToken || disposed) return;
     flight = null;
+    resultMedalGoal = null;
     if (activeTuningDraft) {
       tuningStore.refresh();
       const camera = tuningStore.effective().camera;
@@ -13878,6 +13894,7 @@ export function mountWorldApp({
     dispose() {
       if (closing) return closing;
       disposed = true;
+      resultMedalGoal = null;
       supportController = null;
       supportSummary?.destroy();
       regionalManifestRequest?.abort();
