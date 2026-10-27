@@ -8,6 +8,11 @@ import { fileURLToPath } from 'node:url';
 import { parse } from 'acorn';
 import { format, resolveConfig } from 'prettier';
 import { projectEditionModuleIndentation } from './edition-code-indentation.mjs';
+import {
+  assertSharedPortableAudio,
+  PORTABLE_BANK_PATH,
+  ACADEMY_AUDIO_PATH,
+} from './fpv-audio-shared-data.mjs';
 import { OPTIONAL_PACKAGE_POLICIES } from '../publishing/optional-package-policy.mjs';
 import { REACTION_VOICE_PILOT } from '../game/audio/reactions/pilot.mjs';
 import { ACTOR_VOICE_RECORDINGS } from '../game/audio/reactions/actors.mjs';
@@ -58,6 +63,19 @@ function names(declaration) {
   return [declaration.id.name];
 }
 async function visit(file) {
+  // Share immutable sample data only. All factories, decoded caches and mutable
+  // audio state remain private to their original generated module scopes.
+  if (file === PORTABLE_BANK_PATH) {
+    if (!external.has(ACADEMY_AUDIO_PATH)) throw new Error('Shared audio slot is not admitted.');
+    const canonical = await readFile(path.join(root, file), 'utf8');
+    const academy = await readFile(path.join(root, ACADEMY_AUDIO_PATH), 'utf8');
+    assertSharedPortableAudio(canonical, academy);
+    hashes[file] = hash(canonical);
+    hashes[ACADEMY_AUDIO_PATH] = hash(academy);
+    if (!externals.has(ACADEMY_AUDIO_PATH))
+      externals.set(ACADEMY_AUDIO_PATH, `external${externals.size}`);
+    return externals.get(ACADEMY_AUDIO_PATH);
+  }
   if (external.has(file)) {
     if (!externals.has(file)) externals.set(file, `external${externals.size}`);
     return externals.get(file);
