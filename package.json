@@ -54,7 +54,8 @@
     "fpv:comparison:qualify": "node scripts/smoke-fpv-advanced-comparison.mjs",
     "remote-team:display:produce": "node scripts/remote-team-navigation.mjs produce",
     "remote-team:display:check": "node scripts/remote-team-navigation.mjs check",
-    "test:remote-team-display": "node --test --test-concurrency=1 scripts/test-remote-team-navigation.mjs scripts/remote-team-navigation-cultural.check.mjs scripts/remote-team-navigation-expedition.check.mjs scripts/remote-team-navigation-hunt.check.mjs"
+    "test:remote-team-display": "node --test --test-concurrency=1 scripts/test-remote-team-navigation.mjs scripts/remote-team-navigation-cultural.check.mjs scripts/remote-team-navigation-expedition.check.mjs scripts/remote-team-navigation-hunt.check.mjs",
+    "i18n:check:changes": "node scripts/localization-changes.mjs"
   },
   "dependencies": {
     "i18next": "26.4.2",

@@ -10,6 +10,7 @@ import { acquireCandidatePicture } from './picture.mjs';
 import { applyGameplayTuning, validateGameplayTuning } from '../gameplay-tuning.mjs';
 import { CONTENT_ATTEMPT_PREPARATION_TIMEOUT_MS } from './limits.mjs';
 import { prepareRunningEnemyLevel } from '../hunt/running-enemies.mjs';
+import { t } from '../i18n/index.mjs';
 
 const cancelled = () => new DOMException('Candidate preparation cancelled.', 'AbortError');
 
@@ -119,10 +120,10 @@ export function createContentAttemptPreparer(
     const check = () => {
       if (disposed || controller.signal.aborted || generation !== ticket) throw cancelled();
     };
-    const report = (stage, message) => {
+    const report = (stage, messageKey) => {
       check();
       try {
-        onStatus({ status: 'preparing', stage, message });
+        onStatus({ status: 'preparing', stage, messageKey, message: t(messageKey) });
       } catch {
         // A presentation observer does not own preparation.
       }
@@ -147,7 +148,7 @@ export function createContentAttemptPreparer(
       const result = await Promise.race([
         stopped,
         Promise.resolve().then(async () => {
-          report('verifying', 'Checking the exact authored mission and picture…');
+          report('verifying', 'interface:solo.candidateVerifying');
           const media = manifest.background
             ? await loadArtwork(manifest.background, { signal: controller.signal })
             : null;
@@ -157,7 +158,7 @@ export function createContentAttemptPreparer(
               ? { background: verifiedPreviewBackground(manifest.background, media) }
               : {};
           if (manifest.background) {
-            report('decoding', 'Opening this mission’s verified original picture…');
+            report('decoding', 'interface:solo.candidatePicture');
             candidatePicture = await acquireCandidatePicture(manifest.background, {
               signal: controller.signal,
               loadArtwork: async () => media,
@@ -166,7 +167,7 @@ export function createContentAttemptPreparer(
             });
             check();
           }
-          report('preparing', 'Preparing the authored rules without changing the current flight…');
+          report('preparing', 'interface:solo.candidateRules');
           const options = {
             seed: selected.seed,
             turnPolicy: selected.turnPolicy,

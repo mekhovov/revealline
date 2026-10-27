@@ -5736,7 +5736,7 @@ body .mode-settings-view[open] [data-settings-back][data-menu-icon]::before {
     .game-shell[data-text-size='large']
       #journey-chooser.mission-library-chooser
       .journey-card-illustrated {
-      height: auto;
+      height: max-content;
       min-height: 11rem;
     }
   }
@@ -6124,6 +6124,12 @@ body .mode-settings-view[open] [data-settings-back][data-menu-icon]::before {
   body.journey-preview.game-shell .shell-bar #journey-skip {
     max-width: 8rem;
     white-space: normal;
+  }
+  /* Give large labels the full compact width without changing action order. */
+  @media (max-width: 600px) {
+    .game-shell[data-text-size='large'] #journey-chooser.mission-library-chooser .journey-footer {
+      grid-template-columns: minmax(0, 1fr);
+    }
   }
 }
 

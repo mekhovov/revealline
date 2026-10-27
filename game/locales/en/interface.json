@@ -4654,7 +4654,7 @@
   "solo.flightUnavailable": "Flight unavailable: {{error}}",
   "solo.missionSelectedDeploy": "{{mission}} selected. Deploy when ready.",
   "solo.noOtherNormalMission": "No other normal Solo mission is available in this library.",
-  "solo.openNextFailed": "Could not open the next mission. Your current flight is kept. {{error}}",
+  "solo.openNextFailed": "Could not open the next mission. Your current flight is kept. Try again.",
   "solo.prepareNextFailed": "Could not prepare {{mission}}. Try again; your current flight is kept.",
   "solo.preparingMission": "Preparing {{mission}}…",
   "solo.preparingNextMission": "Preparing {{mission}}… Your current flight is kept.",
@@ -4669,7 +4669,7 @@
   "solo.skipCancelledFlightChanged": "Skip cancelled because the current flight changed.",
   "solo.skipCancelledRetry": "Skip cancelled. Your current flight is kept. Choose Skip mission to retry.",
   "solo.skipCancelledSetupChanged": "Skip cancelled because the next-mission setup changed.",
-  "solo.skipUnavailable": "Skip is unavailable: {{error}} Your current flight is kept. Choose Skip mission to retry.",
+  "solo.skipUnavailable": "Skip is unavailable. Your current flight is kept. Choose Skip mission to retry.",
   "solo.startingClass": "Starting class: {{class}}",
   "solo.startingNow": " · starting now…",
   "solo.steering": "Steering: {{steering}}",
@@ -6253,5 +6253,12 @@
   "community.recovery.checking": "Checking the retained package and restoring this exact edition…",
   "community.recovery.failed": "Restore did not report a completed result. {{error}} Keep the recovery copy and check this edition before retrying.",
   "community.recovery.journalIncomplete": "The edition was installed, but its final local record update did not finish. Keep the recovery copy and refresh before another action.",
-  "community.recovery.restored": "Exact edition restored from its local copy. Saved progress and the recovery package are kept."
+  "community.recovery.restored": "Exact edition restored from its local copy. Saved progress and the recovery package are kept.",
+  "solo.skipNoDestination": "No other normal Solo mission is available in this library. Your current flight is kept. Continue playing or choose another mission from the Library.",
+  "solo.prepareSkipFailed": "Could not prepare {{mission}}. Your current flight is kept. Choose Skip mission to retry.",
+  "solo.prepareResultNextFailed": "Could not prepare the next mission. Your result is kept. Choose Next to retry.",
+  "solo.startupFailed": "The game could not finish starting. Reload the page or open the current online edition.",
+  "solo.candidateVerifying": "Checking the exact authored mission and picture…",
+  "solo.candidatePicture": "Opening this mission’s verified original picture…",
+  "solo.candidateRules": "Preparing the authored rules without changing the current flight…"
 }
