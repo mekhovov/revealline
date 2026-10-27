@@ -98,6 +98,8 @@ const defaultRuntimeHosts = new Set([
   'game/ui/soundtrack-player.mjs',
   'game/ui/victory-story.mjs',
   'game/video-poster.mjs',
+  // Bundled SIM presentation only; embedded media literals remain byte-exact.
+  'optional-practice/civilian-fpv/sim-presentation.mjs',
 ]);
 
 /** Encode only the existing generated data tuples, never execute source. The

@@ -93,3 +93,7 @@ then; this baseline does not qualify rows that are absent from its ancestry.
 Keep this PR a dependent draft until predecessor admission and bounded actual
 browser review. No numeric 200% label, all-theme, physical-device, PWA, acoustic,
 assistive-technology or general accessibility-conformance claim is added.
+
+## Current preserving integration boundary
+
+The original inventory and validation statements remain dated author evidence. This integration retains current Solo, Snake and Overflight ownership while adding native Duel; inactive factors stay at one. Private generation checks are component evidence, not hosted, rendered-layout, gameplay, native or offline acceptance. Broad checks are bypassed under the explicit accelerated merge instruction and are not reported passed.

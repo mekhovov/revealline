@@ -1,0 +1,75 @@
+{
+  "started": "2026-10-20T01:46:01.333Z",
+  "errors": [],
+  "consoleErrors": [
+    "Failed to load resource: the server responded with a status of 404 (Not Found)"
+  ],
+  "before": {
+    "status": "active",
+    "ticks": 202,
+    "shots": 30,
+    "kills": 1,
+    "buttonDisabled": false
+  },
+  "pause": {
+    "before": 0,
+    "after": 0,
+    "rate": 0.5
+  },
+  "after": {
+    "status": "paused",
+    "ticks": 202,
+    "shots": 30,
+    "kills": 1,
+    "playback": {
+      "cursor": 202,
+      "total": 202,
+      "done": true,
+      "verified": true,
+      "playing": false,
+      "rate": 0.5,
+      "error": null,
+      "verification": {
+        "format": "FPVCombatReplayVerification.v2",
+        "verified": true,
+        "practiceOnly": true,
+        "physicalBoundary": "accepted-dynamics-v1",
+        "identity": {
+          "format": "FPVEncounterSession.v2",
+          "base": {
+            "model": "civilian-world-fixed.v2",
+            "backend": "rapier3d-compat-0.21.0:02dc6a4e2fffc013bab08fbb44fa68f501d8303615e9afe4c7d89ad4eedda0d0",
+            "course": "stadium-01",
+            "courseIdentity": "ba603cfd277fc808",
+            "worldIdentity": "9aab8697da0e74b0",
+            "mode": "self-level",
+            "responseIdentity": "73833493634ba989",
+            "rulesIdentity": "189ebd24739c7f4a",
+            "conditionsIdentity": "030d08b3879ad283"
+          },
+          "encounter": "c85f6d18f219861f"
+        },
+        "definitionIdentity": "c85f6d18f219861f",
+        "acceptedTicks": 202,
+        "sessionTicks": 202,
+        "retainedFrom": 0,
+        "retainedTo": 202,
+        "result": null
+      }
+    },
+    "statusText": "Combat playback verified · no rewards.",
+    "label": "COMBAT PLAYBACK · NO REWARDS · 4.0 / 4.0 s"
+  },
+  "retry": {
+    "cursor": 0,
+    "total": 202,
+    "done": false,
+    "verified": false,
+    "playing": true,
+    "rate": 0.5,
+    "error": null,
+    "verification": null
+  },
+  "retryVerified": true,
+  "finished": "2026-10-20T01:46:23.479Z"
+}

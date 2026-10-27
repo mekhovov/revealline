@@ -25,8 +25,8 @@ export function renderTextSizeFallback(container, desired, { locale } = {}) {
   }
 }
 
-/** Only a qualified host can offer the additional size; other hosts retain
- * existing intent as a disabled choice. Never save, dispatch or move focus. */
+/** Only an opted-in host offers the additional size; other hosts retain intent
+ * as a disabled choice. Never save, dispatch or move keyboard focus. */
 export function renderTextSizeControl(control, desired, { locale, extraLarge = false } = {}) {
   resolveTextSize(desired);
   if (!control) return;

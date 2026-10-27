@@ -284,13 +284,15 @@ test('immutable parked declaration and witnessed source refs remain exact', asyn
   assert.equal(recipe.replayRequirements.movingTicks, 3300);
   assert.equal(recipe.replayRequirements.directionChangesWithMovement, 20);
 });
-test('declaration CLI works with only two adapters and manifest, no installed dependencies', async (t) => {
+test('declaration CLI works with its complete source closure and no installed dependencies', async (t) => {
   const temporary = await realpath(await mkdtemp(join(tmpdir(), 'solo-cpu-declaration-')));
   t.after(() => rm(temporary, { recursive: true, force: true }));
   const files = [
     'scripts/solo-remote-cpu-profile.mjs',
     'scripts/solo-remote-supplemental.mjs',
     'docs/performance/solo-remote-cpu-profile-plan.json',
+    // The adapter imports the additive trace protocol constants from this built-in-only helper.
+    'scripts/solo-qualification-cpu-profile.mjs',
   ];
   for (const path of files) {
     const target = join(temporary, path);

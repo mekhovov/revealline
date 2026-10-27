@@ -39,6 +39,43 @@ function make(t, options = {}) {
 const catchAt = (stats, attempt, sequence, family = 'humanoid', board = '0') =>
   stats.observe(attempt, { sequence, board, defeats: [{ family }] });
 
+test('menu reads and rejected observations never create a statistics writer', async (t) => {
+  const common = storage(),
+    writes = [];
+  const save = common.setItem;
+  common.setItem = (key, value) => {
+    writes.push([key, value]);
+    save(key, value);
+  };
+  const { stats } = make(t, { storage: common });
+  await stats.read();
+  const attempt = stats.beginAttempt({ gameType: 'team' });
+  await stats.observe(attempt, { sequence: 0, defeats: [] });
+  assert.throws(() => stats.observe(attempt, { sequence: 1, defeats: [{ family: '' }] }));
+  const replay = stats.beginAttempt({ gameType: 'team', provenance: 'replay' });
+  await catchAt(stats, replay, 1);
+  assert.deepEqual(writes, []);
+  await catchAt(stats, attempt, 1);
+  assert.equal(writes.length, 1);
+  assert.equal(writes[0][0], `${ENEMY_STATS_KEY}:writer`);
+  await catchAt(stats, attempt, 1);
+  assert.equal(writes.length, 1, 'A duplicate observation does not rewrite the identity.');
+});
+
+test('hosts opened before first play adopt the same persisted writer on contribution', async (t) => {
+  const model = managedIndexedDB(),
+    common = storage();
+  const first = make(t, { model, storage: common }).stats;
+  const second = make(t, { model, storage: common }).stats;
+  assert.equal(common.getItem(`${ENEMY_STATS_KEY}:writer`), null);
+  await catchAt(first, first.beginAttempt({ gameType: 'solo' }), 1);
+  const writer = common.getItem(`${ENEMY_STATS_KEY}:writer`);
+  await catchAt(second, second.beginAttempt({ gameType: 'team' }), 1);
+  await first.read();
+  assert.deepEqual(Object.keys(first.snapshot().lineages), [writer]);
+  assert.equal(first.totals().total, 2);
+});
+
 test('closing a host retires queued statistics work without late writes or rejected callbacks', async () => {
   const model = managedIndexedDB(),
     warnings = [],
@@ -483,6 +520,36 @@ test('legacy host Continue uses a bounded adjacent cursor without rewriting the 
   assert.equal(saved.getItem('old-game-session'), 'historical bytes');
   b.begin('imported-round', { provenance: 'replay' });
   assert.equal(await b.observe({ sequence: 100, defeats: [{ family: 'runner' }] }), false);
+});
+
+test('legacy hosts persist a cursor only after a new live defeat', async (t) => {
+  const common = storage(),
+    writes = [];
+  const put = common.setItem;
+  common.setItem = (key, value) => {
+    writes.push([key, value]);
+    put(key, value);
+  };
+  const host = createEnemyStatsHost({
+    gameType: 'versus',
+    storage: common,
+    indexedDB: managedIndexedDB().indexedDB,
+  });
+  t.after(() => host.close());
+  await host.stats.read();
+  host.begin('prepared-round');
+  await host.observe({ sequence: 1, defeats: [] });
+  host.finish();
+  host.begin('real-round');
+  assert.deepEqual(writes, []);
+  await host.observe({ sequence: 2, defeats: [{ family: 'runner' }] });
+  assert.equal(writes.length, 2, 'One writer and one resumable cursor are stored.');
+  const before = [...writes];
+  await host.observe({ sequence: 2, defeats: [{ family: 'runner' }] });
+  host.finish();
+  host.begin('imported-round', { provenance: 'replay' });
+  host.close();
+  assert.deepEqual(writes, before, 'Duplicates, replay and disposal do not rewrite the cursor.');
 });
 
 test('milestones acknowledge live progress without replaying import history or taking focus', async (t) => {

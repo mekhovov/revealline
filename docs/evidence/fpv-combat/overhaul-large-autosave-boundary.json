@@ -1,0 +1,66 @@
+{
+  "started": "2026-10-20T05:28:25.153Z",
+  "scope": "Actual7.18MB recovery imported through the host, automatically saved on pause with real browser localStorage quota, then page reloaded and Continue saved combat invoked without importing again. Functional test, outside performance timing.",
+  "errors": [],
+  "importBytes": 7180019,
+  "expectedTicks": 42134,
+  "hostSha256": "aa35bb4c1dc6fb35aa3128c70ce0b4d52e9f6dae5b1dc36f8df93856f806b794",
+  "harnessSha256": "317ada7816d40ac8e77541b4549f427a5ed35d9960617740a8eb94e183ddca87",
+  "stored": {
+    "format": "FPVCombatAutosave.v1",
+    "bytes": 7180077,
+    "localPointer": {
+      "format": "FPVCombatAutosavePointer.v1",
+      "savedAt": 1792474108714
+    },
+    "tick": 42134,
+    "presentationRecords": 1024,
+    "presentationImpacts": 1024,
+    "counts": {
+      "kills": 1730,
+      "shots": 4194
+    },
+    "status": "Checking saved best…"
+  },
+  "restored": {
+    "status": "paused",
+    "ticks": 42134,
+    "encounterTicks": 42134,
+    "kills": 1730,
+    "shots": 4194,
+    "recording": {
+      "format": "FPVEncounterRecordingStatus.v1",
+      "retainedFrom": 6000,
+      "retainedTo": 42134,
+      "complete": false,
+      "practiceOnly": true
+    },
+    "effects": {
+      "moving": 0,
+      "settled": 0,
+      "marks": 0,
+      "bursts": 0,
+      "calls": 0,
+      "tier": "high",
+      "runId": "encounter-ec3fff2d9bf72219",
+      "tick": 42134,
+      "stored": 1024,
+      "storedImpacts": 1024,
+      "capacity": 1024,
+      "impactCapacity": 1024,
+      "evicted": 0,
+      "presentationClock": 842.68,
+      "pendingFragments": 3,
+      "maxDrawCalls": 24,
+      "registeredPools": 11,
+      "appearanceReady": false,
+      "appearanceHash": null,
+      "appearanceDrawCalls": 0,
+      "appearanceCharacters": 0,
+      "maxAppearanceTriangles": 600000
+    },
+    "statusText": "Preparing scene…"
+  },
+  "passed": true,
+  "finished": "2026-10-20T05:28:32.658Z"
+}

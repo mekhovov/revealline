@@ -1,0 +1,146 @@
+{
+  "recordedAt": "2026-10-16T02:27:25.708365+00:00",
+  "sourceRevision": "81c0d6587cdb582835a64e3d69c4c130460fb11a",
+  "scope": "Bounded synthetic actual-DOM component review only; no WebGL, database, player data, scenery, physical controller, full player theme, persistence or public acceptance.",
+  "result": "HOLD: repeated focus failure in open-before-refresh path; production draft remains held.",
+  "failure": "Original preserved81c preview: visible deferred control focuses old Desert Fly then calls production open(); at390x844 and1280x800 the final focus is BODY with Versions closed and a different primary. No intervening input. Root/source review identifies unconditional same-place reinsertion before focus capture as a candidate mechanism; later child is separately qualified.",
+  "passes": [
+    "No document horizontal overflow at observed390x844,844x390,1280x800 EN/UK samples",
+    "Visible production controls at least44px high in sampled layouts",
+    "24offered editions/10families retained by empty and all synthetic scenarios; unknown retained IDs visible in default26row11family scenario",
+    "Native keyboard Enter/Space versions disclosure; old6ecb exactFly callback",
+    "Production ArrowDown menu navigation reaches exactR6Fly then exactR6Remove-review"
+  ],
+  "console": [],
+  "verifiedFrozenFiles": [
+    {
+      "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/regional-family-component-review-9213/web/index.html",
+      "bytes": 2637,
+      "sha256": "da7a400b9582ed8d5980a223535f972f5b623586939c17f1cf156ef89daadc06"
+    },
+    {
+      "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/regional-family-component-review-9213/web/preview.mjs",
+      "bytes": 7494,
+      "sha256": "24a27aae95d4b0cfd37d0af44743a8967c7644d7ba40c87813a9b0c4dfd76244"
+    },
+    {
+      "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/regional-family-component-review-9213/web/preview.css",
+      "bytes": 708,
+      "sha256": "bb92f1390f6e082789e19c8fa5c9d8c66cc39888bcebe47ba83cb92fc731c49d"
+    },
+    {
+      "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/regional-family-component-review-9213/web/runtime/optional-practice/civilian-fpv/regional-library.mjs",
+      "bytes": 74142,
+      "sha256": "25dc7de4cfe5f9f08095b2934a36d508a1d2291307ab8880ca353b3c994d80b5"
+    },
+    {
+      "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/regional-family-component-review-9213/web/runtime/optional-practice/civilian-fpv/input.mjs",
+      "bytes": 38417,
+      "sha256": "fa05c07d694b96042ad4285294b1b676c60ef85b5122175a0d7b0b0268a1e8d6"
+    },
+    {
+      "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/regional-family-component-review-9213/web/runtime/optional-practice/civilian-fpv/world-style.css",
+      "bytes": 119168,
+      "sha256": "e75fe38f7a339e844376c9ca2eb35ef6d7f84202b395e0c8d2c491ba915e1529"
+    },
+    {
+      "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/regional-family-component-review-9213/web/runtime/optional-practice/civilian-fpv/style.css",
+      "bytes": 175643,
+      "sha256": "caf333f5853e0805126789f96e5013878461f725cd8354c9239be84e5aab81ce"
+    },
+    {
+      "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/regional-family-component-review-9213/web/runtime/game/vendor/i18next-26.4.2.min.js",
+      "bytes": 43702,
+      "sha256": "eb0dd6d72e8f756b90faf864853af2a17870fe97b54473b7c34494870c65901c"
+    }
+  ],
+  "evidenceFiles": [
+    {
+      "path": "console.json",
+      "bytes": 2,
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    {
+      "path": "deferred-preserve-negative.json",
+      "bytes": 511,
+      "sha256": "7b63468e0bf76d58e28f7986482f06ad24eb6693c35e35b5a1a187cf69d0864c"
+    },
+    {
+      "path": "deferred-preserve-negative.png",
+      "bytes": 61292,
+      "sha256": "3400b72291c57a054dce5a91c3d0c670d5cbd7656a4828c5ea5a8b4271da7535"
+    },
+    {
+      "path": "deferred-preserve-repeat-handheld.json",
+      "bytes": 384,
+      "sha256": "a8490b3a1cbc37b4e100306883dece9c6a48577447ba0e66baed97e11e887390"
+    },
+    {
+      "path": "deferred-preserve-repeat-handheld.png",
+      "bytes": 118530,
+      "sha256": "b8b4d3dc378a2ed58eb7815bd48f44882f2b3ff0df26cffc86533df69b5325e8"
+    },
+    {
+      "path": "handheld-all-uk.json",
+      "bytes": 9496,
+      "sha256": "3b777ff301c9b311a9bb3614c0ee429191bd78fcc098beac38b32337db0852e0"
+    },
+    {
+      "path": "handheld-all-uk.png",
+      "bytes": 100662,
+      "sha256": "06ede27848bae21e6ce2b624f23ee288a4ac80cbf123ccd34ff02297f2b65ae6"
+    },
+    {
+      "path": "handheld-empty-uk.json",
+      "bytes": 4956,
+      "sha256": "e5c1070426a365573f57f7ca2e6bcc632fbe16d40742a5f20f698bf86b4e1124"
+    },
+    {
+      "path": "landscape-empty-uk.json",
+      "bytes": 4885,
+      "sha256": "1f191cdf000578bab0b63a0a7699c0b4d05cd110427fe00ab10c016f27b40fd6"
+    },
+    {
+      "path": "landscape-empty-uk.png",
+      "bytes": 51012,
+      "sha256": "d1f1074f14bec5998e41fec050a8ca7228a781418c621439bd24559e6d995772"
+    },
+    {
+      "path": "landscape-retained-en.json",
+      "bytes": 5287,
+      "sha256": "b2572e085199e6df46f88c2a7b5dfb7172c46f780b52097253d80277c44cd69b"
+    },
+    {
+      "path": "native-observations.json",
+      "bytes": 49795,
+      "sha256": "2a285485cf2ad7871f8f3166a63b38254415b520e60a60b2e5d4b980006994ae"
+    },
+    {
+      "path": "portrait-all-uk.json",
+      "bytes": 9359,
+      "sha256": "7bbf1e0066f236d9038cd003d09b9f71a069d631dacdd5f803ef3db736ba98d3"
+    },
+    {
+      "path": "portrait-all-uk.png",
+      "bytes": 57067,
+      "sha256": "0f72e8a95901cb03bd627c6cc9f12b18d2221e2c7b23dc65a6d217332597422d"
+    },
+    {
+      "path": "portrait-retained-en.json",
+      "bytes": 4197,
+      "sha256": "b2d0acf2e8c6a24c113bd2f7627c8d086466c64f720419444cfe23c085513f15"
+    },
+    {
+      "path": "portrait-versions-en.png",
+      "bytes": 55136,
+      "sha256": "c233a54c74e6d0e41d673f278640937888e57995b0976f8e252e8375e86c06a9"
+    }
+  ],
+  "cleanup": "Tab57 closed normally; viewport override reset; frozen9213 unchanged; no player storage accessed.",
+  "limits": [
+    "Not full-player, theme, physical input or performance acceptance",
+    "Synthetic callback-only Fly is not actual gameplay",
+    "Deferred5-second wait exceeded a tool3-second selector cap; resolved UI separately observed without extra input",
+    "Initial exact label selector no-match is a tool preparation error; visible select IDs used"
+  ]
+}
