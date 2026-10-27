@@ -23,6 +23,7 @@ import {
   assertSignedArtifactURL,
   assertLoopback,
   createCompiledOperationTrace,
+  installCompiledMissionsEventProbe,
   installCompiledStartEventProbe,
   COMPILED_RESUME_ENTRY,
   COMPILED_RESUME_GUARDS,
@@ -1719,4 +1720,364 @@ test('first Missions text omission preserves default normalized text whitespace 
     assert.equal(sampled.coverage, expectedText);
     assert.deepEqual(sampled.cards, []);
   }
+});
+
+function missionsEventFixture({ failAddAt = 0, failWindowRemove = false } = {}) {
+  let registrations = 0,
+    calls = 0,
+    forbidden = 0;
+  const optionRows = [],
+    targets = [];
+  const eventTarget = (kind) => {
+    const listeners = [];
+    const target = {
+      listeners,
+      addEventListener(type, callback, options) {
+        assert.equal(options.passive, true);
+        assert.equal(typeof options.capture, 'boolean');
+        optionRows.push({ kind, type, ...options });
+        listeners.push({ type, callback, capture: options.capture });
+        registrations += 1;
+        if (registrations === failAddAt) throw new Error('partial listener registration');
+      },
+      removeEventListener(type, callback, capture) {
+        if (failWindowRemove && kind === 'window' && type === 'click')
+          throw new Error('removal unavailable');
+        const at = listeners.findIndex(
+          (row) => row.type === type && row.callback === callback && row.capture === capture,
+        );
+        if (at >= 0) listeners.splice(at, 1);
+      },
+    };
+    targets.push(target);
+    return target;
+  };
+  const win = eventTarget('window'),
+    button = eventTarget('button'),
+    doc = eventTarget('document');
+  const nodes = new Map([
+    ['shell-play', button],
+    ['shell-home', { open: true }],
+    ['journey-chooser', { open: false }],
+  ]);
+  Object.assign(button, {
+    id: 'shell-play',
+    disabled: false,
+    contains: (target) => target?.inside === true,
+    click() {
+      forbidden += 1;
+    },
+    focus() {
+      forbidden += 1;
+    },
+    onclick(event) {
+      assert.equal(this, button);
+      assert.equal(event.type, 'click');
+      calls += 1;
+      nodes.set('mission-library-opening-status', {
+        hidden: false,
+        textContent: 'Preparing Missions',
+      });
+    },
+  });
+  Object.assign(doc, {
+    hidden: false,
+    hasFocus: () => true,
+    activeElement: button,
+    getElementById(id) {
+      assert(
+        ['shell-play', 'shell-home', 'journey-chooser', 'mission-library-opening-status'].includes(
+          id,
+        ),
+      );
+      return nodes.get(id) ?? null;
+    },
+    querySelectorAll() {
+      forbidden += 1;
+      throw new Error('No card/container scan');
+    },
+    createElement() {
+      forbidden += 1;
+      throw new Error('No product mutation');
+    },
+    dispatchEvent() {
+      forbidden += 1;
+    },
+  });
+  const emit = (target, event) => {
+    for (const row of [...target.listeners]) if (row.type === event.type) row.callback(event);
+  };
+  const event = (target = button) => ({
+    type: 'click',
+    target,
+    isTrusted: true,
+    defaultPrevented: false,
+    eventPhase: 1,
+    button: 0,
+    detail: 1,
+    preventDefault() {
+      forbidden += 1;
+    },
+    stopPropagation() {
+      forbidden += 1;
+    },
+    stopImmediatePropagation() {
+      forbidden += 1;
+    },
+  });
+  const nativeClick = () => {
+    const value = event();
+    emit(win, value);
+    value.eventPhase = 2;
+    button.onclick.call(button, value);
+    emit(button, value);
+    return value;
+  };
+  return {
+    win,
+    doc,
+    button,
+    nodes,
+    optionRows,
+    event,
+    emit,
+    nativeClick,
+    calls: () => calls,
+    forbidden: () => forbidden,
+    listenerCount: () => targets.reduce((sum, target) => sum + target.listeners.length, 0),
+  };
+}
+
+test('passive Missions slots observe one native click, public preparation and only the first focus-away without changing the handler', () => {
+  const f = missionsEventFixture(),
+    handler = f.button.onclick;
+  const probe = installCompiledMissionsEventProbe({ window: f.win, document: f.doc });
+  assert.equal(f.calls(), 0);
+  assert.equal(f.button.onclick, handler);
+  assert.equal(f.listenerCount(), 5);
+  f.emit(f.doc, { type: 'focusin' });
+  assert.equal(probe.snapshot().firstFocusAway, null);
+  const click = f.nativeClick();
+  const row = probe.snapshot();
+  assert.equal(f.calls(), 1);
+  assert.equal(click.defaultPrevented, false);
+  assert.equal(row.capture.phase, 'window-capture');
+  assert.equal(row.capture.trusted, true);
+  assert.equal(row.capture.sameInstalledHandler, true);
+  assert.equal(row.capture.openingStatus.present, false);
+  assert.equal(row.afterHandlerSlot.phase, 'target-after-handler-slot');
+  assert.equal(row.afterHandlerSlot.sameInstalledHandler, true);
+  assert.equal(row.afterHandlerSlot.openingStatus.text, 'Preparing Missions');
+  assert.equal(row.openingStatus.present, true);
+  assert.equal(row.firstFocusAway, null);
+  f.doc.activeElement = { id: 'new-focus' };
+  f.emit(f.doc, { type: 'focusin' });
+  const first = probe.snapshot().firstFocusAway;
+  assert.equal(first.eventType, 'focusin');
+  assert.equal(first.focusedId, 'new-focus');
+  assert.equal(first.homeOpen, true);
+  assert.equal(first.chooserOpen, false);
+  assert.equal(first.openingStatus.present, true);
+  f.doc.hidden = true;
+  f.emit(f.doc, { type: 'visibilitychange' });
+  f.emit(f.win, { type: 'blur' });
+  assert.deepEqual(probe.snapshot().firstFocusAway, first);
+  row.afterHandlerSlot.openingStatus.text = 'external change';
+  assert.equal(probe.snapshot().afterHandlerSlot.openingStatus.text, 'Preparing Missions');
+  f.nodes.delete('mission-library-opening-status');
+  assert.equal(probe.snapshot().openingStatus.present, false);
+  assert.equal(probe.snapshot().afterHandlerSlot.openingStatus.present, true);
+  assert.deepEqual(probe.dispose(), { disposed: true, teardown: 'removed', failures: 0 });
+  assert.equal(f.listenerCount(), 0);
+  assert.equal(f.button.onclick, handler);
+  assert.equal(f.calls(), 1);
+  assert.equal(f.forbidden(), 0);
+});
+
+test('passive Missions observation keeps capture-only delivery bounded and cleans partial or unconfirmed registrations honestly', () => {
+  const f = missionsEventFixture(),
+    probe = installCompiledMissionsEventProbe({ window: f.win, document: f.doc });
+  f.emit(f.win, f.event({ unrelated: true }));
+  assert.equal(probe.snapshot().capture, null);
+  const first = f.event();
+  f.emit(f.win, first);
+  const captured = probe.snapshot().capture;
+  f.emit(f.win, f.event());
+  assert.deepEqual(probe.snapshot().capture, captured);
+  assert.equal(probe.snapshot().afterHandlerSlot, null);
+  assert.equal(f.calls(), 0);
+  f.nodes.set('mission-library-opening-status', { hidden: false, textContent: 'М'.repeat(600) });
+  assert.equal(probe.snapshot().openingStatus.text, 'М'.repeat(512));
+  Object.defineProperty(f.nodes.get('mission-library-opening-status'), 'textContent', {
+    get() {
+      throw new Error('Hostile status getter');
+    },
+  });
+  const failed = probe.snapshot();
+  assert.equal(failed.openingStatus.available, false);
+  assert.equal(failed.openingStatus.present, null);
+  assert(failed.failures > 0);
+  probe.dispose();
+  assert.equal(f.listenerCount(), 0);
+  assert.equal(f.forbidden(), 0);
+  const partial = missionsEventFixture({ failAddAt: 3 });
+  const incomplete = installCompiledMissionsEventProbe({
+    window: partial.win,
+    document: partial.doc,
+  });
+  assert.equal(incomplete.snapshot().installed, false);
+  assert.equal(partial.listenerCount(), 0);
+  assert.equal(incomplete.dispose().teardown, 'removed');
+  assert.equal(partial.calls(), 0);
+  const removal = missionsEventFixture({ failWindowRemove: true });
+  const unconfirmed = installCompiledMissionsEventProbe({
+    window: removal.win,
+    document: removal.doc,
+  });
+  assert.equal(unconfirmed.dispose().teardown, 'unconfirmed');
+  assert.equal(unconfirmed.dispose().teardown, 'unconfirmed');
+  removal.nativeClick();
+  assert.equal(unconfirmed.snapshot().capture, null);
+  assert.equal(removal.forbidden(), 0);
+});
+
+test('Missions observation joins the same optional public read while every original default scalar and Start fact stays unchanged', () => {
+  const base = scalarReadFixture({ forbidCardQuery: true, open: false });
+  const original = readCompiledMenuPublicState(
+    { includeCards: false, omitUnusedContainerText: true },
+    base.scope,
+  );
+  let samples = 0;
+  const f = missionsEventFixture(),
+    probe = installCompiledMissionsEventProbe({ window: f.win, document: f.doc });
+  f.nativeClick();
+  const observed = readCompiledMenuPublicState(
+    {
+      includeCards: false,
+      omitUnusedContainerText: true,
+      missionsProbe: {
+        snapshot() {
+          samples += 1;
+          return probe.snapshot();
+        },
+      },
+    },
+    base.scope,
+  );
+  const { missionsActivation, ...unchanged } = observed;
+  assert.deepEqual(unchanged, original);
+  assert.equal(samples, 1);
+  assert.equal(missionsActivation.format, 'CompiledMissionsEventProbeV1');
+  assert.equal(missionsActivation.afterHandlerSlot.trusted, true);
+  assert.equal(missionsActivation.openingStatus.text, 'Preparing Missions');
+  assert.equal(Object.keys(observed.controls).length, 13);
+  assert.equal(observed.startActivation, null);
+  assert.equal(base.queries(), 0);
+  assert(!('missionsActivation' in original));
+  const defaultAgain = readCompiledMenuPublicState({ includeCards: false }, base.scope);
+  assert(!('missionsActivation' in defaultAgain));
+  const broken = readCompiledMenuPublicState(
+    {
+      includeCards: false,
+      missionsProbe: {
+        snapshot() {
+          throw new Error('Optional observation unavailable');
+        },
+      },
+    },
+    base.scope,
+  );
+  assert.deepEqual(broken.missionsActivation, {
+    format: 'CompiledMissionsEventProbeV1',
+    unavailable: true,
+  });
+  probe.dispose();
+});
+
+test('Missions diagnostic copying redacts and caps only optional data while preserving existing public facts and original report authority', () => {
+  const secret = 'secret-passphrase';
+  const trace = createCompiledOperationTrace(
+    { deadline: 570000, now: () => 0, step: () => Promise.resolve() },
+    (value, cap) => redactPagesText(value, secret, cap),
+  );
+  const f = missionsEventFixture(),
+    probe = installCompiledMissionsEventProbe({ window: f.win, document: f.doc });
+  f.nativeClick();
+  f.nodes.get('mission-library-opening-status').textContent = secret;
+  const base = scalarReadFixture({ forbidCardQuery: true });
+  const ordinary = readCompiledMenuPublicState({ includeCards: false }, base.scope);
+  trace.recordPublicState(ordinary);
+  const existing = trace.snapshot().publicRead.state;
+  trace.enterPhase('visible Missions');
+  trace.noteRead();
+  trace.recordMissionsProbeLifecycle('setup', 'installed-or-unavailable');
+  const input = readCompiledMenuPublicState(
+    { includeCards: false, missionsProbe: probe },
+    base.scope,
+  );
+  input.missionsActivation.href = secret;
+  input.missionsActivation.cards = [{ payload: secret }];
+  trace.recordPublicState(input);
+  const copied = trace.snapshot();
+  assert.deepEqual(copied.publicRead.state, existing);
+  assert.equal(copied.missionsObservation.observedPhase, 'visible Missions');
+  assert.equal(copied.missionsObservation.observedReadIteration, 1);
+  assert.equal(copied.missionsObservation.observedReadSequence, copied.publicReadSequence);
+  assert.equal(copied.missionsObservation.afterHandlerSlot.trusted, true);
+  assert(!JSON.stringify(copied).includes(secret));
+  assert(!('href' in copied.missionsObservation));
+  assert(!('cards' in copied.missionsObservation));
+  assert(Buffer.byteLength(JSON.stringify(copied.missionsObservation)) <= 4096);
+  assert.equal(copied.missionsProbeLifecycle.setup, 'installed-or-unavailable');
+  const oversized = probe.snapshot();
+  oversized.capture.openingStatus.text = 'М'.repeat(512);
+  oversized.afterHandlerSlot.openingStatus.text = 'М'.repeat(512);
+  oversized.openingStatus.text = 'М'.repeat(512);
+  oversized.firstFocusAway = {
+    eventType: 'focusin',
+    hidden: false,
+    focused: true,
+    focusedId: 'x',
+    homeOpen: true,
+    chooserOpen: false,
+    openingStatus: {
+      available: true,
+      present: true,
+      hiddenAttribute: false,
+      text: 'М'.repeat(512),
+    },
+  };
+  const boundaryTrace = createCompiledOperationTrace(
+    { deadline: 570000, now: () => 0, step: () => Promise.resolve() },
+    (value) => value,
+  );
+  boundaryTrace.recordPublicState({ ...ordinary, missionsActivation: oversized });
+  assert.equal(boundaryTrace.snapshot().missionsObservation.omittedForByteCap, true);
+  assert.deepEqual(boundaryTrace.snapshot().publicRead.state, existing);
+  const hostile = {};
+  Object.defineProperty(hostile, 'format', {
+    get() {
+      throw new Error(secret);
+    },
+  });
+  trace.recordPublicState({ ...ordinary, missionsActivation: hostile });
+  assert.equal(trace.snapshot().publicReadUnavailable, false);
+  assert.deepEqual(trace.snapshot().publicRead.state, existing);
+  assert(trace.snapshot().recordingFailures > 0);
+  const authoritative = {
+    diagnostics: { total: 1, overflow: false, events: [{ message: 'x'.repeat(261000) }] },
+  };
+  const encoded = trace.encodeReport(authoritative, (value) => encodePagesReport(value, secret));
+  assert.deepEqual(JSON.parse(encoded).diagnostics, authoritative.diagnostics);
+  assert(!encoded.includes(secret));
+  assert.equal(
+    trace.encodeReport(authoritative, (value) => {
+      if (value.operationTrace) throw new Error('no optional room');
+      return encodePagesReport(value, secret);
+    }),
+    encodePagesReport(authoritative, secret),
+  );
+  trace.recordMissionsProbeLifecycle('cleanup', 'removed');
+  assert.equal(trace.snapshot().missionsProbeLifecycle.cleanup, 'removed');
+  probe.dispose();
 });

@@ -149,6 +149,8 @@ export function createCompiledOperationTrace(budget, redact) {
     recordingFailures = 0;
   const startProbeLifecycle = { setup: null, cleanup: null };
   let resumeEntryProbe = null;
+  let missionsObservation = null,
+    missionsProbeLifecycle = null;
   let latestPublicRead = null,
     publicReadSequence = 0,
     publicReadRecordingFailures = 0,
@@ -204,6 +206,8 @@ export function createCompiledOperationTrace(budget, redact) {
     publicReadOmittedForReadCap,
     startProbeLifecycle,
     resumeEntryProbe,
+    ...(missionsObservation ? { missionsObservation } : {}),
+    ...(missionsProbeLifecycle ? { missionsProbeLifecycle } : {}),
   });
   const compact = (row) =>
     row === null
@@ -352,6 +356,93 @@ export function createCompiledOperationTrace(budget, redact) {
           controls,
         },
       };
+      // Optional diagnostic data never invalidates the existing public-state copy.
+      const copiedMissionsObservation = safe(() => {
+        const input = state?.missionsActivation;
+        if (!input || input.format !== 'CompiledMissionsEventProbeV1') return undefined;
+        if (input.unavailable === true)
+          return { format: 'CompiledMissionsEventProbeV1', unavailable: true };
+        const status = (row) =>
+          row
+            ? {
+                available: scalarBoolean(row.available),
+                present: scalarBoolean(row.present),
+                hiddenAttribute: scalarBoolean(row.hiddenAttribute),
+                text: scalarText(row.text, 512),
+              }
+            : null;
+        const common = (row) => ({
+          hidden: scalarBoolean(row.hidden),
+          focused: scalarBoolean(row.focused),
+          focusedId: scalarText(row.focusedId, 64),
+          homeOpen: scalarBoolean(row.homeOpen),
+          chooserOpen: scalarBoolean(row.chooserOpen),
+          openingStatus: status(row.openingStatus),
+        });
+        const click = (row, phase) =>
+          row?.phase === phase
+            ? {
+                phase,
+                eventType: row.eventType === 'click' ? 'click' : null,
+                ...Object.fromEntries(
+                  [
+                    'trusted',
+                    'defaultPrevented',
+                    'handlerFunctionPresent',
+                    'sameInstalledHandler',
+                    'installedHandlerFunction',
+                    'playEnabled',
+                  ].map((key) => [key, scalarBoolean(row[key])]),
+                ),
+                ...Object.fromEntries(
+                  ['eventPhase', 'button', 'detail'].map((key) => [
+                    key,
+                    Number.isInteger(row[key]) && row[key] >= -1 && row[key] <= 10
+                      ? row[key]
+                      : null,
+                  ]),
+                ),
+                handlerType: scalarText(row.handlerType, 32),
+                ...common(row),
+              }
+            : null;
+        const focus = input.firstFocusAway;
+        return {
+          format: 'CompiledMissionsEventProbeV1',
+          installed: scalarBoolean(input.installed),
+          disposed: scalarBoolean(input.disposed),
+          teardown: scalarText(input.teardown, 32),
+          failures:
+            Number.isSafeInteger(input.failures) && input.failures >= 0
+              ? Math.min(input.failures, 1000000)
+              : null,
+          capture: click(input.capture, 'window-capture'),
+          afterHandlerSlot: click(input.afterHandlerSlot, 'target-after-handler-slot'),
+          firstFocusAway:
+            focus && ['focusin', 'blur', 'visibilitychange'].includes(focus.eventType)
+              ? { eventType: focus.eventType, ...common(focus) }
+              : null,
+          openingStatus: status(input.openingStatus),
+        };
+      });
+      if (copiedMissionsObservation !== undefined) {
+        const joined = {
+          ...copiedMissionsObservation,
+          observedReadSequence: publicReadSequence,
+          observedPhase: phase,
+          observedReadIteration: readIteration,
+        };
+        missionsObservation =
+          Buffer.byteLength(JSON.stringify(joined)) <= 4096
+            ? joined
+            : {
+                format: 'CompiledMissionsEventProbeV1',
+                omittedForByteCap: true,
+                observedReadSequence: publicReadSequence,
+                observedPhase: phase,
+                observedReadIteration: readIteration,
+              };
+      }
       if (Buffer.byteLength(JSON.stringify(candidate, null, 2)) + 1 > 8192) {
         publicReadUnavailable = true;
         publicReadOmittedForReadCap = true;
@@ -442,6 +533,16 @@ export function createCompiledOperationTrace(budget, redact) {
   return Object.freeze({
     step,
     recordPublicState,
+    recordMissionsProbeLifecycle: (kind, outcome) =>
+      safe(() => {
+        if (!['setup', 'cleanup'].includes(kind)) return;
+        if (
+          !['installed-or-unavailable', 'unavailable', 'removed', 'unconfirmed'].includes(outcome)
+        )
+          return;
+        missionsProbeLifecycle ??= { setup: null, cleanup: null };
+        missionsProbeLifecycle[kind] = outcome;
+      }),
     recordResumeEntryProbe: (value) =>
       safe(() => {
         if (!value || value.format !== 'CompiledResumeEntryProbeV1') return;
@@ -548,6 +649,152 @@ export function createCompiledOperationTrace(budget, redact) {
       } catch {
         return original;
       }
+    },
+  });
+}
+
+// Passive fixed slots for the first native Select Mission click; never call its handler.
+export function installCompiledMissionsEventProbe({
+  window: win = globalThis.window,
+  document: doc = globalThis.document,
+} = {}) {
+  let button = null,
+    installedHandler = null,
+    capturedEvent = null;
+  let capture = null,
+    afterHandlerSlot = null,
+    firstFocusAway = null,
+    failures = 0;
+  let installed = false,
+    disposed = false,
+    teardown = 'not-requested',
+    cleanupUnconfirmed = false;
+  const removers = [];
+  const safe = (work) => {
+    try {
+      return work();
+    } catch {
+      failures += 1;
+      return undefined;
+    }
+  };
+  const openingStatus = () =>
+    safe(() => {
+      const node = doc.getElementById('mission-library-opening-status');
+      const value = node?.textContent;
+      return Object.freeze({
+        available: true,
+        present: Boolean(node),
+        hiddenAttribute: node ? node.hidden === true : null,
+        text: node && typeof value === 'string' ? value.slice(0, 512).trim() : null,
+      });
+    }) ?? Object.freeze({ available: false, present: null, hiddenAttribute: null, text: null });
+  const uiFacts = () => ({
+    hidden: doc.hidden === true,
+    focused: doc.hasFocus() === true,
+    focusedId: typeof doc.activeElement?.id === 'string' ? doc.activeElement.id.slice(0, 64) : null,
+    homeOpen: doc.getElementById('shell-home')?.open === true,
+    chooserOpen: doc.getElementById('journey-chooser')?.open === true,
+    openingStatus: openingStatus(),
+  });
+  const facts = (event, phase) => {
+    const handler = button.onclick;
+    const number = (value, low, high) =>
+      Number.isInteger(value) && value >= low && value <= high ? value : null;
+    return Object.freeze({
+      phase,
+      eventType: event.type === 'click' ? 'click' : null,
+      trusted: event.isTrusted === true,
+      defaultPrevented: event.defaultPrevented === true,
+      eventPhase: number(event.eventPhase, 0, 3),
+      button: number(event.button, -1, 4),
+      detail: number(event.detail, 0, 10),
+      handlerType: typeof handler,
+      handlerFunctionPresent: typeof handler === 'function',
+      sameInstalledHandler: handler === installedHandler,
+      installedHandlerFunction: typeof installedHandler === 'function',
+      playEnabled: button.disabled === false,
+      ...uiFacts(),
+    });
+  };
+  const atCapture = (event) =>
+    safe(() => {
+      if (disposed || capturedEvent || event.type !== 'click') return;
+      if (event.target !== button && !button.contains(event.target)) return;
+      capturedEvent = event;
+      capture = facts(event, 'window-capture');
+    });
+  const atTarget = (event) =>
+    safe(() => {
+      if (disposed || afterHandlerSlot || event !== capturedEvent || event.type !== 'click') return;
+      afterHandlerSlot = facts(event, 'target-after-handler-slot');
+    });
+  const atFocusAway = (event) =>
+    safe(() => {
+      if (disposed || !capturedEvent || firstFocusAway) return;
+      if (
+        event.type === 'focusin' &&
+        (doc.activeElement === button || button.contains(doc.activeElement))
+      )
+        return;
+      if (event.type === 'visibilitychange' && !doc.hidden) return;
+      if (!['focusin', 'blur', 'visibilitychange'].includes(event.type)) return;
+      firstFocusAway = Object.freeze({ eventType: event.type, ...uiFacts() });
+    });
+  const clean = () => {
+    let removed = true;
+    for (const remove of removers.splice(0)) {
+      try {
+        remove();
+      } catch {
+        failures += 1;
+        removed = false;
+      }
+    }
+    installed = false;
+    if (!removed) cleanupUnconfirmed = true;
+    return removed;
+  };
+  safe(() => {
+    button = doc.getElementById('shell-play');
+    if (!button || !win?.addEventListener || !button.addEventListener || !doc.addEventListener)
+      return;
+    installedHandler = button.onclick;
+    const listen = (target, type, callback, useCapture) => {
+      removers.push(() => target.removeEventListener(type, callback, useCapture));
+      target.addEventListener(type, callback, { capture: useCapture, passive: true });
+    };
+    listen(win, 'click', atCapture, true);
+    listen(button, 'click', atTarget, false);
+    listen(doc, 'focusin', atFocusAway, true);
+    listen(win, 'blur', atFocusAway, false);
+    listen(doc, 'visibilitychange', atFocusAway, true);
+    installed = true;
+  });
+  if (!installed) clean();
+  const copy = (row) => (row ? { ...row, openingStatus: { ...row.openingStatus } } : null);
+  return Object.freeze({
+    snapshot: () => {
+      const currentOpeningStatus = openingStatus();
+      return {
+        format: 'CompiledMissionsEventProbeV1',
+        installed,
+        disposed,
+        teardown,
+        failures,
+        capture: copy(capture),
+        afterHandlerSlot: copy(afterHandlerSlot),
+        firstFocusAway: copy(firstFocusAway),
+        openingStatus: { ...currentOpeningStatus },
+      };
+    },
+    dispose: () => {
+      if (!disposed) {
+        disposed = true;
+        teardown = clean() && !cleanupUnconfirmed ? 'removed' : 'unconfirmed';
+        capturedEvent = null;
+      }
+      return { disposed, teardown, failures };
     },
   });
 }
@@ -1173,7 +1420,12 @@ export async function prepareCompiledResumeEntryProbe(session, origin, options =
 }
 
 export function readCompiledMenuPublicState(
-  { startProbe = null, includeCards = true, omitUnusedContainerText = false } = {},
+  {
+    startProbe = null,
+    includeCards = true,
+    omitUnusedContainerText = false,
+    missionsProbe = null,
+  } = {},
   scope = globalThis,
 ) {
   const { document, location } = scope;
@@ -1247,6 +1499,17 @@ export function readCompiledMenuPublicState(
         return null;
       }
     })(),
+    ...(missionsProbe
+      ? {
+          missionsActivation: (() => {
+            try {
+              return missionsProbe.snapshot();
+            } catch {
+              return { format: 'CompiledMissionsEventProbeV1', unavailable: true };
+            }
+          })(),
+        }
+      : {}),
     cards: nodes.map((x) => ({
       id: x.dataset.missionId,
       visible: visible(x),

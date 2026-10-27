@@ -271,6 +271,225 @@ export function createSimModeLinks({
 }
 
 /** Cosmetic camera access shared by both SIM hosts. Never changes flight ownership. */
+export function mountFlightHudControls({
+  document: doc,
+  window: win,
+  shell,
+  viewport,
+  locale = () => 'en',
+  available = () => true,
+}) {
+  const storageKey = 'revealline.fpv.hud-layout.v1';
+  const defaults = {
+    layout: 'auto',
+    activity: true,
+    vitals: true,
+    lesson: true,
+    actions: true,
+    compass: true,
+    reticle: true,
+    readouts: true,
+    sticks: 'auto',
+    drone: 'auto',
+  };
+  const normalize = (value) =>
+    Object.fromEntries(
+      Object.entries(defaults).map(([key, fallback]) => [
+        key,
+        typeof fallback === 'boolean'
+          ? typeof value?.[key] === 'boolean'
+            ? value[key]
+            : fallback
+          : (key === 'layout' ? ['auto', 'compact', 'detailed'] : ['auto', 'on', 'off']).includes(
+                value?.[key],
+              )
+            ? value[key]
+            : fallback,
+      ]),
+    );
+  let preferences;
+  try {
+    const saved = JSON.parse(win.localStorage?.getItem(storageKey) ?? 'null');
+    preferences = normalize(saved);
+    const camera = JSON.parse(
+      win.localStorage?.getItem('revealline.fpv.camera-immersion.v1') ?? 'null',
+    );
+    if (camera?.flightInstruments === false)
+      for (const key of ['compass', 'readouts'])
+        if (typeof saved?.[key] !== 'boolean') preferences[key] = false;
+  } catch {
+    preferences = { ...defaults };
+  }
+  const root = doc.createElement('details'),
+    title = doc.createElement('summary'),
+    fields = {},
+    quick = doc.createElement('button'),
+    help = doc.createElement('p');
+  root.className = 'sim-hud-settings';
+  root.dataset.hudSettings = '';
+  root.append(title);
+  quick.type = 'button';
+  quick.className = 'sim-camera-quick sim-hud-quick';
+  quick.dataset.modeAction = 'hud';
+  shell.elements.buttons.pause.before(quick);
+  const definitions = [
+    ['layout', 'HUD layout', 'Вигляд HUD'],
+    ['activity', 'Activity & score', 'Режим і рахунок'],
+    ['vitals', 'Health & ammunition', 'Здоров’я та набої'],
+    ['lesson', 'Lesson instruction card', 'Картка інструкцій уроку'],
+    ['actions', 'On-screen weapon actions', 'Екранні дії зброї'],
+    ['compass', 'Compass', 'Компас'],
+    ['reticle', 'Aiming marker', 'Прицільна позначка'],
+    ['readouts', 'Speed & height', 'Швидкість і висота'],
+    ['sticks', 'Stick movement display', 'Відображення руху стіків'],
+    ['drone', 'Drone response diagram', 'Схема реакції дрона'],
+  ].filter(
+    ([key]) =>
+      !['activity', 'vitals', 'actions'].includes(key) ||
+      viewport.querySelector('[data-combat-overlay]'),
+  );
+  function apply() {
+    const bounds = viewport.getBoundingClientRect?.(),
+      width = bounds?.width || win.innerWidth || 1440,
+      height = bounds?.height || win.innerHeight || 900;
+    const compact =
+      preferences.layout === 'compact' ||
+      (preferences.layout === 'auto' && (width <= 900 || height <= 600));
+    const density = compact ? 'compact' : 'detailed';
+    if (viewport.dataset.hudDensity !== density) {
+      const drawer = viewport.querySelector('[data-combat-weapon-actions]');
+      if (drawer) drawer.open = !compact;
+      viewport.dataset.hudDensity = density;
+    }
+    for (const [key, value] of Object.entries(preferences)) {
+      if (key === 'layout') continue;
+      const enabled = value === 'auto' ? !compact : value !== false && value !== 'off';
+      viewport.setAttribute(`data-hud-widget-${key}`, String(enabled));
+      if (key === 'drone' || key === 'sticks')
+        viewport.setAttribute(`data-hud-setting-${key}`, value);
+    }
+  }
+  const change = (key) => {
+    preferences[key] =
+      fields[key].control.type === 'checkbox'
+        ? fields[key].control.checked
+        : fields[key].control.value;
+    preferences = normalize(preferences);
+    try {
+      win.localStorage?.setItem(storageKey, JSON.stringify(preferences));
+    } catch {
+      /* Session settings remain usable. */
+    }
+    apply();
+  };
+  for (const [key] of definitions) {
+    const canonical = ['activity', 'vitals'].includes(key)
+      ? doc.querySelector(`[data-combat-feedback="${key === 'activity' ? 'hud' : key}"]`)
+      : null;
+    const label = doc.createElement('label'),
+      caption = doc.createElement('span'),
+      control = doc.createElement(typeof defaults[key] === 'boolean' ? 'input' : 'select');
+    if (canonical) preferences[key] = canonical.checked;
+    control.dataset.hudWidget = key;
+    if (typeof defaults[key] === 'boolean') control.type = 'checkbox';
+    else
+      for (const value of key === 'layout'
+        ? ['auto', 'compact', 'detailed']
+        : ['auto', 'on', 'off']) {
+        const option = doc.createElement('option');
+        option.value = value;
+        control.append(option);
+      }
+    const listener = () => {
+      change(key);
+      if (canonical) {
+        canonical.checked = control.checked;
+        canonical.dispatchEvent(new win.Event('input', { bubbles: true }));
+      }
+    };
+    control.addEventListener('change', listener);
+    label.append(caption, control);
+    root.append(label);
+    const synchronize = () => {
+      preferences[key] = canonical.checked;
+      control.checked = canonical.checked;
+      try {
+        win.localStorage?.setItem(storageKey, JSON.stringify(preferences));
+      } catch {
+        /* Session only. */
+      }
+      apply();
+    };
+    canonical?.addEventListener('input', synchronize);
+    fields[key] = { caption, control, listener, canonical, synchronize };
+  }
+  root.append(help);
+  const open = () => {
+    shell.open('pause');
+    root.open = true;
+    root.scrollIntoView?.({ block: 'nearest' });
+    title.focus?.({ preventScroll: true });
+  };
+  quick.addEventListener('click', open);
+  const resize = () => apply();
+  win.addEventListener('resize', resize);
+  const observer = win.ResizeObserver ? new win.ResizeObserver(resize) : null;
+  observer?.observe(viewport);
+  let renderedLocale;
+  function refresh() {
+    quick.hidden = !available() || Boolean(shell.topDialog());
+    const uk = locale() === 'uk';
+    if (renderedLocale === uk) return;
+    renderedLocale = uk;
+    title.textContent = uk ? 'HUD та віджети' : 'HUD & widgets';
+    quick.textContent = 'HUD';
+    quick.setAttribute('aria-label', title.textContent);
+    quick.hidden = !available() || Boolean(shell.topDialog());
+    help.textContent = uk
+      ? 'Авто звільняє огляд на малих екранах. Сенсорні стіки керування та Пауза залишаються доступними. Інші прилади й позначки налаштовуються нижче.'
+      : 'Auto frees the view on small screens. Active touch sticks and Pause stay available. Instruments and objective markers have separate switches below.';
+    for (const [key, en, ua] of definitions) {
+      const { caption, control } = fields[key];
+      caption.textContent = uk ? ua : en;
+      if (control.type === 'checkbox') control.checked = preferences[key];
+      else {
+        for (const option of control.options)
+          option.textContent = {
+            auto: uk ? 'Авто' : 'Auto',
+            compact: uk ? 'Компактний' : 'Compact',
+            detailed: uk ? 'Докладний' : 'Detailed',
+            on: uk ? 'Увімкнено' : 'On',
+            off: uk ? 'Вимкнено' : 'Off',
+          }[option.value];
+        control.value = preferences[key];
+      }
+    }
+  }
+  apply();
+  refresh();
+  return {
+    root,
+    refresh,
+    preferences: () => ({ ...preferences }),
+    dispose() {
+      observer?.disconnect();
+      win.removeEventListener('resize', resize);
+      quick.removeEventListener('click', open);
+      for (const { control, listener, canonical, synchronize } of Object.values(fields)) {
+        control.removeEventListener('change', listener);
+        canonical?.removeEventListener('input', synchronize);
+      }
+      root.remove();
+      quick.remove();
+      delete viewport.dataset.hudDensity;
+      for (const key of Object.keys(defaults))
+        if (key !== 'layout') viewport.removeAttribute(`data-hud-widget-${key}`);
+      viewport.removeAttribute('data-hud-setting-drone');
+      viewport.removeAttribute('data-hud-setting-sticks');
+    },
+  };
+}
+
 export function mountFlightCameraControls({
   document: doc,
   window: win,
@@ -294,6 +513,15 @@ export function mountFlightCameraControls({
   group.className = 'sim-camera-choices';
   const legend = doc.createElement('legend');
   group.append(legend);
+  const hud = mountFlightHudControls({
+    document: doc,
+    window: win,
+    shell,
+    viewport,
+    locale,
+    available,
+  });
+  group.append(hud.root);
   const choices = modes.map((mode) => {
     const button = doc.createElement('button');
     button.type = 'button';
@@ -304,6 +532,127 @@ export function mountFlightCameraControls({
   });
   const hint = doc.createElement('small');
   group.append(hint);
+  const cameraKey = 'revealline.fpv.camera-immersion.v1';
+  let immersion = {
+    chaseDistance: 1.6,
+    showFpvProps: false,
+    showFpvKnife: true,
+    analogVideo: false,
+    analogStrength: 35,
+    guidanceVisible: true,
+    guidanceAccent: 'amber',
+    routeGuideVisible: false,
+    flightInstruments: true,
+    extraTelemetry: false,
+  };
+  try {
+    const saved = JSON.parse(win.localStorage?.getItem(cameraKey) ?? 'null');
+    if (Number.isFinite(saved?.chaseDistance))
+      immersion.chaseDistance = Math.max(0.75, Math.min(6, saved.chaseDistance));
+    if (typeof saved?.showFpvProps === 'boolean') immersion.showFpvProps = saved.showFpvProps;
+    if (typeof saved?.analogVideo === 'boolean') immersion.analogVideo = saved.analogVideo;
+    for (const key of [
+      'showFpvKnife',
+      'guidanceVisible',
+      'routeGuideVisible',
+      'flightInstruments',
+      'extraTelemetry',
+    ])
+      if (typeof saved?.[key] === 'boolean') immersion[key] = saved[key];
+    if (['amber', 'cyan', 'white', 'lime'].includes(saved?.guidanceAccent))
+      immersion.guidanceAccent = saved.guidanceAccent;
+    if (Number.isFinite(saved?.analogStrength))
+      immersion.analogStrength = Math.max(0, Math.min(100, saved.analogStrength));
+  } catch {
+    /* Camera choices remain available without storage. */
+  }
+  const distanceLabel = doc.createElement('label'),
+    distanceCaption = doc.createElement('span'),
+    distance = doc.createElement('input'),
+    propsLabel = doc.createElement('label'),
+    propsCaption = doc.createElement('span'),
+    props = doc.createElement('input'),
+    analogLabel = doc.createElement('label'),
+    analogCaption = doc.createElement('span'),
+    analog = doc.createElement('input'),
+    noiseLabel = doc.createElement('label'),
+    noiseCaption = doc.createElement('span'),
+    noise = doc.createElement('input'),
+    analogHint = doc.createElement('small');
+  distance.type = 'range';
+  distance.min = '0.75';
+  distance.max = '6';
+  distance.step = '0.05';
+  distance.value = String(immersion.chaseDistance);
+  distance.dataset.chaseDistance = '';
+  props.type = 'checkbox';
+  props.checked = immersion.showFpvProps;
+  props.dataset.fpvProps = '';
+  distanceLabel.append(distanceCaption, distance);
+  propsLabel.append(props, propsCaption);
+  analog.type = 'checkbox';
+  analog.checked = immersion.analogVideo;
+  analog.dataset.analogVideo = '';
+  noise.type = 'range';
+  noise.min = '0';
+  noise.max = '100';
+  noise.step = '5';
+  noise.value = String(immersion.analogStrength);
+  noise.dataset.analogStrength = '';
+  analogLabel.append(analog, analogCaption);
+  noiseLabel.append(noiseCaption, noise);
+  group.append(distanceLabel, propsLabel, analogLabel, noiseLabel, analogHint);
+  const presentationFields = [
+    ['showFpvKnife', 'Mounted knife · cosmetic', 'Ніж на корпусі · декоративний'],
+    ['guidanceVisible', 'Objective markers', 'Позначки завдань'],
+    ['routeGuideVisible', 'Validated route guide', 'Перевірений маршрут'],
+    ['extraTelemetry', 'Extra aircraft telemetry', 'Додаткова телеметрія'],
+  ].map(([key, en, uk]) => {
+    const label = doc.createElement('label'),
+      control = doc.createElement('input'),
+      caption = doc.createElement('span');
+    control.type = 'checkbox';
+    control.checked = immersion[key];
+    control.dataset.cameraPreference = key;
+    label.append(control, caption);
+    group.append(label);
+    return { key, en, uk, control, caption };
+  });
+  const accentLabel = doc.createElement('label'),
+    accentCaption = doc.createElement('span'),
+    accent = doc.createElement('select');
+  accent.dataset.cameraPreference = 'guidanceAccent';
+  for (const value of ['amber', 'cyan', 'white', 'lime']) {
+    const option = doc.createElement('option');
+    option.value = value;
+    accent.append(option);
+  }
+  accent.value = immersion.guidanceAccent;
+  accentLabel.append(accentCaption, accent);
+  group.append(accentLabel);
+  const saveImmersion = () => {
+    immersion = {
+      chaseDistance: Number(distance.value),
+      showFpvProps: props.checked,
+      analogVideo: analog.checked,
+      analogStrength: Number(noise.value),
+      ...Object.fromEntries(presentationFields.map(({ key, control }) => [key, control.checked])),
+      guidanceAccent: accent.value,
+    };
+    try {
+      win.localStorage?.setItem(cameraKey, JSON.stringify(immersion));
+    } catch {
+      /* Session only. */
+    }
+    previous = '';
+    refresh();
+  };
+  distance.addEventListener('input', saveImmersion);
+  props.addEventListener('change', saveImmersion);
+  analog.addEventListener('change', saveImmersion);
+  noise.addEventListener('input', saveImmersion);
+  for (const { control } of presentationFields) control.addEventListener('change', saveImmersion);
+  accent.addEventListener('change', saveImmersion);
   shell.elements.content.pause.prepend(group);
   let previous = '',
     disposed = false;
@@ -313,26 +662,46 @@ export function mountFlightCameraControls({
     select.dispatchEvent(new win.Event('change', { bubbles: true }));
     refresh();
   }
-  function cycle() {
-    if (!canShortcut() || !available() || disposed) return;
+  function cycle({ menu = false } = {}) {
+    if ((!menu && !canShortcut()) || !available() || disposed) return;
     change(modes[(modes.indexOf(select.value) + 1) % modes.length]);
-    viewport.focus({ preventScroll: true });
+    if (!menu) viewport.focus({ preventScroll: true });
   }
   function refresh() {
     if (disposed) return;
+    hud.refresh();
     const uk = locale() === 'uk',
       enabled = available();
-    const key = `${uk}:${select.value}:${enabled}:${Boolean(shell.topDialog())}`;
+    const key = `${uk}:${select.value}:${enabled}:${Boolean(shell.topDialog())}:${viewport.dataset.hudDensity}`;
     if (previous === key) return;
     previous = key;
     const names = labels(),
       name = names[modes.indexOf(select.value)] ?? names[0];
-    quick.textContent = `${uk ? 'Вид' : 'View'}: ${name}`;
+    quick.textContent =
+      viewport.dataset.hudDensity === 'compact' ? name : `${uk ? 'Вид' : 'View'}: ${name}`;
     quick.title = uk ? 'Змінити камеру · V / R3' : 'Change camera · V / R3';
     quick.setAttribute('aria-label', `${quick.title} · ${name}`);
     quick.hidden = !enabled || Boolean(shell.topDialog());
     group.hidden = !enabled;
     legend.textContent = uk ? 'Камера' : 'Camera view';
+    distanceCaption.textContent = `${uk ? 'Відстань камери' : 'Chase distance'} · ${immersion.chaseDistance.toFixed(2)} m`;
+    propsCaption.textContent = uk ? 'Показувати пропелери у FPV' : 'Show drone props in FPV';
+    analogCaption.textContent = uk ? 'Аналогове відео FPV' : 'Analog FPV video';
+    noiseCaption.textContent = `${uk ? 'Сила відеоперешкод' : 'Video interference'} · ${immersion.analogStrength}%`;
+    noise.disabled = !immersion.analogVideo;
+    for (const field of presentationFields) {
+      field.caption.textContent = uk ? field.uk : field.en;
+      field.control.disabled = field.key === 'showFpvKnife' && !immersion.showFpvProps;
+    }
+    accentCaption.textContent = uk ? 'Колір позначок' : 'Marker accent';
+    [...accent.options].forEach((option, index) => {
+      option.textContent = (
+        uk ? ['Бурштин', 'Блакитний', 'Білий', 'Лайм'] : ['Amber', 'Cyan', 'White', 'Lime']
+      )[index];
+    });
+    analogHint.textContent = uk
+      ? 'Зерно, рядки та перетікання кольорів лише у FPV. Індикатори залишаються чіткими. Зменшення руху зупиняє анімацію шуму.'
+      : 'Grain, scan lines and colour bleed in FPV only. Your HUD stays clear. Reduced motion keeps the noise still.';
     hint.textContent = uk
       ? 'V · R3 — натисніть правий стік. Пульт: оберіть вид у цьому меню.'
       : 'V · R3: click the right stick. Radio: choose a view in this menu.';
@@ -369,12 +738,21 @@ export function mountFlightCameraControls({
   return {
     cycle,
     refresh,
+    presentationOptions: () => ({ ...immersion, flightInstruments: true }),
     element: group,
     dispose() {
       disposed = true;
+      hud.dispose();
       win.removeEventListener('keydown', keydown);
       select.removeEventListener('change', refresh);
       quick.removeEventListener('click', cycle);
+      distance.removeEventListener('input', saveImmersion);
+      props.removeEventListener('change', saveImmersion);
+      analog.removeEventListener('change', saveImmersion);
+      noise.removeEventListener('input', saveImmersion);
+      for (const { control } of presentationFields)
+        control.removeEventListener('change', saveImmersion);
+      accent.removeEventListener('change', saveImmersion);
       quick.remove();
       group.remove();
     },
@@ -642,8 +1020,7 @@ export function mountFlightComfort({
   function cameraChanged() {
     if (updatingCamera) return;
     // Manual values remain authoritative; presets never silently re-apply.
-    if (canPersistCamera())
-      save(cameraKey, { fov: Number(fov.value), tilt: Number(tilt.value) });
+    if (canPersistCamera()) save(cameraKey, { fov: Number(fov.value), tilt: Number(tilt.value) });
     refresh();
   }
   listen(fov, 'input', cameraChanged);
@@ -838,7 +1215,8 @@ export function mountFlightPractice({
     return { action, button, click };
   });
   const changeRate = () => {
-    if (visible() && read()?.replay && rates.includes(Number(speed.value)))
+    const state = read();
+    if (visible() && state?.replay && (state.rates ?? rates).includes(Number(speed.value)))
       setRate?.(Number(speed.value));
   };
   speed.addEventListener('change', changeRate);
@@ -863,34 +1241,45 @@ export function mountFlightPractice({
       state.checkpoint,
       state.regional,
       state.rate,
+      state.rates,
     ]);
     if (key !== last) {
       last = key;
+      for (const option of speed.querySelectorAll('option')) {
+        option.disabled = !(state.rates ?? rates).includes(Number(option.value));
+        option.hidden = option.disabled;
+      }
       title.textContent = state.regional
-        ? uk ? 'Вільний політ у регіоні' : 'Regional free flight'
-        : uk ? 'Дивіться → спробуйте → повторіть' : 'Watch → Try → Repeat';
+        ? uk
+          ? 'Вільний політ у регіоні'
+          : 'Regional free flight'
+        : uk
+          ? 'Дивіться → спробуйте → повторіть'
+          : 'Watch → Try → Repeat';
       description.textContent = state.title;
       note.textContent = state.regional
-        ? uk ? 'Повторіть завантаження недоступної ділянки або поверніться на старт. Політ залишиться на паузі до ввімкнення керування.' : 'Retry an unavailable area or return to launch. Flight stays paused until you arm.'
-        : state.replay
         ? uk
-          ? 'Записані стіки показують приклад. Спроба почнеться з вимкненими двигунами; увімкніть їх, коли будете готові.'
-          : 'Recorded sticks show the example. Trying starts disarmed; Arm when you are ready.'
-        : state.section
+          ? 'Повторіть завантаження недоступної ділянки або поверніться на старт. Політ залишиться на паузі до ввімкнення керування.'
+          : 'Retry an unavailable area or return to launch. Flight stays paused until you arm.'
+        : state.replay
           ? uk
-            ? 'Тренування ділянки відновлює записаний вхід і не змінює результати. Нова спроба потребує ввімкнення двигунів.'
-            : 'Section practice restores its recorded entry without changing records. A new attempt waits for Arm.'
-          : state.fullPractice
+            ? 'Записані стіки показують приклад. Спроба почнеться з вимкненими двигунами; увімкніть їх, коли будете готові.'
+            : 'Recorded sticks show the example. Trying starts disarmed; Arm when you are ready.'
+          : state.section
             ? uk
-              ? 'Тренування всього маршруту починається зі старту без заліку й збереження запису. Увімкніть двигуни, коли будете готові.'
-              : 'Full-route practice starts at launch without score or saved recordings. Arm when you are ready.'
-            : state.watch
+              ? 'Тренування ділянки відновлює записаний вхід і не змінює результати. Нова спроба потребує ввімкнення двигунів.'
+              : 'Section practice restores its recorded entry without changing records. A new attempt waits for Arm.'
+            : state.fullPractice
               ? uk
-                ? 'Перегляньте приклад, потім спробуйте весь маршрут. Нова спроба потребує ввімкнення двигунів.'
-                : 'Watch the example, then try the full route. A new attempt waits for Arm.'
-              : uk
-                ? 'Повторна спроба повертає на старт. Увімкніть двигуни, коли будете готові.'
-                : 'Retry returns to launch. Arm when you are ready.';
+                ? 'Тренування всього маршруту починається зі старту без заліку й збереження запису. Увімкніть двигуни, коли будете готові.'
+                : 'Full-route practice starts at launch without score or saved recordings. Arm when you are ready.'
+              : state.watch
+                ? uk
+                  ? 'Перегляньте приклад, потім спробуйте весь маршрут. Нова спроба потребує ввімкнення двигунів.'
+                  : 'Watch the example, then try the full route. A new attempt waits for Arm.'
+                : uk
+                  ? 'Повторна спроба повертає на старт. Увімкніть двигуни, коли будете готові.'
+                  : 'Retry returns to launch. Arm when you are ready.';
       const labels = {
         retry: uk ? 'Ще раз' : 'Retry',
         watch: uk ? 'Переглянути приклад' : 'Watch example',
@@ -993,9 +1382,14 @@ export function mountFlightPractice({
 }
 
 // BEGIN GENERATED SHARED MODE SHELL
+import*as simGlobalData from'../../game/data-json.mjs';
+import*as simGlobalActorCatalog from'../../game/hunt/actor-catalog.mjs';
+import*as simGlobalActorKit from'../../game/hunt/industrial-soldier-kit.mjs';
+import*as simGlobalArtReview from'../../game/ui/art-review-navigation.mjs';
 import*as simGlobalI18n from'../../game/i18n/index.mjs';
 import*as simGlobalThemes from'../../game/presentation/theme-system.mjs';
 import*as simGlobalActorPreferences from'../../game/hunt/preferences.mjs';
+import*as simGlobalEnemyAppearance from'../../game/ui/enemy-appearance-controls.mjs';
 const sharedGlobalSettings=(()=>{
 const modules=Object.create(null);
 modules['game/mission-library/library.mjs']=(()=>{
@@ -1450,148 +1844,6 @@ libraryMissionId,
 createMissionLibrary,
 };
 })();
-modules['game/data-json.mjs']=(()=>{
-const t=simGlobalI18n['t'];
-
-/** Shared boundary for user-owned files. Does not invoke getters or toJSON. */
-const plainObject=(value)=>
-value!==null&&
-typeof value==='object'&&
-!Array.isArray(value)&&
-(Object.getPrototypeOf(value)===Object.prototype||Object.getPrototypeOf(value)===null);
-const stableId=(value)=>
-typeof value==='string'&&
-/^[a-zA-Z0-9][a-zA-Z0-9._-]{0,79}$/.test(value)&&
-!['constructor','prototype','__proto__'].includes(value);
-function boundedJSON(
-source,
-{
-maxBytes=4*1024*1024,
-maxNodes=100000,
-maxDepth=16,
-maxArray=4096,
-maxString=4096,
-}={},
-){
-const encoder=new TextEncoder();
-// Repeated field names and short text have identical encoded lengths. Keep
-// this scalar-only cache bounded and local to one call: every external graph
-// still receives the full descriptor, structure and byte-budget traversal.
-const stringBytes=new Map();
-const encodedBytes=(value)=>{
-const known=stringBytes.get(value);
-if(known!==undefined)return known;
-const length=encoder.encode(JSON.stringify(value)).byteLength;
-if(value.length<=512&&stringBytes.size<512)stringBytes.set(value,length);
-return length;
-};
-if(typeof source==='string'){
-if(source.length>maxBytes||encoder.encode(source).byteLength>maxBytes)
-throw new TypeError(t('errors:dataJson.fileByteBudget'));
-try{
-source=JSON.parse(source);
-}catch{
-throw new TypeError(t('errors:dataJson.invalid'));
-}
-}
-let nodes=0,
-size=0;
-const ancestors=new Set();
-const add=(n)=>{
-size+=n;
-if(size>maxBytes)throw new TypeError(t('errors:dataJson.byteBudget'));
-};
-function copy(value,depth){
-if(++nodes>maxNodes||depth>maxDepth)
-throw new TypeError(t('errors:dataJson.structuralBudget'));
-if(value===null||typeof value==='boolean'){
-add(value===false?5:4);
-return value;
-}
-if(typeof value==='number'){
-if(!Number.isFinite(value))throw new TypeError(t('errors:dataJson.finiteNumbers'));
-add(JSON.stringify(value).length);
-return value;
-}
-if(typeof value==='string'){
-if(value.length>maxString)throw new TypeError(t('errors:dataJson.stringBudget'));
-add(encodedBytes(value));
-return value;
-}
-const array=Array.isArray(value);
-if(
-!value||
-typeof value!=='object'||
-(array?Object.getPrototypeOf(value)!==Array.prototype:!plainObject(value))
-)
-throw new TypeError(t('errors:dataJson.plainData'));
-if(ancestors.has(value))throw new TypeError(t('errors:dataJson.cyclesUnsupported'));
-if(array&&value.length>maxArray)
-throw new TypeError(t('errors:dataJson.arrayItemBudget'));
-ancestors.add(value);
-add(2);// JSON container delimiters.
-const out=array?[]:{},
-descriptors=Object.getOwnPropertyDescriptors(value);
-let count=0;
-for(const key of Reflect.ownKeys(descriptors)){
-if(typeof key!=='string')throw new TypeError(t('errors:dataJson.symbolKeys'));
-if(array&&key==='length')continue;
-if(['__proto__','constructor','prototype'].includes(key))
-throw new TypeError(t('errors:dataJson.forbiddenKey',{key}));
-const descriptor=descriptors[key];
-if(!descriptor.enumerable|| !Object.hasOwn(descriptor,'value'))
-throw new TypeError(t('errors:dataJson.ordinaryFields'));
-if(key.length>512)throw new TypeError(t('errors:dataJson.fieldNameBudget'));
-if(array&&(!/^(0|[1-9]\d*)$/.test(key)||Number(key)>=value.length))
-throw new TypeError(t('errors:dataJson.arrayCustomProperties'));
-if(count)add(1);// Comma before every subsequent entry.
-if(!array)add(encodedBytes(key)+1);// Object key and colon; array indexes are not serialized.
-out[key]=copy(descriptor.value,depth+1);
-count++;
-}
-if(array&&count!==value.length)throw new TypeError(t('errors:dataJson.sparseArrays'));
-ancestors.delete(value);
-return out;
-}
-const copied=copy(source,0);
-if(encoder.encode(JSON.stringify(copied)).byteLength>maxBytes)
-throw new TypeError(t('errors:dataJson.encodedByteBudget'));
-return copied;
-}
-function exactKeys(value,allowed,label,messages={}){
-if(!plainObject(value))
-throw new TypeError(
-messages.object?.({label})??t('errors:dataJson.objectRequired',{label}),
-);
-for(const key of Object.keys(value))
-if(!allowed.includes(key))
-throw new TypeError(
-messages.unsupported?.({label,key})??
-t('errors:dataJson.unsupportedField',{path:`${label}.${key}`}),
-);
-}
-function required(condition,message){
-if(!condition)throw new TypeError(message);
-}
-function canonicalJSON(value){
-if(Array.isArray(value))return`[${value.map(canonicalJSON).join(',')}]`;
-if(plainObject(value))
-return`{${Object.keys(value)
-.sort()
-.map((key)=>`${JSON.stringify(key)}:${canonicalJSON(value[key])}`)
-.join(',')}}`;
-return JSON.stringify(value);
-}
-/** Stable local partition identity, not a signature or an anti-cheat service. */
-function dataIdentity(value){
-let hash=0xcbf29ce484222325n;
-for(const byte of new TextEncoder().encode(canonicalJSON(value)))
-hash=BigInt.asUintN(64,(hash^BigInt(byte))*0x100000001b3n);
-return hash.toString(16).padStart(16,'0');
-}
-
-return{plainObject,stableId,boundedJSON,exactKeys,required,canonicalJSON,dataIdentity};
-})();
 modules['game/edition-context.mjs']=(()=>{
 /** Distribution identity is independent of Journey's logical campaign progress. */
 const editionPattern= /^[a-z][a-z0-9]*(?:-[a-z0-9]+)*$/;
@@ -1601,27 +1853,10 @@ const versionPattern= /^v?(0|[1-9]\d{0,4})\.(0|[1-9]\d{0,4})\.(0|[1-9]\d{0,4})$/
 // IDs keep the original edition identity. This is an alias, never a new edition.
 const publicSlugs=Object.freeze({'droneaid-nl-community':'droneaid'});
 
-function editionIdentityId(selector){
-validateEditionId(selector);
-return Object.keys(publicSlugs).find((id)=>publicSlugs[id]===selector)??selector;
-}
-
-function editionPublicSlug(editionId){
-validateEditionId(editionId);
-return publicSlugs[editionId]??editionId;
-}
-
 function validateEditionId(editionId){
 if(typeof editionId!=='string'||editionId.length>64|| !editionPattern.test(editionId))
 throw new TypeError('Invalid edition identity.');
 return editionId;
-}
-
-function editionIdFromLocation(locationRef=globalThis.location){
-if(!locationRef?.href)return undefined;
-const path=new URL(locationRef.href).pathname;
-const match= /\/editions\/([^/]+)\//.exec(path);
-return match?editionIdentityId(match[1]):undefined;
 }
 
 function resolveEditionContext({editionId,version}={}){
@@ -1650,120 +1885,20 @@ externalJournalKey:`${profileKey}.external-chapter-journal.v1`,
 });
 }
 
-function parseEditionChannel(channel){
-if(typeof channel!=='string')return null;
-const match=
-/^edition-([a-z][a-z0-9]*(?:-[a-z0-9]+)*)\.(dev|release-(v?\d+\.\d+\.\d+))$/.exec(channel);
-if(!match)return null;
-try{
-return resolveEditionContext({
-editionId:match[1],
-version:match[2]==='dev'?'DEV':match[3],
-});
-}catch{
-return null;
-}
-}
-
-function installedStateKey(editionId){
-return editionId===undefined
-?'revealline.installed-app.v1'
-:`revealline.installed-app.edition-${validateEditionId(editionId)}.v1`;
-}
-
 /** Stable explicit manifest IDs avoid origin-wide './' identity collisions. */
-function editionAppIdentity({editionId,basePath='/'}={}){
-validateEditionId(editionId);
-if(typeof basePath!=='string'|| !/^\/(?:[A-Za-z0-9_-]+\/)*$/.test(basePath))
-throw new TypeError('Edition base path must be an absolute directory path.');
-const root=`${basePath}editions/${editionPublicSlug(editionId)}/`;
-return Object.freeze({
-id:`${basePath}editions/${editionId}/`,
-start_url:`${root}app/`,
-scope:root,
-});
-}
 
 /** A launcher may select only a retained immutable release of its own edition.
      * Relative current.json pointers are resolved against the document, never a
      * stored origin. This module also ships inside the stable launcher directory. */
-function validateCompanyInstallationReference(value,{editionId,baseURL,editionRoot}={}){
-validateEditionId(editionId);
-if(
-!value||
-typeof value!=='object'||
-Array.isArray(value)||
-value.editionId!==editionId||
-!versionPattern.test(value.version)||
-typeof value.version!=='string'||
-typeof value.scope!=='string'||
-value.scope.length>2048||
-value.entry!=='game/company.html'||
-(value.buildId!==undefined&& !/^[a-f0-9]{64}$/.test(value.buildId))
-)
-throw new TypeError('Edition installation identity differs.');
-const base=new URL(baseURL),
-scope=new URL(value.scope,base);
-const root=
-typeof editionRoot==='string'
-? /^(\/(?:[A-Za-z0-9_-]+\/)*)editions\/([^/]+)\/$/.exec(editionRoot)
-:null;
-const aliases=[editionId,editionPublicSlug(editionId)];
-if(
-!root||
-!aliases.includes(root[2])||
-!/^https?:$/.test(base.protocol)||
-scope.origin!==base.origin||
-scope.username||
-scope.password||
-scope.search||
-scope.hash||
-!aliases.some(
-(slug)=>
-scope.pathname===
-`${root[1]}editions/${slug}/releases/v${value.version.replace(/^v/,'')}/site/`,
-)
-)
-throw new TypeError('Install from the matching published edition address.');
-return Object.freeze({
-editionId,
-version:value.version,
-scope:scope.href,
-entry:value.entry,
-...(value.buildId===undefined?{}:{buildId:value.buildId}),
-});
-}
 
 /** Hash caches may share bytes; ownership and removal must remain separate. */
-function officialContentOwner({editionId,packId,revision}={}){
-if(
-typeof packId!=='string'||
-!editionPattern.test(packId)||
-packId.length>100||
-typeof revision!=='string'||
-!/^[A-Za-z0-9][A-Za-z0-9.-]{0,63}$/.test(revision)
-)
-throw new TypeError('Invalid official content ownership.');
-return`${editionId===undefined?'default':validateEditionId(editionId)}:${packId}:${revision}`;
-}
 
-return{
-editionIdentityId,
-editionPublicSlug,
-validateEditionId,
-editionIdFromLocation,
-resolveEditionContext,
-parseEditionChannel,
-installedStateKey,
-editionAppIdentity,
-validateCompanyInstallationReference,
-officialContentOwner,
-};
+return{validateEditionId,resolveEditionContext};
 })();
 modules['game/mission-library/goal-preferences.mjs']=(()=>{
-const boundedJSON=modules['game/data-json.mjs']['boundedJSON'];
-const exactKeys=modules['game/data-json.mjs']['exactKeys'];
-const required=modules['game/data-json.mjs']['required'];
+const boundedJSON=simGlobalData['boundedJSON'];
+const exactKeys=simGlobalData['exactKeys'];
+const required=simGlobalData['required'];
 const validateEditionId=modules['game/edition-context.mjs']['validateEditionId'];
 const LIBRARY_MODES=modules['game/mission-library/library.mjs']['LIBRARY_MODES'];
 
@@ -3692,10 +3827,10 @@ const JOURNEY_PROFILE_DATABASE='revealline-journey-v1';
 return{JOURNEY_PROFILE_DATABASE};
 })();
 modules['game/profile-storage.mjs']=(()=>{
-const boundedJSON=modules['game/data-json.mjs']['boundedJSON'];
-const canonicalJSON=modules['game/data-json.mjs']['canonicalJSON'];
-const exactKeys=modules['game/data-json.mjs']['exactKeys'];
-const required=modules['game/data-json.mjs']['required'];
+const boundedJSON=simGlobalData['boundedJSON'];
+const canonicalJSON=simGlobalData['canonicalJSON'];
+const exactKeys=simGlobalData['exactKeys'];
+const required=simGlobalData['required'];
 const JOURNEY_PROFILE_DATABASE=
 modules['game/profile-database.mjs']['JOURNEY_PROFILE_DATABASE'];
 
@@ -3968,10 +4103,10 @@ connection=null;
 return{validateTimeout,boundedOperation,createProfileRecordBackend};
 })();
 modules['game/enemy-stats.mjs']=(()=>{
-const boundedJSON=modules['game/data-json.mjs']['boundedJSON'];
-const dataIdentity=modules['game/data-json.mjs']['dataIdentity'];
-const exactKeys=modules['game/data-json.mjs']['exactKeys'];
-const required=modules['game/data-json.mjs']['required'];
+const boundedJSON=simGlobalData['boundedJSON'];
+const dataIdentity=simGlobalData['dataIdentity'];
+const exactKeys=simGlobalData['exactKeys'];
+const required=simGlobalData['required'];
 const createProfileRecordBackend=
 modules['game/profile-storage.mjs']['createProfileRecordBackend'];
 
@@ -4155,11 +4290,6 @@ return value;
 /** A locally played branch retains its visible run totals and replay boundary,
      * but cannot share receipt identity with another tab's continued simulation.
      * This pure helper neither awards counters nor retires an existing token. */
-function forkEnemyStatsSession(source,{randomId=uid}={}){
-const fork=validateEnemyStatsSession(source);
-fork.attemptId=randomId();
-return validateEnemyStatsSession(fork);
-}
 
 function add(table,key,n=1){
 const next=(table[key]??0)+n;
@@ -4240,11 +4370,6 @@ lineage=storage?.getItem(WRITER_KEY);
 }
 if(!id(lineage)){
 lineage=randomId();
-try{
-if(ownsWrites())storage?.setItem(WRITER_KEY,lineage);
-}catch{
-/* Counters still use IndexedDB. */
-}
 }
 required(id(lineage),'A unique statistics writer is required.');
 const backend=createProfileRecordBackend({
@@ -4374,20 +4499,6 @@ return attempt;
 observe(attempt,{board='0',sequence,defeats=[]}={}){
 const token=tokenState(attempt);
 if(!token.active||closed)return Promise.resolve(false);
-// Another host/controller can restore a backup while this attempt is
-// paused. Same-document localStorage writes do not emit a storage event;
-// sample the current writer at the next real gameplay contribution.
-if(!ownsWrites()){
-sessionLineage??=randomId();
-required(id(sessionLineage),'A unique session statistics writer is required.');
-}else{
-try{
-const latest=storage?.getItem(WRITER_KEY);
-if(id(latest))lineage=latest;
-}catch{
-/* A private session retains its independently generated writer. */
-}
-}
 required(
 id(String(board))&&
 integer(sequence)&&
@@ -4414,13 +4525,29 @@ return{family:canonicalEnemyFamily(event.family)};
 });
 const current=state.cursors[token.attemptId]??token.baseline;
 if(sequence<=(current.sequences[String(board)]?? -1))return Promise.resolve(false);
+// Browsing a menu or reading statistics must not create durable state.
+// Another host may restore a backup before the first real contribution;
+// adopt its writer before persisting our lazily created identity.
+const writable=ownsWrites();
+if(!writable){
+sessionLineage??=randomId();
+required(id(sessionLineage),'A unique session statistics writer is required.');
+}else{
+try{
+const latest=storage?.getItem(WRITER_KEY);
+if(id(latest))lineage=latest;
+else storage?.setItem(WRITER_KEY,lineage);
+}catch{
+/* A private session retains its independently generated writer. */
+}
+}
 const cumulative={...current.boardCounts[String(board)]};
 for(const{family}of ownedDefeats)add(cumulative,family);
 const event={
 attemptId:token.attemptId,
 gameType:token.gameType,
 baseline:structuredClone(token.baseline),
-lineage:ownsWrites()?lineage:sessionLineage,
+lineage:writable?lineage:sessionLineage,
 board:String(board),
 sequence,
 cumulative,
@@ -4576,12 +4703,16 @@ readable=false;
 }
 function save(){
 if(!attempt|| !identity|| !canWrite()|| !readable)return;
+if(!['live','continue'].includes(currentProvenance))return;
+const cursor=stats.session(attempt);
+if(!Object.values(cursor.counts).some((count)=>count>0))return;
 const rows={...retained};
 delete rows[identity];
-rows[identity]=stats.session(attempt);
+rows[identity]=cursor;
 retained=Object.fromEntries(Object.entries(rows).slice(-16));
 try{
-storage?.setItem(key,JSON.stringify(retained));
+const serialized=JSON.stringify(retained);
+if(storage?.getItem(key)!==serialized)storage?.setItem(key,serialized);
 }catch{
 /* Stats service reports its own durability. */
 }
@@ -4641,16 +4772,15 @@ validateEnemyStats,
 inspectEnemyStatsBackup,
 mergeEnemyStats,
 validateEnemyStatsSession,
-forkEnemyStatsSession,
 createEnemyStats,
 createEnemyStatsHost,
 };
 })();
 modules['game/presentation/actor-animation.mjs']=(()=>{
-const boundedJSON=modules['game/data-json.mjs']['boundedJSON'];
-const exactKeys=modules['game/data-json.mjs']['exactKeys'];
-const required=modules['game/data-json.mjs']['required'];
-const stableId=modules['game/data-json.mjs']['stableId'];
+const boundedJSON=simGlobalData['boundedJSON'];
+const exactKeys=simGlobalData['exactKeys'];
+const required=simGlobalData['required'];
+const stableId=simGlobalData['stableId'];
 
 const ACTOR_ANIMATION_FORMAT='revealline-actor-animation.v1';
 const ACTOR_CLIPS=Object.freeze([
@@ -4856,677 +4986,6 @@ sampleActorAnimation,
 createSoldierAnimation,
 };
 })();
-modules['game/hunt/industrial-soldier-kit.mjs']=(()=>{
-/** Exact original v3 live accessory geometry. Data only: positions are artwork
-     * pixels, never collider dimensions, capability declarations or simulation state.
-     * Both live renderers and defeat presentation resolve color roles from the same
-     * accepted actor palette. Historical art continues using its original recipes. */
-const INDUSTRIAL_SOLDIER_KIT_REVISION='industrial-roster-v3';
-const freeze=(value)=>{
-if(value&&typeof value==='object'){
-for(const child of Object.values(value))freeze(child);
-Object.freeze(value);
-}
-return value;
-};
-const INDUSTRIAL_SOLDIER_KITS=freeze({
-lookout:{
-id:'binoculars',
-material:'optics',
-anchor:[9,8],
-size:[14,4],
-rectangles:[
-['#192820',0,0,6,4],
-['#192820',8,0,6,4],
-['#81b1ac',1,0,3,2],
-['#b7d9cf',9,0,3,2],
-],
-},
-patroller:{
-id:'bedroll',
-material:'cloth',
-anchor:[9,21],
-size:[14,5],
-rectangles:[
-['#192820',0,0,14,5],
-['coat',1,1,12,3],
-['trim',2,1,2,3],
-['trim',10,1,2,3],
-],
-},
-runner:{
-id:'harness',
-material:'cloth',
-anchor:[11,19],
-size:[10,6],
-rectangles:[
-['#192820',0,0,3,6],
-['#192820',7,0,3,6],
-['trim',1,1,1,4],
-['trim',8,1,1,4],
-['dark',2,1,6,2],
-],
-},
-sprinter:{
-id:'headset',
-material:'electronics',
-anchor:[8,12],
-size:[16,5],
-rectangles:[
-['#192820',0,0,3,5],
-['#192820',13,0,3,5],
-['trim',1,0,1,4],
-['trim',14,0,1,4],
-],
-},
-courier:{
-id:'satchel',
-material:'canvas',
-anchor:[22,17],
-size:[7,7],
-rectangles:[
-['#192820',0,0,7,7],
-['#795e3f',1,1,5,5],
-['#be9b65',1,1,5,2],
-['#d9c296',3,1,1,5],
-],
-},
-guard:{
-id:'pouches',
-material:'cloth',
-anchor:[10,20],
-size:[14,4],
-rectangles:[
-['#192820',0,0,4,4],
-['trim',1,1,2,2],
-['#192820',5,0,4,4],
-['trim',6,1,2,2],
-['#192820',10,0,4,4],
-['trim',11,1,2,2],
-],
-},
-'refuge-seeker':{
-id:'shelter-roll',
-material:'cloth',
-anchor:[9,20],
-size:[14,7],
-rectangles:[
-['#192820',0,0,14,7],
-['dark',1,1,12,5],
-['light',1,1,12,2],
-['trim',4,1,2,5],
-['trim',10,1,2,5],
-],
-},
-switchback:{
-id:'scarf',
-material:'cloth',
-anchor:[23,20],
-size:[5,4],
-rectangles:[
-['#192820',0,0,5,4],
-['trim',0,0,4,2],
-['patch',1,2,2,2],
-],
-},
-'rendezvous-pair':{
-id:'radio',
-material:'electronics',
-anchor:[11,20],
-size:[11,6],
-rectangles:[
-['#192820',0,0,11,6],
-['dark',1,1,9,4],
-['trim',1,1,9,2],
-],
-},
-'shield-bearer':{
-id:'front-plate',
-material:'armor',
-anchor:[5,5],
-size:[22,5],
-rectangles:[
-['#192820',0,0,22,5],
-['#84928a',1,0,20,3],
-['#c8d0bd',2,0,18,1],
-['#384c46',6,1,10,2],
-['dark',2,3,4,2],
-['dark',16,3,4,2],
-],
-},
-'brace-trooper':{
-id:'brace-pack',
-material:'armor',
-anchor:[11,21],
-size:[10,5],
-rectangles:[
-['#192820',0,0,10,5],
-['dark',1,1,8,3],
-],
-},
-'relay-warden':{
-id:'command-pack',
-material:'electronics',
-anchor:[10,19],
-size:[13,8],
-rectangles:[
-['#192820',0,0,13,8],
-['dark',1,1,11,6],
-['trim',2,1,9,2],
-['light',2,4,3,1],
-],
-},
-});
-
-return{INDUSTRIAL_SOLDIER_KIT_REVISION,INDUSTRIAL_SOLDIER_KITS};
-})();
-modules['game/hunt/actor-catalog.mjs']=(()=>{
-/** Shared identities, not a grant of gameplay capability. Native engines must
-     * accept a versioned policy before an actor can enter an attempt. */
-const ACTOR_CATALOG_VERSION='humanoid-actors.v1';
-const ACTOR_ART_REVISION='overhead-field-kit.v2';
-const ACTOR_ART_BUDGET=Object.freeze({
-decodedBytes:64*1024*1024,
-compactDecodedBytes:32*1024*1024,
-sharedBoards:2,
-});
-const freeze=(value)=>{
-if(value&&typeof value==='object'){
-for(const child of Object.values(value))freeze(child);
-Object.freeze(value);
-}
-return value;
-};
-
-const ACTOR_CASTS=freeze([
-{
-id:'tactical',
-name:{en:'Field kit',uk:'Польове спорядження'},
-accessory:'field-kit',
-},
-{
-id:'rivals',
-name:{en:'Worn field kit',uk:'Зношене польове спорядження'},
-accessory:'mixed-kit',
-},
-{
-id:'arcade',
-name:{en:'Winter kit',uk:'Зимове спорядження'},
-accessory:'winter-kit',
-},
-]);
-const ACTOR_STATES=Object.freeze([
-'idle',
-'walk',
-'notice',
-'flee',
-'warning',
-'burst',
-'recover',
-'blocked',
-'caught',
-]);
-
-const descriptions=[
-[
-'lookout',
-'Lookout',
-'Спостерігач',
-'binoculars',
-false,
-['Watches a post.','Спостерігає за постом.'],
-['Binoculars rise while the lookout scans.','Під час огляду піднімає бінокль.'],
-[
-'Approach directly. This introductory target does not flee.',
-'Наближайтеся прямо. Ця навчальна ціль не тікає.',
-],
-],
-[
-'patroller',
-'Patroller',
-'Патрульний',
-'cap',
-false,
-['Completes a circuit or shuttle route.','Проходить коло або маршрут туди й назад.'],
-[
-'A patrol pack, measured steps and the body heading identify the route.',
-'Патрульний рюкзак, рівні кроки та поворот тіла показують напрямок маршруту.',
-],
-[
-'Intercept a crossing; a blocked patrol waits.',
-'Перехопіть на перетині; заблокований патруль чекає.',
-],
-],
-[
-'runner',
-'Runner',
-'Бігун',
-'light-jacket',
-false,
-['Seeks space away from nearby players.','Шукає простір подалі від гравців.'],
-[
-'Looks back, then commits to a short escape.',
-'Озирається, потім виконує короткий ривок утечі.',
-],
-[
-'Cut off the next opening instead of following directly.',
-'Перекрийте наступний вихід замість переслідування слідом.',
-],
-],
-[
-'sprinter',
-'Sprinter',
-'Спринтер',
-'headset',
-false,
-['Reaches an open straight for a burst.','Шукає пряму ділянку для ривка.'],
-[
-'A light headset and crouched warning precede the dash; breathing marks recovery.',
-'Легка гарнітура та присідання попереджають про ривок; важке дихання означає відпочинок.',
-],
-[
-'Predict the straight dash and catch the recovery.',
-'Передбачте прямий ривок і перехопіть під час відпочинку.',
-],
-],
-[
-'courier',
-'Courier',
-'Кур’єр',
-'satchel',
-false,
-[
-'Visits delivery checkpoints for an optional reward.',
-'Відвідує пункти доставки заради необов’язкової нагороди.',
-],
-[
-'A bouncing satchel and parcel symbol distinguish the bonus target.',
-'Сумка та символ пакунка позначають бонусну ціль.',
-],
-[
-'Choose a safe interception; ordinary completion does not require the courier.',
-'Оберіть безпечне перехоплення; кур’єр не потрібен для звичайного завершення.',
-],
-],
-[
-'guard',
-'Guard',
-'Охоронець',
-'helmet',
-false,
-[
-'Defends a post with warned shots in Capture combat.',
-'Захищає пост попередженими пострілами в бойових місіях захоплення.',
-],
-[
-'A helmet and locked aim precede each shot.',
-'Шолом та зафіксоване прицілювання позначають постріл.',
-],
-[
-'Evade the shot and touch the body during an opening.',
-'Ухиліться від пострілу й торкніться тіла у вдалий момент.',
-],
-],
-[
-'refuge-seeker',
-'Refuge seeker',
-'Шукач укриття',
-'hood',
-false,
-[
-'Commits to a reachable shelter and briefly rests there.',
-'Прямує до доступного укриття й ненадовго відпочиває там.',
-],
-[
-'A hood and pointing gesture announce the selected goal.',
-'Каптур та жест указують на обрану ціль.',
-],
-[
-'Intercept the shelter approach; shelter gives no invulnerability.',
-'Перехопіть біля укриття; воно не дає невразливості.',
-],
-],
-[
-'switchback',
-'Switchback',
-'Маневрувальник',
-'scarf',
-false,
-[
-'Escapes through an announced alternative exit.',
-'Тікає через заздалегідь показаний інший вихід.',
-],
-[
-'A scarf and fork symbol introduce a committed direction change.',
-'Шарф і розгалужена стрілка попереджають про зміну напрямку.',
-],
-[
-'Read the next direction and cover that exit.',
-'Стежте за наступним напрямком і перекрийте цей вихід.',
-],
-],
-[
-'rendezvous-pair',
-'Rendezvous pair',
-'Пара для зустрічі',
-'paired-badge',
-false,
-['Two actors seek a shared meeting point.','Двоє прямують до спільного місця зустрічі.'],
-[
-'Paired radio packs and greeting gestures identify the partners.',
-'Парні радіорюкзаки та вітальні жести позначають напарників.',
-],
-[
-'Separate their routes; each counts once, and the survivor becomes a Runner.',
-'Розділіть їхні маршрути; кожен зараховується один раз, а вцілілий стає Бігуном.',
-],
-],
-[
-'shield-bearer',
-'Shield bearer',
-'Щитоносець',
-'shield',
-true,
-[
-'Keeps its front protected while committing to a heading.',
-'Тримає фронт захищеним і дотримується обраного напрямку.',
-],
-[
-'A solid shield marks the hazardous front; a hollow arrow warns of its next turn.',
-'Суцільний щит позначає небезпечний фронт; порожня стрілка попереджає про поворот.',
-],
-[
-'Touch a side or the rear. The exact side boundary is exposed; enclosure also works in Capture.',
-'Торкніться збоку або ззаду. Межа бічної сторони відкрита; у захопленні також діє оточення.',
-],
-],
-[
-'brace-trooper',
-'Brace trooper',
-'Броньований спринтер',
-'opening-armor',
-true,
-[
-'Braces for a burst, then opens its armor to recover.',
-'Закриває броню для ривка, потім відкриває її на відпочинок.',
-],
-[
-'Closed armor during warning and burst is hazardous; split panels mark recovery.',
-'Закрита броня під час попередження та ривка небезпечна; відкриті панелі позначають відпочинок.',
-],
-[
-'Catch the open recovery. Pulse freezes the visible armor state; it does not open it.',
-'Перехопіть під час відкритого відпочинку. Імпульс фіксує поточний стан броні, а не відкриває її.',
-],
-],
-[
-'relay-warden',
-'Relay warden',
-'Вартовий ретранслятора',
-'command-radio',
-true,
-[
-'Holds a native Capture relay or stronghold objective.',
-'Утримує ціль ретранслятора або фортеці в режимі захоплення.',
-],
-[
-'A command radio pack and relay indicators show its objective role.',
-'Командний радіорюкзак та індикатори ретранслятора позначають роль цілі.',
-],
-[
-'Follow the mission’s relay or stronghold rules; this is not ordinary contact prey.',
-'Виконуйте правила ретранслятора або фортеці; це не звичайна контактна ціль.',
-],
-],
-];
-
-const engines=(capture,snake,flight)=>({capture,snake,flight});
-const supported=(policy,requires=[])=>({policy,requires});
-// Required policies are intentionally namespaced. Catalogue presence, costume
-// and field-guide text never upgrade a historical recipe or imply an adapter.
-const capabilities={
-lookout:engines(
-null,
-supported('stationary'),
-supported('ground-patrol',['stationary-route']),
-),
-patroller:engines(
-supported('authored-patrol',['successor-recipe']),
-supported('patroller'),
-supported('ground-patrol'),
-),
-runner:engines(
-supported('humanoid-runner'),
-supported('runner'),
-supported('ground-pursuit',['successor-recipe']),
-),
-sprinter:engines(
-supported('burst-pursuit',['successor-recipe']),
-supported('sprinter'),
-supported('ground-burst',['successor-recipe']),
-),
-courier:engines(
-supported('optional-courier',['successor-recipe','bonus-objective']),
-supported('courier',['bonus-objective']),
-supported('optional-courier',['successor-recipe','bonus-objective']),
-),
-guard:engines(supported('humanoid-guard',['projectiles']),null,null),
-'refuge-seeker':engines(
-supported('refuge',['successor-recipe','goal-waypoints']),
-supported('refuge',['successor-recipe','goal-waypoints']),
-supported('ground-refuge',['successor-recipe','goal-waypoints']),
-),
-switchback:engines(
-supported('switchback',['successor-recipe']),
-supported('switchback',['successor-recipe']),
-supported('ground-switchback',['successor-recipe']),
-),
-'rendezvous-pair':engines(
-supported('rendezvous',['successor-recipe','pair']),
-supported('pair',['successor-recipe','pair']),
-supported('ground-rendezvous',['successor-recipe','pair']),
-),
-'shield-bearer':engines(
-supported('directional-shield',['successor-recipe','specialist-opt-in']),
-supported('shield',['successor-recipe','specialist-opt-in']),
-supported('ground-shield',['successor-recipe','specialist-opt-in']),
-),
-'brace-trooper':engines(
-supported('brace',['successor-recipe','specialist-opt-in']),
-supported('brace',['successor-recipe','specialist-opt-in']),
-supported('ground-brace',['successor-recipe','specialist-opt-in']),
-),
-'relay-warden':engines(
-supported('relay-stronghold',['native-boss-objective','specialist-opt-in']),
-null,
-null,
-),
-};
-
-const ACTOR_FAMILIES=freeze(
-descriptions.map(([id,en,uk,accessory,specialist,goal,tell,counter])=>({
-id,
-name:{en,uk},
-accessory,
-specialist,
-contact:
-id==='relay-warden'?'native-objective':specialist?'conditional':'instant',
-guide:{
-en:{goal:goal[0],tell:tell[0],counter:counter[0]},
-uk:{goal:goal[1],tell:tell[1],counter:counter[1]},
-},
-capabilities:capabilities[id],
-reactionIds:['notice','caught'].map((event)=>`${ACTOR_CATALOG_VERSION}/${id}/${event}`),
-})),
-);
-
-const aliases=freeze({
-still:'lookout',
-refuge:'refuge-seeker',
-pair:'rendezvous-pair',
-shield:'shield-bearer',
-brace:'brace-trooper',
-warden:'relay-warden',
-});
-const families=new Map(ACTOR_FAMILIES.map((entry)=>[entry.id,entry]));
-// Uniform wardrobes are presentation only. Family equipment remains the primary
-// identifier; soft webbing never implies the specialist's protected contact.
-const wardrobes={
-tactical:{
-coat:'#778665',
-light:'#b0bb8c',
-dark:'#45553f',
-pants:'#576647',
-trim:'#a0a17a',
-camo:'#536248',
-patch:'#b9ac84',
-glove:'#857c5e',
-edge:'#d2d3ac',
-},
-rivals:{
-coat:'#958560',
-light:'#c8b88a',
-dark:'#5d6047',
-pants:'#5f6850',
-trim:'#b3a078',
-camo:'#716949',
-patch:'#706b56',
-glove:'#9b815f',
-edge:'#e0d1aa',
-},
-arcade:{
-coat:'#d4d9cc',
-light:'#f4f2df',
-dark:'#697564',
-pants:'#aab4a4',
-trim:'#8c987e',
-camo:'#939d8b',
-patch:'#a3af9e',
-glove:'#6f786a',
-edge:'#edeedd',
-},
-};
-// Tiny accents keep all families distinguishable without replacing equipment
-// silhouettes with rainbow uniforms.
-const familyTrim={
-lookout:'#b0a078',
-patroller:'#a4af87',
-runner:'#89976b',
-sprinter:'#b2a782',
-courier:'#b89967',
-guard:'#94a183',
-'refuge-seeker':'#7c9981',
-switchback:'#ae9270',
-'rendezvous-pair':'#9aacaa',
-'shield-bearer':'#9ba8a0',
-'brace-trooper':'#b2a287',
-'relay-warden':'#b9b38c',
-};
-
-const ACTOR_VISUALS=freeze(
-ACTOR_FAMILIES.flatMap((family)=>
-ACTOR_CASTS.map((cast)=>{
-const wardrobe=wardrobes[cast.id];
-return{
-id:`${ACTOR_CATALOG_VERSION}/${family.id}/${cast.id}`,
-family:family.id,
-cast:cast.id,
-material:'flesh',
-accessory:family.accessory,
-castAccessory:cast.accessory,
-artRevision:ACTOR_ART_REVISION,
-palette:{
-...wardrobe,
-ink:'#192820',
-skin:'#cba984',
-skinLight:'#e3c29b',
-trim:familyTrim[family.id],
-},
-detailPixels:32,
-compactPixels:16,
-decodedBytes:0,
-};
-}),
-),
-);
-const visuals=new Map(ACTOR_VISUALS.map((entry)=>[entry.id,entry]));
-
-function resolveActorFamily(id){
-if(typeof id!=='string')return null;
-const candidate=Object.hasOwn(aliases,id)?aliases[id]:id;
-return families.has(candidate)?candidate:null;
-}
-function actorDefinition(id){
-return families.get(resolveActorFamily(id))??null;
-}
-function actorVisual(id,cast='rivals'){
-if(visuals.has(id))return visuals.get(id);
-const family=resolveActorFamily(id);
-if(!family|| !ACTOR_CASTS.some((entry)=>entry.id===cast))return null;
-return visuals.get(`${ACTOR_CATALOG_VERSION}/${family}/${cast}`)??null;
-}
-function actorFieldGuide(id,locale='en'){
-const entry=actorDefinition(id);
-if(!entry)return null;
-const language=locale==='uk'?'uk':'en';
-return Object.freeze({
-id:entry.id,
-name:entry.name[language],
-specialist:entry.specialist,
-contact:entry.contact,
-...entry.guide[language],
-});
-}
-function actorCapability(id,engine){
-const entry=actorDefinition(id);
-return entry&&Object.hasOwn(entry.capabilities,engine)?entry.capabilities[engine]:null;
-}
-
-/** Accepted failure feedback; optional identity refines advice without changing rules. */
-function specialistFailureCopy(family,locale='en'){
-const uk=locale==='uk';
-if(['shield','shield-bearer'].includes(family))
-return{
-reason:uk
-?'Ви торкнулися захищеного боку щита.'
-:'You touched the protected shield front.',
-tip:uk
-?'Обійдіть щит збоку чи ззаду, або оточіть ціль. Стрілка показує захищений напрямок.'
-:'Approach from the side or rear, or enclose the target. The arrow marks the protected front.',
-};
-if(['brace','brace-trooper'].includes(family))
-return{
-reason:uk?'Ви торкнулися закритої броні.':'You touched closed armor.',
-tip:uk
-?'Дочекайтеся відкритої броні під час відновлення, або оточіть ціль. Замороження не відкриває броню.'
-:'Wait for exposed recovery, or enclose the target. Freezing does not open armor.',
-};
-return{
-reason:uk
-?'Захищений контакт зупинив ваш апарат.'
-:'Protected armor stopped your craft.',
-tip:uk
-?'Заходьте до Щита збоку чи ззаду. Броньований ривок уразливий під час відновлення. Оточення долає обох.'
-:'Catch Shield from the side or rear; catch Brace during recovery. Enclosure defeats either.',
-};
-}
-
-return{
-ACTOR_CATALOG_VERSION,
-ACTOR_ART_REVISION,
-ACTOR_ART_BUDGET,
-ACTOR_CASTS,
-ACTOR_STATES,
-ACTOR_FAMILIES,
-ACTOR_VISUALS,
-resolveActorFamily,
-actorDefinition,
-actorVisual,
-actorFieldGuide,
-actorCapability,
-specialistFailureCopy,
-};
-})();
 modules['game/hunt/actor-art.mjs']=(()=>{
 const createSoldierAnimation=
 modules['game/presentation/actor-animation.mjs']['createSoldierAnimation'];
@@ -5535,10 +4994,9 @@ modules['game/presentation/actor-animation.mjs']['sampleActorAnimation'];
 const validateActorAnimation=
 modules['game/presentation/actor-animation.mjs']['validateActorAnimation'];
 const runtimeActorArtRevision=simGlobalActorPreferences['runtimeActorArtRevision'];
-const INDUSTRIAL_SOLDIER_KITS=
-modules['game/hunt/industrial-soldier-kit.mjs']['INDUSTRIAL_SOLDIER_KITS'];
-const actorVisual=modules['game/hunt/actor-catalog.mjs']['actorVisual'];
-const resolveActorFamily=modules['game/hunt/actor-catalog.mjs']['resolveActorFamily'];
+const INDUSTRIAL_SOLDIER_KITS=simGlobalActorKit['INDUSTRIAL_SOLDIER_KITS'];
+const actorVisual=simGlobalActorCatalog['actorVisual'];
+const resolveActorFamily=simGlobalActorCatalog['resolveActorFamily'];
 /** Original overhead pixel rigs. The host owns time, facing and vulnerability;
      * this renderer never advances AI, reads a clock or consumes randomness. */
 const UNIT=32;
@@ -6682,8 +6140,8 @@ drawHuntActor,
 modules['game/ui/enemy-stats.mjs']=(()=>{
 const canonicalEnemyFamily=modules['game/enemy-stats.mjs']['canonicalEnemyFamily'];
 const drawHuntActor=modules['game/hunt/actor-art.mjs']['drawHuntActor'];
-const actorDefinition=modules['game/hunt/actor-catalog.mjs']['actorDefinition'];
-const resolveActorFamily=modules['game/hunt/actor-catalog.mjs']['resolveActorFamily'];
+const actorDefinition=simGlobalActorCatalog['actorDefinition'];
+const resolveActorFamily=simGlobalActorCatalog['resolveActorFamily'];
 
 const copy={
 en:{
@@ -7068,17 +6526,7 @@ reduced:!!reduced,
 skipped:false,
 };
 }
-function advanceCelebration(state,dt,{paused=false,reduced=false}={}){
-if(!state)return null;
-if(!Number.isFinite(dt)||dt<0)
-throw new TypeError(t('interface:celebrationDtMustBeFiniteAndNonnegative'));
-if(reduced)return{...state,reduced:true,elapsed:state.duration};
-if(paused||state.elapsed>=state.duration)return state;
-return{...state,elapsed:Math.min(state.duration,state.elapsed+Math.min(dt,0.25))};
-}
-function skipCelebration(state){
-return state?{...state,elapsed:state.duration,skipped:true}:null;
-}
+
 function celebrationFrame(state){
 if(!state)
 return{
@@ -7209,8 +6657,6 @@ return{
 CELEBRATION_SECONDS,
 finaleKind,
 createCelebration,
-advanceCelebration,
-skipCelebration,
 celebrationFrame,
 drawCelebration,
 };
@@ -7774,16 +7220,7 @@ if(!TEXT_FACES.includes(value))throw new TypeError('Unsupported text style.');
 return value;
 }
 
-function canvasTextFonts(face,themeFonts,{useThemeFont=false}={}){
-if(resolveTextFace(face)==='plain')return PLAIN_CANVAS_FONTS;
-return Object.freeze({
-...themeFonts,
-ui:useThemeFont&&themeFonts?.ui?themeFonts.ui:PIXEL_CANVAS_UI,
-numeric:themeFonts?.numeric??"'Field Kit Mono', ui-monospace, monospace",
-});
-}
-
-return{TEXT_FACES,DEFAULT_TEXT_FACE,resolveTextFace,canvasTextFonts};
+return{TEXT_FACES,DEFAULT_TEXT_FACE,resolveTextFace};
 })();
 modules['game/text-size.mjs']=(()=>{
 const TEXT_SIZES=Object.freeze(['standard','large','extra-large']);
@@ -8351,244 +7788,6 @@ panel.remove();
 
 return{mountThemeMaterialPreview};
 })();
-modules['game/ui/art-review-navigation.mjs']=(()=>{
-/** Explicit, session-only art review pin; never changes a saved appearance or a
-     * gameplay recipe. Unrecognized revisions use the released artwork. */
-function actorArtReviewRevision(location=globalThis.location){
-try{
-const params=new URL(location.href).searchParams;
-return params.getAll('artReview').length===1&&
-['industrial-pilot-v1','industrial-overhead-v2','industrial-roster-v3'].includes(
-params.get('artReview'),
-)
-?params.get('artReview')
-:null;
-}catch{
-return null;
-}
-}
-
-// These are routes owned by this build, not a general-purpose URL allowlist.
-// Do not transfer preview choices to community/provider links or another edition.
-const ART_REVIEW_NATIVE_PAGE=
-/^(.*\/)(?:game\/(?:(?:index|company)\.html|couch\/(?:index\.html|relay-rescue\.html)?|snake\/(?:(?:index|play)\.html)?|overflight\/(?:play|raid)\.html|studio\/(?:(?:index|snake|overflight|raid)\.html)?|(?:hunt\/military-levels\.html|(?:playground|hunt|online|replay-theater|controller-lab)\/(?:index\.html)?))?|authoring\/(?:asset-studio|motion-lab|enemy-catalog|still-media|video-poster|design-atlas|industrial-art-review)\/(?:index\.html)?|optional-practice\/(?:civilian-fpv|fpv-worlds)\/(?:index\.html)?)$/;
-
-/** Inherit an explicit review-only art pin along a caller-owned native link.
-     * Does not validate arbitrary navigation, persist preferences, transfer content,
-     * or change an explicit destination choice. Missing/ambiguous pins stay absent.
-     */
-function nativeArtReviewURL(href,sourceHref){
-let source,target;
-try{
-source=new URL(sourceHref);
-target=new URL(href,source);
-}catch{
-return href;
-}
-const revision=actorArtReviewRevision(source),
-sourceRoot=ART_REVIEW_NATIVE_PAGE.exec(source.pathname)?.[1],
-targetRoot=ART_REVIEW_NATIVE_PAGE.exec(target.pathname)?.[1];
-if(
-revision&&
-['http:','https:','file:','capacitor:'].includes(source.protocol)&&
-source.protocol===target.protocol&&
-source.origin===target.origin&&
-source.host===target.host&&
-!source.username&&
-!source.password&&
-!target.username&&
-!target.password&&
-sourceRoot&&
-sourceRoot===targetRoot&&
-!target.searchParams.has('artReview')
-){
-target.searchParams.set('artReview',revision);
-return target.href;
-}
-return href;
-}
-
-return{actorArtReviewRevision,nativeArtReviewURL};
-})();
-modules['game/ui/enemy-appearance-controls.mjs']=(()=>{
-const sharedEnemyArtwork=simGlobalActorPreferences['sharedEnemyArtwork'];
-const sharedActorAppearance=simGlobalActorPreferences['sharedActorAppearance'];
-const ACTOR_CASTS=modules['game/hunt/actor-catalog.mjs']['ACTOR_CASTS'];
-const actorArtReviewRevision=
-modules['game/ui/art-review-navigation.mjs']['actorArtReviewRevision'];
-const nativeArtReviewURL=modules['game/ui/art-review-navigation.mjs']['nativeArtReviewURL'];
-
-const COPY={
-en:{
-label:'Enemy appearance preset',
-authored:'Original level artwork',
-military:'Military Field · soldiers and vehicles',
-uniform:'Soldier uniform',
-castAuthored:'As designed',
-about:'What changes?',
-help:'Military Field applies the matching game appearance and detailed military artwork. Choose a uniform under Character appearance. It uses the level’s existing enemies; Running enemies adds optional humanoids. Snake targets stay humanoid.',
-next:'Applies when starting a new attempt. Retry and Continue keep accepted artwork. Creator-owned custom artwork is retained.',
-preview:'Preview artwork is active. Choosing a preset ends this preview.',
-saving:'This choice applies here, but could not be saved for another page.',
-failure:'The appearance could not be prepared. Select it again to retry.',
-},
-uk:{
-label:'Набір оформлення ворогів',
-authored:'Початкове оформлення рівня',
-military:'Військове поле · солдати й техніка',
-uniform:'Форма солдатів',
-castAuthored:'За задумом',
-about:'Що змінюється?',
-help:'Військове поле застосовує відповідне оформлення гри та детальні військові образи. Форму можна вибрати в розділі «Вигляд персонажів». Використовуються наявні вороги рівня; «Рухливі вороги» додають необов’язкових гуманоїдів. Цілі Snake залишаються гуманоїдами.',
-next:'Діє з початком нової спроби. Повтор і продовження зберігають прийняте оформлення. Власні авторські зображення зберігаються.',
-preview:'Активний попередній перегляд зображень. Вибір набору завершує цей перегляд.',
-saving:'Вибір діє тут, але його не вдалося зберегти для іншої сторінки.',
-failure:'Не вдалося підготувати оформлення. Виберіть його знову, щоб повторити.',
-},
-};
-let sequence=0;
-
-function clearExplicitReviewPin(location,history){
-if(!actorArtReviewRevision(location))return;
-const source=new URL(location.href),
-target=new URL(source);
-target.searchParams.delete('artReview');
-// Use the same fixed native-route contract as review-link propagation. An
-// unrelated URL, unsupported protocol or ambiguous pin is never rewritten.
-if(nativeArtReviewURL(target.href,source.href)===target.href)return;
-if(typeof history?.replaceState!=='function')
-throw new Error('The current review appearance cannot be replaced.');
-history.replaceState(history.state,'',target.href);
-}
-
-/** Shared explicit preset, not a gameplay/population switch. Each native host
-     * retains ownership of the current attempt and its next preparation boundary. */
-function mountEnemyAppearanceControls({
-document:doc=globalThis.document,
-location=doc.defaultView?.location??globalThis.location,
-history=doc.defaultView?.history??globalThis.history,
-container,
-preferences=sharedEnemyArtwork(),
-locale=()=>doc.documentElement?.lang??'en',
-includeUniform=false,
-applyMilitary,
-applyAuthored,
-}={}){
-if(!container||typeof applyMilitary!=='function'||typeof applyAuthored!=='function')
-throw new TypeError('Enemy appearance controls require native appearance actions.');
-const root=doc.createElement('div'),
-label=doc.createElement('label'),
-title=doc.createElement('span'),
-select=doc.createElement('select'),
-details=doc.createElement('details'),
-summary=doc.createElement('summary'),
-help=doc.createElement('p'),
-status=doc.createElement('p');
-root.className='enemy-appearance-controls';
-root.dataset.enemyAppearanceControls='true';
-label.className='settings-row';
-select.id=`enemy-appearance-${++sequence}`;
-select.name='enemy-appearance';
-select.dataset.enemyAppearance='true';
-help.id=`${select.id}-help`;
-help.className=status.className='micro-note';
-status.setAttribute('role','status');
-select.setAttribute('aria-describedby',help.id);
-for(const value of['authored','military']){
-const option=doc.createElement('option');
-option.value=value;
-select.append(option);
-}
-label.append(title,select);
-details.append(summary,help);
-root.append(label,status,details);
-const cast=includeUniform?sharedActorAppearance():null;
-let uniform;
-if(cast){
-const uniformLabel=doc.createElement('label');
-uniform={title:doc.createElement('span'),select:doc.createElement('select')};
-uniformLabel.className='settings-row';
-uniform.select.name='soldier-uniform';
-for(const value of['authored',...ACTOR_CASTS.map((entry)=>entry.id)]){
-const option=doc.createElement('option');
-option.value=value;
-uniform.select.append(option);
-}
-uniformLabel.append(uniform.title,uniform.select);
-root.insertBefore(uniformLabel,status);
-}
-container.append(root);
-let disposed=false,
-failed=false,
-generation=0;
-function refresh(){
-if(disposed)return;
-const words=COPY[locale()]??COPY.en,
-state=preferences.snapshot(),
-reviewing=actorArtReviewRevision(location)!==null;
-title.textContent=words.label;
-for(const option of select.options)option.textContent=words[option.value];
-select.value=reviewing?'military':state.style;
-help.textContent=words.help;
-summary.textContent=words.about;
-if(uniform){
-uniform.title.textContent=words.uniform;
-uniform.select.value=cast.snapshot().cast;
-for(const option of uniform.select.options)
-option.textContent=
-ACTOR_CASTS.find((entry)=>entry.id===option.value)?.name[
-locale()==='uk'?'uk':'en'
-]??words.castAuthored;
-}
-status.textContent=failed
-?words.failure
-:reviewing
-?words.preview
-:state.durable===false
-?words.saving
-:words.next;
-}
-const change=async()=>{
-const ticket= ++generation,
-style=select.value;
-if(!['authored','military'].includes(style))return;
-failed=false;
-try{
-// An explicit preset supersedes only this page's supported cosmetic review
-// pin. Do this before notifying preferences so native subscribers observe
-// the new intent; visiting settings or receiving another tab's choice
-// must preserve the current review link.
-clearExplicitReviewPin(location,history);
-preferences.set({style});
-await(style==='military'?applyMilitary():applyAuthored());
-}catch{
-if(!disposed&&generation===ticket)failed=true;
-}
-if(!disposed&&generation===ticket)refresh();
-};
-select.addEventListener('change',change);
-const changeUniform=()=>cast.set({cast:uniform.select.value});
-uniform?.select.addEventListener('change',changeUniform);
-const unsubscribe=preferences.subscribe(refresh);
-const unsubscribeCast=cast?.subscribe(refresh);
-return Object.freeze({
-element:root,
-refresh,
-dispose(){
-if(disposed)return;
-disposed=true;
-generation++;
-unsubscribe();
-unsubscribeCast?.();
-select.removeEventListener('change',change);
-uniform?.select.removeEventListener('change',changeUniform);
-root.remove();
-},
-});
-}
-
-return{clearExplicitReviewPin,mountEnemyAppearanceControls};
-})();
 modules['game/ui/theme-family-controls.mjs']=(()=>{
 const t=simGlobalI18n['t'];
 const localizedText=simGlobalI18n['localizedText'];
@@ -8599,8 +7798,7 @@ const BUILTIN_THEME_FAMILIES=simGlobalThemes['BUILTIN_THEME_FAMILIES'];
 const resolvePresentation=simGlobalThemes['resolvePresentation'];
 const mountThemeMaterialPreview=
 modules['game/ui/theme-material-preview.mjs']['mountThemeMaterialPreview'];
-const mountEnemyAppearanceControls=
-modules['game/ui/enemy-appearance-controls.mjs']['mountEnemyAppearanceControls'];
+const mountEnemyAppearanceControls=simGlobalEnemyAppearance['mountEnemyAppearanceControls'];
 
 /** One immediate appearance choice; the host owns atomic loads and flight boundaries. */
 function attachThemeFamilyControls({
@@ -9053,6 +8251,7 @@ const globalSettingsOwners=new WeakMap();
 /** Adopt real controls, or render missing fields through injected services.
      * Repeated calls add lazy providers without replacing focused controls.
      * `duplicates` retires aliases by logical setting while retaining their handlers.
+     * `extraLargeText` belongs to the initial host; lazy providers cannot grant or revoke it.
      */
 function mountGlobalSettings({
 document:doc=globalThis.document,
@@ -9063,6 +8262,7 @@ locale='en',
 controls={},
 bindings={},
 duplicates={},
+extraLargeText=false,
 }={}){
 if(!root|| !panels|| !doc)return null;
 bindings={...continuousPlayBindings(),...bindings};
@@ -9113,7 +8313,8 @@ function render(row){
 if(!row.input|| !row.binding)return;
 const value=row.binding.get();
 if(row.spec.type==='checkbox')row.input.checked= !!value;
-else if(row.spec.key==='textSize')renderTextSizeControl(row.input,value,{locale});
+else if(row.spec.key==='textSize')
+renderTextSizeControl(row.input,value,{locale,extraLarge:extraLargeText});
 else row.input.value=String(value);
 if(row.output)row.output.textContent=`${Math.round(Number(value)*100)}%`;
 const feedback=row.binding.feedback?.(locale),
@@ -9310,6 +8511,427 @@ return api.update({locale});
 
 return{GLOBAL_SETTINGS,mountGlobalSettings};
 })();
+modules['game/ui/comfort-presets.mjs']=(()=>{
+const getLocale=simGlobalI18n['getLocale'];
+const onLocaleChange=simGlobalI18n['onLocaleChange'];
+const t=simGlobalI18n['t'];
+const DISPLAY_PREFERENCES_KEY=
+modules['game/display-preferences.mjs']['DISPLAY_PREFERENCES_KEY'];
+const MENU_ANIMATION_KEY=
+modules['game/ui/menu-animation-preferences.mjs']['MENU_ANIMATION_KEY'];
+const menuAnimationBinding=
+modules['game/ui/menu-animation-preferences.mjs']['menuAnimationBinding'];
+
+const presets={
+clear:{textFace:'plain',textSize:'large'},
+motion:{reducedEffects:true,menuAnimation:false},
+comfort:{textFace:'plain',textSize:'large',reducedEffects:true,menuAnimation:false},
+};
+const copy={
+en:{
+title:'Comfort presets',
+choose:'Preview a preset',
+clear:'Clear text',
+motion:'Less motion',
+comfort:'Clear text and less motion',
+preview:'Preview only. Your settings change when you select Apply.',
+sample:'Ready when you are. Continue playing.',
+changes:'Changes on Apply',
+same:'These settings already match this preset.',
+system:'Your device’s reduced-motion preference stays active.',
+apply:'Apply preset',
+retry:'Retry saving preset',
+undo:'Undo last preset',
+applied:'Preset applied. You can adjust individual settings.',
+partial:
+'Newer choices were kept. Undo affects only preset settings that remain unchanged.',
+undone:'The preset’s unchanged settings were restored. Newer choices were kept.',
+superseded:'Newer choices were kept. Undo is no longer available for this preset.',
+restored:'This page was restored. The earlier preset can no longer be undone.',
+failed:'Some settings could not be changed. Review the settings below.',
+textFace:'Text style',
+textSize:'Text size',
+reducedEffects:'Reduced effects',
+menuAnimation:'Animated menu background',
+pixel:'Theme font',
+plain:'Plain',
+standard:'Standard',
+large:'Large',
+true:'On',
+false:'Off',
+},
+uk:{
+title:'Набори для зручності',
+choose:'Переглянути набір',
+clear:'Чіткий текст',
+motion:'Менше руху',
+comfort:'Чіткий текст і менше руху',
+preview:'Це лише перегляд. Налаштування зміняться після натискання «Застосувати».',
+sample:'Готові, коли ви готові. Продовжуйте гру.',
+changes:'Зміни після застосування',
+same:'Ці налаштування вже відповідають набору.',
+system:'Налаштування зменшення руху на вашому пристрої залишається чинним.',
+apply:'Застосувати набір',
+retry:'Повторити збереження набору',
+undo:'Скасувати останній набір',
+applied:'Набір застосовано. Окремі налаштування можна змінювати.',
+partial:
+'Новіший вибір залишено без змін. Скасування стосується лише незмінених налаштувань набору.',
+undone:'Незмінені налаштування набору відновлено. Новіші зміни збережено.',
+superseded:'Новіші зміни збережено. Скасування цього набору більше недоступне.',
+restored:'Сторінку відновлено. Попередній набір більше не можна скасувати.',
+failed:'Деякі налаштування не вдалося змінити. Перевірте налаштування нижче.',
+textFace:'Стиль тексту',
+textSize:'Розмір тексту',
+reducedEffects:'Менше ефектів',
+menuAnimation:'Анімоване тло меню',
+pixel:'Шрифт теми',
+plain:'Звичайний',
+standard:'Стандартний',
+large:'Великий',
+true:'Увімкнено',
+false:'Вимкнено',
+},
+};
+
+/** A contained preview. Only Apply/Undo call the host's explicit preference writer. */
+function mountComfortPresets({
+document:doc,
+window:win=doc.defaultView,
+root,
+display,
+setDisplay=(patch)=>display.set(patch),
+displayWarning=()=>
+display.getWarningKey()?t(display.getWarningKey()):display.getWarning(),
+}){
+const menu=menuAnimationBinding(win),
+element=doc.createElement('section'),
+heading=doc.createElement('h4'),
+label=doc.createElement('label'),
+labelText=doc.createElement('span'),
+choice=doc.createElement('select'),
+hint=doc.createElement('p'),
+sample=doc.createElement('p'),
+changesHeading=doc.createElement('h5'),
+changes=doc.createElement('ul'),
+system=doc.createElement('p'),
+actions=doc.createElement('div'),
+apply=doc.createElement('button'),
+undo=doc.createElement('button'),
+status=doc.createElement('p');
+const prefix=`${root.id}-comfort`;
+element.className='comfort-presets';
+element.setAttribute('aria-labelledby',`${prefix}-heading`);
+heading.id=`${prefix}-heading`;
+choice.id=`${prefix}-choice`;
+for(const value of Object.keys(presets)){
+const option=doc.createElement('option');
+option.value=value;
+choice.append(option);
+}
+choice.value='comfort';
+hint.id=`${prefix}-hint`;
+hint.className=system.className=status.className='micro-note';
+choice.setAttribute('aria-describedby',hint.id);
+sample.className='comfort-preset-sample';
+actions.className='comfort-preset-actions';
+apply.type=undo.type='button';
+apply.id=`${prefix}-apply`;
+undo.id=`${prefix}-undo`;
+apply.className='button';
+undo.className='button secondary';
+status.id=`${prefix}-status`;
+status.setAttribute('role','status');
+label.append(labelText,choice);
+actions.append(apply,undo);
+element.append(
+heading,
+label,
+hint,
+sample,
+changesHeading,
+changes,
+system,
+actions,
+status,
+);
+root.insertBefore(element,root.querySelector('.global-settings-group'));
+let disposed=false,
+acting=false,
+last=null,
+reported={display:false,menu:false},
+message='';
+const snapshot=()=>({...display.snapshot(),menuAnimation:menu.get()});
+const warning=(scope=reported)=>
+[
+scope.display?displayWarning():'',
+scope.menu&&menu.persistence().status==='session'
+?menu.feedback(getLocale()).text
+:'',
+]
+.filter(Boolean)
+.join(' ');
+function revoke(part){
+if(!last?.[part])return;
+last.superseded=true;
+last[part]=null;
+reported[part]=false;
+}
+const resultMessage=()=>
+last?.superseded?(last.display||last.menu?'partial':'superseded'):'applied';
+function reconcile(){
+if(!last||acting)return;
+if(last.display&&display.snapshot().revision!==last.display.revision)
+revoke('display');
+if(last.menu&&(menu.get()!==last.menu.value||menu.revision()!==last.menu.revision))
+revoke('menu');
+if(message==='applied'||message==='partial')message=resultMessage();
+}
+function retryScope(previous,current,menuRevision,target){
+return{
+display:
+Object.keys(target).some((key)=>key!=='menuAnimation')&&
+!!previous?.display&&
+previous.display.revision===current.revision&&
+!!displayWarning(),
+menu:
+Object.hasOwn(target,'menuAnimation')&&
+!!previous?.menu&&
+previous.menu.value===current.menuAnimation&&
+previous.menu.revision===menuRevision&&
+menu.persistence().status==='session',
+};
+}
+function render(){
+if(disposed)return;
+reconcile();
+const labels=copy[String(getLocale()).split('-')[0]]??copy.en,
+current=snapshot(),
+target=presets[choice.value],
+preview={...current,...target};
+heading.textContent=labels.title;
+labelText.textContent=labels.choose;
+for(const option of choice.children)option.textContent=labels[option.value];
+hint.textContent=labels.preview;
+sample.textContent=labels.sample;
+sample.dataset.textFace=preview.textFace;
+sample.dataset.textSize=preview.textSize;
+changesHeading.textContent=labels.changes;
+changes.replaceChildren();
+for(const[key,value]of Object.entries(target)){
+if(value===current[key])continue;
+const row=doc.createElement('li');
+row.textContent=`${labels[key]}: ${labels[String(current[key])]} → ${labels[String(value)]}`;
+changes.append(row);
+}
+if(!changes.children.length){
+const row=doc.createElement('li');
+row.textContent=labels.same;
+changes.append(row);
+}
+system.textContent=labels.system;
+system.hidden= !current.effectiveReducedEffects||current.reducedEffects;
+const pending=retryScope(
+last?.preset===choice.value?last:null,
+current,
+menu.revision(),
+target,
+);
+apply.textContent=pending.display||pending.menu?labels.retry:labels.apply;
+undo.textContent=labels.undo;
+undo.disabled= !last?.display&& !last?.menu;
+const text=[labels[message],message?warning():''].filter(Boolean).join(' ');
+if(status.textContent!==text)status.textContent=text;
+status.hidden= !text;
+}
+function applyPreset(){
+reconcile();
+const before=snapshot(),
+menuRevision=menu.revision(),
+target=presets[choice.value],
+previous=last?.preset===choice.value?last:null,
+scope={
+display:Object.keys(target).some((key)=>key!=='menuAnimation'),
+menu:Object.hasOwn(target,'menuAnimation'),
+},
+pending=retryScope(previous,before,menuRevision,target),
+retry=pending.display||pending.menu,
+displayPatch=Object.fromEntries(
+Object.entries(target).filter(
+([key,value])=>
+key!=='menuAnimation'&&(retry?pending.display:before[key]!==value),
+),
+),
+menuChanged= !retry&&scope.menu&&before.menuAnimation!==target.menuAnimation;
+reported=retry?pending:scope;
+if(!Object.keys(displayPatch).length&& !menuChanged&& !retry){
+message='same';
+render();
+return;
+}
+acting=true;
+let failed=false,
+menuSkipped=false,
+menuAttempted=false;
+try{
+if(Object.keys(displayPatch).length)setDisplay(displayPatch);
+}catch{
+failed=true;
+}
+try{
+if(menuChanged||pending.menu){
+const menuStillCurrent=
+menu.get()===before.menuAnimation&&menu.revision()===menuRevision;
+if(!menuStillCurrent)menuSkipped=true;
+else if(menuChanged){
+menuAttempted=true;
+menu.set(target.menuAnimation);
+}else menu.retry();
+}
+}catch{
+failed=true;
+}
+const after=snapshot(),
+menuValueAfter=menu.get(),
+menuRevisionAfter=menu.revision(),
+menuOwned=
+menuAttempted&&
+menuValueAfter===target.menuAnimation&&
+menuRevisionAfter===menuRevision+1,
+displayOwned=
+Object.keys(displayPatch).length&&
+after.revision===before.revision+1&&
+Object.entries(displayPatch).every(([key,value])=>after[key]===value),
+nextDisplay=displayOwned
+?{
+revision:after.revision,
+before:
+previous?.display?.before??
+Object.fromEntries(Object.keys(displayPatch).map((key)=>[key,before[key]])),
+}
+:previous?.display?.revision===after.revision
+?previous.display
+:null,
+nextMenu=menuOwned
+?{
+before:before.menuAnimation,
+value:target.menuAnimation,
+revision:menuRevisionAfter,
+}
+:previous?.menu&&
+menuValueAfter===previous.menu.value&&
+menuRevisionAfter===previous.menu.revision
+?previous.menu
+:null;
+last={
+preset:choice.value,
+display:nextDisplay,
+menu:nextMenu,
+superseded:!!(
+(retry&&previous?.superseded)||
+menuSkipped||
+(previous?.display&& !nextDisplay)||
+(previous?.menu&& !nextMenu)||
+(Object.keys(displayPatch).length>0&&
+after.revision>before.revision&&
+!displayOwned)||
+(menuAttempted&&menuRevisionAfter>menuRevision&& !menuOwned)
+),
+};
+reported.display=reported.display&& !!nextDisplay;
+reported.menu=reported.menu&& !!nextMenu;
+acting=false;
+message=failed?'failed':resultMessage();
+render();
+}
+function undoPreset(){
+reconcile();
+if(!last)return;
+const owned=last,
+hadFocus=doc.activeElement===undo;
+reported={display:!!owned.display,menu:!!owned.menu};
+last=null;
+acting=true;
+let failed=false;
+try{
+if(owned.display)setDisplay(owned.display.before);
+}catch{
+failed=true;
+}
+try{
+if(
+owned.menu&&
+menu.revision()===owned.menu.revision&&
+menu.get()===owned.menu.value
+)
+menu.set(owned.menu.before);
+}catch{
+failed=true;
+}
+acting=false;
+message=failed?'failed':'undone';
+render();
+if(hadFocus&&[undo,doc.body,null].includes(doc.activeElement))
+apply.focus({preventScroll:true});
+}
+const storageChanged=(event)=>{
+if(!last||acting|| ![DISPLAY_PREFERENCES_KEY,MENU_ANIMATION_KEY].includes(event.key))
+return;
+try{
+if(
+event.storageArea!==win.localStorage||
+event.newValue!==win.localStorage.getItem(event.key)
+)
+return;
+}catch{
+return;
+}
+if(event.key===DISPLAY_PREFERENCES_KEY&& !displayWarning())revoke('display');
+if(event.key===MENU_ANIMATION_KEY&&menu.persistence().status!=='session')
+revoke('menu');
+render();
+};
+const restored=(event)=>{
+if(!event.persisted|| !last)return;
+// A frozen page can miss another tab changing away and back to the same
+// values. Matching values alone no longer prove this Undo still owns them.
+last=null;
+reported={display:false,menu:false};
+message='restored';
+render();
+};
+choice.addEventListener('change',render);
+// Host change handlers finish persistence before the event reaches this panel.
+// Refresh their final warning without rerunning every display subscriber.
+root.addEventListener('change',render);
+apply.addEventListener('click',applyPreset);
+undo.addEventListener('click',undoPreset);
+win.addEventListener('storage',storageChanged);
+win.addEventListener('pageshow',restored);
+const stopDisplay=display.subscribe(render),
+stopMenu=menu.subscribe(render),
+stopLocale=onLocaleChange(render);
+render();
+return{
+element,
+destroy(){
+disposed=true;
+stopDisplay();
+stopMenu();
+stopLocale();
+choice.removeEventListener('change',render);
+root.removeEventListener('change',render);
+apply.removeEventListener('click',applyPreset);
+undo.removeEventListener('click',undoPreset);
+win.removeEventListener('storage',storageChanged);
+win.removeEventListener('pageshow',restored);
+element.remove();
+},
+};
+}
+
+return{mountComfortPresets};
+})();
 modules['game/ui/radio-audio.mjs']=(()=>{
 const RADIO_AUDIO_KEY='revealline.radio-audio.v1';
 function readRadioAudio(storage){
@@ -9470,23 +9092,8 @@ return{mountGameplayAudioControls};
 })();
 modules['game/ui/movement-audio.mjs']=(()=>{
 const MOVEMENT_AUDIO_KEY='revealline.movement-audio.v1';
-function readMovementAudio(storage){
-try{
-storage??=globalThis.localStorage;
-const value=JSON.parse(storage?.getItem(MOVEMENT_AUDIO_KEY)??'null');
-return{
-enabled:typeof value?.enabled==='boolean'?value.enabled:true,
-volume:
-Number.isFinite(value?.volume)&&value.volume>=0&&value.volume<=1
-?value.volume
-:0.5,
-};
-}catch{
-return{enabled:true,volume:0.5};
-}
-}
 
-return{MOVEMENT_AUDIO_KEY,readMovementAudio};
+return{MOVEMENT_AUDIO_KEY};
 })();
 modules['game/ui/menu-audio.mjs']=(()=>{
 const mountGameplayAudioControls=
@@ -9512,13 +9119,7 @@ Number.isFinite(value?.volume)&&value.volume>=0&&value.volume<=1
 return{enabled:true,volume:0.35};
 }
 }
-function saveMenuAudio(value){
-try{
-globalThis.localStorage?.setItem(MENU_AUDIO_KEY,JSON.stringify(value));
-}catch{
-/* Session intent stays on Soundscape. */
-}
-}
+
 function attachMenuAudioSettings(sound,doc=globalThis.document,options={}){
 const menu=attachPreference(
 sound,
@@ -9646,7 +9247,7 @@ doc?.getElementById('settings-dialog')
 );
 }
 
-return{MENU_AUDIO_KEY,readMenuAudio,saveMenuAudio,attachMenuAudioSettings};
+return{MENU_AUDIO_KEY,readMenuAudio,attachMenuAudioSettings};
 })();
 return{
 createSimMissionLibrary:modules['game/mission-library/library.mjs']['createMissionLibrary'],
@@ -9675,6 +9276,7 @@ modules['game/ui/menu-animation-preferences.mjs']['menuAnimationBinding'],
 attachSimThemeFamilyControls:
 modules['game/ui/theme-family-controls.mjs']['attachThemeFamilyControls'],
 mountSimGlobalSettings:modules['game/ui/global-settings-view.mjs']['mountGlobalSettings'],
+mountSimComfortPresets:modules['game/ui/comfort-presets.mjs']['mountComfortPresets'],
 readSimRadioAudio:modules['game/ui/radio-audio.mjs']['readRadioAudio'],
 SIM_RADIO_AUDIO_KEY:modules['game/ui/radio-audio.mjs']['RADIO_AUDIO_KEY'],
 attachSimMenuAudioSettings:modules['game/ui/menu-audio.mjs']['attachMenuAudioSettings'],
@@ -9699,6 +9301,7 @@ export const subscribeSimMenuAnimation=sharedGlobalSettings.subscribeSimMenuAnim
 export const simMenuAnimationBinding=sharedGlobalSettings.simMenuAnimationBinding;
 export const attachSimThemeFamilyControls=sharedGlobalSettings.attachSimThemeFamilyControls;
 export const mountSimGlobalSettings=sharedGlobalSettings.mountSimGlobalSettings;
+export const mountSimComfortPresets=sharedGlobalSettings.mountSimComfortPresets;
 export const readSimRadioAudio=sharedGlobalSettings.readSimRadioAudio;
 export const SIM_RADIO_AUDIO_KEY=sharedGlobalSettings.SIM_RADIO_AUDIO_KEY;
 export const attachSimMenuAudioSettings=sharedGlobalSettings.attachSimMenuAudioSettings;

@@ -87,6 +87,7 @@
         "game/test/industrial-review-motion.test.mjs",
         "game/test/industrial-encounter-audio.test.mjs",
         "game/test/shared-encounter-audio.test.mjs",
+        "game/test/fpv-published-destruction.test.mjs",
         "game/test/hunt-overhead-art.test.mjs",
         "game/test/classic-snake-presentation.test.mjs",
         "game/test/defeat-presentation-host.test.mjs",
@@ -156,7 +157,6 @@
       "id": "local-ux",
       "files": [
         "game/test/art-review-navigation.test.mjs",
-        "game/test/art-review-host-navigation.test.mjs",
         "game/test/classic-snake-ui.test.mjs",
         "game/test/hunt-host.test.mjs",
         "game/test/coop-briefing-host.test.mjs",
@@ -164,10 +164,6 @@
         "game/test/phase-briefing.test.mjs",
         "game/test/civilian-practice-ui.test.mjs",
         "game/test/fpv-flight-ui.test.mjs",
-        "game/test/workshop-return.test.mjs",
-        "game/test/content-studio-navigation.test.mjs",
-        "game/test/couch-departure.test.mjs",
-        "game/test/title-mode-departure-host.test.mjs",
         "game/test/mode-choice-appearance.test.mjs",
         "game/test/enemy-appearance-controls.test.mjs",
         "game/test/military-level-directory.test.mjs",
@@ -192,6 +188,46 @@
         "game/test/couch-audio-master.test.mjs",
         "game/test/coop-picture-landing-recovery.test.mjs",
         "game/test/fpv-world-record-storage.test.mjs"
+      ]
+    },
+    {
+      "id": "host-integration",
+      "files": [
+        "game/test/backup-set-host.test.mjs",
+        "game/test/collection-context-host.test.mjs",
+        "game/test/collection-records-return-host.test.mjs",
+        "game/test/device-controls-host.test.mjs",
+        "game/test/difficulty-host.test.mjs",
+        "game/test/display-preferences-host.test.mjs",
+        "game/test/fpv-role-host.test.mjs",
+        "game/test/history-picture-host.test.mjs",
+        "game/test/session-only-release-next-host.test.mjs",
+        "game/test/settings-assists-host.test.mjs",
+        "game/test/text-face-host.test.mjs",
+        "game/test/text-size-host.test.mjs",
+        "game/test/ukraine-role-host.test.mjs",
+        "game/test/enemy-stats.test.mjs",
+        "game/test/enemy-stats-events.test.mjs",
+        "game/test/team-enemy-stats-ownership.test.mjs"
+      ]
+    },
+    {
+      "id": "host-navigation",
+      "files": [
+        "game/test/art-review-host-navigation.test.mjs",
+        "game/test/workshop-return.test.mjs",
+        "game/test/content-studio-navigation.test.mjs",
+        "game/test/couch-departure.test.mjs",
+        "game/test/title-mode-departure-host.test.mjs"
+      ]
+    },
+    {
+      "id": "mission-library",
+      "files": [
+        "game/test/mission-library-solo-host.test.mjs",
+        "game/test/mission-library-solo-custom-host.test.mjs",
+        "game/test/mission-library-solo-handoff-host.test.mjs",
+        "game/test/solo-result-continuation-host.test.mjs"
       ]
     }
   ]

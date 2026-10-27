@@ -208,7 +208,7 @@ test('positive-work aggregate preserves focused status and rejects nonsuccess or
   const { spawnSync } = await import('node:child_process');
   const source = await fs.readFile(new URL('deploy-pages.yml', workflows), 'utf8');
   const aggregate = source.split('\n  focused:\n')[1]?.split('\n  test:\n')[0];
-  assert.match(aggregate, /always\(\) && github.event_name == 'pull_request'/u);
+  assert.match(aggregate, /!cancelled\(\) && github.event_name == 'pull_request'/u);
   for (const condition of [
     "needs.preflight.result == 'success'",
     "needs.preflight.outputs.admission != 'hold'",
@@ -248,6 +248,7 @@ test('positive-work aggregate preserves focused status and rejects nonsuccess or
   assert.ok(aggregate.includes('--automation automation'));
   assert.ok(aggregate.includes('--plan-sha256 "$EXPECTED_PLAN_SHA256"'));
   const ready = source.split('\n  release-ready:\n')[1];
+  assert.match(ready, /if: \$\{\{ !cancelled\(\) && github.event_name == 'pull_request' \}\}/u);
   assert.match(ready, /needs: \[preflight, focused_shards, focused, test, build\]/u);
   assert.match(ready, /FOCUSED_RESULT: \$\{\{ needs.focused.result \}\}/u);
   assert.ok(ready.includes('test "$FOCUSED_RESULT" = success'));
@@ -510,3 +511,82 @@ test('Field Kit artifact output caps and linked-file rejection apply before uplo
       await assert.rejects(fixture.binding(), /ENOENT/u);
     });
 });
+
+test('release policy rejects failed dependencies and keeps only explicit policy skips', async () => {
+  const { spawnSync } = await import('node:child_process');
+  const source = await fs.readFile(new URL('deploy-pages.yml', workflows), 'utf8');
+  const ready = source.split('\n  release-ready:\n')[1];
+  // The v2 job first verifies typed zero-work evidence. Select the final policy
+  // step by name; the job's first run block is no longer the admission policy.
+  const policy = ready?.split('      - name: Apply the selected PR gate policy\n')[1];
+  const body = policy?.split('        run: |\n')[1]?.replace(/^ {10}/gmu, '');
+  assert.ok(body);
+  const passing = {
+    ADMISSION: 'release',
+    PREFLIGHT_RESULT: 'success',
+    FOCUSED_CONTRACT: 'revealline-focused-plan.v2',
+    FOCUSED_SHARDS: '1',
+    FOCUSED_RESULT: 'success',
+    SHARDS_RESULT: 'success',
+    ZERO_FOCUSED_RESULT: 'skipped',
+    BUILD_RESULT: 'success',
+    FULL_CI: 'true',
+    TEST_RESULT: 'success',
+  };
+  const check = (overrides, expected) => {
+    // Exercise the workflow's actual gate body; this does not model GitHub's
+    // scheduler or claim that cancellation was observed on a hosted runner.
+    const result = spawnSync('bash', ['-e', '-o', 'pipefail', '-c', body], {
+      env: { ...process.env, ...passing, ...overrides },
+      timeout: 1000,
+    });
+    assert.equal(result.error, undefined);
+    assert.equal(result.status === 0, expected, JSON.stringify(overrides));
+  };
+  check({}, true);
+  // A dependency reporting cancelled while its workflow remains live must
+  // still fail admission. Whole-workflow cancellation stops the job instead.
+  for (const name of ['PREFLIGHT_RESULT', 'FOCUSED_RESULT', 'BUILD_RESULT', 'TEST_RESULT']) {
+    for (const status of ['failure', 'cancelled', 'skipped', '']) {
+      check({ [name]: status }, false);
+    }
+  }
+  for (const ADMISSION of ['maintenance', 'scheduled']) {
+    check({ ADMISSION, BUILD_RESULT: 'skipped', TEST_RESULT: 'skipped', FULL_CI: 'false' }, true);
+  }
+  check({ ADMISSION: 'release-evidence', TEST_RESULT: 'skipped', FULL_CI: 'false' }, true);
+  // The former focusedRequired=false case is now authenticated zero work:
+  // both jobs skip, but only an explicit successful v2 zero-work proof admits it.
+  const zeroWork = {
+    FOCUSED_SHARDS: '0',
+    FOCUSED_RESULT: 'skipped',
+    SHARDS_RESULT: 'skipped',
+    ZERO_FOCUSED_RESULT: 'success',
+  };
+  check(zeroWork, true);
+  check({ ...zeroWork, FOCUSED_RESULT: 'success' }, false);
+  for (const FOCUSED_CONTRACT of ['', 'revealline-focused-plan.v1', 'unknown']) {
+    check({ FOCUSED_CONTRACT }, false);
+    check({ ...zeroWork, FOCUSED_CONTRACT }, false);
+  }
+  for (const FOCUSED_SHARDS of ['', '5', '-1', 'true']) {
+    check({ FOCUSED_SHARDS }, false);
+  }
+  for (const SHARDS_RESULT of ['success', 'failure', 'cancelled', '']) {
+    check({ ...zeroWork, SHARDS_RESULT }, false);
+  }
+  for (const ZERO_FOCUSED_RESULT of ['failure', 'cancelled', 'skipped', '']) {
+    check({ ...zeroWork, ZERO_FOCUSED_RESULT }, false);
+  }
+  // The policy trusts nonzero aggregate success only after the existing worker
+  // guard/receipt verifier; assert that those admission dependencies remain.
+  assert.match(ready, /needs: \[preflight, focused_shards, focused, test, build\]/u);
+  assert.match(ready, /ZERO_FOCUSED_RESULT: \$\{\{ steps\.zero_focused\.outcome \}\}/u);
+  assert.ok(ready.includes('test "$WORKERS_RESULT" = skipped'));
+  assert.ok(ready.includes('focused-compact-cli.mjs verify'));
+  assert.ok(ready.includes('--plan-sha256 "$EXPECTED_PLAN_SHA256"'));
+  check({ ADMISSION: 'hold' }, false);
+  check({ ADMISSION: 'unknown' }, false);
+  check({ TEST_RESULT: 'skipped', FULL_CI: 'false' }, true);
+});
+

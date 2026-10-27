@@ -1545,13 +1545,18 @@ test("changed heads invalidate admission and disarm an existing request", () => 
   });
 });
 
-test("a failed required rerun disarms an already admitted exact head", () => {
-  const input = fixture({ auto_merge: { enabled_at: "now" } });
-  input.requiredCheck.conclusion = "failure";
-  assert.deepEqual(decideMergeAction(input), {
-    action: "disarm",
-    reason: "release-ready is not successful on the exact head",
-  });
+test('failed, cancelled or skipped required gates never admit an exact head', () => {
+  for (const conclusion of ['failure', 'cancelled', 'skipped']) {
+    for (const auto_merge of [null, { enabled_at: 'now' }]) {
+      const input = fixture({ auto_merge });
+      input.requiredCheck.conclusion = conclusion;
+      input.checkRuns[0].conclusion = conclusion;
+      assert.deepEqual(decideMergeAction(input), {
+        action: auto_merge ? 'disarm' : 'wait',
+        reason: 'release-ready is not successful on the exact head',
+      });
+    }
+  }
 });
 
 test("missing or stale admission receipts disarm even a successful exact head", () => {

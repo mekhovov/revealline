@@ -250,6 +250,8 @@ export function mountAdvancedPractice({
   configuration,
   onSaveConfiguration,
   getControls = () => null,
+  inputSource = 'keyboard',
+  requestRadioStart = () => true,
   onClose = () => {},
   onPause = () => {},
   Worker: WorkerClass = win.Worker,
@@ -393,6 +395,7 @@ export function mountAdvancedPractice({
     const option = el('option', label, input);
     option.value = id;
   }
+  input.value = inputSource === 'radio' ? 'radio' : 'keyboard';
   const maneuverLabel = el('label', `${copy.maneuver} `, settings),
     maneuver = el('select', '', maneuverLabel);
   for (const id of ['free', 'hover', 'turn', 'pulse']) {
@@ -460,7 +463,7 @@ export function mountAdvancedPractice({
   tunePreview.setAttribute('role', 'status');
   const tuneFields = el('div', '', tuning);
   tuneFields.style.cssText =
-    'display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px';
+    'display:grid;grid-template-columns:repeat(auto-fit,minmax(min(220px,100%),1fr));gap:10px';
   const fieldInputs = [];
   let evidencePanel = null;
   const batteryLabel = el('label', copy.batteryDepletion, settings),
@@ -922,7 +925,7 @@ export function mountAdvancedPractice({
     pause();
     paintManeuver();
   });
-  function pause(message = copy.paused) {
+  function pause(message = copy.paused, { notify = true } = {}) {
     if (disposed) return;
     running = false;
     win.clearTimeout(timer);
@@ -940,7 +943,7 @@ export function mountAdvancedPractice({
       flightStopCode && initialized
         ? copy[flightStopCode === 'ADVANCED_DURATION_LIMIT' ? 'durationLimit' : 'recordingLimit']
         : message;
-    onPause();
+    if (notify) onPause();
   }
   function failed(error) {
     initialized = false;
@@ -1022,8 +1025,9 @@ export function mountAdvancedPractice({
       keepComparison.disabled = verifying || !telemetry.missionTick;
       if (telemetry.consumedSequence === sample.sequence) lastConsumedPollAt = started;
       const elapsed = win.performance.now() - started;
-      if (elapsed > 250) pause(copy.slow);
-      else if (running) timer = win.setTimeout(tick, Math.max(0, 20 - elapsed));
+      // Worker completion owns exactly one accepted interval, however late it
+      // arrives. Continue without catching up missed wall time or auto-pausing.
+      if (running) timer = win.setTimeout(tick, Math.max(0, 20 - elapsed));
     } catch (error) {
       if (!disposed && owner === generation) {
         if (['ADVANCED_DURATION_LIMIT', 'ADVANCED_RECORDING_LIMIT'].includes(error.code)) {
@@ -1163,10 +1167,29 @@ export function mountAdvancedPractice({
     renderer.render(scene, view);
     frame = win.requestAnimationFrame(draw);
   }
-  listen(start, 'click', () => {
-    if (!initialized || graphicsLost || disposed || exporting || verifying || flightStopCode)
-      return;
+  function startPractice() {
+    if (
+      !initialized ||
+      graphicsLost ||
+      disposed ||
+      exporting ||
+      verifying ||
+      busy ||
+      running ||
+      flightStopCode
+    )
+      return false;
     try {
+      if (
+        input.value === 'radio' &&
+        (root.querySelector('details[open]') || !requestRadioStart())
+      ) {
+        status.textContent =
+          locale === 'uk'
+            ? 'Поверніться до кнопки «Почати», вимкніть Flight, а потім увімкніть. Перевірте положення стіків.'
+            : 'Return to Start, switch Flight OFF, then ON. Check the stick positions before continuing.';
+        return false;
+      }
       const controls = sampleAvailableControls();
       if (!controls) return;
       if (controls.throttle > 0.1 && (telemetry?.missionTick ?? 0) === 0) {
@@ -1180,10 +1203,13 @@ export function mountAdvancedPractice({
       status.textContent = copy.warning;
       canvas.focus();
       void tick();
+      return true;
     } catch (error) {
       failed(error);
+      return false;
     }
-  });
+  }
+  listen(start, 'click', () => startPractice());
   listen(pauseButton, 'click', () => pause());
   listen(reset, 'click', () => {
     void initialize();
@@ -1207,10 +1233,12 @@ export function mountAdvancedPractice({
     fillTuning();
   });
   listen(input, 'change', () => pause());
-  listen(close, 'click', () => {
+  function closePractice() {
+    pause();
     dispose();
     onClose();
-  });
+  }
+  listen(close, 'click', closePractice);
   listen(download, 'click', () => {
     if (disposed || exporting || !initialized) return;
     void exportData(() => client.recording(), 'advanced-practice.json', status);
@@ -1315,6 +1343,41 @@ export function mountAdvancedPractice({
   return {
     dispose,
     pause,
+    start: startPractice,
+    restart: () => initialize(),
+    close: closePractice,
+    menuState: () => ({
+      active: running,
+      radio: input.value === 'radio',
+      available:
+        initialized &&
+        !disposed &&
+        !graphicsLost &&
+        !verifying &&
+        !exporting &&
+        !busy &&
+        !flightStopCode,
+      resumeReady: !root.querySelector('details[open]'),
+    }),
+    menuContext: () => (running || disposed ? null : { root, key: 'advanced-reference-menu' }),
+    back() {
+      const open = [...root.querySelectorAll('details[open]')].at(-1);
+      if (open) {
+        open.open = false;
+        open.querySelector('summary')?.focus();
+      } else closePractice();
+    },
+    openSettings() {
+      pause();
+      tuning.open = true;
+      tuning.querySelector('summary')?.focus();
+    },
+    showView() {
+      status.textContent =
+        locale === 'uk'
+          ? 'Практика використовує вид FPV. Параметри камери змінюються в налаштуваннях дрона.'
+          : 'Practice uses FPV view. Change the camera settings in aircraft tuning.';
+    },
     element: root,
     getTelemetry: () => (telemetry ? structuredClone(telemetry) : null),
     getComparison: () =>

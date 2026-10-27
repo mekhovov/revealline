@@ -123,25 +123,49 @@ for (const operation of ['', 'riy'])
   });
 
 for (const operation of ['', 'time-attack', 'marathon'])
-  test(`actual unsupported ${operation || 'Raid'} host retains Extra large intent with Large presentation`, async (t) => {
+  test(`actual ${operation || 'Raid'} host supports Extra large while retaining saved intent and accepted state`, async (t) => {
     const storage = saved(),
       page = await overflightNativePage(t, { operation, entry: 'raid', storage });
     const before = storage.getItem(DISPLAY_PREFERENCES_KEY),
       snapshot = page.snapshot();
-    assert.equal(page.document.documentElement.dataset.textScaling, undefined);
-    assert.equal(page.document.body.dataset.textSize, 'large');
+    assert.equal(page.document.documentElement.dataset.textScaling, 'overflight');
+    assert.equal(page.document.body.dataset.textSize, 'extra-large');
     assert.equal(page.$('text-size').value, 'extra-large');
-    assert.equal(page.$('text-size').querySelector('[data-text-size-retained]').disabled, true);
-    assert.equal(page.$('overflight-flight-details'), null);
-    assert.equal(page.document.querySelector('[data-reaction-reader]'), null);
-    assert.equal(page.$('overflight-touch-visibility'), null);
+    assert.equal(page.$('text-size').querySelector('[data-text-size-retained]').disabled, false);
+    assert.ok(page.$('overflight-flight-details').closest('#overflight-pause-dialog'));
+    const reader = page.document.querySelector('[data-reaction-reader]');
+    assert.ok(reader.closest('#overflight-pause-dialog'));
+    assert.equal(reader.hidden, true, 'No accepted caption is invented by opt-in.');
+    assert.ok(page.$('overflight-touch-visibility').closest('[data-touch-visit]'));
     page.$('overflight-action-settings').click();
     page.$('overflight-menu-settings-tab-accessibility').click();
     change(page, 'text-face', 'pixel');
     assert.equal(JSON.parse(storage.getItem(DISPLAY_PREFERENCES_KEY)).textSize, 'extra-large');
-    assert.equal(page.document.body.dataset.textSize, 'large');
+    assert.equal(page.document.body.dataset.textSize, 'extra-large');
     assert.equal(JSON.parse(before).textSize, 'extra-large');
     assert.deepEqual(page.snapshot(), snapshot);
+    const arena = page.$('render-host'),
+      selector = page.$('text-size');
+    for (const size of ['standard', 'large', 'extra-large']) {
+      change(page, 'text-size', size);
+      page.frame(0);
+      assert.equal(page.document.body.dataset.textSize, size);
+      assert.ok(page.$('text-size') === selector);
+      assert.ok(page.$('render-host') === arena);
+      assert.ok(page.document.activeElement === selector);
+      assert.deepEqual(page.snapshot(), snapshot);
+      assert.equal(JSON.parse(storage.getItem(DISPLAY_PREFERENCES_KEY)).textSize, size);
+    }
+    page.$('overflight-menu-settings-tab-display').click();
+    for (const locale of ['uk', 'en']) {
+      change(page, 'language', locale);
+      assert.equal(page.document.body.dataset.textSize, 'extra-large');
+      assert.equal(
+        selector.querySelector('[data-text-size-retained]').textContent,
+        locale === 'uk' ? 'Дуже великий' : 'Extra large',
+      );
+      assert.deepEqual(page.snapshot(), snapshot);
+    }
   });
 
 for (const operation of ['', 'riy'])

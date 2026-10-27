@@ -1,4 +1,4 @@
-import { t } from '../i18n/index.mjs';
+import { t, onLocaleChange } from '../i18n/index.mjs';
 
 /** Shared thumb controls. Hosts own placement and input; no game rules live here. */
 export function mountTouchControlsView({
@@ -108,6 +108,8 @@ export function mountTouchPresentationSettings({
     visibility.mount.append(visitRoot);
   }
   let visibilityHelp = null;
+  let disposed = false,
+    lastChanged = null;
   for (const [key, title, choices] of [
     ...(visibility
       ? [
@@ -169,12 +171,15 @@ export function mountTouchPresentationSettings({
       return { option, label };
     });
     const change = () => {
+      if (disposed) return;
       if (key === 'visibility') visibility.set(input.value);
-      else
+      else {
+        lastChanged = input;
         preferences.set({
           ...preferences.snapshot(),
           [key]: choices ? input.value : Number(input.value),
         });
+      }
       refresh();
     };
     input.addEventListener('change', change);
@@ -192,8 +197,28 @@ export function mountTouchPresentationSettings({
   }
   const status = doc.createElement('p');
   status.setAttribute('role', 'status');
-  root.append(status);
+  status.id = `${idPrefix}-touch-save-status`;
+  const retry = doc.createElement('button');
+  retry.type = 'button';
+  retry.id = `${idPrefix}-touch-save-retry`;
+  retry.setAttribute('aria-describedby', status.id);
+  for (const field of fields)
+    if (field.key !== 'visibility') field.input.setAttribute('aria-describedby', status.id);
+  const retrySave = () => {
+    if (disposed) return;
+    const focused = doc.activeElement === retry;
+    preferences.retry?.();
+    refresh();
+    if (!disposed && focused && preferences.persistence?.().status === 'saved') {
+      const target =
+        lastChanged?.isConnected && !lastChanged.disabled ? lastChanged : fields.find(({ key }) => key === 'mode').input;
+      if (target.isConnected && !target.disabled) target.focus({ preventScroll: true });
+    }
+  };
+  retry.addEventListener('click', retrySave);
+  root.append(status, retry);
   function refresh() {
+    if (disposed) return;
     const settings = preferences.snapshot();
     for (const field of fields) {
       field.caption.textContent = t(`interface:${field.title}`);
@@ -204,15 +229,31 @@ export function mountTouchPresentationSettings({
     }
     if (visitHeading) visitHeading.textContent = visibility.title();
     if (visibilityHelp) visibilityHelp.textContent = visibility.help();
-    status.textContent = preferences.warning?.() ?? '';
+    const saved = preferences.persistence?.();
+    status.textContent =
+      saved?.status === 'saved'
+        ? t('interface:savedOnThisDevice')
+        : saved?.status === 'session' || saved?.status === 'unsaved'
+          ? t(`interface:touchSave.${saved.reason || 'unavailable'}`)
+          : (preferences.warning?.() ?? '');
     status.hidden = !status.textContent;
+    retry.textContent = t('common:preferences.retryEncounterSave');
+    retry.hidden = saved?.canRetry !== true;
+    retry.disabled = retry.hidden;
   }
   mount.append(root);
+  const stopPreferences = preferences.subscribe?.(refresh);
+  const stopLocale = onLocaleChange(refresh);
   refresh();
   return {
     root,
     refresh,
     dispose() {
+      if (disposed) return;
+      disposed = true;
+      stopPreferences?.();
+      stopLocale();
+      retry.removeEventListener('click', retrySave);
       for (const field of fields) field.input.removeEventListener('change', field.change);
       root.remove();
       visitRoot?.remove();

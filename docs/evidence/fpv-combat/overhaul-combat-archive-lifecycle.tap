@@ -1,0 +1,40 @@
+TAP version 13
+# Subtest: combat archive export remains live, finishes atomically and replays the accepted command chain
+ok 1 - combat archive export remains live, finishes atomically and replays the accepted command chain # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.499792
+  ...
+# Subtest: combat archives preserve complete playback after the bounded live recording has rolled
+ok 2 - combat archives preserve complete playback after the bounded live recording has rolled # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.044917
+  ...
+# Subtest: combat archive stops with an explicit gap after restore and never claims the replacement chain
+ok 3 - combat archive stops with an explicit gap after restore and never claims the replacement chain # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.036333
+  ...
+# Subtest: combat archive quota failure preserves the durable prefix and leaves flight available
+ok 4 - combat archive quota failure preserves the durable prefix and leaves flight available # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.035834
+  ...
+# Subtest: combat archive command tampering is rejected even with recomputed transport checksums
+ok 5 - combat archive command tampering is rejected even with recomputed transport checksums # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.038375
+  ...
+# Subtest: archive finish and disposal wait for an in-flight export and persist only one final boundary
+ok 6 - archive finish and disposal wait for an in-flight export and persist only one final boundary
+  ---
+  duration_ms: 64.91875
+  ...
+1..6
+# tests 6
+# suites 0
+# pass 1
+# fail 0
+# cancelled 0
+# skipped 5
+# todo 0
+# duration_ms 620.645791

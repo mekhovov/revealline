@@ -154,3 +154,32 @@ test('authored absolute sizes double once while em branches follow their already
         );
       }
 });
+
+test('actual Raid HTML opts into shared scaling and new full-text rules are Extra-large-only', async () => {
+  const read = (name) => fs.readFile(new URL('../overflight/' + name, import.meta.url), 'utf8');
+  const [html, app, card, css] = await Promise.all(
+    ['raid.html', 'app.mjs', 'raid-upgrade-card.mjs', 'text-scaling.css'].map(read),
+  );
+  assert.match(html, /<html[^>]*data-text-scaling="overflight"/);
+  assert.match(html, /<link[^>]*href="text-scaling\.css"/);
+  assert.match(
+    app,
+    /expandedComparison: display\.snapshot\(\)\.effectiveTextSize === 'extra-large'/,
+  );
+  assert.match(card, /expandedComparison = false/);
+  const marker = '/* Raid, Time Attack and Contract Marathon';
+  assert.ok(css.includes(marker));
+  const addition = css.slice(css.indexOf(marker));
+  const blocks = [...addition.matchAll(/([^{}]+)\{([^{}]*)\}/g)];
+  assert.ok(blocks.length >= 8);
+  for (const [, selector, declarations] of blocks) {
+    assert.ok(selector.includes("html[data-text-scaling='overflight']"));
+    assert.ok(selector.includes("body.overflight-raid[data-text-size='extra-large']"));
+    assert.doesNotMatch(declarations, /display:\s*none|text-overflow:\s*ellipsis|line-clamp/);
+  }
+  const amount = blocks.find(([, selector]) => selector.includes('.raid-upgrade-preview-amount'));
+  assert.ok(amount);
+  assert.match(amount[2], /font-size:\s*40px/);
+  assert.match(addition, /white-space:\s*normal/);
+  assert.match(addition, /overflow-wrap:\s*anywhere/);
+});

@@ -65,13 +65,15 @@ class GuardTests(unittest.TestCase):
                 "source": {"format": "revealline-source-identity.v1", "sourceRevision": "a" * 40,
                     "sourceTree": "b" * 40, "allTrackedSourceContentsAndModesMatch": True,
                     "aggregateSha256": "d" * 64, "files": 10, "bytes": 100, "root": f"/different-vm-{number}"},
-                "wholeFiles": selected, "all28Inventory": list(guard.WHOLE_FILES), "phases": [str(i) for i in range(7)],
-                "additionalPhases": ["additional-overflight-host"] if number == 1 else [],
-                "additionalWholeFiles": list(guard.ADDITIONAL_WHOLE_FILES) if number == 1 else [],
+                "wholeFiles": selected, "all28Inventory": list(guard.WHOLE_FILES),
+                "all44Inventory": list(guard.complete_inventory()), "phases": [str(i) for i in range(7)],
+                "additionalPhases": [label for label, _, _ in guard.additional_phases("NODE", Path("SOURCE"), number)],
+                "additionalWholeFiles": [filename for _, _, filename in guard.additional_phases("NODE", Path("SOURCE"), number)],
                 "feature": {"initialReferenceManifestSHA256": guard.FEATURE_MANIFEST_SHA256,
-                    "featurePaths": 63, "stackAdmitted": True,
+                    "featurePaths": 66, "stackAdmitted": True,
                     "dependencyHead": guard.STACK_HEAD, "dependencyAdmittedAtMain": guard.ADMITTED_AT_MAIN,
-                    "additionalCompleteFiles": 1, "inventory": [dict(row) for row in inventory],
+                    "additionalCompleteFiles": 16, "raidFamilyCompleteFiles": 15, "totalCompleteFiles": 44,
+                    "inventory": [dict(row) for row in inventory],
                     "inventorySHA256": digest, "matchesInitialReference": digest == guard.INITIAL_REFERENCE_LEAF_SHA256},
                 "helperProvenance": {"receipt": {**provenance, "helperPath": f"/vm-{number}/trusted/auditor"},
                     "SHA256": guard.sha256(json.dumps({**provenance, "helperPath": f"/vm-{number}/trusted/auditor"}).encode())},
@@ -108,13 +110,15 @@ class GuardTests(unittest.TestCase):
         original = guard.fixed_phases("/node22", Path("/source"), 1)
         additional = guard.additional_phases("/node22", Path("/source"), 1)
         self.assertEqual(len(original), 7)
-        self.assertEqual(additional, [("additional-overflight-host", ["/node22", "--max-old-space-size=1536",
+        self.assertEqual([row for row in additional if row[2] in guard.ADDITIONAL_WHOLE_FILES], [("additional-overflight-host", ["/node22", "--max-old-space-size=1536",
             "--test", "--test-concurrency=1", "--experimental-test-isolation=none",
             "/source/game/test/overflight-host.test.mjs"], "game/test/overflight-host.test.mjs")])
         self.assertEqual((original + additional)[7], additional[0])
         self.assertNotIn(additional[0][2], guard.WHOLE_FILES)
         for number in (2, 3, 4):
-            self.assertEqual(guard.additional_phases("/node22", Path("/source"), number), [])
+            rows = guard.additional_phases("/node22", Path("/source"), number)
+            self.assertEqual(len(rows), 4)
+            self.assertFalse(any(row[2] in guard.ADDITIONAL_WHOLE_FILES for row in rows))
         for number in (0, 5, -1, "1"):
             with self.assertRaises(RuntimeError):
                 guard.additional_phases("/node22", Path("/source"), number)
@@ -123,8 +127,8 @@ class GuardTests(unittest.TestCase):
         rows = self.aggregate_fixture()
         proof = aggregate.validate_metadata(rows, "a" * 40, "b" * 40)
         self.assertEqual(proof["wholeFiles"], list(guard.WHOLE_FILES))
-        self.assertEqual(proof["additionalWholeFiles"], ["game/test/overflight-host.test.mjs"])
-        self.assertEqual(proof["additionalCompleteFiles"], 1)
+        self.assertEqual([name for name in proof["additionalWholeFiles"] if name in guard.ADDITIONAL_WHOLE_FILES], ["game/test/overflight-host.test.mjs"])
+        self.assertEqual(proof["additionalCompleteFiles"], 16)
         for mutate in (lambda value: value[0].update(additionalPhases=[]),
                        lambda value: value[0].update(additionalWholeFiles=[]),
                        lambda value: value[0]["additionalPhases"].append("additional-overflight-host"),
@@ -339,7 +343,7 @@ class GuardTests(unittest.TestCase):
             campaign = self.toy(Path(temporary))
             campaign.baseline_feature = None
             entries, names = [], []
-            for index in range(63):
+            for index in range(66):
                 name, content = f"feature-{index}", f"tiny-{index}".encode()
                 names.append(name)
                 (campaign.root / name).write_bytes(content)
@@ -349,18 +353,20 @@ class GuardTests(unittest.TestCase):
                 "optional-practice/civilian-fpv/sim-presentation.mjs",
                 "optional-practice/civilian-fpv/style.css",
                 "game/test/fpv-world-appearance-ui.test.mjs",
+                "game/overflight/raid.html", "game/overflight/raid-upgrade-card.mjs",
+                "game/test/overflight-raid-presentation.test.mjs",
             ]]
             selected = tuple(f"test-{i}.mjs" for i in range(28))
             for name in selected:
                 (campaign.root / name).write_bytes(b"tiny")
-            for filename in guard.ADDITIONAL_WHOLE_FILES:
+            for filename in guard.ADDITIONAL_WHOLE_FILES + guard.FAMILY_FILES:
                 host = campaign.root / filename
                 host.parent.mkdir(parents=True, exist_ok=True)
                 host.write_bytes(b"tiny")
             campaign.git = Mock(return_value=b"".join(entries))
             with patch.object(guard, "FEATURE_PATHS", tuple(names)), patch.object(guard, "WHOLE_FILES", selected):
                 actual = campaign.verify_feature()
-                self.assertEqual(actual["featurePaths"], 63)
+                self.assertEqual(actual["featurePaths"], 66)
                 self.assertFalse(actual["matchesInitialReference"], "Future immutable heads are not blocked by stale initial blobs")
                 (campaign.root / "feature-0").write_bytes(b"drift")
                 with self.assertRaisesRegex(RuntimeError, "content drift"):
@@ -376,6 +382,106 @@ class GuardTests(unittest.TestCase):
                 campaign.git = Mock(return_value=b"".join(entries[:-1]))
                 with self.assertRaisesRegex(RuntimeError, "required source paths"):
                     campaign.verify_feature()
+
+
+    def test_raid_family_fixed_additions_preserve_original_blocks_and_exact44(self):
+        expected = ("game/test/overflight-raid-core.test.mjs", "game/test/overflight-raid-balance.test.mjs", "game/test/overflight-raid-hud.test.mjs", "game/test/overflight-raid-presentation.test.mjs", "game/test/overflight-raid-records.test.mjs", "game/test/overflight-raid-refit-shield.test.mjs", "game/test/overflight-raid-review-pilot.test.mjs", "game/test/overflight-raid-variants.test.mjs", "game/test/overflight-time-attack-medal-goal.test.mjs", "game/test/raid-community.test.mjs", "game/test/raid-project.test.mjs", "game/test/raid-studio-preview.test.mjs", "game/test/overflight-reroll-disclosure.test.mjs", "game/test/overflight-upgrade-consequences.test.mjs", "game/test/overflight-attack-readability.test.mjs")
+        self.assertEqual(guard.FAMILY_FILES, expected)
+        self.assertEqual(guard.FAMILY_GROUP_SLICES, ((0, 3), (3, 7), (7, 11), (11, 15)))
+        flattened = []
+        for number, (start, end) in enumerate(guard.FAMILY_GROUP_SLICES, 1):
+            original = guard.fixed_phases("/node22", Path("/source"), number)
+            extra = guard.additional_phases("/node22", Path("/source"), number)
+            selected = original + extra
+            self.assertEqual(len(selected), 11)
+            self.assertEqual([row[2] for row in original], list(guard.WHOLE_FILES[(number - 1) * 7:number * 7]))
+            self.assertEqual([row[2] for row in extra], (list(guard.ADDITIONAL_WHOLE_FILES) if number == 1 else []) + list(expected[start:end]))
+            if number == 1:
+                self.assertEqual(selected[7][2], "game/test/overflight-host.test.mjs")
+            for label, args, filename in selected:
+                self.assertEqual(args, ["/node22", "--max-old-space-size=1536", "--test",
+                    "--test-concurrency=1", "--experimental-test-isolation=none", str(Path("/source") / filename)])
+                self.assertNotIn("--test-name-pattern", args)
+                flattened.append((label, filename))
+        self.assertEqual(len(flattened), 44)
+        self.assertEqual(len({label for label, _ in flattened}), 44)
+        self.assertEqual({filename for _, filename in flattened}, set(guard.complete_inventory()))
+
+    def test_raid_family_metadata_requires_exact_complete_inventory_and_group_additions(self):
+        rows = self.aggregate_fixture()
+        self.assertEqual(json.loads(json.dumps(rows)), rows)
+        proof = aggregate.validate_metadata(rows, "a" * 40, "b" * 40)
+        self.assertEqual(proof["all44WholeFiles"], list(guard.complete_inventory()))
+        self.assertEqual(proof["additionalWholeFiles"], list(guard.ADDITIONAL_WHOLE_FILES + guard.FAMILY_FILES))
+        self.assertEqual(proof["additionalCompleteFiles"], 16)
+        for mutate in (lambda value: value[0]["all44Inventory"].pop(),
+                       lambda value: value[0]["all44Inventory"].reverse(),
+                       lambda value: value[1]["all44Inventory"].__setitem__(-1, value[1]["all44Inventory"][0]),
+                       lambda value: value[0]["additionalPhases"].pop(),
+                       lambda value: value[0]["additionalWholeFiles"].pop(),
+                       lambda value: value[2]["additionalWholeFiles"].reverse(),
+                       lambda value: value[3]["additionalWholeFiles"].__setitem__(0, value[1]["additionalWholeFiles"][0]),
+                       lambda value: value[1]["feature"].update(raidFamilyCompleteFiles=14),
+                       lambda value: value[1]["feature"].update(totalCompleteFiles=43)):
+            rows = self.aggregate_fixture()
+            mutate(rows)
+            with self.assertRaises(RuntimeError):
+                aggregate.validate_metadata(rows, "a" * 40, "b" * 40)
+
+    def test_raid_archive_exact158_namespace_keeps_original_byte_and_raw_caps(self):
+        self.assertEqual(aggregate.GROUP_ZIP_MEMBERS, 158)
+        self.assertEqual(aggregate.GROUP_RAW, 8 * guard.MIB)
+        self.assertEqual(aggregate.GROUP_ARTIFACT, 12 * guard.MIB)
+        for number in range(1, 5):
+            directories, files = aggregate.expected_files(number)
+            self.assertEqual(len(directories), 36)
+            self.assertEqual(len(files), 121)
+            entries = []
+            for name in sorted(files):
+                entry = zipfile.ZipInfo(name)
+                entry.external_attr = (stat.S_IFREG | 0o644) << 16
+                entry.file_size = 65536 if name.endswith("child-terminal.json") else 0
+                entries.append(entry)
+            for name in sorted(directories | {"tmp"}):
+                entry = zipfile.ZipInfo(name + "/")
+                entry.external_attr = (stat.S_IFDIR | 0o755) << 16
+                entries.append(entry)
+            self.assertEqual(len(entries), 158)
+            aggregate.validate_archive(entries, number)
+            with self.assertRaises(RuntimeError):
+                aggregate.validate_archive(entries + [zipfile.ZipInfo("unknown/")], number)
+            target = next(entry.filename for entry in entries if entry.filename.startswith("raid-family-") and entry.filename.endswith("/qualified.json"))
+            with self.assertRaises(RuntimeError):
+                aggregate.validate_archive([entry for entry in entries if entry.filename != target], number)
+            oversized = next(entry for entry in entries if entry.filename.endswith("stdout.log"))
+            oversized.file_size = 4 * guard.MIB + 1
+            with self.assertRaises(RuntimeError):
+                aggregate.validate_archive(entries, number)
+        self.assertEqual(guard.LAUNCH_FLOOR, 2550000000)
+        self.assertEqual(guard.FLOOR, 2 * 1024 ** 3)
+        self.assertEqual(guard.RSS_LIMIT, 2048 * guard.MIB)
+        self.assertEqual(guard.WALL_LIMIT, 180)
+        self.assertEqual(guard.CAMPAIGN_WALL, 45 * 60)
+
+    def test_formatted_raid_reference_is_pending_and_blocks_native_before_output(self):
+        self.assertRegex(guard.FEATURE_MANIFEST_SHA256, r"^[a-f0-9]{64}$")
+        self.assertRegex(guard.INITIAL_REFERENCE_LEAF_SHA256, r"^[a-f0-9]{64}$")
+        guard.require_formatted_raid_reference()
+        for manifest, leaf in ((None, None), ("1" * 63, "2" * 64), ("1" * 64, True),
+                               ("PENDING", "2" * 64)):
+            with patch.object(guard, "FEATURE_MANIFEST_SHA256", manifest), patch.object(guard, "INITIAL_REFERENCE_LEAF_SHA256", leaf):
+                with self.assertRaisesRegex(RuntimeError, "Formatted Raid8"):
+                    guard.require_formatted_raid_reference()
+        with patch.object(guard, "FEATURE_MANIFEST_SHA256", "1" * 64), patch.object(guard, "INITIAL_REFERENCE_LEAF_SHA256", "2" * 64):
+            guard.require_formatted_raid_reference()
+        with tempfile.TemporaryDirectory() as temporary:
+            campaign = guard.Campaign.__new__(guard.Campaign)
+            campaign.output = Path(temporary) / "never-created"
+            with patch.object(guard, "FEATURE_MANIFEST_SHA256", None), patch.object(guard.subprocess, "Popen") as spawn:
+                with self.assertRaisesRegex(RuntimeError, "Formatted Raid8"):
+                    campaign.execute()
+            spawn.assert_not_called()
+            self.assertFalse(campaign.output.exists())
 
     def test_trusted_helper_receipt_binds_candidate_and_cannot_change_after_copy(self):
         with tempfile.TemporaryDirectory() as temporary:

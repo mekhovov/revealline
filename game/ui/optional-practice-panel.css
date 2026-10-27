@@ -37,7 +37,7 @@
     margin: 0;
   }
   .optional-practice-dialog h2 {
-    font-size: calc(1.25rem * var(--overflight-text-scale, 1));
+    font-size: calc(1.25rem * var(--primary-text-scale, 1) * var(--overflight-text-scale, 1));
   }
   .optional-practice-dialog button {
     min-height: 44px;

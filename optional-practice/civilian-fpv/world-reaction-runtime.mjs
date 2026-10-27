@@ -2,36 +2,56 @@
 // Native flight logic remains in its existing cores. No simulation clock or record recipe changes.
 const sourceHashes={
 'optional-practice/civilian-fpv/world-audio.mjs':
-'0682921ac27879c76a3b63666d9685ede0844db7d616109df31b6ade6b7301b7',
+'3c123e90030721a41b464aafcc9e66da4b2a5123b3d343162a7cdf239276f349',
 'game/ui/gameplay-audio-output.mjs':
 '9aa56a400d417db362a366a74790c7703b3f2bcde720ef0cc8944dea8a42ebd2',
 'game/gameplay-audio-preferences.mjs':
 'e7e6f8ae31d760879d97dddf9bfc7fe27b38a48888c60bc9028fa2232fb4eb20',
 'game/ui/audio-output.mjs':'66047e07247684f9f3069f9561898f33b5566d0d997e950adac17c0eed0ff790',
+'game/ui/published-cues.mjs':'2ba1cb7e88c1feada473473d23a845514bddf70b46b9286fe12566ce41aa8f45',
+'game/ui/media-preparation.mjs':
+'9f6ca3ff23a673d1f39e0df49f84ec747a2a59a3530cc7c1ba562f7e42a620ad',
+'game/published-cue-inspection.mjs':
+'c8784637f163a8e10941a1c23266aa01586568f6000c41840ab89697848e50bf',
+'game/mp3-inspection.mjs':'ca767a143f1aa51a8327c63df0926af3a197f90b08e8965c60f9514331b14fa1',
+'game/presentation/portable-destruction-audio.mjs':
+'cb594da86028972ed4eef40466944a385a73931846db6ffebeded6361f76d396',
+'game/audio/portable-destruction.mjs':
+'cd40ca4c27a528f4d9890808e1662f19ccd4d9dc1e18a03fb6a98eb6e21392a2',
+'optional-practice/civilian-fpv/sim-presentation.mjs':
+'7a686a34cb1ddbe37f54a270f53764e8f6b9c34f174cae83c1478339d3835f16',
 'game/audio/dialogue-mix.mjs':'43ffa5b261e585e59b515fab19d1b6d0ccf636152ca6107602dbdb9143ddb00a',
 'game/ui/audio-master.mjs':'6bf14bc5268c0eff8f38c21c819f398917712fdc2607c33977ac873111d1dca8',
-'game/audio-preferences.mjs':'9212831a3524c9e1ebe8c595783f9f53a112e02e3d51280d775ac103b94a9239',
-'game/ui/encounter-audio.mjs':'ad58592952c55444713911a27df525b2c2d1f2a47c8a909a96597fda85e46dbd',
+'game/audio-preferences.mjs':'8baa3a25c6a80981f44e833ba8cb2e10d297f90b51684994d4e8328a7e846a71',
+'game/ui/encounter-audio.mjs':'c507ea003207fd28b0783fe1d47a80daf24261b1fbece181e8829b081003bbe9',
 'game/ui/world-ambience.mjs':'95b506a5cd1c34323a2bed5be3444be55ea38ddfc6036903757cccd3c301b260',
 'game/ui/movement-audio.mjs':'685d8e458401354028a2cacda0c7b1009b3c1e480a08d4cafce46d8f98b69020',
-'game/ui/dialogue-channel.mjs':'f4839f3a1634189a03eed6a3096dc595dfc88ee6437277ee82d78de05c300142',
+'game/ui/dialogue-channel.mjs':
+'f4839f3a1634189a03eed6a3096dc595dfc88ee6437277ee82d78de05c300142',
 'optional-practice/civilian-fpv/world-hangar.mjs':
 '759d21e034e65e99600df72ef7e04a2fdff8359ec9119baa401323b248ec85ef',
 'optional-practice/civilian-fpv/world-actor-editor.mjs':
-'28471be1c8659b76072ce9ae21dd0c0547f480486d56e208339327b9718c785a',
+'844853b958babfc9276ad3cda5ca7169166cc5ce5e4a8c72ce3b257347a965b7',
 'optional-practice/civilian-fpv/world-pursuit-editor.mjs':
 'c1ab754353a095a4c6206d4d353e0d500fd30440d2ed73b2aa426d0ec9b75270',
 'optional-practice/civilian-fpv/world-enemy-guide.mjs':
 '6320d09d4488e8c2b51a3f4ab7324d1e40d620d8917dbd59fa6f5969d7765bf7',
+'optional-practice/civilian-fpv/world-encounter-editor.mjs':
+'6dc1d351d46b9dc5f1b84890fe92ee6f5cc04a846bb39950417890490f115eb7',
+'optional-practice/civilian-fpv/encounter-runtime.mjs':
+'16ea9a79127bf0274219cb0d24da4fdd19ceb533040a7f55bcb2302e3e80ba8b',
+'optional-practice/civilian-fpv/encounter-geometry.mjs':
+'9d1254b8f7db0b2dc6499f0dbef59568674a56f5cc014ed982fc9eb1f0d09fde',
 'optional-practice/civilian-fpv/world-progress.mjs':
-'570a2c47960b032590819f683f45ee31ebd00c03ea4ed1e9dc949b4fae6911c3',
+'58081ddca28770d6db38ba05d08b0846473f62ce521a63f07d21464af8a18735',
 'optional-practice/civilian-fpv/world-hunt-reactions.mjs':
 '7d890938c2ec3b6d8bd6046db3b436589cf7b356c0e7004ef8814e59713dbbc7',
 'game/ui/contextual-reactions.mjs':
-'7da5da76cbda9857c46d86d807d0c05d1075c0cb076f497ced9e2ef84fc23635',
+'7c7824c2abc70515a4020b1ff6b63e216c62043a2b4afaefa5a761d9f667db08',
 'game/ui/hunt-feedback-layout.mjs':
 '54f9755b9fb40953d106b3c0d181948b5eb0983f6b360dba1a1435cf69808a53',
-'game/ui/reaction-caption.mjs':'4bb936f010f3508167d25f60429c4c1b851d8dee3c92f98028132e5bb8e15842',
+'game/ui/reaction-caption.mjs':
+'67b17d8a8112980e907b2bdc3d01b664f6e5f34b3c3c799cc88cfb349823ed9b',
 'game/journey/reaction-portraits.mjs':
 '39cbf1428dca4e3d6f71e71fed4b41e280b3c0bc284e3bcacf580fca5552952f',
 'game/ui/art/reactions/guide-idle.svg':
@@ -52,14 +72,15 @@ const sourceHashes={
 '34900da2d7a4782f0ee0d0da4eb483dc29724f757bdc73bac50e135422405e6d',
 'game/journey/reaction-voice-cache.mjs':
 '18e387079bf3409030f9ac5d7372614031c8bfaea2c286bd54419b24d707ca3b',
-'game/ui/media-preparation.mjs':'9f6ca3ff23a673d1f39e0df49f84ec747a2a59a3530cc7c1ba562f7e42a620ad',
 'game/journey/reaction-recording-format.mjs':
 'cdcd3da4bf5ab6c13190968cd1d286bcae070a005e879e9d291db92a31fef0f4',
 'game/journey/reactions.mjs':'5a467624ad95e59b30f6a339bfa7f66f82a3060356925adb5c85f9c7db7c459d',
 'game/journey/campaign-feedback.mjs':
 '7b9b1df9c7cee0e7a6ac3d632ef53874e287054306c614453b37c767523b784e',
-'game/hunt/actor-reactions.mjs':'6abddc59bb89ded4622004bd362d23b86313a71e142744f98e750895493fe652',
-'game/overflight/reactions.mjs':'f400c252a6597b4497303517a8bf0d482be67f42b6a7d650f71fa0736c8172d9',
+'game/hunt/actor-reactions.mjs':
+'6abddc59bb89ded4622004bd362d23b86313a71e142744f98e750895493fe652',
+'game/overflight/reactions.mjs':
+'f400c252a6597b4497303517a8bf0d482be67f42b6a7d650f71fa0736c8172d9',
 'game/journey/reaction-preferences.mjs':
 'a14d2dcb99daffd83dcbf62311e6756d587db3134bf04c81cd2cd420b4f6809a',
 'game/journey/reaction-options.mjs':
@@ -72,6 +93,16 @@ const sourceHashes={
 '79debf91cafa2e01cd65170037ee483977cbf7d5c3a619ccac9ed400264598b8',
 'optional-practice/civilian-fpv/world-library.mjs':
 '223f5888aa5717761540600b3d50afe9fda4541a0ef7a7a75a33eb5e5c85edb7',
+'optional-practice/civilian-fpv/encounter-session.mjs':
+'81405ee2439c0359b32b1df1dd4409bd469dae7b8731bb45ab888f606de25600',
+'optional-practice/civilian-fpv/encounter-controls.mjs':
+'10aef487e51d431dad687e073ac2466864480a925801a09a4d9b9be15eaeca8e',
+'optional-practice/civilian-fpv/combat-presentation.mjs':
+'44abdb7ed340d7d058c23711cca9a27d1916039c5b5f4182768c78e35ac567ea',
+'optional-practice/civilian-fpv/combat-actors.mjs':
+'b1fcab3f836088ca0abfcef57ac7183e70988c2ea0717990b9d1bcaecc8b9086',
+'optional-practice/civilian-fpv/combat-appearance.mjs':
+'36ea06b21fcf1b6670f11f709966554f74d610f72b89164e59e722ae743e0b93',
 'game/audio/reactions/guide-0-en.m4a':
 '58f961f54b52d0dbb58f53f000ca85bba166236126e135dc1f5e89f8f9a94210',
 'game/audio/reactions/guide-0-uk.m4a':
@@ -122,10 +153,10 @@ const sourceHashes={
 '08087574625bd72a08a58b4549ba6884255d32de2003071014755641eac2f025',
 };
 import*as external0 from'../../game/ui/human-reaction-policy.mjs';
-import*as external1 from'../../game/audio/human-reactions/portable.mjs';
-import*as external2 from'../../game/ui/destruction-level.mjs';
-import*as external3 from'../../game/i18n/index.mjs';
-import*as external4 from'../../game/ui/destruction-audio.mjs';
+import*as external1 from'../../game/i18n/index.mjs';
+import*as external2 from'../../game/ui/destruction-audio.mjs';
+import*as external3 from'../../game/ui/destruction-level.mjs';
+import*as external4 from'./sim-presentation.mjs';
 import*as external5 from'./vendor/three.module.js';
 import*as external6 from'./world-visuals.mjs';
 import*as external7 from'./world-themes.mjs';
@@ -133,14 +164,23 @@ import*as external8 from'./world-pursuit.mjs';
 import*as external9 from'../../game/hunt/actor-catalog.mjs';
 import*as external10 from'./snake-hunt.mjs';
 import*as external11 from'../../game/data-json.mjs';
-import*as external12 from'../../game/hunt/actor-art.mjs';
-import*as external13 from'../../game/hunt/preferences.mjs';
-import*as external14 from'./model.mjs';
-import*as external15 from'./flight-response.mjs';
-import*as external16 from'./radio-profile.mjs';
-import*as external17 from'./world-model.mjs';
-import*as external18 from'./flight-sectors.mjs';
-import*as external19 from'./world-content.mjs';
+import*as external12 from'./world-collision.mjs';
+import*as external13 from'../../game/hunt/actor-art.mjs';
+import*as external14 from'../../game/hunt/preferences.mjs';
+import*as external15 from'./model.mjs';
+import*as external16 from'./flight-response.mjs';
+import*as external17 from'./radio-profile.mjs';
+import*as external18 from'./world-model.mjs';
+import*as external19 from'./flight-sectors.mjs';
+import*as external20 from'./world-content.mjs';
+import*as external21 from'./math.mjs';
+import*as external22 from'./aircraft-archive.mjs';
+import*as external23 from'../../game/hunt/industrial-soldier-kit.mjs';
+import*as external24 from'../../game/hunt/presentation-catalog.mjs';
+import*as external25 from'../../game/encounter-display-preferences.mjs';
+import*as external26 from'./vendor/addons/utils/SkeletonUtils.js';
+import*as external27 from'./industrial-soldiers.mjs';
+import*as external28 from'./industrial-vehicles.mjs';
 const modules=Object.create(null);
 modules['game/gameplay-audio-preferences.mjs']=(()=>{
 // Separate from the strict legacy mute/volume record: older pages cannot erase
@@ -166,7 +206,7 @@ return value.monoEffects;
 }
 
 /** One output choice, no playback or profile writes. Failed intent survives
- * peer/storage events; only explicit choice or Retry attempts persistence. */
+   * peer/storage events; only explicit choice or Retry attempts persistence. */
 function createGameplayAudioPreferences({
 getStorage=()=>globalThis.localStorage,
 window:target=globalThis.window??globalThis,
@@ -315,7 +355,7 @@ createGameplayAudioPreferences:createGameplayAudioPreferences,
 })();
 modules['game/ui/audio-output.mjs']=(()=>{
 /** Shared output topology for Capture, Snake and native flight presentation.
- * A page owns one context. Construction is called only from its gesture owner. */
+   * A page owns one context. Construction is called only from its gesture owner. */
 function createGameAudioContext(host=globalThis){
 const Context=host.AudioContext??host.webkitAudioContext;
 return Context?new Context({latencyHint:'interactive'}):null;
@@ -350,7 +390,7 @@ return output;
 }
 
 /** Down-mix effects after their panners, without touching music, media elements,
- * the master fader, or recording taps. A rejected configuration is not a pass. */
+   * the master fader, or recording taps. A rejected configuration is not a pass. */
 function setGameEffectsMono(output,enabled){
 const node=output?.gameplayBus;
 if(!node||typeof enabled!=='boolean')return false;
@@ -416,7 +456,7 @@ modules['game/gameplay-audio-preferences.mjs']['createGameplayAudioPreferences']
 const setGameEffectsMono=modules['game/ui/audio-output.mjs']['setGameEffectsMono'];
 
 /** Presentation-only owner. Selecting a policy never constructs or resumes a
- * context. The engine attaches its already gesture-created graph explicitly. */
+   * context. The engine attaches its already gesture-created graph explicitly. */
 function createGameplayAudioOutput(options={}){
 const preferences=createGameplayAudioPreferences(options),
 listeners=new Set();
@@ -469,9 +509,845 @@ output=null;
 
 return{createGameplayAudioOutput:createGameplayAudioOutput};
 })();
+modules['game/ui/media-preparation.mjs']=(()=>{
+const aborted=()=>new DOMException('Media preparation cancelled.','AbortError');
+const phases=new Set(['menu','preparing','playing','paused','suspended']);
+const priorities={required:0,demand:1,background:2};
+
+/** Admission only: callers retain validation, ownership and playback policy.
+   * A cancelled native decode still owns its slot until the native promise settles.
+   */
+function createMediaPreparation({
+fetches=2,
+decodes=1,
+decodeBytes=16*1024*1024,
+}={}){
+const limits={fetch:fetches,decode:decodes,inspect:1,main:1};
+const active={fetch:0,decode:0,inspect:0,main:0};
+const queue=[],
+unsettled=new Set();
+let phase='menu',
+closed=false,
+reservedBytes=0,
+sequence=0;
+function remove(task,error){
+const at=queue.indexOf(task);
+if(at>=0)queue.splice(at,1);
+task.signal?.removeEventListener('abort',task.cancel);
+task.reject(error);
+}
+function drain(){
+for(const task of[...queue])
+if(
+closed||
+task.signal?.aborted||
+!task.eligible()||
+(['playing','suspended'].includes(phase)&&task.priority==='background')
+)
+remove(task,aborted());
+queue.sort(
+(a,b)=>priorities[a.priority]-priorities[b.priority]||a.sequence-b.sequence,
+);
+for(const task of[...queue]){
+if(
+phase==='suspended'||
+active[task.kind]>=limits[task.kind]||
+(task.kind==='main'&&phase==='playing')
+)
+continue;
+if(task.kind==='decode'&&reservedBytes+task.bytes>decodeBytes)continue;
+queue.splice(queue.indexOf(task),1);
+task.signal?.removeEventListener('abort',task.cancel);
+active[task.kind]++;
+if(task.kind==='decode')reservedBytes+=task.bytes;
+let deferred=false;
+Promise.resolve()
+.then(()=>{
+if(
+closed||
+phase==='suspended'||
+task.signal?.aborted||
+!task.eligible()||
+(phase==='playing'&&task.priority==='background')
+)
+throw aborted();
+// Phase can change after admission but before this microtask runs.
+// Keep required fallback work pending until a safe phase instead of
+// starting a scan during gameplay or rejecting its playback request.
+if(task.kind==='main'&&phase==='playing'){
+deferred=true;
+queue.push(task);
+task.signal?.addEventListener('abort',task.cancel,{once:true});
+return;
+}
+return task.work();
+})
+.then((value)=>{
+if(deferred)return;
+if(closed||task.signal?.aborted|| !task.eligible())task.reject(aborted());
+else task.resolve(value);
+},task.reject)
+.finally(()=>{
+active[task.kind]--;
+if(task.kind==='decode')reservedBytes-=task.bytes;
+drain();
+});
+}
+}
+return Object.freeze({
+run(kind,work,{priority='demand',signal,bytes=0,eligible=()=>true}={}){
+if(
+!(kind in limits)||
+!(priority in priorities)||
+typeof work!=='function'||
+!Number.isFinite(bytes)||
+bytes<0
+)
+return Promise.reject(new TypeError('Invalid media preparation task.'));
+if(kind==='decode'&&bytes>decodeBytes)
+return Promise.reject(new RangeError('Media decode exceeds its memory budget.'));
+return new Promise((resolve,reject)=>{
+const task={
+kind,
+work,
+priority,
+signal,
+bytes,
+eligible,
+resolve(value){
+unsettled.delete(task);
+resolve(value);
+},
+reject(error){
+unsettled.delete(task);
+reject(error);
+},
+sequence:sequence++,
+};
+task.cancel=()=>{
+remove(task,aborted());
+drain();
+};
+unsettled.add(task);
+queue.push(task);
+signal?.addEventListener('abort',task.cancel,{once:true});
+drain();
+});
+},
+// Upgrade existing work only. Removed/cancelled tasks cannot be revived.
+promote(signal,priority='demand'){
+if(!signal||typeof signal.aborted!=='boolean'|| !(priority in priorities))
+throw new TypeError('Invalid media preparation promotion.');
+if(closed||signal.aborted)return 0;
+let promoted=0;
+for(const task of unsettled)
+if(
+task.signal===signal&&
+priorities[priority]<priorities[task.priority]&&
+task.eligible()
+){
+task.priority=priority;
+promoted++;
+}
+if(promoted)drain();
+return promoted;
+},
+setPhase(value){
+if(!phases.has(value))throw new TypeError('Invalid media preparation phase.');
+phase=value;
+drain();
+},
+refresh:drain,
+snapshot:()=>
+Object.freeze({
+phase,
+queued:queue.length,
+active:{...active},
+reservedDecodeBytes:reservedBytes,
+}),
+close(){
+closed=true;
+drain();
+},
+});
+}
+
+return{createMediaPreparation:createMediaPreparation};
+})();
+modules['game/mp3-inspection.mjs']=(()=>{
+/** Byte-only media boundary, shared by the main thread and static worker. */
+const AUDIO_FILE_LIMITS=Object.freeze({
+trackBytes:32*1024*1024,
+durationSeconds:720,
+});
+const required=(condition,message)=>{
+if(!condition)throw new TypeError(message);
+};
+
+function throwIfSoundtrackAborted(signal){
+if(signal?.aborted)throw new DOMException('Soundtrack operation cancelled.','AbortError');
+}
+/** Native Blob/File brand check and immutable ownership, without caller getters. */
+function ownSoundtrackBlob(source,maxBytes=AUDIO_FILE_LIMITS.trackBytes){
+let size;
+try{
+const sizeGetter=Object.getOwnPropertyDescriptor(Blob.prototype,'size').get;
+size=sizeGetter.call(source);
+}catch{
+throw new TypeError('Audio import requires a Blob or File.');
+}
+required(
+Number.isSafeInteger(size)&&size>0&&size<=maxBytes,
+'Binary media exceeds its byte budget.',
+);
+return Blob.prototype.slice.call(source,0,size,'audio/mpeg');
+}
+const begins=(bytes,at,word)=>[...word].every((c,i)=>bytes[at+i]===c.charCodeAt(0));
+function inspectFrames(bytes){
+let offset=0,
+end=bytes.length;
+if(begins(bytes,0,'ID3')){
+required(
+bytes.length>=10&&[2,3,4].includes(bytes[3])&&bytes[4]!==255,
+'Unsupported ID3 header.',
+);
+const allowed=bytes[3]===2?0xc0:bytes[3]===3?0xe0:0xf0;
+required((bytes[5]& ~allowed)===0,'Invalid ID3 flags.');
+required(
+(bytes[5]&0x10)===0,
+'ID3 footer-tagged files need a supported MP3 delivery copy.',
+);
+let size=0;
+for(let i=6;i<10;i++){
+required(bytes[i]<128,'Invalid ID3 synchsafe size.');
+size=size*128+bytes[i];
+}
+required(
+size<=1024*1024&&size+10<=end,
+'ID3 tag exceeds its 1 MiB budget or is truncated.',
+);
+offset=size+10;
+}
+if(end-offset>=128&&begins(bytes,end-128,'TAG'))end-=128;
+const bitrate1=[0,32,40,48,56,64,80,96,112,128,160,192,224,256,320];
+const bitrateLow=[0,8,16,24,32,40,48,56,64,80,96,112,128,144,160];
+let frames=0,
+first=null;
+while(offset<end){
+required(offset+4<=end,'Truncated MP3 frame header.');
+const b=bytes[offset+1],
+c=bytes[offset+2],
+d=bytes[offset+3];
+const version=(b>>3)&3,
+layer=(b>>1)&3,
+rateIndex=(c>>2)&3,
+bitrateIndex=c>>4;
+required(
+bytes[offset]===255&&
+(b&0xe0)===0xe0&&
+version!==1&&
+layer===1&&
+rateIndex!==3&&
+bitrateIndex>0&&
+bitrateIndex<15&&
+(d&3)!==2,
+'Unsupported or malformed MPEG Layer III frame.',
+);
+const mpegVersion=version===3?'1':version===2?'2':'2.5';
+const sampleRate=
+[44100,48000,32000][rateIndex]/(version===3?1:version===2?2:4),
+channels=d>>6===3?1:2;
+const bitrate=(version===3?bitrate1:bitrateLow)[bitrateIndex];
+const frameBytes=
+Math.floor(((version===3?144000:72000)*bitrate)/sampleRate)+((c>>1)&1);
+const minimum=
+4+
+(b&1?0:2)+
+(version===3?(channels===1?17:32):channels===1?9:17);
+required(frameBytes>=minimum&&offset+frameBytes<=end,'Truncated MP3 frame.');
+if(first)
+required(
+first.mpegVersion===mpegVersion&&
+first.sampleRate===sampleRate&&
+first.channels===channels,
+'Changing MP3 sample format is unsupported.',
+);
+else first={mpegVersion,sampleRate,channels};
+frames++;
+required(
+frames<=60000&&
+(frames*(version===3?1152:576))/sampleRate<=AUDIO_FILE_LIMITS.durationSeconds,
+'MP3 exceeds 12 minutes.',
+);
+offset+=frameBytes;
+}
+required(
+first&&frames>=2&&offset===end,
+'MP3 requires at least two complete audio frames.',
+);
+return{
+...first,
+frames,
+durationSeconds:(frames*(first.mpegVersion==='1'?1152:576))/first.sampleRate,
+};
+}
+/** Structural media check only; payload decodability is a separate browser probe. */
+async function inspectMP3(source,{signal,scheduleScan=(work)=>work()}={}){
+throwIfSoundtrackAborted(signal);
+const blob=ownSoundtrackBlob(source);
+// Materialization can outlive its safe phase. Schedule these stages separately
+// so scanning and native hash initiation are admitted again after each await.
+// No admission owns a promise which recursively waits for the same queue.
+const bytes=new Uint8Array(
+await scheduleScan(()=>{
+throwIfSoundtrackAborted(signal);
+return blob.arrayBuffer();
+}),
+);
+throwIfSoundtrackAborted(signal);
+const facts=await scheduleScan(()=>{
+throwIfSoundtrackAborted(signal);
+return inspectFrames(bytes);
+});
+throwIfSoundtrackAborted(signal);
+required(globalThis.crypto?.subtle,'MP3 validation requires SHA-256 support.');
+const hash=new Uint8Array(
+await scheduleScan(()=>{
+throwIfSoundtrackAborted(signal);
+return crypto.subtle.digest('SHA-256',bytes);
+}),
+);
+throwIfSoundtrackAborted(signal);
+return Object.freeze({
+sha256:[...hash].map((n)=>n.toString(16).padStart(2,'0')).join(''),
+bytes:bytes.length,
+mime:'audio/mpeg',
+...facts,
+});
+}
+
+return{
+AUDIO_FILE_LIMITS:AUDIO_FILE_LIMITS,
+throwIfSoundtrackAborted:throwIfSoundtrackAborted,
+ownSoundtrackBlob:ownSoundtrackBlob,
+inspectMP3:inspectMP3,
+};
+})();
+modules['game/published-cue-inspection.mjs']=(()=>{
+const inspectMP3=modules['game/mp3-inspection.mjs']['inspectMP3'];
+const ownSoundtrackBlob=modules['game/mp3-inspection.mjs']['ownSoundtrackBlob'];
+const throwIfSoundtrackAborted=modules['game/mp3-inspection.mjs']['throwIfSoundtrackAborted'];
+
+const required=(condition,message)=>{
+if(!condition)throw new TypeError(message);
+};
+const begins=(bytes,offset,text)=>
+[...text].every((char,i)=>bytes[offset+i]===char.charCodeAt(0));
+
+/** PCM/float WAVE only: compressed or ambiguous containers use the cue fallback. */
+function inspectWAVE(bytes){
+const view=new DataView(bytes.buffer,bytes.byteOffset,bytes.byteLength);
+required(
+bytes.length>=44&&begins(bytes,0,'RIFF')&&begins(bytes,8,'WAVE'),
+'Invalid cue WAVE header.',
+);
+required(view.getUint32(4,true)+8===bytes.length,'Cue WAVE size mismatch.');
+let format=null,
+dataBytes=null,
+factFrames=null,
+chunks=0;
+for(let offset=12;offset<bytes.length;){
+required(++chunks<=1024&&offset+8<=bytes.length,'Invalid cue WAVE chunks.');
+const size=view.getUint32(offset+4,true),
+start=offset+8,
+end=start+size,
+next=end+(size%2);
+required(next<=bytes.length,'Truncated cue WAVE chunk.');
+if(begins(bytes,offset,'fmt ')){
+required(!format&&[16,18,40].includes(size),'Ambiguous cue WAVE format.');
+let encoding=view.getUint16(start,true);
+const channels=view.getUint16(start+2,true),
+sampleRate=view.getUint32(start+4,true),
+byteRate=view.getUint32(start+8,true),
+alignment=view.getUint16(start+12,true),
+bits=view.getUint16(start+14,true);
+if(encoding===0xfffe){
+required(
+size===40&&view.getUint16(start+16,true)===22,
+'Invalid cue WAVE extension.',
+);
+const validBits=view.getUint16(start+18,true),
+guid=bytes.subarray(start+24,start+40);
+required(
+validBits>0&&
+validBits<=bits&&
+[0,0,0,0,0,16,0,128,0,0,170,0,56,155,113].every(
+(n,i)=>guid[i+1]===n,
+),
+'Unsupported cue WAVE subformat.',
+);
+encoding=guid[0];
+}else
+required(
+size===16||(size===18&&view.getUint16(start+16,true)===0),
+'Unsupported cue WAVE extension.',
+);
+required(
+(encoding===1&&[8,16,24,32].includes(bits))||
+(encoding===3&&[32,64].includes(bits)),
+'Compressed cue WAVE requires a bounded delivery copy.',
+);
+required(
+channels>0&&
+channels<=32&&
+sampleRate>0&&
+sampleRate<=384000&&
+alignment===channels*(bits/8)&&
+byteRate===sampleRate*alignment,
+'Invalid cue WAVE sample format.',
+);
+format={channels,sampleRate,alignment};
+}else if(begins(bytes,offset,'data')){
+required(dataBytes===null&&size>0,'Ambiguous cue WAVE data.');
+dataBytes=size;
+}else if(begins(bytes,offset,'fact')){
+required(factFrames===null&&size===4,'Ambiguous cue WAVE sample count.');
+factFrames=view.getUint32(start,true);
+}else{
+// Do not accept alternate audio layouts (e.g. LIST/wavl with silence
+// segments) whose decoded duration is not the single data chunk's size.
+required(
+begins(bytes,offset,'JUNK')||begins(bytes,offset,'PAD '),
+'Unsupported cue WAVE chunk.',
+);
+}
+offset=next;
+}
+required(
+format&&dataBytes!==null&&dataBytes%format.alignment===0,
+'Invalid cue WAVE frames.',
+);
+const frames=dataBytes/format.alignment;
+required(factFrames===null||factFrames===frames,'Cue WAVE sample count mismatch.');
+return{
+frames,
+channels:format.channels,
+sampleRate:format.sampleRate,
+durationSeconds:frames/format.sampleRate,
+};
+}
+
+/** Validate immutable encoded bytes before the noncancelable native PCM allocation.
+   * scheduleScan must use the owner's safe-phase main queue, including after awaits.
+   */
+async function inspectPublishedCue(source,{sampleRate,maxDuration,signal,scheduleScan}){
+throwIfSoundtrackAborted(signal);
+const blob=ownSoundtrackBlob(source,4*1024*1024),
+mime=Object.getOwnPropertyDescriptor(Blob.prototype,'type').get.call(source);
+required(
+['audio/wav','audio/mpeg'].includes(mime),
+'Cue format has no bounded PCM inspector.',
+);
+required(
+Number.isFinite(sampleRate)&&sampleRate>0&&sampleRate<=384000,
+'Invalid cue output sample rate.',
+);
+required(Number.isFinite(maxDuration)&&maxDuration>0,'Invalid cue duration limit.');
+required(typeof scheduleScan==='function','Cue inspection requires safe-phase admission.');
+let facts;
+if(mime==='audio/mpeg'){
+const mp3=await inspectMP3(blob,{signal,scheduleScan});
+facts={...mp3,frames:mp3.frames*(mp3.mpegVersion==='1'?1152:576)};
+}else{
+const bytes=new Uint8Array(await scheduleScan(()=>blob.arrayBuffer()));
+throwIfSoundtrackAborted(signal);
+facts=await scheduleScan(()=>inspectWAVE(bytes));
+}
+throwIfSoundtrackAborted(signal);
+required(facts.durationSeconds<=maxDuration,'Cue exceeds its duration budget.');
+const outputFrames=Math.ceil((facts.frames*sampleRate)/facts.sampleRate),
+outputBytes=outputFrames*facts.channels*4,
+// A resampler can temporarily retain source and output PCM together.
+reservedBytes=
+outputBytes+(sampleRate===facts.sampleRate?0:facts.frames*facts.channels*4);
+required(
+Number.isSafeInteger(reservedBytes)&&reservedBytes>0&&reservedBytes<=16*1024*1024,
+'Cue exceeds its PCM budget.',
+);
+return Object.freeze({blob,channels:facts.channels,outputFrames,reservedBytes});
+}
+
+return{inspectPublishedCue:inspectPublishedCue};
+})();
+modules['game/ui/published-cues.mjs']=(()=>{
+const createMediaPreparation=modules['game/ui/media-preparation.mjs']['createMediaPreparation'];
+const t=external1['t'];
+const DESTRUCTION_CUES=external2['DESTRUCTION_CUES'];
+const HUMAN_REACTION_CUES=external2['HUMAN_REACTION_CUES'];
+const destructionBufferGain=external3['destructionBufferGain'];
+const inspectPublishedCue=modules['game/published-cue-inspection.mjs']['inspectPublishedCue'];
+const cueNames=new Set([
+'focus',
+'confirm',
+'cancel',
+'capture',
+'failure',
+'victory',
+'pickup',
+...DESTRUCTION_CUES,
+...HUMAN_REACTION_CUES,
+]);
+const CUE_CACHE_BYTES=32*1024*1024;
+// Match optional effect/reaction reads; queue wait and native decoding are separate.
+const CUE_READ_TIMEOUT_MS=10000;
+
+/** Read-only session cache. An unavailable cue uses its existing procedural
+   * fallback; a late decode never replays an event that has already happened. */
+function createPublishedCues({
+sound,
+readAudio,
+maxVoices=64,
+maxFeedbackVoices=16,
+maxDecodedSamples=16*1024*1024,
+}){
+if(
+!Number.isSafeInteger(maxVoices)||
+maxVoices<1||
+maxVoices>64||
+!Number.isSafeInteger(maxFeedbackVoices)||
+maxFeedbackVoices<1||
+maxFeedbackVoices>maxVoices||
+!Number.isSafeInteger(maxDecodedSamples)||
+maxDecodedSamples<1||
+maxDecodedSamples>16*1024*1024
+)
+throw new TypeError('Invalid published audio voice budget.');
+const preparation=sound.mediaPreparation??createMediaPreparation();
+const ownsPreparation= !sound.mediaPreparation;
+let preparationPhase='menu';
+const cache=new Map(),
+attenuation=new Map(),
+pending=new Set(),
+loads=new Map(),
+voices=new Set(),
+recent=new Map();
+let closed=false,
+decodedBytes=0,
+decodedSamples=0;
+const bufferBytes=(value)=>
+value&&typeof value==='object'?value.length*value.numberOfChannels*4:0;
+function retain(name,decoded){
+const size=bufferBytes(decoded);
+for(const[key,value]of cache){
+if(decodedBytes+size<=CUE_CACHE_BYTES)break;
+if(key===name|| !bufferBytes(value))continue;
+decodedBytes-=bufferBytes(value);
+cache.delete(key);
+attenuation.delete(key);
+}
+cache.set(name,decoded??false);
+decodedBytes+=size;
+}
+const cancelPending=()=>{
+for(const controller of pending)controller.abort();
+pending.clear();
+loads.clear();
+for(const[key,value]of cache)if(value==='loading')cache.delete(key);
+};
+const available=(ui=false)=>
+!closed&&
+sound.enabled&&
+!sound.paused&&
+!sound.disposed&&
+!sound.audioMaster?.muted&&
+sound.audioMaster?.volume!==0&&
+sound.context?.state==='running'&&
+sound.settings.master&&
+(ui?sound.menuSettings?.enabled!==false:sound.settings.sfx)&&
+(ui|| !sound.persistentMusic|| !sound.gameplayPaused);
+function load(name,{priority='demand'}={}){
+if(cache.get(name)==='loading')return loads.get(name);
+if(
+!cueNames.has(name)||
+cache.has(name)||
+typeof sound.context?.decodeAudioData!=='function'
+)
+return;
+const controller=new AbortController(),
+context=sound.context;
+const eligible=()=>
+!closed&&
+!controller.signal.aborted&&
+sound.enabled&&
+sound.context===context&&
+!sound.audioMaster?.muted&&
+sound.audioMaster?.volume!==0;
+const admission={signal:controller.signal,priority,eligible};
+let timedOut=false;
+pending.add(controller);
+cache.set(name,'loading');
+const promise=preparation
+.run(
+'fetch',
+async()=>{
+// Start only after admission. Abort cooperative reads, but retain the
+// shared slot until the underlying promise actually settles.
+const timer=setTimeout(()=>{
+timedOut=true;
+if(!closed&&loads.get(name)===promise)cache.set(name,false);
+controller.abort();
+},CUE_READ_TIMEOUT_MS);
+const clear=()=>clearTimeout(timer);
+controller.signal.addEventListener('abort',clear,{once:true});
+try{
+return await readAudio(`audio.${name}`,{signal:controller.signal});
+}finally{
+clear();
+controller.signal.removeEventListener('abort',clear);
+}
+},
+admission,
+)
+.then(async(result)=>{
+if(!result|| !eligible())return null;
+const seconds=HUMAN_REACTION_CUES.includes(name)
+?0.7
+:DESTRUCTION_CUES.includes(name)
+?1
+:15;
+const inspected=await inspectPublishedCue(result.blob,{
+sampleRate:context.sampleRate,
+maxDuration:seconds,
+signal:controller.signal,
+scheduleScan:(work)=>preparation.run('main',work,admission),
+});
+const decoded=await preparation.run(
+'decode',
+async()=>{
+const bytes=await inspected.blob.arrayBuffer();
+if(!eligible())throw new DOMException('Cue decode cancelled.','AbortError');
+return context.decodeAudioData(bytes);
+},
+{...admission,bytes:inspected.reservedBytes},
+);
+if(closed||controller.signal.aborted|| !sound.enabled)return null;
+if(
+!Number.isFinite(decoded.duration)||
+decoded.duration<=0||
+decoded.duration>
+(HUMAN_REACTION_CUES.includes(name)
+?0.7
+:DESTRUCTION_CUES.includes(name)
+?1
+:15)||
+!Number.isSafeInteger(decoded.length)||
+decoded.length<=0||
+decoded.length>inspected.outputFrames||
+decoded.numberOfChannels!==inspected.channels||
+decoded.length*decoded.numberOfChannels>4*1024*1024
+)
+throw new Error(t('interface:publishedCueExceedsItsDecodedBudget'));
+if([...DESTRUCTION_CUES,...HUMAN_REACTION_CUES].includes(name))
+attenuation.set(name,destructionBufferGain(name,decoded));
+return decoded;
+})
+.then((decoded)=>{
+if(!closed&& !controller.signal.aborted){
+if(
+decoded&&
+decodedSamples+decoded.length*decoded.numberOfChannels>maxDecodedSamples
+)
+decoded=null;
+if(decoded)decodedSamples+=decoded.length*decoded.numberOfChannels;
+retain(name,decoded);
+}
+})
+.catch((error)=>{
+if(error?.name==='AbortError'){
+if(!closed&&loads.get(name)===promise){
+if(timedOut)cache.set(name,false);
+else cache.delete(name);
+}
+}else if(!closed&& !controller.signal.aborted)cache.set(name,false);
+})
+.finally(()=>{
+pending.delete(controller);
+if(loads.get(name)===promise)loads.delete(name);
+});
+loads.set(name,promise);
+return promise;
+}
+return Object.freeze({
+setPreparationPhase(value){
+if(!ownsPreparation||closed||value===preparationPhase)return;
+preparation.setPhase(value);
+preparationPhase=value;
+},
+resourceSnapshot:()=>({
+decodedBytes,
+decodedBytesLimit:CUE_CACHE_BYTES,
+// Entries also include unavailable/loading sentinels, not only PCM buffers.
+cacheEntries:cache.size,
+loading:loads.size,
+}),
+has(name){
+const value=cache.get(name);
+return!!value&&value!=='loading';
+},
+prepare(names){
+if(!available())return Promise.resolve();
+return Promise.all(
+names
+.filter((name)=>cueNames.has(name))
+.map((name)=>load(name,{priority:'background'})),
+);
+},
+play(
+name,
+{
+ui=false,
+board='solo',
+pan=0,
+feedback=false,
+priority=2,
+gain=1,
+rate=1,
+maxDuration=null,
+humanReaction=false,
+}={},
+){
+if(!cueNames.has(name)|| !available(ui))return false;
+const buffer=cache.get(name);
+if(buffer===undefined){
+void load(name);
+return false;
+}
+if(!buffer||buffer==='loading')return false;
+const now=sound.context.currentTime;
+if(ui&&now-(recent.get(name)?? -Infinity)<0.08)return true;
+const destruction=[...DESTRUCTION_CUES,...HUMAN_REACTION_CUES].includes(name);
+const owned=[...sound.voices].filter((voice)=>voice.feedback);
+if(
+feedback&&
+(owned.length>=Math.min(16,maxFeedbackVoices)||sound.voices.size>=maxVoices)
+){
+const victim=owned
+.filter((voice)=>voice.priority<priority)
+.sort((a,b)=>a.priority-b.priority)[0];
+if(!victim)return true;// A budget rejection must not trigger a synthetic duplicate.
+victim.stop();
+}
+if(sound.voices.size>=maxVoices)return true;
+if(destruction&&now-(recent.get(`${board}:${name}`)?? -Infinity)<0.09)return true;
+if(destruction)recent.set(`${board}:${name}`,now);
+recent.set(name,now);
+const source=sound.context.createBufferSource(),
+panner=pan?sound.context.createStereoPanner?.():null;
+source.buffer=buffer;
+const volume=sound.context.createGain();
+const playbackRate=Math.max(0.8,Math.min(1.2,Number.isFinite(rate)?rate:1));
+const duration=Math.min(
+buffer.duration/playbackRate,
+destruction?(maxDuration??0.85):Infinity,
+);
+source.playbackRate?.setValueAtTime(playbackRate,now);
+const level=
+Math.max(0,Math.min(1,Number.isFinite(gain)?gain:1))*(attenuation.get(name)??1);
+volume.gain.setValueAtTime(level,now);
+if(destruction){
+volume.gain.setValueAtTime(level,now+Math.max(0,duration-0.02));
+volume.gain.linearRampToValueAtTime?.(0,now+duration);
+}
+source.connect(volume);
+const bus=ui?(sound.menuBus??sound.sfxBus):sound.sfxBus;
+if(panner){
+volume.connect(panner);
+panner.pan.setValueAtTime(Math.max(-1,Math.min(1,pan)),now);
+panner.connect(bus);
+}else volume.connect(bus);
+let stopped=false;
+const voice={
+bus:ui?'menu':'sfx',
+name,
+board,
+feedback,
+humanReaction,
+destruction:DESTRUCTION_CUES.includes(name),
+cueFamily:name,
+priority,
+source,
+retire(){
+if(!humanReaction){
+voice.stop();
+return;
+}
+volume.gain.cancelScheduledValues?.(sound.context.currentTime);
+volume.gain.setTargetAtTime?.(0,sound.context.currentTime,0.008);
+source.stop(sound.context.currentTime+0.04);
+},
+stop(){
+if(stopped)return;
+stopped=true;
+try{
+source.stop();
+}catch{}
+source.disconnect();
+volume.disconnect();
+panner?.disconnect();
+voices.delete(voice);
+sound.voices.delete(voice);
+},
+};
+source.onended=voice.stop;
+sound.voices.add(voice);
+voices.add(voice);
+try{
+source.start(now);
+source.stop(now+duration);
+}catch{
+voice.stop();
+return false;
+}
+return true;
+},
+cancelPending,
+close(){
+closed=true;
+if(ownsPreparation)preparation.close();
+for(const voice of[...voices])voice.stop();
+cancelPending();
+cache.clear();
+decodedBytes=0;
+decodedSamples=0;
+attenuation.clear();
+recent.clear();
+},
+});
+}
+
+return{CUE_CACHE_BYTES:CUE_CACHE_BYTES,createPublishedCues:createPublishedCues};
+})();
+modules['game/presentation/portable-destruction-audio.mjs']=(()=>{
+const PORTABLE_DESTRUCTION_AUDIO=external4['PORTABLE_DESTRUCTION_AUDIO'];
+
+/** The optional package contains the exact accepted release recordings. No
+   * network, draft-library access, object URL, or playback belongs to this reader. */
+async function readPortableDestructionAudio(slot,{signal}={}){
+if(signal?.aborted)throw new DOMException('Cancelled','AbortError');
+const clip=PORTABLE_DESTRUCTION_AUDIO.clips[slot];
+if(!clip)return null;
+const bytes=Uint8Array.from(atob(clip.base64),(value)=>value.charCodeAt(0));
+if(bytes.length!==clip.bytes)
+throw new TypeError('Incomplete portable destruction recording.');
+if(signal?.aborted)throw new DOMException('Cancelled','AbortError');
+return{blob:new Blob([bytes],{type:clip.mime}),asset:clip};
+}
+
+return{readPortableDestructionAudio:readPortableDestructionAudio};
+})();
 modules['game/audio/dialogue-mix.mjs']=(()=>{
 /** Decorative spoken reactions sit behind music and gameplay warnings.
- * The mix trim also applies to saved slider choices without rewriting preferences. */
+   * The mix trim also applies to saved slider choices without rewriting preferences. */
 const DEFAULT_DIALOGUE_VOLUME=0.25;
 const DIALOGUE_MIX_GAIN=0.4;
 const DIALOGUE_MUSIC_GAIN=0.9;
@@ -483,7 +1359,7 @@ DIALOGUE_MUSIC_GAIN:DIALOGUE_MUSIC_GAIN,
 };
 })();
 modules['game/ui/audio-master.mjs']=(()=>{
-const t=external3['t'];
+const t=external1['t'];
 const volumeValue=(value)=>{
 if(!Number.isFinite(value)||value<0||value>1)
 throw new TypeError(t('interface:audioVolumeMustBeBetweenZeroAndOne'));
@@ -496,7 +1372,11 @@ return value;
 
 /** Shared output policy only. Hosts retain persistence, gestures and transport. */
 function createAudioMaster({muted=true,volume=1}={}){
-let state=Object.freeze({muted:mutedValue(muted),volume:volumeValue(volume),revision:0});
+let state=Object.freeze({
+muted:mutedValue(muted),
+volume:volumeValue(volume),
+revision:0,
+});
 let disposed=false;
 const listeners=new Set();
 function publish(next){
@@ -525,8 +1405,10 @@ setMuted:(value)=>change({muted:mutedValue(value)}),
 setVolume:(value)=>change({volume:volumeValue(value)}),
 subscribe(listener){
 if(disposed)throw new Error(t('interface:audioMasterIsDisposed'));
-if(typeof listener!=='function')throw new TypeError(t('interface:audioMasterListenerRequired'));
-if(listeners.has(listener))throw new Error(t('interface:audioMasterListenerAlreadySubscribed'));
+if(typeof listener!=='function')
+throw new TypeError(t('interface:audioMasterListenerRequired'));
+if(listeners.has(listener))
+throw new Error(t('interface:audioMasterListenerAlreadySubscribed'));
 listeners.add(listener);
 try{
 listener(state);
@@ -550,7 +1432,7 @@ listeners.clear();
 
 const mediaOwners=new WeakSet();
 /** Native media keeps its own local fader. Queued native events cannot rewrite
- * master or local intent; explicit local controls call setLocal instead. */
+   * master or local intent; explicit local controls call setLocal instead. */
 function bindAudioMasterMedia({audioMaster,element,volume=1,muted=false}={}){
 if(!audioMaster?.snapshot|| !audioMaster?.subscribe)
 throw new TypeError(t('interface:audioMasterRequired'));
@@ -566,7 +1448,8 @@ const attempted=new Map();
 const write=(key,value)=>{
 const observed=element[key];
 const previous=attempted.get(key);
-if(observed===value||(previous?.value===value&&previous.observed===observed))return;
+if(observed===value||(previous?.value===value&&previous.observed===observed))
+return;
 element[key]=value;
 // Some native platforms ignore/quantize volume. Their queued notification
 // must not cause an endless attempt to write the same unsupported value.
@@ -648,7 +1531,9 @@ typeof value.muted!=='boolean'||
 value.volume<0||
 value.volume>1
 )
-throw new TypeError('Audio preferences require a mute boolean and volume between zero and one.');
+throw new TypeError(
+'Audio preferences require a mute boolean and volume between zero and one.',
+);
 return{muted:value.muted,volume:value.volume};
 }
 
@@ -662,7 +1547,7 @@ return null;
 }
 
 /** Page-owned persistence for the shared output authority. This adapter never
- * starts media or writes a player profile. Only its explicit setters save. */
+   * starts media or writes a player profile. Only its explicit setters save. */
 function createAudioPreferences({
 audioMaster,
 getStorage=()=>globalThis.localStorage,
@@ -676,11 +1561,13 @@ let disposed=false,
 explicit=false,
 stored=false,
 unsaved=false,
-warning='';
-const notify=(message)=>{
+warning='',
+warningKey='';
+const notify=(message,key='')=>{
 warning=message;
+warningKey=key;
 try{
-onWarning(message);
+onWarning(message,key);
 }catch{
 // A notice cannot prevent the synchronous sound change.
 }
@@ -718,27 +1605,38 @@ apply(first.value);
 seedRevision=audioMaster.snapshot().revision;
 }
 const persist=()=>{
+const{muted,volume,revision}=audioMaster.snapshot();
+const current=()=> !disposed&&audioMaster.snapshot().revision===revision;
 try{
 const allowed=writable();
-if(disposed)return;
+if(!current())return;
 if(!allowed){
 unsaved=true;
-notify('Sound changes apply only to this session; saving is disabled here.');
+notify(
+'Sound changes apply only to this session; saving is disabled here.',
+'common:preferences.audioSessionOnly',
+);
 return;
 }
-const{muted,volume}=audioMaster.snapshot(),
-storage=getStorage();
-if(disposed)return;
+const storage=getStorage();
+if(!current())return;
 if(!storage)throw new Error('Storage unavailable.');
 storage.setItem(AUDIO_PREFERENCES_KEY,JSON.stringify(values({muted,volume})));
-if(disposed)return;
+if(!current())return;
+const saved=decode(storage.getItem(AUDIO_PREFERENCES_KEY));
+if(!current())return;
+if(!saved||saved.muted!==muted||saved.volume!==volume)
+throw new Error('Saved audio preferences could not be confirmed.');
 stored=true;
 unsaved=false;
 notify('');
 }catch{
-if(disposed)return;
+if(!current())return;
 unsaved=true;
-notify('Sound changed for this session, but could not be saved for another page.');
+notify(
+'Sound changed for this session, but could not be saved for another page.',
+'common:preferences.audioSaveFailed',
+);
 }
 };
 const change=(key,value)=>{
@@ -777,7 +1675,8 @@ const restored=(event)=>{
 if(disposed||unsaved||event.persisted!==true)return;
 const revision=audioMaster.snapshot().revision,
 current=read();
-if(disposed||unsaved||audioMaster.snapshot().revision!==revision|| !current.value)return;
+if(disposed||unsaved||audioMaster.snapshot().revision!==revision|| !current.value)
+return;
 stored=true;
 apply(current.value);
 };
@@ -800,6 +1699,7 @@ seedRevision=audioMaster.snapshot().revision;
 return true;
 },
 getWarning:()=>warning,
+getWarningKey:()=>warningKey,
 dispose(){
 if(disposed)return;
 disposed=true;
@@ -816,7 +1716,7 @@ createAudioPreferences:createAudioPreferences,
 })();
 modules['game/ui/world-ambience.mjs']=(()=>{
 /** Shared, original atmosphere recipes. They use the existing SFX owner and
- * require no decoded files, independent context or background scheduler. */
+   * require no decoded files, independent context or background scheduler. */
 const WORLDS=Object.freeze({
 'field-crossing':{filter:760,air:0.009,hum:108,humGain:0.0015},
 'freight-depot':{filter:310,air:0.006,hum:61,humGain:0.0035},
@@ -862,8 +1762,8 @@ return{worldAmbienceRecipe:worldAmbienceRecipe};
 })();
 modules['game/ui/encounter-audio.mjs']=(()=>{
 /** Shared semantic cues; both recorded and offline procedural renditions use
- * these recipes. No context, clock, randomness or actor mutation lives here. */
-const destructionSoundRecipe=external4['destructionSoundRecipe'];
+   * these recipes. No context, clock, randomness or actor mutation lives here. */
+const destructionSoundRecipe=external2['destructionSoundRecipe'];
 const worldAmbienceRecipe=modules['game/ui/world-ambience.mjs']['worldAmbienceRecipe'];
 const FAMILY_PITCH=Object.freeze({
 lookout:1.1,
@@ -918,7 +1818,132 @@ to:48,
 function actorSoundProfile(family){
 return ACTOR_SOUNDS[family==='shield-bearer'?'shield':family]??ACTOR_SOUNDS.runner;
 }
+/** Version-two flight cues are semantic and deterministic; old courses keep their bank. */
+function combatSoundRecipe(type,details={}){
+const profiles={
+autocannon:[230,64,0.065,0.055,0.032],
+scatter:[115,35,0.18,0.09,0.085],
+precision:[1240,180,0.09,0.065,0.02],
+rocket:[95,28,0.26,0.085,0.18],
+};
+const profile=profiles[details.weapon];
+let tint=0;
+for(const char of String(details.eventId??''))
+tint=(Math.imul(tint,31)+char.charCodeAt(0))>>>0;
+const variant=0.97+(tint%61)/1000;
+const tone=(from,to,duration,gain=0.025,extra={})=>({
+from,
+to,
+duration,
+gain,
+type:'triangle',
+...extra,
+});
+const recipe=(name,priority,voice,layers=[],cooldown=0.08)=>({
+name,
+procedural:true,
+gain:0.3,
+priority,
+movement:false,
+cooldown,
+tone:voice,
+layers,
+});
+if(type==='player-damage')
+return recipe(
+'hull-damage',
+5,
+tone(175,38,0.15,0.045),
+[tone(0,0,0.055,0.024,{kind:'snare'})],
+0.12,
+);
+if(type==='fire'&&profile){
+const[from,to,duration,gain,noise]=profile;
+return recipe(
+`weapon-${details.weapon}`,
+3,
+tone(from*variant,to*variant,duration,gain),
+[tone(0,0,noise,gain*0.6,{kind:'snare'})],
+details.weapon==='autocannon'?0.08:0.12,
+);
+}
+if(type==='reload-start')
+return recipe(
+'reload-start',
+2,
+tone(170,310,0.065,0.018),
+[tone(260,130,0.055,0.012,{delay:0.09})],
+0.2,
+);
+if(type==='reload-ready')
+return recipe(
+'reload-ready',
+4,
+tone(660,880,0.065,0.025),
+[tone(990,1320,0.08,0.018,{delay:0.07})],
+0.15,
+);
+if(type==='weapon-empty')
+return recipe('weapon-empty',4,tone(155,80,0.045,0.025),[],0.3);
+if(type==='weapon-selected')
+return recipe('weapon-selected',2,tone(profile?.[0]??320,540,0.06,0.014),[],0.15);
+if(type==='payload')
+return recipe(
+'payload-release',
+3,
+tone(220,70,0.13,0.03),
+[tone(0,0,0.07,0.02,{kind:'snare'})],
+0.2,
+);
+if(type==='payload-armed'||type==='payload-ready')
+return recipe(
+type,
+4,
+tone(510,720,0.07,0.025),
+[tone(720,1040,0.1,0.02,{delay:0.1})],
+0.3,
+);
+if(type==='explosion')
+return recipe(
+'combat-explosion',
+3,
+tone(82,25,0.4,0.075,{type:'sine'}),
+[tone(0,0,0.25,0.07,{kind:'snare'})],
+0.12,
+);
+if(type==='component')
+return recipe(
+'component-break',
+4,
+tone(740,130,0.13,0.04),
+[tone(0,0,0.05,0.02,{kind:'snare'})],
+0.12,
+);
+if(type==='surface-impact'||(type==='impact'&&details.weapon)){
+const organic=details.material==='organic'&& !details.protected;
+const glass=details.material==='glass';
+return recipe(
+details.protected?'shield-hit':`hit-${details.material??'stone'}`,
+2,
+tone(organic?160:glass?1800:650,organic?45:130,organic?0.07:0.095,0.028),
+organic?[]:[tone(0,0,0.035,0.012,{kind:'snare'})],
+0.09,
+);
+}
+if(['repair','resupply','challenge'].includes(type))
+return recipe(
+type,
+4,
+tone(440,660,0.08),
+[tone(880,1040,0.09,0.02,{delay:0.1})],
+0.2,
+);
+return null;
+}
+
 function encounterSoundRecipe(type,details={}){
+const combat=combatSoundRecipe(type,details);
+if(combat)return combat;
 if(type==='catch')return destructionSoundRecipe(details);
 if(type==='ambience')return worldAmbienceRecipe(details.world);
 if(type==='warning-charge'){
@@ -960,11 +1985,19 @@ type:breaker?'triangle':'sine',
 const pitch=FAMILY_PITCH[details.family]??1;
 const actor=actorSoundProfile(details.family),
 tracked=details.machine==='tracked',
-metal=details.material==='metal'||[true,'tracked','wheeled'].includes(details.machine);
+metal=
+details.material==='metal'||[true,'tracked','wheeled'].includes(details.machine);
 const recipes={
 step:['grain',0.11,0,130*actor.rate,65*actor.rate,0.055],
 equipment:[actor.equipment,0.12,1,actor.from,actor.to,0.085],
-drive:[tracked?'ratchet':'wheels',0.17,1,tracked?110:210,tracked?48:90,0.16],
+drive:[
+tracked?'ratchet':'wheels',
+0.17,
+1,
+tracked?110:210,
+tracked?48:90,
+0.16,
+],
 notice:['switch',0.17,2,360,520,0.09],
 warning:['warning',0.44,5,620,860,0.13],
 burst:['paper',0.19,2,190,320,0.09],
@@ -989,7 +2022,9 @@ failure:['loss',0.42,5,260,65,0.23],
 const row=recipes[type];
 if(!row)return null;
 const[name,gain,priority,from,to,duration]=row;
-const scale=Number.isFinite(details.gainScale)?Math.max(0,Math.min(1,details.gainScale)):1;
+const scale=Number.isFinite(details.gainScale)
+?Math.max(0,Math.min(1,details.gainScale))
+:1;
 const movement=['step','equipment','drive'].includes(type);
 return{
 name,
@@ -1006,7 +2041,13 @@ movement,
 // Loop textures are deliberately sampled as short envelopes for footsteps.
 maxDuration:movement?duration:null,
 cooldown:
-type==='step'?actor.cadence:type==='equipment'?0.7:type==='drive'?1.2:null,
+type==='step'
+?actor.cadence
+:type==='equipment'
+?0.7
+:type==='drive'
+?1.2
+:null,
 rate:type==='step'?actor.rate:pitch,
 tone:{
 from:from*pitch,
@@ -1031,6 +2072,7 @@ return null;
 
 return{
 actorSoundProfile:actorSoundProfile,
+combatSoundRecipe:combatSoundRecipe,
 encounterSoundRecipe:encounterSoundRecipe,
 actorPhaseSound:actorPhaseSound,
 };
@@ -1044,7 +2086,9 @@ const value=JSON.parse(storage?.getItem(MOVEMENT_AUDIO_KEY)??'null');
 return{
 enabled:typeof value?.enabled==='boolean'?value.enabled:true,
 volume:
-Number.isFinite(value?.volume)&&value.volume>=0&&value.volume<=1?value.volume:0.5,
+Number.isFinite(value?.volume)&&value.volume>=0&&value.volume<=1
+?value.volume
+:0.5,
 };
 }catch{
 return{enabled:true,volume:0.5};
@@ -1084,8 +2128,9 @@ modules['optional-practice/civilian-fpv/world-audio.mjs']=(()=>{
 const createGameplayAudioOutput=
 modules['game/ui/gameplay-audio-output.mjs']['createGameplayAudioOutput'];
 const createHumanReactionPolicy=external0['createHumanReactionPolicy'];
-const HUMAN_REACTION_BANK=external1['HUMAN_REACTION_BANK'];
-const destructionBufferGain=external2['destructionBufferGain'];
+const createPublishedCues=modules['game/ui/published-cues.mjs']['createPublishedCues'];
+const readPortableDestructionAudio=
+modules['game/presentation/portable-destruction-audio.mjs']['readPortableDestructionAudio'];
 const DEFAULT_DIALOGUE_VOLUME=modules['game/audio/dialogue-mix.mjs']['DEFAULT_DIALOGUE_VOLUME'];
 const DIALOGUE_MIX_GAIN=modules['game/audio/dialogue-mix.mjs']['DIALOGUE_MIX_GAIN'];
 const createGameAudioContext=modules['game/ui/audio-output.mjs']['createGameAudioContext'];
@@ -1096,14 +2141,17 @@ const releasePlaybackAudioSession=
 modules['game/ui/audio-output.mjs']['releasePlaybackAudioSession'];
 const createAudioMaster=modules['game/ui/audio-master.mjs']['createAudioMaster'];
 const createAudioPreferences=modules['game/audio-preferences.mjs']['createAudioPreferences'];
-const destructionCategory=external4['destructionCategory'];
+const destructionCategory=external2['destructionCategory'];
+const DESTRUCTION_CUES=external2['DESTRUCTION_CUES'];
+const HUMAN_REACTION_CUES=external2['HUMAN_REACTION_CUES'];
 const encounterSoundRecipe=modules['game/ui/encounter-audio.mjs']['encounterSoundRecipe'];
 const actorPhaseSound=modules['game/ui/encounter-audio.mjs']['actorPhaseSound'];
 const readMovementAudio=modules['game/ui/movement-audio.mjs']['readMovementAudio'];
 const MOVEMENT_AUDIO_KEY=modules['game/ui/movement-audio.mjs']['MOVEMENT_AUDIO_KEY'];
 const dialogueChannel=modules['game/ui/dialogue-channel.mjs']['dialogueChannel'];
 
-/** Optional presentation-only sound. Embedded CC0 vocals decode on activation; no media requests or gameplay clocks. */
+/** Native flight uses the shared published-cue cache and mixer. Accepted package
+   * recordings decode on activation; no network reads or gameplay clocks. */
 const PREFERENCE='revealline.fpv.world-audio.v1';
 const clamp=(value,min,max)=>Math.max(min,Math.min(max,value));
 const AMBIENCES={
@@ -1143,10 +2191,9 @@ let motorStyle='quad';
 let gateStyle='chime';
 let dialogue={enabled:false,volume:DEFAULT_DIALOGUE_VOLUME};
 let dialogueVoice=null;
+let recorded=null;
 const effects=new Set();
 const humanReactions=createHumanReactionPolicy();
-const humanBuffers=new Map();
-let preparingHumans=false;
 const audioMaster=options.audioMaster??createAudioMaster();
 const preferences=
 options.audioPreferences??
@@ -1185,7 +2232,9 @@ applyOutput();
 };
 host.addEventListener?.('storage',changed);
 const recentCues=new Map();
+const observedEvents=new Set();
 let actorDefinitions=new Map();
+let liveActors=new Map();
 let actorPositions=new Map();
 let actorPhases=new Map();
 let actorFamilies=new Map();
@@ -1206,22 +2255,47 @@ for(const effect of effects)effect.stop();
 effects.clear();
 }
 
-function prepareHumans(){
-if(preparingHumans|| !context?.decodeAudioData||options.getDestruction?.()?.vocals===false)
-return;
-preparingHumans=true;
-for(const[name,clip]of Object.entries(HUMAN_REACTION_BANK)){
-const bytes=Uint8Array.from(atob(clip.base64),(character)=>character.charCodeAt(0));
-void context
-.decodeAudioData(bytes.buffer)
-.then((buffer)=>{
-if(!disposed)humanBuffers.set(name,{buffer,gain:destructionBufferGain(name,buffer)});
-})
-.catch(()=>{});
-}
+recorded=createPublishedCues({
+sound:{
+get mediaPreparation(){
+return options.mediaPreparation;
+},
+get enabled(){
+return enabled;
+},
+get paused(){
+return!wanted;
+},
+get disposed(){
+return disposed;
+},
+get context(){
+return context;
+},
+get audioMaster(){
+return masterState;
+},
+get sfxBus(){
+return graph?.buses.interface;
+},
+get settings(){
+return{master:enabled,sfx:levels.interface>0};
+},
+voices:effects,
+},
+readAudio:options.readAudio??readPortableDestructionAudio,
+maxVoices:12,
+maxFeedbackVoices:10,
+maxDecodedSamples:2*1024*1024,
+});
+function prepareRecordings(){
+void recorded.prepare([
+...DESTRUCTION_CUES,
+...(options.getDestruction?.()?.vocals===false?[]:HUMAN_REACTION_CUES),
+]);
 }
 function humanReaction(details){
-prepareHumans();
+prepareRecordings();
 if(
 !graph||
 !enabled||
@@ -1240,38 +2314,18 @@ context.currentTime,
 details,
 [...effects].filter((effect)=>effect.humanReaction).length,
 );
-const clip=name&&humanBuffers.get(name);
-if(!clip)return;
-const source=context.createBufferSource(),
-volume=context.createGain(),
-now=context.currentTime;
-const duration=Math.min(0.7,clip.buffer.duration);
-source.buffer=clip.buffer;
-volume.gain.setValueAtTime(0.45*clip.gain,now);
-volume.gain.setValueAtTime(0.45*clip.gain,now+Math.max(0,duration-0.025));
-volume.gain.linearRampToValueAtTime(0,now+duration);
-source.connect(volume).connect(graph.buses.interface);
-let stopped=false;
-const voice={
+if(name)
+recorded.play(name,{
+gain:0.45,
+maxDuration:0.7,
 humanReaction:true,
+feedback:true,
 priority:2,
-stop(){
-if(stopped)return;
-stopped=true;
-try{
-source.stop();
-}catch{}
-source.disconnect();
-volume.disconnect();
-effects.delete(voice);
-},
-};
-effects.add(voice);
-source.onended=voice.stop;
-source.start(now);
-source.stop(now+duration);
+board:'flight',
+});
 }
 function silence(){
+recorded?.cancelPending();
 dialogueVoice?.stop();
 if(!graph||context.state==='closed')return;
 for(const node of[graph.motor,graph.vehicleGain,graph.wind,graph.humGain]){
@@ -1398,19 +2452,26 @@ context.state!=='running'
 return;
 if(
 movementCue&&
-(!movement.enabled||movement.volume===0||[...effects].some((effect)=>effect.priority>=4))
+(!movement.enabled||
+movement.volume===0||
+[...effects].some((effect)=>effect.priority>=4))
 )
 return;
 if(priority>=4)for(const effect of[...effects])if(effect.movementCue)effect.stop();
 // Crowd feedback cannot use the warning reserve. A warning may reclaim
 // a lower-priority tail, without adding a second output or context.
-if(destruction&&[...effects].filter((effect)=>effect.destruction).length>=10)return;
+if(priority<5&&[...effects].filter((effect)=>effect.priority<5).length>=10){
+const victim=[...effects].find((effect)=>effect.priority<priority);
+if(!victim)return;
+victim.stop();
+}
 if(effects.size>=12){
 const victim=[...effects].find((effect)=>effect.priority<priority);
 if(!victim)return;
 victim.stop();
 }
-const oscillator=kind==='snare'?context.createBufferSource():context.createOscillator();
+const oscillator=
+kind==='snare'?context.createBufferSource():context.createOscillator();
 const envelope=context.createGain();
 const start=context.currentTime+delay;
 if(kind==='snare'){
@@ -1462,10 +2523,19 @@ oscillator.stop(start+duration+0.02);
 }
 
 function actorSoundDetails(event={}){
-const actor=actorDefinitions.get(event.actor);
+const live=liveActors.get(event.actor);
+const definition=
+actorDefinitions.get(event.actor)??actorDefinitions.get(event.sourceId??live?.sourceId);
+const actor=live?{...definition,...live}:definition;
+const material=event.material??actor?.material;
+const type=event.appearance?.type??actor?.type;
 const machine=
 event.machine??
-(actor?.type==='vehicle'?(actor.vehicleModel==='field-tank'?'tracked':'wheeled'):false);
+(actor?.type==='vehicle'
+?actor.vehicleModel==='field-tank'
+?'tracked'
+:'wheeled'
+:false);
 const machineFamily=
 actor?.type==='vehicle'
 ?({
@@ -1475,18 +2545,32 @@ actor?.type==='vehicle'
 }[actor.vehicleModel]??actor.vehicleModel)
 :null;
 return{
+weapon:event.weapon,
+eventId:event.eventId,
+severity:event.severity,
+protected:event.protected===true,
 family:
 event.family??
+event.appearance?.family??
 machineFamily??
 actorFamilies.get(event.actor)??
 (actor?.speed>0?'patroller':'lookout'),
 machine,
+material,
+category:event.category??(material==='electronic'?'electronic':undefined),
+cast:event.appearance?.cast??actor?.appearance?.cast,
 brutal:options.getDestruction?.()?.brutal===true,
 vocals:options.getDestruction?.()?.vocals,
 // Patrols and sentries use the humanoid painter. Drones, hazards and
 // vehicles must never inherit a human voice from the family fallback.
-humanoid:event.humanoid??(actor?['patrol','sentry'].includes(actor.type):undefined),
-flesh:event.flesh,
+humanoid:
+event.humanoid??
+(type
+?['patrol','sentry','humanoid'].includes(type)
+:material
+?material==='organic'
+:undefined),
+flesh:event.flesh??(material?material==='organic':undefined),
 };
 }
 
@@ -1497,6 +2581,8 @@ catch:'catch',
 objective:'objective',
 fire:'fire',
 impact:'impact',
+'player-damage':'player-damage',
+telegraph:'warning',
 defeat:'catch',
 'protected-contact':'impact',
 warning:'warning',
@@ -1506,19 +2592,50 @@ recover:'recover',
 blocked:'blocked',
 equipment:'equipment',
 drive:'drive',
+'surface-impact':'surface-impact',
+explosion:'explosion',
+component:'component',
+'weapon-selected':'weapon-selected',
+'weapon-empty':'weapon-empty',
+'reload-start':'reload-start',
+'reload-ready':'reload-ready',
+payload:'payload',
+'payload-armed':'payload-armed',
+'payload-ready':'payload-ready',
+repair:'repair',
+resupply:'resupply',
+challenge:'challenge',
+supply:'supply',
 }[type];
 if(!kind)return;
 const details=actorSoundDetails(event);
 const recipe=encounterSoundRecipe(kind,details);
 const now=context?.currentTime??0;
-const cueKey=kind==='catch'?`catch:${recipe.category}`:kind;
+if(!recipe)return;
+const cueKey=
+kind==='catch'
+?`catch:${recipe.category}`
+:`${kind}:${event.weapon??''}:${player?'player':'enemy'}`;
 if(now-(recentCues.get(cueKey)?? -Infinity)<(recipe.cooldown??0.12))return;
 recentCues.set(cueKey,now);
 if(recipe.priority>=5||(type==='fire'&& !player)){
 humanReactions.interrupt(now);
 for(const effect of[...effects])if(effect.humanReaction)effect.stop();
 }
-if(kind==='catch')humanReaction(details);
+if(kind==='catch'){
+humanReaction(details);
+if(
+recorded.play(recipe.name,{
+gain:recipe.gain,
+rate:recipe.rate,
+maxDuration:recipe.maxDuration,
+priority:recipe.priority,
+feedback:true,
+board:'flight',
+})
+)
+return;
+}
 if(recipe.priority>=5||(type==='fire'&& !player))dialogueChannel.interrupt();
 const voice={...recipe.tone,priority:recipe.priority,movementCue:recipe.movement};
 if(recipe.movement)voice.gain*=levels.interface;
@@ -1526,7 +2643,12 @@ if(type==='fire'&& !player)voice.gain*=0.65;
 if(type==='objective'&&gateStyle==='digital')voice.type='triangle';
 tone({...voice,destruction:kind==='catch'});
 for(const layer of recipe.layers??[])
-tone({...layer,priority:recipe.priority,destruction:kind==='catch'});
+tone({
+...layer,
+gain:layer.gain*(type==='fire'&& !player?0.65:1),
+priority:recipe.priority,
+destruction:kind==='catch',
+});
 }
 
 async function resume(){
@@ -1534,6 +2656,7 @@ if(!enabled||disposed)return false;
 requestPlaybackAudioSession(host.navigator?.audioSession);
 if(!initialize())return false;
 wanted=true;
+recorded.setPreparationPhase(lastPlaying?'playing':'preparing');
 const epoch= ++transition;
 try{
 await context.resume();
@@ -1541,7 +2664,7 @@ if(disposed|| !enabled|| !wanted){
 if(context.state!=='closed')await context.suspend();
 return false;
 }
-prepareHumans();
+prepareRecordings();
 return epoch===transition&&context.state==='running';
 }catch{
 return false;
@@ -1550,6 +2673,7 @@ return false;
 
 function pause(){
 wanted=false;
+recorded.setPreparationPhase('suspended');
 transition++;
 silence();
 if(context&&context.state!=='closed')context.suspend().catch(()=>{});
@@ -1636,7 +2760,9 @@ typeof value?.enabled!=='boolean'||
 value.volume<0||
 value.volume>1
 )
-throw new TypeError('Movement sound requires an enabled boolean and volume between zero and one.');
+throw new TypeError(
+'Movement sound requires an enabled boolean and volume between zero and one.',
+);
 movement={enabled:value.enabled,volume:value.volume};
 },
 applyVolumes:applyOutput,
@@ -1695,21 +2821,28 @@ theme==='ukrainian'
 :'hangar';
 ambience=AMBIENCES[profile.ambience]??AMBIENCES[fallback];
 motorStyle=
-profile.motor??(theme==='pixel'?'arcade':theme==='operations'?'utility':'quad');
+profile.motor??
+(theme==='pixel'?'arcade':theme==='operations'?'utility':'quad');
 gateStyle=
-profile.gate??(theme==='pixel'?'digital':theme==='ukrainian'?'bell':'chime');
+profile.gate??
+(theme==='pixel'?'digital':theme==='ukrainian'?'bell':'chime');
 lastPlaying=false;
 lastTick=null;
 lastStep=null;
 lastContacts=null;
 recentCues.clear();
+observedEvents.clear();
+liveActors.clear();
 humanReactions.reset();
 actorPositions.clear();
 actorPhases.clear();
-actorFamilies=new Map((course.pursuit?.actors??[]).map((policy)=>[policy.id,policy.family]));
+actorFamilies=new Map(
+(course.pursuit?.actors??[]).map((policy)=>[policy.id,policy.family]),
+);
 lastFootstep= -Infinity;
 actorDefinitions=new Map((course.actors??[]).map((actor)=>[actor.id,actor]));
 stopEffects();
+recorded.cancelPending();
 if(graph&&context.state!=='closed'){
 ramp(graph.windFilter.frequency,ambience.filter);
 ramp(graph.hum.frequency,ambience.hum);
@@ -1717,12 +2850,34 @@ ramp(graph.hum.frequency,ambience.hum);
 },
 update(snapshot,{active=true}={}){
 if(disposed|| !snapshot)return;
+liveActors=new Map((snapshot.actors??[]).map((actor)=>[actor.id,actor]));
+// Observe identifiers even while muted/paused or priming a restored state.
+// Historical accepted events must never become delayed audio on resume.
+const events=[];
+for(const event of snapshot.events??[]){
+if(typeof event.eventId==='string'){
+if(observedEvents.has(event.eventId))continue;
+observedEvents.add(event.eventId);
+if(observedEvents.size>2048)
+observedEvents.delete(observedEvents.values().next().value);
+}
+events.push(event);
+}
+if(options.getDestruction?.()?.vocals===false)
+for(const effect of[...effects])if(effect.humanReaction)effect.stop();
 const tick=snapshot.ticks;
 const step=snapshot.step;
 const fresh=Number.isSafeInteger(tick)&&lastTick!==null&&tick>lastTick;
 const advanced=Number.isSafeInteger(step)&&lastStep!==null&&step>lastStep;
 const playing=active&& !['paused','disarmed'].includes(snapshot.status);
 const finalCue=fresh&&lastPlaying&&['complete','failed'].includes(snapshot.status);
+recorded.setPreparationPhase(
+enabled&&wanted&&context?.state==='running'
+?playing||finalCue
+?'playing'
+:'paused'
+:'suspended',
+);
 if(enabled&&wanted&&graph&&context.state==='running'&&(playing||finalCue)){
 const flying=snapshot.status==='active';
 const throttle=clamp((snapshot.lastInput?.throttle??0)/1000,0,1);
@@ -1733,7 +2888,8 @@ const fundamental=
 (motorStyle==='utility'?65:motorStyle==='arcade'?125:95)+
 throttle*230+
 airflow*35;
-for(const rotor of graph.rotors)ramp(rotor.oscillator.frequency,fundamental*rotor.ratio);
+for(const rotor of graph.rotors)
+ramp(rotor.oscillator.frequency,fundamental*rotor.ratio);
 ramp(graph.motorFilter.frequency,850+throttle*2400);
 ramp(graph.motor.gain,flying?0.009+throttle*0.025:0);
 ramp(graph.wind.gain,ambience.gain+(flying?airflow*0.028:0));
@@ -1747,7 +2903,8 @@ for(const actor of snapshot.actors??[]){
 const previous=actorPositions.get(actor.id),
 position=actor.position;
 if(!position)continue;
-const moving=previous&&Math.hypot(position.x-previous.x,position.z-previous.z)>0;
+const moving=
+previous&&Math.hypot(position.x-previous.x,position.z-previous.z)>0;
 if(moving&&actor.status==='active'){
 const d=Math.hypot(
 position.x-snapshot.position.x,
@@ -1756,7 +2913,11 @@ position.z-snapshot.position.z,
 );
 if(actor.type==='vehicle'){
 nearestVehicle=Math.min(nearestVehicle,d);
-if(!previous.moving&&d<16000&&(!startingVehicle||d<startingVehicle.distance))
+if(
+!previous.moving&&
+d<16000&&
+(!startingVehicle||d<startingVehicle.distance)
+)
 startingVehicle={actor:actor.id,distance:d};
 }else if(['patrol','sentry'].includes(actor.type)&&d<nearestFoot){
 nearestFoot=d;
@@ -1772,7 +2933,11 @@ if(flying&&startingVehicle)cue('drive',false,{actor:startingVehicle.actor});
 const step=encounterSoundRecipe('step',{
 family:footActor?.pursuit?.family??actorFamilies.get(footActor?.id),
 });
-if(flying&&nearestFoot<6000&&context.currentTime-lastFootstep>=step.cooldown){
+if(
+flying&&
+nearestFoot<6000&&
+context.currentTime-lastFootstep>=step.cooldown
+){
 lastFootstep=context.currentTime;
 tone({
 ...step.tone,
@@ -1782,26 +2947,48 @@ priority:0,
 });
 }
 for(const actor of snapshot.actors??[]){
-if(!actor.pursuit||actor.status!=='active')continue;
-const phase=actor.blocked?'blocked':actor.pursuit.phase;
+if(actor.status!=='active')continue;
+const phase=actor.blocked
+?'blocked'
+:actor.warning
+?'warning'
+:(actor.pursuit?.phase??'idle');
 const sound=actorPhaseSound(actorPhases.get(actor.id),phase);
 if(sound){
-cue(sound,false,{actor:actor.id,family:actor.pursuit.family});
-if(sound!=='warning')cue('equipment',false,{actor:actor.id,family:actor.pursuit.family});
+cue(sound,false,{
+actor:actor.id,
+family:actor.pursuit?.family??actor.appearance?.family,
+});
+if(sound!=='warning')
+cue('equipment',false,{
+actor:actor.id,
+family:actor.pursuit?.family??actor.appearance?.family,
+});
 }
 }
-const events=snapshot.events??[];
 const types=new Set();
 const destructionTypes=new Set();
 // Bound cue overlap independently of simulation actor/projectile counts.
-for(const event of events){
+for(const event of[...events].sort(
+(a,b)=>
+Number(['telegraph','player-damage','warning'].includes(b.type))-
+Number(['telegraph','player-damage','warning'].includes(a.type)),
+)){
+const eventKey=`${event.type}:${event.weapon??''}:${event.material??''}:${event.actor==='player'||event.owner==='player'?'player':'enemy'}`;
 if(['catch','defeat'].includes(event.type)){
 const category=destructionCategory(actorSoundDetails(event));
 if(destructionTypes.has(category))continue;
 destructionTypes.add(category);
-}else if(types.has(event.type))continue;
+}else if(types.has(eventKey))continue;
+types.add(eventKey);
 types.add(event.type);
-cue(event.type,event.actor==='player',event);
+cue(
+event.type,
+event.actor==='player'||
+event.owner==='player'||
+(!event.actor&& !event.sourceId),
+event,
+);
 }
 if(advanced&& !types.has('objective'))cue('objective');
 if(lastContacts!==null&&snapshot.contacts>lastContacts&& !types.has('impact'))
@@ -1829,9 +3016,14 @@ fresh&&previous&&actor.position
 }),
 );
 actorPhases=new Map(
-(snapshot.actors??[])
-.filter((actor)=>actor.pursuit)
-.map((actor)=>[actor.id,actor.blocked?'blocked':actor.pursuit.phase]),
+(snapshot.actors??[]).map((actor)=>[
+actor.id,
+actor.blocked
+?'blocked'
+:actor.warning
+?'warning'
+:(actor.pursuit?.phase??'idle'),
+]),
 );
 lastTick=tick;
 lastStep=step;
@@ -1841,7 +3033,7 @@ lastPlaying=playing;
 dispose(){
 if(disposed)return;
 disposed=true;
-humanBuffers.clear();
+recorded.close();
 gameplayOutput.dispose();
 pause();
 releaseMaster();
@@ -2101,7 +3293,8 @@ throw new TypeError('Choose an unarmed hostile Hunt target.');
 if(course.pursuit)throw new TypeError('Edit the existing pursuit graph.');
 const points=[actor.position,...actor.path].filter(
 (point,index,all)=>
-all.findIndex((other)=>['x','y','z'].every((axis)=>point[axis]===other[axis]))===index,
+all.findIndex((other)=>['x','y','z'].every((axis)=>point[axis]===other[axis]))===
+index,
 );
 if(points.length<2)throw new TypeError('Add at least one distinct native waypoint first.');
 const nodes=points.map((position,index)=>({
@@ -2202,7 +3395,9 @@ status.textContent=text(
 });
 if(course.pursuit.format!==PURSUIT_FORMAT_V2)
 panel.append(
-button(text('Upgrade to committed pursuit v2','Оновити до узгодженого переслідування v2'),()=>{
+button(
+text('Upgrade to committed pursuit v2','Оновити до узгодженого переслідування v2'),
+()=>{
 if(dirty){
 status.textContent=text(
 'Apply or discard graph edits before upgrading.',
@@ -2213,7 +3408,8 @@ return;
 return change((next)=>{
 next.pursuit.format=PURSUIT_FORMAT_V2;
 });
-}),
+},
+),
 );
 panel.append(
 explanation,
@@ -2225,9 +3421,11 @@ next.pursuit=accepted;
 next.format=PURSUIT_COURSE;
 for(const mode of['self-level','acro']){
 const hunt=next.steps[mode].find((step)=>step.type==='hunt-contact-v1');
-if(!hunt)throw new TypeError('Add a Contact Hunt objective in each flight mode first.');
+if(!hunt)
+throw new TypeError('Add a Contact Hunt objective in each flight mode first.');
 for(const policy of accepted.actors??[]){
-if(policy.family==='courier')hunt.targets=hunt.targets.filter((id)=>id!==policy.id);
+if(policy.family==='courier')
+hunt.targets=hunt.targets.filter((id)=>id!==policy.id);
 else if(!hunt.targets.includes(policy.id))hunt.targets.push(policy.id);
 }
 }
@@ -2285,7 +3483,10 @@ const PURSUIT_RULES=external8['PURSUIT_RULES'];
 const descriptions={
 lookout:[
 ['Holds its position.','Утримує свою позицію.'],
-['A stationary humanoid marks a direct approach.','Нерухома постать позначає прямий підхід.'],
+[
+'A stationary humanoid marks a direct approach.',
+'Нерухома постать позначає прямий підхід.',
+],
 [
 'Approach at body height and touch it with the drone.',
 'Підійдіть на висоті тіла й торкніться його дроном.',
@@ -2317,7 +3518,10 @@ runner:[
 ],
 ],
 sprinter:[
-['Makes a committed burst along a ground route.','Виконує спрямований ривок наземним маршрутом.'],
+[
+'Makes a committed burst along a ground route.',
+'Виконує спрямований ривок наземним маршрутом.',
+],
 [
 'Warns for 0.8 s, bursts at 3 m/s for 0.4 s, then recovers for 1.6 s.',
 'Попереджає 0,8 с, рухається зі швидкістю 3 м/с протягом 0,4 с і відновлюється 1,6 с.',
@@ -2353,7 +3557,10 @@ courier:[
 ],
 ],
 switchback:[
-['Chooses another connected exit when possible.','За можливості обирає інший з’єднаний вихід.'],
+[
+'Chooses another connected exit when possible.',
+'За можливості обирає інший з’єднаний вихід.',
+],
 [
 'Shows the next heading during a 0.8 s warning before moving.',
 'Показує наступний напрямок під час попередження тривалістю 0,8 с.',
@@ -2408,8 +3615,8 @@ switchback:[
 };
 
 /** Read-only projection of a validated native course and its optional snapshot.
- * Repeated objective references count once; ordinary non-Hunt actors are not
- * reinterpreted as prey. Historical policies retain their original descriptions. */
+   * Repeated objective references count once; ordinary non-Hunt actors are not
+   * reinterpreted as prey. Historical policies retain their original descriptions. */
 function worldEnemyGuide(
 course,
 {mode='self-level',locale='en',state=null,actorId=null}={},
@@ -2462,7 +3669,8 @@ row[optional?'optional':'required']++;
 row.survivor||=Boolean(
 family==='rendezvous-pair'&&
 state?.actors?.some(
-(live)=>live.id===actor.id&&live.status==='active'&&live.pursuit?.family==='runner',
+(live)=>
+live.id===actor.id&&live.status==='active'&&live.pursuit?.family==='runner',
 ),
 );
 }
@@ -2486,7 +3694,7 @@ tail:steps.some((step)=>step.tail.linksPerCatch>0),
 }
 
 /** One paused, text-first native guide. No aircraft, renderer, clock or record is
- * created by preview; dismissing it never resumes an existing flight. */
+   * created by preview; dismissing it never resumes an existing flight. */
 function mountWorldEnemyGuide({document:doc,locale=()=>'en',onPause=()=>{}}){
 const node=(tag,text)=>{
 const value=doc.createElement(tag);
@@ -2582,7 +3790,9 @@ node(
 ),
 );
 if(row.specialist)
-card.append(node('strong',text('Hazard · protected contact','Небезпека · захищений контакт')));
+card.append(
+node('strong',text('Hazard · protected contact','Небезпека · захищений контакт')),
+);
 for(const[key,label]of[
 ['goal',text('Goal','Мета')],
 ['tell',text('Tell','Ознака')],
@@ -2594,7 +3804,10 @@ card.append(paragraph);
 }
 if(row.survivor)
 card.append(
-node('p',text('The surviving partner is now a Runner.','Партнер, що лишився, тепер бігун.')),
+node(
+'p',
+text('The surviving partner is now a Runner.','Партнер, що лишився, тепер бігун.'),
+),
 );
 content.append(card);
 }
@@ -2639,6 +3852,5995 @@ dialog.remove();
 
 return{worldEnemyGuide:worldEnemyGuide,mountWorldEnemyGuide:mountWorldEnemyGuide};
 })();
+modules['optional-practice/civilian-fpv/encounter-geometry.mjs']=(()=>{
+/** Admits combat routes only against the regional host's verified resident geometry. */
+const axes=['x','y','z'];
+const delta=(a,b)=>Object.fromEntries(axes.map((key)=>[key,b[key]-a[key]]));
+const magnitude=(v)=>Math.hypot(v.x,v.y,v.z);
+const blocked=()=>({toi:0,normal:{x:0,y:1,z:0},unavailable:true});
+
+/** A pad needs a supported landing patch and a clear approach from the launch. */
+function admitEncounterServicePad(
+position,
+{bounds,launch,surface,sweepStatic,exact=false},
+){
+const offsets=exact
+?[[0,0]]
+:[
+[0,0],
+...[3000,6000].flatMap((r)=>[
+[r,0],
+[-r,0],
+[0,r],
+[0,-r],
+[r,r],
+[-r,r],
+[r,-r],
+[-r,-r],
+]),
+];
+for(const[x,z]of offsets){
+const candidate={...position,x:position.x+x,z:position.z+z};
+if(
+!['x','z'].every(
+(k)=>candidate[k]>=bounds.min[k]+800&&candidate[k]<=bounds.max[k]-800,
+)
+)
+continue;
+const support=surface(candidate);
+if(!support||support.unavailable||support.normal.y<Math.cos(Math.PI/6))continue;
+const ground=support.position;
+if(
+ground.y<bounds.min.y||
+ground.y>bounds.max.y-1200||
+(exact&&Math.abs(ground.y-position.y)>20)
+)
+continue;
+const patch=[
+[750,0],
+[-750,0],
+[0,750],
+[0,-750],
+].every(([dx,dz])=>{
+const hit=surface({...ground,x:ground.x+dx,z:ground.z+dz});
+return(
+hit&&
+!hit.unavailable&&
+hit.normal.y>=Math.cos(Math.PI/6)&&
+Math.abs(hit.position.y-ground.y)<=150
+);
+});
+if(!patch)continue;
+const hover={...ground,y:ground.y+650};
+if(sweepStatic(hover,hover,600))continue;
+const start={...launch,y:launch.y+250};
+if(sweepStatic(start,hover,220))continue;
+return Object.fromEntries(axes.map((k)=>[k,Math.round(ground[k])]));
+}
+return null;
+}
+
+function createRegionalEncounterGeometry(query,{bounds,player,radius=40000}={}){
+player=player.position?player:{position:player,radius:220};
+const centre={...player.position};
+const area={
+min:Object.fromEntries(
+axes.map((axis)=>[
+axis,
+Math.max(bounds.min[axis],centre[axis]-(axis==='y'?12000:radius)),
+]),
+),
+max:Object.fromEntries(
+axes.map((axis)=>[
+axis,
+Math.min(bounds.max[axis],centre[axis]+(axis==='y'?12000:radius)),
+]),
+),
+};
+const inside=(p,margin=0)=>
+axes.every(
+(axis)=>p[axis]>=area.min[axis]+margin&&p[axis]<=area.max[axis]-margin,
+);
+function sweepStatic(from,to,bodyRadius=25){
+const result=query.castMotion(from,delta(from,to),Math.max(1,Math.round(bodyRadius)));
+if(result.status==='motion-clear')return null;
+if(result.status!=='motion-hit')return blocked();
+const hit=result.hit,
+size=magnitude(hit.normal)||1;
+return{
+...hit,
+position:Object.fromEntries(
+axes.map((key)=>[key,Math.round(from[key]+(to[key]-from[key])*hit.toi)]),
+),
+normal:Object.fromEntries(axes.map((key)=>[key,hit.normal[key]/size])),
+surfaceId:hit.id,
+};
+}
+function groundAt(point){
+const start={...point,y:Math.min(bounds.max.y-1,centre.y+5000)};
+const support=query.support(
+start,
+Math.min(4000000,Math.max(1,Math.ceil(start.y-bounds.min.y+1))),
+);
+if(
+!['terrain-hit','scenery-hit'].includes(support.status)||
+support.normal.y<Math.cos(Math.PI/6)
+)
+return null;
+return{
+position:{...point,y:Math.round(support.heightMm)},
+normal:support.normal,
+surfaceId:support.chunkId,
+};
+}
+// A restart may occur well above the floor. Include only a verified
+// supporting surface, so resources never settle at an invented air height.
+const launchSupport=groundAt(centre);
+if(launchSupport)area.min.y=Math.min(area.min.y,launchSupport.position.y);
+const admitServicePad=(position=centre,{exact=false}={})=>
+admitEncounterServicePad(position,{
+bounds:area,
+launch:centre,
+surface:groundAt,
+sweepStatic,
+exact,
+});
+function bodyLifts(actor){
+const height=['patrol','sentry'].includes(actor.type)?actor.height:actor.radius*2;
+const top=Math.max(actor.radius,height-actor.radius),
+count=Math.max(1,Math.ceil((top-actor.radius)/Math.max(100,actor.radius)));
+if(top===actor.radius)return[actor.radius];
+return Array.from(
+{length:count+1},
+(_,index)=>actor.radius+((top-actor.radius)*index)/count,
+);
+}
+function clearBody(point,actor){
+const r=Math.max(1,actor.radius-12);
+for(const lift of bodyLifts(actor)){
+const from={...point,y:point.y+lift+12};
+if(sweepStatic(from,{...from,y:from.y+1},r))return false;
+}
+return true;
+}
+function supportedPoint(point,actor){
+if(
+!['x','z'].every(
+(axis)=>
+point[axis]>=area.min[axis]+actor.radius&&
+point[axis]<=area.max[axis]-actor.radius,
+)
+)
+return null;
+if(['drone','hazard'].includes(actor.type))
+return clearBody(point,actor)?{...point}:null;
+const ground=groundAt(point);
+return ground&&inside(ground.position)&&clearBody(ground.position,actor)
+?ground.position
+:null;
+}
+function admitActor(
+candidate,
+{requireAttackPosition=false,attackRange=Infinity,attackRadius=1}={},
+){
+const actor=structuredClone(candidate),
+points=[actor.position,...(actor.path??[])],
+adjusted=[];
+for(const point of points){
+const ready=supportedPoint(point,actor);
+if(!ready)return null;
+adjusted.push(ready);
+}
+if(
+magnitude(delta(adjusted[0],player.position))<
+actor.radius+(player.radius??220)+2000
+)
+return null;
+// Runtime reaches path[0] from spawn once, then cycles the path itself.
+const route=[...adjusted,...(adjusted.length>2?[adjusted[1]]:[])];
+for(let edge=1;edge<route.length;edge++){
+const from=route[edge-1],
+to=route[edge],
+travel=delta(from,to);
+const count=Math.max(1,Math.ceil(magnitude(travel)/100));
+let previous=from;
+for(let index=1;index<=count;index++){
+const p=Object.fromEntries(
+axes.map((key)=>[key,Math.round(from[key]+(travel[key]*index)/count)]),
+);
+const admitted=supportedPoint(p,actor);
+if(
+!admitted||
+(!['drone','hazard'].includes(actor.type)&&Math.abs(admitted.y-previous.y)>200)
+)
+return null;
+for(const lift of bodyLifts(actor)){
+const a={...previous,y:previous.y+lift+12},
+b={...admitted,y:admitted.y+lift+12};
+if(sweepStatic(a,b,Math.max(1,actor.radius-12)))return null;
+}
+previous=admitted;
+}
+}
+if(requireAttackPosition){
+const launch={...centre,y:centre.y+(player.supportHeight??220)};
+const lift=['patrol','sentry'].includes(actor.type)?actor.height/2:actor.radius;
+if(
+!adjusted.some((point)=>{
+const target={...point,y:point.y+lift};
+return(
+magnitude(delta(launch,target))<=attackRange&&
+!sweepStatic(launch,target,attackRadius)
+);
+})
+)
+return null;
+}
+actor.position=adjusted[0];
+actor.path=adjusted.slice(1);
+return actor;
+}
+return{
+area,
+ready(bounds=area){
+if(query.ready&& !query.ready())return false;
+if(!query.motionCoverage)return true;
+// Parallel swept strips prove all encounter cells, including intervening
+// blast sight lines, while allowing hits against known solid scenery.
+const width=bounds.max.x-bounds.min.x,
+depth=bounds.max.z-bounds.min.z;
+const bodyRadius=Math.max(1,Math.min(2000,Math.floor(Math.min(width,depth)/2)));
+for(
+let z=bounds.min.z+bodyRadius;
+z<=bounds.max.z-bodyRadius;
+z+=bodyRadius*2
+){
+const at=Math.min(z,bounds.max.z-bodyRadius);
+const from={x:bounds.min.x+bodyRadius,y:centre.y,z:at};
+if(
+query.motionCoverage(
+from,
+{x:Math.max(0,width-bodyRadius*2),y:0,z:0},
+bodyRadius,
+).status!=='motion-covered'
+)
+return false;
+}
+const from={x:bounds.min.x+bodyRadius,y:centre.y,z:bounds.max.z-bodyRadius};
+return(
+query.motionCoverage(
+from,
+{x:Math.max(0,width-bodyRadius*2),y:0,z:0},
+bodyRadius,
+).status==='motion-covered'
+);
+},
+admitActor,
+admitServicePad,
+sweepStatic,
+surface(point){
+const surface=groundAt(point);
+// Preserve the historical v1 defeat-support envelope. Stable identifiers
+// remain available through groundQuery and pad admission.
+return surface?{position:surface.position,normal:surface.normal}:null;
+},
+moveActor(actor,movement){
+const start=actor.position,
+count=Math.max(1,Math.ceil(magnitude(movement)/100));
+let previous=start;
+for(let index=1;index<=count;index++){
+const point=Object.fromEntries(
+axes.map((axis)=>[axis,Math.round(start[axis]+(movement[axis]*index)/count)]),
+);
+const next=supportedPoint(point,actor);
+if(
+!next||
+(!['drone','hazard'].includes(actor.type)&&Math.abs(next.y-previous.y)>200)
+)
+return{position:start,blocked:true};
+for(const lift of bodyLifts(actor))
+if(
+sweepStatic(
+{...previous,y:previous.y+lift+12},
+{...next,y:next.y+lift+12},
+Math.max(1,actor.radius-12),
+)
+)
+return{position:start,blocked:true};
+previous=next;
+}
+return{position:previous,blocked:false};
+},
+visible:(from,to)=> !sweepStatic(from,to,1),
+groundQuery(point,normal={x:0,y:1,z:0}){
+if(Math.abs(normal.y)>0.7)return groundAt(point);
+const length=magnitude(normal)||1;
+const from=Object.fromEntries(
+axes.map((key)=>[key,point[key]+(normal[key]/length)*30]),
+);
+const to=Object.fromEntries(
+axes.map((key)=>[key,point[key]-(normal[key]/length)*100]),
+);
+const hit=sweepStatic(from,to,1);
+if(!hit||hit.unavailable)return null;
+return{
+position:Object.fromEntries(
+axes.map((key)=>[key,from[key]+(to[key]-from[key])*hit.toi]),
+),
+normal:hit.normal,
+surfaceId:hit.id,
+};
+},
+};
+}
+
+return{
+admitEncounterServicePad:admitEncounterServicePad,
+createRegionalEncounterGeometry:createRegionalEncounterGeometry,
+};
+})();
+modules['optional-practice/civilian-fpv/encounter-runtime.mjs']=(()=>{
+const boundedJSON=external11['boundedJSON'];
+const canonicalJSON=external11['canonicalJSON'];
+const dataIdentity=external11['dataIdentity'];
+const exactKeys=external11['exactKeys'];
+const plainObject=external11['plainObject'];
+const required=external11['required'];
+const stableId=external11['stableId'];
+const createWorldCollision=external12['createWorldCollision'];
+const admitEncounterServicePad=
+modules['optional-practice/civilian-fpv/encounter-geometry.mjs']['admitEncounterServicePad'];
+const createPursuitActorState=external8['createPursuitActorState'];
+const createPursuitController=external8['createPursuitController'];
+const pursuitContactProtected=external8['pursuitContactProtected'];
+const PURSUIT_FORMAT_V2=external8['PURSUIT_FORMAT_V2'];
+const WORLD_VEHICLE_MODELS=external8['WORLD_VEHICLE_MODELS'];
+
+const ENCOUNTER_FORMAT='FPVEncounterDefinition.v1';
+const ENCOUNTER_STATE='FPVEncounterState.v1';
+const ENCOUNTER_FORMAT_V2='FPVEncounterDefinition.v2';
+const ENCOUNTER_STATE_V2='FPVEncounterState.v2';
+const ENCOUNTER_WEAPONS=Object.freeze({
+autocannon:Object.freeze({
+damage:12,
+pellets:1,
+interval:5,
+magazine:30,
+reload:90,
+speed:60000,
+range:120000,
+spread:0.007,
+}),
+scatter:Object.freeze({
+damage:10,
+pellets:6,
+interval:30,
+magazine:6,
+reload:120,
+speed:40000,
+range:32000,
+spread:0.07,
+}),
+precision:Object.freeze({
+damage:80,
+pellets:1,
+interval:40,
+magazine:5,
+reload:125,
+speed:120000,
+range:180000,
+spread:0,
+}),
+rocket:Object.freeze({
+damage:40,
+pellets:1,
+interval:50,
+magazine:2,
+reload:150,
+speed:25000,
+range:100000,
+spread:0,
+blast:60,
+blastRadius:4000,
+}),
+});
+function normalizeEncounterConfig(options={}){
+const activity=['continuous','hunting','elimination','strike','survival'].includes(
+options.activity,
+)
+?options.activity
+:'continuous';
+const loadout=Array.isArray(options.loadout)
+?options.loadout.filter((id)=>Object.hasOwn(ENCOUNTER_WEAPONS,id))
+:[];
+const first=loadout[0]??'autocannon',
+second=
+loadout.find((id)=>id!==first)??(first==='scatter'?'precision':'scatter');
+return{
+activity,
+difficulty:Object.hasOwn(POLICIES,options.difficulty)?options.difficulty:'normal',
+population:(activity==='survival'?[64,96,128]:[6,12,20]).includes(
+options.population,
+)
+?options.population
+:activity==='survival'
+?96
+:12,
+survivalMode:options.survivalMode==='endless'?'endless':'timed',
+loadout:[first,second],
+payload:['bomb','remote','drone'].includes(options.payload)?options.payload:'bomb',
+ammoPreset:['balanced','arcade','tactical'].includes(options.ammoPreset)
+?options.ammoPreset
+:'balanced',
+playerDamage:options.playerDamage==='invulnerable'?'invulnerable':'normal',
+enemyDamage:options.enemyDamage==='one-hit'?'one-hit':'normal',
+};
+}
+const militaryArchetype=(a)=>
+a.appearance?.archetype??
+(humanoid(a)
+?'military-trooper'
+:a.type==='hazard'
+?'interceptor-uav'
+:a.type==='drone'
+?'military-uav'
+:a.type==='prop'
+?a.speed
+?[...String(a.id??'')].reduce((sum,c)=>sum+c.charCodeAt(0),0)%2
+?'explosive-rover'
+:'tracked-robot'
+:'supply-container'
+:(a.vehicleModel??'field-utility'));
+const resolveMilitaryEncounterActor=(a)=>({
+...a,
+role:'hostile',
+appearance:{
+family:a.family,
+cast:['tactical','rivals','arcade'].includes(a.appearance?.cast)
+?a.appearance.cast
+:'tactical',
+archetype:militaryArchetype(a),
+},
+});
+const ENCOUNTER_RULES=Object.freeze({
+hz:50,
+actors:20,
+projectiles:64,
+remains:1024,
+huntTicks:9000,
+replacementTicks:50,
+breakTicks:250,
+hurtBreakTicks:500,
+impactCooldown:13,
+pulseDamage:25,
+fireCooldown:8,
+});
+const AXES=['x','y','z'];
+const TYPES=['patrol','sentry','vehicle','drone','hazard','prop'];
+const FAMILIES=[
+'lookout',
+'patroller',
+'runner',
+'sprinter',
+'refuge-seeker',
+'switchback',
+'rendezvous-pair',
+'courier',
+'shield-bearer',
+'brace-trooper',
+];
+const MATERIALS=['organic','metal','wood','electronic','glass'];
+const POLICIES={
+easy:{attackers:2,incoming:0.5,self:0},
+normal:{attackers:3,incoming:1,self:0.1},
+hard:{attackers:4,incoming:1.5,self:0.25},
+};
+const clone=(v)=>structuredClone(v);
+const integer=(n,min,max)=>Number.isSafeInteger(n)&&n>=min&&n<=max;
+const zero=()=>({x:0,y:0,z:0});
+const subtract=(a,b)=>Object.fromEntries(AXES.map((k)=>[k,a[k]-b[k]]));
+const length=(v)=>Math.hypot(v.x,v.y,v.z);
+const distance=(a,b)=>length(subtract(a,b));
+const unit=(v)=>{
+const n=length(v);
+return n?Object.fromEntries(AXES.map((k)=>[k,v[k]/n])):{x:0,y:0,z:1};
+};
+const dot=(a,b)=>AXES.reduce((n,k)=>n+a[k]*b[k],0);
+const add=(a,b,factor=1)=>
+Object.fromEntries(AXES.map((k)=>[k,Math.round(a[k]+b[k]*factor)]));
+const mix=(a,b,t)=>add(a,subtract(b,a),t);
+const within=(p,box)=>AXES.every((k)=>p[k]>=box.min[k]&&p[k]<=box.max[k]);
+const ground=(a)=>['patrol','sentry','vehicle','prop'].includes(a.type);
+const humanoid=(a)=>['patrol','sentry'].includes(a.type);
+const lift=(a)=>(humanoid(a)?a.height/2:a.radius);
+const centre=(a)=>({...a.position,y:a.position.y+lift(a)});
+const slotId=(i)=>`encounter-slot-${String(i+1).padStart(2,'0')}`;
+const seedStep=(value)=>{
+let n=value>>>0;
+n^=n<<13;
+n^=n>>>17;
+n^=n<<5;
+return n>>>0;
+};
+function vector(v,label='Encounter position'){
+exactKeys(v,AXES,label);
+required(
+AXES.every((k)=>integer(v[k],-1000000000,1000000000)),
+`${label} must use integer millimetres`,
+);
+}
+function box(v){
+exactKeys(v,['min','max'],'Encounter bounds');
+vector(v.min);
+vector(v.max);
+required(
+AXES.every((k)=>v.min[k]<v.max[k]),
+'Empty encounter bounds',
+);
+}
+function normalizeActor(v,index=0){
+const type=v.type??'patrol',
+radius=
+v.radius??
+{
+patrol:350,
+sentry:350,
+vehicle:900,
+drone:450,
+hazard:600,
+prop:450,
+}[type];
+const family=v.family??v.appearance?.family??(v.speed?'patroller':'lookout');
+return{
+id:v.id??`target-${index+1}`,
+type,
+role:v.role??'hostile',
+position:clone(v.position),
+path:clone(v.path??[]),
+speed:v.speed??1200,
+radius,
+height:v.height??(humanoid({type})?1800:radius*2),
+health:v.health??(type==='vehicle'?100:50),
+fireEveryTicks:v.fireEveryTicks??(['hazard','prop'].includes(type)?0:100),
+damage:v.damage??10,
+projectileSpeed:v.projectileSpeed??8000,
+range:v.range??20000,
+family,
+material:
+v.material??(humanoid({type})?'organic':type==='drone'?'electronic':'metal'),
+appearance:{family,cast:v.appearance?.cast??'authored'},
+destructible:v.destructible??true,
+...(ground({type})?{groundMotion:'support-v1'}:{}),
+...(v.vehicleModel?{vehicleModel:v.vehicleModel}:{}),
+...(v.spawnZone?{spawnZone:clone(v.spawnZone)}:{}),
+};
+}
+function validateEncounterDefinition(source){
+const v=boundedJSON(source,{
+maxBytes:1048576,
+maxNodes:64000,
+maxArray:256,
+maxDepth:12,
+maxString:512,
+});
+const v2=v.format===ENCOUNTER_FORMAT_V2;
+exactKeys(
+v,
+[
+...(v2
+?[
+'survivalMode',
+'loadout',
+'payload',
+'ammoPreset',
+'playerDamage',
+'enemyDamage',
+'servicePad',
+'crowdModel',
+'contactModel',
+]
+:[]),
+'format',
+'revision',
+'baseIdentity',
+'activity',
+'difficulty',
+'population',
+'seed',
+'bounds',
+'spawn',
+'actors',
+],
+'Encounter definition',
+);
+required(
+(v.format===ENCOUNTER_FORMAT&&v.revision==='r1')||(v2&&v.revision==='r2'),
+'Unsupported encounter definition',
+);
+required(
+typeof v.baseIdentity==='string'&&
+v.baseIdentity.length>0&&
+v.baseIdentity.length<=256,
+'Encounter base identity required',
+);
+required(
+(v2
+?['continuous','hunting','elimination','strike','survival']
+:['continuous','hunting','elimination']
+).includes(v.activity)&&
+Object.hasOwn(POLICIES,v.difficulty)&&
+(v2&&v.activity==='survival'?[64,96,128]:[6,12,20]).includes(v.population),
+'Unsupported encounter activity, difficulty or population',
+);
+if(v2){
+required(
+v.crowdModel===undefined||v.crowdModel==='squad-lanes-v1',
+'Unsupported crowd model',
+);
+required(
+v.contactModel===undefined||v.contactModel==='arcade-ram-v1',
+'Unsupported encounter contact model',
+);
+const config=normalizeEncounterConfig(v);
+for(const key of Object.keys(config))
+required(
+JSON.stringify(v[key])===JSON.stringify(config[key]),
+`Invalid encounter ${key}`,
+);
+}
+required(integer(v.seed,1,0xffffffff),'Encounter seed must be nonzero uint32');
+box(v.bounds);
+vector(v.spawn);
+required(within(v.spawn,v.bounds),'Encounter spawn outside bounds');
+if(v2&&v.servicePad!=null){
+vector(v.servicePad);
+required(within(v.servicePad,v.bounds),'Service pad outside encounter bounds');
+}
+if(v2&&v.ammoPreset==='tactical')
+required(
+v.servicePad!=null,
+'Tactical ammunition needs a supported, reachable service pad. Choose another starting area or ammunition preset.',
+);
+required(
+Array.isArray(v.actors)&&
+v.actors.length>0&&
+v.actors.length<=(v2?128:ENCOUNTER_RULES.actors),
+'No admitted encounter targets or actor budget exceeded',
+);
+const ids=new Set();
+for(const a of v.actors){
+exactKeys(
+a,
+[
+'id',
+'type',
+'role',
+'position',
+'path',
+'speed',
+'radius',
+'height',
+'health',
+'fireEveryTicks',
+'damage',
+'projectileSpeed',
+'range',
+'family',
+'material',
+'appearance',
+'destructible',
+'groundMotion',
+'vehicleModel',
+'spawnZone',
+],
+'Encounter actor',
+);
+required(
+stableId(a.id)&& !ids.has(a.id)&&TYPES.includes(a.type),
+'Unique supported encounter actor required',
+);
+ids.add(a.id);
+required(
+(v2?['hostile']:['hostile','rival','civilian']).includes(a.role)&&
+FAMILIES.includes(a.family)&&
+MATERIALS.includes(a.material)&&
+a.destructible===true,
+'Invalid encounter appearance or capabilities',
+);
+exactKeys(
+a.appearance,
+v2?['family','cast','archetype']:['family','cast'],
+'Encounter appearance',
+);
+if(v2)
+required(
+['tactical','rivals','arcade'].includes(a.appearance.cast)&&
+[
+'military-trooper',
+'interceptor-uav',
+'military-uav',
+'tracked-robot',
+'explosive-rover',
+'supply-container',
+...WORLD_VEHICLE_MODELS,
+].includes(a.appearance.archetype),
+'Military appearance required',
+);
+required(
+a.appearance.family===a.family&&
+typeof a.appearance.cast==='string'&&
+a.appearance.cast.length<=64,
+'Invalid encounter appearance',
+);
+required(
+a.groundMotion===undefined||a.groundMotion==='support-v1',
+'Unsupported ground motion',
+);
+required(
+a.vehicleModel===undefined||
+(a.type==='vehicle'&&WORLD_VEHICLE_MODELS.includes(a.vehicleModel)),
+'Invalid vehicle appearance model',
+);
+for(const[key,min,max]of[
+['speed',0,15000],
+['radius',100,2000],
+['height',200,5000],
+['health',1,1000],
+['fireEveryTicks',0,5000],
+['damage',0,1000],
+['projectileSpeed',1000,60000],
+['range',100,100000],
+])
+required(integer(a[key],min,max),`Invalid encounter ${key}`);
+required(!humanoid(a)||a.height>=a.radius*2,'Invalid humanoid height');
+required(Array.isArray(a.path)&&a.path.length<=64,'Encounter route budget exceeded');
+if(a.spawnZone)box(a.spawnZone);
+for(const p of[a.position,...a.path]){
+vector(p);
+required(
+within(p,v.bounds)&&(!a.spawnZone||within(p,a.spawnZone)),
+'Encounter route outside bounds',
+);
+}
+}
+required(
+v.actors.slice(0,v.population).some((a)=>a.destructible&&a.type!=='prop'),
+'Encounter requires destructible targets in active population',
+);
+if(v2&&v.activity==='survival'){
+const final=v.actors.find((a)=>['vehicle','drone','hazard'].includes(a.type));
+required(
+final&&v.actors.some((a)=>a!==final&&a.type!=='prop'),
+'Survival needs a validated final enemy and a separate ordinary target',
+);
+}
+return v;
+}
+function encounterPhysicsCourse(course){
+return{
+format:'FlightCourse.v2',
+id:course.id,
+revision:course.revision??'r1',
+environment:course.environment??'encounter',
+world:clone(
+course.world??{
+id:course.environment??'encounter',
+theme:'academy',
+style:'meadow',
+},
+),
+locales:clone(course.locales),
+spawn:clone(course.spawn),
+bounds:clone(course.bounds),
+obstacles:clone(course.obstacles??[]),
+actors:[],
+steps:{
+'self-level':[{type:'survive',ticks:36000}],
+acro:[{type:'survive',ticks:36000}],
+},
+rules:{seed:1,maxTicks:36000,collisionDamage:0},
+conditions:clone(course.conditions??{profile:'clear',revision:'r1'}),
+};
+}
+/** Admission uses native collision/support; visible scenery alone is never treated as solid. */
+function createNativeEncounterGeometry(course){
+const collision=createWorldCollision(encounterPhysicsCourse(course)),
+movers=new Set();
+let serial=0;
+const serviceSurface=(point)=>{
+const support=collision.support(
+{...point,y:Math.max(point.y,course.spawn.y)+200},
+100,
+4000000,
+);
+return support
+?{position:{...point,y:support.y},normal:unit(support.normal)}
+:null;
+};
+return{
+admitServicePad(position=course.spawn,{exact=false}={}){
+return admitEncounterServicePad(position,{
+bounds:course.bounds,
+launch:course.spawn,
+surface:serviceSurface,
+sweepStatic:(from,to,radius)=>collision.castStatic(from,subtract(to,from),radius),
+exact,
+});
+},
+sweepStatic(from,to,radius=25){
+return collision.castStatic
+?collision.castStatic(from,subtract(to,from),radius)
+:collision.castPulse(from,to,[]);
+},
+visible:(from,to)=>collision.visible(from,to),
+surface(p,radius=350){
+const support=collision.support({...p,y:p.y+500},radius,20000);
+return support?{position:{...p,y:support.y},normal:unit(support.normal)}:null;
+},
+moveActor(source,delta){
+const actor={...source,id:source.slotId??source.id};
+if(!movers.has(actor.id)){
+required(movers.size<128,'Encounter motion proxy budget exceeded');
+collision.addActor(actor,'support-v1');
+movers.add(actor.id);
+}
+collision.placeActor(actor);
+if(ground(actor))return collision.moveGroundActor(actor,delta);
+const to=add(actor.position,delta),
+hit=collision.castStatic(centre(actor),delta,actor.radius);
+return{position:hit?clone(actor.position):to,blocked:!!hit};
+},
+admitActor(
+source,
+{requireAttackPosition=false,attackRange=Infinity,attackRadius=1}={},
+){
+const actor=clone(source),
+originalId=actor.id;
+actor.id=`probe-${++serial}`;
+const points=[clone(actor.position),...clone(actor.path)];
+if(ground(actor))
+for(const p of points){
+const support=collision.support(
+{...p,y:Math.min(course.bounds.max.y-100,p.y+10000)},
+actor.radius,
+20000,
+);
+if(!support||support.normal.y<866025)return null;
+p.y=support.y+12;
+}
+actor.position=clone(points[0]);
+collision.addActor(actor,'support-v1');
+try{
+const route=[...points,...(points.length>2?[points[1]]:[])];
+for(let i=0;i<route.length;i++){
+const from=route[Math.max(0,i-1)],
+to=route[i],
+size=distance(from,to);
+if(
+size>20000||
+(ground(actor)&&
+Math.abs(to.y-from.y)>Math.hypot(to.x-from.x,to.z-from.z)*0.57735+200)
+)
+return null;
+for(let n=0,count=Math.max(1,Math.ceil(size/100));n<=count;n++){
+actor.position=mix(from,to,n/count);
+collision.placeActor(actor);
+if(!collision.clearActorSpawn(actor))return null;
+if(ground(actor)){
+const support=collision.support(actor.position,actor.radius,220);
+if(
+!support||
+support.normal.y<866025||
+Math.abs(support.y-actor.position.y)>220
+)
+return null;
+}
+}
+}
+if(requireAttackPosition){
+const launchCentre={...course.spawn,y:course.spawn.y+220};
+if(
+!points.some((position)=>{
+const target=centre({...actor,position});
+return(
+distance(launchCentre,target)<=attackRange&&
+!collision.castStatic(launchCentre,subtract(target,launchCentre),attackRadius)
+);
+})
+)
+return null;
+}
+return{
+...source,
+id:originalId,
+position:points[0],
+path:points.slice(1),
+};
+}finally{
+collision.removeActor(actor.id);
+}
+},
+dispose:()=>collision.dispose(),
+};
+}
+/** A single equipped weapon must satisfy both range and projectile clearance. */
+function encounterAttackAdmission(loadout){
+required(
+Array.isArray(loadout)&&
+loadout.length===2&&
+loadout.every((id)=>Object.hasOwn(ENCOUNTER_WEAPONS,id)),
+'Invalid admission loadout',
+);
+const longest=[...loadout].sort(
+(a,b)=>ENCOUNTER_WEAPONS[b].range-ENCOUNTER_WEAPONS[a].range,
+)[0];
+return{
+requireAttackPosition:true,
+attackRange:ENCOUNTER_WEAPONS[longest].range,
+attackRadius:longest==='rocket'?100:25,
+};
+}
+
+function createEncounterDefinition({
+course,
+baseIdentity=dataIdentity(course),
+activity='continuous',
+difficulty='normal',
+population=12,
+seed=1,
+admitActor,
+admitServicePad,
+spawnZones=[],
+version=1,
+...options
+}){
+const v2=version===2;
+const config=normalizeEncounterConfig({...options,activity,difficulty,population});
+if(v2)({activity,difficulty,population}=config);
+required(course?.bounds&&course?.spawn,'Encounter requires world bounds and spawn');
+// New attempts transfer every authored actor to encounter ownership before
+// adding procedural opponents. Recovery retains its immutable definition.
+if(v2&&(course.actors?.length??0)>population){
+const minimum=(activity==='survival'?[64,96,128]:[6,12,20]).find(
+(count)=>count>=course.actors.length,
+);
+required(
+minimum,
+'The authored actor roster exceeds this activity’s supported population. Reduce it in Studio or choose Survival.',
+);
+population=config.population=minimum;
+}
+const owned=admitActor?null:createNativeEncounterGeometry(course),
+admit=admitActor??owned.admitActor,
+actors=[],
+ids=new Set();
+const accept=(candidate,authored=false)=>{
+if(actors.length>=population)return false;
+if(
+v2&&
+activity==='survival'&&
+!authored&&
+candidate.type==='vehicle'&&
+actors.filter((a)=>a.type==='vehicle').length>=4
+)
+return false;
+const normalized=normalizeActor({...candidate,destructible:true},actors.length);
+if(
+v2&&
+activity==='survival'&&
+['shield-bearer','brace-trooper','courier','rendezvous-pair'].includes(
+normalized.family,
+)&&
+actors.filter((a)=>
+['shield-bearer','brace-trooper','courier','rendezvous-pair'].includes(a.family),
+).length>=8
+)
+normalized.family=normalized.appearance.family='patroller';
+if(ids.has(normalized.id))return false;
+const admitted=admit(
+clone(normalized),
+v2?encounterAttackAdmission(config.loadout):undefined,
+);
+if(!admitted)return false;
+const normalizedActor=normalizeActor(admitted,actors.length);
+const actor=v2
+?resolveMilitaryEncounterActor({
+...normalizedActor,
+appearance:{
+...normalizedActor.appearance,
+...(admitted.appearance?.archetype
+?{archetype:admitted.appearance.archetype}
+:{}),
+},
+})
+:normalizedActor;
+if(
+![actor.position,...actor.path].every((p)=>within(p,course.bounds))||
+distance(actor.position,course.spawn)<actor.radius+3500||
+actors.some(
+(other)=>distance(centre(actor),centre(other))<actor.radius+other.radius+800,
+)
+)
+return false;
+actors.push(actor);
+ids.add(actor.id);
+return true;
+};
+const acceptAuthored=(candidate)=>{
+if(accept(candidate,true)|| !v2)return;
+// An unsupported decorative patrol path must not leave an invulnerable
+// original behind. Prefer its supported location, then a bounded nearby
+// route/position that passes the same full geometry and reachability check.
+if(accept({...candidate,path:[],speed:0},true))return;
+let salt=seed>>>0;
+for(const character of String(candidate.id))salt=seedStep(salt^character.charCodeAt(0));
+for(let attempt=0;attempt<96;attempt++){
+const source=attempt<16?candidate.position:course.spawn,
+angle=attempt*2.399963229728653+(salt/4294967296)*Math.PI*2,
+range=4000+Math.floor(attempt/8)*1800,
+position={
+x:Math.round(source.x+Math.cos(angle)*range),
+y:candidate.position.y,
+z:Math.round(source.z+Math.sin(angle)*range),
+};
+if(!within(position,course.bounds))continue;
+const end={...position,x:position.x+1600,z:position.z+800},
+route={...candidate,position,path:[clone(position),end]};
+if(
+(within(end,course.bounds)&&accept(route,true))||
+accept({...route,path:[],speed:0},true)
+)
+return;
+}
+throw new Error(
+`No admitted position for authored actor ${candidate.id}. Its route or placement is blocked; adjust the encounter in Studio.`,
+);
+};
+try{
+for(const original of course.actors??[]){
+const policy=course.pursuit?.actors.find((row)=>row.id===original.id);
+if(!policy){
+acceptAuthored(original);
+continue;
+}
+const nodes=new Map(course.pursuit.nodes.map((node)=>[node.id,node.position])),
+neighbors=new Map([...nodes.keys()].map((id)=>[id,[]]));
+for(const edge of course.pursuit.edges){
+neighbors.get(edge.from).push(edge.to);
+neighbors.get(edge.to).push(edge.from);
+}
+const route=[policy.start];
+for(const goal of[...policy.goals,policy.start]){
+const pending=[[route.at(-1)]],
+seen=new Set();
+let found;
+for(const candidate of pending){
+const last=candidate.at(-1);
+if(last===goal){
+found=candidate;
+break;
+}
+if(seen.has(last))continue;
+seen.add(last);
+for(const next of neighbors.get(last))
+if(!seen.has(next))pending.push([...candidate,next]);
+}
+if(found)route.push(...found.slice(1));
+}
+acceptAuthored({
+...original,
+family:policy.family,
+path:route.slice(0,64).map((id)=>nodes.get(id)),
+speed:1500,
+});
+}
+let rng=seed>>>0;
+const next=()=>{
+rng=seedStep(rng);
+return rng/4294967296;
+};
+const types=
+v2&&activity==='survival'
+?['patrol','patrol','drone','patrol','prop','patrol','hazard','vehicle']
+:['patrol','drone','patrol','vehicle','hazard','prop'];
+for(let index=0;index<(v2?1800:180)&&actors.length<population;index++){
+const zone=spawnZones.length?spawnZones[index%spawnZones.length]:course.bounds;
+box(zone);
+const type=types[index%types.length],
+radius=type==='vehicle'?900:type==='hazard'?600:350;
+const position={
+x:0,
+y:ground({type})
+?zone.min.y
+:Math.min(zone.max.y-1500,Math.max(zone.min.y+2500,course.spawn.y+2500)),
+z:0,
+};
+for(const k of['x','z']){
+const low=Math.max(zone.min[k]+radius,course.spawn[k]-28000),
+high=Math.min(zone.max[k]-radius,course.spawn[k]+28000);
+position[k]=Math.round(low+next()*Math.max(0,high-low));
+}
+const to=clone(position);
+for(const k of['x','z'])
+to[k]=Math.round(
+Math.max(
+zone.min[k]+radius,
+Math.min(
+zone.max[k]-radius,
+position[k]+(next()<0.5? -1:1)*(k==='x'?4000:2000),
+),
+),
+);
+accept({
+id:`encounter-target-${index+1}`,
+type,
+position,
+path:[clone(position),to],
+speed:type==='prop'?600:1000+Math.floor(next()*800),
+family:FAMILIES[index%FAMILIES.length],
+...(spawnZones.length?{spawnZone:zone}:{}),
+});
+}
+if(v2&&activity==='survival'){
+const boss=actors.findIndex((a)=>['vehicle','drone','hazard'].includes(a.type));
+required(boss>=0,'Survival needs a validated military vehicle or UAV entry');
+actors.push(...actors.splice(boss,1));
+}
+return validateEncounterDefinition({
+...(v2
+?{
+...config,
+crowdModel:'squad-lanes-v1',
+contactModel:'arcade-ram-v1',
+servicePad:(admitServicePad??owned?.admitServicePad)?.(course.spawn)??null,
+}
+:{}),
+format:v2?ENCOUNTER_FORMAT_V2:ENCOUNTER_FORMAT,
+revision:v2?'r2':'r1',
+baseIdentity,
+activity,
+difficulty,
+population,
+seed,
+bounds:clone(course.bounds),
+spawn:clone(course.spawn),
+actors,
+});
+}finally{
+owned?.dispose();
+}
+}
+function sweptSphere(a,b,radius,actor,from=actor.position,to=actor.position){
+const start={...from,y:from.y+lift(actor)},
+end={...to,y:to.y+lift(actor)};
+const half=humanoid(actor)?Math.max(0,actor.height/2-actor.radius):0;
+const relative=subtract(a,start),
+delta=subtract(subtract(b,a),subtract(end,start)),
+size=radius+actor.radius;
+const candidates=[],
+closest={x:0,y:Math.max(-half,Math.min(half,relative.y)),z:0};
+if(distance(relative,closest)<=size)candidates.push(0);
+const roots=(aa,bb,cc)=>
+aa>0&&bb*bb>=4*aa*cc
+?[
+(-bb-Math.sqrt(bb*bb-4*aa*cc))/(2*aa),
+(-bb+Math.sqrt(bb*bb-4*aa*cc))/(2*aa),
+]
+:[];
+for(const height of half?[-half,half]:[0]){
+const p={...relative,y:relative.y-height};
+candidates.push(...roots(dot(delta,delta),2*dot(p,delta),dot(p,p)-size*size));
+}
+if(half)
+for(const t of roots(
+delta.x**2+delta.z**2,
+2*(relative.x*delta.x+relative.z*delta.z),
+relative.x**2+relative.z**2-size**2,
+))
+if(Math.abs(relative.y+delta.y*t)<=half)candidates.push(t);
+const toi=Math.min(...candidates.filter((t)=>t>=0&&t<=1));
+if(!Number.isFinite(toi))return null;
+const position=mix(a,b,toi),
+target=mix(start,end,toi);
+target.y+=Math.max(-half,Math.min(half,position.y-target.y));
+return{toi,position,normal:unit(subtract(position,target))};
+}
+const encounterImpactDamage=(speed)=>
+Math.min(100,Math.max(0,Math.floor((speed-2000)/100)));
+/** Staged simulation state is private until the host accepts its physics transaction. */
+function createEncounterRuntime(source,{geometry,runId=null}={}){
+if(source?.format===ENCOUNTER_FORMAT_V2)
+return createEncounterRuntimeV2(source,{geometry,runId});
+const definition=validateEncounterDefinition(source),
+identity=dataIdentity(definition),
+prototypes=definition.actors.slice(0,definition.population),
+policy=POLICIES[definition.difficulty];
+required(
+typeof geometry?.sweepStatic==='function'&&typeof geometry?.visible==='function',
+'Encounter needs verified geometry queries',
+);
+runId??=`encounter-${identity}`;
+required(
+typeof runId==='string'&&runId.length>0&&runId.length<=256,
+'Invalid encounter run ID',
+);
+let state={
+format:ENCOUNTER_STATE,
+definitionIdentity:identity,
+runId,
+ticks:0,
+rng:definition.seed,
+status:'active',
+phase:'wave',
+waitingForClearSpawn:false,
+wave:1,
+nextWaveTick:null,
+lastDamageTick:-10000,
+health:100,
+maxHealth:100,
+score:0,
+kills:0,
+shots:0,
+hits:0,
+successfulImpacts:0,
+streak:0,
+bestStreak:0,
+nextSpawn:1,
+nextProjectile:1,
+nextEvent:1,
+cooldown:0,
+actors:[],
+projectiles:[],
+events:[],
+contactLocks:{},
+result:null,
+};
+let pending=null,
+serial=0,
+defeatRecords=[];
+const movementCache=new Map();
+function movementFor(actor){
+if(!humanoid(actor)|| !actor.path.length|| !actor.speed)return null;
+const index=Number(actor.slotId.slice('encounter-slot-'.length))-1,
+prototype=prototypes[index],
+key=`${actor.slotId}:${actor.family}`;
+if(movementCache.has(key))return movementCache.get(key);
+const points=[prototype.position,...prototype.path].filter(
+(point,i,all)=>all.findIndex((other)=>distance(point,other)<30)===i,
+);
+if(points.length<2)return null;
+const nodes=points.map((position,i)=>({id:`route-${i}`,position})),
+ordered=[prototype.position,...prototype.path].map(
+(point)=>nodes.find((node)=>distance(point,node.position)<30).id,
+),
+edges=[],
+seenEdges=new Set();
+for(let i=1;i<ordered.length;i++){
+const from=ordered[i-1],
+to=ordered[i],
+key=[from,to].sort().join(':');
+if(from!==to&& !seenEdges.has(key)){
+edges.push({from,to});
+seenEdges.add(key);
+}
+}
+const policy={
+id:actor.slotId,
+family:actor.family==='rendezvous-pair'?'runner':actor.family,
+start:nodes[0].id,
+goals:nodes.map((n)=>n.id),
+pair:null,
+};
+const source={
+format:PURSUIT_FORMAT_V2,
+nodes,
+edges,
+actors:[policy],
+},
+movement={
+source,
+policy,
+controller:createPursuitController(source),
+};
+movementCache.set(key,movement);
+return movement;
+}
+const snapshot=({includeDefeats=false}={})=>({
+...clone(state),
+accuracy:state.shots?state.hits/state.shots:null,
+...(includeDefeats?{defeats:clone(defeatRecords)}:{}),
+});
+function emit(draft,type,actor,extra={}){
+const event={
+eventId:`${runId}:${draft.nextEvent++}`,
+type,
+tick:draft.ticks+1,
+...(actor
+?{
+actor:actor.id,
+spawnId:actor.id,
+slotId:actor.slotId,
+sourceId:actor.sourceId,
+position:clone(actor.position),
+normal:{x:0,y:1,z:0},
+velocity:clone(actor.velocity),
+material:actor.material,
+family:
+actor.type==='vehicle'
+?({
+'field-utility':'utility-car',
+'field-tank':'tracked-tank',
+'relay-truck':'radar-truck',
+}[actor.vehicleModel]??
+actor.vehicleModel??
+'utility-car')
+:actor.family,
+humanoid:humanoid(actor),
+machine:
+actor.type==='vehicle'
+?actor.vehicleModel==='field-tank'
+?'tracked'
+:'wheeled'
+:false,
+radius:actor.radius,
+height:actor.height,
+appearance:{
+...actor.appearance,
+type:actor.type,
+...(actor.vehicleModel?{model:actor.vehicleModel}:{}),
+},
+}
+:{}),
+...extra,
+};
+draft.events.push(event);
+return event;
+}
+function spawn(draft,index,initial=false){
+const prototype=prototypes[index],
+actor={
+...clone(prototype),
+id:`${runId}:${draft.nextSpawn++}`,
+slotId:slotId(index),
+sourceId:prototype.id,
+position:clone(prototype.position),
+velocity:zero(),
+status:'active',
+maxHealth:prototype.health,
+health:prototype.health,
+pathIndex:0,
+cooldown:50,
+warning:false,
+heading:{x:0,y:0,z:-1},
+spawnTick:draft.ticks,
+defeatedTick:null,
+};
+actor.spawnId=actor.id;
+actor.blocked=false;
+if(!initial&&definition.activity==='continuous'){
+draft.rng=seedStep(draft.rng);
+if(humanoid(actor)){
+const prior=draft.actors[index]?.family;
+const choices=FAMILIES.filter(
+(family)=>family!==prior&&family!=='rendezvous-pair',
+);
+actor.family=choices[draft.rng%choices.length];
+actor.appearance.family=actor.family;
+}
+actor.speed=Math.min(15000,Math.round(prototype.speed*(0.8+(draft.rng%5)/10)));
+}
+const movement=movementFor(actor);
+if(movement)actor.pursuit=createPursuitActorState(movement.policy,movement.source);
+draft.actors[index]=actor;
+if(!initial)emit(draft,'spawn',actor);
+}
+prototypes.forEach((_,index)=>spawn(state,index,true));
+const protectedHit=(draft,actor,origin)=>{
+const before=state.actors.find((a)=>a.id===actor.id)??actor;
+return before.pursuit
+?pursuitContactProtected(before,origin)
+:!humanoid(before)
+?false
+:before.family==='brace-trooper'
+?(draft.ticks-before.spawnTick)%160<60
+:before.family==='shield-bearer'&&
+dot(subtract(origin,before.position),before.heading)>0;
+};
+function move(draft,actor,player){
+const from=clone(actor.position);
+actor.velocity=zero();
+actor.warning=false;
+if(actor.status!=='active'|| !actor.path.length|| !actor.speed)return from;
+const movement=movementFor(actor);
+if(movement){
+const moving={...actor,id:actor.slotId},
+motionGeometry={
+visible:geometry.visible,
+placeActor(){},
+moveGroundActor(body,delta){
+const target=movement.source.nodes.find(
+(n)=>n.id===actor.pursuit.next,
+)?.position,
+scale=Math.min(
+actor.speed/1500,
+target&&length(delta)?distance(body.position,target)/length(delta):1,
+);
+const scaled=Object.fromEntries(
+AXES.map((key)=>[key,Math.round(delta[key]*scale)]),
+),
+candidate=add(body.position,scaled);
+if(geometry.moveActor)return geometry.moveActor(actor,scaled);
+const supported=geometry.surface?.(candidate,body.radius);
+if(geometry.surface&& !supported)return{position:body.position,blocked:true};
+if(supported){
+if(
+Math.abs(supported.position.y-candidate.y)>220||
+supported.normal.y<0.866
+)
+return{position:body.position,blocked:true};
+candidate.y=Math.round(supported.position.y+12);
+}
+const blocked=[body.radius,body.height/2,body.height-body.radius].some(
+(height)=>
+geometry.sweepStatic(
+{...body.position,y:body.position.y+height},
+{...candidate,y:candidate.y+height},
+body.radius,
+),
+);
+return{
+position:blocked?body.position:candidate,
+blocked:!!blocked,
+};
+},
+};
+const locomotion={
+ticks:draft.ticks,
+position:player.position,
+droneRadius:player.radius??220,
+actors:draft.actors.map((other)=>({...other,id:other.slotId})),
+events:[],
+};
+movement.controller.move(moving,locomotion,motionGeometry);
+actor.position=moving.position;
+actor.blocked=moving.blocked;
+actor.warning=['warning','turning','notice'].includes(actor.pursuit.phase);
+actor.heading={
+x:actor.pursuit.heading.x/1000000,
+y:0,
+z:actor.pursuit.heading.z/1000000,
+};
+actor.velocity=Object.fromEntries(
+AXES.map((k)=>[k,(actor.position[k]-from[k])*50]),
+);
+return from;
+}
+let target=actor.path[actor.pathIndex],
+remaining=distance(actor.position,target);
+if(remaining<35){
+actor.pathIndex=(actor.pathIndex+1)%actor.path.length;
+target=actor.path[actor.pathIndex];
+remaining=distance(actor.position,target);
+}
+let speed=actor.speed;
+const phase=(draft.ticks-actor.spawnTick)%160;
+if(['sprinter','brace-trooper'].includes(actor.family)){
+actor.warning=phase<40;
+speed=phase<40?0:phase<60?speed*2:phase<100?speed/3:speed;
+}
+if(remaining&&speed){
+const direction=unit(subtract(target,actor.position));
+actor.heading=direction;
+const to=add(actor.position,direction,Math.min(remaining,speed/50));
+const moved=geometry.moveActor?.(actor,subtract(to,actor.position));
+if(moved){
+actor.position=clone(moved.position);
+actor.blocked= !!moved.blocked;
+}else{
+const hit=geometry.sweepStatic(
+centre(actor),
+{...to,y:to.y+lift(actor)},
+actor.radius,
+);
+if(!hit)actor.position=to;
+}
+}
+actor.velocity=Object.fromEntries(AXES.map((k)=>[k,(actor.position[k]-from[k])*50]));
+return from;
+}
+function hurt(draft,actor,amount,cause,detail,origin){
+if(actor.status!=='active'|| !actor.destructible||amount<=0)return;
+detail={
+...detail,
+impactPosition:clone(detail.position??actor.position),
+position:clone(actor.position),
+};
+if(protectedHit(draft,actor,origin)){
+emit(draft,'impact',actor,{
+...detail,
+cause,
+damage:0,
+protected:true,
+});
+return;
+}
+actor.health=Math.max(0,actor.health-amount);
+if(cause==='pulse')draft.hits++;
+else draft.successfulImpacts++;
+emit(draft,'impact',actor,{...detail,cause,damage:amount});
+if(actor.health>0)return;
+actor.status='defeated';
+actor.defeatedTick=draft.ticks+1;
+draft.kills++;
+draft.score+=100;
+draft.streak++;
+draft.bestStreak=Math.max(draft.bestStreak,draft.streak);
+const surface=geometry.surface?.(actor.position,actor.radius)??null,
+event=emit(draft,'defeat',actor,{
+...detail,
+cause,
+...(surface?{surface:clone(surface)}:{}),
+});
+actor.velocity=zero();
+draft.defeats.push(event);
+if(draft.defeats.length>1024)draft.defeats.shift();
+}
+const playerHit=(draft,damage,detail={})=>{
+if(damage>0){
+const acceptedDamage=Math.min(draft.health,damage);
+draft.health=Math.max(0,draft.health-damage);
+draft.lastDamageTick=draft.ticks+1;
+draft.streak=0;
+if(acceptedDamage)
+emit(draft,'player-damage',null,{
+damage:acceptedDamage,
+health:draft.health,
+...detail,
+});
+}
+};
+function fire(draft,owner,position,direction,speed,damage){
+if(draft.projectiles.length>=64)return false;
+draft.projectiles.push({
+id:draft.nextProjectile++,
+owner,
+position:clone(position),
+velocity:add(zero(),unit(direction),speed),
+damage,
+ttl:150,
+});
+emit(
+draft,
+'fire',
+owner==='player'?null:draft.actors.find((actor)=>actor.id===owner),
+{actor:owner,position:clone(position)},
+);
+return true;
+}
+function prepare({player,input={}}){
+required(!pending,'An encounter transaction is pending');
+required(state.status==='active','Encounter has ended');
+vector(player.position);
+vector(player.velocity??zero());
+required(
+player.radius===undefined||integer(player.radius,10,3000),
+'Invalid player radius',
+);
+if(input.nose!==undefined)
+required(
+AXES.every((k)=>Number.isFinite(input.nose[k]))&&length(input.nose)>0,
+'Invalid firing direction',
+);
+const draft=clone(state);
+draft.events=[];
+draft.defeats=[];
+if(draft.phase==='intermission'&&draft.ticks>=draft.nextWaveTick){
+draft.waitingForClearSpawn=prototypes.some(
+(actor)=>
+distance(actor.position,player.position)<
+actor.radius+(player.radius??220)+1000,
+);
+if(draft.waitingForClearSpawn)draft.nextWaveTick=draft.ticks+1;
+else{
+draft.wave++;
+draft.phase='wave';
+draft.nextWaveTick=null;
+prototypes.forEach((_,index)=>spawn(draft,index));
+emit(draft,'wave',null,{wave:draft.wave});
+}
+}
+if(definition.activity==='hunting')
+for(let i=0;i<draft.actors.length;i++){
+const a=draft.actors[i];
+if(
+a.status==='defeated'&&
+draft.ticks-a.defeatedTick>=50&&
+distance(prototypes[i].position,player.position)>
+a.radius+(player.radius??220)+1000&&
+draft.actors.every(
+(other,index)=>
+index===i||
+other.status!=='active'||
+distance(prototypes[i].position,other.position)>a.radius+other.radius+300,
+)
+)
+spawn(draft,i);
+}
+const motions=draft.actors.map((actor)=>{
+const from=move(draft,actor,player);
+return{
+id:actor.slotId,
+actorId:actor.id,
+from,
+to:clone(actor.position),
+enabled:actor.status==='active',
+};
+});
+pending={
+transaction:++serial,
+draft,
+before:clone(player),
+input:clone(input),
+motions,
+};
+return{
+transaction:pending.transaction,
+motions:clone(motions),
+actors:clone(draft.actors),
+};
+}
+function commit({transaction,accepted=true,player,trace=null,contacts=[]}){
+required(pending&&transaction===pending.transaction,'Unknown encounter transaction');
+if(!accepted){
+pending=null;
+return snapshot();
+}
+const{draft,before,input,motions}=pending;
+vector(player.position);
+vector(player.velocity??zero());
+required(
+player.radius===undefined||integer(player.radius,10,3000),
+'Invalid player radius',
+);
+required(
+Array.isArray(contacts)&&contacts.length<=1024,
+'Invalid accepted contact budget',
+);
+for(const contact of contacts)
+required(
+(contact.relativeNormalSpeedMmS===undefined||
+(Number.isFinite(contact.relativeNormalSpeedMmS)&&
+contact.relativeNormalSpeedMmS>=0))&&
+(contact.normal===undefined||AXES.every((k)=>Number.isFinite(contact.normal[k]))),
+'Invalid accepted contact',
+);
+const radius=player.radius??220,
+path=
+trace?.length>=2
+?trace.map((p)=>clone(p.position??p))
+:[before.position,player.position];
+path.forEach((p)=>vector(p));
+const touching=new Set();
+for(const actor of draft.actors){
+if(actor.status!=='active')continue;
+const motion=motions.find((m)=>m.id===actor.slotId);
+let hit=null;
+for(let i=1;i<path.length&& !hit;i++)
+hit=sweptSphere(
+{...path[i-1],y:path[i-1].y+radius},
+{...path[i],y:path[i].y+radius},
+radius,
+actor,
+mix(motion.from,motion.to,(i-1)/(path.length-1)),
+mix(motion.from,motion.to,i/(path.length-1)),
+);
+const explicit=contacts.find((c)=>[actor.id,actor.slotId].includes(c.actorId??c.id));
+if(explicit)
+hit={
+position:clone(actor.position),
+...hit,
+normal:unit(
+explicit.normal??hit?.normal??subtract(before.position,actor.position),
+),
+};
+if(!hit)continue;
+touching.add(actor.id);
+const lock=draft.contactLocks[actor.id];
+if(lock&&(!lock.separated||draft.ticks-lock.tick<13))continue;
+const speed=
+explicit?.relativeNormalSpeedMmS??
+Math.max(0,-dot(subtract(before.velocity??zero(),actor.velocity),hit.normal)),
+damage=encounterImpactDamage(speed);
+if(damage>0){
+hurt(
+draft,
+actor,
+damage,
+'impact',
+{
+normal:hit.normal,
+position:hit.position,
+velocity:add(zero(),hit.normal,-speed),
+},
+before.position,
+);
+playerHit(draft,Math.floor(damage*policy.self),{
+cause:'impact',
+position:clone(player.position),
+normal:clone(hit.normal),
+sourceId:actor.sourceId,
+});
+draft.contactLocks[actor.id]={tick:draft.ticks,separated:false};
+}
+}
+const lives=new Set(draft.actors.map((a)=>a.id));
+for(const[id,lock]of Object.entries(draft.contactLocks)){
+if(!lives.has(id))delete draft.contactLocks[id];
+else if(!touching.has(id))lock.separated=true;
+}
+const playerCentre={...player.position,y:player.position.y+radius};
+if(draft.cooldown>0)draft.cooldown--;
+if((input.fire||input.actions&1)&&draft.cooldown===0){
+if(fire(draft,'player',playerCentre,input.nose??{x:0,y:0,z:-1},20000,25))
+draft.shots++;
+draft.cooldown=8;
+}
+const attackers=
+definition.activity==='hunting'
+?[]
+:draft.actors
+.filter(
+(a)=>
+a.status==='active'&&
+a.role==='hostile'&&
+a.fireEveryTicks>0&&
+distance(centre(a),playerCentre)<=a.range&&
+geometry.visible(centre(a),playerCentre),
+)
+.sort(
+(a,b)=>
+distance(centre(a),playerCentre)-distance(centre(b),playerCentre)||
+a.slotId.localeCompare(b.slotId),
+)
+.slice(0,policy.attackers);
+for(const actor of attackers){
+actor.cooldown=Math.max(0,actor.cooldown-1);
+actor.warning||=actor.cooldown<=40;
+if(!actor.cooldown){
+fire(
+draft,
+actor.id,
+centre(actor),
+subtract(playerCentre,centre(actor)),
+actor.projectileSpeed,
+Math.round(actor.damage*policy.incoming),
+);
+actor.cooldown=Math.max(50,actor.fireEveryTicks);
+}
+}
+const survivors=[];
+for(const pulse of draft.projectiles){
+const next=add(pulse.position,pulse.velocity,0.02),
+wall=geometry.sweepStatic(pulse.position,next,25);
+let best=wall?{...wall,actor:null}:null;
+if(pulse.owner==='player')
+for(const actor of draft.actors){
+if(actor.status!=='active')continue;
+const motion=motions.find((m)=>m.id===actor.slotId),
+hit=sweptSphere(pulse.position,next,25,actor,motion.from,motion.to);
+if(hit&&(!best||hit.toi<best.toi))best={...hit,actor};
+}
+else{
+const body={
+position:player.position,
+type:'drone',
+radius,
+height:radius*2,
+},
+hit=sweptSphere(pulse.position,next,25,body,before.position,player.position);
+if(hit&&(!best||hit.toi<best.toi))best={...hit,player:true};
+for(const actor of draft.actors){
+if(actor.status!=='active'||actor.id===pulse.owner)continue;
+const motion=motions.find((m)=>m.id===actor.slotId),
+cover=sweptSphere(pulse.position,next,25,actor,motion.from,motion.to);
+if(cover&&(!best||cover.toi<best.toi))best={...cover,cover:true};
+}
+}
+if(best?.actor)
+hurt(
+draft,
+best.actor,
+pulse.damage,
+'pulse',
+{normal:best.normal,position:best.position,velocity:clone(pulse.velocity)},
+pulse.position,
+);
+else if(best?.player)
+playerHit(draft,pulse.damage,{
+cause:'pulse',
+position:clone(best.position),
+normal:clone(best.normal),
+sourceId:pulse.owner,
+});
+else if(!best&& --pulse.ttl>0&&within(next,definition.bounds))
+survivors.push({...pulse,position:next});
+}
+draft.projectiles=survivors;
+draft.ticks++;
+if(draft.health<=0){
+draft.status='failed';
+draft.result={
+reason:'player-defeated',
+tick:draft.ticks,
+kills:draft.kills,
+score:draft.score,
+};
+}else if(definition.activity==='hunting'&&draft.ticks>=9000){
+draft.status='complete';
+draft.result={
+reason:'time-complete',
+tick:draft.ticks,
+kills:draft.kills,
+score:draft.score,
+};
+}else if(
+draft.phase==='wave'&&
+draft.actors.every((a)=>a.status==='defeated'|| !a.destructible||a.type==='prop')
+){
+if(definition.activity==='elimination'){
+draft.status='complete';
+draft.result={
+reason:'targets-cleared',
+tick:draft.ticks,
+kills:draft.kills,
+score:draft.score,
+};
+}else if(definition.activity==='continuous'){
+draft.phase='intermission';
+draft.nextWaveTick=
+draft.ticks+(draft.ticks-draft.lastDamageTick<=250?500:250);
+}
+}
+if(draft.result)
+emit(draft,'result',null,{
+tick:draft.ticks,
+result:clone(draft.result),
+});
+if(draft.defeats.length)defeatRecords=[...defeatRecords,...draft.defeats].slice(-1024);
+delete draft.defeats;
+state=draft;
+pending=null;
+return snapshot();
+}
+function checkpoint(){
+const saved={...clone(state),defeats:clone(defeatRecords)};
+return{
+format:'FPVEncounterCheckpoint.v1',
+definition:clone(definition),
+state:saved,
+checksum:dataIdentity({definition,state:saved}),
+};
+}
+function restore(record){
+required(!pending,'An encounter transaction is pending');
+const saved=boundedJSON(record,{
+maxBytes:2097152,
+maxNodes:200000,
+maxArray:4096,
+maxDepth:16,
+maxString:1024,
+});
+exactKeys(saved,['format','definition','state','checksum'],'Encounter checkpoint');
+required(
+saved.format==='FPVEncounterCheckpoint.v1'&&
+dataIdentity(validateEncounterDefinition(saved.definition))===identity&&
+saved.checksum===dataIdentity({definition:saved.definition,state:saved.state}),
+'Encounter checkpoint identity or checksum differs',
+);
+const next=saved.state;
+exactKeys(next,[...Object.keys(state),'defeats'],'Encounter checkpoint state');
+required(
+Object.keys(state).every((key)=>Object.hasOwn(next,key))&&
+next.format===ENCOUNTER_STATE&&
+next.definitionIdentity===identity&&
+next.runId===runId,
+'Invalid encounter checkpoint identity',
+);
+for(const key of[
+'ticks',
+'wave',
+'score',
+'kills',
+'shots',
+'hits',
+'successfulImpacts',
+'streak',
+'bestStreak',
+'nextSpawn',
+'nextProjectile',
+'nextEvent',
+'cooldown',
+])
+required(
+integer(next[key],0,Number.MAX_SAFE_INTEGER),
+`Invalid encounter checkpoint ${key}`,
+);
+required(
+next.ticks<=1000000000&&
+next.shots<=next.ticks&&
+next.kills<next.nextSpawn&&
+next.score===next.kills*100&&
+next.successfulImpacts<=next.ticks*20&&
+next.wave<=next.ticks+1&&
+next.nextSpawn<=prototypes.length+next.ticks*20+1&&
+next.wave>=1&&
+next.nextSpawn>0&&
+next.nextProjectile>0&&
+next.nextEvent>0&&
+next.cooldown<=8&&
+next.hits<=next.shots&&
+next.streak<=next.bestStreak&&
+next.bestStreak<=next.kills&&
+integer(next.rng,1,0xffffffff),
+'Invalid encounter checkpoint counters',
+);
+required(
+['active','failed','complete'].includes(next.status)&&
+['wave','intermission'].includes(next.phase)&&
+typeof next.waitingForClearSpawn==='boolean'&&
+(!next.waitingForClearSpawn||next.phase==='intermission')&&
+integer(next.health,0,100)&&
+next.maxHealth===100&&
+integer(next.lastDamageTick,-10000,next.ticks),
+'Invalid encounter checkpoint progress',
+);
+required(
+next.phase==='intermission'
+?integer(next.nextWaveTick,next.ticks,next.ticks+500)
+:next.nextWaveTick===null,
+'Invalid encounter wave deadline',
+);
+required(
+Array.isArray(next.actors)&&
+next.actors.length===prototypes.length&&
+Array.isArray(next.projectiles)&&
+next.projectiles.length<=64&&
+Array.isArray(next.defeats)&&
+next.defeats.length<=1024&&
+Array.isArray(next.events)&&
+next.events.length<=256,
+'Invalid encounter checkpoint budgets',
+);
+required(
+(next.status==='failed')===(next.health===0),
+'Encounter health and status differ',
+);
+required(
+next.phase!=='intermission'||definition.activity==='continuous',
+'Unexpected wave break',
+);
+if(next.status==='complete')
+required(
+definition.activity==='hunting'
+?next.ticks===9000&&next.result?.reason==='time-complete'
+:definition.activity==='elimination'&&
+next.result?.reason==='targets-cleared'&&
+next.actors.every(
+(a)=>a.type==='prop'|| !a.destructible||a.status==='defeated',
+),
+'Invalid encounter completion',
+);
+if(next.status==='failed')
+required(next.result?.reason==='player-defeated','Invalid defeat result');
+required(next.kills>=next.defeats.length,'Defeat ledger exceeds accepted kills');
+const actorIds=new Set(),
+logicalId=(id)=>
+typeof id==='string'&&
+id.startsWith(`${runId}:`)&&
+integer(Number(id.slice(runId.length+1)),1,next.nextSpawn-1);
+for(const[i,actor]of next.actors.entries()){
+exactKeys(
+actor,
+[
+...Object.keys(prototypes[i]),
+'slotId',
+'sourceId',
+'spawnId',
+'velocity',
+'status',
+'maxHealth',
+'pathIndex',
+'cooldown',
+'warning',
+'heading',
+'spawnTick',
+'defeatedTick',
+'blocked',
+'pursuit',
+],
+'Encounter checkpoint actor',
+);
+required(
+actor.slotId===slotId(i)&&
+actor.sourceId===prototypes[i].id&&
+logicalId(actor.id)&&
+actor.spawnId===actor.id&&
+!actorIds.has(actor.id),
+'Invalid encounter checkpoint actor identity',
+);
+actorIds.add(actor.id);
+required(
+actor.type===prototypes[i].type&&
+actor.radius===prototypes[i].radius&&
+actor.height===prototypes[i].height&&
+actor.maxHealth===prototypes[i].health&&
+integer(actor.health,0,actor.maxHealth)&&
+['active','defeated'].includes(actor.status)&&
+(actor.status==='defeated')===(actor.health===0),
+'Invalid encounter checkpoint actor body',
+);
+required(
+integer(actor.pathIndex,0,Math.max(0,actor.path.length-1))&&
+integer(actor.cooldown,0,5000)&&
+integer(actor.spawnTick,0,next.ticks)&&
+(actor.status==='defeated'
+?integer(actor.defeatedTick,actor.spawnTick,next.ticks)
+:actor.defeatedTick===null)&&
+typeof actor.warning==='boolean',
+'Invalid encounter actor timeline',
+);
+vector(actor.position);
+vector(actor.velocity);
+required(within(actor.position,definition.bounds),'Encounter actor outside bounds');
+required(
+dataIdentity(actor.path)===dataIdentity(prototypes[i].path)&&
+FAMILIES.includes(actor.family)&&
+actor.appearance.family===actor.family&&
+MATERIALS.includes(actor.material)&&
+integer(actor.speed,0,15000),
+'Encounter actor rules changed',
+);
+for(const key of[
+'role',
+'material',
+'destructible',
+'fireEveryTicks',
+'damage',
+'projectileSpeed',
+'range',
+'groundMotion',
+'vehicleModel',
+'spawnZone',
+])
+required(
+JSON.stringify(actor[key])===JSON.stringify(prototypes[i][key]),
+'Encounter actor capabilities changed',
+);
+exactKeys(actor.appearance,['family','cast'],'Encounter actor appearance');
+required(
+actor.appearance.cast===prototypes[i].appearance.cast&&
+typeof actor.blocked==='boolean',
+'Invalid actor appearance or motion',
+);
+const movement=movementFor(actor);
+required(!!actor.pursuit=== !!movement,'Encounter movement state missing');
+if(movement){
+const p=actor.pursuit,
+nodes=movement.source.nodes.map((n)=>n.id);
+exactKeys(
+p,
+[
+'family',
+'node',
+'next',
+'goal',
+'previous',
+'phase',
+'phaseTicks',
+'decision',
+'cursor',
+'heading',
+'nextHeading',
+'delivered',
+],
+'Encounter pursuit',
+);
+required(
+p.family===movement.policy.family&&
+nodes.includes(p.node)&&
+nodes.includes(p.goal)&&
+(p.next===null||nodes.includes(p.next))&&
+(p.previous===null||nodes.includes(p.previous)),
+'Invalid pursuit route',
+);
+required(
+[
+'idle',
+'warning',
+'burst',
+'recovering',
+'waiting',
+'committed',
+'turning',
+'notice',
+'flee',
+].includes(p.phase)&&
+integer(p.phaseTicks,0,80)&&
+integer(p.decision,0,40)&&
+integer(p.cursor,0,movement.policy.goals.length-1)&&
+integer(p.delivered,0,next.ticks),
+'Invalid pursuit progress',
+);
+for(const h of[p.heading,p.nextHeading].filter(Boolean)){
+exactKeys(h,['x','z'],'Pursuit heading');
+required(
+['x','z'].every((k)=>integer(h[k],-1001000,1001000)),
+'Invalid pursuit heading',
+);
+}
+required(
+p.phase!=='turning'||(p.family==='shield-bearer'&&p.nextHeading!==null),
+'Missing pursuit turn',
+);
+}
+const prototype=prototypes[i];
+if(definition.activity!=='continuous'||next.wave===1)
+required(
+actor.family===prototype.family&&actor.speed===prototype.speed,
+'Initial encounter movement rules changed',
+);
+else
+required(
+(!humanoid(actor)||actor.family!=='rendezvous-pair')&&
+[0.8,0.9,1,1.1,1.2].some(
+(scale)=>actor.speed===Math.min(15000,Math.round(prototype.speed*scale)),
+),
+'Invalid seeded movement variation',
+);
+exactKeys(actor.heading,AXES,'Encounter actor heading');
+required(
+AXES.every(
+(key)=>Number.isFinite(actor.heading[key])&&Math.abs(actor.heading[key])<=1.00001,
+),
+'Invalid actor heading',
+);
+}
+const pulseIds=new Set();
+for(const pulse of next.projectiles){
+exactKeys(
+pulse,
+['id','owner','position','velocity','damage','ttl'],
+'Encounter projectile',
+);
+required(
+integer(pulse.id,1,next.nextProjectile-1)&&
+!pulseIds.has(pulse.id)&&
+(pulse.owner==='player'||logicalId(pulse.owner))&&
+integer(pulse.damage,0,1500)&&
+integer(pulse.ttl,1,150),
+'Invalid encounter projectile',
+);
+pulseIds.add(pulse.id);
+vector(pulse.position);
+vector(pulse.velocity);
+required(
+within(pulse.position,definition.bounds)&&length(pulse.velocity)<=60001,
+'Projectile outside admitted limits',
+);
+}
+required(
+next.contactLocks&&
+typeof next.contactLocks==='object'&&
+!Array.isArray(next.contactLocks)&&
+Object.keys(next.contactLocks).length<=20,
+'Invalid contact lock budget',
+);
+for(const[id,lock]of Object.entries(next.contactLocks)){
+exactKeys(lock,['tick','separated'],'Contact lock');
+required(
+actorIds.has(id)&&
+integer(lock.tick,0,next.ticks)&&
+typeof lock.separated==='boolean',
+'Invalid contact lock',
+);
+}
+const eventIds=new Set();
+for(const event of next.defeats){
+exactKeys(
+event,
+[
+'eventId',
+'type',
+'tick',
+'actor',
+'spawnId',
+'slotId',
+'sourceId',
+'position',
+'normal',
+'velocity',
+'material',
+'family',
+'humanoid',
+'machine',
+'radius',
+'height',
+'appearance',
+'cause',
+'surface',
+'impactPosition',
+],
+'Settled defeat',
+);
+required(
+event.type==='defeat'&&
+logicalId(event.actor)&&
+event.spawnId===event.actor&&
+typeof event.eventId==='string'&&
+!eventIds.has(event.eventId)&&
+integer(event.tick,1,next.ticks)&&
+MATERIALS.includes(event.material),
+'Invalid settled defeat',
+);
+eventIds.add(event.eventId);
+vector(event.position);
+if(event.impactPosition)vector(event.impactPosition);
+vector(event.velocity);
+required(
+typeof event.humanoid==='boolean'&&
+(event.machine===false||['tracked','wheeled'].includes(event.machine))&&
+typeof event.family==='string'&&
+event.family.length<=64&&
+integer(event.radius,100,2000)&&
+integer(event.height,200,5000)&&
+['impact','pulse'].includes(event.cause)&&
+prototypes.some((p)=>p.id===event.sourceId),
+'Invalid settled defeat source',
+);
+exactKeys(event.appearance,['family','cast','type','model'],'Defeat appearance');
+required(
+FAMILIES.includes(event.appearance.family)&&
+TYPES.includes(event.appearance.type)&&
+typeof event.appearance.cast==='string'&&
+event.appearance.cast.length<=64&&
+(event.appearance.model===undefined||
+WORLD_VEHICLE_MODELS.includes(event.appearance.model)),
+'Invalid defeat appearance',
+);
+exactKeys(event.normal,AXES,'Defeat normal');
+required(
+AXES.every(
+(k)=>Number.isFinite(event.normal[k])&&Math.abs(event.normal[k])<=1.00001,
+),
+'Invalid defeat normal',
+);
+if(event.surface){
+exactKeys(event.surface,['position','normal'],'Defeat support');
+vector(event.surface.position);
+exactKeys(event.surface.normal,AXES,'Support normal');
+required(
+AXES.every(
+(k)=>
+Number.isFinite(event.surface.normal[k])&&
+Math.abs(event.surface.normal[k])<=1.00001,
+),
+'Invalid defeat support normal',
+);
+}
+}
+required(
+next.result===null
+?next.status==='active'
+:next.status!=='active'&&
+next.result.tick===next.ticks&&
+['player-defeated','time-complete','targets-cleared'].includes(
+next.result.reason,
+)&&
+next.result.kills===next.kills&&
+next.result.score===next.score,
+'Invalid encounter result',
+);
+defeatRecords=clone(next.defeats);
+state=clone(next);
+delete state.defeats;
+state.events=[];
+return snapshot();
+}
+return Object.freeze({
+definition:()=>clone(definition),
+identity,
+snapshot,
+summary:()=>({
+status:state.status,
+phase:state.phase,
+ticks:state.ticks,
+runId:state.runId,
+lastCommandSeq:state.lastCommandSeq,
+}),
+prepare,
+commit,
+cancel(transaction=pending?.transaction){
+required(!pending||transaction===pending.transaction,'Unknown encounter transaction');
+pending=null;
+return snapshot();
+},
+checkpoint,
+restore,
+defeats:()=>clone(defeatRecords),
+requestNextWave(){
+required(
+!pending&&state.status==='active'&&state.phase==='intermission',
+'No wave break to skip',
+);
+state.nextWaveTick=state.ticks;
+return snapshot();
+},
+export:()=>canonicalJSON(checkpoint()),
+});
+}
+
+/** Validate a portable recovery before navigation can replace the current flight. */
+function inspectEncounterRecovery(value){
+required(plainObject(value),'A combat recovery must be a plain object');
+const fields=Object.getOwnPropertyDescriptors(value);
+required(
+fields.gameplay&&
+Object.hasOwn(fields.gameplay,'value')&&
+fields.checksum&&
+Object.hasOwn(fields.checksum,'value'),
+'Invalid combat recovery fields',
+);
+const gameplay=boundedJSON(fields.gameplay.value,{
+maxBytes:40*1024*1024,
+maxNodes:3500000,
+maxArray:786432,
+maxDepth:48,
+maxString:12*1024*1024,
+});
+exactKeys(
+gameplay,
+[
+'format',
+'identity',
+'encounter',
+'physical',
+'recording',
+...(gameplay.format==='FPVCombatRecovery.v2'?['session']:[]),
+],
+'Combat recovery',
+);
+required(
+['FPVCombatRecovery.v1','FPVCombatRecovery.v2'].includes(gameplay.format)&&
+fields.checksum.value===dataIdentity(gameplay),
+'Invalid combat session or checksum',
+);
+// Cosmetic presentation cannot invalidate an otherwise valid gameplay recovery.
+let presentation=null;
+try{
+if(fields.presentation&&Object.hasOwn(fields.presentation,'value'))
+presentation=boundedJSON(fields.presentation.value,{
+maxBytes:8*1024*1024,
+maxNodes:1000000,
+maxArray:4096,
+maxDepth:24,
+maxString:4096,
+});
+}catch{
+/* The renderer can reconstruct settled remains from accepted defeat facts. */
+}
+let launch=null;
+try{
+if(fields.launch&&Object.hasOwn(fields.launch,'value')){
+const candidate=boundedJSON(fields.launch.value,{
+maxBytes:128*1024,
+maxNodes:8192,
+maxArray:1024,
+maxDepth:24,
+maxString:4096,
+});
+exactKeys(
+candidate,
+['format','configuration','mode','regional'],
+'Combat launch metadata',
+);
+required(
+candidate.format==='FPVCombatLaunch.v1'&&
+plainObject(candidate.configuration)&&
+['self-level','acro'].includes(candidate.mode),
+'Invalid combat launch metadata',
+);
+if(candidate.regional!==undefined){
+const regional=candidate.regional;
+exactKeys(
+regional,
+['spawnId','savedStart','initialHeading','continuous','geometryProfile'],
+'Combat regional launch',
+);
+required(
+regional.spawnId===undefined||stableId(regional.spawnId),
+'Invalid combat launch spawn',
+);
+required(
+regional.continuous===undefined||typeof regional.continuous==='boolean',
+'Invalid continuous launch',
+);
+required(
+regional.geometryProfile===undefined||
+['terrain-v1','terrain-scenery-v1'].includes(regional.geometryProfile),
+'Invalid launch geometry profile',
+);
+required(
+regional.initialHeading===undefined||
+regional.initialHeading==='region-centre'||
+integer(regional.initialHeading,0,35999),
+'Invalid launch heading',
+);
+if(regional.savedStart!==undefined){
+exactKeys(regional.savedStart,['position','heading'],'Combat saved start');
+exactKeys(regional.savedStart.position,AXES,'Combat start position');
+required(
+integer(regional.savedStart.heading,0,35999)&&
+AXES.every(
+(k)=>
+Number.isFinite(regional.savedStart.position[k])&&
+Math.abs(regional.savedStart.position[k])<=100000000,
+),
+'Invalid combat saved start',
+);
+}
+}
+launch=candidate;
+}
+}catch{
+/* Exact session identity still protects recovery without this optional launch hint. */
+}
+const saved={gameplay,checksum:fields.checksum.value,presentation,launch};
+const definition=validateEncounterDefinition(gameplay.encounter?.definition);
+required(
+gameplay.identity?.format===
+(definition.format===ENCOUNTER_FORMAT_V2
+?'FPVEncounterSession.v2'
+:'FPVEncounterSession.v1')&&gameplay.identity.encounter===dataIdentity(definition),
+'Combat session definition identity differs',
+);
+const validation=createEncounterRuntime(definition,{
+geometry:{sweepStatic:()=>null,visible:()=>false},
+runId:gameplay.encounter.state?.runId,
+});
+validation.restore(gameplay.encounter);
+if(gameplay.format==='FPVCombatRecovery.v2'){
+const session=gameplay.session;
+exactKeys(session,['ticks','nextCommandSeq','commands'],'Encounter session clock');
+required(
+integer(session.ticks,gameplay.encounter.state.ticks,1000000000)&&
+integer(
+session.nextCommandSeq,
+gameplay.encounter.state.lastCommandSeq+1,
+Number.MAX_SAFE_INTEGER,
+)&&
+Array.isArray(session.commands)&&
+session.commands.length<=16,
+'Invalid encounter command queue',
+);
+let previous=gameplay.encounter.state.lastCommandSeq;
+for(const command of session.commands){
+exactKeys(
+command,
+['commandSeq','reload','switchWeapon','payload','detonate','startNextWave'],
+'Encounter command',
+);
+required(
+Object.keys(command).length===2&&
+integer(command.commandSeq,previous+1,session.nextCommandSeq-1)&&
+(Object.hasOwn(command,'switchWeapon')
+?[0,1].includes(command.switchWeapon)
+:['reload','payload','detonate','startNextWave'].some(
+(key)=>command[key]===true,
+)),
+'Invalid queued command',
+);
+previous=command.commandSeq;
+}
+}
+return{saved,definition};
+}
+
+/** New Studio attempts reserve the authored roster; historical recovery is exact. */
+function prepareEncounterDefinition({
+course,
+baseIdentity,
+selection,
+authored=null,
+recovery=null,
+admitActor,
+admitServicePad,
+}){
+const retained=recovery
+?inspectEncounterRecovery(recovery).definition
+:(authored?.definition??authored);
+const v2= !recovery&&selection?.version===2;
+const selected=v2
+?normalizeEncounterConfig(selection)
+:Object.fromEntries(Object.entries(selection??{}).filter(([key])=>key!=='version'));
+// A newly launched Studio companion owns its complete authored roster.
+// Historical recovery bypasses this branch and retains its exact population.
+if(v2&&retained&&retained.actors.length>selected.population){
+const minimum=(selected.activity==='survival'?[64,96,128]:[6,12,20]).find(
+(count)=>count>=retained.actors.length,
+);
+required(
+minimum,
+'The authored actor roster exceeds this activity’s supported population. Reduce it in Studio or choose Survival.',
+);
+selected.population=minimum;
+}
+const expanded=
+v2&&
+retained&&
+selected.population>retained.actors.length&&
+course?.bounds&&
+course?.spawn
+?createEncounterDefinition({
+course:{...course,actors:retained.actors},
+baseIdentity,
+...selected,
+seed:retained.seed,
+version:2,
+admitActor,
+admitServicePad,
+})
+:null;
+const definition=
+expanded??
+(retained
+?validateEncounterDefinition(
+recovery
+?retained
+:v2
+?{
+...retained,
+...selected,
+format:ENCOUNTER_FORMAT_V2,
+revision:'r2',
+crowdModel:'squad-lanes-v1',
+contactModel:'arcade-ram-v1',
+servicePad:retained.servicePad??admitServicePad?.(course.spawn)??null,
+actors:retained.actors.map(resolveMilitaryEncounterActor),
+}
+:{...retained,...selected},
+)
+:createEncounterDefinition({
+course,
+baseIdentity,
+...selection,
+admitActor,
+admitServicePad,
+}));
+required(
+definition.baseIdentity===baseIdentity,
+'This combat session belongs to a different map revision. Open its original map before continuing.',
+);
+if(definition.format===ENCOUNTER_FORMAT_V2&&definition.servicePad&&admitServicePad)
+required(
+admitServicePad(definition.servicePad,{exact:true}),
+'The saved service pad no longer fits the verified geometry.',
+);
+if(retained&&admitActor)
+required(
+definition.actors.every((actor)=>
+admitActor(clone(actor),{
+requireAttackPosition:definition.format===ENCOUNTER_FORMAT_V2,
+...(definition.format===ENCOUNTER_FORMAT_V2
+?encounterAttackAdmission(definition.loadout)
+:{}),
+}),
+),
+'The saved encounter does not fit the verified geometry at this starting point.',
+);
+return definition;
+}
+
+/** V2 has its own rule dispatch so historical pulse recordings retain their exact simulation. */
+function createEncounterRuntimeV2(source,{geometry,runId=null}={}){
+const definition=validateEncounterDefinition(source),
+identity=dataIdentity(definition);
+const admitted=[...definition.actors];
+if(definition.activity==='survival'){
+// Keep every authored prototype in the immutable definition while reserving
+// an admitted final-enemy body even when a smaller population is selected.
+const finalIndex=admitted.findLastIndex((a)=>
+['vehicle','drone','hazard'].includes(a.type),
+);
+const[final]=admitted.splice(finalIndex,1);
+const firstHostile=admitted.findIndex((a)=>a.type!=='prop');
+if(firstHostile>0)admitted.unshift(...admitted.splice(firstHostile,1));
+admitted.splice(definition.population-1);
+admitted.push(final);
+}
+const prototypes=admitted.slice(0,definition.population),
+policy=POLICIES[definition.difficulty];
+required(
+typeof geometry?.sweepStatic==='function'&&typeof geometry?.visible==='function',
+'Encounter needs verified geometry queries',
+);
+const queryGeometry=geometry;
+const unavailable=()=>{
+const error=new Error('Combat geometry is still loading');
+error.code='ENCOUNTER_GEOMETRY_UNAVAILABLE';
+throw error;
+};
+geometry={
+...queryGeometry,
+visible:(...args)=>queryGeometry.visible(...args),
+sweepStatic(from,to,radius){
+const hit=queryGeometry.sweepStatic(from,to,radius);
+if(hit?.unavailable)unavailable();
+if(!hit)return null;
+const position=hit.position??mix(from,to,hit.toi),
+normal=unit(hit.normal??{x:0,y:1,z:0});
+return{
+...hit,
+position,
+normal,
+// Physics advances the swept sphere centre. Cosmetic marks belong to
+// the contacted surface, which is one projectile radius behind it.
+surfacePosition:hit.surfacePosition??add(position,normal,-(radius??25)),
+};
+},
+...(queryGeometry.surface
+?{
+surface(...args){
+const hit=queryGeometry.surface(...args);
+if(hit?.unavailable)unavailable();
+return hit;
+},
+}
+:{}),
+};
+runId??=`encounter-${identity}`;
+required(
+typeof runId==='string'&&runId.length>0&&runId.length<=256,
+'Invalid encounter run ID',
+);
+const isSurvival=definition.activity==='survival',
+squadLanes=definition.crowdModel==='squad-lanes-v1',
+arcadeRam=definition.contactModel==='arcade-ram-v1'&&definition.ammoPreset==='arcade',
+bossIndex=prototypes.length-1;
+const payloadCapacity=
+definition.ammoPreset==='tactical'
+?1
+:{bomb:3,remote:2,drone:1}[definition.payload];
+const weaponState=(id)=>{
+const rule=ENCOUNTER_WEAPONS[id],
+heavy=id==='rocket';
+return{
+id,
+ammo:rule.magazine,
+reserve:heavy
+?definition.ammoPreset==='tactical'
+?0
+:2
+:definition.ammoPreset==='tactical'
+?rule.magazine*2
+:-1,
+reloadTicks:0,
+reloadTotal:rule.reload,
+cooldown:0,
+};
+};
+const challengeTypes=['disable-component'];
+if(definition.activity!=='hunting'&&prototypes.some((a)=>a.fireEveryTicks>0))
+challengeTypes.push('interrupt-attack');
+const interceptors=prototypes.filter((a)=>['drone','hazard'].includes(a.type)).length;
+if(interceptors)challengeTypes.push('interceptor-group');
+if(
+prototypes.some((a,i)=>
+prototypes.some((b,j)=>j>i&&distance(a.position,b.position)<9000),
+)
+)
+challengeTypes.push('multi-target-blast');
+const challengeType=challengeTypes[definition.seed%challengeTypes.length];
+const challengeGoal=
+challengeType==='interceptor-group'
+?Math.min(3,interceptors)
+:challengeType==='multi-target-blast'
+?2
+:1;
+const initial={
+format:ENCOUNTER_STATE_V2,
+definitionIdentity:identity,
+runId,
+ticks:0,
+rng:definition.seed,
+status:'active',
+phase:'wave',
+waitingForClearSpawn:false,
+wave:1,
+nextWaveTick:null,
+lastDamageTick:-10000,
+health:100,
+maxHealth:100,
+score:0,
+kills:0,
+rewardKills:0,
+shots:0,
+hits:0,
+successfulImpacts:0,
+streak:0,
+bestStreak:0,
+nextSpawn:1,
+nextProjectile:1,
+nextEvent:1,
+nextAttack:1,
+nextPickup:1,
+cooldown:0,
+actors:[],
+projectiles:[],
+ordnance:[],
+events:[],
+contactLocks:{},
+result:null,
+weaponIndex:0,
+weapons:definition.loadout.map(weaponState),
+payloadAmmo:payloadCapacity,
+payloadArmed:false,
+lastCommandSeq:0,
+commandMask:0,
+fireReleasedTicks:0,
+serviceTicks:0,
+pickups:[],
+pendingPickups:[],
+attackHits:[],
+nextHealthReward:12,
+nextAmmoReward:3,
+contactProtectionUntil:0,
+aftermathUntil:null,
+challenge:{
+type:challengeType,
+goal:challengeGoal,
+progress:0,
+complete:false,
+startTick:0,
+},
+survival:{
+mode:definition.survivalMode,
+finalSpawned:false,
+finalDefeated:false,
+nextEliteTick:6000,
+reliefUntil:0,
+formation:'advance',
+nextFormationTick:1500,
+nextSpawnTick:0,
+nextSupplyTick:4500,
+pressure:0.4,
+regroupUntil:0,
+nextReliefAllowed:0,
+recentDefeats:[],
+supplies:0,
+},
+};
+let state=initial,
+pending=null,
+serial=0,
+defeatRecords=[],
+impactRecords=[];
+const nextRandom=(draft)=>{
+draft.rng=seedStep(draft.rng);
+return draft.rng/4294967296;
+};
+const actorEvent=(actor)=>
+actor
+?{
+actor:actor.id,
+spawnId:actor.id,
+slotId:actor.slotId,
+sourceId:actor.sourceId,
+position:clone(actor.position),
+velocity:clone(actor.velocity),
+normal:{x:0,y:1,z:0},
+material:actor.material,
+family:
+actor.type==='vehicle'
+?({
+'field-utility':'utility-car',
+'field-tank':'tracked-tank',
+'relay-truck':'radar-truck',
+}[actor.vehicleModel]??'utility-car')
+:actor.family,
+humanoid:humanoid(actor),
+machine:
+!humanoid(actor)&&actor.type!=='prop'
+?actor.type==='vehicle'
+?'wheeled'
+:'rotor'
+:actor.type==='prop'&&actor.speed>0
+?'tracked'
+:false,
+radius:actor.radius,
+height:actor.height,
+appearance:{
+...clone(actor.appearance),
+type:actor.type,
+...(actor.vehicleModel?{model:actor.vehicleModel}:{}),
+},
+componentMask:actor.componentMask,
+}
+:{};
+function emit(draft,type,actor=null,detail={}){
+const event={
+eventId:`${runId}:${draft.nextEvent++}`,
+type,
+tick:draft.ticks+1,
+...actorEvent(actor),
+...detail,
+};
+draft.events.push(event);
+return event;
+}
+function spawn(draft,index,initialSpawn=false,at=null,special=null){
+const prototype=prototypes[index],
+previous=draft.actors[index];
+const actor={
+...clone(prototype),
+id:`${runId}:${draft.nextSpawn++}`,
+slotId:slotId(index),
+sourceId:prototype.id,
+slotIndex:index,
+position:clone(at??prototype.position),
+velocity:zero(),
+status:'active',
+maxHealth:prototype.health*(special==='final'?4:special==='elite'?2:1),
+health:prototype.health*(special==='final'?4:special==='elite'?2:1),
+pathIndex:0,
+cooldown:special==='final'?0:100,
+warning:false,
+heading:{x:0,y:0,z:-1},
+spawnTick:draft.ticks,
+defeatedTick:null,
+replacementTick:null,
+blocked:false,
+componentMask:0,
+special,
+squad:Math.floor(index/6),
+lastHitTick:-10000,
+lastPositionIndex:0,
+routeDirection:1,
+nextSpawnChoice:0,
+};
+actor.spawnId=actor.id;
+const component=(id,ratio)=>({
+id,
+health:Math.max(1,Math.ceil(actor.maxHealth*ratio)),
+maxHealth:Math.max(1,Math.ceil(actor.maxHealth*ratio)),
+});
+if(!initialSpawn&&definition.activity==='continuous'&&humanoid(actor)){
+const families=FAMILIES.filter(
+(family)=>family!==previous?.family&&family!=='rendezvous-pair',
+);
+actor.family=families[Math.floor(nextRandom(draft)*families.length)];
+actor.appearance.family=actor.family;
+}
+actor.components=[
+component(
+actor.family==='shield-bearer'?'plate':'mount',
+actor.family==='shield-bearer'?0.4:0.3,
+),
+component(humanoid(actor)?'equipment':'core',0.25),
+];
+actor.lastPositionIndex=Math.max(
+0,
+[prototype.position,...prototype.path]
+.filter((p,i,all)=>all.findIndex((other)=>distance(p,other)<100)===i)
+.findIndex((p)=>distance(p,actor.position)<100),
+);
+actor.pathIndex=Math.max(
+0,
+actor.path.findIndex((point)=>distance(point,actor.position)<100),
+);
+draft.actors[index]=actor;
+if(!initialSpawn)emit(draft,'spawn',actor,{special});
+return actor;
+}
+prototypes.forEach((_,index)=>{
+const actor=spawn(state,index,true);
+if(
+isSurvival&&
+(index>=Math.max(1,Math.floor((prototypes.length-1)*0.4))||index===bossIndex)
+)
+actor.status='waiting';
+});
+const snapshot=({includeDefeats=false,includeImpacts=false}={})=>({
+...clone(state),
+accuracy:state.shots?state.hits/state.shots:null,
+...(includeDefeats?{defeats:clone(defeatRecords)}:{}),
+...(includeImpacts?{impactRecords:clone(impactRecords)}:{}),
+});
+let frameState=null,
+frameView=null;
+const freezeFrame=(value)=>{
+if(value&&typeof value==='object'&& !Object.isFrozen(value)){
+for(const item of Object.values(value))freezeFrame(item);
+Object.freeze(value);
+}
+return value;
+};
+// Presentation never needs authored routes, component health, collision locks
+// or past accuracy identities. This owned frozen view may be shared within one
+// accepted interval; full snapshots and recovery remain independent copies.
+function frameSnapshot(){
+if(frameState!==state){
+const{actors,contactLocks,attackHits,pendingPickups,...visible}=state;
+void contactLocks;
+void attackHits;
+void pendingPickups;
+frameView=freezeFrame({
+...clone(visible),
+accuracy:state.shots?state.hits/state.shots:null,
+actors:actors.map((actor)=>
+clone(
+Object.fromEntries(
+[
+'id',
+'sourceId',
+'slotId',
+'spawnId',
+'spawnTick',
+'type',
+'radius',
+'height',
+'status',
+'health',
+'maxHealth',
+'lastHitTick',
+'position',
+'heading',
+'velocity',
+'material',
+'family',
+'vehicleModel',
+'appearance',
+'explosive',
+'componentMask',
+'warning',
+'blocked',
+'pursuit',
+'special',
+]
+.filter((key)=>Object.hasOwn(actor,key))
+.map((key)=>[key,actor[key]]),
+),
+),
+),
+});
+frameState=state;
+}
+return frameView;
+}
+const supportedPosition=(actor,position)=>{
+if(!within(position,definition.bounds))return null;
+if(!ground(actor))return clone(position);
+const support=geometry.surface?.(position,actor.radius);
+if(geometry.surface&&(!support||support.normal.y<0.866))return null;
+const result=support
+?{...position,y:Math.round(support.position.y+12)}
+:clone(position);
+return within(result,definition.bounds)?result:null;
+};
+function clearSpawn(draft,index,player,rotate=true,reservations=[]){
+const prototype=prototypes[index],
+prior=draft.actors[index];
+const candidates=[prototype.position,...prototype.path].filter(
+(p,i,all)=>all.findIndex((other)=>distance(p,other)<100)===i,
+);
+const start=rotate
+?(prior.lastPositionIndex+1+prior.nextSpawnChoice)%candidates.length
+:0;
+for(let offset=0;offset<candidates.length;offset++){
+const candidateIndex=(start+offset)%candidates.length;
+if(
+rotate&&
+candidates.length>1&&
+candidateIndex===prior.lastPositionIndex&&
+offset<candidates.length-1
+)
+continue;
+const position=supportedPosition(prototype,candidates[candidateIndex]);
+if(
+!position||
+distance(position,player.position)<prototype.radius+(player.radius??220)+3000
+)
+continue;
+// Do not materialize in the imminent flight corridor.
+const forward=add(player.position,player.velocity??zero(),0.5);
+if(distance(position,forward)<prototype.radius+1800)continue;
+if(
+draft.actors.some(
+(a,i)=>
+i!==index&&
+a.status==='active'&&
+distance(centre(a),centre({...prototype,position}))<
+prototype.radius+a.radius+500,
+)
+)
+continue;
+if(
+geometry.sweepStatic(
+centre({...prototype,position}),
+centre({...prototype,position}),
+prototype.radius,
+)
+)
+continue;
+if(
+reservations.some(
+(other)=>
+distance(centre(other),centre({...prototype,position}))<
+prototype.radius+other.radius+500,
+)
+)
+continue;
+return position;
+}
+return null;
+}
+function actorIndex(actors,motions=null){
+const cells=new Map(),
+cellSize=8000;
+for(const actor of actors){
+if(actor.status!=='active')continue;
+const motion=motions?.get(actor.slotId),
+from=motion?.from??actor.position,
+to=motion?.to??actor.position;
+const minX=Math.floor((Math.min(from.x,to.x)-actor.radius)/cellSize),
+maxX=Math.floor((Math.max(from.x,to.x)+actor.radius)/cellSize);
+const minZ=Math.floor((Math.min(from.z,to.z)-actor.radius)/cellSize),
+maxZ=Math.floor((Math.max(from.z,to.z)+actor.radius)/cellSize);
+for(let x=minX;x<=maxX;x++)
+for(let z=minZ;z<=maxZ;z++){
+const key=`${x}:${z}`;
+if(!cells.has(key))cells.set(key,[]);
+cells.get(key).push(actor);
+}
+}
+return(from,to=from,radius=0)=>{
+const minX=Math.floor((Math.min(from.x,to.x)-radius)/cellSize),
+maxX=Math.floor((Math.max(from.x,to.x)+radius)/cellSize);
+const minZ=Math.floor((Math.min(from.z,to.z)-radius)/cellSize),
+maxZ=Math.floor((Math.max(from.z,to.z)+radius)/cellSize);
+if((maxX-minX+1)*(maxZ-minZ+1)>1024)return actors;
+const found=new Map();
+for(let x=minX;x<=maxX;x++)
+for(let z=minZ;z<=maxZ;z++)
+for(const actor of cells.get(`${x}:${z}`)??[])found.set(actor.slotIndex,actor);
+return[...found.values()].sort((a,b)=>a.slotIndex-b.slotIndex);
+};
+}
+function moveActor(draft,actor,player,neighbours){
+const from=clone(actor.position);
+actor.velocity=zero();
+// Once the aircraft crashes, its last accepted collider interval is frozen.
+// Deployed ordnance resolves against those poses without unrecorded worker motion.
+if(draft.phase==='aftermath'){
+actor.warning=false;
+return from;
+}
+actor.warning=
+actor.status==='active'&&
+actor.fireEveryTicks>0&&
+actor.cooldown<=40&&
+draft.ticks-actor.spawnTick>=100&&
+distance(centre(actor),player.position)<=actor.range&&
+geometry.visible(centre(actor),player.position);
+if(actor.special==='final')actor.warning=(draft.ticks-actor.spawnTick)%300<60;
+const contactWindow=
+squadLanes&&
+isSurvival&&
+actor.fireEveryTicks===0&&
+Math.floor(draft.ticks/500)%4===actor.slotIndex%4;
+const contactWindup=contactWindow&&draft.ticks%500<25;
+if(contactWindup)actor.warning=true;
+if(actor.status!=='active'|| !actor.path.length|| !actor.speed)return from;
+let target=actor.path[actor.pathIndex];
+if(distance(actor.position,target)<Math.max(35,actor.speed/50)){
+if(isSurvival)
+actor.routeDirection=
+(draft.survival.formation==='flank'&&actor.squad%2)||
+(draft.survival.formation==='interceptors'&& !ground(actor))
+? -1
+:1;
+actor.pathIndex=
+(actor.pathIndex+actor.routeDirection+actor.path.length)%actor.path.length;
+target=actor.path[actor.pathIndex];
+}
+let speed=actor.speed;
+if(isSurvival){
+const formation=draft.survival.formation;
+if(formation==='shield-front'&&actor.family!=='shield-bearer')speed*=0.65;
+if(formation==='interceptors'&& !ground(actor))speed*=1.25;
+if(formation==='support-cover'&&actor.family==='courier')speed*=0.6;
+const support=draft.actors.some(
+(a)=>
+a.status==='active'&&
+(a.vehicleModel==='relay-truck'||a.family==='courier')&&
+distance(a.position,actor.position)<10000,
+);
+if(support)speed*=1.08;
+}
+const phase=(draft.ticks-actor.spawnTick+actor.squad*11)%160;
+if(['sprinter','brace-trooper'].includes(actor.family)){
+actor.warning=phase<40;
+speed*=phase<40?0:phase<60?2:phase<100?0.33:1;
+}
+if(actor.special==='final'){
+const phase=(draft.ticks-actor.spawnTick)%300;
+speed*=phase<60?0.15:phase<120?1.5:phase>=220?0.5:1;
+}
+if(isSurvival&&draft.survival.regroupUntil>draft.ticks)speed*=0.5;
+if(actor.components[0].id==='mount'&&actor.componentMask&1&& !humanoid(actor))
+speed*=0.75;
+if(contactWindup){
+speed=0;
+actor.warning=true;
+}
+const routeHeading=unit(subtract(target,actor.position));
+let heading=routeHeading;
+if(isSurvival){
+// Decisions are staggered at 10 Hz; each actual move still requires support,
+// full-body static clearance and living-actor separation at 50 Hz.
+heading=actor.heading;
+if(
+(draft.ticks+actor.slotIndex)%5===0||
+actor.blocked||
+draft.ticks===actor.spawnTick
+){
+const approach=subtract(player.position,actor.position);
+if(ground(actor))approach.y=0;
+const toward=unit(approach);
+const lane=(actor.slotIndex+actor.squad)%3;
+const standoff=
+actor.vehicleModel==='relay-truck'||actor.family==='courier'
+?14000
+:actor.type==='vehicle'
+?8000
+:actor.type==='sentry'
+?5000
+:!squadLanes
+?1000
+:ground(actor)
+?1500
+:2400;
+// Stable slots spread a squad around distinct approach lanes. Rotorcraft
+// also use separate height bands instead of sharing one point above the
+// aircraft; every actual move still passes the same geometry admission.
+const angle=actor.slotIndex*2.399963229728653+actor.squad*0.17;
+const assault=contactWindow&& !contactWindup;
+const radius=assault?0:standoff+lane*(ground(actor)?850:1300);
+const flank=
+draft.survival.formation==='flank'&&actor.family!=='shield-bearer'
+?(actor.squad%2?1:-1)*
+Math.min(5000,distance(actor.position,player.position)*0.35)
+:0;
+const destination=squadLanes
+?{
+x:player.position.x+Math.sin(angle)*radius-toward.z*flank,
+y:ground(actor)
+?actor.position.y
+:assault
+?player.position.y-actor.radius
+:player.position.y+600+lane*1300,
+z:player.position.z+Math.cos(angle)*radius+toward.x*flank,
+}
+:{
+x:player.position.x-toward.x*standoff-toward.z*flank,
+y:ground(actor)?actor.position.y:player.position.y+800,
+z:player.position.z-toward.z*standoff+toward.x*flank,
+};
+heading=
+distance(destination,actor.position)<=Math.max(100,speed/50)
+?zero()
+:unit(subtract(destination,actor.position));
+}
+}
+const attempt=(direction,length)=>{
+const to=add(actor.position,direction,length);
+const supported=supportedPosition(actor,to);
+if(!supported||(ground(actor)&&Math.abs(supported.y-actor.position.y)>220))
+return null;
+if(
+neighbours(to,to,actor.radius+(squadLanes?3000:2200)).some(
+(other)=>
+other.id!==actor.id&&
+other.status==='active'&&
+crowdSeparation(actor,supported,other)<1&&
+crowdSeparation(actor,supported,other)<
+crowdSeparation(actor,actor.position,other),
+)
+)
+return null;
+// Sweep the bottom, middle and top of upright bodies, not only their centre.
+const heights=ground(actor)
+?[actor.radius,actor.height/2,actor.height-actor.radius]
+:[actor.radius];
+if(
+heights.some((height)=>
+geometry.sweepStatic(
+{...actor.position,y:actor.position.y+height},
+{...supported,y:supported.y+height},
+actor.radius,
+),
+)
+)
+return null;
+return supported;
+};
+let supported=attempt(
+heading,
+isSurvival?speed/50:Math.min(distance(target,actor.position),speed/50),
+);
+actor.blocked= !supported;
+if(!supported&&isSurvival)
+supported=attempt(routeHeading,Math.min(distance(target,actor.position),speed/50));
+if(supported)actor.position=supported;
+actor.heading=heading;
+actor.velocity=Object.fromEntries(
+AXES.map((key)=>[key,(actor.position[key]-from[key])*50]),
+);
+return from;
+}
+function crowdSeparation(actor,position,other){
+if(!squadLanes)
+return(
+distance(centre({...actor,position}),centre(other))/
+(actor.radius+other.radius+80)
+);
+const extra=isSurvival
+?(humanoid(actor)?180:ground(actor)?220:400)+
+(humanoid(other)?180:ground(other)?220:400)
+:80;
+const radius=actor.radius+other.radius+extra;
+if(!ground(actor)&& !ground(other))
+return distance(centre({...actor,position}),centre(other))/radius;
+// Upright actors occupy their whole cylinder. Comparing only body centres
+// lets a tall troop and a shorter robot visually intersect on the same floor.
+const height=ground(actor)?actor.height:actor.radius*2;
+const otherHeight=ground(other)?other.height:other.radius*2;
+const horizontal=
+Math.hypot(position.x-other.position.x,position.z-other.position.z)/radius;
+const vertical=
+Math.abs(position.y+height/2-other.position.y-otherHeight/2)/
+((height+otherHeight)/2+80);
+return horizontal>=1||vertical>=1
+?Math.max(horizontal,vertical)
+:1-(1-horizontal)*(1-vertical);
+}
+function pickupSupport(position){
+const support=geometry.surface?.(position,250);
+if(!support||support.normal.y<0.866|| !within(support.position,definition.bounds))
+return null;
+const settled={...support.position,y:Math.round(support.position.y+12)};
+const body={...settled,y:settled.y+250};
+return within(settled,definition.bounds)&& !geometry.sweepStatic(body,body,200)
+?settled
+:null;
+}
+function pickup(draft,kind,position,guarded=false){
+const max=kind==='health'?2:8;
+const supported=pickupSupport(position);
+const item={
+id:`${runId}:pickup-${draft.nextPickup++}`,
+kind,
+position:clone(supported??position),
+surfacePending:!supported,
+guarded,
+entryReady:!guarded,
+spawnTick:draft.ticks+1,
+};
+if(supported&&draft.pickups.filter((p)=>p.kind===kind).length<max)
+draft.pickups.push(item);
+else if(draft.pendingPickups.filter((p)=>p.kind===kind).length<max)
+draft.pendingPickups.push(item);
+emit(draft,'supply',null,{kind,position:clone(position),guarded});
+}
+function recordSurface(draft,contact,extra={}){
+const position=clone(contact.surfacePosition??contact.position),
+normal=unit(contact.normal??{x:0,y:1,z:0});
+const event=emit(draft,'surface-impact',null,{
+sourceId:String(contact.surfaceId??contact.id??'terrain'),
+position,
+normal,
+material:contact.material??'stone',
+surface:{
+position,
+normal,
+...(contact.surfaceId?{surfaceId:contact.surfaceId}:{}),
+},
+...extra,
+});
+draft.newImpacts.push(event);
+}
+function playerDamage(draft,amount,detail={}){
+// Arcade treats the aircraft as a ram weapon. Preserve incoming fire and
+// deliberate payload detonation; only enemy collision damage is exempt.
+// Definitions without this policy retain their recorded contact rules.
+if(arcadeRam&&['impact','contact'].includes(detail.cause))return;
+if(
+definition.playerDamage==='invulnerable'||
+draft.phase==='aftermath'||
+amount<=0||
+draft.health<=0
+)
+return;
+const damage=Math.min(draft.health,Math.max(0,Math.round(amount)));
+draft.health-=damage;
+draft.lastDamageTick=draft.ticks+1;
+draft.streak=0;
+emit(draft,'player-damage',null,{damage,health:draft.health,...detail});
+}
+function countAttack(draft,attackId){
+if(!Number.isSafeInteger(attackId)||attackId<1||draft.attackHits.includes(attackId))
+return;
+draft.attackHits.push(attackId);
+draft.hits++;
+if(draft.attackHits.length>256)draft.attackHits.shift();
+}
+function protectedHit(actor,origin,tick){
+if(!humanoid(actor)||actor.componentMask&1)return false;
+return actor.family==='shield-bearer'
+?dot(subtract(origin,actor.position),actor.heading)>0
+:actor.family==='brace-trooper'&&(tick-actor.spawnTick)%160<60;
+}
+function challengeProgress(draft,type,amount=1){
+if(draft.challenge.type!==type||draft.challenge.complete)return;
+draft.challenge.progress=Math.min(draft.challenge.goal,draft.challenge.progress+amount);
+draft.challenge.complete=draft.challenge.progress===draft.challenge.goal;
+emit(draft,'challenge',null,{challenge:clone(draft.challenge)});
+}
+function hurt(draft,actor,amount,weapon,contact,origin,attackId,chain=new Set()){
+if(actor.status!=='active'||amount<=0|| !actor.destructible)return false;
+const normal=unit(contact.normal??subtract(origin,centre(actor)));
+const detail={
+impactPosition:clone(contact.position??centre(actor)),
+impactDirection:unit(contact.velocity??subtract(centre(actor),origin)),
+normal,
+velocity:clone(contact.velocity??zero()),
+weapon,
+cause:weapon==='impact'?'impact':weapon==='explosion'?'explosion':'pulse',
+severity:amount>=100?'explosive':amount>=60?'high':'localized',
+attackId:attackId??null,
+};
+const protectedBody=protectedHit(actor,origin,draft.ticks);
+const relativeHeight=(detail.impactPosition.y-actor.position.y)/actor.height;
+const componentIndex=
+protectedBody||relativeHeight>0.64
+?0
+:!humanoid(actor)&&relativeHeight<0.4
+?1
+:-1;
+if(componentIndex>=0&&actor.components[componentIndex].health>0){
+const component=actor.components[componentIndex];
+component.health=Math.max(0,component.health-Math.round(amount));
+if(!component.health){
+actor.componentMask|=1<<componentIndex;
+emit(draft,'component',actor,{...detail,component:component.id,damage:amount});
+if(component.id==='core')amount=Math.max(amount,actor.health);
+challengeProgress(draft,'disable-component');
+}
+}
+if(protectedBody&& !(actor.componentMask&1)){
+emit(draft,'impact',actor,{...detail,damage:0,protected:true});
+return false;
+}
+if(definition.enemyDamage==='one-hit')amount=actor.health;
+const damage=Math.min(actor.health,Math.max(1,Math.round(amount)));
+actor.health-=damage;
+actor.lastHitTick=draft.ticks+1;
+countAttack(draft,attackId);
+if(weapon==='impact')draft.successfulImpacts++;
+if(actor.warning){
+challengeProgress(draft,'interrupt-attack');
+actor.cooldown=Math.max(actor.cooldown,50);
+actor.warning=false;
+}
+emit(draft,'impact',actor,{...detail,damage});
+if(actor.health>0)return true;
+actor.status='defeated';
+actor.defeatedTick=draft.ticks+1;
+actor.replacementTick=actor.defeatedTick+200+Math.floor(nextRandom(draft)*201);
+actor.nextSpawnChoice=Math.floor(nextRandom(draft)*Math.max(1,actor.path.length-1));
+draft.kills++;
+draft.score+=100;
+draft.streak++;
+draft.bestStreak=Math.max(draft.bestStreak,draft.streak);
+const surface=geometry.surface?.(actor.position,actor.radius);
+const event=emit(draft,'defeat',actor,{
+...detail,
+...(surface?{surface:clone(surface)}:{}),
+seed:seedStep(draft.rng^draft.nextSpawn),
+});
+draft.defeats.push(event);
+if(['drone','hazard'].includes(actor.type))challengeProgress(draft,'interceptor-group');
+actor.velocity=zero();
+if(actor.special==='final')draft.survival.finalDefeated=true;
+if(actor.vehicleModel==='relay-truck'||actor.family==='courier')
+draft.survival.regroupUntil=draft.ticks+150;
+if(actor.type!=='prop'){
+draft.rewardKills++;
+if(draft.rewardKills>=draft.nextHealthReward){
+pickup(draft,'health',surface?.position??actor.position);
+draft.nextHealthReward+=12;
+}
+if(definition.ammoPreset==='balanced'&&draft.rewardKills>=draft.nextAmmoReward){
+pickup(draft,'ammo',surface?.position??actor.position);
+draft.nextAmmoReward+=3;
+}
+}
+if(isSurvival){
+draft.survival.recentDefeats=[
+...draft.survival.recentDefeats.filter((tick)=>tick>draft.ticks-50),
+draft.ticks,
+];
+const duration={easy:500,normal:400,hard:250}[definition.difficulty];
+if(
+draft.survival.recentDefeats.length>=20&&
+draft.ticks>=draft.survival.nextReliefAllowed
+){
+draft.survival.reliefUntil=draft.ticks+duration;
+draft.survival.nextReliefAllowed=draft.ticks+duration*3;
+}
+}
+if(
+!humanoid(actor)&&
+(actor.type!=='prop'||actor.appearance.archetype==='explosive-rover')&&
+!chain.has(actor.id)
+){
+chain.add(actor.id);
+explode(
+draft,
+centre(actor),
+actor.type==='vehicle'||actor.appearance.archetype==='explosive-rover'?75:40,
+actor.type==='vehicle'||actor.appearance.archetype==='explosive-rover'
+?3500
+:2000,
+'machine',
+null,
+chain,
+);
+}
+return true;
+}
+function explode(draft,position,damage,radius,weapon,attackId=null,chain=new Set()){
+const killsBefore=draft.kills;
+emit(draft,'explosion',null,{
+position:clone(position),
+radius,
+weapon,
+damage,
+severity:'explosive',
+});
+const support=geometry.surface?.(position,100);
+if(support&&distance(support.position,position)<=radius)
+recordSurface(draft,support,{
+weapon,
+cause:'explosion',
+damage,
+severity:'explosive',
+});
+for(const actor of draft.actors){
+if(actor.status!=='active')continue;
+const range=distance(centre(actor),position);
+if(range>radius+actor.radius|| !geometry.visible(position,centre(actor)))continue;
+const inflicted=Math.round(
+damage*Math.max(0,1-Math.max(0,range-actor.radius)/radius),
+);
+hurt(
+draft,
+actor,
+inflicted,
+'explosion',
+{
+position:centre(actor),
+normal:unit(subtract(centre(actor),position)),
+velocity:add(zero(),unit(subtract(centre(actor),position)),inflicted*100),
+},
+position,
+attackId,
+chain,
+);
+}
+if(draft.kills-killsBefore>=2)challengeProgress(draft,'multi-target-blast',2);
+}
+function addShots(draft,owner,position,direction,rule,weapon,inherited=zero()){
+const player=owner==='player';
+if(
+draft.projectiles.filter((p)=>(p.owner==='player')===player).length+rule.pellets>
+(player?48:16)
+)
+return false;
+const attackId=player?draft.nextAttack++:null;
+const forward=unit(direction),
+side=unit({x:forward.z,y:0,z:-forward.x});
+const up=unit({
+x:side.y*forward.z-side.z*forward.y,
+y:side.z*forward.x-side.x*forward.z,
+z:side.x*forward.y-side.y*forward.x,
+});
+const radius=weapon==='rocket'?100:25;
+for(let i=0;i<rule.pellets;i++){
+const angle=nextRandom(draft)*Math.PI*2,
+spread=Math.sqrt(nextRandom(draft))*rule.spread;
+const aim=unit(
+Object.fromEntries(
+AXES.map((key)=>[
+key,
+forward[key]+
+side[key]*Math.cos(angle)*spread+
+up[key]*Math.sin(angle)*spread,
+]),
+),
+);
+draft.projectiles.push({
+id:draft.nextProjectile++,
+owner,
+attackId,
+position:clone(position),
+velocity:add(inherited,aim,rule.speed),
+damage:rule.damage,
+ttl:Math.ceil((rule.range/rule.speed)*50),
+remainingRange:rule.range,
+radius,
+weapon,
+blast:rule.blast??0,
+blastRadius:rule.blastRadius??0,
+});
+}
+if(player)draft.shots++;
+emit(draft,'fire',player?null:draft.actors.find((a)=>a.id===owner),{
+actor:owner,
+position:clone(position),
+direction:forward,
+weapon,
+attackId,
+pellets:rule.pellets,
+});
+return true;
+}
+function resupply(draft,complete=false){
+let changed=false;
+for(const weapon of draft.weapons){
+const before=weapon.ammo+Math.max(0,weapon.reserve),
+rule=ENCOUNTER_WEAPONS[weapon.id];
+if(weapon.id==='rocket')
+weapon.reserve=Math.min(
+(definition.ammoPreset==='tactical'?2:4)-weapon.ammo,
+weapon.reserve+(complete?4:2),
+);
+else if(complete&&definition.ammoPreset==='tactical')
+weapon.reserve=rule.magazine*3-weapon.ammo;
+if(weapon.ammo+Math.max(0,weapon.reserve)>before)changed=true;
+}
+const prior=draft.payloadAmmo;
+draft.payloadAmmo=Math.min(
+payloadCapacity,
+draft.payloadAmmo+(complete?payloadCapacity:1),
+);
+return changed||draft.payloadAmmo>prior;
+}
+function commandInput(draft,input){
+const mask=
+(input.reload?1:0)|
+(input.switchWeapon!==undefined?2:0)|
+(input.payload?4:0)|
+(input.detonate?8:0)|
+(input.startNextWave?16:0);
+const fresh=
+input.commandSeq===undefined
+?mask& ~draft.commandMask
+:input.commandSeq>draft.lastCommandSeq
+?mask
+:0;
+if(input.commandSeq!==undefined&&input.commandSeq>draft.lastCommandSeq)
+draft.lastCommandSeq=input.commandSeq;
+draft.commandMask=mask;
+return{
+reload:!!(fresh&1),
+switchWeapon:fresh&2?input.switchWeapon:undefined,
+payload:!!(fresh&4),
+detonate:!!(fresh&8),
+startNextWave:!!(fresh&16),
+};
+}
+const coveredEndpoint=(position,radius)=>
+['x','z'].every(
+(axis)=>
+position[axis]>=definition.bounds.min[axis]+radius+1&&
+position[axis]<=definition.bounds.max[axis]-radius-1,
+);
+function weapons(draft,player,input,command){
+if(draft.phase==='aftermath'||draft.health<=0)return;
+if(command.switchWeapon!==undefined){
+draft.weaponIndex=command.switchWeapon;
+emit(draft,'weapon-selected',null,{weapon:draft.weapons[draft.weaponIndex].id});
+}
+const weapon=draft.weapons[draft.weaponIndex],
+rule=ENCOUNTER_WEAPONS[weapon.id];
+for(const item of draft.weapons)if(item.cooldown>0)item.cooldown--;
+if(weapon.reloadTicks>0){
+weapon.reloadTicks--;
+if(!weapon.reloadTicks){
+const amount=Math.min(
+rule.magazine-weapon.ammo,
+weapon.reserve<0?rule.magazine:weapon.reserve,
+);
+weapon.ammo+=amount;
+if(weapon.reserve>=0)weapon.reserve-=amount;
+emit(draft,'reload-ready',null,{weapon:weapon.id,ammo:weapon.ammo});
+}
+}
+const held= !!(input.fire||input.actions&1);
+draft.fireReleasedTicks=held?0:draft.fireReleasedTicks+1;
+if(definition.ammoPreset==='arcade'&&draft.fireReleasedTicks>=50){
+const elapsed=draft.fireReleasedTicks-50;
+for(const item of draft.weapons){
+const wait=item.id==='rocket'?200:100;
+if(elapsed>=wait&&item.ammo<ENCOUNTER_WEAPONS[item.id].magazine){
+item.ammo=ENCOUNTER_WEAPONS[item.id].magazine;
+item.reloadTicks=0;
+emit(draft,'reload-ready',null,{weapon:item.id,ammo:item.ammo});
+}
+}
+if(elapsed>=500)draft.payloadAmmo=payloadCapacity;
+}
+const beginReload=()=>{
+if(!weapon.reloadTicks&&weapon.ammo<rule.magazine&&weapon.reserve!==0){
+weapon.reloadTicks=rule.reload;
+emit(draft,'reload-start',null,{weapon:weapon.id,ticks:rule.reload});
+}
+};
+if(command.reload)beginReload();
+if(held&& !weapon.cooldown&& !weapon.reloadTicks){
+if(!weapon.ammo){
+emit(draft,'weapon-empty',null,{weapon:weapon.id});
+weapon.cooldown=15;
+beginReload();
+}else{
+const nose=unit(input.nose??{x:0,y:0,z:-1}),
+origin={
+...player.position,
+y:player.position.y+(player.supportHeight??player.radius??220),
+};
+const muzzle=input.muzzle??add(origin,nose,(player.radius??220)+40);
+const shotRadius=weapon.id==='rocket'?100:25;
+if(!coveredEndpoint(origin,shotRadius)|| !coveredEndpoint(muzzle,shotRadius)){
+weapon.cooldown=rule.interval;
+emit(draft,'weapon-blocked',null,{
+weapon:weapon.id,
+reason:'encounter-boundary',
+});
+}else{
+const obstruction=geometry.sweepStatic(origin,muzzle,shotRadius);
+if(obstruction){
+const attackId=draft.nextAttack++;
+weapon.ammo--;
+weapon.cooldown=rule.interval;
+draft.shots++;
+emit(draft,'fire',null,{
+actor:'player',
+position:origin,
+direction:nose,
+weapon:weapon.id,
+attackId,
+pellets:rule.pellets,
+});
+recordSurface(draft,obstruction,{
+weapon:weapon.id,
+damage:rule.damage,
+cause:'pulse',
+severity:'localized',
+});
+if(rule.blast)
+explode(
+draft,
+obstruction.position,
+rule.blast,
+rule.blastRadius,
+weapon.id,
+attackId,
+);
+}else if(
+addShots(draft,'player',muzzle,nose,rule,weapon.id,player.velocity??zero())
+){
+weapon.ammo--;
+weapon.cooldown=rule.interval;
+}
+}
+}
+}
+draft.cooldown=weapon.cooldown;
+if(command.detonate||command.payload){
+const remote=draft.ordnance.find((o)=>o.kind==='remote'&&o.settled);
+if(definition.payload==='remote'&&remote&&command.detonate){
+explode(draft,remote.position,200,6000,'remote');
+draft.ordnance=draft.ordnance.filter((o)=>o.id!==remote.id);
+}else if(definition.payload==='drone'&&draft.payloadArmed&&command.detonate){
+draft.payloadArmed=false;
+explode(draft,player.position,240,7000,'drone');
+playerDamage(draft,100,{cause:'drone-detonation'});
+}else if(command.payload&&draft.payloadAmmo>0&&draft.ordnance.length<16){
+if(definition.payload==='drone'&& !draft.payloadArmed){
+draft.payloadAmmo--;
+draft.payloadArmed=true;
+draft.fireReleasedTicks=0;
+emit(draft,'payload-armed',null,{weapon:'drone'});
+}else if(
+definition.payload!=='drone'&&
+!(definition.payload==='remote'&&draft.ordnance.some((o)=>o.kind==='remote'))
+){
+const origin={
+...player.position,
+y:player.position.y+(player.supportHeight??player.radius??220),
+},
+release={...origin,y:origin.y-180};
+if(
+coveredEndpoint(origin,80)&&
+coveredEndpoint(release,80)&&
+!geometry.sweepStatic(origin,release,80)
+){
+draft.payloadAmmo--;
+draft.fireReleasedTicks=0;
+const ordnance={
+id:draft.nextProjectile++,
+kind:definition.payload,
+position:release,
+velocity:clone(player.velocity??zero()),
+settled:false,
+age:0,
+};
+draft.ordnance.push(ordnance);
+emit(draft,'payload',null,{position:release,weapon:definition.payload});
+}
+}
+}
+}
+if(
+definition.servicePad&&
+distance(player.position,definition.servicePad)<2200&&
+length(player.velocity??zero())<900&&
+(input.throttle??player.throttle??0)<=0.1&&
+!held&&
+!command.payload&&
+!command.detonate
+){
+draft.serviceTicks++;
+if(draft.serviceTicks===250&&resupply(draft,true))emit(draft,'service-complete');
+}else draft.serviceTicks=0;
+}
+function replenish(draft,player,command){
+if(draft.phase==='aftermath')return;
+if(
+draft.phase==='intermission'&&
+(draft.ticks>=draft.nextWaveTick||command.startNextWave)
+){
+const reservations=[];
+const placements=prototypes.map((prototype,i)=>{
+const at=clearSpawn(draft,i,player,true,reservations);
+if(at)reservations.push({...prototype,position:at});
+return at;
+});
+draft.waitingForClearSpawn=placements.some((p)=> !p);
+if(!draft.waitingForClearSpawn){
+draft.wave++;
+draft.phase='wave';
+draft.nextWaveTick=null;
+const previousComposition=draft.actors
+.map((a)=>`${a.type}:${a.family}`)
+.sort()
+.join('|');
+placements.forEach((at,i)=>spawn(draft,i,false,at));
+if(
+draft.actors
+.map((a)=>`${a.type}:${a.family}`)
+.sort()
+.join('|')===previousComposition
+){
+const changed=draft.actors.find((a)=>humanoid(a));
+if(changed){
+changed.family=changed.appearance.family=
+FAMILIES[(FAMILIES.indexOf(changed.family)+1)%FAMILIES.length];
+const plate=changed.family==='shield-bearer';
+changed.components[0]={
+id:plate?'plate':'mount',
+health:Math.max(1,Math.ceil(changed.maxHealth*(plate?0.4:0.3))),
+maxHealth:Math.max(1,Math.ceil(changed.maxHealth*(plate?0.4:0.3))),
+};
+}
+}
+emit(draft,'wave',null,{wave:draft.wave});
+}else draft.nextWaveTick=draft.ticks+1;
+}
+if(definition.activity==='hunting'&&draft.ticks<9000)
+for(const[i,actor]of draft.actors.entries()){
+if(actor.status!=='defeated'||draft.ticks<actor.replacementTick)continue;
+const at=clearSpawn(draft,i,player);
+if(at)spawn(draft,i,false,at);
+}
+if(!isSurvival)return;
+const survival=draft.survival,
+minute=(draft.ticks+1)/3000;
+survival.pressure=minute<1?0.4:minute<2?0.65:minute<4?0.85:1;
+if(draft.ticks>=survival.nextFormationTick){
+const forms=['advance','flank','shield-front','interceptors','support-cover'].filter(
+(f)=>f!==survival.formation,
+);
+survival.formation=forms[Math.floor(nextRandom(draft)*forms.length)];
+survival.nextFormationTick=draft.ticks+1500+Math.floor(nextRandom(draft)*751);
+survival.reliefUntil=
+draft.ticks+{easy:500,normal:400,hard:250}[definition.difficulty];
+emit(draft,'formation',null,{formation:survival.formation});
+}
+if(draft.ticks+1>=15000&& !survival.finalSpawned){
+const at=clearSpawn(draft,bossIndex,player);
+draft.waitingForClearSpawn= !at;
+if(at){
+spawn(draft,bossIndex,false,at,'final');
+survival.finalSpawned=true;
+emit(draft,'final-arrival',draft.actors[bossIndex]);
+}
+}
+if(
+draft.waitingForClearSpawn||
+(definition.survivalMode==='timed'&&draft.ticks+1>=18000)
+)
+return;
+if(draft.ticks+1>=survival.nextEliteTick){
+const index=draft.actors.findIndex((a,i)=>i!==bossIndex&&a.status!=='active');
+const at=index>=0?clearSpawn(draft,index,player):null;
+if(at){
+spawn(draft,index,false,at,'elite');
+survival.nextEliteTick+=6000;
+emit(draft,'elite-arrival',draft.actors[index]);
+}else if(index<0)survival.nextEliteTick+=50;
+}
+if(draft.ticks+1>=survival.nextSupplyTick){
+const candidate=draft.actors.find(
+(a)=>a.status==='active'&&distance(a.position,player.position)>5000,
+);
+if(candidate){
+pickup(draft,'guarded',candidate.position,true);
+survival.supplies++;
+survival.nextSupplyTick=
+survival.supplies===1?10500:survival.nextSupplyTick+6000;
+}
+}
+const target=Math.max(1,Math.floor((prototypes.length-1)*survival.pressure));
+const active=draft.actors.filter((a,i)=>i!==bossIndex&&a.status==='active').length;
+if(
+active>=target||
+draft.ticks<survival.nextSpawnTick||
+draft.ticks<survival.reliefUntil
+)
+return;
+const candidates=draft.actors
+.map((a,i)=>({a,i}))
+.filter(
+({a,i})=>
+i!==bossIndex&&
+a.status!=='active'&&
+(a.replacementTick===null||draft.ticks>=a.replacementTick),
+);
+const entry=candidates.length
+?candidates[Math.floor(nextRandom(draft)*candidates.length)]
+:null;
+if(entry){
+const at=clearSpawn(draft,entry.i,player);
+if(at)spawn(draft,entry.i,false,at);
+}
+const base=minute<1?2:minute<2?3:minute<4?4:6;
+const rate=Math.min(
+10,
+base*
+(definition.survivalMode==='endless'&&minute>6
+?1.1**Math.floor((minute-6)/2)
+:1),
+);
+survival.nextSpawnTick=draft.ticks+Math.ceil(50/rate);
+}
+function prepare({player,input={}}){
+required(!pending,'An encounter transaction is pending');
+required(state.status==='active','Encounter has ended');
+vector(player.position);
+vector(player.velocity??zero());
+required(
+player.radius===undefined||integer(player.radius,10,3000),
+'Invalid player radius',
+);
+required(
+player.supportHeight===undefined||integer(player.supportHeight,0,3000),
+'Invalid player support height',
+);
+if(input.nose!==undefined)
+required(
+AXES.every((key)=>Number.isFinite(input.nose[key]))&&length(input.nose)>0,
+'Invalid firing direction',
+);
+if(input.muzzle!==undefined){
+vector(input.muzzle);
+required(distance(input.muzzle,player.position)<=5000,'Invalid muzzle offset');
+}
+if(input.commandSeq!==undefined)
+required(integer(input.commandSeq,0,Number.MAX_SAFE_INTEGER),'Invalid command sequence');
+required(
+input.switchWeapon===undefined||[0,1].includes(input.switchWeapon),
+'Invalid weapon slot',
+);
+const draft=clone(state);
+draft.events=[];
+draft.defeats=[];
+draft.newImpacts=[];
+const command=commandInput(draft,input);
+if(definition.activity==='strike'&&player.crashed&&draft.phase!=='aftermath'){
+draft.health=0;
+draft.phase='aftermath';
+draft.aftermathUntil=draft.ticks+1000;
+draft.projectiles=draft.projectiles.filter((p)=>p.owner==='player');
+emit(draft,'aftermath');
+}
+replenish(draft,player,command);
+const neighbours=actorIndex(draft.actors);
+const motions=draft.actors.map((actor)=>({
+id:actor.slotId,
+actorId:actor.id,
+from:moveActor(draft,actor,player,neighbours),
+to:clone(actor.position),
+enabled:actor.status==='active',
+}));
+pending={
+transaction:++serial,
+draft,
+before:clone(player),
+input:clone(input),
+command,
+motions,
+};
+return{
+transaction:pending.transaction,
+motions:clone(motions),
+actors:clone(draft.actors),
+};
+}
+function commit(
+{transaction,accepted=true,player,trace=null,contacts=[]},
+presentation=false,
+){
+const view=presentation?frameSnapshot:snapshot;
+required(pending&&pending.transaction===transaction,'Unknown encounter transaction');
+if(!accepted){
+pending=null;
+return view();
+}
+vector(player.position);
+vector(player.velocity??zero());
+required(Array.isArray(contacts)&&contacts.length<=1024,'Invalid contact budget');
+required(
+player.radius===undefined||integer(player.radius,10,3000),
+'Invalid player radius',
+);
+required(
+player.supportHeight===undefined||integer(player.supportHeight,0,3000),
+'Invalid player support height',
+);
+for(const contact of contacts)
+required(
+(contact.normal===undefined||
+AXES.every((key)=>Number.isFinite(contact.normal[key])))&&
+(contact.relativeNormalSpeedMmS===undefined||
+(Number.isFinite(contact.relativeNormalSpeedMmS)&&
+contact.relativeNormalSpeedMmS>=0)),
+'Invalid accepted contact',
+);
+const{draft,before,input,command,motions}=pending,
+radius=player.radius??220;
+const motionBySlot=new Map(motions.map((m)=>[m.id,m]));
+const path=
+trace?.length>=2
+?trace.map((p)=>clone(p.position??p))
+:[before.position,player.position];
+required(path.length<=1024,'Invalid accepted trace budget');
+path.forEach((p)=>vector(p));
+const touching=new Set();
+if(
+draft.phase!=='aftermath'&&
+draft.payloadArmed&&
+state.payloadArmed&&
+(player.crashed||contacts.length)
+){
+draft.payloadArmed=false;
+explode(draft,player.position,240,7000,'drone');
+playerDamage(draft,100,{cause:'drone-detonation'});
+}
+if(draft.phase!=='aftermath')
+for(const actor of draft.actors){
+if(actor.status!=='active')continue;
+const motion=motionBySlot.get(actor.slotId);
+let hit=null;
+for(let i=1;i<path.length&& !hit;i++)
+hit=sweptSphere(
+{...path[i-1],y:path[i-1].y+(before.supportHeight??radius)},
+{...path[i],y:path[i].y+(player.supportHeight??radius)},
+radius,
+actor,
+mix(motion.from,motion.to,(i-1)/(path.length-1)),
+mix(motion.from,motion.to,i/(path.length-1)),
+);
+const explicit=contacts.find((c)=>
+[actor.id,actor.slotId].includes(c.actorId??c.id),
+);
+if(explicit){
+required(
+explicit.relativeNormalSpeedMmS===undefined||
+(Number.isFinite(explicit.relativeNormalSpeedMmS)&&
+explicit.relativeNormalSpeedMmS>=0),
+'Invalid contact speed',
+);
+hit={
+...hit,
+position:clone(hit?.position??centre(actor)),
+normal:unit(
+explicit.normal??hit?.normal??subtract(before.position,actor.position),
+),
+};
+}
+if(!hit)continue;
+touching.add(actor.id);
+if(draft.payloadArmed){
+draft.payloadArmed=false;
+explode(draft,player.position,240,7000,'drone');
+playerDamage(draft,100,{cause:'drone-detonation'});
+}
+const lock=draft.contactLocks[actor.id];
+const impactLocked=lock&&(!lock.separated||draft.ticks-lock.tick<13);
+// Legacy impact locks also suppressed an enemy's ongoing contact attack.
+// New crowd rules keep impact re-hit protection independent of pressure.
+if(impactLocked&& !squadLanes)continue;
+const speed=
+explicit?.relativeNormalSpeedMmS??
+Math.max(0,-dot(subtract(before.velocity??zero(),actor.velocity),hit.normal));
+const damage=encounterImpactDamage(speed);
+if(!impactLocked&&damage>0){
+const healthBefore=actor.health;
+hurt(
+draft,
+actor,
+damage,
+'impact',
+{...hit,velocity:add(zero(),hit.normal,-speed)},
+before.position,
+);
+playerDamage(draft,Math.floor((healthBefore-actor.health)*policy.self),{
+cause:'impact',
+position:clone(player.position),
+});
+draft.contactLocks[actor.id]={tick:draft.ticks,separated:false};
+}
+if(
+definition.activity!=='hunting'&&
+actor.status==='active'&&
+(!squadLanes||draft.ticks-actor.spawnTick>=100)&&
+draft.ticks>=draft.contactProtectionUntil
+){
+playerDamage(draft,Math.round(20*policy.incoming),{
+cause:'contact',
+sourceId:actor.id,
+});
+draft.contactProtectionUntil=draft.ticks+38;
+}
+}
+const living=new Set(draft.actors.map((a)=>a.id));
+for(const[id,lock]of Object.entries(draft.contactLocks)){
+if(!living.has(id))delete draft.contactLocks[id];
+else if(!touching.has(id))lock.separated=true;
+}
+weapons(draft,player,input,command);
+const playerCentre={
+...player.position,
+y:player.position.y+(player.supportHeight??radius),
+};
+const attackers=
+definition.activity==='hunting'||draft.phase==='aftermath'
+?[]
+:draft.actors
+.filter(
+(a)=>
+a.status==='active'&&
+(a.fireEveryTicks>0||a.special==='final')&&
+!(a.componentMask&1&&a.components[0].id==='mount')&&
+draft.ticks-a.spawnTick>=100&&
+distance(centre(a),playerCentre)<=a.range&&
+geometry.visible(centre(a),playerCentre),
+)
+.sort(
+(a,b)=>
+distance(centre(a),playerCentre)-distance(centre(b),playerCentre)||
+a.slotIndex-b.slotIndex,
+)
+.slice(0,policy.attackers);
+for(const actor of attackers){
+const final=actor.special==='final',
+attackPhase=(draft.ticks-actor.spawnTick)%300;
+if(final&&(attackPhase<60||attackPhase>=120)){
+actor.warning||=attackPhase<60;
+continue;
+}
+actor.cooldown=Math.max(0,actor.cooldown-1);
+actor.warning||=actor.cooldown<=40;
+if(!actor.cooldown){
+const heavy=actor.type==='vehicle',
+scatter=actor.family==='shield-bearer';
+const rule={
+pellets:scatter||final?3:1,
+damage:Math.round(
+Math.max(final?15:0,actor.damage)*
+policy.incoming*
+(scatter||final?0.5:1),
+),
+speed:actor.projectileSpeed,
+range:actor.range,
+spread:scatter||final?0.05:0,
+...(heavy?{blast:Math.round(20*policy.incoming),blastRadius:2000}:{}),
+};
+addShots(
+draft,
+actor.id,
+centre(actor),
+subtract(playerCentre,centre(actor)),
+rule,
+actor.type==='vehicle'
+?'enemy-heavy'
+:actor.type==='drone'||actor.type==='hazard'
+?'enemy-energy'
+:'enemy-rifle',
+);
+actor.cooldown=final?20:Math.max(50,actor.fireEveryTicks);
+}
+}
+const queryActors=actorIndex(draft.actors,motionBySlot);
+// Resident encounter geometry ends at the admitted horizontal boundary.
+// Sweep only the supported portion; leaving it expires a shot without
+// inventing a wall impact or querying an unloaded neighboring cell.
+const admittedSegment=(from,to,radius)=>{
+let fraction=1;
+for(const axis of['x','z']){
+const low=definition.bounds.min[axis]+radius+1;
+const high=definition.bounds.max[axis]-radius-1;
+if(from[axis]<low||from[axis]>high)return null;
+const change=to[axis]-from[axis];
+if(to[axis]<low)fraction=Math.min(fraction,(low-from[axis])/change);
+if(to[axis]>high)fraction=Math.min(fraction,(high-from[axis])/change);
+}
+return{to:mix(from,to,fraction),exits:fraction<1};
+};
+const survivors=[];
+for(const projectile of draft.projectiles){
+const segment=admittedSegment(
+projectile.position,
+add(projectile.position,projectile.velocity,0.02),
+projectile.radius,
+);
+if(!segment)continue;
+const next=segment.to;
+const wall=geometry.sweepStatic(projectile.position,next,projectile.radius);
+let best=wall?{...wall}:null;
+if(projectile.owner==='player')
+for(const actor of queryActors(projectile.position,next,projectile.radius)){
+if(actor.status!=='active')continue;
+const motion=motionBySlot.get(actor.slotId);
+const hit=sweptSphere(
+projectile.position,
+next,
+projectile.radius,
+actor,
+motion.from,
+motion.to,
+);
+if(hit&&(!best||hit.toi<best.toi))best={...hit,actor};
+}
+else{
+if(draft.phase!=='aftermath'){
+const hit=sweptSphere(
+projectile.position,
+next,
+projectile.radius,
+{position:player.position,type:'drone',radius,height:radius*2},
+{
+...before.position,
+y:before.position.y+(before.supportHeight??radius)-radius,
+},
+{
+...player.position,
+y:player.position.y+(player.supportHeight??radius)-radius,
+},
+);
+if(hit&&(!best||hit.toi<best.toi))best={...hit,player:true};
+}
+for(const actor of queryActors(projectile.position,next,projectile.radius)){
+if(actor.status!=='active'||actor.id===projectile.owner)continue;
+const motion=motionBySlot.get(actor.slotId),
+hit=sweptSphere(
+projectile.position,
+next,
+projectile.radius,
+actor,
+motion.from,
+motion.to,
+);
+if(hit&&(!best||hit.toi<best.toi))best={...hit,cover:true};
+}
+}
+if(best){
+if(best.actor)
+hurt(
+draft,
+best.actor,
+projectile.damage,
+projectile.weapon,
+{...best,velocity:projectile.velocity},
+projectile.position,
+projectile.attackId,
+);
+else if(best.player)
+playerDamage(draft,projectile.damage,{
+cause:'pulse',
+position:best.position,
+normal:best.normal,
+weapon:projectile.weapon,
+});
+else if(!best.cover)
+recordSurface(draft,best,{
+weapon:projectile.weapon,
+cause:'pulse',
+damage:projectile.damage,
+severity:projectile.damage>=60?'high':'localized',
+});
+if(projectile.blast){
+const position=add(best.position,best.normal??{x:0,y:1,z:0},30);
+if(projectile.owner==='player')
+explode(
+draft,
+position,
+projectile.blast,
+projectile.blastRadius,
+projectile.weapon,
+projectile.attackId,
+);
+else{
+emit(draft,'explosion',null,{
+position,
+radius:projectile.blastRadius,
+weapon:projectile.weapon,
+damage:projectile.blast,
+severity:'explosive',
+});
+const range=distance(position,playerCentre);
+if(range<projectile.blastRadius&&geometry.visible(position,playerCentre))
+playerDamage(
+draft,
+Math.round(projectile.blast*(1-range/projectile.blastRadius)),
+{cause:'explosion',position,weapon:projectile.weapon},
+);
+}
+}
+}else{
+projectile.ttl--;
+projectile.remainingRange-=distance(projectile.position,next);
+if(
+!segment.exits&&
+projectile.ttl>0&&
+projectile.remainingRange>0&&
+within(next,definition.bounds)
+)
+survivors.push({...projectile,position:next});
+}
+}
+draft.projectiles=survivors;
+const ordnance=[];
+for(const item of draft.ordnance){
+if(item.settled){
+ordnance.push(item);
+continue;
+}
+item.age++;
+item.velocity.y-=196;
+const segment=admittedSegment(item.position,add(item.position,item.velocity,0.02),80);
+if(!segment)continue;
+const next=segment.to,
+hit=geometry.sweepStatic(item.position,next,80);
+if(hit){
+if(item.kind==='bomb')
+explode(
+draft,
+add(hit.position,hit.normal??{x:0,y:1,z:0},90),
+160,
+5000,
+'bomb',
+);
+else{
+item.position=add(hit.position,hit.normal??{x:0,y:1,z:0},90);
+item.velocity=zero();
+item.settled=true;
+ordnance.push(item);
+emit(draft,'payload-ready',null,{weapon:'remote',position:item.position});
+}
+}else if(!segment.exits&&within(next,definition.bounds)&&item.age<=1500){
+item.position=next;
+ordnance.push(item);
+}
+}
+draft.ordnance=ordnance;
+// The accepted aircraft can be destroyed independently of combat hull
+// damage. Ordinary activities give that terminal failure priority over a
+// simultaneous last defeat; Strike retains its explicit payload exception.
+if(player.crashed)draft.health=0;
+if(draft.health>0&&draft.phase!=='aftermath'){
+const kept=[];
+for(const item of draft.pickups){
+let consumed=false;
+const near=distance(item.position,player.position)<=1800;
+const guarded=
+item.guarded&&
+draft.actors.some(
+(a)=>a.status==='active'&&distance(a.position,item.position)<4500,
+);
+if(item.guarded&& !near)item.entryReady=true;
+if(item.guarded&&near&&guarded)item.entryReady=false;
+if(near&& !guarded&&item.kind==='health'&&draft.health<draft.maxHealth){
+draft.health=Math.min(draft.maxHealth,draft.health+25);
+consumed=true;
+}
+if(near&& !guarded&&item.kind==='ammo'&&definition.ammoPreset==='balanced')
+consumed=resupply(draft);
+if(near&& !guarded&&item.entryReady&&item.kind==='guarded'){
+if(draft.health<draft.maxHealth){
+draft.health=Math.min(
+draft.maxHealth,
+draft.health+{easy:35,normal:25,hard:15}[definition.difficulty],
+);
+consumed=true;
+}else if(definition.ammoPreset!=='tactical')consumed=resupply(draft);
+}
+if(consumed)
+emit(draft,'pickup',null,{
+kind:item.kind,
+health:draft.health,
+position:item.position,
+});
+else kept.push(item);
+}
+draft.pickups=kept;
+draft.pendingPickups=draft.pendingPickups.filter((item)=>{
+if(item.surfacePending){
+const support=pickupSupport(item.position);
+if(!support)return true;
+item.position=support;
+item.surfacePending=false;
+}
+if(
+draft.pickups.filter((p)=>p.kind===item.kind).length<
+(item.kind==='health'?2:8)
+){
+draft.pickups.push(item);
+return false;
+}
+return true;
+});
+}
+draft.ticks++;
+const requiredActors=draft.actors.filter((a)=>a.type!=='prop'),
+allDefeated=requiredActors.every((a)=>a.status==='defeated');
+const strikeTarget=draft.actors.find((a)=>a.type==='vehicle')??requiredActors.at(-1);
+let reason=null;
+if(definition.activity==='strike'&&strikeTarget?.status==='defeated'){
+draft.status='complete';
+reason='strike-complete';
+}else if(draft.health<=0){
+if(
+definition.activity==='strike'&&
+draft.phase!=='aftermath'&&
+(draft.ordnance.length||draft.projectiles.some((p)=>p.owner==='player'))
+){
+draft.phase='aftermath';
+draft.aftermathUntil=draft.ticks+1000;
+draft.projectiles=draft.projectiles.filter((p)=>p.owner==='player');
+emit(draft,'aftermath');
+}else if(draft.phase!=='aftermath'||draft.ticks>=draft.aftermathUntil){
+draft.status='failed';
+reason='player-defeated';
+}
+}else if(definition.activity==='hunting'&&draft.ticks>=9000){
+draft.status='complete';
+reason='time-complete';
+}else if(definition.activity==='elimination'&&allDefeated){
+draft.status='complete';
+reason='targets-cleared';
+}else if(
+isSurvival&&
+definition.survivalMode==='timed'&&
+draft.ticks>=18000&&
+draft.survival.finalDefeated
+){
+draft.status='complete';
+reason='survival-complete';
+}else if(definition.activity==='continuous'&&draft.phase==='wave'&&allDefeated){
+draft.phase='intermission';
+draft.nextWaveTick=draft.ticks+(draft.ticks-draft.lastDamageTick<=250?500:250);
+}
+if(reason){
+draft.result={reason,tick:draft.ticks,kills:draft.kills,score:draft.score};
+emit(draft,'result',null,{result:clone(draft.result)});
+}
+if(draft.defeats.length)defeatRecords=[...defeatRecords,...draft.defeats].slice(-1024);
+if(draft.newImpacts.length)
+impactRecords=[...impactRecords,...draft.newImpacts].slice(-1024);
+delete draft.defeats;
+delete draft.newImpacts;
+state=draft;
+pending=null;
+return view();
+}
+function checkpoint(){
+const saved={
+...clone(state),
+defeats:clone(defeatRecords),
+impactRecords:clone(impactRecords),
+};
+return{
+format:'FPVEncounterCheckpoint.v2',
+definition:clone(definition),
+state:saved,
+checksum:dataIdentity({definition,state:saved}),
+};
+}
+function restore(record){
+required(!pending,'An encounter transaction is pending');
+const saved=boundedJSON(record,{
+maxBytes:8*1024*1024,
+maxNodes:800000,
+maxArray:4096,
+maxDepth:24,
+maxString:4096,
+});
+exactKeys(saved,['format','definition','state','checksum'],'Encounter checkpoint');
+required(
+saved.format==='FPVEncounterCheckpoint.v2'&&
+dataIdentity(validateEncounterDefinition(saved.definition))===identity&&
+saved.checksum===dataIdentity({definition:saved.definition,state:saved.state}),
+'Encounter checkpoint identity or checksum differs',
+);
+const next=saved.state;
+exactKeys(
+next,
+[...Object.keys(initial),'defeats','impactRecords'],
+'Encounter checkpoint state',
+);
+required(
+Object.keys(initial).every((key)=>Object.hasOwn(next,key))&&
+next.format===ENCOUNTER_STATE_V2&&
+next.definitionIdentity===identity&&
+next.runId===runId,
+'Invalid encounter checkpoint identity',
+);
+for(const key of[
+'ticks',
+'wave',
+'kills',
+'rewardKills',
+'shots',
+'hits',
+'score',
+'successfulImpacts',
+'streak',
+'bestStreak',
+'nextSpawn',
+'nextProjectile',
+'nextAttack',
+'nextPickup',
+'nextEvent',
+'cooldown',
+'lastCommandSeq',
+'commandMask',
+'fireReleasedTicks',
+'serviceTicks',
+'contactProtectionUntil',
+])
+required(integer(next[key],0,1000000000),`Invalid encounter checkpoint ${key}`);
+required(
+integer(next.health,0,100)&&
+next.maxHealth===100&&
+next.hits<=next.shots&&
+next.score===next.kills*100&&
+next.rewardKills<=next.kills&&
+next.streak<=next.bestStreak&&
+next.bestStreak<=next.kills&&
+integer(next.rng,1,0xffffffff),
+'Invalid encounter counters',
+);
+required(
+['active','failed','complete'].includes(next.status)&&
+['wave','intermission','aftermath'].includes(next.phase)&&
+(next.phase!=='aftermath'||definition.activity==='strike'),
+'Invalid encounter progress',
+);
+required(
+Array.isArray(next.actors)&&
+next.actors.length===prototypes.length&&
+Array.isArray(next.projectiles)&&
+next.projectiles.length<=64&&
+Array.isArray(next.ordnance)&&
+next.ordnance.length<=16&&
+Array.isArray(next.defeats)&&
+next.defeats.length<=1024&&
+Array.isArray(next.impactRecords)&&
+next.impactRecords.length<=1024&&
+Array.isArray(next.pickups)&&
+next.pickups.length<=20&&
+Array.isArray(next.pendingPickups)&&
+next.pendingPickups.length<=20,
+'Invalid encounter budgets',
+);
+required(
+[0,1].includes(next.weaponIndex)&&
+Array.isArray(next.weapons)&&
+next.weapons.length===2&&
+integer(next.payloadAmmo,0,payloadCapacity)&&
+typeof next.payloadArmed==='boolean',
+'Invalid loadout state',
+);
+for(const[i,item]of next.weapons.entries()){
+exactKeys(
+item,
+['id','ammo','reserve','reloadTicks','reloadTotal','cooldown'],
+'Weapon state',
+);
+const rule=ENCOUNTER_WEAPONS[definition.loadout[i]];
+required(
+item.id===definition.loadout[i]&&
+integer(item.ammo,0,rule.magazine)&&
+integer(item.reserve,-1,rule.magazine*3)&&
+integer(item.reloadTicks,0,rule.reload)&&
+item.reloadTotal===rule.reload&&
+integer(item.cooldown,0,rule.interval),
+'Invalid weapon state',
+);
+}
+required(
+integer(next.nextHealthReward,12,1000000000)&&
+next.nextHealthReward===(Math.floor(next.rewardKills/12)+1)*12&&
+integer(next.nextAmmoReward,3,1000000000)&&
+(definition.ammoPreset!=='balanced'||
+next.nextAmmoReward===(Math.floor(next.rewardKills/3)+1)*3),
+'Invalid reward thresholds',
+);
+required(
+next.commandMask<=31&&
+integer(next.lastDamageTick,-10000,next.ticks)&&
+typeof next.waitingForClearSpawn==='boolean'&&
+(next.phase!=='intermission'||definition.activity==='continuous')&&
+(next.phase!=='intermission'||integer(next.nextWaveTick,0,next.ticks+500)),
+'Invalid encounter phase',
+);
+required(next.status!=='failed'||next.health===0,'Invalid failed health');
+required(
+next.health>0||
+next.status==='failed'||
+(definition.activity==='strike'&&
+(next.phase==='aftermath'||next.status==='complete')),
+'Invalid living health',
+);
+required(
+next.aftermathUntil===null||
+(definition.activity==='strike'&&integer(next.aftermathUntil,0,next.ticks+1000)),
+'Invalid aftermath deadline',
+);
+required(
+Array.isArray(next.events)&&
+next.events.length<=2048&&
+Array.isArray(next.attackHits)&&
+next.attackHits.length<=256&&
+new Set(next.attackHits).size===next.attackHits.length&&
+next.attackHits.every((id)=>integer(id,1,next.nextAttack-1)),
+'Invalid encounter events or hit accounting',
+);
+const seen=new Set();
+for(const[i,actor]of next.actors.entries()){
+exactKeys(
+actor,
+[
+...Object.keys(prototypes[i]),
+'slotIndex',
+'slotId',
+'sourceId',
+'spawnId',
+'velocity',
+'status',
+'maxHealth',
+'pathIndex',
+'cooldown',
+'warning',
+'heading',
+'spawnTick',
+'defeatedTick',
+'replacementTick',
+'blocked',
+'componentMask',
+'special',
+'squad',
+'lastHitTick',
+'lastPositionIndex',
+'routeDirection',
+'nextSpawnChoice',
+'components',
+],
+'Encounter checkpoint actor',
+);
+required(
+actor.slotIndex===i&&
+actor.slotId===slotId(i)&&
+actor.sourceId===prototypes[i].id&&
+actor.id===actor.spawnId&&
+typeof actor.id==='string'&&
+actor.id.startsWith(`${runId}:`)&&
+!seen.has(actor.id),
+'Invalid actor identity',
+);
+seen.add(actor.id);
+vector(actor.position);
+vector(actor.velocity);
+required(
+within(actor.position,definition.bounds)&&
+actor.type===prototypes[i].type&&
+actor.radius===prototypes[i].radius&&
+actor.height===prototypes[i].height&&
+integer(actor.health,0,actor.maxHealth)&&
+[prototypes[i].health,prototypes[i].health*2,prototypes[i].health*4].includes(
+actor.maxHealth,
+)&&
+['active','defeated','waiting'].includes(actor.status)&&
+(actor.status==='defeated')===(actor.health===0)&&
+integer(actor.componentMask,0,3),
+'Invalid actor body',
+);
+required(
+dataIdentity(actor.path)===dataIdentity(prototypes[i].path)&&
+actor.appearance.cast===prototypes[i].appearance.cast&&
+actor.appearance.archetype===prototypes[i].appearance.archetype&&
+actor.role==='hostile'&&
+integer(actor.pathIndex,0,Math.max(0,actor.path.length-1)),
+'Invalid actor capabilities',
+);
+required(
+Array.isArray(actor.components)&&
+actor.components.length===2&&
+actor.components.every(
+(c)=>
+['plate','mount','equipment','core'].includes(c.id)&&
+integer(c.health,0,c.maxHealth)&&
+integer(c.maxHealth,1,4000),
+),
+'Invalid actor components',
+);
+required(
+FAMILIES.includes(actor.family)&&
+actor.appearance.family===actor.family&&
+[null,'elite','final'].includes(actor.special)&&
+(actor.special===null||isSurvival)&&
+(actor.special!=='final'||i===bossIndex)&&
+actor.maxHealth===
+prototypes[i].health*
+(actor.special==='final'?4:actor.special==='elite'?2:1),
+'Invalid actor role',
+);
+for(const key of[
+'speed',
+'material',
+'destructible',
+'fireEveryTicks',
+'damage',
+'projectileSpeed',
+'range',
+'groundMotion',
+'vehicleModel',
+'spawnZone',
+])
+required(
+JSON.stringify(actor[key])===JSON.stringify(prototypes[i][key]),
+'Actor capabilities changed',
+);
+exactKeys(actor.appearance,['family','cast','archetype'],'Actor appearance');
+required(
+integer(actor.cooldown,0,5000)&&
+integer(actor.spawnTick,0,next.ticks)&&
+integer(actor.lastHitTick,-10000,next.ticks)&&
+typeof actor.warning==='boolean'&&
+typeof actor.blocked==='boolean'&&
+actor.squad===Math.floor(i/6)&&
+[-1,1].includes(actor.routeDirection)&&
+integer(actor.lastPositionIndex,0,actor.path.length)&&
+integer(actor.nextSpawnChoice,0,Math.max(0,actor.path.length-2)),
+'Invalid actor timeline',
+);
+required(actor.status!=='waiting'||isSurvival,'Unexpected dormant actor');
+if(actor.status==='defeated')
+required(
+integer(actor.defeatedTick,actor.spawnTick,next.ticks)&&
+integer(actor.replacementTick,actor.defeatedTick+200,actor.defeatedTick+400),
+'Invalid replacement time',
+);
+else
+required(
+actor.defeatedTick===null&&actor.replacementTick===null,
+'Unexpected defeat timeline',
+);
+exactKeys(actor.heading,AXES,'Actor heading');
+required(
+AXES.every(
+(key)=>Number.isFinite(actor.heading[key])&&Math.abs(actor.heading[key])<=1.00001,
+),
+'Invalid actor heading',
+);
+for(const[j,c]of actor.components.entries()){
+exactKeys(c,['id','health','maxHealth'],'Actor component');
+const expected=j
+?humanoid(actor)
+?'equipment'
+:'core'
+:actor.family==='shield-bearer'
+?'plate'
+:'mount';
+required(
+c.id===expected&&
+c.maxHealth===
+Math.max(
+1,
+Math.ceil(actor.maxHealth*(j?0.25:expected==='plate'?0.4:0.3)),
+)&&
+Boolean(actor.componentMask&(1<<j))===(c.health===0),
+'Invalid component capabilities',
+);
+}
+}
+for(const shot of next.projectiles){
+vector(shot.position);
+vector(shot.velocity);
+required(
+integer(shot.id,1,next.nextProjectile-1)&&
+integer(shot.ttl,1,10000)&&
+Number.isFinite(shot.remainingRange)&&
+shot.remainingRange>0&&
+integer(shot.damage,0,1500)&&
+(shot.owner==='player'||
+(typeof shot.owner==='string'&&shot.owner.startsWith(`${runId}:`))),
+'Invalid projectile',
+);
+}
+for(const item of next.ordnance){
+vector(item.position);
+vector(item.velocity);
+required(
+['bomb','remote'].includes(item.kind)&&
+typeof item.settled==='boolean'&&
+integer(item.age,0,1500),
+'Invalid payload',
+);
+}
+for(const item of[...next.pickups,...next.pendingPickups]){
+vector(item.position);
+required(
+['health','ammo','guarded'].includes(item.kind)&&
+within(item.position,definition.bounds),
+'Invalid pickup',
+);
+}
+required(
+integer(next.survival.nextEliteTick,0,1000000000)&&
+integer(next.survival.nextSpawnTick,0,1000000000)&&
+next.survival.mode===definition.survivalMode&&
+typeof next.survival.finalDefeated==='boolean'&&
+typeof next.survival.finalSpawned==='boolean',
+'Invalid survival state',
+);
+required(
+next.status==='active'
+?next.result===null
+:next.result?.tick===next.ticks&&
+next.result.kills===next.kills&&
+next.result.score===next.score,
+'Invalid result',
+);
+if(next.status==='complete')
+required(
+definition.activity==='hunting'
+?next.ticks===9000&&next.result.reason==='time-complete'
+:definition.activity==='elimination'
+?next.result.reason==='targets-cleared'&&
+next.actors.every((a)=>a.type==='prop'||a.status==='defeated')
+:definition.activity==='strike'
+?next.result.reason==='strike-complete'&&
+(
+next.actors.find((a)=>a.type==='vehicle')??
+next.actors.filter((a)=>a.type!=='prop').at(-1)
+)?.status==='defeated'
+:isSurvival&&
+definition.survivalMode==='timed'&&
+next.ticks>=18000&&
+next.survival.finalDefeated&&
+next.result.reason==='survival-complete',
+'Invalid encounter completion',
+);
+if(next.status==='failed')
+required(next.result.reason==='player-defeated','Invalid defeat result');
+const eventIds=new Set();
+for(const event of[...next.defeats,...next.impactRecords]){
+required(
+typeof event.eventId==='string'&&
+event.eventId.startsWith(`${runId}:`)&&
+integer(Number(event.eventId.slice(runId.length+1)),1,next.nextEvent-1)&&
+!eventIds.has(event.eventId)&&
+integer(event.tick,1,next.ticks),
+'Invalid presentation event identity',
+);
+eventIds.add(event.eventId);
+vector(event.position);
+required(
+event.type==='defeat'||event.type==='surface-impact',
+'Invalid durable event',
+);
+if(event.surface){
+vector(event.surface.position);
+required(
+AXES.every(
+(key)=>
+Number.isFinite(event.surface.normal?.[key])&&
+Math.abs(event.surface.normal[key])<=1.00001,
+),
+'Invalid impact surface',
+);
+}
+}
+required(next.defeats.length<=next.kills,'Defeat ledger exceeds rewards');
+const survival=next.survival;
+exactKeys(survival,Object.keys(initial.survival),'Survival state');
+for(const key of[
+'reliefUntil',
+'nextFormationTick',
+'nextSupplyTick',
+'regroupUntil',
+'nextReliefAllowed',
+'supplies',
+])
+required(integer(survival[key],0,1000000000),'Invalid survival clock');
+required(
+['advance','flank','shield-front','interceptors','support-cover'].includes(
+survival.formation,
+)&&
+[0.4,0.65,0.85,1].includes(survival.pressure)&&
+Array.isArray(survival.recentDefeats)&&
+survival.recentDefeats.length<=128&&
+survival.recentDefeats.every((tick)=>integer(tick,0,next.ticks)),
+'Invalid survival progression',
+);
+if(survival.finalDefeated)
+required(
+survival.finalSpawned&&
+next.actors[bossIndex].special==='final'&&
+next.actors[bossIndex].status==='defeated',
+'Invalid final defeat',
+);
+exactKeys(
+next.challenge,
+['type','goal','progress','complete','startTick'],
+'Skill challenge',
+);
+required(
+next.challenge.type===challengeType&&
+next.challenge.goal===challengeGoal&&
+integer(next.challenge.progress,0,challengeGoal)&&
+typeof next.challenge.complete==='boolean'&&
+next.challenge.complete===(next.challenge.progress===challengeGoal)&&
+next.challenge.startTick===0,
+'Invalid challenge',
+);
+for(const lock of Object.values(next.contactLocks)){
+exactKeys(lock,['tick','separated'],'Contact lock');
+required(
+integer(lock.tick,0,next.ticks)&&typeof lock.separated==='boolean',
+'Invalid contact lock',
+);
+}
+defeatRecords=clone(next.defeats);
+impactRecords=clone(next.impactRecords);
+delete next.defeats;
+delete next.impactRecords;
+next.events=[];
+state=next;
+return snapshot();
+}
+return Object.freeze({
+definition:()=>clone(definition),
+identity,
+snapshot,
+frameSnapshot,
+summary:()=>({
+status:state.status,
+phase:state.phase,
+ticks:state.ticks,
+runId:state.runId,
+lastCommandSeq:state.lastCommandSeq,
+}),
+prepare(options){
+try{
+if(geometry.ready&& !geometry.ready(definition.bounds))unavailable();
+return prepare(options);
+}catch(error){
+if(error.code!=='ENCOUNTER_GEOMETRY_UNAVAILABLE')throw error;
+pending=null;
+return{transaction:null,rejected:'geometry-unavailable',actors:[],motions:[]};
+}
+},
+commit(options,presentation=false){
+try{
+if(geometry.ready&& !geometry.ready(definition.bounds))unavailable();
+return commit(options,presentation);
+}catch(error){
+if(error.code!=='ENCOUNTER_GEOMETRY_UNAVAILABLE')throw error;
+pending=null;
+return{
+...(presentation?frameSnapshot():snapshot()),
+rejected:'geometry-unavailable',
+};
+}
+},
+commitFrame(options){
+return this.commit(options,true);
+},
+checkpoint,
+restore,
+cancel(transaction,presentation=false){
+required(pending&&pending.transaction===transaction,'Unknown encounter transaction');
+pending=null;
+return presentation?frameSnapshot():snapshot();
+},
+cancelFrame(transaction){
+return this.cancel(transaction,true);
+},
+defeats:()=>clone(defeatRecords),
+impacts:()=>clone(impactRecords),
+requestNextWave(){
+required(
+!pending&&state.status==='active'&&state.phase==='intermission',
+'No wave break to skip',
+);
+state.nextWaveTick=state.ticks;
+frameState=null;
+return snapshot();
+},
+export:()=>canonicalJSON(checkpoint()),
+});
+}
+
+return{
+ENCOUNTER_FORMAT:ENCOUNTER_FORMAT,
+ENCOUNTER_STATE:ENCOUNTER_STATE,
+ENCOUNTER_FORMAT_V2:ENCOUNTER_FORMAT_V2,
+ENCOUNTER_STATE_V2:ENCOUNTER_STATE_V2,
+ENCOUNTER_WEAPONS:ENCOUNTER_WEAPONS,
+normalizeEncounterConfig:normalizeEncounterConfig,
+resolveMilitaryEncounterActor:resolveMilitaryEncounterActor,
+ENCOUNTER_RULES:ENCOUNTER_RULES,
+validateEncounterDefinition:validateEncounterDefinition,
+encounterPhysicsCourse:encounterPhysicsCourse,
+createNativeEncounterGeometry:createNativeEncounterGeometry,
+encounterAttackAdmission:encounterAttackAdmission,
+createEncounterDefinition:createEncounterDefinition,
+encounterImpactDamage:encounterImpactDamage,
+createEncounterRuntime:createEncounterRuntime,
+inspectEncounterRecovery:inspectEncounterRecovery,
+prepareEncounterDefinition:prepareEncounterDefinition,
+};
+})();
+modules['optional-practice/civilian-fpv/world-encounter-editor.mjs']=(()=>{
+const boundedJSON=external11['boundedJSON'];
+const canonicalJSON=external11['canonicalJSON'];
+const exactKeys=external11['exactKeys'];
+const required=external11['required'];
+const createEncounterDefinition=
+modules['optional-practice/civilian-fpv/encounter-runtime.mjs']['createEncounterDefinition'];
+const validateEncounterDefinition=
+modules['optional-practice/civilian-fpv/encounter-runtime.mjs']['validateEncounterDefinition'];
+const normalizeEncounterConfig=
+modules['optional-practice/civilian-fpv/encounter-runtime.mjs']['normalizeEncounterConfig'];
+const ENCOUNTER_FORMAT_V2=
+modules['optional-practice/civilian-fpv/encounter-runtime.mjs']['ENCOUNTER_FORMAT_V2'];
+const resolveMilitaryEncounterActor=
+modules['optional-practice/civilian-fpv/encounter-runtime.mjs'][
+'resolveMilitaryEncounterActor'
+];
+const encounterAttackAdmission=
+modules['optional-practice/civilian-fpv/encounter-runtime.mjs']['encounterAttackAdmission'];
+
+const ENCOUNTER_STUDIO_FORMAT='FPVEncounterStudioBundle.v1';
+// The editable and source definitions each retain their independently validated
+// 1 MiB / 64,000-node envelope, including complete 128-actor Survival routes.
+const STUDIO_BUNDLE_BYTES=2*1024*1024+4096;
+const clone=structuredClone;
+const equal=(a,b)=>canonicalJSON(a??null)===canonicalJSON(b??null);
+const read=(input)=>
+boundedJSON(input,{
+maxBytes:STUDIO_BUNDLE_BYTES,
+maxNodes:132000,
+maxArray:256,
+maxDepth:14,
+});
+
+/** A companion export owns its source pin and edit baseline, never the base map. */
+function validateEncounterStudioBundle(input,{baseIdentity}={}){
+const bundle=read(input);
+exactKeys(
+bundle,
+['format','baseIdentity','definition','sourceDefinition'],
+'encounter studio bundle',
+);
+required(bundle.format===ENCOUNTER_STUDIO_FORMAT,'Unsupported encounter studio bundle');
+const definition=validateEncounterDefinition(bundle.definition);
+const sourceDefinition=validateEncounterDefinition(bundle.sourceDefinition);
+required(
+equal(bundle.baseIdentity,definition.baseIdentity)&&
+equal(bundle.baseIdentity,sourceDefinition.baseIdentity),
+'Encounter source identity mismatch',
+);
+required(
+baseIdentity===undefined||equal(bundle.baseIdentity,baseIdentity),
+'This encounter belongs to another map revision. Open that revision or explicitly reimport the source.',
+);
+return{
+format:ENCOUNTER_STUDIO_FORMAT,
+baseIdentity:clone(bundle.baseIdentity),
+definition,
+sourceDefinition,
+};
+}
+
+/** Preserve authored fields by stable actor ID. Missing IDs require a visible decision. */
+function reconcileEncounterSource(bundleInput,incoming){
+const bundle=validateEncounterStudioBundle(bundleInput);
+const source=validateEncounterDefinition(incoming);
+const before=new Map(bundle.sourceDefinition.actors.map((actor)=>[actor.id,actor]));
+const edits=new Map(bundle.definition.actors.map((actor)=>[actor.id,actor]));
+const unresolved=[];
+const actors=source.actors.flatMap((actor)=>{
+const old=before.get(actor.id),
+edited=edits.get(actor.id);
+if(old&& !edited)return[];// An explicit author deletion stays deleted.
+if(!old|| !edited)return[clone(actor)];
+const merged=clone(actor);
+for(const key of new Set([...Object.keys(old),...Object.keys(edited)])){
+if(equal(old[key],edited[key]))continue;
+if(Object.hasOwn(edited,key))merged[key]=clone(edited[key]);
+else delete merged[key];
+}
+return[merged];
+});
+const nextIds=new Set(source.actors.map((actor)=>actor.id));
+for(const actor of bundle.definition.actors){
+if(nextIds.has(actor.id))continue;
+if(before.has(actor.id))unresolved.push(actor.id);
+actors.push(clone(actor));
+}
+const definition={...clone(source),actors};
+for(const field of[
+'activity',
+'difficulty',
+'population',
+'seed',
+'survivalMode',
+'crowdModel',
+'contactModel',
+'loadout',
+'payload',
+'ammoPreset',
+'playerDamage',
+'enemyDamage',
+'servicePad',
+])
+if(!equal(bundle.definition[field],bundle.sourceDefinition[field]))
+if(bundle.definition[field]!==undefined)
+definition[field]=clone(bundle.definition[field]);
+if(
+bundle.definition.format===ENCOUNTER_FORMAT_V2&&
+definition.format!==ENCOUNTER_FORMAT_V2
+){
+Object.assign(definition,normalizeEncounterConfig(definition),{
+format:ENCOUNTER_FORMAT_V2,
+revision:'r2',
+crowdModel:'squad-lanes-v1',
+contactModel:'arcade-ram-v1',
+});
+definition.actors=definition.actors.map(resolveMilitaryEncounterActor);
+}
+return{sourceDefinition:source,definition,unresolved};
+}
+
+function createEncounterStudioSession({
+definition,
+sourceDefinition=definition,
+admitActor,
+admitServicePad,
+onChange=()=>{},
+}){
+let bundle=validateEncounterStudioBundle({
+format:ENCOUNTER_STUDIO_FORMAT,
+baseIdentity:definition.baseIdentity,
+definition,
+sourceDefinition,
+});
+let past=[],
+future=[],
+pending=null;
+const validate=(input)=>{
+const next=validateEncounterDefinition(input);
+if(next.format===ENCOUNTER_FORMAT_V2&&next.servicePad&&admitServicePad){
+const admitted=admitServicePad(clone(next.servicePad),{exact:true});
+required(
+admitted!=null&&equal(admitted,next.servicePad),
+'The service pad needs a clear supported surface. Reposition it before saving.',
+);
+}
+if(admitActor)
+for(const actor of next.actors){
+const admitted=admitActor(
+clone(actor),
+next.format===ENCOUNTER_FORMAT_V2
+?encounterAttackAdmission(next.loadout)
+:undefined,
+);
+required(
+admitted!=null,
+`Target ${actor.id} needs a supported route and a reachable firing position.`,
+);
+required(
+equal(admitted.position,actor.position)&&equal(admitted.path,actor.path),
+`Target ${actor.id} needs its position or route aligned with the map surface.`,
+);
+}
+return next;
+};
+function adopt(next,{history=true}={}){
+const accepted=validateEncounterStudioBundle({
+...next,
+definition:validate(next.definition),
+});
+required(
+onChange(clone(accepted.definition))!==false,
+'Encounter change was not accepted.',
+);
+if(history){
+past.push(bundle);
+past=past.slice(-40);
+future=[];
+}
+bundle=accepted;
+pending=null;
+return clone(bundle.definition);
+}
+return{
+snapshot:()=>clone(bundle.definition),
+status:()=>({
+undo:past.length>0,
+redo:future.length>0,
+pending:!!pending,
+unresolved:[...(pending?.unresolved??[])],
+}),
+apply(definition){
+required(!pending,'Resolve the changed source before applying edits.');
+required(
+equal(definition.baseIdentity,bundle.baseIdentity),
+'Use source reimport to change the map identity.',
+);
+return adopt({...bundle,definition});
+},
+exportBundle:()=>canonicalJSON(bundle),
+importBundle(input){
+return adopt(validateEncounterStudioBundle(input,{baseIdentity:bundle.baseIdentity}));
+},
+reimport(incoming){
+pending=reconcileEncounterSource(bundle,incoming);
+return clone(pending);
+},
+resolveSource({keepMissing=false}={}){
+required(pending,'No source change needs resolution.');
+const next=clone(pending);
+if(!keepMissing)
+next.definition.actors=next.definition.actors.filter(
+(actor)=> !next.unresolved.includes(actor.id),
+);
+return adopt({
+format:ENCOUNTER_STUDIO_FORMAT,
+baseIdentity:next.definition.baseIdentity,
+definition:next.definition,
+sourceDefinition:next.sourceDefinition,
+});
+},
+cancelReimport(){
+pending=null;
+},
+undo(){
+if(!past.length)return false;
+const prior=past.at(-1),
+current=bundle;
+adopt(prior,{history:false});
+past.pop();
+future.push(current);
+return true;
+},
+redo(){
+if(!future.length)return false;
+const next=future.at(-1),
+current=bundle;
+adopt(next,{history:false});
+future.pop();
+past.push(current);
+return true;
+},
+};
+}
+
+/** Host previews use the same accepted definition and effect recipes as live combat. */
+function mountEncounterEditor({
+container,
+getCourse,
+getBaseIdentity,
+definition,
+bundle:savedBundle,
+onChange=()=>{},
+onPreview=()=>{},
+locale='en',
+admitActor,
+admitServicePad,
+}={}){
+required(
+container&&typeof getCourse==='function'&&typeof getBaseIdentity==='function',
+'Encounter editor needs a map and its exact identity',
+);
+const doc=container.ownerDocument;
+const text=(en,uk)=>
+(typeof locale==='function'?locale():locale)==='uk'?uk:en;
+let session=null,
+selected=null,
+disposed=false,
+notice='',
+transfer='';
+const create=()=>
+createEncounterDefinition({
+course:getCourse(),
+baseIdentity:getBaseIdentity(),
+admitActor,
+admitServicePad,
+version:2,
+});
+const el=(tag,value)=>{
+const node=doc.createElement(tag);
+if(value!==undefined)node.textContent=value;
+return node;
+};
+const label=(title,control)=>{
+const node=el('label');
+node.append(el('span',title),control);
+return node;
+};
+function action(title,callback,disabled=false){
+const button=el('button',title);
+button.type='button';
+button.disabled=disabled;
+button.addEventListener('click',()=>{
+try{
+const result=callback();
+if(result?.catch)
+result.catch((error)=>{
+notice=error.message;
+refresh();
+});
+}catch(error){
+notice=error.message;
+}
+refresh();
+});
+return button;
+}
+const choose=(name,choices,value)=>{
+const node=el('select');
+node.dataset.encounterField=name;
+for(const[key,title]of choices){
+const option=el('option',title);
+option.value=key;
+node.append(option);
+}
+node.value=String(value);
+return node;
+};
+const number=(name,value,min=0,max=100000,step=1)=>{
+const node=el('input');
+node.type='number';
+node.value=String(value);
+node.min=String(min);
+node.max=String(max);
+node.step=String(step);
+node.dataset.encounterField=name;
+return node;
+};
+const numeric=(node)=>{
+required(
+node.value.trim()!==''&&Number.isFinite(Number(node.value)),
+text('Enter a number.','Введіть число.'),
+);
+return Number(node.value);
+};
+function ensure(){
+if(!session){
+// A saved companion from an older revision stays readable so its stable
+// IDs and authored overrides can be explicitly reconciled with the map.
+const restored=savedBundle?validateEncounterStudioBundle(savedBundle):null;
+const initial=restored?.definition??definition??create();
+session=createEncounterStudioSession({
+definition:initial,
+sourceDefinition:restored?.sourceDefinition??initial,
+admitActor,
+admitServicePad,
+onChange,
+});
+savedBundle=null;
+definition=undefined;
+}
+return session;
+}
+function refresh(){
+if(disposed)return;
+container.replaceChildren();
+container.append(el('h3',text('Combat encounters','Бойові сутички')));
+let draft,state;
+try{
+draft=ensure().snapshot();
+state=session.status();
+}catch(error){
+container.append(el('p',error.message));
+return;
+}
+const status=el('p',notice);
+status.setAttribute('role','status');
+status.dataset.encounterStatus='';
+container.append(
+el(
+'p',
+text(
+'Edit a combat companion for this map. Original course objectives stay available.',
+'Налаштуйте бойовий сценарій цієї мапи. Початкові завдання курсу залишаються доступними.',
+),
+),
+);
+const stale= !equal(draft.baseIdentity,getBaseIdentity());
+if(stale){
+container.append(
+el(
+'p',
+text(
+'Map source changed. Reimport its targets before saving.',
+'Джерело мапи змінилося. Повторно імпортуйте цілі перед збереженням.',
+),
+),
+);
+}
+const activity=choose(
+'activity',
+[
+['continuous',text('Continuous combat','Безперервний бій')],
+['hunting',text('Three-minute hunt','Трихвилинне полювання')],
+['elimination',text('Eliminate every target','Знищити всі цілі')],
+['strike',text('Strike objective','Удар по цілі')],
+['survival',text('Survival','Виживання')],
+],
+draft.activity,
+);
+const difficulty=choose(
+'difficulty',
+[
+['easy',text('Easy','Легко')],
+['normal',text('Normal','Звичайно')],
+['hard',text('Hard','Складно')],
+],
+draft.difficulty,
+);
+const population=choose(
+'population',
+(draft.activity==='survival'?[64,96,128]:[6,12,20]).map((n)=>[n,String(n)]),
+draft.population,
+);
+activity.addEventListener('change',()=>{
+const values=activity.value==='survival'?[64,96,128]:[6,12,20];
+const previous=Number(population.value);
+population.replaceChildren(
+...values.map((n)=>{
+const node=el('option',String(n));
+node.value=String(n);
+return node;
+}),
+);
+population.value=String(
+values.includes(previous)?previous:activity.value==='survival'?96:12,
+);
+});
+const config=normalizeEncounterConfig(draft);
+const weapons=[
+['autocannon',text('Autocannon','Автогармата')],
+['scatter',text('Scatter','Картеч')],
+['precision',text('Precision','Точна зброя')],
+['rocket',text('Rockets','Ракети')],
+];
+const primary=choose('primaryWeapon',weapons,config.loadout[0]);
+const secondary=choose('secondaryWeapon',weapons,config.loadout[1]);
+const payload=choose(
+'payload',
+[
+['bomb',text('Dropped bomb','Бомба')],
+['remote',text('Remote charge','Дистанційний заряд')],
+['drone',text('Drone charge','Заряд дрона')],
+],
+config.payload,
+);
+const ammo=choose(
+'ammoPreset',
+[
+['balanced',text('Balanced','Збалансовано')],
+['arcade',text('Arcade','Аркада')],
+['tactical',text('Tactical','Тактично')],
+],
+config.ammoPreset,
+);
+const survival=choose(
+'survivalMode',
+[
+['timed',text('Six minutes','Шість хвилин')],
+['endless',text('Endless','Нескінченно')],
+],
+config.survivalMode,
+);
+const playerDamage=choose(
+'playerDamage',
+[
+['normal',text('Normal damage','Звичайна шкода')],
+['invulnerable',text('Invulnerable practice','Невразливе тренування')],
+],
+config.playerDamage,
+);
+const enemyDamage=choose(
+'enemyDamage',
+[
+['normal',text('Normal health','Звичайне здоров’я')],
+['one-hit',text('One-hit practice','Тренування одним влучанням')],
+],
+config.enemyDamage,
+);
+const seed=number('seed',draft.seed,1,4294967295);
+const serviceEnabled=el('input');
+serviceEnabled.type='checkbox';
+serviceEnabled.dataset.encounterField='servicePadEnabled';
+serviceEnabled.checked=draft.servicePad!=null;
+const serviceCoordinates=Object.fromEntries(
+['x','y','z'].map((axis)=>[
+axis,
+number(
+`servicePad-${axis}`,
+(draft.servicePad?.[axis]??draft.spawn[axis])/1000,
+-100000,
+100000,
+0.001,
+),
+]),
+);
+const serviceFields=el('fieldset');
+serviceFields.append(
+el('legend',text('Service pad','Майданчик поповнення')),
+label(text('Enable supported service pad','Додати майданчик на поверхні'),serviceEnabled),
+...Object.entries(serviceCoordinates).map(([axis,node])=>
+label(`${axis.toUpperCase()} (m)`,node),
+),
+);
+
+container.append(
+label(text('Activity','Режим'),activity),
+label(text('Difficulty','Складність'),difficulty),
+label(text('Active targets','Активні цілі'),population),
+label(text('Seed','Зерно'),seed),
+label(text('Survival duration','Тривалість виживання'),survival),
+label(text('Primary weapon','Перша зброя'),primary),
+label(text('Secondary weapon','Друга зброя'),secondary),
+label(text('Payload','Заряд'),payload),
+label(text('Ammunition rules','Правила боєприпасів'),ammo),
+label(text('Player damage','Шкода гравцеві'),playerDamage),
+label(text('Enemy health rules','Правила здоров’я ворогів'),enemyDamage),
+serviceFields,
+action(
+text('Apply encounter settings','Застосувати параметри сутички'),
+()=>{
+required(
+primary.value!==secondary.value,
+text('Choose two different weapons.','Оберіть дві різні зброї.'),
+);
+let servicePad=null;
+if(serviceEnabled.checked){
+const requested=Object.fromEntries(
+Object.entries(serviceCoordinates).map(([axis,node])=>[
+axis,
+Math.round(numeric(node)*1000),
+]),
+);
+servicePad=admitServicePad?admitServicePad(requested):requested;
+required(
+servicePad!=null,
+text(
+'Choose a clear supported surface for the service pad.',
+'Оберіть вільну поверхню для майданчика.',
+),
+);
+}
+required(
+ammo.value!=='tactical'||servicePad!=null,
+text(
+'Tactical ammunition needs an enabled, reachable service pad.',
+'Тактичні боєприпаси потребують доступного майданчика поповнення.',
+),
+);
+session.apply({
+...draft,
+servicePad,
+format:ENCOUNTER_FORMAT_V2,
+revision:'r2',
+crowdModel:'squad-lanes-v1',
+contactModel:'arcade-ram-v1',
+...normalizeEncounterConfig({
+activity:activity.value,
+difficulty:difficulty.value,
+population:Number(population.value),
+survivalMode:survival.value,
+loadout:[primary.value,secondary.value],
+payload:payload.value,
+ammoPreset:ammo.value,
+playerDamage:playerDamage.value,
+enemyDamage:enemyDamage.value,
+}),
+actors:draft.actors.map(resolveMilitaryEncounterActor),
+activity:activity.value,
+difficulty:difficulty.value,
+population:Number(population.value),
+seed:numeric(seed),
+});
+notice='';
+},
+stale||state.pending,
+),
+);
+selected=draft.actors.some((actor)=>actor.id===selected)
+?selected
+:draft.actors[0]?.id;
+const selector=choose(
+'actor',
+draft.actors.map((actor)=>[actor.id,`${actor.id} · ${actor.family}`]),
+selected,
+);
+selector.addEventListener('change',()=>{
+selected=selector.value;
+refresh();
+});
+container.append(label(text('Target','Ціль'),selector));
+const actor=draft.actors.find((actor)=>actor.id===selected);
+if(actor){
+const controls={};
+for(const[key,en,uk,maximum,scale]of[
+['radius','Body radius (m)','Радіус тіла (м)',2000,1000],
+['height','Body height (m)','Висота тіла (м)',5000,1000],
+['health','Health','Здоров’я',1000,1],
+['damage','Damage','Шкода',1000,1],
+['speed','Movement speed (m/s)','Швидкість руху (м/с)',15000,1000],
+[
+'fireEveryTicks',
+'Time between shots (seconds, 0 = no weapon)',
+'Час між пострілами (секунди, 0 = без зброї)',
+5000,
+50,
+],
+['projectileSpeed','Projectile speed (m/s)','Швидкість снаряда (м/с)',60000,1000],
+['range','Range (m)','Дальність (м)',100000,1000],
+]){
+const node=number(key,actor[key]/scale,0,maximum/scale,1/scale);
+controls[key]={node,scale};
+container.append(label(text(en,uk),node));
+}
+const knownFamilies=[
+['runner',text('Recon scout','Бігун')],
+['patroller',text('Patrol trooper','Патрульний')],
+['lookout',text('Military lookout','Вартовий')],
+['sprinter',text('Assault scout','Спринтер')],
+['switchback',text('Flanking scout','Маневровий бігун')],
+['refuge-seeker',text('Cover-seeking rifleman','Шукач укриття')],
+['courier',text('Dispatch trooper','Кур’єр')],
+['rendezvous-pair',text('Patrol pair','Бігун до місця зустрічі')],
+[
+'shield-bearer',
+text('Shield bearer — frontal protection','Щитоносець — захист спереду'),
+],
+[
+'brace-trooper',
+text('Brace trooper — guarded bursts','Боєць зі щитом — захищені ривки'),
+],
+];
+if(!knownFamilies.some(([id])=>id===actor.family))
+knownFamilies.unshift([actor.family,actor.family]);
+const family=choose('family',knownFamilies,actor.family);
+container.append(label(text('Behaviour and shield','Поведінка та щит'),family));
+const type=choose(
+'type',
+[
+['patrol',text('Military trooper','Рухома наземна ціль')],
+['sentry',text('Military sentry','Вартовий')],
+['vehicle',text('Military vehicle','Транспорт')],
+['drone',text('Military UAV','Дрон')],
+['prop',text('Ground robot / supply','Тренувальний об’єкт')],
+['hazard',text('Interceptor UAV','Рухома перешкода')],
+],
+actor.type,
+);
+const material=choose(
+'material',
+[
+['organic',text('Organic','Органічний')],
+['metal',text('Metal','Метал')],
+['electronic',text('Electronics','Електроніка')],
+['wood',text('Wood','Деревина')],
+['glass',text('Glass','Скло')],
+],
+actor.material,
+);
+type.addEventListener('change',()=>{
+const human=['patrol','sentry'].includes(type.value);
+const radius={
+patrol:350,
+sentry:350,
+vehicle:900,
+drone:450,
+prop:450,
+hazard:600,
+}[type.value];
+material.value=human?'organic':type.value==='drone'?'electronic':'metal';
+controls.radius.node.value=String(radius/1000);
+controls.height.node.value=String((human?1800:radius*2)/1000);
+});
+container.append(
+label(text('Target type','Тип цілі'),type),
+label(text('Impact material','Матеріал удару'),material),
+);
+container.append(
+el(
+'p',
+text(
+'Every combat target can be destroyed. Props are optional and do not block completion.',
+'Кожну бойову ціль можна знищити. Декоративні предмети необов’язкові й не перешкоджають завершенню.',
+),
+),
+);
+const position={};
+for(const axis of['x','y','z']){
+position[axis]=number(
+`position-${axis}`,
+actor.position[axis]/1000,
+draft.bounds.min[axis]/1000,
+draft.bounds.max[axis]/1000,
+0.001,
+);
+container.append(
+label(text(`Position ${axis} (m)`,`Позиція ${axis} (м)`),position[axis]),
+);
+}
+const path=el('textarea');
+path.rows=4;
+path.dataset.encounterField='path';
+path.value=JSON.stringify(
+actor.path.map((p)=>
+Object.fromEntries(Object.entries(p).map(([k,v])=>[k,v/1000])),
+),
+);
+const zone=el('textarea');
+zone.rows=3;
+zone.dataset.encounterField='spawnZone';
+zone.value=actor.spawnZone
+?JSON.stringify(
+Object.fromEntries(
+Object.entries(actor.spawnZone).map(([edge,p])=>[
+edge,
+Object.fromEntries(Object.entries(p).map(([k,v])=>[k,v/1000])),
+]),
+),
+)
+:'';
+container.append(
+label(text('Route points in metres (JSON)','Точки маршруту в метрах (JSON)'),path),
+label(
+text(
+'Spawn zone in metres (optional JSON min/max)',
+'Зона появи в метрах (необов’язковий JSON min/max)',
+),
+zone,
+),
+);
+container.append(
+action(
+text('Apply target settings','Застосувати параметри цілі'),
+()=>{
+const metres=(p)=>
+Object.fromEntries(
+['x','y','z'].map((axis)=>{
+required(Number.isFinite(p?.[axis]),'Route coordinates must be finite.');
+return[axis,Math.round(p[axis]*1000)];
+}),
+);
+const route=read(path.value);
+required(Array.isArray(route),'Route points need an array.');
+const next={
+...actor,
+...Object.fromEntries(
+Object.entries(controls).map(([key,{node,scale}])=>[
+key,
+Math.round(numeric(node)*scale),
+]),
+),
+type:type.value,
+material:material.value,
+family:family.value.trim(),
+appearance:{...actor.appearance,family:family.value.trim()},
+destructible:true,
+position:Object.fromEntries(
+Object.entries(position).map(([key,node])=>[
+key,
+Math.round(numeric(node)*1000),
+]),
+),
+path:route.map(metres),
+};
+if(next.type!=='vehicle')delete next.vehicleModel;
+if(['patrol','sentry','vehicle','prop'].includes(next.type))
+next.groundMotion='support-v1';
+else delete next.groundMotion;
+if(zone.value.trim()){
+const value=read(zone.value);
+next.spawnZone={min:metres(value.min),max:metres(value.max)};
+}else delete next.spawnZone;
+session.apply({
+...draft,
+actors:draft.actors.map((item)=>
+item.id===actor.id
+?draft.format===ENCOUNTER_FORMAT_V2
+?resolveMilitaryEncounterActor({
+...next,
+appearance:{
+...next.appearance,
+archetype:
+type.value===actor.type?next.appearance.archetype:undefined,
+},
+})
+:next
+:item,
+),
+});
+notice='';
+},
+stale||state.pending,
+),
+);
+container.append(
+action(
+text('Duplicate target','Дублювати ціль'),
+()=>{
+let index=1;
+while(draft.actors.some((item)=>item.id===`authored-target-${index}`))index++;
+const next={...clone(actor),id:`authored-target-${index}`};
+session.apply({...draft,actors:[...draft.actors,next]});
+selected=next.id;
+},
+draft.actors.length>=(draft.format===ENCOUNTER_FORMAT_V2?128:20)||
+stale||
+state.pending,
+),
+action(
+text('Remove target','Вилучити ціль'),
+()=>{
+session.apply({
+...draft,
+actors:draft.actors.filter((item)=>item.id!==actor.id),
+});
+},
+draft.actors.length<=1||stale||state.pending,
+),
+);
+container.append(
+el(
+'p',
+text(
+`Admitted roster: ${draft.actors.length} / requested ${draft.population}. Targets need supported routes and reachable firing positions.`,
+`Допущено цілей: ${draft.actors.length} / запитано ${draft.population}. Цілі потребують опорних маршрутів і доступних позицій для стрільби.`,
+),
+),
+);
+const previewWeapon=choose(
+'previewWeapon',
+[
+...weapons,
+['bomb',text('Bomb','Бомба')],
+['remote',text('Remote charge','Дистанційний заряд')],
+['impact',text('Drone impact','Удар дроном')],
+],
+'precision',
+);
+const previewOutcome=choose(
+'previewOutcome',
+[
+['localized',text('Localized defeat','Локальне руйнування')],
+['breakup',text('High-energy defeat','Сильне руйнування')],
+['explosive',text('Explosive defeat','Вибухове руйнування')],
+],
+'breakup',
+);
+container.append(
+label(text('Preview weapon','Зброя перегляду'),previewWeapon),
+label(text('Preview outcome','Результат перегляду'),previewOutcome),
+);
+for(const[en,uk,destruction]of[
+[
+'Preview clean impact',
+'Переглянути чистий удар',
+{brutal:false,blood:false,showRemains:true},
+],
+[
+'Preview debris',
+'Переглянути уламки',
+{brutal:true,blood:false,showRemains:true},
+],
+[
+'Preview blood and remains',
+'Переглянути кров і рештки',
+{brutal:true,blood:true,showRemains:true},
+],
+])
+container.append(
+action(
+text(en,uk),
+()=>
+onPreview({
+definition:session.snapshot(),
+actorId:actor.id,
+destruction,
+weapon:previewWeapon.value,
+outcome:previewOutcome.value,
+}),
+stale,
+),
+);
+}
+const history=el('div');
+history.className='button-row';
+history.append(
+action(
+text('Undo encounter edit','Скасувати зміну сутички'),
+()=>session.undo(),
+!state.undo,
+),
+action(
+text('Redo encounter edit','Повторити зміну сутички'),
+()=>session.redo(),
+!state.redo,
+),
+action(text('Reimport map targets','Повторно імпортувати цілі мапи'),()=>{
+const result=session.reimport(create());
+if(!result.unresolved.length)session.resolveSource();
+else
+notice=
+text('Unresolved source target IDs: ','Нерозпізнані ID цілей джерела: ')+
+result.unresolved.join(', ');
+}),
+);
+container.append(history);
+if(state.unresolved.length)
+container.append(
+el(
+'p',
+text('Source targets no longer exist: ','Цілей більше немає в джерелі: ')+
+state.unresolved.join(', '),
+),
+action(text('Keep them as authored targets','Зберегти як авторські цілі'),()=>{
+session.resolveSource({keepMissing:true});
+notice='';
+}),
+action(text('Remove missing source targets','Вилучити відсутні цілі джерела'),()=>{
+session.resolveSource();
+notice='';
+}),
+);
+if(state.pending)
+container.append(
+action(text('Cancel source reimport','Скасувати повторний імпорт'),()=>{
+session.cancelReimport();
+notice='';
+}),
+);
+const json=el('textarea');
+json.rows=5;
+json.maxLength=STUDIO_BUNDLE_BYTES;
+json.value=transfer;
+json.dataset.encounterField='bundle';
+json.addEventListener('input',()=>{
+transfer=json.value;
+});
+container.append(
+label(text('Encounter companion JSON','JSON бойового сценарію'),json),
+action(text('Export encounter','Експортувати сутичку'),()=>{
+transfer=session.exportBundle();
+}),
+action(
+text('Import encounter','Імпортувати сутичку'),
+()=>{
+session.importBundle(json.value);
+transfer=json.value;
+notice='';
+},
+stale,
+),
+status,
+);
+}
+refresh();
+return{
+snapshot:()=>ensure().snapshot(),
+refresh,
+exportBundle:()=>ensure().exportBundle(),
+importBundle(input){
+const result=ensure().importBundle(input);
+refresh();
+return result;
+},
+reimport(incoming){
+const result=ensure().reimport(incoming);
+refresh();
+return result;
+},
+undo(){
+const result=ensure().undo();
+refresh();
+return result;
+},
+redo(){
+const result=ensure().redo();
+refresh();
+return result;
+},
+dispose(){
+disposed=true;
+session=null;
+container.replaceChildren();
+},
+};
+}
+
+return{
+ENCOUNTER_STUDIO_FORMAT:ENCOUNTER_STUDIO_FORMAT,
+validateEncounterStudioBundle:validateEncounterStudioBundle,
+reconcileEncounterSource:reconcileEncounterSource,
+createEncounterStudioSession:createEncounterStudioSession,
+mountEncounterEditor:mountEncounterEditor,
+};
+})();
 modules['optional-practice/civilian-fpv/world-actor-editor.mjs']=(()=>{
 const WORLD_VEHICLE_MODELS=external8['WORLD_VEHICLE_MODELS'];
 const renderPursuitEditor=
@@ -2650,8 +9852,9 @@ modules['optional-practice/civilian-fpv/world-enemy-guide.mjs']['worldEnemyGuide
 const boundedJSON=external11['boundedJSON'];
 const exactKeys=external11['exactKeys'];
 const ACTOR_CASTS=external9['ACTOR_CASTS'];
-const drawHuntActor=external12['drawHuntActor'];
-const sharedActorAppearance=external13['sharedActorAppearance'];
+
+const drawHuntActor=external13['drawHuntActor'];
+const sharedActorAppearance=external14['sharedActorAppearance'];
 
 const TYPES=['drone','patrol','sentry','vehicle','hazard'];
 const AXES=['x','y','z'];
@@ -2668,11 +9871,11 @@ vehicle:['Patrol vehicle','Патрульна машина'],
 hazard:['Moving hazard','Рухома перешкода'],
 role:['Actor role','Роль персонажа'],
 hostile:['Hostile · pulse combat','Ворожий · імпульсний бій'],
-rival:['Rival · no weapons or damage','Суперник · без зброї та шкоди'],
+rival:['Rival · does not attack','Суперник · не атакує'],
 civilian:['Civilian · background movement','Цивільний · фоновий рух'],
 roleHelp:[
-'Rivals and civilians cannot be damaged or caught. Changing role removes this actor from defeat and Contact Hunt objectives. An emptied objective is removed; if no objectives remain, a short survival objective is added.',
-'Суперників і цивільних не можна пошкодити чи спіймати. Зміна ролі вилучає персонажа із завдань знешкодження й контактного полювання. Порожнє завдання видаляється; якщо завдань не лишилось, додається коротке виживання.',
+'All characters can be destroyed in new live runs. A lesson subject returns after a safe delay if it is still needed. Roles control behavior. Changing role removes this actor from defeat and Contact Hunt objectives; an empty course receives a short survival objective.',
+'У нових польотах можна знищити всіх персонажів. Потрібний для уроку персонаж повернеться після безпечної затримки. Ролі визначають поведінку. Зміна ролі вилучає персонажа із завдань знешкодження й контактного полювання; порожній курс отримує коротке завдання на виживання.',
 ],
 add:['Add actor','Додати персонажа'],
 remove:['Remove actor','Видалити персонажа'],
@@ -2723,7 +9926,10 @@ removed:[
 'Персонажа видалено; посилання в завданнях оновлено в обох режимах.',
 ],
 objectiveAdded:['Defeat objective added.','Завдання знешкодження додано.'],
-invalidNumber:['Enter a finite number for every field.','Введіть скінченне число в кожне поле.'],
+invalidNumber:[
+'Enter a finite number for every field.',
+'Введіть скінченне число в кожне поле.',
+],
 missing:['Select an actor first.','Спочатку виберіть персонажа.'],
 budget:['Maximum: 12 actors and 8 hazards.','Максимум: 12 персонажів і 8 перешкод.'],
 waypointsBudget:[
@@ -2742,7 +9948,10 @@ minDistance:['Minimum distance · m','Мінімальна відстань · �
 maxDistance:['Maximum distance · m','Максимальна відстань · м'],
 maxRelativeSpeed:['Maximum relative speed · m/s','Максимальна відносна швидкість · м/с'],
 maxTilt:['Maximum bank / tilt · degrees','Максимальний крен / нахил · градуси'],
-viewAngle:['Maximum angle from drone nose · degrees','Максимальний кут від носа дрона · градуси'],
+viewAngle:[
+'Maximum angle from drone nose · degrees',
+'Максимальний кут від носа дрона · градуси',
+],
 ticks:[
 'Minimum continuous tracking time · seconds',
 'Мінімальний час безперервного спостереження · секунди',
@@ -3030,8 +10239,8 @@ let addedId;
 return change(
 (course)=>{
 if(
-course.actors.filter((actor)=>(actor.type==='hazard')===(type==='hazard')).length>=
-(type==='hazard'?8:12)
+course.actors.filter((actor)=>(actor.type==='hazard')===(type==='hazard'))
+.length>=(type==='hazard'?8:12)
 )
 throw new TypeError(text('budget'));
 let n=1;
@@ -3047,7 +10256,10 @@ Math.min(course.bounds.max.x-radius,course.spawn.x+4000),
 ),
 y:grounded
 ?course.bounds.min.y
-:Math.max(course.bounds.min.y,Math.min(course.bounds.max.y-2*radius,course.spawn.y+2000)),
+:Math.max(
+course.bounds.min.y,
+Math.min(course.bounds.max.y-2*radius,course.spawn.y+2000),
+),
 z:Math.max(
 course.bounds.min.z+radius,
 Math.min(course.bounds.max.z-radius,course.spawn.z-4000),
@@ -3109,9 +10321,17 @@ const actor=actorIn(course,id);
 if(actor.type==='hazard'||(actor.role??'hostile')!=='hostile')
 throw new TypeError(text('objectiveHelp'));
 for(const mode of objectiveMode==='both'?MODES:[objectiveMode]){
-if(course.steps[mode].some((step)=>step.type==='hunt-contact-v1'&&step.targets.includes(id)))
+if(
+course.steps[mode].some(
+(step)=>step.type==='hunt-contact-v1'&&step.targets.includes(id),
+)
+)
 throw new TypeError(text('huntConflict'));
-if(course.steps[mode].some((step)=>step.type==='eliminate'&&step.targets.includes(id)))
+if(
+course.steps[mode].some(
+(step)=>step.type==='eliminate'&&step.targets.includes(id),
+)
+)
 continue;
 const steps=course.steps[mode];
 const index=steps.at(-1)?.type==='land'?steps.length-1:steps.length;
@@ -3223,7 +10443,9 @@ const specs=[
 ];
 for(const[name,scale,min,max,step]of specs){
 fields[name]=number(
-name==='minTargetTravel'?(initial.minTargetTravel||10000)/scale:initial[name]/scale,
+name==='minTargetTravel'
+?(initial.minTargetTravel||10000)/scale
+:initial[name]/scale,
 text(name),
 {min,max,step},
 );
@@ -3244,7 +10466,9 @@ kind.addEventListener('change',updateKind);
 updateKind();
 panel.append(grid,help,element('p',text('trackingHelp'),'hint'));
 const read=(next)=>{
-const actor=next.actors.find((item)=>item.id===subject.value&&item.type!=='hazard');
+const actor=next.actors.find(
+(item)=>item.id===subject.value&&item.type!=='hazard',
+);
 if(!actor)throw new TypeError(text('trackingMissing'));
 if(kind.value==='follow'&& !canFollow(actor))throw new TypeError(text('followHelp'));
 const values={type:'actor-track-v1',actorId:actor.id};
@@ -3267,7 +10491,8 @@ throw new TypeError(`${text(name)}: ${text('trackingInvalid')} ${min}–${max}.`
 fields[name].removeAttribute('aria-invalid');
 values[name]=Math.round(value*scale);
 }
-if(values.maxDistance<values.minDistance+100)throw new TypeError(text('trackingRange'));
+if(values.maxDistance<values.minDistance+100)
+throw new TypeError(text('trackingRange'));
 return values;
 };
 const original=current?JSON.stringify(current.step):null;
@@ -3289,7 +10514,8 @@ return change(
 (next,bindings)=>{
 const values=read(next),
 targets=modes.value==='both'?MODES:[modes.value];
-if(!targets.every((mode)=>MODES.includes(mode)))throw new TypeError(text('trackingInvalid'));
+if(!targets.every((mode)=>MODES.includes(mode)))
+throw new TypeError(text('trackingInvalid'));
 if(targets.some((mode)=>next.steps[mode].length>=64))
 throw new TypeError(text('trackingBudget'));
 for(const mode of targets){
@@ -3393,7 +10619,8 @@ for(const[key,draft]of huntDrafts)
 if(
 key!=='new'&&
 !rows.some(
-(row)=>`${row.mode}:${row.index}`===key&&JSON.stringify(row.step)===draft.original,
+(row)=>
+`${row.mode}:${row.index}`===key&&JSON.stringify(row.step)===draft.original,
 )
 )
 huntDrafts.delete(key);
@@ -3407,7 +10634,8 @@ panel.append(element('h4',text('hunt')),element('p',text('huntHelp'),'hint'));
 const key=(row)=>`${row.mode}:${row.index}`;
 const draftKey=current?key(current):'new';
 const original=current?JSON.stringify(current.step):null;
-const draft=huntDrafts.get(draftKey)?.original===original?huntDrafts.get(draftKey):null;
+const draft=
+huntDrafts.get(draftKey)?.original===original?huntDrafts.get(draftKey):null;
 if(!draft)huntDrafts.delete(draftKey);
 let captureDraft=()=>{};
 const picker=choose(
@@ -3570,7 +10798,9 @@ const readDraft=()=>({
 targets:[...targets],
 ordered:ordered.checked,
 tail:tail.checked,
-fields:Object.fromEntries(Object.entries(fields).map(([name,field])=>[name,field.value])),
+fields:Object.fromEntries(
+Object.entries(fields).map(([name,field])=>[name,field.value]),
+),
 });
 const baseline=draft?.baseline??JSON.stringify(readDraft());
 captureDraft=()=>huntDrafts.set(draftKey,{original,...readDraft(),baseline});
@@ -3599,7 +10829,9 @@ next.steps[mode].some(
 throw new TypeError(text('huntConflict'));
 const values={
 type:'hunt-contact-v1',
-...(current?.step.contactPolicy===undefined?{}:{contactPolicy:current.step.contactPolicy}),
+...(current?.step.contactPolicy===undefined
+?{}
+:{contactPolicy:current.step.contactPolicy}),
 targets:[...targets],
 ordered:ordered.checked,
 tail:{
@@ -3958,7 +11190,8 @@ if(policy)
 next.pursuit.nodes.find((node)=>node.id===policy.start).position={
 ...target.position,
 };
-for(const[key,,scale]of[...basic,...extra])target[key]=numeric(fields[key],scale);
+for(const[key,,scale]of[...basic,...extra])
+target[key]=numeric(fields[key],scale);
 if(target.type!=='hazard'){
 target.role=role.value;
 if(target.role!=='hostile')removeTargetReferences(next,bindings,target.id);
@@ -3971,7 +11204,11 @@ container.append(element('h4',text('route')),element('p',text('routeHelp'),'hint
 const waypointInputs=[];
 const readRoute=()=>waypointInputs.map((item)=>item.read());
 for(const[index,point]of(actor.path??[]).entries()){
-const pointFields=positionFields(point,course.bounds,`${text('waypoint')} ${index+1}`);
+const pointFields=positionFields(
+point,
+course.bounds,
+`${text('waypoint')} ${index+1}`,
+);
 waypointInputs.push(pointFields);
 const row=element('div');
 const actions=element('div',undefined,'button-row');
@@ -4048,7 +11285,9 @@ json.maxLength=16384;
 json.spellcheck=false;
 json.setAttribute('aria-label',text('json'));
 json.value=JSON.stringify(
-(actor.path??[]).map((point)=>Object.fromEntries(AXES.map((key)=>[key,point[key]/1000]))),
+(actor.path??[]).map((point)=>
+Object.fromEntries(AXES.map((key)=>[key,point[key]/1000])),
+),
 null,
 2,
 );
@@ -4066,7 +11305,8 @@ maxArray:64,
 if(!Array.isArray(path))throw new TypeError(text('waypointsBudget'));
 actorIn(next).path=path.map((point)=>{
 exactKeys(point,AXES,text('waypoint'));
-if(!AXES.every((key)=>Number.isFinite(point[key])))throw new TypeError(text('invalidNumber'));
+if(!AXES.every((key)=>Number.isFinite(point[key])))
+throw new TypeError(text('invalidNumber'));
 return Object.fromEntries(AXES.map((key)=>[key,Math.round(point[key]*1000)]));
 });
 }),
@@ -4143,18 +11383,34 @@ container.replaceChildren();
 };
 }
 
-return{mountActorEditor:mountActorEditor};
+return{
+mountEncounterEditor:
+modules['optional-practice/civilian-fpv/world-encounter-editor.mjs']['mountEncounterEditor'],
+validateEncounterStudioBundle:
+modules['optional-practice/civilian-fpv/world-encounter-editor.mjs'][
+'validateEncounterStudioBundle'
+],
+createEncounterStudioSession:
+modules['optional-practice/civilian-fpv/world-encounter-editor.mjs'][
+'createEncounterStudioSession'
+],
+reconcileEncounterSource:
+modules['optional-practice/civilian-fpv/world-encounter-editor.mjs'][
+'reconcileEncounterSource'
+],
+mountActorEditor:mountActorEditor,
+};
 })();
 modules['optional-practice/civilian-fpv/world-progress.mjs']=(()=>{
 const boundedJSON=external11['boundedJSON'];
-const flightComparisonIdentity=external14['flightComparisonIdentity'];
-const TUNED_RESPONSE_FORMAT=external15['TUNED_RESPONSE_FORMAT'];
-const responseIdentity=external16['responseIdentity'];
-const createWorldFlight=external17['createWorldFlight'];
-const initWorldRuntime=external17['initWorldRuntime'];
-const replayWorldFlight=external17['replayWorldFlight'];
-const validateWorldCourse=external17['validateWorldCourse'];
-const WORLD_MAX_TICKS=external17['WORLD_MAX_TICKS'];
+const flightComparisonIdentity=external15['flightComparisonIdentity'];
+const TUNED_RESPONSE_FORMAT=external16['TUNED_RESPONSE_FORMAT'];
+const responseIdentity=external17['responseIdentity'];
+const createWorldFlight=external18['createWorldFlight'];
+const initWorldRuntime=external18['initWorldRuntime'];
+const replayWorldFlight=external18['replayWorldFlight'];
+const validateWorldCourse=external18['validateWorldCourse'];
+const WORLD_MAX_TICKS=external18['WORLD_MAX_TICKS'];
 
 const centre=(step)=>
 step.min
@@ -4185,13 +11441,16 @@ if(step.type==='hunt-contact-v1'){
 for(const id of step.targets){
 const target=course.actors.find((actor)=>actor.id===id).position;
 const centre={...target,y:target.y+1000};
-distance+=Math.hypot(...['x','y','z'].map((key)=>centre[key]-position[key]))/1000;
+distance+=
+Math.hypot(...['x','y','z'].map((key)=>centre[key]-position[key]))/1000;
 position=centre;
 }
 holdTicks+=step.targets.length*150;
 }
 }
-const base=Math.ceil((distance/2.6+holdTicks/50+20)*(mode==='acro'?1.25:1)*50);
+const base=Math.ceil(
+(distance/2.6+holdTicks/50+20)*(mode==='acro'?1.25:1)*50,
+);
 return{
 goldTicks:base,
 silverTicks:Math.ceil(base*1.8),
@@ -4240,6 +11499,86 @@ weakest:sectors.length
 :Math.min(state.step,course.steps[proof.mode].length-1),
 };
 }
+
+/** Explain the current accepted grade; never award, recalibrate or persist it.
+   * Worlds medals use exact 50 Hz ticks AND contact caps, without a time penalty. */
+function worldMedalGoal(result,ticks){
+const integer=(value)=>Number.isSafeInteger(value)&&value>=0;
+if(
+result?.eligible!==true||
+!integer(ticks)||
+result.seconds!==ticks/50||
+!integer(result.contacts)||
+!['gold','silver','bronze'].includes(result.medal)
+)
+return null;
+const targets=result.targets;
+if(
+!targets||
+!['goldTicks','silverTicks','goldContacts','silverContacts'].every((key)=>
+integer(targets[key]),
+)||
+targets.silverTicks<targets.goldTicks||
+targets.silverContacts<targets.goldContacts
+)
+return null;
+const accepted=
+ticks<=targets.goldTicks&&result.contacts<=targets.goldContacts
+?'gold'
+:ticks<=targets.silverTicks&&result.contacts<=targets.silverContacts
+?'silver'
+:'bronze';
+if(accepted!==result.medal)return null;
+if(accepted==='gold')return Object.freeze({medal:accepted,next:null});
+const next=accepted==='silver'?'gold':'silver';
+return Object.freeze({
+medal:accepted,
+next,
+targetTicks:targets[`${next}Ticks`],
+targetContacts:targets[`${next}Contacts`],
+remainingTicks:Math.max(0,ticks-targets[`${next}Ticks`]),
+excessContacts:Math.max(0,result.contacts-targets[`${next}Contacts`]),
+});
+}
+
+function worldMedalGoalText(goal,locale='en'){
+if(!goal)return'';
+const uk=locale==='uk';
+if(goal.next===null)
+return uk
+?'Золото здобуто: цей політ відповідає обмеженням часу й контактів.'
+:'Gold earned: this flight met the time and contact limits.';
+const seconds=(ticks)=>
+new Intl.NumberFormat(uk?'uk':'en',{
+minimumFractionDigits:2,
+maximumFractionDigits:2,
+useGrouping:false,
+}).format(ticks/50);
+const medal=uk
+?goal.next==='gold'
+?'золото'
+:'срібло'
+:goal.next==='gold'
+?'Gold'
+:'Silver';
+const time=goal.remainingTicks
+?uk
+?`У наступній спробі скоротіть час на ${seconds(goal.remainingTicks)} с.`
+:`On your next attempt, finish ${seconds(goal.remainingTicks)} s sooner.`
+:uk
+?'Умова часу вже виконана.'
+:'The time requirement is already met.';
+const contacts=goal.excessContacts
+?uk
+?`Потрібно менше контактів у наступній спробі: на ${goal.excessContacts}.`
+:`Your next attempt needs ${goal.excessContacts} fewer ${goal.excessContacts===1?'contact':'contacts'}.`
+:uk
+?'Умова контактів уже виконана.'
+:'The contact requirement is already met.';
+return uk
+?`Наступна медаль: ${medal} — не більше ${seconds(goal.targetTicks)} с; максимум контактів: ${goal.targetContacts}. ${time} ${contacts}`
+:`Next: ${medal} — at most ${seconds(goal.targetTicks)} s; contact limit: ${goal.targetContacts}. ${time} ${contacts}`;
+}
 /** A shortlist only: selected ghosts and sector references still replay their own proof. */
 function compatibleFlightComparison(a,b){
 if(!a|| !b)return false;
@@ -4286,7 +11625,7 @@ compatibleFlightComparison(record.proof,flightIdentity)
 }
 
 /** Legacy callers receive the safe, complete original course. A geometric
- * checkpoint cannot reconstruct entry velocity, attitude, actors or skill state. */
+   * checkpoint cannot reconstruct entry velocity, attitude, actors or skill state. */
 function checkpointPractice(input,mode,index){
 const c=validateWorldCourse(input);
 if(!['self-level','acro'].includes(mode))throw new TypeError('Unsupported flight mode.');
@@ -4296,15 +11635,15 @@ return c;
 }
 
 /** Reconstruct a checkpoint through recorded commands, never a saved pose.
- * Both selected-objective and safe full-route fallback flights reject recorders.
- * The caller owns disposal and must require explicit arming with fresh input. */
+   * Both selected-objective and safe full-route fallback flights reject recorders.
+   * The caller owns disposal and must require explicit arming with fresh input. */
 async function prepareCheckpointPractice(input,mode,index,options={}){
 return prepareRecordedSection(input,mode,index,options,false);
 }
 
 /** Watch one verified section, including the available part of an unfinished
- * attempt. The private proof and exclusive end tick must stay together: callers
- * must not play a command at endTick or persist this unscored flight. */
+   * attempt. The private proof and exclusive end tick must stay together: callers
+   * must not play a command at endTick or persist this unscored flight. */
 async function prepareSectionReplay(input,mode,index,options={}){
 return prepareRecordedSection(input,mode,index,options,true);
 }
@@ -4415,9 +11754,11 @@ throw error;
 }
 
 return{
-createSectorTracker:external18['createSectorTracker'],
+createSectorTracker:external19['createSectorTracker'],
 medalTargets:medalTargets,
 evaluateWorldResult:evaluateWorldResult,
+worldMedalGoal:worldMedalGoal,
+worldMedalGoalText:worldMedalGoalText,
 compatibleFlightComparison:compatibleFlightComparison,
 compatibleGhost:compatibleGhost,
 checkpointPractice:checkpointPractice,
@@ -4427,7 +11768,7 @@ prepareSectionReplay:prepareSectionReplay,
 })();
 modules['game/ui/hunt-feedback-layout.mjs']=(()=>{
 /** Measure Solo's optional feedback for its existing fixed/handheld board fit.
- * This only reserves DOM space; no simulation, input or camera values change. */
+   * This only reserves DOM space; no simulation, input or camera values change. */
 function attachHuntFeedbackLayout({container,window:win=globalThis.window}={}){
 const body=container?.ownerDocument?.body;
 if(
@@ -4504,26 +11845,22 @@ modules['game/journey/reaction-portraits.mjs']=(()=>{
 /** Original pixel portraits. External replacement media never supplies markup. */
 const REACTION_PORTRAITS=Object.freeze({
 guide:Object.freeze({
-idle:
-'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCIgc2hhcGUtcmVuZGVyaW5nPSJjcmlzcEVkZ2VzIj48dGl0bGU+R3VpZGUg4oCUIGlkbGU8L3RpdGxlPjxyZWN0IHdpZHRoPSI2NCIgaGVpZ2h0PSI2NCIgcng9IjgiIGZpbGw9IiMxNTI1MmUiLz48cGF0aCBkPSJNOSA2NFY1MWg4di03aDExdi01aDh2NWgxMXY3aDh2MTN6IiBmaWxsPSIjZTJiNTViIi8+PHBhdGggZD0iTTI2IDQzaDEydjhIMjZ6IiBmaWxsPSIjZTVhZDdkIi8+PHBhdGggZD0iTTIxIDE0aDIydjI0aC01djVIMjZ2LTVoLTV6IiBmaWxsPSIjZTVhZDdkIi8+PHBhdGggZD0iTTE5IDI0aDR2MTBoLTR6bTIyIDBoNHYxMGgtNHoiIGZpbGw9IiNlNWFkN2QiLz48cGF0aCBkPSJNMjUgMjdoNHYzaC00em0xMCAwaDR2M2gtNHoiIGZpbGw9IiMyNTM0NDIiLz48cGF0aCBkPSJNMjggMzVoOCIgc3Ryb2tlPSIjMzkyYzM2IiBzdHJva2Utd2lkdGg9IjIiLz48cGF0aCBkPSJNMTggMThWMTBoMjh2OGg1djVIMTN2LTV6IiBmaWxsPSIjZTJiNTViIi8+PHBhdGggZD0iTTE5IDE1aDI2djRIMTl6IiBmaWxsPSIjODM1MTM1Ii8+PHBhdGggZD0iTTI3IDQ4bDUgNSA1LTV2MTZIMjd6IiBmaWxsPSIjODM1MTM1Ii8+PHBhdGggZD0iTTQzIDQ2aDEwdjE1SDQzeiIgZmlsbD0iI2UyYjU1YiIvPjxwYXRoIGQ9Ik0xMyA1Mmg3djEyaC03eiIgZmlsbD0iIzgzNTEzNSIvPjwvc3ZnPgo=',
+idle:'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCIgc2hhcGUtcmVuZGVyaW5nPSJjcmlzcEVkZ2VzIj48dGl0bGU+R3VpZGUg4oCUIGlkbGU8L3RpdGxlPjxyZWN0IHdpZHRoPSI2NCIgaGVpZ2h0PSI2NCIgcng9IjgiIGZpbGw9IiMxNTI1MmUiLz48cGF0aCBkPSJNOSA2NFY1MWg4di03aDExdi01aDh2NWgxMXY3aDh2MTN6IiBmaWxsPSIjZTJiNTViIi8+PHBhdGggZD0iTTI2IDQzaDEydjhIMjZ6IiBmaWxsPSIjZTVhZDdkIi8+PHBhdGggZD0iTTIxIDE0aDIydjI0aC01djVIMjZ2LTVoLTV6IiBmaWxsPSIjZTVhZDdkIi8+PHBhdGggZD0iTTE5IDI0aDR2MTBoLTR6bTIyIDBoNHYxMGgtNHoiIGZpbGw9IiNlNWFkN2QiLz48cGF0aCBkPSJNMjUgMjdoNHYzaC00em0xMCAwaDR2M2gtNHoiIGZpbGw9IiMyNTM0NDIiLz48cGF0aCBkPSJNMjggMzVoOCIgc3Ryb2tlPSIjMzkyYzM2IiBzdHJva2Utd2lkdGg9IjIiLz48cGF0aCBkPSJNMTggMThWMTBoMjh2OGg1djVIMTN2LTV6IiBmaWxsPSIjZTJiNTViIi8+PHBhdGggZD0iTTE5IDE1aDI2djRIMTl6IiBmaWxsPSIjODM1MTM1Ii8+PHBhdGggZD0iTTI3IDQ4bDUgNSA1LTV2MTZIMjd6IiBmaWxsPSIjODM1MTM1Ii8+PHBhdGggZD0iTTQzIDQ2aDEwdjE1SDQzeiIgZmlsbD0iI2UyYjU1YiIvPjxwYXRoIGQ9Ik0xMyA1Mmg3djEyaC03eiIgZmlsbD0iIzgzNTEzNSIvPjwvc3ZnPgo=',
 react:
 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCIgc2hhcGUtcmVuZGVyaW5nPSJjcmlzcEVkZ2VzIj48dGl0bGU+R3VpZGUg4oCUIHJlYWN0PC90aXRsZT48cmVjdCB3aWR0aD0iNjQiIGhlaWdodD0iNjQiIHJ4PSI4IiBmaWxsPSIjMTUyNTJlIi8+PHBhdGggZD0iTTkgNjRWNTFoOHYtN2gxMXYtNWg4djVoMTF2N2g4djEzeiIgZmlsbD0iI2UyYjU1YiIvPjxwYXRoIGQ9Ik0yNiA0M2gxMnY4SDI2eiIgZmlsbD0iI2U1YWQ3ZCIvPjxwYXRoIGQ9Ik0yMSAxNGgyMnYyNGgtNXY1SDI2di01aC01eiIgZmlsbD0iI2U1YWQ3ZCIvPjxwYXRoIGQ9Ik0xOSAyNGg0djEwaC00em0yMiAwaDR2MTBoLTR6IiBmaWxsPSIjZTVhZDdkIi8+PHBhdGggZD0iTTI1IDI3aDR2M2gtNHptMTAgMGg0djNoLTR6IiBmaWxsPSIjMjUzNDQyIi8+PHBhdGggZD0iTTI3IDM0aDN2Mmg2di0yaDMiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzM5MmMzNiIgc3Ryb2tlLXdpZHRoPSIyIi8+PHBhdGggZD0iTTE4IDE4VjEwaDI4djhoNXY1SDEzdi01eiIgZmlsbD0iI2UyYjU1YiIvPjxwYXRoIGQ9Ik0xOSAxNWgyNnY0SDE5eiIgZmlsbD0iIzgzNTEzNSIvPjxwYXRoIGQ9Ik0yNyA0OGw1IDUgNS01djE2SDI3eiIgZmlsbD0iIzgzNTEzNSIvPjxwYXRoIGQ9Ik00MyA0Nmg5di04aDZ2MTlINDN6IiBmaWxsPSIjZTJiNTViIi8+PHBhdGggZD0iTTUyIDMxaDZ2OWgtNnoiIGZpbGw9IiNlNWFkN2QiLz48cGF0aCBkPSJNMTMgNTJoN3YxMmgtN3oiIGZpbGw9IiM4MzUxMzUiLz48L3N2Zz4K',
 }),
 engineer:Object.freeze({
-idle:
-'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCIgc2hhcGUtcmVuZGVyaW5nPSJjcmlzcEVkZ2VzIj48dGl0bGU+RW5naW5lZXIg4oCUIGlkbGU8L3RpdGxlPjxyZWN0IHdpZHRoPSI2NCIgaGVpZ2h0PSI2NCIgcng9IjgiIGZpbGw9IiMxNTI1MmUiLz48cGF0aCBkPSJNOSA2NFY1MWg4di03aDExdi01aDh2NWgxMXY3aDh2MTN6IiBmaWxsPSIjZWQ5YjRkIi8+PHBhdGggZD0iTTI2IDQzaDEydjhIMjZ6IiBmaWxsPSIjYjk3YjU0Ii8+PHBhdGggZD0iTTIxIDE0aDIydjI0aC01djVIMjZ2LTVoLTV6IiBmaWxsPSIjYjk3YjU0Ii8+PHBhdGggZD0iTTE5IDI0aDR2MTBoLTR6bTIyIDBoNHYxMGgtNHoiIGZpbGw9IiNiOTdiNTQiLz48cGF0aCBkPSJNMjUgMjdoNHYzaC00em0xMCAwaDR2M2gtNHoiIGZpbGw9IiMyNTM0NDIiLz48cGF0aCBkPSJNMjggMzVoOCIgc3Ryb2tlPSIjMzkyYzM2IiBzdHJva2Utd2lkdGg9IjIiLz48cGF0aCBkPSJNMTggMjBWMTJoNlY4aDE2djRoNnY4aDR2NEgxNHYtNHoiIGZpbGw9IiNlZDliNGQiLz48cGF0aCBkPSJNMzAgOWg0djExaC00eiIgZmlsbD0iI2ZmZGI4MCIvPjxwYXRoIGQ9Ik0yMCAyNWgyNHY3SDIweiIgZmlsbD0iIzIzM2M0OSIvPjxwYXRoIGQ9Ik0yMyAyNmg2djRoLTZ6bTEyIDBoNnY0aC02eiIgZmlsbD0iI2E1ZTNkZiIvPjxwYXRoIGQ9Ik0yNyA0OGw1IDUgNS01djE2SDI3eiIgZmlsbD0iIzRhMzU0MCIvPjxwYXRoIGQ9Ik00MyA0NmgxMHYxNUg0M3oiIGZpbGw9IiNlZDliNGQiLz48cGF0aCBkPSJNMTMgNTJoN3YxMmgtN3oiIGZpbGw9IiM0YTM1NDAiLz48L3N2Zz4K',
+idle:'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCIgc2hhcGUtcmVuZGVyaW5nPSJjcmlzcEVkZ2VzIj48dGl0bGU+RW5naW5lZXIg4oCUIGlkbGU8L3RpdGxlPjxyZWN0IHdpZHRoPSI2NCIgaGVpZ2h0PSI2NCIgcng9IjgiIGZpbGw9IiMxNTI1MmUiLz48cGF0aCBkPSJNOSA2NFY1MWg4di03aDExdi01aDh2NWgxMXY3aDh2MTN6IiBmaWxsPSIjZWQ5YjRkIi8+PHBhdGggZD0iTTI2IDQzaDEydjhIMjZ6IiBmaWxsPSIjYjk3YjU0Ii8+PHBhdGggZD0iTTIxIDE0aDIydjI0aC01djVIMjZ2LTVoLTV6IiBmaWxsPSIjYjk3YjU0Ii8+PHBhdGggZD0iTTE5IDI0aDR2MTBoLTR6bTIyIDBoNHYxMGgtNHoiIGZpbGw9IiNiOTdiNTQiLz48cGF0aCBkPSJNMjUgMjdoNHYzaC00em0xMCAwaDR2M2gtNHoiIGZpbGw9IiMyNTM0NDIiLz48cGF0aCBkPSJNMjggMzVoOCIgc3Ryb2tlPSIjMzkyYzM2IiBzdHJva2Utd2lkdGg9IjIiLz48cGF0aCBkPSJNMTggMjBWMTJoNlY4aDE2djRoNnY4aDR2NEgxNHYtNHoiIGZpbGw9IiNlZDliNGQiLz48cGF0aCBkPSJNMzAgOWg0djExaC00eiIgZmlsbD0iI2ZmZGI4MCIvPjxwYXRoIGQ9Ik0yMCAyNWgyNHY3SDIweiIgZmlsbD0iIzIzM2M0OSIvPjxwYXRoIGQ9Ik0yMyAyNmg2djRoLTZ6bTEyIDBoNnY0aC02eiIgZmlsbD0iI2E1ZTNkZiIvPjxwYXRoIGQ9Ik0yNyA0OGw1IDUgNS01djE2SDI3eiIgZmlsbD0iIzRhMzU0MCIvPjxwYXRoIGQ9Ik00MyA0NmgxMHYxNUg0M3oiIGZpbGw9IiNlZDliNGQiLz48cGF0aCBkPSJNMTMgNTJoN3YxMmgtN3oiIGZpbGw9IiM0YTM1NDAiLz48L3N2Zz4K',
 react:
 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCIgc2hhcGUtcmVuZGVyaW5nPSJjcmlzcEVkZ2VzIj48dGl0bGU+RW5naW5lZXIg4oCUIHJlYWN0PC90aXRsZT48cmVjdCB3aWR0aD0iNjQiIGhlaWdodD0iNjQiIHJ4PSI4IiBmaWxsPSIjMTUyNTJlIi8+PHBhdGggZD0iTTkgNjRWNTFoOHYtN2gxMXYtNWg4djVoMTF2N2g4djEzeiIgZmlsbD0iI2VkOWI0ZCIvPjxwYXRoIGQ9Ik0yNiA0M2gxMnY4SDI2eiIgZmlsbD0iI2I5N2I1NCIvPjxwYXRoIGQ9Ik0yMSAxNGgyMnYyNGgtNXY1SDI2di01aC01eiIgZmlsbD0iI2I5N2I1NCIvPjxwYXRoIGQ9Ik0xOSAyNGg0djEwaC00em0yMiAwaDR2MTBoLTR6IiBmaWxsPSIjYjk3YjU0Ii8+PHBhdGggZD0iTTI1IDI3aDR2M2gtNHptMTAgMGg0djNoLTR6IiBmaWxsPSIjMjUzNDQyIi8+PHBhdGggZD0iTTI3IDM0aDN2Mmg2di0yaDMiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzM5MmMzNiIgc3Ryb2tlLXdpZHRoPSIyIi8+PHBhdGggZD0iTTE4IDIwVjEyaDZWOGgxNnY0aDZ2OGg0djRIMTR2LTR6IiBmaWxsPSIjZWQ5YjRkIi8+PHBhdGggZD0iTTMwIDloNHYxMWgtNHoiIGZpbGw9IiNmZmRiODAiLz48cGF0aCBkPSJNMjAgMjVoMjR2N0gyMHoiIGZpbGw9IiMyMzNjNDkiLz48cGF0aCBkPSJNMjMgMjZoNnY0aC02em0xMiAwaDZ2NGgtNnoiIGZpbGw9IiNhNWUzZGYiLz48cGF0aCBkPSJNMjcgNDhsNSA1IDUtNXYxNkgyN3oiIGZpbGw9IiM0YTM1NDAiLz48cGF0aCBkPSJNNDMgNDZoOXYtOGg2djE5SDQzeiIgZmlsbD0iI2VkOWI0ZCIvPjxwYXRoIGQ9Ik01MiAzMWg2djloLTZ6IiBmaWxsPSIjYjk3YjU0Ii8+PHBhdGggZD0iTTEzIDUyaDd2MTJoLTd6IiBmaWxsPSIjNGEzNTQwIi8+PC9zdmc+Cg==',
 }),
 rival:Object.freeze({
-idle:
-'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCIgc2hhcGUtcmVuZGVyaW5nPSJjcmlzcEVkZ2VzIj48dGl0bGU+Uml2YWwg4oCUIGlkbGU8L3RpdGxlPjxyZWN0IHdpZHRoPSI2NCIgaGVpZ2h0PSI2NCIgcng9IjgiIGZpbGw9IiMxNTI1MmUiLz48cGF0aCBkPSJNOSA2NFY1MWg4di03aDExdi01aDh2NWgxMXY3aDh2MTN6IiBmaWxsPSIjYjA5OGVjIi8+PHBhdGggZD0iTTI2IDQzaDEydjhIMjZ6IiBmaWxsPSIjZWZiZDkxIi8+PHBhdGggZD0iTTIxIDE0aDIydjI0aC01djVIMjZ2LTVoLTV6IiBmaWxsPSIjZWZiZDkxIi8+PHBhdGggZD0iTTE5IDI0aDR2MTBoLTR6bTIyIDBoNHYxMGgtNHoiIGZpbGw9IiNlZmJkOTEiLz48cGF0aCBkPSJNMjUgMjdoNHYzaC00em0xMCAwaDR2M2gtNHoiIGZpbGw9IiMyNTM0NDIiLz48cGF0aCBkPSJNMjggMzVoOCIgc3Ryb2tlPSIjMzkyYzM2IiBzdHJva2Utd2lkdGg9IjIiLz48cGF0aCBkPSJNMTggMjJWMTJoNVY4aDIxdjhoNHY5aC03VjE1SDI2djd6IiBmaWxsPSIjMzUyYjQ2Ii8+PHBhdGggZD0iTTE4IDIxaDI5djVIMTh6IiBmaWxsPSIjYjA5OGVjIi8+PHBhdGggZD0iTTQzIDI1aDd2MTJoLTRWMjloLTN6IiBmaWxsPSIjYjA5OGVjIi8+PHBhdGggZD0iTTI3IDQ4bDUgNSA1LTV2MTZIMjd6IiBmaWxsPSIjMzUyYjQ2Ii8+PHBhdGggZD0iTTQzIDQ2aDEwdjE1SDQzeiIgZmlsbD0iI2IwOThlYyIvPjxwYXRoIGQ9Ik0xMyA1Mmg3djEyaC03eiIgZmlsbD0iIzM1MmI0NiIvPjwvc3ZnPgo=',
+idle:'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCIgc2hhcGUtcmVuZGVyaW5nPSJjcmlzcEVkZ2VzIj48dGl0bGU+Uml2YWwg4oCUIGlkbGU8L3RpdGxlPjxyZWN0IHdpZHRoPSI2NCIgaGVpZ2h0PSI2NCIgcng9IjgiIGZpbGw9IiMxNTI1MmUiLz48cGF0aCBkPSJNOSA2NFY1MWg4di03aDExdi01aDh2NWgxMXY3aDh2MTN6IiBmaWxsPSIjYjA5OGVjIi8+PHBhdGggZD0iTTI2IDQzaDEydjhIMjZ6IiBmaWxsPSIjZWZiZDkxIi8+PHBhdGggZD0iTTIxIDE0aDIydjI0aC01djVIMjZ2LTVoLTV6IiBmaWxsPSIjZWZiZDkxIi8+PHBhdGggZD0iTTE5IDI0aDR2MTBoLTR6bTIyIDBoNHYxMGgtNHoiIGZpbGw9IiNlZmJkOTEiLz48cGF0aCBkPSJNMjUgMjdoNHYzaC00em0xMCAwaDR2M2gtNHoiIGZpbGw9IiMyNTM0NDIiLz48cGF0aCBkPSJNMjggMzVoOCIgc3Ryb2tlPSIjMzkyYzM2IiBzdHJva2Utd2lkdGg9IjIiLz48cGF0aCBkPSJNMTggMjJWMTJoNVY4aDIxdjhoNHY5aC03VjE1SDI2djd6IiBmaWxsPSIjMzUyYjQ2Ii8+PHBhdGggZD0iTTE4IDIxaDI5djVIMTh6IiBmaWxsPSIjYjA5OGVjIi8+PHBhdGggZD0iTTQzIDI1aDd2MTJoLTRWMjloLTN6IiBmaWxsPSIjYjA5OGVjIi8+PHBhdGggZD0iTTI3IDQ4bDUgNSA1LTV2MTZIMjd6IiBmaWxsPSIjMzUyYjQ2Ii8+PHBhdGggZD0iTTQzIDQ2aDEwdjE1SDQzeiIgZmlsbD0iI2IwOThlYyIvPjxwYXRoIGQ9Ik0xMyA1Mmg3djEyaC03eiIgZmlsbD0iIzM1MmI0NiIvPjwvc3ZnPgo=',
 react:
 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCIgc2hhcGUtcmVuZGVyaW5nPSJjcmlzcEVkZ2VzIj48dGl0bGU+Uml2YWwg4oCUIHJlYWN0PC90aXRsZT48cmVjdCB3aWR0aD0iNjQiIGhlaWdodD0iNjQiIHJ4PSI4IiBmaWxsPSIjMTUyNTJlIi8+PHBhdGggZD0iTTkgNjRWNTFoOHYtN2gxMXYtNWg4djVoMTF2N2g4djEzeiIgZmlsbD0iI2IwOThlYyIvPjxwYXRoIGQ9Ik0yNiA0M2gxMnY4SDI2eiIgZmlsbD0iI2VmYmQ5MSIvPjxwYXRoIGQ9Ik0yMSAxNGgyMnYyNGgtNXY1SDI2di01aC01eiIgZmlsbD0iI2VmYmQ5MSIvPjxwYXRoIGQ9Ik0xOSAyNGg0djEwaC00em0yMiAwaDR2MTBoLTR6IiBmaWxsPSIjZWZiZDkxIi8+PHBhdGggZD0iTTI1IDI3aDR2M2gtNHptMTAgMGg0djNoLTR6IiBmaWxsPSIjMjUzNDQyIi8+PHBhdGggZD0iTTI3IDM0aDN2Mmg2di0yaDMiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzM5MmMzNiIgc3Ryb2tlLXdpZHRoPSIyIi8+PHBhdGggZD0iTTE4IDIyVjEyaDVWOGgyMXY4aDR2OWgtN1YxNUgyNnY3eiIgZmlsbD0iIzM1MmI0NiIvPjxwYXRoIGQ9Ik0xOCAyMWgyOXY1SDE4eiIgZmlsbD0iI2IwOThlYyIvPjxwYXRoIGQ9Ik00MyAyNWg3djEyaC00VjI5aC0zeiIgZmlsbD0iI2IwOThlYyIvPjxwYXRoIGQ9Ik0yNyA0OGw1IDUgNS01djE2SDI3eiIgZmlsbD0iIzM1MmI0NiIvPjxwYXRoIGQ9Ik00MyA0Nmg5di04aDZ2MTlINDN6IiBmaWxsPSIjYjA5OGVjIi8+PHBhdGggZD0iTTUyIDMxaDZ2OWgtNnoiIGZpbGw9IiNlZmJkOTEiLz48cGF0aCBkPSJNMTMgNTJoN3YxMmgtN3oiIGZpbGw9IiMzNTJiNDYiLz48L3N2Zz4K',
 }),
 sentinel:Object.freeze({
-idle:
-'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCIgc2hhcGUtcmVuZGVyaW5nPSJjcmlzcEVkZ2VzIj48dGl0bGU+U2VudGluZWwg4oCUIGlkbGU8L3RpdGxlPjxyZWN0IHdpZHRoPSI2NCIgaGVpZ2h0PSI2NCIgcng9IjgiIGZpbGw9IiMxNTI1MmUiLz48cGF0aCBkPSJNOSA2NFY1MWg4di03aDExdi01aDh2NWgxMXY3aDh2MTN6IiBmaWxsPSIjNmFkNGMyIi8+PHBhdGggZD0iTTI2IDQzaDEydjhIMjZ6IiBmaWxsPSIjYTZiZGM1Ii8+PHBhdGggZD0iTTIxIDE0aDIydjI0aC01djVIMjZ2LTVoLTV6IiBmaWxsPSIjYTZiZGM1Ii8+PHBhdGggZD0iTTE5IDI0aDR2MTBoLTR6bTIyIDBoNHYxMGgtNHoiIGZpbGw9IiNhNmJkYzUiLz48cGF0aCBkPSJNMjUgMjdoNHYzaC00em0xMCAwaDR2M2gtNHoiIGZpbGw9IiMyNTM0NDIiLz48cGF0aCBkPSJNMjggMzVoOCIgc3Ryb2tlPSIjMzkyYzM2IiBzdHJva2Utd2lkdGg9IjIiLz48cGF0aCBkPSJNMTYgMzFWMTRoNVY4aDIydjZoNXYxN2gtN1YxOEgyM3YxM3oiIGZpbGw9IiMzMTVhNjUiLz48cGF0aCBkPSJNMjEgMjJoMjJ2MTBIMjF6IiBmaWxsPSIjMTYyYzM4Ii8+PHBhdGggZD0iTTI0IDI1aDV2M2gtNXptMTEgMGg1djNoLTV6IiBmaWxsPSIjNmFkNGMyIi8+PHBhdGggZD0iTTI5IDdoNnY4aC02eiIgZmlsbD0iIzZhZDRjMiIvPjxwYXRoIGQ9Ik0yNyA0OGw1IDUgNS01djE2SDI3eiIgZmlsbD0iIzMxNWE2NSIvPjxwYXRoIGQ9Ik00MyA0NmgxMHYxNUg0M3oiIGZpbGw9IiM2YWQ0YzIiLz48cGF0aCBkPSJNMTMgNTJoN3YxMmgtN3oiIGZpbGw9IiMzMTVhNjUiLz48L3N2Zz4K',
+idle:'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCIgc2hhcGUtcmVuZGVyaW5nPSJjcmlzcEVkZ2VzIj48dGl0bGU+U2VudGluZWwg4oCUIGlkbGU8L3RpdGxlPjxyZWN0IHdpZHRoPSI2NCIgaGVpZ2h0PSI2NCIgcng9IjgiIGZpbGw9IiMxNTI1MmUiLz48cGF0aCBkPSJNOSA2NFY1MWg4di03aDExdi01aDh2NWgxMXY3aDh2MTN6IiBmaWxsPSIjNmFkNGMyIi8+PHBhdGggZD0iTTI2IDQzaDEydjhIMjZ6IiBmaWxsPSIjYTZiZGM1Ii8+PHBhdGggZD0iTTIxIDE0aDIydjI0aC01djVIMjZ2LTVoLTV6IiBmaWxsPSIjYTZiZGM1Ii8+PHBhdGggZD0iTTE5IDI0aDR2MTBoLTR6bTIyIDBoNHYxMGgtNHoiIGZpbGw9IiNhNmJkYzUiLz48cGF0aCBkPSJNMjUgMjdoNHYzaC00em0xMCAwaDR2M2gtNHoiIGZpbGw9IiMyNTM0NDIiLz48cGF0aCBkPSJNMjggMzVoOCIgc3Ryb2tlPSIjMzkyYzM2IiBzdHJva2Utd2lkdGg9IjIiLz48cGF0aCBkPSJNMTYgMzFWMTRoNVY4aDIydjZoNXYxN2gtN1YxOEgyM3YxM3oiIGZpbGw9IiMzMTVhNjUiLz48cGF0aCBkPSJNMjEgMjJoMjJ2MTBIMjF6IiBmaWxsPSIjMTYyYzM4Ii8+PHBhdGggZD0iTTI0IDI1aDV2M2gtNXptMTEgMGg1djNoLTV6IiBmaWxsPSIjNmFkNGMyIi8+PHBhdGggZD0iTTI5IDdoNnY4aC02eiIgZmlsbD0iIzZhZDRjMiIvPjxwYXRoIGQ9Ik0yNyA0OGw1IDUgNS01djE2SDI3eiIgZmlsbD0iIzMxNWE2NSIvPjxwYXRoIGQ9Ik00MyA0NmgxMHYxNUg0M3oiIGZpbGw9IiM2YWQ0YzIiLz48cGF0aCBkPSJNMTMgNTJoN3YxMmgtN3oiIGZpbGw9IiMzMTVhNjUiLz48L3N2Zz4K',
 react:
 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCIgc2hhcGUtcmVuZGVyaW5nPSJjcmlzcEVkZ2VzIj48dGl0bGU+U2VudGluZWwg4oCUIHJlYWN0PC90aXRsZT48cmVjdCB3aWR0aD0iNjQiIGhlaWdodD0iNjQiIHJ4PSI4IiBmaWxsPSIjMTUyNTJlIi8+PHBhdGggZD0iTTkgNjRWNTFoOHYtN2gxMXYtNWg4djVoMTF2N2g4djEzeiIgZmlsbD0iIzZhZDRjMiIvPjxwYXRoIGQ9Ik0yNiA0M2gxMnY4SDI2eiIgZmlsbD0iI2E2YmRjNSIvPjxwYXRoIGQ9Ik0yMSAxNGgyMnYyNGgtNXY1SDI2di01aC01eiIgZmlsbD0iI2E2YmRjNSIvPjxwYXRoIGQ9Ik0xOSAyNGg0djEwaC00em0yMiAwaDR2MTBoLTR6IiBmaWxsPSIjYTZiZGM1Ii8+PHBhdGggZD0iTTI1IDI3aDR2M2gtNHptMTAgMGg0djNoLTR6IiBmaWxsPSIjMjUzNDQyIi8+PHBhdGggZD0iTTI3IDM0aDN2Mmg2di0yaDMiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzM5MmMzNiIgc3Ryb2tlLXdpZHRoPSIyIi8+PHBhdGggZD0iTTE2IDMxVjE0aDVWOGgyMnY2aDV2MTdoLTdWMThIMjN2MTN6IiBmaWxsPSIjMzE1YTY1Ii8+PHBhdGggZD0iTTIxIDIyaDIydjEwSDIxeiIgZmlsbD0iIzE2MmMzOCIvPjxwYXRoIGQ9Ik0yNCAyNWg1djNoLTV6bTExIDBoNXYzaC01eiIgZmlsbD0iIzZhZDRjMiIvPjxwYXRoIGQ9Ik0yOSA3aDZ2OGgtNnoiIGZpbGw9IiM2YWQ0YzIiLz48cGF0aCBkPSJNMjcgNDhsNSA1IDUtNXYxNkgyN3oiIGZpbGw9IiMzMTVhNjUiLz48cGF0aCBkPSJNNDMgNDZoOXYtOGg2djE5SDQzeiIgZmlsbD0iIzZhZDRjMiIvPjxwYXRoIGQ9Ik01MiAzMWg2djloLTZ6IiBmaWxsPSIjYTZiZGM1Ii8+PHBhdGggZD0iTTEzIDUyaDd2MTJoLTd6IiBmaWxsPSIjMzE1YTY1Ii8+PC9zdmc+Cg==',
 }),
@@ -4562,7 +11899,7 @@ if(node.textContent!==text)node.textContent=text;
 // Result surfaces also have legacy footnote rules; the explicit caption
 // preference takes precedence without exposing a hidden parent surface.
 node.style.display=node.hidden?'none':'block';
-node.style.fontSize=`calc(${options.scale}rem * var(--overflight-text-scale, 1))`;
+node.style.fontSize=`calc(${options.scale}rem * var(--primary-text-scale, 1) * var(--overflight-text-scale, 1))`;
 node.style.lineHeight='1.45';
 node.style.color='var(--fk-text, #f1f5fa)';
 node.style.background=options.background?'var(--fk-panel, #172126)':'transparent';
@@ -4587,164 +11924,9 @@ reactionCaptionText:reactionCaptionText,
 renderResultReactionCaption:renderResultReactionCaption,
 };
 })();
-modules['game/ui/media-preparation.mjs']=(()=>{
-const aborted=()=>new DOMException('Media preparation cancelled.','AbortError');
-const phases=new Set(['menu','preparing','playing','paused','suspended']);
-const priorities={required:0,demand:1,background:2};
-
-/** Admission only: callers retain validation, ownership and playback policy.
- * A cancelled native decode still owns its slot until the native promise settles.
- */
-function createMediaPreparation({fetches=2,decodes=1,decodeBytes=16*1024*1024}={}){
-const limits={fetch:fetches,decode:decodes,inspect:1,main:1};
-const active={fetch:0,decode:0,inspect:0,main:0};
-const queue=[],
-unsettled=new Set();
-let phase='menu',
-closed=false,
-reservedBytes=0,
-sequence=0;
-function remove(task,error){
-const at=queue.indexOf(task);
-if(at>=0)queue.splice(at,1);
-task.signal?.removeEventListener('abort',task.cancel);
-task.reject(error);
-}
-function drain(){
-for(const task of[...queue])
-if(
-closed||
-task.signal?.aborted||
-!task.eligible()||
-(['playing','suspended'].includes(phase)&&task.priority==='background')
-)
-remove(task,aborted());
-queue.sort((a,b)=>priorities[a.priority]-priorities[b.priority]||a.sequence-b.sequence);
-for(const task of[...queue]){
-if(
-phase==='suspended'||
-active[task.kind]>=limits[task.kind]||
-(task.kind==='main'&&phase==='playing')
-)
-continue;
-if(task.kind==='decode'&&reservedBytes+task.bytes>decodeBytes)continue;
-queue.splice(queue.indexOf(task),1);
-task.signal?.removeEventListener('abort',task.cancel);
-active[task.kind]++;
-if(task.kind==='decode')reservedBytes+=task.bytes;
-let deferred=false;
-Promise.resolve()
-.then(()=>{
-if(
-closed||
-phase==='suspended'||
-task.signal?.aborted||
-!task.eligible()||
-(phase==='playing'&&task.priority==='background')
-)
-throw aborted();
-// Phase can change after admission but before this microtask runs.
-// Keep required fallback work pending until a safe phase instead of
-// starting a scan during gameplay or rejecting its playback request.
-if(task.kind==='main'&&phase==='playing'){
-deferred=true;
-queue.push(task);
-task.signal?.addEventListener('abort',task.cancel,{once:true});
-return;
-}
-return task.work();
-})
-.then((value)=>{
-if(deferred)return;
-if(closed||task.signal?.aborted|| !task.eligible())task.reject(aborted());
-else task.resolve(value);
-},task.reject)
-.finally(()=>{
-active[task.kind]--;
-if(task.kind==='decode')reservedBytes-=task.bytes;
-drain();
-});
-}
-}
-return Object.freeze({
-run(kind,work,{priority='demand',signal,bytes=0,eligible=()=>true}={}){
-if(
-!(kind in limits)||
-!(priority in priorities)||
-typeof work!=='function'||
-!Number.isFinite(bytes)||
-bytes<0
-)
-return Promise.reject(new TypeError('Invalid media preparation task.'));
-if(kind==='decode'&&bytes>decodeBytes)
-return Promise.reject(new RangeError('Media decode exceeds its memory budget.'));
-return new Promise((resolve,reject)=>{
-const task={
-kind,
-work,
-priority,
-signal,
-bytes,
-eligible,
-resolve(value){
-unsettled.delete(task);
-resolve(value);
-},
-reject(error){
-unsettled.delete(task);
-reject(error);
-},
-sequence:sequence++,
-};
-task.cancel=()=>{
-remove(task,aborted());
-drain();
-};
-unsettled.add(task);
-queue.push(task);
-signal?.addEventListener('abort',task.cancel,{once:true});
-drain();
-});
-},
-// Upgrade existing work only. Removed/cancelled tasks cannot be revived.
-promote(signal,priority='demand'){
-if(!signal||typeof signal.aborted!=='boolean'|| !(priority in priorities))
-throw new TypeError('Invalid media preparation promotion.');
-if(closed||signal.aborted)return 0;
-let promoted=0;
-for(const task of unsettled)
-if(task.signal===signal&&priorities[priority]<priorities[task.priority]&&task.eligible()){
-task.priority=priority;
-promoted++;
-}
-if(promoted)drain();
-return promoted;
-},
-setPhase(value){
-if(!phases.has(value))throw new TypeError('Invalid media preparation phase.');
-phase=value;
-drain();
-},
-refresh:drain,
-snapshot:()=>
-Object.freeze({
-phase,
-queued:queue.length,
-active:{...active},
-reservedDecodeBytes:reservedBytes,
-}),
-close(){
-closed=true;
-drain();
-},
-});
-}
-
-return{createMediaPreparation:createMediaPreparation};
-})();
 modules['game/journey/reaction-recording-format.mjs']=(()=>{
 /** Conservative pre-decode admission for local speech. Unknown containers stay
- * untouched in storage and use captions until converted to an admitted format. */
+   * untouched in storage and use captions until converted to an admitted format. */
 const unsupported=()=>
 new Error('Use mono/stereo PCM WAV or AAC-LC M4A (8–96 kHz), up to 15 seconds.');
 const requireValue=(condition)=>{
@@ -4755,14 +11937,23 @@ const rates=[
 ];
 function inspectRecordingContainer(buffer){
 requireValue(
-buffer instanceof ArrayBuffer&&buffer.byteLength>=16&&buffer.byteLength<=2*1024*1024,
+buffer instanceof ArrayBuffer&&
+buffer.byteLength>=16&&
+buffer.byteLength<=2*1024*1024,
 );
 const data=new DataView(buffer),
 bytes=new Uint8Array(buffer);
-const text=(offset,length)=>String.fromCharCode(...bytes.subarray(offset,offset+length));
+const text=(offset,length)=>
+String.fromCharCode(...bytes.subarray(offset,offset+length));
 const u32=(offset)=>data.getUint32(offset),
 u16=(offset)=>data.getUint16(offset);
-function compatible(channels,sampleRate,maxDecodedSeconds,format,decodeChannels=channels){
+function compatible(
+channels,
+sampleRate,
+maxDecodedSeconds,
+format,
+decodeChannels=channels,
+){
 requireValue(
 (channels===1||channels===2)&&
 sampleRate>=8000&&
@@ -4795,10 +11986,13 @@ if(codec===0xfffe){
 requireValue(size>=40&&data.getUint16(start+16,true)>=22);
 codec=data.getUint32(start+24,true);
 requireValue(
-text(start+28,12)===String.fromCharCode(0,0,16,0,128,0,0,170,0,56,155,113),
+text(start+28,12)===
+String.fromCharCode(0,0,16,0,128,0,0,170,0,56,155,113),
 );
 }
-requireValue((codec===1&&[8,16,24,32].includes(bits))||(codec===3&&bits===32));
+requireValue(
+(codec===1&&[8,16,24,32].includes(bits))||(codec===3&&bits===32),
+);
 requireValue(align===(channels*bits)/8&&byteRate===sampleRate*align);
 format={channels,sampleRate,align};
 }else if(kind==='data'){
@@ -5058,7 +12252,8 @@ preparation.promote?.(request.abort.signal,'demand');
 }
 return request.promise;
 }
-if(pending.size>=REACTION_VOICE_LIMITS.loads||now()<(failures.get(key)??0))return false;
+if(pending.size>=REACTION_VOICE_LIMITS.loads||now()<(failures.get(key)??0))
+return false;
 const abort=new AbortController(),
 timeout=setTimeout(()=>abort.abort(),10000),
 request={abort,promise:null,priority};
@@ -5080,7 +12275,10 @@ const recording=await preparation.run(
 admission,
 );
 if(!recording|| !eligible()||abort.signal.aborted)return false;
-if(!recording.bytes?.byteLength||recording.bytes.byteLength>REACTION_VOICE_LIMITS.bytes)
+if(
+!recording.bytes?.byteLength||
+recording.bytes.byteLength>REACTION_VOICE_LIMITS.bytes
+)
 return false;
 const metadata=await inspect(
 new Blob([recording.bytes],{type:recording.mime??'audio/mp4'}),
@@ -5095,7 +12293,12 @@ const buffer=await preparation.run(
 ()=>audioContext.decodeAudioData(recording.bytes.slice(0)),
 {...admission,priority:request.priority,bytes:reservedBytes},
 );
-if(closed||abort.signal.aborted||revision!==generation||audioContext!==sound.context)
+if(
+closed||
+abort.signal.aborted||
+revision!==generation||
+audioContext!==sound.context
+)
 return false;
 const size=buffer.length*buffer.numberOfChannels*4;
 if(
@@ -5110,7 +12313,8 @@ size<=REACTION_VOICE_LIMITS.perDecodeBytes
 return false;
 while(
 buffers.size&&
-(bytes+size>REACTION_VOICE_LIMITS.decodedBytes||buffers.size>=REACTION_VOICE_LIMITS.buffers)
+(bytes+size>REACTION_VOICE_LIMITS.decodedBytes||
+buffers.size>=REACTION_VOICE_LIMITS.buffers)
 ){
 const oldest=buffers.keys().next().value;
 bytes-=buffers.get(oldest).length*buffers.get(oldest).numberOfChannels*4;
@@ -5125,7 +12329,13 @@ return false;
 }finally{
 clearTimeout(timeout);
 if(pending.get(key)===request)pending.delete(key);
-if(!closed&& !cancelled&& !abort.signal.aborted&&revision===generation&& !buffers.has(key))
+if(
+!closed&&
+!cancelled&&
+!abort.signal.aborted&&
+revision===generation&&
+!buffers.has(key)
+)
 failures.set(key,now()+30000);
 }
 })();
@@ -5165,11 +12375,13 @@ void cancel({clear:true});
 }
 
 /** Bound expected PCM before asking the browser decoder to allocate it. Native
- * decoder overhead remains browser-owned; only admitted mono/stereo is decoded. */
+   * decoder overhead remains browser-owned; only admitted mono/stereo is decoded. */
 function admitReactionDecode(metadata,sampleRate){
 const bytes=Math.ceil(metadata.maxDecodedSeconds*sampleRate)*metadata.decodeChannels*4;
 if(!Number.isFinite(bytes)||bytes<=0||bytes>REACTION_VOICE_LIMITS.perDecodeBytes)
-throw new Error('This recording exceeds the 6 MiB per-decode PCM budget. Use a shorter recording.');
+throw new Error(
+'This recording exceeds the 6 MiB per-decode PCM budget. Use a shorter recording.',
+);
 return bytes;
 }
 
@@ -5202,7 +12414,10 @@ required(
 value.format===CAMPAIGN_FEEDBACK_FORMAT&&stableId(value.revision),
 'Invalid campaign feedback format or revision.',
 );
-required(Object.hasOwn(VICTORY_MOTIFS,value.victoryMotif),'Choose a registered victory motif.');
+required(
+Object.hasOwn(VICTORY_MOTIFS,value.victoryMotif),
+'Choose a registered victory motif.',
+);
 exactKeys(value.lines,['en','uk'],'Campaign feedback languages');
 for(const locale of['en','uk']){
 const lines=value.lines[locale];
@@ -5231,7 +12446,7 @@ checked.set(value,value);
 return value;
 }
 /** Context is supplied by the host's accepted current mission. Imported flags
- * never select an owner; this is a pure presentation projection, not evidence. */
+   * never select an owner; this is a pure presentation projection, not evidence. */
 function acceptedCampaignFeedback(context){
 if(
 !context||
@@ -5292,8 +12507,8 @@ const actorDefinition=external9['actorDefinition'];
 const resolveActorFamily=external9['resolveActorFamily'];
 
 /** Original optional copy. Selection is deterministic and carries no simulated
- * facts. Hosts must use their existing incidental-reaction budget and priority.
- * Recordings can replace these IDs without changing recipes or locales. */
+   * facts. Hosts must use their existing incidental-reaction budget and priority.
+   * Recordings can replace these IDs without changing recipes or locales. */
 const copy={
 lookout:[
 ['Something on the horizon.','Щось на обрії.'],
@@ -5385,7 +12600,7 @@ actorEventReaction:actorEventReaction,
 })();
 modules['game/overflight/reactions.mjs']=(()=>{
 /** Stable shared Voice Studio entries. Missing recordings use the existing
- * caption path; these entries never synthesize speech or claim a recorded voice. */
+   * caption path; these entries never synthesize speech or claim a recorded voice. */
 const OVERFLIGHT_REACTION_FAMILIES=Object.freeze({
 'overflight.upgraded':'overflight-upgrade',
 'overflight.evolved':'overflight-evolution',
@@ -5460,7 +12675,7 @@ const actorReactionLine=modules['game/hunt/actor-reactions.mjs']['actorReactionL
 const OVERFLIGHT_REACTION_LINES=
 modules['game/overflight/reactions.mjs']['OVERFLIGHT_REACTION_LINES'];
 /** Original, non-blocking personality copy. No simulated facts, gameplay rules,
- * scores, requests to keep playing, or rewards are derived from these captions. */
+   * scores, requests to keep playing, or rewards are derived from these captions. */
 const JOURNEY_REACTIONS=Object.freeze({
 guide:Object.freeze({
 name:'Guide',
@@ -5504,7 +12719,10 @@ engineer:Object.freeze([
 'Вдалий маршрут через складне місце.',
 'Мені подобається, що ви збудували між цими краями.',
 ]),
-rival:Object.freeze(['Два поля. Два способи знайти шлях.','Різні маршрути — спільний краєвид.']),
+rival:Object.freeze([
+'Два поля. Два способи знайти шлях.',
+'Різні маршрути — спільний краєвид.',
+]),
 sentinel:Object.freeze(['Останній сигнал — твій.','За короною залишається картина.']),
 });
 
@@ -5569,13 +12787,14 @@ return{
 id,
 speaker:line.speaker,
 family:line.family,
-name:locale==='uk'?REACTION_NAMES_UK[line.speaker]:JOURNEY_REACTIONS[line.speaker].name,
+name:
+locale==='uk'?REACTION_NAMES_UK[line.speaker]:JOURNEY_REACTIONS[line.speaker].name,
 text:line.text[locale==='uk'?'uk':'en'],
 };
 }
 
 /** Host-owned result context only. Never infer ownership from titles or URLs.
- * A finished race without a successful board is not a completion reaction. */
+   * A finished race without a successful board is not a completion reaction. */
 function journeyResultReaction(context,locale='en'){
 const overflight=context?.presentation==='overflight'&&context.mode==='solo';
 if(
@@ -5592,7 +12811,9 @@ return null;
 if(overflight)
 // This existing Engineer line and its exact recording fit a successful sortie.
 return reactionLine(
-context.outcome==='won'?'journey-reaction.v1/engineer/0':'overflight-reaction.v1/lost',
+context.outcome==='won'
+?'journey-reaction.v1/engineer/0'
+:'overflight-reaction.v1/lost',
 locale,
 );
 const authored=campaignResultLine(context,locale);
@@ -5645,7 +12866,7 @@ return Object.freeze(value);
 }
 
 /** A presentation-only choice shared by all modes. Loading never writes;
- * invalid/future records remain intact, and failure never prevents play. */
+   * invalid/future records remain intact, and failure never prevents play. */
 function createReactionPreferences({
 getStorage=()=>globalThis.localStorage,
 window:eventTarget=globalThis,
@@ -5735,7 +12956,8 @@ try{
 const{storage}=read();// Do not replace corrupt or newer-format records.
 const raw=JSON.stringify({format,enabled});
 storage.setItem(JOURNEY_REACTION_PREFERENCES_KEY,raw);
-if(storage.getItem(JOURNEY_REACTION_PREFERENCES_KEY)!==raw)throw new Error('Readback failed.');
+if(storage.getItem(JOURNEY_REACTION_PREFERENCES_KEY)!==raw)
+throw new Error('Readback failed.');
 pending=false;
 durable=true;
 error='';
@@ -5821,7 +13043,9 @@ value,
 );
 if(
 (!legacy&&value.format!==format)||
-['sounds','speech','subtitles','background'].some((key)=>typeof value[key]!=='boolean')||
+['sounds','speech','subtitles','background'].some(
+(key)=>typeof value[key]!=='boolean',
+)||
 !Number.isFinite(value.volume)||
 value.volume<0||
 value.volume>1||
@@ -5886,7 +13110,8 @@ try{
 const{storage}=read();
 const raw=JSON.stringify(validateReactionOptions({format,...options}));
 storage.setItem(REACTION_OPTIONS_KEY,raw);
-if(storage.getItem(REACTION_OPTIONS_KEY)!==raw)throw new Error('Storage readback failed.');
+if(storage.getItem(REACTION_OPTIONS_KEY)!==raw)
+throw new Error('Storage readback failed.');
 durable=true;
 pending=false;
 }catch{
@@ -5967,8 +13192,7 @@ voice:'Samantha',
 rate:155,
 kind:'generated',
 releaseStatus:'pilot-review-required',
-note:
-'Original local speech preview. UK roles share the Lesya voice with different pacing. Listening qualification is pending.',
+note:'Original local speech preview. UK roles share the Lesya voice with different pacing. Listening qualification is pending.',
 },
 },
 {
@@ -5985,8 +13209,7 @@ voice:'Lesya',
 rate:155,
 kind:'generated',
 releaseStatus:'pilot-review-required',
-note:
-'Original local speech preview. UK roles share the Lesya voice with different pacing. Listening qualification is pending.',
+note:'Original local speech preview. UK roles share the Lesya voice with different pacing. Listening qualification is pending.',
 },
 },
 {
@@ -6003,8 +13226,7 @@ voice:'Samantha',
 rate:155,
 kind:'generated',
 releaseStatus:'pilot-review-required',
-note:
-'Original local speech preview. UK roles share the Lesya voice with different pacing. Listening qualification is pending.',
+note:'Original local speech preview. UK roles share the Lesya voice with different pacing. Listening qualification is pending.',
 },
 },
 {
@@ -6021,8 +13243,7 @@ voice:'Lesya',
 rate:155,
 kind:'generated',
 releaseStatus:'pilot-review-required',
-note:
-'Original local speech preview. UK roles share the Lesya voice with different pacing. Listening qualification is pending.',
+note:'Original local speech preview. UK roles share the Lesya voice with different pacing. Listening qualification is pending.',
 },
 },
 {
@@ -6039,8 +13260,7 @@ voice:'Daniel',
 rate:165,
 kind:'generated',
 releaseStatus:'pilot-review-required',
-note:
-'Original local speech preview. UK roles share the Lesya voice with different pacing. Listening qualification is pending.',
+note:'Original local speech preview. UK roles share the Lesya voice with different pacing. Listening qualification is pending.',
 },
 },
 {
@@ -6057,8 +13277,7 @@ voice:'Lesya',
 rate:165,
 kind:'generated',
 releaseStatus:'pilot-review-required',
-note:
-'Original local speech preview. UK roles share the Lesya voice with different pacing. Listening qualification is pending.',
+note:'Original local speech preview. UK roles share the Lesya voice with different pacing. Listening qualification is pending.',
 },
 },
 {
@@ -6075,8 +13294,7 @@ voice:'Daniel',
 rate:165,
 kind:'generated',
 releaseStatus:'pilot-review-required',
-note:
-'Original local speech preview. UK roles share the Lesya voice with different pacing. Listening qualification is pending.',
+note:'Original local speech preview. UK roles share the Lesya voice with different pacing. Listening qualification is pending.',
 },
 },
 {
@@ -6093,8 +13311,7 @@ voice:'Lesya',
 rate:165,
 kind:'generated',
 releaseStatus:'pilot-review-required',
-note:
-'Original local speech preview. UK roles share the Lesya voice with different pacing. Listening qualification is pending.',
+note:'Original local speech preview. UK roles share the Lesya voice with different pacing. Listening qualification is pending.',
 },
 },
 {
@@ -6111,8 +13328,7 @@ voice:'Karen',
 rate:175,
 kind:'generated',
 releaseStatus:'pilot-review-required',
-note:
-'Original local speech preview. UK roles share the Lesya voice with different pacing. Listening qualification is pending.',
+note:'Original local speech preview. UK roles share the Lesya voice with different pacing. Listening qualification is pending.',
 },
 },
 {
@@ -6129,8 +13345,7 @@ voice:'Lesya',
 rate:175,
 kind:'generated',
 releaseStatus:'pilot-review-required',
-note:
-'Original local speech preview. UK roles share the Lesya voice with different pacing. Listening qualification is pending.',
+note:'Original local speech preview. UK roles share the Lesya voice with different pacing. Listening qualification is pending.',
 },
 },
 {
@@ -6147,8 +13362,7 @@ voice:'Karen',
 rate:175,
 kind:'generated',
 releaseStatus:'pilot-review-required',
-note:
-'Original local speech preview. UK roles share the Lesya voice with different pacing. Listening qualification is pending.',
+note:'Original local speech preview. UK roles share the Lesya voice with different pacing. Listening qualification is pending.',
 },
 },
 {
@@ -6165,8 +13379,7 @@ voice:'Lesya',
 rate:175,
 kind:'generated',
 releaseStatus:'pilot-review-required',
-note:
-'Original local speech preview. UK roles share the Lesya voice with different pacing. Listening qualification is pending.',
+note:'Original local speech preview. UK roles share the Lesya voice with different pacing. Listening qualification is pending.',
 },
 },
 {
@@ -6183,8 +13396,7 @@ voice:'Fred',
 rate:145,
 kind:'generated',
 releaseStatus:'pilot-review-required',
-note:
-'Original local speech preview. UK roles share the Lesya voice with different pacing. Listening qualification is pending.',
+note:'Original local speech preview. UK roles share the Lesya voice with different pacing. Listening qualification is pending.',
 },
 },
 {
@@ -6201,8 +13413,7 @@ voice:'Lesya',
 rate:145,
 kind:'generated',
 releaseStatus:'pilot-review-required',
-note:
-'Original local speech preview. UK roles share the Lesya voice with different pacing. Listening qualification is pending.',
+note:'Original local speech preview. UK roles share the Lesya voice with different pacing. Listening qualification is pending.',
 },
 },
 {
@@ -6219,8 +13430,7 @@ voice:'Fred',
 rate:145,
 kind:'generated',
 releaseStatus:'pilot-review-required',
-note:
-'Original local speech preview. UK roles share the Lesya voice with different pacing. Listening qualification is pending.',
+note:'Original local speech preview. UK roles share the Lesya voice with different pacing. Listening qualification is pending.',
 },
 },
 {
@@ -6237,8 +13447,7 @@ voice:'Lesya',
 rate:145,
 kind:'generated',
 releaseStatus:'pilot-review-required',
-note:
-'Original local speech preview. UK roles share the Lesya voice with different pacing. Listening qualification is pending.',
+note:'Original local speech preview. UK roles share the Lesya voice with different pacing. Listening qualification is pending.',
 },
 },
 ]);
@@ -6263,8 +13472,7 @@ voice:'Samantha',
 rate:150,
 kind:'generated',
 releaseStatus:'listening-review-required',
-note:
-'Original scripted game character. Local draft voice; EN/UK pronunciation, expression and mix require listening review. Casts share this line identity.',
+note:'Original scripted game character. Local draft voice; EN/UK pronunciation, expression and mix require listening review. Casts share this line identity.',
 },
 file:'actors-v1/actor-lookout-notice-en.m4a',
 },
@@ -6281,8 +13489,7 @@ voice:'Lesya',
 rate:150,
 kind:'generated',
 releaseStatus:'listening-review-required',
-note:
-'Original scripted game character. Local draft voice; EN/UK pronunciation, expression and mix require listening review. Casts share this line identity.',
+note:'Original scripted game character. Local draft voice; EN/UK pronunciation, expression and mix require listening review. Casts share this line identity.',
 },
 file:'actors-v1/actor-lookout-notice-uk.m4a',
 },
@@ -6299,8 +13506,7 @@ voice:'Samantha',
 rate:150,
 kind:'generated',
 releaseStatus:'listening-review-required',
-note:
-'Original scripted game character. Local draft voice; EN/UK pronunciation, expression and mix require listening review. Casts share this line identity.',
+note:'Original scripted game character. Local draft voice; EN/UK pronunciation, expression and mix require listening review. Casts share this line identity.',
 },
 file:'actors-v1/actor-lookout-caught-en.m4a',
 },
@@ -6317,8 +13523,7 @@ voice:'Lesya',
 rate:150,
 kind:'generated',
 releaseStatus:'listening-review-required',
-note:
-'Original scripted game character. Local draft voice; EN/UK pronunciation, expression and mix require listening review. Casts share this line identity.',
+note:'Original scripted game character. Local draft voice; EN/UK pronunciation, expression and mix require listening review. Casts share this line identity.',
 },
 file:'actors-v1/actor-lookout-caught-uk.m4a',
 },
@@ -6335,8 +13540,7 @@ voice:'Daniel',
 rate:155,
 kind:'generated',
 releaseStatus:'listening-review-required',
-note:
-'Original scripted game character. Local draft voice; EN/UK pronunciation, expression and mix require listening review. Casts share this line identity.',
+note:'Original scripted game character. Local draft voice; EN/UK pronunciation, expression and mix require listening review. Casts share this line identity.',
 },
 file:'actors-v1/actor-patroller-notice-en.m4a',
 },
@@ -6353,8 +13557,7 @@ voice:'Lesya',
 rate:155,
 kind:'generated',
 releaseStatus:'listening-review-required',
-note:
-'Original scripted game character. Local draft voice; EN/UK pronunciation, expression and mix require listening review. Casts share this line identity.',
+note:'Original scripted game character. Local draft voice; EN/UK pronunciation, expression and mix require listening review. Casts share this line identity.',
 },
 file:'actors-v1/actor-patroller-notice-uk.m4a',
 },
@@ -6371,8 +13574,7 @@ voice:'Daniel',
 rate:155,
 kind:'generated',
 releaseStatus:'listening-review-required',
-note:
-'Original scripted game character. Local draft voice; EN/UK pronunciation, expression and mix require listening review. Casts share this line identity.',
+note:'Original scripted game character. Local draft voice; EN/UK pronunciation, expression and mix require listening review. Casts share this line identity.',
 },
 file:'actors-v1/actor-patroller-caught-en.m4a',
 },
@@ -6389,8 +13591,7 @@ voice:'Lesya',
 rate:155,
 kind:'generated',
 releaseStatus:'listening-review-required',
-note:
-'Original scripted game character. Local draft voice; EN/UK pronunciation, expression and mix require listening review. Casts share this line identity.',
+note:'Original scripted game character. Local draft voice; EN/UK pronunciation, expression and mix require listening review. Casts share this line identity.',
 },
 file:'actors-v1/actor-patroller-caught-uk.m4a',
 },
@@ -6407,8 +13608,7 @@ voice:'Karen',
 rate:175,
 kind:'generated',
 releaseStatus:'listening-review-required',
-note:
-'Original scripted game character. Local draft voice; EN/UK pronunciation, expression and mix require listening review. Casts share this line identity.',
+note:'Original scripted game character. Local draft voice; EN/UK pronunciation, expression and mix require listening review. Casts share this line identity.',
 },
 file:'actors-v1/actor-runner-notice-en.m4a',
 },
@@ -6425,8 +13625,7 @@ voice:'Lesya',
 rate:175,
 kind:'generated',
 releaseStatus:'listening-review-required',
-note:
-'Original scripted game character. Local draft voice; EN/UK pronunciation, expression and mix require listening review. Casts share this line identity.',
+note:'Original scripted game character. Local draft voice; EN/UK pronunciation, expression and mix require listening review. Casts share this line identity.',
 },
 file:'actors-v1/actor-runner-notice-uk.m4a',
 },
@@ -6443,8 +13642,7 @@ voice:'Karen',
 rate:175,
 kind:'generated',
 releaseStatus:'listening-review-required',
-note:
-'Original scripted game character. Local draft voice; EN/UK pronunciation, expression and mix require listening review. Casts share this line identity.',
+note:'Original scripted game character. Local draft voice; EN/UK pronunciation, expression and mix require listening review. Casts share this line identity.',
 },
 file:'actors-v1/actor-runner-caught-en.m4a',
 },
@@ -6461,8 +13659,7 @@ voice:'Lesya',
 rate:175,
 kind:'generated',
 releaseStatus:'listening-review-required',
-note:
-'Original scripted game character. Local draft voice; EN/UK pronunciation, expression and mix require listening review. Casts share this line identity.',
+note:'Original scripted game character. Local draft voice; EN/UK pronunciation, expression and mix require listening review. Casts share this line identity.',
 },
 file:'actors-v1/actor-runner-caught-uk.m4a',
 },
@@ -6479,8 +13676,7 @@ voice:'Daniel',
 rate:180,
 kind:'generated',
 releaseStatus:'listening-review-required',
-note:
-'Original scripted game character. Local draft voice; EN/UK pronunciation, expression and mix require listening review. Casts share this line identity.',
+note:'Original scripted game character. Local draft voice; EN/UK pronunciation, expression and mix require listening review. Casts share this line identity.',
 },
 file:'actors-v1/actor-sprinter-notice-en.m4a',
 },
@@ -6497,8 +13693,7 @@ voice:'Lesya',
 rate:180,
 kind:'generated',
 releaseStatus:'listening-review-required',
-note:
-'Original scripted game character. Local draft voice; EN/UK pronunciation, expression and mix require listening review. Casts share this line identity.',
+note:'Original scripted game character. Local draft voice; EN/UK pronunciation, expression and mix require listening review. Casts share this line identity.',
 },
 file:'actors-v1/actor-sprinter-notice-uk.m4a',
 },
@@ -6515,8 +13710,7 @@ voice:'Daniel',
 rate:180,
 kind:'generated',
 releaseStatus:'listening-review-required',
-note:
-'Original scripted game character. Local draft voice; EN/UK pronunciation, expression and mix require listening review. Casts share this line identity.',
+note:'Original scripted game character. Local draft voice; EN/UK pronunciation, expression and mix require listening review. Casts share this line identity.',
 },
 file:'actors-v1/actor-sprinter-caught-en.m4a',
 },
@@ -6533,8 +13727,7 @@ voice:'Lesya',
 rate:180,
 kind:'generated',
 releaseStatus:'listening-review-required',
-note:
-'Original scripted game character. Local draft voice; EN/UK pronunciation, expression and mix require listening review. Casts share this line identity.',
+note:'Original scripted game character. Local draft voice; EN/UK pronunciation, expression and mix require listening review. Casts share this line identity.',
 },
 file:'actors-v1/actor-sprinter-caught-uk.m4a',
 },
@@ -6551,8 +13744,7 @@ voice:'Samantha',
 rate:170,
 kind:'generated',
 releaseStatus:'listening-review-required',
-note:
-'Original scripted game character. Local draft voice; EN/UK pronunciation, expression and mix require listening review. Casts share this line identity.',
+note:'Original scripted game character. Local draft voice; EN/UK pronunciation, expression and mix require listening review. Casts share this line identity.',
 },
 file:'actors-v1/actor-courier-notice-en.m4a',
 },
@@ -6569,8 +13761,7 @@ voice:'Lesya',
 rate:170,
 kind:'generated',
 releaseStatus:'listening-review-required',
-note:
-'Original scripted game character. Local draft voice; EN/UK pronunciation, expression and mix require listening review. Casts share this line identity.',
+note:'Original scripted game character. Local draft voice; EN/UK pronunciation, expression and mix require listening review. Casts share this line identity.',
 },
 file:'actors-v1/actor-courier-notice-uk.m4a',
 },
@@ -6587,8 +13778,7 @@ voice:'Samantha',
 rate:170,
 kind:'generated',
 releaseStatus:'listening-review-required',
-note:
-'Original scripted game character. Local draft voice; EN/UK pronunciation, expression and mix require listening review. Casts share this line identity.',
+note:'Original scripted game character. Local draft voice; EN/UK pronunciation, expression and mix require listening review. Casts share this line identity.',
 },
 file:'actors-v1/actor-courier-caught-en.m4a',
 },
@@ -6605,8 +13795,7 @@ voice:'Lesya',
 rate:170,
 kind:'generated',
 releaseStatus:'listening-review-required',
-note:
-'Original scripted game character. Local draft voice; EN/UK pronunciation, expression and mix require listening review. Casts share this line identity.',
+note:'Original scripted game character. Local draft voice; EN/UK pronunciation, expression and mix require listening review. Casts share this line identity.',
 },
 file:'actors-v1/actor-courier-caught-uk.m4a',
 },
@@ -6623,8 +13812,7 @@ voice:'Fred',
 rate:150,
 kind:'generated',
 releaseStatus:'listening-review-required',
-note:
-'Original scripted game character. Local draft voice; EN/UK pronunciation, expression and mix require listening review. Casts share this line identity.',
+note:'Original scripted game character. Local draft voice; EN/UK pronunciation, expression and mix require listening review. Casts share this line identity.',
 },
 file:'actors-v1/actor-guard-notice-en.m4a',
 },
@@ -6641,8 +13829,7 @@ voice:'Lesya',
 rate:150,
 kind:'generated',
 releaseStatus:'listening-review-required',
-note:
-'Original scripted game character. Local draft voice; EN/UK pronunciation, expression and mix require listening review. Casts share this line identity.',
+note:'Original scripted game character. Local draft voice; EN/UK pronunciation, expression and mix require listening review. Casts share this line identity.',
 },
 file:'actors-v1/actor-guard-notice-uk.m4a',
 },
@@ -6659,8 +13846,7 @@ voice:'Fred',
 rate:150,
 kind:'generated',
 releaseStatus:'listening-review-required',
-note:
-'Original scripted game character. Local draft voice; EN/UK pronunciation, expression and mix require listening review. Casts share this line identity.',
+note:'Original scripted game character. Local draft voice; EN/UK pronunciation, expression and mix require listening review. Casts share this line identity.',
 },
 file:'actors-v1/actor-guard-caught-en.m4a',
 },
@@ -6677,8 +13863,7 @@ voice:'Lesya',
 rate:150,
 kind:'generated',
 releaseStatus:'listening-review-required',
-note:
-'Original scripted game character. Local draft voice; EN/UK pronunciation, expression and mix require listening review. Casts share this line identity.',
+note:'Original scripted game character. Local draft voice; EN/UK pronunciation, expression and mix require listening review. Casts share this line identity.',
 },
 file:'actors-v1/actor-guard-caught-uk.m4a',
 },
@@ -6695,8 +13880,7 @@ voice:'Samantha',
 rate:155,
 kind:'generated',
 releaseStatus:'listening-review-required',
-note:
-'Original scripted game character. Local draft voice; EN/UK pronunciation, expression and mix require listening review. Casts share this line identity.',
+note:'Original scripted game character. Local draft voice; EN/UK pronunciation, expression and mix require listening review. Casts share this line identity.',
 },
 file:'actors-v1/actor-refuge-seeker-notice-en.m4a',
 },
@@ -6713,8 +13897,7 @@ voice:'Lesya',
 rate:155,
 kind:'generated',
 releaseStatus:'listening-review-required',
-note:
-'Original scripted game character. Local draft voice; EN/UK pronunciation, expression and mix require listening review. Casts share this line identity.',
+note:'Original scripted game character. Local draft voice; EN/UK pronunciation, expression and mix require listening review. Casts share this line identity.',
 },
 file:'actors-v1/actor-refuge-seeker-notice-uk.m4a',
 },
@@ -6731,8 +13914,7 @@ voice:'Samantha',
 rate:155,
 kind:'generated',
 releaseStatus:'listening-review-required',
-note:
-'Original scripted game character. Local draft voice; EN/UK pronunciation, expression and mix require listening review. Casts share this line identity.',
+note:'Original scripted game character. Local draft voice; EN/UK pronunciation, expression and mix require listening review. Casts share this line identity.',
 },
 file:'actors-v1/actor-refuge-seeker-caught-en.m4a',
 },
@@ -6749,8 +13931,7 @@ voice:'Lesya',
 rate:155,
 kind:'generated',
 releaseStatus:'listening-review-required',
-note:
-'Original scripted game character. Local draft voice; EN/UK pronunciation, expression and mix require listening review. Casts share this line identity.',
+note:'Original scripted game character. Local draft voice; EN/UK pronunciation, expression and mix require listening review. Casts share this line identity.',
 },
 file:'actors-v1/actor-refuge-seeker-caught-uk.m4a',
 },
@@ -6767,8 +13948,7 @@ voice:'Karen',
 rate:165,
 kind:'generated',
 releaseStatus:'listening-review-required',
-note:
-'Original scripted game character. Local draft voice; EN/UK pronunciation, expression and mix require listening review. Casts share this line identity.',
+note:'Original scripted game character. Local draft voice; EN/UK pronunciation, expression and mix require listening review. Casts share this line identity.',
 },
 file:'actors-v1/actor-switchback-notice-en.m4a',
 },
@@ -6785,8 +13965,7 @@ voice:'Lesya',
 rate:165,
 kind:'generated',
 releaseStatus:'listening-review-required',
-note:
-'Original scripted game character. Local draft voice; EN/UK pronunciation, expression and mix require listening review. Casts share this line identity.',
+note:'Original scripted game character. Local draft voice; EN/UK pronunciation, expression and mix require listening review. Casts share this line identity.',
 },
 file:'actors-v1/actor-switchback-notice-uk.m4a',
 },
@@ -6803,8 +13982,7 @@ voice:'Karen',
 rate:165,
 kind:'generated',
 releaseStatus:'listening-review-required',
-note:
-'Original scripted game character. Local draft voice; EN/UK pronunciation, expression and mix require listening review. Casts share this line identity.',
+note:'Original scripted game character. Local draft voice; EN/UK pronunciation, expression and mix require listening review. Casts share this line identity.',
 },
 file:'actors-v1/actor-switchback-caught-en.m4a',
 },
@@ -6821,8 +13999,7 @@ voice:'Lesya',
 rate:165,
 kind:'generated',
 releaseStatus:'listening-review-required',
-note:
-'Original scripted game character. Local draft voice; EN/UK pronunciation, expression and mix require listening review. Casts share this line identity.',
+note:'Original scripted game character. Local draft voice; EN/UK pronunciation, expression and mix require listening review. Casts share this line identity.',
 },
 file:'actors-v1/actor-switchback-caught-uk.m4a',
 },
@@ -6839,8 +14016,7 @@ voice:'Daniel',
 rate:160,
 kind:'generated',
 releaseStatus:'listening-review-required',
-note:
-'Original scripted game character. Local draft voice; EN/UK pronunciation, expression and mix require listening review. Casts share this line identity.',
+note:'Original scripted game character. Local draft voice; EN/UK pronunciation, expression and mix require listening review. Casts share this line identity.',
 },
 file:'actors-v1/actor-rendezvous-pair-notice-en.m4a',
 },
@@ -6857,8 +14033,7 @@ voice:'Lesya',
 rate:160,
 kind:'generated',
 releaseStatus:'listening-review-required',
-note:
-'Original scripted game character. Local draft voice; EN/UK pronunciation, expression and mix require listening review. Casts share this line identity.',
+note:'Original scripted game character. Local draft voice; EN/UK pronunciation, expression and mix require listening review. Casts share this line identity.',
 },
 file:'actors-v1/actor-rendezvous-pair-notice-uk.m4a',
 },
@@ -6875,8 +14050,7 @@ voice:'Daniel',
 rate:160,
 kind:'generated',
 releaseStatus:'listening-review-required',
-note:
-'Original scripted game character. Local draft voice; EN/UK pronunciation, expression and mix require listening review. Casts share this line identity.',
+note:'Original scripted game character. Local draft voice; EN/UK pronunciation, expression and mix require listening review. Casts share this line identity.',
 },
 file:'actors-v1/actor-rendezvous-pair-caught-en.m4a',
 },
@@ -6893,8 +14067,7 @@ voice:'Lesya',
 rate:160,
 kind:'generated',
 releaseStatus:'listening-review-required',
-note:
-'Original scripted game character. Local draft voice; EN/UK pronunciation, expression and mix require listening review. Casts share this line identity.',
+note:'Original scripted game character. Local draft voice; EN/UK pronunciation, expression and mix require listening review. Casts share this line identity.',
 },
 file:'actors-v1/actor-rendezvous-pair-caught-uk.m4a',
 },
@@ -6911,8 +14084,7 @@ voice:'Fred',
 rate:145,
 kind:'generated',
 releaseStatus:'listening-review-required',
-note:
-'Original scripted game character. Local draft voice; EN/UK pronunciation, expression and mix require listening review. Casts share this line identity.',
+note:'Original scripted game character. Local draft voice; EN/UK pronunciation, expression and mix require listening review. Casts share this line identity.',
 },
 file:'actors-v1/actor-shield-bearer-notice-en.m4a',
 },
@@ -6929,8 +14101,7 @@ voice:'Lesya',
 rate:145,
 kind:'generated',
 releaseStatus:'listening-review-required',
-note:
-'Original scripted game character. Local draft voice; EN/UK pronunciation, expression and mix require listening review. Casts share this line identity.',
+note:'Original scripted game character. Local draft voice; EN/UK pronunciation, expression and mix require listening review. Casts share this line identity.',
 },
 file:'actors-v1/actor-shield-bearer-notice-uk.m4a',
 },
@@ -6947,8 +14118,7 @@ voice:'Fred',
 rate:145,
 kind:'generated',
 releaseStatus:'listening-review-required',
-note:
-'Original scripted game character. Local draft voice; EN/UK pronunciation, expression and mix require listening review. Casts share this line identity.',
+note:'Original scripted game character. Local draft voice; EN/UK pronunciation, expression and mix require listening review. Casts share this line identity.',
 },
 file:'actors-v1/actor-shield-bearer-caught-en.m4a',
 },
@@ -6965,8 +14135,7 @@ voice:'Lesya',
 rate:145,
 kind:'generated',
 releaseStatus:'listening-review-required',
-note:
-'Original scripted game character. Local draft voice; EN/UK pronunciation, expression and mix require listening review. Casts share this line identity.',
+note:'Original scripted game character. Local draft voice; EN/UK pronunciation, expression and mix require listening review. Casts share this line identity.',
 },
 file:'actors-v1/actor-shield-bearer-caught-uk.m4a',
 },
@@ -6983,8 +14152,7 @@ voice:'Daniel',
 rate:145,
 kind:'generated',
 releaseStatus:'listening-review-required',
-note:
-'Original scripted game character. Local draft voice; EN/UK pronunciation, expression and mix require listening review. Casts share this line identity.',
+note:'Original scripted game character. Local draft voice; EN/UK pronunciation, expression and mix require listening review. Casts share this line identity.',
 },
 file:'actors-v1/actor-brace-trooper-notice-en.m4a',
 },
@@ -7001,8 +14169,7 @@ voice:'Lesya',
 rate:145,
 kind:'generated',
 releaseStatus:'listening-review-required',
-note:
-'Original scripted game character. Local draft voice; EN/UK pronunciation, expression and mix require listening review. Casts share this line identity.',
+note:'Original scripted game character. Local draft voice; EN/UK pronunciation, expression and mix require listening review. Casts share this line identity.',
 },
 file:'actors-v1/actor-brace-trooper-notice-uk.m4a',
 },
@@ -7019,8 +14186,7 @@ voice:'Daniel',
 rate:145,
 kind:'generated',
 releaseStatus:'listening-review-required',
-note:
-'Original scripted game character. Local draft voice; EN/UK pronunciation, expression and mix require listening review. Casts share this line identity.',
+note:'Original scripted game character. Local draft voice; EN/UK pronunciation, expression and mix require listening review. Casts share this line identity.',
 },
 file:'actors-v1/actor-brace-trooper-caught-en.m4a',
 },
@@ -7037,8 +14203,7 @@ voice:'Lesya',
 rate:145,
 kind:'generated',
 releaseStatus:'listening-review-required',
-note:
-'Original scripted game character. Local draft voice; EN/UK pronunciation, expression and mix require listening review. Casts share this line identity.',
+note:'Original scripted game character. Local draft voice; EN/UK pronunciation, expression and mix require listening review. Casts share this line identity.',
 },
 file:'actors-v1/actor-brace-trooper-caught-uk.m4a',
 },
@@ -7055,8 +14220,7 @@ voice:'Fred',
 rate:140,
 kind:'generated',
 releaseStatus:'listening-review-required',
-note:
-'Original scripted game character. Local draft voice; EN/UK pronunciation, expression and mix require listening review. Casts share this line identity.',
+note:'Original scripted game character. Local draft voice; EN/UK pronunciation, expression and mix require listening review. Casts share this line identity.',
 },
 file:'actors-v1/actor-relay-warden-notice-en.m4a',
 },
@@ -7073,8 +14237,7 @@ voice:'Lesya',
 rate:140,
 kind:'generated',
 releaseStatus:'listening-review-required',
-note:
-'Original scripted game character. Local draft voice; EN/UK pronunciation, expression and mix require listening review. Casts share this line identity.',
+note:'Original scripted game character. Local draft voice; EN/UK pronunciation, expression and mix require listening review. Casts share this line identity.',
 },
 file:'actors-v1/actor-relay-warden-notice-uk.m4a',
 },
@@ -7091,8 +14254,7 @@ voice:'Fred',
 rate:140,
 kind:'generated',
 releaseStatus:'listening-review-required',
-note:
-'Original scripted game character. Local draft voice; EN/UK pronunciation, expression and mix require listening review. Casts share this line identity.',
+note:'Original scripted game character. Local draft voice; EN/UK pronunciation, expression and mix require listening review. Casts share this line identity.',
 },
 file:'actors-v1/actor-relay-warden-caught-en.m4a',
 },
@@ -7109,8 +14271,7 @@ voice:'Lesya',
 rate:140,
 kind:'generated',
 releaseStatus:'listening-review-required',
-note:
-'Original scripted game character. Local draft voice; EN/UK pronunciation, expression and mix require listening review. Casts share this line identity.',
+note:'Original scripted game character. Local draft voice; EN/UK pronunciation, expression and mix require listening review. Casts share this line identity.',
 },
 file:'actors-v1/actor-relay-warden-caught-uk.m4a',
 },
@@ -7125,7 +14286,8 @@ modules['game/journey/reaction-voice-library.mjs']=(()=>{
 const inspectReactionRecording=
 modules['game/journey/reaction-voice-cache.mjs']['inspectReactionRecording'];
 const REACTION_VOICE_PILOT=modules['game/audio/reactions/pilot.mjs']['REACTION_VOICE_PILOT'];
-const ACTOR_VOICE_RECORDINGS=modules['game/audio/reactions/actors.mjs']['ACTOR_VOICE_RECORDINGS'];
+const ACTOR_VOICE_RECORDINGS=
+modules['game/audio/reactions/actors.mjs']['ACTOR_VOICE_RECORDINGS'];
 const createActorVoiceDelivery=
 modules['game/audio/reactions/actors.mjs']['createActorVoiceDelivery'];
 const REACTION_LINES=modules['game/journey/reactions.mjs']['REACTION_LINES'];
@@ -7351,7 +14513,8 @@ return new Promise((resolve,reject)=>{
 const tx=db.transaction(STORE,mode),
 request=operation(tx.objectStore(STORE));
 tx.oncomplete=()=>resolve(request?.result);
-tx.onerror=tx.onabort=()=>reject(tx.error??new Error('Recording could not be saved.'));
+tx.onerror=tx.onabort=()=>
+reject(tx.error??new Error('Recording could not be saved.'));
 });
 }
 const read=(lineId,locale)=>
@@ -7475,7 +14638,8 @@ reader.releaseLock();
 }
 }else bytes=await response.arrayBuffer();
 checkAbort(signal);
-if(bytes.byteLength!==original.bytes||(await digest(bytes))!==original.sha256)return null;
+if(bytes.byteLength!==original.bytes||(await digest(bytes))!==original.sha256)
+return null;
 return{metadata:original,bytes};
 }
 async function readRecordsBounded(keys){
@@ -7485,7 +14649,8 @@ for(const key of keys){
 const record=await transaction('readonly',(store)=>store.get(key));
 if(!record)continue;
 total+=byteSize(JSON.stringify(record))+1;
-if(total>MAX_BUNDLE)throw new Error('Voice records exceed the 32 MiB portable bundle limit.');
+if(total>MAX_BUNDLE)
+throw new Error('Voice records exceed the 32 MiB portable bundle limit.');
 records.push(record);
 }
 return records;
@@ -7552,13 +14717,18 @@ mime:record.original.mime,
 };
 const original=await readOriginal(lineId,locale,{signal});
 return original
-?{bytes:original.bytes,sha256:original.metadata.sha256,mime:original.metadata.mime}
+?{
+bytes:original.bytes,
+sha256:original.metadata.sha256,
+mime:original.metadata.mime,
+}
 :null;
 },
 async replace({lineId,locale,blob,kind,credit='',duration,signal}){
 checkAbort(signal);
 const line=lineFor(lineId,locale);
-if(!blob||blob.size>MAX_CLIP)throw new Error('Choose an audio recording under 2 MiB.');
+if(!blob||blob.size>MAX_CLIP)
+throw new Error('Choose an audio recording under 2 MiB.');
 const measured=await inspectRecording(blob,{signal});
 checkAbort(signal);
 if(!Number.isFinite(duration)||Math.abs(duration-measured.duration)>0.5)
@@ -7576,7 +14746,10 @@ let original=previous.original??null;
 if(!original&&originals.has(keyFor(lineId,locale))){
 const archived=await readOriginal(lineId,locale,{signal});
 if(!archived)throw new Error('Download the original recording before replacing it.');
-original={...archived.metadata,base64:bytesToBase64(new Uint8Array(archived.bytes))};
+original={
+...archived.metadata,
+base64:bytesToBase64(new Uint8Array(archived.bytes)),
+};
 }
 const sha256=await digest(bytes),
 revisions=previous.revisions.filter((entry)=>entry.sha256!==sha256);
@@ -7638,7 +14811,10 @@ const incoming=[];
 for(const source of value.records){
 checkAbort(signal);
 const record=await validateRecord(source);
-for(const recording of[...record.revisions,...(record.original?[record.original]:[])]){
+for(const recording of[
+...record.revisions,
+...(record.original?[record.original]:[]),
+]){
 const measured=await inspectRecording(
 new Blob([base64ToBytes(recording.base64)],{type:recording.mime}),
 {signal},
@@ -7651,11 +14827,16 @@ incoming.push(record);
 if(new Set(incoming.map((entry)=>entry.key)).size!==incoming.length)
 throw new Error('Repeated line in voice bundle.');
 const existing=new Map(
-(await readRecordsBounded(incoming.map((entry)=>entry.key))).map((entry)=>[entry.key,entry]),
+(await readRecordsBounded(incoming.map((entry)=>entry.key))).map((entry)=>[
+entry.key,
+entry,
+]),
 );
 const merged=incoming.map((entry)=>{
 const prior=existing.get(entry.key),
-revisions=new Map((prior?.revisions??[]).map((revision)=>[revision.sha256,revision]));
+revisions=new Map(
+(prior?.revisions??[]).map((revision)=>[revision.sha256,revision]),
+);
 if(prior?.original&&entry.original&&prior.original.sha256!==entry.original.sha256)
 throw new Error(
 'This bundle has a different original recording edition; existing originals were retained.',
@@ -7663,10 +14844,13 @@ throw new Error(
 for(const revision of entry.revisions){
 const retained=revisions.get(revision.sha256);
 if(retained&&JSON.stringify(retained)!==JSON.stringify(revision))
-throw new Error('This recording has different retained metadata; existing revisions were kept.');
+throw new Error(
+'This recording has different retained metadata; existing revisions were kept.',
+);
 revisions.set(revision.sha256,revision);
 }
-if(revisions.size>8)throw new Error('Import would exceed eight retained revisions for a line.');
+if(revisions.size>8)
+throw new Error('Import would exceed eight retained revisions for a line.');
 return{
 ...entry,
 original:prior?.original??entry.original,
@@ -7707,23 +14891,24 @@ const renderResultReactionCaption=
 modules['game/ui/reaction-caption.mjs']['renderResultReactionCaption'];
 const createReactionVoiceCache=
 modules['game/journey/reaction-voice-cache.mjs']['createReactionVoiceCache'];
-const currentLocale=external3['getLocale'];
-const onLocaleChange=external3['onLocaleChange'];
+const currentLocale=external1['getLocale'];
+const onLocaleChange=external1['onLocaleChange'];
 const JOURNEY_REACTIONS=modules['game/journey/reactions.mjs']['JOURNEY_REACTIONS'];
 const REACTION_LINES=modules['game/journey/reactions.mjs']['REACTION_LINES'];
 const reactionLine=modules['game/journey/reactions.mjs']['reactionLine'];
 const journeyResultReaction=modules['game/journey/reactions.mjs']['journeyResultReaction'];
 const createReactionPreferences=
 modules['game/journey/reaction-preferences.mjs']['createReactionPreferences'];
-const createReactionOptions=modules['game/journey/reaction-options.mjs']['createReactionOptions'];
+const createReactionOptions=
+modules['game/journey/reaction-options.mjs']['createReactionOptions'];
 const createReactionVoiceLibrary=
 modules['game/journey/reaction-voice-library.mjs']['createReactionVoiceLibrary'];
 const REACTION_PORTRAITS=modules['game/journey/reaction-portraits.mjs']['REACTION_PORTRAITS'];
 const actorDefinition=external9['actorDefinition'];
 const resolveActorFamily=external9['resolveActorFamily'];
 const actorEventReaction=modules['game/hunt/actor-reactions.mjs']['actorEventReaction'];
-const drawHuntActor=external12['drawHuntActor'];
-const sharedActorAppearance=external13['sharedActorAppearance'];
+const drawHuntActor=external13['drawHuntActor'];
+const sharedActorAppearance=external14['sharedActorAppearance'];
 const OVERFLIGHT_REACTION_FAMILIES=
 modules['game/overflight/reactions.mjs']['OVERFLIGHT_REACTION_FAMILIES'];
 
@@ -7734,7 +14919,7 @@ Math.max(3000,Math.ceil((text.split(/\s+/u).length/2.5)*1000))*factor;
 const previewLineId='journey-incidental.v1/guide/capture/0';
 let settingsSequence=0;
 /** Warm the active cast first, then shared pilot lines. Unrelated enemy packs
- * must not displace the current encounter from the bounded decoded cache. */
+   * must not displace the current encounter from the bounded decoded cache. */
 function reactionWarmupLineIds({families=[],originals=[],available=[],locale}){
 const active=new Set(families.map(resolveActorFamily).filter(Boolean));
 const relevant=(id)=>{
@@ -7778,7 +14963,9 @@ const familyFor=(event)=>
 ...OVERFLIGHT_REACTION_FAMILIES,
 })[event.type];
 const urgent=(event)=>
-/^(combat.locked|player.failed|player.downed|lineImpact.seeded|impact.launched)$/.test(event.type);
+/^(combat.locked|player.failed|player.downed|lineImpact.seeded|impact.launched)$/.test(
+event.type,
+);
 
 /** Presentation history is deliberately separate from rules, saves and simulation RNG. */
 class ContextualReactionDirector{
@@ -7819,7 +15006,10 @@ const time=this.now();
 recentLines.set(lineRepeatKey(line),time);
 for(const[id,last]of recentLines)if(time-last>=300000)recentLines.delete(id);
 try{
-globalThis.sessionStorage?.setItem(HISTORY_KEY,JSON.stringify([...recentLines].slice(-64)));
+globalThis.sessionStorage?.setItem(
+HISTORY_KEY,
+JSON.stringify([...recentLines].slice(-64)),
+);
 }catch{
 /* Optional. */
 }
@@ -8075,7 +15265,10 @@ window:target,
 getLocale,
 ...(getStorage?{getStorage}:{}),
 });
-const options=createReactionOptions({window:target,...(getStorage?{getStorage}:{})});
+const options=createReactionOptions({
+window:target,
+...(getStorage?{getStorage}:{}),
+});
 let closed=false,
 current=null,
 timer=null,
@@ -8250,13 +15443,15 @@ player:lastMessage.player,
 },
 getLocale(),
 );
-readerText.style.fontSize=`calc(${state.scale}rem * var(--overflight-text-scale, 1))`;
-readerText.style.background=state.background?'var(--panel-bg, #172126)':'transparent';
+readerText.style.fontSize=`calc(${state.scale}rem * var(--primary-text-scale, 1) * var(--overflight-text-scale, 1))`;
+readerText.style.background=state.background
+?'var(--panel-bg, #172126)'
+:'transparent';
 }
 }
 panel.style.background=state.background?'var(--panel-bg, #172126)':'transparent';
 panel.style.color='var(--text-color, #fff)';
-caption.style.fontSize=`calc(${state.scale}rem * var(--overflight-text-scale, 1))`;
+caption.style.fontSize=`calc(${state.scale}rem * var(--primary-text-scale, 1) * var(--overflight-text-scale, 1))`;
 if(current){
 const localized=localizedCurrentLine();
 caption.textContent=reactionCaptionText(
@@ -8441,7 +15636,9 @@ if(['scale','readingTime'].includes(key))
 for(const value of key==='scale'?[1,1.5,2]:[1,2]){
 const option=create(
 'option',
-key==='scale'?`${value*100}%`:tr(value===1?'readingStandard':'readingExtended'),
+key==='scale'
+?`${value*100}%`
+:tr(value===1?'readingStandard':'readingExtended'),
 );
 option.value=String(value);
 control.append(option);
@@ -8488,7 +15685,10 @@ previewReadingTime=options.snapshot().readingTime;
 render();
 schedulePreview(
 Date.now()+
-captionReadingDuration(reactionLine(previewLineId,getLocale()).text,previewReadingTime),
+captionReadingDuration(
+reactionLine(previewLineId,getLocale()).text,
+previewReadingTime,
+),
 );
 };
 const retry=create('button',tr('retry'));
@@ -8533,7 +15733,10 @@ schedulePreview(
 Math.max(
 previewUntil,
 Date.now()+
-captionReadingDuration(reactionLine(previewLineId,getLocale()).text,previewReadingTime),
+captionReadingDuration(
+reactionLine(previewLineId,getLocale()).text,
+previewReadingTime,
+),
 ),
 );
 });
@@ -8581,11 +15784,15 @@ events(events,context){
 const observed=Array.isArray(events)
 ?events
 .map((event)=>
-resolveActorFamily(event?.actorFamily??event?.kind??context?.actorFamilyFor?.(event?.id)),
+resolveActorFamily(
+event?.actorFamily??event?.kind??context?.actorFamilyFor?.(event?.id),
+),
 )
 .filter(Boolean)
 :[];
-prepare(context?.actorFamilies??(observed.length?[...voiceFamilies,...observed]:undefined));
+prepare(
+context?.actorFamilies??(observed.length?[...voiceFamilies,...observed]:undefined),
+);
 return director.events(events,{...context,enabled:preferences.snapshot().enabled});
 },
 result(context){
@@ -8637,7 +15844,7 @@ modules['game/ui/contextual-reactions.mjs']['attachContextualReactions'];
 const HUNT_CONTACT_CRITERION=external10['HUNT_CONTACT_CRITERION'];
 
 /** Presentation projection only: native SIM has unarmed stationary/patrol prey.
- * Do not infer unsupported arcade behavior from a course's name or artwork. */
+   * Do not infer unsupported arcade behavior from a course's name or artwork. */
 function createWorldHuntReactionSession({reactions}){
 let actors=new Map(),
 families=[],
@@ -8686,7 +15893,7 @@ active=false;
 reactions.suspend();
 },
 /** Consume each accepted flight step, including the final catch. Restores
- * seed the cursor above; verified playback never emits fresh reactions. */
+       * seed the cursor above; verified playback never emits fresh reactions. */
 consume(state){
 if(!state|| !Number.isSafeInteger(state.ticks)||state.ticks<=lastTick)return;
 lastTick=state.ticks;
@@ -8711,7 +15918,8 @@ type:'actor.caught',
 id:event.actor,
 tick:state.ticks,
 actorFamily:
-state.actors?.find((actor)=>actor.id===event.actor)?.pursuit?.family??actors.get(event.actor),
+state.actors?.find((actor)=>actor.id===event.actor)?.pursuit?.family??
+actors.get(event.actor),
 });
 }
 if(events.length||danger)
@@ -8790,8 +15998,8 @@ modules['optional-practice/civilian-fpv/world-library.mjs']=(()=>{
 const boundedJSON=external11['boundedJSON'];
 const exactKeys=external11['exactKeys'];
 const stableId=external11['stableId'];
-const WORLD_LIMITS=external19['WORLD_LIMITS'];
-const worldSHA256=external19['worldSHA256'];
+const WORLD_LIMITS=external20['WORLD_LIMITS'];
+const worldSHA256=external20['worldSHA256'];
 
 const origin='https://raw.githubusercontent.com/mekhovov/revealline/';
 // Expanded bounded catalogue with authored collision-visual support.
@@ -8844,12 +16052,17 @@ typeof row.sha256==='string'&&
 typeof row.path==='string'&&
 /^[a-f0-9]{40}$/.test(row.commit)&&
 /^[a-f0-9]{64}$/.test(row.sha256)&&
-/^authoring\/fpv-worlds\/(?:[a-z0-9_-]+\/)+[a-z0-9_-]+(?:\.[a-z0-9_-]+)*\.rlpack$/.test(row.path)&&
+/^authoring\/fpv-worlds\/(?:[a-z0-9_-]+\/)+[a-z0-9_-]+(?:\.[a-z0-9_-]+)*\.rlpack$/.test(
+row.path,
+)&&
 Array.isArray(row.title)&&
 row.title.length===2&&
 row.title.every(
 (text)=>
-typeof text==='string'&&text.trim()&&text.length<=120&& !/[\x00-\x1f\x7f]/.test(text),
+typeof text==='string'&&
+text.trim()&&
+text.length<=120&&
+!/[\x00-\x1f\x7f]/.test(text),
 )&&
 Number.isSafeInteger(row.bytes)&&
 row.bytes>0&&
@@ -8867,11 +16080,14 @@ return{...row,url:origin+row.commit+'/'+row.path};
 // integrity-checked successor pages; older v1 readers keep their own feed.
 function worldLibraryPage(bytes){
 const value=readIndex(bytes);
-if(value.format==='FPVWorldLibrary.v1')return{worlds:worldLibraryIndex(bytes),next:null};
+if(value.format==='FPVWorldLibrary.v1')
+return{worlds:worldLibraryIndex(bytes),next:null};
 exactKeys(value,['format','worlds','next'],'world library page');
 check(value.format==='FPVWorldLibrary.v2');
 const worlds=worldLibraryIndex(
-new TextEncoder().encode(JSON.stringify({format:'FPVWorldLibrary.v1',worlds:value.worlds})),
+new TextEncoder().encode(
+JSON.stringify({format:'FPVWorldLibrary.v1',worlds:value.worlds}),
+),
 );
 if(value.next===null)return{worlds,next:null};
 const next=value.next;
@@ -8907,7 +16123,11 @@ worker.onerror=()=>finish(new Error('World download unavailable.'));
 worker.onmessageerror=worker.onerror;
 worker.onmessage=({data})=>{
 if(data.type==='world-progress')progress(data.bytes);
-else finish(data.type==='world-done'?null:new Error('World download failed.'),data.bytes);
+else
+finish(
+data.type==='world-done'?null:new Error('World download failed.'),
+data.bytes,
+);
 };
 signal.addEventListener('abort',cancel,{once:true});
 worker.postMessage({type:'world-read',url,bytes,sha256});
@@ -8998,7 +16218,10 @@ row.bytes<1048576
 ?`${Math.ceil(row.bytes/1024)} KiB`
 :`${(row.bytes/1048576).toLocaleString(txt('en','uk'),{minimumFractionDigits:1,maximumFractionDigits:1})} MiB`,
 stored=saved.some((item)=>item.id===row.id&&item.sha256===row.sha256),
-play=el('button',stored&& !fly?txt('Saved pack','Пакунок збережено'):txt('Play','Грати'));
+play=el(
+'button',
+stored&& !fly?txt('Saved pack','Пакунок збережено'):txt('Play','Грати'),
+);
 card.dataset.world=row.id;
 play.type='button';
 play.disabled=busy||(stored&& !fly);
@@ -9075,7 +16298,8 @@ if(row)show(`${size} / ${row.bytes} B`,`${size} / ${row.bytes} B`);
 source?.sha256,
 );
 signal.throwIfAborted();
-if(source)check(bytes.length===source.bytes&&(await worldSHA256(bytes))===source.sha256);
+if(source)
+check(bytes.length===source.bytes&&(await worldSHA256(bytes))===source.sha256);
 signal.throwIfAborted();
 if(row){
 await install(bytes,row,{
@@ -9144,7 +16368,9 @@ operation=null;
 doc.removeEventListener('focusin',trackFocus);
 if(!closed){
 const restore=
-restoreFocus&&visible()&&(doc.activeElement===doc.body||root.contains(doc.activeElement));
+restoreFocus&&
+visible()&&
+(doc.activeElement===doc.body||root.contains(doc.activeElement));
 paint();
 if(restore&&(row||page)){
 const card=[...cards.children].find((node)=>node.dataset.world===row?.id);
@@ -9181,8 +16407,15 @@ do{
 const url=page?.url??indexURL;
 check(!seen.has(url));
 seen.add(url);
-const bytes=await read(url,page?.bytes??32768,controller.signal,()=>{},page?.sha256);
-if(page)check(bytes.length===page.bytes&&(await worldSHA256(bytes))===page.sha256);
+const bytes=await read(
+url,
+page?.bytes??32768,
+controller.signal,
+()=>{},
+page?.sha256,
+);
+if(page)
+check(bytes.length===page.bytes&&(await worldSHA256(bytes))===page.sha256);
 const parsed=worldLibraryPage(bytes);
 check(discovered.length+parsed.worlds.length<=1024);
 for(const row of parsed.worlds){
@@ -9217,7 +16450,10 @@ level:row.levels?.[index],
 })),
 ),
 async prepareMission(row,{signal}){
-if(closed|| !rows.some((offered)=>offered.id===row.id&&offered.sha256===row.sha256))
+if(
+closed||
+!rows.some((offered)=>offered.id===row.id&&offered.sha256===row.sha256)
+)
 throw new Error('This download is no longer offered. Refresh the level selector.');
 const controller=new AbortController();
 const abort=()=>controller.abort(signal.reason);
@@ -9418,8 +16654,7 @@ id:'cc0-castle-court',
 title:['Castle Courtyard','Замкове подвір’я'],
 revision:'r1',
 commit:'0c05c638bad38a3ae62c4c0a911919bc54f1eb11',
-path:
-'authoring/fpv-worlds/free-worlds/distribution/r1/cc0-castle-court/cc0-castle-court.r1.rlpack',
+path:'authoring/fpv-worlds/free-worlds/distribution/r1/cc0-castle-court/cc0-castle-court.r1.rlpack',
 sha256:'ee6d8ee8ea5d981f49cdeaa52282a33d36de3f98321883b0cb7cbcc630356ed0',
 bytes:160544,
 courses:1,
@@ -9451,8 +16686,7 @@ id:'cc0-construction-site',
 title:['House Construction Site','Будівельний майданчик'],
 revision:'r1',
 commit:'0c05c638bad38a3ae62c4c0a911919bc54f1eb11',
-path:
-'authoring/fpv-worlds/free-worlds/distribution/r1/cc0-construction-site/cc0-construction-site.r1.rlpack',
+path:'authoring/fpv-worlds/free-worlds/distribution/r1/cc0-construction-site/cc0-construction-site.r1.rlpack',
 sha256:'8d6f217d626c570815722fc23d04cd5297093ab0ff6a1f6886897a5d96ffe062',
 bytes:2368301,
 courses:1,
@@ -9468,8 +16702,7 @@ id:'cc0-frontier-camp',
 title:['Frontier Camp','Табір на узліссі'],
 revision:'r1',
 commit:'0c05c638bad38a3ae62c4c0a911919bc54f1eb11',
-path:
-'authoring/fpv-worlds/free-worlds/distribution/r1/cc0-frontier-camp/cc0-frontier-camp.r1.rlpack',
+path:'authoring/fpv-worlds/free-worlds/distribution/r1/cc0-frontier-camp/cc0-frontier-camp.r1.rlpack',
 sha256:'4c9b122ccfb6b28b46dd2b198b8d15477fde456d91a2f416498bf40948a5e92b',
 bytes:172377,
 courses:1,
@@ -9485,8 +16718,7 @@ id:'cc0-industrial-yard',
 title:['Industrial Service Yard','Промисловий двір'],
 revision:'r1',
 commit:'0c05c638bad38a3ae62c4c0a911919bc54f1eb11',
-path:
-'authoring/fpv-worlds/free-worlds/distribution/r1/cc0-industrial-yard/cc0-industrial-yard.r1.rlpack',
+path:'authoring/fpv-worlds/free-worlds/distribution/r1/cc0-industrial-yard/cc0-industrial-yard.r1.rlpack',
 sha256:'74fc5afb38af089a0bf58740640b070532d36cdd181011b9ef2fb8742d496273',
 bytes:1054654,
 courses:1,
@@ -9502,8 +16734,7 @@ id:'cc0-orbital-workshop',
 title:['Orbital Workshop','Орбітальна майстерня'],
 revision:'r1',
 commit:'0c05c638bad38a3ae62c4c0a911919bc54f1eb11',
-path:
-'authoring/fpv-worlds/free-worlds/distribution/r1/cc0-orbital-workshop/cc0-orbital-workshop.r1.rlpack',
+path:'authoring/fpv-worlds/free-worlds/distribution/r1/cc0-orbital-workshop/cc0-orbital-workshop.r1.rlpack',
 sha256:'916d8da5a1b2b29ddc20ef7bf090fbc38038ea926d7bdd1a0e560ce513c5e71c',
 bytes:155913,
 courses:1,
@@ -9519,8 +16750,7 @@ id:'cc0-pine-clearing',
 title:['Pine Clearing','Соснова галявина'],
 revision:'r1',
 commit:'0c05c638bad38a3ae62c4c0a911919bc54f1eb11',
-path:
-'authoring/fpv-worlds/free-worlds/distribution/r1/cc0-pine-clearing/cc0-pine-clearing.r1.rlpack',
+path:'authoring/fpv-worlds/free-worlds/distribution/r1/cc0-pine-clearing/cc0-pine-clearing.r1.rlpack',
 sha256:'59c448a1226ad03a3881322ff7d9d766cc7ca35ef888267665fe66399cfe8b3f',
 bytes:131266,
 courses:1,
@@ -9536,8 +16766,7 @@ id:'cc0-platform-garden',
 title:['Platform Garden','Сад платформ'],
 revision:'r1',
 commit:'0c05c638bad38a3ae62c4c0a911919bc54f1eb11',
-path:
-'authoring/fpv-worlds/free-worlds/distribution/r1/cc0-platform-garden/cc0-platform-garden.r1.rlpack',
+path:'authoring/fpv-worlds/free-worlds/distribution/r1/cc0-platform-garden/cc0-platform-garden.r1.rlpack',
 sha256:'019d00195bcb03dd9f202e12cd948d369cdda271517bf4d493e68440b8e406b0',
 bytes:159176,
 courses:1,
@@ -9553,8 +16782,7 @@ id:'cc0-race-paddock',
 title:['Race Paddock','Гоночний паддок'],
 revision:'r1',
 commit:'0c05c638bad38a3ae62c4c0a911919bc54f1eb11',
-path:
-'authoring/fpv-worlds/free-worlds/distribution/r1/cc0-race-paddock/cc0-race-paddock.r1.rlpack',
+path:'authoring/fpv-worlds/free-worlds/distribution/r1/cc0-race-paddock/cc0-race-paddock.r1.rlpack',
 sha256:'33443ec2cb18a9d4c8874f564e3644fd0cd36c03680d1b37cfd01bab1f9a949e',
 bytes:394615,
 courses:1,
@@ -9602,8 +16830,7 @@ id:'cc0-ruined-halls',
 title:['Ruined Halls','Зруйновані зали'],
 revision:'r1',
 commit:'0c05c638bad38a3ae62c4c0a911919bc54f1eb11',
-path:
-'authoring/fpv-worlds/free-worlds/distribution/r1/cc0-ruined-halls/cc0-ruined-halls.r1.rlpack',
+path:'authoring/fpv-worlds/free-worlds/distribution/r1/cc0-ruined-halls/cc0-ruined-halls.r1.rlpack',
 sha256:'01eb7bd2874bb07ff7617f792fa765ca1d8d3e6cad72445013a4c72e8c21324a',
 bytes:1750695,
 courses:1,
@@ -9651,8 +16878,7 @@ id:'cc0-village-green',
 title:['Village Green','Сільський парк'],
 revision:'r1',
 commit:'0c05c638bad38a3ae62c4c0a911919bc54f1eb11',
-path:
-'authoring/fpv-worlds/free-worlds/distribution/r1/cc0-village-green/cc0-village-green.r1.rlpack',
+path:'authoring/fpv-worlds/free-worlds/distribution/r1/cc0-village-green/cc0-village-green.r1.rlpack',
 sha256:'3ca6c466023b6b764c47c70c15013b64d0af7ca4577104ff777707527d4192af',
 bytes:620228,
 courses:1,
@@ -9668,8 +16894,7 @@ id:'cc0-woodland-camp',
 title:['Woodland Camp','Лісовий табір'],
 revision:'r1',
 commit:'0c05c638bad38a3ae62c4c0a911919bc54f1eb11',
-path:
-'authoring/fpv-worlds/free-worlds/distribution/r1/cc0-woodland-camp/cc0-woodland-camp.r1.rlpack',
+path:'authoring/fpv-worlds/free-worlds/distribution/r1/cc0-woodland-camp/cc0-woodland-camp.r1.rlpack',
 sha256:'a7b0f6d52411131f6e03d25f5db1ef25209be2875422e0aad8fd0f155735b93c',
 bytes:310434,
 courses:1,
@@ -9685,15 +16910,17 @@ id:'cc0-coaster-park',
 title:['Coaster Practice Park','Тренувальний парк атракціонів'],
 revision:'r1',
 commit:'f1b6373996a53c84bca77b485e73630ffe6b00c7',
-path:
-'authoring/fpv-worlds/free-worlds/distribution/r1/cc0-coaster-park/cc0-coaster-park.r1.rlpack',
+path:'authoring/fpv-worlds/free-worlds/distribution/r1/cc0-coaster-park/cc0-coaster-park.r1.rlpack',
 sha256:'a0483ee22fabdc190fc65858c458ed4730297a0179f8ede793383775a7568025',
 bytes:1201279,
 courses:1,
 levels:[
 {
 id:'cc0-coaster-park-route',
-title:['Coaster Practice Park · discovery','Тренувальний парк атракціонів · знайомство'],
+title:[
+'Coaster Practice Park · discovery',
+'Тренувальний парк атракціонів · знайомство',
+],
 },
 ],
 },
@@ -9705,6 +16932,8058 @@ worldLibraryIndex:worldLibraryIndex,
 worldLibraryPage:worldLibraryPage,
 mountWorldLibrary:mountWorldLibrary,
 WORLD_LIBRARY_CATALOGUE:WORLD_LIBRARY_CATALOGUE,
+};
+})();
+modules['optional-practice/civilian-fpv/encounter-session.mjs']=(()=>{
+const boundedJSON=external11['boundedJSON'];
+const dataIdentity=external11['dataIdentity'];
+const required=external11['required'];
+const plainObject=external11['plainObject'];
+const exactKeys=external11['exactKeys'];
+const canonicalJSON=external11['canonicalJSON'];
+const stableId=external11['stableId'];
+const createEncounterRuntime=
+modules['optional-practice/civilian-fpv/encounter-runtime.mjs']['createEncounterRuntime'];
+const ENCOUNTER_FORMAT_V2=
+modules['optional-practice/civilian-fpv/encounter-runtime.mjs']['ENCOUNTER_FORMAT_V2'];
+const inspectEncounterRecovery=
+modules['optional-practice/civilian-fpv/encounter-runtime.mjs']['inspectEncounterRecovery'];
+const validateEncounterDefinition=
+modules['optional-practice/civilian-fpv/encounter-runtime.mjs']['validateEncounterDefinition'];
+const rotate=external21['rotate'];
+const Q=external21['Q'];
+const createAircraftArchiveStore=external22['createAircraftArchiveStore'];
+const AIRCRAFT_ARCHIVE_PACKAGE_BYTES=external22['AIRCRAFT_ARCHIVE_PACKAGE_BYTES'];
+const AIRCRAFT_ARCHIVE_PAYLOAD_BYTES=external22['AIRCRAFT_ARCHIVE_PAYLOAD_BYTES'];
+const AIRCRAFT_ARCHIVE_MAX_SEGMENTS=external22['AIRCRAFT_ARCHIVE_MAX_SEGMENTS'];
+
+const copy=(value)=>structuredClone(value);
+function archiveResumeBoundary(encounter,recording,session){
+const state=copy(encounter.state);
+delete state.events;// Recovery restores event-free presentation, with identical gameplay.
+return dataIdentity({state,recording,session});
+}
+const COMMANDS=['reload','switchWeapon','payload','detonate','startNextWave'];
+const mm=(value)=>
+Object.fromEntries(['x','y','z'].map((key)=>[key,Math.round(value[key])]));
+const player=(state)=>({
+position:mm(state.position),
+velocity:mm(state.velocity),
+radius:Math.ceil(state.aircraftRadiusMm??state.radius??220),
+supportHeight:Math.round(
+state.aircraftSupportHeightMm??state.aircraftRadiusMm??state.radius??220,
+),
+crashed:['destroyed','crashed','failed'].includes(state.status),
+});
+
+// Earlier v2 sessions represented reserved/temporarily absent encounter slots as
+// caught actors in the physical checkpoint. Course checkpoints correctly reject
+// that status outside Hunt. Migrate only slots whose independently validated
+// encounter lifecycle proves they were absent; active actors are never repaired.
+function canonicalCombatPhysical(source,encounterState){
+const value=copy(source);
+const actors=
+value.format==='FPVEncounterFlightCheckpoint.v1'
+?value.state?.actors
+:value.format==='AircraftCourseRecovery.v1'
+?value.mission?.state?.actors
+:null;
+if(!Array.isArray(actors)|| !Array.isArray(encounterState?.actors))return value;
+const absent=new Set(
+encounterState.actors
+.filter((actor)=>['waiting','inactive'].includes(actor.status))
+.map((actor)=>actor.slotId),
+);
+const migrate=actors.filter(
+(actor)=>
+absent.has(actor.id)&&
+actor.status==='caught'&&
+Number.isSafeInteger(actor.health)&&
+Number.isSafeInteger(actor.maxHealth)&&
+actor.health>0&&
+actor.health<=actor.maxHealth,
+);
+if(!migrate.length)return value;
+if(value.format==='AircraftCourseRecovery.v1'){
+const{checksum,...packet}=value;
+required(checksum===dataIdentity(packet),'Aircraft recovery checksum differs');
+}
+for(const actor of migrate){
+actor.status='defeated';
+actor.health=0;
+}
+if(value.format==='AircraftCourseRecovery.v1'){
+const{checksum:_checksum,...packet}=value;
+value.checksum=dataIdentity(packet);
+}
+return value;
+}
+
+function readRecovery(input){
+required(plainObject(input),'A combat recovery must be a plain object');
+const fields=Object.getOwnPropertyDescriptors(input);
+required(
+fields.gameplay&&
+Object.hasOwn(fields.gameplay,'value')&&
+fields.checksum&&
+Object.hasOwn(fields.checksum,'value'),
+'Invalid combat recovery fields',
+);
+const gameplay=boundedJSON(fields.gameplay.value,{
+maxBytes:40*1024*1024,
+maxNodes:3500000,
+maxArray:786432,
+maxDepth:48,
+maxString:12*1024*1024,
+});
+exactKeys(
+gameplay,
+[
+'format',
+'identity',
+'encounter',
+'physical',
+'recording',
+...(gameplay.format==='FPVCombatRecovery.v2'?['session']:[]),
+],
+'Combat recovery',
+);
+required(
+typeof fields.checksum.value==='string'&&fields.checksum.value===dataIdentity(gameplay),
+'Combat recovery checksum differs',
+);
+// Cosmetic data has its own budget and is never trusted as gameplay state.
+let presentation=null;
+try{
+if(fields.presentation&&Object.hasOwn(fields.presentation,'value'))
+presentation=boundedJSON(fields.presentation.value,{
+maxBytes:8*1024*1024,
+maxNodes:1000000,
+maxArray:4096,
+maxDepth:24,
+maxString:4096,
+});
+}catch{
+/* Reconstruct settled remains from the valid defeat ledger. */
+}
+return{gameplay,presentation};
+}
+
+function restoreRecording(saved,identity,ticks,encounter=null){
+const v2=identity.format==='FPVEncounterSession.v2';
+exactKeys(
+saved,
+['segments','frames','segmentStart','retainedFrom','previousHash'],
+'Encounter recording',
+);
+required(
+Array.isArray(saved.segments)&&
+saved.segments.length<=(v2?12:3)&&
+Array.isArray(saved.frames)&&
+saved.frames.length<3000,
+'Invalid encounter recording budget',
+);
+let lastCommandSeq=0,
+combatTicks=0;
+const validFrames=(frames)=>
+frames.every((frame)=>{
+const structural=
+Array.isArray(frame)&&
+frame.length===(v2?7:5)&&
+frame.every(
+(value,index)=>
+Number.isSafeInteger(value)&&
+(index===4
+?value>=0&&value<=255
+:index===5
+?value>=0
+:index===6
+?value>=0&&value<=2
+:value>= -1000&&value<=1000),
+);
+if(!structural|| !v2)return structural;
+const bits=frame[4],
+sequence=frame[5],
+phase=frame[6],
+commands=bits&126;
+if(
+bits>127||
+(commands&&commands&(commands-1))||
+Boolean(commands)!==Boolean(sequence)||
+(sequence&&sequence<=lastCommandSeq)||
+(phase!==0&&(bits||sequence))||
+(phase===2&&frame.slice(0,4).some(Boolean))
+)
+return false;
+if(sequence)lastCommandSeq=sequence;
+if(phase!==1)combatTicks++;
+return true;
+});
+required(
+Number.isSafeInteger(saved.retainedFrom)&&
+saved.retainedFrom>=0&&
+saved.retainedFrom<=ticks,
+'Invalid retained recording interval',
+);
+let end=saved.retainedFrom,
+priorHash=null;
+for(const[index,segment]of saved.segments.entries()){
+exactKeys(
+segment,
+['format','identity','from','to','previousHash','frames','hash'],
+'Encounter segment',
+);
+const{hash,...payload}=segment;
+required(
+segment.format===(v2?'FPVEncounterSegment.v2':'FPVEncounterSegment.v1')&&
+dataIdentity(segment.identity)===dataIdentity(identity)&&
+dataIdentity(payload)===hash&&
+segment.from===end&&
+segment.to===end+3000&&
+Array.isArray(segment.frames)&&
+segment.frames.length===3000&&
+validFrames(segment.frames),
+'Invalid encounter segment',
+);
+required(
+index
+?segment.previousHash===priorHash
+:saved.retainedFrom!==0||segment.previousHash===null,
+'Broken encounter recording chain',
+);
+end=segment.to;
+priorHash=hash;
+}
+required(
+saved.segmentStart===end&&
+end+saved.frames.length===ticks&&
+saved.previousHash===priorHash&&
+validFrames(saved.frames),
+'Incomplete encounter recording interval',
+);
+if(v2&&encounter)
+required(
+lastCommandSeq<=encounter.lastCommandSeq&&
+(saved.retainedFrom!==0||
+(combatTicks===encounter.ticks&&lastCommandSeq===encounter.lastCommandSeq)),
+'Encounter recording commands differ from accepted state',
+);
+return copy(saved);
+}
+
+/** One owner advances the companion only when its aircraft interval was accepted. */
+async function createEncounterSession(
+base,
+{definition,geometry,runtime=null,regional=false,runId},
+){
+const v2=definition.format===ENCOUNTER_FORMAT_V2;
+const combat=runtime??createEncounterRuntime(definition,{geometry,runId});
+await base.configureEncounterActors(combat.snapshot().actors);
+let pending=null,
+saving=false,
+disposed=false,
+outsideArea=false,
+returning=false;
+let frames=[],
+segments=[],
+segmentStart=0,
+retainedFrom=0,
+previousHash=null;
+let sessionTicks=0,
+nextCommandSeq=1,
+commands=[],
+aftermathPaused=false,
+geometryWaiting=false,
+archiveGeneration=0;
+const identity=Object.freeze({
+format:v2?'FPVEncounterSession.v2':'FPVEncounterSession.v1',
+base:copy(base.identity),
+encounter:combat.identity,
+});
+const stateInside=(state)=>
+['x','z'].every(
+(key)=>
+state.position[key]>=definition.bounds.min[key]&&
+state.position[key]<=definition.bounds.max[key],
+);
+function recordingStatus(){
+return{
+format:'FPVEncounterRecordingStatus.v1',
+retainedFrom,
+retainedTo:v2?sessionTicks:summary().ticks,
+complete:retainedFrom===0,
+practiceOnly:true,
+};
+}
+const summary=()=>combat.summary?.()??combat.snapshot();
+const effectiveStatus=(flight,encounter)=>
+encounter.status!=='active'
+?encounter.status
+:encounter.phase==='aftermath'
+?aftermathPaused
+?'paused'
+:'active'
+:flight.status;
+function snapshot(flight=base.snapshot(),encounter=combat.snapshot()){
+const remaining=encounter.actors.filter(
+(a)=>a.type!=='prop'&&a.status!=='defeated',
+);
+const objective=
+definition.activity==='strike'
+?(encounter.actors.find((a)=>a.type==='vehicle')??
+encounter.actors.filter((a)=>a.type!=='prop').at(-1))
+:definition.activity==='survival'
+?encounter.actors.find((a)=>a.special==='final'&&a.status==='active')
+:definition.activity==='elimination'
+?remaining.reduce((nearest,a)=>{
+const d=(actor)=>
+Math.hypot(
+...['x','y','z'].map((key)=>actor.position[key]-flight.position[key]),
+);
+return!nearest||d(a)<d(nearest)?a:nearest;
+},null)
+:null;
+return{
+...flight,
+combat:true,
+unscored:true,
+health:encounter.health,
+actors:encounter.actors,
+projectiles:encounter.projectiles,
+events:encounter.events,
+kills:encounter.kills,
+shots:encounter.shots,
+hits:encounter.hits,
+score:encounter.score,
+status:effectiveStatus(flight,encounter),
+encounter:{
+...encounter,
+outsideArea,
+returning,
+admittedCount:Math.min(definition.actors.length,definition.population),
+activity:definition.activity,
+difficulty:definition.difficulty,
+population:definition.population,
+...(v2
+?{
+servicePad:definition.servicePad?copy(definition.servicePad):null,
+geometryWaiting,
+objectiveTarget:objective
+?{
+id:objective.id,
+position:copy(objective.position),
+kind:definition.activity,
+status:objective.status,
+remaining:remaining.length,
+}
+:null,
+}
+:{}),
+},
+combatRecording:recordingStatus(),
+};
+}
+function record(input,phase=0,command=null){
+frames.push([
+...['roll','pitch','yaw','throttle'].map((key)=>
+Math.round(Math.max(-1,Math.min(1,input[key]??0))*1000),
+),
+((input.actions??0)&(v2?1:255))|
+(command?.reload?2:0)|
+(command?.switchWeapon===0?4:command?.switchWeapon===1?8:0)|
+(command?.payload?16:0)|
+(command?.detonate?32:0)|
+(command?.startNextWave?64:0),
+...(v2?[command?.commandSeq??0,phase]:[]),
+]);
+sessionTicks++;
+if(frames.length<3000)return;
+const segment={
+format:v2?'FPVEncounterSegment.v2':'FPVEncounterSegment.v1',
+identity,
+from:segmentStart,
+to:v2?sessionTicks:summary().ticks,
+previousHash,
+frames,
+};
+segment.hash=dataIdentity(segment);
+previousHash=segment.hash;
+segments.push(segment);
+frames=[];
+segmentStart=segment.to;
+if(segments.length>(v2?12:3)){
+segments.shift();
+retainedFrom=segments[0].from;
+}
+}
+function freezePresentation(value){
+if(value&&typeof value==='object'&& !Object.isFrozen(value)){
+for(const item of Object.values(value))freezePresentation(item);
+Object.freeze(value);
+}
+return value;
+}
+function frameSnapshot(
+flight=base.snapshot(),
+encounter=combat.frameSnapshot?.()??combat.snapshot(),
+){
+return freezePresentation(snapshot(flight,encounter));
+}
+function step(input,presentation=false,recordedPhase=null){
+const view=presentation?frameSnapshot:snapshot;
+const combatCommit=
+presentation&&combat.commitFrame
+?combat.commitFrame.bind(combat)
+:combat.commit.bind(combat);
+const combatCancel=
+presentation&&combat.cancelFrame
+?combat.cancelFrame.bind(combat)
+:combat.cancel.bind(combat);
+if(disposed||pending||saving)return view();
+const before=base.snapshot(),
+priorCombat=summary();
+if(effectiveStatus(before,priorCombat)!=='active')return view(before);
+// v2 records the controls actually admitted by physics, including radios
+// whose raw values have more precision than the bounded recording format.
+if(v2)
+input={
+...input,
+...Object.fromEntries(
+['roll','pitch','yaw','throttle'].map((key)=>[
+key,
+Math.round(
+Math.max(-1,Math.min(1,Number.isFinite(input[key])?input[key]:0))*1000,
+)/1000,
+]),
+),
+actions:(input.actions??0)&1,
+};
+if(v2&&priorCombat.phase==='aftermath'){
+const proposal=combat.prepare({player:player(before),input:{}});
+if(proposal.rejected){
+geometryWaiting=true;
+return view();
+}
+const result=combatCommit({
+transaction:proposal.transaction,
+accepted:true,
+player:player(before),
+});
+if(result.rejected){
+geometryWaiting=true;
+return view();
+}
+geometryWaiting=false;
+record({roll:0,pitch:0,yaw:0,throttle:0,actions:0},2);
+return view(before,result);
+}
+// A frozen encounter must not starve aircraft stepping or streaming. The
+// resident window may also temporarily omit part of the target area while
+// the aircraft is still inside it. Physics keeps its own terrain admission.
+const flightOnly=()=>{
+const frozen=combat.snapshot().actors;
+base.stageEncounterActors({
+actors:frozen,
+motions:frozen.map((actor)=>({
+id:actor.slotId,
+from:actor.position,
+to:actor.position,
+enabled:actor.status==='active',
+})),
+});
+const result=base.step({...input,actions:0});
+const finish=()=>{
+const after=base.snapshot();
+if(v2&&after.ticks>before.ticks)record({...input,actions:0},1);
+outsideArea= !stateInside(after);
+if(!outsideArea)returning=false;
+return view(after);
+};
+if(result?.then){
+pending=result.then(finish).finally(()=>{
+pending=null;
+});
+return pending;
+}
+return finish();
+};
+// Phase 1 records regional flight-only accepted time. Replay must honor
+// that intent even when today's resident geometry is ready sooner.
+outsideArea=regional&& !stateInside(before);
+if(outsideArea||recordedPhase===1){
+geometryWaiting=false;
+return flightOnly();
+}
+outsideArea=returning=false;
+const command=commands[0]??null;
+const proposal=combat.prepare({
+player:player(before),
+input:{
+fire:Boolean(input.actions&1),
+nose:rotate(before.orientation,{x:0,y:0,z:-Q}),
+...(v2
+?{
+throttle:input.throttle??0,
+muzzle:(()=>{
+const offset=rotate(before.orientation,{
+x:0,
+y:0,
+z:-(before.aircraftRadiusMm??before.radius??220)-40,
+});
+return mm({
+x:before.position.x+offset.x,
+y:
+before.position.y+
+(before.aircraftSupportHeightMm??before.aircraftRadiusMm??220)+
+offset.y,
+z:before.position.z+offset.z,
+});
+})(),
+}
+:{}),
+...(v2&&command?command:{}),
+},
+});
+if(proposal.rejected){
+geometryWaiting=true;
+// Recorded combat frames must retry admission rather than silently
+// becoming flight-only frames and changing the recorded combat clock.
+if(regional&&recordedPhase===null)return flightOnly();
+return view();
+}
+geometryWaiting=false;
+try{
+base.stageEncounterActors(proposal);
+}catch(error){
+combatCancel(proposal.transaction);
+throw error;
+}
+const finish=()=>{
+let after=base.snapshot();
+const accepted=after.ticks>before.ticks;
+let committed=null;
+if(accepted){
+const motion=base.encounterMotion?.()??{};
+if(motion.trace)
+motion.trace=motion.trace.map((point)=>({
+position:mm(point.position??point),
+...(point.velocity?{velocity:mm(point.velocity)}:{}),
+}));
+const result=combatCommit({
+transaction:proposal.transaction,
+accepted:true,
+player:player(after),
+...motion,
+});
+if(result.rejected){
+// Regional windows are held stable by the accepted aircraft interval.
+// A violation must stop the attempt instead of inventing contact data.
+geometryWaiting=true;
+base.pause();
+throw new Error(
+'Terrain changed during the accepted combat interval; restart this encounter.',
+);
+}
+committed=result;
+record(input,0,command);
+if(command&&commands[0]===command)commands.shift();
+if(result.status!=='active'){
+base.pause();
+after=base.snapshot();
+}
+if(regional&& !stateInside(after)){
+outsideArea=true;
+}
+}else committed=combatCancel(proposal.transaction);
+return view(
+after,
+committed??(presentation?combat.frameSnapshot?.():null)??combat.snapshot(),
+);
+};
+try{
+const result=base.step(input);
+if(result?.then){
+pending=result
+.then(finish)
+.catch((error)=>{
+try{
+combatCancel(proposal.transaction);
+}catch{
+/* Commit already rejected it. */
+}
+throw error;
+})
+.finally(()=>{
+pending=null;
+});
+return pending;
+}
+return finish();
+}catch(error){
+try{
+combatCancel(proposal.transaction);
+}catch{
+/* Commit already rejected it. */
+}
+throw error;
+}
+}
+async function exportCombatRecovery(presentation=null){
+aftermathPaused=true;
+base.pause();
+if(pending)await pending;
+const encounter=combat.checkpoint();
+const recording=copy({segments,frames,segmentStart,retainedFrom,previousHash});
+const operation=base.encounterCheckpoint?.()??base.exportRecovery?.();
+saving=Boolean(operation?.then);
+try{
+const physical=saving?await operation:operation;
+required(physical,'This flight cannot save a combat session');
+const gameplay={
+format:v2?'FPVCombatRecovery.v2':'FPVCombatRecovery.v1',
+identity,
+encounter,
+physical,
+recording,
+...(v2
+?{session:{ticks:sessionTicks,nextCommandSeq,commands:copy(commands)}}
+:{}),
+};
+return copy({gameplay,checksum:dataIdentity(gameplay),presentation});
+}finally{
+saving=false;
+}
+}
+async function restoreCombatRecovery(input){
+const saved=readRecovery(input);
+required(
+saved.gameplay?.format===(v2?'FPVCombatRecovery.v2':'FPVCombatRecovery.v1')&&
+dataIdentity(saved.gameplay.identity)===dataIdentity(identity),
+'Combat recovery belongs to different content or settings',
+);
+// Validate gameplay before touching the accepted aircraft boundary.
+const candidate=createEncounterRuntime(definition,{
+geometry,
+runId:summary().runId,
+});
+candidate.restore(saved.gameplay.encounter);
+if(v2){
+const s=saved.gameplay.session;
+exactKeys(s,['ticks','nextCommandSeq','commands'],'Encounter session clock');
+required(
+Number.isSafeInteger(s.ticks)&&
+s.ticks>=candidate.snapshot().ticks&&
+Number.isSafeInteger(s.nextCommandSeq)&&
+s.nextCommandSeq>candidate.snapshot().lastCommandSeq&&
+Array.isArray(s.commands)&&
+s.commands.length<=16,
+'Invalid encounter command queue',
+);
+let previous=candidate.snapshot().lastCommandSeq??0;
+for(const command of s.commands){
+exactKeys(
+command,
+['commandSeq',...COMMANDS.filter((key)=>Object.hasOwn(command,key))],
+'Encounter command',
+);
+required(
+Number.isSafeInteger(command.commandSeq)&&
+command.commandSeq>previous&&
+command.commandSeq<s.nextCommandSeq&&
+Object.keys(command).length===2&&
+(Object.hasOwn(command,'switchWeapon')
+?[0,1].includes(command.switchWeapon)
+:['reload','payload','detonate','startNextWave'].some(
+(key)=>command[key]===true,
+)),
+'Invalid queued command',
+);
+previous=command.commandSeq;
+}
+}
+const history=restoreRecording(
+saved.gameplay.recording,
+identity,
+v2?saved.gameplay.session.ticks:candidate.snapshot().ticks,
+v2?candidate.snapshot():null,
+);
+const restore=base.restoreEncounterCheckpoint??base.restoreRecovery;
+required(restore,'This flight cannot restore a combat session');
+base.pause();
+await pending;
+await restore(
+v2
+?canonicalCombatPhysical(saved.gameplay.physical,candidate.snapshot())
+:saved.gameplay.physical,
+);
+combat.restore(saved.gameplay.encounter);
+aftermathPaused=true;
+if(v2)({ticks:sessionTicks,nextCommandSeq,commands}=copy(saved.gameplay.session));
+({frames,segments,segmentStart,retainedFrom,previousHash}=history);
+archiveGeneration++;
+outsideArea=regional&& !stateInside(base.snapshot());
+returning=false;
+return{state:snapshot(),presentation:saved.presentation??null};
+}
+return{
+...base,
+identity,
+snapshot:()=>snapshot(),
+frameSnapshot,
+step:(input)=>step(input),
+stepFrame:(input)=>step(input,true),
+async stepRecorded(frame){
+required(
+v2&&Array.isArray(frame)&&frame.length===7&&frame.every(Number.isSafeInteger),
+'A v2 combat frame is required',
+);
+const[roll,pitch,yaw,throttle,bits,commandSeq,phase]=frame,
+commandBits=bits&126;
+required(
+frame.slice(0,4).every((n)=>n>= -1000&&n<=1000)&&
+bits>=0&&
+bits<=127&&
+phase>=0&&
+phase<=2&&
+(!commandBits|| !(commandBits&(commandBits-1)))&&
+Boolean(commandBits)===Boolean(commandSeq)&&
+(phase===0||(!bits&& !commandSeq))&&
+(phase!==2||frame.slice(0,4).every((n)=>n===0)),
+'Invalid recorded combat frame',
+);
+required(
+!saving&& !disposed&& !pending&&commands.length===0,
+'Combat playback needs an idle accepted boundary',
+);
+const aftermath=summary().phase==='aftermath';
+required(
+aftermath
+?phase===2
+:phase===1
+?regional
+:phase===0&&(!regional||stateInside(base.snapshot())),
+'Recorded combat phase differs',
+);
+if(commandBits){
+required(
+commandSeq>summary().lastCommandSeq,
+'Recorded combat command was already consumed',
+);
+const command=
+commandBits&2
+?{reload:true}
+:commandBits&4
+?{switchWeapon:0}
+:commandBits&8
+?{switchWeapon:1}
+:commandBits&16
+?{payload:true}
+:commandBits&32
+?{detonate:true}
+:{startNextWave:true};
+commands.push({...command,commandSeq});
+nextCommandSeq=Math.max(nextCommandSeq,commandSeq+1);
+}
+returning=phase===1;
+aftermathPaused=false;
+base.arm();
+const prior=sessionTicks;
+const result=await step(
+{
+roll:roll/1000,
+pitch:pitch/1000,
+yaw:yaw/1000,
+throttle:throttle/1000,
+actions:bits&1,
+},
+false,
+phase,
+);
+if(sessionTicks===prior){
+commands=[];
+return{accepted:false,state:result};
+}
+required(
+sessionTicks===prior+1,
+'Combat replay advanced an unexpected number of intervals',
+);
+return{accepted:true,state:result};
+},
+queueCombatCommand(command){
+if(
+!v2||
+saving||
+disposed||
+effectiveStatus(base.snapshot(),summary())!=='active'||
+outsideArea||
+commands.length>=16
+)
+return false;
+const keys=Object.keys(command??{});
+if(
+keys.length!==1||
+!COMMANDS.includes(keys[0])||
+(keys[0]==='switchWeapon'
+? ![0,1].includes(command.switchWeapon)
+:command[keys[0]]!==true)
+)
+return false;
+commands.push({...command,commandSeq:nextCommandSeq++});
+return true;
+},
+pause(){
+commands=[];
+aftermathPaused=true;
+base.pause();
+},
+readCombatSegment(afterIndex= -1,{metadata=true}={}){
+required(
+v2&&Number.isSafeInteger(afterIndex)&&afterIndex>= -1,
+'Combat archive requires a v2 accepted recording',
+);
+const earliestIndex=segments.length?segments[0].from/3000:segmentStart/3000;
+const segment=segments.find((entry)=>entry.from/3000>afterIndex);
+return{
+identity:copy(identity),
+generation:archiveGeneration,
+earliestIndex,
+latestTick:sessionTicks,
+gap:afterIndex+1<earliestIndex,
+segment:segment?copy(segment):null,
+...(metadata
+?{
+definition:copy(definition),
+runId:summary().runId,
+boundaryIdentity:archiveResumeBoundary(
+combat.checkpoint(),
+{segments,frames,segmentStart,retainedFrom,previousHash},
+{ticks:sessionTicks,nextCommandSeq,commands},
+),
+}
+:{}),
+};
+},
+combatDefinition:()=>copy(definition),
+combatDefeats:()=>
+combat.defeats?.()??combat.snapshot({includeDefeats:true}).defeats??[],
+combatImpacts:()=>combat.impacts?.()??[],
+nextWave(){
+if(v2){
+if(
+summary().phase==='intermission'&&
+!saving&&
+!disposed&&
+!outsideArea&&
+commands.length<16
+)
+commands.push({startNextWave:true,commandSeq:nextCommandSeq++});
+}else combat.requestNextWave();
+return snapshot();
+},
+returnToEncounter(){
+returning=outsideArea;
+return snapshot();
+},
+encounterDestination:()=>copy(definition.spawn),
+exportCombatRecovery,
+restoreCombatRecovery,
+combatCheckpointPending:()=>saving,
+stepPending:()=>Boolean(pending||base.stepPending?.()),
+arm(){
+if(!saving){
+aftermathPaused=false;
+base.arm();
+}
+},
+async dispose(){
+disposed=true;
+base.pause();
+await pending?.catch(()=>{});
+await base.dispose?.();
+geometry.dispose?.();
+},
+};
+}
+
+// Compare complete accepted dynamics (including the serialized physics world and
+// contact/controller caches). Transport sequence gaps, pending unconsumed inputs,
+// and recorder bookkeeping can differ after rejected steps or recovery; none can
+// establish or invalidate a consumed flight trajectory.
+function acceptedPhysicalBoundary(source,encounterState){
+const value=canonicalCombatPhysical(source,encounterState);
+const simulation=(snapshot)=>{
+const accepted=copy(snapshot);
+delete accepted.recording;
+delete accepted.recordingStatus;
+delete accepted.recorderLengths;
+delete accepted.hash;
+const checkpoint=accepted.checkpoint??accepted;
+delete checkpoint.pending;
+if(checkpoint.state){
+for(const key of[
+'acceptedSequence',
+'acceptedTimestampUs',
+'consumedSequence',
+'inputBytes',
+'checkpointBytes',
+])
+delete checkpoint.state[key];
+}
+return accepted;
+};
+if(value.format==='AircraftCourseRecovery.v1'){
+delete value.sequence;
+delete value.checksum;
+value.physical=simulation(value.physical);
+}else if(
+['AdvancedRegionalRecovery.v1','AdvancedRegionalRecovery.v2'].includes(value.format)
+)
+value.simulation=simulation(value.simulation);
+return value;
+}
+
+/** Replay accepted combat commands through the same admitted aircraft/encounter session.
+   * The caller supplies the exact native or regional backend; checkpoint state is never
+   * restored as a substitute for simulation. Truncated recordings cannot prove earlier play. */
+async function createEncounterPlayback(input,{createSession,signal}={}){
+const archive=
+input?.format===ENCOUNTER_ARCHIVE_FORMAT?inspectEncounterArchive(input):null;
+const{saved,definition}=archive
+?{saved:archive.recovery,definition:archive.definition}
+:inspectEncounterRecovery(input),
+gameplay=saved.gameplay;
+required(
+definition.format===ENCOUNTER_FORMAT_V2&&gameplay.format==='FPVCombatRecovery.v2',
+'Use the historical dispatcher for v1 combat recordings',
+);
+required(
+archive||gameplay.recording.retainedFrom===0,
+'This recording no longer contains its beginning. Continue the saved session as local practice; complete replay verification is unavailable.',
+);
+required(typeof createSession==='function','Combat playback needs its exact flight backend');
+const history=restoreRecording(
+gameplay.recording,
+gameplay.identity,
+gameplay.session.ticks,
+gameplay.encounter.state,
+);
+// Keep one bounded chunk view; do not duplicate an archive's complete frame chain.
+const chunks=archive
+?[
+...archive.packet.segments
+.filter((segment)=>segment.record.kind==='frames')
+.map((segment)=>segment.record.segment.frames),
+history.frames,
+]
+:[...history.segments.map((segment)=>segment.frames),history.frames];
+const total=chunks.reduce((sum,chunk)=>sum+chunk.length,0);
+let chunkIndex=0,
+chunkOffset=0;
+const currentFrame=()=>{
+while(chunkIndex<chunks.length&&chunkOffset>=chunks[chunkIndex].length){
+chunkOffset=0;
+chunkIndex++;
+}
+return chunks[chunkIndex]?.[chunkOffset];
+};
+const abort=()=>{
+if(signal?.aborted)throw signal.reason??new Error('Combat playback cancelled');
+};
+abort();
+const session=await createSession({
+definition:copy(definition),
+runId:gameplay.encounter.state.runId,
+identity:copy(gameplay.identity),
+});
+let cursor=0,
+disposed=false,
+verified=null,
+stepping=false;
+try{
+required(
+session?.stepRecorded&&
+session?.exportCombatRecovery&&
+dataIdentity(session.identity)===dataIdentity(gameplay.identity),
+'Combat playback backend identity differs',
+);
+required(
+session.snapshot().encounter?.ticks===0&&session.snapshot().ticks===0,
+'Combat playback must start from a fresh attempt',
+);
+abort();
+}catch(error){
+await session?.dispose?.();
+throw error;
+}
+const cleanState=(source)=>{
+const value=copy(source);
+delete value.events;
+return value;
+};
+return{
+session,
+snapshot:()=>({
+cursor,
+total:total,
+done:cursor===total,
+verified:verified!==null,
+state:session.snapshot(),
+}),
+async step(){
+required(!disposed&& !stepping,'Combat playback is unavailable or already advancing');
+abort();
+if(cursor===total)return{accepted:false,done:true,state:session.snapshot()};
+stepping=true;
+try{
+const result=await session.stepRecorded(currentFrame());
+abort();
+if(result.accepted){
+cursor++;
+chunkOffset++;
+}
+return{...result,done:cursor===total,cursor,total:total};
+}finally{
+stepping=false;
+}
+},
+async finish(){
+required(
+!disposed&& !stepping&&cursor===total,
+'Complete every recorded interval before verification',
+);
+abort();
+if(verified)return copy(verified);
+const replayed=await session.exportCombatRecovery();
+abort();
+required(
+dataIdentity(cleanState(replayed.gameplay.encounter.state))===
+dataIdentity(cleanState(gameplay.encounter.state)),
+'Combat replay does not reproduce its accepted final state',
+);
+required(
+dataIdentity(
+acceptedPhysicalBoundary(replayed.gameplay.physical,replayed.gameplay.encounter.state),
+)===dataIdentity(acceptedPhysicalBoundary(gameplay.physical,gameplay.encounter.state)),
+'Combat replay does not reproduce its physical boundary',
+);
+verified={
+format:'FPVCombatReplayVerification.v2',
+verified:true,
+practiceOnly:true,
+physicalBoundary:'accepted-dynamics-v1',
+identity:copy(gameplay.identity),
+definitionIdentity:gameplay.encounter.state.definitionIdentity,
+acceptedTicks:gameplay.encounter.state.ticks,
+sessionTicks:total,
+retainedFrom:0,
+retainedTo:total,
+result:copy(gameplay.encounter.state.result),
+};
+return copy(verified);
+},
+async dispose(){
+disposed=true;
+await session.dispose();
+},
+};
+}
+
+async function replayEncounterSession(
+input,
+{
+createSession,
+signal,
+yieldControl=()=>new Promise((resolve)=>setTimeout(resolve,0)),
+onFrame,
+}={},
+){
+const playback=await createEncounterPlayback(input,{createSession,signal});
+try{
+while(!playback.snapshot().done){
+const result=await playback.step();
+required(
+result.accepted,
+'Recorded combat interval is not admitted by this terrain or flight backend',
+);
+await onFrame?.(result.state,result.cursor);
+if(result.cursor%100===0)await yieldControl();
+}
+return await playback.finish();
+}finally{
+await playback.dispose();
+}
+}
+
+const ENCOUNTER_ARCHIVE_FORMAT='FPVCombatArchivePackage.v1';
+const ARCHIVE_MANIFEST='FPVCombatArchive.v1';
+const ARCHIVE_SEGMENT='FPVCombatArchiveSegment.v1';
+const archiveBytes=(value)=>new TextEncoder().encode(JSON.stringify(value)).byteLength;
+const archiveInteger=(value,minimum=0,maximum=Number.MAX_SAFE_INTEGER)=>
+Number.isSafeInteger(value)&&value>=minimum&&value<=maximum;
+const archiveBounds={
+maxBytes:AIRCRAFT_ARCHIVE_PACKAGE_BYTES,
+maxNodes:8000000,
+maxArray:786432,
+maxDepth:52,
+maxString:12*1024*1024,
+};
+const archiveDigest=(value)=>typeof value==='string'&& /^[a-f0-9]{16}$/.test(value);
+function validateCombatArchiveManifest(input){
+const value=boundedJSON(input,{...archiveBounds,maxBytes:528384});
+exactKeys(
+value,
+[
+'format',
+'id',
+'host',
+'name',
+'createdAt',
+'revision',
+'identity',
+'config',
+'origin',
+'state',
+'firstIndex',
+'lastIndex',
+'startTick',
+'endTick',
+'segmentCount',
+'payloadBytes',
+'finalHash',
+'scored',
+],
+'Combat archive manifest',
+);
+const config=value.config;
+exactKeys(config,['identity','definition','runId'],'Combat archive configuration');
+const definition=validateEncounterDefinition(config.definition);
+required(
+definition.format===ENCOUNTER_FORMAT_V2&&
+config.identity?.format==='FPVEncounterSession.v2'&&
+config.identity.encounter===dataIdentity(definition)&&
+typeof config.runId==='string'&&
+config.runId.length>0&&
+config.runId.length<=256,
+'Invalid combat archive configuration',
+);
+exactKeys(value.origin,['kind','startTick'],'Combat archive origin');
+required(
+value.format===ARCHIVE_MANIFEST&&
+stableId(value.id)&&
+value.host==='combat'&&
+typeof value.name==='string'&&
+value.name.length>0&&
+value.name.length<=120&&
+archiveInteger(value.createdAt)&&
+archiveInteger(value.revision)&&
+value.identity===dataIdentity(config.identity)&&
+archiveBytes(config)<=512*1024&&
+value.origin.kind==='fresh'&&
+value.origin.startTick===0&&
+value.startTick===0&&
+archiveInteger(value.endTick)&&
+['open','ended','interrupted','capacity','gap'].includes(value.state)&&
+value.scored===false&&
+archiveInteger(value.segmentCount,0,AIRCRAFT_ARCHIVE_MAX_SEGMENTS)&&
+archiveInteger(value.payloadBytes,archiveBytes(config),AIRCRAFT_ARCHIVE_PAYLOAD_BYTES),
+'Invalid combat archive manifest',
+);
+required(
+value.segmentCount===0
+?value.firstIndex===null&&
+value.lastIndex===null&&
+value.finalHash===null&&
+value.endTick===0&&
+value.payloadBytes===archiveBytes(config)
+:value.firstIndex===0&&
+value.lastIndex===value.segmentCount-1&&
+archiveDigest(value.finalHash),
+'Combat archive range differs',
+);
+return value;
+}
+function emptyCombatArchive(spec){
+return validateCombatArchiveManifest({
+format:ARCHIVE_MANIFEST,
+id:spec.id,
+host:'combat',
+name:spec.name??'Combat practice',
+createdAt:spec.createdAt??Date.now(),
+revision:0,
+identity:spec.identity,
+config:spec.config,
+origin:{kind:'fresh',startTick:0},
+state:'open',
+firstIndex:null,
+lastIndex:null,
+startTick:0,
+endTick:0,
+segmentCount:0,
+payloadBytes:archiveBytes(spec.config),
+finalHash:null,
+scored:false,
+});
+}
+function validateCombatArchiveSegment(input,manifest){
+const item=boundedJSON(input,archiveBounds);
+exactKeys(
+item,
+['format','index','startTick','endTick','initialHash','finalHash','previous','record'],
+'Combat archive segment',
+);
+const{finalHash,...payload}=item;
+required(
+item.format===ARCHIVE_SEGMENT&&
+archiveInteger(item.index,0,AIRCRAFT_ARCHIVE_MAX_SEGMENTS-1)&&
+archiveInteger(item.startTick)&&
+archiveInteger(item.endTick,item.startTick)&&
+archiveDigest(item.initialHash)&&
+finalHash===dataIdentity(payload)&&
+(item.previous===null||archiveDigest(item.previous)),
+'Invalid combat archive segment',
+);
+if(item.record?.kind==='frames'){
+exactKeys(item.record,['kind','segment'],'Combat archive frames');
+const segment=item.record.segment;
+required(
+item.startTick===segment.from&&item.endTick===segment.to,
+'Combat archive frame range differs',
+);
+restoreRecording(
+{
+segments:[segment],
+frames:[],
+segmentStart:segment.to,
+retainedFrom:segment.from,
+previousHash:segment.hash,
+},
+manifest.config.identity,
+segment.to,
+);
+}else{
+exactKeys(item.record,['kind','recovery'],'Combat archive final boundary');
+required(item.record.kind==='final','Unknown combat archive record');
+const{saved,definition}=inspectEncounterRecovery(item.record.recovery);
+required(
+dataIdentity(saved.gameplay.identity)===manifest.identity&&
+dataIdentity(definition)===manifest.config.identity.encounter&&
+saved.gameplay.encounter.state.runId===manifest.config.runId&&
+saved.gameplay.session.ticks===item.endTick&&
+saved.gameplay.recording.segmentStart===item.startTick,
+'Combat archive final boundary differs',
+);
+restoreRecording(
+saved.gameplay.recording,
+saved.gameplay.identity,
+saved.gameplay.session.ticks,
+saved.gameplay.encounter.state,
+);
+// Cosmetic records have their own recovery files; archives retain gameplay and launch hints.
+required(
+item.record.recovery.presentation===null,
+'Combat archives keep cosmetic records in separate recovery files',
+);
+}
+return item;
+}
+function extendCombatArchive(manifest,item,previous){
+required(
+manifest.state==='open'&&(!previous||previous.record.kind!=='final'),
+'Combat archive is closed',
+);
+required(
+item.index===manifest.segmentCount&&
+item.startTick===manifest.endTick&&
+item.initialHash===(previous?.finalHash??dataIdentity(manifest.config))&&
+item.previous===(previous?dataIdentity(previous):null),
+'Missing or changed combat archive segment',
+);
+if(item.record.kind==='frames'){
+const expected=previous?.record.segment?.hash??null;
+required(item.record.segment.previousHash===expected,'Broken combat command chain');
+}
+const next={
+...manifest,
+revision:manifest.revision+1,
+firstIndex:0,
+lastIndex:item.index,
+endTick:item.endTick,
+segmentCount:manifest.segmentCount+1,
+payloadBytes:manifest.payloadBytes+archiveBytes(item),
+finalHash:item.finalHash,
+};
+required(
+next.segmentCount<=AIRCRAFT_ARCHIVE_MAX_SEGMENTS&&
+next.payloadBytes<=AIRCRAFT_ARCHIVE_PAYLOAD_BYTES,
+'Combat archive capacity reached; flight and recent recording can continue',
+);
+return validateCombatArchiveManifest(next);
+}
+function validateCombatArchivePackage(input){
+const value=boundedJSON(input,archiveBounds);
+exactKeys(value,['format','manifest','segments'],'Combat archive package');
+required(
+value.format===ENCOUNTER_ARCHIVE_FORMAT&&Array.isArray(value.segments),
+'Unsupported combat archive package',
+);
+const manifest=validateCombatArchiveManifest(value.manifest);
+required(
+value.segments.length===manifest.segmentCount,
+'Combat archive segment count differs',
+);
+let reconstructed=emptyCombatArchive(manifest),
+previous=null,
+lastSequence=0;
+for(const source of value.segments){
+const segment=validateCombatArchiveSegment(source,manifest);
+reconstructed=extendCombatArchive(reconstructed,segment,previous);
+for(const frame of segment.record.kind==='frames'
+?segment.record.segment.frames
+:segment.record.recovery.gameplay.recording.frames){
+if(frame[5]){
+required(frame[5]>lastSequence,'Combat archive command sequence repeats');
+lastSequence=frame[5];
+}
+}
+previous=segment;
+}
+for(const field of[
+'firstIndex',
+'lastIndex',
+'endTick',
+'segmentCount',
+'payloadBytes',
+'finalHash',
+])
+required(
+reconstructed[field]===manifest[field],
+'Combat archive manifest differs from its chain',
+);
+if(previous?.record.kind==='final'){
+const recovery=previous.record.recovery,
+history=recovery.gameplay.recording;
+for(const recent of history.segments){
+const stored=value.segments[recent.from/3000];
+required(
+stored?.record.kind==='frames'&&
+canonicalJSON(stored.record.segment)===canonicalJSON(recent),
+'Combat archive differs from its retained recovery interval',
+);
+}
+required(
+lastSequence===recovery.gameplay.encounter.state.lastCommandSeq,
+'Combat archive commands differ from its final state',
+);
+}
+return value;
+}
+const combatArchiveCodec={
+database:'revealline.fpv.combat-archives.v1',
+format:ENCOUNTER_ARCHIVE_FORMAT,
+validateManifest:validateCombatArchiveManifest,
+validatePackage:validateCombatArchivePackage,
+validateSegment:validateCombatArchiveSegment,
+extend:extendCombatArchive,
+emptyManifest:emptyCombatArchive,
+};
+const createEncounterArchiveStore=(options={})=>
+createAircraftArchiveStore({...options,codec:combatArchiveCodec});
+function inspectEncounterArchive(input){
+const packet=validateCombatArchivePackage(input),
+tail=packet.segments.at(-1);
+required(
+tail?.record.kind==='final'&&packet.manifest.state==='ended',
+'Combat archive has no complete saved ending',
+);
+const{saved:recovery,definition}=inspectEncounterRecovery(tail.record.recovery);
+return{
+recovery,
+definition,
+summary:{
+id:packet.manifest.id,
+name:packet.manifest.name,
+from:0,
+to:packet.manifest.endTick,
+segments:packet.manifest.segmentCount,
+complete:true,
+},
+packet,
+};
+}
+function wrapCombatArchiveRecord(record,manifest,previous){
+const payload={
+format:ARCHIVE_SEGMENT,
+index:manifest.segmentCount,
+startTick:manifest.endTick,
+endTick:
+record.kind==='frames'?record.segment.to:record.recovery.gameplay.session.ticks,
+initialHash:previous?.finalHash??dataIdentity(manifest.config),
+previous:previous?dataIdentity(previous):null,
+record,
+};
+return{...payload,finalHash:dataIdentity(payload)};
+}
+/** One background write retains sealed commands; quota, missed intervals and replacement
+   * stop archival, never physics. Export pauses at a coherent boundary but keeps this feed open. */
+function createEncounterArchive({
+session,
+store:suppliedStore,
+indexedDB=globalThis.indexedDB,
+name='Combat practice',
+id=`combat-${Date.now().toString(36)}-${Math.random().toString(36).slice(2,9)}`,
+launch=null,
+resumeFrom=null,
+}={}){
+required(
+session?.readCombatSegment&&session?.exportCombatRecovery,
+'Combat archive needs an encounter session',
+);
+const initial=session.readCombatSegment(-1);
+let manifest=null,
+previous=null,
+afterIndex= -1,
+work=null,
+operation=null,
+queuedFinish=null,
+closed=false,
+closing=false,
+state='recording',
+error=null;
+const generation=initial.generation;
+const config={
+identity:initial.identity,
+definition:initial.definition,
+runId:initial.runId,
+};
+let seed=resumeFrom?inspectEncounterArchive(resumeFrom):null;
+if(seed){
+const source=seed.recovery.gameplay;
+required(
+canonicalJSON(seed.packet.manifest.config)===canonicalJSON(config)&&
+source.session.ticks===initial.latestTick&&
+archiveResumeBoundary(source.encounter,source.recording,source.session)===
+initial.boundaryIdentity,
+'Combat archive continuation differs from its restored boundary',
+);
+}
+const hasSeed=Boolean(seed);
+let seedSegments=seed?seed.packet.segments.slice(0,-1):[],
+seedIndex=0;
+// Keep only the validated sealed frame records, never the old final boundary.
+seed=resumeFrom=null;
+const store=suppliedStore??createEncounterArchiveStore({indexedDB});
+const status=()=>({
+id,
+state,
+error,
+durableFrom:0,
+durableTo:manifest?.endTick??0,
+segments:manifest?.segmentCount??0,
+bytes:manifest?.payloadBytes??0,
+complete:state==='ended',
+capacityBytes:AIRCRAFT_ARCHIVE_PACKAGE_BYTES,
+});
+async function failure(cause){
+if(state==='capacity'||state==='gap')return status();
+error=String(cause?.message??cause).replace(/aircraft archive/gi,'Combat archive');
+state= /capacity|full|quota/i.test(error)
+?'capacity'
+:/gap|missed|beginning|replaced/i.test(error)
+?'gap'
+:'error';
+if(manifest?.state==='open')
+try{
+manifest=await store.finish(
+id,
+{
+reason:state==='capacity'?'capacity':state==='gap'?'gap':'interrupted',
+endTick:manifest.endTick,
+finalHash:manifest.finalHash,
+},
+{expectedRevision:manifest.revision},
+);
+}catch{}
+return status();
+}
+async function consume({force=false}={}){
+if(
+!manifest&&
+!force&&
+session.readCombatSegment(afterIndex,{metadata:false}).latestTick===0
+)
+return status();
+required(
+!initial.gap||hasSeed,
+'Combat archive missed its beginning; start a new attempt to retain a complete chain',
+);
+if(!manifest)
+manifest=await store.begin({
+id,
+host:'combat',
+name,
+identity:dataIdentity(config.identity),
+config,
+origin:{kind:'fresh',startTick:0},
+});
+for(let count=0;count<(force?AIRCRAFT_ARCHIVE_MAX_SEGMENTS+13:13);count++){
+if(closed)return status();
+const envelope=session.readCombatSegment(afterIndex,{
+metadata:false,
+});
+required(envelope.generation===generation,'Combat archive session was replaced');
+const retained=seedSegments[seedIndex]?.record.segment;
+required(retained|| !envelope.gap,'A combat recording segment was missed');
+const segment=retained??envelope.segment;
+if(!segment)return status();
+const item=wrapCombatArchiveRecord({kind:'frames',segment},manifest,previous);
+manifest=await store.append(id,item,{
+expectedRevision:manifest.revision,
+});
+previous=item;
+afterIndex=segment.from/3000;
+if(retained){
+seedSegments[seedIndex++]=null;
+if(seedIndex===seedSegments.length){
+seedSegments=[];
+seedIndex=0;
+}
+}
+}
+return status();
+}
+async function exportBoundary(){
+if(state==='ended')return store.exportPackage(id);
+required(state==='recording','Combat archive is unavailable');
+const saved=await session.exportCombatRecovery();
+if(work)await work;
+await consume({force:true});
+required(state==='recording','Combat archive stopped before its final boundary');
+const recovery={
+...saved,
+presentation:null,
+...(launch?{launch:copy(typeof launch==='function'?launch():launch)}:{}),
+};
+const item=wrapCombatArchiveRecord({kind:'final',recovery},manifest,previous);
+const ended={
+...extendCombatArchive(manifest,validateCombatArchiveSegment(item,manifest),previous),
+state:'ended',
+};
+const packet=await store.exportPackage(id);
+return validateCombatArchivePackage({
+...packet,
+manifest:ended,
+segments:[...packet.segments,item],
+});
+}
+function perform(kind){
+const job={kind,promise:null};
+operation=job;
+job.promise=Promise.resolve()
+.then(async()=>{
+const packet=await exportBoundary();
+if(kind==='finish'&&state!=='ended'){
+const item=packet.segments.at(-1);
+manifest=await store.append(id,item,{expectedRevision:manifest.revision});
+manifest=await store.finish(
+id,
+{reason:'ended',endTick:manifest.endTick,finalHash:manifest.finalHash},
+{expectedRevision:manifest.revision},
+);
+state='ended';
+}
+return packet;
+})
+.catch(async(cause)=>{
+await failure(cause);
+throw cause;
+})
+.finally(()=>{
+if(operation===job)operation=null;
+});
+return job.promise;
+}
+const api={
+snapshot:status,
+capture(){
+if(work)return work;
+if(closed||closing||operation||queuedFinish||state!=='recording')
+return Promise.resolve(status());
+work=consume()
+.catch(failure)
+.finally(()=>{
+work=null;
+});
+return work;
+},
+export(){
+if(queuedFinish)return queuedFinish;
+if(operation)return operation.promise;
+if(closed||closing)return Promise.reject(new Error('Combat archive is unavailable'));
+return perform('export');
+},
+finish(){
+if(queuedFinish)return queuedFinish;
+if(operation?.kind==='finish')return operation.promise;
+if(closed||closing)return Promise.reject(new Error('Combat archive is unavailable'));
+if(!operation)return perform('finish');
+const prior=operation.promise;
+queuedFinish=prior
+.then(()=>perform('finish'))
+.finally(()=>{
+queuedFinish=null;
+});
+return queuedFinish;
+},
+async dispose(){
+if(closed)return;
+closing=true;
+await Promise.allSettled([work,operation?.promise,queuedFinish].filter(Boolean));
+closed=true;
+if(manifest?.state==='open')
+try{
+manifest=await store.finish(
+id,
+{reason:'interrupted',endTick:manifest.endTick,finalHash:manifest.finalHash},
+{expectedRevision:manifest.revision},
+);
+}catch{}
+if(!suppliedStore)store.close();
+},
+};
+return api;
+}
+
+return{
+createEncounterSession:createEncounterSession,
+createEncounterPlayback:createEncounterPlayback,
+replayEncounterSession:replayEncounterSession,
+ENCOUNTER_ARCHIVE_FORMAT:ENCOUNTER_ARCHIVE_FORMAT,
+createEncounterArchiveStore:createEncounterArchiveStore,
+inspectEncounterArchive:inspectEncounterArchive,
+createEncounterArchive:createEncounterArchive,
+};
+})();
+modules['optional-practice/civilian-fpv/encounter-controls.mjs']=(()=>{
+/** Player choices are separate from aircraft controls and historical course preferences. */
+const ENCOUNTER_PREFERENCES_KEY='revealline.fpv.encounters.v1';
+const ENCOUNTER_ACTIVITIES=Object.freeze([
+'original',
+'continuous',
+'hunting',
+'elimination',
+'strike',
+'survival',
+]);
+const difficulties=['easy','normal','hard'];
+const populations=[6,12,20];
+const survivalPopulations=[64,96,128];
+const weapons=['autocannon','scatter','precision','rocket'];
+const choices={
+survivalMode:['timed','endless'],
+payload:['bomb','remote','drone'],
+ammoPreset:['balanced','arcade','tactical'],
+playerDamage:['normal','invulnerable'],
+enemyDamage:['normal','one-hit'],
+};
+const copy=(value)=>structuredClone(value);
+const defaults=()=>({
+learning:'original',
+other:'continuous',
+difficulty:'normal',
+population:12,
+survivalPopulation:96,
+survivalMode:'timed',
+loadout:['autocannon','scatter'],
+payload:'bomb',
+ammoPreset:'balanced',
+playerDamage:'normal',
+enemyDamage:'normal',
+});
+function applyChoices(value,patch){
+for(const[key,values]of Object.entries(choices))
+if(values.includes(patch[key]))value[key]=patch[key];
+if(
+Array.isArray(patch.loadout)&&
+patch.loadout.length===2&&
+patch.loadout.every((item)=>weapons.includes(item))&&
+patch.loadout[0]!==patch.loadout[1]
+)
+value.loadout=[...patch.loadout];
+if(difficulties.includes(patch.difficulty))value.difficulty=patch.difficulty;
+if(populations.includes(patch.population))value.population=patch.population;
+if(survivalPopulations.includes(patch.population))value.survivalPopulation=patch.population;
+if(survivalPopulations.includes(patch.survivalPopulation))
+value.survivalPopulation=patch.survivalPopulation;
+return value;
+}
+function createEncounterPreferences(storage){
+let value=defaults();
+try{
+const saved=JSON.parse(storage?.getItem(ENCOUNTER_PREFERENCES_KEY)??'null');
+if(['FPVEncounterPreferences.v1','FPVEncounterPreferences.v2'].includes(saved?.format)){
+for(const key of['learning','other'])
+if(ENCOUNTER_ACTIVITIES.includes(saved[key]))value[key]=saved[key];
+value=applyChoices(value,saved);
+}
+}catch{
+/* A damaged optional preference does not prevent flying. */
+}
+return{
+snapshot:()=>copy(value),
+select({learning=false,original=false,override=null}={}){
+// Historical recovery definitions retain their original rules and shape.
+if(override?.format==='FPVEncounterDefinition.v1')return copy(override);
+const chosen=applyChoices(copy(value),override??{});
+const activity=original
+?'original'
+:ENCOUNTER_ACTIVITIES.includes(override?.activity)
+?override.activity
+:value[learning?'learning':'other'];
+return{
+version:2,
+activity,
+difficulty:chosen.difficulty,
+population:activity==='survival'?chosen.survivalPopulation:chosen.population,
+survivalMode:chosen.survivalMode,
+loadout:chosen.loadout,
+payload:chosen.payload,
+ammoPreset:chosen.ammoPreset,
+playerDamage:chosen.playerDamage,
+enemyDamage:chosen.enemyDamage,
+seed:
+Number.isSafeInteger(override?.seed)&&
+override.seed>=1&&
+override.seed<=0xffffffff
+?override.seed
+:1,
+};
+},
+update(patch,learning=false){
+if(ENCOUNTER_ACTIVITIES.includes(patch.activity))
+value[learning?'learning':'other']=patch.activity;
+applyChoices(value,patch);
+try{
+storage?.setItem(
+ENCOUNTER_PREFERENCES_KEY,
+JSON.stringify({format:'FPVEncounterPreferences.v2',...value}),
+);
+}catch{
+/* Keep the user's choice for this session when storage is unavailable. */
+}
+return copy(value);
+},
+};
+}
+
+const labels={
+original:['Original course','Початковий маршрут'],
+continuous:['Continuous combat','Безперервний бій'],
+hunting:['Target hunting · 3 minutes','Полювання на цілі · 3 хвилини'],
+elimination:['Elimination','Знищення цілей'],
+strike:['Strike','Удар'],
+survival:['Survival','Виживання'],
+timed:['Six minutes','Шість хвилин'],
+endless:['Endless','Нескінченно'],
+autocannon:['Autocannon','Автогармата'],
+scatter:['Scatter','Картеч'],
+precision:['Precision','Точна зброя'],
+rocket:['Rockets','Ракети'],
+bomb:['Drop bomb','Скидання бомби'],
+remote:['Remote charge','Дистанційний заряд'],
+drone:['Drone charge','Заряд дрона'],
+balanced:['Balanced','Збалансовано'],
+arcade:['Arcade','Аркада'],
+tactical:['Tactical','Тактичний'],
+invulnerable:['Invulnerable · assisted','Невразливість · допомога'],
+'one-hit':['One hit · assisted','Одне влучання · допомога'],
+64:['Up to 64','До 64'],
+96:['Up to 96','До 96'],
+128:['Up to 128','До 128'],
+easy:['Easy','Легко'],
+normal:['Normal','Звичайно'],
+hard:['Hard','Складно'],
+6:['Sparse · up to 6','Небагато · до 6'],
+12:['Standard · up to 12','Звичайно · до 12'],
+20:['Dense · up to 20','Багато · до 20'],
+};
+function encounterActivityLabel(activity,locale='en'){
+return(labels[activity]??labels.original)[locale==='uk'?1:0];
+}
+
+function mountEncounterControls({
+document:doc,
+container,
+locale=()=>'en',
+onChange,
+onNextWave,
+onReturn,
+onRestart,
+onSave,
+onLoad,
+onNewRun,
+onRetry,
+}){
+const root=doc.createElement('section');
+root.className='fpv-encounter-controls flight-control-group';
+root.dataset.encounterControls='';
+const title=doc.createElement('h3');
+root.append(title);
+const fields={};
+for(const[key,values]of[
+['activity',ENCOUNTER_ACTIVITIES],
+['difficulty',difficulties],
+['population',[...populations,...survivalPopulations]],
+...Object.entries(choices),
+['weaponA',weapons],
+['weaponB',weapons],
+]){
+const label=doc.createElement('label'),
+caption=doc.createElement('span'),
+select=doc.createElement('select');
+select.dataset.encounterChoice=key;
+for(const value of values){
+const option=doc.createElement('option');
+option.value=String(value);
+select.append(option);
+}
+select.addEventListener('change',()=>{
+const selected=Object.fromEntries(
+Object.entries(fields).map(([name,field])=>[name,field.select.value]),
+);
+const loadout=[selected.weaponA,selected.weaponB];
+if(loadout[0]===loadout[1]){
+loadout[key==='weaponA'?1:0]=weapons.find((id)=>id!==select.value);
+}
+delete selected.weaponA;
+delete selected.weaponB;
+const allowed=selected.activity==='survival'?survivalPopulations:populations;
+onChange?.({
+...selection,
+...selected,
+version:2,
+loadout,
+population:allowed.includes(Number(selected.population))
+?Number(selected.population)
+:allowed[1],
+});
+});
+label.append(caption,select);
+root.append(label);
+fields[key]={label,caption,select};
+}
+const help=doc.createElement('p'),
+status=doc.createElement('p'),
+actions=doc.createElement('div');
+status.setAttribute('role','status');
+actions.className='flight-actions';
+const buttons={};
+for(const[key,handler]of Object.entries({
+next:onNextWave,
+retry:onRetry,
+newRun:onNewRun,
+return:onReturn,
+restart:onRestart,
+save:onSave,
+load:onLoad,
+})){
+const button=doc.createElement('button');
+button.type='button';
+button.addEventListener('click',()=>handler?.());
+buttons[key]=button;
+actions.append(button);
+}
+root.append(help,status,actions);
+container.append(root);
+let selection={...defaults(),activity:'original',version:2},
+encounter=null,
+unavailable='',
+busy=false;
+const txt=(en,uk)=>(locale()==='uk'?uk:en);
+function refresh(){
+title.textContent=txt('Flight activity','Режим гри');
+for(const[key,field]of Object.entries(fields)){
+field.caption.textContent={
+activity:txt('Activity','Заняття'),
+difficulty:txt('Difficulty','Складність'),
+population:txt('Moving targets','Рухомі цілі'),
+survivalMode:txt('Survival length','Тривалість виживання'),
+weaponA:txt('Primary weapon','Основна зброя'),
+weaponB:txt('Secondary weapon','Друга зброя'),
+payload:txt('Payload','Заряд'),
+ammoPreset:txt('Ammunition','Боєприпаси'),
+playerDamage:txt('Player damage','Пошкодження гравця'),
+enemyDamage:txt('Enemy damage','Пошкодження ворогів'),
+}[key];
+for(const option of field.select.options){
+option.textContent=labels[option.value]?.[locale()==='uk'?1:0]??option.value;
+if(key==='population'){
+const allowed=selection.activity==='survival'?survivalPopulations:populations;
+option.hidden=option.disabled= !allowed.includes(Number(option.value));
+}
+}
+field.select.value=String(
+key==='weaponA'
+?selection.loadout[0]
+:key==='weaponB'
+?selection.loadout[1]
+:selection[key],
+);
+field.select.disabled=busy;
+field.label.hidden=
+(key!=='activity'&&selection.activity==='original')||
+(key==='survivalMode'&&selection.activity!=='survival');
+}
+help.textContent=
+selection.activity==='original'
+?txt(
+'Fly the original objectives. Combat has its own results.',
+'Виконуйте початкові завдання. Бойові режими мають окремі результати.',
+)
+:txt(
+'Fire shoots the active primary or secondary gun. The payload is separate: Deploy drops the bomb or charge; Detonate triggers an armed charge. Switch weapon changes guns only. Changing these choices restarts the attempt.',
+'Вогонь стріляє з активної основної або другої зброї. Заряд окремий: застосування скидає бомбу чи заряд; підрив запускає зведений заряд. Перемикання зброї змінює лише гармати. Зміна параметрів починає нову спробу.',
+);
+if(selection.activity!=='original'&&selection.ammoPreset==='arcade')
+help.textContent+=txt(
+' Arcade: ramming enemies does not damage your hull. Enemy fire still does.',
+' Аркада: зіткнення з ворогами не пошкоджують ваш корпус. Ворожий вогонь залишається небезпечним.',
+);
+status.textContent=
+unavailable||
+(encounter
+?`${txt('Targets','Цілі')}: ${encounter.admittedCount??encounter.actors?.length??0} / ${encounter.population??selection.population}${encounter.population>selection.population?` · ${txt('Authored roster minimum','Мінімум заданого складу')}`:''}${encounter.recording?` · ${txt('Retained recording','Збережений запис')}: ${(encounter.recording.retainedFrom/50).toFixed(0)}–${(encounter.recording.retainedTo/50).toFixed(0)} s`:''}`
+:'');
+const outside=Boolean(encounter?.outsideArea||encounter?.phase==='outside');
+buttons.retry.textContent=txt('Retry same run','Повторити цю спробу');
+buttons.newRun.textContent=txt('New run','Нова спроба');
+buttons.retry.hidden=buttons.newRun.hidden= !encounter;
+buttons.next.textContent=txt('Start next wave','Почати наступну хвилю');
+buttons.return.textContent=txt('Guide to encounter','Напрямок до бою');
+buttons.restart.textContent=txt('Restart encounter here','Почати бій тут');
+buttons.save.textContent=txt('Save combat session','Зберегти бойову сесію');
+buttons.load.textContent=txt('Load combat session','Відкрити бойову сесію');
+buttons.next.hidden=
+!encounter|| !['preparation','intermission','break'].includes(encounter.phase);
+buttons.return.hidden=buttons.restart.hidden= !outside;
+buttons.save.hidden= !encounter;
+buttons.load.hidden=selection.activity==='original';
+for(const button of Object.values(buttons))button.disabled=busy;
+}
+refresh();
+return{
+root,
+fields,
+buttons,
+update(next){
+selection={...selection,...next.selection};
+encounter=next.encounter??null;
+unavailable=next.unavailable??'';
+busy=Boolean(next.busy);
+refresh();
+},
+refresh,
+dispose(){
+root.remove();
+},
+};
+}
+
+/** Read-only vitals from accepted combat state. */
+function mountCombatVitals({document:doc,parent,weaponRules}){
+if(!weaponRules)throw new TypeError('Missing combat weapon rules.');
+const make=(tag,part,owner)=>{
+const node=doc.createElement(tag);
+node.className=`combat-vitals${part?`__${part}`:''}`;
+owner?.append(node);
+return node;
+},
+root=make('section','',parent),
+text=(node,value)=>{
+if(node.textContent!==value)node.textContent=value;
+},
+attribute=(node,key,value)=>{
+const next=String(value);
+if(node.getAttribute(key)!==next)node.setAttribute(key,next);
+},
+hidden=(node,value)=>{
+if(node.hidden!==value)node.hidden=value;
+},
+icon=(owner,kind)=>{
+if(!doc.createElementNS){
+const fallback=make('span','icon',owner);
+fallback.textContent=kind==='health'?'+':'|||';
+fallback.setAttribute('aria-hidden','true');
+return;
+}
+const svg=doc.createElementNS('http://www.w3.org/2000/svg','svg'),
+path=doc.createElementNS('http://www.w3.org/2000/svg','path');
+svg.setAttribute('class','combat-vitals__icon');
+svg.setAttribute('viewBox','0 0 24 24');
+svg.setAttribute('width','20');
+svg.setAttribute('height','20');
+svg.setAttribute('aria-hidden','true');
+path.setAttribute('fill','none');
+path.setAttribute('stroke','currentColor');
+path.setAttribute('stroke-width','1.7');
+path.setAttribute('stroke-linejoin','round');
+path.setAttribute(
+'d',
+kind==='health'
+?'M12 2 4 5v7c0 5 8 10 8 10s8-5 8-10V5ZM12 7v9M8 11.5h8'
+:'M3 8 5 4l2 4v12H3ZM10 6l2-4 2 4v14h-4ZM17 8l2-4 2 4v12h-4ZM3 16h4M10 16h4M17 16h4',
+);
+svg.append(path);
+owner.append(svg);
+},
+card=(kind)=>{
+const node=make('div','card',root),
+heading=make('div','heading',node);
+node.dataset.vital=kind;
+icon(heading,kind);
+const label=make('span','label',heading),
+numbers=make('div','numbers',node),
+value=make('strong','value',numbers),
+max=make('span','max',numbers),
+meter=make('div','meter',node),
+fill=make('span','fill',meter),
+status=make('div','status',node);
+meter.setAttribute('role','meter');
+meter.setAttribute('aria-valuemin','0');
+fill.setAttribute('aria-hidden','true');
+return{node,label,value,max,meter,fill,status,fillRatio:null};
+},
+hull=card('health'),
+ammo=card('ammo'),
+footer=make('div','footer',ammo.node),
+reserve=make('span','reserve',footer),
+payload=make('span','payload',footer),
+warning=make('div','warning',root);
+root.dataset.combatVitals='';
+root.hidden=true;
+warning.setAttribute('role','status');
+warning.setAttribute('aria-live','polite');
+warning.setAttribute('aria-atomic','true');
+warning.hidden=true;
+let disposed=false;
+const fillMeter=(view,value,max,label,description)=>{
+const fraction=Math.max(0,Math.min(1,max>0?value/max:0));
+if(view.fillRatio!==fraction){
+view.fillRatio=fraction;
+view.fill.style.transform=`scaleX(${fraction})`;
+}
+attribute(view.meter,'aria-label',label);
+attribute(view.meter,'aria-valuemax',max);
+attribute(view.meter,'aria-valuenow',value);
+attribute(view.meter,'aria-valuetext',description);
+},
+finite=(value,fallback=0)=>(Number.isFinite(value)?value:fallback),
+seconds=(ticks)=>(Math.ceil(Math.max(0,ticks)/5)/10).toFixed(1);
+function update({
+state,
+definition={},
+preferences={},
+locale='en',
+visible=true,
+}={}){
+if(disposed)return;
+const c=state?.encounter,
+t=(en,uk)=>(locale==='uk'?uk:en),
+shown=Boolean(visible&&preferences.vitals!==false&&c);
+if(!shown){
+hidden(root,true);
+hidden(warning,true);
+text(warning,'');
+return;
+}
+attribute(root,'aria-label',t('Vitals','Стан'));
+const maxHealth=Math.max(1,finite(c.maxHealth,100)),
+health=Math.max(0,Math.min(maxHealth,finite(c.health))),
+ratio=health/maxHealth,
+showHealth=
+preferences.playerHealth!=='off'&&
+(preferences.playerHealth!=='damaged'||health<maxHealth),
+hullTone=
+health<=0
+?'destroyed'
+:definition.playerDamage==='invulnerable'
+?'invulnerable'
+:ratio<=0.15
+?'critical'
+:ratio<=0.35
+?'low'
+:health<maxHealth
+?'damaged'
+:'healthy',
+hullStatus={
+healthy:t('Healthy','Цілий'),
+damaged:t('Damaged','Пошкоджено'),
+low:t('LOW HULL','МАЛО МІЦНОСТІ'),
+critical:t('CRITICAL','КРИТИЧНО'),
+destroyed:t('Destroyed','Знищено'),
+invulnerable:t('Invulnerable','Невразливість'),
+}[hullTone];
+hidden(hull.node,!showHealth);
+attribute(root,'data-health-hidden',!showHealth);
+attribute(hull.node,'data-tone',hullTone);
+text(hull.label,t('Health','Здоров’я'));
+text(hull.value,String(Math.ceil(health)));
+text(hull.max,`/ ${maxHealth}`);
+text(hull.status,hullStatus);
+fillMeter(
+hull,
+health,
+maxHealth,
+t('Health','Здоров’я'),
+`${Math.ceil(health)} / ${maxHealth} · ${hullStatus}`,
+);
+const weapon=c.weapons?.[c.weaponIndex??0],
+rule=weaponRules[weapon?.id],
+showAmmo=Boolean(weapon&&rule),
+waiting=Boolean(c.outsideArea||c.geometryWaiting),
+magazine=Math.max(1,finite(rule?.magazine,1)),
+rounds=Math.max(0,Math.min(magazine,finite(weapon?.ammo))),
+released=Math.max(0,finite(c.fireReleasedTicks)),
+arcade=definition.ammoPreset==='arcade',
+refillTicks=weapon?.id==='rocket'?250:150,
+reloadTicks=Math.max(0,finite(weapon?.reloadTicks)),
+rechargeTicks=
+arcade&&rounds<magazine&&released>0
+?Math.max(0,refillTicks-released)
+:Infinity,
+recharging=
+(released>=50||reloadTicks>0)&&rechargeTicks<(reloadTicks||Infinity),
+ammoTone=
+health<=0
+?'destroyed'
+:waiting
+?'waiting'
+:recharging
+?'recharging'
+:reloadTicks>0
+?'reloading'
+:rounds===0
+?'empty'
+:rounds/magazine<=0.25
+?'low'
+:'ready',
+weaponName=
+(labels[weapon?.id]??[t('Weapon','Зброя')])[locale==='uk'?1:0]??
+t('Weapon','Зброя'),
+pauseSuffix=
+state.status!=='active'
+?` · ${t('Paused','Пауза')}`
+:waiting
+?` · ${t('Waiting','Очікування')}`
+:'';
+hidden(ammo.node,!showAmmo);
+attribute(root,'data-ammo-hidden',!showAmmo);
+hidden(root,!showHealth&& !showAmmo);
+if(root.hidden){
+hidden(warning,true);
+text(warning,'');
+return;
+}
+attribute(ammo.node,'data-tone',ammoTone);
+text(ammo.label,`${t('Gun','Зброя')} · ${weaponName}`);
+text(ammo.value,String(rounds));
+text(ammo.max,`/ ${magazine}`);
+let ammoStatus={
+destroyed:
+c.phase==='aftermath'
+?t('Ordnance resolving','Очікування влучання')
+:t('Weapons offline','Зброю вимкнено'),
+reloading:`${t('RELOADING','ПЕРЕЗАРЯДЖЕННЯ')} ${seconds(reloadTicks)} s${pauseSuffix}`,
+recharging:`${t('RECHARGING','ПОПОВНЕННЯ')} ${seconds(rechargeTicks)} s${pauseSuffix}`,
+empty:t('EMPTY','ПОРОЖНЬО'),
+low:t('LOW AMMO','МАЛО НАБОЇВ'),
+ready:t('Ready','Готово'),
+}[ammoTone];
+if(waiting&&health>0)
+ammoStatus=c.outsideArea
+?t('Return to resume combat','Поверніться, щоб продовжити бій')
+:t('Loading combat terrain','Завантаження місцевості для бою');
+else if(health>0&&arcade&&rounds<magazine&&released<50&& !reloadTicks)
+ammoStatus+=` · ${t('Release Fire to recharge','Відпустіть вогонь: поповнення')}`;
+const supplyHelp=
+c.servicePad||definition.ammoPreset==='tactical'
+?t('Find a service pad','Знайдіть майданчик поповнення')
+:t('Collect supplies','Зберіть припаси');
+if(
+health>0&&
+!waiting&&
+!arcade&&
+rounds===0&&
+!reloadTicks&&
+weapon?.reserve===0
+)
+ammoStatus+=` · ${supplyHelp}`;
+text(ammo.status,ammoStatus);
+const progressTotal=
+ammoTone==='recharging'
+?refillTicks
+:ammoTone==='reloading'
+?Math.max(1,finite(weapon?.reloadTotal,rule?.reload??1))
+:0,
+progressRemaining=ammoTone==='recharging'?rechargeTicks:reloadTicks;
+fillMeter(
+ammo,
+progressTotal?Math.max(0,progressTotal-progressRemaining):rounds,
+progressTotal||magazine,
+progressTotal
+?ammoTone==='recharging'
+?t('Recharge progress','Перебіг поповнення')
+:t('Reload progress','Перебіг перезарядження')
+:`${weaponName} · ${t('Magazine','Магазин')}`,
+`${rounds} / ${magazine} · ${ammoStatus}`,
+);
+const reserveCount=
+weapon?.id!=='rocket'&&weapon?.reserve<0
+?'∞'
+:String(Math.max(0,finite(weapon?.reserve)));
+text(reserve,`${t('Reserve','Запас')} ${reserveCount}`);
+const payloadName=
+{
+bomb:t('Bomb','Бомба'),
+remote:t('Remote charge','Дистанційний заряд'),
+drone:t('Drone charge','Заряд дрона'),
+}[definition.payload]??t('Payload','Заряд'),
+capacity=
+definition.ammoPreset==='tactical'
+?1
+:({bomb:3,remote:2,drone:1}[definition.payload]??0),
+payloadCount=Math.max(0,finite(c.payloadAmmo)),
+deployed=c.ordnance?.filter((item)=>item.kind===definition.payload)??[],
+payloadState=c.payloadArmed
+?t('ARMED','ОЗБРОЄНО')
+:deployed.some((item)=>item.kind==='remote'&&item.settled)
+?t('Ready to detonate','Готовий до підриву')
+:deployed.length
+?t('In flight','У польоті')
+:payloadCount===0&& !arcade
+?t('Empty','Порожньо')
+:'';
+let payloadText=`${t('Payload','Заряд')} · ${payloadName} ×${payloadCount}${payloadState?` · ${payloadState}`:''}`;
+if(health>0&& !arcade&& !payloadCount&& !c.payloadArmed&& !deployed.length)
+payloadText+=` · ${supplyHelp}`;
+if(health>0&&arcade&&payloadCount<capacity)
+payloadText+=
+released<50
+?` · ${t('Release Fire to refill','Відпустіть вогонь: поповнення')}`
+:` · ${t('Refill','Поповнення')} ${seconds(550-released)} s${pauseSuffix}`;
+text(payload,payloadText);
+attribute(
+payload,
+'data-state',
+c.payloadArmed?'armed':deployed.length?'deployed':'ready',
+);
+const hullWarning=showHealth&&['critical','destroyed'].includes(hullTone),
+emptyWarning=showAmmo&&ammoTone==='empty',
+lowHull=showHealth&&hullTone==='low',
+warningText=hullWarning
+?hullStatus
+:emptyWarning
+?arcade
+?t('EMPTY · Release Fire','ПОРОЖНЬО · Відпустіть вогонь')
+:weapon.reserve===0
+?`${t('EMPTY','ПОРОЖНЬО')} · ${supplyHelp}`
+:t('EMPTY · Reload','ПОРОЖНЬО · Перезарядіть')
+:lowHull
+?hullStatus
+:'';
+hidden(warning,!warningText||state.status!=='active'||waiting);
+attribute(warning,'data-tone',hullWarning?hullTone:emptyWarning?'empty':'low');
+text(warning,warning.hidden?'':warningText);
+}
+return{
+root,
+update,
+dispose(){
+disposed=true;
+root.remove();
+},
+};
+}
+
+return{
+ENCOUNTER_PREFERENCES_KEY:ENCOUNTER_PREFERENCES_KEY,
+ENCOUNTER_ACTIVITIES:ENCOUNTER_ACTIVITIES,
+createEncounterPreferences:createEncounterPreferences,
+encounterActivityLabel:encounterActivityLabel,
+mountEncounterControls:mountEncounterControls,
+mountCombatVitals:mountCombatVitals,
+};
+})();
+modules['optional-practice/civilian-fpv/combat-presentation.mjs']=(()=>{
+const ACTOR_FAMILIES=external9['ACTOR_FAMILIES'];
+const actorVisual=external9['actorVisual'];
+const INDUSTRIAL_SOLDIER_KITS=external23['INDUSTRIAL_SOLDIER_KITS'];
+const HUNT_PRESENTATION_CATALOG=external24['HUNT_PRESENTATION_CATALOG'];
+const createDestructionPreferences=external14['createDestructionPreferences'];
+const sharedActorAppearance=external14['sharedActorAppearance'];
+const createEncounterDisplayPreferences=external25['createEncounterDisplayPreferences'];
+
+/** Cosmetic limits never cap accepted hits, rewards, or the living population. */
+const COMBAT_EFFECT_LIMITS=Object.freeze({
+capacity:1024,
+low:Object.freeze({
+bursts:4,
+moving:128,
+settled:256,
+marks:32,
+calls:16,
+triangles:0,
+}),
+high:Object.freeze({
+bursts:6,
+moving:256,
+settled:768,
+marks:96,
+calls:24,
+triangles:600000,
+}),
+ultra:Object.freeze({
+bursts:8,
+moving:512,
+settled:1536,
+marks:192,
+calls:40,
+triangles:1200000,
+}),
+});
+const COMBAT_PRESENTATION_KEY='revealline.sim.combat-presentation.v1';
+const FORMAT='FpvCombatPresentationV2';
+const LEGACY_FORMAT='FpvCombatPresentationV1';
+const families=new Set(ACTOR_FAMILIES.map(({id})=>id));
+const materials=new Set([
+'organic',
+'metal',
+'wood',
+'electronic',
+'glass',
+'stone',
+'earth',
+'concrete',
+]);
+const bodyRegions=['head','torso','leftArm','rightArm','leftLeg','rightLeg'];
+const axes=['x','y','z'];
+const clamp=(value,low,high)=>Math.max(low,Math.min(high,value));
+const vector=(value,limit=100000000)=>
+value&&axes.every((key)=>Number.isFinite(value[key])&&Math.abs(value[key])<=limit);
+const copyVector=(value)=>Object.fromEntries(axes.map((key)=>[key,value[key]]));
+const normalOf=(value)=>{
+if(!vector(value))return{x:0,y:1,z:0};
+const length=Math.hypot(value.x,value.y,value.z);
+return length>0
+?Object.fromEntries(axes.map((key)=>[key,value[key]/length]))
+:{x:0,y:1,z:0};
+};
+const hash=(text)=>{
+let n=2166136261;
+for(const char of String(text))n=Math.imul(n^char.charCodeAt(0),16777619);
+return n>>>0;
+};
+const random=(seed,salt)=>{
+let n=(seed^Math.imul(salt+1,2246822519))>>>0;
+n^=n>>>16;
+n=Math.imul(n,3266489917);
+n^=n>>>13;
+return(n>>>0)/4294967296;
+};
+// Accepted damage stays unchanged. These are presentation-only force/readability choices.
+const breakupOutcome=(record,brutal)=>
+brutal&& !record.protected&&record.outcome==='localized'?'breakup':record.outcome;
+const impactStrength=(record)=>
+clamp(
+Math.max(
+0.65+Math.sqrt(record.severity??0.25)*0.65,
+Math.hypot(record.velocity.x,record.velocity.y,record.velocity.z)/18000,
+record.outcome==='explosive'?1.9:0,
+),
+0.65,
+2.6,
+);
+const identifier=(value)=>
+typeof value==='string'&&value.length>0&&value.length<=256;
+const surfaceOf=(value)=>
+value&&vector(value.position)&&vector(value.normal)
+?{
+position:copyVector(value.position),
+normal:normalOf(value.normal),
+...(identifier(value.surfaceId)?{surfaceId:value.surfaceId}:{}),
+...(vector(value.localPosition)
+?{localPosition:copyVector(value.localPosition)}
+:{}),
+}
+:null;
+// Physics collider/chunk IDs and renderer mesh IDs use different namespaces.
+// Preserve accepted contacts, and bind presentation only to their actual surface.
+const sameContact=(accepted,rendered)=>
+rendered&&
+Math.hypot(...axes.map((axis)=>rendered.position[axis]-accepted.position[axis]))<50&&
+axes.reduce((sum,axis)=>sum+rendered.normal[axis]*accepted.normal[axis],0)>0.98;
+
+/** Separate storage keeps older strict shared destruction records compatible. */
+function createCombatPresentationPreferences({window:win=globalThis,storage}={}){
+let store=storage;
+try{
+store??=win.localStorage;
+}catch{
+/* Session choice remains available. */
+}
+let value={detail:'auto',artStyle:'current',durable:true};
+const listeners=new Set();
+const valid=(next)=>
+next&&['auto','high','ultra'].includes(next.detail)&&next.artStyle==='current';
+const read=()=>{
+try{
+const raw=store?.getItem(COMBAT_PRESENTATION_KEY);
+if(!raw)return;
+if(raw.length>512)throw new Error('Oversized combat preferences');
+const next=JSON.parse(raw);
+if(next.format!=='FpvCombatPreferencesV1'|| !valid(next))
+throw new Error('Unsupported combat preferences');
+value={detail:next.detail,artStyle:next.artStyle,durable:true};
+}catch{
+value={...value,durable:false};
+}
+};
+read();
+const notify=()=>listeners.forEach((listener)=>listener({...value}));
+const changed=(event)=>{
+if(event.key!==COMBAT_PRESENTATION_KEY)return;
+read();
+notify();
+};
+win.addEventListener?.('storage',changed);
+return{
+snapshot:()=>({...value}),
+set(patch){
+const next={...value,...patch};
+if(!valid(next)||Object.keys(patch).some((key)=> !['detail','artStyle'].includes(key)))
+throw new TypeError('Unsupported combat presentation choice');
+value={detail:next.detail,artStyle:next.artStyle,durable:false};
+try{
+const raw=JSON.stringify({
+format:'FpvCombatPreferencesV1',
+detail:value.detail,
+artStyle:value.artStyle,
+});
+if(!store)throw new Error('Storage unavailable');
+store.setItem(COMBAT_PRESENTATION_KEY,raw);
+value.durable=store.getItem(COMBAT_PRESENTATION_KEY)===raw;
+}catch{
+/* Keep the requested setting for this session. */
+}
+notify();
+return{...value};
+},
+subscribe(listener){
+listeners.add(listener);
+listener({...value});
+return()=>listeners.delete(listener);
+},
+dispose(){
+listeners.clear();
+win.removeEventListener?.('storage',changed);
+},
+};
+}
+
+function normalizeCombatDefeat(fact,query=null){
+if(
+!fact||
+fact.type!=='defeat'||
+!identifier(fact.eventId)||
+!identifier(fact.sourceId)||
+!vector(fact.position)||
+!Number.isSafeInteger(fact.tick)||
+fact.tick<0
+)
+throw new TypeError('Invalid accepted combat defeat');
+const family=families.has(fact.appearance?.family)?fact.appearance.family:'patroller';
+const preferredCast=sharedActorAppearance().snapshot().cast;
+const cast=['rivals','tactical','arcade'].includes(fact.appearance?.cast)
+?fact.appearance.cast
+:['rivals','tactical','arcade'].includes(preferredCast)
+?preferredCast
+:'rivals';
+let surface=surfaceOf(fact.surface);
+if(!surface&&query){
+try{
+surface=surfaceOf(query(copyVector(fact.position),normalOf(fact.normal)));
+}catch{
+/* Unknown resident geometry cannot receive a mark. */
+}
+}
+let renderSurface=surfaceOf(fact.renderSurface);
+if(!renderSurface&&surface&&query){
+try{
+const candidate=surfaceOf(query(surface.position,surface.normal));
+if(sameContact(surface,candidate))renderSurface=candidate;
+}catch{
+/* Resolve the exact contact when its streamed geometry becomes available. */
+}
+}
+return{
+eventId:fact.eventId,
+sourceId:fact.sourceId,
+spawnId:typeof fact.spawnId==='string'?fact.spawnId.slice(0,256):fact.eventId,
+tick:fact.tick,
+position:copyVector(fact.position),
+...(vector(fact.impactPosition)?{impactPosition:copyVector(fact.impactPosition)}:{}),
+normal:normalOf(fact.normal),
+...(vector(fact.impactDirection)?{impactDirection:normalOf(fact.impactDirection)}:{}),
+velocity:vector(fact.velocity,1000000)?copyVector(fact.velocity):{x:0,y:0,z:0},
+material:materials.has(fact.material)?fact.material:'metal',
+appearance:{
+family,
+cast,
+type:String(fact.appearance?.type??'').slice(0,64),
+model:String(fact.appearance?.model??fact.vehicleModel??'').slice(0,64),
+archetype:String(fact.appearance?.archetype??'').slice(0,64),
+},
+radius:clamp(
+Number.isFinite(fact.radius)?fact.radius:fact.material==='organic'?350:700,
+100,
+3000,
+),
+height:clamp(
+Number.isFinite(fact.height)?fact.height:fact.material==='organic'?1800:900,
+100,
+6000,
+),
+seed:Number.isSafeInteger(fact.seed)?fact.seed>>>0:hash(fact.eventId),
+weapon:String(fact.weapon??fact.cause??'pulse').slice(0,64),
+cause:String(fact.cause??'pulse').slice(0,64),
+severity:clamp(
+Number.isFinite(fact.severity)
+?fact.severity
+:({explosive:1.6,high:0.8,localized:0.25}[fact.severity]??
+(fact.damage??25)/100),
+0,
+4,
+),
+damage:clamp(Number.isFinite(fact.damage)?fact.damage:25,0,10000),
+componentMask:Number.isSafeInteger(fact.componentMask)?fact.componentMask:0,
+protected:fact.protected===true,
+outcome:['intact','localized','breakup','explosive'].includes(fact.outcome)
+?fact.outcome
+:fact.severity==='explosive'||
+/rocket|bomb|charge|explosion/.test(fact.weapon??fact.cause??'')
+?'explosive'
+:fact.severity==='high'||fact.severity>0.6||fact.cause==='impact'
+?'breakup'
+:'localized',
+presentation:normalizeFragmentArchive(fact.presentation),
+surface,
+renderSurface,
+};
+}
+
+const canonicalRegion=(name)=>
+({
+torso:'chest',
+leftArm:'leftUpperArm',
+rightArm:'rightUpperArm',
+leftLeg:'leftThigh',
+rightLeg:'rightThigh',
+})[name]??name;
+const roundCosmetic=(value,precision=3)=>Number(value.toFixed(precision));
+function compactFragmentArchive(value){
+if(!value)return value;
+const compactSurface=(surface)=>
+surface&&{
+...surface,
+position:Object.fromEntries(
+axes.map((axis)=>[axis,roundCosmetic(surface.position[axis],1)]),
+),
+normal:Object.fromEntries(
+axes.map((axis)=>[axis,roundCosmetic(surface.normal[axis],5)]),
+),
+...(surface.localPosition
+?{
+localPosition:Object.fromEntries(
+axes.map((axis)=>[axis,roundCosmetic(surface.localPosition[axis],4)]),
+),
+}
+:{}),
+};
+return{
+born:roundCosmetic(value.born,4),
+pieces:Object.fromEntries(
+Object.entries(value.pieces).map(([key,piece])=>[
+canonicalRegion(key),
+{
+...piece,
+at:piece.at.map((value)=>roundCosmetic(value)),
+rotation:piece.rotation.map((value)=>roundCosmetic(value,5)),
+velocity:piece.velocity.map((value)=>roundCosmetic(value,4)),
+time:roundCosmetic(piece.time,4),
+surface:compactSurface(piece.surface),
+},
+]),
+),
+};
+}
+
+/** Cosmetic failure must never invalidate accepted combat state. Coordinates are metres. */
+function normalizeFragmentArchive(value){
+if(
+!value||
+!Number.isFinite(value.born)||
+value.born<0||
+!value.pieces||
+typeof value.pieces!=='object'||
+Array.isArray(value.pieces)||
+Object.keys(value.pieces).length>128
+)
+return null;
+const pieces={};
+for(const[key,piece]of Object.entries(value.pieces)){
+if(
+!identifier(key)||
+!piece||
+!Array.isArray(piece.at)||
+!Array.isArray(piece.rotation)||
+!Array.isArray(piece.velocity)||
+[piece.at,piece.rotation,piece.velocity].some(
+(a)=>a.length!==3||a.some((n)=> !Number.isFinite(n)||Math.abs(n)>1e8),
+)||
+!Number.isFinite(piece.time)||
+piece.time<0
+)
+return null;
+pieces[canonicalRegion(key)]={
+at:[...piece.at],
+rotation:[...piece.rotation],
+velocity:[...piece.velocity],
+time:piece.time,
+settled:piece.settled===true,
+pending:piece.pending===true,
+surface:surfaceOf(piece.surface),
+};
+}
+return{born:value.born,pieces};
+}
+
+/** Bounded, exportable world-space records. No physics state or engine object is retained. */
+function createCombatRemainsLedger(){
+let runId='',
+revision=0,
+tick=0,
+records=[],
+impactRecords=[],
+seen=new Set(),
+evicted=0;
+const reset=(id='')=>{
+revision++;
+runId=id;
+tick=0;
+records=[];
+impactRecords=[];
+seen.clear();
+evicted=0;
+};
+return{
+reset,
+add(facts,options={}){
+if(options.runId!==undefined&&options.runId!==runId)reset(String(options.runId));
+tick=Math.max(tick,options.tick??0);
+const fresh=[];
+for(const fact of(facts??[]).slice(-1024)){
+if(!['defeat','surface-impact'].includes(fact?.type)||seen.has(fact.eventId))
+continue;
+const isImpact=fact.type==='surface-impact';
+const next=normalizeCombatDefeat(
+{
+...fact,
+type:'defeat',
+sourceId:isImpact
+?String(fact.sourceId??'surface').slice(0,256)||'surface'
+:fact.sourceId,
+},
+options.groundQuery,
+);
+next.kind=isImpact?'surface-impact':'defeat';
+const collection=isImpact?impactRecords:records;
+tick=Math.max(tick,next.tick);
+collection.push(next);
+revision++;
+seen.add(next.eventId);
+fresh.push(next);
+if(collection.length>COMBAT_EFFECT_LIMITS.capacity){
+const old=collection.shift();
+seen.delete(old.eventId);
+evicted++;
+}
+}
+return fresh;
+},
+records:()=>records,
+impacts:()=>impactRecords,
+revision:()=>revision,
+export:()=>structuredClone({format:FORMAT,runId,tick,records,impactRecords}),
+restore(input,options={}){
+const source=Array.isArray(input)
+?{format:FORMAT,runId:options.runId??'',tick:options.tick??0,records:input}
+:input;
+if(
+!source||
+![FORMAT,LEGACY_FORMAT].includes(source.format)||
+typeof source.runId!=='string'||
+source.runId.length>256||
+!Number.isSafeInteger(source.tick)||
+source.tick<0||
+!Array.isArray(source.records)||
+source.records.length>1024||
+(source.impactRecords!==undefined&&
+(!Array.isArray(source.impactRecords)||source.impactRecords.length>1024))||
+(options.runId!==undefined&&source.runId!==options.runId)
+)
+throw new TypeError('Invalid combat presentation archive');
+const next=source.records.map((record)=>({
+// Reconstruction resolves support lazily within the shared frame budget.
+...normalizeCombatDefeat({...record,type:'defeat'}),
+kind:'defeat',
+}));
+const nextImpacts=(source.impactRecords??[]).map((record)=>({
+...normalizeCombatDefeat({...record,type:'defeat'}),
+kind:'surface-impact',
+}));
+const all=[...next,...nextImpacts];
+if(new Set(all.map((record)=>record.eventId)).size!==all.length)
+throw new TypeError('Duplicate combat presentation records');
+if(all.some((record)=>record.tick>source.tick))
+throw new TypeError('Combat remains exceed the restored tick');
+reset(source.runId);
+tick=source.tick;
+records=next;
+impactRecords=nextImpacts;
+seen=new Set(all.map((record)=>record.eventId));
+},
+snapshot:()=>({
+runId,
+tick,
+stored:records.length,
+storedImpacts:impactRecords.length,
+capacity:1024,
+impactCapacity:1024,
+evicted,
+}),
+};
+}
+
+// Convert a child's local support box into its parent's axes using the same
+// XYZ Euler convention as the renderer. The resulting box is conservative for
+// layered tissue, diagonal straps and fingers as their connected root settles.
+function rotatedSupportSize(part){
+const[x,y,z]=part.rotation??[0,0,0];
+const[sx,sy,sz]=part.supportSize??part.size;
+const a=Math.cos(x),
+b=Math.sin(x),
+c=Math.cos(y),
+d=Math.sin(y),
+e=Math.cos(z),
+f=Math.sin(z);
+return[
+Math.abs(c*e)*sx+Math.abs(c*f)*sy+Math.abs(d)*sz,
+Math.abs(a*f+b*e*d)*sx+Math.abs(a*e-b*f*d)*sy+Math.abs(b*c)*sz,
+Math.abs(b*f-a*e*d)*sx+Math.abs(b*e+a*f*d)*sy+Math.abs(a*c)*sz,
+];
+}
+
+/** A recipe uses common primitives so every family/cast fits a small set of GPU batches. */
+function combatFragmentRecipe(record,{brutal=false,blood=true,detail='high'}={}){
+const parts=[],
+organic=record.material==='organic',
+bloody=organic&&blood&& !record.protected,
+outcome=breakupOutcome(record,brutal),
+dismember=organic&&brutal&& !record.protected&&outcome!=='intact';
+const palette=actorVisual(record.appearance.family,record.appearance.cast).palette;
+const add=(shape,size,tint,at=[0,0,0],rotation=[0,0,0],attachment= -1)=>{
+parts.push({shape,size,tint,at,rotation,attachment});
+return parts.length-1;
+};
+if(organic){
+const roots=new Map();
+const severe=['breakup','explosive'].includes(outcome);
+const hitSide=random(record.seed,102)<0.5?'left':'right';
+const fine=detail!=='low';
+const ornament=(root,shape,size,tint,at,rotation=[0,0,0],optional=true)=>{
+const index=add(shape,size,tint,at,rotation,root);
+parts[index].region=parts[root].region;
+parts[index].optionalDetail=optional;
+return index;
+};
+const region=(name,shape,size,tint,at,parent='chest')=>{
+const detached=
+dismember&&
+(outcome==='explosive'||
+(severe&& !['chest','abdomen','pelvis'].includes(name))||
+name===`${hitSide}Forearm`);
+const anchor=roots.get(parent);
+const local=
+anchor!==undefined&& !detached
+?at.map((n,axis)=>n-parts[anchor].bodyAt[axis])
+:at;
+const index=add(
+shape,
+size,
+tint,
+local,
+[0,0,0],
+anchor!==undefined&& !detached?anchor:-1,
+);
+parts[index].region=name;
+parts[index].bodyAt=at;
+parts[index].authored=true;
+roots.set(name,index);
+if(detached&&bloody){
+// The neck opens below the head; limb cuts open at their proximal joint.
+// Every layer follows that persistent body region, including after restore.
+const sign=name==='head'? -1:1;
+const end=sign*(size[1]/2+0.003);
+ornament(
+index,
+'wound',
+[size[0]*0.94,0.038,size[2]*0.94],
+'#421019',
+[0,end,0],
+[0,0,0],
+false,
+);
+ornament(index,'wound',[size[0]*0.74,0.047,size[2]*0.72],'#a82436',[
+0,
+end+sign*0.012,
+0,
+]);
+const paired= /Forearm|Shin/.test(name),
+core= /chest|abdomen|pelvis/.test(name);
+const width=core?0.045:name==='head'?0.035:0.026;
+for(const side of paired?[-1,1]:[0])
+ornament(
+index,
+'bone',
+[width,core?0.075:0.055,width],
+'#dfd0ab',
+[side*size[0]*0.18,end+sign*0.034,0],
+[0.08*side,0,-0.1*side],
+false,
+);
+if(fine)
+for(let fold=0;fold<(detail==='ultra'?4:2);fold++){
+const angle=random(record.seed,120+index*3+fold)*Math.PI*2;
+ornament(
+index,
+'wound',
+[size[0]*0.22,0.07,size[2]*0.2],
+fold%2?'#741b30':'#c24b4d',
+[
+Math.cos(angle)*size[0]*0.26,
+end+sign*0.016,
+Math.sin(angle)*size[2]*0.25,
+],
+[0.12,angle,0.14],
+);
+}
+if(fine&&core)
+for(const side of[-1,1])
+for(let rib=0;rib<3;rib++)
+ornament(
+index,
+'bone',
+[0.024,size[0]*0.4,0.023],
+'#bfa98e',
+[side*size[0]*0.22,end+sign*0.025,(rib-1)*size[2]*0.19],
+[0.2,0.1*rib,side*1.05],
+);
+}
+return index;
+};
+const torso=region('chest','round',[0.4,0.37,0.27],palette.coat,[0,0.16,0],null);
+const abdomen=region('abdomen','round',[0.32,0.22,0.24],palette.coat,[0,-0.1,0]);
+const pelvis=region(
+'pelvis',
+'round',
+[0.35,0.19,0.26],
+palette.pants,
+[0,-0.28,0],
+'abdomen',
+);
+ornament(
+torso,
+'cloth',
+[0.31,0.31,0.065],
+palette.dark,
+[0,0.005,-0.115],
+[0,0,0],
+false,
+);
+ornament(torso,'cloth',[0.27,0.25,0.025],palette.coat,[0,0.015,-0.16]);
+ornament(
+abdomen,
+'cloth',
+[0.33,0.035,0.25],
+palette.dark,
+[0,-0.045,0],
+[0,0,0],
+false,
+);
+ornament(pelvis,'metal',[0.045,0.035,0.02],'#939b87',[0,0.072,-0.137]);
+for(const side of[-1,1]){
+ornament(
+torso,
+'cloth',
+[0.045,0.36,0.04],
+palette.dark,
+[side*0.135,0.015,-0.14],
+[0,0,side*0.1],
+);
+ornament(
+torso,
+'cloth',
+[0.105,0.12,0.06],
+palette.coat,
+[side*0.077,-0.055,-0.183],
+[0,0,0],
+false,
+);
+ornament(torso,'cloth',[0.086,0.018,0.065],palette.dark,[
+side*0.077,
+0.002,
+-0.184,
+]);
+}
+const head=region('head','round',[0.23,0.285,0.24],palette.skin,[0,0.48,0]);
+ornament(
+head,
+'round',
+[0.27,0.18,0.285],
+palette.coat,
+[0,0.09,0.012],
+[0,0,0],
+false,
+);
+ornament(
+head,
+'cloth',
+[0.18,0.047,0.03],
+palette.dark,
+[0,0.012,-0.117],
+[0,0,0],
+false,
+);
+ornament(head,'round',[0.04,0.065,0.065],palette.skin,[0,-0.025,-0.119]);
+for(const side of[-1,1]){
+ornament(head,'round',[0.04,0.075,0.06],palette.skin,[side*0.108,-0.005,0]);
+if(fine)
+ornament(
+head,
+'cloth',
+[0.016,0.135,0.025],
+palette.dark,
+[side*0.09,-0.047,-0.073],
+[0.1,0,side*0.2],
+);
+const prefix=side<0?'left':'right';
+const upper=region(`${prefix}UpperArm`,'limb',[0.155,0.28,0.17],palette.coat,[
+side*0.27,
+0.105,
+0,
+]);
+ornament(upper,'cloth',[0.11,0.095,0.035],palette.dark,[0,-0.09,-0.072]);
+const arm=region(
+`${prefix}Forearm`,
+'limb',
+[0.13,0.24,0.15],
+palette.coat,
+[side*0.29,-0.16,-0.035],
+`${prefix}UpperArm`,
+);
+ornament(arm,'limb',[0.14,0.045,0.155],palette.dark,[0,-0.105,0]);
+const glove=palette.glove??palette.dark;
+ornament(arm,'round',[0.1,0.115,0.065],glove,[0,-0.175,-0.008],[0,0,0],false);
+ornament(
+arm,
+'limb',
+[0.034,0.067,0.038],
+glove,
+[side*0.052,-0.18,-0.015],
+[0,0,side*0.55],
+);
+if(fine)
+for(let finger=0;finger<4;finger++)
+ornament(
+arm,
+'limb',
+[0.021,0.065-Math.abs(finger-1.5)*0.009,0.024],
+glove,
+[(finger-1.5)*0.024,-0.238,-0.008],
+[0.12,0,(finger-1.5)*0.035],
+);
+const thigh=region(
+`${prefix}Thigh`,
+'limb',
+[0.19,0.32,0.205],
+palette.pants,
+[side*0.12,-0.51,0],
+'pelvis',
+);
+ornament(thigh,'cloth',[0.065,0.15,0.11],palette.coat,[side*0.085,-0.005,0.005]);
+const leg=region(
+`${prefix}Shin`,
+'limb',
+[0.155,0.3,0.175],
+palette.pants,
+[side*0.13,-0.83,0],
+`${prefix}Thigh`,
+);
+ornament(
+leg,
+'round',
+[0.145,0.12,0.065],
+palette.dark,
+[0,0.12,-0.078],
+[0,0,0],
+false,
+);
+ornament(
+leg,
+'limb',
+[0.16,0.15,0.18],
+palette.dark,
+[0,-0.135,-0.005],
+[0,0,0],
+false,
+);
+ornament(
+leg,
+'round',
+[0.17,0.12,0.3],
+palette.dark,
+[0,-0.19,-0.075],
+[0,0,0],
+false,
+);
+ornament(leg,'cloth',[0.175,0.035,0.3],'#252b26',[0,-0.24,-0.075]);
+if(fine)
+for(const lace of[-1,1])
+ornament(
+leg,
+'cloth',
+[0.105,0.012,0.018],
+palette.coat,
+[0,-0.14+lace*0.023,-0.143],
+[0,lace*0.14,0],
+);
+}
+const kit=INDUSTRIAL_SOLDIER_KITS[record.appearance.family];
+const kitRoot=add(
+'cloth',
+[kit.size[0]*0.026,0.045,kit.size[1]*0.026],
+palette.dark,
+[0,0.01,0.14],
+[0,0,0],
+torso,
+);
+for(const[role,x,y,width,height]of kit.rectangles)
+add(
+'cloth',
+[width*0.026,0.02,height*0.026],
+palette[role]??role,
+[
+(x+width/2-kit.size[0]/2)*0.026,
+0.035,
+(y+height/2-kit.size[1]/2)*0.026,
+],
+[0,0,0],
+kitRoot,
+);
+// Keep a complete body/kit first, then a bounded selection of finer layers.
+// Optional ornaments attach directly to non-optional roots, so trimming does
+// not orphan a finger, fabric seam or tissue layer during admission.
+const optionalLimit=Math.max(0,140-parts.filter((part)=> !part.optionalDetail).length);
+let keptOptional=0;
+const retained=parts
+.map((part,index)=>({...part,oldIndex:index}))
+.filter((part)=> !part.optionalDetail||keptOptional++ <optionalLimit);
+const remap=new Map(retained.map((part,index)=>[part.oldIndex,index]));
+for(const part of retained)part.attachment=remap.get(part.attachment)?? -1;
+parts.splice(0,parts.length,...retained);
+for(const part of parts)part.ownSupportSize=[...(part.supportSize??part.size)];
+// Include clothing and equipment before deriving each connected root's support bounds.
+for(let i=parts.length-1;i>=0;i--){
+const part=parts[i];
+part.supportSize??=[...part.size];
+if(part.attachment>=0){
+const parent=parts[part.attachment];
+parent.supportSize??=[...parent.size];
+const childSupport=rotatedSupportSize(part);
+for(let axis=0;axis<3;axis++)
+parent.supportSize[axis]=Math.max(
+parent.supportSize[axis],
+Math.abs(part.at[axis])*2+childSupport[axis],
+);
+}
+}
+}else{
+const colors=
+record.material==='wood'
+?['#785438','#ba9164','#473629']
+:record.material==='glass'
+?['#8fbcc6','#c4e2de','#dcebea']
+:['#5e7063','#a5b3ae','#263431'];
+const size=record.radius/700;
+const machine= !['wood','glass'].includes(record.material);
+const vehicle=record.appearance.type==='vehicle',
+drone=
+record.appearance.type==='drone'||
+record.appearance.type==='hazard'||
+/uav|drone/.test(record.appearance.archetype);
+const hull=add(
+machine?'metal':'cloth',
+[0.68*size,0.16*size,0.42*size],
+colors[0],
+);
+add(
+'metal',
+[0.43*size,0.045*size,0.2*size],
+colors[1],
+[0,0.1*size,0],
+[0,0,0],
+hull,
+);
+for(let i=0;i<(brutal?8:4);i++){
+const angle=i*2.39996;
+add(
+record.material==='glass'
+?'glass'
+:record.material==='wood'
+?'cloth'
+:vehicle&&i%3===0
+?'rubber'
+:'metal',
+[
+0.18*size,
+(record.material==='wood'?0.05:0.12)*size,
+(record.material==='wood'?0.52:0.22)*size,
+],
+colors[i%3],
+[Math.cos(angle)*0.5*size,0,Math.sin(angle)*0.5*size],
+);
+}
+if(vehicle){
+add('glass',[0.28*size,0.03,0.2*size],'#a2cbd1',[-0.2*size,0,-0.34*size]);
+if(record.appearance.model==='field-tank'){
+add('metal',[0.1*size,0.1*size,0.8*size],'#394f43',[
+0.25*size,
+0,
+-0.35*size,
+]);
+for(const side of[-1,1])
+add('cloth',[0.18*size,0.1*size,0.72*size],'#27342e',[
+side*0.5*size,
+0,
+0.2*size,
+]);
+}else if(record.appearance.model==='cargo-truck')
+add('cloth',[0.56*size,0.04,0.45*size],'#998367',[-0.4*size,0,0.5*size]);
+}
+if(drone)
+for(const side of[-1,1]){
+const arm=add('metal',[0.55*size,0.035,0.04],'#3d514b',[
+side*0.38*size,
+0,
+side*0.23*size,
+]);
+add('metal',[0.08,0.075,0.08],'#a0b5ae',[0.22*size,0.03,0],[0,0,0],arm);
+add(
+'cloth',
+[0.35*size,0.018,0.04],
+'#273a37',
+[0.22*size,0.08,0],
+[0,0,0],
+arm,
+);
+}
+if(
+/robot|tracked|explosive/.test(record.appearance.archetype)||
+record.appearance.type==='prop'
+)
+for(const side of[-1,1])
+add('rubber',[0.24*size,0.08*size,0.55*size],'#283330',[
+side*0.37*size,
+0.02,
+0.05,
+]);
+if(record.material==='electronic')
+add('metal',[0.18,0.025,0.3],'#315d47',[0.3,0,0.25]);
+}
+return parts;
+}
+
+/** Renderer-only motion and marks: accepted facts are immutable; the native clock owns age. */
+function createCombatPresentation({THREE,scene,preferences,groundQuery,detail='auto'}){
+const shared=preferences?null:createDestructionPreferences();
+const display=preferences?null:createEncounterDisplayPreferences();
+let getPreferences=
+preferences??
+(()=>({...shared.snapshot(),showRemains:display.snapshot().showRemains}));
+let query=groundQuery,
+choice=detail,
+currentTick=0,
+presentationClock=0,
+runId='',
+disposed=false;
+let previousTreatment=null,
+appearance=null,
+autoTier='high',
+slow=0,
+fast=0;
+const ledger=createCombatRemainsLedger(),
+bursts=new Map(),
+impacts=new Map(),
+recipes=new Map(),
+markSupports=new Map(),
+surfaceSupports=new Map(),
+restingBounds=new WeakMap(),
+pendingChecks=new Map();
+let orderRevision= -1,
+orderCamera=null;
+const orderedRings=new Map();
+const nearestRecords=(collection,cameraPosition,originMm)=>{
+const camera=cameraPosition
+?axes.map((axis)=>cameraPosition[axis]+originMm[axis]/1000)
+:null;
+if(
+orderRevision!==ledger.revision()||
+Boolean(camera)!==Boolean(orderCamera)||
+camera?.some((value,i)=>value!==orderCamera?.[i])
+){
+orderedRings.clear();
+orderRevision=ledger.revision();
+orderCamera=camera;
+}
+if(!orderedRings.has(collection)){
+// Record positions are immutable accepted facts. Measure each once when
+// the ring or world-space camera moves, rather than once per comparator.
+const measured=collection.map((record)=>({
+record,
+distance:camera
+?axes.reduce(
+(sum,axis,i)=>sum+(record.position[axis]/1000-camera[i])**2,
+0,
+)
+:0,
+}));
+measured.sort((a,b)=>a.distance-b.distance||b.record.tick-a.record.tick);
+orderedRings.set(
+collection,
+measured.map(({record})=>record),
+);
+}
+return orderedRings.get(collection);
+};
+const root=new THREE.Group();
+root.name='combat-presentation';
+scene.add(root);
+const pools=new Map(),
+pos=new THREE.Vector3(),
+scale=new THREE.Vector3(),
+quaternion=new THREE.Quaternion(),
+decalTurn=new THREE.Quaternion(),
+euler=new THREE.Euler(),
+matrix=new THREE.Matrix4(),
+color=new THREE.Color(),
+pieceOffset=new THREE.Vector3(),
+normal=new THREE.Vector3(),
+decalAxis=new THREE.Vector3(0,0,1);
+const capacity=2048;
+// One shared soft, irregular density texture; no downloaded/per-victim assets.
+const mistPixels=new Uint8Array(32*32*4);
+for(let y=0;y<32;y++)
+for(let x=0;x<32;x++){
+const u=(x-15.5)/15.5,
+v=(y-15.5)/15.5;
+const noise=
+0.7+Math.sin(u*13+Math.sin(v*9))*0.15+Math.cos(v*19-u*7)*0.15;
+const density=Math.max(0,1-Math.hypot(u,v))**1.25*noise;
+mistPixels.set([255,255,255,Math.round(density*255)],(y*32+x)*4);
+}
+const mistTexture=new THREE.DataTexture(mistPixels,32,32);
+mistTexture.magFilter=mistTexture.minFilter=THREE.LinearFilter;
+mistTexture.needsUpdate=true;
+const shapes={
+cloth:new THREE.BoxGeometry(1,1,1),
+round:new THREE.SphereGeometry(0.5,16,12),
+limb:new THREE.CylinderGeometry(0.39,0.46,1,12,4),
+wound:new THREE.IcosahedronGeometry(0.5,2),
+bone:new THREE.CylinderGeometry(0.4,0.32,1,10,3),
+metal:new THREE.BoxGeometry(1,1,1),
+rubber:new THREE.TorusGeometry(0.35,0.15,6,10),
+glass:new THREE.IcosahedronGeometry(0.5,0),
+spark:new THREE.SphereGeometry(0.5,5,4),
+mark:new THREE.CircleGeometry(0.5,48),
+smoke:new THREE.PlaneGeometry(1,1),
+};
+// Sculpt shared primitives rather than allocating geometry for every victim.
+for(const name of['limb','wound','bone']){
+const geometry=shapes[name],
+vertices=geometry.attributes.position;
+for(let i=0;i<vertices.count;i++){
+const x=vertices.getX(i),
+y=vertices.getY(i),
+z=vertices.getZ(i);
+const ring=
+name==='wound'
+?0.88+Math.sin(x*29+z*19)*0.08+Math.cos(y*23-z*11)*0.04
+:name==='limb'
+?0.86+0.14*Math.cos(y*Math.PI)
+:0.76+0.24*Math.abs(y*2);
+vertices.setXYZ(i,x*ring,y,z*ring);
+}
+geometry.computeVertexNormals();
+if(name==='wound'){
+const shades=new Float32Array(vertices.count*3);
+for(let i=0;i<vertices.count;i++){
+const crease=
+0.52+
+0.48*
+Math.abs(
+Math.sin(
+vertices.getY(i)*37+
+Math.sin(vertices.getX(i)*21)*2+
+vertices.getZ(i)*14,
+),
+);
+shades.set([crease,crease*0.89,crease*0.86],i*3);
+}
+geometry.setAttribute('color',new THREE.BufferAttribute(shades,3));
+}
+}
+const markVertices=shapes.mark.attributes.position;
+const markColors=new Float32Array(markVertices.count*3);
+for(let i=0;i<markVertices.count;i++){
+const x=markVertices.getX(i),
+y=markVertices.getY(i),
+angle=Math.atan2(y,x);
+const radius=0.82+Math.sin(angle*7)*0.09+Math.cos(angle*13)*0.05;
+markVertices.setXY(i,x*radius,y*radius);
+const shade=i===0?0.34:0.66+Math.sin(angle*9)*0.14;
+markColors.set([shade,shade,shade],i*3);
+}
+shapes.mark.setAttribute('color',new THREE.BufferAttribute(markColors,3));
+for(const[name,geometry]of Object.entries(shapes)){
+const paint=
+name==='spark'
+?new THREE.MeshBasicMaterial({color:0xffffff,toneMapped:false})
+:new THREE.MeshStandardMaterial({
+color:0xffffff,
+roughness:
+name==='glass'?0.18:name==='wound'?0.3:name==='mark'?0.46:0.86,
+vertexColors:name==='mark'||name==='wound',
+metalness:name==='metal'?0.55:0,
+...(name==='mark'
+?{
+side:THREE.DoubleSide,
+polygonOffset:true,
+polygonOffsetFactor:-1,
+polygonOffsetUnits:-1,
+depthWrite:false,
+}
+:{}),
+...(name==='smoke'
+?{map:mistTexture,transparent:true,opacity:0.65,depthWrite:false}
+:{}),
+});
+const mesh=new THREE.InstancedMesh(geometry,paint,capacity);
+mesh.name=`combat-${name}`;
+mesh.count=0;
+mesh.visible=false;
+mesh.frustumCulled=false;
+mesh.castShadow=false;
+mesh.instanceMatrix.setUsage(THREE.DynamicDrawUsage);
+// Allocate the color attribute before shader preparation; the first hit must
+// not introduce a new USE_INSTANCING_COLOR program variant during flight.
+mesh.setColorAt(0,color.set(0xffffff));
+root.add(mesh);
+pools.set(name,mesh);
+}
+const releaseAppearance=(value,releaseLeases=true)=>{
+if(!value)return;
+const geometries=new Set();
+for(const[name,mesh]of value.pools){
+if(pools.get(name)===mesh)pools.delete(name);
+mesh.removeFromParent();
+geometries.add(mesh.geometry);
+mesh.dispose();
+}
+for(const probe of value.probes??[]){
+probe.removeFromParent();
+probe.dispose();
+}
+for(const texture of value.textures??[])texture.dispose();
+for(const geometry of geometries)geometry.dispose();
+for(const material of value.materials??[])material.dispose();
+if(releaseLeases)
+for(const input of value.inputs??[]){
+try{
+input.release?.();
+}catch{
+/* Keep current-art fallback available. */
+}
+}
+};
+/** A batch transfer is atomic: false leaves every incoming lease with its caller.
+     * Shared source primitives are baked once; each family/cast keeps its own gear. */
+function setAppearancePartsTemplates(inputs){
+if(disposed)return false;
+inputs??=[];
+const staged={
+pools:new Map(),
+materials:new Set(),
+textures:new Set(),
+probes:[],
+inputs:[],
+byIdentity:new Map(),
+calls:0,
+blood:{value:Boolean(getPreferences().blood)},
+derivedBytes:0,
+};
+const cache=new Map(),
+regionMaterials=new Map();
+let valid=false;
+try{
+if(!Array.isArray(inputs)||inputs.length>36||new Set(inputs).size!==inputs.length)
+throw new TypeError('Invalid remains collection');
+function batch(node,transform,center,size,role,region,identity){
+const paints=Array.isArray(node.material)?node.material:[node.material];
+const calls=Array.isArray(node.material)?node.geometry?.groups.length:1;
+if(
+!node.geometry?.attributes.position||
+!calls||
+paints.some((p)=> !p?.isMaterial||p.transparent)
+)
+throw new TypeError('Invalid rigid region material');
+const key=[
+role,
+identity??node.geometry.uuid,
+...paints.map((p)=>p.uuid),
+...transform.elements,
+...center.toArray(),
+...size.toArray(),
+].join('/');
+let pair=cache.get(key);
+if(!pair){
+const geometry=node.geometry.clone().applyMatrix4(transform);
+geometry.translate(-center.x,-center.y,-center.z);
+geometry.scale(1/size.x,1/size.y,1/size.z);
+geometry.computeBoundingBox();
+geometry.computeBoundingSphere();
+if(!vector(geometry.boundingBox?.min)|| !vector(geometry.boundingBox?.max)){
+geometry.dispose();
+throw new TypeError('Invalid authored bounds');
+}
+const make=(material,suffix,drawCount)=>{
+const shape=`appearance:${cache.size}:${region}:${suffix}`;
+const mesh=new THREE.InstancedMesh(geometry,material,512);
+mesh.name=`combat-${shape}`;
+mesh.count=0;
+mesh.visible=false;
+mesh.frustumCulled=false;
+mesh.castShadow=false;
+mesh.receiveShadow=true;
+mesh.userData.combatCalls=drawCount;
+mesh.userData.combatTriangles=
+(geometry.index?.count??geometry.attributes.position.count)/3;
+mesh.instanceMatrix.setUsage(THREE.DynamicDrawUsage);
+mesh.setColorAt(0,color.set(0xffffff));
+staged.pools.set(shape,mesh);
+return shape;
+};
+pair={
+shape:make(node.material,role,calls),
+...(role==='body-cap'?{mergedCap:true}:{}),
+};
+if(role==='body-cap')
+geometry.setAttribute(
+'combatCapEnabled',
+new THREE.InstancedBufferAttribute(new Float32Array(512),1).setUsage(
+THREE.DynamicDrawUsage,
+),
+);
+if(role==='cap'){
+pair.interior=true;
+const mesh=staged.pools.get(pair.shape);
+const white=(staged.white??=(()=>{
+const map=new THREE.DataTexture(new Uint8Array([255,255,255,255]),1,1);
+map.needsUpdate=true;
+staged.textures.add(map);
+return map;
+})());
+const neutral=(paint)=>{
+const material=paint.clone();
+material.color.set('#797764');
+material.emissive?.set(0);
+if(material.map)material.map=white;
+material.roughness=0.96;
+material.metalness=0;
+staged.materials.add(material);
+return material;
+};
+mesh.userData.combatOriginalMaterial=mesh.material;
+mesh.userData.combatCleanMaterial=Array.isArray(mesh.material)
+?mesh.material.map(neutral)
+:neutral(mesh.material);
+const probe=new THREE.InstancedMesh(geometry,mesh.userData.combatCleanMaterial,1);
+probe.name='combat-clean-cap-material-probe';
+probe.setColorAt(0,color.set(0xffffff));
+probe.count=0;
+probe.visible=false;
+probe.frustumCulled=false;
+staged.probes.push(probe);
+}
+cache.set(key,pair);
+}
+return pair;
+}
+// The r2 cap and opaque exterior share one draw. Their authored UVs and
+// normals remain distinct; the masked hair keeps its own alpha-tested draw.
+function mergeRegionCaps(rows){
+const exterior=rows.filter(
+(row)=>
+row.role==='mesh'&&
+row.node.material?.isMeshStandardMaterial&&
+!row.node.material.transparent&&
+row.node.material.alphaTest===0,
+),
+caps=rows.filter((row)=>row.role==='cap');
+if(exterior.length!==1||caps.length!==1)return rows;
+const body=exterior[0],
+cap=caps[0],
+outerPaint=body.node.material,
+capPaint=cap.node.material;
+if(
+!capPaint?.isMeshStandardMaterial||
+capPaint.transparent||
+capPaint.alphaTest>0||
+capPaint.normalMap||
+capPaint.bumpMap||
+capPaint.emissiveMap||
+capPaint.emissive?.getHex()!==0||
+['map','roughnessMap','metalnessMap'].some(
+(key)=>capPaint[key]&&capPaint[key].channel!==0,
+)
+)
+return rows;
+const sources=[body,cap].map((row)=>
+row.node.geometry.clone().applyMatrix4(row.transform),
+);
+let geometry;
+try{
+const names=new Set(sources.flatMap((source)=>Object.keys(source.attributes)));
+if(
+!['position','normal','uv'].every((name)=>
+sources.every((source)=>source.attributes[name]),
+)||
+[...names].some((name)=>{
+const attributes=sources.map((source)=>source.attributes[name]),
+reference=attributes.find(Boolean);
+return attributes.some(
+(attribute)=>
+(!attribute&&name!=='color')||
+(attribute&&
+(attribute.isInterleavedBufferAttribute||
+attribute.itemSize!==reference.itemSize||
+attribute.normalized!==reference.normalized||
+attribute.array.constructor!==reference.array.constructor)),
+);
+})
+)
+return rows;
+geometry=new THREE.BufferGeometry();
+const total=sources.reduce((n,source)=>n+source.attributes.position.count,0),
+indices=[];
+let offset=0;
+for(const source of sources){
+for(let i=0;i<(source.index?.count??source.attributes.position.count);i++)
+indices.push(offset+(source.index?source.index.getX(i):i));
+offset+=source.attributes.position.count;
+}
+geometry.setIndex(indices);
+for(const name of names){
+const reference=sources.map((source)=>source.attributes[name]).find(Boolean),
+values=new reference.array.constructor(total*reference.itemSize);
+let at=0;
+for(const source of sources){
+const attribute=source.attributes[name],
+length=source.attributes.position.count*reference.itemSize;
+if(attribute)values.set(attribute.array,at);
+else{
+// An unpainted interior must not inherit the exterior's clothing tint.
+const white=reference.normalized
+?reference.array instanceof Uint8Array
+?255
+:65535
+:1;
+values.fill(white,at,at+length);
+}
+at+=length;
+}
+geometry.setAttribute(
+name,
+new THREE.BufferAttribute(values,reference.itemSize,reference.normalized),
+);
+}
+const role=new Float32Array(total);
+role.fill(1,sources[0].attributes.position.count);
+geometry.setAttribute('combatCapRole',new THREE.BufferAttribute(role,1));
+geometry.computeBoundingBox();
+geometry.computeBoundingSphere();
+const materialKey=`${outerPaint.uuid}/${capPaint.uuid}`;
+let material=regionMaterials.get(materialKey);
+if(!material){
+material=outerPaint.clone();
+material.name=`${outerPaint.name}:combat-region-cap`;
+material.side=THREE.DoubleSide;
+const uniforms={
+combatBlood:staged.blood,
+combatCapColor:{value:capPaint.color.clone()},
+combatCleanCapColor:{value:new THREE.Color('#797764')},
+combatCapRoughness:{value:capPaint.roughness},
+combatCapMetalness:{value:capPaint.metalness},
+};
+for(const[property,label]of[
+['map','Map'],
+['roughnessMap','RoughnessMap'],
+['metalnessMap','MetalnessMap'],
+]){
+const texture=capPaint[property];
+if(!texture)continue;
+if(texture.matrixAutoUpdate)texture.updateMatrix();
+uniforms[`combatCap${label}`]={value:texture};
+uniforms[`combatCap${label}Transform`]={value:texture.matrix.clone()};
+}
+const maps=['Map','RoughnessMap','MetalnessMap'].filter(
+(label)=>uniforms[`combatCap${label}`],
+);
+material.userData.combatCapTextures=maps.map(
+(label)=>uniforms[`combatCap${label}`].value,
+);
+material.userData.combatCapUniforms=uniforms;
+material.customProgramCacheKey=()=>`combat-region-cap-v1/${maps.join('/')}`;
+material.onBeforeCompile=(shader)=>{
+Object.assign(shader.uniforms,uniforms);
+shader.vertexShader=shader.vertexShader
+.replace(
+'#include <common>',
+`#include <common>
+attribute float combatCapRole;
+attribute float combatCapEnabled;
+varying float vCombatCapRole;
+varying float vCombatCapEnabled;
+${maps.map((label)=>`uniform mat3 combatCap${label}Transform;\nvarying vec2 vCombatCap${label}Uv;`).join('\n')}`,
+)
+.replace(
+'#include <begin_vertex>',
+`#include <begin_vertex>
+vCombatCapRole = combatCapRole;
+vCombatCapEnabled = combatCapEnabled;
+${maps.map((label)=>`vCombatCap${label}Uv = (combatCap${label}Transform * vec3(uv, 1.0)).xy;`).join('\n')}`,
+);
+shader.fragmentShader=shader.fragmentShader
+.replace(
+'#include <common>',
+`#include <common>
+varying float vCombatCapRole;
+varying float vCombatCapEnabled;
+uniform bool combatBlood;
+uniform vec3 combatCapColor;
+uniform vec3 combatCleanCapColor;
+uniform float combatCapRoughness;
+uniform float combatCapMetalness;
+${maps.map((label)=>`uniform sampler2D combatCap${label};\nvarying vec2 vCombatCap${label}Uv;`).join('\n')}`,
+)
+.replace(
+'#include <map_fragment>',
+`if (vCombatCapRole > 0.5) {
+  if (vCombatCapEnabled < 0.5) discard;
+  diffuseColor = vec4(combatBlood ? combatCapColor : combatCleanCapColor, 1.0);
+  ${maps.includes('Map')?'if (combatBlood) diffuseColor *= texture2D(combatCapMap, vCombatCapMapUv);':''}
+} else {
+  #include <map_fragment>
+}`,
+)
+.replace(
+'#include <roughnessmap_fragment>',
+`#include <roughnessmap_fragment>
+if (vCombatCapRole > 0.5) {
+  roughnessFactor = combatBlood ? combatCapRoughness : 0.96;
+  ${maps.includes('RoughnessMap')?'if (combatBlood) roughnessFactor *= texture2D(combatCapRoughnessMap, vCombatCapRoughnessMapUv).g;':''}
+}`,
+)
+.replace(
+'#include <metalnessmap_fragment>',
+`#include <metalnessmap_fragment>
+if (vCombatCapRole > 0.5) {
+  metalnessFactor = combatBlood ? combatCapMetalness : 0.0;
+  ${maps.includes('MetalnessMap')?'if (combatBlood) metalnessFactor *= texture2D(combatCapMetalnessMap, vCombatCapMetalnessMapUv).b;':''}
+}`,
+)
+.replace(
+'#include <normal_fragment_maps>',
+`if (vCombatCapRole < 0.5) {
+  #include <normal_fragment_maps>
+}`,
+);
+};
+staged.materials.add(material);
+regionMaterials.set(materialKey,material);
+}
+const merged={
+...body,
+node:{geometry,material},
+transform:new THREE.Matrix4(),
+role:'body-cap',
+bounds:body.bounds.clone().union(cap.bounds),
+identity:[body,cap]
+.map((row)=>[row.node.geometry.uuid,...row.transform.elements].join('/'))
+.join('|'),
+temporary:true,
+};
+return rows.flatMap((row)=>(row===cap?[]:row===body?[merged]:[row]));
+}catch(error){
+geometry?.dispose();
+throw error;
+}finally{
+for(const source of sources)source.dispose();
+}
+}
+function mergeEquipment(rows){
+const groups=new Map(),
+result=rows.filter((row)=>row.role!=='gear');
+for(const row of rows.filter((row)=>row.role==='gear')){
+if(Array.isArray(row.node.material)){
+result.push(row);
+continue;
+}
+const key=`${row.node.material.uuid}/${row.tint.getHexString()}`;
+if(!groups.has(key))groups.set(key,[]);
+groups.get(key).push(row);
+}
+for(const group of groups.values()){
+if(group.length===1){
+result.push(group[0]);
+continue;
+}
+const names=Object.keys(group[0].node.geometry.attributes);
+const compatible=group.every(
+(row)=>
+names.length===Object.keys(row.node.geometry.attributes).length&&
+names.every((name)=>{
+const attribute=row.node.geometry.attributes[name],
+reference=group[0].node.geometry.attributes[name];
+return(
+attribute&&
+!attribute.isInterleavedBufferAttribute&&
+attribute.itemSize===reference.itemSize&&
+attribute.normalized===reference.normalized&&
+attribute.array.constructor===reference.array.constructor
+);
+}),
+);
+if(!compatible){
+result.push(...group);
+continue;
+}
+const sources=group.map((row)=>
+row.node.geometry.clone().applyMatrix4(row.transform),
+);
+const geometry=new THREE.BufferGeometry(),
+indices=[],
+bounds=new THREE.Box3();
+let offset=0;
+for(const source of sources){
+for(let i=0;i<(source.index?.count??source.attributes.position.count);i++)
+indices.push(offset+(source.index?source.index.getX(i):i));
+offset+=source.attributes.position.count;
+}
+for(const name of names){
+const reference=sources[0].attributes[name];
+const values=new reference.array.constructor(
+sources.reduce((n,g)=>n+g.attributes[name].array.length,0),
+);
+let at=0;
+for(const source of sources){
+values.set(source.attributes[name].array,at);
+at+=source.attributes[name].array.length;
+}
+geometry.setAttribute(
+name,
+new THREE.BufferAttribute(values,reference.itemSize,reference.normalized),
+);
+}
+geometry.setIndex(indices);
+geometry.computeBoundingBox();
+geometry.computeBoundingSphere();
+for(const source of sources)source.dispose();
+for(const row of group)bounds.union(row.bounds);
+result.push({
+...group[0],
+node:{geometry,material:group[0].node.material},
+transform:new THREE.Matrix4(),
+bounds,
+identity:group
+.map((row)=>[row.node.geometry.uuid,...row.transform.elements].join('/'))
+.join('|'),
+temporary:true,
+});
+}
+return result;
+}
+for(const input of inputs){
+if(
+!input||
+input.ready!==true||
+!/^[a-f0-9]{64}$/.test(input.sha256)||
+!families.has(input.family)||
+!input.scene?.isObject3D||
+!Number.isFinite(input.height)||
+input.height<0.5||
+input.height>3||
+!Number.isFinite(input.radius)||
+input.radius<=0||
+input.radius>1||
+(input.cast!==undefined&& !['tactical','rivals','arcade'].includes(input.cast))||
+(input.release!==undefined&&typeof input.release!=='function')
+)
+throw new TypeError('Invalid admitted remains palette');
+const identity=`${input.family}/${input.cast??'*'}`;
+if(staged.byIdentity.has(identity)||(staged.hash&&staged.hash!==input.sha256))
+throw new TypeError('Repeated or mixed remains identity');
+staged.hash=input.sha256;
+staged.inputs.push(input);
+input.scene.updateWorldMatrix(true,true);
+const members=new Set(),
+roots=new Set();
+input.scene.traverse((node)=>members.add(node));
+const inverse=input.scene.matrixWorld.clone().invert();
+const palette={
+regions:[],
+height:input.height,
+radius:input.radius,
+identity,
+calls:0,
+};
+let vertices=0;
+const regionEntries=input.regions
+?Object.entries(input.regions)
+:bodyRegions.map((name)=>[name,input.parts?.[name]]);
+if(![6,12].includes(regionEntries.length))
+throw new TypeError('Incomplete body regions');
+for(const[region,definition]of regionEntries){
+const box=new THREE.Box3(),
+rows=[];
+const visit=(branch,role,tint='#ffffff')=>{
+if(!branch?.isObject3D|| !members.has(branch)||roots.has(branch))
+throw new TypeError('Missing or repeated authored region');
+roots.add(branch);
+let draws=0;
+branch.traverse((node)=>{
+if(
+node.isSkinnedMesh||
+node.isLight||
+node.isCamera||
+node.isLine||
+node.isPoints
+)
+throw new TypeError('Remains must be rigid');
+if(!node.isMesh)return;
+const calls=Array.isArray(node.material)?node.geometry?.groups.length:1;
+if(!node.geometry?.attributes.position|| !calls)
+throw new TypeError('Empty region');
+draws+=calls;
+vertices+=node.geometry.attributes.position.count;
+if(draws>2||vertices>65536)throw new TypeError('Region exceeds budget');
+node.geometry.computeBoundingBox();
+const transform=new THREE.Matrix4().multiplyMatrices(inverse,node.matrixWorld);
+const bounds=node.geometry.boundingBox.clone().applyMatrix4(transform);
+if(role!=='gear')box.union(bounds);
+rows.push({node,transform,role,tint,bounds});
+});
+if(!draws)throw new TypeError('Empty authored region');
+};
+visit(definition?.mesh,'mesh');
+visit(definition?.cap,'cap');
+const center=box.getCenter(new THREE.Vector3()),
+size=box.getSize(new THREE.Vector3()).clampScalar(0.001,10);
+for(const gear of input.equipment??[])
+if((input.regions?gear.damageRegion:gear.region)===region)
+visit(gear.mesh,'gear',new THREE.Color().fromArray(gear.color??[1,1,1]));
+const support=size.clone();
+for(const row of rows)
+for(let axis=0;axis<3;axis++)
+support.setComponent(
+axis,
+Math.max(
+support.getComponent(axis),
+2*Math.abs(row.bounds.min.getComponent(axis)-center.getComponent(axis)),
+2*Math.abs(row.bounds.max.getComponent(axis)-center.getComponent(axis)),
+),
+);
+const pieces=mergeEquipment(
+regionEntries.length===12?mergeRegionCaps(rows):rows,
+).map((row)=>{
+try{
+return{
+...batch(row.node,row.transform,center,size,row.role,region,row.identity),
+tint:row.tint,
+};
+}finally{
+if(row.temporary)row.node.geometry.dispose();
+}
+});
+palette.regions.push({
+name:region,
+parent:definition.parent??null,
+aggregate:definition.aggregate??region,
+center:center.toArray(),
+size:size.toArray(),
+support:support.toArray(),
+pieces,
+});
+}
+palette.calls=new Set(
+palette.regions.flatMap((r)=>r.pieces.map((p)=>p.shape)),
+).size;
+staged.calls=Math.max(staged.calls,palette.calls);
+staged.byIdentity.set(identity,palette);
+}
+const buffers=new Set();
+for(const mesh of[...staged.pools.values(),...staged.probes])
+for(const attribute of[
+...Object.values(mesh.geometry.attributes),
+mesh.geometry.index,
+mesh.instanceMatrix,
+mesh.instanceColor,
+])
+if(attribute?.array)buffers.add(attribute.array.buffer);
+staged.derivedBytes=[...buffers].reduce((sum,buffer)=>sum+buffer.byteLength,0);
+for(const texture of staged.textures)
+staged.derivedBytes+=texture.image?.data?.byteLength??0;
+valid=true;
+}catch{
+releaseAppearance(staged,false);
+}
+releaseAppearance(appearance);
+appearance=valid&&inputs.length?staged:null;
+if(valid&& !inputs.length)releaseAppearance(staged,false);
+recipes.clear();
+clearPools();
+if(appearance){
+for(const probe of appearance.probes)root.add(probe);
+for(const[name,mesh]of appearance.pools){
+pools.set(name,mesh);
+root.add(mesh);
+}
+}
+return valid;
+}
+function setAppearanceParts(input){
+if(input&&appearance?.inputs.length===1&&appearance.inputs[0]===input)return true;
+return setAppearancePartsTemplates(input===null?[]:[input]);
+}
+function appearanceRecipe(record,palette,dismember,bloody=false,detail='high'){
+const parts=[],
+outcome=breakupOutcome(record,dismember),
+factors=[
+record.radius/1000/palette.radius,
+record.height/1000/palette.height,
+record.radius/1000/palette.radius,
+];
+for(const region of palette.regions){
+const attachment=parts.length;
+for(const[index,piece]of region.pieces.entries()){
+if(!dismember&&piece.interior)continue;
+parts.push({
+shape:piece.shape,
+size:region.size.map((n,axis)=>n*factors[axis]),
+supportSize:region.support.map((n,axis)=>n*factors[axis]),
+tint:piece.tint,
+at:index
+?[0,0,0]
+:region.center.map(
+(n,axis)=>n*factors[axis]-(axis===1?record.height/2000:0),
+),
+attachment:index?attachment:-1,
+authored:true,
+capVisible:Boolean(piece.mergedCap&&dismember),
+region:region.name,
+bodyAt:region.center.map(
+(n,axis)=>n*factors[axis]-(axis===1?record.height/2000:0),
+),
+});
+}
+}
+if(parts.length){
+const indices=new Map();
+for(const[index,part]of parts.entries())
+if(part.attachment<0)indices.set(part.region,index);
+const torso=indices.get('chest')??indices.get('torso')??0;
+const severed=(name)=>
+dismember&&
+(outcome==='explosive'||
+(outcome==='breakup'&& !['chest','abdomen','pelvis','torso'].includes(name))||
+name===(random(record.seed,102)<0.5?'leftForearm':'rightForearm')||
+(palette.regions.length===6&&name==='leftArm'));
+for(const part of parts){
+if(part.attachment>=0||part===parts[torso]||severed(part.region))continue;
+const source=palette.regions.find((r)=>r.name===part.region);
+const parent=indices.get(source.parent)??torso;
+part.at=part.bodyAt.map((n,axis)=>n-parts[parent].bodyAt[axis]);
+part.attachment=parent;
+}
+const detailPart=(parent,shape,size,tint,at,rotation=[0,0,0])=>{
+parts.push({
+shape,
+size,
+supportSize:[...size],
+tint,
+at,
+rotation,
+attachment:parent,
+region:parts[parent].region,
+authored:true,
+optionalDetail:true,
+});
+};
+if(bloody){
+for(const[name,index]of indices){
+if(!severed(name))continue;
+const part=parts[index],
+size=part.size;
+const sign=name==='head'? -1:1;
+const end=sign*(size[1]*0.46);
+const paired= /Forearm|Shin/.test(name);
+// Small raised folds leave the admitted authored cut texture visible.
+// These never create another persistent root or replace body geometry.
+for(const side of detail==='ultra'?[-1,-0.35,0.35,1]:[-1,1]){
+detailPart(
+index,
+'wound',
+[size[0]*0.22,0.055,size[2]*0.3],
+side<0?'#8d1730':'#be3c49',
+[side*size[0]*0.3,end,size[2]*0.11],
+[side*0.12,side*0.45,side*0.14],
+);
+}
+const coreWidth= /chest|abdomen|pelvis|torso/.test(name)?0.04:0.025;
+for(const side of paired?[-1,1]:[0])
+detailPart(
+index,
+'bone',
+[coreWidth,0.065,coreWidth],
+'#e0cfaa',
+[side*size[0]*0.16,end+sign*0.025,0],
+[side*0.12,0,side*0.08],
+);
+if(detail==='ultra'){
+// A dark recess and a fabric-colored torn edge add depth rather
+// than blanketing the clothing, equipment or entire cut surface.
+detailPart(index,'wound',[size[0]*0.25,0.018,size[2]*0.2],'#390e19',[
+0,
+end+sign*0.012,
+-size[2]*0.2,
+]);
+detailPart(
+index,
+'wound',
+[size[0]*0.13,0.055,size[2]*0.14],
+actorVisual(record.appearance.family,record.appearance.cast).palette.coat,
+[-size[0]*0.35,end-sign*0.008,-size[2]*0.18],
+[0.18,0.3,0.24],
+);
+}
+}
+// Keep an impact-local blood stain even when Brutal is off. It is a
+// surface layer, not an exposed cut or an extra dismembered fragment.
+const hit=record.impactPosition
+?axes.map(
+(axis)=>
+(record.impactPosition[axis]-record.position[axis])/1000-
+(axis==='y'?record.height/2000:0),
+)
+:parts[torso].bodyAt;
+let target=torso,
+nearest=Infinity;
+for(const index of indices.values()){
+const distance=parts[index].bodyAt.reduce(
+(sum,n,axis)=>sum+(n-hit[axis])**2,
+0,
+);
+if(distance<nearest){
+target=index;
+nearest=distance;
+}
+}
+const targetPart=parts[target];
+const direction=axes.map(
+(axis)=>record.impactDirection?.[axis]??(axis==='z'?1:0),
+);
+const axis=direction.reduce(
+(best,value,index)=>(Math.abs(value)>Math.abs(direction[best])?index:best),
+0,
+);
+const side=direction[axis]>0? -1:1;
+const at=hit.map((value,index)=>
+clamp(
+value-targetPart.bodyAt[index],
+-targetPart.size[index]*0.35,
+targetPart.size[index]*0.35,
+),
+);
+at[axis]=side*(targetPart.size[axis]*0.5+0.004);
+const rotation=
+axis===0?[0,0,Math.PI/2]:axis===2?[Math.PI/2,0,0]:[0,0,0];
+detailPart(target,'wound',[0.095,0.008,0.075],'#651325',at,rotation);
+}
+// Reorder parents ahead of children, preserving region identities across art/detail changes.
+const ordered=[],
+done=new Set();
+const place=(index)=>{
+if(done.has(index))return;
+const part=parts[index],
+parent=part.attachment;
+if(parent>=0)place(parent);
+done.add(index);
+ordered.push({...part,oldIndex:index,oldParent:parent});
+};
+for(let i=0;i<parts.length;i++)place(i);
+const remap=new Map(ordered.map((part,i)=>[part.oldIndex,i]));
+for(const part of ordered)part.attachment=remap.get(part.oldParent)?? -1;
+for(const part of ordered)part.ownSupportSize=[...part.supportSize];
+for(let i=ordered.length-1;i>=0;i--){
+const part=ordered[i];
+if(part.attachment>=0){
+const parent=ordered[part.attachment];
+const childSupport=rotatedSupportSize(part);
+for(let axis=0;axis<3;axis++)
+parent.supportSize[axis]=Math.max(
+parent.supportSize[axis],
+Math.abs(part.at[axis])*2+childSupport[axis],
+);
+}
+}
+return ordered;
+}
+return parts;
+}
+const put=(
+shape,
+at,
+size,
+tint,
+rotation=[0,0,0],
+surfaceNormal=null,
+capVisible=false,
+)=>{
+const mesh=pools.get(shape);
+if(!mesh||mesh.count>=mesh.instanceMatrix.count)return;
+pos.set(...at);
+scale.set(...size);
+if(surfaceNormal)
+quaternion
+.setFromUnitVectors(
+decalAxis,
+normal.set(surfaceNormal.x,surfaceNormal.y,surfaceNormal.z),
+)
+.multiply(decalTurn.setFromAxisAngle(decalAxis,rotation[2]??0));
+else quaternion.setFromEuler(euler.set(...rotation));
+matrix.compose(pos,quaternion,scale);
+mesh.setMatrixAt(mesh.count,matrix);
+mesh.geometry.attributes.combatCapEnabled?.setX(mesh.count,capVisible?1:0);
+mesh.setColorAt(mesh.count++,color.set(tint));
+};
+const selectedDetail=()=>{
+const value=typeof choice==='function'?choice():choice;
+return['auto','high','ultra'].includes(value)?value:'auto';
+};
+const bounds=(graphics,selected)=>
+graphics==='low'
+?'low'
+:graphics==='balanced'
+?'high'
+:selected==='ultra'
+?'ultra'
+:'high';
+let stats={moving:0,settled:0,marks:0,bursts:0,calls:0,tier:'high'};
+function configure(options={}){
+if(options.preferences)getPreferences=options.preferences;
+if(Object.hasOwn(options,'groundQuery'))query=options.groundQuery;
+if(options.detail!==undefined){
+if(
+typeof options.detail!=='function'&&
+!['auto','high','ultra'].includes(options.detail)
+)
+throw new TypeError('Unknown destruction detail');
+choice=options.detail;
+}
+}
+function clearPools(){
+for(const mesh of pools.values()){
+mesh.count=0;
+mesh.visible=false;
+}
+}
+function reset(id=''){
+runId=id;
+currentTick=0;
+presentationClock=0;
+markSupports.clear();
+surfaceSupports.clear();
+pendingChecks.clear();
+ledger.reset(id);
+orderedRings.clear();
+bursts.clear();
+impacts.clear();
+recipes.clear();
+clearPools();
+}
+function observe(facts,options={}){
+if(disposed)return;
+const id=String(options.runId??runId);
+if(id!==runId)reset(id);
+const tick=
+options.tick??Math.max(currentTick,...(facts??[]).map((fact)=>fact.tick??0));
+if(tick<currentTick){
+bursts.clear();
+impacts.clear();
+}
+presentationClock=Math.max(presentationClock,options.presentationClock??tick/50);
+currentTick=tick;
+for(const record of ledger.add(facts,{
+runId,
+tick,
+groundQuery:options.groundQuery??query,
+})){
+record.presentation??={
+born:Math.max(0,presentationClock-(tick-record.tick)/50),
+pieces:{},
+};
+bursts.set(record.eventId,record.presentation.born);
+if(record.kind==='surface-impact')impacts.set(record.eventId,record);
+}
+for(const fact of facts??[]){
+if(!['impact','explosion'].includes(fact.type)||impacts.has(fact.eventId))continue;
+const record=normalizeCombatDefeat({
+...fact,
+type:'defeat',
+sourceId:fact.sourceId||'surface',
+});
+record.presentation??={
+born:Math.max(0,presentationClock-(tick-record.tick)/50),
+pieces:{},
+};
+impacts.set(fact.eventId,record);
+if(impacts.size>32)impacts.delete(impacts.keys().next().value);
+}
+const retained=new Set(
+[...ledger.records(),...ledger.impacts()].map((record)=>record.eventId),
+);
+for(const id of recipes.keys())if(!retained.has(id))recipes.delete(id);
+for(const id of markSupports.keys())if(!retained.has(id))markSupports.delete(id);
+for(const id of surfaceSupports.keys())if(!retained.has(id))surfaceSupports.delete(id);
+for(const id of pendingChecks.keys())if(!retained.has(id))pendingChecks.delete(id);
+for(const[id,began]of bursts)if(presentationClock-began>2)bursts.delete(id);
+for(const[id,fact]of impacts)
+if(presentationClock-fact.presentation.born>0.8)impacts.delete(id);
+}
+function update({
+tick=currentTick,
+presentationClock:suppliedClock=null,
+originMm={x:0,y:0,z:0},
+cameraPosition=null,
+graphicsQuality='balanced',
+reducedMotion=false,
+frameMs=null,
+}={}){
+if(disposed)return;
+presentationClock=Math.max(
+presentationClock,
+Number.isFinite(suppliedClock)?suppliedClock:tick/50,
+);
+clearPools();
+const selected=selectedDetail();
+if(selected==='auto'&&Number.isFinite(frameMs)){
+slow=frameMs>22?slow+1:0;
+// A normal 60 Hz frame is 16.7 ms. Recovery must remain reachable on a
+// 60 Hz display after a temporary stall, with a longer stable interval.
+fast=frameMs<18?fast+1:0;
+if(slow>90){
+autoTier='low';
+slow=0;
+}
+if(fast>300){
+autoTier='high';
+fast=0;
+}
+}
+const prefs=getPreferences(),
+treatment=`${!!prefs.brutal}/${!!prefs.blood}`;
+if(previousTreatment!==null&&treatment!==previousTreatment){
+recipes.clear();
+}
+previousTreatment=treatment;
+if(appearance)appearance.blood.value=Boolean(prefs.blood);
+for(const mesh of appearance?.pools.values()??[])
+if(mesh.userData.combatCleanMaterial)
+mesh.material=prefs.blood
+?mesh.userData.combatOriginalMaterial
+:mesh.userData.combatCleanMaterial;
+const tier=bounds(graphicsQuality,selected),
+pressureReduced=selected==='auto'&&autoTier==='low'&&tier!=='low',
+// Reduce density under pressure, keeping the chosen character's complete
+// silhouette instead of silently changing its artwork.
+limits=pressureReduced
+?{
+...COMBAT_EFFECT_LIMITS[tier],
+...Object.fromEntries(
+['bursts','moving','settled','marks'].map((key)=>[
+key,
+COMBAT_EFFECT_LIMITS.low[key],
+]),
+),
+}
+:COMBAT_EFFECT_LIMITS[tier];
+stats={
+moving:0,
+settled:0,
+marks:0,
+bursts:0,
+calls:0,
+triangles:0,
+surfaceQueries:0,
+authoredClusters:0,
+completeAuthoredClusters:0,
+authoredRegions:0,
+proceduralClusters:0,
+deferredAuthoredClusters:0,
+tier,
+pressureReduced,
+};
+// Support revalidation is cosmetic maintenance. Spread it across frames so
+// a full archive or an unloaded chunk cannot trigger thousands of scene rays.
+let supportChecks=0;
+const supportCheckBudget=64,
+bodySupportBudget=48;
+const querySurface=(...args)=>{
+stats.surfaceQueries++;
+return query(...args);
+};
+const markSurface=(record)=>{
+if(!query)return record.renderSurface??record.surface;
+let cached=surfaceSupports.get(record.eventId);
+if(
+(!cached||presentationClock-cached.at>=0.25)&&
+supportChecks<supportCheckBudget
+){
+supportChecks++;
+const previous=record.renderSurface;
+const attached=previous?.surfaceId&&previous.localPosition;
+const accepted=record.surface;
+let rendered=null;
+try{
+const result=attached
+?querySurface(previous.position,previous.normal,{attachment:previous})
+:querySurface(
+accepted?.position??record.position,
+accepted?.normal??record.normal,
+);
+const candidate=surfaceOf(result);
+if(
+attached
+?result?.attached===true&&candidate?.surfaceId===previous.surfaceId
+:candidate&&(!accepted||sameContact(accepted,candidate))
+)
+rendered=candidate;
+}catch{}
+cached={at:presentationClock,valid:!!rendered};
+surfaceSupports.set(record.eventId,cached);
+if(rendered){
+if(
+!previous||
+axes.some(
+(axis)=>
+previous.position[axis]!==rendered.position[axis]||
+previous.normal[axis]!==rendered.normal[axis],
+)
+)
+markSupports.delete(record.eventId);
+record.renderSurface=rendered;
+}
+}
+return cached?.valid?record.renderSurface:null;
+};
+// Reserve the shared transient pools before admitting complete body clusters.
+const reserved=new Set(['mark','wound','spark','smoke']);
+// Nonfatal glass/dust can use a pool not needed by the nearest body. Reserve
+// that active pool too so adding hit feedback cannot overflow a full budget.
+if(!reducedMotion)
+for(const record of impacts.values()){
+const age=presentationClock-record.presentation.born;
+if(age<0||age>0.3)continue;
+const bloody=record.material==='organic'&&prefs.blood&& !record.protected;
+if(!bloody&&record.material==='glass')reserved.add('glass');
+else if(
+!bloody&&
+['stone','earth','concrete','organic'].includes(record.material)&&
+!record.protected
+)
+reserved.add('cloth');
+}
+let reservedCalls=[...reserved].reduce(
+(sum,name)=>sum+(pools.get(name)?.userData.combatCalls??1),
+0,
+);
+const ordered=nearestRecords(ledger.records(),cameraPosition,originMm);
+const fresh=reducedMotion
+?[]
+:ordered
+.filter(
+(record)=>
+bursts.has(record.eventId)&&presentationClock-bursts.get(record.eventId)<1.25,
+)
+.slice(0,limits.bursts);
+const animatedIds=new Set(fresh.map((record)=>record.eventId));
+const records=[...fresh,...ordered.filter((record)=> !animatedIds.has(record.eventId))];
+const smoke=[];
+// A fresh hit remains visible even if its body awaits streamed support or
+// cannot fit as a complete cluster. The same global limits still apply.
+const burstQuota=Math.floor((limits.moving*0.4)/Math.max(1,fresh.length));
+for(const record of fresh){
+const age=Math.max(0,presentationClock-bursts.get(record.eventId));
+const organic=record.material==='organic';
+const bloody=organic&&prefs.blood&& !record.protected;
+const hard=bloody&&prefs.brutal;
+const explosive=record.outcome==='explosive';
+const force=impactStrength(record);
+const origin=axes.map(
+(axis)=>((record.impactPosition??record.position)[axis]-originMm[axis])/1000,
+);
+if(!record.impactPosition)
+origin[1]+=organic?record.height/2000:record.radius/2000;
+const heading=Math.atan2(
+record.impactDirection?.z??record.velocity.z,
+record.impactDirection?.x??record.velocity.x,
+);
+const surface=record.renderSurface??record.surface;
+const mist=hard&&age>0.025&&age<0.55?Math.min(6,burstQuota):0;
+const core=hard&&age<0.24?Math.min(3,burstQuota-mist):0;
+const desired=bloody
+?hard
+?tier==='ultra'
+?128
+:tier==='low'
+?36
+:80
+:24
+:32;
+const count=Math.min(desired,Math.max(0,burstQuota-mist-core));
+// A brief dense rupture establishes the silhouette before the finer spray
+// separates. Shared opaque folds avoid a fullscreen transparent blood fog.
+for(let i=0;i<core;i++){
+const angle=heading+i*2.4;
+const spread=age*(explosive?4:2.8);
+const scale=Math.sin(Math.min(1,age/0.24)*Math.PI)**0.6;
+put(
+'wound',
+[
+origin[0]+Math.cos(angle)*spread,
+origin[1]+(random(record.seed,i+460)-0.3)*spread,
+origin[2]+Math.sin(angle)*spread,
+],
+[scale*0.26,scale*0.18,scale*(explosive?0.52:0.36)],
+i%2?'#740d22':'#b72239',
+[random(record.seed,i+470)*3,angle,age*5],
+);
+stats.moving++;
+}
+for(let i=0;i<count;i++){
+// Fast radial sheets, directional jets, tumbling clots and delayed spray
+// have different lifetimes; no slow expanding ring of identical beads.
+const phase=bloody?i%(hard?4:3):0;
+const elapsed=age-(phase===2?0.065:phase===3?0.015:0);
+const lifetime=bloody?[0.32,1.2,0.7,0.42][phase]:0.7;
+if(elapsed<0||elapsed>=lifetime)continue;
+const angle=
+heading+
+(random(record.seed,i+340)-0.5)*
+(explosive||phase===3?Math.PI*2:phase===0?0.85:2.8);
+const speed=
+force*(phase===1?1.2:2.4)*(0.65+random(record.seed,i+400)*1.5);
+const lift=
+(record.impactDirection?.y??0)*speed*0.65+
+(0.4+random(record.seed,i+440)*(phase===3?3:2))*(hard?1.2:1);
+const at=[
+origin[0]+Math.cos(angle)*elapsed*speed,
+origin[1]+lift*elapsed-4.9*elapsed*elapsed,
+origin[2]+Math.sin(angle)*elapsed*speed,
+];
+if(
+surface&&
+axes.reduce(
+(sum,axis,j)=>
+sum+
+(at[j]-(surface.position[axis]-originMm[axis])/1000)*surface.normal[axis],
+0,
+)<0.012
+)
+continue;
+const fade=Math.min(1,(lifetime-elapsed)*8);
+const drop=(0.026+random(record.seed,i+910)*(hard?0.065:0.03))*fade;
+const size= !bloody
+?[0.025,0.025,0.14]
+:phase===3
+?[drop*2.8,drop*0.35,drop*(3+speed*0.3)]
+:phase===0
+?[drop*(hard?1.7:1),drop*0.6,drop*(3+speed*0.7)]
+:phase===1
+?[drop*1.35,drop,drop*1.7]
+:[drop*0.4,drop*0.4,drop*1.7];
+put(
+bloody?'wound':'spark',
+at,
+size,
+bloody?['#b51532','#5c091a','#c72a40','#8b1128'][phase]:'#ffd287',
+[elapsed*(phase===1?9:2),Math.PI/2-angle,elapsed*3],
+);
+stats.moving++;
+}
+for(let i=0;i<mist;i++){
+const angle=heading+(i-1)*1.7;
+smoke.push({
+at:[
+origin[0]+Math.cos(angle)*age*2,
+origin[1]+age*(0.4+i*0.2),
+origin[2]+Math.sin(angle)*age*2,
+],
+size:(0.65+age*5)*Math.min(1,(0.55-age)*6),
+tint:i%2?'#95182b':'#631020',
+});
+stats.moving++;
+}
+if(
+!organic&&
+record.material!=='wood'&&
+record.material!=='glass'&&
+age<0.18&&
+stats.moving<limits.moving
+){
+const radius=
+(0.3+Math.sin((age/0.18)*Math.PI)*1.4)*Math.max(0.5,record.radius/700);
+put('spark',origin,[radius,radius*0.8,radius],age<0.05?'#fff8cf':'#ff862d');
+stats.moving++;
+}
+if(
+!organic&&
+record.material!=='glass'&&
+age>0.15&&
+age<0.8&&
+stats.moving+3<=limits.moving
+){
+for(let i=0;i<3;i++)
+smoke.push({
+at:[origin[0]+i*0.13,origin[1]+age*0.9,origin[2]],
+size:0.2+age*(0.5+i*0.1),
+tint:record.material==='wood'?'#918675':'#59605e',
+});
+stats.moving+=3;
+}
+stats.bursts++;
+}
+let examinedPieces=0;
+for(const record of records){
+record.presentation??={
+born:Math.max(0,presentationClock-(tick-record.tick)/50),
+pieces:{},
+};
+const age=Math.max(0,presentationClock-record.presentation.born),
+organic=record.material==='organic',
+bloody=organic&&prefs.blood&& !record.protected,
+dismember=organic&&prefs.brutal&& !record.protected&&record.outcome!=='intact';
+const animated=animatedIds.has(record.eventId);
+if(!animated&&prefs.showRemains===false)continue;
+const palette=
+organic&&
+(appearance?.byIdentity.get(`${record.appearance.family}/${record.appearance.cast}`)??
+appearance?.byIdentity.get(`${record.appearance.family}/*`));
+const authored=palette&&tier!=='low';
+const variants=recipes.get(record.eventId)??new Map();
+recipes.set(record.eventId,variants);
+const cachedFor=(style,make)=>{
+if(!variants.has(style))variants.set(style,{parts:make()});
+return variants.get(style);
+};
+const style=authored
+?`${appearance.hash}/${palette.identity}/${dismember}/${bloody}/${tier}`
+:`current/${dismember}/${bloody}/${tier}`;
+const full=cachedFor(style,()=>
+authored
+?appearanceRecipe(record,palette,dismember,bloody,tier)
+:combatFragmentRecipe(record,{...prefs,detail:tier}),
+);
+let cached=full;
+if(full.parts.some((part)=>part.optionalDetail)){
+const fullShapes=new Set(full.parts.map((part)=>part.shape));
+const fullCalls=[...fullShapes].reduce(
+(sum,name)=>
+sum+(reserved.has(name)?0:(pools.get(name)?.userData.combatCalls??1)),
+reservedCalls,
+);
+const allRootsSettled=full.parts.every(
+(part,index)=>
+part.attachment>=0||
+record.presentation.pieces[canonicalRegion(part.region??`fragment-${index}`)]
+?.settled,
+);
+if(
+fullCalls>limits.calls||
+full.parts.length>limits.settled-stats.settled||
+(!allRootsSettled&&full.parts.length>limits.moving-stats.moving)
+){
+cached=full.essential??=(()=>{
+const kept=full.parts
+.map((part,index)=>({part,index}))
+.filter(({part})=> !part.optionalDetail);
+const remap=new Map(kept.map(({index},i)=>[index,i]));
+const parts=kept.map(({part})=>({
+...part,
+supportSize:[...(part.ownSupportSize??part.supportSize??part.size)],
+attachment:remap.get(part.attachment)?? -1,
+}));
+for(let index=parts.length-1;index>=0;index--){
+const part=parts[index];
+if(part.attachment<0)continue;
+const parent=parts[part.attachment],
+support=rotatedSupportSize(part);
+for(let axis=0;axis<3;axis++)
+parent.supportSize[axis]=Math.max(
+parent.supportSize[axis],
+Math.abs(part.at[axis])*2+support[axis],
+);
+}
+return{parts};
+})();
+}
+}
+const parts=cached.parts;
+// Variant-specific counts can be stale after another detail variant has
+// advanced the shared region poses. Admission below reads those poses.
+if(examinedPieces+parts.length>limits.moving+limits.settled)continue;
+if(
+parts.length>limits.settled-stats.settled&&
+parts.length>limits.moving-stats.moving
+)
+continue;
+const shapes=(cached.shapes??=[...new Set(parts.map((part)=>part.shape))].map(
+(name)=>({name,calls:pools.get(name)?.userData.combatCalls??1}),
+));
+const requiredCalls=shapes.reduce(
+(sum,shape)=>sum+(reserved.has(shape.name)?0:shape.calls),
+reservedCalls,
+);
+const triangles=authored
+?(cached.triangles??=parts.reduce(
+(n,part)=>n+(pools.get(part.shape).userData.combatTriangles??0),
+0,
+))
+:0;
+if(requiredCalls>limits.calls||stats.triangles+triangles>limits.triangles){
+// Keep the selected appearance. A complete authored cluster that cannot
+// fit remains logical instead of being silently redrawn as Current art.
+if(authored)stats.deferredAuthoredClusters++;
+continue;
+}
+cached.multiplicity??=parts.reduce(
+(counts,part)=>counts.set(part.shape,(counts.get(part.shape)??0)+1),
+new Map(),
+);
+if(
+[...cached.multiplicity].some(
+([name,count])=>pools.get(name).count+count>pools.get(name).instanceMatrix.count,
+)
+)
+continue;
+
+// Admit a complete cluster before any surface queries. Offscreen archives
+// remain logical records and do not each run their own fragment simulation.
+const topology=(cached.topology??=parts.map((part,index)=>{
+let root=index;
+while(parts[root].attachment>=0)root=parts[root].attachment;
+return{
+root,
+key:canonicalRegion(parts[root].region??`fragment-${root}`),
+isRoot:root===index,
+};
+}));
+const rootStates=topology.map((row)=>
+row.isRoot?record.presentation.pieces[row.key]:null,
+);
+if(
+topology.every((row,index)=> !row.isRoot||rootStates[index]?.settled)&&
+parts.length>limits.settled-stats.settled
+)
+continue;
+const movingParents=topology.reduce(
+(count,row)=>count+(rootStates[row.root]&& !rootStates[row.root].settled?1:0),
+0,
+);
+if(!reducedMotion&&movingParents>limits.moving-stats.moving)continue;
+examinedPieces+=parts.length;
+
+const origin=axes.map((axis)=>(record.position[axis]-originMm[axis])/1000);
+origin[1]+=organic?record.height/2000:record.radius/2000;
+const surface=
+bloody&&prefs.showRemains!==false?markSurface(record):record.surface;
+const direction=Math.atan2(
+record.impactDirection?.z??record.velocity.z,
+record.impactDirection?.x??record.velocity.x,
+);
+const impact=impactStrength(record);
+const poses=[];
+for(let index=0;index<parts.length;index++){
+const part=parts[index];
+if(part.attachment>=0){
+const parent=poses[part.attachment];
+euler.set(...parent.rotation);
+quaternion.setFromEuler(euler);
+const offset=pieceOffset.set(...part.at).applyQuaternion(quaternion);
+const at=parent.at.map((n,axis)=>n+offset.getComponent(axis));
+quaternion.multiply(decalTurn.setFromEuler(euler.set(...(part.rotation??[0,0,0]))));
+euler.setFromQuaternion(quaternion);
+poses.push({
+at,
+rotation:[euler.x,euler.y,euler.z],
+settled:parent.settled,
+pending:parent.pending,
+});
+
+continue;
+}
+const key=canonicalRegion(part.region??`fragment-${index}`);
+const angle=
+direction+
+(random(record.seed,index*4)-0.5)*
+(record.outcome==='explosive'?Math.PI*2:3.8);
+const launch=
+1.4+random(record.seed,index*4+2)*(record.outcome==='explosive'?4.5:2.4);
+const speed=(0.7+random(record.seed,index*4+1)*1.8)*impact;
+const state=(record.presentation.pieces[key]??={
+at:[
+record.position.x/1000+part.at[0],
+record.position.y/1000+
+(organic?record.height/2000:record.radius/2000)+
+part.at[1],
+record.position.z/1000+part.at[2],
+],
+rotation:[0,angle,0],
+velocity:[Math.cos(angle)*speed,launch,Math.sin(angle)*speed],
+time:0,
+settled:false,
+pending:false,
+surface:null,
+});
+const resting=[
+Math.PI/2,
+angle+0.8,
+(random(record.seed,index+200)-0.5)*0.2,
+];
+const supportSize=part.supportSize??part.size;
+const boundsKey=supportSize.join('/');
+const restOnSurface=(contact,rotation=resting)=>{
+const n=contact.normal;
+matrix.makeRotationFromEuler(euler.set(...rotation));
+const m=matrix.elements;
+const extent=
+(Math.abs(n.x*m[0]+n.y*m[1]+n.z*m[2])*supportSize[0]+
+Math.abs(n.x*m[4]+n.y*m[5]+n.z*m[6])*supportSize[1]+
+Math.abs(n.x*m[8]+n.y*m[9]+n.z*m[10])*supportSize[2])/
+2;
+const signed=axes.reduce(
+(sum,axis,i)=>sum+(state.at[i]-contact.position[axis]/1000)*n[axis],
+0,
+);
+state.at=state.at.map((v,i)=>v+n[axes[i]]*(extent+0.006-signed));
+state.rotation=[...rotation];
+state.surface=contact;
+state.velocity=[0,0,0];
+state.settled=true;
+state.pending=false;
+restingBounds.set(state,boundsKey);
+};
+const changedBounds=state.settled&&restingBounds.get(state)!==boundsKey;
+const checks=pendingChecks.get(record.eventId)??new Map();
+pendingChecks.set(record.eventId,checks);
+// A resting pose is durable data, not proof that its supporting chunk is
+// currently present. Validate visible support on a bounded cadence and
+// retain the original anchor while streaming has temporarily removed it.
+if(
+state.settled&&
+query&&
+supportChecks<bodySupportBudget&&
+((changedBounds&& !state.pending)||
+presentationClock-(checks.get(key)?? -Infinity)>=0.25)
+){
+supportChecks++;
+checks.set(key,presentationClock);
+const previous=state.surface;
+let support=null,
+attached=false;
+try{
+if(previous){
+const result=querySurface(previous.position,previous.normal,{
+attachment:previous,
+});
+support=surfaceOf(result);
+attached=result?.attached===true;
+}
+}catch{}
+const matches=
+support&&
+(!previous.surfaceId||support.surfaceId===previous.surfaceId)&&
+(attached||
+(Math.hypot(
+...axes.map((axis)=>support.position[axis]-previous.position[axis]),
+)<50&&
+axes.reduce(
+(sum,axis)=>sum+support.normal[axis]*previous.normal[axis],
+0,
+)>0.98));
+state.pending= !matches;
+if(matches){
+const changedNormal=axes.some(
+(axis)=>Math.abs(support.normal[axis]-previous.normal[axis])>1e-6,
+);
+if(changedNormal){
+const turn=new THREE.Quaternion().setFromUnitVectors(
+new THREE.Vector3(previous.normal.x,previous.normal.y,previous.normal.z),
+new THREE.Vector3(support.normal.x,support.normal.y,support.normal.z),
+);
+pieceOffset
+.set(...state.at)
+.sub(
+new THREE.Vector3(
+previous.position.x/1000,
+previous.position.y/1000,
+previous.position.z/1000,
+),
+)
+.applyQuaternion(turn);
+state.at=axes.map(
+(axis,i)=>support.position[axis]/1000+pieceOffset.getComponent(i),
+);
+quaternion.setFromEuler(euler.set(...state.rotation)).premultiply(turn);
+euler.setFromQuaternion(quaternion);
+state.rotation=[euler.x,euler.y,euler.z];
+}else{
+state.at=state.at.map(
+(value,i)=>
+value+(support.position[axes[i]]-previous.position[axes[i]])/1000,
+);
+}
+if(changedBounds||changedNormal)restOnSurface(support,state.rotation);
+else state.surface=support;
+}
+}
+if(changedBounds&&restingBounds.get(state)!==boundsKey){
+if(!query&&state.surface)restOnSurface(state.surface,state.rotation);
+else state.pending=true;
+}
+const retryReady=
+!state.pending||presentationClock-(checks.get(key)?? -Infinity)>=0.25;
+// Legacy recoveries have accepted defeat facts but no resting poses. Resolve
+// directly against admitted support; do not replay four seconds of breakup.
+if(
+!state.settled&&
+state.time===0&&
+age>1.25&&
+!bursts.has(record.eventId)&&
+retryReady&&
+(!query||supportChecks<bodySupportBudget)
+){
+const point=Object.fromEntries(axes.map((axis,i)=>[axis,state.at[i]*1000]));
+let support=null;
+if(query)supportChecks++;
+try{
+support=query?surfaceOf(querySurface(point,{x:0,y:1,z:0})):surface;
+}catch{}
+if(support&&support.normal.y>=0.25)restOnSurface(support);
+else{
+state.pending=true;
+checks.set(key,presentationClock);
+}
+}
+// The actual swept surface decides when a piece stops. No lifetime is a floor.
+const targetTime=reducedMotion?Math.max(4,age):age;
+if(
+state.pending&&
+!state.settled&&
+retryReady&&
+!(state.time===0&&age>1.25&& !bursts.has(record.eventId))
+)
+state.pending=false;
+for(
+let step=0;
+!state.settled&& !state.pending&&state.time+1e-6<targetTime&&step<200;
+step++
+){
+const dt=Math.min(0.02,targetTime-state.time);
+const from=[...state.at];
+const to=from.map(
+(n,axis)=>n+state.velocity[axis]*dt-(axis===1?4.9*dt*dt:0),
+);
+const fromMm=Object.fromEntries(axes.map((axis,i)=>[axis,from[i]*1000]));
+const toMm=Object.fromEntries(axes.map((axis,i)=>[axis,to[i]*1000]));
+const radius=Math.min(...supportSize)/2;
+let contact=null,
+admitted=false;
+if(query){
+try{
+const result=querySurface(
+toMm,
+{x:0,y:1,z:0},
+{fromMm,toMm,radiusMm:radius*1000},
+);
+admitted=result?.clear===true|| !!surfaceOf(result);
+const candidate=surfaceOf(result);
+if(candidate){
+// Older down-ray providers return a future support, not a swept hit.
+const signed=(p)=>
+axes.reduce(
+(sum,axis,i)=>
+sum+(p[i]-candidate.position[axis]/1000)*candidate.normal[axis],
+0,
+);
+if(signed(to)<=radius+0.005&&signed(from)>= -radius)contact=candidate;
+}
+}catch{
+/* Missing streamed geometry remains pending. */
+}
+}else if(
+surface&&
+Math.hypot(toMm.x-surface.position.x,toMm.z-surface.position.z)<
+record.radius*8
+){
+admitted=true;
+const signed=(p)=>
+axes.reduce(
+(sum,axis,i)=>
+sum+(p[i]-surface.position[axis]/1000)*surface.normal[axis],
+0,
+);
+if(signed(to)<=radius+0.005&&signed(from)>= -radius)contact=surface;
+}
+state.pending= !admitted;
+if(!admitted){
+checks.set(key,presentationClock);
+break;
+}
+state.at=to;
+state.time+=dt;
+state.velocity[1]-=9.8*dt;
+state.rotation=[
+state.time*(2+random(record.seed,index+180)),
+angle+state.time,
+state.time*2,
+];
+if(contact&&(contact.normal.y<0.25||state.velocity[1]>0)){
+// Walls and undersides deflect fragments; they are not resting floors.
+const n=contact.normal;
+const velocityNormal=axes.reduce(
+(sum,axis,i)=>sum+state.velocity[i]*n[axis],
+0,
+);
+state.velocity=state.velocity.map(
+(v,i)=>v-Math.min(0,velocityNormal)*1.12*n[axes[i]],
+);
+const signed=axes.reduce(
+(sum,axis,i)=>sum+(to[i]-contact.position[axis]/1000)*n[axis],
+0,
+);
+state.at=to.map((v,i)=>v+n[axes[i]]*(radius+0.004-signed));
+}else if(contact){
+// Project the complete connected cluster onto its real supporting normal.
+restOnSurface(contact);
+}
+}
+const at=state.at.map((n,i)=>n-originMm[axes[i]]/1000);
+poses.push({
+at,
+rotation:state.rotation,
+settled:state.settled,
+pending:state.pending,
+});
+}
+cached.allSettled=poses.every((pose)=>pose.settled);
+cached.movingCount=poses.filter((pose)=> !pose.settled).length;
+// Streaming can temporarily remove the supporting geometry. Retain the
+// complete logical cluster, but never display it as a frozen airborne pose.
+if(poses.some((pose)=>pose.pending))continue;
+const visiblePoses=poses
+.map((pose,i)=>({...pose,part:parts[i]}))
+.filter((pose)=>prefs.showRemains!==false|| !pose.settled);
+const movingCount=reducedMotion?0:visiblePoses.filter((p)=> !p.settled).length;
+const settledCount=visiblePoses.length-movingCount;
+if(
+stats.moving+movingCount>limits.moving||
+stats.settled+settledCount>limits.settled
+)
+continue;
+for(const shape of shapes)reserved.add(shape.name);
+reservedCalls=requiredCalls;
+if(visiblePoses.length){
+if(authored){
+const visibleRegions=new Set(visiblePoses.map((pose)=>pose.part.region)).size;
+stats.authoredClusters++;
+stats.authoredRegions+=visibleRegions;
+if(visibleRegions===palette.regions.length)stats.completeAuthoredClusters++;
+}else stats.proceduralClusters++;
+}
+stats.triangles+=triangles;
+stats.moving+=movingCount;
+stats.settled+=settledCount;
+for(const{at,rotation,part}of visiblePoses)
+put(part.shape,at,part.size,part.tint,rotation,null,part.capVisible);
+if(
+bloody&&
+prefs.showRemains!==false&&
+stats.marks+4<=Math.ceil(limits.marks*0.6)
+){
+const footprints=[];
+const hard=prefs.brutal&& !record.protected;
+const splashes=hard?(tier==='ultra'?9:tier==='low'?5:7):4;
+if(surface)
+for(let mark=0;mark<splashes;mark++)
+footprints.push({
+surface,
+scatter:mark,
+radius:mark
+?(mark<4?0.16:0.065)+
+random(record.seed,mark+290)*(hard?0.27:0.16)
+:0.75+impact*0.16,
+stretch:mark?(hard?1.6+random(record.seed,mark+291)*1.1:1.3):1.7,
+distance:mark?(hard?0.45+random(record.seed,mark+292)*1.8:0.4):0,
+delay:mark?0.18+random(record.seed,mark+293)*0.5:0.1,
+});
+// Contact is owned by the settled region, so a severed limb gets a pool
+// where it actually lands, including elevated and moving surfaces.
+if(tier!=='low')
+for(const row of topology){
+if(!row.isRoot||footprints.length>=(tier==='ultra'?18:12))continue;
+const state=record.presentation.pieces[row.key];
+if(!state?.settled||state.pending|| !state.surface)continue;
+footprints.push({
+surface:state.surface,
+scatter:0,
+radius:/chest|torso|pelvis/.test(row.key)
+?hard
+?0.68
+:0.52
+:hard
+?0.32
+:0.24,
+stretch:1.5,
+delay:state.time,
+});
+}
+for(let mark=0;mark<footprints.length;mark++){
+if(stats.marks>=Math.ceil(limits.marks*0.6))break;
+const footprint=footprints[mark],
+surface=footprint.surface,
+radius=footprint.radius;
+const wetAge=age-(footprint.delay??0);
+if(wetAge<0)continue;
+const base=axes.map(
+(axis)=>
+(surface.position[axis]-originMm[axis])/1000+surface.normal[axis]*0.006,
+);
+const at=[...base];
+if(footprint.scatter){
+const angle=
+direction+
+(random(record.seed,mark+294)-0.5)*
+(record.outcome==='explosive'?Math.PI*2:3.8);
+at[0]+=Math.cos(angle)*footprint.distance;
+at[2]+=Math.sin(angle)*footprint.distance;
+}
+// Offset the mark along the accepted tangent plane, including slopes.
+if(Math.abs(surface.normal.y)>0.15)
+at[1]-=
+((at[0]-base[0])*surface.normal.x+(at[2]-base[2])*surface.normal.z)/
+surface.normal.y;
+const size=[radius*footprint.stretch,radius,1],
+turn=random(record.seed,mark+700)*Math.PI*2;
+if(typeof query==='function'){
+let cached=markSupports.get(record.eventId);
+if(!cached&&supportChecks+9<=bodySupportBudget){
+cached={at:presentationClock,values:[]};
+markSupports.set(record.eventId,cached);
+}
+if(!cached)continue;
+const checks=cached.values;
+const worldCenter=at.map((value,i)=>
+Math.round(value*1000+originMm[axes[i]]),
+);
+const signature=`${surface.surfaceId??''}/${worldCenter.join('/')}/${axes.map((axis)=>surface.normal[axis]).join('/')}/${size.join('/')}/${turn}`;
+const changedSupport=checks[mark]?.signature!==signature;
+const needsCheck=
+changedSupport||presentationClock-checks[mark].checkedAt>=0.25;
+// Keep draining unvalidated footprints over rendered frames, even
+// when a paused preview holds the accepted presentation time still.
+const canCheck=supportChecks+9<=bodySupportBudget;
+if(needsCheck&&canCheck){
+supportChecks+=9;
+const orient=new THREE.Quaternion()
+.setFromUnitVectors(
+decalAxis,
+new THREE.Vector3(surface.normal.x,surface.normal.y,surface.normal.z),
+)
+.multiply(new THREE.Quaternion().setFromAxisAngle(decalAxis,turn));
+const supported=[-0.5,0,0.5].every((x)=>
+[-0.5,0,0.5].every((y)=>{
+const offset=new THREE.Vector3(x*size[0],y*size[1],0).applyQuaternion(
+orient,
+);
+const point=Object.fromEntries(
+axes.map((axis,i)=>[
+axis,
+(at[i]+offset.getComponent(i))*1000+originMm[axis],
+]),
+);
+try{
+const hit=surfaceOf(querySurface(point,surface.normal));
+return(
+hit&&
+Math.hypot(...axes.map((axis)=>hit.position[axis]-point[axis]))<50&&
+(!surface.surfaceId||hit.surfaceId===surface.surfaceId)&&
+axes.reduce((n,axis)=>n+hit.normal[axis]*surface.normal[axis],0)>
+0.98
+);
+}catch{
+return false;
+}
+}),
+);
+checks[mark]={signature,supported,checkedAt:presentationClock};
+}
+// Keep individually validated footprints while the bounded queue
+// checks other pieces; never reuse validation at a different contact.
+if(changedSupport&& !canCheck)continue;
+if(!checks[mark]?.supported)continue;
+}
+const spread=0.25+0.75*(1-Math.exp(-wetAge*(footprint.scatter?8:1.2)));
+put(
+'mark',
+at,
+[size[0]*spread,size[1]*spread,1],
+age>20?'#43131a':mark%2?'#701024':HUNT_PRESENTATION_CATALOG.palette.blood,
+[0,0,turn],
+surface.normal,
+);
+stats.marks++;
+}
+}
+}
+// Surface impacts have their own logical ring; an old corpse cannot erase a bullet hit.
+if(prefs.showRemains!==false){
+let bulletMarks=0,
+blastMarks=0,
+examinedImpacts=0;
+for(const record of nearestRecords(ledger.impacts(),cameraPosition,originMm)){
+if(stats.marks>=limits.marks||examinedImpacts++ >=limits.marks*2)break;
+if(record.material==='organic'&& !prefs.blood)continue;
+const blast= /rocket|bomb|charge|explosion/.test(`${record.weapon}/${record.cause}`);
+const quota=Math.max(4,Math.floor(limits.marks*0.2));
+if(blast?blastMarks>=quota:bulletMarks>=quota)continue;
+const surface=markSurface(record);
+if(!surface)continue;
+const radius=blast
+?Math.min(1.2,0.35+record.severity*0.35)
+:record.weapon==='precision'
+?0.075
+:0.04;
+const key=record.eventId;
+let cached=markSupports.get(key);
+if(
+(!cached||presentationClock-cached.at>=0.25)&&
+supportChecks+4<=supportCheckBudget
+){
+supportChecks+=4;
+let supported;
+supported=true;
+if(query){
+supported=[
+[-1,0],
+[1,0],
+[0,-1],
+[0,1],
+].every(([x,z])=>{
+try{
+const orient=new THREE.Quaternion().setFromUnitVectors(
+decalAxis,
+new THREE.Vector3(surface.normal.x,surface.normal.y,surface.normal.z),
+);
+const offset=new THREE.Vector3(
+x*radius*1000,
+z*radius*1000,
+0,
+).applyQuaternion(orient);
+const point=Object.fromEntries(
+axes.map((axis,i)=>[axis,surface.position[axis]+offset.getComponent(i)]),
+);
+const hit=surfaceOf(querySurface(point,surface.normal));
+return(
+hit&&
+Math.hypot(...axes.map((axis)=>hit.position[axis]-point[axis]))<50&&
+(!surface.surfaceId||hit.surfaceId===surface.surfaceId)&&
+axes.reduce((sum,axis)=>sum+hit.normal[axis]*surface.normal[axis],0)>
+0.98
+);
+}catch{
+return false;
+}
+});
+}
+cached={at:presentationClock,supported};
+markSupports.set(key,cached);
+}
+if(!cached?.supported)continue;
+const at=axes.map(
+(axis)=>
+(surface.position[axis]-originMm[axis])/1000+surface.normal[axis]*0.005,
+);
+put(
+'mark',
+at,
+[radius*(blast?1.5:1),radius,1],
+record.material==='organic'?'#711c2c':blast?'#38332b':'#343a36',
+[0,0,random(record.seed,300)*Math.PI*2],
+surface.normal,
+);
+stats.marks++;
+if(blast)blastMarks++;
+else bulletMarks++;
+}
+}
+// Nonfatal hits share the same materials, but never create a corpse record.
+if(!reducedMotion)
+for(const record of[...impacts.values()].reverse()){
+const age=presentationClock-record.presentation.born;
+if(age<0||age>0.3||stats.bursts>=limits.bursts)continue;
+const bloody=record.material==='organic'&&prefs.blood&& !record.protected;
+const count=Math.min(bloody?12:6,limits.moving-stats.moving);
+if(!count)break;
+stats.bursts++;
+const origin=axes.map(
+(axis)=>((record.impactPosition??record.position)[axis]-originMm[axis])/1000,
+);
+if(!record.impactPosition)
+origin[1]+=
+record.material==='organic'?record.height/2000:record.radius/2000;
+const angle=Math.atan2(
+record.impactDirection?.z??(record.velocity.z||record.normal.z),
+record.impactDirection?.x??(record.velocity.x||record.normal.x),
+);
+for(let i=0;i<count;i++){
+const heading=angle+(random(record.seed,i+800)-0.5)*1.8,
+spread=age*(0.7+random(record.seed,i+850)*2);
+put(
+bloody
+?'wound'
+:record.material==='glass'
+?'glass'
+:['stone','earth','concrete','organic'].includes(record.material)&&
+!record.protected
+?'cloth'
+:'spark',
+[
+origin[0]+Math.cos(heading)*spread,
+origin[1]+age*0.9-4.9*age*age,
+origin[2]+Math.sin(heading)*spread,
+],
+[0.025,0.025,0.05],
+bloody
+?'#a62b47'
+:['stone','earth','concrete'].includes(record.material)
+?'#b2a996'
+:record.material==='organic'&& !record.protected
+?'#a4a08c'
+:'#ffcf81',
+[age*3,-heading,age],
+);
+stats.moving++;
+}
+}
+// Transparency is isolated and sorted back-to-front; solid fragments keep depth writes.
+smoke.sort((a,b)=>
+cameraPosition
+?b.at.reduce((sum,n,i)=>sum+(n-cameraPosition[axes[i]])**2,0)-
+a.at.reduce((sum,n,i)=>sum+(n-cameraPosition[axes[i]])**2,0)
+:0,
+);
+for(const item of smoke)
+put(
+'smoke',
+item.at,
+[item.size,item.size,1],
+item.tint,
+[0,0,0],
+cameraPosition
+?normalOf(
+Object.fromEntries(
+axes.map((axis,i)=>[axis,cameraPosition[axis]-item.at[i]]),
+),
+)
+:{x:0,y:0,z:1},
+);
+for(const mesh of pools.values()){
+mesh.visible=mesh.count>0;
+if(mesh.visible){
+mesh.instanceMatrix.needsUpdate=true;
+mesh.instanceColor.needsUpdate=true;
+if(mesh.geometry.attributes.combatCapEnabled)
+mesh.geometry.attributes.combatCapEnabled.needsUpdate=true;
+stats.calls+=mesh.userData.combatCalls??1;
+}
+}
+}
+return{
+configure,
+setAppearanceParts,
+setAppearancePartsTemplates,
+prepareTextures(upload){
+if(typeof upload!=='function'|| !appearance)return;
+const textures=new Set();
+for(const mesh of appearance.pools.values())
+for(const paint of[
+mesh.userData.combatOriginalMaterial??mesh.material,
+mesh.userData.combatCleanMaterial,
+]
+.filter(Boolean)
+.flat()){
+for(const value of Object.values(paint))if(value?.isTexture)textures.add(value);
+for(const texture of paint.userData.combatCapTextures??[])textures.add(texture);
+}
+for(const texture of textures)upload(texture);
+},
+prepareMaterials(){
+for(const mesh of pools.values())mesh.visible=true;
+for(const probe of appearance?.probes??[])probe.visible=true;
+return()=>{
+for(const mesh of pools.values())mesh.visible=mesh.count>0;
+for(const probe of appearance?.probes??[])probe.visible=false;
+};
+},
+observe,
+update,
+reset,
+export(){
+const archive=ledger.export();
+for(const record of[...archive.records,...archive.impactRecords])
+record.presentation=compactFragmentArchive(record.presentation);
+return{...archive,presentationClock};
+},
+restore(input,options){
+ledger.restore(input,{...options,groundQuery:options?.groundQuery??query});
+orderedRings.clear();
+markSupports.clear();
+surfaceSupports.clear();
+runId=ledger.snapshot().runId;
+currentTick=ledger.snapshot().tick;
+presentationClock=Number.isFinite(input?.presentationClock)
+?Math.max(0,input.presentationClock)
+:currentTick/50;
+for(const record of[...ledger.records(),...ledger.impacts()])
+record.presentation??={
+born:Math.max(0,presentationClock-Math.max(4,(currentTick-record.tick)/50)),
+pieces:{},
+};
+bursts.clear();
+impacts.clear();
+recipes.clear();
+pendingChecks.clear();
+clearPools();
+},
+resources:()=>({
+...stats,
+...ledger.snapshot(),
+presentationClock,
+pendingFragments:ledger
+.records()
+.reduce(
+(n,r)=>
+n+Object.values(r.presentation?.pieces??{}).filter((p)=>p.pending).length,
+0,
+),
+maxDrawCalls:COMBAT_EFFECT_LIMITS[stats.tier].calls,
+registeredPools:pools.size,
+appearanceReady:Boolean(appearance),
+appearanceHash:appearance?.hash??null,
+appearanceDrawCalls:appearance?.calls??0,
+appearanceCharacters:appearance?.byIdentity.size??0,
+appearanceDerivedDecodedBytes:appearance?.derivedBytes??0,
+appearanceDerivedGpuBytes:appearance?.derivedBytes??0,
+appearanceDerivedMaterials:appearance?.materials.size??0,
+appearanceDerivedTextures:appearance?.textures.size??0,
+maxAppearanceTriangles:COMBAT_EFFECT_LIMITS[stats.tier].triangles,
+}),
+dispose(){
+if(disposed)return;
+disposed=true;
+root.removeFromParent();
+releaseAppearance(appearance);
+appearance=null;
+for(const mesh of pools.values()){
+mesh.geometry.dispose();
+mesh.material.dispose();
+mesh.dispose();
+}
+mistTexture.dispose();
+pools.clear();
+bursts.clear();
+impacts.clear();
+recipes.clear();
+markSupports.clear();
+surfaceSupports.clear();
+pendingChecks.clear();
+orderedRings.clear();
+shared?.dispose();
+display?.dispose();
+},
+};
+}
+
+return{
+COMBAT_EFFECT_LIMITS:COMBAT_EFFECT_LIMITS,
+COMBAT_PRESENTATION_KEY:COMBAT_PRESENTATION_KEY,
+createCombatPresentationPreferences:createCombatPresentationPreferences,
+normalizeCombatDefeat:normalizeCombatDefeat,
+createCombatRemainsLedger:createCombatRemainsLedger,
+combatFragmentRecipe:combatFragmentRecipe,
+createCombatPresentation:createCombatPresentation,
+};
+})();
+modules['optional-practice/civilian-fpv/combat-appearance.mjs']=(()=>{
+const inspectImport=external20['inspectImport'];
+const worldSHA256=external20['worldSHA256'];
+const validateWorldPath=external20['validateWorldPath'];
+const ACTOR_FAMILIES=external9['ACTOR_FAMILIES'];
+const ACTOR_CASTS=external9['ACTOR_CASTS'];
+// Projected into the existing World runtime slot; the optional package does not
+// gain a separate loader utility or make Academy depend on skeletal art.
+
+// Appearance is a separately admitted optional download. None of this data is
+// part of an encounter, hitbox, recording proof, or reward identity.
+// Enabled only after the complete optional asset pack has passed admission.
+const COMBAT_APPEARANCE_DOWNLOAD=Object.freeze({
+url:'../../authoring/library/fpv-character-art/r2/manifest.json',
+sha256:'9940f5d75727b52d067cf1be2ce75e254f52e0b6670643bc28a308291969e009',
+bytes:14703667,
+});
+const COMBAT_APPEARANCE_FORMAT='FPVCombatAppearance.v1';
+const COMBAT_APPEARANCE_FORMAT_V2='FPVCombatAppearance.v2';
+const COMBAT_DAMAGE_REGIONS=Object.freeze([
+'head',
+'chest',
+'abdomen',
+'pelvis',
+'leftUpperArm',
+'leftForearm',
+'rightUpperArm',
+'rightForearm',
+'leftThigh',
+'leftShin',
+'rightThigh',
+'rightShin',
+]);
+const legacyRegions=['head','torso','leftArm','rightArm','leftLeg','rightLeg'];
+const COMBAT_APPEARANCE_LIMITS=Object.freeze({
+manifestBytes:64*1024,
+downloadBytes:24*1024*1024,
+modelBytes:16*1024*1024,
+decodedBytes:128*1024*1024,
+gpuBytes:160*1024*1024,
+files:16,
+verticesPerModel:65536,
+accessorValuesPerModel:2*1000*1000,
+textureDimension:2048,
+liveActors:20,
+});
+const families=new Set(ACTOR_FAMILIES.map((row)=>row.id));
+const casts=new Set(ACTOR_CASTS.map((row)=>row.id));
+const hash=(value)=>typeof value==='string'&& /^[a-f0-9]{64}$/.test(value);
+const id=(value)=>typeof value==='string'&& /^[a-z0-9][a-z0-9-]{0,79}$/.test(value);
+const text=(value,max=200)=>
+typeof value==='string'&&value.length>0&&value.length<=max;
+const assert=(value,message)=>{
+if(!value)throw new Error(message);
+};
+const abort=(signal)=>{
+if(signal?.aborted)throw new DOMException('Cancelled','AbortError');
+};
+const freeze=(value)=>{
+if(value&&typeof value==='object'){
+for(const child of Object.values(value))freeze(child);
+Object.freeze(value);
+}
+return value;
+};
+const prepared=new WeakMap();
+const HTTPS=(value)=>{
+try{
+return new URL(value).protocol==='https:';
+}catch{
+return false;
+}
+};
+
+function validateCombatAppearanceManifest(input){
+const m=structuredClone(input);
+assert(
+[COMBAT_APPEARANCE_FORMAT,COMBAT_APPEARANCE_FORMAT_V2].includes(m?.format)&&
+id(m.id)&&
+id(m.revision),
+'Invalid appearance identity.',
+);
+assert(text(m.title),'Appearance title is required.');
+assert(
+m.license&&
+text(m.license.creator)&&
+text(m.license.name)&&
+HTTPS(m.license.sourceURL)&&
+HTTPS(m.license.licenseURL)&&
+text(m.license.modifications,2000),
+'Appearance provenance and modifications are required.',
+);
+assert(
+Array.isArray(m.files)&&
+m.files.length>0&&
+m.files.length<=COMBAT_APPEARANCE_LIMITS.files,
+'Appearance file count exceeds budget.',
+);
+const files=new Set();
+let size=0;
+for(const file of m.files){
+validateWorldPath(file.path);
+assert(
+/\.glb$/.test(file.path)&& !files.has(file.path),
+'Appearance files must be unique self-contained GLBs.',
+);
+assert(
+Number.isSafeInteger(file.bytes)&&
+file.bytes>0&&
+file.bytes<=COMBAT_APPEARANCE_LIMITS.modelBytes&&
+hash(file.sha256),
+'Invalid appearance file identity or size.',
+);
+files.add(file.path);
+size+=file.bytes;
+}
+assert(size<=COMBAT_APPEARANCE_LIMITS.downloadBytes,'Appearance download exceeds budget.');
+assert(
+Array.isArray(m.characters)&&m.characters.length>0&&m.characters.length<=36,
+'Appearance characters are required.',
+);
+const identities=new Set(),
+used=new Set();
+for(const c of m.characters){
+assert(
+families.has(c.family)&&casts.has(c.cast)&& !identities.has(`${c.family}/${c.cast}`),
+'Appearance requires unique supported family/cast identities.',
+);
+identities.add(`${c.family}/${c.cast}`);
+assert(
+files.has(c.file)&&text(c.root,80),
+'Appearance character root or file is missing.',
+);
+used.add(c.file);
+assert(
+Number.isFinite(c.height)&&
+c.height>=0.5&&
+c.height<=3&&
+Number.isFinite(c.radius)&&
+c.radius>0&&
+c.radius<=1,
+'Invalid appearance dimensions.',
+);
+c.forward??='+z';
+assert(['+z','-z'].includes(c.forward),'Invalid appearance facing axis.');
+assert(
+c.clips&&['idle','move','attack'].every((key)=>text(c.clips[key],80)),
+'Appearance requires idle, move and attack clips.',
+);
+assert(
+Array.isArray(c.lods)&&
+c.lods.length>=1&&
+c.lods.length<=3&&
+c.lods.every((name)=>text(name,80))&&
+new Set([c.root,...c.lods]).size===c.lods.length+1,
+'Appearance requires separate distance-detail roots.',
+);
+if(c.equipment!==undefined){
+assert(
+Array.isArray(c.equipment)&&c.equipment.length<=8,
+'Appearance equipment count exceeds budget.',
+);
+const equipmentRoots=new Set(),
+remainsRoots=new Set();
+for(const item of c.equipment){
+assert(
+text(item.root,80)&& !equipmentRoots.has(item.root)&&text(item.bone,80),
+'Appearance equipment requires distinct roots and attachment bones.',
+);
+equipmentRoots.add(item.root);
+assert(
+item.remainsRoot===undefined||text(item.remainsRoot,80),
+'Appearance equipment remains root is invalid.',
+);
+const remainsRoot=item.remainsRoot??item.root;
+assert(
+!remainsRoots.has(remainsRoot),
+'Appearance equipment remains roots must be distinct.',
+);
+remainsRoots.add(remainsRoot);
+assert(
+Array.isArray(item.lodBones)&&
+item.lodBones.length===c.lods.length&&
+item.lodBones.every((name)=>text(name,80)),
+'Appearance equipment LOD bones are required.',
+);
+assert(
+legacyRegions.includes(item.region),
+'Appearance equipment requires a damage region.',
+);
+assert(
+item.color===undefined||
+(Array.isArray(item.color)&&
+item.color.length===3&&
+item.color.every((v)=>Number.isFinite(v)&&v>=0&&v<=1)),
+'Appearance equipment color is invalid.',
+);
+assert(
+item.openOffset===undefined||
+(Array.isArray(item.openOffset)&&
+item.openOffset.length===3&&
+item.openOffset.every((value)=>Number.isFinite(value)&&Math.abs(value)<=0.3)),
+'Appearance equipment opening offset is invalid.',
+);
+assert(
+item.role===undefined||['shield','brace'].includes(item.role),
+'Appearance equipment reaction is invalid.',
+);
+}
+}
+if(m.format===COMBAT_APPEARANCE_FORMAT_V2){
+assert(id(c.regionSet)&&m.regionSets?.[c.regionSet],'Missing appearance region set.');
+c.regions=structuredClone(m.regionSets[c.regionSet]);
+const keys=Object.keys(c.regions);
+assert(
+keys.length===12&&COMBAT_DAMAGE_REGIONS.every((key)=>keys.includes(key)),
+'Appearance v2 requires all twelve connected damage regions.',
+);
+for(const[key,region]of Object.entries(c.regions)){
+assert(
+text(region.mesh,80)&&
+text(region.cap,80)&&
+legacyRegions.includes(region.aggregate),
+'Invalid connected damage region.',
+);
+assert(
+region.parent===null||
+(COMBAT_DAMAGE_REGIONS.includes(region.parent)&&region.parent!==key),
+'Invalid connected damage parent.',
+);
+const visited=new Set([key]);
+let parent=region.parent;
+while(parent!==null){
+assert(!visited.has(parent),'Cyclic damage region connectivity.');
+visited.add(parent);
+parent=c.regions[parent]?.parent;
+assert(
+parent===null||COMBAT_DAMAGE_REGIONS.includes(parent),
+'Disconnected damage region.',
+);
+}
+}
+assert(
+Object.values(c.regions).filter((region)=>region.parent===null).length===1,
+'Damage regions require one connected root.',
+);
+for(const item of c.equipment??[])
+assert(
+COMBAT_DAMAGE_REGIONS.includes(item.damageRegion),
+'Equipment requires explicit connected-region ownership.',
+);
+}
+assert(
+c.parts&&
+['head','torso','leftArm','rightArm','leftLeg','rightLeg'].every(
+(key)=>text(c.parts[key]?.mesh,80)&&text(c.parts[key]?.cap,80),
+),
+'Appearance requires authored body parts and wound caps.',
+);
+}
+assert(used.size===files.size,'Appearance pack contains unused files.');
+return freeze(m);
+}
+
+// This only runs after inspectImport has checked every GLB view, image header,
+// accessor and skin. Counts are conservative upper bounds, not GPU telemetry.
+function modelMetrics(document,bytes){
+const view=new DataView(bytes.buffer,bytes.byteOffset,bytes.byteLength);
+const jsonLength=view.getUint32(12,true);
+const binary=bytes.subarray(20+jsonLength+8);
+let pixels=0;
+const imageMipPixels=[];
+for(const image of document.images??[]){
+const v=document.bufferViews[image.bufferView],
+start=v.byteOffset??0;
+const b=binary.subarray(start,start+v.byteLength),
+d=new DataView(b.buffer,b.byteOffset,b.byteLength);
+let width=0,
+height=0;
+if(image.mimeType==='image/png'){
+width=d.getUint32(16);
+height=d.getUint32(20);
+}else{
+let p=2;
+while(p+4<=b.length){
+while(b[p]===255)p++;
+const marker=b[p++];
+if(marker===0xd9||marker===0xda)break;
+if(marker===1||(marker>=0xd0&&marker<=0xd7))continue;
+const length=d.getUint16(p);
+if([0xc0,0xc1,0xc2].includes(marker)){
+height=d.getUint16(p+3);
+width=d.getUint16(p+5);
+break;
+}
+p+=length;
+}
+}
+assert(
+width>0&&
+height>0&&
+width<=COMBAT_APPEARANCE_LIMITS.textureDimension&&
+height<=COMBAT_APPEARANCE_LIMITS.textureDimension,
+'Appearance texture dimension exceeds budget.',
+);
+pixels+=width*height;
+let mipPixels=0;
+while(true){
+mipPixels+=width*height;
+if(width===1&&height===1)break;
+width=Math.max(1,Math.floor(width/2));
+height=Math.max(1,Math.floor(height/2));
+}
+imageMipPixels.push(mipPixels);
+}
+const accessors=document.accessors??[];
+assert(
+accessors.every((a)=>a.count<=1000000)&&
+accessors.reduce((n,a)=>n+a.count,0)<=
+COMBAT_APPEARANCE_LIMITS.accessorValuesPerModel,
+'Appearance accessor budget exceeded.',
+);
+const positions=new Set(
+(document.meshes??[]).flatMap((m)=>m.primitives.map((p)=>p.attributes.POSITION)),
+);
+const vertices=[...positions].reduce((n,a)=>n+accessors[a].count,0);
+assert(
+vertices<=COMBAT_APPEARANCE_LIMITS.verticesPerModel,
+'Appearance vertex budget exceeded.',
+);
+const components={SCALAR:1,VEC2:2,VEC3:3,VEC4:4,MAT2:4,MAT3:9,MAT4:16};
+// Sparse and bufferless accessors allocate their full declared typed arrays.
+// Four bytes/component also bounds normalized/converted component storage.
+const accessorBytes=accessors.reduce((n,a)=>n+a.count*components[a.type]*4,0);
+const textureUses=new Map();
+const countTextures=(value)=>{
+if(!value||typeof value!=='object')return;
+for(const[key,item]of Object.entries(value)){
+if(
+key.endsWith('Texture')&&
+item&&
+typeof item==='object'&&
+Number.isInteger(item.index)
+)
+textureUses.set(item.index,(textureUses.get(item.index)??0)+1);
+else countTextures(item);
+}
+};
+for(const material of document.materials??[])countTextures(material);
+const textureMipPixels=(document.textures??[]).reduce(
+(n,texture,index)=>
+n+imageMipPixels[texture.source]*Math.max(1,textureUses.get(index)??0),
+0,
+);
+// Count separate material uses conservatively; sampler/UV/color-space variants
+// may own separate GPU textures even when they share an embedded image.
+const boneBytes=
+(document.nodes??[]).filter((node)=>node.skin!==undefined).length*
+64*
+16*
+4*
+(COMBAT_APPEARANCE_LIMITS.liveActors+2);
+return{
+vertices,
+pixels,
+decodedBytes:bytes.length*2+accessorBytes*2+pixels*4+boneBytes,
+gpuBytes:binary.length*2+accessorBytes*2+textureMipPixels*4+boneBytes,
+};
+}
+
+function validateCharacter(document,character){
+const nodes=document.nodes??[],
+names=new Map();
+assert(
+(document.extensionsUsed??[]).every((name)=>
+['KHR_materials_unlit','KHR_texture_transform'].includes(name),
+),
+'Appearance requires baked core PBR materials.',
+);
+for(const material of document.materials??[])
+assert(
+['OPAQUE','MASK'].includes(material.alphaMode??'OPAQUE'),
+'Appearance materials must be opaque or alpha-tested.',
+);
+for(const node of nodes){
+assert(!node.extras?.rl,'Appearance may not contain gameplay markers.');
+if(node.name){
+assert(!names.has(node.name),'Appearance node names must be unique.');
+names.set(node.name,node);
+}
+}
+const active=new Set();
+const visit=(index)=>{
+active.add(nodes[index]);
+for(const child of nodes[index].children??[])visit(child);
+};
+for(const index of document.scenes[document.scene??0].nodes??[])visit(index);
+const descendants=(name)=>{
+const root=names.get(name);
+assert(root,`Missing appearance node: ${name}.`);
+assert(active.has(root),`Appearance node is outside the active scene: ${name}.`);
+const result=[];
+const walk=(node)=>{
+result.push(node);
+for(const child of node.children??[])walk(nodes[child]);
+};
+walk(root);
+return result;
+};
+const clips=new Map();
+for(const clip of document.animations??[]){
+assert(
+text(clip.name,80)&& !clips.has(clip.name),
+'Appearance animation names must be unique.',
+);
+clips.set(clip.name,clip);
+}
+for(const name of Object.values(character.clips))
+assert(clips.has(name),`Missing appearance clip: ${name}.`);
+for(const root of[character.root,...character.lods]){
+const branch=descendants(root),
+members=new Set(branch);
+assert(branch.length<=254,'Appearance live node budget exceeded.');
+const meshes=branch.filter((node)=>node.mesh!==undefined);
+assert(
+meshes.length>0&&
+meshes.reduce((n,node)=>n+document.meshes[node.mesh].primitives.length,0)<=2,
+'Appearance live roots require at most two material draws.',
+);
+assert(
+meshes.every((node)=>node.skin!==undefined),
+'Appearance live meshes must be skinned.',
+);
+const joints=new Set();
+for(const mesh of meshes)
+for(const joint of document.skins[mesh.skin].joints){
+assert(members.has(nodes[joint]),'Appearance live root must contain its complete rig.');
+joints.add(joint);
+}
+for(const item of character.equipment??[]){
+const lod=[character.root,...character.lods].indexOf(root);
+const bone=names.get(lod===0?item.bone:item.lodBones[lod-1]);
+assert(
+bone&&members.has(bone)&&joints.has(nodes.indexOf(bone)),
+'Appearance equipment must attach to a contained skin joint.',
+);
+}
+for(const name of Object.values(character.clips))
+assert(
+clips.get(name).channels.some((channel)=>joints.has(channel.target.node)),
+`Appearance clip does not animate the selected rig: ${name}.`,
+);
+}
+for(const item of character.equipment??[]){
+for(const name of new Set([item.root,item.remainsRoot??item.root])){
+const pieces=descendants(name).filter((node)=>node.mesh!==undefined);
+assert(
+pieces.length>0&&
+pieces.every((node)=>node.skin===undefined)&&
+pieces.reduce((n,node)=>n+document.meshes[node.mesh].primitives.length,0)<=2,
+'Appearance equipment requires bounded rigid meshes.',
+);
+}
+}
+const partRoots=new Set();
+for(const part of Object.values(character.parts))
+for(const name of[part.mesh,part.cap]){
+assert(!partRoots.has(name),'Appearance damage part roots must be distinct.');
+partRoots.add(name);
+const pieces=descendants(name).filter((node)=>node.mesh!==undefined);
+assert(
+pieces.length>0&&
+pieces.every((node)=>node.skin===undefined)&&
+pieces.reduce((n,node)=>n+document.meshes[node.mesh].primitives.length,0)<=2,
+'Appearance remains require settled, unskinned meshes.',
+);
+}
+const regionRoots=new Set();
+for(const region of Object.values(character.regions??{})){
+for(const name of[region.mesh,region.cap]){
+assert(!regionRoots.has(name),'Connected damage roots must be distinct.');
+regionRoots.add(name);
+const pieces=descendants(name).filter((node)=>node.mesh!==undefined);
+assert(
+pieces.length>0&&
+pieces.every((node)=>node.skin===undefined)&&
+pieces.reduce((n,node)=>n+document.meshes[node.mesh].primitives.length,0)<=2,
+'Connected remains require bounded rigid meshes.',
+);
+}
+}
+}
+
+/** Full validation precedes activation or cache mutation. Blobs are immutable;
+   * callers cannot mutate the bytes behind an already admitted pack. */
+async function prepareCombatAppearancePack({manifestBytes,sha256,assets,signal}={}){
+abort(signal);
+assert(
+hash(sha256)&&
+manifestBytes instanceof Uint8Array&&
+manifestBytes.length<=COMBAT_APPEARANCE_LIMITS.manifestBytes,
+'A pinned bounded appearance manifest is required.',
+);
+manifestBytes=manifestBytes.slice();
+const manifestBlob=new Blob([manifestBytes]);
+assert((await worldSHA256(manifestBlob))===sha256,'Appearance manifest hash mismatch.');
+const manifest=validateCombatAppearanceManifest(
+JSON.parse(new TextDecoder('utf-8',{fatal:true}).decode(manifestBytes)),
+);
+assert(
+assets instanceof Map&&assets.size===manifest.files.length,
+'Appearance files are incomplete.',
+);
+const blobs=new Map(),
+metrics={downloadBytes:manifestBytes.length,decodedBytes:0,gpuBytes:0,vertices:0};
+for(const file of manifest.files){
+abort(signal);
+const source=assets.get(file.path);
+assert(
+source instanceof Blob||source instanceof Uint8Array,
+'Appearance asset bytes are missing.',
+);
+const blob=source instanceof Blob?source:new Blob([source]);
+assert(
+blob.size===file.bytes&&(await worldSHA256(blob))===file.sha256,
+`Appearance file hash/size mismatch: ${file.path}.`,
+);
+const bytes=new Uint8Array(await blob.arrayBuffer());
+const imported=await inspectImport({files:{[file.path]:bytes},entry:file.path});
+const normalized=new Uint8Array(await imported.modelBlob.arrayBuffer());
+const measured=modelMetrics(imported.document,normalized);
+for(const c of manifest.characters.filter((c)=>c.file===file.path))
+validateCharacter(imported.document,c);
+metrics.downloadBytes+=file.bytes;
+for(const key of['decodedBytes','gpuBytes','vertices'])metrics[key]+=measured[key];
+blobs.set(file.path,blob);
+}
+for(const key of['downloadBytes','decodedBytes','gpuBytes'])
+assert(metrics[key]<=COMBAT_APPEARANCE_LIMITS[key],`Appearance ${key} budget exceeded.`);
+abort(signal);
+const result=Object.freeze({
+manifest,
+sha256,
+get assets(){
+return new Map(blobs);
+},
+metrics:Object.freeze(metrics),
+});
+prepared.set(result,{sha256,manifest:manifestBlob,assets:[...blobs]});
+return result;
+}
+
+async function boundedResponse(response,limit,signal){
+try{
+assert(response?.ok&&response.body?.getReader,'Appearance download failed.');
+const length=response.headers?.get('content-length');
+assert(
+length===null||length===undefined||Number(length)<=limit,
+'Appearance response exceeds byte budget.',
+);
+}catch(error){
+await response?.body?.cancel?.().catch(()=>{});
+throw error;
+}
+const reader=response.body.getReader(),
+chunks=[];
+let total=0;
+const cancel=()=>{
+void reader.cancel().catch(()=>{});
+};
+signal?.addEventListener('abort',cancel,{once:true});
+try{
+while(true){
+abort(signal);
+const{value,done}=await reader.read();
+abort(signal);
+if(done)break;
+total+=value.byteLength;
+assert(total<=limit,'Appearance response exceeds byte budget.');
+chunks.push(value);
+}
+const bytes=new Uint8Array(total);
+let offset=0;
+for(const chunk of chunks){
+bytes.set(chunk,offset);
+offset+=chunk.byteLength;
+}
+return bytes;
+}finally{
+signal?.removeEventListener('abort',cancel);
+await reader.cancel().catch(()=>{});
+reader.releaseLock();
+}
+}
+
+async function downloadCombatAppearancePack({
+url,
+sha256,
+fetch:fetcher=globalThis.fetch,
+signal,
+}={}){
+assert(hash(sha256),'A pinned appearance manifest hash is required.');
+const base=new URL(url);
+assert(
+(base.protocol==='https:'||
+(base.protocol==='http:'&&
+['localhost','127.0.0.1','[::1]'].includes(base.hostname)))&&
+!base.username&&
+!base.password,
+'Invalid appearance URL.',
+);
+const controller=new AbortController(),
+cancel=()=>controller.abort();
+abort(signal);
+signal?.addEventListener('abort',cancel,{once:true});
+const timeout=setTimeout(cancel,120000),
+outerSignal=signal;
+signal=controller.signal;
+try{
+const get=async(target,limit)=>{
+abort(signal);
+const response=await fetcher(target.href,{
+signal,
+credentials:'omit',
+redirect:'error',
+});
+return boundedResponse(response,limit,signal);
+};
+const manifestBytes=await get(base,COMBAT_APPEARANCE_LIMITS.manifestBytes);
+assert((await worldSHA256(manifestBytes))===sha256,'Appearance manifest hash mismatch.');
+const manifest=validateCombatAppearanceManifest(
+JSON.parse(new TextDecoder('utf-8',{fatal:true}).decode(manifestBytes)),
+);
+assert(
+manifestBytes.length+manifest.files.reduce((n,file)=>n+file.bytes,0)<=
+COMBAT_APPEARANCE_LIMITS.downloadBytes,
+'Appearance download exceeds budget.',
+);
+const assets=new Map();
+for(const file of manifest.files)
+assets.set(file.path,await get(new URL(file.path,base),file.bytes));
+return await prepareCombatAppearancePack({manifestBytes,sha256,assets,signal});
+}finally{
+clearTimeout(timeout);
+outerSignal?.removeEventListener('abort',cancel);
+}
+}
+
+/** Decode only a previously admitted pack. The owner and every consumer hold
+   * separate leases: shared textures/geometries outlive all skinned clones and
+   * instanced remains. This helper never changes gameplay or the visible scene. */
+async function prepareCombatAppearanceModels(pack,{THREE,loadModel,clone,signal}={}){
+const admitted=prepared.get(pack);
+assert(
+admitted&&
+THREE?.AnimationClip&&
+typeof loadModel==='function'&&
+typeof clone==='function',
+'Appearance models require an admitted pack and renderer adapters.',
+);
+abort(signal);
+const models=new Map(),
+geometries=new Set(),
+materials=new Set(),
+textures=new Set(),
+images=new Set(),
+skeletons=new Set();
+let references=1,
+closed=false,
+released=false;
+const disposeResources=()=>{
+if(released)return;
+released=true;
+for(const skeleton of skeletons)skeleton.dispose?.();
+for(const geometry of geometries)geometry.dispose?.();
+for(const material of materials)material.dispose?.();
+for(const texture of textures)texture.dispose?.();
+for(const image of images)image.close?.();
+models.clear();
+};
+const release=()=>{
+references--;
+if(references===0)disposeResources();
+};
+const acquire=()=>{
+assert(!closed&& !released,'Appearance model owner is closed.');
+references++;
+let alive=true;
+return()=>{
+if(alive){
+alive=false;
+release();
+}
+};
+};
+const own=(model)=>{
+assert(model?.scene?.isObject3D,'Appearance model decoding failed.');
+model.scene.updateMatrixWorld(true);
+model.scene.traverse((node)=>{
+if(node.skeleton)skeletons.add(node.skeleton);
+if(node.geometry)geometries.add(node.geometry);
+for(const material of Array.isArray(node.material)?node.material:[node.material]){
+if(!material)continue;
+materials.add(material);
+for(const texture of Object.values(material))
+if(texture?.isTexture){
+textures.add(texture);
+const source=texture.source?.data??texture.image;
+for(const image of Array.isArray(source)?source:[source])
+if(image)images.add(image);
+}
+}
+});
+assert(Array.isArray(model.animations),'Appearance model decoding failed.');
+};
+const actorClipCache=new WeakMap();
+const actorClips=(model,root,character)=>{
+const nodes=new Set();
+root.traverse((node)=>{
+nodes.add(node.name);
+nodes.add(node.uuid);
+});
+const clips=
+actorClipCache.get(root)??
+model.animations
+.map((clip)=>{
+const tracks=clip.tracks.filter((track)=>
+nodes.has(THREE.PropertyBinding.parseTrackName(track.name).nodeName),
+);
+return tracks.length
+?new THREE.AnimationClip(clip.name,clip.duration,tracks,clip.blendMode)
+:null;
+})
+.filter(Boolean);
+const names=new Set(clips.map((clip)=>clip.name));
+assert(
+clips.every((clip)=>clip.validate()),
+'Decoded appearance clips are invalid.',
+);
+for(const name of Object.values(character.clips))
+assert(names.has(name),`Decoded appearance clip is missing: ${name}.`);
+actorClipCache.set(root,clips);
+return clips;
+};
+try{
+for(const[path,blob]of admitted.assets){
+abort(signal);
+const model=await loadModel(blob,{signal});
+own(model);
+models.set(path,model);
+abort(signal);
+}
+// Resolve every authored root before exposing any lease; partial models are
+// never an activation candidate. Actual image decoding has completed here.
+for(const character of pack.manifest.characters){
+const scene=models.get(character.file).scene;
+for(const name of[
+character.root,
+...character.lods,
+...Object.values(character.parts).flatMap((part)=>[part.mesh,part.cap]),
+...Object.values(character.regions??{}).flatMap((part)=>[part.mesh,part.cap]),
+...(character.equipment??[]).flatMap((item)=>[
+item.root,
+item.remainsRoot??item.root,
+item.bone,
+...item.lodBones,
+]),
+])
+assert(scene.getObjectByName(name),`Decoded appearance root is missing: ${name}.`);
+for(const name of[character.root,...character.lods])
+actorClips(models.get(character.file),scene.getObjectByName(name),character);
+}
+}catch(error){
+closed=true;
+disposeResources();
+throw error;
+}
+const selected=(index)=>{
+assert(
+!closed&&Number.isSafeInteger(index)&&pack.manifest.characters[index],
+'Unknown appearance character.',
+);
+const character=pack.manifest.characters[index];
+return{character,model:models.get(character.file)};
+};
+return Object.freeze({
+sha256:pack.sha256,
+manifest:pack.manifest,
+metrics:pack.metrics,
+createActorLease(index=0,{lod=0}={}){
+const{character,model}=selected(index);
+assert(
+Number.isSafeInteger(lod)&&lod>=0&&lod<=character.lods.length,
+'Invalid appearance detail level.',
+);
+const root=model.scene.getObjectByName(
+lod===0?character.root:character.lods[lod-1],
+);
+const clips=actorClips(model,root,character);
+// The authored normalization may live above the selected rig. Preserve
+// that matrix in a child wrapper while the outer wrapper remains free for
+// runtime scale/facing adjustments; animation still binds original names.
+root.updateWorldMatrix(true,true);
+const parentMatrix=root.parent?.matrixWorld.clone()??new THREE.Matrix4();
+const cloneWithAncestors=(source)=>{
+const outer=new THREE.Group(),
+normalization=new THREE.Group();
+normalization.matrix.copy(parentMatrix);
+normalization.matrixAutoUpdate=false;
+normalization.add(clone(source));
+outer.add(normalization);
+return outer;
+};
+return{
+ready:true,
+sha256:pack.sha256,
+resourceMetrics:pack.metrics,
+family:character.family,
+cast:character.cast,
+scene:root,
+clips,
+clone:cloneWithAncestors,
+forward:character.forward,
+height:character.height,
+radius:character.radius,
+equipment:(character.equipment??[]).map((item)=>{
+const bone=lod===0?item.bone:item.lodBones[lod-1],
+mesh=model.scene.getObjectByName(item.root),
+sourceBone=root.getObjectByName(bone);
+assert(sourceBone?.isBone&&mesh,'Decoded equipment attachment is invalid.');
+return{
+mesh,
+bone,
+region:item.region,
+damageRegion:item.damageRegion,
+role:item.role,
+color:item.color?[...item.color]:[1,1,1],
+openOffset:item.openOffset?[...item.openOffset]:[0,0,0],
+// Opening displacement is in the selected bone's local coordinates,
+// applied before bindMatrix by the cosmetic equipment renderer.
+bindMatrix:new THREE.Matrix4()
+.copy(sourceBone.matrixWorld)
+.invert()
+.multiply(mesh.matrixWorld),
+};
+}),
+motion:{
+idle:character.clips.idle,
+walk:character.clips.move,
+run:character.clips.run??character.clips.move,
+warning:character.clips.attack,
+},
+release:acquire(),
+};
+},
+createPartsLease(index=0){
+const{character,model}=selected(index);
+return{
+ready:true,
+sha256:pack.sha256,
+family:character.family,
+cast:character.cast,
+scene:model.scene,
+height:character.height,
+radius:character.radius,
+equipment:(character.equipment??[]).map((item)=>({
+// Damage regions may use an authored pose different from the rig's
+// rest pose. Reuse the gear geometry with its matching settled transform.
+mesh:model.scene.getObjectByName(item.remainsRoot??item.root),
+region:item.region,
+damageRegion:item.damageRegion,
+color:item.color?[...item.color]:[1,1,1],
+role:item.role,
+})),
+regions:character.regions
+?Object.fromEntries(
+Object.entries(character.regions).map(([key,region])=>[
+key,
+{
+mesh:model.scene.getObjectByName(region.mesh),
+cap:model.scene.getObjectByName(region.cap),
+parent:region.parent,
+aggregate:region.aggregate,
+},
+]),
+)
+:undefined,
+parts:Object.fromEntries(
+Object.entries(character.parts).map(([key,part])=>[
+key,
+{
+mesh:model.scene.getObjectByName(part.mesh),
+cap:model.scene.getObjectByName(part.cap),
+},
+]),
+),
+release:acquire(),
+};
+},
+prepareTextures(upload){
+assert(
+!closed&&typeof upload==='function',
+'Appearance texture preparation requires an open owner.',
+);
+for(const texture of textures)upload(texture);
+},
+dispose(){
+if(!closed){
+closed=true;
+release();
+}
+},
+});
+}
+
+/** One optional pack retained atomically. A bad download or quota failure never
+   * replaces the previous pack. A cache read repeats byte and content admission. */
+async function openCombatAppearanceStore({
+indexedDB=globalThis.indexedDB,
+name='revealline-fpv-appearance-v1',
+}={}){
+assert(indexedDB,'Appearance storage is unavailable.');
+const opening=indexedDB.open(name,1);
+opening.onupgradeneeded=()=>opening.result.createObjectStore('pack');
+const db=await new Promise((resolve,reject)=>{
+let failed=false;
+opening.onsuccess=()=>(failed?opening.result.close():resolve(opening.result));
+opening.onerror=()=>{
+failed=true;
+reject(opening.error);
+};
+opening.onblocked=()=>{
+failed=true;
+reject(new Error('Appearance storage is busy in another tab.'));
+};
+});
+db.onversionchange=()=>db.close();
+const transaction=(mode,work)=>
+new Promise((resolve,reject)=>{
+const tx=db.transaction('pack',mode);
+let value,error;
+tx.oncomplete=()=>resolve(value);
+tx.onabort=()=>
+reject(error||tx.error||new Error('Appearance storage transaction aborted.'));
+tx.onerror=()=>{};
+try{
+work(
+tx.objectStore('pack'),
+(v)=>{
+value=v;
+},
+(e)=>{
+error=e;
+tx.abort();
+},
+);
+}catch(e){
+error=e;
+tx.abort();
+}
+});
+return{
+async load(sha256,{signal}={}){
+assert(hash(sha256),'Expected appearance hash is required.');
+abort(signal);
+const row=await transaction('readonly',(store,done)=>{
+store.get('active').onsuccess=(e)=>done(e.target.result);
+});
+abort(signal);
+if(!row||row.sha256!==sha256)return null;
+return prepareCombatAppearancePack({
+manifestBytes:new Uint8Array(await row.manifest.arrayBuffer()),
+sha256,
+assets:new Map(row.assets),
+signal,
+});
+},
+async save(pack){
+const row=prepared.get(pack);
+assert(row,'Only a fully admitted appearance pack can be stored.');
+await transaction('readwrite',(store)=>{
+store.put(row,'active');
+});
+},
+async clear(){
+await transaction('readwrite',(store)=>{
+store.delete('active');
+});
+},
+close(){
+db.close();
+},
+};
+}
+
+/** Local selection never authorizes a network request. Only download() fetches
+   * the pinned optional pack; absent or invalid cache keeps Current playable. */
+function createCombatAppearanceChoice({
+storage,
+descriptor,
+openStore=openCombatAppearanceStore,
+download=downloadCombatAppearancePack,
+onChange=()=>{},
+}={}){
+const key='revealline.fpv.character-art.v1';
+let selection='current',
+pack=null,
+store=null,
+pending=null,
+disposed=false,
+serial=0,
+issue=null,
+storageIssue=false;
+try{
+if(storage?.getItem(key)==='realistic')selection='realistic';
+}catch{
+/* Optional preferences do not block flight. */
+}
+const snapshot=()=>({
+selection,
+installed:Boolean(pack),
+active:selection==='realistic'&&pack?'realistic':'current',
+pending:Boolean(pending),
+issue,
+storageIssue,
+});
+const notify=()=>{
+if(!disposed)onChange(snapshot());
+};
+const persist=()=>{
+try{
+storage?.setItem(key,selection);
+}catch{
+storageIssue=true;
+}
+};
+const ready=(async()=>{
+try{
+store=await openStore();
+if(disposed){
+store.close();
+store=null;
+return;
+}
+if(descriptor){
+const cached=await store.load(descriptor.sha256);
+if(!disposed)pack=cached;
+}
+}catch{
+if(store)issue='invalid-cache';
+else storageIssue=true;
+}
+if(selection==='realistic'&& !pack&& !issue)issue='missing';
+notify();
+})();
+return{
+ready,
+snapshot,
+pack:()=>(selection==='realistic'?pack:null),
+select(value){
+assert(['current','realistic'].includes(value),'Unknown character art.');
+serial++;
+pending?.abort();
+pending=null;
+selection=value;
+issue=selection==='realistic'&& !pack?'missing':null;
+persist();
+notify();
+},
+async download(){
+if(disposed|| !descriptor)return false;
+pending?.abort();
+const controller=new AbortController(),
+request= ++serial;
+pending=controller;
+issue=null;
+notify();
+const owns=()=> !disposed&&request===serial&& !controller.signal.aborted;
+try{
+const candidate=await download({...descriptor,signal:controller.signal});
+if(!owns())return false;
+await ready;
+if(!owns())return false;
+try{
+if(store){
+await store.save(candidate);
+storageIssue=false;
+}else storageIssue=true;
+}catch{
+storageIssue=true;
+}
+if(!owns())return false;
+pack=candidate;
+issue=null;
+selection='realistic';
+persist();
+return true;
+}catch(error){
+if(owns())issue=error?.name==='AbortError'?null:'download';
+return false;
+}finally{
+if(request===serial){
+pending=null;
+notify();
+}
+}
+},
+cancel(){
+serial++;
+pending?.abort();
+pending=null;
+issue=null;
+notify();
+},
+dispose(){
+disposed=true;
+serial++;
+pending?.abort();
+pending=null;
+store?.close();
+store=null;
+pack=null;
+},
+};
+}
+
+return{
+cloneCombatSkeleton:external26['clone'],
+COMBAT_APPEARANCE_DOWNLOAD:COMBAT_APPEARANCE_DOWNLOAD,
+COMBAT_APPEARANCE_FORMAT:COMBAT_APPEARANCE_FORMAT,
+COMBAT_APPEARANCE_FORMAT_V2:COMBAT_APPEARANCE_FORMAT_V2,
+COMBAT_DAMAGE_REGIONS:COMBAT_DAMAGE_REGIONS,
+COMBAT_APPEARANCE_LIMITS:COMBAT_APPEARANCE_LIMITS,
+validateCombatAppearanceManifest:validateCombatAppearanceManifest,
+prepareCombatAppearancePack:prepareCombatAppearancePack,
+downloadCombatAppearancePack:downloadCombatAppearancePack,
+prepareCombatAppearanceModels:prepareCombatAppearanceModels,
+openCombatAppearanceStore:openCombatAppearanceStore,
+createCombatAppearanceChoice:createCombatAppearanceChoice,
+};
+})();
+modules['optional-practice/civilian-fpv/combat-actors.mjs']=(()=>{
+const ACTOR_FAMILIES=external9['ACTOR_FAMILIES'];
+const actorVisual=external9['actorVisual'];
+const sharedActorAppearance=external14['sharedActorAppearance'];
+const COMBAT_APPEARANCE_LIMITS=
+modules['optional-practice/civilian-fpv/combat-appearance.mjs']['COMBAT_APPEARANCE_LIMITS'];
+const buildIndustrialSoldier=external27['buildIndustrialSoldier'];
+const applyIndustrialSoldierPose=external27['applyIndustrialSoldierPose'];
+const industrialSoldierPaintKeys=external27['industrialSoldierPaintKeys'];
+const buildIndustrialVehicle=external28['buildIndustrialVehicle'];
+const INDUSTRIAL_VEHICLE_MODELS=external28['INDUSTRIAL_VEHICLE_MODELS'];
+
+const families=new Set(ACTOR_FAMILIES.map(({id})=>id));
+const finite=(p)=>p&&['x','y','z'].every((key)=>Number.isFinite(p[key]));
+const clamp=(value,min,max)=>Math.max(min,Math.min(max,value));
+// Representative-art ceiling; raising it requires a separate skinning qualification.
+const COMBAT_SKINNED_ACTOR_LIMIT=20;
+const COMBAT_ACTOR_LIMIT=128;
+const COMBAT_CROWD_PALETTE_BYTES=8*1024*1024;
+
+/** Reuses the native articulated wardrobe as a CPU pose template. Four shared
+   * primitive batches render the complete admitted crowd; a soldier's separate limbs never
+   * become dozens of scene draw calls. Templates are not collision bodies. */
+function createCombatActorPresentation({THREE,scene,appearanceTemplate=null}){
+const root=new THREE.Group();
+root.name='combat-live-actors';
+scene.add(root);
+const batches=new Map(),
+rows=new Map(),
+acceptedCasts=new Map(),
+healthHistory=new Map();
+const matrix=new THREE.Matrix4(),
+unitScale=new THREE.Matrix4(),
+tint=new THREE.Color();
+const geometries={
+box:new THREE.BoxGeometry(1,1,1),
+cylinder:new THREE.CylinderGeometry(0.5,0.5,1,10),
+tapered:new THREE.CylinderGeometry(0.4,0.5,1,10),
+sphere:new THREE.SphereGeometry(0.5,10,8),
+};
+for(const[name,geometry]of Object.entries(geometries)){
+const material=new THREE.MeshStandardMaterial({
+color:0xffffff,
+roughness:0.82,
+metalness:0.08,
+});
+const mesh=new THREE.InstancedMesh(geometry,material,2048);
+mesh.name=`combat-live-${name}`;
+mesh.count=0;
+mesh.visible=false;
+mesh.frustumCulled=false;
+mesh.castShadow=false;
+mesh.receiveShadow=true;
+mesh.instanceMatrix.setUsage(THREE.DynamicDrawUsage);
+mesh.setColorAt(0,tint.set(0xffffff));
+root.add(mesh);
+batches.set(name,mesh);
+}
+const healthGeometry=new THREE.PlaneGeometry(1,1),
+healthPools=[];
+for(const[name,color]of[
+['background',0x171c22],
+['fill',0xf1c66a],
+]){
+const material=new THREE.MeshBasicMaterial({color,toneMapped:false,depthWrite:false});
+const mesh=new THREE.InstancedMesh(healthGeometry,material,COMBAT_ACTOR_LIMIT);
+mesh.name=`combat-health-${name}`;
+mesh.count=0;
+mesh.visible=false;
+mesh.frustumCulled=false;
+mesh.instanceMatrix.setUsage(THREE.DynamicDrawUsage);
+mesh.renderOrder=2;
+root.add(mesh);
+healthPools.push(mesh);
+}
+const healthPosition=new THREE.Vector3(),
+healthNormal=new THREE.Vector3(),
+healthDirection=new THREE.Vector3(),
+healthRight=new THREE.Vector3(),
+healthRotation=new THREE.Quaternion(),
+healthScale=new THREE.Vector3(),
+forward=new THREE.Vector3(0,0,1);
+let active=false,
+current=[],
+ticks=0,
+disposed=false,
+lastQuality='balanced';
+let resources={
+actors:0,
+instances:0,
+calls:0,
+skinnedActors:0,
+skinnedCalls:0,
+crowdActors:0,
+crowdInstances:0,
+crowdCalls:0,
+};
+let appearance=null;
+const gearPools=new Map();
+const crowdPools=()=>
+[...(appearance?.crowdPalettes.values()??[])].flatMap((palette)=>palette.pools);
+const releaseClone=(row,source=row.source)=>{
+row.mixer?.stopAllAction();
+row.mixer?.uncacheRoot(row.model);
+const skeletons=new Set(),
+shapes=new Set(),
+paints=new Set(),
+textures=new Set();
+const sharedTextures=new Set(
+[...(source?.materials??[])].flatMap((paint)=>
+Object.values(paint).filter((value)=>value?.isTexture),
+),
+);
+const sharedImages=new Set([...sharedTextures].map((texture)=>texture.source?.data));
+row.model?.traverse((node)=>{
+if(node.skeleton&& !source?.skeletons.has(node.skeleton))skeletons.add(node.skeleton);
+if(node.geometry&& !source?.geometries.has(node.geometry))shapes.add(node.geometry);
+for(const paint of Array.isArray(node.material)?node.material:[node.material])
+if(paint&& !source?.materials.has(paint)){
+paints.add(paint);
+for(const value of Object.values(paint))
+if(value?.isTexture&& !sharedTextures.has(value))textures.add(value);
+}
+});
+for(const skeleton of skeletons)skeleton.dispose();
+for(const texture of textures){
+if(!sharedImages.has(texture.source?.data))texture.source?.data?.close?.();
+texture.dispose();
+}
+for(const shape of shapes)shape.dispose();
+for(const paint of paints)paint.dispose();
+if(row.model!==source?.input.scene)row.model?.removeFromParent();
+row.group?.removeFromParent();
+};
+const release=(row)=>{
+if(row.crowd){
+row.group.removeFromParent();
+return;
+}
+if(row.skinned){
+releaseClone(row);
+return;
+}
+row.group.traverse((item)=>{
+item.geometry?.dispose();
+});
+for(const material of row.paints)material.dispose();
+};
+const clearRows=()=>{
+for(const row of rows.values())release(row);
+rows.clear();
+};
+const clear=()=>{
+clearRows();
+current=[];
+acceptedCasts.clear();
+healthHistory.clear();
+active=false;
+for(const mesh of[
+...batches.values(),
+...gearPools.values(),
+...healthPools,
+...crowdPools(),
+]){
+mesh.count=0;
+mesh.visible=false;
+}
+};
+/** The host admits bytes/hashes before transferring this cache lease. No URL
+     * or loader is accepted here. Successful installation owns release() until
+     * replacement/disposal; rejected leases remain the caller's responsibility. */
+const poseKey=(source)=>
+JSON.stringify([
+source.input.scene.uuid,
+[...source.clips].map(([name,clip])=>[name,clip.uuid]),
+source.motion,
+]);
+function readAppearanceTemplate(input){
+if(
+!input||
+input.ready!==true||
+!/^[a-f0-9]{64}$/.test(input.sha256)||
+!families.has(input.family)||
+!input.scene?.isObject3D||
+typeof input.clone!=='function'||
+!Number.isFinite(input.height)||
+input.height<=0||
+input.height>8||
+!Number.isFinite(input.radius)||
+input.radius<=0||
+input.radius>4||
+(input.cast!==undefined&& !['tactical','rivals','arcade'].includes(input.cast))||
+(input.forward!==undefined&& !['+z','-z'].includes(input.forward))||
+(input.release!==undefined&&typeof input.release!=='function')||
+!Array.isArray(input.clips)||
+!input.clips.length||
+input.clips.length>32
+)
+throw new Error('Invalid admitted appearance template');
+const next={
+input,
+objects:new Set(),
+skeletons:new Set(),
+geometries:new Set(),
+materials:new Set(),
+meshes:0,
+clips:new Map(),
+motion:{...input.motion},
+};
+let skinned=0,
+slots=0;
+input.scene.traverse((node)=>{
+next.objects.add(node);
+if(node.isLight||node.isCamera||node.isLine||node.isPoints)
+throw new Error('Appearance templates contain only models and bones');
+if(!node.isMesh)return;
+next.meshes++;
+if(!node.geometry?.isBufferGeometry)throw new Error('Missing appearance geometry');
+next.geometries.add(node.geometry);
+const paints=Array.isArray(node.material)?node.material:[node.material];
+const draws=Array.isArray(node.material)?node.geometry.groups.length:1;
+if(!draws)throw new Error('Empty appearance material groups');
+slots+=draws;
+for(const paint of paints){
+if(!paint?.isMaterial||paint.transparent)
+throw new Error('Unsupported appearance material');
+next.materials.add(paint);
+}
+if(node.isSkinnedMesh){
+skinned++;
+if(!node.skeleton?.bones.length||node.skeleton.bones.length>64)
+throw new Error('Appearance rig exceeds joint budget');
+next.skeletons.add(node.skeleton);
+}
+});
+if(!skinned||next.objects.size>256||next.meshes>2||slots>2)
+throw new Error('Appearance model exceeds representative budget');
+next.calls=slots;
+for(const skeleton of next.skeletons)
+if(skeleton.bones.some((bone)=> !next.objects.has(bone)))
+throw new Error('All appearance bones must belong to the template root');
+for(const clip of input.clips){
+if(
+!(clip instanceof THREE.AnimationClip)||
+!clip.name||
+next.clips.has(clip.name)||
+clip.tracks.length>128||
+!clip.validate()
+)
+throw new Error('Invalid appearance clip');
+next.clips.set(clip.name,clip);
+}
+for(const role of['idle','walk','run','warning']){
+next.motion[role]??=next.clips.has(role)?role:null;
+if(next.motion[role]!==null&& !next.clips.has(next.motion[role]))
+throw new Error('Missing appearance motion clip');
+}
+next.motion.idle??=input.clips[0].name;
+next.equipment=[];
+for(const gear of input.equipment??[]){
+if(
+!gear.mesh?.isObject3D||
+!gear.bindMatrix?.isMatrix4||
+![...next.objects].some((node)=>node.isBone&&node.name===gear.bone)
+)
+throw new TypeError('Invalid authored equipment binding');
+gear.mesh.updateWorldMatrix(true,true);
+const inverse=gear.mesh.matrixWorld.clone().invert();
+gear.mesh.traverse((node)=>{
+if(!node.isMesh)return;
+if(node.isSkinnedMesh)throw new TypeError('Equipment must be rigid');
+const paints=Array.isArray(node.material)?node.material:[node.material];
+if(paints.some((paint)=> !paint?.isMaterial||paint.transparent))
+throw new TypeError('Invalid equipment surface');
+next.equipment.push({
+geometry:node.geometry,
+material:node.material,
+calls:Array.isArray(node.material)?node.geometry.groups.length:1,
+bone:gear.bone,
+color:new THREE.Color().fromArray(gear.color??[1,1,1]),
+offset:new THREE.Matrix4().multiplyMatrices(
+gear.bindMatrix,
+new THREE.Matrix4().multiplyMatrices(inverse,node.matrixWorld),
+),
+role:gear.role,
+openOffset:new THREE.Matrix4()
+.multiplyMatrices(
+new THREE.Matrix4().makeTranslation(...(gear.openOffset??[0,0,0])),
+gear.bindMatrix,
+)
+.multiply(new THREE.Matrix4().multiplyMatrices(inverse,node.matrixWorld)),
+});
+});
+}
+next.probe=cloneAppearance(next);
+return next;
+}
+function retireAppearance(){
+clearRows();
+for(const palette of appearance?.crowdPalettes.values()??[])releaseCrowdPalette(palette);
+for(const source of appearance?.sources??[]){
+if(source.probe)releaseClone(source.probe,source);
+try{
+source.input.release?.();
+}catch{
+/* Keep fallback available. */
+}
+}
+for(const mesh of gearPools.values()){
+mesh.removeFromParent();
+mesh.dispose();
+}
+gearPools.clear();
+appearance=null;
+}
+function setAppearanceTemplates(entries){
+if(disposed)return false;
+const sources=[],
+byIdentity=new Map(),
+stagedGear=new Map(),
+crowdPalettes=new Map();
+let valid=true,
+resourceMetrics=null;
+try{
+entries??=[];
+if(!Array.isArray(entries)||entries.length>36)
+throw new TypeError('Invalid appearance collection');
+const inputs=new Set(),
+probes=new Set();
+for(const entry of entries){
+if(!Array.isArray(entry.lods)|| !entry.lods.length||entry.lods.length>4)
+throw new TypeError('Invalid appearance detail collection');
+const lods=[];
+for(const input of entry.lods){
+if(inputs.has(input))throw new TypeError('Repeated appearance lease');
+inputs.add(input);
+if(input.resourceMetrics!==undefined){
+const next=input.resourceMetrics;
+for(const key of['decodedBytes','gpuBytes']){
+if(
+!Number.isSafeInteger(next?.[key])||
+next[key]<0||
+(resourceMetrics&&next[key]!==resourceMetrics[key])
+)
+throw new TypeError('Invalid appearance resource accounting');
+}
+resourceMetrics={decodedBytes:next.decodedBytes,gpuBytes:next.gpuBytes};
+}
+const source=readAppearanceTemplate(input);
+sources.push(source);
+const key=poseKey(source);
+if(probes.has(key)){
+releaseClone(source.probe,source);
+source.probe=null;
+}else probes.add(key);
+lods.push(source);
+}
+const key=`${lods[0].input.family}/${lods[0].input.cast??'*'}`;
+if(
+byIdentity.has(key)||
+lods.some(
+(source)=>
+`${source.input.family}/${source.input.cast??'*'}`!==key||
+source.input.sha256!==sources[0].input.sha256,
+)
+)
+throw new TypeError('Mixed appearance identity');
+byIdentity.set(key,lods);
+}
+const gearCapacity=new Map();
+for(const source of sources){
+const counts=new Map();
+for(const piece of source.equipment){
+const key=gearKey(piece);
+counts.set(key,(counts.get(key)??0)+1);
+}
+for(const[key,count]of counts)
+gearCapacity.set(key,Math.max(gearCapacity.get(key)??0,count*COMBAT_ACTOR_LIMIT));
+}
+for(const source of sources)
+for(const piece of source.equipment)
+gearPool(piece,stagedGear,false,gearCapacity.get(gearKey(piece)));
+let paletteBytes=0;
+for(const lods of byIdentity.values()){
+const source=lods.at(-1);
+const key=poseKey(source);
+if(!crowdPalettes.has(key)){
+const representative=sources.find(
+(candidate)=>candidate.probe&&poseKey(candidate)===key,
+);
+const palette=bakeCrowdPalette(
+source,
+representative?.probe,
+COMBAT_CROWD_PALETTE_BYTES-paletteBytes,
+);
+paletteBytes+=palette.bytes;
+crowdPalettes.set(key,palette);
+}
+source.crowdPalette=crowdPalettes.get(key);
+}
+if(resourceMetrics){
+const gearBytes=[...stagedGear.values()].reduce(
+(sum,mesh)=>
+sum+
+mesh.instanceMatrix.array.byteLength+
+(mesh.instanceColor?.array.byteLength??0),
+0,
+);
+// Admitted pack metrics already reserve twenty live skeletons and probes.
+// These are the additional shared body poses and full-crowd gear buffers.
+resourceMetrics.decodedBytes+=paletteBytes+gearBytes;
+resourceMetrics.gpuBytes+=
+[...crowdPalettes.values()].reduce((sum,palette)=>sum+palette.gpuBytes,0)+
+gearBytes;
+if(
+resourceMetrics.decodedBytes>COMBAT_APPEARANCE_LIMITS.decodedBytes||
+resourceMetrics.gpuBytes>COMBAT_APPEARANCE_LIMITS.gpuBytes
+)
+throw new TypeError('Appearance and crowd resources exceed the pack budget');
+}
+}catch{
+for(const palette of crowdPalettes.values())releaseCrowdPalette(palette);
+for(const mesh of stagedGear.values())mesh.dispose();
+for(const source of sources)if(source.probe)releaseClone(source.probe,source);
+valid=false;
+}
+retireAppearance();
+if(!valid)return false;
+if(sources.length){
+appearance={
+sources,
+byIdentity,
+crowdPalettes,
+resourceMetrics,
+hash:sources[0].input.sha256,
+};
+for(const[key,mesh]of stagedGear){
+gearPools.set(key,mesh);
+root.add(mesh);
+}
+for(const mesh of crowdPools())root.add(mesh);
+}
+return true;
+}
+function setAppearanceTemplate(input){
+if(input&&appearance?.sources.length===1&&appearance.sources[0].input===input)
+return true;
+return setAppearanceTemplates(input===null?[]:[{lods:[input]}]);
+}
+// Grow whole batches before writing. No admitted actor loses limbs or equipment
+// when the crowd exceeds the initial allocation.
+function reserveBatch(pools,key,required){
+let mesh=pools.get(key);
+if(required<=mesh.instanceMatrix.count)return mesh;
+const size=Math.max(required,mesh.instanceMatrix.count*2);
+const replacement=new THREE.InstancedMesh(mesh.geometry,mesh.material,size);
+replacement.name=mesh.name;
+replacement.frustumCulled=false;
+replacement.castShadow=false;
+replacement.receiveShadow=true;
+replacement.userData={...mesh.userData};
+replacement.instanceMatrix.setUsage(THREE.DynamicDrawUsage);
+replacement.instanceMatrix.array.set(mesh.instanceMatrix.array);
+replacement.setColorAt(0,tint.set(0xffffff));
+if(mesh.instanceColor)replacement.instanceColor.array.set(mesh.instanceColor.array);
+replacement.count=mesh.count;
+replacement.visible=mesh.visible;
+root.add(replacement);
+mesh.removeFromParent();
+mesh.dispose();
+pools.set(key,replacement);
+return replacement;
+}
+function gearKey(piece){
+const paints=Array.isArray(piece.material)?piece.material:[piece.material];
+return`${piece.geometry.uuid}/${paints.map((paint)=>paint.uuid).join('/')}`;
+}
+function gearPool(piece,target=gearPools,attach=true,capacity=320){
+const key=gearKey(piece);
+if(!target.has(key)){
+const mesh=new THREE.InstancedMesh(piece.geometry,piece.material,Math.max(1,capacity));
+mesh.name='combat-live-equipment';
+mesh.count=0;
+mesh.visible=false;
+mesh.frustumCulled=false;
+mesh.castShadow=false;
+mesh.receiveShadow=true;
+mesh.userData.combatCalls=piece.calls;
+mesh.instanceMatrix.setUsage(THREE.DynamicDrawUsage);
+mesh.setColorAt(0,tint.set(0xffffff));
+target.set(key,mesh);
+if(attach)root.add(mesh);
+}
+return attach?reserveBatch(target,key,target.get(key).count+1):target.get(key);
+}
+function releaseCrowdPalette(palette){
+for(const mesh of palette.pools){
+mesh.removeFromParent();
+mesh.dispose();
+}
+for(const geometry of palette.geometries)geometry.dispose();
+}
+/** Bake the shared lowest-detail body once, never once per family or cast.
+     * The small palette keeps distant soldiers in the admitted art style while
+     * matching rigid equipment to the exact sampled skeleton pose. */
+function bakeCrowdPalette(source,probe,availableBytes){
+if(!probe)throw new TypeError('Missing crowd pose preparation rig');
+const palette={
+poses:[],
+roles:new Map(),
+pools:[],
+geometries:[],
+bytes:0,
+gpuBytes:0,
+};
+const sampled=new Map(),
+point=new THREE.Vector3();
+const addBytes=(bytes,gpu=false)=>{
+palette.bytes+=bytes;
+if(gpu)palette.gpuBytes+=bytes;
+if(palette.bytes>availableBytes)
+throw new TypeError('Crowd pose palette exceeds its memory budget');
+};
+try{
+for(const role of['idle','walk','run','warning']){
+const name=source.motion[role]??source.motion.walk??source.motion.idle;
+const clip=source.clips.get(name);
+const count=role==='walk'||role==='run'?4:1;
+const frames=[];
+for(let frame=0;frame<count;frame++){
+const time=clip.duration*(role==='warning'?0.5:frame/count);
+const key=`${name}/${time}`;
+if(!sampled.has(key)){
+probe.mixer.stopAllAction();
+probe.mixer.clipAction(clip).reset().play();
+probe.mixer.setTime(time);
+probe.model.updateMatrixWorld(true);
+const bones=new Map(),
+meshes=[];
+probe.model.traverse((node)=>{
+if(node.isBone){
+bones.set(node.name,node.matrixWorld.clone());
+addBytes(16*8);
+}
+if(node.isMesh)meshes.push(node);
+node.skeleton?.update();
+});
+const pose={bones,pools:[]};
+for(const node of meshes){
+const geometry=node.geometry.clone();
+palette.geometries.push(geometry);
+// Morphs and skinning are already applied to the sampled vertices.
+geometry.deleteAttribute('skinIndex');
+geometry.deleteAttribute('skinWeight');
+geometry.deleteAttribute('tangent');
+geometry.morphAttributes={};
+const positions=geometry.attributes.position;
+for(let index=0;index<positions.count;index++){
+node.getVertexPosition(index,point).applyMatrix4(node.matrixWorld);
+positions.setXYZ(index,point.x,point.y,point.z);
+}
+geometry.computeVertexNormals();
+geometry.computeBoundingBox();
+geometry.computeBoundingSphere();
+const mesh=new THREE.InstancedMesh(geometry,node.material,COMBAT_ACTOR_LIMIT);
+mesh.name='combat-live-crowd-body';
+mesh.count=0;
+mesh.visible=false;
+mesh.frustumCulled=false;
+mesh.castShadow=false;
+mesh.receiveShadow=true;
+mesh.instanceMatrix.setUsage(THREE.DynamicDrawUsage);
+mesh.userData.combatCalls=Array.isArray(node.material)
+?geometry.groups.length
+:1;
+palette.pools.push(mesh);
+pose.pools.push(mesh);
+const buffers=new Set(
+[geometry.index,...Object.values(geometry.attributes)]
+.filter(Boolean)
+.map((attribute)=>(attribute.data??attribute).array.buffer),
+);
+addBytes(
+[...buffers].reduce((sum,buffer)=>sum+buffer.byteLength,0)+
+mesh.instanceMatrix.array.byteLength,
+true,
+);
+}
+sampled.set(key,palette.poses.length);
+palette.poses.push(pose);
+}
+frames.push(sampled.get(key));
+}
+palette.roles.set(role,{frames,duration:Math.max(0.001,clip.duration)});
+}
+return palette;
+}catch(error){
+releaseCrowdPalette(palette);
+throw error;
+}finally{
+probe.mixer.stopAllAction();
+probe.model.updateMatrixWorld(true);
+}
+}
+function cloneAppearance(source){
+let model;
+try{
+model=source.input.clone(source.input.scene);
+if(!model?.isObject3D||source.objects.has(model)||model.parent)
+throw new Error('Appearance clone must be detached and independently owned');
+const objects=new Set();
+model.traverse((node)=>objects.add(node));
+if(
+objects.size<source.objects.size||
+objects.size>source.objects.size+2||
+objects.size>256||
+[...objects].filter((node)=>node.isMesh).length!==source.meshes||
+[...objects].filter((node)=> !node.isGroup).length!==
+[...source.objects].filter((node)=> !node.isGroup).length||
+[...objects].some((node)=>source.objects.has(node))
+)
+throw new Error('Appearance clone shares its object hierarchy');
+model.traverse((node)=>{
+if(!node.isMesh)return;
+const paints=Array.isArray(node.material)?node.material:[node.material];
+if(
+!source.geometries.has(node.geometry)||
+paints.some((paint)=> !source.materials.has(paint))
+)
+throw new Error('Appearance clones must share admitted model resources');
+if(node.isSkinnedMesh){
+if(
+source.skeletons.has(node.skeleton)||
+node.skeleton.bones.some((bone)=> !objects.has(bone))
+)
+throw new Error('Appearance clone must own its skeleton');
+if(!node.skeleton.boneTexture)node.skeleton.computeBoneTexture();
+}
+node.castShadow=false;
+node.receiveShadow=true;
+node.frustumCulled=false;
+});
+return{model,mixer:new THREE.AnimationMixer(model),source};
+}catch(error){
+if(model&& !source.objects.has(model))releaseClone({model},source);
+throw error;
+}
+}
+function buildAppearance(actor,source){
+const row=source.probe??cloneAppearance(source);
+source.probe=null;
+const group=new THREE.Group(),
+warning=new THREE.Object3D();
+const radius=clamp(Number(actor.radius)||350,50,4000)/1000,
+height=clamp(Number(actor.height)||1800,100,8000)/1000;
+row.model.scale.multiply(
+new THREE.Vector3(
+radius/source.input.radius,
+height/source.input.height,
+radius/source.input.radius,
+),
+);
+warning.position.y=height+0.3;
+group.name=`combat-appearance-${actor.id}`;
+if(source.input.forward==='+z'){
+const facing=new THREE.Group();
+facing.rotation.y=Math.PI;
+facing.add(row.model);
+group.add(facing);
+}else group.add(row.model);
+group.add(warning);
+root.add(group);
+return{
+...row,
+group,
+skinned:true,
+equipment:source.equipment.map((piece)=>({
+...piece,
+bone:row.model.getObjectByName(piece.bone),
+})),
+warning,
+clip:null,
+time:null,
+pieces:[
+{
+node:warning,
+kind:'box',
+size:[radius*0.14,radius*0.5,radius*0.14],
+color:new THREE.Color('#ffd275'),
+},
+],
+rotors:[],
+};
+}
+function buildCrowdAppearance(actor,source){
+const group=new THREE.Group(),
+model=new THREE.Object3D(),
+warning=new THREE.Object3D();
+const radius=clamp(Number(actor.radius)||350,50,4000)/1000;
+const height=clamp(Number(actor.height)||1800,100,8000)/1000;
+model.scale.set(
+radius/source.input.radius,
+height/source.input.height,
+radius/source.input.radius,
+);
+if(source.input.forward==='+z')model.rotation.y=Math.PI;
+warning.position.y=height+0.3;
+group.name=`combat-crowd-${actor.id}`;
+group.add(model,warning);
+return{
+group,
+model,
+source,
+crowd:true,
+warning,
+rotors:[],
+equipment:source.equipment.map((piece)=>({
+...piece,
+boneName:piece.bone,
+bone:{matrixWorld:new THREE.Matrix4()},
+})),
+pieces:[
+{
+node:warning,
+kind:'box',
+size:[radius*0.14,radius*0.5,radius*0.14],
+color:new THREE.Color('#ffd275'),
+},
+],
+};
+}
+const appearanceRole=(actor,speed,reducedMotion)=>
+reducedMotion
+?'idle'
+:actor.warning
+?'warning'
+:speed>2
+?'run'
+:speed>0.05
+?'walk'
+:'idle';
+function animateAppearance(row,actor,tick,speed,reducedMotion){
+const role=appearanceRole(actor,speed,reducedMotion);
+const source=row.source;
+const name=source.motion[role]??source.motion.walk??source.motion.idle,
+time=reducedMotion?0:Math.max(0,tick-(actor.spawnTick??0))/50;
+if(row.clip!==name){
+row.mixer.stopAllAction();
+row.mixer.clipAction(source.clips.get(name)).reset().play();
+row.clip=name;
+row.time=null;
+}
+if(row.time!==time){
+row.mixer.setTime(time);
+row.time=time;
+}
+}
+function build(actor,quality,cast){
+const group=new THREE.Group(),
+paints=new Set(),
+pieces=[],
+rotors=[];
+const radius=clamp(Number(actor.radius)||350,50,4000)/1000;
+const height=clamp(Number(actor.height)||1800,100,8000)/1000;
+const family=families.has(actor.appearance?.family)?actor.appearance.family:'patroller';
+const palette=actorVisual(family,cast).palette;
+const paint=(hex)=>{
+const material=new THREE.MeshBasicMaterial({color:hex});
+paints.add(material);
+return material;
+};
+const part=(geometry,material,at,parent=group)=>{
+const node=new THREE.Mesh(geometry,material);
+node.position.set(...at);
+parent.add(node);
+const p=geometry.parameters;
+let kind='box',
+size=[p.width??1,p.height??1,p.depth??1];
+if(geometry.type==='CylinderGeometry'){
+const radius=Math.max(p.radiusTop,p.radiusBottom);
+kind=p.radiusTop/(p.radiusBottom||1)<0.9?'tapered':'cylinder';
+size=[radius*2,p.height,radius*2];
+}else if(geometry.type==='SphereGeometry'){
+kind='sphere';
+size=[p.radius*2,p.radius*2,p.radius*2];
+}
+pieces.push({node,kind,size,color:material.color});
+return node;
+};
+let rig=null,
+vehicle=null;
+if(actor.material==='organic'||['patrol','sentry','humanoid'].includes(actor.type)){
+const soldierPaints=Object.fromEntries(
+industrialSoldierPaintKeys(family).map((role)=>[role,paint(palette[role]??role)]),
+);
+rig=buildIndustrialSoldier({
+THREE,
+parent:group,
+part,
+family,
+cast,
+radius,
+height,
+quality,
+paints:soldierPaints,
+});
+}else if(actor.type==='vehicle'){
+const model=INDUSTRIAL_VEHICLE_MODELS.includes(actor.vehicleModel)
+?actor.vehicleModel
+:INDUSTRIAL_VEHICLE_MODELS.includes(actor.appearance?.model)
+?actor.appearance.model
+:INDUSTRIAL_VEHICLE_MODELS.includes(actor.appearance?.family)
+?actor.appearance.family
+:'field-utility';
+const vehiclePaints=Object.fromEntries(
+Object.entries({
+armor:'#657969',
+dark:'#202d29',
+metal:'#9eaaa4',
+glass:'#68a9b4',
+threat:'#f4ca71',
+}).map(([role,hex])=>[role,paint(hex)]),
+);
+vehicle=buildIndustrialVehicle({
+THREE,
+parent:group,
+part,
+model,
+radius,
+quality,
+paints:vehiclePaints,
+});
+}else{
+const dark=paint('#243635'),
+body=paint(
+actor.material==='wood'
+?'#a27b52'
+:actor.material==='glass'
+?'#84bdc8'
+:'#687f71',
+),
+bright=paint('#f0c773');
+const archetype=actor.appearance?.archetype;
+if(actor.type==='drone'||actor.type==='hazard'||archetype?.endsWith('-uav')){
+part(new THREE.BoxGeometry(radius*1.15,radius*0.48,radius*0.75),body,[0,0,0]);
+for(const side of[-1,1]){
+const arm=part(
+new THREE.BoxGeometry(radius*2.3,radius*0.16,radius*0.15),
+dark,
+[0,0,0],
+);
+arm.rotation.y=(side*Math.PI)/4;
+for(const end of[-1,1]){
+const pivot=new THREE.Group();
+pivot.position.set(side*radius*0.76,radius*0.1,end*radius*0.76);
+group.add(pivot);
+part(
+new THREE.CylinderGeometry(radius*0.16,radius*0.16,radius*0.25,8),
+dark,
+[0,0,0],
+pivot,
+);
+const rotor=new THREE.Group();
+rotor.position.y=radius*0.18;
+pivot.add(rotor);
+rotors.push(rotor);
+part(
+new THREE.BoxGeometry(radius*0.82,radius*0.035,radius*0.12),
+bright,
+[0,0,0],
+rotor,
+);
+}
+}
+const camera=part(new THREE.SphereGeometry(radius*0.19,10,8),bright,[
+0,
+-radius*0.18,
+-radius*0.46,
+]);
+camera.name='combat-uav-camera';
+const antenna=part(
+new THREE.CylinderGeometry(radius*0.025,radius*0.025,radius*0.5,6),
+dark,
+[0,radius*0.38,radius*0.18],
+);
+antenna.name='combat-uav-antenna';
+if(archetype==='interceptor-uav'||actor.type==='hazard'){
+part(new THREE.CylinderGeometry(radius*0.16,radius*0.16,radius*0.4,8),body,[
+0,
+-radius*0.28,
+0,
+]).rotation.x=Math.PI/2;
+part(new THREE.BoxGeometry(radius*0.45,radius*0.07,radius*0.12),bright,[
+0,
+radius*0.25,
+-radius*0.3,
+]);
+}
+}else if(archetype!=='supply-container'){
+// A moving combat prop is a ground machine: a low chassis, independent
+// wheel sets/tracks, sensor mast and role-specific payload stay readable
+// at every quality level.
+const explosive=archetype==='explosive-rover'||actor.explosive===true;
+const groundHeight=Math.max(radius*0.65,height);
+part(new THREE.BoxGeometry(radius*1.25,groundHeight*0.32,radius*1.55),body,[
+0,
+groundHeight*0.42,
+0,
+]);
+const wheels=[];
+for(const side of[-1,1]){
+if(!explosive)
+part(new THREE.BoxGeometry(radius*0.32,groundHeight*0.22,radius*1.8),dark,[
+side*radius*0.72,
+groundHeight*0.18,
+0,
+]).name='combat-robot-track';
+for(const end of[-1,0,1]){
+const wheel=part(
+new THREE.CylinderGeometry(radius*0.24,radius*0.24,radius*0.25,10),
+dark,
+[side*radius*0.77,radius*0.24,end*radius*0.62],
+);
+wheel.rotation.z=Math.PI/2;
+wheel.name='combat-robot-wheel';
+wheels.push(wheel);
+part(
+new THREE.CylinderGeometry(radius*0.12,radius*0.12,radius*0.27,8),
+body,
+[side*radius*0.78,radius*0.24,end*radius*0.62],
+).rotation.z=Math.PI/2;
+}
+}
+const turret=part(
+new THREE.BoxGeometry(radius*0.72,groundHeight*0.25,radius*0.65),
+body,
+[0,groundHeight*0.68,-radius*0.15],
+);
+turret.name='combat-robot-turret';
+const sensor=part(new THREE.SphereGeometry(radius*0.13,8,6),bright,[
+0,
+groundHeight*0.78,
+-radius*0.49,
+]);
+sensor.name='combat-robot-sensor';
+if(explosive){
+for(const side of[-1,1]){
+const charge=part(
+new THREE.CylinderGeometry(radius*0.17,radius*0.17,radius*0.9,10),
+body,
+[side*radius*0.3,groundHeight*0.75,0],
+);
+charge.rotation.x=Math.PI/2;
+charge.name='combat-robot-charge';
+part(new THREE.BoxGeometry(radius*0.36,radius*0.07,radius*0.12),bright,[
+side*radius*0.3,
+groundHeight*0.75+radius*0.17,
+0,
+]);
+}
+}else{
+part(
+new THREE.CylinderGeometry(radius*0.055,radius*0.055,radius*0.75,8),
+dark,
+[0,groundHeight*0.7,-radius*0.65],
+).rotation.x=Math.PI/2;
+part(
+new THREE.CylinderGeometry(radius*0.025,radius*0.025,groundHeight*0.36,6),
+dark,
+[radius*0.2,groundHeight*0.8,radius*0.2],
+);
+}
+vehicle={wheels,radar:null};
+}else{
+part(new THREE.BoxGeometry(radius*1.3,height*0.8,radius*1.3),body,[
+0,
+height*0.4,
+0,
+]);
+for(const y of[0.15,0.65])
+part(new THREE.BoxGeometry(radius*1.36,height*0.06,radius*1.36),dark,[
+0,
+height*y,
+0,
+]);
+part(
+new THREE.CylinderGeometry(radius*0.32,radius*0.32,radius*0.03,12),
+bright,
+[0,height*0.82,0],
+);
+}
+}
+if(
+!(actor.material==='organic'||['patrol','sentry','humanoid'].includes(actor.type))
+){
+const core=part(new THREE.SphereGeometry(radius*0.2,8,6),paint('#ff794b'),[
+0,
+actor.type==='drone'||actor.type==='hazard'?0:height*0.55,
+-radius*0.62,
+]);
+core.name='combat-exposed-core';
+core.userData.componentBit=2;
+}
+const warning=part(
+new THREE.BoxGeometry(radius*0.14,radius*0.5,radius*0.14),
+paint('#ffd275'),
+[0,height+0.3,0],
+);
+return{
+group,
+paints,
+pieces,
+rig,
+vehicle,
+rotors,
+warning,
+radius,
+height,
+family,
+cast,
+signature:`${actor.sourceId}/${actor.type}/${actor.radius}/${actor.height}/${family}/${cast}/${quality}/${actor.material}/${actor.vehicleModel??actor.appearance?.model??''}/${actor.appearance?.archetype??''}`,
+};
+}
+function setActors(actors,options={}){
+if(disposed)return;
+if(actors===null){
+clear();
+return;
+}
+if(!Array.isArray(actors)||actors.length>COMBAT_ACTOR_LIMIT)
+throw new TypeError(`Combat presentation accepts at most ${COMBAT_ACTOR_LIMIT} actors`);
+current=actors
+.filter((actor)=>actor&&typeof actor.id==='string'&&finite(actor.position))
+.map((actor)=>structuredClone(actor));
+ticks=options.tick??ticks;
+active=true;
+}
+function update({
+tick=ticks,
+originMm={x:0,y:0,z:0},
+graphicsQuality='balanced',
+cameraPosition=null,
+reducedMotion=false,
+enemyHealthDisplay='aimed',
+aimDirection=null,
+}={}){
+if(disposed)return;
+for(const mesh of healthPools){
+mesh.count=0;
+mesh.visible=false;
+}
+for(const batch of[...batches.values(),...gearPools.values(),...crowdPools()]){
+batch.count=0;
+batch.visible=false;
+}
+resources={
+actors:0,
+instances:0,
+calls:0,
+skinnedActors:0,
+skinnedCalls:0,
+crowdActors:0,
+crowdInstances:0,
+crowdCalls:0,
+};
+if(!active)return;
+if(graphicsQuality!==lastQuality){
+clearRows();
+lastQuality=graphicsQuality;
+}
+const retained=new Set();
+const retainedCasts=new Set();
+const distanceTo=(actor)=>
+cameraPosition
+?Math.hypot(
+(actor.position.x-originMm.x)/1000-cameraPosition.x,
+(actor.position.y-originMm.y)/1000-cameraPosition.y,
+(actor.position.z-originMm.z)/1000-cameraPosition.z,
+)
+:0;
+// Allocate the limited skinning work to nearby actors, not their spawn order.
+const skinPriority=(actor)=>distanceTo(actor)*(rows.get(actor.id)?.skinned?0.85:1);
+const ordered=[...current].sort(
+(a,b)=>skinPriority(a)-skinPriority(b)||a.id.localeCompare(b.id),
+);
+for(const actor of ordered){
+retained.add(actor.id);
+if(
+['defeated','caught','inactive','waiting'].includes(actor.status)||
+actor.health===0
+){
+if(rows.get(actor.id)?.skinned||rows.get(actor.id)?.crowd){
+release(rows.get(actor.id));
+rows.delete(actor.id);
+}
+continue;
+}
+const healthKey=`${actor.id}/${actor.spawnId??actor.spawnTick??0}`;
+const history=healthHistory.get(healthKey)??{health:actor.health,hitTick:-10000};
+if(actor.health<history.health)history.hitTick=tick;
+if(Number.isFinite(actor.lastHitTick))
+history.hitTick=Math.max(history.hitTick,actor.lastHitTick);
+history.health=actor.health;
+healthHistory.set(healthKey,history);
+if(cameraPosition&&enemyHealthDisplay!=='off'&&Number.isFinite(actor.health)){
+const distance=distanceTo(actor);
+healthPosition.set(
+(actor.position.x-originMm.x)/1000,
+(actor.position.y-originMm.y+actor.height)/1000+0.24,
+(actor.position.z-originMm.z)/1000,
+);
+healthDirection.copy(healthPosition);
+healthDirection.y-=actor.height/2000+0.24;
+healthDirection.sub(cameraPosition).normalize();
+const aimed=
+finite(aimDirection)&&
+healthDirection.dot(healthNormal.copy(aimDirection).normalize())>0.992;
+if(
+enemyHealthDisplay==='all'||
+(distance<100&&(aimed||tick-history.hitTick<=150))
+){
+const fraction=clamp(actor.health/Math.max(1,actor.maxHealth??100),0,1);
+const width=clamp(actor.radius/500,0.6,1.6),
+height=0.075;
+healthNormal.copy(cameraPosition).sub(healthPosition).normalize();
+healthRotation.setFromUnitVectors(forward,healthNormal);
+healthRight.set(1,0,0).applyQuaternion(healthRotation);
+matrix.compose(
+healthPosition,
+healthRotation,
+healthScale.set(width+0.06,height+0.035,1),
+);
+healthPools[0].setMatrixAt(healthPools[0].count++,matrix);
+healthPosition
+.addScaledVector(healthNormal,0.004)
+.addScaledVector(healthRight,(-width*(1-fraction))/2);
+matrix.compose(
+healthPosition,
+healthRotation,
+healthScale.set(width*fraction,height,1),
+);
+healthPools[1].setMatrixAt(healthPools[1].count++,matrix);
+}
+}
+const preferred=sharedActorAppearance().snapshot().cast;
+const castKey=`${actor.id}/${actor.spawnId??actor.spawnTick??0}`;
+const rememberedCast=acceptedCasts.get(castKey);
+const cast=['tactical','arcade','rivals'].includes(actor.appearance?.cast)
+?actor.appearance.cast
+:(rememberedCast??(preferred!=='authored'?preferred:'tactical'));
+acceptedCasts.set(castKey,cast);
+retainedCasts.add(castKey);
+const family=families.has(actor.appearance?.family)
+?actor.appearance.family
+:'patroller';
+const lods=
+appearance?.byIdentity.get(`${family}/${cast}`)??
+appearance?.byIdentity.get(`${family}/*`);
+const distance=cameraPosition
+?Math.hypot(
+(actor.position.x-originMm.x)/1000-cameraPosition.x,
+(actor.position.y-originMm.y)/1000-cameraPosition.y,
+(actor.position.z-originMm.z)/1000-cameraPosition.z,
+)
+:0;
+let level=
+graphicsQuality==='low'
+?(lods?.length??1)-1
+:distance>80
+?3
+:distance>40
+?2
+:distance>(graphicsQuality==='balanced'?14:24)
+?1
+:0;
+level=Math.min(level,(lods?.length??1)-1);
+// Keep the current rig within a 15% band around each distance boundary.
+const oldLevel=lods?.indexOf(rows.get(actor.id)?.source)?? -1;
+if(oldLevel>=0&&graphicsQuality!=='low'){
+const boundaries=[graphicsQuality==='balanced'?14:24,40,80];
+if(level>oldLevel&&distance<boundaries[oldLevel]*1.15)level=oldLevel;
+if(level<oldLevel&&distance>boundaries[oldLevel-1]*0.85)level=oldLevel;
+}
+let source=lods?.[level];
+
+const useAppearance=
+source&&
+(actor.material==='organic'||['patrol','sentry','humanoid'].includes(actor.type));
+const useSkin=useAppearance&&resources.skinnedActors<COMBAT_SKINNED_ACTOR_LIMIT;
+if(useAppearance&& !useSkin)source=lods.at(-1);
+const signature=`${actor.sourceId}/${actor.type}/${actor.radius}/${actor.height}/${family}/${cast}/${graphicsQuality}/${actor.material}/${actor.vehicleModel??actor.appearance?.model??''}/${actor.appearance?.archetype??''}/${useAppearance?source.input.sha256+'/'+source.input.scene.uuid+'/'+(useSkin?'skin':'crowd'):''}`;
+let row=rows.get(actor.id);
+if(row&&row.signature!==signature){
+release(row);
+rows.delete(actor.id);
+row=null;
+}
+if(!row){
+try{
+row=useAppearance
+?useSkin
+?buildAppearance(actor,source)
+:buildCrowdAppearance(actor,source)
+:build(actor,graphicsQuality,cast);
+}catch{
+setAppearanceTemplate(null);
+return update({
+tick,
+originMm,
+graphicsQuality,
+cameraPosition,
+reducedMotion,
+enemyHealthDisplay,
+aimDirection,
+});
+}
+row.signature=signature;
+row.cast=cast;
+rows.set(actor.id,row);
+}
+row.group.position.set(
+(actor.position.x-originMm.x)/1000,
+(actor.position.y-originMm.y)/1000,
+(actor.position.z-originMm.z)/1000,
+);
+const heading=actor.heading??actor.velocity??{x:0,z:-1};
+if(Math.hypot(heading.x??0,heading.z??0)>0)
+row.group.rotation.y=Math.atan2(-heading.x,-heading.z);
+const speed=finite(actor.velocity)
+?Math.hypot(actor.velocity.x,actor.velocity.y,actor.velocity.z)/1000
+:0;
+if(row.skinned){
+animateAppearance(row,actor,tick,speed,reducedMotion);
+resources.skinnedActors++;
+resources.skinnedCalls+=row.source.calls;
+resources.calls+=row.source.calls;
+}
+if(row.rig)
+applyIndustrialSoldierPose(row.rig,{
+ticks:tick,
+moving:speed>0.05,
+phase:actor.warning?'warning':(actor.pursuit?.phase??'idle'),
+reducedMotion,
+});
+if(row.vehicle){
+for(const wheel of row.vehicle.wheels)
+wheel.rotation.x=reducedMotion?0:-((tick/50)*speed)/(row.radius*0.2);
+if(row.vehicle.radar)
+row.vehicle.radar.rotation.y=reducedMotion?0:(tick/50)*0.7;
+}
+for(const[index,rotor]of row.rotors.entries())
+rotor.rotation.y=reducedMotion?0:tick*0.65*(index%2?1:-1);
+row.group.updateMatrixWorld(true);
+if(row.crowd){
+const palette=row.source.crowdPalette;
+const role=palette.roles.get(appearanceRole(actor,speed,reducedMotion));
+const elapsed=reducedMotion?0:Math.max(0,tick-(actor.spawnTick??0))/50;
+const frame=Math.floor(
+((elapsed%role.duration)/role.duration)*role.frames.length,
+);
+const pose=palette.poses[role.frames[frame]];
+for(const mesh of pose.pools){
+if(mesh.count>=COMBAT_ACTOR_LIMIT)
+throw new Error('Admitted crowd exceeds pose capacity');
+mesh.setMatrixAt(mesh.count++,row.model.matrixWorld);
+resources.crowdInstances++;
+}
+for(const piece of row.equipment){
+const bone=pose.bones.get(piece.boneName);
+if(!bone)throw new Error('Crowd equipment lost its sampled bone');
+piece.bone.matrixWorld.multiplyMatrices(row.model.matrixWorld,bone);
+}
+resources.crowdActors++;
+}
+for(const piece of row.equipment??[]){
+if(actor.componentMask&1&&['shield','brace'].includes(piece.role))continue;
+const mesh=gearPool(piece);
+{
+matrix.copy(piece.offset);
+const cycle=Math.max(0,tick-(actor.spawnTick??0))%160;
+const open=actor.pursuit
+? !['warning','burst','guarding'].includes(actor.pursuit.phase)
+:cycle>=60;
+if(piece.role==='brace'&&open){
+const elapsed=
+actor.pursuit?.phase==='recovering'
+?80-(actor.pursuit.phaseTicks??72)
+:actor.pursuit
+?8
+:cycle-60;
+const progress=reducedMotion?1:Math.max(0,Math.min(1,elapsed/8));
+for(const axis of[12,13,14])
+matrix.elements[axis]+=
+(piece.openOffset.elements[axis]-piece.offset.elements[axis])*progress;
+}
+matrix.premultiply(piece.bone.matrixWorld);
+mesh.setMatrixAt(mesh.count,matrix);
+mesh.setColorAt(mesh.count++,piece.color);
+}
+}
+const inside=(node,ancestor)=>{
+for(let n=node;n;n=n.parent)if(n===ancestor)return true;
+return false;
+};
+for(const piece of row.pieces){
+if(
+piece.node.userData.componentBit&&
+!(actor.componentMask&piece.node.userData.componentBit)
+)
+continue;
+if(
+actor.componentMask&1&&
+(inside(piece.node,row.rig?.accessories?.armor)||
+/(?:combat-robot-(?:turret|sensor)|combat-uav-camera|industrial-fixed-barrel)/.test(
+piece.node.name,
+))
+)
+continue;
+if(piece.node===row.warning&& !actor.warning)continue;
+const batch=reserveBatch(batches,piece.kind,batches.get(piece.kind).count+1);
+unitScale.makeScale(...piece.size);
+matrix.multiplyMatrices(piece.node.matrixWorld,unitScale);
+batch.setMatrixAt(batch.count,matrix);
+batch.setColorAt(batch.count++,tint.copy(piece.color));
+resources.instances++;
+}
+resources.actors++;
+}
+for(const key of acceptedCasts.keys())
+if(!retainedCasts.has(key))acceptedCasts.delete(key);
+for(const key of healthHistory.keys())
+if(!retainedCasts.has(key))healthHistory.delete(key);
+for(const mesh of healthPools){
+mesh.visible=mesh.count>0;
+if(mesh.visible){
+mesh.instanceMatrix.needsUpdate=true;
+resources.calls++;
+}
+}
+for(const[id,row]of rows)
+if(!retained.has(id)){
+release(row);
+rows.delete(id);
+}
+for(const batch of[...batches.values(),...gearPools.values(),...crowdPools()]){
+batch.visible=batch.count>0;
+if(batch.visible){
+batch.instanceMatrix.needsUpdate=true;
+if(batch.instanceColor)batch.instanceColor.needsUpdate=true;
+resources.calls+=batch.userData.combatCalls??1;
+if(batch.name==='combat-live-crowd-body')
+resources.crowdCalls+=batch.userData.combatCalls;
+}
+}
+}
+if(appearanceTemplate!==null)setAppearanceTemplate(appearanceTemplate);
+return{
+setAppearanceTemplate,
+setAppearanceTemplates,
+prepareTextures(upload){
+if(!appearance||typeof upload!=='function')return;
+const textures=new Set();
+for(const paint of new Set(
+appearance.sources.flatMap((source)=>[
+...source.materials,
+...source.equipment.flatMap((piece)=>
+Array.isArray(piece.material)?piece.material:[piece.material],
+),
+]),
+))
+for(const value of Object.values(paint))if(value?.isTexture)textures.add(value);
+for(const row of[
+...rows.values(),
+...appearance.sources.map((source)=>source.probe),
+].filter(Boolean))
+row.model?.traverse((node)=>{
+if(node.skeleton?.boneTexture)textures.add(node.skeleton.boneTexture);
+});
+for(const texture of textures)upload(texture);
+},
+prepareMaterials(){
+for(const mesh of[
+...batches.values(),
+...gearPools.values(),
+...healthPools,
+...crowdPools(),
+])
+mesh.visible=true;
+const pending=(appearance?.sources??[])
+.filter((source)=>source.probe)
+.map((source)=>({source,probe:source.probe}));
+for(const{probe}of pending)root.add(probe.model);
+return()=>{
+for(const{source,probe}of pending)
+if(source.probe===probe)probe.model.removeFromParent();
+for(const mesh of[
+...batches.values(),
+...gearPools.values(),
+...healthPools,
+...crowdPools(),
+])
+mesh.visible=mesh.count>0;
+};
+},
+setActors,
+update,
+reset:clear,
+active:()=>active,
+resources:()=>({
+...resources,
+templates:rows.size,
+capacity:COMBAT_ACTOR_LIMIT,
+healthBars:healthPools[0].count,
+appearanceReady:Boolean(appearance),
+appearanceHash:appearance?.hash??null,
+appearanceCharacters:appearance?.byIdentity.size??0,
+equipmentCalls:[...gearPools.values()]
+.filter((mesh)=>mesh.count>0)
+.reduce((n,mesh)=>n+mesh.userData.combatCalls,0),
+maxSkinnedActors:COMBAT_SKINNED_ACTOR_LIMIT,
+crowdPaletteBytes:[...(appearance?.crowdPalettes.values()??[])].reduce(
+(sum,palette)=>sum+palette.bytes,
+0,
+),
+crowdPalettes:appearance?.crowdPalettes.size??0,
+crowdPoses:[...(appearance?.crowdPalettes.values()??[])].reduce(
+(sum,palette)=>sum+palette.poses.length,
+0,
+),
+crowdPaletteByteLimit:COMBAT_CROWD_PALETTE_BYTES,
+appearanceResourceMetrics:appearance?.resourceMetrics
+?{...appearance.resourceMetrics}
+:null,
+crowdPaletteGpuBytes:[...(appearance?.crowdPalettes.values()??[])].reduce(
+(sum,palette)=>sum+palette.gpuBytes,
+0,
+),
+equipmentInstanceBytes:[...gearPools.values()].reduce(
+(sum,mesh)=>
+sum+
+mesh.instanceMatrix.array.byteLength+
+(mesh.instanceColor?.array.byteLength??0),
+0,
+),
+}),
+dispose(){
+if(disposed)return;
+setAppearanceTemplate(null);
+disposed=true;
+clear();
+root.removeFromParent();
+healthGeometry.dispose();
+for(const mesh of healthPools){
+mesh.material.dispose();
+mesh.dispose();
+}
+for(const batch of batches.values()){
+batch.geometry.dispose();
+batch.material.dispose();
+batch.dispose();
+}
+},
+};
+}
+
+return{
+COMBAT_SKINNED_ACTOR_LIMIT:COMBAT_SKINNED_ACTOR_LIMIT,
+COMBAT_ACTOR_LIMIT:COMBAT_ACTOR_LIMIT,
+COMBAT_CROWD_PALETTE_BYTES:COMBAT_CROWD_PALETTE_BYTES,
+createCombatActorPresentation:createCombatActorPresentation,
 };
 })();
 // Exact source recordings; decoded only through the existing bounded voice cache.
@@ -9724,6 +25003,14 @@ export const createWorldAudio=
 modules['optional-practice/civilian-fpv/world-audio.mjs'].createWorldAudio;
 export const mountDroneHangar=
 modules['optional-practice/civilian-fpv/world-hangar.mjs'].mountDroneHangar;
+export const mountEncounterEditor=
+modules['optional-practice/civilian-fpv/world-actor-editor.mjs'].mountEncounterEditor;
+export const validateEncounterStudioBundle=
+modules['optional-practice/civilian-fpv/world-actor-editor.mjs'].validateEncounterStudioBundle;
+export const createEncounterStudioSession=
+modules['optional-practice/civilian-fpv/world-actor-editor.mjs'].createEncounterStudioSession;
+export const reconcileEncounterSource=
+modules['optional-practice/civilian-fpv/world-actor-editor.mjs'].reconcileEncounterSource;
 export const mountActorEditor=
 modules['optional-practice/civilian-fpv/world-actor-editor.mjs'].mountActorEditor;
 export const createSectorTracker=
@@ -9732,6 +25019,10 @@ export const medalTargets=
 modules['optional-practice/civilian-fpv/world-progress.mjs'].medalTargets;
 export const evaluateWorldResult=
 modules['optional-practice/civilian-fpv/world-progress.mjs'].evaluateWorldResult;
+export const worldMedalGoal=
+modules['optional-practice/civilian-fpv/world-progress.mjs'].worldMedalGoal;
+export const worldMedalGoalText=
+modules['optional-practice/civilian-fpv/world-progress.mjs'].worldMedalGoalText;
 export const compatibleFlightComparison=
 modules['optional-practice/civilian-fpv/world-progress.mjs'].compatibleFlightComparison;
 export const compatibleGhost=
@@ -9773,3 +25064,114 @@ export const mountWorldLibrary=
 modules['optional-practice/civilian-fpv/world-library.mjs'].mountWorldLibrary;
 export const WORLD_LIBRARY_CATALOGUE=
 modules['optional-practice/civilian-fpv/world-library.mjs'].WORLD_LIBRARY_CATALOGUE;
+export const ENCOUNTER_FORMAT=
+modules['optional-practice/civilian-fpv/encounter-runtime.mjs'].ENCOUNTER_FORMAT;
+export const ENCOUNTER_STATE=
+modules['optional-practice/civilian-fpv/encounter-runtime.mjs'].ENCOUNTER_STATE;
+export const ENCOUNTER_FORMAT_V2=
+modules['optional-practice/civilian-fpv/encounter-runtime.mjs'].ENCOUNTER_FORMAT_V2;
+export const ENCOUNTER_STATE_V2=
+modules['optional-practice/civilian-fpv/encounter-runtime.mjs'].ENCOUNTER_STATE_V2;
+export const ENCOUNTER_WEAPONS=
+modules['optional-practice/civilian-fpv/encounter-runtime.mjs'].ENCOUNTER_WEAPONS;
+export const normalizeEncounterConfig=
+modules['optional-practice/civilian-fpv/encounter-runtime.mjs'].normalizeEncounterConfig;
+export const resolveMilitaryEncounterActor=
+modules['optional-practice/civilian-fpv/encounter-runtime.mjs'].resolveMilitaryEncounterActor;
+export const ENCOUNTER_RULES=
+modules['optional-practice/civilian-fpv/encounter-runtime.mjs'].ENCOUNTER_RULES;
+export const validateEncounterDefinition=
+modules['optional-practice/civilian-fpv/encounter-runtime.mjs'].validateEncounterDefinition;
+export const encounterPhysicsCourse=
+modules['optional-practice/civilian-fpv/encounter-runtime.mjs'].encounterPhysicsCourse;
+export const createNativeEncounterGeometry=
+modules['optional-practice/civilian-fpv/encounter-runtime.mjs'].createNativeEncounterGeometry;
+export const encounterAttackAdmission=
+modules['optional-practice/civilian-fpv/encounter-runtime.mjs'].encounterAttackAdmission;
+export const createEncounterDefinition=
+modules['optional-practice/civilian-fpv/encounter-runtime.mjs'].createEncounterDefinition;
+export const encounterImpactDamage=
+modules['optional-practice/civilian-fpv/encounter-runtime.mjs'].encounterImpactDamage;
+export const createEncounterRuntime=
+modules['optional-practice/civilian-fpv/encounter-runtime.mjs'].createEncounterRuntime;
+export const inspectEncounterRecovery=
+modules['optional-practice/civilian-fpv/encounter-runtime.mjs'].inspectEncounterRecovery;
+export const prepareEncounterDefinition=
+modules['optional-practice/civilian-fpv/encounter-runtime.mjs'].prepareEncounterDefinition;
+export const createEncounterSession=
+modules['optional-practice/civilian-fpv/encounter-session.mjs'].createEncounterSession;
+export const createEncounterPlayback=
+modules['optional-practice/civilian-fpv/encounter-session.mjs'].createEncounterPlayback;
+export const replayEncounterSession=
+modules['optional-practice/civilian-fpv/encounter-session.mjs'].replayEncounterSession;
+export const ENCOUNTER_ARCHIVE_FORMAT=
+modules['optional-practice/civilian-fpv/encounter-session.mjs'].ENCOUNTER_ARCHIVE_FORMAT;
+export const createEncounterArchiveStore=
+modules['optional-practice/civilian-fpv/encounter-session.mjs'].createEncounterArchiveStore;
+export const inspectEncounterArchive=
+modules['optional-practice/civilian-fpv/encounter-session.mjs'].inspectEncounterArchive;
+export const createEncounterArchive=
+modules['optional-practice/civilian-fpv/encounter-session.mjs'].createEncounterArchive;
+export const ENCOUNTER_PREFERENCES_KEY=
+modules['optional-practice/civilian-fpv/encounter-controls.mjs'].ENCOUNTER_PREFERENCES_KEY;
+export const ENCOUNTER_ACTIVITIES=
+modules['optional-practice/civilian-fpv/encounter-controls.mjs'].ENCOUNTER_ACTIVITIES;
+export const createEncounterPreferences=
+modules['optional-practice/civilian-fpv/encounter-controls.mjs'].createEncounterPreferences;
+export const encounterActivityLabel=
+modules['optional-practice/civilian-fpv/encounter-controls.mjs'].encounterActivityLabel;
+export const mountEncounterControls=
+modules['optional-practice/civilian-fpv/encounter-controls.mjs'].mountEncounterControls;
+export const mountCombatVitals=
+modules['optional-practice/civilian-fpv/encounter-controls.mjs'].mountCombatVitals;
+export const admitEncounterServicePad=
+modules['optional-practice/civilian-fpv/encounter-geometry.mjs'].admitEncounterServicePad;
+export const createRegionalEncounterGeometry=
+modules['optional-practice/civilian-fpv/encounter-geometry.mjs'].createRegionalEncounterGeometry;
+export const COMBAT_EFFECT_LIMITS=
+modules['optional-practice/civilian-fpv/combat-presentation.mjs'].COMBAT_EFFECT_LIMITS;
+export const COMBAT_PRESENTATION_KEY=
+modules['optional-practice/civilian-fpv/combat-presentation.mjs'].COMBAT_PRESENTATION_KEY;
+export const createCombatPresentationPreferences=
+modules['optional-practice/civilian-fpv/combat-presentation.mjs']
+.createCombatPresentationPreferences;
+export const normalizeCombatDefeat=
+modules['optional-practice/civilian-fpv/combat-presentation.mjs'].normalizeCombatDefeat;
+export const createCombatRemainsLedger=
+modules['optional-practice/civilian-fpv/combat-presentation.mjs'].createCombatRemainsLedger;
+export const combatFragmentRecipe=
+modules['optional-practice/civilian-fpv/combat-presentation.mjs'].combatFragmentRecipe;
+export const createCombatPresentation=
+modules['optional-practice/civilian-fpv/combat-presentation.mjs'].createCombatPresentation;
+export const COMBAT_SKINNED_ACTOR_LIMIT=
+modules['optional-practice/civilian-fpv/combat-actors.mjs'].COMBAT_SKINNED_ACTOR_LIMIT;
+export const COMBAT_ACTOR_LIMIT=
+modules['optional-practice/civilian-fpv/combat-actors.mjs'].COMBAT_ACTOR_LIMIT;
+export const COMBAT_CROWD_PALETTE_BYTES=
+modules['optional-practice/civilian-fpv/combat-actors.mjs'].COMBAT_CROWD_PALETTE_BYTES;
+export const createCombatActorPresentation=
+modules['optional-practice/civilian-fpv/combat-actors.mjs'].createCombatActorPresentation;
+export const cloneCombatSkeleton=
+modules['optional-practice/civilian-fpv/combat-appearance.mjs'].cloneCombatSkeleton;
+export const COMBAT_APPEARANCE_DOWNLOAD=
+modules['optional-practice/civilian-fpv/combat-appearance.mjs'].COMBAT_APPEARANCE_DOWNLOAD;
+export const COMBAT_APPEARANCE_FORMAT=
+modules['optional-practice/civilian-fpv/combat-appearance.mjs'].COMBAT_APPEARANCE_FORMAT;
+export const COMBAT_APPEARANCE_FORMAT_V2=
+modules['optional-practice/civilian-fpv/combat-appearance.mjs'].COMBAT_APPEARANCE_FORMAT_V2;
+export const COMBAT_DAMAGE_REGIONS=
+modules['optional-practice/civilian-fpv/combat-appearance.mjs'].COMBAT_DAMAGE_REGIONS;
+export const COMBAT_APPEARANCE_LIMITS=
+modules['optional-practice/civilian-fpv/combat-appearance.mjs'].COMBAT_APPEARANCE_LIMITS;
+export const validateCombatAppearanceManifest=
+modules['optional-practice/civilian-fpv/combat-appearance.mjs'].validateCombatAppearanceManifest;
+export const prepareCombatAppearancePack=
+modules['optional-practice/civilian-fpv/combat-appearance.mjs'].prepareCombatAppearancePack;
+export const downloadCombatAppearancePack=
+modules['optional-practice/civilian-fpv/combat-appearance.mjs'].downloadCombatAppearancePack;
+export const prepareCombatAppearanceModels=
+modules['optional-practice/civilian-fpv/combat-appearance.mjs'].prepareCombatAppearanceModels;
+export const openCombatAppearanceStore=
+modules['optional-practice/civilian-fpv/combat-appearance.mjs'].openCombatAppearanceStore;
+export const createCombatAppearanceChoice=
+modules['optional-practice/civilian-fpv/combat-appearance.mjs'].createCombatAppearanceChoice;

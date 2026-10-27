@@ -143,6 +143,7 @@ import {
 import { createMissionPictureThumbnails } from './ui/mission-thumbnails.mjs';
 import { drawResultPicture } from './ui/result-picture.mjs';
 import { resultContinuationLabel } from './ui/result-continuation.mjs';
+import { captureHomeRecommendation } from './ui/capture-home-recommendation.mjs';
 import { loadExternalCatalog, prepareExternalDownload } from './external-chapter-catalog.mjs';
 import { createExternalChapterHost } from './external-chapter-host.mjs';
 import { createExternalChapterBackup } from './external-chapter-backup.mjs';
@@ -269,6 +270,7 @@ import { settingsTabOwnsKey } from './ui/settings-panels.mjs';
 import { attachPublishedAudio } from './ui/published-audio.mjs';
 import { prepareSavedVisualTheme } from './presentation/saved-visual-theme.mjs';
 import { createSoundtrackStore } from './soundtrack-store.mjs';
+import { createBackupArchiveRestore } from './backup-archive-restore.mjs';
 import {
   upgradeSoundtrackLibrary,
   setCatalogueTracks,
@@ -802,6 +804,7 @@ try {
     optionalVerificationPreparation
       ? optionalVerificationPreparation.run('main', work, { signal })
       : work();
+  let gameShell = null;
   const journeyProfile = journeyEnabled
     ? createJourneyProfileStore({
         profileKey: authoredRoute?.profileKey,
@@ -825,6 +828,7 @@ try {
           journeySaveNotice.update(
             previewSession ? { ...status, durable: false, error: null } : status,
           );
+          if (document.getElementById('shell-home')?.open) gameShell?.refreshHome();
         },
       })
     : null;
@@ -1352,6 +1356,7 @@ try {
     bodyId = theme.player;
   }
   const audioMaster = createAudioMaster();
+  let audioSaveWarningOwner = null;
   const audioPreferences = createAudioPreferences({
     audioMaster,
     window,
@@ -1362,8 +1367,19 @@ try {
     },
     writable: () =>
       !practice && !courseSession && !courseEntry && persistenceReady && writer.writable,
-    onWarning: (message) => {
-      if (message) warning(message);
+    onWarning: (message, key) => {
+      if (message) {
+        if (warning(key ? localizedMessage(key) : message, null, 'host.audio-preferences'))
+          audioSaveWarningOwner = flightInformation.token();
+      } else if (audioSaveWarningOwner) {
+        const expected = audioSaveWarningOwner;
+        audioSaveWarningOwner = null;
+        // A recovered save owns only its own current caption, never a later
+        // gameplay notice, replacement attempt or restored-page message.
+        flightInformation.commitWarning(expected, '', null, 'host.audio-preferences', {
+          allowTerminal: true,
+        });
+      }
     },
   });
   const displayPreferences = createDisplayPreferences({
@@ -1371,6 +1387,7 @@ try {
     matchMedia,
     getStorage: () => profileStorage(),
     legacyPreferences: library.preferences,
+    extraLarge: true,
     writable: () =>
       !practice && !courseSession && !courseEntry && persistenceReady && writer.writable,
     onWarning: (message, key) => {
@@ -1572,8 +1589,7 @@ try {
     render: renderMasterPreferences,
   });
   let neutralResumeTick = false;
-  let gameShell = null,
-    missionPicker = null,
+  let missionPicker = null,
     enemyGuide = null,
     optionalWorlds = null,
     optionalWorldsDisposed = false;
@@ -2179,15 +2195,19 @@ try {
     activateDeferredAudio();
     // Only explicit player actions mirror the legacy preference. Playback promises never do.
     const saved = preferences({ musicEnabled: !audioMaster.snapshot().muted });
-    const warning = audioPreferences.getWarning() || saved.warning || '';
+    const warning = audioPreferenceWarning() || saved.warning || '';
     return { ok: !warning, warning };
   }
   function setMasterVolume(volume) {
     audioPreferences.setVolume(volume);
     activateDeferredAudio();
     const saved = preferences({ masterVolume: audioMaster.snapshot().volume });
-    const warning = audioPreferences.getWarning() || saved.warning || '';
+    const warning = audioPreferenceWarning() || saved.warning || '';
     return { ok: !warning, warning };
+  }
+  function audioPreferenceWarning() {
+    const key = audioPreferences.getWarningKey();
+    return key ? t(key) : audioPreferences.getWarning();
   }
   function activateDeferredAudio() {
     const master = audioMaster.snapshot();
@@ -6350,7 +6370,7 @@ try {
       }),
     );
   }
-  function journeyDestination() {
+  function journeyDestinationFacts() {
     const state = journeyProfile?.snapshot();
     const current = state && journeyCatalog.find(state.cursors.solo);
     const selected =
@@ -6361,9 +6381,57 @@ try {
           selected.campaign.levels.findIndex((level) => level.id === current.levelId),
         )?.id ?? current.id)
       : current?.id;
-    return current && Object.hasOwn(state.clears.solo, receiptId)
-      ? nextJourneyMission(current.id) || current
-      : current || (candidateHost ? journeyCatalog.missions[0] : null);
+    const recordedClear = !!current && Object.hasOwn(state.clears.solo, receiptId);
+    return {
+      destination: recordedClear
+        ? nextJourneyMission(current.id) || current
+        : current || (candidateHost ? journeyCatalog.missions[0] : null),
+      cursorId: state?.cursors.solo ?? null,
+      recordedClear,
+    };
+  }
+  function journeyDestination() {
+    return journeyDestinationFacts().destination;
+  }
+  function homeMissionRecommendation() {
+    if (
+      practice ||
+      scenario ||
+      courseSession ||
+      previewSession ||
+      runtimeContent ||
+      authoredRoute?.id !== DEFAULT_JOURNEY_ROUTES.solo ||
+      !candidateHost?.owns(activeEntry)
+    )
+      return '';
+    let storedAttempt;
+    try {
+      // Preserve recovery priority even when saved bytes cannot be previewed.
+      storedAttempt = profileStorage().getItem(sessionKey) !== null;
+    } catch {
+      return '';
+    }
+    const facts = journeyDestinationFacts();
+    const recommendation = captureHomeRecommendation({
+      ...facts,
+      catalog: journeyCatalog,
+      resume: (!started && storedAttempt) || (started && !['won', 'lost'].includes(run?.status)),
+      lastAttempt:
+        started && selectedJourneyRun === run
+          ? { status: run?.status, mission: journeyMission() }
+          : null,
+    });
+    if (!recommendation) return '';
+    const keys = {
+      first: 'interface:captureHomeRecommendation.first',
+      selected: 'interface:captureHomeRecommendation.selected',
+      retry: 'interface:captureHomeRecommendation.retry',
+      'recorded-next': 'interface:captureHomeRecommendation.recordedNext',
+    };
+    return t(keys[recommendation.reason], {
+      mission: contentText(recommendation.destination, 'name'),
+      previous: recommendation.current ? contentText(recommendation.current, 'name') : '',
+    });
   }
   function journeySkipMission() {
     return journeyEnabled && !practice && !scenario && !courseSession && !campaignOverview
@@ -7293,6 +7361,7 @@ try {
       'title',
       () => preview?.title || t('interface:loadSavedFlight2'),
     );
+    if (document.getElementById('shell-home')?.open) gameShell?.refreshHome();
   }
   function assertWriter() {
     if (courseSession) throw new Error(t('interface:trainingDoesNotWriteCampaignData'));
@@ -7989,6 +8058,26 @@ try {
         ? profileLocks.request(`${libraryKey}.backup-lock`, { signal }, work)
         : work(),
   });
+  function backupInventoryIdentity({ legacySession = true } = {}) {
+    assertWriter();
+    if (courseSession || courseEntry || contentSwitchBusy || sessionBusy || backupBusy)
+      throw new Error(t('interface:finishTrainingOrThePendingContentSaveOperationBeforePreparing'));
+    if (!storedStateAdopted || !persistenceReady || !writer.writable)
+      throw new Error(
+        t('interface:resolveStorageRecoveryBeforePreparingAllInventoriesIndividualGameData'),
+      );
+    if (started && !paused && !['won', 'lost'].includes(run.status))
+      throw new Error(t('interface:pauseTheFlightBeforePreparingABackupSet'));
+    return JSON.stringify({
+      library,
+      packs,
+      session: legacySession
+        ? currentBackupSession('2000-01-01T00:00:00.000Z')
+        : profileStorage().getItem(sessionKey),
+      runId,
+      backupMarker: profileStorage().getItem(`${libraryKey}.backup-lock`),
+    });
+  }
   const libraryPanelOptions = {
     // Selected editions already scope their pack catalogue; omitted examples
     // must not trigger a request for the default game's unrelated catalogue.
@@ -8011,28 +8100,45 @@ try {
       ? null
       : {
           edition: { version: buildVersion, channel, sourceRevision: buildSourceRevision },
-          gameIdentity: () => {
-            assertWriter();
-            if (courseSession || courseEntry || contentSwitchBusy || sessionBusy || backupBusy)
-              throw new Error(
-                t('interface:finishTrainingOrThePendingContentSaveOperationBeforePreparing'),
+          restore: createBackupArchiveRestore({
+            identity: () => backupInventoryIdentity({ legacySession: false }),
+            mediaStore: pictureStore,
+            storyStore,
+            audioStore: createSoundtrackStore({ managedStore: pictureManager }),
+            journey: journeyProfile,
+            catalogue: SOUNDTRACK_CATALOGUE,
+            afterAudio: async () => {
+              if (!soundtrackPlayer || soundtrackDisposed) return;
+              const snapshot = await pictureManager.readDomain('audio');
+              if (snapshot.generation < soundtrackGeneration) return;
+              soundtrackGeneration = snapshot.generation;
+              soundtrackAssets = new Map(snapshot.assets.map(({ sha256, blob }) => [sha256, blob]));
+              soundtrackLibrary = setCatalogueTracks(
+                upgradeSoundtrackLibrary(snapshot.library),
+                SOUNDTRACK_CATALOGUE.tracks,
               );
-            if (!storedStateAdopted || !persistenceReady || !writer.writable)
-              throw new Error(
-                t(
-                  'interface:resolveStorageRecoveryBeforePreparingAllInventoriesIndividualGameData',
-                ),
-              );
-            if (started && !paused && !['won', 'lost'].includes(run.status))
-              throw new Error(t('interface:pauseTheFlightBeforePreparingABackupSet'));
-            return JSON.stringify({
-              library,
-              packs,
-              session: currentBackupSession('2000-01-01T00:00:00.000Z'),
-              runId,
-              backupMarker: profileStorage().getItem(`${libraryKey}.backup-lock`),
-            });
-          },
+              soundtrackPlayer.setLibrary(soundtrackLibrary, {
+                publicStyles: snapshot.publicStyles,
+              });
+            },
+            afterJourney: () => {
+              refreshJourneySkip();
+              refreshJourneyBest();
+            },
+          }),
+          journey: journeyProfile
+            ? {
+                identity: () => journeyProfile.stateRevision(),
+                read: (options) => journeyProfile.exportAsync(options),
+              }
+            : null,
+          gameIdentity: () => backupInventoryIdentity(),
+          archiveProfile: candidateHost
+            ? {
+                kind: 'authored-journey',
+                identity: () => backupInventoryIdentity({ legacySession: false }),
+              }
+            : null,
           readContents: ({ savedAt }) =>
             externalBackup
               ? snapshotCurrentBackup(savedAt)
@@ -8860,7 +8966,7 @@ try {
       document.body.dataset.textSize !== (state.effectiveTextSize ?? state.textSize) ||
       document.body.dataset.textFace !== state.textFace ||
       document.body.dataset.effects !== effects;
-    renderTextSizeControl($('text-size'), state.textSize);
+    renderTextSizeControl($('text-size'), state.textSize, { extraLarge: true });
     document.body.dataset.textSize = state.effectiveTextSize ?? state.textSize;
     $('text-face').value = state.textFace;
     document.body.dataset.textFace = state.textFace;
@@ -13376,6 +13482,7 @@ try {
           ? { style: flightActorLease.pin().style, snapshot: flightActorLease.snapshot }
           : null,
         textFace: displayPreferences.snapshot().textFace,
+        textScale: displayPreferences.snapshot().effectiveTextSize === 'extra-large' ? 2 : 1,
         // The texture is detached; only the displayed Phaser canvas has a CSS size.
         displayCSSWidth: this.displayCSSWidth,
         paused,
@@ -14221,15 +14328,16 @@ try {
           });
           trace?.mark('missions-versus-source-end');
           trace?.mark('missions-remote-team-import-begin');
-          const { createRemoteTeamLibrarySources } = await import(
-            './mission-library/remote-team.mjs'
+          const { loadRemoteTeamLibrarySources } = await import(
+            './mission-library/remote-team-display.mjs'
           );
           trace?.mark('missions-remote-team-import-end');
           assertCurrent();
           trace?.mark('missions-remote-team-sources-begin');
-          const teamSources = createRemoteTeamLibrarySources({
+          const teamSources = await loadRemoteTeamLibrarySources({
             launch: departLibraryMission,
             difficulty: () => browsingJourneyPreferences.snapshot().difficulty,
+            assertCurrent,
           });
           trace?.mark('missions-remote-team-sources-end');
           trace?.mark('missions-prior-import-begin');
@@ -15127,6 +15235,16 @@ try {
       !started || ['won', 'lost'].includes(run?.status)
         ? contentText(journeyDestination(), 'name')
         : undefined,
+    titleRecommendation: homeMissionRecommendation,
+    titleActionDetail: () =>
+      t(
+        started && !['won', 'lost'].includes(run?.status)
+          ? 'interface:home.resumePausedFlight'
+          : !$('continue-saved').hidden
+            ? 'interface:home.resumeSavedFlight'
+            : 'interface:home.startMissionAttempt',
+        { mode: t('interface:solo2') },
+      ),
     onTitleStart: (options) => {
       const destination = journeyDestination();
       if (destination && !started && $('continue-saved').hidden) {
@@ -15307,6 +15425,7 @@ try {
       quality: qualityPolicy.snapshot().tier,
       renderOptions: {
         textFace: displayPreferences.snapshot().textFace,
+        textScale: displayPreferences.snapshot().effectiveTextSize === 'extra-large' ? 2 : 1,
         showGrid: library.preferences.showGrid,
         showCombatScrap: encounterDisplay.snapshot().showRemains,
         brutal: encounterDisplay.snapshot().brutal,

@@ -34,96 +34,103 @@ function densePack() {
   return pack;
 }
 
-test('actual imported maximum-density arena exposes all entries and one press enters paused reading', async (t) => {
-  const f = await page(t, {
-    nativeFocus: true,
-    beforeImport({ $ }) {
-      $('coop-canvas').clientWidth = 212;
-    },
+for (const textSize of ['standard', 'extra-large'])
+  test(`actual imported maximum-density arena at ${textSize} exposes all entries and one press enters paused reading`, async (t) => {
+    const f = await page(t, {
+      nativeFocus: true,
+      beforeImport({ $ }) {
+        $('coop-canvas').clientWidth = 212;
+      },
+    });
+    f.$('coop-text-size').value = textSize;
+    f.$('coop-text-size').emit('change');
+    assert.equal(f.doc.body.dataset.textSize, textSize);
+    await f.selectFile(JSON.stringify(densePack()));
+    assert.equal(f.$('coop-level').value, 'dense-cue-arena');
+    f.$('coop-start').click();
+    f.tick(3);
+    assert.equal(f.$('coop-cue-overflow').hidden, false);
+    assert.equal(f.$('coop-field-details').hidden, false);
+    assert.equal(f.$('coop-field-details-list').children.length, 26);
+    assert.equal(
+      new Set(f.$('coop-field-details-list').children.map((item) => item.dataset.entity)).size,
+      26,
+    );
+    assert.match(f.$('coop-cue-announcement').textContent, /Some field labels need more room/);
+    assert.equal(f.$('coop-field-details-section').getAttribute('aria-live'), 'off');
+    const action = f.$('coop-field-details');
+    const criticalMessage = f.$('coop-message').textContent;
+    let noticeWrites = 0;
+    const notice = f.$('coop-cue-announcement'),
+      textDescriptor = Object.getOwnPropertyDescriptor(
+        Object.getPrototypeOf(notice),
+        'textContent',
+      );
+    Object.defineProperty(notice, 'textContent', {
+      configurable: true,
+      get() {
+        return textDescriptor.get.call(this);
+      },
+      set(value) {
+        noticeWrites++;
+        textDescriptor.set.call(this, value);
+      },
+    });
+    f.tick(20);
+    assert.equal(noticeWrites, 0, 'Continued overflow has no live-region chatter');
+    assert.equal(
+      f.$('coop-message').textContent,
+      criticalMessage,
+      'Overflow does not replace the existing instruction',
+    );
+    action.focus();
+    f.tap('Enter');
+    assert.equal(f.$('coop-help').open, true);
+    assert.equal(
+      f.doc.activeElement.id,
+      'coop-help-reading',
+      'one action enters the existing reader',
+    );
+    assert.equal(f.$('coop-overlay-kicker').textContent, 'PAUSED');
+    const clock = f.$('coop-clock').textContent;
+    f.tick(120);
+    assert.equal(f.$('coop-clock').textContent, clock);
+    assert.equal(f.$('coop-field-details-list').children.length, 26);
+    const details = f.$('coop-field-details-list').textContent;
+    f.$('coop-canvas').clientWidth = 600;
+    f.tick(3);
+    assert.equal(f.doc.activeElement.id, 'coop-help-reading', 'reflow retains reader ownership');
+    assert.equal(f.$('coop-field-details-list').textContent, details);
+    assert.equal(f.$('coop-clock').textContent, clock);
+    f.press('Escape');
+    assert.equal(f.doc.activeElement, action);
+    f.tick(20);
+    assert.equal(f.$('coop-clock').textContent, clock, 'Back never resumes');
+    assert.equal(action.hidden, false, 'the paused reader survives desktop reflow');
+    assert.equal(f.$('coop-cue-overflow').hidden, true);
+    f.$('coop-resume').click();
+    f.tick(120);
+    assert.notEqual(f.$('coop-clock').textContent, clock);
+    assert.equal(f.$('coop-cue-overflow').hidden, false, 'admission survives a later clear layout');
+    assert.equal(action.parentNode, f.$('coop-cue-overflow'));
+    action.focus();
+    f.tick(3);
+    assert.equal(f.doc.activeElement, action, 'a transient fit cannot retire the focused action');
+    assert.equal(action.hidden, false);
+    f.$('coop-pause').click();
+    f.$('coop-lobby').click();
+    f.$('coop-discard-confirm').click();
+    assert.equal(f.$('coop-field-details-section').hidden, true);
+    assert.equal(f.$('coop-field-details-list').children.length, 0);
+    assert.equal(f.$('coop-cue-announcement').textContent, '');
+    const oldAction = action.onclick;
+    oldAction();
+    assert.notEqual(
+      f.doc.activeElement.id,
+      'coop-help-reading',
+      'A retired attempt cannot reopen its reader',
+    );
   });
-  await f.selectFile(JSON.stringify(densePack()));
-  assert.equal(f.$('coop-level').value, 'dense-cue-arena');
-  f.$('coop-start').click();
-  f.tick(3);
-  assert.equal(f.$('coop-cue-overflow').hidden, false);
-  assert.equal(f.$('coop-field-details').hidden, false);
-  assert.equal(f.$('coop-field-details-list').children.length, 26);
-  assert.equal(
-    new Set(f.$('coop-field-details-list').children.map((item) => item.dataset.entity)).size,
-    26,
-  );
-  assert.match(f.$('coop-cue-announcement').textContent, /Some field labels need more room/);
-  assert.equal(f.$('coop-field-details-section').getAttribute('aria-live'), 'off');
-  const action = f.$('coop-field-details');
-  const criticalMessage = f.$('coop-message').textContent;
-  let noticeWrites = 0;
-  const notice = f.$('coop-cue-announcement'),
-    textDescriptor = Object.getOwnPropertyDescriptor(Object.getPrototypeOf(notice), 'textContent');
-  Object.defineProperty(notice, 'textContent', {
-    configurable: true,
-    get() {
-      return textDescriptor.get.call(this);
-    },
-    set(value) {
-      noticeWrites++;
-      textDescriptor.set.call(this, value);
-    },
-  });
-  f.tick(20);
-  assert.equal(noticeWrites, 0, 'Continued overflow has no live-region chatter');
-  assert.equal(
-    f.$('coop-message').textContent,
-    criticalMessage,
-    'Overflow does not replace the existing instruction',
-  );
-  action.focus();
-  f.tap('Enter');
-  assert.equal(f.$('coop-help').open, true);
-  assert.equal(
-    f.doc.activeElement.id,
-    'coop-help-reading',
-    'one action enters the existing reader',
-  );
-  assert.equal(f.$('coop-overlay-kicker').textContent, 'PAUSED');
-  const clock = f.$('coop-clock').textContent;
-  f.tick(120);
-  assert.equal(f.$('coop-clock').textContent, clock);
-  assert.equal(f.$('coop-field-details-list').children.length, 26);
-  const details = f.$('coop-field-details-list').textContent;
-  f.$('coop-canvas').clientWidth = 600;
-  f.tick(3);
-  assert.equal(f.doc.activeElement.id, 'coop-help-reading', 'reflow retains reader ownership');
-  assert.equal(f.$('coop-field-details-list').textContent, details);
-  assert.equal(f.$('coop-clock').textContent, clock);
-  f.press('Escape');
-  assert.equal(f.doc.activeElement, action);
-  f.tick(20);
-  assert.equal(f.$('coop-clock').textContent, clock, 'Back never resumes');
-  assert.equal(action.hidden, false, 'the paused reader survives desktop reflow');
-  assert.equal(f.$('coop-cue-overflow').hidden, true);
-  f.$('coop-resume').click();
-  f.tick(120);
-  assert.notEqual(f.$('coop-clock').textContent, clock);
-  assert.equal(f.$('coop-cue-overflow').hidden, false, 'admission survives a later clear layout');
-  assert.equal(action.parentNode, f.$('coop-cue-overflow'));
-  action.focus();
-  f.tick(3);
-  assert.equal(f.doc.activeElement, action, 'a transient fit cannot retire the focused action');
-  assert.equal(action.hidden, false);
-  f.$('coop-pause').click();
-  f.$('coop-lobby').click();
-  f.$('coop-discard-confirm').click();
-  assert.equal(f.$('coop-field-details-section').hidden, true);
-  assert.equal(f.$('coop-field-details-list').children.length, 0);
-  assert.equal(f.$('coop-cue-announcement').textContent, '');
-  const oldAction = action.onclick;
-  oldAction();
-  assert.notEqual(
-    f.doc.activeElement.id,
-    'coop-help-reading',
-    'A retired attempt cannot reopen its reader',
-  );
-});
 
 test('fresh controller Confirm enters overflow details once and Back preserves the paused attempt', async (t) => {
   const f = await page(t, {

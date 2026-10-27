@@ -103,6 +103,55 @@ test('outside release is observed before another control stops propagation; tear
   assert.equal(f.pauses(), 0, 'A destroyed input owner cannot pause a later game.');
 });
 
+test('compact direction rows steer by all four actual button targets and retain per-seat capture recovery', (t) => {
+  const f = fixture(t, 'dpad');
+  const order = ['up', 'left', 'right', 'down'];
+  for (const surface of f.surfaces) {
+    surface.getBoundingClientRect = () => ({ left: 0, top: 0, width: 268, height: 64 });
+    for (const button of surface.querySelectorAll('[data-direction]'))
+      button.getBoundingClientRect = () => ({
+        left: order.indexOf(button.dataset.direction) * 68,
+        top: 0,
+        width: 64,
+        height: 64,
+      });
+  }
+  f.surfaces[0].setPointerCapture = () => {
+    throw new Error('Pointer capture unavailable');
+  };
+  for (const [index, direction] of order.entries()) {
+    f.pointer(0, index ? 'pointermove' : 'pointerdown', index * 68 + 32, 32, 11);
+    assert.equal(f.input.snapshotDirection(0), direction);
+  }
+  f.pointer(1, 'pointerdown', 32, 32, 22);
+  assert.deepEqual(
+    f.input.consume().map((command) => command.direction),
+    ['down', 'up'],
+  );
+  f.pointer(0, 'pointermove', 65, 32, 11);
+  f.pointer(0, 'pointermove', 300, 32, 11);
+  assert.equal(
+    f.input.snapshotDirection(0),
+    'down',
+    'Gutters and outside moves do not invent a turn.',
+  );
+  f.win.emit('pointercancel', { pointerId: 99 });
+  assert.equal(f.pauses(), 0);
+  f.win.emit('pointerup', { pointerId: 11 });
+  f.pointer(0, 'pointerdown', 100, 32, 33);
+  assert.deepEqual(
+    f.input.consume().map((command) => command.direction),
+    ['left', 'up'],
+  );
+  f.win.emit('pointercancel', { pointerId: 11 });
+  assert.equal(f.pauses(), 0, 'The retired finger cannot cancel either current seat.');
+  f.win.emit('pointercancel', { pointerId: 33 });
+  assert.equal(f.pauses(), 1);
+  assert.equal(f.surfaces[1].hasPointerCapture(22), false);
+  f.win.emit('pointercancel', { pointerId: 33 });
+  assert.equal(f.pauses(), 1);
+});
+
 for (const mode of ['stick', 'swipe', 'dpad'])
   test(`${mode}: outside release after capture failure keeps both seats usable`, (t) => {
     const f = fixture(t, mode);

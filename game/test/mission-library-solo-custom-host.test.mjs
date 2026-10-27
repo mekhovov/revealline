@@ -32,6 +32,7 @@ test('installed Custom late mission in a second campaign launches its exact auth
   const { pack } = await preparePack(source, {
     decodeImage: async (dataUrl) => {
       const image = inspectImageDataUrl(dataUrl);
+      assert.equal(image.valid, true);
       return { naturalWidth: image.width, naturalHeight: image.height };
     },
   });
@@ -72,7 +73,13 @@ test('late Custom clear follows authored Next, ends truthfully, and never grants
   }));
   source.levelVisuals = [];
   source.visualOverrides = {};
-  const { pack } = await preparePack(source);
+  const { pack } = await preparePack(source, {
+    decodeImage: async (dataUrl) => {
+      const image = inspectImageDataUrl(dataUrl);
+      assert.equal(image.valid, true);
+      return { naturalWidth: image.width, naturalHeight: image.height };
+    },
+  });
   const assets = await installedAssets(pack);
   const p = await soloPage(t, { titleScreen: true, assetIndexedDB: assets.indexedDB });
   await open(p);
@@ -86,8 +93,9 @@ test('late Custom clear follows authored Next, ends truthfully, and never grants
   async function clear() {
     p.key('ArrowDown');
     p.key('ArrowDown', false);
-    for (let tick = 0; tick < 900 && p.rendered.run.status !== 'won'; tick++) p.frame();
+    for (let frame = 0; frame < 30 && p.rendered.run.status !== 'won'; frame++) p.frame(250);
     assert.equal(p.rendered.run.status, 'won');
+    assert.equal(p.$('game-overlay').hidden, true, 'Earned picture precedes result actions.');
     const completed = authoritativeCheckpoint(p.rendered.run);
     assert.equal(p.$('skip-celebration').hidden, true);
     for (
@@ -98,6 +106,9 @@ test('late Custom clear follows authored Next, ends truthfully, and never grants
       p.frame(100);
     assert.equal(p.$('show-result').hidden, false);
     p.$('show-result').click();
+    assert.equal(p.$('game-overlay').hidden, false);
+    assert.equal(p.$('skip-celebration').hidden, true);
+    p.frame(0);
     assert.deepEqual(authoritativeCheckpoint(p.rendered.run), completed);
     await settle(() => {
       p.frame(0);

@@ -3,6 +3,10 @@ import { classicOperationStatus } from './classic-operation-status.mjs';
 import { CLASSIC_SNAKE_CAMPAIGN_REVISION } from './classic-campaign.mjs';
 import { classicBoardPreferences, isClassicWorldStyle } from './classic-worlds.mjs';
 import { claimProfileWriter } from '../profile-writer.mjs';
+import { createCouchKeyboardPreferences } from '../couch/keyboard-preferences.mjs';
+import { mountCouchKeyboardSettings } from '../couch/keyboard-settings.mjs';
+import { couchKeyMap, couchDirectionLabel } from '../couch/keyboard-bindings.mjs';
+import { keyCodeForEvent } from '../key-bindings.mjs';
 import {
   createEnemyStats,
   validateEnemyStatsSession,
@@ -34,6 +38,7 @@ import { mountGlobalSettings } from '../ui/global-settings-view.mjs';
 import { attachThemeFamilyControls } from '../ui/theme-family-controls.mjs';
 import { mountBattlefieldGroundControls } from '../ui/battlefield-ground-controls.mjs';
 import { menuAnimationBinding } from '../ui/menu-animation-preferences.mjs';
+import { mountComfortPresets } from '../ui/comfort-presets.mjs';
 import { mountModeSettings } from '../ui/mode-settings-view.mjs';
 import {
   attachSettingsPanels,
@@ -248,6 +253,7 @@ let playShell = null,
   snakeSettingsView = null,
   snakeSupportSummary = null,
   snakeGlobalSettings = null,
+  snakeComfortPresets = null,
   snakeOfflinePanel = null,
   touchPresentationControls = null,
   menuController = null,
@@ -279,6 +285,14 @@ let celebration = null,
   resultPreview = null,
   resultPlayback = null,
   transitionJustStarted = false;
+const keyboardPreferences = createCouchKeyboardPreferences({
+  mode: 'snake',
+  getStorage: () => globalThis.localStorage,
+  getLockManager: () => globalThis.navigator?.locks,
+});
+let keyboardMap = couchKeyMap(keyboardPreferences.snapshot().bindings, 'snake'),
+  keyboardSettings = null,
+  stopKeyboard = () => {};
 const recentReplay = createClassicRecentReplay();
 const continuousPreferences = continuousPlayPreferences();
 const signalReception = [createSignalReception(), createSignalReception()];
@@ -301,6 +315,7 @@ let acceptedArtRevision = runtimeActorArtRevision(),
 const destruction = createDestructionPreferences(),
   remains = createEncounterDisplayPreferences();
 const display = createDisplayPreferences({
+  extraLarge: true,
   onWarning: (message, key) => {
     $('snake-display-status').textContent = key ? t(key) : message;
   },
@@ -1389,6 +1404,15 @@ function renderModeLinks() {
     guidesContainer: snakeSettingsView?.panels.extras ?? $('snake-workshop'),
   });
 }
+function refreshKeyboardHelp() {
+  $('controls-help').textContent =
+    mode === 'solo'
+      ? text('controls')
+      : t('interface:couchKeyboard.snakeKeys', {
+          first: couchDirectionLabel(keyboardPreferences.snapshot().bindings, 0, 'snake'),
+          second: couchDirectionLabel(keyboardPreferences.snapshot().bindings, 1, 'snake'),
+        });
+}
 function renderCopy() {
   doc.documentElement.lang = locale;
   doc.title = `${text('title')} · FPV / LINE`;
@@ -1473,7 +1497,7 @@ function renderCopy() {
         : mode === 'versus'
           ? text('vsHelp')
           : '';
-  $('controls-help').textContent = text(mode === 'solo' ? 'controls' : 'twoControls');
+  refreshKeyboardHelp();
   for (const id of ['next']) $(id).textContent = text(id);
   $('home-link').textContent = text('home');
   $('home-link').href = nativeArtReviewURL(`../?lang=${locale}`, globalThis.location.href);
@@ -2065,7 +2089,7 @@ display.subscribe(primeEffects);
 display.subscribe((choice) => {
   doc.body.dataset.textFace = $('snake-text-face').value = choice.textFace;
   doc.body.dataset.textSize = choice.effectiveTextSize ?? choice.textSize;
-  renderTextSizeControl($('snake-text-size'), choice.textSize);
+  renderTextSizeControl($('snake-text-size'), choice.textSize, { extraLarge: true });
   footprint?.refresh();
 });
 $('snake-text-face').addEventListener('change', () =>
@@ -2272,19 +2296,23 @@ doc.addEventListener('keydown', (event) => {
     }
     return;
   }
-  const direction = {
-    arrowup: 'up',
-    arrowright: 'right',
-    arrowdown: 'down',
-    arrowleft: 'left',
-    w: 'up',
-    d: 'right',
-    s: 'down',
-    a: 'left',
-  }[key];
+  const binding = mode === 'solo' ? null : keyboardMap[keyCodeForEvent(event)];
+  const direction =
+    mode === 'solo'
+      ? {
+          arrowup: 'up',
+          arrowright: 'right',
+          arrowdown: 'down',
+          arrowleft: 'left',
+          w: 'up',
+          d: 'right',
+          s: 'down',
+          a: 'left',
+        }[key]
+      : binding?.[1];
   if (!direction) return;
   event.preventDefault();
-  if (!event.repeat) turn(mode !== 'solo' && key.startsWith('arrow') ? 1 : 0, direction);
+  if (!event.repeat) turn(mode === 'solo' ? 0 : binding[0], direction);
 });
 function pollGamepads(now) {
   const pads = Array.from(globalThis.navigator.getGamepads?.() ?? []).filter(Boolean),
@@ -2412,12 +2440,16 @@ globalThis.addEventListener('pagehide', (event) => {
   if (!event.persisted) {
     disposed = true;
     music?.dispose();
+    keyboardSettings?.dispose();
+    stopKeyboard();
+    keyboardPreferences.dispose();
     classicAudio.dispose();
     disposeTouchControls();
     touchPresentationControls?.dispose();
     touch.destroy();
     snakeDefeatSoundControls.dispose();
     snakeOfflinePanel?.dispose();
+    snakeComfortPresets?.destroy();
     sound.dispose?.();
     audioPreferences.dispose?.();
     audioMaster.dispose?.();
@@ -2701,6 +2733,9 @@ playShell = mountModePlayShell({
   initial: params.has('level') || communityIdentity ? 'play' : 'home',
   onSurfaceChange: (surface) => {
     snakeSupportSummary?.invalidate();
+    keyboardSettings?.cancel();
+    if (surface === 'settings') keyboardSettings?.refresh();
+    else keyboardPreferences.suspend();
     if (surface === 'results' && result()) beginResultPlayback();
     if (!['play', 'results'].includes(surface)) {
       transition.cancel(surface);
@@ -2793,6 +2828,7 @@ snakeGlobalSettings = mountGlobalSettings({
   panels: snakeSettingsView.panels,
   prefix: 'snake-global',
   locale,
+  extraLargeText: true,
   controls: {
     language: $('language').closest('label'),
     appearance: snakeSettingsView.panels.display.querySelector('[data-theme-controls]'),
@@ -2807,7 +2843,28 @@ snakeGlobalSettings = mountGlobalSettings({
     menuAnimation: menuAnimationBinding(globalThis),
   },
 });
+keyboardSettings = mountCouchKeyboardSettings({
+  root: snakeSettingsView.panels.controls,
+  mode: 'snake',
+  preferences: keyboardPreferences,
+  document: doc,
+  window: globalThis,
+  isOpen: () =>
+    !disposed &&
+    playShell?.topDialog()?.dataset.modeSurface === 'settings' &&
+    (ready || paused || result()),
+});
+stopKeyboard = keyboardPreferences.subscribe(({ bindings }) => {
+  keyboardMap = couchKeyMap(bindings, 'snake');
+  refreshKeyboardHelp();
+});
 const snakeTouchSettings = el('section');
+snakeComfortPresets = mountComfortPresets({
+  document: doc,
+  window: globalThis,
+  root: snakeSettingsView.panels.accessibility,
+  display,
+});
 touchPresentationControls = mountTouchPresentationSettings({
   document: doc,
   mount: snakeTouchSettings,

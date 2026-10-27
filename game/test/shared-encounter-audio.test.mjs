@@ -421,6 +421,119 @@ test('optional FPV flight retains all five destruction materials in one transact
   master.dispose();
 });
 
+test('combat event IDs deduplicate across ticks, restore silently, and keep victim materials and vocals separate', async () => {
+  const { context, made } = contextHarness();
+  context.decodeAudioData = async () => ({
+    duration: 0.5,
+    length: 2,
+    sampleRate: 4,
+    numberOfChannels: 1,
+    isVoice: true,
+    getChannelData: () => Float32Array.from([0.1, -0.1]),
+  });
+  const master = createAudioMaster({ muted: false, volume: 0.4 });
+  const prefs = { brutal: true, vocals: true };
+  const audio = createWorldAudio({
+    window: {
+      AudioContext: function () {
+        return context;
+      },
+      addEventListener() {},
+      removeEventListener() {},
+    },
+    storage: { getItem: () => null, setItem() {} },
+    audioMaster: master,
+    getDestruction: () => prefs,
+  });
+  const state = {
+    ticks: 0,
+    step: 0,
+    status: 'active',
+    events: [],
+    contacts: 0,
+    velocity: {},
+    position: { x: 0, y: 0, z: 0 },
+    actors: [],
+  };
+  try {
+    await audio.resume();
+    await Promise.resolve();
+    audio.update(state);
+    const human = {
+      eventId: 'run:1',
+      type: 'defeat',
+      actor: 'spawn-human',
+      sourceId: 'human',
+      material: 'organic',
+      appearance: { family: 'courier', cast: 'arcade', type: 'patrol' },
+    };
+    state.ticks = 1;
+    context.currentTime = 1;
+    state.events = [human];
+    audio.update(state);
+    const voice = made.find((node) => node.started && node.buffer?.isVoice);
+    assert.ok(voice, 'accepted humanoid defeat uses the decoded shared voice bank');
+    const count = made.filter((node) => node.started).length;
+    state.ticks++;
+    context.currentTime = 2;
+    audio.update(state);
+    assert.equal(
+      made.filter((node) => node.started).length,
+      count,
+      'same event cannot replay on a later tick',
+    );
+    prefs.vocals = false;
+    audio.update(state);
+    assert.equal(voice.stopped, true, 'turning vocals off stops an already playing reaction');
+    prefs.vocals = true;
+    state.ticks++;
+    context.currentTime = 3;
+    state.events = [
+      {
+        ...human,
+        eventId: 'run:2',
+        actor: 'spawn-machine',
+        material: 'electronic',
+        appearance: { family: 'courier', type: 'prop' },
+      },
+    ];
+    audio.update(state);
+    assert.equal(
+      made.filter((node) => node.started && node.buffer?.isVoice).length,
+      1,
+      'electronic props never inherit a humanoid voice from their family fallback',
+    );
+    const tones = made.filter((node) => node.started && !node.buffer);
+    assert.equal(
+      tones.at(-1).frequency.value,
+      encounterSoundRecipe('catch', { category: 'electronic' }).tone.from,
+    );
+    audio.setCourse({});
+    state.ticks = 50;
+    state.events = [{ ...human, eventId: 'restore:50' }];
+    const restoredCount = made.filter((node) => node.started).length;
+    audio.update(state);
+    state.ticks++;
+    context.currentTime = 5;
+    audio.update(state);
+    assert.equal(
+      made.filter((node) => node.started).length,
+      restoredCount,
+      'restoring a prior event primes its identity without replay',
+    );
+    state.ticks++;
+    state.events = [{ eventId: 'restore:52', type: 'player-damage' }];
+    audio.update(state);
+    assert.ok(
+      made.filter((node) => node.started).length > restoredCount,
+      'accepted player damage remains audible',
+    );
+  } finally {
+    audio.dispose();
+    master.dispose();
+  }
+});
+
 test('both live graph owners apply mono after activation, keep music separate and dispose the stage', async () => {
   for (const family of ['soundscape', 'world', 'gym']) {
     const { context, made } = contextHarness(),
@@ -511,6 +624,108 @@ test('both live graph owners apply mono after activation, keep music separate an
     assert.equal(context.state, 'closed');
     audio.gameplayOutput.choose(true);
     assert.equal(writes.length, 2);
+    audioMaster.dispose();
+  }
+});
+
+test('v2 weapons and reload states have distinct bounded deterministic audio without changing legacy fire', () => {
+  const profiles = ['autocannon', 'scatter', 'precision', 'rocket'].map((weapon) =>
+    encounterSoundRecipe('fire', { weapon, eventId: 'shot-42' }),
+  );
+  assert.equal(new Set(profiles.map((p) => p.name)).size, 4);
+  assert.equal(new Set(profiles.map((p) => p.tone.from)).size, 4);
+  for (const profile of profiles) {
+    assert.ok(profile.layers.length <= 2);
+    assert.ok(profile.tone.duration < 0.5);
+    assert.ok(profile.priority < 5, 'incoming warning voices retain precedence');
+  }
+  assert.deepEqual(
+    profiles[0],
+    encounterSoundRecipe('fire', { weapon: 'autocannon', eventId: 'shot-42' }),
+  );
+  assert.equal(
+    encounterSoundRecipe('fire').name,
+    'attack',
+    'historical v1 fire recipe remains available',
+  );
+  assert.equal(encounterSoundRecipe('player-damage', { weapon: 'rocket' }).priority, 5);
+  assert.equal(encounterSoundRecipe('player-damage', { weapon: 'rocket' }).name, 'hull-damage');
+  const states = [
+    'reload-start',
+    'reload-ready',
+    'weapon-empty',
+    'weapon-selected',
+    'payload',
+    'payload-armed',
+    'payload-ready',
+    'explosion',
+    'component',
+    'repair',
+    'resupply',
+  ];
+  assert.equal(
+    new Set(states.map((type) => encounterSoundRecipe(type, { weapon: 'rocket' }).name)).size,
+    states.length,
+  );
+});
+
+test('v2 crowd shots cannot exhaust the incoming warning reserve, and reload events are not replayed after pause', async () => {
+  const { context, made } = contextHarness();
+  const audioMaster = createAudioMaster({ muted: false, volume: 0.5 });
+  const audio = createWorldAudio({
+    audioMaster,
+    window: {
+      AudioContext: function () {
+        return context;
+      },
+      addEventListener() {},
+      removeEventListener() {},
+    },
+    storage: { getItem: () => null, setItem() {} },
+  });
+  try {
+    await audio.resume();
+    const base = {
+      ticks: 0,
+      status: 'active',
+      position: { x: 0, y: 0, z: 0 },
+      velocity: {},
+      contacts: 0,
+      events: [],
+    };
+    audio.update(base);
+    const staticVoices = made.filter((n) => n.started && !n.stopped).length;
+    for (let i = 1; i <= 20; i++) {
+      context.currentTime += 0.15;
+      audio.update({
+        ...base,
+        ticks: i,
+        events: [{ type: 'fire', actor: 'player', eventId: `fire:${i}`, weapon: 'autocannon' }],
+      });
+    }
+    assert.ok(made.filter((n) => n.started && !n.stopped).length <= staticVoices + 10);
+    context.currentTime += 0.2;
+    const beforeWarning = made.filter((n) => n.started).length;
+    audio.update({
+      ...base,
+      ticks: 21,
+      events: [{ type: 'telegraph', actor: 'enemy', eventId: 'warning:21' }],
+    });
+    assert.ok(made.filter((n) => n.started).length > beforeWarning);
+    assert.ok(made.filter((n) => n.started && !n.stopped).length <= staticVoices + 12);
+    const paused = {
+      ...base,
+      ticks: 22,
+      status: 'paused',
+      events: [{ type: 'reload-ready', eventId: 'reload:22', weapon: 'precision' }],
+    };
+    audio.update(paused, { active: false });
+    const beforeResume = made.filter((n) => n.started).length;
+    context.currentTime += 1;
+    audio.update({ ...paused, ticks: 23, status: 'active' });
+    assert.equal(made.filter((n) => n.started).length, beforeResume);
+  } finally {
+    await audio.dispose();
     audioMaster.dispose();
   }
 });

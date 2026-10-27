@@ -1,0 +1,521 @@
+{
+  "started": "2026-10-20T01:40:37.268Z",
+  "browser": "155.0.8059.85",
+  "hardware": {
+    "platform": "darwin",
+    "release": "25.6.0",
+    "cpu": "Apple M4 Pro",
+    "logicalCpus": 14,
+    "memoryBytes": 51539607552
+  },
+  "scope": "Full local application, native stadium-01, actual simulation and renderer, scripted keyboard yaw, vertical hover control and sustained firing near the starting point. Assisted invulnerability and Balanced resources. This is not a human gameplay or physical radio qualification.",
+  "timing": "Aggregated synchronous requestAnimationFrame callback CPU work per display frame; asynchronous worker CPU and GPU execution excluded. Frame intervals include scheduling/GL presentation. Ten-minute wall-clock windows are not guaranteed ten minutes accepted simulation when frames are slow.",
+  "runs": [
+    {
+      "population": 20,
+      "seconds": 15,
+      "started": "2026-10-20T01:40:38.336Z",
+      "samples": [
+        {
+          "status": "active",
+          "ticks": 369,
+          "encounterTicks": 369,
+          "health": 100,
+          "kills": 6,
+          "shots": 54,
+          "hits": 6,
+          "wave": 1,
+          "active": 14,
+          "waiting": 0,
+          "position": {
+            "x": 0,
+            "y": 1789,
+            "z": 18000
+          },
+          "velocity": {
+            "x": 0,
+            "y": 76,
+            "z": 0
+          },
+          "geometryWaiting": false,
+          "phase": "wave",
+          "heapBytes": 97583277,
+          "resources": {
+            "renderer": {
+              "calls": 83,
+              "triangles": 14612,
+              "geometries": 82,
+              "textures": 21,
+              "programs": 18,
+              "contextLost": false
+            },
+            "actors": {
+              "actors": 14,
+              "instances": 316,
+              "calls": 4,
+              "skinnedActors": 0,
+              "skinnedCalls": 0,
+              "templates": 20,
+              "capacity": 128,
+              "healthBars": 0,
+              "appearanceReady": false,
+              "appearanceHash": null,
+              "appearanceCharacters": 0,
+              "equipmentCalls": 0,
+              "maxSkinnedActors": 20
+            },
+            "effects": {
+              "moving": 0,
+              "settled": 0,
+              "marks": 0,
+              "bursts": 0,
+              "calls": 0,
+              "triangles": 0,
+              "tier": "high",
+              "runId": "encounter-de65989630acacb9",
+              "tick": 369,
+              "stored": 6,
+              "storedImpacts": 17,
+              "capacity": 1024,
+              "impactCapacity": 1024,
+              "evicted": 0,
+              "presentationClock": 7.38,
+              "pendingFragments": 46,
+              "maxDrawCalls": 24,
+              "registeredPools": 11,
+              "appearanceReady": false,
+              "appearanceHash": null,
+              "appearanceDrawCalls": 0,
+              "appearanceCharacters": 0,
+              "maxAppearanceTriangles": 600000
+            }
+          },
+          "statusText": "Continuous combat · Active · local practice",
+          "seconds": 5
+        },
+        {
+          "status": "active",
+          "ticks": 619,
+          "encounterTicks": 619,
+          "health": 100,
+          "kills": 6,
+          "shots": 86,
+          "hits": 6,
+          "wave": 1,
+          "active": 14,
+          "waiting": 0,
+          "position": {
+            "x": 0,
+            "y": 2034,
+            "z": 18000
+          },
+          "velocity": {
+            "x": 0,
+            "y": 1,
+            "z": 0
+          },
+          "geometryWaiting": false,
+          "phase": "wave",
+          "heapBytes": 98232281,
+          "resources": {
+            "renderer": {
+              "calls": 84,
+              "triangles": 14902,
+              "geometries": 82,
+              "textures": 21,
+              "programs": 18,
+              "contextLost": false
+            },
+            "actors": {
+              "actors": 14,
+              "instances": 315,
+              "calls": 4,
+              "skinnedActors": 0,
+              "skinnedCalls": 0,
+              "templates": 20,
+              "capacity": 128,
+              "healthBars": 0,
+              "appearanceReady": false,
+              "appearanceHash": null,
+              "appearanceCharacters": 0,
+              "equipmentCalls": 0,
+              "maxSkinnedActors": 20
+            },
+            "effects": {
+              "moving": 6,
+              "settled": 0,
+              "marks": 0,
+              "bursts": 1,
+              "calls": 1,
+              "triangles": 0,
+              "tier": "high",
+              "runId": "encounter-de65989630acacb9",
+              "tick": 619,
+              "stored": 6,
+              "storedImpacts": 31,
+              "capacity": 1024,
+              "impactCapacity": 1024,
+              "evicted": 0,
+              "presentationClock": 12.38,
+              "pendingFragments": 46,
+              "maxDrawCalls": 24,
+              "registeredPools": 11,
+              "appearanceReady": false,
+              "appearanceHash": null,
+              "appearanceDrawCalls": 0,
+              "appearanceCharacters": 0,
+              "maxAppearanceTriangles": 600000
+            }
+          },
+          "statusText": "Continuous combat · Active · local practice",
+          "seconds": 10
+        },
+        {
+          "status": "active",
+          "ticks": 869,
+          "encounterTicks": 869,
+          "health": 100,
+          "kills": 6,
+          "shots": 118,
+          "hits": 6,
+          "wave": 1,
+          "active": 14,
+          "waiting": 0,
+          "position": {
+            "x": 0,
+            "y": 2203,
+            "z": 18000
+          },
+          "velocity": {
+            "x": 0,
+            "y": 31,
+            "z": 0
+          },
+          "geometryWaiting": false,
+          "phase": "wave",
+          "heapBytes": 110884722,
+          "resources": {
+            "renderer": {
+              "calls": 57,
+              "triangles": 13396,
+              "geometries": 82,
+              "textures": 21,
+              "programs": 18,
+              "contextLost": false
+            },
+            "actors": {
+              "actors": 14,
+              "instances": 313,
+              "calls": 4,
+              "skinnedActors": 0,
+              "skinnedCalls": 0,
+              "templates": 20,
+              "capacity": 128,
+              "healthBars": 0,
+              "appearanceReady": false,
+              "appearanceHash": null,
+              "appearanceCharacters": 0,
+              "equipmentCalls": 0,
+              "maxSkinnedActors": 20
+            },
+            "effects": {
+              "moving": 18,
+              "settled": 0,
+              "marks": 0,
+              "bursts": 3,
+              "calls": 1,
+              "triangles": 0,
+              "tier": "high",
+              "runId": "encounter-de65989630acacb9",
+              "tick": 869,
+              "stored": 6,
+              "storedImpacts": 52,
+              "capacity": 1024,
+              "impactCapacity": 1024,
+              "evicted": 0,
+              "presentationClock": 17.38,
+              "pendingFragments": 46,
+              "maxDrawCalls": 24,
+              "registeredPools": 11,
+              "appearanceReady": false,
+              "appearanceHash": null,
+              "appearanceDrawCalls": 0,
+              "appearanceCharacters": 0,
+              "maxAppearanceTriangles": 600000
+            }
+          },
+          "statusText": "Continuous combat · Active · local practice",
+          "seconds": 15
+        }
+      ],
+      "errors": [],
+      "consoleErrors": {
+        "Failed to load resource: the server responded with a status of 404 (Not Found)": 1,
+        "THREE.Sprite: \"Raycaster.camera\" needs to be set in order to raycast against sprites.": 4875
+      },
+      "hardware": {
+        "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/155.0.0.0 Safari/537.36",
+        "hardwareConcurrency": 14,
+        "pixelRatio": 1,
+        "width": 1920,
+        "height": 1080,
+        "gpu": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4 Pro, Unspecified Version)",
+        "gpuTimingAvailable": true,
+        "gpuTimingMeasured": false
+      },
+      "profileSelfTime": [
+        {
+          "function": "(idle)",
+          "url": "",
+          "line": 0,
+          "ms": 8416.081
+        },
+        {
+          "function": "(program)",
+          "url": "",
+          "line": 0,
+          "ms": 2513.11
+        },
+        {
+          "function": "snapshot",
+          "url": "http://127.0.0.1:8768/optional-practice/civilian-fpv/world-reaction-runtime.mjs",
+          "line": 5088,
+          "ms": 485.212
+        },
+        {
+          "function": "clone",
+          "url": "http://127.0.0.1:8768/optional-practice/civilian-fpv/world-reaction-runtime.mjs",
+          "line": 3023,
+          "ms": 230
+        },
+        {
+          "function": "snapshot",
+          "url": "http://127.0.0.1:8768/optional-practice/civilian-fpv/world-reaction-runtime.mjs",
+          "line": 5088,
+          "ms": 170.994
+        },
+        {
+          "function": "(garbage collector)",
+          "url": "",
+          "line": 0,
+          "ms": 147.77
+        },
+        {
+          "function": "clone",
+          "url": "http://127.0.0.1:8768/optional-practice/civilian-fpv/world-reaction-runtime.mjs",
+          "line": 3023,
+          "ms": 144.686
+        },
+        {
+          "function": "snapshot",
+          "url": "http://127.0.0.1:8768/optional-practice/civilian-fpv/world-model.mjs",
+          "line": 1026,
+          "ms": 119.91
+        },
+        {
+          "function": "refresh",
+          "url": "http://127.0.0.1:8768/optional-practice/civilian-fpv/world-reaction-runtime.mjs",
+          "line": 15831,
+          "ms": 113.185
+        },
+        {
+          "function": "getBoundingClientRect",
+          "url": "",
+          "line": 0,
+          "ms": 101.942
+        },
+        {
+          "function": "flight.stageEncounterActors",
+          "url": "http://127.0.0.1:8768/optional-practice/civilian-fpv/world-model.mjs",
+          "line": 1634,
+          "ms": 85.598
+        },
+        {
+          "function": "clone",
+          "url": "http://127.0.0.1:8768/optional-practice/civilian-fpv/world-reaction-runtime.mjs",
+          "line": 3023,
+          "ms": 80.49
+        },
+        {
+          "function": "querySelector",
+          "url": "",
+          "line": 0,
+          "ms": 77.28
+        },
+        {
+          "function": "raycast",
+          "url": "http://127.0.0.1:8768/optional-practice/civilian-fpv/vendor/three.core.js",
+          "line": 22561,
+          "ms": 75.405
+        },
+        {
+          "function": "raycast",
+          "url": "http://127.0.0.1:8768/optional-practice/civilian-fpv/vendor/three.core.js",
+          "line": 22561,
+          "ms": 74.25
+        },
+        {
+          "function": "error",
+          "url": "http://127.0.0.1:8768/optional-practice/civilian-fpv/vendor/three.core.js",
+          "line": 2041,
+          "ms": 73.957
+        },
+        {
+          "function": "",
+          "url": "http://127.0.0.1:8768/optional-practice/civilian-fpv/world-reaction-runtime.mjs",
+          "line": 18808,
+          "ms": 73.634
+        },
+        {
+          "function": "snapshot",
+          "url": "http://127.0.0.1:8768/optional-practice/civilian-fpv/world-reaction-runtime.mjs",
+          "line": 5088,
+          "ms": 69.169
+        },
+        {
+          "function": "snapshot",
+          "url": "http://127.0.0.1:8768/optional-practice/civilian-fpv/world-reaction-runtime.mjs",
+          "line": 5088,
+          "ms": 68.379
+        },
+        {
+          "function": "error",
+          "url": "http://127.0.0.1:8768/optional-practice/civilian-fpv/vendor/three.core.js",
+          "line": 2041,
+          "ms": 67.443
+        },
+        {
+          "function": "snapshot",
+          "url": "http://127.0.0.1:8768/optional-practice/civilian-fpv/world-reaction-runtime.mjs",
+          "line": 5088,
+          "ms": 62.33
+        },
+        {
+          "function": "snapshot",
+          "url": "http://127.0.0.1:8768/optional-practice/civilian-fpv/world-reaction-runtime.mjs",
+          "line": 5088,
+          "ms": 62.187
+        },
+        {
+          "function": "snapshot",
+          "url": "http://127.0.0.1:8768/optional-practice/civilian-fpv/world-reaction-runtime.mjs",
+          "line": 5088,
+          "ms": 61.729
+        },
+        {
+          "function": "snapshot",
+          "url": "http://127.0.0.1:8768/optional-practice/civilian-fpv/world-reaction-runtime.mjs",
+          "line": 5088,
+          "ms": 60.721
+        },
+        {
+          "function": "snapshot",
+          "url": "http://127.0.0.1:8768/optional-practice/civilian-fpv/world-reaction-runtime.mjs",
+          "line": 5088,
+          "ms": 60.71
+        },
+        {
+          "function": "snapshot",
+          "url": "http://127.0.0.1:8768/optional-practice/civilian-fpv/world-reaction-runtime.mjs",
+          "line": 5088,
+          "ms": 56.185
+        },
+        {
+          "function": "snapshot",
+          "url": "http://127.0.0.1:8768/optional-practice/civilian-fpv/world-reaction-runtime.mjs",
+          "line": 5088,
+          "ms": 55.217
+        },
+        {
+          "function": "clone",
+          "url": "http://127.0.0.1:8768/optional-practice/civilian-fpv/world-model.mjs",
+          "line": 99,
+          "ms": 54.864
+        },
+        {
+          "function": "snapshot",
+          "url": "http://127.0.0.1:8768/optional-practice/civilian-fpv/world-reaction-runtime.mjs",
+          "line": 5088,
+          "ms": 43.962
+        },
+        {
+          "function": "snapshot",
+          "url": "http://127.0.0.1:8768/optional-practice/civilian-fpv/world-reaction-runtime.mjs",
+          "line": 5088,
+          "ms": 41.661
+        },
+        {
+          "function": "querySelector",
+          "url": "",
+          "line": 0,
+          "ms": 41.502
+        },
+        {
+          "function": "querySelector",
+          "url": "",
+          "line": 0,
+          "ms": 40.376
+        },
+        {
+          "function": "snapshot",
+          "url": "http://127.0.0.1:8768/optional-practice/civilian-fpv/world-model.mjs",
+          "line": 1026,
+          "ms": 39.191
+        },
+        {
+          "function": "clone",
+          "url": "http://127.0.0.1:8768/optional-practice/civilian-fpv/world-reaction-runtime.mjs",
+          "line": 3023,
+          "ms": 37.939
+        },
+        {
+          "function": "update",
+          "url": "http://127.0.0.1:8768/optional-practice/civilian-fpv/world-reaction-runtime.mjs",
+          "line": 18812,
+          "ms": 37.903
+        },
+        {
+          "function": "clone",
+          "url": "http://127.0.0.1:8768/optional-practice/civilian-fpv/world-reaction-runtime.mjs",
+          "line": 3023,
+          "ms": 36.235
+        },
+        {
+          "function": "paintCombatHUD",
+          "url": "http://127.0.0.1:8768/optional-practice/civilian-fpv/world-app.mjs",
+          "line": 2510,
+          "ms": 35.334
+        },
+        {
+          "function": "update",
+          "url": "http://127.0.0.1:8768/optional-practice/civilian-fpv/world-reaction-runtime.mjs",
+          "line": 17329,
+          "ms": 34.789
+        },
+        {
+          "function": "snapshot",
+          "url": "http://127.0.0.1:8768/optional-practice/civilian-fpv/world-model.mjs",
+          "line": 1026,
+          "ms": 32.916
+        },
+        {
+          "function": "updateHUD",
+          "url": "http://127.0.0.1:8768/optional-practice/civilian-fpv/world-app.mjs",
+          "line": 7015,
+          "ms": 31.699
+        }
+      ],
+      "actualSeconds": 16.141,
+      "pilotCPU": 114.30000004172325,
+      "frames": 968,
+      "cpuP50": 5.5,
+      "cpuP95": 8.2,
+      "cpuP99": 8.8,
+      "intervalP50": 16.7,
+      "intervalP95": 16.8,
+      "intervalP99": 16.8,
+      "averageFps": 59.26661395799201
+    }
+  ],
+  "finished": "2026-10-20T01:40:58.147Z"
+}

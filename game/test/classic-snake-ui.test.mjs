@@ -37,6 +37,8 @@ import { attachInstallOfflinePanel } from '../ui/install-offline-panel.mjs';
 import { menuPad } from './helpers/global-tools-fixture.mjs';
 import { mountGlobalSettings } from '../ui/global-settings-view.mjs';
 import { menuAnimationBinding, MENU_ANIMATION_KEY } from '../ui/menu-animation-preferences.mjs';
+import { mountComfortPresets } from '../ui/comfort-presets.mjs';
+import { createDisplayPreferences, DISPLAY_PREFERENCES_KEY } from '../display-preferences.mjs';
 import { mountBattlefieldGroundControls } from '../ui/battlefield-ground-controls.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
@@ -95,6 +97,22 @@ import {
   observeClassicWorldReactions,
 } from '../snake/classic-world-reactions.mjs';
 import { t, getLocale as summaryLocale, setLocale as setSummaryLocale } from '../i18n/index.mjs';
+import { getLocale as getSharedLocale, setLocale as setSharedLocale } from '../i18n/index.mjs';
+import {
+  createCouchKeyboardPreferences,
+  SNAKE_KEYBOARD_KEY,
+  COUCH_KEYBOARD_KEY,
+  TEAM_KEYBOARD_KEY,
+} from '../couch/keyboard-preferences.mjs';
+import { mountCouchKeyboardSettings } from '../couch/keyboard-settings.mjs';
+import {
+  couchKeyMap,
+  couchDirectionLabel,
+  resolveCouchKeyboard,
+  replaceCouchKey,
+} from '../couch/keyboard-bindings.mjs';
+import { keyCodeForEvent } from '../key-bindings.mjs';
+import { KeyboardLocks, keyboardTurn } from './helpers/keyboard-locks.mjs';
 import { mountEnemyAppearanceControls } from '../ui/enemy-appearance-controls.mjs';
 import { prepareClassicEnvironments } from '../snake/classic-environment.mjs';
 import { selectedArcadeCollection } from '../presentation/industrial-arcade.mjs';
@@ -135,9 +153,13 @@ const clearedReplay = JSON.parse(
 async function harness({
   entry = CLASSIC_SNAKE_LEVELS[0],
   mode = 'solo',
+  locale,
+  keyboardStorageMode = { value: 'working' },
+  keyboardLocks = new KeyboardLocks(),
   activity = 'campaign',
   sharedTools = false,
   liveLocale = false,
+  realDisplay = false,
   directEntry = true,
   focused = true,
   artReview = null,
@@ -153,9 +175,10 @@ async function harness({
   supportCollect = null,
   supportExport = null,
   sharedToolOptions = {},
+  touchStorage = null,
 } = {}) {
   const document = new Document();
-  let harnessLocale = language;
+  let harnessLocale = locale ?? language;
   const localeListeners = new Set();
   document.hasFocus = () => focused;
   const writerClaims = [];
@@ -186,6 +209,8 @@ async function harness({
   };
   mount(parseHTML(html), document.body);
   const window = new Events();
+  // Browser key capture travels through Window before the document and focused control.
+  document.parentNode = window;
   const pads = [];
   const supportExports = [];
   let supportUI = null;
@@ -210,8 +235,27 @@ async function harness({
     effectiveTextSize: effectiveTextSize(initialTextSize),
     reducedEffects: false,
     effectiveReducedEffects: false,
+    revision: 0,
   };
   const displayListeners = new Set();
+  let displayOwner,
+    displayStorageFails = false;
+  const displayStorage = {
+    getItem: (key) => storage.get(key) ?? null,
+    setItem(key, value) {
+      if (displayStorageFails) throw new Error('Storage unavailable');
+      storage.set(key, value);
+    },
+  };
+  if (realDisplay)
+    storage.set(
+      DISPLAY_PREFERENCES_KEY,
+      JSON.stringify({
+        textFace: 'pixel',
+        textSize: initialTextSize,
+        reducedEffects: false,
+      }),
+    );
   const location = {
     href: `https://example.test/game/snake/play.html?mode=${mode}${directEntry ? `&level=${entry.id}` : ''}&activity=${activity}${artReview ? `&artReview=${encodeURIComponent(artReview)}` : ''}${query}`,
     origin: 'https://example.test',
@@ -232,6 +276,11 @@ async function harness({
     acceptedAppearances = [];
   const context = createContext({
     CLASSIC_SNAKE_CAMPAIGN_REVISION,
+    createCouchKeyboardPreferences,
+    mountCouchKeyboardSettings,
+    couchKeyMap,
+    couchDirectionLabel,
+    keyCodeForEvent,
     classicBoardPreferences,
     isClassicWorldStyle,
     resolveClassicBoardScene,
@@ -365,6 +414,7 @@ async function harness({
     attachMenuAudioSettings() {},
     attachDefeatSoundControls,
     menuAnimationBinding,
+    mountComfortPresets,
     mountModeSettings,
     attachSettingsPanels,
     settingsPanelBack,
@@ -445,7 +495,12 @@ async function harness({
     },
     localStorage: {
       getItem: (key) => storage.get(key) ?? null,
-      setItem: (key, value) => storage.set(key, String(value)),
+      setItem: (key, value) => {
+        if (key === SNAKE_KEYBOARD_KEY && keyboardStorageMode.value === 'full')
+          throw Object.assign(new Error('Full'), { name: 'QuotaExceededError' });
+        if (key !== SNAKE_KEYBOARD_KEY || keyboardStorageMode.value !== 'silent')
+          storage.set(key, String(value));
+      },
     },
     matchMedia: () => Object.assign(new Events(), { matches: false }),
     addEventListener: window.addEventListener.bind(window),
@@ -456,7 +511,7 @@ async function harness({
       scheduledFrames.push(callback);
     },
     screen: { orientation: new Events() },
-    navigator: { getGamepads: () => (++padReads, pads) },
+    navigator: { getGamepads: () => (++padReads, pads), locks: keyboardLocks },
     performance: { now: () => supportNow },
     setTimeout,
     getLocale: () => harnessLocale,
@@ -478,19 +533,39 @@ async function harness({
         }),
       }),
     createEncounterDisplayPreferences: () => preferences({ showRemains: true }),
-    createDisplayPreferences: () => ({
-      snapshot: () => display,
-      subscribe(listener) {
-        displayListeners.add(listener);
-        listener(display);
-        return () => displayListeners.delete(listener);
-      },
-      set(patch) {
-        Object.assign(display, patch);
-        display.effectiveTextSize = effectiveTextSize(display.textSize);
-        for (const listener of displayListeners) listener(display);
-      },
-    }),
+    createDisplayPreferences: (options = {}) => {
+      if (realDisplay) {
+        displayOwner = createDisplayPreferences({
+          ...options,
+          window,
+          getStorage: () => displayStorage,
+        });
+        displayOwner.subscribe((value) => Object.assign(display, value));
+        return {
+          ...displayOwner,
+          // The host runs in a VM realm; transfer ordinary patches to the
+          // canonical owner just as same-realm browser calls would.
+          set: (patch) => displayOwner.set(structuredClone(patch)),
+        };
+      }
+      display.effectiveTextSize = effectiveTextSize(display.textSize, options);
+      return {
+        snapshot: () => display,
+        getWarning: () => '',
+        getWarningKey: () => '',
+        subscribe(listener) {
+          displayListeners.add(listener);
+          listener(display);
+          return () => displayListeners.delete(listener);
+        },
+        set(patch) {
+          Object.assign(display, patch);
+          display.effectiveTextSize = effectiveTextSize(display.textSize, options);
+          display.revision++;
+          for (const listener of displayListeners) listener(display);
+        },
+      };
+    },
     renderTextSizeControl,
     nextInputModality,
     showScreenControls,
@@ -502,7 +577,9 @@ async function harness({
         ...options,
         storage: {
           getItem: (key) => storage.get(key) ?? null,
-          setItem: (key, value) => storage.set(key, value),
+          setItem: (key, value) => {
+            if (touchStorage?.mode !== 'silent') storage.set(key, value);
+          },
         },
         eventTarget: window,
       }),
@@ -616,6 +693,10 @@ async function harness({
     acceptedAppearances,
     appearanceActions,
     display,
+    displayStorage,
+    setDisplayStorageFails: (value) => {
+      displayStorageFails = value;
+    },
     window,
     storage,
     location,
@@ -632,6 +713,7 @@ async function harness({
     offlinePanel,
     canActivateOffline: () => offlineOptions.canActivate(),
     disposeTools: () => {
+      displayOwner?.dispose();
       tools.dispose();
       offlinePanel.dispose();
     },
@@ -2964,22 +3046,65 @@ test('transient status wrapping never inherits the operation-only rule that hide
 });
 
 for (const mode of ['solo', 'versus', 'team'])
-  test(`${mode}: Snake retains extra-large selected with a Large fallback while the attempt stays paused`, async () => {
-    const h = await harness({ mode, initialTextSize: 'extra-large' });
+  test(`${mode}: qualified Snake text controls preserve paused play across size, storage and locale changes`, async (t) => {
+    const h = await harness({ mode, initialTextSize: 'extra-large', realDisplay: true });
+    t.after(() => h.disposeTools());
     h.shell.open('settings');
     const before = h.created.map((run) => core.exportClassicSnakeReplay(run));
-    const control = h.$('snake-text-size');
+    const beforeStorage = new Map(h.storage);
+    const control = h.$('snake-global-textSize');
     assert.equal(control.value, 'extra-large');
-    assert.equal(control.querySelector('[data-text-size-retained]').disabled, true);
-    assert.equal(h.document.body.dataset.textSize, 'large');
+    assert.equal(control.querySelector('[data-text-size-retained]').disabled, false);
+    assert.equal(h.document.body.dataset.textSize, 'extra-large');
+    assert.equal(h.$('snake-text-size').querySelector('[data-text-size-retained]').disabled, false);
+    h.$('language').value = 'uk';
+    h.$('language').emit('change');
+    assert.equal(control.value, 'extra-large');
+    assert.equal(
+      h.storage.get(DISPLAY_PREFERENCES_KEY),
+      beforeStorage.get(DISPLAY_PREFERENCES_KEY),
+    );
     h.$('snake-text-face').value = 'plain';
     h.$('snake-text-face').emit('change');
-    assert.equal(h.display.textSize, 'extra-large');
+    assert.equal(JSON.parse(h.storage.get(DISPLAY_PREFERENCES_KEY)).textSize, 'extra-large');
+    control.value = 'large';
+    control.emit('change');
+    assert.equal(h.document.body.dataset.textSize, 'large');
+    assert.equal(h.$('snake-text-size').value, 'large');
+    const fromOtherTab = JSON.stringify({
+      textFace: 'plain',
+      textSize: 'standard',
+      reducedEffects: false,
+    });
+    h.storage.set(DISPLAY_PREFERENCES_KEY, fromOtherTab);
+    h.window.emit('storage', {
+      key: DISPLAY_PREFERENCES_KEY,
+      storageArea: h.displayStorage,
+      newValue: fromOtherTab,
+    });
+    assert.equal(control.value, 'standard');
+    assert.equal(h.document.body.dataset.textSize, 'standard');
+    control.focus();
+    h.setDisplayStorageFails(true);
+    control.value = 'extra-large';
+    control.emit('change');
+    assert.equal(h.document.body.dataset.textSize, 'extra-large');
+    assert.equal(h.storage.get(DISPLAY_PREFERENCES_KEY), fromOtherTab);
+    assert.ok(h.$('snake-display-status').textContent);
+    assert.equal(h.document.activeElement, control);
     assert.deepEqual(
       h.created.map((run) => core.exportClassicSnakeReplay(run)),
       before,
     );
     assert.equal(h.shell.blocksPlay(), true);
+    assert.deepEqual(
+      [...h.storage].filter(
+        ([key]) => key !== DISPLAY_PREFERENCES_KEY && key !== 'revealline.locale',
+      ),
+      [...beforeStorage].filter(
+        ([key]) => key !== DISPLAY_PREFERENCES_KEY && key !== 'revealline.locale',
+      ),
+    );
   });
 
 test('Snake live language refresh translates every stats view without changing the paused attempt', async (t) => {
@@ -3512,4 +3637,291 @@ test('Snake compact native Settings Back retires Data before re-entering the sam
   assert.equal(h.$('support-summary-json').textContent, '');
   assert.equal(h.$('support-summary-download').disabled, true);
   assert.equal(h.document.activeElement === focus, true);
+});
+
+for (const mode of ['solo', 'team', 'versus'])
+  test(`${mode} Snake comfort preview, Apply and Undo preserve the paused boards with real preference owners`, async () => {
+    const h = await harness({ mode, realDisplay: true });
+    h.start();
+    h.frame(0);
+    h.frame(100);
+    h.shell.open('settings');
+    h.$('snake-menu-settings-tab-accessibility').click();
+    const before = h.created.map((run) => core.exportClassicSnakeReplay(run)),
+      prefix = 'snake-menu-settings-panel-accessibility-comfort-';
+    h.$(`${prefix}choice`).value = 'comfort';
+    h.$(`${prefix}choice`).emit('change');
+    assert.equal(h.storage.has(DISPLAY_PREFERENCES_KEY), false);
+    assert.equal(h.storage.has(MENU_ANIMATION_KEY), false);
+    h.$(`${prefix}apply`).click();
+    assert.deepEqual(JSON.parse(h.storage.get(DISPLAY_PREFERENCES_KEY)), {
+      textFace: 'plain',
+      textSize: 'large',
+      reducedEffects: true,
+    });
+    assert.equal(h.storage.get(MENU_ANIMATION_KEY), 'off');
+    h.frame(800);
+    assert.deepEqual(
+      h.created.map((run) => core.exportClassicSnakeReplay(run)),
+      before,
+    );
+    h.$(`${prefix}undo`).focus();
+    h.$(`${prefix}undo`).click();
+    assert.deepEqual(JSON.parse(h.storage.get(DISPLAY_PREFERENCES_KEY)), {
+      textFace: 'pixel',
+      textSize: 'standard',
+      reducedEffects: false,
+    });
+    assert.equal(h.storage.get(MENU_ANIMATION_KEY), 'on');
+    assert.equal(h.document.activeElement, h.$(`${prefix}apply`));
+    h.frame(1600);
+    assert.deepEqual(
+      h.created.map((run) => core.exportClassicSnakeReplay(run)),
+      before,
+    );
+    assert.equal(h.shell.elements.dialogs.settings.open, true);
+  });
+
+test('Snake comfort retries failed shared saves without replacing its original Undo target', async () => {
+  const h = await harness({ realDisplay: true }),
+    write = h.storage.set.bind(h.storage),
+    prefix = 'snake-menu-settings-panel-accessibility-comfort-';
+  let working = false;
+  h.storage.set = (key, value) => {
+    if (!working && [DISPLAY_PREFERENCES_KEY, MENU_ANIMATION_KEY].includes(key))
+      throw new DOMException('Modeled full storage', 'QuotaExceededError');
+    return write(key, value);
+  };
+  h.shell.open('settings');
+  h.$('snake-menu-settings-tab-accessibility').click();
+  h.$(`${prefix}apply`).click();
+  assert.equal(h.display.textFace, 'plain');
+  assert.equal(h.$('snake-global-menuAnimation').checked, false);
+  assert.match(h.$(`${prefix}status`).textContent, /could not be saved/);
+  working = true;
+  h.$(`${prefix}apply`).click();
+  assert.equal(h.storage.get(MENU_ANIMATION_KEY), 'off');
+  h.$(`${prefix}undo`).click();
+  assert.equal(h.display.textFace, 'pixel');
+  assert.equal(h.display.textSize, 'standard');
+  assert.equal(h.storage.get(MENU_ANIMATION_KEY), 'on');
+});
+
+for (const mode of ['solo', 'versus', 'team']) {
+  test(`${mode} Snake touch save Retry preserves the paused replay, other storage and input focus`, async (t) => {
+    const touchStorage = { mode: 'silent' };
+    const state = await harness({ mode, touchStorage });
+    t.after(() => state.disposeTools());
+    state.start();
+    const surface = state.$('snake-touch-0-surface');
+    surface.emit('pointerdown', {
+      pointerId: 41,
+      pointerType: 'touch',
+      button: 0,
+      clientX: 80,
+      clientY: 100,
+    });
+    surface.emit('pointermove', { pointerId: 41, pointerType: 'touch', clientX: 80, clientY: 65 });
+    assert.equal(state.created[0].history.at(-1).direction, 'up');
+    state.frame(0);
+    state.frame(100);
+    state.shell.elements.buttons.pause.click();
+    state.shell.elements.buttons.settings.click();
+    const paused = state.created.map((run) => core.exportClassicSnakeReplay(run));
+    const unrelated = () => [...state.storage].filter(([key]) => key !== 'revealline.touch.v1');
+    const saved = unrelated();
+    const field = state.$('snake-global-touch-mode');
+    const status = state.$('snake-global-touch-save-status');
+    const retry = state.$('snake-global-touch-save-retry');
+    field.focus();
+    field.value = 'dpad';
+    field.emit('change');
+    assert.match(status.textContent, /Session only.*did not confirm/);
+    state.window.emit('pageshow', { persisted: true });
+    assert.equal(field.value, 'dpad');
+    assert.equal(surface.hasPointerCapture(41), false);
+    touchStorage.mode = 'working';
+    retry.focus();
+    retry.click();
+    assert.equal(state.document.activeElement, field);
+    assert.equal(retry.hidden, true);
+    assert.equal(JSON.parse(state.storage.get('revealline.touch.v1')).mode, 'dpad');
+    state.frame(1000);
+    assert.deepEqual(
+      state.created.map((run) => core.exportClassicSnakeReplay(run)),
+      paused,
+    );
+    assert.deepEqual(unrelated(), saved);
+    assert.equal(state.document.body.dataset.playing, 'false');
+    assert.equal(state.shell.elements.root.dataset.phase, 'paused');
+  });
+}
+
+function snakeKeyboardSettings(state) {
+  state.shell.open('settings');
+  state.$('snake-menu-settings-tab-controls').click();
+}
+async function snakeAssign(state, seat, action, code) {
+  const button = state.$(`snake-key-${seat}-${action}`);
+  button.focus();
+  button.click();
+  button.emit('keydown', { code, key: code, repeat: false });
+  button.emit('keyup', { code, key: code });
+  await keyboardTurn();
+}
+function snakeKey(state, code) {
+  state.document.emit('keydown', {
+    code,
+    key: code,
+    repeat: false,
+    target: state.$('board') ?? state.document.body,
+  });
+}
+for (const [mode, locale] of [
+  ['versus', 'en'],
+  ['team', 'uk'],
+])
+  test(`Snake ${mode} ${locale} owns four keys per seat and preserves paused replay through save recovery`, async (t) => {
+    const previous = getSharedLocale();
+    setSharedLocale(locale, { persist: false });
+    t.after(() => setSharedLocale(previous, { persist: false }));
+    const keyboardStorageMode = { value: 'working' },
+      state = await harness({ mode, locale, keyboardStorageMode });
+    t.after(() => state.window.emit('pagehide', { persisted: false }));
+    const duelRaw = JSON.stringify(replaceCouchKey(null, 0, 'up', 'KeyU')),
+      teamRaw = JSON.stringify(replaceCouchKey(null, 0, 'up', 'KeyT', 'team'));
+    state.storage.set(COUCH_KEYBOARD_KEY, duelRaw);
+    state.storage.set(TEAM_KEYBOARD_KEY, teamRaw);
+    snakeKeyboardSettings(state);
+    assert.equal(state.document.querySelectorAll('.couch-keyboard-row').length, 8);
+    assert.equal(state.$('snake-key-0-action'), null);
+    assert.equal(state.$('snake-key-0-boost'), null);
+    await snakeAssign(state, 0, 'down', 'KeyK');
+    await snakeAssign(state, 1, 'down', 'KeyJ');
+    assert.match(state.$('controls-help').textContent, /K/);
+    assert.match(state.$('controls-help').textContent, /J/);
+    state.shell.back();
+    state.start();
+    state.frame(0);
+    snakeKey(state, 'KeyK');
+    snakeKey(state, 'KeyJ');
+    state.frame(300);
+    const current = state.created.slice(-(mode === 'team' ? 1 : 2));
+    assert.equal(current[0].snakes[0].direction, 'down');
+    assert.equal((mode === 'team' ? current[0].snakes[1] : current[1].snakes[0]).direction, 'down');
+    snakeKeyboardSettings(state);
+    const before = current.map((run) => core.exportClassicSnakeReplay(run));
+    keyboardStorageMode.value = 'full';
+    await snakeAssign(state, 0, 'up', 'KeyI');
+    assert.match(
+      state.$('snake-key-save-status').textContent,
+      locale === 'en' ? /Session only/ : /Лише в цьому сеансі/,
+    );
+    assert.equal(JSON.parse(state.storage.get(SNAKE_KEYBOARD_KEY)).seats[0].up, 'KeyW');
+    keyboardStorageMode.value = 'working';
+    state.$('snake-key-retry').focus();
+    state.$('snake-key-retry').click();
+    await keyboardTurn();
+    assert.equal(state.document.activeElement.id, 'snake-key-0-up');
+    assert.equal(JSON.parse(state.storage.get(SNAKE_KEYBOARD_KEY)).seats[0].up, 'KeyI');
+    assert.deepEqual(
+      current.map((run) => core.exportClassicSnakeReplay(run)),
+      before,
+    );
+    state.$('snake-key-reset').click();
+    await keyboardTurn();
+    assert.deepEqual(
+      JSON.parse(state.storage.get(SNAKE_KEYBOARD_KEY)),
+      resolveCouchKeyboard(null, 'snake'),
+    );
+    assert.equal(state.storage.get(COUCH_KEYBOARD_KEY), duelRaw);
+    assert.equal(state.storage.get(TEAM_KEYBOARD_KEY), teamRaw);
+    state.shell.back();
+    assert.deepEqual(
+      current.map((run) => core.exportClassicSnakeReplay(run)),
+      before,
+    );
+  });
+
+test('Snake Solo retains both steering aliases and reserved R/menu keys despite a saved two-player layout', async (t) => {
+  const state = await harness({ mode: 'solo' });
+  t.after(() => state.window.emit('pagehide', { persisted: false }));
+  snakeKeyboardSettings(state);
+  await snakeAssign(state, 0, 'down', 'KeyK');
+  const saved = state.storage.get(SNAKE_KEYBOARD_KEY);
+  await snakeAssign(state, 1, 'up', 'KeyK');
+  assert.match(state.$('snake-key-capture-status').textContent, /Player 1/);
+  state.$('snake-key-1-up').emit('keydown', { code: 'Escape', key: 'Escape', repeat: false });
+  assert.equal(state.shell.topDialog().dataset.modeSurface, 'settings');
+  await snakeAssign(state, 0, 'up', 'KeyR');
+  assert.match(state.$('snake-key-capture-status').textContent, /reserved/);
+  assert.equal(state.storage.get(SNAKE_KEYBOARD_KEY), saved);
+  state.shell.back();
+  state.start();
+  state.frame(0);
+  snakeKey(state, 'KeyS');
+  state.frame(300);
+  assert.equal(state.created.at(-1).snakes[0].direction, 'down');
+  snakeKey(state, 'ArrowLeft');
+  state.frame(600);
+  assert.equal(state.created.at(-1).snakes[0].direction, 'left');
+  assert.doesNotMatch(state.$('controls-help').textContent, /P2|Г2/);
+});
+
+test('Snake leaving Settings retires delayed save admission and adopts other-tab keys only at the next explicit entry', async (t) => {
+  const locks = new KeyboardLocks();
+  let delayed = false,
+    admit;
+  const keyboardLocks = {
+    request(key, options, callback) {
+      if (key === `${SNAKE_KEYBOARD_KEY}:writer` && delayed)
+        return new Promise((resolve) => {
+          admit = () => resolve(locks.request(key, options, callback));
+        });
+      return locks.request(key, options, callback);
+    },
+  };
+  const state = await harness({ mode: 'team', keyboardLocks });
+  t.after(() => state.window.emit('pagehide', { persisted: false }));
+  state.start();
+  state.frame(0);
+  snakeKey(state, 'KeyS');
+  state.frame(300);
+  snakeKeyboardSettings(state);
+  const run = state.created.at(-1),
+    before = core.exportClassicSnakeReplay(run);
+  delayed = true;
+  await snakeAssign(state, 0, 'right', 'KeyL');
+  const newer = replaceCouchKey(null, 1, 'down', 'KeyK', 'snake'),
+    raw = JSON.stringify(newer);
+  state.storage.set(SNAKE_KEYBOARD_KEY, raw);
+  state.shell.back();
+  admit();
+  await keyboardTurn();
+  assert.equal(state.storage.get(SNAKE_KEYBOARD_KEY), raw);
+  assert.match(state.$('snake-key-1-down').textContent, /↓/);
+  assert.deepEqual(core.exportClassicSnakeReplay(run), before);
+  snakeKeyboardSettings(state);
+  assert.match(state.$('snake-key-save-status').textContent, /Session only/);
+  delayed = false;
+  state.$('snake-key-retry').focus();
+  state.$('snake-key-retry').click();
+  await keyboardTurn();
+  const saved = JSON.parse(state.storage.get(SNAKE_KEYBOARD_KEY));
+  assert.equal(saved.seats[0].right, 'KeyL');
+  assert.equal(saved.seats[1].down, 'KeyK');
+  assert.equal(state.document.activeElement.id, 'snake-key-0-right');
+  state.shell.back();
+  state.storage.set(
+    SNAKE_KEYBOARD_KEY,
+    JSON.stringify(replaceCouchKey(saved, 1, 'down', 'KeyU', 'snake')),
+  );
+  state.window.emit('storage', { key: SNAKE_KEYBOARD_KEY });
+  assert.match(state.$('snake-key-1-down').textContent, /K/);
+  snakeKeyboardSettings(state);
+  assert.match(state.$('snake-key-1-down').textContent, /U/);
+  assert.match(state.$('controls-help').textContent, /U/);
+  assert.match(state.$('snake-key-save-status').textContent, /another tab/);
+  assert.deepEqual(core.exportClassicSnakeReplay(run), before);
+  assert.ok(locks.calls.every(({ key }) => key === `${SNAKE_KEYBOARD_KEY}:writer`));
 });

@@ -1,4 +1,8 @@
-import { radioControlLabel, createRadioSwitchCapture } from './radio-controls.mjs';
+import {
+  radioControlLabel,
+  createRadioSwitchCapture,
+  createRadioBootstrap,
+} from './radio-controls.mjs';
 import { canonicalJSON } from '../../game/data-json.mjs';
 import { restoreVerifiedRadio } from './radio-session.mjs';
 import { mountRadioGuide } from './radio-guide.mjs';
@@ -11,6 +15,20 @@ import {
   radioSwitch,
   AXIS_RADIO_FORMAT,
   ACTION_RADIO_FORMAT,
+  FIRE_RADIO_FORMAT,
+  COMBAT_RADIO_FORMAT,
+  RADIO_COMBAT_ACTIONS,
+  RADIO_CONTROL_SWITCHES,
+  RADIO_MODEL_CATALOGUE,
+  RADIO_CHANNEL_PRESETS,
+  radioDeviceRecommendation,
+  loadRadioModelSelection,
+  saveRadioModelSelection,
+  createRadioControlLayout,
+  validateRadioControlLayout,
+  loadRadioControlLayout,
+  saveRadioControlLayout,
+  removeRadioControlLayout,
   STICK_LAYOUTS,
   createFlightProfileStore,
   defaultRadioProfile,
@@ -46,10 +64,8 @@ const COPY = {
     travel: 'Record full travel',
     stop: 'Finish travel',
     centre: 'Measure centre',
-    verify: 'I checked the animated sticks and their direction',
-    save: 'Save verified profile',
-    verified: 'Control verification complete. Save to keep this profile.',
-    saved: 'Profile saved on this device.',
+    verified: 'Stick settings ready. Check physical directions and switch actions below.',
+    saved: 'Saved automatically on this device.',
     session: 'Session only — profile could not be saved.',
     response: 'Flight response — separate from calibration',
     curve: 'Simulator curve preview (input → output)',
@@ -63,8 +79,7 @@ const COPY = {
     expo: 'Cubic blend (%)',
     ticks: 'Angular response (50 Hz steps)',
     sign: 'Positive: roll right, pitch forward, yaw right, throttle up. Radio-side mixes and curves still apply; use a simple simulator model on your radio.',
-    incomplete:
-      'Mapping/calibration incomplete. Record travel and centres, then verify all controls.',
+    incomplete: 'Finish assigning the sticks. Complete, valid changes save automatically.',
     ambiguous: 'Move only one control through at least one quarter of its travel, then try again.',
     switches: 'Radio switches and buttons (optional)',
     switchType: 'Switch input type',
@@ -83,7 +98,7 @@ const COPY = {
       'Detection stopped. Keep this page focused, leave the switch OFF and try again. Flight stick axes cannot also be switches.',
     switchConflict:
       'This switch also operates another action. Choose a different switch or clear the previous assignment in advanced fields.',
-    switchCaptured: 'Assigned and returned OFF. Check the live indicator, then save.',
+    switchCaptured: 'Assigned and saved automatically. The live indicator follows your switch.',
     library: 'Saved radios',
     chooseSaved: 'Choose a saved calibration…',
     download: 'Download all radio profiles',
@@ -92,7 +107,7 @@ const COPY = {
     sharing:
       'Share the downloaded setup file with your radio model, firmware, USB mode and computer/browser. Shared mappings need a local direction and switch check. Files are never uploaded automatically.',
     imported:
-      'Imported as a draft. Check directions and Arm/Reset, then verify and save before flying.',
+      'Imported settings save automatically when valid. Check the live stick directions before flying.',
     responseUnchanged: 'Rates & throttle profiles remain unchanged.',
     responseIgnored:
       'Included flight response settings were not applied. Rates & throttle profiles remain unchanged.',
@@ -102,6 +117,11 @@ const COPY = {
     pause: 'Pause — freeze flight until resumed',
     resetAction: 'Reset level — restart this drill at the launch pad',
     camera: 'View — switch ON, then OFF to cycle FPV / Chase / Overview',
+    fire: 'Fire — release after arming, then hold to fire in combat',
+    weapon: 'Switch weapon — release, then activate',
+    reload: 'Reload — release, then activate',
+    payload: 'Deploy / arm payload — release, then activate',
+    detonate: 'Detonate — a separate fresh activation',
     roll: 'Roll',
     pitch: 'Pitch',
     yaw: 'Yaw',
@@ -136,10 +156,8 @@ const COPY = {
     travel: 'Записати повний хід',
     stop: 'Завершити запис',
     centre: 'Виміряти центр',
-    verify: 'Я перевірив рух і напрямок анімованих стіків',
-    save: 'Зберегти перевірений профіль',
-    verified: 'Керування перевірено. Збережіть профіль.',
-    saved: 'Профіль збережено на пристрої.',
+    verified: 'Налаштування стіків готові. Перевірте фізичні напрямки й дії перемикачів нижче.',
+    saved: 'Автоматично збережено на пристрої.',
     session: 'Лише цей сеанс — профіль не вдалося зберегти.',
     response: 'Реакція польоту — окремо від калібрування',
     curve: 'Крива симулятора (вхід → вихід)',
@@ -173,7 +191,7 @@ const COPY = {
       'Визначення зупинено. Поверніться на цю сторінку, вимкніть перемикач і спробуйте знову. Осі стіків не можуть бути перемикачами.',
     switchConflict:
       'Цей перемикач також керує іншою дією. Виберіть інший або очистьте попереднє призначення в додаткових полях.',
-    switchCaptured: 'Призначено й вимкнено. Перевірте індикатор наживо та збережіть.',
+    switchCaptured: 'Призначено й збережено автоматично. Стежте за індикатором наживо.',
     library: 'Збережені пульти',
     chooseSaved: 'Виберіть збережене калібрування…',
     download: 'Завантажити всі профілі пультів',
@@ -182,7 +200,7 @@ const COPY = {
     sharing:
       'Поділіться файлом, указавши модель пульта, прошивку, режим USB та комп’ютер/браузер. Чужі призначення потребують місцевої перевірки напрямків і перемикачів. Файли не надсилаються автоматично.',
     imported:
-      'Імпортовано як чернетку. Перевірте напрямки, мотори й скидання, підтвердьте та збережіть перед польотом.',
+      'Коректні імпортовані налаштування зберігаються автоматично. Перед польотом перевірте напрямки стіків наживо.',
     responseUnchanged: 'Профілі рейтів і газу залишилися без змін.',
     responseIgnored:
       'Параметри реакції польоту з файлу не застосовано. Профілі рейтів і газу залишилися без змін.',
@@ -192,6 +210,11 @@ const COPY = {
     pause: 'Пауза — призупинити політ до відновлення',
     resetAction: 'Скинути рівень — почати цю вправу зі стартового майданчика',
     camera: 'Камера — увімкніть і вимкніть перемикач: FPV / За дроном / Огляд',
+    fire: 'Вогонь — відпустіть після запуску, потім утримуйте для стрільби в бою',
+    weapon: 'Змінити зброю — відпустіть і активуйте',
+    reload: 'Перезарядити — відпустіть і активуйте',
+    payload: 'Скинути / підготувати заряд',
+    detonate: 'Підірвати — окрема нова активація',
     roll: 'Крен',
     pitch: 'Тангаж',
     yaw: 'Рискання',
@@ -217,6 +240,7 @@ export function mountRadioSetup({
 }) {
   const doc = container.ownerDocument,
     copy = COPY[locale] ?? COPY.en;
+  const t = (en, uk) => (locale === 'uk' ? uk : en);
   let storage;
   try {
     storage = win.localStorage;
@@ -224,6 +248,8 @@ export function mountRadioSetup({
     /* explicit session status below */
   }
   const store = createFlightProfileStore({ storage });
+  const originalProfileKeys = new Set(store.radios().map((row) => row.key));
+  let autoSavedEntryKey = null;
   runtime.beginSetup();
   let verified = false,
     recording = false,
@@ -234,8 +260,35 @@ export function mountRadioSetup({
     disposed = false,
     lastPaint = -Infinity,
     lastDiscovery = -Infinity,
+    autoSavePending = false,
+    autoSaveAfter = 0,
+    savedProfileSignature = null,
+    savedProfileResult = null,
+    restoringFields = false,
+    savedLayoutSignature = null,
     importRevision = 0;
   let guide = null;
+  const bootstrap = createRadioBootstrap();
+  let bootstrapEnabled = !runtime.status().verified,
+    bootstrapFlow = false,
+    bootstrapComplete = false,
+    bootstrapDevice = null,
+    layoutDraft = null,
+    layoutCapture = null,
+    layoutSequence = null,
+    previousLayout = null,
+    layoutDeviceKey = null,
+    practice = false,
+    practicePaused = true,
+    practicePrevious = {},
+    practiceSeen = new Set(),
+    sixPanel = null,
+    sixStatus = null,
+    sixLive = null,
+    sixRows = {},
+    modelControls = null,
+    modelDeviceKey = null,
+    proposalNeedsCheck = false;
   const listeners = [],
     rows = {},
     switchRows = {};
@@ -271,7 +324,7 @@ export function mountRadioSetup({
   const refresh = () => {
     // Discovery may first expose a USB device after this user interaction.
     // A pristine setup can restore its verified mapping; edited fields stay owned
-    // by the user until they explicitly verify and save them.
+    // by the editor until their complete mapping is saved automatically.
     if (!runtime.status().profileDirty) {
       runtime.endSetup();
       restoreVerifiedRadio(runtime, store);
@@ -325,26 +378,44 @@ export function mountRadioSetup({
     const option = el('option', text, throttle);
     option.value = id;
   }
-  const sign = el('p', copy.sign);
+  const sign = el(
+    'p',
+    t(
+      'Map each movement below. Watch the dots and use Reverse if a direction is wrong. Changes save automatically.',
+      'Призначте кожен рух нижче. Стежте за точками; якщо напрямок зворотний, увімкніть інверсію. Зміни зберігаються автоматично.',
+    ),
+  );
   const channels = el('div');
   channels.className = 'radio-channels';
   for (const control of FLIGHT_CONTROLS) {
     const field = el('fieldset', undefined, channels);
     const legend = el('legend', radioControlLabel(control, Number(mode.value), locale), field);
-    const axis = label(copy.axis, 'number', '', field);
+    field.dataset.radioControl = control;
+    const hint = el('p', '', field);
+    hint.className = 'radio-channel-hint';
+    const reading = el('output', '', field);
+    reading.className = 'radio-channel-reading';
+    reading.setAttribute('aria-label', `${copy[control]} ${t('live movement', 'рух наживо')}`);
+    const meter = el('div', undefined, field);
+    meter.className = 'radio-channel-meter';
+    meter.setAttribute('aria-hidden', 'true');
+    const dot = el('i', undefined, meter);
+    const advanced = el('details', undefined, field);
+    el('summary', t('Channel & calibration details', 'Канал і параметри калібрування'), advanced);
+    const axis = label(t('USB channel', 'USB-канал'), 'number', '', advanced);
     axis.min = '0';
     axis.max = '63';
     axis.step = '1';
-    const min = label(copy.minimum, 'number', '', field),
-      center = label(copy.center, 'number', '', field),
-      max = label(copy.maximum, 'number', '', field);
+    const min = label(copy.minimum, 'number', '', advanced),
+      center = label(copy.center, 'number', '', advanced),
+      max = label(copy.maximum, 'number', '', advanced);
     for (const node of [min, center, max]) {
       node.min = '-1';
       node.max = '1';
       node.step = '0.001';
     }
     const invert = label(copy.invert, 'checkbox', '', field),
-      deadZone = label(copy.deadZone, 'number', control === 'throttle' ? '0' : '0.02', field);
+      deadZone = label(copy.deadZone, 'number', control === 'throttle' ? '0' : '0.02', advanced);
     deadZone.min = '0';
     deadZone.max = '0.2';
     deadZone.step = '0.005';
@@ -356,31 +427,50 @@ export function mountRadioSetup({
           status.textContent = copy.pick;
           return;
         }
-        if (identifying?.control === control) {
-          const range = identifying.max
-            .map((value, i) => ({ axis: i, range: value - identifying.min[i] }))
-            .sort((a, b) => b.range - a.range);
-          if (range[0]?.range >= 0.25 && range[0].range > (range[1]?.range ?? 0) * 1.5) {
-            axis.value = String(range[0].axis);
-            identifying = null;
-            identify.textContent = copy.identify;
-            invalidate();
-          } else status.textContent = copy.ambiguous;
-        } else {
-          invalidate();
-          if (identifying) rows[identifying.control].identify.textContent = copy.identify;
-          identifying = { control, min: [...pad.axes], max: [...pad.axes] };
-          identify.textContent = copy.use;
-        }
+        stopCaptures();
+        invalidate();
+        identifying = {
+          control,
+          min: [...pad.axes],
+          max: [...pad.axes],
+          baseline: [...pad.axes],
+          identity: canonicalJSON(radioDeviceIdentity(pad)),
+          index: pad.index,
+          started: win.performance.now(),
+          stage: 'positive',
+          positive: null,
+          held: null,
+        };
+        identify.textContent = t('Listening…', 'Очікування…');
+        status.textContent = t(
+          'Move only this control in the indicated direction and hold it.',
+          'Рухайте лише цей орган керування у вказаному напрямку та утримуйте.',
+        );
       },
       field,
     );
-    rows[control] = { axis, min, center, max, invert, deadZone, identify, legend };
+    rows[control] = {
+      axis,
+      min,
+      center,
+      max,
+      invert,
+      deadZone,
+      identify,
+      legend,
+      field,
+      hint,
+      reading,
+      dot,
+    };
   }
   function invalidate(markRuntime = true) {
     importRevision++;
     verified = false;
     if (markRuntime) runtime.editProfile();
+    saveEditorDraft();
+    autoSavePending = true;
+    autoSaveAfter = win.performance.now() + 250;
     status.textContent = copy.incomplete;
   }
   function stopCaptures() {
@@ -396,6 +486,12 @@ export function mountRadioSetup({
     }
   }
   listen(win, 'blur', () => {
+    if (identifying) {
+      stopCaptures();
+      status.textContent = copy.ambiguous;
+    }
+    if (layoutCapture || practice) cancelSixCapture();
+    if (!bootstrapComplete) bootstrap.reset('interrupted');
     if (!switchCapture) return;
     const row = switchRows[switchCapture.action];
     stopCaptures();
@@ -427,7 +523,7 @@ export function mountRadioSetup({
   const switchHeading = el('h3', copy.switches);
   const switchIntro = el('p', copy.switchStart);
   const switchFields = [];
-  for (const action of ['arm', 'pause', 'reset', 'camera']) {
+  for (const action of ['arm', 'pause', 'reset', 'camera', 'fire', ...RADIO_COMBAT_ACTIONS]) {
     const field = el('fieldset');
     switchFields.push(field);
     field.setAttribute('data-radio-switch', action);
@@ -499,9 +595,19 @@ export function mountRadioSetup({
       },
       field,
     );
-    if (action === 'camera')
+    if (action === 'camera' || action === 'fire' || RADIO_COMBAT_ACTIONS.includes(action))
       button(
-        locale === 'uk' ? 'Не призначати перемикач камери' : 'Remove View switch',
+        RADIO_COMBAT_ACTIONS.includes(action)
+          ? locale === 'uk'
+            ? 'Прибрати призначення'
+            : 'Remove assignment'
+          : action === 'fire'
+            ? locale === 'uk'
+              ? 'Не призначати перемикач вогню'
+              : 'Remove Fire switch'
+            : locale === 'uk'
+              ? 'Не призначати перемикач камери'
+              : 'Remove View switch',
         () => {
           stopCaptures();
           node.value = '';
@@ -546,6 +652,391 @@ export function mountRadioSetup({
       indicator,
     };
   }
+  const sixNames = {
+    arm: [
+      t('Arm / Pause', 'Увімкнення / Пауза'),
+      t(
+        'ON: Arm / resume · OFF: pause and menu',
+        'УВІМК.: запуск / продовження · ВИМК.: пауза й меню',
+      ),
+    ],
+    fire: [
+      t('Fire gun', 'Вогонь зі зброї'),
+      t(
+        'Flying: shoot the active gun · Paused: Select on release',
+        'У польоті: стріляти з активної зброї · На паузі: вибір після відпускання',
+      ),
+    ],
+    weapon: [
+      t('Switch gun', 'Змінити зброю'),
+      t(
+        'Flying: next weapon · Paused: Back on release',
+        'У польоті: наступна зброя · На паузі: назад після відпускання',
+      ),
+    ],
+    reload: [
+      t('Reload gun', 'Перезарядити зброю'),
+      t('Flying: reload · Paused: View', 'У польоті: перезарядження · На паузі: камера'),
+    ],
+    payload: [
+      t('Deploy payload', 'Застосувати заряд'),
+      t(
+        'Flying: drop bomb / deploy payload · Paused: Retry with confirmation',
+        'У польоті: скинути бомбу / застосувати заряд · На паузі: повтор із підтвердженням',
+      ),
+    ],
+    detonate: [
+      t('Detonate charge', 'Підірвати заряд'),
+      t(
+        'Flying: separate detonation · Paused: Settings',
+        'У польоті: окремий підрив · На паузі: налаштування',
+      ),
+    ],
+  };
+  function layoutProfile() {
+    try {
+      const current = runtime.status().profile;
+      const profile = current ? JSON.parse(current) : readProfile(false);
+      return canonicalJSON(profile.device) === canonicalJSON(radioDeviceIdentity(runtime.raw()))
+        ? profile
+        : null;
+    } catch {
+      return null;
+    }
+  }
+  function ensureLayout() {
+    const pad = runtime.raw();
+    if (!pad) return null;
+    const device = radioDeviceIdentity(pad),
+      key = canonicalJSON(device);
+    if (layoutDeviceKey === key && layoutDraft) return layoutDraft;
+    layoutDeviceKey = key;
+    layoutCapture = layoutSequence = null;
+    practice = false;
+    const profile = layoutProfile();
+    previousLayout = runtime.controlLayout?.() ?? null;
+    let saved = null;
+    try {
+      saved = loadRadioControlLayout({ storage, device });
+    } catch {
+      /* Session remains usable. */
+    }
+    layoutDraft = structuredClone(
+      previousLayout ??
+        saved ??
+        (profile
+          ? createRadioControlLayout(profile)
+          : {
+              format: 'RadioControlLayout.v1',
+              device,
+              layout: 'six-switch',
+              switches: Object.fromEntries(RADIO_CONTROL_SWITCHES.map((action) => [action, null])),
+            }),
+    );
+    if (bootstrapDevice && canonicalJSON(bootstrapDevice.device) === key)
+      Object.assign(layoutDraft.switches, bootstrapDevice.switches);
+    return layoutDraft;
+  }
+  function paintSix() {
+    if (!sixPanel) return;
+    const draft = ensureLayout(),
+      profile = layoutProfile();
+    paintModel();
+    const pad = runtime.raw();
+    for (const [action, row] of Object.entries(sixRows)) {
+      const binding = draft?.switches[action];
+      const bindingKey = binding ? canonicalJSON(binding) : '';
+      if (row.bindingKey !== bindingKey) row.active = false;
+      row.bindingKey = bindingKey;
+      row.binding.textContent = binding
+        ? Object.hasOwn(binding, 'axis')
+          ? `USB ${t('axis', 'вісь')} ${binding.axis} · ${t('OFF', 'ВИМК')} ${binding.off.toFixed(2)} → ${t('ON', 'УВІМК')} ${binding.on.toFixed(2)}`
+          : `USB ${t('button', 'кнопка')} ${binding.button}${binding.invert ? ` · ${t('reversed', 'зворотна')}` : ''}`
+        : ['arm', 'fire'].includes(action)
+          ? t('Not assigned · required', 'Не призначено · обов’язково')
+          : t('Available through the menu', 'Доступно через меню');
+      let active = null;
+      try {
+        if (binding && pad) active = radioSwitch(draft, pad, action, row.active ?? false);
+      } catch {
+        /* A missing live sample does not change saved assignments. */
+      }
+      row.active = active;
+      row.live.textContent = !binding
+        ? t('Not assigned', 'Не призначено')
+        : active === null
+          ? t('No live sample', 'Немає живого сигналу')
+          : active
+            ? t('ON', 'УВІМК.')
+            : t('OFF', 'ВИМК.');
+      row.live.setAttribute('aria-label', `${sixNames[action][0]}: ${row.live.textContent}`);
+      row.node.dataset.switchActive = active === true ? 'true' : 'false';
+      row.capture.disabled = !draft || Boolean(layoutCapture) || practice;
+      row.node.dataset.captureState =
+        layoutCapture?.action === action ? 'listening' : binding ? 'assigned' : 'empty';
+    }
+    const activeActions = Object.entries(sixRows)
+      .filter(([, row]) => row.active === true)
+      .map(([action]) => sixNames[action][0]);
+    const liveText = !pad
+      ? t(
+          'Connect your radio to preview switch actions.',
+          'Під’єднайте пульт для перевірки дій перемикачів.',
+        )
+      : activeActions.length
+        ? `${t('ON now', 'Зараз увімкнено')}: ${activeActions.join(' · ')}`
+        : !Object.values(draft?.switches ?? {}).some(Boolean)
+          ? t(
+              'No switch actions assigned yet. Choose a switch below.',
+              'Дії перемикачів ще не призначені. Виберіть перемикач нижче.',
+            )
+          : t(
+              'All assigned actions OFF. Move one switch to see its action.',
+              'Усі призначені дії вимкнено. Рухніть один перемикач, щоб побачити його дію.',
+            );
+    if (sixLive && sixLive.textContent !== liveText) sixLive.textContent = liveText;
+    const ready = Boolean(draft?.switches.arm && draft?.switches.fire);
+    sixPanel.querySelector('[data-six-practice]').disabled = !ready || Boolean(layoutCapture);
+    sixPanel.querySelector('[data-six-capture-all]').disabled =
+      !draft || Boolean(layoutCapture) || practice;
+    sixPanel.querySelector('[data-six-swap-fire-payload]').disabled =
+      !draft?.switches.fire ||
+      !draft?.switches.payload ||
+      Boolean(layoutCapture) ||
+      practice ||
+      Boolean(guide?.captureActive());
+  }
+  function modelNotice(candidate) {
+    const messages = {
+      'surface-radio': t(
+        'MT12 has a steering wheel and trigger. Use a flight radio with two sticks, or set up suitable controls manually.',
+        'MT12 має кермо й курок. Використайте пульт із двома стіками або налаштуйте відповідні органи керування вручну.',
+      ),
+      'choose-receiver-firmware': t(
+        'Choose your radio and the firmware installed on your receiver. The SIM cannot identify them through this connection.',
+        'Виберіть свій пульт і прошивку, встановлену на приймачі. SIM не може визначити їх через це підключення.',
+      ),
+      'choose-channel-preset': t(
+        'Choose a USB setup below, or assign your sticks and switches manually.',
+        'Виберіть налаштування USB нижче або призначте стіки й перемикачі вручну.',
+      ),
+      'channel-count-mismatch': t(
+        'This connection is missing channels needed by that suggestion. Choose the matching USB setup, or assign controls manually.',
+        'У цьому підключенні немає потрібних каналів. Виберіть відповідне налаштування USB або призначте керування вручну.',
+      ),
+      'five-switch-radio': t(
+        'Pocket has five switches and a knob. Use the knob for another action, or reach it from the pause menu. Watch the live preview to check your controls.',
+        'Pocket має п’ять перемикачів і ручку. Використайте ручку для ще однієї дії або вибирайте її в меню паузи. Перевірте все керування перед збереженням.',
+      ),
+      'check-candidate': t(
+        'Applying a suggestion saves its assignments automatically. It cannot identify your intended physical switches. Move your Fire control: only Fire gun should light. If another action lights, assign that control below.',
+        'Запропоновані призначення зберігаються автоматично, але не перевірені з фізичними перемикачами. Рухніть ваш перемикач вогню: має засвітитися лише «Вогонь зі зброї». Якщо інша дія — призначте цей перемикач нижче.',
+      ),
+    };
+    return messages[candidate.noticeCode] ?? candidate.notice;
+  }
+  function paintModel() {
+    if (!modelControls) return;
+    const pad = runtime.raw();
+    if (!pad) {
+      modelControls.apply.disabled = true;
+      return;
+    }
+    const device = radioDeviceIdentity(pad),
+      key = canonicalJSON(device);
+    if (modelDeviceKey !== key) {
+      modelDeviceKey = key;
+      let choice = null;
+      try {
+        choice = loadRadioModelSelection({ storage, device });
+      } catch {
+        /* Manual choice remains available. */
+      }
+      const candidate = radioDeviceRecommendation(device, choice ?? {});
+      modelControls.model.value = candidate.modelId;
+      modelControls.transport.value = candidate.channelPreset ?? '';
+      modelControls.message.textContent = modelNotice(candidate);
+      proposalNeedsCheck = false;
+    }
+    const candidate = radioDeviceRecommendation(device, {
+      modelId: modelControls.model.value || 'other-radio',
+      channelPreset: modelControls.transport.value || null,
+    });
+    modelControls.apply.disabled =
+      !candidate.profile || Boolean(layoutCapture) || practice || Boolean(guide?.captureActive());
+  }
+  function cancelSixCapture() {
+    layoutCapture = layoutSequence = null;
+    practice = false;
+    stopCaptures();
+    if (guide?.captureActive()) guide.cancel();
+    if (!bootstrapComplete) {
+      bootstrapEnabled = false;
+      bootstrap.reset();
+      runtime.setProvisionalMenu?.(null);
+    }
+    if (sixStatus)
+      sixStatus.textContent = t(
+        'Assignment cancelled. Your saved sticks and controls are unchanged.',
+        'Призначення скасовано. Збережені налаштування стіків і керування не змінено.',
+      );
+    paintSix();
+  }
+  function startLayoutCapture(action, sequence = null) {
+    const draft = ensureLayout(),
+      pad = runtime.raw();
+    if (!draft || !pad) return;
+    bootstrapEnabled = false;
+    stopCaptures();
+    practice = false;
+    layoutSequence = sequence;
+    const profile = layoutProfile();
+    const flightAxes = profile
+      ? Object.values(profile.channels).map((channel) => channel.axis)
+      : Object.values(rows)
+          .filter((row) => row.axis.value !== '')
+          .map((row) => Number(row.axis.value));
+    layoutCapture = {
+      action,
+      index: pad.index,
+      identity: canonicalJSON(radioDeviceIdentity(pad)),
+      started: win.performance.now(),
+      detector: createRadioSwitchCapture({ flightAxes, holdMs: action === 'arm' ? 220 : 80 }),
+    };
+    sixStatus.textContent = `${sixNames[action][0]}: ${copy.switchMove}`;
+    paintSix();
+  }
+  function sampleLayoutCapture(pad, now) {
+    if (!layoutCapture) return;
+    const capture = layoutCapture;
+    if (
+      !pad ||
+      doc.hidden ||
+      (doc.hasFocus && !doc.hasFocus()) ||
+      pad.index !== capture.index ||
+      canonicalJSON(radioDeviceIdentity(pad)) !== capture.identity ||
+      now - capture.started > 20000
+    ) {
+      cancelSixCapture();
+      sixStatus.textContent = t(
+        'Assignment interrupted or timed out. Your choices are still here; try again.',
+        'Призначення перервано або час минув. Вибрані налаштування залишилися; спробуйте знову.',
+      );
+      return;
+    }
+    const result = capture.detector.sample(pad, now);
+    if (result.state === 'return')
+      sixStatus.textContent = `${sixNames[capture.action][0]}: ${copy.switchReturn}`;
+    if (result.state !== 'done') return;
+    const conflict = RADIO_CONTROL_SWITCHES.find(
+      (action) =>
+        action !== capture.action &&
+        layoutDraft.switches[action] &&
+        radioSwitch(layoutDraft, result.before, action) !==
+          radioSwitch(layoutDraft, result.after, action),
+    );
+    if (conflict) {
+      layoutCapture = layoutSequence = null;
+      const firePayload = [capture.action, conflict].sort().join('/') === 'fire/payload';
+      sixStatus.textContent = `${sixNames[capture.action][0]}: ${t('not changed', 'не змінено')}. ${t('That control currently activates', 'Цей перемикач зараз активує')} ${sixNames[conflict][0]}. ${
+        firePayload
+          ? t(
+              'Use “Swap Fire gun ↔ Deploy payload” below to exchange them without changing your sticks.',
+              'Використайте «Поміняти Вогонь ↔ Застосування заряду» нижче, щоб обміняти дії без зміни стіків.',
+            )
+          : copy.switchConflict
+      }`;
+      paintSix();
+      return;
+    }
+    layoutDraft.switches[capture.action] = result.binding;
+    const next = layoutSequence;
+    layoutCapture = null;
+    persistSixLayout();
+    if (next?.length) startLayoutCapture(next[0], next.slice(1));
+    else {
+      layoutSequence = null;
+      paintSix();
+    }
+  }
+  function samplePractice(pad) {
+    if (!practice || !pad || !layoutDraft) return;
+    const next = Object.fromEntries(
+      RADIO_CONTROL_SWITCHES.map((action) => [action, radioSwitch(layoutDraft, pad, action)]),
+    );
+    for (const action of RADIO_CONTROL_SWITCHES) {
+      if (next[action] === practicePrevious[action]) continue;
+      practiceSeen.add(action);
+      if (action === 'arm') practicePaused = !next.arm;
+      const releaseAction = practicePaused && ['fire', 'weapon'].includes(action);
+      if ((releaseAction && next[action]) || (!releaseAction && !next[action] && action !== 'arm'))
+        continue;
+      const feedback = practicePaused
+        ? {
+            arm: t('Paused menu', 'Меню паузи'),
+            fire: t('Select', 'Вибрати'),
+            weapon: t('Back', 'Назад'),
+            reload: t('View', 'Камера'),
+            payload: t('Retry — confirmation required', 'Повтор — потрібне підтвердження'),
+            detonate: t('Settings', 'Налаштування'),
+          }[action]
+        : sixNames[action][0];
+      sixStatus.textContent = `${t('Practice only', 'Лише тренування')}: ${feedback} · ${practiceSeen.size}/${RADIO_CONTROL_SWITCHES.filter((role) => layoutDraft.switches[role]).length}. ${t('No flight or weapon commands.', 'Без команд польоту або зброї.')}`;
+    }
+    practicePrevious = next;
+  }
+  function sampleBootstrap(now) {
+    if (
+      !bootstrapEnabled ||
+      bootstrapComplete ||
+      runtime.status().verified ||
+      guide?.captureActive() ||
+      layoutCapture ||
+      !runtime.rawDevices
+    )
+      return;
+    if (doc.hidden || (doc.hasFocus && !doc.hasFocus())) {
+      bootstrap.reset('interrupted');
+      return;
+    }
+    const result = bootstrap.sample(runtime.rawDevices(), now);
+    if (sixStatus && !practice) {
+      const instruction = {
+        nominate: t(
+          'Without a keyboard: move one control and return it to rest twice on the same radio.',
+          'Без клавіатури: двічі перемістіть один орган керування та поверніть у спокій на тому самому пульті.',
+        ),
+        confirm: t(
+          'Select / Fire: choose an unused switch. Hold ON, return OFF twice.',
+          'Вибір / Вогонь: виберіть вільний перемикач. Двічі утримайте УВІМК. і поверніть ВИМК.',
+        ),
+        back: t(
+          'Back / Weapon: choose a different switch. Hold ON, return OFF twice.',
+          'Назад / Зброя: виберіть інший перемикач. Двічі утримайте УВІМК. і поверніть ВИМК.',
+        ),
+      }[result.phase];
+      if (instruction)
+        sixStatus.textContent = `${result.error ? t('Discovery restarted. Move only one radio. ', 'Пошук почато знову. Рухайте лише один пульт. ') : ''}${instruction} (${result.cycles}/2)`;
+    }
+    if (result.phase !== 'done') return;
+    bootstrapComplete = bootstrapFlow = true;
+    bootstrapDevice = result;
+    runtime.select(result.index);
+    select.value = String(result.index);
+    runtime.setProvisionalMenu?.({
+      device: result.device,
+      index: result.index,
+      switches: result.switches,
+    });
+    layoutDeviceKey = null;
+    ensureLayout();
+    guide.start();
+    sixStatus.textContent = t(
+      'Select and Back are ready. Follow the stick guide; completed calibration saves automatically.',
+      'Вибір і Назад готові. Дотримуйтеся підказок налаштування стіків. Політ стане доступним після перевірки й збереження стіків.',
+    );
+    paintSix();
+  }
   const libraryLabel = el('label', copy.library),
     librarySelect = el('select', undefined, libraryLabel);
   function refreshLibrary() {
@@ -555,7 +1046,7 @@ export function mountRadioSetup({
     store.radios().forEach(({ key, profile }, index) => {
       const option = el(
         'option',
-        `${index + 1}. ${profile.name} · ${profile.verified ? (locale === 'uk' ? 'перевірено' : 'verified') : locale === 'uk' ? 'чернетка' : 'draft'}`,
+        `${index + 1}. ${profile.name} · ${profile.verified ? (locale === 'uk' ? 'стіки налаштовано' : 'sticks configured') : locale === 'uk' ? 'чернетка' : 'draft'}`,
         librarySelect,
       );
       option.value = key;
@@ -608,15 +1099,19 @@ export function mountRadioSetup({
     const pad = runtime.raw();
     if (!pad) throw new Error(copy.pick);
     const numeric = (node) => (node.value.trim() === '' ? NaN : Number(node.value));
+    const combatAssigned = RADIO_COMBAT_ACTIONS.some((key) => switchRows[key].button.value !== '');
     return validateRadioProfile({
-      format:
-        switchRows.camera.button.value !== ''
-          ? ACTION_RADIO_FORMAT
-          : Object.values(switchRows).some(
-                (row) => row.button.value !== '' && row.source.value === 'axis',
-              )
-            ? AXIS_RADIO_FORMAT
-            : RADIO_FORMAT,
+      format: combatAssigned
+        ? COMBAT_RADIO_FORMAT
+        : switchRows.fire.button.value !== ''
+          ? FIRE_RADIO_FORMAT
+          : switchRows.camera.button.value !== ''
+            ? ACTION_RADIO_FORMAT
+            : Object.values(switchRows).some(
+                  (row) => row.button.value !== '' && row.source.value === 'axis',
+                )
+              ? AXIS_RADIO_FORMAT
+              : RADIO_FORMAT,
       id: 'usb-radio-v1',
       name: pad.id.slice(0, 120) || 'USB radio',
       device: radioDeviceIdentity(pad),
@@ -642,7 +1137,17 @@ export function mountRadioSetup({
       ),
       switches: Object.fromEntries(
         Object.entries(switchRows)
-          .filter(([key, row]) => key !== 'camera' || row.button.value !== '')
+          .filter(([key, row]) =>
+            combatAssigned
+              ? true
+              : RADIO_COMBAT_ACTIONS.includes(key)
+                ? false
+                : key === 'fire'
+                  ? row.button.value !== ''
+                  : key !== 'camera' ||
+                    row.button.value !== '' ||
+                    switchRows.fire.button.value !== '',
+          )
           .map(([key, row]) => [
             key,
             row.button.value === ''
@@ -709,7 +1214,6 @@ export function mountRadioSetup({
       return false;
     }
   }
-  const verifyButton = button(copy.verify, verifyProfile);
   function saveProfile() {
     importRevision++;
     try {
@@ -717,7 +1221,12 @@ export function mountRadioSetup({
       const p = readProfile(true);
       runtime.setProfile(p);
       if (!runtime.verify()) throw new Error(copy.incomplete);
-      const result = store.save({ ...store.snapshot(), radio: p });
+      const result = store.save(
+        { ...store.snapshot(), radio: p },
+        { replaceKey: autoSavedEntryKey },
+      );
+      if (result.saved)
+        autoSavedEntryKey = originalProfileKeys.has(radioProfileKey(p)) ? null : radioProfileKey(p);
       status.textContent = result.saved ? copy.saved : `${copy.session} ${result.error}`;
       refreshLibrary();
       onProfile(p);
@@ -727,13 +1236,175 @@ export function mountRadioSetup({
       return null;
     }
   }
-  const saveButton = button(copy.save, () => guide?.completeSave(saveProfile()));
+  function editorDraftKey(pad) {
+    return `revealline.radio-setup-draft.v1:${encodeURIComponent(canonicalJSON(radioDeviceIdentity(pad)))}`;
+  }
+  function editorFields() {
+    return [
+      mode,
+      throttle,
+      ...[...Object.values(rows), ...Object.values(switchRows)].flatMap((row) =>
+        Object.values(row).filter((node) => ['INPUT', 'SELECT'].includes(node?.tagName)),
+      ),
+    ];
+  }
+  function saveEditorDraft() {
+    if (!guide || restoringFields) return;
+    const pad = runtime.raw();
+    if (!pad) return;
+    try {
+      storage?.setItem(
+        editorDraftKey(pad),
+        JSON.stringify(
+          editorFields().map((node) => (node.type === 'checkbox' ? node.checked : node.value)),
+        ),
+      );
+    } catch {
+      /* The complete profile reports unavailable storage explicitly. */
+    }
+  }
+  function restoreEditorDraft() {
+    const pad = runtime.raw();
+    if (!pad) return;
+    try {
+      const raw = storage?.getItem(editorDraftKey(pad));
+      if (!raw || raw.length > 8192) return;
+      const values = JSON.parse(raw),
+        fields = editorFields();
+      if (
+        !Array.isArray(values) ||
+        values.length !== fields.length ||
+        !values.every((value, index) =>
+          fields[index].type === 'checkbox'
+            ? typeof value === 'boolean'
+            : typeof value === 'string' && value.length <= 32,
+        )
+      )
+        return;
+      fields.forEach((node, index) => {
+        if (node.type === 'checkbox') node.checked = values[index];
+        else node.value = values[index];
+      });
+      for (const row of Object.values(switchRows)) row.updateSwitchFields();
+      describeControls();
+      invalidate();
+    } catch {
+      /* Malformed draft never replaces a usable saved profile. */
+    }
+  }
+  function autoSaveProfile() {
+    if (
+      disposed ||
+      recording ||
+      identifying ||
+      switchCapture ||
+      layoutCapture ||
+      practice ||
+      guide?.captureActive()
+    )
+      return null;
+    // An untouched new controller has empty fields, not a corrupt JSON profile.
+    // Explain the next action instead of leaking validation internals into setup.
+    const incomplete = Object.entries(rows).some(([control, row]) =>
+      [
+        'axis',
+        'min',
+        'max',
+        'deadZone',
+        ...(control === 'throttle' && throttle.value === 'full-travel' ? [] : ['center']),
+      ].some((key) => row[key].value.trim() === '' || !Number.isFinite(Number(row[key].value))),
+    );
+    if (incomplete) {
+      autoSavePending = false;
+      status.textContent = copy.incomplete;
+      return null;
+    }
+    try {
+      const candidate = readProfile(true);
+      normalizeRadioInput(candidate, runtime.raw());
+      const signature = canonicalJSON(candidate);
+      if (signature === savedProfileSignature && runtime.status().verified) {
+        autoSavePending = false;
+        return savedProfileResult;
+      }
+      if (!verifyProfile()) return null;
+      const result = saveProfile();
+      if (result) {
+        savedProfileSignature = signature;
+        savedProfileResult = result;
+        autoSavePending = false;
+        if (result.saved) {
+          try {
+            storage?.removeItem(editorDraftKey(runtime.raw()));
+          } catch {}
+        }
+        persistSixLayout({ announce: false });
+      }
+      return result;
+    } catch (error) {
+      status.textContent = `${t('Not saved yet:', 'Ще не збережено:')} ${error.message}`;
+      return null;
+    }
+  }
+  function persistSixLayout({ announce = true } = {}) {
+    if (!layoutDraft || layoutCapture || practice) return false;
+    try {
+      let profile;
+      try {
+        profile = readProfile(true);
+      } catch {
+        /* A switch can be saved before the sticks are ready. */
+      }
+      const layout = validateRadioControlLayout(layoutDraft, { profile });
+      const signature = canonicalJSON(layout);
+      if (!Object.values(layout.switches).some(Boolean)) return true;
+      if (
+        profile &&
+        runtime.status().verified &&
+        layout.switches.arm &&
+        canonicalJSON(runtime.controlLayout?.()) !== signature
+      ) {
+        runtime.setControlLayout(layout);
+        runtime.setProvisionalMenu?.(null);
+        bootstrapEnabled = false;
+      }
+      const announceSaved = () => {
+        if (announce && sixStatus)
+          sixStatus.textContent = t(
+            'Assignments saved automatically. Check physical switch choices with the live preview.',
+            'Призначення збережено автоматично. Перевірте вибір фізичних перемикачів у живому перегляді.',
+          );
+      };
+      if (signature === savedLayoutSignature) {
+        announceSaved();
+        return true;
+      }
+      try {
+        saveRadioControlLayout({ storage, layout });
+        savedLayoutSignature = signature;
+        announceSaved();
+      } catch {
+        if (sixStatus)
+          sixStatus.textContent = t(
+            'Switches work for this session. Browser storage is unavailable; export a backup to keep them.',
+            'Перемикачі діють у цьому сеансі. Сховище недоступне; експортуйте резервну копію.',
+          );
+      }
+      return true;
+    } catch (error) {
+      if (sixStatus)
+        sixStatus.textContent = `${t('Not saved yet:', 'Ще не збережено:')} ${error.message}`;
+      return false;
+    }
+  }
   listen(select, 'change', () => {
+    restoringFields = true;
     guide?.reset();
     if (select.value === '') {
       runtime.select(null);
       invalidate();
       status.textContent = copy.pick;
+      restoringFields = false;
       return;
     }
     const selected = runtime.select(Number(select.value)),
@@ -754,6 +1425,7 @@ export function mountRadioSetup({
     if (!selected || !pad) {
       status.textContent =
         runtime.devices().status === 'unavailable' ? copy.unavailable : copy.pick;
+      restoringFields = false;
       return;
     }
     const matching = store
@@ -766,6 +1438,8 @@ export function mountRadioSetup({
       (matching.length === 1 ? matching[0] : matching.length ? null : defaultRadioProfile());
     if (p && canonicalJSON(p.device) === canonicalJSON(radioDeviceIdentity(pad)))
       loadProfile(p, { confirmed: p.verified });
+    restoringFields = false;
+    restoreEditorDraft();
   });
   for (const node of [
     mode,
@@ -777,7 +1451,7 @@ export function mountRadioSetup({
       Object.values(row).filter((node) => node.tagName === 'INPUT'),
     ),
   ])
-    listen(node, 'change', invalidate);
+    for (const event of ['input', 'change']) listen(node, event, () => invalidate());
 
   const responseHeading = el('h2', copy.response);
   const responseNodes = {};
@@ -842,7 +1516,15 @@ export function mountRadioSetup({
     const parsed = JSON.parse(text);
     const draft = (p) => (p ? { ...validateRadioProfile(p), verified: false } : null);
     let value;
-    if ([RADIO_FORMAT, AXIS_RADIO_FORMAT, ACTION_RADIO_FORMAT].includes(parsed.format)) {
+    if (
+      [
+        RADIO_FORMAT,
+        AXIS_RADIO_FORMAT,
+        ACTION_RADIO_FORMAT,
+        FIRE_RADIO_FORMAT,
+        COMBAT_RADIO_FORMAT,
+      ].includes(parsed.format)
+    ) {
       value = {
         format: 'FlightProfiles.v1',
         radio: draft(parsed),
@@ -998,6 +1680,7 @@ export function mountRadioSetup({
     invalidate();
     row.setCaptureState('done');
     row.captureHint.textContent = status.textContent = copy.switchCaptured;
+    autoSaveProfile();
   }
   function describeControls() {
     for (const control of FLIGHT_CONTROLS)
@@ -1005,6 +1688,106 @@ export function mountRadioSetup({
     throttleLabel.firstChild.textContent = locale === 'uk' ? 'Стік газу' : 'Throttle stick';
   }
   listen(mode, 'change', describeControls);
+  function previewControl(control, pad) {
+    const row = rows[control],
+      full = control === 'throttle' && throttle.value === 'full-travel';
+    if (!pad || [row.axis, row.min, row.max].some((node) => node.value === '')) return null;
+    const raw = pad.axes[Number(row.axis.value)],
+      min = Number(row.min.value),
+      max = Number(row.max.value);
+    if (!Number.isFinite(raw) || !(max > min)) return null;
+    let value;
+    if (full) value = (raw - min) / (max - min);
+    else {
+      if (row.center.value === '') return null;
+      const center = Number(row.center.value);
+      if (!(center > min && center < max)) return null;
+      value = raw >= center ? (raw - center) / (max - center) : (raw - center) / (center - min);
+    }
+    value = Math.max(full ? 0 : -1, Math.min(1, value));
+    if (row.invert.checked) value = full ? 1 - value : -value;
+    if (!full) {
+      const dead = Number(row.deadZone.value);
+      if (Number.isFinite(dead) && dead >= 0 && dead <= 0.2)
+        value = Math.sign(value) * Math.max(0, (Math.abs(value) - dead) / (1 - dead));
+    }
+    if (control === 'throttle' && !full) value = (value + 1) / 2;
+    return value;
+  }
+  function sampleManualCapture(pad, now) {
+    const capture = identifying;
+    if (!capture) return;
+    const row = rows[capture.control];
+    if (
+      !pad ||
+      pad.index !== capture.index ||
+      canonicalJSON(radioDeviceIdentity(pad)) !== capture.identity ||
+      doc.hidden ||
+      now - capture.started > 30000
+    ) {
+      stopCaptures();
+      status.textContent = t(
+        'Mapping stopped. Try again when the radio is connected.',
+        'Призначення зупинено. Повторіть із під’єднаним пультом.',
+      );
+      return;
+    }
+    const movement = pad.axes
+      .map((v, axis) => ({ axis, delta: v - capture.baseline[axis] }))
+      .sort((a, b) => Math.abs(b.delta) - Math.abs(a.delta));
+    if (capture.stage === 'positive') {
+      const candidate = movement[0];
+      if (
+        !candidate ||
+        Math.abs(candidate.delta) < 0.25 ||
+        Math.abs(candidate.delta) < Math.abs(movement[1]?.delta ?? 0) * 1.8
+      ) {
+        capture.held = null;
+        return;
+      }
+      if (
+        capture.held?.axis !== candidate.axis ||
+        Math.abs(pad.axes[candidate.axis] - capture.held.value) > 0.02
+      )
+        capture.held = { axis: candidate.axis, value: pad.axes[candidate.axis], since: now };
+      if (now - capture.held.since < 250) return;
+      capture.positive = { axis: candidate.axis, value: pad.axes[candidate.axis] };
+      capture.stage = 'opposite';
+      capture.held = null;
+      row.hint.textContent = t(
+        'Now move the same control all the way in the opposite direction and hold.',
+        'Тепер перемістіть цей орган керування до протилежного краю та утримуйте.',
+      );
+      return;
+    }
+    const { axis, value: positive } = capture.positive,
+      current = pad.axes[axis];
+    if ((current - positive) * (positive - capture.baseline[axis]) > 0) {
+      capture.positive.value = current;
+      capture.held = null;
+      return;
+    }
+    if (
+      Math.abs(current - positive) < 0.5 ||
+      ((capture.control !== 'throttle' || throttle.value === 'spring-centred') &&
+        (current - capture.baseline[axis]) * (positive - capture.baseline[axis]) >= 0)
+    ) {
+      capture.held = null;
+      return;
+    }
+    if (!capture.held || Math.abs(current - capture.held.value) > 0.02)
+      capture.held = { value: current, since: now };
+    if (now - capture.held.since < 250) return;
+    row.axis.value = String(axis);
+    row.min.value = String(Math.min(positive, current));
+    row.max.value = String(Math.max(positive, current));
+    row.center.value = String((positive + current) / 2);
+    row.invert.checked = positive < current;
+    identifying = null;
+    row.identify.textContent = copy.identify;
+    invalidate();
+    autoSaveProfile();
+  }
   function clearSticks() {
     for (const stick of stickNodes) {
       stick.dot.style.transform = 'translate(0px, 0px)';
@@ -1014,8 +1797,13 @@ export function mountRadioSetup({
   function paint(now) {
     if (disposed) return;
     const capturePad = runtime.raw();
+    guide?.sample(capturePad);
     try {
+      sampleBootstrap(now);
+      sampleLayoutCapture(runtime.raw(), now);
+      samplePractice(runtime.raw());
       sampleSwitchCapture(capturePad, now);
+      sampleManualCapture(runtime.raw(), now);
     } catch {
       const row = switchCapture ? switchRows[switchCapture.action] : null;
       stopCaptures();
@@ -1031,6 +1819,7 @@ export function mountRadioSetup({
     if (now - lastPaint >= 100) {
       lastPaint = now;
       const pad = runtime.raw();
+      guide?.update(pad);
       if (pad) {
         for (const [action, row] of Object.entries(switchRows)) {
           try {
@@ -1058,19 +1847,53 @@ export function mountRadioSetup({
               row.max.value = travel.max[Number(row.axis.value)].toFixed(3);
             }
         try {
-          const input = normalizeRadioInput(readProfile(), pad),
-            layout = STICK_LAYOUTS[Number(mode.value)];
+          const input = Object.fromEntries(
+              FLIGHT_CONTROLS.map((control) => [control, previewControl(control, pad)]),
+            ),
+            livePreview = guide?.preview(pad);
+          if (livePreview) Object.assign(input, livePreview);
+          const layout = STICK_LAYOUTS[Number(mode.value)];
+          for (const control of FLIGHT_CONTROLS) {
+            const row = rows[control],
+              value = input[control];
+            const active = identifying?.control === control;
+            row.field.classList.toggle('is-listening', active);
+            row.reading.textContent =
+              value === null
+                ? t('Not mapped yet', 'Ще не призначено')
+                : `${Math.round(value * 100)}% · ${t('channel', 'канал')} ${row.axis.value}`;
+            const position =
+              value === null ? 50 : control === 'throttle' ? value * 100 : (value + 1) * 50;
+            row.dot.style.left = `${position}%`;
+            if (!active || identifying.stage === 'positive') {
+              const positionIndex = layout.indexOf(control),
+                side = positionIndex < 2 ? copy.left : copy.right;
+              const direction = positionIndex % 2 === 0 ? t('RIGHT', 'ПРАВОРУЧ') : t('UP', 'ВГОРУ');
+              row.hint.textContent = t(
+                `Move the ${side.toLowerCase()} ${direction}.`,
+                `Перемістіть ${side.toLowerCase()} ${direction}.`,
+              );
+              row.identify.textContent = active
+                ? t('Listening…', 'Очікування…')
+                : t('Map this movement', 'Призначити цей рух');
+            }
+          }
           for (let i = 0; i < 2; i++) {
             const horizontal = layout[i * 2],
-              vertical = layout[i * 2 + 1],
-              y = vertical === 'throttle' ? input.throttle * 2 - 1 : input[vertical];
+              vertical = layout[i * 2 + 1];
+            const y =
+              input[vertical] === null
+                ? 0
+                : vertical === 'throttle'
+                  ? input.throttle * 2 - 1
+                  : input[vertical];
             stickNodes[i].dot.style.transform =
-              `translate(${input[horizontal] * stickNodes[i].node.clientWidth * 0.34}px, ${-y * stickNodes[i].node.clientWidth * 0.34}px)`;
-            stickNodes[i].dot.hidden = false;
+              `translate(${(input[horizontal] ?? 0) * stickNodes[i].node.clientWidth * 0.34}px, ${-y * stickNodes[i].node.clientWidth * 0.34}px)`;
+            stickNodes[i].dot.hidden = input[horizontal] === null && input[vertical] === null;
             stickNodes[i].label.textContent = `${copy[horizontal]} / ${copy[vertical]}`;
             stickNodes[i].node.setAttribute(
               'aria-label',
-              `${copy[i === 0 ? 'left' : 'right']}: ${copy[horizontal]} ${Math.round(input[horizontal] * 100)}%, ${copy[vertical]} ${Math.round(input[vertical] * 100)}%`,
+              `${copy[i === 0 ? 'left' : 'right']}: ${copy[horizontal]} ${Math.round((input[horizontal] ?? 0) * 100)}%, ${copy[vertical]} ${Math.round((input[vertical] ?? 0) * 100)}%`,
             );
           }
         } catch {
@@ -1080,13 +1903,15 @@ export function mountRadioSetup({
         raw.textContent = runtime.devices().status === 'unavailable' ? copy.unavailable : copy.none;
         clearSticks();
       }
-      guide?.update(pad);
+      if (autoSavePending && now >= autoSaveAfter) autoSaveProfile();
+      paintSix();
     }
     frame = win.requestAnimationFrame(paint);
   }
   refreshLibrary();
   refresh();
   loadResponse(store.snapshot().response);
+  restoreEditorDraft();
   guide = mountRadioGuide({
     container,
     window: win,
@@ -1107,11 +1932,25 @@ export function mountRadioSetup({
     invalidate,
     verifyProfile,
     saveProfile,
+    autoSaveProfile,
+    previewControl,
     stopCaptures,
-    externalCaptureActive: () => !!(recording || identifying || switchCapture),
-    onDone,
+    externalCaptureActive: () =>
+      !!(recording || identifying || switchCapture || layoutCapture || practice),
+    skipLegacySwitches: () => bootstrapFlow || Boolean(runtime.controlLayout?.()),
+    onDone: () => {
+      if (!bootstrapFlow) return onDone();
+      bootstrapFlow = false;
+      const missing = RADIO_CONTROL_SWITCHES.filter((action) => !ensureLayout()?.switches[action]);
+      if (missing.length) startLayoutCapture(missing[0], missing.slice(1));
+      else paintSix();
+      sixStatus.textContent = t(
+        'Sticks saved automatically. Assign Flight and Fire, plus any other switches you want. Each assignment saves automatically.',
+        'Стіки збережено автоматично. Призначте Політ, Вогонь та інші перемикачі за бажанням.',
+      );
+    },
     groups: {
-      manual: [sign, channels, travelButton, centreButton, verifyButton, saveButton],
+      manual: [sign, channels, travelButton, centreButton],
       switches: [switchIntro, ...switchFields],
       response: onOpenRates
         ? [button(locale === 'uk' ? 'Рейти й газ' : 'Rates & throttle', onOpenRates)]
@@ -1147,12 +1986,293 @@ export function mountRadioSetup({
     resetResponse.remove();
     applyResponse.remove();
   }
+  sixPanel = el('section');
+  sixPanel.className = 'radio-six-switch';
+  sixPanel.dataset.radioSixSwitch = '';
+  el('h3', t('Full radio · six switches', 'Повне керування · шість перемикачів'), sixPanel);
+  el(
+    'p',
+    t(
+      'Move your intended Fire switch: “Fire gun” should light. If “Deploy payload” lights, use Swap below. Assign each action to your chosen control. Changes save automatically; weapons stay inactive here.',
+      'Рухніть ваш перемикач вогню: має засвітитися «Вогонь зі зброї». Якщо світиться «Застосувати заряд», поміняйте дії кнопкою нижче. Призначте кожній дії обраний перемикач. Зміни зберігаються автоматично; зброя тут не діє.',
+    ),
+    sixPanel,
+  );
+  sixLive = el('p', '', sixPanel);
+  sixLive.className = 'radio-action-preview';
+  sixLive.dataset.radioActionPreview = '';
+  sixLive.tabIndex = -1;
+  sixLive.setAttribute('role', 'status');
+  sixLive.setAttribute('aria-live', 'polite');
+  sixLive.setAttribute('aria-atomic', 'true');
+  sixStatus = el('p', '', sixPanel);
+  sixStatus.setAttribute('role', 'status');
+  sixStatus.dataset.sixStatus = '';
+  for (const [index, action] of RADIO_CONTROL_SWITCHES.entries()) {
+    const node = el('fieldset', undefined, sixPanel);
+    node.dataset.sixRole = action;
+    el('legend', `${index + 1} · ${sixNames[action][0]}`, node);
+    el('p', sixNames[action][1], node);
+    const inputDetails = el('details', undefined, node);
+    el('summary', t('Radio input details', 'Деталі сигналу пульта'), inputDetails);
+    const binding = el('output', '', inputDetails);
+    const live = el('output', '', node);
+    live.className = 'radio-switch-live';
+    const capture = button(
+      `${t('Assign', 'Призначити')} ${sixNames[action][0]}`,
+      () => startLayoutCapture(action),
+      node,
+    );
+    sixRows[action] = { node, binding, live, capture, active: null };
+  }
+  const modelPanel = el('details', undefined, sixPanel);
+  modelPanel.dataset.radioModelPanel = '';
+  el('summary', t('Radio model & connection', 'Модель пульта й підключення'), modelPanel);
+  el(
+    'p',
+    t(
+      'Choose your radio and how it connects. With a wireless receiver, choose its installed firmware too: the SIM cannot tell which radio is paired with it. Apply suggested channels to save valid assignments automatically, then watch the preview. Your saved stick settings stay unchanged.',
+      'Виберіть пульт і спосіб підключення. Для бездротового приймача виберіть також установлену прошивку: SIM не може визначити, який пульт із ним з’єднано. Застосуйте запропоновані канали для автозбереження коректних призначень і стежте за переглядом. Збережені налаштування стіків не змінюються.',
+    ),
+    modelPanel,
+  );
+  const modelLabel = el('label', t('Radio model', 'Модель пульта'), modelPanel),
+    modelSelect = el('select', undefined, modelLabel);
+  modelSelect.dataset.radioModel = '';
+  for (const item of RADIO_MODEL_CATALOGUE) el('option', item.name, modelSelect).value = item.id;
+  const transportLabel = el(
+      'label',
+      t('USB setup / receiver firmware', 'Налаштування USB / прошивка приймача'),
+      modelPanel,
+    ),
+    transportSelect = el('select', undefined, transportLabel);
+  transportSelect.dataset.radioTransport = '';
+  el('option', t('Choose / map manually', 'Вибрати / налаштувати вручну'), transportSelect).value =
+    '';
+  for (const item of RADIO_CHANNEL_PRESETS)
+    el('option', item.name, transportSelect).value = item.id;
+  const modelMessage = el('p', '', modelPanel);
+  modelMessage.dataset.radioModelStatus = '';
+  modelMessage.setAttribute('role', 'status');
+  const candidateButton = button(
+    t('Apply suggested switch assignments', 'Застосувати запропоновані перемикачі'),
+    () => {
+      try {
+        const device = radioDeviceIdentity(runtime.raw()),
+          candidate = radioDeviceRecommendation(device, {
+            modelId: modelSelect.value,
+            channelPreset: transportSelect.value || null,
+          });
+        if (!candidate.profile || !candidate.layout) throw new Error(modelNotice(candidate));
+        cancelSixCapture();
+        ensureLayout();
+        // Adopt neither a calibration nor a control layout by choosing a model.
+        if (!runtime.status().verified) {
+          loadProfile(candidate.profile);
+          invalidate();
+          guide.reset();
+        }
+        layoutDraft = structuredClone(candidate.layout);
+        proposalNeedsCheck = false;
+        autoSaveProfile();
+        bootstrapEnabled = false;
+        try {
+          saveRadioModelSelection({
+            storage,
+            device,
+            modelId: candidate.modelId,
+            channelPreset: candidate.channelPreset,
+          });
+        } catch {
+          /* Suggestion remains usable for this session. */
+        }
+        persistSixLayout();
+        modelPanel.open = false;
+        sixLive.focus();
+      } catch (error) {
+        modelMessage.textContent = error.message;
+      }
+      paintSix();
+    },
+    modelPanel,
+  );
+  candidateButton.dataset.radioModelApply = '';
+  modelControls = {
+    model: modelSelect,
+    transport: transportSelect,
+    message: modelMessage,
+    apply: candidateButton,
+  };
+  for (const node of [modelSelect, transportSelect])
+    listen(node, 'change', () => {
+      try {
+        const device = radioDeviceIdentity(runtime.raw());
+        if (node === modelSelect)
+          transportSelect.value =
+            radioDeviceRecommendation(device, { modelId: modelSelect.value }).channelPreset ?? '';
+        const candidate = radioDeviceRecommendation(device, {
+          modelId: modelSelect.value,
+          channelPreset: transportSelect.value || null,
+        });
+        modelMessage.textContent = modelNotice(candidate);
+        saveRadioModelSelection({
+          storage,
+          device,
+          modelId: candidate.modelId,
+          channelPreset: candidate.channelPreset,
+        });
+      } catch (error) {
+        modelMessage.textContent = error.message;
+      }
+      paintSix();
+    });
+  const captureAll = button(
+    t('Guide all six switches', 'Пройти шість перемикачів'),
+    () => {
+      bootstrapEnabled = false;
+      startLayoutCapture(RADIO_CONTROL_SWITCHES[0], RADIO_CONTROL_SWITCHES.slice(1));
+    },
+    sixPanel,
+  );
+  captureAll.dataset.sixCaptureAll = '';
+  const swapFirePayload = button(
+    t('Swap Fire gun ↔ Deploy payload', 'Поміняти Вогонь ↔ Застосування заряду'),
+    () => {
+      const draft = ensureLayout();
+      if (
+        !draft?.switches.fire ||
+        !draft?.switches.payload ||
+        layoutCapture ||
+        practice ||
+        guide?.captureActive()
+      )
+        return;
+      const before = structuredClone(draft.switches);
+      [draft.switches.fire, draft.switches.payload] = [draft.switches.payload, draft.switches.fire];
+      if (!persistSixLayout()) draft.switches = before;
+      paintSix();
+    },
+    sixPanel,
+  );
+  swapFirePayload.dataset.sixSwapFirePayload = '';
+  swapFirePayload.title = t(
+    'Use when your Fire switch drops the payload. Exchanges these two assignments only; keeps stick calibration and every other switch.',
+    'Якщо перемикач вогню скидає заряд. Міняє лише ці дві дії; зберігає калібрування стіків та інші перемикачі.',
+  );
+
+  const undo = button(
+    t('Restore previous controls', 'Повернути попереднє керування'),
+    () => {
+      try {
+        cancelSixCapture();
+        runtime.setControlLayout(previousLayout);
+        if (previousLayout) saveRadioControlLayout({ storage, layout: previousLayout });
+        else removeRadioControlLayout({ storage, device: radioDeviceIdentity(runtime.raw()) });
+        sixStatus.textContent = t(
+          'Previous controls restored. Your stick settings are unchanged.',
+          'Попереднє керування повернуто. Налаштування стіків не змінено.',
+        );
+      } catch (error) {
+        sixStatus.textContent = error.message;
+      }
+    },
+    sixPanel,
+  );
+  undo.dataset.sixUndo = '';
+  const practiceButton = button(
+    t('Practice six switches', 'Перевірити шість перемикачів'),
+    () => {
+      const pad = runtime.raw();
+      if (!pad || !ensureLayout()) return;
+      practice = true;
+      practiceSeen = new Set();
+      practicePrevious = Object.fromEntries(
+        RADIO_CONTROL_SWITCHES.map((action) => [action, radioSwitch(layoutDraft, pad, action)]),
+      );
+      practicePaused = !practicePrevious.arm;
+      sixStatus.textContent = t(
+        'Practice only: try Flight, Fire, Weapon, Reload, Deploy and Detonate. No flight or weapon commands. Back cancels.',
+        'Лише тренування: перевірте Політ, Вогонь, Зброю, Перезарядження, Заряд і Підрив. Команди польоту й зброї заблоковані. Назад скасовує.',
+      );
+      paintSix();
+    },
+    sixPanel,
+  );
+  practiceButton.dataset.sixPractice = '';
+  button(
+    t('Cancel assignment / practice', 'Скасувати призначення / тренування'),
+    cancelSixCapture,
+    sixPanel,
+  ).dataset.sixCancel = '';
+  button(
+    t('Start without keyboard', 'Почати без клавіатури'),
+    () => {
+      stopCaptures();
+      guide.cancel();
+      bootstrap.reset();
+      bootstrapEnabled = true;
+      bootstrapComplete = false;
+      bootstrapFlow = false;
+      runtime.setProvisionalMenu?.(null);
+      sixStatus.textContent = t(
+        'Move and rest one control twice on the intended radio. Other radios must stay still.',
+        'Двічі перемістіть і поверніть один орган керування на потрібному пульті. Інші пульти мають бути нерухомі.',
+      );
+    },
+    sixPanel,
+  ).dataset.sixBootstrap = '';
+  container.querySelector('.radio-workspace').after(sixPanel);
+  container.querySelector('.radio-device-card').append(modelPanel);
+  const legacySwitches = container.querySelector('.radio-extra-switches');
+  legacySwitches.open = false;
+  legacySwitches.querySelector('summary').textContent = t(
+    'Previous controls / individual switches',
+    'Попереднє керування / окремі перемикачі',
+  );
+  paintSix();
   frame = win.requestAnimationFrame(paint);
   return {
     store,
-    captureActive: () => !!(recording || identifying || switchCapture || guide?.captureActive()),
+    captureActive: () =>
+      !!(
+        recording ||
+        identifying ||
+        switchCapture ||
+        layoutCapture ||
+        practice ||
+        guide?.captureActive() ||
+        (bootstrapEnabled &&
+          !bootstrapComplete &&
+          !runtime.status().verified &&
+          bootstrap.snapshot().device)
+      ),
+    menuPreview: () => runtime.menuPreview?.() ?? runtime.preview(),
+    cancelCapture: cancelSixCapture,
+    captureRadioBack: () =>
+      layoutCapture?.action !== 'weapon' &&
+      switchCapture?.action !== 'weapon' &&
+      !(bootstrapEnabled && !bootstrapComplete && bootstrap.snapshot().phase === 'back'),
     dispose() {
+      const result = autoSaveProfile();
+      // Keep unfinished edits as a draft; leaving the editor restores the last
+      // usable calibration instead of leaving flight locked by a partial edit.
+      if (!result && runtime.status().profileDirty) {
+        const previous = store.snapshot().radio;
+        try {
+          if (
+            previous?.verified &&
+            canonicalJSON(previous.device) === canonicalJSON(radioDeviceIdentity(runtime.raw()))
+          ) {
+            runtime.setProfile(previous, { restoring: true });
+            runtime.verify();
+          }
+        } catch {
+          /* Disconnection keeps the existing reconnect/arming rules. */
+        }
+      }
+      persistSixLayout({ announce: false });
       disposed = true;
+      runtime.setProvisionalMenu?.(null);
       guide?.dispose();
       runtime.endSetup();
       if (frame !== null) win.cancelAnimationFrame(frame);

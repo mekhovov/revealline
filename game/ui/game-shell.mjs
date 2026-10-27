@@ -29,8 +29,10 @@ export function attachGameShell({
   separateTeam = false,
   titleDestination,
   titleContinueDestination,
+  titleRecommendation,
   navigationContext = () =>
     t('interface:captureNavigation.context', { mode: t('interface:solo2') }),
+  titleActionDetail,
   onWorlds,
   onMissions,
   getTopDialog,
@@ -250,6 +252,12 @@ export function attachGameShell({
     }
     $('shell-continue').hidden = !continued;
     if ($('shell-featured')) $('shell-featured').hidden = isolated || continued;
+    if ($('shell-action-context')) $('shell-action-context').hidden = isolated;
+    if ($('shell-action-detail')) {
+      $('shell-action-detail').hidden = isolated || !titleActionDetail;
+      if (!isolated && titleActionDetail)
+        localizedText($('shell-action-detail'), titleActionDetail);
+    }
     if ($('shell-destination'))
       localizedText($('shell-destination'), () =>
         isolated
@@ -257,11 +265,26 @@ export function attachGameShell({
           : continued
             ? copy('title.continueDestination', {
                 destination: !$('continue-saved').hidden
-                  ? $('continue-saved').title
+                  ? $('continue-saved').getAttribute('title') || t('interface:loadSavedFlight2')
                   : titleContinueDestination?.() || $('mission-brief-title').textContent,
               })
             : titleDestination?.() || copy('title.deployDestination'),
       );
+    const recommendation = $('capture-home-recommendation');
+    if (recommendation) {
+      const message = () => (isolated ? '' : titleRecommendation?.() || '');
+      recommendation.hidden = !message();
+      localizedText(recommendation, message);
+      for (const action of [$('shell-featured'), $('shell-continue')]) {
+        const descriptions = new Set(
+          (action.getAttribute('aria-describedby') || '').split(/\s+/).filter(Boolean),
+        );
+        descriptions.delete(recommendation.id);
+        if (!recommendation.hidden && !action.hidden) descriptions.add(recommendation.id);
+        if (descriptions.size) action.setAttribute('aria-describedby', [...descriptions].join(' '));
+        else action.removeAttribute('aria-describedby');
+      }
+    }
   };
   const openHome = ({ focus = true, returnGuard = null } = {}) => {
     if (destroyed) return;

@@ -33,7 +33,7 @@ const BASE_OPTIONAL_PACKAGE_POLICIES = Object.freeze({
     root: 'optional-practice/civilian-flight/',
     entry: 'optional-practice/civilian-flight/index.html',
     // The installed archive includes the reviewed launcher, access gate and
-    // shared menu CSS, battlefield artwork and ambience closure. The runtime has 98 files; the
+    // shared menu CSS, battlefield artwork and ambience closure. The native mixer uses the admitted SIM projection; the runtime has 97 files; the
     // selected source archive adds two reviewed templates within this finite
     // envelope.
     limits: Object.freeze({ files: 100, bytes: 8 * 1024 * 1024 }),
@@ -65,7 +65,6 @@ const BASE_OPTIONAL_PACKAGE_POLICIES = Object.freeze({
       'optional-practice/civilian-fpv/radio-profile.mjs',
       'optional-practice/civilian-fpv/flight-response.mjs',
       'optional-practice/civilian-fpv/rates.mjs',
-      'optional-practice/civilian-fpv/world-audio.mjs',
       'optional-practice/civilian-fpv/flight-fullscreen.mjs',
       'optional-practice/civilian-fpv/flight-fullscreen.css',
       'optional-practice/civilian-fpv/sim-presentation.mjs',
@@ -625,6 +624,7 @@ const FPV_TUNING_FILES = Object.freeze([
   'advanced-ghost-path.mjs',
   'propulsion-evidence.mjs',
   'propulsion-evidence-ui.mjs',
+  'propulsion-load.mjs',
   'aircraft-challenge.mjs',
   'aircraft-challenge-ui.mjs',
   'advanced-worker.mjs',
@@ -657,7 +657,11 @@ export const OPTIONAL_PACKAGE_POLICIES = Object.freeze(
         // Admit only its message families, including plural and dynamic keys.
         localeKeyPrefixes: Object.freeze({
           errors: Object.freeze(['missionLibrary.']),
-          interface: Object.freeze(['missionLibrary.', 'missionGoal.']),
+          interface: Object.freeze([
+            'missionLibrary.',
+            'missionGoal.',
+            ...(['civilian-fpv', 'fpv-worlds'].includes(id) ? ['supportSummary.'] : []),
+          ]),
           common: Object.freeze(['counts.missions', 'collections.']),
         }),
         localeKeys: Object.freeze({
@@ -721,11 +725,13 @@ export const OPTIONAL_PACKAGE_POLICIES = Object.freeze(
           // Standalone Academy remains below 12 MiB; World stays at 20 MiB.
           // World also admits its single Regional Advanced adapter.
           // Academy now carries the same pinned 4.35 MB Rapier build as World.
+          // The evidence inspector adds one explicitly admitted load solver;
+          // complete source inventories are now 151 and 211 files respectively.
           files:
             id === 'civilian-fpv'
-              ? 150
+              ? 151
               : id === 'fpv-worlds'
-                ? 210 // Includes World's same-scope flight and response-bench workers.
+                ? 211 // Includes World's same-scope flight and response-bench workers.
                 : id === 'civilian-flight'
                   ? 100
                   : policy.limits.files,
@@ -752,6 +758,9 @@ export const OPTIONAL_PACKAGE_POLICIES = Object.freeze(
                 )
               : []),
             ...(['civilian-fpv', 'fpv-worlds'].includes(id) ? ['game/platform.mjs'] : []),
+            ...(['civilian-fpv', 'fpv-worlds'].includes(id)
+              ? ['game/ui/local-support-summary.mjs', 'game/local-support-summary.mjs']
+              : []),
             'game/access-gate.mjs',
             'game/access-gate.css',
             // The legacy civilian-flight archive also hosts the shared SIM

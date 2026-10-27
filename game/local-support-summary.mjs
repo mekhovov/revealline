@@ -21,6 +21,17 @@ const controllerStates = [
   'observed',
 ];
 const snakeHosts = ['snake-solo', 'snake-versus', 'snake-team'];
+const teamHosts = ['capture-team'];
+const versusHosts = ['capture-versus'];
+const overflightHosts = [
+  'overflight',
+  'overflight-riy',
+  'overflight-hunt',
+  'overflight-time-attack',
+  'overflight-marathon',
+];
+const academyHosts = ['fpv-academy'];
+const worldsHosts = ['fpv-worlds'];
 
 /** A fixed projection of current owners. No raw URL, identity, input history,
  * game data, storage key or exception text is accepted into this document. */
@@ -48,7 +59,21 @@ export function supportSnapshot(host = {}, env = globalThis, clock = {}) {
       Number.isSafeInteger(capturedAt) && capturedAt >= 1e12 && capturedAt < 1e13
         ? new Date(capturedAt).toISOString()
         : null,
-    scope: snakeHosts.includes(host.kind) ? 'snake-game-shell' : 'primary-game-shell',
+    scope: snakeHosts.includes(host.kind)
+      ? 'snake-game-shell'
+      : versusHosts.includes(host.kind)
+        ? 'versus-game-shell'
+        : teamHosts.includes(host.kind)
+        ? 'team-game-shell'
+        : overflightHosts.includes(host.kind)
+          ? 'overflight-game-shell'
+          : academyHosts.includes(host.kind)
+            ? 'academy-game-shell'
+            : worldsHosts.includes(host.kind)
+              ? 'worlds-game-shell'
+              : host.kind === 'private-room'
+                ? 'private-room-game-shell'
+                : 'primary-game-shell',
     build: {
       version: version(host.version),
       sourceRevision:
@@ -58,8 +83,35 @@ export function supportSnapshot(host = {}, env = globalThis, clock = {}) {
       packaged: boolean(host.packaged),
     },
     game: {
-      host: oneOf(host.kind, ['solo', 'journey', 'installed-edition', 'practice', ...snakeHosts]),
-      state: oneOf(host.state, ['idle', 'running', 'paused', 'won', 'lost', 'finished']),
+      host: oneOf(host.kind, [
+        'solo',
+        'journey',
+        'installed-edition',
+        'practice',
+        ...snakeHosts,
+        ...teamHosts,
+        ...overflightHosts,
+        ...versusHosts,
+        ...academyHosts,
+        ...worldsHosts,
+        'private-room',
+      ]),
+      state: oneOf(host.state, [
+        'idle',
+        'running',
+        'paused',
+        'won',
+        'lost',
+        'finished',
+        'disarmed',
+        'complete',
+        'expired',
+        'playback-ended',
+        'failed',
+        ...(host.kind === 'private-room'
+          ? ['connecting', 'recovering', 'waiting', 'playing', 'abandoned']
+          : []),
+      ]),
       locale: oneOf(host.locale, ['en', 'uk']),
       saving: {
         writable: boolean(host.writable),

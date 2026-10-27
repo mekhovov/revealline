@@ -12,6 +12,13 @@ import { audioHarness } from './soundtrack-audio.mjs';
 import { memoryIndexedDB } from './soundtrack-fixtures.mjs';
 import { waitFor } from './wait-for.mjs';
 
+const remoteTeamDisplayURLs = new Set(
+  ['cultural', 'expedition', 'hunt'].map(
+    (target) =>
+      new URL(`../../content-design/runtime/remote-team-${target}.json`, import.meta.url).href,
+  ),
+);
+
 // Model only the known theme stylesheet's asynchronous native load boundary.
 // CSS bytes remain real; this host makes no parsing, layout or font claim.
 export function installSoloStylesheets(document, { read = readFile } = {}) {
@@ -225,8 +232,9 @@ export async function settle(
   // The focused gate runs independent host processes concurrently. Its runner
   // can schedule a valid asynchronous handoff later than the interactive
   // fixture's five-second default; retain the fast local feedback while
-  // giving CI a deterministic scheduler allowance.
-  const timeoutMs = options.timeoutMs ?? (process.env.CI ? 20_000 : 5_000);
+  // giving CI a bounded allowance for image decoding and shared-runner
+  // scheduling. This is a functional predicate, not a latency benchmark.
+  const timeoutMs = options.timeoutMs ?? (process.env.CI ? 60_000 : 5_000);
   await waitFor(
     () => {
       // A real browser continues to submit paused preparation frames while an
@@ -270,7 +278,7 @@ export async function soloPage(
     animationFrames = false,
     automaticPreparationFrames = true,
     loadStylesheets = true,
-    initialReadyTimeoutMs = 5000,
+    initialReadyTimeoutMs = process.env.CI ? 30_000 : 5000,
     browserSetup,
     readPads = () => [],
   } = {},
@@ -413,6 +421,12 @@ export async function soloPage(
     fetch: async (path, options) => {
       const custom = await fetchResponse?.(path, options);
       if (custom !== undefined && custom !== null) return custom;
+      if (remoteTeamDisplayURLs.has(String(path))) {
+        if (options?.signal?.aborted) throw new DOMException('Cancelled.', 'AbortError');
+        const bytes = await readFile(new URL(String(path)));
+        if (options?.signal?.aborted) throw new DOMException('Cancelled.', 'AbortError');
+        return new Response(bytes);
+      }
       const presentation = String(path).match(/(?:^|\/)presentation\/(.+)$/);
       if (presentation) {
         if (options?.signal?.aborted) throw new DOMException('Cancelled.', 'AbortError');
@@ -653,7 +667,8 @@ export async function soloPage(
     `${$('overlay-title').textContent}: ${$('overlay-copy').textContent}\n${errors.map((e) => e.stack).join('\n')}`,
   );
   // Bulk installed-original fixtures can declare their existing bounded
-  // inventory allowance. Ordinary hosts retain the same five-second deadline.
+  // inventory allowance. Ordinary local hosts retain five seconds; CI allows
+  // the same finite decoding work to finish on a shared runner.
   async function initialReady(predicate, phase) {
     const started = hrtime.bigint();
     try {

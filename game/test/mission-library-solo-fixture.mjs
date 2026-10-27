@@ -1,3 +1,4 @@
+import { authoritativeCheckpoint } from '../replay.mjs';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { soloPage } from './helpers/solo-dom.mjs';
@@ -7,20 +8,7 @@ import { createMissionLibrary } from '../mission-library/library.mjs';
 import { managedIndexedDB } from './helpers/managed-idb.mjs';
 import { emptyPackLibrary, installPack, exportPackLibrary } from '../packs.mjs';
 
-class Picture {
-  width = 1774;
-  height = 887;
-  naturalWidth = 1774;
-  naturalHeight = 887;
-  set src(value) {
-    this.source = value;
-    queueMicrotask(() => this.onload?.());
-  }
-  async decode() {}
-  removeAttribute() {
-    this.source = '';
-  }
-}
+import { RasterImage as Picture } from './helpers/raster-image.mjs';
 async function journeyPage(t, search = '') {
   return soloPage(t, {
     search,
@@ -212,7 +200,8 @@ function showAllLifecycles(p) {
 }
 async function startPrepared(p, id) {
   let activated = false,
-    acceptedRun;
+    acceptedRun,
+    acceptedCheckpoint;
   await running(p, id, () => {
     if (activated) return;
     const start = p.$('start-button');
@@ -230,11 +219,25 @@ async function startPrepared(p, id) {
     )
       return;
     acceptedRun = p.rendered.run;
+    acceptedCheckpoint = authoritativeCheckpoint(acceptedRun);
+    assert.equal(p.rendered.paused, true);
+    assert.equal(acceptedRun.tick, 0);
+    assert.equal(p.doc.activeElement, start);
+    assert.equal(p.$('journey-chooser').open, false);
+    assert.equal(p.$('shell-home').open, false);
+    p.frame(100);
+    assert.equal(p.rendered.run, acceptedRun);
+    assert.deepEqual(
+      authoritativeCheckpoint(acceptedRun),
+      acceptedCheckpoint,
+      'Viewing a prepared briefing must not simulate or replace the accepted attempt.',
+    );
     activated = true;
     start.click();
   });
   assert.equal(activated, true, 'The exact prepared briefing needs one explicit Start.');
   assert.equal(p.rendered.run === acceptedRun, true, 'Start retains the accepted mission run.');
+  assert.deepEqual(authoritativeCheckpoint(acceptedRun), acceptedCheckpoint);
   assert.equal(p.rendered.paused, false);
   assert.equal(p.$('game-overlay').hidden, true);
 }

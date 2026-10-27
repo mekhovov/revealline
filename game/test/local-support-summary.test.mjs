@@ -356,3 +356,174 @@ test('explicit owner invalidation preserves an outstanding export lease across r
   assert.doesNotMatch(h.$('status').textContent, /Shared with/);
   h.ui.destroy();
 });
+
+test('Team support accepts only its aggregate scalar observation and does not invent readiness or save permission', () => {
+  const value = supportSnapshot(
+    {
+      kind: 'capture-team',
+      state: 'paused',
+      writable: null,
+      controller: {
+        sampledAt: 900,
+        status: 'connected',
+        assigned: true,
+        seats: ['private-seat'],
+        devices: ['private-device'],
+        buttons: [1],
+        axes: [0.2],
+      },
+    },
+    environment(),
+    clock,
+  );
+  assert.equal(value.scope, 'team-game-shell');
+  assert.equal(value.game.host, 'capture-team');
+  assert.equal(value.game.state, 'paused');
+  assert.equal(value.game.saving.writable, null);
+  assert.equal(value.game.saving.reason, 'unavailable');
+  assert.equal(value.controller.assigned, true);
+  assert.equal(value.controller.neutral, null);
+  assert.equal(value.controller.confirmBlocked, null);
+  assert.equal(value.controller.confirmReason, 'unavailable');
+  assert.doesNotMatch(JSON.stringify(value), /private|seats|devices|buttons|axes/);
+  for (const kind of ['solo', 'journey', 'installed-edition', 'practice']) {
+    const primary = supportSnapshot({ kind }, environment(), clock);
+    assert.equal(primary.scope, 'primary-game-shell');
+    assert.equal(primary.game.host, kind);
+  }
+
+});
+
+test('Versus finished is an observed round state and preserves primary and Team scopes', () => {
+  const value = supportSnapshot(
+    { kind: 'capture-versus', state: 'finished' },
+    environment(),
+    clock,
+  );
+  assert.equal(value.scope, 'versus-game-shell');
+  assert.equal(value.game.host, 'capture-versus');
+  assert.equal(value.game.state, 'finished');
+  assert.equal(value.game.saving.writable, null);
+  assert.equal(
+    supportSnapshot({ kind: 'capture-team' }, environment(), clock).scope,
+    'team-game-shell',
+  );
+  assert.equal(supportSnapshot({ kind: 'solo' }, environment(), clock).scope, 'primary-game-shell');
+});
+
+test('Academy terminal playback remains distinct from live flight completion and expiry', () => {
+  for (const state of ['disarmed', 'complete', 'expired', 'playback-ended']) {
+    const value = supportSnapshot({ kind: 'fpv-academy', state }, environment(), clock);
+    assert.equal(value.scope, 'academy-game-shell');
+    assert.equal(value.game.host, 'fpv-academy');
+    assert.equal(value.game.state, state);
+    assert.equal(value.game.saving.writable, null);
+    assert.equal(value.controller.assigned, null);
+    assert.equal(value.controller.neutral, null);
+    assert.equal(value.controller.confirmBlocked, null);
+  }
+});
+
+test('Worlds preserves its actual flight and playback states while every existing host scope remains intact', () => {
+  for (const state of [
+    'idle',
+    'running',
+    'paused',
+    'disarmed',
+    'complete',
+    'expired',
+    'failed',
+    'playback-ended',
+  ]) {
+    const value = supportSnapshot({ kind: 'fpv-worlds', state }, environment(), clock);
+    assert.equal(value.scope, 'worlds-game-shell');
+    assert.equal(value.game.host, 'fpv-worlds');
+    assert.equal(value.game.state, state);
+    assert.equal(value.game.saving.writable, null);
+    assert.equal(value.controller.assigned, null);
+    assert.equal(value.controller.neutral, null);
+    assert.equal(value.controller.confirmBlocked, null);
+  }
+  for (const [kind, scope] of [
+    ['solo', 'primary-game-shell'],
+    ['capture-team', 'team-game-shell'],
+    ['capture-versus', 'versus-game-shell'],
+    ['fpv-academy', 'academy-game-shell'],
+  ]) {
+    const value = supportSnapshot({ kind, state: 'paused' }, environment(), clock);
+    assert.equal(value.game.host, kind);
+    assert.equal(value.scope, scope);
+  }
+});
+
+const observationCopy = {
+  en: {
+    presence:
+      'Connected controller observed. Assignment and menu readiness are not confirmed by this observation.',
+    absent: 'No connected controller was observed.',
+    ready: 'The game reports the controller ready.',
+    disconnected: 'The assigned controller disconnected. Reconnect and release the controls.',
+    waiting: 'Controller detected; release its buttons and movement stick.',
+    stale:
+      'The last game controller sample is old or the page was inactive. Return to the game and refresh.',
+  },
+  uk: {
+    presence:
+      'Виявлено під’єднаний контролер. Це спостереження не підтверджує його призначення чи готовність до керування меню.',
+    absent: 'Під’єднаного контролера не виявлено.',
+    ready: 'Гра повідомляє, що контролер готовий.',
+    disconnected:
+      'Призначений контролер від’єднано. Під’єднайте його та відпустіть елементи керування.',
+    waiting: 'Контролер виявлено; відпустіть кнопки та стік руху.',
+    stale:
+      'Останній зразок контролера застарів або сторінка була неактивна. Поверніться до гри й оновіть звіт.',
+  },
+};
+
+for (const [name, status, assigned, neutral, blocked, wording, monotonic = 1000] of [
+  ['unknown ownership', 'connected', null, null, null, 'presence'],
+  ['unknown assignment', 'connected', null, true, false, 'presence'],
+  ['unknown neutral', 'connected', true, null, false, 'presence'],
+  ['unknown Confirm', 'connected', true, true, null, 'presence'],
+  ['unassigned', 'connected', false, true, false, 'presence'],
+  ['not neutral', 'connected', true, false, false, 'presence'],
+  ['Confirm blocked', 'connected', true, true, true, 'presence'],
+  ['confirmed readiness', 'connected', true, true, false, 'ready'],
+  ['unknown missing assignment', 'disconnected', null, null, null, 'absent'],
+  ['explicitly unassigned missing', 'disconnected', false, null, null, 'absent'],
+  ['known assigned disconnect', 'disconnected', true, null, null, 'disconnected'],
+  ['authoritative waiting', 'waiting-neutral', true, false, true, 'waiting'],
+  ['stale presence', 'connected', null, null, null, 'stale', 4000],
+  ['stale readiness', 'connected', true, true, false, 'stale', 4000],
+])
+  test(`support controller wording distinguishes ${name} without changing captured/exported facts`, async () => {
+    const previous = getLocale(),
+      value = host();
+    value.controller = { sampledAt: 900, status, assigned, neutral, blocked };
+    const report = await collectSupportSummary({
+      host: value,
+      env: environment(),
+      clock: { ...clock, monotonic },
+    });
+    const h = panel({ collect: async () => report });
+    try {
+      setLocale('en', { persist: false });
+      h.$('prepare').focus();
+      assert.equal(await h.ui.refresh(), true);
+      const exact = h.$('json').textContent;
+      for (const language of ['en', 'uk']) {
+        setLocale(language, { persist: false });
+        assert.equal(h.$('controller').textContent, observationCopy[language][wording]);
+        assert.equal(h.doc.activeElement, h.$('prepare'));
+        assert.equal(h.$('json').textContent, exact);
+        assert.deepEqual(JSON.parse(exact), report);
+      }
+      await h.ui.download();
+      assert.deepEqual(h.exports, [
+        { value: report, name: 'revealline-local-support-summary.json' },
+      ]);
+    } finally {
+      h.ui.destroy();
+      setLocale(previous, { persist: false });
+    }
+  });

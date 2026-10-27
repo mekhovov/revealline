@@ -858,6 +858,11 @@ export async function addOfflineEntries(
     ...entries
       .filter((entry) => entry.name.startsWith('optional-practice/'))
       .map((entry) => entry.name),
+    // Character art has its own explicit verified download and cache. Hosting
+    // the pack must not add its models to every core-game offline installation.
+    ...entries
+      .filter((entry) => entry.name.startsWith('authoring/library/fpv-character-art/'))
+      .map((entry) => entry.name),
     // Demo recordings and the large landing photograph remain published for
     // online playback, but they are optional bodies rather than core offline boot.
     // Excluding only their bodies preserves URLs, provenance and on-demand tests
