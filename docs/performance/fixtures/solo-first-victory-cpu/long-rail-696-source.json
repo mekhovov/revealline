@@ -1,0 +1,32 @@
+{
+  "format": "SoloLongRailCpuHistoricalSourceV1",
+  "head": "69639b30d985ffa723a4d0c11756b632fc2da5c1",
+  "tree": "d022c57efa75dbe7b7aeeca00a1950f61426595b",
+  "scope": "Exact dispatched Long Rail declaration/workflow/adapter bytes at696; historical execution only, no current dependency exemption for new profiles. Original failed/retained profile remains excluded.",
+  "records": [
+    {
+      "path": "docs/performance/solo-final-long-rail-cpu-profile-plan.json",
+      "bytes": 11592,
+      "sha256": "7efc4fb5be2e9d99cb8c181bc175e59a76208151f569eac9433f4ccf65342a78",
+      "blob": "720ce91926a2c4058e14f6d8132f331939ea355f"
+    },
+    {
+      "path": ".github/workflows/solo-remote-final-long-rail-cpu-profile-temporary.yml",
+      "bytes": 17167,
+      "sha256": "6f9d747656b958232743af7b26ebdeeb7d1dd941744edb0d47b93fd2124349a4",
+      "blob": "30ddc92c7fc317d36fe1a2e0622605bdf511912e"
+    },
+    {
+      "path": "scripts/solo-remote-cpu-profile.mjs",
+      "bytes": 17490,
+      "sha256": "d0d1f266149fc9875bd0faf85853eda94223bb4a12dd6bcdc102e049ac6af62e",
+      "blob": "9023501d92a0f9413e4cf1dfebc60e5eab37783e"
+    },
+    {
+      "path": "scripts/solo-qualification.mjs",
+      "bytes": 26233,
+      "sha256": "88363cc018c21e04ee50addae9e6086b76849c429249cdf4e9a9e9c6c6d24637",
+      "blob": "901c2e41d8e88ed3938ee761e688323807f19525"
+    }
+  ]
+}

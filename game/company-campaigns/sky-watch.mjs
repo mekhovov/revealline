@@ -11,7 +11,7 @@ const missionId = `${id}-01`;
 export const SKY_WATCH_CAMPAIGN = Object.freeze({
   id,
   brandId: 'social-drone-ua',
-  revision: '2',
+  revision: '3',
   name: 'Sky Watch',
   publication: 'public',
   modes: ['solo'],
@@ -31,7 +31,7 @@ export function createSkyWatchProject({ assets }) {
   const picture = assets.find((asset) => asset.id === `${id}-poster-v1`);
   const mission = project.missions[0];
   Object.assign(project, {
-    revision: '2',
+    revision: '3',
     name: 'Sky Watch',
     policyId: TRAIL_IMPACT_JOURNEY_POLICY.id,
     actorCatalogId: CURRENT_PRESSURE_ACTOR_CATALOG.id,
@@ -56,7 +56,7 @@ export function createSkyWatchProject({ assets }) {
     {
       format: 'MapDesignV1',
       id: `${missionId}-map`,
-      revision: '2',
+      revision: '3',
       name: 'Watch corridors',
       width: 72,
       height: 36,
@@ -87,10 +87,10 @@ export function createSkyWatchProject({ assets }) {
   Object.assign(mission, {
     id: missionId,
     name: 'Sky Watch',
-    revision: '2',
-    map: { id: `${missionId}-map`, revision: '2' },
+    revision: '3',
+    map: { id: `${missionId}-map`, revision: '3' },
     modes: ['solo'],
-    coverage: 0.45,
+    coverage: 0.64,
     actors: [
       {
         id: 'west-keeper',
@@ -116,6 +116,22 @@ export function createSkyWatchProject({ assets }) {
         y: 35.5,
         clockwise: true,
       },
+      {
+        id: 'north-keeper',
+        role: 'field-keeper',
+        tier: 'measured',
+        x: 37.5,
+        y: 7.5,
+        heading: [1, 0],
+      },
+      {
+        id: 'central-keeper',
+        role: 'field-keeper',
+        tier: 'measured',
+        x: 36.5,
+        y: 29.5,
+        heading: [-1, 0],
+      },
     ],
     presentation: {
       themeId: 'social-drone-people-workshop-theme',
@@ -124,38 +140,38 @@ export function createSkyWatchProject({ assets }) {
     design: {
       ...mission.design,
       lesson:
-        'Build two deliberate captures through the watch corridors, then enjoy the original video.',
+        'Read the overlapping patrols, use the refuges, and make several deliberate captures to complete the picture.',
       routeDecision:
-        'Use the center refuge for a shorter second cut, or circle a side corridor away from the keepers.',
+        'Choose a side corridor to avoid a keeper, then use the central refuge to reset before the final capture.',
       counterplay:
-        'Read both field keepers and the border patrol before leaving safety; the walls create protected pauses and narrow turns.',
+        'Watch four keepers and the perimeter patrol before leaving safety; walls and the central refuge create narrow, useful pauses.',
       captureConsequence:
-        'The first closure reveals most of the scene. A second safe return completes the picture and unlocks the video.',
+        'The watch needs several safe closures. Use the side corridors and the central refuge instead of one long, exposed cut.',
       memorableMoment:
         'The final corridor closes, the completed picture settles, and the aerial clip begins.',
-      mastery: 'Complete two captures through different corridors without losing a life.',
+      mastery: 'Complete three captures through different corridors without losing a life.',
       introduces: ['perimeter-patrol'],
       practices: ['closure', 'enemy-seeded-closure', 'foundations'],
       combines: ['field-keeper', 'perimeter-patrol', 'foundations'],
-      durationSeconds: [25, 75],
+      durationSeconds: [55, 130],
       difficulty: {
         band: 3,
-        planning: 3,
-        execution: 3,
-        threatDensity: 3,
+        planning: 5,
+        execution: 5,
+        threatDensity: 6,
         timePressure: 0,
-        mechanicLoad: 3,
+        mechanicLoad: 4,
         coordination: 0,
       },
       pacingBeat: 'discover',
-      rewardRef: { id: `${missionId}-discovery`, revision: '2' },
+      rewardRef: { id: `${missionId}-discovery`, revision: '3' },
     },
   });
   project.campaigns = [
     {
       format: 'CampaignDesignV1',
       id,
-      revision: '2',
+      revision: '3',
       name: 'Sky Watch',
       band: 3,
       missionIds: [missionId],
@@ -166,7 +182,7 @@ export function createSkyWatchProject({ assets }) {
     {
       format: 'PackDesignV1',
       id: `${id}-pack`,
-      revision: '2',
+      revision: '3',
       name: 'Sky Watch',
       campaignIds: [id],
     },
@@ -189,7 +205,7 @@ export function createSkyWatchRewards({ assets, missionBindings }) {
     {
       format: 'revealline-completion-reward.v1',
       id: `${missionId}-discovery`,
-      revision: '2',
+      revision: '3',
       brandId: 'social-drone-ua',
       campaignId: id,
       scope: { kind: 'mission', id: missionId },

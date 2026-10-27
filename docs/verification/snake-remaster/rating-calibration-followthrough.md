@@ -8,13 +8,13 @@ bounded follow-up assessment; it does not claim new player calibration. Completi
 stars, personal records and the explicit before-play/result criteria remain the
 intentional baseline for the remaster.
 
-## What was examined
+## Original two-pilot comparison
 
 The existing foundation and supplemental pace journals use the same general
 qualification pilot. Replaying its path at another pace verifies that setup's
 correctness, but does not create independent strategy or difficulty evidence.
 
-The new `review-snake-rating-evidence.mjs` compares five simple, stable seed-17,
+The original `review-snake-rating-evidence.mjs` comparison covered five simple, stable seed-17,
 normal-pace Solo setups using two separately implemented steering approaches:
 
 - The existing scored search simulates possible accepted moves, scores escape
@@ -38,11 +38,49 @@ or variable-hazard eligibility is inferred from Solo results.
 | Offset Blocks        |                 102 |                 102 | No                       | Completion star and personal records |
 | Room to Follow       |                 156 |                 156 | No                       | Completion star and personal records |
 
-All five clear with both implementations, but **none produces a second route**.
+In that original comparison, all five cleared with both implementations, but **none produced a second route**.
 Agreement confirms that a simple visible-state strategy can reproduce the
 qualification path. It supplies neither independent strategic coverage nor an
 evidence-based margin for silver versus gold. Creating thresholds by multiplying
 these move counts would repeat the original single-witness problem.
+
+## Clearance strategy follow-up — 15 October 2026
+
+The v2 report adds a different route objective: spend extra travel to avoid
+narrow approaches beside walls, the current cable and board edges. Each step
+costs one distance unit plus two units per adjacent blocked cell. That weight is
+an explicit experimental preference, not a measured safety margin. The pilot
+replans from visible state on each accepted move; it neither predicts tail
+vacancy nor reads future targets, random state or queued inputs. It cannot undo
+moves or retry a failed run. A synthetic two-corridor check demonstrates that it
+chooses the longer open approach where the shortest-path pilot goes directly
+through a narrow corridor, using the same direction tie order.
+
+| Normal Solo, seed 17 | Original route moves | Clearance route moves | Distinct verified clear? |
+| -------------------- | -------------------: | --------------------: | ------------------------ |
+| Open Loop            |                   93 |                    97 | Yes                      |
+| Twin Islands         |                   98 |                    98 | Yes                      |
+| First Baffle         |                  108 |                   118 | Yes                      |
+| Offset Blocks        |                  102 |                   112 | Yes                      |
+| Room to Follow       |                  156 |                   164 | Yes                      |
+
+All five alternate routes clear and reproduce through the production replay
+validator. Their complete journals are retained beside the original two pilots;
+source hashes bind the steering implementations to the evidence. Tests reject a
+changed replay seed and confirm that candidates still award completion only.
+The report records non-clears, no-path stops and the 1,024-move cutoff if they
+occur; none occurred in these five runs. No unsuccessful experiments were
+omitted from this bounded comparison.
+
+This closes the earlier lack of a different successful strategy on these five
+setups. It does **not** establish that the alternative is safer, easier, more fun
+or representative of players. Four routes take longer, while Twin Islands
+uses a different route with the same move count. The comparison therefore
+provides useful strategy evidence without a defensible new silver/gold margin.
+The 375 published budgets and 1,065 completion-only setups remain unchanged.
+Team, other paces, moving prey and variable hazards remain outside this sample.
+Physical-device and player execution evidence remains deferred, and VoiceOver
+remains skipped. There is no new runtime dependency or asset/build requirement.
 
 ## Evidence required before publishing additional budgets
 
@@ -72,6 +110,11 @@ Variable-schedule missions remain completion-only until their conditions have a
 separate defensible comparison policy.
 
 ## Reproduction
+
+The clearance follow-up passed all 12 targeted evidence/publication/rating tests,
+deterministic report regeneration (`--check`), ESLint, formatting and whitespace
+checks. No new browser, physical-device or full-build result is claimed for this
+local-only analysis change.
 
 ```sh
 node scripts/review-snake-rating-evidence.mjs --check

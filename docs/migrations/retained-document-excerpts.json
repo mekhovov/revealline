@@ -1,0 +1,551 @@
+{
+  "format": "revealline-retained-document-excerpts.v1",
+  "sourceRevision": "f05b90d3ad58ee4a6f6d4277be8a73dbf34fdbd4",
+  "scope": "Ownership-filtered documentation excerpts, not original historical verification records. Exact originals are preserved separately. Retained totals and statements are explicitly scoped to the original record.",
+  "items": [
+    {
+      "path": "docs/chapter-rewards.md",
+      "previousSHA256": "eecd7e333288d46996be58588d746e9b14a4eebacd64ab2d1220ce169186dfd4",
+      "sha256": "67c7ec580521397c6d20b45769d749efcb1211ba12ca8b5d4e08de4cdd333a66",
+      "previousBytes": 7321,
+      "bytes": 7007,
+      "removedBlocks": 2
+    },
+    {
+      "path": "docs/company-editions-phase-status-2026-09-28.md",
+      "previousSHA256": "1937f364571f9044a828a0a89011888b292b57aa347165c9bc0f6261b3d1030b",
+      "sha256": "3e3ba10b65c9481769f78f46adf7d4169e31d8e80e27ddef8a88f76b90f677bc",
+      "previousBytes": 6685,
+      "bytes": 5440,
+      "removedBlocks": 6
+    },
+    {
+      "path": "docs/company-editions-validation.md",
+      "previousSHA256": "59a16ab352f6288b926a8b46fb974e4a72e574afb62fda97fe05169f5c721a6c",
+      "sha256": "de9748144de92b4e4a8f6f9a703117ed867c3e8d38783a79d4cb28cbf6770794",
+      "previousBytes": 42162,
+      "bytes": 34910,
+      "removedBlocks": 11
+    },
+    {
+      "path": "docs/concepts/round-01-image-prompt.md",
+      "previousSHA256": "bf98592364e23e91752c328a274bea4a5f7df1cacfc022d5f8f43e2d9bb61683",
+      "sha256": "230cacbd8cb696aff1b0d77fe4591ec43a1fc2986afa24c6514315ba0c2e82ae",
+      "previousBytes": 5047,
+      "bytes": 353,
+      "removedBlocks": 3
+    },
+    {
+      "path": "docs/concepts/round-03-prompts.md",
+      "previousSHA256": "7307f22bd8703a946186c1d24509d2bcd9d584b4cf5488f038d587e03f08d215",
+      "sha256": "84d4c8f9e783df7a7ba894860ba452ad3d764ca2842c82702a33f260e01cac25",
+      "previousBytes": 12340,
+      "bytes": 7742,
+      "removedBlocks": 2
+    },
+    {
+      "path": "docs/concepts/round-04-theme-system-prompt.md",
+      "previousSHA256": "a6e96d74d05794bbb3e0e1dadce9e12e05653779a2b635c45b02802aeae11aec",
+      "sha256": "94f76c9d81a0888e092e4715b2de214cbf9c26e36d0d859d3a18ae59a994d2b2",
+      "previousBytes": 4352,
+      "bytes": 2581,
+      "removedBlocks": 3
+    },
+    {
+      "path": "docs/concepts/round-08-review.md",
+      "previousSHA256": "16e6c167425749d8139a23b577fd22d31eb492aec88bcb355fcb95253b0e224f",
+      "sha256": "843f89fbc5d5a1d23f6dbbafe9a1ad51de163f8fdee1236cb099a74d6ce32db8",
+      "previousBytes": 4351,
+      "bytes": 4060,
+      "removedBlocks": 2
+    },
+    {
+      "path": "docs/cross-mode-execution.md",
+      "previousSHA256": "6286c4bc70403e1b9a4fca3d32a01be15356ad2a2ab4407fe71bd5ada354c392",
+      "sha256": "33a3a8bad1ced6b71464a41662cb7dfb2f901e09090c1944e26a392bb1cfacd9",
+      "previousBytes": 232574,
+      "bytes": 232104,
+      "removedBlocks": 2
+    },
+    {
+      "path": "docs/default-journey-release.md",
+      "previousSHA256": "0cac7a00c266aa0c4b0929968f1a8b6658e2ab49eb878a3226fd87d0a0bdd766",
+      "sha256": "a7b51e7bdadcfa5cd3510db088792b72c9435e67445c1768ec0e54a7e433fe64",
+      "previousBytes": 9930,
+      "bytes": 10027,
+      "removedBlocks": 1
+    },
+    {
+      "path": "docs/delivery-priorities.md",
+      "previousSHA256": "c85738924a48d24bb3e00678485ba100e24ddb068500cdc48fd61b53c8f0b881",
+      "sha256": "9ec4d46b317b46efdf8b321e9c0daa8547edbebf3618f0d266eadd37fb0164c4",
+      "previousBytes": 50083,
+      "bytes": 50017,
+      "removedBlocks": 1
+    },
+    {
+      "path": "docs/delivery-status.md",
+      "previousSHA256": "294d75e12ac6e5da1aeaeed5bb11801811558783f91613ae731cb9859d014110",
+      "sha256": "f03debad036ea83fa02a2af03642cf1e7c34d61aed3bdd1d527668ae41e19fdd",
+      "previousBytes": 36564,
+      "bytes": 36527,
+      "removedBlocks": 1
+    },
+    {
+      "path": "docs/discovery-desktop-observations.md",
+      "previousSHA256": "fd6a8f6f2ca2f9013c72c02c52c55b9811fc56ed1d5f588006e3f28225fdd3e9",
+      "sha256": "4ab1ace161cdba54bd7f2e991e9ca262258a9153f073ce02730238b552f93051",
+      "previousBytes": 38421,
+      "bytes": 37907,
+      "removedBlocks": 3
+    },
+    {
+      "path": "docs/discovery-learning-rewards.md",
+      "previousSHA256": "cca54a79980731762507bf33849e8dd078d3b7ac4d29ecac3e04b59da0ab8a91",
+      "sha256": "412d9b7d257e34948e42740d6678ae0c132d6fa7ddc035902b0a5441e43c75d3",
+      "previousBytes": 9898,
+      "bytes": 9001,
+      "removedBlocks": 2
+    },
+    {
+      "path": "docs/discovery-rewards-author-guide.md",
+      "previousSHA256": "5fd1d4d1a6bdb088a0e91bcc8e280c38eafb067fc9b2146bf13423c6ebf49129",
+      "sha256": "cf222ecc38c2fa4ea14f25bfd2133d6e1fd86bb3d8482fd915b9dd3028232be2",
+      "previousBytes": 24982,
+      "bytes": 24822,
+      "removedBlocks": 4
+    },
+    {
+      "path": "docs/discovery-rewards-phase-status.md",
+      "previousSHA256": "abf4afa08e9ccbed5ae39b0982b5ecf7400fc278cbbf3cb3389a8c5560e34d8e",
+      "sha256": "a87348063dd7580a7e1cc8dfe6f112045226322a551e2a96d33cdc46538f4f8b",
+      "previousBytes": 63978,
+      "bytes": 60770,
+      "removedBlocks": 7
+    },
+    {
+      "path": "docs/edition-token-capacity.md",
+      "previousSHA256": "5f7b79ddf310d9b54a87522d987d492efff5884c7eabebbb00364173d1d999c6",
+      "sha256": "554b95c5df7fe367295c66077e427d1223af316eaade786216d31709f294fca0",
+      "previousBytes": 4545,
+      "bytes": 4387,
+      "removedBlocks": 1
+    },
+    {
+      "path": "docs/enemy-catalog.md",
+      "previousSHA256": "dbff5a49ffa8afcb72db99a87b72910057fde24ced3321f9a21a9683af4414c6",
+      "sha256": "b42cbbe199d0e1ad514752ccd9d9dcc9a0814cf4349682acb952b86832351141",
+      "previousBytes": 15460,
+      "bytes": 15409,
+      "removedBlocks": 1
+    },
+    {
+      "path": "docs/equipment-workshop.md",
+      "previousSHA256": "4311bae339f6cc2c5bc955ab2182b6507c812f598f0fc57f1102d1516d6e0e05",
+      "sha256": "403fe2ab3e4032f39bbab4a3c46514121885836a82e591983a862d6dd59deab3",
+      "previousBytes": 9927,
+      "bytes": 9377,
+      "removedBlocks": 2
+    },
+    {
+      "path": "docs/external-chapter-delivery.md",
+      "previousSHA256": "549252c825dd54cd0882e1d14410f7e866a8d6ba4a47e2276e76fcc8dda98f50",
+      "sha256": "99512e7a7e97e36f3ca90c5e8f52db5a876a63ffaa44c8d8372828bad88956e7",
+      "previousBytes": 13427,
+      "bytes": 12775,
+      "removedBlocks": 4
+    },
+    {
+      "path": "docs/flight-details-localization-2026-09-28.md",
+      "previousSHA256": "d930dba153f74c4696c5621e54ddba4419daedc7d737440dd86459ba5665d5a2",
+      "sha256": "2c9d2358cd2996878d92bfe52457c0d0205a40f911edc83c6aedc6bea9eed4c0",
+      "previousBytes": 8465,
+      "bytes": 8291,
+      "removedBlocks": 1
+    },
+    {
+      "path": "docs/flight-practice-capacity-review-2026-10-14.md",
+      "previousSHA256": "d49d79fa1278697a26047071f566f528c298f1efae10ba727a52b5984f8397ff",
+      "sha256": "8883cd39cde4f28b4a653803deb464582cb1d37b5ac2f5132261d910cfe4ecc8",
+      "previousBytes": 17956,
+      "bytes": 18055,
+      "removedBlocks": 1
+    },
+    {
+      "path": "docs/implementation-roadmap.md",
+      "previousSHA256": "35f02029d54cd75501eacf95533aa64dc94b1e05510d4820290cc7bb1234fe55",
+      "sha256": "e7aeb8c513eb6cdd11a651d3cfed292099fa7a6366d246d93134fcc0d7c30f61",
+      "previousBytes": 69058,
+      "bytes": 68737,
+      "removedBlocks": 1
+    },
+    {
+      "path": "docs/menu-scenes.md",
+      "previousSHA256": "034136185ae639ae2c01fe65d339430d61146de922342ec16e9a9e62d1fa0483",
+      "sha256": "ca99267c8c1180c4f138c0ba484bfca907637a4c261a54484ac3cf5166216b80",
+      "previousBytes": 27928,
+      "bytes": 22503,
+      "removedBlocks": 24
+    },
+    {
+      "path": "docs/native-menu-plan-status.md",
+      "previousSHA256": "88683a85e2d04d50205ce102249a720e2dadbf185754deab5f035f6973f438f5",
+      "sha256": "b9991905e293f944fa6dc28331d7a8055daa341a3fe6dd1591c5df080680ea50",
+      "previousBytes": 75196,
+      "bytes": 72665,
+      "removedBlocks": 2
+    },
+    {
+      "path": "docs/offline-pwa/sim-and-community-downloads.md",
+      "previousSHA256": "1d9f04cce9ddfd1e8eabc1c1db4e509a92b513bbbadd0f329df5608886804837",
+      "sha256": "e63a7e9873fbcab7a176322cf91ab8f081df267ff97548b601864605d971172e",
+      "previousBytes": 7825,
+      "bytes": 7291,
+      "removedBlocks": 2
+    },
+    {
+      "path": "docs/optional-worlds.md",
+      "previousSHA256": "85331301f76e150352a98cb109e18b988187e367a96b1908735cb7ee146d2764",
+      "sha256": "3c3c6547fee855e4bbc384b7f959624cc1d2890f1f00c0f790361a878cde262d",
+      "previousBytes": 9166,
+      "bytes": 9208,
+      "removedBlocks": 1
+    },
+    {
+      "path": "docs/performance/solo-performance-followup-plan.md",
+      "previousSHA256": "b1e4ec3dc3e6efb8164d4c1ce52d64a9eb50adbc97425f07599efd1565d1608e",
+      "sha256": "a3303aa7095b78a0742afd1eb4d6488424c9b26d725431bc90e42d37a50a5aad",
+      "previousBytes": 177290,
+      "bytes": 177010,
+      "removedBlocks": 1
+    },
+    {
+      "path": "docs/plan-priorities-2026-10-01.md",
+      "previousSHA256": "d615dc65ccc83308bea5b5124656f3cff9b420d78544680e9be1fab302508aba",
+      "sha256": "235438ea2da5d59b33a5308ecfa503d37fddc94debbff2195a6b58581b3ff0ab",
+      "previousBytes": 25079,
+      "bytes": 24846,
+      "removedBlocks": 1
+    },
+    {
+      "path": "docs/plan-review-2026-09-30.md",
+      "previousSHA256": "0b1822e1306a216ac298580611fceafeedea0fadb8fc6a60402ddad92ec47925",
+      "sha256": "728bc6b506cabdcd9d23f292a3e3e6501ae2b559e40324743968dc23d4abf05a",
+      "previousBytes": 23981,
+      "bytes": 23807,
+      "removedBlocks": 1
+    },
+    {
+      "path": "docs/plan-status-2026-09-25.md",
+      "previousSHA256": "32f268415ddf762852e1067dc0ba74d2360219d9bda2322a18c5dfbdb22d5712",
+      "sha256": "bc2dbcf4b8a8f029ee0cd0540c296f57a0dbbeb4e39f521060c69f250e1b69b2",
+      "previousBytes": 34388,
+      "bytes": 34346,
+      "removedBlocks": 1
+    },
+    {
+      "path": "docs/polished-flight-delivery.md",
+      "previousSHA256": "63b4fb81e1816d6db81911c1af6b138a698050d6bfb16df8a805dffee074bc72",
+      "sha256": "ea57ef42cd18d2d3fb67fae518dcf3761f971c017544d97177aba31ce29e6394",
+      "previousBytes": 70443,
+      "bytes": 69320,
+      "removedBlocks": 2
+    },
+    {
+      "path": "docs/polished-journeys-current-plan.md",
+      "previousSHA256": "41d7ec034a8cf88fa41bbedf3f524b8de8fd85a4c33dcfce55e1c66889545435",
+      "sha256": "aa98f2dd7b4d493ac592ffd30589bc5695be1b4d352c5db66171beb5cf79ce6b",
+      "previousBytes": 27085,
+      "bytes": 26795,
+      "removedBlocks": 3
+    },
+    {
+      "path": "docs/production-plan.md",
+      "previousSHA256": "010900cbbeba545a3b2d3b1e0abc9b5898f07911a06c81061761209b81bb2a77",
+      "sha256": "556c92d132916b722e63336864a190f4af7b16e1d9744f1af80ec8a78d929a58",
+      "previousBytes": 45076,
+      "bytes": 45155,
+      "removedBlocks": 1
+    },
+    {
+      "path": "docs/release-history.md",
+      "previousSHA256": "7abe05ea7358a3f95b3af0f5ba91d72d7491def6b3eeea7e8c5b01680d9d8af6",
+      "sha256": "96df1ef0a2841ba2c979826ae5195e78b9c558b41f4bad877d6d0ba8341e6c7f",
+      "previousBytes": 10781,
+      "bytes": 10387,
+      "removedBlocks": 1
+    },
+    {
+      "path": "docs/research/engine-and-framework.md",
+      "previousSHA256": "9080a5e9e685e4ddbdcb19c416ecdb5c5bde3953d1c93b59a9c8dc4646e1033b",
+      "sha256": "8eeea4a77989669c7ef53558dead52e08b736e913b8fc45c1481162e1b49fdb5",
+      "previousBytes": 18570,
+      "bytes": 17882,
+      "removedBlocks": 3
+    },
+    {
+      "path": "docs/research/pixel-art-and-cultural-direction.md",
+      "previousSHA256": "70e8fcb5ccc12058a7d5ae11c08a3b51d1fc9c4f4df04a8dcf353fd7ef0450e2",
+      "sha256": "c40fdf32f9b8bf48b5ec9739f04fdc736e6b6b99453b7550bc4815c5c65a0001",
+      "previousBytes": 18703,
+      "bytes": 17085,
+      "removedBlocks": 10
+    },
+    {
+      "path": "docs/research/round-02-aesthetics.md",
+      "previousSHA256": "492097005979cb35dfa52e192fcf94905b9bafb20d8ed52b069daf5edc32837a",
+      "sha256": "c31675ff793d60a4d59af02f4f162fcd48e0064fda42bdc929c7296495a6b8d1",
+      "previousBytes": 24566,
+      "bytes": 22653,
+      "removedBlocks": 12
+    },
+    {
+      "path": "docs/research/round-02-devices.md",
+      "previousSHA256": "bc78eee5ad76952321694c2322a60b09c9f420f39be26008108eff811cd9dbe1",
+      "sha256": "ae5849304e10fe3bedf47af2d4c99c282ca8fb2b7c6f3ad3f2e315aaf47dac9e",
+      "previousBytes": 16168,
+      "bytes": 15574,
+      "removedBlocks": 3
+    },
+    {
+      "path": "docs/research/round-02-gameplay.md",
+      "previousSHA256": "95e2269d0e4c3cdfba8d95f11b2f767e4e1ebe02e1024d4ae1aaa3cf0a160f85",
+      "sha256": "47c7bbbb3ae21f18c5d3998b44adb727353f0dbf69f366c8fc0329a9d4f30994",
+      "previousBytes": 18488,
+      "bytes": 17388,
+      "removedBlocks": 5
+    },
+    {
+      "path": "docs/research/round-03-devices-focused.md",
+      "previousSHA256": "889b9c458b0d8528f8b4782675b4ace017974bc61c66a19881134c69377ae0a7",
+      "sha256": "1235083081d5881bef127d776278ce7b2708cc4ba97fba4d99c7fb26a0f8cbb2",
+      "previousBytes": 9670,
+      "bytes": 8871,
+      "removedBlocks": 3
+    },
+    {
+      "path": "docs/research/round-03-four-families.md",
+      "previousSHA256": "c1721aebdcc2918577e2eb3ace382a3a3ac8ab4def956869a61fbdfdad97a477",
+      "sha256": "a00a9158d19baab952abe31a20cf8f4d918001ec341ffc2c672690ebf143fdbb",
+      "previousBytes": 15400,
+      "bytes": 13014,
+      "removedBlocks": 13
+    },
+    {
+      "path": "docs/research/round-04-asset-workflow.md",
+      "previousSHA256": "c842676ca1a7c58a6cf40a5b03ff194b2f5cbf305e3381ac16f888cf1b1d2865",
+      "sha256": "2900e3ba76f4dc0904358ece009554a69bc3bbf853e751f88e4390a06ee928a7",
+      "previousBytes": 14217,
+      "bytes": 13457,
+      "removedBlocks": 3
+    },
+    {
+      "path": "docs/research/round-04-framework-recommendations.md",
+      "previousSHA256": "e06edc28351502005e017f14c4d3405afe93690d025f4c5169e4abb32099f557",
+      "sha256": "0a936438e10d1f17dee8dd6218f074ac4c5d3e2a8fdf6cb819000b6f7fcb69bf",
+      "previousBytes": 23027,
+      "bytes": 22181,
+      "removedBlocks": 5
+    },
+    {
+      "path": "docs/research/round-05-legacy-observations.md",
+      "previousSHA256": "219a04d14d4b4920e0ca3b0ba396c33e2fab653d57f5fbeb92f838ab3205f4cf",
+      "sha256": "e7477072f9e16f6542ac8f9da6c637ca06ef7d87c8b4948af1a067bace44c21f",
+      "previousBytes": 12676,
+      "bytes": 12439,
+      "removedBlocks": 2
+    },
+    {
+      "path": "docs/research/round-05-modern-observations.md",
+      "previousSHA256": "78a5a123d2197221e33e0187e676a7128fd48dcda892100963b6ba0533b82988",
+      "sha256": "b3c7de54bde206157c6e660aef4fe6f3b2bb1f9b79e01643d4316fd677d90e8a",
+      "previousBytes": 20855,
+      "bytes": 20509,
+      "removedBlocks": 1
+    },
+    {
+      "path": "docs/research/round-05-xposed-source-inventory.md",
+      "previousSHA256": "aeb102314f0731de363e1198bd97144ec931170ce506571077be01727fa7aaaa",
+      "sha256": "154b3eb7182fe5a256cbfda5b014cc82b1b30192e365926ec48e254176886328",
+      "previousBytes": 16698,
+      "bytes": 16764,
+      "removedBlocks": 1
+    },
+    {
+      "path": "docs/research/round-07-reloaded-ui-motion.md",
+      "previousSHA256": "5b01ddab7e14f7c5e6647cab5f2adf2146b657d1ab73854bfa7f9623f0415231",
+      "sha256": "5d45d972322f86902edd480c0cae1819ed5f87c189be10dded46d2d4350aff63",
+      "previousBytes": 16408,
+      "bytes": 15526,
+      "removedBlocks": 2
+    },
+    {
+      "path": "docs/research/round-08-progression-and-propellers.md",
+      "previousSHA256": "13f8d49b11a7079b707ef29410ea022aee448c05d0c934c4346eb321ddb11001",
+      "sha256": "5ddfadaba4b3eb95e2dab07e1d57ce12262c2dc140c237c721822d231fdb2517",
+      "previousBytes": 10538,
+      "bytes": 10356,
+      "removedBlocks": 2
+    },
+    {
+      "path": "docs/research/round-09-drone-reference.md",
+      "previousSHA256": "53bd4b1214c696ba68a944061ad35a2016b4aef7b463070c8a030a3efe394cd6",
+      "sha256": "857ebc2a4ca5b650eea27ae696e6ad275c2a3f959f7b6f591fa15af0ceba2a3c",
+      "previousBytes": 18901,
+      "bytes": 18494,
+      "removedBlocks": 2
+    },
+    {
+      "path": "docs/research/round-14-player-continuity.md",
+      "previousSHA256": "e2b62162928e641e3f58e0fe967737f86382e685f693e2266ec21a29173421f6",
+      "sha256": "dfc0a2ee49999cbf0d7379ff2f19fb508eab145688ac66cdb03119263a425e42",
+      "previousBytes": 18428,
+      "bytes": 18186,
+      "removedBlocks": 1
+    },
+    {
+      "path": "docs/research/round-42-native-media.md",
+      "previousSHA256": "40c9bcbb0d5181d2a4acd310dc1283e75dd6b201719d268c44d0416dcdb7c696",
+      "sha256": "2761d93a776531c67b1ba501bbe3c1ca888ed075ae8eae618b7fad29a8218ac3",
+      "previousBytes": 9502,
+      "bytes": 9204,
+      "removedBlocks": 1
+    },
+    {
+      "path": "docs/research/round-46-campaign-input-and-reward.md",
+      "previousSHA256": "7614a7037c35e758f2f84ce36d28e0a1437babdaae46b8a375757563cf1821b4",
+      "sha256": "794f24dfbad45df4d3dc50118a4574731a7b32fa9c394081ef37de88de6dd14f",
+      "previousBytes": 5051,
+      "bytes": 4703,
+      "removedBlocks": 1
+    },
+    {
+      "path": "docs/research/round-47-collection-and-production.md",
+      "previousSHA256": "274a3a0d6082021fc9c8eb944dd01a5c8117d40f1ae031f617b7063500b4ae8e",
+      "sha256": "130f07ac6a26cc6b27d13bdad25d41476740fd9dff4dfab1aeccb2c5586547e3",
+      "previousBytes": 7259,
+      "bytes": 7074,
+      "removedBlocks": 1
+    },
+    {
+      "path": "docs/research/xonix-and-xposed.md",
+      "previousSHA256": "20b89299af8de7877c77cf6c585c627bb715094bf75ba874a043fcac5a7c0639",
+      "sha256": "9d3f82003fea5946f22b45f6290b5b3b6d460b2a0e7e32916dfd6fa938d92378",
+      "previousBytes": 18996,
+      "bytes": 18194,
+      "removedBlocks": 2
+    },
+    {
+      "path": "docs/round-01-direction.md",
+      "previousSHA256": "9c764f5bb0fea93862c0adbce0795f1c30f9c705548e676c6c57b8a5e28d386c",
+      "sha256": "3d9063add9779ece12404140939941489c2bd1b38f0aa49c6c6385a1038a0476",
+      "previousBytes": 17915,
+      "bytes": 15570,
+      "removedBlocks": 9
+    },
+    {
+      "path": "docs/round-03-focused-direction.md",
+      "previousSHA256": "52f483e23a029e112c297dcae7df37636c2172823522e9152dc0bc991fa82c29",
+      "sha256": "464e5b19bd207b01ede8115ccd2d06e12cf5c40d6f2b4ea26c8e49e79f08a428",
+      "previousBytes": 13857,
+      "bytes": 11300,
+      "removedBlocks": 18
+    },
+    {
+      "path": "docs/round-04-authoring-system.md",
+      "previousSHA256": "c960a851c457721b5945cdfd6c458734bfece90a2ae7b3eff377c72be087bb28",
+      "sha256": "5d0896d882327c7ad489c536540a970a591958765b406f932c293b3901304a56",
+      "previousBytes": 8034,
+      "bytes": 7569,
+      "removedBlocks": 2
+    },
+    {
+      "path": "docs/round-05-gameplay-direction.md",
+      "previousSHA256": "c9fa5c24e37fdc13aacc522df757386e201bf22c1bc64ca70364b335d2714ffd",
+      "sha256": "49f7775841e99e6d79556c49f867a92e77a3fc663b8598fa8ff90aee854c5dc8",
+      "previousBytes": 10806,
+      "bytes": 10114,
+      "removedBlocks": 3
+    },
+    {
+      "path": "docs/round-06-assets-and-gameplay.md",
+      "previousSHA256": "07d6aff70b95716005be9e9f28e9fbb2c701d6be25c5e781a26ceb7a21e6a61d",
+      "sha256": "3db91bf746e089830ad65311a310b416bbda8886f5399a4b7488677e512cabb2",
+      "previousBytes": 11939,
+      "bytes": 11682,
+      "removedBlocks": 2
+    },
+    {
+      "path": "docs/round-07-motion-and-balance.md",
+      "previousSHA256": "ad39bb82efe586e059c5faa7fb605bae2aa1c32ae24c6496b290ce618b697e6e",
+      "sha256": "6691ba895ba749c0acedaad516e8cb9d654d88a9fd70b5b4392f76215971db25",
+      "previousBytes": 12900,
+      "bytes": 12878,
+      "removedBlocks": 2
+    },
+    {
+      "path": "docs/round-08-character-collection.md",
+      "previousSHA256": "f2c7e60bf80c05d26211fe896c3940dd5abbf1b810ca5d4c83b1865bb6028aa4",
+      "sha256": "dc458f0d42481365e4657342f442536a90a22e2143deb45c1ba6d994ce3f0e21",
+      "previousBytes": 10063,
+      "bytes": 9827,
+      "removedBlocks": 2
+    },
+    {
+      "path": "docs/round-08-gameplay-plan.md",
+      "previousSHA256": "4ce8129619a3f55e92f26a46281b39f83448cba045245e1fc9e188c52eaf860c",
+      "sha256": "4364a7ede4eb166471b8f9dee2298e8d09c10d73a5c8e4e9403ae64139780fc2",
+      "previousBytes": 26682,
+      "bytes": 26448,
+      "removedBlocks": 1
+    },
+    {
+      "path": "docs/round-14-fulfillment-audit.md",
+      "previousSHA256": "c8ad724c5476c88ee7eb423087a33399ad61fd25caa5cec8ea5c35952ba5dd70",
+      "sha256": "c4b8d5672f090bf9c0646b849d2fe796f89943f32c49491f47491e7b264744d7",
+      "previousBytes": 24836,
+      "bytes": 23137,
+      "removedBlocks": 4
+    },
+    {
+      "path": "docs/round-20-player-polish-plan.md",
+      "previousSHA256": "c7439db9d22dfc0e4a2c075ab047eaa7a66da4d6b1771a3ffac2d665599c2c6b",
+      "sha256": "1a2485dd787122a3b847af2cd3620f39fdae545df96c94728c8e465c3811340f",
+      "previousBytes": 17810,
+      "bytes": 17657,
+      "removedBlocks": 2
+    },
+    {
+      "path": "docs/round-21-boss-encounter-plan.md",
+      "previousSHA256": "24e22c654d819ff9024302962865a8ab3d85d230e8f097bc8d2c19157800ba01",
+      "sha256": "efb383682dabf8ab35810ca087737beac529f54b99c4b6205a6770e8641c2645",
+      "previousBytes": 38085,
+      "bytes": 38052,
+      "removedBlocks": 1
+    },
+    {
+      "path": "docs/round-27-candidate-backlog.md",
+      "previousSHA256": "c6651d032eca9a364094147902f03f81fb3d8947c496508f653cf9836512c39d",
+      "sha256": "0125d4ea49f393874a769a74c66e38ed74d2fbd794d138ea0af91f53b5398eb7",
+      "previousBytes": 16412,
+      "bytes": 13516,
+      "removedBlocks": 4
+    },
+    {
+      "path": "docs/round-27-illustrated-workshop-plan.md",
+      "previousSHA256": "0db4c1bda276e2f1d12b99f403d9b4985aec18bf0f0286deaa701cd8e0dd09e6",
+      "sha256": "efa8cee320952cfab665ce09f9fb561eb428e378de60f75d4146ed32004f4468",
+      "previousBytes": 20739,
+      "bytes": 18773,
+      "removedBlocks": 4
+    },
+    {
+      "path": "docs/sentinel-relay.md",
+      "previousSHA256": "38fa2b1b99ec0a0ebb26966daf5f4b08fd52ab72f82210b09dcd0e9b48a3701f",
+      "sha256": "a0088040d9a5dfe9de0280d84375ee24ecafeba6a241d4c92115c63935d4ddfd",
+      "previousBytes": 10525,
+      "bytes": 10184,
+      "removedBlocks": 1
+    }
+  ]
+}

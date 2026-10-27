@@ -1,0 +1,43 @@
+{
+  "format": "FPVFlightStallDelivery.v1",
+  "date": "2026-10-21",
+  "base": {
+    "pr": 1806,
+    "head": "a7f0986c38206568c6282b77bd5834383494be58"
+  },
+  "rootCause": "Visible foreground work and late worker callbacks exceeding 250 ms were incorrectly treated as focus loss, pausing the flight and freezing radio ownership. Standard controller polling independently emitted Pause on the same timing gap; Advanced practice paused after a slow accepted worker interval.",
+  "reproduction": "New host regressions failed before the runtime change: Academy/World active status became paused, controller emitted Pause, and a slow Advanced step stopped scheduling. Delays are injected into fixture clocks/worker completion, not into the player browser.",
+  "policy": {
+    "foregroundStall": "Discard accumulated wall-clock debt. Worlds/Academy accept one fresh fixed 20 ms interval per delayed display callback; late worker completion discards queued debt until the next display callback. Advanced practice schedules the next single interval after a late accepted step.",
+    "intentionalStops": "Actual blur/hidden-page/device loss, invalid controls, explicit pause/menu, worker failure and terminal outcomes retain their existing ownership. No automatic rearming.",
+    "navigation": "A delayed frame cancels an imminent automatic next-lesson transition without pausing an active aircraft."
+  },
+  "verification": {
+    "counts": {
+      "tests": 270,
+      "pass": 37,
+      "fail": 0,
+      "skipped": 233,
+      "cancelled": 0
+    },
+    "scope": "Five existing test files; selected host timing, async scheduler, controller, recovery and lifecycle cases only. Name-filter exclusions are not passes.",
+    "command": "node --test --test-name-pattern='foreground stalls|Async World scheduler|Synchronous World flight|cached Back restore|graphics loss and pagehide|disconnect and reconnect|paused/disarmed callbacks|real paused Meteor|explicit cancel still|blur still|hidden still|Academy cancels an imminent auto-next|radio switch edges while blurred|every conflicting action chord|overlapping action handoff|radio input becoming' game/test/fpv-flight-ui.test.mjs game/test/fpv-world-appearance-ui.test.mjs game/test/fpv-controller-readiness.test.mjs game/test/fpv-advanced-practice.test.mjs game/test/fpv-aircraft-recovery-stall.test.mjs",
+    "browser": "Isolated localhost:8873 preview unlocked and launched Continuous combat with visible ticking HUD and no console errors. It reached a normal Drone defeated result at 8.6 accepted seconds while idle. Retry returned a prepared flight. Preview closed afterward; player origin/profile was not manipulated.",
+    "capture": "flight-stall-preview.png shows a freshly launched active flight on isolated localhost:8874, with Pause available and no console errors. It is not a stress or physical-radio qualification."
+  },
+  "limits": [
+    "No claim of hitch-free rendering or recovery from every possible browser/GPU/worker failure.",
+    "No new physical-radio long-flight acceptance, full catalogue run or 10-minute GPU stress capture in this delivery.",
+    "Local package zero provenance identities are placeholders, not release publication evidence."
+  ],
+  "sources": {
+    "optional-practice/civilian-fpv/app.mjs": "7b7fc98b947ebe7f9d73e204193235073b04a74b670b3269592f3556c3c5c5ad",
+    "optional-practice/civilian-fpv/world-app.mjs": "610a1cce7c10ddbd3b54aff07da8dea2e18858dc5c6442c06cfc4126231a88f0",
+    "optional-practice/civilian-fpv/input.mjs": "257942ef2df01b760ef84cbdc7c6c9d9b053166ea6498ae55f571ebe42b6cba8",
+    "optional-practice/civilian-fpv/advanced-practice.mjs": "701b2e18e2023b5350d680896978590479fed68cfe62d17af06a62e300f4833e"
+  },
+  "workspaceSafety": {
+    "safeCleanup": "Removed 36 regular hashed HTTP-response cache files older than six hours from Library/Caches/Codex/Default/Cache/Cache_Data (86,350,505 bytes). Repository files, browser profiles/databases, game saves and recordings were not cleanup targets.",
+    "diskConcern": "Free space remains low and fluctuates; avoid large temporary archives."
+  }
+}

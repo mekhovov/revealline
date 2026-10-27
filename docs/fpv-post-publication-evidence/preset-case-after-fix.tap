@@ -1,0 +1,125 @@
+TAP version 13
+# Subtest: all advertised versions reconstruct defaults independently captured from tagged source
+ok 1 - all advertised versions reconstruct defaults independently captured from tagged source
+  ---
+  duration_ms: 3.337959
+  ...
+# Subtest: headerless dump rates needs a version, unsupported tags and conflicting headers do not guess
+ok 2 - headerless dump rates needs a version, unsupported tags and conflicting headers do not guess
+  ---
+  duration_ms: 0.40925
+  ...
+# Subtest: explicit unsupported firmware headers never become missing headers or verified release tags
+ok 3 - explicit unsupported firmware headers never become missing headers or verified release tags
+  ---
+  duration_ms: 1.364292
+  ...
+# Subtest: exact release headers retain their source version and genuinely headerless patches remain supported
+ok 4 - exact release headers retain their source version and genuinely headerless patches remain supported
+  ---
+  duration_ms: 0.732584
+  ...
+# Subtest: profiles and assignments are sequential; PID namespace cannot redirect rate settings
+ok 5 - profiles and assignments are sequential; PID namespace cannot redirect rate settings
+  ---
+  duration_ms: 0.497166
+  ...
+# Subtest: ordered defaults resets earlier assignments, selections and untouched profiles
+ok 6 - ordered defaults resets earlier assignments, selections and untouched profiles
+  ---
+  duration_ms: 0.434
+  ...
+# Subtest: preset patches preserve unspecified axes and throttle and cannot mutate a supplied baseline
+ok 7 - preset patches preserve unspecified axes and throttle and cannot mutate a supplied baseline
+  ---
+  duration_ms: 0.251875
+  ...
+# Subtest: algorithm changes use ordered CLI native units and report firmware clamps
+ok 8 - algorithm changes use ordered CLI native units and report firmware clamps
+  ---
+  duration_ms: 0.238958
+  ...
+# Subtest: malformed supported settings reject the whole preview instead of partially applying
+ok 9 - malformed supported settings reject the whole preview instead of partially applying
+  ---
+  duration_ms: 1.413958
+  ...
+# Subtest: unsupported hardware/controller settings and arbitrary CLI commands remain inert
+ok 10 - unsupported hardware/controller settings and arbitrary CLI commands remain inert
+  ---
+  duration_ms: 0.266
+  ...
+# Subtest: new throttle schema must be explicit; version-mismatched patches cannot silently change curves
+ok 11 - new throttle schema must be explicit; version-mismatched patches cannot silently change curves
+  ---
+  duration_ms: 0.431167
+  ...
+# Subtest: native transfers and matching target CLI round trip without calibration or aircraft fields
+ok 12 - native transfers and matching target CLI round trip without calibration or aircraft fields
+  ---
+  duration_ms: 2.016917
+  ...
+# Subtest: local bundles resolve ordered includes, options, exclusive groups and inert descriptions
+ok 13 - local bundles resolve ordered includes, options, exclusive groups and inert descriptions
+  ---
+  duration_ms: 1.140792
+  ...
+# Subtest: included options need explicit matching root option; repeated includes retain order
+ok 14 - included options need explicit matching root option; repeated includes retain order
+  ---
+  duration_ms: 0.280875
+  ...
+# Subtest: preset option matching agrees with the tagged App while preserving original labels
+ok 15 - preset option matching agrees with the tagged App while preserving original labels
+  ---
+  duration_ms: 7.253333
+  ...
+# Subtest: case-only duplicate preset options and selections are rejected without mutating inputs
+ok 16 - case-only duplicate preset options and selections are rejected without mutating inputs
+  ---
+  duration_ms: 0.39425
+  ...
+# Subtest: preset includes reject missing, cyclic, escaping and unsupported nested dependencies before apply
+ok 17 - preset includes reject missing, cyclic, escaping and unsupported nested dependencies before apply
+  ---
+  duration_ms: 0.438417
+  ...
+# Subtest: import receipts pin exact UTF-8 source, firmware choice, source profile and interpreted review
+ok 18 - import receipts pin exact UTF-8 source, firmware choice, source profile and interpreted review
+  ---
+  duration_ms: 1.922541
+  ...
+# Subtest: firmware-default patch baselines resolve the same verified header as the import and receipt
+ok 19 - firmware-default patch baselines resolve the same verified header as the import and receipt
+  ---
+  duration_ms: 3.096542
+  ...
+# Subtest: headerless patch receipts retain the exact baseline and do not invent source firmware
+ok 20 - headerless patch receipts retain the exact baseline and do not invent source firmware
+  ---
+  duration_ms: 0.691666
+  ...
+# Subtest: preset receipts pin every original file and preserve ordered inactive includes and option choices
+ok 21 - preset receipts pin every original file and preserve ordered inactive includes and option choices
+  ---
+  duration_ms: 1.435458
+  ...
+# Subtest: large inert import reviews are bounded and disclose shortened metadata without losing exact source identity
+ok 22 - large inert import reviews are bounded and disclose shortened metadata without losing exact source identity
+  ---
+  duration_ms: 7.381458
+  ...
+# Subtest: native imports produce a receipt while portable curve exports remain free of provenance
+ok 23 - native imports produce a receipt while portable curve exports remain free of provenance
+  ---
+  duration_ms: 0.63725
+  ...
+1..23
+# tests 23
+# suites 0
+# pass 23
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 205.806792

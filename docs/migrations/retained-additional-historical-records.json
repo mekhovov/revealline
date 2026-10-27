@@ -1,0 +1,49 @@
+{
+  "format": "revealline-historical-excerpt-migration.v1",
+  "sourceRevision": "a3cf3972c5c210b6306038f1cbd44e8e48eb0a83",
+  "scope": "Retained historical excerpt after an ownership migration. Original bytes are preserved separately. Historical counts, hashes and approvals inside the excerpt describe the original record only; this derived document is not a release qualification, executable restore plan, or complete original inventory.",
+  "retiredRecordCount": 0,
+  "retiredRecordSHA256": [],
+  "items": [
+    {
+      "path": "docs/verification/cross-mode/p01/public-v0572/review.json",
+      "previousSHA256": "138745dc3031d12b34e37e5733171d35653c25ae7957c0b665e892725283dce2",
+      "sha256": "20d448fd3bc18d1c98393b3478087d169ec5d567861a9b053162c422b15cc8dc",
+      "previousBytes": 11376,
+      "bytes": 11261,
+      "removedRecordsOrFields": 2
+    },
+    {
+      "path": "docs/verification/cross-mode/p08-a/native-before-focus/events.json",
+      "previousSHA256": "ab2269568ac8813d3ad8dba8acf18783db3362947e56d2dea6a2a2ada026aeb3",
+      "sha256": "4d45573b1ef1d32b5052538a135ea57cde0789340179735dd3b9f4d8454dc285",
+      "previousBytes": 41653,
+      "bytes": 41633,
+      "removedRecordsOrFields": 1
+    },
+    {
+      "path": "docs/verification/cross-mode/p08-p05-integration/native-retained/native-delayed/events.json",
+      "previousSHA256": "ec9e72b7fe81a155a6e428dbac8b3f958f1840fddb8d595cb00e8bd4eaea02d1",
+      "sha256": "dcc882f66f3df9812a844faa4f9ab49dc62613e1b6a86eb935d1e9a836b6da7e",
+      "previousBytes": 25776,
+      "bytes": 24907,
+      "removedRecordsOrFields": 1
+    },
+    {
+      "path": "docs/verification/cross-mode/p08-p05-integration/native-retained/native/events.json",
+      "previousSHA256": "1be8c7a153d69cc147d39544b53648c1953ec939b070c24c4b628446fd0dd8ed",
+      "sha256": "64a43ef7cbeaff9f4e33df97febb0040092ad00b1bedb4c344b1a8b3c0ea1930",
+      "previousBytes": 37029,
+      "bytes": 36248,
+      "removedRecordsOrFields": 1
+    },
+    {
+      "path": "docs/verification/round-19/authoring-viewports.json",
+      "previousSHA256": "f176d6ae3ea0d639990b6db599b9a420f58ad6e0ffc64bb90e2fccd435aebe24",
+      "sha256": "0eef245b65022628ef522ecbc36c1dd935a3113507da84bf309052cca6df76f4",
+      "previousBytes": 1209,
+      "bytes": 1755,
+      "removedRecordsOrFields": 4
+    }
+  ]
+}

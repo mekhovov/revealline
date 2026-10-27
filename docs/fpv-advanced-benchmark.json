@@ -1,0 +1,273 @@
+{
+  "format": "AdvancedBenchmark.v2",
+  "backend": "civilian-quad-advanced-experimental.v2",
+  "runtime": "v20.19.5",
+  "platform": "darwin",
+  "architecture": "arm64",
+  "scenario": "Coupled controller, four motor states and Rapier body; separate 100 deg/s roll, pitch and yaw steps and 40 m/s thin-wall contact. Three warmed repetitions per axis and candidate against a 2 kHz reference, with 50 Hz observations.",
+  "reference": {
+    "frequency": 2000,
+    "axes": {
+      "roll": {
+        "elapsedMs": 124.09912499999996,
+        "capacity": 24.174223629699252,
+        "metrics": {
+          "steadyRate": 100.20362210556021,
+          "riseTime": 0.1705049259706476,
+          "peakRate": 100.2744853181991,
+          "absoluteError": 10.364845191333066
+        },
+        "finalHash": "f8606fbb"
+      },
+      "pitch": {
+        "elapsedMs": 107.99116600000002,
+        "capacity": 27.780050082985486,
+        "metrics": {
+          "steadyRate": 100.20362210556021,
+          "riseTime": 0.1705049259706476,
+          "peakRate": 100.2744853181991,
+          "absoluteError": 10.364845191333066
+        },
+        "finalHash": "116182bc"
+      },
+      "yaw": {
+        "elapsedMs": 85.71574999999984,
+        "capacity": 34.99940209354763,
+        "metrics": {
+          "steadyRate": 102.79820691934661,
+          "riseTime": 0.4124999688064447,
+          "peakRate": 102.83097731321068,
+          "absoluteError": 23.456316426347943
+        },
+        "finalHash": "bba6b136"
+      }
+    },
+    "contact": {
+      "blocked": true,
+      "minimumZ": 0.14000162482261658,
+      "finalZ": 0.9827148914337158
+    }
+  },
+  "candidates": [
+    {
+      "frequency": 250,
+      "axes": {
+        "roll": {
+          "metrics": {
+            "steadyRate": 100.19276381232719,
+            "riseTime": 0.17005635667564567,
+            "peakRate": 100.26059271342729,
+            "absoluteError": 10.169841548830965
+          },
+          "relativeErrors": {
+            "steadyRate": 0.00010836228276847266,
+            "riseTime": 0.0026308289478929347,
+            "peakRate": 0.00013854575994807052,
+            "absoluteError": 0.018813946460595508
+          },
+          "elapsedMs": [36.068457999999964, 25.45379200000002, 36.297000000000025],
+          "minimumCapacity": 82.65145879824773,
+          "repeatHashesAgree": true
+        },
+        "pitch": {
+          "metrics": {
+            "steadyRate": 100.19276381232719,
+            "riseTime": 0.17005635667564567,
+            "peakRate": 100.26059271342729,
+            "absoluteError": 10.169841548830965
+          },
+          "relativeErrors": {
+            "steadyRate": 0.00010836228276847266,
+            "riseTime": 0.0026308289478929347,
+            "peakRate": 0.00013854575994807052,
+            "absoluteError": 0.018813946460595508
+          },
+          "elapsedMs": [30.407040999999936, 30.270750000000135, 26.87616600000024],
+          "minimumCapacity": 98.66135938712374,
+          "repeatHashesAgree": true
+        },
+        "yaw": {
+          "metrics": {
+            "steadyRate": 102.78081555017245,
+            "riseTime": 0.4121704289152518,
+            "peakRate": 102.8135261798813,
+            "absoluteError": 23.265904276062532
+          },
+          "relativeErrors": {
+            "steadyRate": 0.00016917969384240417,
+            "riseTime": 0.0007988846451222775,
+            "peakRate": 0.00016970696754377645,
+            "absoluteError": 0.008117734550661391
+          },
+          "elapsedMs": [37.18399999999974, 35.10620800000015, 24.554791999999907],
+          "minimumCapacity": 80.67986230636889,
+          "repeatHashesAgree": true
+        }
+      },
+      "contact": {
+        "blocked": true,
+        "minimumZ": 0.14311012625694275,
+        "finalZ": 1.1198582649230957
+      },
+      "accuracyPass": true,
+      "contactsPass": true,
+      "capacityPass": true,
+      "repetitionPass": true
+    },
+    {
+      "frequency": 500,
+      "axes": {
+        "roll": {
+          "metrics": {
+            "steadyRate": 100.19537892100564,
+            "riseTime": 0.170382085084534,
+            "peakRate": 100.2643288269033,
+            "absoluteError": 10.279198017160223
+          },
+          "relativeErrors": {
+            "steadyRate": 8.226433717025612e-5,
+            "riseTime": 0.0007204535905005547,
+            "peakRate": 0.00010128689530116401,
+            "absoluteError": 0.008263237182207023
+          },
+          "elapsedMs": [44.32629199999974, 57.71312500000022, 49.77350000000024],
+          "minimumCapacity": 51.98124343466046,
+          "repeatHashesAgree": true
+        },
+        "pitch": {
+          "metrics": {
+            "steadyRate": 100.19537892100564,
+            "riseTime": 0.170382085084534,
+            "peakRate": 100.2643288269033,
+            "absoluteError": 10.279198017160223
+          },
+          "relativeErrors": {
+            "steadyRate": 8.226433717025612e-5,
+            "riseTime": 0.0007204535905005547,
+            "peakRate": 0.00010128689530116401,
+            "absoluteError": 0.008263237182207023
+          },
+          "elapsedMs": [32.825124999999844, 47.520166999999674, 30.565000000000055],
+          "minimumCapacity": 63.13109126910309,
+          "repeatHashesAgree": true
+        },
+        "yaw": {
+          "metrics": {
+            "steadyRate": 102.78650296331696,
+            "riseTime": 0.41244516329576797,
+            "peakRate": 102.81954357654008,
+            "absoluteError": 23.374008950009387
+          },
+          "relativeErrors": {
+            "steadyRate": 0.00011385369823455878,
+            "riseTime": 0.00013286185411187355,
+            "peakRate": 0.00011118961396011046,
+            "absoluteError": 0.003508968537195473
+          },
+          "elapsedMs": [42.25116600000001, 33.27387499999986, 42.29991699999982],
+          "minimumCapacity": 70.92212497721953,
+          "repeatHashesAgree": true
+        }
+      },
+      "contact": {
+        "blocked": true,
+        "minimumZ": 0.14147450029850006,
+        "finalZ": 1.0516842603683472
+      },
+      "accuracyPass": true,
+      "contactsPass": true,
+      "capacityPass": true,
+      "repetitionPass": true
+    },
+    {
+      "frequency": 1000,
+      "axes": {
+        "roll": {
+          "metrics": {
+            "steadyRate": 100.19812935280703,
+            "riseTime": 0.17048801153984505,
+            "peakRate": 100.26874795929629,
+            "absoluteError": 10.33454507198611
+          },
+          "relativeErrors": {
+            "steadyRate": 5.48159102212705e-5,
+            "riseTime": 9.920200666490486e-5,
+            "peakRate": 5.7216538031581726e-5,
+            "absoluteError": 0.0029233547426537917
+          },
+          "elapsedMs": [59.168125000000146, 59.75649999999996, 75.05254200000036],
+          "minimumCapacity": 39.971997217629024,
+          "repeatHashesAgree": true
+        },
+        "pitch": {
+          "metrics": {
+            "steadyRate": 100.19812935280703,
+            "riseTime": 0.17048801153984505,
+            "peakRate": 100.26874795929629,
+            "absoluteError": 10.33454507198611
+          },
+          "relativeErrors": {
+            "steadyRate": 5.48159102212705e-5,
+            "riseTime": 9.920200666490486e-5,
+            "peakRate": 5.7216538031581726e-5,
+            "absoluteError": 0.0029233547426537917
+          },
+          "elapsedMs": [60.636833000000024, 53.12300000000005, 81.70333299999993],
+          "minimumCapacity": 36.71820830124522,
+          "repeatHashesAgree": true
+        },
+        "yaw": {
+          "metrics": {
+            "steadyRate": 102.79138227970529,
+            "riseTime": 0.4125343064768323,
+            "peakRate": 102.82448180331,
+            "absoluteError": 23.42831561334544
+          },
+          "relativeErrors": {
+            "steadyRate": 6.638870312862008e-5,
+            "riseTime": 8.324284359823016e-5,
+            "peakRate": 6.31668595437297e-5,
+            "absoluteError": 0.0011937429770963717
+          },
+          "elapsedMs": [47.48491700000022, 63.64691700000003, 64.53125],
+          "minimumCapacity": 46.48910411622276,
+          "repeatHashesAgree": true
+        }
+      },
+      "contact": {
+        "blocked": true,
+        "minimumZ": 0.14001941680908203,
+        "finalZ": 0.9822640419006348
+      },
+      "accuracyPass": true,
+      "contactsPass": true,
+      "capacityPass": true,
+      "repetitionPass": true
+    }
+  ],
+  "repetitions": 3,
+  "selectedHzOnThisRuntime": 250,
+  "frozenExperimentalDefaultHz": 250,
+  "qualification": {
+    "status": "experimental",
+    "scored": false,
+    "defaultEligible": false,
+    "pending": [
+      "browser-and-architecture-determinism",
+      "qualification-device-performance",
+      "reference-aircraft-measurements",
+      "regional-and-native-host-qualification",
+      "experienced-pilot-review"
+    ]
+  },
+  "limitations": [
+    "This one local machine is not the qualification device matrix.",
+    "The numerical reference is not a measured real aircraft.",
+    "Capacity includes simulation/recording but excludes rendering and streaming.",
+    "Contact equality checks obstruction without tunneling, not every mission geometry.",
+    "Cross-runtime worker evidence is recorded separately in fpv-advanced-runtime-qualification.json.",
+    "Custom controller settings, including disabled feedforward filtering, require separate qualification."
+  ],
+  "createdAt": "2026-10-15T23:30:57.590Z",
+  "sourceReport": "fpv-advanced-runtime-qualification.json"
+}

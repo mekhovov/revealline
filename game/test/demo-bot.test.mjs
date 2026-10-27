@@ -516,3 +516,141 @@ test('full live admission now finishes the formerly exhausted seed and resets be
   }
   assert.equal(ThreadWorker.owners, 0);
 });
+
+test('resource diagnostic observes Worker lifetime before initial preparation resolves', async () => {
+  let owned = 0,
+    created = 0,
+    retired = 0;
+  const controller = new AbortController();
+  const pending = prepareBotPlayer(maps[0], options(), {
+    WorkerClass: SilentWorker,
+    signal: controller.signal,
+    onWorker() {
+      owned++;
+      created++;
+      return () => {
+        owned--;
+        retired++;
+      };
+    },
+  });
+  try {
+    assert.equal(owned, 1);
+    assert.equal(created, 1);
+    controller.abort();
+    await assert.rejects(pending, { name: 'AbortError' });
+    assert.equal(owned, 0);
+    assert.equal(retired, 1);
+    assert.equal(SilentWorker.owners, 0);
+  } finally {
+    controller.abort();
+    await pending.catch(() => {});
+  }
+});
+
+test('resource diagnostic callbacks cannot alter Worker watchdog or cleanup', async () => {
+  for (const onWorker of [
+    () => {
+      throw new Error('diagnostic create');
+    },
+    () => () => {
+      throw new Error('diagnostic release');
+    },
+  ]) {
+    await assert.rejects(
+      prepareBotPlayer(maps[0], options(), {
+        WorkerClass: SilentWorker,
+        watchdogMs: 5,
+        onWorker,
+      }),
+      /deadline/,
+    );
+    assert.equal(SilentWorker.owners, 0);
+  }
+});
+
+
+// Preserve the original bounded-progress contract alongside the stricter complete-performance regression.
+for (const level of maps)
+  for (const policy of ['immediate', 'grid-center']) {
+    test(`${level.id}/${policy}: three qualified seeds make useful varied scenes within 60 seconds and exact recordings`, (t) => {
+      const signatures = new Set();
+      for (const seed of [1, 2, 3]) {
+        const setup = options(policy, seed),
+          state = createRun(level, setup),
+          recorder = createRecorder(level, setup, 'autoplay-regression');
+        let bends = 0,
+          decisions = 0,
+          stopped = true,
+          captures = 0,
+          maxPlanningMs = 0,
+          endReason = null;
+        while (state.status === 'running' && state.tick < 7200) {
+          const before = authoritativeCheckpoint(state);
+          const started = performance.now();
+          const macro = planDemoMacro(state, { plannerSeed: seed, decision: decisions++ });
+          maxPlanningMs = Math.max(maxPlanningMs, performance.now() - started);
+          assert.deepEqual(
+            authoritativeCheckpoint(state),
+            before,
+            'Lookahead never mutates the live run.',
+          );
+          if (!macro.ok) {
+            assert.equal(macro.reason, 'no-safe-macro');
+            assert.ok(macro.examined <= BOT_LIMITS.candidates);
+            assert.ok(macro.simulatedTicks <= BOT_LIMITS.totalTicks);
+            assert.equal(state.player.cutting, false);
+            assert.equal(state.player.speed, 0);
+            endReason = macro.reason;
+            break;
+          }
+          assert.ok(macro.metrics.examined <= BOT_LIMITS.candidates);
+          assert.ok(macro.metrics.simulatedTicks <= BOT_LIMITS.totalTicks);
+          assert.ok(macro.metrics.ticks <= BOT_LIMITS.candidateTicks);
+          execution: for (const segment of macro.segments)
+            for (let tick = 0; tick < segment.ticks; tick++) {
+              if (state.tick === 7200) break execution;
+              assert.equal(state.status, 'running');
+              if (segment.input.direction === null)
+                assert.equal(stopped, true, 'Neutral input only follows a natural capture stop.');
+              else stopped = false;
+              const wasCutting = state.player.cutting,
+                priorDirection = state.player.direction;
+              stepRun(state, segment.input, FIXED_DT);
+              if (wasCutting && priorDirection !== state.player.direction) bends++;
+              if (state.events.some((event) => event.type === 'capture.stopped')) {
+                stopped = true;
+                captures++;
+              }
+              recordInput(recorder, segment.input);
+              assert.equal(state.classic.livesLost, 0);
+            }
+          if (state.tick === macro.endTick)
+            assert.equal(authoritativeCheckpoint(state).hash, macro.endHash);
+        }
+        assert.ok(
+          state.status === 'won' ||
+            (state.status === 'running' && (state.tick === 7200 || endReason === 'no-safe-macro')),
+        );
+        assert.ok(bends >= 2, 'A scene includes a real multi-turn capture.');
+        assert.ok(captures >= 2, 'A scene demonstrates repeated completed captures.');
+        assert.ok(state.coverage >= 0.2, 'A scene makes substantial real map progress.');
+        const recording = exportReplay(recorder, state);
+        assert.equal(verifyReplay(recording).match, true);
+        signatures.add(JSON.stringify(recording.segments));
+        t.diagnostic(
+          JSON.stringify({
+            seed,
+            ticks: state.tick,
+            status: state.status,
+            coverage: state.coverage,
+            captures,
+            bends,
+            endReason,
+            maxPlanningMs: Math.round(maxPlanningMs),
+          }),
+        );
+      }
+      assert.equal(signatures.size, 3, 'Planner seeds produce actual route variety.');
+    });
+  }

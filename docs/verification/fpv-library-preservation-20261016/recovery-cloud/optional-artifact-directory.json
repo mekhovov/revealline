@@ -1,0 +1,136 @@
+{
+  "artifactId": 12021476397,
+  "artifactBytes": 23157547,
+  "artifactDigestFromGitHub": "b476b71480a81c565c7d5a700faa25097e4477dd518d9fe0a3b3fd7d8914aaa6",
+  "readMode": "bounded HTTP Range of central directory only; no full artifact download or outer digest rehash",
+  "directory": [
+    {
+      "name": "distribution-optional-civilian-flight.zip",
+      "compression": 8,
+      "crc32": 3600059595,
+      "compressedBytes": 2120008,
+      "bytes": 3762262,
+      "localOffset": 0
+    },
+    {
+      "name": "distribution-optional-fpv-worlds.zip",
+      "compression": 8,
+      "crc32": 1188077682,
+      "compressedBytes": 6566385,
+      "bytes": 17601020,
+      "localOffset": 2120095
+    },
+    {
+      "name": "distribution-optional-civilian-fpv.zip",
+      "compression": 8,
+      "crc32": 4277999866,
+      "compressedBytes": 2859116,
+      "bytes": 6781322,
+      "localOffset": 8686562
+    },
+    {
+      "name": "manifest-optional-civilian-flight.json",
+      "compression": 8,
+      "crc32": 3959171662,
+      "compressedBytes": 5128,
+      "bytes": 16741,
+      "localOffset": 11545762
+    },
+    {
+      "name": "manifest-optional-civilian-fpv.json",
+      "compression": 8,
+      "crc32": 4214237283,
+      "compressedBytes": 5492,
+      "bytes": 18095,
+      "localOffset": 11550974
+    },
+    {
+      "name": "manifest-optional-fpv-worlds.json",
+      "compression": 8,
+      "crc32": 542321434,
+      "compressedBytes": 8782,
+      "bytes": 29757,
+      "localOffset": 11556547
+    },
+    {
+      "name": "optional-candidate-verification.json",
+      "compression": 8,
+      "crc32": 2554643590,
+      "compressedBytes": 594,
+      "bytes": 1144,
+      "localOffset": 11565408
+    },
+    {
+      "name": "optional-checksums.json",
+      "compression": 8,
+      "crc32": 453834485,
+      "compressedBytes": 875,
+      "bytes": 2139,
+      "localOffset": 11566084
+    },
+    {
+      "name": "optional-package-review.json",
+      "compression": 8,
+      "crc32": 1691833488,
+      "compressedBytes": 442,
+      "bytes": 2838,
+      "localOffset": 11567028
+    },
+    {
+      "name": "optional-packages.json",
+      "compression": 8,
+      "crc32": 3056168023,
+      "compressedBytes": 1033,
+      "bytes": 2636,
+      "localOffset": 11567544
+    },
+    {
+      "name": "source-inventory-optional-civilian-flight.json",
+      "compression": 8,
+      "crc32": 3548594153,
+      "compressedBytes": 6021,
+      "bytes": 27442,
+      "localOffset": 11568645
+    },
+    {
+      "name": "source-inventory-optional-civilian-fpv.json",
+      "compression": 8,
+      "crc32": 2564179892,
+      "compressedBytes": 6567,
+      "bytes": 30036,
+      "localOffset": 11574758
+    },
+    {
+      "name": "source-inventory-optional-fpv-worlds.json",
+      "compression": 8,
+      "crc32": 1976321509,
+      "compressedBytes": 10357,
+      "bytes": 50238,
+      "localOffset": 11581414
+    },
+    {
+      "name": "source-optional-civilian-flight.zip",
+      "compression": 8,
+      "crc32": 2645089492,
+      "compressedBytes": 2125101,
+      "bytes": 3797326,
+      "localOffset": 11591858
+    },
+    {
+      "name": "source-optional-civilian-fpv.zip",
+      "compression": 8,
+      "crc32": 1549745756,
+      "compressedBytes": 2865939,
+      "bytes": 6817787,
+      "localOffset": 13717040
+    },
+    {
+      "name": "source-optional-fpv-worlds.zip",
+      "compression": 8,
+      "crc32": 847779686,
+      "compressedBytes": 6573099,
+      "bytes": 17646033,
+      "localOffset": 16583057
+    }
+  ]
+}

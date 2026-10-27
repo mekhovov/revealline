@@ -67,7 +67,12 @@ test('published Solo materializes only Horizon and preserves full navigation, ca
     const expected = original.select(original.catalog.find(future.id), 'expert');
     assert.equal(host.executionMetadata(expected.executionKey).packId, future.packId);
     await host.ensureExecution(expected.executionKey);
-    assert.deepEqual(host.select(future, 'expert'), expected);
+    // The route host exposes the authored encounter facade over these exact entries.
+    assert.deepEqual(host.select(future, 'expert'), {
+      ...expected,
+      encounterVariant: 'authored',
+      encounterVariants: ['authored'],
+    });
     assert.equal(host.select(first, 'standard'), owned);
     assert(host.owns(owned));
     assert.equal(fetched.length, 2);
@@ -101,7 +106,11 @@ test('published chapters load online without an offline preparation integration'
       assert(mission, `Published chapter ${descriptor.packId} must have a mission`);
       await host.ensureMission(mission);
       const expected = original.select(original.catalog.find(mission.id), 'standard');
-      assert.deepEqual(host.select(mission, 'standard'), expected);
+      assert.deepEqual(host.select(mission, 'standard'), {
+        ...expected,
+        encounterVariant: 'authored',
+        encounterVariants: ['authored'],
+      });
       await host.ensureExecution(expected.executionKey);
     }
     assert.equal(fetched.length, route.navigation.chapters.length);

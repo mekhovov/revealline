@@ -45,7 +45,7 @@ function descriptor(value, byteLimit = 9 * 1024 * 1024) {
     fail('Invalid optional artifact descriptor.');
   return value;
 }
-function rows(value, expected, limits) {
+function rows(value, expected, limits, label = 'Optional package') {
   if (!Array.isArray(value) || value.length !== expected.length || value.length > limits.files)
     fail('Optional dependency inventory is incomplete.');
   const found = new Set();
@@ -57,7 +57,7 @@ function rows(value, expected, limits) {
     found.add(row.path);
     total += row.bytes;
   }
-  if (total > limits.bytes) fail('Optional package exceeds its byte budget.');
+  if (total > limits.bytes) fail(`${label} exceeds its byte budget.`);
 }
 function matches(pin, bytes, byteLimit) {
   descriptor(pin, byteLimit);
@@ -260,7 +260,15 @@ export async function validateOptionalPackageAdmission(envelope, { read } = {}) 
       policy.launcherTemplate,
       ...policy.localeInputs,
     ];
-    rows(inventory.inputs, inputPaths, policy.limits);
+    rows(
+      inventory.inputs,
+      inputPaths,
+      {
+        ...policy.limits,
+        bytes: policy.sourceInputBytes ?? policy.limits.bytes,
+      },
+      'Optional source input inventory',
+    );
     rows(
       inventory.files,
       [
@@ -335,8 +343,18 @@ export async function validateOptionalPackageAdmission(envelope, { read } = {}) 
     const launcherStart = launcherTemplate.indexOf('export function installOptionalLauncher(');
     if (launcherStart < 0) fail('Optional launcher template is missing its registered entry.');
     const launcherFunction = launcherTemplate.slice(launcherStart + 'export '.length).trim();
+    // The v1 wrapper gained an additive failure-copy service. Reconstruct the
+    // exact wrapper selected by the archived template's parameter signature;
+    // do not accept either wrapper interchangeably or execute archive code.
+    const launcherParameters = launcherFunction.match(
+      /^function installOptionalLauncher\([\s\S]*?\n\) \{/,
+    )?.[0];
+    if (!launcherParameters) fail('Optional launcher parameter signature differs.');
+    const failureService = /\boptionalOfflineFailureMessage\s*,/.test(launcherParameters)
+      ? ', optionalOfflineFailureMessage'
+      : '';
     const launcherApp = Buffer.from(
-      `import { optionalInstallationKey, validateOptionalInstallationReference, inspectOptionalOffline, prepareOptionalOffline, removeOptionalOffline } from './context.mjs';\nimport { mountPracticeNavigation } from './navigation.mjs';\n(${launcherFunction})(${JSON.stringify({ packageId: item.id, root: installation.id, description: parse(runtime.get(policy.root + 'package-info.json')) })}, { optionalInstallationKey, validateOptionalInstallationReference, inspectOptionalOffline, prepareOptionalOffline, removeOptionalOffline, mountPracticeNavigation });\n`,
+      `import { optionalInstallationKey, validateOptionalInstallationReference, inspectOptionalOffline, prepareOptionalOffline, removeOptionalOffline${failureService} } from './context.mjs';\nimport { mountPracticeNavigation } from './navigation.mjs';\n(${launcherFunction})(${JSON.stringify({ packageId: item.id, root: installation.id, description: parse(runtime.get(policy.root + 'package-info.json')) })}, { optionalInstallationKey, validateOptionalInstallationReference, inspectOptionalOffline, prepareOptionalOffline, removeOptionalOffline${failureService}, mountPracticeNavigation });\n`,
     );
     if (
       !launcherFunction.endsWith('}') ||

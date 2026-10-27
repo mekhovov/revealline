@@ -33,10 +33,10 @@ const BASE_OPTIONAL_PACKAGE_POLICIES = Object.freeze({
     root: 'optional-practice/civilian-flight/',
     entry: 'optional-practice/civilian-flight/index.html',
     // The installed archive includes the reviewed launcher, access gate and
-    // shared menu CSS, battlefield artwork and ambience closure. The runtime has 94 files; the
+    // shared menu CSS, battlefield artwork and ambience closure. The native mixer uses the admitted SIM projection; the runtime has 97 files; the
     // selected source archive adds two reviewed templates within this finite
     // envelope.
-    limits: Object.freeze({ files: 96, bytes: 8 * 1024 * 1024 }),
+    limits: Object.freeze({ files: 100, bytes: 8 * 1024 * 1024 }),
     localFiles: Object.freeze([
       'index.html',
       'app.mjs',
@@ -51,6 +51,8 @@ const BASE_OPTIONAL_PACKAGE_POLICIES = Object.freeze({
       'README.md',
     ]),
     sharedFiles: Object.freeze([
+      'game/gameplay-audio-preferences.mjs',
+      'game/ui/gameplay-audio-output.mjs',
       'game/ui/mode-play-shell.mjs',
       'game/ui/mode-play-shell.css',
       'game/ui/mode-choice.css',
@@ -61,7 +63,8 @@ const BASE_OPTIONAL_PACKAGE_POLICIES = Object.freeze({
       'game/ui/native-menu-icons.mjs',
       'optional-practice/civilian-fpv/input.mjs',
       'optional-practice/civilian-fpv/radio-profile.mjs',
-      'optional-practice/civilian-fpv/world-audio.mjs',
+      'optional-practice/civilian-fpv/flight-response.mjs',
+      'optional-practice/civilian-fpv/rates.mjs',
       'optional-practice/civilian-fpv/flight-fullscreen.mjs',
       'optional-practice/civilian-fpv/flight-fullscreen.css',
       'optional-practice/civilian-fpv/sim-presentation.mjs',
@@ -421,6 +424,8 @@ const RUNTIME_PACKAGE_POLICIES = Object.freeze({
     limits: Object.freeze({ files: 96, bytes: 16 * 1024 * 1024 }),
     localFiles: Object.freeze([
       'index.html',
+      'advanced-worker.mjs',
+      'response-bench-worker.mjs',
       'app.webmanifest',
       'README.md',
       'SCENERY-LICENSES.txt',
@@ -581,6 +586,59 @@ const RUNTIME_PACKAGE_POLICIES = Object.freeze({
   }),
 });
 
+// The worker entry must be listed explicitly: a URL passed to Worker is not an import.
+const FPV_TUNING_FILES = Object.freeze([
+  'rates.mjs',
+  'flight-response.mjs',
+  'tuning-library.mjs',
+  'tuning-ui.mjs',
+  'setup-draft.mjs',
+  'setup-workbench.mjs',
+  'aircraft-tuning-fields.mjs',
+  'controller-tune-library.mjs',
+  'controller-tune-panel.mjs',
+  'response-bench.mjs',
+  'response-bench-client.mjs',
+  'response-bench-worker.mjs',
+  'response-bench-panel.mjs',
+  'tuning.css',
+  'betaflight-import.mjs',
+  'advanced-controller.mjs',
+  'advanced-terrain.mjs',
+  'advanced-simulation.mjs',
+  'advanced-aircraft-runtime.mjs',
+  'aircraft-physics.mjs',
+  'aircraft-response.mjs',
+  'aircraft-presets.mjs',
+  'aircraft-appearance.mjs',
+  'aircraft-preview.mjs',
+  'aircraft-recording.mjs',
+  'aircraft-terrain.mjs',
+  'aircraft-course-session.mjs',
+  'aircraft-mission-checkpoint.mjs',
+  'aircraft-practice-controls.mjs',
+  'aircraft-course-advice.mjs',
+  'aircraft-archive.mjs',
+  'aircraft-archive-controls.mjs',
+  'aircraft-archive-verifier.mjs',
+  'advanced-ghost-path.mjs',
+  'propulsion-evidence.mjs',
+  'propulsion-evidence-ui.mjs',
+  'propulsion-load.mjs',
+  'aircraft-challenge.mjs',
+  'aircraft-challenge-ui.mjs',
+  'advanced-worker.mjs',
+  'advanced-worker-client.mjs',
+  'advanced-practice.mjs',
+  'sim-boot.mjs',
+]);
+const FPV_ADVANCED_ACADEMY_FILES = Object.freeze([
+  'world-collision.mjs',
+  'vendor/rapier/rapier.mjs',
+  'vendor/rapier/LICENSE',
+  'vendor/rapier/provenance.json',
+]);
+
 // Discovery assets are admitted source inputs, never arbitrary catalogue URLs.
 // Pursuit, shared presentation and discovery additions retain finite reviewed envelopes.
 export const OPTIONAL_PACKAGE_POLICIES = Object.freeze(
@@ -589,11 +647,21 @@ export const OPTIONAL_PACKAGE_POLICIES = Object.freeze(
       id,
       Object.freeze({
         ...policy,
+        // Original aggregate locale files are retained as source hashes, while
+        // only selected messages ship. Academy's reviewed input inventory includes
+        // the visual workbench and isolated response bench.
+        // The runtime envelope plus 192 KiB retains aggregate locale hashes;
+        // those full locale inputs do not ship in standalone SIM archives.
+        ...(id === 'civilian-fpv' ? { sourceInputBytes: 13 * 1024 * 1024 + 192 * 1024 } : {}),
         // The canonical browser is projected into an existing package module.
         // Admit only its message families, including plural and dynamic keys.
         localeKeyPrefixes: Object.freeze({
           errors: Object.freeze(['missionLibrary.']),
-          interface: Object.freeze(['missionLibrary.', 'missionGoal.']),
+          interface: Object.freeze([
+            'missionLibrary.',
+            'missionGoal.',
+            ...(['civilian-fpv', 'fpv-worlds'].includes(id) ? ['supportSummary.'] : []),
+          ]),
           common: Object.freeze(['counts.missions', 'collections.']),
         }),
         localeKeys: Object.freeze({
@@ -616,11 +684,22 @@ export const OPTIONAL_PACKAGE_POLICIES = Object.freeze(
                   from: 'optional-practice/civilian-fpv/sim-presentation.mjs',
                   source: '../../game/ui/global-settings-tools.mjs',
                 }),
+                // Only a verified iOS stage supplies this bridge. Web packages
+                // retain browser exports and never evaluate the iOS import.
+                Object.freeze({
+                  from: 'game/platform.mjs',
+                  source: '../native/bridge.mjs',
+                }),
               ]
             : [],
         ),
         licenses: Object.freeze([
           ...policy.licenses,
+          ...(id === 'civilian-fpv'
+            ? RUNTIME_PACKAGE_POLICIES['fpv-worlds'].licenses.filter(
+                (license) => license.dependency === '@dimforge/rapier3d-compat',
+              )
+            : []),
           ...(id === 'civilian-flight'
             ? legacyFPV.licenses.slice(0, 2).map((license) => ({
                 ...license,
@@ -628,15 +707,44 @@ export const OPTIONAL_PACKAGE_POLICIES = Object.freeze(
               }))
             : []),
         ]),
+        vendorPins: Object.freeze([
+          ...(policy.vendorPins ?? []),
+          ...(id === 'civilian-fpv'
+            ? RUNTIME_PACKAGE_POLICIES['fpv-worlds'].vendorPins.filter((pin) =>
+                pin.path.startsWith('optional-practice/civilian-fpv/vendor/rapier/'),
+              )
+            : []),
+        ]),
         limits: Object.freeze({
           ...policy.limits,
-          // Regional review and authored ground profiles use an explicit module closure.
-          // Include launcher/templates; keep the 20 MiB budget and exact dependency boundary.
-          files: id === 'civilian-fpv' ? 104 : id === 'fpv-worlds' ? 164 : policy.limits.files,
-          bytes: id === 'fpv-worlds' ? 20 * 1024 * 1024 : policy.limits.bytes,
+          // Includes tuning/worker, the native-safe boot and platform adapter;
+          // The visual workbench and isolated response bench add nine explicit
+          // files to each complete runtime/source envelope. The installed-core
+          // Academy cache includes the shared full locale catalog; its measured
+          // 13,125,579-byte closure, including shared navigation, fits 13 MiB.
+          // Standalone Academy remains below 12 MiB; World stays at 20 MiB.
+          // World also admits its single Regional Advanced adapter.
+          // Academy now carries the same pinned 4.35 MB Rapier build as World.
+          // The evidence inspector adds one explicitly admitted load solver;
+          // complete source inventories are now 151 and 211 files respectively.
+          files:
+            id === 'civilian-fpv'
+              ? 151
+              : id === 'fpv-worlds'
+                ? 211 // Includes World's same-scope flight and response-bench workers.
+                : id === 'civilian-flight'
+                  ? 100
+                  : policy.limits.files,
+          bytes:
+            id === 'fpv-worlds'
+              ? 20 * 1024 * 1024
+              : id === 'civilian-fpv'
+                ? 13 * 1024 * 1024
+                : policy.limits.bytes,
         }),
         localFiles: Object.freeze([
           ...policy.localFiles,
+          ...(id === 'civilian-fpv' ? [...FPV_TUNING_FILES, ...FPV_ADVANCED_ACADEMY_FILES] : []),
           'package-info.json',
           'preview.png',
           'guide.html',
@@ -644,6 +752,15 @@ export const OPTIONAL_PACKAGE_POLICIES = Object.freeze(
         sharedFiles: Object.freeze([
           ...new Set([
             ...policy.sharedFiles,
+            ...(id === 'fpv-worlds'
+              ? [...FPV_TUNING_FILES, 'advanced-regional.mjs'].map(
+                  (name) => `optional-practice/civilian-fpv/${name}`,
+                )
+              : []),
+            ...(['civilian-fpv', 'fpv-worlds'].includes(id) ? ['game/platform.mjs'] : []),
+            ...(['civilian-fpv', 'fpv-worlds'].includes(id)
+              ? ['game/ui/local-support-summary.mjs', 'game/local-support-summary.mjs']
+              : []),
             'game/access-gate.mjs',
             'game/access-gate.css',
             // The legacy civilian-flight archive also hosts the shared SIM

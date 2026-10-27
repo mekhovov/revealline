@@ -178,7 +178,11 @@ class FullTests(unittest.TestCase):
         self.assertEqual(q['format'], 'revealline-source-qualification.v1')
         self.assertTrue(q['passed'])
         self.assertEqual(q['testFiles'], 4)
-        self.assertEqual(len(q['gates']), 6)
+        self.assertEqual([(gate['gate'], gate.get('command'), gate['step']['name']) for gate in q['gates']], [
+            ('validate', 'npm run validate', 'Validate source'),
+            ('motion-syntax', 'node --check authoring/motion-lab/app.js', 'Check motion lab syntax'),
+            ('test', None, 'Run test shard 1/4'),
+        ])
         self.assertNotIn('waiverEvidence', q)
         self.assertFalse((self.root / 'out/source.tar').exists())
         with zipfile.ZipFile(self.root / 'out/source-qualification-evidence.zip') as archive:
@@ -186,6 +190,32 @@ class FullTests(unittest.TestCase):
         self.assertEqual(common.sha(retained), common.HISTORICAL_AUDIO_EVIDENCE_SHA256)
         with self.assertRaisesRegex(ValueError, 'Fresh ordinary'):
             self.assemble()
+
+    def test_current_pinned_checkout_and_restored_required_policy_execute_frozen_consumer(self):
+        self.fixture.policy['authorization'] = full.consumer.RESTORATION_AUTHORIZATION
+        for path in self.config['pr']['logs'].values():
+            file = Path(path)
+            file.write_bytes(file.read_bytes().replace(b'actions/checkout@v4',
+                b'actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09'))
+        result = self.assemble()
+        self.assertTrue(result['consumer']['allQualificationPinsResolved'])
+        self.assertEqual(result['tests'], {'tests': 4, 'pass': 4, 'fail': 0, 'cancelled': 0, 'skipped': 0, 'todo': 0})
+
+    def test_absent_historical_production_steps_remain_blockers(self):
+        for role, job_name, step_name in [
+            ('pr', 'preflight', 'Validate, lint, and format source'),
+            ('pr', 'preflight', 'Verify Field Kit production ledger and compiled output'),
+            ('pr', 'preflight', 'Verify immutable production sources first'),
+            ('manual', 'qualify', 'Reproduce production collection when available'),
+            ('manual', 'qualify', 'Require reviewed production slots in the committed ledger')]:
+            jobs = copy.deepcopy(self.jobs[role])
+            job = next(j for j in jobs['jobs'] if j['name'] == job_name)
+            job['steps'] = [s for s in job['steps'] if s['name'] != step_name]
+            self.write(self.config[role]['jobs'], common.encoded(jobs))
+            with self.subTest(step=step_name), self.assertRaisesRegex(ValueError, 'Required successful step missing'):
+                self.assemble()
+            self.assertFalse((self.root / 'out').exists())
+            self.write(self.config[role]['jobs'], common.encoded(self.jobs[role]))
 
     def test_missing_or_failed_shard_and_partial_inventory_refuse(self):
         for mutation in [lambda j: j['jobs'].pop(), lambda j: j['jobs'][-1].update(conclusion='failure'),
@@ -332,6 +362,43 @@ class FullTests(unittest.TestCase):
 
 
 class ParsingTests(unittest.TestCase):
+    def checkout_log(self, action='actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09', path='automation'):
+        commit, tree = 'a' * 40, 'b' * 40
+        script = 'node ../automation/scripts/check-source-identity.mjs --root .'
+        value = {'format': 'revealline-source-identity.v1', 'sourceRevision': commit,
+                 'sourceTree': tree, 'allTrackedSourceContentsAndModesMatch': True,
+                 'files': 5, 'bytes': 10, 'aggregateSha256': 'd' * 64}
+        identity = command(script, json.dumps(value, separators=(',', ':')))
+        checkout = ('##[group]Run ' + action + '\n  ref: ' + commit + '\n  path: ' + path +
+                    '\n##[endgroup]\n' + commit + '\n').encode()
+        return checkout, identity + identity, (commit, tree, 'pr', commit, script)
+
+    def test_only_historical_v4_and_exact_reviewed_v5_checkout_are_authority(self):
+        for action in full.CHECKOUT_ACTIONS:
+            for path in ('automation', '.source-gate-automation'):
+                checkout, identities, args = self.checkout_log(action, path)
+                with self.subTest(action=action, path=path):
+                    self.assertEqual(full.checkout_authority(checkout + identities, *args)['files'], 5)
+        for action in ('actions/checkout@v5', 'actions/checkout@main', 'actions/checkout@' + 'f' * 40,
+                       'actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c08'):
+            checkout, identities, args = self.checkout_log(action)
+            with self.subTest(action=action), self.assertRaisesRegex(ValueError, 'Unsupported PR automation'):
+                full.checkout_authority(checkout + identities, *args)
+
+    def test_pinned_checkout_cannot_borrow_ref_output_path_or_duplicate_authority(self):
+        checkout, identities, args = self.checkout_log()
+        variants = [checkout.replace(b'  ref: ' + b'a' * 40, b'  ref: ' + b'f' * 40),
+                    checkout.replace(b'##[endgroup]\n' + b'a' * 40, b'##[endgroup]\n' + b'f' * 40),
+                    checkout.replace(b'  path: automation', b'  path: source'),
+                    checkout.replace(b'  path: automation', b'  path: automation\n  path: source'),
+                    checkout.replace(b'  ref: ', b'  ref: other\n  ref: '), checkout + checkout,
+                    checkout + self.checkout_log('actions/checkout@v5')[0]]
+        for index, bad in enumerate(variants):
+            with self.subTest(index=index), self.assertRaises(ValueError):
+                full.checkout_authority(bad + identities, *args)
+        with self.assertRaises(ValueError):
+            full.checkout_authority(checkout + identities.split(b'##[group]Run ')[1], *args)
+
     def test_nested_cases_have_top_plan_distinct_from_total(self):
         text = ('TAP version 13\n# Subtest: parent\n    # Subtest: child\n    ok 1 - child\n    1..1\n'
                 'ok 1 - parent\n1..1\n# tests 2\n# suites 0\n# pass 2\n# fail 0\n# cancelled 0\n'

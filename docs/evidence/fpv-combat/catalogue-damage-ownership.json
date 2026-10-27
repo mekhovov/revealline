@@ -1,0 +1,3720 @@
+{
+  "format": "FPVCatalogueDamageOwnershipAudit.v1",
+  "scope": "Shipped in-memory catalogue definitions and pinned regional delivery identities; no downloaded scene bytes or user storage inspected.",
+  "actorTuple": [
+    "stableId",
+    "type",
+    "effectiveAuthoredRole"
+  ],
+  "summary": {
+    "entries": 204,
+    "native": 134,
+    "learning": 58,
+    "legacy": 12,
+    "entriesWithActors": 118,
+    "actorOccurrences": 357,
+    "byTypeRole": {
+      "patrol:hostile": 263,
+      "vehicle:hostile": 13,
+      "patrol:civilian": 19,
+      "drone:rival": 13,
+      "vehicle:civilian": 9,
+      "hazard:no-role": 24,
+      "drone:hostile": 9,
+      "sentry:hostile": 7
+    },
+    "regionalPins": 24,
+    "regionalIds": 13
+  },
+  "sources": [
+    {
+      "id": "snake-hunt-loops-01",
+      "source": "native",
+      "format": "FlightCourse.v2",
+      "sourceIdentity": "3760a2de192eea8d",
+      "actorCount": 3,
+      "actors": [
+        [
+          "humanoid-01",
+          "patrol",
+          "hostile"
+        ],
+        [
+          "humanoid-02",
+          "patrol",
+          "hostile"
+        ],
+        [
+          "humanoid-03",
+          "patrol",
+          "hostile"
+        ]
+      ]
+    },
+    {
+      "id": "snake-hunt-loops-02",
+      "source": "native",
+      "format": "FlightCourse.v2",
+      "sourceIdentity": "77d36083abc50aff",
+      "actorCount": 5,
+      "actors": [
+        [
+          "humanoid-01",
+          "patrol",
+          "hostile"
+        ],
+        [
+          "humanoid-02",
+          "patrol",
+          "hostile"
+        ],
+        [
+          "humanoid-03",
+          "patrol",
+          "hostile"
+        ],
+        [
+          "humanoid-04",
+          "patrol",
+          "hostile"
+        ],
+        [
+          "humanoid-05",
+          "patrol",
+          "hostile"
+        ]
+      ]
+    },
+    {
+      "id": "snake-hunt-loops-03",
+      "source": "native",
+      "format": "FlightCourse.v2",
+      "sourceIdentity": "27657892c87436b1",
+      "actorCount": 6,
+      "actors": [
+        [
+          "humanoid-01",
+          "patrol",
+          "hostile"
+        ],
+        [
+          "humanoid-02",
+          "patrol",
+          "hostile"
+        ],
+        [
+          "humanoid-03",
+          "patrol",
+          "hostile"
+        ],
+        [
+          "humanoid-04",
+          "patrol",
+          "hostile"
+        ],
+        [
+          "humanoid-05",
+          "patrol",
+          "hostile"
+        ],
+        [
+          "humanoid-06",
+          "patrol",
+          "hostile"
+        ]
+      ]
+    },
+    {
+      "id": "snake-hunt-loops-04",
+      "source": "native",
+      "format": "FlightCourse.v2",
+      "sourceIdentity": "99130b0d560c0ee7",
+      "actorCount": 6,
+      "actors": [
+        [
+          "humanoid-01",
+          "patrol",
+          "hostile"
+        ],
+        [
+          "humanoid-02",
+          "patrol",
+          "hostile"
+        ],
+        [
+          "humanoid-03",
+          "patrol",
+          "hostile"
+        ],
+        [
+          "humanoid-04",
+          "patrol",
+          "hostile"
+        ],
+        [
+          "humanoid-05",
+          "patrol",
+          "hostile"
+        ],
+        [
+          "humanoid-06",
+          "patrol",
+          "hostile"
+        ]
+      ]
+    },
+    {
+      "id": "snake-hunt-loops-05",
+      "source": "native",
+      "format": "FlightCourse.v2",
+      "sourceIdentity": "49fe8c5ebf2a69aa",
+      "actorCount": 7,
+      "actors": [
+        [
+          "humanoid-01",
+          "patrol",
+          "hostile"
+        ],
+        [
+          "humanoid-02",
+          "patrol",
+          "hostile"
+        ],
+        [
+          "humanoid-03",
+          "patrol",
+          "hostile"
+        ],
+        [
+          "humanoid-04",
+          "patrol",
+          "hostile"
+        ],
+        [
+          "humanoid-05",
+          "patrol",
+          "hostile"
+        ],
+        [
+          "humanoid-06",
+          "patrol",
+          "hostile"
+        ],
+        [
+          "humanoid-07",
+          "patrol",
+          "hostile"
+        ]
+      ]
+    },
+    {
+      "id": "snake-hunt-loops-06",
+      "source": "native",
+      "format": "FlightCourse.v2",
+      "sourceIdentity": "ad6c210e17238c1d",
+      "actorCount": 8,
+      "actors": [
+        [
+          "humanoid-01",
+          "patrol",
+          "hostile"
+        ],
+        [
+          "humanoid-02",
+          "patrol",
+          "hostile"
+        ],
+        [
+          "humanoid-03",
+          "patrol",
+          "hostile"
+        ],
+        [
+          "humanoid-04",
+          "patrol",
+          "hostile"
+        ],
+        [
+          "humanoid-05",
+          "patrol",
+          "hostile"
+        ],
+        [
+          "humanoid-06",
+          "patrol",
+          "hostile"
+        ],
+        [
+          "humanoid-07",
+          "patrol",
+          "hostile"
+        ],
+        [
+          "humanoid-08",
+          "patrol",
+          "hostile"
+        ]
+      ]
+    },
+    {
+      "id": "snake-hunt-weave-01",
+      "source": "native",
+      "format": "FlightCourse.v2",
+      "sourceIdentity": "9bbdf66eccbfb0b0",
+      "actorCount": 3,
+      "actors": [
+        [
+          "humanoid-01",
+          "patrol",
+          "hostile"
+        ],
+        [
+          "humanoid-02",
+          "patrol",
+          "hostile"
+        ],
+        [
+          "humanoid-03",
+          "patrol",
+          "hostile"
+        ]
+      ]
+    },
+    {
+      "id": "snake-hunt-weave-02",
+      "source": "native",
+      "format": "FlightCourse.v2",
+      "sourceIdentity": "18716d6ad7098efc",
+      "actorCount": 4,
+      "actors": [
+        [
+          "humanoid-01",
+          "patrol",
+          "hostile"
+        ],
+        [
+          "humanoid-02",
+          "patrol",
+          "hostile"
+        ],
+        [
+          "humanoid-03",
+          "patrol",
+          "hostile"
+        ],
+        [
+          "humanoid-04",
+          "patrol",
+          "hostile"
+        ]
+      ]
+    },
+    {
+      "id": "snake-hunt-weave-03",
+      "source": "native",
+      "format": "FlightCourse.v2",
+      "sourceIdentity": "0a10341a9d2fed0e",
+      "actorCount": 5,
+      "actors": [
+        [
+          "humanoid-01",
+          "patrol",
+          "hostile"
+        ],
+        [
+          "humanoid-02",
+          "patrol",
+          "hostile"
+        ],
+        [
+          "humanoid-03",
+          "patrol",
+          "hostile"
+        ],
+        [
+          "humanoid-04",
+          "patrol",
+          "hostile"
+        ],
+        [
+          "humanoid-05",
+          "patrol",
+          "hostile"
+        ]
+      ]
+    },
+    {
+      "id": "snake-hunt-weave-04",
+      "source": "native",
+      "format": "FlightCourse.v2",
+      "sourceIdentity": "226c6e3c6fe1e702",
+      "actorCount": 6,
+      "actors": [
+        [
+          "humanoid-01",
+          "patrol",
+          "hostile"
+        ],
+        [
+          "humanoid-02",
+          "patrol",
+          "hostile"
+        ],
+        [
+          "humanoid-03",
+          "patrol",
+          "hostile"
+        ],
+        [
+          "humanoid-04",
+          "patrol",
+          "hostile"
+        ],
+        [
+          "humanoid-05",
+          "patrol",
+          "hostile"
+        ],
+        [
+          "humanoid-06",
+          "patrol",
+          "hostile"
+        ]
+      ]
+    },
+    {
+      "id": "snake-hunt-weave-05",
+      "source": "native",
+      "format": "FlightCourse.v2",
+      "sourceIdentity": "47207ef15ad18511",
+      "actorCount": 6,
+      "actors": [
+        [
+          "humanoid-01",
+          "patrol",
+          "hostile"
+        ],
+        [
+          "humanoid-02",
+          "patrol",
+          "hostile"
+        ],
+        [
+          "humanoid-03",
+          "patrol",
+          "hostile"
+        ],
+        [
+          "humanoid-04",
+          "patrol",
+          "hostile"
+        ],
+        [
+          "humanoid-05",
+          "patrol",
+          "hostile"
+        ],
+        [
+          "humanoid-06",
+          "patrol",
+          "hostile"
+        ]
+      ]
+    },
+    {
+      "id": "snake-hunt-weave-06",
+      "source": "native",
+      "format": "FlightCourse.v2",
+      "sourceIdentity": "5f8173051028b34c",
+      "actorCount": 8,
+      "actors": [
+        [
+          "humanoid-01",
+          "patrol",
+          "hostile"
+        ],
+        [
+          "humanoid-02",
+          "patrol",
+          "hostile"
+        ],
+        [
+          "humanoid-03",
+          "patrol",
+          "hostile"
+        ],
+        [
+          "humanoid-04",
+          "patrol",
+          "hostile"
+        ],
+        [
+          "humanoid-05",
+          "patrol",
+          "hostile"
+        ],
+        [
+          "humanoid-06",
+          "patrol",
+          "hostile"
+        ],
+        [
+          "humanoid-07",
+          "patrol",
+          "hostile"
+        ],
+        [
+          "humanoid-08",
+          "patrol",
+          "hostile"
+        ]
+      ]
+    },
+    {
+      "id": "snake-hunt-heights-01",
+      "source": "native",
+      "format": "FlightCourse.v2",
+      "sourceIdentity": "b83da4456db0fc7c",
+      "actorCount": 3,
+      "actors": [
+        [
+          "humanoid-01",
+          "patrol",
+          "hostile"
+        ],
+        [
+          "humanoid-02",
+          "patrol",
+          "hostile"
+        ],
+        [
+          "humanoid-03",
+          "patrol",
+          "hostile"
+        ]
+      ]
+    },
+    {
+      "id": "snake-hunt-heights-02",
+      "source": "native",
+      "format": "FlightCourse.v2",
+      "sourceIdentity": "28f8651b72caea48",
+      "actorCount": 4,
+      "actors": [
+        [
+          "humanoid-01",
+          "patrol",
+          "hostile"
+        ],
+        [
+          "humanoid-02",
+          "patrol",
+          "hostile"
+        ],
+        [
+          "humanoid-03",
+          "patrol",
+          "hostile"
+        ],
+        [
+          "humanoid-04",
+          "patrol",
+          "hostile"
+        ]
+      ]
+    },
+    {
+      "id": "snake-hunt-heights-03",
+      "source": "native",
+      "format": "FlightCourse.v2",
+      "sourceIdentity": "fe662a8910b86e45",
+      "actorCount": 5,
+      "actors": [
+        [
+          "humanoid-01",
+          "patrol",
+          "hostile"
+        ],
+        [
+          "humanoid-02",
+          "patrol",
+          "hostile"
+        ],
+        [
+          "humanoid-03",
+          "patrol",
+          "hostile"
+        ],
+        [
+          "humanoid-04",
+          "patrol",
+          "hostile"
+        ],
+        [
+          "humanoid-05",
+          "patrol",
+          "hostile"
+        ]
+      ]
+    },
+    {
+      "id": "snake-hunt-heights-04",
+      "source": "native",
+      "format": "FlightCourse.v2",
+      "sourceIdentity": "1c722bfebbb583bf",
+      "actorCount": 6,
+      "actors": [
+        [
+          "humanoid-01",
+          "patrol",
+          "hostile"
+        ],
+        [
+          "humanoid-02",
+          "patrol",
+          "hostile"
+        ],
+        [
+          "humanoid-03",
+          "patrol",
+          "hostile"
+        ],
+        [
+          "humanoid-04",
+          "patrol",
+          "hostile"
+        ],
+        [
+          "humanoid-05",
+          "patrol",
+          "hostile"
+        ],
+        [
+          "humanoid-06",
+          "patrol",
+          "hostile"
+        ]
+      ]
+    },
+    {
+      "id": "snake-hunt-heights-05",
+      "source": "native",
+      "format": "FlightCourse.v2",
+      "sourceIdentity": "71c1c971237e50d4",
+      "actorCount": 6,
+      "actors": [
+        [
+          "humanoid-01",
+          "patrol",
+          "hostile"
+        ],
+        [
+          "humanoid-02",
+          "patrol",
+          "hostile"
+        ],
+        [
+          "humanoid-03",
+          "patrol",
+          "hostile"
+        ],
+        [
+          "humanoid-04",
+          "patrol",
+          "hostile"
+        ],
+        [
+          "humanoid-05",
+          "patrol",
+          "hostile"
+        ],
+        [
+          "humanoid-06",
+          "patrol",
+          "hostile"
+        ]
+      ]
+    },
+    {
+      "id": "snake-hunt-heights-06",
+      "source": "native",
+      "format": "FlightCourse.v2",
+      "sourceIdentity": "42f179e478284baf",
+      "actorCount": 8,
+      "actors": [
+        [
+          "humanoid-01",
+          "patrol",
+          "hostile"
+        ],
+        [
+          "humanoid-02",
+          "patrol",
+          "hostile"
+        ],
+        [
+          "humanoid-03",
+          "patrol",
+          "hostile"
+        ],
+        [
+          "humanoid-04",
+          "patrol",
+          "hostile"
+        ],
+        [
+          "humanoid-05",
+          "patrol",
+          "hostile"
+        ],
+        [
+          "humanoid-06",
+          "patrol",
+          "hostile"
+        ],
+        [
+          "humanoid-07",
+          "patrol",
+          "hostile"
+        ],
+        [
+          "humanoid-08",
+          "patrol",
+          "hostile"
+        ]
+      ]
+    },
+    {
+      "id": "snake-hunt-chase-01",
+      "source": "native",
+      "format": "FlightCourse.v2",
+      "sourceIdentity": "8a4bc60e95feace3",
+      "actorCount": 3,
+      "actors": [
+        [
+          "humanoid-01",
+          "patrol",
+          "hostile"
+        ],
+        [
+          "humanoid-02",
+          "patrol",
+          "hostile"
+        ],
+        [
+          "humanoid-03",
+          "patrol",
+          "hostile"
+        ]
+      ]
+    },
+    {
+      "id": "snake-hunt-chase-02",
+      "source": "native",
+      "format": "FlightCourse.v2",
+      "sourceIdentity": "a30a569f2d054af3",
+      "actorCount": 4,
+      "actors": [
+        [
+          "humanoid-01",
+          "patrol",
+          "hostile"
+        ],
+        [
+          "humanoid-02",
+          "patrol",
+          "hostile"
+        ],
+        [
+          "humanoid-03",
+          "patrol",
+          "hostile"
+        ],
+        [
+          "humanoid-04",
+          "patrol",
+          "hostile"
+        ]
+      ]
+    },
+    {
+      "id": "snake-hunt-chase-03",
+      "source": "native",
+      "format": "FlightCourse.v2",
+      "sourceIdentity": "1809fbd80deb8dec",
+      "actorCount": 5,
+      "actors": [
+        [
+          "humanoid-01",
+          "patrol",
+          "hostile"
+        ],
+        [
+          "humanoid-02",
+          "patrol",
+          "hostile"
+        ],
+        [
+          "humanoid-03",
+          "patrol",
+          "hostile"
+        ],
+        [
+          "humanoid-04",
+          "patrol",
+          "hostile"
+        ],
+        [
+          "humanoid-05",
+          "patrol",
+          "hostile"
+        ]
+      ]
+    },
+    {
+      "id": "snake-hunt-chase-04",
+      "source": "native",
+      "format": "FlightCourse.v2",
+      "sourceIdentity": "76c1b92df6d239ae",
+      "actorCount": 6,
+      "actors": [
+        [
+          "humanoid-01",
+          "patrol",
+          "hostile"
+        ],
+        [
+          "humanoid-02",
+          "patrol",
+          "hostile"
+        ],
+        [
+          "humanoid-03",
+          "patrol",
+          "hostile"
+        ],
+        [
+          "humanoid-04",
+          "patrol",
+          "hostile"
+        ],
+        [
+          "humanoid-05",
+          "patrol",
+          "hostile"
+        ],
+        [
+          "humanoid-06",
+          "patrol",
+          "hostile"
+        ]
+      ]
+    },
+    {
+      "id": "snake-hunt-chase-05",
+      "source": "native",
+      "format": "FlightCourse.v2",
+      "sourceIdentity": "78bd4f6ad4273284",
+      "actorCount": 7,
+      "actors": [
+        [
+          "humanoid-01",
+          "patrol",
+          "hostile"
+        ],
+        [
+          "humanoid-02",
+          "patrol",
+          "hostile"
+        ],
+        [
+          "humanoid-03",
+          "patrol",
+          "hostile"
+        ],
+        [
+          "humanoid-04",
+          "patrol",
+          "hostile"
+        ],
+        [
+          "humanoid-05",
+          "patrol",
+          "hostile"
+        ],
+        [
+          "humanoid-06",
+          "patrol",
+          "hostile"
+        ],
+        [
+          "humanoid-07",
+          "patrol",
+          "hostile"
+        ]
+      ]
+    },
+    {
+      "id": "snake-hunt-chase-06",
+      "source": "native",
+      "format": "FlightCourse.v2",
+      "sourceIdentity": "fe8bd8922c602648",
+      "actorCount": 10,
+      "actors": [
+        [
+          "humanoid-01",
+          "patrol",
+          "hostile"
+        ],
+        [
+          "humanoid-02",
+          "patrol",
+          "hostile"
+        ],
+        [
+          "humanoid-03",
+          "patrol",
+          "hostile"
+        ],
+        [
+          "humanoid-04",
+          "patrol",
+          "hostile"
+        ],
+        [
+          "humanoid-05",
+          "patrol",
+          "hostile"
+        ],
+        [
+          "humanoid-06",
+          "patrol",
+          "hostile"
+        ],
+        [
+          "humanoid-07",
+          "patrol",
+          "hostile"
+        ],
+        [
+          "humanoid-08",
+          "patrol",
+          "hostile"
+        ],
+        [
+          "humanoid-09",
+          "patrol",
+          "hostile"
+        ],
+        [
+          "humanoid-10",
+          "patrol",
+          "hostile"
+        ]
+      ]
+    },
+    {
+      "id": "snake-hunt-interception-loop-intercept",
+      "source": "native",
+      "format": "FlightCourse.v2",
+      "sourceIdentity": "6abf23e69b34203c",
+      "actorCount": 3,
+      "actors": [
+        [
+          "humanoid-01",
+          "patrol",
+          "hostile"
+        ],
+        [
+          "humanoid-02",
+          "patrol",
+          "hostile"
+        ],
+        [
+          "humanoid-03",
+          "patrol",
+          "hostile"
+        ]
+      ]
+    },
+    {
+      "id": "snake-hunt-interception-two-return-lanes",
+      "source": "native",
+      "format": "FlightCourse.v2",
+      "sourceIdentity": "9e3e17a36b6b0efe",
+      "actorCount": 4,
+      "actors": [
+        [
+          "humanoid-01",
+          "patrol",
+          "hostile"
+        ],
+        [
+          "humanoid-02",
+          "patrol",
+          "hostile"
+        ],
+        [
+          "humanoid-03",
+          "patrol",
+          "hostile"
+        ],
+        [
+          "humanoid-04",
+          "patrol",
+          "hostile"
+        ]
+      ]
+    },
+    {
+      "id": "snake-hunt-interception-corner-approach",
+      "source": "native",
+      "format": "FlightCourse.v2",
+      "sourceIdentity": "ec0c6178e38996ba",
+      "actorCount": 3,
+      "actors": [
+        [
+          "humanoid-01",
+          "patrol",
+          "hostile"
+        ],
+        [
+          "humanoid-02",
+          "patrol",
+          "hostile"
+        ],
+        [
+          "humanoid-03",
+          "patrol",
+          "hostile"
+        ]
+      ]
+    },
+    {
+      "id": "snake-hunt-interception-crossing-patrols",
+      "source": "native",
+      "format": "FlightCourse.v2",
+      "sourceIdentity": "e31ea0dd1efb860a",
+      "actorCount": 4,
+      "actors": [
+        [
+          "humanoid-01",
+          "patrol",
+          "hostile"
+        ],
+        [
+          "humanoid-02",
+          "patrol",
+          "hostile"
+        ],
+        [
+          "humanoid-03",
+          "patrol",
+          "hostile"
+        ],
+        [
+          "humanoid-04",
+          "patrol",
+          "hostile"
+        ]
+      ]
+    },
+    {
+      "id": "snake-hunt-interception-island-bypass",
+      "source": "native",
+      "format": "FlightCourse.v2",
+      "sourceIdentity": "7dc10d50916a29a3",
+      "actorCount": 4,
+      "actors": [
+        [
+          "humanoid-01",
+          "patrol",
+          "hostile"
+        ],
+        [
+          "humanoid-02",
+          "patrol",
+          "hostile"
+        ],
+        [
+          "humanoid-03",
+          "patrol",
+          "hostile"
+        ],
+        [
+          "humanoid-04",
+          "patrol",
+          "hostile"
+        ]
+      ]
+    },
+    {
+      "id": "snake-hunt-interception-staggered-interception",
+      "source": "native",
+      "format": "FlightCourse.v2",
+      "sourceIdentity": "21e7483b4210627e",
+      "actorCount": 5,
+      "actors": [
+        [
+          "humanoid-01",
+          "patrol",
+          "hostile"
+        ],
+        [
+          "humanoid-02",
+          "patrol",
+          "hostile"
+        ],
+        [
+          "humanoid-03",
+          "patrol",
+          "hostile"
+        ],
+        [
+          "humanoid-04",
+          "patrol",
+          "hostile"
+        ],
+        [
+          "humanoid-05",
+          "patrol",
+          "hostile"
+        ]
+      ]
+    },
+    {
+      "id": "snake-hunt-route-choices-warehouse-return",
+      "source": "native",
+      "format": "FlightCourse.v2",
+      "sourceIdentity": "f8c25d168936cf0c",
+      "actorCount": 4,
+      "actors": [
+        [
+          "humanoid-01",
+          "patrol",
+          "hostile"
+        ],
+        [
+          "humanoid-02",
+          "patrol",
+          "hostile"
+        ],
+        [
+          "humanoid-03",
+          "patrol",
+          "hostile"
+        ],
+        [
+          "humanoid-04",
+          "patrol",
+          "hostile"
+        ]
+      ]
+    },
+    {
+      "id": "snake-hunt-route-choices-courtyard-approaches",
+      "source": "native",
+      "format": "FlightCourse.v2",
+      "sourceIdentity": "a2b0e87473164209",
+      "actorCount": 4,
+      "actors": [
+        [
+          "humanoid-01",
+          "patrol",
+          "hostile"
+        ],
+        [
+          "humanoid-02",
+          "patrol",
+          "hostile"
+        ],
+        [
+          "humanoid-03",
+          "patrol",
+          "hostile"
+        ],
+        [
+          "humanoid-04",
+          "patrol",
+          "hostile"
+        ]
+      ]
+    },
+    {
+      "id": "snake-hunt-route-choices-platform-perimeter",
+      "source": "native",
+      "format": "FlightCourse.v2",
+      "sourceIdentity": "f93d4f62798fe277",
+      "actorCount": 4,
+      "actors": [
+        [
+          "humanoid-01",
+          "patrol",
+          "hostile"
+        ],
+        [
+          "humanoid-02",
+          "patrol",
+          "hostile"
+        ],
+        [
+          "humanoid-03",
+          "patrol",
+          "hostile"
+        ],
+        [
+          "humanoid-04",
+          "patrol",
+          "hostile"
+        ]
+      ]
+    },
+    {
+      "id": "snake-hunt-route-choices-boundary-cutback",
+      "source": "native",
+      "format": "FlightCourse.v2",
+      "sourceIdentity": "8a5f9846f016a588",
+      "actorCount": 4,
+      "actors": [
+        [
+          "humanoid-01",
+          "patrol",
+          "hostile"
+        ],
+        [
+          "humanoid-02",
+          "patrol",
+          "hostile"
+        ],
+        [
+          "humanoid-03",
+          "patrol",
+          "hostile"
+        ],
+        [
+          "humanoid-04",
+          "patrol",
+          "hostile"
+        ]
+      ]
+    },
+    {
+      "id": "snake-hunt-route-choices-cross-route-choice",
+      "source": "native",
+      "format": "FlightCourse.v2",
+      "sourceIdentity": "2ef99ed4ee570181",
+      "actorCount": 5,
+      "actors": [
+        [
+          "humanoid-01",
+          "patrol",
+          "hostile"
+        ],
+        [
+          "humanoid-02",
+          "patrol",
+          "hostile"
+        ],
+        [
+          "humanoid-03",
+          "patrol",
+          "hostile"
+        ],
+        [
+          "humanoid-04",
+          "patrol",
+          "hostile"
+        ],
+        [
+          "humanoid-05",
+          "patrol",
+          "hostile"
+        ]
+      ]
+    },
+    {
+      "id": "snake-hunt-route-choices-airfield-circuit",
+      "source": "native",
+      "format": "FlightCourse.v2",
+      "sourceIdentity": "ec41dd490a4b09db",
+      "actorCount": 6,
+      "actors": [
+        [
+          "humanoid-01",
+          "patrol",
+          "hostile"
+        ],
+        [
+          "humanoid-02",
+          "patrol",
+          "hostile"
+        ],
+        [
+          "humanoid-03",
+          "patrol",
+          "hostile"
+        ],
+        [
+          "humanoid-04",
+          "patrol",
+          "hostile"
+        ],
+        [
+          "humanoid-05",
+          "patrol",
+          "hostile"
+        ],
+        [
+          "humanoid-06",
+          "patrol",
+          "hostile"
+        ]
+      ]
+    },
+    {
+      "id": "snake-hunt-ground-routes-low-pass-depot",
+      "source": "native",
+      "format": "FlightCourse.v2",
+      "sourceIdentity": "a09b6367460e998b",
+      "actorCount": 3,
+      "actors": [
+        [
+          "patroller-01",
+          "patrol",
+          "hostile"
+        ],
+        [
+          "patroller-02",
+          "patrol",
+          "hostile"
+        ],
+        [
+          "patroller-03",
+          "patrol",
+          "hostile"
+        ]
+      ]
+    },
+    {
+      "id": "snake-hunt-ground-routes-split-yard-return",
+      "source": "native",
+      "format": "FlightCourse.v2",
+      "sourceIdentity": "b982794f964512af",
+      "actorCount": 4,
+      "actors": [
+        [
+          "patroller-01",
+          "patrol",
+          "hostile"
+        ],
+        [
+          "patroller-02",
+          "patrol",
+          "hostile"
+        ],
+        [
+          "patroller-03",
+          "patrol",
+          "hostile"
+        ],
+        [
+          "patroller-04",
+          "patrol",
+          "hostile"
+        ]
+      ]
+    },
+    {
+      "id": "snake-hunt-ground-routes-crossing-arrivals",
+      "source": "native",
+      "format": "FlightCourse.v2",
+      "sourceIdentity": "af9ded76cd7716d6",
+      "actorCount": 4,
+      "actors": [
+        [
+          "patroller-01",
+          "patrol",
+          "hostile"
+        ],
+        [
+          "patroller-02",
+          "patrol",
+          "hostile"
+        ],
+        [
+          "patroller-03",
+          "patrol",
+          "hostile"
+        ],
+        [
+          "patroller-04",
+          "patrol",
+          "hostile"
+        ]
+      ]
+    },
+    {
+      "id": "snake-hunt-ground-routes-shelter-arc",
+      "source": "native",
+      "format": "FlightCourse.v2",
+      "sourceIdentity": "08c123a2b734a5f6",
+      "actorCount": 5,
+      "actors": [
+        [
+          "patroller-01",
+          "patrol",
+          "hostile"
+        ],
+        [
+          "patroller-02",
+          "patrol",
+          "hostile"
+        ],
+        [
+          "patroller-03",
+          "patrol",
+          "hostile"
+        ],
+        [
+          "patroller-04",
+          "patrol",
+          "hostile"
+        ],
+        [
+          "patroller-05",
+          "patrol",
+          "hostile"
+        ]
+      ]
+    },
+    {
+      "id": "snake-hunt-ground-routes-freight-slalom",
+      "source": "native",
+      "format": "FlightCourse.v2",
+      "sourceIdentity": "ed3f8e9b74f04dab",
+      "actorCount": 5,
+      "actors": [
+        [
+          "patroller-01",
+          "patrol",
+          "hostile"
+        ],
+        [
+          "patroller-02",
+          "patrol",
+          "hostile"
+        ],
+        [
+          "patroller-03",
+          "patrol",
+          "hostile"
+        ],
+        [
+          "patroller-04",
+          "patrol",
+          "hostile"
+        ],
+        [
+          "patroller-05",
+          "patrol",
+          "hostile"
+        ]
+      ]
+    },
+    {
+      "id": "snake-hunt-ground-routes-forked-depot",
+      "source": "native",
+      "format": "FlightCourse.v2",
+      "sourceIdentity": "95a88567f2608f4b",
+      "actorCount": 6,
+      "actors": [
+        [
+          "patroller-01",
+          "patrol",
+          "hostile"
+        ],
+        [
+          "patroller-02",
+          "patrol",
+          "hostile"
+        ],
+        [
+          "patroller-03",
+          "patrol",
+          "hostile"
+        ],
+        [
+          "patroller-04",
+          "patrol",
+          "hostile"
+        ],
+        [
+          "patroller-05",
+          "patrol",
+          "hostile"
+        ],
+        [
+          "patroller-06",
+          "patrol",
+          "hostile"
+        ]
+      ]
+    },
+    {
+      "id": "snake-hunt-approach-windows-low-roof-window",
+      "source": "native",
+      "format": "FlightCourse.v2",
+      "sourceIdentity": "bf7a22fdbb418337",
+      "actorCount": 4,
+      "actors": [
+        [
+          "patroller-01",
+          "patrol",
+          "hostile"
+        ],
+        [
+          "patroller-02",
+          "patrol",
+          "hostile"
+        ],
+        [
+          "patroller-03",
+          "patrol",
+          "hostile"
+        ],
+        [
+          "patroller-04",
+          "patrol",
+          "hostile"
+        ]
+      ]
+    },
+    {
+      "id": "snake-hunt-approach-windows-roofline-exchange",
+      "source": "native",
+      "format": "FlightCourse.v2",
+      "sourceIdentity": "4c16431dba536f15",
+      "actorCount": 4,
+      "actors": [
+        [
+          "patroller-01",
+          "patrol",
+          "hostile"
+        ],
+        [
+          "patroller-02",
+          "patrol",
+          "hostile"
+        ],
+        [
+          "patroller-03",
+          "patrol",
+          "hostile"
+        ],
+        [
+          "patroller-04",
+          "patrol",
+          "hostile"
+        ]
+      ]
+    },
+    {
+      "id": "snake-hunt-approach-windows-return-slot",
+      "source": "native",
+      "format": "FlightCourse.v2",
+      "sourceIdentity": "839959c16b636ca6",
+      "actorCount": 5,
+      "actors": [
+        [
+          "patroller-01",
+          "patrol",
+          "hostile"
+        ],
+        [
+          "patroller-02",
+          "patrol",
+          "hostile"
+        ],
+        [
+          "patroller-03",
+          "patrol",
+          "hostile"
+        ],
+        [
+          "patroller-04",
+          "patrol",
+          "hostile"
+        ],
+        [
+          "patroller-05",
+          "patrol",
+          "hostile"
+        ]
+      ]
+    },
+    {
+      "id": "snake-hunt-approach-windows-staggered-roofs",
+      "source": "native",
+      "format": "FlightCourse.v2",
+      "sourceIdentity": "a0437cce2c7c9a03",
+      "actorCount": 5,
+      "actors": [
+        [
+          "patroller-01",
+          "patrol",
+          "hostile"
+        ],
+        [
+          "patroller-02",
+          "patrol",
+          "hostile"
+        ],
+        [
+          "patroller-03",
+          "patrol",
+          "hostile"
+        ],
+        [
+          "patroller-04",
+          "patrol",
+          "hostile"
+        ],
+        [
+          "patroller-05",
+          "patrol",
+          "hostile"
+        ]
+      ]
+    },
+    {
+      "id": "snake-hunt-approach-windows-window-chain",
+      "source": "native",
+      "format": "FlightCourse.v2",
+      "sourceIdentity": "dc639f24513114d5",
+      "actorCount": 6,
+      "actors": [
+        [
+          "patroller-01",
+          "patrol",
+          "hostile"
+        ],
+        [
+          "patroller-02",
+          "patrol",
+          "hostile"
+        ],
+        [
+          "patroller-03",
+          "patrol",
+          "hostile"
+        ],
+        [
+          "patroller-04",
+          "patrol",
+          "hostile"
+        ],
+        [
+          "patroller-05",
+          "patrol",
+          "hostile"
+        ],
+        [
+          "patroller-06",
+          "patrol",
+          "hostile"
+        ]
+      ]
+    },
+    {
+      "id": "snake-hunt-approach-windows-three-yard-finale",
+      "source": "native",
+      "format": "FlightCourse.v2",
+      "sourceIdentity": "8f49c7fb31c1c6d2",
+      "actorCount": 8,
+      "actors": [
+        [
+          "patroller-01",
+          "patrol",
+          "hostile"
+        ],
+        [
+          "patroller-02",
+          "patrol",
+          "hostile"
+        ],
+        [
+          "patroller-03",
+          "patrol",
+          "hostile"
+        ],
+        [
+          "patroller-04",
+          "patrol",
+          "hostile"
+        ],
+        [
+          "patroller-05",
+          "patrol",
+          "hostile"
+        ],
+        [
+          "patroller-06",
+          "patrol",
+          "hostile"
+        ],
+        [
+          "patroller-07",
+          "patrol",
+          "hostile"
+        ],
+        [
+          "patroller-08",
+          "patrol",
+          "hostile"
+        ]
+      ]
+    },
+    {
+      "id": "native-pursuit-refuge-return",
+      "source": "native",
+      "format": "FlightCourse.v3",
+      "sourceIdentity": "e66c91aea780e7b8",
+      "actorCount": 3,
+      "actors": [
+        [
+          "pursuit-1",
+          "patrol",
+          "hostile"
+        ],
+        [
+          "pursuit-2",
+          "patrol",
+          "hostile"
+        ],
+        [
+          "field-machine",
+          "vehicle",
+          "hostile"
+        ]
+      ]
+    },
+    {
+      "id": "native-pursuit-meeting-yard",
+      "source": "native",
+      "format": "FlightCourse.v3",
+      "sourceIdentity": "f641492c6b8c33df",
+      "actorCount": 3,
+      "actors": [
+        [
+          "pursuit-1",
+          "patrol",
+          "hostile"
+        ],
+        [
+          "pursuit-2",
+          "patrol",
+          "hostile"
+        ],
+        [
+          "field-machine",
+          "vehicle",
+          "hostile"
+        ]
+      ]
+    },
+    {
+      "id": "native-pursuit-runner-court",
+      "source": "native",
+      "format": "FlightCourse.v3",
+      "sourceIdentity": "484df2945f021257",
+      "actorCount": 2,
+      "actors": [
+        [
+          "pursuit-1",
+          "patrol",
+          "hostile"
+        ],
+        [
+          "field-machine",
+          "vehicle",
+          "hostile"
+        ]
+      ]
+    },
+    {
+      "id": "native-pursuit-burst-lanes",
+      "source": "native",
+      "format": "FlightCourse.v3",
+      "sourceIdentity": "e257ae97626d27e4",
+      "actorCount": 2,
+      "actors": [
+        [
+          "pursuit-1",
+          "patrol",
+          "hostile"
+        ],
+        [
+          "field-machine",
+          "vehicle",
+          "hostile"
+        ]
+      ]
+    },
+    {
+      "id": "native-pursuit-refuge-return",
+      "source": "native",
+      "format": "FlightCourse.v3",
+      "sourceIdentity": "42a1a82a53af08c2",
+      "actorCount": 3,
+      "actors": [
+        [
+          "pursuit-1",
+          "patrol",
+          "hostile"
+        ],
+        [
+          "pursuit-2",
+          "patrol",
+          "hostile"
+        ],
+        [
+          "field-machine",
+          "vehicle",
+          "hostile"
+        ]
+      ]
+    },
+    {
+      "id": "native-pursuit-switchback-crossing",
+      "source": "native",
+      "format": "FlightCourse.v3",
+      "sourceIdentity": "1dd4152e93458c4b",
+      "actorCount": 3,
+      "actors": [
+        [
+          "pursuit-1",
+          "patrol",
+          "hostile"
+        ],
+        [
+          "pursuit-2",
+          "patrol",
+          "hostile"
+        ],
+        [
+          "field-machine",
+          "vehicle",
+          "hostile"
+        ]
+      ]
+    },
+    {
+      "id": "native-pursuit-meeting-yard",
+      "source": "native",
+      "format": "FlightCourse.v3",
+      "sourceIdentity": "650f405d6373b5bf",
+      "actorCount": 3,
+      "actors": [
+        [
+          "pursuit-1",
+          "patrol",
+          "hostile"
+        ],
+        [
+          "pursuit-2",
+          "patrol",
+          "hostile"
+        ],
+        [
+          "field-machine",
+          "vehicle",
+          "hostile"
+        ]
+      ]
+    },
+    {
+      "id": "native-pursuit-armor-windows",
+      "source": "native",
+      "format": "FlightCourse.v3",
+      "sourceIdentity": "7cf2ba7dc8c08ee2",
+      "actorCount": 2,
+      "actors": [
+        [
+          "pursuit-1",
+          "patrol",
+          "hostile"
+        ],
+        [
+          "pursuit-2",
+          "patrol",
+          "hostile"
+        ]
+      ]
+    },
+    {
+      "id": "adventure-coast-01",
+      "source": "native",
+      "format": "FlightCourse.v2",
+      "sourceIdentity": "6a77435a26cd51c1",
+      "actorCount": 1,
+      "actors": [
+        [
+          "guide",
+          "patrol",
+          "civilian"
+        ]
+      ]
+    },
+    {
+      "id": "adventure-coast-02",
+      "source": "native",
+      "format": "FlightCourse.v2",
+      "sourceIdentity": "2a8f253b07445673",
+      "actorCount": 1,
+      "actors": [
+        [
+          "courier",
+          "drone",
+          "rival"
+        ]
+      ]
+    },
+    {
+      "id": "adventure-coast-03",
+      "source": "native",
+      "format": "FlightCourse.v2",
+      "sourceIdentity": "e9233a498bbd786e",
+      "actorCount": 1,
+      "actors": [
+        [
+          "courier",
+          "drone",
+          "rival"
+        ]
+      ]
+    },
+    {
+      "id": "adventure-coast-04",
+      "source": "native",
+      "format": "FlightCourse.v2",
+      "sourceIdentity": "d0062dabb64d060e",
+      "actorCount": 1,
+      "actors": [
+        [
+          "harbour-rover",
+          "vehicle",
+          "civilian"
+        ]
+      ]
+    },
+    {
+      "id": "adventure-coast-05",
+      "source": "native",
+      "format": "FlightCourse.v2",
+      "sourceIdentity": "215965daef683f2d",
+      "actorCount": 0,
+      "actors": []
+    },
+    {
+      "id": "adventure-quarry-01",
+      "source": "native",
+      "format": "FlightCourse.v2",
+      "sourceIdentity": "e8daf54f9347377d",
+      "actorCount": 1,
+      "actors": [
+        [
+          "haul-rover",
+          "vehicle",
+          "civilian"
+        ]
+      ]
+    },
+    {
+      "id": "adventure-quarry-02",
+      "source": "native",
+      "format": "FlightCourse.v2",
+      "sourceIdentity": "c49031fb4489a9f7",
+      "actorCount": 2,
+      "actors": [
+        [
+          "crossing-west",
+          "hazard",
+          null
+        ],
+        [
+          "crossing-north",
+          "hazard",
+          null
+        ]
+      ]
+    },
+    {
+      "id": "adventure-quarry-03",
+      "source": "native",
+      "format": "FlightCourse.v2",
+      "sourceIdentity": "98fadababbc69ee6",
+      "actorCount": 1,
+      "actors": [
+        [
+          "haul-rover",
+          "vehicle",
+          "civilian"
+        ]
+      ]
+    },
+    {
+      "id": "adventure-quarry-04",
+      "source": "native",
+      "format": "FlightCourse.v2",
+      "sourceIdentity": "5afda4f02fb0e454",
+      "actorCount": 3,
+      "actors": [
+        [
+          "quarry-drone",
+          "drone",
+          "hostile"
+        ],
+        [
+          "quarry-rover",
+          "vehicle",
+          "hostile"
+        ],
+        [
+          "quarry-sentry",
+          "sentry",
+          "hostile"
+        ]
+      ]
+    },
+    {
+      "id": "adventure-quarry-05",
+      "source": "native",
+      "format": "FlightCourse.v2",
+      "sourceIdentity": "6ac54c4823653539",
+      "actorCount": 0,
+      "actors": []
+    },
+    {
+      "id": "adventure-rooftops-01",
+      "source": "native",
+      "format": "FlightCourse.v2",
+      "sourceIdentity": "e5edb865ad9053d4",
+      "actorCount": 1,
+      "actors": [
+        [
+          "courier",
+          "drone",
+          "rival"
+        ]
+      ]
+    },
+    {
+      "id": "adventure-rooftops-02",
+      "source": "native",
+      "format": "FlightCourse.v2",
+      "sourceIdentity": "a0a8f2d5d720f0a1",
+      "actorCount": 0,
+      "actors": []
+    },
+    {
+      "id": "adventure-rooftops-03",
+      "source": "native",
+      "format": "FlightCourse.v2",
+      "sourceIdentity": "5372e3ec628d637a",
+      "actorCount": 1,
+      "actors": [
+        [
+          "courier",
+          "drone",
+          "rival"
+        ]
+      ]
+    },
+    {
+      "id": "adventure-rooftops-04",
+      "source": "native",
+      "format": "FlightCourse.v2",
+      "sourceIdentity": "69c48b588112a61f",
+      "actorCount": 0,
+      "actors": []
+    },
+    {
+      "id": "adventure-rooftops-05",
+      "source": "native",
+      "format": "FlightCourse.v2",
+      "sourceIdentity": "bd450365950df37e",
+      "actorCount": 2,
+      "actors": [
+        [
+          "bridge-crossing",
+          "hazard",
+          null
+        ],
+        [
+          "upper-crossing",
+          "hazard",
+          null
+        ]
+      ]
+    },
+    {
+      "id": "adventure-orchard-01",
+      "source": "native",
+      "format": "FlightCourse.v2",
+      "sourceIdentity": "3fbba5dbad1c7a5f",
+      "actorCount": 1,
+      "actors": [
+        [
+          "orchard-guide",
+          "patrol",
+          "civilian"
+        ]
+      ]
+    },
+    {
+      "id": "adventure-orchard-02",
+      "source": "native",
+      "format": "FlightCourse.v2",
+      "sourceIdentity": "75bd9d390046da45",
+      "actorCount": 1,
+      "actors": [
+        [
+          "harvest-cart",
+          "vehicle",
+          "civilian"
+        ]
+      ]
+    },
+    {
+      "id": "adventure-orchard-03",
+      "source": "native",
+      "format": "FlightCourse.v2",
+      "sourceIdentity": "fb4a7db76791ecc1",
+      "actorCount": 1,
+      "actors": [
+        [
+          "harvest-cart",
+          "vehicle",
+          "civilian"
+        ]
+      ]
+    },
+    {
+      "id": "adventure-orchard-04",
+      "source": "native",
+      "format": "FlightCourse.v2",
+      "sourceIdentity": "0aec54d80c49a6f2",
+      "actorCount": 1,
+      "actors": [
+        [
+          "orchard-guide",
+          "patrol",
+          "civilian"
+        ]
+      ]
+    },
+    {
+      "id": "adventure-orchard-05",
+      "source": "native",
+      "format": "FlightCourse.v2",
+      "sourceIdentity": "003247497951654c",
+      "actorCount": 0,
+      "actors": []
+    },
+    {
+      "id": "adventure-solar-farm-01",
+      "source": "native",
+      "format": "FlightCourse.v2",
+      "sourceIdentity": "c912ae602959e426",
+      "actorCount": 1,
+      "actors": [
+        [
+          "service-rover",
+          "vehicle",
+          "civilian"
+        ]
+      ]
+    },
+    {
+      "id": "adventure-solar-farm-02",
+      "source": "native",
+      "format": "FlightCourse.v2",
+      "sourceIdentity": "af10673a3cd440d3",
+      "actorCount": 0,
+      "actors": []
+    },
+    {
+      "id": "adventure-solar-farm-03",
+      "source": "native",
+      "format": "FlightCourse.v2",
+      "sourceIdentity": "53d3d7e531c44a4e",
+      "actorCount": 1,
+      "actors": [
+        [
+          "service-rover",
+          "vehicle",
+          "civilian"
+        ]
+      ]
+    },
+    {
+      "id": "adventure-solar-farm-04",
+      "source": "native",
+      "format": "FlightCourse.v2",
+      "sourceIdentity": "3c0ec6b56b4f1cf5",
+      "actorCount": 2,
+      "actors": [
+        [
+          "solar-crossing-a",
+          "hazard",
+          null
+        ],
+        [
+          "solar-crossing-b",
+          "hazard",
+          null
+        ]
+      ]
+    },
+    {
+      "id": "adventure-solar-farm-05",
+      "source": "native",
+      "format": "FlightCourse.v2",
+      "sourceIdentity": "cfb835337a8c80b3",
+      "actorCount": 3,
+      "actors": [
+        [
+          "solar-drone",
+          "drone",
+          "hostile"
+        ],
+        [
+          "solar-rover",
+          "vehicle",
+          "hostile"
+        ],
+        [
+          "solar-sentry",
+          "sentry",
+          "hostile"
+        ]
+      ]
+    },
+    {
+      "id": "adventure-rail-depot-01",
+      "source": "native",
+      "format": "FlightCourse.v2",
+      "sourceIdentity": "0660b35ca1482547",
+      "actorCount": 1,
+      "actors": [
+        [
+          "inspection-rover",
+          "vehicle",
+          "civilian"
+        ]
+      ]
+    },
+    {
+      "id": "adventure-rail-depot-02",
+      "source": "native",
+      "format": "FlightCourse.v2",
+      "sourceIdentity": "0ec4c2e5d9029430",
+      "actorCount": 1,
+      "actors": [
+        [
+          "courier",
+          "drone",
+          "rival"
+        ]
+      ]
+    },
+    {
+      "id": "adventure-rail-depot-03",
+      "source": "native",
+      "format": "FlightCourse.v2",
+      "sourceIdentity": "0f8ad0af86f2f4f8",
+      "actorCount": 1,
+      "actors": [
+        [
+          "inspection-rover",
+          "vehicle",
+          "civilian"
+        ]
+      ]
+    },
+    {
+      "id": "adventure-rail-depot-04",
+      "source": "native",
+      "format": "FlightCourse.v2",
+      "sourceIdentity": "b088264656d87bcb",
+      "actorCount": 2,
+      "actors": [
+        [
+          "depot-south",
+          "hazard",
+          null
+        ],
+        [
+          "depot-north",
+          "hazard",
+          null
+        ]
+      ]
+    },
+    {
+      "id": "adventure-rail-depot-05",
+      "source": "native",
+      "format": "FlightCourse.v2",
+      "sourceIdentity": "fca1f6c3546fa6a2",
+      "actorCount": 3,
+      "actors": [
+        [
+          "rail-drone",
+          "drone",
+          "hostile"
+        ],
+        [
+          "rail-rover",
+          "vehicle",
+          "hostile"
+        ],
+        [
+          "rail-sentry",
+          "sentry",
+          "hostile"
+        ]
+      ]
+    },
+    {
+      "id": "flight-01",
+      "source": "legacy",
+      "format": "FlightCourse.v1",
+      "sourceIdentity": "573db8b71fe99103",
+      "actorCount": 0,
+      "actors": []
+    },
+    {
+      "id": "flight-02",
+      "source": "legacy",
+      "format": "FlightCourse.v1",
+      "sourceIdentity": "8f671907feda67c9",
+      "actorCount": 0,
+      "actors": []
+    },
+    {
+      "id": "flight-03",
+      "source": "legacy",
+      "format": "FlightCourse.v1",
+      "sourceIdentity": "1b240bb932f3f649",
+      "actorCount": 0,
+      "actors": []
+    },
+    {
+      "id": "flight-04",
+      "source": "legacy",
+      "format": "FlightCourse.v1",
+      "sourceIdentity": "9f0f8cfdac49a166",
+      "actorCount": 0,
+      "actors": []
+    },
+    {
+      "id": "flight-05",
+      "source": "legacy",
+      "format": "FlightCourse.v1",
+      "sourceIdentity": "dec5e82c56c5d299",
+      "actorCount": 0,
+      "actors": []
+    },
+    {
+      "id": "flight-06",
+      "source": "legacy",
+      "format": "FlightCourse.v1",
+      "sourceIdentity": "80e5b607f33f1a75",
+      "actorCount": 0,
+      "actors": []
+    },
+    {
+      "id": "flight-07",
+      "source": "legacy",
+      "format": "FlightCourse.v1",
+      "sourceIdentity": "923c2d912d5f865c",
+      "actorCount": 0,
+      "actors": []
+    },
+    {
+      "id": "flight-08",
+      "source": "legacy",
+      "format": "FlightCourse.v1",
+      "sourceIdentity": "0a44f9386d8f14eb",
+      "actorCount": 0,
+      "actors": []
+    },
+    {
+      "id": "flight-09",
+      "source": "legacy",
+      "format": "FlightCourse.v1",
+      "sourceIdentity": "6a883e6da14ef864",
+      "actorCount": 0,
+      "actors": []
+    },
+    {
+      "id": "flight-10",
+      "source": "legacy",
+      "format": "FlightCourse.v1",
+      "sourceIdentity": "17c60cf6ab703346",
+      "actorCount": 0,
+      "actors": []
+    },
+    {
+      "id": "flight-11",
+      "source": "legacy",
+      "format": "FlightCourse.v1",
+      "sourceIdentity": "c1dba4037a711cbe",
+      "actorCount": 0,
+      "actors": []
+    },
+    {
+      "id": "flight-12",
+      "source": "legacy",
+      "format": "FlightCourse.v1",
+      "sourceIdentity": "52cfa145bb51eee1",
+      "actorCount": 0,
+      "actors": []
+    },
+    {
+      "id": "woodland-01",
+      "source": "native",
+      "format": "FlightCourse.v2",
+      "sourceIdentity": "f0429df99d6a0be5",
+      "actorCount": 1,
+      "actors": [
+        [
+          "park-visitor",
+          "patrol",
+          "civilian"
+        ]
+      ]
+    },
+    {
+      "id": "woodland-02",
+      "source": "native",
+      "format": "FlightCourse.v2",
+      "sourceIdentity": "8d81a0a9e7d3867a",
+      "actorCount": 1,
+      "actors": [
+        [
+          "park-visitor",
+          "patrol",
+          "civilian"
+        ]
+      ]
+    },
+    {
+      "id": "woodland-03",
+      "source": "native",
+      "format": "FlightCourse.v2",
+      "sourceIdentity": "45a738eef97502b9",
+      "actorCount": 1,
+      "actors": [
+        [
+          "park-visitor",
+          "patrol",
+          "civilian"
+        ]
+      ]
+    },
+    {
+      "id": "woodland-04",
+      "source": "native",
+      "format": "FlightCourse.v2",
+      "sourceIdentity": "d8e4976677ed1980",
+      "actorCount": 1,
+      "actors": [
+        [
+          "park-visitor",
+          "patrol",
+          "civilian"
+        ]
+      ]
+    },
+    {
+      "id": "woodland-05",
+      "source": "native",
+      "format": "FlightCourse.v2",
+      "sourceIdentity": "fdd80865c96968a8",
+      "actorCount": 1,
+      "actors": [
+        [
+          "park-visitor",
+          "patrol",
+          "civilian"
+        ]
+      ]
+    },
+    {
+      "id": "woodland-06",
+      "source": "native",
+      "format": "FlightCourse.v2",
+      "sourceIdentity": "c6a2a47128db875c",
+      "actorCount": 3,
+      "actors": [
+        [
+          "crossing-1",
+          "hazard",
+          null
+        ],
+        [
+          "crossing-2",
+          "hazard",
+          null
+        ],
+        [
+          "park-visitor",
+          "patrol",
+          "civilian"
+        ]
+      ]
+    },
+    {
+      "id": "woodland-07",
+      "source": "native",
+      "format": "FlightCourse.v2",
+      "sourceIdentity": "58873d2a74c63d27",
+      "actorCount": 3,
+      "actors": [
+        [
+          "crossing-1",
+          "hazard",
+          null
+        ],
+        [
+          "crossing-2",
+          "hazard",
+          null
+        ],
+        [
+          "park-visitor",
+          "patrol",
+          "civilian"
+        ]
+      ]
+    },
+    {
+      "id": "woodland-08",
+      "source": "native",
+      "format": "FlightCourse.v2",
+      "sourceIdentity": "0c0d2cc13c51388f",
+      "actorCount": 1,
+      "actors": [
+        [
+          "park-visitor",
+          "patrol",
+          "civilian"
+        ]
+      ]
+    },
+    {
+      "id": "courtyard-01",
+      "source": "native",
+      "format": "FlightCourse.v2",
+      "sourceIdentity": "b4dfaa7c94cdda59",
+      "actorCount": 1,
+      "actors": [
+        [
+          "park-visitor",
+          "patrol",
+          "civilian"
+        ]
+      ]
+    },
+    {
+      "id": "courtyard-02",
+      "source": "native",
+      "format": "FlightCourse.v2",
+      "sourceIdentity": "9154a3109bfef94a",
+      "actorCount": 1,
+      "actors": [
+        [
+          "park-visitor",
+          "patrol",
+          "civilian"
+        ]
+      ]
+    },
+    {
+      "id": "courtyard-03",
+      "source": "native",
+      "format": "FlightCourse.v2",
+      "sourceIdentity": "2c4fd148b3f419d7",
+      "actorCount": 1,
+      "actors": [
+        [
+          "park-visitor",
+          "patrol",
+          "civilian"
+        ]
+      ]
+    },
+    {
+      "id": "courtyard-04",
+      "source": "native",
+      "format": "FlightCourse.v2",
+      "sourceIdentity": "553e2a3b03a53207",
+      "actorCount": 1,
+      "actors": [
+        [
+          "park-visitor",
+          "patrol",
+          "civilian"
+        ]
+      ]
+    },
+    {
+      "id": "courtyard-05",
+      "source": "native",
+      "format": "FlightCourse.v2",
+      "sourceIdentity": "8cee927deba9d5e9",
+      "actorCount": 1,
+      "actors": [
+        [
+          "park-visitor",
+          "patrol",
+          "civilian"
+        ]
+      ]
+    },
+    {
+      "id": "courtyard-06",
+      "source": "native",
+      "format": "FlightCourse.v2",
+      "sourceIdentity": "c5a4afb3391e7d18",
+      "actorCount": 3,
+      "actors": [
+        [
+          "crossing-1",
+          "hazard",
+          null
+        ],
+        [
+          "crossing-2",
+          "hazard",
+          null
+        ],
+        [
+          "park-visitor",
+          "patrol",
+          "civilian"
+        ]
+      ]
+    },
+    {
+      "id": "courtyard-07",
+      "source": "native",
+      "format": "FlightCourse.v2",
+      "sourceIdentity": "9c25df5478939a0f",
+      "actorCount": 3,
+      "actors": [
+        [
+          "crossing-1",
+          "hazard",
+          null
+        ],
+        [
+          "crossing-2",
+          "hazard",
+          null
+        ],
+        [
+          "park-visitor",
+          "patrol",
+          "civilian"
+        ]
+      ]
+    },
+    {
+      "id": "courtyard-08",
+      "source": "native",
+      "format": "FlightCourse.v2",
+      "sourceIdentity": "080fa7f5714b60ec",
+      "actorCount": 1,
+      "actors": [
+        [
+          "park-visitor",
+          "patrol",
+          "civilian"
+        ]
+      ]
+    },
+    {
+      "id": "warehouse-01",
+      "source": "native",
+      "format": "FlightCourse.v2",
+      "sourceIdentity": "55e317b766d5c708",
+      "actorCount": 0,
+      "actors": []
+    },
+    {
+      "id": "warehouse-02",
+      "source": "native",
+      "format": "FlightCourse.v2",
+      "sourceIdentity": "02bafbdb158d9774",
+      "actorCount": 1,
+      "actors": [
+        [
+          "pace-rival",
+          "drone",
+          "rival"
+        ]
+      ]
+    },
+    {
+      "id": "warehouse-03",
+      "source": "native",
+      "format": "FlightCourse.v2",
+      "sourceIdentity": "485686b472c9d462",
+      "actorCount": 1,
+      "actors": [
+        [
+          "pace-rival",
+          "drone",
+          "rival"
+        ]
+      ]
+    },
+    {
+      "id": "warehouse-04",
+      "source": "native",
+      "format": "FlightCourse.v2",
+      "sourceIdentity": "50b6e5ee2414e947",
+      "actorCount": 1,
+      "actors": [
+        [
+          "pace-rival",
+          "drone",
+          "rival"
+        ]
+      ]
+    },
+    {
+      "id": "warehouse-05",
+      "source": "native",
+      "format": "FlightCourse.v2",
+      "sourceIdentity": "a46a9a4a0c78fa2d",
+      "actorCount": 1,
+      "actors": [
+        [
+          "pace-rival",
+          "drone",
+          "rival"
+        ]
+      ]
+    },
+    {
+      "id": "warehouse-06",
+      "source": "native",
+      "format": "FlightCourse.v2",
+      "sourceIdentity": "7d78807f064f13eb",
+      "actorCount": 0,
+      "actors": []
+    },
+    {
+      "id": "warehouse-07",
+      "source": "native",
+      "format": "FlightCourse.v2",
+      "sourceIdentity": "c32ba5149f99851d",
+      "actorCount": 2,
+      "actors": [
+        [
+          "crossing-1",
+          "hazard",
+          null
+        ],
+        [
+          "crossing-2",
+          "hazard",
+          null
+        ]
+      ]
+    },
+    {
+      "id": "warehouse-08",
+      "source": "native",
+      "format": "FlightCourse.v2",
+      "sourceIdentity": "c693ffa694aa4834",
+      "actorCount": 0,
+      "actors": []
+    },
+    {
+      "id": "stadium-01",
+      "source": "native",
+      "format": "FlightCourse.v2",
+      "sourceIdentity": "82d988664b913009",
+      "actorCount": 0,
+      "actors": []
+    },
+    {
+      "id": "stadium-02",
+      "source": "native",
+      "format": "FlightCourse.v2",
+      "sourceIdentity": "bf103fd19a3ab982",
+      "actorCount": 1,
+      "actors": [
+        [
+          "pace-rival",
+          "drone",
+          "rival"
+        ]
+      ]
+    },
+    {
+      "id": "stadium-03",
+      "source": "native",
+      "format": "FlightCourse.v2",
+      "sourceIdentity": "e800f54b1f15e444",
+      "actorCount": 1,
+      "actors": [
+        [
+          "pace-rival",
+          "drone",
+          "rival"
+        ]
+      ]
+    },
+    {
+      "id": "stadium-04",
+      "source": "native",
+      "format": "FlightCourse.v2",
+      "sourceIdentity": "68e635eaaa460b60",
+      "actorCount": 1,
+      "actors": [
+        [
+          "pace-rival",
+          "drone",
+          "rival"
+        ]
+      ]
+    },
+    {
+      "id": "stadium-05",
+      "source": "native",
+      "format": "FlightCourse.v2",
+      "sourceIdentity": "9831546d8ce52703",
+      "actorCount": 1,
+      "actors": [
+        [
+          "pace-rival",
+          "drone",
+          "rival"
+        ]
+      ]
+    },
+    {
+      "id": "stadium-06",
+      "source": "native",
+      "format": "FlightCourse.v2",
+      "sourceIdentity": "05bc8fe98c1ac39a",
+      "actorCount": 0,
+      "actors": []
+    },
+    {
+      "id": "stadium-07",
+      "source": "native",
+      "format": "FlightCourse.v2",
+      "sourceIdentity": "28730b387e397a8b",
+      "actorCount": 2,
+      "actors": [
+        [
+          "crossing-1",
+          "hazard",
+          null
+        ],
+        [
+          "crossing-2",
+          "hazard",
+          null
+        ]
+      ]
+    },
+    {
+      "id": "stadium-08",
+      "source": "native",
+      "format": "FlightCourse.v2",
+      "sourceIdentity": "a8d8f645d56d149d",
+      "actorCount": 0,
+      "actors": []
+    },
+    {
+      "id": "container-yard-01",
+      "source": "native",
+      "format": "FlightCourse.v2",
+      "sourceIdentity": "8b486b0c7b50e293",
+      "actorCount": 0,
+      "actors": []
+    },
+    {
+      "id": "container-yard-02",
+      "source": "native",
+      "format": "FlightCourse.v2",
+      "sourceIdentity": "cb0655a8b8b12ca3",
+      "actorCount": 0,
+      "actors": []
+    },
+    {
+      "id": "container-yard-03",
+      "source": "native",
+      "format": "FlightCourse.v2",
+      "sourceIdentity": "437ad54e01783edc",
+      "actorCount": 2,
+      "actors": [
+        [
+          "crossing-1",
+          "hazard",
+          null
+        ],
+        [
+          "crossing-2",
+          "hazard",
+          null
+        ]
+      ]
+    },
+    {
+      "id": "container-yard-04",
+      "source": "native",
+      "format": "FlightCourse.v2",
+      "sourceIdentity": "e917d11dc8d8351f",
+      "actorCount": 1,
+      "actors": [
+        [
+          "target-1",
+          "sentry",
+          "hostile"
+        ]
+      ]
+    },
+    {
+      "id": "container-yard-05",
+      "source": "native",
+      "format": "FlightCourse.v2",
+      "sourceIdentity": "cf246703879ff68e",
+      "actorCount": 2,
+      "actors": [
+        [
+          "target-1",
+          "patrol",
+          "hostile"
+        ],
+        [
+          "target-2",
+          "patrol",
+          "hostile"
+        ]
+      ]
+    },
+    {
+      "id": "container-yard-06",
+      "source": "native",
+      "format": "FlightCourse.v2",
+      "sourceIdentity": "dfd0c2b31a8fb715",
+      "actorCount": 2,
+      "actors": [
+        [
+          "target-1",
+          "drone",
+          "hostile"
+        ],
+        [
+          "target-2",
+          "drone",
+          "hostile"
+        ]
+      ]
+    },
+    {
+      "id": "container-yard-07",
+      "source": "native",
+      "format": "FlightCourse.v2",
+      "sourceIdentity": "fed3e4ecae2b45ff",
+      "actorCount": 2,
+      "actors": [
+        [
+          "target-1",
+          "vehicle",
+          "hostile"
+        ],
+        [
+          "target-2",
+          "sentry",
+          "hostile"
+        ]
+      ]
+    },
+    {
+      "id": "container-yard-08",
+      "source": "native",
+      "format": "FlightCourse.v2",
+      "sourceIdentity": "b12288bf4dbadc4c",
+      "actorCount": 2,
+      "actors": [
+        [
+          "extraction-patrol",
+          "patrol",
+          "hostile"
+        ],
+        [
+          "extraction-drone",
+          "drone",
+          "hostile"
+        ]
+      ]
+    },
+    {
+      "id": "garage-01",
+      "source": "native",
+      "format": "FlightCourse.v2",
+      "sourceIdentity": "8d74134decc538dc",
+      "actorCount": 0,
+      "actors": []
+    },
+    {
+      "id": "garage-02",
+      "source": "native",
+      "format": "FlightCourse.v2",
+      "sourceIdentity": "d7862fc6315c6d2c",
+      "actorCount": 0,
+      "actors": []
+    },
+    {
+      "id": "garage-03",
+      "source": "native",
+      "format": "FlightCourse.v2",
+      "sourceIdentity": "e0cfc11bf2f31976",
+      "actorCount": 2,
+      "actors": [
+        [
+          "crossing-1",
+          "hazard",
+          null
+        ],
+        [
+          "crossing-2",
+          "hazard",
+          null
+        ]
+      ]
+    },
+    {
+      "id": "garage-04",
+      "source": "native",
+      "format": "FlightCourse.v2",
+      "sourceIdentity": "d547a5fc10ddc14f",
+      "actorCount": 2,
+      "actors": [
+        [
+          "target-1",
+          "sentry",
+          "hostile"
+        ],
+        [
+          "target-2",
+          "sentry",
+          "hostile"
+        ]
+      ]
+    },
+    {
+      "id": "garage-05",
+      "source": "native",
+      "format": "FlightCourse.v2",
+      "sourceIdentity": "eacc7ac7e971cbe1",
+      "actorCount": 2,
+      "actors": [
+        [
+          "target-1",
+          "patrol",
+          "hostile"
+        ],
+        [
+          "target-2",
+          "patrol",
+          "hostile"
+        ]
+      ]
+    },
+    {
+      "id": "garage-06",
+      "source": "native",
+      "format": "FlightCourse.v2",
+      "sourceIdentity": "fa3957fc011c8b14",
+      "actorCount": 2,
+      "actors": [
+        [
+          "target-1",
+          "drone",
+          "hostile"
+        ],
+        [
+          "target-2",
+          "drone",
+          "hostile"
+        ]
+      ]
+    },
+    {
+      "id": "garage-07",
+      "source": "native",
+      "format": "FlightCourse.v2",
+      "sourceIdentity": "5c3e5b8434ad7b10",
+      "actorCount": 2,
+      "actors": [
+        [
+          "target-1",
+          "vehicle",
+          "hostile"
+        ],
+        [
+          "target-2",
+          "vehicle",
+          "hostile"
+        ]
+      ]
+    },
+    {
+      "id": "garage-08",
+      "source": "native",
+      "format": "FlightCourse.v2",
+      "sourceIdentity": "a35d85dd2cf7660a",
+      "actorCount": 2,
+      "actors": [
+        [
+          "extraction-patrol",
+          "patrol",
+          "hostile"
+        ],
+        [
+          "extraction-drone",
+          "drone",
+          "hostile"
+        ]
+      ]
+    },
+    {
+      "id": "beginner-01",
+      "source": "learning",
+      "format": "FlightCourse.v2",
+      "sourceIdentity": "2b283442c91e80fb",
+      "actorCount": 0,
+      "actors": []
+    },
+    {
+      "id": "beginner-02",
+      "source": "learning",
+      "format": "FlightCourse.v2",
+      "sourceIdentity": "be7038ca265c9eea",
+      "actorCount": 0,
+      "actors": []
+    },
+    {
+      "id": "beginner-03",
+      "source": "learning",
+      "format": "FlightCourse.v2",
+      "sourceIdentity": "55fd503021e009f0",
+      "actorCount": 0,
+      "actors": []
+    },
+    {
+      "id": "beginner-04",
+      "source": "learning",
+      "format": "FlightCourse.v2",
+      "sourceIdentity": "dbaecb9d131f5e8d",
+      "actorCount": 0,
+      "actors": []
+    },
+    {
+      "id": "beginner-05",
+      "source": "learning",
+      "format": "FlightCourse.v2",
+      "sourceIdentity": "7dbce973d81f47f1",
+      "actorCount": 0,
+      "actors": []
+    },
+    {
+      "id": "beginner-06",
+      "source": "learning",
+      "format": "FlightCourse.v2",
+      "sourceIdentity": "617aba71cc2c9a29",
+      "actorCount": 0,
+      "actors": []
+    },
+    {
+      "id": "beginner-07",
+      "source": "learning",
+      "format": "FlightCourse.v2",
+      "sourceIdentity": "49641fb80e59cf0e",
+      "actorCount": 0,
+      "actors": []
+    },
+    {
+      "id": "beginner-08",
+      "source": "learning",
+      "format": "FlightCourse.v2",
+      "sourceIdentity": "4850f1a1932293e7",
+      "actorCount": 0,
+      "actors": []
+    },
+    {
+      "id": "beginner-09",
+      "source": "learning",
+      "format": "FlightCourse.v2",
+      "sourceIdentity": "6583c985edced34a",
+      "actorCount": 0,
+      "actors": []
+    },
+    {
+      "id": "beginner-10",
+      "source": "learning",
+      "format": "FlightCourse.v2",
+      "sourceIdentity": "51abf3ff40a1c7be",
+      "actorCount": 0,
+      "actors": []
+    },
+    {
+      "id": "beginner-11",
+      "source": "learning",
+      "format": "FlightCourse.v2",
+      "sourceIdentity": "cc40e164543aeb8c",
+      "actorCount": 0,
+      "actors": []
+    },
+    {
+      "id": "beginner-12",
+      "source": "learning",
+      "format": "FlightCourse.v2",
+      "sourceIdentity": "0e66863f2b9832b4",
+      "actorCount": 0,
+      "actors": []
+    },
+    {
+      "id": "beginner-13",
+      "source": "learning",
+      "format": "FlightCourse.v2",
+      "sourceIdentity": "bb596f55890dbe1f",
+      "actorCount": 0,
+      "actors": []
+    },
+    {
+      "id": "beginner-14",
+      "source": "learning",
+      "format": "FlightCourse.v2",
+      "sourceIdentity": "db2f668dcb1d1301",
+      "actorCount": 0,
+      "actors": []
+    },
+    {
+      "id": "beginner-15",
+      "source": "learning",
+      "format": "FlightCourse.v2",
+      "sourceIdentity": "18e16a885f2617c8",
+      "actorCount": 0,
+      "actors": []
+    },
+    {
+      "id": "beginner-16",
+      "source": "learning",
+      "format": "FlightCourse.v2",
+      "sourceIdentity": "fae047e39b4fa767",
+      "actorCount": 0,
+      "actors": []
+    },
+    {
+      "id": "beginner-17",
+      "source": "learning",
+      "format": "FlightCourse.v2",
+      "sourceIdentity": "07a2933124cdc68c",
+      "actorCount": 0,
+      "actors": []
+    },
+    {
+      "id": "beginner-18",
+      "source": "learning",
+      "format": "FlightCourse.v2",
+      "sourceIdentity": "d8f6a65e0eca4fc5",
+      "actorCount": 0,
+      "actors": []
+    },
+    {
+      "id": "beginner-19",
+      "source": "learning",
+      "format": "FlightCourse.v2",
+      "sourceIdentity": "24e8c237f51c72e2",
+      "actorCount": 0,
+      "actors": []
+    },
+    {
+      "id": "beginner-20",
+      "source": "learning",
+      "format": "FlightCourse.v2",
+      "sourceIdentity": "4e7052ce3c2454c6",
+      "actorCount": 0,
+      "actors": []
+    },
+    {
+      "id": "beginner-21",
+      "source": "learning",
+      "format": "FlightCourse.v2",
+      "sourceIdentity": "a370c561aac9a6a2",
+      "actorCount": 0,
+      "actors": []
+    },
+    {
+      "id": "beginner-22",
+      "source": "learning",
+      "format": "FlightCourse.v2",
+      "sourceIdentity": "6b5e47fc9313b27d",
+      "actorCount": 0,
+      "actors": []
+    },
+    {
+      "id": "beginner-23",
+      "source": "learning",
+      "format": "FlightCourse.v2",
+      "sourceIdentity": "2f154cdcc393b261",
+      "actorCount": 0,
+      "actors": []
+    },
+    {
+      "id": "beginner-24",
+      "source": "learning",
+      "format": "FlightCourse.v2",
+      "sourceIdentity": "f7532ee7b19339c1",
+      "actorCount": 0,
+      "actors": []
+    },
+    {
+      "id": "beginner-25",
+      "source": "learning",
+      "format": "FlightCourse.v2",
+      "sourceIdentity": "16e95611ca8c7850",
+      "actorCount": 0,
+      "actors": []
+    },
+    {
+      "id": "beginner-26",
+      "source": "learning",
+      "format": "FlightCourse.v2",
+      "sourceIdentity": "5005cc12bfd31b4f",
+      "actorCount": 0,
+      "actors": []
+    },
+    {
+      "id": "beginner-27",
+      "source": "learning",
+      "format": "FlightCourse.v2",
+      "sourceIdentity": "cd1ecbd37f09e2d9",
+      "actorCount": 0,
+      "actors": []
+    },
+    {
+      "id": "beginner-28",
+      "source": "learning",
+      "format": "FlightCourse.v2",
+      "sourceIdentity": "fd8e57c34c2ef2ee",
+      "actorCount": 0,
+      "actors": []
+    },
+    {
+      "id": "beginner-29",
+      "source": "learning",
+      "format": "FlightCourse.v2",
+      "sourceIdentity": "497f73a9eace062a",
+      "actorCount": 0,
+      "actors": []
+    },
+    {
+      "id": "beginner-30",
+      "source": "learning",
+      "format": "FlightCourse.v2",
+      "sourceIdentity": "2a315ccc8c60cf9e",
+      "actorCount": 0,
+      "actors": []
+    },
+    {
+      "id": "beginner-31",
+      "source": "learning",
+      "format": "FlightCourse.v2",
+      "sourceIdentity": "70d877113746fa44",
+      "actorCount": 0,
+      "actors": []
+    },
+    {
+      "id": "beginner-32",
+      "source": "learning",
+      "format": "FlightCourse.v2",
+      "sourceIdentity": "626ccd0ed75c25b6",
+      "actorCount": 0,
+      "actors": []
+    },
+    {
+      "id": "beginner-33",
+      "source": "learning",
+      "format": "FlightCourse.v2",
+      "sourceIdentity": "b1493ce5e3d649d1",
+      "actorCount": 0,
+      "actors": []
+    },
+    {
+      "id": "beginner-34",
+      "source": "learning",
+      "format": "FlightCourse.v2",
+      "sourceIdentity": "f427fe848b865307",
+      "actorCount": 0,
+      "actors": []
+    },
+    {
+      "id": "beginner-35",
+      "source": "learning",
+      "format": "FlightCourse.v2",
+      "sourceIdentity": "00f29619ef00bee2",
+      "actorCount": 0,
+      "actors": []
+    },
+    {
+      "id": "beginner-36",
+      "source": "learning",
+      "format": "FlightCourse.v2",
+      "sourceIdentity": "98a84db2aedd48a5",
+      "actorCount": 0,
+      "actors": []
+    },
+    {
+      "id": "beginner-37",
+      "source": "learning",
+      "format": "FlightCourse.v2",
+      "sourceIdentity": "5059001bf5a3e30d",
+      "actorCount": 0,
+      "actors": []
+    },
+    {
+      "id": "beginner-38",
+      "source": "learning",
+      "format": "FlightCourse.v2",
+      "sourceIdentity": "d445a19b960acbc7",
+      "actorCount": 0,
+      "actors": []
+    },
+    {
+      "id": "beginner-39",
+      "source": "learning",
+      "format": "FlightCourse.v2",
+      "sourceIdentity": "7d7057903d6d209f",
+      "actorCount": 0,
+      "actors": []
+    },
+    {
+      "id": "beginner-40",
+      "source": "learning",
+      "format": "FlightCourse.v2",
+      "sourceIdentity": "e95319cadcaf66e0",
+      "actorCount": 0,
+      "actors": []
+    },
+    {
+      "id": "beginner-41",
+      "source": "learning",
+      "format": "FlightCourse.v2",
+      "sourceIdentity": "8a67e278bdce983b",
+      "actorCount": 0,
+      "actors": []
+    },
+    {
+      "id": "beginner-42",
+      "source": "learning",
+      "format": "FlightCourse.v2",
+      "sourceIdentity": "143fddd38328045f",
+      "actorCount": 0,
+      "actors": []
+    },
+    {
+      "id": "beginner-43",
+      "source": "learning",
+      "format": "FlightCourse.v2",
+      "sourceIdentity": "0ad4e82276845af6",
+      "actorCount": 0,
+      "actors": []
+    },
+    {
+      "id": "beginner-44",
+      "source": "learning",
+      "format": "FlightCourse.v2",
+      "sourceIdentity": "f9c425aafbc61f9a",
+      "actorCount": 0,
+      "actors": []
+    },
+    {
+      "id": "beginner-45",
+      "source": "learning",
+      "format": "FlightCourse.v2",
+      "sourceIdentity": "c797e254b8ba14b7",
+      "actorCount": 0,
+      "actors": []
+    },
+    {
+      "id": "beginner-46",
+      "source": "learning",
+      "format": "FlightCourse.v2",
+      "sourceIdentity": "47d8cd0c80a3a4d9",
+      "actorCount": 0,
+      "actors": []
+    },
+    {
+      "id": "beginner-47",
+      "source": "learning",
+      "format": "FlightCourse.v2",
+      "sourceIdentity": "dbcb1c9d8ed6d010",
+      "actorCount": 0,
+      "actors": []
+    },
+    {
+      "id": "beginner-48",
+      "source": "learning",
+      "format": "FlightCourse.v2",
+      "sourceIdentity": "f30678be5fd7d29a",
+      "actorCount": 0,
+      "actors": []
+    },
+    {
+      "id": "beginner-49",
+      "source": "learning",
+      "format": "FlightCourse.v2",
+      "sourceIdentity": "bb6855850a58374f",
+      "actorCount": 0,
+      "actors": []
+    },
+    {
+      "id": "beginner-50",
+      "source": "learning",
+      "format": "FlightCourse.v2",
+      "sourceIdentity": "1c87b66d90f7a35e",
+      "actorCount": 0,
+      "actors": []
+    },
+    {
+      "id": "beginner-51",
+      "source": "learning",
+      "format": "FlightCourse.v2",
+      "sourceIdentity": "92044cef4de09d99",
+      "actorCount": 0,
+      "actors": []
+    },
+    {
+      "id": "beginner-52",
+      "source": "learning",
+      "format": "FlightCourse.v2",
+      "sourceIdentity": "5d3a81d6966bb43d",
+      "actorCount": 0,
+      "actors": []
+    },
+    {
+      "id": "beginner-53",
+      "source": "learning",
+      "format": "FlightCourse.v2",
+      "sourceIdentity": "cfa3bb221736eeec",
+      "actorCount": 0,
+      "actors": []
+    },
+    {
+      "id": "beginner-54",
+      "source": "learning",
+      "format": "FlightCourse.v2",
+      "sourceIdentity": "b00944bd95cadf0c",
+      "actorCount": 0,
+      "actors": []
+    },
+    {
+      "id": "beginner-55",
+      "source": "learning",
+      "format": "FlightCourse.v2",
+      "sourceIdentity": "547e23707ed96c35",
+      "actorCount": 0,
+      "actors": []
+    },
+    {
+      "id": "beginner-56",
+      "source": "learning",
+      "format": "FlightCourse.v2",
+      "sourceIdentity": "11724e0b8e844d2f",
+      "actorCount": 0,
+      "actors": []
+    },
+    {
+      "id": "beginner-57",
+      "source": "learning",
+      "format": "FlightCourse.v2",
+      "sourceIdentity": "f418dc8b08bea395",
+      "actorCount": 0,
+      "actors": []
+    },
+    {
+      "id": "beginner-58",
+      "source": "learning",
+      "format": "FlightCourse.v2",
+      "sourceIdentity": "eae52b2af982fa9f",
+      "actorCount": 0,
+      "actors": []
+    }
+  ],
+  "regions": [
+    {
+      "id": "alpine-highlands-study",
+      "descriptorSha256": "92b7ed6acb426a04b007006a72536b8178bd0ad59bba7182637e25fd0d4cf804",
+      "authoredActorCount": 0,
+      "owner": "Regional presentation course has no authored actors; combat actors come from the admitted encounter definition."
+    },
+    {
+      "id": "alpine-highlands-study",
+      "descriptorSha256": "32c5338bb3ac7a4279de1f1cf77ddd36bd050c6b5bd971467f9cf5ef0898d2aa",
+      "authoredActorCount": 0,
+      "owner": "Regional presentation course has no authored actors; combat actors come from the admitted encounter definition."
+    },
+    {
+      "id": "lunar-basin-study",
+      "descriptorSha256": "e3ec1ebf203e391741e64d218ac2554db3d5b0327dbdc9940e7190726f27ba65",
+      "authoredActorCount": 0,
+      "owner": "Regional presentation course has no authored actors; combat actors come from the admitted encounter definition."
+    },
+    {
+      "id": "alpine-highlands-study",
+      "descriptorSha256": "0096934874cb5ad3a8355471242aadbb92a660607d3c04481f6b06eb0937062f",
+      "authoredActorCount": 0,
+      "owner": "Regional presentation course has no authored actors; combat actors come from the admitted encounter definition."
+    },
+    {
+      "id": "alpine-highlands-study",
+      "descriptorSha256": "c60fd92ed1dc00136fb8df55bf02bcc211b932c4bbe018917a1f37b549ac3c8d",
+      "authoredActorCount": 0,
+      "owner": "Regional presentation course has no authored actors; combat actors come from the admitted encounter definition."
+    },
+    {
+      "id": "lunar-basin-study",
+      "descriptorSha256": "1ec74a074029002f6595bb614ac63a2a52a67e1092c6baf1e45480ffdbb7619a",
+      "authoredActorCount": 0,
+      "owner": "Regional presentation course has no authored actors; combat actors come from the admitted encounter definition."
+    },
+    {
+      "id": "alpine-highlands-study",
+      "descriptorSha256": "a442a07717d09c703231279db41dd23c9447e0cc7f5f53aa3964eef4f74573ec",
+      "authoredActorCount": 0,
+      "owner": "Regional presentation course has no authored actors; combat actors come from the admitted encounter definition."
+    },
+    {
+      "id": "alpine-highlands-study",
+      "descriptorSha256": "8b49b885b05976b4a114a17d88d9af1b352418cbac16866a5249ae32b43c191a",
+      "authoredActorCount": 0,
+      "owner": "Regional presentation course has no authored actors; combat actors come from the admitted encounter definition."
+    },
+    {
+      "id": "canal-city-study",
+      "descriptorSha256": "891835944510139a7bed6a99305c0e22b71ba9ccfe84801a07ea6e215ca25c87",
+      "authoredActorCount": 0,
+      "owner": "Regional presentation course has no authored actors; combat actors come from the admitted encounter definition."
+    },
+    {
+      "id": "desert-expedition-study",
+      "descriptorSha256": "fed1f7d18bfe3163cbb52b8b7ecd174a777b89a45ac962c181bd8ca11b727ea7",
+      "authoredActorCount": 0,
+      "owner": "Regional presentation course has no authored actors; combat actors come from the admitted encounter definition."
+    },
+    {
+      "id": "desert-expedition-study",
+      "descriptorSha256": "6ecb919762a9d3fac6519ca80600489cab0cb6b3cb3e0804d01d5f7e8791029d",
+      "authoredActorCount": 0,
+      "owner": "Regional presentation course has no authored actors; combat actors come from the admitted encounter definition."
+    },
+    {
+      "id": "tropical-coastal-districts",
+      "descriptorSha256": "44aa0de26f4b4aa79fb0ca8f4b6c7d39bdd62debbdc5e4c51a3a12368a0f42ce",
+      "authoredActorCount": 0,
+      "owner": "Regional presentation course has no authored actors; combat actors come from the admitted encounter definition."
+    },
+    {
+      "id": "railway-valley-expanse",
+      "descriptorSha256": "38bddc6a19c8ba5965992b68ed9b80398cb515dc99de7ce07cac11c9436606c7",
+      "authoredActorCount": 0,
+      "owner": "Regional presentation course has no authored actors; combat actors come from the admitted encounter definition."
+    },
+    {
+      "id": "coaster-gardens-study",
+      "descriptorSha256": "935a4a4034c206d5bbce77e333f72530812a50c60135117616887a6dac70b53a",
+      "authoredActorCount": 0,
+      "owner": "Regional presentation course has no authored actors; combat actors come from the admitted encounter definition."
+    },
+    {
+      "id": "coaster-gardens-study",
+      "descriptorSha256": "4800da2f8a06134333fad8def9615a96c94b2fb76f7fb3ef41bfa69b4a9872b5",
+      "authoredActorCount": 0,
+      "owner": "Regional presentation course has no authored actors; combat actors come from the admitted encounter definition."
+    },
+    {
+      "id": "hillside-town-study",
+      "descriptorSha256": "f6717cb5833932f4ab1be27705802ba0600384e0f4fc2f4d0e2e8f4b06bdf573",
+      "authoredActorCount": 0,
+      "owner": "Regional presentation course has no authored actors; combat actors come from the admitted encounter definition."
+    },
+    {
+      "id": "hillside-town-study",
+      "descriptorSha256": "de1dc4726724bf4851e5976191585e04205f81ba3b83f14442e0c94f18b907d9",
+      "authoredActorCount": 0,
+      "owner": "Regional presentation course has no authored actors; combat actors come from the admitted encounter definition."
+    },
+    {
+      "id": "tropical-coastal-districts",
+      "descriptorSha256": "dab4be6dd5b782d38c6c01f510137d048b9646d1f14e80c4dc40c6d848720f49",
+      "authoredActorCount": 0,
+      "owner": "Regional presentation course has no authored actors; combat actors come from the admitted encounter definition."
+    },
+    {
+      "id": "canyon-expanse-study",
+      "descriptorSha256": "d2c3dce6c39227e85a10256fb3d1082fec2a6c7a47f6347fd664e2840eb57003",
+      "authoredActorCount": 0,
+      "owner": "Regional presentation course has no authored actors; combat actors come from the admitted encounter definition."
+    },
+    {
+      "id": "tropical-coastal-study",
+      "descriptorSha256": "ddd62d4662b873bc97243a414dc4ddc291eeb7e9c084f15af661b449ddcc3443",
+      "authoredActorCount": 0,
+      "owner": "Regional presentation course has no authored actors; combat actors come from the admitted encounter definition."
+    },
+    {
+      "id": "canyon-arrival-landmarks-study",
+      "descriptorSha256": "f69cc4d315c254d5b825e2cfbde21d8509da1c8e3ae2a3e743de95782c5300c8",
+      "authoredActorCount": 0,
+      "owner": "Regional presentation course has no authored actors; combat actors come from the admitted encounter definition."
+    },
+    {
+      "id": "canyon-arrival-landmarks-study",
+      "descriptorSha256": "5cd92029c88179e94231b4ec4f799372b075cd187421e9feec3fb6ee2eabf6d0",
+      "authoredActorCount": 0,
+      "owner": "Regional presentation course has no authored actors; combat actors come from the admitted encounter definition."
+    },
+    {
+      "id": "railway-valley-study",
+      "descriptorSha256": "431b2dfb4be228e094174f1ccdd8eb72f906f09eb39a62c31b16e2bfb1239f15",
+      "authoredActorCount": 0,
+      "owner": "Regional presentation course has no authored actors; combat actors come from the admitted encounter definition."
+    },
+    {
+      "id": "urban-earthworks-study",
+      "descriptorSha256": "9a7d157d2d5fd197c632b870bd9b9ebacd62015ad0084605712185064c8ae73a",
+      "authoredActorCount": 0,
+      "owner": "Regional presentation course has no authored actors; combat actors come from the admitted encounter definition."
+    }
+  ],
+  "limits": [
+    "Actor IDs are unique within a course, not globally across courses.",
+    "Civilian/rival are authored behavior roles; new live native rules do not exempt them from damage.",
+    "Hazards have no authored role field; null is intentional.",
+    "Regional zero counts describe the presentation-course adapter, not visual analysis of every downloaded scenery mesh.",
+    "Unannotated imported meshes cannot be recognized as characters by this source inventory.",
+    "This inventory does not qualify real obstacle clearance or player hitability."
+  ]
+}

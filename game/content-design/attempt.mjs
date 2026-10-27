@@ -5,11 +5,12 @@ import { TURN_POLICIES } from '../core/registry.mjs';
 import { createRecorder } from '../replay.mjs';
 import { freezeDesign } from './catalogs.mjs';
 import { createContentExecutionCatalog } from './execution.mjs';
-import { loadPreviewArtwork, verifiedPreviewBackground } from './assets.mjs';
+import { loadPreviewArtwork, loadVerifiedArtwork, verifiedPreviewBackground } from './assets.mjs';
 import { acquireCandidatePicture } from './picture.mjs';
 import { applyGameplayTuning, validateGameplayTuning } from '../gameplay-tuning.mjs';
 import { CONTENT_ATTEMPT_PREPARATION_TIMEOUT_MS } from './limits.mjs';
 import { prepareRunningEnemyLevel } from '../hunt/running-enemies.mjs';
+import { t } from '../i18n/index.mjs';
 
 const cancelled = () => new DOMException('Candidate preparation cancelled.', 'AbortError');
 
@@ -24,8 +25,9 @@ export function createContentAttemptPreparer(
     packIds,
     themes,
     buildVersion = 'dev',
-    loadArtwork = loadPreviewArtwork,
+    loadArtwork,
     decodeImage,
+    serializeArtwork = true,
     timeoutMs = CONTENT_ATTEMPT_PREPARATION_TIMEOUT_MS,
   } = {},
 ) {
@@ -35,6 +37,9 @@ export function createContentAttemptPreparer(
       timeoutMs <= CONTENT_ATTEMPT_PREPARATION_TIMEOUT_MS,
     'Invalid candidate preparation timeout.',
   );
+  required(typeof serializeArtwork === 'boolean', 'Choose whether to retain serialized artwork.');
+  if (loadArtwork === undefined)
+    loadArtwork = serializeArtwork ? loadPreviewArtwork : loadVerifiedArtwork;
   required(typeof loadArtwork === 'function', 'Candidate preparation needs an artwork loader.');
   required(
     decodeImage === undefined || typeof decodeImage === 'function',
@@ -115,10 +120,10 @@ export function createContentAttemptPreparer(
     const check = () => {
       if (disposed || controller.signal.aborted || generation !== ticket) throw cancelled();
     };
-    const report = (stage, message) => {
+    const report = (stage, messageKey) => {
       check();
       try {
-        onStatus({ status: 'preparing', stage, message });
+        onStatus({ status: 'preparing', stage, messageKey, message: t(messageKey) });
       } catch {
         // A presentation observer does not own preparation.
       }
@@ -143,24 +148,26 @@ export function createContentAttemptPreparer(
       const result = await Promise.race([
         stopped,
         Promise.resolve().then(async () => {
-          report('verifying', 'Checking the exact authored mission and picture…');
+          report('verifying', 'interface:solo.candidateVerifying');
           const media = manifest.background
             ? await loadArtwork(manifest.background, { signal: controller.signal })
             : null;
           check();
-          const visualOverrides = manifest.background
-            ? { background: verifiedPreviewBackground(manifest.background, media) }
-            : {};
+          const visualOverrides =
+            manifest.background && serializeArtwork
+              ? { background: verifiedPreviewBackground(manifest.background, media) }
+              : {};
           if (manifest.background) {
-            report('decoding', 'Opening this mission’s verified original picture…');
+            report('decoding', 'interface:solo.candidatePicture');
             candidatePicture = await acquireCandidatePicture(manifest.background, {
               signal: controller.signal,
               loadArtwork: async () => media,
               decodeImage,
+              binary: !serializeArtwork,
             });
             check();
           }
-          report('preparing', 'Preparing the authored rules without changing the current flight…');
+          report('preparing', 'interface:solo.candidateRules');
           const options = {
             seed: selected.seed,
             turnPolicy: selected.turnPolicy,

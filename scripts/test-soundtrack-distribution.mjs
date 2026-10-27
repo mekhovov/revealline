@@ -67,6 +67,7 @@ async function fixture(t) {
     'game/soundtrack.mjs',
     'game/soundtrack-rights.mjs',
     'game/mp3.mjs',
+    'game/mp3-inspection.mjs',
     'game/data-json.mjs',
     'game/ui/music.mjs',
   ])
@@ -161,8 +162,16 @@ test('publication writer preserves catalogue values and emits reproducible repos
 });
 test('real archived CLI builds reviewed soundtrack metadata without installed formatter dependencies', async (t) => {
   const f = await fixture(t);
+  // This case qualifies frozen soundtrack metadata, not offline installation.
+  // The existing offline-content/launcher stubs never covered the whole runtime;
+  // omit only this fixture's artificial sentinel rather than stub new projectors.
+  // Other cases keep their real offline paths and assertions unchanged.
+  await rm(path.join(f.root, 'game/offline.mjs'));
   for (const name of [
     'scripts/game-cli.mjs',
+    'scripts/distribution-zip.mjs',
+    'scripts/build-entry-writer.mjs',
+    'game/mission-library/included-bundled-pack.mjs',
     'scripts/brand-icons.mjs',
     'game/ui/art/identity/fpv-line/icon-master.png',
     'scripts/offline-content.mjs',
@@ -183,6 +192,13 @@ test('real archived CLI builds reviewed soundtrack metadata without installed fo
   await f.put(
     'scripts/localization.mjs',
     'export async function validateLocalization() { return { valid: true }; }',
+  );
+  // This archived metadata fixture has no spatial/reaction sample inputs.
+  // Keep those optional path decisions finite, as in the archived CLI fixture;
+  // this does not qualify production sample selection or full offline closure.
+  await f.put(
+    'scripts/offline-core-closure.mjs',
+    'export function isOptionalSpatialAudioBody() { return false; }\nexport function isOptionalReactionVoiceBody() { return false; }\n',
   );
   await f.put('scripts/offline-launcher.mjs', 'export async function addOfflineLauncher() {}');
   await f.put(

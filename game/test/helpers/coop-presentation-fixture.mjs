@@ -48,7 +48,15 @@ export async function waitFor(check, diagnostic = () => '') {
 
 // The real document page loader is shared by production and this injected host.
 // Exact compiled metadata/original PNG bytes are real; browser decode is finite.
-export function installCoopPresentation({ doc, win, install, read, decode, load } = {}) {
+export function installCoopPresentation({
+  doc,
+  win,
+  install,
+  read,
+  decode,
+  load,
+  createHost,
+} = {}) {
   const css = presentationCSSVariables(compiled.resolved);
   // Match the real host eager-image boundary. Pictures and scenes remain lazy:
   // their bytes must pass through readPicture and the normal decoder below.
@@ -120,25 +128,29 @@ export function installCoopPresentation({ doc, win, install, read, decode, load 
   const lease = mountPresentationPage({
     document: doc,
     window: win,
-    createHost: () => ({
-      async load() {
-        calls.loads++;
-        await load?.({ snapshot, calls });
-        return snapshot;
-      },
-      apply() {},
-      async readPicture(slot, options) {
-        calls.reads.push({ slot, options });
-        await read?.({ slot, options, calls });
-        return {
-          asset: snapshot.resolved.assets[slot],
-          blob: new Blob([originals.get(slot)], { type: 'image/png' }),
-        };
-      },
-      close() {
-        calls.closes++;
-      },
-    }),
+    // Audio integration fixtures may supply the real compiled presentation
+    // host. The default picture-only boundary stays unchanged for other tests.
+    createHost:
+      createHost ??
+      (() => ({
+        async load() {
+          calls.loads++;
+          await load?.({ snapshot, calls });
+          return snapshot;
+        },
+        apply() {},
+        async readPicture(slot, options) {
+          calls.reads.push({ slot, options });
+          await read?.({ slot, options, calls });
+          return {
+            asset: snapshot.resolved.assets[slot],
+            blob: new Blob([originals.get(slot)], { type: 'image/png' }),
+          };
+        },
+        close() {
+          calls.closes++;
+        },
+      })),
   });
   return { snapshot, calls, lease };
 }

@@ -1,0 +1,170 @@
+TAP version 13
+# Subtest: cloning is eligible only for known matching filesystem devices
+ok 1 - cloning is eligible only for known matching filesystem devices
+  ---
+  duration_ms: 2.185667
+  ...
+# Subtest: cross-device entries bypass native copies and retain accepted bytes on both platforms
+ok 2 - cross-device entries bypass native copies and retain accepted bytes on both platforms
+  ---
+  duration_ms: 1.257375
+  ...
+# Subtest: same-device exact clones are verified and need no fallback write
+ok 3 - same-device exact clones are verified and need no fallback write
+  ---
+  duration_ms: 0.614083
+  ...
+# Subtest: failed or changed clones and unavailable source/device checks use exact fallback
+ok 4 - failed or changed clones and unavailable source/device checks use exact fallback
+  ---
+  duration_ms: 3.886042
+  ...
+# Subtest: fallback write errors remain visible instead of reporting a successful build entry
+ok 5 - fallback write errors remain visible instead of reporting a successful build entry
+  ---
+  duration_ms: 0.770541
+  ...
+# Subtest: built bytes remain independent after source changes
+ok 6 - built bytes remain independent after source changes
+  ---
+  duration_ms: 33.295708
+  ...
+# Subtest: generated or changed entries always retain prepared bytes
+ok 7 - generated or changed entries always retain prepared bytes
+  ---
+  duration_ms: 8.358458
+  ...
+# Subtest: browser restart requires all pages closed and a confirmed persistent-context shutdown
+ok 8 - browser restart requires all pages closed and a confirmed persistent-context shutdown
+  ---
+  duration_ms: 6.657667
+  ...
+# Subtest: timed-out startup retains resource ownership and a late close failure cannot imply cleanup
+ok 9 - timed-out startup retains resource ownership and a late close failure cannot imply cleanup
+  ---
+  duration_ms: 3.028667
+  ...
+# Subtest: an expired restart cannot start browser acquisition after cleanup has begun
+ok 10 - an expired restart cannot start browser acquisition after cleanup has begun
+  ---
+  duration_ms: 2.456917
+  ...
+# Subtest: offline action requires fresh observable work, native Enter and a fresh terminal status
+ok 11 - offline action requires fresh observable work, native Enter and a fresh terminal status
+  ---
+  duration_ms: 3.820542
+  ...
+# Subtest: offline actions reject hidden controls before creating a witness or sending a key
+ok 12 - offline actions reject hidden controls before creating a witness or sending a key
+  ---
+  duration_ms: 0.120917
+  ...
+# Subtest: overall observation deadline encloses the journey but preserves report and cleanup
+ok 13 - overall observation deadline encloses the journey but preserves report and cleanup
+  ---
+  duration_ms: 3.481959
+  ...
+# Subtest: installation observer covers all three public app identities and current offline controls
+ok 14 - installation observer covers all three public app identities and current offline controls
+  ---
+  duration_ms: 16.671667
+  ...
+# Subtest: launcher destinations preserve exact app identity and the defined locale query
+ok 15 - launcher destinations preserve exact app identity and the defined locale query
+  ---
+  duration_ms: 6.633292
+  ...
+# Subtest: bounded operation returns results, preserves errors, and rejects stalls
+ok 16 - bounded operation returns results, preserves errors, and rejects stalls
+  ---
+  duration_ms: 6.107917
+  ...
+# Subtest: Academy offline controls expand the ordinary closed Workshop disclosure in every offline flow
+ok 17 - Academy offline controls expand the ordinary closed Workshop disclosure in every offline flow
+  ---
+  duration_ms: 36.53175
+  ...
+# Subtest: opt-in quota denial preserves pointers, resets before retry and retains exact helper authority
+ok 18 - opt-in quota denial preserves pointers, resets before retry and retains exact helper authority
+  ---
+  duration_ms: 5.166417
+  ...
+# Subtest: quota selection defaults to Academy and accepts only the explicit all-packages enum
+ok 19 - quota selection defaults to Academy and accepts only the explicit all-packages enum
+  ---
+  duration_ms: 5.086416
+  ...
+# Subtest: every quota-denied package preserves all pointers and leaves no package-scoped staging or worker
+ok 20 - every quota-denied package preserves all pointers and leaves no package-scoped staging or worker
+  ---
+  duration_ms: 3.744209
+  ...
+# Subtest: all-package quota orchestration keeps native controls, scoped fixtures and default receipt compatibility
+ok 21 - all-package quota orchestration keeps native controls, scoped fixtures and default receipt compatibility
+  ---
+  duration_ms: 6.224334
+  ...
+# Subtest: Worlds removal opens the public Library and requires its actual removal control to be visible
+ok 22 - Worlds removal opens the public Library and requires its actual removal control to be visible
+  ---
+  duration_ms: 2.129959
+  ...
+# Subtest: profile import and every export open the ordinary transfer disclosure without toggling it closed
+ok 23 - profile import and every export open the ordinary transfer disclosure without toggling it closed
+  ---
+  duration_ms: 3.306792
+  ...
+# Subtest: profile export expectations preserve the entire legacy fixture and current radio library
+ok 24 - profile export expectations preserve the entire legacy fixture and current radio library
+  ---
+  duration_ms: 0.334083
+  ...
+# Subtest: offline restart closes every page and rejects surviving windows
+ok 25 - offline restart closes every page and rejects surviving windows
+  ---
+  duration_ms: 0.272542
+  ...
+# Subtest: access-gated candidates require normal-form credentials and never expose them in errors
+ok 26 - access-gated candidates require normal-form credentials and never expose them in errors
+  ---
+  duration_ms: 0.2205
+  ...
+# Subtest: historical UI routing requires explicit mode and exact prior Academy origin/path
+ok 27 - historical UI routing requires explicit mode and exact prior Academy origin/path
+  ---
+  duration_ms: 14.961875
+  ...
+# Subtest: current candidate always uses current admission and historical admission is explicitly prior-only
+ok 28 - current candidate always uses current admission and historical admission is explicitly prior-only
+  ---
+  duration_ms: 1.719875
+  ...
+# Subtest: historical reveal mapping receives exactly one final Enter; current path retains current action
+ok 29 - historical reveal mapping receives exactly one final Enter; current path retains current action
+  ---
+  duration_ms: 3.204792
+  ...
+# Subtest: historical authority pins both helpers and refuses changed authority at completion
+ok 30 - historical authority pins both helpers and refuses changed authority at completion
+  ---
+  duration_ms: 7.098208
+  ...
+# Subtest: download retry restoration rejects changed pointers, missing original workers and temporary resources
+ok 31 - download retry restoration rejects changed pointers, missing original workers and temporary resources
+  ---
+  duration_ms: 19.253125
+  ...
+# Subtest: download restoration freshly exports both Academy records and reads the saved World again
+ok 32 - download restoration freshly exports both Academy records and reads the saved World again
+  ---
+  duration_ms: 3.599875
+  ...
+1..32
+# tests 32
+# suites 0
+# pass 32
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 287.854292

@@ -1,7 +1,36 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { resolvePresentation } from '../presentation/theme-system.mjs';
-import { evaluateControlStateSemantics } from './fixtures/appearance-materials.mjs';
+import {
+  evaluateControlStateSemantics,
+  evaluateCloseUpLayout,
+} from './fixtures/appearance-materials.mjs';
+
+test('close-up layout audit detects clipped content and undersized targets, including enlarged Studio controls', () => {
+  const sample = {
+    id: 'studio',
+    rectangle: { x: 12, width: 120, height: 44 },
+    minTarget: 44,
+    scrollWidth: 116,
+    clientWidth: 116,
+    scrollHeight: 40,
+    clientHeight: 40,
+  };
+  assert.equal(evaluateCloseUpLayout([sample], 360).status, 'passed');
+  for (const patch of [
+    { rectangle: { x: 250, width: 120, height: 44 } },
+    { rectangle: { x: 12, width: 120, height: 32 } },
+    { minTarget: NaN },
+    { scrollWidth: 160 },
+    { scrollHeight: 64 },
+  ])
+    assert.equal(evaluateCloseUpLayout([{ ...sample, ...patch }], 360).status, 'failed');
+  assert.equal(
+    evaluateCloseUpLayout([{ ...sample, scrollableValue: true, scrollWidth: 300 }], 360).status,
+    'passed',
+  );
+  assert.equal(evaluateCloseUpLayout([], 360).status, 'skipped');
+});
 
 const fieldSamples = (tokens) =>
   [false, true].flatMap((twin) =>

@@ -1,0 +1,678 @@
+{
+  "format": "FpvNativeRuntimeQualification.v1",
+  "date": "2026-10-16",
+  "result": "pass-with-explicit-qualification-limits",
+  "scope": "Actual Electron development shell on one ARM64 Mac, production World host/renderer/worker and deterministic local Regional test terrain. Explicit separate test-only entry; production access pages remain byte-identical. Not authentication, signed-distribution, physical-controller, GPU-matrix or iOS qualification.",
+  "device": {
+    "os": "macOS 26.7.1",
+    "build": "25G241",
+    "architecture": "arm64",
+    "electron": "44.3.0",
+    "chromium": "152.0.7977.78",
+    "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) FPV/LINE/0.21.0 Chrome/152.0.7977.78 Electron/44.3.0 Safari/537.36"
+  },
+  "origin": "revealline://app",
+  "isolatedProfile": "/private/tmp/fpv-native-smoke-20261016-profile",
+  "method": {
+    "interaction": "Native accessibility/keyboard input, visible Save/Open dialogs, no DevTools, renderer Node, preload, injected settings or executeJavaScript.",
+    "productionWorldGate": "Password required visibly confirmed on final r5 stage.",
+    "fixtureBuilder": "scripts/build-fpv-native-smoke.mjs",
+    "harness": "platforms/desktop/test/fpv-smoke-harness.mjs",
+    "ordinaryPagesUnchanged": true,
+    "appClosed": true
+  },
+  "source": {
+    "ordinary": "/private/tmp/fpv-native-final-20261016-source-r5",
+    "ordinaryManifestSha256": "bd8f1caa38522fb011375957ac075d8422aee638d908b025e19d744556b6a053",
+    "fixtureSource": "/private/tmp/fpv-native-smoke-20261016-source-r5",
+    "fixtureStage": "/private/tmp/fpv-native-smoke-20261016-desktop",
+    "fixtureManifestSha256": "bdfb43c6ffa2aced36edbc2523e48555103bebf3b6b85bab635926d8f2f57c72",
+    "sourceHashes": {
+      "advanced-controller.mjs": "b1a35e143d2c992a9504708d48b11b21b3f58a7d1f2eaaaf600951196df0cc30",
+      "advanced-simulation.mjs": "d37e3da0d026e9d10ef6365f6760ee9cc71eae7fa1aa6bca1bff9e3ef6d3f8ec",
+      "advanced-regional.mjs": "afc37309f39c2bcc6eb53e7a36b53e1bee445e7ef3fd57d580a6dbdb1e8ed631",
+      "advanced-terrain.mjs": "bb03e8493a578d9d845637fcc1f90a9820400a1b75474fce71c73d4b83c7e5ee",
+      "advanced-worker.mjs": "5983abbe51aa92d4fe53b2cd2c6fc3223969303d821664bbba045a0d2c43695c",
+      "advanced-worker-client.mjs": "e6db12e3b8973c761da819daa904aa13842f298e7edf6f85cefc3d459f9d7fbc",
+      "world-app.mjs": "57e9f072e498274bf36e5414496ff0a271f44eda89bf46c18dfdc0353ebec0f0",
+      "tuning-ui.mjs": "90e4d96bf7c431cf612923fc06c9e141576d6cf516a061a1b0bdd5ed9d4ad21d"
+    },
+    "sourceMatches": {
+      "checked": 171,
+      "mismatches": [],
+      "generated": [
+        "game/i18n/catalogs.mjs",
+        "game/index.html",
+        "native/fpv-qualification.json",
+        "native/source-packages/civilian-fpv.json",
+        "native/source-packages/fpv-worlds.json",
+        "optional-practice/civilian-fpv/icons/icon-192.png",
+        "optional-practice/civilian-fpv/icons/icon-512.png",
+        "optional-practice/civilian-fpv/worker.js",
+        "optional-practice/fpv-worlds/icons/icon-192.png",
+        "optional-practice/fpv-worlds/icons/icon-512.png",
+        "optional-practice/fpv-worlds/worker.js"
+      ]
+    },
+    "historical": true,
+    "preservedOrdinaryManifest": "/private/tmp/fpv-native-final-20261016-source-r5-preserved-manifest.json",
+    "preservedFixtureManifest": "/private/tmp/fpv-native-smoke-20261016-source-r5-preserved-manifest.json",
+    "note": "Full functional results below belong to r5. Its obsolete source directory was removed after preserving the exact manifest; stage paths are reused by the current r8 candidate. Focused r6 renderer, r7 host-pointer and r8 World-worker results are recorded separately."
+  },
+  "checks": {
+    "regional": {
+      "passed": true,
+      "backend": "civilian-quad-advanced-regional.v1",
+      "initialFlightTicks": 840,
+      "finalRecoveredFlightTicks": 858,
+      "landing": {
+        "label": "key:p",
+        "at": "2026-10-15T23:21:40.389Z",
+        "visible": "visible",
+        "focused": true,
+        "status": "paused",
+        "tick": 728,
+        "advanced": true,
+        "position": {
+          "x": 0,
+          "y": -9.869999885559082,
+          "z": 0
+        },
+        "velocity": {
+          "x": 0,
+          "y": -2.3283064365386963e-10,
+          "z": 0
+        },
+        "grounded": true,
+        "touching": true,
+        "contacts": 1,
+        "workers": {
+          "created": 1,
+          "terminated": 0,
+          "live": 1
+        }
+      },
+      "takeoff": {
+        "label": "key:p",
+        "at": "2026-10-15T23:21:51.875Z",
+        "visible": "visible",
+        "focused": true,
+        "status": "paused",
+        "tick": 840,
+        "advanced": true,
+        "position": {
+          "x": 0,
+          "y": -7.917380332946777,
+          "z": 0
+        },
+        "velocity": {
+          "x": 0,
+          "y": 6.425327301025391,
+          "z": 0
+        },
+        "grounded": false,
+        "touching": false,
+        "contacts": 1,
+        "workers": {
+          "created": 1,
+          "terminated": 0,
+          "live": 1
+        }
+      },
+      "climbAboveContactMeters": 1.9526195526123047
+    },
+    "nativeLifecycle": {
+      "passed": true,
+      "operation": "Minimize while active, raise window, require explicit resume",
+      "initialFrozenTick": 30,
+      "finalFrozenTick": 858,
+      "finalObservations": [
+        {
+          "label": "after:blur",
+          "at": "2026-10-15T23:30:39.719Z",
+          "visible": "visible",
+          "focused": false,
+          "status": "paused",
+          "tick": 858,
+          "advanced": true,
+          "position": {
+            "x": 0,
+            "y": -6.234324932098389,
+            "z": 0
+          },
+          "velocity": {
+            "x": 0,
+            "y": 2.7545154094696045,
+            "z": 0
+          },
+          "grounded": false,
+          "touching": false,
+          "contacts": 1,
+          "workers": {
+            "created": 2,
+            "terminated": 1,
+            "live": 1
+          }
+        },
+        {
+          "label": "after:focus",
+          "at": "2026-10-15T23:30:44.802Z",
+          "visible": "visible",
+          "focused": true,
+          "status": "paused",
+          "tick": 858,
+          "advanced": true,
+          "position": {
+            "x": 0,
+            "y": -6.234324932098389,
+            "z": 0
+          },
+          "velocity": {
+            "x": 0,
+            "y": 2.7545154094696045,
+            "z": 0
+          },
+          "grounded": false,
+          "touching": false,
+          "contacts": 1,
+          "workers": {
+            "created": 2,
+            "terminated": 1,
+            "live": 1
+          }
+        }
+      ]
+    },
+    "exports": {
+      "passed": true,
+      "visibleSaveDialogs": true,
+      "jsonRecording": {
+        "format": "AdvancedRegionalRecording.v1",
+        "bytes": 122822,
+        "missionTicks": 858,
+        "finalHash": "fd7f39b3",
+        "verified": true
+      },
+      "rateCLI": {
+        "target": "Betaflight 2026.6.2",
+        "bytes": 527,
+        "algorithm": "ACTUAL",
+        "rollMaximumDps": 830
+      },
+      "libraryBackup": {
+        "revision": 4,
+        "profileCount": 2
+      },
+      "cancelledExportCreatesNoFile": true,
+      "qualification": "CLI, library and cancellation exercised on earlier candidate with identical native export implementation; final r5 recording exercised again."
+    },
+    "recovery": {
+      "passed": true,
+      "nativeFilePicker": true,
+      "format": "AdvancedRegionalRecovery.v1",
+      "restoredTick": 840,
+      "pausedUntilExplicitResume": true,
+      "finalValidatorSourceMatched": true,
+      "continuedTicks": 18,
+      "recordingReplayedWithExactFinalStagedSource": true
+    },
+    "persistence": {
+      "passed": true,
+      "fullProcessRestart": true,
+      "libraryEqualsNativeBackup": true,
+      "libraryRevision": 4,
+      "customProfile": "Native qualification pilot",
+      "customProfileRevision": 2,
+      "rollMaximumDps": 830,
+      "storageProbes": [
+        {
+          "lockAcquired": true,
+          "transactionComplete": true,
+          "previousVisits": 0,
+          "visits": 1
+        },
+        {
+          "lockAcquired": true,
+          "transactionComplete": true,
+          "previousVisits": 1,
+          "visits": 2
+        },
+        {
+          "lockAcquired": true,
+          "transactionComplete": true,
+          "previousVisits": 2,
+          "visits": 3
+        }
+      ],
+      "capabilities": {
+        "secureContext": true,
+        "webLocks": true,
+        "indexedDB": true
+      }
+    },
+    "cleanup": {
+      "passed": true,
+      "finalWorkers": {
+        "created": 2,
+        "terminated": 2,
+        "live": 0
+      },
+      "pageErrors": [],
+      "processExitCode": 0
+    }
+  },
+  "sampleReceipts": {
+    "beforeRestart": {
+      "samples": 34,
+      "workers": {
+        "created": 2,
+        "terminated": 2,
+        "live": 0
+      }
+    },
+    "afterRestart": {
+      "samples": 11,
+      "workers": {
+        "created": 0,
+        "terminated": 0,
+        "live": 0
+      }
+    },
+    "final": {
+      "samples": 25,
+      "workers": {
+        "created": 2,
+        "terminated": 2,
+        "live": 0
+      }
+    }
+  },
+  "gpu": {
+    "qualified": false,
+    "message": "GL_INVALID_OPERATION: glDrawElements: Mismatch between texture format and sampler type (signed/unsigned/float/shadow).",
+    "finalWarningCount": 0,
+    "baseline": "Original warning reproduced on Legacy before Advanced started. Root cause was the shared Regional upload pass; the renderer-only correction passes cold preparation and quality-change WebGL checks, plus actual Electron Legacy/Advanced transitions. Full GPU/device matrix remains unqualified.",
+    "historicalWarningCount": 6,
+    "regressionResolved": true,
+    "regressionEvidence": "docs/fpv-regional-renderer-qualification.json"
+  },
+  "artifacts": [
+    {
+      "path": "/private/tmp/fpv-native-final-20261016-runtime-before-restart.json",
+      "bytes": 275131,
+      "sha256": "a111ee7c2d7a705baaf340f33894ef9cbbe23b3cda77233197eb5c304f1db354"
+    },
+    {
+      "path": "/private/tmp/fpv-native-final-20261016-runtime-after-restart.json",
+      "bytes": 45719,
+      "sha256": "664b626a1d7aad1ea6809e1573743e73e63c0d6a24359db8caef1e8c5788d710"
+    },
+    {
+      "path": "/private/tmp/fpv-native-final-20261016-r5-runtime.json",
+      "bytes": 198191,
+      "sha256": "a27fdbe94738101c7c03e2b57ba596e5a2965957595483a150fc810daef9997e"
+    },
+    {
+      "path": "/private/tmp/fpv-native-final-20261016-regional-recording.json",
+      "bytes": 122436,
+      "sha256": "6cd1041a786d05b69afabbd260b29527aec571484a7c35d6d4ff75ed488b5e4f"
+    },
+    {
+      "path": "/private/tmp/fpv-native-final-20261016-regional-recovery.json",
+      "bytes": 671165,
+      "sha256": "09e63aef42acd04d1b35d56a097ed8d9ac63962aff9bb9c86a1bf25f41ae89e2"
+    },
+    {
+      "path": "/private/tmp/fpv-native-final-20261016-r5-recording.json",
+      "bytes": 122822,
+      "sha256": "7dc371ad240f5ca1061b4145cd73335c655be82caa8991dce5ea3365c3860aad"
+    },
+    {
+      "path": "/private/tmp/fpv-native-final-20261016-r5-recovery-stderr.log",
+      "bytes": 1308,
+      "sha256": "298e08cdf3b25cfaee13b2c039ecccced93dbcee09e3d613a494b70b37039d42"
+    },
+    {
+      "path": "/private/tmp/fpv-native-20261016-rates-verified.txt",
+      "bytes": 527,
+      "sha256": "23506c36f23de11f146cc6bed18aa4e68f4c81eb4013739fc6587648c79f982f"
+    },
+    {
+      "path": "/private/tmp/fpv-native-20261016-library.json",
+      "bytes": 1973,
+      "sha256": "1e340361abc4c9288cb6fff956c679f237031dfd56984420088a6792c52ac7a7"
+    },
+    {
+      "path": "/private/tmp/fpv-native-20261016-legacy-baseline.json",
+      "bytes": 38078,
+      "sha256": "25ce8f653cfe20634573e32a4472df50d7a447195414224eafc44b2edb18fd8c"
+    },
+    {
+      "path": "/private/tmp/fpv-native-final-20261016-r6-runtime.json",
+      "bytes": 56105,
+      "sha256": "921c61bcb7aa8bedef02cc27ee6d9502925920625e1abd007445983547f1fb88"
+    },
+    {
+      "path": "/private/tmp/fpv-native-final-20261016-r6-stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/fpv-native-final-20261016-r7-runtime.json",
+      "bytes": 82948,
+      "sha256": "b650473f85118f5d1445ef490b8f308230bb6151bcbf26983b35e25de5d9614d"
+    },
+    {
+      "path": "/private/tmp/fpv-native-final-20261016-r7-stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/fpv-native-final-20261016-r7-source-check.json",
+      "bytes": 1527,
+      "sha256": "0f9f45249c7cd7da4a0854fc68b225fa9992be227e65b806dfab1fff492e5ed9"
+    },
+    {
+      "path": "/private/tmp/fpv-native-final-20261016-r8-runtime.json",
+      "bytes": 92372,
+      "sha256": "8bc85fa5541132e41690371c4653bdf15de8b75828d702cb22c3a37ea9c1fe46"
+    },
+    {
+      "path": "/private/tmp/fpv-native-final-20261016-r8-stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/fpv-native-final-20261016-r8-source-check.json",
+      "bytes": 2279,
+      "sha256": "e0afd98d2060061ff334e208315f0813fdc73eb3af1c295ff1377c6f38471eae"
+    },
+    {
+      "path": "/private/tmp/fpv-native-final-20261016-r8-policy-refresh.json",
+      "bytes": 1560,
+      "sha256": "3c8a62ba84cd776b0c8d54cf5dffe0cee5c16c21fe87a54410185fc64846b949"
+    },
+    {
+      "path": "/private/tmp/fpv-native-final-20261016-r8-pre-policy-source-check.json",
+      "bytes": 1983,
+      "sha256": "4264cde39c3ceab3568f748c65801a36e917dedb293192194657f401cbe9ba49"
+    },
+    {
+      "path": "/private/tmp/fpv-native-final-20261016-source-r8-pre-policy-manifest.json",
+      "bytes": 33223,
+      "sha256": "4b865996b7cf8c02ddb5aa2263f6cbc6bd9ceb5256215a4ee602ff51c44ce9ff"
+    },
+    {
+      "path": "/private/tmp/fpv-native-smoke-20261016-source-r8-pre-policy-manifest.json",
+      "bytes": 33944,
+      "sha256": "ddaaa06c0ca07d2a07efa188a3fe7fb066aa8a9230d8186844321fbe06961df2"
+    }
+  ],
+  "limitations": [
+    "Unsigned development shell; installer, signing/notarization and OS/device matrix not qualified.",
+    "Production password gate preserved; authenticated access flow was not exercised.",
+    "No physical USB controller/touchscreen qualification.",
+    "No Xcode or iOS simulator available; iOS runtime remains unqualified.",
+    "Full-game content exceeds unchanged 768 MiB native budget; simulator-only build is explicit.",
+    "Renderer sampler regression fixed; full GPU/device matrix remains outside the one-machine check."
+  ],
+  "currentCandidate": {
+    "source": "/private/tmp/fpv-native-final-20261016-source-r8",
+    "out": "/private/tmp/fpv-native-final-20261016-desktop",
+    "files": 183,
+    "bytes": 18205089,
+    "manifestSha256": "08cda575bd166bd24294f93fb80b164c7adc7689505afc221e05968c8c78d361",
+    "resourceReaderVerified": true,
+    "fixture": {
+      "source": "/private/tmp/fpv-native-smoke-20261016-source-r8",
+      "out": "/private/tmp/fpv-native-smoke-20261016-desktop",
+      "files": 187,
+      "bytes": 18267067,
+      "manifestSha256": "f50eb49079645c8eb3a83089a712a53e5fa86093c25bdcf7400f68b4a3ead4f2",
+      "resourceReaderVerified": true
+    },
+    "sourceMatches": {
+      "checked": 172,
+      "mismatches": [],
+      "generatedExclusions": [
+        "game/i18n/catalogs.mjs",
+        "game/index.html",
+        "native/fpv-qualification.json",
+        "native/source-packages/civilian-fpv.json",
+        "native/source-packages/fpv-worlds.json",
+        "optional-practice/civilian-fpv/icons/icon-192.png",
+        "optional-practice/civilian-fpv/icons/icon-512.png",
+        "optional-practice/civilian-fpv/worker.js",
+        "optional-practice/fpv-worlds/icons/icon-192.png",
+        "optional-practice/fpv-worlds/icons/icon-512.png",
+        "optional-practice/fpv-worlds/worker.js"
+      ]
+    },
+    "sourceHashes": {
+      "optional-practice/civilian-fpv/advanced-practice.mjs": "ed34c7081069ca78d6fde9b75ab28930b3da4a7a6b0f774373a3340143318f8b",
+      "optional-practice/civilian-fpv/advanced-worker.mjs": "5983abbe51aa92d4fe53b2cd2c6fc3223969303d821664bbba045a0d2c43695c",
+      "optional-practice/civilian-fpv/app.mjs": "7bc6fe57c5a95cdd8f633ffca73112764b27062e905a2b08a53468ef033820ad",
+      "optional-practice/civilian-fpv/renderer.mjs": "63f6ea8b5437132d8c6ec2be05cabcc214ac51efff51404daa103065e04b7ffd",
+      "optional-practice/civilian-fpv/tuning-ui.mjs": "90e4d96bf7c431cf612923fc06c9e141576d6cf516a061a1b0bdd5ed9d4ad21d",
+      "optional-practice/civilian-fpv/world-app.mjs": "e4bb41954da38d97770239942bb11a9b9d301e035a9183fbfef8bff45b38ce91",
+      "optional-practice/fpv-worlds/advanced-worker.mjs": "51b67155430c594d4a1299d386cb1b719d2ce03f0e83f0076e65c3d7e9cb8514"
+    },
+    "focusedChecks": {
+      "passed": true,
+      "scope": "Actual native World reference practice and Regional Advanced worker startup through the new World-scope bootstrap, under unchanged native CSP/resource policy. This checks native routing compatibility; browser service-worker offline behavior is covered by the generated Pages check.",
+      "workerRoute": "optional-practice/fpv-worlds/advanced-worker.mjs",
+      "wrapperResourceStatus": 200,
+      "referencePractice": {
+        "readyVisible": true,
+        "explicitStart": true,
+        "motionReadoutObserved": "Height changed from 1.5 m to 1.1 m; speed reached 2.8 m/s.",
+        "pausedViaEscape": true,
+        "returnedToTuning": true,
+        "finalWorkers": {
+          "created": 1,
+          "terminated": 1,
+          "live": 0
+        }
+      },
+      "regional": {
+        "legacyPrepared": true,
+        "advancedStarted": true,
+        "pausedTick": 20,
+        "returnedToLegacy": true,
+        "disposed": true
+      },
+      "workers": {
+        "created": 2,
+        "terminated": 2,
+        "live": 0
+      },
+      "pageErrors": [],
+      "stderrBytes": 0,
+      "processExitCode": 0,
+      "persistence": {
+        "fullProcessRestart": true,
+        "equalsR7FinalLibrary": true,
+        "libraryRevision": 5,
+        "rollMaximumDps": 840
+      },
+      "storageProbe": {
+        "lockAcquired": true,
+        "transactionComplete": true,
+        "previousVisits": 5,
+        "visits": 6
+      },
+      "sourceHashes": {
+        "optional-practice/civilian-fpv/advanced-practice.mjs": "ed34c7081069ca78d6fde9b75ab28930b3da4a7a6b0f774373a3340143318f8b",
+        "optional-practice/civilian-fpv/advanced-worker.mjs": "5983abbe51aa92d4fe53b2cd2c6fc3223969303d821664bbba045a0d2c43695c",
+        "optional-practice/civilian-fpv/app.mjs": "7bc6fe57c5a95cdd8f633ffca73112764b27062e905a2b08a53468ef033820ad",
+        "optional-practice/civilian-fpv/renderer.mjs": "63f6ea8b5437132d8c6ec2be05cabcc214ac51efff51404daa103065e04b7ffd",
+        "optional-practice/civilian-fpv/tuning-ui.mjs": "90e4d96bf7c431cf612923fc06c9e141576d6cf516a061a1b0bdd5ed9d4ad21d",
+        "optional-practice/civilian-fpv/world-app.mjs": "e4bb41954da38d97770239942bb11a9b9d301e035a9183fbfef8bff45b38ce91",
+        "optional-practice/fpv-worlds/advanced-worker.mjs": "51b67155430c594d4a1299d386cb1b719d2ce03f0e83f0076e65c3d7e9cb8514"
+      },
+      "metadataRefresh": {
+        "format": "FpvNativeMetadataRefresh.v1",
+        "reason": "World complete source archive adds one worker bootstrap; explicit file cap is 180. Byte budgets unchanged.",
+        "policy": {
+          "path": "publishing/optional-package-policy.mjs",
+          "sha256": "e8dca56614b5bd5e09ee3cbe7e86c98082d891cc685b307ea6b193615960e640",
+          "worldFileCap": 180,
+          "worldBytesCap": 20971520
+        },
+        "comparisons": [
+          {
+            "source": "/private/tmp/fpv-native-final-20261016-source-r8",
+            "testedManifest": "/private/tmp/fpv-native-final-20261016-source-r8-pre-policy-manifest.json",
+            "testedManifestSha256": "4b865996b7cf8c02ddb5aa2263f6cbc6bd9ceb5256215a4ee602ff51c44ce9ff",
+            "finalManifestSha256": "08cda575bd166bd24294f93fb80b164c7adc7689505afc221e05968c8c78d361",
+            "files": 183,
+            "unchangedPayloadFiles": 181,
+            "changedMetadataOnly": [
+              "native/fpv-qualification.json",
+              "native/source-packages/fpv-worlds.json"
+            ]
+          },
+          {
+            "source": "/private/tmp/fpv-native-smoke-20261016-source-r8",
+            "testedManifest": "/private/tmp/fpv-native-smoke-20261016-source-r8-pre-policy-manifest.json",
+            "testedManifestSha256": "ddaaa06c0ca07d2a07efa188a3fe7fb066aa8a9230d8186844321fbe06961df2",
+            "finalManifestSha256": "f50eb49079645c8eb3a83089a712a53e5fa86093c25bdcf7400f68b4a3ead4f2",
+            "files": 187,
+            "unchangedPayloadFiles": 185,
+            "changedMetadataOnly": [
+              "native/fpv-qualification.json",
+              "native/source-packages/fpv-worlds.json"
+            ]
+          }
+        ],
+        "runtimePayloadUnchanged": true
+      }
+    },
+    "rendererRegression": "docs/fpv-regional-renderer-qualification.json",
+    "historicalRendererCandidate": "/private/tmp/fpv-native-final-20261016-source-r6",
+    "historicalPointerCandidate": "/private/tmp/fpv-native-final-20261016-source-r7"
+  },
+  "historicalCandidates": [
+    {
+      "source": "/private/tmp/fpv-native-final-20261016-source-r6",
+      "out": "/private/tmp/fpv-native-final-20261016-desktop",
+      "files": 182,
+      "bytes": 18204303,
+      "manifestSha256": "ac966d138b051ce70ea7c03907e4d09d03f825a8e7b83ea41cd01bb251a53f04",
+      "resourceReaderVerified": true,
+      "fixture": {
+        "out": "/private/tmp/fpv-native-smoke-20261016-desktop",
+        "files": 186,
+        "bytes": 18266281,
+        "manifestSha256": "eee5f8b1e0982371178a8be1d14e8caa712672f181815b729ef03d57e4eb15b9",
+        "resourceReaderVerified": true
+      },
+      "sourceMatches": {
+        "checked": 171,
+        "mismatches": [],
+        "generatedExclusions": [
+          "game/i18n/catalogs.mjs",
+          "game/index.html",
+          "native/fpv-qualification.json",
+          "native/source-packages/civilian-fpv.json",
+          "native/source-packages/fpv-worlds.json",
+          "optional-practice/civilian-fpv/icons/icon-192.png",
+          "optional-practice/civilian-fpv/icons/icon-512.png",
+          "optional-practice/civilian-fpv/worker.js",
+          "optional-practice/fpv-worlds/icons/icon-192.png",
+          "optional-practice/fpv-worlds/icons/icon-512.png",
+          "optional-practice/fpv-worlds/worker.js"
+        ]
+      },
+      "rendererRegression": "docs/fpv-regional-renderer-qualification.json",
+      "historical": true,
+      "note": "r6 renderer regression candidate. Stage paths are now reused by r7; original r6 source directories and receipts remain available."
+    },
+    {
+      "source": "/private/tmp/fpv-native-final-20261016-source-r7",
+      "out": "/private/tmp/fpv-native-final-20261016-desktop",
+      "files": 182,
+      "bytes": 18204404,
+      "manifestSha256": "d9474c5aa57571bee7df18987c1b43147626794ba145cbcaad3c99fc34abef1c",
+      "resourceReaderVerified": true,
+      "fixture": {
+        "source": "/private/tmp/fpv-native-smoke-20261016-source-r7",
+        "out": "/private/tmp/fpv-native-smoke-20261016-desktop",
+        "files": 186,
+        "bytes": 18266382,
+        "manifestSha256": "c84a6d032d7eb8115aff75b99802f72db7d7abe1c9e2ab4e763387039b003df3",
+        "resourceReaderVerified": true
+      },
+      "sourceMatches": {
+        "checked": 171,
+        "mismatches": [],
+        "generatedExclusions": [
+          "game/i18n/catalogs.mjs",
+          "game/index.html",
+          "native/fpv-qualification.json",
+          "native/source-packages/civilian-fpv.json",
+          "native/source-packages/fpv-worlds.json",
+          "optional-practice/civilian-fpv/icons/icon-192.png",
+          "optional-practice/civilian-fpv/icons/icon-512.png",
+          "optional-practice/civilian-fpv/worker.js",
+          "optional-practice/fpv-worlds/icons/icon-192.png",
+          "optional-practice/fpv-worlds/icons/icon-512.png",
+          "optional-practice/fpv-worlds/worker.js"
+        ]
+      },
+      "sourceHashes": {
+        "optional-practice/civilian-fpv/app.mjs": "7bc6fe57c5a95cdd8f633ffca73112764b27062e905a2b08a53468ef033820ad",
+        "optional-practice/civilian-fpv/renderer.mjs": "63f6ea8b5437132d8c6ec2be05cabcc214ac51efff51404daa103065e04b7ffd",
+        "optional-practice/civilian-fpv/tuning-ui.mjs": "90e4d96bf7c431cf612923fc06c9e141576d6cf516a061a1b0bdd5ed9d4ad21d",
+        "optional-practice/civilian-fpv/world-app.mjs": "a0a02b05be6dc86ae3c593c3c146d8ce965454c039acda71d705477525cb81e6"
+      },
+      "focusedChecks": {
+        "passed": true,
+        "scope": "Actual native pointer Save in production World host tuning dialog, followed by cold Regional Legacy preparation, Advanced restart/20-tick flight, Legacy return and disposal. Exact pointerdown/up geometry is covered by the generated Pages browser check, not measured by this native accessibility run.",
+        "tuning": {
+          "operation": "Edit roll maximum from 830 to 840 degrees/second, then activate Save for next flight using one native coordinate pointer click.",
+          "successMessageVisible": true,
+          "savedClickReceipt": "ui:Save for next flight",
+          "libraryRevisionBefore": 4,
+          "libraryRevisionAfter": 5,
+          "profileRevisionBefore": 2,
+          "profileRevisionAfter": 3,
+          "rollMaximumDps": 840,
+          "savedToLocalLibrary": true
+        },
+        "transitions": [
+          "Legacy prepared",
+          "Advanced prepared",
+          "Advanced active",
+          "Advanced paused at tick 20",
+          "Legacy prepared",
+          "Disposed"
+        ],
+        "workers": {
+          "created": 1,
+          "terminated": 1,
+          "live": 0
+        },
+        "pageErrors": [],
+        "stderrBytes": 0,
+        "processExitCode": 0,
+        "storageProbe": {
+          "lockAcquired": true,
+          "transactionComplete": true,
+          "previousVisits": 4,
+          "visits": 5
+        },
+        "sourceHashes": {
+          "optional-practice/civilian-fpv/app.mjs": "7bc6fe57c5a95cdd8f633ffca73112764b27062e905a2b08a53468ef033820ad",
+          "optional-practice/civilian-fpv/renderer.mjs": "63f6ea8b5437132d8c6ec2be05cabcc214ac51efff51404daa103065e04b7ffd",
+          "optional-practice/civilian-fpv/tuning-ui.mjs": "90e4d96bf7c431cf612923fc06c9e141576d6cf516a061a1b0bdd5ed9d4ad21d",
+          "optional-practice/civilian-fpv/world-app.mjs": "a0a02b05be6dc86ae3c593c3c146d8ce965454c039acda71d705477525cb81e6"
+        }
+      },
+      "rendererRegression": "docs/fpv-regional-renderer-qualification.json",
+      "historicalRendererCandidate": "/private/tmp/fpv-native-final-20261016-source-r6",
+      "historical": true,
+      "note": "r7 host-pointer Save candidate. Stage paths are now reused by r8; original r7 source directories and receipts remain available."
+    }
+  ]
+}

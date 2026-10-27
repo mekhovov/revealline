@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
 import { readFile, writeFile, mkdir, mkdtemp, rm, stat, realpath } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
+import { performance } from 'node:perf_hooks';
 import path from 'node:path';
 import { tmpdir } from 'node:os';
 import { fileURLToPath, pathToFileURL } from 'node:url';
@@ -79,7 +80,14 @@ export function validateFPVObservationPlan(input, kind) {
 
 /** Reuse release admission for every original envelope member, including source
  * archives and inventories. Extract only the selected runtime; this never grants publication. */
-export async function loadFPVObservationArtifact(input, { base = process.cwd() } = {}) {
+export async function loadFPVObservationArtifact(
+  input,
+  { base = process.cwd(), packageId = 'civilian-fpv' } = {},
+) {
+  assert(
+    ['civilian-fpv', 'civilian-flight', 'fpv-worlds'].includes(packageId),
+    'Observation requires a registered practice application.',
+  );
   const plan = validateFPVArtifactBinding(input);
   const root = await realpath(path.resolve(base, plan.bundle));
   const read = async (name, limit) => {
@@ -105,9 +113,9 @@ export async function loadFPVObservationArtifact(input, { base = process.cwd() }
       return originals.get(descriptor.path);
     },
   });
-  const selected = envelope.packages.find((item) => item.id === 'civilian-fpv');
+  const selected = envelope.packages.find((item) => item.id === packageId);
   if (!selected || selected.revision !== plan.packageRevision)
-    throw new Error('The exact civilian-fpv package is absent.');
+    throw new Error(`The exact ${packageId} package is absent.`);
   const files = readEditionZip(originals.get(selected.distribution.path));
   return {
     files,
@@ -123,14 +131,21 @@ export async function loadFPVObservationArtifact(input, { base = process.cwd() }
   };
 }
 
-export function fpvObservationDeadline(promise, milliseconds, label) {
+export async function fpvObservationDeadline(promise, milliseconds, label) {
+  const expires = performance.now() + milliseconds;
   let timer;
-  return Promise.race([
-    promise,
-    new Promise((_, reject) => {
-      timer = setTimeout(() => reject(new Error(`${label} timed out.`)), milliseconds);
-    }),
-  ]).finally(() => clearTimeout(timer));
+  try {
+    const value = await Promise.race([
+      promise,
+      new Promise((_, reject) => {
+        timer = setTimeout(() => reject(new Error(`${label} timed out.`)), milliseconds);
+      }),
+    ]);
+    if (performance.now() >= expires) throw new Error(`${label} timed out.`);
+    return value;
+  } finally {
+    clearTimeout(timer);
+  }
 }
 
 export async function closeFPVObservationResources(operations) {

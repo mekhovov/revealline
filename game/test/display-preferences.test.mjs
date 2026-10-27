@@ -8,6 +8,60 @@ const rawState = (preferences) => {
   const { textFace, textSize, reducedEffects } = preferences.snapshot();
   return { textFace, textSize, reducedEffects };
 };
+
+for (const failure of ['silent', 'unreadable'])
+  test(`display ${failure} writes retain session intent until an explicit verified save`, () => {
+    const f = fixture({ stored: encode() }),
+      write = f.storage.setItem,
+      read = f.storage.getItem;
+    if (failure === 'silent') f.storage.setItem = () => {};
+    else
+      f.storage.getItem = () => {
+        throw new Error('Modeled readback failure');
+      };
+    f.preferences.set({ textSize: 'large' });
+    assert.equal(f.preferences.snapshot().textSize, 'large');
+    assert.match(f.preferences.getWarning(), /could not be saved/);
+    f.event(encode());
+    assert.equal(f.preferences.snapshot().textSize, 'large');
+    f.storage.setItem = write;
+    f.storage.getItem = read;
+    f.preferences.set({ textSize: 'large' });
+    assert.equal(f.preferences.getWarning(), '');
+    assert.equal(f.data.get(DISPLAY_PREFERENCES_KEY), encode({ textSize: 'large' }));
+  });
+
+for (const phase of ['write', 'verify'])
+  test(`a newer display edit during ${phase} cannot be acknowledged by an older write`, () => {
+    const f = fixture({ stored: encode() }),
+      write = f.storage.setItem,
+      read = f.storage.getItem;
+    const newer = () => {
+      f.storage.setItem = write;
+      f.storage.getItem = read;
+      f.preferences.set({ textFace: 'plain' });
+    };
+    if (phase === 'write')
+      f.storage.setItem = function (key, value) {
+        write.call(this, key, value);
+        newer();
+      };
+    else
+      f.storage.getItem = function (key) {
+        const result = read.call(this, key);
+        newer();
+        return result;
+      };
+    f.preferences.set({ textSize: 'large' });
+    assert.equal(f.preferences.snapshot().textFace, 'plain');
+    assert.match(f.preferences.getWarning(), /could not be saved/);
+    f.preferences.set({ textFace: 'plain' });
+    assert.equal(f.preferences.getWarning(), '');
+    assert.equal(
+      f.data.get(DISPLAY_PREFERENCES_KEY),
+      encode({ textSize: 'large', textFace: 'plain' }),
+    );
+  });
 function fixture({ stored, reduced = false, legacyPreferences, writable, onWarning } = {}) {
   const data = new Map(stored === undefined ? [] : [[DISPLAY_PREFERENCES_KEY, stored]]),
     writes = [],
@@ -74,6 +128,7 @@ test('shared display record overrides legacy synchronously and startup never wri
   assert.deepEqual(f.preferences.snapshot(), {
     textFace: 'plain',
     textSize: 'standard',
+    effectiveTextSize: 'standard',
     reducedEffects: true,
     effectiveReducedEffects: true,
     revision: 0,
@@ -408,6 +463,7 @@ test('persisted return reads current shared state and cap without resaving or du
   assert.deepEqual(f.preferences.snapshot(), {
     textFace: 'plain',
     textSize: 'large',
+    effectiveTextSize: 'large',
     reducedEffects: false,
     effectiveReducedEffects: true,
     revision: 1,

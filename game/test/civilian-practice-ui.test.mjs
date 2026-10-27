@@ -8,6 +8,47 @@ import { GLOBAL_SETTINGS } from '../ui/global-settings-view.mjs';
 import { getLocale, setLocale } from '../i18n/index.mjs';
 import { Document, Events } from './helpers/couch-dom.mjs';
 import { activateMissionCard } from './helpers/library-selection.mjs';
+import { waitFor } from './helpers/wait-for.mjs';
+
+for (const locale of ['en', 'uk'])
+  for (const kind of ['overall', 'cancelled', 'unknown'])
+    test(`Gym offline feedback ${locale} ${kind} uses safe localized reasons`, async (t) => {
+      const previous = getLocale();
+      t.after(() => setLocale(previous));
+      const f = await fixture(t, { search: `?lang=${locale}` });
+      const error =
+        kind === 'cancelled'
+          ? new DOMException('secret', 'AbortError')
+          : new Error(
+              kind === 'overall'
+                ? 'Download exceeded five minutes. Retry on a faster connection.'
+                : 'secret backend detail',
+            );
+      f.win.navigator.serviceWorker = {
+        getRegistration: async () => undefined,
+        register: async () => {
+          throw error;
+        },
+      };
+      f.doc.getElementById('offline').click();
+      await waitFor(() => f.doc.getElementById('package-status').textContent.length > 0);
+      const text = f.doc.getElementById('package-status').textContent;
+      assert.doesNotMatch(text, /secret/);
+      assert.match(
+        text,
+        kind === 'overall'
+          ? locale === 'uk'
+            ? /п’ять хвилин/
+            : /five minutes/
+          : kind === 'cancelled'
+            ? locale === 'uk'
+              ? /скасовано/
+              : /cancelled/
+            : locale === 'uk'
+              ? /Не вдалося/
+              : /failed/,
+      );
+    });
 
 async function fixture(t, { storage, search = '', previews = [] } = {}) {
   const doc = new Document(),
@@ -387,6 +428,31 @@ test('gym menu keyboard navigation owns arrows and returns from nested help with
   assert.equal(f.view.snapshot().ticks, 0);
 });
 
+test('Gym native Help retains instructions across blur and focus', async (t) => {
+  const f = await fixture(t),
+    $ = (id) => f.doc.getElementById(id);
+  $('gym-shell-action-settings').click();
+  $('gym-shell-action-help').click();
+  f.tick(2);
+  const dialog = $('help-dialog'),
+    hint = dialog.querySelector('.gym-menu-hint');
+  assert.equal(dialog.open, true);
+  assert.ok(hint, 'the native dialog owns its navigation instructions');
+  const instructions = hint.textContent,
+    state = f.view.snapshot();
+  assert.ok(instructions.length > 0);
+  f.doc.focused = false;
+  f.win.emit('blur');
+  f.tick(2);
+  assert.equal(hint.textContent, instructions, 'blur must not resize the native dialog');
+  assert.equal(hint.hidden, false);
+  f.doc.focused = true;
+  f.win.emit('focus');
+  f.tick(2);
+  assert.equal(hint.textContent, instructions, 'refocus must not reflow the clicked control');
+  assert.deepEqual(f.view.snapshot(), state, 'suspension and refocus cannot start a flight');
+});
+
 test('gym Select Mission starts the selected drill with one action', async (t) => {
   const previews = [],
     f = await fixture(t, { previews }),
@@ -668,6 +734,157 @@ for (const clock of ['animation timestamp', 'callback execution']) {
     f.tick(4);
     assert.deepEqual(f.view.snapshot(), completed, 'A stalled frame must not change drills.');
     assert.deepEqual(f.view.trace(), trace);
-    assert.equal(flow.hidden, true, 'The cancelled timer cannot silently rearm.');
+    assert.equal(flow.style.visibility, 'hidden', 'The cancelled timer cannot silently rearm.');
+    assert.equal(flow.inert, true, 'Cancelled controls cannot retain input ownership.');
   });
 }
+
+test('gym retains extra-large desired intent while its actual paused model uses the Large interface fallback', async (t) => {
+  const originalLocale = getLocale();
+  t.after(() => setLocale(originalLocale, { persist: false }));
+  const key = 'revealline.display.v1';
+  const records = new Map([
+    [key, JSON.stringify({ textFace: 'plain', textSize: 'extra-large', reducedEffects: false })],
+  ]);
+  const writes = [];
+  const storage = {
+    getItem: (name) => records.get(name) ?? null,
+    setItem(name, value) {
+      records.set(name, value);
+      writes.push(name);
+    },
+  };
+  const f = await fixture(t, { storage }),
+    $ = (id) => f.doc.getElementById(id);
+  const control = $('gym-global-textSize');
+  assert.equal(control.value, 'extra-large');
+  assert.equal(control.querySelector('[data-text-size-retained]').disabled, true);
+  assert.equal(f.doc.body.dataset.textSize, 'large');
+  assert.equal(writes.includes(key), false);
+  $('gym-shell-action-primary').click();
+  f.tick(3);
+  $('gym-shell-action-menu').click();
+  $('gym-shell-action-settings').click();
+  const paused = structuredClone(f.view.snapshot()),
+    trace = structuredClone(f.view.trace());
+  assert.equal(paused.status, 'paused');
+  for (const locale of ['uk', 'en']) {
+    setLocale(locale, { persist: false });
+    assert.equal(control.value, 'extra-large');
+    assert.equal(f.doc.body.dataset.textSize, 'large');
+    assert.equal(writes.includes(key), false);
+    f.tick(3);
+    assert.deepEqual(f.view.snapshot(), paused);
+    assert.deepEqual(f.view.trace(), trace);
+  }
+  $('gym-global-textFace').value = 'pixel';
+  $('gym-global-textFace').emit('change');
+  assert.equal(JSON.parse(records.get(key)).textSize, 'extra-large');
+  assert.equal(f.doc.body.dataset.textSize, 'large');
+  f.tick(3);
+  assert.deepEqual(f.view.snapshot(), paused);
+  assert.deepEqual(f.view.trace(), trace);
+});
+
+for (const locale of ['en', 'uk'])
+  test(`assisted gym ${locale} presets preserve a paused practice transcript through partial save, Retry and Undo`, async (t) => {
+    const priorLocale = getLocale();
+    setLocale(locale, { persist: false });
+    t.after(() => setLocale(priorLocale, { persist: false }));
+    const displayKey = 'revealline.display.v1',
+      menuKey = 'revealline.menu-animation.v1',
+      originalDisplay = { textFace: 'pixel', textSize: 'standard', reducedEffects: false },
+      values = new Map([
+        [displayKey, JSON.stringify(originalDisplay)],
+        [menuKey, 'on'],
+      ]),
+      writes = [];
+    let menuWorking = true;
+    const f = await fixture(t, {
+        search: `?lang=${locale}`,
+        storage: {
+          getItem: (key) => values.get(key) ?? null,
+          setItem(key, value) {
+            if ([displayKey, menuKey].includes(key)) {
+              writes.push([key, value]);
+              if (key === menuKey && !menuWorking)
+                throw new DOMException('Modeled full storage', 'QuotaExceededError');
+            }
+            values.set(key, value);
+          },
+        },
+      }),
+      $ = (id) => f.doc.getElementById(id),
+      preset = (suffix) => $(`gym-settings-panel-accessibility-comfort-${suffix}`);
+    $('gym-shell-action-primary').click();
+    f.key('KeyW');
+    f.tick(4);
+    f.key('KeyW', 'keyup');
+    $('gym-shell-action-pause').click();
+    $('gym-shell-action-pause-settings').click();
+    $('gym-settings-tab-accessibility').click();
+    const paused = f.view.snapshot(),
+      before = f.view.trace(),
+      replayed = replayPractice(f.view.catalogue(), before),
+      drillId = $('drill').value;
+    assert.equal(paused.status, 'paused');
+    assert.ok(paused.ticks > 0, 'The test retains a started practice attempt.');
+    assert.equal(preset('apply').closest('[hidden],[inert]'), null);
+    preset('choice').value = 'clear';
+    preset('choice').emit('change');
+    preset('choice').value = 'comfort';
+    preset('choice').emit('change');
+    assert.equal(writes.length, 0, 'Opening and previewing never writes preferences.');
+    assert.deepEqual(JSON.parse(values.get(displayKey)), originalDisplay);
+    assert.equal(values.get(menuKey), 'on');
+    menuWorking = false;
+    preset('apply').focus();
+    preset('apply').click();
+    assert.equal(writes.length, 2);
+    assert.equal(f.doc.activeElement, preset('apply'));
+    assert.equal($('gym-global-textSize').value, 'large');
+    assert.equal($('gym-global-menuAnimation').checked, false);
+    assert.deepEqual(JSON.parse(values.get(displayKey)), {
+      textFace: 'plain',
+      textSize: 'large',
+      reducedEffects: true,
+    });
+    assert.equal(values.get(menuKey), 'on');
+    assert.match(
+      preset('status').textContent,
+      locale === 'en' ? /Session only/ : /Лише в цьому сеансі/,
+    );
+    menuWorking = true;
+    preset('apply').click();
+    assert.equal(writes.length, 3, 'Retry saves only the owner that remained unsaved.');
+    assert.equal(writes[2][0], menuKey);
+    assert.equal(values.get(menuKey), 'off');
+    assert.doesNotMatch(preset('status').textContent, /Session only|Лише в цьому сеансі/);
+    f.tick(4);
+    assert.deepEqual(f.view.snapshot(), paused);
+    assert.deepEqual(f.view.trace(), before);
+    assert.deepEqual(replayPractice(f.view.catalogue(), f.view.trace()), replayed);
+    preset('undo').focus();
+    preset('undo').click();
+    assert.equal(writes.length, 5);
+    assert.deepEqual(JSON.parse(values.get(displayKey)), originalDisplay);
+    assert.equal(values.get(menuKey), 'on');
+    assert.equal(f.doc.activeElement, preset('apply'));
+    assert.equal($('drill').value, drillId);
+    assert.deepEqual(f.view.snapshot(), paused);
+    assert.deepEqual(f.view.trace(), before);
+    assert.deepEqual(replayPractice(f.view.catalogue(), f.view.trace()), replayed);
+    $('gym-shell-action-settings-back').click();
+    f.tick(4);
+    assert.equal($('gym-shell-pause-dialog').open, true);
+    assert.equal(f.doc.activeElement, $('gym-shell-action-pause-resume'));
+    assert.deepEqual(f.view.snapshot(), paused, 'Leaving Settings never resumes the drill.');
+    assert.deepEqual(f.view.trace(), before);
+    const retainedApply = preset('apply');
+    f.view.dispose();
+    const finalWrites = writes.length;
+    retainedApply.click();
+    f.win.emit('pageshow', { persisted: true });
+    assert.equal(writes.length, finalWrites);
+    assert.equal(f.doc.querySelector('.comfort-presets'), null);
+  });

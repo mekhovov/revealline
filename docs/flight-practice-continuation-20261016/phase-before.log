@@ -1,0 +1,260 @@
+TAP version 13
+# Subtest: status cancellation owns lookup and reply lifetime without cancelling a playing worker
+ok 1 - status cancellation owns lookup and reply lifetime without cancelling a playing worker
+  ---
+  duration_ms: 28.218292
+  ...
+# Subtest: detailed readiness distinguishes missing dependencies from an inconclusive worker check
+ok 2 - detailed readiness distinguishes missing dependencies from an inconclusive worker check
+  ---
+  duration_ms: 37.949834
+  ...
+# Subtest: readiness accepts legacy replies but never certifies inconclusive, contradictory or foreign status
+ok 3 - readiness accepts legacy replies but never certifies inconclusive, contradictory or foreign status
+  ---
+  duration_ms: 156.991334
+  ...
+# Subtest: civilian-flight initial inconclusive preparation preserves previous records until a verified retry
+ok 4 - civilian-flight initial inconclusive preparation preserves previous records until a verified retry
+  ---
+  duration_ms: 17.214666
+  ...
+# Subtest: civilian-flight final inconclusive preparation preserves previous records until a verified retry
+ok 5 - civilian-flight final inconclusive preparation preserves previous records until a verified retry
+  ---
+  duration_ms: 19.569792
+  ...
+# Subtest: civilian-fpv initial inconclusive preparation preserves previous records until a verified retry
+ok 6 - civilian-fpv initial inconclusive preparation preserves previous records until a verified retry
+  ---
+  duration_ms: 12.755708
+  ...
+# Subtest: civilian-fpv final inconclusive preparation preserves previous records until a verified retry
+ok 7 - civilian-fpv final inconclusive preparation preserves previous records until a verified retry
+  ---
+  duration_ms: 23.046
+  ...
+# Subtest: fpv-worlds initial inconclusive preparation preserves previous records until a verified retry
+ok 8 - fpv-worlds initial inconclusive preparation preserves previous records until a verified retry
+  ---
+  duration_ms: 14.477709
+  ...
+# Subtest: fpv-worlds final inconclusive preparation preserves previous records until a verified retry
+ok 9 - fpv-worlds final inconclusive preparation preserves previous records until a verified retry
+  ---
+  duration_ms: 30.410209
+  ...
+# Subtest: inconclusive preparation uses the caller locale and does not retry worker registration after lookup failure
+ok 10 - inconclusive preparation uses the caller locale and does not retry worker registration after lookup failure
+  ---
+  duration_ms: 8.846833
+  ...
+# Subtest: cancelling initial verification never records a late successful installation
+ok 11 - cancelling initial verification never records a late successful installation
+  ---
+  duration_ms: 7.045541
+  ...
+# Subtest: cancelling final verification rejects after activation without publishing a receipt
+ok 12 - cancelling final verification rejects after activation without publishing a receipt
+  ---
+  duration_ms: 13.768584
+  ...
+# Subtest: pagehide cancels its package operation and a fresh owner can reinstall
+ok 13 - pagehide cancels its package operation and a fresh owner can reinstall
+  ---
+  duration_ms: 12.869875
+  ...
+# Subtest: default progress belongs to the invoking native modal and Cancel restores its focus
+ok 14 - default progress belongs to the invoking native modal and Cancel restores its focus
+  ---
+  duration_ms: 9.795792
+  ...
+# Subtest: closing a moved settings owner cancels its download without reclaiming focus
+ok 15 - closing a moved settings owner cancels its download without reclaiming focus
+  ---
+  duration_ms: 10.284959
+  ...
+# Subtest: successful preparation removes progress without stealing focus from another control
+ok 16 - successful preparation removes progress without stealing focus from another control
+  ---
+  duration_ms: 8.556917
+  ...
+# Subtest: custom progress keeps caller-owned UI, focus and dialog lifetime unchanged
+ok 17 - custom progress keeps caller-owned UI, focus and dialog lifetime unchanged
+  ---
+  duration_ms: 8.942917
+  ...
+# Subtest: a closed explicit progress owner cannot start a hidden download
+ok 18 - a closed explicit progress owner cannot start a hidden download
+  ---
+  duration_ms: 0.913
+  ...
+# Subtest: late registration is cancelled and cannot recreate an installation receipt
+ok 19 - late registration is cancelled and cannot recreate an installation receipt
+  ---
+  duration_ms: 11.995291
+  ...
+# Subtest: removal retains registration ownership after caller cancellation until even a late activated worker is removed
+ok 20 - removal retains registration ownership after caller cancellation until even a late activated worker is removed
+  ---
+  duration_ms: 16.10325
+  ...
+# (node:2550) ExperimentalWarning: The MockTimers API is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: a stuck registration bounds removal waiting and a timed-out removal never runs later
+ok 21 - a stuck registration bounds removal waiting and a timed-out removal never runs later
+  ---
+  duration_ms: 11.681875
+  ...
+# Subtest: offload waits for worker write settlement and both game wrappers use scoped removal
+ok 22 - offload waits for worker write settlement and both game wrappers use scoped removal
+  ---
+  duration_ms: 14.744625
+  ...
+# Subtest: offload cancels an old verification before its pointer and exact cache are removed
+ok 23 - offload cancels an old verification before its pointer and exact cache are removed
+  ---
+  duration_ms: 8.360458
+  ...
+# Subtest: missing dependencies require repair, then exact offload and a fresh install restore the same receipt
+ok 24 - missing dependencies require repair, then exact offload and a fresh install restore the same receipt
+  ---
+  duration_ms: 28.1025
+  ...
+# Subtest: civilian-flight announces downloading before awaiting the next dependency
+not ok 25 - civilian-flight announces downloading before awaiting the next dependency
+  ---
+  duration_ms: 38.379292
+  location: '/Users/oleksandr.mekhovov/.codex/worktrees/flight-practice-publication/go_test/game/test/optional-offline-lifecycle.test.mjs:712:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected
+    
+      [
+        'downloading',
+    +   'verifying'
+    -   'downloading'
+      ]
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    0: 'downloading'
+    1: 'downloading'
+  actual:
+    0: 'downloading'
+    1: 'verifying'
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/.codex/worktrees/flight-practice-publication/go_test/game/test/optional-offline-lifecycle.test.mjs:727:14)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: civilian-flight inspection exceptions are inconclusive without changing cached bytes
+ok 26 - civilian-flight inspection exceptions are inconclusive without changing cached bytes
+  ---
+  duration_ms: 24.171958
+  ...
+# Subtest: civilian-flight status distinguishes verified bytes from missing and hash-mismatched files
+ok 27 - civilian-flight status distinguishes verified bytes from missing and hash-mismatched files
+  ---
+  duration_ms: 15.802334
+  ...
+# Subtest: civilian-flight worker keeps cancellation received before its controller exists
+ok 28 - civilian-flight worker keeps cancellation received before its controller exists
+  ---
+  duration_ms: 0.843959
+  ...
+# Subtest: civilian-flight worker waits for final writes then rejects cancellation, without announcing ready
+ok 29 - civilian-flight worker waits for final writes then rejects cancellation, without announcing ready
+  ---
+  duration_ms: 7.319625
+  ...
+# Subtest: civilian-flight old controlling worker does not recreate an offloaded cache on a later asset read
+ok 30 - civilian-flight old controlling worker does not recreate an offloaded cache on a later asset read
+  ---
+  duration_ms: 7.584791
+  ...
+# Subtest: civilian-flight read-only status does not recreate a cache removed after its names were read
+ok 31 - civilian-flight read-only status does not recreate a cache removed after its names were read
+  ---
+  duration_ms: 16.217042
+  ...
+# Subtest: civilian-flight status cannot certify an empty dependency set or a missing package
+ok 32 - civilian-flight status cannot certify an empty dependency set or a missing package
+  ---
+  duration_ms: 0.425542
+  ...
+# Subtest: package announces downloading before awaiting the next dependency
+not ok 33 - package announces downloading before awaiting the next dependency
+  ---
+  duration_ms: 21.875917
+  location: '/Users/oleksandr.mekhovov/.codex/worktrees/flight-practice-publication/go_test/game/test/optional-offline-lifecycle.test.mjs:712:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected
+    
+      [
+        'downloading',
+    +   'verifying'
+    -   'downloading'
+      ]
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    0: 'downloading'
+    1: 'downloading'
+  actual:
+    0: 'downloading'
+    1: 'verifying'
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/.codex/worktrees/flight-practice-publication/go_test/game/test/optional-offline-lifecycle.test.mjs:727:14)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: package inspection exceptions are inconclusive without changing cached bytes
+ok 34 - package inspection exceptions are inconclusive without changing cached bytes
+  ---
+  duration_ms: 12.861583
+  ...
+# Subtest: package status distinguishes verified bytes from missing and hash-mismatched files
+ok 35 - package status distinguishes verified bytes from missing and hash-mismatched files
+  ---
+  duration_ms: 16.764416
+  ...
+# Subtest: package worker keeps cancellation received before its controller exists
+ok 36 - package worker keeps cancellation received before its controller exists
+  ---
+  duration_ms: 1.054583
+  ...
+# Subtest: package worker waits for final writes then rejects cancellation, without announcing ready
+ok 37 - package worker waits for final writes then rejects cancellation, without announcing ready
+  ---
+  duration_ms: 6.231541
+  ...
+# Subtest: package old controlling worker does not recreate an offloaded cache on a later asset read
+ok 38 - package old controlling worker does not recreate an offloaded cache on a later asset read
+  ---
+  duration_ms: 0.801167
+  ...
+# Subtest: package read-only status does not recreate a cache removed after its names were read
+ok 39 - package read-only status does not recreate a cache removed after its names were read
+  ---
+  duration_ms: 0.282416
+  ...
+# Subtest: package status cannot certify an empty dependency set or a missing package
+ok 40 - package status cannot certify an empty dependency set or a missing package
+  ---
+  duration_ms: 0.069625
+  ...
+1..40
+# tests 40
+# suites 0
+# pass 38
+# fail 2
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 789.498625

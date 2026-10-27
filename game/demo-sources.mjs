@@ -95,6 +95,8 @@ export async function loadDemoSources({
           classRecipes: entry.classRecipes ?? entry.campaign.classRecipes,
         };
         if (!supportsDemoBot(simulationLevel, options)) continue;
+        const identity = demoIdentity(level, options.classRecipes),
+          recordingIdentity = demoIdentity(simulationLevel, options.classRecipes);
         for (const seed of [1, 2, 3])
           sources.push({
             id: `live-${campaignKey(entry.campaign)}-${level.id}-${seed}`,
@@ -102,15 +104,15 @@ export async function loadDemoSources({
             levelId: level.id,
             level,
             entry,
-            identity: demoIdentity(level, options.classRecipes),
-            recordingIdentity: demoIdentity(simulationLevel, options.classRecipes),
+            identity,
+            recordingIdentity,
             campaignKey: campaignKey(entry.campaign),
             levelKey: `${campaignKey(entry.campaign)}/${level.id}`,
-            create: ({ signal }) =>
+            create: ({ signal, onWorker }) =>
               prepareCompleteBotPlayer(
                 simulationLevel,
                 { ...options, seed },
-                { signal, WorkerClass, plannerSeed: seed },
+                { signal, WorkerClass, plannerSeed: seed, onWorker },
               ),
           });
       }

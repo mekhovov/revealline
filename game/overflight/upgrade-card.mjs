@@ -1,7 +1,9 @@
 import { localizedOverflight, overflightText } from './copy.mjs';
+import { overflightUpgradeConsequences } from './upgrade-consequences.mjs';
 import {
   createOverflightUpgradePreviewSprites,
   overflightUpgradePreview,
+  overflightUpgradePreviewCaptions,
 } from './upgrade-preview.mjs';
 
 /** The native draft and its review sheet share the same card, not a second mock-up. */
@@ -9,11 +11,13 @@ export function createOverflightUpgradeCard({
   document,
   offer,
   build,
+  compiled,
   player,
   rulesVersion = 2,
   riySettings,
   locale = 'en',
   reducedEffects = false,
+  expandedComparison = false,
   disabled = false,
   moduleIcon,
   paintSprite,
@@ -62,7 +66,40 @@ export function createOverflightUpgradeCard({
     sprites: createOverflightUpgradePreviewSprites(document, paintSprite, reducedEffects),
   });
   const next = local(offer.next ?? offer.description);
-  button.append(heading, preview, node('span', next, 'upgrade-description'));
+  const facts = overflightUpgradeConsequences(offer, { build, compiled }),
+    consequences = [];
+  if (facts?.payloadPath) consequences.push(text('commitmentPayload'));
+  if (facts?.combatSlots) {
+    const { used, capacity } = facts.combatSlots;
+    consequences.push(
+      text(used === capacity ? 'commitmentCombatFinal' : 'commitmentCombat')
+        .replace('{used}', String(used))
+        .replace('{capacity}', String(capacity)),
+    );
+  }
+  if (facts?.supportFamily) consequences.push(text('commitmentSupport'));
+  if (facts?.maximumRank) consequences.push(text('commitmentMaximum'));
+  const consequence = consequences.join(' ');
+  button.append(heading, preview);
+  if (expandedComparison) {
+    const comparison = node('span', '', 'upgrade-comparison');
+    for (const { label, lines, diagramText } of overflightUpgradePreviewCaptions(offer, {
+      locale,
+      build,
+      player,
+      rulesVersion,
+      riySettings,
+    })) {
+      const row = node('span', '', 'upgrade-comparison-state');
+      row.append(node('strong', label));
+      for (const line of [...lines, diagramText].filter(Boolean)) row.append(node('span', line));
+      comparison.append(row);
+    }
+    button.append(comparison);
+  }
+  button.append(node('span', next, 'upgrade-description'));
+  if (consequence)
+    button.append(node('span', consequence, 'upgrade-description upgrade-consequence'));
   if (offer.evolution) {
     const progress = node('span', '', 'upgrade-evolution');
     const marks = node('span', '', 'upgrade-ranks');
@@ -89,6 +126,7 @@ export function createOverflightUpgradeCard({
       `${text('current')}: ${local(offer.current)}`,
       `${text('next')}: ${next}`,
       preview.querySelector('svg')?.getAttribute('aria-label'),
+      consequence,
     ]
       .filter(Boolean)
       .join('. '),

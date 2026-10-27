@@ -1,4 +1,6 @@
 // These are public-UI adapters, not simulator training or completion hooks.
+import { validateFlightResponse } from '../optional-practice/civilian-fpv/radio-profile.mjs';
+
 export const OBSERVED_PACKAGES = Object.freeze({
   'civilian-flight': Object.freeze({
     settingsPrefix: 'gym',
@@ -57,6 +59,9 @@ export function resourceCleanupIssues(state) {
 }
 
 export async function activateOfflineAction(page, { button, status, expected }) {
+  // Locator.press itself can target hidden controls. Require the ordinary
+  // visible surface before witnessing a new user action.
+  await page.locator(button).waitFor({ state: 'visible' });
   // Observe DOM changes only; never clear app statuses or invoke app functions.
   // A previously displayed "Ready offline" must not satisfy a new operation.
   await page.evaluate(
@@ -105,8 +110,22 @@ export async function activateOfflineAction(page, { button, status, expected }) 
             !globalThis.document.querySelector(button)?.disabled &&
             !globalThis.document.querySelector('[data-optional-offline-progress]')
           );
-        if (/failed|timed out|cancelled|denied|quota|not available|not supported/i.test(text))
+        if (
+          /failed|timed out|stalled|exceeded five minutes|needs repair|cancelled|denied|quota|not available|not supported/i.test(
+            text,
+          )
+        )
           throw new Error(`Offline action failed: ${text}`);
+        // A fault control can be ineffective. Treat a fresh successful terminal
+        // status as an unexpected outcome, not a stalled transfer/deadline.
+        if (
+          /ready offline|ready for offline|prepared offline|offline runtime preparation completed/i.test(
+            text,
+          ) &&
+          !globalThis.document.querySelector(button)?.disabled &&
+          !globalThis.document.querySelector('[data-optional-offline-progress]')
+        )
+          throw new Error(`Unexpected offline action result: ${text}`);
         return false;
       },
       { button, status, expected: expected.source },
@@ -125,8 +144,8 @@ export async function activateOfflineAction(page, { button, status, expected }) 
 export async function revealFPVOffline(page, openHelp) {
   if (!(await page.locator('#help-dialog').isVisible())) await openHelp();
   const summary = page.locator('summary[data-sim-copy="workshopAndOffline"]');
-  // Exercise the native keyboard route. A first pointer press currently shifts
-  // this dialog before mouseup; do not misreport that separate pointer issue.
+  // Exercise the native keyboard route. Pointer stability has a separate
+  // qualification matrix; this observer cannot supply that evidence.
   if ((await summary.locator('..').getAttribute('open')) === null) await summary.press('Enter');
   await page.locator('#install-offline').waitFor({ state: 'visible' });
   await page.locator('#remove-offline').waitFor({ state: 'visible' });
@@ -145,11 +164,40 @@ export async function revealFPVProfiles(page, openSetup) {
     .waitFor({ state: 'visible' });
 }
 
-export function expectedImportedProfileExport(format, fixture) {
-  if (format === 'FlightProfiles.v1') return fixture;
+export function expectedImportedProfileExport(format, fixture, options = {}) {
+  if (!['FlightProfiles.v1', 'FlightProfiles.v2'].includes(format))
+    throw new Error(`Unsupported observed profile export format: ${format}`);
+  if (
+    !options ||
+    typeof options !== 'object' ||
+    Array.isArray(options) ||
+    Object.keys(options).some((key) => !['ratesOwner', 'priorExport', 'importNotice'].includes(key))
+  )
+    throw new Error('Invalid observed profile import policy.');
+  const { ratesOwner = false, priorExport = null, importNotice = '' } = options;
+  if (typeof ratesOwner !== 'boolean') throw new Error('Rates ownership must be explicit.');
+  const expected = structuredClone(fixture);
+  if (ratesOwner) {
+    if (
+      priorExport?.format !== format ||
+      priorExport.radio !== null ||
+      (format === 'FlightProfiles.v2' &&
+        (!Array.isArray(priorExport.radios) || priorExport.radios.length !== 0)) ||
+      typeof importNotice !== 'string' ||
+      importNotice.length > 4096 ||
+      !importNotice.includes(
+        'Included flight response settings were not applied. Rates & throttle profiles remain unchanged.',
+      )
+    )
+      throw new Error(
+        'Require the fresh public export and explicit calibration-only import notice.',
+      );
+    expected.response = validateFlightResponse(priorExport.response);
+  } else if (priorExport !== null || importNotice !== '')
+    throw new Error('Legacy profile import cannot silently opt into response preservation.');
+  if (format === 'FlightProfiles.v1') return expected;
   if (format === 'FlightProfiles.v2')
-    return { ...fixture, format, radios: fixture.radio ? [fixture.radio] : [] };
-  throw new Error(`Unsupported observed profile export format: ${format}`);
+    return { ...expected, format, radios: expected.radio ? [expected.radio] : [] };
 }
 
 export function matchesLaunchedAppURL(actual, expectedEntry, locale = 'en') {

@@ -83,18 +83,39 @@ function applyTo(source) {
 }
 
 function removeFromCurrent() {
-  const directory = mkdtempSync(join(tmpdir(), 'combat-board-baseline-'));
-  scratch.push(directory);
-  const target = join(directory, 'game/ui/render.mjs');
-  mkdirSync(join(directory, 'game/ui'), { recursive: true });
-  writeFileSync(target, current);
-  // The actual renderer has newer comments/options inside the old context.
-  // Match the exact added lines without requiring obsolete surrounding lines.
-  git(['apply', '--reverse', '-C0', '--check', patchPath], { cwd: directory });
-  git(['apply', '--reverse', '-C0', patchPath], { cwd: directory });
-  const source = readFileSync(target, 'utf8');
+  // The held patch belongs to the pinned renderer, whose reversible bytes are
+  // checked separately above. Current code has later hunt/Snake adapters and
+  // retained layers. Remove only the current additive combat presentation,
+  // retaining those adapters and caches in both sides of the command comparison.
+  let source = current;
+  const replace = (text, replacement = '', count = 1) => {
+    assert.equal(source.split(text).length - 1, count, `Current combat anchor: ${text}`);
+    source = source.replaceAll(text, replacement);
+  };
+  replace("import { combatView } from './combat-view.mjs';\n");
+  replace(`import {
+  createCombatPresentation,
+  drawCombatScrap,
+  drawCombatWarnings,
+  drawCombatProjectiles,
+} from './combat-presentation.mjs';\n`);
+  replace('    this.combatPresentation = createCombatPresentation();\n');
+  replace('    this.combatPresentation.reset();\n', '', 3);
+  replace('    this.combatPresentation.setArtRevision(artRevision);\n');
+  replace(
+    '    const combat = combatView(state);\n' +
+      '    if (combat && !combat.valid) {\n' +
+      '      throw new Error(`Cannot render optional combat: ${combat.error}`);\n' +
+      '    }\n',
+    '    const combat = null;\n',
+  );
+  replace('    if (combat && !fullReveal) drawCombatScrap(ctx, combat, p, combatOptions);\n');
+  replace('      if (combat) this.combatPresentation.drawActors(ctx, combat, p, combatOptions);\n');
+  replace('      if (combat) drawCombatWarnings(ctx, combat, p, combatOptions);\n');
+  replace('      if (combat) drawCombatProjectiles(ctx, combat, p, combatOptions);\n');
   assert(!source.includes('combatView'));
   assert(!source.includes('combatPresentation'));
+  assert(!source.includes('drawCombat'));
   return source;
 }
 
@@ -245,6 +266,20 @@ const spriteDraws = (calls) =>
   calls.filter(
     (entry) => entry.op === 'drawImage' && entry.args[0].getContext && entry.args[0].width === 16,
   );
+// Independently constructed painters own different canvases. Compare their
+// complete retained drawing content, not a fake DOM allocation ID or closure.
+const drawingEvidence = (calls) =>
+  calls.map((call) => ({
+    ...call,
+    args: call.args.map((value) =>
+      canvases.includes(value)
+        ? { width: value.width, height: value.height, calls: drawingEvidence(value.calls) }
+        : value,
+    ),
+  }));
+const drawsImage = (call, id) =>
+  call.op === 'drawImage' &&
+  (call.args[0]?.id === id || call.args[0]?.calls?.some((nested) => drawsImage(nested, id)));
 const commandIndex = (calls, predicate) => {
   const index = calls.findIndex(predicate);
   assert(index >= 0, 'Expected drawing command is present.');
@@ -311,7 +346,7 @@ test('absent and disabled combat preserve both historical and current command st
           const checkpoint = authoritativeCheckpoint(run);
           const original = render(run, { Class: Original, width, fullReveal });
           const patched = render(run, { Class: Adopted, width, fullReveal });
-          assert.deepEqual(patched.calls, original.calls);
+          assert.deepEqual(drawingEvidence(patched.calls), drawingEvidence(original.calls));
           assert.deepEqual(paintSnapshot(patched.board), paintSnapshot(original.board));
           assert.deepEqual(authoritativeCheckpoint(run), checkpoint);
           assert.equal(spriteDraws(patched.calls).length, 0);
@@ -335,7 +370,7 @@ test('absent and disabled combat leave current pursuit/interception warnings byt
         for (const width of [294, 1152]) {
           const original = render(run, { Class: UnadoptedPainter, reduced, width });
           const adopted = render(run, { reduced, width });
-          assert.deepEqual(adopted.calls, original.calls);
+          assert.deepEqual(drawingEvidence(adopted.calls), drawingEvidence(original.calls));
           assert.deepEqual(paintSnapshot(adopted.board), paintSnapshot(original.board));
           assert.equal(spriteDraws(adopted.calls).length, 0);
         }
@@ -576,7 +611,7 @@ test('actual fired projectiles draw above keepers and below the craft with a rea
   }
 });
 
-test('real ram and terminal capture place inert scrap over the picture with no terminal live threats', () => {
+test('real ram places inert scrap over the picture while terminal capture reveals a clean picture', () => {
   for (const [cause, count, options] of [
     ['ram', 150, {}],
     ['capture', 1000, { capture: true }],
@@ -590,19 +625,16 @@ test('real ram and terminal capture place inert scrap over the picture with no t
     const fullReveal = cause === 'capture';
     if (fullReveal) assert.equal(run.status, 'won');
     const shown = render(run, { fullReveal });
-    const picture = commandIndex(
-      shown.calls,
-      (c) => c.op === 'drawImage' && c.args[0].id === 'picture',
-    );
-    const scrap = commandIndex(
-      shown.calls,
+    const picture = commandIndex(shown.calls, (c) => drawsImage(c, 'picture'));
+    const scrap = shown.calls.findIndex(
       (c) =>
         c.op === 'fillRect' &&
         atPoint(c.args, mark.x * 16 - 4, mark.y * 16 - 2) &&
         c.args[2] === 8 &&
         c.args[3] === 4,
     );
-    assert(picture < scrap);
+    if (fullReveal) assert.equal(scrap, -1, 'The revealed result hides all field scrap.');
+    else assert(picture < scrap, 'Live inert scrap is composited above the retained picture.');
     const hidden = render(run, { fullReveal, showCombatScrap: false });
     assert(
       !hidden.calls.some(
@@ -709,13 +741,14 @@ test('a real terminal capture is immediately static even unreduced, while surviv
   assert.equal(view.tick, mark.tick, 'The real terminal event is still at spark age zero.');
   const { calls } = render(captured, { fullReveal: true, reduced: false });
   assert(
-    calls.some(
+    !calls.some(
       (c) =>
         c.op === 'fillRect' &&
         atPoint(c.args, mark.x * 16 - 4, mark.y * 16 - 2) &&
         c.args[2] === 8 &&
         c.args[3] === 4,
     ),
+    'The full revealed picture does not retain field scrap.',
   );
   assert(
     !calls.some(

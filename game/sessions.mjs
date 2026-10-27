@@ -18,6 +18,7 @@ import { snapshotSessionActorPin } from './session-actor-pin.mjs';
 import { ACTOR_APPEARANCE_PIN_BYTES } from './presentation/actor-appearance-pin.mjs';
 import { matchReplayInstalledRules } from './replay-installed-rules.mjs';
 import { PRESENTATION_PINS_FORMAT } from './presentation-pins.mjs';
+import { classicRulesSessionPictureContext } from './classic-rules-session.mjs';
 import {
   FLIGHT_MEDIA_PINS_FORMAT,
   snapshotFlightPresentationPins,
@@ -31,11 +32,13 @@ export const PRESENTATION_SESSION_FORMAT = 'xonix-session.v3';
 export const STORY_SESSION_FORMAT = 'xonix-session.v4';
 export const VISUAL_SESSION_FORMAT = 'xonix-session.v5';
 export const ACTOR_SESSION_FORMAT = 'xonix-session.v6';
+export const CLASSIC_RULES_SESSION_FORMAT = 'xonix-session.v7';
 const pictureFormats = [
   PRESENTATION_SESSION_FORMAT,
   STORY_SESSION_FORMAT,
   VISUAL_SESSION_FORMAT,
   ACTOR_SESSION_FORMAT,
+  CLASSIC_RULES_SESSION_FORMAT,
 ];
 const continuationFormats = [CONTINUOUS_SESSION_FORMAT, ...pictureFormats];
 export const SESSION_STORAGE_BYTES = 2 * 1024 * 1024;
@@ -88,7 +91,9 @@ function envelope(candidate) {
     maxArray: MAX_REPLAY_TICKS,
     maxString: 262144,
   });
-  if (session.format !== ACTOR_SESSION_FORMAT)
+  const currentRules = session.format === CLASSIC_RULES_SESSION_FORMAT;
+  const extended = currentRules || session.format === ACTOR_SESSION_FORMAT;
+  if (!extended)
     required(
       new TextEncoder().encode(typeof candidate === 'string' ? candidate : JSON.stringify(session))
         .byteLength <= legacyImportBytes,
@@ -106,10 +111,9 @@ function envelope(candidate) {
       'replay',
       ...(continuationFormats.includes(session.format) ? ['continuation'] : []),
       ...(pictureFormats.includes(session.format) ? ['presentationPins'] : []),
-      ...(session.format === VISUAL_SESSION_FORMAT || session.format === ACTOR_SESSION_FORMAT
-        ? ['visualThemePin']
-        : []),
-      ...(session.format === ACTOR_SESSION_FORMAT ? ['actorAppearancePin'] : []),
+      ...(session.format === VISUAL_SESSION_FORMAT || extended ? ['visualThemePin'] : []),
+      ...(extended ? ['actorAppearancePin'] : []),
+      ...(currentRules ? ['pictureSource'] : []),
     ],
     'saved attempt',
   );
@@ -121,6 +125,7 @@ function envelope(candidate) {
       STORY_SESSION_FORMAT,
       VISUAL_SESSION_FORMAT,
       ACTOR_SESSION_FORMAT,
+      CLASSIC_RULES_SESSION_FORMAT,
     ].includes(session.format),
     'Unsupported saved attempt format.',
   );
@@ -137,7 +142,7 @@ function envelope(candidate) {
     session.presentationPins = snapshotFlightPresentationPins(session.presentationPins);
     required(
       session.format === VISUAL_SESSION_FORMAT ||
-        session.format === ACTOR_SESSION_FORMAT ||
+        extended ||
         session.presentationPins.format ===
           (session.format === STORY_SESSION_FORMAT
             ? FLIGHT_MEDIA_PINS_FORMAT
@@ -150,7 +155,7 @@ function envelope(candidate) {
     session.replay !== null && typeof session.replay === 'object' && !Array.isArray(session.replay),
     'Saved attempt replay is missing.',
   );
-  if (session.format === ACTOR_SESSION_FORMAT)
+  if (extended)
     required(
       new TextEncoder().encode(JSON.stringify(session.replay)).byteLength <= MAX_REPLAY_BYTES,
       'Saved replay exceeds its unchanged byte budget.',
@@ -161,20 +166,35 @@ function envelope(candidate) {
     replayVersion: session.replay.version,
     checkpointAlgorithm: session.replay.checkpoint?.algorithm,
   });
-  if (
-    session.format === VISUAL_SESSION_FORMAT ||
-    (session.format === ACTOR_SESSION_FORMAT && session.visualThemePin !== null)
-  )
+  const pictureContext = currentRules
+    ? classicRulesSessionPictureContext(session.pictureSource, {
+        campaignKey: session.campaignKey,
+        levelId: session.replay.level?.id,
+      })
+    : null;
+  if (pictureContext) {
+    session.pictureSource = pictureContext.source;
+    required(
+      session.presentationPins.executionKey === pictureContext.campaignKey &&
+        session.presentationPins.levelId === pictureContext.level.id &&
+        session.presentationPins.levelRevision === pictureContext.level.revision,
+      'Saved Current rules pictures differ from their original execution.',
+    );
+  }
+  if (session.format === VISUAL_SESSION_FORMAT || (extended && session.visualThemePin !== null))
     session.visualThemePin = snapshotSessionVisualPin(session.visualThemePin, {
       pictures: session.presentationPins,
-      campaignKey: session.campaignKey,
+      campaignKey: pictureContext?.campaignKey ?? session.campaignKey,
       themeId: session.themeId,
       simulationLevel: session.replay.level,
     });
-  if (session.format === ACTOR_SESSION_FORMAT)
+  if (
+    session.format === ACTOR_SESSION_FORMAT ||
+    (currentRules && session.actorAppearancePin !== null)
+  )
     session.actorAppearancePin = snapshotSessionActorPin(session.actorAppearancePin, {
       pictures: session.presentationPins,
-      campaignKey: session.campaignKey,
+      campaignKey: pictureContext?.campaignKey ?? session.campaignKey,
       themeId: session.themeId,
       simulationLevel: session.replay.level,
     });
@@ -197,6 +217,8 @@ export function suspendSession({
   presentationLevel,
   visualThemePin,
   actorAppearancePin,
+  classicRulesPictureSource,
+  campaign,
 }) {
   if (!run || !['running', 'respawning'].includes(run.status))
     throw new Error('Only an unfinished attempt can be suspended.');
@@ -208,6 +230,19 @@ export function suspendSession({
   const intent = continuation === undefined ? undefined : continuationValue(continuation);
   const pictures =
     presentationPins === undefined ? undefined : snapshotFlightPresentationPins(presentationPins);
+  const pictureContext =
+    classicRulesPictureSource === undefined
+      ? null
+      : classicRulesSessionPictureContext(classicRulesPictureSource, {
+          campaignKey,
+          levelId: run.level.id,
+          campaign,
+        });
+  if (pictureContext)
+    required(
+      campaign && pictures && intent,
+      'Current rules saves need installed rules and pictures.',
+    );
   const tuning = recoverGameplayTuning(run.level);
   const projected = !!(tuning || run.level.runningEnemies);
   let pictureRevision = run.level.revision;
@@ -235,9 +270,9 @@ export function suspendSession({
   if (pictures !== undefined)
     required(
       intent !== undefined &&
-        pictures.executionKey === campaignKey &&
+        pictures.executionKey === (pictureContext?.campaignKey ?? campaignKey) &&
         pictures.levelId === run.level.id &&
-        pictures.levelRevision === pictureRevision &&
+        pictures.levelRevision === (pictureContext?.level.revision ?? pictureRevision) &&
         presentationPicturePins(pictures).choices.some(
           (choice) => choice.identity.themeId === themeId,
         ),
@@ -248,20 +283,20 @@ export function suspendSession({
       ? undefined
       : snapshotSessionVisualPin(visualThemePin, {
           pictures,
-          campaignKey,
+          campaignKey: pictureContext?.campaignKey ?? campaignKey,
           themeId,
           simulationLevel: run.level,
-          presentationLevel: projected ? presentationLevel : run.level,
+          presentationLevel: pictureContext?.level ?? (projected ? presentationLevel : run.level),
         });
   let actors;
   if (actorAppearancePin !== undefined) {
     required(intent !== undefined, 'Saved actors require explicit continuation.');
     actors = snapshotSessionActorPin(actorAppearancePin, {
       pictures,
-      campaignKey,
+      campaignKey: pictureContext?.campaignKey ?? campaignKey,
       themeId,
       simulationLevel: run.level,
-      presentationLevel: projected ? presentationLevel : run.level,
+      presentationLevel: pictureContext?.level ?? (projected ? presentationLevel : run.level),
     });
   }
   if (intent === undefined) {
@@ -269,8 +304,9 @@ export function suspendSession({
     recordRelease(recorder);
   }
   return {
-    format:
-      actors !== undefined
+    format: pictureContext
+      ? CLASSIC_RULES_SESSION_FORMAT
+      : actors !== undefined
         ? ACTOR_SESSION_FORMAT
         : visuals !== undefined
           ? VISUAL_SESSION_FORMAT
@@ -286,14 +322,15 @@ export function suspendSession({
     bodyId,
     runId,
     savedAt,
+    ...(pictureContext ? { pictureSource: pictureContext.source } : {}),
     ...(intent === undefined ? {} : { continuation: intent }),
     ...(pictures === undefined
       ? actors !== undefined
         ? { presentationPins: null }
         : {}
       : { presentationPins: pictures }),
-    ...(actors !== undefined
-      ? { visualThemePin: visuals ?? null, actorAppearancePin: actors }
+    ...(actors !== undefined || pictureContext
+      ? { visualThemePin: visuals ?? null, actorAppearancePin: actors ?? null }
       : visuals === undefined
         ? {}
         : { visualThemePin: visuals }),
@@ -343,31 +380,43 @@ export async function restoreSession(
     replay: session.replay,
     state: checked.state,
   });
+  const pictureContext =
+    session.format === CLASSIC_RULES_SESSION_FORMAT
+      ? classicRulesSessionPictureContext(session.pictureSource, {
+          campaignKey,
+          levelId: level.id,
+          campaign: installed,
+        })
+      : null;
   if (pictureFormats.includes(session.format) && session.presentationPins !== null)
     validateFlightPresentationPinsForRun(session.presentationPins, {
       identityCatalog: mediaIdentityCatalog,
-      campaignKey,
-      level,
+      campaignKey: pictureContext?.campaignKey ?? campaignKey,
+      level: pictureContext?.level ?? level,
       themeId: session.themeId,
     });
   if (
     session.format === VISUAL_SESSION_FORMAT ||
-    (session.format === ACTOR_SESSION_FORMAT && session.visualThemePin !== null)
+    ([ACTOR_SESSION_FORMAT, CLASSIC_RULES_SESSION_FORMAT].includes(session.format) &&
+      session.visualThemePin !== null)
   )
     session.visualThemePin = snapshotSessionVisualPin(session.visualThemePin, {
       pictures: session.presentationPins,
-      campaignKey,
+      campaignKey: pictureContext?.campaignKey ?? campaignKey,
       themeId: session.themeId,
       simulationLevel: checked.state.level,
-      presentationLevel: level,
+      presentationLevel: pictureContext?.level ?? level,
     });
-  if (session.format === ACTOR_SESSION_FORMAT)
+  if (
+    session.format === ACTOR_SESSION_FORMAT ||
+    (session.format === CLASSIC_RULES_SESSION_FORMAT && session.actorAppearancePin !== null)
+  )
     session.actorAppearancePin = snapshotSessionActorPin(session.actorAppearancePin, {
       pictures: session.presentationPins,
-      campaignKey,
+      campaignKey: pictureContext?.campaignKey ?? campaignKey,
       themeId: session.themeId,
       simulationLevel: checked.state.level,
-      presentationLevel: level,
+      presentationLevel: pictureContext?.level ?? level,
     });
   const recorder = createRecorder(
     session.replay.level,

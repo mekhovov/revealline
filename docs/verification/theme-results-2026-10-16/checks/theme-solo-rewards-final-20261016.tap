@@ -1,0 +1,70 @@
+TAP version 13
+# Subtest: Solo win advances from picture to results and the next mission automatically while Random stays available
+ok 1 - Solo win advances from picture to results and the next mission automatically while Random stays available
+  ---
+  duration_ms: 68928.584625
+  ...
+# Subtest: Solo Skip advances a Custom mission without rewards and retains its mission cursor
+ok 2 - Solo Skip advances a Custom mission without rewards and retains its mission cursor
+  ---
+  duration_ms: 17999.088167
+  ...
+# Subtest: Solo Next crosses Custom campaign and pack boundaries without a summary or picker
+ok 3 - Solo Next crosses Custom campaign and pack boundaries without a summary or picker
+  ---
+  duration_ms: 136068.511625
+  ...
+# Subtest: Solo boundary metadata failure preserves the earned result and allows retry
+ok 4 - Solo boundary metadata failure preserves the earned result and allows retry
+  ---
+  duration_ms: 54926.655333
+  ...
+# Subtest: Solo boundary metadata cancel preserves the earned result and allows retry
+ok 5 - Solo boundary metadata cancel preserves the earned result and allows retry
+  ---
+  duration_ms: 115977.362083
+  ...
+# Subtest: Solo final Journey result retains the picture while Browse permits a deliberate exact Classic handoff
+ok 6 - Solo final Journey result retains the picture while Browse permits a deliberate exact Classic handoff
+  ---
+  duration_ms: 33341.383709
+  ...
+# Subtest: Solo respects automatic progression disabled before victory
+ok 7 - Solo respects automatic progression disabled before victory
+  ---
+  duration_ms: 102809.393667
+  ...
+# Subtest: Solo respects automatic progression disabled during countdown
+ok 8 - Solo respects automatic progression disabled during countdown
+  ---
+  duration_ms: 118462.8595
+  ...
+# Subtest: full effects: a legal win presents its earned picture before the automatic result
+ok 9 - full effects: a legal win presents its earned picture before the automatic result
+  ---
+  duration_ms: 23783.192584
+  ...
+# Subtest: reduced effects: a legal win presents its earned picture before the automatic result
+ok 10 - reduced effects: a legal win presents its earned picture before the automatic result
+  ---
+  duration_ms: 39710.098958
+  ...
+# Subtest: the automatic victory presentation does not expose a redundant animation-skip step
+ok 11 - the automatic victory presentation does not expose a redundant animation-skip step
+  ---
+  duration_ms: 54323.982041
+  ...
+# Subtest: held controller Confirm cannot interrupt the automatic victory presentation
+ok 12 - held controller Confirm cannot interrupt the automatic victory presentation
+  ---
+  duration_ms: 48714.011666
+  ...
+1..12
+# tests 12
+# suites 0
+# pass 12
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 648981.257042

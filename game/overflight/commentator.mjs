@@ -149,6 +149,9 @@ export function createOverflightCommentator({ reactions = null, ...host } = {}) 
     preferences: shared.preferences,
     options: shared.options,
     diagnostics: shared.diagnostics,
+    refreshCaptionLayout: () => {
+      if (!closed) shared.refreshCaptionLayout?.();
+    },
     prepare: () => {
       if (!closed) shared.prepare();
     },

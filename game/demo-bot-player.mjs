@@ -19,11 +19,18 @@ function checkAbort(signal) {
   if (signal?.aborted) throw abortError();
 }
 
-function workerTransport(WorkerClass, watchdogMs) {
+function workerTransport(WorkerClass, watchdogMs, onWorker) {
   if (typeof WorkerClass !== 'function') throw new Error('Live autoplay requires a Web Worker.');
   const worker = new WorkerClass(new URL('./demo-bot-worker.mjs', import.meta.url), {
     type: 'module',
   });
+  let releaseObservation = null;
+  try {
+    const release = onWorker?.();
+    if (typeof release === 'function') releaseObservation = release;
+  } catch {
+    // Optional diagnostics cannot change the worker's lifetime or gameplay.
+  }
   let serial = 0,
     stopped = false,
     terminated = false,
@@ -32,7 +39,17 @@ function workerTransport(WorkerClass, watchdogMs) {
   function retire() {
     if (!terminated) {
       terminated = true;
-      termination = worker.terminate();
+      try {
+        termination = worker.terminate();
+      } finally {
+        const release = releaseObservation;
+        releaseObservation = null;
+        try {
+          release?.();
+        } catch {
+          // A diagnostic observer never prevents ordinary owner cleanup.
+        }
+      }
       if (termination && typeof termination.then === 'function') {
         termination = Promise.resolve(termination);
         retiringWorkers.add(termination);
@@ -138,6 +155,7 @@ export async function prepareBotPlayer(
     WorkerClass = globalThis.Worker,
     plannerSeed = options.seed ?? 1,
     watchdogMs = 1000,
+    onWorker = null,
   } = {},
 ) {
   checkAbort(signal);
@@ -244,7 +262,7 @@ export async function prepareBotPlayer(
       if (retiringWorkers.size) await Promise.all([...retiringWorkers]);
       checkAbort(signal);
       if (disposed || generation !== version) throw abortError();
-      transport = workerTransport(WorkerClass, watchdogMs);
+      transport = workerTransport(WorkerClass, watchdogMs, onWorker);
       const result = await transport.request(state, plannerSeed, decision);
       checkAbort(signal);
       if (disposed || generation !== version) throw abortError();

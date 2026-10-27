@@ -1,0 +1,515 @@
+TAP version 13
+# Subtest: Survivor built-in battlefields retain the opening and shorten only the last two choices
+ok 1 - Survivor built-in battlefields retain the opening and shorten only the last two choices
+  ---
+  duration_ms: 146.762417
+  ...
+# Subtest: Survivor legacy and explicit authored progression survive compile/import and upgraded copies
+ok 2 - Survivor legacy and explicit authored progression survive compile/import and upgraded copies
+  ---
+  duration_ms: 15.450542
+  ...
+# Subtest: Survivor revised thresholds partition durable V4 records without changing visual identity
+ok 3 - Survivor revised thresholds partition durable V4 records without changing visual identity
+  ---
+  duration_ms: 4.0695
+  ...
+# Subtest: Riy built-in battlefields retain the opening and shorten only the last two choices
+ok 4 - Riy built-in battlefields retain the opening and shorten only the last two choices
+  ---
+  duration_ms: 192.749167
+  ...
+# Subtest: Riy legacy and explicit authored progression survive compile/import and upgraded copies
+ok 5 - Riy legacy and explicit authored progression survive compile/import and upgraded copies
+  ---
+  duration_ms: 29.828083
+  ...
+# Subtest: Riy revised thresholds partition durable V4 records without changing visual identity
+ok 6 - Riy revised thresholds partition durable V4 records without changing visual identity
+  ---
+  duration_ms: 6.097916
+  ...
+# Subtest: local crowd force crosses grid boundaries continuously and uses neighboring cells
+ok 7 - local crowd force crosses grid boundaries continuously and uses neighboring cells
+  ---
+  duration_ms: 1.082167
+  ...
+# Subtest: coincident bodies receive finite opposite separation and distant bodies have no force
+ok 8 - coincident bodies receive finite opposite separation and distant bodies have no force
+  ---
+  duration_ms: 0.146375
+  ...
+# Subtest: Survival authors local separation explicitly without rewriting earlier content or records
+ok 9 - Survival authors local separation explicitly without rewriting earlier content or records
+  ---
+  duration_ms: 33.019042
+  ...
+# Subtest: Riy authors local separation explicitly without rewriting earlier content or records
+ok 10 - Riy authors local separation explicitly without rewriting earlier content or records
+  ---
+  duration_ms: 26.898625
+  ...
+# Subtest: the native simulation uses authored local spacing and preserves complete area damage
+ok 11 - the native simulation uses authored local spacing and preserves complete area damage
+  ---
+  duration_ms: 27.680958
+  ...
+# Subtest: same and new-seed sorties preserve explicitly authored local crowd rules
+ok 12 - same and new-seed sorties preserve explicitly authored local crowd rules
+  ---
+  duration_ms: 4.130584
+  ...
+# Subtest: Raid does not advertise or silently accept the Survivor-only movement experiment
+ok 13 - Raid does not advertise or silently accept the Survivor-only movement experiment
+  ---
+  duration_ms: 6.088292
+  ...
+# Subtest: local broad phase matches every nearby body across rebuilds, radii and arena edges
+ok 14 - local broad phase matches every nearby body across rebuilds, radii and arena edges
+  ---
+  duration_ms: 12.362209
+  ...
+# Subtest: local spacing freezes coordinates before its first query and allocates its fine index only on demand
+ok 15 - local spacing freezes coordinates before its first query and allocates its fine index only on demand
+  ---
+  duration_ms: 0.27725
+  ...
+# Subtest: diagnostic fixtures explicitly select local spacing without enabling it in ordinary play or Raid
+ok 16 - diagnostic fixtures explicitly select local spacing without enabling it in ordinary play or Raid
+  ---
+  duration_ms: 0.472666
+  ...
+# Subtest: review provenance and pilot inputs share the selected route without changing prior defaults
+ok 17 - review provenance and pilot inputs share the selected route without changing prior defaults
+  ---
+  duration_ms: 1.423583
+  ...
+# Subtest: native entry forwards an explicit review route through both wrappers and records that same route
+ok 18 - native entry forwards an explicit review route through both wrappers and records that same route
+  ---
+  duration_ms: 71.768042
+  ...
+# Subtest: native variant mission picker queries progress only for supported installed projects
+ok 19 - native variant mission picker queries progress only for supported installed projects
+  ---
+  duration_ms: 78.495458
+  ...
+# Subtest: completed-frame trials include explicitly requested native Survivor and Riy review builds
+ok 20 - completed-frame trials include explicitly requested native Survivor and Riy review builds
+  ---
+  duration_ms: 20.279042
+  ...
+# Subtest: native catalogue exposes all eighteen compiled layouts for all five operations
+ok 21 - native catalogue exposes all eighteen compiled layouts for all five operations
+  ---
+  duration_ms: 279.205833
+  ...
+# Subtest: one fixed clock scales every simulation system and keeps paused time out of the run
+ok 22 - one fixed clock scales every simulation system and keeps paused time out of the run
+  ---
+  duration_ms: 0.476542
+  ...
+# Subtest: an upgrade stops catch-up on that exact step and a hitch never requests automatic pause
+ok 23 - an upgrade stops catch-up on that exact step and a hitch never requests automatic pause
+  ---
+  duration_ms: 0.070916
+  ...
+# Subtest: modal actions wait for release while held steering stays responsive
+ok 24 - modal actions wait for release while held steering stays responsive
+  ---
+  duration_ms: 0.11875
+  ...
+# Subtest: keyboard focus loss forgets missed keyup but rejects repeats until a fresh press
+ok 25 - keyboard focus loss forgets missed keyup but rejects repeats until a fresh press
+  ---
+  duration_ms: 0.150416
+  ...
+# Subtest: raw measurement pages stay bounded and reconstruct the complete untruncated receipt
+ok 26 - raw measurement pages stay bounded and reconstruct the complete untruncated receipt
+  ---
+  duration_ms: 2.010459
+  ...
+# Subtest: the shared audio adapter emits bounded semantic cues once per tick
+ok 27 - the shared audio adapter emits bounded semantic cues once per tick
+  ---
+  duration_ms: 1.050292
+  ...
+# Subtest: native Overflight interface has matching English and Ukrainian coverage
+ok 28 - native Overflight interface has matching English and Ukrainian coverage
+  ---
+  duration_ms: 0.161208
+  ...
+# Subtest: the 750 ms resume ramp integrates exactly at different display cadences
+ok 29 - the 750 ms resume ramp integrates exactly at different display cadences
+  ---
+  duration_ms: 0.223958
+  ...
+# Subtest: ten retries keep one renderer and context restoration requires explicit resume
+ok 30 - ten retries keep one renderer and context restoration requires explicit resume
+  ---
+  duration_ms: 7.441459
+  ...
+# Subtest: appearance replacement retires the old atlas first and teardown retires a pending renderer
+ok 31 - appearance replacement retires the old atlas first and teardown retires a pending renderer
+  ---
+  duration_ms: 1.226042
+  ...
+# Subtest: native music context is accepted by the shared soundtrack schema
+ok 32 - native music context is accepted by the shared soundtrack schema
+  ---
+  duration_ms: 0.566334
+  ...
+# Subtest: Studio project messages require the exact same-origin embedding parent
+ok 33 - Studio project messages require the exact same-origin embedding parent
+  ---
+  duration_ms: 0.0965
+  ...
+# Subtest: an accepted evolution has one audio cue even when no simulation tick elapsed
+ok 34 - an accepted evolution has one audio cue even when no simulation tick elapsed
+  ---
+  duration_ms: 0.196458
+  ...
+# Subtest: a failed renderer is replaced on Retry while healthy retries retain their owner
+ok 35 - a failed renderer is replaced on Retry while healthy retries retain their owner
+  ---
+  duration_ms: 0.099042
+  ...
+# Subtest: explicit review playback uses ordinary input at 10 Hz while the host keeps fixed 60 Hz steps
+ok 36 - explicit review playback uses ordinary input at 10 Hz while the host keeps fixed 60 Hz steps
+  ---
+  duration_ms: 0.27825
+  ...
+# Subtest: review upgrades show legally rerolled offers for 1.5 visible seconds and never count hidden time
+ok 37 - review upgrades show legally rerolled offers for 1.5 visible seconds and never count hidden time
+  ---
+  duration_ms: 0.119833
+  ...
+# Subtest: ordinary manual play never invokes review input or automatic upgrade selection
+ok 38 - ordinary manual play never invokes review input or automatic upgrade selection
+  ---
+  duration_ms: 0.036792
+  ...
+# Subtest: review capture is silent, bounded to 20 seconds, and releases tracks, timers and previous URLs
+ok 39 - review capture is silent, bounded to 20 seconds, and releases tracks, timers and previous URLs
+  ---
+  duration_ms: 0.577333
+  ...
+# Subtest: oversize and unsupported review capture fail without retaining chunks or active tracks
+ok 40 - oversize and unsupported review capture fail without retaining chunks or active tracks
+  ---
+  duration_ms: 1.958791
+  ...
+# Subtest: native Marathon continuation retains its run when next-sortie settings change
+ok 41 - native Marathon continuation retains its run when next-sortie settings change
+  ---
+  duration_ms: 8.728625
+  ...
+# Subtest: review stop checkpoints are bounded and require an explicit diagnostic build
+ok 42 - review stop checkpoints are bounded and require an explicit diagnostic build
+  ---
+  duration_ms: 0.104458
+  ...
+# Subtest: review stop immediately releases all actions, survives replacements, and keeps earned drafts
+ok 43 - review stop immediately releases all actions, survives replacements, and keeps earned drafts
+  ---
+  duration_ms: 0.1055
+  ...
+# Subtest: native Settings initialization preserves operation cards and navigation on Home
+ok 44 - native Settings initialization preserves operation cards and navigation on Home
+  ---
+  duration_ms: 22.635375
+  ...
+# Subtest: a selected demonstration remains manual until opt-in, and takeover stops all automation
+ok 45 - a selected demonstration remains manual until opt-in, and takeover stops all automation
+  ---
+  duration_ms: 0.141
+  ...
+# Subtest: opt-in review traces retain bounded ordinary inputs and snapshots without writing simulation state
+ok 46 - opt-in review traces retain bounded ordinary inputs and snapshots without writing simulation state
+  ---
+  duration_ms: 81.710583
+  ...
+# Subtest: finished review download captures terminal state instead of an older inspector snapshot
+ok 47 - finished review download captures terminal state instead of an older inspector snapshot
+  ---
+  duration_ms: 9.422292
+  ...
+# Subtest: survivor: new V4 sorties shorten only the last two choices and identify the balance revision
+ok 48 - survivor: new V4 sorties shorten only the last two choices and identify the balance revision
+  ---
+  duration_ms: 139.633166
+  ...
+# Subtest: survivor: previous authored/imported V4 projects retain exact rules and identity
+ok 49 - survivor: previous authored/imported V4 projects retain exact rules and identity
+  ---
+  duration_ms: 6.008208
+  ...
+# Subtest: survivor: old and new balance records survive a mixed-profile reopen
+ok 50 - survivor: old and new balance records survive a mixed-profile reopen
+  ---
+  duration_ms: 12.777709
+  ...
+# Subtest: riy: new V4 sorties shorten only the last two choices and identify the balance revision
+ok 51 - riy: new V4 sorties shorten only the last two choices and identify the balance revision
+  ---
+  duration_ms: 183.922959
+  ...
+# Subtest: riy: previous authored/imported V4 projects retain exact rules and identity
+ok 52 - riy: previous authored/imported V4 projects retain exact rules and identity
+  ---
+  duration_ms: 13.914625
+  ...
+# Subtest: riy: old and new balance records survive a mixed-profile reopen
+ok 53 - riy: old and new balance records survive a mixed-profile reopen
+  ---
+  duration_ms: 15.557417
+  ...
+# Subtest: Raid records keep score and fastest successful clear independent
+ok 54 - Raid records keep score and fastest successful clear independent
+  ---
+  duration_ms: 3.050125
+  ...
+# Subtest: record identity separates content, seed and gameplay settings but shares cosmetics
+ok 55 - record identity separates content, seed and gameplay settings but shares cosmetics
+  ---
+  duration_ms: 1.921917
+  ...
+# Subtest: storage failure is session-only and can recover without losing the previous record
+ok 56 - storage failure is session-only and can recover without losing the previous record
+  ---
+  duration_ms: 1.67925
+  ...
+# Subtest: nonterminal, nonfinite and review attempts cannot set records
+ok 57 - nonterminal, nonfinite and review attempts cannot set records
+  ---
+  duration_ms: 1.038208
+  ...
+# Subtest: failed writes preserve stronger durable records in session results and later reads
+ok 58 - failed writes preserve stronger durable records in session results and later reads
+  ---
+  duration_ms: 1.546166
+  ...
+# Subtest: Raid launch preserves same-build locale and artwork, rejects unknown paths
+ok 59 - Raid launch preserves same-build locale and artwork, rejects unknown paths
+  ---
+  duration_ms: 1.862792
+  ...
+# Subtest: Raid cues are distinct, spatial, bounded per tick and use shared destruction setting
+ok 60 - Raid cues are distinct, spatial, bounded per tick and use shared destruction setting
+  ---
+  duration_ms: 0.848875
+  ...
+# Subtest: Raid commentator never promises salvage on the ground and only announces first earned Rush
+ok 61 - Raid commentator never promises salvage on the ground and only announces first earned Rush
+  ---
+  duration_ms: 0.294166
+  ...
+# Subtest: V2 records write durably beside untouched legacy history and isolate difficulty
+ok 62 - V2 records write durably beside untouched legacy history and isolate difficulty
+  ---
+  duration_ms: 11.434583
+  ...
+# Subtest: V4 records have an independent durable bucket and never overwrite V3 results
+ok 63 - V4 records have an independent durable bucket and never overwrite V3 results
+  ---
+  duration_ms: 1.074792
+  ...
+# Subtest: native Raid uses current rules at every difficulty without changing legacy authoring defaults
+ok 64 - native Raid uses current rules at every difficulty without changing legacy authoring defaults
+  ---
+  duration_ms: 32.734125
+  ...
+# Subtest: pre-run variant record lookup uses the same revision as its completed run
+ok 65 - pre-run variant record lookup uses the same revision as its completed run
+  ---
+  duration_ms: 39.83725
+  ...
+# Subtest: Marathon previews describe V4 authored-cover routes and retain legacy V3 tactics in both languages
+ok 66 - Marathon previews describe V4 authored-cover routes and retain legacy V3 tactics in both languages
+  ---
+  duration_ms: 27.819625
+  ...
+# Subtest: custom V4 Marathon previews preserve optional battlefield and movement authoring
+ok 67 - custom V4 Marathon previews preserve optional battlefield and movement authoring
+  ---
+  duration_ms: 20.881916
+  ...
+# Subtest: Time Attack and Marathon reject experimental terrain rather than silently changing routes
+ok 68 - Time Attack and Marathon reject experimental terrain rather than silently changing routes
+  ---
+  duration_ms: 1.410167
+  ...
+# Subtest: Time Attack awards adjusted-time medals, keeps raw time and penalizes failed clears
+ok 69 - Time Attack awards adjusted-time medals, keeps raw time and penalizes failed clears
+  ---
+  duration_ms: 2.5935
+  ...
+# Subtest: bank/continue transactions settle once and preserve resources without free repairs
+ok 70 - bank/continue transactions settle once and preserve resources without free repairs
+  ---
+  duration_ms: 7.453625
+  ...
+# Subtest: losing the last airframe forfeits the entire unbanked chain, retry restarts it
+ok 71 - losing the last airframe forfeits the entire unbanked chain, retry restarts it
+  ---
+  duration_ms: 4.90375
+  ...
+# Subtest: five contracts are bounded and auto-bank; generated escalation keeps project safety floors
+ok 72 - five contracts are bounded and auto-bank; generated escalation keeps project safety floors
+  ---
+  duration_ms: 62.493834
+  ...
+# Subtest: variant records have independent contexts and shared durable/session storage semantics
+ok 73 - variant records have independent contexts and shared durable/session storage semantics
+  ---
+  duration_ms: 4.842792
+  ...
+# Subtest: pause freezes variant clocks, and exhausted carried builds never offer an illegal draft
+ok 74 - pause freezes variant clocks, and exhausted carried builds never offer an illegal draft
+  ---
+  duration_ms: 5.524333
+  ...
+# Subtest: an ordinary-input pilot can complete all five escalated contracts with carried upgrades
+ok 75 - an ordinary-input pilot can complete all five escalated contracts with carried upgrades
+  ---
+  duration_ms: 895.004084
+  ...
+# Subtest: Marathon next-contract prose has its own result panel while numeric scores remain compact
+ok 76 - Marathon next-contract prose has its own result panel while numeric scores remain compact
+  ---
+  duration_ms: 13.998792
+  ...
+# Subtest: Marathon buttons bank once, refresh results and continue only with the host guard
+ok 77 - Marathon buttons bank once, refresh results and continue only with the host guard
+  ---
+  duration_ms: 9.600208
+  ...
+# Subtest: Time Attack renders hundredths and an old async result cannot overwrite a new attempt
+ok 78 - Time Attack renders hundredths and an old async result cannot overwrite a new attempt
+  ---
+  duration_ms: 6.662791
+  ...
+# Subtest: medal formatting carries rounded hundredths across minute boundaries
+ok 79 - medal formatting carries rounded hundredths across minute boundaries
+  ---
+  duration_ms: 0.133792
+  ...
+# Subtest: the last legal three-card choice cannot immediately open an exhausted queued draft
+ok 80 - the last legal three-card choice cannot immediately open an exhausted queued draft
+  ---
+  duration_ms: 2.84075
+  ...
+# Subtest: global family and publisher admission preserve Riy bytes and reject resource closure changes
+ok 81 - global family and publisher admission preserve Riy bytes and reject resource closure changes
+  ---
+  duration_ms: 45.464083
+  ...
+# Subtest: global install, exact recovery, offload and reinstall use the native Riy library
+ok 82 - global install, exact recovery, offload and reinstall use the native Riy library
+  ---
+  duration_ms: 235.916792
+  ...
+# Subtest: three worlds have quiet, distinct bounded ambience using original shared recipes
+ok 83 - three worlds have quiet, distinct bounded ambience using original shared recipes
+  ---
+  duration_ms: 0.599583
+  ...
+# Subtest: atmosphere advances only on accepted gameplay time and foreground danger removes owned voices
+ok 84 - atmosphere advances only on accepted gameplay time and foreground danger removes owned voices
+  ---
+  duration_ms: 0.240958
+  ...
+# Subtest: warning charge follows actual remaining time, ignores active ground patches and cancelled/reused attacks
+ok 85 - warning charge follows actual remaining time, ignores active ground patches and cancelled/reused attacks
+  ---
+  duration_ms: 0.159875
+  ...
+# Subtest: audible warning charge wins over a more advanced distant attack in either pool order
+ok 86 - audible warning charge wins over a more advanced distant attack in either pool order
+  ---
+  duration_ms: 0.255916
+  ...
+# Subtest: two local warning rungs produce only the most urgent cue without delayed backlog
+ok 87 - two local warning rungs produce only the most urgent cue without delayed backlog
+  ---
+  duration_ms: 0.082542
+  ...
+# Subtest: leaving warning range releases local ambience and escort feedback without replay on return
+ok 88 - leaving warning range releases local ambience and escort feedback without replay on return
+  ---
+  duration_ms: 0.306166
+  ...
+# Subtest: inaudible foreground events do not consume nearby charge, escort or ambience opportunities
+ok 89 - inaudible foreground events do not consume nearby charge, escort or ambience opportunities
+  ---
+  duration_ms: 0.357542
+  ...
+# Subtest: local foreground damage suppresses a charge rung without a stale cue after it clears
+ok 90 - local foreground damage suppresses a charge rung without a stale cue after it clears
+  ---
+  duration_ms: 0.136833
+  ...
+# Subtest: squad shots are distinct but share a cadence cap and cannot backlog through warnings
+ok 91 - squad shots are distinct but share a cadence cap and cannot backlog through warnings
+  ---
+  duration_ms: 0.222292
+  ...
+# Subtest: simultaneous squad shots alternate roles without increasing the shared cadence
+ok 92 - simultaneous squad shots alternate roles without increasing the shared cadence
+  ---
+  duration_ms: 0.148833
+  ...
+# Subtest: an inaudible escort cannot spend the local cue slot or replay its shot on return
+ok 93 - an inaudible escort cannot spend the local cue slot or replay its shot on return
+  ---
+  duration_ms: 0.067542
+  ...
+# Subtest: shared mixer suppresses inaudible sources before cooldown admission in every board
+ok 94 - shared mixer suppresses inaudible sources before cooldown admission in every board
+  ---
+  duration_ms: 29.793583
+  ...
+# Subtest: atmosphere uses shared mute/pause/cleanup and yields immediately to warning foreground
+ok 95 - atmosphere uses shared mute/pause/cleanup and yields immediately to warning foreground
+  ---
+  duration_ms: 4.12675
+  ...
+# Subtest: armor changes reserve a short foreground window before later destruction reactions
+ok 96 - armor changes reserve a short foreground window before later destruction reactions
+  ---
+  duration_ms: 3.148667
+  ...
+# Subtest: cross-frame friendly impacts cannot mask player damage and each impact channel remains bounded
+ok 97 - cross-frame friendly impacts cannot mask player damage and each impact channel remains bounded
+  ---
+  duration_ms: 5.707333
+  ...
+# Subtest: native adapter admits damage and armor ahead of ordinary impacts while Classic remains independent of gore
+ok 98 - native adapter admits damage and armor ahead of ordinary impacts while Classic remains independent of gore
+  ---
+  duration_ms: 0.359125
+  ...
+# Subtest: audible charge briefly attenuates shared music once, using the accepted gameplay clock
+ok 99 - audible charge briefly attenuates shared music once, using the accepted gameplay clock
+  ---
+  duration_ms: 0.171916
+  ...
+# Subtest: distant warnings and friendly fire do not attenuate music; pause, fixtures and retry release only the owned lease
+ok 100 - distant warnings and friendly fire do not attenuate music; pause, fixtures and retry release only the owned lease
+  ---
+  duration_ms: 0.080125
+  ...
+# Subtest: native audio forwards music gain ownership and only local priority events request it
+ok 101 - native audio forwards music gain ownership and only local priority events request it
+  ---
+  duration_ms: 0.117875
+  ...
+1..101
+# tests 101
+# suites 0
+# pass 101
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1407.988833

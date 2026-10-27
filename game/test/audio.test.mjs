@@ -233,6 +233,37 @@ test('master/music/sfx buses are independently controlled and invalid changes ar
   assert.ok(sound.voices.size > 0);
   await sound.dispose();
 });
+test('unchanged validated settings do not reschedule gains, while lifecycle changes still apply', async () => {
+  const { sound, context } = await setup();
+  const buses = [
+    'master',
+    'musicBus',
+    'sfxBus',
+    'menuBus',
+    'movementBus',
+    'radioBus',
+    'dialogueBus',
+  ];
+  const counts = () => buses.map((key) => sound[key].gain.calls.length);
+  const before = counts();
+  for (let i = 0; i < 240; i++) {
+    context.currentTime += 1 / 120;
+    sound.configure({ music: 0.55 });
+  }
+  assert.deepEqual(counts(), before);
+  assert.throws(() => sound.configure({ music: 0.55, unknown: 1 }));
+  assert.throws(() => sound.configure({ music: 0.55, style: 'invalid' }));
+  assert.throws(() => sound.configure({ music: 0.55, sfx: NaN }));
+  assert.deepEqual(counts(), before);
+  sound.configure({ music: 0.25 });
+  assert.equal(sound.musicBus.gain.value, 0.25);
+  assert(sound.musicBus.gain.calls.length > before[1]);
+  sound.disable();
+  assert.equal(sound.musicBus.gain.value, 0);
+  await sound.enable();
+  assert.equal(sound.musicBus.gain.value, 0.25);
+  await sound.dispose();
+});
 test('track descriptors are copied, styles switch cleanly, and unsupported media are rejected', async () => {
   const { sound } = await setup(),
     track = { ...DEFAULT_TRACKS[3], id: 'custom', name: 'My metal track', tempo: 140 };

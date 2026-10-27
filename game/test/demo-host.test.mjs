@@ -7,13 +7,13 @@ import {
   DEMO_HOST_READY_TIMEOUT_MS,
 } from './helpers/demo-host-fixture.mjs';
 import { memoryStorage, settle } from './helpers/solo-dom.mjs';
+import { nativeCaptureSession } from '../capture-presentation-session.mjs';
 import { authoritativeCheckpoint, verifyReplay, MAX_REPLAY_TICKS } from '../replay.mjs';
 import { FIXED_DT } from '../core/index.mjs';
 import { REWARD_BOARD_SECONDS, REWARD_STORY_SECONDS } from '../ui/reward-arrival.mjs';
 import { emptyLibrary, loadLibrary, saveLibrary, updatePreferences } from '../library.mjs';
 import { KEY_BINDING_PRESETS } from '../key-bindings.mjs';
 import { waitFor } from './helpers/wait-for.mjs';
-import { nativeCaptureSession } from '../capture-presentation-session.mjs';
 
 const frames = (page, count, ms = 16) => {
   for (let i = 0; i < count; i++) page.frame(ms);
@@ -112,12 +112,13 @@ test('actual idle home entry resets on activity and does not write game data', a
     ordinary = page.rendered.run;
   const checkpoint = authoritativeCheckpoint(ordinary),
     before = stored(page);
-  frames(page, 239, 250);
+  page.frame(0);
+  frames(page, 599, 100);
   assert.equal(page.$('demo-dialog').open, false);
   page.doc.emit('pointerdown', { button: 0, pointerType: 'mouse' });
-  frames(page, 239, 250);
+  frames(page, 599, 100);
   assert.equal(page.$('demo-dialog').open, false);
-  page.frame(250);
+  page.frame(100);
   await page.ready();
   assert.equal(page.$('demo-dialog').open, true);
   assert.deepEqual(authoritativeCheckpoint(ordinary), checkpoint);
@@ -307,6 +308,7 @@ test('a single remaining source prepares a new painter on repetition without reu
   const canvas = page.$('demo-canvas');
   canvas.clientWidth = 1600;
   canvas.clientHeight = 300;
+  page.win.emit('resize');
   page.frame(0);
   assert.equal(
     page.demoFrame.options.displayCSSWidth,
@@ -314,6 +316,7 @@ test('a single remaining source prepares a new painter on repetition without reu
     'Height-limited fullscreen scales readable game pieces to the contained board width.',
   );
   canvas.clientHeight = undefined;
+  page.win.emit('resize');
   page.frame(0);
   assert.equal(
     page.demoFrame.options.displayCSSWidth,
