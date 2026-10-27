@@ -1,0 +1,10 @@
+{
+  "format": "revealline-retained-proof-projection.v1",
+  "sourcePath": "game/replays/sentinel-routes.json",
+  "previousRecordSHA256": "b704c71879c29810f42dca6e94857c6728d2439c08d1807edc008114bdb85a70",
+  "previousPackSHA256": "790bbcc43d78f64cacb01ae50cde4bb463ad938de80325cc37c26c415fce1c43",
+  "scope": "Derived identity for the retained published pack with its admitted artwork. All recorded routes, inputs, expected results and simulation checkpoints are unchanged.",
+  "sha256": "684368dc7d1b67f0604f215fd12807d05601840a0fe01ffa9f05453a0b3c8467",
+  "previousPackVersion": "1.0.0",
+  "packVersion": "1.1.0"
+}

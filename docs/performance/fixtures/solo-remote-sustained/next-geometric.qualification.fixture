@@ -1,0 +1,427 @@
+{
+  "format": "SoloQualificationV1",
+  "id": "ten-next-authored-geometric-v1",
+  "kind": "lifecycle",
+  "nativeRouteProtocol": "authored-next-geometric-v1",
+  "timeoutMs": 1200000,
+  "query": {
+    "journey": "authored"
+  },
+  "coverage": [
+    "Eleven actual authored mission wins and ten manual public Next transitions with public Auto Next disabled",
+    "Fixed source-specific geometry predicates for five routes; six original timed routes retained",
+    "Sequential trusted keyboard operations; rendered-state polling bounded to 50 ms and 0–100 ms observed command envelope",
+    "Transition/resource workload excluded from timing comparison; original failed routes remain historical",
+    "No progress seeding, gameplay changes, lowered goals, or life loss accepted"
+  ],
+  "actions": [
+    {
+      "type": "click",
+      "selector": "#shell-options",
+      "timeoutMs": 60000
+    },
+    {
+      "type": "click",
+      "selector": "#settings-tab-gameplay",
+      "timeoutMs": 60000
+    },
+    {
+      "type": "check",
+      "selector": "#settings-autoNext",
+      "value": false
+    },
+    {
+      "type": "click",
+      "selector": "[data-close=\"settings-dialog\"]",
+      "timeoutMs": 60000
+    },
+    {
+      "type": "click",
+      "selector": "#shell-featured",
+      "timeoutMs": 60000
+    },
+    {
+      "type": "wait",
+      "phase": "running",
+      "timeoutMs": 60000
+    },
+    {
+      "type": "authored-next-route",
+      "protocol": "authored-next-geometric-v1",
+      "mission": "first-return",
+      "timeoutMs": 60000
+    },
+    {
+      "type": "result",
+      "outcome": "won",
+      "timeoutMs": 20000
+    },
+    {
+      "type": "snapshot",
+      "group": "next-result"
+    },
+    {
+      "type": "click",
+      "selector": "#next-button",
+      "timeoutMs": 60000
+    },
+    {
+      "type": "wait",
+      "phase": "running",
+      "timeoutMs": 60000
+    },
+    {
+      "type": "authored-next-route",
+      "protocol": "authored-next-geometric-v1",
+      "mission": "choose-your-share",
+      "timeoutMs": 60000
+    },
+    {
+      "type": "result",
+      "outcome": "won",
+      "timeoutMs": 20000
+    },
+    {
+      "type": "snapshot",
+      "group": "next-result"
+    },
+    {
+      "type": "click",
+      "selector": "#next-button",
+      "timeoutMs": 60000
+    },
+    {
+      "type": "wait",
+      "phase": "running",
+      "timeoutMs": 60000
+    },
+    {
+      "type": "authored-next-route",
+      "protocol": "authored-next-geometric-v1",
+      "mission": "two-keepers",
+      "timeoutMs": 60000
+    },
+    {
+      "type": "result",
+      "outcome": "won",
+      "timeoutMs": 20000
+    },
+    {
+      "type": "snapshot",
+      "group": "next-result"
+    },
+    {
+      "type": "click",
+      "selector": "#next-button",
+      "timeoutMs": 60000
+    },
+    {
+      "type": "wait",
+      "phase": "running",
+      "timeoutMs": 60000
+    },
+    {
+      "type": "authored-next-route",
+      "protocol": "authored-next-geometric-v1",
+      "mission": "nearby-shore",
+      "timeoutMs": 60000
+    },
+    {
+      "type": "result",
+      "outcome": "won",
+      "timeoutMs": 20000
+    },
+    {
+      "type": "snapshot",
+      "group": "next-result"
+    },
+    {
+      "type": "click",
+      "selector": "#next-button",
+      "timeoutMs": 60000
+    },
+    {
+      "type": "wait",
+      "phase": "running",
+      "timeoutMs": 60000
+    },
+    {
+      "type": "authored-next-route",
+      "protocol": "authored-next-geometric-v1",
+      "mission": "island-outpost",
+      "timeoutMs": 60000
+    },
+    {
+      "type": "result",
+      "outcome": "won",
+      "timeoutMs": 20000
+    },
+    {
+      "type": "snapshot",
+      "group": "next-result"
+    },
+    {
+      "type": "click",
+      "selector": "#next-button",
+      "timeoutMs": 60000
+    },
+    {
+      "type": "wait",
+      "phase": "running",
+      "timeoutMs": 60000
+    },
+    {
+      "type": "authored-next-route",
+      "protocol": "authored-next-geometric-v1",
+      "mission": "stepping-stones",
+      "timeoutMs": 60000
+    },
+    {
+      "type": "result",
+      "outcome": "won",
+      "timeoutMs": 20000
+    },
+    {
+      "type": "snapshot",
+      "group": "next-result"
+    },
+    {
+      "type": "click",
+      "selector": "#next-button",
+      "timeoutMs": 60000
+    },
+    {
+      "type": "wait",
+      "phase": "running",
+      "timeoutMs": 60000
+    },
+    {
+      "type": "authored-next-route",
+      "protocol": "authored-next-geometric-v1",
+      "mission": "two-bays",
+      "timeoutMs": 60000
+    },
+    {
+      "type": "result",
+      "outcome": "won",
+      "timeoutMs": 20000
+    },
+    {
+      "type": "snapshot",
+      "group": "next-result"
+    },
+    {
+      "type": "click",
+      "selector": "#next-button",
+      "timeoutMs": 60000
+    },
+    {
+      "type": "wait",
+      "phase": "running",
+      "timeoutMs": 60000
+    },
+    {
+      "type": "authored-next-route",
+      "protocol": "authored-next-geometric-v1",
+      "mission": "courtyard-return",
+      "timeoutMs": 60000
+    },
+    {
+      "type": "result",
+      "outcome": "won",
+      "timeoutMs": 20000
+    },
+    {
+      "type": "snapshot",
+      "group": "next-result"
+    },
+    {
+      "type": "click",
+      "selector": "#next-button",
+      "timeoutMs": 60000
+    },
+    {
+      "type": "wait",
+      "phase": "running",
+      "timeoutMs": 60000
+    },
+    {
+      "type": "authored-next-route",
+      "protocol": "authored-next-geometric-v1",
+      "mission": "long-way-home",
+      "timeoutMs": 60000
+    },
+    {
+      "type": "result",
+      "outcome": "won",
+      "timeoutMs": 20000
+    },
+    {
+      "type": "snapshot",
+      "group": "next-result"
+    },
+    {
+      "type": "click",
+      "selector": "#next-button",
+      "timeoutMs": 60000
+    },
+    {
+      "type": "wait",
+      "phase": "running",
+      "timeoutMs": 60000
+    },
+    {
+      "type": "authored-next-route",
+      "protocol": "authored-next-geometric-v1",
+      "mission": "behind-the-patrol",
+      "timeoutMs": 60000
+    },
+    {
+      "type": "result",
+      "outcome": "won",
+      "timeoutMs": 20000
+    },
+    {
+      "type": "snapshot",
+      "group": "next-result"
+    },
+    {
+      "type": "click",
+      "selector": "#next-button",
+      "timeoutMs": 60000
+    },
+    {
+      "type": "wait",
+      "phase": "running",
+      "timeoutMs": 60000
+    },
+    {
+      "type": "authored-next-route",
+      "protocol": "authored-next-geometric-v1",
+      "mission": "second-landing",
+      "timeoutMs": 60000
+    },
+    {
+      "type": "result",
+      "outcome": "won",
+      "timeoutMs": 20000
+    },
+    {
+      "type": "snapshot",
+      "group": "next-result"
+    },
+    {
+      "type": "exportReplay"
+    }
+  ],
+  "expectedReplayDefinition": {
+    "level": {
+      "version": "xonix-level.v5",
+      "id": "second-landing",
+      "revision": "gp4s-3ff00000000000003ff00000000000003ff0000000000000-61e4f1de00fbd453",
+      "name": "Second landing",
+      "width": 72,
+      "height": 36,
+      "spawn": {
+        "x": 15.5,
+        "y": 0.5
+      },
+      "walls": [],
+      "foundations": [
+        {
+          "x": 10,
+          "y": 12,
+          "w": 25,
+          "h": 3
+        },
+        {
+          "x": 50,
+          "y": 24,
+          "w": 8,
+          "h": 3
+        }
+      ],
+      "goal": {
+        "coverage": 0.65
+      },
+      "encounter": null,
+      "classic": {
+        "version": "classic.v1",
+        "terrain": [],
+        "powerups": [
+          {
+            "id": "extra-life",
+            "kind": "extra-life",
+            "x": 22.5,
+            "y": 12.5
+          }
+        ],
+        "arcadeActions": {
+          "version": "arcade-actions.v1"
+        }
+      },
+      "enemies": [
+        {
+          "id": "west",
+          "type": "bouncer",
+          "x": 8.5,
+          "y": 25.5,
+          "vx": 7.81352993211135,
+          "vy": 7.81352993211135,
+          "course": "field-course.v2"
+        },
+        {
+          "id": "east",
+          "type": "bouncer",
+          "x": 60.5,
+          "y": 8.5,
+          "vx": -7.81352993211135,
+          "vy": 7.81352993211135,
+          "course": "field-course.v2"
+        },
+        {
+          "id": "outer",
+          "type": "border-patrol",
+          "speed": 8.16,
+          "clockwise": true,
+          "x": 71.5,
+          "y": 13.5
+        }
+      ],
+      "objectives": [],
+      "supplies": [],
+      "rules": {
+        "lives": 3,
+        "moveSpeed": 8.84,
+        "boostMultiplier": 1.5,
+        "respawnSeconds": 0.65,
+        "graceSeconds": 1,
+        "playerRadius": 0.18,
+        "pointsPerCell": 10,
+        "objectivePoints": 500,
+        "timeMedals": [
+          90,
+          150
+        ],
+        "switchCooldownSeconds": 2,
+        "timeLimitSeconds": 0,
+        "cutTimeLimitSeconds": 0,
+        "maxTrailCells": 0,
+        "stopOnCapture": true
+      },
+      "signalZones": [],
+      "hangars": [
+        {
+          "id": "home-hangar",
+          "x": 15.5,
+          "y": 0.5,
+          "radius": 2
+        }
+      ]
+    },
+    "options": {
+      "classId": "scout",
+      "turnPolicy": "immediate"
+    }
+  }
+}

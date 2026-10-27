@@ -1,0 +1,11 @@
+# Cocoa ownership failure reporting
+
+The retained native control [39098132775](https://github.com/mekhovov/revealline/actions/runs/39098132775), attempt 2, failed before audio observation. Its new root-owned `/usr/libexec/xpcproxy` PID 3527 had no proven browser/non-browser ownership. It is not the separately observed Metal process 3529. No retained later identity resolves its service; disappearance alone would not provide that proof. No process exemption, extra grace period or ownership relaxation is justified.
+
+The parent previously tried to read the final ownership report before checking the failed command. An interrupted atomic write left only a partial report, so the missing final file obscured the real cause and reported the preflight as not run. The parent now checks clean command completion first and records the failed status and violation. Admission still requires the existing final source-matching report and full ownership validator. Partial evidence remains untouched and is never used to admit media.
+
+The original actual-parent case fails before and passes after. Review found a second edge: a closed command with a nonzero exit and no final report could still mask its cause. That failure was reproduced and corrected. The final parent matrix checks seven command-failure variants against missing, partial and apparently closed report bytes. The source group passes 42 cases with one explicitly excluded local HTTP-server case; five release/consumer files are complete. Seven listed source inputs were stable. Scoped lint, formatting and peer review pass. These checks do not qualify native startup or audio playback.
+
+Exact artifact: 12125363865, 55,855 bytes, SHA-256 `a8a244312938b922368dca7d5e594ee7e89ac82ab8aa3a5d5f79228a9eea6a9c`; all 13 member CRCs and V2 identity maps were verified. Local receipts, original failed controls and later successful controls are retained separately under `.cache/solo-followup/cocoa-39098132775-attempt2/`. Attempt 1's Node setup timeout and attempt 2's ownership failure remain failures.
+
+A possible next diagnostic is bounded retention of later identities from inventories already required during cleanup. It must preserve the original failure and require no new polling, classification or signal authority. That proposal is separate and unimplemented in this reporting repair.

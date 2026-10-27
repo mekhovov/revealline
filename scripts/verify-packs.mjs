@@ -9,6 +9,7 @@ import { verifyFpvR3Proof } from './verify-fpv-r3.mjs';
 import { verifyFpvR4Proof } from './verify-fpv-r4.mjs';
 import { verifyFpvR5Proof } from './verify-fpv-r5.mjs';
 import { readPackIndexes, readPackJSON } from './pack-indexes.mjs';
+import { NEON_PROOF_PACKS, verifyIndexedNeonRoutes } from './verify-neon-routes.mjs';
 import { boundedJSON, exactKeys, required } from '../game/data-json.mjs';
 import {
   validatePack,
@@ -62,7 +63,7 @@ export async function expansionSources({
   const index = await readPackIndexes(sourceRoot);
   const refs = index.all.filter((entry) =>
     scope === 'historical'
-      ? !['fpv-arcade-r4', ...pressurePackIds].includes(entry.id)
+      ? !['fpv-arcade-r4', ...pressurePackIds, ...NEON_PROOF_PACKS].includes(entry.id)
       : (scope === 'arcade'
           ? ['fpv-arcade-r4', 'fpv-arcade-r3']
           : [...pressurePackIds, 'fpv-arcade-r4', 'homeward-skies']
@@ -173,6 +174,14 @@ export async function verifyExpansionRoutes() {
     historical.pressure = checked;
     for (const pack of chapters) coveredPacks.add(pack.id);
   }
+  // Current-rules Neon receipts have their own execution model and bounded
+  // batch. Do not load their pictures into the legacy proof batch or silently
+  // treat them as covered by its earlier route counts.
+  historical.neon = await verifyIndexedNeonRoutes(
+    fileURLToPath(root),
+    index.all.filter((entry) => NEON_PROOF_PACKS.includes(entry.id)),
+  );
+  for (const id of historical.neon.packs) coveredPacks.add(id);
   required(
     coveredPacks.size === index.all.length &&
       index.all.every((entry) => coveredPacks.has(entry.id)),

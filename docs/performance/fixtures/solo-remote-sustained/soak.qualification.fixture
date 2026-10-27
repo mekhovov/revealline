@@ -1,0 +1,204 @@
+{
+  "format": "SoloQualificationV1",
+  "id": "thirty-minute-lifecycle-soak",
+  "resourceRules": [
+    {
+      "group": "completed",
+      "path": "resources.renderer.ownedCanvases.canvases",
+      "last": 10,
+      "maxRange": 0
+    },
+    {
+      "group": "completed",
+      "path": "resources.renderer.ownedCanvases.rgbaBytesEstimate",
+      "last": 10,
+      "maxRange": 0
+    },
+    {
+      "group": "completed",
+      "path": "resources.phaser.uniqueCanvases",
+      "last": 10,
+      "maxRange": 0
+    }
+  ],
+  "kind": "lifecycle",
+  "timeoutMs": 2400000,
+  "entryPath": "playground/",
+  "readySelector": "#import-file",
+  "coverage": [
+    "at least 30 real minutes repeating legal capture/result/Retry cycles",
+    "resource snapshots at equivalent result boundaries"
+  ],
+  "actions": [
+    {
+      "type": "expect",
+      "selector": "#preview-load-status[data-state=\"ready\"]",
+      "timeoutMs": 60000
+    },
+    {
+      "type": "upload",
+      "selector": "#import-file",
+      "file": "first-return.xonix.json",
+      "acceptedLevelSelector": "#level-json"
+    },
+    {
+      "type": "click",
+      "selector": "#preview-button",
+      "timeoutMs": 60000
+    },
+    {
+      "type": "expect",
+      "selector": "#preview-load-status[data-state=\"ready\"]",
+      "timeoutMs": 60000
+    },
+    {
+      "type": "follow",
+      "selector": "#open-preview",
+      "preparationStatusSelector": "[data-presentation-status=\"auxiliary\"]",
+      "timeoutMs": 120000
+    },
+    {
+      "type": "snapshot",
+      "group": "prepared"
+    },
+    {
+      "type": "click",
+      "selector": "#start-button",
+      "timeoutMs": 60000
+    },
+    {
+      "type": "wait",
+      "phase": "running",
+      "timeoutMs": 60000
+    },
+    {
+      "type": "repeat",
+      "count": 360,
+      "atLeastMs": 1800000,
+      "actions": [
+        {
+          "type": "key",
+          "key": "ArrowRight",
+          "ms": 1358
+        },
+        {
+          "type": "key",
+          "key": "ArrowDown",
+          "ms": 3908
+        },
+        {
+          "type": "result",
+          "outcome": "won",
+          "timeoutMs": 20000
+        },
+        {
+          "type": "snapshot",
+          "group": "completed"
+        },
+        {
+          "type": "click",
+          "selector": "#retry-button",
+          "timeoutMs": 60000
+        },
+        {
+          "type": "wait",
+          "phase": "running",
+          "timeoutMs": 60000
+        },
+        {
+          "type": "wait",
+          "ms": 1000
+        }
+      ]
+    },
+    {
+      "type": "click",
+      "selector": "#pause-button"
+    },
+    {
+      "type": "wait",
+      "phase": "paused"
+    },
+    {
+      "type": "snapshot",
+      "group": "soak-end"
+    },
+    {
+      "type": "exportReplay"
+    }
+  ],
+  "readyHiddenSelector": "#boot-status",
+  "expectedReplayDefinition": {
+    "level": {
+      "version": "xonix-level.v5",
+      "id": "first-return",
+      "revision": "gp4s-3ff00000000000003ff00000000000003ff0000000000000-211ae8f36cc0327a",
+      "name": "First return",
+      "width": 72,
+      "height": 36,
+      "spawn": {
+        "x": 24.5,
+        "y": 0.5
+      },
+      "walls": [],
+      "foundations": [],
+      "goal": {
+        "coverage": 0.3
+      },
+      "encounter": null,
+      "classic": {
+        "version": "classic.v1",
+        "terrain": [],
+        "powerups": [],
+        "arcadeActions": {
+          "version": "arcade-actions.v1"
+        }
+      },
+      "enemies": [
+        {
+          "id": "keeper",
+          "type": "bouncer",
+          "x": 58.5,
+          "y": 23.5,
+          "vx": 7.81352993211135,
+          "vy": -7.81352993211135,
+          "course": "field-course.v2"
+        }
+      ],
+      "objectives": [],
+      "supplies": [],
+      "rules": {
+        "lives": 3,
+        "moveSpeed": 8.84,
+        "boostMultiplier": 1.5,
+        "respawnSeconds": 0.65,
+        "graceSeconds": 1,
+        "playerRadius": 0.18,
+        "pointsPerCell": 10,
+        "objectivePoints": 500,
+        "timeMedals": [
+          90,
+          150
+        ],
+        "switchCooldownSeconds": 2,
+        "timeLimitSeconds": 0,
+        "cutTimeLimitSeconds": 0,
+        "maxTrailCells": 0,
+        "stopOnCapture": true
+      },
+      "signalZones": [],
+      "hangars": [
+        {
+          "id": "home-hangar",
+          "x": 24.5,
+          "y": 0.5,
+          "radius": 2
+        }
+      ]
+    },
+    "options": {
+      "classId": "scout",
+      "turnPolicy": "immediate"
+    }
+  }
+}

@@ -41,11 +41,13 @@ function storage() {
   assert.equal(saveLibrary(result, profileKey, emptyLibrary()).ok, true);
   return result;
 }
-function savesFromCollection(page) {
+async function savesFromCollection(page) {
   page.$('shell-gallery').click();
   assert.equal(page.$('collection-dialog').open, true);
   page.$('collection-records').click();
+  await settle(() => page.$('library-dialog').open && !page.$('library-scores').hidden);
   page.doc.querySelector('button[data-library-panel="saves"]').click();
+  await settle(() => page.$('library-dialog').open && !page.$('library-saves').hidden);
   assert.equal(page.$('library-dialog').open, true);
   assert.equal(page.$('library-saves').hidden, false);
 }
@@ -81,14 +83,14 @@ function ready(page, size) {
 // Actual Solo entry/journaled backup; finite DOM and storage. No native layout claim.
 test('Collection file Import and Undo return Home without inventing a cancelled pack launch', async (t) => {
   const page = await soloPage(t, { campaign, storage: storage(), titleScreen: true });
-  savesFromCollection(page);
+  await savesFromCollection(page);
   await importOwnedFile(page);
   assert.match(page.$('save-status').textContent, /Game data restored/);
   ready(page, 'large');
   noPackCancellation(page);
   returnHome(page);
   noPackCancellation(page);
-  savesFromCollection(page);
+  await savesFromCollection(page);
   assert.equal(page.$('undo-backup').disabled, false);
   page.$('undo-backup').focus();
   await page.$('undo-backup').onclick();
@@ -131,7 +133,7 @@ test('blur during the actual held backup lock does not announce a pack cancellat
     },
   };
   const page = await soloPage(t, { campaign, storage: storage(), titleScreen: true, lockManager });
-  savesFromCollection(page);
+  await savesFromCollection(page);
   armed = true;
   const pending = importOwnedFile(page);
   try {
@@ -171,8 +173,9 @@ for (const action of ['keep', 'escape', 'close', 'pagehide', 'changed storage'])
         : delete globalThis.addEventListener,
     );
     const page = await soloPage(t, { campaign, storage: storage(), titleScreen: true });
+    await savesFromCollection(page);
+    // Lazy Library construction registers its global pagehide listener on first use.
     for (const args of listeners) page.win.addEventListener(...args);
-    savesFromCollection(page);
     page.$('save-file').focus();
     const before = new Map(page.storage.map);
     const pending = importOwnedFile(page, { accept: false });
@@ -205,7 +208,7 @@ for (const action of ['keep', 'escape', 'close', 'pagehide', 'changed storage'])
 
 test('repeated Escape cancels only the active replacement review before native close', async (t) => {
   const page = await soloPage(t, { campaign, storage: storage(), titleScreen: true });
-  savesFromCollection(page);
+  await savesFromCollection(page);
   const before = new Map(page.storage.map);
   const dialog = page.$('library-dialog');
   for (const focused of ['library-operation-cancel', 'library-operation-message']) {
@@ -250,7 +253,7 @@ test('repeated Escape cancels only the active replacement review before native c
 for (const choice of ['Back', 'Confirm']) {
   test(`modeled controller ${choice} routes the replacement decision through the current Library owner`, async (t) => {
     const page = await soloPage(t, { campaign, storage: storage(), titleScreen: true });
-    savesFromCollection(page);
+    await savesFromCollection(page);
     page.$('save-file').focus();
     const pending = importOwnedFile(page, { accept: false });
     await settle(() => !page.$('library-operation-confirm').hidden);

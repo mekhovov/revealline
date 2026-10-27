@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>RevealLine — Restored Studio sound check</title>
+    <style>
+      body {
+        background: #071527;
+        color: #f6f3e8;
+        font: 18px/1.5 system-ui;
+        max-width: 68rem;
+        margin: auto;
+        padding: 1.5rem;
+      }
+      button,
+      input,
+      a {
+        min-height: 48px;
+        padding: 0.6rem 1rem;
+        font: inherit;
+      }
+      :focus-visible {
+        outline: 3px solid #ffd64a;
+        outline-offset: 3px;
+      }
+      pre {
+        white-space: pre-wrap;
+        overflow-wrap: anywhere;
+        font-size: 14px;
+      }
+      a {
+        color: #67aaff;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Restored Studio sound check</h1>
+    <p>
+      Choose the .rltheme file exported from Studio after saving your uploaded capture sound. This
+      checks the original bytes, browser decoding, Team and Duel cue ownership, mute, pause and
+      canceled decoding through the game's audio path. No saves or preferences change.
+    </p>
+    <p>
+      This is a digital signal check, not a listening review or a physical speaker test. File import
+      here is read only; it does not establish Studio storage recovery.
+    </p>
+    <label for="bundle">Exported Studio bundle</label>
+    <input id="bundle" type="file" accept=".rltheme" />
+    <button id="run" type="button" disabled>Run restored cue check</button>
+    <button id="cancel" type="button" disabled>Cancel check</button>
+    <a id="download" hidden>Download report</a>
+    <p id="status" role="status">Choose a bundle. Audio starts only when you choose Run.</p>
+    <pre id="result" aria-label="Restored cue check report"></pre>
+    <script type="module" src="./studio-probe.mjs"></script>
+  </body>
+</html>

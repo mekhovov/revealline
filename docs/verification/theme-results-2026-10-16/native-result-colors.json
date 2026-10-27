@@ -1,0 +1,2000 @@
+[
+  {
+    "active": "snake-action-retry",
+    "paint": [
+      {
+        "background": "rgb(126, 231, 255)",
+        "color": "rgb(23, 25, 27)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "Pause replay"
+      },
+      {
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(247, 244, 255)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "DRAW"
+      },
+      {
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(185, 190, 214)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "Best score 800 · Fastest 18.6s · Fewest moves 93"
+      },
+      {
+        "background": "rgb(26, 32, 64)",
+        "color": "rgb(247, 244, 255)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "Random level"
+      },
+      {
+        "background": "rgb(26, 32, 64)",
+        "color": "rgb(247, 244, 255)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "Choose mission"
+      },
+      {
+        "background": "rgb(26, 32, 64)",
+        "color": "rgb(247, 244, 255)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "Collections"
+      },
+      {
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(247, 244, 255)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "This run0"
+      },
+      {
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(247, 244, 255)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "This run"
+      },
+      {
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(126, 231, 255)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "0"
+      },
+      {
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(247, 244, 255)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "Lifetime2"
+      },
+      {
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(185, 190, 214)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "Lifetime"
+      },
+      {
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(126, 231, 255)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "2"
+      },
+      {
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(185, 190, 214)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "Enemy details"
+      },
+      {
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(185, 190, 214)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "This run / Lifetime"
+      },
+      {
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(247, 244, 255)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "Rival — Different routes, one shared view."
+      },
+      {
+        "background": "rgb(126, 231, 255)",
+        "color": "rgb(23, 25, 27)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "Retry"
+      },
+      {
+        "background": "rgb(26, 32, 64)",
+        "color": "rgb(247, 244, 255)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "Home"
+      }
+    ],
+    "scrollWidth": 1280,
+    "text": "Results\nPause replay\n\nDRAW\n\nBest score 800 · Fastest 18.6s · Fewest moves 93\n\nMore options\nThis run\n0\nLifetime\n2\nEnemy details\nRival — Different routes, one shared view.\nRetry\nHome",
+    "theme": "legacy",
+    "width": 1280
+  },
+  {
+    "active": "snake-action-retry",
+    "paint": [
+      {
+        "background": "rgb(230, 184, 92)",
+        "color": "rgb(23, 25, 27)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "Pause replay"
+      },
+      {
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(243, 237, 221)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "DRAW"
+      },
+      {
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(196, 193, 182)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "Best score 800 · Fastest 18.6s · Fewest moves 93"
+      },
+      {
+        "background": "rgb(54, 60, 64)",
+        "color": "rgb(243, 237, 221)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "Random level"
+      },
+      {
+        "background": "rgb(54, 60, 64)",
+        "color": "rgb(243, 237, 221)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "Choose mission"
+      },
+      {
+        "background": "rgb(54, 60, 64)",
+        "color": "rgb(243, 237, 221)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "Collections"
+      },
+      {
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(243, 237, 221)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "This run0"
+      },
+      {
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(243, 237, 221)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "This run"
+      },
+      {
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(230, 184, 92)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "0"
+      },
+      {
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(243, 237, 221)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "Lifetime2"
+      },
+      {
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(196, 193, 182)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "Lifetime"
+      },
+      {
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(230, 184, 92)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "2"
+      },
+      {
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(196, 193, 182)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "Enemy details"
+      },
+      {
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(196, 193, 182)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "This run / Lifetime"
+      },
+      {
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(243, 237, 221)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "Rival — Different routes, one shared view."
+      },
+      {
+        "background": "rgb(230, 184, 92)",
+        "color": "rgb(23, 25, 27)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "Retry"
+      },
+      {
+        "background": "rgb(54, 60, 64)",
+        "color": "rgb(243, 237, 221)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "Home"
+      }
+    ],
+    "scrollWidth": 1280,
+    "text": "Results\nPause replay\n\nDRAW\n\nBest score 800 · Fastest 18.6s · Fewest moves 93\n\nMore options\nThis run\n0\nLifetime\n2\nEnemy details\nRival — Different routes, one shared view.\nRetry\nHome",
+    "theme": "industrial-workshop",
+    "width": 1280
+  },
+  {
+    "active": "snake-action-retry",
+    "paint": [
+      {
+        "background": "rgb(229, 202, 133)",
+        "color": "rgb(23, 25, 27)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "Pause replay"
+      },
+      {
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(240, 239, 220)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "DRAW"
+      },
+      {
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(187, 197, 173)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "Best score 800 · Fastest 18.6s · Fewest moves 93"
+      },
+      {
+        "background": "rgb(52, 63, 45)",
+        "color": "rgb(240, 239, 220)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "Random level"
+      },
+      {
+        "background": "rgb(52, 63, 45)",
+        "color": "rgb(240, 239, 220)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "Choose mission"
+      },
+      {
+        "background": "rgb(52, 63, 45)",
+        "color": "rgb(240, 239, 220)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "Collections"
+      },
+      {
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(240, 239, 220)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "This run0"
+      },
+      {
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(240, 239, 220)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "This run"
+      },
+      {
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(229, 202, 133)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "0"
+      },
+      {
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(240, 239, 220)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "Lifetime2"
+      },
+      {
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(187, 197, 173)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "Lifetime"
+      },
+      {
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(229, 202, 133)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "2"
+      },
+      {
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(187, 197, 173)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "Enemy details"
+      },
+      {
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(187, 197, 173)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "This run / Lifetime"
+      },
+      {
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(240, 239, 220)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "Rival — Different routes, one shared view."
+      },
+      {
+        "background": "rgb(229, 202, 133)",
+        "color": "rgb(23, 25, 27)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "Retry"
+      },
+      {
+        "background": "rgb(52, 63, 45)",
+        "color": "rgb(240, 239, 220)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "Home"
+      }
+    ],
+    "scrollWidth": 1280,
+    "text": "Results\nPause replay\n\nDRAW\n\nBest score 800 · Fastest 18.6s · Fewest moves 93\n\nMore options\nThis run\n0\nLifetime\n2\nEnemy details\nRival — Different routes, one shared view.\nRetry\nHome",
+    "theme": "military-field",
+    "width": 1280
+  },
+  {
+    "active": "snake-action-retry",
+    "paint": [
+      {
+        "background": "rgb(240, 162, 102)",
+        "color": "rgb(23, 25, 27)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "Pause replay"
+      },
+      {
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(248, 236, 217)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "DRAW"
+      },
+      {
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(206, 190, 172)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "Best score 800 · Fastest 18.6s · Fewest moves 93"
+      },
+      {
+        "background": "rgb(59, 49, 42)",
+        "color": "rgb(248, 236, 217)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "Random level"
+      },
+      {
+        "background": "rgb(59, 49, 42)",
+        "color": "rgb(248, 236, 217)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "Choose mission"
+      },
+      {
+        "background": "rgb(59, 49, 42)",
+        "color": "rgb(248, 236, 217)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "Collections"
+      },
+      {
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(248, 236, 217)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "This run0"
+      },
+      {
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(248, 236, 217)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "This run"
+      },
+      {
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(240, 162, 102)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "0"
+      },
+      {
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(248, 236, 217)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "Lifetime2"
+      },
+      {
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(206, 190, 172)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "Lifetime"
+      },
+      {
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(240, 162, 102)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "2"
+      },
+      {
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(206, 190, 172)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "Enemy details"
+      },
+      {
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(206, 190, 172)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "This run / Lifetime"
+      },
+      {
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(248, 236, 217)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "Rival — Different routes, one shared view."
+      },
+      {
+        "background": "rgb(240, 162, 102)",
+        "color": "rgb(23, 25, 27)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "Retry"
+      },
+      {
+        "background": "rgb(59, 49, 42)",
+        "color": "rgb(248, 236, 217)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "Home"
+      }
+    ],
+    "scrollWidth": 1280,
+    "text": "Results\nPause replay\n\nDRAW\n\nBest score 800 · Fastest 18.6s · Fewest moves 93\n\nMore options\nThis run\n0\nLifetime\n2\nEnemy details\nRival — Different routes, one shared view.\nRetry\nHome",
+    "theme": "ember-foundry",
+    "width": 1280
+  },
+  {
+    "active": "snake-action-retry",
+    "paint": [
+      {
+        "background": "rgb(145, 213, 227)",
+        "color": "rgb(23, 25, 27)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "Pause replay"
+      },
+      {
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(234, 242, 238)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "DRAW"
+      },
+      {
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(185, 206, 214)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "Best score 800 · Fastest 18.6s · Fewest moves 93"
+      },
+      {
+        "background": "rgb(46, 65, 76)",
+        "color": "rgb(234, 242, 238)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "Random level"
+      },
+      {
+        "background": "rgb(46, 65, 76)",
+        "color": "rgb(234, 242, 238)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "Choose mission"
+      },
+      {
+        "background": "rgb(46, 65, 76)",
+        "color": "rgb(234, 242, 238)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "Collections"
+      },
+      {
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(234, 242, 238)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "This run0"
+      },
+      {
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(234, 242, 238)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "This run"
+      },
+      {
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(145, 213, 227)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "0"
+      },
+      {
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(234, 242, 238)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "Lifetime2"
+      },
+      {
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(185, 206, 214)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "Lifetime"
+      },
+      {
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(145, 213, 227)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "2"
+      },
+      {
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(185, 206, 214)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "Enemy details"
+      },
+      {
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(185, 206, 214)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "This run / Lifetime"
+      },
+      {
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(234, 242, 238)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "Rival — Different routes, one shared view."
+      },
+      {
+        "background": "rgb(145, 213, 227)",
+        "color": "rgb(23, 25, 27)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "Retry"
+      },
+      {
+        "background": "rgb(46, 65, 76)",
+        "color": "rgb(234, 242, 238)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "Home"
+      }
+    ],
+    "scrollWidth": 1280,
+    "text": "Results\nPause replay\n\nDRAW\n\nBest score 800 · Fastest 18.6s · Fewest moves 93\n\nMore options\nThis run\n0\nLifetime\n2\nEnemy details\nRival — Different routes, one shared view.\nRetry\nHome",
+    "theme": "polar-relay",
+    "width": 1280
+  },
+  {
+    "active": "snake-action-retry",
+    "paint": [
+      {
+        "background": "rgb(211, 34, 42)",
+        "color": "rgb(255, 255, 255)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "Pause replay"
+      },
+      {
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(243, 234, 222)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "DRAW"
+      },
+      {
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(197, 185, 174)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "Best score 800 · Fastest 18.6s · Fewest moves 93"
+      },
+      {
+        "background": "rgb(28, 29, 30)",
+        "color": "rgb(243, 234, 222)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "Random level"
+      },
+      {
+        "background": "rgb(28, 29, 30)",
+        "color": "rgb(243, 234, 222)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "Choose mission"
+      },
+      {
+        "background": "rgb(28, 29, 30)",
+        "color": "rgb(243, 234, 222)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "Collections"
+      },
+      {
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(243, 234, 222)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "This run0"
+      },
+      {
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(243, 234, 222)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "This run"
+      },
+      {
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(243, 234, 222)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "0"
+      },
+      {
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(243, 234, 222)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "Lifetime2"
+      },
+      {
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(197, 185, 174)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "Lifetime"
+      },
+      {
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(243, 234, 222)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "2"
+      },
+      {
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(197, 185, 174)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "Enemy details"
+      },
+      {
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(197, 185, 174)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "This run / Lifetime"
+      },
+      {
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(243, 234, 222)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "Rival — Different routes, one shared view."
+      },
+      {
+        "background": "rgb(211, 34, 42)",
+        "color": "rgb(255, 255, 255)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "Retry"
+      },
+      {
+        "background": "rgb(28, 29, 30)",
+        "color": "rgb(243, 234, 222)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "Home"
+      }
+    ],
+    "scrollWidth": 1280,
+    "text": "Results\nPause replay\n\nDRAW\n\nBest score 800 · Fastest 18.6s · Fewest moves 93\n\nMore options\nThis run\n0\nLifetime\n2\nEnemy details\nRival — Different routes, one shared view.\nRetry\nHome",
+    "theme": "vyshyvanka",
+    "width": 1280
+  },
+  {
+    "active": "snake-action-retry",
+    "paint": [
+      {
+        "background": "rgb(0, 87, 183)",
+        "color": "rgb(255, 255, 255)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "Pause replay"
+      },
+      {
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(18, 32, 64)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "DRAW"
+      },
+      {
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(66, 87, 116)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "Best score 800 · Fastest 18.6s · Fewest moves 93"
+      },
+      {
+        "background": "rgb(255, 255, 255)",
+        "color": "rgb(18, 32, 64)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "Random level"
+      },
+      {
+        "background": "rgb(255, 255, 255)",
+        "color": "rgb(18, 32, 64)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "Choose mission"
+      },
+      {
+        "background": "rgb(255, 255, 255)",
+        "color": "rgb(18, 32, 64)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "Collections"
+      },
+      {
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(18, 32, 64)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "This run0"
+      },
+      {
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(18, 32, 64)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "This run"
+      },
+      {
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(0, 87, 183)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "0"
+      },
+      {
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(18, 32, 64)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "Lifetime2"
+      },
+      {
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(66, 87, 116)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "Lifetime"
+      },
+      {
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(0, 87, 183)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "2"
+      },
+      {
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(66, 87, 116)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "Enemy details"
+      },
+      {
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(66, 87, 116)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "This run / Lifetime"
+      },
+      {
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(18, 32, 64)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "Rival — Different routes, one shared view."
+      },
+      {
+        "background": "rgb(0, 87, 183)",
+        "color": "rgb(255, 255, 255)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "Retry"
+      },
+      {
+        "background": "rgb(255, 255, 255)",
+        "color": "rgb(18, 32, 64)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "Home"
+      }
+    ],
+    "scrollWidth": 1280,
+    "text": "Results\nPause replay\n\nDRAW\n\nBest score 800 · Fastest 18.6s · Fewest moves 93\n\nMore options\nThis run\n0\nLifetime\n2\nEnemy details\nRival — Different routes, one shared view.\nRetry\nHome",
+    "theme": "dnipro-porcelain",
+    "width": 1280
+  },
+  {
+    "active": "snake-action-retry",
+    "paint": [
+      {
+        "background": "rgb(240, 192, 64)",
+        "color": "rgb(23, 25, 27)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "Pause replay"
+      },
+      {
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(232, 228, 216)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "DRAW"
+      },
+      {
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(192, 188, 168)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "Best score 800 · Fastest 18.6s · Fewest moves 93"
+      },
+      {
+        "background": "rgb(26, 48, 96)",
+        "color": "rgb(232, 228, 216)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "Random level"
+      },
+      {
+        "background": "rgb(26, 48, 96)",
+        "color": "rgb(232, 228, 216)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "Choose mission"
+      },
+      {
+        "background": "rgb(26, 48, 96)",
+        "color": "rgb(232, 228, 216)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "Collections"
+      },
+      {
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(232, 228, 216)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "This run0"
+      },
+      {
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(232, 228, 216)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "This run"
+      },
+      {
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(240, 192, 64)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "0"
+      },
+      {
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(232, 228, 216)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "Lifetime2"
+      },
+      {
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(192, 188, 168)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "Lifetime"
+      },
+      {
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(240, 192, 64)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "2"
+      },
+      {
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(192, 188, 168)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "Enemy details"
+      },
+      {
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(192, 188, 168)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "This run / Lifetime"
+      },
+      {
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(232, 228, 216)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "Rival — Different routes, one shared view."
+      },
+      {
+        "background": "rgb(240, 192, 64)",
+        "color": "rgb(23, 25, 27)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "Retry"
+      },
+      {
+        "background": "rgb(26, 48, 96)",
+        "color": "rgb(232, 228, 216)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "Home"
+      }
+    ],
+    "scrollWidth": 1280,
+    "text": "Results\nPause replay\n\nDRAW\n\nBest score 800 · Fastest 18.6s · Fewest moves 93\n\nMore options\nThis run\n0\nLifetime\n2\nEnemy details\nRival — Different routes, one shared view.\nRetry\nHome",
+    "theme": "tryzub",
+    "width": 1280
+  },
+  {
+    "active": "snake-action-retry",
+    "paint": [
+      {
+        "background": "rgb(0, 0, 128)",
+        "color": "rgb(255, 255, 255)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "Pause replay"
+      },
+      {
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(0, 0, 0)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "DRAW"
+      },
+      {
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(40, 40, 40)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "Best score 800 · Fastest 18.6s · Fewest moves 93"
+      },
+      {
+        "background": "rgb(222, 222, 222)",
+        "color": "rgb(0, 0, 0)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "Random level"
+      },
+      {
+        "background": "rgb(222, 222, 222)",
+        "color": "rgb(0, 0, 0)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "Choose mission"
+      },
+      {
+        "background": "rgb(222, 222, 222)",
+        "color": "rgb(0, 0, 0)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "Collections"
+      },
+      {
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(0, 0, 0)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "This run0"
+      },
+      {
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(0, 0, 0)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "This run"
+      },
+      {
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(0, 0, 0)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "0"
+      },
+      {
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(0, 0, 0)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "Lifetime2"
+      },
+      {
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(40, 40, 40)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "Lifetime"
+      },
+      {
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(0, 0, 0)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "2"
+      },
+      {
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(40, 40, 40)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "Enemy details"
+      },
+      {
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(40, 40, 40)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "This run / Lifetime"
+      },
+      {
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(0, 0, 0)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "Rival — Different routes, one shared view."
+      },
+      {
+        "background": "rgb(0, 0, 128)",
+        "color": "rgb(255, 255, 255)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "Retry"
+      },
+      {
+        "background": "rgb(222, 222, 222)",
+        "color": "rgb(0, 0, 0)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "Home"
+      }
+    ],
+    "scrollWidth": 1280,
+    "text": "Results\nPause replay\n\nDRAW\n\nBest score 800 · Fastest 18.6s · Fewest moves 93\n\nMore options\nThis run\n0\nLifetime\n2\nEnemy details\nRival — Different routes, one shared view.\nRetry\nHome",
+    "theme": "windows-classic",
+    "width": 1280
+  },
+  {
+    "active": "snake-action-retry",
+    "paint": [
+      {
+        "background": "rgb(255, 255, 85)",
+        "color": "rgb(23, 25, 27)",
+        "font": "\"Field Kit Mono\", \"IBM Plex Mono\", monospace",
+        "text": "Pause replay"
+      },
+      {
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(255, 255, 255)",
+        "font": "\"Field Kit Mono\", \"IBM Plex Mono\", monospace",
+        "text": "DRAW"
+      },
+      {
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(204, 204, 204)",
+        "font": "\"Field Kit Mono\", \"IBM Plex Mono\", monospace",
+        "text": "Best score 800 · Fastest 18.6s · Fewest moves 93"
+      },
+      {
+        "background": "rgb(0, 0, 96)",
+        "color": "rgb(255, 255, 255)",
+        "font": "\"Field Kit Mono\", \"IBM Plex Mono\", monospace",
+        "text": "Random level"
+      },
+      {
+        "background": "rgb(0, 0, 96)",
+        "color": "rgb(255, 255, 255)",
+        "font": "\"Field Kit Mono\", \"IBM Plex Mono\", monospace",
+        "text": "Choose mission"
+      },
+      {
+        "background": "rgb(0, 0, 96)",
+        "color": "rgb(255, 255, 255)",
+        "font": "\"Field Kit Mono\", \"IBM Plex Mono\", monospace",
+        "text": "Collections"
+      },
+      {
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(255, 255, 255)",
+        "font": "\"Field Kit Mono\", \"IBM Plex Mono\", monospace",
+        "text": "This run0"
+      },
+      {
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(255, 255, 255)",
+        "font": "\"Field Kit Mono\", \"IBM Plex Mono\", monospace",
+        "text": "This run"
+      },
+      {
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(255, 255, 85)",
+        "font": "\"Field Kit Mono\", \"IBM Plex Mono\", monospace",
+        "text": "0"
+      },
+      {
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(255, 255, 255)",
+        "font": "\"Field Kit Mono\", \"IBM Plex Mono\", monospace",
+        "text": "Lifetime2"
+      },
+      {
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(204, 204, 204)",
+        "font": "\"Field Kit Mono\", \"IBM Plex Mono\", monospace",
+        "text": "Lifetime"
+      },
+      {
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(255, 255, 85)",
+        "font": "\"Field Kit Mono\", \"IBM Plex Mono\", monospace",
+        "text": "2"
+      },
+      {
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(204, 204, 204)",
+        "font": "\"Field Kit Mono\", \"IBM Plex Mono\", monospace",
+        "text": "Enemy details"
+      },
+      {
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(204, 204, 204)",
+        "font": "\"Field Kit Mono\", \"IBM Plex Mono\", monospace",
+        "text": "This run / Lifetime"
+      },
+      {
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(255, 255, 255)",
+        "font": "\"Field Kit Mono\", \"IBM Plex Mono\", monospace",
+        "text": "Rival — Different routes, one shared view."
+      },
+      {
+        "background": "rgb(255, 255, 85)",
+        "color": "rgb(23, 25, 27)",
+        "font": "\"Field Kit Mono\", \"IBM Plex Mono\", monospace",
+        "text": "Retry"
+      },
+      {
+        "background": "rgb(0, 0, 96)",
+        "color": "rgb(255, 255, 255)",
+        "font": "\"Field Kit Mono\", \"IBM Plex Mono\", monospace",
+        "text": "Home"
+      }
+    ],
+    "scrollWidth": 1280,
+    "text": "Results\nPause replay\n\nDRAW\n\nBest score 800 · Fastest 18.6s · Fewest moves 93\n\nMore options\nThis run\n0\nLifetime\n2\nEnemy details\nRival — Different routes, one shared view.\nRetry\nHome",
+    "theme": "dos",
+    "width": 1280
+  },
+  {
+    "active": "snake-action-retry",
+    "paint": [
+      {
+        "background": "rgb(54, 82, 38)",
+        "color": "rgb(255, 255, 255)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "Pause replay"
+      },
+      {
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(48, 43, 34)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "DRAW"
+      },
+      {
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(92, 72, 52)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "Best score 800 · Fastest 18.6s · Fewest moves 93"
+      },
+      {
+        "background": "rgb(246, 235, 208)",
+        "color": "rgb(48, 43, 34)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "Random level"
+      },
+      {
+        "background": "rgb(246, 235, 208)",
+        "color": "rgb(48, 43, 34)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "Choose mission"
+      },
+      {
+        "background": "rgb(246, 235, 208)",
+        "color": "rgb(48, 43, 34)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "Collections"
+      },
+      {
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(48, 43, 34)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "This run0"
+      },
+      {
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(48, 43, 34)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "This run"
+      },
+      {
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(54, 82, 38)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "0"
+      },
+      {
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(48, 43, 34)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "Lifetime2"
+      },
+      {
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(92, 72, 52)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "Lifetime"
+      },
+      {
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(54, 82, 38)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "2"
+      },
+      {
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(92, 72, 52)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "Enemy details"
+      },
+      {
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(92, 72, 52)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "This run / Lifetime"
+      },
+      {
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(48, 43, 34)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "Rival — Different routes, one shared view."
+      },
+      {
+        "background": "rgb(54, 82, 38)",
+        "color": "rgb(255, 255, 255)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "Retry"
+      },
+      {
+        "background": "rgb(246, 235, 208)",
+        "color": "rgb(48, 43, 34)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "Home"
+      }
+    ],
+    "scrollWidth": 1280,
+    "text": "Results\nPause replay\n\nDRAW\n\nBest score 800 · Fastest 18.6s · Fewest moves 93\n\nMore options\nThis run\n0\nLifetime\n2\nEnemy details\nRival — Different routes, one shared view.\nRetry\nHome",
+    "theme": "orchard-workshop",
+    "width": 1280
+  },
+  {
+    "active": "snake-action-retry",
+    "paint": [
+      {
+        "background": "rgb(103, 216, 202)",
+        "color": "rgb(23, 25, 27)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "Pause replay"
+      },
+      {
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(229, 238, 242)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "DRAW"
+      },
+      {
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(182, 200, 212)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "Best score 800 · Fastest 18.6s · Fewest moves 93"
+      },
+      {
+        "background": "rgb(48, 56, 79)",
+        "color": "rgb(229, 238, 242)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "Random level"
+      },
+      {
+        "background": "rgb(48, 56, 79)",
+        "color": "rgb(229, 238, 242)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "Choose mission"
+      },
+      {
+        "background": "rgb(48, 56, 79)",
+        "color": "rgb(229, 238, 242)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "Collections"
+      },
+      {
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(229, 238, 242)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "This run0"
+      },
+      {
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(229, 238, 242)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "This run"
+      },
+      {
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(103, 216, 202)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "0"
+      },
+      {
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(229, 238, 242)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "Lifetime2"
+      },
+      {
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(182, 200, 212)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "Lifetime"
+      },
+      {
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(103, 216, 202)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "2"
+      },
+      {
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(182, 200, 212)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "Enemy details"
+      },
+      {
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(182, 200, 212)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "This run / Lifetime"
+      },
+      {
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(229, 238, 242)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "Rival — Different routes, one shared view."
+      },
+      {
+        "background": "rgb(103, 216, 202)",
+        "color": "rgb(23, 25, 27)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "Retry"
+      },
+      {
+        "background": "rgb(48, 56, 79)",
+        "color": "rgb(229, 238, 242)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "Home"
+      }
+    ],
+    "scrollWidth": 1280,
+    "text": "Results\nPause replay\n\nDRAW\n\nBest score 800 · Fastest 18.6s · Fewest moves 93\n\nMore options\nThis run\n0\nLifetime\n2\nEnemy details\nRival — Different routes, one shared view.\nRetry\nHome",
+    "theme": "neon-ruins",
+    "width": 1280
+  },
+  {
+    "active": "snake-action-retry",
+    "paint": [
+      {
+        "background": "rgb(50, 76, 42)",
+        "color": "rgb(255, 255, 255)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "Pause replay"
+      },
+      {
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(36, 50, 31)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "DRAW"
+      },
+      {
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(67, 82, 54)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "Best score 800 · Fastest 18.6s · Fewest moves 93"
+      },
+      {
+        "background": "rgb(185, 201, 145)",
+        "color": "rgb(36, 50, 31)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "Random level"
+      },
+      {
+        "background": "rgb(185, 201, 145)",
+        "color": "rgb(36, 50, 31)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "Choose mission"
+      },
+      {
+        "background": "rgb(185, 201, 145)",
+        "color": "rgb(36, 50, 31)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "Collections"
+      },
+      {
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(36, 50, 31)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "This run0"
+      },
+      {
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(36, 50, 31)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "This run"
+      },
+      {
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(50, 76, 42)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "0"
+      },
+      {
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(36, 50, 31)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "Lifetime2"
+      },
+      {
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(67, 82, 54)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "Lifetime"
+      },
+      {
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(50, 76, 42)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "2"
+      },
+      {
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(67, 82, 54)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "Enemy details"
+      },
+      {
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(67, 82, 54)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "This run / Lifetime"
+      },
+      {
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(36, 50, 31)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "Rival — Different routes, one shared view."
+      },
+      {
+        "background": "rgb(50, 76, 42)",
+        "color": "rgb(255, 255, 255)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "Retry"
+      },
+      {
+        "background": "rgb(185, 201, 145)",
+        "color": "rgb(36, 50, 31)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "Home"
+      }
+    ],
+    "scrollWidth": 1280,
+    "text": "Results\nPause replay\n\nDRAW\n\nBest score 800 · Fastest 18.6s · Fewest moves 93\n\nMore options\nThis run\n0\nLifetime\n2\nEnemy details\nRival — Different routes, one shared view.\nRetry\nHome",
+    "theme": "pocket-lcd",
+    "width": 1280
+  },
+  {
+    "active": "snake-action-retry",
+    "paint": [
+      {
+        "background": "rgb(224, 163, 115)",
+        "color": "rgb(23, 25, 27)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "Pause replay"
+      },
+      {
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(246, 234, 212)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "DRAW"
+      },
+      {
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(199, 193, 172)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "Best score 800 · Fastest 18.6s · Fewest moves 93"
+      },
+      {
+        "background": "rgb(27, 61, 65)",
+        "color": "rgb(246, 234, 212)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "Random level"
+      },
+      {
+        "background": "rgb(27, 61, 65)",
+        "color": "rgb(246, 234, 212)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "Choose mission"
+      },
+      {
+        "background": "rgb(27, 61, 65)",
+        "color": "rgb(246, 234, 212)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "Collections"
+      },
+      {
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(246, 234, 212)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "This run0"
+      },
+      {
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(246, 234, 212)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "This run"
+      },
+      {
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(224, 163, 115)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "0"
+      },
+      {
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(246, 234, 212)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "Lifetime2"
+      },
+      {
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(199, 193, 172)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "Lifetime"
+      },
+      {
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(224, 163, 115)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "2"
+      },
+      {
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(199, 193, 172)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "Enemy details"
+      },
+      {
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(199, 193, 172)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "This run / Lifetime"
+      },
+      {
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(246, 234, 212)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "Rival — Different routes, one shared view."
+      },
+      {
+        "background": "rgb(224, 163, 115)",
+        "color": "rgb(23, 25, 27)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "Retry"
+      },
+      {
+        "background": "rgb(27, 61, 65)",
+        "color": "rgb(246, 234, 212)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "Home"
+      }
+    ],
+    "scrollWidth": 1280,
+    "text": "Results\nPause replay\n\nDRAW\n\nBest score 800 · Fastest 18.6s · Fewest moves 93\n\nMore options\nThis run\n0\nLifetime\n2\nEnemy details\nRival — Different routes, one shared view.\nRetry\nHome",
+    "theme": "copper-observatory",
+    "width": 1280
+  },
+  {
+    "active": "snake-action-retry",
+    "paint": [
+      {
+        "background": "rgb(157, 48, 75)",
+        "color": "rgb(255, 255, 255)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "Pause replay"
+      },
+      {
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(53, 42, 57)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "DRAW"
+      },
+      {
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(104, 83, 96)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "Best score 800 · Fastest 18.6s · Fewest moves 93"
+      },
+      {
+        "background": "rgb(255, 250, 244)",
+        "color": "rgb(53, 42, 57)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "Random level"
+      },
+      {
+        "background": "rgb(255, 250, 244)",
+        "color": "rgb(53, 42, 57)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "Choose mission"
+      },
+      {
+        "background": "rgb(255, 250, 244)",
+        "color": "rgb(53, 42, 57)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "Collections"
+      },
+      {
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(53, 42, 57)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "This run0"
+      },
+      {
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(53, 42, 57)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "This run"
+      },
+      {
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(157, 48, 75)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "0"
+      },
+      {
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(53, 42, 57)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "Lifetime2"
+      },
+      {
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(104, 83, 96)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "Lifetime"
+      },
+      {
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(157, 48, 75)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "2"
+      },
+      {
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(104, 83, 96)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "Enemy details"
+      },
+      {
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(104, 83, 96)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "This run / Lifetime"
+      },
+      {
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(53, 42, 57)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "Rival — Different routes, one shared view."
+      },
+      {
+        "background": "rgb(157, 48, 75)",
+        "color": "rgb(255, 255, 255)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "Retry"
+      },
+      {
+        "background": "rgb(255, 250, 244)",
+        "color": "rgb(53, 42, 57)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "Home"
+      }
+    ],
+    "scrollWidth": 1280,
+    "text": "Results\nPause replay\n\nDRAW\n\nBest score 800 · Fastest 18.6s · Fewest moves 93\n\nMore options\nThis run\n0\nLifetime\n2\nEnemy details\nRival — Different routes, one shared view.\nRetry\nHome",
+    "theme": "sakura-station",
+    "width": 1280
+  },
+  {
+    "active": "snake-action-retry",
+    "paint": [
+      {
+        "background": "rgb(210, 177, 109)",
+        "color": "rgb(23, 25, 27)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "Pause replay"
+      },
+      {
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(238, 229, 212)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "DRAW"
+      },
+      {
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(188, 177, 166)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "Best score 800 · Fastest 18.6s · Fewest moves 93"
+      },
+      {
+        "background": "rgb(39, 33, 39)",
+        "color": "rgb(238, 229, 212)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "Random level"
+      },
+      {
+        "background": "rgb(39, 33, 39)",
+        "color": "rgb(238, 229, 212)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "Choose mission"
+      },
+      {
+        "background": "rgb(39, 33, 39)",
+        "color": "rgb(238, 229, 212)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "Collections"
+      },
+      {
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(238, 229, 212)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "This run0"
+      },
+      {
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(238, 229, 212)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "This run"
+      },
+      {
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(210, 177, 109)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "0"
+      },
+      {
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(238, 229, 212)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "Lifetime2"
+      },
+      {
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(188, 177, 166)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "Lifetime"
+      },
+      {
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(210, 177, 109)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "2"
+      },
+      {
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(188, 177, 166)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "Enemy details"
+      },
+      {
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(188, 177, 166)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "This run / Lifetime"
+      },
+      {
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(238, 229, 212)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "Rival — Different routes, one shared view."
+      },
+      {
+        "background": "rgb(210, 177, 109)",
+        "color": "rgb(23, 25, 27)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "Retry"
+      },
+      {
+        "background": "rgb(39, 33, 39)",
+        "color": "rgb(238, 229, 212)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "Home"
+      }
+    ],
+    "scrollWidth": 1280,
+    "text": "Results\nPause replay\n\nDRAW\n\nBest score 800 · Fastest 18.6s · Fewest moves 93\n\nMore options\nThis run\n0\nLifetime\n2\nEnemy details\nRival — Different routes, one shared view.\nRetry\nHome",
+    "theme": "obsidian-reliquary",
+    "width": 1280
+  },
+  {
+    "active": "snake-action-retry",
+    "paint": [
+      {
+        "background": "rgb(153, 213, 237)",
+        "color": "rgb(23, 25, 27)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "Pause replay"
+      },
+      {
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(229, 239, 245)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "DRAW"
+      },
+      {
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(175, 192, 207)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "Best score 800 · Fastest 18.6s · Fewest moves 93"
+      },
+      {
+        "background": "rgb(27, 43, 63)",
+        "color": "rgb(229, 239, 245)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "Random level"
+      },
+      {
+        "background": "rgb(27, 43, 63)",
+        "color": "rgb(229, 239, 245)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "Choose mission"
+      },
+      {
+        "background": "rgb(27, 43, 63)",
+        "color": "rgb(229, 239, 245)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "Collections"
+      },
+      {
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(229, 239, 245)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "This run0"
+      },
+      {
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(229, 239, 245)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "This run"
+      },
+      {
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(153, 213, 237)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "0"
+      },
+      {
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(229, 239, 245)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "Lifetime2"
+      },
+      {
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(175, 192, 207)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "Lifetime"
+      },
+      {
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(153, 213, 237)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "2"
+      },
+      {
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(175, 192, 207)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "Enemy details"
+      },
+      {
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(175, 192, 207)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "This run / Lifetime"
+      },
+      {
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(229, 239, 245)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "Rival — Different routes, one shared view."
+      },
+      {
+        "background": "rgb(153, 213, 237)",
+        "color": "rgb(23, 25, 27)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "Retry"
+      },
+      {
+        "background": "rgb(27, 43, 63)",
+        "color": "rgb(229, 239, 245)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "Home"
+      }
+    ],
+    "scrollWidth": 1280,
+    "text": "Results\nPause replay\n\nDRAW\n\nBest score 800 · Fastest 18.6s · Fewest moves 93\n\nMore options\nThis run\n0\nLifetime\n2\nEnemy details\nRival — Different routes, one shared view.\nRetry\nHome",
+    "theme": "deep-space",
+    "width": 1280
+  },
+  {
+    "active": "snake-action-retry",
+    "paint": [
+      {
+        "background": "rgb(192, 182, 226)",
+        "color": "rgb(23, 25, 27)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "Pause replay"
+      },
+      {
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(230, 236, 225)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "DRAW"
+      },
+      {
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(179, 194, 180)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "Best score 800 · Fastest 18.6s · Fewest moves 93"
+      },
+      {
+        "background": "rgb(34, 53, 43)",
+        "color": "rgb(230, 236, 225)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "Random level"
+      },
+      {
+        "background": "rgb(34, 53, 43)",
+        "color": "rgb(230, 236, 225)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "Choose mission"
+      },
+      {
+        "background": "rgb(34, 53, 43)",
+        "color": "rgb(230, 236, 225)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "Collections"
+      },
+      {
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(230, 236, 225)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "This run0"
+      },
+      {
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(230, 236, 225)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "This run"
+      },
+      {
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(192, 182, 226)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "0"
+      },
+      {
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(230, 236, 225)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "Lifetime2"
+      },
+      {
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(179, 194, 180)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "Lifetime"
+      },
+      {
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(192, 182, 226)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "2"
+      },
+      {
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(179, 194, 180)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "Enemy details"
+      },
+      {
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(179, 194, 180)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "This run / Lifetime"
+      },
+      {
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(230, 236, 225)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "Rival — Different routes, one shared view."
+      },
+      {
+        "background": "rgb(192, 182, 226)",
+        "color": "rgb(23, 25, 27)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "Retry"
+      },
+      {
+        "background": "rgb(34, 53, 43)",
+        "color": "rgb(230, 236, 225)",
+        "font": "\"Field Kit UI\", \"Exo 2\", sans-serif",
+        "text": "Home"
+      }
+    ],
+    "scrollWidth": 1280,
+    "text": "Results\nPause replay\n\nDRAW\n\nBest score 800 · Fastest 18.6s · Fewest moves 93\n\nMore options\nThis run\n0\nLifetime\n2\nEnemy details\nRival — Different routes, one shared view.\nRetry\nHome",
+    "theme": "moonlit-grove",
+    "width": 1280
+  }
+]

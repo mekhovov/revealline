@@ -14,6 +14,7 @@ import {
   subscribeSimMenuAnimation,
   attachSimThemeFamilyControls,
   mountSimGlobalSettings,
+  mountSimComfortPresets,
   mountSimModeSettings,
   simAttachSettingsPanels,
   simSettingsPanelBack,
@@ -42,6 +43,7 @@ import {
 import { attachPracticeInput } from './input.mjs';
 import { PRACTICE_COPY } from './copy.mjs';
 import { preparePracticeOffline, removePracticeOffline } from './offline.mjs';
+import { optionalOfflineFailureMessage } from '../install-context.mjs';
 
 function renderDrillPreview({ container, diagram, document: doc }) {
   const canvas = doc.createElement('canvas');
@@ -229,7 +231,7 @@ export function mountCivilianPractice({ document: doc, window: win }) {
   const display = createSimDisplayPreferences({ window: win, getStorage: () => win.localStorage });
   const stopDisplay = display.subscribe((state) => {
     doc.body.dataset.textFace = state.textFace;
-    doc.body.dataset.textSize = state.textSize;
+    doc.body.dataset.textSize = state.effectiveTextSize ?? state.textSize;
     doc.body.dataset.effects = state.effectiveReducedEffects ? 'reduced' : 'full';
   });
   const themeHost = installSimThemeHost({
@@ -604,8 +606,8 @@ export function mountCivilianPractice({ document: doc, window: win }) {
     try {
       await preparePracticeOffline({ navigator: win.navigator, location: win.location });
       $('package-status').textContent = tr('installed');
-    } catch {
-      $('package-status').textContent = tr('installFailed');
+    } catch (error) {
+      $('package-status').textContent = optionalOfflineFailureMessage(error, getLocale());
     }
   };
   $('remove-offline').onclick = async () => {
@@ -616,8 +618,8 @@ export function mountCivilianPractice({ document: doc, window: win }) {
         location: win.location,
       });
       $('package-status').textContent = tr('removed');
-    } catch {
-      $('package-status').textContent = tr('installFailed');
+    } catch (error) {
+      $('package-status').textContent = optionalOfflineFailureMessage(error, getLocale(), 'remove');
     }
   };
   const section = (className) => {
@@ -818,9 +820,16 @@ export function mountCivilianPractice({ document: doc, window: win }) {
     },
     duplicates: { masterMuted: [$('sound')] },
   });
+  const comfortPresets = mountSimComfortPresets({
+    document: doc,
+    window: win,
+    root: modeSettings.panels.accessibility,
+    display,
+  });
   const audioCues = section('gym-audio-cues');
   const stopAudioCues = attachSimMenuAudioSettings(
     {
+      gameplayOutput: audio.gameplayOutput,
       get menuSettings() {
         return presentation.menuSettings;
       },
@@ -898,7 +907,9 @@ export function mountCivilianPractice({ document: doc, window: win }) {
     ownsKeyboardEvent: (event) => simSettingsTabOwnsKey(event, menuContext()?.root),
     onHint(value) {
       const context = menuContext();
-      if (!value && context?.root.dataset.modeSurface) return;
+      // Input suspension must not collapse instructions in an open menu or
+      // native dialog and move a control between pointer press and release.
+      if (!value && context) return;
       menuHint.hidden = !context;
       const parent =
         context?.root === playShell.elements.dialogs.settings
@@ -928,6 +939,7 @@ export function mountCivilianPractice({ document: doc, window: win }) {
     $('sound').onclick = null;
     menuNavigation.dispose();
     menuHint.remove();
+    comfortPresets.destroy();
     globalSettings?.destroy();
     globalTools?.dispose();
     appearance.dispose();

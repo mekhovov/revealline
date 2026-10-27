@@ -33,7 +33,10 @@
       "durationSeconds": 31.908333333333335,
       "turnPolicy": "grid-center",
       "replayURL": "./demo-data/first-signal-right.replay.json",
-      "replayVariants": ["./demo-data/first-signal-right.chromium-macos.replay.json"]
+      "replayVariants": [
+        "./demo-data/first-signal-right.chromium-macos.replay.json",
+        "./demo-data/first-signal-right.node20-linux-x64.replay.json"
+      ]
     },
     {
       "id": "relay-orchard-loop",
@@ -135,7 +138,10 @@
       "durationSeconds": 44.391666666666666,
       "turnPolicy": "immediate",
       "replayURL": "./demo-data/hidden-frequency-search.replay.json",
-      "replayVariants": ["./demo-data/hidden-frequency-search.chromium-macos.replay.json"]
+      "replayVariants": [
+        "./demo-data/hidden-frequency-search.chromium-macos.replay.json",
+        "./demo-data/hidden-frequency-search.node20-linux-x64.replay.json"
+      ]
     },
     {
       "id": "the-crossing-windows",
@@ -170,6 +176,74 @@
       "turnPolicy": "immediate",
       "replayURL": "./demo-data/signal-garden-route.replay.json",
       "replayVariants": ["./demo-data/signal-garden-route.chromium-macos.replay.json"]
+    },
+    {
+      "id": "orchard-crossing-circuit",
+      "campaignId": "fpv-pressure-lines",
+      "campaignKey": "fpv-pressure-lines/1/ebb56ffdd9baa8e8",
+      "levelId": "orchard-crossing",
+      "levelRevision": "1",
+      "identity": "af346e7e3d400f49",
+      "recordingIdentity": "cef626b614a00d08",
+      "inputTraceIdentity": "4ea122c1ae9928d6",
+      "title": "Orchard Crossing",
+      "provenance": "authored",
+      "tags": ["capture", "bent-cut", "safe-ground", "arcade"],
+      "durationSeconds": 31.416666666666668,
+      "turnPolicy": "immediate",
+      "replayURL": "./demo-data/orchard-crossing-circuit.replay.json",
+      "replayVariants": ["./demo-data/orchard-crossing-circuit.node20-linux-x64.replay.json"]
+    },
+    {
+      "id": "courtyard-exits-circuit",
+      "campaignId": "fpv-pressure-lines",
+      "campaignKey": "fpv-pressure-lines/1/ebb56ffdd9baa8e8",
+      "levelId": "courtyard-exits",
+      "levelRevision": "1",
+      "identity": "64ac5c0275b0c5db",
+      "recordingIdentity": "de03c86cecd7cab4",
+      "inputTraceIdentity": "50ebb44e6d28103d",
+      "title": "Courtyard Exits",
+      "provenance": "authored",
+      "tags": ["capture", "bent-cut", "safe-ground", "arcade"],
+      "durationSeconds": 31.975,
+      "turnPolicy": "immediate",
+      "replayURL": "./demo-data/courtyard-exits-circuit.replay.json",
+      "replayVariants": []
+    },
+    {
+      "id": "last-light-recovery",
+      "campaignId": "first-signal",
+      "campaignKey": "first-signal/2/88639f3aab7b6cc1",
+      "levelId": "signal-08",
+      "levelRevision": "1",
+      "identity": "07559fdb9548f17f",
+      "recordingIdentity": "d1384c3dc6516b24",
+      "inputTraceIdentity": "ae729c91885a257b",
+      "title": "Last Light",
+      "provenance": "authored",
+      "tags": ["capture", "bent-cut", "failure", "recovery", "scout"],
+      "durationSeconds": 30.075,
+      "turnPolicy": "immediate",
+      "replayURL": "./demo-data/last-light-recovery.replay.json",
+      "replayVariants": []
+    },
+    {
+      "id": "supply-circuit-recovery",
+      "campaignId": "first-signal",
+      "campaignKey": "first-signal/2/88639f3aab7b6cc1",
+      "levelId": "signal-10",
+      "levelRevision": "1",
+      "identity": "6c261c7403bd2de5",
+      "recordingIdentity": "38e792b6a12aa0fc",
+      "inputTraceIdentity": "db9100dd8c09fafd",
+      "title": "Supply Circuit",
+      "provenance": "authored",
+      "tags": ["capture", "bent-cut", "failure", "recovery", "scout"],
+      "durationSeconds": 52.96666666666667,
+      "turnPolicy": "immediate",
+      "replayURL": "./demo-data/supply-circuit-recovery.replay.json",
+      "replayVariants": ["./demo-data/supply-circuit-recovery.node20-linux-x64.replay.json"]
     }
   ]
 }

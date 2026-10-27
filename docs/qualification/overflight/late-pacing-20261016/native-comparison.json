@@ -1,0 +1,20 @@
+{
+  "runtime": "cf16eea20e7069363db7d0f77bb6a92a50c615d0",
+  "checks": {
+    "projectIdentity": true,
+    "outcome": true,
+    "time": true,
+    "everyStat": true,
+    "fullUpgradeHistory": true,
+    "originalCrowd": true,
+    "timingCorrectlyRejected": true,
+    "noDroppedSimulation": true
+  },
+  "time": 404.1666666666667,
+  "kills": 3427,
+  "damageTaken": 240,
+  "airframesLost": 2,
+  "lastUpgradeTime": 236.03333333333333,
+  "trialValid": false,
+  "invalidReasons": ["review-clip-recording-overhead", "interrupted"]
+}

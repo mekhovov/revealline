@@ -1,0 +1,10 @@
+{
+  "collectedAt": "2026-10-15T18:46:19.982873+00:00",
+  "scope": "One post-run observation, not controlled load throughout the audit and not proof of a deadline failure cause. No unrelated process was stopped.",
+  "values": {
+    "vm.loadavg": "{ 58.06 38.68 33.34 }",
+    "hw.logicalcpu": "14",
+    "hw.memsize": "51539607552",
+    "vm.swapusage": "total = 4096.00M  used = 3489.38M  free = 606.62M  (encrypted)"
+  }
+}

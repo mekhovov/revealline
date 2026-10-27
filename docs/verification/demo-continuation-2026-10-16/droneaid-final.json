@@ -1,0 +1,2185 @@
+{
+  "format": "revealline-demo-availability.v1",
+  "startedAt": "2026-10-16T04:17:35.815Z",
+  "config": {
+    "policies": [
+      "immediate",
+      "grid-center"
+    ],
+    "offline": false,
+    "workers": true,
+    "inventoryOnly": false,
+    "limit": null,
+    "packs": [],
+    "levels": [],
+    "edition": "droneaid",
+    "journey": false,
+    "report": "docs/verification/demo-continuation-2026-10-16/droneaid-final.json"
+  },
+  "qualification": "Node real-core preparation and replay verification. Not real hardware, browser scheduling, audio or viewing quality.",
+  "sources": [
+    {
+      "id": "improv-droneaid-nl-workshop-lights/candidate-054b4b1a0509b579/bf9ebf37cce9a225-droneaid-nl-workshop-lights-01",
+      "levelKey": "droneaid-nl-workshop-lights/candidate-054b4b1a0509b579/bf9ebf37cce9a225/droneaid-nl-workshop-lights-01",
+      "kind": "improv",
+      "turnPolicy": "immediate",
+      "status": "verified",
+      "preparationMs": 4945,
+      "result": "won",
+      "simulationSeconds": 17,
+      "coverage": 0.7255753365175858,
+      "lives": 3,
+      "elapsedMs": 5384
+    },
+    {
+      "id": "improv-droneaid-nl-workshop-lights/candidate-054b4b1a0509b579/bf9ebf37cce9a225-droneaid-nl-workshop-lights-02",
+      "levelKey": "droneaid-nl-workshop-lights/candidate-054b4b1a0509b579/bf9ebf37cce9a225/droneaid-nl-workshop-lights-02",
+      "kind": "improv",
+      "turnPolicy": "immediate",
+      "status": "verified",
+      "preparationMs": 2686,
+      "result": "won",
+      "simulationSeconds": 12.966666666666667,
+      "coverage": 0.7671472258628222,
+      "lives": 3,
+      "elapsedMs": 3131
+    },
+    {
+      "id": "improv-droneaid-nl-workshop-lights/candidate-054b4b1a0509b579/bf9ebf37cce9a225-droneaid-nl-workshop-lights-03",
+      "levelKey": "droneaid-nl-workshop-lights/candidate-054b4b1a0509b579/bf9ebf37cce9a225/droneaid-nl-workshop-lights-03",
+      "kind": "improv",
+      "turnPolicy": "immediate",
+      "status": "verified",
+      "preparationMs": 8629,
+      "result": "won",
+      "simulationSeconds": 25.716666666666665,
+      "coverage": 0.6506340183646698,
+      "lives": 3,
+      "elapsedMs": 9607
+    },
+    {
+      "id": "improv-droneaid-nl-workshop-lights/candidate-054b4b1a0509b579/bf9ebf37cce9a225-droneaid-nl-workshop-lights-04",
+      "levelKey": "droneaid-nl-workshop-lights/candidate-054b4b1a0509b579/bf9ebf37cce9a225/droneaid-nl-workshop-lights-04",
+      "kind": "improv",
+      "turnPolicy": "immediate",
+      "status": "verified",
+      "preparationMs": 12192,
+      "result": "won",
+      "simulationSeconds": 46.13333333333333,
+      "coverage": 0.792311091471498,
+      "lives": 3,
+      "elapsedMs": 13353
+    },
+    {
+      "id": "improv-droneaid-nl-workshop-lights/candidate-054b4b1a0509b579/bf9ebf37cce9a225-droneaid-nl-workshop-lights-05",
+      "levelKey": "droneaid-nl-workshop-lights/candidate-054b4b1a0509b579/bf9ebf37cce9a225/droneaid-nl-workshop-lights-05",
+      "kind": "improv",
+      "turnPolicy": "immediate",
+      "status": "verified",
+      "preparationMs": 6731,
+      "result": "won",
+      "simulationSeconds": 39.24166666666667,
+      "coverage": 0.6413091552410438,
+      "lives": 2,
+      "elapsedMs": 8459
+    },
+    {
+      "id": "improv-droneaid-nl-workshop-lights/candidate-054b4b1a0509b579/bf9ebf37cce9a225-droneaid-nl-workshop-lights-06",
+      "levelKey": "droneaid-nl-workshop-lights/candidate-054b4b1a0509b579/bf9ebf37cce9a225/droneaid-nl-workshop-lights-06",
+      "kind": "improv",
+      "turnPolicy": "immediate",
+      "status": "verified",
+      "preparationMs": 9576,
+      "result": "won",
+      "simulationSeconds": 34.291666666666664,
+      "coverage": 0.7441345728198318,
+      "lives": 3,
+      "elapsedMs": 10809
+    },
+    {
+      "id": "improv-droneaid-nl-parts-in-motion/candidate-872cecca70891d14/4bae7562b7d6c9d4-droneaid-nl-parts-in-motion-01",
+      "levelKey": "droneaid-nl-parts-in-motion/candidate-872cecca70891d14/4bae7562b7d6c9d4/droneaid-nl-parts-in-motion-01",
+      "kind": "improv",
+      "turnPolicy": "immediate",
+      "status": "verified",
+      "preparationMs": 7013,
+      "result": "won",
+      "simulationSeconds": 32.775,
+      "coverage": 0.853202846975089,
+      "lives": 3,
+      "elapsedMs": 8536
+    },
+    {
+      "id": "improv-droneaid-nl-parts-in-motion/candidate-872cecca70891d14/4bae7562b7d6c9d4-droneaid-nl-parts-in-motion-02",
+      "levelKey": "droneaid-nl-parts-in-motion/candidate-872cecca70891d14/4bae7562b7d6c9d4/droneaid-nl-parts-in-motion-02",
+      "kind": "improv",
+      "turnPolicy": "immediate",
+      "status": "verified",
+      "preparationMs": 7832,
+      "result": "won",
+      "simulationSeconds": 31.108333333333334,
+      "coverage": 0.8954626334519573,
+      "lives": 3,
+      "elapsedMs": 8481
+    },
+    {
+      "id": "improv-droneaid-nl-parts-in-motion/candidate-872cecca70891d14/4bae7562b7d6c9d4-droneaid-nl-parts-in-motion-03",
+      "levelKey": "droneaid-nl-parts-in-motion/candidate-872cecca70891d14/4bae7562b7d6c9d4/droneaid-nl-parts-in-motion-03",
+      "kind": "improv",
+      "turnPolicy": "immediate",
+      "status": "verified",
+      "preparationMs": 10574,
+      "result": "won",
+      "simulationSeconds": 49.108333333333334,
+      "coverage": 0.6472419928825622,
+      "lives": 2,
+      "elapsedMs": 11937
+    },
+    {
+      "id": "improv-droneaid-nl-parts-in-motion/candidate-872cecca70891d14/4bae7562b7d6c9d4-droneaid-nl-parts-in-motion-04",
+      "levelKey": "droneaid-nl-parts-in-motion/candidate-872cecca70891d14/4bae7562b7d6c9d4/droneaid-nl-parts-in-motion-04",
+      "kind": "improv",
+      "turnPolicy": "immediate",
+      "status": "verified",
+      "preparationMs": 6324,
+      "result": "won",
+      "simulationSeconds": 34.40833333333333,
+      "coverage": 0.6672597864768683,
+      "lives": 3,
+      "elapsedMs": 6946
+    },
+    {
+      "id": "improv-droneaid-nl-parts-in-motion/candidate-872cecca70891d14/4bae7562b7d6c9d4-droneaid-nl-parts-in-motion-05",
+      "levelKey": "droneaid-nl-parts-in-motion/candidate-872cecca70891d14/4bae7562b7d6c9d4/droneaid-nl-parts-in-motion-05",
+      "kind": "improv",
+      "turnPolicy": "immediate",
+      "status": "verified",
+      "preparationMs": 11230,
+      "result": "won",
+      "simulationSeconds": 87.78333333333333,
+      "coverage": 0.9234875444839857,
+      "lives": 2,
+      "elapsedMs": 13049
+    },
+    {
+      "id": "improv-droneaid-nl-parts-in-motion/candidate-872cecca70891d14/4bae7562b7d6c9d4-droneaid-nl-parts-in-motion-06",
+      "levelKey": "droneaid-nl-parts-in-motion/candidate-872cecca70891d14/4bae7562b7d6c9d4/droneaid-nl-parts-in-motion-06",
+      "kind": "improv",
+      "turnPolicy": "immediate",
+      "status": "verified",
+      "preparationMs": 7753,
+      "result": "won",
+      "simulationSeconds": 60.675,
+      "coverage": 0.8256227758007118,
+      "lives": 2,
+      "elapsedMs": 8442
+    },
+    {
+      "id": "improv-droneaid-nl-makers-together/candidate-a4e73ebcd43a4690/71361b09d54c8376-droneaid-nl-makers-together-01",
+      "levelKey": "droneaid-nl-makers-together/candidate-a4e73ebcd43a4690/71361b09d54c8376/droneaid-nl-makers-together-01",
+      "kind": "improv",
+      "turnPolicy": "immediate",
+      "status": "verified",
+      "preparationMs": 6923,
+      "result": "won",
+      "simulationSeconds": 92.825,
+      "coverage": 0.8627537511032657,
+      "lives": 1,
+      "elapsedMs": 7597
+    },
+    {
+      "id": "improv-droneaid-nl-makers-together/candidate-a4e73ebcd43a4690/71361b09d54c8376-droneaid-nl-makers-together-02",
+      "levelKey": "droneaid-nl-makers-together/candidate-a4e73ebcd43a4690/71361b09d54c8376/droneaid-nl-makers-together-02",
+      "kind": "improv",
+      "turnPolicy": "immediate",
+      "status": "verified",
+      "preparationMs": 3334,
+      "result": "won",
+      "simulationSeconds": 59.46666666666667,
+      "coverage": 0.6519434628975265,
+      "lives": 2,
+      "elapsedMs": 3845
+    },
+    {
+      "id": "improv-droneaid-nl-makers-together/candidate-a4e73ebcd43a4690/71361b09d54c8376-droneaid-nl-makers-together-03",
+      "levelKey": "droneaid-nl-makers-together/candidate-a4e73ebcd43a4690/71361b09d54c8376/droneaid-nl-makers-together-03",
+      "kind": "improv",
+      "turnPolicy": "immediate",
+      "status": "verified",
+      "preparationMs": 5554,
+      "result": "won",
+      "simulationSeconds": 53.291666666666664,
+      "coverage": 0.7281553398058253,
+      "lives": 2,
+      "elapsedMs": 6221
+    },
+    {
+      "id": "improv-droneaid-nl-makers-together/candidate-a4e73ebcd43a4690/71361b09d54c8376-droneaid-nl-makers-together-04",
+      "levelKey": "droneaid-nl-makers-together/candidate-a4e73ebcd43a4690/71361b09d54c8376/droneaid-nl-makers-together-04",
+      "kind": "improv",
+      "turnPolicy": "immediate",
+      "status": "verified",
+      "preparationMs": 3268,
+      "result": "won",
+      "simulationSeconds": 13.783333333333333,
+      "coverage": 0.8962014134275619,
+      "lives": 3,
+      "elapsedMs": 3572
+    },
+    {
+      "id": "improv-droneaid-nl-makers-together/candidate-a4e73ebcd43a4690/71361b09d54c8376-droneaid-nl-makers-together-05",
+      "levelKey": "droneaid-nl-makers-together/candidate-a4e73ebcd43a4690/71361b09d54c8376/droneaid-nl-makers-together-05",
+      "kind": "improv",
+      "turnPolicy": "immediate",
+      "status": "verified",
+      "preparationMs": 8593,
+      "result": "won",
+      "simulationSeconds": 45.53333333333333,
+      "coverage": 0.707855251544572,
+      "lives": 2,
+      "elapsedMs": 9806
+    },
+    {
+      "id": "improv-droneaid-nl-makers-together/candidate-a4e73ebcd43a4690/71361b09d54c8376-droneaid-nl-makers-together-06",
+      "levelKey": "droneaid-nl-makers-together/candidate-a4e73ebcd43a4690/71361b09d54c8376/droneaid-nl-makers-together-06",
+      "kind": "improv",
+      "turnPolicy": "immediate",
+      "status": "verified",
+      "preparationMs": 9691,
+      "result": "won",
+      "simulationSeconds": 53.96666666666667,
+      "coverage": 0.7323321554770318,
+      "lives": 2,
+      "elapsedMs": 11143
+    },
+    {
+      "id": "improv-droneaid-nl-careful-handoff/candidate-732c87da248b1ab5/fcef3dd5e0d22a73-droneaid-nl-careful-handoff-01",
+      "levelKey": "droneaid-nl-careful-handoff/candidate-732c87da248b1ab5/fcef3dd5e0d22a73/droneaid-nl-careful-handoff-01",
+      "kind": "improv",
+      "turnPolicy": "immediate",
+      "status": "verified",
+      "preparationMs": 5875,
+      "result": "won",
+      "simulationSeconds": 51.50833333333333,
+      "coverage": 0.6054176072234763,
+      "lives": 2,
+      "elapsedMs": 6520
+    },
+    {
+      "id": "improv-droneaid-nl-careful-handoff/candidate-732c87da248b1ab5/fcef3dd5e0d22a73-droneaid-nl-careful-handoff-02",
+      "levelKey": "droneaid-nl-careful-handoff/candidate-732c87da248b1ab5/fcef3dd5e0d22a73/droneaid-nl-careful-handoff-02",
+      "kind": "improv",
+      "turnPolicy": "immediate",
+      "status": "verified",
+      "preparationMs": 4962,
+      "result": "won",
+      "simulationSeconds": 62.5,
+      "coverage": 0.7002257336343115,
+      "lives": 2,
+      "elapsedMs": 5579
+    },
+    {
+      "id": "improv-droneaid-nl-careful-handoff/candidate-732c87da248b1ab5/fcef3dd5e0d22a73-droneaid-nl-careful-handoff-03",
+      "levelKey": "droneaid-nl-careful-handoff/candidate-732c87da248b1ab5/fcef3dd5e0d22a73/droneaid-nl-careful-handoff-03",
+      "kind": "improv",
+      "turnPolicy": "immediate",
+      "status": "verified",
+      "preparationMs": 4441,
+      "result": "won",
+      "simulationSeconds": 77.39166666666667,
+      "coverage": 0.691647855530474,
+      "lives": 2,
+      "elapsedMs": 5410
+    },
+    {
+      "id": "improv-droneaid-nl-careful-handoff/candidate-732c87da248b1ab5/fcef3dd5e0d22a73-droneaid-nl-careful-handoff-04",
+      "levelKey": "droneaid-nl-careful-handoff/candidate-732c87da248b1ab5/fcef3dd5e0d22a73/droneaid-nl-careful-handoff-04",
+      "kind": "improv",
+      "turnPolicy": "immediate",
+      "status": "verified",
+      "preparationMs": 9225,
+      "result": "won",
+      "simulationSeconds": 91.28333333333333,
+      "coverage": 0.7431151241534989,
+      "lives": 1,
+      "elapsedMs": 10260
+    },
+    {
+      "id": "improv-droneaid-nl-careful-handoff/candidate-732c87da248b1ab5/fcef3dd5e0d22a73-droneaid-nl-careful-handoff-05",
+      "levelKey": "droneaid-nl-careful-handoff/candidate-732c87da248b1ab5/fcef3dd5e0d22a73/droneaid-nl-careful-handoff-05",
+      "kind": "improv",
+      "turnPolicy": "immediate",
+      "status": "verified",
+      "preparationMs": 9823,
+      "result": "won",
+      "simulationSeconds": 89.83333333333333,
+      "coverage": 0.9539503386004514,
+      "lives": 2,
+      "elapsedMs": 10865
+    },
+    {
+      "id": "improv-droneaid-nl-careful-handoff/candidate-732c87da248b1ab5/fcef3dd5e0d22a73-droneaid-nl-careful-handoff-06",
+      "levelKey": "droneaid-nl-careful-handoff/candidate-732c87da248b1ab5/fcef3dd5e0d22a73/droneaid-nl-careful-handoff-06",
+      "kind": "improv",
+      "turnPolicy": "immediate",
+      "status": "failed",
+      "error": {
+        "name": "DemoLoadingTimeoutError",
+        "code": "demo-load-timeout",
+        "message": "Demo preparation exceeded its loading deadline."
+      },
+      "elapsedMs": 15005
+    },
+    {
+      "id": "improv-droneaid-nl-signals-of-support/candidate-19619aa8c685e91d/386d61fa386a65d4-droneaid-nl-signals-of-support-01",
+      "levelKey": "droneaid-nl-signals-of-support/candidate-19619aa8c685e91d/386d61fa386a65d4/droneaid-nl-signals-of-support-01",
+      "kind": "improv",
+      "turnPolicy": "immediate",
+      "status": "verified",
+      "preparationMs": 9736,
+      "result": "won",
+      "simulationSeconds": 48.208333333333336,
+      "coverage": 0.855475763016158,
+      "lives": 2,
+      "elapsedMs": 11294
+    },
+    {
+      "id": "improv-droneaid-nl-signals-of-support/candidate-19619aa8c685e91d/386d61fa386a65d4-droneaid-nl-signals-of-support-02",
+      "levelKey": "droneaid-nl-signals-of-support/candidate-19619aa8c685e91d/386d61fa386a65d4/droneaid-nl-signals-of-support-02",
+      "kind": "improv",
+      "turnPolicy": "immediate",
+      "status": "verified",
+      "preparationMs": 4026,
+      "result": "won",
+      "simulationSeconds": 33.475,
+      "coverage": 0.6859578286227007,
+      "lives": 2,
+      "elapsedMs": 4555
+    },
+    {
+      "id": "improv-droneaid-nl-signals-of-support/candidate-19619aa8c685e91d/386d61fa386a65d4-droneaid-nl-signals-of-support-03",
+      "levelKey": "droneaid-nl-signals-of-support/candidate-19619aa8c685e91d/386d61fa386a65d4/droneaid-nl-signals-of-support-03",
+      "kind": "improv",
+      "turnPolicy": "immediate",
+      "status": "verified",
+      "preparationMs": 5187,
+      "result": "won",
+      "simulationSeconds": 45.975,
+      "coverage": 1,
+      "lives": 2,
+      "elapsedMs": 5823
+    },
+    {
+      "id": "improv-droneaid-nl-signals-of-support/candidate-19619aa8c685e91d/386d61fa386a65d4-droneaid-nl-signals-of-support-04",
+      "levelKey": "droneaid-nl-signals-of-support/candidate-19619aa8c685e91d/386d61fa386a65d4/droneaid-nl-signals-of-support-04",
+      "kind": "improv",
+      "turnPolicy": "immediate",
+      "status": "verified",
+      "preparationMs": 5199,
+      "result": "won",
+      "simulationSeconds": 58.1,
+      "coverage": 0.8766321476812247,
+      "lives": 1,
+      "elapsedMs": 6882
+    },
+    {
+      "id": "improv-droneaid-nl-signals-of-support/candidate-19619aa8c685e91d/386d61fa386a65d4-droneaid-nl-signals-of-support-05",
+      "levelKey": "droneaid-nl-signals-of-support/candidate-19619aa8c685e91d/386d61fa386a65d4/droneaid-nl-signals-of-support-05",
+      "kind": "improv",
+      "turnPolicy": "immediate",
+      "status": "verified",
+      "preparationMs": 6585,
+      "result": "won",
+      "simulationSeconds": 53.03333333333333,
+      "coverage": 0.8004504504504505,
+      "lives": 2,
+      "elapsedMs": 7314
+    },
+    {
+      "id": "improv-droneaid-nl-signals-of-support/candidate-19619aa8c685e91d/386d61fa386a65d4-droneaid-nl-signals-of-support-06",
+      "levelKey": "droneaid-nl-signals-of-support/candidate-19619aa8c685e91d/386d61fa386a65d4/droneaid-nl-signals-of-support-06",
+      "kind": "improv",
+      "turnPolicy": "immediate",
+      "status": "verified",
+      "preparationMs": 6918,
+      "result": "won",
+      "simulationSeconds": 66.9,
+      "coverage": 0.7964880684376408,
+      "lives": 2,
+      "elapsedMs": 7671
+    },
+    {
+      "id": "improv-droneaid-nl-shared-horizon/candidate-d9dc0dd9fe688f2c/3e9acad2498d7d9c-droneaid-nl-shared-horizon-01",
+      "levelKey": "droneaid-nl-shared-horizon/candidate-d9dc0dd9fe688f2c/3e9acad2498d7d9c/droneaid-nl-shared-horizon-01",
+      "kind": "improv",
+      "turnPolicy": "immediate",
+      "status": "verified",
+      "preparationMs": 2614,
+      "result": "lost",
+      "simulationSeconds": 41.975,
+      "coverage": 0.3039747064137308,
+      "lives": 0,
+      "elapsedMs": 2900
+    },
+    {
+      "id": "improv-droneaid-nl-shared-horizon/candidate-d9dc0dd9fe688f2c/3e9acad2498d7d9c-droneaid-nl-shared-horizon-02",
+      "levelKey": "droneaid-nl-shared-horizon/candidate-d9dc0dd9fe688f2c/3e9acad2498d7d9c/droneaid-nl-shared-horizon-02",
+      "kind": "improv",
+      "turnPolicy": "immediate",
+      "status": "verified",
+      "preparationMs": 9720,
+      "result": "won",
+      "simulationSeconds": 104,
+      "coverage": 0.987353206865402,
+      "lives": 2,
+      "elapsedMs": 11556
+    },
+    {
+      "id": "improv-droneaid-nl-shared-horizon/candidate-d9dc0dd9fe688f2c/3e9acad2498d7d9c-droneaid-nl-shared-horizon-03",
+      "levelKey": "droneaid-nl-shared-horizon/candidate-d9dc0dd9fe688f2c/3e9acad2498d7d9c/droneaid-nl-shared-horizon-03",
+      "kind": "improv",
+      "turnPolicy": "immediate",
+      "status": "verified",
+      "preparationMs": 7622,
+      "result": "won",
+      "simulationSeconds": 65.275,
+      "coverage": 0.9141824751580849,
+      "lives": 1,
+      "elapsedMs": 8705
+    },
+    {
+      "id": "improv-droneaid-nl-shared-horizon/candidate-d9dc0dd9fe688f2c/3e9acad2498d7d9c-droneaid-nl-shared-horizon-04",
+      "levelKey": "droneaid-nl-shared-horizon/candidate-d9dc0dd9fe688f2c/3e9acad2498d7d9c/droneaid-nl-shared-horizon-04",
+      "kind": "improv",
+      "turnPolicy": "immediate",
+      "status": "verified",
+      "preparationMs": 4279,
+      "result": "won",
+      "simulationSeconds": 42.90833333333333,
+      "coverage": 1,
+      "lives": 2,
+      "elapsedMs": 4893
+    },
+    {
+      "id": "improv-droneaid-nl-shared-horizon/candidate-d9dc0dd9fe688f2c/3e9acad2498d7d9c-droneaid-nl-shared-horizon-05",
+      "levelKey": "droneaid-nl-shared-horizon/candidate-d9dc0dd9fe688f2c/3e9acad2498d7d9c/droneaid-nl-shared-horizon-05",
+      "kind": "improv",
+      "turnPolicy": "immediate",
+      "status": "verified",
+      "preparationMs": 7606,
+      "result": "won",
+      "simulationSeconds": 66.16666666666667,
+      "coverage": 1,
+      "lives": 2,
+      "elapsedMs": 8414
+    },
+    {
+      "id": "improv-droneaid-nl-shared-horizon/candidate-d9dc0dd9fe688f2c/3e9acad2498d7d9c-droneaid-nl-shared-horizon-06",
+      "levelKey": "droneaid-nl-shared-horizon/candidate-d9dc0dd9fe688f2c/3e9acad2498d7d9c/droneaid-nl-shared-horizon-06",
+      "kind": "improv",
+      "turnPolicy": "immediate",
+      "status": "verified",
+      "preparationMs": 5240,
+      "result": "won",
+      "simulationSeconds": 41.71666666666667,
+      "coverage": 1,
+      "lives": 2,
+      "elapsedMs": 6454
+    },
+    {
+      "id": "improv-droneaid-nl-workshop-lights/2/bf9ebf37cce9a225-droneaid-nl-workshop-lights-01",
+      "levelKey": "droneaid-nl-workshop-lights/2/bf9ebf37cce9a225/droneaid-nl-workshop-lights-01",
+      "kind": "improv",
+      "turnPolicy": "immediate",
+      "status": "verified",
+      "preparationMs": 1401,
+      "result": "won",
+      "simulationSeconds": 17,
+      "coverage": 0.7255753365175858,
+      "lives": 3,
+      "elapsedMs": 1631
+    },
+    {
+      "id": "improv-droneaid-nl-workshop-lights/2/bf9ebf37cce9a225-droneaid-nl-workshop-lights-02",
+      "levelKey": "droneaid-nl-workshop-lights/2/bf9ebf37cce9a225/droneaid-nl-workshop-lights-02",
+      "kind": "improv",
+      "turnPolicy": "immediate",
+      "status": "verified",
+      "preparationMs": 1572,
+      "result": "won",
+      "simulationSeconds": 12.966666666666667,
+      "coverage": 0.7671472258628222,
+      "lives": 3,
+      "elapsedMs": 1901
+    },
+    {
+      "id": "improv-droneaid-nl-workshop-lights/2/bf9ebf37cce9a225-droneaid-nl-workshop-lights-03",
+      "levelKey": "droneaid-nl-workshop-lights/2/bf9ebf37cce9a225/droneaid-nl-workshop-lights-03",
+      "kind": "improv",
+      "turnPolicy": "immediate",
+      "status": "verified",
+      "preparationMs": 3342,
+      "result": "won",
+      "simulationSeconds": 25.716666666666665,
+      "coverage": 0.6506340183646698,
+      "lives": 3,
+      "elapsedMs": 4010
+    },
+    {
+      "id": "improv-droneaid-nl-workshop-lights/2/bf9ebf37cce9a225-droneaid-nl-workshop-lights-04",
+      "levelKey": "droneaid-nl-workshop-lights/2/bf9ebf37cce9a225/droneaid-nl-workshop-lights-04",
+      "kind": "improv",
+      "turnPolicy": "immediate",
+      "status": "verified",
+      "preparationMs": 6981,
+      "result": "won",
+      "simulationSeconds": 46.13333333333333,
+      "coverage": 0.792311091471498,
+      "lives": 3,
+      "elapsedMs": 7934
+    },
+    {
+      "id": "improv-droneaid-nl-workshop-lights/2/bf9ebf37cce9a225-droneaid-nl-workshop-lights-05",
+      "levelKey": "droneaid-nl-workshop-lights/2/bf9ebf37cce9a225/droneaid-nl-workshop-lights-05",
+      "kind": "improv",
+      "turnPolicy": "immediate",
+      "status": "verified",
+      "preparationMs": 3780,
+      "result": "won",
+      "simulationSeconds": 39.24166666666667,
+      "coverage": 0.6413091552410438,
+      "lives": 2,
+      "elapsedMs": 4194
+    },
+    {
+      "id": "improv-droneaid-nl-workshop-lights/2/bf9ebf37cce9a225-droneaid-nl-workshop-lights-06",
+      "levelKey": "droneaid-nl-workshop-lights/2/bf9ebf37cce9a225/droneaid-nl-workshop-lights-06",
+      "kind": "improv",
+      "turnPolicy": "immediate",
+      "status": "verified",
+      "preparationMs": 4617,
+      "result": "won",
+      "simulationSeconds": 34.291666666666664,
+      "coverage": 0.7441345728198318,
+      "lives": 3,
+      "elapsedMs": 5121
+    },
+    {
+      "id": "improv-droneaid-nl-workshop-lights/candidate-054b4b1a0509b579/bf9ebf37cce9a225-droneaid-nl-workshop-lights-01",
+      "levelKey": "droneaid-nl-workshop-lights/candidate-054b4b1a0509b579/bf9ebf37cce9a225/droneaid-nl-workshop-lights-01",
+      "kind": "improv",
+      "turnPolicy": "grid-center",
+      "status": "verified",
+      "preparationMs": 1205,
+      "result": "won",
+      "simulationSeconds": 16.966666666666665,
+      "coverage": 0.7255753365175858,
+      "lives": 3,
+      "elapsedMs": 1370
+    },
+    {
+      "id": "improv-droneaid-nl-workshop-lights/candidate-054b4b1a0509b579/bf9ebf37cce9a225-droneaid-nl-workshop-lights-02",
+      "levelKey": "droneaid-nl-workshop-lights/candidate-054b4b1a0509b579/bf9ebf37cce9a225/droneaid-nl-workshop-lights-02",
+      "kind": "improv",
+      "turnPolicy": "grid-center",
+      "status": "verified",
+      "preparationMs": 915,
+      "result": "won",
+      "simulationSeconds": 12.9,
+      "coverage": 0.7671472258628222,
+      "lives": 3,
+      "elapsedMs": 1084
+    },
+    {
+      "id": "improv-droneaid-nl-workshop-lights/candidate-054b4b1a0509b579/bf9ebf37cce9a225-droneaid-nl-workshop-lights-03",
+      "levelKey": "droneaid-nl-workshop-lights/candidate-054b4b1a0509b579/bf9ebf37cce9a225/droneaid-nl-workshop-lights-03",
+      "kind": "improv",
+      "turnPolicy": "grid-center",
+      "status": "verified",
+      "preparationMs": 3090,
+      "result": "won",
+      "simulationSeconds": 33.975,
+      "coverage": 0.5819851333624836,
+      "lives": 3,
+      "elapsedMs": 3752
+    },
+    {
+      "id": "improv-droneaid-nl-workshop-lights/candidate-054b4b1a0509b579/bf9ebf37cce9a225-droneaid-nl-workshop-lights-04",
+      "levelKey": "droneaid-nl-workshop-lights/candidate-054b4b1a0509b579/bf9ebf37cce9a225/droneaid-nl-workshop-lights-04",
+      "kind": "improv",
+      "turnPolicy": "grid-center",
+      "status": "verified",
+      "preparationMs": 5517,
+      "result": "won",
+      "simulationSeconds": 47.325,
+      "coverage": 0.9372514361467079,
+      "lives": 3,
+      "elapsedMs": 5926
+    },
+    {
+      "id": "improv-droneaid-nl-workshop-lights/candidate-054b4b1a0509b579/bf9ebf37cce9a225-droneaid-nl-workshop-lights-05",
+      "levelKey": "droneaid-nl-workshop-lights/candidate-054b4b1a0509b579/bf9ebf37cce9a225/droneaid-nl-workshop-lights-05",
+      "kind": "improv",
+      "turnPolicy": "grid-center",
+      "status": "verified",
+      "preparationMs": 3448,
+      "result": "won",
+      "simulationSeconds": 39.25833333333333,
+      "coverage": 0.6413091552410438,
+      "lives": 2,
+      "elapsedMs": 3845
+    },
+    {
+      "id": "improv-droneaid-nl-workshop-lights/candidate-054b4b1a0509b579/bf9ebf37cce9a225-droneaid-nl-workshop-lights-06",
+      "levelKey": "droneaid-nl-workshop-lights/candidate-054b4b1a0509b579/bf9ebf37cce9a225/droneaid-nl-workshop-lights-06",
+      "kind": "improv",
+      "turnPolicy": "grid-center",
+      "status": "verified",
+      "preparationMs": 5133,
+      "result": "won",
+      "simulationSeconds": 49.4,
+      "coverage": 0.6728640991589199,
+      "lives": 2,
+      "elapsedMs": 5967
+    },
+    {
+      "id": "improv-droneaid-nl-parts-in-motion/candidate-872cecca70891d14/4bae7562b7d6c9d4-droneaid-nl-parts-in-motion-01",
+      "levelKey": "droneaid-nl-parts-in-motion/candidate-872cecca70891d14/4bae7562b7d6c9d4/droneaid-nl-parts-in-motion-01",
+      "kind": "improv",
+      "turnPolicy": "grid-center",
+      "status": "verified",
+      "preparationMs": 3277,
+      "result": "won",
+      "simulationSeconds": 27.7,
+      "coverage": 0.9532918149466192,
+      "lives": 3,
+      "elapsedMs": 3765
+    },
+    {
+      "id": "improv-droneaid-nl-parts-in-motion/candidate-872cecca70891d14/4bae7562b7d6c9d4-droneaid-nl-parts-in-motion-02",
+      "levelKey": "droneaid-nl-parts-in-motion/candidate-872cecca70891d14/4bae7562b7d6c9d4/droneaid-nl-parts-in-motion-02",
+      "kind": "improv",
+      "turnPolicy": "grid-center",
+      "status": "verified",
+      "preparationMs": 1565,
+      "result": "won",
+      "simulationSeconds": 31.033333333333335,
+      "coverage": 0.8954626334519573,
+      "lives": 3,
+      "elapsedMs": 1764
+    },
+    {
+      "id": "improv-droneaid-nl-parts-in-motion/candidate-872cecca70891d14/4bae7562b7d6c9d4-droneaid-nl-parts-in-motion-03",
+      "levelKey": "droneaid-nl-parts-in-motion/candidate-872cecca70891d14/4bae7562b7d6c9d4/droneaid-nl-parts-in-motion-03",
+      "kind": "improv",
+      "turnPolicy": "grid-center",
+      "status": "verified",
+      "preparationMs": 2580,
+      "result": "won",
+      "simulationSeconds": 53.516666666666666,
+      "coverage": 0.7148576512455516,
+      "lives": 2,
+      "elapsedMs": 2915
+    },
+    {
+      "id": "improv-droneaid-nl-parts-in-motion/candidate-872cecca70891d14/4bae7562b7d6c9d4-droneaid-nl-parts-in-motion-04",
+      "levelKey": "droneaid-nl-parts-in-motion/candidate-872cecca70891d14/4bae7562b7d6c9d4/droneaid-nl-parts-in-motion-04",
+      "kind": "improv",
+      "turnPolicy": "grid-center",
+      "status": "verified",
+      "preparationMs": 2227,
+      "result": "won",
+      "simulationSeconds": 39.983333333333334,
+      "coverage": 0.8287366548042705,
+      "lives": 2,
+      "elapsedMs": 2544
+    },
+    {
+      "id": "improv-droneaid-nl-parts-in-motion/candidate-872cecca70891d14/4bae7562b7d6c9d4-droneaid-nl-parts-in-motion-05",
+      "levelKey": "droneaid-nl-parts-in-motion/candidate-872cecca70891d14/4bae7562b7d6c9d4/droneaid-nl-parts-in-motion-05",
+      "kind": "improv",
+      "turnPolicy": "grid-center",
+      "status": "verified",
+      "preparationMs": 2319,
+      "result": "won",
+      "simulationSeconds": 40.375,
+      "coverage": 0.8754448398576512,
+      "lives": 3,
+      "elapsedMs": 2608
+    },
+    {
+      "id": "improv-droneaid-nl-parts-in-motion/candidate-872cecca70891d14/4bae7562b7d6c9d4-droneaid-nl-parts-in-motion-06",
+      "levelKey": "droneaid-nl-parts-in-motion/candidate-872cecca70891d14/4bae7562b7d6c9d4/droneaid-nl-parts-in-motion-06",
+      "kind": "improv",
+      "turnPolicy": "grid-center",
+      "status": "verified",
+      "preparationMs": 2971,
+      "result": "won",
+      "simulationSeconds": 65.25,
+      "coverage": 0.7557829181494662,
+      "lives": 2,
+      "elapsedMs": 3430
+    },
+    {
+      "id": "improv-droneaid-nl-makers-together/candidate-a4e73ebcd43a4690/71361b09d54c8376-droneaid-nl-makers-together-01",
+      "levelKey": "droneaid-nl-makers-together/candidate-a4e73ebcd43a4690/71361b09d54c8376/droneaid-nl-makers-together-01",
+      "kind": "improv",
+      "turnPolicy": "grid-center",
+      "status": "verified",
+      "preparationMs": 4140,
+      "result": "won",
+      "simulationSeconds": 85.81666666666666,
+      "coverage": 0.8305383936451898,
+      "lives": 2,
+      "elapsedMs": 4617
+    },
+    {
+      "id": "improv-droneaid-nl-makers-together/candidate-a4e73ebcd43a4690/71361b09d54c8376-droneaid-nl-makers-together-02",
+      "levelKey": "droneaid-nl-makers-together/candidate-a4e73ebcd43a4690/71361b09d54c8376/droneaid-nl-makers-together-02",
+      "kind": "improv",
+      "turnPolicy": "grid-center",
+      "status": "verified",
+      "preparationMs": 2481,
+      "result": "won",
+      "simulationSeconds": 59.458333333333336,
+      "coverage": 0.6519434628975265,
+      "lives": 2,
+      "elapsedMs": 2799
+    },
+    {
+      "id": "improv-droneaid-nl-makers-together/candidate-a4e73ebcd43a4690/71361b09d54c8376-droneaid-nl-makers-together-03",
+      "levelKey": "droneaid-nl-makers-together/candidate-a4e73ebcd43a4690/71361b09d54c8376/droneaid-nl-makers-together-03",
+      "kind": "improv",
+      "turnPolicy": "grid-center",
+      "status": "verified",
+      "preparationMs": 2398,
+      "result": "won",
+      "simulationSeconds": 53.25833333333333,
+      "coverage": 0.7281553398058253,
+      "lives": 2,
+      "elapsedMs": 2752
+    },
+    {
+      "id": "improv-droneaid-nl-makers-together/candidate-a4e73ebcd43a4690/71361b09d54c8376-droneaid-nl-makers-together-04",
+      "levelKey": "droneaid-nl-makers-together/candidate-a4e73ebcd43a4690/71361b09d54c8376/droneaid-nl-makers-together-04",
+      "kind": "improv",
+      "turnPolicy": "grid-center",
+      "status": "verified",
+      "preparationMs": 1146,
+      "result": "won",
+      "simulationSeconds": 13.741666666666667,
+      "coverage": 0.8962014134275619,
+      "lives": 3,
+      "elapsedMs": 1292
+    },
+    {
+      "id": "improv-droneaid-nl-makers-together/candidate-a4e73ebcd43a4690/71361b09d54c8376-droneaid-nl-makers-together-05",
+      "levelKey": "droneaid-nl-makers-together/candidate-a4e73ebcd43a4690/71361b09d54c8376/droneaid-nl-makers-together-05",
+      "kind": "improv",
+      "turnPolicy": "grid-center",
+      "status": "verified",
+      "preparationMs": 2886,
+      "result": "won",
+      "simulationSeconds": 48.516666666666666,
+      "coverage": 0.7153574580759047,
+      "lives": 2,
+      "elapsedMs": 3285
+    },
+    {
+      "id": "improv-droneaid-nl-makers-together/candidate-a4e73ebcd43a4690/71361b09d54c8376-droneaid-nl-makers-together-06",
+      "levelKey": "droneaid-nl-makers-together/candidate-a4e73ebcd43a4690/71361b09d54c8376/droneaid-nl-makers-together-06",
+      "kind": "improv",
+      "turnPolicy": "grid-center",
+      "status": "verified",
+      "preparationMs": 3498,
+      "result": "won",
+      "simulationSeconds": 53.891666666666666,
+      "coverage": 0.7323321554770318,
+      "lives": 2,
+      "elapsedMs": 3895
+    },
+    {
+      "id": "improv-droneaid-nl-careful-handoff/candidate-732c87da248b1ab5/fcef3dd5e0d22a73-droneaid-nl-careful-handoff-01",
+      "levelKey": "droneaid-nl-careful-handoff/candidate-732c87da248b1ab5/fcef3dd5e0d22a73/droneaid-nl-careful-handoff-01",
+      "kind": "improv",
+      "turnPolicy": "grid-center",
+      "status": "verified",
+      "preparationMs": 2928,
+      "result": "lost",
+      "simulationSeconds": 70.90833333333333,
+      "coverage": 0.7363431151241535,
+      "lives": 0,
+      "elapsedMs": 3336
+    },
+    {
+      "id": "improv-droneaid-nl-careful-handoff/candidate-732c87da248b1ab5/fcef3dd5e0d22a73-droneaid-nl-careful-handoff-02",
+      "levelKey": "droneaid-nl-careful-handoff/candidate-732c87da248b1ab5/fcef3dd5e0d22a73/droneaid-nl-careful-handoff-02",
+      "kind": "improv",
+      "turnPolicy": "grid-center",
+      "status": "verified",
+      "preparationMs": 3955,
+      "result": "won",
+      "simulationSeconds": 102.74166666666666,
+      "coverage": 0.9404063205417608,
+      "lives": 2,
+      "elapsedMs": 4739
+    },
+    {
+      "id": "improv-droneaid-nl-careful-handoff/candidate-732c87da248b1ab5/fcef3dd5e0d22a73-droneaid-nl-careful-handoff-03",
+      "levelKey": "droneaid-nl-careful-handoff/candidate-732c87da248b1ab5/fcef3dd5e0d22a73/droneaid-nl-careful-handoff-03",
+      "kind": "improv",
+      "turnPolicy": "grid-center",
+      "status": "verified",
+      "preparationMs": 3773,
+      "result": "won",
+      "simulationSeconds": 104.05,
+      "coverage": 0.963882618510158,
+      "lives": 1,
+      "elapsedMs": 4326
+    },
+    {
+      "id": "improv-droneaid-nl-careful-handoff/candidate-732c87da248b1ab5/fcef3dd5e0d22a73-droneaid-nl-careful-handoff-04",
+      "levelKey": "droneaid-nl-careful-handoff/candidate-732c87da248b1ab5/fcef3dd5e0d22a73/droneaid-nl-careful-handoff-04",
+      "kind": "improv",
+      "turnPolicy": "grid-center",
+      "status": "verified",
+      "preparationMs": 2589,
+      "result": "won",
+      "simulationSeconds": 57.36666666666667,
+      "coverage": 0.8465011286681715,
+      "lives": 2,
+      "elapsedMs": 2932
+    },
+    {
+      "id": "improv-droneaid-nl-careful-handoff/candidate-732c87da248b1ab5/fcef3dd5e0d22a73-droneaid-nl-careful-handoff-05",
+      "levelKey": "droneaid-nl-careful-handoff/candidate-732c87da248b1ab5/fcef3dd5e0d22a73/droneaid-nl-careful-handoff-05",
+      "kind": "improv",
+      "turnPolicy": "grid-center",
+      "status": "verified",
+      "preparationMs": 4637,
+      "result": "lost",
+      "simulationSeconds": 91.25,
+      "coverage": 0.7882618510158014,
+      "lives": 0,
+      "elapsedMs": 5097
+    },
+    {
+      "id": "improv-droneaid-nl-careful-handoff/candidate-732c87da248b1ab5/fcef3dd5e0d22a73-droneaid-nl-careful-handoff-06",
+      "levelKey": "droneaid-nl-careful-handoff/candidate-732c87da248b1ab5/fcef3dd5e0d22a73/droneaid-nl-careful-handoff-06",
+      "kind": "improv",
+      "turnPolicy": "grid-center",
+      "status": "verified",
+      "preparationMs": 4011,
+      "result": "won",
+      "simulationSeconds": 88.55833333333334,
+      "coverage": 0.7636939791760978,
+      "lives": 2,
+      "elapsedMs": 4516
+    },
+    {
+      "id": "improv-droneaid-nl-signals-of-support/candidate-19619aa8c685e91d/386d61fa386a65d4-droneaid-nl-signals-of-support-01",
+      "levelKey": "droneaid-nl-signals-of-support/candidate-19619aa8c685e91d/386d61fa386a65d4/droneaid-nl-signals-of-support-01",
+      "kind": "improv",
+      "turnPolicy": "grid-center",
+      "status": "verified",
+      "preparationMs": 2176,
+      "result": "won",
+      "simulationSeconds": 47.63333333333333,
+      "coverage": 0.855475763016158,
+      "lives": 2,
+      "elapsedMs": 2488
+    },
+    {
+      "id": "improv-droneaid-nl-signals-of-support/candidate-19619aa8c685e91d/386d61fa386a65d4-droneaid-nl-signals-of-support-02",
+      "levelKey": "droneaid-nl-signals-of-support/candidate-19619aa8c685e91d/386d61fa386a65d4/droneaid-nl-signals-of-support-02",
+      "kind": "improv",
+      "turnPolicy": "grid-center",
+      "status": "verified",
+      "preparationMs": 1280,
+      "result": "won",
+      "simulationSeconds": 33.44166666666667,
+      "coverage": 0.6859578286227007,
+      "lives": 2,
+      "elapsedMs": 1511
+    },
+    {
+      "id": "improv-droneaid-nl-signals-of-support/candidate-19619aa8c685e91d/386d61fa386a65d4-droneaid-nl-signals-of-support-03",
+      "levelKey": "droneaid-nl-signals-of-support/candidate-19619aa8c685e91d/386d61fa386a65d4/droneaid-nl-signals-of-support-03",
+      "kind": "improv",
+      "turnPolicy": "grid-center",
+      "status": "verified",
+      "preparationMs": 2140,
+      "result": "won",
+      "simulationSeconds": 45.74166666666667,
+      "coverage": 0.7661579892280072,
+      "lives": 2,
+      "elapsedMs": 2455
+    },
+    {
+      "id": "improv-droneaid-nl-signals-of-support/candidate-19619aa8c685e91d/386d61fa386a65d4-droneaid-nl-signals-of-support-04",
+      "levelKey": "droneaid-nl-signals-of-support/candidate-19619aa8c685e91d/386d61fa386a65d4/droneaid-nl-signals-of-support-04",
+      "kind": "improv",
+      "turnPolicy": "grid-center",
+      "status": "verified",
+      "preparationMs": 3347,
+      "result": "lost",
+      "simulationSeconds": 80.25833333333334,
+      "coverage": 0.645204862674471,
+      "lives": 0,
+      "elapsedMs": 3781
+    },
+    {
+      "id": "improv-droneaid-nl-signals-of-support/candidate-19619aa8c685e91d/386d61fa386a65d4-droneaid-nl-signals-of-support-05",
+      "levelKey": "droneaid-nl-signals-of-support/candidate-19619aa8c685e91d/386d61fa386a65d4/droneaid-nl-signals-of-support-05",
+      "kind": "improv",
+      "turnPolicy": "grid-center",
+      "status": "verified",
+      "preparationMs": 2815,
+      "result": "won",
+      "simulationSeconds": 57.875,
+      "coverage": 0.8626126126126126,
+      "lives": 2,
+      "elapsedMs": 3141
+    },
+    {
+      "id": "improv-droneaid-nl-signals-of-support/candidate-19619aa8c685e91d/386d61fa386a65d4-droneaid-nl-signals-of-support-06",
+      "levelKey": "droneaid-nl-signals-of-support/candidate-19619aa8c685e91d/386d61fa386a65d4/droneaid-nl-signals-of-support-06",
+      "kind": "improv",
+      "turnPolicy": "grid-center",
+      "status": "verified",
+      "preparationMs": 3042,
+      "result": "won",
+      "simulationSeconds": 59.25,
+      "coverage": 0.7775776677172445,
+      "lives": 2,
+      "elapsedMs": 3358
+    },
+    {
+      "id": "improv-droneaid-nl-shared-horizon/candidate-d9dc0dd9fe688f2c/3e9acad2498d7d9c-droneaid-nl-shared-horizon-01",
+      "levelKey": "droneaid-nl-shared-horizon/candidate-d9dc0dd9fe688f2c/3e9acad2498d7d9c/droneaid-nl-shared-horizon-01",
+      "kind": "improv",
+      "turnPolicy": "grid-center",
+      "status": "verified",
+      "preparationMs": 1282,
+      "result": "lost",
+      "simulationSeconds": 41.975,
+      "coverage": 0.3039747064137308,
+      "lives": 0,
+      "elapsedMs": 1474
+    },
+    {
+      "id": "improv-droneaid-nl-shared-horizon/candidate-d9dc0dd9fe688f2c/3e9acad2498d7d9c-droneaid-nl-shared-horizon-02",
+      "levelKey": "droneaid-nl-shared-horizon/candidate-d9dc0dd9fe688f2c/3e9acad2498d7d9c/droneaid-nl-shared-horizon-02",
+      "kind": "improv",
+      "turnPolicy": "grid-center",
+      "status": "verified",
+      "preparationMs": 3447,
+      "result": "lost",
+      "simulationSeconds": 79.025,
+      "coverage": 0.7294489611562782,
+      "lives": 0,
+      "elapsedMs": 3856
+    },
+    {
+      "id": "improv-droneaid-nl-shared-horizon/candidate-d9dc0dd9fe688f2c/3e9acad2498d7d9c-droneaid-nl-shared-horizon-03",
+      "levelKey": "droneaid-nl-shared-horizon/candidate-d9dc0dd9fe688f2c/3e9acad2498d7d9c/droneaid-nl-shared-horizon-03",
+      "kind": "improv",
+      "turnPolicy": "grid-center",
+      "status": "verified",
+      "preparationMs": 3023,
+      "result": "won",
+      "simulationSeconds": 70.3,
+      "coverage": 0.9494128274616079,
+      "lives": 2,
+      "elapsedMs": 3412
+    },
+    {
+      "id": "improv-droneaid-nl-shared-horizon/candidate-d9dc0dd9fe688f2c/3e9acad2498d7d9c-droneaid-nl-shared-horizon-04",
+      "levelKey": "droneaid-nl-shared-horizon/candidate-d9dc0dd9fe688f2c/3e9acad2498d7d9c/droneaid-nl-shared-horizon-04",
+      "kind": "improv",
+      "turnPolicy": "grid-center",
+      "status": "verified",
+      "preparationMs": 1523,
+      "result": "won",
+      "simulationSeconds": 42.858333333333334,
+      "coverage": 1,
+      "lives": 2,
+      "elapsedMs": 1698
+    },
+    {
+      "id": "improv-droneaid-nl-shared-horizon/candidate-d9dc0dd9fe688f2c/3e9acad2498d7d9c-droneaid-nl-shared-horizon-05",
+      "levelKey": "droneaid-nl-shared-horizon/candidate-d9dc0dd9fe688f2c/3e9acad2498d7d9c/droneaid-nl-shared-horizon-05",
+      "kind": "improv",
+      "turnPolicy": "grid-center",
+      "status": "verified",
+      "preparationMs": 2123,
+      "result": "won",
+      "simulationSeconds": 61.25,
+      "coverage": 1,
+      "lives": 2,
+      "elapsedMs": 2363
+    },
+    {
+      "id": "improv-droneaid-nl-shared-horizon/candidate-d9dc0dd9fe688f2c/3e9acad2498d7d9c-droneaid-nl-shared-horizon-06",
+      "levelKey": "droneaid-nl-shared-horizon/candidate-d9dc0dd9fe688f2c/3e9acad2498d7d9c/droneaid-nl-shared-horizon-06",
+      "kind": "improv",
+      "turnPolicy": "grid-center",
+      "status": "verified",
+      "preparationMs": 1543,
+      "result": "won",
+      "simulationSeconds": 41.708333333333336,
+      "coverage": 1,
+      "lives": 2,
+      "elapsedMs": 1794
+    },
+    {
+      "id": "improv-droneaid-nl-workshop-lights/2/bf9ebf37cce9a225-droneaid-nl-workshop-lights-01",
+      "levelKey": "droneaid-nl-workshop-lights/2/bf9ebf37cce9a225/droneaid-nl-workshop-lights-01",
+      "kind": "improv",
+      "turnPolicy": "grid-center",
+      "status": "verified",
+      "preparationMs": 498,
+      "result": "won",
+      "simulationSeconds": 16.966666666666665,
+      "coverage": 0.7255753365175858,
+      "lives": 3,
+      "elapsedMs": 575
+    },
+    {
+      "id": "improv-droneaid-nl-workshop-lights/2/bf9ebf37cce9a225-droneaid-nl-workshop-lights-02",
+      "levelKey": "droneaid-nl-workshop-lights/2/bf9ebf37cce9a225/droneaid-nl-workshop-lights-02",
+      "kind": "improv",
+      "turnPolicy": "grid-center",
+      "status": "verified",
+      "preparationMs": 453,
+      "result": "won",
+      "simulationSeconds": 12.9,
+      "coverage": 0.7671472258628222,
+      "lives": 3,
+      "elapsedMs": 541
+    },
+    {
+      "id": "improv-droneaid-nl-workshop-lights/2/bf9ebf37cce9a225-droneaid-nl-workshop-lights-03",
+      "levelKey": "droneaid-nl-workshop-lights/2/bf9ebf37cce9a225/droneaid-nl-workshop-lights-03",
+      "kind": "improv",
+      "turnPolicy": "grid-center",
+      "status": "verified",
+      "preparationMs": 1355,
+      "result": "won",
+      "simulationSeconds": 33.975,
+      "coverage": 0.5819851333624836,
+      "lives": 3,
+      "elapsedMs": 1554
+    },
+    {
+      "id": "improv-droneaid-nl-workshop-lights/2/bf9ebf37cce9a225-droneaid-nl-workshop-lights-04",
+      "levelKey": "droneaid-nl-workshop-lights/2/bf9ebf37cce9a225/droneaid-nl-workshop-lights-04",
+      "kind": "improv",
+      "turnPolicy": "grid-center",
+      "status": "verified",
+      "preparationMs": 1855,
+      "result": "won",
+      "simulationSeconds": 47.325,
+      "coverage": 0.9372514361467079,
+      "lives": 3,
+      "elapsedMs": 2083
+    },
+    {
+      "id": "improv-droneaid-nl-workshop-lights/2/bf9ebf37cce9a225-droneaid-nl-workshop-lights-05",
+      "levelKey": "droneaid-nl-workshop-lights/2/bf9ebf37cce9a225/droneaid-nl-workshop-lights-05",
+      "kind": "improv",
+      "turnPolicy": "grid-center",
+      "status": "verified",
+      "preparationMs": 1654,
+      "result": "won",
+      "simulationSeconds": 39.25833333333333,
+      "coverage": 0.6413091552410438,
+      "lives": 2,
+      "elapsedMs": 1860
+    },
+    {
+      "id": "improv-droneaid-nl-workshop-lights/2/bf9ebf37cce9a225-droneaid-nl-workshop-lights-06",
+      "levelKey": "droneaid-nl-workshop-lights/2/bf9ebf37cce9a225/droneaid-nl-workshop-lights-06",
+      "kind": "improv",
+      "turnPolicy": "grid-center",
+      "status": "verified",
+      "preparationMs": 2320,
+      "result": "won",
+      "simulationSeconds": 49.4,
+      "coverage": 0.6728640991589199,
+      "lives": 2,
+      "elapsedMs": 2627
+    }
+  ],
+  "sourceHashes": {
+    "game/editions/catalog.json": "e42d7a3d02247a882745c0b823143b85293cb2acfc0d7c133601013dacdd9c3e",
+    "game/content/company-campaigns/droneaid-nl-workshop-lights.json": "024ab11b714877fb200da2d4ac67b28142d0c725dbb3aba176fa5878f81f7b57",
+    "game/content/company-campaigns/droneaid-nl-parts-in-motion.json": "97ac4c54f02d8824e6dc0fa9fe0f1ce26a526a458f17083feb5423d2882af59e",
+    "game/content/company-campaigns/droneaid-nl-makers-together.json": "b69173b31180da7660676e49078c8b44f9828c345d7c94db8be7c1767955a2a3",
+    "game/content/company-campaigns/droneaid-nl-careful-handoff.json": "f74c0cd9b7c1227c30140962f8cb65a05ea978419b2aeedd11035e011fecaa7d",
+    "game/content/company-campaigns/droneaid-nl-signals-of-support.json": "e70d1084abddfa05c8adc9d535652b8d2370d803aeb293e031a2ba94e285a728",
+    "game/content/company-campaigns/droneaid-nl-shared-horizon.json": "8fcbfa694387730228b23802f24fab9d727eca9b4e76333a9f4a29bc3e54838b",
+    "game/content/company-boot/droneaid-nl-community/archives.json": "1ea74a6b13c74781fba202bacdcd5832e0e5170b888f46a31d5bf86681ed6b50",
+    "game/content/company-boot/droneaid-nl-community/campaign.json": "45719f8e311220c6f77d697d85c12dff150d357c8eb1478daa5964476b7d6b59",
+    "game/content/company-boot/droneaid-nl-community/classes.json": "410a8e205346ed00e27856a6b727f1ed980db7fa26ed599a7201578962e363c0",
+    "game/content/company-boot/droneaid-nl-community/packs.json": "1ea74a6b13c74781fba202bacdcd5832e0e5170b888f46a31d5bf86681ed6b50",
+    "game/content/company-boot/droneaid-nl-community/presets.json": "f81f9a1fe46aaaf271ad2e16c63576a61048446ad597a24f6f48939e6e200574",
+    "game/content/company-boot/droneaid-nl-community/themes.json": "c25c9d38285cb642d005b783046c3a49c2c0cfd6a40b30cb075c3bbe51af0c15",
+    "game/content/company-campaigns/droneaid-nl-workshop-lights.rewards.json": "570700126026e01a5cda89b801165ef4ba1955d259f88be5e71c53c8e821721e",
+    "scripts/audit-demo-availability.mjs": "bfca079f1f2389df21fa47653e1c1b79afd46f57257d26a5557faea568932483",
+    "game/i18n/index.mjs": "29f40a6d92826ced1eb53283ed32e342ac6e95920abbf8d549f2d78e65b48d07",
+    "game/i18n/catalogs.mjs": "4b6b7e84870fa34925d81bb5d4daab2b8542926ca0fe07674eea060b10bd92ea",
+    "game/mastery.mjs": "2794850285f343ac3ea30dabd22bac1e80bc45e6a73734597e364272af9d8504",
+    "game/campaign-contexts.mjs": "0cfbc653dedff1bb47d6f98b498580e06a66e82325e27973b7d5b88eb707e11a",
+    "game/campaign-difficulty.mjs": "d1e7aa765d4dd63b3c7cbae074b2f33f7bd444229353041d37de35c8ae810aa1",
+    "game/data-json.mjs": "4483fea98f02a9af815cd7efce7ad2a3bb5ab9aa98ba792e2448cb3dc6d93093",
+    "game/demo-audio-feedback.mjs": "3b685ae8bfa0459fbdb72fab80833328c71f151ad0cefe2032c844bb8b0015d9",
+    "game/demo-bot-player.mjs": "6abeb5b348b36329ac55df529bcf44f8d674101b6eda5de518467ca1c86308c7",
+    "game/demo-bot-worker.mjs": "135b0c9aefbef402be23fdbd91fd16a3549a30e68d34aabdd6998152a18dc837",
+    "game/demo-bot.mjs": "6854776ee12b430ac650b28283bc4dab933e9439a92e9960e4fa37a1b2f78672",
+    "game/demo-catalog.mjs": "3d295b7154017806f36cd7a0d2980b7e10c8d8f0108cf9ad35d464c926bda307",
+    "game/demo-director.mjs": "7a56e0ea15fcde19d2130262d2ff59637faeaaf505047151a64a5adcf053aa69",
+    "game/demo-experience.mjs": "22fe26aa0e66e9458f5ed2f3322bb9af44312aac84ca27a54e831bc7d01da0da",
+    "game/demo-improv-player.mjs": "86ed27550976567c50f9362ce67fbed1e0273d2c48533f4753992ed4905dbdba",
+    "game/demo-library.mjs": "b41aa582fb958fbdff02548e4f119ca96425892a50ecdf86f332426cc6fea250",
+    "game/demo-loading.mjs": "8b35db9e51774eb606af0904c762b5f206382a633aff7104932236944e5c7353",
+    "game/demo-sources.mjs": "26199603e5199cd7325031a016e68170a7cd16d71fd0b5d479ef07e3edf14154",
+    "game/gameplay-tuning-v1.mjs": "6213bc6c3a67370ea00dea600f2951736fb5aed108cdc4037703f9254503e91b",
+    "game/gameplay-tuning-v2.mjs": "3bfecf33324e2f5c83aca5f86ef183dd7147108be356cd9aa31cb1f1e1a24c5c",
+    "game/gameplay-tuning-v3.mjs": "82dfa8e48511485ee76a670dee689970e7af7b69e73861f0b950b9449fa4f9af",
+    "game/gameplay-tuning.mjs": "6b4123c0668676da01af91393feee274c42faa883e30401f423cb19093d27140",
+    "game/library.mjs": "cda2d2aa7bb3675b6a8991ae0080d0a4f7f15f23e44df973dd2e8d8aca8d152c",
+    "game/replay-actor-context.mjs": "533a9bc90a16a6971ba3268fd7518f999a65ff44362b06205760761b40063062",
+    "game/replay-installed-rules.mjs": "322b4b9f82666337e2551ca457b4de27381e786a58bcb9e4067643086a170652",
+    "game/replay-player.mjs": "8013c240be6914099ba7f38753b784ffaa7ea110c9e6551006e4ae01bd17ba70",
+    "game/replay-presentation.mjs": "c17e564120a5fef399385807e4fc974487b2fce782dfdd61da95dc332f8eead8",
+    "game/replay-proof-store.mjs": "45a33a4c98c8cf5bd9e779f0cab715ab82b33bd01bd3138b01c28dd8be9fd99d",
+    "game/replay.mjs": "c0bfc6842743f931dab1a9612e8799c240c542fcb7f9895ab6f866989ae41a6d",
+    "game/core/abilities.mjs": "bb7cb0df95beb6878878d77cac40b2cb6f2403f74e089db46432659098fb3cde",
+    "game/core/arcade-actions.mjs": "fa88d2371b6a6c889550ab196ac0cfbc5dced9ad8493cda126928f4cd53f2726",
+    "game/core/bonus-opportunity.mjs": "df7a08d3d965a445153881a3423c09b1cbfca5c91231d05570c59e7ef18baa90",
+    "game/core/capture-regions.mjs": "82680114409789d83ad1af09ef18a61cacc8e86ee246d1937c87ecc7c7ecf575",
+    "game/core/capture.mjs": "9ea5eec1db293445c3e93cf809ca08bded13062bbbdfe3ac6b7c1306a3cac731",
+    "game/core/classic-contour.mjs": "39f096ad8a10605031eecf49227c06d77cf5032042325c0053439ed311ce5da8",
+    "game/core/classic-definition.mjs": "a1663a97efb2d04dc2d3e9dc20983740c9be32bc6a84494612b77144892a9270",
+    "game/core/classic-motion.mjs": "23ded4bc7e90cddb838ea08d320b6ac8a6df3755cf12dc362ea10e5d7bcc8c2b",
+    "game/core/classic-state.mjs": "6b8001326238729541bb9515bfa1f92fdb4d18c961f49e7b2a6c68e41a42726f",
+    "game/core/classic-step.mjs": "468441bee309496488e34497dcf673382197694610e596a89828bb0575aa61b6",
+    "game/core/classic-topology.mjs": "c63830a351caa1c45938382d7793aa7ccbc308fac60b5cd477a14fb1962d5131",
+    "game/core/combat-definition.mjs": "41e64dc55ef9bb88f2df6c8116dbd7ea01b0f171f4ae399e2a2593e7427f97d6",
+    "game/core/combat-motion.mjs": "c5b7eb7da31040493b8c2c54ebe0e32a1b845b51b28ead193a4d20c0cc34e28b",
+    "game/core/combat-patrols.mjs": "e7c68452b47910d5ae33fc38eb8c3b5dcbb81303556eede1548b3a635d2be472",
+    "game/core/contacts.mjs": "d8c8294bf7141471a125dc325ab1202e2a705ca62ad7632d89129907c8072df4",
+    "game/core/coverage.mjs": "9bd7899414967a00a5a46c32257fce0961ad2ea15eb91e65f2496aed4793db4b",
+    "game/core/directional-fields.mjs": "b93cf46cd2a845ffa4792410d8d42852afca701dd07ee04a9969fecd417b5f17",
+    "game/core/encounter.mjs": "5543956a0dc81a613c33e1244a6f02621d1c089ec6cade4e34ff1fcc569d279b",
+    "game/core/enemy-pressure.mjs": "e66302eab2bc961c3328f0fc572f21d3ea67ee32132c4d0d8f15c1c08d04a2cb",
+    "game/core/field-course.mjs": "fbd86842f281334088a35e1793c65ba4d323fe64209f81546e47a06f87af0e0d",
+    "game/core/foundations.mjs": "5bba8689aed68d43bafca509fbcb26e0783d96efbb1ed64a07083d3b7a86cd71",
+    "game/core/geometry.mjs": "ad980ff30fef2cb8afd307f2a8dccf0329d1dc996dbd9fa3d13e3d2e9f2ae3d4",
+    "game/core/index.mjs": "d5fead46c41a9651da86003f70417a9d2bbd5a61830c007011b205581b2a3330",
+    "game/core/level.mjs": "4d0b9f171ace4d8ff4c35ae7d50b4fccaabee218605e422c098aa23d2c5c5b5c",
+    "game/core/line-impact.mjs": "e3a11756a9fb7272ad660dbf9a2c175095f89e26f889e3f3edb25865b2b7c5a0",
+    "game/core/movement.mjs": "216e03da20b388c8278be19a9829a8ef642fea30291125b645c5373e5902c261",
+    "game/core/registry.mjs": "ca7e365071ab3c49514343ea7683d8e552d2cd3f9fdbd0f317df64a57c0b7c2c",
+    "game/core/relay-gates.mjs": "6ebaf6d4fbe5b2b53336d048a2e10a876c5f8f796c70b4474927185d55ee9117",
+    "game/core/systems.mjs": "ecfc946dbe6caf9feacab674730b8b1844e2f133c40566069d722206c6e546b6",
+    "game/core/timed-bonuses.mjs": "8a9330bce36416d3f9a3ac74c2876f90756f28995c9bbd38be4a9bc94d0ce0ea",
+    "game/core/versions.mjs": "715a8990f897e7605e3fe045e5c1a064e163ccbbae7a26ba060214443d1b22f2",
+    "game/demo-data/authored-mistake-signal-03.replay.json": "d0baf94ffb72251b7b7fbb9e9fdf0b08fe2d8aa2c4872bdee5f213be8b1cfcb7",
+    "game/demo-data/authored-mistake-signal-06.replay.json": "323af6e8f277c44b1a2ed4c42db057899b6c0bce302de14160a280383266b151",
+    "game/demo-data/authored-mistake-signal-08.replay.json": "f2359fbb9caa704a0442dab579c12966e4284487501f9b035313ae58f3f8a4fb",
+    "game/demo-data/authored-mistake-signal-10.replay.json": "14f389a5ffcadf9f7c0be0fa0918942caa844534792ead34feec5180d23e8d84",
+    "game/demo-data/authored-mistake-signal-11.replay.json": "3b269abc7f53bb41a92db3097d278996f8dfd1f83d3446f0f925ef72f8f290ca",
+    "game/demo-data/authored-mistake-signal-12.replay.json": "83711c9b93d556aa31842b88d06ceda2c37a0bfa44a7636d4f833b0e021601a6",
+    "game/demo-data/catalog.json": "44276f64f2532b4776373f5048d73a821622290c5f44fdd588d1097be41e2a3f",
+    "game/demo-data/ci-variant-provenance.json": "ea97bac94db34ba002805df4bc522890ce76f72d38b992e69f934dc93c3feaaf",
+    "game/demo-data/courtyard-exits-circuit.replay.json": "d170c28d8a97eb1a94d78a996c0e4c230e73c7d95f7669b996e8fca4850c0c3d",
+    "game/demo-data/crosswind-openings.chromium-macos.replay.json": "11dd1280e1f0899947d9697eb20e75c28b27bcc35d102eb4058a81256d18c94f",
+    "game/demo-data/crosswind-openings.replay.json": "a8eb595988bd478a99bec31a4cc5a2c2f53413778a890fe8a7de36c93c841676",
+    "game/demo-data/first-signal-left.chromium-macos.replay.json": "b18d9d343ffca2b7efec6c3ec0266d80ed0603804420f444159e4214533bd11e",
+    "game/demo-data/first-signal-left.replay.json": "900f921146e37324dfefc90f55bfc60c03bd8a2954d53353ecae25df8a55c54a",
+    "game/demo-data/first-signal-right.chromium-macos.replay.json": "c20c847103c652b3cf04f081b17bed8ddb1b0fca4b04e8e29cc72da23cf3849e",
+    "game/demo-data/first-signal-right.node20-linux-x64.replay.json": "36aa993898faef782499daffed7f7d977729b315a1197c5ed6b38df213f44b2b",
+    "game/demo-data/first-signal-right.replay.json": "1670c4dff98ebfb56d4b6a44bac010c3f796d98f16abb4abe71e56a2ec5c8fc7",
+    "game/demo-data/hidden-frequency-search.chromium-macos.replay.json": "56c7600b96686d17e84b5e1292ca848112767a15a6d192d8b11accb0d242f89c",
+    "game/demo-data/hidden-frequency-search.node20-linux-x64.replay.json": "3346eba1031a728b99fb7a0c4be5f41b147378e716f895f46dd02498c319647b",
+    "game/demo-data/hidden-frequency-search.replay.json": "dd5e26c19ad433acf88b926ac1e595fa3f2e1df0d040d1879ca8190f7dd18537",
+    "game/demo-data/last-light-recovery.replay.json": "6039f47e25f5c154e13d63b5423ea8958cc653f2352b14d6ec41fba885f98493",
+    "game/demo-data/night-patrol-loop.chromium-macos.replay.json": "2ac0bb990b4eca72e5854c1d56b59188a3cad2968a5049e8ee77900895410e2d",
+    "game/demo-data/night-patrol-loop.replay.json": "f83e60de8f61ac2a44ba4bdc98228cc72abfdbc8e70fe3843946281a17d632e9",
+    "game/demo-data/orchard-crossing-circuit.node20-linux-x64.replay.json": "40462bcd7d43e23cff65e0e21221998d49febe70eb2a87d8668c56c607720005",
+    "game/demo-data/orchard-crossing-circuit.replay.json": "e3d53e6fbfa01a85772eb19043ca05c7139c4131f0f603f3baee08ba33147411",
+    "game/demo-data/relay-orchard-loop.chromium-macos.replay.json": "58a4196d25f5759260e716d175e78c29c157ef5f366ffe833648bcc7c25f9ebc",
+    "game/demo-data/relay-orchard-loop.replay.json": "d48bab6ab5f1fb1513d8261a8758519f0d9faccd91a0f334946f802260738627",
+    "game/demo-data/relay-orchard-stairs.chromium-macos.replay.json": "605add619e47a1d7762813897ead1368c98048819874b1b84816dce69e2af358",
+    "game/demo-data/relay-orchard-stairs.replay.json": "d145e8462f193a707e8bb3d8059a06fd1b0a407e8141a63101ebcf56b446cfb1",
+    "game/demo-data/signal-garden-route.chromium-macos.replay.json": "8129f40d4713dc8f44c6023d09f2827ba4c98624ad6c88fa723d82f5c96959c1",
+    "game/demo-data/signal-garden-route.replay.json": "a12a33a32a6583ae18680f891af2f4f0304569c024ef474d507041f6ad3e3572",
+    "game/demo-data/stone-lanes-detour.chromium-macos.replay.json": "5081c6c54a80dd43954005a8eef2f79d8fe2019572d3b3328fecab95def25673",
+    "game/demo-data/stone-lanes-detour.replay.json": "137b26ecdac3ea17780a293b961f93c4cb0722f50d5e19b3f6188ccbb8603b99",
+    "game/demo-data/supply-circuit-recovery.node20-linux-x64.replay.json": "ac9d26ff789ff875c39c318c8813f569f158f5f153ca405cd12894c839ac765b",
+    "game/demo-data/supply-circuit-recovery.replay.json": "00f20aede9a668a71bd8038ad22032d4ca57a425ee004e8c608bababd680719c",
+    "game/demo-data/the-crossing-windows.chromium-macos.replay.json": "03fe9a5ea307d82093badf26968a06686605a01832d5ef6048a8fa38c13e9f2f",
+    "game/demo-data/the-crossing-windows.replay.json": "b52aa84d5bcc15a75d998dc40ab91cf8c36dca5e25562873223d86ae33f9982c",
+    "game/demo-data/variant-provenance.json": "701d0c04385779caa7c2660fa30216df9b856738f2da040e02434131e31f39b6"
+  },
+  "contentSHA256": "11d27573a564497ef0424e839f527e0a58a45d0b5638d573aa4f23fa51d61740",
+  "levelCoverage": [
+    {
+      "executionKey": "droneaid-nl-workshop-lights/candidate-054b4b1a0509b579/bf9ebf37cce9a225",
+      "levelId": "droneaid-nl-workshop-lights-01",
+      "turnPolicy": "immediate",
+      "sourceIds": [
+        "improv-droneaid-nl-workshop-lights/candidate-054b4b1a0509b579/bf9ebf37cce9a225-droneaid-nl-workshop-lights-01"
+      ],
+      "verifiedSourceIds": [
+        "improv-droneaid-nl-workshop-lights/candidate-054b4b1a0509b579/bf9ebf37cce9a225-droneaid-nl-workshop-lights-01"
+      ]
+    },
+    {
+      "executionKey": "droneaid-nl-workshop-lights/candidate-054b4b1a0509b579/bf9ebf37cce9a225",
+      "levelId": "droneaid-nl-workshop-lights-02",
+      "turnPolicy": "immediate",
+      "sourceIds": [
+        "improv-droneaid-nl-workshop-lights/candidate-054b4b1a0509b579/bf9ebf37cce9a225-droneaid-nl-workshop-lights-02"
+      ],
+      "verifiedSourceIds": [
+        "improv-droneaid-nl-workshop-lights/candidate-054b4b1a0509b579/bf9ebf37cce9a225-droneaid-nl-workshop-lights-02"
+      ]
+    },
+    {
+      "executionKey": "droneaid-nl-workshop-lights/candidate-054b4b1a0509b579/bf9ebf37cce9a225",
+      "levelId": "droneaid-nl-workshop-lights-03",
+      "turnPolicy": "immediate",
+      "sourceIds": [
+        "improv-droneaid-nl-workshop-lights/candidate-054b4b1a0509b579/bf9ebf37cce9a225-droneaid-nl-workshop-lights-03"
+      ],
+      "verifiedSourceIds": [
+        "improv-droneaid-nl-workshop-lights/candidate-054b4b1a0509b579/bf9ebf37cce9a225-droneaid-nl-workshop-lights-03"
+      ]
+    },
+    {
+      "executionKey": "droneaid-nl-workshop-lights/candidate-054b4b1a0509b579/bf9ebf37cce9a225",
+      "levelId": "droneaid-nl-workshop-lights-04",
+      "turnPolicy": "immediate",
+      "sourceIds": [
+        "improv-droneaid-nl-workshop-lights/candidate-054b4b1a0509b579/bf9ebf37cce9a225-droneaid-nl-workshop-lights-04"
+      ],
+      "verifiedSourceIds": [
+        "improv-droneaid-nl-workshop-lights/candidate-054b4b1a0509b579/bf9ebf37cce9a225-droneaid-nl-workshop-lights-04"
+      ]
+    },
+    {
+      "executionKey": "droneaid-nl-workshop-lights/candidate-054b4b1a0509b579/bf9ebf37cce9a225",
+      "levelId": "droneaid-nl-workshop-lights-05",
+      "turnPolicy": "immediate",
+      "sourceIds": [
+        "improv-droneaid-nl-workshop-lights/candidate-054b4b1a0509b579/bf9ebf37cce9a225-droneaid-nl-workshop-lights-05"
+      ],
+      "verifiedSourceIds": [
+        "improv-droneaid-nl-workshop-lights/candidate-054b4b1a0509b579/bf9ebf37cce9a225-droneaid-nl-workshop-lights-05"
+      ]
+    },
+    {
+      "executionKey": "droneaid-nl-workshop-lights/candidate-054b4b1a0509b579/bf9ebf37cce9a225",
+      "levelId": "droneaid-nl-workshop-lights-06",
+      "turnPolicy": "immediate",
+      "sourceIds": [
+        "improv-droneaid-nl-workshop-lights/candidate-054b4b1a0509b579/bf9ebf37cce9a225-droneaid-nl-workshop-lights-06"
+      ],
+      "verifiedSourceIds": [
+        "improv-droneaid-nl-workshop-lights/candidate-054b4b1a0509b579/bf9ebf37cce9a225-droneaid-nl-workshop-lights-06"
+      ]
+    },
+    {
+      "executionKey": "droneaid-nl-parts-in-motion/candidate-872cecca70891d14/4bae7562b7d6c9d4",
+      "levelId": "droneaid-nl-parts-in-motion-01",
+      "turnPolicy": "immediate",
+      "sourceIds": [
+        "improv-droneaid-nl-parts-in-motion/candidate-872cecca70891d14/4bae7562b7d6c9d4-droneaid-nl-parts-in-motion-01"
+      ],
+      "verifiedSourceIds": [
+        "improv-droneaid-nl-parts-in-motion/candidate-872cecca70891d14/4bae7562b7d6c9d4-droneaid-nl-parts-in-motion-01"
+      ]
+    },
+    {
+      "executionKey": "droneaid-nl-parts-in-motion/candidate-872cecca70891d14/4bae7562b7d6c9d4",
+      "levelId": "droneaid-nl-parts-in-motion-02",
+      "turnPolicy": "immediate",
+      "sourceIds": [
+        "improv-droneaid-nl-parts-in-motion/candidate-872cecca70891d14/4bae7562b7d6c9d4-droneaid-nl-parts-in-motion-02"
+      ],
+      "verifiedSourceIds": [
+        "improv-droneaid-nl-parts-in-motion/candidate-872cecca70891d14/4bae7562b7d6c9d4-droneaid-nl-parts-in-motion-02"
+      ]
+    },
+    {
+      "executionKey": "droneaid-nl-parts-in-motion/candidate-872cecca70891d14/4bae7562b7d6c9d4",
+      "levelId": "droneaid-nl-parts-in-motion-03",
+      "turnPolicy": "immediate",
+      "sourceIds": [
+        "improv-droneaid-nl-parts-in-motion/candidate-872cecca70891d14/4bae7562b7d6c9d4-droneaid-nl-parts-in-motion-03"
+      ],
+      "verifiedSourceIds": [
+        "improv-droneaid-nl-parts-in-motion/candidate-872cecca70891d14/4bae7562b7d6c9d4-droneaid-nl-parts-in-motion-03"
+      ]
+    },
+    {
+      "executionKey": "droneaid-nl-parts-in-motion/candidate-872cecca70891d14/4bae7562b7d6c9d4",
+      "levelId": "droneaid-nl-parts-in-motion-04",
+      "turnPolicy": "immediate",
+      "sourceIds": [
+        "improv-droneaid-nl-parts-in-motion/candidate-872cecca70891d14/4bae7562b7d6c9d4-droneaid-nl-parts-in-motion-04"
+      ],
+      "verifiedSourceIds": [
+        "improv-droneaid-nl-parts-in-motion/candidate-872cecca70891d14/4bae7562b7d6c9d4-droneaid-nl-parts-in-motion-04"
+      ]
+    },
+    {
+      "executionKey": "droneaid-nl-parts-in-motion/candidate-872cecca70891d14/4bae7562b7d6c9d4",
+      "levelId": "droneaid-nl-parts-in-motion-05",
+      "turnPolicy": "immediate",
+      "sourceIds": [
+        "improv-droneaid-nl-parts-in-motion/candidate-872cecca70891d14/4bae7562b7d6c9d4-droneaid-nl-parts-in-motion-05"
+      ],
+      "verifiedSourceIds": [
+        "improv-droneaid-nl-parts-in-motion/candidate-872cecca70891d14/4bae7562b7d6c9d4-droneaid-nl-parts-in-motion-05"
+      ]
+    },
+    {
+      "executionKey": "droneaid-nl-parts-in-motion/candidate-872cecca70891d14/4bae7562b7d6c9d4",
+      "levelId": "droneaid-nl-parts-in-motion-06",
+      "turnPolicy": "immediate",
+      "sourceIds": [
+        "improv-droneaid-nl-parts-in-motion/candidate-872cecca70891d14/4bae7562b7d6c9d4-droneaid-nl-parts-in-motion-06"
+      ],
+      "verifiedSourceIds": [
+        "improv-droneaid-nl-parts-in-motion/candidate-872cecca70891d14/4bae7562b7d6c9d4-droneaid-nl-parts-in-motion-06"
+      ]
+    },
+    {
+      "executionKey": "droneaid-nl-makers-together/candidate-a4e73ebcd43a4690/71361b09d54c8376",
+      "levelId": "droneaid-nl-makers-together-01",
+      "turnPolicy": "immediate",
+      "sourceIds": [
+        "improv-droneaid-nl-makers-together/candidate-a4e73ebcd43a4690/71361b09d54c8376-droneaid-nl-makers-together-01"
+      ],
+      "verifiedSourceIds": [
+        "improv-droneaid-nl-makers-together/candidate-a4e73ebcd43a4690/71361b09d54c8376-droneaid-nl-makers-together-01"
+      ]
+    },
+    {
+      "executionKey": "droneaid-nl-makers-together/candidate-a4e73ebcd43a4690/71361b09d54c8376",
+      "levelId": "droneaid-nl-makers-together-02",
+      "turnPolicy": "immediate",
+      "sourceIds": [
+        "improv-droneaid-nl-makers-together/candidate-a4e73ebcd43a4690/71361b09d54c8376-droneaid-nl-makers-together-02"
+      ],
+      "verifiedSourceIds": [
+        "improv-droneaid-nl-makers-together/candidate-a4e73ebcd43a4690/71361b09d54c8376-droneaid-nl-makers-together-02"
+      ]
+    },
+    {
+      "executionKey": "droneaid-nl-makers-together/candidate-a4e73ebcd43a4690/71361b09d54c8376",
+      "levelId": "droneaid-nl-makers-together-03",
+      "turnPolicy": "immediate",
+      "sourceIds": [
+        "improv-droneaid-nl-makers-together/candidate-a4e73ebcd43a4690/71361b09d54c8376-droneaid-nl-makers-together-03"
+      ],
+      "verifiedSourceIds": [
+        "improv-droneaid-nl-makers-together/candidate-a4e73ebcd43a4690/71361b09d54c8376-droneaid-nl-makers-together-03"
+      ]
+    },
+    {
+      "executionKey": "droneaid-nl-makers-together/candidate-a4e73ebcd43a4690/71361b09d54c8376",
+      "levelId": "droneaid-nl-makers-together-04",
+      "turnPolicy": "immediate",
+      "sourceIds": [
+        "improv-droneaid-nl-makers-together/candidate-a4e73ebcd43a4690/71361b09d54c8376-droneaid-nl-makers-together-04"
+      ],
+      "verifiedSourceIds": [
+        "improv-droneaid-nl-makers-together/candidate-a4e73ebcd43a4690/71361b09d54c8376-droneaid-nl-makers-together-04"
+      ]
+    },
+    {
+      "executionKey": "droneaid-nl-makers-together/candidate-a4e73ebcd43a4690/71361b09d54c8376",
+      "levelId": "droneaid-nl-makers-together-05",
+      "turnPolicy": "immediate",
+      "sourceIds": [
+        "improv-droneaid-nl-makers-together/candidate-a4e73ebcd43a4690/71361b09d54c8376-droneaid-nl-makers-together-05"
+      ],
+      "verifiedSourceIds": [
+        "improv-droneaid-nl-makers-together/candidate-a4e73ebcd43a4690/71361b09d54c8376-droneaid-nl-makers-together-05"
+      ]
+    },
+    {
+      "executionKey": "droneaid-nl-makers-together/candidate-a4e73ebcd43a4690/71361b09d54c8376",
+      "levelId": "droneaid-nl-makers-together-06",
+      "turnPolicy": "immediate",
+      "sourceIds": [
+        "improv-droneaid-nl-makers-together/candidate-a4e73ebcd43a4690/71361b09d54c8376-droneaid-nl-makers-together-06"
+      ],
+      "verifiedSourceIds": [
+        "improv-droneaid-nl-makers-together/candidate-a4e73ebcd43a4690/71361b09d54c8376-droneaid-nl-makers-together-06"
+      ]
+    },
+    {
+      "executionKey": "droneaid-nl-careful-handoff/candidate-732c87da248b1ab5/fcef3dd5e0d22a73",
+      "levelId": "droneaid-nl-careful-handoff-01",
+      "turnPolicy": "immediate",
+      "sourceIds": [
+        "improv-droneaid-nl-careful-handoff/candidate-732c87da248b1ab5/fcef3dd5e0d22a73-droneaid-nl-careful-handoff-01"
+      ],
+      "verifiedSourceIds": [
+        "improv-droneaid-nl-careful-handoff/candidate-732c87da248b1ab5/fcef3dd5e0d22a73-droneaid-nl-careful-handoff-01"
+      ]
+    },
+    {
+      "executionKey": "droneaid-nl-careful-handoff/candidate-732c87da248b1ab5/fcef3dd5e0d22a73",
+      "levelId": "droneaid-nl-careful-handoff-02",
+      "turnPolicy": "immediate",
+      "sourceIds": [
+        "improv-droneaid-nl-careful-handoff/candidate-732c87da248b1ab5/fcef3dd5e0d22a73-droneaid-nl-careful-handoff-02"
+      ],
+      "verifiedSourceIds": [
+        "improv-droneaid-nl-careful-handoff/candidate-732c87da248b1ab5/fcef3dd5e0d22a73-droneaid-nl-careful-handoff-02"
+      ]
+    },
+    {
+      "executionKey": "droneaid-nl-careful-handoff/candidate-732c87da248b1ab5/fcef3dd5e0d22a73",
+      "levelId": "droneaid-nl-careful-handoff-03",
+      "turnPolicy": "immediate",
+      "sourceIds": [
+        "improv-droneaid-nl-careful-handoff/candidate-732c87da248b1ab5/fcef3dd5e0d22a73-droneaid-nl-careful-handoff-03"
+      ],
+      "verifiedSourceIds": [
+        "improv-droneaid-nl-careful-handoff/candidate-732c87da248b1ab5/fcef3dd5e0d22a73-droneaid-nl-careful-handoff-03"
+      ]
+    },
+    {
+      "executionKey": "droneaid-nl-careful-handoff/candidate-732c87da248b1ab5/fcef3dd5e0d22a73",
+      "levelId": "droneaid-nl-careful-handoff-04",
+      "turnPolicy": "immediate",
+      "sourceIds": [
+        "improv-droneaid-nl-careful-handoff/candidate-732c87da248b1ab5/fcef3dd5e0d22a73-droneaid-nl-careful-handoff-04"
+      ],
+      "verifiedSourceIds": [
+        "improv-droneaid-nl-careful-handoff/candidate-732c87da248b1ab5/fcef3dd5e0d22a73-droneaid-nl-careful-handoff-04"
+      ]
+    },
+    {
+      "executionKey": "droneaid-nl-careful-handoff/candidate-732c87da248b1ab5/fcef3dd5e0d22a73",
+      "levelId": "droneaid-nl-careful-handoff-05",
+      "turnPolicy": "immediate",
+      "sourceIds": [
+        "improv-droneaid-nl-careful-handoff/candidate-732c87da248b1ab5/fcef3dd5e0d22a73-droneaid-nl-careful-handoff-05"
+      ],
+      "verifiedSourceIds": [
+        "improv-droneaid-nl-careful-handoff/candidate-732c87da248b1ab5/fcef3dd5e0d22a73-droneaid-nl-careful-handoff-05"
+      ]
+    },
+    {
+      "executionKey": "droneaid-nl-careful-handoff/candidate-732c87da248b1ab5/fcef3dd5e0d22a73",
+      "levelId": "droneaid-nl-careful-handoff-06",
+      "turnPolicy": "immediate",
+      "sourceIds": [
+        "improv-droneaid-nl-careful-handoff/candidate-732c87da248b1ab5/fcef3dd5e0d22a73-droneaid-nl-careful-handoff-06"
+      ],
+      "verifiedSourceIds": []
+    },
+    {
+      "executionKey": "droneaid-nl-signals-of-support/candidate-19619aa8c685e91d/386d61fa386a65d4",
+      "levelId": "droneaid-nl-signals-of-support-01",
+      "turnPolicy": "immediate",
+      "sourceIds": [
+        "improv-droneaid-nl-signals-of-support/candidate-19619aa8c685e91d/386d61fa386a65d4-droneaid-nl-signals-of-support-01"
+      ],
+      "verifiedSourceIds": [
+        "improv-droneaid-nl-signals-of-support/candidate-19619aa8c685e91d/386d61fa386a65d4-droneaid-nl-signals-of-support-01"
+      ]
+    },
+    {
+      "executionKey": "droneaid-nl-signals-of-support/candidate-19619aa8c685e91d/386d61fa386a65d4",
+      "levelId": "droneaid-nl-signals-of-support-02",
+      "turnPolicy": "immediate",
+      "sourceIds": [
+        "improv-droneaid-nl-signals-of-support/candidate-19619aa8c685e91d/386d61fa386a65d4-droneaid-nl-signals-of-support-02"
+      ],
+      "verifiedSourceIds": [
+        "improv-droneaid-nl-signals-of-support/candidate-19619aa8c685e91d/386d61fa386a65d4-droneaid-nl-signals-of-support-02"
+      ]
+    },
+    {
+      "executionKey": "droneaid-nl-signals-of-support/candidate-19619aa8c685e91d/386d61fa386a65d4",
+      "levelId": "droneaid-nl-signals-of-support-03",
+      "turnPolicy": "immediate",
+      "sourceIds": [
+        "improv-droneaid-nl-signals-of-support/candidate-19619aa8c685e91d/386d61fa386a65d4-droneaid-nl-signals-of-support-03"
+      ],
+      "verifiedSourceIds": [
+        "improv-droneaid-nl-signals-of-support/candidate-19619aa8c685e91d/386d61fa386a65d4-droneaid-nl-signals-of-support-03"
+      ]
+    },
+    {
+      "executionKey": "droneaid-nl-signals-of-support/candidate-19619aa8c685e91d/386d61fa386a65d4",
+      "levelId": "droneaid-nl-signals-of-support-04",
+      "turnPolicy": "immediate",
+      "sourceIds": [
+        "improv-droneaid-nl-signals-of-support/candidate-19619aa8c685e91d/386d61fa386a65d4-droneaid-nl-signals-of-support-04"
+      ],
+      "verifiedSourceIds": [
+        "improv-droneaid-nl-signals-of-support/candidate-19619aa8c685e91d/386d61fa386a65d4-droneaid-nl-signals-of-support-04"
+      ]
+    },
+    {
+      "executionKey": "droneaid-nl-signals-of-support/candidate-19619aa8c685e91d/386d61fa386a65d4",
+      "levelId": "droneaid-nl-signals-of-support-05",
+      "turnPolicy": "immediate",
+      "sourceIds": [
+        "improv-droneaid-nl-signals-of-support/candidate-19619aa8c685e91d/386d61fa386a65d4-droneaid-nl-signals-of-support-05"
+      ],
+      "verifiedSourceIds": [
+        "improv-droneaid-nl-signals-of-support/candidate-19619aa8c685e91d/386d61fa386a65d4-droneaid-nl-signals-of-support-05"
+      ]
+    },
+    {
+      "executionKey": "droneaid-nl-signals-of-support/candidate-19619aa8c685e91d/386d61fa386a65d4",
+      "levelId": "droneaid-nl-signals-of-support-06",
+      "turnPolicy": "immediate",
+      "sourceIds": [
+        "improv-droneaid-nl-signals-of-support/candidate-19619aa8c685e91d/386d61fa386a65d4-droneaid-nl-signals-of-support-06"
+      ],
+      "verifiedSourceIds": [
+        "improv-droneaid-nl-signals-of-support/candidate-19619aa8c685e91d/386d61fa386a65d4-droneaid-nl-signals-of-support-06"
+      ]
+    },
+    {
+      "executionKey": "droneaid-nl-shared-horizon/candidate-d9dc0dd9fe688f2c/3e9acad2498d7d9c",
+      "levelId": "droneaid-nl-shared-horizon-01",
+      "turnPolicy": "immediate",
+      "sourceIds": [
+        "improv-droneaid-nl-shared-horizon/candidate-d9dc0dd9fe688f2c/3e9acad2498d7d9c-droneaid-nl-shared-horizon-01"
+      ],
+      "verifiedSourceIds": [
+        "improv-droneaid-nl-shared-horizon/candidate-d9dc0dd9fe688f2c/3e9acad2498d7d9c-droneaid-nl-shared-horizon-01"
+      ]
+    },
+    {
+      "executionKey": "droneaid-nl-shared-horizon/candidate-d9dc0dd9fe688f2c/3e9acad2498d7d9c",
+      "levelId": "droneaid-nl-shared-horizon-02",
+      "turnPolicy": "immediate",
+      "sourceIds": [
+        "improv-droneaid-nl-shared-horizon/candidate-d9dc0dd9fe688f2c/3e9acad2498d7d9c-droneaid-nl-shared-horizon-02"
+      ],
+      "verifiedSourceIds": [
+        "improv-droneaid-nl-shared-horizon/candidate-d9dc0dd9fe688f2c/3e9acad2498d7d9c-droneaid-nl-shared-horizon-02"
+      ]
+    },
+    {
+      "executionKey": "droneaid-nl-shared-horizon/candidate-d9dc0dd9fe688f2c/3e9acad2498d7d9c",
+      "levelId": "droneaid-nl-shared-horizon-03",
+      "turnPolicy": "immediate",
+      "sourceIds": [
+        "improv-droneaid-nl-shared-horizon/candidate-d9dc0dd9fe688f2c/3e9acad2498d7d9c-droneaid-nl-shared-horizon-03"
+      ],
+      "verifiedSourceIds": [
+        "improv-droneaid-nl-shared-horizon/candidate-d9dc0dd9fe688f2c/3e9acad2498d7d9c-droneaid-nl-shared-horizon-03"
+      ]
+    },
+    {
+      "executionKey": "droneaid-nl-shared-horizon/candidate-d9dc0dd9fe688f2c/3e9acad2498d7d9c",
+      "levelId": "droneaid-nl-shared-horizon-04",
+      "turnPolicy": "immediate",
+      "sourceIds": [
+        "improv-droneaid-nl-shared-horizon/candidate-d9dc0dd9fe688f2c/3e9acad2498d7d9c-droneaid-nl-shared-horizon-04"
+      ],
+      "verifiedSourceIds": [
+        "improv-droneaid-nl-shared-horizon/candidate-d9dc0dd9fe688f2c/3e9acad2498d7d9c-droneaid-nl-shared-horizon-04"
+      ]
+    },
+    {
+      "executionKey": "droneaid-nl-shared-horizon/candidate-d9dc0dd9fe688f2c/3e9acad2498d7d9c",
+      "levelId": "droneaid-nl-shared-horizon-05",
+      "turnPolicy": "immediate",
+      "sourceIds": [
+        "improv-droneaid-nl-shared-horizon/candidate-d9dc0dd9fe688f2c/3e9acad2498d7d9c-droneaid-nl-shared-horizon-05"
+      ],
+      "verifiedSourceIds": [
+        "improv-droneaid-nl-shared-horizon/candidate-d9dc0dd9fe688f2c/3e9acad2498d7d9c-droneaid-nl-shared-horizon-05"
+      ]
+    },
+    {
+      "executionKey": "droneaid-nl-shared-horizon/candidate-d9dc0dd9fe688f2c/3e9acad2498d7d9c",
+      "levelId": "droneaid-nl-shared-horizon-06",
+      "turnPolicy": "immediate",
+      "sourceIds": [
+        "improv-droneaid-nl-shared-horizon/candidate-d9dc0dd9fe688f2c/3e9acad2498d7d9c-droneaid-nl-shared-horizon-06"
+      ],
+      "verifiedSourceIds": [
+        "improv-droneaid-nl-shared-horizon/candidate-d9dc0dd9fe688f2c/3e9acad2498d7d9c-droneaid-nl-shared-horizon-06"
+      ]
+    },
+    {
+      "executionKey": "droneaid-nl-workshop-lights/2/bf9ebf37cce9a225",
+      "levelId": "droneaid-nl-workshop-lights-01",
+      "turnPolicy": "immediate",
+      "sourceIds": [
+        "improv-droneaid-nl-workshop-lights/2/bf9ebf37cce9a225-droneaid-nl-workshop-lights-01"
+      ],
+      "verifiedSourceIds": [
+        "improv-droneaid-nl-workshop-lights/2/bf9ebf37cce9a225-droneaid-nl-workshop-lights-01"
+      ]
+    },
+    {
+      "executionKey": "droneaid-nl-workshop-lights/2/bf9ebf37cce9a225",
+      "levelId": "droneaid-nl-workshop-lights-02",
+      "turnPolicy": "immediate",
+      "sourceIds": [
+        "improv-droneaid-nl-workshop-lights/2/bf9ebf37cce9a225-droneaid-nl-workshop-lights-02"
+      ],
+      "verifiedSourceIds": [
+        "improv-droneaid-nl-workshop-lights/2/bf9ebf37cce9a225-droneaid-nl-workshop-lights-02"
+      ]
+    },
+    {
+      "executionKey": "droneaid-nl-workshop-lights/2/bf9ebf37cce9a225",
+      "levelId": "droneaid-nl-workshop-lights-03",
+      "turnPolicy": "immediate",
+      "sourceIds": [
+        "improv-droneaid-nl-workshop-lights/2/bf9ebf37cce9a225-droneaid-nl-workshop-lights-03"
+      ],
+      "verifiedSourceIds": [
+        "improv-droneaid-nl-workshop-lights/2/bf9ebf37cce9a225-droneaid-nl-workshop-lights-03"
+      ]
+    },
+    {
+      "executionKey": "droneaid-nl-workshop-lights/2/bf9ebf37cce9a225",
+      "levelId": "droneaid-nl-workshop-lights-04",
+      "turnPolicy": "immediate",
+      "sourceIds": [
+        "improv-droneaid-nl-workshop-lights/2/bf9ebf37cce9a225-droneaid-nl-workshop-lights-04"
+      ],
+      "verifiedSourceIds": [
+        "improv-droneaid-nl-workshop-lights/2/bf9ebf37cce9a225-droneaid-nl-workshop-lights-04"
+      ]
+    },
+    {
+      "executionKey": "droneaid-nl-workshop-lights/2/bf9ebf37cce9a225",
+      "levelId": "droneaid-nl-workshop-lights-05",
+      "turnPolicy": "immediate",
+      "sourceIds": [
+        "improv-droneaid-nl-workshop-lights/2/bf9ebf37cce9a225-droneaid-nl-workshop-lights-05"
+      ],
+      "verifiedSourceIds": [
+        "improv-droneaid-nl-workshop-lights/2/bf9ebf37cce9a225-droneaid-nl-workshop-lights-05"
+      ]
+    },
+    {
+      "executionKey": "droneaid-nl-workshop-lights/2/bf9ebf37cce9a225",
+      "levelId": "droneaid-nl-workshop-lights-06",
+      "turnPolicy": "immediate",
+      "sourceIds": [
+        "improv-droneaid-nl-workshop-lights/2/bf9ebf37cce9a225-droneaid-nl-workshop-lights-06"
+      ],
+      "verifiedSourceIds": [
+        "improv-droneaid-nl-workshop-lights/2/bf9ebf37cce9a225-droneaid-nl-workshop-lights-06"
+      ]
+    },
+    {
+      "executionKey": "droneaid-nl-workshop-lights/candidate-054b4b1a0509b579/bf9ebf37cce9a225",
+      "levelId": "droneaid-nl-workshop-lights-01",
+      "turnPolicy": "grid-center",
+      "sourceIds": [
+        "improv-droneaid-nl-workshop-lights/candidate-054b4b1a0509b579/bf9ebf37cce9a225-droneaid-nl-workshop-lights-01"
+      ],
+      "verifiedSourceIds": [
+        "improv-droneaid-nl-workshop-lights/candidate-054b4b1a0509b579/bf9ebf37cce9a225-droneaid-nl-workshop-lights-01"
+      ]
+    },
+    {
+      "executionKey": "droneaid-nl-workshop-lights/candidate-054b4b1a0509b579/bf9ebf37cce9a225",
+      "levelId": "droneaid-nl-workshop-lights-02",
+      "turnPolicy": "grid-center",
+      "sourceIds": [
+        "improv-droneaid-nl-workshop-lights/candidate-054b4b1a0509b579/bf9ebf37cce9a225-droneaid-nl-workshop-lights-02"
+      ],
+      "verifiedSourceIds": [
+        "improv-droneaid-nl-workshop-lights/candidate-054b4b1a0509b579/bf9ebf37cce9a225-droneaid-nl-workshop-lights-02"
+      ]
+    },
+    {
+      "executionKey": "droneaid-nl-workshop-lights/candidate-054b4b1a0509b579/bf9ebf37cce9a225",
+      "levelId": "droneaid-nl-workshop-lights-03",
+      "turnPolicy": "grid-center",
+      "sourceIds": [
+        "improv-droneaid-nl-workshop-lights/candidate-054b4b1a0509b579/bf9ebf37cce9a225-droneaid-nl-workshop-lights-03"
+      ],
+      "verifiedSourceIds": [
+        "improv-droneaid-nl-workshop-lights/candidate-054b4b1a0509b579/bf9ebf37cce9a225-droneaid-nl-workshop-lights-03"
+      ]
+    },
+    {
+      "executionKey": "droneaid-nl-workshop-lights/candidate-054b4b1a0509b579/bf9ebf37cce9a225",
+      "levelId": "droneaid-nl-workshop-lights-04",
+      "turnPolicy": "grid-center",
+      "sourceIds": [
+        "improv-droneaid-nl-workshop-lights/candidate-054b4b1a0509b579/bf9ebf37cce9a225-droneaid-nl-workshop-lights-04"
+      ],
+      "verifiedSourceIds": [
+        "improv-droneaid-nl-workshop-lights/candidate-054b4b1a0509b579/bf9ebf37cce9a225-droneaid-nl-workshop-lights-04"
+      ]
+    },
+    {
+      "executionKey": "droneaid-nl-workshop-lights/candidate-054b4b1a0509b579/bf9ebf37cce9a225",
+      "levelId": "droneaid-nl-workshop-lights-05",
+      "turnPolicy": "grid-center",
+      "sourceIds": [
+        "improv-droneaid-nl-workshop-lights/candidate-054b4b1a0509b579/bf9ebf37cce9a225-droneaid-nl-workshop-lights-05"
+      ],
+      "verifiedSourceIds": [
+        "improv-droneaid-nl-workshop-lights/candidate-054b4b1a0509b579/bf9ebf37cce9a225-droneaid-nl-workshop-lights-05"
+      ]
+    },
+    {
+      "executionKey": "droneaid-nl-workshop-lights/candidate-054b4b1a0509b579/bf9ebf37cce9a225",
+      "levelId": "droneaid-nl-workshop-lights-06",
+      "turnPolicy": "grid-center",
+      "sourceIds": [
+        "improv-droneaid-nl-workshop-lights/candidate-054b4b1a0509b579/bf9ebf37cce9a225-droneaid-nl-workshop-lights-06"
+      ],
+      "verifiedSourceIds": [
+        "improv-droneaid-nl-workshop-lights/candidate-054b4b1a0509b579/bf9ebf37cce9a225-droneaid-nl-workshop-lights-06"
+      ]
+    },
+    {
+      "executionKey": "droneaid-nl-parts-in-motion/candidate-872cecca70891d14/4bae7562b7d6c9d4",
+      "levelId": "droneaid-nl-parts-in-motion-01",
+      "turnPolicy": "grid-center",
+      "sourceIds": [
+        "improv-droneaid-nl-parts-in-motion/candidate-872cecca70891d14/4bae7562b7d6c9d4-droneaid-nl-parts-in-motion-01"
+      ],
+      "verifiedSourceIds": [
+        "improv-droneaid-nl-parts-in-motion/candidate-872cecca70891d14/4bae7562b7d6c9d4-droneaid-nl-parts-in-motion-01"
+      ]
+    },
+    {
+      "executionKey": "droneaid-nl-parts-in-motion/candidate-872cecca70891d14/4bae7562b7d6c9d4",
+      "levelId": "droneaid-nl-parts-in-motion-02",
+      "turnPolicy": "grid-center",
+      "sourceIds": [
+        "improv-droneaid-nl-parts-in-motion/candidate-872cecca70891d14/4bae7562b7d6c9d4-droneaid-nl-parts-in-motion-02"
+      ],
+      "verifiedSourceIds": [
+        "improv-droneaid-nl-parts-in-motion/candidate-872cecca70891d14/4bae7562b7d6c9d4-droneaid-nl-parts-in-motion-02"
+      ]
+    },
+    {
+      "executionKey": "droneaid-nl-parts-in-motion/candidate-872cecca70891d14/4bae7562b7d6c9d4",
+      "levelId": "droneaid-nl-parts-in-motion-03",
+      "turnPolicy": "grid-center",
+      "sourceIds": [
+        "improv-droneaid-nl-parts-in-motion/candidate-872cecca70891d14/4bae7562b7d6c9d4-droneaid-nl-parts-in-motion-03"
+      ],
+      "verifiedSourceIds": [
+        "improv-droneaid-nl-parts-in-motion/candidate-872cecca70891d14/4bae7562b7d6c9d4-droneaid-nl-parts-in-motion-03"
+      ]
+    },
+    {
+      "executionKey": "droneaid-nl-parts-in-motion/candidate-872cecca70891d14/4bae7562b7d6c9d4",
+      "levelId": "droneaid-nl-parts-in-motion-04",
+      "turnPolicy": "grid-center",
+      "sourceIds": [
+        "improv-droneaid-nl-parts-in-motion/candidate-872cecca70891d14/4bae7562b7d6c9d4-droneaid-nl-parts-in-motion-04"
+      ],
+      "verifiedSourceIds": [
+        "improv-droneaid-nl-parts-in-motion/candidate-872cecca70891d14/4bae7562b7d6c9d4-droneaid-nl-parts-in-motion-04"
+      ]
+    },
+    {
+      "executionKey": "droneaid-nl-parts-in-motion/candidate-872cecca70891d14/4bae7562b7d6c9d4",
+      "levelId": "droneaid-nl-parts-in-motion-05",
+      "turnPolicy": "grid-center",
+      "sourceIds": [
+        "improv-droneaid-nl-parts-in-motion/candidate-872cecca70891d14/4bae7562b7d6c9d4-droneaid-nl-parts-in-motion-05"
+      ],
+      "verifiedSourceIds": [
+        "improv-droneaid-nl-parts-in-motion/candidate-872cecca70891d14/4bae7562b7d6c9d4-droneaid-nl-parts-in-motion-05"
+      ]
+    },
+    {
+      "executionKey": "droneaid-nl-parts-in-motion/candidate-872cecca70891d14/4bae7562b7d6c9d4",
+      "levelId": "droneaid-nl-parts-in-motion-06",
+      "turnPolicy": "grid-center",
+      "sourceIds": [
+        "improv-droneaid-nl-parts-in-motion/candidate-872cecca70891d14/4bae7562b7d6c9d4-droneaid-nl-parts-in-motion-06"
+      ],
+      "verifiedSourceIds": [
+        "improv-droneaid-nl-parts-in-motion/candidate-872cecca70891d14/4bae7562b7d6c9d4-droneaid-nl-parts-in-motion-06"
+      ]
+    },
+    {
+      "executionKey": "droneaid-nl-makers-together/candidate-a4e73ebcd43a4690/71361b09d54c8376",
+      "levelId": "droneaid-nl-makers-together-01",
+      "turnPolicy": "grid-center",
+      "sourceIds": [
+        "improv-droneaid-nl-makers-together/candidate-a4e73ebcd43a4690/71361b09d54c8376-droneaid-nl-makers-together-01"
+      ],
+      "verifiedSourceIds": [
+        "improv-droneaid-nl-makers-together/candidate-a4e73ebcd43a4690/71361b09d54c8376-droneaid-nl-makers-together-01"
+      ]
+    },
+    {
+      "executionKey": "droneaid-nl-makers-together/candidate-a4e73ebcd43a4690/71361b09d54c8376",
+      "levelId": "droneaid-nl-makers-together-02",
+      "turnPolicy": "grid-center",
+      "sourceIds": [
+        "improv-droneaid-nl-makers-together/candidate-a4e73ebcd43a4690/71361b09d54c8376-droneaid-nl-makers-together-02"
+      ],
+      "verifiedSourceIds": [
+        "improv-droneaid-nl-makers-together/candidate-a4e73ebcd43a4690/71361b09d54c8376-droneaid-nl-makers-together-02"
+      ]
+    },
+    {
+      "executionKey": "droneaid-nl-makers-together/candidate-a4e73ebcd43a4690/71361b09d54c8376",
+      "levelId": "droneaid-nl-makers-together-03",
+      "turnPolicy": "grid-center",
+      "sourceIds": [
+        "improv-droneaid-nl-makers-together/candidate-a4e73ebcd43a4690/71361b09d54c8376-droneaid-nl-makers-together-03"
+      ],
+      "verifiedSourceIds": [
+        "improv-droneaid-nl-makers-together/candidate-a4e73ebcd43a4690/71361b09d54c8376-droneaid-nl-makers-together-03"
+      ]
+    },
+    {
+      "executionKey": "droneaid-nl-makers-together/candidate-a4e73ebcd43a4690/71361b09d54c8376",
+      "levelId": "droneaid-nl-makers-together-04",
+      "turnPolicy": "grid-center",
+      "sourceIds": [
+        "improv-droneaid-nl-makers-together/candidate-a4e73ebcd43a4690/71361b09d54c8376-droneaid-nl-makers-together-04"
+      ],
+      "verifiedSourceIds": [
+        "improv-droneaid-nl-makers-together/candidate-a4e73ebcd43a4690/71361b09d54c8376-droneaid-nl-makers-together-04"
+      ]
+    },
+    {
+      "executionKey": "droneaid-nl-makers-together/candidate-a4e73ebcd43a4690/71361b09d54c8376",
+      "levelId": "droneaid-nl-makers-together-05",
+      "turnPolicy": "grid-center",
+      "sourceIds": [
+        "improv-droneaid-nl-makers-together/candidate-a4e73ebcd43a4690/71361b09d54c8376-droneaid-nl-makers-together-05"
+      ],
+      "verifiedSourceIds": [
+        "improv-droneaid-nl-makers-together/candidate-a4e73ebcd43a4690/71361b09d54c8376-droneaid-nl-makers-together-05"
+      ]
+    },
+    {
+      "executionKey": "droneaid-nl-makers-together/candidate-a4e73ebcd43a4690/71361b09d54c8376",
+      "levelId": "droneaid-nl-makers-together-06",
+      "turnPolicy": "grid-center",
+      "sourceIds": [
+        "improv-droneaid-nl-makers-together/candidate-a4e73ebcd43a4690/71361b09d54c8376-droneaid-nl-makers-together-06"
+      ],
+      "verifiedSourceIds": [
+        "improv-droneaid-nl-makers-together/candidate-a4e73ebcd43a4690/71361b09d54c8376-droneaid-nl-makers-together-06"
+      ]
+    },
+    {
+      "executionKey": "droneaid-nl-careful-handoff/candidate-732c87da248b1ab5/fcef3dd5e0d22a73",
+      "levelId": "droneaid-nl-careful-handoff-01",
+      "turnPolicy": "grid-center",
+      "sourceIds": [
+        "improv-droneaid-nl-careful-handoff/candidate-732c87da248b1ab5/fcef3dd5e0d22a73-droneaid-nl-careful-handoff-01"
+      ],
+      "verifiedSourceIds": [
+        "improv-droneaid-nl-careful-handoff/candidate-732c87da248b1ab5/fcef3dd5e0d22a73-droneaid-nl-careful-handoff-01"
+      ]
+    },
+    {
+      "executionKey": "droneaid-nl-careful-handoff/candidate-732c87da248b1ab5/fcef3dd5e0d22a73",
+      "levelId": "droneaid-nl-careful-handoff-02",
+      "turnPolicy": "grid-center",
+      "sourceIds": [
+        "improv-droneaid-nl-careful-handoff/candidate-732c87da248b1ab5/fcef3dd5e0d22a73-droneaid-nl-careful-handoff-02"
+      ],
+      "verifiedSourceIds": [
+        "improv-droneaid-nl-careful-handoff/candidate-732c87da248b1ab5/fcef3dd5e0d22a73-droneaid-nl-careful-handoff-02"
+      ]
+    },
+    {
+      "executionKey": "droneaid-nl-careful-handoff/candidate-732c87da248b1ab5/fcef3dd5e0d22a73",
+      "levelId": "droneaid-nl-careful-handoff-03",
+      "turnPolicy": "grid-center",
+      "sourceIds": [
+        "improv-droneaid-nl-careful-handoff/candidate-732c87da248b1ab5/fcef3dd5e0d22a73-droneaid-nl-careful-handoff-03"
+      ],
+      "verifiedSourceIds": [
+        "improv-droneaid-nl-careful-handoff/candidate-732c87da248b1ab5/fcef3dd5e0d22a73-droneaid-nl-careful-handoff-03"
+      ]
+    },
+    {
+      "executionKey": "droneaid-nl-careful-handoff/candidate-732c87da248b1ab5/fcef3dd5e0d22a73",
+      "levelId": "droneaid-nl-careful-handoff-04",
+      "turnPolicy": "grid-center",
+      "sourceIds": [
+        "improv-droneaid-nl-careful-handoff/candidate-732c87da248b1ab5/fcef3dd5e0d22a73-droneaid-nl-careful-handoff-04"
+      ],
+      "verifiedSourceIds": [
+        "improv-droneaid-nl-careful-handoff/candidate-732c87da248b1ab5/fcef3dd5e0d22a73-droneaid-nl-careful-handoff-04"
+      ]
+    },
+    {
+      "executionKey": "droneaid-nl-careful-handoff/candidate-732c87da248b1ab5/fcef3dd5e0d22a73",
+      "levelId": "droneaid-nl-careful-handoff-05",
+      "turnPolicy": "grid-center",
+      "sourceIds": [
+        "improv-droneaid-nl-careful-handoff/candidate-732c87da248b1ab5/fcef3dd5e0d22a73-droneaid-nl-careful-handoff-05"
+      ],
+      "verifiedSourceIds": [
+        "improv-droneaid-nl-careful-handoff/candidate-732c87da248b1ab5/fcef3dd5e0d22a73-droneaid-nl-careful-handoff-05"
+      ]
+    },
+    {
+      "executionKey": "droneaid-nl-careful-handoff/candidate-732c87da248b1ab5/fcef3dd5e0d22a73",
+      "levelId": "droneaid-nl-careful-handoff-06",
+      "turnPolicy": "grid-center",
+      "sourceIds": [
+        "improv-droneaid-nl-careful-handoff/candidate-732c87da248b1ab5/fcef3dd5e0d22a73-droneaid-nl-careful-handoff-06"
+      ],
+      "verifiedSourceIds": [
+        "improv-droneaid-nl-careful-handoff/candidate-732c87da248b1ab5/fcef3dd5e0d22a73-droneaid-nl-careful-handoff-06"
+      ]
+    },
+    {
+      "executionKey": "droneaid-nl-signals-of-support/candidate-19619aa8c685e91d/386d61fa386a65d4",
+      "levelId": "droneaid-nl-signals-of-support-01",
+      "turnPolicy": "grid-center",
+      "sourceIds": [
+        "improv-droneaid-nl-signals-of-support/candidate-19619aa8c685e91d/386d61fa386a65d4-droneaid-nl-signals-of-support-01"
+      ],
+      "verifiedSourceIds": [
+        "improv-droneaid-nl-signals-of-support/candidate-19619aa8c685e91d/386d61fa386a65d4-droneaid-nl-signals-of-support-01"
+      ]
+    },
+    {
+      "executionKey": "droneaid-nl-signals-of-support/candidate-19619aa8c685e91d/386d61fa386a65d4",
+      "levelId": "droneaid-nl-signals-of-support-02",
+      "turnPolicy": "grid-center",
+      "sourceIds": [
+        "improv-droneaid-nl-signals-of-support/candidate-19619aa8c685e91d/386d61fa386a65d4-droneaid-nl-signals-of-support-02"
+      ],
+      "verifiedSourceIds": [
+        "improv-droneaid-nl-signals-of-support/candidate-19619aa8c685e91d/386d61fa386a65d4-droneaid-nl-signals-of-support-02"
+      ]
+    },
+    {
+      "executionKey": "droneaid-nl-signals-of-support/candidate-19619aa8c685e91d/386d61fa386a65d4",
+      "levelId": "droneaid-nl-signals-of-support-03",
+      "turnPolicy": "grid-center",
+      "sourceIds": [
+        "improv-droneaid-nl-signals-of-support/candidate-19619aa8c685e91d/386d61fa386a65d4-droneaid-nl-signals-of-support-03"
+      ],
+      "verifiedSourceIds": [
+        "improv-droneaid-nl-signals-of-support/candidate-19619aa8c685e91d/386d61fa386a65d4-droneaid-nl-signals-of-support-03"
+      ]
+    },
+    {
+      "executionKey": "droneaid-nl-signals-of-support/candidate-19619aa8c685e91d/386d61fa386a65d4",
+      "levelId": "droneaid-nl-signals-of-support-04",
+      "turnPolicy": "grid-center",
+      "sourceIds": [
+        "improv-droneaid-nl-signals-of-support/candidate-19619aa8c685e91d/386d61fa386a65d4-droneaid-nl-signals-of-support-04"
+      ],
+      "verifiedSourceIds": [
+        "improv-droneaid-nl-signals-of-support/candidate-19619aa8c685e91d/386d61fa386a65d4-droneaid-nl-signals-of-support-04"
+      ]
+    },
+    {
+      "executionKey": "droneaid-nl-signals-of-support/candidate-19619aa8c685e91d/386d61fa386a65d4",
+      "levelId": "droneaid-nl-signals-of-support-05",
+      "turnPolicy": "grid-center",
+      "sourceIds": [
+        "improv-droneaid-nl-signals-of-support/candidate-19619aa8c685e91d/386d61fa386a65d4-droneaid-nl-signals-of-support-05"
+      ],
+      "verifiedSourceIds": [
+        "improv-droneaid-nl-signals-of-support/candidate-19619aa8c685e91d/386d61fa386a65d4-droneaid-nl-signals-of-support-05"
+      ]
+    },
+    {
+      "executionKey": "droneaid-nl-signals-of-support/candidate-19619aa8c685e91d/386d61fa386a65d4",
+      "levelId": "droneaid-nl-signals-of-support-06",
+      "turnPolicy": "grid-center",
+      "sourceIds": [
+        "improv-droneaid-nl-signals-of-support/candidate-19619aa8c685e91d/386d61fa386a65d4-droneaid-nl-signals-of-support-06"
+      ],
+      "verifiedSourceIds": [
+        "improv-droneaid-nl-signals-of-support/candidate-19619aa8c685e91d/386d61fa386a65d4-droneaid-nl-signals-of-support-06"
+      ]
+    },
+    {
+      "executionKey": "droneaid-nl-shared-horizon/candidate-d9dc0dd9fe688f2c/3e9acad2498d7d9c",
+      "levelId": "droneaid-nl-shared-horizon-01",
+      "turnPolicy": "grid-center",
+      "sourceIds": [
+        "improv-droneaid-nl-shared-horizon/candidate-d9dc0dd9fe688f2c/3e9acad2498d7d9c-droneaid-nl-shared-horizon-01"
+      ],
+      "verifiedSourceIds": [
+        "improv-droneaid-nl-shared-horizon/candidate-d9dc0dd9fe688f2c/3e9acad2498d7d9c-droneaid-nl-shared-horizon-01"
+      ]
+    },
+    {
+      "executionKey": "droneaid-nl-shared-horizon/candidate-d9dc0dd9fe688f2c/3e9acad2498d7d9c",
+      "levelId": "droneaid-nl-shared-horizon-02",
+      "turnPolicy": "grid-center",
+      "sourceIds": [
+        "improv-droneaid-nl-shared-horizon/candidate-d9dc0dd9fe688f2c/3e9acad2498d7d9c-droneaid-nl-shared-horizon-02"
+      ],
+      "verifiedSourceIds": [
+        "improv-droneaid-nl-shared-horizon/candidate-d9dc0dd9fe688f2c/3e9acad2498d7d9c-droneaid-nl-shared-horizon-02"
+      ]
+    },
+    {
+      "executionKey": "droneaid-nl-shared-horizon/candidate-d9dc0dd9fe688f2c/3e9acad2498d7d9c",
+      "levelId": "droneaid-nl-shared-horizon-03",
+      "turnPolicy": "grid-center",
+      "sourceIds": [
+        "improv-droneaid-nl-shared-horizon/candidate-d9dc0dd9fe688f2c/3e9acad2498d7d9c-droneaid-nl-shared-horizon-03"
+      ],
+      "verifiedSourceIds": [
+        "improv-droneaid-nl-shared-horizon/candidate-d9dc0dd9fe688f2c/3e9acad2498d7d9c-droneaid-nl-shared-horizon-03"
+      ]
+    },
+    {
+      "executionKey": "droneaid-nl-shared-horizon/candidate-d9dc0dd9fe688f2c/3e9acad2498d7d9c",
+      "levelId": "droneaid-nl-shared-horizon-04",
+      "turnPolicy": "grid-center",
+      "sourceIds": [
+        "improv-droneaid-nl-shared-horizon/candidate-d9dc0dd9fe688f2c/3e9acad2498d7d9c-droneaid-nl-shared-horizon-04"
+      ],
+      "verifiedSourceIds": [
+        "improv-droneaid-nl-shared-horizon/candidate-d9dc0dd9fe688f2c/3e9acad2498d7d9c-droneaid-nl-shared-horizon-04"
+      ]
+    },
+    {
+      "executionKey": "droneaid-nl-shared-horizon/candidate-d9dc0dd9fe688f2c/3e9acad2498d7d9c",
+      "levelId": "droneaid-nl-shared-horizon-05",
+      "turnPolicy": "grid-center",
+      "sourceIds": [
+        "improv-droneaid-nl-shared-horizon/candidate-d9dc0dd9fe688f2c/3e9acad2498d7d9c-droneaid-nl-shared-horizon-05"
+      ],
+      "verifiedSourceIds": [
+        "improv-droneaid-nl-shared-horizon/candidate-d9dc0dd9fe688f2c/3e9acad2498d7d9c-droneaid-nl-shared-horizon-05"
+      ]
+    },
+    {
+      "executionKey": "droneaid-nl-shared-horizon/candidate-d9dc0dd9fe688f2c/3e9acad2498d7d9c",
+      "levelId": "droneaid-nl-shared-horizon-06",
+      "turnPolicy": "grid-center",
+      "sourceIds": [
+        "improv-droneaid-nl-shared-horizon/candidate-d9dc0dd9fe688f2c/3e9acad2498d7d9c-droneaid-nl-shared-horizon-06"
+      ],
+      "verifiedSourceIds": [
+        "improv-droneaid-nl-shared-horizon/candidate-d9dc0dd9fe688f2c/3e9acad2498d7d9c-droneaid-nl-shared-horizon-06"
+      ]
+    },
+    {
+      "executionKey": "droneaid-nl-workshop-lights/2/bf9ebf37cce9a225",
+      "levelId": "droneaid-nl-workshop-lights-01",
+      "turnPolicy": "grid-center",
+      "sourceIds": [
+        "improv-droneaid-nl-workshop-lights/2/bf9ebf37cce9a225-droneaid-nl-workshop-lights-01"
+      ],
+      "verifiedSourceIds": [
+        "improv-droneaid-nl-workshop-lights/2/bf9ebf37cce9a225-droneaid-nl-workshop-lights-01"
+      ]
+    },
+    {
+      "executionKey": "droneaid-nl-workshop-lights/2/bf9ebf37cce9a225",
+      "levelId": "droneaid-nl-workshop-lights-02",
+      "turnPolicy": "grid-center",
+      "sourceIds": [
+        "improv-droneaid-nl-workshop-lights/2/bf9ebf37cce9a225-droneaid-nl-workshop-lights-02"
+      ],
+      "verifiedSourceIds": [
+        "improv-droneaid-nl-workshop-lights/2/bf9ebf37cce9a225-droneaid-nl-workshop-lights-02"
+      ]
+    },
+    {
+      "executionKey": "droneaid-nl-workshop-lights/2/bf9ebf37cce9a225",
+      "levelId": "droneaid-nl-workshop-lights-03",
+      "turnPolicy": "grid-center",
+      "sourceIds": [
+        "improv-droneaid-nl-workshop-lights/2/bf9ebf37cce9a225-droneaid-nl-workshop-lights-03"
+      ],
+      "verifiedSourceIds": [
+        "improv-droneaid-nl-workshop-lights/2/bf9ebf37cce9a225-droneaid-nl-workshop-lights-03"
+      ]
+    },
+    {
+      "executionKey": "droneaid-nl-workshop-lights/2/bf9ebf37cce9a225",
+      "levelId": "droneaid-nl-workshop-lights-04",
+      "turnPolicy": "grid-center",
+      "sourceIds": [
+        "improv-droneaid-nl-workshop-lights/2/bf9ebf37cce9a225-droneaid-nl-workshop-lights-04"
+      ],
+      "verifiedSourceIds": [
+        "improv-droneaid-nl-workshop-lights/2/bf9ebf37cce9a225-droneaid-nl-workshop-lights-04"
+      ]
+    },
+    {
+      "executionKey": "droneaid-nl-workshop-lights/2/bf9ebf37cce9a225",
+      "levelId": "droneaid-nl-workshop-lights-05",
+      "turnPolicy": "grid-center",
+      "sourceIds": [
+        "improv-droneaid-nl-workshop-lights/2/bf9ebf37cce9a225-droneaid-nl-workshop-lights-05"
+      ],
+      "verifiedSourceIds": [
+        "improv-droneaid-nl-workshop-lights/2/bf9ebf37cce9a225-droneaid-nl-workshop-lights-05"
+      ]
+    },
+    {
+      "executionKey": "droneaid-nl-workshop-lights/2/bf9ebf37cce9a225",
+      "levelId": "droneaid-nl-workshop-lights-06",
+      "turnPolicy": "grid-center",
+      "sourceIds": [
+        "improv-droneaid-nl-workshop-lights/2/bf9ebf37cce9a225-droneaid-nl-workshop-lights-06"
+      ],
+      "verifiedSourceIds": [
+        "improv-droneaid-nl-workshop-lights/2/bf9ebf37cce9a225-droneaid-nl-workshop-lights-06"
+      ]
+    }
+  ],
+  "discovery": [
+    {
+      "turnPolicy": "immediate",
+      "elapsedMs": 3362,
+      "sources": 42,
+      "registeredSources": 42
+    },
+    {
+      "turnPolicy": "grid-center",
+      "elapsedMs": 1293,
+      "sources": 42,
+      "registeredSources": 42
+    }
+  ],
+  "changedSources": [],
+  "errors": [],
+  "elapsedSeconds": 443.645722625,
+  "cleanup": {
+    "ownersBeforeForcedCleanup": 0,
+    "listeners": 0
+  },
+  "finishedAt": "2026-10-16T04:24:59.445Z",
+  "summary": {
+    "registered": 84,
+    "registeredLevels": 84,
+    "usableLevels": 83,
+    "verified": 83,
+    "failed": 1,
+    "notExercised": 0,
+    "remainingWorkers": 0,
+    "uncoveredLevels": 0
+  },
+  "passed": false
+}

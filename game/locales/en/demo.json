@@ -32,7 +32,7 @@
   "practiceComplete": "Practice complete. No scores, pictures or progress were awarded. Try from the beginning or return to the demo.",
   "readout": "{{percent}}% captured · {{lives}} lives · {{seconds}}s",
   "recapWin": "Level complete · {{percent}}% captured. Ready to try your own route?",
-  "recapLoss": "Signal lost. Even a good route can fail — watch the next pilot adapt.",
+  "recapLoss": "Signal lost · {{percent}}% captured. Where would you make your next cut? Choose Want to play to try.",
   "earnedPicture": "You have earned this picture.",
   "previewPicture": "Picture preview · no progress or rewards are earned.",
   "blurredPicture": "Scrambled preview. Earn the original picture in normal play.",
@@ -96,5 +96,8 @@
   "joinHint": "Steer to take over · practice, no rewards",
   "closeDetails": "Close details",
   "fullscreenShort": "Fullscreen",
-  "windowedShort": "Windowed"
+  "windowedShort": "Windowed",
+  "reactionRecovery": "Back on safe ground with a new capture. That is a comeback.",
+  "reactionShield": "The shield caught that hit. A little breathing room!",
+  "reactionObjective": "Objective secured. One step closer to bringing this picture home."
 }

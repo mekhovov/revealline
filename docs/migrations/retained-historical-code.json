@@ -1,0 +1,105 @@
+{
+  "format": "revealline-historical-code-projection.v1",
+  "sourceRevision": "d1bc8296e736f6c0057f391049142e415856c52b",
+  "scope": "Retained historical source after removal of retired theme branches, catalog records and owned test cases. Both original bytes and unrelated pending work are preserved separately. These are not original artifact identities or newly executed historical qualifications.",
+  "items": [
+    {
+      "path": "docs/verification/cross-mode/about-navigation-v0614/originals/p03-release-history-about-628e95da/preimage/game/app.mjs",
+      "previousSHA256": "8eded9082a16787c87a5e0507e69fd566e0a597405014f91934e6eaacc11f950",
+      "sha256": "44d2ebf88787b7c80a8d37f2a9dd6267c899696db317250bede1f032428ad0b1",
+      "previousBytes": 269289,
+      "bytes": 269347
+    },
+    {
+      "path": "docs/verification/cross-mode/about-navigation-v0614/originals/p03-release-history-about-628e95da/proposal/game/app.mjs",
+      "previousSHA256": "592bcb9d2a151e7f3a1b181976055c6b68a060bdb77c313427f7d14a62ab9d22",
+      "sha256": "52aac4510e103916503c6f631f29fec35f4d4ba243cf488dbe83732a3586c9ab",
+      "previousBytes": 269100,
+      "bytes": 269158
+    },
+    {
+      "path": "docs/verification/cross-mode/enemy-workshop-return-v0613/originals/p03-enemy-workshop-return-r2-ccd04f9c/source/game/enemy-catalog.mjs",
+      "previousSHA256": "46ce076af222227c5895bec7c8516f4e6e8098cfc81a9432d9fb0d6546e6c447",
+      "sha256": "901fb313a5a121a579c23de272901b61c8eb6bdedbfac5c5810f9f7270e16ff5",
+      "previousBytes": 5966,
+      "bytes": 5984
+    },
+    {
+      "path": "docs/verification/cross-mode/enemy-workshop-return-v0613/originals/p03-enemy-workshop-return-r2-ccd04f9c/source/game/progress.mjs",
+      "previousSHA256": "7bfdff5fde139b7def3383b95767aac04424becd07302f1f72724295fe3d37b2",
+      "sha256": "04f484133f7c841ad967cc07d9b73901b23da9b1988e5b80955ba0f925c4e98b",
+      "previousBytes": 14612,
+      "bytes": 14688
+    },
+    {
+      "path": "docs/verification/cross-mode/enemy-workshop-return-v0613/originals/p03-enemy-workshop-return-r2-ccd04f9c/source/game/test/enemy-catalog.test.mjs",
+      "previousSHA256": "cac5f4ea905f6df9b54c8c15be75412eaa243a53ad5d0ed90cbb38d2cec87690",
+      "sha256": "c898c7b6350b7b0f4dc6bf5956b57aba747443a59eb1836d178379c123ff8044",
+      "previousBytes": 10697,
+      "bytes": 8904
+    },
+    {
+      "path": "docs/verification/cross-mode/enemy-workshop-return-v0613/originals/p03-enemy-workshop-return-r2-ccd04f9c/source/game/ui/actor-presentation.mjs",
+      "previousSHA256": "5d4c40cbcebeb738526dbdb31fa95b36a368da8930d14de04a9600118aea54c7",
+      "sha256": "2876113be9288e93eb21ad8d6db1b66cde0a6feb5fdae1e061828d5ad9b7b97f",
+      "previousBytes": 26660,
+      "bytes": 25372
+    },
+    {
+      "path": "docs/verification/cross-mode/enemy-workshop-return-v0613/originals/p03-enemy-workshop-return-r2-ccd04f9c/source/game/ui/audio.mjs",
+      "previousSHA256": "b0703011e0981ed4d86d62cb36b721f65f52e7033a4f63417a81287731ee0388",
+      "sha256": "fe9bef26ad1cb808f9c78e7fb471b53127183358587ca3f93012c71e5c8b8231",
+      "previousBytes": 26731,
+      "bytes": 26811
+    },
+    {
+      "path": "docs/verification/cross-mode/enemy-workshop-return-v0613/originals/p03-enemy-workshop-return-r2-ccd04f9c/source/game/ui/celebration.mjs",
+      "previousSHA256": "d242a42e9aa595adc00a6b85b4f2e3ead6f3a5a94e8ddc230b131b1c97827232",
+      "sha256": "e703e5e678c90dc4bbcfc85b7ad1c2026b391ffd53cf5bc90875c41f20279093",
+      "previousBytes": 7855,
+      "bytes": 6664
+    },
+    {
+      "path": "docs/verification/cross-mode/enemy-workshop-return-v0613/originals/p03-enemy-workshop-return-r2-ccd04f9c/source/game/ui/event-feedback.mjs",
+      "previousSHA256": "c558dbe6fbdc91e6e9aae51cf355e557cdebf6f9319cb5ab6d886c75b5760307",
+      "sha256": "31eefdf74d34df5caa434a00f3e95ec3b666617a1e336df81c06f0b1cde52386",
+      "previousBytes": 5824,
+      "bytes": 5790
+    },
+    {
+      "path": "docs/verification/cross-mode/p01/offline-visibility/local-browser/artifact-authority/service-worker.js",
+      "previousSHA256": "af1ae9e08fba63798bb598acdc3942f124b926a97070d0e9c441239efed3f580",
+      "sha256": "2101d4ba184d81334a97fe8550cf5112d29ee805d271925d5c1723fd0e766053",
+      "previousBytes": 106430,
+      "bytes": 106906
+    },
+    {
+      "path": "docs/verification/cross-mode/p03-missions-backup/originals/native/server/candidate-app.mjs",
+      "previousSHA256": "8eded9082a16787c87a5e0507e69fd566e0a597405014f91934e6eaacc11f950",
+      "sha256": "44d2ebf88787b7c80a8d37f2a9dd6267c899696db317250bede1f032428ad0b1",
+      "previousBytes": 269289,
+      "bytes": 269347
+    },
+    {
+      "path": "recovery/ornament-port-20261009/conflict-stages/game__app.mjs.stage1",
+      "previousSHA256": "08b0575d825c323f7475efe2a89b45920f8c0ba55ce5f7c1944c66017eb66525",
+      "sha256": "18eb4d230b3393d76293a28ae380a51f9dfd89c3d561b3dae33afd547e9e1b29",
+      "previousBytes": 395470,
+      "bytes": 395528
+    },
+    {
+      "path": "recovery/ornament-port-20261009/conflict-stages/game__app.mjs.stage2",
+      "previousSHA256": "8549a1dd8665148fb2aed7e2e831f7a1f6e176477f1d4ae307e308b496b278df",
+      "sha256": "b695e5120fc51aae345104580177d538b974c41bfd8e86e1351fbe3dd2fe63a1",
+      "previousBytes": 544829,
+      "bytes": 544883
+    },
+    {
+      "path": "recovery/ornament-port-20261009/conflict-stages/game__app.mjs.stage3",
+      "previousSHA256": "b6c744b9b4db18389d72cbde9e17a3994fb5c751a527f61616d27dcff2ddb20b",
+      "sha256": "4c53b8db3b6a24638083b4172bc0831dd6ffd1e9c71b204a35807aada3721c44",
+      "previousBytes": 396113,
+      "bytes": 396171
+    }
+  ]
+}

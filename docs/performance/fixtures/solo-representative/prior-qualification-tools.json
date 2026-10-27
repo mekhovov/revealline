@@ -1,0 +1,1923 @@
+{
+  "format": "SoloQualificationHistoricalToolSupplementV1",
+  "postHocExactGitReadback": true,
+  "scope": "Additive exact-Git source binding for the fifteen already-declared releases listed below. Original declarations, workflows, prior witnesses and observed outcomes are unchanged. No new native authority or current-tool exemption. Only test-side historical readers consume this supplement.",
+  "sources": [
+    {
+      "revision": "c41a02216c0811952232a387fd1743e09452c269",
+      "tree": "7fff7e134c67aa268e63cab5b08a7f3473bb5703",
+      "releases": [
+        {
+          "manifest": "docs/performance/solo-final-timing-cold-first30-v2-plan.json",
+          "workflow": ".github/workflows/solo-remote-final-timing-cold-first30-v2-temporary.yml",
+          "references": [
+            "docs/performance/fixtures/solo-remote-timing/cold-first30.qualification.fixture",
+            "docs/performance/fixtures/solo-remote-timing/long-rail.qualification.fixture",
+            "docs/performance/fixtures/solo-remote-timing/long-rail.xonix.fixture",
+            "docs/performance/fixtures/solo-remote-timing/sentry-detour.xonix.fixture",
+            "docs/performance/fixtures/solo-remote-timing/sentry.qualification.fixture",
+            "docs/performance/fixtures/solo-remote-timing/warm-first30.qualification.fixture",
+            "scripts/brand-icons.mjs",
+            "scripts/build-entry-writer.mjs",
+            "scripts/calibrate-solo-performance.mjs",
+            "scripts/core-soundtrack-publication.mjs",
+            "scripts/default-runtime-metadata.mjs",
+            "scripts/edition-code-indentation.mjs",
+            "scripts/external-distribution.mjs",
+            "scripts/game-cli.mjs",
+            "scripts/hosted-soundtrack-publication.mjs",
+            "scripts/localization-audit.mjs",
+            "scripts/localization-content.mjs",
+            "scripts/localization.mjs",
+            "scripts/offline-core-closure.mjs",
+            "scripts/optional-artwork.mjs",
+            "scripts/optional-distribution.mjs",
+            "scripts/pack-indexes.mjs",
+            "scripts/qualify-solo-runtime.mjs",
+            "scripts/reviewed-soundtrack-batches.mjs",
+            "scripts/run-solo-remote-correctness.mjs",
+            "scripts/serve-production-preview.mjs",
+            "scripts/solo-build-archive.mjs",
+            "scripts/solo-build-worker-closure.mjs",
+            "scripts/solo-owned-resource-assessment.mjs",
+            "scripts/solo-qualification-audio.mjs",
+            "scripts/solo-qualification-browser-context.mjs",
+            "scripts/solo-qualification-cadence.mjs",
+            "scripts/solo-qualification-cpu-profile.mjs",
+            "scripts/solo-qualification-export.mjs",
+            "scripts/solo-qualification-hitch-journal.mjs",
+            "scripts/solo-qualification-native-replay.mjs",
+            "scripts/solo-qualification-observation.mjs",
+            "scripts/solo-qualification-replay-core.mjs",
+            "scripts/solo-qualification-replay-identity.mjs",
+            "scripts/solo-qualification-replay.mjs",
+            "scripts/solo-qualification-snapshot-store.mjs",
+            "scripts/solo-qualification.mjs",
+            "scripts/solo-remote-archive.py",
+            "scripts/solo-remote-baseline.mjs",
+            "scripts/solo-remote-sustained.mjs",
+            "scripts/soundtrack-archive-admissions.mjs",
+            "scripts/soundtrack-distribution.mjs",
+            "scripts/vendor/devtools-benchmark.mjs",
+            "scripts/verify-solo-build.mjs"
+          ]
+        },
+        {
+          "manifest": "docs/performance/solo-final-timing-warm-first30-v2-plan.json",
+          "workflow": ".github/workflows/solo-remote-final-timing-warm-first30-v2-temporary.yml",
+          "references": [
+            "docs/performance/fixtures/solo-remote-timing/cold-first30.qualification.fixture",
+            "docs/performance/fixtures/solo-remote-timing/long-rail.qualification.fixture",
+            "docs/performance/fixtures/solo-remote-timing/long-rail.xonix.fixture",
+            "docs/performance/fixtures/solo-remote-timing/sentry-detour.xonix.fixture",
+            "docs/performance/fixtures/solo-remote-timing/sentry.qualification.fixture",
+            "docs/performance/fixtures/solo-remote-timing/warm-first30.qualification.fixture",
+            "scripts/brand-icons.mjs",
+            "scripts/build-entry-writer.mjs",
+            "scripts/calibrate-solo-performance.mjs",
+            "scripts/core-soundtrack-publication.mjs",
+            "scripts/default-runtime-metadata.mjs",
+            "scripts/edition-code-indentation.mjs",
+            "scripts/external-distribution.mjs",
+            "scripts/game-cli.mjs",
+            "scripts/hosted-soundtrack-publication.mjs",
+            "scripts/localization-audit.mjs",
+            "scripts/localization-content.mjs",
+            "scripts/localization.mjs",
+            "scripts/offline-core-closure.mjs",
+            "scripts/optional-artwork.mjs",
+            "scripts/optional-distribution.mjs",
+            "scripts/pack-indexes.mjs",
+            "scripts/qualify-solo-runtime.mjs",
+            "scripts/reviewed-soundtrack-batches.mjs",
+            "scripts/run-solo-remote-correctness.mjs",
+            "scripts/serve-production-preview.mjs",
+            "scripts/solo-build-archive.mjs",
+            "scripts/solo-build-worker-closure.mjs",
+            "scripts/solo-owned-resource-assessment.mjs",
+            "scripts/solo-qualification-audio.mjs",
+            "scripts/solo-qualification-browser-context.mjs",
+            "scripts/solo-qualification-cadence.mjs",
+            "scripts/solo-qualification-cpu-profile.mjs",
+            "scripts/solo-qualification-export.mjs",
+            "scripts/solo-qualification-hitch-journal.mjs",
+            "scripts/solo-qualification-native-replay.mjs",
+            "scripts/solo-qualification-observation.mjs",
+            "scripts/solo-qualification-replay-core.mjs",
+            "scripts/solo-qualification-replay-identity.mjs",
+            "scripts/solo-qualification-replay.mjs",
+            "scripts/solo-qualification-snapshot-store.mjs",
+            "scripts/solo-qualification.mjs",
+            "scripts/solo-remote-archive.py",
+            "scripts/solo-remote-baseline.mjs",
+            "scripts/solo-remote-sustained.mjs",
+            "scripts/soundtrack-archive-admissions.mjs",
+            "scripts/soundtrack-distribution.mjs",
+            "scripts/vendor/devtools-benchmark.mjs",
+            "scripts/verify-solo-build.mjs"
+          ]
+        },
+        {
+          "manifest": "docs/performance/solo-final-timing-sentry-v2-plan.json",
+          "workflow": ".github/workflows/solo-remote-final-timing-sentry-v2-temporary.yml",
+          "references": [
+            "docs/performance/fixtures/solo-remote-timing/cold-first30.qualification.fixture",
+            "docs/performance/fixtures/solo-remote-timing/long-rail.qualification.fixture",
+            "docs/performance/fixtures/solo-remote-timing/long-rail.xonix.fixture",
+            "docs/performance/fixtures/solo-remote-timing/sentry-detour.xonix.fixture",
+            "docs/performance/fixtures/solo-remote-timing/sentry.qualification.fixture",
+            "docs/performance/fixtures/solo-remote-timing/warm-first30.qualification.fixture",
+            "scripts/brand-icons.mjs",
+            "scripts/build-entry-writer.mjs",
+            "scripts/calibrate-solo-performance.mjs",
+            "scripts/core-soundtrack-publication.mjs",
+            "scripts/default-runtime-metadata.mjs",
+            "scripts/edition-code-indentation.mjs",
+            "scripts/external-distribution.mjs",
+            "scripts/game-cli.mjs",
+            "scripts/hosted-soundtrack-publication.mjs",
+            "scripts/localization-audit.mjs",
+            "scripts/localization-content.mjs",
+            "scripts/localization.mjs",
+            "scripts/offline-core-closure.mjs",
+            "scripts/optional-artwork.mjs",
+            "scripts/optional-distribution.mjs",
+            "scripts/pack-indexes.mjs",
+            "scripts/qualify-solo-runtime.mjs",
+            "scripts/reviewed-soundtrack-batches.mjs",
+            "scripts/run-solo-remote-correctness.mjs",
+            "scripts/serve-production-preview.mjs",
+            "scripts/solo-build-archive.mjs",
+            "scripts/solo-build-worker-closure.mjs",
+            "scripts/solo-owned-resource-assessment.mjs",
+            "scripts/solo-qualification-audio.mjs",
+            "scripts/solo-qualification-browser-context.mjs",
+            "scripts/solo-qualification-cadence.mjs",
+            "scripts/solo-qualification-cpu-profile.mjs",
+            "scripts/solo-qualification-export.mjs",
+            "scripts/solo-qualification-hitch-journal.mjs",
+            "scripts/solo-qualification-native-replay.mjs",
+            "scripts/solo-qualification-observation.mjs",
+            "scripts/solo-qualification-replay-core.mjs",
+            "scripts/solo-qualification-replay-identity.mjs",
+            "scripts/solo-qualification-replay.mjs",
+            "scripts/solo-qualification-snapshot-store.mjs",
+            "scripts/solo-qualification.mjs",
+            "scripts/solo-remote-archive.py",
+            "scripts/solo-remote-baseline.mjs",
+            "scripts/solo-remote-sustained.mjs",
+            "scripts/soundtrack-archive-admissions.mjs",
+            "scripts/soundtrack-distribution.mjs",
+            "scripts/vendor/devtools-benchmark.mjs",
+            "scripts/verify-solo-build.mjs"
+          ]
+        },
+        {
+          "manifest": "docs/performance/solo-final-timing-long-rail-v2-plan.json",
+          "workflow": ".github/workflows/solo-remote-final-timing-long-rail-v2-temporary.yml",
+          "references": [
+            "docs/performance/fixtures/solo-remote-timing/cold-first30.qualification.fixture",
+            "docs/performance/fixtures/solo-remote-timing/long-rail.qualification.fixture",
+            "docs/performance/fixtures/solo-remote-timing/long-rail.xonix.fixture",
+            "docs/performance/fixtures/solo-remote-timing/sentry-detour.xonix.fixture",
+            "docs/performance/fixtures/solo-remote-timing/sentry.qualification.fixture",
+            "docs/performance/fixtures/solo-remote-timing/warm-first30.qualification.fixture",
+            "scripts/brand-icons.mjs",
+            "scripts/build-entry-writer.mjs",
+            "scripts/calibrate-solo-performance.mjs",
+            "scripts/core-soundtrack-publication.mjs",
+            "scripts/default-runtime-metadata.mjs",
+            "scripts/edition-code-indentation.mjs",
+            "scripts/external-distribution.mjs",
+            "scripts/game-cli.mjs",
+            "scripts/hosted-soundtrack-publication.mjs",
+            "scripts/localization-audit.mjs",
+            "scripts/localization-content.mjs",
+            "scripts/localization.mjs",
+            "scripts/offline-core-closure.mjs",
+            "scripts/optional-artwork.mjs",
+            "scripts/optional-distribution.mjs",
+            "scripts/pack-indexes.mjs",
+            "scripts/qualify-solo-runtime.mjs",
+            "scripts/reviewed-soundtrack-batches.mjs",
+            "scripts/run-solo-remote-correctness.mjs",
+            "scripts/serve-production-preview.mjs",
+            "scripts/solo-build-archive.mjs",
+            "scripts/solo-build-worker-closure.mjs",
+            "scripts/solo-owned-resource-assessment.mjs",
+            "scripts/solo-qualification-audio.mjs",
+            "scripts/solo-qualification-browser-context.mjs",
+            "scripts/solo-qualification-cadence.mjs",
+            "scripts/solo-qualification-cpu-profile.mjs",
+            "scripts/solo-qualification-export.mjs",
+            "scripts/solo-qualification-hitch-journal.mjs",
+            "scripts/solo-qualification-native-replay.mjs",
+            "scripts/solo-qualification-observation.mjs",
+            "scripts/solo-qualification-replay-core.mjs",
+            "scripts/solo-qualification-replay-identity.mjs",
+            "scripts/solo-qualification-replay.mjs",
+            "scripts/solo-qualification-snapshot-store.mjs",
+            "scripts/solo-qualification.mjs",
+            "scripts/solo-remote-archive.py",
+            "scripts/solo-remote-baseline.mjs",
+            "scripts/solo-remote-sustained.mjs",
+            "scripts/soundtrack-archive-admissions.mjs",
+            "scripts/soundtrack-distribution.mjs",
+            "scripts/vendor/devtools-benchmark.mjs",
+            "scripts/verify-solo-build.mjs"
+          ]
+        },
+        {
+          "manifest": "docs/performance/solo-final-soak-v2-plan.json",
+          "workflow": ".github/workflows/solo-remote-final-soak-v2-temporary.yml",
+          "references": [
+            "docs/performance/fixtures/solo-remote-correctness/first30.qualification.fixture",
+            "docs/performance/fixtures/solo-remote-sustained/first-return.xonix.fixture",
+            "docs/performance/fixtures/solo-remote-sustained/long29.qualification.fixture",
+            "docs/performance/fixtures/solo-remote-sustained/next.qualification.fixture",
+            "docs/performance/fixtures/solo-remote-sustained/retry.qualification.fixture",
+            "docs/performance/fixtures/solo-remote-sustained/soak-first-return-anchored.qualification.fixture",
+            "scripts/brand-icons.mjs",
+            "scripts/build-entry-writer.mjs",
+            "scripts/calibrate-solo-performance.mjs",
+            "scripts/core-soundtrack-publication.mjs",
+            "scripts/default-runtime-metadata.mjs",
+            "scripts/edition-code-indentation.mjs",
+            "scripts/external-distribution.mjs",
+            "scripts/game-cli.mjs",
+            "scripts/hosted-soundtrack-publication.mjs",
+            "scripts/localization-audit.mjs",
+            "scripts/localization-content.mjs",
+            "scripts/localization.mjs",
+            "scripts/offline-core-closure.mjs",
+            "scripts/optional-artwork.mjs",
+            "scripts/optional-distribution.mjs",
+            "scripts/pack-indexes.mjs",
+            "scripts/qualify-solo-runtime.mjs",
+            "scripts/reviewed-soundtrack-batches.mjs",
+            "scripts/run-solo-remote-correctness.mjs",
+            "scripts/serve-production-preview.mjs",
+            "scripts/solo-build-archive.mjs",
+            "scripts/solo-build-worker-closure.mjs",
+            "scripts/solo-owned-resource-assessment.mjs",
+            "scripts/solo-qualification-audio.mjs",
+            "scripts/solo-qualification-browser-context.mjs",
+            "scripts/solo-qualification-cadence.mjs",
+            "scripts/solo-qualification-cpu-profile.mjs",
+            "scripts/solo-qualification-export.mjs",
+            "scripts/solo-qualification-hitch-journal.mjs",
+            "scripts/solo-qualification-native-replay.mjs",
+            "scripts/solo-qualification-observation.mjs",
+            "scripts/solo-qualification-replay-core.mjs",
+            "scripts/solo-qualification-replay-identity.mjs",
+            "scripts/solo-qualification-replay.mjs",
+            "scripts/solo-qualification-snapshot-store.mjs",
+            "scripts/solo-qualification.mjs",
+            "scripts/solo-remote-archive.py",
+            "scripts/solo-remote-baseline.mjs",
+            "scripts/solo-remote-sustained.mjs",
+            "scripts/soundtrack-archive-admissions.mjs",
+            "scripts/soundtrack-distribution.mjs",
+            "scripts/vendor/devtools-benchmark.mjs",
+            "scripts/verify-solo-build.mjs"
+          ]
+        },
+        {
+          "manifest": "docs/performance/solo-final-next-plan.json",
+          "workflow": ".github/workflows/solo-remote-final-lifecycle-next-temporary.yml",
+          "references": [
+            "docs/performance/fixtures/solo-remote-correctness/first30.qualification.fixture",
+            "docs/performance/fixtures/solo-remote-sustained/first-return.xonix.fixture",
+            "docs/performance/fixtures/solo-remote-sustained/long29.qualification.fixture",
+            "docs/performance/fixtures/solo-remote-sustained/next-first-return-anchored.qualification.fixture",
+            "docs/performance/fixtures/solo-remote-sustained/retry.qualification.fixture",
+            "docs/performance/fixtures/solo-remote-sustained/soak-first-return-anchored.qualification.fixture",
+            "scripts/brand-icons.mjs",
+            "scripts/build-entry-writer.mjs",
+            "scripts/calibrate-solo-performance.mjs",
+            "scripts/core-soundtrack-publication.mjs",
+            "scripts/default-runtime-metadata.mjs",
+            "scripts/edition-code-indentation.mjs",
+            "scripts/external-distribution.mjs",
+            "scripts/game-cli.mjs",
+            "scripts/hosted-soundtrack-publication.mjs",
+            "scripts/localization-audit.mjs",
+            "scripts/localization-content.mjs",
+            "scripts/localization.mjs",
+            "scripts/offline-core-closure.mjs",
+            "scripts/optional-artwork.mjs",
+            "scripts/optional-distribution.mjs",
+            "scripts/pack-indexes.mjs",
+            "scripts/qualify-solo-runtime.mjs",
+            "scripts/reviewed-soundtrack-batches.mjs",
+            "scripts/run-solo-remote-correctness.mjs",
+            "scripts/serve-production-preview.mjs",
+            "scripts/solo-build-archive.mjs",
+            "scripts/solo-build-worker-closure.mjs",
+            "scripts/solo-owned-resource-assessment.mjs",
+            "scripts/solo-qualification-audio.mjs",
+            "scripts/solo-qualification-browser-context.mjs",
+            "scripts/solo-qualification-cadence.mjs",
+            "scripts/solo-qualification-cpu-profile.mjs",
+            "scripts/solo-qualification-export.mjs",
+            "scripts/solo-qualification-hitch-journal.mjs",
+            "scripts/solo-qualification-native-replay.mjs",
+            "scripts/solo-qualification-observation.mjs",
+            "scripts/solo-qualification-replay-core.mjs",
+            "scripts/solo-qualification-replay-identity.mjs",
+            "scripts/solo-qualification-replay.mjs",
+            "scripts/solo-qualification-snapshot-store.mjs",
+            "scripts/solo-qualification.mjs",
+            "scripts/solo-remote-archive.py",
+            "scripts/solo-remote-baseline.mjs",
+            "scripts/solo-remote-sustained.mjs",
+            "scripts/soundtrack-archive-admissions.mjs",
+            "scripts/soundtrack-distribution.mjs",
+            "scripts/vendor/devtools-benchmark.mjs",
+            "scripts/verify-solo-build.mjs"
+          ]
+        },
+        {
+          "manifest": "docs/performance/solo-final-retry-plan.json",
+          "workflow": ".github/workflows/solo-remote-final-lifecycle-retry-temporary.yml",
+          "references": [
+            "docs/performance/fixtures/solo-remote-correctness/first30.qualification.fixture",
+            "docs/performance/fixtures/solo-remote-sustained/first-return.xonix.fixture",
+            "docs/performance/fixtures/solo-remote-sustained/long29.qualification.fixture",
+            "docs/performance/fixtures/solo-remote-sustained/next.qualification.fixture",
+            "docs/performance/fixtures/solo-remote-sustained/retry-first-return-anchored.qualification.fixture",
+            "docs/performance/fixtures/solo-remote-sustained/soak-first-return-anchored.qualification.fixture",
+            "scripts/brand-icons.mjs",
+            "scripts/build-entry-writer.mjs",
+            "scripts/calibrate-solo-performance.mjs",
+            "scripts/core-soundtrack-publication.mjs",
+            "scripts/default-runtime-metadata.mjs",
+            "scripts/edition-code-indentation.mjs",
+            "scripts/external-distribution.mjs",
+            "scripts/game-cli.mjs",
+            "scripts/hosted-soundtrack-publication.mjs",
+            "scripts/localization-audit.mjs",
+            "scripts/localization-content.mjs",
+            "scripts/localization.mjs",
+            "scripts/offline-core-closure.mjs",
+            "scripts/optional-artwork.mjs",
+            "scripts/optional-distribution.mjs",
+            "scripts/pack-indexes.mjs",
+            "scripts/qualify-solo-runtime.mjs",
+            "scripts/reviewed-soundtrack-batches.mjs",
+            "scripts/run-solo-remote-correctness.mjs",
+            "scripts/serve-production-preview.mjs",
+            "scripts/solo-build-archive.mjs",
+            "scripts/solo-build-worker-closure.mjs",
+            "scripts/solo-owned-resource-assessment.mjs",
+            "scripts/solo-qualification-audio.mjs",
+            "scripts/solo-qualification-browser-context.mjs",
+            "scripts/solo-qualification-cadence.mjs",
+            "scripts/solo-qualification-cpu-profile.mjs",
+            "scripts/solo-qualification-export.mjs",
+            "scripts/solo-qualification-hitch-journal.mjs",
+            "scripts/solo-qualification-native-replay.mjs",
+            "scripts/solo-qualification-observation.mjs",
+            "scripts/solo-qualification-replay-core.mjs",
+            "scripts/solo-qualification-replay-identity.mjs",
+            "scripts/solo-qualification-replay.mjs",
+            "scripts/solo-qualification-snapshot-store.mjs",
+            "scripts/solo-qualification.mjs",
+            "scripts/solo-remote-archive.py",
+            "scripts/solo-remote-baseline.mjs",
+            "scripts/solo-remote-sustained.mjs",
+            "scripts/soundtrack-archive-admissions.mjs",
+            "scripts/soundtrack-distribution.mjs",
+            "scripts/vendor/devtools-benchmark.mjs",
+            "scripts/verify-solo-build.mjs"
+          ]
+        },
+        {
+          "manifest": "docs/performance/solo-final-long29-plan.json",
+          "workflow": ".github/workflows/solo-remote-final-lifecycle-long29-temporary.yml",
+          "references": [
+            "docs/performance/fixtures/solo-remote-correctness/first30.qualification.fixture",
+            "docs/performance/fixtures/solo-remote-sustained/first-return.xonix.fixture",
+            "docs/performance/fixtures/solo-remote-sustained/long29.qualification.fixture",
+            "docs/performance/fixtures/solo-remote-sustained/next.qualification.fixture",
+            "docs/performance/fixtures/solo-remote-sustained/retry.qualification.fixture",
+            "docs/performance/fixtures/solo-remote-sustained/soak-first-return-anchored.qualification.fixture",
+            "scripts/brand-icons.mjs",
+            "scripts/build-entry-writer.mjs",
+            "scripts/calibrate-solo-performance.mjs",
+            "scripts/core-soundtrack-publication.mjs",
+            "scripts/default-runtime-metadata.mjs",
+            "scripts/edition-code-indentation.mjs",
+            "scripts/external-distribution.mjs",
+            "scripts/game-cli.mjs",
+            "scripts/hosted-soundtrack-publication.mjs",
+            "scripts/localization-audit.mjs",
+            "scripts/localization-content.mjs",
+            "scripts/localization.mjs",
+            "scripts/offline-core-closure.mjs",
+            "scripts/optional-artwork.mjs",
+            "scripts/optional-distribution.mjs",
+            "scripts/pack-indexes.mjs",
+            "scripts/qualify-solo-runtime.mjs",
+            "scripts/reviewed-soundtrack-batches.mjs",
+            "scripts/run-solo-remote-correctness.mjs",
+            "scripts/serve-production-preview.mjs",
+            "scripts/solo-build-archive.mjs",
+            "scripts/solo-build-worker-closure.mjs",
+            "scripts/solo-owned-resource-assessment.mjs",
+            "scripts/solo-qualification-audio.mjs",
+            "scripts/solo-qualification-browser-context.mjs",
+            "scripts/solo-qualification-cadence.mjs",
+            "scripts/solo-qualification-cpu-profile.mjs",
+            "scripts/solo-qualification-export.mjs",
+            "scripts/solo-qualification-hitch-journal.mjs",
+            "scripts/solo-qualification-native-replay.mjs",
+            "scripts/solo-qualification-observation.mjs",
+            "scripts/solo-qualification-replay-core.mjs",
+            "scripts/solo-qualification-replay-identity.mjs",
+            "scripts/solo-qualification-replay.mjs",
+            "scripts/solo-qualification-snapshot-store.mjs",
+            "scripts/solo-qualification.mjs",
+            "scripts/solo-remote-archive.py",
+            "scripts/solo-remote-baseline.mjs",
+            "scripts/solo-remote-sustained.mjs",
+            "scripts/soundtrack-archive-admissions.mjs",
+            "scripts/soundtrack-distribution.mjs",
+            "scripts/vendor/devtools-benchmark.mjs",
+            "scripts/verify-solo-build.mjs"
+          ]
+        },
+        {
+          "manifest": "docs/performance/solo-final-audio-v2-plan.json",
+          "workflow": ".github/workflows/solo-remote-final-audio-v2-temporary.yml",
+          "references": [
+            "docs/performance/fixtures/solo-remote-auxiliary/first-return.xonix.fixture",
+            "docs/performance/fixtures/solo-remote-auxiliary/long-rail.xonix.fixture",
+            "docs/performance/fixtures/solo-remote-auxiliary/recorded-music.qualification.fixture",
+            "docs/performance/fixtures/solo-remote-auxiliary/recorded-speech.qualification.fixture",
+            "docs/performance/fixtures/solo-remote-auxiliary/recovery.qualification.fixture",
+            "docs/performance/fixtures/solo-remote-auxiliary/signal-07.xonix.fixture",
+            "scripts/brand-icons.mjs",
+            "scripts/build-entry-writer.mjs",
+            "scripts/core-soundtrack-publication.mjs",
+            "scripts/default-runtime-metadata.mjs",
+            "scripts/edition-code-indentation.mjs",
+            "scripts/external-distribution.mjs",
+            "scripts/game-cli.mjs",
+            "scripts/hosted-soundtrack-publication.mjs",
+            "scripts/localization-audit.mjs",
+            "scripts/localization-content.mjs",
+            "scripts/localization.mjs",
+            "scripts/offline-core-closure.mjs",
+            "scripts/optional-artwork.mjs",
+            "scripts/optional-distribution.mjs",
+            "scripts/pack-indexes.mjs",
+            "scripts/prepare-solo-audio-fixtures.mjs",
+            "scripts/qualify-solo-runtime.mjs",
+            "scripts/reviewed-soundtrack-batches.mjs",
+            "scripts/run-solo-remote-correctness.mjs",
+            "scripts/serve-production-preview.mjs",
+            "scripts/solo-build-archive.mjs",
+            "scripts/solo-build-worker-closure.mjs",
+            "scripts/solo-qualification-audio.mjs",
+            "scripts/solo-qualification-browser-context.mjs",
+            "scripts/solo-qualification-cadence.mjs",
+            "scripts/solo-qualification-cpu-profile.mjs",
+            "scripts/solo-qualification-export.mjs",
+            "scripts/solo-qualification-native-replay.mjs",
+            "scripts/solo-qualification-observation.mjs",
+            "scripts/solo-qualification-replay-core.mjs",
+            "scripts/solo-qualification-replay-identity.mjs",
+            "scripts/solo-qualification-replay.mjs",
+            "scripts/solo-qualification.mjs",
+            "scripts/solo-remote-archive.py",
+            "scripts/solo-remote-auxiliary.mjs",
+            "scripts/solo-remote-baseline.mjs",
+            "scripts/soundtrack-archive-admissions.mjs",
+            "scripts/soundtrack-distribution.mjs",
+            "scripts/verify-solo-build.mjs"
+          ]
+        },
+        {
+          "manifest": "docs/performance/solo-remote-offline-candidate-v2-plan.json",
+          "workflow": ".github/workflows/solo-remote-offline-candidate-v2-temporary.yml",
+          "references": [
+            "scripts/brand-icons.mjs",
+            "scripts/build-entry-writer.mjs",
+            "scripts/core-soundtrack-publication.mjs",
+            "scripts/default-runtime-metadata.mjs",
+            "scripts/edition-code-indentation.mjs",
+            "scripts/external-distribution.mjs",
+            "scripts/game-cli.mjs",
+            "scripts/hosted-soundtrack-publication.mjs",
+            "scripts/localization-audit.mjs",
+            "scripts/localization-content.mjs",
+            "scripts/localization.mjs",
+            "scripts/observe-solo-offline-persistence.mjs",
+            "scripts/offline-core-closure.mjs",
+            "scripts/optional-artwork.mjs",
+            "scripts/optional-distribution.mjs",
+            "scripts/optional-installation-observer-helpers.mjs",
+            "scripts/pack-indexes.mjs",
+            "scripts/reviewed-soundtrack-batches.mjs",
+            "scripts/run-solo-remote-correctness.mjs",
+            "scripts/serve-production-preview.mjs",
+            "scripts/solo-build-archive.mjs",
+            "scripts/solo-build-worker-closure.mjs",
+            "scripts/solo-offline-gameplay.mjs",
+            "scripts/solo-qualification-export.mjs",
+            "scripts/solo-qualification-native-replay.mjs",
+            "scripts/solo-qualification-replay-core.mjs",
+            "scripts/solo-remote-archive.py",
+            "scripts/solo-remote-baseline.mjs",
+            "scripts/solo-remote-offline.mjs",
+            "scripts/soundtrack-archive-admissions.mjs",
+            "scripts/soundtrack-distribution.mjs",
+            "scripts/verify-solo-build.mjs"
+          ]
+        },
+        {
+          "manifest": "docs/performance/solo-remote-final-earned-raster-v2-plan.json",
+          "workflow": ".github/workflows/solo-remote-final-earned-raster-v2-temporary.yml",
+          "references": [
+            "docs/performance/fixtures/solo-representative/first-fracture-earned-raster.fixture",
+            "scripts/brand-icons.mjs",
+            "scripts/build-entry-writer.mjs",
+            "scripts/core-soundtrack-publication.mjs",
+            "scripts/default-runtime-metadata.mjs",
+            "scripts/edition-code-indentation.mjs",
+            "scripts/external-distribution.mjs",
+            "scripts/game-cli.mjs",
+            "scripts/hosted-soundtrack-publication.mjs",
+            "scripts/localization-audit.mjs",
+            "scripts/localization-content.mjs",
+            "scripts/localization.mjs",
+            "scripts/observe-solo-native-raster.mjs",
+            "scripts/offline-core-closure.mjs",
+            "scripts/optional-artwork.mjs",
+            "scripts/optional-distribution.mjs",
+            "scripts/pack-indexes.mjs",
+            "scripts/reviewed-soundtrack-batches.mjs",
+            "scripts/run-solo-remote-correctness.mjs",
+            "scripts/serve-production-preview.mjs",
+            "scripts/solo-build-archive.mjs",
+            "scripts/solo-build-worker-closure.mjs",
+            "scripts/solo-earned-raster-protocol.mjs",
+            "scripts/solo-qualification-browser-context.mjs",
+            "scripts/solo-raster-protocols.mjs",
+            "scripts/solo-remote-archive.py",
+            "scripts/solo-remote-raster.mjs",
+            "scripts/soundtrack-archive-admissions.mjs",
+            "scripts/soundtrack-distribution.mjs",
+            "scripts/verify-solo-build.mjs"
+          ]
+        },
+        {
+          "manifest": "docs/performance/solo-native-touch-plan.json",
+          "workflow": ".github/workflows/solo-remote-native-touch-temporary.yml",
+          "references": [
+            "docs/performance/fixtures/solo-remote-timing/cold-first30.qualification.fixture",
+            "scripts/brand-icons.mjs",
+            "scripts/build-entry-writer.mjs",
+            "scripts/core-soundtrack-publication.mjs",
+            "scripts/default-runtime-metadata.mjs",
+            "scripts/edition-code-indentation.mjs",
+            "scripts/external-distribution.mjs",
+            "scripts/game-cli.mjs",
+            "scripts/hosted-soundtrack-publication.mjs",
+            "scripts/localization-audit.mjs",
+            "scripts/localization-content.mjs",
+            "scripts/localization.mjs",
+            "scripts/observe-solo-native-touch.mjs",
+            "scripts/offline-core-closure.mjs",
+            "scripts/optional-artwork.mjs",
+            "scripts/optional-distribution.mjs",
+            "scripts/pack-indexes.mjs",
+            "scripts/reviewed-soundtrack-batches.mjs",
+            "scripts/run-solo-remote-correctness.mjs",
+            "scripts/serve-production-preview.mjs",
+            "scripts/solo-build-archive.mjs",
+            "scripts/solo-build-worker-closure.mjs",
+            "scripts/solo-qualification-cadence.mjs",
+            "scripts/solo-qualification-export.mjs",
+            "scripts/solo-qualification-native-replay.mjs",
+            "scripts/solo-qualification-replay-core.mjs",
+            "scripts/solo-qualification.mjs",
+            "scripts/solo-remote-archive.py",
+            "scripts/solo-remote-baseline.mjs",
+            "scripts/solo-remote-touch.mjs",
+            "scripts/soundtrack-archive-admissions.mjs",
+            "scripts/soundtrack-distribution.mjs",
+            "scripts/verify-solo-build.mjs"
+          ]
+        }
+      ],
+      "records": [
+        {
+          "path": ".github/workflows/solo-remote-final-audio-v2-temporary.yml",
+          "blob": "a0e9f5c6db0f62fe9f9976e01d8624a93256f362",
+          "bytes": 18624,
+          "sha256": "2466aad51a6c6d1e9318d2a5f140264fe8e96078200224309f8d74d944d63cfc"
+        },
+        {
+          "path": ".github/workflows/solo-remote-final-earned-raster-v2-temporary.yml",
+          "blob": "5c9398f5fcca772b32922ba0156db8282879c454",
+          "bytes": 19337,
+          "sha256": "7b3fd1bba99e99054ff593fee3f1dba43d1462928a16a193335bcf473a868d52"
+        },
+        {
+          "path": ".github/workflows/solo-remote-final-lifecycle-long29-temporary.yml",
+          "blob": "d04f40b53c016423297693708f18a0c4aef5234c",
+          "bytes": 21960,
+          "sha256": "cf0b8d00b6435b7d9a4ec4fd5b228ef56184298ea19c718b57449e7910673295"
+        },
+        {
+          "path": ".github/workflows/solo-remote-final-lifecycle-next-temporary.yml",
+          "blob": "e688235da830c34a3ff6b8231db0ed19fd8c73aa",
+          "bytes": 21940,
+          "sha256": "d4a9babb6adf2e4647fc2b04fc47694b66e7d0465af57b98292def78b8284faa"
+        },
+        {
+          "path": ".github/workflows/solo-remote-final-lifecycle-retry-temporary.yml",
+          "blob": "70cd69fc56ac08d74fc38dc314b34fba4511f57d",
+          "bytes": 21950,
+          "sha256": "d303da3dc4489837a6de56ad453e1eee43a903eb844651087fe8e6bdbda57302"
+        },
+        {
+          "path": ".github/workflows/solo-remote-final-soak-v2-temporary.yml",
+          "blob": "3c99ac990a78f3a5d41108e9ed3c09f58c6c09b0",
+          "bytes": 21910,
+          "sha256": "d7f6babb03f79c62266883f1a1978c9eed8027a9b199c8e061ed981ea09e986f"
+        },
+        {
+          "path": ".github/workflows/solo-remote-final-timing-cold-first30-v2-temporary.yml",
+          "blob": "2d8ab144ada9fda79c827f1d8b64d01d2940aac4",
+          "bytes": 22068,
+          "sha256": "a76e4901080d86ee7c9374eee258a4f226188f98ff1f80be00ca2c04841049cc"
+        },
+        {
+          "path": ".github/workflows/solo-remote-final-timing-long-rail-v2-temporary.yml",
+          "blob": "69e61852143cabb78236a691c6f70b2fc1dd78a2",
+          "bytes": 22038,
+          "sha256": "1c2d1c46e0c0552769863f0ab3dd103d41520c79f279aec5cc2f6a62cff35b5f"
+        },
+        {
+          "path": ".github/workflows/solo-remote-final-timing-sentry-v2-temporary.yml",
+          "blob": "d4a6df7d930810703e6d055c2b9d970d2b6d8b5b",
+          "bytes": 22008,
+          "sha256": "7eafb28768c05c81aba2dc7529ce778df171f14adcd847d7c77dcd8349e63b8f"
+        },
+        {
+          "path": ".github/workflows/solo-remote-final-timing-warm-first30-v2-temporary.yml",
+          "blob": "2f59560f7ff85c3d50fdd03ce651faec42a37593",
+          "bytes": 22068,
+          "sha256": "5698bf79a9b096ed232b9ae28cebfb9abc15b67865bdfcbb33a399d7a8893566"
+        },
+        {
+          "path": ".github/workflows/solo-remote-native-touch-temporary.yml",
+          "blob": "761b8ccac3fb82e563a6b60221ffccc1f86cf414",
+          "bytes": 14806,
+          "sha256": "2201784f3549a6995cce205eb3b2233078059ddc47ba9e7c224c49c68cba79b5"
+        },
+        {
+          "path": ".github/workflows/solo-remote-offline-candidate-v2-temporary.yml",
+          "blob": "f26bb03509803d71143db890360e1354febbcf81",
+          "bytes": 18262,
+          "sha256": "24e0662e0bcd38f914b3efdaf786bbe27e55096dd309bfa3ff75cb393fe67183"
+        },
+        {
+          "path": "docs/performance/fixtures/solo-remote-auxiliary/first-return.xonix.fixture",
+          "blob": "e5aaf0bcb4b52f064bf88986d3e17a01492597e3",
+          "bytes": 2897,
+          "sha256": "d36ab449fe115f49b3caf9f29e7f6558d155e6a83ef973748fab08784b8fda3e"
+        },
+        {
+          "path": "docs/performance/fixtures/solo-remote-auxiliary/long-rail.xonix.fixture",
+          "blob": "958af434ea160be589ac5768aab4641fa798ee25",
+          "bytes": 3563,
+          "sha256": "821897e571449bb5ec27678eef09c5955d9e9be873aaaf76736ff1aadbd0d84c"
+        },
+        {
+          "path": "docs/performance/fixtures/solo-remote-auxiliary/recorded-music.qualification.fixture",
+          "blob": "612b9845f8b0bd7152044790b1a1e9aa72c4bb3a",
+          "bytes": 6456,
+          "sha256": "dd68efc71bb3b75ad8fa28817dd7d99630e312300286d142b24b6fab9990c493"
+        },
+        {
+          "path": "docs/performance/fixtures/solo-remote-auxiliary/recorded-speech.qualification.fixture",
+          "blob": "e9ec13a4d9dd03aac6fd6bae805337a4a80cd7b1",
+          "bytes": 6574,
+          "sha256": "235350a6011bd9ebcfa73aa815b6a4c616f945ca67278c64b93a906e8388411d"
+        },
+        {
+          "path": "docs/performance/fixtures/solo-remote-auxiliary/recovery.qualification.fixture",
+          "blob": "bec36f52b435a8580f720ab330a94fa3ff01f808",
+          "bytes": 4655,
+          "sha256": "907929279c5231edb727cad3ff42e45ddf146129215fc27a9a6b809e0cd227d2"
+        },
+        {
+          "path": "docs/performance/fixtures/solo-remote-auxiliary/signal-07.xonix.fixture",
+          "blob": "a64c87baee5c5c689cfe6752aa070973d9c5d65b",
+          "bytes": 3011,
+          "sha256": "5c9c935dac1049314c7ce644a1dcb747e7770bac3d8e1dd9f14b75e7c3dab015"
+        },
+        {
+          "path": "docs/performance/fixtures/solo-remote-correctness/first30.qualification.fixture",
+          "blob": "4f5b894e23c10de56dd73ef50dc9d38f6fb55554",
+          "bytes": 6387,
+          "sha256": "aa3a4c98c6f272ea515d1e8c9e0fb3238d78782065bfb96ae8fe4e304041e2c5"
+        },
+        {
+          "path": "docs/performance/fixtures/solo-remote-sustained/first-return.xonix.fixture",
+          "blob": "e5aaf0bcb4b52f064bf88986d3e17a01492597e3",
+          "bytes": 2897,
+          "sha256": "d36ab449fe115f49b3caf9f29e7f6558d155e6a83ef973748fab08784b8fda3e"
+        },
+        {
+          "path": "docs/performance/fixtures/solo-remote-sustained/long29.qualification.fixture",
+          "blob": "c3183ca951c61845ba054db2e5be63262e04b324",
+          "bytes": 4765,
+          "sha256": "5ffad85e4dc752ea3e8bcf236f88e65c09875d58ac339c096890c0b6f2133150"
+        },
+        {
+          "path": "docs/performance/fixtures/solo-remote-sustained/next-first-return-anchored.qualification.fixture",
+          "blob": "879b5a026256fcb0598a6783cf631d569e7d6225",
+          "bytes": 12422,
+          "sha256": "17aa6627b51310ea2ccc4cca2d77a5a9f00d68c6a4edff114720480c208ae11b"
+        },
+        {
+          "path": "docs/performance/fixtures/solo-remote-sustained/next.qualification.fixture",
+          "blob": "eb77e7583705e49df06b9ecb6439a0e64406024c",
+          "bytes": 12200,
+          "sha256": "869679e7a89bbd1a329ea3efd319aa8a4ffeaa1495715642a1447ab7a36dda40"
+        },
+        {
+          "path": "docs/performance/fixtures/solo-remote-sustained/retry-first-return-anchored.qualification.fixture",
+          "blob": "923d8020598a4c5bfc19a8fd479cd74209686cf6",
+          "bytes": 4556,
+          "sha256": "77458b3992e1f40b565bd57912bdc2b4e79ddadb8ce07b617456e220853fe9d1"
+        },
+        {
+          "path": "docs/performance/fixtures/solo-remote-sustained/retry.qualification.fixture",
+          "blob": "337cbbf46eab109340541b7d09a6449334c93ac4",
+          "bytes": 4326,
+          "sha256": "2e44c12bbe09f3f9cb27b25ee61e1a07659a77ecc5e8898c9e635b657a74606c"
+        },
+        {
+          "path": "docs/performance/fixtures/solo-remote-sustained/soak-first-return-anchored.qualification.fixture",
+          "blob": "875f807115287ab4d66cd68aa951aac5f1858d0f",
+          "bytes": 4737,
+          "sha256": "079d4dd76fbd914ddd4da7311f8e6cee4a0ff4fc3bc951842b2921c94c53b8ff"
+        },
+        {
+          "path": "docs/performance/fixtures/solo-remote-timing/cold-first30.qualification.fixture",
+          "blob": "4f5b894e23c10de56dd73ef50dc9d38f6fb55554",
+          "bytes": 6387,
+          "sha256": "aa3a4c98c6f272ea515d1e8c9e0fb3238d78782065bfb96ae8fe4e304041e2c5"
+        },
+        {
+          "path": "docs/performance/fixtures/solo-remote-timing/long-rail.qualification.fixture",
+          "blob": "b4a0f8263b7a409330c2e854321381ecf5e53652",
+          "bytes": 4562,
+          "sha256": "b9afaecaadcbd0f657dd8064b9f7932c0c7ec12d6433f7d2b76f60de7ef19528"
+        },
+        {
+          "path": "docs/performance/fixtures/solo-remote-timing/long-rail.xonix.fixture",
+          "blob": "958af434ea160be589ac5768aab4641fa798ee25",
+          "bytes": 3563,
+          "sha256": "821897e571449bb5ec27678eef09c5955d9e9be873aaaf76736ff1aadbd0d84c"
+        },
+        {
+          "path": "docs/performance/fixtures/solo-remote-timing/sentry-detour.xonix.fixture",
+          "blob": "14d5cca66e1c0157fac345f80d41d000e063c772",
+          "bytes": 4049,
+          "sha256": "caad15d6f4770bc5e48935db1655e2892cfb5bd9093a72d0d7795125e8d2d3fa"
+        },
+        {
+          "path": "docs/performance/fixtures/solo-remote-timing/sentry.qualification.fixture",
+          "blob": "86397db2851f4df1b1b31666dd9d60be56c78e68",
+          "bytes": 5450,
+          "sha256": "86cc1eea19e1d229dae865b368a94238de900ad83be5d9a4ee469b2e4dc3c0fd"
+        },
+        {
+          "path": "docs/performance/fixtures/solo-remote-timing/warm-first30.qualification.fixture",
+          "blob": "98008c904544bdd16011c23f5a17c39ee7b2f459",
+          "bytes": 6570,
+          "sha256": "6da01ca449068ca6705012f3d6604362c581fe52c4583407797c0961acf3156d"
+        },
+        {
+          "path": "docs/performance/fixtures/solo-representative/first-fracture-earned-raster.fixture",
+          "blob": "9c85154e05e84f70a28f7ea6a9705c9530991810",
+          "bytes": 3425,
+          "sha256": "f645e2f2d07571e0a5423ab15ec72f365e5658fea6dc844bb30934411daf119d"
+        },
+        {
+          "path": "docs/performance/solo-final-audio-v2-plan.json",
+          "blob": "c2adefd03b299408ee117b69304b459f47a023f7",
+          "bytes": 18166,
+          "sha256": "41aa84c7518a90e68e89cdb57c90538daf2719447f6bee7767ef3b18c8ed11b5"
+        },
+        {
+          "path": "docs/performance/solo-final-long29-plan.json",
+          "blob": "4609ac23ef95b53f9f5a073b8127b483e6a0bd6b",
+          "bytes": 17250,
+          "sha256": "90ac6b66cc59d0741e177c35ed413221c79e60f8e0fadbb0f700c3dbf8a35e93"
+        },
+        {
+          "path": "docs/performance/solo-final-next-plan.json",
+          "blob": "a84f7c5fb23c4cb6c91539d962667b8c0b8a35a1",
+          "bytes": 17200,
+          "sha256": "dd57ec5f4e7b7862f3845e8ee61c7b32540c3119418b24313e641166078ef0b2"
+        },
+        {
+          "path": "docs/performance/solo-final-retry-plan.json",
+          "blob": "1ed5d861877a61a59cec6df4205e9526e5d9bb32",
+          "bytes": 17242,
+          "sha256": "cdadbb5b0e3401c0e595de0f6219ecf7da471d2606ff8c694f2b84a13b1f39b9"
+        },
+        {
+          "path": "docs/performance/solo-final-soak-v2-plan.json",
+          "blob": "9fa955b5b5a9f411372092fb0f58ffec6e60b1ed",
+          "bytes": 19196,
+          "sha256": "5df93bf3e06cc230901e45c0caf153cc0cd5d669a7113898d4094ec1b687dd07"
+        },
+        {
+          "path": "docs/performance/solo-final-timing-cold-first30-v2-plan.json",
+          "blob": "5491d2ddaf4bd4b58c02f865bc1af9f1e6b7ef0c",
+          "bytes": 17724,
+          "sha256": "a2978f1032e2b7590c11046822ccbe1972589ecb9a41ef5455ab0e716b76c4c3"
+        },
+        {
+          "path": "docs/performance/solo-final-timing-long-rail-v2-plan.json",
+          "blob": "b4b3f3910ec4db2f437118f719d339942aa7d1b8",
+          "bytes": 17706,
+          "sha256": "5e0e67db9fadbef77eabb88bc393ff391b5ac4ee1d93b545f874c7b212bcf9af"
+        },
+        {
+          "path": "docs/performance/solo-final-timing-sentry-v2-plan.json",
+          "blob": "8c55d85cdc9a8d0a4afb08654820694b025cdeea",
+          "bytes": 17697,
+          "sha256": "dda7bf1a91fc981eb44b4eabf228059316069781f49b800c5001bb3d40d80e8a"
+        },
+        {
+          "path": "docs/performance/solo-final-timing-warm-first30-v2-plan.json",
+          "blob": "723c3b1cf5568ea1ce7cdcf2dc5fbf3fe383bcff",
+          "bytes": 17727,
+          "sha256": "b222ed349ab99792d28c1b9a72bee9a8db5499aa740454cff8e722ce70f3b517"
+        },
+        {
+          "path": "docs/performance/solo-native-touch-plan.json",
+          "blob": "aa4cd778a70ed8a4aeea134f3a2b65a26eee109d",
+          "bytes": 10560,
+          "sha256": "37743d7f5336312093fa4c6f09338945483b90347d1fb4972e8ad6de990e60f2"
+        },
+        {
+          "path": "docs/performance/solo-remote-final-earned-raster-v2-plan.json",
+          "blob": "a0219cd8ba48375bd3a451709e55994147970bf6",
+          "bytes": 16598,
+          "sha256": "9ef2f35bf154b9b7629ec70d901c0a848b52302eed2e4917f150d6886f25da74"
+        },
+        {
+          "path": "docs/performance/solo-remote-offline-candidate-v2-plan.json",
+          "blob": "55d80aae887079588df2896063e272873ecd939a",
+          "bytes": 17555,
+          "sha256": "e9aaaaa9c5643e72874be701d986b7b0c647ee3f2889dab4e80959ba0767a807"
+        },
+        {
+          "path": "scripts/brand-icons.mjs",
+          "blob": "c627f4d23b35a4b0ac3238d5ea389bd44e9d1e61",
+          "bytes": 12391,
+          "sha256": "7fa383d043be55befee6ee04302d407f337b9d6ecb522f443b550ceb6767dcda"
+        },
+        {
+          "path": "scripts/build-entry-writer.mjs",
+          "blob": "9c38c9b83c64816bab76ca6e6d959e058888ce70",
+          "bytes": 1815,
+          "sha256": "08d33395ea8e67fed40cafb57c1e9573178b266b4ee8d595dcec3c9d14d66874"
+        },
+        {
+          "path": "scripts/calibrate-solo-performance.mjs",
+          "blob": "639ca78045a4474c81055d5842fbce7993dadc6c",
+          "bytes": 4773,
+          "sha256": "e8a6d45e8cc2a04d65537f2bc0a6d0d8df18caec2766de4cefb9a153ec6bc816"
+        },
+        {
+          "path": "scripts/core-soundtrack-publication.mjs",
+          "blob": "19f0cc1bb36e3c43d647b658951b3f6b1f63344e",
+          "bytes": 5789,
+          "sha256": "6986e149248e2c614374a0ccba3f88cf3670f49ac20f0dc1844d655a11bf0726"
+        },
+        {
+          "path": "scripts/default-runtime-metadata.mjs",
+          "blob": "b0ccaf28edad0dc26162e17cd36d552523d4beaa",
+          "bytes": 10256,
+          "sha256": "a4ee09ad2b169613a4bd2e286151255f1376b939964f37be0f28499afe158107"
+        },
+        {
+          "path": "scripts/edition-code-indentation.mjs",
+          "blob": "f223346098c5617055e0cc79a86057f8bae313f7",
+          "bytes": 3700,
+          "sha256": "b079b539468827fdbea9e5d9541b805a5fde528b1ef16bc5a7834245ec78244e"
+        },
+        {
+          "path": "scripts/external-distribution.mjs",
+          "blob": "3ed47cde695bb23cd4b80b4b4b4f7c444323cea2",
+          "bytes": 6651,
+          "sha256": "f0d91db8311a483d8d008612760b7ad7ae3741f5a7c6aae9df8fb04f3e1463cd"
+        },
+        {
+          "path": "scripts/game-cli.mjs",
+          "blob": "099d15b351c504da7e4f1de641d0d5aeadb339a7",
+          "bytes": 94310,
+          "sha256": "384c26bde0dc3e300f651e7a43c9d5f6d3c70eb28e0e07763f7cb51d94929cb5"
+        },
+        {
+          "path": "scripts/hosted-soundtrack-publication.mjs",
+          "blob": "7503e95a3802f989849c88698e3130d2f0cfb1b7",
+          "bytes": 10450,
+          "sha256": "62c5a7954084ef0f2971cc62035ff4f3a5fc165c10c88aa09dac23a327977ee6"
+        },
+        {
+          "path": "scripts/localization-audit.mjs",
+          "blob": "041499a37a327408517691aa901b0667f07ac224",
+          "bytes": 10005,
+          "sha256": "56c2759e666fe7c2bf6964b7182d13be177b4c722f9324f59e7d4765cddd403d"
+        },
+        {
+          "path": "scripts/localization-content.mjs",
+          "blob": "cfdf836d9deb71bddbabd182de6976e878d3658d",
+          "bytes": 16926,
+          "sha256": "32b46390220eb124d7bbcfba60088898b745c966c6cb5c167e47462c7899e393"
+        },
+        {
+          "path": "scripts/localization.mjs",
+          "blob": "23b5581d83bf42043c6f9ab7d03147c3a290f6f8",
+          "bytes": 13957,
+          "sha256": "d66bb70c6a4c7f0ca1f08cf8a313340af5bba4425b001b7e6844b9030687de6b"
+        },
+        {
+          "path": "scripts/observe-solo-native-raster.mjs",
+          "blob": "bf69fa73612be6efbaeb8bbcb39d0ddca24943e6",
+          "bytes": 22552,
+          "sha256": "edcdc5a4a06f23aab95aa639ba26da84c88014749e5aa401b578dfece3df6f3f"
+        },
+        {
+          "path": "scripts/observe-solo-native-touch.mjs",
+          "blob": "ac6c2187d0248a327ce915b36f2f5e32c9aab33a",
+          "bytes": 22315,
+          "sha256": "de83cce174f1491acb2619746fe0161f197068a69dc736e522dca069874f0e9d"
+        },
+        {
+          "path": "scripts/observe-solo-offline-persistence.mjs",
+          "blob": "ece15bed910e5af5557f2d457a6bd69989eefca0",
+          "bytes": 47307,
+          "sha256": "0c78e72198530bfbc5d5347f93421c273ab9943f0e203fe761e6956eaec982de"
+        },
+        {
+          "path": "scripts/offline-core-closure.mjs",
+          "blob": "af7f49bd9c31760b731930d20825c1768494842a",
+          "bytes": 9292,
+          "sha256": "a7cd339b10379f101406dd67cd2f44e925f366fbc4aba396e7df3025ba208635"
+        },
+        {
+          "path": "scripts/optional-artwork.mjs",
+          "blob": "e42c4b343b84f34ba2c370718f668b597d25ee61",
+          "bytes": 4613,
+          "sha256": "83e456393b4d26bb54b30e4ce1b15499dd5b9aaeeef72bd274f27c2989d9928e"
+        },
+        {
+          "path": "scripts/optional-distribution.mjs",
+          "blob": "797f6d96f1d882174f277c30ddbcdc7b8c3bea81",
+          "bytes": 2584,
+          "sha256": "0fb416bddd39eab244c911d453df383a6488ce3a3a515eae37d07560aec93c71"
+        },
+        {
+          "path": "scripts/optional-installation-observer-helpers.mjs",
+          "blob": "20aa13871300dc23b0707a22a0ddafff55d63fae",
+          "bytes": 9585,
+          "sha256": "f9dc958bed7445d284a0d906ab18f55f87ef7779d475963b219a3ac44baccb88"
+        },
+        {
+          "path": "scripts/pack-indexes.mjs",
+          "blob": "2a4564ee1e88ef4f61b556b79f415aced69523aa",
+          "bytes": 5421,
+          "sha256": "34ecdb35caecd581a5477e3972130f1ef67004fcd7add7f055126cb65a52a35e"
+        },
+        {
+          "path": "scripts/prepare-solo-audio-fixtures.mjs",
+          "blob": "85013affb4781a06e071872199abbf90e8363329",
+          "bytes": 10676,
+          "sha256": "a8941d708d9b773b3eda1b455f9291ee60f2c8b5846e7501a5a40236478c467e"
+        },
+        {
+          "path": "scripts/qualify-solo-runtime.mjs",
+          "blob": "2de6d669535ff08111f70850f30758eafddaf820",
+          "bytes": 66337,
+          "sha256": "457e608f8c2defb2e75c19057780224e8dc7b0121ad21da811408323e1054a2f"
+        },
+        {
+          "path": "scripts/reviewed-soundtrack-batches.mjs",
+          "blob": "413f94d96d30686a0b76c8ebf3c7f87cdc299665",
+          "bytes": 16280,
+          "sha256": "3041fa50772034f4666d67c8f9cfad231de963a09d5d40132def422779a9daaa"
+        },
+        {
+          "path": "scripts/run-solo-remote-correctness.mjs",
+          "blob": "b3a8d041cdb70697183f1b3562a5f852f70c26fd",
+          "bytes": 57545,
+          "sha256": "cdec62bc65481f30bb36d7055227594a727f390e75d5bbb86415f1b7fa2a07c7"
+        },
+        {
+          "path": "scripts/serve-production-preview.mjs",
+          "blob": "0176a28b0eb56e634a12112d5737211a6ec6de8f",
+          "bytes": 10414,
+          "sha256": "4c63ec2ea6d7b6b3c79793dd1e8dc8f75daa9ee6c783ee076d8bc050602c1cab"
+        },
+        {
+          "path": "scripts/solo-build-archive.mjs",
+          "blob": "236b891c910f696f1b3646442bfb91a77afe5e1f",
+          "bytes": 5262,
+          "sha256": "25a7c537c777c435d3ca80694c4ba925a9448222945a8f46e0d1b029441cf368"
+        },
+        {
+          "path": "scripts/solo-build-worker-closure.mjs",
+          "blob": "d4266ac6f7f4c76a552bfc7cd373e432fb3d575e",
+          "bytes": 1658,
+          "sha256": "19c0663b20bcc2cf2b29016ecc7c09d54d673b62740ec3e9babe25e965936ac1"
+        },
+        {
+          "path": "scripts/solo-earned-raster-protocol.mjs",
+          "blob": "a86d3c43eb0af2afae0d120d35aef9dbacfa85ee",
+          "bytes": 15489,
+          "sha256": "ad48a0fa7b2689f5e0086a04f090581a59d526d6acaacf7f5f92e0b53a7b5e4d"
+        },
+        {
+          "path": "scripts/solo-offline-gameplay.mjs",
+          "blob": "4d988b2c78d31462674122c165ebfbaf78457b50",
+          "bytes": 19735,
+          "sha256": "b1fbc7fd643390cd75d8d9e304d693e9b81abc8346f7631bc6f3764fcd771733"
+        },
+        {
+          "path": "scripts/solo-owned-resource-assessment.mjs",
+          "blob": "918ce41f0a058df96cfdb74cf01a0535ae0f0335",
+          "bytes": 15475,
+          "sha256": "b01bc507c5aa27cc79142a7bde7b38be5438ddd6ebdd747bb7173b08d496675c"
+        },
+        {
+          "path": "scripts/solo-qualification-audio.mjs",
+          "blob": "0f47c93d792e5532e47e00e57e975a060b0a1f94",
+          "bytes": 19077,
+          "sha256": "8c076969c30ff342b19526e1df22bd8994659f2ac84e7343b111f2a1d2c20af1"
+        },
+        {
+          "path": "scripts/solo-qualification-browser-context.mjs",
+          "blob": "ccf6ac62a7e456c77e1f48c5973ead2b0cd0b3d9",
+          "bytes": 4026,
+          "sha256": "5f89ceedec155349250283304b38e68dd22eedf32e6c306ff2c25c3258233d7f"
+        },
+        {
+          "path": "scripts/solo-qualification-cadence.mjs",
+          "blob": "05142bcde221dacd1c53e34f3125533aee4f47c0",
+          "bytes": 7999,
+          "sha256": "d2031f4a32a64b6a9cb4b21dfa1700dab7e5f7d3742ec22da520ce39e53974dc"
+        },
+        {
+          "path": "scripts/solo-qualification-cpu-profile.mjs",
+          "blob": "c61ea6a3b0b120729026f7b4e05417e937fb8954",
+          "bytes": 3270,
+          "sha256": "26d125133b4448248918b9ae69350c18db4506bb9ea045053d33325679e5a1d7"
+        },
+        {
+          "path": "scripts/solo-qualification-export.mjs",
+          "blob": "adec0f8686908dbf623cd669d9422eda62d618e3",
+          "bytes": 5553,
+          "sha256": "edb2d9efa97fa9e19905f83aa93000219db521f3930fe02fb96c57d2162ceb77"
+        },
+        {
+          "path": "scripts/solo-qualification-hitch-journal.mjs",
+          "blob": "60ad79b95fd02492f9ffc26b40d84b337f908683",
+          "bytes": 33228,
+          "sha256": "393afd9eb51c9262168c7382c022de56234d3838357427e947f8d4812954161d"
+        },
+        {
+          "path": "scripts/solo-qualification-native-replay.mjs",
+          "blob": "3a73ab1789500e68492ac4bf7572ef84d7bf0ab3",
+          "bytes": 9513,
+          "sha256": "7e5e0337294144449b66519d945e927a0f0e8c586963df9b83e5a4a2aa246d7c"
+        },
+        {
+          "path": "scripts/solo-qualification-observation.mjs",
+          "blob": "0756e2359798f925bb90827efedda91295f25b0c",
+          "bytes": 14584,
+          "sha256": "0195f26910e35c68f6dc29e472b84b151b9910f2afd8ce9183ed5ef577d21a7b"
+        },
+        {
+          "path": "scripts/solo-qualification-replay-core.mjs",
+          "blob": "0580f4b45e6c88e1e943f9b963cfa7f58f0b475b",
+          "bytes": 5930,
+          "sha256": "1e96e592ee289685607515bbe14c8845f2c03dc81191a0772071fd9995ceb3ea"
+        },
+        {
+          "path": "scripts/solo-qualification-replay-identity.mjs",
+          "blob": "0577102f967889361a72675935ffe194c09da9c7",
+          "bytes": 1866,
+          "sha256": "133c362d1c60bfa8de317a6899d038ce4f1b4c9264b67b95fb0893c84f5fffdb"
+        },
+        {
+          "path": "scripts/solo-qualification-replay.mjs",
+          "blob": "2ac39051782d5c9ef7a0e5ea49536c9da825663c",
+          "bytes": 1260,
+          "sha256": "b5f89a8377a83f5645d6077af54cadfcd1e33905d13161ae6eb667468e8bfacf"
+        },
+        {
+          "path": "scripts/solo-qualification-snapshot-store.mjs",
+          "blob": "6e4c4e848ccfe80e61764ec36a7ce4782b9c7c25",
+          "bytes": 11359,
+          "sha256": "19f1989ca20ded51eebefd0a5fd6f8b01532dcc32150db25d26c80e025c5e51a"
+        },
+        {
+          "path": "scripts/solo-qualification.mjs",
+          "blob": "901c2e41d8e88ed3938ee761e688323807f19525",
+          "bytes": 26233,
+          "sha256": "88363cc018c21e04ee50addae9e6086b76849c429249cdf4e9a9e9c6c6d24637"
+        },
+        {
+          "path": "scripts/solo-raster-protocols.mjs",
+          "blob": "123bd916d45315462d56b4bcffce6c7800004c93",
+          "bytes": 41879,
+          "sha256": "d579882dd06cbc50881715116dd3a163a8654c19ead3356de031ad29d43e69d9"
+        },
+        {
+          "path": "scripts/solo-remote-archive.py",
+          "blob": "7a56298d0509ebe0a33c257bef3efe2d0cbdbddc",
+          "bytes": 22756,
+          "sha256": "822735e979eff256c433b715dcb6cac88de8c99c94bacc1ce10f4cb8d7f8e2f6"
+        },
+        {
+          "path": "scripts/solo-remote-auxiliary.mjs",
+          "blob": "07e516245117a9193d118a04e1907c63938f167a",
+          "bytes": 26264,
+          "sha256": "5bb28f4f687e75a54f5e15a79e13418017c404ce4fe3e9b6c9d32dd748fe9f69"
+        },
+        {
+          "path": "scripts/solo-remote-baseline.mjs",
+          "blob": "a9362e45d5bcbb4bf1105a7c8ae8982bb0cd30ea",
+          "bytes": 15700,
+          "sha256": "62265c0d41693d249b476917617d3c26fe6b8514e2b12c67fc3d896214ba58a0"
+        },
+        {
+          "path": "scripts/solo-remote-offline.mjs",
+          "blob": "e405f232a1373238cba24b4ffa006231f48fb553",
+          "bytes": 31551,
+          "sha256": "05ddfd0c9c475a31b461798029104bc6ba42770c0ce4a9135cbb6cdc9587329b"
+        },
+        {
+          "path": "scripts/solo-remote-raster.mjs",
+          "blob": "f3335fe3288d001b35aeb98e79f510ca76163353",
+          "bytes": 22297,
+          "sha256": "3ace87dc40ef5e8f4c28559a4abf8ccde23277b3f6c0afc21048a01760f21d80"
+        },
+        {
+          "path": "scripts/solo-remote-sustained.mjs",
+          "blob": "6c19f296a2b04013b4bbc8283fee6864fd23f667",
+          "bytes": 67617,
+          "sha256": "af80d4a2f900093c42033712fab2685aeb982b57dbb7d91bc485e244d6e54192"
+        },
+        {
+          "path": "scripts/solo-remote-touch.mjs",
+          "blob": "2bae58e676c0e5d4afd4eede44657b95d1220e8a",
+          "bytes": 21973,
+          "sha256": "ea1e170cc1ca163faa24622a02df9f184081fd48be7418d9bdf8a5c837d10f6b"
+        },
+        {
+          "path": "scripts/soundtrack-archive-admissions.mjs",
+          "blob": "1477214eeb1f0d10e83fde01cc598f63874e29be",
+          "bytes": 5614,
+          "sha256": "103e246b66045e0a480f41c8c42fa5966ac3f0587943f8307fa89bd3b47b380d"
+        },
+        {
+          "path": "scripts/soundtrack-distribution.mjs",
+          "blob": "b96deeb1d1e439c302f6c390f0dea5d34300f98b",
+          "bytes": 15378,
+          "sha256": "8f0e7d0178de524a8939fab2c951702f9a315c581f80d703bd834f8a4c492ac2"
+        },
+        {
+          "path": "scripts/vendor/devtools-benchmark.mjs",
+          "blob": "6e47f10a898ffc68b514f57d689ec60f73545665",
+          "bytes": 2739,
+          "sha256": "dc39973cdbf82704a3d623dd57d037ea501eb5761596c66e27f301c9e860af6b"
+        },
+        {
+          "path": "scripts/verify-solo-build.mjs",
+          "blob": "794186eb657f5a898795f70ea3bce3b16643af10",
+          "bytes": 16212,
+          "sha256": "9294c97bf52596d4c6f76f8200e6b4e16bffe5f221cb1538a0f8e2db9693003d"
+        }
+      ]
+    },
+    {
+      "revision": "69639b30d985ffa723a4d0c11756b632fc2da5c1",
+      "tree": "d022c57efa75dbe7b7aeeca00a1950f61426595b",
+      "releases": [
+        {
+          "manifest": "docs/performance/solo-native-touch-v2-plan.json",
+          "workflow": ".github/workflows/solo-remote-native-touch-v2-temporary.yml",
+          "references": [
+            "docs/performance/fixtures/solo-remote-timing/cold-first30.qualification.fixture",
+            "scripts/brand-icons.mjs",
+            "scripts/build-entry-writer.mjs",
+            "scripts/core-soundtrack-publication.mjs",
+            "scripts/default-runtime-metadata.mjs",
+            "scripts/edition-code-indentation.mjs",
+            "scripts/external-distribution.mjs",
+            "scripts/game-cli.mjs",
+            "scripts/hosted-soundtrack-publication.mjs",
+            "scripts/localization-audit.mjs",
+            "scripts/localization-content.mjs",
+            "scripts/localization.mjs",
+            "scripts/observe-solo-native-touch.mjs",
+            "scripts/offline-core-closure.mjs",
+            "scripts/optional-artwork.mjs",
+            "scripts/optional-distribution.mjs",
+            "scripts/pack-indexes.mjs",
+            "scripts/reviewed-soundtrack-batches.mjs",
+            "scripts/run-solo-remote-correctness.mjs",
+            "scripts/serve-production-preview.mjs",
+            "scripts/solo-build-archive.mjs",
+            "scripts/solo-build-worker-closure.mjs",
+            "scripts/solo-qualification-cadence.mjs",
+            "scripts/solo-qualification-export.mjs",
+            "scripts/solo-qualification-native-replay.mjs",
+            "scripts/solo-qualification-replay-core.mjs",
+            "scripts/solo-qualification.mjs",
+            "scripts/solo-remote-archive.py",
+            "scripts/solo-remote-baseline.mjs",
+            "scripts/solo-remote-touch.mjs",
+            "scripts/soundtrack-archive-admissions.mjs",
+            "scripts/soundtrack-distribution.mjs",
+            "scripts/verify-solo-build.mjs"
+          ]
+        },
+        {
+          "manifest": "docs/performance/solo-final-long-rail-cpu-profile-plan.json",
+          "workflow": ".github/workflows/solo-remote-final-long-rail-cpu-profile-temporary.yml",
+          "references": [
+            "docs/performance/fixtures/solo-remote-timing/long-rail.qualification.fixture",
+            "docs/performance/fixtures/solo-remote-timing/long-rail.xonix.fixture",
+            "scripts/brand-icons.mjs",
+            "scripts/build-entry-writer.mjs",
+            "scripts/core-soundtrack-publication.mjs",
+            "scripts/default-runtime-metadata.mjs",
+            "scripts/edition-code-indentation.mjs",
+            "scripts/external-distribution.mjs",
+            "scripts/game-cli.mjs",
+            "scripts/hosted-soundtrack-publication.mjs",
+            "scripts/localization-audit.mjs",
+            "scripts/localization-content.mjs",
+            "scripts/localization.mjs",
+            "scripts/offline-core-closure.mjs",
+            "scripts/optional-artwork.mjs",
+            "scripts/optional-distribution.mjs",
+            "scripts/pack-indexes.mjs",
+            "scripts/qualify-solo-runtime.mjs",
+            "scripts/reviewed-soundtrack-batches.mjs",
+            "scripts/run-solo-remote-correctness.mjs",
+            "scripts/serve-production-preview.mjs",
+            "scripts/solo-build-archive.mjs",
+            "scripts/solo-build-worker-closure.mjs",
+            "scripts/solo-qualification-audio.mjs",
+            "scripts/solo-qualification-browser-context.mjs",
+            "scripts/solo-qualification-cadence.mjs",
+            "scripts/solo-qualification-cpu-profile.mjs",
+            "scripts/solo-qualification-export.mjs",
+            "scripts/solo-qualification-native-replay.mjs",
+            "scripts/solo-qualification-observation.mjs",
+            "scripts/solo-qualification-replay-core.mjs",
+            "scripts/solo-qualification-replay-identity.mjs",
+            "scripts/solo-qualification.mjs",
+            "scripts/solo-remote-archive.py",
+            "scripts/solo-remote-baseline.mjs",
+            "scripts/solo-remote-cpu-profile.mjs",
+            "scripts/solo-remote-supplemental.mjs",
+            "scripts/soundtrack-archive-admissions.mjs",
+            "scripts/soundtrack-distribution.mjs",
+            "scripts/verify-solo-build.mjs"
+          ]
+        }
+      ],
+      "records": [
+        {
+          "path": ".github/workflows/solo-remote-final-long-rail-cpu-profile-temporary.yml",
+          "blob": "30ddc92c7fc317d36fe1a2e0622605bdf511912e",
+          "bytes": 17167,
+          "sha256": "6f9d747656b958232743af7b26ebdeeb7d1dd941744edb0d47b93fd2124349a4"
+        },
+        {
+          "path": ".github/workflows/solo-remote-native-touch-v2-temporary.yml",
+          "blob": "3a1e9e27189a0dcb17ded31604385c5c0bde6ad2",
+          "bytes": 15885,
+          "sha256": "cd6df3ae33d36f366f6a9ce756e0c70a29f6bd2c6959b66328123902153f6e8a"
+        },
+        {
+          "path": "docs/performance/fixtures/solo-remote-timing/cold-first30.qualification.fixture",
+          "blob": "4f5b894e23c10de56dd73ef50dc9d38f6fb55554",
+          "bytes": 6387,
+          "sha256": "aa3a4c98c6f272ea515d1e8c9e0fb3238d78782065bfb96ae8fe4e304041e2c5"
+        },
+        {
+          "path": "docs/performance/fixtures/solo-remote-timing/long-rail.qualification.fixture",
+          "blob": "b4a0f8263b7a409330c2e854321381ecf5e53652",
+          "bytes": 4562,
+          "sha256": "b9afaecaadcbd0f657dd8064b9f7932c0c7ec12d6433f7d2b76f60de7ef19528"
+        },
+        {
+          "path": "docs/performance/fixtures/solo-remote-timing/long-rail.xonix.fixture",
+          "blob": "958af434ea160be589ac5768aab4641fa798ee25",
+          "bytes": 3563,
+          "sha256": "821897e571449bb5ec27678eef09c5955d9e9be873aaaf76736ff1aadbd0d84c"
+        },
+        {
+          "path": "docs/performance/solo-final-long-rail-cpu-profile-plan.json",
+          "blob": "720ce91926a2c4058e14f6d8132f331939ea355f",
+          "bytes": 11592,
+          "sha256": "7efc4fb5be2e9d99cb8c181bc175e59a76208151f569eac9433f4ccf65342a78"
+        },
+        {
+          "path": "docs/performance/solo-native-touch-v2-plan.json",
+          "blob": "c78862af306dfb7e4b96050b91aa660a368f1f97",
+          "bytes": 13591,
+          "sha256": "4facf977b824d69c308793105e137bd40d3868748822ebd160bb0b9447dd4d84"
+        },
+        {
+          "path": "scripts/brand-icons.mjs",
+          "blob": "c627f4d23b35a4b0ac3238d5ea389bd44e9d1e61",
+          "bytes": 12391,
+          "sha256": "7fa383d043be55befee6ee04302d407f337b9d6ecb522f443b550ceb6767dcda"
+        },
+        {
+          "path": "scripts/build-entry-writer.mjs",
+          "blob": "9c38c9b83c64816bab76ca6e6d959e058888ce70",
+          "bytes": 1815,
+          "sha256": "08d33395ea8e67fed40cafb57c1e9573178b266b4ee8d595dcec3c9d14d66874"
+        },
+        {
+          "path": "scripts/core-soundtrack-publication.mjs",
+          "blob": "19f0cc1bb36e3c43d647b658951b3f6b1f63344e",
+          "bytes": 5789,
+          "sha256": "6986e149248e2c614374a0ccba3f88cf3670f49ac20f0dc1844d655a11bf0726"
+        },
+        {
+          "path": "scripts/default-runtime-metadata.mjs",
+          "blob": "b0ccaf28edad0dc26162e17cd36d552523d4beaa",
+          "bytes": 10256,
+          "sha256": "a4ee09ad2b169613a4bd2e286151255f1376b939964f37be0f28499afe158107"
+        },
+        {
+          "path": "scripts/edition-code-indentation.mjs",
+          "blob": "f223346098c5617055e0cc79a86057f8bae313f7",
+          "bytes": 3700,
+          "sha256": "b079b539468827fdbea9e5d9541b805a5fde528b1ef16bc5a7834245ec78244e"
+        },
+        {
+          "path": "scripts/external-distribution.mjs",
+          "blob": "3ed47cde695bb23cd4b80b4b4b4f7c444323cea2",
+          "bytes": 6651,
+          "sha256": "f0d91db8311a483d8d008612760b7ad7ae3741f5a7c6aae9df8fb04f3e1463cd"
+        },
+        {
+          "path": "scripts/game-cli.mjs",
+          "blob": "099d15b351c504da7e4f1de641d0d5aeadb339a7",
+          "bytes": 94310,
+          "sha256": "384c26bde0dc3e300f651e7a43c9d5f6d3c70eb28e0e07763f7cb51d94929cb5"
+        },
+        {
+          "path": "scripts/hosted-soundtrack-publication.mjs",
+          "blob": "7503e95a3802f989849c88698e3130d2f0cfb1b7",
+          "bytes": 10450,
+          "sha256": "62c5a7954084ef0f2971cc62035ff4f3a5fc165c10c88aa09dac23a327977ee6"
+        },
+        {
+          "path": "scripts/localization-audit.mjs",
+          "blob": "041499a37a327408517691aa901b0667f07ac224",
+          "bytes": 10005,
+          "sha256": "56c2759e666fe7c2bf6964b7182d13be177b4c722f9324f59e7d4765cddd403d"
+        },
+        {
+          "path": "scripts/localization-content.mjs",
+          "blob": "cfdf836d9deb71bddbabd182de6976e878d3658d",
+          "bytes": 16926,
+          "sha256": "32b46390220eb124d7bbcfba60088898b745c966c6cb5c167e47462c7899e393"
+        },
+        {
+          "path": "scripts/localization.mjs",
+          "blob": "23b5581d83bf42043c6f9ab7d03147c3a290f6f8",
+          "bytes": 13957,
+          "sha256": "d66bb70c6a4c7f0ca1f08cf8a313340af5bba4425b001b7e6844b9030687de6b"
+        },
+        {
+          "path": "scripts/observe-solo-native-touch.mjs",
+          "blob": "ac6c2187d0248a327ce915b36f2f5e32c9aab33a",
+          "bytes": 22315,
+          "sha256": "de83cce174f1491acb2619746fe0161f197068a69dc736e522dca069874f0e9d"
+        },
+        {
+          "path": "scripts/offline-core-closure.mjs",
+          "blob": "af7f49bd9c31760b731930d20825c1768494842a",
+          "bytes": 9292,
+          "sha256": "a7cd339b10379f101406dd67cd2f44e925f366fbc4aba396e7df3025ba208635"
+        },
+        {
+          "path": "scripts/optional-artwork.mjs",
+          "blob": "e42c4b343b84f34ba2c370718f668b597d25ee61",
+          "bytes": 4613,
+          "sha256": "83e456393b4d26bb54b30e4ce1b15499dd5b9aaeeef72bd274f27c2989d9928e"
+        },
+        {
+          "path": "scripts/optional-distribution.mjs",
+          "blob": "797f6d96f1d882174f277c30ddbcdc7b8c3bea81",
+          "bytes": 2584,
+          "sha256": "0fb416bddd39eab244c911d453df383a6488ce3a3a515eae37d07560aec93c71"
+        },
+        {
+          "path": "scripts/pack-indexes.mjs",
+          "blob": "2a4564ee1e88ef4f61b556b79f415aced69523aa",
+          "bytes": 5421,
+          "sha256": "34ecdb35caecd581a5477e3972130f1ef67004fcd7add7f055126cb65a52a35e"
+        },
+        {
+          "path": "scripts/qualify-solo-runtime.mjs",
+          "blob": "2de6d669535ff08111f70850f30758eafddaf820",
+          "bytes": 66337,
+          "sha256": "457e608f8c2defb2e75c19057780224e8dc7b0121ad21da811408323e1054a2f"
+        },
+        {
+          "path": "scripts/reviewed-soundtrack-batches.mjs",
+          "blob": "413f94d96d30686a0b76c8ebf3c7f87cdc299665",
+          "bytes": 16280,
+          "sha256": "3041fa50772034f4666d67c8f9cfad231de963a09d5d40132def422779a9daaa"
+        },
+        {
+          "path": "scripts/run-solo-remote-correctness.mjs",
+          "blob": "b3a8d041cdb70697183f1b3562a5f852f70c26fd",
+          "bytes": 57545,
+          "sha256": "cdec62bc65481f30bb36d7055227594a727f390e75d5bbb86415f1b7fa2a07c7"
+        },
+        {
+          "path": "scripts/serve-production-preview.mjs",
+          "blob": "0176a28b0eb56e634a12112d5737211a6ec6de8f",
+          "bytes": 10414,
+          "sha256": "4c63ec2ea6d7b6b3c79793dd1e8dc8f75daa9ee6c783ee076d8bc050602c1cab"
+        },
+        {
+          "path": "scripts/solo-build-archive.mjs",
+          "blob": "236b891c910f696f1b3646442bfb91a77afe5e1f",
+          "bytes": 5262,
+          "sha256": "25a7c537c777c435d3ca80694c4ba925a9448222945a8f46e0d1b029441cf368"
+        },
+        {
+          "path": "scripts/solo-build-worker-closure.mjs",
+          "blob": "d4266ac6f7f4c76a552bfc7cd373e432fb3d575e",
+          "bytes": 1658,
+          "sha256": "19c0663b20bcc2cf2b29016ecc7c09d54d673b62740ec3e9babe25e965936ac1"
+        },
+        {
+          "path": "scripts/solo-qualification-audio.mjs",
+          "blob": "0f47c93d792e5532e47e00e57e975a060b0a1f94",
+          "bytes": 19077,
+          "sha256": "8c076969c30ff342b19526e1df22bd8994659f2ac84e7343b111f2a1d2c20af1"
+        },
+        {
+          "path": "scripts/solo-qualification-browser-context.mjs",
+          "blob": "ccf6ac62a7e456c77e1f48c5973ead2b0cd0b3d9",
+          "bytes": 4026,
+          "sha256": "5f89ceedec155349250283304b38e68dd22eedf32e6c306ff2c25c3258233d7f"
+        },
+        {
+          "path": "scripts/solo-qualification-cadence.mjs",
+          "blob": "05142bcde221dacd1c53e34f3125533aee4f47c0",
+          "bytes": 7999,
+          "sha256": "d2031f4a32a64b6a9cb4b21dfa1700dab7e5f7d3742ec22da520ce39e53974dc"
+        },
+        {
+          "path": "scripts/solo-qualification-cpu-profile.mjs",
+          "blob": "c61ea6a3b0b120729026f7b4e05417e937fb8954",
+          "bytes": 3270,
+          "sha256": "26d125133b4448248918b9ae69350c18db4506bb9ea045053d33325679e5a1d7"
+        },
+        {
+          "path": "scripts/solo-qualification-export.mjs",
+          "blob": "adec0f8686908dbf623cd669d9422eda62d618e3",
+          "bytes": 5553,
+          "sha256": "edb2d9efa97fa9e19905f83aa93000219db521f3930fe02fb96c57d2162ceb77"
+        },
+        {
+          "path": "scripts/solo-qualification-native-replay.mjs",
+          "blob": "3a73ab1789500e68492ac4bf7572ef84d7bf0ab3",
+          "bytes": 9513,
+          "sha256": "7e5e0337294144449b66519d945e927a0f0e8c586963df9b83e5a4a2aa246d7c"
+        },
+        {
+          "path": "scripts/solo-qualification-observation.mjs",
+          "blob": "0756e2359798f925bb90827efedda91295f25b0c",
+          "bytes": 14584,
+          "sha256": "0195f26910e35c68f6dc29e472b84b151b9910f2afd8ce9183ed5ef577d21a7b"
+        },
+        {
+          "path": "scripts/solo-qualification-replay-core.mjs",
+          "blob": "0580f4b45e6c88e1e943f9b963cfa7f58f0b475b",
+          "bytes": 5930,
+          "sha256": "1e96e592ee289685607515bbe14c8845f2c03dc81191a0772071fd9995ceb3ea"
+        },
+        {
+          "path": "scripts/solo-qualification-replay-identity.mjs",
+          "blob": "0577102f967889361a72675935ffe194c09da9c7",
+          "bytes": 1866,
+          "sha256": "133c362d1c60bfa8de317a6899d038ce4f1b4c9264b67b95fb0893c84f5fffdb"
+        },
+        {
+          "path": "scripts/solo-qualification.mjs",
+          "blob": "901c2e41d8e88ed3938ee761e688323807f19525",
+          "bytes": 26233,
+          "sha256": "88363cc018c21e04ee50addae9e6086b76849c429249cdf4e9a9e9c6c6d24637"
+        },
+        {
+          "path": "scripts/solo-remote-archive.py",
+          "blob": "7a56298d0509ebe0a33c257bef3efe2d0cbdbddc",
+          "bytes": 22756,
+          "sha256": "822735e979eff256c433b715dcb6cac88de8c99c94bacc1ce10f4cb8d7f8e2f6"
+        },
+        {
+          "path": "scripts/solo-remote-baseline.mjs",
+          "blob": "a9362e45d5bcbb4bf1105a7c8ae8982bb0cd30ea",
+          "bytes": 15700,
+          "sha256": "62265c0d41693d249b476917617d3c26fe6b8514e2b12c67fc3d896214ba58a0"
+        },
+        {
+          "path": "scripts/solo-remote-cpu-profile.mjs",
+          "blob": "9023501d92a0f9413e4cf1dfebc60e5eab37783e",
+          "bytes": 17490,
+          "sha256": "d0d1f266149fc9875bd0faf85853eda94223bb4a12dd6bcdc102e049ac6af62e"
+        },
+        {
+          "path": "scripts/solo-remote-supplemental.mjs",
+          "blob": "f20e32e00dc8b8ab34c0397c5d956ed489ca66d0",
+          "bytes": 26518,
+          "sha256": "8b18c736d9377a2ad872a20fa2d1467e10cceeb149375685fa2bc0583ef824ee"
+        },
+        {
+          "path": "scripts/solo-remote-touch.mjs",
+          "blob": "2bae58e676c0e5d4afd4eede44657b95d1220e8a",
+          "bytes": 21973,
+          "sha256": "ea1e170cc1ca163faa24622a02df9f184081fd48be7418d9bdf8a5c837d10f6b"
+        },
+        {
+          "path": "scripts/soundtrack-archive-admissions.mjs",
+          "blob": "1477214eeb1f0d10e83fde01cc598f63874e29be",
+          "bytes": 5614,
+          "sha256": "103e246b66045e0a480f41c8c42fa5966ac3f0587943f8307fa89bd3b47b380d"
+        },
+        {
+          "path": "scripts/soundtrack-distribution.mjs",
+          "blob": "b96deeb1d1e439c302f6c390f0dea5d34300f98b",
+          "bytes": 15378,
+          "sha256": "8f0e7d0178de524a8939fab2c951702f9a315c581f80d703bd834f8a4c492ac2"
+        },
+        {
+          "path": "scripts/verify-solo-build.mjs",
+          "blob": "794186eb657f5a898795f70ea3bce3b16643af10",
+          "bytes": 16212,
+          "sha256": "9294c97bf52596d4c6f76f8200e6b4e16bffe5f221cb1538a0f8e2db9693003d"
+        }
+      ]
+    },
+    {
+      "revision": "7c7cc2648331870683ac7b76850bbeff859f802e",
+      "tree": "e20aabb50c0e82c52c0970a14934b2d05611f53e",
+      "releases": [
+        {
+          "manifest": "docs/performance/solo-remote-e1cc-correctness-plan.json",
+          "workflow": ".github/workflows/solo-remote-final-correctness-temporary.yml",
+          "references": [
+            ".github/workflows/solo-remote-final-correctness-temporary.yml",
+            "docs/performance/fixtures/solo-remote-correctness/first30.qualification.fixture",
+            "docs/performance/solo-remote-correctness-plan.json",
+            "docs/performance/solo-remote-e1cc-correctness-plan.json",
+            "scripts/brand-icons.mjs",
+            "scripts/build-entry-writer.mjs",
+            "scripts/core-soundtrack-publication.mjs",
+            "scripts/default-runtime-metadata.mjs",
+            "scripts/edition-code-indentation.mjs",
+            "scripts/external-distribution.mjs",
+            "scripts/game-cli.mjs",
+            "scripts/hosted-soundtrack-publication.mjs",
+            "scripts/localization-audit.mjs",
+            "scripts/localization-content.mjs",
+            "scripts/localization.mjs",
+            "scripts/offline-core-closure.mjs",
+            "scripts/optional-artwork.mjs",
+            "scripts/optional-distribution.mjs",
+            "scripts/pack-indexes.mjs",
+            "scripts/qualify-solo-runtime.mjs",
+            "scripts/reviewed-soundtrack-batches.mjs",
+            "scripts/run-solo-remote-correctness.mjs",
+            "scripts/serve-production-preview.mjs",
+            "scripts/solo-build-archive.mjs",
+            "scripts/solo-build-worker-closure.mjs",
+            "scripts/solo-qualification-audio.mjs",
+            "scripts/solo-qualification-browser-context.mjs",
+            "scripts/solo-qualification-cadence.mjs",
+            "scripts/solo-qualification-cpu-profile.mjs",
+            "scripts/solo-qualification-export.mjs",
+            "scripts/solo-qualification-native-replay.mjs",
+            "scripts/solo-qualification-observation.mjs",
+            "scripts/solo-qualification-replay-core.mjs",
+            "scripts/solo-qualification-replay-identity.mjs",
+            "scripts/solo-qualification-replay.mjs",
+            "scripts/solo-qualification.mjs",
+            "scripts/solo-remote-archive.py",
+            "scripts/solo-remote-baseline.mjs",
+            "scripts/solo-worker-diagnostics.mjs",
+            "scripts/soundtrack-archive-admissions.mjs",
+            "scripts/soundtrack-distribution.mjs",
+            "scripts/test-solo-e1cc-correctness.mjs",
+            "scripts/verify-solo-build.mjs",
+            "scripts/verify-solo-mp3-worker.mjs",
+            "scripts/verify-solo-paused-render.mjs"
+          ]
+        }
+      ],
+      "records": [
+        {
+          "path": ".github/workflows/solo-remote-final-correctness-temporary.yml",
+          "blob": "5357fe791214641f126056c0421194f008842182",
+          "bytes": 15700,
+          "sha256": "1ade8159bfe676d1282a81b6ee9b1510253d76e7027080664402f165231d8ffa"
+        },
+        {
+          "path": "docs/performance/fixtures/solo-remote-correctness/first30.qualification.fixture",
+          "blob": "4f5b894e23c10de56dd73ef50dc9d38f6fb55554",
+          "bytes": 6387,
+          "sha256": "aa3a4c98c6f272ea515d1e8c9e0fb3238d78782065bfb96ae8fe4e304041e2c5"
+        },
+        {
+          "path": "docs/performance/solo-remote-correctness-plan.json",
+          "blob": "e2ccc23f4c4ceaf5374c33cf626ce74468cd1c36",
+          "bytes": 11388,
+          "sha256": "d64551a703c321851a6f57d89ad57a2000e5389e5a3b3fdb7731e499ddbbd6f8"
+        },
+        {
+          "path": "docs/performance/solo-remote-e1cc-correctness-plan.json",
+          "blob": "112e143831c58b3b906ef404a2021e21e0f5fba7",
+          "bytes": 22288,
+          "sha256": "4ff2707af9bdbe33e4c597fbfa9808f4aacba784d4e3afc309e68443d66d50ca"
+        },
+        {
+          "path": "scripts/brand-icons.mjs",
+          "blob": "c627f4d23b35a4b0ac3238d5ea389bd44e9d1e61",
+          "bytes": 12391,
+          "sha256": "7fa383d043be55befee6ee04302d407f337b9d6ecb522f443b550ceb6767dcda"
+        },
+        {
+          "path": "scripts/build-entry-writer.mjs",
+          "blob": "9c38c9b83c64816bab76ca6e6d959e058888ce70",
+          "bytes": 1815,
+          "sha256": "08d33395ea8e67fed40cafb57c1e9573178b266b4ee8d595dcec3c9d14d66874"
+        },
+        {
+          "path": "scripts/core-soundtrack-publication.mjs",
+          "blob": "19f0cc1bb36e3c43d647b658951b3f6b1f63344e",
+          "bytes": 5789,
+          "sha256": "6986e149248e2c614374a0ccba3f88cf3670f49ac20f0dc1844d655a11bf0726"
+        },
+        {
+          "path": "scripts/default-runtime-metadata.mjs",
+          "blob": "b0ccaf28edad0dc26162e17cd36d552523d4beaa",
+          "bytes": 10256,
+          "sha256": "a4ee09ad2b169613a4bd2e286151255f1376b939964f37be0f28499afe158107"
+        },
+        {
+          "path": "scripts/edition-code-indentation.mjs",
+          "blob": "f223346098c5617055e0cc79a86057f8bae313f7",
+          "bytes": 3700,
+          "sha256": "b079b539468827fdbea9e5d9541b805a5fde528b1ef16bc5a7834245ec78244e"
+        },
+        {
+          "path": "scripts/external-distribution.mjs",
+          "blob": "3ed47cde695bb23cd4b80b4b4b4f7c444323cea2",
+          "bytes": 6651,
+          "sha256": "f0d91db8311a483d8d008612760b7ad7ae3741f5a7c6aae9df8fb04f3e1463cd"
+        },
+        {
+          "path": "scripts/game-cli.mjs",
+          "blob": "099d15b351c504da7e4f1de641d0d5aeadb339a7",
+          "bytes": 94310,
+          "sha256": "384c26bde0dc3e300f651e7a43c9d5f6d3c70eb28e0e07763f7cb51d94929cb5"
+        },
+        {
+          "path": "scripts/hosted-soundtrack-publication.mjs",
+          "blob": "7503e95a3802f989849c88698e3130d2f0cfb1b7",
+          "bytes": 10450,
+          "sha256": "62c5a7954084ef0f2971cc62035ff4f3a5fc165c10c88aa09dac23a327977ee6"
+        },
+        {
+          "path": "scripts/localization-audit.mjs",
+          "blob": "041499a37a327408517691aa901b0667f07ac224",
+          "bytes": 10005,
+          "sha256": "56c2759e666fe7c2bf6964b7182d13be177b4c722f9324f59e7d4765cddd403d"
+        },
+        {
+          "path": "scripts/localization-content.mjs",
+          "blob": "cfdf836d9deb71bddbabd182de6976e878d3658d",
+          "bytes": 16926,
+          "sha256": "32b46390220eb124d7bbcfba60088898b745c966c6cb5c167e47462c7899e393"
+        },
+        {
+          "path": "scripts/localization.mjs",
+          "blob": "23b5581d83bf42043c6f9ab7d03147c3a290f6f8",
+          "bytes": 13957,
+          "sha256": "d66bb70c6a4c7f0ca1f08cf8a313340af5bba4425b001b7e6844b9030687de6b"
+        },
+        {
+          "path": "scripts/offline-core-closure.mjs",
+          "blob": "af7f49bd9c31760b731930d20825c1768494842a",
+          "bytes": 9292,
+          "sha256": "a7cd339b10379f101406dd67cd2f44e925f366fbc4aba396e7df3025ba208635"
+        },
+        {
+          "path": "scripts/optional-artwork.mjs",
+          "blob": "e42c4b343b84f34ba2c370718f668b597d25ee61",
+          "bytes": 4613,
+          "sha256": "83e456393b4d26bb54b30e4ce1b15499dd5b9aaeeef72bd274f27c2989d9928e"
+        },
+        {
+          "path": "scripts/optional-distribution.mjs",
+          "blob": "797f6d96f1d882174f277c30ddbcdc7b8c3bea81",
+          "bytes": 2584,
+          "sha256": "0fb416bddd39eab244c911d453df383a6488ce3a3a515eae37d07560aec93c71"
+        },
+        {
+          "path": "scripts/pack-indexes.mjs",
+          "blob": "2a4564ee1e88ef4f61b556b79f415aced69523aa",
+          "bytes": 5421,
+          "sha256": "34ecdb35caecd581a5477e3972130f1ef67004fcd7add7f055126cb65a52a35e"
+        },
+        {
+          "path": "scripts/qualify-solo-runtime.mjs",
+          "blob": "64efb16ad417430f3b497796ba20747fd4820a27",
+          "bytes": 85248,
+          "sha256": "8adf22811e2c88baa994931440a3acb84ace357b5c576f22f33831e9c8402022"
+        },
+        {
+          "path": "scripts/reviewed-soundtrack-batches.mjs",
+          "blob": "413f94d96d30686a0b76c8ebf3c7f87cdc299665",
+          "bytes": 16280,
+          "sha256": "3041fa50772034f4666d67c8f9cfad231de963a09d5d40132def422779a9daaa"
+        },
+        {
+          "path": "scripts/run-solo-remote-correctness.mjs",
+          "blob": "c1d011c64d1230958c462f02aac2426f41a8731e",
+          "bytes": 62481,
+          "sha256": "70fbe28bd86b03bf1a2832a00bbfb1c9104f64207e61cca04518e03c888cbd24"
+        },
+        {
+          "path": "scripts/serve-production-preview.mjs",
+          "blob": "0176a28b0eb56e634a12112d5737211a6ec6de8f",
+          "bytes": 10414,
+          "sha256": "4c63ec2ea6d7b6b3c79793dd1e8dc8f75daa9ee6c783ee076d8bc050602c1cab"
+        },
+        {
+          "path": "scripts/solo-build-archive.mjs",
+          "blob": "236b891c910f696f1b3646442bfb91a77afe5e1f",
+          "bytes": 5262,
+          "sha256": "25a7c537c777c435d3ca80694c4ba925a9448222945a8f46e0d1b029441cf368"
+        },
+        {
+          "path": "scripts/solo-build-worker-closure.mjs",
+          "blob": "d4266ac6f7f4c76a552bfc7cd373e432fb3d575e",
+          "bytes": 1658,
+          "sha256": "19c0663b20bcc2cf2b29016ecc7c09d54d673b62740ec3e9babe25e965936ac1"
+        },
+        {
+          "path": "scripts/solo-qualification-audio.mjs",
+          "blob": "0f47c93d792e5532e47e00e57e975a060b0a1f94",
+          "bytes": 19077,
+          "sha256": "8c076969c30ff342b19526e1df22bd8994659f2ac84e7343b111f2a1d2c20af1"
+        },
+        {
+          "path": "scripts/solo-qualification-browser-context.mjs",
+          "blob": "ccf6ac62a7e456c77e1f48c5973ead2b0cd0b3d9",
+          "bytes": 4026,
+          "sha256": "5f89ceedec155349250283304b38e68dd22eedf32e6c306ff2c25c3258233d7f"
+        },
+        {
+          "path": "scripts/solo-qualification-cadence.mjs",
+          "blob": "05142bcde221dacd1c53e34f3125533aee4f47c0",
+          "bytes": 7999,
+          "sha256": "d2031f4a32a64b6a9cb4b21dfa1700dab7e5f7d3742ec22da520ce39e53974dc"
+        },
+        {
+          "path": "scripts/solo-qualification-cpu-profile.mjs",
+          "blob": "c61ea6a3b0b120729026f7b4e05417e937fb8954",
+          "bytes": 3270,
+          "sha256": "26d125133b4448248918b9ae69350c18db4506bb9ea045053d33325679e5a1d7"
+        },
+        {
+          "path": "scripts/solo-qualification-export.mjs",
+          "blob": "adec0f8686908dbf623cd669d9422eda62d618e3",
+          "bytes": 5553,
+          "sha256": "edb2d9efa97fa9e19905f83aa93000219db521f3930fe02fb96c57d2162ceb77"
+        },
+        {
+          "path": "scripts/solo-qualification-native-replay.mjs",
+          "blob": "3a73ab1789500e68492ac4bf7572ef84d7bf0ab3",
+          "bytes": 9513,
+          "sha256": "7e5e0337294144449b66519d945e927a0f0e8c586963df9b83e5a4a2aa246d7c"
+        },
+        {
+          "path": "scripts/solo-qualification-observation.mjs",
+          "blob": "d1a27cf253174f1016b5c13b0428da56d9ba9885",
+          "bytes": 24474,
+          "sha256": "fc8d6b03d49d44e2010acebb4f89188334503ef2a01316e0a9bdd4406e3b3d94"
+        },
+        {
+          "path": "scripts/solo-qualification-replay-core.mjs",
+          "blob": "0580f4b45e6c88e1e943f9b963cfa7f58f0b475b",
+          "bytes": 5930,
+          "sha256": "1e96e592ee289685607515bbe14c8845f2c03dc81191a0772071fd9995ceb3ea"
+        },
+        {
+          "path": "scripts/solo-qualification-replay-identity.mjs",
+          "blob": "0577102f967889361a72675935ffe194c09da9c7",
+          "bytes": 1866,
+          "sha256": "133c362d1c60bfa8de317a6899d038ce4f1b4c9264b67b95fb0893c84f5fffdb"
+        },
+        {
+          "path": "scripts/solo-qualification-replay.mjs",
+          "blob": "2ac39051782d5c9ef7a0e5ea49536c9da825663c",
+          "bytes": 1260,
+          "sha256": "b5f89a8377a83f5645d6077af54cadfcd1e33905d13161ae6eb667468e8bfacf"
+        },
+        {
+          "path": "scripts/solo-qualification.mjs",
+          "blob": "fa8424f7fa515f2bd350fac7bae606187818201c",
+          "bytes": 27145,
+          "sha256": "2dd2f085608c815ff7946f22272c321ae3d4ed8b7e91483a48730c1304ee1b30"
+        },
+        {
+          "path": "scripts/solo-remote-archive.py",
+          "blob": "7a56298d0509ebe0a33c257bef3efe2d0cbdbddc",
+          "bytes": 22756,
+          "sha256": "822735e979eff256c433b715dcb6cac88de8c99c94bacc1ce10f4cb8d7f8e2f6"
+        },
+        {
+          "path": "scripts/solo-remote-baseline.mjs",
+          "blob": "a9362e45d5bcbb4bf1105a7c8ae8982bb0cd30ea",
+          "bytes": 15700,
+          "sha256": "62265c0d41693d249b476917617d3c26fe6b8514e2b12c67fc3d896214ba58a0"
+        },
+        {
+          "path": "scripts/solo-worker-diagnostics.mjs",
+          "blob": "750bfc58456e59c448db2a83e42a498670785be7",
+          "bytes": 2694,
+          "sha256": "b15cba8d17c3dc4b31802ff87ff1cb97c71109991f8d729382e5b5374c9226fe"
+        },
+        {
+          "path": "scripts/soundtrack-archive-admissions.mjs",
+          "blob": "1477214eeb1f0d10e83fde01cc598f63874e29be",
+          "bytes": 5614,
+          "sha256": "103e246b66045e0a480f41c8c42fa5966ac3f0587943f8307fa89bd3b47b380d"
+        },
+        {
+          "path": "scripts/soundtrack-distribution.mjs",
+          "blob": "b96deeb1d1e439c302f6c390f0dea5d34300f98b",
+          "bytes": 15378,
+          "sha256": "8f0e7d0178de524a8939fab2c951702f9a315c581f80d703bd834f8a4c492ac2"
+        },
+        {
+          "path": "scripts/test-solo-e1cc-correctness.mjs",
+          "blob": "0bbd5eec37550b8824079942ef74db054c5b221c",
+          "bytes": 11223,
+          "sha256": "6425343e96afe8bd39359fe21a8fbd992a1913f16cde5a25562c662bfcdecb80"
+        },
+        {
+          "path": "scripts/verify-solo-build.mjs",
+          "blob": "794186eb657f5a898795f70ea3bce3b16643af10",
+          "bytes": 16212,
+          "sha256": "9294c97bf52596d4c6f76f8200e6b4e16bffe5f221cb1538a0f8e2db9693003d"
+        },
+        {
+          "path": "scripts/verify-solo-mp3-worker.mjs",
+          "blob": "9162ea86f8591f16a66cfe1a64e3b223d0438dfe",
+          "bytes": 13091,
+          "sha256": "ea9f18d14778fb5e979a1b32282a01dc1580e593a5c27f74f1b5d4a17da55bad"
+        },
+        {
+          "path": "scripts/verify-solo-paused-render.mjs",
+          "blob": "f04e44214baf3037298cc74f5b71b72ea431498c",
+          "bytes": 9270,
+          "sha256": "4d07139b1e20fef9615e1325d9c8ff95631205e18a7f2dc311106eb0c5c7940d"
+        }
+      ]
+    }
+  ]
+}

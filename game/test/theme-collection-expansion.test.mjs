@@ -118,6 +118,39 @@ test('Signal Blue keeps both earlier named revisions and its original identity',
   assert.equal(currentFamily.sim, null);
 });
 
+test('Desktop 98 separates white entry fields from its desktop while retaining saved r2 appearances', () => {
+  const old = getThemeFamily('windows-classic', 'r2');
+  const current = getThemeFamily('windows-classic');
+  const oldInterface = getInterfaceTheme('windows-classic', 'r2');
+  const currentInterface = getInterfaceTheme('windows-classic');
+  assert.equal(oldInterface.tokens.input, '#008888');
+  assert.equal(current.revision, 'r3');
+  assert.deepEqual(current.interface, { id: 'windows-classic', revision: 'r3' });
+  assert.deepEqual(current.arcade, old.arcade);
+  assert.deepEqual(current.sim, old.sim);
+  assert.deepEqual(currentInterface, {
+    ...oldInterface,
+    revision: 'r3',
+    tokens: { ...oldInterface.tokens, input: '#ffffff', inputText: '#000000' },
+  });
+  for (const ornaments of ['subtle', 'off']) {
+    const view = resolvePresentation({ familyId: 'windows-classic', ornaments });
+    assert.equal(view.tokens.ink, '#008888');
+    assert.equal(view.components.input.states.default.background, '#ffffff');
+    assert.ok(contrastRatio(view.tokens.inputText, view.tokens.input) >= 7);
+    assert.ok(contrastRatio(view.tokens.muted, view.tokens.input) >= 4.5);
+  }
+  assert.equal(
+    resolvePresentation({ themeFamily: old }).components.input.states.default.background,
+    '#008888',
+  );
+  assert.equal(
+    resolvePresentation({ familyId: 'windows-classic', accessibility: { highContrast: true } })
+      .tokens.input,
+    '#000000',
+  );
+});
+
 test('new players start with Flight Deck while saved personal and community themes remain respected', () => {
   const preferences = resolveStoredAppearance(),
     application = resolveThemeFamilySelection(preferences),

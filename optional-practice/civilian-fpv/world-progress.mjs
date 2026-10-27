@@ -1,4 +1,7 @@
 import { boundedJSON } from '../../game/data-json.mjs';
+import { flightComparisonIdentity } from './model.mjs';
+import { TUNED_RESPONSE_FORMAT } from './flight-response.mjs';
+import { responseIdentity } from './radio-profile.mjs';
 import {
   createWorldFlight,
   initWorldRuntime,
@@ -94,27 +97,129 @@ export function evaluateWorldResult(
       : Math.min(state.step, course.steps[proof.mode].length - 1),
   };
 }
-export function compatibleGhost(record, flightIdentity) {
-  const a = record?.proof,
-    b = flightIdentity;
+
+/** Explain the current accepted grade; never award, recalibrate or persist it.
+ * Worlds medals use exact 50 Hz ticks AND contact caps, without a time penalty. */
+export function worldMedalGoal(result, ticks) {
+  const integer = (value) => Number.isSafeInteger(value) && value >= 0;
   if (
-    record?.status !== 'verified' ||
-    record.diagnostic !== 'complete' ||
-    a?.session !== 'practice' ||
-    !a ||
-    !b
+    result?.eligible !== true ||
+    !integer(ticks) ||
+    result.seconds !== ticks / 50 ||
+    !integer(result.contacts) ||
+    !['gold', 'silver', 'bronze'].includes(result.medal)
   )
-    return false;
-  return [
+    return null;
+  const targets = result.targets;
+  if (
+    !targets ||
+    !['goldTicks', 'silverTicks', 'goldContacts', 'silverContacts'].every((key) =>
+      integer(targets[key]),
+    ) ||
+    targets.silverTicks < targets.goldTicks ||
+    targets.silverContacts < targets.goldContacts
+  )
+    return null;
+  const accepted =
+    ticks <= targets.goldTicks && result.contacts <= targets.goldContacts
+      ? 'gold'
+      : ticks <= targets.silverTicks && result.contacts <= targets.silverContacts
+        ? 'silver'
+        : 'bronze';
+  if (accepted !== result.medal) return null;
+  if (accepted === 'gold') return Object.freeze({ medal: accepted, next: null });
+  const next = accepted === 'silver' ? 'gold' : 'silver';
+  return Object.freeze({
+    medal: accepted,
+    next,
+    targetTicks: targets[`${next}Ticks`],
+    targetContacts: targets[`${next}Contacts`],
+    remainingTicks: Math.max(0, ticks - targets[`${next}Ticks`]),
+    excessContacts: Math.max(0, result.contacts - targets[`${next}Contacts`]),
+  });
+}
+
+export function worldMedalGoalText(goal, locale = 'en') {
+  if (!goal) return '';
+  const uk = locale === 'uk';
+  if (goal.next === null)
+    return uk
+      ? 'Золото здобуто: цей політ відповідає обмеженням часу й контактів.'
+      : 'Gold earned: this flight met the time and contact limits.';
+  const seconds = (ticks) =>
+    new Intl.NumberFormat(uk ? 'uk' : 'en', {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+      useGrouping: false,
+    }).format(ticks / 50);
+  const medal = uk
+    ? goal.next === 'gold'
+      ? 'золото'
+      : 'срібло'
+    : goal.next === 'gold'
+      ? 'Gold'
+      : 'Silver';
+  const time = goal.remainingTicks
+    ? uk
+      ? `У наступній спробі скоротіть час на ${seconds(goal.remainingTicks)} с.`
+      : `On your next attempt, finish ${seconds(goal.remainingTicks)} s sooner.`
+    : uk
+      ? 'Умова часу вже виконана.'
+      : 'The time requirement is already met.';
+  const contacts = goal.excessContacts
+    ? uk
+      ? `Потрібно менше контактів у наступній спробі: на ${goal.excessContacts}.`
+      : `Your next attempt needs ${goal.excessContacts} fewer ${goal.excessContacts === 1 ? 'contact' : 'contacts'}.`
+    : uk
+      ? 'Умова контактів уже виконана.'
+      : 'The contact requirement is already met.';
+  return uk
+    ? `Наступна медаль: ${medal} — не більше ${seconds(goal.targetTicks)} с; максимум контактів: ${goal.targetContacts}. ${time} ${contacts}`
+    : `Next: ${medal} — at most ${seconds(goal.targetTicks)} s; contact limit: ${goal.targetContacts}. ${time} ${contacts}`;
+}
+/** A shortlist only: selected ghosts and sector references still replay their own proof. */
+export function compatibleFlightComparison(a, b) {
+  if (!a || !b) return false;
+  const contextKeys = [
     'model',
     'backend',
     'courseIdentity',
     'worldIdentity',
     'mode',
-    'responseIdentity',
     'rulesIdentity',
     'conditionsIdentity',
-  ].every((key) => a[key] === b[key]);
+  ];
+  if (!contextKeys.every((key) => a[key] === b[key])) return false;
+  const hasComparison =
+    Object.hasOwn(a, 'comparisonIdentity') || Object.hasOwn(b, 'comparisonIdentity');
+  if (!hasComparison) return a.responseIdentity === b.responseIdentity;
+  if (typeof a.comparisonIdentity !== 'string' || a.comparisonIdentity !== b.comparisonIdentity)
+    return false;
+  // Imported status labels cannot grant a different response access to a class.
+  // Recompute from recorded values wherever this is a proof rather than a runtime identity.
+  try {
+    for (const value of [a, b]) {
+      if (Object.hasOwn(value, 'frames') && !value.response) return false;
+      if (
+        value.response &&
+        (value.response.format !== TUNED_RESPONSE_FORMAT ||
+          responseIdentity(value.response) !== value.responseIdentity ||
+          flightComparisonIdentity(value, value.response) !== value.comparisonIdentity)
+      )
+        return false;
+    }
+  } catch {
+    return false;
+  }
+  return true;
+}
+export function compatibleGhost(record, flightIdentity) {
+  return (
+    record?.status === 'verified' &&
+    record.diagnostic === 'complete' &&
+    record.proof?.session === 'practice' &&
+    compatibleFlightComparison(record.proof, flightIdentity)
+  );
 }
 
 /** Legacy callers receive the safe, complete original course. A geometric

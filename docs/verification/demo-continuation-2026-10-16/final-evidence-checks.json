@@ -1,0 +1,17 @@
+{
+  "checkedAt": "2026-10-16T06:55:11.308993+00:00",
+  "jsonFiles": [
+    "browser-observation-final.json",
+    "browser-observation-running.json",
+    "browser-observation-summary.json",
+    "browser-handoff-state.json",
+    "worker-final-qualification.json",
+    "worker-final-state.json",
+    "worker-final-summary.json"
+  ],
+  "localLinksChecked": 59,
+  "rawBrowserFinalSHA256": "44bbe549164fe116ae43b59c840259189c79663235368ca6a46e65a4fda29333",
+  "rawReportsReformatted": false,
+  "productionTestSourceChanged": false,
+  "checks": "Focused JSON parsing, local documentation link existence, raw browser digest, final served/Worker source hashes and empty frozen game/scripts/optional-practice diff. No further test or audit run."
+}

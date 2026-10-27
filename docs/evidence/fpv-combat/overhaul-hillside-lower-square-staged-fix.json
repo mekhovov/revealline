@@ -1,0 +1,452 @@
+{
+  "pin": "f6717cb5833932f4ab1be27705802ba0600384e0f4fc2f4d0e2e8f4b06bdf573",
+  "results": [
+    {
+      "delta": 0,
+      "restored": true
+    },
+    {
+      "delta": 1,
+      "restored": true
+    },
+    {
+      "delta": 10,
+      "restored": true
+    },
+    {
+      "delta": 100,
+      "restored": true
+    },
+    {
+      "delta": 220,
+      "restored": true
+    },
+    {
+      "delta": 500,
+      "restored": true
+    }
+  ],
+  "initial": {
+    "position": {
+      "x": 128000,
+      "y": 3000,
+      "z": 64000
+    },
+    "velocity": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "orientation": [
+      0,
+      0,
+      0,
+      1000000
+    ],
+    "angular": {
+      "roll": 0,
+      "pitch": 0,
+      "yaw": 0
+    },
+    "ticks": 0,
+    "grounded": false,
+    "support": null,
+    "landingSpeed": 0,
+    "landingTilt": 0,
+    "mode": "acro",
+    "status": "paused",
+    "reason": "prepared",
+    "contacts": 0,
+    "recentres": 1,
+    "originMm": {
+      "x": 192000,
+      "y": 0,
+      "z": 64000
+    },
+    "localPositionMm": {
+      "x": -64000,
+      "y": 3000,
+      "z": 0
+    },
+    "pendingTargetMm": null,
+    "terrain": {
+      "state": "ready",
+      "terrainReady": true,
+      "flightReady": false,
+      "hasRetainedTerrain": true,
+      "geometryProfile": "terrain-scenery-v1",
+      "geometryBytes": 1054640,
+      "textureBytes": 2446676,
+      "resourceBytes": 3501316,
+      "sourceBytes": 5860129,
+      "reservedSourceBytes": 5860129,
+      "reservedGeometryBytes": 3501316,
+      "provenance": {
+        "regionId": "hillside-town-study",
+        "revision": "courtyard-r5",
+        "positionMm": {
+          "x": 128000,
+          "y": 3000,
+          "z": 64000
+        },
+        "originMm": {
+          "x": 192000,
+          "y": 0,
+          "z": 64000
+        },
+        "compiler": "FPV regional mixed owner v1",
+        "chunks": [
+          {
+            "chunkId": "town-1-0",
+            "terrain": {
+              "chunkId": "town-1-0",
+              "collision": {
+                "id": "town-1-0-collision",
+                "url": "https://fixture.invalid/terrain/town-1-0.json",
+                "bytes": 2689,
+                "sha256": "6513fb7324f6fe6a918c585d7cc43ec21d70e6e546aa6efba8393e87550a45f9"
+              },
+              "scene": {
+                "id": "town-1-0-scene",
+                "url": "https://fixture.invalid/terrain/town-1-0.glb",
+                "bytes": 38384,
+                "sha256": "2dfa00ce9e95e97fc2c4e04b4dd98eb92f0b80d0128a1fc7956d2c69daa0a8c3"
+              }
+            },
+            "scenery": {
+              "chunkId": "town-1-0",
+              "collision": {
+                "id": "town-1-0-collision",
+                "url": "https://fixture.invalid/scenery/town-1-0.json",
+                "bytes": 521394,
+                "sha256": "b963a29380b7fa6d75e2c222278e23eb1c3335560769668e1a8b86dd1ccc5862"
+              },
+              "scene": {
+                "id": "town-1-0-scene",
+                "url": "https://fixture.invalid/scenery/town-1-0.glb",
+                "bytes": 378216,
+                "sha256": "a1f9c7f528a7b8c0a43931ae360aa61ed6e3a12f3d611209f497c5cf927c733b"
+              }
+            }
+          },
+          {
+            "chunkId": "town-0-0",
+            "terrain": {
+              "chunkId": "town-0-0",
+              "collision": {
+                "id": "town-0-0-collision",
+                "url": "https://fixture.invalid/terrain/town-0-0.json",
+                "bytes": 2689,
+                "sha256": "05f8680c7b0fdc5ebabfce99e59efc4e700827d5b00f26b4264e9ec5e2672606"
+              },
+              "scene": {
+                "id": "town-0-0-scene",
+                "url": "https://fixture.invalid/terrain/town-0-0.glb",
+                "bytes": 38384,
+                "sha256": "060059784db2590a9c268742d7c0a3da1d097da3c861dab176bab6861a10af88"
+              }
+            },
+            "scenery": {
+              "chunkId": "town-0-0",
+              "collision": {
+                "id": "town-0-0-collision",
+                "url": "https://fixture.invalid/scenery/town-0-0.json",
+                "bytes": 507030,
+                "sha256": "d6e317098387c7ea6b6ba02db9d0aa18d69cd065d5af26e72749721c3903e959"
+              },
+              "scene": {
+                "id": "town-0-0-scene",
+                "url": "https://fixture.invalid/scenery/town-0-0.glb",
+                "bytes": 363392,
+                "sha256": "0dcdd79419dedc0482d3a1bdaa5ccc3117d62d2251aa4513b219e482a045ca37"
+              }
+            }
+          },
+          {
+            "chunkId": "town-1-1",
+            "terrain": {
+              "chunkId": "town-1-1",
+              "collision": {
+                "id": "town-1-1-collision",
+                "url": "https://fixture.invalid/terrain/town-1-1.json",
+                "bytes": 6550,
+                "sha256": "8b6682bf403b70f1eae6ca75bee107e5c81f8ad2bf0c03ff1f2e1971709c93c3"
+              },
+              "scene": {
+                "id": "town-1-1-scene",
+                "url": "https://fixture.invalid/terrain/town-1-1.glb",
+                "bytes": 38388,
+                "sha256": "ce0452e75a3294ebbddc1608313c6458d8c713c9432addb5f479808416ae470d"
+              }
+            },
+            "scenery": {
+              "chunkId": "town-1-1",
+              "collision": {
+                "id": "town-1-1-collision",
+                "url": "https://fixture.invalid/scenery/town-1-1.json",
+                "bytes": 697266,
+                "sha256": "c5a6ad59fb94c8a68e3bb2cbaf6224f99c9ef041d55b96be2ee12d3e7d0152cb"
+              },
+              "scene": {
+                "id": "town-1-1-scene",
+                "url": "https://fixture.invalid/scenery/town-1-1.glb",
+                "bytes": 515848,
+                "sha256": "bc9ce5743a3709bc355a7143f26dbade1d554863d720d49ce5a816dee4106e12"
+              }
+            }
+          },
+          {
+            "chunkId": "town-2-0",
+            "terrain": {
+              "chunkId": "town-2-0",
+              "collision": {
+                "id": "town-2-0-collision",
+                "url": "https://fixture.invalid/terrain/town-2-0.json",
+                "bytes": 2689,
+                "sha256": "9fbace2374e51879ec8855939f3a0a9d0f45c78f3c484e7a882095c058ddf99d"
+              },
+              "scene": {
+                "id": "town-2-0-scene",
+                "url": "https://fixture.invalid/terrain/town-2-0.glb",
+                "bytes": 38384,
+                "sha256": "efb4d6eea1bab8e3c1f5790ba36a289cb8a03beaa4d8727ff6dd6c6e4a6a7f66"
+              }
+            },
+            "scenery": {
+              "chunkId": "town-2-0",
+              "collision": {
+                "id": "town-2-0-collision",
+                "url": "https://fixture.invalid/scenery/town-2-0.json",
+                "bytes": 506408,
+                "sha256": "e1d865789ae6eda1cf76a815799cb72edc068dc2515c0b15fa0118ce28cdac79"
+              },
+              "scene": {
+                "id": "town-2-0-scene",
+                "url": "https://fixture.invalid/scenery/town-2-0.glb",
+                "bytes": 363388,
+                "sha256": "a238ee5686de0cd8f69f2f384300ce6b7d5d66f868699b9bbcf1076c0ab8dd67"
+              }
+            }
+          },
+          {
+            "chunkId": "town-0-1",
+            "terrain": {
+              "chunkId": "town-0-1",
+              "collision": {
+                "id": "town-0-1-collision",
+                "url": "https://fixture.invalid/terrain/town-0-1.json",
+                "bytes": 6550,
+                "sha256": "a6b598775a52cf82ae401a4e2783c034d8ed0f1e2951d9b1dc2b4eb2dacd7e07"
+              },
+              "scene": {
+                "id": "town-0-1-scene",
+                "url": "https://fixture.invalid/terrain/town-0-1.glb",
+                "bytes": 38388,
+                "sha256": "b1208e567db72d0409e322f8fccf8807ee0d01acbef4210b88763fa514913502"
+              }
+            },
+            "scenery": {
+              "chunkId": "town-0-1",
+              "collision": {
+                "id": "town-0-1-collision",
+                "url": "https://fixture.invalid/scenery/town-0-1.json",
+                "bytes": 511269,
+                "sha256": "92eda5ed3b07fa1a0a38d6db5e51c9b402b494bb051f1f323955b439d97c7709"
+              },
+              "scene": {
+                "id": "town-0-1-scene",
+                "url": "https://fixture.invalid/scenery/town-0-1.glb",
+                "bytes": 363628,
+                "sha256": "68e33a48697b37748f2d54a694aab6a8f09d729ab630fa4e5ce29857380780ff"
+              }
+            }
+          },
+          {
+            "chunkId": "town-2-1",
+            "terrain": {
+              "chunkId": "town-2-1",
+              "collision": {
+                "id": "town-2-1-collision",
+                "url": "https://fixture.invalid/terrain/town-2-1.json",
+                "bytes": 6550,
+                "sha256": "eedbbb64425dd8f29b109cf9ed4f9d762dc69503e12e5adc75e7ce65a0df0e09"
+              },
+              "scene": {
+                "id": "town-2-1-scene",
+                "url": "https://fixture.invalid/terrain/town-2-1.glb",
+                "bytes": 38388,
+                "sha256": "1c5065854c235dfbf5cdc542619ee390cdbe5637419fec2f2bcb80f0c3ee6702"
+              }
+            },
+            "scenery": {
+              "chunkId": "town-2-1",
+              "collision": {
+                "id": "town-2-1-collision",
+                "url": "https://fixture.invalid/scenery/town-2-1.json",
+                "bytes": 510629,
+                "sha256": "99ad47195a03c26405946cacb32a63b254e3a8bb2effbcd50abd3fd9c919e7bf"
+              },
+              "scene": {
+                "id": "town-2-1-scene",
+                "url": "https://fixture.invalid/scenery/town-2-1.glb",
+                "bytes": 363628,
+                "sha256": "7673212fce0d8330d7c74819b164798c29cff9bf1979e3bc7e4872edbbf9a701"
+              }
+            }
+          }
+        ]
+      },
+      "failure": null
+    },
+    "geometryProfile": "terrain-scenery-v1",
+    "streaming": {
+      "enabled": true,
+      "pending": false,
+      "failure": null
+    },
+    "model": "regional-authoring-flight-prototype.v1",
+    "unscored": true,
+    "playerReady": false,
+    "attitude": {
+      "roll": 0,
+      "pitch": 0,
+      "yaw": 0,
+      "up": {
+        "x": 0,
+        "y": 1000000,
+        "z": 0
+      }
+    },
+    "lastInput": {
+      "roll": 0,
+      "pitch": 0,
+      "yaw": 0,
+      "throttle": 0
+    },
+    "step": 0,
+    "total": 0,
+    "hold": 0,
+    "events": [],
+    "actors": [],
+    "projectiles": [],
+    "score": 0
+  },
+  "saved": {
+    "format": "RegionalEncounterFlight.v2",
+    "identity": "ba9737c67a526b02",
+    "body": {
+      "position": {
+        "x": 128000,
+        "y": 2976,
+        "z": 64000
+      },
+      "velocity": {
+        "x": 0,
+        "y": -585,
+        "z": 0
+      },
+      "orientation": [
+        0,
+        0,
+        0,
+        1000000
+      ],
+      "angular": {
+        "roll": 0,
+        "pitch": 0,
+        "yaw": 0
+      },
+      "ticks": 3,
+      "grounded": false,
+      "support": null,
+      "landingSpeed": 0,
+      "landingTilt": 0
+    },
+    "mode": "acro",
+    "origin": {
+      "x": 192000,
+      "y": 0,
+      "z": 64000
+    },
+    "contacts": 0,
+    "recentres": 1
+  },
+  "candidateComponents": [
+    {
+      "name": "town-1-0",
+      "bounds": [
+        -64,
+        0,
+        -64,
+        64,
+        6,
+        64
+      ],
+      "closed": false,
+      "convex": false,
+      "faces": 2048,
+      "point": [
+        -64,
+        3.196,
+        0
+      ]
+    },
+    {
+      "name": "town-0-0",
+      "bounds": [
+        -192,
+        0,
+        -64,
+        -64,
+        6,
+        64
+      ],
+      "closed": false,
+      "convex": false,
+      "faces": 2048,
+      "point": [
+        -64,
+        3.196,
+        0
+      ]
+    },
+    {
+      "name": "town-1-0",
+      "bounds": [
+        -64,
+        -0.019999999552965164,
+        -60,
+        -58,
+        6.099999904632568,
+        64
+      ],
+      "closed": true,
+      "convex": false,
+      "faces": 380,
+      "point": [
+        -64,
+        3.196,
+        0
+      ]
+    },
+    {
+      "name": "town-0-0",
+      "bounds": [
+        -70,
+        -0.019999999552965164,
+        -60,
+        -64,
+        6.099999904632568,
+        64
+      ],
+      "closed": true,
+      "convex": false,
+      "faces": 380,
+      "point": [
+        -64,
+        3.196,
+        0
+      ]
+    }
+  ]
+}

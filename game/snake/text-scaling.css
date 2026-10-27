@@ -1,0 +1,359 @@
+/* Classic Snake Solo, Versus and Team opt in together. Absolute text sizes
+ * multiply once; inherited text follows its parent. The hub and other families
+ * keep their existing fallback. No transform changes the logical board. */
+html[data-text-scaling='snake'][data-theme-text-size='extra-large'] {
+  --primary-text-scale: 2;
+}
+html[data-text-scaling='snake'][data-theme-text-size='extra-large'] body:not([data-text-size]),
+html[data-text-scaling='snake'] body[data-text-size='extra-large'] {
+  font-size: calc(1rem * var(--primary-text-scale, 1));
+}
+html[data-text-scaling='snake'] body[data-text-size] {
+  --primary-text-scale: 1;
+}
+html[data-text-scaling='snake'] body[data-text-size='extra-large'] {
+  --primary-text-scale: 2;
+  min-inline-size: 0;
+}
+
+html[data-text-scaling='snake'] body[data-text-size='extra-large'] :is(button, .button, summary) {
+  min-block-size: 44px;
+  max-inline-size: 100%;
+  white-space: normal;
+  overflow-wrap: break-word;
+  word-break: normal;
+}
+
+html[data-text-scaling='snake'] body[data-text-size='extra-large'] :is(input, select, textarea) {
+  box-sizing: border-box;
+  min-inline-size: 0;
+  max-inline-size: 100%;
+}
+
+html[data-text-scaling='snake'] body[data-text-size='extra-large'] :is(p, h1, h2, h3, h4, label) {
+  overflow-wrap: break-word;
+  min-inline-size: 0;
+}
+
+html[data-text-scaling='snake'] body[data-text-size='extra-large'] dialog[open] {
+  box-sizing: border-box;
+  min-inline-size: 0;
+  max-inline-size: calc(var(--dialog-viewport-width, 100vw) - 16px);
+  max-block-size: calc(var(--dialog-viewport-height, 100dvh) - 16px);
+  overflow: auto;
+  scroll-padding-block: 12px;
+}
+
+html[data-text-scaling='snake']
+  body[data-text-size='extra-large']
+  :is(.mode-play-dialog, .mode-settings-view)[open] {
+  display: block;
+  block-size: auto;
+}
+
+html[data-text-scaling='snake'] body[data-text-size='extra-large'] .mode-play-home[open] {
+  min-block-size: 0;
+  padding: 16px;
+}
+
+html[data-text-scaling='snake']
+  body[data-text-size='extra-large']
+  .mode-play-home
+  > :is(.mode-play-dialog-head, .mode-play-content, .mode-play-actions) {
+  inline-size: 100%;
+  max-inline-size: 900px;
+}
+
+html[data-text-scaling='snake']
+  body[data-text-size='extra-large']
+  .mode-play-dialog
+  > :is(.mode-play-content, .mode-play-actions) {
+  overflow: visible;
+  min-block-size: 0;
+  flex: none;
+}
+
+html[data-text-scaling='snake']
+  body[data-text-size='extra-large']
+  :is(.mode-play-utilities, .snake-result-primary, #snake-results .run-controls):not([hidden]) {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
+  gap: 12px;
+}
+
+/* The shared landing owner places utilities by column. With one enlarged
+ * explicit track that would create a second, squeezed implicit column. */
+html[data-text-scaling='snake']
+  body[data-text-size='extra-large']
+  .mode-play-utilities:not([hidden]) {
+  grid-auto-flow: row;
+}
+
+html[data-text-scaling='snake']
+  body[data-text-size='extra-large']
+  #snake-results-dialog
+  .snake-result-primary
+  > button {
+  white-space: normal;
+  overflow: visible;
+  text-overflow: clip;
+}
+
+/* Result content has a legacy ID-scoped scroll owner, while the transition
+ * controls install a sticky footer at runtime. Enlarged results use one outer
+ * scroll region so that footer cannot cover the focused More actions button. */
+html[data-text-scaling='snake']
+  body[data-text-size='extra-large']
+  #snake-results-dialog[open]
+  > .mode-play-content {
+  overflow: visible;
+  flex: none;
+}
+
+html[data-text-scaling='snake']
+  body[data-text-size='extra-large']
+  #snake-results-dialog[open]
+  > .continuous-result-actions:not([hidden]) {
+  position: static;
+}
+
+/* The transition status is authored by a runtime stylesheet, outside the
+ * linked-sheet inventory. Keep its inherited button size on the same factor. */
+html[data-text-scaling='snake'] body[data-text-size='extra-large'] .continuous-play-controls {
+  font-size: calc(0.85rem * var(--primary-text-scale, 1));
+}
+
+html[data-text-scaling='snake']
+  body[data-text-size='extra-large']
+  .enemy-stats[data-variant='panel'] {
+  font-size: calc(0.875rem * var(--primary-text-scale, 1));
+}
+
+html[data-text-scaling='snake']
+  body[data-text-size='extra-large']
+  .enemy-stats[data-variant='hud'] {
+  font-size: calc(0.8rem * var(--primary-text-scale, 1));
+}
+
+html[data-text-scaling='snake']
+  body[data-text-size='extra-large']
+  .enemy-stats[data-variant='collection']
+  .enemy-stats-total {
+  font-size: calc(clamp(1.7rem, 3vw, 2.8rem) * var(--primary-text-scale, 1));
+}
+
+@media (max-width: 360px) {
+  html[data-text-scaling='snake']
+    body[data-text-size='extra-large']
+    .enemy-stats[data-variant='panel'] {
+    font-size: calc(0.8rem * var(--primary-text-scale, 1));
+  }
+
+  html[data-text-scaling='snake']
+    body[data-text-size='extra-large']
+    .enemy-stats[data-variant='hud'] {
+    font-size: calc(0.75rem * var(--primary-text-scale, 1));
+  }
+}
+
+html[data-text-scaling='snake']
+  body[data-text-size='extra-large']
+  .snake-result-overview:not([hidden]) {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+}
+
+html[data-text-scaling='snake']
+  body[data-text-size='extra-large']
+  #snake-pause-dialog[open]
+  :is(.pause-command-grid, [data-pause-group='missions'] .pause-command-grid):not([hidden]) {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
+}
+
+html[data-text-scaling='snake']
+  body[data-text-size='extra-large']
+  #snake-pause-dialog[open]
+  [data-pause-group='missions']
+  :is(button, a) {
+  white-space: normal;
+  overflow-wrap: break-word;
+}
+
+html[data-text-scaling='snake'] body[data-text-size='extra-large'] .mode-settings-view > header {
+  flex-wrap: wrap;
+  align-items: start;
+}
+
+html[data-text-scaling='snake']
+  body[data-text-size='extra-large']
+  .mode-settings-view
+  :is(.mode-settings-content, .mode-settings-layout) {
+  display: block;
+  min-block-size: 0;
+  overflow: visible;
+}
+
+html[data-text-scaling='snake']
+  body[data-text-size='extra-large']
+  .mode-settings-view
+  .field-kit-settings-panel:not([hidden]) {
+  min-block-size: 0;
+  overflow: visible;
+}
+
+html[data-text-scaling='snake']
+  body[data-text-size='extra-large']
+  .mode-settings-view
+  .field-kit-settings-tabs {
+  overflow: visible;
+  min-block-size: 0;
+  margin-block: 12px;
+}
+
+html[data-text-scaling='snake'] body[data-text-size='extra-large'] :is(.setup, .game-mode-choice) {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 12rem), 1fr));
+}
+
+html[data-text-scaling='snake'] body[data-text-size='extra-large'] .mode-play-bar {
+  flex-wrap: wrap;
+  block-size: auto;
+}
+
+html[data-text-scaling='snake'] body[data-text-size='extra-large'] .mode-play-stage {
+  overflow: auto;
+}
+
+html[data-text-scaling='snake'] body[data-text-size='extra-large'] .arena {
+  min-block-size: min-content;
+}
+
+html[data-text-scaling='snake'] body[data-text-size='extra-large'] .board-stats {
+  flex-wrap: wrap;
+  min-inline-size: 0;
+}
+
+html[data-text-scaling='snake'] body[data-text-size='extra-large'] .board-stats b {
+  white-space: nowrap;
+  overflow-wrap: normal;
+}
+
+html[data-text-scaling='snake'] body[data-text-size='extra-large'] .board-wrap {
+  min-block-size: 10rem;
+}
+
+html[data-text-scaling='snake']
+  body[data-text-size='extra-large']
+  :is(.level-strip, .run-controls, .sortie-actions) {
+  flex-wrap: wrap;
+}
+
+/* The chooser retains its existing list scroll and focus owner. Its outer
+ * scroll reaches full-width controls; enlarged cards grow with their text. */
+html[data-text-scaling='snake'] body[data-text-size='extra-large'] #journey-chooser[open] {
+  display: block;
+  block-size: auto;
+  overflow: auto;
+  scroll-padding-block: 12px;
+}
+html[data-text-scaling='snake'] body[data-text-size='extra-large'] #journey-chooser .journey-cards {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr));
+  grid-auto-rows: auto;
+  min-block-size: min(18rem, 48dvh);
+  max-block-size: max(18rem, 48dvh);
+  overflow: auto;
+  margin-block: 12px;
+}
+html[data-text-scaling='snake'] body[data-text-size='extra-large'] #journey-chooser .journey-card {
+  grid-template-rows: auto auto auto auto 7rem;
+  block-size: auto;
+  min-block-size: 0;
+  max-block-size: none;
+  overflow: visible;
+}
+html[data-text-scaling='snake']
+  body[data-text-size='extra-large']
+  #journey-chooser
+  .journey-card
+  > strong {
+  display: block;
+  overflow: visible;
+  -webkit-line-clamp: unset;
+  white-space: normal;
+  overflow-wrap: break-word;
+}
+html[data-text-scaling='snake']
+  body[data-text-size='extra-large']
+  #journey-chooser
+  :is(.journey-card-campaign, .journey-card-progress, .journey-card-action) {
+  white-space: normal;
+  text-overflow: clip;
+  overflow: visible;
+}
+html[data-text-scaling='snake']
+  body[data-text-size='extra-large']
+  #journey-chooser
+  .journey-card-action:not([hidden]) {
+  position: static;
+  grid-column: 1 / -1;
+  max-inline-size: 100%;
+}
+html[data-text-scaling='snake']
+  body[data-text-size='extra-large']
+  #journey-chooser
+  :is(.journey-filters, .journey-search-controls) {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 12px;
+}
+html[data-text-scaling='snake']
+  body[data-text-size='extra-large']
+  #journey-chooser
+  :is(.journey-search-field, .journey-filter-details, #journey-search-clear) {
+  grid-column: auto;
+  grid-row: auto;
+}
+html[data-text-scaling='snake']
+  body[data-text-size='extra-large']
+  #journey-chooser
+  .journey-search-field
+  > .journey-filter-label {
+  position: static;
+  inline-size: auto;
+  block-size: auto;
+  clip-path: none;
+  overflow: visible;
+  white-space: normal;
+}
+html[data-text-scaling='snake']
+  body[data-text-size='extra-large']
+  #journey-chooser
+  :is(.journey-filter-options, .mission-library-setup > .mission-picker-setup-fields) {
+  position: static;
+  inline-size: 100%;
+  max-inline-size: 100%;
+  max-block-size: none;
+  overflow: visible;
+}
+html[data-text-scaling='snake']
+  body[data-text-size='extra-large']
+  #journey-chooser
+  .journey-footer {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
+  grid-auto-flow: row;
+  overflow: visible;
+}
+html[data-text-scaling='snake'] body[data-text-size='extra-large'] #journey-chooser .journey-goal {
+  grid-column: 1 / -1;
+  grid-template-columns: minmax(0, 1fr);
+  min-inline-size: 0;
+}
+html[data-text-scaling='snake']
+  body[data-text-size='extra-large']
+  #journey-chooser
+  .journey-goal-actions {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 12rem), 1fr));
+  grid-auto-flow: row;
+}

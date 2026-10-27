@@ -1,0 +1,6 @@
+Browser tab: 11, Title: "FPV Survivals · Survival · Single Drone · FPV / LINE", URL: "http://127.0.0.1:8913/game/overflight/play.html?layout=relay-ruins-receiver-gardens&reviewBuild=echo&reviewRoute=figure-eight&seed=202604&autoplay=1&diagnostics=1&lang=en".
+The following is a diff from the previous accessibility tree with ~ and + representing changed and added elements, respectively. Removed elements are summarized by ID range.
+Removed element IDs: 4
++		106 text FPV Survivals · Survival · Single Drone
+~					21 checkbox (settable, integer) Description: Mute, Value: 1, ID: muted
+The focused UI element is 21 checkbox (settable, integer) Description: Mute, Value: 1, ID: muted

@@ -1,0 +1,68 @@
+{
+  "format": "revealline-demo-owner-batch.v1",
+  "sourceCommit": "1dc0320462cd6dd14a4538b001da03218e86dd29",
+  "pid": 1883,
+  "startedAt": "2026-10-16T03:59:05.419919+00:00",
+  "status": "completed",
+  "runs": [
+    {
+      "owner": "base",
+      "command": [
+        "node",
+        "scripts/audit-demo-availability.mjs",
+        "--report",
+        "docs/verification/demo-continuation-2026-10-16/base-final.json"
+      ],
+      "startedAt": "2026-10-16T03:59:25.285233+00:00",
+      "status": "completed",
+      "pid": 2379,
+      "exitCode": 1,
+      "finishedAt": "2026-10-16T04:01:16.320665+00:00"
+    },
+    {
+      "owner": "journey",
+      "command": [
+        "node",
+        "scripts/audit-demo-availability.mjs",
+        "--journey",
+        "--report",
+        "docs/verification/demo-continuation-2026-10-16/journey-final.json"
+      ],
+      "startedAt": "2026-10-16T04:01:22.261197+00:00",
+      "status": "completed",
+      "pid": 5386,
+      "exitCode": 0,
+      "finishedAt": "2026-10-16T04:17:17.878311+00:00"
+    },
+    {
+      "owner": "droneaid",
+      "command": [
+        "node",
+        "scripts/audit-demo-availability.mjs",
+        "--edition",
+        "droneaid",
+        "--report",
+        "docs/verification/demo-continuation-2026-10-16/droneaid-final.json"
+      ],
+      "startedAt": "2026-10-16T04:17:28.556443+00:00",
+      "status": "completed",
+      "pid": 27763,
+      "exitCode": 1,
+      "finishedAt": "2026-10-16T04:24:59.458872+00:00"
+    },
+    {
+      "command": [
+        "node",
+        "scripts/audit-demo-availability.mjs",
+        "--edition",
+        "--report"
+      ],
+      "startedAt": "2026-10-16T04:25:32.088074+00:00",
+      "status": "completed",
+      "pid": 34598,
+      "exitCode": 0,
+      "finishedAt": "2026-10-16T04:28:18.152273+00:00"
+    }
+  ],
+  "finishedAt": "2026-10-16T04:28:59.980290+00:00"
+}

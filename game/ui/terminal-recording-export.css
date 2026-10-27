@@ -26,7 +26,7 @@
     min-width: 0;
     resize: vertical;
     overflow-wrap: anywhere;
-    font: 0.8rem / 1.4 monospace;
+    font: calc(0.8rem * var(--primary-text-scale, 1)) / 1.4 monospace;
     color: var(--fk-text);
     background: var(--fk-bg);
   }

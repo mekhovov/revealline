@@ -1,0 +1,78 @@
+{
+  "format": "FPVPlanStatusReview.v1",
+  "reviewedAt": "2026-10-20T22:55:22.187056+02:00",
+  "scope": "Read-only source/evidence review plus plan/document updates. No new gameplay or performance test run.",
+  "workspace": "/Users/oleksandr.mekhovov/work/my_projects/go_test_radio_fix",
+  "branch": "codex/fpv-flight-widgets-world-picker",
+  "receiptSourceComparison": {
+    "compact-hud-package-measurement.json": {
+      "matching": [
+        "optional-practice/civilian-fpv/flight-fullscreen.mjs",
+        "optional-practice/civilian-fpv/flight-fullscreen.css",
+        "optional-practice/civilian-fpv/style.css",
+        "optional-practice/civilian-fpv/world-app.mjs",
+        "optional-practice/civilian-fpv/app.mjs"
+      ],
+      "changed": [],
+      "absent": []
+    },
+    "consistency-regressions.json": {
+      "matching": [
+        "optional-practice/civilian-fpv/world-model.mjs",
+        "optional-practice/civilian-fpv/world-editor.mjs",
+        "optional-practice/civilian-fpv/world-content.mjs",
+        "optional-practice/civilian-fpv/renderer.mjs",
+        "optional-practice/civilian-fpv/sim-presentation.mjs",
+        "optional-practice/civilian-fpv/world-reaction-runtime.mjs",
+        "optional-practice/civilian-fpv/aircraft-course-session.mjs",
+        "optional-practice/civilian-fpv/aircraft-mission-checkpoint.mjs",
+        "optional-practice/civilian-fpv/aircraft-practice-controls.mjs"
+      ],
+      "changed": [
+        "optional-practice/civilian-fpv/world-app.mjs",
+        "optional-practice/civilian-fpv/flight-fullscreen.mjs",
+        "optional-practice/civilian-fpv/flight-fullscreen.css",
+        "optional-practice/civilian-fpv/style.css"
+      ],
+      "absent": []
+    },
+    "consistency-catalogue-matrix.json": {
+      "matching": [
+        "scripts/qualify-fpv-combat-catalogue.mjs",
+        "optional-practice/civilian-fpv/encounter-runtime.mjs",
+        "optional-practice/civilian-fpv/encounter-session.mjs",
+        "optional-practice/civilian-fpv/encounter-geometry.mjs",
+        "optional-practice/civilian-fpv/world-catalogue.mjs",
+        "optional-practice/civilian-fpv/world-library.mjs",
+        "optional-practice/civilian-fpv/regional-library.mjs",
+        "optional-practice/civilian-fpv/world-model.mjs",
+        "optional-practice/civilian-fpv/aircraft-course-session.mjs",
+        "optional-practice/civilian-fpv/regional-session.mjs",
+        "optional-practice/civilian-fpv/advanced-regional.mjs",
+        "optional-practice/civilian-fpv/regional/scenery-admission.mjs",
+        "optional-practice/civilian-fpv/regional/restore-containment.mjs",
+        "optional-practice/civilian-fpv/regional/verified-flight-geometry.mjs",
+        "optional-practice/civilian-fpv/regional/verified-mixed-window.mjs",
+        "optional-practice/civilian-fpv/regional/verified-scenery-window.mjs",
+        "optional-practice/civilian-fpv/advanced-simulation.mjs"
+      ],
+      "changed": [],
+      "absent": []
+    }
+  },
+  "missingValidationInputs": [
+    "authoring/community",
+    "authoring/industrial-art-review/environments-v1/pursuit-patrol-district.rltheme",
+    "authoring/library/four-worlds-chapters/packs/original-fpv-pressure.json",
+    "authoring/library/four-worlds-chapters/packs/original-retro-1994.json",
+    "authoring/library/four-worlds-chapters/packs/original-spend-network.json",
+    "authoring/library/four-worlds-chapters/packs/original-ukraine-atlas.json",
+    "authoring/library/fpv-route-choices/packs/fpv-route-choices.json",
+    "authoring/motion-lab/collection-presets.json",
+    "authoring/motion-lab/ability-presets.json"
+  ],
+  "diskAvailableBytes": 497446912,
+  "localHttpStatus": 200,
+  "releaseQualified": false,
+  "etaBasis": "Effort estimates from inspection; no scheduled completion date or background work commitment."
+}

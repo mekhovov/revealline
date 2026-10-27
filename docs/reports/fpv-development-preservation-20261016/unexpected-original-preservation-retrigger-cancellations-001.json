@@ -1,0 +1,27 @@
+{
+  "format": "UnexpectedHistoricalAdHocCumulativePRRetriggerCancellation.v1",
+  "newMetadataHead": "bc8afad425e6ae138278d6a0371a7bbbb0518571",
+  "reason": "GitHub pull-request path filters consider the cumulative PR diff, causing unchanged historical preservation jobs to retrigger. Normal cancellations honor the reviewed one-focused-new-part run scope.",
+  "runs": [
+    {
+      "id": 38875736482,
+      "name": "FPV preservation readback",
+      "head_sha": "bc8afad425e6ae138278d6a0371a7bbbb0518571",
+      "status": "completed",
+      "conclusion": "cancelled",
+      "html_url": "https://github.com/mekhovov/revealline/actions/runs/38875736482"
+    },
+    {
+      "id": 38875736704,
+      "name": "FPV preservation portable restore",
+      "head_sha": "bc8afad425e6ae138278d6a0371a7bbbb0518571",
+      "status": "completed",
+      "conclusion": "cancelled",
+      "html_url": "https://github.com/mekhovov/revealline/actions/runs/38875736704"
+    }
+  ],
+  "unacceptedAtNewHead": true,
+  "priorAcceptedActualRunReceiptsUnchanged": true,
+  "applicationRequiredCIOrRepositoryProtectionModified": false,
+  "inheritedPriorPassOrCompletionClaimed": false
+}

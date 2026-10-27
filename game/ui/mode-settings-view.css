@@ -46,7 +46,8 @@ body .mode-settings-view[open] {
 
 .mode-settings-view > header :is(h1, h2) {
   margin: 0;
-  font: 600 22px/1.3 var(--fk-font-ui, 'Exo 2', system-ui, sans-serif);
+  font: 600 calc(22px * var(--overflight-text-scale, 1) * var(--primary-text-scale, 1)) / 1.3
+    var(--fk-font-ui, 'Exo 2', system-ui, sans-serif);
   letter-spacing: normal;
 }
 
@@ -75,7 +76,8 @@ body .mode-settings-view[open] [data-settings-back] {
   min-height: 44px;
   height: auto;
   padding: 8px 12px;
-  font: 600 14px/1.3 var(--fk-font-ui, 'Exo 2', system-ui, sans-serif);
+  font: 600 calc(14px * var(--overflight-text-scale, 1) * var(--primary-text-scale, 1)) / 1.3
+    var(--fk-font-ui, 'Exo 2', system-ui, sans-serif);
 }
 
 body .mode-settings-view[open] [data-settings-back][data-menu-icon]::before {
@@ -138,8 +140,14 @@ body .mode-settings-view[open] [data-settings-back][data-menu-icon]::before {
   line-height: 1.35;
   white-space: normal;
   overflow-wrap: anywhere;
-  color: #f3f5ef;
-  background: var(--native-panel, #15172d);
+}
+
+/* Layout owns geometry; shared material states own paint, including selection.
+   Keep this fallback below the theme painter's specificity so light themes and
+   textured frames do not inherit a fixed dark-mode label or lose their finish. */
+:where(.mode-settings-view .field-kit-settings-tabs > [role='tab']) {
+  color: var(--fk-text, #f3f5ef);
+  background: var(--fk-panel-raised, var(--native-panel, #15172d));
   border: 1px solid transparent;
   border-image: none;
 }
@@ -157,9 +165,9 @@ body .mode-settings-view[open] [data-settings-back][data-menu-icon]::before {
   mask-repeat: no-repeat;
 }
 
-.mode-settings-view .field-kit-settings-tabs > [aria-selected='true'] {
-  border-color: #ffda68;
-  box-shadow: inset 3px 0 #ffda68;
+:where(.mode-settings-view .field-kit-settings-tabs > [aria-selected='true']) {
+  border-color: var(--fk-focus, #ffda68);
+  box-shadow: inset 3px 0 var(--fk-focus, #ffda68);
 }
 
 .mode-settings-view .field-kit-settings-panel {
@@ -205,7 +213,7 @@ body .mode-settings-view[open] [data-settings-back][data-menu-icon]::before {
 }
 
 .mode-settings-view :is(button, select, input, summary, a):focus-visible {
-  outline: 3px solid var(--field-kit-focus, #a8eaf0);
+  outline: 3px solid var(--fk-focus, var(--field-kit-focus, #a8eaf0));
   outline-offset: 2px;
 }
 
@@ -216,7 +224,7 @@ body .mode-settings-view[open] [data-settings-back][data-menu-icon]::before {
   }
 
   .mode-settings-view > header :is(h1, h2) {
-    font-size: 18px;
+    font-size: calc(18px * var(--overflight-text-scale, 1) * var(--primary-text-scale, 1));
   }
 
   .mode-settings-view .mode-settings-layout {

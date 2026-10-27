@@ -10,6 +10,7 @@ import { installPracticeWorker as installPackageWorker } from '../optional-pract
 
 import { buildOptionalLauncher } from './optional-launcher.mjs';
 import { OPTIONAL_PACKAGE_POLICIES } from '../publishing/optional-package-policy.mjs';
+import { isOptionalNativeBridgeImport } from '../publishing/optional-import-capabilities.mjs';
 import { validatePracticeDescription } from '../game/optional-practice-details.mjs';
 export const OPTIONAL_PRACTICE_ROOT = OPTIONAL_PACKAGE_POLICIES['civilian-flight'].root;
 export const OPTIONAL_PRACTICE_LIMITS = OPTIONAL_PACKAGE_POLICIES['civilian-flight'].limits;
@@ -142,6 +143,12 @@ export function optionalModuleDependencies(name, bytes, policy, verifiedVendor =
       node.source
     ) {
       requireValid(
+        node.type !== 'ImportExpression' || (node.options == null && node.phase == null),
+        'Optional practice does not admit import options or phases',
+      );
+      // Shared syntax/policy check also protects publication of the resulting archive.
+      if (isOptionalNativeBridgeImport(name, node, policy)) return;
+      requireValid(
         typeof node.source.value === 'string' && /^\.\.?\//.test(node.source.value),
         'Optional practice permits only explicit relative module dependencies',
       );
@@ -236,7 +243,7 @@ export function buildBundledOptionalPractice(entries, { packageId = 'civilian-fp
   requireValid(
     files.length + 1 <= policy.limits.files &&
       files.reduce((total, file) => total + file.bytes, worker.bytes.length) <= policy.limits.bytes,
-    'Complete bundled optional output exceeds package limits',
+    `Complete bundled optional output exceeds package limits: ${packageId} has ${files.length + 1}/${policy.limits.files} files and ${files.reduce((total, file) => total + file.bytes, worker.bytes.length)}/${policy.limits.bytes} bytes`,
   );
   return {
     files,
@@ -365,7 +372,7 @@ export async function buildOptionalPractice(
   requireValid(
     files.length <= limits.files &&
       files.reduce((total, file) => total + file.bytes, 0) <= limits.bytes,
-    'Optional practice exceeds unchanged package limits',
+    `Optional practice exceeds unchanged package limits: ${packageId} has ${files.length}/${limits.files} files and ${files.reduce((total, file) => total + file.bytes, 0)}/${limits.bytes} bytes`,
   );
   const workerTemplateSha256 = hash(Buffer.from(installWorker.toString()));
   const revision = hash(

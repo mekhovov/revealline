@@ -1,0 +1,103 @@
+{
+  "createdAt": "2026-10-17T15:29:53.830149+00:00",
+  "reason": "Free disk space after exact-main fetch failed; remove its named incomplete pack and superseded generated task-only staging/source copies. Preserve all committed evidence, recordings, historical failure profiles and user files.",
+  "removed": [
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.git/objects/pack/tmp_pack_FevPzJ",
+      "logicalBytes": 225443840
+    },
+    {
+      "path": "/private/tmp/fpv-historical-source-9nVyJy",
+      "logicalBytes": 51183803
+    },
+    {
+      "path": "/private/tmp/fpv-historical-source-KBsFxF",
+      "logicalBytes": 51183803
+    },
+    {
+      "path": "/private/tmp/fpv-historical-source-YWwhLF",
+      "logicalBytes": 51183803
+    },
+    {
+      "path": "/private/tmp/fpv-historical-source-dIvH8j",
+      "logicalBytes": 51183803
+    },
+    {
+      "path": "/private/tmp/fpv-sixth-native-20261017-desktop",
+      "logicalBytes": 18314944
+    },
+    {
+      "path": "/private/tmp/fpv-sixth-native-20261017-ios",
+      "logicalBytes": 18389947
+    },
+    {
+      "path": "/private/tmp/fpv-sixth-native-20261017-source",
+      "logicalBytes": 18314578
+    },
+    {
+      "path": "/private/tmp/fpv-seventh-native-20261017-desktop",
+      "logicalBytes": 18315257
+    },
+    {
+      "path": "/private/tmp/fpv-seventh-native-20261017-ios",
+      "logicalBytes": 18390260
+    },
+    {
+      "path": "/private/tmp/fpv-seventh-native-20261017-source",
+      "logicalBytes": 18314889
+    },
+    {
+      "path": "/private/tmp/fpv-eighth-native-final-20261017-desktop",
+      "logicalBytes": 18315907
+    },
+    {
+      "path": "/private/tmp/fpv-eighth-native-final-20261017-ios",
+      "logicalBytes": 18390910
+    },
+    {
+      "path": "/private/tmp/fpv-eighth-native-final-20261017-source",
+      "logicalBytes": 18315534
+    },
+    {
+      "path": "/private/tmp/fpv-boundary-review-native-desktop",
+      "logicalBytes": 18322277
+    },
+    {
+      "path": "/private/tmp/fpv-boundary-review-native-ios",
+      "logicalBytes": 18397280
+    },
+    {
+      "path": "/private/tmp/fpv-boundary-review-native-source",
+      "logicalBytes": 18321908
+    },
+    {
+      "path": "/private/tmp/fpv-boundary-review-native-fixture",
+      "logicalBytes": 18384607
+    },
+    {
+      "path": "/private/tmp/fpv-boundary-review-native-fixture-desktop",
+      "logicalBytes": 18384971
+    },
+    {
+      "path": "/private/tmp/fpv-post-publication-native-desktop",
+      "logicalBytes": 18319490
+    },
+    {
+      "path": "/private/tmp/fpv-post-publication-native-ios",
+      "logicalBytes": 18394493
+    },
+    {
+      "path": "/private/tmp/fpv-post-publication-native-source",
+      "logicalBytes": 18319120
+    },
+    {
+      "path": "/private/tmp/fpv-post-publication-native-fixture",
+      "logicalBytes": 18381818
+    },
+    {
+      "path": "/private/tmp/fpv-post-publication-native-fixture-desktop",
+      "logicalBytes": 18382182
+    }
+  ],
+  "freeBytesAfter": 964976640
+}

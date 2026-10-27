@@ -1,0 +1,40 @@
+TAP version 13
+# Subtest: startup failure retains pending scripts and request outcomes without replacing the original error
+ok 1 - startup failure retains pending scripts and request outcomes without replacing the original error
+  ---
+  duration_ms: 1.115542
+  type: 'test'
+  ...
+# Subtest: successful startup returns the action result and reports explicit request truncation
+ok 2 - successful startup returns the action result and reports explicit request truncation
+  ---
+  duration_ms: 1.311
+  type: 'test'
+  ...
+# Subtest: startup report excludes URL credentials, query, fragment, data bodies and redacts retained strings
+ok 3 - startup report excludes URL credentials, query, fragment, data bodies and redacts retained strings
+  ---
+  duration_ms: 0.206166
+  type: 'test'
+  ...
+# Subtest: failed and hung state capture stays bounded and never masks the startup result
+ok 4 - failed and hung state capture stays bounded and never masks the startup result
+  ---
+  duration_ms: 13.164333
+  type: 'test'
+  ...
+# Subtest: arbitrary network and capture errors cannot retain URL secrets in diagnostic metadata
+ok 5 - arbitrary network and capture errors cannot retain URL secrets in diagnostic metadata
+  ---
+  duration_ms: 0.32375
+  type: 'test'
+  ...
+1..5
+# tests 5
+# suites 0
+# pass 5
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 62.643083

@@ -1,8 +1,8 @@
 {
   "format": "xonix-sentinel-proof.v1",
   "packId": "sentinel-relay",
-  "packVersion": "1.0.0",
-  "packSha256": "790bbcc43d78f64cacb01ae50cde4bb463ad938de80325cc37c26c415fce1c43",
+  "packVersion": "1.1.0",
+  "packSha256": "a15fc3d8a9848da76a23d426fc6576d7091603c03d5565642c3360bd68b8dff7",
   "levelSha256": "2cf4d96ca97577e1f532305db8a8310040fa31e13dfb54305b083d14889c6f93",
   "classesSha256": "ae853d82027f8d00c9acb1b3e75bd9d6fb5187054744fda1fc36c15fa6456b29",
   "campaignKey": "sentinel-relay/1/838c4e06647f7fd0",

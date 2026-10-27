@@ -1,0 +1,374 @@
+{
+  "format": "FPVTuningContinuationVerification.v1",
+  "generatedAt": "2026-10-16T03:59:52.836157+00:00",
+  "branch": "codex/fpv-rates-and-tuning",
+  "baseRevision": "741948b14a09a816e49054c443511186bb99eb41",
+  "priorImplementationRevision": "8202201b790923f8de3821fbc3298006885773bf",
+  "sourceBinding": "Final working-tree source hashes; commit follows this receipt. No public deployment.",
+  "softwareCompletionItems": 6,
+  "softwareCompletionPassed": true,
+  "checks": {
+    "fullPracticeSuite": {
+      "passed": 589,
+      "failed": 0,
+      "note": "Full run precedes the final verification-watchdog adjustment and CLI-only boundary guards. The affected suites below were rerun afterward."
+    },
+    "finalWorkerPracticeTests": {
+      "passed": 17,
+      "failed": 0
+    },
+    "finalFlightLogTests": {
+      "passed": 14,
+      "failed": 0
+    },
+    "nativeBuildPlatformTests": {
+      "passed": 75,
+      "failed": 0,
+      "scope": "Unchanged platform suite; final source-bound staging and Electron fixture reported separately."
+    },
+    "releaseValidation": {
+      "passed": true,
+      "command": "npm run validate"
+    },
+    "changedModuleLint": {
+      "passed": true,
+      "modules": 40,
+      "note": "Final CLI boundary edits and Pages locator were also linted after the combined run."
+    },
+    "finalEditorMatrix": {
+      "passed": 6,
+      "failed": 0
+    },
+    "runtimeMatrix": {
+      "runtimes": 6,
+      "exactAgreement": true,
+      "allMeasuredTimingCandidatesPassed": true
+    },
+    "normalPagesBuild": {
+      "passed": true,
+      "publicationProfile": "main-pages",
+      "output": "/private/tmp/fpv-rates-completion-20261016-pages",
+      "sourceRevision": null,
+      "manifestEntriesVerified": 3430,
+      "manifestSha256": "e64d4ba0d283e50e948f7cc980c1adb16770ba1c40aa69af7571db77ef69d6e6",
+      "distributionZipSha256": "74dc9e80f48a9b517860e6d606fb8a33db8524780b4c535f3babf0398506c59f",
+      "changedRuntimeFilesMatchCurrentSource": [
+        "optional-practice/civilian-fpv/advanced-practice.mjs",
+        "optional-practice/civilian-fpv/advanced-regional.mjs",
+        "optional-practice/civilian-fpv/advanced-simulation.mjs",
+        "optional-practice/civilian-fpv/advanced-worker-client.mjs",
+        "optional-practice/civilian-fpv/advanced-worker.mjs",
+        "optional-practice/civilian-fpv/app.mjs",
+        "optional-practice/civilian-fpv/betaflight-import.mjs",
+        "optional-practice/civilian-fpv/input.mjs",
+        "optional-practice/civilian-fpv/radio-runtime.mjs",
+        "optional-practice/civilian-fpv/regional/region-motion-query.mjs",
+        "optional-practice/civilian-fpv/regional/scenery-admission.mjs",
+        "optional-practice/civilian-fpv/regional/terrain-admission.mjs",
+        "optional-practice/civilian-fpv/regional/verified-flight-geometry.mjs",
+        "optional-practice/civilian-fpv/regional/verified-mixed-window.mjs",
+        "optional-practice/civilian-fpv/regional/verified-scenery-window.mjs",
+        "optional-practice/civilian-fpv/regional/verified-terrain-window.mjs",
+        "optional-practice/civilian-fpv/tuning-library.mjs",
+        "optional-practice/civilian-fpv/tuning-ui.mjs",
+        "optional-practice/civilian-fpv/world-app.mjs"
+      ]
+    },
+    "generatedPagesBrowserCheck": {
+      "passed": true,
+      "packages": 2,
+      "actualKeyboardInstallerControls": true,
+      "isolatedOfflineContexts": true
+    }
+  },
+  "sources": [
+    {
+      "path": "game/test/fpv-advanced-practice.test.mjs",
+      "bytes": 19840,
+      "sha256": "955e6e324c3996c833172e76503932826cda6f5fc75fa6e9fa11c806f27d5961"
+    },
+    {
+      "path": "game/test/fpv-advanced-regional.test.mjs",
+      "bytes": 23921,
+      "sha256": "6cbc56ec5fed96824386206c0d4c4b0bff075b72f045c2ed8df3895c81a69250"
+    },
+    {
+      "path": "game/test/fpv-advanced-terrain.test.mjs",
+      "bytes": 12722,
+      "sha256": "23d498194929ad0d4b95b8204364f29ad33a8bad80c02a9d83fcb21d2586c0fd"
+    },
+    {
+      "path": "game/test/fpv-advanced-worker.test.mjs",
+      "bytes": 8108,
+      "sha256": "99bdcb4f3f0fe05ebe21ccf77dc9bfc8db51d5eb6dda351c5bb0177919124319"
+    },
+    {
+      "path": "game/test/fpv-advanced.test.mjs",
+      "bytes": 16458,
+      "sha256": "d297184bf039cb9c20b05447b7dbf80f2566f0e3361ebf4b2967014fa453c57d"
+    },
+    {
+      "path": "game/test/fpv-betaflight-import.test.mjs",
+      "bytes": 19793,
+      "sha256": "5554fa5f17aeb898947924d1354312ec96eb2e27d051fb5e844b66cfd76edf28"
+    },
+    {
+      "path": "game/test/fpv-flight-ui.test.mjs",
+      "bytes": 76285,
+      "sha256": "fe58a13eeb03fce30c95dcffa3b9c85efa8043198abc96b0c01ca3802c634fd2"
+    },
+    {
+      "path": "game/test/fpv-radio.test.mjs",
+      "bytes": 12595,
+      "sha256": "bae0401a034dee555e944df8be5f365d817d2e6620f0d0168bb6432c5d5d7675"
+    },
+    {
+      "path": "game/test/fpv-tuning-library.test.mjs",
+      "bytes": 28551,
+      "sha256": "895b03f40b0ecd6ae46fda5e4c2ffac8c0bd970705e449f9b93d5384e7dbf8d9"
+    },
+    {
+      "path": "game/test/fpv-tuning-ui.test.mjs",
+      "bytes": 34930,
+      "sha256": "190489e8eed733499a22d1765ea97c91a9bb831fb347f5643e1283e24a8eb4a5"
+    },
+    {
+      "path": "game/test/fpv-world-appearance-ui.test.mjs",
+      "bytes": 89280,
+      "sha256": "0e509d0a7a59d72f60f05d0244fed51c90cf3b2ebabeb36f8ff2bf61215f657f"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/advanced-practice.mjs",
+      "bytes": 47388,
+      "sha256": "e886fa61afa1083fedd6c0af4db4c47c41bdbe024039006bf540d7553d64ec3f"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/advanced-regional.mjs",
+      "bytes": 23022,
+      "sha256": "815eb5ae69e3beb55098df0fe422874379d569db1459362aac25b5f135629238"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/advanced-simulation.mjs",
+      "bytes": 60779,
+      "sha256": "c42faf40c4e6dea5bb167598f095f0c99786b3b1cc3a3e6b00d6cf6a7110001c"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/advanced-worker-client.mjs",
+      "bytes": 3869,
+      "sha256": "c10cb8a211e1169dc5e80ff7b3e18017755479a594774c0d045c682cf81d8ada"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/advanced-worker.mjs",
+      "bytes": 5824,
+      "sha256": "72efd49d26b1baf6665f9bdd097aca3bace3bb4a0a606ebf3a3136b24a27f267"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/app.mjs",
+      "bytes": 97130,
+      "sha256": "6008be62ec318178727bec9fb1caf95f60ae14665baedfb8f14ee9b3a6a38798"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/betaflight-import.mjs",
+      "bytes": 36889,
+      "sha256": "7a844d3eb8eb8d3dbc3f0872901a4ba0655c2150fe8e4c5fdc3ada7eb61c8723"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/input.mjs",
+      "bytes": 42603,
+      "sha256": "9890ef3de130762da619a4a4d7e4f43b7e5b5c64d8e28d3cbbbf0eecd4f9fdb6"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/radio-runtime.mjs",
+      "bytes": 10306,
+      "sha256": "3f659e0c8ba6728ad0897218f41e73eebe46316fa6d7046a3ded0ab489106c1e"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/regional/region-motion-query.mjs",
+      "bytes": 3931,
+      "sha256": "fba3960fe9e90c0d56d7fbf77711843342b8c9230cd7502dffa9df2bda9686ce"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/regional/scenery-admission.mjs",
+      "bytes": 16032,
+      "sha256": "184d34c5cff615fd17a00097d8f3cd450a086573bf1e88953a7e92226e389765"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/regional/terrain-admission.mjs",
+      "bytes": 9420,
+      "sha256": "35b9af942b3b1526c63f6b41ab030e43806cee74715adbf0a71ada1cbf023c59"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/regional/verified-flight-geometry.mjs",
+      "bytes": 2562,
+      "sha256": "18573585c1b1f59fe62a9eaefe62275135716291cea072d4acdd3e5a361ecbb2"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/regional/verified-mixed-window.mjs",
+      "bytes": 16559,
+      "sha256": "812b46df0d4c4fef9c76c1b2fc6c7c570b31d9ba83b72bca97ae2e5c1979ad0c"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/regional/verified-scenery-window.mjs",
+      "bytes": 14405,
+      "sha256": "07d5b719b8a37a1f6deec0838c594f575fabce6d1203f3adab96b2723a771fb5"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/regional/verified-terrain-window.mjs",
+      "bytes": 12375,
+      "sha256": "4a4df9f20e84f20cb2c66f2dbc1ea1b38bed12937a5b363509dd90ddea46bca0"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/tuning-library.mjs",
+      "bytes": 14652,
+      "sha256": "ff08c8f3e3da605c86e5518a14043e76a7d5d52c5abcc8f3e12de6d8dfc08696"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/tuning-ui.mjs",
+      "bytes": 53231,
+      "sha256": "ccaf7451f8ea67607c5fd9d69fadfcf7bf86b90e71b3306b1104d54ab1dd73fc"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/world-app.mjs",
+      "bytes": 400536,
+      "sha256": "8931e7330c70fe402822643697c506ca1c975c09fa849a12d6f413cbe457f03f"
+    },
+    {
+      "path": "package.json",
+      "bytes": 8685,
+      "sha256": "f79eff6955790ad400f963d2f8dc37e654c99d6b0ce8950a1608e55e726d72a9"
+    },
+    {
+      "path": "publishing/optional-package-admission.mjs",
+      "bytes": 20285,
+      "sha256": "94eedf3b46c5b8dccab58e7669116482ca044b729e27df71cd8df39a4a3673ba"
+    },
+    {
+      "path": "publishing/optional-package-candidate.mjs",
+      "bytes": 4890,
+      "sha256": "cc659bc6ce63cead724540aff4f3cc47bb0c35726e408c6ad75fd2140e937db7"
+    },
+    {
+      "path": "publishing/optional-package-policy.mjs",
+      "bytes": 30314,
+      "sha256": "5465d019eef0108503b626bdd66ef4b5a7491a2c40bbc3937ecf00187a8461d4"
+    },
+    {
+      "path": "scripts/fpv-flight-log-comparison.mjs",
+      "bytes": 21595,
+      "sha256": "bd0f4d3bb18d6d6efc1349d0eb254d5b46c625382aac91d3ccb9dc80d6366db2"
+    },
+    {
+      "path": "scripts/fpv-regional-contact-capacity.mjs",
+      "bytes": 8570,
+      "sha256": "5a357d574cc721018f13d04674db8795f42589a80886a3846925c9bdb6f71545"
+    },
+    {
+      "path": "scripts/smoke-fpv-advanced-comparison.mjs",
+      "bytes": 15318,
+      "sha256": "262553520d56e8d43cda26a6bcc440c17c106bcb62784df23c4d90b229a0c052"
+    },
+    {
+      "path": "scripts/smoke-fpv-pages.mjs",
+      "bytes": 28420,
+      "sha256": "6026974c7ec311e2d47b0a8893f87bef3121f836f00b4f3a2abccb61e98fd1ea"
+    },
+    {
+      "path": "scripts/smoke-fpv-tuning.mjs",
+      "bytes": 18627,
+      "sha256": "407f62989ec4ebf1d4687d7f1f12f62d2de387d83c19a86d7c0dc1b68dd17097"
+    },
+    {
+      "path": "scripts/test-fpv-flight-log-comparison.mjs",
+      "bytes": 16450,
+      "sha256": "20f014f7519c87141f1f5ebd4b526b868d22e7465ba74ebbf1b4d09406ab9f48"
+    },
+    {
+      "path": "scripts/test-optional-fpv-package.mjs",
+      "bytes": 25906,
+      "sha256": "4e102f114c7193a8444256609fd8121781248466fbaf06cc0e3393107f458b94"
+    }
+  ],
+  "reports": [
+    {
+      "path": "docs/fpv-tuning-browser-final-qualification.json",
+      "bytes": 9588,
+      "sha256": "8dc747b0b6943312e7f980c6cd255fbebaafc55a1364224e7fa3acccabd2575f"
+    },
+    {
+      "path": "docs/fpv-advanced-comparison-browser-final-qualification.json",
+      "bytes": 5362,
+      "sha256": "2706683077f011a02d47378f90510616ecd0529de65a206b60287e56e815d157"
+    },
+    {
+      "path": "docs/fpv-advanced-runtime-qualification-2026-10-16-final.json",
+      "bytes": 585755,
+      "sha256": "08b195c27f13c9c839bc6a4dd36764f0484c6841b3a3a966d898a2c4d502926b"
+    },
+    {
+      "path": "docs/fpv-regional-contact-capacity-2026-10-16-final.json",
+      "bytes": 14401,
+      "sha256": "8dc5ead466b2cc8fb985a59b1ae0727d97e821081ee0002de5d8f9742179e0d7"
+    },
+    {
+      "path": "docs/fpv-native-continuation-qualification.json",
+      "bytes": 37140,
+      "sha256": "535e486052a35bb6ef969f6c98b62d28fbbcc09b3506e80d898189746a690aa8"
+    },
+    {
+      "path": "docs/fpv-pages-continuation-live-testing-evidence.json",
+      "bytes": 55557,
+      "sha256": "80dea3d712c446628c2e763c81935cc770c8d75c1bddd3f23416da870981255c"
+    }
+  ],
+  "localLogReceipts": [
+    {
+      "path": "/private/tmp/fpv-continuation-practice-final.log",
+      "bytes": 146492,
+      "sha256": "820bfddb22cd2101901cf972bd95a67cae6715c4243db6643b01c6e76ae31249"
+    },
+    {
+      "path": "/private/tmp/fpv-verification-deadline-tests.log",
+      "bytes": 4510,
+      "sha256": "fa7fdd34bfd529f449d312670f814bc583635b0fb7c41cfaf0c2002f254bac72"
+    },
+    {
+      "path": "/private/tmp/fpv-flight-log-final-tests.log",
+      "bytes": 3670,
+      "sha256": "40ca01708515e7852d07e99b6b1811a20ad58e2dc9f43301fc023907e47cc327"
+    },
+    {
+      "path": "/private/tmp/fpv-continuation-validation.log",
+      "bytes": 3885,
+      "sha256": "e40da55b8c4f3aff4b2464d3e0f7825d075596527d84b220a50de95d869df95f"
+    },
+    {
+      "path": "/private/tmp/fpv-continuation-lint-final.log",
+      "bytes": 35,
+      "sha256": "b1c17304488c353bfa2833bbf886c9026c6cd006829c2592f1cdf5faca3aa528"
+    },
+    {
+      "path": "/private/tmp/fpv-continuation-pages-build-final.log",
+      "bytes": 211,
+      "sha256": "77b36356e6dab1bf9a481ae94211861805ea287a61c6da8687213e87fb738c3b"
+    },
+    {
+      "path": "/private/tmp/fpv-continuation-pages-smoke-final.log",
+      "bytes": 1499,
+      "sha256": "3d317f4142dee83e79b4ce0be83a42e7460e53eb53fa50f2376f74e7ca86a4b9"
+    }
+  ],
+  "preservedAttempts": [
+    "docs/fpv-tuning-browser-final-load-timeout.json",
+    "docs/fpv-pages-continuation-selector-failure.json",
+    "docs/fpv-regional-contact-capacity.json"
+  ],
+  "limits": [
+    "Physical radio, real-aircraft data and experienced-pilot assessment are deferred by user; no measured aircraft qualification is claimed.",
+    "One ARM64 host; physical Intel/mobile/low-end and iOS execution remain unqualified.",
+    "Advanced stays optional, experimental, unscored and ineligible for automatic promotion.",
+    "Normal local Pages build and remembered-unlock fixture do not establish public HTTPS, real-password acceptance or installed-update behavior.",
+    "Full-game native distribution remains outside the simulator-only qualification build."
+  ],
+  "published": false,
+  "advancedPromoted": false
+}

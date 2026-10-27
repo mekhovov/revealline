@@ -1,5 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import { getLocale, setLocale, t as translate } from '../i18n/index.mjs';
 import {
   attachControllerBoostSettings,
   renderControllerBoostCue,
@@ -137,4 +138,37 @@ test('unavailable Boost shows status without offering a button owned by another 
     renderControllerBoostCue(cue, { mode: 'toggle', latched: false }, 'South', false);
   assert.equal(cue.textContent, 'Controller Boost off');
   assert.equal(cue.writes, 3);
+});
+
+test('cached cues follow locale notifications while paused and repair replaced text independently', (t) => {
+  const locale = getLocale();
+  t.after(() => setLocale(locale, { persist: false }));
+  setLocale('en', { persist: false });
+  const first = new Element(),
+    second = new Element(),
+    state = { mode: 'toggle', latched: true };
+  renderControllerBoostCue(first, state, 'R1', true);
+  renderControllerBoostCue(second, state, 'RB', false);
+  setLocale('uk', { persist: false });
+  assert.equal(
+    first.textContent,
+    translate('gameplay:controllerBoost2', {
+      value1: 'on',
+      value2: translate('gameplay:toTurn', { value1: 'R1', value2: 'off' }),
+    }),
+    'locale notifications update a paused cue before another frame',
+  );
+  assert.equal(
+    second.textContent,
+    translate('gameplay:controllerBoost2', { value1: 'on', value2: '' }),
+  );
+  const translated = first.textContent;
+  first.textContent = 'replaced';
+  first.hidden = true;
+  renderControllerBoostCue(first, state, 'R1', true);
+  assert.equal(first.textContent, translated);
+  assert.equal(first.hidden, false);
+  const writes = first.writes;
+  for (let i = 0; i < 120; i++) renderControllerBoostCue(first, state, 'R1', true);
+  assert.equal(first.writes, writes);
 });

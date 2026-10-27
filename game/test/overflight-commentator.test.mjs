@@ -46,6 +46,29 @@ const advance = (state, ticks, events = []) => {
   state.events = events.map((type) => ({ type }));
 };
 
+test('caption layout refresh delegates only to the shared owner and retires on disposal', () => {
+  let layouts = 0,
+    prepares = 0,
+    suspends = 0;
+  const adapter = createOverflightCommentator({
+    reactions: {
+      refreshCaptionLayout: () => layouts++,
+      prepare: () => prepares++,
+      suspend: () => suspends++,
+    },
+  });
+  adapter.refreshCaptionLayout();
+  assert.equal(layouts, 1);
+  assert.equal(prepares, 0);
+  adapter.dispose();
+  adapter.refreshCaptionLayout();
+  assert.equal(layouts, 1);
+  assert.equal(suspends, 1);
+  const legacy = fixture();
+  assert.doesNotThrow(() => legacy.adapter.refreshCaptionLayout());
+  legacy.adapter.dispose();
+});
+
 test('Overflight copy is registered in shared Voice Studio with exact EN/UK text and truthful recording reuse', () => {
   for (const line of OVERFLIGHT_REACTION_LINES) {
     assert.equal(

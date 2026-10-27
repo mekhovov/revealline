@@ -375,6 +375,9 @@ export function createObservationCheckpointStore({
             return;
           }
           connection = db;
+          db.onclose = () => {
+            if (connection === db) connection = null;
+          };
           db.onversionchange = () => {
             db.close();
             if (connection === db) connection = null;
@@ -387,24 +390,50 @@ export function createObservationCheckpointStore({
     return opening;
   }
   async function transaction(mode, action) {
-    const db = await open();
-    return operation((finish) => {
-      const tx = db.transaction(['reports'], mode);
-      let result;
-      tx.oncomplete = () => finish(null, result);
-      tx.onabort = () => finish(tx.error ?? new Error('Observer checkpoint transaction aborted.'));
-      tx.onerror = () => {}; // The abort owns rejection and rollback.
-      action(tx.objectStore('reports'), (value) => {
-        result = value;
-      });
-      return () => {
-        try {
-          tx.abort();
-        } catch {
-          /* Already committed. */
-        }
-      };
-    });
+    // A browser may close a connection between acquisition and transaction
+    // creation, even before its close event arrives. Only that pre-transaction
+    // failure is safe to retry; never replay an aborted or committed write.
+    for (let attempt = 0; attempt < 2; attempt++) {
+      const db = await open();
+      let started = false;
+      try {
+        return await operation((finish) => {
+          let tx;
+          try {
+            tx = db.transaction(['reports'], mode);
+          } catch (error) {
+            if (error.name === 'InvalidStateError') {
+              if (connection === db) connection = null;
+              db.close();
+            }
+            throw error;
+          }
+          started = true;
+          let result;
+          tx.oncomplete = () => finish(null, result);
+          tx.onabort = () =>
+            finish(tx.error ?? new Error('Observer checkpoint transaction aborted.'));
+          tx.onerror = () => {}; // The abort owns rejection and rollback.
+          try {
+            action(tx.objectStore('reports'), (value) => {
+              result = value;
+            });
+          } catch (error) {
+            tx.abort();
+            throw error;
+          }
+          return () => {
+            try {
+              tx.abort();
+            } catch {
+              /* Already committed. */
+            }
+          };
+        });
+      } catch (error) {
+        if (closed || started || attempt || error.name !== 'InvalidStateError') throw error;
+      }
+    }
   }
   function decode(text) {
     if (text == null) return null;
@@ -505,6 +534,7 @@ export function mountObserver({
     scratch = null,
     scratchContext = null,
     frameLoads = 0,
+    demoEnded = false,
     observerHealth = { attached: false, targets: 0, failures: 0, error: null },
     diagnostics = [],
     droppedDiagnostics = 0,
@@ -561,6 +591,48 @@ export function mountObserver({
     return () => {
       target.removeEventListener('error', onError);
       target.removeEventListener('unhandledrejection', onRejection);
+    };
+  }
+  function gamePath(view = frame.contentWindow) {
+    try {
+      const url = new URL(view.location.href);
+      return url.origin === root.origin ? url.pathname : 'cross-origin';
+    } catch {
+      return null;
+    }
+  }
+  function captureControlIntent(doc) {
+    // Passive evidence only: no key values from editing, labels, query strings,
+    // input cancellation, focus changes or extra gameplay input ownership.
+    const onInput = (event) => {
+      if (!running) return;
+      let controlId, key;
+      if (event.type === 'click') {
+        const control = event.target?.closest?.('button, a, [role="button"]');
+        controlId = boundedText(control?.id, 128);
+        if (!controlId) return;
+      } else {
+        if (event.target?.closest?.('input, textarea, select, [contenteditable="true"]')) return;
+        if (
+          !['Escape', 'Enter', 'Tab', 'ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(
+            event.key,
+          )
+        )
+          return;
+        key = event.key;
+      }
+      log.event('observed-control-input', performance.now(), {
+        inputType: event.type,
+        controlId,
+        key,
+        trusted: event.isTrusted === true,
+        documentPath: gamePath(doc.defaultView),
+      });
+    };
+    const options = { capture: true, passive: true };
+    for (const type of ['click', 'keydown']) doc.addEventListener(type, onInput, options);
+    return () => {
+      for (const type of ['click', 'keydown']) doc.removeEventListener(type, onInput, options);
     };
   }
   cleanupListeners.push(captureErrors(window, 'observer-window'));
@@ -808,6 +880,13 @@ export function mountObserver({
       phaseKey = next;
       log.event('observed-dom-state-change', performance.now(), { phase });
     }
+    if (!demoEnded && s.available && s.bootState === 'ready' && !s.demoOpen && !s.practice) {
+      demoEnded = true;
+      log.event('demo-ended', performance.now());
+      // Finish after this sample/mutation callback returns, so finalization
+      // cannot recursively sample or leave a newly scheduled clock behind.
+      void Promise.resolve().then(() => stop('demo-ended'));
+    }
   }
   function attachChild() {
     observer?.disconnect();
@@ -818,7 +897,12 @@ export function mountObserver({
     try {
       const doc = frame.contentDocument;
       const targets = observationTargets(doc, { required: running });
-      removeChildDiagnostics = captureErrors(doc.defaultView, 'game-window');
+      const removeErrors = captureErrors(doc.defaultView, 'game-window'),
+        removeIntent = captureControlIntent(doc);
+      removeChildDiagnostics = () => {
+        removeErrors();
+        removeIntent();
+      };
       const ObserverClass = doc.defaultView.MutationObserver ?? MutationObserver;
       observer = new ObserverClass((records) => {
         if (
@@ -841,9 +925,12 @@ export function mountObserver({
         });
       observerHealth = { ...observerHealth, attached: true, targets: targets.length, error: null };
       phaseChanged();
+      return true;
     } catch (error) {
       observer?.disconnect();
       observer = null;
+      removeChildDiagnostics();
+      removeChildDiagnostics = () => {};
       const detail = diagnostic('observer-window', 'observer-attachment-failed', error);
       observerHealth = {
         attached: false,
@@ -852,6 +939,7 @@ export function mountObserver({
         error: detail,
       };
       if (running) log.event('observer-attachment-failed', performance.now(), { detail });
+      return false;
     }
   }
   function canvasSample() {
@@ -924,6 +1012,8 @@ export function mountObserver({
     timer = null;
     observer?.disconnect();
     observer = null;
+    removeChildDiagnostics();
+    removeChildDiagnostics = () => {};
     if (scratch) {
       scratch.width = 0;
       scratch.height = 0;
@@ -953,6 +1043,7 @@ export function mountObserver({
     log = null;
     phaseKey = '';
     frameLoads = 0;
+    demoEnded = false;
     observerHealth = { attached: false, targets: 0, failures: 0, error: null };
     status('Hashing served sources. The observation clock has not started.');
     try {
@@ -991,7 +1082,10 @@ export function mountObserver({
       };
       preparing = false;
       running = true;
-      attachChild();
+      if (!attachChild()) {
+        await stop('observer-attachment-failed');
+        return;
+      }
       sample();
       timer = setTimeout(wake, OBSERVATION_LIMITS.intervalMs);
     } catch (error) {
@@ -1028,6 +1122,8 @@ export function mountObserver({
     report.samples = log.samples;
     report.events = log.events;
     report.childNavigationsDuringObservation = frameLoads;
+    report.demoEndedDuringObservation = demoEnded;
+    report.finalGamePath = gamePath();
     status('Observation stopped. Comparing final served source and storage hashes…');
     report.finalStorage = await readStorage(frame.contentWindow);
     if (disposed) return;
@@ -1057,7 +1153,7 @@ export function mountObserver({
     report.droppedDiagnostics = droppedDiagnostics;
     report.observerComplete = observerHealth.failures === 0;
     report.observationValidForPinnedSources =
-      report.sourceInventoryStable && frameLoads === 0 && report.observerComplete;
+      report.sourceInventoryStable && frameLoads === 0 && !demoEnded && report.observerComplete;
     report.requestedDurationReached = report.timing.elapsedSeconds >= durationSeconds;
     report.releaseQualified = false;
     report.status = 'finalized';
@@ -1076,6 +1172,7 @@ export function mountObserver({
       report.requestedDurationReached &&
       report.observationValidForPinnedSources &&
       report.terminalChecks.storage === 'complete';
+    report.checkpointStorageAvailable = !persistenceFailed;
     try {
       finalText = serialize(report);
       $('observation-report').value = finalText;
@@ -1084,6 +1181,15 @@ export function mountObserver({
       storageFailure(error);
     }
     if (disposed) return;
+    if (persistenceFailed) {
+      // The last write can fail after the first serialization. Keep that
+      // failure in the exact downloadable evidence, without retrying the write.
+      report.checkpointStorageAvailable = false;
+      report.diagnostics = [...diagnostics];
+      report.droppedDiagnostics = droppedDiagnostics;
+      finalText = serialize(report);
+      $('observation-report').value = finalText;
+    }
     $('observation-clear-saved').disabled = false;
     $('observation-download').disabled = false;
     $('observation-start').disabled = false;
@@ -1132,11 +1238,13 @@ export function mountObserver({
     }
   }
   listen(frame, 'load', () => {
-    if (running) {
+    const wasRunning = running;
+    if (wasRunning) {
       frameLoads++;
-      log.event('child-load', performance.now());
+      log.event('child-load', performance.now(), { documentPath: gamePath() });
     }
     attachChild();
+    if (wasRunning) void stop('child-navigation');
   });
   for (const event of ['visibilitychange', 'freeze', 'resume'])
     listen(document, event, () => {

@@ -1,0 +1,380 @@
+# Retained historical excerpt after an ownership migration. Exact originals are preserved separately. This excerpt is not the original complete record or a release qualification.
+
+TAP version 13
+# Subtest: demo routes the same full event batch and run context as ordinary gameplay
+ok 1 - demo routes the same full event batch and run context as ordinary gameplay
+  ---
+  duration_ms: 1.885625
+  ...
+# Subtest: actual demo shares mute, volume and transport while demo Pause and credits preserve gameplay
+ok 2 - actual demo shares mute, volume and transport while demo Pause and credits preserve gameplay
+  ---
+  duration_ms: 4770.017209
+  ...
+# Subtest: actual Play style starts paused music, preserves listening restrictions, and yields to newer close or Pause
+ok 3 - actual Play style starts paused music, preserves listening restrictions, and yields to newer close or Pause
+  ---
+  duration_ms: 8510.02225
+  ...
+# Subtest: demo and takeover use current ordinary gore, remains, grid and font settings
+ok 4 - demo and takeover use current ordinary gore, remains, grid and font settings
+  ---
+  duration_ms: 3271.289542
+  ...
+# Subtest: Standard: live clear-picture toggle previews unearned art without resetting playback, practice or progress
+ok 5 - Standard: live clear-picture toggle previews unearned art without resetting playback, practice or progress
+  ---
+  duration_ms: 5825.882042
+  ...
+# Subtest: Journey: live clear-picture toggle previews unearned art without resetting playback, practice or progress
+ok 6 - Journey: live clear-picture toggle previews unearned art without resetting playback, practice or progress
+  ---
+  duration_ms: 12215.99875
+  ...
+# Subtest: the settings choice persists across a mounted app reload and privacy remains mutually exclusive
+    # Subtest: save from Settings
+    ok 1 - save from Settings
+      ---
+      duration_ms: 3414.214209
+      ...
+    # Subtest: restore in the next app instance
+    ok 2 - restore in the next app instance
+      ---
+      duration_ms: 6596.726875
+      ...
+    1..2
+ok 7 - the settings choice persists across a mounted app reload and privacy remains mutually exclusive
+  ---
+  duration_ms: 10011.907
+  ...
+# Subtest: visible spectator clock ignores focus, keeps one owner and emits fresh ordinary frames
+ok 8 - visible spectator clock ignores focus, keeps one owner and emits fresh ordinary frames
+  ---
+  duration_ms: 4.859417
+  ...
+# Subtest: withheld visible RAF cannot stop spectator simulation, recap rotation, audio or painting
+ok 9 - withheld visible RAF cannot stop spectator simulation, recap rotation, audio or painting
+  ---
+  duration_ms: 5.759625
+  ...
+# Subtest: frame wins the visible wake once and retires its queued sibling
+ok 10 - frame wins the visible wake once and retires its queued sibling
+  ---
+  duration_ms: 0.452417
+  ...
+# Subtest: timer wins the visible wake once and retires its queued sibling
+ok 11 - timer wins the visible wake once and retires its queued sibling
+  ---
+  duration_ms: 0.106041
+  ...
+# Subtest: visible timer recovery preserves explicit pause and pumps audio without stale effects
+ok 12 - visible timer recovery preserves explicit pause and pumps audio without stale effects
+  ---
+  duration_ms: 0.314708
+  ...
+# Subtest: reset invalidates both pending visible callbacks
+ok 13 - reset invalidates both pending visible callbacks
+  ---
+  duration_ms: 0.367625
+  ...
+# Subtest: visibilitychange invalidates both pending visible callbacks
+ok 14 - visibilitychange invalidates both pending visible callbacks
+  ---
+  duration_ms: 0.516542
+  ...
+# Subtest: freeze invalidates both pending visible callbacks
+ok 15 - freeze invalidates both pending visible callbacks
+  ---
+  duration_ms: 0.1815
+  ...
+# Subtest: stop invalidates both pending visible callbacks
+ok 16 - stop invalidates both pending visible callbacks
+  ---
+  duration_ms: 1.383084
+  ...
+# Subtest: destroy invalidates both pending visible callbacks
+ok 17 - destroy invalidates both pending visible callbacks
+  ---
+  duration_ms: 0.163625
+  ...
+# Subtest: 1000ms hidden delay admits at most two seconds with one quarter-second per task
+ok 18 - 1000ms hidden delay admits at most two seconds with one quarter-second per task
+  ---
+  duration_ms: 0.370167
+  ...
+# Subtest: 60000ms hidden delay admits at most two seconds with one quarter-second per task
+ok 19 - 60000ms hidden delay admits at most two seconds with one quarter-second per task
+  ---
+  duration_ms: 0.169083
+  ...
+# Subtest: visibility switches invalidate stale RAF and message callbacks without double stepping
+ok 20 - visibility switches invalidate stale RAF and message callbacks without double stepping
+  ---
+  duration_ms: 0.732375
+  ...
+# Subtest: explicit pause stops catch-up while audio and visible painting continue until close
+ok 21 - explicit pause stops catch-up while audio and visible painting continue until close
+  ---
+  duration_ms: 0.396375
+  ...
+# Subtest: loading and freeze discard debt; resume preserves paused intent and resets timestamps
+ok 22 - loading and freeze discard debt; resume preserves paused intent and resets timestamps
+  ---
+  duration_ms: 0.1925
+  ...
+# Subtest: planner budget reserves a boundary without polling or spinning and cannot bank unlimited debt
+ok 23 - planner budget reserves a boundary without polling or spinning and cannot bank unlimited debt
+  ---
+  duration_ms: 0.219958
+  ...
+# Subtest: fallback timer works without RAF or MessageChannel and stale work cannot survive destroy
+ok 24 - fallback timer works without RAF or MessageChannel and stale work cannot survive destroy
+  ---
+  duration_ms: 0.421292
+  ...
+# Subtest: close during an advance cancels the remaining burst and does not schedule another owner
+ok 25 - close during an advance cancels the remaining burst and does not schedule another owner
+  ---
+  duration_ms: 0.787959
+  ...
+# Subtest: clock samples never move its elapsed origin backward
+ok 26 - clock samples never move its elapsed origin backward
+  ---
+  duration_ms: 0.504125
+  ...
+# Subtest: two accelerated hours rotate hidden scenes across focus, pause and freeze generations
+ok 27 - two accelerated hours rotate hidden scenes across focus, pause and freeze generations
+  ---
+  duration_ms: 45.483
+  ...
+# Subtest: mounted demo uses an earned release original without a durable assignment and never earns practice rewards
+    # Subtest: ordinary Ready materializes the release still without an assignment
+    ok 1 - ordinary Ready materializes the release still without an assignment
+      ---
+      duration_ms: 3353.327292
+      ...
+    # Subtest: standard host: earned original stays clear during takeover and completed playback
+    ok 2 - standard host: earned original stays clear during takeover and completed playback
+      ---
+      duration_ms: 22892.973417
+      ...
+    # Subtest: gentle host: earned original stays clear during takeover and completed playback
+    ok 3 - gentle host: earned original stays clear during takeover and completed playback
+      ---
+      duration_ms: 28691.08875
+      ...
+    # Subtest: picture privacy replaces an earned original only inside demo and practice
+    ok 4 - picture privacy replaces an earned original only inside demo and practice
+      ---
+      duration_ms: 6241.862584
+      ...
+    # Subtest: another unearned level stays obscured in fresh practice despite the existing receipt
+    ok 5 - another unearned level stays obscured in fresh practice despite the existing receipt
+      ---
+      duration_ms: 4875.263
+      ...
+    1..5
+ok 28 - mounted demo uses an earned release original without a durable assignment and never earns practice rewards
+  ---
+  duration_ms: 66266.48675
+  ...
+# Subtest: an accessible demo on an idle Legacy host prepares the same level without automatic Start
+ok 29 - an accessible demo on an idle Legacy host prepares the same level without automatic Start
+  ---
+  duration_ms: 12004.651125
+  ...
+# Subtest: default Journey demo Fresh transfers exact Legacy mission ownership and arrives at Ready
+    # Subtest: the Journey host requests its verified destination without adopting a Legacy run
+    ok 1 - the Journey host requests its verified destination without adopting a Legacy run
+      ---
+      duration_ms: 46832.139458
+      ...
+    # Subtest: the receiving Legacy host prepares exact art and remains at tick zero
+    ok 2 - the receiving Legacy host prepares exact art and remains at tick zero
+      ---
+      duration_ms: 36786.376584
+      ...
+    # Subtest: a Ready hint cannot authorize an unearned locked Legacy mission
+    ok 3 - a Ready hint cannot authorize an unearned locked Legacy mission
+      ---
+      duration_ms: 40130.667666
+      ...
+    1..3
+ok 30 - default Journey demo Fresh transfers exact Legacy mission ownership and arrives at Ready
+  ---
+  duration_ms: 123749.921583
+  ...
+# Subtest: a pending scene picture releases its painter on deadline before the decoder settles
+ok 31 - a pending scene picture releases its painter on deadline before the decoder settles
+  ---
+  duration_ms: 10480.232
+  ...
+# Subtest: a pending scene picture releases its painter on Back before the decoder settles
+ok 32 - a pending scene picture releases its painter on Back before the decoder settles
+  ---
+  duration_ms: 8278.94275
+  ...
+# Subtest: journey/neutral-ground/immediate: formerly stalled performance reaches a real result
+ok 33 - journey/neutral-ground/immediate: formerly stalled performance reaches a real result
+  ---
+  duration_ms: 14473.909667
+  ...
+# Subtest: journey/neutral-ground/grid-center: formerly stalled performance reaches a real result
+ok 34 - journey/neutral-ground/grid-center: formerly stalled performance reaches a real result
+  ---
+  duration_ms: 13520.122708
+  ...
+# Subtest: journey/crossbar-depot/immediate: formerly stalled performance reaches a real result
+ok 35 - journey/crossbar-depot/immediate: formerly stalled performance reaches a real result
+  ---
+  duration_ms: 9656.084708
+  ...
+# Subtest: journey/crossbar-depot/grid-center: formerly stalled performance reaches a real result
+ok 36 - journey/crossbar-depot/grid-center: formerly stalled performance reaches a real result
+  ---
+  duration_ms: 16198.312125
+  ...
+# Subtest: journey/staggered-reserve/immediate: formerly stalled performance reaches a real result
+ok 39 - journey/staggered-reserve/immediate: formerly stalled performance reaches a real result
+  ---
+  duration_ms: 33839.661084
+  ...
+# Subtest: journey/staggered-reserve/grid-center: formerly stalled performance reaches a real result
+ok 40 - journey/staggered-reserve/grid-center: formerly stalled performance reaches a real result
+  ---
+  duration_ms: 22733.366875
+  ...
+# Subtest: journey/side-door-bays/immediate: formerly stalled performance reaches a real result
+ok 41 - journey/side-door-bays/immediate: formerly stalled performance reaches a real result
+  ---
+  duration_ms: 18794.421708
+  ...
+# Subtest: journey/side-door-bays/grid-center: formerly stalled performance reaches a real result
+ok 42 - journey/side-door-bays/grid-center: formerly stalled performance reaches a real result
+  ---
+  duration_ms: 38018.065667
+  ...
+# Subtest: journey/first-relay/immediate: formerly stalled performance reaches a real result
+ok 43 - journey/first-relay/immediate: formerly stalled performance reaches a real result
+  ---
+  duration_ms: 30493.178791
+  ...
+# Subtest: journey/first-relay/grid-center: formerly stalled performance reaches a real result
+ok 44 - journey/first-relay/grid-center: formerly stalled performance reaches a real result
+  ---
+  duration_ms: 41930.120584
+  ...
+# Subtest: journey/relay-perimeter/immediate: formerly stalled performance reaches a real result
+ok 45 - journey/relay-perimeter/immediate: formerly stalled performance reaches a real result
+  ---
+  duration_ms: 20629.499875
+  ...
+# Subtest: journey/crown-audience/grid-center: formerly stalled performance reaches a real result
+ok 46 - journey/crown-audience/grid-center: formerly stalled performance reaches a real result
+  ---
+  duration_ms: 31980.38625
+  ...
+# Subtest: droneaid/droneaid-nl-signals-of-support-04/immediate: formerly stalled performance reaches a real result
+ok 47 - droneaid/droneaid-nl-signals-of-support-04/immediate: formerly stalled performance reaches a real result
+  ---
+  duration_ms: 24413.469083
+  ...
+# Subtest: droneaid/droneaid-nl-signals-of-support-06/grid-center: formerly stalled performance reaches a real result
+ok 48 - droneaid/droneaid-nl-signals-of-support-06/grid-center: formerly stalled performance reaches a real result
+  ---
+  duration_ms: 29822.503208
+  ...
+# Subtest: scene transition modifies only the already concealed picture and releases its bounded cache
+ok 50 - scene transition modifies only the already concealed picture and releases its bounded cache
+  ---
+  duration_ms: 210.496
+  ...
+# Subtest: reduced effects and invalid transition inputs skip transition work, and failed filtering cannot expose raw art
+ok 51 - reduced effects and invalid transition inputs skip transition work, and failed filtering cannot expose raw art
+  ---
+  duration_ms: 73.1785
+  ...
+# Subtest: clear previews cannot disable active gameplay jammers; protected images retain the same mechanic
+ok 52 - clear previews cannot disable active gameplay jammers; protected images retain the same mechanic
+  ---
+  duration_ms: 26.4335
+  ...
+# Subtest: mounted observer exports bounded incomplete checkpoints with hashes and recovers without starting or steering
+ok 53 - mounted observer exports bounded incomplete checkpoints with hashes and recovers without starting or steering
+  ---
+  duration_ms: 374.008625
+  ...
+# Subtest: finalization detects changed sources and stores the finalized report separately from its preliminary checkpoint
+ok 54 - finalization detects changed sources and stores the finalized report separately from its preliminary checkpoint
+  ---
+  duration_ms: 75.757208
+  ...
+# Subtest: cancelling source preparation aborts ownership without creating or replacing saved evidence
+ok 55 - cancelling source preparation aborts ownership without creating or replacing saved evidence
+  ---
+  duration_ms: 16.066958
+  ...
+# Subtest: quota failure is bounded and leaves current DOM/download observation available
+ok 56 - quota failure is bounded and leaves current DOM/download observation available
+  ---
+  duration_ms: 24.32775
+  ...
+# Subtest: a failed final checkpoint write stays visible in the exact finalized DOM report
+ok 57 - a failed final checkpoint write stays visible in the exact finalized DOM report
+  ---
+  duration_ms: 56.563541
+  ...
+# Subtest: disabled IndexedDB and a failed terminal inventory never prevent export or imply completion
+ok 58 - disabled IndexedDB and a failed terminal inventory never prevent export or imply completion
+  ---
+  duration_ms: 149.696958
+  ...
+# Subtest: store enforces serialized byte budget before opening and closes late opens after timeout
+ok 59 - store enforces serialized byte budget before opening and closes late opens after timeout
+  ---
+  duration_ms: 16.546125
+  ...
+# Subtest: observer storage reopens a closed connection, close notification true
+ok 60 - observer storage reopens a closed connection, close notification true
+  ---
+  duration_ms: 0.944375
+  ...
+# Subtest: observer storage reopens a closed connection, close notification false
+ok 61 - observer storage reopens a closed connection, close notification false
+  ---
+  duration_ms: 0.7005
+  ...
+# Subtest: repeated transaction-creation failure has one bounded reconnect and no failing write retries
+ok 62 - repeated transaction-creation failure has one bounded reconnect and no failing write retries
+  ---
+  duration_ms: 0.490584
+  ...
+# Subtest: child navigation finalizes invalid evidence immediately and retains only bounded control intent
+ok 63 - child navigation finalizes invalid evidence immediately and retains only bounded control intent
+  ---
+  duration_ms: 59.8885
+  ...
+# Subtest: leaving the demo ends its observation without blocking the game or certifying another session
+ok 64 - leaving the demo ends its observation without blocking the game or certifying another session
+  ---
+  duration_ms: 63.191625
+  ...
+# Subtest: disposal during preparation aborts the source request and detaches listeners without a late start
+ok 65 - disposal during preparation aborts the source request and detaches listeners without a late start
+  ---
+  duration_ms: 17.395584
+  ...
+# Subtest: a slow checkpoint cannot drop the queued final report, and pending clear cannot erase a newly started run
+ok 66 - a slow checkpoint cannot drop the queued final report, and pending clear cannot erase a newly started run
+  ---
+  duration_ms: 37.675792
+  ...
+1..66
+# tests 76
+# suites 0
+# pass 76
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 708630.539625

@@ -28,6 +28,7 @@ import {
   industrialMaterialPixels,
 } from '../game/presentation/industrial-materials.mjs';
 import { createDefaultThemeBundle } from '../game/presentation/catalog.mjs';
+import { PICTURE_PRODUCTION_MIGRATION } from './picture-production-history.mjs';
 import { decodePresentationDocument } from '../game/presentation/document-codec.mjs';
 import { FORMATS, validateThemeBundle, resolvePresentation } from '../game/presentation/model.mjs';
 import { exportThemeBundle, importThemeBundle } from '../game/presentation/bundle.mjs';
@@ -41,6 +42,62 @@ export const INDUSTRIAL_ENVIRONMENT_DATA_PATH =
 const sha = (bytes) => createHash('sha256').update(bytes).digest('hex');
 const identity = (value) => sha(canonicalJSON(value));
 const ref = ({ id, revision }) => ({ id, revision });
+
+/** Lossless source projection only. The runtime reconstructs the original JSON
+ * before parsing, so source pins, property order and independent objects survive.
+ * The finite dictionary uses only later references and needs no library/file. */
+export function encodeIndustrialEnvironmentModule(data) {
+  const json = JSON.stringify(data),
+    counts = new Map(),
+    dictionary = [],
+    header =
+      '/** Generated immutable admission rows. Retain previous rows; regenerate with scripts/produce-industrial-environments.mjs. */\n// prettier-ignore\n',
+    literal = `export const INDUSTRIAL_ENVIRONMENT_DATA = ${json};\n`;
+  if (/[\ue000-\ue0ff]/u.test(json)) return Buffer.from(header + literal);
+  const add = (value) => {
+    if (value.length >= 8) counts.set(value, (counts.get(value) ?? 0) + 1);
+  };
+  function visit(value) {
+    if (typeof value === 'string') add(JSON.stringify(value));
+    else if (value && typeof value === 'object') {
+      add(JSON.stringify(value));
+      if (Array.isArray(value)) value.forEach(visit);
+      else
+        for (const [key, child] of Object.entries(value)) {
+          add(JSON.stringify(key) + ':');
+          visit(child);
+        }
+    }
+  }
+  visit(data);
+  const candidates = [...counts]
+    .filter(([, count]) => count > 1)
+    .sort(
+      (a, b) =>
+        (b[0].length - 3) * (b[1] - 1) - (a[0].length - 3) * (a[1] - 1) ||
+        (a[0] < b[0] ? -1 : a[0] > b[0] ? 1 : 0),
+    )
+    .slice(0, 512);
+  let text = json;
+  for (const [part] of candidates) {
+    const count =
+      text.split(part).length -
+      1 +
+      dictionary.reduce((sum, row) => sum + row.split(part).length - 1, 0);
+    if ((count - 1) * (Buffer.byteLength(part) - 3) < 64) continue;
+    const marker = String.fromCharCode(0xe000 + dictionary.length);
+    text = text.split(part).join(marker);
+    for (let i = 0; i < dictionary.length; i++)
+      dictionary[i] = dictionary[i].split(part).join(marker);
+    dictionary.push(part);
+    if (dictionary.length === 256) break;
+  }
+  const encoded = `export const INDUSTRIAL_ENVIRONMENT_DATA = (()=>{const [text,rows]=${JSON.stringify([text, dictionary])},pattern=/[\\ue000-\\ue0ff]/g,expand=value=>value.replace(pattern,mark=>rows[mark.charCodeAt(0)-0xe000]);for(let i=rows.length-1;i>=0;i--)rows[i]=expand(rows[i]);return JSON.parse(expand(text));})();\n`;
+  return Buffer.from(
+    header + (Buffer.byteLength(encoded) < Buffer.byteLength(literal) ? encoded : literal),
+  );
+}
+
 const chapterUkrainian = {
   'Patrol District': 'Патрульний район',
   'Escape Lines': 'Шляхи втечі',
@@ -376,30 +433,37 @@ export function assertIndustrialEnvironmentRetention(previous, next) {
 // Source catalogues may contain newly authored picture slots which the published
 // Studio has not adopted. A full transport must use the actual loaded contract,
 // not prove compatibility by importing into its own broader source registry.
+/** Only current slots or the exact admitted predecessor contract can be used.
+ * Retained picture slots preserve old gallery owners after membership changes;
+ * their inclusion creates source recipes, never a new artwork approval. */
+export function compatibleStudioBaseline(publishedSource, retainedSource) {
+  const published = validateThemeBundle(publishedSource);
+  const retained = validateThemeBundle(retainedSource);
+  const pin = PICTURE_PRODUCTION_MIGRATION.baseline.slots;
+  if (retained.slots.length !== pin.count || sha(canonicalJSON(retained.slots)) !== pin.sha256)
+    throw new Error('Retained Studio slot contract differs from the pinned predecessor.');
+  const current = new Map(createDefaultThemeBundle().slots.map((slot) => [slot.id, slot]));
+  const previous = new Map(retained.slots.map((slot) => [slot.id, slot]));
+  for (const slot of published.slots) {
+    const expected = current.get(slot.id) ?? previous.get(slot.id);
+    if (!expected || canonicalJSON(slot) !== canonicalJSON(expected))
+      throw new Error('The published Studio slot contract needs an explicit compatible producer.');
+  }
+  return createDefaultThemeBundle({ slots: published.slots });
+}
+
 async function publishedStudioBaseline() {
   const bytes = await readFile(resolve(root, 'game/presentation/compiled/studio.json')),
     published = validateThemeBundle(decodePresentationDocument(bytes.toString('utf8'))),
-    base = structuredClone(createDefaultThemeBundle()),
-    approved = new Map(published.slots.map((slot) => [slot.id, slot]));
-  base.slots = base.slots.filter((slot) => approved.has(slot.id));
-  if (
-    base.slots.length !== published.slots.length ||
-    base.slots.some((slot) => canonicalJSON(slot) !== canonicalJSON(approved.get(slot.id)))
-  )
-    throw new Error('The published Studio slot contract needs an explicit compatible producer.');
-  base.slots = structuredClone(published.slots);
-  for (const theme of base.themes)
-    theme.bindings = Object.fromEntries(
-      Object.entries(theme.bindings).filter(([id]) => approved.has(id)),
-    );
-  const used = new Set(
-    base.themes.flatMap(({ bindings }) =>
-      Object.values(bindings).map(({ id, revision }) => `${id}@${revision}`),
+    retained = JSON.parse(
+      await readFile(
+        resolve(root, 'authoring/library/fpv-field-kit/picture-migration-baseline.json'),
+        'utf8',
+      ),
     ),
-  );
-  base.assets = base.assets.filter(({ id, revision }) => used.has(`${id}@${revision}`));
+    base = compatibleStudioBaseline(published, retained);
   return {
-    base: validateThemeBundle(base),
+    base,
     published,
     contract: { slots: published.slots.length, sourceSha256: sha(bytes) },
   };
@@ -616,9 +680,7 @@ export async function createIndustrialEnvironmentBatch({ previous = null } = {})
         })),
     });
   }
-  const module =
-    Buffer.from(`/** Generated immutable admission rows. Retain previous rows; regenerate with scripts/produce-industrial-environments.mjs. */\n// prettier-ignore
-export const INDUSTRIAL_ENVIRONMENT_DATA = ${JSON.stringify(data)};\n`);
+  const module = encodeIndustrialEnvironmentModule(data);
   files.set(INDUSTRIAL_ENVIRONMENT_DATA_PATH, module);
   const report = {
     format: 'revealline-industrial-environment-inventory.v1',

@@ -29,43 +29,88 @@ const campaign = await json('../content/campaign.json'),
 campaign.classRecipes = classRecipes;
 const entry = { campaign, classRecipes };
 const catalog = await json('../demo-data/catalog.json');
+const pressurePack = await json('../content/packs/fpv-arcade-r5.json');
+const pressureEntry = {
+  campaign: {
+    ...pressurePack.campaigns[0],
+    classRecipes: pressurePack.classRecipes,
+  },
+  classRecipes: pressurePack.classRecipes,
+};
 
-test('curated complete routes reproduce current Standard tuning without scripted reversal excerpts', async () => {
+test('curated complete routes reproduce current Standard tuning without scripted reversal excerpts', async (t) => {
   const generated = await buildDemoRecordings();
-  assert.equal(generated.length, 10);
-  assert.equal(new Set(generated.map(({ replay }) => replay.level.id)).size, 8);
+  assert.equal(generated.length, 14);
+  assert.equal(new Set(generated.map(({ replay }) => replay.level.id)).size, 12);
   assert.deepEqual(
     catalog.clips,
     generated.map(({ descriptor }) => descriptor),
   );
+  const frozenRecordings = new Map();
+  // Inspect every clip before an assertion stops the route-by-route checks, so
+  // one failing runtime yields evidence for the whole immutable catalogue.
+  for (const { replay, descriptor } of generated) {
+    const candidates = await Promise.all(
+      [descriptor.replayURL, ...descriptor.replayVariants].map((url) => json(`../${url.slice(2)}`)),
+    );
+    const verifiedCandidates = candidates.map((candidate) => ({
+      replay: candidate,
+      verification: verifyReplay(candidate),
+    }));
+    frozenRecordings.set(descriptor.id, verifiedCandidates);
+    if (!verifiedCandidates.some(({ verification }) => verification.match))
+      t.diagnostic(
+        JSON.stringify({
+          clip: descriptor.id,
+          runtime: `${process.version}/${process.platform}/${process.arch}`,
+          generated: { summary: replay.summary, checkpoint: replay.checkpoint },
+          frozen: verifiedCandidates.map(({ replay: candidate, verification }) => ({
+            sameGeneratedTrace:
+              demoInputTraceIdentity(candidate) === demoInputTraceIdentity(replay),
+            sameGeneratedLevel: JSON.stringify(candidate.level) === JSON.stringify(replay.level),
+            recorded: { summary: candidate.summary, checkpoint: candidate.checkpoint },
+            reconstructed: verification.actual,
+            diagnostics: verification.diagnostics,
+          })),
+        }),
+      );
+  }
   for (const { replay, descriptor, metrics } of generated) {
     assert.ok(['won', 'lost'].includes(replay.summary.status));
-    const authored = campaign.levels.find((level) => level.id === replay.level.id);
+    const sourceEntry = descriptor.campaignId === campaign.id ? entry : pressureEntry;
+    const authored = sourceEntry.campaign.levels.find((level) => level.id === replay.level.id);
     assert.deepEqual(
       replay.level,
       applyGameplayTuning(authored, resolveGameplayTuning('standard')),
     );
-    assert.equal(descriptor.identity, demoIdentity(authored, classRecipes));
-    assert.equal(descriptor.recordingIdentity, demoIdentity(replay.level, classRecipes));
-    assert.equal(descriptor.levelRevision, authored.revision);
-    const candidates = await Promise.all(
-      [descriptor.replayURL, ...descriptor.replayVariants].map((url) => json(`../${url.slice(2)}`)),
+    assert.equal(descriptor.identity, demoIdentity(authored, sourceEntry.classRecipes));
+    assert.equal(
+      descriptor.recordingIdentity,
+      demoIdentity(replay.level, sourceEntry.classRecipes),
     );
+    assert.equal(descriptor.levelRevision, authored.revision);
+    const verifiedCandidates = frozenRecordings.get(descriptor.id);
+    const candidates = verifiedCandidates.map(({ replay }) => replay);
     for (const candidate of candidates) {
       assert.equal(demoInputTraceIdentity(candidate), descriptor.inputTraceIdentity);
-      assert.deepEqual(candidate.summary, replay.summary);
+      // The exact selected runtime checkpoint is still verified below. Other
+      // frozen engines may differ in the last bits of swept-collision time.
+      assert.ok(Math.abs(candidate.summary.time - replay.summary.time) < 1e-10);
+      assert.deepEqual({ ...candidate.summary, time: replay.summary.time }, replay.summary);
     }
-    const frozen = candidates.find((candidate) => verifyReplay(candidate).match);
+    const frozen = verifiedCandidates.find(({ verification }) => verification.match)?.replay;
     assert.ok(
       frozen,
-      'At least one independently frozen strict recording must match this runtime.',
+      `${descriptor.id}: at least one independently frozen strict recording must match ` +
+        `${process.version}/${process.platform}/${process.arch}. ` +
+        JSON.stringify(verifiedCandidates.map(({ verification }) => verification.diagnostics)),
     );
-    assert.ok(demoReplayMatchesEntry(replay, entry));
+    assert.ok(demoReplayMatchesEntry(replay, sourceEntry));
     const mistake = descriptor.tags.includes('failure');
     if (mistake) {
       assert.ok(metrics.failures >= 1);
-      assert.ok(replay.ticks / 120 >= 12 && replay.ticks / 120 <= 30);
-      assert.ok(['running', 'lost'].includes(replay.summary.status));
+      assert.ok(replay.ticks / 120 >= 12 && replay.ticks / 120 <= 60);
+      assert.equal(replay.summary.status, 'lost');
       assert.ok(replay.summary.lives < 3);
       assert.ok(descriptor.tags.includes(replay.options.classId));
     } else {
@@ -107,9 +152,7 @@ test('curated complete routes reproduce current Standard tuning without scripted
     assert.equal(player.state.lives, replay.summary.lives);
     if (mistake) {
       assert.equal(events['player.failed'], metrics.failures);
-      assert.ok(
-        metrics.fullLoss ? player.state.status === 'lost' : player.state.status === 'running',
-      );
+      assert.equal(player.state.status, 'lost', 'A loss performance ends only at a real defeat.');
     } else {
       assert.equal(events['player.failed'] ?? 0, 0);
       assert.ok(events['cut.closed'] >= 3);
@@ -177,7 +220,8 @@ test('frozen browser variants preserve the exact reviewed trace and every non-en
   assert.equal(provenance.format, 'revealline-demo-runtime-variants.v1');
   assert.equal(
     provenance.variants.length,
-    catalog.clips.reduce((count, clip) => count + clip.replayVariants.length, 0),
+    catalog.clips.reduce((count, clip) => count + clip.replayVariants.length, 0) -
+      (await json('../demo-data/ci-variant-provenance.json')).variants.length,
   );
   for (const id of [
     'first-signal-left',
@@ -214,8 +258,42 @@ test('frozen browser variants preserve the exact reviewed trace and every non-en
   }
 });
 
+test('Linux variants pin independently observed checkpoints without changing reviewed inputs or results', async () => {
+  const provenance = await json('../demo-data/ci-variant-provenance.json');
+  assert.equal(provenance.runtime, 'v20.19.6/linux/x64');
+  for (const variant of provenance.variants) {
+    const clip = catalog.clips.find((entry) => entry.id === variant.id);
+    assert.ok(clip.replayVariants.includes(variant.replayURL));
+    const original = await json(`../${clip.replayURL.slice(2)}`);
+    const replay = await json(`../${variant.replayURL.slice(2)}`);
+    assert.equal(demoInputTraceIdentity(replay), clip.inputTraceIdentity);
+    assert.equal(replay.checkpoint.hash, variant.checkpoint);
+    assert.equal(original.checkpoint.hash, variant.sourceCheckpoint);
+    for (const key of [
+      'version',
+      'ruleset',
+      'level',
+      'options',
+      'segments',
+      'ticks',
+      'releaseAfter',
+    ])
+      assert.deepEqual(replay[key], original[key]);
+    assert.deepEqual(original.summary, variant.sourceSummary);
+    assert.deepEqual(replay.summary, variant.runtimeSummary);
+    assert.ok(Math.abs(replay.summary.time - original.summary.time) < 1e-10);
+    assert.deepEqual({ ...replay.summary, time: original.summary.time }, original.summary);
+    assert.deepEqual(
+      Object.keys(original.checkpoint.sections).filter(
+        (section) => replay.checkpoint.sections[section] !== original.checkpoint.sections[section],
+      ),
+      variant.changedSections,
+    );
+  }
+});
+
 test('catalogue admits only matching installed content and local bundled replay URLs', async () => {
-  assert.equal(resolveDemoCatalog(catalog, [entry]).length, 10);
+  assert.equal(resolveDemoCatalog(catalog, [entry]).length, 12);
   assert.equal(resolveDemoCatalog(catalog, []).length, 0);
   const changed = structuredClone(entry);
   changed.campaign.levels[0].rules.moveSpeed++;
@@ -242,13 +320,19 @@ test('catalogue admits only matching installed content and local bundled replay 
     source = await json('../demo-data/first-signal-left.replay.json');
   assert.deepEqual(
     await loadDemoRecording(resolved[0], {
-      fetch: async () => ({ ok: true, text: async () => JSON.stringify(source) }),
+      fetch: async () => ({
+        ok: true,
+        text: async () => JSON.stringify(source),
+      }),
     }),
     source,
   );
   await assert.rejects(
     loadDemoRecording(resolved[2], {
-      fetch: async () => ({ ok: true, text: async () => JSON.stringify(source) }),
+      fetch: async () => ({
+        ok: true,
+        text: async () => JSON.stringify(source),
+      }),
     }),
     /no longer matches/,
   );

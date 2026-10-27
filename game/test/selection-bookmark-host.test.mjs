@@ -37,6 +37,7 @@ test('retained chapter selector persists its choice while the other saved flight
       });
       p.$('start-button').click();
       await settle(() => p.doc.body.dataset.flightState === 'running');
+      p.frame(0);
       p.key('ArrowDown');
       for (let n = 0; n < 12; n++) p.frame();
       p.$('pause-button').click();

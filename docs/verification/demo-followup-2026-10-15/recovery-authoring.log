@@ -1,0 +1,2 @@
+{"level":"signal-08","status":"lost","cuts":3,"bends":6,"seconds":30.0666666666656,"failures":[{"cause":"boss-lane","exposure":288,"cuts":1,"tick":1263},{"cause":"enemy-trail","exposure":298,"cuts":1,"tick":1809},{"cause":"boss-lane","exposure":309,"cuts":3,"tick":3609}],"invalid":null,"verified":true}
+{"level":"signal-10","status":"respawning","cuts":3,"bends":4,"seconds":37.57499999999851,"failures":[{"cause":"enemy-trail","exposure":520,"cuts":1,"tick":1495},{"cause":"enemy-trail","exposure":62,"cuts":3,"tick":4509}],"invalid":"unreadable loss","verified":true}

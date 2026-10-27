@@ -1,0 +1,316 @@
+{
+  "format": "SoloExactReceiverLoopEvidenceV1",
+  "runtimeCommit": "a159dd2ed12f02f0abcfc0b2d1e31bd564f5c61e",
+  "baselineRuntime": "14ac29e27df9d78283a1d93b5a16a23121212371",
+  "benchmarkCheckout": "2f0419124f414b35ec9cf08ed1c0dfa2b0b2bff6",
+  "sourcePath": "game/ui/analog-signal.mjs",
+  "baselineModuleSHA256": "57160f3fa06c1e434d55fb4d46c154a94288b0abc3afbe0f02a679173cd8936c",
+  "candidateModuleSHA256": "ffabbc99b5892f309962fd8b53ef36ae6b1af690b4c3776a6382d6f5cf33534c",
+  "nodeVersion": "v22.22.2",
+  "platform": "darwin",
+  "startedAt": "2026-10-16T11:50:55.475173+00:00",
+  "finishedAt": "2026-10-16T11:50:57.777299+00:00",
+  "elapsedSeconds": 2.3019938329962315,
+  "equivalence": {
+    "outputCases": 78,
+    "invalidInputCases": 18,
+    "scope": "Frozen old-output equality across boundary dimensions, six phase/seed/strength combinations and in-place/overlapping views. Exact validation errors and rejected-output immutability matched. No extra runtime pixel buffers."
+  },
+  "workloads": [
+    {
+      "width": 512,
+      "height": 512,
+      "pairs": [
+        {
+          "pair": 0,
+          "order": ["baseline", "candidate"],
+          "repetitions": 15,
+          "baselineMs": 2.828838866666668,
+          "candidateMs": 2.2477472000000036,
+          "improvementPercent": 20.541702587372445
+        },
+        {
+          "pair": 1,
+          "order": ["candidate", "baseline"],
+          "repetitions": 15,
+          "baselineMs": 2.84566386666667,
+          "candidateMs": 2.2266916666666625,
+          "improvementPercent": 21.751416506020927
+        },
+        {
+          "pair": 2,
+          "order": ["baseline", "candidate"],
+          "repetitions": 15,
+          "baselineMs": 2.8643638666666598,
+          "candidateMs": 2.2098944666666664,
+          "improvementPercent": 22.848682306609934
+        },
+        {
+          "pair": 3,
+          "order": ["candidate", "baseline"],
+          "repetitions": 15,
+          "baselineMs": 2.900472200000005,
+          "candidateMs": 2.2196444000000004,
+          "improvementPercent": 23.47299863794604
+        },
+        {
+          "pair": 4,
+          "order": ["baseline", "candidate"],
+          "repetitions": 15,
+          "baselineMs": 2.813647199999999,
+          "candidateMs": 2.22784446666667,
+          "improvementPercent": 20.82004927033244
+        },
+        {
+          "pair": 5,
+          "order": ["candidate", "baseline"],
+          "repetitions": 15,
+          "baselineMs": 2.8533138666666673,
+          "candidateMs": 2.2201805333333366,
+          "improvementPercent": 22.189403722100064
+        },
+        {
+          "pair": 6,
+          "order": ["baseline", "candidate"],
+          "repetitions": 15,
+          "baselineMs": 2.8448555999999976,
+          "candidateMs": 2.256919466666674,
+          "improvementPercent": 20.666642388925617
+        },
+        {
+          "pair": 7,
+          "order": ["candidate", "baseline"],
+          "repetitions": 15,
+          "baselineMs": 2.8009416666666613,
+          "candidateMs": 2.2460777999999966,
+          "improvementPercent": 19.80990440714876
+        },
+        {
+          "pair": 8,
+          "order": ["baseline", "candidate"],
+          "repetitions": 15,
+          "baselineMs": 2.861144466666656,
+          "candidateMs": 2.220616666666668,
+          "improvementPercent": 22.387118422797702
+        }
+      ],
+      "baselineMedianMs": 2.84566386666667,
+      "candidateMedianMs": 2.2266916666666625,
+      "medianImprovementPercent": 21.751416506020927,
+      "improvedPairs": 9
+    },
+    {
+      "width": 512,
+      "height": 288,
+      "pairs": [
+        {
+          "pair": 0,
+          "order": ["baseline", "candidate"],
+          "repetitions": 25,
+          "baselineMs": 1.6269516799999928,
+          "candidateMs": 1.2415033200000016,
+          "improvementPercent": 23.691444849793754
+        },
+        {
+          "pair": 1,
+          "order": ["candidate", "baseline"],
+          "repetitions": 25,
+          "baselineMs": 1.6051199999999972,
+          "candidateMs": 1.299965000000002,
+          "improvementPercent": 19.01135117623578
+        },
+        {
+          "pair": 2,
+          "order": ["baseline", "candidate"],
+          "repetitions": 25,
+          "baselineMs": 1.6054466800000045,
+          "candidateMs": 1.2741350000000056,
+          "improvementPercent": 20.63672896318164
+        },
+        {
+          "pair": 3,
+          "order": ["candidate", "baseline"],
+          "repetitions": 25,
+          "baselineMs": 1.6116566800000056,
+          "candidateMs": 1.2817399999999999,
+          "improvementPercent": 20.470655077730616
+        },
+        {
+          "pair": 4,
+          "order": ["baseline", "candidate"],
+          "repetitions": 25,
+          "baselineMs": 1.6097183200000018,
+          "candidateMs": 1.2479316400000062,
+          "improvementPercent": 22.475154535111162
+        },
+        {
+          "pair": 5,
+          "order": ["candidate", "baseline"],
+          "repetitions": 25,
+          "baselineMs": 1.5667966799999977,
+          "candidateMs": 1.2566399999999975,
+          "improvementPercent": 19.79559211218144
+        },
+        {
+          "pair": 6,
+          "order": ["baseline", "candidate"],
+          "repetitions": 25,
+          "baselineMs": 1.5717883200000051,
+          "candidateMs": 1.2398533599999972,
+          "improvementPercent": 21.118299186750978
+        },
+        {
+          "pair": 7,
+          "order": ["candidate", "baseline"],
+          "repetitions": 25,
+          "baselineMs": 1.5947616799999924,
+          "candidateMs": 1.2563583199999995,
+          "improvementPercent": 21.219682178467856
+        },
+        {
+          "pair": 8,
+          "order": ["baseline", "candidate"],
+          "repetitions": 25,
+          "baselineMs": 1.5374266799999987,
+          "candidateMs": 1.2568366799999966,
+          "improvementPercent": 18.25062642987322
+        }
+      ],
+      "baselineMedianMs": 1.6051199999999972,
+      "candidateMedianMs": 1.2566399999999975,
+      "medianImprovementPercent": 21.71052631578949,
+      "improvedPairs": 9
+    },
+    {
+      "width": 160,
+      "height": 120,
+      "pairs": [
+        {
+          "pair": 0,
+          "order": ["baseline", "candidate"],
+          "repetitions": 80,
+          "baselineMs": 0.21649947500000052,
+          "candidateMs": 0.18083124999999994,
+          "improvementPercent": 16.474970666788224
+        },
+        {
+          "pair": 1,
+          "order": ["candidate", "baseline"],
+          "repetitions": 80,
+          "baselineMs": 0.21688021250000133,
+          "candidateMs": 0.16867031249999798,
+          "improvementPercent": 22.228814442904998
+        },
+        {
+          "pair": 2,
+          "order": ["baseline", "candidate"],
+          "repetitions": 80,
+          "baselineMs": 0.21669009999999958,
+          "candidateMs": 0.1699307250000004,
+          "improvementPercent": 21.57891615722143
+        },
+        {
+          "pair": 3,
+          "order": ["candidate", "baseline"],
+          "repetitions": 80,
+          "baselineMs": 0.2097130249999964,
+          "candidateMs": 0.1638807374999999,
+          "improvementPercent": 21.854764385758717
+        },
+        {
+          "pair": 4,
+          "order": ["baseline", "candidate"],
+          "repetitions": 80,
+          "baselineMs": 0.21617863749999627,
+          "candidateMs": 0.16559009999999716,
+          "improvementPercent": 23.401265770305347
+        },
+        {
+          "pair": 5,
+          "order": ["candidate", "baseline"],
+          "repetitions": 80,
+          "baselineMs": 0.21439374999999927,
+          "candidateMs": 0.16610052500000166,
+          "improvementPercent": 22.525481736290242
+        },
+        {
+          "pair": 6,
+          "order": ["baseline", "candidate"],
+          "repetitions": 80,
+          "baselineMs": 0.2134531250000009,
+          "candidateMs": 0.1629395875,
+          "improvementPercent": 23.664932288998198
+        },
+        {
+          "pair": 7,
+          "order": ["candidate", "baseline"],
+          "repetitions": 80,
+          "baselineMs": 0.21207343749999835,
+          "candidateMs": 0.16564948749999645,
+          "improvementPercent": 21.890506678849054
+        },
+        {
+          "pair": 8,
+          "order": ["baseline", "candidate"],
+          "repetitions": 80,
+          "baselineMs": 0.20075937499999555,
+          "candidateMs": 0.17057135000000018,
+          "improvementPercent": 15.036919197420318
+        }
+      ],
+      "baselineMedianMs": 0.21439374999999927,
+      "candidateMedianMs": 0.16610052500000166,
+      "medianImprovementPercent": 22.525481736290242,
+      "improvedPairs": 9
+    }
+  ],
+  "focusedTests": {
+    "command": "CI=1 node22 --test --test-concurrency=1 game/test/analog-signal.test.mjs game/test/demo-picture.test.mjs game/test/menu-signal-loss.test.mjs game/test/render-performance.test.mjs",
+    "tests": 49,
+    "pass": 49,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "durationMs": 2697.165208,
+    "scope": "Precommit exact runtime bytes, after approved scalar/noise loop change; compact frozen-reference tests cover78 pixel/alias cases."
+  },
+  "proofReferences": [
+    {
+      "path": ".cache/solo-followup/analog-noise-exact-01/source-receipt.json",
+      "sha256": "fe16d121bca40aa4cc0675dce51dcfabe697e8af0c518e138fe78ef161c293b5"
+    },
+    {
+      "path": ".cache/solo-followup/analog-noise-exact-01/execution-receipt.json",
+      "sha256": "dbc0529c6cf13d84acaab89002a61f4fe371a856021a5d4e05310faf7e9ffc50"
+    },
+    {
+      "path": ".cache/solo-followup/analog-noise-exact-01/result.json",
+      "sha256": "6f3def6be289db8c608c9dc527a6367cb2c634170ca706c98669647f24e2b3b5"
+    },
+    {
+      "path": ".cache/solo-followup/analog-noise-exact-01/baseline.mjs",
+      "sha256": "57160f3fa06c1e434d55fb4d46c154a94288b0abc3afbe0f02a679173cd8936c"
+    },
+    {
+      "path": ".cache/solo-followup/analog-noise-exact-01/candidate.mjs",
+      "sha256": "ffabbc99b5892f309962fd8b53ef36ae6b1af690b4c3776a6382d6f5cf33534c"
+    },
+    {
+      "path": ".cache/solo-followup/analog-noise-exact-01/compare.mjs",
+      "sha256": "a9bc40db5226d157d9459e3e6983eaaf86716dfad50d3f957e3557f0dd1194d8"
+    },
+    {
+      "path": ".cache/solo-followup/analog-noise-exact-01/focused-tests.log",
+      "sha256": "8c4e77c01439cb190aed6b5eee5541f8a40fa7b3e3c1baa89bdc65a59e36ed60"
+    },
+    {
+      "path": ".cache/solo-followup/analog-noise-exact-01/scoped-lint.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": ".cache/solo-followup/analog-noise-exact-01/scoped-format.log",
+      "sha256": "17aa973d3f004560237d9a95171210b0671deff23d61628eecf7322ff5938f20"
+    }
+  ],
+  "scope": "Paired Node CPU microbenchmark with alternating execution order, all27pairs retained. This is not native-browser timing, physical-device, power or temperature evidence. No adaptive Demo quality policy was introduced without measured callback overload."
+}

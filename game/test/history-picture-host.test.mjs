@@ -1,3 +1,5 @@
+import { activateHostAction } from './helpers/host-action.mjs';
+import { RasterImage } from './helpers/raster-image.mjs';
 import { nativeCaptureSession as nativeSession } from '../capture-presentation-session.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
@@ -11,6 +13,7 @@ import { CURRENT_PICTURES } from '../presentation/current-pictures.mjs';
 import { FORMATS, TOKEN_DEFAULTS } from '../presentation/model.mjs';
 import { COMPILED_PRESENTATION_FORMAT } from '../presentation/host.mjs';
 import { hashPresentationBytes } from '../presentation/bundle.mjs';
+import { RasterImage as Picture } from './helpers/raster-image.mjs';
 
 const campaign = JSON.parse(await readFile(new URL('../content/campaign.json', import.meta.url)));
 const sessionKey = 'revealline.suspended.dev.v1';
@@ -33,22 +36,10 @@ class Locks {
     }
   }
 }
-class Picture {
-  constructor() {
-    this.width = this.height = this.naturalWidth = this.naturalHeight = 1;
-  }
-  set src(value) {
-    this.url = value;
-    if (value) queueMicrotask(() => this.onload?.());
-  }
-  decode() {
-    return Promise.resolve();
-  }
-  removeAttribute() {
-    this.url = '';
-  }
-}
-async function pageFor(t, { read, Image = Picture, waitForPictures = true, inspectMemory } = {}) {
+async function pageFor(
+  t,
+  { read, Image = RasterImage, waitForPictures = true, inspectMemory } = {},
+) {
   const releaseBytes = await readFile(
     new URL('../presentation/compiled/runtime.json', import.meta.url),
   );
@@ -198,7 +189,7 @@ test('an unfinished original can be prepared explicitly after history return wit
   assert.equal(memory.allPuts.length, writes);
   assert.equal(locks.calls.filter((key) => key === writerKey).length, 1);
   page.$('pause-button').click();
-  page.$('library-button').click();
+  await activateHostAction(page.$('library-button'));
   await settle(() => !page.$('session-originals').hidden);
   assert.equal(page.$('prepare-session-originals').disabled, false);
   assert.match(page.$('session-originals-note').textContent, /session|tab/i);
@@ -311,7 +302,7 @@ test('history Load saved flight and explicit Resume keep the saved pin and check
   );
   ticks(page, 3);
   assert.deepEqual(authoritativeCheckpoint(page.rendered.run), checkpoint);
-  page.$('library-button').click();
+  await activateHostAction(page.$('library-button'));
   page.doc.querySelector('[data-library-panel="saves"]').click();
   assert.equal(page.$('library-saves').hidden, false);
   page.$('export-session').click();
@@ -325,6 +316,8 @@ test('history Load saved flight and explicit Resume keep the saved pin and check
   );
   page.$('library-dialog').close();
   page.$('start-button').click();
+  await settle(() => page.doc.body.dataset.flightState === 'running');
+  page.frame(0);
   ticks(page, 2);
   assert.equal(page.rendered.paused, false);
   assert.equal(page.doc.querySelectorAll('dialog[open]').length, 0);
@@ -340,7 +333,8 @@ test('history cancellation preserves selected pins while a new explicit Start re
   let decodes = 0,
     originalStored = false;
   class HeldPicture extends Picture {
-    decode() {
+    async decode() {
+      await super.decode();
       // Original validation happens before durable history exists; hold the
       // selected-picture display only after that actual commit completes.
       if (!originalStored) return Promise.resolve();
@@ -406,7 +400,7 @@ test('unjoined session prewarm becomes ready without starting and exposes export
   assert.notEqual(page.doc.body.dataset.flightState, 'running');
   assert.equal(page.$('flight-preparation-cancel').hidden, true);
   assert.equal(page.$('picture-reload').hidden, true);
-  page.$('library-button').click();
+  await activateHostAction(page.$('library-button'));
   await settle(() => !page.$('session-originals').hidden);
   assert.equal(page.$('prepare-session-originals').disabled, false);
   page.$('library-dialog').close();

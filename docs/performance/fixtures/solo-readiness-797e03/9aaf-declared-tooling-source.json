@@ -1,0 +1,594 @@
+{
+  "format": "SoloReadinessChangedToolDeclaredSourceV1",
+  "postHocExactGitReadback": true,
+  "revision": "9aaf4ea6ee9ebe23821552e59851f2e3e817a15b",
+  "tree": "7e64a66f9eb309b692719b163ca00fbe78146ad5",
+  "declarations": [
+    {
+      "path": "docs/performance/solo-797-journal-cost-plan.json",
+      "references": [
+        "scripts/qualify-solo-runtime.mjs",
+        "scripts/solo-qualification-cpu-profile.mjs"
+      ],
+      "revision": "9aaf4ea6ee9ebe23821552e59851f2e3e817a15b",
+      "execution": "not-asserted-by-this-source-record"
+    },
+    {
+      "path": "docs/performance/solo-797-lifecycle-long29-plan.json",
+      "references": [
+        "scripts/qualify-solo-runtime.mjs",
+        "scripts/solo-qualification-cpu-profile.mjs"
+      ],
+      "revision": "9aaf4ea6ee9ebe23821552e59851f2e3e817a15b",
+      "execution": "not-asserted-by-this-source-record"
+    },
+    {
+      "path": "docs/performance/solo-797-lifecycle-retry-plan.json",
+      "references": [
+        "scripts/qualify-solo-runtime.mjs",
+        "scripts/solo-qualification-cpu-profile.mjs"
+      ],
+      "revision": "9aaf4ea6ee9ebe23821552e59851f2e3e817a15b",
+      "execution": "not-asserted-by-this-source-record"
+    },
+    {
+      "path": "docs/performance/solo-797-lifecycle-soak-plan.json",
+      "references": [
+        "scripts/qualify-solo-runtime.mjs",
+        "scripts/solo-qualification-cpu-profile.mjs"
+      ],
+      "revision": "9aaf4ea6ee9ebe23821552e59851f2e3e817a15b",
+      "execution": "not-asserted-by-this-source-record"
+    },
+    {
+      "path": "docs/performance/solo-797-timing-cold-first30-plan.json",
+      "references": [
+        "scripts/qualify-solo-runtime.mjs",
+        "scripts/solo-qualification-cpu-profile.mjs"
+      ],
+      "revision": "9aaf4ea6ee9ebe23821552e59851f2e3e817a15b",
+      "execution": "not-asserted-by-this-source-record"
+    },
+    {
+      "path": "docs/performance/solo-797-timing-jammer-steering-plan.json",
+      "references": [
+        "scripts/qualify-solo-runtime.mjs",
+        "scripts/solo-qualification-cpu-profile.mjs"
+      ],
+      "revision": "9aaf4ea6ee9ebe23821552e59851f2e3e817a15b",
+      "execution": "not-asserted-by-this-source-record"
+    },
+    {
+      "path": "docs/performance/solo-797-timing-large-capture-erosion-plan.json",
+      "references": [
+        "scripts/qualify-solo-runtime.mjs",
+        "scripts/solo-qualification-cpu-profile.mjs"
+      ],
+      "revision": "9aaf4ea6ee9ebe23821552e59851f2e3e817a15b",
+      "execution": "not-asserted-by-this-source-record"
+    },
+    {
+      "path": "docs/performance/solo-797-timing-long-rail-latency-plan.json",
+      "references": [
+        "scripts/qualify-solo-runtime.mjs",
+        "scripts/solo-qualification-cpu-profile.mjs"
+      ],
+      "revision": "9aaf4ea6ee9ebe23821552e59851f2e3e817a15b",
+      "execution": "not-asserted-by-this-source-record"
+    },
+    {
+      "path": "docs/performance/solo-797-timing-sentry-latency-plan.json",
+      "references": [
+        "scripts/qualify-solo-runtime.mjs",
+        "scripts/solo-qualification-cpu-profile.mjs"
+      ],
+      "revision": "9aaf4ea6ee9ebe23821552e59851f2e3e817a15b",
+      "execution": "not-asserted-by-this-source-record"
+    },
+    {
+      "path": "docs/performance/solo-797-timing-warm-first30-plan.json",
+      "references": [
+        "scripts/qualify-solo-runtime.mjs",
+        "scripts/solo-qualification-cpu-profile.mjs"
+      ],
+      "revision": "9aaf4ea6ee9ebe23821552e59851f2e3e817a15b",
+      "execution": "not-asserted-by-this-source-record"
+    },
+    {
+      "path": "docs/performance/solo-first-victory-cpu-797e03-plan.json",
+      "references": [
+        "scripts/qualify-solo-runtime.mjs",
+        "scripts/solo-qualification-cpu-profile.mjs",
+        "scripts/solo-remote-cpu-profile.mjs"
+      ],
+      "revision": "9aaf4ea6ee9ebe23821552e59851f2e3e817a15b",
+      "execution": "not-asserted-by-this-source-record"
+    },
+    {
+      "path": "docs/performance/solo-next-geometric-797e03-plan.json",
+      "references": [
+        "scripts/qualify-solo-runtime.mjs",
+        "scripts/solo-qualification-cpu-profile.mjs"
+      ],
+      "revision": "9aaf4ea6ee9ebe23821552e59851f2e3e817a15b",
+      "execution": "not-asserted-by-this-source-record"
+    },
+    {
+      "path": "docs/performance/solo-readiness-preparation-797e03-plan.json",
+      "references": [
+        "scripts/solo-remote-readiness.mjs",
+        "scripts/qualify-solo-runtime.mjs",
+        "scripts/solo-qualification-readiness.mjs",
+        "scripts/solo-qualification-cpu-profile.mjs"
+      ],
+      "revision": "9aaf4ea6ee9ebe23821552e59851f2e3e817a15b",
+      "execution": "not-asserted-by-this-source-record"
+    },
+    {
+      "path": "docs/performance/solo-remote-797e03-correctness-plan.json",
+      "references": [
+        "scripts/qualify-solo-runtime.mjs",
+        "scripts/solo-qualification-cpu-profile.mjs"
+      ],
+      "revision": "9aaf4ea6ee9ebe23821552e59851f2e3e817a15b",
+      "execution": "not-asserted-by-this-source-record"
+    },
+    {
+      "path": "docs/performance/solo-shared-mode-public-return-797e03-plan.json",
+      "references": [
+        "scripts/qualify-solo-runtime.mjs",
+        "scripts/solo-qualification-cpu-profile.mjs"
+      ],
+      "revision": "9aaf4ea6ee9ebe23821552e59851f2e3e817a15b",
+      "execution": "not-asserted-by-this-source-record"
+    },
+    {
+      "path": "docs/performance/solo-de332-journal-cost-plan.json",
+      "revision": "9aaf4ea6ee9ebe23821552e59851f2e3e817a15b",
+      "references": [
+        "scripts/qualify-solo-runtime.mjs",
+        "scripts/solo-qualification-cpu-profile.mjs"
+      ],
+      "execution": "not-asserted"
+    },
+    {
+      "path": "docs/performance/solo-de332-lifecycle-long29-plan.json",
+      "revision": "9aaf4ea6ee9ebe23821552e59851f2e3e817a15b",
+      "references": [
+        "scripts/qualify-solo-runtime.mjs",
+        "scripts/solo-qualification-cpu-profile.mjs"
+      ],
+      "execution": "not-asserted"
+    },
+    {
+      "path": "docs/performance/solo-de332-lifecycle-retry-plan.json",
+      "revision": "9aaf4ea6ee9ebe23821552e59851f2e3e817a15b",
+      "references": [
+        "scripts/qualify-solo-runtime.mjs",
+        "scripts/solo-qualification-cpu-profile.mjs"
+      ],
+      "execution": "not-asserted"
+    },
+    {
+      "path": "docs/performance/solo-de332-lifecycle-soak-plan.json",
+      "revision": "9aaf4ea6ee9ebe23821552e59851f2e3e817a15b",
+      "references": [
+        "scripts/qualify-solo-runtime.mjs",
+        "scripts/solo-qualification-cpu-profile.mjs"
+      ],
+      "execution": "not-asserted"
+    },
+    {
+      "path": "docs/performance/solo-de332-timing-cold-first30-plan.json",
+      "revision": "9aaf4ea6ee9ebe23821552e59851f2e3e817a15b",
+      "references": [
+        "scripts/qualify-solo-runtime.mjs",
+        "scripts/solo-qualification-cpu-profile.mjs"
+      ],
+      "execution": "not-asserted"
+    },
+    {
+      "path": "docs/performance/solo-de332-timing-jammer-steering-plan.json",
+      "revision": "9aaf4ea6ee9ebe23821552e59851f2e3e817a15b",
+      "references": [
+        "scripts/qualify-solo-runtime.mjs",
+        "scripts/solo-qualification-cpu-profile.mjs"
+      ],
+      "execution": "not-asserted"
+    },
+    {
+      "path": "docs/performance/solo-de332-timing-large-capture-erosion-plan.json",
+      "revision": "9aaf4ea6ee9ebe23821552e59851f2e3e817a15b",
+      "references": [
+        "scripts/qualify-solo-runtime.mjs",
+        "scripts/solo-qualification-cpu-profile.mjs"
+      ],
+      "execution": "not-asserted"
+    },
+    {
+      "path": "docs/performance/solo-de332-timing-long-rail-latency-plan.json",
+      "revision": "9aaf4ea6ee9ebe23821552e59851f2e3e817a15b",
+      "references": [
+        "scripts/qualify-solo-runtime.mjs",
+        "scripts/solo-qualification-cpu-profile.mjs"
+      ],
+      "execution": "not-asserted"
+    },
+    {
+      "path": "docs/performance/solo-de332-timing-sentry-latency-plan.json",
+      "revision": "9aaf4ea6ee9ebe23821552e59851f2e3e817a15b",
+      "references": [
+        "scripts/qualify-solo-runtime.mjs",
+        "scripts/solo-qualification-cpu-profile.mjs"
+      ],
+      "execution": "not-asserted"
+    },
+    {
+      "path": "docs/performance/solo-de332-timing-warm-first30-plan.json",
+      "revision": "9aaf4ea6ee9ebe23821552e59851f2e3e817a15b",
+      "references": [
+        "scripts/qualify-solo-runtime.mjs",
+        "scripts/solo-qualification-cpu-profile.mjs"
+      ],
+      "execution": "not-asserted"
+    },
+    {
+      "path": "docs/performance/solo-797-lifecycle-retry-plan.json",
+      "revision": "d87a2ee10e069fa3720040d9003f9740acd9427c",
+      "references": [
+        "scripts/qualify-solo-runtime.mjs",
+        "scripts/solo-qualification-cpu-profile.mjs"
+      ],
+      "execution": "separate-reviewed-release"
+    },
+    {
+      "path": "docs/performance/solo-797-timing-warm-first30-plan.json",
+      "revision": "d87a2ee10e069fa3720040d9003f9740acd9427c",
+      "references": [
+        "scripts/qualify-solo-runtime.mjs",
+        "scripts/solo-qualification-cpu-profile.mjs"
+      ],
+      "execution": "separate-reviewed-release"
+    },
+    {
+      "path": "docs/performance/solo-readiness-preparation-73a345-plan.json",
+      "references": [
+        "scripts/solo-remote-readiness.mjs",
+        "scripts/qualify-solo-runtime.mjs",
+        "scripts/solo-qualification-readiness.mjs",
+        "scripts/solo-qualification-cpu-profile.mjs"
+      ],
+      "revision": "9aaf4ea6ee9ebe23821552e59851f2e3e817a15b",
+      "execution": "not-asserted-by-this-source-record"
+    },
+    {
+      "path": "docs/performance/solo-remote-73a345-correctness-tooling-plan.json",
+      "references": [
+        "scripts/qualify-solo-runtime.mjs",
+        "scripts/solo-qualification-cpu-profile.mjs"
+      ],
+      "revision": "9aaf4ea6ee9ebe23821552e59851f2e3e817a15b",
+      "execution": "not-asserted-by-this-source-record"
+    },
+    {
+      "path": "docs/performance/solo-first-victory-cpu-de332-plan.json",
+      "references": [
+        "scripts/qualify-solo-runtime.mjs",
+        "scripts/solo-qualification-cpu-profile.mjs"
+      ],
+      "revision": "9aaf4ea6ee9ebe23821552e59851f2e3e817a15b",
+      "execution": "not-asserted-by-this-source-record"
+    },
+    {
+      "path": "docs/performance/solo-readiness-preparation-de332-plan.json",
+      "references": ["scripts/solo-qualification-cpu-profile.mjs"],
+      "revision": "9aaf4ea6ee9ebe23821552e59851f2e3e817a15b",
+      "execution": "not-asserted-by-this-source-record"
+    },
+    {
+      "path": "docs/performance/solo-remote-cpu-profile-plan.json",
+      "references": ["scripts/solo-qualification-cpu-profile.mjs"],
+      "revision": "9aaf4ea6ee9ebe23821552e59851f2e3e817a15b",
+      "execution": "not-asserted-by-this-source-record"
+    },
+    {
+      "path": "docs/performance/solo-shared-mode-public-return-797e03-tooling-plan.json",
+      "references": [
+        "scripts/qualify-solo-runtime.mjs",
+        "scripts/solo-qualification-cpu-profile.mjs"
+      ],
+      "revision": "f6557a569599f920b47e55c179bdb664eacdd3f0",
+      "execution": "not-asserted-by-this-source-record"
+    }
+  ],
+  "records": [
+    {
+      "path": ".github/workflows/solo-native-package-consumer.yml",
+      "object": "7f8d0a7eaecf6f00712fcfb4f6e65046d43041eb",
+      "bytes": 385436,
+      "sha256": "e0d599e53a3839a46b9f61a75cbb0a93c9d85d149854090882b2a042d828c7c8",
+      "revision": "9aaf4ea6ee9ebe23821552e59851f2e3e817a15b"
+    },
+    {
+      "path": "docs/performance/solo-797-journal-cost-plan.json",
+      "object": "4cf89cba49ccc1239f70a969b7b2d264f90e38bc",
+      "bytes": 12324,
+      "sha256": "940f8e40eda9970d1934f85f629dcb7491459068c630e56c641f37ff2efca23f",
+      "revision": "9aaf4ea6ee9ebe23821552e59851f2e3e817a15b"
+    },
+    {
+      "path": "docs/performance/solo-797-lifecycle-long29-plan.json",
+      "object": "30d08147040254d0d8f1704c49ef06248b563db4",
+      "bytes": 16425,
+      "sha256": "b39c85284534c9a4b8ee1accbe88041ce2fca6b4c77011ed39bcb677a5243f95",
+      "revision": "9aaf4ea6ee9ebe23821552e59851f2e3e817a15b"
+    },
+    {
+      "path": "docs/performance/solo-797-lifecycle-retry-plan.json",
+      "object": "c16edff556fef0fbd0f5a3e6cbc9b903c479be46",
+      "bytes": 16179,
+      "sha256": "b175263c8c9735ced2bfe67c6e2eacee44edbd796a797938c6e2df5fe8549cd0",
+      "revision": "9aaf4ea6ee9ebe23821552e59851f2e3e817a15b"
+    },
+    {
+      "path": "docs/performance/solo-797-lifecycle-soak-plan.json",
+      "object": "2190ae61006def1052037f9a44191821c1d43ff4",
+      "bytes": 17275,
+      "sha256": "39c055fb31662c625d21f736e5bc5ba3fd89d980b6c504ca5a3c39ace617e885",
+      "revision": "9aaf4ea6ee9ebe23821552e59851f2e3e817a15b"
+    },
+    {
+      "path": "docs/performance/solo-797-timing-cold-first30-plan.json",
+      "object": "833e687d43e0c2fc9af3161fd861105397afe850",
+      "bytes": 17470,
+      "sha256": "81ea7ba151d36dd16276c176c045dd337c4db1683a06a3cf29f3f300d98bd627",
+      "revision": "9aaf4ea6ee9ebe23821552e59851f2e3e817a15b"
+    },
+    {
+      "path": "docs/performance/solo-797-timing-jammer-steering-plan.json",
+      "object": "e3d620d2f91c0b802bc7db6561427790d42fad49",
+      "bytes": 16457,
+      "sha256": "e44b54ae61b5afed322b3a2b00ff8d56db44371576ceba3084f71750716c7830",
+      "revision": "9aaf4ea6ee9ebe23821552e59851f2e3e817a15b"
+    },
+    {
+      "path": "docs/performance/solo-797-timing-large-capture-erosion-plan.json",
+      "object": "c9a1b6da96ccad4be6e16ae5a30108707fea2050",
+      "bytes": 16477,
+      "sha256": "d775a1cbdaa40fa3304f31bbf2cc0666df9c1d55ffac7b5ea20962f9aebab17c",
+      "revision": "9aaf4ea6ee9ebe23821552e59851f2e3e817a15b"
+    },
+    {
+      "path": "docs/performance/solo-797-timing-long-rail-latency-plan.json",
+      "object": "79111323bc4017337ab20ac51e83df2e4834631e",
+      "bytes": 16458,
+      "sha256": "48d6a73f9e650e7c51d880b01e85f89005b7c85d8fa920ecf1b5a4709c960380",
+      "revision": "9aaf4ea6ee9ebe23821552e59851f2e3e817a15b"
+    },
+    {
+      "path": "docs/performance/solo-797-timing-sentry-latency-plan.json",
+      "object": "9cc232c97a5df9f1ad1596624be31b903b978353",
+      "bytes": 16444,
+      "sha256": "94c2e76b24bf4099c8419cdf0a78fea8a8abc343d510fed30e582786b19843a3",
+      "revision": "9aaf4ea6ee9ebe23821552e59851f2e3e817a15b"
+    },
+    {
+      "path": "docs/performance/solo-797-timing-warm-first30-plan.json",
+      "object": "b98a25c30cc9a4927329c574a08e0d1a566e1d3b",
+      "bytes": 16436,
+      "sha256": "f3bb5bf230a34729a95fe5330e82a0edcb62cd82f4f4f6e528449cc0aba4b149",
+      "revision": "9aaf4ea6ee9ebe23821552e59851f2e3e817a15b"
+    },
+    {
+      "path": "docs/performance/solo-first-victory-cpu-797e03-plan.json",
+      "object": "6dd19c5df0bd8ae172ed5e21715e12aaac644e61",
+      "bytes": 13401,
+      "sha256": "30e521b5784bd023762c3c15d0f13bcbd7bcfea373691464ad4861b5c6dcc06d",
+      "revision": "9aaf4ea6ee9ebe23821552e59851f2e3e817a15b"
+    },
+    {
+      "path": "docs/performance/solo-next-geometric-797e03-plan.json",
+      "object": "882ec4b9698fc78356a2e1f3cbc474b1897213bd",
+      "bytes": 18806,
+      "sha256": "7bded36826b1624bf9d42e193aee2fc537be03e5cf8dea8b8da2fe70f0b6bb8f",
+      "revision": "9aaf4ea6ee9ebe23821552e59851f2e3e817a15b"
+    },
+    {
+      "path": "docs/performance/solo-readiness-preparation-797e03-plan.json",
+      "object": "7e2fac5c2ff98634959c09d42e36a58e37582655",
+      "bytes": 17507,
+      "sha256": "8b5cff2d83b397ead0c1fa142596f7058b7a4ce0e8eb051d45bdd1b54d125028",
+      "revision": "9aaf4ea6ee9ebe23821552e59851f2e3e817a15b"
+    },
+    {
+      "path": "docs/performance/solo-remote-797e03-correctness-plan.json",
+      "object": "d71b98f403b93f0dc286c59c77f5eeeda9e0b416",
+      "bytes": 22186,
+      "sha256": "e7a2403a260b26196939d15d8108ada7c6a5f22100a4a056f999427cada1fd4d",
+      "revision": "9aaf4ea6ee9ebe23821552e59851f2e3e817a15b"
+    },
+    {
+      "path": "docs/performance/solo-shared-mode-public-return-797e03-plan.json",
+      "object": "6354f6edeaa398df14fac9b8b55dda5f2da89390",
+      "bytes": 10343,
+      "sha256": "e9114308e934c7f19ab35b3ae486592c70b28de40896a394702d2ce83c492079",
+      "revision": "9aaf4ea6ee9ebe23821552e59851f2e3e817a15b"
+    },
+    {
+      "path": "scripts/qualify-solo-runtime.mjs",
+      "object": "e41e06838bd77596f3eb3a338caa428195b1786e",
+      "bytes": 92172,
+      "sha256": "99e9bfad90efb6315558f035815f7b345780dc1e54446ecc404680d0382583c4",
+      "revision": "9aaf4ea6ee9ebe23821552e59851f2e3e817a15b"
+    },
+    {
+      "path": "scripts/solo-qualification-readiness.mjs",
+      "object": "96c3c6a00f26330ec86a7681b971491c418651c3",
+      "bytes": 145206,
+      "sha256": "83abb89d6cfaac3c4c23862f45e3f4d2862d1d016ce39d9bba40839b92d1c9cb",
+      "revision": "9aaf4ea6ee9ebe23821552e59851f2e3e817a15b"
+    },
+    {
+      "path": "scripts/solo-remote-readiness.mjs",
+      "object": "b47646e9c00c400f2552fc5836ad321dd30a9c61",
+      "bytes": 94724,
+      "sha256": "f1080169b740939c9da93940420458dc32affb863e6239c1840da32df117e758",
+      "revision": "9aaf4ea6ee9ebe23821552e59851f2e3e817a15b"
+    },
+    {
+      "path": "docs/performance/solo-de332-journal-cost-plan.json",
+      "object": "2785c22ae4a6ee6bfd81d5f0d80ccc2a1e3bf60d",
+      "bytes": 10914,
+      "sha256": "1cb0c8677f7cd12e5adc4c4b8e07b087dbaa52e23ff0ad4241dd716af15fa2b5",
+      "revision": "9aaf4ea6ee9ebe23821552e59851f2e3e817a15b"
+    },
+    {
+      "path": "docs/performance/solo-de332-lifecycle-long29-plan.json",
+      "object": "7f0e12b2b4968924300c04a13889964ecb5330c6",
+      "bytes": 16000,
+      "sha256": "5faeacfdf1c1c0bee80d3cf3e7a73ed2f5af37983cdbcd7149c1ff28c9a39947",
+      "revision": "9aaf4ea6ee9ebe23821552e59851f2e3e817a15b"
+    },
+    {
+      "path": "docs/performance/solo-de332-lifecycle-retry-plan.json",
+      "object": "15f606e5c3465084cdce329bca6526d5bd7d5a08",
+      "bytes": 15970,
+      "sha256": "bc922786de5ac1ed87e95aa7a83e3d0c323e068ef44c1130ae8f1b3ac81b05b7",
+      "revision": "9aaf4ea6ee9ebe23821552e59851f2e3e817a15b"
+    },
+    {
+      "path": "docs/performance/solo-de332-lifecycle-soak-plan.json",
+      "object": "c39e0e887e2c92f5df955f30e7e542edbb6e3d91",
+      "bytes": 15995,
+      "sha256": "ca043aa7adc558be73069e8ada8268d4ffb42f4a82d0b56bf0b7cc6c726461a8",
+      "revision": "9aaf4ea6ee9ebe23821552e59851f2e3e817a15b"
+    },
+    {
+      "path": "docs/performance/solo-de332-timing-cold-first30-plan.json",
+      "object": "733faaca3d820ef4366d02563e52a4a3e0a4a2e2",
+      "bytes": 16342,
+      "sha256": "1618ebc1cca309909444ab9309572618a357616fc923fc285d6d801b1ad7584f",
+      "revision": "9aaf4ea6ee9ebe23821552e59851f2e3e817a15b"
+    },
+    {
+      "path": "docs/performance/solo-de332-timing-jammer-steering-plan.json",
+      "object": "06d054494d0c06c6e1d5f5e835c9f9b94c9d793b",
+      "bytes": 16362,
+      "sha256": "89aad5e238f7a3c87ec9d0798a6d0ef6c25a13cd4997151e6d150c98f2fe8560",
+      "revision": "9aaf4ea6ee9ebe23821552e59851f2e3e817a15b"
+    },
+    {
+      "path": "docs/performance/solo-de332-timing-large-capture-erosion-plan.json",
+      "object": "790a9d58dd2470eb14d9ba192ffe3804d48a776c",
+      "bytes": 16382,
+      "sha256": "6a26fd4b4b4a0b7e44061431a7bbe8187013a200a90c7e77465aed0f3c0353bd",
+      "revision": "9aaf4ea6ee9ebe23821552e59851f2e3e817a15b"
+    },
+    {
+      "path": "docs/performance/solo-de332-timing-long-rail-latency-plan.json",
+      "object": "6b719f8d23bb56fcbf06c4db8ab02e48b82c9a34",
+      "bytes": 16363,
+      "sha256": "fcea8265dff9cb666d42fcb3c16bb35e0481c595911db5b83c0d47e2394148e7",
+      "revision": "9aaf4ea6ee9ebe23821552e59851f2e3e817a15b"
+    },
+    {
+      "path": "docs/performance/solo-de332-timing-sentry-latency-plan.json",
+      "object": "4fbd6d228e2978fbe7615ed0ed63ea66ce4b1d51",
+      "bytes": 16349,
+      "sha256": "8284fb50f1f5d323699e7818d827961fbfbcc2b84a30177842bd1b10f147973d",
+      "revision": "9aaf4ea6ee9ebe23821552e59851f2e3e817a15b"
+    },
+    {
+      "path": "docs/performance/solo-de332-timing-warm-first30-plan.json",
+      "object": "8b96773b322bc302e26a71944b15145475589df6",
+      "bytes": 16341,
+      "sha256": "13b0aa40aaf8552ea05fa2de992294b0da85b167f3c4ee764b63df78ae1543d0",
+      "revision": "9aaf4ea6ee9ebe23821552e59851f2e3e817a15b"
+    },
+    {
+      "path": "docs/performance/solo-797-lifecycle-retry-plan.json",
+      "object": "0d214536f1ead31fc546d58b2a210a1aea51acee",
+      "bytes": 18651,
+      "sha256": "89b3d3ae5e1786f1023f4c7163a7628b8512a027b64375d2cfad1bdaddb24b03",
+      "revision": "d87a2ee10e069fa3720040d9003f9740acd9427c"
+    },
+    {
+      "path": "docs/performance/solo-797-timing-warm-first30-plan.json",
+      "object": "5f653baa215ac94864f184e6e6ab5832c4db3093",
+      "bytes": 18898,
+      "sha256": "9d307894368681834637af046c4a15ed7bc5e0b02a71d6a1d391d5e6e794492e",
+      "revision": "d87a2ee10e069fa3720040d9003f9740acd9427c"
+    },
+    {
+      "path": "docs/performance/solo-readiness-preparation-73a345-plan.json",
+      "object": "c60fdd842b648dac4c8ff0b081ed9f66ba1fd7bc",
+      "bytes": 16445,
+      "sha256": "1e52cd4c44a3b26a2922149a70ae2ae30fd8fa75a66e12fdbbc782554670a433",
+      "revision": "9aaf4ea6ee9ebe23821552e59851f2e3e817a15b"
+    },
+    {
+      "path": "docs/performance/solo-remote-73a345-correctness-tooling-plan.json",
+      "object": "c66e729827c64e1c2a500278afc1c0ea0a685b36",
+      "bytes": 21612,
+      "sha256": "f6928efcd9dd88257802b803f1400363644d91be75b0e725aee2d1fa7d418377",
+      "revision": "9aaf4ea6ee9ebe23821552e59851f2e3e817a15b"
+    },
+    {
+      "path": "docs/performance/solo-first-victory-cpu-de332-plan.json",
+      "object": "fa3a5f1d96c43ac741a2637830684b8a7cdd461a",
+      "bytes": 12872,
+      "sha256": "b11bdb1d427e9b6891283447ae38e8c8d211fddbf31063391b87f6171db3b0c6",
+      "revision": "9aaf4ea6ee9ebe23821552e59851f2e3e817a15b"
+    },
+    {
+      "path": "docs/performance/solo-readiness-preparation-de332-plan.json",
+      "object": "e328897840b5f3be7fcf2789425176491914bd50",
+      "bytes": 15894,
+      "sha256": "959c0149f065022bf366ddef6f1e74cda8d8f8c0f013db63fd8e588f94831afc",
+      "revision": "9aaf4ea6ee9ebe23821552e59851f2e3e817a15b"
+    },
+    {
+      "path": "scripts/solo-qualification-cpu-profile.mjs",
+      "object": "c61ea6a3b0b120729026f7b4e05417e937fb8954",
+      "bytes": 3270,
+      "sha256": "26d125133b4448248918b9ae69350c18db4506bb9ea045053d33325679e5a1d7",
+      "revision": "9aaf4ea6ee9ebe23821552e59851f2e3e817a15b"
+    },
+    {
+      "path": "scripts/solo-remote-cpu-profile.mjs",
+      "object": "0e8e21107974a96f981fe9db890bb851f068e83e",
+      "bytes": 30410,
+      "sha256": "de6caca54ad8e5702e3b90908e9bf15fc54f92cbb957282af0445361565d1800",
+      "revision": "9aaf4ea6ee9ebe23821552e59851f2e3e817a15b"
+    },
+    {
+      "path": "docs/performance/solo-remote-cpu-profile-plan.json",
+      "object": "3f3a55dba6a9961cf56b0eb292eb8b6a4f46be7c",
+      "bytes": 9913,
+      "sha256": "23139ecdc03518fe3989a9f2344c13c6f66ea13b3d05bc9d9035333470f6cf9a",
+      "revision": "9aaf4ea6ee9ebe23821552e59851f2e3e817a15b"
+    },
+    {
+      "path": "docs/performance/solo-shared-mode-public-return-797e03-tooling-plan.json",
+      "object": "29deaffd2c581ebb7547c8363b3e0a83c8bec0c9",
+      "bytes": 10952,
+      "sha256": "9e07cc1bdefc3697704942b0fd9a1b5f266ae6462925dd452bf2c4aaa34dfc38",
+      "revision": "f6557a569599f920b47e55c179bdb664eacdd3f0"
+    }
+  ],
+  "scope": "Exact Git readback of declarations and changed helper references. Records do not assert that every declaration was dispatched; held plans remain held. Prior observations and failures are unchanged. No production historical fallback.",
+  "sources": [
+    {
+      "revision": "9aaf4ea6ee9ebe23821552e59851f2e3e817a15b",
+      "tree": "7e64a66f9eb309b692719b163ca00fbe78146ad5"
+    },
+    {
+      "revision": "d87a2ee10e069fa3720040d9003f9740acd9427c",
+      "tree": "a036ad2355165d1c288165fc52e8328835fb4c95"
+    },
+    {
+      "revision": "f6557a569599f920b47e55c179bdb664eacdd3f0",
+      "tree": "5ac18d562b0986bd102b59e7bfa4b4b54a98af10"
+    }
+  ]
+}

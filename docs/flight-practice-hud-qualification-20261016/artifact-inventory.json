@@ -1,0 +1,126 @@
+{
+  "format": "PracticeHUDEvidenceInventory.v1",
+  "qualified": false,
+  "files": [
+    {
+      "path": "corrected-probe/complete-artifacts.tgz",
+      "bytes": 1170883,
+      "sha256": "bbc2c1ea75bca0b66409d579854c40ff24e4971b79b19bb503a9fc62e33c53ec"
+    },
+    {
+      "path": "corrected-probe/failed.json",
+      "bytes": 175313,
+      "sha256": "4749a55e707733cab7f29a88f21df043009d6eede1c7e2b12f659c804e8a77a0"
+    },
+    {
+      "path": "corrected-probe/independent-audit.json",
+      "bytes": 1094,
+      "sha256": "842e6acd28495d44d09ec6f0373a9f621e32e3d1bece0b3ff916a99c1b223293"
+    },
+    {
+      "path": "corrected-probe/native-completion.png",
+      "bytes": 535879,
+      "sha256": "09c21e3370376cc1eb525ee285aca177803613ad9e66951db867a25895169f77"
+    },
+    {
+      "path": "final-guide-build-incomplete.log",
+      "bytes": 91,
+      "sha256": "992737b7925959af459c5cf12843f7ec2337fbd3989f5bef428a2fefee4e82d6"
+    },
+    {
+      "path": "final-guide-build.log",
+      "bytes": 461,
+      "sha256": "388cde353a1fd3b75f8a1a8574610aebe9689aa07d321adeb762139668c4a328"
+    },
+    {
+      "path": "final-guide-envelope.json",
+      "bytes": 2636,
+      "sha256": "f59ed9eb8d6b934edf1256efdbf849e1270a2d6a2119b9437306176acc9dd6d9"
+    },
+    {
+      "path": "final-guide-verification.json",
+      "bytes": 1144,
+      "sha256": "f4f5ddcbde00e90362db8ef7a5c43fe2ee9004da5698b2057f149d4f93ab3448"
+    },
+    {
+      "path": "fpv-probe-failed-artifacts.tgz",
+      "bytes": 756177,
+      "sha256": "948a02c58bfa2fac47bd191820489aedc2dc3483c72b9b3e2a0d4a71ca00dde7"
+    },
+    {
+      "path": "fpv-probe-failed.json",
+      "bytes": 686084,
+      "sha256": "f6f5fe1cbce480b846380cf470b7bd19ec6ce5f1668972c0340e8d2b814e4cbe"
+    },
+    {
+      "path": "guide-tests.log",
+      "bytes": 804,
+      "sha256": "c86317ccabbb64837b572252056968cd9e185e2ad58e7d757c9f081f5fb09b5e"
+    },
+    {
+      "path": "host-ui-tests.log",
+      "bytes": 21362,
+      "sha256": "5f0c25e809eba543488f668ad8ee89ea92b22669fe6242bdd5f4685502c7fd3c"
+    },
+    {
+      "path": "hud-candidate-envelope.json",
+      "bytes": 2636,
+      "sha256": "edad60bdf2f937b68d1997dc5ddd6056c3e512084e8c3ff466de77757e768398"
+    },
+    {
+      "path": "hud-candidate-verification.json",
+      "bytes": 1144,
+      "sha256": "739ea075f4ff2195c4baa79392e62a79b0eaf72f916ee321506f0773b718adf4"
+    },
+    {
+      "path": "hud-regression-after.log",
+      "bytes": 24401,
+      "sha256": "09777446599dca3424689ab012efb92d0d1b8581c99aec020863426b859675fa"
+    },
+    {
+      "path": "hud-regression-before.log",
+      "bytes": 28472,
+      "sha256": "ab285e9b16f40604579d1d7599488b59e548a47390b38fc2d2afaae191be2580"
+    },
+    {
+      "path": "hud-settings-artifacts.tgz",
+      "bytes": 3302681,
+      "sha256": "98643215921a33342d7ff523596458ce7f3f22bba22112bf91c7affa6378cd33"
+    },
+    {
+      "path": "hud-settings-completed.json",
+      "bytes": 110498,
+      "sha256": "b6f3b0f04d4d8f720faab1ba2f497f2ed0ad635ba6e21d185a67e56e51a1dbd7"
+    },
+    {
+      "path": "independent-audit.json",
+      "bytes": 1468,
+      "sha256": "2029b54aea0b099bdccc53d5c15f3abc532550e95e7c3a2478d83935d8284bc8"
+    },
+    {
+      "path": "keyboard-observer-tests.log",
+      "bytes": 22343,
+      "sha256": "9e5ff466b49988fa1f48f32ed23e31dfe010953c1d437b04269e18dbc0b134a6"
+    },
+    {
+      "path": "observer-tests.log",
+      "bytes": 22126,
+      "sha256": "328fe290eb07a525d4165b10487bcb4bf36b8f6969379aa50da81f6a359e03ae"
+    },
+    {
+      "path": "practice-tests.log",
+      "bytes": 82131,
+      "sha256": "7ef5854ee1ab325d08b7f935aecaa0372efec316ff76f6a1c2b2add376eaa310"
+    },
+    {
+      "path": "README.md",
+      "bytes": 2063,
+      "sha256": "aee0a1fed1d7ec1c180db35aca62cb6aed3418e376baf10bcfa1202a5acf9402"
+    },
+    {
+      "path": "takeoff-regression-before.log",
+      "bytes": 4248,
+      "sha256": "4421fce961ca1fd73b8b0876259788097e89626d1835c32b098e59cec80eec51"
+    }
+  ]
+}

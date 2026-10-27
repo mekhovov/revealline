@@ -1,0 +1,307 @@
+{
+  "format": "SoloHostedLifecycleManifestV1",
+  "status": "reviewed-lifecycle-diagnostic-only",
+  "repository": "mekhovov/revealline",
+  "candidate": {
+    "revision": "a6eacee2f09f06f9ffa76fe8cd5d674aff0475a4",
+    "tree": "6b13627e324f695b6ee8d9f2dee2eeeb7217c332",
+    "run": 39008793814,
+    "artifact": 12092903788,
+    "outer": {
+      "bytes": 1091879339,
+      "sha256": "a61fd756ce362abacf5dd5f329bed1a936db2b888b9f814cf5924a781964e14a"
+    },
+    "inner": {
+      "bytes": 1073755490,
+      "sha256": "52a9f82f48b3e657755f2c5735826b827caa1e866430d30939d05113b1fa67b1"
+    },
+    "manifestSHA256": "b0e56f24e4d49c6c9ee42000f472ca895c883ca02e1063db741e2eddfe428fb7",
+    "producer": "Exact successful Appearance package, Node22.13.1 Linux; original focused-policy metadata retained. Full outer/member/source/CSP verification required remotely before any native row."
+  },
+  "runtimeRevision": "32abd322afd8243e4537ce4784e2f78ee45ecbec",
+  "baseline": {
+    "revision": "8b01991942dc764b8aa4726851699ce1985e53ae",
+    "tree": "9373b6a74aea8fa1ef47aa17ace140b4cf714609"
+  },
+  "node": "22.13.1",
+  "playwright": "1.62.1",
+  "cpu": 1,
+  "maxParallel": 1,
+  "automaticRetries": 0,
+  "performanceExclusion": true,
+  "setupTimeoutMs": 2400000,
+  "helperTimeoutMs": 3300000,
+  "rowEvidenceBytes": 16777216,
+  "evidenceBytes": 134217728,
+  "protocol": {
+    "hiddenMs": 10000,
+    "returnPausedMs": 500,
+    "resumeObservationMs": 400,
+    "heldDirectionMs": 100,
+    "resumedFrameCapacity": 16,
+    "eventCapacity": 128,
+    "phaseCapacity": 64,
+    "observationTimeoutMs": 360000,
+    "replayTimeoutMs": 120000,
+    "cleanupTimeoutMs": 45000,
+    "reportBytes": 2097152,
+    "replayBytes": 262144,
+    "syntheticDOMEvents": false,
+    "headed": true,
+    "display": "1280x800x24",
+    "connection": "connectOverCDP",
+    "noDefaults": true,
+    "defaultContextOnly": true
+  },
+  "fixture": {
+    "path": "docs/performance/fixtures/solo-remote-timing/cold-first30.qualification.fixture",
+    "bytes": 6387,
+    "sha256": "aa3a4c98c6f272ea515d1e8c9e0fb3238d78782065bfb96ae8fe4e304041e2c5"
+  },
+  "jobs": ["chromium-background"],
+  "packageBinding": {
+    "format": "SoloCurrentPackageMetadataBinding.v1",
+    "producerRun": 39008793814,
+    "producerConclusion": "success",
+    "metadataArtifact": 12093018459,
+    "metadataOuter": {
+      "bytes": 16050,
+      "sha256": "84817643f9af167b2ffd9dc688f1894ac74bf64cf2493ce3da81eabb9eada8d5"
+    },
+    "packageBinding": {
+      "bytes": 7285,
+      "sha256": "0b22f74bf0c08adef7d8a26d0485fa013100cc2cd5df355b71a7363ee48f535b"
+    },
+    "independentReadback": {
+      "bytes": 1635,
+      "sha256": "998864073a00798776dff2a66369a60557a76383553b074d5e1b283a1f1c9f97",
+      "source": "a6eacee2f09f06f9ffa76fe8cd5d674aff0475a4",
+      "status": "passed-small-metadata-only"
+    },
+    "scope": "Actual successful exact-source producer metadata. Full candidate outer/inner/source/static-worker/offline closure and served CSP verification remain mandatory before every native row."
+  },
+  "release": {
+    "scope": "real-native-background-correctness-only",
+    "candidateRevision": "a6eacee2f09f06f9ffa76fe8cd5d674aff0475a4",
+    "firstEightAllCorrectnessPassed": false,
+    "performanceQualification": "excluded",
+    "physicalQualification": "unobserved",
+    "webkitBackground": "unsupported-unobserved",
+    "automaticRetries": 0,
+    "priorProofInspected": true,
+    "noUnclosedOwners": true,
+    "onceOnlyBefore": "c41a02216c0811952232a387fd1743e09452c269"
+  },
+  "adapterInputs": [
+    {
+      "path": "scripts/solo-remote-lifecycle.mjs",
+      "bytes": 23154,
+      "sha256": "2ffb82d2b032f69b8380d4c20085c92714eb9f30f2c836dc7cc06bc84bc77b5c"
+    }
+  ],
+  "frozenTools": [
+    {
+      "path": "scripts/brand-icons.mjs",
+      "bytes": 12391,
+      "sha256": "7fa383d043be55befee6ee04302d407f337b9d6ecb522f443b550ceb6767dcda"
+    },
+    {
+      "path": "scripts/build-entry-writer.mjs",
+      "bytes": 1815,
+      "sha256": "08d33395ea8e67fed40cafb57c1e9573178b266b4ee8d595dcec3c9d14d66874"
+    },
+    {
+      "path": "scripts/core-soundtrack-publication.mjs",
+      "bytes": 5789,
+      "sha256": "6986e149248e2c614374a0ccba3f88cf3670f49ac20f0dc1844d655a11bf0726"
+    },
+    {
+      "path": "scripts/default-runtime-metadata.mjs",
+      "bytes": 10256,
+      "sha256": "a4ee09ad2b169613a4bd2e286151255f1376b939964f37be0f28499afe158107"
+    },
+    {
+      "path": "scripts/edition-code-indentation.mjs",
+      "bytes": 3700,
+      "sha256": "b079b539468827fdbea9e5d9541b805a5fde528b1ef16bc5a7834245ec78244e"
+    },
+    {
+      "path": "scripts/external-distribution.mjs",
+      "bytes": 6651,
+      "sha256": "f0d91db8311a483d8d008612760b7ad7ae3741f5a7c6aae9df8fb04f3e1463cd"
+    },
+    {
+      "path": "scripts/game-cli.mjs",
+      "bytes": 94310,
+      "sha256": "384c26bde0dc3e300f651e7a43c9d5f6d3c70eb28e0e07763f7cb51d94929cb5"
+    },
+    {
+      "path": "scripts/hosted-soundtrack-publication.mjs",
+      "bytes": 10450,
+      "sha256": "62c5a7954084ef0f2971cc62035ff4f3a5fc165c10c88aa09dac23a327977ee6"
+    },
+    {
+      "path": "scripts/localization-audit.mjs",
+      "bytes": 10005,
+      "sha256": "56c2759e666fe7c2bf6964b7182d13be177b4c722f9324f59e7d4765cddd403d"
+    },
+    {
+      "path": "scripts/localization-content.mjs",
+      "bytes": 16926,
+      "sha256": "32b46390220eb124d7bbcfba60088898b745c966c6cb5c167e47462c7899e393"
+    },
+    {
+      "path": "scripts/localization.mjs",
+      "bytes": 13957,
+      "sha256": "d66bb70c6a4c7f0ca1f08cf8a313340af5bba4425b001b7e6844b9030687de6b"
+    },
+    {
+      "path": "scripts/observe-solo-native-lifecycle.mjs",
+      "bytes": 26419,
+      "sha256": "d1cd48307d7628e6602d820c3dc88a71aed3595a056dca852789647ff7a66e9a"
+    },
+    {
+      "path": "scripts/offline-core-closure.mjs",
+      "bytes": 9292,
+      "sha256": "a7cd339b10379f101406dd67cd2f44e925f366fbc4aba396e7df3025ba208635"
+    },
+    {
+      "path": "scripts/optional-artwork.mjs",
+      "bytes": 4613,
+      "sha256": "83e456393b4d26bb54b30e4ce1b15499dd5b9aaeeef72bd274f27c2989d9928e"
+    },
+    {
+      "path": "scripts/optional-distribution.mjs",
+      "bytes": 2584,
+      "sha256": "0fb416bddd39eab244c911d453df383a6488ce3a3a515eae37d07560aec93c71"
+    },
+    {
+      "path": "scripts/pack-indexes.mjs",
+      "bytes": 5421,
+      "sha256": "34ecdb35caecd581a5477e3972130f1ef67004fcd7add7f055126cb65a52a35e"
+    },
+    {
+      "path": "scripts/reviewed-soundtrack-batches.mjs",
+      "bytes": 16280,
+      "sha256": "3041fa50772034f4666d67c8f9cfad231de963a09d5d40132def422779a9daaa"
+    },
+    {
+      "path": "scripts/run-solo-remote-correctness.mjs",
+      "bytes": 57545,
+      "sha256": "cdec62bc65481f30bb36d7055227594a727f390e75d5bbb86415f1b7fa2a07c7"
+    },
+    {
+      "path": "scripts/serve-production-preview.mjs",
+      "bytes": 10414,
+      "sha256": "4c63ec2ea6d7b6b3c79793dd1e8dc8f75daa9ee6c783ee076d8bc050602c1cab"
+    },
+    {
+      "path": "scripts/solo-build-archive.mjs",
+      "bytes": 5262,
+      "sha256": "25a7c537c777c435d3ca80694c4ba925a9448222945a8f46e0d1b029441cf368"
+    },
+    {
+      "path": "scripts/solo-build-worker-closure.mjs",
+      "bytes": 1658,
+      "sha256": "19c0663b20bcc2cf2b29016ecc7c09d54d673b62740ec3e9babe25e965936ac1"
+    },
+    {
+      "path": "scripts/solo-qualification-export.mjs",
+      "bytes": 5553,
+      "sha256": "edb2d9efa97fa9e19905f83aa93000219db521f3930fe02fb96c57d2162ceb77"
+    },
+    {
+      "path": "scripts/solo-qualification-native-replay.mjs",
+      "bytes": 9513,
+      "sha256": "7e5e0337294144449b66519d945e927a0f0e8c586963df9b83e5a4a2aa246d7c"
+    },
+    {
+      "path": "scripts/solo-qualification-replay-core.mjs",
+      "bytes": 5930,
+      "sha256": "1e96e592ee289685607515bbe14c8845f2c03dc81191a0772071fd9995ceb3ea"
+    },
+    {
+      "path": "scripts/solo-remote-archive.py",
+      "bytes": 22756,
+      "sha256": "822735e979eff256c433b715dcb6cac88de8c99c94bacc1ce10f4cb8d7f8e2f6"
+    },
+    {
+      "path": "scripts/soundtrack-archive-admissions.mjs",
+      "bytes": 5614,
+      "sha256": "103e246b66045e0a480f41c8c42fa5966ac3f0587943f8307fa89bd3b47b380d"
+    },
+    {
+      "path": "scripts/soundtrack-distribution.mjs",
+      "bytes": 15378,
+      "sha256": "8f0e7d0178de524a8939fab2c951702f9a315c581f80d703bd834f8a4c492ac2"
+    },
+    {
+      "path": "scripts/verify-solo-build.mjs",
+      "bytes": 16212,
+      "sha256": "9294c97bf52596d4c6f76f8200e6b4e16bffe5f221cb1538a0f8e2db9693003d"
+    }
+  ],
+  "scope": "One original-protocol native desktop Chromium background/return observation. Real native hidden/visible events required; missing hidden state is unobserved. No physical iPhone, WebKit or performance qualification.",
+  "resources": {
+    "jobDisjointMinutes": {
+      "checkoutAndNode": 9,
+      "toolsDependencies": 6,
+      "browserDependencies": 10,
+      "testsAndBinding": 3,
+      "helperStep": 58,
+      "setupRetention": 2,
+      "upload": 10,
+      "total": 98,
+      "jobCap": 100
+    },
+    "nativeObservationMs": 360000,
+    "strictReplayMs": 120000,
+    "cleanupTotalMs": 45000,
+    "ownedRowMs": 600000,
+    "displayPreflightMs": 30000
+  },
+  "toolingClosure": {
+    "status": "dynamic-verifier-smoke-required",
+    "dynamicSourceValidation": [
+      "scripts/soundtrack-distribution.mjs",
+      "scripts/optional-distribution.mjs",
+      "scripts/external-distribution.mjs",
+      "scripts/optional-artwork.mjs"
+    ],
+    "smokeTest": "scripts/test-solo-source-verifier-smoke.mjs",
+    "scope": "Tools-only sparse checkout, full exact game source checkouts; actual source-verifier branch must pass before native observation."
+  },
+  "releaseTrigger": {
+    "status": "reviewed-one-shot",
+    "pullRequest": 1544,
+    "sameRepositoryRequired": true,
+    "action": "synchronize",
+    "onceOnlyBefore": "c41a02216c0811952232a387fd1743e09452c269"
+  },
+  "predecessor": {
+    "sourceRevision": "e0252ff8f6b7f5ac84721fd5994c74e8469fb271",
+    "driverBytes": 22613,
+    "driverSHA256": "894bc9082f9bdde863dc009f73d028d08b1ddadcb2179f2228610a5c5f11bdc9",
+    "automationWitnessSHA256": "e74162b32fc580e9830e4fa956d9a83ba1939eb12902d4670caf536376ebf2c3",
+    "reportSHA256": "dcaccf36a3cfe9182ed00bca83dd19e8d627faa2f365748d288598ea5ac27d8e",
+    "scope": "Historical V4 Chromium protocol and provenance only; no current-source or hosted pass."
+  },
+  "setupSuccessor": {
+    "format": "SoloNativeDisplayDependencySuccessorV1",
+    "priorRun": 39015298892,
+    "priorTooling": "c41a02216c0811952232a387fd1743e09452c269",
+    "priorConclusion": "failure",
+    "priorNativeObservations": 0,
+    "priorManifest": {
+      "path": "docs/performance/solo-native-lifecycle-plan.json",
+      "bytes": 10335,
+      "sha256": "c327b02b08aa42efbba2ddfe009b772783cd7c30ea902abeee4d8174ae820c41"
+    },
+    "priorSummarySHA256": "43809e719324c40661c923921c2f23894f736c24bfec2628a69e70ef7d7b13aa",
+    "package": "x11-utils",
+    "runtimeChanged": false,
+    "scenarioChanged": false,
+    "gateChanged": false,
+    "automaticRetries": 0
+  }
+}

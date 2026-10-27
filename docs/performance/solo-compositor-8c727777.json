@@ -1,0 +1,334 @@
+{
+  "format": "SoloCompositorEvidenceV1",
+  "status": "failed-strict-identical-input-control",
+  "sourceRevision": "8c727777aac2e0ec6fa0bc260051b8a7d99a8b94",
+  "artifactArchiveSHA256": "f4cc3d51219aa0f9b6cc5d1e60a4c2bc3bfea8d3022328326f92927b6fec7c47",
+  "browser": "26.5",
+  "scope": "Separate synthetic WebKit full/acquire compositor screenshot control, exact 14 captures at declared 0.10/0.25 presentation seconds and zero-delta replacements. Same original fixture, DPR3 geometry, default privacy configuration, strict zero-difference control gates and exposed-picture positive checks. Pre/post owner/checkpoint/painter/readiness stability is mandatory. Not physical display, performance, thermal, legal-play or whole-raster qualification; original getImageData failures remain unchanged.",
+  "performanceGateStatus": "excluded-instrumented-synthetic-correctness",
+  "startedAt": "2026-10-16T14:01:54.376Z",
+  "completedAt": "2026-10-16T14:01:56.538Z",
+  "receipt": {
+    "path": "/Volumes/alex/solo-performance-b1174522/evidence/compositor-control-8c727777-attempt01/report.json",
+    "bytes": 116275,
+    "sha256": "ea354d1512eae64a3bdaacdc42fda59d52fcb95aa657795608e1cbee9e175b4b"
+  },
+  "preservation": {
+    "path": "/Volumes/alex/solo-performance-b1174522/evidence/compositor-control-8c727777-attempt01/preservation.json",
+    "bytes": 10624,
+    "sha256": "f3dff0e03ef71b8173e5c1b2078bdc36787ce2ba7c373a3ba811b2db40f5e235"
+  },
+  "plan": {
+    "path": "/Volumes/alex/solo-performance-b1174522/evidence/compositor-control-8c727777-attempt01/plan-8c727777.json",
+    "bytes": 4496,
+    "sha256": "668098f8cd6614ab559a380e197da8074d870ba71ee2cde97be62209bd12c8bf"
+  },
+  "driver": {
+    "path": "/Volumes/alex/solo-performance-b1174522/evidence/compositor-control-8c727777-attempt01/driver.mjs",
+    "bytes": 19623,
+    "sha256": "42a2f2c8459bc09e5d532e281ba21656fadea5f02eceb247923e1a6bad1f0cc2"
+  },
+  "originalReadbackFailure": {
+    "path": "/Volumes/alex/solo-performance-b1174522/evidence/compositor-control-8c727777-attempt01/original-failed-readback-report.json",
+    "bytes": 88016,
+    "sha256": "951666592d1b7740a43ab0da17a980b0a5f12dbec5156adec2efa8e90963f839"
+  },
+  "geometry": {
+    "bitmap": {
+      "width": 1200,
+      "height": 900
+    },
+    "CSS": {
+      "x": 0,
+      "y": 0,
+      "width": 400,
+      "height": 300
+    },
+    "DPR": 3,
+    "cells": [48, 36]
+  },
+  "captureProtocol": {
+    "count": 14,
+    "fixedRafOpportunities": 2,
+    "strictThresholdChangedPixels": 0,
+    "hiddenCellBoundaryMarginOutputPixels": 1,
+    "sameOwnerReplacement": "A\u2192B\u2192A at0.25presentationseconds;zero delta;no manual invalidation",
+    "stateWitnessesUnchangedAllCaptures": true,
+    "witnessFields": [
+      "serial",
+      "image",
+      "tick",
+      "levelId",
+      "checkpoint",
+      "painterTime",
+      "generation",
+      "paintRevision",
+      "draws",
+      "board",
+      "frame",
+      "connected",
+      "fontsStatus",
+      "imageReady",
+      "contextLost",
+      "rectangle",
+      "dpr"
+    ]
+  },
+  "controls": [
+    {
+      "left": "a-010",
+      "right": "repeat-a-010",
+      "region": "all",
+      "samples": 1080000,
+      "changedPixels": 40713,
+      "changedChannels": 40713,
+      "maxDelta": 1
+    },
+    {
+      "left": "a-025",
+      "right": "repeat-a-025",
+      "region": "all",
+      "samples": 1080000,
+      "changedPixels": 0,
+      "changedChannels": 0,
+      "maxDelta": 0
+    },
+    {
+      "left": "a-zero-control",
+      "right": "a-zero-repeat",
+      "region": "all",
+      "samples": 1080000,
+      "changedPixels": 0,
+      "changedChannels": 0,
+      "maxDelta": 0
+    },
+    {
+      "left": "b-zero-control",
+      "right": "b-zero-repeat",
+      "region": "all",
+      "samples": 1080000,
+      "changedPixels": 0,
+      "changedChannels": 0,
+      "maxDelta": 0
+    },
+    {
+      "left": "repeat-a-zero-control",
+      "right": "repeat-a-zero-repeat",
+      "region": "all",
+      "samples": 1080000,
+      "changedPixels": 0,
+      "changedChannels": 0,
+      "maxDelta": 0
+    },
+    {
+      "left": "a-zero-repeat",
+      "right": "repeat-a-zero-repeat",
+      "region": "all",
+      "samples": 1080000,
+      "changedPixels": 0,
+      "changedChannels": 0,
+      "maxDelta": 0
+    }
+  ],
+  "replacement": [
+    {
+      "left": "a-replaced-b",
+      "right": "b-zero-repeat",
+      "region": "all",
+      "samples": 1080000,
+      "changedPixels": 0,
+      "changedChannels": 0,
+      "maxDelta": 0
+    },
+    {
+      "left": "a-restored-a",
+      "right": "a-zero-repeat",
+      "region": "all",
+      "samples": 1080000,
+      "changedPixels": 0,
+      "changedChannels": 0,
+      "maxDelta": 0
+    }
+  ],
+  "hidden": [
+    {
+      "left": "a-010",
+      "right": "b-010",
+      "region": "hidden",
+      "samples": 755941,
+      "changedPixels": 23842,
+      "changedChannels": 23842,
+      "maxDelta": 1
+    },
+    {
+      "left": "a-025",
+      "right": "b-025",
+      "region": "hidden",
+      "samples": 755941,
+      "changedPixels": 0,
+      "changedChannels": 0,
+      "maxDelta": 0
+    },
+    {
+      "left": "a-zero-repeat",
+      "right": "a-replaced-b",
+      "region": "hidden",
+      "samples": 755941,
+      "changedPixels": 0,
+      "changedChannels": 0,
+      "maxDelta": 0
+    }
+  ],
+  "exposed": [
+    {
+      "left": "a-010",
+      "right": "b-010",
+      "region": "exposed",
+      "samples": 71415,
+      "changedPixels": 71415,
+      "changedChannels": 214245,
+      "maxDelta": 89
+    },
+    {
+      "left": "a-025",
+      "right": "b-025",
+      "region": "exposed",
+      "samples": 71415,
+      "changedPixels": 71415,
+      "changedChannels": 214245,
+      "maxDelta": 148
+    },
+    {
+      "left": "a-zero-repeat",
+      "right": "a-replaced-b",
+      "region": "exposed",
+      "samples": 71415,
+      "changedPixels": 71415,
+      "changedChannels": 214245,
+      "maxDelta": 148
+    }
+  ],
+  "temporalExposed": {
+    "left": "a-010",
+    "right": "a-025",
+    "region": "exposed",
+    "samples": 71415,
+    "changedPixels": 71415,
+    "changedChannels": 214245,
+    "maxDelta": 44
+  },
+  "invariantFailures": [
+    "Exact pixel control differs: a-010/repeat-a-010",
+    "Concealed-pixel comparison fails: a-010/b-010"
+  ],
+  "concealmentStatus": "unobserved-identical-input-control-failed",
+  "pageErrors": [],
+  "failedRequests": [],
+  "cleanup": {
+    "processExit": {
+      "code": 0,
+      "signal": null,
+      "at": "2026-10-16T14:01:56.296Z"
+    },
+    "forced": false,
+    "browserClosed": true,
+    "closedAt": "2026-10-16T14:01:56.298Z"
+  },
+  "limits": [
+    "The complete diagnostic remains failed; matching later samples do not replace the failed first-frame control.",
+    "An unstable identical-input control leaves the0.10s concealed-image comparison unqualified; this does not establish a hidden-image leak or identify the cause.",
+    "Default browser privacy/settings unchanged. This result does not establish readback-only or privacy causality.",
+    "Page screenshots represent captured composited submission, not physical display/energy/temperature.",
+    "Synthetic procedural-actor full/acquire fixture only; no live gameplay, physical iPhone or whole-raster pass.",
+    "No pixel epsilon, threshold relaxation, sample trimming or rerun selection. Original readback failure remains unchanged."
+  ],
+  "primitiveFollowup8c1": {
+    "sourceRevision": "8c1af9d191224893bad9012f7638940a869d6096",
+    "historicalInputSourceRevision": "dbf61c518e9df3ed68b24f693686c9600405f3f2",
+    "browser": "26.5",
+    "status": "failed-strict-control-retained-diagnostic-completed",
+    "scope": "Six fixed primitive draws after a separately executed untouched control. Excluded from all performance, physical-display, installed-PWA and thermal qualification.",
+    "actualControlClosure": {
+      "modules": 151,
+      "dataFiles": 2,
+      "matchesHistoricalClosure": true,
+      "captures": 16,
+      "allFourPinned010And025PNGControlsMatch": true
+    },
+    "premises": {
+      "independentPostTintEquality": true,
+      "opaqueSources": true,
+      "opaquePostTint": true
+    },
+    "comparison": {
+      "case1VersusEachOfCases2To6": {
+        "changedPixels": 17020,
+        "changedChannels": 17020,
+        "maxDelta": 1
+      },
+      "allPairsAmongCases2To6": {
+        "changedPixels": 0,
+        "changedChannels": 0,
+        "maxDelta": 0
+      },
+      "historicalExactMatches": {
+        "case1": "A-with-replacements after-noise",
+        "cases2To6": "A-repeat after-noise"
+      }
+    },
+    "interpretation": "The fixed protocol demonstrates an order/history-dependent result, but its source, destination and execution histories are not fully factorial. It does not identify a browser backend, internal precision, privacy mechanism or application defect. No production correction or relaxed pixel gate follows.",
+    "interpretationReceipt": {
+      "path": "/Users/oleksandr.mekhovov/.codex/worktrees/solo-performance/go_test/.cache/solo-followup/raster-primitive-local-binding-02/execution-interpretation-01.json",
+      "bytes": 7361,
+      "sha256": "b435333dfb156855f654b97be7211aa91825e7ed32b4801c6efae04ea1c56b75"
+    },
+    "binding": {
+      "path": "/Users/oleksandr.mekhovov/.codex/worktrees/solo-performance/go_test/.cache/solo-followup/raster-primitive-local-binding-02/binding-receipt.json",
+      "bytes": 4494,
+      "sha256": "3ae70c895f3826674fe21ae52c3d91a0d411d2c3aaf90e5762b2da5ffa334f00"
+    },
+    "controlReport": {
+      "path": "/Volumes/SoloPerf-RAM-solo-final-8c727777-ram-v4/evidence/raster-soft-light-primitive-8c1-local-attempt01/control/raster/report.json",
+      "bytes": 48649,
+      "sha256": "b4d33ad728d3b28effc8a08d4557d4b57d74753b7010fdbaa1193c9d550c53b7"
+    },
+    "primitiveReport": {
+      "path": "/Volumes/SoloPerf-RAM-solo-final-8c727777-ram-v4/evidence/raster-soft-light-primitive-8c1-local-attempt01/primitive/raster/report.json",
+      "bytes": 62552,
+      "sha256": "073a4ad916a6465842a7b740531f5683f812f53da4f58ff0901546a4a7d45ff0"
+    },
+    "outerReceipts": [
+      {
+        "path": "/Volumes/SoloPerf-RAM-solo-final-8c727777-ram-v4/evidence/raster-soft-light-primitive-8c1-local-attempt01/control/orchestration/receipt.json",
+        "bytes": 17892,
+        "sha256": "d1721503e2eb7e7c6c7a922af378d647b9dbd229d27cc4ee4393cd0abcdabb58"
+      },
+      {
+        "path": "/Volumes/SoloPerf-RAM-solo-final-8c727777-ram-v4/evidence/raster-soft-light-primitive-8c1-local-attempt01/primitive/orchestration/receipt.json",
+        "bytes": 17675,
+        "sha256": "4a125f51692c82a47c7aa1e02d04c9ce0e5b3cc6832404b7e33b60a6829bd22a"
+      }
+    ],
+    "cleanCompletion": true,
+    "controlBrowserClosedAt": "2026-10-16T20:17:19.184Z",
+    "primitiveBrowserClosedAt": "2026-10-16T20:17:48.496Z",
+    "preservation": {
+      "path": "/Users/oleksandr.mekhovov/.codex/worktrees/solo-performance/go_test/.cache/solo-followup/local-ssd-diagnostic-evidence-8c1-01/raster-primitive-attempt01/receipt.json",
+      "bytes": 15796,
+      "sha256": "921ff87d5a4c1c3c8d4b0dc2b59f13e9b6af717e63275ed8f53d182e2ced1523"
+    },
+    "archive": {
+      "path": "/Users/oleksandr.mekhovov/.codex/worktrees/solo-performance/go_test/.cache/solo-followup/local-ssd-diagnostic-evidence-8c1-01/raster-primitive-attempt01/evidence.tar",
+      "bytes": 14387200,
+      "sha256": "18e7606cb558910aa80d2f29a1b5dbb72f3ebdab801b0ab222c659901a1d2199"
+    },
+    "preservedMembers": 93,
+    "preservationScope": "Local SSD full member readback and source identity verification passed. RAM originals remain. Current external-share revalidation is unavailable; historical external receipts retain their original scope. Local SSD is not independent external backup.",
+    "limits": [
+      "Actual8c1 control module/data closure matched retaineddbf closure; no unrelated runtime equivalence.",
+      "No epsilon, extra warmup, retry or source/runtime change.",
+      "Full currentRAM readback passed; external current checks unavailable. LocalSSD is not independent external backup.",
+      "No timing/physical display/iPhone/PWA/thermal qualification."
+    ]
+  }
+}

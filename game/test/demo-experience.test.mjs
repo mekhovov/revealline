@@ -355,3 +355,80 @@ test('signal clearing, suppression, resistance and harmless zones never manufact
     assert.equal(readCaption(captions, [event]), 'demo:tipStart');
   }
 });
+
+function advanceGuide(captions, seconds, events = [], options = {}) {
+  let result;
+  for (let frame = 0; frame < seconds * 4; frame++)
+    result = captions.advance(0.25, frame === 0 ? events : [], { reactions: true, ...options });
+  return result;
+}
+
+test('guide gives lessons priority, reacts to a real recovery, and limits scene chatter', () => {
+  const captions = createDemoCaptions();
+  captions.reset();
+  advanceGuide(captions, 12, [{ type: 'cut.closed' }]);
+  advanceGuide(captions, 6, [{ type: 'player.failed' }]);
+  assert.equal(advanceGuide(captions, 0.25, [{ type: 'cut.closed' }]), 'demo:reactionRecovery');
+  assert.equal(captions.reacting, true);
+  assert.equal(advanceGuide(captions, 6), 'demo:tipFailure');
+  assert.equal(
+    advanceGuide(captions, 0.25, [{ type: 'shield.absorbed' }]),
+    'demo:tipFailure',
+    'No reaction inside the cooldown.',
+  );
+  advanceGuide(captions, 18);
+  assert.equal(advanceGuide(captions, 0.25, [{ type: 'shield.absorbed' }]), 'demo:reactionShield');
+  advanceGuide(captions, 30);
+  assert.equal(
+    advanceGuide(captions, 0.25, [{ type: 'shield.absorbed' }]),
+    'demo:tipFailure',
+    'Two reactions are enough for one scene.',
+  );
+  captions.reset();
+  advanceGuide(captions, 12);
+  assert.equal(
+    advanceGuide(captions, 0.25, [{ type: 'objective.captured' }]),
+    'demo:tipObjective',
+    'Teach the objective before reacting.',
+  );
+  assert.equal(advanceGuide(captions, 6), 'demo:reactionObjective');
+});
+
+test('guide drops stale, hidden and disabled reactions without dropping teaching captions', () => {
+  for (const options of [{ fresh: false }, { reactions: false }]) {
+    const captions = createDemoCaptions();
+    captions.reset();
+    advanceGuide(captions, 12);
+    advanceGuide(captions, 6, [{ type: 'player.failed' }], options);
+    assert.equal(
+      advanceGuide(captions, 6, [{ type: 'cut.closed' }]),
+      'demo:tipClose',
+      'No retrospective comeback from hidden events.',
+    );
+    assert.equal(captions.reacting, false);
+    advanceGuide(captions, 12);
+    assert.equal(
+      advanceGuide(captions, 0.25, [{ type: 'shield.absorbed' }]),
+      'demo:reactionShield',
+    );
+    assert.equal(
+      captions.advance(0, [], options),
+      'demo:tipClose',
+      'Disabling or hiding removes active personality immediately.',
+    );
+  }
+  const captions = createDemoCaptions();
+  captions.reset();
+  advanceGuide(captions, 12);
+  advanceGuide(captions, 18, [
+    { type: 'cut.started' },
+    { type: 'cut.closed' },
+    { type: 'objective.captured' },
+  ]);
+  assert.equal(
+    advanceGuide(captions, 6),
+    'demo:tipObjective',
+    'A reaction expires while queued lessons are being read.',
+  );
+  assert.equal(captions.reacting, false);
+});

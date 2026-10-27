@@ -1,0 +1,55 @@
+{
+  "sourceCommit": "1dc0320462cd6dd14a4538b001da03218e86dd29",
+  "productionTestDiffFromFrozen": [],
+  "reportSHA256": "ec3118ab5208e591c490e864faf5718aa85de7bcfd2f81bb3d93c699eb7a9352",
+  "logSHA256": "70a3d3f6083f7872be727bffe5bdf9deec727ed950629e828bb15f282ea19374",
+  "passed": true,
+  "requestedSimulationSeconds": 7200,
+  "actualSimulationSeconds": 7229.033333333332,
+  "wallSeconds": 190.799148667,
+  "scenes": 175,
+  "outcomes": {
+    "won": 150,
+    "lost": 25
+  },
+  "verifiedRecordings": 175,
+  "pauseChecks": 175,
+  "policies": {
+    "immediate": {
+      "scenes": 87,
+      "simulationSeconds": 3618.4,
+      "availableSources": 23,
+      "visitedSources": 23
+    },
+    "grid-center": {
+      "scenes": 88,
+      "simulationSeconds": 3610.633333333333,
+      "availableSources": 23,
+      "visitedSources": 23
+    }
+  },
+  "players": {
+    "created": 175,
+    "disposed": 175,
+    "live": 0,
+    "peakLive": 1
+  },
+  "workers": {
+    "created": 94,
+    "liveOwners": 0,
+    "running": 0,
+    "peakRunning": 1,
+    "listeners": 0
+  },
+  "errors": [],
+  "preparationFailures": [],
+  "changedSources": [],
+  "localFinalHashMismatches": [],
+  "scope": "Accelerated core/director/real-worker verification. Not two wall hours, browser rendering, GPU, touch/controller hardware, audio or human watchability qualification.",
+  "doesNotWaive": [
+    "prior generic Orchard Crossing admission failure",
+    "DroneAid Careful Handoff loading deadline failure",
+    "physical devices/audio and first-time viewers",
+    "hidden-page behavior or leak freedom"
+  ]
+}
