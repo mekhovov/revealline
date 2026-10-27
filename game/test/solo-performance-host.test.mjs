@@ -251,9 +251,11 @@ test('ordinary Solo creates optional Worlds only on public opening and reuses it
     opener.click();
   };
   openWorlds();
+  assert.equal(page.$('settings-dialog').open, true, 'The parent stays usable during import.');
+  await settle(() => page.$('optional-worlds-dialog')?.open);
   const panel = page.$('optional-worlds-dialog'),
     checkpoint = authoritativeCheckpoint(run);
-  assert.equal(panel.open, true, 'The explicit click creates and opens the owner synchronously.');
+  assert.equal(panel.open, true, 'The explicit opening constructs one owner after import.');
   assert.deepEqual(owners(), [panel]);
   await settle(
     () => !page.$('optional-worlds-reload').disabled,

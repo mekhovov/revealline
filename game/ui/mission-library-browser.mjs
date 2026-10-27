@@ -848,6 +848,8 @@ export function attachMissionLibraryBrowser({
     campaignRail.replaceChildren(...shortcuts);
     campaignRail.hidden = shortcuts.length < 2;
     let previousCampaign = null;
+    // The host identity is stable for this synchronous render; later renders read it again.
+    const currentId = matches.length ? getCurrentId() : null;
     const buttons = matches.map((row) => {
       const display = livePresentation(row);
       let card = cards.get(row.id);
@@ -911,7 +913,7 @@ export function attachMissionLibraryBrowser({
         ? 'included'
         : availability.state;
       card.button.dataset.pictureState = card.completion?.state ?? 'unfinished';
-      card.button.dataset.current = String(row.id === getCurrentId());
+      card.button.dataset.current = String(row.id === currentId);
       card.campaignHeading.hidden = previousCampaign === row.campaignKey;
       localizedText(card.progress, () =>
         card.completion?.state === 'unavailable'
