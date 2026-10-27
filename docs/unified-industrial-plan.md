@@ -22,6 +22,14 @@ Disk recovery uses a worktree-local sparse exclusion for `authoring/fpv-worlds/r
 
 The 15 October rebase includes main `75bbcf576e` and preserves the remote Team appearance regression update. The Team discovery regression now also requires no statistics write until a real defeat. Separate focused mission-library launch/image failures remain unresolved; passing targeted audio/package tests does not close P0 or public-release qualification.
 
+### Mission-library qualification follow-up · 15 October 2026
+
+The follow-up refreshes the native Solo host regressions for the current explicit briefing/Start flow, downloaded chapter classification, real image dimensions and expanded Versus/Team catalogue. The installed-pack fixture now separates named IndexedDB databases. It continues to assert exact mission identity, no unearned clears, failed-download preservation, explicit retries and authored continuation. The library and Solo result-continuation files join a dedicated required mission-library CI phase. A separate host-navigation phase takes five navigation/departure files from local-ux, which reached its ten-minute execution limit after 597 reported passing top-level cases. No covered file or assertion is dropped; each phase retains its existing deadline. The Custom continuation regression now explicitly leaves the earned-picture presentation through its native controls before selecting Next.
+
+Functional waits remain bounded. CI gets additional time for full original-image decoding, catalogue preparation and shared-runner scheduling; these deadlines are not performance acceptance criteria. The isolated installed-Custom launch and six history-picture cases passed locally. A broader local run was interrupted after renewed timeout failures during severe machine load and disk pressure; this is not a passing-suite receipt. After the result-flow correction, the Custom authored continuation, three incoming-picture ordering cases, expanded Versus handoff and both download/retry cases passed. Repository lint, formatting and validation, plus seven verifier cases, passed. The collection/difficulty/result run passed all 36 cases. The 22-case library sweep passed 19 and found three stale visibility/order assertions; after correction both download cases and all three exact Team-edition handoffs passed. The added Team expedition case brings current library coverage to 23 cases across that sweep and targeted reruns, not a single all-green full-suite receipt. The final package/build check must run from the clean final commit; an earlier build overlapped the last test-only edits and is not accepted as final-source evidence. Full exact-head CI and the remaining device/physical-audio checks are still required.
+
+The native-audio optional-package regression now follows the shared assisted-flight audio projection: 93 packaged files within the unchanged 96-file allowance, with explicit dependency-closure assertions. Its seven package tests passed locally, and the updated optional-practice CI check passed. P1 does not depend on increasing a package limit.
+
 ## Approval recorded · 4 October 2026
 
 The user explicitly approved the artwork and instructed production to proceed. Earlier entries below describing the art decision as pending are dated delivery history, not current blockers. This clears the treatment gate; it does not approve unrelated changed source slots, merge the stack, or establish device/network qualification.
@@ -195,3 +203,16 @@ The next delivery remains completion/interception evidence for all six pilots, t
 - The [atomic adoption mechanism](field-kit-atomic-adoption.md) is implemented: one complete ledger/compiled Git tree, exact source/history/ownership checks, explicit new-ref adoption, idempotent recovery and guarded rollback. It never swaps the active checkout's two paths separately. Actual production adoption is **unexecuted** and still requires a ready, approved production continuation; the current technical candidate cannot pass that gate. Phase C approval and public delivery remain separate.
 
 Next required acceptance: remaining native completion/interception routes and creator/device recovery observations, then the Phase C art/sound review and approved production batches. Historical-device recordings and real-network private-room qualification/HTTPS remain required; broader content and online expansion remain optional.
+
+
+### Current-main preservation checkpoint · 26 October 2026
+
+The #1520 author measurements above are dated source-specific records, not new
+current build, physical-device, native or offline qualification. Parent #1493 is
+actually integrated and retains current audio, inspection and resource owners.
+Mission-library tests now have current fixture, custom and handoff source owners;
+this integration preserves those cases and adds their files to the new library
+phase instead of restoring an older monolithic test file. Finite functional CI
+preparation allowances remain separate from gameplay/replay/performance limits.
+Non-success checks and broader qualification may be bypassed under the user's
+explicit accelerated merge instruction; no passing results are fabricated.

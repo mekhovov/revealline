@@ -157,7 +157,6 @@
       "id": "local-ux",
       "files": [
         "game/test/art-review-navigation.test.mjs",
-        "game/test/art-review-host-navigation.test.mjs",
         "game/test/classic-snake-ui.test.mjs",
         "game/test/hunt-host.test.mjs",
         "game/test/coop-briefing-host.test.mjs",
@@ -165,10 +164,6 @@
         "game/test/phase-briefing.test.mjs",
         "game/test/civilian-practice-ui.test.mjs",
         "game/test/fpv-flight-ui.test.mjs",
-        "game/test/workshop-return.test.mjs",
-        "game/test/content-studio-navigation.test.mjs",
-        "game/test/couch-departure.test.mjs",
-        "game/test/title-mode-departure-host.test.mjs",
         "game/test/mode-choice-appearance.test.mjs",
         "game/test/enemy-appearance-controls.test.mjs",
         "game/test/military-level-directory.test.mjs",
@@ -214,6 +209,25 @@
         "game/test/enemy-stats.test.mjs",
         "game/test/enemy-stats-events.test.mjs",
         "game/test/team-enemy-stats-ownership.test.mjs"
+      ]
+    },
+    {
+      "id": "host-navigation",
+      "files": [
+        "game/test/art-review-host-navigation.test.mjs",
+        "game/test/workshop-return.test.mjs",
+        "game/test/content-studio-navigation.test.mjs",
+        "game/test/couch-departure.test.mjs",
+        "game/test/title-mode-departure-host.test.mjs"
+      ]
+    },
+    {
+      "id": "mission-library",
+      "files": [
+        "game/test/mission-library-solo-host.test.mjs",
+        "game/test/mission-library-solo-custom-host.test.mjs",
+        "game/test/mission-library-solo-handoff-host.test.mjs",
+        "game/test/solo-result-continuation-host.test.mjs"
       ]
     }
   ]

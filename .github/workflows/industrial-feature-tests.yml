@@ -28,7 +28,18 @@ jobs:
       fail-fast: false
       max-parallel: 3
       matrix:
-        phase: [gameplay, creator, presentation, recordings, rooms, local-ux, host-integration]
+        phase:
+          [
+            gameplay,
+            creator,
+            presentation,
+            recordings,
+            rooms,
+            local-ux,
+            host-integration,
+            host-navigation,
+            mission-library,
+          ]
     steps:
       - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
         with:

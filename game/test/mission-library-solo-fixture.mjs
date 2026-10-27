@@ -8,20 +8,7 @@ import { createMissionLibrary } from '../mission-library/library.mjs';
 import { managedIndexedDB } from './helpers/managed-idb.mjs';
 import { emptyPackLibrary, installPack, exportPackLibrary } from '../packs.mjs';
 
-class Picture {
-  width = 1774;
-  height = 887;
-  naturalWidth = 1774;
-  naturalHeight = 887;
-  set src(value) {
-    this.source = value;
-    queueMicrotask(() => this.onload?.());
-  }
-  async decode() {}
-  removeAttribute() {
-    this.source = '';
-  }
-}
+import { RasterImage as Picture } from './helpers/raster-image.mjs';
 async function journeyPage(t, search = '') {
   return soloPage(t, {
     search,
