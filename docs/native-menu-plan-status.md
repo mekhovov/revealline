@@ -1,8 +1,24 @@
 # Native menus: plan status and release batches
 
-> Retained excerpt after an ownership migration. Historical totals and verification statements describe the original scope; this excerpt is not a current release qualification. Original bytes and removed material are preserved separately.
+## October 15 — Rebase and localized keyboard entry
 
-> **Current plan:** use [the September 30 roadmap](native-menu-roadmap.md) for the current phase review, priorities, tool gaps and timestamped delivery table. This file is the historical evidence ledger. Earlier “Next”, branch, queue, count and phase-status statements apply to their recorded cutoffs, not the active work order. The current priority is the public landing correction, then integrated player safety, offline/accessibility/device acceptance, functional creator gaps and the remaining reference/creative work.
+The owned checkout was rebased without conflicts onto main `fab00f38a0` after
+recovering an ENOSPC checkout failure with verified Git copies and worktree-local
+sparse media. Runtime `d19382e03b` adds English/Ukrainian locked-entry labels,
+explicit language selection, bounded Tab navigation, retained pending focus and
+duplicate-submit protection. It preserves the newer pre-unlock inert-script
+boundary. **11/11 runtime checks and three selected page/launcher checks pass**;
+the full page-inventory check remains blocked by omitted artwork. Browser tools
+are unavailable, so no fresh browser, physical controller or publication acceptance
+is claimed. See [the bounded receipt](verification/access-entry-input-2026-10-15.md).
+
+Controller-only password entry remains open. Continue with current public entry,
+progress recovery, installed-phone updates and a living-background showcase;
+older September “next gallery” and release-queue paragraphs below are historical.
+Reuse the later unified five-mode menus and existing owner
+work rather than restoring their old donor branches. The overall plan is incomplete.
+
+> **Plan history:** [the September 30 roadmap](native-menu-roadmap.md) retains the original phase matrix and timestamped delivery table. Use the latest dated entry above for the active batch. Earlier “Next”, branch, queue, count and phase-status statements apply to their recorded cutoffs, not the current work order. Historical evidence is preserved and does not establish acceptance of a later integrated build.
 
 ## September 30 — Restore the approved landing action list
 

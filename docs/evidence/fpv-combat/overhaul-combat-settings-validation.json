@@ -1,0 +1,53 @@
+{
+  "date": "2026-10-20T07:21:02.933836+00:00",
+  "scope": "Combat settings, local recovery and recording actions; unpublished isolated checkout",
+  "sourceSha256": {
+    "optional-practice/civilian-fpv/world-app.mjs": "3c0ff9241d6d75497e88eee75b4a08fad2e3c42dda7de2e4ced72ebcecde83f0",
+    "optional-practice/civilian-fpv/snake-hunt-presentation.mjs": "d03a083f96ba1a12f4a2beade82d2292e28b04780f8d53013ff2a1b3a6ff77e6",
+    "optional-practice/civilian-fpv/style.css": "1d855a4956ba8f2bd45f8902c5e0a415cb216bd65b51cde4f17816a8bc1b0afa",
+    "game/test/fpv-world-appearance-ui.test.mjs": "0d7a12c5e473765b3440789b127103d27bd97834709ab936c88125beaabefb31",
+    "game/test/fpv-encounter-host-lifecycle.test.mjs": "634a35a3d09cb2980cb5e4dd00b6b365fb52b1b80222bd5537193c1d511a0ce6"
+  },
+  "automated": {
+    "uiAndLifecycle": {
+      "passed": 180,
+      "failed": 0,
+      "skipped": 0,
+      "durationMs": 63247.52725,
+      "files": [
+        "game/test/fpv-world-appearance-ui.test.mjs",
+        "game/test/fpv-encounter-host-lifecycle.test.mjs"
+      ]
+    },
+    "presentation": {
+      "passed": 93,
+      "failed": 0,
+      "skipped": 0,
+      "durationMs": 3182.738042,
+      "files": [
+        "game/test/encounter-display-preferences.test.mjs",
+        "game/test/encounter-display-controls.test.mjs",
+        "game/test/fpv-combat-presentation.test.mjs",
+        "game/test/fpv-combat-organic-detail.test.mjs",
+        "game/test/fpv-combat-cap-batching.test.mjs"
+      ]
+    }
+  },
+  "browser": {
+    "method": "CUA interaction with actual localhost SIM, native file chooser/download and visible status",
+    "gorePreferences": "Passed inline controls, Display synchronization and refresh persistence; final all three on",
+    "nativeRecoverySeconds": 37.5,
+    "nativeCurrentPlayback": "Prepared, resumed, paused",
+    "regionalArchivePlaybackSeconds": 16,
+    "exportedRegionalFilePlayback": "Prepared with exact installed Railway Valley map",
+    "invalidFile": "Visible localized error",
+    "incompleteArchive": "Watch disabled with missing ending explanation",
+    "capture": "overhaul-combat-settings.png"
+  },
+  "limitations": [
+    "No physical radio test this turn",
+    "No fresh performance qualification",
+    "Broader display-host test cannot load omitted sparse-checkout authoring/motion-lab/animation.mjs",
+    "Package candidates use synthetic source identities and are not release qualification"
+  ]
+}

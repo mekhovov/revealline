@@ -1,3 +1,4 @@
+import { createExecutedFrameReader } from './solo-frame-trace-executed-source.mjs';
 // Test-only exact executed declaration authority; production hashes current tools.
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
@@ -34,13 +35,21 @@ export function sharedOwnerDeclaredRefs(bytes, manifestPath, manifestBytes) {
   );
 }
 export async function assertSharedOwnerDeclaredTool(manifestPath, ref) {
-  if (!changed.has(ref.path)) return false;
+  const retainedRecorder = ref.path === 'scripts/solo-qualification-cpu-profile.mjs';
+  if (!changed.has(ref.path) && !retainedRecorder) return false;
   const root = new URL('../', import.meta.url);
   const [w, m] = await Promise.all([
     readFile(new URL(SHARED_OWNER_WITNESS, root)),
     readFile(new URL(manifestPath, root)),
   ]);
   const refs = sharedOwnerDeclaredRefs(w, manifestPath, m);
+  if (retainedRecorder) {
+    // First bind the exact executed declaration, then the exact retained source.
+    const read = createExecutedFrameReader((path) => readFile(new URL(path, root)));
+    const bytes = await read(ref.path);
+    assert.deepEqual(ref, { path: ref.path, bytes: bytes.length, sha256: hash(bytes) });
+    return true;
+  }
   assert.deepEqual(ref, refs.get(ref.path), 'Exact executed helper reference required');
   return true;
 }

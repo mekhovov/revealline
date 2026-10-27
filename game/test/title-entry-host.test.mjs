@@ -16,6 +16,7 @@ import { campaignKey, emptyLibrary } from '../library.mjs';
 import { emptyPackLibrary } from '../packs.mjs';
 import { BACKUP_FORMAT } from '../backup.mjs';
 import { acceptGameDataReplacement } from './helpers/backup-preflight.mjs';
+import { getLocale, setLocale } from '../i18n/index.mjs';
 const slot = 'revealline.suspended.dev.v1';
 const ticks = (h, n = 1) => {
   for (let i = 0; i < n; i++) h.frame();
@@ -25,6 +26,17 @@ const snapshot = (h) => {
   return authoritativeCheckpoint(h.rendered.run);
 };
 const menu = (h) => h.$('shell-menu').click();
+function detailInBothLanguages(h, english, ukrainian) {
+  const previous = getLocale();
+  try {
+    setLocale('en', { persist: false });
+    assert.equal(h.$('shell-action-detail').textContent, english);
+    setLocale('uk', { persist: false });
+    assert.equal(h.$('shell-action-detail').textContent, ukrainian);
+  } finally {
+    setLocale(previous, { persist: false });
+  }
+}
 // A programmatic click does not focus a control. These journeys model an
 // already-focused keyboard action, independently of the minimal boot DOM.
 const activateTitle = (h, id) => {
@@ -56,6 +68,18 @@ test('one title Start launches the actual named selected mission without opening
   const h = await soloPage(t, { titleScreen: true }),
     run = h.rendered.run;
   assert.match(h.$('shell-destination').textContent, /Start · First Signal/);
+  assert.equal(h.$('shell-action-context').hidden, false);
+  assert.equal(h.$('shell-destination').dataset.nativeQuiet, undefined);
+  assert.equal(h.$('shell-action-context').parentNode, h.doc.querySelector('.home-actions'));
+  assert.equal(
+    h.$('shell-featured').getAttribute('aria-describedby'),
+    'shell-destination shell-action-detail',
+  );
+  detailInBothLanguages(
+    h,
+    'Solo · Starts a new attempt at this mission.',
+    'Одиночна · Починає нову спробу цієї місії.',
+  );
   assert.equal(h.doc.activeElement, h.$('shell-featured'));
   await start(h);
   h.frame(0);
@@ -76,6 +100,15 @@ for (const policy of ['immediate', 'grid-center']) {
       beforeTick = h.rendered.run.tick,
       bytes = h.storage.getItem(slot);
     assert.equal(h.$('shell-continue').hidden, false);
+    detailInBothLanguages(
+      h,
+      'Solo · Resumes your paused flight.',
+      'Одиночна · Продовжує призупинений політ.',
+    );
+    assert.equal(
+      h.$('shell-continue').getAttribute('aria-describedby'),
+      'shell-destination shell-action-detail',
+    );
     h.$('shell-continue').click();
     await settle(() => h.doc.body.dataset.flightState === 'running');
     assert.equal(h.rendered.run, run);
@@ -100,6 +133,12 @@ for (const policy of ['immediate', 'grid-center']) {
     await t.test('explicit title Continue', async (t) => {
       const h = await soloPage(t, { storage, titleScreen: true });
       assert.equal(h.$('shell-continue').hidden, false);
+      assert.match(h.$('shell-destination').textContent, /First Signal/);
+      detailInBothLanguages(
+        h,
+        'Solo · Verifies the saved flight, then resumes it.',
+        'Одиночна · Перевіряє збережений політ, а потім продовжує його.',
+      );
       assert.equal(h.doc.activeElement, h.$('shell-continue'));
       h.$('shell-continue').click();
       await settle(() => h.doc.body.dataset.flightState === 'running');

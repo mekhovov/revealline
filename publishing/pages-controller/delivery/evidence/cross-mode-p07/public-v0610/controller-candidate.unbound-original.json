@@ -1,9 +1,0 @@
-{
-  "status": "UNBOUND_PENDING_ACTUAL_PUBLISHER",
-  "commit": null,
-  "tree": null,
-  "mergedControllerCommit": null,
-  "runId": null,
-  "deploymentId": null,
-  "intakeRequestRemainsUnbound": true
-}

@@ -42,7 +42,17 @@ function fixture() {
     pad.axes[1] = 0;
     assert(adapter.status().controls.throttle > 0.5);
   };
-  return { adapter, pad, poll, press, release, arm };
+  return {
+    adapter,
+    pad,
+    poll,
+    press,
+    release,
+    arm,
+    elapse(ms) {
+      now += ms;
+    },
+  };
 }
 
 test('every conflicting action chord pauses an active controller before neutral flight input can be used', () => {
@@ -111,5 +121,22 @@ test('disconnect and reconnect retain the deliberate neutral pickup and arm boun
   assert.deepEqual(f.poll('ready').actions, []);
   f.release();
   assert.deepEqual(f.poll('ready').actions, ['arm']);
+  f.adapter.dispose();
+});
+
+test('foreground stalls preserve controller ownership and sample the latest sticks', () => {
+  const f = fixture();
+  f.arm();
+  const throttle = f.adapter.status().controls.throttle;
+  for (const gap of [300, 1000, 5000]) {
+    f.elapse(gap);
+    f.pad.axes[2] = 0.75;
+    const sampled = f.poll();
+    assert.deepEqual(sampled.actions, []);
+    assert.equal(sampled.active, true);
+    assert.equal(sampled.controls.throttle, throttle);
+    assert.ok(sampled.controls.roll > 0.5);
+  }
+  assert.deepEqual(f.poll('flight', []).actions, ['pause'], 'disconnect still pauses');
   f.adapter.dispose();
 });

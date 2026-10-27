@@ -1,3 +1,4 @@
+import { createExecutedFrameReader } from './solo-frame-trace-executed-source.mjs';
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
 import { mkdtemp, readFile, writeFile, symlink, rm } from 'node:fs/promises';
@@ -20,7 +21,8 @@ import {
   FRAME_TRACE_LIMITS,
 } from './solo-qualification-cpu-profile.mjs';
 import { verifiedMidCalibration } from './solo-remote-sustained.mjs';
-const read = (p) => readFile(new URL('../' + p, import.meta.url));
+// Preserve executed/held v1 source assertions; the successor has separate current-source controls.
+const read = createExecutedFrameReader((p) => readFile(new URL('../' + p, import.meta.url)));
 const manifest = JSON.parse(await read('docs/performance/solo-browser-frame-trace-warm-plan.json'));
 const source = '9d5139b9983c700a6a708f65f379fa4d5a8b0395';
 const hash = (b) => createHash('sha256').update(b).digest('hex');

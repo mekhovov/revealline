@@ -2,8 +2,8 @@
   "format": "revealline-industrial-environment-inventory.v1",
   "materialRevision": "industrial-roster-v3",
   "studioContract": {
-    "slots": 335,
-    "sourceSha256": "c905cab9ce4519379d57bdecf3ef02146b44d5a2ad82430a3939b2d2fc00f617"
+    "slots": 359,
+    "sourceSha256": "75b5857a9534fbaaf59545b3576c9a769057c0f5f1a6978c1116b1e790e84f2b"
   },
   "variantDescription": "Four restrained wear variations per material; chapter combinations supply broad visual differences.",
   "chapters": [
@@ -77,8 +77,8 @@
       "package": {
         "path": "authoring/industrial-art-review/environments-v1/pursuit-patrol-district.rltheme",
         "href": "authoring/industrial-art-review/environments-v1/pursuit-patrol-district.rltheme",
-        "bytes": 988338,
-        "sha256": "6a538eb3cea4ec978fca6ef720cdef4b852016ea6c196f61cec353ca0730aa59",
+        "bytes": 1063671,
+        "sha256": "c1fae169d5a020857a1dea70dc9313ac42254140b5f11a29ddca0de83174688b",
         "decodedBytes": 3072,
         "assets": [
           {
@@ -1083,8 +1083,8 @@
       "package": {
         "path": "authoring/industrial-art-review/environments-v1/pursuit-escape-lines.rltheme",
         "href": "authoring/industrial-art-review/environments-v1/pursuit-escape-lines.rltheme",
-        "bytes": 988336,
-        "sha256": "988950dd70dbdf7f6e9eaaf9547a588e684b4db9aad1cc49a08234478282ab8d",
+        "bytes": 1063669,
+        "sha256": "62303d2f3a4987092eb52884fa8fc840d95d30338a6ec3603faaf3a6148c65b4",
         "decodedBytes": 3072,
         "assets": [
           {
@@ -2089,8 +2089,8 @@
       "package": {
         "path": "authoring/industrial-art-review/environments-v1/pursuit-guarded-crossings.rltheme",
         "href": "authoring/industrial-art-review/environments-v1/pursuit-guarded-crossings.rltheme",
-        "bytes": 988382,
-        "sha256": "a8db4031ec7e369972a33019b0a11067c84711e1e0e8e147f5c7dc58108e4f0c",
+        "bytes": 1063715,
+        "sha256": "b4f054dec39c97c3ba18c27194f0ed59e93b90c232ae5172fae59c768c260342",
         "decodedBytes": 3072,
         "assets": [
           {
@@ -3095,8 +3095,8 @@
       "package": {
         "path": "authoring/industrial-art-review/environments-v1/pursuit-specialist-circuit.rltheme",
         "href": "authoring/industrial-art-review/environments-v1/pursuit-specialist-circuit.rltheme",
-        "bytes": 988387,
-        "sha256": "92e426d99bdb454a7f6d16d5cd1b5a131e2d5063984b9d3653f7aba7d9a0abf4",
+        "bytes": 1063720,
+        "sha256": "cd5c85d1b0d2fda85a91a431492fd673bbe6db7a3712f7fa1ae96eb3b1463e51",
         "decodedBytes": 3072,
         "assets": [
           {
@@ -4096,8 +4096,8 @@
       "package": {
         "path": "authoring/industrial-art-review/environments-v1/pursuit-team-shared-bearings.rltheme",
         "href": "authoring/industrial-art-review/environments-v1/pursuit-team-shared-bearings.rltheme",
-        "bytes": 988367,
-        "sha256": "056801f01925ab42541c65b0568e900455e836caa3e6cb36aeff81f343de08cd",
+        "bytes": 1063700,
+        "sha256": "835c56d85a053e530042e556f59453a9f62b783deb9b8743ab874cacfad9d2e7",
         "decodedBytes": 3072,
         "assets": [
           {
@@ -4647,8 +4647,8 @@
       "package": {
         "path": "authoring/industrial-art-review/environments-v1/pursuit-team-pincer-grounds.rltheme",
         "href": "authoring/industrial-art-review/environments-v1/pursuit-team-pincer-grounds.rltheme",
-        "bytes": 988331,
-        "sha256": "211cdb781ee40b9ae49b95e475470289e9f4c67ec267d36c47baca64d9c714cd",
+        "bytes": 1063664,
+        "sha256": "613d134d6a540f4167dd6c48c557843798d1edbc2c997fe5513345e9c7086585",
         "decodedBytes": 3072,
         "assets": [
           {
@@ -5198,8 +5198,8 @@
       "package": {
         "path": "authoring/industrial-art-review/environments-v1/pursuit-team-return-workshop.rltheme",
         "href": "authoring/industrial-art-review/environments-v1/pursuit-team-return-workshop.rltheme",
-        "bytes": 988385,
-        "sha256": "3af85a45db1a3df36721943e4718994e954b7eb5f73aaeb3bebb81d47c081993",
+        "bytes": 1063718,
+        "sha256": "251c1f0aebdf050cb89b9f8eb49e5b5a63e7989b69669fcaec8f16e017c37ebc",
         "decodedBytes": 3072,
         "assets": [
           {
@@ -5749,8 +5749,8 @@
       "package": {
         "path": "authoring/industrial-art-review/environments-v1/pursuit-team-material-exchange.rltheme",
         "href": "authoring/industrial-art-review/environments-v1/pursuit-team-material-exchange.rltheme",
-        "bytes": 988291,
-        "sha256": "f9f0f5c383600aa91a2df230c94debded70a0af63732b3a8c43498cb908a050e",
+        "bytes": 1063624,
+        "sha256": "b13d2c766493feb4877844f5177e4d226b0b162e6e11b52666d182b345e51944",
         "decodedBytes": 3072,
         "assets": [
           {
@@ -6300,8 +6300,8 @@
       "package": {
         "path": "authoring/industrial-art-review/environments-v1/pursuit-team-window-partners.rltheme",
         "href": "authoring/industrial-art-review/environments-v1/pursuit-team-window-partners.rltheme",
-        "bytes": 988383,
-        "sha256": "cb70bc35af8dcd92230cac814cc55eab897b73087308a1c438a4ad7c58377201",
+        "bytes": 1063716,
+        "sha256": "4fc8a2a14dc8d7319609c318782e19c1c933d5f86516ce6fa1ebe78f0cbf7039",
         "decodedBytes": 3072,
         "assets": [
           {
@@ -6851,8 +6851,8 @@
       "package": {
         "path": "authoring/industrial-art-review/environments-v1/pursuit-team-two-pilot-finale.rltheme",
         "href": "authoring/industrial-art-review/environments-v1/pursuit-team-two-pilot-finale.rltheme",
-        "bytes": 988381,
-        "sha256": "57b90c3c1af027f881badca8028a782a86b013d15071e17f597d000a0b358c5a",
+        "bytes": 1063714,
+        "sha256": "c01ad229ea8820077bc6fb878f6b97c7720be09b1cf529520ac412f0d4e6ea9c",
         "decodedBytes": 3072,
         "assets": [
           {
@@ -7476,8 +7476,8 @@
       "package": {
         "path": "authoring/industrial-art-review/environments-v1/classic-snake-twin-intercepts.rltheme",
         "href": "authoring/industrial-art-review/environments-v1/classic-snake-twin-intercepts.rltheme",
-        "bytes": 988334,
-        "sha256": "62f1de335abe4e4d1fab5e11c5930c5e271be47bfa1a7a9e0a255ed32a8cfd4b",
+        "bytes": 1063667,
+        "sha256": "f3cf506dccf0dcf7bbefb7e833c04c7fc54aceff973b02b63f9c7c5296760908",
         "decodedBytes": 3072,
         "assets": [
           {
@@ -8065,8 +8065,8 @@
       "package": {
         "path": "authoring/industrial-art-review/environments-v1/classic-snake-moving-windows.rltheme",
         "href": "authoring/industrial-art-review/environments-v1/classic-snake-moving-windows.rltheme",
-        "bytes": 988351,
-        "sha256": "15c7b9dfa877efe88aff30ae1aac878a3fcaa93f7be47d32b2ae8f0825021fdd",
+        "bytes": 1063684,
+        "sha256": "1dec7fe5d6218dec296f3540d4b8bd51e3364ff28f9c5986ea4222fab2e0e21c",
         "decodedBytes": 3072,
         "assets": [
           {
@@ -8652,8 +8652,8 @@
       "package": {
         "path": "authoring/industrial-art-review/environments-v1/ground-routes.rltheme",
         "href": "authoring/industrial-art-review/environments-v1/ground-routes.rltheme",
-        "bytes": 988432,
-        "sha256": "23c3d55def77de150551327f3fece40d1154cb15beeb87086a85fb61bc0dffea",
+        "bytes": 1063765,
+        "sha256": "354d9f5720ebd0780a42483b7ab897742124e2ac1776a867bb8762bf04595209",
         "decodedBytes": 3072,
         "assets": [
           {
@@ -9245,8 +9245,8 @@
       "package": {
         "path": "authoring/industrial-art-review/environments-v1/approach-windows.rltheme",
         "href": "authoring/industrial-art-review/environments-v1/approach-windows.rltheme",
-        "bytes": 988393,
-        "sha256": "d9f5533374149877e4e57e76dd56f545705f4ef5227228bf253682e37890362d",
+        "bytes": 1063726,
+        "sha256": "d178461a3524d3cd944cb2e3d6b503df7bd425c91b41c5f41fc8b2a01b229eb8",
         "decodedBytes": 3072,
         "assets": [
           {
@@ -9705,7 +9705,7 @@
   "roomPreparations": 756,
   "roomSources": 276,
   "moduleBytes": 422824,
-  "packageBytes": 13837091,
+  "packageBytes": 14891753,
   "decodedBytesPerChapterMax": 3072,
   "scope": "Produced and software-admitted, presentation only. No new missions, gameplay policy, automatic default promotion or human/device acceptance."
 }

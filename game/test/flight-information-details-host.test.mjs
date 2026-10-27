@@ -59,6 +59,66 @@ function open(p) {
   p.$('overlay-field-details').click();
   assert.equal(p.$('flight-details-dialog').open, true);
 }
+
+test('earned partial reveal stays readable in paused Details through language changes and Back', async (t) => {
+  setLocale('en', { persist: false });
+  t.after(() => setLocale('en', { persist: false }));
+  const storage = memoryStorage(),
+    p = await soloPage(t, { campaign, storage });
+  await start(p);
+  tap(p, 'ArrowDown');
+  for (let count = 0; count < 1000 && !p.rendered.run.coverage; count++) p.frame();
+  assert.ok(p.rendered.run.coverage > 0 && p.rendered.run.coverage < 1);
+  p.$('pause-button').click();
+  const before = authoritativeCheckpoint(p.rendered.run),
+    beforeDetailsSave = storage.getItem('revealline.suspended.dev.v1'),
+    retained = info(p),
+    progress = structuredClone(retained.snapshot.progress);
+  p.$('pause-mission-info-toggle').click();
+  open(p);
+  // The existing opener pauses and resaves the same run. Compare the complete
+  // replay, then retain the resulting bytes for the reading/locale checks.
+  const saved = storage.getItem('revealline.suspended.dev.v1');
+  assert.deepEqual(
+    nativeSession(JSON.parse(saved)).replay,
+    nativeSession(JSON.parse(beforeDetailsSave)).replay,
+  );
+  assert.match(p.$('flight-details-content').textContent, /Picture revealed: 13%/);
+  assert.match(p.$('flight-details-content').textContent, /Still to reveal: 87% of the picture/);
+  p.$('flight-details-read').click();
+  const focus = p.doc.activeElement;
+  p.$('flight-details-reading').clientHeight = 100;
+  p.$('flight-details-reading').scrollHeight = 500;
+  p.$('flight-details-reading').scrollTop = 35;
+  for (const locale of ['uk', 'en']) {
+    setLocale(locale, { persist: false });
+    const content = p.$('flight-details-content').textContent;
+    assert.match(
+      content,
+      locale === 'uk'
+        ? /Ще потрібно відкрити: 87% зображення/
+        : /Still to reveal: 87% of the picture/,
+    );
+    assert.equal(p.doc.activeElement === focus, true, `reader focus: ${p.doc.activeElement?.id}`);
+    assert.equal(p.$('flight-details-reading').scrollTop, 35);
+    ticks(p, 12);
+    assert.deepEqual(info(p).snapshot.progress, progress);
+    assert.deepEqual(authoritativeCheckpoint(p.rendered.run), before);
+    assert.equal(storage.getItem('revealline.suspended.dev.v1'), saved);
+  }
+  p.$('flight-details-back').click();
+  await Promise.resolve();
+  assert.equal(p.$('flight-details-dialog').open, false);
+  assert.equal(
+    p.doc.activeElement === p.$('overlay-field-details'),
+    true,
+    `returned focus: ${p.doc.activeElement?.id}`,
+  );
+  assert.deepEqual(authoritativeCheckpoint(p.rendered.run), before);
+  assert.equal(verifyReplay(nativeSession(JSON.parse(saved)).replay).match, true);
+  assert.deepEqual(p.errors, []);
+});
+
 for (const turnPolicy of ['immediate', 'grid-center'])
   test(`mounted ${turnPolicy}: Details reading and Back preserve flight; only Resume moves`, async (t) => {
     setLocale('en', { persist: false });

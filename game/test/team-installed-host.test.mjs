@@ -381,7 +381,10 @@ for (const restoring of [false, true])
           [],
           'A fresh direct launch has no prior held core inputs.',
         );
-        const verified = await restoreTeamHuntAttempt(initialEnvelope, { pack: prepared.pack, level });
+        const verified = await restoreTeamHuntAttempt(initialEnvelope, {
+          pack: prepared.pack,
+          level,
+        });
         assert.equal(verified.run.tick, 0);
         assert.deepEqual(verified.run.needsNeutral, [false, false]);
       }

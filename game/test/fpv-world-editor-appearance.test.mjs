@@ -133,3 +133,103 @@ test('spatial editor preserves an authenticated retained binding when a proposed
     editor.dispose();
   }
 });
+
+test('spatial editor offers bounded-renderer camera actions for radio menus without editing source', async () => {
+  const document = new Document(),
+    window = new Events(),
+    calls = [];
+  let frame,
+    resolveControls,
+    draws = 0;
+  Object.assign(window, {
+    requestAnimationFrame(callback) {
+      frame = callback;
+      return 1;
+    },
+    cancelAnimationFrame() {},
+  });
+  const canvas = document.createElement('canvas');
+  canvas.getBoundingClientRect = () => ({ width: 640, height: 480 });
+  const course = structuredClone(WORLD_CATALOGUE.find((entry) => !entry.legacy).course);
+  const original = structuredClone(course);
+  const editor = mountWorldEditor({
+    canvas,
+    window,
+    course,
+    rendererFactory: () => ({
+      available: true,
+      setQuality() {},
+      setCourse() {},
+      createEditor: () =>
+        new Promise((resolve) => {
+          resolveControls = resolve;
+        }),
+      draw() {
+        draws++;
+      },
+      dispose() {
+        calls.push(['dispose']);
+      },
+    }),
+    onChange() {
+      assert.fail('View actions must not change authored objects');
+    },
+  });
+  assert.equal(editor.orbitView(40, -20), false);
+  assert.equal(editor.zoomView(-120), false);
+  assert.equal(editor.resetView(), false);
+  resolveControls({
+    select() {},
+    orbit(...values) {
+      calls.push(['orbit', ...values]);
+    },
+    zoom(...values) {
+      calls.push(['zoom', ...values]);
+    },
+    home() {
+      calls.push(['home']);
+    },
+  });
+  await editor.ready;
+  assert.equal(draws, 1);
+  frame();
+  assert.equal(draws, 1);
+  assert.equal(editor.orbitView(40, -20), true);
+  frame();
+  assert.equal(draws, 2, 'View action requests a redraw without relying on pointer events');
+  assert.equal(editor.zoomView(-120), true);
+  assert.equal(editor.zoomView(120), true);
+  assert.equal(editor.resetView(), true);
+  assert.equal(editor.orbitView(Infinity, 0), false);
+  assert.equal(editor.orbitView(0, NaN), false);
+  assert.equal(editor.zoomView('120'), false);
+  assert.deepEqual(calls, [['orbit', 40, -20], ['zoom', -120], ['zoom', 120], ['home']]);
+  assert.deepEqual(course, original);
+  editor.dispose();
+  assert.equal(editor.orbitView(40, 0), false);
+  assert.equal(editor.zoomView(120), false);
+  assert.equal(editor.resetView(), false);
+  assert.equal(calls.at(-1)[0], 'dispose');
+});
+
+test('unavailable spatial graphics cannot break later course or appearance form refreshes', async () => {
+  const document = new Document(),
+    window = new Events(),
+    errors = [];
+  const editor = mountWorldEditor({
+    canvas: document.createElement('canvas'),
+    window,
+    rendererFactory: () => ({ available: false, dispose() {} }),
+    onError: (error) => errors.push(error.message),
+  });
+  try {
+    await assert.rejects(editor.ready, /WebGL is unavailable/);
+    assert.doesNotThrow(() =>
+      editor.setCourse(WORLD_CATALOGUE.find((entry) => !entry.legacy).course),
+    );
+    assert.doesNotThrow(() => editor.setRouteGuide(null));
+    assert.equal(errors.length, 1);
+  } finally {
+    editor.dispose();
+  }
+});

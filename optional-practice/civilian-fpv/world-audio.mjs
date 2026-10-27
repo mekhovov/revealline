@@ -1,6 +1,7 @@
+import { createGameplayAudioOutput } from '../../game/ui/gameplay-audio-output.mjs';
 import { createHumanReactionPolicy } from '../../game/ui/human-reaction-policy.mjs';
-import { HUMAN_REACTION_BANK } from '../../game/audio/human-reactions/portable.mjs';
-import { destructionBufferGain } from '../../game/ui/destruction-level.mjs';
+import { createPublishedCues } from '../../game/ui/published-cues.mjs';
+import { readPortableDestructionAudio } from '../../game/presentation/portable-destruction-audio.mjs';
 import { DEFAULT_DIALOGUE_VOLUME, DIALOGUE_MIX_GAIN } from '../../game/audio/dialogue-mix.mjs';
 import {
   createGameAudioContext,
@@ -10,12 +11,17 @@ import {
 } from '../../game/ui/audio-output.mjs';
 import { createAudioMaster } from '../../game/ui/audio-master.mjs';
 import { createAudioPreferences } from '../../game/audio-preferences.mjs';
-import { destructionCategory } from '../../game/ui/destruction-audio.mjs';
+import {
+  destructionCategory,
+  DESTRUCTION_CUES,
+  HUMAN_REACTION_CUES,
+} from '../../game/ui/destruction-audio.mjs';
 import { encounterSoundRecipe, actorPhaseSound } from '../../game/ui/encounter-audio.mjs';
 import { readMovementAudio, MOVEMENT_AUDIO_KEY } from '../../game/ui/movement-audio.mjs';
 import { dialogueChannel } from '../../game/ui/dialogue-channel.mjs';
 
-/** Optional presentation-only sound. Embedded CC0 vocals decode on activation; no media requests or gameplay clocks. */
+/** Native flight uses the shared published-cue cache and mixer. Accepted package
+ * recordings decode on activation; no network reads or gameplay clocks. */
 const PREFERENCE = 'revealline.fpv.world-audio.v1';
 const clamp = (value, min, max) => Math.max(min, Math.min(max, value));
 const AMBIENCES = {
@@ -33,6 +39,7 @@ export function createWorldAudio(options = {}) {
   } catch {
     // Sound works for this visit even when browser preferences are unavailable.
   }
+  const gameplayOutput = createGameplayAudioOutput({ window: host, getStorage: () => storage });
   const AudioContext = host.AudioContext ?? host.webkitAudioContext;
   let enabled = false;
   try {
@@ -54,10 +61,9 @@ export function createWorldAudio(options = {}) {
   let gateStyle = 'chime';
   let dialogue = { enabled: false, volume: DEFAULT_DIALOGUE_VOLUME };
   let dialogueVoice = null;
+  let recorded = null;
   const effects = new Set();
   const humanReactions = createHumanReactionPolicy();
-  const humanBuffers = new Map();
-  let preparingHumans = false;
   const audioMaster = options.audioMaster ?? createAudioMaster();
   const preferences =
     options.audioPreferences ??
@@ -96,7 +102,9 @@ export function createWorldAudio(options = {}) {
   };
   host.addEventListener?.('storage', changed);
   const recentCues = new Map();
+  const observedEvents = new Set();
   let actorDefinitions = new Map();
+  let liveActors = new Map();
   let actorPositions = new Map();
   let actorPhases = new Map();
   let actorFamilies = new Map();
@@ -117,27 +125,47 @@ export function createWorldAudio(options = {}) {
     effects.clear();
   }
 
-  function prepareHumans() {
-    if (
-      preparingHumans ||
-      !context?.decodeAudioData ||
-      options.getDestruction?.()?.vocals === false
-    )
-      return;
-    preparingHumans = true;
-    for (const [name, clip] of Object.entries(HUMAN_REACTION_BANK)) {
-      const bytes = Uint8Array.from(atob(clip.base64), (character) => character.charCodeAt(0));
-      void context
-        .decodeAudioData(bytes.buffer)
-        .then((buffer) => {
-          if (!disposed)
-            humanBuffers.set(name, { buffer, gain: destructionBufferGain(name, buffer) });
-        })
-        .catch(() => {});
-    }
+  recorded = createPublishedCues({
+    sound: {
+      get mediaPreparation() {
+        return options.mediaPreparation;
+      },
+      get enabled() {
+        return enabled;
+      },
+      get paused() {
+        return !wanted;
+      },
+      get disposed() {
+        return disposed;
+      },
+      get context() {
+        return context;
+      },
+      get audioMaster() {
+        return masterState;
+      },
+      get sfxBus() {
+        return graph?.buses.interface;
+      },
+      get settings() {
+        return { master: enabled, sfx: levels.interface > 0 };
+      },
+      voices: effects,
+    },
+    readAudio: options.readAudio ?? readPortableDestructionAudio,
+    maxVoices: 12,
+    maxFeedbackVoices: 10,
+    maxDecodedSamples: 2 * 1024 * 1024,
+  });
+  function prepareRecordings() {
+    void recorded.prepare([
+      ...DESTRUCTION_CUES,
+      ...(options.getDestruction?.()?.vocals === false ? [] : HUMAN_REACTION_CUES),
+    ]);
   }
   function humanReaction(details) {
-    prepareHumans();
+    prepareRecordings();
     if (
       !graph ||
       !enabled ||
@@ -156,38 +184,18 @@ export function createWorldAudio(options = {}) {
       details,
       [...effects].filter((effect) => effect.humanReaction).length,
     );
-    const clip = name && humanBuffers.get(name);
-    if (!clip) return;
-    const source = context.createBufferSource(),
-      volume = context.createGain(),
-      now = context.currentTime;
-    const duration = Math.min(0.7, clip.buffer.duration);
-    source.buffer = clip.buffer;
-    volume.gain.setValueAtTime(0.45 * clip.gain, now);
-    volume.gain.setValueAtTime(0.45 * clip.gain, now + Math.max(0, duration - 0.025));
-    volume.gain.linearRampToValueAtTime(0, now + duration);
-    source.connect(volume).connect(graph.buses.interface);
-    let stopped = false;
-    const voice = {
-      humanReaction: true,
-      priority: 2,
-      stop() {
-        if (stopped) return;
-        stopped = true;
-        try {
-          source.stop();
-        } catch {}
-        source.disconnect();
-        volume.disconnect();
-        effects.delete(voice);
-      },
-    };
-    effects.add(voice);
-    source.onended = voice.stop;
-    source.start(now);
-    source.stop(now + duration);
+    if (name)
+      recorded.play(name, {
+        gain: 0.45,
+        maxDuration: 0.7,
+        humanReaction: true,
+        feedback: true,
+        priority: 2,
+        board: 'flight',
+      });
   }
   function silence() {
+    recorded?.cancelPending();
     dialogueVoice?.stop();
     if (!graph || context.state === 'closed') return;
     for (const node of [graph.motor, graph.vehicleGain, graph.wind, graph.humGain]) {
@@ -283,6 +291,7 @@ export function createWorldAudio(options = {}) {
         hum,
         humGain,
       };
+      gameplayOutput.attach(output);
       return true;
     } catch {
       candidate?.close().catch(() => {});
@@ -321,7 +330,11 @@ export function createWorldAudio(options = {}) {
     if (priority >= 4) for (const effect of [...effects]) if (effect.movementCue) effect.stop();
     // Crowd feedback cannot use the warning reserve. A warning may reclaim
     // a lower-priority tail, without adding a second output or context.
-    if (destruction && [...effects].filter((effect) => effect.destruction).length >= 10) return;
+    if (priority < 5 && [...effects].filter((effect) => effect.priority < 5).length >= 10) {
+      const victim = [...effects].find((effect) => effect.priority < priority);
+      if (!victim) return;
+      victim.stop();
+    }
     if (effects.size >= 12) {
       const victim = [...effects].find((effect) => effect.priority < priority);
       if (!victim) return;
@@ -379,7 +392,12 @@ export function createWorldAudio(options = {}) {
   }
 
   function actorSoundDetails(event = {}) {
-    const actor = actorDefinitions.get(event.actor);
+    const live = liveActors.get(event.actor);
+    const definition =
+      actorDefinitions.get(event.actor) ?? actorDefinitions.get(event.sourceId ?? live?.sourceId);
+    const actor = live ? { ...definition, ...live } : definition;
+    const material = event.material ?? actor?.material;
+    const type = event.appearance?.type ?? actor?.type;
     const machine =
       event.machine ??
       (actor?.type === 'vehicle'
@@ -396,18 +414,32 @@ export function createWorldAudio(options = {}) {
           }[actor.vehicleModel] ?? actor.vehicleModel)
         : null;
     return {
+      weapon: event.weapon,
+      eventId: event.eventId,
+      severity: event.severity,
+      protected: event.protected === true,
       family:
         event.family ??
+        event.appearance?.family ??
         machineFamily ??
         actorFamilies.get(event.actor) ??
         (actor?.speed > 0 ? 'patroller' : 'lookout'),
       machine,
+      material,
+      category: event.category ?? (material === 'electronic' ? 'electronic' : undefined),
+      cast: event.appearance?.cast ?? actor?.appearance?.cast,
       brutal: options.getDestruction?.()?.brutal === true,
       vocals: options.getDestruction?.()?.vocals,
       // Patrols and sentries use the humanoid painter. Drones, hazards and
       // vehicles must never inherit a human voice from the family fallback.
-      humanoid: event.humanoid ?? (actor ? ['patrol', 'sentry'].includes(actor.type) : undefined),
-      flesh: event.flesh,
+      humanoid:
+        event.humanoid ??
+        (type
+          ? ['patrol', 'sentry', 'humanoid'].includes(type)
+          : material
+            ? material === 'organic'
+            : undefined),
+      flesh: event.flesh ?? (material ? material === 'organic' : undefined),
     };
   }
 
@@ -418,6 +450,8 @@ export function createWorldAudio(options = {}) {
       objective: 'objective',
       fire: 'fire',
       impact: 'impact',
+      'player-damage': 'player-damage',
+      telegraph: 'warning',
       defeat: 'catch',
       'protected-contact': 'impact',
       warning: 'warning',
@@ -427,19 +461,50 @@ export function createWorldAudio(options = {}) {
       blocked: 'blocked',
       equipment: 'equipment',
       drive: 'drive',
+      'surface-impact': 'surface-impact',
+      explosion: 'explosion',
+      component: 'component',
+      'weapon-selected': 'weapon-selected',
+      'weapon-empty': 'weapon-empty',
+      'reload-start': 'reload-start',
+      'reload-ready': 'reload-ready',
+      payload: 'payload',
+      'payload-armed': 'payload-armed',
+      'payload-ready': 'payload-ready',
+      repair: 'repair',
+      resupply: 'resupply',
+      challenge: 'challenge',
+      supply: 'supply',
     }[type];
     if (!kind) return;
     const details = actorSoundDetails(event);
     const recipe = encounterSoundRecipe(kind, details);
     const now = context?.currentTime ?? 0;
-    const cueKey = kind === 'catch' ? `catch:${recipe.category}` : kind;
+    if (!recipe) return;
+    const cueKey =
+      kind === 'catch'
+        ? `catch:${recipe.category}`
+        : `${kind}:${event.weapon ?? ''}:${player ? 'player' : 'enemy'}`;
     if (now - (recentCues.get(cueKey) ?? -Infinity) < (recipe.cooldown ?? 0.12)) return;
     recentCues.set(cueKey, now);
     if (recipe.priority >= 5 || (type === 'fire' && !player)) {
       humanReactions.interrupt(now);
       for (const effect of [...effects]) if (effect.humanReaction) effect.stop();
     }
-    if (kind === 'catch') humanReaction(details);
+    if (kind === 'catch') {
+      humanReaction(details);
+      if (
+        recorded.play(recipe.name, {
+          gain: recipe.gain,
+          rate: recipe.rate,
+          maxDuration: recipe.maxDuration,
+          priority: recipe.priority,
+          feedback: true,
+          board: 'flight',
+        })
+      )
+        return;
+    }
     if (recipe.priority >= 5 || (type === 'fire' && !player)) dialogueChannel.interrupt();
     const voice = { ...recipe.tone, priority: recipe.priority, movementCue: recipe.movement };
     if (recipe.movement) voice.gain *= levels.interface;
@@ -447,7 +512,12 @@ export function createWorldAudio(options = {}) {
     if (type === 'objective' && gateStyle === 'digital') voice.type = 'triangle';
     tone({ ...voice, destruction: kind === 'catch' });
     for (const layer of recipe.layers ?? [])
-      tone({ ...layer, priority: recipe.priority, destruction: kind === 'catch' });
+      tone({
+        ...layer,
+        gain: layer.gain * (type === 'fire' && !player ? 0.65 : 1),
+        priority: recipe.priority,
+        destruction: kind === 'catch',
+      });
   }
 
   async function resume() {
@@ -455,6 +525,7 @@ export function createWorldAudio(options = {}) {
     requestPlaybackAudioSession(host.navigator?.audioSession);
     if (!initialize()) return false;
     wanted = true;
+    recorded.setPreparationPhase(lastPlaying ? 'playing' : 'preparing');
     const epoch = ++transition;
     try {
       await context.resume();
@@ -462,7 +533,7 @@ export function createWorldAudio(options = {}) {
         if (context.state !== 'closed') await context.suspend();
         return false;
       }
-      prepareHumans();
+      prepareRecordings();
       return epoch === transition && context.state === 'running';
     } catch {
       return false;
@@ -471,6 +542,7 @@ export function createWorldAudio(options = {}) {
 
   function pause() {
     wanted = false;
+    recorded.setPreparationPhase('suspended');
     transition++;
     silence();
     if (context && context.state !== 'closed') context.suspend().catch(() => {});
@@ -478,6 +550,7 @@ export function createWorldAudio(options = {}) {
   }
 
   return {
+    gameplayOutput,
     get context() {
       return context;
     },
@@ -626,6 +699,8 @@ export function createWorldAudio(options = {}) {
       lastStep = null;
       lastContacts = null;
       recentCues.clear();
+      observedEvents.clear();
+      liveActors.clear();
       humanReactions.reset();
       actorPositions.clear();
       actorPhases.clear();
@@ -635,6 +710,7 @@ export function createWorldAudio(options = {}) {
       lastFootstep = -Infinity;
       actorDefinitions = new Map((course.actors ?? []).map((actor) => [actor.id, actor]));
       stopEffects();
+      recorded.cancelPending();
       if (graph && context.state !== 'closed') {
         ramp(graph.windFilter.frequency, ambience.filter);
         ramp(graph.hum.frequency, ambience.hum);
@@ -642,12 +718,34 @@ export function createWorldAudio(options = {}) {
     },
     update(snapshot, { active = true } = {}) {
       if (disposed || !snapshot) return;
+      liveActors = new Map((snapshot.actors ?? []).map((actor) => [actor.id, actor]));
+      // Observe identifiers even while muted/paused or priming a restored state.
+      // Historical accepted events must never become delayed audio on resume.
+      const events = [];
+      for (const event of snapshot.events ?? []) {
+        if (typeof event.eventId === 'string') {
+          if (observedEvents.has(event.eventId)) continue;
+          observedEvents.add(event.eventId);
+          if (observedEvents.size > 2048)
+            observedEvents.delete(observedEvents.values().next().value);
+        }
+        events.push(event);
+      }
+      if (options.getDestruction?.()?.vocals === false)
+        for (const effect of [...effects]) if (effect.humanReaction) effect.stop();
       const tick = snapshot.ticks;
       const step = snapshot.step;
       const fresh = Number.isSafeInteger(tick) && lastTick !== null && tick > lastTick;
       const advanced = Number.isSafeInteger(step) && lastStep !== null && step > lastStep;
       const playing = active && !['paused', 'disarmed'].includes(snapshot.status);
       const finalCue = fresh && lastPlaying && ['complete', 'failed'].includes(snapshot.status);
+      recorded.setPreparationPhase(
+        enabled && wanted && context?.state === 'running'
+          ? playing || finalCue
+            ? 'playing'
+            : 'paused'
+          : 'suspended',
+      );
       if (enabled && wanted && graph && context.state === 'running' && (playing || finalCue)) {
         const flying = snapshot.status === 'active';
         const throttle = clamp((snapshot.lastInput?.throttle ?? 0) / 1000, 0, 1);
@@ -713,27 +811,48 @@ export function createWorldAudio(options = {}) {
             });
           }
           for (const actor of snapshot.actors ?? []) {
-            if (!actor.pursuit || actor.status !== 'active') continue;
-            const phase = actor.blocked ? 'blocked' : actor.pursuit.phase;
+            if (actor.status !== 'active') continue;
+            const phase = actor.blocked
+              ? 'blocked'
+              : actor.warning
+                ? 'warning'
+                : (actor.pursuit?.phase ?? 'idle');
             const sound = actorPhaseSound(actorPhases.get(actor.id), phase);
             if (sound) {
-              cue(sound, false, { actor: actor.id, family: actor.pursuit.family });
+              cue(sound, false, {
+                actor: actor.id,
+                family: actor.pursuit?.family ?? actor.appearance?.family,
+              });
               if (sound !== 'warning')
-                cue('equipment', false, { actor: actor.id, family: actor.pursuit.family });
+                cue('equipment', false, {
+                  actor: actor.id,
+                  family: actor.pursuit?.family ?? actor.appearance?.family,
+                });
             }
           }
-          const events = snapshot.events ?? [];
           const types = new Set();
           const destructionTypes = new Set();
           // Bound cue overlap independently of simulation actor/projectile counts.
-          for (const event of events) {
+          for (const event of [...events].sort(
+            (a, b) =>
+              Number(['telegraph', 'player-damage', 'warning'].includes(b.type)) -
+              Number(['telegraph', 'player-damage', 'warning'].includes(a.type)),
+          )) {
+            const eventKey = `${event.type}:${event.weapon ?? ''}:${event.material ?? ''}:${event.actor === 'player' || event.owner === 'player' ? 'player' : 'enemy'}`;
             if (['catch', 'defeat'].includes(event.type)) {
               const category = destructionCategory(actorSoundDetails(event));
               if (destructionTypes.has(category)) continue;
               destructionTypes.add(category);
-            } else if (types.has(event.type)) continue;
+            } else if (types.has(eventKey)) continue;
+            types.add(eventKey);
             types.add(event.type);
-            cue(event.type, event.actor === 'player', event);
+            cue(
+              event.type,
+              event.actor === 'player' ||
+                event.owner === 'player' ||
+                (!event.actor && !event.sourceId),
+              event,
+            );
           }
           if (advanced && !types.has('objective')) cue('objective');
           if (lastContacts !== null && snapshot.contacts > lastContacts && !types.has('impact'))
@@ -761,9 +880,10 @@ export function createWorldAudio(options = {}) {
         }),
       );
       actorPhases = new Map(
-        (snapshot.actors ?? [])
-          .filter((actor) => actor.pursuit)
-          .map((actor) => [actor.id, actor.blocked ? 'blocked' : actor.pursuit.phase]),
+        (snapshot.actors ?? []).map((actor) => [
+          actor.id,
+          actor.blocked ? 'blocked' : actor.warning ? 'warning' : (actor.pursuit?.phase ?? 'idle'),
+        ]),
       );
       lastTick = tick;
       lastStep = step;
@@ -773,7 +893,8 @@ export function createWorldAudio(options = {}) {
     dispose() {
       if (disposed) return;
       disposed = true;
-      humanBuffers.clear();
+      recorded.close();
+      gameplayOutput.dispose();
       pause();
       releaseMaster();
       host.removeEventListener?.('storage', changed);

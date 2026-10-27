@@ -1,0 +1,374 @@
+{
+  "format": "ExactFirstTwoPublicExtraPayloadClearance.v1",
+  "createdUTC": "2026-10-16T06:06:03.451897+00:00",
+  "repository": "mekhovov/revealline",
+  "approvedPublicPayloadPublication": true,
+  "selectionMustMatchExactManifest": true,
+  "publicOnlyManifest": "first-two-public-files-frozen.jsonl",
+  "publicOnlyManifestSHA256": "3c8bf60d4ab96f8ddb8220acdd1c419afb28d9121a3bb805317255902bae71cb",
+  "files": 3169,
+  "bytes": 528292018,
+  "roots": [
+    {
+      "rootAlias": "fpv-catalogue-play-20261014",
+      "files": 2256,
+      "bytes": 501995341,
+      "allFileBodiesExactlyBoundToDeclaredPublicGitBlobLeaves": true
+    },
+    {
+      "rootAlias": "rl-1192.H9P01v",
+      "files": 913,
+      "bytes": 26296677,
+      "allFileBodiesExactlyBoundToDeclaredPublicGitBlobLeaves": true
+    }
+  ],
+  "sourceIdentity": {
+    "catalogue": {
+      "rootAlias": "fpv-catalogue-play-20261014",
+      "verifiedGitHEAD": null,
+      "brokenMainAppNamedWorktreePointerProvenanceVerified": true,
+      "gitMarkerSHA256": "5b86245a61eafdc6e608faed71153fa2170eec27e8273506982e12b1ea7614fe",
+      "fullPayloadRequiresManifestRestore": true
+    },
+    "rl1192": {
+      "rootAlias": "rl-1192.H9P01v",
+      "verifiedGitHEAD": "3cb8036f6b889c2308e7b745bf5eee3a6ad4294c",
+      "githubCommitTree": "9962e31d826e6408dddd89fb081a134fe5db3a10",
+      "originIdentity": "mekhovov/revealline",
+      "sourceCommitAndAnnotatedTagsPreviouslyCovered": true
+    }
+  },
+  "allSourceFilesRehashedWithStableSizeMtimeBeforeAfter": true,
+  "everyFileRawGitBlobIdentityComputed": true,
+  "all3169BodiesInExactVerifiedPublicBaselineLeaves": true,
+  "distinctPublicBlobIdentities": 2990,
+  "publicBaselineDeclaredObjectCount": 56541,
+  "publicBaselineLeafSetSHA256": "6bab0727362768c67bc57359c91d4efb8c33322b417d42b59c556d7576513937",
+  "publicBaselineClosureReceiptSHA256": "fc33f7d3c10757a7016c5f4bb89db6fa993273709b20ae8fb0e01f4fdd065366",
+  "finitePatternFamilies": [
+    "private-key",
+    "aws-access-key",
+    "github-token",
+    "slack-token",
+    "google-api-key",
+    "url-userinfo"
+  ],
+  "finitePatternFindings": 0,
+  "privateMigrationAndCredentialPathFindings": 0,
+  "sourceBodyReviewSHA256": "415d6af442cd4525d80a07495ab62d447662662126d1f74d5c464f924d08228f",
+  "logDispositions": [
+    {
+      "path": "fpv-catalogue-play-20261014/docs/offline-pwa/evidence/final-host-recheck.log.gz",
+      "bytes": 1326,
+      "sha256": "38bd5448c3669ae65d2c25077d6122b955e03301a0c7ddec82cef9ef6cbfdb71",
+      "gitBlob": "250ac6f136543caf5aead3d81ad6e9f6f48113ec",
+      "publicGitBlobIdentityVerified": true,
+      "decodedGzipReview": {
+        "format": "gzip-single-stream",
+        "decodedBytes": 5413,
+        "decodedSHA256": "fd258b9efd13a5f5f56a00a0462ef1c94dac315f79b7a919c6db415c2e3131c0",
+        "decodedFinitePatternFindings": [],
+        "memberOutputNotPersisted": true
+      },
+      "disposition": "Exact existing public app test-evidence bytes; all raw and applicable decoded bytes passed finite pattern review. No new private runtime, browser or player data inferred or read."
+    },
+    {
+      "path": "fpv-catalogue-play-20261014/docs/offline-pwa/evidence/baseline-failures-extra.log.gz",
+      "bytes": 11937,
+      "sha256": "e48b555704f899fffbdec04661e0e54b01e207f869c41a27b8ba187ee4e910c4",
+      "gitBlob": "2a43419e89a278adb50ec4113f89db0e1f92e2d1",
+      "publicGitBlobIdentityVerified": true,
+      "decodedGzipReview": {
+        "format": "gzip-single-stream",
+        "decodedBytes": 79329,
+        "decodedSHA256": "b6a084253158dc6028097b1adbe9914cb9b45f2ae79552da141bdffaf04c4423",
+        "decodedFinitePatternFindings": [],
+        "memberOutputNotPersisted": true
+      },
+      "disposition": "Exact existing public app test-evidence bytes; all raw and applicable decoded bytes passed finite pattern review. No new private runtime, browser or player data inferred or read."
+    },
+    {
+      "path": "fpv-catalogue-play-20261014/docs/offline-pwa/evidence/baseline-collection-full.log.gz",
+      "bytes": 1267,
+      "sha256": "66613f00a4ce1ef62047421a88eb1ac05f12df13ac713cee938fa6645fd9d028",
+      "gitBlob": "0c96f0527a0d6471ecea5281b0f0f87c850e69b6",
+      "publicGitBlobIdentityVerified": true,
+      "decodedGzipReview": {
+        "format": "gzip-single-stream",
+        "decodedBytes": 5364,
+        "decodedSHA256": "9d0b9ce97aa9d2c577a571f5b5e5c4b14e68ff654ef47da7523a24b92c3bc119",
+        "decodedFinitePatternFindings": [],
+        "memberOutputNotPersisted": true
+      },
+      "disposition": "Exact existing public app test-evidence bytes; all raw and applicable decoded bytes passed finite pattern review. No new private runtime, browser or player data inferred or read."
+    },
+    {
+      "path": "fpv-catalogue-play-20261014/docs/offline-pwa/evidence/transfer-regression.log.gz",
+      "bytes": 805,
+      "sha256": "0dfbbaf62aae8146972ca5672610d82fb9bfa17c4c40b0642a6e68d33b1e3f6f",
+      "gitBlob": "9d0aee809a3e26e34be19ef2e8a7ba674b5865e7",
+      "publicGitBlobIdentityVerified": true,
+      "decodedGzipReview": {
+        "format": "gzip-single-stream",
+        "decodedBytes": 2712,
+        "decodedSHA256": "0a5242516e8d5937176e2297ea89eba913d25b2b5c7666eae7b619ab02fb29b7",
+        "decodedFinitePatternFindings": [],
+        "memberOutputNotPersisted": true
+      },
+      "disposition": "Exact existing public app test-evidence bytes; all raw and applicable decoded bytes passed finite pattern review. No new private runtime, browser or player data inferred or read."
+    },
+    {
+      "path": "fpv-catalogue-play-20261014/docs/offline-pwa/evidence/baseline-failures.log.gz",
+      "bytes": 37042,
+      "sha256": "63edd55a5dd5386e064817b399e422c59b11e8c98e56141139830d24386712ca",
+      "gitBlob": "db736d60e5baad6c8977b5eb2f2752659e47a6fe",
+      "publicGitBlobIdentityVerified": true,
+      "decodedGzipReview": {
+        "format": "gzip-single-stream",
+        "decodedBytes": 315753,
+        "decodedSHA256": "777e75d60102b82cac3584908956cb0b9e1f05f4e37a5e27c86d4f82a84ca826",
+        "decodedFinitePatternFindings": [],
+        "memberOutputNotPersisted": true
+      },
+      "disposition": "Exact existing public app test-evidence bytes; all raw and applicable decoded bytes passed finite pattern review. No new private runtime, browser or player data inferred or read."
+    },
+    {
+      "path": "fpv-catalogue-play-20261014/docs/offline-pwa/evidence/publication-tests.log.gz",
+      "bytes": 5095,
+      "sha256": "53dbf9c8f5122fbfe56f3e19346eec1fd09d6c740a5cd85479234f042f465f44",
+      "gitBlob": "a162f18724d37cfbdb238532df7052ae6ff8cf2e",
+      "publicGitBlobIdentityVerified": true,
+      "decodedGzipReview": {
+        "format": "gzip-single-stream",
+        "decodedBytes": 21796,
+        "decodedSHA256": "de73a97becf2138a08e0c180e62dad57c7120fd63ada349a12ef942ec9a89b0e",
+        "decodedFinitePatternFindings": [],
+        "memberOutputNotPersisted": true
+      },
+      "disposition": "Exact existing public app test-evidence bytes; all raw and applicable decoded bytes passed finite pattern review. No new private runtime, browser or player data inferred or read."
+    },
+    {
+      "path": "fpv-catalogue-play-20261014/docs/offline-pwa/evidence/collection-isolated.log.gz",
+      "bytes": 672,
+      "sha256": "ad201f905e117e65fede7fbc042c40b7d0a3fb60bb70d06a5e57104ce4067782",
+      "gitBlob": "8a926406f6839a18a94b04947ea98b6302cdc0eb",
+      "publicGitBlobIdentityVerified": true,
+      "decodedGzipReview": {
+        "format": "gzip-single-stream",
+        "decodedBytes": 4242,
+        "decodedSHA256": "ca29057db7f29fddcf0720e060931d5bca938bfb114bef7fa121ece9ff069125",
+        "decodedFinitePatternFindings": [],
+        "memberOutputNotPersisted": true
+      },
+      "disposition": "Exact existing public app test-evidence bytes; all raw and applicable decoded bytes passed finite pattern review. No new private runtime, browser or player data inferred or read."
+    },
+    {
+      "path": "fpv-catalogue-play-20261014/docs/offline-pwa/evidence/baseline-failures-fifth.log.gz",
+      "bytes": 10483,
+      "sha256": "0a08d7c81474b63fddf543141a079f1174eae680e95665f8c7d2a8c28b0b3b67",
+      "gitBlob": "28a6fcd4f780b94f8c33a47877859fec52a6396b",
+      "publicGitBlobIdentityVerified": true,
+      "decodedGzipReview": {
+        "format": "gzip-single-stream",
+        "decodedBytes": 115409,
+        "decodedSHA256": "bad6bcf01c815c2ce2a33cef8372b669699678da740f978b456ad811bf0c73d3",
+        "decodedFinitePatternFindings": [],
+        "memberOutputNotPersisted": true
+      },
+      "disposition": "Exact existing public app test-evidence bytes; all raw and applicable decoded bytes passed finite pattern review. No new private runtime, browser or player data inferred or read."
+    },
+    {
+      "path": "fpv-catalogue-play-20261014/docs/offline-pwa/evidence/baseline-failures-sixth.log.gz",
+      "bytes": 125370,
+      "sha256": "27bd5d46af335f4bf532c9314d270a589707a3829ad409e82d9be12c7ba60b58",
+      "gitBlob": "69e93f658d34f4dde31c99464d896493bcc094b3",
+      "publicGitBlobIdentityVerified": true,
+      "decodedGzipReview": {
+        "format": "gzip-single-stream",
+        "decodedBytes": 2033787,
+        "decodedSHA256": "95b3eca75ca210f587e90d48b86a4d99f8adce251cdb23caed63277f1de65216",
+        "decodedFinitePatternFindings": [],
+        "memberOutputNotPersisted": true
+      },
+      "disposition": "Exact existing public app test-evidence bytes; all raw and applicable decoded bytes passed finite pattern review. No new private runtime, browser or player data inferred or read."
+    },
+    {
+      "path": "fpv-catalogue-play-20261014/docs/offline-pwa/evidence/full-suite-initial.log.gz",
+      "bytes": 649936,
+      "sha256": "0f5d2bcbe7fe3f5ae3157c6e48dc70386f36f0d5fac6b9e2ec72f699c82da2a4",
+      "gitBlob": "dba777915e24b68e640f71c94d86443cb1f85113",
+      "publicGitBlobIdentityVerified": true,
+      "decodedGzipReview": {
+        "format": "gzip-single-stream",
+        "decodedBytes": 5587700,
+        "decodedSHA256": "7506e366275c933d9ffb699d2940f98ee2c60afc8a0e72e4374fecca733bd9c0",
+        "decodedFinitePatternFindings": [],
+        "memberOutputNotPersisted": true
+      },
+      "disposition": "Exact existing public app test-evidence bytes; all raw and applicable decoded bytes passed finite pattern review. No new private runtime, browser or player data inferred or read."
+    },
+    {
+      "path": "fpv-catalogue-play-20261014/docs/offline-pwa/evidence/production-regressions.log.gz",
+      "bytes": 1200,
+      "sha256": "ae595ed922ec8890977c3c4a85056943ec988bd25f8071df8ca41c8466b410c6",
+      "gitBlob": "ea4f8174d606753360c464f4eb32a3ff9c26c64e",
+      "publicGitBlobIdentityVerified": true,
+      "decodedGzipReview": {
+        "format": "gzip-single-stream",
+        "decodedBytes": 3733,
+        "decodedSHA256": "f10565c4cb9c92c3bc832aae58c6bed6a4dfeff0e8b77a621b9f575e6583aebc",
+        "decodedFinitePatternFindings": [],
+        "memberOutputNotPersisted": true
+      },
+      "disposition": "Exact existing public app test-evidence bytes; all raw and applicable decoded bytes passed finite pattern review. No new private runtime, browser or player data inferred or read."
+    },
+    {
+      "path": "fpv-catalogue-play-20261014/docs/offline-pwa/evidence/final-host-regressions.log.gz",
+      "bytes": 3642,
+      "sha256": "c1987f19c9121b8b09b9f823fbecbc8b0911cc2b6067883058bd71387f218283",
+      "gitBlob": "0e33510bf1362d1908a545e29b43e8b5ab8e5b16",
+      "publicGitBlobIdentityVerified": true,
+      "decodedGzipReview": {
+        "format": "gzip-single-stream",
+        "decodedBytes": 16287,
+        "decodedSHA256": "7f192cb683f87ee3a4e9e0713982c9331fff186c45e63e218b11999df52b993c",
+        "decodedFinitePatternFindings": [],
+        "memberOutputNotPersisted": true
+      },
+      "disposition": "Exact existing public app test-evidence bytes; all raw and applicable decoded bytes passed finite pattern review. No new private runtime, browser or player data inferred or read."
+    },
+    {
+      "path": "fpv-catalogue-play-20261014/docs/offline-pwa/evidence/baseline-failures-seventh.log.gz",
+      "bytes": 1521,
+      "sha256": "79bbbb48cad875bcf7e205535b6d0169ca56b347de03d7ea326bf223c3d4ddcd",
+      "gitBlob": "4c316482ba86301e87b767f144129482b0b41e08",
+      "publicGitBlobIdentityVerified": true,
+      "decodedGzipReview": {
+        "format": "gzip-single-stream",
+        "decodedBytes": 5651,
+        "decodedSHA256": "3eacb8e1d760848a9f15e25c30a56a19446c336273d2d1fe3960083c310bf279",
+        "decodedFinitePatternFindings": [],
+        "memberOutputNotPersisted": true
+      },
+      "disposition": "Exact existing public app test-evidence bytes; all raw and applicable decoded bytes passed finite pattern review. No new private runtime, browser or player data inferred or read."
+    },
+    {
+      "path": "fpv-catalogue-play-20261014/docs/offline-pwa/evidence/baseline-failures-fourth.log.gz",
+      "bytes": 14980,
+      "sha256": "17274bae9c4df9bde6a999155b66c2ce1ef33e41f00b23c5ad05e00d3673df3d",
+      "gitBlob": "d0f7cdfaf209b3655d11ca8d21c2dd748e7dddca",
+      "publicGitBlobIdentityVerified": true,
+      "decodedGzipReview": {
+        "format": "gzip-single-stream",
+        "decodedBytes": 105238,
+        "decodedSHA256": "a81c158fda607eac0e7b60b7b0a6b3ba9a41aaae0e90b6edfbff4968ebe44e08",
+        "decodedFinitePatternFindings": [],
+        "memberOutputNotPersisted": true
+      },
+      "disposition": "Exact existing public app test-evidence bytes; all raw and applicable decoded bytes passed finite pattern review. No new private runtime, browser or player data inferred or read."
+    },
+    {
+      "path": "fpv-catalogue-play-20261014/docs/offline-pwa/evidence/final-focused.log.gz",
+      "bytes": 12506,
+      "sha256": "b640557cfe75a543033f796b2adce012564df9251f41ed667a06a26924c49640",
+      "gitBlob": "078e896eb545085c2c20b981f604e9322c09e955",
+      "publicGitBlobIdentityVerified": true,
+      "decodedGzipReview": {
+        "format": "gzip-single-stream",
+        "decodedBytes": 60754,
+        "decodedSHA256": "8da48c9b7a04e0ca3f8a1e679c6a252590e0ee48d62e718a0a7c7231d2a72722",
+        "decodedFinitePatternFindings": [],
+        "memberOutputNotPersisted": true
+      },
+      "disposition": "Exact existing public app test-evidence bytes; all raw and applicable decoded bytes passed finite pattern review. No new private runtime, browser or player data inferred or read."
+    },
+    {
+      "path": "fpv-catalogue-play-20261014/docs/offline-pwa/evidence/baseline-failures-third.log.gz",
+      "bytes": 10213,
+      "sha256": "32cd1a5fb092ad9b9eac9c0c0b0a1565d12a64b4b5ba8ce0db42db3f752dd9fc",
+      "gitBlob": "a7cc77a4e75777558df24a007825e586f477f85d",
+      "publicGitBlobIdentityVerified": true,
+      "decodedGzipReview": {
+        "format": "gzip-single-stream",
+        "decodedBytes": 81012,
+        "decodedSHA256": "98a95f90490572272eb25a44892aac944882e5ec8fadb575f4ed5d233cf0d060",
+        "decodedFinitePatternFindings": [],
+        "memberOutputNotPersisted": true
+      },
+      "disposition": "Exact existing public app test-evidence bytes; all raw and applicable decoded bytes passed finite pattern review. No new private runtime, browser or player data inferred or read."
+    },
+    {
+      "path": "fpv-catalogue-play-20261014/docs/offline-pwa/evidence/baseline-collection-recheck.log.gz",
+      "bytes": 670,
+      "sha256": "f7fcd641af9e21f87a05fb85707f75f7ffee8374b08a909b541b6b26337fe330",
+      "gitBlob": "f97b010331e3cb26340b08d197286556e4f1f04d",
+      "publicGitBlobIdentityVerified": true,
+      "decodedGzipReview": {
+        "format": "gzip-single-stream",
+        "decodedBytes": 4245,
+        "decodedSHA256": "939be69208ed6f015c5813d1ef76ab1eac07117bd4470a19f1ffc110e69aee28",
+        "decodedFinitePatternFindings": [],
+        "memberOutputNotPersisted": true
+      },
+      "disposition": "Exact existing public app test-evidence bytes; all raw and applicable decoded bytes passed finite pattern review. No new private runtime, browser or player data inferred or read."
+    },
+    {
+      "path": "fpv-catalogue-play-20261014/docs/offline-pwa/evidence/long-test-sample.txt.gz",
+      "bytes": 57262,
+      "sha256": "6597725922fead0086e70a121e05b720775c8249c44b1f8e6d5611b73789430c",
+      "gitBlob": "c1316a409cfb28a758822ecef2296f7adeb9e1c5",
+      "publicGitBlobIdentityVerified": true,
+      "decodedGzipReview": {
+        "format": "gzip-single-stream",
+        "decodedBytes": 769511,
+        "decodedSHA256": "8f6b1d9f141a155d958022413fede683352607b35133170dacd893a4be374d52",
+        "decodedFinitePatternFindings": [],
+        "memberOutputNotPersisted": true
+      },
+      "disposition": "Exact existing public app test-evidence bytes; all raw and applicable decoded bytes passed finite pattern review. No new private runtime, browser or player data inferred or read."
+    },
+    {
+      "path": "fpv-catalogue-play-20261014/docs/research/evidence/missions-v0621/integrated-modifier-node20.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "gitBlob": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "publicGitBlobIdentityVerified": true,
+      "decodedGzipReview": null,
+      "disposition": "Exact existing public app test-evidence bytes; all raw and applicable decoded bytes passed finite pattern review. No new private runtime, browser or player data inferred or read."
+    },
+    {
+      "path": "fpv-catalogue-play-20261014/docs/research/evidence/missions-v0621/integrated-modifier-node22.stdout",
+      "bytes": 64536,
+      "sha256": "73b3d914e198f566f5128c7dc01e1fc55e9dc4f5876fc5ff0960895949316685",
+      "gitBlob": "c972973075d384e8833a4648530b337f14657d8b",
+      "publicGitBlobIdentityVerified": true,
+      "decodedGzipReview": null,
+      "disposition": "Exact existing public app test-evidence bytes; all raw and applicable decoded bytes passed finite pattern review. No new private runtime, browser or player data inferred or read."
+    },
+    {
+      "path": "fpv-catalogue-play-20261014/docs/research/evidence/missions-v0621/integrated-modifier-node22.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "gitBlob": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "publicGitBlobIdentityVerified": true,
+      "decodedGzipReview": null,
+      "disposition": "Exact existing public app test-evidence bytes; all raw and applicable decoded bytes passed finite pattern review. No new private runtime, browser or player data inferred or read."
+    },
+    {
+      "path": "fpv-catalogue-play-20261014/docs/research/evidence/missions-v0621/integrated-modifier-node20.stdout",
+      "bytes": 60229,
+      "sha256": "1fe40fa206f8f1b02f359d8dd51f0950ad9802ceced798bfd15ff70e59c7e44f",
+      "gitBlob": "f8814de52443b35fa3e9a080ee1ffcc80998b27d",
+      "publicGitBlobIdentityVerified": true,
+      "decodedGzipReview": null,
+      "disposition": "Exact existing public app test-evidence bytes; all raw and applicable decoded bytes passed finite pattern review. No new private runtime, browser or player data inferred or read."
+    }
+  ],
+  "privateOriginRowsRetainedOrHashed": false,
+  "mixedInventoryDigestComputed": false,
+  "excludedOriginalGitMetadataDependenciesCachesAndPrivateSubtreesNotIncluded": true,
+  "noDirectUploadByReviewer": true,
+  "bulkPackingOwner": "listing_evidence_review",
+  "remainingExtraRootPayloadsClearedByThisReceipt": false,
+  "qualification": "Exact frozen regular-file payload list only. All listed bytes are existing public app Git leaves and independently passed finite raw/decompressed credential-pattern checks. No catalogue HEAD, full extra-volume closure, new source-history closure, native player or physical disconnect claim. Packing must recheck source identities and use the fixed manifest; later files and unlisted roots are not covered."
+}

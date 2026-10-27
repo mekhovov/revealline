@@ -103,6 +103,17 @@ export const FRAME_TRACE_CATEGORIES = Object.freeze([
   'viz',
   'gpu',
 ]);
+export const FRAME_TASK_TRACE_PROTOCOL = 'warm-first3-tasks-v2';
+export const FRAME_TASK_TRACE_CATEGORIES = Object.freeze(FRAME_TRACE_CATEGORIES.slice(0, 5));
+export function frameTraceCategories(protocol = 'warm-first3-v1') {
+  assert(
+    ['warm-first3-v1', FRAME_TASK_TRACE_PROTOCOL].includes(protocol),
+    'Unknown frame trace protocol',
+  );
+  return protocol === FRAME_TASK_TRACE_PROTOCOL
+    ? FRAME_TASK_TRACE_CATEGORIES
+    : FRAME_TRACE_CATEGORIES;
+}
 export const FRAME_TRACE_LIMITS = Object.freeze({
   maximumMs: 30000,
   bufferKiB: 8192,
@@ -119,7 +130,10 @@ const FRAME_TRACE_MARKS = Object.freeze({
 export function qualificationFrameTraceOptions(flags, engine, scenarioBytes) {
   const selected = flags.filter((flag) => flag.startsWith('--frame-trace'));
   if (!selected.length) return null;
-  assert.deepEqual(selected, ['--frame-trace=warm-first3-v1']);
+  assert.equal(selected.length, 1);
+  const protocol = selected[0].slice('--frame-trace='.length);
+  assert.equal(selected[0], '--frame-trace=' + protocol);
+  frameTraceCategories(protocol);
   assert.equal(engine, 'chromium');
   assert(
     !flags.some((flag) => ['--cpu-profile', '--memory-profile', '--audio-proof'].includes(flag)),
@@ -129,7 +143,7 @@ export function qualificationFrameTraceOptions(flags, engine, scenarioBytes) {
     !flags.includes('--fixture-access') && !flags.some((flag) => flag.startsWith('--public-url')),
   );
   assert.equal(createHash('sha256').update(scenarioBytes).digest('hex'), FRAME_TRACE_RECIPE_SHA256);
-  return Object.freeze({ protocol: 'warm-first3-v1', recipeSHA256: FRAME_TRACE_RECIPE_SHA256 });
+  return Object.freeze({ protocol, recipeSHA256: FRAME_TRACE_RECIPE_SHA256 });
 }
 
 export function inspectFrameTrace(bytes, anchors) {
@@ -197,14 +211,22 @@ export function inspectFrameTrace(bytes, anchors) {
 }
 
 /** Reuses the existing row-owned CDP connection; no launch, flags, signals or sampling. */
-export function createQualificationFrameTrace(cdp, { file, remainingMs, onLimit = () => {} }) {
+export function createQualificationFrameTrace(
+  cdp,
+  { file, remainingMs, onLimit = () => {}, protocol = 'warm-first3-v1' },
+) {
+  const categories = frameTraceCategories(protocol);
   assert.equal(typeof remainingMs, 'function');
   const report = {
     status: 'not-started',
-    protocol: 'warm-first3-v1',
+    protocol,
     file,
     ...FRAME_TRACE_LIMITS,
-    categories: [...FRAME_TRACE_CATEGORIES],
+    categories: [...categories],
+    categoryCoverage:
+      protocol === FRAME_TASK_TRACE_PROTOCOL
+        ? 'Task/frame subset. Broad cc, viz and gpu categories are omitted; cross-tagged events may remain. Reduced coverage is not a guarantee against trace loss.'
+        : 'Original broad task/frame, cc, viz and gpu categories.',
     anchors: {},
     backend: {
       applicationRenderer: 'unobserved',
@@ -345,7 +367,7 @@ export function createQualificationFrameTrace(cdp, { file, remainingMs, onLimit 
         }
         const available = await send('Tracing.getCategories');
         assert(Array.isArray(available.categories));
-        for (const category of FRAME_TRACE_CATEGORIES)
+        for (const category of categories)
           assert(
             available.categories.includes(category),
             'Required trace category unavailable: ' + category,
@@ -372,7 +394,7 @@ export function createQualificationFrameTrace(cdp, { file, remainingMs, onLimit 
             traceBufferSizeInKb: FRAME_TRACE_LIMITS.bufferKiB,
             enableSampling: false,
             enableSystrace: false,
-            includedCategories: [...FRAME_TRACE_CATEGORIES],
+            includedCategories: [...categories],
             excludedCategories: ['*'],
           },
         });
