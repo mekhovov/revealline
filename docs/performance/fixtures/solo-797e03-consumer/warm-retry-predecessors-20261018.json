@@ -1,0 +1,234 @@
+{
+  "format": "Solo797WarmRetryPredecessorReviewV1",
+  "sourceRevision": "797e03f28743921842df6aa57520a72016ba3dfc",
+  "sourceTree": "bd53120f0cdfa462b8d63c2de5aa61e9c6658ac5",
+  "baselineRevision": "8b01991942dc764b8aa4726851699ce1985e53ae",
+  "predecessorToolingRevision": "f94e8b84e25d672359555f9a1bee6e85b0d726ba",
+  "scope": "Independent review permits distinct Warm and Retry observations; it does not turn any failed predecessor into a pass or complete native qualification.",
+  "firstEightProof": {
+    "format": "SoloFirstEightCorrectnessEvidenceV1",
+    "sourceRevision": "797e03f28743921842df6aa57520a72016ba3dfc",
+    "runId": 39109911286,
+    "artifactId": 12130067688,
+    "artifactSHA256": "5c5f84eb082d13123410b0c1939aab3c9af4ef981ad9b3150b215c3a16aba916",
+    "summarySHA256": "5ff787c26c962ec31c9fbe2d635b679fb393caa5ea2eaa84e41fbcc3061804b8",
+    "correctness": "passed",
+    "ownersClosed": true
+  },
+  "firstEightLimitations": {
+    "rawNumericalFailuresRetained": 3,
+    "nodePortabilityMismatchesRetained": 4
+  },
+  "cold": {
+    "runId": 39115166586,
+    "expectedJobs": 6,
+    "reviewedJobs": 6,
+    "uniqueOwnersClosed": 49,
+    "forcedCleanup": 0,
+    "ambiguities": 0,
+    "survivors": 0,
+    "ownershipViolations": 0,
+    "disposition": "failed-reviewed",
+    "artifacts": [
+      {
+        "engine": "chromium",
+        "repetition": 1,
+        "ownersClosed": 9,
+        "runId": 39115166586,
+        "artifactId": 12131109991,
+        "artifactSHA256": "01a83cce62748376e96bc20f152f1e54564dbdf6610a76ee1616d0617b846047",
+        "summarySHA256": "c5a693cfb6500d7ec3582e609d4508f15b0584b3f0a501219d2cc3f8d9d6a241",
+        "disposition": "failed-reviewed"
+      },
+      {
+        "engine": "chromium",
+        "repetition": 2,
+        "ownersClosed": 7,
+        "runId": 39115166586,
+        "artifactId": 12131394558,
+        "artifactSHA256": "d09193067705484ff206738d42a13f6b537cc4e1f216ffe2e1c5cca960d8179d",
+        "summarySHA256": "bb413e11942e3b5a4277ae6c60d4c27ede49cbd8348f3cfb5be968817f58280d",
+        "disposition": "failed-reviewed"
+      },
+      {
+        "engine": "chromium",
+        "repetition": 3,
+        "ownersClosed": 9,
+        "runId": 39115166586,
+        "artifactId": 12132168724,
+        "artifactSHA256": "3bb8390149a9532f9216431bee495f6aa3eef85f2f2550109069a636b75b018e",
+        "summarySHA256": "4ad8243ab4dc0fe8c4c7be02a3578123cd22e915efe23a483386d835f481ddbb",
+        "disposition": "failed-reviewed"
+      },
+      {
+        "engine": "webkit",
+        "repetition": 1,
+        "ownersClosed": 8,
+        "runId": 39115166586,
+        "artifactId": 12133135391,
+        "artifactSHA256": "9be7d90772b0250850e62996bc95e95234c89ae3846b2d7cd91f43fc65691627",
+        "summarySHA256": "767efe01a945fb89eb5fe224638d808140ffee897cf66746587d765b58cce008",
+        "disposition": "failed-reviewed"
+      },
+      {
+        "engine": "webkit",
+        "repetition": 2,
+        "ownersClosed": 8,
+        "runId": 39115166586,
+        "artifactId": 12132972934,
+        "artifactSHA256": "07020bc1827f4708673626ced94b27b706de7161a67af8bc9aa4dbe4017b1a4b",
+        "summarySHA256": "ffd7ae0e66cdba7948c5c8d4ccc95883b56a044738a30f29570f6b25d9518451",
+        "disposition": "failed-reviewed"
+      },
+      {
+        "engine": "webkit",
+        "repetition": 3,
+        "ownersClosed": 8,
+        "runId": 39115166586,
+        "artifactId": 12132319231,
+        "artifactSHA256": "8cfcad17a02bfb281d0215ee2c57ac5d3a1f51f1c9f038375dc5affb9ffd9ae3",
+        "summarySHA256": "bfbec8946ab180dcfab5bd3b17012518a3a3b03dc91f8b4a110884bda97f1aef",
+        "disposition": "failed-reviewed"
+      }
+    ],
+    "findings": [
+      "Chromium1 candidate timing is inconclusive: input-p95 bucket(33.34,50]ms crosses33.4ms; hitch review remains required.",
+      "Chromium2 calibration spread40.46% rejected the cohort before either workload ran.",
+      "Chromium3 baseline export timed out; candidate correctness and numerical checks passed but hitch review remains required.",
+      "WebKit1 candidate correctness/protocol passed but missed-opportunity rate20.9958% failed; work-p95 was4ms.",
+      "WebKit2 candidate had a startup interruption and later hidden-Pause timeout; the216ms work sample contains214ms interruption response, not demonstrated cause of the preceding293ms gap.",
+      "WebKit3 candidate correctness/protocol passed but missed-opportunity rate52.839506% failed; work-p95 was5ms.",
+      "WebKit2 and3 baseline native checkpoints matched; movingTicks minimum3300 failed at3288 and3285 respectively. This is not replay divergence."
+    ],
+    "attribution": "Low application work and large frame gaps leave browser scheduling/rendering costs unmeasured. No CPU, GPU or physical-device cause is established."
+  },
+  "next": {
+    "runId": 39115157669,
+    "expectedJobs": 6,
+    "reviewedJobs": 6,
+    "uniqueOwnersClosed": 27,
+    "forcedCleanup": 0,
+    "ambiguities": 0,
+    "survivors": 0,
+    "ownershipViolations": 0,
+    "disposition": "failed-reviewed",
+    "reviewReadback": {
+      "gitBlob": "5ee78c370e36dbc01cd753c5ede151af60f98026",
+      "bytes": 83807,
+      "sha256": "a252194a6fe85a71a606b84c2151487638f0b01af05eb51e754473980939449a"
+    },
+    "artifacts": [
+      {
+        "engine": "webkit",
+        "repetition": 2,
+        "ownersClosed": 4,
+        "runId": 39115157669,
+        "artifactId": 12132605296,
+        "artifactSHA256": "f92b1a0988b5247e252492f4d103ad851cf0c5da9b279444cce839a710548d8d",
+        "summarySHA256": "8ec141ef79ea439e9f841c2261c336f3f3c35a94b7f07b0012d0d99aef05aa28",
+        "disposition": "failed-reviewed",
+        "routes": 1,
+        "protocol": "fail",
+        "correctness": "fail",
+        "strictFinalMissionReplay": "fail",
+        "checkpointMatch": true
+      },
+      {
+        "engine": "webkit",
+        "repetition": 1,
+        "ownersClosed": 4,
+        "runId": 39115157669,
+        "artifactId": 12132346133,
+        "artifactSHA256": "f3f7218d155b18f057419c3865c2037171703128c20f911c499ea6088977091a",
+        "summarySHA256": "a42c96b177505d314ed44a44157f8a4292975bd6a62d2fe6e9ce10a1760c79e6",
+        "disposition": "failed-reviewed",
+        "routes": 1,
+        "protocol": "fail",
+        "correctness": "fail",
+        "strictFinalMissionReplay": "fail",
+        "checkpointMatch": true
+      },
+      {
+        "engine": "webkit",
+        "repetition": 3,
+        "ownersClosed": 4,
+        "runId": 39115157669,
+        "artifactId": 12132106903,
+        "artifactSHA256": "a42d491f75330d55eaa8af45c320379e374e6298504cb60a8635aa755b0159ba",
+        "summarySHA256": "695750ff63832b6745df4c98b4561ca8b8d2e6ce468c028d868157e80b496132",
+        "disposition": "failed-reviewed",
+        "routes": 3,
+        "protocol": "fail",
+        "correctness": "fail",
+        "strictFinalMissionReplay": "fail",
+        "checkpointMatch": true
+      },
+      {
+        "engine": "chromium",
+        "repetition": 2,
+        "ownersClosed": 5,
+        "runId": 39115157669,
+        "artifactId": 12132048428,
+        "artifactSHA256": "a6143fb6057ea1b9d62d005b9bc201bf196a42bc5d187a654a76cad68e75a5bc",
+        "summarySHA256": "414e808c89f4d66555470600356bfc27b742e8bae98bc11dfd0672dbf724f979",
+        "disposition": "failed-reviewed",
+        "routes": 1,
+        "protocol": "fail",
+        "correctness": "fail",
+        "strictFinalMissionReplay": "fail",
+        "checkpointMatch": true
+      },
+      {
+        "engine": "chromium",
+        "repetition": 3,
+        "ownersClosed": 5,
+        "runId": 39115157669,
+        "artifactId": 12131969667,
+        "artifactSHA256": "d4e41d907a6752d49261716c733a90f1779ed6bb524ab969486fce60d6be75f8",
+        "summarySHA256": "d5a3466290a8f6925286182c751c27232fea7260a6f7d7ecaeece3e45e949a0c",
+        "disposition": "failed-reviewed",
+        "routes": 11,
+        "protocol": "pass",
+        "correctness": "pass",
+        "strictFinalMissionReplay": "pass",
+        "checkpointMatch": true
+      },
+      {
+        "engine": "chromium",
+        "repetition": 1,
+        "ownersClosed": 5,
+        "runId": 39115157669,
+        "artifactId": 12131553804,
+        "artifactSHA256": "67dc4254579f44dccf99e190e057d04ec409abd0f035b27f7e2b24f573b3f583",
+        "summarySHA256": "83be2bda60d3cb4c300636cd54902336da3bf4ebbdf3660c27e2412124981514",
+        "disposition": "failed-reviewed",
+        "routes": 11,
+        "protocol": "pass",
+        "correctness": "pass",
+        "strictFinalMissionReplay": "pass",
+        "checkpointMatch": true
+      }
+    ],
+    "findings": [
+      "All six summary rows failed. Chromium1 and3 completed eleven missions and ten Next transitions with strict native replay, but numerical/review gates failed.",
+      "Chromium2 and all three WebKit rows failed bounded input/read operations. Their matching partial checkpoints do not satisfy the strict final-mission replay contract."
+    ]
+  },
+  "admission": {
+    "warm": {
+      "declaration": "docs/performance/solo-797-timing-warm-first30-plan.json",
+      "status": "reviewed-and-released",
+      "previousPhase": "cold-first30",
+      "performanceExclusion": false
+    },
+    "retry": {
+      "declaration": "docs/performance/solo-797-lifecycle-retry-plan.json",
+      "status": "reviewed-diagnostic-only",
+      "previousPhase": "next",
+      "performanceExclusion": true
+    },
+    "requires": "Actual changed source controls, peer review and normal merge before manual fixed-lane dispatch.",
+    "unchanged": "All source/package/recipe pins, normal callback cadence, fixed B, numerical thresholds, replay, command ownership and deadlines.",
+    "laterPhases": "Heavy timing, calibrated post-Retry diagnostics and long29 retain their independent predecessor holds."
+  }
+}

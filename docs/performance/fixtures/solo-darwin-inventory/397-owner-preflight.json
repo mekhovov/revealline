@@ -1,0 +1,149 @@
+{
+  "format": "SoloDarwin397PrerequisiteWitnessV1",
+  "status": "passed-declared-non-browser-cases",
+  "sourceRevision": "39774cce8697d412d138ef4da11ac547a5f8e535",
+  "sourceTree": "cac2369a26cac5282e4260c638b934540d17ced6",
+  "run": 39066188284,
+  "runURL": "https://github.com/mekhovov/revealline/actions/runs/39066188284",
+  "workflow": ".github/workflows/solo-darwin-exec-observation-temporary.yml",
+  "artifact": {
+    "id": 12112809455,
+    "node_id": "MDg6QXJ0aWZhY3QxMjExMjgwOTQ1NQ==",
+    "name": "solo-darwin-exec-observation-39066188284-1",
+    "size_in_bytes": 15163,
+    "url": "https://api.github.com/repos/mekhovov/revealline/actions/artifacts/12112809455",
+    "archive_download_url": "https://api.github.com/repos/mekhovov/revealline/actions/artifacts/12112809455/zip",
+    "expired": false,
+    "digest": "sha256:769d581252aaa2a0fb9247408fb2e3a8e67184fcf4374ed2da50cff3bd6918f5",
+    "created_at": "2026-10-17T20:20:03Z",
+    "updated_at": "2026-10-17T20:20:03Z",
+    "expires_at": "2026-10-31T20:20:02Z",
+    "workflow_run": {
+      "id": 39066188284,
+      "repository_id": 1367404328,
+      "head_repository_id": 1367404328,
+      "head_branch": "codex/solo-performance",
+      "head_sha": "39774cce8697d412d138ef4da11ac547a5f8e535"
+    }
+  },
+  "report": {
+    "path": "solo-owner-v2-preflight/report.json",
+    "bytes": 17935,
+    "sha256": "eaae0857724dfe239d25d48b8400b18b67ee39b57792d72d6f206fc900cdd86b",
+    "utf8": "{\n  \"format\": \"SoloDarwinNonBrowserOwnerPreflightV1\",\n  \"sourceRevision\": \"39774cce8697d412d138ef4da11ac547a5f8e535\",\n  \"status\": \"passed\",\n  \"startedAt\": \"2026-10-17T20:19:52.464Z\",\n  \"platform\": \"darwin\",\n  \"architecture\": \"x64\",\n  \"cases\": [\n    {\n      \"id\": \"leader\",\n      \"status\": \"passed\",\n      \"observations\": [\n        {\n          \"format\": \"SoloDarwinOwnerChildV1\",\n          \"sourceRevision\": \"39774cce8697d412d138ef4da11ac547a5f8e535\",\n          \"case\": \"leader\",\n          \"role\": \"leader\",\n          \"platform\": \"darwin\",\n          \"architecture\": \"x64\",\n          \"pid\": 5318,\n          \"ppid\": 5295,\n          \"completed\": true,\n          \"exitCode\": 0\n        }\n      ],\n      \"observationRefs\": [\n        {\n          \"role\": \"leader\",\n          \"bytes\": 263,\n          \"sha256\": \"703e295797347b48ebbb7fde65d6a667ef295f4b9996a9fc926ca0701c7f253e\"\n        }\n      ],\n      \"command\": {\n        \"argv\": [\n          \"/Users/runner/hostedtoolcache/node/22.13.1/x64/bin/node\",\n          \"/Users/runner/work/revealline/revealline/scripts/solo-darwin-owner-preflight.mjs\",\n          \"child\",\n          \"leader\",\n          \"/Users/runner/work/_temp/solo-owner-v2-preflight\",\n          \"39774cce8697d412d138ef4da11ac547a5f8e535\"\n        ],\n        \"cwd\": \"/Users/runner/work/revealline/revealline\",\n        \"startedAt\": \"2026-10-17T20:19:53.295Z\",\n        \"timeoutMs\": 20000,\n        \"rssBytes\": 6442450944,\n        \"outputBytes\": 1048576,\n        \"status\": \"closed\",\n        \"tracked\": [\n          {\n            \"pid\": 5318,\n            \"ppid\": 5295,\n            \"pgid\": 5318,\n            \"birth\": \"00000000000000005318\",\n            \"state\": \"R\",\n            \"rss\": 0,\n            \"argv\": \"/Users/runner/hostedtoolcache/node/22.13.1/x64/bin/node /Users/runner/work/revealline/revealline/scripts/solo-darwin-owner-preflight.mjs child leader /Users/runner/work/_temp/solo-owner-v2-preflight 39774cce8697d412d138ef4da11ac547a5f8e535\",\n            \"ownerTagged\": false,\n            \"inspectionIncomplete\": false,\n            \"pathInspection\": \"unobserved\",\n            \"rssInspection\": \"unobserved\",\n            \"ownerTagInspection\": \"unobserved\",\n            \"identityKind\": \"private-unique-id-uint64\",\n            \"euid\": 501,\n            \"ruid\": 501,\n            \"parentUniqueId\": \"5295\",\n            \"version\": 11195\n          }\n        ],\n        \"forcedCleanup\": false,\n        \"ambiguous\": [],\n        \"survivors\": [],\n        \"initialLeaderCapture\": \"direct-child-birth\",\n        \"processInventory\": {\n          \"platform\": \"darwin\",\n          \"path\": \"/private/tmp/solo-process-owner-v2.uZFtXc/inventory\",\n          \"bytes\": 13896,\n          \"sha256\": \"489e05c3984c34f77e770ceac17e5b05c08b0b2a41266bbae32e5e627b0c1d19\",\n          \"format\": \"SoloDarwinProcessInventoryV3\",\n          \"identityKind\": \"private-unique-id-uint64\"\n        },\n        \"foreignSystemProcesses\": [\n          {\n            \"format\": \"SoloKnownNonBrowserProcessWitnessV1\",\n            \"scope\": \"Exact root kernel /bin/ps executable only; ownership and unreadable resource/tag fields remain unknown; no signal authority.\",\n            \"process\": {\n              \"pid\": 5325,\n              \"ppid\": 1034,\n              \"pgid\": 1026,\n              \"birth\": \"00000000000000005325\",\n              \"identityKind\": \"private-unique-id-uint64\",\n              \"parentUniqueId\": \"1034\",\n              \"version\": 11209,\n              \"euid\": 0,\n              \"ruid\": 0,\n              \"state\": \"R\",\n              \"executable\": \"/bin/ps\",\n              \"pathInspection\": \"complete\",\n              \"rssInspection\": \"unavailable\",\n              \"ownerTagInspection\": \"unavailable\",\n              \"rss\": null,\n              \"ownerTagged\": null\n            }\n          },\n          {\n            \"format\": \"SoloKnownNonBrowserProcessWitnessV1\",\n            \"scope\": \"Exact root kernel /bin/ps executable only; ownership and unreadable resource/tag fields remain unknown; no signal authority.\",\n            \"process\": {\n              \"pid\": 5368,\n              \"ppid\": 1034,\n              \"pgid\": 1026,\n              \"birth\": \"00000000000000005368\",\n              \"identityKind\": \"private-unique-id-uint64\",\n              \"parentUniqueId\": \"1034\",\n              \"version\": 11295,\n              \"euid\": 0,\n              \"ruid\": 0,\n              \"state\": \"R\",\n              \"executable\": \"/bin/ps\",\n              \"pathInspection\": \"complete\",\n              \"rssInspection\": \"unavailable\",\n              \"ownerTagInspection\": \"unavailable\",\n              \"rss\": null,\n              \"ownerTagged\": null\n            }\n          },\n          {\n            \"format\": \"SoloKnownNonBrowserProcessWitnessV1\",\n            \"scope\": \"Exact root kernel /bin/ps executable only; ownership and unreadable resource/tag fields remain unknown; no signal authority.\",\n            \"process\": {\n              \"pid\": 5403,\n              \"ppid\": 1034,\n              \"pgid\": 1026,\n              \"birth\": \"00000000000000005403\",\n              \"identityKind\": \"private-unique-id-uint64\",\n              \"parentUniqueId\": \"1034\",\n              \"version\": 11371,\n              \"euid\": 0,\n              \"ruid\": 0,\n              \"state\": \"R\",\n              \"executable\": \"/bin/ps\",\n              \"pathInspection\": \"complete\",\n              \"rssInspection\": \"unavailable\",\n              \"ownerTagInspection\": \"unavailable\",\n              \"rss\": null,\n              \"ownerTagged\": null\n            }\n          },\n          {\n            \"format\": \"SoloKnownNonBrowserProcessWitnessV1\",\n            \"scope\": \"Exact root kernel /bin/ps executable only; ownership and unreadable resource/tag fields remain unknown; no signal authority.\",\n            \"process\": {\n              \"pid\": 5445,\n              \"ppid\": 1034,\n              \"pgid\": 1026,\n              \"birth\": \"00000000000000005445\",\n              \"identityKind\": \"private-unique-id-uint64\",\n              \"parentUniqueId\": \"1034\",\n              \"version\": 11453,\n              \"euid\": 0,\n              \"ruid\": 0,\n              \"state\": \"R\",\n              \"executable\": \"/bin/ps\",\n              \"pathInspection\": \"complete\",\n              \"rssInspection\": \"unavailable\",\n              \"ownerTagInspection\": \"unavailable\",\n              \"rss\": null,\n              \"ownerTagged\": null\n            }\n          }\n        ],\n        \"peakRSS\": 35856384,\n        \"exitCode\": 0,\n        \"signal\": null,\n        \"violation\": null,\n        \"outputBytesObserved\": 0,\n        \"completedAt\": \"2026-10-17T20:19:54.608Z\"\n      },\n      \"assessment\": {\n        \"status\": \"passed\",\n        \"failures\": [],\n        \"scope\": \"Declared non-browser process family only; no browser/media/game/performance qualification.\"\n      }\n    },\n    {\n      \"id\": \"tree\",\n      \"status\": \"passed\",\n      \"observations\": [\n        {\n          \"format\": \"SoloDarwinOwnerChildV1\",\n          \"sourceRevision\": \"39774cce8697d412d138ef4da11ac547a5f8e535\",\n          \"case\": \"tree\",\n          \"role\": \"tree\",\n          \"platform\": \"darwin\",\n          \"architecture\": \"x64\",\n          \"pid\": 5458,\n          \"ppid\": 5295,\n          \"childPid\": 5478,\n          \"completed\": true,\n          \"exitCode\": 0\n        },\n        {\n          \"format\": \"SoloDarwinOwnerChildV1\",\n          \"sourceRevision\": \"39774cce8697d412d138ef4da11ac547a5f8e535\",\n          \"case\": \"tree\",\n          \"role\": \"branch\",\n          \"platform\": \"darwin\",\n          \"architecture\": \"x64\",\n          \"pid\": 5478,\n          \"ppid\": 5458,\n          \"childPid\": 5497,\n          \"completed\": true,\n          \"exitCode\": 0\n        },\n        {\n          \"format\": \"SoloDarwinOwnerChildV1\",\n          \"sourceRevision\": \"39774cce8697d412d138ef4da11ac547a5f8e535\",\n          \"case\": \"tree\",\n          \"role\": \"leaf\",\n          \"platform\": \"darwin\",\n          \"architecture\": \"x64\",\n          \"pid\": 5497,\n          \"ppid\": 5478,\n          \"completed\": true,\n          \"exitCode\": 0\n        }\n      ],\n      \"observationRefs\": [\n        {\n          \"role\": \"tree\",\n          \"bytes\": 279,\n          \"sha256\": \"fb4921c00517e5509aa06731eeca937b1d1d08489ac6f4c5c98e61cb72300672\"\n        },\n        {\n          \"role\": \"branch\",\n          \"bytes\": 281,\n          \"sha256\": \"1920cddabe4685a571a0f06373efd74e87cad9afc8ca743f43fa57fc123942ab\"\n        },\n        {\n          \"role\": \"leaf\",\n          \"bytes\": 259,\n          \"sha256\": \"317e49b9cfcb9f3eb715a4efed0fbbc2da32dc36f2a1938dca15459dee072531\"\n        }\n      ],\n      \"command\": {\n        \"argv\": [\n          \"/Users/runner/hostedtoolcache/node/22.13.1/x64/bin/node\",\n          \"/Users/runner/work/revealline/revealline/scripts/solo-darwin-owner-preflight.mjs\",\n          \"child\",\n          \"tree\",\n          \"/Users/runner/work/_temp/solo-owner-v2-preflight\",\n          \"39774cce8697d412d138ef4da11ac547a5f8e535\"\n        ],\n        \"cwd\": \"/Users/runner/work/revealline/revealline\",\n        \"startedAt\": \"2026-10-17T20:19:54.646Z\",\n        \"timeoutMs\": 20000,\n        \"rssBytes\": 6442450944,\n        \"outputBytes\": 1048576,\n        \"status\": \"closed\",\n        \"tracked\": [\n          {\n            \"pid\": 5458,\n            \"ppid\": 5295,\n            \"pgid\": 5458,\n            \"birth\": \"00000000000000005458\",\n            \"state\": \"R\",\n            \"rss\": 0,\n            \"argv\": \"/Users/runner/hostedtoolcache/node/22.13.1/x64/bin/node /Users/runner/work/revealline/revealline/scripts/solo-darwin-owner-preflight.mjs child tree /Users/runner/work/_temp/solo-owner-v2-preflight 39774cce8697d412d138ef4da11ac547a5f8e535\",\n            \"ownerTagged\": false,\n            \"inspectionIncomplete\": false,\n            \"pathInspection\": \"unobserved\",\n            \"rssInspection\": \"unobserved\",\n            \"ownerTagInspection\": \"unobserved\",\n            \"identityKind\": \"private-unique-id-uint64\",\n            \"euid\": 501,\n            \"ruid\": 501,\n            \"parentUniqueId\": \"5295\",\n            \"version\": 11480\n          },\n          {\n            \"pid\": 5478,\n            \"ppid\": 5458,\n            \"pgid\": 5458,\n            \"birth\": \"00000000000000005478\",\n            \"state\": \"R\",\n            \"rss\": 32567296,\n            \"argv\": \"/Users/runner/hostedtoolcache/node/22.13.1/x64/bin/node\",\n            \"ownerTagged\": true,\n            \"inspectionIncomplete\": false,\n            \"pathInspection\": \"complete\",\n            \"rssInspection\": \"complete\",\n            \"ownerTagInspection\": \"present\",\n            \"identityKind\": \"private-unique-id-uint64\",\n            \"euid\": 501,\n            \"ruid\": 501,\n            \"parentUniqueId\": \"5458\",\n            \"version\": 11519\n          },\n          {\n            \"pid\": 5497,\n            \"ppid\": 5478,\n            \"pgid\": 5458,\n            \"birth\": \"00000000000000005497\",\n            \"state\": \"R\",\n            \"rss\": 36016128,\n            \"argv\": \"/Users/runner/hostedtoolcache/node/22.13.1/x64/bin/node\",\n            \"ownerTagged\": true,\n            \"inspectionIncomplete\": false,\n            \"pathInspection\": \"complete\",\n            \"rssInspection\": \"complete\",\n            \"ownerTagInspection\": \"present\",\n            \"identityKind\": \"private-unique-id-uint64\",\n            \"euid\": 501,\n            \"ruid\": 501,\n            \"parentUniqueId\": \"5478\",\n            \"version\": 11558\n          }\n        ],\n        \"forcedCleanup\": false,\n        \"ambiguous\": [],\n        \"survivors\": [],\n        \"initialLeaderCapture\": \"direct-child-birth\",\n        \"processInventory\": {\n          \"platform\": \"darwin\",\n          \"path\": \"/private/tmp/solo-process-owner-v2.uZFtXc/inventory\",\n          \"bytes\": 13896,\n          \"sha256\": \"489e05c3984c34f77e770ceac17e5b05c08b0b2a41266bbae32e5e627b0c1d19\",\n          \"format\": \"SoloDarwinProcessInventoryV3\",\n          \"identityKind\": \"private-unique-id-uint64\"\n        },\n        \"foreignSystemProcesses\": [\n          {\n            \"format\": \"SoloKnownNonBrowserProcessWitnessV1\",\n            \"scope\": \"Exact root kernel /bin/ps executable only; ownership and unreadable resource/tag fields remain unknown; no signal authority.\",\n            \"process\": {\n              \"pid\": 5462,\n              \"ppid\": 1034,\n              \"pgid\": 1026,\n              \"birth\": \"00000000000000005462\",\n              \"identityKind\": \"private-unique-id-uint64\",\n              \"parentUniqueId\": \"1034\",\n              \"version\": 11487,\n              \"euid\": 0,\n              \"ruid\": 0,\n              \"state\": \"R\",\n              \"executable\": \"/bin/ps\",\n              \"pathInspection\": \"complete\",\n              \"rssInspection\": \"unavailable\",\n              \"ownerTagInspection\": \"unavailable\",\n              \"rss\": null,\n              \"ownerTagged\": null\n            }\n          },\n          {\n            \"format\": \"SoloKnownNonBrowserProcessWitnessV1\",\n            \"scope\": \"Exact root kernel /bin/ps executable only; ownership and unreadable resource/tag fields remain unknown; no signal authority.\",\n            \"process\": {\n              \"pid\": 5493,\n              \"ppid\": 1034,\n              \"pgid\": 1026,\n              \"birth\": \"00000000000000005493\",\n              \"identityKind\": \"private-unique-id-uint64\",\n              \"parentUniqueId\": \"1034\",\n              \"version\": 11551,\n              \"euid\": 0,\n              \"ruid\": 0,\n              \"state\": \"R\",\n              \"executable\": \"/bin/ps\",\n              \"pathInspection\": \"complete\",\n              \"rssInspection\": \"unavailable\",\n              \"ownerTagInspection\": \"unavailable\",\n              \"rss\": null,\n              \"ownerTagged\": null\n            }\n          }\n        ],\n        \"peakRSS\": 108269568,\n        \"exitCode\": 0,\n        \"signal\": null,\n        \"violation\": null,\n        \"outputBytesObserved\": 0,\n        \"completedAt\": \"2026-10-17T20:19:58.478Z\"\n      },\n      \"assessment\": {\n        \"status\": \"passed\",\n        \"failures\": [],\n        \"scope\": \"Declared non-browser process family only; no browser/media/game/performance qualification.\"\n      }\n    },\n    {\n      \"id\": \"deadline\",\n      \"status\": \"expected-negative-observed\",\n      \"observations\": [\n        {\n          \"format\": \"SoloDarwinOwnerChildV1\",\n          \"sourceRevision\": \"39774cce8697d412d138ef4da11ac547a5f8e535\",\n          \"case\": \"deadline\",\n          \"role\": \"deadline\",\n          \"platform\": \"darwin\",\n          \"architecture\": \"x64\",\n          \"pid\": 5563,\n          \"ppid\": 5295,\n          \"completed\": false\n        }\n      ],\n      \"observationRefs\": [\n        {\n          \"role\": \"deadline\",\n          \"bytes\": 251,\n          \"sha256\": \"f8674b630c722ee76c3a5c68a19aa5a9ec6774900c0ac22affc22761c169e0bd\"\n        }\n      ],\n      \"command\": {\n        \"argv\": [\n          \"/Users/runner/hostedtoolcache/node/22.13.1/x64/bin/node\",\n          \"/Users/runner/work/revealline/revealline/scripts/solo-darwin-owner-preflight.mjs\",\n          \"child\",\n          \"deadline\",\n          \"/Users/runner/work/_temp/solo-owner-v2-preflight\",\n          \"39774cce8697d412d138ef4da11ac547a5f8e535\"\n        ],\n        \"cwd\": \"/Users/runner/work/revealline/revealline\",\n        \"startedAt\": \"2026-10-17T20:19:58.507Z\",\n        \"timeoutMs\": 2000,\n        \"rssBytes\": 6442450944,\n        \"outputBytes\": 1048576,\n        \"status\": \"failed\",\n        \"tracked\": [\n          {\n            \"pid\": 5563,\n            \"ppid\": 5295,\n            \"pgid\": 5563,\n            \"birth\": \"00000000000000005563\",\n            \"state\": \"R\",\n            \"rss\": 0,\n            \"argv\": \"/Users/runner/hostedtoolcache/node/22.13.1/x64/bin/node /Users/runner/work/revealline/revealline/scripts/solo-darwin-owner-preflight.mjs child deadline /Users/runner/work/_temp/solo-owner-v2-preflight 39774cce8697d412d138ef4da11ac547a5f8e535\",\n            \"ownerTagged\": false,\n            \"inspectionIncomplete\": false,\n            \"pathInspection\": \"unobserved\",\n            \"rssInspection\": \"unobserved\",\n            \"ownerTagInspection\": \"unobserved\",\n            \"identityKind\": \"private-unique-id-uint64\",\n            \"euid\": 501,\n            \"ruid\": 501,\n            \"parentUniqueId\": \"5295\",\n            \"version\": 11701\n          }\n        ],\n        \"forcedCleanup\": true,\n        \"ambiguous\": [],\n        \"survivors\": [],\n        \"initialLeaderCapture\": \"direct-child-birth\",\n        \"processInventory\": {\n          \"platform\": \"darwin\",\n          \"path\": \"/private/tmp/solo-process-owner-v2.uZFtXc/inventory\",\n          \"bytes\": 13896,\n          \"sha256\": \"489e05c3984c34f77e770ceac17e5b05c08b0b2a41266bbae32e5e627b0c1d19\",\n          \"format\": \"SoloDarwinProcessInventoryV3\",\n          \"identityKind\": \"private-unique-id-uint64\"\n        },\n        \"foreignSystemProcesses\": [],\n        \"peakRSS\": 36003840,\n        \"exitCode\": null,\n        \"signal\": \"SIGTERM\",\n        \"violation\": \"deadline\",\n        \"outputBytesObserved\": 0,\n        \"completedAt\": \"2026-10-17T20:20:01.265Z\"\n      },\n      \"assessment\": {\n        \"status\": \"expected-negative-observed\",\n        \"failures\": [],\n        \"scope\": \"Declared non-browser process family only; no browser/media/game/performance qualification.\"\n      }\n    }\n  ],\n  \"ownershipQualification\": false,\n  \"browserObservations\": 0,\n  \"mediaObservations\": 0,\n  \"performanceQualification\": false,\n  \"execSuccessorProtocol\": \"SoloDarwinExecSuccessorObservationV1\",\n  \"sources\": [\n    {\n      \"path\": \"scripts/solo-darwin-owner-preflight.mjs\",\n      \"bytes\": 21632,\n      \"sha256\": \"48c9c0200905d4754ce6155df73982a9600ba0012d3d0bdeaba0c25dafde52bd\"\n    },\n    {\n      \"path\": \"scripts/solo-darwin-process-inventory.mjs\",\n      \"bytes\": 13716,\n      \"sha256\": \"bc3c1976364478f8cfb06776c54edb06701b8a43b0526db2c974e38229209783\"\n    },\n    {\n      \"path\": \"scripts/solo-darwin-process-inventory.c\",\n      \"bytes\": 7955,\n      \"sha256\": \"72ff466c653ddb987a4e5df5df024aabd952cf45d659e7872809412aa996db9f\"\n    },\n    {\n      \"path\": \"scripts/run-solo-remote-correctness.mjs\",\n      \"bytes\": 66435,\n      \"sha256\": \"513f2fc3a23897192c7a8fc371f1ec55f085fa79925e836d524f2dfec41da1c8\"\n    }\n  ],\n  \"elapsedMs\": 8802.945856999999,\n  \"completedAt\": \"2026-10-17T20:20:01.269Z\"\n}\n"
+  },
+  "inventoryBuild": {
+    "format": "SoloDarwinInventoryBuildV2",
+    "sourceRevision": "39774cce8697d412d138ef4da11ac547a5f8e535",
+    "platform": "darwin",
+    "inventoryFormat": "SoloDarwinProcessInventoryV3",
+    "identityKind": "private-unique-id-uint64",
+    "compiler": {
+      "path": "/Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang",
+      "version": "Apple clang version 17.0.0 (clang-1700.0.13.5)\nTarget: x86_64-apple-darwin24.6.0\nThread model: posix\nInstalledDir: /Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin"
+    },
+    "sdk": {
+      "path": "/Applications/Xcode_16.4.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk",
+      "version": "15.5"
+    },
+    "arguments": [
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-O2",
+      "-isysroot",
+      "/Applications/Xcode_16.4.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk",
+      "/Users/runner/work/revealline/revealline/scripts/solo-darwin-process-inventory.c",
+      "-o",
+      "/private/tmp/solo-process-owner-v2.uZFtXc/inventory"
+    ],
+    "sources": {
+      "solo-darwin-process-inventory.c": {
+        "bytes": 7955,
+        "sha256": "72ff466c653ddb987a4e5df5df024aabd952cf45d659e7872809412aa996db9f"
+      },
+      "solo-darwin-process-inventory.mjs": {
+        "bytes": 13716,
+        "sha256": "bc3c1976364478f8cfb06776c54edb06701b8a43b0526db2c974e38229209783"
+      }
+    },
+    "binary": {
+      "path": "/private/tmp/solo-process-owner-v2.uZFtXc/inventory",
+      "bytes": 13896,
+      "sha256": "489e05c3984c34f77e770ceac17e5b05c08b0b2a41266bbae32e5e627b0c1d19",
+      "format": "SoloDarwinProcessInventoryV3",
+      "identityKind": "private-unique-id-uint64"
+    }
+  },
+  "members": {
+    "solo-owner-v2-preflight/branch.json": {
+      "bytes": 281,
+      "sha256": "1920cddabe4685a571a0f06373efd74e87cad9afc8ca743f43fa57fc123942ab"
+    },
+    "solo-owner-v2-preflight/deadline-command.json": {
+      "bytes": 1870,
+      "sha256": "4504c738ba63c6e21ce208e07c5473bf9aa06ed41ccc4a7fd9bdd4a174305caf"
+    },
+    "solo-owner-v2-preflight/deadline.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "solo-owner-v2-preflight/deadline.json": {
+      "bytes": 251,
+      "sha256": "f8674b630c722ee76c3a5c68a19aa5a9ec6774900c0ac22affc22761c169e0bd"
+    },
+    "solo-owner-v2-preflight/inventory-build.json": {
+      "bytes": 1709,
+      "sha256": "a49339fb9233ac45c39ac7fb9a50beb5d6d838d15e1120558754040f1e54cb9e"
+    },
+    "solo-owner-v2-preflight/leader-command.json": {
+      "bytes": 4740,
+      "sha256": "6cc7a3b7a64ba397bf8f807b5af88a6e177f39863db353f922ce6f239a174a86"
+    },
+    "solo-owner-v2-preflight/leader.json": {
+      "bytes": 263,
+      "sha256": "703e295797347b48ebbb7fde65d6a667ef295f4b9996a9fc926ca0701c7f253e"
+    },
+    "solo-owner-v2-preflight/leader.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "solo-owner-v2-preflight/leaf.json": {
+      "bytes": 259,
+      "sha256": "317e49b9cfcb9f3eb715a4efed0fbbc2da32dc36f2a1938dca15459dee072531"
+    },
+    "solo-owner-v2-preflight/report.json": {
+      "bytes": 17935,
+      "sha256": "eaae0857724dfe239d25d48b8400b18b67ee39b57792d72d6f206fc900cdd86b"
+    },
+    "solo-owner-v2-preflight/tree-command.json": {
+      "bytes": 4383,
+      "sha256": "1dbf860d96d76d9e353f2ba585b1930d222a0e1fdf64c78cc28d8bd73f2abf9e"
+    },
+    "solo-owner-v2-preflight/tree.json": {
+      "bytes": 279,
+      "sha256": "fb4921c00517e5509aa06731eeca937b1d1d08489ac6f4c5c98e61cb72300672"
+    },
+    "solo-owner-v2-preflight/tree.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "solo-owner-v2-build.json": {
+      "bytes": 1709,
+      "sha256": "a49339fb9233ac45c39ac7fb9a50beb5d6d838d15e1120558754040f1e54cb9e"
+    },
+    "solo-owner-v2-contracts.tap": {
+      "bytes": 15635,
+      "sha256": "d91d413611e1aa5945e182b4c4f6624a696a2165977c02513ae2090d76993f83"
+    },
+    "solo-owner-v2-dependencies.log": {
+      "bytes": 25,
+      "sha256": "c5d0b8ad393e9af3b315184b7a276f8eef2d466bd30d6b4984514ebea3e1a491"
+    },
+    "solo-owner-v2-sdk-observations.json": {
+      "bytes": 20574,
+      "sha256": "16bebdc173d20442f2a166b2ddd7c27a379ca1c414dc3b51a24a66cf1b820657"
+    }
+  },
+  "scope": "Prior-host non-browser cases only; not current-host browser ownership, media support, game or performance qualification."
+}

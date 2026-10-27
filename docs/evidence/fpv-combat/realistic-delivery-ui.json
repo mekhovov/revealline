@@ -1,0 +1,2436 @@
+{
+  "beforeSwitch": {
+    "art": {
+      "active": "realistic",
+      "installed": true,
+      "issue": null,
+      "pending": false,
+      "renderer": {
+        "characterIndex": null,
+        "characters": 36,
+        "error": null,
+        "sha256": "8121b18a0a6c1ea2c625cb355ef2d5efee0ed6c1486a835d415c3119fc555357",
+        "state": "ready"
+      },
+      "selection": "realistic",
+      "storageIssue": false
+    },
+    "course": "flight-01",
+    "state": {
+      "actors": [
+        {
+          "appearance": {
+            "cast": "authored",
+            "family": "lookout"
+          },
+          "blocked": false,
+          "cooldown": 50,
+          "damage": 10,
+          "defeatedTick": null,
+          "destructible": true,
+          "family": "lookout",
+          "fireEveryTicks": 100,
+          "groundMotion": "support-v1",
+          "heading": {
+            "x": 0,
+            "y": 0,
+            "z": -1
+          },
+          "health": 50,
+          "height": 1800,
+          "id": "encounter-d6a8df2f04c5d4af:1",
+          "material": "organic",
+          "maxHealth": 50,
+          "path": [
+            {
+              "x": -16389,
+              "y": 12,
+              "z": -18034
+            },
+            {
+              "x": -20389,
+              "y": 12,
+              "z": -20034
+            }
+          ],
+          "pathIndex": 0,
+          "position": {
+            "x": -16389,
+            "y": 12,
+            "z": -18034
+          },
+          "projectileSpeed": 8000,
+          "pursuit": {
+            "cursor": 0,
+            "decision": 0,
+            "delivered": 0,
+            "family": "lookout",
+            "goal": "route-0",
+            "heading": {
+              "x": -894454,
+              "z": -447227
+            },
+            "next": null,
+            "nextHeading": null,
+            "node": "route-0",
+            "phase": "idle",
+            "phaseTicks": 0,
+            "previous": null
+          },
+          "radius": 350,
+          "range": 20000,
+          "role": "hostile",
+          "slotId": "encounter-slot-01",
+          "sourceId": "encounter-target-1",
+          "spawnId": "encounter-d6a8df2f04c5d4af:1",
+          "spawnTick": 0,
+          "speed": 1117,
+          "status": "active",
+          "type": "patrol",
+          "velocity": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "warning": false
+        },
+        {
+          "appearance": {
+            "cast": "authored",
+            "family": "patroller"
+          },
+          "blocked": false,
+          "cooldown": 50,
+          "damage": 10,
+          "defeatedTick": null,
+          "destructible": true,
+          "family": "patroller",
+          "fireEveryTicks": 100,
+          "heading": {
+            "x": 0,
+            "y": 0,
+            "z": -1
+          },
+          "health": 50,
+          "height": 900,
+          "id": "encounter-d6a8df2f04c5d4af:2",
+          "material": "electronic",
+          "maxHealth": 50,
+          "path": [
+            {
+              "x": 2398,
+              "y": 2500,
+              "z": 6008
+            },
+            {
+              "x": -1602,
+              "y": 2500,
+              "z": 8008
+            }
+          ],
+          "pathIndex": 0,
+          "position": {
+            "x": 2398,
+            "y": 2500,
+            "z": 6008
+          },
+          "projectileSpeed": 8000,
+          "radius": 450,
+          "range": 20000,
+          "role": "hostile",
+          "slotId": "encounter-slot-02",
+          "sourceId": "encounter-target-2",
+          "spawnId": "encounter-d6a8df2f04c5d4af:2",
+          "spawnTick": 0,
+          "speed": 1378,
+          "status": "active",
+          "type": "drone",
+          "velocity": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "warning": false
+        },
+        {
+          "appearance": {
+            "cast": "authored",
+            "family": "runner"
+          },
+          "blocked": false,
+          "cooldown": 50,
+          "damage": 10,
+          "defeatedTick": null,
+          "destructible": true,
+          "family": "runner",
+          "fireEveryTicks": 100,
+          "groundMotion": "support-v1",
+          "heading": {
+            "x": 0,
+            "y": 0,
+            "z": -1
+          },
+          "health": 50,
+          "height": 1800,
+          "id": "encounter-d6a8df2f04c5d4af:3",
+          "material": "organic",
+          "maxHealth": 50,
+          "path": [
+            {
+              "x": 10478,
+              "y": 12,
+              "z": -21075
+            },
+            {
+              "x": 6478,
+              "y": 12,
+              "z": -19075
+            }
+          ],
+          "pathIndex": 0,
+          "position": {
+            "x": 10478,
+            "y": 12,
+            "z": -21075
+          },
+          "projectileSpeed": 8000,
+          "pursuit": {
+            "cursor": 0,
+            "decision": 0,
+            "delivered": 0,
+            "family": "runner",
+            "goal": "route-0",
+            "heading": {
+              "x": -894454,
+              "z": 447227
+            },
+            "next": null,
+            "nextHeading": null,
+            "node": "route-0",
+            "phase": "idle",
+            "phaseTicks": 0,
+            "previous": null
+          },
+          "radius": 350,
+          "range": 20000,
+          "role": "hostile",
+          "slotId": "encounter-slot-03",
+          "sourceId": "encounter-target-3",
+          "spawnId": "encounter-d6a8df2f04c5d4af:3",
+          "spawnTick": 0,
+          "speed": 1399,
+          "status": "active",
+          "type": "patrol",
+          "velocity": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "warning": false
+        },
+        {
+          "appearance": {
+            "cast": "authored",
+            "family": "sprinter"
+          },
+          "blocked": false,
+          "cooldown": 50,
+          "damage": 10,
+          "defeatedTick": null,
+          "destructible": true,
+          "family": "sprinter",
+          "fireEveryTicks": 100,
+          "groundMotion": "support-v1",
+          "heading": {
+            "x": 0,
+            "y": 0,
+            "z": -1
+          },
+          "health": 100,
+          "height": 1800,
+          "id": "encounter-d6a8df2f04c5d4af:4",
+          "material": "metal",
+          "maxHealth": 100,
+          "path": [
+            {
+              "x": 20019,
+              "y": 12,
+              "z": 12341
+            },
+            {
+              "x": 16019,
+              "y": 12,
+              "z": 14341
+            }
+          ],
+          "pathIndex": 0,
+          "position": {
+            "x": 20019,
+            "y": 12,
+            "z": 12341
+          },
+          "projectileSpeed": 8000,
+          "radius": 900,
+          "range": 20000,
+          "role": "hostile",
+          "slotId": "encounter-slot-04",
+          "sourceId": "encounter-target-4",
+          "spawnId": "encounter-d6a8df2f04c5d4af:4",
+          "spawnTick": 0,
+          "speed": 1047,
+          "status": "active",
+          "type": "vehicle",
+          "velocity": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "warning": false
+        },
+        {
+          "appearance": {
+            "cast": "authored",
+            "family": "refuge-seeker"
+          },
+          "blocked": false,
+          "cooldown": 50,
+          "damage": 10,
+          "defeatedTick": null,
+          "destructible": true,
+          "family": "refuge-seeker",
+          "fireEveryTicks": 0,
+          "heading": {
+            "x": 0,
+            "y": 0,
+            "z": -1
+          },
+          "health": 50,
+          "height": 1200,
+          "id": "encounter-d6a8df2f04c5d4af:5",
+          "material": "metal",
+          "maxHealth": 50,
+          "path": [
+            {
+              "x": 21172,
+              "y": 2500,
+              "z": -15818
+            },
+            {
+              "x": 17172,
+              "y": 2500,
+              "z": -17818
+            }
+          ],
+          "pathIndex": 0,
+          "position": {
+            "x": 21172,
+            "y": 2500,
+            "z": -15818
+          },
+          "projectileSpeed": 8000,
+          "radius": 600,
+          "range": 20000,
+          "role": "hostile",
+          "slotId": "encounter-slot-05",
+          "sourceId": "encounter-target-5",
+          "spawnId": "encounter-d6a8df2f04c5d4af:5",
+          "spawnTick": 0,
+          "speed": 1720,
+          "status": "active",
+          "type": "hazard",
+          "velocity": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "warning": false
+        },
+        {
+          "appearance": {
+            "cast": "authored",
+            "family": "switchback"
+          },
+          "blocked": false,
+          "cooldown": 50,
+          "damage": 10,
+          "defeatedTick": null,
+          "destructible": true,
+          "family": "switchback",
+          "fireEveryTicks": 0,
+          "groundMotion": "support-v1",
+          "heading": {
+            "x": 0,
+            "y": 0,
+            "z": -1
+          },
+          "health": 50,
+          "height": 900,
+          "id": "encounter-d6a8df2f04c5d4af:6",
+          "material": "metal",
+          "maxHealth": 50,
+          "path": [
+            {
+              "x": -4625,
+              "y": 13,
+              "z": -7126
+            },
+            {
+              "x": -8625,
+              "y": 13,
+              "z": -5126
+            }
+          ],
+          "pathIndex": 0,
+          "position": {
+            "x": -4625,
+            "y": 13,
+            "z": -7126
+          },
+          "projectileSpeed": 8000,
+          "radius": 450,
+          "range": 20000,
+          "role": "hostile",
+          "slotId": "encounter-slot-06",
+          "sourceId": "encounter-target-6",
+          "spawnId": "encounter-d6a8df2f04c5d4af:6",
+          "spawnTick": 0,
+          "speed": 600,
+          "status": "active",
+          "type": "prop",
+          "velocity": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "warning": false
+        }
+      ],
+      "advanced": true,
+      "advancedTelemetry": {
+        "achievedRates": {
+          "pitch": 0,
+          "roll": 0,
+          "yaw": 0
+        },
+        "archiveStatus": {
+          "earliestIndex": 0,
+          "generation": "0:1",
+          "lastSealedIndex": -1,
+          "latestTick": 0,
+          "origin": {
+            "kind": "fresh",
+            "startTick": 0
+          }
+        },
+        "backend": "civilian-quad-aircraft-regional.v2",
+        "calibratedInput": {
+          "pitch": 0,
+          "roll": 0,
+          "throttle": 0,
+          "yaw": 0
+        },
+        "consumedSequence": -1,
+        "consumedTimestampUs": 0,
+        "contact": {
+          "contacts": 0,
+          "entries": [],
+          "grounded": false,
+          "ids": [],
+          "impactSpeed": 0,
+          "normal": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "support": null,
+          "touching": false
+        },
+        "current": 0,
+        "devicePollHz": null,
+        "dynamicColliders": [
+          {
+            "enabled": true,
+            "id": "encounter-slot-01",
+            "position": {
+              "x": -16.388999938964844,
+              "y": 0.9120000004768372,
+              "z": -18.034000396728516
+            }
+          },
+          {
+            "enabled": true,
+            "id": "encounter-slot-02",
+            "position": {
+              "x": 2.3980000019073486,
+              "y": 2.950000047683716,
+              "z": 6.007999897003174
+            }
+          },
+          {
+            "enabled": true,
+            "id": "encounter-slot-03",
+            "position": {
+              "x": 10.477999687194824,
+              "y": 0.9120000004768372,
+              "z": -21.075000762939453
+            }
+          },
+          {
+            "enabled": true,
+            "id": "encounter-slot-04",
+            "position": {
+              "x": 20.018999099731445,
+              "y": 0.9120000004768372,
+              "z": 12.340999603271484
+            }
+          },
+          {
+            "enabled": true,
+            "id": "encounter-slot-05",
+            "position": {
+              "x": 21.17200088500977,
+              "y": 3.0999999046325684,
+              "z": -15.817999839782717
+            }
+          },
+          {
+            "enabled": true,
+            "id": "encounter-slot-06",
+            "position": {
+              "x": -4.625,
+              "y": 0.4629999995231629,
+              "z": -7.125999927520752
+            }
+          }
+        ],
+        "experimental": true,
+        "frequency": 500,
+        "missionHz": 50,
+        "missionTick": 0,
+        "motorSpeeds": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "orientation": {
+          "w": 1,
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "position": {
+          "x": 0,
+          "y": 0.14000000059604645,
+          "z": 0
+        },
+        "radius": 0.6010407640085653,
+        "recordingStatus": {
+          "currentSeconds": 0,
+          "error": null,
+          "format": "AircraftRecordingStatus.v1",
+          "lastRecoverableSeconds": null,
+          "retainedBytes": 13038,
+          "retainedFromSeconds": 0,
+          "retainedSegments": 1,
+          "retainedThroughSeconds": 0,
+          "state": "recording"
+        },
+        "requestedRates": {
+          "pitch": 0,
+          "roll": 0,
+          "yaw": 0
+        },
+        "sampleAgeUs": null,
+        "saturated": false,
+        "scored": false,
+        "seconds": 0,
+        "substep": 0,
+        "supportHeight": 0.14,
+        "terrain": {
+          "contacts": 0,
+          "entries": [],
+          "frameIdentity": "3fe6e718aca8a0f4",
+          "grounded": false,
+          "ids": [],
+          "impactSpeed": 0,
+          "normal": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "support": null,
+          "touching": false
+        },
+        "topHeight": 0.14,
+        "usedAh": 0,
+        "velocity": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "voltage": 25.200000000000003
+      },
+      "aircraftRadiusMm": 601.0407640085654,
+      "aircraftSupportHeightMm": 140,
+      "angular": {
+        "pitch": 0,
+        "roll": 0,
+        "yaw": 0
+      },
+      "attitude": {
+        "pitch": 0,
+        "roll": 0,
+        "up": {
+          "x": 0,
+          "y": 1000000,
+          "z": 0
+        },
+        "yaw": 0
+      },
+      "combat": true,
+      "combatRecording": {
+        "complete": true,
+        "format": "FPVEncounterRecordingStatus.v1",
+        "practiceOnly": true,
+        "retainedFrom": 0,
+        "retainedTo": 0
+      },
+      "contactCooldown": 0,
+      "contacts": 0,
+      "cooldown": 0,
+      "encounter": {
+        "accuracy": null,
+        "activity": "continuous",
+        "actors": [
+          {
+            "appearance": {
+              "cast": "authored",
+              "family": "lookout"
+            },
+            "blocked": false,
+            "cooldown": 50,
+            "damage": 10,
+            "defeatedTick": null,
+            "destructible": true,
+            "family": "lookout",
+            "fireEveryTicks": 100,
+            "groundMotion": "support-v1",
+            "heading": {
+              "x": 0,
+              "y": 0,
+              "z": -1
+            },
+            "health": 50,
+            "height": 1800,
+            "id": "encounter-d6a8df2f04c5d4af:1",
+            "material": "organic",
+            "maxHealth": 50,
+            "path": [
+              {
+                "x": -16389,
+                "y": 12,
+                "z": -18034
+              },
+              {
+                "x": -20389,
+                "y": 12,
+                "z": -20034
+              }
+            ],
+            "pathIndex": 0,
+            "position": {
+              "x": -16389,
+              "y": 12,
+              "z": -18034
+            },
+            "projectileSpeed": 8000,
+            "pursuit": {
+              "cursor": 0,
+              "decision": 0,
+              "delivered": 0,
+              "family": "lookout",
+              "goal": "route-0",
+              "heading": {
+                "x": -894454,
+                "z": -447227
+              },
+              "next": null,
+              "nextHeading": null,
+              "node": "route-0",
+              "phase": "idle",
+              "phaseTicks": 0,
+              "previous": null
+            },
+            "radius": 350,
+            "range": 20000,
+            "role": "hostile",
+            "slotId": "encounter-slot-01",
+            "sourceId": "encounter-target-1",
+            "spawnId": "encounter-d6a8df2f04c5d4af:1",
+            "spawnTick": 0,
+            "speed": 1117,
+            "status": "active",
+            "type": "patrol",
+            "velocity": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "warning": false
+          },
+          {
+            "appearance": {
+              "cast": "authored",
+              "family": "patroller"
+            },
+            "blocked": false,
+            "cooldown": 50,
+            "damage": 10,
+            "defeatedTick": null,
+            "destructible": true,
+            "family": "patroller",
+            "fireEveryTicks": 100,
+            "heading": {
+              "x": 0,
+              "y": 0,
+              "z": -1
+            },
+            "health": 50,
+            "height": 900,
+            "id": "encounter-d6a8df2f04c5d4af:2",
+            "material": "electronic",
+            "maxHealth": 50,
+            "path": [
+              {
+                "x": 2398,
+                "y": 2500,
+                "z": 6008
+              },
+              {
+                "x": -1602,
+                "y": 2500,
+                "z": 8008
+              }
+            ],
+            "pathIndex": 0,
+            "position": {
+              "x": 2398,
+              "y": 2500,
+              "z": 6008
+            },
+            "projectileSpeed": 8000,
+            "radius": 450,
+            "range": 20000,
+            "role": "hostile",
+            "slotId": "encounter-slot-02",
+            "sourceId": "encounter-target-2",
+            "spawnId": "encounter-d6a8df2f04c5d4af:2",
+            "spawnTick": 0,
+            "speed": 1378,
+            "status": "active",
+            "type": "drone",
+            "velocity": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "warning": false
+          },
+          {
+            "appearance": {
+              "cast": "authored",
+              "family": "runner"
+            },
+            "blocked": false,
+            "cooldown": 50,
+            "damage": 10,
+            "defeatedTick": null,
+            "destructible": true,
+            "family": "runner",
+            "fireEveryTicks": 100,
+            "groundMotion": "support-v1",
+            "heading": {
+              "x": 0,
+              "y": 0,
+              "z": -1
+            },
+            "health": 50,
+            "height": 1800,
+            "id": "encounter-d6a8df2f04c5d4af:3",
+            "material": "organic",
+            "maxHealth": 50,
+            "path": [
+              {
+                "x": 10478,
+                "y": 12,
+                "z": -21075
+              },
+              {
+                "x": 6478,
+                "y": 12,
+                "z": -19075
+              }
+            ],
+            "pathIndex": 0,
+            "position": {
+              "x": 10478,
+              "y": 12,
+              "z": -21075
+            },
+            "projectileSpeed": 8000,
+            "pursuit": {
+              "cursor": 0,
+              "decision": 0,
+              "delivered": 0,
+              "family": "runner",
+              "goal": "route-0",
+              "heading": {
+                "x": -894454,
+                "z": 447227
+              },
+              "next": null,
+              "nextHeading": null,
+              "node": "route-0",
+              "phase": "idle",
+              "phaseTicks": 0,
+              "previous": null
+            },
+            "radius": 350,
+            "range": 20000,
+            "role": "hostile",
+            "slotId": "encounter-slot-03",
+            "sourceId": "encounter-target-3",
+            "spawnId": "encounter-d6a8df2f04c5d4af:3",
+            "spawnTick": 0,
+            "speed": 1399,
+            "status": "active",
+            "type": "patrol",
+            "velocity": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "warning": false
+          },
+          {
+            "appearance": {
+              "cast": "authored",
+              "family": "sprinter"
+            },
+            "blocked": false,
+            "cooldown": 50,
+            "damage": 10,
+            "defeatedTick": null,
+            "destructible": true,
+            "family": "sprinter",
+            "fireEveryTicks": 100,
+            "groundMotion": "support-v1",
+            "heading": {
+              "x": 0,
+              "y": 0,
+              "z": -1
+            },
+            "health": 100,
+            "height": 1800,
+            "id": "encounter-d6a8df2f04c5d4af:4",
+            "material": "metal",
+            "maxHealth": 100,
+            "path": [
+              {
+                "x": 20019,
+                "y": 12,
+                "z": 12341
+              },
+              {
+                "x": 16019,
+                "y": 12,
+                "z": 14341
+              }
+            ],
+            "pathIndex": 0,
+            "position": {
+              "x": 20019,
+              "y": 12,
+              "z": 12341
+            },
+            "projectileSpeed": 8000,
+            "radius": 900,
+            "range": 20000,
+            "role": "hostile",
+            "slotId": "encounter-slot-04",
+            "sourceId": "encounter-target-4",
+            "spawnId": "encounter-d6a8df2f04c5d4af:4",
+            "spawnTick": 0,
+            "speed": 1047,
+            "status": "active",
+            "type": "vehicle",
+            "velocity": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "warning": false
+          },
+          {
+            "appearance": {
+              "cast": "authored",
+              "family": "refuge-seeker"
+            },
+            "blocked": false,
+            "cooldown": 50,
+            "damage": 10,
+            "defeatedTick": null,
+            "destructible": true,
+            "family": "refuge-seeker",
+            "fireEveryTicks": 0,
+            "heading": {
+              "x": 0,
+              "y": 0,
+              "z": -1
+            },
+            "health": 50,
+            "height": 1200,
+            "id": "encounter-d6a8df2f04c5d4af:5",
+            "material": "metal",
+            "maxHealth": 50,
+            "path": [
+              {
+                "x": 21172,
+                "y": 2500,
+                "z": -15818
+              },
+              {
+                "x": 17172,
+                "y": 2500,
+                "z": -17818
+              }
+            ],
+            "pathIndex": 0,
+            "position": {
+              "x": 21172,
+              "y": 2500,
+              "z": -15818
+            },
+            "projectileSpeed": 8000,
+            "radius": 600,
+            "range": 20000,
+            "role": "hostile",
+            "slotId": "encounter-slot-05",
+            "sourceId": "encounter-target-5",
+            "spawnId": "encounter-d6a8df2f04c5d4af:5",
+            "spawnTick": 0,
+            "speed": 1720,
+            "status": "active",
+            "type": "hazard",
+            "velocity": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "warning": false
+          },
+          {
+            "appearance": {
+              "cast": "authored",
+              "family": "switchback"
+            },
+            "blocked": false,
+            "cooldown": 50,
+            "damage": 10,
+            "defeatedTick": null,
+            "destructible": true,
+            "family": "switchback",
+            "fireEveryTicks": 0,
+            "groundMotion": "support-v1",
+            "heading": {
+              "x": 0,
+              "y": 0,
+              "z": -1
+            },
+            "health": 50,
+            "height": 900,
+            "id": "encounter-d6a8df2f04c5d4af:6",
+            "material": "metal",
+            "maxHealth": 50,
+            "path": [
+              {
+                "x": -4625,
+                "y": 13,
+                "z": -7126
+              },
+              {
+                "x": -8625,
+                "y": 13,
+                "z": -5126
+              }
+            ],
+            "pathIndex": 0,
+            "position": {
+              "x": -4625,
+              "y": 13,
+              "z": -7126
+            },
+            "projectileSpeed": 8000,
+            "radius": 450,
+            "range": 20000,
+            "role": "hostile",
+            "slotId": "encounter-slot-06",
+            "sourceId": "encounter-target-6",
+            "spawnId": "encounter-d6a8df2f04c5d4af:6",
+            "spawnTick": 0,
+            "speed": 600,
+            "status": "active",
+            "type": "prop",
+            "velocity": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "warning": false
+          }
+        ],
+        "admittedCount": 6,
+        "bestStreak": 0,
+        "contactLocks": {},
+        "cooldown": 0,
+        "definitionIdentity": "d6a8df2f04c5d4af",
+        "difficulty": "easy",
+        "events": [],
+        "format": "FPVEncounterState.v1",
+        "health": 100,
+        "hits": 0,
+        "kills": 0,
+        "lastDamageTick": -10000,
+        "maxHealth": 100,
+        "nextEvent": 1,
+        "nextProjectile": 1,
+        "nextSpawn": 7,
+        "nextWaveTick": null,
+        "outsideArea": false,
+        "phase": "wave",
+        "population": 6,
+        "projectiles": [],
+        "result": null,
+        "returning": false,
+        "rng": 632655742,
+        "runId": "encounter-d6a8df2f04c5d4af",
+        "score": 0,
+        "shots": 0,
+        "status": "active",
+        "streak": 0,
+        "successfulImpacts": 0,
+        "ticks": 0,
+        "waitingForClearSpawn": false,
+        "wave": 1
+      },
+      "events": [],
+      "failure": null,
+      "grounded": true,
+      "health": 100,
+      "heightRange": {
+        "max": 0,
+        "min": 0
+      },
+      "hits": 0,
+      "hold": 0,
+      "kills": 0,
+      "landingSpeed": 0,
+      "landingTilt": 0,
+      "lastInput": {
+        "actions": 0,
+        "pitch": 0,
+        "roll": 0,
+        "throttle": 0,
+        "yaw": 0
+      },
+      "maxHealth": 100,
+      "nextProjectileId": 1,
+      "orientation": [
+        0,
+        0,
+        0,
+        1000000
+      ],
+      "position": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "projectiles": [],
+      "reason": "prepared",
+      "recordingStatus": {
+        "currentSeconds": 0,
+        "error": null,
+        "format": "AircraftRecordingStatus.v1",
+        "lastRecoverableSeconds": null,
+        "retainedBytes": 13038,
+        "retainedFromSeconds": 0,
+        "retainedSegments": 1,
+        "retainedThroughSeconds": 0,
+        "state": "recording"
+      },
+      "rng": 1,
+      "score": 0,
+      "shots": 0,
+      "status": "disarmed",
+      "step": 0,
+      "support": {
+        "id": "$floor",
+        "normal": {
+          "x": 0,
+          "y": 1000000,
+          "z": 0
+        },
+        "y": 1
+      },
+      "target": {
+        "ticks": 36000,
+        "type": "survive"
+      },
+      "ticks": 0,
+      "total": 1,
+      "unscored": true,
+      "velocity": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    }
+  },
+  "cache": {
+    "art": {
+      "active": "realistic",
+      "installed": true,
+      "issue": null,
+      "pending": false,
+      "renderer": {
+        "characterIndex": null,
+        "characters": 36,
+        "error": null,
+        "sha256": "8121b18a0a6c1ea2c625cb355ef2d5efee0ed6c1486a835d415c3119fc555357",
+        "state": "ready"
+      },
+      "selection": "realistic",
+      "storageIssue": false
+    },
+    "errors": [],
+    "networkBlocked": true,
+    "packRequests": []
+  },
+  "checks": [
+    {
+      "art": {
+        "active": "current",
+        "installed": true,
+        "issue": null,
+        "pending": false,
+        "renderer": {
+          "error": null,
+          "state": "current"
+        },
+        "selection": "current",
+        "storageIssue": false
+      },
+      "label": "realistic-to-current",
+      "sameAcceptedState": true,
+      "ticks": 0
+    },
+    {
+      "art": {
+        "active": "realistic",
+        "installed": true,
+        "issue": null,
+        "pending": false,
+        "renderer": {
+          "characterIndex": null,
+          "characters": 36,
+          "error": null,
+          "sha256": "8121b18a0a6c1ea2c625cb355ef2d5efee0ed6c1486a835d415c3119fc555357",
+          "state": "ready"
+        },
+        "selection": "realistic",
+        "storageIssue": false
+      },
+      "label": "current-to-realistic",
+      "sameAcceptedState": true,
+      "ticks": 0
+    },
+    {
+      "art": {
+        "active": "current",
+        "installed": true,
+        "issue": null,
+        "pending": false,
+        "renderer": {
+          "error": null,
+          "state": "current"
+        },
+        "selection": "current",
+        "storageIssue": false
+      },
+      "label": "progressed-realistic-to-current",
+      "sameAcceptedState": true,
+      "ticks": 479
+    },
+    {
+      "art": {
+        "active": "realistic",
+        "installed": true,
+        "issue": null,
+        "pending": false,
+        "renderer": {
+          "characterIndex": null,
+          "characters": 36,
+          "error": null,
+          "sha256": "8121b18a0a6c1ea2c625cb355ef2d5efee0ed6c1486a835d415c3119fc555357",
+          "state": "ready"
+        },
+        "selection": "realistic",
+        "storageIssue": false
+      },
+      "label": "progressed-current-to-realistic",
+      "sameAcceptedState": true,
+      "ticks": 479
+    }
+  ],
+  "cleanup": {
+    "errors": [],
+    "mainRendererDisposed": true,
+    "previewCanvasDisconnected": true,
+    "previewContextLost": true,
+    "workers": {
+      "accepted": 1009,
+      "created": 2,
+      "errors": 0,
+      "live": 0,
+      "proposals": 1009,
+      "rejected": 0,
+      "terminated": 2
+    }
+  },
+  "download": {
+    "art": {
+      "active": "current",
+      "installed": true,
+      "issue": null,
+      "pending": false,
+      "renderer": null,
+      "selection": "realistic",
+      "storageIssue": false
+    },
+    "resources": [
+      {
+        "encodedBodySize": 52499,
+        "name": "http://127.0.0.1:8893/authoring/library/fpv-character-art/r1/manifest.json",
+        "transferSize": 52799
+      },
+      {
+        "encodedBodySize": 13557808,
+        "name": "http://127.0.0.1:8893/authoring/library/fpv-character-art/r1/characters.glb",
+        "transferSize": 13558108
+      }
+    ]
+  },
+  "ended": "2026-10-19T22:55:24.409Z",
+  "entry": "Existing isolated QA entry mounts unchanged production World app; password form excluded.",
+  "format": "FPVCombatDeliveryQA.v1",
+  "limitations": [
+    "Existing isolated test entry; production password form not tested or bypassed.",
+    "Paused art-switch equality verified at tick479 with zero shot/hit counters; nonzero hit persistence covered by other focused acceptance.",
+    "Download cancellation not exercised in this fast local UI pass; focused lifecycle tests cover cancellation and failure.",
+    "Separate protected Creator tools page excluded; built-in Workshop destruction previews exercised."
+  ],
+  "missingBeforeDownload": {
+    "active": "current",
+    "issue": "missing",
+    "requests": 0,
+    "selection": "realistic"
+  },
+  "origin": "http://127.0.0.1:8893",
+  "progressedBefore": {
+    "course": "flight-01",
+    "state": {
+      "actors": [
+        {
+          "appearance": {
+            "cast": "authored",
+            "family": "lookout"
+          },
+          "blocked": false,
+          "cooldown": 50,
+          "damage": 10,
+          "defeatedTick": null,
+          "destructible": true,
+          "family": "lookout",
+          "fireEveryTicks": 100,
+          "groundMotion": "support-v1",
+          "heading": {
+            "x": -0.894454,
+            "y": 0,
+            "z": -0.447227
+          },
+          "health": 50,
+          "height": 1800,
+          "id": "encounter-d6a8df2f04c5d4af:1",
+          "material": "organic",
+          "maxHealth": 50,
+          "path": [
+            {
+              "x": -16389,
+              "y": 12,
+              "z": -18034
+            },
+            {
+              "x": -20389,
+              "y": 12,
+              "z": -20034
+            }
+          ],
+          "pathIndex": 0,
+          "position": {
+            "x": -16389,
+            "y": 12,
+            "z": -18034
+          },
+          "projectileSpeed": 8000,
+          "pursuit": {
+            "cursor": 0,
+            "decision": 0,
+            "delivered": 0,
+            "family": "lookout",
+            "goal": "route-0",
+            "heading": {
+              "x": -894454,
+              "z": -447227
+            },
+            "next": null,
+            "nextHeading": null,
+            "node": "route-0",
+            "phase": "idle",
+            "phaseTicks": 0,
+            "previous": null
+          },
+          "radius": 350,
+          "range": 20000,
+          "role": "hostile",
+          "slotId": "encounter-slot-01",
+          "sourceId": "encounter-target-1",
+          "spawnId": "encounter-d6a8df2f04c5d4af:1",
+          "spawnTick": 0,
+          "speed": 1117,
+          "status": "active",
+          "type": "patrol",
+          "velocity": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "warning": false
+        },
+        {
+          "appearance": {
+            "cast": "authored",
+            "family": "patroller"
+          },
+          "blocked": false,
+          "cooldown": 71,
+          "damage": 10,
+          "defeatedTick": null,
+          "destructible": true,
+          "family": "patroller",
+          "fireEveryTicks": 100,
+          "heading": {
+            "x": 0.8942895303600715,
+            "y": 0,
+            "z": -0.44748881090856624
+          },
+          "health": 50,
+          "height": 900,
+          "id": "encounter-d6a8df2f04c5d4af:2",
+          "material": "electronic",
+          "maxHealth": 50,
+          "path": [
+            {
+              "x": 2398,
+              "y": 2500,
+              "z": 6008
+            },
+            {
+              "x": -1602,
+              "y": 2500,
+              "z": 8008
+            }
+          ],
+          "pathIndex": 0,
+          "position": {
+            "x": -1476,
+            "y": 2500,
+            "z": 7947
+          },
+          "projectileSpeed": 8000,
+          "radius": 450,
+          "range": 20000,
+          "role": "hostile",
+          "slotId": "encounter-slot-02",
+          "sourceId": "encounter-target-2",
+          "spawnId": "encounter-d6a8df2f04c5d4af:2",
+          "spawnTick": 0,
+          "speed": 1378,
+          "status": "active",
+          "type": "drone",
+          "velocity": {
+            "x": 1250,
+            "y": 0,
+            "z": -600
+          },
+          "warning": false
+        },
+        {
+          "appearance": {
+            "cast": "authored",
+            "family": "runner"
+          },
+          "blocked": false,
+          "cooldown": 50,
+          "damage": 10,
+          "defeatedTick": null,
+          "destructible": true,
+          "family": "runner",
+          "fireEveryTicks": 100,
+          "groundMotion": "support-v1",
+          "heading": {
+            "x": -0.893796,
+            "y": 0,
+            "z": 0.450053
+          },
+          "health": 50,
+          "height": 1800,
+          "id": "encounter-d6a8df2f04c5d4af:3",
+          "material": "organic",
+          "maxHealth": 50,
+          "path": [
+            {
+              "x": 10478,
+              "y": 12,
+              "z": -21075
+            },
+            {
+              "x": 6478,
+              "y": 12,
+              "z": -19075
+            }
+          ],
+          "pathIndex": 0,
+          "position": {
+            "x": 7228,
+            "y": 12,
+            "z": -19453
+          },
+          "projectileSpeed": 8000,
+          "pursuit": {
+            "cursor": 0,
+            "decision": 22,
+            "delivered": 0,
+            "family": "runner",
+            "goal": "route-1",
+            "heading": {
+              "x": -893796,
+              "z": 450053
+            },
+            "next": "route-1",
+            "nextHeading": null,
+            "node": "route-0",
+            "phase": "committed",
+            "phaseTicks": 0,
+            "previous": "route-1"
+          },
+          "radius": 350,
+          "range": 20000,
+          "role": "hostile",
+          "slotId": "encounter-slot-03",
+          "sourceId": "encounter-target-3",
+          "spawnId": "encounter-d6a8df2f04c5d4af:3",
+          "spawnTick": 0,
+          "speed": 1399,
+          "status": "active",
+          "type": "patrol",
+          "velocity": {
+            "x": -1250,
+            "y": 0,
+            "z": 600
+          },
+          "warning": false
+        },
+        {
+          "appearance": {
+            "cast": "authored",
+            "family": "sprinter"
+          },
+          "blocked": false,
+          "cooldown": 50,
+          "damage": 10,
+          "defeatedTick": null,
+          "destructible": true,
+          "family": "sprinter",
+          "fireEveryTicks": 100,
+          "groundMotion": "support-v1",
+          "heading": {
+            "x": 0.8912275336415284,
+            "y": 0,
+            "z": -0.4535564830087188
+          },
+          "health": 100,
+          "height": 1800,
+          "id": "encounter-d6a8df2f04c5d4af:4",
+          "material": "metal",
+          "maxHealth": 100,
+          "path": [
+            {
+              "x": 20019,
+              "y": 12,
+              "z": 12341
+            },
+            {
+              "x": 16019,
+              "y": 12,
+              "z": 14341
+            }
+          ],
+          "pathIndex": 0,
+          "position": {
+            "x": 18411,
+            "y": 12,
+            "z": 13160
+          },
+          "projectileSpeed": 8000,
+          "radius": 900,
+          "range": 20000,
+          "role": "hostile",
+          "slotId": "encounter-slot-04",
+          "sourceId": "encounter-target-4",
+          "spawnId": "encounter-d6a8df2f04c5d4af:4",
+          "spawnTick": 0,
+          "speed": 1047,
+          "status": "active",
+          "type": "vehicle",
+          "velocity": {
+            "x": 950,
+            "y": 0,
+            "z": -450
+          },
+          "warning": false
+        },
+        {
+          "appearance": {
+            "cast": "authored",
+            "family": "refuge-seeker"
+          },
+          "blocked": false,
+          "cooldown": 50,
+          "damage": 10,
+          "defeatedTick": null,
+          "destructible": true,
+          "family": "refuge-seeker",
+          "fireEveryTicks": 0,
+          "heading": {
+            "x": 0.8928214279714101,
+            "y": 0,
+            "z": 0.4504108099891611
+          },
+          "health": 50,
+          "height": 1200,
+          "id": "encounter-d6a8df2f04c5d4af:5",
+          "material": "metal",
+          "maxHealth": 50,
+          "path": [
+            {
+              "x": 21172,
+              "y": 2500,
+              "z": -15818
+            },
+            {
+              "x": 17172,
+              "y": 2500,
+              "z": -17818
+            }
+          ],
+          "pathIndex": 0,
+          "position": {
+            "x": 20087,
+            "y": 2500,
+            "z": -16366
+          },
+          "projectileSpeed": 8000,
+          "radius": 600,
+          "range": 20000,
+          "role": "hostile",
+          "slotId": "encounter-slot-05",
+          "sourceId": "encounter-target-5",
+          "spawnId": "encounter-d6a8df2f04c5d4af:5",
+          "spawnTick": 0,
+          "speed": 1720,
+          "status": "active",
+          "type": "hazard",
+          "velocity": {
+            "x": 1550,
+            "y": 0,
+            "z": 750
+          },
+          "warning": false
+        },
+        {
+          "appearance": {
+            "cast": "authored",
+            "family": "switchback"
+          },
+          "blocked": false,
+          "cooldown": 50,
+          "damage": 10,
+          "defeatedTick": null,
+          "destructible": true,
+          "family": "switchback",
+          "fireEveryTicks": 0,
+          "groundMotion": "support-v1",
+          "heading": {
+            "x": 0.8887946882052404,
+            "y": 0.00033114556192445616,
+            "z": -0.4583054577034473
+          },
+          "health": 50,
+          "height": 900,
+          "id": "encounter-d6a8df2f04c5d4af:6",
+          "material": "metal",
+          "maxHealth": 50,
+          "path": [
+            {
+              "x": -4625,
+              "y": 13,
+              "z": -7126
+            },
+            {
+              "x": -8625,
+              "y": 13,
+              "z": -5126
+            }
+          ],
+          "pathIndex": 0,
+          "position": {
+            "x": -7298,
+            "y": 12,
+            "z": -5747
+          },
+          "projectileSpeed": 8000,
+          "radius": 450,
+          "range": 20000,
+          "role": "hostile",
+          "slotId": "encounter-slot-06",
+          "sourceId": "encounter-target-6",
+          "spawnId": "encounter-d6a8df2f04c5d4af:6",
+          "spawnTick": 0,
+          "speed": 600,
+          "status": "active",
+          "type": "prop",
+          "velocity": {
+            "x": 550,
+            "y": 0,
+            "z": -250
+          },
+          "warning": false
+        }
+      ],
+      "advanced": true,
+      "advancedTelemetry": {
+        "achievedRates": {
+          "pitch": -0.0011230165653503363,
+          "roll": 0.003876631361003134,
+          "yaw": -2.707042727651287e-9
+        },
+        "archiveStatus": {
+          "earliestIndex": 0,
+          "generation": "0:1",
+          "lastSealedIndex": -1,
+          "latestTick": 479,
+          "origin": {
+            "kind": "fresh",
+            "startTick": 0
+          }
+        },
+        "backend": "civilian-quad-aircraft-regional.v2",
+        "calibratedInput": {
+          "pitch": 0,
+          "roll": 0,
+          "throttle": 0,
+          "yaw": 0
+        },
+        "consumedSequence": 478,
+        "consumedTimestampUs": 9560000,
+        "contact": {
+          "contacts": 1,
+          "entries": [
+            {
+              "id": "course-boundary-y-min",
+              "moving": false,
+              "normal": {
+                "x": 0,
+                "y": 1,
+                "z": 0
+              }
+            }
+          ],
+          "grounded": true,
+          "ids": [
+            "course-boundary-y-min"
+          ],
+          "impactSpeed": 0,
+          "normal": {
+            "x": 0,
+            "y": 1,
+            "z": 0
+          },
+          "support": {
+            "id": "course-boundary-y-min",
+            "normal": {
+              "x": 0,
+              "y": 1,
+              "z": 0
+            }
+          },
+          "touching": true
+        },
+        "current": 0.025054605899450383,
+        "devicePollHz": null,
+        "dynamicColliders": [
+          {
+            "enabled": true,
+            "id": "encounter-slot-01",
+            "position": {
+              "x": -16.388999938964844,
+              "y": 0.9120000004768372,
+              "z": -18.034000396728516
+            }
+          },
+          {
+            "enabled": true,
+            "id": "encounter-slot-02",
+            "position": {
+              "x": -1.47599995136261,
+              "y": 2.950000047683716,
+              "z": 7.947000026702881
+            }
+          },
+          {
+            "enabled": true,
+            "id": "encounter-slot-03",
+            "position": {
+              "x": 7.228000164031982,
+              "y": 0.9120000004768372,
+              "z": -19.45299911499023
+            }
+          },
+          {
+            "enabled": true,
+            "id": "encounter-slot-04",
+            "position": {
+              "x": 18.410999298095703,
+              "y": 0.9120000004768372,
+              "z": 13.15999984741211
+            }
+          },
+          {
+            "enabled": true,
+            "id": "encounter-slot-05",
+            "position": {
+              "x": 20.086999893188477,
+              "y": 3.0999999046325684,
+              "z": -16.365999221801758
+            }
+          },
+          {
+            "enabled": true,
+            "id": "encounter-slot-06",
+            "position": {
+              "x": -7.297999858856201,
+              "y": 0.4620000123977661,
+              "z": -5.747000217437744
+            }
+          }
+        ],
+        "experimental": true,
+        "frequency": 500,
+        "missionHz": 50,
+        "missionTick": 479,
+        "motorSpeeds": [
+          0.05999999999999985,
+          0.06000871892039756,
+          0.06001124455160048,
+          0.060002526070509064
+        ],
+        "orientation": {
+          "w": 1,
+          "x": -2.1833713503838226e-7,
+          "y": 1.4664588987578495e-10,
+          "z": -4.503032755565073e-7
+        },
+        "position": {
+          "x": 0.00009667300764704124,
+          "y": 0.1399678736925125,
+          "z": 0.00002801127266138792
+        },
+        "radius": 0.6010407640085653,
+        "recordingStatus": {
+          "currentSeconds": 9.58,
+          "error": null,
+          "format": "AircraftRecordingStatus.v1",
+          "lastRecoverableSeconds": 5,
+          "retainedBytes": 501493,
+          "retainedFromSeconds": 0,
+          "retainedSegments": 1,
+          "retainedThroughSeconds": 9.58,
+          "state": "recording"
+        },
+        "requestedRates": {
+          "pitch": 0,
+          "roll": 0,
+          "yaw": 0
+        },
+        "sampleAgeUs": 20000,
+        "saturated": true,
+        "scored": false,
+        "seconds": 9.58,
+        "substep": 4790,
+        "supportHeight": 0.1400001415611639,
+        "terrain": {
+          "contacts": 1,
+          "entries": [
+            {
+              "id": "course-boundary-y-min",
+              "moving": false,
+              "normal": {
+                "x": 0,
+                "y": 1,
+                "z": 0
+              }
+            }
+          ],
+          "frameIdentity": "3fe6e718aca8a0f4",
+          "grounded": true,
+          "ids": [
+            "course-boundary-y-min"
+          ],
+          "impactSpeed": 0,
+          "normal": {
+            "x": 0,
+            "y": 1,
+            "z": 0
+          },
+          "support": {
+            "id": "course-boundary-y-min",
+            "normal": {
+              "x": 0,
+              "y": 1,
+              "z": 0
+            }
+          },
+          "touching": true
+        },
+        "topHeight": 0.1400001415611639,
+        "usedAh": 0,
+        "velocity": {
+          "x": 9.472398232901467e-6,
+          "y": 8.850882295519114e-6,
+          "z": 2.744046923908172e-6
+        },
+        "voltage": 25.199248361823017
+      },
+      "aircraftRadiusMm": 601.0407640085654,
+      "aircraftSupportHeightMm": 140.0001415611639,
+      "angular": {
+        "pitch": 0,
+        "roll": 0,
+        "yaw": 0
+      },
+      "attitude": {
+        "pitch": 0,
+        "roll": 0,
+        "up": {
+          "x": 0,
+          "y": 1000000,
+          "z": 0
+        },
+        "yaw": 0
+      },
+      "combat": true,
+      "combatRecording": {
+        "complete": true,
+        "format": "FPVEncounterRecordingStatus.v1",
+        "practiceOnly": true,
+        "retainedFrom": 0,
+        "retainedTo": 479
+      },
+      "contactCooldown": 0,
+      "contacts": 0,
+      "cooldown": 0,
+      "encounter": {
+        "accuracy": null,
+        "activity": "continuous",
+        "actors": [
+          {
+            "appearance": {
+              "cast": "authored",
+              "family": "lookout"
+            },
+            "blocked": false,
+            "cooldown": 50,
+            "damage": 10,
+            "defeatedTick": null,
+            "destructible": true,
+            "family": "lookout",
+            "fireEveryTicks": 100,
+            "groundMotion": "support-v1",
+            "heading": {
+              "x": -0.894454,
+              "y": 0,
+              "z": -0.447227
+            },
+            "health": 50,
+            "height": 1800,
+            "id": "encounter-d6a8df2f04c5d4af:1",
+            "material": "organic",
+            "maxHealth": 50,
+            "path": [
+              {
+                "x": -16389,
+                "y": 12,
+                "z": -18034
+              },
+              {
+                "x": -20389,
+                "y": 12,
+                "z": -20034
+              }
+            ],
+            "pathIndex": 0,
+            "position": {
+              "x": -16389,
+              "y": 12,
+              "z": -18034
+            },
+            "projectileSpeed": 8000,
+            "pursuit": {
+              "cursor": 0,
+              "decision": 0,
+              "delivered": 0,
+              "family": "lookout",
+              "goal": "route-0",
+              "heading": {
+                "x": -894454,
+                "z": -447227
+              },
+              "next": null,
+              "nextHeading": null,
+              "node": "route-0",
+              "phase": "idle",
+              "phaseTicks": 0,
+              "previous": null
+            },
+            "radius": 350,
+            "range": 20000,
+            "role": "hostile",
+            "slotId": "encounter-slot-01",
+            "sourceId": "encounter-target-1",
+            "spawnId": "encounter-d6a8df2f04c5d4af:1",
+            "spawnTick": 0,
+            "speed": 1117,
+            "status": "active",
+            "type": "patrol",
+            "velocity": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "warning": false
+          },
+          {
+            "appearance": {
+              "cast": "authored",
+              "family": "patroller"
+            },
+            "blocked": false,
+            "cooldown": 71,
+            "damage": 10,
+            "defeatedTick": null,
+            "destructible": true,
+            "family": "patroller",
+            "fireEveryTicks": 100,
+            "heading": {
+              "x": 0.8942895303600715,
+              "y": 0,
+              "z": -0.44748881090856624
+            },
+            "health": 50,
+            "height": 900,
+            "id": "encounter-d6a8df2f04c5d4af:2",
+            "material": "electronic",
+            "maxHealth": 50,
+            "path": [
+              {
+                "x": 2398,
+                "y": 2500,
+                "z": 6008
+              },
+              {
+                "x": -1602,
+                "y": 2500,
+                "z": 8008
+              }
+            ],
+            "pathIndex": 0,
+            "position": {
+              "x": -1476,
+              "y": 2500,
+              "z": 7947
+            },
+            "projectileSpeed": 8000,
+            "radius": 450,
+            "range": 20000,
+            "role": "hostile",
+            "slotId": "encounter-slot-02",
+            "sourceId": "encounter-target-2",
+            "spawnId": "encounter-d6a8df2f04c5d4af:2",
+            "spawnTick": 0,
+            "speed": 1378,
+            "status": "active",
+            "type": "drone",
+            "velocity": {
+              "x": 1250,
+              "y": 0,
+              "z": -600
+            },
+            "warning": false
+          },
+          {
+            "appearance": {
+              "cast": "authored",
+              "family": "runner"
+            },
+            "blocked": false,
+            "cooldown": 50,
+            "damage": 10,
+            "defeatedTick": null,
+            "destructible": true,
+            "family": "runner",
+            "fireEveryTicks": 100,
+            "groundMotion": "support-v1",
+            "heading": {
+              "x": -0.893796,
+              "y": 0,
+              "z": 0.450053
+            },
+            "health": 50,
+            "height": 1800,
+            "id": "encounter-d6a8df2f04c5d4af:3",
+            "material": "organic",
+            "maxHealth": 50,
+            "path": [
+              {
+                "x": 10478,
+                "y": 12,
+                "z": -21075
+              },
+              {
+                "x": 6478,
+                "y": 12,
+                "z": -19075
+              }
+            ],
+            "pathIndex": 0,
+            "position": {
+              "x": 7228,
+              "y": 12,
+              "z": -19453
+            },
+            "projectileSpeed": 8000,
+            "pursuit": {
+              "cursor": 0,
+              "decision": 22,
+              "delivered": 0,
+              "family": "runner",
+              "goal": "route-1",
+              "heading": {
+                "x": -893796,
+                "z": 450053
+              },
+              "next": "route-1",
+              "nextHeading": null,
+              "node": "route-0",
+              "phase": "committed",
+              "phaseTicks": 0,
+              "previous": "route-1"
+            },
+            "radius": 350,
+            "range": 20000,
+            "role": "hostile",
+            "slotId": "encounter-slot-03",
+            "sourceId": "encounter-target-3",
+            "spawnId": "encounter-d6a8df2f04c5d4af:3",
+            "spawnTick": 0,
+            "speed": 1399,
+            "status": "active",
+            "type": "patrol",
+            "velocity": {
+              "x": -1250,
+              "y": 0,
+              "z": 600
+            },
+            "warning": false
+          },
+          {
+            "appearance": {
+              "cast": "authored",
+              "family": "sprinter"
+            },
+            "blocked": false,
+            "cooldown": 50,
+            "damage": 10,
+            "defeatedTick": null,
+            "destructible": true,
+            "family": "sprinter",
+            "fireEveryTicks": 100,
+            "groundMotion": "support-v1",
+            "heading": {
+              "x": 0.8912275336415284,
+              "y": 0,
+              "z": -0.4535564830087188
+            },
+            "health": 100,
+            "height": 1800,
+            "id": "encounter-d6a8df2f04c5d4af:4",
+            "material": "metal",
+            "maxHealth": 100,
+            "path": [
+              {
+                "x": 20019,
+                "y": 12,
+                "z": 12341
+              },
+              {
+                "x": 16019,
+                "y": 12,
+                "z": 14341
+              }
+            ],
+            "pathIndex": 0,
+            "position": {
+              "x": 18411,
+              "y": 12,
+              "z": 13160
+            },
+            "projectileSpeed": 8000,
+            "radius": 900,
+            "range": 20000,
+            "role": "hostile",
+            "slotId": "encounter-slot-04",
+            "sourceId": "encounter-target-4",
+            "spawnId": "encounter-d6a8df2f04c5d4af:4",
+            "spawnTick": 0,
+            "speed": 1047,
+            "status": "active",
+            "type": "vehicle",
+            "velocity": {
+              "x": 950,
+              "y": 0,
+              "z": -450
+            },
+            "warning": false
+          },
+          {
+            "appearance": {
+              "cast": "authored",
+              "family": "refuge-seeker"
+            },
+            "blocked": false,
+            "cooldown": 50,
+            "damage": 10,
+            "defeatedTick": null,
+            "destructible": true,
+            "family": "refuge-seeker",
+            "fireEveryTicks": 0,
+            "heading": {
+              "x": 0.8928214279714101,
+              "y": 0,
+              "z": 0.4504108099891611
+            },
+            "health": 50,
+            "height": 1200,
+            "id": "encounter-d6a8df2f04c5d4af:5",
+            "material": "metal",
+            "maxHealth": 50,
+            "path": [
+              {
+                "x": 21172,
+                "y": 2500,
+                "z": -15818
+              },
+              {
+                "x": 17172,
+                "y": 2500,
+                "z": -17818
+              }
+            ],
+            "pathIndex": 0,
+            "position": {
+              "x": 20087,
+              "y": 2500,
+              "z": -16366
+            },
+            "projectileSpeed": 8000,
+            "radius": 600,
+            "range": 20000,
+            "role": "hostile",
+            "slotId": "encounter-slot-05",
+            "sourceId": "encounter-target-5",
+            "spawnId": "encounter-d6a8df2f04c5d4af:5",
+            "spawnTick": 0,
+            "speed": 1720,
+            "status": "active",
+            "type": "hazard",
+            "velocity": {
+              "x": 1550,
+              "y": 0,
+              "z": 750
+            },
+            "warning": false
+          },
+          {
+            "appearance": {
+              "cast": "authored",
+              "family": "switchback"
+            },
+            "blocked": false,
+            "cooldown": 50,
+            "damage": 10,
+            "defeatedTick": null,
+            "destructible": true,
+            "family": "switchback",
+            "fireEveryTicks": 0,
+            "groundMotion": "support-v1",
+            "heading": {
+              "x": 0.8887946882052404,
+              "y": 0.00033114556192445616,
+              "z": -0.4583054577034473
+            },
+            "health": 50,
+            "height": 900,
+            "id": "encounter-d6a8df2f04c5d4af:6",
+            "material": "metal",
+            "maxHealth": 50,
+            "path": [
+              {
+                "x": -4625,
+                "y": 13,
+                "z": -7126
+              },
+              {
+                "x": -8625,
+                "y": 13,
+                "z": -5126
+              }
+            ],
+            "pathIndex": 0,
+            "position": {
+              "x": -7298,
+              "y": 12,
+              "z": -5747
+            },
+            "projectileSpeed": 8000,
+            "radius": 450,
+            "range": 20000,
+            "role": "hostile",
+            "slotId": "encounter-slot-06",
+            "sourceId": "encounter-target-6",
+            "spawnId": "encounter-d6a8df2f04c5d4af:6",
+            "spawnTick": 0,
+            "speed": 600,
+            "status": "active",
+            "type": "prop",
+            "velocity": {
+              "x": 550,
+              "y": 0,
+              "z": -250
+            },
+            "warning": false
+          }
+        ],
+        "admittedCount": 6,
+        "bestStreak": 0,
+        "contactLocks": {},
+        "cooldown": 0,
+        "definitionIdentity": "d6a8df2f04c5d4af",
+        "difficulty": "easy",
+        "events": [],
+        "format": "FPVEncounterState.v1",
+        "health": 80,
+        "hits": 0,
+        "kills": 0,
+        "lastDamageTick": 389,
+        "maxHealth": 100,
+        "nextEvent": 10,
+        "nextProjectile": 6,
+        "nextSpawn": 7,
+        "nextWaveTick": null,
+        "outsideArea": false,
+        "phase": "wave",
+        "population": 6,
+        "projectiles": [
+          {
+            "damage": 5,
+            "id": 5,
+            "owner": "encounter-d6a8df2f04c5d4af:2",
+            "position": {
+              "x": -381,
+              "y": 1570,
+              "z": 3116
+            },
+            "ttl": 120,
+            "velocity": {
+              "x": 941,
+              "y": -2324,
+              "z": -7597
+            }
+          }
+        ],
+        "result": null,
+        "returning": false,
+        "rng": 632655742,
+        "runId": "encounter-d6a8df2f04c5d4af",
+        "score": 0,
+        "shots": 0,
+        "status": "active",
+        "streak": 0,
+        "successfulImpacts": 0,
+        "ticks": 479,
+        "waitingForClearSpawn": false,
+        "wave": 1
+      },
+      "events": [],
+      "failure": null,
+      "grounded": true,
+      "health": 80,
+      "heightRange": {
+        "max": 0,
+        "min": 0
+      },
+      "hits": 0,
+      "hold": 0,
+      "kills": 0,
+      "landingSpeed": 0,
+      "landingTilt": 0,
+      "lastInput": {
+        "actions": 0,
+        "pitch": 0,
+        "roll": 0,
+        "throttle": 0,
+        "yaw": 0
+      },
+      "maxHealth": 100,
+      "nextProjectileId": 1,
+      "orientation": [
+        0,
+        0,
+        0,
+        1000000
+      ],
+      "position": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "projectiles": [
+        {
+          "damage": 5,
+          "id": 5,
+          "owner": "encounter-d6a8df2f04c5d4af:2",
+          "position": {
+            "x": -381,
+            "y": 1570,
+            "z": 3116
+          },
+          "ttl": 120,
+          "velocity": {
+            "x": 941,
+            "y": -2324,
+            "z": -7597
+          }
+        }
+      ],
+      "reason": "prepared",
+      "recordingStatus": {
+        "currentSeconds": 9.58,
+        "error": null,
+        "format": "AircraftRecordingStatus.v1",
+        "lastRecoverableSeconds": 5,
+        "retainedBytes": 501493,
+        "retainedFromSeconds": 0,
+        "retainedSegments": 1,
+        "retainedThroughSeconds": 9.58,
+        "state": "recording"
+      },
+      "rng": 1,
+      "score": 0,
+      "shots": 0,
+      "status": "paused",
+      "step": 0,
+      "support": {
+        "id": "$floor",
+        "normal": {
+          "x": 0,
+          "y": 1000000,
+          "z": 0
+        },
+        "y": 0
+      },
+      "target": {
+        "ticks": 36000,
+        "type": "survive"
+      },
+      "ticks": 479,
+      "total": 1,
+      "unscored": true,
+      "velocity": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    }
+  },
+  "started": "2026-10-19T22:49:30.826Z",
+  "studio": {
+    "art": {
+      "active": "realistic",
+      "installed": true,
+      "issue": null,
+      "pending": false,
+      "renderer": {
+        "characterIndex": null,
+        "characters": 36,
+        "error": null,
+        "sha256": "8121b18a0a6c1ea2c625cb355ef2d5efee0ed6c1486a835d415c3119fc555357",
+        "state": "ready"
+      },
+      "selection": "realistic",
+      "storageIssue": false
+    },
+    "canvas": {
+      "height": 648,
+      "width": 900
+    },
+    "cleanPreviewOpenedAndClosed": true,
+    "closed": {
+      "canvasDisconnected": true,
+      "contextLost": true
+    },
+    "errors": [],
+    "path": "Explore worlds → SIM tools → Workshop → Preview blood and remains"
+  }
+}

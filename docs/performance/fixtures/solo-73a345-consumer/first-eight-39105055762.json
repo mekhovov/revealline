@@ -1,0 +1,45 @@
+{
+  "format": "SoloSource73FirstEightReadbackV1",
+  "status": "passed-correctness-only",
+  "run": 39105055762,
+  "job": 117608986487,
+  "artifact": 12127359946,
+  "artifactBytes": 815628,
+  "artifactSHA256": "17665afe978ae63cfaf8d24b1a9626e1d7f607b7ee2611fc637c9e680f3d46d8",
+  "summaryBytes": 116312,
+  "summarySHA256": "a33416a355620817896366d5312fbecb44f0c7e6b8f7220941c8447886d99762",
+  "tooling": {
+    "revision": "570ca4ffe57f75c342e2d99b62a04a8b62b740a0",
+    "tree": "7e2ded8a289aa73949e67dfcaed46f5c6ca08cff"
+  },
+  "candidate": {
+    "revision": "73a345cec696d7789198cf295ca5c37b17ca0e71",
+    "tree": "ea30e68636b3342f8e60664a79d425e11e27ff1e"
+  },
+  "baseline": {
+    "revision": "8b01991942dc764b8aa4726851699ce1985e53ae",
+    "tree": "9373b6a74aea8fa1ef47aa17ace140b4cf714609"
+  },
+  "correctnessRowsPassed": 8,
+  "strictNativeReplayPassed": 4,
+  "closedCommands": 14,
+  "numericalFailures": [
+    "baseline-first30-chromium",
+    "baseline-first30-webkit",
+    "candidate-first30-webkit"
+  ],
+  "performanceQualification": false,
+  "exactExecutedScriptRefs": 41,
+  "fixtureRefs": 1,
+  "archiveMembers": 80,
+  "evidenceInventoryEntries": 71,
+  "setupControlSummary": {
+    "tests": 56,
+    "pass": 56,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 0
+  },
+  "remoteFullPayloadAndSourceVerification": "passed-both-source-arms",
+  "scope": "Exact73 preview source/package and original eight-row correctness only. Numerical failures and Node portability mismatches remain retained. No merged-main, timing, physical-device or other scenario qualification."
+}

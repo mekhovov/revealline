@@ -1,0 +1,48 @@
+{
+  "format": "SoloDemoRuntime73SourceAssetsV1",
+  "sourceRevision": "73a345cec696d7789198cf295ca5c37b17ca0e71",
+  "tree": "ea30e68636b3342f8e60664a79d425e11e27ff1e",
+  "assets": [
+    {
+      "path": "game/demo-data/catalog.json",
+      "blob": "c82b3030e39dad6c41506458123f444d4a53aeb2",
+      "bytes": 6839,
+      "sha256": "3d4fbe0437fb6dfc7e4140e72e597012e95ec82c007621e6dee358c38baf4078",
+      "role": "catalog",
+      "relative": "demo-data/catalog.json"
+    },
+    {
+      "path": "game/demo-data/first-signal-left.replay.json",
+      "blob": "96fffb14a23ecb39c5ba5571bbbb5c7c9d904db8",
+      "bytes": 10793,
+      "sha256": "900f921146e37324dfefc90f55bfc60c03bd8a2954d53353ecae25df8a55c54a",
+      "role": "replay",
+      "relative": "demo-data/first-signal-left.replay.json"
+    },
+    {
+      "path": "game/demo-data/first-signal-left.chromium-macos.replay.json",
+      "blob": "4bee025eded439d15ace9ea9f4b05fa206ba500a",
+      "bytes": 10801,
+      "sha256": "b18d9d343ffca2b7efec6c3ec0266d80ed0603804420f444159e4214533bd11e",
+      "role": "replay",
+      "relative": "demo-data/first-signal-left.chromium-macos.replay.json"
+    }
+  ],
+  "expectedClip": {
+    "id": "first-signal-left",
+    "campaignId": "first-signal",
+    "campaignKey": "first-signal/2/88639f3aab7b6cc1",
+    "levelId": "signal-01",
+    "levelRevision": "1",
+    "identity": "d31dfb37580148ee",
+    "recordingIdentity": "c48b4182e13d1541",
+    "inputTraceIdentity": "004a620b36d19d0d",
+    "title": "First Signal",
+    "provenance": "authored",
+    "tags": ["capture", "bent-cut", "safe-ground"],
+    "durationSeconds": 30.683333333333334,
+    "turnPolicy": "immediate",
+    "replayURL": "./demo-data/first-signal-left.replay.json",
+    "replayVariants": ["./demo-data/first-signal-left.chromium-macos.replay.json"]
+  }
+}

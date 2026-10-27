@@ -12,6 +12,26 @@ import {
   replayAdvancedRecording,
 } from '../../optional-practice/civilian-fpv/advanced-simulation.mjs';
 import { createRateProfile } from '../../optional-practice/civilian-fpv/rates.mjs';
+import {
+  createPresetConfiguration,
+  applyAircraftComponents,
+} from '../../optional-practice/civilian-fpv/aircraft-presets.mjs';
+import {
+  DEFAULT_RESPONSE,
+  defaultRadioProfile,
+  createRadioControlLayout,
+} from '../../optional-practice/civilian-fpv/radio-profile.mjs';
+import { createRadioRuntime } from '../../optional-practice/civilian-fpv/radio-runtime.mjs';
+import { mountRadioMenuControls } from '../../optional-practice/civilian-fpv/sim-presentation.mjs';
+import { createFlightMenuNavigation } from '../../optional-practice/civilian-fpv/input.mjs';
+import { createTuningLibraryStore } from '../../optional-practice/civilian-fpv/tuning-library.mjs';
+import { createAircraftArchiveStore } from '../../optional-practice/civilian-fpv/aircraft-archive.mjs';
+import { verifyAircraftArchive } from '../../optional-practice/civilian-fpv/aircraft-archive-verifier.mjs';
+import { managedIndexedDB } from './helpers/managed-idb.mjs';
+import {
+  aircraftMotorPoint,
+  aircraftMotorSpeedForThrust,
+} from '../../optional-practice/civilian-fpv/aircraft-physics.mjs';
 
 class LocalWorker extends Events {
   static instances = [];
@@ -37,6 +57,269 @@ class LocalWorker extends Events {
     this.handler.dispose();
   }
 }
+
+test('aircraft arena keeps Legacy rates explicitly, applies preset starter rates by default, and saves a frozen draft', async (t) => {
+  const preset = createPresetConfiguration('meteor75-analog-2022'),
+    saves = [];
+  const data = new Map();
+  const store = createTuningLibraryStore({
+    storage: {
+      getItem: (key) => data.get(key) ?? null,
+      setItem: (key, value) => data.set(key, value),
+    },
+  });
+  const f = await fixture(t, {
+    configuration: preset,
+    response: DEFAULT_RESPONSE,
+    async onSaveConfiguration(value, metadata) {
+      const current = store.snapshot();
+      await store.saveAircraftConfiguration(
+        {
+          setupId: current.selectedSetupId,
+          newProfileId: `aircraft-${saves.length}`,
+          advanced: value,
+          response: metadata.response,
+          camera: { tilt: metadata.camera.tilt, verticalFov: metadata.camera.fov },
+          preset: metadata.preset,
+          components: metadata.components,
+        },
+        current.revision,
+      );
+      saves.push({ value, metadata });
+    },
+  });
+  let worker = LocalWorker.instances.at(-1);
+  assert.equal(worker.messages[0].options.aircraft.format, 'AdvancedAircraft.v2');
+  assert.deepEqual(worker.messages[0].options.response.response, DEFAULT_RESPONSE);
+  assert.equal(f.session.getTelemetry().frequency, 1000);
+  const chooseAircraft = f.container
+    .querySelectorAll('select')
+    .find((select) => select.children.some((option) => option.value === 'holybro-x650-v2'));
+  const rates = f.container
+    .querySelectorAll('select')
+    .find((select) => select.children.some((option) => option.value === 'keep'));
+  assert.equal(rates.value, 'defaults');
+  rates.value = 'keep';
+  chooseAircraft.value = 'holybro-x650-v2';
+  chooseAircraft.emit('change');
+  f.button('Restart practice').click();
+  await waitFor(
+    () => LocalWorker.instances.at(-1) !== worker && !f.button('Start practice').disabled,
+  );
+  worker = LocalWorker.instances.at(-1);
+  assert.deepEqual(worker.messages[0].options.response.response, DEFAULT_RESPONSE);
+  assert.equal(worker.messages[0].options.aircraft.id, 'holybro-x650-v2');
+  rates.value = 'defaults';
+  chooseAircraft.value = 'meteor75-analog-2022';
+  chooseAircraft.emit('change');
+  f.button('Save aircraft for next flight').click();
+  await waitFor(() => saves.length === 1);
+  assert.deepEqual(saves[0].metadata.response, preset.response);
+  assert.equal(saves[0].value.aircraft.battery.depletion, false);
+  assert.deepEqual(saves[0].metadata.camera, {
+    tilt: preset.camera.tilt,
+    fov: preset.camera.verticalFov,
+  });
+  assert.deepEqual(store.effective().camera, preset.camera);
+  const savedSetup = store.snapshot().setups.find((setup) => setup.id === 'my-drone');
+  assert.deepEqual(savedSetup.preset, preset.preset);
+  assert.equal(savedSetup.components.presetId, preset.preset.id);
+  assert.equal(savedSetup.components.cameraPayload.massGrams, 0);
+  assert.equal(worker.messages[0].options.aircraft.id, 'holybro-x650-v2');
+  f.button('Restart practice').click();
+  await waitFor(
+    () => LocalWorker.instances.at(-1) !== worker && !f.button('Start practice').disabled,
+  );
+  assert.deepEqual(
+    LocalWorker.instances.at(-1).messages[0].options.response.response,
+    preset.response,
+  );
+});
+
+for (const rateModel of ['Actual', 'Legacy'])
+  test(`Advanced preserves an unsaved component edit exactly once through save and revert with ${rateModel} rates`, async (t) => {
+    const preset = createPresetConfiguration('meteor75-analog-2022');
+    const draft = applyAircraftComponents(preset.aircraft, preset.components, {
+      battery: preset.components.battery,
+      cameraPayload: { massGrams: 4 },
+    });
+    const data = new Map();
+    const store = createTuningLibraryStore({
+      storage: {
+        getItem: (key) => data.get(key) ?? null,
+        setItem: (key, value) => data.set(key, value),
+      },
+    });
+    await store.createPresetSetup({
+      presetId: preset.preset.id,
+      setupId: 'payload-whoop',
+      profileId: 'payload-rates',
+      rates: 'defaults',
+    });
+    let saved = false;
+    const response = rateModel === 'Actual' ? preset.response : DEFAULT_RESPONSE;
+    const f = await fixture(t, {
+      configuration: { aircraft: draft.aircraft, controller: preset.controller },
+      components: draft.components,
+      response,
+      camera: { tilt: preset.camera.tilt, fov: preset.camera.verticalFov },
+      async onSaveConfiguration(advanced, metadata) {
+        assert.equal(Object.hasOwn(metadata, 'preset'), false);
+        const current = store.snapshot();
+        await store.saveAircraftConfiguration(
+          {
+            setupId: current.selectedSetupId,
+            newProfileId: 'saved-payload-rates',
+            advanced,
+            response: metadata.response,
+            camera: { tilt: metadata.camera.tilt, verticalFov: metadata.camera.fov },
+            components: metadata.components,
+          },
+          current.revision,
+        );
+        saved = true;
+      },
+    });
+    const aircraft = f.container
+      .querySelectorAll('select')
+      .find((select) => select.children.some((option) => option.value === 'holybro-x650-v2'));
+    aircraft.value = 'holybro-x650-v2';
+    aircraft.emit('change');
+    f.button('Revert aircraft draft').click();
+    f.button('Save aircraft for next flight').click();
+    await waitFor(() => saved);
+    const setup = store.snapshot().setups.find((item) => item.id === 'payload-whoop');
+    assert.equal(setup.components.cameraPayload.massGrams, 4);
+    assert.equal(setup.advanced.aircraft.mass, preset.aircraft.mass + 0.004);
+    assert.deepEqual(store.effective().response, response);
+    const reopened = applyAircraftComponents(setup.advanced.aircraft, setup.components, {
+      battery: setup.components.battery,
+      cameraPayload: setup.components.cameraPayload,
+    });
+    assert.deepEqual(reopened.aircraft, draft.aircraft);
+    assert.deepEqual(reopened.components, draft.components);
+  });
+
+test('aircraft preview reports insufficient thrust instead of a zero-percent hover point', async (t) => {
+  const preset = createPresetConfiguration('meteor75-analog-2022');
+  preset.aircraft.mass = 1;
+  const f = await fixture(t, { configuration: preset, response: preset.response });
+  assert.match(f.container.textContent, /Estimated hover throttle: Insufficient thrust for hover/);
+});
+
+test('aircraft arena archives its final tail, continues flying and retires its owner on restart', async (t) => {
+  const preset = createPresetConfiguration('meteor75-analog-2022');
+  const store = createAircraftArchiveStore({ indexedDB: managedIndexedDB().indexedDB });
+  const workerURL = new URL(
+    '../../optional-practice/fpv-worlds/advanced-worker.mjs',
+    import.meta.url,
+  );
+  const f = await fixture(t, {
+    configuration: preset,
+    response: preset.response,
+    archiveStore: store,
+    workerURL,
+  });
+  f.win.Worker = LocalWorker;
+  async function rowsWhen(predicate) {
+    for (let i = 0; i < 500; i++) {
+      const rows = await store.list();
+      if (predicate(rows)) return rows;
+      await new Promise((resolve) => setImmediate(resolve));
+    }
+    assert.fail('Arena archive did not settle');
+  }
+  assert.equal(f.container.querySelector('.aircraft-archive-controls').hidden, false);
+  await waitFor(() => f.container.textContent.includes('Ready to archive when flight begins'));
+  assert.equal((await store.list()).length, 0, 'prepared arena consumes no archive slot');
+  assert.equal(f.button('Finish current archive').disabled, true);
+  f.button('Start practice').click();
+  await waitFor(() => f.session.getTelemetry().missionTick === 1);
+  const started = (await rowsWhen((rows) => rows.length === 1))[0];
+  assert.equal(started.startTick, 0);
+  assert.equal(started.endTick, 0, 'one accepted tick has not rotated a sealed segment');
+  await waitFor(() => !f.button('Finish current archive').disabled);
+  f.button('Finish current archive').click();
+  const first = (await rowsWhen((rows) => rows[0]?.state === 'ended'))[0];
+  assert.equal(first.id, started.id);
+  assert.equal(first.startTick, 0);
+  assert.equal(first.endTick, 1);
+  assert.equal(first.host, 'arena');
+  assert.equal(
+    (await verifyAircraftArchive(await store.exportPackage(first.id))).verificationScope,
+    'complete-session',
+  );
+  await waitFor(() => !f.button('Start practice').disabled);
+  f.button('Start practice').click();
+  await waitFor(() => f.session.getTelemetry().missionTick === 2);
+  f.button('Pause').click();
+  f.button('Verify selected archive').click();
+  await waitFor(() =>
+    f.container.textContent.includes('Complete session physics verified from reset'),
+  );
+  assert.equal(LocalWorker.instances.at(-1).url, workerURL);
+  assert.equal(LocalWorker.instances.at(-1).terminated, true);
+  f.button('Restart practice').click();
+  await waitFor(
+    () =>
+      !f.button('Start practice').disabled &&
+      f.session.getTelemetry().missionTick === 0 &&
+      f.container.textContent.includes('Ready to archive when flight begins'),
+  );
+  assert.equal((await store.list()).length, 1, 'restarted but unflown arena creates no archive');
+  f.button('Start practice').click();
+  await waitFor(() => f.session.getTelemetry().missionTick === 1);
+  const second = (await rowsWhen((rows) => rows.length === 2)).find((row) => row.id !== first.id);
+  assert.equal(second.state, 'open');
+  f.button('Pause').click();
+  const choose = f.container
+    .querySelectorAll('select')
+    .find((select) => select.children.some((option) => option.value === 'freestyle'));
+  choose.value = 'freestyle';
+  choose.emit('change');
+  f.button('Restart practice').click();
+  await waitFor(
+    () =>
+      !f.button('Start practice').disabled &&
+      f.session.getTelemetry().backend === 'civilian-quad-advanced-experimental.v2',
+  );
+  assert.equal(f.container.querySelector('.aircraft-archive-controls').hidden, true);
+  const retired = await rowsWhen((rows) =>
+    rows.some((row) => row.id === second.id && row.state === 'interrupted'),
+  );
+  assert.equal(retired.find((row) => row.id === first.id).state, 'ended');
+});
+
+test('aircraft arena verifies checkpoint clips and retains usable practice controls', async (t) => {
+  const preset = createPresetConfiguration('meteor75-analog-2022');
+  const f = await fixture(t, { configuration: preset, response: preset.response });
+  const options = LocalWorker.instances.at(-1).messages[0].options;
+  f.button('Start practice').click();
+  await waitFor(() => f.session.getTelemetry()?.missionTick === 1);
+  f.button('Pause').click();
+  f.button('Keep this practice as reference').click();
+  await waitFor(() => f.session.getComparison()?.verified);
+  assert.equal(f.session.getComparison().samples, 2);
+  assert.equal(f.session.getComparison().scored, false);
+  assert.match(f.container.textContent, /starting checkpoint/);
+  assert.equal(f.button('Start practice').disabled, false);
+  const aircraft = f.container
+    .querySelectorAll('select')
+    .find((select) => select.children.some((option) => option.value === 'holybro-x650-v2'));
+  aircraft.value = 'freestyle';
+  aircraft.emit('change');
+  let reads = 0;
+  const { recording } = comparisonRecording(options);
+  importComparison(f, recording, {
+    size: 8 * 1024 * 1024 + 1,
+    text: async () => {
+      reads++;
+      return JSON.stringify(recording);
+    },
+  });
+  await waitFor(() => reads === 1 && !f.button('Start practice').disabled);
+  assert.equal(f.session.getComparison().samples, 5);
+});
 
 async function fixture(t, { waitReady = true, ...options } = {}) {
   const doc = new Document(),
@@ -100,6 +383,77 @@ async function fixture(t, { waitReady = true, ...options } = {}) {
     rendererDisposed: () => rendererDisposed,
   };
 }
+
+test('mounted bench comparison follows valid aircraft drafts and never replaces the running aircraft', async (t) => {
+  const preset = createPresetConfiguration('nazgul-eco-xl5-v11');
+  const f = await fixture(t, { configuration: preset });
+  const worker = LocalWorker.instances.at(-1);
+  const initialMessages = structuredClone(worker.messages);
+  const initialTelemetry = f.session.getTelemetry();
+  const panel = f.container.querySelector('.propulsion-evidence-panel');
+  assert.equal(panel.parentNode.tagName, 'DETAILS');
+  assert.equal(panel.open, false);
+  panel.querySelector('[data-action="synthetic-demo"]').click();
+  const output = panel.querySelector('[data-role="comparison"]');
+  const source = JSON.parse(panel.querySelector('[data-action="paste-data"]').value);
+  assert.match(output.textContent, /outside.*battery range/);
+  for (const sample of source.samples)
+    sample.values.voltage = preset.aircraft.battery.nominalVoltage;
+  panel.querySelector('[data-action="paste-data"]').value = JSON.stringify(source);
+  panel.querySelector('[data-action="import-paste"]').click();
+  const { thrust, voltage } = source.samples[0].values;
+  const expectedCurrent = (aircraft) => {
+    const speed = aircraftMotorSpeedForThrust(aircraft, thrust, voltage);
+    return Number(aircraftMotorPoint(aircraft, speed, voltage).current.toPrecision(7));
+  };
+  assert.ok(output.textContent.includes(`estimated current ${expectedCurrent(preset.aircraft)} A`));
+  const field = f.container
+    .querySelectorAll('label')
+    .find((label) => label.textContent === 'Thrust per motor at nominal voltage (N)')
+    .querySelector('input');
+  const original = field.value;
+  field.value = String(Number(original) * 1.5);
+  field.emit('input');
+  const changed = { ...preset.aircraft, maxThrust: Number(field.value) };
+  assert.notEqual(expectedCurrent(changed), expectedCurrent(preset.aircraft));
+  assert.ok(output.textContent.includes(`estimated current ${expectedCurrent(changed)} A`));
+  field.value = '';
+  field.emit('input');
+  assert.match(output.textContent, /Comparison unavailable/);
+  f.button('Revert aircraft draft').click();
+  assert.equal(field.value, original);
+  assert.ok(output.textContent.includes(`estimated current ${expectedCurrent(preset.aircraft)} A`));
+  const picker = f.container
+    .querySelectorAll('select')
+    .find((select) => select.children.some((option) => option.value === 'holybro-x650-v2'));
+  picker.value = 'holybro-x650-v2';
+  picker.emit('change');
+  assert.ok(
+    output.textContent.includes(
+      `estimated current ${expectedCurrent(createPresetConfiguration(picker.value).aircraft)} A`,
+    ),
+  );
+  assert.deepEqual(worker.messages, initialMessages);
+  assert.deepEqual(f.session.getTelemetry(), initialTelemetry);
+  const paste = panel.querySelector('[data-action="paste-data"]');
+  const demo = panel.querySelector('[data-action="synthetic-demo"]');
+  f.session.dispose();
+  paste.value = '';
+  demo.click();
+  assert.equal(paste.value, '');
+  assert.equal(panel.parentNode, null);
+});
+
+test('the Ukrainian Advanced host mounts a localized bench panel with a visible keyboard file input', async (t) => {
+  const f = await fixture(t, { locale: 'uk', waitReady: false });
+  const panel = f.container.querySelector('.propulsion-evidence-panel');
+  assert.equal(panel.querySelector('summary').textContent, 'Порівняння стендових даних');
+  const input = panel.querySelector('[data-action="import-file"]');
+  assert.equal(input.style.display, 'block');
+  assert.equal(input.tabIndex, 0);
+  panel.querySelector('[data-action="synthetic-demo"]').click();
+  assert.match(panel.querySelector('[data-role="provenance"]').textContent, /Синтетичний/);
+});
 
 test('graphics loss and pagehide pause Advanced, clear held touch axes, and require explicit resume', async (t) => {
   const f = await fixture(t),
@@ -1000,4 +1354,148 @@ test('repeatable maneuver cues use simulation time and a kept reference survives
   assert.equal(f.session.getTelemetry().missionTick, 0);
   assert.equal(f.session.getComparison().visible, true);
   assert.match(f.container.textContent, /0.0 s · Raise throttle/);
+});
+
+test('Advanced reference radio pauses its own flight, navigates with switches and requires fresh resume', async (t) => {
+  const profile = defaultRadioProfile(),
+    pad = {
+      index: 0,
+      id: profile.device.id,
+      mapping: '',
+      connected: true,
+      axes: [0.004, 0.004, -1, 0.004, -1, 0, 0, 0],
+      buttons: Array.from({ length: 24 }, () => ({ value: 0 })),
+    };
+  let session,
+    now = 0,
+    closed = 0,
+    gameplayActions = 0;
+  const radio = createRadioRuntime({
+    getGamepads: () => [pad],
+    now: () => now,
+    onFreeze: () => session?.pause(undefined, { notify: false }),
+    onCombatAction: () => gameplayActions++,
+  });
+  radio.select(0);
+  radio.setProfile(profile);
+  assert.equal(radio.verify(), true);
+  const layout = createRadioControlLayout(profile);
+  for (const [index, name] of ['arm', 'fire', 'weapon', 'reload', 'payload', 'detonate'].entries())
+    layout.switches[name] = { button: index, threshold: 0.5, invert: false };
+  radio.setControlLayout(layout);
+  const f = await fixture(t, {
+    inputSource: 'radio',
+    getControls: () => radio.preview().controls,
+    requestRadioStart: () => radio.status().active || radio.requestArm(),
+    onPause: () => {
+      if (radio.status().active) radio.freeze('paused');
+    },
+    onClose: () => closed++,
+  });
+  session = f.session;
+  const menus = mountRadioMenuControls({
+    document: f.doc,
+    window: f.win,
+    runtime: radio,
+    onResume: () => session.start(),
+    onSettings: () => session.openSettings(),
+    onRetry: () => session.restart(),
+  });
+  const navigator = createFlightMenuNavigation({
+    document: f.doc,
+    window: f.doc.defaultView,
+    getContext: () => menus.context() ?? session.menuContext(),
+    onBack: () => session.back(),
+  });
+  t.after(() => {
+    navigator.dispose();
+    menus.dispose();
+  });
+  const poll = async () => {
+    now += 20;
+    const state = session.menuState(),
+      context = menus.context() ?? session.menuContext();
+    const observed = menus.sync({
+      context,
+      flightActive: state.active,
+      flightAvailable: state.available,
+      canResume:
+        state.available &&
+        state.resumeReady &&
+        !navigator.snapshot().editing &&
+        context?.root === session.element,
+      enabled: state.radio,
+      playback: false,
+    });
+    navigator.poll({ now, radio: observed });
+    await Promise.resolve();
+  };
+  const cycle = async (index) => {
+    await poll();
+    pad.buttons[index].value = 1;
+    await poll();
+    pad.buttons[index].value = 0;
+    await poll();
+  };
+  assert.equal(session.menuContext().root, session.element);
+  assert.equal(session.start(), false, 'Start cannot bypass the Flight switch');
+  await poll();
+  await cycle(1);
+  assert.equal(navigator.snapshot().device, 'radio');
+  await cycle(1);
+  assert.equal(session.menuState().active, false, 'Select cannot arm while Flight is OFF');
+  pad.buttons[0].value = 1;
+  await poll();
+  await waitFor(() => session.getTelemetry()?.missionTick === 1 && session.menuState().active);
+  await waitFor(() => session.menuState().available);
+  assert.equal(session.menuContext(), null);
+  await poll();
+  pad.buttons[0].value = 0;
+  await poll();
+  assert.equal(session.menuState().active, false);
+  assert.equal(session.menuContext().root, session.element);
+  const tick = session.getTelemetry().missionTick;
+  session.openSettings();
+  assert.equal(session.menuState().resumeReady, false);
+  await poll();
+  pad.buttons[0].value = 1;
+  await poll();
+  assert.equal(session.menuState().active, false, 'Flight ON is consumed while settings are open');
+  session.back();
+  await poll();
+  assert.equal(session.menuState().active, false, 'closing settings never reuses held Flight ON');
+  assert.equal(session.getTelemetry().missionTick, tick);
+  await cycle(0);
+  pad.buttons[0].value = 1;
+  await poll();
+  await waitFor(() => session.getTelemetry().missionTick > tick);
+  await waitFor(() => session.menuState().available);
+  await poll();
+  pad.buttons[0].value = 0;
+  await poll();
+  await cycle(1);
+  await cycle(2);
+  assert.equal(closed, 1, 'paused Weapon Back returns to tuning');
+  assert.equal(gameplayActions, 0, 'menu switches never emit combat actions');
+});
+
+test('foreground stalls in Advanced practice accept one interval and schedule the next without pausing', async (t) => {
+  let f;
+  class SlowWorker extends LocalWorker {
+    postMessage(message) {
+      if (message.type === 'step') f.advanceClock(500);
+      super.postMessage(message);
+    }
+  }
+  f = await fixture(t, { Worker: SlowWorker });
+  f.button('Start practice').click();
+  await waitFor(() => f.session.getTelemetry()?.missionTick === 1);
+  assert.equal(f.timers.size, 1, 'delayed accepted step schedules another interval');
+  const [id, tick] = f.timers.entries().next().value;
+  f.timers.delete(id);
+  await tick();
+  assert.equal(f.session.getTelemetry().missionTick, 2);
+  assert.equal(f.timers.size, 1);
+  f.button('Pause').click();
+  assert.equal(f.timers.size, 0, 'explicit pause still stops scheduling');
 });

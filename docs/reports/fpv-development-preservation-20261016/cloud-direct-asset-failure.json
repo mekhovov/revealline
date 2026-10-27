@@ -1,0 +1,9 @@
+{
+  "format": "FPVCloudReadbackFailure.v1",
+  "runId": 38851700947,
+  "head": "69bef1a2ca1cb0e26ea7abd689be853c4fb58df7",
+  "failure": "All three direct asset metadata GET requests refused HTTP403 Resource not accessible by integration before any payload was read.",
+  "originalLogSHA256": "fdc9ac916d4a5db7bdeb033d52f352583ebf0faa2b018eaeb7a372d02c0c1ff1",
+  "normalNextChange": "Root authorized contents:write only on verifier job scoped to same repo, exact preservation branch and PR1552; token only readback step; GET-only helper; no repo default or release-state change.",
+  "originalFailureRetained": true
+}

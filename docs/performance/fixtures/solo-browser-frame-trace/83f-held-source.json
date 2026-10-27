@@ -1,0 +1,21 @@
+{
+  "format": "SoloHeldFrameTraceDeclaredSourceV1",
+  "revision": "83f401a61808fe6db29a97c072d36a31ec7029ab",
+  "tree": "b34e3779d36398aa059f18b7c4d9d4be7dfd938f",
+  "postHocExactGitReadback": true,
+  "scope": "Test-only exact prior held declaration and changed adapter. This declaration was not executed; no first-eight or native observation is inferred. Production has no historical fallback.",
+  "records": [
+    {
+      "path": "docs/performance/solo-browser-frame-trace-warm-plan.json",
+      "blob": "25497ba987e77f4e124ecb7b8a9b62e80e98e704",
+      "bytes": 13941,
+      "sha256": "2da883907291c01706377bcff6bd326cc75e987065a0a6e16f2229e1b21470b0"
+    },
+    {
+      "path": "scripts/solo-remote-cpu-profile.mjs",
+      "blob": "a388ba12afb31acd84934a3c3d51bf030693a3ee",
+      "bytes": 44178,
+      "sha256": "6f51c42bc06c4ac29dcc3fd01cc247d16754a694b4f29352855388ca57a9e056"
+    }
+  ]
+}

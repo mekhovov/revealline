@@ -27,7 +27,7 @@
   }
   .story-dialog p {
     margin: 10px 0;
-    font-size: clamp(16px, 2vw, 18px);
+    font-size: calc(clamp(16px, 2vw, 18px) * var(--primary-text-scale, 1));
     line-height: 1.5;
   }
   .story-dialog > p:empty {
@@ -38,7 +38,7 @@
     padding-right: 44px;
   }
   .game-shell .story-dialog :is(button, label, input) {
-    font-size: 18px;
+    font-size: calc(18px * var(--primary-text-scale, 1));
   }
   .story-dialog button,
   .story-dialog input[type='range'] {
@@ -46,7 +46,7 @@
     min-height: 44px;
   }
   .game-shell[data-text-size='large'] .story-dialog :is(p, button, label, input) {
-    font-size: 22px;
+    font-size: calc(22px * var(--primary-text-scale, 1));
   }
 
   .story-dialog .victory-story video {

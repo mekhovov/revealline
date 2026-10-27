@@ -4,6 +4,22 @@ import { page } from './helpers/coop-host.mjs';
 import { deferred, waitFor } from './helpers/coop-presentation-fixture.mjs';
 import { COOP_PICTURE_BINDINGS } from '../couch/coop-picture-bindings.mjs';
 
+// Preserve strict object identity without formatting the cyclic fake DOM on failure.
+function assertSameReference(actual, expected, message = 'Expected the same owned object.') {
+  if (Object.is(actual, expected)) return;
+  const describe = (value) => {
+    if (value === null) return 'null';
+    if (value === undefined) return 'undefined';
+    return (
+      [value.tagName, value.id, value.sha256]
+        .filter((part) => typeof part === 'string' && part.length > 0)
+        .map((part) => part.slice(0, 80))
+        .join('#') || typeof value
+    );
+  };
+  assert.fail(`${message} Actual: ${describe(actual)}; expected: ${describe(expected)}.`);
+}
+
 const nearest = { block: 'nearest', inline: 'nearest', behavior: 'instant' };
 const friendly = 'Team picture unavailable. Retry picture or choose another arena.';
 const diagnostic = 'Team picture preparation failed.';
@@ -63,7 +79,7 @@ for (const [width, height] of [
 ])
   test(`failed picture → Retry → pending Cancel is visible at ${width}×${height} without starting a flight`, async (t) => {
     const f = await waiting(t, { width, height });
-    assert.equal(f.doc.activeElement, f.doc.body);
+    assertSameReference(f.doc.activeElement, f.doc.body);
     assert.equal(f.$('coop-picture-cancel').hidden, false);
     assert.deepEqual(f.scrolls, [], 'Passive preparation keeps Cancel secondary.');
     f.scrolls.length = 0;
@@ -169,7 +185,7 @@ for (const outcome of ['ready', 'error'])
     if (outcome === 'ready') f.gates[0].resolve();
     else f.gates[0].reject(missing());
     await settle(f, outcome);
-    assert.equal(f.doc.activeElement, selected);
+    assertSameReference(f.doc.activeElement, selected);
     assert.equal(f.focusAttempts.length, attempts);
     assert.deepEqual(f.scrolls, []);
     assert.equal(f.drawImages.length, 0);
@@ -216,7 +232,7 @@ for (const newer of [
     assert.equal(changed, true);
     assert.deepEqual(f.scrolls, []);
     assert.equal(f.drawImages.length, 0);
-    if (newer === 'focus-then-body') assert.equal(f.doc.activeElement, f.doc.body);
+    if (newer === 'focus-then-body') assertSameReference(f.doc.activeElement, f.doc.body);
     if (newer === 'settings') assert.equal(f.$('coop-options').open, true);
   });
 
@@ -299,13 +315,15 @@ test('newer focus during pending Cancel remains authoritative even after returni
       $('coop-picture-cancel').addEventListener('focusin', () => {
         if (moved) return;
         moved = true;
-        $('coop-level').focus();
+        assert.equal($('coop-settings-open').closest('[hidden],[inert]'), null);
+        $('coop-settings-open').focus();
+        assert.equal(doc.activeElement.id, 'coop-settings-open');
         doc.body.focus();
       });
     },
   });
   assert.equal(moved, false, 'Passive preparation does not hand focus to Cancel.');
-  assert.equal(f.doc.activeElement, f.doc.body);
+  assertSameReference(f.doc.activeElement, f.doc.body);
   f.gates[0].reject(missing());
   await settle(f, 'error');
   f.scrolls.length = 0;
@@ -313,12 +331,12 @@ test('newer focus during pending Cancel remains authoritative even after returni
   f.tap('Enter');
   await waitFor(() => f.artwork.calls.reads.length === 2);
   assert.equal(moved, true);
-  assert.equal(f.doc.activeElement, f.doc.body);
+  assertSameReference(f.doc.activeElement, f.doc.body);
   const attempts = f.focusAttempts.length;
   assert.deepEqual(f.scrolls, []);
   f.gates[1].resolve();
   await settle(f, 'ready');
-  assert.equal(f.doc.activeElement, f.doc.body);
+  assertSameReference(f.doc.activeElement, f.doc.body);
   assert.equal(f.focusAttempts.length, attempts, 'Completion cannot revive the retired handoff');
   assert.deepEqual(f.scrolls, []);
   assert.equal(f.drawImages.length, 0);

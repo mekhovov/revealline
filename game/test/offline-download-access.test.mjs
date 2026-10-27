@@ -228,6 +228,58 @@ test('an online network blackhole times out and can retry without reopening the 
   assert.equal(requests, 2);
 });
 
+for (const delayedStage of ['response', 'body']) {
+  test(`cancelled catalogue ${delayedStage} cannot parse or admit late ownership`, async () => {
+    const controller = new AbortController();
+    let release, entered;
+    const started = new Promise((resolve) => (entered = resolve));
+    const held = new Promise((resolve) => (release = resolve));
+    let requests = 0,
+      parses = 0,
+      inspections = 0;
+    const response = {
+      ok: true,
+      json() {
+        parses++;
+        if (delayedStage === 'body') {
+          entered();
+          return held;
+        }
+        return Promise.resolve(catalogue);
+      },
+    };
+    const access = createOfflineDownloadAccess({
+      availability,
+      fetch: () => {
+        requests++;
+        if (requests > 1) return Promise.resolve(Response.json(catalogue));
+        if (delayedStage === 'response') {
+          entered();
+          return held;
+        }
+        return Promise.resolve(response);
+      },
+      store: {
+        inspect: async () => {
+          inspections++;
+          return { ready: true };
+        },
+      },
+    });
+    const pending = access.ensure('solo:horizon-starter', { signal: controller.signal });
+    await started;
+    controller.abort();
+    await assert.rejects(pending, { name: 'AbortError' });
+    release(delayedStage === 'response' ? response : catalogue);
+    await new Promise(setImmediate);
+    assert.equal(parses, delayedStage === 'body' ? 1 : 0, 'only already-started reads may finish');
+    assert.equal(inspections, 0, 'cancelled catalogue cannot admit package verification');
+    await access.ensure('solo:horizon-starter');
+    assert.equal(requests, 2, 'late result is not cached for the next owner');
+    assert.equal(inspections, 1);
+  });
+}
+
 function destinationFixture() {
   const value = structuredClone(catalogue);
   const ids = [

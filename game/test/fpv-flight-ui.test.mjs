@@ -13,15 +13,62 @@ import {
 import { createFlightRenderer } from '../../optional-practice/civilian-fpv/renderer.mjs';
 import { FLIGHT_COURSES } from '../../optional-practice/civilian-fpv/catalogue.mjs';
 import { FLIGHT_DEMONSTRATIONS } from '../../optional-practice/civilian-fpv/demonstrations.mjs';
-import { replayFlight } from '../../optional-practice/civilian-fpv/model.mjs';
+import { MAX_FLIGHT_TICKS, replayFlight } from '../../optional-practice/civilian-fpv/model.mjs';
 import {
   createFlightProfileStore,
   defaultRadioProfile,
   radioDeviceIdentity,
 } from '../../optional-practice/civilian-fpv/radio-profile.mjs';
 import { mountFlightNotebook } from '../../optional-practice/civilian-fpv/notebook.mjs';
+import { mountFlightCameraControls } from '../../optional-practice/civilian-fpv/flight-fullscreen.mjs';
 import { Document, Events } from './helpers/couch-dom.mjs';
 import { waitFor } from './helpers/wait-for.mjs';
+
+function registerOfflineFeedbackTests() {
+  for (const locale of ['en', 'uk'])
+    for (const kind of ['overall', 'cancelled', 'unknown'])
+      test(`Academy offline feedback ${locale} ${kind} uses safe localized reasons`, async (t) => {
+        const previous = getLocale();
+        t.after(() => setLocale(previous));
+        const error =
+          kind === 'cancelled'
+            ? new DOMException('secret', 'AbortError')
+            : new Error(
+                kind === 'overall'
+                  ? 'Download exceeded five minutes. Retry on a faster connection.'
+                  : 'secret backend detail',
+              );
+        const f = await fixture(t, {
+          notebookFactory: null,
+          studioFactory: null,
+          url: `https://example.test/optional-practice/civilian-fpv/?lang=${locale}`,
+          serviceWorker: {
+            getRegistration: async () => undefined,
+            register: async () => {
+              throw error;
+            },
+          },
+        });
+        f.$('install-offline').click();
+        await waitFor(() => !f.$('install-offline').disabled);
+        const text = f.$('transfer-status').textContent;
+        assert.doesNotMatch(text, /secret/);
+        assert.match(
+          text,
+          kind === 'overall'
+            ? locale === 'uk'
+              ? /п’ять хвилин/
+              : /five minutes/
+            : kind === 'cancelled'
+              ? locale === 'uk'
+                ? /скасовано/
+                : /cancelled/
+              : locale === 'uk'
+                ? /Не вдалося/
+                : /failed/,
+        );
+      });
+}
 
 const html = parse(
   await readFile(
@@ -29,6 +76,7 @@ const html = parse(
     'utf8',
   ),
 );
+registerOfflineFeedbackTests();
 async function fixture(
   t,
   {
@@ -38,6 +86,7 @@ async function fixture(
     serviceWorker,
     home = false,
     blurOnTitleMount = false,
+    windowOptions = {},
     ...factories
   } = {},
 ) {
@@ -77,6 +126,8 @@ async function fixture(
     disposed = false,
     pads = [];
   Object.assign(win, {
+    CustomEvent,
+    Event,
     location: new URL(url),
     performance: { now: () => 0 },
     navigator: { getGamepads: () => pads, ...(serviceWorker ? { serviceWorker } : {}) },
@@ -94,6 +145,7 @@ async function fixture(
     },
     setTimeout: (fn) => fn(),
     URL: { createObjectURL: () => 'blob:flight-test', revokeObjectURL() {} },
+    ...windowOptions,
   });
   Object.defineProperty(win, 'localStorage', {
     get() {
@@ -197,6 +249,172 @@ function radioProfile(pad) {
   };
 }
 
+test('Academy prepares a saved aircraft and waits for a pending flight step before explicit resume', async (t) => {
+  const [tuning, presets, workers] = await Promise.all([
+    import('../../optional-practice/civilian-fpv/tuning-library.mjs'),
+    import('../../optional-practice/civilian-fpv/aircraft-presets.mjs'),
+    import('../../optional-practice/civilian-fpv/advanced-worker.mjs'),
+  ]);
+  const data = new Map(),
+    storage = {
+      getItem: (key) => data.get(key) ?? null,
+      setItem: (key, value) => data.set(key, value),
+    };
+  const library = tuning.createTuningLibraryStore({ storage });
+  await library.createPresetSetup({
+    presetId: 'meteor75-analog-2022',
+    setupId: 'whoop',
+    profileId: 'whoop-rates',
+    rates: 'defaults',
+  });
+  let worker;
+  class Worker extends Events {
+    constructor() {
+      super();
+      worker = this;
+      this.closed = false;
+      this.handler = workers.createAdvancedWorkerHandler((data) => {
+        if (!this.closed) this.emit('message', { data });
+      });
+    }
+    postMessage(value) {
+      if (this.holdStep && ['step', 'propose'].includes(value.type)) {
+        this.pendingStep = value;
+        return;
+      }
+      void this.handler.receive(value).finally(() => {
+        if (this.closed) this.handler.dispose();
+      });
+    }
+    terminate() {
+      this.closed = true;
+      this.handler.dispose();
+    }
+  }
+  let shownAircraft;
+  const h = await fixture(t, {
+    storage,
+    windowOptions: { Worker, setTimeout, clearTimeout },
+    rendererFactory: () => ({
+      available: true,
+      setCourse() {},
+      setPath() {},
+      setAircraft(value) {
+        shownAircraft = structuredClone(value);
+      },
+      draw() {},
+      dispose() {},
+    }),
+  });
+  const preset = presets.createPresetConfiguration('meteor75-analog-2022');
+  assert.equal(h.view.snapshot().reason, 'prepared');
+  assert.equal(h.view.observedSplits().ticks, 0);
+  assert.equal(h.view.snapshot().advancedTelemetry.frequency, 1000);
+  assert.deepEqual(shownAircraft.geometry, preset.aircraft.geometry);
+  assert.match(h.doc.body.textContent, /All courses remain available in practice/);
+  assert.equal(h.doc.querySelector('.aircraft-practice-controls').hidden, false);
+  h.$('arm').click();
+  for (let tick = 0; tick < 8; tick++) {
+    h.tick();
+    await new Promise((resolve) => setImmediate(resolve));
+  }
+  assert.ok(h.view.snapshot().ticks > 0);
+  assert.equal(h.view.snapshot().advancedTelemetry.usedAh, 0);
+  h.key('KeyW');
+  h.key('ArrowRight');
+  worker.holdStep = true;
+  h.tick();
+  await new Promise((resolve) => setImmediate(resolve));
+  assert.ok(worker.pendingStep);
+  const observationsBeforePending = h.view.observedSplits();
+  assert.equal(observationsBeforePending.ticks, h.view.snapshot().ticks);
+  h.view.pause();
+  assert.equal(h.view.arm(), false);
+  assert.equal(h.view.snapshot().status, 'paused');
+  assert.match(h.$('status').textContent, /Finishing the current flight step/);
+  worker.holdStep = false;
+  worker.postMessage(worker.pendingStep);
+  await new Promise((resolve) => setImmediate(resolve));
+  const paused = h.view.snapshot();
+  assert.equal(
+    h.view.observedSplits().ticks,
+    paused.ticks,
+    'only the accepted pending interval is observed',
+  );
+  assert.ok(paused.lastInput.throttle > 0);
+  assert.equal(paused.status, 'paused', 'worker completion cannot arm on its own');
+  assert.equal(h.view.arm(), true);
+  for (let tick = 0; tick < 3; tick++) {
+    h.tick();
+    await new Promise((resolve) => setImmediate(resolve));
+  }
+  assert.equal(h.view.snapshot().lastInput.throttle, paused.lastInput.throttle);
+  for (const axis of ['roll', 'pitch', 'yaw']) assert.equal(h.view.snapshot().lastInput[axis], 0);
+  const challengeKind = h.doc.querySelector('[data-aircraft-challenge="kind"]'),
+    challengeDuration = h.doc.querySelector('[data-aircraft-challenge="duration"]'),
+    challengeRestart = h.doc.querySelector('[data-aircraft-challenge="restart"]');
+  assert.equal(h.view.snapshot().challenge, undefined);
+  for (const kind of ['timed-practice', 'battery-endurance', 'none']) {
+    h.view.pause();
+    challengeKind.value = kind;
+    challengeKind.emit('change');
+    challengeDuration.value = '30';
+    challengeDuration.emit('input');
+    challengeRestart.click();
+    await new Promise((resolve) => setImmediate(resolve));
+    await h.view.settled();
+    await new Promise((resolve) => setImmediate(resolve));
+    assert.equal(challengeRestart.disabled, false);
+    assert.equal(h.view.snapshot().ticks, 0);
+    assert.equal(shownAircraft.battery.depletion, kind === 'battery-endurance');
+    assert.equal(h.view.snapshot().advancedTelemetry.usedAh, 0);
+    assert.equal(h.view.snapshot().challenge?.missionTick, kind === 'none' ? undefined : 0);
+    h.$('arm').click();
+    for (let tick = 0; tick < 8; tick++) {
+      h.tick();
+      await new Promise((resolve) => setImmediate(resolve));
+    }
+    assert.ok(h.view.snapshot().ticks > 0);
+    assert.equal(h.view.snapshot().advancedTelemetry.usedAh > 0, kind === 'battery-endurance');
+    const recorded = await h.view.exportRecording();
+    assert.equal(recorded.config.configuration.challenge?.kind, kind === 'none' ? undefined : kind);
+  }
+  assert.equal(library.effective().advanced.aircraft.battery.depletion, false);
+  for (const [action, fov] of [
+    ['Apply & restart', '106'],
+    ['Test draft · unscored', '108'],
+  ]) {
+    h.view.pause();
+    h.$('academy-shell-action-settings').click();
+    const settings = h.$('academy-shell-settings-dialog');
+    assert.equal(settings.open, true);
+    await openAcademyTuning(h);
+    const camera = academyTuningControl(h, 'Vertical FOV (degrees)');
+    camera.value = fov;
+    camera.emit('input');
+    await academyTuningClick(h, action);
+    await h.view.settled();
+    assert.equal(h.doc.querySelector('.fpv-tuning').open, false, action);
+    assert.equal(settings.open, false, `${action} must leave Settings before flight`);
+    assert.equal(h.view.snapshot().reason, 'prepared', action);
+    assert.equal(h.view.snapshot().ticks, 0, action);
+    for (let tick = 0; tick < 12; tick++) {
+      h.tick();
+      await new Promise((resolve) => setImmediate(resolve));
+    }
+    assert.notEqual(h.view.snapshot().status, 'active', `${action} must wait for explicit Arm`);
+    assert.equal(h.view.snapshot().ticks, 0, `${action} must not advance while ready`);
+    assert.equal(h.view.observedSplits().ticks, 0);
+    assert.deepEqual(h.view.observedSplits().rows, []);
+    h.$('arm').click();
+    for (let tick = 0; tick < 8; tick++) {
+      h.tick();
+      await new Promise((resolve) => setImmediate(resolve));
+    }
+    assert.ok(h.view.snapshot().ticks > 0, `${action} must allow arming from the flight button`);
+  }
+});
+
 test('SIM world selection freezes on first arm and applies queued preference only on reset', async (t) => {
   const h = await fixture(t);
   const select = h.$('sim-appearance-world');
@@ -267,6 +485,54 @@ test('unavailable recorded appearance remains visible after graphics preparation
   assert.equal(h.view.appearance().accepted.revision, 'missing-r2');
   assert.equal(h.view.exportAttempt().frames.length, 0);
   assert.deepEqual(h.deliveries, []);
+});
+
+test('Academy explicit keyboard resume keeps consumed throttle and releases held keys', async (t) => {
+  for (const action of ['button', 'shortcut'])
+    await t.test(action, async (t) => {
+      const h = await fixture(t);
+      h.$('arm').click();
+      h.key('KeyW');
+      h.key('ArrowRight');
+      h.tick(12);
+      const before = h.view.snapshot();
+      assert.ok(before.lastInput.throttle > 0);
+      if (action === 'button') h.$('pause').click();
+      else h.key('KeyP');
+      h.tick(3);
+      assert.equal(h.view.snapshot().ticks, before.ticks, 'pause consumes no input or time');
+      h.win.emit('keydown', { code: 'KeyW', target: h.$('viewport'), repeat: true });
+      if (h.$('academy-shell-pause-dialog').open)
+        h.$('academy-shell-pause-dialog').emit('cancel', { bubbles: false });
+      assert.equal(h.view.snapshot().status, 'paused', 'closing a menu never resumes');
+      if (action === 'shortcut') {
+        h.key('KeyP');
+        if (h.$('academy-shell-pause-dialog').open)
+          h.$('academy-shell-pause-dialog').emit('cancel', { bubbles: false });
+      }
+      h.$('academy-flight-resume').click();
+      h.tick(3);
+      assert.deepEqual(h.view.snapshot().lastInput, {
+        roll: 0,
+        pitch: 0,
+        yaw: 0,
+        throttle: before.lastInput.throttle,
+      });
+      h.view.pause();
+      h.win.emit('blur');
+      h.win.emit('focus');
+      h.$('arm').click();
+      h.tick(3);
+      assert.equal(
+        h.view.snapshot().lastInput.throttle,
+        0,
+        'focus loss invalidates resume throttle',
+      );
+      h.$('reset').click();
+      h.$('arm').click();
+      h.tick(3);
+      assert.equal(h.view.snapshot().lastInput.throttle, 0, 'new attempts start at zero');
+    });
 });
 
 test('native optional shell lists twelve drills, uses exclusive keyboard input, and neutralizes blur/dialog/reset', async (t) => {
@@ -446,6 +712,63 @@ test('radio switch edges while blurred or hidden cannot rearm; return requires a
   assert.deepEqual(f.view.snapshot(), hidden);
 });
 
+test('six switches in Academy open pause, change View, confirm Retry and guard nested resume', async (t) => {
+  const { createRadioControlLayout } = await import(
+    '../../optional-practice/civilian-fpv/radio-profile.mjs'
+  );
+  const f = await fixture(t),
+    pad = {
+      id: 'Six switch radio',
+      index: 0,
+      connected: true,
+      mapping: '',
+      axes: [0, 0, 0, -1],
+      buttons: Array.from({ length: 6 }, () => ({ value: 0 })),
+    };
+  f.setPads([pad]);
+  f.$('input-source').value = 'radio';
+  f.$('input-source').emit('change');
+  await f.view.settled();
+  const profile = radioProfile(pad),
+    layout = createRadioControlLayout(profile);
+  ['arm', 'fire', 'weapon', 'reload', 'payload', 'detonate'].forEach((key, button) => {
+    layout.switches[key] = { button, threshold: 0.5, invert: false };
+  });
+  f.view.radio.select(0);
+  f.view.radio.setProfile(profile);
+  f.view.radio.verify();
+  f.view.radio.setControlLayout(layout);
+  const sample = async (button, value) => {
+    pad.buttons[button].value = value;
+    f.tick(2);
+    await Promise.resolve();
+  };
+  f.tick();
+  await sample(0, 1);
+  f.tick();
+  assert.equal(f.view.snapshot().status, 'active');
+  await sample(0, 0);
+  assert.equal(f.view.snapshot().status, 'paused');
+  assert.equal(f.$('academy-shell-pause-dialog').open, true);
+  const camera = f.$('camera').value;
+  await sample(3, 1);
+  await sample(3, 0);
+  assert.notEqual(f.$('camera').value, camera, 'Reload changes View while paused');
+  await sample(4, 1);
+  await sample(4, 0);
+  const confirmation = f.doc.querySelector('.sim-radio-confirm');
+  assert.equal(confirmation.open, true);
+  await sample(0, 1);
+  assert.equal(f.view.snapshot().status, 'paused', 'Flight ON cannot escape confirmation');
+  confirmation.querySelectorAll('button')[0].click();
+  f.tick();
+  assert.equal(f.view.snapshot().status, 'paused', 'held ON cannot resume after cancellation');
+  await sample(0, 0);
+  await sample(0, 1);
+  f.tick();
+  assert.equal(f.view.snapshot().status, 'active');
+});
+
 test('immediate Retry preserves the completed proof while notebook verification yields', async (t) => {
   let release, book;
   const f = await fixture(t, {
@@ -510,6 +833,236 @@ test('Controls camera chooser and toolbar stay synchronized for the narrow layou
   f.$('camera').value = 'chase';
   f.$('camera').emit('change');
   assert.equal(f.$('camera-help').value, 'chase');
+});
+
+function analogControlsFixture(t, storage, locale = 'en') {
+  const doc = new Document(),
+    win = new Events();
+  Object.assign(win, { Event, localStorage: storage });
+  const pause = doc.createElement('button'),
+    content = doc.createElement('div'),
+    select = doc.createElement('select'),
+    viewport = doc.createElement('div');
+  select.value = 'fpv';
+  doc.body.append(pause, content, select, viewport);
+  const controls = mountFlightCameraControls({
+    document: doc,
+    window: win,
+    select,
+    viewport,
+    locale: () => locale,
+    shell: { elements: { buttons: { pause }, content: { pause: content } }, topDialog: () => null },
+  });
+  t.after(() => controls.dispose());
+  return {
+    doc,
+    controls,
+    analog: doc.querySelector('[data-analog-video]'),
+    strength: doc.querySelector('[data-analog-strength]'),
+  };
+}
+
+test('Analog camera controls default off and preserve older immersion preferences', (t) => {
+  const saved = JSON.stringify({ chaseDistance: 2.5, showFpvProps: true });
+  const h = analogControlsFixture(t, {
+    getItem: () => saved,
+    setItem() {
+      assert.fail('Reading defaults must not rewrite preferences');
+    },
+  });
+  assert.equal(h.analog.checked, false);
+  assert.equal(h.strength.value, '35');
+  assert.equal(h.strength.disabled, true);
+  assert.deepEqual(h.controls.presentationOptions(), {
+    chaseDistance: 2.5,
+    showFpvProps: true,
+    showFpvKnife: true,
+    analogVideo: false,
+    analogStrength: 35,
+    guidanceVisible: true,
+    guidanceAccent: 'amber',
+    routeGuideVisible: false,
+    flightInstruments: true,
+    extraTelemetry: false,
+  });
+});
+
+test('Analog camera toggle and strength persist independently and release their listeners', (t) => {
+  const key = 'revealline.fpv.camera-immersion.v1';
+  const data = new Map([['revealline.flight-profiles.v1', 'untouched-radio-calibration']]);
+  let writes = 0;
+  const storage = {
+    getItem: (name) => data.get(name) ?? null,
+    setItem(name, value) {
+      writes++;
+      data.set(name, value);
+    },
+  };
+  const h = analogControlsFixture(t, storage);
+  h.analog.checked = true;
+  h.analog.emit('change');
+  assert.equal(h.strength.disabled, false);
+  h.strength.value = '70';
+  h.strength.emit('input');
+  assert.equal(h.controls.presentationOptions().analogStrength, 70);
+  assert.deepEqual(JSON.parse(data.get(key)), h.controls.presentationOptions());
+  assert.equal(data.get('revealline.flight-profiles.v1'), 'untouched-radio-calibration');
+  const restored = analogControlsFixture(t, storage, 'uk');
+  assert.equal(restored.analog.checked, true);
+  assert.equal(restored.strength.value, '70');
+  assert.match(restored.analog.parentNode.textContent, /Аналогове відео FPV/);
+  assert.equal(writes, 2, 'Restoring preferences does not write them again');
+  h.controls.dispose();
+  h.analog.checked = false;
+  h.analog.emit('change');
+  h.strength.emit('input');
+  assert.equal(writes, 2);
+});
+
+test('Analog camera preferences clamp stored intensity and remain usable when storage fails', (t) => {
+  for (const [input, expected] of [
+    [500, 100],
+    [-50, 0],
+    ['100', 35],
+  ]) {
+    const h = analogControlsFixture(t, {
+      getItem: () => JSON.stringify({ analogVideo: true, analogStrength: input }),
+    });
+    assert.equal(h.controls.presentationOptions().analogStrength, expected);
+  }
+  const h = analogControlsFixture(t, {
+    getItem() {
+      throw new Error('Storage unavailable');
+    },
+    setItem() {
+      throw new Error('Storage full');
+    },
+  });
+  assert.equal(h.analog.checked, false);
+  h.analog.checked = true;
+  h.analog.emit('change');
+  h.strength.value = '20';
+  h.strength.emit('input');
+  assert.equal(h.controls.presentationOptions().analogVideo, true);
+  assert.equal(h.controls.presentationOptions().analogStrength, 20);
+});
+
+test('Camera knife, guidance, route and instrument preferences persist independently without changing radio calibration', (t) => {
+  const key = 'revealline.fpv.camera-immersion.v1',
+    data = new Map([['revealline.flight-profiles.v1', 'unchanged-calibration']]),
+    writes = [],
+    storage = {
+      getItem: (name) => data.get(name) ?? null,
+      setItem(name, value) {
+        writes.push(name);
+        data.set(name, value);
+      },
+    },
+    h = analogControlsFixture(t, storage),
+    control = (view, name) => view.doc.querySelector(`[data-camera-preference="${name}"]`),
+    change = (name, value) => {
+      const field = control(h, name);
+      if (field.type === 'checkbox') field.checked = value;
+      else field.value = value;
+      field.emit('change');
+    },
+    props = h.doc.querySelector('[data-fpv-props]');
+  assert.equal(control(h, 'showFpvKnife').disabled, true);
+  props.checked = true;
+  props.emit('change');
+  assert.equal(control(h, 'showFpvKnife').disabled, false);
+  for (const [name, value] of Object.entries({
+    showFpvKnife: false,
+    guidanceVisible: false,
+    guidanceAccent: 'white',
+    routeGuideVisible: true,
+    flightInstruments: false,
+    extraTelemetry: true,
+  }))
+    change(name, value);
+  const selected = h.controls.presentationOptions();
+  assert.equal(selected.showFpvProps, true);
+  assert.equal(selected.guidanceVisible, false);
+  assert.equal(
+    selected.routeGuideVisible,
+    true,
+    'route guidance is independent of objective markers',
+  );
+  assert.equal(selected.flightInstruments, false);
+  assert.equal(selected.extraTelemetry, true, 'extra telemetry has its own saved choice');
+  assert.equal(selected.showFpvKnife, false);
+  assert.equal(selected.guidanceAccent, 'white');
+  assert.deepEqual(JSON.parse(data.get(key)), selected);
+  assert.equal(data.get('revealline.flight-profiles.v1'), 'unchanged-calibration');
+  assert.ok(writes.every((name) => name === key));
+  const restored = analogControlsFixture(t, storage, 'uk'),
+    writeCount = writes.length;
+  assert.deepEqual(restored.controls.presentationOptions(), selected);
+  assert.equal(control(restored, 'showFpvKnife').checked, false);
+  assert.equal(control(restored, 'showFpvKnife').disabled, false);
+  assert.equal(control(restored, 'guidanceVisible').checked, false);
+  assert.equal(control(restored, 'routeGuideVisible').checked, true);
+  assert.equal(control(restored, 'flightInstruments').checked, false);
+  assert.equal(control(restored, 'extraTelemetry').checked, true);
+  assert.equal(control(restored, 'guidanceAccent').value, 'white');
+  assert.match(control(restored, 'showFpvKnife').parentNode.textContent, /декоративний/);
+  assert.match(
+    control(restored, 'routeGuideVisible').parentNode.textContent,
+    /Перевірений маршрут/,
+  );
+  restored.doc.querySelector('[data-camera-view="chase"]').click();
+  assert.deepEqual(restored.controls.presentationOptions(), selected);
+  assert.equal(
+    writes.length,
+    writeCount,
+    'restoring and changing view do not rewrite display choices',
+  );
+  const copied = restored.controls.presentationOptions();
+  copied.guidanceVisible = true;
+  assert.equal(restored.controls.presentationOptions().guidanceVisible, false);
+  h.controls.dispose();
+  // Detached controls still exist in caller references; disposal must release
+  // every new preference listener as well as the original analog controls.
+  const detachedFields = h.controls.element.querySelectorAll('[data-camera-preference]');
+  for (const field of detachedFields) {
+    if (field.type === 'checkbox') field.checked = !field.checked;
+    else field.value = 'lime';
+    field.emit('change');
+  }
+  assert.equal(writes.length, writeCount);
+});
+
+test('Camera presentation preferences reject malformed saved choices and accept every supported accent', (t) => {
+  const saved = {
+    showFpvKnife: 'false',
+    guidanceVisible: 0,
+    routeGuideVisible: 'true',
+    flightInstruments: null,
+    extraTelemetry: 1,
+    guidanceAccent: 'pink',
+  };
+  const h = analogControlsFixture(t, {
+    getItem: () => JSON.stringify(saved),
+    setItem() {
+      assert.fail('Reading malformed choices must not overwrite saved data');
+    },
+  });
+  assert.equal(h.controls.presentationOptions().showFpvKnife, true);
+  assert.equal(h.controls.presentationOptions().guidanceVisible, true);
+  assert.equal(h.controls.presentationOptions().routeGuideVisible, false);
+  assert.equal(h.controls.presentationOptions().flightInstruments, true);
+  assert.equal(h.controls.presentationOptions().extraTelemetry, false);
+  assert.equal(h.controls.presentationOptions().guidanceAccent, 'amber');
+  for (const accent of ['amber', 'cyan', 'white', 'lime']) {
+    const restored = analogControlsFixture(t, {
+      getItem: () => JSON.stringify({ guidanceAccent: accent }),
+    });
+    assert.equal(restored.controls.presentationOptions().guidanceAccent, accent);
+    assert.equal(
+      restored.doc.querySelector('[data-camera-preference="guidanceAccent"]').value,
+      accent,
+    );
+  }
 });
 
 test('Studio preview runs the actual course as authoring and never reaches the notebook earning callback', async (t) => {
@@ -965,7 +1518,7 @@ test('disposing releases generated course callbacks; retained old buttons are in
   assert.equal(hostClicks, 1);
 });
 
-test('stale queued animation timestamps cannot advance after a long execution gap; explicit resume keeps input ownership', async (t) => {
+test('foreground stalls keep Academy flight active with fresh controls and bounded elapsed time', async (t) => {
   for (const mode of ['self-level', 'acro'])
     for (const owner of ['keyboard', 'radio']) {
       const f = await fixture(t),
@@ -979,7 +1532,6 @@ test('stale queued animation timestamps cannot advance after a long execution ga
         };
       let clock = 0;
       f.win.performance = { now: () => clock };
-      // This lifecycle fixture exercises the original KeyE yaw mapping.
       f.$('keyboard-preset').value = 'classic';
       f.$('keyboard-preset').emit('change');
       f.$('mode').value = mode;
@@ -1000,30 +1552,27 @@ test('stale queued animation timestamps cannot advance after a long execution ga
       clock = 20;
       f.tick();
       assert.equal(f.view.snapshot().lastInput.yaw, 500);
-      const before = f.view.snapshot().ticks,
-        frames = f.view.exportAttempt().frames.length;
-      // The rAF timestamp moves only 20 ms, while callback execution was delayed 300 ms.
-      clock = 320;
-      f.tick();
-      assert.equal(f.view.snapshot().status, 'paused', `${mode}/${owner}`);
-      assert.equal(f.view.snapshot().ticks, before);
-      assert.equal(f.view.exportAttempt().frames.length, frames);
-      clock = 340;
-      f.tick(4);
-      assert.equal(f.view.snapshot().ticks, before, 'no queued catch-up');
-      if (owner === 'radio') {
-        pad.axes[2] = 0;
-        assert.equal(f.view.arm(), false, 'radio still requires matching pickup');
-        pad.axes[2] = 0.5;
-      } else f.key('KeyE', 'keyup');
-      assert.equal(f.view.arm(), true);
-      clock = 2000;
-      f.tick();
-      clock = 2020;
+      // A queued rAF advances 20 ms, but callback execution stalls 500 ms.
+      // Repeat at a sustained slow cadence: it must still accept fresh intervals.
+      for (let i = 0; i < 3; i++) {
+        const before = f.view.snapshot().ticks;
+        if (owner === 'radio') pad.axes[2] = i % 2 ? 0.5 : -0.5;
+        else if (i === 0) f.key('KeyE', 'keyup');
+        clock += 500;
+        f.tick();
+        assert.equal(f.view.snapshot().status, 'active', `${mode}/${owner}`);
+        assert.equal(f.view.snapshot().ticks, before + 1, 'no wall-clock catch-up');
+        assert.equal(f.view.snapshot().lastInput.yaw, owner === 'radio' ? (i % 2 ? 500 : -500) : 0);
+      }
+      const before = f.view.snapshot().ticks;
+      // A long rAF timestamp gap is bounded too, even if the execution clock is short.
+      f.jump(1000);
+      clock += 20;
       f.tick();
       assert.equal(f.view.snapshot().status, 'active');
-      assert(f.view.snapshot().ticks > before);
-      assert.equal(f.view.snapshot().lastInput.yaw, owner === 'radio' ? 500 : 0);
+      assert.equal(f.view.snapshot().ticks, before + 1);
+      f.win.emit('blur');
+      assert.equal(f.view.snapshot().status, 'paused', 'real focus loss still pauses');
       assert.equal(f.deliveries.length, 0);
     }
 });
@@ -1239,7 +1788,8 @@ test('unavailable offline capability stays explanatory and a failed prepare neve
   });
   f.$('install-offline').click();
   await new Promise((resolve) => setImmediate(resolve));
-  assert.equal(f.$('transfer-status').textContent, 'Offline package unavailable');
+  assert.match(f.$('transfer-status').textContent, /Offline preparation failed/);
+  assert.doesNotMatch(f.$('transfer-status').textContent, /Offline package unavailable/);
   assert.equal(f.$('install-offline').disabled, false);
   assert.equal(f.$('remove-offline').disabled, false);
 });
@@ -1340,6 +1890,78 @@ test('TX15 default does not match an unrelated joystick', async (t) => {
   assert.equal(f.view.radio.status().profile, null);
   assert.equal(f.view.snapshot().status, 'disarmed');
 });
+
+for (const save of ['guided', 'manual']) {
+  test(`Academy radio setup saves through ${save} controls and activates radio flight`, async (t) => {
+    const data = new Map();
+    const f = await fixture(t, {
+      storage: {
+        getItem: (key) => data.get(key) ?? null,
+        setItem: (key, value) => data.set(key, value),
+      },
+    });
+    const profile = defaultRadioProfile();
+    const pad = {
+      id: profile.device.id,
+      index: 0,
+      connected: true,
+      mapping: '',
+      axes: [0.004, 0.004, -1, 0.004, -1, 0, 0, 0],
+      buttons: Array.from({ length: 24 }, () => ({ value: 0 })),
+    };
+    f.setPads([pad]);
+    f.win.Event = Event;
+    const create = f.doc.createElement.bind(f.doc);
+    f.doc.createElement = (...args) => {
+      const node = create(...args);
+      Object.defineProperty(node, 'firstChild', {
+        get: () =>
+          node._text
+            ? {
+                get textContent() {
+                  return node._text;
+                },
+                set textContent(value) {
+                  node._text = value;
+                },
+              }
+            : (node.children[0] ?? null),
+      });
+      return node;
+    };
+    f.$('setup').click();
+    const container = f.$('radio-setup');
+    const click = (text) =>
+      container
+        .querySelectorAll('button')
+        .find((node) => node.textContent === text)
+        .click();
+    if (save === 'manual') {
+      click('I checked the animated sticks and their direction');
+      click('Save verified profile');
+    } else {
+      const checked = container.querySelector('.radio-confirm input');
+      checked.checked = true;
+      checked.emit('change');
+      click('Save & return');
+    }
+    await f.view.settled();
+    assert.equal(f.$('setup-dialog').open, false);
+    assert.equal(f.$('input-source').value, 'radio');
+    assert.equal(f.view.radio.status().verified, true);
+    assert.equal(f.view.radio.status().editing, false);
+    assert.notEqual(f.view.snapshot().status, 'active');
+    f.tick(2);
+    pad.axes[4] = 1;
+    f.tick(2);
+    assert.equal(f.view.snapshot().status, 'active');
+    pad.axes[2] = -0.5;
+    pad.axes[3] = 0.5;
+    f.tick(3);
+    assert.ok(f.view.snapshot().lastInput.throttle > 0);
+    assert.ok(f.view.snapshot().lastInput.yaw > 0);
+  });
+}
 
 test('camera focus preserves global pause for keyboard, touch and radio owners without resuming held input', async (t) => {
   for (const owner of ['keyboard', 'touch', 'radio']) {
@@ -1442,6 +2064,55 @@ test('Academy title focus loss before flight initialization keeps the menu usabl
   f.$('academy-shell-action-primary').click();
   f.$('academy-shell-action-start').click();
   assert.equal(f.view.snapshot().status, 'active');
+});
+
+test('Academy Home context stays localized with its current flight while browsing and returning', async (t) => {
+  const h = await fixture(t, { home: true });
+  const context = h.$('academy-shell-navigation-context');
+  const home = h.$('academy-shell-home-dialog');
+  assert.equal(context.textContent, 'FPV SIM · Academy');
+  assert.equal(context.hidden, false);
+  assert.ok(home.querySelector('nav').getAttribute('aria-describedby').includes(context.id));
+  const prepared = h.view.snapshot();
+  const mission = home.querySelector('.mode-play-mission').textContent;
+  const browse = () => {
+    h.$('academy-shell-action-missions').focus();
+    h.$('academy-shell-action-missions').click();
+    assert.equal(h.$('journey-chooser').open, true);
+    assert.ok(
+      h.$('journey-chooser-status').textContent.includes(`${context.textContent} · `),
+      'The chooser keeps the exact localized host context while browsing.',
+    );
+    h.doc.querySelectorAll('.journey-card')[1].focus();
+    h.tick(2);
+    h.$('journey-back').click();
+    assert.equal(home.open, true);
+    assert.ok(
+      h.doc.activeElement === h.$('academy-shell-action-missions'),
+      `Back must return focus to the mission opener, received ${h.doc.activeElement?.id}`,
+    );
+  };
+  browse();
+  assert.deepEqual(
+    h.view.snapshot(),
+    prepared,
+    'focus-only browsing cannot start or replace a flight',
+  );
+  assert.equal(home.querySelector('.mode-play-mission').textContent, mission);
+  h.$('academy-shell-action-primary').click();
+  h.tick(3);
+  h.$('academy-shell-action-menu').click();
+  const paused = h.view.snapshot();
+  assert.equal(paused.status, 'paused');
+  assert.ok(paused.ticks > 0);
+  h.$('language').value = 'uk';
+  h.$('language').emit('change');
+  assert.equal(context.textContent, 'FPV SIM · Академія');
+  const translatedMission = home.querySelector('.mode-play-mission').textContent;
+  browse();
+  assert.deepEqual(h.view.snapshot(), paused);
+  assert.equal(home.querySelector('.mode-play-mission').textContent, translatedMission);
+  assert.equal(context.textContent, 'FPV SIM · Академія');
 });
 
 test('Academy shell keeps menu input out of native flight and requires explicit Start', async (t) => {
@@ -1852,6 +2523,179 @@ async function openAcademyTuning(h) {
   assert.equal(h.doc.querySelector('.fpv-tuning').open, true);
 }
 
+for (const configuration of ['Legacy', 'Actual'])
+  test(`Academy Apply & restart retains ${configuration} settings and waits for explicit Arm`, async (t) => {
+    const data = new Map();
+    let holdPreparation = false,
+      releasePreparation;
+    const h = await fixture(t, {
+      storage: {
+        getItem: (key) => data.get(key) ?? null,
+        setItem: (key, value) => data.set(key, value),
+      },
+      rendererFactory: () => ({
+        available: true,
+        setCourse() {},
+        setPath() {},
+        draw() {},
+        dispose() {},
+        async prepare() {
+          if (holdPreparation)
+            await new Promise((resolve) => {
+              releasePreparation = resolve;
+            });
+          return true;
+        },
+      }),
+    });
+    h.$('arm').click();
+    h.tick(6);
+    assert.ok(h.view.snapshot().ticks > 0);
+    h.view.pause();
+    await openAcademyTuning(h);
+    if (configuration === 'Actual') {
+      const algorithm = academyTuningControl(h, 'Rate algorithm', 'select');
+      algorithm.value = 'actual';
+      algorithm.emit('change');
+    }
+    const camera = academyTuningControl(h, 'Vertical FOV (degrees)');
+    camera.value = '103';
+    camera.emit('input');
+    holdPreparation = true;
+    await academyTuningClick(h, 'Apply & restart');
+    await waitFor(() => Boolean(releasePreparation), {
+      message: 'Academy replacement preparation',
+    });
+    assert.equal(h.$('arm').disabled, true);
+    assert.notEqual(h.view.snapshot().status, 'active');
+    holdPreparation = false;
+    releasePreparation();
+    await h.view.settled();
+    h.tick(12);
+    assert.notEqual(h.view.snapshot().status, 'active');
+    assert.equal(h.view.snapshot().ticks, 0);
+    assert.equal(h.$('camera-fov').value, '103');
+    const saved = JSON.parse(data.get('revealline.fpv.tuning.v1'));
+    const setup = saved.setups.find((item) => item.id === saved.selectedSetupId);
+    const profile = saved.profiles.find(
+      (item) => item.id === (setup.profileId ?? saved.defaultProfileId),
+    );
+    assert.deepEqual(h.view.exportAttempt().response, profile.response);
+    assert.equal(
+      profile.response.format,
+      configuration === 'Legacy' ? 'FlightResponseProfile.v1' : 'FlightResponseProfile.v2',
+    );
+    h.$('arm').click();
+    h.tick(8);
+    assert.equal(h.view.snapshot().status, 'active');
+    assert.ok(h.view.snapshot().ticks > 0);
+  });
+
+test('Academy mode, reset and input changes preserve the tested draft until a normal course launch', async (t) => {
+  const [tuning, workers] = await Promise.all([
+    import('../../optional-practice/civilian-fpv/tuning-library.mjs'),
+    import('../../optional-practice/civilian-fpv/advanced-worker.mjs'),
+  ]);
+  const data = new Map(),
+    storage = {
+      getItem: (key) => data.get(key) ?? null,
+      setItem: (key, value) => data.set(key, value),
+    };
+  const store = tuning.createTuningLibraryStore({ storage });
+  await store.createPresetSetup({
+    presetId: 'helion-pro-o4',
+    setupId: 'saved-helion',
+    profileId: 'saved-rates',
+    rates: 'defaults',
+  });
+  const saved = store.export(),
+    instances = [];
+  const comfortKey = 'revealline.fpv.flight-comfort.v1.academy.camera',
+    savedComfort = JSON.stringify({ fov: 99, tilt: 17 });
+  data.set(comfortKey, savedComfort);
+  class Worker extends Events {
+    constructor() {
+      super();
+      this.closed = false;
+      this.messages = [];
+      instances.push(this);
+      this.handler = workers.createAdvancedWorkerHandler((data) => {
+        if (!this.closed) this.emit('message', { data });
+      });
+    }
+    postMessage(value) {
+      this.messages.push(structuredClone(value));
+      void this.handler.receive(value).finally(() => {
+        if (this.closed) this.handler.dispose();
+      });
+    }
+    terminate() {
+      this.closed = true;
+      this.handler.dispose();
+    }
+  }
+  const h = await fixture(t, { storage, windowOptions: { Worker, setTimeout, clearTimeout } });
+  await openAcademyTuning(h);
+  const aircraft = academyTuningControl(h, 'Aircraft preset', 'select');
+  aircraft.value = 'meteor75-analog-2022';
+  aircraft.emit('change');
+  await academyTuningClick(h, 'Use in draft');
+  const fov = academyTuningControl(h, 'Vertical FOV (degrees)');
+  fov.value = '103';
+  fov.emit('input');
+  await academyTuningClick(h, 'Test draft · unscored');
+  await h.view.settled();
+  const init = () => instances.at(-1).messages.find((message) => message.type === 'init').options;
+  const draft = init();
+  assert.equal(draft.aircraft.id, 'meteor75-analog-2022');
+  h.$('camera-fov').value = '106';
+  h.$('camera-fov').emit('input');
+  h.$('camera-fov').emit('change');
+  await new Promise((resolve) => setImmediate(resolve));
+  assert.equal(
+    data.get('revealline.fpv.tuning.v1'),
+    saved,
+    'Trial camera must not edit saved Helion',
+  );
+  assert.equal(data.get(comfortKey), savedComfort);
+  for (const action of ['mode', 'reset', 'input', 'retry', 'keyboard-reset']) {
+    if (action === 'mode') {
+      h.$('mode').value = 'acro';
+      h.$('mode').emit('change');
+    } else if (action === 'input') {
+      h.$('input-source').value = 'touch';
+      h.$('input-source').emit('change');
+    } else if (action === 'keyboard-reset') {
+      h.$('viewport').focus();
+      h.key('KeyR');
+    } else h.$(action).click();
+    await h.view.settled();
+    assert.deepEqual(init().aircraft, draft.aircraft, `${action} must retain the tested aircraft`);
+    assert.deepEqual(init().controller, draft.controller);
+    assert.deepEqual(init().response, draft.response);
+    assert.equal(init().assist.mode, 'acro');
+    assert.equal(h.$('camera-fov').value, '103');
+    assert.equal(h.doc.querySelector('.tuning-return').hidden, false);
+    assert.equal(data.get('revealline.fpv.tuning.v1'), saved);
+    h.view.pause();
+  }
+  h.$('next').click();
+  await h.view.settled();
+  assert.equal(init().aircraft.id, 'helion-pro-o4');
+  assert.equal(h.doc.querySelector('.tuning-return').hidden, true);
+  h.$('camera-fov').value = '109';
+  h.$('camera-fov').emit('input');
+  h.$('camera-fov').emit('change');
+  await new Promise((resolve) => setImmediate(resolve));
+  assert.equal(JSON.parse(data.get(comfortKey)).fov, 109);
+  assert.equal(
+    JSON.parse(data.get('revealline.fpv.tuning.v1')).setups.find(
+      (setup) => setup.id === 'saved-helion',
+    ).camera.verticalFov,
+    109,
+  );
+});
+
 for (const source of ['keyboard', 'touch', 'controller', 'radio'])
   test(`Academy tuning diagnostics follow ${source} ownership with a different calibrated radio connected`, async (t) => {
     const h = await fixture(t);
@@ -1891,6 +2735,7 @@ for (const source of ['keyboard', 'touch', 'controller', 'radio'])
     assert.ok(committed.ticks > 0);
     radioPad.axes[0] = -0.9;
     await openAcademyTuning(h);
+    if (source === 'controller') controllerPad.axes[2] = 0.78;
     h.tick(40);
     const text = h.doc.querySelector('[aria-label="Input diagnostics"]').textContent;
     assert.match(
@@ -1901,7 +2746,7 @@ for (const source of ['keyboard', 'touch', 'controller', 'radio'])
     );
     assert.match(
       text,
-      source === 'radio'
+      source === 'radio' || source === 'controller'
         ? /Live input preview; flight is paused/
         : /Last committed flight input; flight is paused/,
     );
@@ -1910,7 +2755,17 @@ for (const source of ['keyboard', 'touch', 'controller', 'radio'])
     if (source === 'keyboard') assert.match(text, /Raw input: \{"keys":\["ArrowRight"\]\}/);
     if (source === 'touch')
       assert.match(text, /Calibrated: \{"roll":0,"pitch":0,"yaw":0,"throttle":0.6\}/);
-    if (source === 'controller') assert.match(text, /Raw input: \{"axes":\[0,0,0.56,0\]/);
+    if (source === 'controller') {
+      assert.match(text, /Raw input: \{"axes":\[0,0,0.78,0\]/);
+      assert.match(text, /Mapping: standard-mode-2/);
+      assert.match(text, /flight throttle unavailable/);
+      assert.match(text, /"throttle":null/);
+      assert.equal(
+        h.view.snapshot().ticks,
+        committed.ticks,
+        'Preview must not advance the paused flight',
+      );
+    }
     if (source !== 'radio') assert.doesNotMatch(text, /"roll":-0.9/);
     else assert.match(text, /"roll":-0.9/);
     assert.match(text, /Browser sample age \(ms\): unavailable/);
@@ -2129,3 +2984,853 @@ for (const kind of ['legacy camera', 'saved drone camera', 'unreadable camera', 
     assert.deepEqual(JSON.parse(data.get('revealline.flight-profiles.v1')).response, response);
   });
 }
+
+const neutral = { roll: 0, pitch: 0, yaw: 0, throttle: 0 };
+
+test('explicit keyboard resume restores only the accepted throttle for the same flight', () => {
+  const document = new Document(),
+    window = new Events(),
+    session = {};
+  const input = createFlightInput({ window, document });
+  try {
+    input.enable(true);
+    input.seedThrottle(0.53);
+    window.emit('keydown', { code: 'KeyW', target: document.body });
+    window.emit('keydown', { code: 'ArrowRight', target: document.body });
+    assert.ok(
+      input.sample(0.02).throttle > 0.53,
+      'a proposal can be newer than the accepted input',
+    );
+    input.pause({ session, retainKeyboardThrottle: true });
+    assert.deepEqual(input.sample(0.02), neutral, 'paused input remains neutral');
+    input.pause({ session }); // Nested menu opening must not discard eligibility.
+    input.resume(session, 0.53);
+    window.emit('keydown', { code: 'KeyW', target: document.body, repeat: true });
+    assert.deepEqual(input.sample(0.02), { ...neutral, throttle: 0.53 });
+    assert.deepEqual(
+      input.sample(0.02),
+      { ...neutral, throttle: 0.53 },
+      'released keys cannot ramp',
+    );
+  } finally {
+    input.dispose();
+  }
+});
+
+test('keyboard pause shortcut can retain explicit host eligibility after releasing its keys', () => {
+  const document = new Document(),
+    window = new Events(),
+    session = {};
+  let reason,
+    active = true;
+  const input = createFlightInput({
+    window,
+    document,
+    onPause(value) {
+      reason = value;
+      input.pause({ session, retainKeyboardThrottle: active && value === 'paused' });
+      active = false;
+    },
+  });
+  try {
+    input.enable(true);
+    input.seedThrottle(0.53);
+    window.emit('keydown', { code: 'KeyP', target: document.body });
+    assert.equal(reason, 'paused');
+    assert.deepEqual(input.sample(0.02), neutral);
+    window.emit('keydown', { code: 'KeyP', target: document.body });
+    assert.deepEqual(input.sample(0.02), neutral);
+    input.resume(session, 0.53);
+    assert.equal(input.sample(0.02).throttle, 0.53);
+  } finally {
+    input.dispose();
+  }
+});
+
+test('lost ownership, reset and a different flight invalidate keyboard resume eligibility', () => {
+  for (const invalidate of [
+    ({ window }) => window.emit('blur'),
+    ({ document }) => {
+      document.hidden = true;
+      document.emit('visibilitychange');
+    },
+    ({ input }) => {
+      input.select('touch');
+      input.select('keyboard');
+    },
+    ({ input }) => input.clear(),
+    ({ input }) => input.enable(false),
+    ({ input }) => input.ratesApplied(true),
+    ({ input }) => input.keyboardPreset('classic'),
+  ]) {
+    const document = new Document(),
+      window = new Events(),
+      session = {};
+    const input = createFlightInput({ window, document });
+    try {
+      input.enable(true);
+      input.pause({ session, retainKeyboardThrottle: true });
+      invalidate({ input, document, window });
+      input.pause({ session }); // Opening another menu cannot recreate eligibility.
+      input.resume(session, 0.53);
+      assert.deepEqual(input.sample(0.02), neutral);
+      input.pause({ session, retainKeyboardThrottle: true });
+      input.resume({}, 0.53);
+      assert.deepEqual(input.sample(0.02), neutral);
+    } finally {
+      input.dispose();
+    }
+  }
+});
+
+test('keyboard resume never grants another input owner throttle or changes checkpoint seeding', () => {
+  for (const owner of ['touch', 'radio', 'controller']) {
+    const document = new Document(),
+      window = new Events(),
+      session = {};
+    const input = createFlightInput({ window, document });
+    try {
+      input.select(owner);
+      input.enable(true);
+      input.pause({ session, retainKeyboardThrottle: true });
+      input.resume(session, 0.53);
+      assert.deepEqual(input.sample(0.02), neutral);
+      if (owner === 'touch') {
+        input.seedThrottle(0.4);
+        assert.equal(input.sample(0.02).throttle, 0.4, 'explicit checkpoint seeding is unchanged');
+      }
+    } finally {
+      input.dispose();
+    }
+  }
+});
+
+test('actual Academy settings keep an unsaved menu animation choice and Retry the same checkbox', async (t) => {
+  const priorLocale = getLocale();
+  setLocale('en', { persist: false });
+  t.after(() => setLocale(priorLocale, { persist: false }));
+  const key = 'revealline.menu-animation.v1',
+    data = new Map([[key, 'on']]);
+  let working = false;
+  const storage = {
+    getItem: (key) => data.get(key) ?? null,
+    setItem(key, value) {
+      if (key === 'revealline.menu-animation.v1' && !working)
+        throw new DOMException('Modeled blocked storage', 'SecurityError');
+      data.set(key, value);
+    },
+  };
+  const h = await fixture(t, { storage }),
+    input = h.doc.getElementById('academy-global-menuAnimation');
+  input.checked = false;
+  input.emit('change');
+  const status = h.doc.getElementById(`${input.id}-status`),
+    retry = status.parentNode.querySelector('.global-settings-save-retry');
+  assert.equal(input.checked, false);
+  assert.match(status.textContent, /Session only.*blocked/);
+  assert.equal(h.doc.documentElement.dataset.menuAnimation, 'off');
+  working = true;
+  retry.click();
+  assert.equal(data.get(key), 'off');
+  assert.equal(status.textContent, 'Saved');
+  assert.equal(retry.hidden, true);
+});
+
+async function academyTerminalLanguageFixture(t, options = {}) {
+  const previous = getLocale();
+  setLocale('en', { persist: false });
+  t.after(() => setLocale(previous, { persist: false }));
+  const records = new Map(),
+    writes = [];
+  let lastDraw = null;
+  const h = await fixture(t, {
+    storage: {
+      getItem: (key) => records.get(key) ?? null,
+      setItem(key, value) {
+        writes.push([key, value]);
+        records.set(key, value);
+      },
+    },
+    // Keep the real scheduler/model. This long expiry fixture does not retain
+    // every renderer draw in the ordinary fixture's diagnostic array.
+    rendererFactory: () => ({
+      available: true,
+      setCourse() {},
+      setPath() {},
+      draw(state) {
+        lastDraw = state;
+      },
+      dispose() {},
+    }),
+    ...options,
+  });
+  let downloads = 0;
+  h.win.URL.createObjectURL = () => {
+    downloads++;
+    return 'blob:unexpected-terminal-recording';
+  };
+  return { ...h, records, writes, downloads: () => downloads, lastDraw: () => lastDraw };
+}
+
+function academyTerminalLanguage(h, locale, expected, proof) {
+  const outcome = h.$('complete'),
+    title = h.$('complete-title'),
+    lesson = h.$('lesson'),
+    state = h.view.snapshot(),
+    records = [...h.records],
+    writes = h.writes.length,
+    deliveries = h.deliveries.length;
+  const opener = h.$('academy-shell-action-settings');
+  h.$('academy-shell-action-menu').click();
+  assert.equal(h.$('academy-shell-home-dialog').open, true);
+  assert.equal(opener.getClientRects().length > 0, true, 'Use the visible Home Settings opener.');
+  opener.focus();
+  opener.click();
+  assert.equal(h.$('academy-shell-settings-dialog').open, true);
+  h.$('academy-settings-tab-display').click();
+  const field = h.$('language');
+  assert.equal(field.tagName, 'SELECT');
+  assert.equal(h.$('academy-shell-settings-dialog').contains(field), true);
+  field.focus();
+  field.value = locale;
+  field.emit('change');
+  assert.equal(getLocale(), locale);
+  assert.equal(h.$('complete-title').textContent, expected.title);
+  assert.equal(h.$('lesson').textContent, expected.lesson);
+  assert.equal(h.$('complete') === outcome, true, 'Keep the exact native result region.');
+  assert.equal(h.$('complete-title') === title, true, 'Keep the exact result heading.');
+  assert.equal(h.$('lesson') === lesson, true, 'Keep the exact result advice node.');
+  assert.equal(h.doc.activeElement === field, true, 'Language refresh must retain field focus.');
+  assert.equal(outcome.hidden, expected.outcomeHidden ?? false);
+  assert.equal(h.$('next').hidden, expected.nextHidden ?? true);
+  assert.equal(h.$('review').hidden, expected.reviewHidden ?? true);
+  assert.deepEqual(
+    h.view.snapshot(),
+    state,
+    'The existing language pause cannot restart a terminal flight.',
+  );
+  if (proof !== null) assert.equal(JSON.stringify(h.view.exportAttempt()), proof);
+  assert.deepEqual([...h.records], records);
+  assert.equal(
+    h.writes.length,
+    writes,
+    'Repainting terminal copy must not write records or preferences.',
+  );
+  assert.equal(h.deliveries.length, deliveries, 'Language must not readmit a result.');
+  assert.equal(h.downloads(), 0);
+  h.$('academy-shell-action-settings-back').click();
+  assert.equal(h.$('academy-shell-settings-dialog').open, false);
+  assert.equal(
+    h.doc.activeElement === opener,
+    true,
+    `Back restores #${opener.id}; received #${h.doc.activeElement?.id ?? 'none'}.`,
+  );
+  assert.deepEqual(h.view.snapshot(), state);
+}
+
+async function academyTerminalResetLanguage(h, course) {
+  h.view.reset();
+  await h.view.settled();
+  assert.equal(h.view.snapshot().status, 'disarmed');
+  assert.equal(h.view.snapshot().ticks, 0);
+  assert.equal(h.$('complete').hidden, true);
+  academyTerminalLanguage(
+    h,
+    'uk',
+    {
+      ...course.locales.uk,
+      outcomeHidden: true,
+      nextHidden: h.$('next').hidden,
+      reviewHidden: h.$('review').hidden,
+    },
+    JSON.stringify(h.view.exportAttempt()),
+  );
+  assert.equal(h.$('complete').hidden, true, 'Translation cannot revive the previous result.');
+}
+
+test('Academy expired result retains terminal meaning through native language changes after all 36000 model ticks', async (t) => {
+  const h = await academyTerminalLanguageFixture(t);
+  assert.equal(h.view.arm(), true);
+  for (
+    let frame = 0;
+    frame < MAX_FLIGHT_TICKS + 4 && h.view.snapshot().status !== 'expired';
+    frame++
+  )
+    h.tick();
+  assert.equal(h.view.snapshot().status, 'expired');
+  assert.equal(h.view.snapshot().ticks, MAX_FLIGHT_TICKS);
+  assert.equal(
+    h.renders.length,
+    0,
+    'The renderer option avoids retaining the full timed-out flight.',
+  );
+  assert.equal(h.$('complete-title').textContent, 'Flight ended');
+  assert.equal(h.$('lesson').textContent, 'Your next route starts with another try.');
+  assert.equal(h.deliveries.length, 0);
+  const proof = JSON.stringify(h.view.exportAttempt());
+  for (const [locale, title, lesson] of [
+    ['uk', 'Політ завершено', 'Новий маршрут починається з наступної спроби.'],
+    ['en', 'Flight ended', 'Your next route starts with another try.'],
+  ])
+    academyTerminalLanguage(h, locale, { title, lesson }, proof);
+  // The live owner remains expired while an unfinished recording owns the
+  // presentation. Its EOF must not borrow the live flight's terminal meaning.
+  const demonstration = FLIGHT_DEMONSTRATIONS.find(
+    (item) => item.course === 'flight-01' && item.mode === 'self-level',
+  );
+  await h.view.review({ ...demonstration, frames: demonstration.frames.slice(0, 4) });
+  h.tick(6);
+  assert.equal(h.doc.querySelector('[data-mode-play-shell]').dataset.phase, 'results');
+  assert.equal(h.lastDraw().status, 'active');
+  assert.equal(h.lastDraw().ticks, 4);
+  assert.equal(h.$('complete').hidden, true);
+  const playback = h.lastDraw();
+  for (const locale of ['uk', 'en']) {
+    academyTerminalLanguage(
+      h,
+      locale,
+      {
+        ...FLIGHT_COURSES[0].locales[locale],
+        outcomeHidden: true,
+      },
+      proof,
+    );
+    assert.deepEqual(
+      h.lastDraw(),
+      playback,
+      'Locale cannot complete or advance the four-frame recording.',
+    );
+    assert.equal(h.view.snapshot().status, 'expired', 'The actual live owner is still distinct.');
+  }
+  await academyTerminalResetLanguage(h, FLIGHT_COURSES[0]);
+});
+
+test('Academy unscored terminal retains draft-test meaning through native language changes after a real public-course objective', async (t) => {
+  const course = structuredClone(FLIGHT_COURSES[0]),
+    landing = { ...course.steps['self-level'].at(-1), ticks: 1 };
+  course.steps = { 'self-level': [landing], acro: [landing] };
+  const h = await academyTerminalLanguageFixture(t, { courses: [course], demonstrations: [] });
+  await openAcademyTuning(h);
+  await academyTuningClick(h, 'Test draft · unscored');
+  await h.view.settled();
+  assert.equal(h.doc.querySelector('.fpv-tuning').open, false);
+  assert.equal(h.doc.querySelector('.tuning-return').hidden, false);
+  assert.equal(h.view.arm(), true);
+  h.tick(3);
+  assert.equal(h.view.snapshot().status, 'complete');
+  assert.equal(h.view.snapshot().step, 1);
+  assert.equal(h.$('complete-title').textContent, 'Draft test finished');
+  assert.equal(
+    h.$('lesson').textContent,
+    'Unscored, without a recording. Return to tuning to compare.',
+  );
+  assert.equal(h.deliveries.length, 0);
+  h.$('export-attempt').click();
+  assert.equal(h.downloads(), 0, 'An unscored draft cannot export proof.');
+  for (const [locale, title, lesson] of [
+    [
+      'uk',
+      'Перевірку чернетки завершено',
+      'Без заліку й запису. Поверніться до рейтів для порівняння.',
+    ],
+    ['en', 'Draft test finished', 'Unscored, without a recording. Return to tuning to compare.'],
+  ])
+    academyTerminalLanguage(h, locale, { title, lesson }, null);
+  assert.equal(h.records.has('revealline.fpv.tuning.v1'), false);
+  await academyTerminalResetLanguage(h, course);
+});
+
+test('Academy ordinary verified success retains current course copy and one admission across native language changes', async (t) => {
+  const h = await academyTerminalLanguageFixture(t),
+    pad = {
+      id: 'Fixture USB',
+      index: 0,
+      connected: true,
+      mapping: '',
+      axes: [0, 0, 0, -1],
+      buttons: [],
+    };
+  h.setPads([pad]);
+  h.$('input-source').value = 'radio';
+  h.$('input-source').emit('change');
+  await h.view.settled();
+  h.view.radio.select(0);
+  h.view.radio.setProfile(radioProfile(pad));
+  h.view.radio.verify();
+  assert.equal(h.view.arm(), true);
+  h.tick();
+  const example = FLIGHT_DEMONSTRATIONS.find(
+    (item) => item.course === 'flight-01' && item.mode === 'self-level',
+  );
+  for (const values of example.frames) {
+    pad.axes = [values[0] / 1000, values[1] / 1000, values[2] / 1000, values[3] / 500 - 1];
+    h.tick();
+  }
+  await h.view.settled();
+  assert.equal(h.view.snapshot().status, 'complete');
+  assert.equal(h.deliveries.length, 1);
+  assert.equal(h.$('next').hidden, false);
+  assert.equal(h.$('review').hidden, false);
+  const proof = JSON.stringify(h.view.exportAttempt());
+  for (const locale of ['uk', 'en'])
+    academyTerminalLanguage(
+      h,
+      locale,
+      {
+        ...FLIGHT_COURSES[0].locales[locale],
+        nextHidden: false,
+        reviewHidden: false,
+      },
+      proof,
+    );
+  assert.equal(h.deliveries.length, 1);
+  await academyTerminalResetLanguage(h, FLIGHT_COURSES[0]);
+});
+
+test('Academy retains extra-large desired size without exposing an unqualified selectable setting', async (t) => {
+  let raw = JSON.stringify({ textFace: 'plain', textSize: 'extra-large', reducedEffects: false });
+  const writes = [];
+  const storage = {
+    getItem: (key) => (key === 'revealline.display.v1' ? raw : null),
+    setItem(key, value) {
+      writes.push(key);
+      if (key === 'revealline.display.v1') raw = value;
+    },
+  };
+  const f = await fixture(t, { home: true, storage });
+  const control = f.$('academy-global-textSize');
+  assert.equal(control.value, 'extra-large');
+  assert.equal(control.querySelector('[data-text-size-retained]').disabled, true);
+  assert.equal(f.doc.body.dataset.textSize, 'large');
+  assert.equal(writes.includes('revealline.display.v1'), false);
+  f.$('academy-global-reducedEffects').checked = true;
+  f.$('academy-global-reducedEffects').emit('change');
+  assert.equal(JSON.parse(raw).textSize, 'extra-large');
+});
+
+test('optional combat D-pad commands require release and retain controller flight ownership', () => {
+  const doc = new Document(),
+    win = new Events();
+  const pad = {
+    id: 'combat-pad',
+    index: 0,
+    connected: true,
+    mapping: 'standard',
+    axes: [0, 0, 0, 0],
+    buttons: Array.from({ length: 16 }, () => ({ value: 0 })),
+  };
+  let enabled = true,
+    now = 0;
+  const gamepad = createFlightGamepad({ document: doc, window: win, combatLayout: () => enabled });
+  const poll = (scope = 'flight') => gamepad.poll({ gamepads: [pad], scope, now: (now += 20) });
+  poll();
+  poll();
+  for (const [index, action] of [
+    [12, 'reload'],
+    [13, 'payload'],
+    [14, 'weaponA'],
+    [15, 'weaponB'],
+    [10, 'detonate'],
+  ]) {
+    pad.buttons[index].value = 1;
+    assert.deepEqual(poll().actions, []);
+    assert.equal(gamepad.sample(0.02).roll, 0);
+    assert.equal(gamepad.sample(0.02).pitch, 0);
+    pad.buttons[index].value = 0;
+    assert.deepEqual(poll().actions, [action]);
+    assert.equal(gamepad.status().active, true);
+  }
+  pad.buttons[13].value = 1;
+  poll('blocked');
+  poll();
+  pad.buttons[13].value = 0;
+  assert.deepEqual(poll().actions, [], 'held command cannot leak across menu boundary');
+  enabled = false;
+  poll();
+  pad.buttons[15].value = 1;
+  poll();
+  assert.equal(gamepad.sample(0.02).roll, 0.5, 'ordinary D-pad flight mapping is retained');
+  gamepad.dispose();
+});
+
+const academySupportSettle = () => new Promise((resolve) => setImmediate(resolve));
+async function academySupportFixture(t, options = {}) {
+  const locale = getLocale();
+  setLocale('en', { persist: false });
+  t.after(() => setLocale(locale, { persist: false }));
+  const f = await fixture(t, options);
+  assert.ok(f.$('academy-support-summary-root'), 'Academy native Data owns a support root.');
+  let reads = 0;
+  const original = f.win.navigator.getGamepads;
+  t.mock.method(f.win.navigator, 'getGamepads', () => {
+    reads++;
+    return original();
+  });
+  return { ...f, supportReads: () => reads };
+}
+function openAcademySupport(f) {
+  f.$('academy-shell-action-settings').click();
+  f.$('academy-settings-tab-data').click();
+  assert.equal(f.$('academy-shell-settings-dialog').open, true);
+  assert.equal(f.$('academy-settings-panel-data').hidden, false);
+}
+async function prepareAcademySupport(f) {
+  f.$('support-summary-prepare').focus();
+  f.$('support-summary-prepare').click();
+  await waitFor(() => !f.$('support-summary-download').disabled);
+  return JSON.parse(f.$('support-summary-json').textContent);
+}
+
+test('Academy support starts with unknown controller, build and writer ownership using its injected environment', async (t) => {
+  const f = await academySupportFixture(t);
+  openAcademySupport(f);
+  f.win.navigator.storage = {
+    persisted: async () => true,
+    estimate: async () => ({ usage: 1, quota: 2 }),
+  };
+  const reads = f.supportReads(),
+    before = f.view.snapshot(),
+    proof = f.view.exportAttempt();
+  const value = await prepareAcademySupport(f);
+  assert.equal(value.scope, 'academy-game-shell');
+  assert.equal(value.game.host, 'fpv-academy');
+  assert.equal(value.game.state, 'disarmed');
+  assert.deepEqual(value.build, { version: null, sourceRevision: null, packaged: null });
+  assert.equal(value.controller.freshness, 'unavailable');
+  assert.equal(value.controller.assigned, null);
+  assert.equal(value.controller.neutral, null);
+  assert.equal(value.controller.confirmBlocked, null);
+  assert.equal(value.game.saving.writable, null);
+  assert.equal(value.storage.retention, 'granted');
+  assert.equal(f.supportReads(), reads);
+  assert.deepEqual(f.view.snapshot(), before);
+  assert.deepEqual(f.view.exportAttempt(), proof);
+});
+
+for (const owner of [
+  'category',
+  'close',
+  'overlay',
+  'blur',
+  'hidden',
+  'bfcache',
+  'width',
+  'dispose',
+])
+  test(`Academy retires pending support across ${owner} away/back before completion`, async (t) => {
+    let finish,
+      calls = 0;
+    const held = new Promise((resolve) => {
+      finish = resolve;
+    });
+    const f = await academySupportFixture(t);
+    f.win.innerWidth = f.doc.defaultView.innerWidth = 1000;
+    f.win.navigator.storage = { persisted: () => (++calls === 1 ? held : Promise.resolve(false)) };
+    openAcademySupport(f);
+    const output = f.$('support-summary-json'),
+      prepare = f.$('support-summary-prepare'),
+      download = f.$('support-summary-download');
+    prepare.click();
+    await academySupportSettle();
+    if (owner === 'category') {
+      f.$('academy-settings-tab-data').emit('keydown', { key: 'ArrowUp' });
+      f.$('academy-settings-tab-data').click();
+    } else if (owner === 'close') {
+      f.$('academy-shell-settings-dialog').close();
+      openAcademySupport(f);
+    } else if (owner === 'overlay') {
+      f.$('help').click();
+      assert.equal(f.$('help-dialog').open, true);
+      f.doc.querySelector('[data-close="help-dialog"]').click();
+    } else if (owner === 'blur') {
+      f.doc.focused = false;
+      f.win.emit('blur');
+      f.doc.focused = true;
+      f.win.emit('focus');
+    } else if (owner === 'hidden') {
+      f.doc.hidden = true;
+      f.doc.visibilityState = 'hidden';
+      f.doc.emit('visibilitychange');
+      f.doc.hidden = false;
+      f.doc.visibilityState = 'visible';
+      f.doc.emit('visibilitychange');
+    } else if (owner === 'bfcache') {
+      f.win.emit('pagehide', { persisted: true });
+      f.win.emit('pageshow', { persisted: true });
+    } else if (owner === 'dispose') {
+      f.view.dispose();
+      assert.equal(output.textContent, '', 'Disposal retires synchronously.');
+      assert.equal(prepare.getAttribute('aria-busy'), 'false');
+    } else {
+      f.$('academy-settings-tab-data').focus();
+      f.win.innerWidth = f.doc.defaultView.innerWidth = 320;
+      f.doc.defaultView.emit('resize');
+      f.win.innerWidth = f.doc.defaultView.innerWidth = 1000;
+      f.doc.defaultView.emit('resize');
+    }
+    const focused = f.doc.activeElement;
+    finish(true);
+    await academySupportSettle();
+    await academySupportSettle();
+    assert.equal(output.textContent, '');
+    assert.equal(download.disabled, true);
+    assert.equal(f.doc.activeElement, focused);
+    if (owner === 'dispose') {
+      prepare.click();
+      download.click();
+      await academySupportSettle();
+      assert.equal(calls, 1, 'A destroyed view cannot prepare or export.');
+    } else assert.equal((await prepareAcademySupport(f)).storage.retention, 'not-granted');
+  });
+
+test('Academy preserves a captured report across ordinary paused frames and unchanged wide presentation', async (t) => {
+  const f = await academySupportFixture(t);
+  f.win.innerWidth = f.doc.defaultView.innerWidth = 1000;
+  assert.equal(f.view.arm(), true);
+  f.tick(3);
+  f.view.pause();
+  openAcademySupport(f);
+  const captured = await prepareAcademySupport(f);
+  const before = f.view.snapshot(),
+    proof = f.view.exportAttempt();
+  f.tick(3);
+  assert.deepEqual(JSON.parse(f.$('support-summary-json').textContent), captured);
+  f.$('academy-settings-tab-data').focus();
+  const view = f.$('academy-shell-settings-dialog').getAttribute('data-settings-view');
+  f.win.innerWidth = f.doc.defaultView.innerWidth = 900;
+  f.doc.defaultView.emit('resize');
+  assert.equal(f.$('academy-shell-settings-dialog').getAttribute('data-settings-view'), view);
+  assert.deepEqual(JSON.parse(f.$('support-summary-json').textContent), captured);
+  assert.equal(f.$('support-summary-download').disabled, false);
+  assert.deepEqual(f.view.snapshot(), before);
+  assert.deepEqual(f.view.exportAttempt(), proof);
+});
+
+test('Academy support reuses a normal physical frame and exports exact JSON without changing a paused attempt', async (t) => {
+  const f = await academySupportFixture(t);
+  const pad = menuPad();
+  pad.id = 'private-academy-device';
+  f.setPads([pad]);
+  assert.equal(f.view.arm(), true);
+  f.tick(6);
+  f.view.pause();
+  openAcademySupport(f);
+  f.tick();
+  const before = f.view.snapshot(),
+    proof = f.view.exportAttempt(),
+    reads = f.supportReads();
+  const value = await prepareAcademySupport(f);
+  assert.equal(value.game.state, 'paused');
+  assert.equal(value.controller.status, 'connected');
+  assert.equal(value.controller.assigned, null);
+  assert.equal(value.controller.neutral, null);
+  assert.equal(value.controller.confirmBlocked, null);
+  assert.equal(f.supportReads(), reads);
+  assert.deepEqual(f.view.snapshot(), before);
+  assert.deepEqual(f.view.exportAttempt(), proof);
+  assert.doesNotMatch(
+    JSON.stringify(value),
+    /private-academy|buttons|axes|profile|device|raw|storageKey/,
+  );
+  const blobs = [];
+  f.win.URL.createObjectURL = (blob) => {
+    blobs.push(blob);
+    return 'blob:academy-support';
+  };
+  f.$('support-summary-download').focus();
+  f.$('support-summary-download').click();
+  await waitFor(() => blobs.length === 1);
+  assert.deepEqual(JSON.parse(await blobs[0].text()), value);
+  setLocale('uk', { persist: false });
+  assert.match(f.$('support-summary-title').textContent, /Локальний звіт/);
+  assert.equal(f.doc.activeElement, f.$('support-summary-download'));
+  f.win.emit('pagehide', { persisted: true });
+  assert.equal(f.$('support-summary-json').textContent, '');
+  assert.deepEqual(f.view.snapshot(), before);
+});
+
+for (const retirement of ['settings', 'help-return'])
+  test(`Academy ended unfinished playback stays distinct after ${retirement}`, async (t) => {
+    const { memoryStorage } = await import('./helpers/solo-dom.mjs');
+    const storage = memoryStorage();
+    const f = await academySupportFixture(t, { storage });
+    const proof = {
+      ...structuredClone(FLIGHT_DEMONSTRATIONS[0]),
+      session: 'replay',
+      frames: Array.from({ length: 4 }, () => [0, 0, 0, 0]),
+    };
+    const original = structuredClone(proof);
+    const checked = await f.view.review(proof);
+    assert.equal(checked.state.status, 'active', 'The recording has not completed its objective.');
+    f.tick(12);
+    assert.equal(f.renders.at(-1).ticks, proof.frames.length);
+    assert.equal(f.renders.at(-1).status, 'active');
+    f.$('academy-shell-action-menu').click();
+    openAcademySupport(f);
+    if (retirement === 'help-return') {
+      f.$('academy-settings-tab-extras').click();
+      f.$('help').click();
+      assert.equal(f.$('help-dialog').open, true);
+      f.doc.querySelector('[data-close="help-dialog"]').click();
+      f.$('academy-settings-tab-data').click();
+    }
+    const rendered = structuredClone(f.renders.at(-1));
+    const reads = f.supportReads(),
+      writes = [...storage.writes],
+      attempt = f.view.exportAttempt();
+    const value = await prepareAcademySupport(f);
+    assert.equal(value.game.state, 'playback-ended');
+    assert.notEqual(value.game.state, 'paused');
+    assert.notEqual(value.game.state, 'complete');
+    assert.match(f.$('support-summary-game').textContent, /Playback ended/);
+    assert.deepEqual(f.renders.at(-1), rendered);
+    assert.deepEqual(proof, original);
+    assert.deepEqual(f.view.exportAttempt(), attempt);
+    assert.equal(f.deliveries.length, 0);
+    assert.equal(f.supportReads(), reads);
+    assert.deepEqual(storage.writes, writes);
+    const blobs = [];
+    f.win.URL.createObjectURL = (blob) => {
+      blobs.push(blob);
+      return 'blob:ended-playback-support';
+    };
+    f.$('support-summary-download').focus();
+    f.$('support-summary-download').click();
+    await waitFor(() => blobs.length === 1);
+    assert.deepEqual(JSON.parse(await blobs[0].text()), value);
+    setLocale('uk', { persist: false });
+    assert.match(f.$('support-summary-game').textContent, /Перегляд завершено/);
+    assert.equal(f.doc.activeElement, f.$('support-summary-download'));
+    assert.deepEqual(storage.writes, writes);
+  });
+
+test('Academy support keeps in-progress playback paused and its existing Continue owner remains usable', async (t) => {
+  const f = await academySupportFixture(t);
+  await f.view.review(FLIGHT_DEMONSTRATIONS[0]);
+  f.tick(5);
+  f.$('academy-flight-menu').click();
+  openAcademySupport(f);
+  const rendered = structuredClone(f.renders.at(-1));
+  assert.ok(rendered.ticks > 0 && rendered.ticks < FLIGHT_DEMONSTRATIONS[0].frames.length);
+  assert.equal((await prepareAcademySupport(f)).game.state, 'paused');
+  assert.deepEqual(f.renders.at(-1), rendered);
+  f.$('academy-shell-action-settings-back').click();
+  f.$('academy-shell-action-pause-resume').click();
+  f.tick(5);
+  assert.ok(f.renders.at(-1).ticks > rendered.ticks);
+  assert.equal(f.deliveries.length, 0);
+});
+
+for (const api of ['empty', 'missing', 'throwing'])
+  test(`Academy support distinguishes ${api} Gamepad API observations without polling during Prepare`, async (t) => {
+    const f = await academySupportFixture(t);
+    openAcademySupport(f);
+    let calls = 0;
+    if (api === 'missing') delete f.win.navigator.getGamepads;
+    else
+      f.win.navigator.getGamepads = () => {
+        calls++;
+        if (api === 'throwing') throw new Error('private-gamepad-failure');
+        return [];
+      };
+    f.tick();
+    const before = calls;
+    const value = await prepareAcademySupport(f);
+    assert.equal(value.controller.status, api === 'empty' ? 'disconnected' : 'unavailable');
+    assert.equal(calls, before);
+    assert.equal(value.controller.assigned, null);
+    assert.equal(value.controller.neutral, null);
+    assert.equal(value.controller.confirmBlocked, null);
+    assert.doesNotMatch(JSON.stringify(value), /private-gamepad-failure/);
+  });
+
+for (const locale of ['en', 'uk'])
+  test(`Academy ${locale} comfort presets preserve the paused attempt through preview, Retry and Undo`, async (t) => {
+    const priorLocale = getLocale();
+    setLocale(locale, { persist: false });
+    t.after(() => setLocale(priorLocale, { persist: false }));
+    const displayKey = 'revealline.display.v1',
+      menuKey = 'revealline.menu-animation.v1',
+      data = new Map(),
+      writes = [];
+    let working = true;
+    const h = await fixture(t, {
+      url: `https://example.test/optional-practice/civilian-fpv/?lang=${locale}`,
+      storage: {
+        getItem: (key) => data.get(key) ?? null,
+        setItem(key, value) {
+          if ([displayKey, menuKey].includes(key)) {
+            writes.push([key, value]);
+            if (!working) throw new DOMException('Modeled full storage', 'QuotaExceededError');
+          }
+          data.set(key, value);
+        },
+      },
+    });
+    assert.equal(h.view.arm(), true);
+    h.tick(4);
+    h.$('academy-flight-menu').click();
+    h.$('academy-shell-action-pause-settings').click();
+    h.$('academy-settings-tab-accessibility').click();
+    const prefix = 'academy-settings-panel-accessibility-comfort-',
+      preset = (suffix) => h.$(`${prefix}${suffix}`),
+      before = h.view.exportAttempt(),
+      paused = h.view.snapshot(),
+      controls = ['mode', 'input-source', 'camera', 'camera-fov', 'camera-tilt'],
+      configuration = controls.map((id) => h.$(id).value);
+    assert.equal(paused.status, 'paused');
+    assert.equal(preset('apply').closest('[hidden],[inert]'), null);
+    preset('choice').value = 'clear';
+    preset('choice').emit('change');
+    preset('choice').value = 'comfort';
+    preset('choice').emit('change');
+    assert.equal(
+      writes.length,
+      0,
+      'Opening and changing the preview must not persist preferences.',
+    );
+    working = false;
+    preset('apply').focus();
+    preset('apply').click();
+    assert.equal(h.$('academy-global-textSize').value, 'large');
+    assert.equal(h.$('academy-global-menuAnimation').checked, false);
+    assert.match(
+      preset('status').textContent,
+      locale === 'en' ? /Session only/ : /Лише в цьому сеансі/,
+    );
+    assert.equal(h.doc.activeElement, preset('apply'));
+    working = true;
+    preset('apply').click();
+    assert.deepEqual(JSON.parse(data.get(displayKey)), {
+      textFace: 'plain',
+      textSize: 'large',
+      reducedEffects: true,
+    });
+    assert.equal(data.get(menuKey), 'off');
+    assert.doesNotMatch(preset('status').textContent, /Session only|Лише в цьому сеансі/);
+    h.tick(4);
+    assert.deepEqual(h.view.exportAttempt(), before);
+    assert.deepEqual(h.view.snapshot(), paused);
+    preset('undo').focus();
+    preset('undo').click();
+    assert.deepEqual(JSON.parse(data.get(displayKey)), {
+      textFace: 'pixel',
+      textSize: 'standard',
+      reducedEffects: false,
+    });
+    assert.equal(data.get(menuKey), 'on');
+    assert.equal(h.doc.activeElement, preset('apply'));
+    assert.deepEqual(
+      controls.map((id) => h.$(id).value),
+      configuration,
+    );
+    assert.deepEqual(h.view.exportAttempt(), before);
+    assert.equal(h.$('academy-shell-settings-dialog').open, true);
+    const retainedApply = preset('apply');
+    h.view.dispose();
+    const finalWrites = writes.length;
+    retainedApply.click();
+    h.win.emit('pageshow', { persisted: true });
+    assert.equal(writes.length, finalWrites);
+    assert.equal(h.doc.querySelector('.comfort-presets'), null);
+  });

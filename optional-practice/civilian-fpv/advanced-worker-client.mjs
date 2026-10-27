@@ -13,9 +13,10 @@ export function createAdvancedWorkerClient({
     throw new Error('Advanced practice requires Web Workers on this platform.');
   if (!Number.isFinite(watchdogMs) || watchdogMs < 1 || watchdogMs > 60000)
     throw new Error('Invalid Advanced worker deadline');
-  // A complete twelve-minute recording may need six minutes at the minimum
-  // qualified 2x capacity, plus one minute of setup margin. Flight/init requests
-  // keep their short watchdog; recording and recovery verification use this bound.
+  // Historical twelve-minute recordings may need six minutes at the minimum
+  // qualified 2x capacity, plus setup margin. New aircraft clips retain at most
+  // three minutes. This bounds verification, never the duration of flying.
+  // Flight/init requests keep their short watchdog.
   if (
     !Number.isFinite(verificationWatchdogMs) ||
     verificationWatchdogMs < 1 ||
@@ -47,6 +48,17 @@ export function createAdvancedWorkerClient({
     if (disposed || !data || data.session !== session) return;
     const pending = waiting.get(data.id);
     if (!pending) return;
+    if (Object.hasOwn(data, 'progress')) {
+      if (typeof pending.onProgress !== 'function') return;
+      clearTimeout(pending.timer);
+      pending.timer = setTimeout(pending.timeout, verificationWatchdogMs);
+      try {
+        pending.onProgress(data.progress);
+      } catch (error) {
+        dispose(error);
+      }
+      return;
+    }
     clearTimeout(pending.timer);
     waiting.delete(data.id);
     if (data.error) {
@@ -60,16 +72,20 @@ export function createAdvancedWorkerClient({
   worker.addEventListener('message', receive);
   worker.addEventListener('error', fail);
   worker.addEventListener('messageerror', fail);
-  function request(type, fields = {}) {
+  function request(type, fields = {}, { onProgress } = {}) {
     if (disposed) return Promise.reject(new Error('Advanced practice is closed.'));
     if (waiting.size >= 32) return Promise.reject(new Error('Advanced worker queue is full.'));
     const id = ++requestId;
     return new Promise((resolve, reject) => {
+      const timeout = () =>
+        dispose(new Error('Advanced worker did not respond. Practice is paused.'));
       const timer = setTimeout(
-        () => dispose(new Error('Advanced worker did not respond. Practice is paused.')),
-        ['verify-recording', 'restore'].includes(type) ? verificationWatchdogMs : watchdogMs,
+        timeout,
+        ['verify-recording', 'verify-archive', 'verify-course-archive', 'restore'].includes(type)
+          ? verificationWatchdogMs
+          : watchdogMs,
       );
-      waiting.set(id, { resolve, reject, timer });
+      waiting.set(id, { resolve, reject, timer, timeout, onProgress });
       try {
         worker.postMessage({ ...fields, id, session, type });
       } catch (error) {
@@ -84,16 +100,28 @@ export function createAdvancedWorkerClient({
     session,
     initialize: (options) => request('init', { options }),
     input: (sample) => request('input', { sample }),
-    step: (sample) => request('step', { sample }),
-    propose: (sample) => request('propose', { sample }),
+    step: (sample, motions) => request('step', { sample, motions }),
+    propose: (sample, motions) => request('propose', { sample, motions }),
     commit: (decision) => request('commit', { decision }),
     stageTerrainFrame: (frame) => request('stage-terrain', { frame }),
     commitTerrainFrame: (decision) => request('commit-terrain', { decision }),
     telemetry: () => request('telemetry'),
     snapshot: () => request('snapshot'),
     restore: (snapshot) => request('restore', { snapshot }),
+    restorePractice: (snapshot) => request('restore-practice', { snapshot }),
     recording: () => request('recording'),
+    recordingStatus: () => request('recording-status'),
+    reportPersistence: (status) => request('recording-persistence', { status }),
+    readSealedSegment: (afterIndex = -1) => request('read-sealed-segment', { afterIndex }),
+    finalizeArchive: (afterIndex = -1) => request('finalize-archive', { afterIndex }),
     verifyRecording: (recording) => request('verify-recording', { recording }),
+    verifyArchive: (archive, { onProgress = () => {} } = {}) =>
+      request('verify-archive', { archive }, { onProgress }),
+    verifyCourseArchive: (
+      archive,
+      course,
+      { onProgress = () => {}, collectReference = false } = {},
+    ) => request('verify-course-archive', { archive, course, collectReference }, { onProgress }),
     reset: () => request('reset'),
     dispose,
   };

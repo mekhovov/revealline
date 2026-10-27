@@ -21,6 +21,20 @@
       "completedDistribution": false,
       "browserJourneyRun": false,
       "limitation": "Not an application failure or completed build. Exact owned build process group was verified before termination; partial staging was not deleted."
+    },
+    {
+      "log": "/tmp/practice-main-production-build-20261016-run3.log",
+      "exitCode": 0,
+      "disposition": "completed",
+      "sourceRevision": "3a1b5e3c348b4623caa949e23602fc5f9fc0b444",
+      "sourceTree": "7bd0ee83d2c239e1d977b99f5ee3b559596b3e9d",
+      "output": "/Volumes/alex/CodexMigrationStaging/flight-practice-main-distribution-20261016",
+      "distributionSha256": "147d78d5beba3713cb69e3b06a4b165e30a1afbb1cb0760bc9b3adb2d957ec09",
+      "files": 3493,
+      "totalBytes": 1072077940,
+      "completedDistribution": true,
+      "browserJourneyRun": false,
+      "limitation": "Original buffered committed-source output. Browser validation and hosting remain separate."
     }
   ]
 }

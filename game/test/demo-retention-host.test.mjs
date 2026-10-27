@@ -13,6 +13,9 @@ import {
   verifyReplay,
 } from '../replay.mjs';
 import { saveSession, suspendSession } from '../sessions.mjs';
+import { Soundscape } from '../ui/audio.mjs';
+import { audioHarness } from './helpers/soundtrack-audio.mjs';
+import { demoPage } from './helpers/demo-host-fixture.mjs';
 import { managedIndexedDB } from './helpers/managed-idb.mjs';
 import { memoryStorage, settle, soloPage } from './helpers/solo-dom.mjs';
 
@@ -63,7 +66,7 @@ function unfinishedFlight() {
   return { run, recorder, inputs, saved };
 }
 
-async function mountedFlight(t) {
+async function mountedFlight(t, { createPage = soloPage, browserSetup, ...options } = {}) {
   const f = unfinishedFlight(),
     storage = memoryStorage(),
     database = managedIndexedDB(),
@@ -72,10 +75,12 @@ async function mountedFlight(t) {
   // The app, recorder and production demo IndexedDB adapter are unchanged.
   // Only IndexedDB transaction ordering/storage is modeled, not browser disk
   // persistence or quota. Other host databases retain the existing fixture.
-  const page = await soloPage(t, {
+  const page = await createPage(t, {
+    ...options,
     storage,
     titleScreen: true,
-    browserSetup({ globals }) {
+    browserSetup(context) {
+      const { globals } = context;
       const ordinary = globals.indexedDB;
       globals.indexedDB = {
         open(name, ...args) {
@@ -84,6 +89,7 @@ async function mountedFlight(t) {
           return database.indexedDB.open(name, ...args);
         },
       };
+      browserSetup?.(context);
     },
   });
   return { ...f, page, database, requests };
@@ -194,15 +200,49 @@ function assertRetained(document, checkpoint) {
   assert.equal(document.items[0].descriptor.campaignKey, campaignKey(campaign));
 }
 
+function observeWinningHostSerialization(t, page) {
+  let inHostFrame = false,
+    winningSerializations = 0;
+  const frame = page.frame;
+  t.mock.method(page, 'frame', (...args) => {
+    inHostFrame = true;
+    try {
+      return frame(...args);
+    } finally {
+      inHostFrame = false;
+    }
+  });
+  const stringify = JSON.stringify;
+  t.mock.method(JSON, 'stringify', (value, ...args) => {
+    // Observe the real replay byte-budget serialization, without replacing an
+    // exporter/validator. Reference replay checks outside host frames do not count.
+    if (
+      inHostFrame &&
+      value?.version === trace.version &&
+      value?.summary?.status === 'won' &&
+      Array.isArray(value?.segments)
+    )
+      winningSerializations++;
+    return stringify(value, ...args);
+  });
+  return () => winningSerializations;
+}
+
 test('mounted ordinary restored win is kept manually without enabling automatic collection', async (t) => {
   const f = await mountedFlight(t),
     { page, database, requests } = f;
+  const winningSerializations = observeWinningHostSerialization(t, page);
   assert.equal(page.$('demo-collect').checked, false);
   openKeep(page);
   assert.match(page.$('demo-keep-status').textContent, /Complete a normal run/);
   assert.deepEqual(requests, [], 'An unfinished Keep does not open the demo database.');
   page.doc.querySelector('[data-close="shell-workshop-dialog"]').click();
   const { checkpoint, earned } = await completeOrdinary(f);
+  assert.equal(
+    winningSerializations(),
+    0,
+    'Disabled automatic collection must not export a replay',
+  );
   assert.deepEqual(requests, [], 'A normal win does not silently opt into automatic collection.');
   assert.equal(page.storage.getItem(SETTINGS), null);
   openKeep(page);
@@ -219,6 +259,7 @@ test('mounted ordinary restored win is kept manually without enabling automatic 
 test('mounted ordinary restored win is retained automatically only after the real Settings opt-in', async (t) => {
   const f = await mountedFlight(t),
     { page, database, requests } = f;
+  const winningSerializations = observeWinningHostSerialization(t, page);
   setCollection(page, true);
   assert.deepEqual(
     requests,
@@ -226,6 +267,11 @@ test('mounted ordinary restored win is retained automatically only after the rea
     'Enabling collection does not create a cache before an eligible win.',
   );
   const { checkpoint, earned } = await completeOrdinary(f);
+  assert.equal(
+    winningSerializations(),
+    0,
+    'Enabled collection defers replay serialization until after the winning host frame.',
+  );
   await settle(() => database.allPuts.length === 1);
   assertRetained(await readCache(database), checkpoint);
   assert.equal(page.$('demo-keep-status').textContent, '', 'No manual Keep action was used.');
@@ -236,5 +282,88 @@ test('mounted ordinary restored win is retained automatically only after the rea
   assert.deepEqual(loadLibrary(page.storage, PROFILE).library, earned);
   assert.deepEqual(authoritativeCheckpoint(page.rendered.run), checkpoint);
   assert.equal(page.storage.getItem(SESSION), null);
+  assert.deepEqual(page.errors, []);
+});
+
+test('earned terminal parent callbacks cannot reopen active Demo media admission', async (t) => {
+  let sound;
+  const original = Soundscape.prototype.setActorPresentation;
+  t.mock.method(Soundscape.prototype, 'setActorPresentation', function (...args) {
+    sound = this;
+    return original.apply(this, args);
+  });
+  const canvases = [];
+  const f = await mountedFlight(t, {
+    // Only this new case opts into the actual Demo fixture's finite native
+    // animation and PNG decode boundaries; ordinary retention cases stay intact.
+    createPage: demoPage,
+    audio: { ...audioHarness(), URLImpl: undefined },
+    browserSetup({ document }) {
+      const create = document.createElement.bind(document);
+      document.createElement = (tag) => {
+        const element = create(tag);
+        if (tag === 'canvas') canvases.push(element);
+        return element;
+      };
+    },
+  });
+  const { page } = f;
+  assert.ok(sound, 'Observe the real app-owned shared preparation queue.');
+  const { checkpoint, earned } = await completeOrdinary(f);
+  const parent = page.rendered.run;
+  assert.equal(parent.status, 'won');
+  const surface = canvases.find((canvas) => canvas.listeners.get('contextlost')?.size);
+  assert.ok(surface, 'The displayed parent canvas owns real context lifecycle listeners.');
+  page.$('shell-menu').click();
+  await page.open();
+  const demoTick = page.demoFrame.run.tick;
+  const controller = new AbortController();
+  let calls = 0,
+    settled = false;
+  const pending = sound.mediaPreparation.run('main', () => ++calls, {
+    signal: controller.signal,
+  });
+  // Attach rejection handling immediately; a failed assertion still retires
+  // this injected owner instead of leaving a pending queue promise behind.
+  pending.then(
+    () => {
+      settled = true;
+    },
+    () => {
+      settled = true;
+    },
+  );
+  t.after(() => controller.abort());
+  const microtasks = () => new Promise((resolve) => setImmediate(resolve));
+  await microtasks();
+  assert.equal(calls, 0, 'Active Demo parks real shared main-thread preparation.');
+  for (let frame = 0; frame < 6; frame++) page.frame(1000 / 60);
+  await microtasks();
+  assert.ok(page.demoFrame.run.tick > demoTick, 'The spectator really advances.');
+  assert.equal(calls, 0, 'The won parent cannot admit bulk work on its native callbacks.');
+  page.doc.focused = false;
+  page.win.emit('blur');
+  page.doc.focused = true;
+  page.win.emit('focus');
+  await microtasks();
+  assert.equal(calls, 0, 'Parent focus restoration cannot reopen active Demo admission.');
+  surface.emit('contextlost');
+  page.frame(1000 / 60);
+  await microtasks();
+  assert.equal(calls, 0, 'Parent context loss preserves the active Demo queue owner.');
+  surface.emit('contextrestored');
+  page.frame(1000 / 60);
+  await microtasks();
+  assert.equal(calls, 0, 'Parent context restoration does not become Demo Pause.');
+  assert.deepEqual(authoritativeCheckpoint(parent), checkpoint);
+  assert.deepEqual(loadLibrary(page.storage, PROFILE).library, earned);
+  assert.equal(page.storage.getItem(SESSION), null);
+  page.$('demo-interrupt').click();
+  await settle(() => settled, 'Explicit Demo Pause must settle the owned queued task.');
+  assert.equal(await pending, 1);
+  await microtasks();
+  assert.equal(calls, 1, 'Explicit visible Pause releases the parked work exactly once.');
+  assert.deepEqual(authoritativeCheckpoint(parent), checkpoint);
+  assert.deepEqual(loadLibrary(page.storage, PROFILE).library, earned);
   assert.deepEqual(page.errors, []);
 });

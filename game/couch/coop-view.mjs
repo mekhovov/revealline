@@ -246,6 +246,7 @@ export function createCoopPainter(canvas) {
       runtimeLevel = null,
       textFace = 'pixel',
       textSize = 'standard',
+      extraLargeText = false,
       picture = null,
       pictureLevel = run.level,
       actorStyle = 'hybrid',
@@ -272,7 +273,9 @@ export function createCoopPainter(canvas) {
       }),
     );
     if (selectedArt !== artSnapshot) prepareArt(selectedArt);
-    const cueScale = coopCueScale(canvas.clientWidth, run.width, textSize);
+    const cueScale = coopCueScale(canvas.clientWidth, run.width, textSize, {
+      extraLarge: extraLargeText,
+    });
     if (actorAppearance !== null && !['fpv', 'campaign'].includes(actorAppearance?.style))
       throw new TypeError(t('interface:teamActorAppearanceNeedsASupportedStyle'));
     const selectedActors =

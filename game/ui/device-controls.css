@@ -15,12 +15,20 @@
     margin-left: auto;
     min-width: 44px;
     min-height: 44px;
-    font-size: 22px;
+    font-size: calc(22px * var(--primary-text-scale, 1));
   }
-  body.field-kit.game-shell:is([data-flight-state='running'], [data-flight-state='paused'])
+  body.field-kit.game-shell:is(
+      :is([data-flight-state='running'], [data-flight-layout='preparing']),
+      [data-flight-state='paused']
+    )
     .shell-bar
     > :is(#shell-packs, #journey-skip, #shell-collection, #shell-settings, .shell-edition) {
     display: none;
+  }
+  /* Preparation reserves the eventual touch geometry but exposes no controls.
+   The paused/briefing command surface and real input scope keep ownership. */
+  .game-shell[data-flight-layout='preparing'] .play-controls {
+    visibility: hidden;
   }
   .game-shell .play-controls {
     display: none;
@@ -63,13 +71,13 @@
   .game-shell .play-controls .ability-buttons .button {
     min-height: 44px;
     padding: 4px 8px;
-    font-size: 17px;
+    font-size: calc(17px * var(--primary-text-scale, 1));
   }
   .game-shell .play-controls .ability-buttons kbd {
     display: none;
   }
   .game-shell .ability-buttons > span {
-    font-size: 14px;
+    font-size: calc(14px * var(--primary-text-scale, 1));
     text-align: right;
   }
   .game-shell main {
@@ -103,16 +111,16 @@
   }
   .game-shell .flight-status {
     margin: 8px 0 0;
-    font-size: 16px;
+    font-size: calc(16px * var(--primary-text-scale, 1));
   }
   .game-shell .run-message {
     margin: 4px 0;
-    font-size: 16px;
+    font-size: calc(16px * var(--primary-text-scale, 1));
     line-height: 1.25;
     min-height: 0;
   }
   .game-shell .encounter-status:not([hidden]):not([data-phase='open']) {
-    font-size: 15px;
+    font-size: calc(15px * var(--primary-text-scale, 1));
     margin: 4px 0;
     padding: 4px 8px;
   }
@@ -191,7 +199,7 @@
     background: rgb(4 12 25 / 96%);
     color: #d9fbff;
     font:
-      12px/1.4 ui-monospace,
+      calc(12px * var(--primary-text-scale, 1)) / 1.4 ui-monospace,
       monospace;
   }
   .game-shell .controller-confirm-trace pre {
@@ -259,7 +267,7 @@
       gap: 6px;
     }
     body.field-kit.game-shell .game-overlay[data-kind='pause'] .pause-label {
-      font-size: 13px;
+      font-size: calc(13px * var(--primary-text-scale, 1));
     }
     .game-shell .game-overlay[data-kind='pause'] .overlay-actions {
       gap: 6px;
@@ -269,7 +277,7 @@
       .overlay-actions
       :is(.button, summary) {
       padding-inline: 8px;
-      font-size: 15px;
+      font-size: calc(15px * var(--primary-text-scale, 1));
       text-align: center;
     }
     .game-shell .game-overlay[data-kind='pause'] .overlay-actions :is(.button, summary)::before {
@@ -305,7 +313,7 @@
       inset-inline-start: 4px;
       padding-inline: 3px;
       background: #050a14;
-      font-size: 10px;
+      font-size: calc(10px * var(--primary-text-scale, 1));
       line-height: 1;
       pointer-events: none;
     }
@@ -317,7 +325,7 @@
       .overlay-actions
       :is(.button, summary) {
       padding-inline: 6px;
-      font-size: 13px;
+      font-size: calc(13px * var(--primary-text-scale, 1));
       line-height: 1.1;
       text-align: center;
     }
@@ -340,11 +348,11 @@
       margin-bottom: 4px;
     }
     .game-shell .telemetry strong {
-      font-size: 23px;
+      font-size: calc(23px * var(--primary-text-scale, 1));
     }
     .game-shell .telemetry span,
     .game-shell .telemetry em {
-      font-size: 13px;
+      font-size: calc(13px * var(--primary-text-scale, 1));
     }
     .game-shell .arena-panel,
     .game-shell .arena-panel:has(> .encounter-status[data-kind='classic'][data-phase='open']),
@@ -358,11 +366,11 @@
       );
     }
     .game-shell .flight-status {
-      font-size: 14px;
+      font-size: calc(14px * var(--primary-text-scale, 1));
       margin-top: 3px;
     }
     .game-shell .run-message {
-      font-size: 14px;
+      font-size: calc(14px * var(--primary-text-scale, 1));
     }
   }
   @media (max-width: 280px) {
@@ -412,7 +420,7 @@
     }
     .game-shell #shell-menu::after {
       content: ' ' attr(data-menu-label);
-      font-size: 17px;
+      font-size: calc(17px * var(--primary-text-scale, 1));
       letter-spacing: 1px;
     }
   }
@@ -423,12 +431,12 @@
    Warning-capable maps, training and narrow landscape keep their existing reserve. */
   @media (min-width: 681px) and (orientation: landscape) and (max-height: 540px) {
     .game-shell[data-arena-chrome='compact']:not(.first-flight-session):not(
-        [data-flight-state='running']
+        :is([data-flight-state='running'], [data-flight-layout='preparing'])
       ) {
       --compact-chrome: 140px;
     }
     .game-shell[data-arena-chrome='compact'][data-text-size='large']:not(.first-flight-session):not(
-        [data-flight-state='running']
+        :is([data-flight-state='running'], [data-flight-layout='preparing'])
       ) {
       --compact-chrome: 145px;
     }
@@ -438,50 +446,50 @@
    Reserve warning space from the authored map, including while its card is hidden. */
   @media (min-width: 681px) and (orientation: landscape) and (max-height: 540px) {
     .game-shell[data-arena-chrome='full']:not(.first-flight-session):not(
-        [data-flight-state='running']
+        :is([data-flight-state='running'], [data-flight-layout='preparing'])
       ) {
       --compact-chrome: 205px;
     }
     .game-shell[data-arena-chrome='full'][data-text-size='large']:not(.first-flight-session):not(
-        [data-flight-state='running']
+        :is([data-flight-state='running'], [data-flight-layout='preparing'])
       ) {
       --compact-chrome: 225px;
     }
     .game-shell[data-arena-chrome='full']:not(.first-flight-session):not(
-        [data-flight-state='running']
+        :is([data-flight-state='running'], [data-flight-layout='preparing'])
       )
       .arena-panel,
     .game-shell[data-arena-chrome='full']:not(.first-flight-session):not(
-        [data-flight-state='running']
+        :is([data-flight-state='running'], [data-flight-layout='preparing'])
       )
       .arena-panel:has(> .encounter-status[data-kind='classic'][data-phase='open']),
     .game-shell[data-arena-chrome='full']:not(.first-flight-session):not(
-        [data-flight-state='running']
+        :is([data-flight-state='running'], [data-flight-layout='preparing'])
       )
       .arena-panel:has(> .encounter-status:not([hidden])) {
       max-width: calc(100% - var(--side-gutter));
     }
     .game-shell[data-arena-chrome='full'][data-screen-controls='shown']:not(
         .first-flight-session
-      ):not([data-flight-state='running'])
+      ):not(:is([data-flight-state='running'], [data-flight-layout='preparing']))
       .arena-panel,
     .game-shell[data-arena-chrome='full'][data-screen-controls='shown']:not(
         .first-flight-session
-      ):not([data-flight-state='running'])
+      ):not(:is([data-flight-state='running'], [data-flight-layout='preparing']))
       .arena-panel:has(> .encounter-status[data-kind='classic'][data-phase='open']),
     .game-shell[data-arena-chrome='full'][data-screen-controls='shown']:not(
         .first-flight-session
-      ):not([data-flight-state='running'])
+      ):not(:is([data-flight-state='running'], [data-flight-layout='preparing']))
       .arena-panel:has(> .encounter-status:not([hidden])) {
       max-width: calc(100% - var(--side-gutter) - 16px);
     }
     .game-shell[data-arena-chrome='full']:not(.first-flight-session):not(
-        [data-flight-state='running']
+        :is([data-flight-state='running'], [data-flight-layout='preparing'])
       )
       .arena-panel
       > .arena-shell,
     .game-shell[data-arena-chrome='full']:not(.first-flight-session):not(
-        [data-flight-state='running']
+        :is([data-flight-state='running'], [data-flight-layout='preparing'])
       )
       .arena-panel:has(> .encounter-status:not([hidden]))
       > .arena-shell {
@@ -531,33 +539,36 @@
   @media (orientation: landscape) and (max-height: 600px),
     (orientation: landscape) and (any-pointer: coarse) {
     /* Reserve room for the canvas focus paint beyond its fitted layout box. */
-    body.field-kit.game-shell[data-flight-state='running'] {
+    body.field-kit.game-shell:is([data-flight-state='running'], [data-flight-layout='preparing']) {
       --fk-flight-bottom: 8px;
     }
-    .game-shell[data-flight-state='running'] {
+    .game-shell:is([data-flight-state='running'], [data-flight-layout='preparing']) {
       --touch-gutter: 0px;
       --side-gutter: 0px;
       overflow: hidden;
     }
-    .game-shell[data-flight-state='running'] main {
+    .game-shell:is([data-flight-state='running'], [data-flight-layout='preparing']) main {
       position: fixed;
       inset: 0;
       max-width: none;
       padding: 0;
       height: 100dvh;
     }
-    .game-shell[data-flight-state='running'] .arena-panel,
-    .game-shell[data-flight-state='running']
+    .game-shell:is([data-flight-state='running'], [data-flight-layout='preparing']) .arena-panel,
+    .game-shell:is([data-flight-state='running'], [data-flight-layout='preparing'])
       .arena-panel:has(> .encounter-status[data-kind='classic'][data-phase='open']),
-    .game-shell[data-flight-state='running'] .arena-panel:has(> .encounter-status:not([hidden])) {
+    .game-shell:is([data-flight-state='running'], [data-flight-layout='preparing'])
+      .arena-panel:has(> .encounter-status:not([hidden])) {
       position: absolute;
       inset: 0;
       max-width: none;
       width: 100%;
       margin: 0;
     }
-    .game-shell[data-flight-state='running'] .arena-panel > .arena-shell,
-    .game-shell[data-flight-state='running']
+    .game-shell:is([data-flight-state='running'], [data-flight-layout='preparing'])
+      .arena-panel
+      > .arena-shell,
+    .game-shell:is([data-flight-state='running'], [data-flight-layout='preparing'])
       .arena-panel:has(> .encounter-status:not([hidden]))
       > .arena-shell {
       position: absolute;
@@ -572,7 +583,7 @@
       margin: 0;
       border: 0;
     }
-    .game-shell[data-flight-state='running'] .shell-bar {
+    .game-shell:is([data-flight-state='running'], [data-flight-layout='preparing']) .shell-bar {
       position: fixed;
       z-index: 9;
       top: 0;
@@ -582,20 +593,25 @@
       background: transparent;
       pointer-events: none;
     }
-    .game-shell[data-flight-state='running'] .shell-bar > button {
+    .game-shell:is([data-flight-state='running'], [data-flight-layout='preparing'])
+      .shell-bar
+      > button {
       pointer-events: auto;
       background: #07101ea8;
       border-radius: 8px;
     }
-    .game-shell[data-flight-state='running'] #shell-menu {
+    .game-shell:is([data-flight-state='running'], [data-flight-layout='preparing']) #shell-menu {
       width: 44px;
       padding: 4px;
     }
-    .game-shell[data-flight-state='running'] #shell-menu :not(.brand-mark),
-    .game-shell[data-flight-state='running'] #shell-menu::after {
+    .game-shell:is([data-flight-state='running'], [data-flight-layout='preparing'])
+      #shell-menu
+      :not(.brand-mark),
+    .game-shell:is([data-flight-state='running'], [data-flight-layout='preparing'])
+      #shell-menu::after {
       display: none;
     }
-    .game-shell[data-flight-state='running'] .telemetry {
+    .game-shell:is([data-flight-state='running'], [data-flight-layout='preparing']) .telemetry {
       position: fixed;
       z-index: 6;
       top: var(--safe-top);
@@ -610,25 +626,32 @@
       border-radius: 0 0 8px 8px;
       pointer-events: none;
     }
-    .game-shell[data-flight-state='running'] .telemetry > div {
+    .game-shell:is([data-flight-state='running'], [data-flight-layout='preparing'])
+      .telemetry
+      > div {
       padding-left: 6px;
     }
-    .game-shell[data-flight-state='running'] .telemetry span,
-    .game-shell[data-flight-state='running'] .telemetry em {
-      font-size: 10px;
+    .game-shell:is([data-flight-state='running'], [data-flight-layout='preparing']) .telemetry span,
+    .game-shell:is([data-flight-state='running'], [data-flight-layout='preparing']) .telemetry em {
+      font-size: calc(10px * var(--primary-text-scale, 1));
       line-height: 1;
     }
-    .game-shell[data-flight-state='running'] .telemetry strong {
-      font-size: 20px;
+    .game-shell:is([data-flight-state='running'], [data-flight-layout='preparing'])
+      .telemetry
+      strong {
+      font-size: calc(20px * var(--primary-text-scale, 1));
       margin-top: 1px;
     }
-    .game-shell[data-flight-state='running'] .telemetry .meter {
+    .game-shell:is([data-flight-state='running'], [data-flight-layout='preparing'])
+      .telemetry
+      .meter {
       display: none;
     }
-    .game-shell[data-flight-state='running'] .flight-status {
+    .game-shell:is([data-flight-state='running'], [data-flight-layout='preparing']) .flight-status {
       display: none;
     }
-    .game-shell[data-flight-state='running'] .encounter-status:not([hidden]) {
+    .game-shell:is([data-flight-state='running'], [data-flight-layout='preparing'])
+      .encounter-status:not([hidden]) {
       position: fixed;
       z-index: 6;
       bottom: max(4px, var(--safe-bottom));
@@ -638,14 +661,15 @@
       margin: 0;
       padding: 4px 8px;
       background: #07101eb3;
-      font-size: 13px;
+      font-size: calc(13px * var(--primary-text-scale, 1));
       pointer-events: none;
     }
-    .game-shell[data-flight-state='running']
+    .game-shell:is([data-flight-state='running'], [data-flight-layout='preparing'])
       .encounter-status[data-kind='classic'][data-phase='open'] {
       display: none;
     }
-    .game-shell[data-flight-state='running'] .first-flight-panel {
+    .game-shell:is([data-flight-state='running'], [data-flight-layout='preparing'])
+      .first-flight-panel {
       display: none;
     }
   }
@@ -653,32 +677,53 @@
   /* Keep a shown D-pad clear of the complete board in short landscape.
    Existing compiled width/height limits still own the vertical header reserve. */
   @media (orientation: landscape) and (max-height: 600px) {
-    .game-shell[data-flight-state='running'][data-screen-controls='shown'][data-touch-mode='dpad'] {
+    .game-shell:is(
+        [data-flight-state='running'],
+        [data-flight-layout='preparing']
+      )[data-screen-controls='shown'][data-touch-mode='dpad'] {
       --dpad-left-edge: max(24px, calc(var(--safe-left) + 12px));
       --dpad-right-edge: max(24px, calc(var(--safe-right) + 12px));
       --dpad-board-left: var(--safe-left);
       --dpad-board-right: var(--safe-right);
     }
-    .game-shell[data-flight-state='running'][data-screen-controls='shown'][data-touch-mode='dpad'][data-touch-side='left'] {
+    .game-shell:is(
+        [data-flight-state='running'],
+        [data-flight-layout='preparing']
+      )[data-screen-controls='shown'][data-touch-mode='dpad'][data-touch-side='left'] {
       --dpad-board-left: calc(var(--dpad-left-edge) + var(--touch-size) + 12px);
     }
-    .game-shell[data-flight-state='running'][data-screen-controls='shown'][data-touch-mode='dpad'][data-touch-side='right'] {
+    .game-shell:is(
+        [data-flight-state='running'],
+        [data-flight-layout='preparing']
+      )[data-screen-controls='shown'][data-touch-mode='dpad'][data-touch-side='right'] {
       --dpad-board-right: calc(var(--dpad-right-edge) + var(--touch-size) + 12px);
     }
-    .game-shell[data-flight-state='running'][data-screen-controls='shown'][data-touch-mode='dpad'][data-touch-side='left']:has(
+    .game-shell:is(
+        [data-flight-state='running'],
+        [data-flight-layout='preparing']
+      )[data-screen-controls='shown'][data-touch-mode='dpad'][data-touch-side='left']:has(
         .play-controls .ability-buttons > button:not([hidden])
       ) {
       --dpad-board-right: calc(var(--dpad-right-edge) + 160px + 12px);
     }
-    .game-shell[data-flight-state='running'][data-screen-controls='shown'][data-touch-mode='dpad'][data-touch-side='right']:has(
+    .game-shell:is(
+        [data-flight-state='running'],
+        [data-flight-layout='preparing']
+      )[data-screen-controls='shown'][data-touch-mode='dpad'][data-touch-side='right']:has(
         .play-controls .ability-buttons > button:not([hidden])
       ) {
       --dpad-board-left: calc(var(--dpad-left-edge) + 160px + 12px);
     }
-    .game-shell[data-flight-state='running'][data-screen-controls='shown'][data-touch-mode='dpad']
+    .game-shell:is(
+        [data-flight-state='running'],
+        [data-flight-layout='preparing']
+      )[data-screen-controls='shown'][data-touch-mode='dpad']
       .arena-panel
       > .arena-shell,
-    .game-shell[data-flight-state='running'][data-screen-controls='shown'][data-touch-mode='dpad']
+    .game-shell:is(
+        [data-flight-state='running'],
+        [data-flight-layout='preparing']
+      )[data-screen-controls='shown'][data-touch-mode='dpad']
       .arena-panel:has(> .encounter-status:not([hidden]))
       > .arena-shell {
       left: calc(
@@ -695,13 +740,20 @@
    preferences and viewport only; score, threat and message updates cannot
    resize the arena. Keep the existing button-free horizontal HUD lane. */
   @media (min-width: 521px) and (max-width: 680px) and (orientation: landscape) and (max-height: 600px) {
-    body.field-kit.game-shell[data-flight-state='running']:not(.first-flight-session) {
+    body.field-kit.game-shell:is(
+        [data-flight-state='running'],
+        [data-flight-layout='preparing']
+      ):not(.first-flight-session) {
       --fk-flight-header: calc(
         var(--fk-text-counter) * 2.5 + var(--fk-text-secondary) * 4.35 + var(--fk-text-secondary) *
           1.3 + 24px
       );
     }
-    body.field-kit.game-shell[data-flight-state='running']:not(.first-flight-session) .telemetry {
+    body.field-kit.game-shell:is(
+        [data-flight-state='running'],
+        [data-flight-layout='preparing']
+      ):not(.first-flight-session)
+      .telemetry {
       grid-template-columns: repeat(2, minmax(0, 1fr));
       row-gap: 8px;
     }
@@ -711,10 +763,11 @@
    width instead of squeezing text into the short landscape board footprint.
    The running arena retains its separate, aspect-correct fit. */
   @media (min-width: 521px) and (max-width: 680px) and (orientation: landscape) and (max-height: 600px) {
-    .game-shell[data-flight-state='paused'] .arena-panel,
-    .game-shell[data-flight-state='paused']
+    .game-shell[data-flight-state='paused']:not([data-flight-layout='preparing']) .arena-panel,
+    .game-shell[data-flight-state='paused']:not([data-flight-layout='preparing'])
       .arena-panel:has(> .encounter-status[data-kind='classic'][data-phase='open']),
-    .game-shell[data-flight-state='paused'] .arena-panel:has(> .encounter-status:not([hidden])) {
+    .game-shell[data-flight-state='paused']:not([data-flight-layout='preparing'])
+      .arena-panel:has(> .encounter-status:not([hidden])) {
       max-width: 100%;
     }
   }
@@ -723,7 +776,8 @@
    height-limited footprint. Keep readable counters centered in the viewport;
    the board and running-flight HUD keep their own aspect-correct geometry. */
   @media (min-width: 521px) and (max-width: 680px) and (orientation: landscape) and (max-height: 600px) {
-    .game-shell:not([data-flight-state='running']) .telemetry {
+    .game-shell:not(:is([data-flight-state='running'], [data-flight-layout='preparing']))
+      .telemetry {
       position: relative;
       left: 50%;
       transform: translateX(-50%);
