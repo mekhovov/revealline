@@ -315,6 +315,7 @@ let acceptedArtRevision = runtimeActorArtRevision(),
 const destruction = createDestructionPreferences(),
   remains = createEncounterDisplayPreferences();
 const display = createDisplayPreferences({
+  extraLarge: true,
   onWarning: (message, key) => {
     $('snake-display-status').textContent = key ? t(key) : message;
   },
@@ -2088,7 +2089,7 @@ display.subscribe(primeEffects);
 display.subscribe((choice) => {
   doc.body.dataset.textFace = $('snake-text-face').value = choice.textFace;
   doc.body.dataset.textSize = choice.effectiveTextSize ?? choice.textSize;
-  renderTextSizeControl($('snake-text-size'), choice.textSize);
+  renderTextSizeControl($('snake-text-size'), choice.textSize, { extraLarge: true });
   footprint?.refresh();
 });
 $('snake-text-face').addEventListener('change', () =>
@@ -2827,6 +2828,7 @@ snakeGlobalSettings = mountGlobalSettings({
   panels: snakeSettingsView.panels,
   prefix: 'snake-global',
   locale,
+  extraLargeText: true,
   controls: {
     language: $('language').closest('label'),
     appearance: snakeSettingsView.panels.display.querySelector('[data-theme-controls]'),

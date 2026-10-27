@@ -26,6 +26,7 @@ function seed(
     studio = false,
     primaryTextScaling = false,
     overflightTextScaling = false,
+    textScaling,
     coarse = false,
     reduced = false,
     brokenStorage = false,
@@ -42,6 +43,7 @@ function seed(
         }
       : {};
   if (primaryTextScaling) dataset.textScaling = 'solo';
+  if (textScaling) dataset.textScaling = textScaling;
   if (overflightTextScaling) dataset.textScaling = 'overflight';
   const document = {
     documentElement: { dataset, style: { setProperty: (key, value) => variables.set(key, value) } },
@@ -506,16 +508,35 @@ test('qualified primary extra-large seeds its multiplier before deferred styles 
 
 test('primary and Overflight first-paint scale factors remain independent across every stored size', () => {
   for (const textSize of ['standard', 'large', 'extra-large']) {
-    for (const host of ['primary', 'overflight', 'other']) {
+    for (const host of ['primary', 'snake', 'overflight', 'other']) {
       const result = seed(
         { 'revealline.display.v1': raw({ textSize }) },
-        { primaryTextScaling: host === 'primary', overflightTextScaling: host === 'overflight' },
+        { primaryTextScaling: host === 'primary', overflightTextScaling: host === 'overflight', textScaling: host === 'snake' ? 'snake' : undefined },
       );
       const extra = textSize === 'extra-large';
-      assert.equal(result.variables.get('--primary-text-scale'), host === 'primary' && extra ? '2' : '1');
+      assert.equal(result.variables.get('--primary-text-scale'), ['primary', 'snake'].includes(host) && extra ? '2' : '1');
       assert.equal(result.variables.get('--overflight-text-scale'), host === 'overflight' && extra ? '2' : '1');
       assert.ok(Number(result.variables.get('--primary-text-scale')) * Number(result.variables.get('--overflight-text-scale')) <= 2);
       assert.equal(result.dataset.themeTextSize, extra && host === 'other' ? 'large' : textSize);
     }
+  }
+});
+
+test('Classic Snake first paint and Standard/Large reset agree while its hub remains unqualified', () => {
+  for (const textSize of ['standard', 'large', 'extra-large']) {
+    const record = {
+      'revealline.display.v1': raw({ textFace: 'pixel', textSize, reducedEffects: false }),
+    };
+    const snake = seed(record, { textScaling: 'snake' });
+    assert.equal(snake.dataset.themeTextSize, textSize);
+    assert.equal(
+      snake.variables.get('--primary-text-scale'),
+      textSize === 'extra-large' ? '2' : '1',
+    );
+    assert.equal(snake.variables.get('--iw-text-size'), textSize === 'large' ? '20px' : '16px');
+    const hub = seed(record);
+    assert.equal(hub.dataset.themeTextSize, textSize === 'extra-large' ? 'large' : textSize);
+    assert.equal(hub.variables.get('--primary-text-scale'), '1');
+    assert.equal(hub.variables.get('--overflight-text-scale'), '1');
   }
 });

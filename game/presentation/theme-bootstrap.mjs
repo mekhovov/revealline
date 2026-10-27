@@ -1511,9 +1511,10 @@
     /* Ignore damaged local data. */
   }
   const studio = doc.currentScript?.dataset.themeDensity === 'studio';
+  const primaryTextHost = ['solo', 'snake'].includes(root.dataset.textScaling);
   const extraLarge =
     display?.textSize === 'extra-large' &&
-    ['solo', 'overflight'].includes(root.dataset.textScaling);
+    (primaryTextHost || root.dataset.textScaling === 'overflight');
   const large =
     display?.textSize === 'large' || (display?.textSize === 'extra-large' && !extraLarge);
   const plain = display?.textFace === 'plain';
@@ -1540,8 +1541,7 @@
   variables['--iw-text-size'] = large ? '20px' : '16px';
   variables['--overflight-text-scale'] =
     root.dataset.textScaling === 'overflight' && extraLarge ? '2' : '1';
-  variables['--primary-text-scale'] =
-    root.dataset.textScaling === 'solo' && extraLarge ? '2' : '1';
+  variables['--primary-text-scale'] = primaryTextHost && extraLarge ? '2' : '1';
   for (const [key, value] of Object.entries(variables)) root.style.setProperty(key, value);
   Object.assign(root.dataset, {
     interfaceTheme: id,
