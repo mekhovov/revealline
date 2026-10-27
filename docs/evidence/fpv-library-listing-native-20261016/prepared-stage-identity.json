@@ -1,0 +1,51 @@
+{
+  "format": "FPVNativeListingPreparedStage.v1",
+  "sourceRevision": "bc9bc71f192729f0661a0483d7d64609c1973343",
+  "archiveSHA256": "90d2cabcebd8c4647f6abced993dfb5c40f4a19bd5829a0e15c0b5bfc321f692",
+  "originalMember": "optional-practice/civilian-fpv/world-store.mjs",
+  "moduleSHA256": "6050ac77adf52c2b757b851c444a4b1430a8cbca34a9048713e540601ebcca22",
+  "nativeObservedHarnessFilesByteIdentical": true,
+  "nativeEvidence": "docs/evidence/fpv-library-listing-native-20261016/native-receipt.json",
+  "nativeEvidenceReceiptSHA256": "175b89ed7ac8d38a3aec4095d334337ce5947c9a149779a447a630ab779e53ef",
+  "newStageNativeAccepted": false,
+  "normalPlayerAccepted": false,
+  "publicPersistenceAccepted": false,
+  "scope": "Preparation reproduces bytes only. The supplied-factory facade and tiny test DB are disclosed in README; a new origin/run has no inherited native acceptance. No player/default storage or runtime reconnect/migration changes.",
+  "files": [
+    {
+      "path": "packaged-world-store.mjs",
+      "bytes": 17516,
+      "sha256": "6050ac77adf52c2b757b851c444a4b1430a8cbca34a9048713e540601ebcca22"
+    },
+    {
+      "path": "index.html",
+      "bytes": 1930,
+      "sha256": "ee7b1343ca521480f02dbe51b022ee7ae0ea118cbad312d6ee89f9ba9d97d95c"
+    },
+    {
+      "path": "style.css",
+      "bytes": 771,
+      "sha256": "0c7aef2cbbc6afaaafaf7f7a6f7875bf5fa571c1227f4b566fcf7d522541bef7"
+    },
+    {
+      "path": "harness.mjs",
+      "bytes": 1668,
+      "sha256": "d37599b6a90bfb1b6d8d276a905e02a5141a511c5ca226abe3b93e04bc2c4aca"
+    },
+    {
+      "path": "contract.mjs",
+      "bytes": 14755,
+      "sha256": "c2d819373994e2ac9e87b93fb04fe8df522d75d7a4167dcf6361a52496533f62"
+    },
+    {
+      "path": "verify.mjs",
+      "bytes": 4667,
+      "sha256": "23e26e38f42f11cbb3af829282fa30bfd66d8e4375b835e6b0130ad8b0fabc1f"
+    },
+    {
+      "path": "README.md",
+      "bytes": 5335,
+      "sha256": "6842d6a42eb77a3b55f8dc4af13a3fd5990e09acd824cd0c3205394a1caabbbe"
+    }
+  ]
+}

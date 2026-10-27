@@ -10,6 +10,7 @@
   "rawOriginalsPreserved": true,
   "pixelTransformations": [],
   "generation": "Twelve independent text-only calls in concurrent batches of three, three and six. No generation retry, edit, original crop, stretch, resampling or re-encoding. Eleven outputs are 1774×887; Survey Wheel Ukraine is 1773×887 despite the same 1774×887 request. Review derivatives use a proportional full-frame fit.",
+  "rightsScope": "Original fictional AI-generated project illustrations. No reference images were supplied to generation, no copied game assets or named artist imitation. FPV includes recognizable Ukrainian drone/military context without graphic violence or operational claims. Ukraine uses broad craft/material inspiration; Retro equipment and No historical/product accuracy, exclusive-rights or human-quality certification.",
   "layoutAuthority": {
     "path": "authoring/library/moving-edges/layouts.json",
     "sha256": "f9f15bd2d88d23d88922d90b41b4639c62347b8f26e46b99c66c6328b4bbc82c",

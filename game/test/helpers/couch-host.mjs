@@ -188,10 +188,34 @@ export async function couchPage(
     } else if (!rendering) BoardPainter.prototype[key] = () => {};
   }
   t.after(() => {
-    win.emit('pagehide', { persisted: false });
-    for (const [key, value] of original)
-      value ? Object.defineProperty(globalThis, key, value) : delete globalThis[key];
-    for (const [key, value] of methods) BoardPainter.prototype[key] = value;
+    const errors = [];
+    try {
+      win.emit('pagehide', { persisted: false });
+    } catch (error) {
+      errors.push(error);
+    }
+    rafs.clear();
+    try {
+      doc.documentElement.remove();
+    } catch (error) {
+      errors.push(error);
+    }
+    for (const [key, value] of original) {
+      try {
+        value ? Object.defineProperty(globalThis, key, value) : delete globalThis[key];
+      } catch (error) {
+        errors.push(error);
+      }
+    }
+    for (const [key, value] of methods) {
+      try {
+        BoardPainter.prototype[key] = value;
+      } catch (error) {
+        errors.push(error);
+      }
+    }
+    if (errors.length === 1) throw errors[0];
+    if (errors.length) throw new AggregateError(errors, 'Versus fixture retirement failed');
   });
   const actorTransport = installActorAppearanceTransport({
     baseURL: new URL('../presentation/compiled/', href),

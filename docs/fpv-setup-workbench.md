@@ -28,11 +28,11 @@ Only commanded rotation animates. It stops outside its section, when backgrounde
 
 ## Simulation comparisons
 
-The isolated bench runs the current physical aircraft backend at its fixed 500 Hz. It measures every accepted physics step, retaining bounded display traces at 50 Hz. Diagnostic capture is excluded from physical state, replay hashes and trajectories. Each request owns an immutable configuration and dedicated worker; replacement, close and invalidation cancel the job and ignore late replies.
+The isolated bench runs the selected physical backend at its recorded fixed frequency. The new v3 backend defaults to 1,000 Hz; explicit historical 500 Hz configurations remain supported. Comparisons require the same backend and frequency, and report both. It measures every accepted physics step, retaining bounded display traces at 50 Hz. Diagnostic capture is excluded from physical state, replay hashes and trajectories. Each request owns an immutable configuration and dedicated worker; replacement, close and invalidation cancel the job and ignore late replies.
 
 PID comparisons hold everything except the controller constant. Complete-setup comparisons identify changed groups. Manual practice freezes comparison configurations and conditions, but does not claim identical human inputs.
 
-The assistant changes one nonzero P/I/D/feedforward gain by ±10%, holding aircraft, rates, filters and zero gains constant. Selection uses step/release cases; separate validation includes opposite directions, ramps, throttle levels, orthogonal-axis steps and deterministic noise seeds. Candidates must improve tracking and pass all regression gates. Zero/unreached metrics are handled explicitly. Results show exact values and measured tradeoffs; inconclusive searches return No clear improvement. Suggestions never save or apply automatically. This qualifies behavior of the SIM model, not a real aircraft.
+The assistant changes one nonzero P/I/D/feedforward gain by ±10%, holding aircraft, rates, filters and zero gains constant. Selection uses step/release cases; separate validation includes opposite directions, ramps, throttle levels, orthogonal-axis steps and deterministic noise seeds. Candidates must improve tracking and pass all regression gates; allowed time regression is at most one step of the selected physical frequency (1 ms at 1,000 Hz). Zero/unreached metrics are handled explicitly. Results show exact values and measured tradeoffs; inconclusive searches return No clear improvement. Suggestions never save or apply automatically. This qualifies behavior of the SIM model, not a real aircraft.
 
 ## Research basis
 
@@ -42,7 +42,7 @@ Interaction patterns were reviewed against [WebFPV input help](https://webfpv.or
 
 Targeted draft/library, controller-library, workbench, host, worker, bench and assistant tests cover atomic writes, invalid text, undo, stale edits, copying, compatibility, diagnostics, cancellation, holdout rejection and no-op saves. The complete practice suite passed **1,060/1,060** checks after updating the paused-controller test to verify live preview ownership. Targeted post-review UI checks additionally cover calibration return, retired catalog references, raw-text undo, geometry updates and independent input capture. Browser checks confirmed Academy/World access, an unscored draft round trip, calibration return, English/Ukrainian labels and a 320-pixel layout. Full lint and source/content validation also run before publication.
 
-Optional/native packaging explicitly includes all workbench and worker dependencies. Academy's measured source/installed envelope increases by 256 KiB; World remains inside its existing 20 MiB envelope. The numerical backend frequency is unchanged.
+Optional/native packaging explicitly includes all workbench and worker dependencies. Academy's measured source/installed envelope increases by 256 KiB; World remains inside its existing 20 MiB envelope. That original workbench release did not change the numerical backend frequency. The later [v3 contact/timing correction](fpv-current-contact-20261019.md) is a separately versioned change.
 
 ## Comparison release qualification
 

@@ -8,6 +8,9 @@ import {
   assessSharedModePublicReturn,
 } from './solo-qualification-shared-mode.mjs';
 
+import { executePagesBackupFlow, assertPagesBackupEvidence } from './solo-pages-backup.mjs';
+export { assertPagesBackupEvidence } from './solo-pages-backup.mjs';
+
 const planPath = new URL(
   '../docs/performance/solo-published-pages-smoke-plan.json',
   import.meta.url,
@@ -32,8 +35,15 @@ export function validatePagesSmokePlan(plan) {
   assert.equal(plan.node, '22.13.1');
   assert.equal(plan.playwright, '1.62.1');
   assert.deepEqual(plan.engines, ['chromium', 'webkit']);
-  assert.deepEqual(plan.diagnosticModes, ['none', 'missions']);
+  assert.deepEqual(plan.diagnosticModes, ['none', 'missions', 'backup']);
   assert.equal(plan.defaultDiagnostic, 'none');
+  assert.deepEqual(plan.backupDiagnostic, {
+    scope: 'fresh-profile-progress-backup',
+    maximumRetainedReadBytes: 1048576,
+    acquisitionBound: 'existing-browser-context-and-owner-limits',
+    downloadRetention: 'metadata-only-after-owned-delete',
+    performanceExcluded: true,
+  });
   assert.deepEqual(plan.missionsDiagnostic, {
     scope: 'missions-first-open-stage-observation',
     initialSoloQuery: 'performance=1',
@@ -67,10 +77,12 @@ export function validatePagesSmokePlan(plan) {
   return plan;
 }
 export function pagesDiagnosticScope(diagnostic = 'none') {
-  assert(['none', 'missions'].includes(diagnostic), 'Fixed Pages diagnostic required');
+  assert(['none', 'missions', 'backup'].includes(diagnostic), 'Fixed Pages diagnostic required');
   return diagnostic === 'missions'
     ? 'missions-first-open-stage-observation'
-    : 'public-critical-flow-smoke';
+    : diagnostic === 'backup'
+      ? 'fresh-profile-progress-backup'
+      : 'public-critical-flow-smoke';
 }
 export function assertPagesMissionsEvidence(pageEvidence) {
   const evidence = pageEvidence?.missions;
@@ -892,6 +904,7 @@ export async function observePagesSmoke({
   checkpoint = async () => {},
   binding = readPagesBinding,
   soloFlows = executePagesSoloFlows,
+  backupFlow = executePagesBackupFlow,
   sharedFlows = executeSharedModePublicReturn,
   sharedAssessment = assessSharedModePublicReturn,
   now = () => performance.now(),
@@ -1031,58 +1044,66 @@ export async function observePagesSmoke({
     );
     report.stages.push('ordinary-password-accepted');
     await retain();
-    report.solo = { actions: [], samples: [] };
-    await soloFlows(page, budget, report.solo);
-    if (diagnostic === 'missions')
-      report.missionsAssessment = assertPagesMissionsEvidence(soloDiagnostic.result);
-    report.stages.push(...plan.flows.slice(0, 3));
-    await retain();
-    await budget.step(
-      'retain Solo public evidence',
-      async (timeout) => {
-        const failure = await retainPagesPublicEvidence(
-          [soloDiagnostic],
-          password,
-          Math.min(5000, timeout),
-          () => {
-            try {
-              budget.remaining();
-              return true;
-            } catch {
-              return false;
-            }
-          },
-        );
-        assert.equal(failure, null, failure ?? 'Public evidence incomplete');
-      },
-      5000,
-    );
-    await budget.step('close Solo page', () => page.close());
-    assert.equal(context.pages().length, 0, 'Solo page did not close');
-    const sharedPage = await budget.step('new shared-route page', () => context.newPage());
-    assert.deepEqual(context.pages(), [sharedPage], 'Shared page ownership is ambiguous');
-    const sharedDiagnostic = createPagesDiagnostics(sharedPage, password);
-    observers.push(sharedDiagnostic);
-    report.pages.push(sharedDiagnostic.result);
-    await budget.step(
-      'published shared starting route',
-      (timeout) =>
-        sharedPage.goto(PAGES_ROOT + 'game/?journey=legacy', {
-          timeout,
-          waitUntil: 'domcontentloaded',
-        }),
-      60000,
-    );
-    report.shared = {};
-    await sharedFlows({
-      page: sharedPage,
-      deadline: Math.min(budget.deadline, now() + plan.sharedModeTimeoutMs),
-      record: report.shared,
-      now,
-    });
-    report.sharedAssessment = sharedAssessment(report.shared);
-    report.stages.push('team-versus-public-return');
-    await retain();
+    if (diagnostic === 'backup') {
+      report.backup = {};
+      await backupFlow(page, budget, report.backup);
+      report.backupAssessment = assertPagesBackupEvidence(report.backup);
+      report.stages.push('fresh-profile-progress-backup');
+      await retain();
+    } else {
+      report.solo = { actions: [], samples: [] };
+      await soloFlows(page, budget, report.solo);
+      if (diagnostic === 'missions')
+        report.missionsAssessment = assertPagesMissionsEvidence(soloDiagnostic.result);
+      report.stages.push(...plan.flows.slice(0, 3));
+      await retain();
+      await budget.step(
+        'retain Solo public evidence',
+        async (timeout) => {
+          const failure = await retainPagesPublicEvidence(
+            [soloDiagnostic],
+            password,
+            Math.min(5000, timeout),
+            () => {
+              try {
+                budget.remaining();
+                return true;
+              } catch {
+                return false;
+              }
+            },
+          );
+          assert.equal(failure, null, failure ?? 'Public evidence incomplete');
+        },
+        5000,
+      );
+      await budget.step('close Solo page', () => page.close());
+      assert.equal(context.pages().length, 0, 'Solo page did not close');
+      const sharedPage = await budget.step('new shared-route page', () => context.newPage());
+      assert.deepEqual(context.pages(), [sharedPage], 'Shared page ownership is ambiguous');
+      const sharedDiagnostic = createPagesDiagnostics(sharedPage, password);
+      observers.push(sharedDiagnostic);
+      report.pages.push(sharedDiagnostic.result);
+      await budget.step(
+        'published shared starting route',
+        (timeout) =>
+          sharedPage.goto(PAGES_ROOT + 'game/?journey=legacy', {
+            timeout,
+            waitUntil: 'domcontentloaded',
+          }),
+        60000,
+      );
+      report.shared = {};
+      await sharedFlows({
+        page: sharedPage,
+        deadline: Math.min(budget.deadline, now() + plan.sharedModeTimeoutMs),
+        record: report.shared,
+        now,
+      });
+      report.sharedAssessment = sharedAssessment(report.shared);
+      report.stages.push('team-versus-public-return');
+      await retain();
+    }
     report.bindingAfter = await binding(expectedRevision, budget);
     assert.deepEqual(
       report.bindingAfter,

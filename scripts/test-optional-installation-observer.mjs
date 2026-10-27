@@ -47,6 +47,14 @@ const observerFunction = (name) =>
     findObserverNode((node) => node.type === 'FunctionDeclaration' && node.id.name === name),
   );
 
+test('only the installed-app window diagnostic opens visible Chrome; ordinary/default lanes stay headless', () => {
+  const launch = observerFunction('launchBrowser');
+  assert.match(launch, /chromium\.launchPersistentContext\(profile,/);
+  assert.match(launch, /headless: ordinaryWindowEnabled \|\| !activeWindowEnabled/);
+  assert.match(launch, /channel: 'chrome'/);
+  assert.match(historicalObserverSource, /!activeWindowEnabled \|\| activeSessionEnabled/);
+});
+
 test('browser restart requires all pages closed and a confirmed persistent-context shutdown', async () => {
   let listener;
   const actions = [];
@@ -692,6 +700,56 @@ test('profile export expectations preserve the entire legacy fixture and current
     { ...library, extra: 'unexpected' },
   ])
     assert.notDeepEqual(damaged, library);
+});
+
+test('calibration-only import retains exact prior Rates response and all imported radio fields', () => {
+  const response = {
+    format: 'FlightResponseProfile.v1',
+    id: 'gentle-v1',
+    name: 'Gentle',
+    maxRate: 240,
+    maxTilt: 30,
+    expo: 30,
+    responseTicks: 8,
+  };
+  const fixture = {
+    format: 'FlightProfiles.v1',
+    radio: { id: 'fixture', verified: false },
+    response: { ...response, id: 'incoming', name: 'Incoming', expo: 40 },
+  };
+  const priorExport = { format: 'FlightProfiles.v2', radio: null, radios: [], response };
+  const importNotice =
+    'Imported as a draft. Included flight response settings were not applied. Rates & throttle profiles remain unchanged.';
+  const policy = { ratesOwner: true, priorExport, importNotice };
+  const expected = expectedImportedProfileExport('FlightProfiles.v2', fixture, policy);
+  assert.deepEqual(expected, {
+    ...fixture,
+    format: 'FlightProfiles.v2',
+    radios: [fixture.radio],
+    response,
+  });
+  expected.response.expo = 1;
+  expected.radio.verified = true;
+  assert.equal(priorExport.response.expo, 30);
+  assert.equal(fixture.radio.verified, false);
+  assert.equal(fixture.response.expo, 40);
+  for (const patch of [
+    { priorExport: null },
+    { priorExport: { ...priorExport, format: 'FlightProfiles.v99' } },
+    { priorExport: { ...priorExport, response: {} } },
+    { priorExport: { ...priorExport, radio: fixture.radio } },
+    { priorExport: { ...priorExport, radios: [fixture.radio] } },
+    { importNotice: '' },
+    { importNotice: 'Saved on this device' },
+    { ratesOwner: 'yes' },
+    { arbitraryPolicy: true },
+  ])
+    assert.throws(() =>
+      expectedImportedProfileExport('FlightProfiles.v2', fixture, { ...policy, ...patch }),
+    );
+  assert.throws(() =>
+    expectedImportedProfileExport('FlightProfiles.v2', fixture, { ...policy, ratesOwner: false }),
+  );
 });
 
 test('offline restart closes every page and rejects surviving windows', async () => {

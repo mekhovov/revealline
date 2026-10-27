@@ -12,6 +12,7 @@ import {
   snapshotPausedAfterTransfer,
   verifyHistoricalSessionAfterUpdate,
   disposeHistoricalAcademySession,
+  historicalHeightIncreased,
 } from './optional-installation-active-session.mjs';
 
 const mode = 'academy-v0.142.4-98ad851';
@@ -37,10 +38,103 @@ const raw = () => ({
   viewportFocused: true,
 });
 
+// Deliberately blocks timer dispatch in a synthetic unit fixture, not a native flight.
+function blockTimerDispatch(ms) {
+  const deadline = performance.now() + ms;
+  while (performance.now() < deadline) {
+    // A resolved operation must still be rejected after its monotonic deadline.
+  }
+}
+
+test('a resolved read after a timer-dispatch stall cannot pass its deadline', async () => {
+  const f = fixture(),
+    receipt = {};
+  const evaluate = f.page.evaluate;
+  f.page.evaluate = async (fn) => {
+    const result = await evaluate(fn);
+    blockTimerDispatch(60);
+    return result;
+  };
+  await assert.rejects(
+    prepareHistoricalAcademySession(f.page, {
+      expectedURL,
+      receipt,
+      mode,
+      timeoutMs: 40,
+    }),
+    /Deadline exceeded: capture time origin/,
+  );
+  assert.equal(receipt.failure, 'capture time origin');
+  assert.equal(receipt.passed, false);
+  assert.equal(receipt.witnesses.length, 0);
+  assert.equal(receipt.actions.length, 0);
+  assert.equal(receipt.cleanup.completed, true);
+  assert.equal(f.state.disposed, true);
+  assert.equal(f.listeners.size, 0);
+});
+
+test('a handle resolved after a dispatch stall remains owned for independent cleanup', async () => {
+  const f = fixture(),
+    receipt = {};
+  const acquire = f.page.evaluateHandle;
+  let disposals = 0;
+  f.page.evaluateHandle = async () => {
+    const handle = await acquire();
+    const dispose = handle.dispose;
+    handle.dispose = async () => {
+      disposals++;
+      await dispose();
+    };
+    blockTimerDispatch(60);
+    return handle;
+  };
+  await assert.rejects(
+    prepareHistoricalAcademySession(f.page, {
+      expectedURL,
+      receipt,
+      mode,
+      timeoutMs: 40,
+    }),
+    /Deadline exceeded: capture document identity/,
+  );
+  assert.equal(receipt.failure, 'capture document identity');
+  assert.equal(receipt.passed, false);
+  assert.equal(receipt.actions.length, 0);
+  assert.equal(disposals, 1);
+  assert.equal(f.state.disposed, true);
+  assert.equal(receipt.cleanup.completed, true);
+  assert.equal(f.listeners.size, 0);
+});
+
+test('cleanup returning after its unchanged one-second budget cannot report verified cleanup', async () => {
+  const f = fixture(),
+    receipt = {};
+  const guard = await prepareHistoricalAcademySession(f.page, {
+    expectedURL,
+    receipt,
+    mode,
+  });
+  const off = f.page.off;
+  f.page.off = (...args) => {
+    off(...args);
+    blockTimerDispatch(1020);
+  };
+  const cleanup = await disposeHistoricalAcademySession(guard);
+  assert.equal(cleanup.completed, false);
+  assert.equal(
+    cleanup.results.find((row) => row.name === 'remove navigation listener').passed,
+    false,
+  );
+  assert.equal(f.state.disposed, true, 'Other independent cleanup is still attempted.');
+  assert.equal(f.listeners.size, 0);
+  assert.equal(f.state.held.size, 0);
+  assert.equal(receipt.passed, false);
+});
+
 test('strict opt-in and historical URL reject current versions, foreign hosts and locales', () => {
   assert.equal(selectHistoricalActiveSession(undefined), false);
   assert.equal(selectHistoricalActiveSession(mode), true);
-  for (const value of ['', true, 'all', 'academy'])
+  for (const value of ['', true, 'all', 'academy', { toString: () => mode }])
     assert.throws(() => selectHistoricalActiveSession(value));
   assert.equal(validateHistoricalSessionURL(expectedURL), expectedURL);
   for (const value of [
@@ -72,6 +166,69 @@ test('strict visible HUD parser rejects hidden metrics, wrong phases and unsafe 
     { details: 'Speed 0.2 m/s · 1.2–2.4 m/s' },
   ])
     assert.throws(() => parseVisibleHistoricalHUD({ ...raw(), ...patch }, 'active'));
+});
+
+test('motion requires positive height gain and rejects gravity falls or reset to ground', () => {
+  assert(historicalHeightIncreased(0, 0.2, 0.2));
+  assert(historicalHeightIncreased(0.3, 0.4));
+  assert(!historicalHeightIncreased(0.3, 0));
+  assert(!historicalHeightIncreased(0.3, 0.2));
+  assert(!historicalHeightIncreased(0.3, 0.3));
+  assert.throws(() => historicalHeightIncreased(0, Infinity));
+});
+
+test('extra historical sessions require finite per-package opt-ins and matching immutable URLs', () => {
+  for (const [id, prefix] of [
+    ['civilian-flight', 'gym'],
+    ['fpv-worlds', 'worlds'],
+  ]) {
+    const url = expectedURL.replaceAll('civilian-fpv', id);
+    assert.equal(selectHistoricalActiveSession(`${prefix}-v0.142.4-98ad851`), true);
+    assert.equal(validateHistoricalSessionURL(url, id), url);
+    assert.throws(() => validateHistoricalSessionURL(url));
+    assert.throws(() => validateHistoricalSessionURL(expectedURL, id));
+  }
+  for (const id of ['', 'unknown', null, '../civilian-fpv'])
+    assert.throws(() => validateHistoricalSessionURL(expectedURL, id));
+});
+
+test('Gym witnesses require the visible exact assisted drill readout, not a hidden legacy FPV metric', () => {
+  const value = {
+    ...raw(),
+    courseIdentity: 'lift-and-land',
+    modeIdentity: 'assisted',
+    details: 'Position 10.0, 16.0 m · Height 0.20 m · Heading 0°',
+    homeVisible: false,
+  };
+  const options = { packageId: 'civilian-flight' };
+  assert.equal(parseVisibleHistoricalHUD(value, 'active', options).height, 0.2);
+  for (const patch of [
+    { homeVisible: true },
+    { detailsVisible: false },
+    { modeIdentity: 'self-level' },
+    { courseIdentity: 'other-drill' },
+    { details: 'Height 0.20 m' },
+    { details: 'Position 11.0, 16.0 m · Height 0.20 m · Heading 0°' },
+    { details: 'Position 10.0, 16.0 m · Height 0.20 m · Heading 90°' },
+    { details: 'Position 10.0, 16.0 m · Height 1.20 m · Heading 0°' },
+  ])
+    assert.throws(() => parseVisibleHistoricalHUD({ ...value, ...patch }, 'active', options));
+});
+
+test('Worlds uses the same real visible first-lesson gauge but rejects an overlaid menu', () => {
+  const value = { ...raw(), homeVisible: false, blockingDialogs: [] };
+  assert.equal(parseVisibleHistoricalHUD(value, 'active', { packageId: 'fpv-worlds' }).height, 0.2);
+  assert.throws(() =>
+    parseVisibleHistoricalHUD({ ...value, homeVisible: true }, 'active', {
+      packageId: 'fpv-worlds',
+    }),
+  );
+  assert.throws(() => parseVisibleHistoricalHUD(value, 'active', { packageId: 'unknown' }));
+  assert.throws(() =>
+    parseVisibleHistoricalHUD({ ...value, blockingDialogs: ['sim-settings'] }, 'active', {
+      packageId: 'fpv-worlds',
+    }),
+  );
 });
 
 /** Synthetic public-DOM unit fixture. Not simulated flight or browser evidence. */
@@ -372,6 +529,27 @@ test('missing opt-in, out-of-order verification, and fabricated guards cannot qu
   }
 });
 
+test('failed native focus transfer preserves one bounded last public snapshot', async () => {
+  const f = fixture(),
+    receipt = {};
+  const guard = await prepareHistoricalAcademySession(f.page, {
+    expectedURL,
+    receipt,
+    mode,
+  });
+  try {
+    await assert.rejects(snapshotPausedAfterTransfer(guard), /1500ms/);
+    assert.equal(receipt.passed, false);
+    assert(receipt.transferDiagnostics.attempts > 0 && receipt.transferDiagnostics.attempts < 40);
+    assert.equal(receipt.transferDiagnostics.lastSnapshot.phase, 'active');
+    assert.equal(receipt.transferDiagnostics.lastSnapshot.focused, true);
+    assert.equal(receipt.transferDiagnostics.lastSnapshot.visibility, 'visible');
+    assert.equal(receipt.transferDiagnostics.maximumWaitMs, 1500);
+  } finally {
+    await disposeHistoricalAcademySession(guard);
+  }
+});
+
 test('native key failure releases owned key; handle failure does not skip listener cleanup', async () => {
   const f = fixture({ failKey: true, failDispose: true }),
     receipt = {};
@@ -387,7 +565,11 @@ test('native key failure releases owned key; handle failure does not skip listen
 test('one shared expired deadline rejects the later stage and still permits independent disposal', async () => {
   const f = fixture(),
     receipt = {};
-  const guard = await prepareHistoricalAcademySession(f.page, { expectedURL, receipt, mode });
+  const guard = await prepareHistoricalAcademySession(f.page, {
+    expectedURL,
+    receipt,
+    mode,
+  });
   try {
     assert.equal(receipt.deadlineMs, 30000);
     // Unit-only expiry of the guard's wall-clock budget, never a browser/model time override.
@@ -423,7 +605,12 @@ test('late visibility or enabled results cannot emit an activation after timeout
       return control;
     };
     await assert.rejects(
-      prepareHistoricalAcademySession(f.page, { expectedURL, receipt, mode, timeoutMs: 100 }),
+      prepareHistoricalAcademySession(f.page, {
+        expectedURL,
+        receipt,
+        mode,
+        timeoutMs: 100,
+      }),
     );
     assert(entered);
     assert.equal(receipt.cleanup.completed, true);
@@ -457,7 +644,12 @@ test('already in-flight activation prevents a verified cleanup even if it settle
     return control;
   };
   await assert.rejects(
-    prepareHistoricalAcademySession(f.page, { expectedURL, receipt, mode, timeoutMs: 100 }),
+    prepareHistoricalAcademySession(f.page, {
+      expectedURL,
+      receipt,
+      mode,
+      timeoutMs: 100,
+    }),
   );
   assert(entered);
   assert.equal(receipt.cleanup.completed, false);
@@ -489,7 +681,12 @@ test('a late native key-down is released again and cannot qualify cleanup', asyn
     return down(key);
   };
   await assert.rejects(
-    prepareHistoricalAcademySession(f.page, { expectedURL, receipt, mode, timeoutMs: 100 }),
+    prepareHistoricalAcademySession(f.page, {
+      expectedURL,
+      receipt,
+      mode,
+      timeoutMs: 100,
+    }),
   );
   assert(entered);
   assert.equal(receipt.cleanup.completed, false);
@@ -503,7 +700,11 @@ test('a late native key-down is released again and cannot qualify cleanup', asyn
 test('a disarmed Start is recorded, then only visible enabled native Arm permits another action', async () => {
   const f = fixture({ startDisarmed: true }),
     receipt = {};
-  const guard = await prepareHistoricalAcademySession(f.page, { expectedURL, receipt, mode });
+  const guard = await prepareHistoricalAcademySession(f.page, {
+    expectedURL,
+    receipt,
+    mode,
+  });
   try {
     assert.deepEqual(receipt.startAttempt, {
       phase: 'disarmed',

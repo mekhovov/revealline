@@ -44,11 +44,13 @@ export function createAudioPreferences({
     explicit = false,
     stored = false,
     unsaved = false,
-    warning = '';
-  const notify = (message) => {
+    warning = '',
+    warningKey = '';
+  const notify = (message, key = '') => {
     warning = message;
+    warningKey = key;
     try {
-      onWarning(message);
+      onWarning(message, key);
     } catch {
       // A notice cannot prevent the synchronous sound change.
     }
@@ -86,27 +88,38 @@ export function createAudioPreferences({
     seedRevision = audioMaster.snapshot().revision;
   }
   const persist = () => {
+    const { muted, volume, revision } = audioMaster.snapshot();
+    const current = () => !disposed && audioMaster.snapshot().revision === revision;
     try {
       const allowed = writable();
-      if (disposed) return;
+      if (!current()) return;
       if (!allowed) {
         unsaved = true;
-        notify('Sound changes apply only to this session; saving is disabled here.');
+        notify(
+          'Sound changes apply only to this session; saving is disabled here.',
+          'common:preferences.audioSessionOnly',
+        );
         return;
       }
-      const { muted, volume } = audioMaster.snapshot(),
-        storage = getStorage();
-      if (disposed) return;
+      const storage = getStorage();
+      if (!current()) return;
       if (!storage) throw new Error('Storage unavailable.');
       storage.setItem(AUDIO_PREFERENCES_KEY, JSON.stringify(values({ muted, volume })));
-      if (disposed) return;
+      if (!current()) return;
+      const saved = decode(storage.getItem(AUDIO_PREFERENCES_KEY));
+      if (!current()) return;
+      if (!saved || saved.muted !== muted || saved.volume !== volume)
+        throw new Error('Saved audio preferences could not be confirmed.');
       stored = true;
       unsaved = false;
       notify('');
     } catch {
-      if (disposed) return;
+      if (!current()) return;
       unsaved = true;
-      notify('Sound changed for this session, but could not be saved for another page.');
+      notify(
+        'Sound changed for this session, but could not be saved for another page.',
+        'common:preferences.audioSaveFailed',
+      );
     }
   };
   const change = (key, value) => {
@@ -169,6 +182,7 @@ export function createAudioPreferences({
       return true;
     },
     getWarning: () => warning,
+    getWarningKey: () => warningKey,
     dispose() {
       if (disposed) return;
       disposed = true;

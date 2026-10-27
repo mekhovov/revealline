@@ -1,0 +1,35 @@
+{
+  "format": "FPVHudPackageMeasurement.v1",
+  "date": "2026-10-20T21:51:39.428Z",
+  "qualification": "working-tree measurement; zero identities are placeholders, not release evidence",
+  "packages": [
+    {
+      "id": "civilian-fpv",
+      "runtimeFiles": 145,
+      "runtimeBytes": 12000261,
+      "sourceFiles": 147,
+      "sourceBytes": 12042317,
+      "inputBytes": 13214248,
+      "inputBudget": 13303808,
+      "limits": {
+        "files": 150,
+        "bytes": 13107200
+      },
+      "revision": "64b483441ca014d8dc4d3441b7632de332b9df64a06d6acbca5ca7b859628716"
+    },
+    {
+      "id": "fpv-worlds",
+      "runtimeFiles": 208,
+      "runtimeBytes": 19264332,
+      "sourceFiles": 210,
+      "sourceBytes": 19314666,
+      "inputBytes": 20455889,
+      "inputBudget": 20971520,
+      "limits": {
+        "files": 210,
+        "bytes": 20971520
+      },
+      "revision": "1f74e19bc6a6b677feac47a0cefb93f70078d4d799335c95b268fdf2da56aa37"
+    }
+  ]
+}

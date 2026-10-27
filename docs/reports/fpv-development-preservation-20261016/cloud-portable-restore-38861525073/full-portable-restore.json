@@ -1,0 +1,32 @@
+{
+  "format": "FPVFullPortableRestoreVerification.v1",
+  "indexSHA256": "630438ac879a40577638e5b21706fea93b637b8a34dbc70ad3266248b2d9509e",
+  "logicalFilePaths": 122706,
+  "logicalBytes": 20682624334,
+  "allFileHashesAndModesAndTimesMatch": true,
+  "githubDependencyFiles": 39,
+  "githubDependencyBytes": 1461705,
+  "allGitHubDependencyFileHashesMatch": true,
+  "actualRelativeLinksVerified": 282,
+  "linkDispositionsSHA256": "93e396d6b0f56998e301175a5e5a2470d2cd965bdb898e107861c592dd8441e3",
+  "allLinksResolveToExactWithinRootTerminal": true,
+  "diskPreflight": {
+    "cacheEstimatedBytes": 19166652047,
+    "logicalCopyEstimatedBytes": 20684086039,
+    "existingCacheCapacityCreditBytes": 0,
+    "additionalCacheEstimatedBytes": 19166652047,
+    "metadataAllowanceBytes": 1464877056,
+    "estimatedPeakBytes": 41315615142,
+    "freeDiskReserveBytes": 2147483648,
+    "cacheFreeBytesBeforeRestore": 91910565888,
+    "targetFreeBytesBeforeRestore": 91910565888,
+    "cacheAndTargetOnSameFilesystem": true
+  },
+  "detailedRestoreReceiptSHA256": "11eaea2362b8430aa60d7872b90b76d1ba30471220b34a100d9816aeae01bb86",
+  "inventoriedPayloadPortableRestoreComplete": true,
+  "sharedVerifiedCacheUsed": false,
+  "oneShotPayloadMaterializationPerformed": true,
+  "gitSourceAndReproducibleDependenciesRequireSeparateClosure": true,
+  "overallDisconnectSafetyClaimed": false,
+  "createdAtUnix": 1792132698.7394292
+}

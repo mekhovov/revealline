@@ -4,7 +4,10 @@ import {
   createGhostPathCollector,
   MAX_GHOST_PATH_SAMPLES,
   sampleGhostPath,
+  validateAircraftCoursePresentation,
 } from '../../optional-practice/civilian-fpv/advanced-ghost-path.mjs';
+
+import { createPresetConfiguration } from '../../optional-practice/civilian-fpv/aircraft-presets.mjs';
 
 const sample = (tick) => [tick, tick / 50, 2 * tick, -tick, 0, 0, 0, 1];
 
@@ -68,4 +71,119 @@ test('sampling remains bounded under repeated final-point reads and deterministi
     assert.ok(first.snapshot().path.length <= 8);
     assert.deepEqual(first.snapshot(), second.snapshot());
   }
+});
+
+function presentation(ticks = 12) {
+  const collector = createGhostPathCollector();
+  for (let tick = 0; tick <= ticks; tick++) collector.add(sample(tick));
+  return {
+    format: 'AircraftCoursePresentation.v1',
+    aircraft: createPresetConfiguration('meteor75-analog-2022').aircraft,
+    completedAtTick: ticks,
+    ...collector.snapshot(),
+  };
+}
+
+test('course presentation owns its aircraft and path while retaining COM metres and exact endpoints', () => {
+  const source = presentation(),
+    before = structuredClone(source);
+  const checked = validateAircraftCoursePresentation(source);
+  assert.deepEqual(checked, before);
+  assert.notEqual(checked.path, source.path);
+  assert.notEqual(checked.aircraft, source.aircraft);
+  source.path[0][2] = 44;
+  source.aircraft.geometry.rotors[0].position.x += 1;
+  assert.deepEqual(checked, before);
+  checked.path[1][1] = 42;
+  assert.deepEqual(source.path[1], before.path[1]);
+});
+
+test('course presentation rejects malformed bounds, schedules, geometry and orientation before use', () => {
+  const original = presentation();
+  for (const mutate of [
+    (s) => {
+      s.format = 'unknown';
+    },
+    (s) => {
+      s.maxPathSamples++;
+    },
+    (s) => {
+      s.completedAtTick = -1;
+    },
+    (s) => {
+      s.completedAtTick = Number.MAX_SAFE_INTEGER;
+    },
+    (s) => {
+      s.sourceSampleCount++;
+    },
+    (s) => {
+      s.pathStride = 3;
+    },
+    (s) => {
+      s.pathStride = 2 ** 48 + 1;
+    },
+    (s) => {
+      s.pathStride = 0;
+    },
+    (s) => {
+      s.path = [];
+    },
+    (s) => {
+      s.path = Array(MAX_GHOST_PATH_SAMPLES + 1).fill(s.path[0]);
+    },
+    (s) => {
+      s.path[0][0] = 1;
+    },
+    (s) => {
+      s.path[2][0] = 1;
+    },
+    (s) => {
+      s.path.at(-1)[0]--;
+    },
+    (s) => {
+      s.path[1].push(1);
+    },
+    (s) => {
+      delete s.path[1];
+    },
+    (s) => {
+      delete s.path[1][2];
+    },
+    (s) => {
+      s.path[1][2] = Infinity;
+    },
+    (s) => {
+      s.path[1].splice(4, 4, 0, 0, 0, 0);
+    },
+    (s) => {
+      s.path[1].splice(4, 4, 1e308, 1e308, 1e308, 1e308);
+    },
+    (s) => {
+      s.aircraft.geometry.rotors[0].position.x = NaN;
+    },
+    (s) => {
+      delete s.aircraft;
+    },
+  ]) {
+    const changed = structuredClone(original);
+    mutate(changed);
+    assert.throws(() => validateAircraftCoursePresentation(changed));
+  }
+  assert.deepEqual(validateAircraftCoursePresentation(original), original);
+});
+
+test('course presentation remains bounded beyond old time ceilings and admits safe long clocks', () => {
+  const source = presentation(100000),
+    checked = validateAircraftCoursePresentation(source);
+  assert.ok(checked.path.length <= MAX_GHOST_PATH_SAMPLES);
+  assert.ok(checked.pathStride > 1);
+  assert.equal(checked.sourceSampleCount, 100001);
+  assert.deepEqual(checked.path[0], sample(0));
+  assert.deepEqual(checked.path.at(-1), sample(100000));
+  const long = presentation(0);
+  long.completedAtTick = 2 ** 48 + 1;
+  long.sourceSampleCount = long.completedAtTick + 1;
+  long.pathStride = 2 ** 48;
+  long.path = [sample(0), sample(2 ** 48), sample(long.completedAtTick)];
+  assert.deepEqual(validateAircraftCoursePresentation(long), long);
 });

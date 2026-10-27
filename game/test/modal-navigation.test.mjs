@@ -930,16 +930,42 @@ test('actual Settings → Studio listbox/range edits preview, cancel and apply t
   pad.frame();
   pad.frame(1251);
   assert.equal(h.$('soundtrack-open').classList.contains('controller-focus'), true);
-  pad.pulse(0);
-  assert.equal(
-    h.$('soundtrack-dialog').open,
-    true,
-    'A fresh controller Confirm opens the Studio after changing Settings tabs.',
-  );
-  await settle(
-    () => h.$('soundtrack-dialog').open && !h.$('soundtrack-close').disabled,
-    'The actual Studio reload must finish and restore its Close action.',
-  );
+  const studioOpen = h.$('soundtrack-open'),
+    originalOpen = studioOpen.onclick;
+  let opening = null,
+    openCalls = 0,
+    openingComplete = false;
+  function captureOpen(...args) {
+    const pending = Reflect.apply(originalOpen, this, args);
+    if (++openCalls === 1) opening = pending;
+    return pending;
+  }
+  studioOpen.onclick = captureOpen;
+  try {
+    pad.pulse(0);
+    assert.equal(
+      h.$('soundtrack-dialog').open,
+      true,
+      'A fresh controller Confirm opens the Studio after changing Settings tabs.',
+    );
+    assert.equal(openCalls, 1, 'Controller Confirm invokes the actual public Studio opener once.');
+    assert.equal(typeof opening?.then, 'function', 'The public Studio opener owns its completion.');
+    void opening.then(
+      () => {
+        openingComplete = true;
+      },
+      () => {
+        openingComplete = true;
+      },
+    );
+    await settle(
+      () => openingComplete && h.$('soundtrack-dialog').open && !h.$('soundtrack-close').disabled,
+      'The actual Studio reload must finish and restore its Close action.',
+    );
+    await opening;
+  } finally {
+    if (studioOpen.onclick === captureOpen) studioOpen.onclick = originalOpen;
+  }
   pad.frame();
   pad.frame();
   assert.equal(h.$('soundtrack-dialog').open, true);

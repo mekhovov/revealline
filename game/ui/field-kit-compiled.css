@@ -627,7 +627,7 @@
       flex-wrap: nowrap;
       justify-content: center;
       background: var(--fk-bg);
-      font-size: var(--fk-text-secondary);
+      font-size: calc(var(--fk-text-secondary) * var(--primary-text-scale, 1));
     }
     .field-kit.game-shell:is([data-flight-state='running'], [data-flight-layout='preparing'])
       #game-now-playing-title {
@@ -671,7 +671,7 @@
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
-      font-size: var(--fk-text-secondary);
+      font-size: calc(var(--fk-text-secondary) * var(--primary-text-scale, 1));
       line-height: 1.3;
       background: var(--fk-bg);
       z-index: 6;

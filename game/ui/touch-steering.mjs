@@ -10,6 +10,7 @@ export function attachTouchSteering({
   window: win = globalThis.window,
   getSettings,
   active,
+  dpadDirectionAtPoint = () => undefined,
   onDirection = () => {},
   onVector = () => {},
   onRelease = () => {},
@@ -60,7 +61,12 @@ export function attachTouchSteering({
     event.preventDefault();
     const x = event.clientX - gesture.x,
       y = event.clientY - gesture.y;
-    const direction = touchDirection(x, y, gesture.direction, gesture.mode === 'dpad' ? 6 : 10);
+    const hitDirection =
+      gesture.mode === 'dpad' ? dpadDirectionAtPoint(event, gesture.element) : undefined;
+    const direction =
+      hitDirection === undefined
+        ? touchDirection(x, y, gesture.direction, gesture.mode === 'dpad' ? 6 : 10)
+        : hitDirection;
     if (direction && direction !== gesture.direction) {
       // onDirection may synchronously clear input when resuming/changing modality.
       const current = gesture;

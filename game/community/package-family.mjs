@@ -24,8 +24,9 @@ import {
 } from '../overflight/raid-community.mjs';
 
 /** Native validators own each format. Family detection never trusts a file extension. */
+export const COMMUNITY_PACKAGE_MAX_BYTES = 256 * 1024 * 1024;
 export async function inspectCommunityPackage(source, options = {}) {
-  const blob = ownCreatorBlob(source, 256 * 1024 * 1024, 'Community package');
+  const blob = ownCreatorBlob(source, COMMUNITY_PACKAGE_MAX_BYTES, 'Community package');
   const prefix = new TextDecoder().decode(await blob.slice(0, 8).arrayBuffer());
   if (prefix === 'RLCNB1\r\n') {
     const prepared = await importCreatorBundle(blob, options);

@@ -1,0 +1,416 @@
+{
+  "format": "FPVCombatFullSessionAcceptance.v1",
+  "measuredAt": "2026-10-19T20:55:51.991Z",
+  "environment": {
+    "node": "v20.19.5",
+    "platform": "darwin",
+    "architecture": "arm64",
+    "cpu": "Apple M4 Pro"
+  },
+  "measurement": "Full production session/solver/radio CPU path in-process; excludes browser renderer, worker transport, DOM and physical USB.",
+  "runs": [
+    {
+      "id": "native-aircraft-full-hunt",
+      "backend": "aircraft-500Hz/native",
+      "simulatedSeconds": 180,
+      "acceptedTicks": 9000,
+      "wallMs": 19614.181209,
+      "stepCpu": {
+        "count": 9000,
+        "meanMs": 1.3166644014444424,
+        "p50Ms": 1.1502919999998085,
+        "p95Ms": 2.0899589999989985,
+        "p99Ms": 3.142249999998967,
+        "maxMs": 33.18895799999973
+      },
+      "stepWindows": [
+        {
+          "from": 0,
+          "to": 3000,
+          "count": 3000,
+          "meanMs": 1.3746988450000026,
+          "p50Ms": 1.2012910000003103,
+          "p95Ms": 2.1182079999998678,
+          "p99Ms": 3.2851250000003347,
+          "maxMs": 33.18895799999973
+        },
+        {
+          "from": 3000,
+          "to": 6000,
+          "count": 3000,
+          "meanMs": 1.3075538656666703,
+          "p50Ms": 1.1492080000007263,
+          "p95Ms": 2.0690839999988384,
+          "p99Ms": 2.8940829999992275,
+          "maxMs": 33.02504200000112
+        },
+        {
+          "from": 6000,
+          "to": 9000,
+          "count": 3000,
+          "meanMs": 1.267740493666654,
+          "p50Ms": 1.1060409999990952,
+          "p95Ms": 2.0815829999992275,
+          "p99Ms": 3.1941659999993135,
+          "maxMs": 32.844333000000915
+        }
+      ],
+      "shots": 1125,
+      "hits": 963,
+      "kills": 963,
+      "wave": 1,
+      "result": {
+        "reason": "time-complete",
+        "tick": 9000,
+        "kills": 963,
+        "score": 96300
+      },
+      "acceptedEvents": 4009,
+      "distinctEvents": 4009,
+      "maxHeightMm": 998,
+      "pauseRecoveryBoundaries": [
+        {
+          "tick": 2000,
+          "saveMs": 188.33504200000016,
+          "restoreMs": 1885.6331250000003
+        },
+        {
+          "tick": 6000,
+          "saveMs": 249.89699999999903,
+          "restoreMs": 2005.4986659999995
+        }
+      ],
+      "finalRecovery": {
+        "saveMs": 259.1449160000011,
+        "restoreMs": 2142.5825000000004,
+        "bytes": 3513457,
+        "physicalRecording": {
+          "format": "AircraftRecordingStatus.v1",
+          "state": "recording",
+          "retainedFromSeconds": 133,
+          "retainedThroughSeconds": 180,
+          "lastRecoverableSeconds": null,
+          "currentSeconds": 180,
+          "retainedSegments": 3,
+          "retainedBytes": 2680323,
+          "error": null
+        },
+        "resumedTick": null,
+        "retainedFrom": 0,
+        "retainedTo": 9000
+      },
+      "profilePreserved": true,
+      "workerTransactions": {
+        "accepted": 9000,
+        "rejected": 0,
+        "restores": 3
+      }
+    },
+    {
+      "id": "native-standard-elimination",
+      "backend": "standard/native",
+      "simulatedSeconds": 1.6,
+      "acceptedTicks": 80,
+      "wallMs": 62.14537500000006,
+      "stepCpu": {
+        "count": 80,
+        "meanMs": 0.6139927125000213,
+        "p50Ms": 0.5589580000014394,
+        "p95Ms": 0.926500000001397,
+        "p99Ms": 1.8277909999997064,
+        "maxMs": 1.8277909999997064
+      },
+      "stepWindows": [
+        {
+          "from": 0,
+          "to": 80,
+          "count": 80,
+          "meanMs": 0.6139927125000213,
+          "p50Ms": 0.5589580000014394,
+          "p95Ms": 0.926500000001397,
+          "p99Ms": 1.8277909999997064,
+          "maxMs": 1.8277909999997064
+        }
+      ],
+      "shots": 10,
+      "hits": 6,
+      "kills": 6,
+      "wave": 1,
+      "result": {
+        "reason": "targets-cleared",
+        "tick": 80,
+        "kills": 6,
+        "score": 600
+      },
+      "acceptedEvents": 23,
+      "distinctEvents": 23,
+      "maxHeightMm": 2,
+      "pauseRecoveryBoundaries": [],
+      "finalRecovery": {
+        "saveMs": 1.6326660000013362,
+        "restoreMs": 4.176625000000058,
+        "bytes": 18691,
+        "physicalRecording": null,
+        "resumedTick": null,
+        "retainedFrom": 0,
+        "retainedTo": 80
+      },
+      "profilePreserved": true
+    },
+    {
+      "id": "regional-aircraft-continuous-retention",
+      "backend": "aircraft-500Hz/regional",
+      "simulatedSeconds": 720.34,
+      "acceptedTicks": 36017,
+      "wallMs": 148001.51633399999,
+      "stepCpu": {
+        "count": 36017,
+        "meanMs": 3.29035606383097,
+        "p50Ms": 3.0104170000013255,
+        "p95Ms": 4.204125000003842,
+        "p99Ms": 8.00266699999338,
+        "maxMs": 62.3235829999976
+      },
+      "stepWindows": [
+        {
+          "from": 0,
+          "to": 3000,
+          "count": 3000,
+          "meanMs": 3.1197194973333437,
+          "p50Ms": 2.981458999998722,
+          "p95Ms": 3.8653750000012224,
+          "p99Ms": 4.627540999998018,
+          "maxMs": 50.42749999999796
+        },
+        {
+          "from": 3000,
+          "to": 6000,
+          "count": 3000,
+          "meanMs": 3.1591473166666644,
+          "p50Ms": 2.9756669999987935,
+          "p95Ms": 3.943334000003233,
+          "p99Ms": 5.714541999994253,
+          "maxMs": 59.52437500000087
+        },
+        {
+          "from": 6000,
+          "to": 9000,
+          "count": 3000,
+          "meanMs": 3.213028143333315,
+          "p50Ms": 3.0195000000021537,
+          "p95Ms": 4.04229199999827,
+          "p99Ms": 5.6484159999963595,
+          "maxMs": 62.3235829999976
+        },
+        {
+          "from": 9000,
+          "to": 12000,
+          "count": 3000,
+          "meanMs": 3.7407943400001145,
+          "p50Ms": 3.1241250000020955,
+          "p95Ms": 7.019541000001482,
+          "p99Ms": 13.747999999992317,
+          "maxMs": 58.70737499999814
+        },
+        {
+          "from": 12000,
+          "to": 15000,
+          "count": 3000,
+          "meanMs": 4.03384377733327,
+          "p50Ms": 3.205832999999984,
+          "p95Ms": 8.35450000000128,
+          "p99Ms": 18.55145800000173,
+          "maxMs": 58.76629200000025
+        },
+        {
+          "from": 15000,
+          "to": 18000,
+          "count": 3000,
+          "meanMs": 3.233214535666591,
+          "p50Ms": 2.995667000010144,
+          "p95Ms": 4.062000000005355,
+          "p99Ms": 6.53233299999556,
+          "maxMs": 59.887791000001016
+        },
+        {
+          "from": 18000,
+          "to": 21000,
+          "count": 3000,
+          "meanMs": 3.1585886493334403,
+          "p50Ms": 2.964791000005789,
+          "p95Ms": 3.7765419999923324,
+          "p99Ms": 5.400041999993846,
+          "maxMs": 56.505082999996375
+        },
+        {
+          "from": 21000,
+          "to": 24000,
+          "count": 3000,
+          "meanMs": 3.105843288666821,
+          "p50Ms": 2.9364579999964917,
+          "p95Ms": 3.8056669999932637,
+          "p99Ms": 5.290999999997439,
+          "maxMs": 57.24266699999862
+        },
+        {
+          "from": 24000,
+          "to": 27000,
+          "count": 3000,
+          "meanMs": 3.2313245393334653,
+          "p50Ms": 3.0368749999906868,
+          "p95Ms": 4.034124999991036,
+          "p99Ms": 5.301874999990105,
+          "maxMs": 57.490417000008165
+        },
+        {
+          "from": 27000,
+          "to": 30000,
+          "count": 3000,
+          "meanMs": 3.136472773333182,
+          "p50Ms": 2.990916999988258,
+          "p95Ms": 3.7751250000001164,
+          "p99Ms": 4.953166999999667,
+          "maxMs": 56.28962500000489
+        },
+        {
+          "from": 30000,
+          "to": 33000,
+          "count": 3000,
+          "meanMs": 3.1598879496666585,
+          "p50Ms": 2.993291999999201,
+          "p95Ms": 3.7893329999933485,
+          "p99Ms": 5.809792000014568,
+          "maxMs": 62.243625000002794
+        },
+        {
+          "from": 33000,
+          "to": 36000,
+          "count": 3000,
+          "meanMs": 3.194156709333135,
+          "p50Ms": 3.0038749999948777,
+          "p95Ms": 3.8567909999983385,
+          "p99Ms": 5.954415999993216,
+          "maxMs": 61.92324999999255
+        },
+        {
+          "from": 36000,
+          "to": 36017,
+          "count": 17,
+          "meanMs": 2.9817524117671006,
+          "p50Ms": 2.871374999987893,
+          "p95Ms": 4.0008749999979045,
+          "p99Ms": 4.0008749999979045,
+          "maxMs": 4.0008749999979045
+        }
+      ],
+      "shots": 4503,
+      "hits": 672,
+      "kills": 672,
+      "wave": 112,
+      "result": null,
+      "acceptedEvents": 6966,
+      "distinctEvents": 6966,
+      "maxHeightMm": 2858.0279207229614,
+      "pauseRecoveryBoundaries": [
+        {
+          "tick": 2000,
+          "saveMs": 154.19016700000066,
+          "restoreMs": 5993.018709
+        },
+        {
+          "tick": 6000,
+          "saveMs": 271.3938330000019,
+          "restoreMs": 10191.284625
+        }
+      ],
+      "finalRecovery": {
+        "saveMs": 264.0806250000023,
+        "restoreMs": 8493.918000000005,
+        "bytes": 5512164,
+        "physicalRecording": {
+          "format": "AircraftRecordingStatus.v1",
+          "state": "recording",
+          "retainedFromSeconds": 662.62,
+          "retainedThroughSeconds": 720.34,
+          "lastRecoverableSeconds": null,
+          "currentSeconds": 720.34,
+          "retainedSegments": 3,
+          "retainedBytes": 4280518,
+          "error": null
+        },
+        "resumedTick": 36018,
+        "retainedFrom": 27000,
+        "retainedTo": 36017
+      },
+      "profilePreserved": true,
+      "workerTransactions": {
+        "accepted": 36018,
+        "rejected": 0,
+        "restores": 3
+      }
+    },
+    {
+      "id": "regional-standard-radio-boundary-return",
+      "backend": "standard/regional",
+      "simulatedFlightSeconds": 66.3,
+      "acceptedFlightTicks": 3315,
+      "acceptedCombatTicks": 710,
+      "recentres": 3,
+      "maxXMm": 150222,
+      "outsideBoundary": {
+        "ticks": 710,
+        "position": {
+          "x": 104011,
+          "y": 18808,
+          "z": 6000
+        }
+      },
+      "returnedPosition": {
+        "x": 103983,
+        "y": 20207,
+        "z": 6000
+      },
+      "wallMs": 1778.9639170000155,
+      "stepCpu": {
+        "count": 3315,
+        "meanMs": 0.39062535806928994,
+        "p50Ms": 0.3003329999919515,
+        "p95Ms": 0.7097500000090804,
+        "p99Ms": 1.3400839999958407,
+        "maxMs": 2.552332999999635
+      },
+      "restoreBoundaryMs": 12.886040999990655,
+      "terrainRequests": 14,
+      "streamWaits": 0,
+      "frozenCombatPreserved": true,
+      "profilePreserved": true
+    }
+  ],
+  "source": {
+    "head": "69107fcbff1e46cce122b2ec19d2cbe69435b61d",
+    "workingTree": true,
+    "sha256": {
+      "game/test/fpv-combat-full-session.test.mjs": "50b7af6377ca0550e5e4ab7aefe5a4afbb9648721a56479ba494da57212cceb8",
+      "optional-practice/civilian-fpv/encounter-session.mjs": "1d24a38f58fc4c1e32689ee54580303a30c1380c83e7046949aa88d176465ae9",
+      "optional-practice/civilian-fpv/encounter-runtime.mjs": "f93d575b05e30cd709fafc40b89d929230acd172aebad37892d7a392025a997f",
+      "optional-practice/civilian-fpv/encounter-geometry.mjs": "f5138ffc03fbcc37fa06faa29dc7248eaedd232ddf180e2f5a722e75ef7b1214",
+      "optional-practice/civilian-fpv/advanced-aircraft-runtime.mjs": "e820690dd0aff89b3adecb6ba1b4870a86c57e3121a0a7daf1482cb0e0f412b8",
+      "optional-practice/civilian-fpv/advanced-regional.mjs": "e87bb40c090a2fac6a5414cf5520766ed63b03978fe8ded422463890a1f104a4",
+      "optional-practice/civilian-fpv/aircraft-course-session.mjs": "eabc62a7688dec2715118bb94c166c1e388e39636fcee7e79f415cb7619dbcdd",
+      "optional-practice/civilian-fpv/aircraft-recording.mjs": "79bf6f61f982c1c45186e494f64a0ee0a55d07dbf6e405f121f2d8ec0b665cce",
+      "optional-practice/civilian-fpv/radio-runtime.mjs": "b22683fa7b721d54d97c22414b1bcb24abe5b68a9970e7341aa5c0eabcd73f71",
+      "optional-practice/civilian-fpv/radio-profile.mjs": "06e8aab4cad993e6f1f600e4497ea0cb8b5b58f4d425269015049e23df85910d",
+      "optional-practice/civilian-fpv/world-model.mjs": "0f034732a248f99e3254d211eeb8098d4b208ced152048c7a8a7907cbd61c29f",
+      "optional-practice/civilian-fpv/regional/flight-prototype.mjs": "c10d8b7b476bcd8939daecabbddeeb002f8199b0400dbd549f1479bc10ecf308",
+      "authoring/fpv-worlds/regions/endurance-fixture.mjs": "7b627678c4ff2ff9d2bc11d0b67ab16e04322aedca22b436901a9e366e3d4c12"
+    }
+  },
+  "verification": {
+    "passed": 4,
+    "failed": 0,
+    "durationMs": 170051.779917,
+    "eslint": "passed",
+    "hardwareInput": "synthetic Gamepad, user profile untouched",
+    "browserContext": "none; isolated Node QA context"
+  }
+}

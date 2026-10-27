@@ -16,7 +16,11 @@ const datasetKey = (name) => {
 const selectorSyntax = new Map();
 function parseSelector(selector) {
   const cached = selectorSyntax.get(selector);
-  if (cached) return cached;
+  if (cached) {
+    selectorSyntax.delete(selector);
+    selectorSyntax.set(selector, cached);
+    return cached;
+  }
   const parsed = selector.split(',').map((part) => {
     part = part.trim();
     if (/\s/.test(part)) {
@@ -354,11 +358,21 @@ export class Element extends Events {
     this.append(node);
     return node;
   }
-  after(node) {
-    const siblings = this.parentNode.children;
-    node.remove?.();
-    siblings.splice(siblings.indexOf(this) + 1, 0, node);
-    node.parentNode = this.parentNode;
+  after(...values) {
+    const parent = this.parentNode;
+    if (!parent) return;
+    // Capture the first sibling that will not move before detaching arguments.
+    // This also preserves native order when the receiver itself is supplied.
+    const next =
+      parent.children
+        .slice(parent.children.indexOf(this) + 1)
+        .find((node) => !values.includes(node)) ?? null;
+    const nodes = values.map((value) =>
+      value?.nodeType ? value : this.ownerDocument.createTextNode(String(value)),
+    );
+    const ordered = nodes.filter((node, index) => nodes.lastIndexOf(node) === index);
+    for (const node of ordered) node.remove?.();
+    for (const node of ordered) parent.insertBefore(node, next);
   }
   before(node) {
     if (!this.parentNode) return;

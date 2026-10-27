@@ -51,3 +51,29 @@ Functional receipts and exact build identities are in
 `fpv-radio-setup-ux-verification.json`. New unit coverage remains in final
 qualification. Browser verification, build limits, input/replay behavior and
 physical player feedback continue during feature delivery.
+
+## Radio setup regression fixes — 2026-10-19
+
+Automatic stick capture now accepts the same minimum travel as the profile
+validator (a span of 0.5). Previously, automatic capture required 0.65 movement
+from rest and 1.1 between opposite endpoints, blocking otherwise valid USB
+radios. All four controls still require separate axes, opposite directions,
+stable holds, and measured centres.
+
+**Set sticks manually** is available even during an interrupted or stalled
+wizard. It opens raw channel values and editable axis, endpoint, centre,
+inversion, and dead zone fields above optional switch settings. Existing
+measurements are retained. The player explicitly checks directions before saving.
+
+Selecting a known or saved calibration now goes directly to **Check & save**.
+Both the guided and manual Save actions tell the simulator to use USB radio and
+return to paused flight. A failed storage write offers explicit session use.
+Failed runtime verification cannot be persisted as a successful setup, and the
+radio runtime rejects arming while the setup dialog is open.
+
+Regression coverage includes reduced and reversed ranges, all four flight axes,
+ambiguous movements, manual recovery, denied storage, and setup ownership.
+Academy and World host tests exercise saving, selecting radio input, deliberate
+arming, and live flight input. Browser checks exercise the production setup
+component, profile reload, and manual editing at desktop and narrow widths with
+synthetic USB samples; physical radio verification remains a separate check.

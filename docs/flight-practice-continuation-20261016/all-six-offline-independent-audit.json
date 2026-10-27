@@ -1,0 +1,169 @@
+{
+  "format": "AllSixOfflineFlightIndependentAudit.v1",
+  "passed": true,
+  "receipt": {
+    "path": "/tmp/practice-all-three-offline-flight-20261016-run2.json",
+    "sha256": "f095c9669b85944155baaa9b6bec5b732be5da9b42061adfe6ab6147a9aba04e"
+  },
+  "archive": {
+    "path": "/tmp/practice-native-57d3-authority-20261016.tgz",
+    "sha256": "0fdeb723a1a3824b9ccc1bc088c0abb9bd5797c6bbfb9714c0e4a6ba51402aae"
+  },
+  "observerRevision": "57d3b748cf83e21513ae40a4df18eb5b2bc00e7b",
+  "packageSourceRevision": "b8aec0821087354ac8a6765a5b95c68d24dd9137",
+  "checks": [
+    {
+      "name": "observer authority",
+      "archivedAndGitMatched": 6,
+      "continuityReaderGitMatched": true
+    },
+    {
+      "name": "package binding",
+      "packages": 3,
+      "pinnedArtifacts": 12,
+      "runtimeMembers": 10,
+      "envelopeSha256": "c271bc6c248844f756ba4c1a191e6008593d48c4d03b9e4d34836d6a174c73a6"
+    },
+    {
+      "name": "exact imported asset and all content retention",
+      "assetRow": {
+        "key": "5e4248528dfdf1d52d01a683d9589154cd6b560bd44b704c88c051c7377eb784",
+        "sha256": "1f2776034b6f379eef9dca020db84fbff69ef1c7a5bcfae5ceb6acf8125b0f21"
+      },
+      "fullDatabaseMatches": 5,
+      "templateCardMatches": 5,
+      "importedCardFramed": true
+    },
+    {
+      "name": "offline protocol source inspection",
+      "persistentProcessRestart": true,
+      "offlineBeforeNavigation": true,
+      "uncachedProbeOnEveryOpenPrepared": true,
+      "standaloneDisplayModeChecked": true,
+      "syntheticProofAndProfileRetentionCompared": true
+    }
+  ],
+  "flights": [
+    {
+      "packageId": "civilian-flight",
+      "route": "browser-process-restart-launcher",
+      "heightFrom": 0,
+      "heightTo": 0.2,
+      "stableMs": 638.7720420000005,
+      "pausedSamples": 4,
+      "pauseRenderDelayMs": null
+    },
+    {
+      "packageId": "civilian-fpv",
+      "route": "browser-process-restart-launcher",
+      "heightFrom": 0,
+      "heightTo": 0.2,
+      "stableMs": 642.9801250000019,
+      "pausedSamples": 4,
+      "pauseRenderDelayMs": null
+    },
+    {
+      "packageId": "fpv-worlds",
+      "route": "browser-process-restart-launcher",
+      "heightFrom": 0,
+      "heightTo": 0.2,
+      "stableMs": 637.8644999999997,
+      "pausedSamples": 4,
+      "pauseRenderDelayMs": 7.738541999999143
+    },
+    {
+      "packageId": "civilian-flight",
+      "route": "browser-process-restart-standalone",
+      "heightFrom": 0,
+      "heightTo": 0.2,
+      "stableMs": 639.364375000001,
+      "pausedSamples": 4,
+      "pauseRenderDelayMs": null
+    },
+    {
+      "packageId": "civilian-fpv",
+      "route": "browser-process-restart-standalone",
+      "heightFrom": 0,
+      "heightTo": 0.2,
+      "stableMs": 638.8628749999989,
+      "pausedSamples": 4,
+      "pauseRenderDelayMs": null
+    },
+    {
+      "packageId": "fpv-worlds",
+      "route": "browser-process-restart-standalone",
+      "heightFrom": 0,
+      "heightTo": 0.2,
+      "stableMs": 641.9432499999966,
+      "pausedSamples": 4,
+      "pauseRenderDelayMs": 54.626250000001164
+    }
+  ],
+  "screenshots": [
+    {
+      "path": "/tmp/practice-all-three-offline-flight-20261016-run2.json.imported-world-initial-import-import-ready.png",
+      "bytes": 317143,
+      "sha256": "916f82a09846688abe6269206015e91555f64586909ead0b4478cfba37f21dc0"
+    },
+    {
+      "path": "/tmp/practice-all-three-offline-flight-20261016-run2.json.offline-flight-browser-process-restart-launcher-civilian-flight.png",
+      "bytes": 90960,
+      "sha256": "6144fda948c949527ef62e3089e7bb2816c3485f7d28ccfdf2d4b86660f51e15"
+    },
+    {
+      "path": "/tmp/practice-all-three-offline-flight-20261016-run2.json.offline-flight-browser-process-restart-launcher-civilian-fpv.png",
+      "bytes": 618066,
+      "sha256": "b21fb6341ea47c89819f93c16b6eee233523a615b07c752087d6dccfbed83afb"
+    },
+    {
+      "path": "/tmp/practice-all-three-offline-flight-20261016-run2.json.offline-flight-browser-process-restart-standalone-civilian-flight.png",
+      "bytes": 95140,
+      "sha256": "0131407942d145aa5ed97389509e7aa8b6318773c6007f7cc462a76210679dc4"
+    },
+    {
+      "path": "/tmp/practice-all-three-offline-flight-20261016-run2.json.offline-flight-browser-process-restart-standalone-civilian-fpv.png",
+      "bytes": 600877,
+      "sha256": "14f99a9f0a2b8523558d131f4b8227457c1caaa79d2e013411a3d5f72a497fe8"
+    },
+    {
+      "path": "/tmp/practice-all-three-offline-flight-20261016-run2.json.imported-world-browser-process-restart-launcher-paused-flight.png",
+      "bytes": 209158,
+      "sha256": "440fa8a23ff61bea5b5ef95cd46278b584adf56d6068ebcefc7695885d79e7b9"
+    },
+    {
+      "path": "/tmp/practice-all-three-offline-flight-20261016-run2.json.imported-world-browser-process-restart-standalone-paused-flight.png",
+      "bytes": 214217,
+      "sha256": "ca0500aee203fa1ac23fc1f9a65b8cae3bf16a02fe15dc6247d25bd554001e9c"
+    }
+  ],
+  "limitations": [
+    "Read-only evidence audit, not a new browser execution or a fresh package admission.",
+    "EN assisted Gym and Self-level FPV short lift/pause only; no completed lesson, physical input, machine-wide network outage, public release, or human usability claim.",
+    "Academy runs identical frozen candidate payload at a controlled v0.0.0 path; this is not historical-version migration.",
+    "Synthetic proof/profile imports are retention fixtures, not genuine completed exercise evidence.",
+    "Screenshots are hash-checked here; visual assessment is separate human-readable audit commentary."
+  ],
+  "priorFailuresPreserved": [
+    {
+      "path": "/tmp/practice-all-three-offline-flight-20261016-run1.json",
+      "sha256": "118705dec98762adeda70c49accb27a6514140cf4f05afd6d42a5e510e0e4311",
+      "passed": false
+    },
+    {
+      "path": "/tmp/practice-imported-offline-flight-20261016-run1.json",
+      "sha256": "dcd42af9290987e7dfd15aa9a4526614e9deb83597e3fe37aa0a4e9343c024e2",
+      "passed": false
+    }
+  ],
+  "checkpoints": [
+    "all-three-prepared",
+    "all-three-relaunched-offline-after-all-windows-closed",
+    "all-three-open-offline",
+    "all-three-offline-after-browser-process-restart",
+    "candidate-installed-over-alternate-path",
+    "failed-install-preserves-pointers",
+    "candidate-removed-retained-path-restored",
+    "rollback-and-other-package-work-offline",
+    "gym-cache-removal-preserves-fpv-and-worlds"
+  ]
+}
