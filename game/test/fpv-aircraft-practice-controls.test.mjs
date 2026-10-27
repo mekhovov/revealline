@@ -118,7 +118,7 @@ test('unavailable and blocked IndexedDB reject without losing or creating a fals
   missing.close();
 });
 
-function fixture(t, { store, exportFile } = {}) {
+function fixture(t, { store, exportFile, onRestored } = {}) {
   const document = new Document(),
     window = new Events();
   let currentLocale = 'en',
@@ -155,7 +155,9 @@ function fixture(t, { store, exportFile } = {}) {
     restoreRecovery: async (data, { signal }) => {
       signal.throwIfAborted();
       assert.ok(pauses > 0);
-      if (data.identity !== 'flight-a') throw new Error('Recovery belongs to another flight');
+      const packet = data.format === 'AircraftChallengeRecovery.v1' ? data.session : data;
+      if (packet.identity !== 'flight-a' && packet.identity?.course !== 'flight-a')
+        throw new Error('Recovery belongs to another flight');
       restores.push(data);
       current = { ...current, ticks: aircraftRecoveryTick(data) };
     },
@@ -167,6 +169,7 @@ function fixture(t, { store, exportFile } = {}) {
     store: memoryStore,
     locale: () => currentLocale,
     getSession: () => active,
+    onRestored,
     onPause: () => {
       pauses++;
     },
@@ -214,6 +217,166 @@ function fixture(t, { store, exportFile } = {}) {
     },
   };
 }
+
+test('restore observations reset only after current successful restores and cannot fail persistence', async (t) => {
+  const notices = [];
+  const f = fixture(t, {
+    onRestored(session, state) {
+      notices.push({ session, ticks: state.ticks });
+      throw new Error('optional display unavailable');
+    },
+  });
+  f.update(250);
+  await f.click('Restore last saved checkpoint');
+  assert.deepEqual(
+    notices,
+    [{ session: f.active, ticks: 250 }],
+    'same-clock successful restore still resets observations',
+  );
+  assert.match(f.ui.root.textContent, /Checkpoint restored/);
+  assert.doesNotMatch(f.ui.root.textContent, /optional display unavailable/);
+  f.file.files = [{ size: 100, text: async () => JSON.stringify(checkpoint(250, 'other-flight')) }];
+  f.file.emit('change');
+  await settle();
+  assert.equal(notices.length, 1, 'failed restore retains observations');
+  let release;
+  f.file.files = [
+    {
+      size: 100,
+      text: () =>
+        new Promise((resolve) => {
+          release = resolve;
+        }),
+    },
+  ];
+  f.file.emit('change');
+  await settle();
+  await f.click('Cancel recovery');
+  release(JSON.stringify(checkpoint(250)));
+  await settle();
+  assert.equal(notices.length, 1, 'cancelled restore retains observations');
+});
+
+for (const outcome of ['restored', 'exported', 'export-cancelled', 'failed'])
+  test(`completed recovery operation localizes ${outcome} feedback without repeating work`, async (t) => {
+    const diagnostic = 'IDB connection closing <unchanged diagnostic>';
+    let calls = 0;
+    const f = fixture(t, {
+      ...(outcome === 'failed'
+        ? {
+            store: {
+              load: async () => {
+                calls++;
+                throw new Error(diagnostic);
+              },
+              close() {},
+            },
+          }
+        : outcome.startsWith('export')
+          ? {
+              exportFile: async () => {
+                calls++;
+                return { status: outcome === 'exported' ? 'requested' : 'cancelled' };
+              },
+            }
+          : {}),
+    });
+    await f.click(
+      outcome.startsWith('export') ? 'Export recent clip' : 'Restore last saved checkpoint',
+    );
+    const expected = {
+      restored: [
+        'Checkpoint restored. The flight remains paused; arm when ready.',
+        'Точку відновлено. Політ залишається на паузі; запустіть двигуни, коли будете готові.',
+      ],
+      exported: [
+        'Export requested. Check the selected destination.',
+        'Експорт запитано. Перевірте вибране місце призначення.',
+      ],
+      'export-cancelled': ['Export cancelled.', 'Експорт скасовано.'],
+      failed: [`Could not complete: ${diagnostic}`, `Не вдалося завершити: ${diagnostic}`],
+    }[outcome];
+    const effects = () => [calls, f.restores.length, f.exports.length, f.writes.length, f.pauses];
+    const before = effects();
+    for (const [language, message] of [
+      ['en', expected[0]],
+      ['uk', expected[1]],
+      ['en', expected[0]],
+    ]) {
+      f.locale(language);
+      await settle();
+      assert.ok(f.ui.root.textContent.includes(message), `${language}: ${message}`);
+      assert.deepEqual(effects(), before, 'changing language only repaints the completed outcome');
+    }
+    f.active = { ...f.active };
+    f.update(0);
+    assert.ok(!f.ui.root.textContent.includes(expected[0]), 'a new session clears the old outcome');
+  });
+
+test('pending and cancelled recovery feedback follows locale without replaying a file read', async (t) => {
+  const f = fixture(t);
+  let release,
+    reads = 0;
+  f.file.files = [
+    {
+      size: 100,
+      text: () => {
+        reads++;
+        return new Promise((resolve) => {
+          release = resolve;
+        });
+      },
+    },
+  ];
+  f.file.emit('change');
+  await settle();
+  assert.match(f.ui.root.textContent, /Preparing…/);
+  f.locale('uk');
+  assert.match(f.ui.root.textContent, /Підготовка…/);
+  await f.click('Скасувати відновлення');
+  assert.match(f.ui.root.textContent, /Відновлення скасовано/);
+  f.locale('en');
+  assert.match(f.ui.root.textContent, /Recovery cancelled/);
+  f.locale('uk');
+  assert.match(f.ui.root.textContent, /Відновлення скасовано/);
+  release(JSON.stringify(checkpoint(250)));
+  await settle();
+  assert.equal(reads, 1);
+  assert.equal(f.restores.length, 0);
+  assert.equal(f.pauses, 0);
+  assert.equal(f.writes.length, 0);
+});
+
+test('unchanged recovery feedback does not repeatedly mutate its live status region', async (t) => {
+  const f = fixture(t);
+  await f.click('Restore last saved checkpoint');
+  const node = f.ui.root
+    .querySelectorAll('p')
+    .find((item) => item.textContent.startsWith('Checkpoint restored.'));
+  assert.ok(node);
+  const content = Object.getOwnPropertyDescriptor(Object.getPrototypeOf(node), 'textContent');
+  let writes = 0;
+  Object.defineProperty(node, 'textContent', {
+    get() {
+      return content.get.call(this);
+    },
+    set(value) {
+      writes++;
+      content.set.call(this, value);
+    },
+  });
+  for (let index = 0; index < 50; index++) f.update(250);
+  assert.equal(writes, 0, 'steady flight paints do not repeat a status announcement');
+  f.locale('uk');
+  assert.equal(writes, 1, 'a changed language updates the status once');
+  assert.match(node.textContent, /Точку відновлено/);
+  for (let index = 0; index < 50; index++) f.update(250);
+  assert.equal(writes, 1);
+  f.locale('en');
+  assert.equal(writes, 2);
+  assert.match(node.textContent, /Checkpoint restored/);
+  assert.equal(f.restores.length, 1);
+});
 
 test('live autosave keeps one pending write, records the captured tick, and never pauses flight', async (t) => {
   let resolveSave;
@@ -349,4 +512,397 @@ test('controls remain hidden for legacy flights and translate status for Ukraini
   f.active = {};
   f.update(1000, { aircraftRadiusMm: undefined });
   assert.equal(f.ui.root.hidden, true);
+});
+
+function recoveryConnections(t, { admitted = (tx) => tx, opened = () => {} } = {}) {
+  const memory = managedIndexedDB(),
+    connections = [];
+  const store = createAircraftRecoveryStore({
+    indexedDB: {
+      open(...args) {
+        const request = memory.indexedDB.open(...args);
+        return new Proxy(request, {
+          set(target, name, value) {
+            target[name] =
+              name === 'onsuccess'
+                ? (...event) => {
+                    const db = target.result,
+                      transaction = db.transaction.bind(db);
+                    db.transaction = (...args) => admitted(transaction(...args));
+                    connections.push(db);
+                    opened(db);
+                    value(...event);
+                  }
+                : value;
+            return true;
+          },
+        });
+      },
+    },
+  });
+  t.after(() => store.close());
+  return {
+    memory,
+    connections,
+    store,
+    close(notify = true) {
+      const db = connections.at(-1);
+      db.close();
+      if (notify) db.onclose?.({ target: db });
+      return db;
+    },
+  };
+}
+
+test('recovery reopens after unexpected close and ignores late old-connection events', async (t) => {
+  const f = recoveryConnections(t);
+  await f.store.save(checkpoint(250));
+  const old = f.close();
+  assert.equal((await f.store.load()).missionTick, 250);
+  assert.equal(f.memory.openCount, 2);
+  old.onclose?.({ target: old });
+  old.onversionchange?.({ target: old });
+  assert.equal((await f.store.load()).missionTick, 250);
+  assert.equal(f.memory.openCount, 2);
+  assert.equal(f.memory.allPuts.length, 1);
+  f.store.close();
+  f.connections.at(-1).onclose?.();
+  await assert.rejects(f.store.load(), { name: 'AbortError' });
+  assert.equal(f.memory.openCount, 2);
+});
+
+test('recovery retries only a rejected transaction admission once, before issuing a write', async (t) => {
+  let closeNew = false;
+  const f = recoveryConnections(t, {
+    opened: (db) => {
+      if (closeNew) db.close();
+    },
+  });
+  await f.store.save(checkpoint(250));
+  f.close(false);
+  await f.store.save(checkpoint(500));
+  assert.equal(f.memory.openCount, 2);
+  assert.equal(f.memory.allPuts.length, 2, 'one committed put per explicit save');
+  assert.equal((await f.store.load()).missionTick, 500);
+  f.close(false);
+  closeNew = true;
+  await assert.rejects(f.store.save(checkpoint(750)), { name: 'InvalidStateError' });
+  assert.equal(f.memory.openCount, 3, 'one replacement admission, not a retry loop');
+  assert.equal(f.memory.allPuts.length, 2);
+  closeNew = false;
+  assert.equal((await f.store.load()).missionTick, 500);
+  assert.equal(f.memory.openCount, 4);
+});
+
+test('recovery never retries an admitted failed request or an ambiguously acknowledged commit', async (t) => {
+  let loseAcknowledgement = false;
+  const f = recoveryConnections(t, {
+    admitted: (tx) =>
+      new Proxy(tx, {
+        set(target, name, value) {
+          target[name] =
+            name === 'oncomplete'
+              ? () => {
+                  if (!loseAcknowledgement) return value();
+                  target.error = new DOMException('Commit acknowledgement lost', 'UnknownError');
+                  target.onabort?.();
+                }
+              : value;
+          return true;
+        },
+      }),
+  });
+  await f.store.save(checkpoint(250));
+  f.memory.onAnyPut = () => {
+    throw new DOMException('Admitted request failed', 'InvalidStateError');
+  };
+  await assert.rejects(f.store.save(checkpoint(500)), /Admitted request failed/);
+  assert.equal(f.memory.openCount, 1);
+  assert.equal(f.memory.allPuts.length, 2);
+  f.memory.onAnyPut = null;
+  assert.equal((await f.store.load()).missionTick, 250);
+  loseAcknowledgement = true;
+  await assert.rejects(f.store.save(checkpoint(750)), /acknowledgement lost/);
+  assert.equal(f.memory.openCount, 1);
+  assert.equal(f.memory.allPuts.length, 3);
+  loseAcknowledgement = false;
+  assert.equal(
+    (await f.store.load()).missionTick,
+    750,
+    'a failed acknowledgement is not proof of rollback',
+  );
+});
+
+test('cancelling between stale admission and reopening never starts a replacement request', async (t) => {
+  const f = recoveryConnections(t),
+    controller = new AbortController();
+  await f.store.save(checkpoint(250));
+  f.connections[0].transaction = () => {
+    controller.abort();
+    throw new DOMException('Closing connection', 'InvalidStateError');
+  };
+  await assert.rejects(f.store.save(checkpoint(500), { signal: controller.signal }), {
+    name: 'AbortError',
+  });
+  assert.equal(f.memory.openCount, 1);
+  assert.equal(f.memory.allPuts.length, 1);
+});
+
+test('autosave distinguishes capture, validation and storage failures with bounded inert EN/UK details', async (t) => {
+  const memory = managedIndexedDB(),
+    store = createAircraftRecoveryStore({ indexedDB: memory.indexedDB }),
+    f = fixture(t, { store });
+  const original = f.active.exportRecovery;
+  f.active.exportRecovery = async () => {
+    throw new Error('<img onerror=bad> ' + 'x'.repeat(500));
+  };
+  f.update(250);
+  await settle();
+  assert.match(f.ui.root.textContent, /Checkpoint capture.*Error.*<img onerror=bad>/);
+  assert.doesNotMatch(f.ui.root.textContent, new RegExp('x'.repeat(400)));
+  assert.equal(f.ui.root.querySelector('img'), null);
+  f.locale('uk');
+  assert.match(f.ui.root.textContent, /Створення точки.*Error.*<img onerror=bad>/);
+  assert.equal(memory.openCount, 0);
+  f.active.exportRecovery = async () => ({ ...checkpoint(500), mission: { state: { ticks: 1 } } });
+  f.update(500);
+  await settle();
+  assert.match(f.ui.root.textContent, /Перевірка точки.*Recovery mission and physics do not match/);
+  assert.equal(memory.openCount, 0);
+  f.active.exportRecovery = original;
+  memory.failAnyPutAt = 1;
+  f.update(750);
+  await settle();
+  assert.match(f.ui.root.textContent, /Сховище.*QuotaExceededError.*storage write failure/);
+  assert.equal(f.pauses, 0);
+  memory.failAnyPutAt = null;
+  f.update(1000);
+  await settle();
+  assert.doesNotMatch(f.ui.root.textContent, /QuotaExceededError|<img/);
+  assert.match(f.ui.root.textContent, /Точку збережено/);
+});
+
+test('recovery request error details survive a transaction error before tx.error is populated', async () => {
+  let pending;
+  const store = createAircraftRecoveryStore({
+    indexedDB: {
+      open() {
+        const request = {};
+        queueMicrotask(() => {
+          request.result = {
+            close() {},
+            transaction() {
+              const tx = {
+                error: null,
+                abort() {},
+                objectStore() {
+                  return {
+                    put() {
+                      pending = {
+                        error: new DOMException(
+                          'Origin quota rejected this write',
+                          'QuotaExceededError',
+                        ),
+                      };
+                      queueMicrotask(() => {
+                        pending.onerror?.();
+                        tx.onerror?.({ target: pending });
+                      });
+                      return pending;
+                    },
+                  };
+                },
+              };
+              return tx;
+            },
+          };
+          request.onsuccess();
+        });
+        return request;
+      },
+    },
+  });
+  try {
+    await assert.rejects(store.save(checkpoint(250)), (error) => {
+      assert.equal(error, pending.error, 'the original native error identity/type is preserved');
+      assert.equal(error.name, 'QuotaExceededError');
+      assert.equal(error.message, 'Origin quota rejected this write');
+      return true;
+    });
+  } finally {
+    store.close();
+  }
+});
+
+test('concurrent stale-handle operations share one reopen and never invent a missing recovery slot', async (t) => {
+  const f = recoveryConnections(t);
+  await f.store.save(checkpoint(250));
+  f.close(false);
+  const [first, second] = await Promise.all([f.store.load(), f.store.load()]);
+  assert.equal(first.missionTick, 250);
+  assert.deepEqual(first, second);
+  assert.equal(f.memory.openCount, 2);
+  await new Promise((resolve, reject) => {
+    const tx = f.connections.at(-1).transaction('recovery', 'readwrite');
+    tx.oncomplete = resolve;
+    tx.onerror = tx.onabort = () => reject(tx.error);
+    tx.objectStore('recovery').delete('academy');
+  });
+  const writes = f.memory.allPuts.length;
+  f.close();
+  assert.equal(await f.store.load(), null);
+  assert.equal(
+    f.memory.allPuts.length,
+    writes,
+    'absence is reported, never replaced or repaired by a write',
+  );
+});
+
+const actorCheckpoint = (tick, live = false) =>
+  checkpoint(tick, {
+    model: 'aircraft-course-practice.v2',
+    course: 'flight-a',
+    ...(live ? { actorRules: 'destructible-subjects.v1' } : {}),
+  });
+
+test('preserved Advanced originals survive autosaves and duplicate preservation without duplicate slots', async () => {
+  const memory = managedIndexedDB(),
+    store = createAircraftRecoveryStore({ indexedDB: memory.indexedDB, key: 'world' }),
+    original = actorCheckpoint(250),
+    next = actorCheckpoint(500, true);
+  try {
+    await store.save(original);
+    await store.preserveOriginal(original);
+    await store.save(next);
+    await store.preserveOriginal(structuredClone(original));
+    assert.deepEqual((await store.load()).data, next);
+    assert.deepEqual((await store.load({ original: true })).data, original);
+    const keys = new Set(
+      memory.allPuts.map(([, key]) => key).filter((key) => key.startsWith('world:original:')),
+    );
+    assert.equal(keys.size, 1);
+    original.mission.state.ticks = 999;
+    assert.equal((await store.load({ original: true })).data.mission.state.ticks, 250);
+  } finally {
+    store.close();
+  }
+});
+
+test('failed original pointer write keeps the earlier complete original and current recovery', async () => {
+  const memory = managedIndexedDB(),
+    store = createAircraftRecoveryStore({ indexedDB: memory.indexedDB }),
+    original = actorCheckpoint(250),
+    replacement = actorCheckpoint(750);
+  try {
+    await store.save(actorCheckpoint(500, true));
+    await store.preserveOriginal(original);
+    memory.failAnyPutAt = 2;
+    await assert.rejects(() => store.preserveOriginal(replacement), /storage write failure/);
+    memory.failAnyPutAt = null;
+    assert.deepEqual((await store.load({ original: true })).data, original);
+    assert.equal((await store.load()).missionTick, 500);
+  } finally {
+    store.close();
+  }
+});
+
+test('restoring real native and Challenge envelope shapes preserves before migration and exports exact original', async (t) => {
+  for (const wrapped of [false, true]) {
+    const memory = managedIndexedDB(),
+      store = createAircraftRecoveryStore({ indexedDB: memory.indexedDB }),
+      base = actorCheckpoint(250),
+      original = wrapped
+        ? { format: 'AircraftChallengeRecovery.v1', progress: { missionTick: 250 }, session: base }
+        : base;
+    await store.save(original);
+    const f = fixture(t, { store });
+    let migrated = 0;
+    f.active.migrateActorRules = async () => {
+      assert.deepEqual((await store.load({ original: true })).data, original);
+      migrated++;
+    };
+    await f.click('Restore last saved checkpoint');
+    assert.equal(migrated, 1);
+    assert.deepEqual(f.restores[0], original);
+    f.active.exportRecovery = async () => actorCheckpoint(f.active.snapshot().ticks, true);
+    f.update(500);
+    await settle();
+    await settle();
+    assert.equal((await store.load()).missionTick, 500);
+    assert.deepEqual((await store.load({ original: true })).data, original);
+    await f.click('Export preserved original checkpoint');
+    assert.deepEqual(f.exports.at(-1), {
+      data: original,
+      name: 'aircraft-original-checkpoint.json',
+    });
+  }
+});
+
+test('original storage failure prevents migration while leaving verified recovery paused', async (t) => {
+  const original = actorCheckpoint(250),
+    f = fixture(t, {
+      store: {
+        load: async () => ({ data: original, missionTick: 250 }),
+        preserveOriginal: async () => {
+          throw new Error('backup quota');
+        },
+        close() {},
+      },
+    });
+  let migrated = 0;
+  f.active.migrateActorRules = async () => {
+    migrated++;
+  };
+  await f.click('Restore last saved checkpoint');
+  assert.equal(f.restores.length, 1);
+  assert.equal(f.pauses, 1);
+  assert.equal(migrated, 0);
+  assert.match(f.ui.root.textContent, /backup quota/);
+});
+
+test('cancel after original backup starts cannot migrate the restored flight', async (t) => {
+  let finish;
+  const original = actorCheckpoint(250),
+    f = fixture(t, {
+      store: {
+        load: async () => ({ data: original, missionTick: 250 }),
+        preserveOriginal: () =>
+          new Promise((resolve) => {
+            finish = resolve;
+          }),
+        close() {},
+      },
+    });
+  let migrated = 0;
+  f.active.migrateActorRules = async () => {
+    migrated++;
+  };
+  await f.click('Restore last saved checkpoint');
+  await f.click('Cancel recovery');
+  finish();
+  await settle();
+  assert.equal(migrated, 0);
+  assert.match(f.ui.root.textContent, /cancelled/);
+});
+
+test('new actor-rule checkpoints do not replace preserved originals and unsupported legacy missions skip migration', async (t) => {
+  const f = fixture(t, {
+    store: {
+      load: async () => ({ data: actorCheckpoint(250, true), missionTick: 250 }),
+      preserveOriginal: async () => {
+        throw new Error('must not rewrite original');
+      },
+      close() {},
+    },
+  });
+  let migrated = 0;
+  f.active.migrateActorRules = async () => {
+    migrated++;
+  };
+  await f.click('Restore last saved checkpoint');
+  assert.equal(migrated, 1);
+  f.active.supportsLiveActorRules = () => false;
+  await f.click('Restore last saved checkpoint');
+  assert.equal(migrated, 1);
+  assert.match(f.ui.root.textContent, /flight remains paused/);
 });

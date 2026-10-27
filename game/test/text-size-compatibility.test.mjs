@@ -179,12 +179,16 @@ for (const family of ['company', 'overflight'])
       nodes.set(id, element);
     }
     const attempt = Object.freeze({ phase: 'paused', tick: 7 });
+    const projectionCalls = [],
+      captionLayoutCalls = [];
     const invoke = runInNewContext(`(${source.slice(callback.start, callback.end)})`, {
       document: doc,
       doc,
       $: (id) => nodes.get(id),
       preferences: {},
       appearance: null,
+      textScalingView: { refresh: (enabled) => projectionCalls.push(enabled) },
+      commentator: { refreshCaptionLayout: () => captionLayoutCalls.push('refresh') },
       run: attempt,
       renderTextSizeControl,
       renderTextSizeFallback,
@@ -193,5 +197,7 @@ for (const family of ['company', 'overflight'])
     invoke({ ...desired, effectiveTextSize: 'large', effectiveReducedEffects: false });
     assert.equal((family === 'company' ? doc.documentElement : doc.body).dataset.textSize, 'large');
     assert.ok(doc.querySelector('[data-text-size-fallback]'));
+    assert.deepEqual(projectionCalls, family === 'overflight' ? [false] : []);
+    assert.deepEqual(captionLayoutCalls, family === 'overflight' ? ['refresh'] : []);
     assert.deepEqual(attempt, { phase: 'paused', tick: 7 });
   });

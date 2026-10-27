@@ -58,3 +58,7 @@ from this baseline and require enlarged-layout measurement after integration.
 No all-theme, assistive-technology, physical-device, PWA, audio, packaged-build or
 formal accessibility-conformance claim follows. The visible choice remains
 “Extra large,” with no numeric 200% label.
+
+## Current preserving integration boundary
+
+The original inventory and validation statements above remain dated author evidence. Current integration retains Solo, Snake and Overflight ownership while adding the native Duel host. Inactive scaling factors stay at one. Current controls, two-seat capture recovery, game state, audio owners and unrelated current-main source are preserved. Private generator baseline/check, generation/check and synthetic startup checks are component evidence, not full hosted, browser, rendered-layout, native, offline or gameplay acceptance. Broad checks may be bypassed under the explicit accelerated merge instruction; bypassed checks are not reported passed.

@@ -71,3 +71,7 @@ Standard versus Extra large sizes at the same viewport/theme where claiming a
 twofold size. Physical devices, PWA persistence and all themes remain unqualified
 unless separately exercised. The visible option is “Extra large”; this slice does
 not add a numeric 200% label.
+
+## Current preserving integration boundary
+
+The authored inventory and earlier test/build observations above remain dated reference evidence at their recorded source. This integration combines current Solo and Overflight support with the new Snake host, keeps inactive scaling factors at one, and preserves current storage-failure, locale, focus, replay and paused-attempt ownership. The current bootstrap generator baseline/check and new generation/check succeeded, and 80 synthetic first-paint host/size/density/contrast cases passed. These are source/component results, not rendered layouts, gameplay, hosted full-suite, browser, physical-device, native or offline qualification. Those broad gates may be bypassed under the explicit accelerated merge authority and are not reported passed.

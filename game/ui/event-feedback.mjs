@@ -108,11 +108,7 @@ export function drawEventFeedback(
 ) {
   if (!finitePoint(event) || event.age >= 0.7) return;
   const feedbackTheme =
-      themeFamily === 'fpv'
-        ? 'fpv'
-        : themeFamily === 'atlas'
-          ? 'ukraine'
-          : themeId,
+      themeFamily === 'fpv' ? 'fpv' : themeFamily === 'atlas' ? 'ukraine' : themeId,
     pickup = event.type === 'powerup.collected' && PICKUP_COLORS[event.kind],
     failed = event.type === 'player.failed',
     lineHit = event.type === 'lineImpact.seeded',
@@ -194,10 +190,7 @@ export function drawEventFeedback(
       }[event.kind]
     : failed
       ? t('gameplay:1Life', {
-          value1:
-            feedbackTheme === 'fpv'
-              ? t('interface:craftLost')
-              : t('interface:lifeLost'),
+          value1: feedbackTheme === 'fpv' ? t('interface:craftLost') : t('interface:lifeLost'),
         })
       : event.type === 'shield.absorbed'
         ? t('interface:shieldUsed')

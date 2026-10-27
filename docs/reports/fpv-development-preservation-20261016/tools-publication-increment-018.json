@@ -1,0 +1,148 @@
+{
+  "previousHead": "66f2a6e2d4924dc43d255967914b081b3f9c582d",
+  "head": "0942916a74c5ed6821e31b7d4ee34a66e97b9456",
+  "authenticatedChangedBlobReadbackMatches": true,
+  "sourceHelpersUnchangedFrom": "66f2a6e2d4924dc43d255967914b081b3f9c582d",
+  "scope": "Original staging payload+26 reports only",
+  "allVolumeInputSetFinal": false,
+  "files": [
+    {
+      "path": "docs/reports/fpv-development-preservation-20261016/final-index/preservation-index.json",
+      "gitBlobSHA1": "ba3776568571f971f32553cf7486f09019c5ac40",
+      "sha256": "630438ac879a40577638e5b21706fea93b637b8a34dbc70ad3266248b2d9509e",
+      "bytes": 41343790
+    },
+    {
+      "path": "docs/reports/fpv-development-preservation-20261016/final-index/original-staging-input-scope-v2-state.json",
+      "gitBlobSHA1": "10d29f2a6a38662ab5bfe26280da07be9dc36bcc",
+      "sha256": "c189c1a8e41039cfe478ad2584f2e138bad27512d5350d87b73ccd65d30d3f31",
+      "bytes": 1505
+    },
+    {
+      "path": "docs/reports/fpv-development-preservation-20261016/original-staging-index-build-002.json",
+      "gitBlobSHA1": "a62d1ce858da1aa15466909750b01109fd9a6394",
+      "sha256": "6df36892645ab2b86f1be8b15cbc9058b43b89771eea51b18cf58ef9e4c38d40",
+      "bytes": 1914
+    },
+    {
+      "path": "docs/reports/fpv-development-preservation-20261016/original16-frozen-output-packing-preflight.json",
+      "gitBlobSHA1": "3bd0dd2df7d75550ec8aed4ea9ebae897297ce35",
+      "sha256": "06f61dae169605f353d482feec6a8b81c21b9e1d586d599f33ce3b7e0b432d65",
+      "bytes": 674
+    },
+    {
+      "path": "docs/reports/fpv-development-preservation-20261016/tools-publication-increment-017.json",
+      "gitBlobSHA1": "c8c8c9cd2bde0b21d59745a3b5bf23810c77fdce",
+      "sha256": "15b17675ddf0892f6b6baaeafb1d597031c929168542d99a53aebe7cd3592ee3",
+      "bytes": 2704
+    },
+    {
+      "path": "docs/reports/fpv-development-preservation-20261016/original-staging-report-parts/part-604cfa4697d269f625d5e43f72763f16f7a872b92909b3278bd54dd162d0a142-verified.json",
+      "gitBlobSHA1": "afcc8388972705230fc0406a60c460f5305238d8",
+      "sha256": "62180e4dcaaddc8b949a053d0bf83e495bf12c9411f67164dbc65fe811916863",
+      "bytes": 13154
+    },
+    {
+      "path": "docs/reports/fpv-development-preservation-20261016/original-staging-report-parts/part-b143c506fa92012f56abdb870863dfd19723d79dafd4b500da56935c9b9abba9-verified.json",
+      "gitBlobSHA1": "ad4e59a13a6dab44be36230bedbd931d9073cd36",
+      "sha256": "864e02408c7b191ba139d3c315870af0df37c2e5a38780b210a0be6205dbbd87",
+      "bytes": 4112
+    },
+    {
+      "path": "docs/reports/fpv-development-preservation-20261016/cloud-receipts-38860572427/collection.json",
+      "gitBlobSHA1": "30c286f5aa4acfc0746ac0a2d6b2ee78ff6b618c",
+      "sha256": "dab23968cf1b4c76d74f3e7469b598db90f172a6cff5da122e89190ca9fc3d64",
+      "bytes": 8423
+    },
+    {
+      "path": "docs/reports/fpv-development-preservation-20261016/cloud-receipts-38860572427/part-102e33a30593f1df5ac75fd810880d170344552b2d6bdc2728d45275a0e775d0-verified.json",
+      "gitBlobSHA1": "241895236506fb025e2267e76b7fb1cd5f4be5d8",
+      "sha256": "30f12f87cbc38afe9053e8e57fd80620b29038e5714c4bda161c08f66190710b",
+      "bytes": 2136130
+    },
+    {
+      "path": "docs/reports/fpv-development-preservation-20261016/cloud-receipts-38860572427/part-1c571cf78fefa69569939741c5771f33c3fa68f5540964de0cf9c6ad1332f26d-verified.json",
+      "gitBlobSHA1": "77c6356a0a603ef30f72981059f818b33f613543",
+      "sha256": "2aa7ce80212cceb60c513971c9ab65f9d54aea204561149952ea598ea54a0a27",
+      "bytes": 381552
+    },
+    {
+      "path": "docs/reports/fpv-development-preservation-20261016/cloud-receipts-38860572427/part-2f0d817fed4cf9fa05d8cc4b684cb0dc5df0529bd5fff1ce9d4c408dd0bfdf32-verified.json",
+      "gitBlobSHA1": "42f24618f04b84cba8425e7ebf65ff5f9f914a71",
+      "sha256": "de7281e282aa6eef0ea3c778b42cb7e6d0cef6790a67852c2e29a97de915b0be",
+      "bytes": 1602495
+    },
+    {
+      "path": "docs/reports/fpv-development-preservation-20261016/cloud-receipts-38860572427/part-35b7972b6e9472961534b2f5c1a01e875acda8eac094b5e4e2652642f91163b7-verified.json",
+      "gitBlobSHA1": "fd68a77f872dcd87187d95fe0a658a0e435ce7d4",
+      "sha256": "e418d012e9a6e2259db8a0ec5ea4f4bf7f34c45d0b3b18e25dc99b759fef0978",
+      "bytes": 38152
+    },
+    {
+      "path": "docs/reports/fpv-development-preservation-20261016/cloud-receipts-38860572427/part-46360e3916646a8c41f6062795a6f1fe92b5769926044551700a3c3187e83c93-verified.json",
+      "gitBlobSHA1": "dfc21bc163ce44bbeb22fda884be1cacb949b366",
+      "sha256": "abf4addf23d46beead86be56f9ff587a853ac4a9d23f6648fdda6638ee84759f",
+      "bytes": 1405852
+    },
+    {
+      "path": "docs/reports/fpv-development-preservation-20261016/cloud-receipts-38860572427/part-5280e98ddcd944daa283bd426287a0c42e63ea6c5055552deaf362fc84ace076-verified.json",
+      "gitBlobSHA1": "eee5cfec77ef947f25fcce697e92e835eb9ff822",
+      "sha256": "798b7999d6a2b969ed4c275b527f0732dcfc13300327a35934c369f98355e23d",
+      "bytes": 1956590
+    },
+    {
+      "path": "docs/reports/fpv-development-preservation-20261016/cloud-receipts-38860572427/part-8c0b7aa858bc4ba55a3bbab88bb90e01ec21b58647de30682b3bfb750166c611-verified.json",
+      "gitBlobSHA1": "b589b7b71537ff5b75764ecb67386d7bc5c7b3b9",
+      "sha256": "4c465fc29f91f6a78e24ffe4fe34ad3f3972bd86baaf608492223c4d889cb478",
+      "bytes": 398276
+    },
+    {
+      "path": "docs/reports/fpv-development-preservation-20261016/cloud-receipts-38860572427/part-96e54d4137442c325fec7a3ec0340b9395edde473d60934d6d5895c0554310b8-verified.json",
+      "gitBlobSHA1": "6ff07adbaab0ee91982c0f91d96b6067714fc605",
+      "sha256": "ec2d570cdcf914dc634b099d1cada661a778df900c14c16c559e56e420bf9480",
+      "bytes": 483857
+    },
+    {
+      "path": "docs/reports/fpv-development-preservation-20261016/cloud-receipts-38860572427/part-9d76fd0a4ed90188fffac80f9790e679cc5c209bd6f12cca1e1c187d13dc6c40-verified.json",
+      "gitBlobSHA1": "f0237c9a64bfbfbbf66d6b0a16fd5c55de82d35a",
+      "sha256": "44554282d1fab40f0a6e610341b91b81c6414f95d50a5e66d3205e0dabfe0c2a",
+      "bytes": 1860486
+    },
+    {
+      "path": "docs/reports/fpv-development-preservation-20261016/cloud-receipts-38860572427/part-9d974f7da889830ed507a387d2bd06a39a9d0634e457287463a723f7fb6b7520-verified.json",
+      "gitBlobSHA1": "9c0729251ba8b14ba778a92f240439c6175af78d",
+      "sha256": "5787d2506b5d729f30ba71b320f1b2653484abe0512b9188b14cad61259dad12",
+      "bytes": 782375
+    },
+    {
+      "path": "docs/reports/fpv-development-preservation-20261016/cloud-receipts-38860572427/part-a611cc22eac994b4fe7af86cb1d126b136cb5f31d48cfc7e0a8730091e962b89-verified.json",
+      "gitBlobSHA1": "81f86cffe62ae93d561ce6313a8b417461d6770e",
+      "sha256": "434b7c2e42b3aa64ca063eafdef3ebce13f6a4a871c854d5df38f2c787bee864",
+      "bytes": 320843
+    },
+    {
+      "path": "docs/reports/fpv-development-preservation-20261016/cloud-receipts-38860572427/part-ba941694c6a3682c00a5c7c22e4ebc5dff0e53599ed2877d1901fe1a2e5b0f9d-verified.json",
+      "gitBlobSHA1": "cc4942e5d7ffbe59810575caf3639d8730ebdc87",
+      "sha256": "c10363c277768a7b1e8771418be7c32f84d482fcec53fd4f83b81b2f4e20bf17",
+      "bytes": 7109
+    },
+    {
+      "path": "docs/reports/fpv-development-preservation-20261016/cloud-receipts-38860572427/part-bd6595d702e48191b9b9bafe5a1105ad34bb466cb2e0a28314c24394dd2e9565-verified.json",
+      "gitBlobSHA1": "6cef1a9e53f05599e4f33581e524da3d3008e281",
+      "sha256": "3e54f95e4b67a8c465c582e13148aa9a5ba0ffd1cd8e49e0b68ee7d76af167d3",
+      "bytes": 516977
+    },
+    {
+      "path": "docs/reports/fpv-development-preservation-20261016/cloud-receipts-38860572427/part-d636f3184ee164c3b6dc656280f1f48d17eae0b72d7cb38b16d09b0188ed5098-verified.json",
+      "gitBlobSHA1": "34ce8df1b1dac02733c1a9abd453a6a371da14b3",
+      "sha256": "fbe3069f112129476c303783f5facd78ca767cb1ade3d1b97f360f5050217fed",
+      "bytes": 302775
+    },
+    {
+      "path": "docs/reports/fpv-development-preservation-20261016/cloud-receipts-38860572427/part-ddc6e470b9dfb440e846fd2ba36396b5c4c582e40ec3e540b998c54acd8aa41e-verified.json",
+      "gitBlobSHA1": "712d8b0006ddaf96c0989be9880cfad4def01c37",
+      "sha256": "9743980d4d5ee47bf6b4523b7677ef7f0bf20d8d8068d6fb27a8e080e2716ee0",
+      "bytes": 741708
+    }
+  ]
+}

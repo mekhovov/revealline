@@ -4,40 +4,57 @@
     "source": "320fd3d8b0e3f83cb26b67a0ed05e71f64a8f81b",
     "tree": "4c21d42d7bddf625d15d62403be4bd42cf7b1717",
     "path": "authoring/library/fpv-field-kit/production.rltheme",
-    "bytes": 7840089,
-    "sha256": "f161302ce44b46d3adb589a6184d296587e883fa1d2ccb485e706ce0d45c9815",
-    "scope": "Exact merged main320 production predecessor, independently decoded locally with original payload SHA verification; not a public release or browser acceptance claim."
+    "bytes": 7731209,
+    "sha256": "90679c19624ff6c60ebf8a819a679b7774e0b7401de9394b80167ee8594fef66",
+    "scope": "Derived retained-content oracle after an ownership migration. Source commit and tag identify the original artifact; these new bytes are not that release or its historical qualification."
   },
   "metadata": {
     "format": "revealline-theme-bundle.v1",
     "id": "field-kit",
     "revision": 94,
     "selection": {
-      "base": { "id": "base", "revision": 1 },
+      "base": {
+        "id": "base",
+        "revision": 1
+      },
       "collection": null,
-      "theme": { "id": "fpv", "revision": 94 }
+      "theme": {
+        "id": "fpv",
+        "revision": 94
+      }
     }
   },
   "groups": {
     "slots": {
-      "count": 335,
-      "sha256": "f2d853890e884c926450d6cbe7ed2648676e62a079a9e8768fc73a8fc12d1051"
+      "count": 302,
+      "sha256": "93cd0c41cf186805569b72f283fbeb803cf31623b3935cbc3cd0aa494f1fac22"
     },
     "assets": {
-      "count": 2548,
-      "sha256": "23465ccea618102d36f8a57bd374e9e30e83f24fcc926b84708c0277e9465ea4"
+      "count": 2515,
+      "sha256": "f58323fbb87d8b8e8d237a5cc80451339ded3150022000c76da46658371517c6"
     },
     "themes": {
       "count": 95,
-      "sha256": "c99b789b5baf0dd79e10af86fa6af2f875551fafa988781321fbd4902334ad7e"
+      "sha256": "233a016467981ca1c665a195641fdcba1b990abe012d30142f70f4374b8d689e"
     },
     "collections": {
       "count": 1,
-      "sha256": "74daee988fe6fe616d1ecc4a6ffd9f6c9c47b2fc00584259232f8f1477db1b57"
+      "sha256": "84f512c5583368c0d68f138d2d3f7821e0492c0693e931751f8ec3311f6f30cc"
     }
   },
   "payloads": {
     "count": 132,
     "sha256": "4932cc57542adc364f44cb548011a7ca26afa7e0cb1eb00e00647fe5c381738c"
+  },
+  "migration": {
+    "format": "revealline-retained-production-oracle.v1",
+    "originalBundleSHA256": "f161302ce44b46d3adb589a6184d296587e883fa1d2ccb485e706ce0d45c9815",
+    "originalFixtureSHA256": "bb13e0229deb8003ab4ec9c4750d1beb6f411d368edd5fa03841bd4f57c58cb5",
+    "removedSlots": 33,
+    "removedAssets": 33,
+    "preservedPayloads": {
+      "count": 132,
+      "sha256": "4932cc57542adc364f44cb548011a7ca26afa7e0cb1eb00e00647fe5c381738c"
+    }
   }
 }

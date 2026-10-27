@@ -3,6 +3,7 @@ import { createHash } from 'node:crypto';
 import { execFileSync } from 'node:child_process';
 import { cpus } from 'node:os';
 import { fileURLToPath } from 'node:url';
+import { AIRCRAFT_FREQUENCY } from '../optional-practice/civilian-fpv/advanced-aircraft-runtime.mjs';
 import { runSustainedQualification } from '../game/test/helpers/fpv-aircraft-sustained-qualification.mjs';
 
 const args = process.argv.slice(2);
@@ -67,7 +68,7 @@ const receipt = {
   },
   sources,
   missionHz: 50,
-  physicsHz: 500,
+  physicsHz: AIRCRAFT_FREQUENCY,
   input:
     'Synthetic position/altitude feedback through ordinary roll/pitch/throttle sticks at the authored spawn, yaw pulses, controlled descent until support, and second takeoff; no body-state injection.',
   pilotVersion: 'bounded-position-feedback.v2',

@@ -242,9 +242,7 @@ export function installThemeHost({
       accessibility: {
         ...display.snapshot(),
         ...intent,
-        extraLarge: ['solo', 'snake', 'versus', 'team'].includes(
-          doc.documentElement?.dataset.textScaling,
-        ),
+        extraLarge: ['solo', 'overflight', 'snake', 'versus', 'team'].includes(doc.documentElement?.dataset.textScaling),
         coarsePointer: coarse?.matches === true,
         ...(body.textFace ? { textFace: body.textFace } : {}),
         ...(body.textSize ? { textSize: body.textSize } : {}),

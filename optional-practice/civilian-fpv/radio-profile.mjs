@@ -15,6 +15,18 @@ import {
 export const RADIO_FORMAT = 'RadioProfile.v1';
 export const AXIS_RADIO_FORMAT = 'RadioProfile.v2';
 export const ACTION_RADIO_FORMAT = 'RadioProfile.v3';
+export const FIRE_RADIO_FORMAT = 'RadioProfile.v4';
+export const COMBAT_RADIO_FORMAT = 'RadioProfile.v5';
+export const RADIO_COMBAT_ACTIONS = Object.freeze(['weapon', 'reload', 'payload', 'detonate']);
+export const RADIO_CONTROL_LAYOUT_FORMAT = 'RadioControlLayout.v1';
+export const RADIO_CONTROL_SWITCHES = Object.freeze([
+  'arm',
+  'fire',
+  'weapon',
+  'reload',
+  'payload',
+  'detonate',
+]);
 export const RESPONSE_FORMAT = 'FlightResponseProfile.v1';
 export const FLIGHT_CONTROLS = Object.freeze(['roll', 'pitch', 'yaw', 'throttle']);
 export const STICK_LAYOUTS = Object.freeze({
@@ -48,6 +60,360 @@ export function radioDeviceIdentity(pad) {
   };
 }
 export const radioDeviceKey = (pad) => canonicalJSON(radioDeviceIdentity(pad));
+
+/** The optional six-switch layout is separate from calibrated profile/replay formats. */
+export function validateRadioControlLayout(input, { profile = null } = {}) {
+  const value = plain(input);
+  exactKeys(value, ['format', 'device', 'layout', 'switches'], 'radio control layout');
+  required(
+    value.format === RADIO_CONTROL_LAYOUT_FORMAT && value.layout === 'six-switch',
+    'Unsupported radio control layout',
+  );
+  const device = value.device;
+  exactKeys(device, ['id', 'mapping', 'axes', 'buttons'], 'radio layout device');
+  required(
+    typeof device.id === 'string' &&
+      device.id.length <= 512 &&
+      ['', 'standard'].includes(device.mapping) &&
+      int(device.axes, 1, 64) &&
+      int(device.buttons, 0, 256),
+    'Invalid radio layout device',
+  );
+  if (profile) {
+    profile = validateRadioProfile(profile);
+    required(
+      canonicalJSON(profile.device) === canonicalJSON(device),
+      'Control layout belongs to another radio',
+    );
+  }
+  exactKeys(value.switches, RADIO_CONTROL_SWITCHES, 'six radio controls');
+  const axes = new Set(profile ? FLIGHT_CONTROLS.map((key) => profile.channels[key].axis) : []),
+    buttons = new Set();
+  for (const key of RADIO_CONTROL_SWITCHES) {
+    const binding = value.switches[key];
+    if (binding === null) continue;
+    if (Object.hasOwn(binding, 'axis')) {
+      exactKeys(binding, ['axis', 'off', 'on'], key);
+      required(
+        int(binding.axis, 0, device.axes - 1) &&
+          !axes.has(binding.axis) &&
+          finite(binding.off, -1, 1) &&
+          finite(binding.on, -1, 1) &&
+          Math.abs(binding.on - binding.off) >= 0.5,
+        'Invalid or overlapping layout switch axis',
+      );
+      axes.add(binding.axis);
+    } else {
+      exactKeys(binding, ['button', 'threshold', 'invert'], key);
+      required(
+        int(binding.button, 0, device.buttons - 1) &&
+          !buttons.has(binding.button) &&
+          finite(binding.threshold, 0.1, 0.9) &&
+          typeof binding.invert === 'boolean',
+        'Invalid or duplicate layout switch',
+      );
+      buttons.add(binding.button);
+    }
+  }
+  return value;
+}
+export function createRadioControlLayout(input) {
+  const profile = validateRadioProfile(input);
+  return validateRadioControlLayout(
+    {
+      format: RADIO_CONTROL_LAYOUT_FORMAT,
+      layout: 'six-switch',
+      device: profile.device,
+      switches: Object.fromEntries(
+        RADIO_CONTROL_SWITCHES.map((key) => [key, profile.switches[key] ?? null]),
+      ),
+    },
+    { profile },
+  );
+}
+function controlLayoutStorageKey(device) {
+  const validated = validateRadioControlLayout({
+    format: RADIO_CONTROL_LAYOUT_FORMAT,
+    layout: 'six-switch',
+    device,
+    switches: Object.fromEntries(RADIO_CONTROL_SWITCHES.map((key) => [key, null])),
+  });
+  return `revealline.radio-control-layout.v1:${encodeURIComponent(canonicalJSON(validated.device))}`;
+}
+export function loadRadioControlLayout({ storage, device }) {
+  const value = storage?.getItem(controlLayoutStorageKey(device));
+  if (value === null || value === undefined) return null;
+  const layout = validateRadioControlLayout(value);
+  required(
+    canonicalJSON(layout.device) === canonicalJSON(device),
+    'Stored control layout belongs to another radio',
+  );
+  return layout;
+}
+export function saveRadioControlLayout({ storage, layout }) {
+  const value = validateRadioControlLayout(layout);
+  required(typeof storage?.setItem === 'function', 'Control layout storage is unavailable');
+  storage.setItem(controlLayoutStorageKey(value.device), canonicalJSON(value));
+  return value;
+}
+export function removeRadioControlLayout({ storage, device }) {
+  required(typeof storage?.removeItem === 'function', 'Control layout storage is unavailable');
+  storage.removeItem(controlLayoutStorageKey(device));
+}
+
+export const RADIO_MODEL_SELECTION_FORMAT = 'RadioModelSelection.v1';
+// Models identify the player's transmitter, not its configurable USB channel map.
+// Receiver dongles deliberately do not imply which transmitter is paired.
+export const RADIO_MODEL_CATALOGUE = Object.freeze([
+  Object.freeze({
+    id: 'oxbot-r1',
+    name: 'OXBOT R1',
+    transport: 'usb',
+    channelPreset: 'oxbot-aetr',
+  }),
+  ...[
+    ['tx15', 'TX15'],
+    ['tx15-max', 'TX15 MAX'],
+    ['tx16s', 'TX16S'],
+    ['tx16s-max', 'TX16S MAX'],
+    ['tx16s-mkii', 'TX16S MKII'],
+    ['tx16s-mkii-max', 'TX16S MKII MAX'],
+    ['tx16s-mk3', 'TX16S MK3'],
+    ['tx16s-mk3-max', 'TX16S MK3 MAX'],
+    ['gx12', 'GX12'],
+    ['gx12-crush', 'GX12 Crush'],
+    ['gx15', 'GX15'],
+    ['gx15-max', 'GX15 MAX'],
+    ['boxer', 'Boxer'],
+    ['boxer-max', 'Boxer MAX'],
+    ['boxer-crush', 'Boxer Crush'],
+    ['boxer-transparent', 'Boxer Transparent'],
+    ['pocket', 'Pocket'],
+    ['pocket-crush', 'Pocket Crush'],
+    ['zorro', 'Zorro'],
+    ['tx12', 'TX12'],
+    ['tx12-mkii', 'TX12 MKII'],
+    ['ax12', 'AX12'],
+    ['t8', 'T8'],
+    ['t8l', 'T8L'],
+    ['t8-lite', 'T8 Lite'],
+    ['t8-pro', 'T8 Pro'],
+    ['tx8', 'TX8'],
+  ].map(([id, name]) =>
+    Object.freeze({
+      id: `radiomaster-${id}`,
+      name: `RadioMaster ${name}`,
+      transport: 'usb',
+      channelPreset: /^(?:ax12|t8|tx8)/.test(id) ? null : 'edgetx-classic',
+      ...(id.startsWith('pocket') ? { physicalSwitches: 5 } : {}),
+    }),
+  ),
+  Object.freeze({
+    id: 'radiomaster-mt12',
+    name: 'RadioMaster MT12',
+    transport: 'usb',
+    surfaceOnly: true,
+    channelPreset: null,
+  }),
+  Object.freeze({
+    id: 'other-radio',
+    name: 'Other transmitter',
+    transport: 'unknown',
+    channelPreset: null,
+  }),
+]);
+export const RADIO_CHANNEL_PRESETS = Object.freeze([
+  Object.freeze({ id: 'edgetx-classic', name: 'EdgeTX classic USB', transport: 'usb' }),
+  Object.freeze({ id: 'aetr-usb', name: 'AETR USB · 8-axis channel convention', transport: 'usb' }),
+  Object.freeze({ id: 'oxbot-aetr', name: 'OXBOT R1 · AETR USB', transport: 'usb' }),
+  Object.freeze({
+    id: 'squid-stick',
+    name: 'Squid Stick · supplied CRSF firmware',
+    transport: 'receiver',
+  }),
+  Object.freeze({
+    id: 'crsf-upstream',
+    name: 'CRSFJoystick · upstream firmware',
+    transport: 'receiver',
+  }),
+]);
+function selectionDevice(input) {
+  const device = Number.isSafeInteger(input?.axes)
+    ? { id: input.id, mapping: input.mapping, axes: input.axes, buttons: input.buttons }
+    : radioDeviceIdentity(input);
+  // Layout device validation also supports surface radios with fewer than four axes.
+  return validateRadioControlLayout({
+    format: RADIO_CONTROL_LAYOUT_FORMAT,
+    layout: 'six-switch',
+    device,
+    switches: Object.fromEntries(RADIO_CONTROL_SWITCHES.map((key) => [key, null])),
+  }).device;
+}
+function modelSelectionStorageKey(device) {
+  return `revealline.radio-model-selection.v1:${encodeURIComponent(canonicalJSON(selectionDevice(device)))}`;
+}
+export function validateRadioModelSelection(input) {
+  const value = plain(input);
+  exactKeys(value, ['format', 'device', 'modelId', 'channelPreset'], 'radio model selection');
+  required(value.format === RADIO_MODEL_SELECTION_FORMAT, 'Unsupported radio model selection');
+  exactKeys(value.device, ['id', 'mapping', 'axes', 'buttons'], 'radio model device');
+  value.device = selectionDevice(value.device);
+  required(
+    RADIO_MODEL_CATALOGUE.some(({ id }) => id === value.modelId) &&
+      (value.channelPreset === null ||
+        RADIO_CHANNEL_PRESETS.some(({ id }) => id === value.channelPreset)),
+    'Unknown radio model or channel preset',
+  );
+  return value;
+}
+export function loadRadioModelSelection({ storage, device }) {
+  const value = storage?.getItem(modelSelectionStorageKey(device));
+  if (value === null || value === undefined) return null;
+  const selection = validateRadioModelSelection(value);
+  required(
+    canonicalJSON(selection.device) === canonicalJSON(selectionDevice(device)),
+    'Stored model selection belongs to another radio',
+  );
+  return selection;
+}
+export function saveRadioModelSelection({ storage, device, modelId, channelPreset }) {
+  const value = validateRadioModelSelection({
+    format: RADIO_MODEL_SELECTION_FORMAT,
+    device: selectionDevice(device),
+    modelId,
+    channelPreset,
+  });
+  required(typeof storage?.setItem === 'function', 'Radio model storage is unavailable');
+  storage.setItem(modelSelectionStorageKey(value.device), canonicalJSON(value));
+  return value;
+}
+export function removeRadioModelSelection({ storage, device }) {
+  required(typeof storage?.removeItem === 'function', 'Radio model storage is unavailable');
+  storage.removeItem(modelSelectionStorageKey(device));
+}
+function detectedRadioModel(id) {
+  const name = id
+    .toLowerCase()
+    .replace(/mk\s*ii\b/g, 'mkii')
+    .replace(/mk\s*iii\b/g, 'mk3');
+  if (/(?:0xbot|oxbot)(?:\b|[_ ])/.test(name)) return RADIO_MODEL_CATALOGUE[0];
+  return (
+    RADIO_MODEL_CATALOGUE.filter((model) => model.id.startsWith('radiomaster-'))
+      .sort((a, b) => b.name.length - a.name.length)
+      .find((model) =>
+        new RegExp(`\\b${model.name.slice(12).toLowerCase().replaceAll(' ', '[ _-]*')}\\b`).test(
+          name,
+        ),
+      ) ?? null
+  );
+}
+/** Proposals are never calibration evidence. USB names, counts and transmitter
+ * models cannot prove radio-side mixes or direction; quick checking is required.
+ * Sources: EdgeTX joystick-mapping information; OXBOT R1 QSG; the distinct
+ * countofkrakow/CRSFJoystick (Squid) and mikeneiderhauser/CRSFJoystick descriptors. */
+export function radioDeviceRecommendation(input, { modelId, channelPreset } = {}) {
+  const device = selectionDevice(input);
+  const receiver = /squid|crsf|raspberry|pico|rp2040/i.test(device.id);
+  const detected = receiver ? null : detectedRadioModel(device.id);
+  const model = modelId ? RADIO_MODEL_CATALOGUE.find(({ id }) => id === modelId) : detected;
+  required(modelId === undefined || Boolean(model), 'Unknown radio model');
+  const presetId =
+    channelPreset === undefined
+      ? /squid[\s_-]*stick/i.test(device.id)
+        ? 'squid-stick'
+        : receiver
+          ? null
+          : model?.channelPreset
+      : channelPreset;
+  const preset = RADIO_CHANNEL_PRESETS.find(({ id }) => id === presetId);
+  required(channelPreset == null || Boolean(preset), 'Unknown radio channel preset');
+  const result = {
+    modelId: model?.id ?? 'other-radio',
+    transport: preset?.transport ?? (receiver ? 'receiver' : (model?.transport ?? 'unknown')),
+    channelPreset: preset?.id ?? null,
+    profile: null,
+    layout: null,
+    requiresVerification: true,
+    notice: '',
+    noticeCode: '',
+  };
+  if (model?.surfaceOnly)
+    return {
+      ...result,
+      noticeCode: 'surface-radio',
+      notice:
+        'MT12 uses a steering wheel and trigger. Choose a four-axis flight transmitter or map compatible controls manually.',
+    };
+  if (!preset)
+    return {
+      ...result,
+      noticeCode: receiver ? 'choose-receiver-firmware' : 'choose-channel-preset',
+      notice: receiver
+        ? 'This receiver cannot identify its paired transmitter or firmware. Choose the transmitter and the installed receiver firmware.'
+        : 'Choose a transmitter and channel preset, or map the sticks and switches manually.',
+    };
+  const upstream = preset.id === 'crsf-upstream';
+  const axis = (value) => ({ axis: value, off: -1, on: 1 });
+  const button = (value) => ({ button: value, threshold: 0.5, invert: false });
+  const bindings =
+    preset.id === 'squid-stick'
+      ? [button(2), axis(4), axis(5), button(0), axis(6), axis(7)]
+      : upstream
+        ? [button(0), button(1), button(2), button(3), button(4), button(5)]
+        : [axis(4), axis(5), axis(6), axis(7), button(0), button(1)];
+  const channels = { roll: 0, pitch: 1, yaw: upstream ? 4 : 3, throttle: upstream ? 3 : 2 };
+  const supported =
+    Object.values(channels).every((index) => index < device.axes) &&
+    bindings.every((binding) =>
+      'axis' in binding ? binding.axis < device.axes : binding.button < device.buttons,
+    );
+  if (!supported || device.mapping === 'standard')
+    return {
+      ...result,
+      noticeCode: 'channel-count-mismatch',
+      notice:
+        'This joystick does not expose the channels required by that preset. Use manual mapping or choose its actual USB configuration.',
+    };
+  const profile = validateRadioProfile({
+    format: COMBAT_RADIO_FORMAT,
+    id: `candidate-${result.modelId}-${preset.id}`,
+    name: `${model?.name ?? 'Receiver'} · ${preset.name}`.slice(0, 120),
+    device,
+    stickMode: 2,
+    throttleStyle: 'full-travel',
+    verified: false,
+    channels: Object.fromEntries(
+      Object.entries(channels).map(([control, index]) => [
+        control,
+        {
+          axis: index,
+          min: -1,
+          center: control === 'throttle' ? null : 0,
+          max: 1,
+          invert: false,
+          deadZone: control === 'throttle' ? 0 : 0.02,
+        },
+      ]),
+    ),
+    switches: {
+      pause: null,
+      reset: null,
+      camera: null,
+      ...Object.fromEntries(RADIO_CONTROL_SWITCHES.map((key, index) => [key, bindings[index]])),
+    },
+  });
+  return {
+    ...result,
+    profile,
+    layout: createRadioControlLayout(profile),
+    noticeCode: model?.physicalSwitches === 5 ? 'five-switch-radio' : 'check-candidate',
+    notice:
+      model?.physicalSwitches === 5
+        ? 'Pocket has five switches and a knob. Use the knob for the sixth role, or leave that action in the menu. Check every stick and switch before saving.'
+        : 'Channel proposal only: check stick directions and each switch. Transmitter mixes can change every assignment.',
+  };
+}
+
 export function validateRadioProfile(input) {
   const p = plain(input);
   exactKeys(
@@ -66,7 +432,13 @@ export function validateRadioProfile(input) {
     'radio profile',
   );
   required(
-    [RADIO_FORMAT, AXIS_RADIO_FORMAT, ACTION_RADIO_FORMAT].includes(p.format) &&
+    [
+      RADIO_FORMAT,
+      AXIS_RADIO_FORMAT,
+      ACTION_RADIO_FORMAT,
+      FIRE_RADIO_FORMAT,
+      COMBAT_RADIO_FORMAT,
+    ].includes(p.format) &&
       stableId(p.id) &&
       typeof p.name === 'string' &&
       p.name.trim().length > 0 &&
@@ -118,10 +490,18 @@ export function validateRadioProfile(input) {
       );
   }
   const actions =
-    p.format === ACTION_RADIO_FORMAT
-      ? ['arm', 'pause', 'reset', 'camera']
-      : ['arm', 'pause', 'reset'];
+    p.format === COMBAT_RADIO_FORMAT
+      ? ['arm', 'pause', 'reset', 'camera', 'fire', ...RADIO_COMBAT_ACTIONS]
+      : p.format === FIRE_RADIO_FORMAT
+        ? ['arm', 'pause', 'reset', 'camera', 'fire']
+        : p.format === ACTION_RADIO_FORMAT
+          ? ['arm', 'pause', 'reset', 'camera']
+          : ['arm', 'pause', 'reset'];
   exactKeys(p.switches, actions, 'radio switches');
+  required(
+    p.format !== FIRE_RADIO_FORMAT || p.switches.fire != null,
+    'Fire profiles need an assigned Fire control',
+  );
   const buttons = new Set();
   for (const action of actions) {
     const s = p.switches[action];
@@ -464,9 +844,17 @@ export function createFlightProfileStore({ storage, key = 'revealline.flight-pro
     }
     return { saved, error };
   };
-  const save = (input) => {
+  const save = (input, { replaceKey = null } = {}) => {
     const value = validate(input);
-    return commit(value, [...radios, ...(value.radio ? [value.radio] : [])]);
+    // Setup may replace only its own preceding autosave. Existing named and
+    // imported profiles remain separate; one slider edit is not a new profile.
+    required(
+      replaceKey === null || radios.some((item) => radioProfileKey(item) === replaceKey),
+      'Autosave predecessor is not in this library',
+    );
+    const removeKey =
+      value.radio && radioProfileKey(value.radio) === replaceKey ? null : replaceKey;
+    return commit(value, [...radios, ...(value.radio ? [value.radio] : [])], { removeKey });
   };
   return {
     snapshot: () => structuredClone(current),

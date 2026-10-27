@@ -1,0 +1,27 @@
+{
+  "format": "FPVArcadeRamKnifeDelivery.v1",
+  "date": "2026-10-21",
+  "parent": "d605f4e74e4ae9cb952d792704284decf78401a8",
+  "sourceHashes": {
+    "optional-practice/civilian-fpv/encounter-runtime.mjs": "16ea9a79127bf0274219cb0d24da4fdd19ceb533040a7f55bcb2302e3e80ba8b",
+    "optional-practice/civilian-fpv/encounter-controls.mjs": "4590c51253dc9b869a0769d04cffad9ba5367ac2182d2c3a3eed6b16d964a7c0",
+    "optional-practice/civilian-fpv/world-encounter-editor.mjs": "6dc1d351d46b9dc5f1b84890fe92ee6f5cc04a846bb39950417890490f115eb7",
+    "optional-practice/civilian-fpv/aircraft-appearance.mjs": "3a0e9cce7c45cb02e3bce8482a1df92008d8a582e5049ec7855dc21272209a52",
+    "optional-practice/civilian-fpv/world-reaction-runtime.mjs": "20d5d9886e40f66a6e40d20f4efae2960909a3c376fe03c894b470e744bb03ca"
+  },
+  "gameplay": "New live definitions carry contactModel:arcade-ram-v1. Arcade ammo preset exempts player-damage causes impact and contact. Enemy damage and other ammo presets unchanged. Existing definitions without the policy retain historical behavior.",
+  "presentation": "Centered cosmetic knife: blade length 235 mm versus 95 mm, width 44 mm versus 18 mm, raised spine, mounting saddles; existing toggle and collision geometry preserved.",
+  "checks": {
+    "syntax": "passed",
+    "diffWhitespace": "passed",
+    "reactionProjection": "verified-byte-identical;42 modules;24 recordings;1357398 bytes",
+    "packages": "Academy and Worlds construct within unchanged policies",
+    "manualVisual": "Production-geometry previews in landscape FOV82 and portrait FOV60; camera tilt0"
+  },
+  "limitations": [
+    "No automated test suite run",
+    "No physical-radio ram flight or gameplay damage regression run",
+    "Simple-scene previews do not qualify whole-game HUD/performance coverage",
+    "Local package identities are placeholders, not release evidence"
+  ]
+}

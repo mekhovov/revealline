@@ -97,7 +97,7 @@ test('result captions retain their independent size and visibility while partici
     options,
     true,
   );
-  assert.equal(node.style.fontSize, 'calc(1.35rem * var(--primary-text-scale, 1))');
+  assert.equal(node.style.fontSize, 'calc(1.35rem * var(--primary-text-scale, 1) * var(--overflight-text-scale, 1))');
   assert.equal(node.style.getPropertyValue('--reaction-caption-size'), '1.35rem');
   assert.equal(node.hidden, false);
   assert.match(node.textContent, /Return to the border/);

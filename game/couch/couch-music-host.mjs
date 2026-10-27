@@ -45,6 +45,7 @@ export function attachCouchMusicHost({
   getScene = ({ active }) => (active ? 'gameplay' : 'menu'),
   onOpen = () => {},
   onClose = () => {},
+  onPresentationChange = () => {},
 } = {}) {
   const media = doc.createElement('audio');
   if (typeof media.play !== 'function') return null;
@@ -232,6 +233,7 @@ export function attachCouchMusicHost({
   panel = attachSoundtrackPanel({
     document: doc,
     settingsRoot: section,
+    settingsOwner: root,
     onlineCatalogueDownload,
     onlineSourceStore,
     catalogue: source.catalogue,
@@ -258,6 +260,7 @@ export function attachCouchMusicHost({
       visit = getOwner();
       onOpen();
     },
+    onPresentationChange,
     canRestoreFocus: () => !disposed && canOpen() && getOwner() === visit,
     onClose: () => {
       visit = null;

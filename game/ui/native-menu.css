@@ -1,5 +1,6 @@
 @import url('./menu-retune.css');
 @import url('./global-settings-view.css');
+@import url('./comfort-presets.css');
 
 /* Legacy layout and paint share one cascade layer. Theme recipes own opt-in appearance. */
 @layer legacy {
@@ -256,6 +257,20 @@
     border: 0;
     background: none;
   }
+  body.field-kit .native-landing .home-action-context {
+    max-width: 100%;
+    padding: 0 12px 6px;
+    overflow-wrap: anywhere;
+  }
+  body.field-kit .native-landing .home-action-context p {
+    max-width: none;
+    margin: 0;
+    color: var(--fk-text-muted);
+    font: 400 var(--fk-text-secondary) / 1.5 var(--fk-font-ui, sans-serif);
+  }
+  body.field-kit .native-landing .home-action-context .home-destination {
+    color: var(--fk-text);
+  }
   body.field-kit .native-landing .native-menu-actions > :is(button, a) {
     display: flex;
     align-items: center;
@@ -398,7 +413,7 @@
     max-width: var(--native-menu-width);
   }
   body.field-kit #coop-menu.native-landing :is(.lead, .objective, .coop-picture-preview),
-  body.field-kit #race-main.native-landing :is(.race-kicker, #race-journey-note, #race-summary),
+  body.field-kit #race-main.native-landing :is(.race-kicker, #race-journey-note),
   body.field-kit:not([data-couch-status='paused']):not([data-couch-status='finished'])
     #race-main.native-landing
     :is(.race-seats, #race-message) {

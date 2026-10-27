@@ -380,11 +380,11 @@ function labelStudy(width = 362, options = {}) {
 }
 
 test('Standard Team commands retain the accepted main baseline with current pilot contacts', () => {
-  // Independently measured using the exact 5a1cf983 predecessor painter, not derived
+  // Independently measured using the exact 6c6771d7 main painter, not derived
   // solely from the candidate. Both complete command streams matched.
   const baseline = {
-    pixel: 'f49acf033d3f8304dfaf49c20ac0cda22d0460f1031703f5c8da2fde42b5f862',
-    plain: 'ca82c15cd1db7a83d4d163efabaebdad8e90ec061cdc55781897b96e766561a1',
+    pixel: '4365a07e4a8ac210ac53f638255ed1f983fa809d9b65e6528b3f0182dda53740',
+    plain: '052053c0a23d81ef0280de9ed245195a2b41c5d812f6c1a3b39641c9f8ca9f27',
   };
   for (const textFace of ['pixel', 'plain']) {
     const options = { textFace, reduced: true };
