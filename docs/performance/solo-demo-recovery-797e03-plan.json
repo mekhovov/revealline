@@ -1,0 +1,291 @@
+{
+  "format": "SoloHostedDemoRecoveryPlanV1",
+  "cohort": "linux-demo-runtime797-recovery-v1",
+  "repository": "mekhovov/revealline",
+  "node": "22.13.1",
+  "playwright": "1.62.1",
+  "runner": "ubuntu-24.04 x64 GitHub-hosted; actual image, CPU, memory, browser version and binary hashes recorded",
+  "performanceExclusion": true,
+  "helperTimeoutMs": 4500000,
+  "evidenceBytes": 268435456,
+  "rows": [
+    {
+      "id": "candidate-demo-quality-recovery",
+      "kind": "demo",
+      "source": "candidate",
+      "engine": "chromium",
+      "timeoutMs": 660000
+    }
+  ],
+  "candidate": {
+    "revision": "797e03f28743921842df6aa57520a72016ba3dfc",
+    "tree": "bd53120f0cdfa462b8d63c2de5aa61e9c6658ac5",
+    "run": 39104551453,
+    "artifact": 12128990483,
+    "outer": {
+      "bytes": 1094639112,
+      "sha256": "76a01b2d29119f1bc4d8aaa8da77846160133067d0eb3036f5791c3198b5b897"
+    },
+    "inner": {
+      "bytes": 1075807530,
+      "sha256": "5eb1c3e70d8fc460ddeba3762137306cf2e6902c315172c633702621883b7e9c"
+    },
+    "manifestSHA256": "497efcff7f399c12030bfa5297f8e67faaa97ef26626ac88a1b924fcb23db6a0",
+    "producer": "Successful Appearance39104551453; compact metadata independently verified. Full payload/source/worker/CSP validation remains mandatory in hosted consumer."
+  },
+  "baseline": {
+    "revision": "8b01991942dc764b8aa4726851699ce1985e53ae",
+    "tree": "9373b6a74aea8fa1ef47aa17ace140b4cf714609",
+    "scope": "Exact source identity only; no baseline row/build."
+  },
+  "acceptance": {
+    "recovery": "Four fixed synthetic display/owned-concealment-layer spectator/practice arms require exact frozen checkpoint/tick, blocked controls, paused restoration repaint without autoplay, explicit Resume, and fresh practice steering.",
+    "quality": "Boundary public policy/calibration and forwarded actual painter tier before/after fixed CPU1 windows. No forced tier/pressure; no observed transition remains not-observed and is not a performance pass.",
+    "replay": "Parent public export bytes unchanged; same-engine/version strict replay of both parent and actual bundled Demo source after observation browser closure. Every spectator snapshot independently reconstructs exact source prefix. Practice has no public recorder: exact takeover prefix plus releaseInputs and paused checkpoint facts only, no full practice replay claim.",
+    "failure": "Any failed assertion, resource/deadline overflow, source mismatch, page error, failed request or unconfirmed owned cleanup fails. No retries. Preserve partial reports and not-run verifier outcomes.",
+    "scope": "Separate headed Linux Chromium functional fault-injection observation; synthetic events are untrusted and do not establish actual GPU context loss, pixel equality, device timing, heat, Safari/iPhone/PWA or authentication qualification.",
+    "access": "Existing local production preview fixtureAccess=true only. Original payload/source/CSP proof remains required; authentication explicitly unqualified."
+  },
+  "resources": {
+    "serial": true,
+    "automaticRetries": 0,
+    "perCommandRSSBytes": 6442450944,
+    "perCommandLogBytes": 4194304,
+    "perRowEvidenceBytes": 33554432,
+    "aggregateEvidenceBytes": 268435456,
+    "minimumInitialMemoryBytes": 12884901888,
+    "minimumInitialDiskBytes": 8589934592,
+    "minimumRemainingDiskBytes": 1073741824,
+    "setupBounds": "Common candidate archive/member/source/CSP verification only; 300s transfer,600s each ZIP verification,480s source proof,75min common helper. No baseline build or calibration in this mode.",
+    "ownership": "Fresh RUNNER_TEMP subtree; Linux process birth+owner token/ancestry, bounded TERM/KILL cleanup and fresh process checks before next row. No blanket browser killing.",
+    "finalizationReserveBytes": 4194304,
+    "setupEvidenceMaximumBytes": 25165824,
+    "scratch": "Fresh RUNNER_TEMP/sc-<random>/rNN owner, <=52 UTF-8 bytes per row; exact root/row device+inode recorded. Separate from descriptive output paths. No shared temporary profile.",
+    "workflow": "Existing consumer main-branch manual guard; this fixed reviewed plan requires source CI and normal merge before dispatch. Original setup, helper and upload margins remain unchanged.",
+    "browserLaunch": "Original Demo Chrome/CDP lifecycle with explicit Linux --no-sandbox matching pinned Playwright1.62.1 default; fresh exact-owned profile, no local browser and no physical-device inference.",
+    "workflowBudgetMinutes": {
+      "checkoutsAndNode": 7,
+      "dependenciesAndBrowser": 20,
+      "testsAndPlan": 3,
+      "helperStep": 79,
+      "setupRetention": 2,
+      "evidenceUpload": 10,
+      "sum": 121,
+      "job": 125
+    }
+  },
+  "guidance": [
+    {
+      "url": "https://playwright.dev/docs/ci",
+      "application": "One serial worker and helper deadline below job deadline so partial reports can upload. Version1.62.1 is explicitly pinned instead of following current documentation examples."
+    },
+    {
+      "url": "https://playwright.dev/docs/browsers",
+      "application": "Record exact pinned browser builds; Linux WebKit is a separate platform stratum, not Safari/iOS."
+    },
+    {
+      "url": "https://developer.chrome.com/blog/devtools-grounded-real-world",
+      "application": "CPU stress does not reproduce device GPU, memory or thermal conditions; this CPU1 correctness cohort is not physical-device qualification."
+    }
+  ],
+  "status": "pinned-for-execution",
+  "scope": "Exact source797 diagnostic with an independently approved first-eight correctness prerequisite. This scenario remains unobserved; all three raw numerical failures and four Node portability mismatches remain retained.",
+  "rowEvidenceBytes": 33554432,
+  "demo": {
+    "arms": [
+      "spectator-display",
+      "spectator-owned-concealment-layer",
+      "practice-display",
+      "practice-owned-concealment-layer"
+    ],
+    "qualityWindowsMs": [5000, 2500],
+    "observationTimeoutMs": 360000,
+    "replayTimeoutMs": 120000,
+    "cpuThrottle": 1,
+    "retries": 0,
+    "driver": {
+      "path": "scripts/observe-solo-demo-recovery.mjs",
+      "bytes": 36467,
+      "sha256": "3fbf0a483be011214d0f8e23d138ba65e53220fb0ee0d1d58736722b7084d253"
+    },
+    "probe": {
+      "path": "scripts/solo-demo-recovery-probe.mjs",
+      "bytes": 5900,
+      "sha256": "8d615388066634d5f6905561c033c6a2bdeeb18ff9041c7669d6130fcc64c468"
+    },
+    "sourcePaths": [
+      "game/build-info.json",
+      "game/index.html",
+      "game/app.mjs",
+      "game/ui/demo-host.mjs",
+      "game/ui/demo-clock.mjs",
+      "game/ui/visual-quality-policy.mjs",
+      "game/demo-experience.mjs",
+      "game/replay-player.mjs",
+      "game/ui/render.mjs",
+      "game/replay.mjs",
+      "game/core/index.mjs"
+    ],
+    "expectedClip": {
+      "id": "first-signal-left",
+      "campaignId": "first-signal",
+      "campaignKey": "first-signal/2/88639f3aab7b6cc1",
+      "levelId": "signal-01",
+      "levelRevision": "1",
+      "identity": "d31dfb37580148ee",
+      "recordingIdentity": "c48b4182e13d1541",
+      "inputTraceIdentity": "004a620b36d19d0d",
+      "title": "First Signal",
+      "provenance": "authored",
+      "tags": ["capture", "bent-cut", "safe-ground"],
+      "durationSeconds": 30.683333333333334,
+      "turnPolicy": "immediate",
+      "replayURL": "./demo-data/first-signal-left.replay.json",
+      "replayVariants": ["./demo-data/first-signal-left.chromium-macos.replay.json"]
+    },
+    "sourceAssets": [
+      {
+        "role": "catalog",
+        "relative": "demo-data/catalog.json",
+        "bytes": 6839,
+        "sha256": "3d4fbe0437fb6dfc7e4140e72e597012e95ec82c007621e6dee358c38baf4078"
+      },
+      {
+        "role": "replay",
+        "relative": "demo-data/first-signal-left.replay.json",
+        "bytes": 10793,
+        "sha256": "900f921146e37324dfefc90f55bfc60c03bd8a2954d53353ecae25df8a55c54a"
+      },
+      {
+        "role": "replay",
+        "relative": "demo-data/first-signal-left.chromium-macos.replay.json",
+        "bytes": 10801,
+        "sha256": "b18d9d343ffca2b7efec6c3ec0266d80ed0603804420f444159e4214533bd11e"
+      }
+    ],
+    "bindingRequired": "Exact source797 catalog and replay bytes are pinned by fixtures/solo-demo-797e03/source-assets.json and independently read from Git. Full remote package member/served equality and strict replay remain mandatory; de332 evidence is historical only."
+  },
+  "adapterInputs": [
+    {
+      "path": "scripts/solo-remote-demo.mjs",
+      "bytes": 28634,
+      "sha256": "50762ec6934fcf1bcb2326eb4041ada02ccadaffaafb33c98d91f8488673eb6e"
+    },
+    {
+      "path": "scripts/observe-solo-demo-recovery.mjs",
+      "bytes": 36467,
+      "sha256": "3fbf0a483be011214d0f8e23d138ba65e53220fb0ee0d1d58736722b7084d253"
+    },
+    {
+      "path": "scripts/solo-demo-recovery-probe.mjs",
+      "bytes": 5900,
+      "sha256": "8d615388066634d5f6905561c033c6a2bdeeb18ff9041c7669d6130fcc64c468"
+    }
+  ],
+  "retention": "Common bounded evidence contains plans, exact served source/replay hashes, checkpoint snapshots, full strict replay results and owned command closure. Fresh Chrome profiles remain in exact short scratch until hosted job teardown and are not advertised as preserved archives.",
+  "setupTimeoutMs": 2400000,
+  "release": {
+    "format": "SoloDemoRuntime797DiagnosticReleaseV1",
+    "status": "reviewed",
+    "candidateRevision": "797e03f28743921842df6aa57520a72016ba3dfc",
+    "scope": "independent-demo-synthetic-recovery",
+    "dispatch": {
+      "workflow": ".github/workflows/solo-native-package-consumer.yml",
+      "ref": "refs/heads/main",
+      "lane": "demo-recovery",
+      "source": "797e03f28743921842df6aa57520a72016ba3dfc"
+    },
+    "physicalQualification": "unobserved",
+    "performanceQualification": "excluded",
+    "automaticRetries": 0,
+    "priorProofInspected": true,
+    "noUnclosedOwners": true,
+    "evidence": [
+      {
+        "runId": 39096176143,
+        "artifactId": 12125002138,
+        "artifactSHA256": "d6b5ed1d46c6f89eab6d40361893f2dedb2d6698a50b6ba612cf6058c68c705d",
+        "summarySHA256": "c67a520f87683b2a43479919f27e798c7cb3adff9a0d0896d815d554d5918955"
+      }
+    ],
+    "ownerScope": "Actual source797 first-eight run39109911286 retained 14 clean closed commands, 8 correctness passes and 4 strict same-engine replay verifications. Fresh ownership and this scenario remain unobserved.",
+    "firstEightSourceRevision": "797e03f28743921842df6aa57520a72016ba3dfc",
+    "firstEightAllCorrectnessPassed": true,
+    "firstEightEvidence": {
+      "format": "SoloFirstEightCorrectnessEvidenceV1",
+      "sourceRevision": "797e03f28743921842df6aa57520a72016ba3dfc",
+      "runId": 39109911286,
+      "artifactId": 12130067688,
+      "artifactSHA256": "5c5f84eb082d13123410b0c1939aab3c9af4ef981ad9b3150b215c3a16aba916",
+      "summarySHA256": "5ff787c26c962ec31c9fbe2d635b679fb393caa5ea2eaa84e41fbcc3061804b8",
+      "correctness": "passed",
+      "ownersClosed": true
+    },
+    "publicationScope": "Reviewed for fixed manual main-branch dispatch after current source CI and normal merge. The exact source797 first-eight correctness prerequisite is approved; no timing, physical, audibility or scenario-result qualification is inferred. Original de332 evidence remains historical only.",
+    "firstEightRequired": true,
+    "firstEightNumericalFailuresRetained": 3,
+    "nodePortabilityMismatchesRetained": 4
+  },
+  "bindingScope": {
+    "status": "metadata-and-git-source-bound-release-held",
+    "candidateRevision": "de3324607c82787c1a1fec9c13d4f8b5cb74cee4",
+    "runtimeRevision": "de3324607c82787c1a1fec9c13d4f8b5cb74cee4",
+    "candidateArtifact": 12123463810,
+    "sourceAssets": "Exact de332 Git blobs; package/served equality pending native admission.",
+    "runtime73": "No package pins or successor permission inferred."
+  },
+  "sourceCohort": "demo-runtime797-diagnostic-v1",
+  "runtimeRevision": "797e03f28743921842df6aa57520a72016ba3dfc",
+  "prospectiveTooling": {
+    "status": "current-source-ci-required-before-normal-merge",
+    "sparseClosure": null,
+    "finalToolingRevision": null
+  },
+  "frozenTools": [
+    {
+      "path": "scripts/run-solo-remote-correctness.mjs",
+      "bytes": 74932,
+      "sha256": "8417c019cd8efe8956f95b725b87abe71288aec720c796c07d2a649963a4a8a1"
+    },
+    {
+      "path": "scripts/solo-owned-resource-assessment.mjs",
+      "bytes": 28635,
+      "sha256": "7ecf08a9a2955f25f02fd13f568cbbbad7d7102744a9d8c755bbe716d54e0860"
+    },
+    {
+      "path": "scripts/solo-qualification-snapshot-store.mjs",
+      "bytes": 11359,
+      "sha256": "19f1989ca20ded51eebefd0a5fd6f8b01532dcc32150db25d26c80e025c5e51a"
+    },
+    {
+      "path": "scripts/serve-production-preview.mjs",
+      "bytes": 10414,
+      "sha256": "4c63ec2ea6d7b6b3c79793dd1e8dc8f75daa9ee6c783ee076d8bc050602c1cab"
+    },
+    {
+      "path": "scripts/game-cli.mjs",
+      "bytes": 94310,
+      "sha256": "384c26bde0dc3e300f651e7a43c9d5f6d3c70eb28e0e07763f7cb51d94929cb5"
+    }
+  ],
+  "packageBinding": {
+    "producerRun": 39104551453,
+    "producerConclusion": "success",
+    "scope": "Exact verified source797 package; full hosted archive/member/source/CSP verification remains mandatory."
+  },
+  "sourceSuccessor": {
+    "priorDeclaration": "docs/performance/solo-demo-recovery-73a345-plan.json",
+    "priorRevision": "73a345cec696d7789198cf295ca5c37b17ca0e71",
+    "scope": "Prior source73 workloads and retained evidence are preserved. No old scenario outcome is promoted."
+  },
+  "sourceAssetsWitness": {
+    "path": "docs/performance/fixtures/solo-demo-797e03/source-assets.json",
+    "bytes": 2233,
+    "sha256": "bf0871872fb2e2e4818c791b6561e2d49f60537c550f046ff500617ec8ecf9fc"
+  },
+  "firstEightReview": {
+    "path": "docs/performance/fixtures/solo-797e03-consumer/first-eight-39109911286.json",
+    "bytes": 2213,
+    "sha256": "3bedb1f0cc889e21ea2937addd936cbfd7ec78824434b37571d84dbdc1b65f9f"
+  }
+}

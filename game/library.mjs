@@ -50,10 +50,33 @@ import { t } from './i18n/index.mjs';
 
 const libraryError = (key, values) => t(`errors:library.${key}`, values);
 
+// Reviewed membership-only successors. Keys cover the full normalized levels
+// and class recipes; an edited or imported lookalike cannot use this migration.
+const RETAINED_CAMPAIGN_PREDECESSORS = Object.freeze({
+  'equipment-workshop/1/7bbeedba8b221cf4': 'equipment-workshop/1/3fc2cf073da368b4',
+  'neon-mosaic/2/56d7451c6b50ab4b': 'neon-mosaic/2/68f10772f1871b8b',
+});
+
+/** Project only surviving clears. Historical scores, pictures and replay proofs
+ * retain their original identities and are never relabeled as new evidence. */
+function retainedCampaignProgress(library, campaign, key) {
+  const predecessor = RETAINED_CAMPAIGN_PREDECESSORS[key];
+  if (!predecessor || !Object.hasOwn(library.campaigns, predecessor)) return null;
+  const previous = library.campaigns[predecessor];
+  if (!previous || typeof previous.clears !== 'object' || previous.clears === null) return null;
+  const ids = new Set(campaign.levels.map((level) => level.id));
+  const next = {
+    ...structuredClone(previous),
+    clears: Object.fromEntries(Object.entries(previous.clears).filter(([id]) => ids.has(id))),
+  };
+  return validateProgress(next, campaign) ? next : null;
+}
+
 export const LIBRARY_VERSION = 'xonix-library.v2';
 export const PRESENTATION_LIBRARY_VERSION = 'xonix-library.v3';
 export const STORY_LIBRARY_VERSION = 'xonix-library.v4';
 export const DEFAULT_CINEMATIC_VOLUME = 0.75;
+export const MAX_COLLECTION_TIME_SECONDS = 7200;
 const LEGACY_LIBRARY_VERSION = 'xonix-library.v1';
 export const LIBRARY_LIMITS = Object.freeze({
   maxBytes: 4 * 1024 * 1024,
@@ -189,7 +212,7 @@ function stats(value, withVariants = false) {
   );
   required(
     finite(value.score, 0, 1e9) &&
-      finite(value.time, 0, 7200) &&
+      finite(value.time, 0, MAX_COLLECTION_TIME_SECONDS) &&
       Number.isInteger(value.medals) &&
       finite(value.medals, 1, 3) &&
       typeof value.clean === 'boolean',
@@ -387,7 +410,7 @@ function checkLibrary(candidate, { campaigns = [] } = {}) {
         text(item.levelName, 280) &&
         text(item.runId, 159) &&
         finite(item.score, 0, 1e9) &&
-        finite(item.time, 0, 7200) &&
+        finite(item.time, 0, MAX_COLLECTION_TIME_SECONDS) &&
         medalValid(item.medal) &&
         stamp(item.completedAt),
       libraryError('galleryMetadata'),
@@ -453,7 +476,7 @@ function checkLibrary(candidate, { campaigns = [] } = {}) {
     );
     required(
       finite(item.score, 0, 1e9) &&
-        finite(item.time, 0, 7200) &&
+        finite(item.time, 0, MAX_COLLECTION_TIME_SECONDS) &&
         medalValid(item.medal) &&
         stamp(item.completedAt) &&
         text(item.runId, 159),
@@ -513,10 +536,12 @@ export function exportLibrary(library) {
   return JSON.stringify(checkLibrary(library));
 }
 export function progressFor(library, campaign) {
-  const progress = library.campaigns[campaignKey(campaign)];
-  return progress && validateProgress(progress, campaign)
-    ? structuredClone(progress)
-    : emptyProgress(campaign);
+  const key = campaignKey(campaign);
+  const progress = library.campaigns[key];
+  if (progress && validateProgress(progress, campaign)) return structuredClone(progress);
+  // Never conceal a malformed current record by substituting historical data.
+  if (Object.hasOwn(library.campaigns, key)) return emptyProgress(campaign);
+  return retainedCampaignProgress(library, campaign, key) ?? emptyProgress(campaign);
 }
 export function setCampaignProgress(library, campaign, progress) {
   const next = checkLibrary(library);

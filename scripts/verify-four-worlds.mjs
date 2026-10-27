@@ -325,8 +325,8 @@ export async function verifyFourWorlds({ candidate, write = false } = {}) {
         }
     }
   }
-  assert.equal(routes.length, 48);
-  assert.equal(imageFacts.length, 12);
+  assert.equal(routes.length, 36);
+  assert.equal(imageFacts.length, 9);
   const result = { ...header, routes };
   if (write)
     await writeFile(path.join(ROOT, PROOF_FILE), JSON.stringify(result, null, 2) + '\n', {
@@ -349,7 +349,7 @@ export async function verifyFourWorlds({ candidate, write = false } = {}) {
       savedContinuationVerified: true,
     })),
     imageFacts,
-    note: '48 actual wins and verified saved continuations for twelve distinct picture/map identities over three unchanged R5 geometries. Full owned RGB PNG scanlines decoded; browser/color/readability, physical controls and enjoyment remain separate.',
+    note: '36 actual wins and verified saved continuations for nine retained picture/map identities over three unchanged R5 geometries. Full owned RGB PNG scanlines decoded; browser/color/readability, physical controls and enjoyment remain separate.',
   };
 }
 if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {

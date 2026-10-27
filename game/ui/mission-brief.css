@@ -20,14 +20,14 @@
     min-width: 0;
   }
   #shell-missions[data-view='brief'] #shell-missions-title {
-    font-size: clamp(26px, 4vw, 34px);
+    font-size: calc(clamp(26px, 4vw, 34px) * var(--primary-text-scale, 1));
     line-height: 1.2;
     overflow-wrap: anywhere;
     text-wrap: wrap;
   }
   #shell-missions[data-view='brief'] #shell-missions-context {
     margin: 0 0 8px;
-    font-size: 16px;
+    font-size: calc(16px * var(--primary-text-scale, 1));
     line-height: 1.35;
     color: var(--muted);
   }
@@ -56,12 +56,12 @@
   }
   #shell-brief-content .reading-actions button {
     min-height: 44px;
-    font-size: 18px;
+    font-size: calc(18px * var(--primary-text-scale, 1));
   }
   #shell-brief-content .reading-hint {
     margin: 8px 0 0;
     min-height: 0;
-    font-size: 16px;
+    font-size: calc(16px * var(--primary-text-scale, 1));
     line-height: 1.4;
   }
   #shell-brief-content #mission-brief-reading {
@@ -81,7 +81,7 @@
   #shell-brief-content #mission-brief-reading > p {
     flex: 0 0 auto;
     margin: 0 0 20px;
-    font-size: 20px;
+    font-size: calc(20px * var(--primary-text-scale, 1));
     line-height: 1.55;
     overflow-wrap: anywhere;
   }
@@ -95,21 +95,21 @@
     color: var(--accent);
   }
   .game-shell[data-text-size='large'] #shell-brief-content #mission-brief-reading > p {
-    font-size: 22px;
+    font-size: calc(22px * var(--primary-text-scale, 1));
     line-height: 1.55;
   }
   .game-shell[data-text-size='large'] #shell-brief-content .reading-actions button {
-    font-size: 22px;
+    font-size: calc(22px * var(--primary-text-scale, 1));
   }
   .game-shell[data-text-size='large'] #shell-brief-content .reading-hint {
-    font-size: 18px;
+    font-size: calc(18px * var(--primary-text-scale, 1));
   }
   @media (max-width: 480px) {
     #shell-brief-content #mission-brief-reading {
       padding: 12px;
     }
     #shell-brief-content #mission-brief-reading > p {
-      font-size: 18px;
+      font-size: calc(18px * var(--primary-text-scale, 1));
     }
   }
 }

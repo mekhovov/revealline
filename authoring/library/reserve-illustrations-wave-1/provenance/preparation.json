@@ -46,15 +46,6 @@
       "actualOrdinarySize": 2522301,
       "imageInputToGeneration": false,
       "inspection": "Viewed the complete original via view_image before prompt preparation; broad foreground focus, layered scenic discoveries, bright warm/cool separation and detailed pixel-style material treatment."
-    },
-    {
-      "sourceProvenanceGitBlob": "f25f9eb1b7234802e2c9fd7c8ddb07f8fb89e42b",
-      "inspectedPath": "/Users/oleksandr.mekhovov/.codex/generated_images/01a097a2-47c9-7462-8534-695c751580eb/exec-64ff0766-b741-4e01-b6d5-9da440c29268.png",
-      "recordedBytes": 2577915,
-      "recordedSha256": "d80e371a2bc008ce1b893268725add92a5b9a18bc8589e7b5145cbb4a75b46fa",
-      "actualOrdinarySize": 2577915,
-      "imageInputToGeneration": false,
-      "inspection": "Viewed the complete original via view_image before prompt preparation; broad foreground focus, layered scenic discoveries, bright warm/cool separation and detailed pixel-style material treatment."
     }
   ],
   "culturalReference": {

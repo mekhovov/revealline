@@ -2,6 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { mountGlobalSettings } from '../ui/global-settings-view.mjs';
 import { Document } from './helpers/couch-dom.mjs';
+import { menuAnimationBinding, MENU_ANIMATION_KEY } from '../ui/menu-animation-preferences.mjs';
 
 function fixture() {
   const document = new Document(),
@@ -47,6 +48,56 @@ function preference(initial) {
     listeners: () => listeners.size,
   };
 }
+
+for (const projected of [false, true])
+  test(`${projected ? 'SIM' : 'shared'} generated menu-motion row preserves failed choice and returns Retry focus only to its checkbox`, async (t) => {
+    const f = fixture(),
+      win = f.document.defaultView;
+    let working = false,
+      stored = 'on';
+    win.localStorage = {
+      getItem: (key) => (key === MENU_ANIMATION_KEY ? stored : null),
+      setItem(key, value) {
+        if (!working) throw new DOMException('Modeled blocked save', 'SecurityError');
+        if (key === MENU_ANIMATION_KEY) stored = value;
+      },
+    };
+    const services = projected
+        ? await import('../../optional-practice/civilian-fpv/flight-fullscreen.mjs')
+        : null,
+      mount = services?.mountSimGlobalSettings ?? mountGlobalSettings,
+      binding = (services?.simMenuAnimationBinding ?? menuAnimationBinding)(win),
+      view = mount({ ...f, bindings: { menuAnimation: binding } });
+    t.after(() => view.destroy());
+    const input = f.document.getElementById('global-settings-menuAnimation'),
+      status = f.document.getElementById(`${input.id}-status`),
+      retry = status.parentNode.querySelector('.global-settings-save-retry');
+    input.checked = false;
+    input.emit('change');
+    assert.equal(input.checked, false);
+    assert.equal(stored, 'on');
+    assert.match(status.textContent, /Session only.*blocked/);
+    retry.focus();
+    view.refresh('uk');
+    assert.equal(f.document.activeElement, retry);
+    assert.match(status.textContent, /заблоковане/);
+    working = true;
+    retry.click();
+    assert.equal(stored, 'off');
+    assert.equal(status.textContent, 'Збережено');
+    assert.equal(f.document.activeElement, input);
+    assert.equal(retry.hidden, true);
+    working = false;
+    input.checked = true;
+    input.emit('change');
+    const other = f.document.createElement('button');
+    f.root.append(other);
+    other.focus();
+    working = true;
+    binding.retry();
+    assert.equal(f.document.activeElement, other);
+    assert.equal(stored, 'on');
+  });
 
 test('two hosts share one preference owner without startup writes and release subscriptions', () => {
   const owner = preference(0.6),
@@ -157,5 +208,72 @@ test('storage warnings and rejected changes stay visible without falsely applyin
   await Promise.resolve();
   assert.equal(input.checked, false);
   assert.equal(status.textContent, 'Unavailable');
+  settings.destroy();
+});
+
+test('generated SIM-style control preserves desired extra size across locale refresh and explicit Large selection', () => {
+  const owner = preference('extra-large'),
+    f = fixture();
+  const settings = mountGlobalSettings({ ...f, bindings: { textSize: owner } });
+  const input = f.document.getElementById('global-settings-textSize');
+  input.focus();
+  assert.equal(input.value, 'extra-large');
+  assert.equal(input.querySelector('[data-text-size-retained]').disabled, true);
+  const status = input.closest('[data-global-setting]').querySelector('[role="status"]'),
+    fallback = input.parentElement.querySelector('[data-text-size-fallback]');
+  assert.deepEqual(
+    input.getAttribute('aria-describedby').split(/\s+/),
+    [status.id, fallback.id],
+    'the retained-size notice supplements the shared persistence status',
+  );
+  settings.refresh('uk');
+  assert.equal(input.value, 'extra-large');
+  assert.match(input.querySelector('[data-text-size-retained]').textContent, /Дуже великий/);
+  assert.match(
+    input.parentElement.querySelector('[data-text-size-fallback]').textContent,
+    /збережено/,
+  );
+  assert.equal(f.document.activeElement, input);
+  assert.equal(owner.writes(), 0);
+  input.value = 'large';
+  input.emit('change');
+  assert.equal(owner.get(), 'large');
+  assert.equal(owner.writes(), 1);
+  assert.equal(input.querySelector('[data-text-size-retained]'), null);
+  assert.equal(input.getAttribute('aria-describedby'), status.id);
+  assert.equal(fallback.hidden, true);
+  settings.destroy();
+});
+
+test('qualified settings retain capability, selected control and focus when lazy providers refresh', () => {
+  const owner = preference('extra-large'),
+    f = fixture();
+  const settings = mountGlobalSettings({
+    ...f,
+    extraLargeText: true,
+    bindings: { textSize: owner },
+  });
+  const input = f.document.getElementById('global-settings-textSize');
+  input.focus();
+  assert.equal(input.querySelector('[data-text-size-retained]').disabled, false);
+  const again = mountGlobalSettings({
+    ...f,
+    locale: 'uk',
+    bindings: { masterVolume: preference(0.5) },
+  });
+  assert.equal(again, settings);
+  assert.equal(f.document.getElementById('global-settings-textSize'), input);
+  assert.equal(input.querySelector('[data-text-size-retained]').disabled, false);
+  assert.equal(input.value, 'extra-large');
+  assert.equal(owner.writes(), 0);
+  assert.equal(f.document.activeElement, input);
+  input.value = 'standard';
+  input.emit('change');
+  assert.equal(owner.get(), 'standard');
+  assert.equal(input.querySelector('[data-text-size-retained]').disabled, false);
+  input.value = 'extra-large';
+  input.emit('change');
+  assert.equal(owner.get(), 'extra-large');
+  assert.equal(owner.writes(), 2);
   settings.destroy();
 });

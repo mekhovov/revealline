@@ -1,0 +1,15 @@
+{
+  "format": "revealline-main-pages-archive-receipt.v1",
+  "sourceRevision": "fb3caf12bd43743670f47c42dc21f7a406223379",
+  "artifactId": "12103681604",
+  "measurement": "actual uncompressed artifact.tar emitted by the pinned Pages action",
+  "maximumArchiveBytes": 980000000,
+  "archiveAccepted": true,
+  "errors": [],
+  "archiveBytes": 963368960,
+  "stagedBytes": 960384263,
+  "inventorySha256": "7e51a6e0fe6b5b2c47293076ab5731f7ff1dd8ddf0b0abadd29645c002a1f0ee",
+  "archiveSha256": "2463961b29d2ea0a44dd214059863b86c358be76b6cf5bcf0e7590d1ade38435",
+  "files": 3425,
+  "overheadBytes": 2984697
+}

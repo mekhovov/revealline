@@ -1234,3 +1234,51 @@ test('Couch explicit scene keeps level music across inactive Pause, Settings, re
     'builtin.listening.auto.menu',
   );
 });
+
+test('actual paused Duel adopts mono in Audio settings without changing flight, master or music transport', async (t) => {
+  const saved = memoryStorage({ 'revealline.audio-master.v1': '{"muted":true,"volume":0.4}' }),
+    a = audio(t),
+    page = await couchPage(t, { storage: saved, audio: a });
+  enter(page, 'race-start');
+  await settleUntil(() => a.output()?.enabled);
+  page.frame();
+  page.key('KeyD');
+  page.frames(4);
+  page.key('KeyD', false);
+  enter(page, 'race-pause');
+  const before = page.checkpoint(),
+    sound = a.output(),
+    music = sound.musicState(),
+    cursor = sound.cursor,
+    master = saved.getItem(AUDIO_PREFERENCES_KEY),
+    media = {
+      time: a.media.currentTime,
+      plays: a.media.plays,
+      muted: a.media.muted,
+      src: a.media.src,
+    },
+    writes = saved.writes.length;
+  enter(page, 'race-options');
+  enter(page, 'race-settings-tab-audio');
+  const control = page.doc.querySelector('[data-gameplay-audio] input');
+  assert.ok(control);
+  assert.equal(control.closest('[data-global-setting]').dataset.globalSetting, 'audioCues');
+  control.focus();
+  control.checked = true;
+  control.emit('change');
+  assert.equal(sound.gameplayOutput.snapshot().status, 'mono');
+  assert.equal(sound.gameplayBus.channelCount, 1);
+  assert.equal(page.doc.activeElement, control);
+  assert.equal(saved.writes.length, writes + 1);
+  assert.equal(saved.writes.at(-1)[0], 'revealline.gameplay-audio-output.v1');
+  assert.equal(saved.getItem(AUDIO_PREFERENCES_KEY), master);
+  assert.equal(sound.cursor, cursor);
+  assert.deepEqual(sound.musicState(), music);
+  assert.deepEqual(
+    { time: a.media.currentTime, plays: a.media.plays, muted: a.media.muted, src: a.media.src },
+    media,
+  );
+  page.frames(20);
+  assert.deepEqual(page.checkpoint(), before);
+  assert.equal(page.state(), 'paused');
+});

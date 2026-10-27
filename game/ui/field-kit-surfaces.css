@@ -9,16 +9,16 @@
     padding: clamp(20px, 4vw, 40px);
   }
   .field-kit.game-shell :is(dialog p, dialog li) {
-    font-size: var(--fk-text-body);
+    font-size: calc(var(--fk-text-body) * var(--primary-text-scale, 1));
     line-height: var(--fk-leading-body);
   }
   .field-kit.game-shell dialog :is(.micro-note, .reading-hint, .eyebrow) {
-    font-size: var(--fk-text-secondary);
+    font-size: calc(var(--fk-text-secondary) * var(--primary-text-scale, 1));
     line-height: 1.5;
   }
   .field-kit.game-shell dialog :is(h3, h4) {
     color: var(--fk-text);
-    font-size: var(--fk-text-body);
+    font-size: calc(var(--fk-text-body) * var(--primary-text-scale, 1));
     line-height: 1.4;
   }
   .field-kit.game-shell dialog h2 {
@@ -123,11 +123,11 @@
     line-height: 1.4;
   }
   .field-kit.game-shell .gallery-card strong {
-    font-size: var(--fk-text-control);
+    font-size: calc(var(--fk-text-control) * var(--primary-text-scale, 1));
     color: var(--fk-text);
   }
   .field-kit.game-shell .gallery-card span {
-    font-size: var(--fk-text-secondary);
+    font-size: calc(var(--fk-text-secondary) * var(--primary-text-scale, 1));
     color: var(--fk-muted);
   }
   .field-kit.game-shell #gallery-view-dialog {
@@ -153,14 +153,14 @@
     border-radius: 0;
   }
   .field-kit.game-shell :is(.appearance-reward p, .mastery-note) {
-    font-size: var(--fk-text-secondary);
+    font-size: calc(var(--fk-text-secondary) * var(--primary-text-scale, 1));
     line-height: 1.5;
   }
   .field-kit.game-shell .appearance-reward.earned {
     border-color: var(--fk-success);
   }
   .field-kit.game-shell :is(.scoreboard ol, .scoreboard h3) {
-    font-size: var(--fk-text-control);
+    font-size: calc(var(--fk-text-control) * var(--primary-text-scale, 1));
     line-height: 1.5;
   }
   .field-kit.game-shell .scoreboard ol {
@@ -181,11 +181,11 @@
     color: var(--fk-text);
     background-color: var(--fk-bg);
     font-family: var(--fk-font-ui);
-    font-size: var(--fk-text-control);
+    font-size: calc(var(--fk-text-control) * var(--primary-text-scale, 1));
   }
   .field-kit.game-shell .soundtrack-field > span {
     color: var(--fk-muted);
-    font-size: var(--fk-text-secondary);
+    font-size: calc(var(--fk-text-secondary) * var(--primary-text-scale, 1));
   }
   .field-kit.game-shell dialog :is(pre, textarea) {
     white-space: pre-wrap;
@@ -249,14 +249,14 @@
   }
   .field-kit[data-field-kit-page] :is(h1, .race-screen h1) {
     font-family: var(--fk-font-display);
-    font-size: clamp(var(--fk-text-display), 6vw, 72px);
+    font-size: calc(clamp(var(--fk-text-display), 6vw, 72px) * var(--primary-text-scale, 1));
     line-height: 1.05;
     letter-spacing: 0.015em;
     text-shadow: none;
   }
   .field-kit[data-field-kit-page] :is(h2, h3) {
     color: var(--fk-text);
-    font-size: calc(var(--fk-text-body) + 4px);
+    font-size: calc(calc(var(--fk-text-body) + 4px) * var(--primary-text-scale, 1));
     line-height: 1.3;
     letter-spacing: normal;
   }
@@ -285,12 +285,12 @@
       .stage-heading
     ) {
     color: var(--fk-muted);
-    font-size: var(--fk-text-secondary);
+    font-size: calc(var(--fk-text-secondary) * var(--primary-text-scale, 1));
     line-height: 1.5;
   }
   .field-kit[data-field-kit-page]
     :is(.badge, .readouts, .race-kicker, .seat > span, .face-buttons span, .dpad span) {
-    font-size: var(--fk-text-secondary);
+    font-size: calc(var(--fk-text-secondary) * var(--primary-text-scale, 1));
     color: var(--fk-muted);
     letter-spacing: normal;
     border-radius: 0;
@@ -315,7 +315,7 @@
     gap: 8px;
     max-width: 230px;
     margin-block: 12px;
-    font-size: var(--fk-text-control);
+    font-size: calc(var(--fk-text-control) * var(--primary-text-scale, 1));
   }
   .field-kit[data-field-kit-page='couch'] #couch-app {
     --sun: var(--fk-amber);
@@ -339,7 +339,7 @@
     border-color: var(--fk-line);
   }
   .field-kit[data-field-kit-page='couch'] #couch-app .race-menu-actions :is(button, a) {
-    font-size: var(--fk-text-body);
+    font-size: calc(var(--fk-text-body) * var(--primary-text-scale, 1));
     min-height: 48px;
     border-color: var(--fk-control-line);
     background-color: var(--fk-panel);
@@ -365,7 +365,7 @@
     gap: 20px;
   }
   .field-kit[data-field-kit-page='controller'] .face-buttons b {
-    font-size: var(--fk-text-control);
+    font-size: calc(var(--fk-text-control) * var(--primary-text-scale, 1));
   }
   .field-kit[data-field-kit-page='controller'] :is(.stage-heading, .feedback dt) {
     color: var(--fk-cyan);
@@ -384,7 +384,7 @@
     display: none;
   }
   .field-kit[data-field-kit-page='about'] .hero h1 {
-    font-size: clamp(56px, 7vw, 104px);
+    font-size: calc(clamp(56px, 7vw, 104px) * var(--primary-text-scale, 1));
   }
   .field-kit[data-field-kit-page='about'] :is(.header-play, .button-primary) {
     color: var(--fk-on-accent);
@@ -440,11 +440,11 @@
   }
   .field-kit.game-shell .achievement strong {
     color: var(--fk-text);
-    font-size: var(--fk-text-control);
+    font-size: calc(var(--fk-text-control) * var(--primary-text-scale, 1));
   }
   .field-kit.game-shell .achievement span {
     color: var(--fk-muted);
-    font-size: var(--fk-text-secondary);
+    font-size: calc(var(--fk-text-secondary) * var(--primary-text-scale, 1));
     line-height: 1.5;
   }
   .field-kit.game-shell dialog .button.primary {
@@ -489,7 +489,7 @@
     width: 100%;
   }
   .field-kit[data-field-kit-page] header {
-    font-size: var(--fk-text-secondary);
+    font-size: calc(var(--fk-text-secondary) * var(--primary-text-scale, 1));
     letter-spacing: normal;
   }
   .field-kit.game-shell .game-overlay {
@@ -501,7 +501,7 @@
   .field-kit.game-shell .game-overlay :is(h1, h2) {
     color: var(--fk-text);
     font-family: var(--fk-font-display);
-    font-size: var(--fk-text-display);
+    font-size: calc(var(--fk-text-display) * var(--primary-text-scale, 1));
     line-height: 1.1;
     text-shadow: none;
   }
@@ -536,7 +536,7 @@
     box-shadow:
       0 0 0 1px #02040a,
       0 10px 30px #000a;
-    font-size: 14px;
+    font-size: calc(14px * var(--primary-text-scale, 1));
     line-height: 1.3;
     pointer-events: none;
   }
@@ -599,7 +599,7 @@
   }
   .field-kit.game-shell .game-overlay[data-kind='ready'] #start-button {
     min-height: 48px;
-    font-size: 17px;
+    font-size: calc(17px * var(--primary-text-scale, 1));
   }
   .field-kit.game-shell
     .game-overlay[data-kind='ready']
@@ -622,7 +622,7 @@
     color: var(--fk-amber);
     border-bottom: 1px solid #263b5b;
     font-family: var(--fk-font-mono);
-    font-size: 13px;
+    font-size: calc(13px * var(--primary-text-scale, 1));
     font-weight: 700;
     line-height: 1.2;
     letter-spacing: 0.12em;
@@ -646,7 +646,7 @@
     color: #9bb1c9;
     background: #0a1220;
     border-inline-start: 3px solid #36587d;
-    font: 700 11px/1.15 var(--fk-font-mono);
+    font: 700 calc(11px * var(--primary-text-scale, 1)) / 1.15 var(--fk-font-mono);
     letter-spacing: 0.08em;
     text-transform: uppercase;
   }
@@ -659,7 +659,7 @@
   .field-kit.game-shell .game-overlay[data-kind='pause'] .overlay-actions :is(.button, summary) {
     min-height: 44px;
     padding: 6px 8px;
-    font-size: 15px;
+    font-size: calc(15px * var(--primary-text-scale, 1));
     line-height: 1.15;
     text-align: center;
     overflow-wrap: break-word;
@@ -672,7 +672,7 @@
   }
   .field-kit.game-shell .game-overlay[data-kind='pause'] #start-button {
     min-height: 48px;
-    font-size: 17px;
+    font-size: calc(17px * var(--primary-text-scale, 1));
   }
   .field-kit.game-shell .game-overlay[data-kind='pause'] #overlay-menu {
     color: #c1cfdd;
@@ -694,7 +694,7 @@
     }
     .field-kit.game-shell .game-overlay[data-kind='pause'] .pause-menu-section > h3 {
       padding-inline: 5px;
-      font-size: 10px;
+      font-size: calc(10px * var(--primary-text-scale, 1));
       letter-spacing: 0.04em;
     }
   }
@@ -715,7 +715,7 @@
       position: static;
       padding: 3px 6px;
       background: #0a1220;
-      font-size: 10px;
+      font-size: calc(10px * var(--primary-text-scale, 1));
     }
     .field-kit.game-shell
       .game-overlay[data-kind='pause']
@@ -732,7 +732,7 @@
       width: min(420px, calc(100vw - var(--safe-left, 0px) - var(--safe-right, 0px) - 12px));
       max-height: 72px;
       padding: 5px 8px;
-      font-size: 12px;
+      font-size: calc(12px * var(--primary-text-scale, 1));
     }
   }
   @media (max-width: 600px) {
@@ -827,7 +827,7 @@
     .field-kit.game-shell .game-overlay[data-kind='won'] #overlay-title {
       grid-column: 2;
       grid-row: 2;
-      font-size: 40px;
+      font-size: calc(40px * var(--primary-text-scale, 1));
       line-height: 1;
     }
     .field-kit.game-shell .game-overlay[data-kind='won'] #overlay-copy {
@@ -853,6 +853,11 @@
     .field-kit.game-shell .game-overlay[data-kind='won'] #mastery-overlay {
       grid-column: 1 / -1;
       grid-row: 5;
+    }
+    .field-kit.game-shell .game-overlay[data-kind='won'] #capture-medal-goal {
+      grid-column: 1 / -1;
+      grid-row: 6;
+      line-height: 1.35;
     }
     .field-kit.game-shell .game-overlay[data-kind='won'] .overlay-actions {
       margin-top: 12px;

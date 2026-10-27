@@ -1,0 +1,336 @@
+{
+  "animation": [
+    {
+      "changedBoneMatrixValues": 609,
+      "height": 1.7411631372846756,
+      "lod": 0,
+      "tracks": [
+        {
+          "name": "idle",
+          "tracks": 54
+        },
+        {
+          "name": "walk",
+          "tracks": 54
+        },
+        {
+          "name": "run",
+          "tracks": 54
+        },
+        {
+          "name": "warning",
+          "tracks": 54
+        }
+      ]
+    },
+    {
+      "changedBoneMatrixValues": 609,
+      "height": 1.7411767975491896,
+      "lod": 1,
+      "tracks": [
+        {
+          "name": "idle",
+          "tracks": 54
+        },
+        {
+          "name": "walk",
+          "tracks": 54
+        },
+        {
+          "name": "run",
+          "tracks": 54
+        },
+        {
+          "name": "warning",
+          "tracks": 54
+        }
+      ]
+    }
+  ],
+  "candidate": "worker-candidate.glb",
+  "cleanup": {
+    "afterConsumers": {
+      "calls": 1,
+      "geometries": 5,
+      "programs": 6,
+      "textures": 6,
+      "triangles": 2
+    },
+    "afterOwner": {
+      "calls": 1,
+      "geometries": 1,
+      "programs": 1,
+      "textures": 1,
+      "triangles": 2
+    },
+    "cloneSkeletons": 80
+  },
+  "completed": true,
+  "elapsedMs": 140017.90000000224,
+  "errors": [],
+  "frames": 8397,
+  "hardware": {
+    "gpu": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4 Pro, Unspecified Version)",
+    "height": 1080,
+    "pixelRatio": 1,
+    "timerQuery": true,
+    "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/155.0.0.0 Safari/537.36",
+    "width": 1920
+  },
+  "metrics": {
+    "decodedBytes": 84336792,
+    "downloadBytes": 11151578,
+    "gpuBytes": 102633484,
+    "vertices": 40996
+  },
+  "scope": "Representative technical/art evaluation only, no full-roster or mobile qualification",
+  "segments": [
+    {
+      "count": 0,
+      "drawAndAnimationAndEffectsP95": 1.1,
+      "effects": {
+        "appearanceDrawCalls": 13,
+        "appearanceHash": "1fa40aa1bb1ded22ae4b229fe91cde998084a8dd0929399b884ec849f88b806c",
+        "appearanceReady": true,
+        "bursts": 0,
+        "calls": 0,
+        "capacity": 1024,
+        "evicted": 0,
+        "marks": 0,
+        "maxDrawCalls": 24,
+        "moving": 0,
+        "registeredPools": 24,
+        "runId": "proof",
+        "settled": 0,
+        "stored": 1024,
+        "tick": 0,
+        "tier": "high"
+      },
+      "gpuP95": 1.138,
+      "intervalP95": 16.7,
+      "lod": 0,
+      "name": "ground",
+      "quality": "balanced",
+      "resources": {
+        "calls": 1,
+        "geometries": 5,
+        "programs": 10,
+        "textures": 86,
+        "triangles": 2
+      },
+      "samples": 1020
+    },
+    {
+      "count": 20,
+      "drawAndAnimationAndEffectsP95": 1.6,
+      "effects": {
+        "appearanceDrawCalls": 13,
+        "appearanceHash": "1fa40aa1bb1ded22ae4b229fe91cde998084a8dd0929399b884ec849f88b806c",
+        "appearanceReady": true,
+        "bursts": 0,
+        "calls": 0,
+        "capacity": 1024,
+        "evicted": 0,
+        "marks": 0,
+        "maxDrawCalls": 24,
+        "moving": 0,
+        "registeredPools": 24,
+        "runId": "proof",
+        "settled": 0,
+        "stored": 1024,
+        "tick": 0,
+        "tier": "high"
+      },
+      "gpuP95": 1.721,
+      "intervalP95": 16.7,
+      "lod": 0,
+      "name": "20-live",
+      "quality": "balanced",
+      "resources": {
+        "calls": 41,
+        "geometries": 5,
+        "programs": 10,
+        "textures": 86,
+        "triangles": 585922
+      },
+      "samples": 1020
+    },
+    {
+      "count": 20,
+      "drawAndAnimationAndEffectsP95": 1.5,
+      "effects": {
+        "appearanceDrawCalls": 13,
+        "appearanceHash": "1fa40aa1bb1ded22ae4b229fe91cde998084a8dd0929399b884ec849f88b806c",
+        "appearanceReady": true,
+        "bursts": 0,
+        "calls": 0,
+        "capacity": 1024,
+        "evicted": 0,
+        "marks": 0,
+        "maxDrawCalls": 24,
+        "moving": 0,
+        "registeredPools": 24,
+        "runId": "proof",
+        "settled": 0,
+        "stored": 1024,
+        "tick": 0,
+        "tier": "high"
+      },
+      "gpuP95": 1.916,
+      "intervalP95": 16.7,
+      "lod": 1,
+      "name": "20-lod",
+      "quality": "balanced",
+      "resources": {
+        "calls": 41,
+        "geometries": 5,
+        "programs": 10,
+        "textures": 86,
+        "triangles": 269842
+      },
+      "samples": 1020
+    },
+    {
+      "count": 20,
+      "drawAndAnimationAndEffectsP95": 3.2,
+      "effects": {
+        "appearanceDrawCalls": 13,
+        "appearanceHash": "1fa40aa1bb1ded22ae4b229fe91cde998084a8dd0929399b884ec849f88b806c",
+        "appearanceReady": true,
+        "bursts": 0,
+        "calls": 14,
+        "capacity": 1024,
+        "evicted": 80,
+        "marks": 96,
+        "maxDrawCalls": 24,
+        "moving": 0,
+        "registeredPools": 24,
+        "runId": "proof",
+        "settled": 767,
+        "stored": 1024,
+        "tick": 3900,
+        "tier": "high"
+      },
+      "gpuP95": 2.154,
+      "intervalP95": 16.8,
+      "lod": 0,
+      "name": "live-high-full-ring",
+      "quality": "balanced",
+      "resources": {
+        "calls": 55,
+        "geometries": 20,
+        "programs": 10,
+        "textures": 86,
+        "triangles": 1096997
+      },
+      "samples": 1020
+    },
+    {
+      "count": 20,
+      "drawAndAnimationAndEffectsP95": 3.4,
+      "effects": {
+        "appearanceDrawCalls": 13,
+        "appearanceHash": "1fa40aa1bb1ded22ae4b229fe91cde998084a8dd0929399b884ec849f88b806c",
+        "appearanceReady": true,
+        "bursts": 0,
+        "calls": 14,
+        "capacity": 1024,
+        "evicted": 80,
+        "marks": 192,
+        "maxDrawCalls": 40,
+        "moving": 0,
+        "registeredPools": 24,
+        "runId": "proof",
+        "settled": 1534,
+        "stored": 1024,
+        "tick": 4900,
+        "tier": "ultra"
+      },
+      "gpuP95": 2.452,
+      "intervalP95": 16.7,
+      "lod": 1,
+      "name": "lod-ultra-full-ring",
+      "quality": "high",
+      "resources": {
+        "calls": 55,
+        "geometries": 20,
+        "programs": 10,
+        "textures": 86,
+        "triangles": 1291992
+      },
+      "samples": 1021
+    },
+    {
+      "count": 20,
+      "drawAndAnimationAndEffectsP95": 2.8,
+      "effects": {
+        "appearanceDrawCalls": 13,
+        "appearanceHash": "1fa40aa1bb1ded22ae4b229fe91cde998084a8dd0929399b884ec849f88b806c",
+        "appearanceReady": true,
+        "bursts": 0,
+        "calls": 6,
+        "capacity": 1024,
+        "evicted": 80,
+        "marks": 32,
+        "maxDrawCalls": 16,
+        "moving": 0,
+        "registeredPools": 24,
+        "runId": "proof",
+        "settled": 256,
+        "stored": 1024,
+        "tick": 5900,
+        "tier": "low"
+      },
+      "gpuP95": 1.343,
+      "intervalP95": 16.8,
+      "lod": 1,
+      "name": "lod-low-full-ring",
+      "quality": "low",
+      "resources": {
+        "calls": 47,
+        "geometries": 24,
+        "programs": 10,
+        "textures": 86,
+        "triangles": 282610
+      },
+      "samples": 1020
+    },
+    {
+      "clean": true,
+      "count": 20,
+      "drawAndAnimationAndEffectsP95": 2.9,
+      "effects": {
+        "appearanceDrawCalls": 13,
+        "appearanceHash": "1fa40aa1bb1ded22ae4b229fe91cde998084a8dd0929399b884ec849f88b806c",
+        "appearanceReady": true,
+        "bursts": 0,
+        "calls": 1,
+        "capacity": 1024,
+        "evicted": 80,
+        "marks": 0,
+        "maxDrawCalls": 24,
+        "moving": 0,
+        "registeredPools": 24,
+        "runId": "proof",
+        "settled": 765,
+        "stored": 1024,
+        "tick": 6900,
+        "tier": "high"
+      },
+      "gpuP95": 1.287,
+      "intervalP95": 16.7,
+      "lod": 0,
+      "name": "live-clean",
+      "quality": "balanced",
+      "resources": {
+        "calls": 42,
+        "geometries": 25,
+        "programs": 10,
+        "textures": 86,
+        "triangles": 595102
+      },
+      "samples": 1020
+    }
+  ],
+  "sha256": "1fa40aa1bb1ded22ae4b229fe91cde998084a8dd0929399b884ec849f88b806c"
+}

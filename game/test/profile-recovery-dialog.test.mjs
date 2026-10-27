@@ -31,6 +31,7 @@ function fixture(options = {}) {
   let nativeCloses = 0;
   dialog.showModal = () => {
     dialog.open = true;
+    options.afterNativeOpen?.({ dialog });
   };
   dialog.close = () => {
     dialog.open = false;
@@ -89,7 +90,11 @@ function fixture(options = {}) {
     packaged: options.packaged ?? true,
     resolveSourceVersion: options.resolveSourceVersion,
     unavailable: options.unavailable,
-    onOpen: () => calls.opened++,
+    onOpen: () => {
+      calls.opened++;
+      options.onOpen?.({ doc, settings, dialog });
+    },
+    onPresentationChange: options.onPresentationChange,
     load: () => {
       calls.loads++;
       return options.load ? options.load(runtime) : runtime;
@@ -125,6 +130,39 @@ test('Settings recovery stays lazy, uses the supplied version and keeps Settings
   assert.equal(h.settings.open, true);
   assert.equal(h.doc.activeElement, h.$('open'));
   assert.equal(h.calls.closes, 1);
+});
+
+test('native child close refreshes entry without bypassing busy restrictions or retaining a disposed listener', async () => {
+  let reason = 'Finish the pending save first.',
+    checks = 0;
+  const h = fixture({ unavailable: () => (checks++, reason) });
+  const child = h.doc.createElement('dialog');
+  h.doc.body.append(child);
+  child.showModal();
+  child.close();
+  assert.equal(h.$('open').disabled, true);
+  assert.equal(h.$('entry-status').textContent, reason);
+  reason = '';
+  child.showModal();
+  child.close();
+  assert.equal(h.$('open').disabled, false);
+  assert.equal(h.calls.loads, 0, 'Returning does not open or prepare recovery');
+  await h.host.open();
+  child.showModal();
+  child.close();
+  assert.equal(h.$('open').disabled, true, 'The current recovery reader still owns entry');
+  await h.host.close();
+  h.settings.open = false;
+  const hiddenChecks = checks;
+  child.showModal();
+  child.close();
+  assert.equal(checks, hiddenChecks, 'Closed Settings does not refresh unrelated tools');
+  h.settings.open = true;
+  await h.host.dispose();
+  const disposedChecks = checks;
+  child.showModal();
+  child.close();
+  assert.equal(checks, disposedChecks);
 });
 
 test('Escape and Back join pending reader cleanup and revoke raw URLs before native close', async () => {
@@ -315,4 +353,62 @@ test('edition recovery binds its reader without fetching unrelated historical ca
   assert.deepEqual(h.calls.readers[0].recoveryCatalogs, []);
   assert.deepEqual(h.calls.catalogs, []);
   await h.host.close();
+});
+
+test('recovery presentation commits once after native open and preserves rejected and repeated attempts', async (t) => {
+  let presentations = 0,
+    h;
+  h = fixture({
+    onPresentationChange: () => {
+      presentations++;
+      assert.equal(h.dialog.open, true);
+      assert.equal(h.settings.open, true);
+      assert.equal(h.doc.activeElement === h.$('back'), true);
+    },
+  });
+  t.after(() => h.host.dispose());
+  assert.equal(presentations, 0);
+  const first = h.host.open();
+  assert.equal(presentations, 1);
+  assert.equal(await h.host.open(), false);
+  assert.equal(presentations, 1);
+  await first;
+  await h.host.close();
+  assert.equal(presentations, 1);
+  await h.host.open();
+  assert.equal(presentations, 2);
+  await h.host.close();
+  h.settings.close();
+  assert.equal(await h.host.open(), false);
+  assert.equal(presentations, 2);
+});
+
+test('recovery does not notify when its pre-open owner rejects admission', async (t) => {
+  let presentations = 0;
+  const h = fixture({
+    onOpen: ({ settings }) => settings.close(),
+    onPresentationChange: () => presentations++,
+  });
+  t.after(() => h.host.dispose());
+  assert.equal(await h.host.open(), false);
+  assert.equal(h.dialog.open, false);
+  assert.equal(h.calls.loads, 0);
+  assert.equal(presentations, 0);
+});
+
+test('recovery retires a committed native open when public Back immediately returns to Settings', async (t) => {
+  let presentations = 0,
+    closing;
+  const h = fixture({
+    afterNativeOpen: () => {
+      closing = h.$('back').onclick();
+    },
+    onPresentationChange: () => presentations++,
+  });
+  t.after(() => h.host.dispose());
+  assert.equal(await h.host.open(), false);
+  assert.equal(typeof closing?.then, 'function');
+  await closing;
+  assert.equal(h.dialog.open, false);
+  assert.equal(presentations, 1);
 });

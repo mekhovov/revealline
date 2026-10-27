@@ -1,3 +1,4 @@
+import { inspectImageDataUrl } from '../content.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
@@ -56,7 +57,7 @@ function storage(entries = {}) {
 }
 
 test('text size is a strict finite presentation preference with Standard as the new-profile default', () => {
-  assert.deepEqual(TEXT_SIZES, ['standard', 'large']);
+  assert.deepEqual(TEXT_SIZES, ['standard', 'large', 'extra-large']);
   assert.equal(Object.isFrozen(TEXT_SIZES), true);
   assert.equal(DEFAULT_TEXT_SIZE, 'standard');
   assert.equal(DEFAULT_PREFERENCES.textSize, 'standard');
@@ -116,9 +117,12 @@ test('malformed present sizes reject before storage access or backup image alloc
     },
   };
   const packs = { ...emptyPackLibrary(), packs: [pack] },
-    decodeImage = async () => {
+    decodeImage = async (source) => {
       decodes++;
-      return { naturalWidth: 1, naturalHeight: 1 };
+      // Native decoding is modeled from each real fixture's admitted header.
+      const header = inspectImageDataUrl(source);
+      assert.equal(header.valid, true);
+      return { naturalWidth: header.width, naturalHeight: header.height };
     };
   for (const textSize of [undefined, null, false, 1, '', 'Large', 'large ', [], {}]) {
     const candidate = emptyLibrary();
@@ -192,55 +196,57 @@ test('an unrelated stale save adopts the stored size, while a deliberate Standar
   );
 });
 
-test('full backup, replacement and Undo keep the exact retained attempt and reject stale preference resurrection', async () => {
-  const before = await prepareBackup(envelope(current(), retained.session), options),
-    selected = { ...before, library: updatePreferences(before.library, { textSize: 'large' }) },
-    ready = await prepareBackup(await exportBackup(selected, options), options);
-  assert.equal(ready.library.preferences.textSize, 'large');
-  assert.deepEqual(ready.session, retained.session);
-  const restored = await restoreSession(ready.session, {
-    campaign: retained.campaign,
-    campaignKey: retained.session.campaignKey,
+for (const textSize of ['large', 'extra-large'])
+  test(`${textSize}: full backup, replacement and Undo keep the exact retained attempt and reject stale preference resurrection`, async () => {
+    const before = await prepareBackup(envelope(current(), retained.session), options),
+      selected = { ...before, library: updatePreferences(before.library, { textSize }) },
+      ready = await prepareBackup(await exportBackup(selected, options), options);
+    assert.equal(ready.library.preferences.textSize, textSize);
+    assert.deepEqual(ready.session, retained.session);
+    const restored = await restoreSession(ready.session, {
+      campaign: retained.campaign,
+      campaignKey: retained.session.campaignKey,
+    });
+    assert.deepEqual(authoritativeCheckpoint(restored.run), retained.session.replay.checkpoint);
+    const local = storage({
+        profile: exportLibrary(before.library),
+        session: JSON.stringify(before.session),
+      }),
+      assets = new Map([['packs', JSON.stringify(before.packs)]]),
+      adapters = {
+        storage: local,
+        profileKey: 'profile',
+        sessionKey: 'session',
+        packsKey: 'packs',
+        journalKey: 'journal',
+        lockKey: 'backup-lock',
+        withLock: (work) => work(),
+        readAsset: async (key) => structuredClone(assets.get(key) ?? null),
+        writeAsset: async (key, value) => assets.set(key, structuredClone(value)),
+        commitProfile: (library, settings) =>
+          saveLibrary(local, 'profile', library, null, settings),
+      };
+    const imported = await commitBackup(ready, adapters);
+    assert.equal(imported.ok, true);
+    assert.equal(imported.profile.library.preferences.textSize, textSize);
+    assert.equal(loadLibrary(local, 'profile').library.preferences.textSize, textSize);
+    assert.equal(local.getItem('session'), JSON.stringify(retained.session));
+    const undone = await commitBackup(before, adapters);
+    assert.equal(undone.ok, true);
+    assert.equal(undone.profile.library.preferences.textSize, 'standard');
+    assert.deepEqual(undone.profile.library, before.library);
+    assert.equal(local.getItem('session'), JSON.stringify(retained.session));
+    assert.notEqual(undone.profile.generation, imported.profile.generation);
+    const afterUndo = local.getItem('profile');
+    assert.equal(
+      saveLibrary(local, 'profile', imported.profile.library, null, {
+        baseline: imported.profile.library,
+        generation: imported.profile.generation,
+      }).ok,
+      false,
+    );
+    assert.equal(local.getItem('profile'), afterUndo);
   });
-  assert.deepEqual(authoritativeCheckpoint(restored.run), retained.session.replay.checkpoint);
-  const local = storage({
-      profile: exportLibrary(before.library),
-      session: JSON.stringify(before.session),
-    }),
-    assets = new Map([['packs', JSON.stringify(before.packs)]]),
-    adapters = {
-      storage: local,
-      profileKey: 'profile',
-      sessionKey: 'session',
-      packsKey: 'packs',
-      journalKey: 'journal',
-      lockKey: 'backup-lock',
-      withLock: (work) => work(),
-      readAsset: async (key) => structuredClone(assets.get(key) ?? null),
-      writeAsset: async (key, value) => assets.set(key, structuredClone(value)),
-      commitProfile: (library, settings) => saveLibrary(local, 'profile', library, null, settings),
-    };
-  const imported = await commitBackup(ready, adapters);
-  assert.equal(imported.ok, true);
-  assert.equal(imported.profile.library.preferences.textSize, 'large');
-  assert.equal(loadLibrary(local, 'profile').library.preferences.textSize, 'large');
-  assert.equal(local.getItem('session'), JSON.stringify(retained.session));
-  const undone = await commitBackup(before, adapters);
-  assert.equal(undone.ok, true);
-  assert.equal(undone.profile.library.preferences.textSize, 'standard');
-  assert.deepEqual(undone.profile.library, before.library);
-  assert.equal(local.getItem('session'), JSON.stringify(retained.session));
-  assert.notEqual(undone.profile.generation, imported.profile.generation);
-  const afterUndo = local.getItem('profile');
-  assert.equal(
-    saveLibrary(local, 'profile', imported.profile.library, null, {
-      baseline: imported.profile.library,
-      generation: imported.profile.generation,
-    }).ok,
-    false,
-  );
-  assert.equal(local.getItem('profile'), afterUndo);
-});
 
 test('save failure leaves the old bytes exact and the selected session size exportable', () => {
   const local = storage({ profile: retained.profileText }),

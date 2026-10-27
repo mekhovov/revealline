@@ -3410,3 +3410,223 @@ test('Settings keyboard leaves text editing native and arrows leave checkboxes w
   assert.equal(text.emit('keydown', { key: 'ArrowLeft' }).defaultPrevented, false);
   assert.equal(text.value, 'Keep this text');
 });
+
+test('engaged neutral samples validate only the current control while traversal and repair retain enumeration', (t) => {
+  const counts = { queries: 0, styles: 0, rects: 0, acceptance: 0, clicks: 0 };
+  const h = setup(t, {
+    accept: () => {
+      counts.acceptance++;
+      return true;
+    },
+  });
+  const query = h.document.querySelectorAll.bind(h.document);
+  h.document.querySelectorAll = (...args) => {
+    counts.queries++;
+    return query(...args);
+  };
+  const style = h.document.defaultView.getComputedStyle;
+  h.document.defaultView.getComputedStyle = (...args) => {
+    counts.styles++;
+    return style(...args);
+  };
+  const group = h.control('section');
+  const buttons = Array.from({ length: 64 }, (_, index) => {
+    const button = h.control('button', { id: `member-${index}` }, group);
+    const rects = button.getClientRects.bind(button);
+    button.getClientRects = () => {
+      counts.rects++;
+      return rects();
+    };
+    button.addEventListener('click', () => counts.clicks++);
+    return button;
+  });
+  h.api.engage();
+  assert.equal(h.document.activeElement, buttons[0]);
+  const before = { ...counts },
+    scrolls = buttons[0].scrolled;
+  for (let sample = 0; sample < 120; sample++) h.api.handle({});
+  const steady = Object.fromEntries(
+    Object.keys(counts).map((key) => [key, counts[key] - before[key]]),
+  );
+  t.diagnostic(JSON.stringify({ controls: buttons.length, samples: 120, steady }));
+  assert.equal(h.document.activeElement, buttons[0]);
+  assert.equal(buttons[0].scrolled, scrolls, 'Neutral samples do not refocus or scroll.');
+  assert.equal(steady.clicks, 0);
+  assert.equal(steady.queries, 0, 'A valid focused control needs no whole-root selector query.');
+  assert.equal(steady.rects, 240, 'Both existing current-target visibility checks remain.');
+  assert.equal(steady.styles, 960, 'Only the current target and its three ancestors are styled.');
+  assert.equal(steady.acceptance, 240, 'Host acceptance remains live on both target checks.');
+  const beforeDirection = counts.queries;
+  h.api.handle({ direction: 'down' });
+  assert(
+    counts.queries > beforeDirection,
+    'Actual traversal still enumerates the current controls.',
+  );
+  assert.equal(h.document.activeElement, buttons[1]);
+  buttons[1].hidden = true;
+  const beforeRepair = counts.queries;
+  h.api.handle({});
+  assert(counts.queries > beforeRepair, 'Unavailable focus still invokes ordinary focus repair.');
+  assert.equal(h.document.activeElement, buttons[0]);
+  assert.equal(counts.clicks, 0);
+});
+
+test('current-control membership excludes the scope root and repairs each selector or visibility invalidation', (t) => {
+  let rejected = null;
+  const h = setup(t, { accept: (element) => element !== rejected });
+  const panel = h.control('div');
+  panel.setAttribute('data-controller-editor', '');
+  const first = h.control('button', { id: 'fallback' }, panel);
+  h.setScope('preparing', panel);
+  h.api.engage();
+  panel.focus();
+  h.api.handle({});
+  assert.equal(
+    h.document.activeElement,
+    first,
+    'The matching root is absent from its own querySelectorAll.',
+  );
+  const cases = [
+    [
+      'button',
+      {},
+      (node) => {
+        node.disabled = true;
+      },
+    ],
+    ['a', {}, (node) => node.removeAttribute('href')],
+    [
+      'select',
+      {},
+      (node) => {
+        node.hidden = true;
+      },
+    ],
+    [
+      'input',
+      {},
+      (node) => {
+        node.type = 'hidden';
+      },
+    ],
+    [
+      'textarea',
+      {},
+      (node) => {
+        node.style.visibility = 'hidden';
+      },
+    ],
+    [
+      'summary',
+      {},
+      (node) => {
+        node.style.display = 'none';
+      },
+    ],
+    ['div', {}, (node) => node.removeAttribute('data-controller-editor')],
+    [
+      'button',
+      {},
+      (node) => {
+        rejected = node;
+      },
+    ],
+    [
+      'button',
+      {},
+      (node) => {
+        node.getClientRects = () => [];
+      },
+    ],
+    ['button', {}, (node) => node.setAttribute('aria-hidden', 'true')],
+    [
+      'button',
+      {},
+      (node) => {
+        node.inert = true;
+      },
+    ],
+    ['button', {}, (node) => node.remove()],
+    ['button', {}, (node) => h.document.body.append(node)],
+  ];
+  for (const [tag, options, invalidate] of cases) {
+    const node = h.control(tag, options, panel);
+    if (tag === 'a') node.setAttribute('href', '#target');
+    if (tag === 'div') node.setAttribute('data-controller-editor', '');
+    node.focus();
+    h.api.handle({});
+    assert.equal(h.document.activeElement, node, `The actual ${tag} selector remains eligible.`);
+    invalidate(node);
+    h.api.handle({});
+    assert.equal(
+      h.document.activeElement,
+      first,
+      `Invalid ${tag} focus returns through ordinary repair.`,
+    );
+    node.remove();
+    rejected = null;
+  }
+});
+
+test('current-control membership revalidates target visibility after the host acceptance callback', (t) => {
+  let mutate = null;
+  const h = setup(t, {
+    accept: () => {
+      mutate?.();
+      return true;
+    },
+  });
+  const first = h.control('button'),
+    second = h.control('button');
+  h.api.engage();
+  first.focus();
+  mutate = () => {
+    mutate = null;
+    first.hidden = true;
+  };
+  h.api.handle({});
+  assert.equal(
+    h.document.activeElement,
+    second,
+    'The second current-target check retains callback invalidation.',
+  );
+  second.hidden = false;
+  first.hidden = false;
+  first.focus();
+  mutate = () => {
+    mutate = null;
+    h.document.activeElement = second;
+    second.hidden = true;
+  };
+  h.api.handle({});
+  assert.equal(
+    h.document.activeElement,
+    first,
+    'A replacement active target is independently checked.',
+  );
+});
+
+test('current-control membership checks focus replaced by the second acceptance callback', (t) => {
+  let accepted = 0,
+    armed = false;
+  const h = setup(t, {
+    accept: () => {
+      if (armed && ++accepted === 2) {
+        h.document.activeElement = second;
+        second.hidden = true;
+      }
+      return true;
+    },
+  });
+  const first = h.control('button'),
+    second = h.control('button');
+  h.api.engage();
+  first.focus();
+  armed = true;
+  h.api.handle({});
+  assert.equal(
+    h.document.activeElement,
+    first,
+    'Focus changed during the final host callback cannot leave an unavailable active target.',
+  );
+});

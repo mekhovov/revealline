@@ -1,0 +1,415 @@
+{
+  "format": "SoloHostedAuxiliaryManifestV1",
+  "status": "reviewed-diagnostic-only",
+  "createdAt": "2026-10-17T03:00:03.926056+00:00",
+  "repository": "mekhovov/revealline",
+  "node": "22.13.1",
+  "playwright": "1.62.1",
+  "candidate": {
+    "revision": "3adcd53792043ef02459e86168c6b33a66d6ef00",
+    "tree": "48018be714c3965f989c75c9fe18e8da2529eebd",
+    "run": 38983792534,
+    "artifact": 12082915872,
+    "outer": {
+      "bytes": 1090952183,
+      "sha256": "637d7e10ccabe6fe1936d28bfb3e00f07d7bf03083a30ce3d0fee3249b7a1135"
+    },
+    "inner": {
+      "bytes": 1073310046,
+      "sha256": "8f3a54fe973540f6bd0fbcf069d1a8f87702f69ef87d901da83b563ce564a3d8"
+    },
+    "manifestSHA256": "efc58d03a6d4abb45dca63fbf8f4ec85232a47b3f9259e14b26efc6cfc086718",
+    "producer": "Exact successful Appearance package, Node22.13.1 Linux; original focused-policy metadata retained. Full outer/member/source/CSP verification required remotely before any native row."
+  },
+  "baseline": {
+    "revision": "b11745223861c3973ad4bf440cc536198b8e0371",
+    "tree": "09f68c3691a4ae1013c3073f0ccf301b3355903f",
+    "producer": "Retained exact-source normal Linux b117 producer38978329593/attempt1 under Node22.13.1; no source flags or budgets changed. Each consumer must verify the complete pinned outer/ready/inner/source/CSP before admission. No fallback rebuild or historical macOS artifact substitution.",
+    "historicalArtifactInvestigation": {
+      "mainRun": 38817575550,
+      "pagesArtifact": 12011437947,
+      "pagesSHA256": "842551f36fcc368c9ef1be2b92ecabee10fe524ed4a75c063ac8dc981f0cb8eb",
+      "disposition": "Exact b117 workflow uses publication-profile main-pages and removes standalone distribution.zip before staging. Not substituted for normal distribution. Company run38817575589 is a bundled-edition profile."
+    },
+    "reuse": "Exact API/producer-small-evidence pins only locally; full large outer and ready-body readback remain mandatory in each remote consumer. This binding grants no performance qualification or candidate release.",
+    "reusableArtifact": {
+      "format": "SoloHostedNormalBaselineReuseV1",
+      "run": 38978329593,
+      "artifact": 12080662080,
+      "name": "solo-normal-baseline-b1174522-38978329593-1",
+      "producer": {
+        "repository": "mekhovov/revealline",
+        "workflow": ".github/workflows/solo-remote-correctness-temporary.yml",
+        "run": 38978329593,
+        "attempt": 1,
+        "toolingRevision": "d569ce092db47d14f974da24063f82f4a280a19a",
+        "toolingTree": "ee4d756b04fd512849cb19ceb613edfbb04c7c68"
+      },
+      "outer": {
+        "bytes": 1073744615,
+        "sha256": "abf5d8ae1f277cc2b640f103a3ab3471ebf13fe78eba518cc7630c7c316b9e62"
+      },
+      "inner": {
+        "bytes": 1073181451,
+        "sha256": "1e9bb6ad49ced329fecd66f9976c024dad2949bdf4b008f376ee50d6bbf36290"
+      },
+      "manifestSHA256": "2a19dfb7227e5d528fe4f072d1eef9e753ac987396a8f5b8248247483814e8a8",
+      "ready": {
+        "bytes": 1602,
+        "sha256": "4e90b38ad8e3d871f122798643c87173dde7d2a006c1e282485c124fcaa2132a"
+      }
+    }
+  },
+  "performanceExclusion": true,
+  "cpu": 1,
+  "setupTimeoutMs": 2400000,
+  "fixturePreparationTimeoutMs": 180000,
+  "evidenceBytes": 268435456,
+  "rowEvidenceBytes": 33554432,
+  "release": {
+    "scope": "independent-audio-import-duration-diagnostic",
+    "predecessorRun": 38985941469,
+    "automaticRetries": 0,
+    "performanceQualification": "excluded",
+    "firstEightAllCorrectnessPassed": false,
+    "priorProofInspected": true,
+    "noUnclosedOwners": true,
+    "evidence": [
+      {
+        "runId": 38985941469,
+        "artifactId": 12083397932,
+        "artifactSHA256": "f4ec29665182e28337d14bed46323e70e16981912be53170c75c97063419c3e1",
+        "summarySHA256": "3de8915a541d66a8afd3d56b066825881d75100c653d12acc68fd1c9785e6929"
+      },
+      {
+        "runId": 38992974900,
+        "artifactId": 12085927499,
+        "artifactSHA256": "364d3ab488cbeebb9dcff3c3a04a7411e27a19d0e80b834235978b5272b28971",
+        "summarySHA256": "285c3985bfc2b5212c1f0256caafd33af67c0fe2c4abdecd64483790b383a0f8"
+      },
+      {
+        "runId": 38992974900,
+        "artifactId": 12087010011,
+        "artifactSHA256": "0625db4967bae72a383e999884c120c43bc57130343eb5caaa974a33f3b2cec8",
+        "summarySHA256": "a5e62f5b610ad2c30544a6297650fc39ec920ed7d40bd1873b6f1fe6d54bddb3"
+      },
+      {
+        "runId": 38995660514,
+        "artifactId": 12087685762,
+        "artifactSHA256": "266b71d7ca5f9775a154ab5862bfb1be4ae3d0d3d130f654d5a8eae0410e5471",
+        "summarySHA256": "18eb2bb8653acf7e8363acc86a9a9cf416764beaf97887d410dd408e0f1aef72"
+      },
+      {
+        "runId": 38995660514,
+        "artifactId": 12087097855,
+        "artifactSHA256": "f54a7cad5016a7464c5fcb33c75f4b5b3d6ffff4522d5bf687e4f09edb4da646",
+        "summarySHA256": "16ebb8b68fc6eaa1a8dfac66a2b65001eab0c9e424f2d5206bddbca63d66d268"
+      }
+    ],
+    "selectedJobs": ["music-webkit"],
+    "correction": {
+      "previousRun": 38995660514,
+      "reason": "Both WebKit sources retain the exact public import duration error before Apply listening; the value and event sequence remain unobserved. One candidate-only original-source arm adds passive load/metadata capture to distinguish non-finite, non-positive or excessive duration before source cleanup. No native behavior, recipe, source, validation, deadline, audio limits or pass threshold changes. Chromium already passed and is not repeated.",
+      "unchangedScenarioDeadlines": true,
+      "productionBudgetsChanged": false
+    },
+    "musicProofBytes": 33554432,
+    "priorCorrections": [
+      {
+        "previousRun": 38990616921,
+        "sourceRecords": 128,
+        "previousSourceRecords": 64,
+        "unchangedByteLimits": true,
+        "unchangedScenarioDeadlines": true,
+        "reason": "Both baseline speech probes exhausted64 source records after95 requests; Chromium music never reached a browser after checkout timeout; WebKit music never reached a browser because archived original URL returned404. Finite successor preserves sources, inputs, deadlines and numerical gates; uses128 diagnostic source records, shallowtools checkout and existing explicit creator-download intake verified against unchanged original hashes. WebKit candidate309ms interruption remains unattributed; recovery is not repeated.",
+        "creatorFixtureSHA256": "0534575a1604bf9f228fffe31e5e21370324fe1a80bf4e1d6006a59e72e0b265"
+      },
+      {
+        "previousRun": 38992974900,
+        "sourceRecords": 128,
+        "previousAggregateEncodedBytes": 16777216,
+        "musicAggregateEncodedBytes": 33554432,
+        "speechAggregateEncodedBytes": 16777216,
+        "encodedBytesPerSource": 2097152,
+        "unchangedScenarioDeadlines": true,
+        "productionBudgetsChanged": false,
+        "reason": "The completed original-source run exhausted the 16 MiB intrusive identity budget in Chromium baseline (5 capped requests) and candidate (1). Both WebKit arms stopped at the missing imported playlist option before playback; the bounded import-boundary and failure public status witness will retain that unobserved cause. This separate music-only successor keeps the exact recipes, sources, input controls, strict replay, zero-capped identity requirement and numerical gates. Speech and recovery are not repeated here; no attribution or previous result is changed."
+      }
+    ],
+    "format": "SoloMusicImportDiagnosticReleaseV1",
+    "importProbe": {
+      "elements": 8,
+      "records": 64
+    }
+  },
+  "recipes": {
+    "speech": {
+      "path": "docs/performance/fixtures/solo-remote-auxiliary/recorded-speech.qualification.fixture",
+      "bytes": 6574,
+      "sha256": "235350a6011bd9ebcfa73aa815b6a4c616f945ca67278c64b93a906e8388411d"
+    },
+    "music": {
+      "path": "docs/performance/fixtures/solo-remote-auxiliary/recorded-music.qualification.fixture",
+      "bytes": 6456,
+      "sha256": "dd68efc71bb3b75ad8fa28817dd7d99630e312300286d142b24b6fab9990c493"
+    },
+    "recovery": {
+      "path": "docs/performance/fixtures/solo-remote-auxiliary/recovery.qualification.fixture",
+      "bytes": 4655,
+      "sha256": "907929279c5231edb727cad3ff42e45ddf146129215fc27a9a6b809e0cd227d2"
+    }
+  },
+  "uploads": [
+    {
+      "path": "docs/performance/fixtures/solo-remote-auxiliary/long-rail.xonix.fixture",
+      "bytes": 3563,
+      "sha256": "821897e571449bb5ec27678eef09c5955d9e9be873aaaf76736ff1aadbd0d84c",
+      "name": "long-rail.xonix.json"
+    },
+    {
+      "path": "docs/performance/fixtures/solo-remote-auxiliary/first-return.xonix.fixture",
+      "bytes": 2897,
+      "sha256": "d36ab449fe115f49b3caf9f29e7f6558d155e6a83ef973748fab08784b8fda3e",
+      "name": "first-return.xonix.json"
+    },
+    {
+      "path": "docs/performance/fixtures/solo-remote-auxiliary/signal-07.xonix.fixture",
+      "bytes": 3011,
+      "sha256": "5c9c935dac1049314c7ce644a1dcb747e7770bac3d8e1dd9f14b75e7c3dab015",
+      "name": "signal-07.xonix.json"
+    }
+  ],
+  "frozenTools": [
+    {
+      "path": "scripts/qualify-solo-runtime.mjs",
+      "bytes": 59605,
+      "sha256": "90db5e035dafe5538d347f3cc1b0c38e8e18ffef3c11db3e7b6f803f4619e01f"
+    },
+    {
+      "path": "scripts/solo-qualification-audio.mjs",
+      "bytes": 19077,
+      "sha256": "8c076969c30ff342b19526e1df22bd8994659f2ac84e7343b111f2a1d2c20af1"
+    },
+    {
+      "path": "scripts/prepare-solo-audio-fixtures.mjs",
+      "bytes": 10676,
+      "sha256": "a8941d708d9b773b3eda1b455f9291ee60f2c8b5846e7501a5a40236478c467e"
+    },
+    {
+      "path": "scripts/solo-qualification-native-replay.mjs",
+      "bytes": 9513,
+      "sha256": "7e5e0337294144449b66519d945e927a0f0e8c586963df9b83e5a4a2aa246d7c"
+    },
+    {
+      "path": "scripts/serve-production-preview.mjs",
+      "bytes": 10414,
+      "sha256": "4c63ec2ea6d7b6b3c79793dd1e8dc8f75daa9ee6c783ee076d8bc050602c1cab"
+    },
+    {
+      "path": "scripts/game-cli.mjs",
+      "bytes": 92165,
+      "sha256": "09acb154eb13de251f7986684698be439fe3b4209d620828e24872f98e4a482c"
+    },
+    {
+      "path": "game/soundtrack-bundle.mjs",
+      "bytes": 12028,
+      "sha256": "fa6a98e404ca7d169c2dc4fd5383065d79d69f2f8af25e3ca7c4ee6f67d745fd"
+    },
+    {
+      "path": "game/content/soundtrack-catalogue.mjs",
+      "bytes": 114695,
+      "sha256": "e6eef8e91bd53e7608585625c34677a9fda40a6083e8dcbf58e3ed995801407e"
+    },
+    {
+      "path": "game/audio/reactions/pilot.mjs",
+      "bytes": 9663,
+      "sha256": "41662fedb8ebfbc40f4009c3ebec7d12ffb5f28cc79ebdbb170488367f04548c"
+    }
+  ],
+  "musicBundle": {
+    "path": ".cache/solo-followup/qualification-playground-ready-01/recorded-music.rlsound",
+    "bytes": 3124928,
+    "sha256": "aa25ae643608cfa9a2dd6aac1a3dcd7ba65d667f998144d0927c194df7c1e99f",
+    "preparation": "Use unchanged prepare-solo-audio-fixtures.mjs --download inside3min declared pre-observation fixture stage; exact archived SHA/size checked, no creator fallback or transcoding. Reconstructed bundle must match retained byte identity.",
+    "originalRecordings": [
+      {
+        "sha256": "77e1ad0bd0a7c5625a12eaa1c8099408ede6959b2ee2dbf5bace85d09a602ada",
+        "bytes": 1925141
+      },
+      {
+        "sha256": "0ee835fd279ac5fa15f9346744cbafc2ba800c1c0671b78ca9abe2b4353402f7",
+        "bytes": 1196325
+      }
+    ]
+  },
+  "maxParallel": 2,
+  "jobs": [
+    {
+      "id": "speech-chromium",
+      "recipe": "speech",
+      "engine": "chromium",
+      "helperMinutes": 75,
+      "wholeJobMinutes": 120,
+      "rows": [
+        {
+          "id": "speech-chromium-baseline",
+          "source": "baseline",
+          "kind": "auxiliary",
+          "engine": "chromium",
+          "timeoutMs": 540000,
+          "performanceExclusion": true
+        },
+        {
+          "id": "speech-chromium-candidate",
+          "source": "candidate",
+          "kind": "auxiliary",
+          "engine": "chromium",
+          "timeoutMs": 540000,
+          "performanceExclusion": true
+        }
+      ]
+    },
+    {
+      "id": "music-chromium",
+      "recipe": "music",
+      "engine": "chromium",
+      "helperMinutes": 75,
+      "wholeJobMinutes": 120,
+      "rows": [
+        {
+          "id": "music-chromium-baseline",
+          "source": "baseline",
+          "kind": "auxiliary",
+          "engine": "chromium",
+          "timeoutMs": 600000,
+          "performanceExclusion": true
+        },
+        {
+          "id": "music-chromium-candidate",
+          "source": "candidate",
+          "kind": "auxiliary",
+          "engine": "chromium",
+          "timeoutMs": 600000,
+          "performanceExclusion": true
+        }
+      ]
+    },
+    {
+      "id": "recovery-chromium",
+      "recipe": "recovery",
+      "engine": "chromium",
+      "helperMinutes": 60,
+      "wholeJobMinutes": 105,
+      "rows": [
+        {
+          "id": "recovery-chromium-candidate",
+          "source": "candidate",
+          "kind": "auxiliary",
+          "engine": "chromium",
+          "timeoutMs": 420000,
+          "performanceExclusion": true
+        }
+      ]
+    },
+    {
+      "id": "recovery-webkit",
+      "recipe": "recovery",
+      "engine": "webkit",
+      "helperMinutes": 60,
+      "wholeJobMinutes": 105,
+      "rows": [
+        {
+          "id": "recovery-webkit-candidate",
+          "source": "candidate",
+          "kind": "auxiliary",
+          "engine": "webkit",
+          "timeoutMs": 420000,
+          "performanceExclusion": true
+        }
+      ]
+    },
+    {
+      "id": "speech-webkit",
+      "recipe": "speech",
+      "engine": "webkit",
+      "helperMinutes": 75,
+      "wholeJobMinutes": 120,
+      "rows": [
+        {
+          "id": "speech-webkit-baseline",
+          "source": "baseline",
+          "kind": "auxiliary",
+          "engine": "webkit",
+          "timeoutMs": 540000,
+          "performanceExclusion": true
+        },
+        {
+          "id": "speech-webkit-candidate",
+          "source": "candidate",
+          "kind": "auxiliary",
+          "engine": "webkit",
+          "timeoutMs": 540000,
+          "performanceExclusion": true
+        }
+      ]
+    },
+    {
+      "id": "music-webkit",
+      "recipe": "music",
+      "engine": "webkit",
+      "helperMinutes": 75,
+      "wholeJobMinutes": 120,
+      "rows": [
+        {
+          "id": "music-webkit-baseline",
+          "source": "baseline",
+          "kind": "auxiliary",
+          "engine": "webkit",
+          "timeoutMs": 600000,
+          "performanceExclusion": true
+        },
+        {
+          "id": "music-webkit-candidate",
+          "source": "candidate",
+          "kind": "auxiliary",
+          "engine": "webkit",
+          "timeoutMs": 600000,
+          "performanceExclusion": true
+        }
+      ]
+    }
+  ],
+  "duplicateAvoidance": "The two original Chromium Retry source arms are mapped to prospective sustained Retry phase, not dispatched here. A new successful report would be source-scoped; no historical macOS credit.",
+  "demoRecovery": {
+    "proposal": {
+      "path": ".cache/solo-followup/demo-context-recovery-successor-proposal-01/proposal.json",
+      "bytes": 8510,
+      "sha256": "83032c3ef3acf9bdaa2e73a7c202fa1bc066109bdb4a099c6a6018950ae54217"
+    },
+    "status": "missing-executable-driver",
+    "scope": "Four display/layer x spectator/practice synthetic fault arms plus stale-layer event remain separate; main-display recovery recipe cannot substitute."
+  },
+  "continuousRecording": "Separate long uninterrupted recording/Pause/save attribution still open; Retry-based soak does not cover it.",
+  "adapterInputs": [
+    {
+      "path": "scripts/solo-remote-auxiliary.mjs",
+      "bytes": 21813,
+      "sha256": "9c21ecfe357b4008a4317348311e5acfd25c9561a027319be8495bf54aa7f900"
+    },
+    {
+      "path": "scripts/solo-remote-baseline.mjs",
+      "bytes": 15700,
+      "sha256": "62265c0d41693d249b476917617d3c26fe6b8514e2b12c67fc3d896214ba58a0"
+    }
+  ],
+  "bindingScope": {
+    "status": "reviewed-independent-diagnostic-only",
+    "candidateRevision": "3adcd53792043ef02459e86168c6b33a66d6ef00",
+    "runtimeRevision": "0d9fef1120face4c0f9998ebd24a94e6df0d85c0",
+    "candidateArtifact": 12082915872,
+    "firstEight": "Exact3ad seven of eight passed; worker WebKit remains failed. This independent audio/fault diagnostic never grants first-eight or timing credit.",
+    "sourceAssets": "Full source/archive/static-worker/CSP admission passed in38985941469 and must be repeated in each consumer.",
+    "baseline": "Existing actualb117 reusable normal-artifact identity retained for lanes that observe baseline; full outer/ready/inner/source/CSP proof mandatory remotely, no fallback rebuild."
+  },
+  "cohort": "linux-webkit-native-import-duration-3ad-v4"
+}

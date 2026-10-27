@@ -19,37 +19,54 @@ import { emptyLibrary, recordLibraryCompletion, saveLibrary } from '../library.m
 import { authoritativeCheckpoint } from '../replay.mjs';
 import { BoardPainter } from '../ui/render.mjs';
 import { getLocale, setLocale } from '../i18n/index.mjs';
+import { RasterImage } from './helpers/raster-image.mjs';
 
 const profileKey = 'revealline.library.dev.v1';
 const source = JSON.parse(
   await readFile(new URL('../content/packs/night-shift.json', import.meta.url)),
 );
-const { pack } = await preparePack({
-  ...source,
-  id: 'collection-context-fixture',
-  name: 'Collection context fixture',
-  campaigns: [
-    {
-      ...source.campaigns[0],
-      id: 'collection-earned-chapter',
-      title: 'Earned chapter',
-      levels: [0, 1, 2].map((i) => ({
-        version: 'xonix-level.v1',
-        id: `collection-map-${i}`,
-        revision: '1',
-        name: `Earned map ${i}`,
-        width: 48,
-        height: 36,
-        spawn: { x: 24.5, y: 0.5 },
-        walls: [],
-        enemies: [],
-        objectives: [],
-        supplies: [],
-        goal: { coverage: 0.5 },
-      })),
+const { pack } = await preparePack(
+  {
+    ...source,
+    id: 'collection-context-fixture',
+    name: 'Collection context fixture',
+    // The fixture renames all three maps. Keep their real artwork attached to
+    // those new identities rather than retaining the source pack's level IDs.
+    levelVisuals: source.levelVisuals.map((entry) => ({
+      ...entry,
+      levelId: `collection-map-${source.campaigns[0].levels.findIndex((level) => level.id === entry.levelId)}`,
+    })),
+    campaigns: [
+      {
+        ...source.campaigns[0],
+        id: 'collection-earned-chapter',
+        title: 'Earned chapter',
+        levels: [0, 1, 2].map((i) => ({
+          version: 'xonix-level.v1',
+          id: `collection-map-${i}`,
+          revision: '1',
+          name: `Earned map ${i}`,
+          width: 48,
+          height: 36,
+          spawn: { x: 24.5, y: 0.5 },
+          walls: [],
+          enemies: [],
+          objectives: [],
+          supplies: [],
+          goal: { coverage: 0.5 },
+        })),
+      },
+    ],
+  },
+  {
+    async decodeImage(dataUrl) {
+      const image = new RasterImage();
+      image.src = dataUrl;
+      await image.decode();
+      return image;
     },
-  ],
-});
+  },
+);
 const entries = createExecutionCatalog([resolvePackCampaign(pack, pack.campaigns[0].id)]).entries;
 
 async function setup(t, modes = ['standard', 'gentle'], { installed = true } = {}) {
@@ -123,7 +140,7 @@ async function setup(t, modes = ['standard', 'gentle'], { installed = true } = {
     assetIndexedDB: assets.indexedDB,
     // The focused CI gate validates the full repository immediately before
     // this real host boots, so artwork selection can exceed the 5 s default.
-    initialReadyTimeoutMs: 15_000,
+    initialReadyTimeoutMs: process.env.CI ? 30_000 : 15_000,
   });
   return {
     ...page,
@@ -135,11 +152,12 @@ async function setup(t, modes = ['standard', 'gentle'], { installed = true } = {
     assets,
   };
 }
-function open(page) {
+async function open(page) {
   page.$('collection-button').focus();
   page.$('collection-button').click();
   page.frame(0);
   assert.equal(page.$('collection-dialog').open, true);
+  await settle(() => page.$('gallery-grid').querySelectorAll('button').length === 1);
   // These tests browse the explicit secondary progress view.
   page.$('collection-progress').open = true;
   page.$('collection-progress').emit('toggle');
@@ -181,7 +199,7 @@ test('open Collection translates earned rewards while retaining its context, nod
   t.after(() => setLocale(locale, { persist: false }));
   setLocale('en', { persist: false });
   const page = await setup(t);
-  open(page);
+  await open(page);
   const select = page.$('collection-context');
   select.focus();
   const selection = select.value;
@@ -233,7 +251,7 @@ test('open Collection translates earned rewards while retaining its context, nod
 for (const modes of [['standard'], ['gentle'], ['standard', 'gentle']])
   test(`Collection card labels each earned mode once: ${modes.join(' + ')}`, async (t) => {
     const page = await setup(t, modes);
-    open(page);
+    await open(page);
     const cards = page.$('gallery-grid').querySelectorAll('button');
     assert.equal(cards.length, 1);
     const text = cards[0].children[2].textContent;
@@ -273,7 +291,7 @@ test('global Collection inspects earned chapter progress independently of the pa
   );
   const checkpoint = authoritativeCheckpoint(page.rendered.run),
     run = page.rendered.run;
-  open(page);
+  await open(page);
   // Opening Collection already invokes the existing Pause/save path. Only
   // the new read-only selector is subject to this exact no-write baseline.
   const raw = [...page.storage.map],
@@ -316,7 +334,7 @@ test('global Collection inspects earned chapter progress independently of the pa
   assert.equal(page.storage.writes.length, writes);
   assert.equal(page.assets.allPuts.length, assetWrites);
   page.$('collection-dialog').close();
-  open(page);
+  await open(page);
   assert.equal(select.value, standard.executionKey, 'Explicit view context survives reopen.');
   assert.deepEqual(authoritativeCheckpoint(run), checkpoint);
   assert.equal(page.storage.getItem(profileKey), new Map(raw).get(profileKey));
@@ -326,7 +344,7 @@ test('global Collection inspects earned chapter progress independently of the pa
 test('missing historical context stays archived and cannot become the current chapter by title or theme', async (t) => {
   const page = await setup(t, ['standard'], { installed: false });
   const raw = [...page.storage.map];
-  open(page);
+  await open(page);
   const select = page.$('collection-context');
   assert.equal(select.options.length, 1);
   assert.match(select.options[0].textContent, /First Signal.*Standard/);
@@ -348,7 +366,7 @@ test('missing historical context stays archived and cannot become the current ch
 test('existing controller select draft, cancel and confirm preserve context and picture Back focus', async (t) => {
   const page = await setup(t),
     pulse = padFor(page, t);
-  open(page);
+  await open(page);
   const select = page.$('collection-context');
   assert.ok(select);
   const initial = select.value,

@@ -31,6 +31,39 @@ manifests and an explicit growth reserve. `cannot-fit` exits 1. A successful
 `requires-exact-build` result only means the lower bound did not exceed the guard;
 it does not replace archive admission or the final complete-site inventory.
 
+### External build output and local resource limits
+
+The normal build accepts an absolute external output directory. Use an installed
+Node version matching CI, a clean committed source, the exact full commit hash,
+and a new output name:
+
+```sh
+node scripts/game-cli.mjs build --out /absolute/mounted-drive/NEW_OUTPUT \
+  --version VERSION --revision FULL_COMMIT_HASH --progress stderr
+```
+
+Budget both the expanded site and its ZIP, plus a safety reserve. Source-file
+bytes alone are not a guaranteed bound on generated output. Expanded writes
+use at most four workers and share parent-directory creation; failures settle
+already-owned writes before staging cleanup. ZIP order and accepted bytes are
+unchanged. Keep source pins, logs and failed results alongside successful output.
+The optional `--progress stderr` writes phase-start markers to standard error;
+omit it for the original JSON-only output. A marker is not a percentage or a
+completion receipt. Cross-volume or unknown device metadata vetoes optional
+cloning once per batch; same-device files still undergo their original per-file
+eligibility and exact-byte checks. These optimizations do not bypass validation
+or prove that a complete build fits its verification deadline.
+
+A mounted network folder moves storage, **not computation**. The owner-approved
+`/Volumes/alex/CodexMigrationStaging` share is not remote execution, a browser
+profile relocation, hosting authorization or a complete-site capacity pass.
+Measure available space on the actual output filesystem and retain separate
+system/profile headroom. Do not delete unrelated files, move a real user browser
+profile, or extend verification limits merely to obtain a pass. See the
+[19 October local diagnostic checkpoint](flight-practice-execution-2026-10-19.md)
+for the distinction between sufficient storage, completed isolated validators
+and a still-failing normal full build.
+
 ## Register an application
 
 1. Create `optional-practice/<id>/index.html`, a manifest, application modules and `README.md`. Use a stable lowercase hyphenated ID; do not rename an installed app to ship an update. Add instructions, asset sources, copyright/license inventory and support information. Offline preparation must pass that ID to the shared installation service.
@@ -82,6 +115,123 @@ The source checkout must be clean and committed. The output includes distributio
 When SIM is changing concurrently, build from a recorded, merged commit in an isolated checkout. Do not package its uncommitted work or copy files from an active SIM worktree. Rebase the publishing changes after accepted SIM fixes land and reproduce the final candidate again. A newer candidate must receive its own source-bound evidence; an older passing runtime does not qualify it automatically.
 
 Complete every existing review gate with real, source-bound evidence: automated validation; content accuracy; assets/licenses; keyboard/controller accessibility; installed isolation; update/rollback; same-device performance; human learning/pacing. Record browser/device, source SHA, package hashes, steps, screenshots, results and limitations. A synthetic fixture’s review is never release evidence.
+
+### Repeat player-flow observations locally
+
+Use `scripts/observe-practice-first-flight.mjs PLAN_JSON PLAYWRIGHT_MODULE NEW_OUTPUT`
+with an external Playwright installation and a new evidence directory. Supply any
+approved test access through a protected environment or silent input, never plan
+fields or command arguments. The observer uses the normal access form and does
+not alter application bytes, install demonstrations or inject progress.
+
+The strict plan formats are intentionally separate:
+
+| Plan / protocol                                                                   | What it tests                                                                                        | Package revision field |
+| --------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------- | ---------------------- |
+| `revealline-practice-first-flight-plan.v1` / `practice-first-flight-public-ui.v1` | Legacy four-case EN launch, motion, pause and retry                                                  | Academy                |
+| `revealline-practice-first-flight-plan.v2` / `practice-first-flight-public-ui.v2` | Ten EN/UK cases: Gym plus both FPV modes in Academy and Worlds                                       | Academy                |
+| `revealline-practice-gym-exercise-plan.v1` / `practice-exercise-public-ui.gym.v1` | Two EN/UK native Gym lift-and-land exercises, completion screenshots and actual exported transcripts | Gym                    |
+
+Every plan declares exactly `format`, `protocol`, `caseId`, `deviceLabel`,
+`quietWindow`, `cases`, `bundle`, `envelopeSha256`, `sourceRevision`, `sourceTree`
+and `packageRevision`. Use the candidate's original envelope/source/revision
+values, not a branch name or `latest`. Obtain the exact ordered case IDs from the
+exported protocol constants and validator tests. Unknown fields, partial matrices
+and mismatched package revisions fail admission. All original runtime and source
+archives are admitted even when the exercise protocol stages only Gym.
+
+The Gym observer uses visible measurements and ordinary R/F input, requires
+ordered checkpoints and a native replay-backed completion mark, then returns
+through the result scene's Home action and exports through Settings → Data.
+It independently replays that actual export with the
+same native catalogue/model and byte-matched dependency closure outside the
+browser. Missing, changed or newly unpinned replay dependencies fail closed. The
+replay must not be used to drive a browser or manufacture an exercise result.
+
+These are automated local development observations, not public release, novice
+learning, physical-input or accessibility approval. They start at stable app
+launchers; they do not replace the full main-game directory journey. Preserve
+failed runs and the exact observer authority, plan, original report, screenshots
+and exported transcript alongside any successful retry. `qualified` remains
+false; a motion smoke pass is not an exercise-completion pass.
+
+### Repeat visible HUD and native FPV exercise checks
+
+Use `observe-practice-first-flight.mjs PLAN_JSON PLAYWRIGHT_MODULE NEW_OUTPUT`
+with the same exact artifact-binding fields as the registered first-flight plans:
+
+- Format `revealline-practice-hud-settings-plan.v1`, protocol
+  `practice-hud-settings-public-ui.v1`, all four IDs from `HUD_SETTINGS_CASES`.
+  This observes reachable preferences, reload retention and visible stationary
+  Detailed HUD after deliberate Start; it does not qualify movement or exercises.
+- First use `revealline-practice-fpv-exercise-probe-plan.v1` /
+  `practice-exercise-public-ui.fpv-probe.v1`, the single ID from
+  `FPV_EXERCISE_PROBE_CASES`. Then use `revealline-practice-fpv-exercise-plan.v1` /
+  `practice-exercise-public-ui.fpv.v1`, all eight IDs from `FPV_EXERCISE_CASES`.
+  A successful probe is not the complete matrix. Both bind Academy's revision;
+  full-envelope admission and per-app original ZIPs bind Worlds' replay inputs.
+
+Keep credentials in protected normal-form access input, not plans or arguments.
+No arbitrary script/dependency/case override is supported. Keep the 90-second case
+and ten-minute overall bounds, use one owned browser and a safe disk margin, and
+retain every failed original output. The exercise case requires actual native
+completion, released keys, screenshot, ordinary UI export and off-browser frozen
+proof replay. Hidden course identity metadata is not a visible measurement;
+legacy hidden height/speed/progress nodes must not substitute for maintained HUD
+feedback. Never count imported demonstrations or synthetic unit proofs as native
+exercise completion. One corrected native exercise completed, but its export and
+browser cleanup failed. The prepared keyboard export and full matrix remain
+unverified; keyboard activation never qualifies the first-pointer path. See the
+[HUD continuation](flight-practice-hud-qualification-2026-10-16.md).
+
+### Native directory check before publication
+
+Before publication, also repeat the native main-game directory journey:
+
+```sh
+node scripts/observe-practice-directory-journey.mjs PLAN_JSON PLAYWRIGHT_MODULE NEW_OUTPUT
+```
+
+Use format `revealline-practice-directory-journey-plan.v1`, protocol
+`practice-directory-full-source-shell.v1`, the common artifact-binding fields
+listed above, and **additional** exact `shellRevision`/`shellTree` fields for the
+clean committed checkout running the main-game source shell. Declare all six
+ordered case IDs from `DIRECTORY_JOURNEY_CASES`; the package revision field binds
+Academy, and `bundle` must be absolute. The shell and package source identities
+may differ and must not be relabelled as each other. Supply normal test access
+through the protected environment or silent input, never plan data/arguments.
+
+The observer follows Settings → Help & Extras → Flight practice, verifies real
+metadata/previews, opens each app with one Play action without arming, and follows
+the launcher guide back through the directory to the game in EN/UK. It serves
+unchanged committed source files with per-file Git-blob verification and uses an
+explicit unpublished catalogue/current-pointer fixture containing admitted
+packages. It never creates review approvals or selects a public release. This is
+not the production build or final deployed-site check; missing build inputs,
+positive appearance selection, physical input and full guide usability remain
+separate. Keep failed receipts, authority and screenshots alongside any retry.
+See the [source-shell report](flight-practice-directory-journey-2026-10-15.md).
+
+For positive **personal preference** transfer, use format
+`revealline-practice-directory-personal-appearance-plan.v1` and protocol
+`practice-directory-personal-appearance.v1`. It chooses Tryzub through ordinary
+Settings and compares the bounded main/app preferences. This does not qualify a
+positive compiled-edition appearance URL pair; null edition pins are expected.
+
+For the generated distribution, use format
+`revealline-practice-directory-production-personal-appearance-plan.v1`, protocol
+`practice-directory-production-personal-appearance.v1`, and add an absolute
+`distribution` directory plus `distributionManifestSha256` for its original
+generated `manifest.json`. Build from the same clean `shellRevision`/`shellTree`;
+the manifest's revision and generated `game/build-info.json` must agree. The
+observer hashes every original member before and after, serves only listed
+generated files with public security headers, and retains the original manifest.
+There is no source-file fallback. Only its reported admitted practice catalogue/
+release fixture overlays the build. A local distribution journey is still not
+hosting, capacity, public release selection or human approval. Preserve failed
+attempts, full original outputs and source identities before retrying.
+
+### Publish only after the existing review gates pass
 
 ```sh
 node scripts/publish-optional-packages.mjs verify \
@@ -157,6 +307,57 @@ The [all-three installation observer](optional-installation-observer.md) instead
 accepts admitted frozen candidates and an authorized test password when required.
 Never substitute a sample-fixture success for a real candidate's failed or blocked
 installation observation. Physical devices and human learning remain separate.
+
+For a source-bound Academy first-pointer regression check, use the separate
+observer described in the [pointer protocol and results](flight-practice-pointer-2026-10-15.md).
+Copy a retained `plan.json` from its evidence archive, point `bundle` at the exact
+original candidate, and verify the envelope/source/tree/package pins. For a new
+candidate, obtain fresh pins from its admitted envelope; never rename an old
+receipt to qualify it. Run with an existing external Playwright installation:
+
+```sh
+node scripts/observe-practice-pointer.mjs PLAN_JSON PLAYWRIGHT_MODULE NEW_OUTPUT_DIRECTORY
+```
+
+Supply `OPTIONAL_INSTALLATION_PASSWORD` through an approved secret environment or
+silent interactive input, never in command arguments or committed plans. The
+observer uses the ordinary form. It tests EN/UK Workshop, profile backup and
+notebook backup separately by mouse and Tab/Enter, using fresh contexts and reload
+cases. Setup navigation itself uses keyboard activation. Keep the full output,
+including failed attempts and cleanup errors. Run its tooling regressions with
+`npm run practice:pointer:test`; these are not browser or device qualification.
+
+For repeatable recovery and player-flow observations, see the separate
+[repair protocol and original evidence](flight-practice-repair-2026-10-15.md):
+
+```sh
+npm run practice:observer:test
+node scripts/observe-practice-first-flight.mjs PLAN_JSON PLAYWRIGHT_MODULE NEW_OUTPUT_DIRECTORY
+node scripts/observe-practice-cache-repair.mjs PLAN_JSON PLAYWRIGHT_MODULE NEW_OUTPUT_DIRECTORY
+```
+
+Use each tool's own retained plan shape, not the pointer plan. Both pin an admitted
+envelope and immutable source. Cache-repair v2 additionally pins all three package
+revisions and requires `seed: "worlds-template-copy"`: it creates one ordinary
+Workshop project and checks its retained records/card through controlled cache
+and worker faults. It alters only its disposable test profile. V1 empty-store
+evidence cannot substitute for that populated case. First-flight v1 checks four
+EN movement/pause/retry flows; it does not certify a completed exercise, the
+main-game entry route, UK, physical controls or human learning.
+
+Keep the complete new output directory, source witnesses, screenshots, failures
+and cleanup result. Never reuse an existing output directory or relabel an older
+candidate receipt. Quota overrides and message tracing are opt-in diagnostics;
+read their stated boundaries and actual outcomes before making readiness claims.
+For the controlled all-three quota subcase, set both
+`OPTIONAL_INSTALLATION_QUOTA_PROBE=1` and
+`OPTIONAL_INSTALLATION_QUOTA_PACKAGES=all` on the installation observer. It uses
+Chromium's origin-wide allowance override, never fills the disk or clears site
+data, and restores it before retry. A reported zero limit is not a reliable
+denial control on the tested Chrome version; retain the v2 positive-headroom
+protocol and require every selected app's completed/reset/retry result. Worlds'
+in-app removal is in Content → World library, while preparation is directly in
+Content. The separate stable launcher also offers scoped removal.
 
 When checking the player guides, follow the runtime menus rather than only the
 static HTML: the shared shell reparents input/offline controls into Settings.

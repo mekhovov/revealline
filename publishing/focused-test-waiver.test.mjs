@@ -103,10 +103,15 @@ test('workflow passes pinned policy without weakening the exact-source or requir
     new URL('../.github/workflows/deploy-pages.yml', import.meta.url),
     'utf8',
   );
-  assert.equal(
-    workflow.split('--test-policy automation/publishing/test-policy.json').length - 1,
-    2,
+  assert.equal(workflow.split('            publishing/test-policy.json\n').length - 1, 4);
+  const cli = await readFile(new URL('./focused-compact-cli.mjs', import.meta.url), 'utf8');
+  assert.match(
+    cli,
+    /testPolicyBytes: await readBytes\(path.join\(automation, 'publishing\/test-policy.json'\)\)/u,
   );
+  assert.match(cli, /dependencies.policyDigest \?\? validationPolicyDigest/u);
+  for (const mode of ['prepare', 'execute', 'verify'])
+    assert.ok(workflow.includes(`focused-compact-cli.mjs ${mode}`));
   assert.match(
     workflow,
     /publishing\/test-policy\.json\n            publishing\/test-policy\.mjs\n            scripts\/check-source-identity\.mjs/u,

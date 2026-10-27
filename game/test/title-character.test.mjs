@@ -8,10 +8,21 @@ function fixture(t) {
     container = document.createElement('div'),
     calls = [],
     original = document.createElement.bind(document);
-  let clears = 0;
+  let clears = 0,
+    hiddenWrites = 0;
   t.mock.method(document, 'createElement', (tag) => {
     const element = original(tag);
-    if (tag === 'canvas') element.getContext = () => ({ clearRect: () => clears++ });
+    if (tag === 'canvas') {
+      let hidden = element.hidden;
+      Object.defineProperty(element, 'hidden', {
+        get: () => hidden,
+        set(value) {
+          hiddenWrites++;
+          hidden = value;
+        },
+      });
+      element.getContext = () => ({ clearRect: () => clears++ });
+    }
     return element;
   });
   document.body.append(container);
@@ -39,6 +50,7 @@ function fixture(t) {
     recipe,
     set: (value) => (character = value),
     clears: () => clears,
+    hiddenWrites: () => hiddenWrites,
   };
 }
 
@@ -59,17 +71,36 @@ test('title character reuses the exact selected image without mutating presets o
 
 test('closed or background home does no drawing and reduced motion is a static upright pose', (t) => {
   const f = fixture(t);
+  assert.equal(f.hiddenWrites(), 1, 'Construction establishes the initial hidden state once.');
+  for (let index = 0; index < 100; index++) f.view.update(0.01, { visible: false });
+  assert.equal(f.hiddenWrites(), 1, 'An unopened title does not repeat hidden DOM writes.');
   f.view.update(0.01, { visible: true });
+  assert.equal(f.hiddenWrites(), 2, 'Visible artwork is unhidden once.');
   for (let index = 0; index < 100; index++) f.view.update(100, { visible: false });
   assert.equal(f.calls.length, 1);
   assert.equal(f.container.querySelector('canvas').hidden, true);
+  assert.equal(f.hiddenWrites(), 3, 'Closing the title hides it once across repeated updates.');
   f.view.update(0, { visible: true, reduced: true });
   assert.equal(f.calls.at(-1).heading, 0);
   const count = f.calls.length;
   for (let index = 0; index < 100; index++) f.view.update(1, { visible: true, reduced: true });
   assert.equal(f.calls.length, count);
+  assert.equal(f.hiddenWrites(), 4, 'Static reduced artwork stays visible without DOM writes.');
   f.view.update(0.04, { visible: true, reduced: false });
   assert.equal(f.calls.length, count + 1);
+  assert.equal(f.hiddenWrites(), 4, 'Enabling motion preserves the already visible canvas.');
+  f.set({ body: f.body, recipe: f.recipe, image: null });
+  for (let index = 0; index < 100; index++) f.view.update(0.04, { visible: true });
+  assert.equal(f.hiddenWrites(), 5, 'Missing artwork hides once and never paints a substitute.');
+  assert.equal(f.calls.length, count + 1);
+  f.set({ body: f.body, recipe: f.recipe, image: f.image });
+  f.view.update(0, { visible: true, reduced: true });
+  assert.equal(
+    f.hiddenWrites(),
+    6,
+    'Returning exact artwork restores visible static presentation.',
+  );
+  assert.equal(f.calls.length, count + 2);
 });
 
 test('missing exact artwork stays hidden, selected image changes redraw, and twenty lifetimes release DOM ownership', (t) => {

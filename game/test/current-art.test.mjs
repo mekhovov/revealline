@@ -11,7 +11,6 @@ import {
   CurrentArtUnavailableError,
 } from '../presentation/current-art.mjs';
 import { inventoryCurrentArt } from '../../scripts/generate-current-art.mjs';
-import { createSceneArt } from '../ui/scene-art.mjs';
 
 const root = fileURLToPath(new URL('../../', import.meta.url));
 const baseURL = 'https://preview.invalid/release/';
@@ -19,26 +18,8 @@ const embedded = CURRENT_ART_SOURCES.find(
   (row) => row.kind === 'embedded' && row.source.kind === 'built-in',
 );
 const external = CURRENT_ART_SOURCES.find((row) => row.kind === 'external');
-const procedural = CURRENT_ART_SOURCES.find((row) => row.kind === 'procedural');
 const file = (relative) => fs.readFile(path.join(root, relative));
 const flush = () => new Promise((resolve) => setImmediate(resolve));
-function canvasFixture() {
-  const commands = [];
-  const ctx = new Proxy(
-    {},
-    {
-      set(target, key, value) {
-        commands.push(['set', key, value]);
-        target[key] = value;
-        return true;
-      },
-      get(target, key) {
-        return target[key] ?? ((...args) => commands.push([key, ...args]));
-      },
-    },
-  );
-  return { commands, getContext: () => ctx };
-}
 function imageDecoder(facts, closed = []) {
   return async (blob) => {
     assert.ok(blob instanceof Blob);
@@ -46,8 +27,8 @@ function imageDecoder(facts, closed = []) {
     return image;
   };
 }
-test('trusted locator mapping remains fresh for 209 exact owners including 56 FPV owners', async () => {
-  assert.equal(CURRENT_ART_SOURCES.length, 209);
+test('trusted locator mapping remains fresh for 175 retained exact owners including 56 FPV owners', async () => {
+  assert.equal(CURRENT_ART_SOURCES.length, 175);
   assert.equal(CURRENT_ART_SOURCES.filter((row) => row.owner.themeId === 'fpv').length, 56);
   assert.deepEqual(
     CURRENT_ART_SOURCES.map(({ id, owner }) => ({ id, owner })),
@@ -64,26 +45,10 @@ test('lookup and construction are lazy and never accept URLs or uploaded owner l
   assert.equal(describeCurrentArt({ id: embedded.id, path: 'https://outside.invalid' }), null);
   await assert.rejects(loader.load('picture.unknown'), /registered exact/);
   assert.equal(describeCurrentArt(embedded.id).availability.status, 'request-required');
-  assert.equal(describeCurrentArt(procedural.id).availability.distributionBytes, 0);
+  assert.ok(CURRENT_ART_SOURCES.every((row) => row.image && row.kind !== 'procedural'));
   assert.ok(Object.isFrozen(describeCurrentArt(embedded.id).owner));
   loader.close();
   await assert.rejects(loader.load(embedded.id), /closed/);
-});
-test('procedural previews use the exact registered scene renderer, theme, level and labelled seed', async () => {
-  const loader = createCurrentArtPreview({
-    fetch: () => assert.fail('Procedural previews do not fetch.'),
-    canvasFactory: canvasFixture,
-  });
-  const result = await loader.load(procedural.id);
-  const original = createSceneArt(procedural.theme, procedural.level, 0, canvasFixture);
-  assert.deepEqual(result.image.commands, original.commands);
-  assert.equal(result.kind, 'procedural');
-  assert.equal(result.image.width, 384);
-  assert.equal(result.downloadBytes, 0);
-  assert.equal(result.fit, 'cover');
-  assert.match(result.origin.label, /seed 0/);
-  result.dispose();
-  assert.equal(result.image.width, 0);
 });
 test('an exact source PNG is loaded once on request and closed with its owner', async () => {
   const calls = [],
@@ -203,22 +168,32 @@ test('source failures, redirects, truncated bytes and bad decoded dimensions nev
 });
 test('newer requests cancel and dispose late decoded originals without affecting the replacement', async () => {
   const bytes = await file(embedded.sourceImagePath),
+    replacementBytes = await file(external.sourceImagePath),
     controller = new AbortController();
   let finish,
     decodeStarted = false,
-    closed = 0;
+    firstClosed = 0,
+    replacementClosed = 0;
   const loader = createCurrentArtPreview({
     baseURL,
-    fetch: async () => new Response(bytes),
-    canvasFactory: canvasFixture,
+    fetch: async (url) =>
+      new Response(
+        url === new URL(embedded.sourceImagePath, baseURL).href ? bytes : replacementBytes,
+      ),
     decodeImage: () => {
+      if (decodeStarted)
+        return Promise.resolve({
+          width: external.image.width,
+          height: external.image.height,
+          close: () => replacementClosed++,
+        });
       decodeStarted = true;
       return new Promise((resolve) => {
         finish = () =>
           resolve({
             width: embedded.image.width,
             height: embedded.image.height,
-            close: () => closed++,
+            close: () => firstClosed++,
           });
       });
     },
@@ -227,15 +202,16 @@ test('newer requests cancel and dispose late decoded originals without affecting
     name: 'AbortError',
   });
   while (!decodeStarted) await flush();
-  const replacement = await loader.load(procedural.id);
+  const replacement = await loader.load(external.id);
   finish();
   await first;
-  assert.equal(closed, 1);
-  assert.equal(replacement.image.width, 384);
+  assert.equal(firstClosed, 1);
+  assert.equal(replacement.image.width, external.image.width);
+  assert.equal(replacementClosed, 0);
   controller.abort();
-  assert.equal(replacement.image.width, 384);
+  assert.equal(replacementClosed, 0);
   loader.close();
-  assert.equal(replacement.image.width, 0);
+  assert.equal(replacementClosed, 1);
 });
 test('abort cancels a pending response stream and a closed loader performs no new IO', async () => {
   let cancelCount = 0,

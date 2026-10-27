@@ -31,6 +31,8 @@ Use **Pause** before changing setup and **Reset / Retry** for a fresh FPV attemp
 
 After focus loss or a disconnected device, return to the app and follow its resume prompt. A recovered session should not begin flying on its own.
 
+In either FPV app, use **Settings → Accessibility → Flight guidance**. Choose **Guidance → Detailed** for numeric objective readings; **Text size** and **HUD contrast** are separate choices. These settings survive reload. They do not start a flight, hold altitude or stabilize the aircraft.
+
 ## Offline versus home-screen installation
 
 1. Open **Details & guide → Download for offline use**, or the app’s existing Prepare offline action: **Settings → Content & Offline** in Gym and World Studio, or **Settings → Help & Extras → Flight guide → Workshop & offline** in Flight Studio.
@@ -49,10 +51,15 @@ Open the new app icon once while online. Check or prepare its offline copy there
 
 Removing a home-screen icon or uninstalling a browser app is a separate operation. Read any option to delete site data before confirming. Keep exported backups outside this site’s browser storage; check that you can find and import the file before relying on it.
 
+**Radio calibration and the tuning library are separate backups.** In the FPV apps, keep Radio setup’s **Export profiles** file for calibration. For rates, throttle and saved drone setups, open **Settings → Controls → Aircraft, rates & throttle → Library → Import / export · Betaflight and backups**, choose **Backup complete library**, then **Download file**. Save the downloaded JSON outside browser storage. **Export SIM rates** and a rate-only CLI export are not complete-library backups. To restore, open the same section, use **Upload text / JSON** to load your library JSON, wait until its text appears, then choose **Restore library backup**. **Restore library backup replaces the saved library**: first back up any current settings you want to keep. Importing radio calibration does not restore the tuning library. Restored settings apply to a new flight, not an already running attempt.
+
 Apps own separate caches but share this origin’s quota with other games on the same site. Browsers can evict cached files. If **Needs repair** appears, reconnect, remove only the affected offline copy and download again. For denied/full storage, allow storage or leave private browsing, free space and retry. World Studio’s **Request persistent storage** can reduce eviction risk if granted; it is not a backup or a guarantee against user-initiated deletion. See [browser storage and eviction](https://developer.mozilla.org/en-US/docs/Web/API/Storage_API/Storage_quotas_and_eviction_criteria).
+
+**Browser eviction can remove records and imported worlds, not only cached files.** This differs from the launcher’s scoped removal. Keep exported backups outside browser storage. If records are missing after eviction, reconnect, prepare the app again, then restore your exported backups with its import tools. Downloading the app does not recover lost records; without an export, they may be unrecoverable.
 
 ## When something is missing
 
+- **Download stalled / exceeded five minutes:** check your connection and retry online. Cancelled means that attempt stopped, not that a previous copy was removed. A combined download or verification failure does not identify a single cause: check connection and browser storage, then retry. Permission errors do not necessarily mean storage is full. Check saved copies in the launcher before relying on them offline.
 - **Empty catalogue:** no reviewed packages have been selected for the host. Use the existing FPV shortcut and guide in the main game.
 - **Request failed:** retry. A dated cached catalogue is not a fresh availability check.
 - **Offline verification could not finish:** choose **Check available practice** again. This is not proof that files are missing; keep the saved copy while verification is incomplete. Previously verified actions can remain available. Use removal/re-download only when the launcher reports **Needs repair**, not just an unfinished check.

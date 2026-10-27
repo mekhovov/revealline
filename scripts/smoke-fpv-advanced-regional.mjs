@@ -1,4 +1,4 @@
-/* global window */
+/* global window, document */
 import { createServer } from 'node:http';
 import { createHash } from 'node:crypto';
 import { readFile, writeFile, mkdtemp, rm } from 'node:fs/promises';
@@ -6,6 +6,7 @@ import { tmpdir } from 'node:os';
 import path from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import {
+  ADVANCED_MAX_SECONDS,
   createAdvancedSimulation,
   replayAdvancedRecording,
 } from '../optional-practice/civilian-fpv/advanced-simulation.mjs';
@@ -284,6 +285,96 @@ export async function smokeAdvancedRegional({ playwrightModule, output, screensh
         evidence.cancelledRecovery.workers.live === 1,
       'Cancelling verification changed the attempt or retained the detached worker',
     );
+    // Recover a genuine full history one tick before the duration boundary.
+    // The real browser worker generates the limit; no clock/state is forged.
+    const fullDuration = structuredClone(recovery),
+      durationExtension = createAdvancedSimulation(recovery.simulation.recording.config);
+    try {
+      durationExtension.restore(recovery.simulation);
+      while (durationExtension.telemetry().missionTick < ADVANCED_MAX_SECONDS * 50 - 1)
+        durationExtension.stepMission();
+      fullDuration.simulation = durationExtension.snapshot();
+    } finally {
+      durationExtension.dispose();
+    }
+    await importRecovery(fullDuration, 'duration-boundary-recovery.json');
+    await page.waitForFunction(
+      () => window.qualificationApp.snapshot().state.ticks === 35999,
+      null,
+      { timeout: 120000 },
+    );
+    await recoveryStatus.filter({ hasText: 'Recovery restored.' }).waitFor();
+    await page.locator('[data-mode-action="pause-resume"]').click();
+    await page.waitForFunction(
+      () => window.qualificationApp.snapshot().state.reason === 'duration-limit',
+      null,
+      { timeout: 15000 },
+    );
+    evidence.durationLimit = await page.evaluate(() => ({
+      state: window.qualificationApp.snapshot().state,
+      message: document.getElementById('flight-status').textContent,
+      resumeDisabled: document.getElementById('world-arm').disabled,
+    }));
+    requireCheck(
+      evidence.durationLimit.state.ticks === ADVANCED_MAX_SECONDS * 50 &&
+        evidence.durationLimit.state.status === 'paused' &&
+        evidence.durationLimit.resumeDisabled &&
+        evidence.durationLimit.message.includes('Flight duration limit reached'),
+      'The real duration boundary did not retain its paused export/restart state',
+    );
+    if (
+      !(await page
+        .getByRole('button', { name: 'Export Advanced recording', exact: true })
+        .isVisible())
+    )
+      await page.keyboard.press('p');
+    const limitDownloadReady = page.waitForEvent('download');
+    void limitDownloadReady.catch(() => {});
+    await page.getByRole('button', { name: 'Export Advanced recording', exact: true }).click();
+    const limitDownload = await limitDownloadReady,
+      limitPath = path.join(temporary, 'duration-limit.json');
+    await limitDownload.saveAs(limitPath);
+    const limitRecording = JSON.parse(await readFile(limitPath, 'utf8'));
+    evidence.durationLimit.export = {
+      bytes: (await readFile(limitPath)).length,
+      missionTicks: limitRecording.missionTicks,
+      finalHash: limitRecording.finalHash,
+      replayVerified: (await replayAdvancedRecording(limitRecording)).verified,
+    };
+    requireCheck(
+      evidence.durationLimit.export.replayVerified,
+      'Duration-limit export did not replay exactly',
+    );
+    const limitRecoveryReady = page.waitForEvent('download');
+    await page.getByRole('button', { name: 'Export recovery', exact: true }).click();
+    const limitRecoveryDownload = await limitRecoveryReady,
+      limitRecoveryPath = path.join(temporary, 'duration-limit-recovery.json');
+    await limitRecoveryDownload.saveAs(limitRecoveryPath);
+    const limitRecovery = JSON.parse(await readFile(limitRecoveryPath, 'utf8'));
+    await importRecovery(limitRecovery, 'completed-flight-recovery.json');
+    await recoveryStatus
+      .filter({ hasText: 'Recovery restored at the flight limit.' })
+      .waitFor({ timeout: 120000 });
+    evidence.durationLimit.restoredAtLimit = await page.evaluate(() => ({
+      reason: window.qualificationApp.snapshot().state.reason,
+      ticks: window.qualificationApp.snapshot().state.ticks,
+      resumeDisabled: document.getElementById('world-arm').disabled,
+    }));
+    requireCheck(
+      evidence.durationLimit.restoredAtLimit.reason === 'duration-limit' &&
+        evidence.durationLimit.restoredAtLimit.ticks === 36000 &&
+        evidence.durationLimit.restoredAtLimit.resumeDisabled,
+      'Restoring a completed flight incorrectly enabled resume',
+    );
+    await page.getByRole('button', { name: 'Restart here', exact: true }).click();
+    await page.waitForFunction(
+      () =>
+        window.qualificationApp.snapshot().state.advanced &&
+        window.qualificationApp.snapshot().state.ticks === 0 &&
+        window.qualificationApp.snapshot().state.reason === 'prepared',
+    );
+    evidence.durationLimit.explicitRestart = true;
+    await page.keyboard.press('p');
     if (screenshot) await page.screenshot({ path: screenshot });
     await page.locator('[data-regional-advanced="toggle"]').click();
     await page.waitForFunction(
@@ -399,7 +490,7 @@ export async function smokeAdvancedRegional({ playwrightModule, output, screensh
       passed: passed && pins.every((source) => source.unchanged),
       sourceStable: pins.every((source) => source.unchanged),
       scope:
-        'Actual World host, Three renderer, verified six-cell terrain fixture and production Advanced module worker; keyboard/menu restart, pause, recording download and Node replay, recovery file download and verified import, finite controller corruption rejected without adoption, physical cancellation of a real worker replaying a snapshot extended by 30 seconds, verified terrain landing and continued takeoff, exact exported contact replay, switch back to Legacy, disposal. Fixture boot only; production access gate unchanged. One headless Chrome ARM64 host, no native or device qualification.',
+        'Actual World host, Three renderer, verified six-cell terrain fixture and production Advanced module worker; keyboard/menu restart, pause, recording download and Node replay, recovery file download and verified import, finite controller corruption rejected without adoption, physical cancellation of a real worker replaying a snapshot extended by 30 seconds, verified full-history recovery one tick before the actual 12-minute boundary, terminal export and exact replay, verified terrain landing and continued takeoff, exact exported contact replay, switch back to Legacy, disposal. Fixture boot only; production access gate unchanged. One headless Chrome ARM64 host, no native or device qualification.',
       sources: pins,
       workers,
       pageErrors: errors,

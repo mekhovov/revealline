@@ -349,3 +349,48 @@ test('artwork-bearing pack identities stay bounded and fingerprints include exac
     library.missions.every((row) => row.id.length <= 2048 && !row.id.includes('data:image')),
   );
 });
+
+test('Custom browsing retires after held official verification before constructing rows', async () => {
+  const owner = await makeOwner();
+  let release,
+    active = true,
+    descriptions = 0;
+  const gate = new Promise((resolve) => {
+    release = resolve;
+  });
+  const retired = new Error('Retired Custom visit');
+  const pending = customLibrarySources([owner], {
+    ...adapters,
+    assertCurrent() {
+      if (!active) throw retired;
+    },
+    isOfficial: () => gate,
+    describe(binding) {
+      descriptions++;
+      return adapters.describe(binding);
+    },
+  });
+  active = false;
+  release(false);
+  await assert.rejects(pending, (error) => error === retired);
+  assert.equal(descriptions, 0);
+  const sources = await customLibrarySources([owner], adapters);
+  assert.equal(sources.length, 1);
+});
+
+test('Custom completed action authority does not retain its retired browsing guard', async () => {
+  const owner = await makeOwner();
+  let active = true;
+  const sources = await customLibrarySources([owner], {
+    ...adapters,
+    assertCurrent() {
+      assert.equal(active, true, 'construction visit');
+    },
+    prepare: async () => true,
+  });
+  active = false;
+  const library = createMissionLibrary(sources),
+    row = library.missions[0];
+  assert.deepEqual(await library.prepare(row), { state: 'ready' });
+  assert.equal(library.launch(row), true);
+});

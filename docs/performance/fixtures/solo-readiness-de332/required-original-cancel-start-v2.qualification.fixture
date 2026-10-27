@@ -1,0 +1,173 @@
+{
+  "format": "SoloQualificationV1",
+  "kind": "lifecycle",
+  "timeoutMs": 240000,
+  "query": {
+    "journey": "opening"
+  },
+  "replayRequirements": {
+    "movingTicks": 120
+  },
+  "expectedReplayDefinition": {
+    "level": {
+      "version": "xonix-level.v5",
+      "id": "first-return",
+      "revision": "gp4s-3ff00000000000003ff00000000000003ff0000000000000-211ae8f36cc0327a",
+      "name": "First return",
+      "width": 72,
+      "height": 36,
+      "spawn": {
+        "x": 24.5,
+        "y": 0.5
+      },
+      "walls": [],
+      "foundations": [],
+      "goal": {
+        "coverage": 0.3
+      },
+      "encounter": null,
+      "classic": {
+        "version": "classic.v1",
+        "terrain": [],
+        "powerups": [],
+        "arcadeActions": {
+          "version": "arcade-actions.v1"
+        }
+      },
+      "enemies": [
+        {
+          "id": "keeper",
+          "type": "bouncer",
+          "x": 58.5,
+          "y": 23.5,
+          "vx": 7.81352993211135,
+          "vy": -7.81352993211135,
+          "course": "field-course.v2"
+        }
+      ],
+      "objectives": [],
+      "supplies": [],
+      "rules": {
+        "lives": 3,
+        "moveSpeed": 8.84,
+        "boostMultiplier": 1.5,
+        "respawnSeconds": 0.65,
+        "graceSeconds": 1,
+        "playerRadius": 0.18,
+        "pointsPerCell": 10,
+        "objectivePoints": 500,
+        "timeMedals": [90, 150],
+        "switchCooldownSeconds": 2,
+        "timeLimitSeconds": 0,
+        "cutTimeLimitSeconds": 0,
+        "maxTrailCells": 0,
+        "stopOnCapture": true
+      },
+      "signalZones": [],
+      "hangars": [
+        {
+          "id": "home-hangar",
+          "x": 24.5,
+          "y": 0.5,
+          "radius": 2
+        }
+      ]
+    },
+    "options": {
+      "classId": "scout",
+      "turnPolicy": "immediate"
+    }
+  },
+  "id": "required-original-cancel-first-return-v1",
+  "coverage": [
+    "Correctness-only: exact authored original acquisition is held; public Escape closes idle Home, and visible Start joins the flight picture owner. A second real Escape must cancel the still-current busy attempt and actual native fetch.",
+    "No automatic Start across a500ms inactive checkpoint; a fresh public Start must prepare the exact original and complete meaningful movement plus strict replay.",
+    "Held response tests acquisition cancellation, not decoder stalls. All numerical and failed-response evidence remains unchanged."
+  ],
+  "actions": [
+    {
+      "type": "key",
+      "key": "Escape",
+      "ms": 1,
+      "label": "close-idle-home"
+    },
+    {
+      "type": "expect",
+      "selector": "body:not(:has(dialog[open])) #start-button:not(:disabled)",
+      "timeoutMs": 5000,
+      "label": "idle-home-actually-closed"
+    },
+    {
+      "type": "click",
+      "selector": "#start-button",
+      "timeoutMs": 5000,
+      "label": "required-original-first-start"
+    },
+    {
+      "type": "expect",
+      "selector": "body:not([data-flight-state=\"running\"]):not(:has(dialog[open])) #flight-preparation-status[data-state=\"busy\"]",
+      "timeoutMs": 5000,
+      "label": "required-original-blocks-start"
+    },
+    {
+      "type": "key",
+      "key": "Escape",
+      "ms": 1,
+      "label": "required-original-public-back"
+    },
+    {
+      "type": "expect",
+      "selector": "#flight-preparation-status[data-state=\"cancelled\"]",
+      "timeoutMs": 5000,
+      "label": "required-original-public-cancelled"
+    },
+    {
+      "type": "wait",
+      "ms": 500,
+      "label": "required-original-no-automatic-start"
+    },
+    {
+      "type": "expect",
+      "selector": "body:not([data-flight-state=\"running\"]):not(:has(dialog[open])) #start-button:not(:disabled)",
+      "timeoutMs": 1000
+    },
+    {
+      "type": "click",
+      "selector": "#start-button",
+      "label": "required-original-fresh-start"
+    },
+    {
+      "type": "wait",
+      "phase": "running",
+      "timeoutMs": 15000
+    },
+    {
+      "type": "key",
+      "key": "ArrowLeft",
+      "ms": 1200,
+      "label": "meaningful-safe-border"
+    },
+    {
+      "type": "click",
+      "selector": "#pause-button"
+    },
+    {
+      "type": "wait",
+      "phase": "paused",
+      "timeoutMs": 10000
+    },
+    {
+      "type": "snapshot",
+      "group": "after-media-fault"
+    },
+    {
+      "type": "exportReplay",
+      "label": "after-media-fault"
+    }
+  ],
+  "mediaReadinessFault": {
+    "protocol": "required-original-cancel-v1",
+    "sourceRevision": "de3324607c82787c1a1fec9c13d4f8b5cb74cee4",
+    "startRetention": "trusted-initial-start-v1"
+  }
+}

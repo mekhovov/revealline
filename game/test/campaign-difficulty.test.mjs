@@ -73,10 +73,10 @@ test('Standard preserves every shipped campaign shape, key and frozen legacy boa
       ['living-threads', 3],
       ['fieldcraft', 4],
       ['homeward-skies', 3],
-      ['equipment-workshop', 3],
+      ['equipment-workshop', 2],
       ['sentinel-relay', 1],
       ['neon-reference', 16],
-      ['neon-mosaic', 38],
+      ['neon-mosaic', 37],
       ['fpv-first-light-r4', 3],
       ['fpv-first-light-r3', 3],
       ['fpv-first-light-r2', 3],
@@ -93,7 +93,12 @@ test('Standard preserves every shipped campaign shape, key and frozen legacy boa
     assert.notEqual(context.campaign, campaign);
     const old = baseline.campaigns.find((c) => c.id === campaign.id);
     if (!old) continue;
-    assert.equal(context.campaignKey, old.key);
+    // Membership-only successors keep each remaining frozen board unchanged.
+    const reviewedSuccessors = {
+      'equipment-workshop/1/3fc2cf073da368b4': 'equipment-workshop/1/7bbeedba8b221cf4',
+      'neon-mosaic/2/68f10772f1871b8b': 'neon-mosaic/2/56d7451c6b50ab4b',
+    };
+    assert.equal(context.campaignKey, reviewedSuccessors[old.key] ?? old.key);
     for (const level of context.campaign.levels) {
       const reference = old.levels.find((l) => l.id === level.id);
       assert.equal(sha(normalizedLevel(level)), reference.normalizedSha256);

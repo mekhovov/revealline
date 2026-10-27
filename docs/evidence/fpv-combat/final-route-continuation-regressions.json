@@ -1,0 +1,48 @@
+{
+  "format": "FPVHostRegressionEvidence.v1",
+  "startedAt": "2026-10-20T15:24:08.292Z",
+  "finishedAt": "2026-10-20T15:25:31.159Z",
+  "elapsedMs": 82865,
+  "node": "v20.19.5",
+  "command": [
+    "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node",
+    "--test",
+    "--test-concurrency=1",
+    "--test-reporter=tap",
+    "game/test/fpv-world-appearance-ui.test.mjs",
+    "game/test/fpv-world-route-guides.test.mjs",
+    "game/test/fpv-world-editor-appearance.test.mjs",
+    "game/test/fpv-world-runtime.test.mjs",
+    "game/test/fpv-live-actors.test.mjs",
+    "game/test/fpv-world-record-archive.test.mjs",
+    "game/test/fpv-world-record-storage.test.mjs",
+    "game/test/fpv-catalogue-damage-ownership.test.mjs"
+  ],
+  "exitCode": 0,
+  "summary": {
+    "tests": 227,
+    "suites": 0,
+    "pass": 227,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "todo": 0,
+    "duration_ms": 82840.475667
+  },
+  "sourceBefore": {
+    "optional-practice/civilian-fpv/world-app.mjs": "f5099c0c9e4d76513553f7c534eedbaca09801e63f8a76d96e638580bd224eba",
+    "optional-practice/civilian-fpv/world-editor.mjs": "c8e1bcbf87be7e4a5620f8120581a81bd916228bef04f995b8162ab6f8c998fa",
+    "optional-practice/civilian-fpv/world-content.mjs": "4ed45e79db3d73e7d8961b69bc290aeebca494045c6d6a3e5944c7bf0758a1d9",
+    "optional-practice/civilian-fpv/world-model.mjs": "9b7de0d16c3cb73b477808bc2bf0dfc17395a11acbca116ddb01fb28ed81d553",
+    "optional-practice/civilian-fpv/world-records.mjs": "8fb720ec1a1a1e5cbc7ec5b253d14b6d76d680e6c03dc5f2c92b3e2e407d4c27"
+  },
+  "sourceAfter": {
+    "optional-practice/civilian-fpv/world-app.mjs": "f5099c0c9e4d76513553f7c534eedbaca09801e63f8a76d96e638580bd224eba",
+    "optional-practice/civilian-fpv/world-editor.mjs": "c8e1bcbf87be7e4a5620f8120581a81bd916228bef04f995b8162ab6f8c998fa",
+    "optional-practice/civilian-fpv/world-content.mjs": "4ed45e79db3d73e7d8961b69bc290aeebca494045c6d6a3e5944c7bf0758a1d9",
+    "optional-practice/civilian-fpv/world-model.mjs": "9b7de0d16c3cb73b477808bc2bf0dfc17395a11acbca116ddb01fb28ed81d553",
+    "optional-practice/civilian-fpv/world-records.mjs": "8fb720ec1a1a1e5cbc7ec5b253d14b6d76d680e6c03dc5f2c92b3e2e407d4c27"
+  },
+  "scope": "Mounted DOM/fixture renderer, native physics, archive/storage and route validation; no actual browser, device or performance qualification.",
+  "log": "docs/evidence/fpv-combat/final-route-continuation-regressions.tap"
+}

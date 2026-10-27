@@ -1,0 +1,162 @@
+{
+  "format": "FpvAdvancedComparisonBrowserQualification.v1",
+  "createdAt": "2026-10-17T03:48:54.908Z",
+  "engine": "chromium",
+  "version": "155.0.8059.85",
+  "fixture": "Production arena component, actual renderer and dedicated workers in isolated loopback harness; production access gates untouched. Cancellation deliberately holds only one verification request before transport. The aircraft save race holds its callback promise; it does not qualify real browser-lock contention or storage. Touch/physical radio and native hardware are not qualified here.",
+  "checks": {
+    "recording": {
+      "missionTicks": 81,
+      "bytes": 4718,
+      "sha256": "bd9918e46385bb67f282e174e34272636bee6d5b16f685911ecdb63a156cb0e5",
+      "finalHash": "09bc4279"
+    },
+    "keepReference": {
+      "verified": true,
+      "scored": false,
+      "comparisonClass": "bf62d88a044a7ef4",
+      "missionTicks": 81,
+      "samples": 82,
+      "visible": true,
+      "position": {
+        "x": -2.4727315369547807e-18,
+        "y": 2.693279266357422,
+        "z": 3
+      }
+    },
+    "sameMissionTick": {
+      "missionTick": 37,
+      "ghost": {
+        "verified": true,
+        "scored": false,
+        "comparisonClass": "bf62d88a044a7ef4",
+        "missionTicks": 81,
+        "samples": 82,
+        "visible": true,
+        "position": {
+          "x": -4.372141296216914e-18,
+          "y": 1.527407169342041,
+          "z": 3
+        }
+      },
+      "verifiedPathSamples": 82
+    },
+    "tamperedRecordingRejected": true,
+    "exportImportVerified": true,
+    "aircraftClassFiltering": true,
+    "cancelDisposesVerifier": true,
+    "personalRatesRemainComparable": true,
+    "delayedAircraftSave": {
+      "savedMass": 0.8,
+      "activeMass": 0.65,
+      "initializationCount": 10,
+      "saveRequests": 1,
+      "draftMass": 0.9,
+      "restartedMass": 0.8
+    },
+    "workers": {
+      "created": 11,
+      "terminated": 11,
+      "live": 0
+    }
+  },
+  "errors": [],
+  "failure": null,
+  "sources": [
+    {
+      "path": "game/data-json.mjs",
+      "sha256": "9ce33d6173f3cba8587ed7a7f1924c66e9d9c86ffa59b37a743764ea0b01f7bd"
+    },
+    {
+      "path": "game/i18n/bootstrap.mjs",
+      "sha256": "242e4791b2202d2644b91df5aa76355019890525af774ee2e795c937988b0395"
+    },
+    {
+      "path": "game/i18n/catalogs.mjs",
+      "sha256": "a7a25ae3d7ffbb1a4940c5a20c84891f09b40f9d4454b77bebb9a0dd37045816"
+    },
+    {
+      "path": "game/i18n/index.mjs",
+      "sha256": "29f40a6d92826ced1eb53283ed32e342ac6e95920abbf8d549f2d78e65b48d07"
+    },
+    {
+      "path": "game/platform.mjs",
+      "sha256": "29682ff18fd1571eeaf5c53a21c1bda5e60f4a93e542bfc718c2ca9bfd6a20ec"
+    },
+    {
+      "path": "game/vendor/i18next-26.4.2.min.js",
+      "sha256": "eb0dd6d72e8f756b90faf864853af2a17870fe97b54473b7c34494870c65901c"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/advanced-controller.mjs",
+      "sha256": "b1a35e143d2c992a9504708d48b11b21b3f58a7d1f2eaaaf600951196df0cc30"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/advanced-practice.mjs",
+      "sha256": "c1d7bc0f03b9e7fec3a9a2d8f58b8980326724423f330ef104fbf8f18ecfd100"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/advanced-simulation.mjs",
+      "sha256": "612b6f508a24b9fc54a3bf0457359b57402716ac96b546c80881a6230bbfb070"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/advanced-terrain.mjs",
+      "sha256": "58c1805ceb24bd616c3e53e7cfbcc1d1fe80619c94e0cd0ca2f2988e9ab8ea95"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/advanced-worker-client.mjs",
+      "sha256": "6f3aea322fbffaac5addca8d6817eeced332fe58d182a5708a56e3dc2f99379f"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/advanced-worker.mjs",
+      "sha256": "cd1a15105af58561e67dd05b38c99f42207452f92be4046737cb853f8009c9d8"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/flight-contact.mjs",
+      "sha256": "bb58ec29aeaa865b19343a3e58ea9c35f94df6bdc44b995e43bb4b269c8169b6"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/flight-support.mjs",
+      "sha256": "4d759128114e24fde4ec011357edd3f334f9b0a92499eba99199e1d6088dd4af"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/math.mjs",
+      "sha256": "555c8b6ea170b46992133507d2a3d867f06185bca060239cab7db9c9b87f9f98"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/rates.mjs",
+      "sha256": "12b66e90c2b59d2495131f42dcd4281cfbfa87a705245ce73aa1a2abc6dfdec5"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/rotation-table.mjs",
+      "sha256": "2ddab304ac99a2e70fc7e84fc6c27eedb49f1f3dac976baed680effa659cef41"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/vendor/rapier/rapier.mjs",
+      "sha256": "02dc6a4e2fffc013bab08fbb44fa68f501d8303615e9afe4c7d89ad4eedda0d0"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/vendor/three.core.js",
+      "sha256": "9edde002b066a9a05676a6127f67735b62baf399bdea529f2f7e31657da769e6"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/vendor/three.module.js",
+      "sha256": "9052042d676cb0fdc1ddfefe193053f34b7ac0513a616fdac4535d49987812ea"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/world-collision.mjs",
+      "sha256": "72bbf0933877adb9c014df95b176acdf6eb7dcc745c84e8f9f5acce3e5650538"
+    },
+    {
+      "path": "optional-practice/fpv-worlds/advanced-worker.mjs",
+      "sha256": "51b67155430c594d4a1299d386cb1b719d2ce03f0e83f0076e65c3d7e9cb8514"
+    },
+    {
+      "path": "scripts/smoke-fpv-advanced-comparison.mjs",
+      "sha256": "f53761a69894aaa859ae3dd95f3bf74fee63d2ba24645cd06f5cbf3f8012d59e"
+    }
+  ],
+  "sourceStable": true,
+  "changedSources": [],
+  "pass": true
+}

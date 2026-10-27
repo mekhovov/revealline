@@ -3,7 +3,7 @@ import { boundedJSON, dataIdentity, exactKeys, required } from '../../game/data-
 export const ADVANCED_TERRAIN_FORMAT = 'AdvancedRegionalCollisionFrame.v1';
 export const ADVANCED_TERRAIN_LIMITS = Object.freeze({
   frameBytes: 2 * 1024 * 1024,
-  colliders: 64,
+  colliders: 128,
   vertices: 65536,
   triangles: 131072,
   frames: 512,
