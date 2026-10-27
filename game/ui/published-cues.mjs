@@ -227,6 +227,8 @@ export function createPublishedCues({
         rate = 1,
         maxDuration = null,
         humanReaction = false,
+        cueFamily = name,
+        replaceRoutine = false,
       } = {},
     ) {
       if (!cueNames.has(name) || !available(ui)) return false;
@@ -283,7 +285,7 @@ export function createPublishedCues({
         feedback,
         humanReaction,
         destruction: DESTRUCTION_CUES.includes(name),
-        cueFamily: name,
+        cueFamily,
         priority,
         source,
         retire() {
@@ -318,6 +320,17 @@ export function createPublishedCues({
         voice.stop();
         return false;
       }
+      // A handled budget rejection also returns true. Retire the same-board
+      // routine predecessor only after this custom recording really started.
+      if (feedback && replaceRoutine)
+        for (const predecessor of [...sound.voices])
+          if (
+            predecessor !== voice &&
+            predecessor.feedback &&
+            predecessor.board === board &&
+            predecessor.cueFamily === cueFamily
+          )
+            predecessor.retire();
       return true;
     },
     cancelPending,

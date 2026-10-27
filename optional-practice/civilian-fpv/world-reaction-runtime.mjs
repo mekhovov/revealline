@@ -8,7 +8,7 @@ const sourceHashes={
 'game/gameplay-audio-preferences.mjs':
 'e7e6f8ae31d760879d97dddf9bfc7fe27b38a48888c60bc9028fa2232fb4eb20',
 'game/ui/audio-output.mjs':'66047e07247684f9f3069f9561898f33b5566d0d997e950adac17c0eed0ff790',
-'game/ui/published-cues.mjs':'2ba1cb7e88c1feada473473d23a845514bddf70b46b9286fe12566ce41aa8f45',
+'game/ui/published-cues.mjs':"d283283feb3872e8c4a2a59558ed60566919a29c204cebf910b32316e9ffa41f",
 'game/ui/media-preparation.mjs':
 '9f6ca3ff23a673d1f39e0df49f84ec747a2a59a3530cc7c1ba562f7e42a620ad',
 'game/published-cue-inspection.mjs':
@@ -1004,325 +1004,331 @@ const CUE_READ_TIMEOUT_MS=10000;
 /** Read-only session cache. An unavailable cue uses its existing procedural
    * fallback; a late decode never replays an event that has already happened. */
 function createPublishedCues({
-sound,
-readAudio,
-maxVoices=64,
-maxFeedbackVoices=16,
-maxDecodedSamples=16*1024*1024,
-}){
-if(
-!Number.isSafeInteger(maxVoices)||
-maxVoices<1||
-maxVoices>64||
-!Number.isSafeInteger(maxFeedbackVoices)||
-maxFeedbackVoices<1||
-maxFeedbackVoices>maxVoices||
-!Number.isSafeInteger(maxDecodedSamples)||
-maxDecodedSamples<1||
-maxDecodedSamples>16*1024*1024
-)
-throw new TypeError('Invalid published audio voice budget.');
-const preparation=sound.mediaPreparation??createMediaPreparation();
-const ownsPreparation= !sound.mediaPreparation;
-let preparationPhase='menu';
-const cache=new Map(),
-attenuation=new Map(),
-pending=new Set(),
-loads=new Map(),
-voices=new Set(),
-recent=new Map();
-let closed=false,
-decodedBytes=0,
-decodedSamples=0;
-const bufferBytes=(value)=>
-value&&typeof value==='object'?value.length*value.numberOfChannels*4:0;
-function retain(name,decoded){
-const size=bufferBytes(decoded);
-for(const[key,value]of cache){
-if(decodedBytes+size<=CUE_CACHE_BYTES)break;
-if(key===name|| !bufferBytes(value))continue;
-decodedBytes-=bufferBytes(value);
-cache.delete(key);
-attenuation.delete(key);
-}
-cache.set(name,decoded??false);
-decodedBytes+=size;
-}
-const cancelPending=()=>{
-for(const controller of pending)controller.abort();
-pending.clear();
-loads.clear();
-for(const[key,value]of cache)if(value==='loading')cache.delete(key);
-};
-const available=(ui=false)=>
-!closed&&
-sound.enabled&&
-!sound.paused&&
-!sound.disposed&&
-!sound.audioMaster?.muted&&
-sound.audioMaster?.volume!==0&&
-sound.context?.state==='running'&&
-sound.settings.master&&
-(ui?sound.menuSettings?.enabled!==false:sound.settings.sfx)&&
-(ui|| !sound.persistentMusic|| !sound.gameplayPaused);
-function load(name,{priority='demand'}={}){
-if(cache.get(name)==='loading')return loads.get(name);
-if(
-!cueNames.has(name)||
-cache.has(name)||
-typeof sound.context?.decodeAudioData!=='function'
-)
-return;
-const controller=new AbortController(),
-context=sound.context;
-const eligible=()=>
-!closed&&
-!controller.signal.aborted&&
-sound.enabled&&
-sound.context===context&&
-!sound.audioMaster?.muted&&
-sound.audioMaster?.volume!==0;
-const admission={signal:controller.signal,priority,eligible};
-let timedOut=false;
-pending.add(controller);
-cache.set(name,'loading');
-const promise=preparation
-.run(
-'fetch',
-async()=>{
-// Start only after admission. Abort cooperative reads, but retain the
-// shared slot until the underlying promise actually settles.
-const timer=setTimeout(()=>{
-timedOut=true;
-if(!closed&&loads.get(name)===promise)cache.set(name,false);
-controller.abort();
-},CUE_READ_TIMEOUT_MS);
-const clear=()=>clearTimeout(timer);
-controller.signal.addEventListener('abort',clear,{once:true});
-try{
-return await readAudio(`audio.${name}`,{signal:controller.signal});
-}finally{
-clear();
-controller.signal.removeEventListener('abort',clear);
-}
-},
-admission,
-)
-.then(async(result)=>{
-if(!result|| !eligible())return null;
-const seconds=HUMAN_REACTION_CUES.includes(name)
-?0.7
-:DESTRUCTION_CUES.includes(name)
-?1
-:15;
-const inspected=await inspectPublishedCue(result.blob,{
-sampleRate:context.sampleRate,
-maxDuration:seconds,
-signal:controller.signal,
-scheduleScan:(work)=>preparation.run('main',work,admission),
-});
-const decoded=await preparation.run(
-'decode',
-async()=>{
-const bytes=await inspected.blob.arrayBuffer();
-if(!eligible())throw new DOMException('Cue decode cancelled.','AbortError');
-return context.decodeAudioData(bytes);
-},
-{...admission,bytes:inspected.reservedBytes},
-);
-if(closed||controller.signal.aborted|| !sound.enabled)return null;
-if(
-!Number.isFinite(decoded.duration)||
-decoded.duration<=0||
-decoded.duration>
-(HUMAN_REACTION_CUES.includes(name)
-?0.7
-:DESTRUCTION_CUES.includes(name)
-?1
-:15)||
-!Number.isSafeInteger(decoded.length)||
-decoded.length<=0||
-decoded.length>inspected.outputFrames||
-decoded.numberOfChannels!==inspected.channels||
-decoded.length*decoded.numberOfChannels>4*1024*1024
-)
-throw new Error(t('interface:publishedCueExceedsItsDecodedBudget'));
-if([...DESTRUCTION_CUES,...HUMAN_REACTION_CUES].includes(name))
-attenuation.set(name,destructionBufferGain(name,decoded));
-return decoded;
-})
-.then((decoded)=>{
-if(!closed&& !controller.signal.aborted){
-if(
-decoded&&
-decodedSamples+decoded.length*decoded.numberOfChannels>maxDecodedSamples
-)
-decoded=null;
-if(decoded)decodedSamples+=decoded.length*decoded.numberOfChannels;
-retain(name,decoded);
-}
-})
-.catch((error)=>{
-if(error?.name==='AbortError'){
-if(!closed&&loads.get(name)===promise){
-if(timedOut)cache.set(name,false);
-else cache.delete(name);
-}
-}else if(!closed&& !controller.signal.aborted)cache.set(name,false);
-})
-.finally(()=>{
-pending.delete(controller);
-if(loads.get(name)===promise)loads.delete(name);
-});
-loads.set(name,promise);
-return promise;
-}
-return Object.freeze({
-setPreparationPhase(value){
-if(!ownsPreparation||closed||value===preparationPhase)return;
-preparation.setPhase(value);
-preparationPhase=value;
-},
-resourceSnapshot:()=>({
-decodedBytes,
-decodedBytesLimit:CUE_CACHE_BYTES,
-// Entries also include unavailable/loading sentinels, not only PCM buffers.
-cacheEntries:cache.size,
-loading:loads.size,
-}),
-has(name){
-const value=cache.get(name);
-return!!value&&value!=='loading';
-},
-prepare(names){
-if(!available())return Promise.resolve();
-return Promise.all(
-names
-.filter((name)=>cueNames.has(name))
-.map((name)=>load(name,{priority:'background'})),
-);
-},
-play(
-name,
-{
-ui=false,
-board='solo',
-pan=0,
-feedback=false,
-priority=2,
-gain=1,
-rate=1,
-maxDuration=null,
-humanReaction=false,
-}={},
-){
-if(!cueNames.has(name)|| !available(ui))return false;
-const buffer=cache.get(name);
-if(buffer===undefined){
-void load(name);
-return false;
-}
-if(!buffer||buffer==='loading')return false;
-const now=sound.context.currentTime;
-if(ui&&now-(recent.get(name)?? -Infinity)<0.08)return true;
-const destruction=[...DESTRUCTION_CUES,...HUMAN_REACTION_CUES].includes(name);
-const owned=[...sound.voices].filter((voice)=>voice.feedback);
-if(
-feedback&&
-(owned.length>=Math.min(16,maxFeedbackVoices)||sound.voices.size>=maxVoices)
-){
-const victim=owned
-.filter((voice)=>voice.priority<priority)
-.sort((a,b)=>a.priority-b.priority)[0];
-if(!victim)return true;// A budget rejection must not trigger a synthetic duplicate.
-victim.stop();
-}
-if(sound.voices.size>=maxVoices)return true;
-if(destruction&&now-(recent.get(`${board}:${name}`)?? -Infinity)<0.09)return true;
-if(destruction)recent.set(`${board}:${name}`,now);
-recent.set(name,now);
-const source=sound.context.createBufferSource(),
-panner=pan?sound.context.createStereoPanner?.():null;
-source.buffer=buffer;
-const volume=sound.context.createGain();
-const playbackRate=Math.max(0.8,Math.min(1.2,Number.isFinite(rate)?rate:1));
-const duration=Math.min(
-buffer.duration/playbackRate,
-destruction?(maxDuration??0.85):Infinity,
-);
-source.playbackRate?.setValueAtTime(playbackRate,now);
-const level=
-Math.max(0,Math.min(1,Number.isFinite(gain)?gain:1))*(attenuation.get(name)??1);
-volume.gain.setValueAtTime(level,now);
-if(destruction){
-volume.gain.setValueAtTime(level,now+Math.max(0,duration-0.02));
-volume.gain.linearRampToValueAtTime?.(0,now+duration);
-}
-source.connect(volume);
-const bus=ui?(sound.menuBus??sound.sfxBus):sound.sfxBus;
-if(panner){
-volume.connect(panner);
-panner.pan.setValueAtTime(Math.max(-1,Math.min(1,pan)),now);
-panner.connect(bus);
-}else volume.connect(bus);
-let stopped=false;
-const voice={
-bus:ui?'menu':'sfx',
-name,
-board,
-feedback,
-humanReaction,
-destruction:DESTRUCTION_CUES.includes(name),
-cueFamily:name,
-priority,
-source,
-retire(){
-if(!humanReaction){
-voice.stop();
-return;
-}
-volume.gain.cancelScheduledValues?.(sound.context.currentTime);
-volume.gain.setTargetAtTime?.(0,sound.context.currentTime,0.008);
-source.stop(sound.context.currentTime+0.04);
-},
-stop(){
-if(stopped)return;
-stopped=true;
-try{
-source.stop();
-}catch{}
-source.disconnect();
-volume.disconnect();
-panner?.disconnect();
-voices.delete(voice);
-sound.voices.delete(voice);
-},
-};
-source.onended=voice.stop;
-sound.voices.add(voice);
-voices.add(voice);
-try{
-source.start(now);
-source.stop(now+duration);
-}catch{
-voice.stop();
-return false;
-}
-return true;
-},
-cancelPending,
-close(){
-closed=true;
-if(ownsPreparation)preparation.close();
-for(const voice of[...voices])voice.stop();
-cancelPending();
-cache.clear();
-decodedBytes=0;
-decodedSamples=0;
-attenuation.clear();
-recent.clear();
-},
-});
+  sound,
+  readAudio,
+  maxVoices = 64,
+  maxFeedbackVoices = 16,
+  maxDecodedSamples = 16 * 1024 * 1024,
+}) {
+  if (
+    !Number.isSafeInteger(maxVoices) ||
+    maxVoices < 1 ||
+    maxVoices > 64 ||
+    !Number.isSafeInteger(maxFeedbackVoices) ||
+    maxFeedbackVoices < 1 ||
+    maxFeedbackVoices > maxVoices ||
+    !Number.isSafeInteger(maxDecodedSamples) ||
+    maxDecodedSamples < 1 ||
+    maxDecodedSamples > 16 * 1024 * 1024
+  )
+    throw new TypeError('Invalid published audio voice budget.');
+  const preparation = sound.mediaPreparation ?? createMediaPreparation();
+  const ownsPreparation = !sound.mediaPreparation;
+  let preparationPhase = 'menu';
+  const cache = new Map(),
+    attenuation = new Map(),
+    pending = new Set(),
+    loads = new Map(),
+    voices = new Set(),
+    recent = new Map();
+  let closed = false,
+    decodedBytes = 0,
+    decodedSamples = 0;
+  const bufferBytes = (value) =>
+    value && typeof value === 'object' ? value.length * value.numberOfChannels * 4 : 0;
+  function retain(name, decoded) {
+    const size = bufferBytes(decoded);
+    for (const [key, value] of cache) {
+      if (decodedBytes + size <= CUE_CACHE_BYTES) break;
+      if (key === name || !bufferBytes(value)) continue;
+      decodedBytes -= bufferBytes(value);
+      cache.delete(key);
+      attenuation.delete(key);
+    }
+    cache.set(name, decoded ?? false);
+    decodedBytes += size;
+  }
+  const cancelPending = () => {
+    for (const controller of pending) controller.abort();
+    pending.clear();
+    loads.clear();
+    for (const [key, value] of cache) if (value === 'loading') cache.delete(key);
+  };
+  const available = (ui = false) =>
+    !closed &&
+    sound.enabled &&
+    !sound.paused &&
+    !sound.disposed &&
+    !sound.audioMaster?.muted &&
+    sound.audioMaster?.volume !== 0 &&
+    sound.context?.state === 'running' &&
+    sound.settings.master &&
+    (ui ? sound.menuSettings?.enabled !== false : sound.settings.sfx) &&
+    (ui || !sound.persistentMusic || !sound.gameplayPaused);
+  function load(name, { priority = 'demand' } = {}) {
+    if (cache.get(name) === 'loading') return loads.get(name);
+    if (
+      !cueNames.has(name) ||
+      cache.has(name) ||
+      typeof sound.context?.decodeAudioData !== 'function'
+    )
+      return;
+    const controller = new AbortController(),
+      context = sound.context;
+    const eligible = () =>
+      !closed &&
+      !controller.signal.aborted &&
+      sound.enabled &&
+      sound.context === context &&
+      !sound.audioMaster?.muted &&
+      sound.audioMaster?.volume !== 0;
+    const admission = { signal: controller.signal, priority, eligible };
+    let timedOut = false;
+    pending.add(controller);
+    cache.set(name, 'loading');
+    const promise = preparation
+      .run(
+        'fetch',
+        async () => {
+          // Start only after admission. Abort cooperative reads, but retain the
+          // shared slot until the underlying promise actually settles.
+          const timer = setTimeout(() => {
+            timedOut = true;
+            if (!closed && loads.get(name) === promise) cache.set(name, false);
+            controller.abort();
+          }, CUE_READ_TIMEOUT_MS);
+          const clear = () => clearTimeout(timer);
+          controller.signal.addEventListener('abort', clear, { once: true });
+          try {
+            return await readAudio(`audio.${name}`, { signal: controller.signal });
+          } finally {
+            clear();
+            controller.signal.removeEventListener('abort', clear);
+          }
+        },
+        admission,
+      )
+      .then(async (result) => {
+        if (!result || !eligible()) return null;
+        const seconds = HUMAN_REACTION_CUES.includes(name)
+          ? 0.7
+          : DESTRUCTION_CUES.includes(name)
+            ? 1
+            : 15;
+        const inspected = await inspectPublishedCue(result.blob, {
+          sampleRate: context.sampleRate,
+          maxDuration: seconds,
+          signal: controller.signal,
+          scheduleScan: (work) => preparation.run('main', work, admission),
+        });
+        const decoded = await preparation.run(
+          'decode',
+          async () => {
+            const bytes = await inspected.blob.arrayBuffer();
+            if (!eligible()) throw new DOMException('Cue decode cancelled.', 'AbortError');
+            return context.decodeAudioData(bytes);
+          },
+          { ...admission, bytes: inspected.reservedBytes },
+        );
+        if (closed || controller.signal.aborted || !sound.enabled) return null;
+        if (
+          !Number.isFinite(decoded.duration) ||
+          decoded.duration <= 0 ||
+          decoded.duration >
+            (HUMAN_REACTION_CUES.includes(name) ? 0.7 : DESTRUCTION_CUES.includes(name) ? 1 : 15) ||
+          !Number.isSafeInteger(decoded.length) ||
+          decoded.length <= 0 ||
+          decoded.length > inspected.outputFrames ||
+          decoded.numberOfChannels !== inspected.channels ||
+          decoded.length * decoded.numberOfChannels > 4 * 1024 * 1024
+        )
+          throw new Error(t('interface:publishedCueExceedsItsDecodedBudget'));
+        if ([...DESTRUCTION_CUES, ...HUMAN_REACTION_CUES].includes(name))
+          attenuation.set(name, destructionBufferGain(name, decoded));
+        return decoded;
+      })
+      .then((decoded) => {
+        if (!closed && !controller.signal.aborted) {
+          if (
+            decoded &&
+            decodedSamples + decoded.length * decoded.numberOfChannels > maxDecodedSamples
+          )
+            decoded = null;
+          if (decoded) decodedSamples += decoded.length * decoded.numberOfChannels;
+          retain(name, decoded);
+        }
+      })
+      .catch((error) => {
+        if (error?.name === 'AbortError') {
+          if (!closed && loads.get(name) === promise) {
+            if (timedOut) cache.set(name, false);
+            else cache.delete(name);
+          }
+        } else if (!closed && !controller.signal.aborted) cache.set(name, false);
+      })
+      .finally(() => {
+        pending.delete(controller);
+        if (loads.get(name) === promise) loads.delete(name);
+      });
+    loads.set(name, promise);
+    return promise;
+  }
+  return Object.freeze({
+    setPreparationPhase(value) {
+      if (!ownsPreparation || closed || value === preparationPhase) return;
+      preparation.setPhase(value);
+      preparationPhase = value;
+    },
+    resourceSnapshot: () => ({
+      decodedBytes,
+      decodedBytesLimit: CUE_CACHE_BYTES,
+      // Entries also include unavailable/loading sentinels, not only PCM buffers.
+      cacheEntries: cache.size,
+      loading: loads.size,
+    }),
+    has(name) {
+      const value = cache.get(name);
+      return !!value && value !== 'loading';
+    },
+    prepare(names) {
+      if (!available()) return Promise.resolve();
+      return Promise.all(
+        names
+          .filter((name) => cueNames.has(name))
+          .map((name) => load(name, { priority: 'background' })),
+      );
+    },
+    play(
+      name,
+      {
+        ui = false,
+        board = 'solo',
+        pan = 0,
+        feedback = false,
+        priority = 2,
+        gain = 1,
+        rate = 1,
+        maxDuration = null,
+        humanReaction = false,
+        cueFamily = name,
+        replaceRoutine = false,
+      } = {},
+    ) {
+      if (!cueNames.has(name) || !available(ui)) return false;
+      const buffer = cache.get(name);
+      if (buffer === undefined) {
+        void load(name);
+        return false;
+      }
+      if (!buffer || buffer === 'loading') return false;
+      const now = sound.context.currentTime;
+      if (ui && now - (recent.get(name) ?? -Infinity) < 0.08) return true;
+      const destruction = [...DESTRUCTION_CUES, ...HUMAN_REACTION_CUES].includes(name);
+      const owned = [...sound.voices].filter((voice) => voice.feedback);
+      if (feedback && (owned.length >= Math.min(16, maxFeedbackVoices) || sound.voices.size >= maxVoices)) {
+        const victim = owned
+          .filter((voice) => voice.priority < priority)
+          .sort((a, b) => a.priority - b.priority)[0];
+        if (!victim) return true; // A budget rejection must not trigger a synthetic duplicate.
+        victim.stop();
+      }
+      if (sound.voices.size >= maxVoices) return true;
+      if (destruction && now - (recent.get(`${board}:${name}`) ?? -Infinity) < 0.09) return true;
+      if (destruction) recent.set(`${board}:${name}`, now);
+      recent.set(name, now);
+      const source = sound.context.createBufferSource(),
+        panner = pan ? sound.context.createStereoPanner?.() : null;
+      source.buffer = buffer;
+      const volume = sound.context.createGain();
+      const playbackRate = Math.max(0.8, Math.min(1.2, Number.isFinite(rate) ? rate : 1));
+      const duration = Math.min(
+        buffer.duration / playbackRate,
+        destruction ? (maxDuration ?? 0.85) : Infinity,
+      );
+      source.playbackRate?.setValueAtTime(playbackRate, now);
+      const level =
+        Math.max(0, Math.min(1, Number.isFinite(gain) ? gain : 1)) * (attenuation.get(name) ?? 1);
+      volume.gain.setValueAtTime(level, now);
+      if (destruction) {
+        volume.gain.setValueAtTime(level, now + Math.max(0, duration - 0.02));
+        volume.gain.linearRampToValueAtTime?.(0, now + duration);
+      }
+      source.connect(volume);
+      const bus = ui ? (sound.menuBus ?? sound.sfxBus) : sound.sfxBus;
+      if (panner) {
+        volume.connect(panner);
+        panner.pan.setValueAtTime(Math.max(-1, Math.min(1, pan)), now);
+        panner.connect(bus);
+      } else volume.connect(bus);
+      let stopped = false;
+      const voice = {
+        bus: ui ? 'menu' : 'sfx',
+        name,
+        board,
+        feedback,
+        humanReaction,
+        destruction: DESTRUCTION_CUES.includes(name),
+        cueFamily,
+        priority,
+        source,
+        retire() {
+          if (!humanReaction) {
+            voice.stop();
+            return;
+          }
+          volume.gain.cancelScheduledValues?.(sound.context.currentTime);
+          volume.gain.setTargetAtTime?.(0, sound.context.currentTime, 0.008);
+          source.stop(sound.context.currentTime + 0.04);
+        },
+        stop() {
+          if (stopped) return;
+          stopped = true;
+          try {
+            source.stop();
+          } catch {}
+          source.disconnect();
+          volume.disconnect();
+          panner?.disconnect();
+          voices.delete(voice);
+          sound.voices.delete(voice);
+        },
+      };
+      source.onended = voice.stop;
+      sound.voices.add(voice);
+      voices.add(voice);
+      try {
+        source.start(now);
+        source.stop(now + duration);
+      } catch {
+        voice.stop();
+        return false;
+      }
+      // A handled budget rejection also returns true. Retire the same-board
+      // routine predecessor only after this custom recording really started.
+      if (feedback && replaceRoutine)
+        for (const predecessor of [...sound.voices])
+          if (
+            predecessor !== voice &&
+            predecessor.feedback &&
+            predecessor.board === board &&
+            predecessor.cueFamily === cueFamily
+          )
+            predecessor.retire();
+      return true;
+    },
+    cancelPending,
+    close() {
+      closed = true;
+      if (ownsPreparation) preparation.close();
+      for (const voice of [...voices]) voice.stop();
+      cancelPending();
+      cache.clear();
+      decodedBytes = 0;
+      decodedSamples = 0;
+      attenuation.clear();
+      recent.clear();
+    },
+  });
 }
 
 return{CUE_CACHE_BYTES:CUE_CACHE_BYTES,createPublishedCues:createPublishedCues};

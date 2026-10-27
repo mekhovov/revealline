@@ -47,6 +47,7 @@ function harness(
       'edition',
       'multiplayer-target',
       'sample-scope',
+      'sample-duration',
     ].map((id) => [id, element(id)]),
   );
   const nodes = new Map(
@@ -78,6 +79,12 @@ function harness(
       'flight-preparation-status',
       'race-preparation',
       'shell-flight-status',
+      'racer-encounter-0',
+      'racer-encounter-title-0',
+      'racer-encounter-instruction-0',
+      'racer-encounter-1',
+      'racer-encounter-title-1',
+      'racer-encounter-instruction-1',
     ].map((id) => [id, element(id)]),
   );
   const doc = {
@@ -96,6 +103,12 @@ function harness(
   nodes.get('coop-canvas').parent = nodes.get('coop-play');
   nodes.get('coop-overlay').hidden = true;
   nodes.get('journey-cards').querySelector = () => nodes.get('journey-library-card');
+  for (const seat of [0, 1]) {
+    const group = nodes.get(`racer-encounter-${seat}`);
+    group.hidden = true;
+    nodes.get(`racer-encounter-title-${seat}`).parent = group;
+    nodes.get(`racer-encounter-instruction-${seat}`).parent = group;
+  }
   nodes.set('journey-library-card', element('journey-library-card'));
   const root = { ...element('root'), querySelector: (id) => outer.get(id.slice(1)) };
   const win = {
@@ -506,8 +519,10 @@ test('bounded passive frame samples record distributions without pretending unsu
   assert.equal(sample.action, 'Frame sample');
   assert.equal(sample.frameIntervals.p95Ms, 16);
   assert.equal(sample.frameIntervals.medianMs, 16);
+  assert.equal(sample.requestedDurationMs, 30000);
   assert.ok(sample.frameIntervals.count >= 1800);
   assert.deepEqual(sample.longTasks, { supported: false });
+  assert.deepEqual(sample.jsHeapTimeline, { supported: false });
   assert.equal(h.outer.get('sample').disabled, false);
   assert.deepEqual(h.doc.body.dataset, {});
 });
@@ -584,8 +599,153 @@ test('supported long-task observations include only this sample and disconnect o
     count: 2,
     over50Ms: 2,
     maxMs: 75,
+    omittedCount: 0,
   });
   assert.equal(disconnected, true);
+});
+
+test('sample duration is explicit, bounded and captured when armed, including the 30-second default', () => {
+  for (const [value, seconds] of [
+    ['', 30],
+    ['30', 30],
+    ['120', 120],
+    ['300', 300],
+    ['Infinity', 30],
+    ['-1', 30],
+    ['10000', 30],
+  ]) {
+    const h = harness('team');
+    h.frame();
+    h.frame();
+    h.outer.get('sample-duration').value = value;
+    h.outer.get('sample-duration').listeners.get('change')();
+    assert.equal(h.outer.get('sample').textContent, `Observe ${seconds} seconds`);
+    h.outer.get('sample-scope').value = 'active';
+    h.outer.get('sample').listeners.get('click')();
+    assert.match(h.outer.get('status').textContent, new RegExp(`play for ${seconds} seconds`));
+    h.frame(5000);
+    h.nodes.get('coop-play').hidden = false;
+    h.frame();
+    h.outer.get('sample-duration').value = '30';
+    for (let i = 0; i < seconds * 10 - 1; i++) h.frame(100);
+    assert.equal(
+      h.records().some((row) => row.action === 'Frame sample'),
+      false,
+    );
+    h.frame(100);
+    const sample = h.records().at(-1);
+    assert.equal(sample.requestedDurationMs, seconds * 1000);
+    assert.equal(sample.durationMs, seconds * 1000);
+    assert.equal(sample.frameIntervals.p95Ms, 100);
+    assert.equal(h.outer.get('sample').disabled, false);
+  }
+});
+
+test('long active samples retain interrupted evidence but exclude it from qualification after the original 30-second window', () => {
+  for (const reason of ['pause', 'focus', 'mission', 'visibility', 'pagehide', 'navigation']) {
+    const h = harness('team', {
+      memory: { usedJSHeapSize: 100, totalJSHeapSize: 200, jsHeapSizeLimit: 300 },
+    });
+    h.frame();
+    h.frame();
+    h.outer.get('sample-duration').value = '120';
+    h.outer.get('sample-scope').value = 'active';
+    h.outer.get('sample').listeners.get('click')();
+    h.nodes.get('coop-play').hidden = false;
+    h.frame();
+    for (let i = 0; i < 700; i++) h.frame(100);
+    assert.equal(
+      h.records().some((row) => row.action === 'Frame sample'),
+      false,
+    );
+    if (reason === 'pause') h.nodes.get('coop-overlay').hidden = false;
+    if (reason === 'focus') h.doc.focused = false;
+    if (reason === 'mission') h.nodes.get('coop-level').value = 'another-field';
+    if (reason === 'visibility') {
+      h.doc.hidden = true;
+      h.doc.listeners.get('visibilitychange')();
+    }
+    if (reason === 'pagehide') h.outerWin.listeners.get('pagehide')();
+    if (reason === 'navigation') h.outer.get('game').onload();
+    h.frame();
+    const records = h.records().filter((row) => row.action === 'Frame sample');
+    assert.equal(records.length, 1);
+    assert.equal(records[0].requestedDurationMs, 120000);
+    assert.ok(records[0].observedDurationMs >= 70000);
+    assert.match(records[0].outcome, /discarded/);
+    assert.equal(records[0].partial, true);
+    assert.ok(records[0].frameIntervals.count >= 700);
+    assert.equal(
+      records[0].jsHeapTimeline.supported,
+      true,
+      'A retained memory timeline does not qualify an interrupted sample.',
+    );
+    assert.equal(h.doc.listeners.has('keydown'), false);
+    h.frame(120000);
+    assert.equal(h.records().filter((row) => row.action === 'Frame sample').length, 1);
+  }
+});
+
+test('five-minute observations retain late frame activity and bounded sampled heap peaks, not endpoint or leak claims', () => {
+  const memory = { usedJSHeapSize: 100, totalJSHeapSize: 1000, jsHeapSizeLimit: 2000 };
+  const h = harness('team', { memory });
+  h.frame();
+  h.frame();
+  h.outer.get('sample-duration').value = '300';
+  h.outer.get('sample-scope').value = 'active';
+  h.outer.get('sample').listeners.get('click')();
+  h.nodes.get('coop-play').hidden = false;
+  h.frame();
+  let elapsed = 0;
+  while (elapsed < 290000) {
+    memory.usedJSHeapSize = elapsed >= 100000 && elapsed < 110000 ? 900 : 100;
+    h.frame(16);
+    elapsed += 16;
+  }
+  h.nodes.get('coop-coverage').textContent = 'late-window-field';
+  memory.usedJSHeapSize = 200;
+  while (elapsed < 300000) {
+    h.frame(100);
+    elapsed += 100;
+  }
+  const sample = h.records().at(-1),
+    heap = sample.jsHeapTimeline;
+  assert.ok(sample.frameIntervals.count > 10000, 'Long samples must not silently stop at old cap.');
+  assert.equal(sample.frameIntervals.maxMs, 100);
+  assert.ok(sample.frameIntervals.over50ms > 0);
+  assert.equal(sample.activity.at(-1).hud['coop-coverage'], 'late-window-field');
+  assert.ok(sample.activity.at(-1).atMs > 290000);
+  assert.ok(sample.activity.length <= 120);
+  assert.equal(heap.supported, true);
+  assert.equal(heap.intervalMs, 5000);
+  assert.equal(heap.maxSnapshots, 62);
+  assert.ok(heap.samples.length >= 60 && heap.samples.length <= 62);
+  assert.equal(heap.samples[0].atMs, 0);
+  assert.equal(heap.samples.at(-1).atMs, sample.durationMs);
+  assert.equal(heap.samples.at(-1).usedBytes, 200);
+  assert.equal(heap.peakObservedUsedBytes, 900);
+  assert.match(heap.limits, /miss peaks/);
+  assert.match(heap.limits, /No forced GC.*leak conclusion/);
+});
+
+test('missing, invalid or inaccessible heap counters do not produce fabricated timeline values', () => {
+  for (const memory of [undefined, {}, { usedJSHeapSize: NaN }, { usedJSHeapSize: -1 }, 'throws']) {
+    const h = harness();
+    if (memory === 'throws')
+      Object.defineProperty(h.win.performance, 'memory', {
+        get() {
+          throw new Error('Counter unavailable');
+        },
+      });
+    else h.win.performance.memory = memory;
+    h.frame();
+    h.frame();
+    h.outer.get('sample').listeners.get('click')();
+    for (let i = 0; i < 300; i++) h.frame(100);
+    const sample = h.records().at(-1);
+    assert.deepEqual(sample.jsHeapTimeline, { supported: false });
+    assert.deepEqual(sample.browserAfter.jsHeap, { supported: false });
+  }
 });
 
 test('Team observes the actual canvas under its display:contents wrapper, not a paused overlay', () => {
@@ -908,4 +1068,142 @@ test('development observer stays outside the player release include list', async
       (path) => path === 'docs' || path.startsWith('docs/verification/journey-performance'),
     ),
   );
+});
+
+function encounterObservation(configure = () => {}) {
+  const h = harness('versus');
+  h.outer.get('sample-scope').value = 'active';
+  h.nodes.get('race-level').value = 'candidate/sentinel/crown/standard/0';
+  configure(h);
+  h.outer.get('sample').listeners.get('click')();
+  h.frame();
+  return h;
+}
+
+function finishEncounterObservation(h) {
+  for (let tick = 0; tick < 300; tick++) h.frame(100);
+  return h.records().findLast((row) => row.action === 'Frame sample');
+}
+
+test('encounter observation retains real shown phase and instruction changes for both boards', () => {
+  const h = encounterObservation((h) => {
+    for (const seat of [0, 1]) {
+      h.nodes.get(`racer-encounter-${seat}`).hidden = false;
+      h.nodes.get(`racer-encounter-${seat}`).dataset.phase = 'warning';
+      h.nodes.get(`racer-encounter-title-${seat}`).textContent = '1 / 2 · LANE WARNING · 2.0s';
+      h.nodes.get(`racer-encounter-instruction-${seat}`).textContent = `Watch row ${17 + seat}.`;
+    }
+  });
+  for (let tick = 0; tick < 150; tick++) h.frame(100);
+  h.nodes.get('racer-encounter-0').dataset.phase = 'active';
+  h.nodes.get('racer-encounter-title-0').textContent = '1 / 2 · LANE ACTIVE · 0.5s';
+  h.nodes.get('racer-encounter-1').dataset.phase = 'open';
+  h.nodes.get('racer-encounter-title-1').textContent = '1 / 2 · CORE OPEN';
+  for (let tick = 0; tick < 150; tick++) h.frame(100);
+  const row = h.records().findLast((record) => record.action === 'Frame sample');
+  assert.equal(row.encounterObservationVersion, 1);
+  assert.equal(row.encounterBefore.supported, true);
+  assert.deepEqual(
+    row.encounterBefore.players.map((p) => p.phase),
+    ['warning', 'warning'],
+  );
+  assert.deepEqual(
+    row.encounterAfter.players.map((p) => p.phase),
+    ['active', 'open'],
+  );
+  assert.equal(row.encounterAfter.players[0].title.text, '1 / 2 · LANE ACTIVE · 0.5s');
+  assert.equal(row.encounterBefore.players[1].instruction.text, 'Watch row 18.');
+  assert.ok(row.activity.some((entry) => entry.encounter.players[1].phase === 'open'));
+  assert.ok(row.activity.length <= 120);
+  assert.equal(row.inputs.trustedKeydowns, 0);
+});
+
+test('encounter observation excludes hidden or inert stale phase labels without mutating them', () => {
+  const h = encounterObservation((h) => {
+    for (const seat of [0, 1]) {
+      const group = h.nodes.get(`racer-encounter-${seat}`);
+      group.hidden = seat === 0;
+      group.inert = seat === 1;
+      group.dataset.phase = 'old-open';
+      h.nodes.get(`racer-encounter-title-${seat}`).textContent = 'Stale opening';
+    }
+  });
+  const row = finishEncounterObservation(h);
+  assert.equal(row.encounterBefore.supported, true);
+  for (const player of row.encounterAfter.players) {
+    assert.equal(player.shown, false);
+    assert.equal(player.phase, null);
+    assert.equal(player.title, null);
+    assert.equal(player.instruction, null);
+  }
+  assert.equal(h.nodes.get('racer-encounter-0').dataset.phase, 'old-open');
+  assert.equal(h.nodes.get('racer-encounter-title-1').textContent, 'Stale opening');
+});
+
+test('encounter observation distinguishes missing cards from an observed hidden classic card', () => {
+  const h = encounterObservation((h) => h.nodes.delete('racer-encounter-instruction-1'));
+  const row = finishEncounterObservation(h);
+  assert.equal(row.encounterAfter.supported, false);
+  assert.equal(row.encounterAfter.players[0].available, true);
+  assert.equal(row.encounterAfter.players[1].available, false);
+  assert.equal(row.encounterAfter.players[0].shown, false);
+  const team = harness('team');
+  team.outer.get('sample').listeners.get('click')();
+  team.frame();
+  const teamRow = finishEncounterObservation(team);
+  assert.equal(teamRow.encounterAfter.supported, false);
+  assert.match(teamRow.encounterAfter.reason, /Duel/);
+});
+
+test('encounter observation bounds original visible text and snapshots it independently', () => {
+  const h = encounterObservation((h) => {
+    const group = h.nodes.get('racer-encounter-0');
+    group.hidden = false;
+    group.dataset.phase = 'p'.repeat(200);
+    h.nodes.get('racer-encounter-title-0').textContent = 'T'.repeat(1500);
+    h.nodes.get('racer-encounter-instruction-0').textContent = 'I'.repeat(1500);
+  });
+  h.nodes.get('racer-encounter-title-0').textContent = 'Later title';
+  const row = finishEncounterObservation(h);
+  assert.equal(row.encounterBefore.players[0].phase.length, 80);
+  assert.equal(row.encounterBefore.players[0].phaseTruncated, true);
+  assert.equal(row.encounterBefore.players[0].title.text, 'T'.repeat(512));
+  assert.equal(row.encounterBefore.players[0].title.truncated, true);
+  assert.equal(row.encounterBefore.players[0].instruction.text.length, 512);
+  assert.equal(row.encounterAfter.players[0].title.text, 'Later title');
+  assert.equal(row.encounterAfter.players[0].title.truncated, false);
+});
+
+test('encounter observation never exposes a paused partial window as a completed measurement', () => {
+  const h = encounterObservation((h) => {
+    h.nodes.get('racer-encounter-0').hidden = false;
+    h.nodes.get('racer-encounter-0').dataset.phase = 'warning';
+  });
+  h.frame(1000);
+  h.nodes.get('race-pause').textContent = 'Resume';
+  h.frame();
+  const row = h.records().findLast((record) => record.action === 'Frame sample');
+  assert.match(row.outcome, /discarded/);
+  assert.equal(row.partial, true);
+  assert.ok(row.frameIntervals.count > 0);
+  assert.equal(row.encounterBefore.supported, true);
+  assert.equal(row.encounterAfter.supported, true);
+});
+
+
+test('duration timer at the exact retention boundary cannot qualify incomplete frame percentiles', () => {
+  const h = harness();
+  h.frame();
+  h.frame();
+  h.outer.get('sample').listeners.get('click')();
+  h.frame(0);
+  for (let i = 0; i < 120000; i++) h.frame(0);
+  h.frame(30000);
+  const sample = h.records().findLast((row) => row.action === 'Frame sample');
+  assert.equal(sample.partial, true);
+  assert.equal(sample.frameIntervals.count, 120001);
+  assert.equal(sample.frameIntervals.retainedCount, 120000);
+  assert.equal(sample.frameIntervals.percentilesCoverWholeSample, false);
+  assert.equal(sample.frameIntervals.maxMs, 30000);
+  assert.match(sample.outcome, /retention limit.*discarded/);
 });

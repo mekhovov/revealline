@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Native gameplay audio observation</title>
+    <style>
+      :root {
+        color-scheme: dark;
+        font:
+          16px system-ui,
+          sans-serif;
+        background: #101923;
+        color: #f3f0db;
+      }
+      body {
+        margin: 1rem;
+      }
+      form,
+      .actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.6rem;
+        margin: 0.7rem 0;
+      }
+      input {
+        flex: 1;
+        min-width: 20rem;
+      }
+      button,
+      input,
+      a {
+        padding: 0.6rem;
+        font: inherit;
+      }
+      iframe {
+        width: 100%;
+        height: 75vh;
+        border: 1px solid #78dce8;
+      }
+      pre {
+        white-space: pre-wrap;
+        overflow-wrap: anywhere;
+        max-height: 40vh;
+        overflow: auto;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Native gameplay audio observation</h1>
+    <p>
+      Development candidate only. Use the game’s ordinary controls. This page observes real cue
+      ownership and native buffer starts; it does not play the game or certify audible quality.
+    </p>
+    <form id="open">
+      <label for="target">Same-origin candidate game URL</label
+      ><input id="target" required /><button>Open candidate</button>
+    </form>
+    <p id="status" role="status">Waiting for an explicitly instrumented candidate.</p>
+    <iframe id="game" title="Normal candidate game"></iframe>
+    <div class="actions">
+      <button id="refresh" type="button">Refresh observation</button
+      ><button id="stop" type="button">Stop observing</button
+      ><a id="download" hidden>Download observation</a>
+    </div>
+    <p>
+      Refreshing or stopping this observer never resumes gameplay. Check the game’s pause state
+      before continuing. A matching hash alone cannot distinguish a custom cue from a fallback with
+      identical bytes.
+    </p>
+    <pre id="result" aria-label="Observed audio record"></pre>
+    <script type="module" src="./gameplay.mjs"></script>
+  </body>
+</html>
