@@ -6,6 +6,7 @@ import { parse } from 'parse5';
 import * as i18n from '../i18n/index.mjs';
 import { attachCommunityReadiness, communityRequest } from '../community/readiness.mjs';
 import { confirmCommunityRemoval } from '../community/removal-review.mjs';
+import { captureCommunityActionFocus } from '../community/action-focus.mjs';
 import { Document, Events } from './helpers/couch-dom.mjs';
 
 const source = (await readFile(new URL('../community/page.mjs', import.meta.url), 'utf8')).replace(
@@ -76,6 +77,7 @@ function host(
     RevealLineCommunityAuth: injected ? { headers: async () => ({}) } : undefined,
     attachCommunityReadiness,
     confirmCommunityRemoval,
+    captureCommunityActionFocus,
     communityRequest,
     probeCommunityService: probe,
     createCommunityAccountClient: () => ({
@@ -786,4 +788,175 @@ test('an unavailable local edition has no Play or install action and leaves heal
   assert.equal(cards[0].querySelectorAll('a').length, 0);
   assert.match(cards[0].textContent, /could not be checked/u);
   assert.equal(cards[1].querySelector('a').href, '../creator/player.html?edition=healthy');
+});
+
+const recoveryEdition = (id, extra = {}) => ({
+  ...catalogEdition(id),
+  local: true,
+  recoveryCopy: true,
+  recoveryAvailable: true,
+  installed: false,
+  publishedAt: undefined,
+  packageSize: undefined,
+  retainedBytes: 1234,
+  ...extra,
+});
+
+test('Recovery copies is reachable during outage and restores only an explicit exact local choice', async (t) => {
+  const requests = [],
+    restores = [];
+  let installed = false;
+  const h = host(t, {
+    probe: async () => {
+      throw new Error('offline');
+    },
+    catalog: async (args) => {
+      requests.push(args);
+      return {
+        editions: [
+          recoveryEdition('copy', {
+            installed,
+            playHref: installed ? '../creator/player.html?edition=exact' : null,
+          }),
+        ],
+        nextCursor: null,
+      };
+    },
+    removal: {
+      restoreRetained: async (id) => {
+        restores.push(id);
+        installed = true;
+        return { journalComplete: true };
+      },
+    },
+  });
+  await settle();
+  assert.equal(h.calls.catalog, 0);
+  await h.$('open-recovery').onclick();
+  assert.equal(requests[0].installed, 'recovery');
+  assert.equal(h.$('service-catalog-fields').disabled, false);
+  assert.equal(h.$('service-account-fields').disabled, true);
+  assert.equal(h.$('service-publish-fields').disabled, true);
+  assert.match(h.$('catalog').textContent, /check its integrity/);
+  assert.doesNotMatch(h.$('catalog').textContent, /NaN|Invalid Date/);
+  assert.deepEqual(restores, []);
+  const button = h.$('catalog').querySelector('button');
+  assert.equal(button.textContent, 'Reinstall exact edition');
+  button.focus();
+  await button.onclick();
+  assert.deepEqual(restores, ['copy']);
+  assert.equal(h.$('catalog').querySelector('a').href, '../creator/player.html?edition=exact');
+  assert.equal(button.ownerDocument.activeElement, h.$('catalog').querySelector('a'));
+  assert.match(h.$('status').textContent, /Exact edition restored/);
+  assert.equal(h.calls.session, 0);
+});
+
+test('Recovery copies cancels remote rows, preserves local search and isolates unreadable entries', async (t) => {
+  const remote = deferred(),
+    requests = [];
+  const h = host(t, {
+    catalog: (args) => {
+      requests.push(args);
+      if (args.installed !== 'recovery') return remote.promise;
+      return {
+        editions: [
+          recoveryEdition('broken', {
+            localUnavailable: true,
+            recoveryAvailable: false,
+            retainedBytes: undefined,
+          }),
+          recoveryEdition('healthy'),
+        ],
+        nextCursor: null,
+      };
+    },
+  });
+  await settle();
+  await h.$('open-recovery').onclick();
+  assert.equal(requests[0].signal.aborted, true);
+  remote.resolve({ editions: [catalogEdition('remote')], nextCursor: 'wrong' });
+  await settle();
+  assert.deepEqual(shownTitles(h), ['Edition broken', 'Edition healthy']);
+  const cards = h.$('catalog').querySelectorAll('article');
+  assert.equal(cards[0].querySelectorAll('button').length, 0);
+  assert.equal(cards[0].querySelectorAll('a').length, 0);
+  assert.match(cards[0].textContent, /copy could not be read/);
+  assert.doesNotMatch(cards[0].textContent, /Retained package\./);
+  assert.equal(cards[1].querySelectorAll('button').length, 1);
+  h.$('search').value = 'healthy';
+  await h.$('search').oninput();
+  assert.equal(requests.at(-1).query, 'healthy');
+  assert.equal(requests.at(-1).installed, 'recovery');
+});
+
+for (const change of ['new focus', 'new query', 'departure'])
+  test(`late local restore respects ${change}`, async (t) => {
+    const restore = deferred();
+    const h = host(t, {
+      catalog: async (args) => ({
+        editions: [recoveryEdition(args.query || 'copy')],
+        nextCursor: null,
+      }),
+      removal: { restoreRetained: () => restore.promise },
+    });
+    await settle();
+    await h.$('open-recovery').onclick();
+    const opener = h.$('catalog').querySelector('button'),
+      doc = opener.ownerDocument;
+    opener.focus();
+    const pending = opener.onclick();
+    await settle();
+    if (change === 'new focus') {
+      const newer = doc.createElement('button');
+      doc.body.append(newer);
+      newer.focus();
+      newer.remove();
+      doc.activeElement = doc.body; // Model native blur when the newer focused node is removed.
+    } else if (change === 'new query') {
+      h.$('search').focus();
+      h.$('search').value = 'newer';
+      await h.$('search').oninput();
+    } else {
+      const event = new Event('pagehide');
+      Object.defineProperty(event, 'persisted', { value: true });
+      h.window.dispatchEvent(event);
+    }
+    const before = h.$('status').textContent;
+    restore.resolve({ journalComplete: true });
+    await pending;
+    if (change === 'new focus')
+      assert.equal(doc.activeElement, doc.body, 'removed newer choice never grants focus back');
+    else {
+      assert.equal(h.$('status').textContent, before);
+      if (change === 'new query') assert.deepEqual(shownTitles(h), ['Edition newer']);
+    }
+  });
+
+test('local restore surfaces an error or incomplete journal with a usable retry', async (t) => {
+  let attempt = 0;
+  const h = host(t, {
+    catalog: async () => ({ editions: [recoveryEdition('copy')], nextCursor: null }),
+    removal: {
+      restoreRetained: async () => {
+        if (++attempt === 1) throw new Error('Hash differs');
+        return { journalComplete: false };
+      },
+    },
+  });
+  await settle();
+  await h.$('open-recovery').onclick();
+  let opener = h.$('catalog').querySelector('button');
+  opener.focus();
+  await opener.onclick();
+  assert.match(h.$('status').textContent, /did not report a completed result.*Hash differs/);
+  assert.equal(opener.disabled, false);
+  assert.equal(opener.ownerDocument.activeElement, opener);
+  await opener.onclick();
+  assert.match(
+    h.$('status').textContent,
+    /installed, but its final local record update did not finish/,
+  );
+  assert.equal(h.$('status').classList.contains('error'), true);
+  opener = h.$('catalog').querySelector('button');
+  assert.equal(opener.disabled, false);
 });

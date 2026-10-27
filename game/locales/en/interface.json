@@ -6234,7 +6234,7 @@
   "community.removal.offload.confirm": "Offload installed media",
   "community.removal.offload.content": "This edition will stop being playable here until it is reinstalled. Its local record is kept; media used by other content stays available.",
   "community.removal.offload.progress": "Saved attempts, progress and earned rewards are kept in their separate stores. Offloading does not reset them.",
-  "community.removal.offload.recovery": "The verified exact recovery package is kept. This edition leaves the Installed list. Reconnect to the catalog to find Reinstall exact edition, which uses that local package.",
+  "community.removal.offload.recovery": "The verified exact recovery package is kept. This edition leaves the Installed list. Open Recovery copies to reinstall it from the local package; no online catalog is needed.",
   "community.removal.download.title": "Remove this recovery download?",
   "community.removal.download.confirm": "Remove recovery download",
   "community.removal.download.content": "The installed edition and its playable media stay on this device.",
@@ -6245,5 +6245,13 @@
   "community.removal.cancelled": "Kept unchanged. No removal was requested.",
   "community.removal.unconfirmed": "The action did not confirm a final result. Check this edition’s current local state before reviewing it again. {{error}}",
   "community.removal.journalIncomplete": "The media was offloaded, but the local record update did not finish. Keep the recovery package and reload to check this edition before another action.",
-  "community.removal.checking": "Checking the exact installed edition and recovery package before review…"
+  "community.removal.checking": "Checking the exact installed edition and recovery package before review…",
+  "community.recovery.copies": "Recovery copies",
+  "community.recovery.presence": "Retained package. Choose Reinstall exact edition to check its integrity and content before restoring. Saved progress is kept.",
+  "community.recovery.bytes": "Stored package: {{bytes}} bytes.",
+  "community.recovery.unavailable": "This recovery copy could not be read. Try Refresh or recover an intact backup. Other copies remain available.",
+  "community.recovery.checking": "Checking the retained package and restoring this exact edition…",
+  "community.recovery.failed": "Restore did not report a completed result. {{error}} Keep the recovery copy and check this edition before retrying.",
+  "community.recovery.journalIncomplete": "The edition was installed, but its final local record update did not finish. Keep the recovery copy and refresh before another action.",
+  "community.recovery.restored": "Exact edition restored from its local copy. Saved progress and the recovery package are kept."
 }
