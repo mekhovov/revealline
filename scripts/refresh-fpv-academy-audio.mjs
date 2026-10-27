@@ -7,6 +7,7 @@ import { fileURLToPath } from 'node:url';
 import { parse } from 'acorn';
 import { format, resolveConfig } from 'prettier';
 import { projectEditionModuleIndentation } from './edition-code-indentation.mjs';
+import { assertPrivateAudioBinding } from './fpv-audio-shared-data.mjs';
 import { OPTIONAL_PACKAGE_POLICIES } from '../publishing/optional-package-policy.mjs';
 
 const root = fileURLToPath(new URL('../', import.meta.url));
@@ -134,7 +135,7 @@ async function visit(file) {
     return externals.get(file);
   }
   if (!included.has(file)) throw new Error(`Unexpected Academy audio dependency: ${file}`);
-  if (modules.has(file)) return `modules[${JSON.stringify(file)}]`;
+  if (modules.has(file)) return `_a[${JSON.stringify(file)}]`;
   if (visiting.has(file))
     throw new Error(`Audio projection cannot duplicate cyclic state: ${file}`);
   visiting.add(file);
@@ -142,6 +143,7 @@ async function visit(file) {
   hashes[file] = hash(source);
   const tree = parse(source, { ecmaVersion: 'latest', sourceType: 'module' });
   checkStatic(tree, file);
+  assertPrivateAudioBinding(source, file);
   const edits = [],
     exported = new Map();
   for (const node of tree.body) {
@@ -175,7 +177,7 @@ async function visit(file) {
     source = source.slice(0, start) + replacement + source.slice(finish);
   visiting.delete(file);
   modules.set(file, { source, exported });
-  return `modules[${JSON.stringify(file)}]`;
+  return `_a[${JSON.stringify(file)}]`;
 }
 await visit(entry);
 if (modules.size !== included.size) throw new Error('The canonical Academy audio closure changed.');
@@ -188,14 +190,14 @@ const projected = [
   ...[...externals].map(
     ([file, name]) => `import * as ${name} from ${JSON.stringify(relative(file))};`,
   ),
-  'export const createSimFlightAudio = (() => {',
+  'export const [createSimFlightAudio, PORTABLE_DESTRUCTION_AUDIO] = (() => {',
   `const sourceHashes = Object.freeze(${JSON.stringify(hashes)});`,
-  'const modules = Object.create(null);',
+  'const _a = Object.create(null);',
   ...[...modules].map(
     ([file, { source, exported }]) =>
-      `modules[${JSON.stringify(file)}] = (() => {\n${source}\nreturn {${[...exported].map(([name, value]) => `${JSON.stringify(name)}: ${value}`).join(',')}};\n})();`,
+      `_a[${JSON.stringify(file)}] = (() => {\n${source}\nreturn {${[...exported].map(([name, value]) => `${JSON.stringify(name)}: ${value}`).join(',')}};\n})();`,
   ),
-  `return modules[${JSON.stringify(entry)}].createWorldAudio;`,
+  `return [_a[${JSON.stringify(entry)}].createWorldAudio, _a["game/audio/portable-destruction.mjs"].PORTABLE_DESTRUCTION_AUDIO];`,
   '})();',
   end,
 ].join('\n');
