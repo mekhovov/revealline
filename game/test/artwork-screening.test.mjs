@@ -14,6 +14,23 @@ import {
   validateArtworkChanges,
 } from '../../scripts/artwork-screening.mjs';
 
+test('undecoded rasters prove byte reuse without treating null pixel hashes as identical images', () => {
+  const image = (id, owners) => ({
+    id,
+    canonicalPixels: null,
+    exactTransforms: [],
+    currentOwners: owners,
+    historicalOwners: [],
+  });
+  assert.deepEqual(
+    classifyExactSharing([image('first', ['solo/a']), image('second', ['solo/b'])]),
+    { exactCurrent: [], historicalReuse: [] },
+  );
+  const shared = classifyExactSharing([image('same-bytes', ['solo/a', 'versus/a'])]);
+  assert.equal(shared.exactCurrent.length, 1);
+  assert.equal(shared.exactCurrent[0].kind, 'identical-source');
+});
+
 function picture(width = 32, height = 24, seed = 1) {
   const pixels = Buffer.alloc(width * height * 3);
   for (let i = 0; i < width * height; i++) {

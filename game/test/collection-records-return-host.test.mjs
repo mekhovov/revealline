@@ -1,9 +1,10 @@
 import { nativeCaptureSession as nativeSession } from '../capture-presentation-session.mjs';
 // Actual Solo/Collection/Library handlers; native queued dialog close and IDB
 // completion are modeled. Scroll commands prove ownership/order, not geometry.
-import test from 'node:test';
+import test, { after } from 'node:test';
 import assert from 'node:assert/strict';
 import { soloPage, SoloElement, memoryStorage, settle } from './helpers/solo-dom.mjs';
+import { createImmutablePresentationFixture } from './helpers/immutable-presentation-fixture.mjs';
 import { memoryIndexedDB } from './helpers/soundtrack-fixtures.mjs';
 import { earnedPictureFixture } from './helpers/earned-picture-fixture.mjs';
 import { deferred } from './helpers/media-fixtures.mjs';
@@ -14,6 +15,15 @@ import { createRun, stepRun, getSummary, FIXED_DT, CLASSES } from '../core/index
 import { authoritativeCheckpoint } from '../replay.mjs';
 import { PNGImage } from './helpers/png-image.mjs';
 import { BoardPainter } from '../ui/render.mjs';
+
+// Repeated pages reuse only bounded, hash-verified Node transport bytes. Each
+// page still verifies its manifests/images and satisfies the original deadlines.
+const presentationFixture = createImmutablePresentationFixture();
+after(() => {
+  console.log(
+    'Immutable presentation fixture provenance: ' + JSON.stringify(presentationFixture.snapshot()),
+  );
+});
 
 const campaign = {
   version: 'xonix-campaign.v1',
@@ -177,6 +187,7 @@ async function setup(t, { media = false } = {}) {
   // paints during startup. Only gallery rendering is modeled below.
   t.mock.method(BoardPainter.prototype, 'drawGallery', () => {});
   const h = await soloPage(t, {
+    presentationFixture,
     storage,
     ...(media ? {} : { campaign, titleScreen: true }),
     soundtrackIndexedDB: reads.indexedDB,
@@ -218,6 +229,7 @@ async function setup(t, { media = false } = {}) {
   records.focus();
   records.click();
   assert.equal(h.$('library-dialog').open, true);
+  await settle(() => !h.$('library-scores').hidden);
   assert.equal(h.$('library-scores').hidden, false);
   let snapshot;
   const baseline = () => {

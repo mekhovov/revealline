@@ -1,4 +1,5 @@
 import { continuousPlayBindings } from './continuous-play.mjs';
+import { renderTextSizeControl } from './text-size-control.mjs';
 // One logical settings inventory. Shared flow preferences have one lightweight
 // owner; hosts retain audio, simulation and profile lifecycle ownership.
 export const GLOBAL_SETTINGS = Object.freeze(
@@ -96,6 +97,7 @@ const globalSettingsOwners = new WeakMap();
 /** Adopt real controls, or render missing fields through injected services.
  * Repeated calls add lazy providers without replacing focused controls.
  * `duplicates` retires aliases by logical setting while retaining their handlers.
+ * `extraLargeText` belongs to the initial host; lazy providers cannot grant or revoke it.
  */
 export function mountGlobalSettings({
   document: doc = globalThis.document,
@@ -106,6 +108,7 @@ export function mountGlobalSettings({
   controls = {},
   bindings = {},
   duplicates = {},
+  extraLargeText = false,
 } = {}) {
   if (!root || !panels || !doc) return null;
   bindings = { ...continuousPlayBindings(), ...bindings };
@@ -139,18 +142,36 @@ export function mountGlobalSettings({
   function retireField(row) {
     row.stop?.();
     row.input?.removeEventListener('change', row.change);
+    row.retry?.removeEventListener('click', row.retrySave);
     row.field?.remove();
     row.status?.remove();
-    Object.assign(row, { input: null, field: null, status: null, output: null, stop: null });
+    row.retry?.remove();
+    Object.assign(row, {
+      input: null,
+      field: null,
+      status: null,
+      output: null,
+      retry: null,
+      stop: null,
+    });
   }
   function render(row) {
     if (!row.input || !row.binding) return;
     const value = row.binding.get();
     if (row.spec.type === 'checkbox') row.input.checked = !!value;
+    else if (row.spec.key === 'textSize')
+      renderTextSizeControl(row.input, value, { locale, extraLarge: extraLargeText });
     else row.input.value = String(value);
     if (row.output) row.output.textContent = `${Math.round(Number(value) * 100)}%`;
-    row.status.textContent = row.binding.warning?.() || '';
+    const feedback = row.binding.feedback?.(locale),
+      message = row.binding.warning?.() || feedback?.text || '';
+    if (row.status.textContent !== message) row.status.textContent = message;
     row.status.hidden = !row.status.textContent;
+    const ownedFocus = doc.activeElement === row.retry;
+    row.retry.textContent = feedback?.retryLabel || '';
+    row.retry.hidden = !(feedback?.retry && row.binding.retry);
+    if (ownedFocus && row.retry.hidden && [row.retry, doc.body, null].includes(doc.activeElement))
+      row.input.focus({ preventScroll: true });
   }
   function makeField(row) {
     const { spec, wrapper } = row;
@@ -170,25 +191,26 @@ export function mountGlobalSettings({
     label.append(text, input);
     if (row.output) label.append(row.output);
     const status = doc.createElement('p');
+    status.id = `${input.id}-status`;
     status.className = 'micro-note';
     status.setAttribute('role', 'status');
     status.hidden = true;
-    wrapper.append(label, status);
-    Object.assign(row, { field: label, label: text, input, status });
-    row.change = () => {
-      const value =
-        spec.type === 'checkbox'
-          ? input.checked
-          : spec.type === 'range'
-            ? Number(input.value)
-            : input.value;
+    input.setAttribute('aria-describedby', status.id);
+    const retry = doc.createElement('button');
+    retry.type = 'button';
+    retry.className = 'button secondary global-settings-save-retry';
+    retry.hidden = true;
+    retry.setAttribute('aria-describedby', status.id);
+    wrapper.append(label, status, retry);
+    Object.assign(row, { field: label, label: text, input, status, retry });
+    const invoke = (operation) => {
       const failed = (error) => {
         render(row);
         status.textContent = error?.message || labels().failed;
         status.hidden = false;
       };
       try {
-        const pending = row.binding.set(value);
+        const pending = operation();
         render(row);
         if (pending?.then)
           pending.then(
@@ -203,7 +225,18 @@ export function mountGlobalSettings({
         failed(error);
       }
     };
+    row.change = () => {
+      const value =
+        spec.type === 'checkbox'
+          ? input.checked
+          : spec.type === 'range'
+            ? Number(input.value)
+            : input.value;
+      invoke(() => row.binding.set(value));
+    };
+    row.retrySave = () => invoke(() => row.binding.retry?.());
     input.addEventListener('change', row.change);
+    retry.addEventListener('click', row.retrySave);
   }
   function refresh(nextLocale = locale) {
     if (disposed) return;
@@ -300,6 +333,7 @@ export function mountGlobalSettings({
       for (const row of rows.values()) {
         row.stop?.();
         row.input?.removeEventListener('change', row.change);
+        row.retry?.removeEventListener('click', row.retrySave);
       }
       for (const { node, parent, next } of moves.reverse()) {
         // A host may already have retired its own provider during teardown.

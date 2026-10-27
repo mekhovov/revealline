@@ -1,0 +1,273 @@
+{
+  "format": "SoloHostedDemoActivePlanV1",
+  "cohort": "linux-demo-active-3adcd537-pending-release",
+  "repository": "mekhovov/revealline",
+  "node": "22.13.1",
+  "playwright": "1.62.1",
+  "runner": "ubuntu-24.04 x64 GitHub-hosted; actual image, CPU, memory, browser version and binary hashes recorded",
+  "performanceExclusion": false,
+  "helperTimeoutMs": 4500000,
+  "evidenceBytes": 268435456,
+  "rows": [
+    {
+      "id": "candidate-demo-active30-p1",
+      "kind": "demo-active",
+      "source": "candidate",
+      "engine": "chromium",
+      "repetition": 1,
+      "timeoutMs": 400000,
+      "performanceExclusion": false
+    },
+    {
+      "id": "candidate-demo-active30-p2",
+      "kind": "demo-active",
+      "source": "candidate",
+      "engine": "chromium",
+      "repetition": 2,
+      "timeoutMs": 400000,
+      "performanceExclusion": false
+    },
+    {
+      "id": "candidate-demo-active30-p3",
+      "kind": "demo-active",
+      "source": "candidate",
+      "engine": "chromium",
+      "repetition": 3,
+      "timeoutMs": 400000,
+      "performanceExclusion": false
+    }
+  ],
+  "candidate": {
+    "revision": "3adcd53792043ef02459e86168c6b33a66d6ef00",
+    "tree": "48018be714c3965f989c75c9fe18e8da2529eebd",
+    "run": 38983792534,
+    "artifact": 12082915872,
+    "outer": {
+      "bytes": 1090952183,
+      "sha256": "637d7e10ccabe6fe1936d28bfb3e00f07d7bf03083a30ce3d0fee3249b7a1135"
+    },
+    "inner": {
+      "bytes": 1073310046,
+      "sha256": "8f3a54fe973540f6bd0fbcf069d1a8f87702f69ef87d901da83b563ce564a3d8"
+    },
+    "manifestSHA256": "efc58d03a6d4abb45dca63fbf8f4ec85232a47b3f9259e14b26efc6cfc086718",
+    "producer": "Exact successful Appearance package, Node22.13.1 Linux; original focused-policy metadata retained. Full outer/member/source/CSP verification required remotely before any native row."
+  },
+  "baseline": {
+    "revision": "b11745223861c3973ad4bf440cc536198b8e0371",
+    "tree": "09f68c3691a4ae1013c3073f0ccf301b3355903f",
+    "role": "Exact source checkout identity retained by common admission only; Demo mode does not build or observe baseline."
+  },
+  "acceptance": {
+    "publicFlow": "Byte-identical original calibration, public Demo entry,Pause/Resume,30second observation,Pause/export,exact source/prefix and strict native replay protocol. Default mute/full-effects assertions unchanged.",
+    "raf": "Only unchanged scoped rAF work/cadence evaluator can yield pass-scoped-raf-only; numerical failure/review/inconclusive remains failed, all three independently declared rows execute unless ownership/setup failure prevents safe continuation.",
+    "costLimits": "Timer/MessageChannel wakes and after-callback microtasks are outside per-callback p95. CDP TaskDuration/ScriptDuration finite nonnegative deltas are descriptive whole-page occupancy, not total-wake p95. No all-application-cost pass.",
+    "replay": "Exact manifest/source assets and unchanged full source, independent before/after native prefixes, observation owner closed naturally before fresh same-engine/version strict120second verifier.",
+    "failure": "No retries. All raw source/numerical/page/cleanup failures retained. Unclosed/ambiguous/forced native owners stop subsequent rows through the existing common owner.",
+    "scope": "New Linux Xvfb headed Chromium CPU1 stratum,3candidate-only1280x800 windows. No physical/device/GPU/energy/heat/passive-input or overhead proof; no replacement credit for old macOS contamination.",
+    "access": "Unchanged production preview fixtureAccess=true with original PUBLIC headers and artifact HTML/source/CSP; not production authentication evidence."
+  },
+  "resources": {
+    "serial": true,
+    "automaticRetries": 0,
+    "perCommandRSSBytes": 6442450944,
+    "perCommandLogBytes": 4194304,
+    "perRowEvidenceBytes": 33554432,
+    "aggregateEvidenceBytes": 268435456,
+    "minimumInitialMemoryBytes": 12884901888,
+    "minimumInitialDiskBytes": 8589934592,
+    "minimumRemainingDiskBytes": 1073741824,
+    "setupBounds": "Common candidate archive/member/source/CSP admission only,40min setup cap inside75min helper. Each400s outer includes unchanged240s observation,<=20s observation close/drain,120s verifier+bounded5s return/drain. No baseline build/CPU calibration; each row retains its original one settled120 blank cadence admission.",
+    "ownership": "Fresh RUNNER_TEMP subtree; Linux process birth+owner token/ancestry, bounded TERM/KILL cleanup and fresh process checks before next row. No blanket browser killing.",
+    "finalizationReserveBytes": 4194304,
+    "setupEvidenceMaximumBytes": 25165824,
+    "scratch": "Fresh RUNNER_TEMP/sc-<random>/rNN owner, <=52 UTF-8 bytes per row; exact root/row device+inode recorded. Separate from descriptive output paths. No shared temporary profile.",
+    "workflow": "Separate disabled125min workflow;75min helper and79min step, existing setup/upload margins preserved. Three serial400s rows; profiles remain exact owned short scratch until hosted teardown, not an archival claim.",
+    "browserLaunch": "Original Demo Chrome/CDP lifecycle with explicit Linux --no-sandbox matching pinned Playwright1.62.1 default; fresh exact-owned profile, no local browser and no physical-device inference.",
+    "workflowBudgetMinutes": {
+      "checkoutsAndNode": 7,
+      "dependenciesAndBrowser": 20,
+      "testsAndPlan": 3,
+      "helperStep": 79,
+      "setupRetention": 2,
+      "evidenceUpload": 10,
+      "sum": 121,
+      "job": 125
+    }
+  },
+  "guidance": [
+    {
+      "url": "https://playwright.dev/docs/ci",
+      "application": "One serial worker and helper deadline below job deadline so partial reports can upload. Version1.62.1 is explicitly pinned instead of following current documentation examples."
+    },
+    {
+      "url": "https://playwright.dev/docs/browsers",
+      "application": "Record exact pinned browser builds; Linux WebKit is a separate platform stratum, not Safari/iOS."
+    },
+    {
+      "url": "https://developer.chrome.com/blog/devtools-grounded-real-world",
+      "application": "CPU stress does not reproduce device GPU, memory or thermal conditions; this CPU1 correctness cohort is not physical-device qualification."
+    }
+  ],
+  "status": "bound-3ad-metadata-pending-full-remote-proof-and-reviewed-release",
+  "scope": "Scoped active Demo rAF-work/cadence only; full application-cost and instrumentation overhead unqualified. Common process/resource supervisor remains part of this hosted environment.",
+  "rowEvidenceBytes": 33554432,
+  "demo": {
+    "replayTimeoutMs": 120000,
+    "cpuThrottle": 1,
+    "retries": 0,
+    "driver": {
+      "path": "scripts/observe-solo-demo-active.mjs",
+      "bytes": 25423,
+      "sha256": "dfac2cafddf6b2febe666d3a5af4c734ccd6aa5594371d844da6efc847ecf3d0"
+    },
+    "probe": {
+      "path": "scripts/solo-demo-active-observer.mjs",
+      "bytes": 9111,
+      "sha256": "7082f727692354b48802d718ccdaa97e0e823634605a5bcd87023ffced7883a8"
+    },
+    "sourcePaths": [
+      "game/build-info.json",
+      "game/index.html",
+      "game/app.mjs",
+      "game/ui/demo-host.mjs",
+      "game/ui/demo-clock.mjs",
+      "game/ui/visual-quality-policy.mjs",
+      "game/demo-experience.mjs",
+      "game/replay-player.mjs",
+      "game/ui/render.mjs",
+      "game/replay.mjs",
+      "game/core/index.mjs"
+    ],
+    "expectedClip": {
+      "id": "first-signal-left",
+      "campaignId": "first-signal",
+      "campaignKey": "first-signal/2/88639f3aab7b6cc1",
+      "levelId": "signal-01",
+      "levelRevision": "1",
+      "identity": "d31dfb37580148ee",
+      "recordingIdentity": "c48b4182e13d1541",
+      "inputTraceIdentity": "004a620b36d19d0d",
+      "title": "First Signal",
+      "provenance": "authored",
+      "tags": ["capture", "bent-cut", "safe-ground"],
+      "durationSeconds": 30.683333333333334,
+      "turnPolicy": "immediate",
+      "replayURL": "./demo-data/first-signal-left.replay.json",
+      "replayVariants": ["./demo-data/first-signal-left.chromium-macos.replay.json"]
+    },
+    "sourceAssets": [
+      {
+        "role": "catalog",
+        "relative": "demo-data/catalog.json",
+        "bytes": 6839,
+        "sha256": "3d4fbe0437fb6dfc7e4140e72e597012e95ec82c007621e6dee358c38baf4078"
+      },
+      {
+        "role": "replay",
+        "relative": "demo-data/first-signal-left.replay.json",
+        "bytes": 10793,
+        "sha256": "900f921146e37324dfefc90f55bfc60c03bd8a2954d53353ecae25df8a55c54a"
+      },
+      {
+        "role": "replay",
+        "relative": "demo-data/first-signal-left.chromium-macos.replay.json",
+        "bytes": 10801,
+        "sha256": "b18d9d343ffca2b7efec6c3ec0266d80ed0603804420f444159e4214533bd11e"
+      }
+    ],
+    "bindingRequired": "Exact3ad Git source catalog/replay bytes pinned; remote full package admission must compare these assets to selected inner-manifest members and served bytes before observation. No local large-archive readback or native result is claimed.",
+    "watchingMs": 30000,
+    "deadlineSeconds": 240,
+    "viewport": {
+      "width": 1280,
+      "height": 800,
+      "dpr": 1
+    }
+  },
+  "adapterInputs": [
+    {
+      "path": "scripts/solo-remote-demo-active.mjs",
+      "bytes": 11884,
+      "sha256": "0f5faf24ed2fb31cf53f3d17f3758894993c230891dc06b2bccea2a17f643fe8"
+    },
+    {
+      "path": "scripts/solo-remote-demo.mjs",
+      "bytes": 13894,
+      "sha256": "ea3fc96bfb2fe9b6f6938647be74c46e457b0afc728558dafa540fb105548535"
+    },
+    {
+      "path": "scripts/observe-solo-demo-active.mjs",
+      "bytes": 25423,
+      "sha256": "dfac2cafddf6b2febe666d3a5af4c734ccd6aa5594371d844da6efc847ecf3d0"
+    },
+    {
+      "path": "scripts/solo-demo-active-observer.mjs",
+      "bytes": 9111,
+      "sha256": "7082f727692354b48802d718ccdaa97e0e823634605a5bcd87023ffced7883a8"
+    }
+  ],
+  "retention": "All three raw reports,source replay,strict verifier result,plans and common process/closure/inventory retained under fixed caps. No post-row source download/archive/profile hashing during observations. Profiles remain owned short scratch until hosted teardown; no profile preservation claim.",
+  "setupTimeoutMs": 2400000,
+  "release": {
+    "status": "pending",
+    "candidateRevision": "3adcd53792043ef02459e86168c6b33a66d6ef00",
+    "latestFirst8Passed": false,
+    "affectedDemoCorrectnessClosed": false,
+    "noConcurrentJobLocalWork": false,
+    "scope": "Bind exact latest package and all inputs, review source/owner premise and prior affected correctness, then explicitly release; no native execution in preparation."
+  },
+  "historicalProtocol": {
+    "matrix": {
+      "path": ".cache/solo-followup/qualification-matrix-v16-bound/matrix.json",
+      "bytes": 481771,
+      "sha256": "ca01260b6ea7c77cf40dd5c9db0d65fa2d29e8fec08e8178700f6c69e68be2d9"
+    },
+    "rows": [
+      {
+        "id": "v16-demo-active-chrome-p1-candidate",
+        "originalPlan": {
+          "path": ".cache/solo-followup/qualification-matrix-v16-bound/v16-demo-active-chrome-p1-candidate.plan.json",
+          "bytes": 24438,
+          "sha256": "03c915b87ccfb07fae0668d7776f0cefd45235521e62a1ae67349f5a91f97538"
+        }
+      },
+      {
+        "id": "v16-demo-active-chrome-p2-candidate",
+        "originalPlan": {
+          "path": ".cache/solo-followup/qualification-matrix-v16-bound/v16-demo-active-chrome-p2-candidate.plan.json",
+          "bytes": 24438,
+          "sha256": "d7d1097c5ca5fb5d7ed4c1d2a95a7e03df114afa71a741d610930b3e9aa53c23"
+        }
+      },
+      {
+        "id": "v16-demo-active-chrome-p3-candidate",
+        "originalPlan": {
+          "path": ".cache/solo-followup/qualification-matrix-v16-bound/v16-demo-active-chrome-p3-candidate.plan.json",
+          "bytes": 24438,
+          "sha256": "8dd8fc3579e2f4a646211d99e52a924cf2d7eb65c3930f2da5ec8df282531705"
+        }
+      }
+    ],
+    "driver": {
+      "path": ".cache/solo-followup/demo-active-work-final-prospective-02/driver.mjs",
+      "bytes": 23408,
+      "sha256": "7012e44992bf4cc5156979f9f7bf24f8a58a46395cd99c6ad88d32174ce3f7de"
+    },
+    "observer": {
+      "path": ".cache/solo-followup/demo-active-work-final-prospective-02/observer.mjs",
+      "bytes": 9111,
+      "sha256": "7082f727692354b48802d718ccdaa97e0e823634605a5bcd87023ffced7883a8"
+    },
+    "disposition": "Historical failures/contamination and any unexecuted replacements remain untouched; no old-condition completion credit."
+  },
+  "bindingScope": {
+    "status": "metadata-and-git-source-bound-release-held",
+    "candidateRevision": "3adcd53792043ef02459e86168c6b33a66d6ef00",
+    "runtimeRevision": "0d9fef1120face4c0f9998ebd24a94e6df0d85c0",
+    "candidateArtifact": 12082915872,
+    "firstEight": "Pending exact3ad first8 retained evidence and review; no positive release flags granted.",
+    "sourceAssets": "Demo catalog/replay identities derive from exact git show3ad bytes; remote package equality remains required.",
+    "baseline": "Existing actualb117 reusable normal-artifact identity retained for lanes that observe baseline; full outer/ready/inner/source/CSP proof mandatory remotely, no fallback rebuild."
+  }
+}

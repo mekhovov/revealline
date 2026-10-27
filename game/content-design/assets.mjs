@@ -1,9 +1,42 @@
 import { boundedJSON, exactKeys, required, stableId, dataIdentity } from '../data-json.mjs';
-import { inspectImageDataUrl } from '../content.mjs';
+import { inspectImageBytes } from '../content.mjs';
 import { freezeDesign } from './catalogs.mjs';
 import { CONTENT_ARTWORK_LOAD_TIMEOUT_MS, CONTENT_ASSET_MAX_BYTES } from './limits.mjs';
 
 const verified = new WeakMap();
+function imageDataURL(bytes, mime, signal) {
+  if (typeof FileReader === 'function')
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      let settled = false;
+      const finish = (error) => {
+        if (settled) return;
+        settled = true;
+        signal.removeEventListener('abort', cancel);
+        reader.onload = reader.onerror = reader.onabort = null;
+        if (error) reject(error);
+        else resolve(reader.result);
+      };
+      const cancel = () => {
+        finish(new DOMException('Artwork preview cancelled.', 'AbortError'));
+        reader.abort();
+      };
+      reader.onload = () => finish();
+      reader.onerror = () => finish(reader.error ?? new Error('Artwork encoding failed.'));
+      reader.onabort = cancel;
+      signal.addEventListener('abort', cancel, { once: true });
+      if (signal.aborted) return cancel();
+      try {
+        reader.readAsDataURL(new Blob([bytes], { type: mime }));
+      } catch (error) {
+        finish(error);
+      }
+    });
+  let binary = '';
+  for (let start = 0; start < bytes.length; start += 16384)
+    binary += String.fromCharCode(...bytes.subarray(start, start + 16384));
+  return Promise.resolve(`data:${mime};base64,${btoa(binary)}`);
+}
 export function compileAssetRevision(source) {
   const asset = boundedJSON(source, { maxBytes: 4096, maxNodes: 30, maxDepth: 2 });
   exactKeys(
@@ -73,15 +106,35 @@ export function assetRevisionMime(source) {
 export function verifiedPreviewBackground(asset, media) {
   const pin = compileAssetRevision(asset);
   required(
-    verified.get(media) === dataIdentity(pin),
+    verified.get(media) === dataIdentity(pin) && typeof media.dataUrl === 'string',
     'Load and verify this exact asset revision before preview.',
   );
   return { dataUrl: media.dataUrl, fit: 'cover', name: pin.alt };
 }
 
-/** Same-origin, bounded bytes, exact digest and dimensions. Merely assigning an
- * asset ID never establishes that art exists, has loaded or is visually approved. */
-export async function loadPreviewArtwork(
+/** Only the privately verified immutable bytes may become an owned display URL. */
+export function verifiedArtworkBlob(asset, media) {
+  const pin = compileAssetRevision(asset);
+  required(
+    verified.get(media) === dataIdentity(pin) && media.blob instanceof Blob,
+    'Load and verify this exact asset revision before decoding.',
+  );
+  return media.blob;
+}
+
+/** Preserve the serialized preview/creator contract and its original deadline. */
+export function loadPreviewArtwork(source, options) {
+  return loadArtwork(source, options, true);
+}
+
+/** Runtime display preparation keeps verified pixels binary until image decode. */
+export function loadVerifiedArtwork(source, options) {
+  return loadArtwork(source, options, false);
+}
+
+/** Same-origin, bounded bytes, exact digest and dimensions. Both representations
+ * share every validation check and the same complete-operation deadline. */
+async function loadArtwork(
   source,
   {
     signal,
@@ -89,6 +142,7 @@ export async function loadPreviewArtwork(
     digest = (bytes) => crypto.subtle.digest('SHA-256', bytes),
     timeoutMs = CONTENT_ARTWORK_LOAD_TIMEOUT_MS,
   } = {},
+  serialize,
 ) {
   const asset = compileAssetRevision(source);
   required(
@@ -149,12 +203,8 @@ export async function loadPreviewArtwork(
           b.toString(16).padStart(2, '0'),
         ).join('');
         required(hash === asset.sha256, 'Artwork digest differs from its pinned revision.');
-        let binary = '';
-        for (let start = 0; start < bytes.length; start += 16384)
-          binary += String.fromCharCode(...bytes.subarray(start, start + 16384));
         const mime = assetRevisionMime(asset);
-        const media = { dataUrl: `data:${mime};base64,${btoa(binary)}` };
-        const image = inspectImageDataUrl(media.dataUrl);
+        const image = inspectImageBytes(bytes, mime);
         required(
           image.valid &&
             image.mime === mime &&
@@ -162,6 +212,13 @@ export async function loadPreviewArtwork(
             image.height === asset.height,
           'Artwork dimensions or raster header differ from its revision.',
         );
+        if (controller.signal.aborted)
+          throw new DOMException('Artwork preview cancelled.', 'AbortError');
+        const media = serialize
+          ? { dataUrl: await imageDataURL(bytes, mime, controller.signal) }
+          : { blob: new Blob([bytes], { type: mime }) };
+        if (controller.signal.aborted)
+          throw new DOMException('Artwork preview cancelled.', 'AbortError');
         verified.set(media, dataIdentity(asset));
         return Object.freeze(media);
       }),

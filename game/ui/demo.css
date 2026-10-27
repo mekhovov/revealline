@@ -41,7 +41,7 @@
   }
   #demo-dialog .demo-header h2 {
     margin: 2px 0 0;
-    font-size: clamp(1.1rem, 2.5vw, 1.7rem);
+    font-size: calc(clamp(1.1rem, 2.5vw, 1.7rem) * var(--primary-text-scale, 1));
     overflow-wrap: anywhere;
   }
   .demo-header .eyebrow {
@@ -58,7 +58,7 @@
   #demo-dialog select {
     min-height: 44px;
     min-width: 44px;
-    font-size: 1rem;
+    font-size: calc(1rem * var(--primary-text-scale, 1));
     line-height: 1.3;
     white-space: normal;
   }
@@ -112,7 +112,7 @@
     gap: 8px;
     min-height: 44px;
     flex-shrink: 0;
-    font-size: 0.875rem;
+    font-size: calc(0.875rem * var(--primary-text-scale, 1));
     line-height: 1.45;
     cursor: pointer;
   }
@@ -123,13 +123,13 @@
     margin: 0 0 8px;
   }
   #demo-caption {
-    font-size: 1rem;
+    font-size: calc(1rem * var(--primary-text-scale, 1));
     line-height: 1.5;
   }
   #demo-status,
   #demo-picture-note {
     color: #bdc9d6;
-    font-size: 0.875rem;
+    font-size: calc(0.875rem * var(--primary-text-scale, 1));
     line-height: 1.45;
   }
   .demo-actions,
@@ -148,7 +148,7 @@
     border-radius: 4px;
   }
   .demo-practice-controls p {
-    font-size: 0.875rem;
+    font-size: calc(0.875rem * var(--primary-text-scale, 1));
     line-height: 1.4;
   }
   #demo-dialog.is-practice .demo-practice-controls {
@@ -180,7 +180,7 @@
       gap: 8px;
     }
     #demo-dialog .demo-header h2 {
-      font-size: 1.1rem;
+      font-size: calc(1.1rem * var(--primary-text-scale, 1));
     }
     .demo-panel {
       gap: 8px;
@@ -255,7 +255,7 @@
   #demo-audio-artist,
   .demo-audio-status {
     color: #bdc9d6;
-    font-size: 0.875rem;
+    font-size: calc(0.875rem * var(--primary-text-scale, 1));
   }
   #demo-audio a {
     color: #83dae7;
@@ -295,7 +295,7 @@
     #demo-dialog .demo-transport > button,
     #demo-dialog .demo-audio-transport > button {
       padding: 8px;
-      font-size: 0.875rem;
+      font-size: calc(0.875rem * var(--primary-text-scale, 1));
       overflow-wrap: normal;
       word-break: normal;
     }
@@ -418,11 +418,11 @@
     pointer-events: auto;
   }
   #demo-dialog .demo-header h2 {
-    font-size: clamp(0.85rem, 1.5vw, 1.1rem);
+    font-size: calc(clamp(0.85rem, 1.5vw, 1.1rem) * var(--primary-text-scale, 1));
     margin: 0;
   }
   #demo-dialog .demo-header .eyebrow {
-    font-size: 0.65rem;
+    font-size: calc(0.65rem * var(--primary-text-scale, 1));
   }
   #demo-dialog .demo-panel,
   #demo-dialog[data-reward='expanded'] .demo-panel {
@@ -449,19 +449,19 @@
   #demo-dialog .demo-transport > button {
     flex: 1 1 auto;
     padding: 6px 12px;
-    font-size: 0.85rem;
+    font-size: calc(0.85rem * var(--primary-text-scale, 1));
   }
   #demo-dialog .demo-header-actions {
     gap: 4px;
     flex-wrap: nowrap;
   }
   #demo-dialog .demo-header-actions button {
-    font-size: 0.8rem;
+    font-size: calc(0.8rem * var(--primary-text-scale, 1));
     padding: 4px 8px;
   }
   #demo-dialog #demo-caption {
     margin: 0;
-    font-size: 0.8rem;
+    font-size: calc(0.8rem * var(--primary-text-scale, 1));
     line-height: 1.3;
     max-width: 70ch;
   }
@@ -471,7 +471,7 @@
     gap: 12px;
     min-height: 44px;
     cursor: pointer;
-    font-size: 0.8rem;
+    font-size: calc(0.8rem * var(--primary-text-scale, 1));
   }
   #demo-now-playing {
     color: #bdc9d6;
@@ -551,12 +551,12 @@
   min-width: 0;
 }
 #demo-dialog .demo-header h2 {
-  font-size: calc(1rem * var(--demo-text-factor, 1));
+  font-size: calc(calc(1rem * var(--demo-text-factor, 1)) * var(--primary-text-scale, 1));
   margin: 0;
   overflow-wrap: anywhere;
 }
 #demo-dialog .eyebrow {
-  font-size: calc(0.7rem * var(--demo-text-factor, 1));
+  font-size: calc(calc(0.7rem * var(--demo-text-factor, 1)) * var(--primary-text-scale, 1));
   line-height: 1.3;
   margin: 0;
 }
@@ -572,7 +572,7 @@
   min-width: 44px;
   width: auto;
   padding: 6px 10px;
-  font-size: calc(0.85rem * var(--demo-text-factor, 1));
+  font-size: calc(calc(0.85rem * var(--demo-text-factor, 1)) * var(--primary-text-scale, 1));
   line-height: 1.2;
   white-space: normal;
 }
@@ -611,7 +611,7 @@
   display: block;
   visibility: visible;
   margin: 2px 0 0;
-  font-size: calc(0.875rem * var(--demo-text-factor, 1));
+  font-size: calc(calc(0.875rem * var(--demo-text-factor, 1)) * var(--primary-text-scale, 1));
   line-height: 1.4;
   overflow-wrap: anywhere;
 }
@@ -623,12 +623,12 @@
   width: auto;
 }
 #demo-dialog #demo-join-hint {
-  font-size: calc(0.75rem * var(--demo-text-factor, 1));
+  font-size: calc(calc(0.75rem * var(--demo-text-factor, 1)) * var(--primary-text-scale, 1));
   line-height: 1.3;
   margin: 5px 0 0;
 }
 #demo-dialog #demo-now-playing {
-  font-size: calc(0.8rem * var(--demo-text-factor, 1));
+  font-size: calc(calc(0.8rem * var(--demo-text-factor, 1)) * var(--primary-text-scale, 1));
   line-height: 1.35;
   margin: 3px 0;
   max-width: none;
@@ -760,7 +760,7 @@
   }
   #demo-dialog .demo-header-actions .button {
     padding-inline: 5px;
-    font-size: calc(0.8rem * var(--demo-text-factor, 1));
+    font-size: calc(calc(0.8rem * var(--demo-text-factor, 1)) * var(--primary-text-scale, 1));
   }
 }
 @media (max-width: 600px) {
@@ -806,7 +806,7 @@
 }
 #demo-dialog #demo-status {
   margin: 4px 0 0;
-  font-size: calc(0.75rem * var(--demo-text-factor, 1));
+  font-size: calc(calc(0.75rem * var(--demo-text-factor, 1)) * var(--primary-text-scale, 1));
   line-height: 1.3;
 }
 
@@ -817,6 +817,6 @@
 #demo-dialog #demo-panel-caption,
 #demo-dialog #demo-panel-status {
   margin: 0;
-  font-size: calc(0.85rem * var(--demo-text-factor, 1));
+  font-size: calc(calc(0.85rem * var(--demo-text-factor, 1)) * var(--primary-text-scale, 1));
   line-height: 1.4;
 }

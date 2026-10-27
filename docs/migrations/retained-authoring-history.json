@@ -1,0 +1,46 @@
+{
+  "format": "revealline-retained-authoring-history.v1",
+  "scope": "Derived catalog and renderer projections retain other families. These new hashes are not the original historical artifacts; original bytes and migration evidence are retained outside this repository.",
+  "items": [
+    {
+      "previousPath": "authoring/production/history/46ce076af222227c5895bec7c8516f4e6e8098cfc81a9432d9fb0d6546e6c447.mjs",
+      "path": "authoring/production/history/95d6f3c7ff15f32892d1ef826238a7a7de2992c70c4c26b97cc29fb909efcd3a.mjs",
+      "previousSHA256": "46ce076af222227c5895bec7c8516f4e6e8098cfc81a9432d9fb0d6546e6c447",
+      "sha256": "95d6f3c7ff15f32892d1ef826238a7a7de2992c70c4c26b97cc29fb909efcd3a",
+      "previousBytes": 5966,
+      "bytes": 5837
+    },
+    {
+      "previousPath": "authoring/production/history/edbb5c4e73e03b7e516825575bf2fed6d234745cecc514241667097a3d3f8eca.json",
+      "path": "authoring/production/history/c4c2adbc3f787e0f7db52859b98d9bc54239fdb7e8e44af02a0f4cefcf5bda73.json",
+      "previousSHA256": "edbb5c4e73e03b7e516825575bf2fed6d234745cecc514241667097a3d3f8eca",
+      "sha256": "c4c2adbc3f787e0f7db52859b98d9bc54239fdb7e8e44af02a0f4cefcf5bda73",
+      "previousBytes": 23077,
+      "bytes": 20699
+    },
+    {
+      "previousPath": "authoring/production/history/e857a548bccaa9649d86ccb6443fbf9fd37f8ff4de8e3f6a7a7da900b92ed8cb.json",
+      "path": "authoring/production/history/f28b92cdfe4e9ccd402d6e3a625cf9d23c804a5a0b82fb1a3fc25065e7c0d9aa.json",
+      "previousSHA256": "e857a548bccaa9649d86ccb6443fbf9fd37f8ff4de8e3f6a7a7da900b92ed8cb",
+      "sha256": "f28b92cdfe4e9ccd402d6e3a625cf9d23c804a5a0b82fb1a3fc25065e7c0d9aa",
+      "previousBytes": 36911,
+      "bytes": 35307
+    },
+    {
+      "previousPath": "authoring/production/history/4676dbca131440742815a3ed7a5e1e2ec89c121f813e5d8c0ff45f01360dde4a.mjs",
+      "path": "authoring/production/history/6b4e4c20da271cd105deee017883558ea715eab6d9e034b66053f4da2f17af00.mjs",
+      "previousSHA256": "4676dbca131440742815a3ed7a5e1e2ec89c121f813e5d8c0ff45f01360dde4a",
+      "sha256": "6b4e4c20da271cd105deee017883558ea715eab6d9e034b66053f4da2f17af00",
+      "previousBytes": 25033,
+      "bytes": 23588
+    },
+    {
+      "previousPath": "authoring/production/history/4676dbca131440742815a3ed7a5e1e2ec89c121f813e5d8c0ff45f01360dde4a.source",
+      "path": "authoring/production/history/6b4e4c20da271cd105deee017883558ea715eab6d9e034b66053f4da2f17af00.source",
+      "previousSHA256": "4676dbca131440742815a3ed7a5e1e2ec89c121f813e5d8c0ff45f01360dde4a",
+      "sha256": "6b4e4c20da271cd105deee017883558ea715eab6d9e034b66053f4da2f17af00",
+      "previousBytes": 25033,
+      "bytes": 23588
+    }
+  ]
+}

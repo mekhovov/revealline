@@ -1,0 +1,5908 @@
+{
+  "format": "AircraftCurrentContactSustainedEvidence.v1",
+  "sourceRevision": "68f9a39362ac50e483d9a1447ead5e68af168c5b",
+  "physicsHz": 1000,
+  "missionHz": 50,
+  "passed": true,
+  "uniqueCases": 35,
+  "initialAttempt": {
+    "format": "AircraftCurrentContactSustained.v1",
+    "sourceRevision": "68f9a39362ac50e483d9a1447ead5e68af168c5b",
+    "startedAt": "2026-10-18T22:56:14.938Z",
+    "finishedAt": "2026-10-18T22:58:43.429Z",
+    "elapsedSeconds": 148.48977016700002,
+    "selectedSourceSha256": {
+      "game/test/helpers/fpv-aircraft-sustained-qualification.mjs": "1fb59e3205d0fd7a0c9de98393573a1a71eb167b8726b392fa8366fc0dfdb445",
+      "game/test/helpers/fpv-regional-real-geometry.mjs": "85e52e017b02d2dbf4773448691eac3415eee46e93a9876bb42a0e35555c4414",
+      "optional-practice/civilian-fpv/advanced-simulation.mjs": "b1bd0944ae095ab05ffb85e78deddee757ab9641053b981f4f78a52c2640d69c",
+      "optional-practice/civilian-fpv/advanced-aircraft-runtime.mjs": "2a38134de98562ae426e22737684c6e690321b148a1ed3e4f3209527ca0585b2",
+      "optional-practice/civilian-fpv/advanced-regional.mjs": "7c335b0cf0044bc52e0a0ff2b87e08336eeed148f034616fa51aeed87ce6eb63",
+      "optional-practice/civilian-fpv/aircraft-course-session.mjs": "0d71939840f1e09b5328581a267bce1df732dc948756bf9d96f82eb97ceeec6e",
+      "optional-practice/civilian-fpv/aircraft-physics.mjs": "7bc651f151e0729541a9323c075ea40a1bcccb0fb9cd0379c202b1a77421351a",
+      "optional-practice/civilian-fpv/aircraft-presets.mjs": "c3bceb64f9cfef85c6894c2b69814c70886b6f30b7301e2659382e24bbee56e6",
+      "optional-practice/civilian-fpv/aircraft-recording.mjs": "79bf6f61f982c1c45186e494f64a0ee0a55d07dbf6e405f121f2d8ec0b665cce",
+      "optional-practice/civilian-fpv/aircraft-response.mjs": "c89d28ca2b504b880c1b8e77fe1be9d197129b18d4273f8d72b548bba5169303",
+      "optional-practice/civilian-fpv/rates.mjs": "12b66e90c2b59d2495131f42dcd4281cfbfa87a705245ce73aa1a2abc6dfdec5",
+      "optional-practice/civilian-fpv/radio-profile.mjs": "d972a03be9f62d390894958b8fa58ae7ac3f97bab2d797b165fca4ab98c506ed",
+      "optional-practice/civilian-fpv/model.mjs": "0b10fc11948bbca05e23eb6d096a95b97c02aad0573e17d68ac9404ba6694909",
+      "optional-practice/civilian-fpv/world-model.mjs": "1ee223ec4be6ffdfb1e3285a8d0dbf64388d78471570d700485b2d42df6354f2"
+    },
+    "sourcesStable": true,
+    "runtime": {
+      "node": "v20.19.5",
+      "architecture": "arm64",
+      "platform": "darwin",
+      "processor": "Apple M4 Pro"
+    },
+    "missionHz": 50,
+    "physicsHz": 1000,
+    "passed": false,
+    "smoke": false,
+    "results": [
+      {
+        "aircraft": "air65-ii-racing-2026",
+        "mode": "acro",
+        "host": "academy",
+        "course": "flight-01",
+        "courseIdentity": "573db8b71fe99103",
+        "configIdentity": "97df7b6f23d0ced4",
+        "backend": "civilian-quad-aircraft-regional.v3",
+        "durationSeconds": 32,
+        "airborneSeconds": 27.14,
+        "groundedSeconds": 4.86,
+        "secondTakeoffSeconds": 10,
+        "initialSupport": true,
+        "landed": true,
+        "minimumUpright": 0.9998499494547586,
+        "maximumYawDegreesPerSecond": 33.18394100464005,
+        "maximumClimbMetres": 1.4031545147299767,
+        "finalHash": "c7970a8e",
+        "finalPosition": {
+          "x": -5,
+          "y": 1403,
+          "z": -1
+        },
+        "pauseNoop": true,
+        "recoveryExact": true,
+        "recoveryAtSeconds": 24,
+        "recoveryContinuationSeconds": 8,
+        "retainedSegments": 1,
+        "retainedBytes": 149091,
+        "courseProgress": [
+          {
+            "tick": 500,
+            "step": 1,
+            "position": {
+              "x": 0,
+              "y": 1403,
+              "z": 0
+            }
+          },
+          {
+            "tick": 1000,
+            "step": 2,
+            "position": {
+              "x": 1,
+              "y": 0,
+              "z": -1
+            }
+          },
+          {
+            "tick": 1500,
+            "step": 2,
+            "position": {
+              "x": -5,
+              "y": 1403,
+              "z": -1
+            }
+          }
+        ],
+        "elapsedSeconds": 4.461487958,
+        "passed": true
+      },
+      {
+        "aircraft": "air65-ii-racing-2026",
+        "mode": "self-level",
+        "host": "academy",
+        "course": "flight-01",
+        "courseIdentity": "573db8b71fe99103",
+        "configIdentity": "c11b0f6b870fb13e",
+        "backend": "civilian-quad-aircraft-regional.v3",
+        "durationSeconds": 32,
+        "airborneSeconds": 27.14,
+        "groundedSeconds": 4.86,
+        "secondTakeoffSeconds": 10,
+        "initialSupport": true,
+        "landed": true,
+        "minimumUpright": 0.9999983254864059,
+        "maximumYawDegreesPerSecond": 29.784863474895356,
+        "maximumClimbMetres": 1.4031548723578453,
+        "finalHash": "8945399f",
+        "finalPosition": {
+          "x": 0,
+          "y": 1403,
+          "z": 0
+        },
+        "pauseNoop": true,
+        "recoveryExact": true,
+        "recoveryAtSeconds": 24,
+        "recoveryContinuationSeconds": 8,
+        "retainedSegments": 1,
+        "retainedBytes": 151861,
+        "courseProgress": [
+          {
+            "tick": 500,
+            "step": 1,
+            "position": {
+              "x": 0,
+              "y": 1403,
+              "z": 0
+            }
+          },
+          {
+            "tick": 1000,
+            "step": 2,
+            "position": {
+              "x": 1,
+              "y": 0,
+              "z": 0
+            }
+          },
+          {
+            "tick": 1500,
+            "step": 2,
+            "position": {
+              "x": 0,
+              "y": 1403,
+              "z": 0
+            }
+          }
+        ],
+        "elapsedSeconds": 4.208191458,
+        "passed": true
+      },
+      {
+        "aircraft": "meteor75-analog-2022",
+        "mode": "acro",
+        "host": "world",
+        "course": "adventure-coast-01",
+        "courseIdentity": "6a77435a26cd51c1",
+        "configIdentity": "599d0cd9b0953eaf",
+        "backend": "civilian-quad-aircraft-regional.v3",
+        "durationSeconds": 32,
+        "airborneSeconds": 27.1,
+        "groundedSeconds": 4.9,
+        "secondTakeoffSeconds": 10,
+        "initialSupport": true,
+        "landed": true,
+        "minimumUpright": 0.9996979332114841,
+        "maximumYawDegreesPerSecond": 29.8595107254154,
+        "maximumClimbMetres": 1.405093951150775,
+        "finalHash": "916b8578",
+        "finalPosition": {
+          "x": -6,
+          "y": 1399,
+          "z": 48000
+        },
+        "pauseNoop": true,
+        "recoveryExact": true,
+        "recoveryAtSeconds": 24,
+        "recoveryContinuationSeconds": 8,
+        "retainedSegments": 1,
+        "retainedBytes": 343071,
+        "courseProgress": [
+          {
+            "tick": 500,
+            "step": 0,
+            "position": {
+              "x": 0,
+              "y": 1399,
+              "z": 48000
+            }
+          },
+          {
+            "tick": 1000,
+            "step": 0,
+            "position": {
+              "x": 1,
+              "y": 0,
+              "z": 48000
+            }
+          },
+          {
+            "tick": 1500,
+            "step": 0,
+            "position": {
+              "x": -6,
+              "y": 1399,
+              "z": 48000
+            }
+          }
+        ],
+        "elapsedSeconds": 5.124380833000001,
+        "passed": true
+      },
+      {
+        "aircraft": "meteor75-analog-2022",
+        "mode": "self-level",
+        "host": "world",
+        "course": "adventure-coast-01",
+        "courseIdentity": "6a77435a26cd51c1",
+        "configIdentity": "b83fe9c0ed075755",
+        "backend": "civilian-quad-aircraft-regional.v3",
+        "durationSeconds": 32,
+        "airborneSeconds": 27.08,
+        "groundedSeconds": 4.92,
+        "secondTakeoffSeconds": 10,
+        "initialSupport": true,
+        "landed": true,
+        "minimumUpright": 0.9999966374005632,
+        "maximumYawDegreesPerSecond": 29.85952442127209,
+        "maximumClimbMetres": 1.4051152896136045,
+        "finalHash": "5f811a6e",
+        "finalPosition": {
+          "x": 1,
+          "y": 1399,
+          "z": 48000
+        },
+        "pauseNoop": true,
+        "recoveryExact": true,
+        "recoveryAtSeconds": 24,
+        "recoveryContinuationSeconds": 8,
+        "retainedSegments": 1,
+        "retainedBytes": 345604,
+        "courseProgress": [
+          {
+            "tick": 500,
+            "step": 0,
+            "position": {
+              "x": 0,
+              "y": 1399,
+              "z": 48000
+            }
+          },
+          {
+            "tick": 1000,
+            "step": 0,
+            "position": {
+              "x": 1,
+              "y": 0,
+              "z": 48000
+            }
+          },
+          {
+            "tick": 1500,
+            "step": 0,
+            "position": {
+              "x": 1,
+              "y": 1399,
+              "z": 48000
+            }
+          }
+        ],
+        "elapsedSeconds": 7.228734166999999,
+        "passed": true
+      },
+      {
+        "aircraft": "meteor75-pro-matrix",
+        "mode": "acro",
+        "host": "learning",
+        "course": "beginner-01",
+        "courseIdentity": "2b283442c91e80fb",
+        "configIdentity": "c4d675b54ab81ac2",
+        "backend": "civilian-quad-aircraft-regional.v3",
+        "durationSeconds": 32,
+        "airborneSeconds": 27.2,
+        "groundedSeconds": 4.8,
+        "secondTakeoffSeconds": 10,
+        "initialSupport": true,
+        "landed": true,
+        "minimumUpright": 0.9999706403330418,
+        "maximumYawDegreesPerSecond": 29.893996352528315,
+        "maximumClimbMetres": 1.4012770000845194,
+        "finalHash": "8240096a",
+        "finalPosition": {
+          "x": -5,
+          "y": 1401,
+          "z": -1
+        },
+        "pauseNoop": true,
+        "recoveryExact": true,
+        "recoveryAtSeconds": 24,
+        "recoveryContinuationSeconds": 8,
+        "retainedSegments": 1,
+        "retainedBytes": 149254,
+        "courseProgress": [
+          {
+            "tick": 500,
+            "step": 2,
+            "position": {
+              "x": 0,
+              "y": 1401,
+              "z": 0
+            }
+          },
+          {
+            "tick": 1000,
+            "step": 3,
+            "position": {
+              "x": 1,
+              "y": 0,
+              "z": -2
+            }
+          },
+          {
+            "tick": 1500,
+            "step": 3,
+            "position": {
+              "x": -5,
+              "y": 1401,
+              "z": -2
+            }
+          }
+        ],
+        "elapsedSeconds": 5.170695208000001,
+        "passed": true
+      },
+      {
+        "aircraft": "meteor75-pro-matrix",
+        "mode": "self-level",
+        "host": "learning",
+        "course": "beginner-01",
+        "courseIdentity": "2b283442c91e80fb",
+        "configIdentity": "f8c10ee1473b5c54",
+        "backend": "civilian-quad-aircraft-regional.v3",
+        "durationSeconds": 32,
+        "airborneSeconds": 27.18,
+        "groundedSeconds": 4.82,
+        "secondTakeoffSeconds": 10,
+        "initialSupport": true,
+        "landed": true,
+        "minimumUpright": 0.9999421209526206,
+        "maximumYawDegreesPerSecond": 29.893009253067117,
+        "maximumClimbMetres": 1.4014726225286722,
+        "finalHash": "e2207a8d",
+        "finalPosition": {
+          "x": 0,
+          "y": 1401,
+          "z": 0
+        },
+        "pauseNoop": true,
+        "recoveryExact": true,
+        "recoveryAtSeconds": 24,
+        "recoveryContinuationSeconds": 8,
+        "retainedSegments": 1,
+        "retainedBytes": 153159,
+        "courseProgress": [
+          {
+            "tick": 500,
+            "step": 2,
+            "position": {
+              "x": 0,
+              "y": 1401,
+              "z": 0
+            }
+          },
+          {
+            "tick": 1000,
+            "step": 3,
+            "position": {
+              "x": 0,
+              "y": 0,
+              "z": -2
+            }
+          },
+          {
+            "tick": 1500,
+            "step": 3,
+            "position": {
+              "x": 0,
+              "y": 1401,
+              "z": -1
+            }
+          }
+        ],
+        "elapsedSeconds": 5.288797124999998,
+        "passed": true
+      },
+      {
+        "aircraft": "meteor85-analog",
+        "mode": "acro",
+        "host": "academy",
+        "course": "flight-01",
+        "courseIdentity": "573db8b71fe99103",
+        "configIdentity": "c3d13cc5a3b47bfc",
+        "backend": "civilian-quad-aircraft-regional.v3",
+        "durationSeconds": 32,
+        "airborneSeconds": 27.1,
+        "groundedSeconds": 4.9,
+        "secondTakeoffSeconds": 10,
+        "initialSupport": true,
+        "landed": true,
+        "minimumUpright": 0.9999998488888229,
+        "maximumYawDegreesPerSecond": 29.933583961841308,
+        "maximumClimbMetres": 1.4016978554427624,
+        "finalHash": "8c696ec1",
+        "finalPosition": {
+          "x": 0,
+          "y": 1402,
+          "z": 0
+        },
+        "pauseNoop": true,
+        "recoveryExact": true,
+        "recoveryAtSeconds": 24,
+        "recoveryContinuationSeconds": 8,
+        "retainedSegments": 1,
+        "retainedBytes": 148626,
+        "courseProgress": [
+          {
+            "tick": 500,
+            "step": 1,
+            "position": {
+              "x": 0,
+              "y": 1402,
+              "z": 0
+            }
+          },
+          {
+            "tick": 1000,
+            "step": 2,
+            "position": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            }
+          },
+          {
+            "tick": 1500,
+            "step": 2,
+            "position": {
+              "x": 0,
+              "y": 1402,
+              "z": 0
+            }
+          }
+        ],
+        "elapsedSeconds": 7.078422124999998,
+        "passed": true
+      },
+      {
+        "aircraft": "meteor85-analog",
+        "mode": "self-level",
+        "host": "academy",
+        "course": "flight-01",
+        "courseIdentity": "573db8b71fe99103",
+        "configIdentity": "18e607b00687ed16",
+        "backend": "civilian-quad-aircraft-regional.v3",
+        "durationSeconds": 32,
+        "airborneSeconds": 27.1,
+        "groundedSeconds": 4.9,
+        "secondTakeoffSeconds": 10,
+        "initialSupport": true,
+        "landed": true,
+        "minimumUpright": 0.9995041515894657,
+        "maximumYawDegreesPerSecond": 29.933740861803052,
+        "maximumClimbMetres": 1.4016977362334728,
+        "finalHash": "04f309ff",
+        "finalPosition": {
+          "x": 0,
+          "y": 1402,
+          "z": 0
+        },
+        "pauseNoop": true,
+        "recoveryExact": true,
+        "recoveryAtSeconds": 24,
+        "recoveryContinuationSeconds": 8,
+        "retainedSegments": 1,
+        "retainedBytes": 152641,
+        "courseProgress": [
+          {
+            "tick": 500,
+            "step": 1,
+            "position": {
+              "x": 0,
+              "y": 1402,
+              "z": 0
+            }
+          },
+          {
+            "tick": 1000,
+            "step": 2,
+            "position": {
+              "x": 3,
+              "y": 0,
+              "z": -1
+            }
+          },
+          {
+            "tick": 1500,
+            "step": 2,
+            "position": {
+              "x": 1,
+              "y": 1402,
+              "z": 0
+            }
+          }
+        ],
+        "elapsedSeconds": 8.426382291999994,
+        "passed": true
+      },
+      {
+        "aircraft": "mobula8-analog-2023",
+        "mode": "acro",
+        "host": "world",
+        "course": "adventure-coast-01",
+        "courseIdentity": "6a77435a26cd51c1",
+        "configIdentity": "15af29dd98262ba9",
+        "backend": "civilian-quad-aircraft-regional.v3",
+        "durationSeconds": 32,
+        "airborneSeconds": 27.1,
+        "groundedSeconds": 4.9,
+        "secondTakeoffSeconds": 10,
+        "initialSupport": true,
+        "landed": true,
+        "minimumUpright": 0.9999698778037442,
+        "maximumYawDegreesPerSecond": 29.93331432734767,
+        "maximumClimbMetres": 1.4037221428006887,
+        "finalHash": "54c5f392",
+        "finalPosition": {
+          "x": 0,
+          "y": 1396,
+          "z": 48000
+        },
+        "pauseNoop": true,
+        "recoveryExact": true,
+        "recoveryAtSeconds": 24,
+        "recoveryContinuationSeconds": 8,
+        "retainedSegments": 1,
+        "retainedBytes": 342438,
+        "courseProgress": [
+          {
+            "tick": 500,
+            "step": 0,
+            "position": {
+              "x": 0,
+              "y": 1397,
+              "z": 48000
+            }
+          },
+          {
+            "tick": 1000,
+            "step": 0,
+            "position": {
+              "x": 3,
+              "y": 0,
+              "z": 48000
+            }
+          },
+          {
+            "tick": 1500,
+            "step": 0,
+            "position": {
+              "x": 1,
+              "y": 1397,
+              "z": 48000
+            }
+          }
+        ],
+        "elapsedSeconds": 7.3409185,
+        "passed": true
+      },
+      {
+        "aircraft": "mobula8-analog-2023",
+        "mode": "self-level",
+        "host": "world",
+        "course": "adventure-coast-01",
+        "courseIdentity": "6a77435a26cd51c1",
+        "configIdentity": "e4f5d47747963da7",
+        "backend": "civilian-quad-aircraft-regional.v3",
+        "durationSeconds": 32,
+        "airborneSeconds": 27.1,
+        "groundedSeconds": 4.9,
+        "secondTakeoffSeconds": 10,
+        "initialSupport": true,
+        "landed": true,
+        "minimumUpright": 0.9999901970752907,
+        "maximumYawDegreesPerSecond": 29.9332424892212,
+        "maximumClimbMetres": 1.4037114139646292,
+        "finalHash": "df4135de",
+        "finalPosition": {
+          "x": 0,
+          "y": 1396,
+          "z": 48000
+        },
+        "pauseNoop": true,
+        "recoveryExact": true,
+        "recoveryAtSeconds": 24,
+        "recoveryContinuationSeconds": 8,
+        "retainedSegments": 1,
+        "retainedBytes": 345338,
+        "courseProgress": [
+          {
+            "tick": 500,
+            "step": 0,
+            "position": {
+              "x": 0,
+              "y": 1397,
+              "z": 48000
+            }
+          },
+          {
+            "tick": 1000,
+            "step": 0,
+            "position": {
+              "x": 2,
+              "y": 0,
+              "z": 48000
+            }
+          },
+          {
+            "tick": 1500,
+            "step": 0,
+            "position": {
+              "x": 1,
+              "y": 1397,
+              "z": 48000
+            }
+          }
+        ],
+        "elapsedSeconds": 7.178728208000001,
+        "passed": true
+      },
+      {
+        "aircraft": "cetus-x-betaflight-2022",
+        "mode": "acro",
+        "host": "learning",
+        "course": "beginner-01",
+        "courseIdentity": "2b283442c91e80fb",
+        "configIdentity": "2be61b1bc28f01f0",
+        "backend": "civilian-quad-aircraft-regional.v3",
+        "durationSeconds": 32,
+        "airborneSeconds": 27.08,
+        "groundedSeconds": 4.92,
+        "secondTakeoffSeconds": 10,
+        "initialSupport": true,
+        "landed": true,
+        "minimumUpright": 0.9999957678657013,
+        "maximumYawDegreesPerSecond": 29.96929242717755,
+        "maximumClimbMetres": 1.4031470771878958,
+        "finalHash": "1e32beb4",
+        "finalPosition": {
+          "x": -1,
+          "y": 1397,
+          "z": 0
+        },
+        "pauseNoop": true,
+        "recoveryExact": true,
+        "recoveryAtSeconds": 24,
+        "recoveryContinuationSeconds": 8,
+        "retainedSegments": 1,
+        "retainedBytes": 148678,
+        "courseProgress": [
+          {
+            "tick": 500,
+            "step": 2,
+            "position": {
+              "x": 0,
+              "y": 1397,
+              "z": 0
+            }
+          },
+          {
+            "tick": 1000,
+            "step": 3,
+            "position": {
+              "x": 1,
+              "y": 0,
+              "z": 0
+            }
+          },
+          {
+            "tick": 1500,
+            "step": 3,
+            "position": {
+              "x": 0,
+              "y": 1397,
+              "z": 0
+            }
+          }
+        ],
+        "elapsedSeconds": 8.700396999999997,
+        "passed": true
+      },
+      {
+        "aircraft": "cetus-x-betaflight-2022",
+        "mode": "self-level",
+        "host": "learning",
+        "course": "beginner-01",
+        "courseIdentity": "2b283442c91e80fb",
+        "configIdentity": "df5ae680e944eeba",
+        "backend": "civilian-quad-aircraft-regional.v3",
+        "durationSeconds": 32,
+        "airborneSeconds": 27.08,
+        "groundedSeconds": 4.92,
+        "secondTakeoffSeconds": 10,
+        "initialSupport": true,
+        "landed": true,
+        "minimumUpright": 0.9999991677996369,
+        "maximumYawDegreesPerSecond": 29.96967812658528,
+        "maximumClimbMetres": 1.4031637664884329,
+        "finalHash": "a648728f",
+        "finalPosition": {
+          "x": -1,
+          "y": 1397,
+          "z": 0
+        },
+        "pauseNoop": true,
+        "recoveryExact": true,
+        "recoveryAtSeconds": 24,
+        "recoveryContinuationSeconds": 8,
+        "retainedSegments": 1,
+        "retainedBytes": 150490,
+        "courseProgress": [
+          {
+            "tick": 500,
+            "step": 2,
+            "position": {
+              "x": 0,
+              "y": 1397,
+              "z": 0
+            }
+          },
+          {
+            "tick": 1000,
+            "step": 3,
+            "position": {
+              "x": 1,
+              "y": 0,
+              "z": 0
+            }
+          },
+          {
+            "tick": 1500,
+            "step": 3,
+            "position": {
+              "x": -1,
+              "y": 1397,
+              "z": 0
+            }
+          }
+        ],
+        "elapsedSeconds": 2.6598561249999912,
+        "passed": true
+      },
+      {
+        "aircraft": "protos-16-aio-1-0",
+        "mode": "acro",
+        "host": "academy",
+        "course": "flight-01",
+        "courseIdentity": "573db8b71fe99103",
+        "configIdentity": "a78451b95eaa7195",
+        "backend": "civilian-quad-aircraft-regional.v3",
+        "durationSeconds": 32,
+        "airborneSeconds": 27.02,
+        "groundedSeconds": 4.98,
+        "secondTakeoffSeconds": 10,
+        "initialSupport": true,
+        "landed": true,
+        "minimumUpright": 0.9999935570814094,
+        "maximumYawDegreesPerSecond": 27.589498772386868,
+        "maximumClimbMetres": 1.4034026302397251,
+        "finalHash": "d47a1b43",
+        "finalPosition": {
+          "x": 2,
+          "y": 1393,
+          "z": -1
+        },
+        "pauseNoop": true,
+        "recoveryExact": true,
+        "recoveryAtSeconds": 24,
+        "recoveryContinuationSeconds": 8,
+        "retainedSegments": 1,
+        "retainedBytes": 147870,
+        "courseProgress": [
+          {
+            "tick": 500,
+            "step": 1,
+            "position": {
+              "x": 0,
+              "y": 1393,
+              "z": 0
+            }
+          },
+          {
+            "tick": 1000,
+            "step": 2,
+            "position": {
+              "x": 1,
+              "y": 0,
+              "z": -1
+            }
+          },
+          {
+            "tick": 1500,
+            "step": 2,
+            "position": {
+              "x": 2,
+              "y": 1393,
+              "z": -1
+            }
+          }
+        ],
+        "elapsedSeconds": 4.404783749999988,
+        "passed": true
+      },
+      {
+        "aircraft": "protos-16-aio-1-0",
+        "mode": "self-level",
+        "host": "academy",
+        "course": "flight-01",
+        "courseIdentity": "573db8b71fe99103",
+        "configIdentity": "8b8c4cb12e32019b",
+        "backend": "civilian-quad-aircraft-regional.v3",
+        "durationSeconds": 32,
+        "airborneSeconds": 26.94,
+        "groundedSeconds": 5.06,
+        "secondTakeoffSeconds": 10,
+        "initialSupport": true,
+        "landed": true,
+        "minimumUpright": 0.9991810182029296,
+        "maximumYawDegreesPerSecond": 36.646472479951484,
+        "maximumClimbMetres": 1.4034031070768833,
+        "finalHash": "79f519e7",
+        "finalPosition": {
+          "x": -1,
+          "y": 1393,
+          "z": 0
+        },
+        "pauseNoop": true,
+        "recoveryExact": true,
+        "recoveryAtSeconds": 24,
+        "recoveryContinuationSeconds": 8,
+        "retainedSegments": 1,
+        "retainedBytes": 150090,
+        "courseProgress": [
+          {
+            "tick": 500,
+            "step": 1,
+            "position": {
+              "x": 0,
+              "y": 1393,
+              "z": 0
+            }
+          },
+          {
+            "tick": 1000,
+            "step": 2,
+            "position": {
+              "x": 4,
+              "y": 0,
+              "z": -2
+            }
+          },
+          {
+            "tick": 1500,
+            "step": 2,
+            "position": {
+              "x": 0,
+              "y": 1393,
+              "z": 0
+            }
+          }
+        ],
+        "elapsedSeconds": 3.7068377499999916,
+        "passed": true
+      },
+      {
+        "aircraft": "pavo20-pro-ii-o4-4s",
+        "mode": "acro",
+        "host": "world",
+        "course": "adventure-coast-01",
+        "courseIdentity": "6a77435a26cd51c1",
+        "configIdentity": "8872dc780c63e47e",
+        "backend": "civilian-quad-aircraft-regional.v3",
+        "durationSeconds": 32,
+        "airborneSeconds": 27.1,
+        "groundedSeconds": 4.9,
+        "secondTakeoffSeconds": 10,
+        "initialSupport": true,
+        "landed": true,
+        "minimumUpright": 0.9997824476504761,
+        "maximumYawDegreesPerSecond": 27.590243505565375,
+        "maximumClimbMetres": 1.4016899205744267,
+        "finalHash": "caf7a79b",
+        "finalPosition": {
+          "x": 1,
+          "y": 1398,
+          "z": 48000
+        },
+        "pauseNoop": true,
+        "recoveryExact": true,
+        "recoveryAtSeconds": 24,
+        "recoveryContinuationSeconds": 8,
+        "retainedSegments": 1,
+        "retainedBytes": 342504,
+        "courseProgress": [
+          {
+            "tick": 500,
+            "step": 0,
+            "position": {
+              "x": 0,
+              "y": 1398,
+              "z": 48000
+            }
+          },
+          {
+            "tick": 1000,
+            "step": 0,
+            "position": {
+              "x": 2,
+              "y": 0,
+              "z": 48000
+            }
+          },
+          {
+            "tick": 1500,
+            "step": 0,
+            "position": {
+              "x": 1,
+              "y": 1398,
+              "z": 48000
+            }
+          }
+        ],
+        "elapsedSeconds": 4.449374416000006,
+        "passed": true
+      },
+      {
+        "aircraft": "pavo20-pro-ii-o4-4s",
+        "mode": "self-level",
+        "host": "world",
+        "course": "adventure-coast-01",
+        "courseIdentity": "6a77435a26cd51c1",
+        "configIdentity": "4b74b5eb35d02108",
+        "backend": "civilian-quad-aircraft-regional.v3",
+        "durationSeconds": 32,
+        "airborneSeconds": 27.1,
+        "groundedSeconds": 4.9,
+        "secondTakeoffSeconds": 10,
+        "initialSupport": true,
+        "landed": true,
+        "minimumUpright": 0.9999985767321558,
+        "maximumYawDegreesPerSecond": 27.590631040688567,
+        "maximumClimbMetres": 1.401694092899561,
+        "finalHash": "b73a6bc4",
+        "finalPosition": {
+          "x": 0,
+          "y": 1398,
+          "z": 48000
+        },
+        "pauseNoop": true,
+        "recoveryExact": true,
+        "recoveryAtSeconds": 24,
+        "recoveryContinuationSeconds": 8,
+        "retainedSegments": 1,
+        "retainedBytes": 344931,
+        "courseProgress": [
+          {
+            "tick": 500,
+            "step": 0,
+            "position": {
+              "x": 0,
+              "y": 1398,
+              "z": 48000
+            }
+          },
+          {
+            "tick": 1000,
+            "step": 0,
+            "position": {
+              "x": 1,
+              "y": 0,
+              "z": 48000
+            }
+          },
+          {
+            "tick": 1500,
+            "step": 0,
+            "position": {
+              "x": 0,
+              "y": 1398,
+              "z": 48000
+            }
+          }
+        ],
+        "elapsedSeconds": 3.5108527500000055,
+        "passed": true
+      },
+      {
+        "aircraft": "smart35-analog",
+        "mode": "acro",
+        "host": "learning",
+        "course": "beginner-01",
+        "courseIdentity": "2b283442c91e80fb",
+        "configIdentity": "44f8f2b1d11db619",
+        "backend": "civilian-quad-aircraft-regional.v3",
+        "durationSeconds": 32,
+        "airborneSeconds": 27.06,
+        "groundedSeconds": 4.94,
+        "secondTakeoffSeconds": 10,
+        "initialSupport": true,
+        "landed": true,
+        "minimumUpright": 0.997037618984442,
+        "maximumYawDegreesPerSecond": 34.868760907847964,
+        "maximumClimbMetres": 1.4037006236612797,
+        "finalHash": "1419a1f0",
+        "finalPosition": {
+          "x": -2,
+          "y": 1403,
+          "z": 0
+        },
+        "pauseNoop": true,
+        "recoveryExact": true,
+        "recoveryAtSeconds": 24,
+        "recoveryContinuationSeconds": 8,
+        "retainedSegments": 1,
+        "retainedBytes": 148721,
+        "courseProgress": [
+          {
+            "tick": 500,
+            "step": 2,
+            "position": {
+              "x": -2,
+              "y": 1403,
+              "z": 0
+            }
+          },
+          {
+            "tick": 1000,
+            "step": 3,
+            "position": {
+              "x": -2,
+              "y": 0,
+              "z": -1
+            }
+          },
+          {
+            "tick": 1500,
+            "step": 3,
+            "position": {
+              "x": -2,
+              "y": 1403,
+              "z": 0
+            }
+          }
+        ],
+        "elapsedSeconds": 2.0803145000000076,
+        "passed": true
+      },
+      {
+        "aircraft": "smart35-analog",
+        "mode": "self-level",
+        "host": "learning",
+        "course": "beginner-01",
+        "courseIdentity": "2b283442c91e80fb",
+        "configIdentity": "077c6f3a06486173",
+        "backend": "civilian-quad-aircraft-regional.v3",
+        "durationSeconds": 32,
+        "airborneSeconds": 27.06,
+        "groundedSeconds": 4.94,
+        "secondTakeoffSeconds": 10,
+        "initialSupport": true,
+        "landed": true,
+        "minimumUpright": 0.997094299963083,
+        "maximumYawDegreesPerSecond": 34.86890761527614,
+        "maximumClimbMetres": 1.403696570545435,
+        "finalHash": "cdfc173e",
+        "finalPosition": {
+          "x": -1,
+          "y": 1403,
+          "z": 0
+        },
+        "pauseNoop": true,
+        "recoveryExact": true,
+        "recoveryAtSeconds": 24,
+        "recoveryContinuationSeconds": 8,
+        "retainedSegments": 1,
+        "retainedBytes": 150732,
+        "courseProgress": [
+          {
+            "tick": 500,
+            "step": 2,
+            "position": {
+              "x": -1,
+              "y": 1403,
+              "z": 0
+            }
+          },
+          {
+            "tick": 1000,
+            "step": 3,
+            "position": {
+              "x": -2,
+              "y": 0,
+              "z": -1
+            }
+          },
+          {
+            "tick": 1500,
+            "step": 3,
+            "position": {
+              "x": -1,
+              "y": 1403,
+              "z": 0
+            }
+          }
+        ],
+        "elapsedSeconds": 2.4015687079999917,
+        "passed": true
+      },
+      {
+        "aircraft": "nazgul-eco-xl5-v11",
+        "mode": "acro",
+        "host": "academy",
+        "course": "flight-01",
+        "courseIdentity": "573db8b71fe99103",
+        "configIdentity": "bb21095218051411",
+        "backend": "civilian-quad-aircraft-regional.v3",
+        "durationSeconds": 32,
+        "airborneSeconds": 27.08,
+        "groundedSeconds": 4.92,
+        "secondTakeoffSeconds": 10,
+        "initialSupport": true,
+        "landed": true,
+        "minimumUpright": 0.9993894536031338,
+        "maximumYawDegreesPerSecond": 34.98672219892517,
+        "maximumClimbMetres": 1.4015990123152733,
+        "finalHash": "115b2117",
+        "finalPosition": {
+          "x": -1,
+          "y": 1398,
+          "z": 0
+        },
+        "pauseNoop": true,
+        "recoveryExact": true,
+        "recoveryAtSeconds": 24,
+        "recoveryContinuationSeconds": 8,
+        "retainedSegments": 1,
+        "retainedBytes": 148614,
+        "courseProgress": [
+          {
+            "tick": 500,
+            "step": 1,
+            "position": {
+              "x": -1,
+              "y": 1398,
+              "z": 0
+            }
+          },
+          {
+            "tick": 1000,
+            "step": 2,
+            "position": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            }
+          },
+          {
+            "tick": 1500,
+            "step": 2,
+            "position": {
+              "x": -1,
+              "y": 1398,
+              "z": 0
+            }
+          }
+        ],
+        "elapsedSeconds": 1.9735574999999954,
+        "passed": true
+      },
+      {
+        "aircraft": "nazgul-eco-xl5-v11",
+        "mode": "self-level",
+        "host": "academy",
+        "course": "flight-01",
+        "courseIdentity": "573db8b71fe99103",
+        "configIdentity": "63bf35a6ff123a9b",
+        "backend": "civilian-quad-aircraft-regional.v3",
+        "durationSeconds": 32,
+        "airborneSeconds": 27.08,
+        "groundedSeconds": 4.92,
+        "secondTakeoffSeconds": 10,
+        "initialSupport": true,
+        "landed": true,
+        "minimumUpright": 0.9999241145180816,
+        "maximumYawDegreesPerSecond": 34.98696854937326,
+        "maximumClimbMetres": 1.4017401561141014,
+        "finalHash": "d69d819a",
+        "finalPosition": {
+          "x": 0,
+          "y": 1398,
+          "z": 0
+        },
+        "pauseNoop": true,
+        "recoveryExact": true,
+        "recoveryAtSeconds": 24,
+        "recoveryContinuationSeconds": 8,
+        "retainedSegments": 1,
+        "retainedBytes": 151236,
+        "courseProgress": [
+          {
+            "tick": 500,
+            "step": 1,
+            "position": {
+              "x": 0,
+              "y": 1398,
+              "z": 0
+            }
+          },
+          {
+            "tick": 1000,
+            "step": 2,
+            "position": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            }
+          },
+          {
+            "tick": 1500,
+            "step": 2,
+            "position": {
+              "x": 0,
+              "y": 1398,
+              "z": 0
+            }
+          }
+        ],
+        "elapsedSeconds": 2.199467334000001,
+        "passed": true
+      },
+      {
+        "aircraft": "mach-r5-sport-2050",
+        "mode": "acro",
+        "host": "world",
+        "course": "adventure-coast-01",
+        "courseIdentity": "6a77435a26cd51c1",
+        "configIdentity": "de34abdb9ca50271",
+        "backend": "civilian-quad-aircraft-regional.v3",
+        "durationSeconds": 32,
+        "airborneSeconds": 27.1,
+        "groundedSeconds": 4.9,
+        "secondTakeoffSeconds": 10,
+        "initialSupport": true,
+        "landed": true,
+        "minimumUpright": 0.9997835575999325,
+        "maximumYawDegreesPerSecond": 37.21739671183545,
+        "maximumClimbMetres": 1.3991980850696564,
+        "finalHash": "7141dc55",
+        "finalPosition": {
+          "x": -1,
+          "y": 1399,
+          "z": 48000
+        },
+        "pauseNoop": true,
+        "recoveryExact": true,
+        "recoveryAtSeconds": 24,
+        "recoveryContinuationSeconds": 8,
+        "retainedSegments": 1,
+        "retainedBytes": 342421,
+        "courseProgress": [
+          {
+            "tick": 500,
+            "step": 0,
+            "position": {
+              "x": -1,
+              "y": 1399,
+              "z": 48000
+            }
+          },
+          {
+            "tick": 1000,
+            "step": 0,
+            "position": {
+              "x": 0,
+              "y": 0,
+              "z": 48000
+            }
+          },
+          {
+            "tick": 1500,
+            "step": 0,
+            "position": {
+              "x": -1,
+              "y": 1399,
+              "z": 48000
+            }
+          }
+        ],
+        "elapsedSeconds": 3.58356341599999,
+        "passed": true
+      },
+      {
+        "aircraft": "mach-r5-sport-2050",
+        "mode": "self-level",
+        "host": "world",
+        "course": "adventure-coast-01",
+        "courseIdentity": "6a77435a26cd51c1",
+        "configIdentity": "322c205ce3fdb667",
+        "backend": "civilian-quad-aircraft-regional.v3",
+        "durationSeconds": 32,
+        "airborneSeconds": 27.1,
+        "groundedSeconds": 4.9,
+        "secondTakeoffSeconds": 10,
+        "initialSupport": true,
+        "landed": true,
+        "minimumUpright": 0.9999906504204897,
+        "maximumYawDegreesPerSecond": 37.217997738708966,
+        "maximumClimbMetres": 1.399214655160904,
+        "finalHash": "26dd273e",
+        "finalPosition": {
+          "x": -1,
+          "y": 1399,
+          "z": 48000
+        },
+        "pauseNoop": true,
+        "recoveryExact": true,
+        "recoveryAtSeconds": 24,
+        "recoveryContinuationSeconds": 8,
+        "retainedSegments": 1,
+        "retainedBytes": 344808,
+        "courseProgress": [
+          {
+            "tick": 500,
+            "step": 0,
+            "position": {
+              "x": -1,
+              "y": 1398,
+              "z": 48000
+            }
+          },
+          {
+            "tick": 1000,
+            "step": 0,
+            "position": {
+              "x": 0,
+              "y": 0,
+              "z": 48000
+            }
+          },
+          {
+            "tick": 1500,
+            "step": 0,
+            "position": {
+              "x": -1,
+              "y": 1399,
+              "z": 48000
+            }
+          }
+        ],
+        "elapsedSeconds": 3.080537207999994,
+        "passed": true
+      },
+      {
+        "aircraft": "rekon7-pro-o3",
+        "mode": "acro",
+        "host": "learning",
+        "course": "beginner-01",
+        "courseIdentity": "2b283442c91e80fb",
+        "configIdentity": "07e13ee67049475d",
+        "backend": "civilian-quad-aircraft-regional.v3",
+        "durationSeconds": 32,
+        "airborneSeconds": 26.96,
+        "groundedSeconds": 5.04,
+        "secondTakeoffSeconds": 10,
+        "initialSupport": true,
+        "landed": true,
+        "minimumUpright": 0.9998079659356229,
+        "maximumYawDegreesPerSecond": 26.41129807125181,
+        "maximumClimbMetres": 1.4033348709344864,
+        "finalHash": "c5b0cf7c",
+        "finalPosition": {
+          "x": 0,
+          "y": 1396,
+          "z": 0
+        },
+        "pauseNoop": true,
+        "recoveryExact": true,
+        "recoveryAtSeconds": 24,
+        "recoveryContinuationSeconds": 8,
+        "retainedSegments": 1,
+        "retainedBytes": 148419,
+        "courseProgress": [
+          {
+            "tick": 500,
+            "step": 2,
+            "position": {
+              "x": 0,
+              "y": 1397,
+              "z": 0
+            }
+          },
+          {
+            "tick": 1000,
+            "step": 3,
+            "position": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            }
+          },
+          {
+            "tick": 1500,
+            "step": 3,
+            "position": {
+              "x": 0,
+              "y": 1396,
+              "z": 0
+            }
+          }
+        ],
+        "elapsedSeconds": 2.0536133329999866,
+        "passed": true
+      },
+      {
+        "aircraft": "rekon7-pro-o3",
+        "mode": "self-level",
+        "host": "learning",
+        "course": "beginner-01",
+        "courseIdentity": "2b283442c91e80fb",
+        "configIdentity": "a8f2bb3b3549bd33",
+        "backend": "civilian-quad-aircraft-regional.v3",
+        "durationSeconds": 32,
+        "airborneSeconds": 26.96,
+        "groundedSeconds": 5.04,
+        "secondTakeoffSeconds": 10,
+        "initialSupport": true,
+        "landed": true,
+        "minimumUpright": 0.9999347700434545,
+        "maximumYawDegreesPerSecond": 26.413132714262485,
+        "maximumClimbMetres": 1.4034853130578995,
+        "finalHash": "cee8f9d4",
+        "finalPosition": {
+          "x": 0,
+          "y": 1396,
+          "z": 0
+        },
+        "pauseNoop": true,
+        "recoveryExact": true,
+        "recoveryAtSeconds": 24,
+        "recoveryContinuationSeconds": 8,
+        "retainedSegments": 1,
+        "retainedBytes": 151917,
+        "courseProgress": [
+          {
+            "tick": 500,
+            "step": 2,
+            "position": {
+              "x": 0,
+              "y": 1396,
+              "z": 0
+            }
+          },
+          {
+            "tick": 1000,
+            "step": 3,
+            "position": {
+              "x": 0,
+              "y": 0,
+              "z": 1
+            }
+          },
+          {
+            "tick": 1500,
+            "step": 3,
+            "position": {
+              "x": 0,
+              "y": 1397,
+              "z": 0
+            }
+          }
+        ],
+        "elapsedSeconds": 2.1906564579999976,
+        "passed": true
+      },
+      {
+        "aircraft": "chimera7-pro-v2-o4",
+        "mode": "acro",
+        "host": "academy",
+        "course": "flight-01",
+        "courseIdentity": "573db8b71fe99103",
+        "configIdentity": "f36860f36c430cbe",
+        "backend": "civilian-quad-aircraft-regional.v3",
+        "durationSeconds": 32,
+        "airborneSeconds": 26.96,
+        "groundedSeconds": 5.04,
+        "secondTakeoffSeconds": 10,
+        "initialSupport": true,
+        "landed": true,
+        "minimumUpright": 0.999228396671942,
+        "maximumYawDegreesPerSecond": 25.683354144536047,
+        "maximumClimbMetres": 1.3994126990437508,
+        "finalHash": "bbb103ad",
+        "finalPosition": {
+          "x": 0,
+          "y": 1399,
+          "z": 0
+        },
+        "pauseNoop": true,
+        "recoveryExact": true,
+        "recoveryAtSeconds": 24,
+        "recoveryContinuationSeconds": 8,
+        "retainedSegments": 1,
+        "retainedBytes": 148693,
+        "courseProgress": [
+          {
+            "tick": 500,
+            "step": 1,
+            "position": {
+              "x": 0,
+              "y": 1399,
+              "z": 6
+            }
+          },
+          {
+            "tick": 1000,
+            "step": 2,
+            "position": {
+              "x": 1,
+              "y": 0,
+              "z": -5
+            }
+          },
+          {
+            "tick": 1500,
+            "step": 2,
+            "position": {
+              "x": 0,
+              "y": 1399,
+              "z": -1
+            }
+          }
+        ],
+        "elapsedSeconds": 1.8928503749999945,
+        "passed": true
+      },
+      {
+        "aircraft": "chimera7-pro-v2-o4",
+        "mode": "self-level",
+        "host": "academy",
+        "course": "flight-01",
+        "courseIdentity": "573db8b71fe99103",
+        "configIdentity": "dff899becefcc4c8",
+        "backend": "civilian-quad-aircraft-regional.v3",
+        "durationSeconds": 32,
+        "airborneSeconds": 26.96,
+        "groundedSeconds": 5.04,
+        "secondTakeoffSeconds": 10,
+        "initialSupport": true,
+        "landed": true,
+        "minimumUpright": 0.9999569589024215,
+        "maximumYawDegreesPerSecond": 25.68317454258482,
+        "maximumClimbMetres": 1.3994513228535652,
+        "finalHash": "bfb912b9",
+        "finalPosition": {
+          "x": 0,
+          "y": 1399,
+          "z": 1
+        },
+        "pauseNoop": true,
+        "recoveryExact": true,
+        "recoveryAtSeconds": 24,
+        "recoveryContinuationSeconds": 8,
+        "retainedSegments": 1,
+        "retainedBytes": 150610,
+        "courseProgress": [
+          {
+            "tick": 500,
+            "step": 1,
+            "position": {
+              "x": 0,
+              "y": 1399,
+              "z": 4
+            }
+          },
+          {
+            "tick": 1000,
+            "step": 2,
+            "position": {
+              "x": 0,
+              "y": 0,
+              "z": -4
+            }
+          },
+          {
+            "tick": 1500,
+            "step": 2,
+            "position": {
+              "x": 0,
+              "y": 1399,
+              "z": 0
+            }
+          }
+        ],
+        "elapsedSeconds": 2.1457540410000076,
+        "passed": true
+      },
+      {
+        "aircraft": "helion-pro-o4",
+        "mode": "acro",
+        "host": "world",
+        "course": "adventure-coast-01",
+        "courseIdentity": "6a77435a26cd51c1",
+        "configIdentity": "d04641fdccd9a4af",
+        "backend": "civilian-quad-aircraft-regional.v3",
+        "durationSeconds": 32,
+        "airborneSeconds": 26.88,
+        "groundedSeconds": 5.12,
+        "secondTakeoffSeconds": 10,
+        "initialSupport": true,
+        "landed": true,
+        "minimumUpright": 0.9999959512618827,
+        "maximumYawDegreesPerSecond": 23.292908196759264,
+        "maximumClimbMetres": 1.4034499526023865,
+        "finalHash": "5af476fb",
+        "finalPosition": {
+          "x": 0,
+          "y": 1403,
+          "z": 48000
+        },
+        "pauseNoop": true,
+        "recoveryExact": true,
+        "recoveryAtSeconds": 24,
+        "recoveryContinuationSeconds": 8,
+        "retainedSegments": 1,
+        "retainedBytes": 342379,
+        "courseProgress": [
+          {
+            "tick": 500,
+            "step": 0,
+            "position": {
+              "x": 0,
+              "y": 1403,
+              "z": 48000
+            }
+          },
+          {
+            "tick": 1000,
+            "step": 0,
+            "position": {
+              "x": 1,
+              "y": 0,
+              "z": 48000
+            }
+          },
+          {
+            "tick": 1500,
+            "step": 0,
+            "position": {
+              "x": 0,
+              "y": 1403,
+              "z": 48000
+            }
+          }
+        ],
+        "elapsedSeconds": 3.713478040999995,
+        "passed": true
+      },
+      {
+        "aircraft": "helion-pro-o4",
+        "mode": "self-level",
+        "host": "world",
+        "course": "adventure-coast-01",
+        "courseIdentity": "6a77435a26cd51c1",
+        "configIdentity": "f7ac3140df22cdc5",
+        "backend": "civilian-quad-aircraft-regional.v3",
+        "durationSeconds": 32,
+        "airborneSeconds": 26.84,
+        "groundedSeconds": 5.16,
+        "secondTakeoffSeconds": 10,
+        "initialSupport": true,
+        "landed": true,
+        "minimumUpright": 0.9999950129198817,
+        "maximumYawDegreesPerSecond": 23.29385667402027,
+        "maximumClimbMetres": 1.4034417271614075,
+        "finalHash": "50937ca9",
+        "finalPosition": {
+          "x": 0,
+          "y": 1403,
+          "z": 48002
+        },
+        "pauseNoop": true,
+        "recoveryExact": true,
+        "recoveryAtSeconds": 24,
+        "recoveryContinuationSeconds": 8,
+        "retainedSegments": 1,
+        "retainedBytes": 345381,
+        "courseProgress": [
+          {
+            "tick": 500,
+            "step": 0,
+            "position": {
+              "x": 0,
+              "y": 1403,
+              "z": 48000
+            }
+          },
+          {
+            "tick": 1000,
+            "step": 0,
+            "position": {
+              "x": 0,
+              "y": 0,
+              "z": 48002
+            }
+          },
+          {
+            "tick": 1500,
+            "step": 0,
+            "position": {
+              "x": 0,
+              "y": 1403,
+              "z": 48002
+            }
+          }
+        ],
+        "elapsedSeconds": 2.8510792919999948,
+        "passed": true
+      },
+      {
+        "aircraft": "holybro-x650-v2",
+        "mode": "acro",
+        "host": "learning",
+        "course": "beginner-01",
+        "courseIdentity": "2b283442c91e80fb",
+        "configIdentity": "23f18b5202f30997",
+        "backend": "civilian-quad-aircraft-regional.v3",
+        "durationSeconds": 32,
+        "airborneSeconds": 26.64,
+        "groundedSeconds": 5.36,
+        "secondTakeoffSeconds": 10,
+        "initialSupport": true,
+        "landed": true,
+        "minimumUpright": 0.9998282630589499,
+        "maximumYawDegreesPerSecond": 15.466331614370329,
+        "maximumClimbMetres": 1.4035342782735825,
+        "finalHash": "3b59ace0",
+        "finalPosition": {
+          "x": 0,
+          "y": 1397,
+          "z": 0
+        },
+        "pauseNoop": true,
+        "recoveryExact": true,
+        "recoveryAtSeconds": 24,
+        "recoveryContinuationSeconds": 8,
+        "retainedSegments": 1,
+        "retainedBytes": 148583,
+        "courseProgress": [
+          {
+            "tick": 500,
+            "step": 2,
+            "position": {
+              "x": 0,
+              "y": 1397,
+              "z": 0
+            }
+          },
+          {
+            "tick": 1000,
+            "step": 3,
+            "position": {
+              "x": 1,
+              "y": 0,
+              "z": 1
+            }
+          },
+          {
+            "tick": 1500,
+            "step": 3,
+            "position": {
+              "x": 0,
+              "y": 1397,
+              "z": 0
+            }
+          }
+        ],
+        "elapsedSeconds": 1.879432541999995,
+        "passed": true
+      },
+      {
+        "aircraft": "holybro-x650-v2",
+        "mode": "self-level",
+        "host": "learning",
+        "course": "beginner-01",
+        "courseIdentity": "2b283442c91e80fb",
+        "configIdentity": "27726019362474b1",
+        "backend": "civilian-quad-aircraft-regional.v3",
+        "durationSeconds": 32,
+        "airborneSeconds": 26.66,
+        "groundedSeconds": 5.34,
+        "secondTakeoffSeconds": 10,
+        "initialSupport": true,
+        "landed": true,
+        "minimumUpright": 0.9996132846029624,
+        "maximumYawDegreesPerSecond": 15.466452706443391,
+        "maximumClimbMetres": 1.4034987539052963,
+        "finalHash": "8d5e456f",
+        "finalPosition": {
+          "x": 0,
+          "y": 1397,
+          "z": 0
+        },
+        "pauseNoop": true,
+        "recoveryExact": true,
+        "recoveryAtSeconds": 24,
+        "recoveryContinuationSeconds": 8,
+        "retainedSegments": 1,
+        "retainedBytes": 151676,
+        "courseProgress": [
+          {
+            "tick": 500,
+            "step": 2,
+            "position": {
+              "x": 0,
+              "y": 1397,
+              "z": 0
+            }
+          },
+          {
+            "tick": 1000,
+            "step": 3,
+            "position": {
+              "x": 1,
+              "y": 0,
+              "z": 0
+            }
+          },
+          {
+            "tick": 1500,
+            "step": 3,
+            "position": {
+              "x": 0,
+              "y": 1397,
+              "z": 0
+            }
+          }
+        ],
+        "elapsedSeconds": 2.3141801669999986,
+        "passed": true
+      },
+      {
+        "aircraft": "meteor75-analog-2022",
+        "mode": "acro",
+        "host": "regional",
+        "passed": false,
+        "error": "Error: ENOENT: no such file or directory, open '/private/tmp/fpv-current-contact-20261019/authoring/fpv-worlds/regions/canyon-badlands/delivery-expanse-r1/delivery.json'\n    at async open (node:internal/fs/promises:639:25)\n    at async readFile (node:internal/fs/promises:1246:14)\n    at async realRegionalGeometry (file:///private/tmp/fpv-current-contact-20261019/game/test/helpers/fpv-regional-real-geometry.mjs:17:27)\n    at async qualifyRegionalAircraft (file:///private/tmp/fpv-current-contact-20261019/game/test/helpers/fpv-aircraft-sustained-qualification.mjs:354:20)\n    at async run (file:///private/tmp/fpv-current-contact-20261019/game/test/helpers/fpv-aircraft-sustained-qualification.mjs:432:22)\n    at async runSustainedQualification (file:///private/tmp/fpv-current-contact-20261019/game/test/helpers/fpv-aircraft-sustained-qualification.mjs:448:9)\n    at async file:///private/tmp/fpv-r20-sustained-current.mjs:6:14"
+      },
+      {
+        "aircraft": "meteor75-analog-2022",
+        "mode": "self-level",
+        "host": "regional",
+        "passed": false,
+        "error": "Error: ENOENT: no such file or directory, open '/private/tmp/fpv-current-contact-20261019/authoring/fpv-worlds/regions/canyon-badlands/delivery-expanse-r1/delivery.json'\n    at async open (node:internal/fs/promises:639:25)\n    at async readFile (node:internal/fs/promises:1246:14)\n    at async realRegionalGeometry (file:///private/tmp/fpv-current-contact-20261019/game/test/helpers/fpv-regional-real-geometry.mjs:17:27)\n    at async qualifyRegionalAircraft (file:///private/tmp/fpv-current-contact-20261019/game/test/helpers/fpv-aircraft-sustained-qualification.mjs:354:20)\n    at async run (file:///private/tmp/fpv-current-contact-20261019/game/test/helpers/fpv-aircraft-sustained-qualification.mjs:432:22)\n    at async runSustainedQualification (file:///private/tmp/fpv-current-contact-20261019/game/test/helpers/fpv-aircraft-sustained-qualification.mjs:448:9)\n    at async file:///private/tmp/fpv-r20-sustained-current.mjs:6:14"
+      },
+      {
+        "aircraft": "holybro-x650-v2",
+        "mode": "acro",
+        "host": "regional",
+        "passed": false,
+        "error": "Error: ENOENT: no such file or directory, open '/private/tmp/fpv-current-contact-20261019/authoring/fpv-worlds/regions/canyon-badlands/delivery-expanse-r1/delivery.json'\n    at async open (node:internal/fs/promises:639:25)\n    at async readFile (node:internal/fs/promises:1246:14)\n    at async realRegionalGeometry (file:///private/tmp/fpv-current-contact-20261019/game/test/helpers/fpv-regional-real-geometry.mjs:17:27)\n    at async qualifyRegionalAircraft (file:///private/tmp/fpv-current-contact-20261019/game/test/helpers/fpv-aircraft-sustained-qualification.mjs:354:20)\n    at async run (file:///private/tmp/fpv-current-contact-20261019/game/test/helpers/fpv-aircraft-sustained-qualification.mjs:432:22)\n    at async runSustainedQualification (file:///private/tmp/fpv-current-contact-20261019/game/test/helpers/fpv-aircraft-sustained-qualification.mjs:448:9)\n    at async file:///private/tmp/fpv-r20-sustained-current.mjs:6:14"
+      },
+      {
+        "aircraft": "holybro-x650-v2",
+        "mode": "self-level",
+        "host": "regional",
+        "passed": false,
+        "error": "Error: ENOENT: no such file or directory, open '/private/tmp/fpv-current-contact-20261019/authoring/fpv-worlds/regions/canyon-badlands/delivery-expanse-r1/delivery.json'\n    at async open (node:internal/fs/promises:639:25)\n    at async readFile (node:internal/fs/promises:1246:14)\n    at async realRegionalGeometry (file:///private/tmp/fpv-current-contact-20261019/game/test/helpers/fpv-regional-real-geometry.mjs:17:27)\n    at async qualifyRegionalAircraft (file:///private/tmp/fpv-current-contact-20261019/game/test/helpers/fpv-aircraft-sustained-qualification.mjs:354:20)\n    at async run (file:///private/tmp/fpv-current-contact-20261019/game/test/helpers/fpv-aircraft-sustained-qualification.mjs:432:22)\n    at async runSustainedQualification (file:///private/tmp/fpv-current-contact-20261019/game/test/helpers/fpv-aircraft-sustained-qualification.mjs:448:9)\n    at async file:///private/tmp/fpv-r20-sustained-current.mjs:6:14"
+      },
+      {
+        "aircraft": "meteor75-analog-2022",
+        "mode": "self-level",
+        "host": "academy",
+        "course": "flight-01",
+        "courseIdentity": "573db8b71fe99103",
+        "configIdentity": "b83fe9c0ed075755",
+        "backend": "civilian-quad-aircraft-regional.v3",
+        "durationSeconds": 735,
+        "airborneSeconds": 730.08,
+        "groundedSeconds": 4.92,
+        "secondTakeoffSeconds": 713,
+        "initialSupport": true,
+        "landed": true,
+        "minimumUpright": 0.999832806732033,
+        "maximumYawDegreesPerSecond": 29.859213334363144,
+        "maximumClimbMetres": 1.4050590228289366,
+        "finalHash": "ed3c9918",
+        "finalPosition": {
+          "x": 0,
+          "y": 1399,
+          "z": 0
+        },
+        "pauseNoop": true,
+        "recoveryExact": true,
+        "recoveryAtSeconds": 732,
+        "recoveryContinuationSeconds": 3,
+        "retainedSegments": 3,
+        "retainedBytes": 725749,
+        "courseProgress": [
+          {
+            "tick": 500,
+            "step": 1,
+            "position": {
+              "x": -1,
+              "y": 1399,
+              "z": 0
+            }
+          },
+          {
+            "tick": 1000,
+            "step": 2,
+            "position": {
+              "x": 1,
+              "y": 0,
+              "z": 0
+            }
+          },
+          {
+            "tick": 1500,
+            "step": 2,
+            "position": {
+              "x": 0,
+              "y": 1399,
+              "z": 0
+            }
+          },
+          {
+            "tick": 2000,
+            "step": 2,
+            "position": {
+              "x": 0,
+              "y": 1399,
+              "z": 0
+            }
+          },
+          {
+            "tick": 2500,
+            "step": 2,
+            "position": {
+              "x": 0,
+              "y": 1399,
+              "z": 0
+            }
+          },
+          {
+            "tick": 3000,
+            "step": 2,
+            "position": {
+              "x": 0,
+              "y": 1399,
+              "z": 0
+            }
+          },
+          {
+            "tick": 3500,
+            "step": 2,
+            "position": {
+              "x": 0,
+              "y": 1399,
+              "z": 0
+            }
+          },
+          {
+            "tick": 4000,
+            "step": 2,
+            "position": {
+              "x": 0,
+              "y": 1399,
+              "z": 0
+            }
+          },
+          {
+            "tick": 4500,
+            "step": 2,
+            "position": {
+              "x": 0,
+              "y": 1399,
+              "z": 0
+            }
+          },
+          {
+            "tick": 5000,
+            "step": 2,
+            "position": {
+              "x": 0,
+              "y": 1399,
+              "z": 0
+            }
+          },
+          {
+            "tick": 5500,
+            "step": 2,
+            "position": {
+              "x": 0,
+              "y": 1399,
+              "z": 0
+            }
+          },
+          {
+            "tick": 6000,
+            "step": 2,
+            "position": {
+              "x": 0,
+              "y": 1399,
+              "z": 0
+            }
+          },
+          {
+            "tick": 6500,
+            "step": 2,
+            "position": {
+              "x": 0,
+              "y": 1399,
+              "z": 0
+            }
+          },
+          {
+            "tick": 7000,
+            "step": 2,
+            "position": {
+              "x": 0,
+              "y": 1399,
+              "z": 0
+            }
+          },
+          {
+            "tick": 7500,
+            "step": 2,
+            "position": {
+              "x": 0,
+              "y": 1399,
+              "z": 0
+            }
+          },
+          {
+            "tick": 8000,
+            "step": 2,
+            "position": {
+              "x": 0,
+              "y": 1399,
+              "z": 0
+            }
+          },
+          {
+            "tick": 8500,
+            "step": 2,
+            "position": {
+              "x": 0,
+              "y": 1399,
+              "z": 0
+            }
+          },
+          {
+            "tick": 9000,
+            "step": 2,
+            "position": {
+              "x": 0,
+              "y": 1399,
+              "z": 0
+            }
+          },
+          {
+            "tick": 9500,
+            "step": 2,
+            "position": {
+              "x": 0,
+              "y": 1399,
+              "z": 0
+            }
+          },
+          {
+            "tick": 10000,
+            "step": 2,
+            "position": {
+              "x": 0,
+              "y": 1399,
+              "z": 0
+            }
+          },
+          {
+            "tick": 10500,
+            "step": 2,
+            "position": {
+              "x": 0,
+              "y": 1399,
+              "z": 0
+            }
+          },
+          {
+            "tick": 11000,
+            "step": 2,
+            "position": {
+              "x": 0,
+              "y": 1399,
+              "z": 0
+            }
+          },
+          {
+            "tick": 11500,
+            "step": 2,
+            "position": {
+              "x": 0,
+              "y": 1399,
+              "z": 0
+            }
+          },
+          {
+            "tick": 12000,
+            "step": 2,
+            "position": {
+              "x": 0,
+              "y": 1399,
+              "z": 0
+            }
+          },
+          {
+            "tick": 12500,
+            "step": 2,
+            "position": {
+              "x": 0,
+              "y": 1399,
+              "z": 0
+            }
+          },
+          {
+            "tick": 13000,
+            "step": 2,
+            "position": {
+              "x": 0,
+              "y": 1399,
+              "z": 0
+            }
+          },
+          {
+            "tick": 13500,
+            "step": 2,
+            "position": {
+              "x": 0,
+              "y": 1399,
+              "z": 0
+            }
+          },
+          {
+            "tick": 14000,
+            "step": 2,
+            "position": {
+              "x": 0,
+              "y": 1399,
+              "z": 0
+            }
+          },
+          {
+            "tick": 14500,
+            "step": 2,
+            "position": {
+              "x": 0,
+              "y": 1399,
+              "z": 0
+            }
+          },
+          {
+            "tick": 15000,
+            "step": 2,
+            "position": {
+              "x": 0,
+              "y": 1399,
+              "z": 0
+            }
+          },
+          {
+            "tick": 15500,
+            "step": 2,
+            "position": {
+              "x": 0,
+              "y": 1399,
+              "z": 0
+            }
+          },
+          {
+            "tick": 16000,
+            "step": 2,
+            "position": {
+              "x": 0,
+              "y": 1399,
+              "z": 0
+            }
+          },
+          {
+            "tick": 16500,
+            "step": 2,
+            "position": {
+              "x": 0,
+              "y": 1399,
+              "z": 0
+            }
+          },
+          {
+            "tick": 17000,
+            "step": 2,
+            "position": {
+              "x": 0,
+              "y": 1399,
+              "z": 0
+            }
+          },
+          {
+            "tick": 17500,
+            "step": 2,
+            "position": {
+              "x": 0,
+              "y": 1399,
+              "z": 0
+            }
+          },
+          {
+            "tick": 18000,
+            "step": 2,
+            "position": {
+              "x": 0,
+              "y": 1399,
+              "z": 0
+            }
+          },
+          {
+            "tick": 18500,
+            "step": 2,
+            "position": {
+              "x": 0,
+              "y": 1399,
+              "z": 0
+            }
+          },
+          {
+            "tick": 19000,
+            "step": 2,
+            "position": {
+              "x": 0,
+              "y": 1399,
+              "z": 0
+            }
+          },
+          {
+            "tick": 19500,
+            "step": 2,
+            "position": {
+              "x": 0,
+              "y": 1399,
+              "z": 0
+            }
+          },
+          {
+            "tick": 20000,
+            "step": 2,
+            "position": {
+              "x": 0,
+              "y": 1399,
+              "z": 0
+            }
+          },
+          {
+            "tick": 20500,
+            "step": 2,
+            "position": {
+              "x": 0,
+              "y": 1399,
+              "z": 0
+            }
+          },
+          {
+            "tick": 21000,
+            "step": 2,
+            "position": {
+              "x": 0,
+              "y": 1399,
+              "z": 0
+            }
+          },
+          {
+            "tick": 21500,
+            "step": 2,
+            "position": {
+              "x": 0,
+              "y": 1399,
+              "z": 0
+            }
+          },
+          {
+            "tick": 22000,
+            "step": 2,
+            "position": {
+              "x": 0,
+              "y": 1399,
+              "z": 0
+            }
+          },
+          {
+            "tick": 22500,
+            "step": 2,
+            "position": {
+              "x": 0,
+              "y": 1399,
+              "z": 0
+            }
+          },
+          {
+            "tick": 23000,
+            "step": 2,
+            "position": {
+              "x": 0,
+              "y": 1399,
+              "z": 0
+            }
+          },
+          {
+            "tick": 23500,
+            "step": 2,
+            "position": {
+              "x": 0,
+              "y": 1399,
+              "z": 0
+            }
+          },
+          {
+            "tick": 24000,
+            "step": 2,
+            "position": {
+              "x": 0,
+              "y": 1399,
+              "z": 0
+            }
+          },
+          {
+            "tick": 24500,
+            "step": 2,
+            "position": {
+              "x": 0,
+              "y": 1399,
+              "z": 0
+            }
+          },
+          {
+            "tick": 25000,
+            "step": 2,
+            "position": {
+              "x": 0,
+              "y": 1399,
+              "z": 0
+            }
+          },
+          {
+            "tick": 25500,
+            "step": 2,
+            "position": {
+              "x": 0,
+              "y": 1399,
+              "z": 0
+            }
+          },
+          {
+            "tick": 26000,
+            "step": 2,
+            "position": {
+              "x": 0,
+              "y": 1399,
+              "z": 0
+            }
+          },
+          {
+            "tick": 26500,
+            "step": 2,
+            "position": {
+              "x": 0,
+              "y": 1399,
+              "z": 0
+            }
+          },
+          {
+            "tick": 27000,
+            "step": 2,
+            "position": {
+              "x": 0,
+              "y": 1399,
+              "z": 0
+            }
+          },
+          {
+            "tick": 27500,
+            "step": 2,
+            "position": {
+              "x": 0,
+              "y": 1399,
+              "z": 0
+            }
+          },
+          {
+            "tick": 28000,
+            "step": 2,
+            "position": {
+              "x": 0,
+              "y": 1399,
+              "z": 0
+            }
+          },
+          {
+            "tick": 28500,
+            "step": 2,
+            "position": {
+              "x": 0,
+              "y": 1399,
+              "z": 0
+            }
+          },
+          {
+            "tick": 29000,
+            "step": 2,
+            "position": {
+              "x": 0,
+              "y": 1399,
+              "z": 0
+            }
+          },
+          {
+            "tick": 29500,
+            "step": 2,
+            "position": {
+              "x": 0,
+              "y": 1399,
+              "z": 0
+            }
+          },
+          {
+            "tick": 30000,
+            "step": 2,
+            "position": {
+              "x": 0,
+              "y": 1399,
+              "z": 0
+            }
+          },
+          {
+            "tick": 30500,
+            "step": 2,
+            "position": {
+              "x": 0,
+              "y": 1399,
+              "z": 0
+            }
+          },
+          {
+            "tick": 31000,
+            "step": 2,
+            "position": {
+              "x": 0,
+              "y": 1399,
+              "z": 0
+            }
+          },
+          {
+            "tick": 31500,
+            "step": 2,
+            "position": {
+              "x": 0,
+              "y": 1399,
+              "z": 0
+            }
+          },
+          {
+            "tick": 32000,
+            "step": 2,
+            "position": {
+              "x": 0,
+              "y": 1399,
+              "z": 0
+            }
+          },
+          {
+            "tick": 32500,
+            "step": 2,
+            "position": {
+              "x": 0,
+              "y": 1399,
+              "z": 0
+            }
+          },
+          {
+            "tick": 33000,
+            "step": 2,
+            "position": {
+              "x": 0,
+              "y": 1399,
+              "z": 0
+            }
+          },
+          {
+            "tick": 33500,
+            "step": 2,
+            "position": {
+              "x": 0,
+              "y": 1399,
+              "z": 0
+            }
+          },
+          {
+            "tick": 34000,
+            "step": 2,
+            "position": {
+              "x": 0,
+              "y": 1399,
+              "z": 0
+            }
+          },
+          {
+            "tick": 34500,
+            "step": 2,
+            "position": {
+              "x": 0,
+              "y": 1399,
+              "z": 0
+            }
+          },
+          {
+            "tick": 35000,
+            "step": 2,
+            "position": {
+              "x": 0,
+              "y": 1399,
+              "z": 0
+            }
+          },
+          {
+            "tick": 35500,
+            "step": 2,
+            "position": {
+              "x": 0,
+              "y": 1399,
+              "z": 0
+            }
+          },
+          {
+            "tick": 36000,
+            "step": 2,
+            "position": {
+              "x": 0,
+              "y": 1399,
+              "z": 0
+            }
+          },
+          {
+            "tick": 36500,
+            "step": 2,
+            "position": {
+              "x": 0,
+              "y": 1399,
+              "z": 0
+            }
+          }
+        ],
+        "elapsedSeconds": 24.498643542000003,
+        "passed": true
+      }
+    ],
+    "limitations": [
+      "Selected hashes only, not complete transitive closure.",
+      "Direct in-process production simulation, not browser/worker/native/device/IndexedDB evidence.",
+      "Thirty catalog course cases rotate authored host; four Regional cases; one735-second Meteor75 run. Not every possible course/aircraft/host combination.",
+      "Bounded retained segments asserted; no whole-process memory bound or real-time gate.",
+      "Unscored software controllability, not measured real-aircraft fidelity."
+    ]
+  },
+  "regionalFixtureRetry": {
+    "format": "AircraftCurrentContactSustained.v1",
+    "sourceRevision": "68f9a39362ac50e483d9a1447ead5e68af168c5b",
+    "startedAt": "2026-10-18T22:59:28.282Z",
+    "finishedAt": "2026-10-18T23:06:42.608Z",
+    "elapsedSeconds": 434.323958625,
+    "selectedSourceSha256": {
+      "game/test/helpers/fpv-aircraft-sustained-qualification.mjs": "1fb59e3205d0fd7a0c9de98393573a1a71eb167b8726b392fa8366fc0dfdb445",
+      "game/test/helpers/fpv-regional-real-geometry.mjs": "85e52e017b02d2dbf4773448691eac3415eee46e93a9876bb42a0e35555c4414",
+      "optional-practice/civilian-fpv/advanced-simulation.mjs": "b1bd0944ae095ab05ffb85e78deddee757ab9641053b981f4f78a52c2640d69c",
+      "optional-practice/civilian-fpv/advanced-aircraft-runtime.mjs": "2a38134de98562ae426e22737684c6e690321b148a1ed3e4f3209527ca0585b2",
+      "optional-practice/civilian-fpv/advanced-regional.mjs": "7c335b0cf0044bc52e0a0ff2b87e08336eeed148f034616fa51aeed87ce6eb63",
+      "optional-practice/civilian-fpv/aircraft-course-session.mjs": "0d71939840f1e09b5328581a267bce1df732dc948756bf9d96f82eb97ceeec6e",
+      "optional-practice/civilian-fpv/aircraft-physics.mjs": "7bc651f151e0729541a9323c075ea40a1bcccb0fb9cd0379c202b1a77421351a",
+      "optional-practice/civilian-fpv/aircraft-presets.mjs": "c3bceb64f9cfef85c6894c2b69814c70886b6f30b7301e2659382e24bbee56e6",
+      "optional-practice/civilian-fpv/aircraft-recording.mjs": "79bf6f61f982c1c45186e494f64a0ee0a55d07dbf6e405f121f2d8ec0b665cce",
+      "optional-practice/civilian-fpv/aircraft-response.mjs": "c89d28ca2b504b880c1b8e77fe1be9d197129b18d4273f8d72b548bba5169303",
+      "optional-practice/civilian-fpv/rates.mjs": "12b66e90c2b59d2495131f42dcd4281cfbfa87a705245ce73aa1a2abc6dfdec5",
+      "optional-practice/civilian-fpv/radio-profile.mjs": "d972a03be9f62d390894958b8fa58ae7ac3f97bab2d797b165fca4ab98c506ed",
+      "optional-practice/civilian-fpv/model.mjs": "0b10fc11948bbca05e23eb6d096a95b97c02aad0573e17d68ac9404ba6694909",
+      "optional-practice/civilian-fpv/world-model.mjs": "1ee223ec4be6ffdfb1e3285a8d0dbf64388d78471570d700485b2d42df6354f2"
+    },
+    "sourcesStable": true,
+    "runtime": {
+      "node": "v20.19.5",
+      "architecture": "arm64",
+      "platform": "darwin",
+      "processor": "Apple M4 Pro"
+    },
+    "missionHz": 50,
+    "physicsHz": 1000,
+    "results": [
+      {
+        "aircraft": "meteor75-analog-2022",
+        "mode": "acro",
+        "host": "regional",
+        "source": {
+          "id": "canyon-expanse-study",
+          "revision": "relief-r1",
+          "sha256": "d2c3dce6c39227e85a10256fb3d1082fec2a6c7a47f6347fd664e2840eb57003"
+        },
+        "boundaryRollback": true,
+        "configIdentity": "599d0cd9b0953eaf",
+        "backend": "civilian-quad-aircraft-regional.v3",
+        "durationSeconds": 65,
+        "airborneSeconds": 61.5,
+        "groundedSeconds": 3.5,
+        "secondTakeoffSeconds": 30,
+        "initialSupport": false,
+        "landed": true,
+        "minimumUpright": 0.9900402706167325,
+        "maximumYawDegreesPerSecond": 29.859814617201835,
+        "maximumClimbMetres": 1.405195951461792,
+        "finalHash": "70a05b99",
+        "finalPosition": {
+          "x": 1569996.9533426848,
+          "y": 19643.159345433505,
+          "z": 1759995.68367891
+        },
+        "pauseNoop": true,
+        "recoveryExact": true,
+        "recoveryAtSeconds": 62,
+        "recoveryContinuationSeconds": 3,
+        "retainedSegments": 2,
+        "retainedBytes": 4292892,
+        "courseProgress": [
+          {
+            "tick": 500,
+            "step": 0,
+            "position": {
+              "x": 1570000.0005195402,
+              "y": 19643.141741021336,
+              "z": 1759999.9999744515
+            }
+          },
+          {
+            "tick": 1000,
+            "step": 0,
+            "position": {
+              "x": 1570000.0038444642,
+              "y": 17409.65838840704,
+              "z": 1760000.0012628264
+            }
+          },
+          {
+            "tick": 1500,
+            "step": 0,
+            "position": {
+              "x": 1570000.0554355034,
+              "y": 13503.734097028908,
+              "z": 1759999.9905937717
+            }
+          },
+          {
+            "tick": 2000,
+            "step": 0,
+            "position": {
+              "x": 1569901.7885416034,
+              "y": 17146.752131962523,
+              "z": 1760118.157382971
+            }
+          },
+          {
+            "tick": 2500,
+            "step": 0,
+            "position": {
+              "x": 1569999.8699510056,
+              "y": 19643.159186070643,
+              "z": 1759997.2526399684
+            }
+          },
+          {
+            "tick": 3000,
+            "step": 0,
+            "position": {
+              "x": 1569997.1201768448,
+              "y": 19643.15925495834,
+              "z": 1759993.9171440064
+            }
+          }
+        ],
+        "elapsedSeconds": 102.68527,
+        "passed": true
+      },
+      {
+        "aircraft": "meteor75-analog-2022",
+        "mode": "self-level",
+        "host": "regional",
+        "source": {
+          "id": "canyon-expanse-study",
+          "revision": "relief-r1",
+          "sha256": "d2c3dce6c39227e85a10256fb3d1082fec2a6c7a47f6347fd664e2840eb57003"
+        },
+        "boundaryRollback": true,
+        "configIdentity": "b83fe9c0ed075755",
+        "backend": "civilian-quad-aircraft-regional.v3",
+        "durationSeconds": 65,
+        "airborneSeconds": 61.5,
+        "groundedSeconds": 3.5,
+        "secondTakeoffSeconds": 30,
+        "initialSupport": false,
+        "landed": true,
+        "minimumUpright": 0.9896157301026356,
+        "maximumYawDegreesPerSecond": 29.860060504001332,
+        "maximumClimbMetres": 1.4051172733306885,
+        "finalHash": "0ca3dd31",
+        "finalPosition": {
+          "x": 1569997.0349896173,
+          "y": 19643.149148108187,
+          "z": 1759996.7726729442
+        },
+        "pauseNoop": true,
+        "recoveryExact": true,
+        "recoveryAtSeconds": 62,
+        "recoveryContinuationSeconds": 3,
+        "retainedSegments": 2,
+        "retainedBytes": 4290985,
+        "courseProgress": [
+          {
+            "tick": 500,
+            "step": 0,
+            "position": {
+              "x": 1570000.000066599,
+              "y": 19643.141734764715,
+              "z": 1759999.9998602043
+            }
+          },
+          {
+            "tick": 1000,
+            "step": 0,
+            "position": {
+              "x": 1570000.0205836394,
+              "y": 17409.65794628961,
+              "z": 1760000.0006145192
+            }
+          },
+          {
+            "tick": 1500,
+            "step": 0,
+            "position": {
+              "x": 1570000.016805084,
+              "y": 13503.733736911097,
+              "z": 1759999.9955623576
+            }
+          },
+          {
+            "tick": 2000,
+            "step": 0,
+            "position": {
+              "x": 1569909.254796735,
+              "y": 17147.757663520144,
+              "z": 1760102.977676721
+            }
+          },
+          {
+            "tick": 2500,
+            "step": 0,
+            "position": {
+              "x": 1569998.1790986236,
+              "y": 19643.14955844557,
+              "z": 1759994.3773543027
+            }
+          },
+          {
+            "tick": 3000,
+            "step": 0,
+            "position": {
+              "x": 1569996.8341586522,
+              "y": 19643.149396778612,
+              "z": 1759994.4366709033
+            }
+          }
+        ],
+        "elapsedSeconds": 101.2522595,
+        "passed": true
+      },
+      {
+        "aircraft": "holybro-x650-v2",
+        "mode": "acro",
+        "host": "regional",
+        "source": {
+          "id": "canyon-expanse-study",
+          "revision": "relief-r1",
+          "sha256": "d2c3dce6c39227e85a10256fb3d1082fec2a6c7a47f6347fd664e2840eb57003"
+        },
+        "boundaryRollback": true,
+        "configIdentity": "23f18b5202f30997",
+        "backend": "civilian-quad-aircraft-regional.v3",
+        "durationSeconds": 65,
+        "airborneSeconds": 60.86,
+        "groundedSeconds": 4.14,
+        "secondTakeoffSeconds": 30,
+        "initialSupport": false,
+        "landed": true,
+        "minimumUpright": 0.9834269645533903,
+        "maximumYawDegreesPerSecond": 15.464343997947086,
+        "maximumClimbMetres": 1.4034407138824463,
+        "finalHash": "142ac0b1",
+        "finalPosition": {
+          "x": 1569999.8060057906,
+          "y": 19518.52977298612,
+          "z": 1760000.0908797854
+        },
+        "pauseNoop": true,
+        "recoveryExact": true,
+        "recoveryAtSeconds": 62,
+        "recoveryContinuationSeconds": 3,
+        "retainedSegments": 2,
+        "retainedBytes": 4290662,
+        "courseProgress": [
+          {
+            "tick": 500,
+            "step": 0,
+            "position": {
+              "x": 1569999.9985833836,
+              "y": 19518.316683292025,
+              "z": 1759999.9982600817
+            }
+          },
+          {
+            "tick": 1000,
+            "step": 0,
+            "position": {
+              "x": 1570000.0225066012,
+              "y": 17264.85323599036,
+              "z": 1760000.0118593907
+            }
+          },
+          {
+            "tick": 1500,
+            "step": 0,
+            "position": {
+              "x": 1569999.9902446629,
+              "y": 13332.902152860463,
+              "z": 1759999.993406919
+            }
+          },
+          {
+            "tick": 2000,
+            "step": 0,
+            "position": {
+              "x": 1569814.999250981,
+              "y": 17049.942331120543,
+              "z": 1760184.00431505
+            }
+          },
+          {
+            "tick": 2500,
+            "step": 0,
+            "position": {
+              "x": 1570002.4721141914,
+              "y": 19518.52671175443,
+              "z": 1760001.4644444431
+            }
+          },
+          {
+            "tick": 3000,
+            "step": 0,
+            "position": {
+              "x": 1569999.7121138365,
+              "y": 19518.528363845435,
+              "z": 1759999.6470618243
+            }
+          }
+        ],
+        "elapsedSeconds": 98.36988654099999,
+        "passed": true
+      },
+      {
+        "aircraft": "holybro-x650-v2",
+        "mode": "self-level",
+        "host": "regional",
+        "source": {
+          "id": "canyon-expanse-study",
+          "revision": "relief-r1",
+          "sha256": "d2c3dce6c39227e85a10256fb3d1082fec2a6c7a47f6347fd664e2840eb57003"
+        },
+        "boundaryRollback": true,
+        "configIdentity": "27726019362474b1",
+        "backend": "civilian-quad-aircraft-regional.v3",
+        "durationSeconds": 65,
+        "airborneSeconds": 60.86,
+        "groundedSeconds": 4.14,
+        "secondTakeoffSeconds": 30,
+        "initialSupport": false,
+        "landed": true,
+        "minimumUpright": 0.9851144139561766,
+        "maximumYawDegreesPerSecond": 15.464381563987514,
+        "maximumClimbMetres": 1.4034459590911865,
+        "finalHash": "80af7e02",
+        "finalPosition": {
+          "x": 1570000.0036281026,
+          "y": 19518.483208046506,
+          "z": 1760000.0196122578
+        },
+        "pauseNoop": true,
+        "recoveryExact": true,
+        "recoveryAtSeconds": 62,
+        "recoveryContinuationSeconds": 3,
+        "retainedSegments": 2,
+        "retainedBytes": 4294354,
+        "courseProgress": [
+          {
+            "tick": 500,
+            "step": 0,
+            "position": {
+              "x": 1569999.9988764855,
+              "y": 19518.316653127844,
+              "z": 1759999.9982417857
+            }
+          },
+          {
+            "tick": 1000,
+            "step": 0,
+            "position": {
+              "x": 1569999.996338685,
+              "y": 17264.8592580433,
+              "z": 1760000.04673309
+            }
+          },
+          {
+            "tick": 1500,
+            "step": 0,
+            "position": {
+              "x": 1570000.0037367577,
+              "y": 13332.889337818891,
+              "z": 1760000.0379383205
+            }
+          },
+          {
+            "tick": 2000,
+            "step": 0,
+            "position": {
+              "x": 1569834.3257099295,
+              "y": 17054.070602312255,
+              "z": 1760167.604562138
+            }
+          },
+          {
+            "tick": 2500,
+            "step": 0,
+            "position": {
+              "x": 1570000.8610608827,
+              "y": 19518.47204568066,
+              "z": 1759999.2476832161
+            }
+          },
+          {
+            "tick": 3000,
+            "step": 0,
+            "position": {
+              "x": 1569999.9135088895,
+              "y": 19518.487311026496,
+              "z": 1760000.089985522
+            }
+          }
+        ],
+        "elapsedSeconds": 131.43258633300005,
+        "passed": true
+      }
+    ],
+    "passed": true,
+    "limitations": [
+      "Selected hashes only, not complete transitive closure.",
+      "Direct in-process production simulation, not browser/worker/native/device/IndexedDB evidence.",
+      "Four Regional cases rerun after restoring exact committed sparse fixture; preceding31 accepted runs were not repeated. Not every possible course/aircraft/host combination.",
+      "Bounded retained segments asserted; no whole-process memory bound or real-time gate.",
+      "Unscored software controllability, not measured real-aircraft fidelity."
+    ]
+  },
+  "qualifiedResults": [
+    {
+      "aircraft": "air65-ii-racing-2026",
+      "mode": "acro",
+      "host": "academy",
+      "course": "flight-01",
+      "courseIdentity": "573db8b71fe99103",
+      "configIdentity": "97df7b6f23d0ced4",
+      "backend": "civilian-quad-aircraft-regional.v3",
+      "durationSeconds": 32,
+      "airborneSeconds": 27.14,
+      "groundedSeconds": 4.86,
+      "secondTakeoffSeconds": 10,
+      "initialSupport": true,
+      "landed": true,
+      "minimumUpright": 0.9998499494547586,
+      "maximumYawDegreesPerSecond": 33.18394100464005,
+      "maximumClimbMetres": 1.4031545147299767,
+      "finalHash": "c7970a8e",
+      "finalPosition": {
+        "x": -5,
+        "y": 1403,
+        "z": -1
+      },
+      "pauseNoop": true,
+      "recoveryExact": true,
+      "recoveryAtSeconds": 24,
+      "recoveryContinuationSeconds": 8,
+      "retainedSegments": 1,
+      "retainedBytes": 149091,
+      "courseProgress": [
+        {
+          "tick": 500,
+          "step": 1,
+          "position": {
+            "x": 0,
+            "y": 1403,
+            "z": 0
+          }
+        },
+        {
+          "tick": 1000,
+          "step": 2,
+          "position": {
+            "x": 1,
+            "y": 0,
+            "z": -1
+          }
+        },
+        {
+          "tick": 1500,
+          "step": 2,
+          "position": {
+            "x": -5,
+            "y": 1403,
+            "z": -1
+          }
+        }
+      ],
+      "elapsedSeconds": 4.461487958,
+      "passed": true
+    },
+    {
+      "aircraft": "air65-ii-racing-2026",
+      "mode": "self-level",
+      "host": "academy",
+      "course": "flight-01",
+      "courseIdentity": "573db8b71fe99103",
+      "configIdentity": "c11b0f6b870fb13e",
+      "backend": "civilian-quad-aircraft-regional.v3",
+      "durationSeconds": 32,
+      "airborneSeconds": 27.14,
+      "groundedSeconds": 4.86,
+      "secondTakeoffSeconds": 10,
+      "initialSupport": true,
+      "landed": true,
+      "minimumUpright": 0.9999983254864059,
+      "maximumYawDegreesPerSecond": 29.784863474895356,
+      "maximumClimbMetres": 1.4031548723578453,
+      "finalHash": "8945399f",
+      "finalPosition": {
+        "x": 0,
+        "y": 1403,
+        "z": 0
+      },
+      "pauseNoop": true,
+      "recoveryExact": true,
+      "recoveryAtSeconds": 24,
+      "recoveryContinuationSeconds": 8,
+      "retainedSegments": 1,
+      "retainedBytes": 151861,
+      "courseProgress": [
+        {
+          "tick": 500,
+          "step": 1,
+          "position": {
+            "x": 0,
+            "y": 1403,
+            "z": 0
+          }
+        },
+        {
+          "tick": 1000,
+          "step": 2,
+          "position": {
+            "x": 1,
+            "y": 0,
+            "z": 0
+          }
+        },
+        {
+          "tick": 1500,
+          "step": 2,
+          "position": {
+            "x": 0,
+            "y": 1403,
+            "z": 0
+          }
+        }
+      ],
+      "elapsedSeconds": 4.208191458,
+      "passed": true
+    },
+    {
+      "aircraft": "meteor75-analog-2022",
+      "mode": "acro",
+      "host": "world",
+      "course": "adventure-coast-01",
+      "courseIdentity": "6a77435a26cd51c1",
+      "configIdentity": "599d0cd9b0953eaf",
+      "backend": "civilian-quad-aircraft-regional.v3",
+      "durationSeconds": 32,
+      "airborneSeconds": 27.1,
+      "groundedSeconds": 4.9,
+      "secondTakeoffSeconds": 10,
+      "initialSupport": true,
+      "landed": true,
+      "minimumUpright": 0.9996979332114841,
+      "maximumYawDegreesPerSecond": 29.8595107254154,
+      "maximumClimbMetres": 1.405093951150775,
+      "finalHash": "916b8578",
+      "finalPosition": {
+        "x": -6,
+        "y": 1399,
+        "z": 48000
+      },
+      "pauseNoop": true,
+      "recoveryExact": true,
+      "recoveryAtSeconds": 24,
+      "recoveryContinuationSeconds": 8,
+      "retainedSegments": 1,
+      "retainedBytes": 343071,
+      "courseProgress": [
+        {
+          "tick": 500,
+          "step": 0,
+          "position": {
+            "x": 0,
+            "y": 1399,
+            "z": 48000
+          }
+        },
+        {
+          "tick": 1000,
+          "step": 0,
+          "position": {
+            "x": 1,
+            "y": 0,
+            "z": 48000
+          }
+        },
+        {
+          "tick": 1500,
+          "step": 0,
+          "position": {
+            "x": -6,
+            "y": 1399,
+            "z": 48000
+          }
+        }
+      ],
+      "elapsedSeconds": 5.124380833000001,
+      "passed": true
+    },
+    {
+      "aircraft": "meteor75-analog-2022",
+      "mode": "self-level",
+      "host": "world",
+      "course": "adventure-coast-01",
+      "courseIdentity": "6a77435a26cd51c1",
+      "configIdentity": "b83fe9c0ed075755",
+      "backend": "civilian-quad-aircraft-regional.v3",
+      "durationSeconds": 32,
+      "airborneSeconds": 27.08,
+      "groundedSeconds": 4.92,
+      "secondTakeoffSeconds": 10,
+      "initialSupport": true,
+      "landed": true,
+      "minimumUpright": 0.9999966374005632,
+      "maximumYawDegreesPerSecond": 29.85952442127209,
+      "maximumClimbMetres": 1.4051152896136045,
+      "finalHash": "5f811a6e",
+      "finalPosition": {
+        "x": 1,
+        "y": 1399,
+        "z": 48000
+      },
+      "pauseNoop": true,
+      "recoveryExact": true,
+      "recoveryAtSeconds": 24,
+      "recoveryContinuationSeconds": 8,
+      "retainedSegments": 1,
+      "retainedBytes": 345604,
+      "courseProgress": [
+        {
+          "tick": 500,
+          "step": 0,
+          "position": {
+            "x": 0,
+            "y": 1399,
+            "z": 48000
+          }
+        },
+        {
+          "tick": 1000,
+          "step": 0,
+          "position": {
+            "x": 1,
+            "y": 0,
+            "z": 48000
+          }
+        },
+        {
+          "tick": 1500,
+          "step": 0,
+          "position": {
+            "x": 1,
+            "y": 1399,
+            "z": 48000
+          }
+        }
+      ],
+      "elapsedSeconds": 7.228734166999999,
+      "passed": true
+    },
+    {
+      "aircraft": "meteor75-pro-matrix",
+      "mode": "acro",
+      "host": "learning",
+      "course": "beginner-01",
+      "courseIdentity": "2b283442c91e80fb",
+      "configIdentity": "c4d675b54ab81ac2",
+      "backend": "civilian-quad-aircraft-regional.v3",
+      "durationSeconds": 32,
+      "airborneSeconds": 27.2,
+      "groundedSeconds": 4.8,
+      "secondTakeoffSeconds": 10,
+      "initialSupport": true,
+      "landed": true,
+      "minimumUpright": 0.9999706403330418,
+      "maximumYawDegreesPerSecond": 29.893996352528315,
+      "maximumClimbMetres": 1.4012770000845194,
+      "finalHash": "8240096a",
+      "finalPosition": {
+        "x": -5,
+        "y": 1401,
+        "z": -1
+      },
+      "pauseNoop": true,
+      "recoveryExact": true,
+      "recoveryAtSeconds": 24,
+      "recoveryContinuationSeconds": 8,
+      "retainedSegments": 1,
+      "retainedBytes": 149254,
+      "courseProgress": [
+        {
+          "tick": 500,
+          "step": 2,
+          "position": {
+            "x": 0,
+            "y": 1401,
+            "z": 0
+          }
+        },
+        {
+          "tick": 1000,
+          "step": 3,
+          "position": {
+            "x": 1,
+            "y": 0,
+            "z": -2
+          }
+        },
+        {
+          "tick": 1500,
+          "step": 3,
+          "position": {
+            "x": -5,
+            "y": 1401,
+            "z": -2
+          }
+        }
+      ],
+      "elapsedSeconds": 5.170695208000001,
+      "passed": true
+    },
+    {
+      "aircraft": "meteor75-pro-matrix",
+      "mode": "self-level",
+      "host": "learning",
+      "course": "beginner-01",
+      "courseIdentity": "2b283442c91e80fb",
+      "configIdentity": "f8c10ee1473b5c54",
+      "backend": "civilian-quad-aircraft-regional.v3",
+      "durationSeconds": 32,
+      "airborneSeconds": 27.18,
+      "groundedSeconds": 4.82,
+      "secondTakeoffSeconds": 10,
+      "initialSupport": true,
+      "landed": true,
+      "minimumUpright": 0.9999421209526206,
+      "maximumYawDegreesPerSecond": 29.893009253067117,
+      "maximumClimbMetres": 1.4014726225286722,
+      "finalHash": "e2207a8d",
+      "finalPosition": {
+        "x": 0,
+        "y": 1401,
+        "z": 0
+      },
+      "pauseNoop": true,
+      "recoveryExact": true,
+      "recoveryAtSeconds": 24,
+      "recoveryContinuationSeconds": 8,
+      "retainedSegments": 1,
+      "retainedBytes": 153159,
+      "courseProgress": [
+        {
+          "tick": 500,
+          "step": 2,
+          "position": {
+            "x": 0,
+            "y": 1401,
+            "z": 0
+          }
+        },
+        {
+          "tick": 1000,
+          "step": 3,
+          "position": {
+            "x": 0,
+            "y": 0,
+            "z": -2
+          }
+        },
+        {
+          "tick": 1500,
+          "step": 3,
+          "position": {
+            "x": 0,
+            "y": 1401,
+            "z": -1
+          }
+        }
+      ],
+      "elapsedSeconds": 5.288797124999998,
+      "passed": true
+    },
+    {
+      "aircraft": "meteor85-analog",
+      "mode": "acro",
+      "host": "academy",
+      "course": "flight-01",
+      "courseIdentity": "573db8b71fe99103",
+      "configIdentity": "c3d13cc5a3b47bfc",
+      "backend": "civilian-quad-aircraft-regional.v3",
+      "durationSeconds": 32,
+      "airborneSeconds": 27.1,
+      "groundedSeconds": 4.9,
+      "secondTakeoffSeconds": 10,
+      "initialSupport": true,
+      "landed": true,
+      "minimumUpright": 0.9999998488888229,
+      "maximumYawDegreesPerSecond": 29.933583961841308,
+      "maximumClimbMetres": 1.4016978554427624,
+      "finalHash": "8c696ec1",
+      "finalPosition": {
+        "x": 0,
+        "y": 1402,
+        "z": 0
+      },
+      "pauseNoop": true,
+      "recoveryExact": true,
+      "recoveryAtSeconds": 24,
+      "recoveryContinuationSeconds": 8,
+      "retainedSegments": 1,
+      "retainedBytes": 148626,
+      "courseProgress": [
+        {
+          "tick": 500,
+          "step": 1,
+          "position": {
+            "x": 0,
+            "y": 1402,
+            "z": 0
+          }
+        },
+        {
+          "tick": 1000,
+          "step": 2,
+          "position": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          }
+        },
+        {
+          "tick": 1500,
+          "step": 2,
+          "position": {
+            "x": 0,
+            "y": 1402,
+            "z": 0
+          }
+        }
+      ],
+      "elapsedSeconds": 7.078422124999998,
+      "passed": true
+    },
+    {
+      "aircraft": "meteor85-analog",
+      "mode": "self-level",
+      "host": "academy",
+      "course": "flight-01",
+      "courseIdentity": "573db8b71fe99103",
+      "configIdentity": "18e607b00687ed16",
+      "backend": "civilian-quad-aircraft-regional.v3",
+      "durationSeconds": 32,
+      "airborneSeconds": 27.1,
+      "groundedSeconds": 4.9,
+      "secondTakeoffSeconds": 10,
+      "initialSupport": true,
+      "landed": true,
+      "minimumUpright": 0.9995041515894657,
+      "maximumYawDegreesPerSecond": 29.933740861803052,
+      "maximumClimbMetres": 1.4016977362334728,
+      "finalHash": "04f309ff",
+      "finalPosition": {
+        "x": 0,
+        "y": 1402,
+        "z": 0
+      },
+      "pauseNoop": true,
+      "recoveryExact": true,
+      "recoveryAtSeconds": 24,
+      "recoveryContinuationSeconds": 8,
+      "retainedSegments": 1,
+      "retainedBytes": 152641,
+      "courseProgress": [
+        {
+          "tick": 500,
+          "step": 1,
+          "position": {
+            "x": 0,
+            "y": 1402,
+            "z": 0
+          }
+        },
+        {
+          "tick": 1000,
+          "step": 2,
+          "position": {
+            "x": 3,
+            "y": 0,
+            "z": -1
+          }
+        },
+        {
+          "tick": 1500,
+          "step": 2,
+          "position": {
+            "x": 1,
+            "y": 1402,
+            "z": 0
+          }
+        }
+      ],
+      "elapsedSeconds": 8.426382291999994,
+      "passed": true
+    },
+    {
+      "aircraft": "mobula8-analog-2023",
+      "mode": "acro",
+      "host": "world",
+      "course": "adventure-coast-01",
+      "courseIdentity": "6a77435a26cd51c1",
+      "configIdentity": "15af29dd98262ba9",
+      "backend": "civilian-quad-aircraft-regional.v3",
+      "durationSeconds": 32,
+      "airborneSeconds": 27.1,
+      "groundedSeconds": 4.9,
+      "secondTakeoffSeconds": 10,
+      "initialSupport": true,
+      "landed": true,
+      "minimumUpright": 0.9999698778037442,
+      "maximumYawDegreesPerSecond": 29.93331432734767,
+      "maximumClimbMetres": 1.4037221428006887,
+      "finalHash": "54c5f392",
+      "finalPosition": {
+        "x": 0,
+        "y": 1396,
+        "z": 48000
+      },
+      "pauseNoop": true,
+      "recoveryExact": true,
+      "recoveryAtSeconds": 24,
+      "recoveryContinuationSeconds": 8,
+      "retainedSegments": 1,
+      "retainedBytes": 342438,
+      "courseProgress": [
+        {
+          "tick": 500,
+          "step": 0,
+          "position": {
+            "x": 0,
+            "y": 1397,
+            "z": 48000
+          }
+        },
+        {
+          "tick": 1000,
+          "step": 0,
+          "position": {
+            "x": 3,
+            "y": 0,
+            "z": 48000
+          }
+        },
+        {
+          "tick": 1500,
+          "step": 0,
+          "position": {
+            "x": 1,
+            "y": 1397,
+            "z": 48000
+          }
+        }
+      ],
+      "elapsedSeconds": 7.3409185,
+      "passed": true
+    },
+    {
+      "aircraft": "mobula8-analog-2023",
+      "mode": "self-level",
+      "host": "world",
+      "course": "adventure-coast-01",
+      "courseIdentity": "6a77435a26cd51c1",
+      "configIdentity": "e4f5d47747963da7",
+      "backend": "civilian-quad-aircraft-regional.v3",
+      "durationSeconds": 32,
+      "airborneSeconds": 27.1,
+      "groundedSeconds": 4.9,
+      "secondTakeoffSeconds": 10,
+      "initialSupport": true,
+      "landed": true,
+      "minimumUpright": 0.9999901970752907,
+      "maximumYawDegreesPerSecond": 29.9332424892212,
+      "maximumClimbMetres": 1.4037114139646292,
+      "finalHash": "df4135de",
+      "finalPosition": {
+        "x": 0,
+        "y": 1396,
+        "z": 48000
+      },
+      "pauseNoop": true,
+      "recoveryExact": true,
+      "recoveryAtSeconds": 24,
+      "recoveryContinuationSeconds": 8,
+      "retainedSegments": 1,
+      "retainedBytes": 345338,
+      "courseProgress": [
+        {
+          "tick": 500,
+          "step": 0,
+          "position": {
+            "x": 0,
+            "y": 1397,
+            "z": 48000
+          }
+        },
+        {
+          "tick": 1000,
+          "step": 0,
+          "position": {
+            "x": 2,
+            "y": 0,
+            "z": 48000
+          }
+        },
+        {
+          "tick": 1500,
+          "step": 0,
+          "position": {
+            "x": 1,
+            "y": 1397,
+            "z": 48000
+          }
+        }
+      ],
+      "elapsedSeconds": 7.178728208000001,
+      "passed": true
+    },
+    {
+      "aircraft": "cetus-x-betaflight-2022",
+      "mode": "acro",
+      "host": "learning",
+      "course": "beginner-01",
+      "courseIdentity": "2b283442c91e80fb",
+      "configIdentity": "2be61b1bc28f01f0",
+      "backend": "civilian-quad-aircraft-regional.v3",
+      "durationSeconds": 32,
+      "airborneSeconds": 27.08,
+      "groundedSeconds": 4.92,
+      "secondTakeoffSeconds": 10,
+      "initialSupport": true,
+      "landed": true,
+      "minimumUpright": 0.9999957678657013,
+      "maximumYawDegreesPerSecond": 29.96929242717755,
+      "maximumClimbMetres": 1.4031470771878958,
+      "finalHash": "1e32beb4",
+      "finalPosition": {
+        "x": -1,
+        "y": 1397,
+        "z": 0
+      },
+      "pauseNoop": true,
+      "recoveryExact": true,
+      "recoveryAtSeconds": 24,
+      "recoveryContinuationSeconds": 8,
+      "retainedSegments": 1,
+      "retainedBytes": 148678,
+      "courseProgress": [
+        {
+          "tick": 500,
+          "step": 2,
+          "position": {
+            "x": 0,
+            "y": 1397,
+            "z": 0
+          }
+        },
+        {
+          "tick": 1000,
+          "step": 3,
+          "position": {
+            "x": 1,
+            "y": 0,
+            "z": 0
+          }
+        },
+        {
+          "tick": 1500,
+          "step": 3,
+          "position": {
+            "x": 0,
+            "y": 1397,
+            "z": 0
+          }
+        }
+      ],
+      "elapsedSeconds": 8.700396999999997,
+      "passed": true
+    },
+    {
+      "aircraft": "cetus-x-betaflight-2022",
+      "mode": "self-level",
+      "host": "learning",
+      "course": "beginner-01",
+      "courseIdentity": "2b283442c91e80fb",
+      "configIdentity": "df5ae680e944eeba",
+      "backend": "civilian-quad-aircraft-regional.v3",
+      "durationSeconds": 32,
+      "airborneSeconds": 27.08,
+      "groundedSeconds": 4.92,
+      "secondTakeoffSeconds": 10,
+      "initialSupport": true,
+      "landed": true,
+      "minimumUpright": 0.9999991677996369,
+      "maximumYawDegreesPerSecond": 29.96967812658528,
+      "maximumClimbMetres": 1.4031637664884329,
+      "finalHash": "a648728f",
+      "finalPosition": {
+        "x": -1,
+        "y": 1397,
+        "z": 0
+      },
+      "pauseNoop": true,
+      "recoveryExact": true,
+      "recoveryAtSeconds": 24,
+      "recoveryContinuationSeconds": 8,
+      "retainedSegments": 1,
+      "retainedBytes": 150490,
+      "courseProgress": [
+        {
+          "tick": 500,
+          "step": 2,
+          "position": {
+            "x": 0,
+            "y": 1397,
+            "z": 0
+          }
+        },
+        {
+          "tick": 1000,
+          "step": 3,
+          "position": {
+            "x": 1,
+            "y": 0,
+            "z": 0
+          }
+        },
+        {
+          "tick": 1500,
+          "step": 3,
+          "position": {
+            "x": -1,
+            "y": 1397,
+            "z": 0
+          }
+        }
+      ],
+      "elapsedSeconds": 2.6598561249999912,
+      "passed": true
+    },
+    {
+      "aircraft": "protos-16-aio-1-0",
+      "mode": "acro",
+      "host": "academy",
+      "course": "flight-01",
+      "courseIdentity": "573db8b71fe99103",
+      "configIdentity": "a78451b95eaa7195",
+      "backend": "civilian-quad-aircraft-regional.v3",
+      "durationSeconds": 32,
+      "airborneSeconds": 27.02,
+      "groundedSeconds": 4.98,
+      "secondTakeoffSeconds": 10,
+      "initialSupport": true,
+      "landed": true,
+      "minimumUpright": 0.9999935570814094,
+      "maximumYawDegreesPerSecond": 27.589498772386868,
+      "maximumClimbMetres": 1.4034026302397251,
+      "finalHash": "d47a1b43",
+      "finalPosition": {
+        "x": 2,
+        "y": 1393,
+        "z": -1
+      },
+      "pauseNoop": true,
+      "recoveryExact": true,
+      "recoveryAtSeconds": 24,
+      "recoveryContinuationSeconds": 8,
+      "retainedSegments": 1,
+      "retainedBytes": 147870,
+      "courseProgress": [
+        {
+          "tick": 500,
+          "step": 1,
+          "position": {
+            "x": 0,
+            "y": 1393,
+            "z": 0
+          }
+        },
+        {
+          "tick": 1000,
+          "step": 2,
+          "position": {
+            "x": 1,
+            "y": 0,
+            "z": -1
+          }
+        },
+        {
+          "tick": 1500,
+          "step": 2,
+          "position": {
+            "x": 2,
+            "y": 1393,
+            "z": -1
+          }
+        }
+      ],
+      "elapsedSeconds": 4.404783749999988,
+      "passed": true
+    },
+    {
+      "aircraft": "protos-16-aio-1-0",
+      "mode": "self-level",
+      "host": "academy",
+      "course": "flight-01",
+      "courseIdentity": "573db8b71fe99103",
+      "configIdentity": "8b8c4cb12e32019b",
+      "backend": "civilian-quad-aircraft-regional.v3",
+      "durationSeconds": 32,
+      "airborneSeconds": 26.94,
+      "groundedSeconds": 5.06,
+      "secondTakeoffSeconds": 10,
+      "initialSupport": true,
+      "landed": true,
+      "minimumUpright": 0.9991810182029296,
+      "maximumYawDegreesPerSecond": 36.646472479951484,
+      "maximumClimbMetres": 1.4034031070768833,
+      "finalHash": "79f519e7",
+      "finalPosition": {
+        "x": -1,
+        "y": 1393,
+        "z": 0
+      },
+      "pauseNoop": true,
+      "recoveryExact": true,
+      "recoveryAtSeconds": 24,
+      "recoveryContinuationSeconds": 8,
+      "retainedSegments": 1,
+      "retainedBytes": 150090,
+      "courseProgress": [
+        {
+          "tick": 500,
+          "step": 1,
+          "position": {
+            "x": 0,
+            "y": 1393,
+            "z": 0
+          }
+        },
+        {
+          "tick": 1000,
+          "step": 2,
+          "position": {
+            "x": 4,
+            "y": 0,
+            "z": -2
+          }
+        },
+        {
+          "tick": 1500,
+          "step": 2,
+          "position": {
+            "x": 0,
+            "y": 1393,
+            "z": 0
+          }
+        }
+      ],
+      "elapsedSeconds": 3.7068377499999916,
+      "passed": true
+    },
+    {
+      "aircraft": "pavo20-pro-ii-o4-4s",
+      "mode": "acro",
+      "host": "world",
+      "course": "adventure-coast-01",
+      "courseIdentity": "6a77435a26cd51c1",
+      "configIdentity": "8872dc780c63e47e",
+      "backend": "civilian-quad-aircraft-regional.v3",
+      "durationSeconds": 32,
+      "airborneSeconds": 27.1,
+      "groundedSeconds": 4.9,
+      "secondTakeoffSeconds": 10,
+      "initialSupport": true,
+      "landed": true,
+      "minimumUpright": 0.9997824476504761,
+      "maximumYawDegreesPerSecond": 27.590243505565375,
+      "maximumClimbMetres": 1.4016899205744267,
+      "finalHash": "caf7a79b",
+      "finalPosition": {
+        "x": 1,
+        "y": 1398,
+        "z": 48000
+      },
+      "pauseNoop": true,
+      "recoveryExact": true,
+      "recoveryAtSeconds": 24,
+      "recoveryContinuationSeconds": 8,
+      "retainedSegments": 1,
+      "retainedBytes": 342504,
+      "courseProgress": [
+        {
+          "tick": 500,
+          "step": 0,
+          "position": {
+            "x": 0,
+            "y": 1398,
+            "z": 48000
+          }
+        },
+        {
+          "tick": 1000,
+          "step": 0,
+          "position": {
+            "x": 2,
+            "y": 0,
+            "z": 48000
+          }
+        },
+        {
+          "tick": 1500,
+          "step": 0,
+          "position": {
+            "x": 1,
+            "y": 1398,
+            "z": 48000
+          }
+        }
+      ],
+      "elapsedSeconds": 4.449374416000006,
+      "passed": true
+    },
+    {
+      "aircraft": "pavo20-pro-ii-o4-4s",
+      "mode": "self-level",
+      "host": "world",
+      "course": "adventure-coast-01",
+      "courseIdentity": "6a77435a26cd51c1",
+      "configIdentity": "4b74b5eb35d02108",
+      "backend": "civilian-quad-aircraft-regional.v3",
+      "durationSeconds": 32,
+      "airborneSeconds": 27.1,
+      "groundedSeconds": 4.9,
+      "secondTakeoffSeconds": 10,
+      "initialSupport": true,
+      "landed": true,
+      "minimumUpright": 0.9999985767321558,
+      "maximumYawDegreesPerSecond": 27.590631040688567,
+      "maximumClimbMetres": 1.401694092899561,
+      "finalHash": "b73a6bc4",
+      "finalPosition": {
+        "x": 0,
+        "y": 1398,
+        "z": 48000
+      },
+      "pauseNoop": true,
+      "recoveryExact": true,
+      "recoveryAtSeconds": 24,
+      "recoveryContinuationSeconds": 8,
+      "retainedSegments": 1,
+      "retainedBytes": 344931,
+      "courseProgress": [
+        {
+          "tick": 500,
+          "step": 0,
+          "position": {
+            "x": 0,
+            "y": 1398,
+            "z": 48000
+          }
+        },
+        {
+          "tick": 1000,
+          "step": 0,
+          "position": {
+            "x": 1,
+            "y": 0,
+            "z": 48000
+          }
+        },
+        {
+          "tick": 1500,
+          "step": 0,
+          "position": {
+            "x": 0,
+            "y": 1398,
+            "z": 48000
+          }
+        }
+      ],
+      "elapsedSeconds": 3.5108527500000055,
+      "passed": true
+    },
+    {
+      "aircraft": "smart35-analog",
+      "mode": "acro",
+      "host": "learning",
+      "course": "beginner-01",
+      "courseIdentity": "2b283442c91e80fb",
+      "configIdentity": "44f8f2b1d11db619",
+      "backend": "civilian-quad-aircraft-regional.v3",
+      "durationSeconds": 32,
+      "airborneSeconds": 27.06,
+      "groundedSeconds": 4.94,
+      "secondTakeoffSeconds": 10,
+      "initialSupport": true,
+      "landed": true,
+      "minimumUpright": 0.997037618984442,
+      "maximumYawDegreesPerSecond": 34.868760907847964,
+      "maximumClimbMetres": 1.4037006236612797,
+      "finalHash": "1419a1f0",
+      "finalPosition": {
+        "x": -2,
+        "y": 1403,
+        "z": 0
+      },
+      "pauseNoop": true,
+      "recoveryExact": true,
+      "recoveryAtSeconds": 24,
+      "recoveryContinuationSeconds": 8,
+      "retainedSegments": 1,
+      "retainedBytes": 148721,
+      "courseProgress": [
+        {
+          "tick": 500,
+          "step": 2,
+          "position": {
+            "x": -2,
+            "y": 1403,
+            "z": 0
+          }
+        },
+        {
+          "tick": 1000,
+          "step": 3,
+          "position": {
+            "x": -2,
+            "y": 0,
+            "z": -1
+          }
+        },
+        {
+          "tick": 1500,
+          "step": 3,
+          "position": {
+            "x": -2,
+            "y": 1403,
+            "z": 0
+          }
+        }
+      ],
+      "elapsedSeconds": 2.0803145000000076,
+      "passed": true
+    },
+    {
+      "aircraft": "smart35-analog",
+      "mode": "self-level",
+      "host": "learning",
+      "course": "beginner-01",
+      "courseIdentity": "2b283442c91e80fb",
+      "configIdentity": "077c6f3a06486173",
+      "backend": "civilian-quad-aircraft-regional.v3",
+      "durationSeconds": 32,
+      "airborneSeconds": 27.06,
+      "groundedSeconds": 4.94,
+      "secondTakeoffSeconds": 10,
+      "initialSupport": true,
+      "landed": true,
+      "minimumUpright": 0.997094299963083,
+      "maximumYawDegreesPerSecond": 34.86890761527614,
+      "maximumClimbMetres": 1.403696570545435,
+      "finalHash": "cdfc173e",
+      "finalPosition": {
+        "x": -1,
+        "y": 1403,
+        "z": 0
+      },
+      "pauseNoop": true,
+      "recoveryExact": true,
+      "recoveryAtSeconds": 24,
+      "recoveryContinuationSeconds": 8,
+      "retainedSegments": 1,
+      "retainedBytes": 150732,
+      "courseProgress": [
+        {
+          "tick": 500,
+          "step": 2,
+          "position": {
+            "x": -1,
+            "y": 1403,
+            "z": 0
+          }
+        },
+        {
+          "tick": 1000,
+          "step": 3,
+          "position": {
+            "x": -2,
+            "y": 0,
+            "z": -1
+          }
+        },
+        {
+          "tick": 1500,
+          "step": 3,
+          "position": {
+            "x": -1,
+            "y": 1403,
+            "z": 0
+          }
+        }
+      ],
+      "elapsedSeconds": 2.4015687079999917,
+      "passed": true
+    },
+    {
+      "aircraft": "nazgul-eco-xl5-v11",
+      "mode": "acro",
+      "host": "academy",
+      "course": "flight-01",
+      "courseIdentity": "573db8b71fe99103",
+      "configIdentity": "bb21095218051411",
+      "backend": "civilian-quad-aircraft-regional.v3",
+      "durationSeconds": 32,
+      "airborneSeconds": 27.08,
+      "groundedSeconds": 4.92,
+      "secondTakeoffSeconds": 10,
+      "initialSupport": true,
+      "landed": true,
+      "minimumUpright": 0.9993894536031338,
+      "maximumYawDegreesPerSecond": 34.98672219892517,
+      "maximumClimbMetres": 1.4015990123152733,
+      "finalHash": "115b2117",
+      "finalPosition": {
+        "x": -1,
+        "y": 1398,
+        "z": 0
+      },
+      "pauseNoop": true,
+      "recoveryExact": true,
+      "recoveryAtSeconds": 24,
+      "recoveryContinuationSeconds": 8,
+      "retainedSegments": 1,
+      "retainedBytes": 148614,
+      "courseProgress": [
+        {
+          "tick": 500,
+          "step": 1,
+          "position": {
+            "x": -1,
+            "y": 1398,
+            "z": 0
+          }
+        },
+        {
+          "tick": 1000,
+          "step": 2,
+          "position": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          }
+        },
+        {
+          "tick": 1500,
+          "step": 2,
+          "position": {
+            "x": -1,
+            "y": 1398,
+            "z": 0
+          }
+        }
+      ],
+      "elapsedSeconds": 1.9735574999999954,
+      "passed": true
+    },
+    {
+      "aircraft": "nazgul-eco-xl5-v11",
+      "mode": "self-level",
+      "host": "academy",
+      "course": "flight-01",
+      "courseIdentity": "573db8b71fe99103",
+      "configIdentity": "63bf35a6ff123a9b",
+      "backend": "civilian-quad-aircraft-regional.v3",
+      "durationSeconds": 32,
+      "airborneSeconds": 27.08,
+      "groundedSeconds": 4.92,
+      "secondTakeoffSeconds": 10,
+      "initialSupport": true,
+      "landed": true,
+      "minimumUpright": 0.9999241145180816,
+      "maximumYawDegreesPerSecond": 34.98696854937326,
+      "maximumClimbMetres": 1.4017401561141014,
+      "finalHash": "d69d819a",
+      "finalPosition": {
+        "x": 0,
+        "y": 1398,
+        "z": 0
+      },
+      "pauseNoop": true,
+      "recoveryExact": true,
+      "recoveryAtSeconds": 24,
+      "recoveryContinuationSeconds": 8,
+      "retainedSegments": 1,
+      "retainedBytes": 151236,
+      "courseProgress": [
+        {
+          "tick": 500,
+          "step": 1,
+          "position": {
+            "x": 0,
+            "y": 1398,
+            "z": 0
+          }
+        },
+        {
+          "tick": 1000,
+          "step": 2,
+          "position": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          }
+        },
+        {
+          "tick": 1500,
+          "step": 2,
+          "position": {
+            "x": 0,
+            "y": 1398,
+            "z": 0
+          }
+        }
+      ],
+      "elapsedSeconds": 2.199467334000001,
+      "passed": true
+    },
+    {
+      "aircraft": "mach-r5-sport-2050",
+      "mode": "acro",
+      "host": "world",
+      "course": "adventure-coast-01",
+      "courseIdentity": "6a77435a26cd51c1",
+      "configIdentity": "de34abdb9ca50271",
+      "backend": "civilian-quad-aircraft-regional.v3",
+      "durationSeconds": 32,
+      "airborneSeconds": 27.1,
+      "groundedSeconds": 4.9,
+      "secondTakeoffSeconds": 10,
+      "initialSupport": true,
+      "landed": true,
+      "minimumUpright": 0.9997835575999325,
+      "maximumYawDegreesPerSecond": 37.21739671183545,
+      "maximumClimbMetres": 1.3991980850696564,
+      "finalHash": "7141dc55",
+      "finalPosition": {
+        "x": -1,
+        "y": 1399,
+        "z": 48000
+      },
+      "pauseNoop": true,
+      "recoveryExact": true,
+      "recoveryAtSeconds": 24,
+      "recoveryContinuationSeconds": 8,
+      "retainedSegments": 1,
+      "retainedBytes": 342421,
+      "courseProgress": [
+        {
+          "tick": 500,
+          "step": 0,
+          "position": {
+            "x": -1,
+            "y": 1399,
+            "z": 48000
+          }
+        },
+        {
+          "tick": 1000,
+          "step": 0,
+          "position": {
+            "x": 0,
+            "y": 0,
+            "z": 48000
+          }
+        },
+        {
+          "tick": 1500,
+          "step": 0,
+          "position": {
+            "x": -1,
+            "y": 1399,
+            "z": 48000
+          }
+        }
+      ],
+      "elapsedSeconds": 3.58356341599999,
+      "passed": true
+    },
+    {
+      "aircraft": "mach-r5-sport-2050",
+      "mode": "self-level",
+      "host": "world",
+      "course": "adventure-coast-01",
+      "courseIdentity": "6a77435a26cd51c1",
+      "configIdentity": "322c205ce3fdb667",
+      "backend": "civilian-quad-aircraft-regional.v3",
+      "durationSeconds": 32,
+      "airborneSeconds": 27.1,
+      "groundedSeconds": 4.9,
+      "secondTakeoffSeconds": 10,
+      "initialSupport": true,
+      "landed": true,
+      "minimumUpright": 0.9999906504204897,
+      "maximumYawDegreesPerSecond": 37.217997738708966,
+      "maximumClimbMetres": 1.399214655160904,
+      "finalHash": "26dd273e",
+      "finalPosition": {
+        "x": -1,
+        "y": 1399,
+        "z": 48000
+      },
+      "pauseNoop": true,
+      "recoveryExact": true,
+      "recoveryAtSeconds": 24,
+      "recoveryContinuationSeconds": 8,
+      "retainedSegments": 1,
+      "retainedBytes": 344808,
+      "courseProgress": [
+        {
+          "tick": 500,
+          "step": 0,
+          "position": {
+            "x": -1,
+            "y": 1398,
+            "z": 48000
+          }
+        },
+        {
+          "tick": 1000,
+          "step": 0,
+          "position": {
+            "x": 0,
+            "y": 0,
+            "z": 48000
+          }
+        },
+        {
+          "tick": 1500,
+          "step": 0,
+          "position": {
+            "x": -1,
+            "y": 1399,
+            "z": 48000
+          }
+        }
+      ],
+      "elapsedSeconds": 3.080537207999994,
+      "passed": true
+    },
+    {
+      "aircraft": "rekon7-pro-o3",
+      "mode": "acro",
+      "host": "learning",
+      "course": "beginner-01",
+      "courseIdentity": "2b283442c91e80fb",
+      "configIdentity": "07e13ee67049475d",
+      "backend": "civilian-quad-aircraft-regional.v3",
+      "durationSeconds": 32,
+      "airborneSeconds": 26.96,
+      "groundedSeconds": 5.04,
+      "secondTakeoffSeconds": 10,
+      "initialSupport": true,
+      "landed": true,
+      "minimumUpright": 0.9998079659356229,
+      "maximumYawDegreesPerSecond": 26.41129807125181,
+      "maximumClimbMetres": 1.4033348709344864,
+      "finalHash": "c5b0cf7c",
+      "finalPosition": {
+        "x": 0,
+        "y": 1396,
+        "z": 0
+      },
+      "pauseNoop": true,
+      "recoveryExact": true,
+      "recoveryAtSeconds": 24,
+      "recoveryContinuationSeconds": 8,
+      "retainedSegments": 1,
+      "retainedBytes": 148419,
+      "courseProgress": [
+        {
+          "tick": 500,
+          "step": 2,
+          "position": {
+            "x": 0,
+            "y": 1397,
+            "z": 0
+          }
+        },
+        {
+          "tick": 1000,
+          "step": 3,
+          "position": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          }
+        },
+        {
+          "tick": 1500,
+          "step": 3,
+          "position": {
+            "x": 0,
+            "y": 1396,
+            "z": 0
+          }
+        }
+      ],
+      "elapsedSeconds": 2.0536133329999866,
+      "passed": true
+    },
+    {
+      "aircraft": "rekon7-pro-o3",
+      "mode": "self-level",
+      "host": "learning",
+      "course": "beginner-01",
+      "courseIdentity": "2b283442c91e80fb",
+      "configIdentity": "a8f2bb3b3549bd33",
+      "backend": "civilian-quad-aircraft-regional.v3",
+      "durationSeconds": 32,
+      "airborneSeconds": 26.96,
+      "groundedSeconds": 5.04,
+      "secondTakeoffSeconds": 10,
+      "initialSupport": true,
+      "landed": true,
+      "minimumUpright": 0.9999347700434545,
+      "maximumYawDegreesPerSecond": 26.413132714262485,
+      "maximumClimbMetres": 1.4034853130578995,
+      "finalHash": "cee8f9d4",
+      "finalPosition": {
+        "x": 0,
+        "y": 1396,
+        "z": 0
+      },
+      "pauseNoop": true,
+      "recoveryExact": true,
+      "recoveryAtSeconds": 24,
+      "recoveryContinuationSeconds": 8,
+      "retainedSegments": 1,
+      "retainedBytes": 151917,
+      "courseProgress": [
+        {
+          "tick": 500,
+          "step": 2,
+          "position": {
+            "x": 0,
+            "y": 1396,
+            "z": 0
+          }
+        },
+        {
+          "tick": 1000,
+          "step": 3,
+          "position": {
+            "x": 0,
+            "y": 0,
+            "z": 1
+          }
+        },
+        {
+          "tick": 1500,
+          "step": 3,
+          "position": {
+            "x": 0,
+            "y": 1397,
+            "z": 0
+          }
+        }
+      ],
+      "elapsedSeconds": 2.1906564579999976,
+      "passed": true
+    },
+    {
+      "aircraft": "chimera7-pro-v2-o4",
+      "mode": "acro",
+      "host": "academy",
+      "course": "flight-01",
+      "courseIdentity": "573db8b71fe99103",
+      "configIdentity": "f36860f36c430cbe",
+      "backend": "civilian-quad-aircraft-regional.v3",
+      "durationSeconds": 32,
+      "airborneSeconds": 26.96,
+      "groundedSeconds": 5.04,
+      "secondTakeoffSeconds": 10,
+      "initialSupport": true,
+      "landed": true,
+      "minimumUpright": 0.999228396671942,
+      "maximumYawDegreesPerSecond": 25.683354144536047,
+      "maximumClimbMetres": 1.3994126990437508,
+      "finalHash": "bbb103ad",
+      "finalPosition": {
+        "x": 0,
+        "y": 1399,
+        "z": 0
+      },
+      "pauseNoop": true,
+      "recoveryExact": true,
+      "recoveryAtSeconds": 24,
+      "recoveryContinuationSeconds": 8,
+      "retainedSegments": 1,
+      "retainedBytes": 148693,
+      "courseProgress": [
+        {
+          "tick": 500,
+          "step": 1,
+          "position": {
+            "x": 0,
+            "y": 1399,
+            "z": 6
+          }
+        },
+        {
+          "tick": 1000,
+          "step": 2,
+          "position": {
+            "x": 1,
+            "y": 0,
+            "z": -5
+          }
+        },
+        {
+          "tick": 1500,
+          "step": 2,
+          "position": {
+            "x": 0,
+            "y": 1399,
+            "z": -1
+          }
+        }
+      ],
+      "elapsedSeconds": 1.8928503749999945,
+      "passed": true
+    },
+    {
+      "aircraft": "chimera7-pro-v2-o4",
+      "mode": "self-level",
+      "host": "academy",
+      "course": "flight-01",
+      "courseIdentity": "573db8b71fe99103",
+      "configIdentity": "dff899becefcc4c8",
+      "backend": "civilian-quad-aircraft-regional.v3",
+      "durationSeconds": 32,
+      "airborneSeconds": 26.96,
+      "groundedSeconds": 5.04,
+      "secondTakeoffSeconds": 10,
+      "initialSupport": true,
+      "landed": true,
+      "minimumUpright": 0.9999569589024215,
+      "maximumYawDegreesPerSecond": 25.68317454258482,
+      "maximumClimbMetres": 1.3994513228535652,
+      "finalHash": "bfb912b9",
+      "finalPosition": {
+        "x": 0,
+        "y": 1399,
+        "z": 1
+      },
+      "pauseNoop": true,
+      "recoveryExact": true,
+      "recoveryAtSeconds": 24,
+      "recoveryContinuationSeconds": 8,
+      "retainedSegments": 1,
+      "retainedBytes": 150610,
+      "courseProgress": [
+        {
+          "tick": 500,
+          "step": 1,
+          "position": {
+            "x": 0,
+            "y": 1399,
+            "z": 4
+          }
+        },
+        {
+          "tick": 1000,
+          "step": 2,
+          "position": {
+            "x": 0,
+            "y": 0,
+            "z": -4
+          }
+        },
+        {
+          "tick": 1500,
+          "step": 2,
+          "position": {
+            "x": 0,
+            "y": 1399,
+            "z": 0
+          }
+        }
+      ],
+      "elapsedSeconds": 2.1457540410000076,
+      "passed": true
+    },
+    {
+      "aircraft": "helion-pro-o4",
+      "mode": "acro",
+      "host": "world",
+      "course": "adventure-coast-01",
+      "courseIdentity": "6a77435a26cd51c1",
+      "configIdentity": "d04641fdccd9a4af",
+      "backend": "civilian-quad-aircraft-regional.v3",
+      "durationSeconds": 32,
+      "airborneSeconds": 26.88,
+      "groundedSeconds": 5.12,
+      "secondTakeoffSeconds": 10,
+      "initialSupport": true,
+      "landed": true,
+      "minimumUpright": 0.9999959512618827,
+      "maximumYawDegreesPerSecond": 23.292908196759264,
+      "maximumClimbMetres": 1.4034499526023865,
+      "finalHash": "5af476fb",
+      "finalPosition": {
+        "x": 0,
+        "y": 1403,
+        "z": 48000
+      },
+      "pauseNoop": true,
+      "recoveryExact": true,
+      "recoveryAtSeconds": 24,
+      "recoveryContinuationSeconds": 8,
+      "retainedSegments": 1,
+      "retainedBytes": 342379,
+      "courseProgress": [
+        {
+          "tick": 500,
+          "step": 0,
+          "position": {
+            "x": 0,
+            "y": 1403,
+            "z": 48000
+          }
+        },
+        {
+          "tick": 1000,
+          "step": 0,
+          "position": {
+            "x": 1,
+            "y": 0,
+            "z": 48000
+          }
+        },
+        {
+          "tick": 1500,
+          "step": 0,
+          "position": {
+            "x": 0,
+            "y": 1403,
+            "z": 48000
+          }
+        }
+      ],
+      "elapsedSeconds": 3.713478040999995,
+      "passed": true
+    },
+    {
+      "aircraft": "helion-pro-o4",
+      "mode": "self-level",
+      "host": "world",
+      "course": "adventure-coast-01",
+      "courseIdentity": "6a77435a26cd51c1",
+      "configIdentity": "f7ac3140df22cdc5",
+      "backend": "civilian-quad-aircraft-regional.v3",
+      "durationSeconds": 32,
+      "airborneSeconds": 26.84,
+      "groundedSeconds": 5.16,
+      "secondTakeoffSeconds": 10,
+      "initialSupport": true,
+      "landed": true,
+      "minimumUpright": 0.9999950129198817,
+      "maximumYawDegreesPerSecond": 23.29385667402027,
+      "maximumClimbMetres": 1.4034417271614075,
+      "finalHash": "50937ca9",
+      "finalPosition": {
+        "x": 0,
+        "y": 1403,
+        "z": 48002
+      },
+      "pauseNoop": true,
+      "recoveryExact": true,
+      "recoveryAtSeconds": 24,
+      "recoveryContinuationSeconds": 8,
+      "retainedSegments": 1,
+      "retainedBytes": 345381,
+      "courseProgress": [
+        {
+          "tick": 500,
+          "step": 0,
+          "position": {
+            "x": 0,
+            "y": 1403,
+            "z": 48000
+          }
+        },
+        {
+          "tick": 1000,
+          "step": 0,
+          "position": {
+            "x": 0,
+            "y": 0,
+            "z": 48002
+          }
+        },
+        {
+          "tick": 1500,
+          "step": 0,
+          "position": {
+            "x": 0,
+            "y": 1403,
+            "z": 48002
+          }
+        }
+      ],
+      "elapsedSeconds": 2.8510792919999948,
+      "passed": true
+    },
+    {
+      "aircraft": "holybro-x650-v2",
+      "mode": "acro",
+      "host": "learning",
+      "course": "beginner-01",
+      "courseIdentity": "2b283442c91e80fb",
+      "configIdentity": "23f18b5202f30997",
+      "backend": "civilian-quad-aircraft-regional.v3",
+      "durationSeconds": 32,
+      "airborneSeconds": 26.64,
+      "groundedSeconds": 5.36,
+      "secondTakeoffSeconds": 10,
+      "initialSupport": true,
+      "landed": true,
+      "minimumUpright": 0.9998282630589499,
+      "maximumYawDegreesPerSecond": 15.466331614370329,
+      "maximumClimbMetres": 1.4035342782735825,
+      "finalHash": "3b59ace0",
+      "finalPosition": {
+        "x": 0,
+        "y": 1397,
+        "z": 0
+      },
+      "pauseNoop": true,
+      "recoveryExact": true,
+      "recoveryAtSeconds": 24,
+      "recoveryContinuationSeconds": 8,
+      "retainedSegments": 1,
+      "retainedBytes": 148583,
+      "courseProgress": [
+        {
+          "tick": 500,
+          "step": 2,
+          "position": {
+            "x": 0,
+            "y": 1397,
+            "z": 0
+          }
+        },
+        {
+          "tick": 1000,
+          "step": 3,
+          "position": {
+            "x": 1,
+            "y": 0,
+            "z": 1
+          }
+        },
+        {
+          "tick": 1500,
+          "step": 3,
+          "position": {
+            "x": 0,
+            "y": 1397,
+            "z": 0
+          }
+        }
+      ],
+      "elapsedSeconds": 1.879432541999995,
+      "passed": true
+    },
+    {
+      "aircraft": "holybro-x650-v2",
+      "mode": "self-level",
+      "host": "learning",
+      "course": "beginner-01",
+      "courseIdentity": "2b283442c91e80fb",
+      "configIdentity": "27726019362474b1",
+      "backend": "civilian-quad-aircraft-regional.v3",
+      "durationSeconds": 32,
+      "airborneSeconds": 26.66,
+      "groundedSeconds": 5.34,
+      "secondTakeoffSeconds": 10,
+      "initialSupport": true,
+      "landed": true,
+      "minimumUpright": 0.9996132846029624,
+      "maximumYawDegreesPerSecond": 15.466452706443391,
+      "maximumClimbMetres": 1.4034987539052963,
+      "finalHash": "8d5e456f",
+      "finalPosition": {
+        "x": 0,
+        "y": 1397,
+        "z": 0
+      },
+      "pauseNoop": true,
+      "recoveryExact": true,
+      "recoveryAtSeconds": 24,
+      "recoveryContinuationSeconds": 8,
+      "retainedSegments": 1,
+      "retainedBytes": 151676,
+      "courseProgress": [
+        {
+          "tick": 500,
+          "step": 2,
+          "position": {
+            "x": 0,
+            "y": 1397,
+            "z": 0
+          }
+        },
+        {
+          "tick": 1000,
+          "step": 3,
+          "position": {
+            "x": 1,
+            "y": 0,
+            "z": 0
+          }
+        },
+        {
+          "tick": 1500,
+          "step": 3,
+          "position": {
+            "x": 0,
+            "y": 1397,
+            "z": 0
+          }
+        }
+      ],
+      "elapsedSeconds": 2.3141801669999986,
+      "passed": true
+    },
+    {
+      "aircraft": "meteor75-analog-2022",
+      "mode": "self-level",
+      "host": "academy",
+      "course": "flight-01",
+      "courseIdentity": "573db8b71fe99103",
+      "configIdentity": "b83fe9c0ed075755",
+      "backend": "civilian-quad-aircraft-regional.v3",
+      "durationSeconds": 735,
+      "airborneSeconds": 730.08,
+      "groundedSeconds": 4.92,
+      "secondTakeoffSeconds": 713,
+      "initialSupport": true,
+      "landed": true,
+      "minimumUpright": 0.999832806732033,
+      "maximumYawDegreesPerSecond": 29.859213334363144,
+      "maximumClimbMetres": 1.4050590228289366,
+      "finalHash": "ed3c9918",
+      "finalPosition": {
+        "x": 0,
+        "y": 1399,
+        "z": 0
+      },
+      "pauseNoop": true,
+      "recoveryExact": true,
+      "recoveryAtSeconds": 732,
+      "recoveryContinuationSeconds": 3,
+      "retainedSegments": 3,
+      "retainedBytes": 725749,
+      "courseProgress": [
+        {
+          "tick": 500,
+          "step": 1,
+          "position": {
+            "x": -1,
+            "y": 1399,
+            "z": 0
+          }
+        },
+        {
+          "tick": 1000,
+          "step": 2,
+          "position": {
+            "x": 1,
+            "y": 0,
+            "z": 0
+          }
+        },
+        {
+          "tick": 1500,
+          "step": 2,
+          "position": {
+            "x": 0,
+            "y": 1399,
+            "z": 0
+          }
+        },
+        {
+          "tick": 2000,
+          "step": 2,
+          "position": {
+            "x": 0,
+            "y": 1399,
+            "z": 0
+          }
+        },
+        {
+          "tick": 2500,
+          "step": 2,
+          "position": {
+            "x": 0,
+            "y": 1399,
+            "z": 0
+          }
+        },
+        {
+          "tick": 3000,
+          "step": 2,
+          "position": {
+            "x": 0,
+            "y": 1399,
+            "z": 0
+          }
+        },
+        {
+          "tick": 3500,
+          "step": 2,
+          "position": {
+            "x": 0,
+            "y": 1399,
+            "z": 0
+          }
+        },
+        {
+          "tick": 4000,
+          "step": 2,
+          "position": {
+            "x": 0,
+            "y": 1399,
+            "z": 0
+          }
+        },
+        {
+          "tick": 4500,
+          "step": 2,
+          "position": {
+            "x": 0,
+            "y": 1399,
+            "z": 0
+          }
+        },
+        {
+          "tick": 5000,
+          "step": 2,
+          "position": {
+            "x": 0,
+            "y": 1399,
+            "z": 0
+          }
+        },
+        {
+          "tick": 5500,
+          "step": 2,
+          "position": {
+            "x": 0,
+            "y": 1399,
+            "z": 0
+          }
+        },
+        {
+          "tick": 6000,
+          "step": 2,
+          "position": {
+            "x": 0,
+            "y": 1399,
+            "z": 0
+          }
+        },
+        {
+          "tick": 6500,
+          "step": 2,
+          "position": {
+            "x": 0,
+            "y": 1399,
+            "z": 0
+          }
+        },
+        {
+          "tick": 7000,
+          "step": 2,
+          "position": {
+            "x": 0,
+            "y": 1399,
+            "z": 0
+          }
+        },
+        {
+          "tick": 7500,
+          "step": 2,
+          "position": {
+            "x": 0,
+            "y": 1399,
+            "z": 0
+          }
+        },
+        {
+          "tick": 8000,
+          "step": 2,
+          "position": {
+            "x": 0,
+            "y": 1399,
+            "z": 0
+          }
+        },
+        {
+          "tick": 8500,
+          "step": 2,
+          "position": {
+            "x": 0,
+            "y": 1399,
+            "z": 0
+          }
+        },
+        {
+          "tick": 9000,
+          "step": 2,
+          "position": {
+            "x": 0,
+            "y": 1399,
+            "z": 0
+          }
+        },
+        {
+          "tick": 9500,
+          "step": 2,
+          "position": {
+            "x": 0,
+            "y": 1399,
+            "z": 0
+          }
+        },
+        {
+          "tick": 10000,
+          "step": 2,
+          "position": {
+            "x": 0,
+            "y": 1399,
+            "z": 0
+          }
+        },
+        {
+          "tick": 10500,
+          "step": 2,
+          "position": {
+            "x": 0,
+            "y": 1399,
+            "z": 0
+          }
+        },
+        {
+          "tick": 11000,
+          "step": 2,
+          "position": {
+            "x": 0,
+            "y": 1399,
+            "z": 0
+          }
+        },
+        {
+          "tick": 11500,
+          "step": 2,
+          "position": {
+            "x": 0,
+            "y": 1399,
+            "z": 0
+          }
+        },
+        {
+          "tick": 12000,
+          "step": 2,
+          "position": {
+            "x": 0,
+            "y": 1399,
+            "z": 0
+          }
+        },
+        {
+          "tick": 12500,
+          "step": 2,
+          "position": {
+            "x": 0,
+            "y": 1399,
+            "z": 0
+          }
+        },
+        {
+          "tick": 13000,
+          "step": 2,
+          "position": {
+            "x": 0,
+            "y": 1399,
+            "z": 0
+          }
+        },
+        {
+          "tick": 13500,
+          "step": 2,
+          "position": {
+            "x": 0,
+            "y": 1399,
+            "z": 0
+          }
+        },
+        {
+          "tick": 14000,
+          "step": 2,
+          "position": {
+            "x": 0,
+            "y": 1399,
+            "z": 0
+          }
+        },
+        {
+          "tick": 14500,
+          "step": 2,
+          "position": {
+            "x": 0,
+            "y": 1399,
+            "z": 0
+          }
+        },
+        {
+          "tick": 15000,
+          "step": 2,
+          "position": {
+            "x": 0,
+            "y": 1399,
+            "z": 0
+          }
+        },
+        {
+          "tick": 15500,
+          "step": 2,
+          "position": {
+            "x": 0,
+            "y": 1399,
+            "z": 0
+          }
+        },
+        {
+          "tick": 16000,
+          "step": 2,
+          "position": {
+            "x": 0,
+            "y": 1399,
+            "z": 0
+          }
+        },
+        {
+          "tick": 16500,
+          "step": 2,
+          "position": {
+            "x": 0,
+            "y": 1399,
+            "z": 0
+          }
+        },
+        {
+          "tick": 17000,
+          "step": 2,
+          "position": {
+            "x": 0,
+            "y": 1399,
+            "z": 0
+          }
+        },
+        {
+          "tick": 17500,
+          "step": 2,
+          "position": {
+            "x": 0,
+            "y": 1399,
+            "z": 0
+          }
+        },
+        {
+          "tick": 18000,
+          "step": 2,
+          "position": {
+            "x": 0,
+            "y": 1399,
+            "z": 0
+          }
+        },
+        {
+          "tick": 18500,
+          "step": 2,
+          "position": {
+            "x": 0,
+            "y": 1399,
+            "z": 0
+          }
+        },
+        {
+          "tick": 19000,
+          "step": 2,
+          "position": {
+            "x": 0,
+            "y": 1399,
+            "z": 0
+          }
+        },
+        {
+          "tick": 19500,
+          "step": 2,
+          "position": {
+            "x": 0,
+            "y": 1399,
+            "z": 0
+          }
+        },
+        {
+          "tick": 20000,
+          "step": 2,
+          "position": {
+            "x": 0,
+            "y": 1399,
+            "z": 0
+          }
+        },
+        {
+          "tick": 20500,
+          "step": 2,
+          "position": {
+            "x": 0,
+            "y": 1399,
+            "z": 0
+          }
+        },
+        {
+          "tick": 21000,
+          "step": 2,
+          "position": {
+            "x": 0,
+            "y": 1399,
+            "z": 0
+          }
+        },
+        {
+          "tick": 21500,
+          "step": 2,
+          "position": {
+            "x": 0,
+            "y": 1399,
+            "z": 0
+          }
+        },
+        {
+          "tick": 22000,
+          "step": 2,
+          "position": {
+            "x": 0,
+            "y": 1399,
+            "z": 0
+          }
+        },
+        {
+          "tick": 22500,
+          "step": 2,
+          "position": {
+            "x": 0,
+            "y": 1399,
+            "z": 0
+          }
+        },
+        {
+          "tick": 23000,
+          "step": 2,
+          "position": {
+            "x": 0,
+            "y": 1399,
+            "z": 0
+          }
+        },
+        {
+          "tick": 23500,
+          "step": 2,
+          "position": {
+            "x": 0,
+            "y": 1399,
+            "z": 0
+          }
+        },
+        {
+          "tick": 24000,
+          "step": 2,
+          "position": {
+            "x": 0,
+            "y": 1399,
+            "z": 0
+          }
+        },
+        {
+          "tick": 24500,
+          "step": 2,
+          "position": {
+            "x": 0,
+            "y": 1399,
+            "z": 0
+          }
+        },
+        {
+          "tick": 25000,
+          "step": 2,
+          "position": {
+            "x": 0,
+            "y": 1399,
+            "z": 0
+          }
+        },
+        {
+          "tick": 25500,
+          "step": 2,
+          "position": {
+            "x": 0,
+            "y": 1399,
+            "z": 0
+          }
+        },
+        {
+          "tick": 26000,
+          "step": 2,
+          "position": {
+            "x": 0,
+            "y": 1399,
+            "z": 0
+          }
+        },
+        {
+          "tick": 26500,
+          "step": 2,
+          "position": {
+            "x": 0,
+            "y": 1399,
+            "z": 0
+          }
+        },
+        {
+          "tick": 27000,
+          "step": 2,
+          "position": {
+            "x": 0,
+            "y": 1399,
+            "z": 0
+          }
+        },
+        {
+          "tick": 27500,
+          "step": 2,
+          "position": {
+            "x": 0,
+            "y": 1399,
+            "z": 0
+          }
+        },
+        {
+          "tick": 28000,
+          "step": 2,
+          "position": {
+            "x": 0,
+            "y": 1399,
+            "z": 0
+          }
+        },
+        {
+          "tick": 28500,
+          "step": 2,
+          "position": {
+            "x": 0,
+            "y": 1399,
+            "z": 0
+          }
+        },
+        {
+          "tick": 29000,
+          "step": 2,
+          "position": {
+            "x": 0,
+            "y": 1399,
+            "z": 0
+          }
+        },
+        {
+          "tick": 29500,
+          "step": 2,
+          "position": {
+            "x": 0,
+            "y": 1399,
+            "z": 0
+          }
+        },
+        {
+          "tick": 30000,
+          "step": 2,
+          "position": {
+            "x": 0,
+            "y": 1399,
+            "z": 0
+          }
+        },
+        {
+          "tick": 30500,
+          "step": 2,
+          "position": {
+            "x": 0,
+            "y": 1399,
+            "z": 0
+          }
+        },
+        {
+          "tick": 31000,
+          "step": 2,
+          "position": {
+            "x": 0,
+            "y": 1399,
+            "z": 0
+          }
+        },
+        {
+          "tick": 31500,
+          "step": 2,
+          "position": {
+            "x": 0,
+            "y": 1399,
+            "z": 0
+          }
+        },
+        {
+          "tick": 32000,
+          "step": 2,
+          "position": {
+            "x": 0,
+            "y": 1399,
+            "z": 0
+          }
+        },
+        {
+          "tick": 32500,
+          "step": 2,
+          "position": {
+            "x": 0,
+            "y": 1399,
+            "z": 0
+          }
+        },
+        {
+          "tick": 33000,
+          "step": 2,
+          "position": {
+            "x": 0,
+            "y": 1399,
+            "z": 0
+          }
+        },
+        {
+          "tick": 33500,
+          "step": 2,
+          "position": {
+            "x": 0,
+            "y": 1399,
+            "z": 0
+          }
+        },
+        {
+          "tick": 34000,
+          "step": 2,
+          "position": {
+            "x": 0,
+            "y": 1399,
+            "z": 0
+          }
+        },
+        {
+          "tick": 34500,
+          "step": 2,
+          "position": {
+            "x": 0,
+            "y": 1399,
+            "z": 0
+          }
+        },
+        {
+          "tick": 35000,
+          "step": 2,
+          "position": {
+            "x": 0,
+            "y": 1399,
+            "z": 0
+          }
+        },
+        {
+          "tick": 35500,
+          "step": 2,
+          "position": {
+            "x": 0,
+            "y": 1399,
+            "z": 0
+          }
+        },
+        {
+          "tick": 36000,
+          "step": 2,
+          "position": {
+            "x": 0,
+            "y": 1399,
+            "z": 0
+          }
+        },
+        {
+          "tick": 36500,
+          "step": 2,
+          "position": {
+            "x": 0,
+            "y": 1399,
+            "z": 0
+          }
+        }
+      ],
+      "elapsedSeconds": 24.498643542000003,
+      "passed": true
+    },
+    {
+      "aircraft": "meteor75-analog-2022",
+      "mode": "acro",
+      "host": "regional",
+      "source": {
+        "id": "canyon-expanse-study",
+        "revision": "relief-r1",
+        "sha256": "d2c3dce6c39227e85a10256fb3d1082fec2a6c7a47f6347fd664e2840eb57003"
+      },
+      "boundaryRollback": true,
+      "configIdentity": "599d0cd9b0953eaf",
+      "backend": "civilian-quad-aircraft-regional.v3",
+      "durationSeconds": 65,
+      "airborneSeconds": 61.5,
+      "groundedSeconds": 3.5,
+      "secondTakeoffSeconds": 30,
+      "initialSupport": false,
+      "landed": true,
+      "minimumUpright": 0.9900402706167325,
+      "maximumYawDegreesPerSecond": 29.859814617201835,
+      "maximumClimbMetres": 1.405195951461792,
+      "finalHash": "70a05b99",
+      "finalPosition": {
+        "x": 1569996.9533426848,
+        "y": 19643.159345433505,
+        "z": 1759995.68367891
+      },
+      "pauseNoop": true,
+      "recoveryExact": true,
+      "recoveryAtSeconds": 62,
+      "recoveryContinuationSeconds": 3,
+      "retainedSegments": 2,
+      "retainedBytes": 4292892,
+      "courseProgress": [
+        {
+          "tick": 500,
+          "step": 0,
+          "position": {
+            "x": 1570000.0005195402,
+            "y": 19643.141741021336,
+            "z": 1759999.9999744515
+          }
+        },
+        {
+          "tick": 1000,
+          "step": 0,
+          "position": {
+            "x": 1570000.0038444642,
+            "y": 17409.65838840704,
+            "z": 1760000.0012628264
+          }
+        },
+        {
+          "tick": 1500,
+          "step": 0,
+          "position": {
+            "x": 1570000.0554355034,
+            "y": 13503.734097028908,
+            "z": 1759999.9905937717
+          }
+        },
+        {
+          "tick": 2000,
+          "step": 0,
+          "position": {
+            "x": 1569901.7885416034,
+            "y": 17146.752131962523,
+            "z": 1760118.157382971
+          }
+        },
+        {
+          "tick": 2500,
+          "step": 0,
+          "position": {
+            "x": 1569999.8699510056,
+            "y": 19643.159186070643,
+            "z": 1759997.2526399684
+          }
+        },
+        {
+          "tick": 3000,
+          "step": 0,
+          "position": {
+            "x": 1569997.1201768448,
+            "y": 19643.15925495834,
+            "z": 1759993.9171440064
+          }
+        }
+      ],
+      "elapsedSeconds": 102.68527,
+      "passed": true
+    },
+    {
+      "aircraft": "meteor75-analog-2022",
+      "mode": "self-level",
+      "host": "regional",
+      "source": {
+        "id": "canyon-expanse-study",
+        "revision": "relief-r1",
+        "sha256": "d2c3dce6c39227e85a10256fb3d1082fec2a6c7a47f6347fd664e2840eb57003"
+      },
+      "boundaryRollback": true,
+      "configIdentity": "b83fe9c0ed075755",
+      "backend": "civilian-quad-aircraft-regional.v3",
+      "durationSeconds": 65,
+      "airborneSeconds": 61.5,
+      "groundedSeconds": 3.5,
+      "secondTakeoffSeconds": 30,
+      "initialSupport": false,
+      "landed": true,
+      "minimumUpright": 0.9896157301026356,
+      "maximumYawDegreesPerSecond": 29.860060504001332,
+      "maximumClimbMetres": 1.4051172733306885,
+      "finalHash": "0ca3dd31",
+      "finalPosition": {
+        "x": 1569997.0349896173,
+        "y": 19643.149148108187,
+        "z": 1759996.7726729442
+      },
+      "pauseNoop": true,
+      "recoveryExact": true,
+      "recoveryAtSeconds": 62,
+      "recoveryContinuationSeconds": 3,
+      "retainedSegments": 2,
+      "retainedBytes": 4290985,
+      "courseProgress": [
+        {
+          "tick": 500,
+          "step": 0,
+          "position": {
+            "x": 1570000.000066599,
+            "y": 19643.141734764715,
+            "z": 1759999.9998602043
+          }
+        },
+        {
+          "tick": 1000,
+          "step": 0,
+          "position": {
+            "x": 1570000.0205836394,
+            "y": 17409.65794628961,
+            "z": 1760000.0006145192
+          }
+        },
+        {
+          "tick": 1500,
+          "step": 0,
+          "position": {
+            "x": 1570000.016805084,
+            "y": 13503.733736911097,
+            "z": 1759999.9955623576
+          }
+        },
+        {
+          "tick": 2000,
+          "step": 0,
+          "position": {
+            "x": 1569909.254796735,
+            "y": 17147.757663520144,
+            "z": 1760102.977676721
+          }
+        },
+        {
+          "tick": 2500,
+          "step": 0,
+          "position": {
+            "x": 1569998.1790986236,
+            "y": 19643.14955844557,
+            "z": 1759994.3773543027
+          }
+        },
+        {
+          "tick": 3000,
+          "step": 0,
+          "position": {
+            "x": 1569996.8341586522,
+            "y": 19643.149396778612,
+            "z": 1759994.4366709033
+          }
+        }
+      ],
+      "elapsedSeconds": 101.2522595,
+      "passed": true
+    },
+    {
+      "aircraft": "holybro-x650-v2",
+      "mode": "acro",
+      "host": "regional",
+      "source": {
+        "id": "canyon-expanse-study",
+        "revision": "relief-r1",
+        "sha256": "d2c3dce6c39227e85a10256fb3d1082fec2a6c7a47f6347fd664e2840eb57003"
+      },
+      "boundaryRollback": true,
+      "configIdentity": "23f18b5202f30997",
+      "backend": "civilian-quad-aircraft-regional.v3",
+      "durationSeconds": 65,
+      "airborneSeconds": 60.86,
+      "groundedSeconds": 4.14,
+      "secondTakeoffSeconds": 30,
+      "initialSupport": false,
+      "landed": true,
+      "minimumUpright": 0.9834269645533903,
+      "maximumYawDegreesPerSecond": 15.464343997947086,
+      "maximumClimbMetres": 1.4034407138824463,
+      "finalHash": "142ac0b1",
+      "finalPosition": {
+        "x": 1569999.8060057906,
+        "y": 19518.52977298612,
+        "z": 1760000.0908797854
+      },
+      "pauseNoop": true,
+      "recoveryExact": true,
+      "recoveryAtSeconds": 62,
+      "recoveryContinuationSeconds": 3,
+      "retainedSegments": 2,
+      "retainedBytes": 4290662,
+      "courseProgress": [
+        {
+          "tick": 500,
+          "step": 0,
+          "position": {
+            "x": 1569999.9985833836,
+            "y": 19518.316683292025,
+            "z": 1759999.9982600817
+          }
+        },
+        {
+          "tick": 1000,
+          "step": 0,
+          "position": {
+            "x": 1570000.0225066012,
+            "y": 17264.85323599036,
+            "z": 1760000.0118593907
+          }
+        },
+        {
+          "tick": 1500,
+          "step": 0,
+          "position": {
+            "x": 1569999.9902446629,
+            "y": 13332.902152860463,
+            "z": 1759999.993406919
+          }
+        },
+        {
+          "tick": 2000,
+          "step": 0,
+          "position": {
+            "x": 1569814.999250981,
+            "y": 17049.942331120543,
+            "z": 1760184.00431505
+          }
+        },
+        {
+          "tick": 2500,
+          "step": 0,
+          "position": {
+            "x": 1570002.4721141914,
+            "y": 19518.52671175443,
+            "z": 1760001.4644444431
+          }
+        },
+        {
+          "tick": 3000,
+          "step": 0,
+          "position": {
+            "x": 1569999.7121138365,
+            "y": 19518.528363845435,
+            "z": 1759999.6470618243
+          }
+        }
+      ],
+      "elapsedSeconds": 98.36988654099999,
+      "passed": true
+    },
+    {
+      "aircraft": "holybro-x650-v2",
+      "mode": "self-level",
+      "host": "regional",
+      "source": {
+        "id": "canyon-expanse-study",
+        "revision": "relief-r1",
+        "sha256": "d2c3dce6c39227e85a10256fb3d1082fec2a6c7a47f6347fd664e2840eb57003"
+      },
+      "boundaryRollback": true,
+      "configIdentity": "27726019362474b1",
+      "backend": "civilian-quad-aircraft-regional.v3",
+      "durationSeconds": 65,
+      "airborneSeconds": 60.86,
+      "groundedSeconds": 4.14,
+      "secondTakeoffSeconds": 30,
+      "initialSupport": false,
+      "landed": true,
+      "minimumUpright": 0.9851144139561766,
+      "maximumYawDegreesPerSecond": 15.464381563987514,
+      "maximumClimbMetres": 1.4034459590911865,
+      "finalHash": "80af7e02",
+      "finalPosition": {
+        "x": 1570000.0036281026,
+        "y": 19518.483208046506,
+        "z": 1760000.0196122578
+      },
+      "pauseNoop": true,
+      "recoveryExact": true,
+      "recoveryAtSeconds": 62,
+      "recoveryContinuationSeconds": 3,
+      "retainedSegments": 2,
+      "retainedBytes": 4294354,
+      "courseProgress": [
+        {
+          "tick": 500,
+          "step": 0,
+          "position": {
+            "x": 1569999.9988764855,
+            "y": 19518.316653127844,
+            "z": 1759999.9982417857
+          }
+        },
+        {
+          "tick": 1000,
+          "step": 0,
+          "position": {
+            "x": 1569999.996338685,
+            "y": 17264.8592580433,
+            "z": 1760000.04673309
+          }
+        },
+        {
+          "tick": 1500,
+          "step": 0,
+          "position": {
+            "x": 1570000.0037367577,
+            "y": 13332.889337818891,
+            "z": 1760000.0379383205
+          }
+        },
+        {
+          "tick": 2000,
+          "step": 0,
+          "position": {
+            "x": 1569834.3257099295,
+            "y": 17054.070602312255,
+            "z": 1760167.604562138
+          }
+        },
+        {
+          "tick": 2500,
+          "step": 0,
+          "position": {
+            "x": 1570000.8610608827,
+            "y": 19518.47204568066,
+            "z": 1759999.2476832161
+          }
+        },
+        {
+          "tick": 3000,
+          "step": 0,
+          "position": {
+            "x": 1569999.9135088895,
+            "y": 19518.487311026496,
+            "z": 1760000.089985522
+          }
+        }
+      ],
+      "elapsedSeconds": 131.43258633300005,
+      "passed": true
+    }
+  ],
+  "limitations": [
+    "Selected hashes only, not complete transitive closure.",
+    "Direct in-process production simulation, not browser/worker/native/device/IndexedDB evidence.",
+    "Thirty catalog course cases rotate authored host; four Regional cases; one735-second Meteor75 run. Not every possible course/aircraft/host combination.",
+    "Bounded retained segments asserted; no whole-process memory bound or real-time gate.",
+    "Unscored software controllability, not measured real-aircraft fidelity."
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "baseline": "c7217007ac",
+  "priorGrainTiles": 11,
+  "preservedByteIdentical": [
+    "--ui-grain-powder",
+    "--ui-grain-brush",
+    "--ui-grain-thread",
+    "--ui-grain-glaze",
+    "--ui-grain-timber",
+    "--ui-grain-stone",
+    "--ui-grain-fiber",
+    "--ui-grain-machining",
+    "--ui-grain-edge-wear",
+    "--ui-grain-vent",
+    "--ui-grain-bulkhead"
+  ],
+  "added": [
+    "--ui-grain-planed"
+  ]
+}

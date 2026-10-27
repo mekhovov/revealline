@@ -1,0 +1,21 @@
+{
+  "pass": true,
+  "node": "v22.22.2",
+  "sourceHashCount": 209,
+  "sourceStable": true,
+  "libraryExactlyRetained": true,
+  "librarySha256": "47e7ab556a12d1a5db504de0826f3d7294c1af0ffd088a1c00923d3d8b579ae4",
+  "restoredProfileHasNoImportReceipt": true,
+  "laterExplicitImportReceiptRetained": true,
+  "recording": {
+    "format": "AdvancedRegionalRecording.v1",
+    "missionTicks": 26,
+    "frequency": 250,
+    "finalHash": "0b26acd5",
+    "verified": true,
+    "verificationScope": "complete",
+    "recoveryVerified": true,
+    "recoveryRestoredHash": "0b26acd5",
+    "scored": false
+  }
+}

@@ -59346,10 +59346,7 @@
               }
             ],
             "bonus": {
-              "at": [
-                4,
-                8
-              ],
+              "at": [4, 8],
               "policy": {
                 "kind": "courier",
                 "every": 4,
@@ -63196,10 +63193,7 @@
               }
             ],
             "bonus": {
-              "at": [
-                4,
-                8
-              ],
+              "at": [4, 8],
               "policy": {
                 "kind": "courier",
                 "every": 4,
@@ -67046,10 +67040,7 @@
               }
             ],
             "bonus": {
-              "at": [
-                4,
-                8
-              ],
+              "at": [4, 8],
               "policy": {
                 "kind": "courier",
                 "every": 4,
@@ -70896,10 +70887,7 @@
               }
             ],
             "bonus": {
-              "at": [
-                4,
-                8
-              ],
+              "at": [4, 8],
               "policy": {
                 "kind": "courier",
                 "every": 4,
@@ -75656,10 +75644,7 @@
               }
             ],
             "bonus": {
-              "at": [
-                4,
-                8
-              ],
+              "at": [4, 8],
               "policy": {
                 "kind": "courier",
                 "every": 4,
@@ -80416,10 +80401,7 @@
               }
             ],
             "bonus": {
-              "at": [
-                4,
-                8
-              ],
+              "at": [4, 8],
               "policy": {
                 "kind": "courier",
                 "every": 4,

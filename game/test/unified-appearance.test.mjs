@@ -8,7 +8,7 @@ import {
   THEME_PREFERENCES_KEY,
   createThemePreferences,
 } from '../presentation/theme-system.mjs';
-import { installThemeHost } from '../presentation/theme-host.mjs';
+import { installThemeHost, ThemePreparationTimeoutError } from '../presentation/theme-host.mjs';
 import { createDefaultThemeBundle } from '../presentation/catalog.mjs';
 import { duplicateStudioSnapshot, reviseStudioTheme } from '../presentation/studio-session.mjs';
 import { createThemeCandidate } from '../presentation/theme-preview.mjs';
@@ -63,6 +63,170 @@ function deferred() {
   return { promise, resolve, reject };
 }
 const nextTask = () => new Promise((resolve) => setImmediate(resolve));
+
+test('selected theme readiness awaits only its pending resources and accepts their completed snapshot', async (t) => {
+  const { document, host } = hostFixture(t);
+  await host.ready;
+  const accepted = host.snapshot(),
+    fonts = deferred();
+  let loads = 0,
+    settled = false;
+  document.fonts = {
+    load() {
+      loads++;
+      return fonts.promise;
+    },
+    get ready() {
+      assert.fail('selected theme readiness must not await the whole font bank');
+    },
+  };
+  const selected = host.setDefault({ familyId: 'dnipro-porcelain', revision: 'r1' });
+  assert.equal(host.preparing, true);
+  const ready = host.whenReady().then((value) => {
+    settled = true;
+    return value;
+  });
+  await nextTask();
+  assert.ok(loads > 0);
+  const selectedLoads = loads;
+  assert.equal(settled, false);
+  assert.equal(host.snapshot(), accepted);
+  fonts.resolve([]);
+  await selected;
+  assert.equal(await ready, host.snapshot());
+  assert.equal(host.snapshot().familyId, 'dnipro-porcelain');
+  assert.equal(host.preparing, false);
+  assert.equal(await host.whenReady(), host.snapshot());
+  assert.equal(loads, selectedLoads, 'waiting and the ready fast path request no extra resources');
+});
+
+test('theme readiness follows a superseding selection while the old font request remains unresolved', async (t) => {
+  const { document, host } = hostFixture(t);
+  await host.ready;
+  const oldFonts = deferred();
+  document.fonts = { load: () => oldFonts.promise };
+  const oldSelection = host.setDefault({ familyId: 'dnipro-porcelain', revision: 'r1' });
+  await nextTask();
+  const ready = host.whenReady();
+  document.fonts.load = () => Promise.resolve([]);
+  await host.setDefault({ familyId: 'vyshyvanka', revision: 'r1' });
+  const accepted = await ready;
+  assert.equal(accepted.familyId, 'vyshyvanka');
+  assert.equal(host.preparing, false);
+  oldFonts.resolve([]);
+  await oldSelection;
+  assert.equal(host.snapshot(), accepted, 'a stale request cannot replace the ready selection');
+});
+
+test('theme readiness has one ten-second deadline across superseding selections', async (t) => {
+  const { document, host } = hostFixture(t);
+  await host.ready;
+  t.mock.timers.enable({ apis: ['setTimeout'] });
+  const fonts = deferred();
+  document.fonts = { load: () => fonts.promise };
+  const first = host.setDefault({ familyId: 'dnipro-porcelain', revision: 'r1' });
+  await nextTask();
+  let settled = false;
+  const ready = host.whenReady();
+  const rejection = assert.rejects(ready, (error) => {
+    settled = true;
+    assert.ok(error instanceof ThemePreparationTimeoutError);
+    assert.equal(error.code, 'THEME_PREPARATION_TIMEOUT');
+    return true;
+  });
+  t.mock.timers.tick(7000);
+  const second = host.setDefault({ familyId: 'vyshyvanka', revision: 'r1' });
+  await nextTask();
+  t.mock.timers.tick(2999);
+  await nextTask();
+  assert.equal(settled, false);
+  t.mock.timers.tick(1);
+  await rejection;
+  assert.equal(host.preparing, true, 'a timed-out waiter does not cancel the shared owner');
+  fonts.resolve([]);
+  await Promise.all([first, second]);
+  assert.equal(host.snapshot().familyId, 'vyshyvanka');
+  assert.equal(host.preparing, false);
+});
+
+test('aborting theme readiness affects only that waiter and leaves the shared selection recoverable', async (t) => {
+  const { document, host } = hostFixture(t);
+  await host.ready;
+  const accepted = host.snapshot(),
+    fonts = deferred(),
+    controller = new AbortController();
+  document.fonts = { load: () => fonts.promise };
+  const selected = host.setDefault({ familyId: 'dnipro-porcelain', revision: 'r1' });
+  const cancelled = host.whenReady({ signal: controller.signal }),
+    surviving = host.whenReady();
+  const reason = new Error('Attempt was superseded');
+  controller.abort(reason);
+  await assert.rejects(cancelled, (error) => error === reason);
+  assert.equal(host.snapshot(), accepted);
+  assert.equal(host.preparing, true);
+  fonts.resolve([]);
+  await selected;
+  assert.equal(await surviving, host.snapshot());
+  assert.equal(host.snapshot().familyId, 'dnipro-porcelain');
+  await assert.rejects(host.whenReady({ signal: controller.signal }), (error) => error === reason);
+});
+
+test('theme readiness preserves rejected-resource fallback and rejects invalid deadlines or a closed owner', async (t) => {
+  const { document, host } = hostFixture(t);
+  await host.ready;
+  const accepted = host.snapshot();
+  document.fonts = { load: () => Promise.reject(new Error('Selected font unavailable')) };
+  const selection = host.setDefault({ familyId: 'dnipro-porcelain', revision: 'r1' });
+  assert.equal(await host.whenReady(), accepted);
+  await selection;
+  assert.equal(host.preparing, false);
+  for (const timeoutMs of [0, -1, 10001, Infinity, NaN, '1000'])
+    await assert.rejects(host.whenReady({ timeoutMs }), TypeError);
+  const fonts = deferred();
+  document.fonts.load = () => fonts.promise;
+  const pending = host.refresh();
+  const ready = host.whenReady();
+  host.dispose();
+  await assert.rejects(ready, { name: 'AbortError' });
+  await assert.rejects(host.whenReady(), { name: 'AbortError' });
+  assert.equal(host.preparing, false);
+  fonts.resolve([]);
+  await pending;
+});
+
+test('committing a prepared context settles readiness unless an acceptance listener selects a newer owner', async (t) => {
+  const { document, host } = hostFixture(t);
+  await host.ready;
+  const oldFonts = deferred();
+  document.fonts = { load: () => oldFonts.promise };
+  const earlier = host.refresh();
+  await nextTask();
+  const firstReady = host.whenReady();
+  document.fonts.load = () => Promise.resolve([]);
+  const token = await host.prepareDefault({ familyId: 'dnipro-porcelain', revision: 'r1' });
+  assert.equal(token.commit(), true);
+  assert.equal((await firstReady).familyId, 'dnipro-porcelain');
+  oldFonts.resolve([]);
+  await earlier;
+
+  const nextToken = await host.prepareDefault({ familyId: 'vyshyvanka', revision: 'r1' }),
+    newestFonts = deferred();
+  let newest;
+  const stop = host.subscribe((snapshot) => {
+    if (snapshot.familyId !== 'vyshyvanka') return;
+    document.fonts.load = () => newestFonts.promise;
+    newest = host.setDefault({ familyId: 'tryzub', revision: 'r1' });
+  });
+  t.after(stop);
+  assert.equal(nextToken.commit(), true);
+  assert.equal(host.preparing, true, 'the reentrant selection retains its own pending state');
+  const finalReady = host.whenReady();
+  await nextTask();
+  newestFonts.resolve([]);
+  await newest;
+  assert.equal((await finalReady).familyId, 'tryzub');
+  assert.equal(host.preparing, false);
+});
 
 test('prepared context leaves the accepted interface and preferences unchanged until a synchronous single-use commit', async (t) => {
   const { document, host, storage } = hostFixture(t, {

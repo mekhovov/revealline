@@ -4,17 +4,138 @@ on:
   pull_request:
     paths:
       - '.github/workflows/appearance-preview.yml'
+      - 'game/community/community.css'
+      - 'game/community/page.mjs'
+      - 'game/community/removal-review.mjs'
+      - 'game/test/community-readiness-host.test.mjs'
+      - 'game/test/community-removal-review.test.mjs'
+      - 'game/locales/en/interface.json'
+      - 'game/locales/uk/interface.json'
+      - 'game/i18n/catalogs.mjs'
+      - 'publishing/focused-test-map.json'
       - 'docs/appearance-preview-testing.md'
+      - 'docs/offline-pwa/readiness-dashboard.md'
+      - 'game/downloads.css'
+      - 'game/downloads.html'
+      - 'game/downloads.mjs'
+      - 'game/i18n/catalogs.mjs'
+      - 'game/locales/en/interface.json'
+      - 'game/locales/uk/interface.json'
+      - 'game/test/offline-readiness-host.test.mjs'
+      - 'game/test/offline-readiness.test.mjs'
+      - 'game/ui/offline-readiness.mjs'
+      - 'game/app.mjs'
+      - 'game/ui/performance-session.mjs'
+      - 'game/test/performance-session.test.mjs'
+      - 'game/test/mission-library-stage-observation.test.mjs'
+      - 'game/couch/couch.mjs'
+      - 'game/couch/couch-shell.mjs'
+      - 'game/couch/couch-static-pictures.mjs'
+      - 'game/couch/couch-installed-chapters.mjs'
+      - 'game/ui/controller-navigation.mjs'
+      - 'game/test/controller-navigation.test.mjs'
+      - 'game/test/controller-reading.test.mjs'
+      - 'game/test/couch-static-pictures.test.mjs'
+      - 'game/test/couch-static-picture-host.test.mjs'
+      - 'game/test/couch-shell.test.mjs'
+      - 'game/test/couch-installed-chapters.test.mjs'
+      - 'game/replay.mjs'
+      - 'game/demo-library.mjs'
+      - 'game/demo-bot.mjs'
+      - 'game/demo-bot-player.mjs'
+      - 'game/demo-sources.mjs'
+      - 'game/journey/performance-store.mjs'
+      - 'game/journey/performance.mjs'
+      - 'game/journey/profile.mjs'
+      - 'game/mastery-awards.mjs'
+      - 'game/mastery-verification.mjs'
+      - 'game/mastery-journey.mjs'
+      - 'game/mastery-journey-proofs.mjs'
+      - 'game/company-campaigns/evidence.mjs'
+      - 'game/company-campaigns/learning-proofs.mjs'
+      - 'game/ui/edition-lessons.mjs'
+      - 'game/ui/edition-mastery.mjs'
+      - 'game/ui/edition-solo.mjs'
+      - 'game/ui/library-entry.mjs'
+      - 'game/ui/library-panel.mjs'
+      - 'game/capture-presentation-session.mjs'
+      - 'game/test/journey-performance-admission.test.mjs'
+      - 'game/test/journey-performance-observation-admission.test.mjs'
+      - 'game/test/journey-profile-owned-transition.test.mjs'
+      - 'game/test/journey-required-progress-admission.test.mjs'
+      - 'game/test/solo-required-progress-preparation-host.test.mjs'
+      - 'game/test/owned-recorder.test.mjs'
+      - 'game/test/demo-library-indexeddb.test.mjs'
+      - 'game/test/demo-bot.test.mjs'
+      - 'game/test/demo-sources.test.mjs'
+      - 'game/test/demo-scene-transition.test.mjs'
+      - 'game/test/demo-loading-host.test.mjs'
+      - 'game/test/solo-demo-resources-host.test.mjs'
+      - 'game/test/victory-story-ui.test.mjs'
+      - 'game/test/optional-learning-admission.test.mjs'
+      - 'game/test/optional-replay-admission.test.mjs'
+      - 'game/test/solo-pending-verification-gameplay-host.test.mjs'
+      - 'game/test/edition-mastery-host.test.mjs'
+      - 'game/test/edition-lessons.test.mjs'
+      - 'game/test/capture-presentation-session.test.mjs'
+      - 'game/test/solo-dense-replay-persistence.test.mjs'
+      - 'game/test/library-entry.test.mjs'
+      - 'game/test/solo-lazy-library-host.test.mjs'
+      - 'game/test/helpers/optional-worlds-loader.mjs'
+      - 'game/test/solo-transition-performance-host.test.mjs'
       - 'game/presentation/**'
       - 'game/ui/theme-*'
       - 'game/ui/menu-controls.css'
       - 'game/ui/industrial-workshop.css'
       - 'game/ui/field-kit*.css'
+      - 'game/ui/handheld-play.css'
+      - 'game/ui/device-controls.css'
+      - 'game/ui/hunt-feedback.css'
+      - 'game/ui/pixel-theme.css'
+      - 'game/ui/journey.css'
       - 'game/ui/edition-tool-provider.mjs'
       - 'game/ui/optional-practice-panel.mjs'
       - 'game/ui/mode-choice.mjs'
       - 'game/ui/story-dialog.mjs'
       - 'game/ui/operation-status.mjs'
+      - 'game/ui/visual-quality-policy.mjs'
+      - 'game/ui/menu-scenes.mjs'
+      - 'game/ui/menu-scene-motion.mjs'
+      - 'game/ui/native-menus.mjs'
+      - 'game/ui/field-kit-surfaces.mjs'
+      - 'game/ui/game-shell.mjs'
+      - 'game/ui/modal-navigation.mjs'
+      - 'game/ui/controller-confirm-trace.mjs'
+      - 'game/ui/controller-router.mjs'
+      - 'game/ui/controller-boost-settings.mjs'
+      - 'game/ui/classic-view.mjs'
+      - 'game/test/classic-presentation.test.mjs'
+      - 'game/couch/controller-session.mjs'
+      - 'game/ui/audio.mjs'
+      - 'game/ui/published-audio.mjs'
+      - 'game/published-cue-inspection.mjs'
+      - 'game/ui/media-preparation.mjs'
+      - 'game/ui/feedback-director.mjs'
+      - 'game/journey/reaction-voice-cache.mjs'
+      - 'game/mp3-inspection.mjs'
+      - 'game/ui/mp3-inspector.mjs'
+      - 'game/mp3-inspection-worker.mjs'
+      - 'game/test/helpers/pcm-wave.mjs'
+      - 'game/audio/effects/**'
+      - 'game/ui/flight-information-source.mjs'
+      - 'game/ui/flight-information-bridge.mjs'
+      - 'game/ui/flight-information-host.mjs'
+      - 'game/ui/soundtrack-player.mjs'
+      - 'game/ui/demo-audio.mjs'
+      - 'game/ui/demo-host.mjs'
+      - 'game/ui/demo-reward.mjs'
+      - 'game/ui/demo-scene-transition.mjs'
+      - 'game/ui/victory-story.mjs'
+      - 'game/ui/title-character.mjs'
+      - 'game/ui/soundtrack-panel.mjs'
+      - 'game/ui/soundtrack-authoring-view.mjs'
+      - 'game/ui/enemy-guide.mjs'
+      - 'game/ui/enemy-body-assets.mjs'
       - 'game/replay-theater/**'
       - 'game/editions/model.mjs'
       - 'game/editions/package-budget.mjs'
@@ -30,6 +151,7 @@ on:
       - 'scripts/prepare-world-texture-acceptance.mjs'
       - 'scripts/test-world-texture-acceptance.mjs'
       - 'scripts/test-appearance-preview-policy.mjs'
+      - 'scripts/prepare-appearance-preview-metadata.mjs'
       - 'scripts/build-neon-artwork-gallery.mjs'
       - 'scripts/build-neon-mosaic.mjs'
       - 'scripts/refresh-fpv-presentation-assets.mjs'
@@ -45,7 +167,80 @@ on:
       - 'game/test/menu-audio-localization.test.mjs'
       - 'game/test/menu-style-host.test.mjs'
       - 'game/test/win-picture-host.test.mjs'
+      - 'game/test/solo-auto-next-preferences-host.test.mjs'
       - 'game/test/demo-reward.test.mjs'
+      - 'game/test/visual-quality-policy.test.mjs'
+      - 'game/test/title-visual-quality-host.test.mjs'
+      - 'game/test/menu-scenes.test.mjs'
+      - 'game/test/field-kit-surfaces.test.mjs'
+      - 'game/test/menu-scene-motion.test.mjs'
+      - 'game/test/solo-render-submission.test.mjs'
+      - 'game/test/solo-performance-host.test.mjs'
+      - 'game/test/preparation-cadence.test.mjs'
+      - 'game/test/solo-cadence-readiness-host.test.mjs'
+      - 'game/ui/preparation-cadence.mjs'
+      - 'game/ui/hunt-feedback-layout.mjs'
+      - 'game/test/hunt-feedback-layout.test.mjs'
+      - 'game/presentation/host.mjs'
+      - 'game/test/presentation-host.test.mjs'
+      - 'game/scenario-entry.mjs'
+      - 'game/playground/model.mjs'
+      - 'game/ui/edition-controller-practice.mjs'
+      - 'game/test/edition-controller-practice.test.mjs'
+      - 'game/test/scenario-mastery.test.mjs'
+      - 'game/test/edition-solo-host.test.mjs'
+      - 'game/test/optional-chapters-host-copy.test.mjs'
+      - 'game/test/optional-world-choice-lifetime.test.mjs'
+      - 'game/test/optional-world-play-lifetime.test.mjs'
+      - 'game/test/optional-world-play-installed-host.test.mjs'
+      - 'game/test/solo-preparation-invalidation-host.test.mjs'
+      - 'game/test/solo-preparation-layout-host.test.mjs'
+      - 'game/test/solo-soundtrack-context-host.test.mjs'
+      - 'game/test/flight-information-source.test.mjs'
+      - 'game/test/flight-information-bridge.test.mjs'
+      - 'game/test/flight-information-host.test.mjs'
+      - 'game/test/flight-information-details-host.test.mjs'
+      - 'game/test/audio.test.mjs'
+      - 'game/test/published-audio.test.mjs'
+      - 'game/test/published-cue-inspection.test.mjs'
+      - 'game/test/published-cue-closure.test.mjs'
+      - 'game/test/media-preparation.test.mjs'
+      - 'game/test/feedback-director.test.mjs'
+      - 'game/test/destruction-audio.test.mjs'
+      - 'game/test/destruction-level.test.mjs'
+      - 'game/test/human-reaction-audio.test.mjs'
+      - 'game/test/classic-catch-audio.test.mjs'
+      - 'game/test/mp3.test.mjs'
+      - 'game/test/mp3-inspector.test.mjs'
+      - 'game/test/solo-soundtrack-admission-host.test.mjs'
+      - 'game/test/soundtrack-player.test.mjs'
+      - 'game/test/soundtrack-gain-leases.test.mjs'
+      - 'game/test/audio-master.test.mjs'
+      - 'game/test/soundtrack-master.test.mjs'
+      - 'game/test/modal-navigation.test.mjs'
+      - 'game/test/immutable-presentation-fixture.test.mjs'
+      - 'game/test/helpers/immutable-presentation-fixture.mjs'
+      - 'game/test/helpers/solo-dom.mjs'
+      - 'game/test/controller-confirm-trace.test.mjs'
+      - 'game/test/controller-router.test.mjs'
+      - 'game/test/controller-boost-settings.test.mjs'
+      - 'game/test/pause-menu-host.test.mjs'
+      - 'game/test/controller-restore.test.mjs'
+      - 'game/test/demo-audio.test.mjs'
+      - 'game/test/demo-audio-host.test.mjs'
+      - 'game/test/demo-context-recovery-host.test.mjs'
+      - 'game/test/demo-visual-quality-host.test.mjs'
+      - 'game/test/title-character.test.mjs'
+      - 'game/test/demo-clock.test.mjs'
+      - 'game/test/demo-host.test.mjs'
+      - 'game/test/demo-retained-presentation-host.test.mjs'
+      - 'game/test/soundtrack-panel.test.mjs'
+      - 'game/test/soundtrack-host.test.mjs'
+      - 'game/test/helpers/soundtrack-authoring-loader.mjs'
+      - 'game/test/enemy-guide-panel.test.mjs'
+      - 'game/test/enemy-body-assets.test.mjs'
+      - 'game/test/solo-demo-media-admission-host.test.mjs'
+      - 'game/test/helpers/audio-view-writes.mjs'
       - 'optional-practice/civilian-fpv/*.mjs'
       - 'optional-practice/civilian-fpv/*.css'
       - 'optional-practice/civilian-fpv/index.html'
@@ -80,6 +275,19 @@ on:
       - 'game/test/studio-appearance-basis.test.mjs'
       - 'game/test/asset-studio-host-loading.test.mjs'
       - 'game/test/company-studio-preview.test.mjs'
+      - '.github/workflows/overflight-text-scaling-native.yml'
+      - 'docs/accessibility/overflight-native-qualification.md'
+      - 'game/overflight/raid-upgrade-card.mjs'
+      - 'game/overflight/raid.html'
+      - 'game/overflight/text-scaling-view.mjs'
+      - 'game/overflight/text-scaling.css'
+      - 'game/test/overflight-raid-presentation.test.mjs'
+      - 'game/test/overflight-text-scaling-declarations.test.mjs'
+      - 'game/test/overflight-text-scaling-host.test.mjs'
+      - 'game/test/overflight-text-scaling-view.test.mjs'
+      - 'scripts/aggregate-overflight-text-scaling-native.py'
+      - 'scripts/overflight-text-scaling-native-guard.py'
+      - 'scripts/test_overflight_text_scaling_native_guard.py'
 
 permissions:
   contents: read
@@ -88,10 +296,480 @@ concurrency:
   group: appearance-preview-${{ github.event.pull_request.number }}
   cancel-in-progress: true
 
+env:
+  APPEARANCE_TEAM_TEST_FILES: >-
+    game/test/couch-static-pictures.test.mjs
+    game/test/couch-static-picture-host.test.mjs
+    game/test/couch-shell.test.mjs
+    game/test/controller-navigation.test.mjs
+    game/test/controller-reading.test.mjs
+  APPEARANCE_INSTALLED_TEST_FILES: >-
+    game/test/couch-installed-chapters.test.mjs
+  APPEARANCE_ADMISSION_TEST_FILES: >-
+    game/test/journey-performance-admission.test.mjs
+    game/test/journey-performance-observation-admission.test.mjs
+    game/test/journey-profile-owned-transition.test.mjs
+    game/test/journey-required-progress-admission.test.mjs
+    game/test/solo-required-progress-preparation-host.test.mjs
+    game/test/owned-recorder.test.mjs
+    game/test/demo-library-indexeddb.test.mjs
+    game/test/optional-learning-admission.test.mjs
+    game/test/optional-replay-admission.test.mjs
+    game/test/solo-pending-verification-gameplay-host.test.mjs
+    game/test/edition-mastery-host.test.mjs
+    game/test/edition-lessons.test.mjs
+    game/test/capture-presentation-session.test.mjs
+    game/test/solo-dense-replay-persistence.test.mjs
+    game/test/library-entry.test.mjs
+    game/test/solo-lazy-library-host.test.mjs
+    game/test/solo-transition-performance-host.test.mjs
+    game/test/performance-session.test.mjs
+    game/test/mission-library-stage-observation.test.mjs
+  APPEARANCE_DEMO_TEST_FILES: >-
+    game/test/demo-scene-transition.test.mjs
+    game/test/victory-story-ui.test.mjs
+    game/test/demo-bot.test.mjs
+    game/test/demo-sources.test.mjs
+    game/test/solo-demo-resources-host.test.mjs
+    game/test/demo-loading-host.test.mjs
+
 jobs:
-  preview:
+  admission:
     runs-on: ubuntu-latest
-    timeout-minutes: 40
+    timeout-minutes: 19
+    env:
+      PREVIEW_HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+      PREVIEW_RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+    outputs:
+      proof: ${{ steps.admission_receipt.outputs.proof }}
+      artifactId: ${{ steps.admission_artifact.outputs.artifact-id }}
+      artifactURL: ${{ steps.admission_artifact.outputs.artifact-url }}
+      artifactDigest: ${{ steps.admission_artifact.outputs.artifact-digest }}
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        timeout-minutes: 3
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          persist-credentials: false
+      - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5
+        timeout-minutes: 2
+        with:
+          node-version: '22.13.1'
+          package-manager-cache: false
+      - name: Read exact-source admission policy
+        timeout-minutes: 1
+        id: test_policy
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(git rev-parse HEAD)" = "$PREVIEW_HEAD_SHA"
+          mkdir -p .cache/appearance-admission
+          node publishing/test-policy.mjs
+      - name: Install admission test dependencies
+        timeout-minutes: 3
+        if: steps.test_policy.outputs.runTests == 'true'
+        run: npm ci
+      - name: Run complete optional-proof and saved-flight regressions
+        timeout-minutes: 5
+        id: admission_tests
+        if: steps.test_policy.outputs.runTests == 'true'
+        shell: bash
+        run: |
+          set -euo pipefail
+          read -r -a test_files <<< "$APPEARANCE_ADMISSION_TEST_FILES"
+          node --test --test-concurrency=1 "${test_files[@]}" | tee .cache/appearance-admission/admission-tests.tap
+      - name: Bind exact-source admission proof
+        timeout-minutes: 1
+        id: admission_receipt
+        env:
+          TEST_POLICY_MODE: ${{ steps.test_policy.outputs.mode }}
+          TEST_POLICY_SHA256: ${{ steps.test_policy.outputs.policySha256 }}
+          ADMISSION_RESULT: ${{ steps.admission_tests.outcome }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(git rev-parse HEAD)" = "$PREVIEW_HEAD_SHA"
+          test -z "$(git status --porcelain --untracked-files=no)"
+          node --input-type=module <<'NODE'
+          import { readFile, writeFile, appendFile, lstat } from 'node:fs/promises';
+          import { createHash } from 'node:crypto';
+          import { execFileSync } from 'node:child_process';
+          import { parseTestPolicy, policyDecision } from './publishing/test-policy.mjs';
+          const root = '.cache/appearance-admission/';
+          const head = process.env.PREVIEW_HEAD_SHA;
+          if (!/^[a-f0-9]{40}$/.test(head)) throw new Error('Exact admission source required.');
+          const policyBytes = await readFile('publishing/test-policy.json');
+          const policy = parseTestPolicy(policyBytes.toString('utf8'));
+          const decision = policyDecision(policy);
+          const policySha256 = createHash('sha256').update(policyBytes).digest('hex');
+          if (decision.mode !== process.env.TEST_POLICY_MODE || policySha256 !== process.env.TEST_POLICY_SHA256)
+            throw new Error('Admission policy changed after the decision.');
+          const waived = decision.mode === 'waived';
+          if (process.env.ADMISSION_RESULT !== (waived ? 'skipped' : 'success'))
+            throw new Error('Admission outcome does not match the explicit test policy.');
+          const testPolicy = { ...decision, policySha256, policy };
+          const output = waived ? 'admission-tests-waived.json' : 'admission-tests.tap';
+          if (waived) await writeFile(root + output, JSON.stringify({
+            result: 'waived', executed: false, testPolicy,
+            statement: 'Explicit user waiver; automated tests were not executed and no passing verdict is claimed.',
+          }, null, 2) + '\n');
+          const info = await lstat(root + output);
+          if (!info.isFile() || info.isSymbolicLink() || info.size <= 0 || info.size > 8 * 1024 ** 2)
+            throw new Error('Bounded admission output required.');
+          const bytes = await readFile(root + output);
+          if (bytes.length !== info.size) throw new Error('Admission output changed during readback.');
+          const proof = {
+            format: 'AppearanceAdmissionProofV1', sourceRevision: head,
+            sourceTree: execFileSync('git', ['rev-parse', 'HEAD^{tree}'], { encoding: 'utf8' }).trim(),
+            workflowRun: process.env.PREVIEW_RUN_URL, node: process.version, testPolicy,
+            result: waived ? 'waived' : 'passed', executed: !waived,
+            command: waived ? null : 'node --test --test-concurrency=1',
+            files: process.env.APPEARANCE_ADMISSION_TEST_FILES.trim().split(/\s+/),
+            output: { path: output, bytes: bytes.length, sha256: createHash('sha256').update(bytes).digest('hex') },
+          };
+          const serialized = JSON.stringify(proof);
+          if (Buffer.byteLength(serialized) > 16 * 1024) throw new Error('Admission proof exceeds output bound.');
+          await writeFile(root + 'admission-proof.json', JSON.stringify(proof, null, 2) + '\n');
+          await appendFile(process.env.GITHUB_OUTPUT, `proof=${serialized}\n`);
+          NODE
+      - name: Retain admission proof and partial diagnostics
+        timeout-minutes: 2
+        id: admission_artifact
+        if: ${{ always() && (steps.admission_receipt.outcome == 'success' || steps.admission_tests.outcome == 'success' || steps.admission_tests.outcome == 'failure' || steps.admission_tests.outcome == 'cancelled') }}
+        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
+        with:
+          name: appearance-admission-${{ github.event.pull_request.head.sha }}-${{ github.run_attempt }}
+          path: .cache/appearance-admission/
+          if-no-files-found: error
+          retention-days: 7
+  demo_admission:
+    runs-on: ubuntu-latest
+    timeout-minutes: 19
+    env:
+      PREVIEW_HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+      PREVIEW_RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+    outputs:
+      proof: ${{ steps.admission_receipt.outputs.proof }}
+      artifactId: ${{ steps.admission_artifact.outputs.artifact-id }}
+      artifactURL: ${{ steps.admission_artifact.outputs.artifact-url }}
+      artifactDigest: ${{ steps.admission_artifact.outputs.artifact-digest }}
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        timeout-minutes: 3
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          persist-credentials: false
+      - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5
+        timeout-minutes: 2
+        with:
+          node-version: '22.13.1'
+          package-manager-cache: false
+      - name: Read exact-source Demo admission policy
+        timeout-minutes: 1
+        id: test_policy
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(git rev-parse HEAD)" = "$PREVIEW_HEAD_SHA"
+          mkdir -p .cache/appearance-demo-admission
+          node publishing/test-policy.mjs
+      - name: Install Demo admission test dependencies
+        timeout-minutes: 3
+        if: steps.test_policy.outputs.runTests == 'true'
+        run: npm ci
+      - name: Run complete Demo ownership, transitions and resources regressions
+        timeout-minutes: 5
+        id: admission_tests
+        if: steps.test_policy.outputs.runTests == 'true'
+        shell: bash
+        run: |
+          set -euo pipefail
+          read -r -a test_files <<< "$APPEARANCE_DEMO_TEST_FILES"
+          node --test --test-concurrency=1 "${test_files[@]}" | tee .cache/appearance-demo-admission/demo-admission-tests.tap
+      - name: Bind exact-source Demo admission proof
+        timeout-minutes: 1
+        id: admission_receipt
+        env:
+          TEST_POLICY_MODE: ${{ steps.test_policy.outputs.mode }}
+          TEST_POLICY_SHA256: ${{ steps.test_policy.outputs.policySha256 }}
+          ADMISSION_RESULT: ${{ steps.admission_tests.outcome }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(git rev-parse HEAD)" = "$PREVIEW_HEAD_SHA"
+          test -z "$(git status --porcelain --untracked-files=no)"
+          node --input-type=module <<'NODE'
+          import { readFile, writeFile, appendFile, lstat } from 'node:fs/promises';
+          import { createHash } from 'node:crypto';
+          import { execFileSync } from 'node:child_process';
+          import { parseTestPolicy, policyDecision } from './publishing/test-policy.mjs';
+          const root = '.cache/appearance-demo-admission/';
+          const head = process.env.PREVIEW_HEAD_SHA;
+          if (!/^[a-f0-9]{40}$/.test(head)) throw new Error('Exact admission source required.');
+          const policyBytes = await readFile('publishing/test-policy.json');
+          const policy = parseTestPolicy(policyBytes.toString('utf8'));
+          const decision = policyDecision(policy);
+          const policySha256 = createHash('sha256').update(policyBytes).digest('hex');
+          if (decision.mode !== process.env.TEST_POLICY_MODE || policySha256 !== process.env.TEST_POLICY_SHA256)
+            throw new Error('Admission policy changed after the decision.');
+          const waived = decision.mode === 'waived';
+          if (process.env.ADMISSION_RESULT !== (waived ? 'skipped' : 'success'))
+            throw new Error('Admission outcome does not match the explicit test policy.');
+          const testPolicy = { ...decision, policySha256, policy };
+          const output = waived ? 'demo-admission-tests-waived.json' : 'demo-admission-tests.tap';
+          if (waived) await writeFile(root + output, JSON.stringify({
+            result: 'waived', executed: false, testPolicy,
+            statement: 'Explicit user waiver; automated tests were not executed and no passing verdict is claimed.',
+          }, null, 2) + '\n');
+          const info = await lstat(root + output);
+          if (!info.isFile() || info.isSymbolicLink() || info.size <= 0 || info.size > 8 * 1024 ** 2)
+            throw new Error('Bounded admission output required.');
+          const bytes = await readFile(root + output);
+          if (bytes.length !== info.size) throw new Error('Admission output changed during readback.');
+          const proof = {
+            format: 'AppearanceAdmissionProofV1', sourceRevision: head,
+            sourceTree: execFileSync('git', ['rev-parse', 'HEAD^{tree}'], { encoding: 'utf8' }).trim(),
+            workflowRun: process.env.PREVIEW_RUN_URL, node: process.version, testPolicy,
+            result: waived ? 'waived' : 'passed', executed: !waived,
+            command: waived ? null : 'node --test --test-concurrency=1',
+            files: process.env.APPEARANCE_DEMO_TEST_FILES.trim().split(/\s+/),
+            output: { path: output, bytes: bytes.length, sha256: createHash('sha256').update(bytes).digest('hex') },
+          };
+          const serialized = JSON.stringify(proof);
+          if (Buffer.byteLength(serialized) > 16 * 1024) throw new Error('Admission proof exceeds output bound.');
+          await writeFile(root + 'demo-admission-proof.json', JSON.stringify(proof, null, 2) + '\n');
+          await appendFile(process.env.GITHUB_OUTPUT, `proof=${serialized}\n`);
+          NODE
+      - name: Retain Demo admission proof and partial diagnostics
+        timeout-minutes: 2
+        id: admission_artifact
+        if: ${{ always() && (steps.admission_receipt.outcome == 'success' || steps.admission_tests.outcome == 'success' || steps.admission_tests.outcome == 'failure' || steps.admission_tests.outcome == 'cancelled') }}
+        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
+        with:
+          name: appearance-demo-admission-${{ github.event.pull_request.head.sha }}-${{ github.run_attempt }}
+          path: .cache/appearance-demo-admission/
+          if-no-files-found: error
+          retention-days: 7
+  team_admission:
+    runs-on: ubuntu-latest
+    timeout-minutes: 24
+    env:
+      PREVIEW_HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+      PREVIEW_RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+    outputs:
+      proof: ${{ steps.admission_receipt.outputs.proof }}
+      artifactId: ${{ steps.admission_artifact.outputs.artifact-id }}
+      artifactURL: ${{ steps.admission_artifact.outputs.artifact-url }}
+      artifactDigest: ${{ steps.admission_artifact.outputs.artifact-digest }}
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        timeout-minutes: 3
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          persist-credentials: false
+      - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5
+        timeout-minutes: 2
+        with:
+          node-version: '22.13.1'
+          package-manager-cache: false
+      - name: Read exact-source Team admission policy
+        timeout-minutes: 1
+        id: test_policy
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(git rev-parse HEAD)" = "$PREVIEW_HEAD_SHA"
+          mkdir -p .cache/appearance-team-admission
+          node publishing/test-policy.mjs
+      - name: Install Team admission test dependencies
+        timeout-minutes: 3
+        if: steps.test_policy.outputs.runTests == 'true'
+        run: npm ci
+      - name: Run complete Team artwork, preparation and controller regressions
+        timeout-minutes: 10
+        id: admission_tests
+        if: steps.test_policy.outputs.runTests == 'true'
+        shell: bash
+        run: |
+          set -euo pipefail
+          read -r -a test_files <<< "$APPEARANCE_TEAM_TEST_FILES"
+          node --test --test-concurrency=1 "${test_files[@]}" | tee .cache/appearance-team-admission/team-admission-tests.tap
+      - name: Bind exact-source Team admission proof
+        timeout-minutes: 1
+        id: admission_receipt
+        env:
+          TEST_POLICY_MODE: ${{ steps.test_policy.outputs.mode }}
+          TEST_POLICY_SHA256: ${{ steps.test_policy.outputs.policySha256 }}
+          ADMISSION_RESULT: ${{ steps.admission_tests.outcome }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(git rev-parse HEAD)" = "$PREVIEW_HEAD_SHA"
+          test -z "$(git status --porcelain --untracked-files=no)"
+          node --input-type=module <<'NODE'
+          import { readFile, writeFile, appendFile, lstat } from 'node:fs/promises';
+          import { createHash } from 'node:crypto';
+          import { execFileSync } from 'node:child_process';
+          import { parseTestPolicy, policyDecision } from './publishing/test-policy.mjs';
+          const root = '.cache/appearance-team-admission/';
+          const head = process.env.PREVIEW_HEAD_SHA;
+          if (!/^[a-f0-9]{40}$/.test(head)) throw new Error('Exact admission source required.');
+          const policyBytes = await readFile('publishing/test-policy.json');
+          const policy = parseTestPolicy(policyBytes.toString('utf8'));
+          const decision = policyDecision(policy);
+          const policySha256 = createHash('sha256').update(policyBytes).digest('hex');
+          if (decision.mode !== process.env.TEST_POLICY_MODE || policySha256 !== process.env.TEST_POLICY_SHA256)
+            throw new Error('Admission policy changed after the decision.');
+          const waived = decision.mode === 'waived';
+          if (process.env.ADMISSION_RESULT !== (waived ? 'skipped' : 'success'))
+            throw new Error('Admission outcome does not match the explicit test policy.');
+          const testPolicy = { ...decision, policySha256, policy };
+          const output = waived ? 'team-admission-tests-waived.json' : 'team-admission-tests.tap';
+          if (waived) await writeFile(root + output, JSON.stringify({
+            result: 'waived', executed: false, testPolicy,
+            statement: 'Explicit user waiver; automated tests were not executed and no passing verdict is claimed.',
+          }, null, 2) + '\n');
+          const info = await lstat(root + output);
+          if (!info.isFile() || info.isSymbolicLink() || info.size <= 0 || info.size > 8 * 1024 ** 2)
+            throw new Error('Bounded admission output required.');
+          const bytes = await readFile(root + output);
+          if (bytes.length !== info.size) throw new Error('Admission output changed during readback.');
+          const proof = {
+            format: 'AppearanceAdmissionProofV1', sourceRevision: head,
+            sourceTree: execFileSync('git', ['rev-parse', 'HEAD^{tree}'], { encoding: 'utf8' }).trim(),
+            workflowRun: process.env.PREVIEW_RUN_URL, node: process.version, testPolicy,
+            result: waived ? 'waived' : 'passed', executed: !waived,
+            command: waived ? null : 'node --test --test-concurrency=1',
+            files: process.env.APPEARANCE_TEAM_TEST_FILES.trim().split(/\s+/),
+            output: { path: output, bytes: bytes.length, sha256: createHash('sha256').update(bytes).digest('hex') },
+          };
+          const serialized = JSON.stringify(proof);
+          if (Buffer.byteLength(serialized) > 16 * 1024) throw new Error('Admission proof exceeds output bound.');
+          await writeFile(root + 'team-admission-proof.json', JSON.stringify(proof, null, 2) + '\n');
+          await appendFile(process.env.GITHUB_OUTPUT, `proof=${serialized}\n`);
+          NODE
+      - name: Retain Team admission proof and partial diagnostics
+        timeout-minutes: 2
+        id: admission_artifact
+        if: ${{ always() && (steps.admission_receipt.outcome == 'success' || steps.admission_tests.outcome == 'success' || steps.admission_tests.outcome == 'failure' || steps.admission_tests.outcome == 'cancelled') }}
+        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
+        with:
+          name: appearance-team-admission-${{ github.event.pull_request.head.sha }}-${{ github.run_attempt }}
+          path: .cache/appearance-team-admission/
+          if-no-files-found: error
+          retention-days: 7
+  installed_admission:
+    runs-on: ubuntu-latest
+    timeout-minutes: 24
+    env:
+      PREVIEW_HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+      PREVIEW_RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+    outputs:
+      proof: ${{ steps.admission_receipt.outputs.proof }}
+      artifactId: ${{ steps.admission_artifact.outputs.artifact-id }}
+      artifactURL: ${{ steps.admission_artifact.outputs.artifact-url }}
+      artifactDigest: ${{ steps.admission_artifact.outputs.artifact-digest }}
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        timeout-minutes: 3
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          persist-credentials: false
+      - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5
+        timeout-minutes: 2
+        with:
+          node-version: '22.13.1'
+          package-manager-cache: false
+      - name: Read exact-source Installed chapter admission policy
+        timeout-minutes: 1
+        id: test_policy
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(git rev-parse HEAD)" = "$PREVIEW_HEAD_SHA"
+          mkdir -p .cache/appearance-installed-admission
+          node publishing/test-policy.mjs
+      - name: Install Installed chapter admission test dependencies
+        timeout-minutes: 3
+        if: steps.test_policy.outputs.runTests == 'true'
+        run: npm ci
+      - name: Run complete installed chapter ownership and preparation regressions
+        timeout-minutes: 10
+        id: admission_tests
+        if: steps.test_policy.outputs.runTests == 'true'
+        shell: bash
+        run: |
+          set -euo pipefail
+          read -r -a test_files <<< "$APPEARANCE_INSTALLED_TEST_FILES"
+          node --test --test-concurrency=1 "${test_files[@]}" | tee .cache/appearance-installed-admission/installed-admission-tests.tap
+      - name: Bind exact-source Installed chapter admission proof
+        timeout-minutes: 1
+        id: admission_receipt
+        env:
+          TEST_POLICY_MODE: ${{ steps.test_policy.outputs.mode }}
+          TEST_POLICY_SHA256: ${{ steps.test_policy.outputs.policySha256 }}
+          ADMISSION_RESULT: ${{ steps.admission_tests.outcome }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(git rev-parse HEAD)" = "$PREVIEW_HEAD_SHA"
+          test -z "$(git status --porcelain --untracked-files=no)"
+          node --input-type=module <<'NODE'
+          import { readFile, writeFile, appendFile, lstat } from 'node:fs/promises';
+          import { createHash } from 'node:crypto';
+          import { execFileSync } from 'node:child_process';
+          import { parseTestPolicy, policyDecision } from './publishing/test-policy.mjs';
+          const root = '.cache/appearance-installed-admission/';
+          const head = process.env.PREVIEW_HEAD_SHA;
+          if (!/^[a-f0-9]{40}$/.test(head)) throw new Error('Exact admission source required.');
+          const policyBytes = await readFile('publishing/test-policy.json');
+          const policy = parseTestPolicy(policyBytes.toString('utf8'));
+          const decision = policyDecision(policy);
+          const policySha256 = createHash('sha256').update(policyBytes).digest('hex');
+          if (decision.mode !== process.env.TEST_POLICY_MODE || policySha256 !== process.env.TEST_POLICY_SHA256)
+            throw new Error('Admission policy changed after the decision.');
+          const waived = decision.mode === 'waived';
+          if (process.env.ADMISSION_RESULT !== (waived ? 'skipped' : 'success'))
+            throw new Error('Admission outcome does not match the explicit test policy.');
+          const testPolicy = { ...decision, policySha256, policy };
+          const output = waived ? 'installed-admission-tests-waived.json' : 'installed-admission-tests.tap';
+          if (waived) await writeFile(root + output, JSON.stringify({
+            result: 'waived', executed: false, testPolicy,
+            statement: 'Explicit user waiver; automated tests were not executed and no passing verdict is claimed.',
+          }, null, 2) + '\n');
+          const info = await lstat(root + output);
+          if (!info.isFile() || info.isSymbolicLink() || info.size <= 0 || info.size > 8 * 1024 ** 2)
+            throw new Error('Bounded admission output required.');
+          const bytes = await readFile(root + output);
+          if (bytes.length !== info.size) throw new Error('Admission output changed during readback.');
+          const proof = {
+            format: 'AppearanceAdmissionProofV1', sourceRevision: head,
+            sourceTree: execFileSync('git', ['rev-parse', 'HEAD^{tree}'], { encoding: 'utf8' }).trim(),
+            workflowRun: process.env.PREVIEW_RUN_URL, node: process.version, testPolicy,
+            result: waived ? 'waived' : 'passed', executed: !waived,
+            command: waived ? null : 'node --test --test-concurrency=1',
+            files: process.env.APPEARANCE_INSTALLED_TEST_FILES.trim().split(/\s+/),
+            output: { path: output, bytes: bytes.length, sha256: createHash('sha256').update(bytes).digest('hex') },
+          };
+          const serialized = JSON.stringify(proof);
+          if (Buffer.byteLength(serialized) > 16 * 1024) throw new Error('Admission proof exceeds output bound.');
+          await writeFile(root + 'installed-admission-proof.json', JSON.stringify(proof, null, 2) + '\n');
+          await appendFile(process.env.GITHUB_OUTPUT, `proof=${serialized}\n`);
+          NODE
+      - name: Retain Installed chapter admission proof and partial diagnostics
+        timeout-minutes: 2
+        id: admission_artifact
+        if: ${{ always() && (steps.admission_receipt.outcome == 'success' || steps.admission_tests.outcome == 'success' || steps.admission_tests.outcome == 'failure' || steps.admission_tests.outcome == 'cancelled') }}
+        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
+        with:
+          name: appearance-installed-admission-${{ github.event.pull_request.head.sha }}-${{ github.run_attempt }}
+          path: .cache/appearance-installed-admission/
+          if-no-files-found: error
+          retention-days: 7
+  preview:
+    needs: [admission, team_admission, demo_admission, installed_admission]
+    runs-on: ubuntu-latest
+    timeout-minutes: 70
     env:
       PREVIEW_HEAD_SHA: ${{ github.event.pull_request.head.sha }}
       PREVIEW_PR: ${{ github.event.pull_request.number }}
@@ -127,7 +805,71 @@ jobs:
         game/test/menu-style-host.test.mjs
         game/test/fpv-acceptance-workflow.test.mjs
         game/test/win-picture-host.test.mjs
+        game/test/solo-auto-next-preferences-host.test.mjs
         game/test/demo-reward.test.mjs
+        game/test/solo-demo-media-admission-host.test.mjs
+        game/test/visual-quality-policy.test.mjs
+        game/test/title-visual-quality-host.test.mjs
+        game/test/menu-scenes.test.mjs
+        game/test/field-kit-surfaces.test.mjs
+        game/test/menu-scene-motion.test.mjs
+        game/test/solo-render-submission.test.mjs
+        game/test/solo-performance-host.test.mjs
+        game/test/preparation-cadence.test.mjs
+        game/test/hunt-feedback-layout.test.mjs
+        game/test/presentation-host.test.mjs
+        game/test/solo-cadence-readiness-host.test.mjs
+        game/test/edition-controller-practice.test.mjs
+        game/test/scenario-mastery.test.mjs
+        game/test/edition-solo-host.test.mjs
+        game/test/optional-chapters-host-copy.test.mjs
+        game/test/optional-world-choice-lifetime.test.mjs
+        game/test/optional-world-play-lifetime.test.mjs
+        game/test/optional-world-play-installed-host.test.mjs
+        game/test/solo-preparation-invalidation-host.test.mjs
+        game/test/solo-preparation-layout-host.test.mjs
+        game/test/solo-soundtrack-context-host.test.mjs
+        game/test/flight-information-source.test.mjs
+        game/test/flight-information-bridge.test.mjs
+        game/test/flight-information-host.test.mjs
+        game/test/flight-information-details-host.test.mjs
+        game/test/audio.test.mjs
+        game/test/published-audio.test.mjs
+        game/test/published-cue-inspection.test.mjs
+        game/test/published-cue-closure.test.mjs
+        game/test/media-preparation.test.mjs
+        game/test/feedback-director.test.mjs
+        game/test/destruction-audio.test.mjs
+        game/test/destruction-level.test.mjs
+        game/test/human-reaction-audio.test.mjs
+        game/test/classic-catch-audio.test.mjs
+        game/test/mp3.test.mjs
+        game/test/mp3-inspector.test.mjs
+        game/test/solo-soundtrack-admission-host.test.mjs
+        game/test/soundtrack-player.test.mjs
+        game/test/soundtrack-gain-leases.test.mjs
+        game/test/audio-master.test.mjs
+        game/test/soundtrack-master.test.mjs
+        game/test/modal-navigation.test.mjs
+        game/test/immutable-presentation-fixture.test.mjs
+        game/test/controller-confirm-trace.test.mjs
+        game/test/controller-router.test.mjs
+        game/test/controller-boost-settings.test.mjs
+        game/test/pause-menu-host.test.mjs
+        game/test/classic-presentation.test.mjs
+        game/test/controller-restore.test.mjs
+        game/test/demo-audio.test.mjs
+        game/test/demo-audio-host.test.mjs
+        game/test/demo-context-recovery-host.test.mjs
+        game/test/demo-visual-quality-host.test.mjs
+        game/test/title-character.test.mjs
+        game/test/demo-clock.test.mjs
+        game/test/demo-host.test.mjs
+        game/test/demo-retained-presentation-host.test.mjs
+        game/test/soundtrack-panel.test.mjs
+        game/test/soundtrack-host.test.mjs
+        game/test/enemy-guide-panel.test.mjs
+        game/test/enemy-body-assets.test.mjs
         game/test/company-studio-ui.test.mjs
         game/test/company-studio-preview.test.mjs
         game/test/studio-appearance-basis.test.mjs
@@ -153,30 +895,42 @@ jobs:
         scripts/test-optional-fpv-package.mjs
         scripts/test-sparse-publisher-imports.mjs
     steps:
+      - name: Record the bounded packaging start
+        timeout-minutes: 1
+        shell: bash
+        run: echo "PREVIEW_STARTED_AT=$(date +%s)" >> "$GITHUB_ENV"
       - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        timeout-minutes: 3
         with:
           ref: ${{ github.event.pull_request.head.sha }}
           persist-credentials: false
       - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5
+        timeout-minutes: 2
         with:
           node-version: '22.13.1'
           package-manager-cache: false
       - name: Verify the exact PR head
+        timeout-minutes: 1
         shell: bash
         run: |
           test "$(git rev-parse HEAD)" = "$PREVIEW_HEAD_SHA"
           mkdir -p .cache/appearance-preview
       - name: Read explicit automated-suite policy
+        timeout-minutes: 1
         id: test_policy
         run: node publishing/test-policy.mjs
       - run: npm ci
+        timeout-minutes: 3
       - name: Install pinned SIM source-validation dependencies without test fixtures
+        timeout-minutes: 3
         if: steps.test_policy.outputs.mode == 'waived'
         run: npm ci --prefix authoring/fpv-worlds --ignore-scripts --omit=dev
       - name: Install pinned SIM test dependencies
+        timeout-minutes: 3
         if: steps.test_policy.outputs.runTests == 'true'
         run: npm ci --prefix authoring/fpv-worlds --ignore-scripts
       - name: Verify generated presentation and marking sources
+        timeout-minutes: 2
         shell: bash
         run: |
           set -euo pipefail
@@ -185,6 +939,7 @@ jobs:
           node scripts/refresh-fpv-presentation-assets.mjs --check
           node authoring/fpv-worlds/industrial-markings/generate.mjs --check
       - name: Run focused appearance, SIM and curated-community checks
+        timeout-minutes: 45
         id: focused
         if: steps.test_policy.outputs.runTests == 'true'
         shell: bash
@@ -193,19 +948,47 @@ jobs:
           read -r -a test_files <<< "$APPEARANCE_TEST_FILES"
           node --test --test-concurrency=1 "${test_files[@]}" | tee .cache/appearance-preview/focused-tests.tap
       - name: Build the full game and separate Worlds playtest
+        timeout-minutes: 12
         shell: bash
         run: |
           set -euo pipefail
+          # The job has 70 minutes; reserve two for job startup and final runner cleanup.
+          # Admit the 12-minute build only with 11 more minutes for evidence and closure.
+          [[ "${PREVIEW_STARTED_AT:-}" =~ ^[1-9][0-9]{8,11}$ ]] || { echo 'Missing packaging start clock.'; exit 1; }
+          elapsed=$(( $(date +%s) - PREVIEW_STARTED_AT ))
+          remaining=$(( 68 * 60 - elapsed ))
+          echo "Packaging admission: elapsed=${elapsed}s remaining=${remaining}s required=1380s."
+          if (( elapsed < 0 || remaining < 23 * 60 )); then
+            echo 'Insufficient time remains for bounded build and evidence retention.'
+            exit 1
+          fi
           node scripts/game-cli.mjs build --out .cache/appearance-game --revision "$PREVIEW_HEAD_SHA" > .cache/appearance-preview/main-build.json
           node scripts/build-fpv-worlds-playtest.mjs --out .cache/appearance-worlds > .cache/appearance-preview/world-build.json
           cp .cache/appearance-game/distribution.zip .cache/appearance-preview/distribution.zip
           cp .cache/appearance-worlds/fpv-worlds-playtest.zip .cache/appearance-preview/fpv-worlds-playtest.zip
           cp docs/appearance-preview-testing.md .cache/appearance-preview/README.md
       - name: Bind checksums and policy-qualified evidence to the exact source
+        timeout-minutes: 1
         env:
           TEST_POLICY_MODE: ${{ steps.test_policy.outputs.mode }}
           TEST_POLICY_SHA256: ${{ steps.test_policy.outputs.policySha256 }}
           FOCUSED_RESULT: ${{ steps.focused.outcome }}
+          ADMISSION_PROOF: ${{ needs.admission.outputs.proof }}
+          ADMISSION_ARTIFACT_ID: ${{ needs.admission.outputs.artifactId }}
+          ADMISSION_ARTIFACT_URL: ${{ needs.admission.outputs.artifactURL }}
+          ADMISSION_ARTIFACT_DIGEST: ${{ needs.admission.outputs.artifactDigest }}
+          DEMO_ADMISSION_PROOF: ${{ needs.demo_admission.outputs.proof }}
+          DEMO_ADMISSION_ARTIFACT_ID: ${{ needs.demo_admission.outputs.artifactId }}
+          DEMO_ADMISSION_ARTIFACT_URL: ${{ needs.demo_admission.outputs.artifactURL }}
+          DEMO_ADMISSION_ARTIFACT_DIGEST: ${{ needs.demo_admission.outputs.artifactDigest }}
+          INSTALLED_ADMISSION_PROOF: ${{ needs.installed_admission.outputs.proof }}
+          INSTALLED_ADMISSION_ARTIFACT_ID: ${{ needs.installed_admission.outputs.artifactId }}
+          INSTALLED_ADMISSION_ARTIFACT_URL: ${{ needs.installed_admission.outputs.artifactURL }}
+          INSTALLED_ADMISSION_ARTIFACT_DIGEST: ${{ needs.installed_admission.outputs.artifactDigest }}
+          TEAM_ADMISSION_PROOF: ${{ needs.team_admission.outputs.proof }}
+          TEAM_ADMISSION_ARTIFACT_ID: ${{ needs.team_admission.outputs.artifactId }}
+          TEAM_ADMISSION_ARTIFACT_URL: ${{ needs.team_admission.outputs.artifactURL }}
+          TEAM_ADMISSION_ARTIFACT_DIGEST: ${{ needs.team_admission.outputs.artifactDigest }}
         shell: bash
         run: |
           set -euo pipefail
@@ -230,6 +1013,42 @@ jobs:
             throw new Error('Focused-check outcome does not match the explicit test policy.');
           const testOutput = waived ? 'focused-tests-waived.json' : 'focused-tests.tap';
           const testPolicy = { ...decision, policySha256, policy };
+          const sourceTree = execFileSync('git', ['rev-parse', 'HEAD^{tree}'], { encoding: 'utf8' }).trim();
+          const additionalCohorts = [];
+          for (const [prefix, fileVariable, outputPrefix] of [
+            ['ADMISSION', 'APPEARANCE_ADMISSION_TEST_FILES', 'admission'],
+            ['TEAM_ADMISSION', 'APPEARANCE_TEAM_TEST_FILES', 'team-admission'],
+            ['DEMO_ADMISSION', 'APPEARANCE_DEMO_TEST_FILES', 'demo-admission'],
+            ['INSTALLED_ADMISSION', 'APPEARANCE_INSTALLED_TEST_FILES', 'installed-admission'],
+          ]) {
+            const admissionText = process.env[`${prefix}_PROOF`] || '';
+            if (!admissionText || Buffer.byteLength(admissionText) > 16 * 1024)
+              throw new Error('Bounded predecessor admission proof required.');
+            const admission = JSON.parse(admissionText);
+            const expectedFiles = process.env[fileVariable].trim().split(/\s+/);
+            if (admission.format !== 'AppearanceAdmissionProofV1' || admission.sourceRevision !== head ||
+                admission.sourceTree !== sourceTree || admission.workflowRun !== process.env.PREVIEW_RUN_URL ||
+                admission.node !== process.version || JSON.stringify(admission.testPolicy) !== JSON.stringify(testPolicy) ||
+                admission.result !== (waived ? 'waived' : 'passed') || admission.executed !== !waived ||
+                admission.command !== (waived ? null : 'node --test --test-concurrency=1') ||
+                JSON.stringify(admission.files) !== JSON.stringify(expectedFiles) ||
+                admission.output?.path !== `${outputPrefix}-tests${waived ? '-waived.json' : '.tap'}` ||
+                !Number.isSafeInteger(admission.output?.bytes) || admission.output.bytes <= 0 || admission.output.bytes > 8 * 1024 ** 2 ||
+                !/^[a-f0-9]{64}$/.test(admission.output?.sha256 || ''))
+              throw new Error('Predecessor admission source, policy, outcome or output mismatch.');
+            const artifactID = process.env[`${prefix}_ARTIFACT_ID`];
+            if (!/^[1-9][0-9]*$/.test(artifactID || '') || !Number.isSafeInteger(Number(artifactID)) ||
+                process.env[`${prefix}_ARTIFACT_URL`] !== `${process.env.PREVIEW_RUN_URL}/artifacts/${artifactID}` ||
+                !/^[a-f0-9]{64}$/.test(process.env[`${prefix}_ARTIFACT_DIGEST`] || ''))
+              throw new Error('Successfully uploaded admission artifact identity required.');
+            const admissionReceipt = Buffer.from(JSON.stringify(admission, null, 2) + '\n');
+            additionalCohorts.push({ ...admission,
+              receipt: { path: `${outputPrefix}-proof.json`, bytes: admissionReceipt.length,
+                sha256: createHash('sha256').update(admissionReceipt).digest('hex') },
+              artifact: { id: Number(artifactID), url: process.env[`${prefix}_ARTIFACT_URL`],
+                sha256: process.env[`${prefix}_ARTIFACT_DIGEST`] },
+            });
+          }
           if (waived) await writeFile(root + testOutput, JSON.stringify({
             result: 'waived',
             executed: false,
@@ -252,7 +1071,7 @@ jobs:
           await writeFile(root + 'preview-identity.json', JSON.stringify({
             format: 'AppearancePreview.v1',
             sourceRevision: head,
-            sourceTree: execFileSync('git', ['rev-parse', 'HEAD^{tree}'], { encoding: 'utf8' }).trim(),
+            sourceTree,
             pullRequest: Number(process.env.PREVIEW_PR),
             workflowRun: process.env.PREVIEW_RUN_URL,
             node: process.version,
@@ -263,6 +1082,7 @@ jobs:
               command: waived ? null : 'node --test --test-concurrency=1',
               files: process.env.APPEARANCE_TEST_FILES.trim().split(/\s+/),
               output: testOutput,
+              additionalCohorts,
             },
             artifacts: rows,
             qualification: 'development-preview',
@@ -279,6 +1099,8 @@ jobs:
           await writeFile(root + 'SHA256SUMS', checksums.join('\n') + '\n');
           NODE
       - name: Upload playable preview archives and receipts
+        timeout-minutes: 2
+        id: playable_archive
         uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
         with:
           name: appearance-preview-pr-${{ github.event.pull_request.number }}-${{ github.event.pull_request.head.sha }}
@@ -286,8 +1108,25 @@ jobs:
           if-no-files-found: error
           compression-level: 0
           retention-days: 7
-      - name: Retain failed focused-check diagnostics
-        if: ${{ failure() && steps.test_policy.outputs.runTests == 'true' && steps.focused.outcome == 'failure' }}
+      - name: Bind small metadata to the successfully uploaded exact package
+        timeout-minutes: 2
+        env:
+          PREVIEW_ARTIFACT_ID: ${{ steps.playable_archive.outputs.artifact-id }}
+          PREVIEW_ARTIFACT_URL: ${{ steps.playable_archive.outputs.artifact-url }}
+          PREVIEW_ARTIFACT_DIGEST: ${{ steps.playable_archive.outputs.artifact-digest }}
+        run: node scripts/prepare-appearance-preview-metadata.mjs
+      - name: Upload compact package identity for remote verification
+        timeout-minutes: 3
+        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
+        with:
+          name: appearance-preview-metadata-pr-${{ github.event.pull_request.number }}-${{ github.event.pull_request.head.sha }}
+          path: .cache/appearance-preview-metadata/
+          if-no-files-found: error
+          compression-level: 0
+          retention-days: 7
+      - name: Retain focused diagnostics when packaging does not finish
+        timeout-minutes: 2
+        if: ${{ always() && (failure() || cancelled()) && steps.test_policy.outputs.runTests == 'true' && (steps.focused.outcome == 'success' || steps.focused.outcome == 'failure' || steps.focused.outcome == 'cancelled') }}
         uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
         with:
           name: appearance-preview-failed-tests-${{ github.event.pull_request.head.sha }}
@@ -295,6 +1134,7 @@ jobs:
           if-no-files-found: error
           retention-days: 7
       - name: Report preview scope
+        timeout-minutes: 1
         env:
           FOCUSED_RESULT: ${{ steps.focused.outcome }}
           TEST_POLICY_MODE: ${{ steps.test_policy.outputs.mode }}
@@ -309,5 +1149,6 @@ jobs:
               echo "Focused appearance checks: $FOCUSED_RESULT. Policy: ${TEST_POLICY_MODE:-unavailable}; missing or malformed policy never authorizes a waiver."
             fi
             echo 'Successful runs attach two playable ZIPs, SHA256SUMS, source identity, policy evidence and a local testing guide. Required tests include TAP output; waived tests include a waiver receipt instead. Failed runs are not qualified previews.'
+            echo 'A separate exact-source predecessor runs the complete optional-proof and saved-flight regressions. Its result, complete files, output checksum and separate evidence artifact are bound into preview identity; an explicit waiver remains unexecuted.'
             echo 'Nothing is deployed. This does not claim full-suite, production artwork, password-gated browser, offline-installation or physical-device acceptance.'
           } >> "$GITHUB_STEP_SUMMARY"

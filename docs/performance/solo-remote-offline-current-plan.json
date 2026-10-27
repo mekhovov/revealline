@@ -1,0 +1,231 @@
+{
+  "repository": "mekhovov/revealline",
+  "node": "22.13.1",
+  "playwright": "1.62.1",
+  "runner": "ubuntu-24.04 x64 GitHub-hosted; actual image, CPU, memory, browser version and binary hashes recorded",
+  "performanceExclusion": true,
+  "helperTimeoutMs": 6000000,
+  "evidenceBytes": 268435456,
+  "candidate": {
+    "revision": "adb1c0c7b7dd1a526a0693917f2012d1dbc08b22",
+    "tree": "fc162d7d3a7bc0d8e7212d230b4f2eb0d31ba508",
+    "run": 39004951633,
+    "artifact": 12090923917,
+    "outer": {
+      "bytes": 1091842485,
+      "sha256": "f4d227caf2152d4de62a3e638e1ffda9e8373bac4d8fbf1b1300d15fb236e010"
+    },
+    "inner": {
+      "bytes": 1073748678,
+      "sha256": "66eff1484b7e7e6e39f67aa70533e13be7b345fb68d270b857a5cacfb5ac642f"
+    },
+    "manifestSHA256": "9152f392cadc6caebea9237e041fd3041943bec73b21be2b26fb4d781cacc38a",
+    "producer": "Exact successful Appearance package, Node22.13.1 Linux; original focused-policy metadata retained. Full outer/member/source/CSP verification required remotely before any native row."
+  },
+  "baseline": {
+    "revision": "8b01991942dc764b8aa4726851699ce1985e53ae",
+    "tree": "9373b6a74aea8fa1ef47aa17ace140b4cf714609",
+    "reusableArtifact": {
+      "format": "SoloHostedNormalBaselineReuseV2",
+      "sourceRevision": "8b01991942dc764b8aa4726851699ce1985e53ae",
+      "sourceTree": "9373b6a74aea8fa1ef47aa17ace140b4cf714609",
+      "run": 38998342742,
+      "artifact": 12088541389,
+      "name": "solo-normal-baseline-8b019919-38998342742-1",
+      "producer": {
+        "repository": "mekhovov/revealline",
+        "workflow": ".github/workflows/solo-remote-baseline-temporary.yml",
+        "run": 38998342742,
+        "attempt": 1,
+        "toolingRevision": "c9e637ad81fadf49caec884155d1bd0c2496c59c",
+        "toolingTree": "4d72cdb0aa075386bc1e6b5cd53f9f80eeb4a08c"
+      },
+      "outer": {
+        "bytes": 1073805912,
+        "sha256": "63545549d9d087e96dcade7e549369a3e2cc00eaa8ae292c314686d0b0563230"
+      },
+      "inner": {
+        "bytes": 1073243091,
+        "sha256": "8f8808fe79390429308cb4637c66ea34aeb5043947616a14b9cffcacf044dc1e"
+      },
+      "manifestSHA256": "3b448d181f75bf54aa1f2929e30f8b6a3fbc39a8b4eeb58914f5b29a704a85e8",
+      "ready": {
+        "bytes": 1599,
+        "sha256": "22b6a3cfdba87f242daa41309611ba2671dac18bcf6455cd7ebb68cb6b741d88"
+      }
+    },
+    "producer": "Exact normal8b successful hosted producer; full outer/ready/inner/source/CSP admission remains required remotely."
+  },
+  "resources": {
+    "serial": true,
+    "automaticRetries": 0,
+    "perCommandRSSBytes": 6442450944,
+    "perCommandLogBytes": 4194304,
+    "perRowEvidenceBytes": 33554432,
+    "aggregateEvidenceBytes": 268435456,
+    "minimumInitialMemoryBytes": 12884901888,
+    "minimumInitialDiskBytes": 8589934592,
+    "minimumRemainingDiskBytes": 1073741824,
+    "setupBounds": "Original full candidate/source/ZIP/CSP plus pinned original normal baseline full readback, bounded40min sharedsetup; no rebuild fallback.",
+    "ownership": "Fresh RUNNER_TEMP subtree; Linux process birth+owner token/ancestry, bounded TERM/KILL cleanup and fresh process checks before next row. No blanket browser killing.",
+    "finalizationReserveBytes": 4194304,
+    "setupEvidenceMaximumBytes": 29360128,
+    "scratch": "Fresh exact common RUNNER_TEMP/sc-sixchars/rNN root and child path/device/inode authority; <=52-byte row path. Profile admission requires matching common scratch-authority receipt in addition to command/raw/plan closure.",
+    "workflowBudgetMinutes": {
+      "preHelper": 39,
+      "helper": 100,
+      "outerHelperStep": 104,
+      "setupRetention": 2,
+      "upload": 10,
+      "stepSum": 155,
+      "wholeJob": 165,
+      "jobReserve": 10
+    },
+    "helperBudgetMinutes": {
+      "artifactPreparation": 40,
+      "twoDriverCommands": 40,
+      "twoPreservationAndRetirementPairs": 12,
+      "modePreparationAndFinalizationRemainder": 8,
+      "sum": 100
+    }
+  },
+  "format": "SoloHostedOfflineCurrentPairPlan.v2",
+  "status": "pinned-for-execution",
+  "cohort": "adb-offline-native-state-pair01",
+  "profileEvidenceBytes": 1082130432,
+  "rowEvidenceBytes": 33554432,
+  "scope": "First executable V2 cause-analysis pair: exact successful adb package and normal8b baseline; historical cce native-state evidence remains separate. No current-source performance or physical-device qualification.",
+  "rows": [
+    {
+      "id": "offline-baseline-p1",
+      "kind": "offline-persistence",
+      "engine": "chromium",
+      "source": "baseline",
+      "timeoutMs": 1200000,
+      "performanceExclusion": true
+    },
+    {
+      "id": "offline-candidate-p1",
+      "kind": "offline-persistence",
+      "engine": "chromium",
+      "source": "candidate",
+      "timeoutMs": 1200000,
+      "performanceExclusion": true
+    }
+  ],
+  "offline": {
+    "serverPort": 18791,
+    "observationTimeoutMs": 960000,
+    "downloadTimeoutMs": 300000,
+    "maximumReportBytes": 2097152,
+    "profileMaximumBytes": 536870912,
+    "archiveMaximumBytes": 536870912,
+    "profileMaximumMembers": 20000,
+    "preservationTimeoutMs": 180000,
+    "retirementTimeoutMs": 180000,
+    "driver": {
+      "path": "scripts/observe-solo-offline-persistence.mjs",
+      "bytes": 45724,
+      "sha256": "56d25493b2feed06c2b3644286b71c8b333798c2463fbddcdd485b2f2bdd8582"
+    },
+    "gameplay": {
+      "format": "SoloOfflinePublicGameplayV1",
+      "diagnosticTimeoutMs": 600000,
+      "playTimeoutMs": 120000,
+      "replayTimeoutMs": 120000,
+      "maximumExports": 2,
+      "maximumExportBytes": 262144
+    },
+    "openingRecipe": {
+      "path": "docs/performance/fixtures/solo-remote-offline/installed-starter.qualification.fixture",
+      "bytes": 5811,
+      "sha256": "21b2d99269a7a21cc1ac7c6e960f17531c5d2cfd1ec7ac4d4b523520b25e0cb5"
+    },
+    "nativeStatePolicy": "owned-cdp-after-navigation-v1",
+    "expectedBrowserVersion": "151.0.7922.34"
+  },
+  "adapterInputs": [
+    {
+      "path": "scripts/solo-remote-offline.mjs",
+      "bytes": 27362,
+      "sha256": "2a5c677e34cdd563e691a2ea5293268d00a69b3d644a02bd880db89ab0f0fd65"
+    },
+    {
+      "path": "scripts/observe-solo-offline-persistence.mjs",
+      "bytes": 45724,
+      "sha256": "56d25493b2feed06c2b3644286b71c8b333798c2463fbddcdd485b2f2bdd8582"
+    },
+    {
+      "path": "scripts/solo-remote-baseline.mjs",
+      "bytes": 15700,
+      "sha256": "62265c0d41693d249b476917617d3c26fe6b8514e2b12c67fc3d896214ba58a0"
+    },
+    {
+      "path": "scripts/solo-offline-gameplay.mjs",
+      "bytes": 13885,
+      "sha256": "f973ca1841213a7fe832175427a7aa9adf56f4db961f0834e2da6ede63435963"
+    }
+  ],
+  "acceptance": {
+    "execution": "Exact public pre-close premise, settled observation and clean common process closure; completed-diagnostic is not product success.",
+    "negativeOutcome": "Observed restart/cache failure remains negative but does not prevent candidate after valid baseline premise/closure/preservation.",
+    "preservation": "Bounded full type/mode/member hash archive readback and unchanged source rehash, then separate exact-profile retirement; uncertainty stops dependent work.",
+    "failure": "No retry or repair. Every failed/partial/not-run row retained. No aggregate offline qualification pass.",
+    "successOnlyGameplay": "Original600s restart stage unchanged; optional120s public play/export plus2x120s replay stages, no repair/retry/state injection. Never equate completed-diagnostic with gameplay pass.",
+    "nativeState": "Same retained CDP session owns the real state-only correction after both owned navigations; unchanged URL/nativefalse checks, Playwright transportoffline, stoppedserver, serviceworker responses/cache, strict replay and closure remain independently required."
+  },
+  "setupTimeoutMs": 2400000,
+  "bindingScope": {
+    "status": "verified-package-for-reviewed-diagnostic",
+    "candidateRevision": "adb1c0c7b7dd1a526a0693917f2012d1dbc08b22",
+    "runtimeRevision": "488eae03aee7f58dd5837451363015888faa429f",
+    "candidateArtifact": 12090923917,
+    "baseline": "Exact8b normal producer; no fallback rebuild or historical package substitution.",
+    "sourceAssets": "Each source arm must bind its own admitted catalogue and installed Starter pack/campaign/first+Next mission dependencies before browser launch.",
+    "performanceQualification": false
+  },
+  "diagnosticRelease": {
+    "format": "SoloNativeOfflineStateDiagnosticReleaseV1",
+    "status": "reviewed-for-cause-analysis",
+    "candidateRevision": "adb1c0c7b7dd1a526a0693917f2012d1dbc08b22",
+    "baselineRevision": "8b01991942dc764b8aa4726851699ce1985e53ae",
+    "firstEightAllCorrectnessPassed": false,
+    "successorQualificationReleased": false,
+    "performanceQualificationReleased": false,
+    "onceOnlyBefore": "adb1c0c7b7dd1a526a0693917f2012d1dbc08b22",
+    "nativeStateEvidence": {
+      "run": 39001646012,
+      "sourceRevision": "cce49c81d82b79aefc24898f32eeebc609e569fb",
+      "browserVersion": "151.0.7922.34",
+      "conclusion": "failure",
+      "qualificationEligible": false,
+      "artifact": 12089228265,
+      "outer": {
+        "bytes": 6153,
+        "sha256": "110af2d9831ab58830da6d6e3a644cd9b06aeccbef4bf9460d46cada4e7a8bf1"
+      },
+      "interpretation": "All19 native states observed across3 closed contexts; post-navigation same-session override changes native state tofalse, detachment reversesit. Separate scratch-observer failure remains failed. This evidence does not prove offline transport."
+    },
+    "ownerCorrection": {
+      "path": "scripts/run-solo-remote-correctness.mjs",
+      "bytes": 54513,
+      "sha256": "d5d4e03934a3f016d0e1125516959b2cc5568d244f3bf50c770ebeb0c8e3b58f",
+      "admission": "Required pre-observation wrapper checks verify these exact bytes; direct child birth, reused PID rejection and Linux owned-child cleanup remain required. The common runner retains its complete source.",
+      "scope": "Current owner implementation; every original fresh-identity, unknown-child, finite cleanup and failed-closure rule remains unchanged."
+    },
+    "outcomePolicy": "Preserve all prior failures. No automatic retry, first-eight waiver, changed gate, profile repair or aggregate performance qualification.",
+    "cleanupRecheckEvidence": {
+      "run": 39004951685,
+      "sourceRevision": "adb1c0c7b7dd1a526a0693917f2012d1dbc08b22",
+      "browserVersion": "151.0.7922.34",
+      "conclusion": "success",
+      "qualificationEligible": false,
+      "artifact": 12090446791,
+      "outer": {
+        "bytes": 6111,
+        "sha256": "b13ffb02a6d361db1ca35ab0083b5952f79b41597a993c8341f447b325413116"
+      },
+      "scope": "Separate native data-page observation and owner cleanup only; no network transport or game credit."
+    }
+  }
+}

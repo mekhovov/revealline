@@ -4,6 +4,18 @@ const frame = document.querySelector('#game');
 const status = document.querySelector('#status');
 const log = document.querySelector('#log');
 const records = [];
+// Detailed records are bounded, but ending/replacing a sample must never erase
+// its worst frame or turn a pause after a stall into a successful observation.
+const observerTotals = {
+  samples: 0,
+  partialSamples: 0,
+  observedFrames: 0,
+  maxFrameIntervalMs: 0,
+  over33ms: 0,
+  over50ms: 0,
+  over100ms: 0,
+  over250ms: 0,
+};
 const sampleButton = document.querySelector('#sample');
 const editionSelect = document.querySelector('#edition');
 const multiplayerTarget = document.querySelector('#multiplayer-target');
@@ -28,14 +40,32 @@ const finales = {
     fracture: 'unbroken-finish',
   },
 };
-const editionIds = new Set(['',
-'droneaid-nl-community',
-'social-drone-ua',
-'victory-drones',
-'ukraine-culture',
-'fpv-learning']);
+const editionIds = new Set([
+  '',
+  'droneaid-nl-community',
+  'droneaid-pt-community',
+  'social-drone-ua',
+  'victory-drones',
+  'ukraine-culture',
+  'fpv-learning',
+]);
 let dispose = () => {};
 const report = (record) => {
+  if (record.action === 'Frame sample') {
+    observerTotals.samples++;
+    if (record.partial) observerTotals.partialSamples++;
+    const intervals = record.frameIntervals;
+    if (intervals) {
+      observerTotals.observedFrames += intervals.count;
+      observerTotals.maxFrameIntervalMs = Math.max(
+        observerTotals.maxFrameIntervalMs,
+        intervals.maxMs ?? 0,
+      );
+      for (const threshold of ['over33ms', 'over50ms', 'over100ms', 'over250ms'])
+        observerTotals[threshold] += intervals[threshold] ?? 0;
+    }
+  }
+  record.observerTotals = { ...observerTotals };
   records.push(record);
   if (records.length > 100) records.shift();
   log.textContent = JSON.stringify(records, null, 2);
@@ -114,7 +144,13 @@ document.querySelector('#load').addEventListener('click', () => {
     clearTimeout(loadTimer);
     document.removeEventListener('visibilitychange', loadVisibility);
     window.removeEventListener('pagehide', loadPagehide);
-    report({ action: 'Load to playable menu', mode, outcome, ms: null });
+    report({
+      action: 'Load to playable menu',
+      mode,
+      outcome,
+      ms: null,
+      elapsedMs: performance.now() - began,
+    });
   };
   const loadVisibility = () => {
     if (document.hidden) abandon('visibility changed before load; sample discarded');
@@ -384,6 +420,26 @@ document.querySelector('#load').addEventListener('click', () => {
       const heapIntervalMs = 5000,
         heapMaxSnapshots = 62,
         activityIntervalMs = Math.max(500, requestedDurationMs / 120);
+      const intervalTotals = {
+        count: 0,
+        totalMs: 0,
+        maxMs: 0,
+        over33ms: 0,
+        over50ms: 0,
+        over100ms: 0,
+        over250ms: 0,
+      };
+      const recordInterval = (ms) => {
+        if (!Number.isFinite(ms) || ms < 0) return;
+        intervalTotals.count++;
+        intervalTotals.totalMs += ms;
+        intervalTotals.maxMs = Math.max(intervalTotals.maxMs, ms);
+        if (ms > 33.34) intervalTotals.over33ms++;
+        if (ms > 50) intervalTotals.over50ms++;
+        if (ms > 100) intervalTotals.over100ms++;
+        if (ms > 250) intervalTotals.over250ms++;
+        if (intervals.length < 120000) intervals.push(ms);
+      };
       let lastActivityAt = -Infinity,
         lastHeapAt = -Infinity,
         omittedTasks = 0;
@@ -452,6 +508,9 @@ document.querySelector('#load').addEventListener('click', () => {
         // or focus change. Recheck the same conditions at the final boundary.
         if (!reason && activeOnly && (!foreground() || !running() || mission() !== sampledMission))
           reason = 'active play, mission or focus changed; sample discarded';
+        const endedAt = win.performance.now();
+        const finalIntervalIncomplete = beganAt !== null && previous !== null && endedAt > previous;
+        if (finalIntervalIncomplete) recordInterval(endedAt - previous);
         stopped = true;
         win.cancelAnimationFrame(sampleRaf);
         clearTimeout(sampleTimer);
@@ -463,7 +522,7 @@ document.querySelector('#load').addEventListener('click', () => {
         document.removeEventListener('visibilitychange', sampleVisibility);
         doc.removeEventListener('keydown', input, true);
         if (sampleButton) sampleButton.disabled = false;
-        if (reason || intervals.length < 60) {
+        if (beganAt === null) {
           report({
             action: 'Frame sample',
             mode,
@@ -471,8 +530,9 @@ document.querySelector('#load').addEventListener('click', () => {
             scope: activeOnly ? 'active' : 'visible',
             requestedDurationMs,
             observedDurationMs: beganAt === null ? 0 : win.performance.now() - beganAt,
-            outcome: reason || 'too few frames; sample discarded',
-            observedFrames: intervals.length,
+            outcome: reason || 'no active frames; sample discarded',
+            partial: true,
+            observedFrames: 0,
             mission: mission(),
             requestedMission,
             focusAtArm,
@@ -481,8 +541,12 @@ document.querySelector('#load').addEventListener('click', () => {
           });
           return;
         }
+        const incompletePercentileCoverage = intervalTotals.count !== intervals.length;
+        const partial = Boolean(reason) || intervals.length < 60 || incompletePercentileCoverage;
+        // Legacy outcome wording remains compatible with existing reports;
+        // "discarded" now means excluded from qualification, not lost evidence.
         const sorted = [...intervals].sort((a, b) => a - b);
-        const percentile = (fraction) => sorted[Math.ceil(sorted.length * fraction) - 1];
+        const percentile = (fraction) => sorted[Math.ceil(sorted.length * fraction) - 1] ?? null;
         collectHeap(win.performance.now(), true);
         report({
           action: 'Frame sample',
@@ -492,16 +556,25 @@ document.querySelector('#load').addEventListener('click', () => {
           requestedMission,
           scope: activeOnly ? 'active' : 'visible',
           requestedDurationMs,
-          outcome: 'passive desktop sample; compare equivalent baseline before qualification',
-          durationMs: win.performance.now() - beganAt,
+          outcome:
+            reason ||
+            (partial
+              ? (incompletePercentileCoverage
+                  ? 'frame retention limit exceeded; sample discarded'
+                  : 'too few frames; sample discarded')
+              : 'passive desktop sample; compare equivalent baseline before qualification'),
+          partial,
+          finalIntervalIncomplete,
+          observedFrames: intervalTotals.count,
+          durationMs: beganAt === null ? 0 : win.performance.now() - beganAt,
+          observedDurationMs: beganAt === null ? 0 : win.performance.now() - beganAt,
           frameIntervals: {
-            count: intervals.length,
+            ...intervalTotals,
+            retainedCount: intervals.length,
+            percentilesCoverWholeSample: intervalTotals.count === intervals.length,
             medianMs: percentile(0.5),
             p95Ms: percentile(0.95),
             p99Ms: percentile(0.99),
-            maxMs: sorted.at(-1),
-            over33ms: intervals.filter((ms) => ms > 33.34).length,
-            over50ms: intervals.filter((ms) => ms > 50).length,
           },
           longTasks: taskSupported
             ? {
@@ -522,6 +595,7 @@ document.querySelector('#load').addEventListener('click', () => {
           inputs,
           focusAtArm,
           focusAtFinish: focusSnapshot(),
+          focusEvents: focusEvents.filter((event) => event.atMs >= focusAtArm.atMs),
           activity,
           hudBefore,
           hudAfter: hudSnapshot(),
@@ -543,7 +617,10 @@ document.querySelector('#load').addEventListener('click', () => {
             : { supported: false },
           mediaBefore,
           mediaAfter: mediaSnapshot(),
-          newResourceEntries: win.performance.getEntriesByType('resource').length - beforeResources,
+          newResourceEntries:
+            beganAt === null
+              ? null
+              : win.performance.getEntriesByType('resource').length - beforeResources,
         });
       };
       const beginSample = () => {
@@ -582,6 +659,10 @@ document.querySelector('#load').addEventListener('click', () => {
           }
           if (foreground() && running()) beginSample();
         } else if (activeOnly && (!foreground() || !running() || mission() !== sampledMission)) {
+          // This can be the very callback delayed by the pause-causing stall.
+          // Capture its interval before testing eligibility for a full sample.
+          if (previous !== null) recordInterval(win.performance.now() - previous);
+          previous = win.performance.now();
           finish('active play, mission or focus changed; sample discarded');
           return;
         }
@@ -603,7 +684,7 @@ document.querySelector('#load').addEventListener('click', () => {
               finish('frame limit exceeded; sample discarded');
               return;
             }
-            intervals.push(now - previous);
+            recordInterval(now - previous);
           }
           previous = now;
         }
@@ -614,7 +695,7 @@ document.querySelector('#load').addEventListener('click', () => {
       doc.addEventListener('keydown', input, true);
       if (sampleButton) sampleButton.disabled = true;
       if (activeOnly) {
-        status.textContent = `Armed. Start or resume in the game; remain focused and play for ${requestedDurationMs / 1000} seconds. Pause/results discard the sample.`;
+        status.textContent = `Armed. Start or resume in the game and play for ${requestedDurationMs / 1000} seconds. Pause/results retain a partial sample.`;
         sampleTimer = setTimeout(
           () => finish('no foreground play within 60 seconds; sample discarded'),
           60000,
@@ -669,6 +750,7 @@ document.querySelector('#load').addEventListener('click', () => {
         mode,
         outcome,
         ms: null,
+        elapsedMs: performance.now() - pending.started,
         mission: mission(),
         trustedActivation: pending.trustedActivation,
         focusAtActivation: pending.focusAtActivation,

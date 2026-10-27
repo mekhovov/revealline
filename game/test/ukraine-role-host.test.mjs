@@ -11,6 +11,7 @@ import { retryFixture } from './fixtures/retry-scenarios.mjs';
 import { emptyLibrary, updatePreferences, exportLibrary, loadLibrary } from '../library.mjs';
 import { authoritativeCheckpoint } from '../replay.mjs';
 import { BoardPainter } from '../ui/render.mjs';
+import { validateEnemyStatsSession } from '../enemy-stats.mjs';
 
 const presets = JSON.parse(
   await readFile(new URL('../../authoring/motion-lab/presets.json', import.meta.url), 'utf8'),
@@ -116,6 +117,7 @@ test('explicit new saved appearance and suspended checkpoint survive normal host
     assert.equal(p.$('body-select').value, mapping.impact);
     p.$('start-button').click();
     await settle(() => p.doc.body.dataset.flightState === 'running');
+    p.frame(0);
     p.key('ArrowDown');
     for (let n = 0; n < 12; n++) p.frame();
     p.$('pause-button').click();
@@ -207,7 +209,15 @@ test('custom Ukraine class mapping and unknown explicit appearance keep existing
 
 test('actual Couch recommendation switches both independent painters without touching match physics or profile', async (t) => {
   const storage = memoryStorage(),
-    f = await couchPage(t, { storage, ImageClass: Picture });
+    // The shipped Couch release includes JPEG originals. Its existing host
+    // decoder reads their actual dimensions; the Solo-only Picture above is a
+    // synthetic appearance fixture and must not supply a square JPEG fallback.
+    f = await couchPage(t, { storage });
+  const initialWrites = [...storage.writes];
+  assert.deepEqual(
+    initialWrites.map(([key]) => key),
+    ['revealline-enemy-stats.v1:writer'],
+  );
   const look = BoardPainter.prototype.setLook,
     looks = [];
   BoardPainter.prototype.setLook = function (theme, bodyId, overrides) {
@@ -228,6 +238,7 @@ test('actual Couch recommendation switches both independent painters without tou
       assert.equal(f.renders[0].level.id, f.renders[1].level.id);
       assert.equal(f.renders[0].tick, 0);
     }
+    assert.deepEqual(storage.writes, initialWrites, 'Appearance choices do not write the profile');
     await activateHostAction(f.$('race-start'));
     f.frame();
     f.key('KeyD');
@@ -238,7 +249,19 @@ test('actual Couch recommendation switches both independent painters without tou
     const held = f.checkpoint();
     f.frames(3, 100);
     assert.deepEqual(f.checkpoint(), held);
-    assert.equal(storage.writes.length, 0);
+    assert.deepEqual(storage.writes.slice(0, initialWrites.length), initialWrites);
+    const added = storage.writes.slice(initialWrites.length);
+    assert.equal(added.length, 1, 'Start/Pause saves only its existing enemy-session cursor');
+    const [[key, value]] = added;
+    assert.equal(key, 'revealline-enemy-stats-session.v1:host:versus');
+    const cursors = Object.values(JSON.parse(value));
+    assert.equal(cursors.length, 1);
+    const cursor = validateEnemyStatsSession(cursors[0]);
+    assert.equal(cursor.gameType, 'versus');
+    assert.deepEqual(cursor.sequences, {});
+    assert.deepEqual(cursor.counts, {});
+    assert.deepEqual(cursor.boardCounts, {});
+    assert.deepEqual([...storage.map], [...initialWrites, [key, value]]);
   } finally {
     BoardPainter.prototype.setLook = look;
   }

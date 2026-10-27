@@ -1,0 +1,208 @@
+{
+  "format": "FpvIntegratedManualFlightEvidence.v1",
+  "reviewedDate": "2026-10-19",
+  "timezone": "Europe/Berlin",
+  "sourceRevision": "cfdf24d617f631c15e0bfaff1f167dcba5008ab9",
+  "sourceTree": "73013fe15388dd2891ce2e996ee34e63bb0b0d58",
+  "packageReceipt": "fpv-flight-integrated-package-20261019.json",
+  "packageReceiptSha256": "a35affca49c595db77e969a6c699e6b8912b97480c28f5a3f6e84c344f60caf3",
+  "automatedCourseSample": {
+    "logLocalPath": "/private/tmp/fpv-integrated-course-flights-1k-final.log",
+    "logSha256": "165171f6afda0500585f8ed513400507d7996dc181e897628a3edf26863bf5b1",
+    "tapPass": 32,
+    "tapFail": 0,
+    "tapSkip": 0,
+    "ordinaryFlights": 420,
+    "distinctHostCoursePairs": 141,
+    "aircraft": 15,
+    "modes": ["acro", "self-level"],
+    "scope": "3.6-second takeoff/steer/release flights; separate aircraft/rate/PID changes checked in all three hosts; not every objective completed"
+  },
+  "manualArchives": [
+    {
+      "aircraft": "meteor75-analog-2022",
+      "host": "academy",
+      "archiveLocalPath": "/private/tmp/fpv-r20-manual-meteor75-cfdf24d61.json",
+      "archiveBytes": 34611,
+      "archiveSha256": "5d6eeba55a9bddc9f573a62df1700bbc8c6f46bb59d310cd8367a3e0f1e18e3b",
+      "identity": "c4c5bea74f205fef",
+      "backend": "civilian-quad-aircraft-regional.v3",
+      "frequency": 1000,
+      "mode": "self-level",
+      "batteryDepletion": false,
+      "massKg": 0.03768,
+      "controller": {
+        "format": "AdvancedControllerTune.v3",
+        "gains": {
+          "roll": {
+            "p": 0.00011445300000000001,
+            "i": 5.150385e-5,
+            "d": 4.4509500000000006e-7,
+            "feedforward": 3.17925e-7
+          },
+          "pitch": {
+            "p": 0.00011445300000000001,
+            "i": 5.150385e-5,
+            "d": 4.4509500000000006e-7,
+            "feedforward": 3.17925e-7
+          },
+          "yaw": {
+            "p": 0.00011278389375000001,
+            "i": 5.075275218750001e-5,
+            "d": 7.974618750000001e-7,
+            "feedforward": 5.69615625e-7
+          }
+        },
+        "integralLimit": 0.0028125,
+        "antiWindup": 20,
+        "gyroFilterHz": 100,
+        "dTermFilterHz": 60,
+        "inputSmoothingHz": 0,
+        "feedforwardFilterHz": 30
+      },
+      "rates": {
+        "format": "FpvRateProfile.v1",
+        "algorithm": "actual",
+        "quickRatesRcExpo": false,
+        "axes": {
+          "roll": {
+            "rcRate": 10,
+            "rate": 60,
+            "expo": 25,
+            "limit": 1998
+          },
+          "pitch": {
+            "rcRate": 10,
+            "rate": 60,
+            "expo": 25,
+            "limit": 1998
+          },
+          "yaw": {
+            "rcRate": 10,
+            "rate": 60,
+            "expo": 25,
+            "limit": 1998
+          }
+        },
+        "throttle": {
+          "model": "betaflight-2025.12",
+          "mid": 50,
+          "expo": 0,
+          "hover": 50,
+          "limitType": "off",
+          "limitPercent": 100
+        }
+      },
+      "startMissionTick": 0,
+      "endMissionTick": 530,
+      "inputRows": 530,
+      "maximumAbsoluteRotationInput": [0, 0, 0],
+      "finalHash": "85caaf43",
+      "scored": false,
+      "visibleVerification": "course completion verified at 8.58 seconds"
+    },
+    {
+      "aircraft": "nazgul-eco-xl5-v11",
+      "host": "world",
+      "archiveLocalPath": "/private/tmp/fpv-r20-manual-nazgul-cfdf24d61.json",
+      "archiveBytes": 38091,
+      "archiveSha256": "e6e40d312f86a306d62cba9e824e5d7ddee82a6876d8a86126c8f6efb5cd7090",
+      "identity": "a18e1845107e8786",
+      "backend": "civilian-quad-aircraft-regional.v3",
+      "frequency": 1000,
+      "mode": "self-level",
+      "batteryDepletion": false,
+      "massKg": 0.652,
+      "controller": {
+        "format": "AdvancedControllerTune.v3",
+        "gains": {
+          "roll": {
+            "p": 0.021133601999999998,
+            "i": 0.009510120899999999,
+            "d": 8.218623e-5,
+            "feedforward": 5.870445e-5
+          },
+          "pitch": {
+            "p": 0.021133601999999998,
+            "i": 0.009510120899999999,
+            "d": 8.218623e-5,
+            "feedforward": 5.870445e-5
+          },
+          "yaw": {
+            "p": 0.0208254036375,
+            "i": 0.009371431636875,
+            "d": 0.00014725032875,
+            "feedforward": 0.00010517880624999999
+          }
+        },
+        "integralLimit": 0.30625,
+        "antiWindup": 20,
+        "gyroFilterHz": 100,
+        "dTermFilterHz": 60,
+        "inputSmoothingHz": 0,
+        "feedforwardFilterHz": 30
+      },
+      "rates": {
+        "format": "FpvRateProfile.v1",
+        "algorithm": "actual",
+        "quickRatesRcExpo": false,
+        "axes": {
+          "roll": {
+            "rcRate": 10,
+            "rate": 80,
+            "expo": 25,
+            "limit": 1998
+          },
+          "pitch": {
+            "rcRate": 10,
+            "rate": 80,
+            "expo": 25,
+            "limit": 1998
+          },
+          "yaw": {
+            "rcRate": 10,
+            "rate": 80,
+            "expo": 25,
+            "limit": 1998
+          }
+        },
+        "throttle": {
+          "model": "betaflight-2025.12",
+          "mid": 50,
+          "expo": 0,
+          "hover": 50,
+          "limitType": "off",
+          "limitPercent": 100
+        }
+      },
+      "startMissionTick": 0,
+      "endMissionTick": 640,
+      "inputRows": 640,
+      "maximumAbsoluteRotationInput": [0.18, 0.18, 0.18],
+      "finalHash": "cc809b99",
+      "scored": false,
+      "visibleVerification": "complete session physics verified from reset"
+    }
+  ],
+  "additionalManualAcroSmoke": {
+    "host": "world",
+    "aircraft": "nazgul-eco-xl5-v11",
+    "durationSeconds": 5.04,
+    "durableCheckpointSeconds": 5,
+    "modeChange": "explicit Self-level to Acro, new paused zero-time attempt",
+    "heightMetresObserved": 6.1,
+    "verticalSpeedMpsObserved": 1.5,
+    "driftMpsObserved": 1.1,
+    "releasedRotationInputsPercent": [0, 0, 0],
+    "throttlePercentAtPause": 35,
+    "archiveExported": false,
+    "scope": "short keyboard takeoff/yaw/pitch/release/pause; no course or landing completion claimed"
+  },
+  "limitations": [
+    "Fresh localhost origins only; public affected archive inventory was not accessed.",
+    "Meteor75 descent included a bounce before settling; zero lateral input does not mean zero displacement.",
+    "World Self-level recording verifies physics, not course completion.",
+    "One available desktop in-app browser; not a cross-browser, physical-radio or device matrix.",
+    "No real-aircraft fidelity, storage-retention diagnosis or scored promotion is established."
+  ]
+}

@@ -468,6 +468,7 @@ test('explicit real-source build ships thirty-two exact generated bodies once in
       bodySizes.slice(start, end).reduce((total, bytes) => total + bytes, 0),
       expected,
     );
+  assert.equal(wanted.size, 32);
   assertZipMemberPins(zip, new Map([...wanted, ...sourcePins]));
   const legacy = JSON.parse(await readFile(path.join(source, 'game/content/optional-worlds.json')));
   for (const old of legacy.packs) {

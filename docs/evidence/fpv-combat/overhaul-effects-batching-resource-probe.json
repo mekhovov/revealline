@@ -1,0 +1,18 @@
+{
+  "failedResponses": [],
+  "errors": [],
+  "pageFailure": null,
+  "sources": {
+    "world-reaction-runtime.mjs": "e13a1fd21b79cf0cb50b64a22f494b0fdbe9b3a4afb1cf6fb5945cb4580deb06",
+    "renderer.mjs": "277de38a0acded3da5b52f668bf77688478cdd420dcb603e8a7c9eeb855d2fc0",
+    "combat-presentation.mjs": "8c1402c122840b859263edffadd3d1cd99734221a1acdb1cc8b8ea4b7556fe9f",
+    "combat-actors.mjs": "b1fcab3f836088ca0abfcef57ac7183e70988c2ea0717990b9d1bcaecc8b9086",
+    "combat-appearance.mjs": "36ea06b21fcf1b6670f11f709966554f74d610f72b89164e59e722ae743e0b93"
+  },
+  "harnessHashes": {
+    "overhaul-effects-batching-diagnostic.cjs": "5b6c124d8224f28aadd4608320c09b9f2e9f4a5d8ee5bfee8738cc916531dfb3",
+    "overhaul-effects-batching-diagnostic.js": "b990086bb4248acf5acf9f0344757e5596564724e505b74c94128a857050832e",
+    "overhaul-gpu-probe.js": "4b34fce30f8bf3afb408dde375b85eaa6addc5ed952749ca6a2ce242410d8ccd"
+  },
+  "note": "Separate functional bootstrap after measured comparison. It identifies this probe failed resource URLs; original timing captured only the console404 text, so this is supporting inference rather than proof of its original URL."
+}

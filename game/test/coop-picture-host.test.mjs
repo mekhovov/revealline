@@ -1,4 +1,5 @@
 import test from 'node:test';
+import './team-result-continuation-host.test.mjs';
 import assert from 'node:assert/strict';
 import { page } from './helpers/coop-host.mjs';
 import { deferred, waitFor } from './helpers/coop-presentation-fixture.mjs';
@@ -377,7 +378,7 @@ test('BFCache suspension keeps accepted artwork and shared preferences; terminal
   );
 });
 
-test('paused menu/display edits retain HUD continuity and the accepted picture with only shared preference reads/writes', async (t) => {
+test('paused menu/display edits retain HUD continuity and the accepted picture with only shared preference writes', async (t) => {
   const savedReaction = JSON.stringify({ format: 'JourneyReactionPreferencesV1', enabled: false });
   const writes = [],
     storageReads = [],
@@ -426,6 +427,8 @@ test('paused menu/display edits retain HUD continuity and the accepted picture w
   assert.equal(f.doc.body.dataset.menuOrnaments, 'off');
   assert.equal(f.$('coop-journey-reactions-enabled').checked, false);
   assert.equal(values.get(reactionKey), savedReaction);
+  // This recorder spans boot and Start as well as Settings: include the existing
+  // preference/cursor readers, while the write check below stays Settings-only.
   // This includes initial host preparation, which now reads the statistics,
   // encounter and reaction owners as well as the shared Settings preferences.
   // Paused edits must still write only display/menu preferences below.
@@ -498,3 +501,78 @@ test('terminal pagehide during decode releases candidate resources and never foc
   assert.equal(f.focusAttempts.length, focusCount);
   assert.equal(f.drawImages.length, 0);
 });
+
+// Run the existing complete result-continuation controls above as well: a stalled
+// callback still cancels automatic Next even though a stopped lobby is not paused.
+for (const stage of ['read', 'decode'])
+  for (const elapsedMs of [251, 500])
+    test(`a ${elapsedMs}ms loading/lobby callback keeps the required picture ${stage} owner`, async (t) => {
+      const gate = deferred();
+      t.after(() => gate.resolve());
+      const f = await page(t, {
+        ...options,
+        waitPicture: false,
+        presentation: { [stage]: () => gate.promise },
+      });
+      await waitFor(() => f.artwork.calls[stage === 'read' ? 'reads' : 'decodes'].length === 1);
+      assert.equal(state(f), 'preparing');
+      assert.equal(f.$('coop-start').disabled, true);
+      const reads = f.artwork.calls.reads.length;
+      f.tick(1, 0); // Establish the actual update callback's initial timestamp.
+      f.tick(1, elapsedMs);
+      assert.equal(state(f), 'preparing', 'Elapsed time alone cannot cancel an owned load.');
+      assert.equal(f.$('coop-picture-cancel').hidden, false);
+      assert.equal(f.$('coop-start').disabled, true);
+      assert.equal(f.$('coop-menu').hidden, false);
+      assert.deepEqual(f.artwork.calls.releases, []);
+      assert.equal(f.drawImages.length, 0);
+      gate.resolve();
+      await settle(f);
+      f.tick(1, elapsedMs);
+      assert.equal(state(f), 'ready');
+      assert.equal(f.$('coop-start').disabled, false);
+      assert.equal(f.$('coop-menu').hidden, false, 'Ready remains a separate public Start.');
+      assert.equal(f.drawImages.length, 0);
+      assert.equal(
+        f.artwork.calls.reads.length,
+        reads,
+        'The original owner completes without Retry.',
+      );
+      start(f);
+      assert.equal(acceptedFrameImage(f).sha256, COOP_PICTURE_BINDINGS[0].picture.sha256);
+    });
+
+for (const elapsedMs of [250, 251, 500])
+  test(`active Team ${elapsedMs}ms callback preserves the strict greater-than250ms pause boundary`, async (t) => {
+    const f = await page(t, options);
+    f.$('coop-start').focus();
+    f.tap('Enter');
+    assert.equal(f.$('coop-overlay').hidden, true);
+    // Integer callback timestamps make the exact250ms threshold unambiguous.
+    f.tick(1, 0);
+    f.tick(120, 20);
+    assert.equal(f.$('coop-overlay').hidden, true);
+    const before = hud(f),
+      reads = f.artwork.calls.reads.length,
+      releases = [...f.artwork.calls.releases];
+    f.tick(1, elapsedMs);
+    if (elapsedMs === 250) {
+      assert.equal(f.$('coop-overlay').hidden, true);
+    } else {
+      assert.equal(f.$('coop-overlay').hidden, false);
+      assert.equal(f.$('coop-resume').hidden, false);
+      assert.deepEqual(hud(f), before, 'The interrupted callback does not advance the flight.');
+      f.tick(60);
+      assert.deepEqual(hud(f), before, 'Subsequent callbacks cannot resume the paused flight.');
+      f.$('coop-resume').click();
+      assert.equal(f.$('coop-overlay').hidden, true);
+    }
+    f.tick(120);
+    assert.notDeepEqual(
+      hud(f),
+      before,
+      'Only the uninterrupted or explicitly resumed flight advances.',
+    );
+    assert.equal(f.artwork.calls.reads.length, reads);
+    assert.deepEqual(f.artwork.calls.releases, releases);
+  });

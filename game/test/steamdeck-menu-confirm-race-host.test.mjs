@@ -49,7 +49,6 @@ function pointer(pointerType, pointerId = 71) {
 
 async function deckPage(t, options = {}) {
   let time = 1000;
-  t.mock.method(performance, 'now', () => time);
   const pad = {
       index: 0,
       id: 'Steam Deck',
@@ -63,10 +62,14 @@ async function deckPage(t, options = {}) {
       readPads: () => (pad.connected ? [pad] : []),
       initialReadyTimeoutMs: 30000,
       ...options,
+      browserSetup: ({ globals, window }) => {
+        globals.performance = window.performance = { now: () => time };
+      },
     }),
     elapse = (milliseconds) => {
       time += milliseconds;
       pad.timestamp = time;
+      assert.equal(performance.now(), time, 'between-frame native events use the modeled clock');
     },
     frame = (milliseconds = 20) => {
       elapse(milliseconds);

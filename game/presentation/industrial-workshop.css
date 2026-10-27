@@ -413,7 +413,7 @@
   box-sizing: border-box;
   padding: 8px 14px;
   font-family: var(--iw-font-ui);
-  font-size: var(--iw-text-size);
+  font-size: calc(var(--iw-text-size) * var(--primary-text-scale, 1) * var(--overflight-text-scale, 1));
   font-weight: 600;
   line-height: 1.35;
   text-shadow: none;
@@ -584,7 +584,7 @@
   border-image: none;
   border-radius: 0;
   font-family: var(--iw-font-ui);
-  font-size: var(--iw-text-size);
+  font-size: calc(var(--iw-text-size) * var(--primary-text-scale, 1) * var(--overflight-text-scale, 1));
   accent-color: var(--iw-accent);
   box-shadow: var(--ui-inset-depth, inset 0 1px 2px #0003);
 }
@@ -597,6 +597,21 @@
   min-height: var(--iw-target);
   box-sizing: border-box;
   padding: 6px 10px;
+}
+/* Safari's native menu bezel ignores the shared field height and padding.
+   Keep native select behavior, but paint the closed single-choice field here. */
+[data-theme-styled='true'] :where(select:not([multiple], [size])) {
+  appearance: none;
+  -webkit-appearance: none;
+  padding-inline-end: 36px;
+}
+[data-theme-styled='true']
+  :where(select:not([multiple], [size], :disabled, [aria-disabled='true'])) {
+  background:
+    linear-gradient(45deg, transparent 50%, currentColor 50%) right 18px center / 6px 6px no-repeat,
+    linear-gradient(135deg, currentColor 50%, transparent 50%) right 12px center / 6px 6px no-repeat,
+    var(--ui-inset-finish, none),
+    var(--iw-input, var(--iw-ink));
 }
 [data-theme-styled='true'] :where(input, textarea)::placeholder {
   color: var(--iw-muted);
@@ -957,7 +972,7 @@
 }
 [data-theme-text-size='large']:not([data-interface-theme='legacy'])
   :where(p, label, button, select, input, textarea, .micro-note) {
-  font-size: max(18px, 1em);
+  font-size: max(calc(18px * var(--primary-text-scale, 1) * var(--overflight-text-scale, 1)), 1em);
 }
 
 .theme-family-controls {
@@ -1064,8 +1079,10 @@
     border-color: ButtonText;
     forced-color-adjust: auto;
   }
-  [data-theme-styled='true'] :where(input[type='checkbox'], input[type='radio']) {
+  [data-theme-styled='true'] :where(input[type='checkbox'], input[type='radio'], select) {
     appearance: auto;
+    -webkit-appearance: auto;
+    background-image: none;
   }
   [data-theme-styled='true'] :where(input[type='checkbox'], input[type='radio'])::before {
     display: none;
@@ -1141,7 +1158,7 @@
   line-height: 1.2;
 }
 .theme-preview-card small {
-  font-size: 13px;
+  font-size: calc(13px * var(--primary-text-scale, 1) * var(--overflight-text-scale, 1));
   font-weight: 400;
   line-height: 1.32;
   opacity: 0.9;
@@ -1205,7 +1222,7 @@
   background: var(--iw-ink);
   color: var(--iw-text);
   font-family: var(--iw-font-ui);
-  font-size: var(--iw-text-size, 16px);
+  font-size: calc(var(--iw-text-size, 16px) * var(--primary-text-scale, 1) * var(--overflight-text-scale, 1));
   text-align: left;
   line-height: 1.35;
   isolation: isolate;
@@ -1294,7 +1311,7 @@
 }
 .theme-material-preview[data-preview-compact='true'] {
   padding: 8px;
-  font-size: 12px;
+  font-size: calc(12px * var(--primary-text-scale, 1) * var(--overflight-text-scale, 1));
   pointer-events: none;
 }
 .theme-material-preview[data-preview-compact='true'] .theme-material-panel {
@@ -1312,7 +1329,7 @@
   gap: 6px;
 }
 .theme-material-preview[data-theme-text-size='large'] {
-  font-size: 16px;
+  font-size: calc(16px * var(--primary-text-scale, 1) * var(--overflight-text-scale, 1));
 }
 .theme-material-preview[data-theme-text-size='large'] .theme-material-field {
   grid-template-columns: 1fr;
@@ -1499,7 +1516,7 @@
   color: var(--iw-on-accent);
   background: var(--iw-accent);
   border-color: var(--iw-accent);
-  font-size: 0.75rem;
+  font-size: calc(0.75rem * var(--primary-text-scale, 1) * var(--overflight-text-scale, 1));
 }
 [data-theme-styled='true'] .soundtrack-now-card::after {
   background: var(--iw-accent);
@@ -1577,7 +1594,7 @@
   gap: 10px;
 }
 [data-theme-styled='true'] :where(.soundtrack-dialog, .optional-worlds-dialog) .micro-note {
-  font-size: var(--fk-text-secondary);
+  font-size: calc(var(--fk-text-secondary) * var(--primary-text-scale, 1) * var(--overflight-text-scale, 1));
 }
 /* Session transport is one control group. Its volume label must not run into
    the last button when a long translation or enlarged text wraps the row. */
@@ -1693,6 +1710,7 @@
   --ui-grain-thread: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='48' shape-rendering='crispEdges'%3E%3Cpath fill='%23fff' opacity='.021' d='M0 0h2v1h-2zM4 0h1v3h-1zM8 0h3v1h-3zM12 0h1v3h-1zM16 0h3v1h-3zM20 0h1v3h-1zM24 0h3v1h-3zM28 0h1v3h-1zM32 0h3v1h-3zM36 0h1v3h-1zM40 0h3v1h-3zM44 0h1v2h-1zM0 4h1v3h-1zM4 4h3v1h-3zM8 4h1v3h-1zM12 4h3v1h-3zM16 4h1v2h-1zM20 4h3v1h-3zM24 4h1v2h-1zM28 4h3v1h-3zM32 4h1v2h-1zM36 4h3v1h-3zM40 4h1v2h-1zM44 4h3v1h-3zM0 8h3v1h-3zM4 8h1v2h-1zM8 8h3v1h-3zM12 8h1v2h-1zM16 8h3v1h-3zM20 8h1v2h-1zM24 8h3v1h-3zM28 8h1v3h-1zM32 8h3v1h-3zM36 8h1v3h-1zM40 8h3v1h-3zM44 8h1v3h-1zM0 12h1v3h-1zM4 12h3v1h-3zM8 12h1v3h-1zM12 12h3v1h-3zM16 12h1v3h-1zM20 12h3v1h-3zM24 12h1v3h-1zM28 12h3v1h-3zM32 12h1v3h-1zM36 12h2v1h-2zM40 12h1v3h-1zM44 12h2v1h-2zM0 16h3v1h-3zM4 16h1v3h-1zM8 16h2v1h-2zM12 16h1v3h-1zM16 16h2v1h-2zM20 16h1v3h-1zM24 16h2v1h-2zM28 16h1v3h-1zM32 16h2v1h-2zM36 16h1v3h-1zM40 16h2v1h-2zM44 16h1v3h-1zM0 20h1v3h-1zM4 20h2v1h-2zM8 20h1v3h-1zM12 20h2v1h-2zM16 20h1v3h-1zM20 20h3v1h-3zM24 20h1v3h-1zM28 20h3v1h-3zM32 20h1v3h-1zM36 20h3v1h-3zM40 20h1v3h-1zM44 20h3v1h-3zM0 24h3v1h-3zM4 24h1v3h-1zM8 24h3v1h-3zM12 24h1v3h-1zM16 24h3v1h-3zM20 24h1v3h-1zM24 24h3v1h-3zM28 24h1v2h-1zM32 24h3v1h-3zM36 24h1v2h-1zM40 24h3v1h-3zM44 24h1v2h-1zM0 28h1v2h-1zM4 28h3v1h-3zM8 28h1v2h-1zM12 28h3v1h-3zM16 28h1v2h-1zM20 28h3v1h-3zM24 28h1v2h-1zM28 28h3v1h-3zM32 28h1v2h-1zM36 28h3v1h-3zM40 28h1v3h-1zM44 28h3v1h-3zM0 32h3v1h-3zM4 32h1v2h-1zM8 32h3v1h-3zM12 32h1v3h-1zM16 32h3v1h-3zM20 32h1v3h-1zM24 32h3v1h-3zM28 32h1v3h-1zM32 32h3v1h-3zM36 32h1v3h-1zM40 32h3v1h-3zM44 32h1v3h-1zM0 36h1v3h-1zM4 36h3v1h-3zM8 36h1v3h-1zM12 36h3v1h-3zM16 36h1v3h-1zM20 36h2v1h-2zM24 36h1v3h-1zM28 36h2v1h-2zM32 36h1v3h-1zM36 36h2v1h-2zM40 36h1v3h-1zM44 36h2v1h-2zM0 40h2v1h-2zM4 40h1v3h-1zM8 40h2v1h-2zM12 40h1v3h-1zM16 40h2v1h-2zM20 40h1v3h-1zM24 40h2v1h-2zM28 40h1v3h-1zM32 40h3v1h-3zM36 40h1v3h-1zM40 40h3v1h-3zM44 40h1v3h-1zM0 44h1v3h-1zM4 44h3v1h-3zM8 44h1v3h-1zM12 44h3v1h-3zM16 44h1v3h-1zM20 44h3v1h-3zM24 44h1v3h-1zM28 44h3v1h-3zM32 44h1v3h-1zM36 44h3v1h-3zM40 44h1v2h-1zM44 44h3v1h-3z'/%3E%3Cpath fill='%23000' opacity='.065' d='M2 2h1v2h-1zM6 2h2v1h-2zM10 2h1v2h-1zM14 2h2v1h-2zM18 2h1v2h-1zM22 2h2v1h-2zM26 2h1v2h-1zM30 2h2v1h-2zM34 2h1v2h-1zM38 2h2v1h-2zM42 2h1v2h-1zM46 2h2v1h-2zM2 6h2v1h-2zM6 6h1v2h-1zM10 6h2v1h-2zM14 6h1v2h-1zM18 6h2v1h-2zM22 6h1v2h-1zM26 6h2v1h-2zM30 6h1v2h-1zM34 6h2v1h-2zM38 6h1v2h-1zM42 6h2v1h-2zM46 6h1v2h-1zM2 10h1v2h-1zM6 10h2v1h-2zM10 10h1v2h-1zM14 10h2v1h-2zM18 10h1v2h-1zM22 10h2v1h-2zM26 10h1v2h-1zM30 10h2v1h-2zM34 10h1v2h-1zM38 10h2v1h-2zM42 10h1v2h-1zM46 10h2v1h-2zM2 14h2v1h-2zM6 14h1v2h-1zM10 14h2v1h-2zM14 14h1v2h-1zM18 14h2v1h-2zM22 14h1v2h-1zM26 14h2v1h-2zM30 14h1v2h-1zM34 14h2v1h-2zM38 14h1v2h-1zM42 14h2v1h-2zM46 14h1v2h-1zM2 18h1v2h-1zM6 18h2v1h-2zM10 18h1v2h-1zM14 18h2v1h-2zM18 18h1v2h-1zM22 18h2v1h-2zM26 18h1v2h-1zM30 18h2v1h-2zM34 18h1v2h-1zM38 18h2v1h-2zM42 18h1v2h-1zM46 18h2v1h-2zM2 22h2v1h-2zM6 22h1v2h-1zM10 22h2v1h-2zM14 22h1v2h-1zM18 22h2v1h-2zM22 22h1v2h-1zM26 22h2v1h-2zM30 22h1v2h-1zM34 22h2v1h-2zM38 22h1v2h-1zM42 22h2v1h-2zM46 22h1v2h-1zM2 26h1v2h-1zM6 26h2v1h-2zM10 26h1v2h-1zM14 26h2v1h-2zM18 26h1v2h-1zM22 26h2v1h-2zM26 26h1v2h-1zM30 26h2v1h-2zM34 26h1v2h-1zM38 26h2v1h-2zM42 26h1v2h-1zM46 26h2v1h-2zM2 30h2v1h-2zM6 30h1v2h-1zM10 30h2v1h-2zM14 30h1v2h-1zM18 30h2v1h-2zM22 30h1v2h-1zM26 30h2v1h-2zM30 30h1v2h-1zM34 30h2v1h-2zM38 30h1v2h-1zM42 30h2v1h-2zM46 30h1v2h-1zM2 34h1v2h-1zM6 34h2v1h-2zM10 34h1v2h-1zM14 34h2v1h-2zM18 34h1v2h-1zM22 34h2v1h-2zM26 34h1v2h-1zM30 34h2v1h-2zM34 34h1v2h-1zM38 34h2v1h-2zM42 34h1v2h-1zM46 34h2v1h-2zM2 38h2v1h-2zM6 38h1v2h-1zM10 38h2v1h-2zM14 38h1v2h-1zM18 38h2v1h-2zM22 38h1v2h-1zM26 38h2v1h-2zM30 38h1v2h-1zM34 38h2v1h-2zM38 38h1v2h-1zM42 38h2v1h-2zM46 38h1v2h-1zM2 42h1v2h-1zM6 42h2v1h-2zM10 42h1v2h-1zM14 42h2v1h-2zM18 42h1v2h-1zM22 42h2v1h-2zM26 42h1v2h-1zM30 42h2v1h-2zM34 42h1v2h-1zM38 42h2v1h-2zM42 42h1v2h-1zM46 42h2v1h-2zM2 46h2v1h-2zM6 46h1v2h-1zM10 46h2v1h-2zM14 46h1v2h-1zM18 46h2v1h-2zM22 46h1v2h-1zM26 46h2v1h-2zM30 46h1v2h-1zM34 46h2v1h-2zM38 46h1v2h-1zM42 46h2v1h-2zM46 46h1v2h-1z'/%3E%3Cpath fill='%23fff' opacity='.018' d='M1 0h2v1h-2zM21 8h1v2h-1zM41 16h2v1h-2zM13 20h2v1h-2zM33 28h1v2h-1zM5 32h1v2h-1zM25 40h2v1h-2z'/%3E%3C/svg%3E");
   --ui-grain-glaze: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='256' height='192' shape-rendering='crispEdges'%3E%3Cpath fill='%23183858' opacity='.045' d='M19 27h1v1h-1zM107 68h1v1h-1zM214 21h1v1h-1zM64 143h1v1h-1zM182 155h1v1h-1zM236 108h1v1h-1z'/%3E%3Cpath fill='%23fff' opacity='.18' d='M20 28h1v1h-1zM108 69h1v1h-1zM215 22h1v1h-1zM65 144h1v1h-1zM183 156h1v1h-1zM237 109h1v1h-1z'/%3E%3C/svg%3E");
   --ui-grain-timber: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='192' height='128' shape-rendering='crispEdges'%3E%3Cpath fill='none' stroke='%23000' stroke-opacity='.045' d='M81 15h9v3h17v3h13v2h14v1h7v-1h8v-2h10v-3h13v-3h11v-3'/%3E%3Cpath fill='none' stroke='%23000' stroke-opacity='.045' d='M15 105h17v-1h9v-1h8v-1h15v0h17v0h7v1h12v1h10v1'/%3E%3Cpath fill='none' stroke='%23000' stroke-opacity='.045' d='M73 99h14v1h13v1h10v1h15v1h9v0'/%3E%3Cpath fill='none' stroke='%23000' stroke-opacity='.045' d='M64 18h13v1h11v2h16v3'/%3E%3Cpath fill='none' stroke='%23000' stroke-opacity='.045' d='M25 7h16v-1h16v-1h17v0h17v1h17v1h15v1h9v0h15v0h14v-1h8v-1h16v-1'/%3E%3Cpath fill='none' stroke='%23000' stroke-opacity='.045' d='M60 25h15v0h12v1h15v1h13v1h12v1h14v0'/%3E%3Cpath fill='none' stroke='%23000' stroke-opacity='.045' d='M25 79h17v-3h17v-2h8v0h8v1h12v2'/%3E%3Cpath fill='none' stroke='%23fff' stroke-opacity='.028' d='M68 13h7v0h15v1h9v1h7v1h15v1h7v0h8v0h6v0'/%3E%3Cpath fill='none' stroke='%23fff' stroke-opacity='.028' d='M35 90h12v-3h6v-1h10v-1h8v1h10v2h13v3h14v3h7v2h8v2'/%3E%3Cpath fill='none' stroke='%23fff' stroke-opacity='.028' d='M13 94h16v-1h11v-1h6v-1h9v-1h6v0h10v0h16v1h7v1h15v1'/%3E%3Cpath fill='none' stroke='%23fff' stroke-opacity='.028' d='M51 100h12v0h8v0h8v1h10v1'/%3E%3Cpath fill='none' stroke='%23fff' stroke-opacity='.028' d='M55 83h6v0h11v0h10v2h17v3h7v3h11v2h15v1h17v-1h13v-3h6v-3'/%3E%3Cpath fill='none' stroke='%23fff' stroke-opacity='.028' d='M26 82h10v-1h15v-1h11v0h12v0h16v1h13v1h10v1'/%3E%3Cpath fill='none' stroke='%23fff' stroke-opacity='.028' d='M35 28h9v-1h9v-1h14v0h13v0'/%3E%3C/svg%3E");
+  --ui-grain-planed: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='384' height='256' shape-rendering='crispEdges'%3E%3Cpath fill='none' stroke='%23000' stroke-opacity='.025' d='M17 28h39v-1h21v1h32M42 34h26v-2h22v1h38M213 61h31v1h17v2h23v-1h42M236 70h20v2h31v-1h19M21 141h28v1h19v-1h42M85 153h34v-2h27v1h41M248 194h26v-2h19v-1h33M215 203h36v-2h28v-1h14M46 226h43v1h18v-1h35'/%3E%3Cpath fill='none' stroke='%23fff' stroke-opacity='.018' d='M22 29h33v-1h19v1h29M219 62h23v1h15v2h24M26 142h20v1h17v-1h31M92 154h25v-2h25M253 195h20v-2h16M52 227h35v1h17'/%3E%3C/svg%3E");
   --ui-grain-stone: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='192' height='128' shape-rendering='crispEdges'%3E%3Cpath fill='%23fff' opacity='.028' d='M18 33h6v1h2v1h-7v-1h-1zM160 72h6v2h-6zM145 100h4v1h-4zM94 118h3v1h2v1h-4v-1h-1zM62 19h5v1h-5zM147 18h3v1h-3zM85 59h3v1h2v1h-4v-1h-1zM121 47h5v2h-5zM95 56h2v2h-2zM54 77h6v1h2v1h-7v-1h-1zM115 4h3v2h-3zM50 21h5v1h-5zM126 95h6v1h2v1h-7v-1h-1zM127 90h5v2h-5zM159 21h2v2h-2zM153 89h5v1h2v1h-6v-1h-1z'/%3E%3Cpath fill='%23000' opacity='.04' d='M146 23h2v2h-2zM179 84h3v1h2v1h-4v-1h-1zM12 16h5v2h-5zM151 77h5v1h-5zM31 104h5v1h2v1h-6v-1h-1zM137 43h5v1h-5zM70 81h5v2h-5zM124 10h6v1h2v1h-7v-1h-1zM20 118h4v2h-4zM90 69h6v2h-6zM118 30h3v1h2v1h-4v-1h-1zM36 86h2v2h-2zM82 103h4v1h-4zM61 16h3v1h2v1h-4v-1h-1zM115 58h2v1h-2zM106 98h3v2h-3z'/%3E%3C/svg%3E");
   --ui-grain-fiber: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='192' height='128' shape-rendering='crispEdges'%3E%3Cpath fill='%23fff' opacity='.035' d='M137 49h8v1h-3v1h-2v-1h-2zM81 29h6v1h-3v1h-2v-1h-2zM82 31h3v1h-3v1h-2v-1h-2zM54 100h9v1h-3v1h-2v-1h-2zM114 57h4v1h-3v1h-2v-1h-2zM145 26h9v1h-3v1h-2v-1h-2zM129 105h8v1h-3v1h-2v-1h-2zM84 63h3v1h-3v1h-2v-1h-2zM37 44h9v1h-3v1h-2v-1h-2zM136 106h5v1h-3v1h-2v-1h-2zM142 46h8v1h-3v1h-2v-1h-2zM33 60h6v1h-3v1h-2v-1h-2zM16 13h3v1h-3v1h-2v-1h-2z'/%3E%3Cpath fill='%23000' opacity='.033' d='M108 55h4v1h-3v1h-2v-1h-2zM80 108h3v1h-3v1h-2v-1h-2zM36 44h8v1h-3v1h-2v-1h-2zM35 84h4v1h-3v1h-2v-1h-2zM39 91h5v1h-3v1h-2v-1h-2zM83 46h8v1h-3v1h-2v-1h-2zM134 114h9v1h-3v1h-2v-1h-2zM81 45h4v1h-3v1h-2v-1h-2zM75 15h9v1h-3v1h-2v-1h-2zM42 34h4v1h-3v1h-2v-1h-2zM156 90h4v1h-3v1h-2v-1h-2zM89 27h8v1h-3v1h-2v-1h-2z'/%3E%3C/svg%3E");
   --ui-grain-machining: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='256' height='128' shape-rendering='crispEdges'%3E%3Cpath fill='%23000' opacity='.075' d='M12 18h34v1H12zM91 43h19v1H91zM164 12h47v1h-47zM37 95h31v1H37zM146 103h18v1h-18zM208 74h26v1h-26zM118 65h8v1h-8zM68 28h6v1h-6z'/%3E%3Cpath fill='%23fff' opacity='.045' d='M13 19h30v1H13zM92 44h16v1H92zM167 13h40v1h-40zM39 96h26v1H39zM147 104h15v1h-15zM209 75h22v1h-22z'/%3E%3C/svg%3E");
@@ -1897,9 +1915,10 @@
     --ui-metal: var(--ui-grain-brush) 0 0 / 192px 96px repeat;
   }
 
-  /* Fine timber grain remains broad and sparse enough for small labels. */
+  /* Planed timber supports paper reading wells. Long grain stays on the wood
+     rather than crossing the text fields; dark waxed timber overrides below. */
   [data-theme-material='wood'][data-theme-texture='on'][data-theme-contrast='normal'][data-theme-surface='bevel'] {
-    --ui-woodgrain: var(--ui-grain-timber) 11px 3px / 192px 128px repeat;
+    --ui-woodgrain: var(--ui-grain-planed) 11px 3px / 384px 256px repeat;
     --ui-panel-finish: var(--ui-woodgrain), linear-gradient(180deg, #ffffff12, transparent 6px);
     --ui-panel-depth:
       inset 0 3px 0 #ffffff20, inset 0 -4px 0 #00000022, inset 2px 0 0 #ffffff10,
@@ -1907,7 +1926,9 @@
     --ui-active-finish:
       var(--ui-woodgrain),
       linear-gradient(180deg, #00000022, transparent 3px, transparent calc(100% - 2px), #ffffff20);
-    --ui-inset-finish: var(--ui-woodgrain), linear-gradient(180deg, #00000025, transparent 4px);
+    --ui-inset-finish:
+      var(--ui-grain-fiber) 17px 23px / 192px 128px repeat,
+      linear-gradient(180deg, #00000018, transparent 3px);
     --ui-pressed-depth: inset 0 2px 0 #0005, inset 0 -1px 0 #ffffff20;
   }
   [data-theme-material='composite'][data-theme-texture='on'][data-theme-contrast='normal'][data-theme-surface='bevel'] {
@@ -1962,6 +1983,30 @@
     --ui-panel-depth:
       inset 1px 1px 0 #ffffff20, inset -2px -3px 0 #0009, 0 0 0 1px #0008, 0 5px 0 var(--ui-shadow),
       0 16px 28px #0006;
+    /* Cast housings keep their fine stipple under load. Only the machined lip
+       catches light; a selected plate is seated, not scratched or glowing. */
+    --ui-control-finish:
+      var(--ui-grain),
+      linear-gradient(
+        180deg,
+        #ffffff30 0 1px,
+        #ffffff0c 1px 3px,
+        transparent 5px,
+        transparent calc(100% - 4px),
+        #0006
+      );
+    --ui-hover-finish:
+      var(--ui-grain),
+      linear-gradient(180deg, #ffffff50 0 1px, transparent 4px, transparent calc(100% - 3px), #0005);
+    --ui-selected-finish:
+      var(--ui-grain),
+      linear-gradient(180deg, #ffffff25 0 1px, transparent 3px, transparent calc(100% - 2px), #0004);
+    --ui-active-finish:
+      var(--ui-grain),
+      linear-gradient(180deg, #0006, transparent 4px, transparent calc(100% - 1px), #ffffff30);
+    --ui-inset-finish:
+      var(--ui-grain-stone) 23px 17px / 192px 128px repeat,
+      linear-gradient(180deg, #0006, transparent 5px, transparent calc(100% - 1px), #ffffff14);
   }
   [data-theme-finish='polar-relay'][data-theme-texture='on'][data-theme-contrast='normal'][data-theme-surface='bevel'] {
     --ui-grain: var(--ui-grain-brush) 0 0 / 192px 96px repeat;
@@ -1992,6 +2037,30 @@
     --ui-panel-depth:
       inset 1px 1px 0 #ffffff30, inset -1px -2px 0 #0008, 0 0 0 1px #0007, 0 3px 0 var(--ui-shadow),
       0 12px 24px #0005;
+    /* Sealed relay equipment retains the same directional brushing in every
+       state. Do not inherit Flight Deck's chipped paint on selection/press. */
+    --ui-hover-finish:
+      var(--ui-grain),
+      linear-gradient(
+        180deg,
+        #ffffff65 0 1px,
+        #ffffff18 1px 3px,
+        transparent 5px,
+        transparent calc(100% - 2px),
+        #0004
+      );
+    --ui-selected-finish:
+      var(--ui-grain),
+      linear-gradient(180deg, #ffffff38 0 1px, transparent 3px, transparent calc(100% - 2px), #0003);
+    --ui-active-finish:
+      var(--ui-grain),
+      linear-gradient(180deg, #0005, transparent 3px, transparent calc(100% - 1px), #ffffff45);
+    --ui-inset-finish:
+      var(--ui-grain),
+      linear-gradient(180deg, #0005, transparent 4px, transparent calc(100% - 1px), #ffffff20);
+    --ui-toolbar-finish:
+      var(--ui-grain),
+      linear-gradient(180deg, #ffffff30 0 1px, transparent 3px, transparent calc(100% - 2px), #0004);
   }
   [data-theme-finish='obsidian-reliquary'][data-theme-texture='on'][data-theme-contrast='normal'][data-theme-surface='bevel'] {
     --ui-panel-finish:
@@ -2026,6 +2095,7 @@
   }
   [data-theme-finish='moonlit-grove'][data-theme-texture='on'][data-theme-contrast='normal'][data-theme-surface='bevel'] {
     --ui-woodgrain: var(--ui-grain-timber) 53px 47px / 192px 128px repeat;
+    --ui-inset-finish: var(--ui-woodgrain), linear-gradient(180deg, #00000025, transparent 4px);
     --ui-panel-finish: var(--ui-woodgrain), linear-gradient(180deg, #ffffff12, transparent 6px);
     --ui-panel-depth:
       inset 1px 1px 0 #ffffff18, inset -2px -3px 0 #0006, 0 4px 0 var(--ui-shadow),

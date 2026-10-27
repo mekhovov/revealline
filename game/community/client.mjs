@@ -203,7 +203,7 @@ export function createCommunityClient({
       ...init,
     });
   return Object.freeze({
-    async catalog({ cursor = null, limit = 20, query = '' } = {}) {
+    async catalog({ cursor = null, limit = 20, query = '', signal } = {}) {
       required(
         Number.isSafeInteger(limit) && limit >= 1 && limit <= 50,
         'Catalog page size is invalid.',
@@ -213,7 +213,7 @@ export function createCommunityClient({
       url.searchParams.set('limit', String(limit));
       if (cursor) url.searchParams.set('cursor', cursor);
       if (query.trim()) url.searchParams.set('q', query.trim());
-      const body = await json(await fetchImpl(url, { credentials: 'same-origin' }));
+      const body = await json(await fetchImpl(url, { credentials: 'same-origin', signal }));
       required(Array.isArray(body.editions), 'Catalog response is invalid.');
       return Object.freeze({
         editions: Object.freeze(body.editions.map(validateCommunityEdition)),

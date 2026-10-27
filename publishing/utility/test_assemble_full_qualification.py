@@ -178,10 +178,11 @@ class FullTests(unittest.TestCase):
         self.assertEqual(q['format'], 'revealline-source-qualification.v1')
         self.assertTrue(q['passed'])
         self.assertEqual(q['testFiles'], 4)
-        self.assertEqual([(g['gate'], g.get('command'), g['step']['name']) for g in q['gates']], [
+        self.assertEqual([(gate['gate'], gate.get('command'), gate['step']['name']) for gate in q['gates']], [
             ('validate', 'npm run validate', 'Validate source'),
             ('motion-syntax', 'node --check authoring/motion-lab/app.js', 'Check motion lab syntax'),
-            ('test', None, 'Run test shard 1/4')])
+            ('test', None, 'Run test shard 1/4'),
+        ])
         self.assertNotIn('waiverEvidence', q)
         self.assertFalse((self.root / 'out/source.tar').exists())
         with zipfile.ZipFile(self.root / 'out/source-qualification-evidence.zip') as archive:

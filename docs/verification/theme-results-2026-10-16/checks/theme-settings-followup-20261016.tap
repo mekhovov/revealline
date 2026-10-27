@@ -1,0 +1,185 @@
+TAP version 13
+# Subtest: optional settings preserve real preferences and handlers, omit unavailable categories and restore ownership
+ok 1 - optional settings preserve real preferences and handlers, omit unavailable categories and restore ownership
+  ---
+  duration_ms: 8.52375
+  ...
+# Subtest: compact keyboard categories localize in place and Back exits the section before the dialog
+ok 2 - compact keyboard categories localize in place and Back exits the section before the dialog
+  ---
+  duration_ms: 6.823667
+  ...
+# Subtest: the existing controller adapter traverses optional categories, confirms a panel and returns to its category
+ok 3 - the existing controller adapter traverses optional categories, confirms a panel and returns to its category
+  ---
+  duration_ms: 34.069084
+  ...
+# Subtest: Settings panel edges reach header Back with keyboard and controller
+ok 4 - Settings panel edges reach header Back with keyboard and controller
+  ---
+  duration_ms: 114.324
+  ...
+# Subtest: Settings panel edges reach footer Back with keyboard and controller
+ok 5 - Settings panel edges reach footer Back with keyboard and controller
+  ---
+  duration_ms: 7.1365
+  ...
+# Subtest: nested settings selects can shrink beneath their longest native option
+ok 6 - nested settings selects can shrink beneath their longest native option
+  ---
+  duration_ms: 250.636959
+  ...
+# Subtest: solo adopts the complete common inventory without replacing preference owners
+ok 7 - solo adopts the complete common inventory without replacing preference owners
+  ---
+  duration_ms: 1251.997541
+  ...
+# Subtest: team adopts the complete common inventory without replacing preference owners
+ok 8 - team adopts the complete common inventory without replacing preference owners
+  ---
+  duration_ms: 472.903833
+  ...
+# Subtest: versus adopts the complete common inventory without replacing preference owners
+ok 9 - versus adopts the complete common inventory without replacing preference owners
+  ---
+  duration_ms: 47.268375
+  ...
+# Subtest: native aliases retire only redundant actions, retaining their listeners and distinct music actions
+ok 10 - native aliases retire only redundant actions, retaining their listeners and distinct music actions
+  ---
+  duration_ms: 577.020375
+  ...
+# Subtest: isolated Solo courses keep their home sound action when common Settings are adopted
+ok 11 - isolated Solo courses keep their home sound action when common Settings are adopted
+  ---
+  duration_ms: 319.4085
+  ...
+# Subtest: native common rows remain reachable through controller categories and return to the category on Back
+ok 12 - native common rows remain reachable through controller categories and return to the category on Back
+  ---
+  duration_ms: 770.856833
+  ...
+# Subtest: rendered-material fixture uses matched native control pairs without replacing runtime paint
+ok 13 - rendered-material fixture uses matched native control pairs without replacing runtime paint
+  ---
+  duration_ms: 383.106291
+  ...
+# Subtest: material semantic checks reject active disabled paint and a pressed danger recolored as selection
+ok 14 - material semantic checks reject active disabled paint and a pressed danger recolored as selection
+  ---
+  duration_ms: 59.120958
+  ...
+# Subtest: material close-up composes native player, Studio and tall-card surfaces without replacing paint
+ok 15 - material close-up composes native player, Studio and tall-card surfaces without replacing paint
+  ---
+  duration_ms: 116.250958
+  ...
+# Subtest: danger pressed and disabled recipes retain their semantic pairs across themes and contrast preferences
+ok 16 - danger pressed and disabled recipes retain their semantic pairs across themes and contrast preferences
+  ---
+  duration_ms: 438.057917
+  ...
+# Subtest: all production and future specimen interfaces validate and meet text contrast
+ok 17 - all production and future specimen interfaces validate and meet text contrast
+  ---
+  duration_ms: 411.710375
+  ...
+# Subtest: accessibility wins over theme and compact density, while selection/focus remain independent
+ok 18 - accessibility wins over theme and compact density, while selection/focus remain independent
+  ---
+  duration_ms: 7.540542
+  ...
+# Subtest: ornaments Off removes frame wear and interface sampling never chooses SIM nearest filtering
+ok 19 - ornaments Off removes frame wear and interface sampling never chooses SIM nearest filtering
+  ---
+  duration_ms: 6.247583
+  ...
+# Subtest: ornaments Off suppresses texture for every installed family without removing semantic state cues
+ok 20 - ornaments Off suppresses texture for every installed family without removing semantic state cues
+  ---
+  duration_ms: 518.093708
+  ...
+# Subtest: shared material layers preserve semantic state colors and reset at every presentation scope
+ok 21 - shared material layers preserve semantic state colors and reset at every presentation scope
+  ---
+  duration_ms: 66.276666
+  ...
+# Subtest: authored and retained Industrial identities keep their own material capability for scoped recipes
+ok 22 - authored and retained Industrial identities keep their own material capability for scoped recipes
+  ---
+  duration_ms: 1808.636958
+  ...
+# Subtest: decorative face recipes require their own enabled texture and contrast scope
+ok 23 - decorative face recipes require their own enabled texture and contrast scope
+  ---
+  duration_ms: 191.792334
+  ...
+# Subtest: gallery and nested backdrops consume their nearest scope material while retaining palette and focus cues
+ok 24 - gallery and nested backdrops consume their nearest scope material while retaining palette and focus cues
+  ---
+  duration_ms: 9.645417
+  ...
+# Subtest: interface validation rejects executable styles, unknown fields and missing provenance
+ok 25 - interface validation rejects executable styles, unknown fields and missing provenance
+  ---
+  duration_ms: 24.241708
+  ...
+# Subtest: DOM application keeps controls and focus, restores only its owned styles
+ok 26 - DOM application keeps controls and focus, restores only its owned styles
+  ---
+  duration_ms: 6.547125
+  ...
+# Subtest: custom interface identity retains its material recipe and restores the prior DOM lease
+ok 27 - custom interface identity retains its material recipe and restores the prior DOM lease
+  ---
+  duration_ms: 3.416208
+  ...
+# Subtest: new theme preferences preserve defaults and do not touch legacy state on read
+ok 28 - new theme preferences preserve defaults and do not touch legacy state on read
+  ---
+  duration_ms: 4.680917
+  ...
+# Subtest: failed/session-only saving retains local intent instead of stale cross-tab state
+ok 29 - failed/session-only saving retains local intent instead of stale cross-tab state
+  ---
+  duration_ms: 0.363916
+  ...
+# Subtest: theme host applies only latest prepared selection and a failed load retains the accepted presentation
+ok 30 - theme host applies only latest prepared selection and a failed load retains the accepted presentation
+  ---
+  duration_ms: 119.911666
+  ...
+# Subtest: theme host recovers from stylesheet failure without applying a partial theme
+ok 31 - theme host recovers from stylesheet failure without applying a partial theme
+  ---
+  duration_ms: 71.929125
+  ...
+# Subtest: family documents pin independent revisions and reject mutable or unexpected references
+ok 32 - family documents pin independent revisions and reject mutable or unexpected references
+  ---
+  duration_ms: 8.001583
+  ...
+# Subtest: DOS uses a mono stack before the Plain accessibility override
+ok 33 - DOS uses a mono stack before the Plain accessibility override
+  ---
+  duration_ms: 18.3055
+  ...
+# Subtest: Canvas consumes interface fonts independently from authored arcade artwork
+ok 34 - Canvas consumes interface fonts independently from authored arcade artwork
+  ---
+  duration_ms: 7.339167
+  ...
+# Subtest: shared appearance bounds native option widths and nested help within compact panels
+ok 35 - shared appearance bounds native option widths and nested help within compact panels
+  ---
+  duration_ms: 31.558209
+  ...
+1..35
+# tests 35
+# suites 0
+# pass 35
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 8808.841083

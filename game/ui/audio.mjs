@@ -1,3 +1,5 @@
+import { createGameplayAudioOutput } from './gameplay-audio-output.mjs';
+import { createMediaPreparation } from './media-preparation.mjs';
 import { createHumanReactionPolicy } from './human-reaction-policy.mjs';
 import { DEFAULT_DIALOGUE_VOLUME, DIALOGUE_MIX_GAIN } from '../audio/dialogue-mix.mjs';
 import { encounterSoundRecipe } from './encounter-audio.mjs';
@@ -16,7 +18,7 @@ import { FeedbackDirector } from './feedback-director.mjs';
 import { readRadioAudio } from './radio-audio.mjs';
 import { readMenuAudio } from './menu-audio.mjs';
 import { t } from '../i18n/index.mjs';
-import { createPublishedCues } from './published-audio.mjs';
+import { createPublishedCues, CUE_CACHE_BYTES } from './published-audio.mjs';
 import {
   MUSIC_STYLES,
   DEFAULT_TRACKS,
@@ -40,14 +42,22 @@ const defaultFactory = () => createGameAudioContext();
  * Only toggle/enable/resume create or resume audio; update never bypasses a gesture.
  */
 export class Soundscape {
-  constructor({ contextFactory = defaultFactory, persistentMusic = false, audioMaster } = {}) {
+  constructor({
+    contextFactory = defaultFactory,
+    persistentMusic = false,
+    audioMaster,
+    window,
+    getStorage,
+  } = {}) {
     if (typeof persistentMusic !== 'boolean')
       throw new TypeError('persistentMusic must be a boolean');
+    this.gameplayOutput = createGameplayAudioOutput({ window, getStorage });
     this.enabled = false;
     this.menuSettings = readMenuAudio();
     this.radioSettings = readRadioAudio();
     this.movementSettings = readMovementAudio();
     this.dialogueSettings = { enabled: false, volume: DEFAULT_DIALOGUE_VOLUME };
+    this.mediaPreparation = createMediaPreparation();
     this.feedbackDirector = new FeedbackDirector(this);
     this.humanReactions = createHumanReactionPolicy();
     this.persistentMusic = persistentMusic;
@@ -72,6 +82,7 @@ export class Soundscape {
     this.songEndHandler = null;
     this.songEnded = null;
     this.publishedAudio = null;
+    this.publishedOwnerState = 'never-created';
     this.audioMaster = { muted: false, volume: 1 };
     this.releaseAudioMaster = audioMaster?.subscribe((state) => {
       this.audioMaster = state;
@@ -81,11 +92,55 @@ export class Soundscape {
         this.stopVoices('dialogue');
       }
       this.applyVolumes();
+      this.mediaPreparation.refresh();
     });
   }
+  setPreparationPhase(phase) {
+    this.mediaPreparation.setPhase(phase);
+  }
+  resourceSnapshot() {
+    // Export-time reads only: never initialize a context or touch PCM sample data.
+    const state = this.disposed
+      ? 'disposed'
+      : (this.publishedOwnerState === 'active' && !this.publishedAudio) ||
+          (this.publishedOwnerState === 'never-created' && this.publishedAudio)
+        ? 'unavailable'
+        : this.publishedOwnerState;
+    return {
+      effects: this.feedbackDirector.resourceSnapshot(),
+      publishedOwner: { format: 'SoloOptionalOwnerStateV1', state },
+      published:
+        this.publishedAudio?.resourceSnapshot() ??
+        (state === 'never-created'
+          ? { decodedBytes: 0, decodedBytesLimit: CUE_CACHE_BYTES, cacheEntries: 0, loading: 0 }
+          : null),
+      proceduralNoise: {
+        buffers: Number(!!this.noise),
+        decodedBytes: (this.noise?.length ?? 0) * (this.noise?.numberOfChannels ?? 0) * 4,
+        durationLimitSeconds: 0.25,
+      },
+      accounting:
+        'Retained cache PCM and the owned noise buffer only, at four bytes per sample. Active voices may share these buffers or retain evicted buffers. Native decoder/storage copies, streamed media, synthesizer nodes and browser overhead are excluded. Admission reservations are separate declared estimates and must not be added as measured native memory.',
+    };
+  }
+  prepareGameplayAudio(names) {
+    return this.feedbackDirector.prepare(names);
+  }
   setPublishedAudio(readAudio) {
-    this.publishedAudio?.close();
-    this.publishedAudio = readAudio ? createPublishedCues({ sound: this, readAudio }) : null;
+    if (this.publishedAudio) this.publishedOwnerState = 'retired';
+    try {
+      this.publishedAudio?.close();
+      if (readAudio) {
+        // Enter before construction: a thrown constructor must never imply zero ownership.
+        this.publishedOwnerState = 'creating';
+        this.publishedAudio = createPublishedCues({ sound: this, readAudio });
+        this.publishedOwnerState = 'active';
+      } else this.publishedAudio = null;
+      if (this.disposed) this.publishedOwnerState = 'disposed';
+    } catch (error) {
+      this.publishedOwnerState = 'failed';
+      throw error;
+    }
   }
   publishedCue(name) {
     if (!this.menuSettings.enabled || this.menuSettings.volume === 0) return false;
@@ -296,6 +351,8 @@ export class Soundscape {
         throw new TypeError(t('interface:unknownMusicStyle'));
       next.style = style;
     }
+    if (Object.keys(next).every((key) => next[key] === this.settings[key]))
+      return this.getSettings();
     if (next.style !== this.settings.style) {
       this.track = { ...DEFAULT_TRACKS.find((t) => t.genre === next.style) };
       if (this.persistentMusic) this.resetMusic();
@@ -357,6 +414,7 @@ export class Soundscape {
     if (!context) return false;
     this.context = context;
     Object.assign(this, createGameAudioOutput(context));
+    this.gameplayOutput.attach(this);
     if (context.createWaveShaper) {
       const curve = Float32Array.from({ length: 256 }, (_, i) =>
         Math.tanh(((i / 255) * 2 - 1) * 3),
@@ -428,7 +486,6 @@ export class Soundscape {
     // Must happen before context creation/resume in the same user activation.
     requestPlaybackAudioSession();
     if (!this.setup()) return false;
-    this.feedbackDirector.prepare();
     if (this.persistentMusic && this.enabled && !this.paused && this.context.state === 'running') {
       this.gameplayPaused = false;
       return true;
@@ -539,7 +596,9 @@ export class Soundscape {
     if (this.disposed) return;
     this.disposed = true;
     this.releaseAudioMaster?.();
+    this.gameplayOutput.dispose();
     this.feedbackDirector.close();
+    this.mediaPreparation.close();
     this.setPublishedAudio(null);
     this.cancelPreview();
     ++this.transition;
@@ -552,6 +611,7 @@ export class Soundscape {
       this.musicDrive,
       this.sfxDrive,
       this.musicBus,
+      this.gameplayBus,
       this.sfxBus,
       this.menuBus,
       this.radioBus,

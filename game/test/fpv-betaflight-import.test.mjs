@@ -470,6 +470,44 @@ test('preset option matching agrees with the tagged App while preserving origina
   );
 });
 
+test('explicit preset review flags match tagged App boolean metadata and survive transfer receipts', async () => {
+  const cases = JSON.parse(
+    readFileSync(
+      new URL('./fixtures/fpv/betaflight-preset-review-boolean.json', import.meta.url),
+      'utf8',
+    ),
+  );
+  for (const observation of cases.observations) {
+    const files = { 'main.txt': `${observation.line}\n${cases.payload}` },
+      bundle = { files, entry: 'main.txt' },
+      resolved = resolveBetaflightPresetBundle(bundle);
+    assert.equal(resolved.forceOptionsReview, observation.upstreamForceOptionsReview);
+    assert.equal(resolved.text.trim(), cases.payload);
+    const { provenance } = await previewBetaflightImport(resolved.text, {
+      kind: 'patch',
+      baseline: createRateProfile(),
+      presetBundle: bundle,
+    });
+    assert.ok(
+      provenance.preset.metadata.entries.some((entry) => {
+        const metadata = JSON.parse(entry);
+        return (
+          metadata.field === 'FORCE_OPTIONS_REVIEW' &&
+          metadata.value === observation.upstreamForceOptionsReview
+        );
+      }),
+    );
+  }
+  assert.equal(
+    resolveBetaflightPresetBundle({
+      files: { 'main.txt': `#$ FORCE_OPTIONS_REVIEW\n${cases.payload}` },
+      entry: 'main.txt',
+    }).forceOptionsReview,
+    true,
+    'Keep the existing bare-directive compatibility behavior',
+  );
+});
+
 test('case-only duplicate preset options and selections are rejected without mutating inputs', () => {
   const files = {
     'main.txt': '#$ OPTION BEGIN (CHECKED): Race\n#$ OPTION END\n#$ INCLUDE: child.txt',

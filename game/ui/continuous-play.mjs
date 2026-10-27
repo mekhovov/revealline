@@ -21,48 +21,129 @@ export function continuousPlayPreferences({
 } = {}) {
   const shared = storage === defaultStorage();
   if (sharedPreferences && shared) return sharedPreferences;
-  let value = { ...CONTINUOUS_PLAY_DEFAULTS };
+  let value = { ...CONTINUOUS_PLAY_DEFAULTS },
+    reason = '',
+    action = 0,
+    saving = false,
+    disposed = false;
   const listeners = new Set();
+  const pending = new Set(),
+    saved = new Set();
   const read = () => {
+    const next = { ...CONTINUOUS_PLAY_DEFAULTS };
+    const raw = storage?.getItem(CONTINUOUS_PLAY_KEY);
     try {
-      const saved = JSON.parse(storage?.getItem(CONTINUOUS_PLAY_KEY) ?? '{}');
-      for (const key of Object.keys(value))
-        if (typeof saved?.[key] === 'boolean') value[key] = saved[key];
+      const record = JSON.parse(raw ?? '{}');
+      for (const key of Object.keys(next))
+        if (typeof record?.[key] === 'boolean') next[key] = record[key];
     } catch {
-      /* In-memory preferences remain usable when storage is unavailable. */
+      /* An explicit choice can replace an unreadable preference record. */
+    }
+    return next;
+  };
+  try {
+    value = read();
+  } catch {
+    /* Startup reads do not claim that an unsaved default has been saved. */
+  }
+  const notify = () => {
+    for (const listener of [...listeners])
+      if (!disposed && listeners.has(listener)) listener({ ...value });
+  };
+  const persistence = (key) => ({
+    status: pending.has(key) ? 'session' : saved.has(key) ? 'saved' : 'idle',
+    reason: pending.has(key) ? reason : '',
+  });
+  const save = () => {
+    if (disposed || saving || !pending.size) return;
+    saving = true;
+    const expected = action,
+      local = { ...value },
+      keys = [...pending];
+    let phase = 'read';
+    try {
+      if (!storage) {
+        reason = 'unavailable';
+        return;
+      }
+      // Retry keeps local unsaved choices and the latest saved values for all
+      // untouched settings. A different tab cannot silently retire local intent.
+      const next = read();
+      if (disposed || action !== expected) return;
+      for (const key of keys) next[key] = local[key];
+      const raw = JSON.stringify(next);
+      phase = 'write';
+      storage.setItem(CONTINUOUS_PLAY_KEY, raw);
+      if (disposed || action !== expected) return;
+      phase = 'verify';
+      const confirmed = storage.getItem(CONTINUOUS_PLAY_KEY);
+      if (disposed || action !== expected) return;
+      if (confirmed !== raw) throw new Error('Save was not confirmed.');
+      value = next;
+      pending.clear();
+      saved.clear();
+      for (const key of keys) saved.add(key);
+      reason = '';
+    } catch (error) {
+      if (!disposed && action === expected)
+        reason =
+          error?.name === 'SecurityError'
+            ? 'blocked'
+            : error?.name === 'QuotaExceededError'
+              ? 'full'
+              : phase;
+    } finally {
+      saving = false;
+      if (!disposed) notify();
     }
   };
-  read();
-  const notify = () => {
-    for (const listener of listeners) listener({ ...value });
-  };
   const changed = (event) => {
-    if (event.key === CONTINUOUS_PLAY_KEY) {
-      read();
+    if (
+      disposed ||
+      (event.key !== CONTINUOUS_PLAY_KEY && !(event.key === null && event.newValue === null)) ||
+      (event.storageArea && event.storageArea !== storage)
+    )
+      return;
+    const expected = action;
+    try {
+      const current = read();
+      if (disposed || action !== expected) return;
+      for (const key of Object.keys(current)) if (!pending.has(key)) value[key] = current[key];
+      saved.clear();
       notify();
+    } catch {
+      /* An unreadable event has no authority over this session's choices. */
     }
   };
   target?.addEventListener?.('storage', changed);
   const preferences = {
     snapshot: () => ({ ...value }),
+    persistence,
     set(key, enabled) {
-      if (!(key in CONTINUOUS_PLAY_DEFAULTS))
+      if (disposed) throw new Error('Continuous-play preferences are disposed.');
+      if (!Object.hasOwn(CONTINUOUS_PLAY_DEFAULTS, key))
         throw new TypeError('Unknown continuous-play preference.');
       value[key] = !!enabled;
-      try {
-        storage?.setItem(CONTINUOUS_PLAY_KEY, JSON.stringify(value));
-      } catch {
-        /* Session choice remains active. */
-      }
-      notify();
+      action++;
+      pending.add(key);
+      reason = 'unconfirmed';
+      save();
+      return persistence(key);
+    },
+    retry() {
+      if (disposed || !pending.size) return;
+      action++;
+      save();
     },
     subscribe(listener) {
       listeners.add(listener);
       return () => listeners.delete(listener);
     },
     dispose() {
+      disposed = true;
       target?.removeEventListener?.('storage', changed);
       listeners.clear();
+      if (sharedPreferences === preferences) sharedPreferences = null;
     },
   };
   if (shared) sharedPreferences = preferences;
@@ -217,6 +298,32 @@ const FLOW_COPY = {
     autoReplay: 'Автоматично показувати повтор поразки',
   },
 };
+const SAVE_COPY = {
+  en: {
+    saved: 'Saved on this device.',
+    session: 'Session only.',
+    unavailable: 'Browser storage is unavailable.',
+    blocked: 'The browser blocked saving.',
+    full: 'Browser storage is full.',
+    read: 'Saved settings could not be read.',
+    write: 'These settings could not be saved.',
+    verify: 'Saving could not be confirmed.',
+    unconfirmed: 'Your latest choice has not been saved yet.',
+    retry: 'Retry saving',
+  },
+  uk: {
+    saved: 'Збережено на цьому пристрої.',
+    session: 'Лише для цього сеансу.',
+    unavailable: 'Сховище браузера недоступне.',
+    blocked: 'Браузер заблокував збереження.',
+    full: 'Сховище браузера заповнене.',
+    read: 'Не вдалося прочитати збережені налаштування.',
+    write: 'Не вдалося зберегти ці налаштування.',
+    verify: 'Не вдалося підтвердити збереження.',
+    unconfirmed: 'Ваш останній вибір ще не збережено.',
+    retry: 'Повторити збереження',
+  },
+};
 export function continuousPlayBindings(preferences = continuousPlayPreferences()) {
   return Object.fromEntries(
     Object.keys(CONTINUOUS_PLAY_DEFAULTS).map((key) => [
@@ -225,6 +332,21 @@ export function continuousPlayBindings(preferences = continuousPlayPreferences()
         get: () => preferences.snapshot()[key],
         set: (value) => preferences.set(key, value),
         subscribe: (fn) => preferences.subscribe(fn),
+        retry: () => preferences.retry(),
+        feedback: (locale) => {
+          const state = preferences.persistence?.(key),
+            copy = SAVE_COPY[String(locale).split('-')[0]] ?? SAVE_COPY.en;
+          return {
+            text:
+              state?.status === 'saved'
+                ? copy.saved
+                : state?.status === 'session'
+                  ? `${copy.session} ${copy[state.reason] ?? copy.unconfirmed}`
+                  : '',
+            retry: state?.status === 'session',
+            retryLabel: copy.retry,
+          };
+        },
       },
     ]),
   );
@@ -241,11 +363,11 @@ export function mountContinuousPlayControls({
     const style = doc.createElement('style');
     style.id = 'continuous-play-style';
     style.textContent = `
-.continuous-play-controls {display:flex;align-items:center;flex-wrap:wrap;gap:.35rem .65rem;min-width:0;max-width:100%;margin:0;font-size:.85rem;}
+.continuous-play-controls {display:flex;align-items:center;flex-wrap:wrap;gap:.35rem .65rem;min-width:0;max-width:100%;margin:0;font-size:calc(.85rem * var(--overflight-text-scale, 1));}
 .continuous-play-controls[hidden] {display:none!important;}
 .continuous-play-controls p {margin:0;overflow-wrap:anywhere;}
 .continuous-play-controls .button {min-height:44px;padding:.35rem .65rem;font-size:inherit;}
-.continuous-result-actions {position:sticky;bottom:0;z-index:3;display:flex;flex-wrap:wrap;align-items:center;gap:.5rem;min-width:0;padding-block:.55rem;background:var(--fk-surface,#24292b);}
+.continuous-result-actions {position:sticky;bottom:0;z-index:3;display:flex;flex-wrap:wrap;align-items:center;gap:.5rem;min-width:0;padding-block:.55rem;background:var(--fk-panel,#24292b);}
 .continuous-result-actions[hidden] {display:none!important;}
 .continuous-result-actions > * {min-width:0;max-width:100%;}
 @media(max-width:600px),(max-height:500px) {.continuous-result-actions {scroll-margin-block:1rem;} .continuous-result-actions > .continuous-play-controls {flex:1 1 100%;} .continuous-result-actions > button {min-height:44px;flex:1 1 8rem;}}

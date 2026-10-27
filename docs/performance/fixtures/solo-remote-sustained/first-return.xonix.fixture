@@ -1,0 +1,125 @@
+{
+  "format": "xonix-playground.v6",
+  "masteryDefinition": null,
+  "level": {
+    "version": "xonix-level.v5",
+    "id": "first-return",
+    "revision": "gp4s-3ff00000000000003ff00000000000003ff0000000000000-211ae8f36cc0327a",
+    "name": "First return",
+    "width": 72,
+    "height": 36,
+    "spawn": {
+      "x": 24.5,
+      "y": 0.5
+    },
+    "walls": [],
+    "foundations": [],
+    "goal": {
+      "coverage": 0.3
+    },
+    "encounter": null,
+    "classic": {
+      "version": "classic.v1",
+      "terrain": [],
+      "powerups": [],
+      "arcadeActions": {
+        "version": "arcade-actions.v1"
+      }
+    },
+    "enemies": [
+      {
+        "id": "keeper",
+        "type": "bouncer",
+        "x": 58.5,
+        "y": 23.5,
+        "vx": 7.81352993211135,
+        "vy": -7.81352993211135,
+        "course": "field-course.v2"
+      }
+    ],
+    "objectives": [],
+    "supplies": [],
+    "rules": {
+      "lives": 3,
+      "moveSpeed": 8.84,
+      "boostMultiplier": 1.5,
+      "respawnSeconds": 0.65,
+      "graceSeconds": 1,
+      "playerRadius": 0.18,
+      "pointsPerCell": 10,
+      "objectivePoints": 500,
+      "timeMedals": [
+        90,
+        150
+      ],
+      "switchCooldownSeconds": 2,
+      "timeLimitSeconds": 0,
+      "cutTimeLimitSeconds": 0,
+      "maxTrailCells": 0,
+      "stopOnCapture": true
+    },
+    "signalZones": [],
+    "hangars": [
+      {
+        "id": "home-hangar",
+        "x": 24.5,
+        "y": 0.5,
+        "radius": 2
+      }
+    ]
+  },
+  "theme": {
+    "id": "horizon",
+    "name": "Horizon School",
+    "subtitle": "Find a shore. Make a path.",
+    "family": "retro",
+    "player": "retro-craft",
+    "enemyShape": "orb",
+    "patrolShape": "spark",
+    "bossShape": "core",
+    "scene": "dawn",
+    "labels": {
+      "objective": "Relay",
+      "supply": "Supply",
+      "enemy": "Field keeper",
+      "boss": "Sentinel",
+      "currency": "Score",
+      "ability": "Ability"
+    },
+    "palette": {
+      "ink": "#142b3a",
+      "paper": "#f7efe0",
+      "muted": "#a5bab8",
+      "accent": "#ffd27b",
+      "safe": "#65dcc5",
+      "danger": "#ff7795",
+      "field": "#102c3a",
+      "grid": "#294754",
+      "sky": "#f5c68b",
+      "land": "#638d91"
+    },
+    "classBodies": {
+      "scout": "retro-craft",
+      "bomber": "retro-craft",
+      "carrier": "retro-craft",
+      "interceptor": "retro-craft",
+      "fiber": "retro-craft",
+      "impact": "retro-craft",
+      "trapper": "retro-craft"
+    }
+  },
+  "visualOverrides": {},
+  "settings": {
+    "seed": 1,
+    "classId": "scout",
+    "turnPolicy": "immediate"
+  },
+  "presentation": {
+    "style": "microtile",
+    "showGrid": true
+  },
+  "metadata": {
+    "title": "Qualification: first-return",
+    "description": "Unchanged gameplay definition; public Playground import for bounded qualification. Decorative authored backdrop is absent from this explicit greybox fixture."
+  }
+}
