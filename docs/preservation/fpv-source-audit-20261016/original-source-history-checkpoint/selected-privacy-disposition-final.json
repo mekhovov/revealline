@@ -1,0 +1,94 @@
+{
+  "format": "SelectedHistoricalAppSourcePrivacyFinalDisposition.v1",
+  "createdUTC": "2026-10-16T05:31:37.179234+00:00",
+  "safeForPublicPreservation": true,
+  "all2790SelectedCommitHeadersAndChangedPathsAudited": true,
+  "all61506ChangedFileVersionsRecorded": true,
+  "allPrivatePackedRawGitObjectSHA1IdentitiesVerified": true,
+  "uniquePrivatePackedBlobs": 4677,
+  "privateBlobBytesScanned": 858750152,
+  "strictUniqueBlobScanNoExemptions": true,
+  "finiteCredentialPatternFamilies": 6,
+  "actualPrivatePackedCandidateOccurrences": 5,
+  "actualPrivatePackedCandidateTuples": [
+    {
+      "gitBlob": "aa5079969da9bcc396a687222ec29afa2e142d25",
+      "path": "game/test/landing-release-history-host.test.mjs",
+      "matchSHA256": "c604d4eecc9010177eb941b7d66cc680b44732bbfee77bce699072713037e370"
+    },
+    {
+      "gitBlob": "f7150f1726be3907a7e8550d6aa589a8817f590f",
+      "path": "game/test/mission-library-handoff.test.mjs",
+      "matchSHA256": "c604d4eecc9010177eb941b7d66cc680b44732bbfee77bce699072713037e370"
+    },
+    {
+      "gitBlob": "de8d70cc3b3b8245d37fe843e60d9be9d937d852",
+      "path": "game/test/edition-offline-client.test.mjs",
+      "matchSHA256": "c604d4eecc9010177eb941b7d66cc680b44732bbfee77bce699072713037e370"
+    },
+    {
+      "gitBlob": "f5f1a4dda73166182d622020e36be0e5c4f272cd",
+      "path": "services/community/test/deployed-tus-resume.test.mjs",
+      "matchSHA256": "fd3411554212f1dfbe4f17051eb6cafd5ea95d666051fdd1d9d3760bdbf53931"
+    },
+    {
+      "gitBlob": "49c62b894132884c5dbb5b190db8a8ee18f19b6d",
+      "path": "scripts/test-optional-installation-quota-probe.mjs",
+      "matchSHA256": "a28b8176f57374f4f478f28ad1530d57fff8e37cdb58a74e5146350154124e29"
+    }
+  ],
+  "allActualCandidatesIndependentlyReviewedByExactPathBlobMatchTuple": true,
+  "unresolvedFindings": [],
+  "allSelectedEnvTemplateVersions": [
+    {
+      "path": "services/community/.env.example",
+      "gitBlob": "2a0032724d98ef1e12ea758d190334985924bb29"
+    },
+    {
+      "path": "services/community/.env.example",
+      "gitBlob": "42ef9193fdd1b59c90e6d7463a6ccd15b7a78854"
+    },
+    {
+      "path": "services/community/.env.example",
+      "gitBlob": "53f6988974464ea05dc5170931a880afc03fc8ba"
+    },
+    {
+      "path": "services/community/.env.example",
+      "gitBlob": "757d362afca581d4ec2f13c08d4cd40180ab2fe8"
+    },
+    {
+      "path": "services/community/.env.example",
+      "gitBlob": "782f897d2e310d976b19a457872cabeb4e410601"
+    },
+    {
+      "path": "services/community/.env.example",
+      "gitBlob": "c6d46b494c2c349c54087882a0622c21bda525d5"
+    },
+    {
+      "path": "services/community/.env.example",
+      "gitBlob": "dfb86a292aa85d92160749b48f1913c6ef281f32"
+    }
+  ],
+  "bundledEnvTemplateVersions": [
+    {
+      "path": "services/community/.env.example",
+      "gitBlob": "2a0032724d98ef1e12ea758d190334985924bb29"
+    },
+    {
+      "path": "services/community/.env.example",
+      "gitBlob": "757d362afca581d4ec2f13c08d4cd40180ab2fe8"
+    }
+  ],
+  "allSelectedAndBundledTemplatesExactlyMatchSevenIndividuallyReviewedBlobs": true,
+  "privateExcludedRawCommitTreeAndLeafObjectsAbsentFromPackAllowlist": true,
+  "privateRawConfigMigrationOrPlayerDataBodiesReadOrUploaded": false,
+  "inputHashes": {
+    "selected-privacy-disposition-prepack.json": "414b4aaf0ffd7863aec1de83e0af5a8039743d98fb5b8b8f9502b3fcd34a92ca",
+    "selected-object-closure-audit-resumed-final.json": "8833a0092128293afdde4599b0c4554f0b955452ac78b8dcd33c461ae8f38fc4",
+    "packed-unique-blob-privacy-scan.json": "548520a4d6149db7eb9018fe158d87557a921ec8b1ff453c75ba3f006b3dcaef",
+    "selected-history-bundle-object-allowlist.json": "f0c47c80d5798f186a15573330cbdcbd033b250dfeb3086653e6cdb1a81a3477",
+    "historical-url-fixture-independent-review.json": "85ed8c63c0d4122830cd0810d59eb7d021fd2c47bc2defcfb0bce1a9d63c0031",
+    "historical-env-template-independent-review.json": "20f584fc5dedcd1e4d238e709e20df412ced66c281ebfc2268f4db52aaf3e5c7"
+  },
+  "scope": "Bounded finite credential patterns plus exact fixture and template review; no blanket claim of secret-free full public history. Public prerequisite leaf bodies are inherited by exact verified public tree identities and excluded from private pack."
+}

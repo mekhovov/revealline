@@ -1,0 +1,45 @@
+{
+  "createdUTC": "2026-10-16T08:24:40.448656+00:00",
+  "parent": "e016e7317637e75ebe853ec4bbce4bc9b586ee09",
+  "head": "a5fb2f2119d6e6d53fcac6fd7109e95b869bbc0d",
+  "branch": "codex/preservation-fpv-source-audit-20261016",
+  "existingPublicCommitMetadata": [
+    {
+      "sha": "08a71f934e76f183adea68d8088bf0bc3fdae9b5",
+      "tree": "ea0c63a8cbd381894ee1c6c6d876400c4fa6ac4a",
+      "parents": [
+        "57200be2104d05725434bf79612cf0be1e1cf448"
+      ]
+    },
+    {
+      "sha": "091d486aeb378ecec4381d8b4e68c06e85edf1d0",
+      "tree": "efb4dae3f0fadb92b567d69588b0d5e36d0e8349",
+      "parents": [
+        "198324e85c84afc3a2fa1471f8e08718fce6be88"
+      ]
+    },
+    {
+      "sha": "37d80d937ff7b55f1dd6f3ca62c9c79eb843b534",
+      "tree": "8fa4e568a5c5e79d2ca210af240e1f0dc5b6b096",
+      "parents": [
+        "bd0885811be4646cb1d092c91a7bddac96b8e9b6"
+      ]
+    },
+    {
+      "sha": "88867270621a9d59f8041056e2653d21421ad374",
+      "tree": "d1d45065e06931a8bf724b8510a53625d4444160",
+      "parents": [
+        "de88b245da36b6df401e44a6e53cf77b330d1a66"
+      ]
+    },
+    {
+      "sha": "f2ce6f2b26dc1fa903b29b89afd4b474af55904e",
+      "tree": "477bc19f2ccf43bafd95de02063154db2bca3d92",
+      "parents": [
+        "afe63ce5d985a90a0b56fd65b1d0913a741a659e"
+      ]
+    }
+  ],
+  "sourceIndexWorkingPathsNotIncluded": true,
+  "appTreeUnchanged": true
+}

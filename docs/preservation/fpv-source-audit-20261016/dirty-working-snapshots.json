@@ -1,0 +1,282 @@
+{
+  "format": "InactiveAppWorkingSourceSnapshots.v1",
+  "checkouts": [
+    {
+      "checkout": "fpv-urban-mixed-preparation-20261014",
+      "files": [],
+      "symlinks": [
+        {
+          "path": "canyon-landmarks-final",
+          "target": "/Volumes/alex/CodexMigrationStaging/fpv-large-worlds-20261014/canyon-landmarks-r5",
+          "archiveTargetRequired": true
+        },
+        {
+          "path": "canyon-landmarks-reviewed",
+          "target": "/Volumes/alex/CodexMigrationStaging/fpv-large-worlds-20261014/canyon-landmarks-r7",
+          "archiveTargetRequired": true
+        },
+        {
+          "path": "canyon-landmarks-study",
+          "target": "/Volumes/alex/CodexMigrationStaging/fpv-large-worlds-20261014/canyon-landmarks-r1",
+          "archiveTargetRequired": true
+        },
+        {
+          "path": "canyon-relief-reviewed",
+          "target": "/Volumes/alex/CodexMigrationStaging/fpv-large-worlds-20261014/canyon-relief-r2",
+          "archiveTargetRequired": true
+        },
+        {
+          "path": "canyon-relief-rounded",
+          "target": "/Volumes/alex/CodexMigrationStaging/fpv-large-worlds-20261014/canyon-relief-r6",
+          "archiveTargetRequired": true
+        },
+        {
+          "path": "canyon-relief-study",
+          "target": "/Volumes/alex/CodexMigrationStaging/fpv-large-worlds-20261014/canyon-relief-r1",
+          "archiveTargetRequired": true
+        },
+        {
+          "path": "railway-comparison",
+          "target": "/Volumes/alex/CodexMigrationStaging/fpv-temp/railway-comparison",
+          "archiveTargetRequired": true
+        },
+        {
+          "path": "railway-indexed-review",
+          "target": "/Volumes/alex/CodexMigrationStaging/fpv-temp/railway-indexed-review",
+          "archiveTargetRequired": true
+        },
+        {
+          "path": "railway-pilot-final",
+          "target": "/Volumes/alex/CodexMigrationStaging/fpv-large-worlds-20261014/railway-pilot-r3",
+          "archiveTargetRequired": true
+        },
+        {
+          "path": "railway-pilot-study",
+          "target": "/Volumes/alex/CodexMigrationStaging/fpv-large-worlds-20261014/railway-pilot-r2",
+          "archiveTargetRequired": true
+        },
+        {
+          "path": "railway-structure-final",
+          "target": "/Volumes/alex/CodexMigrationStaging/fpv-large-worlds-20261014/railway-structure-r2",
+          "archiveTargetRequired": true
+        },
+        {
+          "path": "railway-structure-readable",
+          "target": "/Volumes/alex/CodexMigrationStaging/fpv-large-worlds-20261014/railway-structure-r4",
+          "archiveTargetRequired": true
+        },
+        {
+          "path": "railway-texture-window",
+          "target": "/Volumes/alex/CodexMigrationStaging/fpv-temp/railway-texture-window",
+          "archiveTargetRequired": true
+        },
+        {
+          "path": "urban-hall-final",
+          "target": "/Volumes/alex/CodexMigrationStaging/fpv-large-worlds-20261014/urban-hall-r3",
+          "archiveTargetRequired": true
+        },
+        {
+          "path": "urban-hall-study",
+          "target": "/Volumes/alex/CodexMigrationStaging/fpv-large-worlds-20261014/urban-hall-r1",
+          "archiveTargetRequired": true
+        },
+        {
+          "path": "urban-loading-study",
+          "target": "/Volumes/alex/CodexMigrationStaging/fpv-large-worlds-20261014/urban-loading-r1",
+          "archiveTargetRequired": true
+        },
+        {
+          "path": "urban-parking-study",
+          "target": "/Volumes/alex/CodexMigrationStaging/fpv-large-worlds-20261014/urban-parking-r1",
+          "archiveTargetRequired": true
+        },
+        {
+          "path": "urban-regional-study",
+          "target": "/Volumes/alex/CodexMigrationStaging/fpv-large-worlds-20261014/urban-regional-r2",
+          "archiveTargetRequired": true
+        }
+      ],
+      "findings": [],
+      "sourceMutation": false,
+      "createdUTC": "2026-10-16T03:43:27.369353+00:00"
+    },
+    {
+      "checkout": "fpv-delivery-checkpoint-20261014",
+      "files": [
+        {
+          "path": "docs/fpv-continuous-delivery.md",
+          "bytes": 326595,
+          "sha256": "b265cdc440e00d629dbdba831a9de51ffcfe950790a2332f280b771b8ed154a3",
+          "gitBlob": "828368de31ee820655c4b358e952e7e9fe7a0d38",
+          "mode": "100644"
+        }
+      ],
+      "symlinks": [],
+      "findings": [],
+      "sourceMutation": false,
+      "createdUTC": "2026-10-16T03:43:28.642586+00:00"
+    },
+    {
+      "checkout": "fpv-regional-independent-20261015",
+      "files": [
+        {
+          "path": "authoring/fpv-worlds/regions/canyon-badlands/verify-commanded-flight.mjs",
+          "bytes": 9510,
+          "sha256": "92baeb69720b6c341ce98094ba8dfe3d67c7a91106e9ce7efd04c50e3327e788",
+          "gitBlob": "ecd63589aa6d68892c69e57f58af8427e71196a6",
+          "mode": "100644"
+        },
+        {
+          "path": "authoring/fpv-worlds/regions/canyon-badlands/verify-delivery.mjs",
+          "bytes": 2694,
+          "sha256": "0258471315453a06bcc3a385e26211511b98b8f3abbdc9b72aa64492da7565d4",
+          "gitBlob": "bed6bbb7e2ffff5df52575e9d60d6d0ec7b5c916",
+          "mode": "100644"
+        },
+        {
+          "path": "authoring/fpv-worlds/regions/prepare-delivery.mjs",
+          "bytes": 6093,
+          "sha256": "14fb71e279ac2f933316a1674cdf517add9c8d242f99ddbba831d729b1ac0d76",
+          "gitBlob": "f176964527db3d45e8f709768dceb7891bb7bb81",
+          "mode": "100644"
+        },
+        {
+          "path": "optional-practice/civilian-fpv/regional-delivery.mjs",
+          "bytes": 14126,
+          "sha256": "0248c07fecb06d782f2d282a2d97ff40afd496094df10cd70930ea4b4c120844",
+          "gitBlob": "ac59435a839c73f59c56aacfa238bce991e7170b",
+          "mode": "100644"
+        },
+        {
+          "path": "optional-practice/civilian-fpv/regional/region-manifest.mjs",
+          "bytes": 12134,
+          "sha256": "5c5238689ab17f7feb4a154ffba5150fd569107513ecf8e3e2e46f4abfd580a0",
+          "gitBlob": "cc9a5aee98d184df1696932d94fc17d8c0ee8dab",
+          "mode": "100644"
+        },
+        {
+          "path": "optional-practice/civilian-fpv/regional/scenery-admission.mjs",
+          "bytes": 14729,
+          "sha256": "447bbbfbd8648298c92b60845206099d8b72f7877b974ab0a3cc1fb3d2a81c03",
+          "gitBlob": "da3cf58a110e1c450017afdc4c10bb2a66e1d513",
+          "mode": "100644"
+        },
+        {
+          "path": "optional-practice/civilian-fpv/regional/source-window.mjs",
+          "bytes": 10162,
+          "sha256": "42a9b850704000900c16855bccfef6adf4e5925565677eb2d99c4401651fe3f9",
+          "gitBlob": "710ba71a99a546bf04d605b4964779bcfe2499c2",
+          "mode": "100644"
+        },
+        {
+          "path": "optional-practice/civilian-fpv/regional/terrain-admission.mjs",
+          "bytes": 8703,
+          "sha256": "cc19b8f92e8855c96c0c24bf1c4d06e5ce99fb4cd8d6024c14c07a1d5417e4b4",
+          "gitBlob": "bdf85539238c2bf4a1dae95151b91566cbe12475",
+          "mode": "100644"
+        },
+        {
+          "path": "optional-practice/civilian-fpv/regional/verified-mixed-window.mjs",
+          "bytes": 15600,
+          "sha256": "c9d8e075f143efe6455007c762caf2575eade3a426859f6c06d4cd29ec48fc86",
+          "gitBlob": "4675bc0116df8075072969d7062f417429552170",
+          "mode": "100644"
+        },
+        {
+          "path": "optional-practice/civilian-fpv/regional/verified-scenery-window.mjs",
+          "bytes": 13802,
+          "sha256": "bf4ea858806436c0facd1780fda62f3cc8593e00599a49d60efbd6b98a238bb3",
+          "gitBlob": "a022f5a29e9fdf901bf1ab4a4e0c0a9388f9d1cf",
+          "mode": "100644"
+        },
+        {
+          "path": "optional-practice/civilian-fpv/regional/verified-terrain-window.mjs",
+          "bytes": 11849,
+          "sha256": "b11c3c36ad95823b90b5caa3c3adbcca30e3d71fe8d3abb9452afcaf7b32e720",
+          "gitBlob": "a7217524733ee38f788592718ea5be972cc4801b",
+          "mode": "100644"
+        },
+        {
+          "path": "authoring/fpv-worlds/regions/endurance-clock.mjs",
+          "bytes": 2454,
+          "sha256": "9c3e9f9ae37e25f5f68408fbe4774a7ef7021b7f2d08523054a9265bb7716678",
+          "gitBlob": "e39be81e01613db18dbc620ff90b4d0e97498ebd",
+          "mode": "100644"
+        },
+        {
+          "path": "authoring/fpv-worlds/regions/endurance-fixture.mjs",
+          "bytes": 4736,
+          "sha256": "7b627678c4ff2ff9d2bc11d0b67ab16e04322aedca22b436901a9e366e3d4c12",
+          "gitBlob": "0fc6bc9eb0b1ecfaf6c89f819cf02a2ad93e1a56",
+          "mode": "100644"
+        },
+        {
+          "path": "authoring/fpv-worlds/regions/endurance.html",
+          "bytes": 3832,
+          "sha256": "8d4faa9dc91be8558e05c82029fb6ee559a5e73d27ff513c9e673fa6e930fa88",
+          "gitBlob": "f8b027073fda2e63423366480bee121c9cde56e1",
+          "mode": "100644"
+        },
+        {
+          "path": "authoring/fpv-worlds/regions/endurance.mjs",
+          "bytes": 17678,
+          "sha256": "c8fe1bf464e8157fd1f5dccc2333b004210e7d1505f32f442c693c2cfb95093c",
+          "gitBlob": "6ceabb9af235d19990f0929513a9397e5161ee8c",
+          "mode": "100644"
+        },
+        {
+          "path": "authoring/fpv-worlds/regions/verify-endurance.mjs",
+          "bytes": 5784,
+          "sha256": "c23747d5e3fdb63f6151f5f58021774f8f1bdead4c4197d321de32a67d384c73",
+          "gitBlob": "eea1ca00643e931612eac276056e857113b6aedf",
+          "mode": "100644"
+        },
+        {
+          "path": "authoring/fpv-worlds/regions/verify-sparse-scenery.mjs",
+          "bytes": 15455,
+          "sha256": "ef7b40e9a48b68439ef148c68ea3941a68b813ad330d116beea73d51d63918fb",
+          "gitBlob": "765a8e2bfc20af30b1aed0d2a45bdd3afe5c11fc",
+          "mode": "100644"
+        },
+        {
+          "path": "docs/fpv-regional-elapsed-endurance.md",
+          "bytes": 5235,
+          "sha256": "148d3781fd41850e5dcc02b01c5fbe3bcb3c32e5c00f57a731f812087c818690",
+          "gitBlob": "698951bf1f0b7d52c1d216c0d1e395422ab18d6c",
+          "mode": "100644"
+        },
+        {
+          "path": "docs/fpv-regional-sparse-scenery.md",
+          "bytes": 3634,
+          "sha256": "488840bec35acadd459b91e8463739237ba5116924159a6bf4419cf7d7ed9877",
+          "gitBlob": "0bd6539fd88f2fe0f83327638385c4e5e7bb4d2f",
+          "mode": "100644"
+        }
+      ],
+      "symlinks": [],
+      "findings": [],
+      "sourceMutation": false,
+      "createdUTC": "2026-10-16T03:43:30.388075+00:00"
+    },
+    {
+      "checkout": "fpv-urban-independent-20261014",
+      "files": [],
+      "symlinks": [
+        {
+          "path": "canyon-regional-study",
+          "target": "/Volumes/alex/CodexMigrationStaging/fpv-large-worlds-20261014/canyon-study-recovered-r1",
+          "archiveTargetRequired": true
+        },
+        {
+          "path": "urban-regional-study",
+          "target": "/Volumes/alex/CodexMigrationStaging/fpv-large-worlds-20261014/urban-regional-r1",
+          "archiveTargetRequired": true
+        }
+      ],
+      "findings": [],
+      "sourceMutation": false,
+      "createdUTC": "2026-10-16T03:43:49.493180+00:00"
+    }
+  ],
+  "boundary": "Point-in-time archival source copies; original files/index/branches untouched. Active1540/1543owners excluded. Symlink target bytes need complete secondary archives; source snapshots are not correctness/qualification claims."
+}

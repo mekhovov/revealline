@@ -1,0 +1,16 @@
+{
+  "format": "SelectedAppHistoryBundleReceipt.v1",
+  "createdUTC": "2026-10-16T05:30:54.974726+00:00",
+  "bundlePath": "/Volumes/alex/CodexMigrationStaging/fpv-temp/source-preservation-closure-20261016/fpv-app-selected-history-20261016.bundle",
+  "bytes": 389261798,
+  "sha256": "d21fd37f7ca6231ce0b6622e5591b3db4dac282f9f62520f024620d797292636",
+  "packSHA1": "284ccd48a899bbb1857b17c15546d9446d7217bc",
+  "objects": 17824,
+  "head": "e87be58282b8e528da9550119b1c1c24826b8d34",
+  "ref": "refs/heads/codex/preservation-local-history-20261016",
+  "objectAllowlistSHA256": "f0c47c80d5798f186a15573330cbdcbd033b250dfeb3086653e6cdb1a81a3477",
+  "sourceMutation": false,
+  "wholeCacheIncluded": false,
+  "prerequisiteCount": 555,
+  "coldRestoreVerified": false
+}
