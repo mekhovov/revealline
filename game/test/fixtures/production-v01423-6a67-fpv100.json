@@ -5,8 +5,9 @@
   "provenance": {
     "path": "authoring/library/fpv-field-kit/production.rltheme",
     "gitBlob": "98873caea65e6e655d2420c1f3948b6f3250c783",
-    "bytes": 8227540,
-    "sha256": "3cfdf800e5794058de080edddf5a91a914ddd20098015a25a27818694478c71f"
+    "bytes": 8118660,
+    "sha256": "dfa26d323978d8ad1d6528982c817dea9c53d8b573817c4f435f326727e871cd",
+    "scope": "Derived retained-content oracle after an ownership migration. Source commit and tag identify the original artifact; these new bytes are not that release or its historical qualification."
   },
   "metadata": {
     "format": "revealline-theme-bundle.v1",
@@ -26,27 +27,37 @@
   },
   "groups": {
     "slots": {
-      "count": 335,
-      "sha256": "f2d853890e884c926450d6cbe7ed2648676e62a079a9e8768fc73a8fc12d1051"
+      "count": 302,
+      "sha256": "93cd0c41cf186805569b72f283fbeb803cf31623b3935cbc3cd0aa494f1fac22"
     },
     "assets": {
-      "count": 2606,
-      "sha256": "c09cd235f6927a11e34420226d02f619c1b36c07c999cba022e728a37f6e4687"
+      "count": 2573,
+      "sha256": "67749a41cf37529d24fe56a8982de7d028c58d312254e3f188cb95cfa4a8bbbe"
     },
     "themes": {
       "count": 101,
-      "sha256": "0d9f9fe0f48cfdfe7af4b04c960f167e5c5c17845aeb7860bf3997f57cf69875"
+      "sha256": "0458cedc8b66e838c914a71902949564a8c16f32ce55c05c3ee034d6aed5d797"
     },
     "collections": {
       "count": 1,
-      "sha256": "74daee988fe6fe616d1ecc4a6ffd9f6c9c47b2fc00584259232f8f1477db1b57"
+      "sha256": "84f512c5583368c0d68f138d2d3f7821e0492c0693e931751f8ec3311f6f30cc"
     }
   },
   "payloads": {
     "count": 132,
-    "bytes": 4009342,
     "sha256": "4932cc57542adc364f44cb548011a7ca26afa7e0cb1eb00e00647fe5c381738c"
   },
   "audioRecords": 424,
-  "scope": "Exact production100/audio52 predecessor, independently read from immutable 6a67d6dbfe01d5e1f3842b5a79dd5d5ddeefcfd8 Git bytes before the discovery audio continuation. This oracle records unchanged historical bytes, not a new listening or release approval."
+  "scope": "Exact production100/audio52 predecessor, independently read from immutable 6a67d6dbfe01d5e1f3842b5a79dd5d5ddeefcfd8 Git bytes before the discovery audio continuation. This oracle records unchanged historical bytes, not a new listening or release approval.",
+  "migration": {
+    "format": "revealline-retained-production-oracle.v1",
+    "originalBundleSHA256": "3cfdf800e5794058de080edddf5a91a914ddd20098015a25a27818694478c71f",
+    "originalFixtureSHA256": "cf19ad831cc0347f4f84c2ac310a1168354858e75f40991b35ffec18ea58d0b7",
+    "removedSlots": 33,
+    "removedAssets": 33,
+    "preservedPayloads": {
+      "count": 132,
+      "sha256": "4932cc57542adc364f44cb548011a7ca26afa7e0cb1eb00e00647fe5c381738c"
+    }
+  }
 }

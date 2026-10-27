@@ -4,6 +4,24 @@ import RAPIER from './vendor/rapier/rapier.mjs';
 
 export const WORLD_COLLISION_BACKEND =
   'rapier3d-compat-0.21.0:02dc6a4e2fffc013bab08fbb44fa68f501d8303615e9afe4c7d89ad4eedda0d0';
+export const COMBAT_SHAPE_FORMAT = 'CombatActorShape.v2';
+export function validateCombatShapeDescriptor(value, admitted) {
+  if (
+    !value ||
+    !admitted ||
+    Object.keys(value).sort().join('/') !== 'height/radius/shape/spawnId' ||
+    typeof value.spawnId !== 'string' ||
+    !value.spawnId.length ||
+    value.spawnId.length > 512 ||
+    !['sphere', 'cylinder'].includes(value.shape) ||
+    ![value.radius, value.height].every((n) => Number.isFinite(n) && n >= 0.01 && n <= 100) ||
+    value.shape !== (admitted.shape ?? 'cylinder') ||
+    value.radius !== admitted.radius ||
+    value.height !== admitted.height
+  )
+    throw new TypeError('Combat shape must match its admitted slot and identify its spawn');
+  return structuredClone(value);
+}
 const IDENTITY = Object.freeze({ x: 0, y: 0, z: 0, w: 1 });
 const AXES = ['x', 'y', 'z'];
 const mm = (v) => Object.fromEntries(AXES.map((k) => [k, v[k] / 1000]));
@@ -123,6 +141,7 @@ export function createWorldCollision(course) {
   function movingSweep(from, delta, radius, motions, start = 0, duration = 1) {
     let best = null;
     for (const motion of motions) {
+      if (motion.enabled === false) continue;
       const proxy = actors.get(motion.id);
       if (!proxy) continue;
       const travel = sub(motion.to, motion.from);
@@ -181,6 +200,8 @@ export function createWorldCollision(course) {
   }
   return {
     support,
+    castStatic: staticSweep,
+    castMoving: movingSweep,
     addActor(actor, groundMotion) {
       assertLive();
       const grounded = ['patrol', 'sentry'].includes(actor.type);
@@ -189,12 +210,25 @@ export function createWorldCollision(course) {
         ? RAPIER.ColliderDesc.capsule(Math.max(0, lift - actor.radius) / 1000, actor.radius / 1000)
         : RAPIER.ColliderDesc.ball(actor.radius / 1000);
       desc.setTranslation(...AXES.map((k) => centre(actor.position, lift)[k] / 1000));
+      const previous = actors.get(actor.id);
+      const collider = world.createCollider(desc);
+      if (previous) world.removeCollider(previous.collider, true);
       actors.set(actor.id, {
-        collider: world.createCollider(desc),
+        type: actor.type,
+        height: actor.height,
+        collider,
         lift,
         radius: actor.radius,
         groundMotion,
       });
+    },
+    removeActor(id) {
+      assertLive();
+      const proxy = actors.get(id);
+      if (proxy) {
+        world.removeCollider(proxy.collider, true);
+        actors.delete(id);
+      }
     },
     clearActorSpawn(actor) {
       assertLive();
@@ -216,7 +250,28 @@ export function createWorldCollision(course) {
     placeActor(actor) {
       assertLive();
       const proxy = actors.get(actor.id);
-      if (proxy) proxy.collider.setTranslation(mm(centre(actor.position, proxy.lift)));
+      if (proxy) {
+        const grounded = ['patrol', 'sentry'].includes(actor.type);
+        const lift = grounded ? actor.height / 2 : actor.radius;
+        if (
+          proxy.radius !== actor.radius ||
+          proxy.height !== actor.height ||
+          proxy.type !== actor.type
+        ) {
+          proxy.collider.setShape(
+            grounded
+              ? new RAPIER.Capsule(Math.max(0, lift - actor.radius) / 1000, actor.radius / 1000)
+              : new RAPIER.Ball(actor.radius / 1000),
+          );
+          Object.assign(proxy, {
+            lift,
+            radius: actor.radius,
+            height: actor.height,
+            type: actor.type,
+          });
+        }
+        proxy.collider.setTranslation(mm(centre(actor.position, proxy.lift)));
+      }
     },
     moveGroundActor: function moveGroundActor(actor, delta) {
       assertLive();

@@ -1511,8 +1511,10 @@
     /* Ignore damaged local data. */
   }
   const studio = doc.currentScript?.dataset.themeDensity === 'studio';
-  const qualifiedText = ['solo', 'snake'].includes(root.dataset.textScaling);
-  const extraLarge = display?.textSize === 'extra-large' && qualifiedText;
+  const primaryTextHost = ['solo', 'snake'].includes(root.dataset.textScaling);
+  const extraLarge =
+    display?.textSize === 'extra-large' &&
+    (primaryTextHost || root.dataset.textScaling === 'overflight');
   const large =
     display?.textSize === 'large' || (display?.textSize === 'extra-large' && !extraLarge);
   const plain = display?.textFace === 'plain';
@@ -1537,7 +1539,9 @@
       "'Field Kit UI', 'Exo 2', sans-serif";
   variables['--iw-target'] = studio && !coarse && !large && !extraLarge ? '32px' : '44px';
   variables['--iw-text-size'] = large ? '20px' : '16px';
-  if (qualifiedText) variables['--primary-text-scale'] = extraLarge ? '2' : '1';
+  variables['--overflight-text-scale'] =
+    root.dataset.textScaling === 'overflight' && extraLarge ? '2' : '1';
+  variables['--primary-text-scale'] = primaryTextHost && extraLarge ? '2' : '1';
   for (const [key, value] of Object.entries(variables)) root.style.setProperty(key, value);
   Object.assign(root.dataset, {
     interfaceTheme: id,

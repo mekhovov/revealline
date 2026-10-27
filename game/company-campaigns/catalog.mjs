@@ -1,6 +1,7 @@
 import { freezeDesign } from '../content-design/catalogs.mjs';
 
-const definitions = [[
+const definitions = [
+  [
     'droneaid-community-relay',
     'droneaid',
     'Community Relay',
@@ -26,7 +27,7 @@ const definitions = [[
       ],
     ],
   ],
-[
+  [
     'droneaid-nl-workshop-lights',
     'droneaid-nl',
     'Workshop Lights',
@@ -70,7 +71,7 @@ const definitions = [[
       ],
     ],
   ],
-[
+  [
     'droneaid-nl-parts-in-motion',
     'droneaid-nl',
     'Parts in Motion',
@@ -114,7 +115,7 @@ const definitions = [[
       ],
     ],
   ],
-[
+  [
     'droneaid-nl-makers-together',
     'droneaid-nl',
     'Makers Together',
@@ -158,7 +159,7 @@ const definitions = [[
       ],
     ],
   ],
-[
+  [
     'droneaid-nl-careful-handoff',
     'droneaid-nl',
     'The Careful Handoff',
@@ -202,7 +203,7 @@ const definitions = [[
       ],
     ],
   ],
-[
+  [
     'droneaid-nl-signals-of-support',
     'droneaid-nl',
     'Signals of Support',
@@ -246,7 +247,7 @@ const definitions = [[
       ],
     ],
   ],
-[
+  [
     'droneaid-nl-shared-horizon',
     'droneaid-nl',
     'Shared Horizon',
@@ -289,7 +290,8 @@ const definitions = [[
         'Choose your route through all the familiar safe returns before the final loop.',
       ],
     ],
-  ]];
+  ],
+];
 
 export const COMPANY_CAMPAIGNS = freezeDesign(
   definitions.map(([id, brandId, name, audience, rows]) => ({
@@ -317,9 +319,7 @@ export const COMPANY_MISSIONS = freezeDesign(
       brief,
       scene,
       routeDecision,
-      lessonId: [].includes(campaignId)
-        ? `${campaignId}-${String(index + 1).padStart(2, '0')}-lesson`
-        : null,
+      lessonId: null,
     })),
   ),
 );

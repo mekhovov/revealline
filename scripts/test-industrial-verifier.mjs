@@ -18,7 +18,17 @@ test('the feature manifest selects every required stream and real test paths', a
   const phases = selectIndustrialPhases(manifest);
   assert.deepEqual(
     phases.map((phase) => phase.id),
-    ['gameplay', 'creator', 'presentation', 'recordings', 'rooms', 'local-ux'],
+    [
+      'gameplay',
+      'creator',
+      'presentation',
+      'recordings',
+      'rooms',
+      'local-ux',
+      'host-integration',
+      'host-navigation',
+      'mission-library',
+    ],
   );
   for (const phase of phases) {
     assert.deepEqual(selectIndustrialPhases(manifest, phase.id), [phase]);
@@ -26,6 +36,20 @@ test('the feature manifest selects every required stream and real test paths', a
       assert.ok((await fs.stat(new URL(`../${file}`, import.meta.url))).isFile());
   }
   assert.throws(() => selectIndustrialPhases(manifest, 'unknown'), /Unknown/);
+  const workflow = await fs.readFile(
+    new URL('../.github/workflows/industrial-feature-tests.yml', import.meta.url),
+    'utf8',
+  );
+  const matrix = workflow
+    .match(/phase:\s*\[([^\]]+)\]/)?.[1]
+    .split(',')
+    .map((id) => id.trim())
+    .filter(Boolean);
+  assert.deepEqual(
+    matrix,
+    phases.map((phase) => phase.id),
+    'Every required phase must run in CI.',
+  );
   assert.throws(
     () => selectIndustrialPhases({ ...manifest, phases: [...phases, phases[0]] }),
     /Invalid/,

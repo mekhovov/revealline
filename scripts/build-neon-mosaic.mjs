@@ -38,60 +38,62 @@ const font = {
   V: ['10001', '10001', '10001', '10001', '10001', '01010', '00100'],
   Y: ['10001', '10001', '01010', '00100', '00100', '00100', '00100'],
 };
-export const MOSAIC_DESIGNS = [{ id: 'fpv', title: 'FPV', lines: ['FPV'] },
-{ id: 'ukraine', title: 'UKRAINE', lines: ['UKRAINE'] },
-{ id: 'drone-aid', title: 'DRONE AID', lines: ['DRONE', 'AID'] },
-{ id: 'social-drone', title: 'SOCIAL DRONE', lines: ['SOCIAL', 'DRONE'] },
-{ id: 'sdua', title: 'SDUA', lines: ['SDUA'] },
-{ id: 'victory-drones', title: 'VICTORY DRONES', lines: ['VICTORY', 'DRONES'] },
-{ id: 'vd', title: 'VD', lines: ['VD'] },
-{ id: 'fpv-line', title: 'FPV LINE', lines: ['FPV', 'LINE'] },
-{ id: 'reveal', title: 'REVEAL', lines: ['REVEAL'] },
-{ id: 'fly-free', title: 'FLY FREE', lines: ['FLY', 'FREE'] },
-{
+export const MOSAIC_DESIGNS = [
+  { id: 'fpv', title: 'FPV', lines: ['FPV'] },
+  { id: 'ukraine', title: 'UKRAINE', lines: ['UKRAINE'] },
+  { id: 'drone-aid', title: 'DRONE AID', lines: ['DRONE', 'AID'] },
+  { id: 'social-drone', title: 'SOCIAL DRONE', lines: ['SOCIAL', 'DRONE'] },
+  { id: 'sdua', title: 'SDUA', lines: ['SDUA'] },
+  { id: 'victory-drones', title: 'VICTORY DRONES', lines: ['VICTORY', 'DRONES'] },
+  { id: 'vd', title: 'VD', lines: ['VD'] },
+  { id: 'fpv-line', title: 'FPV LINE', lines: ['FPV', 'LINE'] },
+  { id: 'reveal', title: 'REVEAL', lines: ['REVEAL'] },
+  { id: 'fly-free', title: 'FLY FREE', lines: ['FLY', 'FREE'] },
+  {
     id: 'fpv-drone',
     title: 'FPV Drone',
     symbol: 'drone',
     motif:
       'a quadrotor silhouette with four circular rotors, a squashed-X frame, a camera and central fuselage',
   },
-{
+  {
     id: 'tryzub',
     title: 'Ukrainian Trident',
     symbol: 'tryzub',
     motif: 'a stylized Ukrainian tryzub with a central spear and interwoven side prongs',
   },
-{
+  {
     id: 'vyshyvanka',
     title: 'Vyshyvanka Diamonds',
     symbol: 'diamonds',
     motif: 'a vyshyvanka-inspired sequence of embroidered diamonds with cross-shaped centers',
   },
-{
+  {
     id: 'ruzha',
     title: 'Eight-Point Ruzha',
     symbol: 'ruzha',
     motif: 'an eight-point geometric rosette inspired by Ukrainian embroidery',
   },
-{
+  {
     id: 'kalyna',
     title: 'Kalyna',
     symbol: 'kalyna',
     motif: 'a kalyna branch with clustered berries and paired leaves',
   },
-{
+  {
     id: 'tree-of-life',
     title: 'Tree of Life',
     symbol: 'tree',
     motif: 'a branching tree-of-life motif inspired by Ukrainian embroidery',
   },
-{
+  {
     id: 'pysanka',
     title: 'Pysanka',
     symbol: 'pysanka',
     motif: 'a closed pysanka egg outline with a central diamond and staggered ornamental stitches',
   },
-...CULTURAL_DESIGNS];
+  ...CULTURAL_DESIGNS,
+];
 
 // Disjoint maximal row spans, merged vertically; also try the transposed grid.
 function rectangles(cells, kind) {
@@ -376,6 +378,9 @@ function makeBouncers(cells, id, count) {
   return result;
 }
 
+// Permanent layout positions: retired entries stay empty so other missions never change.
+const MOSAIC_LAYOUT_IDS = Object.freeze(["fpv","ukraine","drone-aid",null,"social-drone","sdua","victory-drones","vd","fpv-line","reveal","fly-free","fpv-drone","tryzub","vyshyvanka","ruzha","kalyna","tree-of-life","pysanka","barvinok","wheat","vinok","didukh","rushnyk","bandura","trembita","tsymbaly","kosiv-pitcher","opishnia-ram","petrykivka","oak","stork","swallow","horse","deer","fish","berehynia","bezkonechnyk","ornek-tulip"]);
+
 export async function buildNeonMosaic() {
   const [chambers, channels, arrows] = await Promise.all([
     buildNeonChambers(),
@@ -385,7 +390,9 @@ export async function buildNeonMosaic() {
   const backgrounds = await Promise.all(
     MOSAIC_DESIGNS.map((design) => neonRevealBackground(design.id, `Neon ${design.title}`)),
   );
-  return MOSAIC_DESIGNS.map((design, index) => {
+  return MOSAIC_DESIGNS.map((design, position) => {
+    const index = MOSAIC_LAYOUT_IDS.indexOf(design.id);
+    assert.ok(index >= 0, `Register a permanent layout position for ${design.id}`);
     const { cells, lower } = designCells(design, index),
       scenario = structuredClone(channels.scenario);
     scenario.visualOverrides = {
@@ -396,7 +403,7 @@ export async function buildNeonMosaic() {
     };
     for (const [role, visual] of Object.entries(scenario.visualOverrides))
       visual.name = `Mosaic ${role}`;
-    scenario.visualOverrides.background = backgrounds[index];
+    scenario.visualOverrides.background = backgrounds[position];
     const terrain = [
       ...rectangles(cells, 'B').map((r) => ({ kind: 'slow', ...r })),
       ...rectangles(cells, 'X').map((r) => ({ kind: 'lethal', ...r })),

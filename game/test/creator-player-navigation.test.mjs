@@ -21,6 +21,9 @@ import { BoardPainter } from '../ui/render.mjs';
 import { authoritativeCheckpoint } from '../replay.mjs';
 import { REWARD_BOARD_SECONDS } from '../ui/reward-arrival.mjs';
 import { createCelebration } from '../ui/celebration.mjs';
+import { DISPLAY_PREFERENCES_KEY } from '../display-preferences.mjs';
+import { MENU_ANIMATION_KEY } from '../ui/menu-animation-preferences.mjs';
+import { getLocale, setLocale } from '../i18n/index.mjs';
 
 const html = await readFile(new URL('../creator/player.html', import.meta.url), 'utf8');
 const themes = JSON.parse(
@@ -391,7 +394,7 @@ async function playerHost(t, fixture, { invalidEdition = false, setLook = async 
     original.set(name, Object.getOwnPropertyDescriptor(globalThis, name));
     Object.defineProperty(globalThis, name, { value, configurable: true, writable: true });
   }
-  Object.assign(win, { fetch: globals.fetch });
+  Object.assign(win, { fetch: globals.fetch, localStorage: fixture.storage });
   let closed = false;
   const close = () => {
     if (closed) return;
@@ -799,3 +802,86 @@ test('async mission selection also stays paused if the player opens Settings whi
   assert.equal($('creator-home').hidden, false);
   assert.deepEqual(authoritativeCheckpoint(page.run()), checkpoint);
 });
+
+for (const locale of ['en', 'uk'])
+  test(`installed Custom ${locale} comfort presets retain the paused checkpoint through preview, Retry and Undo`, async (t) => {
+    const priorLocale = getLocale();
+    setLocale(locale, { persist: false });
+    t.after(() => setLocale(priorLocale, { persist: false }));
+    const fixture = await installedFixture(),
+      page = await playerHost(t, fixture),
+      { $, doc } = page,
+      preferenceWrites = () =>
+        fixture.writes.filter(([key]) =>
+          [DISPLAY_PREFERENCES_KEY, MENU_ANIMATION_KEY].includes(key),
+        ),
+      preset = (suffix) => $(`creator-panel-display-comfort-${suffix}`);
+    $('start').click();
+    await settle(() => !$('pause').disabled);
+    page.frame();
+    page.frame();
+    $('pause').click();
+    const checkpoint = authoritativeCheckpoint(page.run()),
+      saved = fixture.storage.getItem(creatorAttemptKey(fixture.pack.editionId)),
+      mission = page.run().level.id;
+    assert.ok(saved, 'The real Custom player retains a recoverable paused attempt.');
+    $('creator-open-settings').click();
+    $('creator-tab-display').click();
+    assert.equal(preset('apply').closest('[hidden],[inert]'), null);
+    assert.equal($('creator-panel-display').children[0].className, 'comfort-presets');
+    preset('choice').value = 'clear';
+    preset('choice').emit('change');
+    preset('choice').value = 'comfort';
+    preset('choice').emit('change');
+    assert.equal(preferenceWrites().length, 0);
+    const write = fixture.storage.setItem;
+    let working = false;
+    fixture.storage.setItem = (key, value) => {
+      if (!working && [DISPLAY_PREFERENCES_KEY, MENU_ANIMATION_KEY].includes(key))
+        throw new DOMException('Modeled full storage', 'QuotaExceededError');
+      write(key, value);
+    };
+    preset('apply').focus();
+    preset('apply').click();
+    assert.equal($('creator-text-face').value, 'plain');
+    assert.equal($('creator-text-size').value, 'large');
+    assert.equal($('creator-reduced-effects').checked, true);
+    assert.equal($('creator-background-animation').checked, false);
+    assert.match(
+      preset('status').textContent,
+      locale === 'en' ? /Session only/ : /Лише в цьому сеансі/,
+    );
+    assert.equal(doc.activeElement, preset('apply'));
+    working = true;
+    preset('apply').click();
+    assert.deepEqual(JSON.parse(fixture.storage.getItem(DISPLAY_PREFERENCES_KEY)), {
+      textFace: 'plain',
+      textSize: 'large',
+      reducedEffects: true,
+    });
+    assert.equal(fixture.storage.getItem(MENU_ANIMATION_KEY), 'off');
+    assert.doesNotMatch(preset('status').textContent, /Session only|Лише в цьому сеансі/);
+    page.frame();
+    assert.deepEqual(authoritativeCheckpoint(page.run()), checkpoint);
+    assert.equal(fixture.storage.getItem(creatorAttemptKey(fixture.pack.editionId)), saved);
+    preset('undo').focus();
+    preset('undo').click();
+    assert.deepEqual(JSON.parse(fixture.storage.getItem(DISPLAY_PREFERENCES_KEY)), {
+      textFace: 'pixel',
+      textSize: 'standard',
+      reducedEffects: false,
+    });
+    assert.equal(fixture.storage.getItem(MENU_ANIMATION_KEY), 'on');
+    assert.equal(doc.activeElement, preset('apply'));
+    assert.equal(page.run().level.id, mission);
+    assert.deepEqual(authoritativeCheckpoint(page.run()), checkpoint);
+    assert.equal(fixture.storage.getItem(creatorAttemptKey(fixture.pack.editionId)), saved);
+    assert.equal($('creator-settings').open, true);
+    const retainedApply = preset('apply');
+    page.close();
+    const writesAfterClose = preferenceWrites().length;
+    retainedApply.click();
+    page.win.emit('pageshow', { persisted: true });
+    assert.equal(preferenceWrites().length, writesAfterClose);
+    assert.equal(doc.querySelector('.comfort-presets'), null);
+  });

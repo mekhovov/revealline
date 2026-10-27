@@ -35,10 +35,10 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    font: calc(13px * var(--primary-text-scale, 1)) / 1.4 var(--fk-font-ui, sans-serif);
+    font: calc(13px * var(--overflight-text-scale, 1) * var(--primary-text-scale, 1)) / 1.4 var(--fk-font-ui, sans-serif);
   }
   .shared-touch-surface > span:first-child {
-    font: 54px/1.3 var(--fk-font-ui, sans-serif);
+    font: calc(54px * var(--overflight-text-scale, 1)) / 1.3 var(--fk-font-ui, sans-serif);
   }
   .shared-touch-pad {
     width: var(--touch-size);
@@ -61,7 +61,7 @@
     box-shadow: none;
     background: color-mix(in srgb, var(--fk-panel-raised, #19364a) 70%, transparent);
     color: var(--fk-text, #c4f3ff);
-    font: bold 25px/1 var(--fk-font-ui, sans-serif);
+    font: bold calc(25px * var(--overflight-text-scale, 1)) / 1 var(--fk-font-ui, sans-serif);
     touch-action: none;
   }
   .shared-touch-pad button[data-direction='up'] {

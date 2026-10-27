@@ -60,6 +60,7 @@
   }
 
   .access-gate-card input,
+  .access-gate-card select,
   .access-gate-card button {
     min-height: 48px;
     box-sizing: border-box;
@@ -68,8 +69,10 @@
     font: inherit;
   }
 
-  .access-gate-card input {
+  .access-gate-card input,
+  .access-gate-card select {
     width: 100%;
+    min-width: 0;
     padding: 8px 12px;
     background: #070914;
     color: #fff;
@@ -84,7 +87,8 @@
     cursor: pointer;
   }
 
-  .access-gate-card button:disabled {
+  .access-gate-card button:disabled,
+  .access-gate-card button[aria-disabled='true'] {
     cursor: wait;
     opacity: 0.65;
   }
